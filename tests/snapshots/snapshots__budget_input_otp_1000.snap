@@ -2,13 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (982 words)
+budget: 1000 (991 words)
 
 CHANGELOG.md
      1→# Changelog …
-     3→## [1.4.2]
-     5→- chore(input): remove unintentional log within internal pasteListener
-     6→
 README.md
      1→# The only accessible & unstyled & full featured Input OTP component in the Web. …
      3→### OTP Input for React 🔐 by [@guilhermerodz](https://twitter.com/guilherme_rodz)
@@ -130,7 +127,6 @@ apps/test/README.md
      3→## Getting Started …
     23→## Learn More …
     32→## Deploy on Vercel …
-apps/test/next.config.mjs
 apps/test/package.json
 apps/test/src/app/base/page.tsx
      7→export default function Page() {
@@ -219,24 +215,33 @@ package.json
     44→  "devDependencies": {
     60→}
 packages/input-otp/package.json
-     2→  "name …
-     3→  "version …
-     4→  "author …
-     5→  "description …
-     6→  "license …
-     7→  "homepage …
-     8→  "repository …
-    13→  "bugs …
-    16→  "keywords …
-    22→  "main …
-    23→  "module …
-    24→  "types …
-    25→  "files …
-    28→  "exports …
-    38→  "scripts …
-    55→  "eslintConfig …
-   111→  "devDependencies …
-   118→  "peerDependencies …
+     2→  "name": "input-otp",
+     3→  "version": "1.4.2",
+     4→  "author": "Guilherme Rodz <g@rodz.dev>",
+     5→  "description": "One-time password input component for React.",
+     6→  "license": "MIT",
+     7→  "homepage": "https://input-otp.rodz.dev/",
+     8→  "repository": {
+    12→  },
+    13→  "bugs": {
+    15→  },
+    16→  "keywords": [
+    21→  ],
+    22→  "main": "./dist/index.js",
+    23→  "module": "./dist/index.mjs",
+    24→  "types": "./dist/index.d.ts",
+    25→  "files": [
+    27→  ],
+    28→  "exports": {
+    37→  },
+    38→  "scripts": {
+    54→  },
+    55→  "eslintConfig": {
+   110→  },
+   111→  "devDependencies": {
+   117→  },
+   118→  "peerDependencies": {
+   122→}
 packages/input-otp/src/input.tsx
      3→import * as React from 'react'
      5→import { syncTimeouts } from './sync-timeouts'
@@ -294,10 +299,11 @@ packages/input-otp/src/use-pwm-badge.tsx
     20→}: {
       →…
 packages/input-otp/tsconfig.json
-     2→  "compilerOptions …
-    12→  "include …
+     2→  "compilerOptions": {
+    11→  },
+    12→  "include": ["src"]
+    13→}
 packages/input-otp/tsup.config.ts
-     1→import { defineConfig } from 'tsup';
 pnpm-workspace.yaml
      1→packages …
 turbo.json

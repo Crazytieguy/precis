@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1000 words)
+budget: 1000 (1002 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -33,6 +33,12 @@ Readme.md
     25→  - [Commands](#commands)
     26→    - [Command-arguments](#command-arguments)
     27→      - [More configuration](#more-configuration-1)
+    28→      - [Custom argument processing](#custom-argument-processing)
+    29→    - [Action handler](#action-handler)
+    30→    - [Stand-alone executable (sub)commands](#stand-alone-executable-subcommands)
+    31→    - [Life cycle hooks](#life-cycle-hooks)
+    32→  - [Automated help](#automated-help)
+    33→    - [Custom help](#custom-help)
       →…
     61→## Installation …
     67→## Quick Start …
@@ -44,19 +50,6 @@ Readme.md
    754→## Automated help …
    956→## Custom event listeners …
    966→## Bits and pieces …
-   968→### .parse() and .parseAsync()
-   970→Call with no parameters to parse `process.argv`. Detects Electron and special node options like `node --eval`. Easy mode!
-   971→
-   972→Or, call with an array of strings to parse, and optionally where the user arguments start by specifying where the arguments are `from`:
-   973→
-   974→- `'node'`: default, `argv[0]` is the application and `argv[1]` is the script being run, with user arguments after that
-   975→- `'electron'`: `argv[0]` is the application and `argv[1]` varies depending on whether the electron application is packaged
-   976→- `'user'`: just user arguments
-   977→
-   978→For example:
-   979→
-   980→```js
-      →…
   1164→## Support …
 Readme_zh-CN.md
      1→# Commander.js
@@ -65,19 +58,22 @@ Readme_zh-CN.md
     10→使用其他语言阅读：[English](./Readme.md) | 简体中文
     11→
       →…
-   907→### .parse() 和 .parseAsync()
-   909→`.parse`的第一个参数是要解析的字符串数组，也可以省略参数而使用`process.argv`。
-   910→
-      →…
+   570→#### 其他参数配置 …
+   582→#### 自定义参数处理 …
 SECURITY.md
      1→# Security Policy …
 docs/deprecated.md
-   229→### Short option flag longer than a single character …
+     1→# Deprecated …
 docs/help-in-depth.md
+     1→# Help in Depth …
 docs/options-in-depth.md
+     2→# Options in Depth …
 docs/parsing-and-hooks.md
+     1→# Parsing life cycle and hooks …
 docs/release-policy.md
+     1→# Release Policy …
 docs/terminology.md
+     1→# Terminology …
 eslint.config.js
      8→const tsconfigTsFiles …
      9→const tsconfigJsFiles …
@@ -101,12 +97,16 @@ lib/argument.js
 lib/command.js
     13→class Command extends EventEmitter {
   1127→  _prepareForParse() {
+  1128→    if (this._savedState === null) {
+      →…
 lib/error.js
      1→/**
-      →…
+     2→ * CommanderError class
+     3→ */
      4→class CommanderError extends Error {
     22→/**
-      →…
+    23→ * InvalidArgumentError class
+    24→ */
     25→class InvalidArgumentError extends CommanderError {
 lib/help.js
     12→class Help {
@@ -127,11 +127,15 @@ lib/help.js
 lib/option.js
      3→class Option {
    261→/**
+   262→ * This class is to make it easier to work with dual options, without changing the existing
+   263→ * implementation. We support separate dual options for separate positive and negative options,
       →…
    268→class DualOptions {
 lib/suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
+     4→  // https://en.wikipedia.org/wiki/Damerau–Levenshtein_distance
+      →…
 package-support.json
      2→  "versions": [
     19→}

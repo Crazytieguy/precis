@@ -2,15 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (495 words)
+budget: 500 (496 words)
 
 CHANGELOG.md
      1→# Changelog …
-   911→#### Testing for no arguments …
 CONTRIBUTING.md
      1→# Contributing …
-     3→## Issues …
-    13→## Pull Requests …
 Readme.md
      1→# Commander.js
      8→The complete solution for [node.js](http://nodejs.org) command-line interfaces.
@@ -33,28 +30,14 @@ Readme.md
    754→## Automated help …
    956→## Custom event listeners …
    966→## Bits and pieces …
-   968→### .parse() and .parseAsync()
-   970→Call with no parameters to parse `process.argv`. Detects Electron and special node options like `node --eval`. Easy mode!
-   971→
-   972→Or, call with an array of strings to parse, and optionally where the user arguments start by specifying where the arguments are `from`:
-   973→
-      →…
   1164→## Support …
 Readme_zh-CN.md
      1→# Commander.js …
-   907→### .parse() 和 .parseAsync()
-   909→`.parse`的第一个参数是要解析的字符串数组，也可以省略参数而使用`process.argv`。
-   910→
-      →…
 SECURITY.md
      1→# Security Policy …
 docs/deprecated.md
-   229→### Short option flag longer than a single character …
 docs/help-in-depth.md
 docs/options-in-depth.md
-docs/parsing-and-hooks.md
-docs/release-policy.md
-docs/terminology.md
 esm.mjs
      1→import commander from './index.js';
 examples/color-help-replacement.mjs
@@ -65,7 +48,7 @@ examples/global-options-added.js
     17→  createCommand(name) {
 examples/help-centered.mjs
 examples/man-style-help.mjs
-     5→function formatItem(term, termWidth, description, helper) {
+     5→function formatItem …
 lib/argument.js
      3→class Argument {
 lib/command.js
@@ -105,12 +88,7 @@ lib/suggestSimilar.js
 package-support.json
 package.json
 tests/command.createArgument.test.js
-     4→  constructor(name, description) {
-    11→  createArgument(name, description) {
-    16→  createCommand(name) {
 tests/command.createOption.test.js
-     4→  constructor(flags, description) {
-    11→  createOption(flags, description) {
 tests/esm-imports-test.mjs
      1→../esm.mjs …
 tests/ts-imports.test.ts
@@ -128,12 +106,34 @@ typings/index.d.ts
     40→export interface ErrorOptions {
     48→export class Argument {
     95→export class Option {
+   115→  constructor(flags: string, description?: string);
    210→export class Help {
+   218→  constructor();
+   226→  prepareContext(contextOptions: {
+   227→    error?: boolean;
+   228→    helpWidth?: number;
+   229→    outputHasColors?: boolean;
+   230→  }): void;
+   279→  styleCommandDescription(str: string): string;
+   280→  styleOptionDescription(str: string): string;
+   281→  styleSubcommandDescription(str: string): string;
+   282→  styleArgumentDescription(str: string): string;
+   286→  styleOptionTerm(str: string): string;
+   287→  styleSubcommandTerm(str: string): string;
+   288→  styleArgumentTerm(str: string): string;
    340→export type HelpConfiguration = Partial<Help>;
    342→export interface ParseOptions {
    345→export interface HelpContext {
    349→export interface AddHelpTextContext {
    354→export interface OutputConfiguration {
+   355→  writeOut?(str: string): void;
+   356→  writeErr?(str: string): void;
+   357→  outputError?(str: string, write: (str: string) => void): void;
+   359→  getOutHelpWidth?(): number;
+   360→  getErrHelpWidth?(): number;
+   362→  getOutHasColors?(): boolean;
+   363→  getErrHasColors?(): boolean;
+   364→  stripColor?(str: string): string;
    367→export type AddHelpTextPosition = 'beforeAll' | 'before' | 'after' | 'afterAll';
    368→export type HookEvent = 'preSubcommand' | 'preAction' | 'postAction';
    370→export type OptionValueSource =
@@ -141,15 +141,19 @@ typings/index.d.ts
    372→  | undefined;
    374→export type OptionValues = Record<string, any>;
    376→export class Command {
+   384→  constructor(name?: string);
+   493→  argument(name: string, description?: string, defaultValue?: unknown): this;
+   528→  helpCommand(enable: boolean): this;
+   718→  storeOptionsAsProperties(storeAsProperties?: boolean): this;
+  1083→  addHelpText(
+  1084→    position: AddHelpTextPosition,
+  1085→    text: (context: AddHelpTextContext) => string,
+  1086→  ): this;
   1094→export interface CommandOptions {
   1100→export interface ExecutableCommandOptions extends CommandOptions {
   1104→export interface ParseOptionsResult {
   1113→export const program: Command;
 typings/index.test-d.ts
      1→import * as commander from './index';
-   384→interface MyCheeseOption {
-   385→  cheese: string;
-   386→}
-   509→class MyCommand extends commander.Command {
    510→  createCommand(name?: string): MyCommand {
    514→  myFunction(): void {

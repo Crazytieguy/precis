@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3944 words)
+budget: 4000 (3945 words)
 
 AGENTS.md
      1→# AGENTS.md
@@ -17,13 +17,7 @@ CLAUDE.md
     18→### Code Quality …
     22→## Development Process …
     32→## Core Architecture …
-    34→### Main Components
-    36→- **PluginManager** (`src/pluggy/_manager.py`): Central registry that manages plugins and coordinates hook calls
-    37→- **HookCaller** (`src/pluggy/_hooks.py`): Executes hook implementations with proper argument binding
-    38→- **HookImpl/HookSpec** (`src/pluggy/_hooks.py`): Represent hook implementations and specifications
-    39→- **Result** (`src/pluggy/_result.py`): Handles hook call results and exception propagation
-    40→- **Multicall** (`src/pluggy/_callers.py`): Core execution engine for calling multiple hook implementations
-    41→
+    34→### Main Components …
     42→### Package Structure …
     48→## Configuration Files …
 SECURITY.md
@@ -48,6 +42,14 @@ docs/conf.py
    115→
    116→            Ref: https://github.com/sphinx-doc/sphinx/issues/2150."""
    117→            if (
+   118→                record.msg.startswith('Problems with "include" directive path:')
+   119→                and "_changelog_towncrier_draft.rst" in record.msg
+   120→            ):
+   121→                return False
+   122→            return True
+   123→
+   124→    logger = logging.getLogger(sphinx.util.logging.NAMESPACE)
+   125→    warn_handler = [x for x in logger.handlers if x.level == logging.WARNING]
       →…
    130→def setup(app: "sphinx.application.Sphinx") -> None:
    131→    configure_logging(app)
@@ -838,6 +840,7 @@ testing/test_hookcaller.py
     22→    class Hooks:
     23→        @hookspec
     24→        def he_method1(self, arg: object) -> None:
+    25→            pass
       →…
     34→class AddMeth:
     60→@pytest.fixture
@@ -849,6 +852,7 @@ testing/test_hookcaller.py
    330→    @hookimpl(**{name: val})  # type: ignore[untyped-decorator,call-overload]
    331→    def he_myhook1(arg1) -> None:
    332→        pass
+   333→
       →…
 testing/test_invocations.py
 testing/test_multicall.py
@@ -857,18 +861,21 @@ testing/test_multicall.py
    251→    out = []
    252→
    253→    @hookimpl(hookwrapper=True)
+   254→    def m1():
       →…
    319→@pytest.mark.parametrize("exc", [ValueError, SystemExit])
    320→def test_wrapper_exception(exc: type[BaseException]) -> None:
    321→    out = []
    322→
    323→    @hookimpl(wrapper=True)
+   324→    def m1():
       →…
    416→@pytest.mark.parametrize("has_hookwrapper", [True, False])
    417→def test_wrapper_stopiteration_passtrough(has_hookwrapper: bool) -> None:
    418→    out = []
    419→
    420→    @hookimpl(wrapper=True)
+   421→    def wrap():
       →…
 testing/test_pluginmanager.py
    298→@pytest.mark.parametrize("result_callback", [True, False])
@@ -880,6 +887,7 @@ testing/test_pluginmanager.py
    304→    out = []
    305→    if not result_callback:
    306→        callback = None
+   307→    else:
       →…
    698→@pytest.mark.parametrize("historic", [False, True])
    699→def test_register_while_calling(
@@ -896,6 +904,7 @@ testing/test_pluginmanager.py
    710→    hookspec = HookspecMarker("example")
    711→
    712→    class Hooks:
+   713→        @hookspec(historic=historic)
       →…
 testing/test_result.py
 testing/test_tracer.py

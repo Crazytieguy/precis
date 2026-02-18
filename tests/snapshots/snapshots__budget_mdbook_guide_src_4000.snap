@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3931 words)
+budget: 4000 (3932 words)
 
 404.md
      1→# Document not found (404)
@@ -127,6 +127,7 @@ cli/build.md
      6→mdbook build
      7→```
      8→
+     9→It will try to parse your `SUMMARY.md` file to understand the structure of your
       →…
     16→#### Specify a directory …
     25→#### `--open` …
@@ -139,7 +140,7 @@ cli/clean.md
      6→```bash
      7→mdbook clean
      8→```
-      →…
+     9→
     10→#### Specify a directory …
     19→#### `--dest-dir` …
 cli/completions.md
@@ -150,6 +151,7 @@ cli/completions.md
      6→The completions first need to be installed for your shell:
      7→
      8→```bash
+     9→# bash
       →…
 cli/init.md
      1→# The init command
@@ -159,6 +161,7 @@ cli/init.md
      6→The `init` command is used like this:
      7→
      8→```bash
+     9→mdbook init
       →…
     32→#### Tip: Generate chapters from SUMMARY.md …
     39→#### Specify a directory …
@@ -174,6 +177,7 @@ cli/serve.md
      6→```bash
      7→mdbook serve
      8→```
+     9→
       →…
     18→#### Specify a directory …
     27→### Server options
@@ -194,6 +198,7 @@ cli/test.md
      6→them to be able to automatically test these code examples.
      7→
      8→mdBook supports a `test` command that will run all available tests in a book. At
+     9→the moment, only Rust tests are supported.
       →…
     11→#### Disable tests on a code block …
     31→#### Specify a directory …
@@ -241,12 +246,16 @@ continuous-integration.md
     70→This can be used to validate Rust code examples in the book.
     71→
     72→This will require having Rust installed.
+    73→Some services have Rust pre-installed, but if your service does not, you will need to add a step to install it.
+    74→
       →…
     83→## Deploying
     85→You may want to automatically deploy your book.
     86→Some may want to do this every time a change is pushed, and others may want to only deploy when a specific release is tagged.
     87→
     88→You'll also need to understand the specifics on how to push a change to your web service.
+    89→For example, [GitHub Pages] just requires committing the output onto a specific git branch.
+    90→Other services may require using something like SSH to connect to a remote server.
       →…
    100→### 404 handling
    102→mdBook automatically generates a 404 page to be used for broken links.
@@ -329,6 +338,9 @@ for_developers/mdbook-wordcount/src/main.rs
     16→        .get_deserialized("output.wordcount")
     17→        .unwrap_or_default();
     18→
+    19→    let _ = fs::create_dir_all(&ctx.destination);
+    20→    let mut f = File::create(ctx.destination.join("wordcounts.txt")).unwrap();
+    21→
       →…
     40→fn count_words(ch: &Chapter) -> usize {
     41→    ch.content.split_whitespace().count()
@@ -380,6 +392,7 @@ format/configuration/environment-variables.md
      4→corresponding environment variable. Because many operating systems restrict
      5→environment variables to be alphanumeric characters or `_`, the configuration
      6→key needs to be formatted slightly differently to the normal `foo.bar.baz` form.
+     7→
       →…
 format/configuration/general.md
      1→# General configuration
@@ -387,6 +400,7 @@ format/configuration/general.md
      4→
      5→Here is an example of what a ***book.toml*** file might look like:
      6→
+     7→```toml
       →…
     31→## Supported configuration options …
     37→### General metadata …
@@ -398,6 +412,7 @@ format/configuration/preprocessors.md
      4→
      5→The following preprocessors are built-in and included by default:
      6→
+     7→- `links`: Expands the `{{ #playground }}`, `{{ #include }}`, and `{{ #rustdoc_include }}` handlebars
       →…
     26→## Custom preprocessor configuration …
     45→## Locking a preprocessor dependency to a renderer …
@@ -410,6 +425,7 @@ format/configuration/renderers.md
      4→
      5→The following backends are built-in:
      6→
+     7→* [`html`](#html-renderer-options) --- This renders the book to HTML.
       →…
     20→## Output tables …
     59→### Custom backend commands …
@@ -425,6 +441,12 @@ format/configuration/renderers.md
    289→
    290→```toml
    291→[output.html.search.chapter]
+   292→# Disables search indexing for all chapters in the `appendix` directory.
+   293→"appendix" = { enable = false }
+   294→# Enables search indexing for just this one appendix chapter.
+   295→"appendix/glossary.md" = { enable = true }
+   296→```
+   297→
       →…
    300→### `[output.html.redirect]` …
    325→## Markdown renderer …
@@ -488,76 +510,7 @@ format/mathjax.md
     32→### Block equations …
 format/mdbook.md
      1→# mdBook-specific features
-     3→## Hiding code lines
-     5→There is a feature in mdBook that lets you hide code lines by prepending them with a specific prefix.
-     6→
-     7→For the Rust language, you can prefix lines with `# ` (`#` followed by a space) to hide them [like you would with Rustdoc][rustdoc-hide].
-     8→This prefix can be escaped with `##` to prevent the hiding of a line that should begin with the literal string `# ` (see [Rustdoc's docs][rustdoc-hide] for more details)
-     9→
-    10→[rustdoc-hide]: https://doc.rust-lang.org/stable/rustdoc/write-documentation/documentation-tests.html#hiding-portions-of-the-example
-    11→
-    12→```bash
-    13→# fn main() {
-    14→    let x = 5;
-    15→    let y = 6;
-    16→
-    17→    println!("{}", x + y);
-    18→# }
-    19→```
-    20→
-    21→Will render as
-    22→
-    23→```rust
-    24→# fn main() {
-    25→    let x = 5;
-    26→    let y = 6;
-    27→
-    28→    println!("{}", x + y);
-    29→# }
-    30→```
-    31→
-    32→When you tap or hover the mouse over the code block, there will be an eyeball icon (<i class="fa fa-eye"></i>) which will toggle the visibility of the hidden lines.
-    33→
-    34→By default, this only works for code examples that are annotated with `rust`.
-    35→However, you can define custom prefixes for other languages by adding a new line-hiding prefix in your `book.toml` with the language name and prefix character(s):
-    36→
-    37→```toml
-    38→[output.html.code.hidelines]
-    39→python = "~"
-    40→```
-    41→
-    42→The prefix will hide any lines that begin with the given prefix. With the python prefix shown above, this:
-    43→
-    44→```bash
-    45→~hidden()
-    46→nothidden():
-    47→~    hidden()
-    48→    ~hidden()
-    49→    nothidden()
-    50→```
-    51→
-    52→will render as
-    53→
-    54→```python
-    55→~hidden()
-    56→nothidden():
-    57→~    hidden()
-    58→    ~hidden()
-    59→    nothidden()
-    60→```
-    61→
-    62→This behavior can be overridden locally with a different prefix. This has the same effect as above:
-    63→
-    64→~~~markdown
-    65→```python,hidelines=!!!
-    66→!!!hidden()
-    67→nothidden():
-    68→!!!    hidden()
-    69→    !!!hidden()
-    70→    nothidden()
-    71→```
-    72→~~~
-    73→
+     3→## Hiding code lines …
     74→## Rust playground …
    102→## Rust code block attributes …
    133→## Including files …
@@ -603,6 +556,16 @@ format/theme/README.md
     19→    - **_css/general.css_** is the base styles.
     20→    - **_css/print.css_** is the style for printer output.
     21→    - **_css/variables.css_** contains variables used in other CSS files.
+    22→- **_book.js_** is mostly used to add client side functionality, like hiding /
+    23→  un-hiding the sidebar, changing the theme, ...
+    24→- **_highlight.js_** is the JavaScript that is used to highlight code snippets,
+    25→  you should not need to modify this.
+    26→- **_highlight.css_** is the theme used for the code highlighting.
+    27→- **_favicon.svg_** and **_favicon.png_** the favicon that will be used. The SVG
+    28→  version is used by [newer browsers].
+    29→- **fonts/fonts.css** contains the definition of which fonts to load.
+    30→  Custom fonts can be included in the `fonts` directory.
+    31→
       →…
 format/theme/editor.md
      1→# Editor
@@ -736,12 +699,15 @@ guide/creating.md
     32→## Anatomy of a book …
     36→### `book.toml`
     38→In the root of your book, there is a `book.toml` file which contains settings for describing how to build your book.
+    39→This is written in the [TOML markup language](https://toml.io/).
       →…
     50→### `SUMMARY.md`
     52→The next major part of a book is the summary file located at `src/SUMMARY.md`.
+    53→This file contains a list of all the chapters in the book.
       →…
     73→### Source files
     75→The content of your book is all contained in the `src` directory.
+    76→Each chapter is a separate Markdown file.
       →…
     96→## Publishing a book …
 guide/installation.md
@@ -756,6 +722,7 @@ guide/installation.md
     19→## Build from source using Rust …
     41→### Installing the latest master version
     43→The version published to crates.io will ever so slightly be behind the version hosted on GitHub.
+    44→If you need the latest version you can build the git version of mdBook yourself.
       →…
     53→## Modifying and contributing …
 guide/reading.md

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3931 words)
+budget: 4000 (3922 words)
 
 package.json
      2→	"name": "ky",
@@ -98,59 +98,43 @@ readme.md
     83→```
     84→
     85→## API
-    87→### ky(input, options?)
-    89→The `input` and `options` are the same as [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch), with additional `options` available (see below).
-    90→
-    91→Returns a [`Response` object](https://developer.mozilla.org/en-US/docs/Web/API/Response) with [`Body` methods](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#body) added for convenience. So you can, for example, call `ky.get(input).json()` directly without having to await the `Response` first. When called like that, an appropriate `Accept` header will be set depending on the body method used. Unlike the `Body` methods of `window.Fetch`, these will throw an `HTTPError` if the response status is not in the range of `200...299`. Also, `.json()` will return an empty string if body is empty or the response status is `204` instead of throwing a parse error due to an empty body.
-    92→
-    93→Available body shortcuts: `.json()`, `.text()`, `.formData()`, `.arrayBuffer()`, `.blob()`, and `.bytes()`. The `.bytes()` shortcut is only present when the runtime supports `Response.prototype.bytes()`.
-    94→
-    95→```js
-    96→import ky from 'ky';
-    97→
-    98→const user = await ky('/api/user').json();
-    99→
-   100→console.log(user);
-   101→```
-   102→
-   103→⌨️ **TypeScript:** Accepts an optional [type parameter](https://www.typescriptlang.org/docs/handbook/2/generics.html), which defaults to [`unknown`](https://www.typescriptlang.org/docs/handbook/2/functions.html#unknown), and is passed through to the return type of `.json()`.
-   104→
-   105→```ts
-   106→import ky from 'ky';
-   107→
-   108→// user1 is unknown
-   109→const user1 = await ky('/api/users/1').json();
-   110→// user2 is a User
-   111→const user2 = await ky<User>('/api/users/2').json();
-   112→// user3 is a User
-   113→const user3 = await ky('/api/users/3').json<User>();
-   114→
-   115→console.log([user1, user2, user3]);
-   116→
-   117→// Get raw bytes (when supported by the runtime)
-   118→const bytes = await ky('/api/file').bytes();
-   119→console.log(bytes instanceof Uint8Array);
-   120→```
-   121→
+    87→### ky(input, options?) …
    122→### ky.get(input, options?) …
-   123→### ky.post(input, options?)
-   124→### ky.put(input, options?)
-   125→### ky.patch(input, options?)
-   126→### ky.head(input, options?)
-   127→### ky.delete(input, options?)
-   129→Sets `options.method` to the method name and makes a request.
-   130→
-   131→⌨️ **TypeScript:** Accepts an optional type parameter for use with JSON responses (see [`ky()`](#kyinput-options)).
-   132→
+   123→### ky.post(input, options?) …
+   124→### ky.put(input, options?) …
+   125→### ky.patch(input, options?) …
+   126→### ky.head(input, options?) …
+   127→### ky.delete(input, options?) …
    133→#### input …
    141→#### options …
-   147→##### method …
-   156→##### json …
-   162→##### searchParams …
-   173→##### prefixUrl …
-   197→##### retry …
-   327→##### timeout …
-   335→##### hooks …
+   147→##### method
+   149→Type: `string`\
+   150→Default: `'get'`
+      →…
+   156→##### json
+   158→Type: `object` and any other value accepted by [`JSON.stringify()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
+   159→
+      →…
+   162→##### searchParams
+   164→Type: `string | object<string, string | number | boolean | undefined> | Array<Array<string | number | boolean>> | URLSearchParams`\
+   165→Default: `''`
+      →…
+   173→##### prefixUrl
+   175→Type: `string | URL`
+   176→
+      →…
+   197→##### retry
+   199→Type: `object | number`\
+   200→Default:
+      →…
+   327→##### timeout
+   329→Type: `number | false`\
+   330→Default: `10000`
+      →…
+   335→##### hooks
+   337→Type: `object<string, Function[]>`\
+   338→Default: `{beforeRequest: [], beforeRetry: [], afterResponse: []}`
+      →…
    342→###### hooks.beforeRequest
    344→Type: `Function[]`\
    345→Default: `[]`
@@ -171,84 +155,72 @@ readme.md
    488→Default: `[]`
    489→
       →…
-   553→##### throwHttpErrors …
-   566→##### onDownloadProgress …
-   592→##### onUploadProgress …
-   619→##### parseJson …
-   639→##### stringifyJson …
-   664→##### fetch …
-   683→##### context …
+   553→##### throwHttpErrors
+   555→Type: `boolean | (status: number) => boolean`\
+   556→Default: `true`
+      →…
+   566→##### onDownloadProgress
+   568→Type: `Function`
+   569→
+      →…
+   592→##### onUploadProgress
+   594→Type: `Function`
+   595→
+      →…
+   619→##### parseJson
+   621→Type: `Function`\
+   622→Default: `JSON.parse()`
+      →…
+   639→##### stringifyJson
+   641→Type: `Function`\
+   642→Default: `JSON.stringify()`
+      →…
+   664→##### fetch
+   666→Type: `Function`\
+   667→Default: `fetch`
+      →…
+   683→##### context
+   685→Type: `object<string, unknown>`\
+   686→Default: `{}`
+      →…
    745→### ky.extend(defaultOptions) …
    811→### ky.create(defaultOptions) …
    829→#### defaultOptions …
    833→### ky.stop …
    864→### ky.retry(options?) …
    870→#### options …
-   874→##### delay …
-   882→##### code …
-   895→##### cause …
-   913→##### request …
+   874→##### delay
+   876→Type: `number`
+   877→
+      →…
+   882→##### code
+   884→Type: `string`
+   885→
+      →…
+   895→##### cause
+   897→Type: `Error`
+   898→
+      →…
+   913→##### request
+   915→Type: `Request`
+   916→
+      →…
    923→#### Example …
   1000→### HTTPError …
   1046→### TimeoutError …
   1050→## Tips
-  1052→### Sending form data
-  1054→Sending form data in Ky is identical to `fetch`. Just pass a [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance to the `body` option. The `Content-Type` header will be automatically set to `multipart/form-data`, overriding any existing `Content-Type` header.
-  1055→
-  1056→```js
-  1057→import ky from 'ky';
-  1058→
-  1059→// `multipart/form-data`
-  1060→const formData = new FormData();
-  1061→formData.append('food', 'fries');
-  1062→formData.append('drink', 'icetea');
-  1063→
-  1064→const response = await ky.post(url, {body: formData});
-  1065→```
-  1066→
-  1067→If you want to send the data in `application/x-www-form-urlencoded` format, you will need to encode the data with [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams). Like `FormData`, this will override any existing `Content-Type` headers.
-  1068→
-  1069→```js
-  1070→import ky from 'ky';
-  1071→
-  1072→// `application/x-www-form-urlencoded`
-  1073→const searchParams = new URLSearchParams();
-  1074→searchParams.set('food', 'fries');
-  1075→searchParams.set('drink', 'icetea');
-  1076→
-  1077→const response = await ky.post(url, {body: searchParams});
-  1078→```
-  1079→
+  1052→### Sending form data …
   1080→#### Modifying FormData in hooks …
   1109→### Setting a custom `Content-Type` …
   1129→### Cancellation …
   1156→### Proxy support (Node.js) …
-  1158→#### Native proxy support
-  1160→Node.js 24.5+ supports automatic proxy configuration via environment variables. Set `NODE_USE_ENV_PROXY=1` or use the `--use-env-proxy` CLI flag.
-  1161→
-  1162→```sh
-  1163→NODE_USE_ENV_PROXY=1 HTTP_PROXY=http://proxy.example.com:8080 node app.js
-  1164→```
-  1165→
-  1166→Or:
-  1167→
-  1168→```sh
-  1169→node --use-env-proxy app.js
-  1170→```
-  1171→
-  1172→Supported environment variables:
-  1173→- `HTTP_PROXY` / `http_proxy`: Proxy URL for HTTP requests
-  1174→- `HTTPS_PROXY` / `https_proxy`: Proxy URL for HTTPS requests
-  1175→- `NO_PROXY` / `no_proxy`: Comma-separated list of hosts to bypass the proxy
-  1176→
+  1158→#### Native proxy support …
   1177→#### Using ProxyAgent …
   1209→### HTTP/2 support (Node.js) …
   1249→### Consuming Server-Sent Events (SSE) …
   1264→### Extending types …
   1292→## FAQ
-  1294→#### How do I use this in Node.js?
-  1296→Node.js 18 and later supports `fetch` natively, so you can just use this package directly.
-  1297→
+  1294→#### How do I use this in Node.js? …
   1298→#### How do I use this with a web app (React, Vue.js, etc.) that uses server-side rendering (SSR)? …
   1302→#### How do I test a browser library that uses this? …
   1306→#### How do I use this without a bundler like Webpack? …
@@ -311,6 +283,8 @@ source/core/Ky.ts
     39→				throw new RangeError(`The \`timeout\` option cannot be greater than ${maxSafeTimeout}`);
     40→			}
     41→
+    42→			// Delay the fetch so that body method shortcuts can set the Accept header
+    43→			await Promise.resolve();
       →…
    178→	static #normalizeSearchParams(searchParams: SearchParamsOption): SearchParamsOption {
    200→	constructor(input: Input, options: Options = {}) {
@@ -321,6 +295,8 @@ source/core/Ky.ts
    205→			headers: mergeHeaders((this.#input as Request).headers, options.headers),
    206→			hooks: mergeHooks(
    207→				{
+   208→					beforeRequest: [],
+   209→					beforeRetry: [],
       →…
    297→	#calculateDelay(): number {
    316→	async #calculateRetryDelay(error: unknown) {
@@ -355,6 +331,13 @@ source/core/constants.ts
     71→
     72→	If not provided, uses the default retry delay calculation based on `retry.delay` configuration.
     73→
+    74→	**Note:** Custom delays bypass jitter and `backoffLimit`. This is intentional, as custom delays often come from server responses (e.g., `Retry-After` headers) and should be respected exactly as specified.
+    75→	*/
+    76→	delay?: number;
+    77→
+    78→	/**
+    79→	Error code for the retry.
+    80→
       →…
    145→/**
    146→Marker returned by ky.retry() to signal a forced retry from afterResponse hooks.
@@ -464,7 +447,19 @@ source/errors/ForceRetryError.ts
     14→	constructor(options?: ForceRetryOptions) {
     15→		// Runtime protection: wrap non-Error causes in NonError
     16→		// TypeScript type is Error for guidance, but JS users can pass anything
-      →…
+    17→		const cause = options?.cause
+    18→			? (options.cause instanceof Error ? options.cause : new NonError(options.cause))
+    19→			: undefined;
+    20→
+    21→		super(
+    22→			options?.code ? `Forced retry: ${options.code}` : 'Forced retry',
+    23→			cause ? {cause} : undefined,
+    24→		);
+    25→
+    26→		this.customDelay = options?.delay;
+    27→		this.code = options?.code;
+    28→		this.customRequest = options?.request;
+    29→	}
 source/errors/HTTPError.ts
      1→import type {NormalizedOptions} from '../types/options.js';
      2→import type {KyRequest} from '../types/request.js';
@@ -477,7 +472,16 @@ source/errors/HTTPError.ts
     10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
     11→		const code = (response.status || response.status === 0) ? response.status : '';
     12→		const title = response.statusText ?? '';
-      →…
+    13→		const status = `${code} ${title}`.trim();
+    14→		const reason = status ? `status code ${status}` : 'an unknown error';
+    15→
+    16→		super(`Request failed with ${reason}: ${request.method} ${request.url}`);
+    17→
+    18→		this.name = 'HTTPError';
+    19→		this.response = response;
+    20→		this.request = request;
+    21→		this.options = options;
+    22→	}
 source/errors/NonError.ts
      1→/**
      2→Wrapper for non-Error values that were thrown.
@@ -491,7 +495,21 @@ source/errors/NonError.ts
     10→	constructor(value: unknown) {
     11→		let message = 'Non-error value was thrown';
     12→
-      →…
+    13→		// Intentionally minimal as this error is just an edge-case.
+    14→		try {
+    15→			if (typeof value === 'string') {
+    16→				message = value;
+    17→			} else if (value && typeof value === 'object' && 'message' in value && typeof value.message === 'string') {
+    18→				message = value.message;
+    19→			}
+    20→		} catch {
+    21→			// Use default message if accessing properties throws
+    22→		}
+    23→
+    24→		super(message);
+    25→
+    26→		this.value = value;
+    27→	}
 source/errors/TimeoutError.ts
      1→import type {KyRequest} from '../types/request.js';
      3→export class TimeoutError extends Error {
@@ -500,7 +518,8 @@ source/errors/TimeoutError.ts
      6→	constructor(request: Request) {
      7→		super(`Request timed out: ${request.method} ${request.url}`);
      8→		this.name = 'TimeoutError';
-      →…
+     9→		this.request = request;
+    10→	}
 source/index.ts
      3→import {Ky} from './core/Ky.js';
      4→import {requestMethods, stop, retry} from './core/constants.js';
@@ -668,12 +687,18 @@ source/utils/body.ts
      1→import type {Options} from '../types/options.js';
      2→import {usualFormBoundarySize} from '../core/constants.js';
      5→export const getBodySize = (body?: BodyInit | null): number => {
+     6→	if (!body) {
+      →…
     57→const withProgress = (stream: ReadableStream<Uint8Array>, totalBytes: number, onProgress: Options['onDownloadProgress'] | Options['onUploadProgress']): ReadableStream<Uint8Array> => {
     58→	let previousChunk: Uint8Array | undefined;
     59→	let transferredBytes = 0;
       →…
     90→export const streamResponse = (response: Response, onDownloadProgress: Options['onDownloadProgress']) => {
+    91→	if (!response.body) {
+      →…
    119→export const streamRequest = (request: Request, onUploadProgress: Options['onUploadProgress'], originalBody?: BodyInit | null) => {
+   120→	if (!request.body) {
+      →…
 source/utils/delay.ts
      3→import {type InternalOptions} from '../types/options.js';
      5→export type DelayOptions = {
@@ -683,6 +708,8 @@ source/utils/delay.ts
     10→	ms: number,
     11→	{signal}: DelayOptions,
     12→): Promise<void> {
+    13→	return new Promise((resolve, reject) => {
+      →…
 source/utils/is.ts
      2→export const isObject = (value: unknown): value is object => value !== null && typeof value === 'object';
 source/utils/merge.ts
@@ -691,18 +718,26 @@ source/utils/merge.ts
      3→import {supportsAbortSignal} from '../core/constants.js';
      4→import {isObject} from './is.js';
      6→export const validateAndMerge = (...sources: Array<Partial<Options> | undefined>): Partial<Options> => {
+     7→	for (const source of sources) {
+      →…
     16→export const mergeHeaders = (source1: KyHeadersInit = {}, source2: KyHeadersInit = {}) => {
+    17→	const result = new globalThis.Headers(source1 as RequestInit['headers']);
+      →…
     32→function newHookValue<K extends keyof Hooks>(original: Hooks, incoming: Hooks, property: K): Required<Hooks>[K] {
     33→	return (Object.hasOwn(incoming, property) && incoming[property] === undefined)
     34→		? []
       →…
     38→export const mergeHooks = (original: Hooks = {}, incoming: Hooks = {}): Required<Hooks> => (
     39→	{
+    40→		beforeRequest: newHookValue(original, incoming, 'beforeRequest'),
+      →…
     47→const appendSearchParameters = (target: any, source: any): URLSearchParams => {
     48→	const result = new URLSearchParams();
     49→
       →…
     86→export const deepMerge = <T>(...sources: Array<Partial<T> | undefined>): T => {
+    87→	let returnValue: any = {};
+      →…
 source/utils/normalize.ts
      1→import {requestMethods} from '../core/constants.js';
      2→import type {RetryOptions} from '../types/retry.js';
@@ -718,6 +753,8 @@ source/utils/normalize.ts
     18→	methods: retryMethods,
       →…
     28→export const normalizeRetryOptions = (retry: number | RetryOptions = {}): InternalRetryOptions => {
+    29→	if (typeof retry === 'number') {
+      →…
 source/utils/options.ts
      1→import {kyOptionKeys, requestOptionsRegistry, vendorSpecificOptions} from '../core/constants.js';
      2→import type {SearchParamsOption} from '../types/options.js';
@@ -725,7 +762,11 @@ source/utils/options.ts
      5→	request: Request,
      6→	options: Record<string, unknown>,
      7→): Record<string, unknown> => {
+     8→	const unknownOptions: Record<string, unknown> = {};
+      →…
     30→export const hasSearchParameters = (search: SearchParamsOption): boolean => {
+    31→	if (search === undefined) {
+      →…
 source/utils/timeout.ts
      1→import {TimeoutError} from '../errors/TimeoutError.js';
      3→export type TimeoutOptions = {
@@ -738,6 +779,8 @@ source/utils/timeout.ts
     12→	abortController: AbortController | undefined,
     13→	options: TimeoutOptions,
     14→): Promise<Response> {
+    15→	return new Promise((resolve, reject) => {
+      →…
 source/utils/type-guards.ts
      1→import {HTTPError} from '../errors/HTTPError.js';
      2→import {TimeoutError} from '../errors/TimeoutError.js';

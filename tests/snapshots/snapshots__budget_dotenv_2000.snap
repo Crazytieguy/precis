@@ -2,13 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1969 words)
+budget: 2000 (1973 words)
 
 CHANGELOG.md
      1→# Changelog
      3→All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
      4→
-     7→## [17.3.1](https://github.com/motdotla/dotenv/compare/v17.3.0...v17.3.1) (2026-02-12) …
    484→# [8.0.0](https://github.com/motdotla/dotenv/compare/v7.0.0...v8.0.0) (2019-05-02)
 CONTRIBUTING.md
      1→# Contributing
@@ -16,7 +15,10 @@ CONTRIBUTING.md
      4→2. Install dependencies (`npm install`)
      5→3. Create your feature branch (`git checkout -b my-new-feature`)
      6→4. Commit your changes (`git commit -am 'Added some feature'`)
-      →…
+     7→5. Test your changes (`npm test`)
+     8→6. Push to the branch (`git push origin my-new-feature`)
+     9→7. [Create new Pull Request](https://help.github.com/articles/creating-a-pull-request/)
+    10→
     11→## Testing
     13→We use [TAP](https://github.com/tapjs/node-tap) to write tests. Run our test suite with this command:
     14→
@@ -46,10 +48,7 @@ README-es.md
    579→## Docs …
    587→### Config …
    605→#### Options …
-   607→##### path
-   609→Default: `path.resolve(process.cwd(), '.env')`
-   610→
-      →…
+   607→##### path …
    625→##### quiet …
    648→##### encoding …
    658→##### debug …
@@ -57,16 +56,10 @@ README-es.md
    678→##### processEnv …
    692→### Parse …
    705→#### Options …
-   707→##### debug
-   709→Default: `false`
-   710→
-      →…
+   707→##### debug …
    721→### Populate …
    748→#### options …
-   750→##### Debug
-   752→Default: `false`
-   753→
-      →…
+   750→##### Debug …
    756→##### override …
    764→## CHANGELOG …
    770→## Who's using dotenv? …
@@ -91,7 +84,20 @@ README.md
     22→# .env
     23→S3_BUCKET="YOURS3BUCKET"
     24→SECRET_KEY="YOURSECRETKEYGOESHERE"
-      →…
+    25→```
+    26→
+    27→And as early as possible in your application, import and configure dotenv:
+    28→
+    29→```javascript
+    30→require('dotenv').config() // or import 'dotenv/config' if you're using ES6
+    31→...
+    32→console.log(process.env) // remove this after you've confirmed it is working
+    33→```
+    34→
+    35→That's it. `process.env` now has the keys and values you defined in your `.env` file:
+    36→
+    37→&nbsp;
+    38→
     39→## Advanced
     43→Import with [ES6](#how-do-i-use-dotenv-with-import):
     44→
@@ -105,6 +111,42 @@ README.md
     52→import dotenv from 'dotenv'
     53→dotenv.config({ path: '/custom/path/to/.env' })
     54→```
+    55→
+    56→</details>
+    57→<details><summary>bun</summary><br>
+    58→
+    59→```sh
+    60→bun add dotenv
+    61→```
+    62→
+    63→</details>
+    64→<details><summary>yarn</summary><br>
+    65→
+    66→```sh
+    67→yarn add dotenv
+    68→```
+    69→
+    70→</details>
+    71→<details><summary>pnpm</summary><br>
+    72→
+    73→```sh
+    74→pnpm add dotenv
+    75→```
+    76→
+    77→</details>
+    78→<details><summary>Monorepos</summary><br>
+    79→
+    80→For monorepos with a structure like `apps/backend/app.js`, put it the `.env` file in the root of the folder where your `app.js` process runs.
+    81→
+    82→```ini
+    83→# app/backend/.env
+    84→S3_BUCKET="YOURS3BUCKET"
+    85→SECRET_KEY="YOURSECRETKEYGOESHERE"
+    86→```
+    87→
+    88→</details>
+    89→<details><summary>Multiline Values</summary><br>
+    90→
       →…
    319→## Agents
    323→> Software is changing, and dotenv must change with it—that is why I built [agentic secret storage (AS2)](https://dotenvx.com/as2). Agents run code without humans at terminals, so plaintext `.env` files are the wrong primitive.
@@ -153,6 +195,42 @@ README.md
    370→</details>
    371→<details><summary>Should I have multiple `.env` files?</summary><br/>
    372→
+   373→We recommend creating one `.env` file per environment. Use `.env` for local/development, `.env.production` for production and so on. This still follows the twelve factor principles as each is attributed individually to its own environment. Avoid custom set ups that work in inheritance somehow (`.env.production` inherits values form `.env` for example). It is better to duplicate values if necessary across each `.env.environment` file.
+   374→
+   375→> In a twelve-factor app, env vars are granular controls, each fully orthogonal to other env vars. They are never grouped together as “environments”, but instead are independently managed for each deploy. This is a model that scales up smoothly as the app naturally expands into more deploys over its lifetime.
+   376→>
+   377→> – [The Twelve-Factor App](http://12factor.net/config)
+   378→
+   379→Additionally, we recommend using [dotenvx](https://github.com/dotenvx/dotenvx) to encrypt and manage these.
+   380→
+   381→</details>
+   382→
+   383→<details><summary>How do I use dotenv with `import`?</summary><br/>
+   384→
+   385→Simply..
+   386→
+   387→```javascript
+   388→// index.mjs (ESM)
+   389→import 'dotenv/config' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+   390→import express from 'express'
+   391→```
+   392→
+   393→A little background..
+   394→
+   395→> When you run a module containing an `import` declaration, the modules it imports are loaded first, then each module body is executed in a depth-first traversal of the dependency graph, avoiding cycles by skipping anything already executed.
+   396→>
+   397→> – [ES6 In Depth: Modules](https://hacks.mozilla.org/2015/08/es6-in-depth-modules/)
+   398→
+   399→What does this mean in plain language? It means you would think the following would work but it won't.
+   400→
+   401→`errorReporter.mjs`:
+   402→```js
+   403→class Client {
+   404→  constructor (apiKey) {
+   405→    console.log('apiKey', apiKey)
+   406→
+   407→    this.apiKey = apiKey
+   408→  }
       →…
    579→## Docs
    581→Dotenv exposes four functions:
@@ -182,82 +260,27 @@ README.md
    607→##### path
    609→Default: `path.resolve(process.cwd(), '.env')`
    610→
-   611→Specify a custom path if your file containing environment variables is located elsewhere.
-   612→
-   613→```js
-   614→require('dotenv').config({ path: '/custom/path/to/.env' })
-   615→```
-   616→
-   617→By default, `config` will look for a file called .env in the current working directory.
-   618→
-   619→Pass in multiple files as an array, and they will be parsed in order and combined with `process.env` (or `option.processEnv`, if set). The first value set for a variable will win, unless the `options.override` flag is set, in which case the last value set will win.  If a value already exists in `process.env` and the `options.override` flag is NOT set, no changes will be made to that value. 
-   620→
-   621→```js  
-   622→require('dotenv').config({ path: ['.env.local', '.env'] })
-   623→```
-   624→
+      →…
    625→##### quiet
    627→Default: `false`
    628→
-   629→Suppress runtime logging message.
-   630→
-   631→```js
-   632→// index.js
-   633→require('dotenv').config({ quiet: false }) // change to true to suppress
-   634→console.log(`Hello ${process.env.HELLO}`)
-   635→```
-   636→
-   637→```ini
-   638→# .env
-   639→HELLO=World
-   640→```
-   641→
-   642→```sh
-   643→$ node index.js
-   644→[dotenv@17.0.0] injecting env (1) from .env
-   645→Hello World
-   646→```
-   647→
+      →…
    648→##### encoding
    650→Default: `utf8`
    651→
-   652→Specify the encoding of your file containing environment variables.
-   653→
-   654→```js
-   655→require('dotenv').config({ encoding: 'latin1' })
-   656→```
-   657→
+      →…
    658→##### debug
    660→Default: `false`
    661→
-   662→Turn on logging to help debug why certain keys or values are not being set as you expect.
-   663→
-   664→```js
-   665→require('dotenv').config({ debug: process.env.DEBUG })
-   666→```
-   667→
+      →…
    668→##### override
    670→Default: `false`
    671→
-   672→Override any environment variables that have already been set on your machine with values from your .env file(s). If multiple files have been provided in `option.path` the override will also be used as each file is combined with the next. Without `override` being set, the first value wins. With `override` set the last value wins. 
-   673→
-   674→```js
-   675→require('dotenv').config({ override: true })
-   676→```
-   677→
+      →…
    678→##### processEnv
    680→Default: `process.env`
    681→
-   682→Specify an object to write your environment variables to. Defaults to `process.env` environment variables.
-   683→
-   684→```js
-   685→const myObject = {}
-   686→require('dotenv').config({ processEnv: myObject })
-   687→
-   688→console.log(myObject) // values from .env
-   689→console.log(process.env) // this was not changed or written to
-   690→```
-   691→
+      →…
    692→### Parse
    694→The engine which parses the contents of your file containing environment
    695→variables is available to use. It accepts a String or Buffer and will return
@@ -274,16 +297,7 @@ README.md
    707→##### debug
    709→Default: `false`
    710→
-   711→Turn on logging to help debug why certain keys or values are not being set as you expect.
-   712→
-   713→```js
-   714→const dotenv = require('dotenv')
-   715→const buf = Buffer.from('hello world')
-   716→const opt = { debug: true }
-   717→const config = dotenv.parse(buf, opt)
-   718→// expect a debug message because the buffer is not in KEY=VAL form
-   719→```
-   720→
+      →…
    721→### Populate
    723→The engine which populates the contents of your .env file to `process.env` is available for use. It accepts a target, a source, and options. This is useful for power users who want to supply their own objects.
    724→
@@ -314,15 +328,11 @@ README.md
    750→##### Debug
    752→Default: `false`
    753→
-   754→Turn on logging to help debug why certain keys or values are not being populated as you expect.
-   755→
+      →…
    756→##### override
    758→Default: `false`
    759→
-   760→Override any environment variables that have already been set.
-   761→
-   762→&nbsp;
-   763→
+      →…
    764→## CHANGELOG
    766→See [CHANGELOG.md](CHANGELOG.md)
    767→
@@ -443,6 +453,7 @@ lib/main.js
      7→const version = packageJson.version
     10→const TIPS = [
     11→  '🔐 encrypt with Dotenvx: https://dotenvx.com',
+    12→  '🔐 prevent committing .env to code: https://dotenvx.com/precommit',
       →…
     27→function _getRandomTip () {
     31→function parseBoolean (value) {
@@ -465,6 +476,7 @@ lib/main.js
    378→function populate (processEnv, parsed, options = {}) {
    413→const DotenvModule = {
    414→  configDotenv,
+   415→  _configVault,
       →…
 package.json
      2→  "name": "dotenv",

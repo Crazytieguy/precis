@@ -2,15 +2,11 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3961 words)
+budget: 4000 (4165 words)
 
 CHANGELOG.md
      1→# Changelog …
-     3→## 2.4.0
-     5→- Added
-     6→  - TOML v1.1.0 compatibility
-     7→  - Binary wheels for Windows arm64
-     8→
+     3→## 2.4.0 …
      9→## 2.3.0 …
     16→## 2.2.1 …
     21→## 2.2.0 …
@@ -97,19 +93,7 @@ README.md
     63→toml_str = """
     64→[[players]]
     65→name = "Lehtinen"
-    66→number = 26
-    67→
-    68→[[players]]
-    69→name = "Numminen"
-    70→number = 27
-    71→"""
-    72→
-    73→toml_dict = tomli.loads(toml_str)
-    74→assert toml_dict == {
-    75→    "players": [{"name": "Lehtinen", "number": 26}, {"name": "Numminen", "number": 27}]
-    76→}
-    77→```
-    78→
+      →…
     79→### Parse a TOML file<a name="parse-a-toml-file"></a>
     81→```python
     82→import tomli
@@ -117,11 +101,7 @@ README.md
     84→with open("path_to_file/conf.toml", "rb") as f:
     85→    toml_dict = tomli.load(f)
     86→```
-    87→
-    88→The file must be opened in binary mode (with the `"rb"` flag).
-    89→Binary mode will enforce decoding the file as UTF-8 with universal newlines disabled,
-    90→both of which are required to correctly parse TOML.
-    91→
+      →…
     92→### Handle invalid TOML<a name="handle-invalid-toml"></a>
     94→```python
     95→import tomli
@@ -129,12 +109,7 @@ README.md
     97→try:
     98→    toml_dict = tomli.loads("]] this is invalid TOML [[")
     99→except tomli.TOMLDecodeError:
-   100→    print("Yep, definitely not valid.")
-   101→```
-   102→
-   103→Note that error messages are considered informational only.
-   104→They should not be assumed to stay constant across Tomli versions.
-   105→
+      →…
    106→### Construct `decimal.Decimal`s from TOML floats<a name="construct-decimaldecimals-from-toml-floats"></a>
    108→```python
    109→from decimal import Decimal
@@ -142,15 +117,7 @@ README.md
    111→
    112→toml_dict = tomli.loads("precision-matters = 0.982492", parse_float=Decimal)
    113→assert isinstance(toml_dict["precision-matters"], Decimal)
-   114→assert toml_dict["precision-matters"] == Decimal("0.982492")
-   115→```
-   116→
-   117→Note that `decimal.Decimal` can be replaced with another callable that converts a TOML float from string to a Python type.
-   118→The `decimal.Decimal` is, however, a practical choice for use cases where float inaccuracies can not be tolerated.
-   119→
-   120→Illegal types are `dict` and `list`, and their subtypes.
-   121→A `ValueError` will be raised if `parse_float` produces illegal types.
-   122→
+      →…
    123→### Building a `tomli`/`tomllib` compatibility layer<a name="building-a-tomlitomllib-compatibility-layer"></a>
    125→Python versions 3.11+ ship with a version of Tomli:
    126→the `tomllib` standard library module.
@@ -158,27 +125,7 @@ README.md
    128→but still works seamlessly with Python 3.6+,
    129→do the following.
    130→
-   131→Instead of a hard Tomli dependency, use the following
-   132→[dependency specifier](https://packaging.python.org/en/latest/specifications/dependency-specifiers/)
-   133→to only require Tomli when the standard library module is not available:
-   134→
-   135→```
-   136→tomli >= 1.1.0 ; python_version < "3.11"
-   137→```
-   138→
-   139→Then, in your code, import a TOML parser using the following fallback mechanism:
-   140→
-   141→```python
-   142→import sys
-   143→
-   144→if sys.version_info >= (3, 11):
-   145→    import tomllib
-   146→else:
-   147→    import tomli as tomllib
-   148→
-   149→tomllib.loads("['This parses fine with Python 3.6+']")
-   150→```
-   151→
+      →…
    152→## FAQ<a name="faq"></a>
    154→### Why this parser?<a name="why-this-parser"></a>
    156→- it's lil'
@@ -187,11 +134,7 @@ README.md
    159→  14x as fast as [tomlkit](https://pypi.org/project/tomlkit/),
    160→  2.1x as fast as [toml](https://pypi.org/project/toml/)
    161→- outputs [basic data types](#how-do-toml-types-map-into-python-types) only
-   162→- 100% spec compliant: passes all tests in
-   163→  [toml-lang/toml-test](https://github.com/toml-lang/toml-test)
-   164→  test suite
-   165→- thoroughly tested: 100% branch coverage
-   166→
+      →…
    167→### Is comment preserving round-trip parsing supported?<a name="is-comment-preserving-round-trip-parsing-supported"></a>
    169→No.
    170→
@@ -199,8 +142,7 @@ README.md
    172→Preserving comments requires a custom type to be returned so will not be supported,
    173→at least not by the `tomli.loads` and `tomli.load` functions.
    174→
-   175→Look into [TOML Kit](https://github.com/sdispater/tomlkit) if preservation of style is what you need.
-   176→
+      →…
    177→### Is there a `dumps`, `write` or `encode` function?<a name="is-there-a-dumps-write-or-encode-function"></a>
    179→[Tomli-W](https://github.com/hukkin/tomli-w) is the write-only counterpart of Tomli, providing `dump` and `dumps` functions.
    180→
@@ -213,16 +155,7 @@ README.md
    188→| Key              | `str`               |                                                              |
    189→| String           | `str`               |                                                              |
    190→| Integer          | `int`               |                                                              |
-   191→| Float            | `float`             |                                                              |
-   192→| Boolean          | `bool`              |                                                              |
-   193→| Offset Date-Time | `datetime.datetime` | `tzinfo` attribute set to an instance of `datetime.timezone` |
-   194→| Local Date-Time  | `datetime.datetime` | `tzinfo` attribute set to `None`                             |
-   195→| Local Date       | `datetime.date`     |                                                              |
-   196→| Local Time       | `datetime.time`     |                                                              |
-   197→| Array            | `list`              |                                                              |
-   198→| Table            | `dict`              |                                                              |
-   199→| Inline Table     | `dict`              |                                                              |
-   200→
+      →…
    201→## Performance<a name="performance"></a>
    203→The `benchmark/` folder in this repository contains a performance benchmark for comparing the various Python TOML parsers.
    204→
@@ -235,21 +168,7 @@ README.md
    212→foo@bar:~/dev/tomli$ pip freeze
    213→pytomlpp==1.1.0
    214→rtoml==0.13.0
-   215→toml==0.10.2
-   216→tomli @ file:///home/foo/dev/tomli
-   217→tomlkit==0.13.3
-   218→foo@bar:~/dev/tomli$ python benchmark/run.py
-   219→Parsing data.toml 5000 times:
-   220→------------------------------------------------------
-   221→    parser |  exec time | performance (more is better)
-   222→-----------+------------+-----------------------------
-   223→     rtoml |    0.328 s | baseline (100%)
-   224→  pytomlpp |    0.365 s | 89.75%
-   225→     tomli |    0.838 s | 39.12%
-   226→      toml |     3.01 s | 10.90%
-   227→   tomlkit |     20.7 s | 1.59%
-   228→```
-   229→
+      →…
    230→### Pure Python<a name="pure-python"></a>
    232→```console
    233→foo@bar:~/dev/tomli$ python benchmark/run.py
@@ -257,12 +176,7 @@ README.md
    235→------------------------------------------------------
    236→    parser |  exec time | performance (more is better)
    237→-----------+------------+-----------------------------
-   238→     rtoml |    0.323 s | baseline (100%)
-   239→  pytomlpp |    0.365 s | 88.40%
-   240→     tomli |     1.44 s | 22.36%
-   241→      toml |     3.03 s | 10.65%
-   242→   tomlkit |     20.6 s | 1.57%
-   243→```
+      →…
 benchmark/README.md
      1→# Benchmark …
      3→## Acknowledgments
@@ -271,7 +185,7 @@ benchmark/README.md
      7→repository and edited.
      8→Credit goes to the authors of that project.
      9→
-    10→## Running …
+    10→## Running
     12→### Against the local Tomli state
     14→```bash
     15→tox -e benchmark
@@ -317,12 +231,14 @@ benchmark/run.py
     23→    print(f"{name:>{col_width[0]}} | {placeholder}", end="", flush=True)
     24→    time_taken = min(timeit.repeat(func, number=run_count, repeat=5))
     25→    print("\b" * len(placeholder), end="")
+    26→    time_suffix = " s"
       →…
     37→def run(run_count: int) -> None:
     38→    data_path = Path(__file__).parent / "data.toml"
     39→    test_data = data_path.read_bytes().decode()
     40→
     41→    col_width = (10, 10, 28)
+    42→    col_head = ("parser", "exec time", "performance (more is better)")
       →…
 fuzzer/fuzz.py
      1→import atheris
@@ -501,10 +417,16 @@ src/tomli/_parser.py
     91→        pos: Pos | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
     92→        *args: Any,
     93→    ):
+    94→        if (
+      →…
    137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
    138→    """Parse TOML from a binary file object."""
+   139→    b = __fp.read()
+      →…
    149→def loads(__s: str, *, parse_float: ParseFloat = float) -> dict[str, Any]:
    150→    """Parse TOML from a string."""
+   151→
+      →…
    220→class Flags:
    221→    """Flags that map to parsed keys/namespaces."""
    222→
@@ -515,23 +437,44 @@ src/tomli/_parser.py
    227→    EXPLICIT_NEST: Final = 1
    228→
    229→    def __init__(self) -> None:
+   230→        self._flags: dict[str, dict[Any, Any]] = {}
+      →…
    233→    def add_pending(self, key: Key, flag: int) -> None:
+   234→        self._pending_flags.add((key, flag))
    236→    def finalize_pending(self) -> None:
+   237→        for key, flag in self._pending_flags:
+      →…
    241→    def unset_all(self, key: Key) -> None:
+   242→        cont = self._flags
+      →…
    249→    def set(self, key: Key, flag: int, *, recursive: bool) -> None:  # noqa: A003
+   250→        cont = self._flags
+      →…
    260→    def is_(self, key: Key, flag: int) -> bool:
+   261→        if not key:
+      →…
    278→class NestedDict:
    279→    def __init__(self) -> None:
+   280→        # The parsed content of the TOML document
+      →…
    283→    def get_or_create_nest(
    284→        self,
    285→        key: Key,
    286→        *,
    287→        access_lists: bool = True,
    288→    ) -> dict[str, Any]:
+   289→        cont: Any = self.dict
+      →…
    300→    def append_nest_to_list(self, key: Key) -> None:
+   301→        cont = self.get_or_create_nest(key[:-1])
+      →…
    312→class Output:
    313→    def __init__(self) -> None:
+   314→        self.data = NestedDict()
+      →…
    318→def skip_chars(src: str, pos: Pos, chars: Iterable[str]) -> Pos:
+   319→    try:
+      →…
    327→def skip_until(
    328→    src: str,
    329→    pos: Pos,
@@ -540,37 +483,75 @@ src/tomli/_parser.py
    332→    error_on: frozenset[str],
    333→    error_on_eof: bool,
    334→) -> Pos:
+   335→    try:
+      →…
    349→def skip_comment(src: str, pos: Pos) -> Pos:
+   350→    try:
+      →…
    361→def skip_comments_and_array_ws(src: str, pos: Pos) -> Pos:
+   362→    while True:
+      →…
    370→def create_dict_rule(src: str, pos: Pos, out: Output) -> tuple[Pos, Key]:
+   371→    pos += 1  # Skip "["
+      →…
    390→def create_list_rule(src: str, pos: Pos, out: Output) -> tuple[Pos, Key]:
+   391→    pos += 2  # Skip "[["
+      →…
    413→def key_value_rule(
    414→    src: str, pos: Pos, out: Output, header: Key, parse_float: ParseFloat
    415→) -> Pos:
+   416→    pos, key, value = parse_key_value_pair(src, pos, parse_float, nest_lvl=0)
+      →…
    447→def parse_key_value_pair(
    448→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
    449→) -> tuple[Pos, Key, Any]:
+   450→    pos, key = parse_key(src, pos)
+      →…
    463→def parse_key(src: str, pos: Pos) -> tuple[Pos, Key]:
+   464→    pos, key_part = parse_key_part(src, pos)
+      →…
    481→def parse_key_part(src: str, pos: Pos) -> tuple[Pos, str]:
+   482→    try:
+      →…
    497→def parse_one_line_basic_str(src: str, pos: Pos) -> tuple[Pos, str]:
+   498→    pos += 1
+      →…
    502→def parse_array(
    503→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
    504→) -> tuple[Pos, list[Any]]:
+   505→    pos += 1
+      →…
    528→def parse_inline_table(
    529→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
    530→) -> tuple[Pos, dict[str, Any]]:
+   531→    pos += 1
+      →…
    564→def parse_basic_str_escape(
    565→    src: str, pos: Pos, *, multiline: bool = False
    566→) -> tuple[Pos, str]:
+   567→    escape_id = src[pos : pos + 2]
+      →…
    595→def parse_basic_str_escape_multiline(src: str, pos: Pos) -> tuple[Pos, str]:
+   596→    return parse_basic_str_escape(src, pos, multiline=True)
    599→def parse_hex_char(src: str, pos: Pos, hex_len: int) -> tuple[Pos, str]:
+   600→    hex_str = src[pos : pos + hex_len]
+      →…
    612→def parse_literal_str(src: str, pos: Pos) -> tuple[Pos, str]:
+   613→    pos += 1  # Skip starting apostrophe
+      →…
    621→def parse_multiline_str(src: str, pos: Pos, *, literal: bool) -> tuple[Pos, str]:
+   622→    pos += 3
+      →…
    652→def parse_basic_str(src: str, pos: Pos, *, multiline: bool) -> tuple[Pos, str]:
+   653→    if multiline:
+      →…
    684→def parse_value(
    685→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
    686→) -> tuple[Pos, Any]:
+   687→    if nest_lvl > MAX_INLINE_NESTING:
+      →…
    760→def is_unicode_scalar_value(codepoint: int) -> bool:
+   761→    return (0 <= codepoint <= 55295) or (57344 <= codepoint <= 1114111)
    764→def make_safe_parse_float(parse_float: ParseFloat) -> ParseFloat:
    765→    """A decorator to make `parse_float` safe.
    766→
@@ -579,6 +560,8 @@ src/tomli/_parser.py
    769→    the parser. The returned decorated callable raises `ValueError`
    770→    instead of returning illegal types.
    771→    """
+   772→    # The default `float` callable never returns illegal types. Optimize it.
+      →…
 src/tomli/_re.py
      7→from datetime import date, datetime, time, timedelta, timezone, tzinfo
      8→from functools import lru_cache
@@ -631,6 +614,8 @@ src/tomli/_re.py
     62→    Raises ValueError if the match does not correspond to a valid date
     63→    or datetime.
     64→    """
+    65→    (
+      →…
     95→# No need to limit cache size. This is only ever called on input
     96→# that matched RE_DATETIME, so there is an implicit bound of
     97→# 24 (hours) * 60 (minutes) * 2 (offset direction) = 2880.
@@ -644,7 +629,11 @@ src/tomli/_re.py
    105→        )
    106→    )
    109→def match_to_localtime(match: re.Match[str]) -> time:
+   110→    hour_str, minute_str, sec_str, micros_str = match.groups()
+      →…
    116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
+   117→    if match.group("floatpart"):
+      →…
 src/tomli/_types.py
      5→from typing import Any, Callable, Tuple
 tests/__init__.py
@@ -696,14 +685,6 @@ tests/data/invalid/_external/toml-test/invalid/spec-1.1.0/common-49-0.toml
      1→[product …
 tests/data/invalid/_external/toml-test/invalid/spec-1.1.0/common-50-0.toml
      1→[product …
-tests/data/invalid/_external/toml-test/invalid/table/append-with-dotted-keys-01.toml
-    13→[a.b.c …
-tests/data/invalid/_external/toml-test/invalid/table/append-with-dotted-keys-02.toml
-     4→[a.b.c.d …
-tests/data/invalid/_external/toml-test/invalid/table/array-implicit.toml
-    10→[[albums.songs …
-tests/data/invalid/_external/toml-test/invalid/table/redefine-01.toml
-     2→[a …
 tests/data/invalid/array-of-tables/overwrite-array-in-parent.toml
      1→[[parent-table.arr …
      2→[parent-table …
@@ -813,12 +794,52 @@ tests/data/valid/_external/toml-test/valid/example.json
 tests/data/valid/_external/toml-test/valid/example.toml
      3→[numtheory …
 tests/data/valid/_external/toml-test/valid/float/exponent.json
+     2→    "lower":      {"type": "float", "value": "300.0"},
+     3→    "minustenth": {"type": "float", "value": "-0.1"},
+     4→    "neg":        {"type": "float", "value": "0.03"},
+     5→    "pointlower": {"type": "float", "value": "310.0"},
+     6→    "pointupper": {"type": "float", "value": "310.0"},
+     7→    "pos":        {"type": "float", "value": "300.0"},
+     8→    "upper":      {"type": "float", "value": "300.0"},
+     9→    "zero":       {"type": "float", "value": "3.0"}
+    10→}
 tests/data/valid/_external/toml-test/valid/float/float.json
+     2→    "negpi":                   {"type": "float", "value": "-3.14"},
+     3→    "pi":                      {"type": "float", "value": "3.14"},
+     4→    "pospi":                   {"type": "float", "value": "3.14"},
+     5→    "zero-intpart":            {"type": "float", "value": "0.123"},
+     6→    "leading-zero-fractional": {"type": "float", "value": "0.0123"}
+     7→}
 tests/data/valid/_external/toml-test/valid/float/inf-and-nan.json
+     2→    "infinity":      {"type": "float", "value": "inf"},
+     3→    "infinity_neg":  {"type": "float", "value": "-inf"},
+     4→    "infinity_plus": {"type": "float", "value": "inf"},
+     5→    "nan":           {"type": "float", "value": "nan"},
+     6→    "nan_neg":       {"type": "float", "value": "nan"},
+     7→    "nan_plus":      {"type": "float", "value": "nan"}
+     8→}
 tests/data/valid/_external/toml-test/valid/float/long.json
+     2→    "longpi":    {"type": "float", "value": "3.141592653589793"},
+     3→    "neglongpi": {"type": "float", "value": "-3.141592653589793"}
+     4→}
 tests/data/valid/_external/toml-test/valid/float/max-int.json
+     2→    "max_float": {"type": "float", "value": "9007199254740991"},
+     3→    "min_float": {"type": "float", "value": "-9007199254740991"}
+     4→}
 tests/data/valid/_external/toml-test/valid/float/underscore.json
+     2→    "after":    {"type": "float", "value": "3141.5927"},
+     3→    "before":   {"type": "float", "value": "3141.5927"},
+     4→    "exponent": {"type": "float", "value": "3.0e14"}
+     5→}
 tests/data/valid/_external/toml-test/valid/float/zero.json
+     2→    "exponent":            {"type": "float", "value": "0"},
+     3→    "exponent-signed-neg": {"type": "float", "value": "-0"},
+     4→    "exponent-signed-pos": {"type": "float", "value": "0"},
+     5→    "exponent-two-0":      {"type": "float", "value": "0"},
+     6→    "signed-neg":          {"type": "float", "value": "-0"},
+     7→    "signed-pos":          {"type": "float", "value": "0"},
+     8→    "zero":                {"type": "float", "value": "0"}
+     9→}
 tests/data/valid/_external/toml-test/valid/implicit-and-explicit-after.json
      2→    "a": {
     10→}
@@ -862,11 +883,48 @@ tests/data/valid/_external/toml-test/valid/inline-table/newline-comment.json
 tests/data/valid/_external/toml-test/valid/inline-table/newline.json
 tests/data/valid/_external/toml-test/valid/inline-table/spaces.json
 tests/data/valid/_external/toml-test/valid/integer/float64-max.json
+     2→    "max_int": {"type": "integer", "value": "9007199254740991"},
+     3→    "min_int": {"type": "integer", "value": "-9007199254740991"}
+     4→}
 tests/data/valid/_external/toml-test/valid/integer/integer.json
+     2→    "answer":    {"type": "integer", "value": "42"},
+     3→    "neganswer": {"type": "integer", "value": "-42"},
+     4→    "posanswer": {"type": "integer", "value": "42"},
+     5→    "zero":      {"type": "integer", "value": "0"}
+     6→}
 tests/data/valid/_external/toml-test/valid/integer/literals.json
+     2→    "bin1": {"type": "integer", "value": "214"},
+     3→    "bin2": {"type": "integer", "value": "5"},
+     4→    "hex1": {"type": "integer", "value": "3735928559"},
+     5→    "hex2": {"type": "integer", "value": "3735928559"},
+     6→    "hex3": {"type": "integer", "value": "3735928559"},
+     7→    "hex4": {"type": "integer", "value": "2439"},
+     8→    "oct1": {"type": "integer", "value": "342391"},
+     9→    "oct2": {"type": "integer", "value": "493"},
+    10→    "oct3": {"type": "integer", "value": "501"}
+    11→}
 tests/data/valid/_external/toml-test/valid/integer/long.json
+     2→    "int64-max":     {"type": "integer", "value": "9223372036854775807"},
+     3→    "int64-max-neg": {"type": "integer", "value": "-9223372036854775808"}
+     4→}
 tests/data/valid/_external/toml-test/valid/integer/underscore.json
+     2→    "kilo": {"type": "integer", "value": "1000"},
+     3→    "x":    {"type": "integer", "value": "1111"}
+     4→}
 tests/data/valid/_external/toml-test/valid/integer/zero.json
+     2→    "a2": {"type": "integer", "value": "0"},
+     3→    "a3": {"type": "integer", "value": "0"},
+     4→    "b1": {"type": "integer", "value": "0"},
+     5→    "b2": {"type": "integer", "value": "0"},
+     6→    "b3": {"type": "integer", "value": "0"},
+     7→    "d1": {"type": "integer", "value": "0"},
+     8→    "d2": {"type": "integer", "value": "0"},
+     9→    "d3": {"type": "integer", "value": "0"},
+    10→    "h1": {"type": "integer", "value": "0"},
+    11→    "h2": {"type": "integer", "value": "0"},
+    12→    "h3": {"type": "integer", "value": "0"},
+    13→    "o1": {"type": "integer", "value": "0"}
+    14→}
 tests/data/valid/_external/toml-test/valid/key/alphanum.toml
     10→[2018_10 …
     13→[a-a-a …
@@ -995,30 +1053,52 @@ tests/data/valid/_external/toml-test/valid/spec-example-1.toml
     18→  [servers.alpha …
     22→  [servers.beta …
     26→[clients …
+tests/data/valid/_external/toml-test/valid/table/array-empty-name.json
 tests/data/valid/_external/toml-test/valid/table/array-empty-name.toml
-     3→[['' …
+tests/data/valid/_external/toml-test/valid/table/array-empty.json
 tests/data/valid/_external/toml-test/valid/table/array-empty.toml
+tests/data/valid/_external/toml-test/valid/table/array-implicit-and-explicit-after.json
 tests/data/valid/_external/toml-test/valid/table/array-implicit-and-explicit-after.toml
+tests/data/valid/_external/toml-test/valid/table/array-implicit.json
 tests/data/valid/_external/toml-test/valid/table/array-implicit.toml
+tests/data/valid/_external/toml-test/valid/table/array-many.json
 tests/data/valid/_external/toml-test/valid/table/array-many.toml
+tests/data/valid/_external/toml-test/valid/table/array-nest.json
 tests/data/valid/_external/toml-test/valid/table/array-nest.toml
+tests/data/valid/_external/toml-test/valid/table/array-one.json
 tests/data/valid/_external/toml-test/valid/table/array-one.toml
+tests/data/valid/_external/toml-test/valid/table/array-table-array.json
 tests/data/valid/_external/toml-test/valid/table/array-table-array.toml
+tests/data/valid/_external/toml-test/valid/table/array-within-dotted.json
 tests/data/valid/_external/toml-test/valid/table/array-within-dotted.toml
+tests/data/valid/_external/toml-test/valid/table/empty-name.json
 tests/data/valid/_external/toml-test/valid/table/empty-name.toml
+tests/data/valid/_external/toml-test/valid/table/empty.json
 tests/data/valid/_external/toml-test/valid/table/empty.toml
+tests/data/valid/_external/toml-test/valid/table/keyword-with-values.json
 tests/data/valid/_external/toml-test/valid/table/keyword-with-values.toml
+tests/data/valid/_external/toml-test/valid/table/keyword.json
 tests/data/valid/_external/toml-test/valid/table/keyword.toml
+tests/data/valid/_external/toml-test/valid/table/names-with-values.json
 tests/data/valid/_external/toml-test/valid/table/names-with-values.toml
+tests/data/valid/_external/toml-test/valid/table/names.json
 tests/data/valid/_external/toml-test/valid/table/names.toml
+tests/data/valid/_external/toml-test/valid/table/no-eol.json
 tests/data/valid/_external/toml-test/valid/table/no-eol.toml
+tests/data/valid/_external/toml-test/valid/table/sub-empty.json
 tests/data/valid/_external/toml-test/valid/table/sub-empty.toml
+tests/data/valid/_external/toml-test/valid/table/sub.json
 tests/data/valid/_external/toml-test/valid/table/sub.toml
-     5→[a.extend …
+tests/data/valid/_external/toml-test/valid/table/whitespace.json
 tests/data/valid/_external/toml-test/valid/table/whitespace.toml
+tests/data/valid/_external/toml-test/valid/table/with-literal-string.json
 tests/data/valid/_external/toml-test/valid/table/with-literal-string.toml
+tests/data/valid/_external/toml-test/valid/table/with-pound.json
 tests/data/valid/_external/toml-test/valid/table/with-pound.toml
+tests/data/valid/_external/toml-test/valid/table/with-single-quotes.json
 tests/data/valid/_external/toml-test/valid/table/with-single-quotes.toml
+tests/data/valid/_external/toml-test/valid/table/without-super-with-values.json
+tests/data/valid/_external/toml-test/valid/table/without-super.json
 tests/data/valid/array/array-subtables.toml
      1→[[arr …
      2→[arr.subtab …

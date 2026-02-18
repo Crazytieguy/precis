@@ -1,0 +1,48 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+sample.c
+     2→#include <stdio.h>
+     3→#include <stdlib.h>
+     4→#include "token.h"
+     6→#define MAX_TOKENS 1024
+     7→#define MIN(a, b) ((a) < (b) ? (a) : (b))
+     9→typedef struct Token {
+    10→    int kind;
+    11→    int start;
+    12→    int end;
+    13→} Token;
+    15→/* The kind of a lexical token. */
+    16→enum TokenKind {
+    17→    TOKEN_IDENT,
+    18→    TOKEN_NUMBER,
+    19→    TOKEN_SYMBOL,
+    20→};
+    22→typedef int (*Comparator)(const void *, const void *);
+    24→/**
+    25→ * Process the input and return a list of tokens.
+    26→ * @param input The source text to tokenize.
+    27→ * @param len Length of the input.
+    28→ * @return Number of tokens extracted, or -1 on error.
+    29→ */
+    30→int process(const char *input, int len) {
+    31→    return len;
+    32→}
+    34→static void helper(void) {}
+    36→// Create a new token with the given kind and span.
+    37→Token *token_new(int kind, int start, int end) {
+    38→    Token *t = malloc(sizeof(Token));
+    39→    t->kind = kind;
+    40→    t->start = start;
+    41→    t->end = end;
+    42→    return t;
+    43→}
+    45→void token_free(Token *t) {
+    46→    free(t);
+    47→}
+    49→/* Internal helper for parsing. */
+    50→static int _parse_next(const char *input, int pos) {
+    51→    return pos + 1;
+    52→}
+    56→void *alloc_node(size_t size);

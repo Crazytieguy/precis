@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (992 words)
+budget: 1000 (997 words)
 
 README.md
     40→## About …
@@ -20,52 +20,40 @@ README.md
     99→  - [`.returnType`](#returntype)
    100→  - [`.exhaustive`](#exhaustive)
    101→  - [`.otherwise`](#otherwise)
+   102→  - [`.narrow`](#narrow)
+   103→  - [`isMatching`](#ismatching)
+   104→  - [Patterns](#patterns)
+   105→    - [Literals](#literals)
+   106→    - [Wildcards](#wildcards)
       →…
    128→## Sandbox examples …
    139→## Getting Started …
    415→## API Reference …
-   417→### `match`
-   419→```ts
-   420→match(value);
-   421→```
-   422→
-      →…
    742→## Patterns …
-   857→#### `P._` wildcard
-   859→The `P._` pattern will match any value. You can also use `P.any`, which is an alias to `P._`.
-   860→
-   861→```ts
-   862→import { match, P } from 'ts-pattern';
-   863→
-      →…
   1405→## `P.string` predicates …
   1500→## `P.number` and `P.bigint` predicates …
   1621→## Types …
-  1623→### `P.infer`
-  1625→`P.infer<typeof somePattern>` lets you infer a type of value from a type of pattern.
-  1626→
-  1627→It's particularly useful when validating an API response.
-  1628→
-      →…
   1766→## Inspirations …
 benchmarks/package.json
 docs/roadmap.md
 docs/v3-to-v4-migration-guide.md
-     3→## Breaking changes …
-     5→### Imports …
 docs/v4-to-v5-migration-guide.md
-     7→## TypeScript v5 …
-    65→## chainable methods …
+examples/gif-fetcher/package.json
 examples/gif-fetcher/src/App.tsx
     42→const reducer …
     75→export default function App() {
 examples/gif-fetcher/src/constants.ts
      1→export const API_KEY = 'xxxxxxxxxxxxxxxx';
 examples/gif-fetcher/src/index.tsx
+     6→const rootElement = document.getElementById('root');
 examples/gif-fetcher/src/searchGif.ts
+     2→import { API_KEY } from './constants';
      6→export function searchGif(query: string) {
+examples/gif-fetcher/tsconfig.json
 examples/one-file-demo/one-file-demo.ts
     79→const example3 …
+examples/one-file-demo/package.json
+examples/one-file-demo/tsconfig.json
 jsr.json
 package.json
 src/errors.ts
@@ -81,7 +69,9 @@ src/internals/helpers.ts
      9→import { Pattern, Matcher, MatcherType, AnyMatcher } from '../types/Pattern';
     12→export const isObject …
     16→export const isMatcher …
-    24→const isOptionalPattern …
+    24→const isOptionalPattern = (
+    25→  x: unknown
+    26→): x is Matcher<unknown, unknown, 'optional', SelectionType> => {
     32→export const matchPattern …
    120→export const getSelectionKeys …
    132→export const flatMap …
@@ -114,7 +104,9 @@ src/internals/symbols.ts
 src/is-matching.ts
      6→/**
      7→ * This constraint allows using additional properties
-      →…
+     8→ * in object patterns. See "should allow targetting unknown properties"
+     9→ * unit test in `is-matching.test.ts`.
+    10→ */
     11→type PatternConstraint<T> = T extends readonly any[]
     12→  ? P.Pattern<T>
     13→  : T extends object
@@ -287,8 +279,15 @@ src/types/helpers.ts
    268→  output: unknown;
    269→}
 tests/instance-of.test.ts
+     4→class A {
+     7→class B {
 tests/tsconfig.json
+     2→  "compilerOptions": {
+    10→  },
+    11→  "include": ["."],
+    12→  "exclude": ["../src", "../dist", "../example", "../node_modules"]
+    13→}
 tests/types-catalog/definition.ts
 tests/types-catalog/utils.ts
-     4→export const some …
+     4→export const some = <a>(value: a): Option<a> => ({
 tsconfig.json

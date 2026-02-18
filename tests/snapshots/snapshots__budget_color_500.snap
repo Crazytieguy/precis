@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (489 words)
+budget: 500 (492 words)
 
 README.md
      1→# color
@@ -19,20 +19,7 @@ README.md
     14→```
     15→
     16→## Examples
-    18→### Standard colors
-    20→```go
-    21→// Print with default helper functions
-    22→color.Cyan("Prints text in cyan.")
-    23→
-    24→// A newline will be appended automatically
-    25→color.Blue("Prints %s in blue.", "text")
-    26→
-    27→// These are using the default foreground colors
-    28→color.Red("We have red")
-    29→color.Magenta("And many others ..")
-    30→
-    31→```
-    32→
+    18→### Standard colors …
     33→### RGB colors …
     45→### Mix and reuse colors …
     71→### Use your own output (io.Writer) …
@@ -87,8 +74,17 @@ color.go
    119→const (
    130→	background
    134→const (
+   211→func (c *Color) unset …
    405→func (c *Color) sequence() string {
    416→func (c *Color) wrap(s string) string {
+   424→func (c *Color) format …
+   428→func (c *Color) unformat …
+   456→func (c *Color) isNoColorSet …
+   487→func (c *Color) attrExists …
+   497→func boolPtr …
+   501→func getCachedColor …
+   514→func colorPrint …
+   528→func colorString …
    679→func sprintln(a ...interface{}) string {
 color_test.go
      3→import …
@@ -99,7 +95,10 @@ color_test.go
     17→	rb := new(bytes.Buffer)
     18→	Output = rb
     19→
+    20→	NoColor = false
+    21→
       →…
    462→func readRaw(t *testing.T, r io.Reader) string {
 color_windows.go
      3→import …
+     9→func init …

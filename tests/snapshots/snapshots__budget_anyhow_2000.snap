@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1916 words)
+budget: 2000 (1924 words)
 
 Cargo.toml
      1→[package …
@@ -36,7 +36,10 @@ README.md
    175→<sub>
       →…
 build.rs
-     3→use std::env;
+    17→fn main() {
+    99→fn compile_probe(rustc_bootstrap: bool) -> bool {
+   188→fn rustc_minor_version() -> Option<u32> {
+   199→fn cargo_env_var(key: &str) -> OsString {
 rust-toolchain.toml
      1→[toolchain …
 src/backtrace.rs
@@ -282,6 +285,8 @@ src/lib.rs
    298→///
    299→/// <br>
    300→///
+   301→/// # Display representations
+   302→///
       →…
    390→pub struct Error {
    391→    inner: Own<ErrorImpl>,
@@ -299,6 +304,8 @@ src/lib.rs
    404→/// pub fn underlying_io_error_kind(error: &Error) -> Option<io::ErrorKind> {
    405→///     for cause in error.chain() {
    406→///         if let Some(io_error) = cause.downcast_ref::<io::Error>() {
+   407→///             return Some(io_error.kind());
+   408→///         }
       →…
    415→pub struct Chain<'a> {
    416→    state: crate::chain::ChainState<'a>,
@@ -366,6 +373,8 @@ src/lib.rs
    480→/// use anyhow::{Context, Result};
    481→/// use std::fs;
    482→/// use std::path::PathBuf;
+   483→///
+   484→/// pub struct ImportantThing {
       →…
    616→pub trait Context<T, E>: context::private::Sealed {
    618→    fn context …
@@ -407,7 +416,6 @@ src/macros.rs
    229→#[macro_export]
    230→macro_rules! __anyhow {
 src/nightly.rs
-     7→use core::error::{self, Error};
     10→pub use core::error::Request;
 src/ptr.rs
      5→#[repr(transparent)]
@@ -469,7 +477,6 @@ tests/crate/Cargo.toml
 tests/crate/test.rs
      3→pub use anyhow::*;
 tests/drop/mod.rs
-     3→use std::error::Error as StdError;
      8→#[derive(Debug)]
      9→pub struct Flag {
     10→    atomic: Arc<AtomicBool>,
@@ -479,7 +486,6 @@ tests/drop/mod.rs
     27→    has_dropped: Flag,
     28→}
 tests/test_autotrait.rs
-     3→use anyhow::Error;
 tests/test_boxed.rs
     11→#[derive(Error, Debug)]
     12→#[error("outer")]
@@ -488,7 +494,6 @@ tests/test_boxed.rs
     15→}
 tests/test_chain.rs
 tests/test_context.rs
-     6→mod drop;
     22→macro_rules! context_type {
     42→#[derive(Error, Debug)]
     43→#[error("{message}")]
@@ -498,14 +503,7 @@ tests/test_context.rs
     47→}
     49→struct Dropped {
 tests/test_convert.rs
-     1→#![allow(clippy::unnecessary_wraps)]
-     2→
-     3→mod drop;
 tests/test_downcast.rs
-     1→#![allow(clippy::assertions_on_result_states, clippy::wildcard_imports)]
-     2→
-     3→mod common;
-     4→mod drop;
 tests/test_ensure.rs
     40→struct S;
     43→    type Output = bool;
@@ -517,8 +515,10 @@ tests/test_ensure.rs
     72→    fn fmt …
     77→#[track_caller]
     78→fn assert_err<T: Debug>(result: impl FnOnce() -> Result<T>, expected: &'static str) {
+    79→    let actual = result().unwrap_err().to_string();
+    80→
+      →…
 tests/test_ffi.rs
-     4→use anyhow::anyhow;
      6→#[no_mangle]
      7→pub extern "C" fn anyhow1(err: anyhow::Error) {
      8→    println!("{:?}", err);
@@ -533,11 +533,7 @@ tests/test_ffi.rs
     19→}
 tests/test_fmt.rs
 tests/test_macros.rs
-    13→mod common;
 tests/test_repr.rs
-     1→#![allow(clippy::extra_unused_type_parameters)]
-     2→
-     3→mod drop;
 tests/test_source.rs
      6→#[derive(Debug)]
      7→enum TestError {
@@ -555,8 +551,6 @@ tests/ui/ensure-nonbool.rs
     17→impl Not for NotBool {
     18→    type Output = bool;
     19→    fn not(self) -> Self::Output {
-tests/ui/must-use.rs
-     3→use anyhow::anyhow;
 tests/ui/no-impl.rs
      3→#[derive(Debug)]
      4→struct Error;

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (935 words)
+budget: 1000 (942 words)
 
 backtrace.rs
      2→pub(crate) use std::backtrace::{Backtrace, BacktraceStatus};
@@ -195,6 +195,7 @@ lib.rs
    445→/// #     use super::Deserialize;
    446→/// #     use std::io;
    447→/// #
+   448→/// #     pub fn from_str<T: Deserialize>(json: &str) -> io::Result<T> {
       →…
    468→pub type Result<T, E = Error> = core::result::Result<T, E>;
    470→/// Provides the `context` method for `Result`.
@@ -233,7 +234,6 @@ macros.rs
    204→macro_rules! anyhow {
    230→macro_rules! __anyhow {
 nightly.rs
-     7→use core::error::{self, Error};
     10→pub use core::error::Request;
 ptr.rs
      5→#[repr(transparent)]

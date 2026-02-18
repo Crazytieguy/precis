@@ -2,14 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3952 words)
+budget: 4000 (3955 words)
 
 CHANGELOG.md
      1→# Changelog …
-     3→## 1.21.3
-     5→- Outline more initialization in `race`: [#284](https://github.com/matklad/once_cell/pull/284),
-     6→  [#285](https://github.com/matklad/once_cell/pull/285).
-     7→
 Cargo.toml
      1→[package …
     19→[workspace …
@@ -835,8 +831,6 @@ tests/it/sync_once_cell.rs
    187→        exe
    188→    };
    189→    let bin = examples_dir
-   190→        .join("reentrant_init_deadlocks")
-   191→        .with_extension(std::env::consts::EXE_EXTENSION);
       →…
    296→fn arrrrrrrrrrrrrrrrrrrrrr() {
 tests/it/unsync_lazy.rs
@@ -852,6 +846,7 @@ xtask/src/main.rs
      8→fn main() -> xshell::Result<()> {
      9→    let sh = Shell::new()?;
     10→
+    11→    let _e = push_toolchain(&sh, "stable")?;
       →…
    116→fn push_toolchain<'a>(
    117→    sh: &'a xshell::Shell,
@@ -859,14 +854,17 @@ xtask/src/main.rs
    119→) -> xshell::Result<xshell::PushEnv<'a>> {
    120→    cmd!(sh, "rustup toolchain install {toolchain} --no-self-update").run()?;
    121→    let res = sh.push_env("RUSTUP_TOOLCHAIN", toolchain);
+   122→    cmd!(sh, "rustc --version").run()?;
       →…
    126→fn section(name: &'static str) -> impl Drop {
    127→    println!("::group::{name}");
    128→    let start = Instant::now();
+   129→    defer(move || {
       →…
    136→fn defer<F: FnOnce()>(f: F) -> impl Drop {
    137→    struct D<F: FnOnce()>(Option<F>);
    138→    impl<F: FnOnce()> Drop for D<F> {
+   139→        fn drop(&mut self) {
       →…
 xtask/src/tidy.rs
      1→use xshell::{cmd, Shell};

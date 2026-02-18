@@ -2,13 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (966 words)
+budget: 1000 (965 words)
 
 AGENTS.md
      1→# AGENTS.md …
 CLAUDE.md
      1→# CLAUDE.md …
-    34→### Main Components …
 SECURITY.md
      1→# Security …
 codecov.yml
@@ -22,6 +21,7 @@ docs/conf.py
       →…
    130→def setup(app: "sphinx.application.Sphinx") -> None:
    131→    configure_logging(app)
+docs/examples/eggsample/eggsample/__init__.py
 docs/examples/eggsample/eggsample/hookspecs.py
      7→@hookspec
      8→def eggsample_add_ingredients(ingredients: tuple):
@@ -93,6 +93,7 @@ src/pluggy/__init__.py
      4→    "PluginValidationError",
      5→    "HookCaller",
      6→    "HookCallError",
+     7→    "HookspecOpts",
       →…
 src/pluggy/_callers.py
     22→# Need to distinguish between old- and new-style hook wrappers.

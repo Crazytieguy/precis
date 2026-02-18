@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (490 words)
+budget: 500 (489 words)
 
 404.md
      1→# Document not found (404) …
@@ -14,7 +14,6 @@ README.md
      7→        top: 60px;
      8→        background-color: var(--theme-popup-bg);
      9→        border-radius: 8px;
-    10→        padding: 2px 5px 2px 5px;
       →…
     46→## Contributing …
     55→## License …
@@ -25,6 +24,8 @@ SUMMARY.md
 cli/README.md
      1→# Command-line tool
      3→The `mdbook` command-line tool is used to create and build books.
+     4→After you have [installed](../guide/installation.md) `mdbook`, you can run the `mdbook help` command in your terminal to view the available commands.
+     5→
       →…
 cli/arg-watcher.md
 cli/build.md
@@ -83,6 +84,7 @@ format/README.md
 format/configuration/README.md
      1→# Configuration
      3→This section details the configuration options available in the ***book.toml***:
+     4→- **[General]** configuration including the `book`, `rust`, `build` sections
       →…
 format/configuration/environment-variables.md
      1→# Environment variables …
@@ -107,10 +109,6 @@ format/mathjax.md
      1→# MathJax support …
 format/mdbook.md
      1→# mdBook-specific features …
-     3→## Hiding code lines
-     5→There is a feature in mdBook that lets you hide code lines by prepending them with a specific prefix.
-     6→
-      →…
 format/summary.md
      1→# SUMMARY.md …
 format/theme/README.md

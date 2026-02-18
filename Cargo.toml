@@ -12,6 +12,7 @@ ignore = "0.4"
 serde_json = "1"
 streaming-iterator = "0.1.9"
 tree-sitter = { version = "0.25", features = ["std"] }
+tree-sitter-c = "0.24.1"
 tree-sitter-go = "0.25.0"
 tree-sitter-md = "0.5.2"
 tree-sitter-python = "0.25.0"
@@ -35,6 +36,8 @@ opt-level = 3
 [profile.dev.package.tree-sitter-python]
 opt-level = 3
 [profile.dev.package.tree-sitter-typescript]
+opt-level = 3
+[profile.dev.package.tree-sitter-c]
 opt-level = 3
 [profile.dev.package.tree-sitter-go]
 opt-level = 3

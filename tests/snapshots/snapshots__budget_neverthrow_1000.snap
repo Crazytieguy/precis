@@ -2,12 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (992 words)
+budget: 1000 (995 words)
 
 CHANGELOG.md
      1→# neverthrow …
-     3→## 8.2.0 …
-    56→### Patch Changes …
 README.md
      1→# NeverThrow 🙅 …
      5→## Description …
@@ -16,41 +14,9 @@ README.md
     79→## Recommended: Use `eslint-plugin-neverthrow` …
    100→## Top-Level API …
    139→## API Documentation …
-   141→### Synchronous API (`Result`) …
-   143→#### `ok`
-   145→Constructs an `Ok` variant of `Result`
-   146→
-   147→**Signature:**
-   148→
-   149→```typescript
-   150→ok<T, E>(value: T): Ok<T, E> { ... }
-   151→```
-   152→
-   153→**Example:**
-   154→
-   155→```typescript
-      →…
+   141→### Synchronous API (`Result`)
    863→### Asynchronous API (`ResultAsync`)
-   865→#### `okAsync`
-   867→Constructs an `Ok` variant of `ResultAsync`
-   868→
-   869→**Signature:**
-   870→
-   871→```typescript
-   872→okAsync<T, E>(value: T): ResultAsync<T, E>
-   873→```
-   874→
-   875→**Example:**
-   876→
-   877→```typescript
-      →…
   1519→### Utilities
-  1521→#### `fromThrowable`
-  1523→Top level export of `Result.fromThrowable`.
-  1524→Please find documentation at [Result.fromThrowable](#resultfromthrowable-static-class-method)
-  1525→
-  1526→[⬆️  Back to top](#toc)
-  1527→
   1633→### Testing
   1635→`Result` instances have two unsafe methods, aptly called `_unsafeUnwrap` and `_unsafeUnwrapErr` which **should only be used in a test environment**.
   1636→
@@ -93,6 +59,8 @@ src/_internals/error.ts
      4→  withStackTrace: boolean
      5→}
      7→const defaultErrorConfig: ErrorConfig = {
+     8→  withStackTrace: false,
+     9→}
     11→interface NeverThrowError<T, E> {
     12→  data:
     13→    | {
@@ -112,6 +80,7 @@ src/_internals/error.ts
     30→  config: ErrorConfig = defaultErrorConfig,
     31→): NeverThrowError<T, E> => {
     32→  const data = result.isOk()
+    33→    ? { type: 'Ok', value: result.value }
       →…
 src/_internals/utils.ts
      1→import { Result, ok, err } from '../result'
@@ -137,9 +106,14 @@ src/_internals/utils.ts
     40→      acc = err(result.error)
     41→      break
     42→    } else {
-      →…
+    43→      acc.map((list) => list.push(result.value))
+    44→    }
+    45→  }
+    46→  return acc
+    47→}
     54→export const combineResultAsyncList = <T, E>(
     55→  asyncResultList: readonly ResultAsync<T, E>[],
+    56→): ResultAsync<readonly T[], E> =>
       →…
     61→/**
     62→ * Give a list of all the errors we find
@@ -154,9 +128,16 @@ src/_internals/utils.ts
     71→      acc.error.push(result.error)
     72→    } else if (result.isErr() && acc.isOk()) {
     73→      acc = err([result.error])
-      →…
+    74→    } else if (result.isOk() && acc.isOk()) {
+    75→      acc.value.push(result.value)
+    76→    }
+    77→    // do nothing when result.isOk() && acc.isErr()
+    78→  }
+    79→  return acc
+    80→}
     82→export const combineResultAsyncListWithAllErrors = <T, E>(
     83→  asyncResultList: readonly ResultAsync<T, E>[],
+    84→): ResultAsync<readonly T[], E[]> =>
       →…
 src/result-async.ts
      1→./result …
@@ -249,15 +230,19 @@ src/result.ts
    712→export type CombineResults …
    719→export type CombineResultsWithAllErrorsArray …
 tests/index.test.ts
+     3→../src …
 tests/safe-try.test.ts
+     1→../src …
 tests/tsconfig.tests.json
      2→  "compilerOptions": {
     22→  },
     23→  "include": [
     27→}
 tests/typecheck-tests.ts
+     7→../src …
+    16→import { safeTry, Transpose } from '../src/result …
     19→type CreateTuple …
-  2607→const input …
+  2607→const input = <T>(): T => 123 as any
 tsconfig.json
      2→  "compilerOptions": {
     23→  },

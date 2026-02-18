@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (948 words)
+budget: 1000 (959 words)
 
 Cargo.toml
      1→[package …
@@ -26,7 +26,6 @@ README.md
    175→<sub>
       →…
 build.rs
-     3→use std::env;
 rust-toolchain.toml
      1→[toolchain …
 src/backtrace.rs
@@ -34,10 +33,15 @@ src/backtrace.rs
      5→pub(crate) use self::capture::{Backtrace, BacktraceStatus};
      7→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
      8→pub(crate) enum Backtrace {}
+    10→#[cfg(std_backtrace)]
     11→macro_rules! impl_backtrace {
+    17→#[cfg(all(not(std_backtrace), feature = "backtrace"))]
     18→macro_rules! impl_backtrace {
+    24→#[cfg(any(std_backtrace, feature = "backtrace"))]
     25→macro_rules! backtrace {
+    31→#[cfg(not(any(std_backtrace, feature = "backtrace")))]
     32→macro_rules! backtrace {
+    38→#[cfg(error_generic_member_access)]
     39→macro_rules! backtrace_if_absent {
     53→macro_rules! backtrace_if_absent {
     64→macro_rules! backtrace_if_absent {
@@ -72,8 +76,14 @@ src/ensure.rs
     10→pub trait BothDebug {
     24→#[doc(hidden)]
     25→pub trait NotBothDebug {
+   103→#[doc(hidden)]
+   104→#[macro_export]
    105→macro_rules! __parse_ensure {
+   884→#[doc(hidden)]
+   885→#[macro_export]
    886→macro_rules! __fancy_ensure {
+   910→#[doc(hidden)]
+   911→#[macro_export]
    912→macro_rules! __fallback_ensure {
 src/error.rs
      4→use crate::nightly::{self, Request};
@@ -198,12 +208,19 @@ src/lib.rs
    709→        #[doc(hidden)]
    710→        pub trait Bool {
 src/macros.rs
+     1→/// Return early with an error.
+     2→///
+      →…
     58→macro_rules! bail {
     70→macro_rules! __ensure {
+   174→/// Construct an ad-hoc error from a string or existing non-`anyhow` error
+   175→/// value.
+      →…
    204→macro_rules! anyhow {
+   228→#[doc(hidden)]
+   229→#[macro_export]
    230→macro_rules! __anyhow {
 src/nightly.rs
-     7→use core::error::{self, Error};
     10→pub use core::error::Request;
 src/ptr.rs
      5→#[repr(transparent)]
@@ -255,7 +272,6 @@ tests/crate/Cargo.toml
 tests/crate/test.rs
      3→pub use anyhow::*;
 tests/drop/mod.rs
-     3→use std::error::Error as StdError;
      8→#[derive(Debug)]
      9→pub struct Flag {
     10→    atomic: Arc<AtomicBool>,
@@ -264,28 +280,17 @@ tests/drop/mod.rs
     26→pub struct DetectDrop {
     27→    has_dropped: Flag,
     28→}
-tests/test_autotrait.rs
-     3→use anyhow::Error;
 tests/test_boxed.rs
     13→struct MyError {
 tests/test_chain.rs
 tests/test_context.rs
     22→macro_rules! context_type {
     44→struct LowLevel {
-tests/test_convert.rs
-     1→#![allow(clippy::unnecessary_wraps)]
-     2→
-     3→mod drop;
-tests/test_downcast.rs
-     1→#![allow(clippy::assertions_on_result_states, clippy::wildcard_imports)]
-     2→
-     3→mod common;
 tests/test_ensure.rs
     43→    type Output = bool;
     77→#[track_caller]
     78→fn assert_err<T: Debug>(result: impl FnOnce() -> Result<T>, expected: &'static str) {
 tests/test_ffi.rs
-     4→use anyhow::anyhow;
      6→#[no_mangle]
      7→pub extern "C" fn anyhow1(err: anyhow::Error) {
     11→#[no_mangle]
@@ -293,11 +298,6 @@ tests/test_ffi.rs
     16→#[no_mangle]
     17→pub extern "C" fn anyhow3() -> Option<anyhow::Error> {
 tests/test_fmt.rs
-tests/test_macros.rs
-tests/test_repr.rs
-     1→#![allow(clippy::extra_unused_type_parameters)]
-     2→
-     3→mod drop;
 tests/test_source.rs
      7→enum TestError {
 tests/ui/ensure-nonbool.rs
@@ -305,8 +305,6 @@ tests/ui/ensure-nonbool.rs
     12→    fn deref(&self) -> &Self::Target {
     18→    type Output = bool;
     19→    fn not(self) -> Self::Output {
-tests/ui/must-use.rs
-     3→use anyhow::anyhow;
 tests/ui/no-impl.rs
      3→#[derive(Debug)]
      4→struct Error;

@@ -1,0 +1,19 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+sample.c
+     4→#include "token.h"
+     6→#define MAX_TOKENS …
+     7→#define MIN …
+    16→enum TokenKind {
+    17→    TOKEN_IDENT,
+    18→    TOKEN_NUMBER,
+    19→    TOKEN_SYMBOL,
+    20→};
+    30→int process(const char *input, int len) {
+    34→static void helper(void) {}
+    37→Token *token_new(int kind, int start, int end) {
+    45→void token_free(Token *t) {
+    50→static int _parse_next …
+    56→void *alloc_node(size_t size);

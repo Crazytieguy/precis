@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1940 words)
+budget: 2000 (1939 words)
 
 README.md
      1→# color
@@ -27,12 +27,7 @@ README.md
     24→// A newline will be appended automatically
     25→color.Blue("Prints %s in blue.", "text")
     26→
-    27→// These are using the default foreground colors
-    28→color.Red("We have red")
-    29→color.Magenta("And many others ..")
-    30→
-    31→```
-    32→
+      →…
     33→### RGB colors
     35→If your terminal supports 24-bit colors, you can use RGB color codes.
     36→
@@ -41,9 +36,7 @@ README.md
     39→color.RGB(230, 42, 42).Println("foreground red")
     40→
     41→color.BgRGB(255, 128, 0).Println("background orange")
-    42→color.BgRGB(230, 42, 42).Println("background red")
-    43→```
-    44→
+      →…
     45→### Mix and reuse colors
     47→```go
     48→// Create a new color object
@@ -52,10 +45,6 @@ README.md
     51→
     52→// Or just add them to New()
     53→d := color.New(color.FgCyan, color.Bold)
-    54→d.Printf("This prints bold cyan %s\n", "too!.")
-    55→
-    56→// Mix up foreground and background colors, create new mixes!
-    57→red := color.New(color.FgRed)
       →…
     71→### Use your own output (io.Writer)
     73→```go
@@ -65,7 +54,7 @@ README.md
     77→blue := color.New(color.FgBlue)
     78→blue.Fprint(writer, "This will print text in blue.")
     79→```
-    80→
+      →…
     81→### Custom print functions (PrintFunc)
     83→```go
     84→// Create a custom print function for convenience
@@ -74,10 +63,7 @@ README.md
     87→red("Error: %s", err)
     88→
     89→// Mix up multiple attributes
-    90→notice := color.New(color.Bold, color.FgGreen).PrintlnFunc()
-    91→notice("Don't forget this...")
-    92→```
-    93→
+      →…
     94→### Custom fprint functions (FprintFunc)
     96→```go
     97→blue := color.New(color.FgBlue).FprintfFunc()
@@ -86,8 +72,7 @@ README.md
    100→// Mix up with multiple attributes
    101→success := color.New(color.Bold, color.FgGreen).FprintlnFunc()
    102→success(myWriter, "Don't forget this...")
-   103→```
-   104→
+      →…
    105→### Insert into noncolor strings (SprintFunc)
    107→```go
    108→// Create SprintXxx functions to mix strings with other non-colorized strings:
@@ -96,10 +81,6 @@ README.md
    111→fmt.Printf("This is a %s and this is %s.\n", yellow("warning"), red("error"))
    112→
    113→info := color.New(color.FgWhite, color.BgGreen).SprintFunc()
-   114→fmt.Printf("This %s rocks!\n", info("package"))
-   115→
-   116→// Use helper functions
-   117→fmt.Println("This", color.RedString("warning"), "should be not neglected.")
       →…
    124→### Plug into existing code
    126→```go
@@ -109,10 +90,6 @@ README.md
    130→fmt.Println("Existing text will now be in yellow")
    131→fmt.Printf("This one %s\n", "too")
    132→
-   133→color.Unset() // Don't forget to unset
-   134→
-   135→// You can mix up parameters
-   136→color.Set(color.FgMagenta, color.Bold)
       →…
    142→### Disable/Enable color
    144→There might be a case where you want to explicitly disable/enable color output. the 
@@ -122,10 +99,6 @@ README.md
    148→The `color` package also disables color output if the [`NO_COLOR`](https://no-color.org) environment
    149→variable is set to a non-empty string.
    150→
-   151→`Color` has support to disable/enable colors programmatically both globally and
-   152→for single color definitions. For example suppose you have a CLI app and a
-   153→`-no-color` bool flag. You can easily disable the color output with:
-   154→
       →…
    177→## GitHub Actions
    179→To output color in GitHub Actions (or other CI systems that support ANSI colors), make sure to set `color.NoColor = false` so that it bypasses the check for non-tty output streams. 
@@ -205,7 +178,11 @@ color.go
     82→	Italic:       ResetItalic,
     83→	Underline:    ResetUnderline,
     84→	BlinkSlow:    ResetBlinking,
-      →…
+    85→	BlinkRapid:   ResetBlinking,
+    86→	ReverseVideo: ResetReversed,
+    87→	Concealed:    ResetConcealed,
+    88→	CrossedOut:   ResetCrossedOut,
+    89→}
     91→// Foreground text colors
     92→const (
     93→	FgBlack Attribute = iota + 30
@@ -259,6 +236,8 @@ color.go
    193→func Unset() {
    202→func (c *Color) Set() *Color {
    211→func (c *Color) unset() {
+   212→	if c.isNoColorSet() {
+      →…
    222→func (c *Color) SetWriter(w io.Writer) *Color {
    233→func (c *Color) UnsetWriter(w io.Writer) {
    243→func (c *Color) Add(value ...Attribute) *Color {
@@ -300,16 +279,32 @@ color.go
    421→	return c.format() + s + c.unformat()
    422→}
    424→func (c *Color) format() string {
+   425→	return fmt.Sprintf("%s[%sm", escape, c.sequence())
+      →…
    428→func (c *Color) unformat() string {
+   429→	//return fmt.Sprintf("%s[%dm", escape, Reset)
+      →…
    446→func (c *Color) DisableColor() {
    452→func (c *Color) EnableColor() {
    456→func (c *Color) isNoColorSet() bool {
+   457→	// check first if we have user set action
+      →…
    467→func (c *Color) Equals(c2 *Color) bool {
    487→func (c *Color) attrExists(a Attribute) bool {
+   488→	for _, attr := range c.params {
+      →…
    497→func boolPtr(v bool) *bool {
+   498→	return &v
+      →…
    501→func getCachedColor(p Attribute) *Color {
+   502→	colorsCacheMu.Lock()
+      →…
    514→func colorPrint(format string, p Attribute, a ...interface{}) {
+   515→	c := getCachedColor(p)
+      →…
    528→func colorString(format string, p Attribute, a ...interface{}) string {
+   529→	c := getCachedColor(p)
+      →…
    540→func Black(format string, a ...interface{}) { colorPrint(format, FgBlack, a...) }
    544→func Red(format string, a ...interface{}) { colorPrint(format, FgRed, a...) }
    548→func Green(format string, a ...interface{}) { colorPrint(format, FgGreen, a...) }
@@ -375,6 +370,10 @@ color_test.go
     29→		{text: "yellow", code: FgYellow},
     30→		{text: "blue", code: FgBlue},
     31→		{text: "magent", code: FgMagenta},
+    32→		{text: "cyan", code: FgCyan},
+    33→		{text: "white", code: FgWhite},
+    34→		{text: "hblack", code: FgHiBlack},
+    35→		{text: "hred", code: FgHiRed},
       →…
     73→func TestColorEquals(t *testing.T) {
    107→func TestNoColor(t *testing.T) {
@@ -389,7 +388,13 @@ color_test.go
    462→func readRaw(t *testing.T, r io.Reader) string {
    463→	t.Helper()
    464→
-      →…
+   465→	out, err := io.ReadAll(r)
+   466→	if err != nil {
+   467→		t.Fatal(err)
+   468→	}
+   469→
+   470→	return string(out)
+   471→}
    473→func TestIssue206_1(t *testing.T) {
    492→func TestIssue206_2(t *testing.T) {
    508→func TestIssue218(t *testing.T) {
@@ -401,3 +406,5 @@ color_windows.go
      6→	"golang.org/x/sys/windows"
      7→)
      9→func init() {
+    10→	// Opt-in for ansi color support for current process.
+      →…

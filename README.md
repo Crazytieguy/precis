@@ -53,6 +53,7 @@ Line numbers use a right-aligned format with an arrow separator (e.g. `    12→
 - **Rust** — functions, structs, enums, traits, impls, type aliases, consts, statics, macros, modules
 - **TypeScript / JavaScript / TSX** (`.ts`, `.tsx`, `.js`, `.jsx`, `.mts`, `.cts`, `.mjs`, `.cjs`) — functions, classes, interfaces, enums, type aliases, consts, namespaces
 - **Go** — functions, methods, structs, interfaces, type aliases, consts, vars (exported = uppercase)
+- **C** (`.c`, `.h`) — functions, structs, unions, enums, typedefs, macros, includes (static = private, `_`-prefix = private)
 - **Python** — functions, classes, module-level constants (typed, UPPER_CASE, dunder)
 - **Markdown** — ATX headings (`#`, `##`, etc.) and setext headings as section structure
 - **JSON** (`.json`) — top-level object keys as sections (lockfiles excluded)

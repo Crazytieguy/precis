@@ -2,14 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3912 words)
+budget: 4000 (3906 words)
 
 CHANGELOG.md
      1→# Change Log …
-     3→## [Unreleased] …
-     5→## [0.4.29] - 2025-12-02 …
-     7→## What's Changed …
-    19→## What's Changed …
 Cargo.toml
      1→[package …
     19→[package.metadata.docs.rs …
@@ -45,24 +41,7 @@ README.md
     37→```rust
     38→use log::{info, trace, warn};
     39→
-    40→pub fn shave_the_yak(yak: &mut Yak) {
-    41→    trace!("Commencing yak shaving");
-    42→
-    43→    loop {
-    44→        match find_a_razor() {
-    45→            Ok(razor) => {
-    46→                info!("Razor located: {razor}");
-    47→                yak.shave(razor);
-    48→                break;
-    49→            }
-    50→            Err(err) => {
-    51→                warn!("Unable to locate a razor: {err}, retrying");
-    52→            }
-    53→        }
-    54→    }
-    55→}
-    56→```
-    57→
+      →…
     58→### In executables
     60→In order to produce log output, executables have to use a logger implementation compatible with the facade.
     61→There are many available implementations to choose from, here are some options:
@@ -75,17 +54,6 @@ README.md
     68→    * [`pretty_env_logger`](https://docs.rs/pretty_env_logger/*/pretty_env_logger/)
     69→    * [`stderrlog`](https://docs.rs/stderrlog/*/stderrlog/)
     70→    * [`flexi_logger`](https://docs.rs/flexi_logger/*/flexi_logger/)
-    71→    * [`call_logger`](https://docs.rs/call_logger/*/call_logger/)
-    72→    * [`std-logger`](https://docs.rs/std-logger/*/std_logger/)
-    73→    * [`structured-logger`](https://docs.rs/structured-logger/latest/structured_logger/)
-    74→    * [`clang_log`](https://docs.rs/clang_log/latest/clang_log)
-    75→    * [`ftail`](https://docs.rs/ftail/latest/ftail/)
-    76→* Complex configurable frameworks:
-    77→    * [`log4rs`](https://docs.rs/log4rs/*/log4rs/)
-    78→    * [`logforth`](https://docs.rs/logforth/*/logforth/)
-    79→    * [`fern`](https://docs.rs/fern/*/fern/)
-    80→    * [`spdlog-rs`](https://docs.rs/spdlog-rs/*/spdlog/)
-    81→* Adaptors for other facilities:
       →…
    106→## Structured logging
    108→If you enable the `kv` feature, you can associate structured data with your log records:
@@ -108,12 +76,43 @@ benches/value.rs
     21→#[bench]
     22→fn custom_to_value_debug(b: &mut test::Bencher) {
 rfcs/0296-structured-logging.md
-     5→# Summary …
-    16→# Contents …
-    43→# Motivation …
+     5→# Summary
+     8→Add support for structured logging to the `log` crate in both `std` and `no_std` environments, allowing log records to carry typed data beyond a textual message. This document serves as an introduction to what structured logging is all about, and as an RFC for an implementation in the `log` crate.
+     9→
+    10→`log` will provide an API for capturing structured data that offloads complex serialization to de-facto standards in the ecosystem, but avoids integrating them too tightly, or forcing any specific framework on consumers.
+    11→
+    12→The API is heavily inspired by `slog` and `tokio-trace`.
+    13→
+    14→> NOTE: Code in this RFC uses recent language features like `impl Trait`, but can be implemented without them.
+    15→
+    16→# Contents
+    17→- [Motivation](#motivation)
+    18→  - [What is structured logging?](#what-is-structured-logging)
+    19→  - [Why do we need structured logging in `log`?](#why-do-we-need-structured-logging-in-log)
+    20→- [Guide-level explanation](#guide-level-explanation)
+    21→  - [Logging structured key-value pairs](#logging-structured-key-value-pairs)
+    22→  - [Supporting key-value pairs in `Log` implementations](#supporting-key-value-pairs-in-log-implementations)
+    23→  - [Integrating log frameworks with `log`](#integrating-log-frameworks-with-log)
+    24→  - [How producers and consumers of structured values interact](#how-producers-and-consumers-of-structured-values-interact)
+    25→- [Reference-level explanation](#reference-level-explanation)
+    26→  - [Design considerations](#design-considerations)
+    27→  - [Cargo features](#cargo-features)
+    28→  - [A complete key-values API](#a-complete-key-values-api)
+    29→    - [`Error`](#error)
+    30→    - [`Value`](#value)
+    31→    - [`ToValue`](#tovalue)
+    32→    - [`Key`](#key)
+    33→    - [`ToKey`](#tokey)
+    34→    - [`Source`](#source)
+    35→    - [`Visitor`](#visitor)
+    36→    - [`Record` and `RecordBuilder`](#record-and-recordbuilder)
+      →…
+    43→# Motivation
     46→## What is structured logging? …
     86→## Why do we need structured logging in `log`? …
-    98→# Guide-level explanation …
+    98→# Guide-level explanation
+   101→This section introduces `log`'s structured logging API through a tour of how structured records can be captured and consumed.
+   102→
    103→## Logging structured key-value pairs …
    107→### What can be captured as a structured value? …
    255→## Supporting key-value pairs in `Log` implementations …
@@ -121,11 +120,11 @@ rfcs/0296-structured-logging.md
    348→### Writing key-value pairs as JSON …
    401→## Integrating log frameworks with `log` …
    489→## How producers and consumers of structured values interact …
-   495→# Reference-level explanation …
+   495→# Reference-level explanation
+   498→This section details the nuts-and-bolts of the structured logging API.
+   499→
    500→## Design considerations …
-   502→### Don't break anything
-   504→Allow structured logging to be added in the current `0.4.x` series of `log`. This gives us the option of including structured logging in an `0.4.x` release, or bumping the minor crate version without introducing any actual breaking changes.
-   505→
+   502→### Don't break anything …
    506→### Don't create a public dependency …
    510→### Support arbitrary producers and arbitrary consumers …
    514→### Remain object safe …
@@ -143,35 +142,18 @@ rfcs/0296-structured-logging.md
   1430→### `Record` and `RecordBuilder` …
   1460→## A minimal key-values API …
   1569→## The `log!` macros …
-  1575→# Drawbacks, rationale, and alternatives …
+  1575→# Drawbacks, rationale, and alternatives
   1578→## Supporting structured logging at all …
   1582→## Internalizing `sval` and `serde` …
   1588→### Drawbacks …
   1596→### Alternatives …
-  1598→#### Build a serialization contract in `log`
-  1600→Instead of internalizing a few serialization frameworks, `log` could provide a public common contract for them to conform to:
-  1601→
-  1602→```rust
-  1603→// Instead of `Value::from_any` + `FromAny`
-  1604→
-  1605→pub trait Visit {
-  1606→    fn visit(&self, visitor: &mut dyn Visitor) -> Result<(), Error>;
-  1607→}
-  1608→
-  1609→pub trait Visitor {
-  1610→    fn u64(&mut self, v: u64) -> Result<(), Error>;
-  1611→    fn i64(&mut self, v: i64) -> Result<(), Error>;
-  1612→
-  1613→    ..
-  1614→}
-  1615→```
-  1616→
-      →…
-  1629→# Prior art …
+  1629→# Prior art
+  1632→Structured logging is a paradigm that's supported by logging frameworks in many language ecosystems.
+  1633→
   1634→## Rust …
   1640→## Go …
   1644→## .NET …
-  1650→# Unresolved questions …
+  1650→# Unresolved questions
 src/__private_api.rs
      3→use self::sealed::KVs;
      4→use crate::{logger, Level, Log, Metadata, Record};
@@ -331,9 +313,6 @@ src/kv/source.rs
     32→///         println!("{key}: {value}");
     33→///
     34→///         Ok(())
-    35→///     }
-    36→/// }
-    37→///
       →…
     51→pub trait Source {
     62→    fn visit …
@@ -398,9 +377,6 @@ src/kv/value.rs
     56→///
     57→/// ## Using the `ToValue` trait
     58→///
-    59→/// The `ToValue` trait can be used to capture values generically.
-    60→/// It's the bound used by `Source`.
-    61→///
       →…
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
@@ -781,6 +757,7 @@ src/lib.rs
   1497→            STATE.store(INITIALIZED, Ordering::Release);
   1498→            Ok(())
   1499→        }
+  1500→        Err(INITIALIZING) => {
       →…
   1529→pub unsafe fn set_logger_racy(logger: &'static dyn Log) -> Result<(), SetLoggerError> {
   1544→/// The type returned by [`set_logger`] if [`set_logger`] has already been called.
@@ -813,6 +790,7 @@ src/lib.rs
   1612→    false if cfg!(feature = "release_max_level_off") => LevelFilter::Off,
   1613→    false if cfg!(feature = "release_max_level_error") => LevelFilter::Error,
   1614→    false if cfg!(feature = "release_max_level_warn") => LevelFilter::Warn,
+  1615→    false if cfg!(feature = "release_max_level_info") => LevelFilter::Info,
       →…
 src/macros.rs
     75→macro_rules! log {
@@ -885,8 +863,6 @@ test_max_level_features/main.rs
     74→    assert_eq!(*lvl, expected);
       →…
 tests/integration.rs
-     3→use log::{debug, error, info, trace, warn, Level, LevelFilter, Log, Metadata, Record};
-     4→use std::sync::{Arc, Mutex};
      6→struct State {
      7→    last_log_level: Mutex<Option<Level>>,
      8→    last_log_location: Mutex<Option<u32>>,
@@ -899,7 +875,6 @@ tests/integration.rs
     62→fn test_filter(logger: &dyn Log, a: &State, filter: LevelFilter) {
     89→fn test_line_numbers(logger: &dyn Log, state: &State) {
 tests/macros.rs
-     1→use log::{log, log_enabled, Log, Metadata, Record};
      3→macro_rules! all_log_macros {
     14→struct Logger;
     16→impl Log for Logger {

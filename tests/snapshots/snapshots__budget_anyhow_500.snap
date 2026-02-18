@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (478 words)
+budget: 500 (480 words)
 
 Cargo.toml
      1→[package …
@@ -17,12 +17,15 @@ README.md
    144→## Comparison to failure …
    155→## Comparison to thiserror …
    166→#### License …
-build.rs
-     3→use std::env;
 rust-toolchain.toml
      1→[toolchain …
 src/backtrace.rs
      8→pub(crate) enum Backtrace {}
+    11→macro_rules! impl_backtrace {
+    18→macro_rules! impl_backtrace {
+    25→macro_rules! backtrace {
+    32→macro_rules! backtrace {
+    39→macro_rules! backtrace_if_absent {
     53→macro_rules! backtrace_if_absent {
     64→macro_rules! backtrace_if_absent {
     70→#[cfg(all(not(std_backtrace), feature = "backtrace"))]
@@ -38,6 +41,9 @@ src/context.rs
 src/ensure.rs
     10→pub trait BothDebug {
     25→pub trait NotBothDebug {
+   105→macro_rules! __parse_ensure {
+   886→macro_rules! __fancy_ensure {
+   912→macro_rules! __fallback_ensure {
 src/error.rs
      4→use crate::nightly::{self, Request};
      6→use crate::ptr::Mut;
@@ -92,7 +98,10 @@ src/lib.rs
    678→        pub use crate::kind::BoxedKind;
    710→        pub trait Bool {
 src/macros.rs
+    58→macro_rules! bail {
     70→macro_rules! __ensure {
+   204→macro_rules! anyhow {
+   230→macro_rules! __anyhow {
 src/nightly.rs
     10→pub use core::error::Request;
 src/ptr.rs
@@ -138,24 +147,15 @@ tests/drop/mod.rs
     26→pub struct DetectDrop {
     27→    has_dropped: Flag,
     28→}
-tests/test_autotrait.rs
 tests/test_boxed.rs
 tests/test_context.rs
+    22→macro_rules! context_type {
 tests/test_ensure.rs
     43→    type Output = bool;
     78→fn assert_err …
 tests/test_ffi.rs
-     6→#[no_mangle]
-     7→pub extern "C" fn anyhow1(err: anyhow::Error) {
-    11→#[no_mangle]
-    12→pub extern "C" fn anyhow2(err: &mut Option<anyhow::Error>) {
-    16→#[no_mangle]
-    17→pub extern "C" fn anyhow3() -> Option<anyhow::Error> {
-tests/test_fmt.rs
 tests/test_source.rs
 tests/ui/ensure-nonbool.rs
-tests/ui/must-use.rs
-     3→use anyhow::anyhow;
 tests/ui/no-impl.rs
      3→#[derive(Debug)]
      4→struct Error;

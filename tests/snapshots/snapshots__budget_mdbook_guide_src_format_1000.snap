@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (981 words)
+budget: 1000 (975 words)
 
 README.md
      1→# Format
@@ -62,7 +62,12 @@ configuration/renderers.md
    206→### `[output.html.playground]` …
    230→### `[output.html.code]` …
    244→### `[output.html.search]` …
-   286→#### `[output.html.search.chapter]` …
+   286→#### `[output.html.search.chapter]`
+   288→The [`output.html.search.chapter`] table provides the ability to modify search settings per chapter or directory. Each key is the path to the chapter source file or directory, and the value is a table of settings to apply to that path. This will merge recursively, with more specific paths taking precedence.
+   289→
+   290→```toml
+   291→[output.html.search.chapter]
+      →…
    300→### `[output.html.redirect]` …
    325→## Markdown renderer …
 example.rs
@@ -74,6 +79,7 @@ markdown.md
      1→# Markdown
      3→mdBook's [parser](https://github.com/raphlinus/pulldown-cmark) adheres to the [CommonMark](https://commonmark.org/) specification with some extensions described below.
      4→You can take a quick [tutorial](https://commonmark.org/help/tutorial/),
+     5→or [try out](https://spec.commonmark.org/dingus/) CommonMark in real time. A complete Markdown overview is out of scope for 
       →…
      9→## Text and paragraphs …
     25→## Headings …
@@ -97,40 +103,13 @@ mathjax.md
      1→# MathJax support
      3→mdBook has optional support for math equations through
      4→[MathJax](https://www.mathjax.org/).
+     5→
       →…
     24→### Inline equations …
     32→### Block equations …
 mdbook.md
      1→# mdBook-specific features
-     3→## Hiding code lines
-     5→There is a feature in mdBook that lets you hide code lines by prepending them with a specific prefix.
-     6→
-     7→For the Rust language, you can prefix lines with `# ` (`#` followed by a space) to hide them [like you would with Rustdoc][rustdoc-hide].
-     8→This prefix can be escaped with `##` to prevent the hiding of a line that should begin with the literal string `# ` (see [Rustdoc's docs][rustdoc-hide] for more details)
-     9→
-    10→[rustdoc-hide]: https://doc.rust-lang.org/stable/rustdoc/write-documentation/documentation-tests.html#hiding-portions-of-the-example
-    11→
-    12→```bash
-    13→# fn main() {
-    14→    let x = 5;
-    15→    let y = 6;
-    16→
-    17→    println!("{}", x + y);
-    18→# }
-    19→```
-    20→
-    21→Will render as
-    22→
-    23→```rust
-    24→# fn main() {
-    25→    let x = 5;
-    26→    let y = 6;
-    27→
-    28→    println!("{}", x + y);
-    29→# }
-    30→```
-    31→
-      →…
+     3→## Hiding code lines …
     74→## Rust playground …
    102→## Rust code block attributes …
    133→## Including files …
@@ -146,6 +125,7 @@ summary.md
      1→# SUMMARY.md
      3→The summary file is used by mdBook to know what chapters to include, in what
      4→order they should appear, what their hierarchy is and where the source files
+     5→are. Without this file, there is no book.
       →…
     12→### Structure …
     93→### Example …
@@ -163,6 +143,7 @@ theme/README.md
     12→Here are the files you can override:
     13→
     14→- **_index.hbs_** is the handlebars template.
+    15→- **_head.hbs_** is appended to the HTML `<head>` section.
       →…
 theme/editor.md
      1→# Editor
@@ -187,6 +168,15 @@ theme/editor.md
     21→```
     22→~~~
     23→
+    24→The above will result in this editable playground:
+    25→
+    26→```rust,editable
+    27→fn main() {
+    28→    let number = 5;
+    29→    print!("{}", number);
+    30→}
+    31→```
+    32→
       →…
     35→## Customizing the editor …
 theme/index-hbs.md
@@ -202,14 +192,17 @@ theme/index-hbs.md
     46→### toc
     48→The toc helper is used like this
     49→
+    50→```handlebars
       →…
     80→### resource
     82→The path to a static file.
     83→It implicitly includes `path_to_root`,
+    84→and accounts for files that are renamed with a hash in their filename.
       →…
     90→### fa
     92→mdBook includes a copy of [Font Awesome Free's](https://fontawesome.com)
     93→MIT-licensed SVG files. It accepts three positional arguments:
+    94→
       →…
 theme/syntax-highlighting.md
      1→# Syntax highlighting

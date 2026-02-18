@@ -41,6 +41,7 @@ fn fixture_path(name: &str) -> Option<std::path::PathBuf> {
 //   git clone --depth 1 https://github.com/fatih/color.git test/fixtures/color
 //   git clone --depth 1 https://github.com/hashicorp/go-version.git test/fixtures/go-version
 //   git clone --depth 1 https://github.com/fatih/structs.git test/fixtures/structs
+//   git clone --depth 1 https://github.com/antirez/sds.git test/fixtures/sds
 
 /// Generate a snapshot test that renders a fixture with a word budget.
 macro_rules! budget_test {
@@ -445,6 +446,66 @@ MIT
 "#
 }
 
+fn c_sample() -> &'static str {
+    r#"
+#include <stdio.h>
+#include <stdlib.h>
+#include "token.h"
+
+#define MAX_TOKENS 1024
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
+
+typedef struct Token {
+    int kind;
+    int start;
+    int end;
+} Token;
+
+/* The kind of a lexical token. */
+enum TokenKind {
+    TOKEN_IDENT,
+    TOKEN_NUMBER,
+    TOKEN_SYMBOL,
+};
+
+typedef int (*Comparator)(const void *, const void *);
+
+/**
+ * Process the input and return a list of tokens.
+ * @param input The source text to tokenize.
+ * @param len Length of the input.
+ * @return Number of tokens extracted, or -1 on error.
+ */
+int process(const char *input, int len) {
+    return len;
+}
+
+static void helper(void) {}
+
+// Create a new token with the given kind and span.
+Token *token_new(int kind, int start, int end) {
+    Token *t = malloc(sizeof(Token));
+    t->kind = kind;
+    t->start = start;
+    t->end = end;
+    return t;
+}
+
+void token_free(Token *t) {
+    free(t);
+}
+
+/* Internal helper for parsing. */
+static int _parse_next(const char *input, int pos) {
+    return pos + 1;
+}
+
+extern int global_count;
+
+void *alloc_node(size_t size);
+"#
+}
+
 // Budget-based inline sample tests: test each language at small and large budgets.
 
 macro_rules! sample_test {
@@ -492,6 +553,11 @@ sample_test!(go_sample_budget_50, "sample.go", go_sample, 50);
 sample_test!(go_sample_budget_200, "sample.go", go_sample, 200);
 sample_test!(go_sample_budget_10000, "sample.go", go_sample, 10000);
 
+sample_test!(c_sample_budget_20, "sample.c", c_sample, 20);
+sample_test!(c_sample_budget_50, "sample.c", c_sample, 50);
+sample_test!(c_sample_budget_200, "sample.c", c_sample, 200);
+sample_test!(c_sample_budget_10000, "sample.c", c_sample, 10000);
+
 sample_test!(markdown_sample_budget_20, "README.md", markdown_sample, 20);
 sample_test!(markdown_sample_budget_50, "README.md", markdown_sample, 50);
 sample_test!(markdown_sample_budget_200, "README.md", markdown_sample, 200);
@@ -507,6 +573,7 @@ fn budget_monotonicity_inline() {
         ("sample.tsx", tsx_sample()),
         ("sample.py", python_sample()),
         ("sample.go", go_sample()),
+        ("sample.c", c_sample()),
         ("README.md", markdown_sample()),
     ];
     let budgets = [0, 10, 20, 50, 100, 200, 500, 1000, 10000];
@@ -584,6 +651,8 @@ budget_test!(budget_go_multierror_500, "go-multierror", 500);
 budget_test!(budget_go_multierror_2000, "go-multierror", 2000);
 budget_test!(budget_mitt_src_500, "mitt/src", 500);
 budget_test!(budget_mitt_src_2000, "mitt/src", 2000);
+budget_test!(budget_sds_500, "sds", 500);
+budget_test!(budget_sds_2000, "sds", 2000);
 
 // Subdirectory budget tests: running on a subdirectory within a fixture tests
 // that path display and file discovery work correctly at deeper nesting levels.

@@ -299,6 +299,7 @@ tests/test_display.rs
 tests/test_error.rs
      7→macro_rules! unimplemented_display {
 tests/test_expr.rs
+     5→use std::path::PathBuf;
     55→#[track_caller]
     56→fn assert<T: Display>(expected: &str, value: T) {
     57→    assert_eq!(expected, value.to_string());
@@ -310,9 +311,6 @@ tests/test_generics.rs
 tests/test_lints.rs
      5→pub use std::error::Error;
 tests/test_option.rs
-     1→#![cfg(feature = "std")]
-     2→#![cfg_attr(thiserror_nightly_testing, feature(error_generic_member_access))]
-     3→
      4→#[cfg(thiserror_nightly_testing)]
      5→pub mod structs {
     49→#[cfg(thiserror_nightly_testing)]
@@ -328,3 +326,7 @@ tests/ui/fallback-impl-with-display.rs
      9→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
     10→        unimplemented!()
     11→    }
+tests/ui/lifetime.rs
+tests/ui/no-display.rs
+tests/ui/source-struct-not-error.rs
+tests/ui/source-struct-unnamed-field-not-error.rs

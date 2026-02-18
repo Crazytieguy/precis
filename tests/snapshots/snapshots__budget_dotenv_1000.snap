@@ -5,9 +5,10 @@ expression: output
 budget: 1000 (979 words)
 
 CHANGELOG.md
-     1→# Changelog …
-     7→## [17.3.1](https://github.com/motdotla/dotenv/compare/v17.3.0...v17.3.1) (2026-02-12) …
-   484→# [8.0.0](https://github.com/motdotla/dotenv/compare/v7.0.0...v8.0.0) (2019-05-02) …
+     1→# Changelog
+     3→All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+     4→
+   484→# [8.0.0](https://github.com/motdotla/dotenv/compare/v7.0.0...v8.0.0) (2019-05-02)
 CONTRIBUTING.md
      1→# Contributing
      3→1. [Fork it](https://help.github.com/articles/fork-a-repo/)
@@ -17,25 +18,20 @@ CONTRIBUTING.md
     19→## Code Style …
 README-es.md
      1→# dotenv …
+    11→## Usage …
+    39→## Advanced …
+   319→## Agentes …
    331→### Inicio rápido …
+   357→## FAQ …
+   579→## Docs …
    587→### Config …
    605→#### Options …
-   607→##### path
-   609→Default: `path.resolve(process.cwd(), '.env')`
-   610→
-      →…
    692→### Parse …
    705→#### Options …
-   707→##### debug
-   709→Default: `false`
-   710→
-      →…
    721→### Populate …
    748→#### options …
-   750→##### Debug
-   752→Default: `false`
-   753→
-      →…
+   764→## CHANGELOG …
+   770→## Who's using dotenv? …
 README.md
      1→# dotenv
      5→Dotenv is a zero-dependency module that loads environment variables from a `.env` file into [`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env). Storing configuration in the environment separate from code is based on [The Twelve-Factor App](https://12factor.net/config) methodology.
@@ -47,14 +43,20 @@ README.md
     11→## Usage
     13→Install it.
     14→
+    15→```sh
+    16→npm install dotenv --save
       →…
     39→## Advanced
     43→Import with [ES6](#how-do-i-use-dotenv-with-import):
     44→
+    45→```javascript
+    46→import 'dotenv/config'
       →…
    319→## Agents
    323→> Software is changing, and dotenv must change with it—that is why I built [agentic secret storage (AS2)](https://dotenvx.com/as2). Agents run code without humans at terminals, so plaintext `.env` files are the wrong primitive.
    324→>
+   325→> AS2 is built for autonomous software: encrypted by default, zero console access, and cryptography‑first delivery that keeps operators out of the loop.
+   326→>
       →…
    331→### Quickstart
    333→Install vestauth and initialize your agent.
@@ -66,10 +68,14 @@ README.md
    357→## FAQ
    361→No.
    362→
+   363→Unless you encrypt it with [dotenvx](https://github.com/dotenvx/dotenvx). Then we recommend you do.
+   364→
       →…
    579→## Docs
    581→Dotenv exposes four functions:
    582→
+   583→* `config`
+   584→* `parse`
       →…
    587→### Config
    589→`config` will read your `.env` file, parse the contents, assign it to
@@ -82,12 +88,6 @@ README.md
    607→##### path
    609→Default: `path.resolve(process.cwd(), '.env')`
    610→
-   611→Specify a custom path if your file containing environment variables is located elsewhere.
-   612→
-   613→```js
-   614→require('dotenv').config({ path: '/custom/path/to/.env' })
-   615→```
-   616→
       →…
    625→##### quiet
    627→Default: `false`
@@ -120,12 +120,6 @@ README.md
    707→##### debug
    709→Default: `false`
    710→
-   711→Turn on logging to help debug why certain keys or values are not being set as you expect.
-   712→
-   713→```js
-   714→const dotenv = require('dotenv')
-   715→const buf = Buffer.from('hello world')
-   716→const opt = { debug: true }
       →…
    721→### Populate
    723→The engine which populates the contents of your .env file to `process.env` is available for use. It accepts a target, a source, and options. This is useful for power users who want to supply their own objects.
@@ -138,8 +132,7 @@ README.md
    750→##### Debug
    752→Default: `false`
    753→
-   754→Turn on logging to help debug why certain keys or values are not being populated as you expect.
-   755→
+      →…
    756→##### override
    758→Default: `false`
    759→
@@ -147,11 +140,12 @@ README.md
    764→## CHANGELOG
    766→See [CHANGELOG.md](CHANGELOG.md)
    767→
-      →…
+   768→&nbsp;
+   769→
    770→## Who's using dotenv?
    772→[These npm modules depend on it.](https://www.npmjs.com/browse/depended/dotenv)
    773→
-      →…
+   774→Projects that expand it often use the [keyword "dotenv" on npm](https://www.npmjs.com/search?q=keywords:dotenv).
 lib/cli-options.js
      1→const re = /^dotenv_config_(encoding|path|quiet|debug|override|DOTENV_KEY)=(.+)$/
 lib/env-options.js

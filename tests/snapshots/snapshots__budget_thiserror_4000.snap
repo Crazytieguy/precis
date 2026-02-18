@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3891 words)
+budget: 4000 (3854 words)
 
 Cargo.toml
      1→[package …
@@ -199,17 +199,9 @@ build.rs
     11→#[doc(hidden)]
       →…
     18→fn main() {
-    19→    println!("cargo:rerun-if-changed=build/probe.rs");
-      →…
     91→fn compile_probe(rustc_bootstrap: bool) -> bool {
-    92→    if env::var_os("RUSTC_STAGE").is_some() {
-      →…
    179→fn rustc_minor_version() -> Option<u32> {
-   180→    let rustc = cargo_env_var("RUSTC");
-      →…
    190→fn cargo_env_var(key: &str) -> OsString {
-   191→    env::var_os(key).unwrap_or_else(|| {
-      →…
 impl/Cargo.toml
      1→[package …
     11→[lib …
@@ -219,6 +211,11 @@ impl/src/ast.rs
      1→use crate::attr::{self, Attrs};
      2→use crate::generics::ParamsInScope;
      3→use crate::unraw::{IdentUnraw, MemberUnraw};
+     4→use proc_macro2::Span;
+     5→use std::fmt::{self, Display};
+     6→use syn::{
+     7→    Data, DataEnum, DataStruct, DeriveInput, Error, Fields, Generics, Ident, Index, Result, Type,
+     8→};
     10→pub enum Input<'a> {
     11→    Struct(Struct<'a>),
     12→    Enum(Enum<'a>),
@@ -260,20 +257,22 @@ impl/src/ast.rs
     54→impl<'a> Input<'a> {
     55→    pub fn from_syn(node: &'a DeriveInput) -> Result<Self> {
     67→impl<'a> Struct<'a> {
-    68→    fn from_syn …
     85→impl<'a> Enum<'a> {
-    86→    fn from_syn …
    118→impl<'a> Variant<'a> {
-   119→    fn from_syn …
    130→impl<'a> Field<'a> {
-   131→    fn multiple_from_syn …
-   139→    fn from_syn …
    156→impl ContainerKind {
-   157→    fn from_struct …
-   165→    fn from_variant …
    174→impl Display for ContainerKind {
    175→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
 impl/src/attr.rs
+     1→use proc_macro2::{Delimiter, Group, Literal, Punct, Spacing, Span, TokenStream, TokenTree};
+     2→use quote::{format_ident, quote, quote_spanned, ToTokens};
+     3→use std::collections::BTreeSet as Set;
+     4→use syn::parse::discouraged::Speculative;
+     5→use syn::parse::{End, ParseStream};
+     6→use syn::{
+     7→    braced, bracketed, parenthesized, token, Attribute, Error, ExprPath, Ident, Index, LitFloat,
+     8→    LitInt, LitStr, Meta, Result, Token,
+     9→};
     11→pub struct Attrs<'a> {
     12→    pub display: Option<Display<'a>>,
     13→    pub source: Option<Source<'a>>,
@@ -326,8 +325,6 @@ impl/src/attr.rs
     66→    UpperExp,
     67→}
     69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
-   124→fn parse_error_attribute …
-   196→fn parse_token_expr …
    302→impl ToTokens for Display<'_> {
    303→    fn to_tokens(&self, tokens: &mut TokenStream) {
    342→impl ToTokens for Trait {
@@ -339,27 +336,31 @@ impl/src/expand.rs
      4→use crate::generics::InferredBounds;
      5→use crate::private;
      6→use crate::unraw::MemberUnraw;
+     7→use proc_macro2::{Ident, Span, TokenStream};
+     8→use quote::{format_ident, quote, quote_spanned, ToTokens};
+     9→use std::collections::BTreeSet as Set;
+    10→use syn::{DeriveInput, GenericArgument, PathArguments, Result, Token, Type};
     12→pub fn derive(input: &DeriveInput) -> TokenStream {
-    22→fn try_expand …
-    31→fn impl_struct …
-   221→fn impl_enum …
-   505→pub(crate) fn call_site_ident …
-   511→fn fields_pat …
-   526→fn use_as_display …
-   536→fn from_initializer …
-   565→fn type_is_option …
-   569→fn unoptional_type …
-   574→fn type_parameter_of_option …
 impl/src/fallback.rs
      1→use crate::expand::call_site_ident;
      2→use crate::private;
-     7→pub(crate) fn expand …
+     3→use proc_macro2::TokenStream;
+     4→use quote::quote;
+     5→use syn::DeriveInput;
 impl/src/fmt.rs
      1→use crate::ast::{ContainerKind, Field};
      2→use crate::attr::{Display, Trait};
      3→use crate::private;
      4→use crate::scan_expr::scan_expr;
      5→use crate::unraw::{IdentUnraw, MemberUnraw};
+     6→use proc_macro2::{Delimiter, TokenStream, TokenTree};
+     7→use quote::{format_ident, quote, quote_spanned, ToTokens as _};
+     8→use std::collections::{BTreeSet, HashMap};
+     9→use std::iter;
+    10→use syn::ext::IdentExt;
+    11→use syn::parse::discouraged::Speculative;
+    12→use syn::parse::{Error, ParseStream, Parser, Result};
+    13→use syn::{Expr, Ident, Index, LitStr, Token};
     15→impl Display<'_> {
     16→    pub fn expand_shorthand(&mut self, fields: &[Field], container: ContainerKind) -> Result<()> {
    166→struct FmtArguments {
@@ -386,20 +387,19 @@ impl/src/fmt.rs
    188→        first_unnamed: None,
    189→    })
    190→}
-   192→fn try_explicit_named_args …
-   231→fn fallback_explicit_named_args …
-   255→fn is_syn_full …
-   273→fn take_int …
-   286→fn take_ident …
-   299→fn between …
 impl/src/generics.rs
+     1→use proc_macro2::TokenStream;
+     2→use quote::ToTokens;
+     3→use std::collections::btree_map::Entry;
+     4→use std::collections::{BTreeMap as Map, BTreeSet as Set};
+     5→use syn::punctuated::Punctuated;
+     6→use syn::{parse_quote, GenericArgument, Generics, Ident, PathArguments, Token, Type, WhereClause};
      8→pub struct ParamsInScope<'a> {
      9→    names: Set<&'a Ident>,
     10→}
     12→impl<'a> ParamsInScope<'a> {
     13→    pub fn new(generics: &'a Generics) -> Self {
     19→    pub fn intersects(&self, ty: &Type) -> bool {
-    26→fn crawl …
     48→pub struct InferredBounds {
     49→    bounds: Map<String, (Set<String>, Punctuated<TokenStream, Token![+]>)>,
     50→    order: Vec<TokenStream>,
@@ -419,6 +419,10 @@ impl/src/lib.rs
     30→mod scan_expr;
     31→mod unraw;
     32→mod valid;
+    34→use proc_macro::TokenStream;
+    35→use proc_macro2::{Ident, Span};
+    36→use quote::{ToTokens, TokenStreamExt as _};
+    37→use syn::{parse_macro_input, DeriveInput};
     39→#[proc_macro_derive(Error, attributes(backtrace, error, from, source))]
     40→pub fn derive_error(input: TokenStream) -> TokenStream {
     41→    let input = parse_macro_input!(input as DeriveInput);
@@ -431,30 +435,17 @@ impl/src/lib.rs
 impl/src/prop.rs
      1→use crate::ast::{Enum, Field, Struct, Variant};
      2→use crate::unraw::MemberUnraw;
+     3→use proc_macro2::Span;
+     4→use syn::Type;
      6→impl Struct<'_> {
-     7→    pub(crate) fn from_field …
-    11→    pub(crate) fn source_field …
-    15→    pub(crate) fn backtrace_field …
-    19→    pub(crate) fn distinct_backtrace_field …
     25→impl Enum<'_> {
-    26→    pub(crate) fn has_source …
-    32→    pub(crate) fn has_backtrace …
-    38→    pub(crate) fn has_display …
     53→impl Variant<'_> {
-    54→    pub(crate) fn from_field …
-    58→    pub(crate) fn source_field …
-    62→    pub(crate) fn backtrace_field …
-    66→    pub(crate) fn distinct_backtrace_field …
     72→impl Field<'_> {
-    73→    pub(crate) fn is_backtrace …
-    77→    pub(crate) fn source_span …
-    88→fn from_field …
-    97→fn source_field …
-   112→fn backtrace_field …
-   127→fn distinct_backtrace_field …
-   138→fn type_is_backtrace …
 impl/src/scan_expr.rs
      1→use self::{Action::*, Input::*};
+     2→use proc_macro2::{Delimiter, Ident, Spacing, TokenTree};
+     3→use syn::parse::{ParseStream, Result};
+     4→use syn::{AngleBracketedGenericArguments, BinOp, Expr, ExprPath, Lifetime, Lit, Token, Type};
      6→enum Input {
      7→    Keyword(&'static str),
      8→    Punct(&'static str),
@@ -501,8 +492,15 @@ impl/src/scan_expr.rs
    175→static RAW: [(Input, Action); 3] = [
    181→static REFERENCE: [(Input, Action); 3] = [
    187→static RETURN: [(Input, Action); 2] = [
-   192→pub(crate) fn scan_expr …
 impl/src/unraw.rs
+     1→use proc_macro2::{Ident, Span, TokenStream};
+     2→use quote::ToTokens;
+     3→use std::cmp::Ordering;
+     4→use std::fmt::{self, Display};
+     5→use std::hash::{Hash, Hasher};
+     6→use syn::ext::IdentExt as _;
+     7→use syn::parse::{Parse, ParseStream, Result};
+     8→use syn::Index;
     10→#[derive(Clone)]
     11→#[repr(transparent)]
     12→pub struct IdentUnraw(Ident);
@@ -546,19 +544,12 @@ impl/src/unraw.rs
 impl/src/valid.rs
      1→use crate::ast::{Enum, Field, Input, Struct, Variant};
      2→use crate::attr::Attrs;
+     3→use syn::{Error, GenericArgument, PathArguments, Result, Type};
      5→impl Input<'_> {
-     6→    pub(crate) fn validate …
     14→impl Struct<'_> {
-    15→    fn validate …
     45→impl Enum<'_> {
-    46→    fn validate …
     66→impl Variant<'_> {
-    67→    fn validate …
     91→impl Field<'_> {
-    92→    fn validate …
-   109→fn check_non_field_attrs …
-   151→fn check_field_attrs …
-   224→fn contains_non_static_lifetime …
 rust-toolchain.toml
      1→[toolchain …
 src/aserror.rs
@@ -710,7 +701,6 @@ tests/no-std/test.rs
     14→    pub field: i32,
     15→}
 tests/test_backtrace.rs
-     4→use thiserror::Error;
      8→pub struct Inner;
     13→pub struct InnerBacktrace {
     17→#[cfg(thiserror_nightly_testing)]
@@ -749,7 +739,6 @@ tests/test_display.rs
    418→        write!(formatter, "0o{:o}", value)
    419→    }
 tests/test_error.rs
-     3→use core::fmt::{self, Display};
      7→macro_rules! unimplemented_display {
      8→    ($ty:ty) => {
       →…
@@ -782,7 +771,6 @@ tests/test_error.rs
     48→    Unit,
     49→}
 tests/test_expr.rs
-     3→use core::fmt::Display;
      5→use std::path::PathBuf;
     11→pub enum CompilerError {
     41→pub enum RustupError {
@@ -791,7 +779,6 @@ tests/test_expr.rs
     57→    assert_eq!(expected, value.to_string());
     58→}
 tests/test_from.rs
-     3→use std::io;
      8→pub struct ErrorStruct {
     15→pub struct ErrorStructOptional {
     22→pub struct ErrorTuple(#[from] io::Error);
@@ -801,7 +788,6 @@ tests/test_from.rs
     48→pub enum Many {
     53→fn assert_impl<T: From<io::Error>>() {}
 tests/test_generics.rs
-     3→use core::fmt::{self, Debug, Display};
      7→pub struct NoFormat;
     10→pub struct DebugOnly;
     12→pub struct DisplayOnly;
@@ -827,12 +813,8 @@ tests/test_generics.rs
    162→pub struct StructTransparentGeneric<E>(pub E);
    175→pub enum AssociatedTypeError<T: FromStr> {
 tests/test_lints.rs
-     3→use thiserror::Error;
      5→pub use std::error::Error;
 tests/test_option.rs
-     1→#![cfg(feature = "std")]
-     2→#![cfg_attr(thiserror_nightly_testing, feature(error_generic_member_access))]
-     3→
      4→#[cfg(thiserror_nightly_testing)]
      5→pub mod structs {
     11→    pub struct OptSourceNoBacktrace {
@@ -848,7 +830,6 @@ tests/test_option.rs
     83→    pub enum AlwaysSourceOptBacktrace {
     93→    pub enum OptSourceOptBacktrace {
 tests/test_path.rs
-     3→use core::fmt::Display;
      8→#[derive(Error, Debug)]
      9→#[error("failed to read '{file}'")]
     10→struct StructPathBuf {

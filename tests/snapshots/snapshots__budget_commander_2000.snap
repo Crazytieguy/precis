@@ -2,17 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1997 words)
+budget: 2000 (1998 words)
 
 CHANGELOG.md
      1→# Changelog …
-   911→#### Testing for no arguments
-   913→If you were previously using code like:
-   914→
-   915→```js
-      →…
+   911→#### Testing for no arguments …
 CONTRIBUTING.md
-     1→# Contributing …
+     1→# Contributing
      3→## Issues …
     13→## Pull Requests …
 Readme.md
@@ -43,6 +39,13 @@ Readme.md
     31→    - [Life cycle hooks](#life-cycle-hooks)
     32→  - [Automated help](#automated-help)
     33→    - [Custom help](#custom-help)
+    34→    - [Display help after errors](#display-help-after-errors)
+    35→    - [Display help from code](#display-help-from-code)
+    36→    - [.name](#name)
+    37→    - [.usage](#usage)
+    38→    - [.description and .summary](#description-and-summary)
+    39→    - [.helpOption(flags, description)](#helpoptionflags-description)
+    40→    - [.helpCommand()](#helpcommand)
       →…
     61→## Installation …
     67→## Quick Start …
@@ -64,24 +67,6 @@ Readme.md
    754→## Automated help …
    956→## Custom event listeners …
    966→## Bits and pieces …
-   968→### .parse() and .parseAsync()
-   970→Call with no parameters to parse `process.argv`. Detects Electron and special node options like `node --eval`. Easy mode!
-   971→
-   972→Or, call with an array of strings to parse, and optionally where the user arguments start by specifying where the arguments are `from`:
-   973→
-   974→- `'node'`: default, `argv[0]` is the application and `argv[1]` is the script being run, with user arguments after that
-   975→- `'electron'`: `argv[0]` is the application and `argv[1]` varies depending on whether the electron application is packaged
-   976→- `'user'`: just user arguments
-   977→
-   978→For example:
-   979→
-   980→```js
-   981→program.parse(); // parse process.argv and auto-detect electron and special node flags
-   982→program.parse(process.argv); // assume argv[0] is app and argv[1] is script
-   983→program.parse(['--port', '80'], { from: 'user' }); // just user supplied arguments, nothing special about argv[0]
-   984→```
-   985→
-      →…
   1164→## Support …
 Readme_zh-CN.md
      1→# Commander.js
@@ -92,17 +77,13 @@ Readme_zh-CN.md
       →…
    570→#### 其他参数配置 …
    582→#### 自定义参数处理 …
-   907→### .parse() 和 .parseAsync()
-   909→`.parse`的第一个参数是要解析的字符串数组，也可以省略参数而使用`process.argv`。
-   910→
-   911→如果参数遵循与 node 不同的约定，可以在第二个参数中传递`from`选项：
-   912→
-      →…
 SECURITY.md
-     1→# Security Policy …
+     1→# Security Policy
+     3→To report a security vulnerability, please use the
+     4→[Tidelift security contact](https://tidelift.com/security).
+      →…
 docs/deprecated.md
      1→# Deprecated …
-   229→### Short option flag longer than a single character …
 docs/help-in-depth.md
      1→# Help in Depth …
 docs/options-in-depth.md
@@ -113,14 +94,30 @@ docs/release-policy.md
      1→# Release Policy …
 docs/terminology.md
      1→# Terminology …
-docs/zh-CN/可变参数的选项.md
 eslint.config.js
      8→const tsconfigTsFiles …
      9→const tsconfigJsFiles …
 esm.mjs
      1→import commander from './index.js';
 examples/color-help-replacement.mjs
+    20→class MyHelp extends Help {
+    21→  constructor() {
+    26→  prepareContext(contextOptions) {
+    33→  displayWidth(str) {
+    37→  boxWrap(str, width) {
+    41→  styleTitle(str) {
+    44→  styleCommandText(str) {
+    47→  styleCommandDescription(str) {
+    50→  styleDescriptionText(str) {
+    53→  styleOptionText(str) {
+    56→  styleArgumentText(str) {
+    59→  styleSubcommandText(str) {
+    64→class MyCommand extends Command {
+    65→  createCommand(name) {
+    68→  createHelp() {
+    73→const program = new MyCommand();
 examples/color-help.mjs
+     6→const program = new Command();
 examples/custom-command-class.js
      6→class CommandWithTrace extends commander.Command {
      7→  createCommand(name) {
@@ -128,8 +125,15 @@ examples/global-options-added.js
     16→class MyRootCommand extends Command {
     17→  createCommand(name) {
 examples/help-centered.mjs
+     6→class MyHelp extends Help {
+     7→  formatItem(term, termWidth, description, helper) {
+    17→class MyCommand extends Command {
+    18→  createCommand(name) {
+    21→  createHelp() {
+    26→const program = new MyCommand();
 examples/man-style-help.mjs
      5→function formatItem(term, termWidth, description, helper) {
+    25→const program = new Command();
 jest.config.js
      1→const config …
 lib/argument.js
@@ -368,11 +372,15 @@ package.json
     81→  "support": true
     82→}
 tests/command.createArgument.test.js
+     3→class MyArgument extends commander.Argument {
      4→  constructor(name, description) {
+    10→class MyCommand extends commander.Command {
     11→  createArgument(name, description) {
     16→  createCommand(name) {
 tests/command.createOption.test.js
+     3→class MyOption extends commander.Option {
      4→  constructor(flags, description) {
+    10→class MyCommand extends commander.Command {
     11→  createOption(flags, description) {
 tests/esm-imports-test.mjs
      1→../esm.mjs …
@@ -533,4 +541,8 @@ typings/index.test-d.ts
    386→}
    509→class MyCommand extends commander.Command {
    510→  createCommand(name?: string): MyCommand {
+   511→    return new MyCommand(name);
+   512→  }
    514→  myFunction(): void {
+   515→    // do nothing.
+   516→  }

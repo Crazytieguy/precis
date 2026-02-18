@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1918 words)
+budget: 2000 (1926 words)
 
 Cargo.toml
      1→[package …
@@ -78,6 +78,11 @@ README.md
     68→  ```rust
     69→  #[derive(Error, Debug)]
     70→  pub enum Error {
+    71→      #[error("invalid rdo_lookahead_frames {0} (expected < {max})", max = i32::MAX)]
+    72→      InvalidLookahead(u32),
+    73→  }
+    74→  ```
+    75→
       →…
    211→## Comparison to anyhow
    213→Use thiserror if you care about designing your own dedicated error type(s) so
@@ -118,6 +123,9 @@ build/probe.rs
     29→    }
 build.rs
     10→const PRIVATE: &str = "\
+    11→#[doc(hidden)]
+    12→pub mod __private$$ {
+      →…
     18→fn main() {
     91→fn compile_probe(rustc_bootstrap: bool) -> bool {
    179→fn rustc_minor_version() -> Option<u32> {
@@ -264,7 +272,10 @@ impl/src/fmt.rs
    184→
    185→    input.parse::<TokenStream>().unwrap();
    186→    Ok(FmtArguments {
-      →…
+   187→        named: BTreeSet::new(),
+   188→        first_unnamed: None,
+   189→    })
+   190→}
 impl/src/generics.rs
      8→pub struct ParamsInScope<'a> {
      9→    names: Set<&'a Ident>,
@@ -481,7 +492,6 @@ tests/no-std/test.rs
     14→    pub field: i32,
     15→}
 tests/test_backtrace.rs
-     4→use thiserror::Error;
     17→#[cfg(thiserror_nightly_testing)]
     18→pub mod structs {
     19→    use super::{Inner, InnerBacktrace};
@@ -494,7 +504,6 @@ tests/test_display.rs
    414→mod util {
    417→    pub fn octal<T: Octal>(value: &T, formatter: &mut fmt::Formatter) -> fmt::Result {
 tests/test_error.rs
-     3→use core::fmt::{self, Display};
      7→macro_rules! unimplemented_display {
     18→struct BracedError {
     24→struct TupleError(String, usize);
@@ -503,17 +512,14 @@ tests/test_error.rs
     36→struct WithAnyhow {
     42→enum EnumError {
 tests/test_expr.rs
-     3→use core::fmt::Display;
      5→use std::path::PathBuf;
     55→#[track_caller]
     56→fn assert<T: Display>(expected: &str, value: T) {
     57→    assert_eq!(expected, value.to_string());
     58→}
 tests/test_from.rs
-     3→use std::io;
     53→fn assert_impl<T: From<io::Error>>() {}
 tests/test_generics.rs
-     3→use core::fmt::{self, Debug, Display};
      7→pub struct NoFormat;
     12→pub struct DisplayOnly;
     14→impl Display for DisplayOnly {
@@ -523,18 +529,13 @@ tests/test_generics.rs
     83→impl<HasDisplay, HasDebug, HasNeither> Debug for EnumCompound<HasDisplay, HasDebug, HasNeither> {
     84→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 tests/test_lints.rs
-     3→use thiserror::Error;
      5→pub use std::error::Error;
 tests/test_option.rs
-     1→#![cfg(feature = "std")]
-     2→#![cfg_attr(thiserror_nightly_testing, feature(error_generic_member_access))]
-     3→
      4→#[cfg(thiserror_nightly_testing)]
      5→pub mod structs {
     49→#[cfg(thiserror_nightly_testing)]
     50→pub mod enums {
 tests/test_path.rs
-     3→use core::fmt::Display;
     10→struct StructPathBuf {
     17→struct StructPath {
     22→enum EnumPathBuf {

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1961 words)
+budget: 2000 (1969 words)
 
 package.json
      2→	"name": "ky",
@@ -69,19 +69,13 @@ readme.md
     55→
       →…
     85→## API
-    87→### ky(input, options?)
-    89→The `input` and `options` are the same as [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch), with additional `options` available (see below).
-    90→
-      →…
+    87→### ky(input, options?) …
    122→### ky.get(input, options?) …
-   123→### ky.post(input, options?)
-   124→### ky.put(input, options?)
-   125→### ky.patch(input, options?)
-   126→### ky.head(input, options?)
-   127→### ky.delete(input, options?)
-   129→Sets `options.method` to the method name and makes a request.
-   130→
-      →…
+   123→### ky.post(input, options?) …
+   124→### ky.put(input, options?) …
+   125→### ky.patch(input, options?) …
+   126→### ky.head(input, options?) …
+   127→### ky.delete(input, options?) …
    147→##### method …
    156→##### json …
    162→##### searchParams …
@@ -127,35 +121,14 @@ readme.md
   1000→### HTTPError …
   1046→### TimeoutError …
   1050→## Tips
-  1052→### Sending form data
-  1054→Sending form data in Ky is identical to `fetch`. Just pass a [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance to the `body` option. The `Content-Type` header will be automatically set to `multipart/form-data`, overriding any existing `Content-Type` header.
-  1055→
-      →…
+  1052→### Sending form data …
   1109→### Setting a custom `Content-Type` …
   1129→### Cancellation …
   1156→### Proxy support (Node.js) …
-  1158→#### Native proxy support
-  1160→Node.js 24.5+ supports automatic proxy configuration via environment variables. Set `NODE_USE_ENV_PROXY=1` or use the `--use-env-proxy` CLI flag.
-  1161→
-  1162→```sh
-  1163→NODE_USE_ENV_PROXY=1 HTTP_PROXY=http://proxy.example.com:8080 node app.js
-  1164→```
-  1165→
-  1166→Or:
-  1167→
-  1168→```sh
-  1169→node --use-env-proxy app.js
-  1170→```
-  1171→
-  1172→Supported environment variables:
-      →…
   1209→### HTTP/2 support (Node.js) …
   1249→### Consuming Server-Sent Events (SSE) …
   1264→### Extending types …
   1292→## FAQ
-  1294→#### How do I use this in Node.js?
-  1296→Node.js 18 and later supports `fetch` natively, so you can just use this package directly.
-  1297→
   1339→## Browser support
   1341→The latest version of Chrome, Firefox, and Safari.
   1342→
@@ -307,27 +280,46 @@ source/index.ts
     34→const ky = createInstance();
 source/types/ResponsePromise.ts
      4→import {type KyResponse} from './response.js';
+     6→export type ResponsePromise …
 source/types/common.ts
+     2→export type Primitive …
+     4→export type Required …
+     6→export type LiteralUnion …
 source/types/hooks.ts
      1→import {type stop, type RetryMarker} from '../core/constants.js';
      2→import type {KyRequest, KyResponse, HTTPError} from '../index.js';
      3→import type {NormalizedOptions} from './options.js';
+     5→export type BeforeRequestState …
+    14→export type BeforeRequestHook …
+    20→export type BeforeRetryState …
+    30→export type BeforeRetryHook …
+    32→export type AfterResponseState …
+    41→export type AfterResponseHook …
+    48→export type BeforeErrorState …
+    57→export type BeforeErrorHook …
+    59→export type Hooks …
 source/types/ky.ts
      1→import {type stop, type retry} from '../core/constants.js';
      2→import type {Input, Options} from './options.js';
      3→import type {ResponsePromise} from './ResponsePromise.js';
+     5→export type KyInstance …
 source/types/options.ts
      1→import type {LiteralUnion, Required} from './common.js';
      2→import type {Hooks} from './hooks.js';
      3→import type {RetryOptions} from './retry.js';
+     6→export type SearchParamsInit …
+     9→export type SearchParamsOption …
+    11→export type RequestHttpMethod …
+    12→export type HttpMethod …
+    14→export type Input …
+    16→export type Progress …
+    27→export type KyHeadersInit …
     29→/**
     30→Custom Ky options
     31→*/
     32→
     33→export type KyOptions = {
     34→	/**
-    35→	Shortcut for sending JSON. Use this instead of the `body` option.
-    36→
       →…
    302→/**
    303→Each key from KyOptions is present and set to `true`.
@@ -383,6 +375,7 @@ source/types/options.ts
    354→	*/
    355→	headers?: KyHeadersInit;
    356→}
+   358→export type InternalOptions …
    370→/**
    371→Normalized options passed to the `fetch` call and the `beforeRequest` hooks.
    372→*/
@@ -399,12 +392,16 @@ source/types/options.ts
    383→	context: Record<string, unknown>;
    384→}
 source/types/request.ts
+     1→export type KyRequest …
 source/types/response.ts
+     1→export type KyResponse …
 source/types/retry.ts
      1→import type {HttpMethod} from './options.js';
+     3→export type ShouldRetryState …
+    15→export type RetryOptions …
 source/utils/body.ts
      5→export const getBodySize …
-    57→const withProgress …
+    57→const withProgress = (stream: ReadableStream<Uint8Array>, totalBytes: number, onProgress: Options['onDownloadProgress'] | Options['onUploadProgress']): ReadableStream<Uint8Array> => {
     90→export const streamResponse …
    119→export const streamRequest …
 source/utils/delay.ts
@@ -415,9 +412,9 @@ source/utils/is.ts
 source/utils/merge.ts
      6→export const validateAndMerge …
     16→export const mergeHeaders …
-    32→function newHookValue …
+    32→function newHookValue<K extends keyof Hooks>(original: Hooks, incoming: Hooks, property: K): Required<Hooks>[K] {
     38→export const mergeHooks …
-    47→const appendSearchParameters …
+    47→const appendSearchParameters = (target: any, source: any): URLSearchParams => {
     86→export const deepMerge …
 source/utils/normalize.ts
      5→export const normalizeRequestMethod …
@@ -426,6 +423,8 @@ source/utils/normalize.ts
     12→const retryAfterStatusCodes = [413, 429, 503];
     14→type InternalRetryOptions = Required<Omit<RetryOptions, 'shouldRetry'>> & Pick<RetryOptions, 'shouldRetry'>;
     16→const defaultRetryOptions: InternalRetryOptions = {
+    17→	limit: 2,
+      →…
     28→export const normalizeRetryOptions …
 source/utils/options.ts
      4→export const findUnknownOptions …
@@ -483,6 +482,9 @@ test/browser.ts
     13→	interface Window {
     14→		ky: typeof ky;
     15→	}
+test/bytes.ts
+test/fetch.ts
+test/headers.ts
 test/helpers/create-http-test-server.ts
      7→export type HttpServerOptions = {
     11→export type ExtendedHttpTestServer = {
@@ -490,6 +492,10 @@ test/helpers/create-large-file.ts
 test/helpers/parse-body.ts
 test/helpers/with-page.ts
 test/helpers/with-performance.ts
+test/hooks.ts
+test/http-error.ts
+test/main.ts
+test/retry.ts
 tsconfig.dist.json
      2→	"extends": "./tsconfig",
      3→	"compilerOptions": {

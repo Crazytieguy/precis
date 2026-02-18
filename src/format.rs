@@ -551,8 +551,8 @@ pub(crate) fn doc_comment_start(lines: &[&str], symbol_line_0: usize, lang: Opti
         return peek;
     }
 
-    // Go doc comments (plain // preceding a declaration)
-    if lang == Some(Lang::Go) && prev_trimmed.starts_with("//") {
+    // Go and C doc comments (plain // preceding a declaration)
+    if matches!(lang, Some(Lang::Go | Lang::C)) && prev_trimmed.starts_with("//") {
         peek -= 1;
         while peek > 0 {
             let above = lines[peek - 1].trim();
@@ -565,7 +565,7 @@ pub(crate) fn doc_comment_start(lines: &[&str], symbol_line_0: usize, lang: Opti
         return peek;
     }
 
-    // Block doc comments (/** ... */ — JSDoc or Rust)
+    // Block doc comments (/** ... */ — JSDoc/Doxygen or Rust; /* ... */ for C)
     if prev_trimmed.ends_with("*/") {
         let mut scan = peek - 1;
         loop {
@@ -574,7 +574,11 @@ pub(crate) fn doc_comment_start(lines: &[&str], symbol_line_0: usize, lang: Opti
                 return scan;
             }
             if line.starts_with("/*") {
-                // Regular block comment, not a doc comment
+                // In C, plain /* ... */ comments are the standard doc comment style.
+                // In other languages, only /** ... */ counts as a doc comment.
+                if lang == Some(Lang::C) {
+                    return scan;
+                }
                 break;
             }
             if scan == 0 {
@@ -584,8 +588,10 @@ pub(crate) fn doc_comment_start(lines: &[&str], symbol_line_0: usize, lang: Opti
         }
     }
 
-    // Python-style # comments (but not Rust #[attributes], already handled above)
-    if prev_trimmed.starts_with('#') && !prev_trimmed.starts_with("#[") {
+    // Python-style # comments (but not Rust #[attributes], already handled above).
+    // Only match for Python — C preprocessor directives (#include, #define) also
+    // start with # but are not doc comments.
+    if lang == Some(Lang::Python) && prev_trimmed.starts_with('#') && !prev_trimmed.starts_with("#[") {
         peek -= 1;
         while peek > 0 {
             let above = lines[peek - 1].trim();

@@ -2,15 +2,16 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (956 words)
+budget: 1000 (958 words)
 
 CHANGELOG.md
-     1→# Changelog …
+     1→# Changelog
+     3→All notable changes to this project will be documented in this file.
+     4→
+      →…
     21→### Fixed …
 CONTRIBUTING.md
-     1→Contributing
-     4→All the contributions are welcome! Please open [an
-      →…
+     1→Contributing …
 README.md
      1→# python-dotenv
      3→[![Build Status][build_status_badge]][build_status_link]
@@ -39,30 +40,7 @@ README.md
     27→
       →…
     78→## Other Use Cases
-    80→### Load configuration without altering the environment
-    82→The function `dotenv_values` works more or less the same way as `load_dotenv`,
-    83→except it doesn't touch the environment, it just returns a `dict` with the
-    84→values parsed from the `.env` file.
-    85→
-    86→```python
-    87→from dotenv import dotenv_values
-    88→
-    89→config = dotenv_values(".env")  # config = {"USER": "foo", "EMAIL": "foo@example.org"}
-    90→```
-    91→
-    92→This notably enables advanced configuration management:
-    93→
-    94→```python
-    95→import os
-    96→from dotenv import dotenv_values
-    97→
-    98→config = {
-    99→    **dotenv_values(".env.shared"),  # load shared development variables
-   100→    **dotenv_values(".env.secret"),  # load sensitive variables
-   101→    **os.environ,  # override loaded values with environment variables
-   102→}
-   103→```
-   104→
+    80→### Load configuration without altering the environment …
    105→### Parse configuration as a stream …
    120→### Load .env files in IPython …
    141→### Disable load_dotenv …
@@ -149,6 +127,7 @@ src/dotenv/cli.py
     73→    """
     74→
     75→    try:
+    76→        with open(path) as stream:
       →…
    112→@cli.command(name="set")
    113→@click.pass_context
@@ -158,6 +137,7 @@ src/dotenv/cli.py
    117→    """Store the given key/value."""
    118→    file = ctx.obj["FILE"]
    119→    quote = ctx.obj["QUOTE"]
+   120→    export = ctx.obj["EXPORT"]
       →…
    128→@cli.command()
    129→@click.pass_context
@@ -166,6 +146,7 @@ src/dotenv/cli.py
    132→    """Retrieve the value for the given key."""
    133→    file = ctx.obj["FILE"]
    134→
+   135→    with stream_file(file) as stream:
       →…
    145→@cli.command()
    146→@click.pass_context
@@ -174,12 +155,14 @@ src/dotenv/cli.py
    149→    """Removes the given key."""
    150→    file = ctx.obj["FILE"]
    151→    quote = ctx.obj["QUOTE"]
+   152→    success, key = unset_key(file, key, quote)
       →…
    172→@click.argument("commandline", nargs=-1, type=click.UNPROCESSED)
    173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
    174→    """Run command with environment variables present."""
    175→    file = ctx.obj["FILE"]
    176→    if not os.path.isfile(file):
+   177→        raise click.BadParameter(
       →…
 src/dotenv/ipython.py
      8→from .main import find_dotenv, load_dotenv
@@ -209,12 +192,16 @@ src/dotenv/ipython.py
     34→    def dotenv(self, line):
     35→        args = parse_argstring(self.dotenv, line)
     36→        # Locate the .env file
+    37→        dotenv_path = args.dotenv_path
       →…
 src/dotenv/main.py
     13→from .parser import Binding, parse_stream
     14→from .variables import parse_variables
     25→def _load_dotenv_disabled() -> bool:
     26→    """
+    27→    Determine if dotenv loading has been disabled.
+    28→    """
+    29→    if "PYTHON_DOTENV_DISABLED" not in os.environ:
       →…
     45→class DotEnv:
     63→    @contextmanager
@@ -235,12 +222,19 @@ src/dotenv/main.py
    145→) -> Iterator[Tuple[IO[str], IO[str]]]:
    146→    pathlib.Path(path).touch()
    147→
+   148→    with tempfile.NamedTemporaryFile(mode="w", encoding=encoding, delete=False) as dest:
       →…
    269→def _walk_to_root(path: str) -> Iterator[str]:
    270→    """
+   271→    Yield directories starting from the given directory up to the root
+   272→    """
+   273→    if not os.path.exists(path):
       →…
    423→def _is_file_or_fifo(path: StrPath) -> bool:
    424→    """
+   425→    Return True if `path` exists and is either a regular file or a FIFO.
+   426→    """
+   427→    if os.path.isfile(path):
       →…
 src/dotenv/parser.py
     35→class Original(NamedTuple):

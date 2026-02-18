@@ -14,15 +14,10 @@ Readme.md
    189→### Examples …
    205→### Documentation …
    231→### License …
-docs/guides/01-getting-started.md
-     3→## Installing Superstruct …
 docs/readme.md
      7→### Usage …
-docs/reference/core.md
-     3→### `assert` …
 docs/reference/typescript.md
      5→## Utilities …
-     7→### `Describe` …
 docs/resources/faq.md
      1→# FAQ …
 docs/resources/links.md
@@ -136,7 +131,19 @@ test/validation/boolean/valid.ts
 test/validation/function/invalid.ts
 test/validation/function/valid.ts
      5→export const data = function () {}
+test/validation/instance/invalid.ts
+test/validation/instance/valid.ts
+test/validation/literal/invalid.ts
+test/validation/literal/valid.ts
 test/validation/never/invalid.ts
+test/validation/number/invalid.ts
+test/validation/number/valid.ts
+test/validation/pattern/invalid.ts
+test/validation/pattern/valid.ts
+test/validation/regexp/invalid.ts
+test/validation/regexp/valid.ts
+test/validation/string/invalid.ts
+test/validation/string/valid.ts
 test/validation/type/valid-instance.ts
      3→class Person {
      6→  constructor(name: string) {

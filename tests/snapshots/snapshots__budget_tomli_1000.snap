@@ -2,13 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (966 words)
+budget: 1000 (976 words)
 
 CHANGELOG.md
      1→# Changelog …
-     3→## 2.4.0
-     5→- Added
-      →…
 README.md
      5→# Tomli
      7→> A lil' TOML parser
@@ -26,6 +23,7 @@ README.md
     35→Version 2.4.0 and later are compatible with [TOML v1.1.0](https://toml.io/en/v1.1.0).
     36→Older versions are [TOML v1.0.0](https://toml.io/en/v1.0.0) compatible.
     37→
+    38→A version of Tomli, the `tomllib` module,
       →…
     50→## Installation<a name="installation"></a>
     52→```bash
@@ -33,21 +31,7 @@ README.md
     54→```
     55→
     56→## Usage<a name="usage"></a>
-    58→### Parse a TOML string<a name="parse-a-toml-string"></a>
-    60→```python
-    61→import tomli
-    62→
-    63→toml_str = """
-    64→[[players]]
-      →…
    152→## FAQ<a name="faq"></a>
-   154→### Why this parser?<a name="why-this-parser"></a>
-   156→- it's lil'
-   157→- pure Python with zero dependencies
-   158→- the fastest pure Python parser [\*](#pure-python):
-   159→  14x as fast as [tomlkit](https://pypi.org/project/tomlkit/),
-   160→  2.1x as fast as [toml](https://pypi.org/project/toml/)
-      →…
    201→## Performance<a name="performance"></a>
    203→The `benchmark/` folder in this repository contains a performance benchmark for comparing the various Python TOML parsers.
    204→
@@ -58,19 +42,9 @@ benchmark/README.md
      3→## Acknowledgments
      5→This benchmark was shamelessly copied from
      6→[pytomlpp](https://github.com/bobfang1992/pytomlpp/tree/e6b03726f8347c6a6757f520ad1b5fab68ed8534/benchmark)
-     7→repository and edited.
       →…
-    10→## Running …
-    12→### Against the local Tomli state
-    14→```bash
-    15→tox -e benchmark
-    16→```
-    17→
-    18→### Against the latest Tomli PyPI release
-    20→```bash
-      →…
+    10→## Running
 benchmark/data.toml
-   117→[multiline-strings …
 benchmark/run.py
     15→def benchmark …
     37→def run …
@@ -120,8 +94,12 @@ src/tomli/__init__.py
      6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
      8→from ._parser …
 src/tomli/_parser.py
+     7→import sys …
+     8→from types …
     10→from ._re …
     19→TYPE_CHECKING = False
+    21→    from collections.abc …
+    22→    from typing …
     24→    from ._types …
     26→# Inline tables/arrays are implemented using recursion. Pathologically
     27→# nested documents cause pure Python to raise RecursionError (which is OK),
@@ -130,7 +108,8 @@ src/tomli/_parser.py
     30→# https://mypyc.readthedocs.io/en/latest/differences_from_python.html#stack-overflows
     31→# Before mypyc's fix is in, recursion needs to be limited by this library.
     32→# Choosing `sys.getrecursionlimit()` as maximum inline table/array nesting
-      →…
+    33→# level, as it allows more nesting than pure Python, but still seems a far
+    34→# lower number than where mypyc binaries crash.
     35→MAX_INLINE_NESTING: Final = sys.getrecursionlimit()
     37→ASCII_CTRL: Final = frozenset(chr(i) for i in range(32)) | frozenset(chr(127))
     39→# Neither of these sets include quotation mark or backslash. They are
@@ -154,6 +133,7 @@ src/tomli/_parser.py
     78→
     79→    Adds the following attributes to ValueError:
     80→    msg: The unformatted error message
+    81→    doc: The TOML document being parsed
       →…
     86→
    220→class Flags:
@@ -168,7 +148,11 @@ src/tomli/_parser.py
    278→class NestedDict:
    312→class Output:
 src/tomli/_re.py
+     7→from datetime …
+     8→from functools …
+     9→import re …
     11→TYPE_CHECKING = False
+    13→    from typing …
     15→    from ._types …
     17→_TIME_RE_STR: Final = r"""
     26→RE_NUMBER: Final = re.compile(
@@ -184,7 +168,10 @@ src/tomli/_re.py
     36→|
     37→[+-]?(?:0|[1-9](?:_?[0-9])*)         # dec, integer part
     38→(?P<floatpart>
-      →…
+    39→    (?:\.[0-9](?:_?[0-9])*)?         # optional fractional part
+    40→    (?:[eE][+-]?[0-9](?:_?[0-9])*)?  # optional exponent part
+    41→)
+    42→""",
     45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)
     46→RE_DATETIME: Final = re.compile(
     47→    rf"""
@@ -217,67 +204,57 @@ tests/__init__.py
      5→__all__ = ("tomllib",)
      9→import tomli as tomllib
 tests/burntsushi.py
-tests/data/invalid/_external/toml-test/invalid/array/extend-defined-aot.toml
-tests/data/invalid/_external/toml-test/invalid/array/extending-table.toml
-     5→[a.c …
-tests/data/invalid/_external/toml-test/invalid/array/tables-02.toml
-     2→[[fruit …
-     9→  [fruit.variety …
-tests/data/invalid/_external/toml-test/invalid/inline-table/overwrite-02.toml
-     3→[a.b …
-tests/data/invalid/_external/toml-test/invalid/table/append-with-dotted-keys-01.toml
-    13→[a.b.c …
-tests/data/invalid/_external/toml-test/invalid/table/append-with-dotted-keys-02.toml
-     4→[a.b.c.d …
-tests/data/invalid/_external/toml-test/invalid/table/array-implicit.toml
-    10→[[albums.songs …
-tests/data/invalid/_external/toml-test/invalid/table/redefine-01.toml
-     2→[a …
+tests/data/invalid/_external/toml-test/invalid/key/no-eol-04.toml
+     1→[[0000l0 …
+tests/data/invalid/_external/toml-test/invalid/key/start-bracket.toml
+     1→[a …
+     3→[b …
+tests/data/invalid/array-of-tables/overwrite-array-in-parent.toml
+     1→[[parent-table.arr …
+     2→[parent-table …
+tests/data/invalid/array-of-tables/overwrite-bool-with-aot.toml
+     2→[[a …
 tests/data/invalid/keys-and-vals/overwrite-with-deep-table.toml
      2→[a.b.c.d …
 tests/data/invalid/missing-closing-double-square-bracket.toml
      1→[[closing-bracket.missing …
+tests/data/invalid/table/redefine-1.toml
+tests/data/invalid/table/redefine-2.toml
 tests/data/valid/_external/toml-test/valid/bool/bool.json
+     2→    "f": {"type": "bool", "value": "false"},
+     3→    "t": {"type": "bool", "value": "true"}
+     4→}
 tests/data/valid/_external/toml-test/valid/comment/tricky.toml
     18→["hash#tag" …
     27→["#"]]]]# …
-tests/data/valid/_external/toml-test/valid/key/like-date.toml
-    18→[2002-01-02 …
-tests/data/valid/_external/toml-test/valid/key/start.toml
-     4→[-key …
-tests/data/valid/_external/toml-test/valid/multibyte.toml
-     6→['𝐭𝐛𝐥' …
-    15→		['𝐭𝐛𝐥'.sub."βïƭ#" …
-tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-42.toml
-     2→[fruit.apple …
-tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-43.toml
-     2→[fruit.apple …
-tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-44.toml
-     6→[owner …
-tests/data/valid/_external/toml-test/valid/spec-example-1.toml
-    18→  [servers.alpha …
-tests/data/valid/_external/toml-test/valid/table/array-empty-name.toml
-     3→[['' …
-tests/data/valid/_external/toml-test/valid/table/sub.toml
-     5→[a.extend …
+tests/data/valid/_external/toml-test/valid/inline-table/key-dotted-03.toml
+tests/data/valid/_external/toml-test/valid/inline-table/key-dotted-04.toml
 tests/data/valid/array/open-parent-table.json
      2→  "parent-table": {
      6→}
+tests/data/valid/boolean.json
+tests/data/valid/dates-and-times/datetimes.json
+tests/data/valid/dates-and-times/localtime.json
+tests/data/valid/five-quotes.json
+tests/data/valid/hex-char.json
 tests/data/valid/inline-table/multiline-inline-table.json
      2→  "multiline": {
     35→}
 tests/data/valid/multiline-basic-str/replacements.json
 tests/test_data.py
      5→import json
-    11→DATA_DIR …
-    13→VALID_FILES …
-    21→VALID_FILES_EXPECTED …
-    23→INVALID_FILES …
+     9→from . …
+    11→DATA_DIR = Path(__file__).parent / "data"
+    13→VALID_FILES = tuple((DATA_DIR / "valid").glob("**/*.toml"))
+    21→VALID_FILES_EXPECTED = tuple(_expected_files)
+    23→INVALID_FILES = tuple((DATA_DIR / "invalid").glob("**/*.toml"))
     27→class TestData(unittest.TestCase):
 tests/test_error.py
+    10→from . …
     13→class TestError(unittest.TestCase):
 tests/test_misc.py
      5→import copy
+    14→from . …
     17→class TestMiscellaneous(unittest.TestCase):
 tomllib.md
      1→# `tomllib` – Tomli in the standard library
@@ -286,6 +263,7 @@ tomllib.md
      5→Relevant links:
      6→
      7→- Python Issue Tracker: https://bugs.python.org/issue40059
+     8→- Tomli issue tracker: https://github.com/hukkin/tomli/issues/141
       →…
     13→## Converting Tomli to tomllib …
     15→### Sync status
@@ -295,4 +273,6 @@ tomllib.md
     20→### Steps to convert
     22→- Move everything in `tomli:src/tomli` to `cpython:Lib/tomllib`. Exclude `py.typed`.
     23→
+    24→- Remove `__version__ = ...` line from `cpython:Lib/tomllib/__init__.py`
+    25→
       →…

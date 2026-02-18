@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (483 words)
+budget: 500 (482 words)
 
 README.md
      1→# humanize
@@ -26,15 +26,6 @@ README.md
     29→- Hebrew
     30→- Indonesian
     31→- Italian
-    32→- Japanese
-    33→- Klingon
-    34→- Korean
-    35→- Norwegian
-    36→- Persian
-    37→- Polish
-    38→- Russian
-    39→- Simplified Chinese
-    40→- Slovak
       →…
     49→## API reference
     51→[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
@@ -44,28 +35,14 @@ README.md
     55→## Installation
     57→### From PyPI
     59→```bash
-    60→python3 -m pip install --upgrade humanize
-    61→```
-    62→
+      →…
     63→### From source
     65→```bash
       →…
     71→## Usage
     73→### Integer humanization
     75→```pycon
-    76→>>> import humanize
-    77→>>> humanize.intcomma(12345)
-    78→'12,345'
-    79→>>> humanize.intword(123455913)
-    80→'123.5 million'
-    81→>>> humanize.intword(12345591313)
-    82→'12.3 billion'
-    83→>>> humanize.apnumber(4)
-    84→'four'
-    85→>>> humanize.apnumber(41)
-    86→'41'
-    87→```
-    88→
+      →…
     89→### Date & time humanization
     91→```pycon
       →…
@@ -77,12 +54,6 @@ README.md
    127→
    128→```pycon
    129→>>> import humanize
-   130→>>> import datetime as dt
-   131→>>> humanize.naturaldelta(dt.timedelta(seconds=2))
-   132→'2 seconds'
-   133→```
-   134→
-   135→```pycon
       →…
    154→### File size humanization
    156→```pycon
@@ -137,9 +108,8 @@ pyproject.toml
 src/humanize/__init__.py
     26→from ._version …
     28→__all__ = [
-    29→    "__version__",
-      →…
 src/humanize/filesize.py
+    36→def naturalsize …
 src/humanize/i18n.py
      8→TYPE_CHECKING = False
     13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
@@ -149,23 +119,35 @@ src/humanize/i18n.py
     22→_THOUSANDS_SEPARATOR = {
     30→# Mapping of locale to decimal separator
     31→_DECIMAL_SEPARATOR = {
+    51→def get_translation …
+    58→def activate …
+    96→def deactivate …
+   183→def thousands_separator …
+   196→def decimal_separator …
 src/humanize/lists.py
      5→TYPE_CHECKING = False
      9→__all__ = ["natural_list"]
+    12→def natural_list …
 src/humanize/number.py
      7→from .i18n …
      8→from .i18n …
      9→from .i18n …
     10→from .i18n …
     12→TYPE_CHECKING = False
+    34→def ordinal …
+   110→def intcomma …
+   195→def intword …
+   269→def apnumber …
+   321→def fractional …
+   385→def scientific …
+   454→def clamp …
+   531→def metric …
 src/humanize/time.py
     11→from .i18n …
     12→from .i18n …
     13→from .number …
     15→TYPE_CHECKING = False
     21→__all__ = [
-    22→    "naturaldate",
-      →…
     30→@total_ordering
     31→class Unit(Enum):
     32→    MICROSECONDS = 0
@@ -177,6 +159,12 @@ src/humanize/time.py
     38→    MONTHS = 6
     39→    YEARS = 7
     40→
+    41→    def __lt__ …
+    95→def naturaldelta …
+   249→def naturaltime …
+   311→def naturalday …
+   343→def naturaldate …
+   451→def precisedelta …
 tests/test_filesize.py
 tests/test_i18n.py
     17→@freeze_time("2020-02-02")

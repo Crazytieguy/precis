@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3895 words)
+budget: 4000 (3902 words)
 
 Cargo.toml
      1→[package …
@@ -785,7 +785,6 @@ src/macros.rs
    229→#[macro_export]
    230→macro_rules! __anyhow {
 src/nightly.rs
-     7→use core::error::{self, Error};
     10→pub use core::error::Request;
     41→pub fn request_ref_backtrace …
     45→fn request_ref …
@@ -886,17 +885,21 @@ tests/drop/mod.rs
      9→pub struct Flag {
     10→    atomic: Arc<AtomicBool>,
     11→}
+    13→impl Flag {
     14→    pub fn new() -> Self {
     20→    pub fn get(&self) -> bool {
     25→#[derive(Debug)]
     26→pub struct DetectDrop {
     27→    has_dropped: Flag,
     28→}
+    30→impl DetectDrop {
     31→    pub fn new(has_dropped: &Flag) -> Self {
+    40→impl StdError for DetectDrop {}
+    42→impl Display for DetectDrop {
     43→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    48→impl Drop for DetectDrop {
     49→    fn drop(&mut self) {
 tests/test_autotrait.rs
-     3→use anyhow::Error;
 tests/test_boxed.rs
     11→#[derive(Error, Debug)]
     12→#[error("outer")]
@@ -908,6 +911,9 @@ tests/test_context.rs
      6→mod drop;
      8→use crate::drop::{DetectDrop, Flag};
     22→macro_rules! context_type {
+    23→    ($name:ident) => {
+    24→        #[derive(Debug)]
+      →…
     42→#[derive(Error, Debug)]
     43→#[error("{message}")]
     44→struct LowLevel {
@@ -920,13 +926,9 @@ tests/test_context.rs
     52→    high: Flag,
     53→}
 tests/test_convert.rs
-     1→#![allow(clippy::unnecessary_wraps)]
-     2→
      3→mod drop;
      5→use self::drop::{DetectDrop, Flag};
 tests/test_downcast.rs
-     1→#![allow(clippy::assertions_on_result_states, clippy::wildcard_imports)]
-     2→
      3→mod common;
      4→mod drop;
      6→use self::common::*;
@@ -951,7 +953,6 @@ tests/test_ensure.rs
     80→
       →…
 tests/test_ffi.rs
-     4→use anyhow::anyhow;
      6→#[no_mangle]
      7→pub extern "C" fn anyhow1(err: anyhow::Error) {
      8→    println!("{:?}", err);
@@ -969,8 +970,6 @@ tests/test_macros.rs
     13→mod common;
     15→use self::common::*;
 tests/test_repr.rs
-     1→#![allow(clippy::extra_unused_type_parameters)]
-     2→
      3→mod drop;
      5→use self::drop::{DetectDrop, Flag};
 tests/test_source.rs
@@ -980,8 +979,6 @@ tests/test_source.rs
      9→}
     12→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
     20→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
-tests/ui/chained-comparison.rs
-tests/ui/empty-ensure.rs
 tests/ui/ensure-nonbool.rs
      4→struct Bool(bool);
      6→struct DerefBool(bool);
@@ -996,10 +993,6 @@ tests/ui/ensure-nonbool.rs
     19→    fn not(self) -> Self::Output {
     20→        !self.0
     21→    }
-tests/ui/must-use.rs
-     3→use anyhow::anyhow;
 tests/ui/no-impl.rs
      3→#[derive(Debug)]
      4→struct Error;
-tests/ui/temporary-value.rs
-tests/ui/wrong-interpolation.rs

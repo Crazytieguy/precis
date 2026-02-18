@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1966 words)
+budget: 2000 (1963 words)
 
 README.md
      1→# Format
@@ -31,6 +31,7 @@ configuration/environment-variables.md
      5→environment variables to be alphanumeric characters or `_`, the configuration
      6→key needs to be formatted slightly differently to the normal `foo.bar.baz` form.
      7→
+     8→Variables starting with `MDBOOK_` are used for configuration. The key is created
       →…
 configuration/general.md
      1→# General configuration
@@ -39,8 +40,11 @@ configuration/general.md
      5→Here is an example of what a ***book.toml*** file might look like:
      6→
      7→```toml
+     8→[book]
       →…
-    31→## Supported configuration options …
+    31→## Supported configuration options
+    33→It is important to note that **any** relative path specified in the
+      →…
     37→### General metadata …
     64→### Rust options …
     85→### Build options …
@@ -51,12 +55,21 @@ configuration/preprocessors.md
      5→The following preprocessors are built-in and included by default:
      6→
      7→- `links`: Expands the `{{ #playground }}`, `{{ #include }}`, and `{{ #rustdoc_include }}` handlebars
+     8→  helpers in a chapter to include the contents of a file.
       →…
-    26→## Custom preprocessor configuration …
-    45→## Locking a preprocessor dependency to a renderer …
-    55→## Provide your own command …
+    26→## Custom preprocessor configuration
+    28→Preprocessors can be added by including a `preprocessor` table in `book.toml` with the name of the preprocessor.
+      →…
+    45→## Locking a preprocessor dependency to a renderer
+    47→You can explicitly specify that a preprocessor should run for a renderer by
+      →…
+    55→## Provide your own command
+    57→By default when you add a `[preprocessor.foo]` table to your `book.toml` file,
+      →…
     67→### Optional preprocessors …
-    79→## Require a certain order …
+    79→## Require a certain order
+    81→The order in which preprocessors are run can be controlled with the `before` and `after` fields.
+      →…
 configuration/renderers.md
      1→# Configuring Renderers
      3→Renderers (also called "backends") are responsible for creating the output of the book.
@@ -64,11 +77,16 @@ configuration/renderers.md
      5→The following backends are built-in:
      6→
      7→* [`html`](#html-renderer-options) --- This renders the book to HTML.
+     8→  This is enabled by default if no other `[output]` tables are defined in `book.toml`.
       →…
-    20→## Output tables …
+    20→## Output tables
+    22→Backends can be added by including a `output` table in `book.toml` with the name of the backend.
+      →…
     59→### Custom backend commands …
     71→### Optional backends …
-    84→## HTML renderer options …
+    84→## HTML renderer options
+    86→The HTML renderer has a variety of options detailed below.
+      →…
    176→### `[output.html.print]` …
    191→### `[output.html.fold]` …
    206→### `[output.html.playground]` …
@@ -87,7 +105,9 @@ configuration/renderers.md
    297→
       →…
    300→### `[output.html.redirect]` …
-   325→## Markdown renderer …
+   325→## Markdown renderer
+   327→The Markdown renderer will run preprocessors and then output the resulting
+      →…
 example.rs
      1→fn main() {
      2→    println!("Hello World!");
@@ -148,76 +168,7 @@ mathjax.md
     32→### Block equations …
 mdbook.md
      1→# mdBook-specific features
-     3→## Hiding code lines
-     5→There is a feature in mdBook that lets you hide code lines by prepending them with a specific prefix.
-     6→
-     7→For the Rust language, you can prefix lines with `# ` (`#` followed by a space) to hide them [like you would with Rustdoc][rustdoc-hide].
-     8→This prefix can be escaped with `##` to prevent the hiding of a line that should begin with the literal string `# ` (see [Rustdoc's docs][rustdoc-hide] for more details)
-     9→
-    10→[rustdoc-hide]: https://doc.rust-lang.org/stable/rustdoc/write-documentation/documentation-tests.html#hiding-portions-of-the-example
-    11→
-    12→```bash
-    13→# fn main() {
-    14→    let x = 5;
-    15→    let y = 6;
-    16→
-    17→    println!("{}", x + y);
-    18→# }
-    19→```
-    20→
-    21→Will render as
-    22→
-    23→```rust
-    24→# fn main() {
-    25→    let x = 5;
-    26→    let y = 6;
-    27→
-    28→    println!("{}", x + y);
-    29→# }
-    30→```
-    31→
-    32→When you tap or hover the mouse over the code block, there will be an eyeball icon (<i class="fa fa-eye"></i>) which will toggle the visibility of the hidden lines.
-    33→
-    34→By default, this only works for code examples that are annotated with `rust`.
-    35→However, you can define custom prefixes for other languages by adding a new line-hiding prefix in your `book.toml` with the language name and prefix character(s):
-    36→
-    37→```toml
-    38→[output.html.code.hidelines]
-    39→python = "~"
-    40→```
-    41→
-    42→The prefix will hide any lines that begin with the given prefix. With the python prefix shown above, this:
-    43→
-    44→```bash
-    45→~hidden()
-    46→nothidden():
-    47→~    hidden()
-    48→    ~hidden()
-    49→    nothidden()
-    50→```
-    51→
-    52→will render as
-    53→
-    54→```python
-    55→~hidden()
-    56→nothidden():
-    57→~    hidden()
-    58→    ~hidden()
-    59→    nothidden()
-    60→```
-    61→
-    62→This behavior can be overridden locally with a different prefix. This has the same effect as above:
-    63→
-    64→~~~markdown
-    65→```python,hidelines=!!!
-    66→!!!hidden()
-    67→nothidden():
-    68→!!!    hidden()
-    69→    !!!hidden()
-    70→    nothidden()
-    71→```
-    72→~~~
-    73→
+     3→## Hiding code lines …
     74→## Rust playground …
    102→## Rust code block attributes …
    133→## Including files …
@@ -273,6 +224,11 @@ theme/README.md
     29→- **fonts/fonts.css** contains the definition of which fonts to load.
     30→  Custom fonts can be included in the `fonts` directory.
     31→
+    32→Generally, when you want to tweak the theme, you don't need to override all the
+    33→files. If you only need changes in the stylesheet, there is no point in
+    34→overriding all the other files. Because custom files take precedence over
+    35→built-in ones, they will not get updated with new fixes / features.
+    36→
       →…
 theme/editor.md
      1→# Editor
@@ -345,6 +301,17 @@ theme/index-hbs.md
     51→{{#toc}}{{/toc}}
     52→```
     53→
+    54→and outputs something that looks like this, depending on the structure of your
+    55→book
+    56→
+    57→```html
+    58→<ul class="chapter">
+    59→    <li><a href="link/to/file.html">Some chapter</a></li>
+    60→    <li>
+    61→        <ul class="section">
+    62→            <li><a href="link/to/other_file.html">Some other Chapter</a></li>
+    63→        </ul>
+    64→    </li>
       →…
     80→### resource
     82→The path to a static file.
@@ -353,7 +320,8 @@ theme/index-hbs.md
     85→
     86→```handlebars
     87→<link rel="stylesheet" href="{{ resource "css/chrome.css" }}">
-      →…
+    88→```
+    89→
     90→### fa
     92→mdBook includes a copy of [Font Awesome Free's](https://fontawesome.com)
     93→MIT-licensed SVG files. It accepts three positional arguments:
@@ -361,6 +329,17 @@ theme/index-hbs.md
     95→1. Type: one of "solid", "regular", and "brands" (light and duotone are not
     96→   currently supported)
     97→2. Icon: anything chosen from the
+    98→   [free icon set](https://fontawesome.com/v6/search)
+    99→3. ID (optional): if included, an HTML ID attribute will be added to the
+   100→   icon's wrapping `<span>` tag
+   101→
+   102→For example, this handlebars syntax will become this HTML:
+   103→
+   104→```handlebars
+   105→{{fa "solid" "print" "print-button"}}
+   106→```
+   107→
+   108→```html
       →…
 theme/syntax-highlighting.md
      1→# Syntax highlighting

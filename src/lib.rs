@@ -13,6 +13,7 @@ pub enum Lang {
     Rust,
     Python,
     Go,
+    C,
     Markdown,
     /// TypeScript, JavaScript, TSX, JSX
     JsTs,
@@ -31,6 +32,7 @@ impl Lang {
             "rs" => Some(Lang::Rust),
             "py" => Some(Lang::Python),
             "go" => Some(Lang::Go),
+            "c" | "h" => Some(Lang::C),
             "md" => Some(Lang::Markdown),
             "ts" | "tsx" | "js" | "jsx" | "mts" | "cts" | "mjs" | "cjs" => Some(Lang::JsTs),
             "json" => Some(Lang::Json),

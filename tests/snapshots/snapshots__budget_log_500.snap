@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (469 words)
+budget: 500 (465 words)
 
 CHANGELOG.md
 Cargo.toml
@@ -19,8 +19,6 @@ README.md
     58→### In executables …
    106→## Structured logging …
 rfcs/0296-structured-logging.md
-   502→### Don't break anything …
-  1598→#### Build a serialization contract in `log` …
 src/__private_api.rs
      3→use self::sealed::KVs;
      7→pub use std::{format_args, module_path, stringify};
@@ -103,11 +101,15 @@ src/kv/value.rs
   1159→macro_rules! as_serde {
   1169→macro_rules! as_sval {
 src/lib.rs
+   401→use std::error;
    405→#[macro_use]
    406→mod macros;
    407→mod serde;
    409→#[cfg(feature = "kv")]
    410→pub mod kv;
+   413→use std::sync::atomic::{AtomicUsize, Ordering};
+   416→use std::cell::Cell;
+   418→use std::sync::atomic::Ordering;
    421→struct AtomicUsize {
    422→    v: Cell<usize>,
    423→}

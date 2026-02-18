@@ -2,14 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3846 words)
+budget: 4000 (3850 words)
 
 CHANGELOG.md
      1→# Changelog …
-     3→## mdBook 0.5.2
-     4→[v0.5.1...v0.5.2](https://github.com/rust-lang/mdBook/compare/v0.5.1...v0.5.2)
-     5→
-  1659→### Changed …
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
 Cargo.toml
@@ -96,6 +92,10 @@ crates/mdbook-core/src/config.rs
    641→pub struct Code {
    650→pub struct Search {
    708→pub struct SearchChapterSettings {
+   713→/// Allows you to "update" any arbitrary field in a struct by round-tripping via
+   714→/// a `toml::Value`.
+   715→///
+      →…
    718→trait Updateable<'de>: Serialize + Deserialize<'de> {
 crates/mdbook-core/src/lib.rs
      3→/// The current version of `mdbook`.
@@ -330,6 +330,7 @@ crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
       →…
    649→type CombinedRedirects = BTreeMap<String, (String, BTreeMap<String, String>)>;
 crates/mdbook-html/src/html_handlebars/helpers/fontawesome.rs
+     8→pub(crate) fn fa_helper …
 crates/mdbook-html/src/html_handlebars/helpers/mod.rs
 crates/mdbook-html/src/html_handlebars/helpers/resources.rs
     10→#[derive(Clone)]
@@ -346,6 +347,7 @@ crates/mdbook-html/src/html_handlebars/helpers/toc.rs
     13→}
     15→impl HelperDef for RenderToc {
     16→    fn call …
+   177→fn write_li_open_tag …
 crates/mdbook-html/src/html_handlebars/mod.rs
      1→mod hbs_renderer;
      2→mod helpers;
@@ -616,8 +618,10 @@ crates/mdbook-summary/src/lib.rs
     85→    /// The name of the chapter.
     86→    pub name: String,
       →…
+    96→impl Link {
     97→    /// Create a new link with no nested items.
     98→    pub fn new<S: Into<String>, P: AsRef<Path>>(name: S, location: P) -> Link {
+   108→impl Default for Link {
    109→    fn default() -> Self {
    110→        Link {
    111→            name: String::new(),
@@ -626,6 +630,8 @@ crates/mdbook-summary/src/lib.rs
    123→    /// A link to a chapter.
    124→    Link(Link),
       →…
+   131→impl SummaryItem {
+   140→impl From<Link> for SummaryItem {
    141→    fn from(other: Link) -> SummaryItem {
    142→        SummaryItem::Link(other)
    143→    }
@@ -640,6 +646,7 @@ crates/mdbook-summary/src/lib.rs
    185→///
       →…
    190→macro_rules! collect_events {
+   221→impl<'a> SummaryParser<'a> {
 crates/xtask/Cargo.toml
      1→[package …
      9→[dependencies …
@@ -669,6 +676,9 @@ examples/remove-emphasis/book.toml
      1→[book …
      4→[preprocessor.remove-emphasis …
 examples/remove-emphasis/mdbook-remove-emphasis/Cargo.toml
+     1→[package …
+     7→[dependencies …
+    13→[[bin …
 examples/remove-emphasis/mdbook-remove-emphasis/src/main.rs
 guide/book.toml
      1→[book …
@@ -695,6 +705,9 @@ guide/guide-helper/src/lib.rs
     11→    let pre = GuideHelper;
     12→    let (ctx, book) = mdbook_preprocessor::parse_input(io::stdin())?;
     13→
+    14→    let book_version = Version::parse(&ctx.mdbook_version)?;
+    15→    let version_req = VersionReq::parse(mdbook_preprocessor::MDBOOK_VERSION)?;
+    16→
       →…
     33→struct GuideHelper;
     35→impl Preprocessor for GuideHelper {
@@ -782,6 +795,7 @@ guide/src/format/README.md
      3→In this section you will learn how to:
      4→
      5→- Structure your book correctly
+     6→- Format your `SUMMARY.md` file
       →…
 guide/src/format/configuration/README.md
      1→# Configuration
@@ -807,10 +821,6 @@ guide/src/format/mathjax.md
      1→# MathJax support …
 guide/src/format/mdbook.md
      1→# mdBook-specific features …
-     3→## Hiding code lines
-     5→There is a feature in mdBook that lets you hide code lines by prepending them with a specific prefix.
-     6→
-      →…
 guide/src/format/summary.md
      1→# SUMMARY.md …
 guide/src/format/theme/README.md
@@ -956,7 +966,6 @@ src/cmd/watch.rs
     26→impl WatcherKind {
     74→fn find_gitignore(book_root: &Path) -> Option<PathBuf> {
 src/main.rs
-     5→use anyhow::anyhow;
     14→mod cmd;
     16→const VERSION: &str = concat!("v", clap::crate_version!());
     18→fn main() {
@@ -981,16 +990,11 @@ tests/gui/books/heading-nav/README.md
 tests/gui/books/heading-nav/book.toml
      1→[book …
 tests/gui/books/heading-nav-folded/book.toml
-tests/gui/books/heading-nav-folded/src/intro.md
 tests/gui/books/heading-nav-folded/src/sub/inner/index.md
-     3→## Inner chapter heading …
 tests/gui/books/highlighting/README.md
      1→# Syntax Highlighting …
 tests/gui/books/highlighting/book.toml
      1→[book …
-tests/gui/books/highlighting/src/SUMMARY.md
-tests/gui/books/highlighting/src/languages.md
-     3→## apache …
 tests/gui/books/redirect/README.md
      1→# Redirect …
 tests/gui/books/redirect/book.toml
@@ -1005,7 +1009,6 @@ tests/gui/runner.rs
      7→use serde_json::Value;
 tests/testsuite/README.md
      1→# Testsuite …
-     3→## Introduction …
 tests/testsuite/book_test.rs
      3→use mdbook_core::utils::fs;
     13→static NEXT_TEST_ID: AtomicU32 = AtomicU32::new(0);
@@ -1027,7 +1030,6 @@ tests/testsuite/build/no_reserved_filename/book.toml
 tests/testsuite/includes/all_includes/book.toml
      1→[book …
 tests/testsuite/includes/all_includes/src/relative/includes.md
-tests/testsuite/includes/all_includes/src/rustdoc.md
 tests/testsuite/index/basic_readme/book.toml
      1→[book …
 tests/testsuite/index/basic_readme/src/README.md
@@ -1039,7 +1041,6 @@ tests/testsuite/index/basic_readme/src/second/Readme.md
 tests/testsuite/init/init_from_summary/src/SUMMARY.md
      1→# Summary …
 tests/testsuite/main.rs
-     7→mod book_test;
     22→mod search;
     28→    pub use crate::book_test::{BookTest, glob_one, read_to_string};
     29→    pub use snapbox::str;
@@ -1047,12 +1048,8 @@ tests/testsuite/markdown/admonitions/book.toml
      1→[book …
 tests/testsuite/markdown/basic_markdown/book.toml
      1→[book …
-tests/testsuite/markdown/basic_markdown/src/html.md
-     3→## Comments …
 tests/testsuite/markdown/custom_header_attributes/book.toml
      1→[book …
-tests/testsuite/markdown/custom_header_attributes/src/SUMMARY.md
-tests/testsuite/markdown/custom_header_attributes/src/custom_header_attributes.md
 tests/testsuite/markdown/definition_lists/book.toml
      1→[book …
 tests/testsuite/markdown/footnotes/src/footnotes.md
@@ -1066,6 +1063,7 @@ tests/testsuite/markdown/tasklists/src/tasklists.md
 tests/testsuite/playground/disabled_playground/book.toml
 tests/testsuite/playground/playground_on_rust_code/book.toml
      1→[book …
+tests/testsuite/preprocessor/extension_compatibility/book.toml
 tests/testsuite/preprocessor/failing_preprocessor/book.toml
      1→[preprocessor.nop-preprocessor …
 tests/testsuite/preprocessor/missing_optional_not_fatal/book.toml
@@ -1113,8 +1111,6 @@ tests/testsuite/rendering/fontawesome/book.toml
      1→[book …
 tests/testsuite/rendering/header_links/book.toml
      1→[book …
-tests/testsuite/rendering/header_links/src/SUMMARY.md
-tests/testsuite/rendering/header_links/src/header_links.md
 tests/testsuite/rendering/hidelines/book.toml
 tests/testsuite/rendering/html_blocks/book.toml
      1→[book …
@@ -1123,10 +1119,9 @@ tests/testsuite/rendering/html_blocks/src/SUMMARY.md
 tests/testsuite/search/chapter_settings_validation_error/book.toml
 tests/testsuite/search/disable_search_chapter/book.toml
 tests/testsuite/search/disable_search_chapter/src/second/nested.md
-tests/testsuite/search/reasonable_search_index/src/first/duplicate-headers.md
-     7→# Header Text …
-     9→# header-text …
-tests/testsuite/search/reasonable_search_index/src/first/heading-attributes.md
+tests/testsuite/search/reasonable_search_index/src/SUMMARY.md
+tests/testsuite/search/reasonable_search_index/src/intro.md
+     5→## Sneaky …
 tests/testsuite/test/failing_tests/book.toml
      1→[book …
 tests/testsuite/test/passing_tests/book.toml

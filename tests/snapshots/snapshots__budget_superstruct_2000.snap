@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1975 words)
+budget: 2000 (1971 words)
 
 Changelog.md
      1→# Changelog …
@@ -16,14 +16,6 @@ Readme.md
    231→### License …
 docs/guides/01-getting-started.md
      1→# Getting Started …
-     3→## Installing Superstruct
-     5→To install Superstruct run:
-     6→
-     7→```bash
-     8→npm install --save superstruct
-     9→```
-    10→
-      →…
 docs/guides/02-validating-data.md
      1→# Validating Data …
 docs/guides/03-coercing-data.md
@@ -44,7 +36,6 @@ docs/reference/coercions.md
      1→# Coercions …
 docs/reference/core.md
      1→# Core …
-     3→### `assert` …
 docs/reference/errors.md
      1→# Errors …
 docs/reference/refinements.md
@@ -54,7 +45,6 @@ docs/reference/types.md
 docs/reference/typescript.md
      1→# TypeScript …
      5→## Utilities …
-     7→### `Describe` …
 docs/reference/utilities.md
      1→# Utilities …
 docs/resources/faq.md
@@ -396,8 +386,11 @@ test/typings/infer.ts
      4→const Struct = object()
      5→type T = Infer<typeof Struct>
 test/validation/any/valid-number.ts
+     1→import { any } from '../../../src'
 test/validation/any/valid-string.ts
+     1→import { any } from '../../../src'
 test/validation/any/valid-undefined.ts
+     1→import { any } from '../../../src'
 test/validation/array/invalid-element-property.ts
 test/validation/array/invalid-element.ts
 test/validation/array/invalid-opaque.ts

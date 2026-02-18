@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1005 words)
+budget: 1000 (1006 words)
 
 Changelog.md
      1→# Changelog …
@@ -14,19 +14,10 @@ Readme.md
    189→### Examples …
    205→### Documentation …
    231→### License …
-docs/guides/01-getting-started.md
-     3→## Installing Superstruct
-     5→To install Superstruct run:
-     6→
-     7→```bash
-      →…
 docs/readme.md
      7→### Usage …
-docs/reference/core.md
-     3→### `assert` …
 docs/reference/typescript.md
      5→## Utilities …
-     7→### `Describe` …
 docs/resources/faq.md
      1→# FAQ …
 docs/resources/links.md
@@ -266,11 +257,26 @@ test/validation/bigint/invalid.ts
 test/validation/bigint/valid.ts
 test/validation/boolean/invalid.ts
 test/validation/boolean/valid.ts
+test/validation/coerce/changed.ts
+test/validation/coerce/condition-not-met.ts
+test/validation/coerce/unchanged.ts
+test/validation/date/invalid-date.ts
+test/validation/date/invalid.ts
+test/validation/date/valid.ts
+test/validation/enums/invalid-numbers.ts
+test/validation/enums/invalid-strings.ts
+test/validation/enums/valid.ts
 test/validation/function/invalid.ts
 test/validation/function/valid.ts
      5→export const data = function () {}
 test/validation/instance/invalid.ts
 test/validation/instance/valid.ts
+test/validation/integer/invalid-decimal.ts
+test/validation/integer/invalid.ts
+test/validation/integer/valid.ts
+test/validation/lazy/invalid.ts
+test/validation/lazy/valid.ts
+test/validation/lazy/with-refiners.ts
 test/validation/literal/invalid.ts
 test/validation/literal/valid.ts
 test/validation/never/invalid.ts
@@ -280,11 +286,12 @@ test/validation/never/invalid.ts
      7→export const failures = [
 test/validation/number/invalid.ts
 test/validation/number/valid.ts
-test/validation/object/invalid-referential.ts
-test/validation/object/valid-referential.ts
 test/validation/pattern/invalid.ts
 test/validation/pattern/valid.ts
 test/validation/refine/invalid-multiple-refinements.ts
+test/validation/refine/invalid-shorthand.ts
+test/validation/refine/invalid.ts
+test/validation/refine/valid.ts
 test/validation/regexp/invalid.ts
 test/validation/regexp/valid.ts
 test/validation/string/invalid.ts
@@ -294,6 +301,9 @@ test/validation/trimmed/valid.ts
 test/validation/type/valid-instance.ts
      3→class Person {
      6→  constructor(name: string) {
+test/validation/unknown/valid-number.ts
+test/validation/unknown/valid-string.ts
+test/validation/unknown/valid-undefined.ts
 tsconfig.json
      2→  "include": ["./src/**/*.ts"],
      3→  "compilerOptions": {

@@ -2,18 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1947 words)
+budget: 2000 (1950 words)
 
 CHANGELOG.md
      1→# Changelog
      3→All notable changes to this project will be documented in this file.
      4→
+     5→The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this
       →…
-    21→### Fixed
-    23→* CLI: Ensure `find_dotenv` work reliably on python 3.13 by [@theskumar] in [#563](https://github.com/theskumar/python-dotenv/pull/563)
-    24→* CLI: revert the use of execvpe on Windows by [@wrongontheinternet] in [#566](https://github.com/theskumar/python-dotenv/pull/566)
-    25→
-    26→
+    21→### Fixed …
 CONTRIBUTING.md
      1→Contributing
      4→All the contributions are welcome! Please open [an
@@ -22,7 +19,6 @@ CONTRIBUTING.md
      7→
      8→Executing the tests:
      9→
-    10→    $ uv venv
       →…
 README.md
      1→# python-dotenv
@@ -61,6 +57,14 @@ README.md
     36→```python
     37→from dotenv import load_dotenv
     38→
+    39→load_dotenv()  # reads variables from a .env file and sets them in os.environ
+    40→
+    41→# Code of your application, which uses environment variables (e.g. from `os.environ` or
+    42→# `os.getenv`) as if they came from the actual environment.
+    43→```
+    44→
+    45→By default, `load_dotenv()` will:
+    46→
       →…
     78→## Other Use Cases
     80→### Load configuration without altering the environment
@@ -69,31 +73,13 @@ README.md
     84→values parsed from the `.env` file.
     85→
     86→```python
-    87→from dotenv import dotenv_values
-    88→
-    89→config = dotenv_values(".env")  # config = {"USER": "foo", "EMAIL": "foo@example.org"}
-    90→```
-    91→
-    92→This notably enables advanced configuration management:
-    93→
-    94→```python
-    95→import os
-    96→from dotenv import dotenv_values
-    97→
-    98→config = {
-    99→    **dotenv_values(".env.shared"),  # load shared development variables
-   100→    **dotenv_values(".env.secret"),  # load sensitive variables
-   101→    **os.environ,  # override loaded values with environment variables
-   102→}
-   103→```
-   104→
+      →…
    105→### Parse configuration as a stream
    107→`load_dotenv` and `dotenv_values` accept [streams][python_streams] via their
    108→`stream` argument. It is thus possible to load the variables from sources other
    109→than the filesystem (e.g. the network).
    110→
    111→```python
-   112→from io import StringIO
       →…
    120→### Load .env files in IPython
    122→You can use dotenv in IPython. By default, it will use `find_dotenv` to search for a
@@ -101,7 +87,6 @@ README.md
    124→
    125→```python
    126→%load_ext dotenv
-   127→%dotenv
       →…
    141→### Disable load_dotenv
    143→Set `PYTHON_DOTENV_DISABLED=1` to disable `load_dotenv()` from loading .env
@@ -124,7 +109,11 @@ README.md
    161→  "USER": "foo",
    162→  "EMAIL": "foo@example.org"
    163→}
-      →…
+   164→$ dotenv run -- python foo.py
+   165→```
+   166→
+   167→Run `dotenv --help` for more information about the options and subcommands.
+   168→
    169→## File format
    171→The format is not formally specified and still improves over time. That being
    172→said, `.env` files should mostly look like Bash files. Reading from FIFOs (named
@@ -146,7 +135,6 @@ README.md
    189→
    190→```bash
    191→FOO="first line
-   192→second line"
       →…
    199→### Variable without a value
    201→A variable can have no value:
@@ -154,7 +142,6 @@ README.md
    203→```bash
    204→FOO
    205→```
-   206→
       →…
    214→### Variable expansion
    216→python-dotenv can interpolate variables using POSIX variable expansion.
@@ -162,7 +149,6 @@ README.md
    218→With `load_dotenv(override=True)` or `dotenv_values()`, the value of a variable
    219→is the first of the values defined in the following list:
    220→
-   221→- Value of that variable in the `.env` file.
       →…
    234→## Related Projects
    236→- [environs](https://github.com/sloria/environs)
@@ -538,6 +524,11 @@ tests/test_is_interactive.py
      8→class TestIsInteractive:
      9→    """Tests for the _is_interactive helper function within find_dotenv.
     10→
+    11→    The _is_interactive function is used by find_dotenv to determine if the code
+    12→    is running in an interactive environment (like a REPL, IPython notebook, etc.)
+    13→    versus a normal script execution.
+    14→
+    15→    Interactive environments include:
       →…
     31→
     32→    def _create_dotenv_file(self, tmp_path):

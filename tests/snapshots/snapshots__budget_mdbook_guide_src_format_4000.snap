@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3944 words)
+budget: 4000 (3949 words)
 
 README.md
      1→# Format
@@ -141,7 +141,7 @@ configuration/preprocessors.md
     41→[preprocessor.example]
     42→some-extra-feature = true
     43→```
-      →…
+    44→
     45→## Locking a preprocessor dependency to a renderer
     47→You can explicitly specify that a preprocessor should run for a renderer by
     48→binding the two together.
@@ -180,7 +180,9 @@ configuration/preprocessors.md
     94→```
     95→
     96→It would also be possible, though redundant, to specify both of the above in the same config file.
-      →…
+    97→
+    98→Preprocessors having the same priority specified through `before` and `after` are sorted by name.
+    99→Any infinite loops will be detected and produce an error.
 configuration/renderers.md
      1→# Configuring Renderers
      3→Renderers (also called "backends") are responsible for creating the output of the book.
@@ -217,6 +219,22 @@ configuration/renderers.md
     35→[output.wordcount]
     36→ignores = ["Example Chapter"]
     37→```
+    38→
+    39→If you define any `[output]` tables, then the `html` backend is not enabled by default.
+    40→If you want to keep the `html` backend running, then just include it in the `book.toml` file.
+    41→For example:
+    42→
+    43→```toml
+    44→[book]
+    45→title = "My Awesome Book"
+    46→
+    47→[output.wordcount]
+    48→
+    49→[output.html]
+    50→```
+    51→
+    52→If more than one `output` table is included, this changes the behavior for the layout of the output directory.
+    53→If there is only one backend, then it places its output directly in the `book` directory (see [`build.build-dir`] to override this location).
       →…
     59→### Custom backend commands …
     71→### Optional backends …
@@ -237,6 +255,22 @@ configuration/renderers.md
     99→preferred-dark-theme = "navy"
    100→smart-punctuation = true
    101→definition-lists = true
+   102→admonitions = true
+   103→mathjax-support = false
+   104→additional-css = ["custom.css", "custom2.css"]
+   105→additional-js = ["custom.js"]
+   106→no-section-label = false
+   107→git-repository-url = "https://github.com/rust-lang/mdBook"
+   108→git-repository-icon = "fab-github"
+   109→edit-url-template = "https://github.com/rust-lang/mdBook/edit/master/guide/{path}"
+   110→site-url = "/example-book/"
+   111→cname = "myproject.rs"
+   112→input-404 = "not-found.md"
+   113→sidebar-header-nav = true
+   114→```
+   115→
+   116→The following configuration options are available:
+   117→
       →…
    176→### `[output.html.print]` …
    191→### `[output.html.fold]` …
@@ -273,7 +307,7 @@ configuration/renderers.md
    340→only whether it is enabled or disabled.
    341→
    342→See [the preprocessors documentation](preprocessors.md) for how to
-      →…
+   343→specify which preprocessors should run before the Markdown renderer.
 example.rs
      1→fn main() {
      2→    println!("Hello World!");
@@ -295,6 +329,7 @@ markdown.md
     13→```markdown
     14→Here is a line of text.
     15→
+    16→This is a new line.
       →…
     25→## Headings
     27→Headings use the `#` marker and should be on a line by themselves. More `#` mean smaller headings:
@@ -302,6 +337,7 @@ markdown.md
     29→```markdown
     30→### A heading 
     31→
+    32→Some text.
       →…
     39→### A heading …
     43→#### A smaller heading 
@@ -313,6 +349,7 @@ markdown.md
     51→```markdown
     52→* milk
     53→* eggs
+    54→* butter
       →…
     69→## Links
     71→Linking to a URL or local file is easy:
@@ -320,6 +357,7 @@ markdown.md
     73→```markdown
     74→Use [mdBook](https://github.com/rust-lang/mdBook). 
     75→
+    76→Read about [mdBook](mdbook.md).
       →…
    108→## Images
    110→Including images is simply a matter of including a link to them, much like in the _Links_ section above. The following markdown
@@ -327,6 +365,7 @@ markdown.md
    112→
    113→```markdown
    114→![The Rust Logo](images/rust-logo-blk.svg)
+   115→```
       →…
    127→## Extensions
    129→mdBook has several extensions beyond the standard CommonMark specification.
@@ -373,75 +412,14 @@ mdbook.md
      8→This prefix can be escaped with `##` to prevent the hiding of a line that should begin with the literal string `# ` (see [Rustdoc's docs][rustdoc-hide] for more details)
      9→
     10→[rustdoc-hide]: https://doc.rust-lang.org/stable/rustdoc/write-documentation/documentation-tests.html#hiding-portions-of-the-example
-    11→
-    12→```bash
-    13→# fn main() {
-    14→    let x = 5;
-    15→    let y = 6;
-    16→
-    17→    println!("{}", x + y);
-    18→# }
-    19→```
-    20→
-    21→Will render as
-    22→
-    23→```rust
-    24→# fn main() {
-    25→    let x = 5;
-    26→    let y = 6;
-    27→
-    28→    println!("{}", x + y);
-    29→# }
-    30→```
-    31→
-    32→When you tap or hover the mouse over the code block, there will be an eyeball icon (<i class="fa fa-eye"></i>) which will toggle the visibility of the hidden lines.
-    33→
-    34→By default, this only works for code examples that are annotated with `rust`.
-    35→However, you can define custom prefixes for other languages by adding a new line-hiding prefix in your `book.toml` with the language name and prefix character(s):
-    36→
-    37→```toml
-    38→[output.html.code.hidelines]
-    39→python = "~"
-    40→```
-    41→
-    42→The prefix will hide any lines that begin with the given prefix. With the python prefix shown above, this:
-    43→
-    44→```bash
-    45→~hidden()
-    46→nothidden():
-    47→~    hidden()
-    48→    ~hidden()
-    49→    nothidden()
-    50→```
-    51→
-    52→will render as
-    53→
-    54→```python
-    55→~hidden()
-    56→nothidden():
-    57→~    hidden()
-    58→    ~hidden()
-    59→    nothidden()
-    60→```
-    61→
-    62→This behavior can be overridden locally with a different prefix. This has the same effect as above:
-    63→
-    64→~~~markdown
-    65→```python,hidelines=!!!
-    66→!!!hidden()
-    67→nothidden():
-    68→!!!    hidden()
-    69→    !!!hidden()
-    70→    nothidden()
-    71→```
-    72→~~~
-    73→
+      →…
     74→## Rust playground
     76→Rust language code blocks will automatically get a play button (<i class="fas fa-play"></i>) which will execute the code and display the output just below the code block.
     77→This works by sending the code to the [Rust Playground].
     78→
     79→```rust
     80→println!("Hello, World!");
+    81→```
       →…
    102→## Rust code block attributes
    104→Additional attributes can be included in Rust code blocks with comma, space, or tab-separated terms just after the language term. For example:
@@ -449,6 +427,7 @@ mdbook.md
    106→~~~markdown
    107→```rust,ignore
    108→# This example won't be tested.
+   109→panic!("oops!");
       →…
    133→## Including files
    135→With the following syntax, you can include files into your book:
@@ -456,6 +435,7 @@ mdbook.md
    137→```hbs
    138→\{{#include file.rs}}
    139→```
+   140→
       →…
    154→## Including portions of a file
    155→Often you only need a specific part of the file, e.g. relevant lines for an
@@ -463,6 +443,7 @@ mdbook.md
    157→
    158→```hbs
    159→\{{#include file.rs:2}}
+   160→\{{#include file.rs::10}}
       →…
    215→## Including a file but initially hiding all except specified lines
    217→The `rustdoc_include` helper is for including code from external Rust files that contain complete
@@ -470,6 +451,7 @@ mdbook.md
    219→same way as with `include`.
    220→
    221→The lines not in the line number range or between the anchors will still be included, but they will
+   222→be prefaced with `#`. This way, a reader can expand the snippet to see the complete example, and
       →…
    279→## Inserting runnable Rust files
    281→With the following syntax, you can insert runnable Rust files into your book:
@@ -477,6 +459,7 @@ mdbook.md
    283→```hbs
    284→\{{#playground file.rs}}
    285→```
+   286→
       →…
    310→## Controlling page \<title\>
    312→A chapter can set a \<title\> that is different from its entry in the table of
@@ -484,6 +467,7 @@ mdbook.md
    314→
    315→```hbs
    316→\{{#title My Title}}
+   317→```
       →…
    319→## HTML classes provided by mdBook
    323→### `class="left"` and `"right"` …
@@ -494,6 +478,7 @@ mdbook.md
    345→to inline SVG. Only the regular, solid, and brands icons are included; paid
    346→features like the light icons are not.
    347→
+   348→For example, given this HTML syntax:
       →…
 summary.md
      1→# SUMMARY.md

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (952 words)
+budget: 1000 (954 words)
 
 __private_api.rs
      3→use self::sealed::KVs;
@@ -186,6 +186,7 @@ lib.rs
    787→    #[inline]
    788→    fn get(&self) -> &'a str {
    789→        match *self {
+   790→            MaybeStaticStr::Static(s) => s,
       →…
    842→pub struct Record<'a> {
    843→    metadata: Metadata<'a>,
@@ -227,6 +228,7 @@ lib.rs
   1485→    F: FnOnce() -> &'static dyn Log,
   1486→{
   1487→    match STATE.compare_exchange(
+  1488→        UNINITIALIZED,
       →…
   1549→pub struct SetLoggerError(());
   1558→#[cfg(feature = "std")]
@@ -246,6 +248,8 @@ lib.rs
   1609→///
   1610→/// [`logger`]: fn.logger.html
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
+  1612→    false if cfg!(feature = "release_max_level_off") => LevelFilter::Off,
+      →…
 macros.rs
     75→macro_rules! log {
    119→macro_rules! __log {
@@ -268,8 +272,4 @@ macros.rs
    564→macro_rules! __log_value_error {
    573→macro_rules! __log_value_error {
 serde.rs
-     3→use serde_core::de::{
-     4→    Deserialize, DeserializeSeed, Deserializer, EnumAccess, Error, Unexpected, VariantAccess,
-     5→    Visitor,
-     6→};
      9→use crate::{Level, LevelFilter, LOG_LEVEL_NAMES};

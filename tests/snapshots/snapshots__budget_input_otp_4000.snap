@@ -2,13 +2,11 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3911 words)
+budget: 4000 (3912 words)
 
 CHANGELOG.md
      1→# Changelog …
-     3→## [1.4.2]
-     5→- chore(input): remove unintentional log within internal pasteListener
-     6→
+     3→## [1.4.2] …
      7→## [1.4.1] …
     11→## [1.4.0] …
     25→## [1.2.5] …
@@ -434,7 +432,6 @@ apps/storybook/tailwind.config.js
      4→  content: [
      5→    './index.html',
      6→    './src/stories/**/*.{ts,tsx}',
-     7→    './src/**/*.{ts,tsx}',
       →…
 apps/storybook/tsconfig.json
      2→  "compilerOptions": {
@@ -778,6 +775,7 @@ apps/website/src/app/(pages)/layout.tsx
     12→import { Toaster } from '@/components/ui/sonner'
     14→export const metadata: Metadata = {
     15→  title: {
+    16→    default: siteConfig.name,
       →…
     68→export default function RootLayout({
     69→  children,
@@ -962,6 +960,7 @@ packages/input-otp/src/input.tsx
    546→}
    553→const NOSCRIPT_CSS_FALLBACK = `
    554→[data-input-otp] {
+   555→  --nojs-bg: white !important;
       →…
 packages/input-otp/src/regexp.ts
      1→export const REGEXP_ONLY_DIGITS = '^\\d+$'
@@ -1025,6 +1024,7 @@ packages/input-otp/src/use-pwm-badge.tsx
      6→const PWM_BADGE_SPACE_WIDTH = `${PWM_BADGE_SPACE_WIDTH_PX}px` as const
      8→const PASSWORD_MANAGERS_SELECTORS = [
      9→  '[data-lastpass-icon-root]', // LastPass
+    10→  'com-1password-button', // 1Password
       →…
     15→export function usePasswordManagerBadge({
     16→  containerRef,

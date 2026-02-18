@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3989 words)
+budget: 4000 (3990 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -81,25 +81,6 @@ budget: 4000 (3989 words)
      3→}
 CHANGELOG.md
      1→# Changelog …
-     3→## [7.7.4](https://github.com/npm/node-semver/compare/v7.7.3...v7.7.4) (2026-01-16) …
-     4→### Bug Fixes …
-    16→### Bug Fixes …
-    23→### Bug Fixes …
-    31→### Bug Fixes …
-    35→### Features …
-    50→### Bug Fixes …
-    60→### Bug Fixes …
-    66→### Bug Fixes …
-    88→### Features …
-   110→### Bug Fixes …
-   117→### Bug Fixes …
-   127→### Bug Fixes …
-   135→### Bug Fixes …
-   141→### Features …
-   153→### Features …
-   174→### Bug Fixes …
-   185→### Bug Fixes …
-   200→### Bug Fixes …
 CONTRIBUTING.md
      3→# Contributing …
      5→## Code of Conduct
@@ -112,16 +93,11 @@ CONTRIBUTING.md
     14→
       →…
     17→## Pull Request Conventions
-    19→### Commits
-    21→We use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
-    22→
-      →…
+    19→### Commits …
     30→### Test Coverage …
     36→### Linting …
     42→## What _not_ to contribute?
-    44→### Dependencies
-    46→It should be noted that our team does not accept third-party dependency updates/PRs.  If you submit a PR trying to update our dependencies we will close it with or without a reference to these contribution guidelines.
-    47→
+    44→### Dependencies …
     48→### Tools/Automation …
 README.md
      1→semver(1) -- The semantic versioner for npm
@@ -295,6 +271,7 @@ README.md
    186→If a version has a prerelease tag (for example, `1.2.3-alpha.3`) then
    187→it will only be allowed to satisfy comparator sets if at least one
    188→comparator with the same `[major, minor, patch]` tuple also has a
+   189→prerelease tag.
       →…
    219→#### Prerelease Identifiers
    221→The method `.inc` takes an additional `identifier` string argument that
@@ -312,6 +289,7 @@ README.md
    281→Advanced range syntax desugars to primitive comparators in
    282→deterministic ways.
    283→
+   284→Advanced ranges may be combined in the same way as primitive
       →…
    287→#### Hyphen Ranges `X.Y.Z - A.B.C`
    289→Specifies an inclusive set.
@@ -341,6 +319,7 @@ README.md
    386→Putting all this together, here is a Backus-Naur grammar for ranges,
    387→for the benefit of parser authors:
    388→
+   389→```bnf
       →…
    408→## Functions
    410→All methods and classes take a final `options` object argument.  All
@@ -390,11 +369,13 @@ README.md
    455→* `gt(v1, v2)`: `v1 > v2`
    456→* `gte(v1, v2)`: `v1 >= v2`
    457→* `lt(v1, v2)`: `v1 < v2`
+   458→* `lte(v1, v2)`: `v1 <= v2`
       →…
    478→### Sorting
    480→* `sort(versions)`: Returns a sorted array of versions based on the `compareBuild` 
    481→  function.
    482→* `rsort(versions)`: The reverse of `sort`. Returns an array of versions based on
+   483→  the `compareBuild` function in descending order.
       →…
    485→### Comparators
    487→* `intersects(comparator)`: Return true if the comparators intersect
@@ -403,16 +384,19 @@ README.md
    491→* `validRange(range)`: Return the valid range or null if it's not valid.
    492→* `satisfies(version, range)`: Return true if the version satisfies the
    493→  range.
+   494→* `maxSatisfying(versions, range)`: Return the highest version in the list
       →…
    531→### Coercion
    533→* `coerce(version, options)`: Coerces a string to semver if possible
    534→
    535→This aims to provide a very forgiving translation of a non-semver string to
+   536→semver. It looks for the first digit in a string and consumes all
       →…
    558→### Clean
    560→* `clean(version)`: Clean a string to be a valid semver if possible
    561→
    562→This will return a cleaned and trimmed semver version. If the provided
+   563→version is not valid a null will be returned. This does not work for
       →…
    576→## Constants
    578→As a convenience, helper constants are exported to provide information about what `node-semver` supports:
@@ -421,11 +405,13 @@ README.md
    582→- major
    583→- premajor
    584→- minor
+   585→- preminor
       →…
    600→### `SEMVER_SPEC_VERSION`
    602→2.0.0
    603→
    604→```
+   605→const semver = require('semver');
       →…
    610→## Exported Modules
    613→TODO: Make sure that all of these items are documented (classes aren't,
@@ -517,8 +503,6 @@ bin/semver.js
     45→      const value = a.slice(indexOfEqualSign + 1)
     46→      a = a.slice(0, indexOfEqualSign)
     47→      argv.unshift(value)
-    48→    }
-    49→    switch (a) {
       →…
    132→const failInc = () => {
    133→  console.error('--inc can only be used on a single version with no range')
@@ -536,8 +520,6 @@ bin/semver.js
    147→
    148→Options:
    149→-r --range <range>
-   150→        Print versions that match the specified range.
-   151→
       →…
 classes/comparator.js
      3→const ANY = Symbol('SemVer ANY')
@@ -752,11 +734,18 @@ internal/constants.js
      5→const SEMVER_SPEC_VERSION = '2.0.0'
      7→const MAX_LENGTH = 256
      8→const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER ||
+     9→/* istanbul ignore next */ 9007199254740991
     12→const MAX_SAFE_COMPONENT_LENGTH = 16
     16→const MAX_SAFE_BUILD_LENGTH = MAX_LENGTH - 6
     18→const RELEASE_TYPES = [
+    19→  'major',
+    20→  'premajor',
+      →…
 internal/debug.js
      3→const debug = (
+     4→  typeof process === 'object' &&
+     5→  process.env &&
+      →…
 internal/identifiers.js
      3→const numeric = /^[0-9]+$/
      4→const compareIdentifiers = (a, b) => {
@@ -772,7 +761,12 @@ internal/identifiers.js
     14→    b = +b
     15→  }
     16→
-      →…
+    17→  return a === b ? 0
+    18→    : (anum && !bnum) ? -1
+    19→    : (bnum && !anum) ? 1
+    20→    : a < b ? -1
+    21→    : 1
+    22→}
     24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
 internal/lrucache.js
      3→class LRUCache {
@@ -831,6 +825,9 @@ internal/re.js
     16→const t = exports.t = {}
     19→const LETTERDASHNUMBER = '[a-zA-Z0-9-]'
     27→const safeRegexReplacements = [
+    28→  ['\\s', 1],
+    29→  ['\\d', MAX_LENGTH],
+      →…
     33→const makeSafeRegex = (value) => {
     34→  for (const [token, max] of safeRegexReplacements) {
     35→    value = value

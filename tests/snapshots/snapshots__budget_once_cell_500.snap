@@ -6,10 +6,6 @@ budget: 500 (479 words)
 
 CHANGELOG.md
      1→# Changelog …
-     3→## 1.21.3
-     5→- Outline more initialization in `race`: [#284](https://github.com/matklad/once_cell/pull/284),
-     6→  [#285](https://github.com/matklad/once_cell/pull/285).
-     7→
 Cargo.toml
      1→[package …
     19→[workspace …
@@ -142,15 +138,22 @@ src/race.rs
    363→        ghost: PhantomData<Option<Box<T>>>,
    364→    }
 tests/it/main.rs
+     1→mod unsync_once_cell;
+     5→mod unsync_lazy;
 tests/it/race.rs
 tests/it/race_once_box.rs
     11→struct Heap {
     16→struct Pebble<T> {
     22→    fn drop(&mut self) {
+    23→        self.total.fetch_sub(1, SeqCst);
+    24→    }
+tests/it/sync_lazy.rs
 tests/it/sync_once_cell.rs
    178→#[test]
       →…
    181→fn reentrant_init() {
+tests/it/unsync_lazy.rs
+tests/it/unsync_once_cell.rs
 xtask/Cargo.toml
      1→[package …
      8→[dependencies …

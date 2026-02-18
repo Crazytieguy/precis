@@ -2,31 +2,18 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1973 words)
+budget: 2000 (1983 words)
 
 CHANGELOG.md
      1→# neverthrow …
      3→## 8.2.0 …
-     5→### Minor Changes …
     11→## 8.1.1 …
-    13→### Patch Changes …
     17→## 8.1.0 …
-    19→### Minor Changes …
     23→## 8.0.0 …
-    25→### Major Changes …
     43→## 7.2.0 …
-    45→### Minor Changes …
     49→## 7.1.0 …
-    51→### Minor Changes …
-    56→### Patch Changes
-    58→- [#483](https://github.com/supermacro/neverthrow/pull/483) [`96f7f66`](https://github.com/supermacro/neverthrow/commit/96f7f669ac83be705a389d47ed804e9d44a13932) Thanks [@braxtonhall](https://github.com/braxtonhall)! - Fix `combineWithAllErrors` types
-    59→
-    60→- [#563](https://github.com/supermacro/neverthrow/pull/563) [`eadf50c`](https://github.com/supermacro/neverthrow/commit/eadf50c695db896b8841c0ee301ae5eeba994b90) Thanks [@mattpocock](https://github.com/mattpocock)! - Made err() infer strings narrowly for easier error tagging.
-    61→
     62→## 7.0.1 …
-    64→### Patch Changes …
     70→## 7.0.0 …
-    72→### Major Changes …
 README.md
      1→# NeverThrow 🙅 …
      5→## Description
@@ -50,65 +37,9 @@ README.md
    103→
       →…
    139→## API Documentation
-   141→### Synchronous API (`Result`) …
-   143→#### `ok`
-   145→Constructs an `Ok` variant of `Result`
-   146→
-   147→**Signature:**
-   148→
-   149→```typescript
-   150→ok<T, E>(value: T): Ok<T, E> { ... }
-   151→```
-   152→
-   153→**Example:**
-   154→
-   155→```typescript
-   156→import { ok } from 'neverthrow'
-   157→
-   158→const myResult = ok({ myData: 'test' }) // instance of `Ok`
-   159→
-   160→myResult.isOk() // true
-   161→myResult.isErr() // false
-   162→```
-   163→
-   164→[⬆️  Back to top](#toc)
-   165→
-   166→---
-   167→
+   141→### Synchronous API (`Result`)
    863→### Asynchronous API (`ResultAsync`)
-   865→#### `okAsync`
-   867→Constructs an `Ok` variant of `ResultAsync`
-   868→
-   869→**Signature:**
-   870→
-   871→```typescript
-   872→okAsync<T, E>(value: T): ResultAsync<T, E>
-   873→```
-   874→
-   875→**Example:**
-   876→
-   877→```typescript
-   878→import { okAsync } from 'neverthrow'
-   879→
-   880→const myResultAsync = okAsync({ myData: 'test' }) // instance of `ResultAsync`
-   881→
-   882→const myResult = await myResultAsync // instance of `Ok`
-   883→
-   884→myResult.isOk() // true
-   885→myResult.isErr() // false
-   886→```
-   887→
-   888→[⬆️  Back to top](#toc)
-   889→
-   890→---
-   891→
   1519→### Utilities
-  1521→#### `fromThrowable`
-  1523→Top level export of `Result.fromThrowable`.
-  1524→Please find documentation at [Result.fromThrowable](#resultfromthrowable-static-class-method)
-  1525→
-  1526→[⬆️  Back to top](#toc)
-  1527→
   1633→### Testing
   1635→`Result` instances have two unsafe methods, aptly called `_unsafeUnwrap` and `_unsafeUnwrapErr` which **should only be used in a test environment**.
   1636→
@@ -122,6 +53,16 @@ README.md
   1644→expect(myResult._unsafeUnwrap()).toBe(someExpectation)
   1645→```
   1646→
+  1647→However, do note that `Result` instances are comparable. So you don't necessarily need to unwrap them in order to assert expectations in your tests. So you could also do something like this:
+  1648→
+  1649→```typescript
+  1650→import { ok } from 'neverthrow'
+  1651→
+  1652→// ...
+  1653→
+  1654→expect(callSomeFunctionThatReturnsAResult("with", "some", "args")).toEqual(ok(someExpectation));
+  1655→```
+  1656→
       →…
   1673→## A note on the Package Name
   1675→Although the package is called `neverthrow`, please don't take this literally. I am simply encouraging the developer to think a bit more about the ergonomics and usage of whatever software they are writing.
@@ -298,6 +239,7 @@ src/result-async.ts
    210→  /**
    211→   * @deprecated will be removed in 9.0.0.
    212→   *
+   213→   * You can use `safeTry` without this method.
       →…
    222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
    227→  then …
@@ -344,32 +286,38 @@ src/result.ts
    135→  /**
    136→   * Used to check if a `Result` is an `OK`
    137→   *
+   138→   * @returns `true` if the result is an `OK` variant of Result
       →…
    140→  isOk(): this is Ok<T, E>
    142→  /**
    143→   * Used to check if a `Result` is an `Err`
    144→   *
+   145→   * @returns `true` if the result is an `Err` variant of Result
       →…
    147→  isErr(): this is Err<T, E>
    149→  /**
    150→   * Maps a `Result<T, E>` to `Result<U, E>`
    151→   * by applying a function to a contained `Ok` value, leaving an `Err` value
+   152→   * untouched.
       →…
    157→  map<A>(f: (t: T) => A): Result<A, E>
    159→  /**
    160→   * Maps a `Result<T, E>` to `Result<T, F>` by applying a function to a
    161→   * contained `Err` value, leaving an `Ok` value untouched.
+   162→   *
       →…
    168→  mapErr<U>(f: (e: E) => U): Result<T, U>
    183→  andThen …
    185→  /**
    186→   * This "tee"s the current value to an passed-in computation such as side
    187→   * effect functions but still returns the same current value as the result.
+   188→   *
       →…
    195→  andTee(f: (t: T) => unknown): Result<T, E>
    197→  /**
    198→   * This "tee"s the current `Err` value to an passed-in computation such as side
    199→   * effect functions but still returns the same `Err` value as the result.
+   200→   *
       →…
    207→  orTee(f: (t: E) => unknown): Result<T, E>
    219→  andThrough …
@@ -377,36 +325,43 @@ src/result.ts
    235→  /**
    236→   * Similar to `map` Except you must return a new `Result`.
    237→   *
+   238→   * This is useful for when you need to do a subsequent async computation using
       →…
    244→  asyncAndThen<U, F>(f: (t: T) => ResultAsync<U, F>): ResultAsync<U, E | F>
    246→  /**
    247→   * Maps a `Result<T, E>` to `ResultAsync<U, E>`
    248→   * by applying an async function to a contained `Ok` value, leaving an `Err`
+   249→   * value untouched.
       →…
    253→  asyncMap<U>(f: (t: T) => Promise<U>): ResultAsync<U, E>
    255→  /**
    256→   * Unwrap the `Ok` value, or return the default if there is an `Err`
    257→   *
+   258→   * @param v the default value to return if there is an `Err`
       →…
    260→  unwrapOr<A>(v: A): T | A
    262→  /**
    263→   *
    264→   * Given 2 functions (one for the `Ok` variant and one for the `Err` variant)
+   265→   * execute the function that matches the `Result` variant.
       →…
    276→  match<A, B = A>(ok: (t: T) => A, err: (e: E) => B): A | B
    278→  /**
    279→   * @deprecated will be removed in 9.0.0.
    280→   *
+   281→   * You can use `safeTry` without this method.
       →…
    290→  safeUnwrap(): Generator<Err<never, E>, T>
    292→  /**
    293→   * **This method is unsafe, and should only be used in a test environments**
    294→   *
+   295→   * Takes a `Result<T, E>` and returns a `T` when the result is an `Ok`, otherwise it throws a custom object.
       →…
    299→  _unsafeUnwrap(config?: ErrorConfig): T
    301→  /**
    302→   * **This method is unsafe, and should only be used in a test environments**
    303→   *
+   304→   * takes a `Result<T, E>` and returns a `E` when the result is an `Err`,
       →…
    309→  _unsafeUnwrapErr(config?: ErrorConfig): E
    312→export class Ok<T, E> implements IResult<T, E> {
@@ -471,9 +426,12 @@ src/result.ts
    712→export type CombineResults …
    719→export type CombineResultsWithAllErrorsArray …
 tests/index.test.ts
+     1→import * as td from 'testdouble'
      3→../src …
+    18→import { vitest, describe, expect, it } from 'vitest'
 tests/safe-try.test.ts
      1→../src …
+    13→import { describe, expect, test } from 'vitest'
 tests/tsconfig.tests.json
      2→  "compilerOptions": {
     22→  },
@@ -482,6 +440,7 @@ tests/tsconfig.tests.json
 tests/typecheck-tests.ts
      7→../src …
     16→import { safeTry, Transpose } from '../src/result …
+    17→import { type N, Test } from 'ts-toolbelt'
     19→type CreateTuple …
   2607→const input = <T>(): T => 123 as any
 tsconfig.json

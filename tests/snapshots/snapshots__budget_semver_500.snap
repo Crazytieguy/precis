@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (509 words)
+budget: 500 (519 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -35,55 +35,20 @@ budget: 500 (509 words)
      3→repository …
     13→branches …
 .github/workflows/audit.yml
-     3→name …
-     5→on …
-    11→permissions …
-    14→jobs …
 .github/workflows/ci-release.yml
-     3→name …
-     5→on …
-    21→permissions …
-    25→jobs …
 .github/workflows/ci.yml
-     3→name …
-     5→on …
-    16→permissions …
-    19→jobs …
 .github/workflows/codeql-analysis.yml
-     3→name …
-     5→on …
-    18→permissions …
-    21→jobs …
 .github/workflows/post-dependabot.yml
-     3→name …
-     5→on …
-     7→permissions …
-    10→jobs …
 .github/workflows/pull-request.yml
-     3→name …
-     5→on …
-    13→permissions …
-    16→jobs …
 .github/workflows/release-integration.yml
-     3→name …
-     5→on …
-    22→permissions …
-    26→jobs …
 .github/workflows/release.yml
-     3→name …
-     5→on …
-    11→permissions …
-    16→jobs …
 .release-please-manifest.json
-     2→  ". …
+     2→  ".": "7.7.4"
+     3→}
 CHANGELOG.md
      1→# Changelog …
-     3→## [7.7.4](https://github.com/npm/node-semver/compare/v7.7.3...v7.7.4) (2026-01-16) …
 CONTRIBUTING.md
      3→# Contributing …
-     5→## Code of Conduct …
-    19→### Commits …
-    44→### Dependencies …
 README.md
      1→semver(1) -- The semantic versioner for npm …
      4→## Install …
@@ -91,7 +56,13 @@ README.md
    139→## Versions …
    148→## Ranges …
    184→### Prerelease Tags …
+   219→#### Prerelease Identifiers …
+   250→#### Prerelease Identifier Base …
    279→### Advanced Range Syntax …
+   287→#### Hyphen Ranges `X.Y.Z - A.B.C` …
+   306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*` …
+   324→#### Tilde Ranges `~1.2.3` `~1.2` `~1` …
+   341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4` …
    384→### Range Grammar …
    408→## Functions …
    453→### Comparison …
@@ -144,8 +115,8 @@ classes/semver.js
 internal/constants.js
 internal/debug.js
 internal/identifiers.js
-     4→const compareIdentifiers …
-    24→const rcompareIdentifiers …
+     4→const compareIdentifiers = (a, b) => {
+    24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
 internal/lrucache.js
      3→class LRUCache {
      4→  constructor () {
@@ -153,34 +124,45 @@ internal/lrucache.js
     21→  delete (key) {
     25→  set (key, value) {
 internal/parse-options.js
-     6→const parseOptions …
+     6→const parseOptions = options => {
 internal/re.js
-    33→const makeSafeRegex …
-    42→const createToken …
+    33→const makeSafeRegex = (value) => {
+    42→const createToken = (name, value, isGlobal) => {
 package.json
-     2→  "name …
-     3→  "version …
-     4→  "description …
-     5→  "main …
-     6→  "scripts …
-    16→  "devDependencies …
-    22→  "license …
-    23→  "repository …
-    27→  "bin …
-    30→  "files …
-    41→  "tap …
-    49→  "engines …
-    52→  "author …
-    53→  "templateOSS …
+     2→  "name": "semver",
+     3→  "version": "7.7.4",
+     4→  "description": "The semantic version parser used by npm.",
+     5→  "main": "index.js",
+     6→  "scripts": {
+    15→  },
+    16→  "devDependencies": {
+    21→  },
+    22→  "license": "ISC",
+    23→  "repository": {
+    26→  },
+    27→  "bin": {
+    29→  },
+    30→  "files": [
+    40→  ],
+    41→  "tap": {
+    48→  },
+    49→  "engines": {
+    51→  },
+    52→  "author": "GitHub Inc.",
+    53→  "templateOSS": {
+    78→}
 ranges/subset.js
     73→const minimumVersionWithPreRelease = [new Comparator('>=0.0.0-0')]
     74→const minimumVersion = [new Comparator('>=0.0.0')]
 release-please-config.json
-     2→  "group-pull-request-title-pattern …
-     3→  "pull-request-title-pattern …
-     4→  "changelog-sections …
-    31→  "packages …
-    36→  "prerelease-type …
+     2→  "group-pull-request-title-pattern": "chore: release ${version}",
+     3→  "pull-request-title-pattern": "chore: release${component} ${version}",
+     4→  "changelog-sections": [
+    30→  ],
+    31→  "packages": {
+    35→  },
+    36→  "prerelease-type": "pre.0"
+    37→}
 test/bin/semver.js
      9→const bin = require.resolve('../../bin/semver')
     10→const run …

@@ -2,11 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (497 words)
+budget: 500 (496 words)
 
 CHANGELOG.md
      1→# neverthrow …
-     3→## 8.2.0 …
 README.md
      1→# NeverThrow 🙅 …
      5→## Description …
@@ -16,11 +15,8 @@ README.md
    100→## Top-Level API …
    139→## API Documentation …
    141→### Synchronous API (`Result`) …
-   143→#### `ok` …
    863→### Asynchronous API (`ResultAsync`) …
-   865→#### `okAsync` …
   1519→### Utilities …
-  1521→#### `fromThrowable` …
   1633→### Testing …
   1673→## A note on the Package Name …
   1681→### License …
@@ -131,8 +127,14 @@ src/result.ts
    419→export class Err<T, E> implements IResult<T, E> {
    505→  _unsafeUnwrap(config?: ErrorConfig): T {
    509→  _unsafeUnwrapErr(_?: ErrorConfig): E {
+tests/index.test.ts
+tests/safe-try.test.ts
 tests/tsconfig.tests.json
-     2→  "compilerOptions …
-    23→  "include …
+     2→  "compilerOptions": {
+    22→  },
+    23→  "include": [
+    27→}
 tests/typecheck-tests.ts
+    19→type CreateTuple …
+  2607→const input …
 tsconfig.json

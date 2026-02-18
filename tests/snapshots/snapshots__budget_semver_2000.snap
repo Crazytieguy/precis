@@ -2,12 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1990 words)
+budget: 2000 (1992 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
-     8→  .filter((file) => file.startsWith('.eslintrc.local.'))
-      →…
 .github/ISSUE_TEMPLATE/bug.yml
      3→name …
      4→description …
@@ -81,21 +79,15 @@ budget: 2000 (1990 words)
      3→}
 CHANGELOG.md
      1→# Changelog …
-     3→## [7.7.4](https://github.com/npm/node-semver/compare/v7.7.3...v7.7.4) (2026-01-16) …
 CONTRIBUTING.md
      3→# Contributing …
-     5→## Code of Conduct
-     7→All interactions in the **npm** organization on GitHub are considered to be covered by our standard [Code of Conduct](https://docs.npmjs.com/policies/conduct).
-     8→
-     9→## Reporting Bugs
-    11→Before submitting a new bug report please search for an existing or similar report.
-    12→
-      →…
-    17→## Pull Request Conventions
+     5→## Code of Conduct …
+     9→## Reporting Bugs …
+    17→## Pull Request Conventions …
     19→### Commits …
     30→### Test Coverage …
     36→### Linting …
-    42→## What _not_ to contribute?
+    42→## What _not_ to contribute? …
     44→### Dependencies …
     48→### Tools/Automation …
 README.md
@@ -151,9 +143,11 @@ README.md
       →…
    219→#### Prerelease Identifiers
    221→The method `.inc` takes an additional `identifier` string argument that
+   222→will append the value of the string as a prerelease identifier:
       →…
    250→#### Prerelease Identifier Base
    252→The method `.inc` takes an optional parameter 'identifierBase' string
+   253→that will let you let your prerelease number as zero-based or one-based.
       →…
    279→### Advanced Range Syntax
    281→Advanced range syntax desugars to primitive comparators in
@@ -161,15 +155,19 @@ README.md
       →…
    287→#### Hyphen Ranges `X.Y.Z - A.B.C`
    289→Specifies an inclusive set.
+   290→
       →…
    306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*`
    308→Any of `X`, `x`, or `*` may be used to "stand in" for one of the
+   309→numeric values in the `[major, minor, patch]` tuple.
       →…
    324→#### Tilde Ranges `~1.2.3` `~1.2` `~1`
    326→Allows patch-level changes if a minor version is specified on the
+   327→comparator.  Allows minor-level changes if not.
       →…
    341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4`
    343→Allows changes that do not modify the left-most non-zero element in the
+   344→`[major, minor, patch]` tuple.  In other words, this allows patch and
       →…
    384→### Range Grammar
    386→Putting all this together, here is a Backus-Naur grammar for ranges,
@@ -512,8 +510,6 @@ test/integration/whitespace.js
     14→const zeroLarge = '0'.repeat(500000)
 test/internal/debug.js
      3→const main = () => {
-     4→  const t = require('tap')
-      →…
 test/map.js
      9→const ROOT = resolve(__dirname, '..')
     10→const TEST = join(ROOT, 'test')

@@ -4,7 +4,6 @@ expression: output
 ---
 budget: 500 (465 words)
 
-Cargo.toml
 README.md
      1→# mdBook …
     14→## License …
@@ -23,6 +22,9 @@ crates/mdbook-core/src/config.rs
     46→use crate::static_regex;
    718→trait Updateable …
 crates/mdbook-core/src/lib.rs
+     3→/// The current version of `mdbook`.
+     4→///
+      →…
      7→pub const MDBOOK_VERSION: &str = env!("CARGO_PKG_VERSION");
     14→pub mod errors {
     15→    pub use anyhow::{Error, Result};
@@ -57,6 +59,8 @@ crates/mdbook-html/Cargo.toml
 crates/mdbook-html/README.md
      1→# mdbook-html …
     11→## License …
+crates/mdbook-html/src/html/tokenizer.rs
+    22→    type Handle = ();
 crates/mdbook-html/src/html/tree.rs
     25→macro_rules! attr_qual_name {
    131→    fn into_tendril(self) -> StrTendril;
@@ -132,6 +136,7 @@ guide/guide-helper/src/lib.rs
      3→use mdbook_preprocessor::book::Book;
      9→/// Preprocessing entry point.
     10→pub fn handle_preprocessing() -> Result<()> {
+    33→struct GuideHelper;
 guide/guide-helper/src/main.rs
      3→fn main() {
 guide/src/README.md
@@ -147,12 +152,11 @@ guide/src/format/README.md
      1→# Format …
 guide/src/format/configuration/README.md
      1→# Configuration …
-guide/src/format/mdbook.md
-     3→## Hiding code lines …
 guide/src/format/theme/README.md
      1→# Theme …
 guide/src/guide/README.md
      1→# User guide …
+src/cmd/build.rs
 src/cmd/clean.rs
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
     45→#[derive(Debug)]
@@ -173,6 +177,7 @@ src/cmd/mod.rs
 src/cmd/serve.rs
      3→use super::watch;
     20→const LIVE_RELOAD_ENDPOINT: &str = "__livereload";
+src/cmd/test.rs
 src/cmd/watch/native.rs
     11→pub fn rebuild_on_change …
 src/cmd/watch/poller.rs
@@ -183,11 +188,5 @@ src/cmd/watch.rs
     23→    Native,
     24→}
 src/main.rs
-     5→use anyhow::anyhow;
     14→mod cmd;
     58→fn create_clap_command() -> Command {
-triagebot.toml
-     2→[assign …
-     5→[shortcut …
-     8→[bot-pull-requests …
-    11→[range-diff …

@@ -2,14 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1894 words)
+budget: 2000 (1895 words)
 
 CHANGELOG.md
      1→# Changelog …
-     3→## mdBook 0.5.2
-     4→[v0.5.1...v0.5.2](https://github.com/rust-lang/mdBook/compare/v0.5.1...v0.5.2)
-     5→
-  1659→### Changed …
 Cargo.toml
 README.md
      1→# mdBook
@@ -40,7 +36,6 @@ crates/mdbook-core/src/book/tests.rs
      1→use super::*;
 crates/mdbook-core/src/book.rs
      3→use serde::{Deserialize, Serialize};
-    99→fn for_each_mut …
    245→    type Target = Vec<u32>;
    274→    type Item = &'a BookItem;
 crates/mdbook-core/src/config.rs
@@ -49,7 +44,6 @@ crates/mdbook-core/src/config.rs
     81→fn is_default …
     86→fn toml_is_empty …
     91→    type Err = Error;
-   308→fn parse_env …
    336→fn is_default_src …
    718→trait Updateable<'de>: Serialize + Deserialize<'de> {
 crates/mdbook-core/src/lib.rs
@@ -180,7 +174,6 @@ crates/mdbook-html/README.md
     13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
 crates/mdbook-html/front-end/js/book.js
      9→function playground_text …
-crates/mdbook-html/src/html/admonitions.rs
 crates/mdbook-html/src/html/hide_lines.rs
      3→use crate::html::{Element, Node};
 crates/mdbook-html/src/html/mod.rs
@@ -212,13 +205,11 @@ crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
     28→    }
    304→    fn name(&self) -> &str {
    308→    fn render(&self, ctx: &RenderContext) -> Result<()> {
-   633→struct RenderChapterContext<'a> {
    642→/// Redirect mapping.
    643→///
       →…
    649→type CombinedRedirects = BTreeMap<String, (String, BTreeMap<String, String>)>;
 crates/mdbook-html/src/html_handlebars/helpers/fontawesome.rs
-crates/mdbook-html/src/html_handlebars/helpers/mod.rs
 crates/mdbook-html/src/html_handlebars/helpers/resources.rs
     11→pub(crate) struct ResourceHelper {
     16→    fn call …
@@ -237,7 +228,6 @@ crates/mdbook-html/src/html_handlebars/static_files.rs
     22→pub(super) struct StaticFiles {
     23→    static_files: Vec<StaticFile>,
       →…
-    27→enum StaticFile {
 crates/mdbook-html/src/lib.rs
      1→//! mdBook HTML renderer.
      2→
@@ -260,9 +250,7 @@ crates/mdbook-html/src/theme/mod.rs
    201→    fn default() -> Theme {
    229→fn load_file_contents …
 crates/mdbook-html/src/theme/playground_editor.rs
-     3→pub(crate) static JS: &[u8] = include_bytes!("../../front-end/playground_editor/editor.js");
 crates/mdbook-html/src/theme/searcher.rs
-     4→pub(crate) static JS: &[u8] = include_bytes!("../../front-end/searcher/searcher.js");
 crates/mdbook-html/src/utils.rs
      3→use std::collections::HashSet;
      4→use std::path::{Component, Path, PathBuf};
@@ -281,10 +269,25 @@ crates/mdbook-markdown/README.md
 crates/mdbook-markdown/src/lib.rs
      8→use pulldown_cmark::{Options, Parser};
     11→pub use pulldown_cmark;
+    13→/// Options for parsing markdown.
+    14→#[non_exhaustive]
     15→pub struct MarkdownOptions {
     16→    /// Enables smart punctuation.
     17→    ///
-      →…
+    18→    /// Converts quotes to curly quotes, `...` to `…`, `--` to en-dash, and
+    19→    /// `---` to em-dash.
+    20→    ///
+    21→    /// This is `true` by default.
+    22→    pub smart_punctuation: bool,
+    23→    /// Enables definition lists.
+    24→    ///
+    25→    /// This is `true` by default.
+    26→    pub definition_lists: bool,
+    27→    /// Enables admonitions.
+    28→    ///
+    29→    /// This is `true` by default.
+    30→    pub admonitions: bool,
+    31→}
     33→impl Default for MarkdownOptions {
     34→    fn default() -> MarkdownOptions {
     35→        MarkdownOptions {
@@ -396,11 +399,9 @@ crates/xtask/README.md
      1→# xtask …
 crates/xtask/src/changelog.rs
      3→use super::Result;
-     8→const CHANGELOG_PATH …
 crates/xtask/src/main.rs
      3→use std::collections::BTreeMap;
      9→mod changelog;
-    11→type Result …
 eslint.config.mjs
      7→            preprocess(text, filename) {
     16→            postprocess(messages, filename) {
@@ -496,7 +497,6 @@ guide/src/format/mathjax.md
      1→# MathJax support …
 guide/src/format/mdbook.md
      1→# mdBook-specific features …
-     3→## Hiding code lines …
 guide/src/format/summary.md
      1→# SUMMARY.md …
 guide/src/format/theme/README.md
@@ -574,10 +574,6 @@ src/cmd/watch/poller.rs
     21→    post_build: &dyn Fn(),
     22→) {
     23→    let mut book = MDBook::load(book_dir).unwrap_or_else(|e| {
-    24→        error!("failed to load book: {e}");
-    25→        std::process::exit(1);
-    26→    });
-    27→
       →…
     78→struct PathData {
     86→struct Watcher {
@@ -592,24 +588,16 @@ src/cmd/watch.rs
     23→    Native,
     24→}
 src/main.rs
-     5→use anyhow::anyhow;
     14→mod cmd;
     16→const VERSION: &str = concat!("v", clap::crate_version!());
     57→/// Create a list of valid arguments and sub-commands
     58→fn create_clap_command() -> Command {
 tests/testsuite/README.md
      1→# Testsuite …
-     3→## Introduction …
 tests/testsuite/book_test.rs
     23→pub struct BookTest {
    361→pub struct BookCommand {
 tests/testsuite/main.rs
+    22→mod search;
     28→    pub use crate::book_test::{BookTest, glob_one, read_to_string};
-tests/testsuite/search/reasonable_search_index/src/first/duplicate-headers.md
-tests/testsuite/toc.rs
-    26→macro_rules! descendants {
 triagebot.toml
-     2→[assign …
-     5→[shortcut …
-     8→[bot-pull-requests …
-    11→[range-diff …

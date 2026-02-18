@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1011 words)
+budget: 1000 (1012 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -79,20 +79,8 @@ budget: 1000 (1011 words)
      3→}
 CHANGELOG.md
      1→# Changelog …
-     3→## [7.7.4](https://github.com/npm/node-semver/compare/v7.7.3...v7.7.4) (2026-01-16) …
 CONTRIBUTING.md
      3→# Contributing …
-     5→## Code of Conduct
-     7→All interactions in the **npm** organization on GitHub are considered to be covered by our standard [Code of Conduct](https://docs.npmjs.com/policies/conduct).
-     8→
-     9→## Reporting Bugs …
-    17→## Pull Request Conventions …
-    19→### Commits …
-    30→### Test Coverage …
-    36→### Linting …
-    42→## What _not_ to contribute? …
-    44→### Dependencies …
-    48→### Tools/Automation …
 README.md
      1→semver(1) -- The semantic versioner for npm
      4→## Install
@@ -220,7 +208,13 @@ internal/lrucache.js
     10→    const value = this.map.get(key)
     11→    if (value === undefined) {
     12→      return undefined
-      →…
+    13→    } else {
+    14→      // Remove the key from the map and add it to the end
+    15→      this.map.delete(key)
+    16→      this.map.set(key, value)
+    17→      return value
+    18→    }
+    19→  }
     21→  delete (key) {
     22→    return this.map.delete(key)
     23→  }
@@ -228,7 +222,17 @@ internal/lrucache.js
     26→    const deleted = this.delete(key)
     27→
     28→    if (!deleted && value !== undefined) {
-      →…
+    29→      // If cache is full, delete the least recently used item
+    30→      if (this.map.size >= this.max) {
+    31→        const firstKey = this.map.keys().next().value
+    32→        this.delete(firstKey)
+    33→      }
+    34→
+    35→      this.map.set(key, value)
+    36→    }
+    37→
+    38→    return this
+    39→  }
 internal/parse-options.js
      4→const looseOption = Object.freeze({ loose: true })
      5→const emptyOpts = Object.freeze({ })
@@ -302,7 +306,7 @@ release-please-config.json
     37→}
 test/bin/semver.js
      9→const bin = require.resolve('../../bin/semver')
-    10→const run = args => new Promise((resolve, reject) => {
+    10→const run …
 test/integration/whitespace.js
 test/internal/debug.js
      3→const main = () => {

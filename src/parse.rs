@@ -131,6 +131,14 @@ fn import_name(node: tree_sitter::Node, source: &str, lang: Lang) -> String {
                     .to_string()
             }
         }
+        Lang::C => {
+            // Preserve brackets vs quotes to distinguish system vs local includes:
+            // `#include <stdio.h>` → `<stdio.h>` (system)
+            // `#include "myheader.h"` → `"myheader.h"` (local/1st-party)
+            text.strip_prefix("#include")
+                .map(|s| s.trim().to_string())
+                .unwrap_or_else(|| text.to_string())
+        }
         Lang::Markdown | Lang::Json | Lang::Toml | Lang::Yaml => "?".to_string(),
     }
 }
@@ -155,6 +163,8 @@ fn is_first_party_import(name: &str, lang: Lang) -> bool {
         Lang::Go => false,
         // Python: relative imports (leading dot) are local.
         Lang::Python => name.starts_with('.'),
+        // C: `#include "header.h"` (quoted) is local, `#include <header.h>` (angle) is system.
+        Lang::C => name.starts_with('"'),
         Lang::Markdown | Lang::Json | Lang::Toml | Lang::Yaml => false,
     }
 }
@@ -185,6 +195,10 @@ fn language_for_extension(ext: &str) -> Option<(Language, &'static str)> {
         (Lang::Go, _) => Some((
             tree_sitter_go::LANGUAGE.into(),
             include_str!("../queries/go.scm"),
+        )),
+        (Lang::C, _) => Some((
+            tree_sitter_c::LANGUAGE.into(),
+            include_str!("../queries/c.scm"),
         )),
         (Lang::Python, _) => Some((
             tree_sitter_python::LANGUAGE.into(),
@@ -342,6 +356,58 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             }
             "const_spec" => SymbolKind::Const,
             "var_spec" => SymbolKind::Static,
+            // C
+            "function_definition" if lang == Lang::C => SymbolKind::Function,
+            "struct_specifier" => {
+                // Only capture struct definitions, not forward declarations or typedef inner structs.
+                if symbol_node.child_by_field_name("body").is_none() {
+                    continue;
+                }
+                // Skip struct definitions inside typedef — the typedef captures the whole thing
+                if symbol_node
+                    .parent()
+                    .is_some_and(|p| p.kind() == "type_definition")
+                {
+                    continue;
+                }
+                SymbolKind::Struct
+            }
+            "union_specifier" => {
+                if symbol_node.child_by_field_name("body").is_none() {
+                    continue;
+                }
+                if symbol_node
+                    .parent()
+                    .is_some_and(|p| p.kind() == "type_definition")
+                {
+                    continue;
+                }
+                SymbolKind::Struct
+            }
+            "enum_specifier" => {
+                if symbol_node.child_by_field_name("body").is_none() {
+                    continue;
+                }
+                if symbol_node
+                    .parent()
+                    .is_some_and(|p| p.kind() == "type_definition")
+                {
+                    continue;
+                }
+                SymbolKind::Enum
+            }
+            "type_definition" => SymbolKind::TypeAlias,
+            "preproc_def" | "preproc_function_def" => SymbolKind::Macro,
+            "preproc_include" => SymbolKind::Import,
+            // C: declaration nodes can be function prototypes or global variables
+            "declaration" if lang == Lang::C => {
+                // Check if this is a function prototype (has function_declarator)
+                if has_descendant_kind(symbol_node, "function_declarator") {
+                    SymbolKind::Function
+                } else {
+                    SymbolKind::Static
+                }
+            }
             // Python
             "function_definition" => SymbolKind::Function,
             "class_definition" => SymbolKind::Class,
@@ -421,6 +487,12 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
         } else if matches!(symbol_node.kind(), "const_declaration" | "var_declaration") {
             // Grouped const/var block: use keyword as display name
             (if symbol_node.kind() == "const_declaration" { "const" } else { "var" }).to_string()
+        } else if symbol_node.kind() == "type_definition" {
+            // C typedef: extract the declarator name (last type_identifier in the declarator)
+            typedef_name(symbol_node, source)
+        } else if symbol_node.kind() == "declaration" && lang == Lang::C {
+            // C declaration: extract name from the declarator
+            c_declaration_name(symbol_node, source)
         } else {
             match name_idx.and_then(|idx| m.captures.iter().find(|c| c.index == idx)) {
                 Some(c) => c
@@ -457,6 +529,8 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
                 Lang::Go => name.starts_with(|c: char| c.is_ascii_uppercase()),
                 Lang::Python => !name.starts_with('_') || (name.starts_with("__") && name.ends_with("__")),
                 Lang::Markdown => true,
+                // C: non-static symbols are public; underscore-prefixed names are conventionally private
+                Lang::C => !is_c_static(symbol_node, source) && !name.starts_with('_'),
                 _ => is_public_symbol(symbol_node, source),
             }
         };
@@ -473,7 +547,18 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             is_public,
             is_first_party,
             line: symbol_node.start_position().row + 1,
-            end_line: symbol_node.end_position().row + 1,
+            // C preprocessor directives include trailing newlines, so their
+            // end_position is at column 0 of the next line. Adjust to avoid
+            // claiming an extra line that causes overlapping output.
+            end_line: if lang == Lang::C
+                && matches!(symbol_node.kind(), "preproc_include" | "preproc_def" | "preproc_function_def")
+                && symbol_node.end_position().column == 0
+                && symbol_node.end_position().row > symbol_node.start_position().row
+            {
+                symbol_node.end_position().row
+            } else {
+                symbol_node.end_position().row + 1
+            },
         });
     }
 
@@ -771,6 +856,85 @@ fn is_require_call(declarator: Option<tree_sitter::Node>, source: &str) -> bool 
         }
         _ => false,
     }
+}
+
+/// Check if any descendant of a node has the given kind.
+fn has_descendant_kind(node: tree_sitter::Node, kind: &str) -> bool {
+    let mut cursor = node.walk();
+    for child in node.children(&mut cursor) {
+        if child.kind() == kind {
+            return true;
+        }
+        if has_descendant_kind(child, kind) {
+            return true;
+        }
+    }
+    false
+}
+
+/// Extract the typedef name from a C `type_definition` node.
+/// Handles `typedef struct { ... } Name;`, `typedef int Name;`,
+/// `typedef int (*Name)(...)`, etc.
+fn typedef_name(node: tree_sitter::Node, source: &str) -> String {
+    // The `declarator` field of type_definition contains the name.
+    // For simple typedefs: declarator is type_identifier
+    // For pointer typedefs: declarator is pointer_declarator wrapping type_identifier
+    // For function pointer typedefs: deeply nested
+    if let Some(decl) = node.child_by_field_name("declarator")
+        && let Some(name) = find_type_identifier(decl, source)
+    {
+        return name;
+    }
+    "?".to_string()
+}
+
+/// Recursively find the first type_identifier in a declarator subtree.
+fn find_type_identifier(node: tree_sitter::Node, source: &str) -> Option<String> {
+    if node.kind() == "type_identifier" {
+        return node.utf8_text(source.as_bytes()).ok().map(|s| s.to_string());
+    }
+    let mut cursor = node.walk();
+    for child in node.children(&mut cursor) {
+        if let Some(name) = find_type_identifier(child, source) {
+            return Some(name);
+        }
+    }
+    None
+}
+
+/// Extract the name from a C `declaration` node (global variable or function prototype).
+fn c_declaration_name(node: tree_sitter::Node, source: &str) -> String {
+    // The declarator field contains the name, possibly nested in pointer_declarator
+    // or function_declarator.
+    if let Some(decl) = node.child_by_field_name("declarator")
+        && let Some(name) = find_identifier(decl, source)
+    {
+        return name;
+    }
+    "?".to_string()
+}
+
+/// Recursively find the first identifier in a declarator subtree.
+fn find_identifier(node: tree_sitter::Node, source: &str) -> Option<String> {
+    if node.kind() == "identifier" {
+        return node.utf8_text(source.as_bytes()).ok().map(|s| s.to_string());
+    }
+    let mut cursor = node.walk();
+    for child in node.children(&mut cursor) {
+        if let Some(name) = find_identifier(child, source) {
+            return Some(name);
+        }
+    }
+    None
+}
+
+/// Check if a C symbol has `static` storage class (file-scoped, not public).
+fn is_c_static(node: tree_sitter::Node, source: &str) -> bool {
+    let mut cursor = node.walk();
+    node.children(&mut cursor).any(|child| {
+        child.kind() == "storage_class_specifier"
+            && child.utf8_text(source.as_bytes()).unwrap_or("") == "static"
+    })
 }
 
 /// Check if a node is inside a function body (i.e. it's a local declaration, not a module-level one).

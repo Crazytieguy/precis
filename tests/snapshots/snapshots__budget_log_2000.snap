@@ -2,14 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1929 words)
+budget: 2000 (1934 words)
 
 CHANGELOG.md
      1→# Change Log …
-     3→## [Unreleased] …
-     5→## [0.4.29] - 2025-12-02 …
-     7→## What's Changed …
-    19→## What's Changed …
 Cargo.toml
      1→[package …
     19→[package.metadata.docs.rs …
@@ -36,26 +32,7 @@ README.md
     35→```
     36→
     37→```rust
-    38→use log::{info, trace, warn};
-    39→
-    40→pub fn shave_the_yak(yak: &mut Yak) {
-    41→    trace!("Commencing yak shaving");
-    42→
-    43→    loop {
-    44→        match find_a_razor() {
-    45→            Ok(razor) => {
-    46→                info!("Razor located: {razor}");
-    47→                yak.shave(razor);
-    48→                break;
-    49→            }
-    50→            Err(err) => {
-    51→                warn!("Unable to locate a razor: {err}, retrying");
-    52→            }
-    53→        }
-    54→    }
-    55→}
-    56→```
-    57→
+      →…
     58→### In executables
     60→In order to produce log output, executables have to use a logger implementation compatible with the facade.
     61→There are many available implementations to choose from, here are some options:
@@ -66,10 +43,6 @@ README.md
     66→    * [`simple_logger`](https://docs.rs/simple_logger/*/simple_logger/)
     67→    * [`simplelog`](https://docs.rs/simplelog/*/simplelog/)
     68→    * [`pretty_env_logger`](https://docs.rs/pretty_env_logger/*/pretty_env_logger/)
-    69→    * [`stderrlog`](https://docs.rs/stderrlog/*/stderrlog/)
-    70→    * [`flexi_logger`](https://docs.rs/flexi_logger/*/flexi_logger/)
-    71→    * [`call_logger`](https://docs.rs/call_logger/*/call_logger/)
-    72→    * [`std-logger`](https://docs.rs/std-logger/*/std_logger/)
       →…
    106→## Structured logging
    108→If you enable the `kv` feature, you can associate structured data with your log records:
@@ -91,18 +64,7 @@ rfcs/0296-structured-logging.md
     43→# Motivation …
     98→# Guide-level explanation …
    495→# Reference-level explanation …
-   502→### Don't break anything
-   504→Allow structured logging to be added in the current `0.4.x` series of `log`. This gives us the option of including structured logging in an `0.4.x` release, or bumping the minor crate version without introducing any actual breaking changes.
-   505→
   1575→# Drawbacks, rationale, and alternatives …
-  1598→#### Build a serialization contract in `log`
-  1600→Instead of internalizing a few serialization frameworks, `log` could provide a public common contract for them to conform to:
-  1601→
-  1602→```rust
-  1603→// Instead of `Value::from_any` + `FromAny`
-  1604→
-  1605→pub trait Visit {
-      →…
   1629→# Prior art …
   1650→# Unresolved questions …
 src/__private_api.rs
@@ -140,6 +102,7 @@ src/kv/error.rs
     15→    Value(crate::kv::value::inner::Error),
     16→    Fmt,
     17→}
+    21→    pub fn msg …
     28→    #[cfg(feature = "value-bag")]
     29→    pub(super) fn from_value(err: crate::kv::value::inner::Error) -> Self {
     36→    #[cfg(feature = "value-bag")]
@@ -148,15 +111,20 @@ src/kv/error.rs
     69→mod std_support {
     70→    use super::*;
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
+    77→        pub fn boxed …
 src/kv/key.rs
      3→use std::borrow::Borrow;
      6→/// A type that can be converted into a [`Key`](struct.Key.html).
      7→pub trait ToKey {
+     9→    fn to_key …
     36→#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
     37→pub struct Key<'k> {
     38→    // NOTE: This may become `Cow<'k, str>`
     39→    key: &'k str,
     40→}
+    45→    pub fn from_str …
+    53→    pub fn as_str …
+    61→    pub fn to_borrowed_str …
     93→#[cfg(feature = "std")]
     94→mod std_support {
     95→    use super::*;
@@ -177,8 +145,6 @@ src/kv/mod.rs
      8→//! features = ["kv"]
      9→//! ```
     10→//!
-    11→//! # Structured logging in `log`
-    12→//!
       →…
    246→mod error;
    247→mod key;
@@ -201,12 +167,16 @@ src/kv/source.rs
     10→///
       →…
     51→pub trait Source {
+    62→    fn visit …
+    73→    fn get …
+    85→    fn count …
     90→/// The default implementation of `Source::get`
     91→fn get_default<'v>(source: &'v (impl Source + ?Sized), key: Key) -> Option<Value<'v>> {
    113→/// The default implementation of `Source::count`.
    114→fn count_default(source: impl Source) -> usize {
    234→/// A visitor for the key-value pairs in a [`Source`](trait.Source.html).
    235→pub trait VisitSource<'kvs> {
+   237→    fn visit_pair …
    240→#[allow(clippy::needless_lifetimes)] // Not needless.
    241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T
    242→where
@@ -221,17 +191,28 @@ src/kv/value.rs
      8→pub use crate::kv::Error;
     10→/// A type that can be converted into a [`Value`](struct.Value.html).
     11→pub trait ToValue {
+    13→    fn to_value …
     33→/// A value in a key-value.
     34→///
       →…
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
    121→}
+   125→    pub fn from_any …
+   133→    pub fn from_debug …
+   143→    pub fn from_display …
+   154→    pub fn from_serde …
+   165→    pub fn from_sval …
+   175→    pub fn from_dyn_debug …
+   182→    pub fn from_dyn_display …
+   190→    pub fn from_dyn_error …
+   197→    pub fn null …
    203→    /// Get a value from an internal primitive.
    204→    fn from_inner<T>(value: T) -> Self
    205→    where
    206→        T: Into<inner::Inner<'v>>,
    207→    {
+   217→    pub fn visit …
    234→#[cfg(feature = "kv_serde")]
    235→impl<'v> serde_core::Serialize for Value<'v> {
    244→#[cfg(feature = "kv_sval")]
@@ -241,18 +222,36 @@ src/kv/value.rs
    288→macro_rules! impl_to_value_primitive {
    312→macro_rules! impl_to_value_nonzero_primitive {
    336→macro_rules! impl_value_to_primitive {
+   379→    pub fn to_borrowed_error …
+   384→    pub fn to_borrowed_str …
    389→#[cfg(feature = "kv_std")]
    390→mod std_support {
    395→    use super::*;
+   438→        pub fn to_cow_str …
    450→/// A visitor for a [`Value`].
    451→///
       →…
    462→pub trait VisitValue<'v> {
+   469→    fn visit_any …
+   472→    fn visit_null …
+   477→    fn visit_u64 …
+   482→    fn visit_i64 …
+   487→    fn visit_u128 …
+   492→    fn visit_i128 …
+   497→    fn visit_f64 …
+   502→    fn visit_bool …
+   507→    fn visit_str …
+   512→    fn visit_borrowed_str …
+   517→    fn visit_char …
+   524→    fn visit_error …
+   530→    fn visit_borrowed_error …
    538→#[allow(clippy::needless_lifetimes)] // Not needless.
    539→impl<'a, 'v, T: ?Sized> VisitValue<'v> for &'a mut T
    540→where
    541→    T: VisitValue<'v>,
    542→{
+   588→    fn visit_error …
+   593→    fn visit_borrowed_error …
    601→#[cfg(feature = "value-bag")]
    602→pub(in crate::kv) mod inner {
    610→    use super::*;
@@ -275,6 +274,11 @@ src/kv/value.rs
    748→        Debug(&'v dyn fmt::Debug),
    749→        Display(&'v dyn fmt::Display),
    750→    }
+  1055→    pub fn capture_debug …
+  1065→    pub fn capture_display …
+  1075→    pub fn capture_error …
+  1085→    pub fn capture_serde …
+  1095→    pub fn capture_sval …
   1123→pub use VisitValue as Visit;
   1129→macro_rules! as_debug {
   1139→macro_rules! as_display {
@@ -462,7 +466,6 @@ src/lib.rs
   1610→/// [`logger`]: fn.logger.html
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
   1612→    false if cfg!(feature = "release_max_level_off") => LevelFilter::Off,
-  1613→    false if cfg!(feature = "release_max_level_error") => LevelFilter::Error,
       →…
 src/macros.rs
     75→macro_rules! log {
@@ -522,7 +525,6 @@ test_max_level_features/main.rs
     44→fn test(a: &State, filter: LevelFilter) {
     72→fn last(state: &State, expected: Option<Level>) {
 tests/integration.rs
-     3→use log::{debug, error, info, trace, warn, Level, LevelFilter, Log, Metadata, Record};
      6→struct State {
      7→    last_log_level: Mutex<Option<Level>>,
      8→    last_log_location: Mutex<Option<u32>>,

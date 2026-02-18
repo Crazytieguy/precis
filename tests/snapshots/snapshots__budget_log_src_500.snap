@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (466 words)
+budget: 500 (455 words)
 
 __private_api.rs
      3→use self::sealed::KVs;
@@ -90,11 +90,15 @@ kv/value.rs
   1159→macro_rules! as_serde {
   1169→macro_rules! as_sval {
 lib.rs
+   401→use std::error;
    405→#[macro_use]
    406→mod macros;
    407→mod serde;
    409→#[cfg(feature = "kv")]
    410→pub mod kv;
+   413→use std::sync::atomic::{AtomicUsize, Ordering};
+   416→use std::cell::Cell;
+   418→use std::sync::atomic::Ordering;
    421→struct AtomicUsize {
    422→    v: Cell<usize>,
    423→}
@@ -112,8 +116,7 @@ lib.rs
    782→    Static(&'static str),
    783→    Borrowed(&'a str),
    784→}
-   787→    #[inline]
-   788→    fn get(&self) -> &'a str {
+   788→    fn get …
    842→pub struct Record<'a> {
    843→    metadata: Metadata<'a>,
    844→    args: fmt::Arguments<'a>,
@@ -131,11 +134,7 @@ lib.rs
   1202→}
   1249→pub trait Log: Sync + Send {
   1283→struct NopLogger;
-  1482→#[cfg(target_has_atomic = "ptr")]
-  1483→fn set_logger_inner<F>(make_logger: F) -> Result<(), SetLoggerError>
-  1484→where
-  1485→    F: FnOnce() -> &'static dyn Log,
-  1486→{
+  1483→fn set_logger_inner …
   1549→pub struct SetLoggerError(());
   1566→pub struct ParseLevelError(());
   1599→#[doc(hidden)]

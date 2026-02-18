@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2005 words)
+budget: 2000 (2006 words)
 
 README.md
     40→## About …
@@ -36,66 +36,30 @@ README.md
    128→## Sandbox examples …
    139→## Getting Started …
    415→## API Reference …
-   417→### `match`
-   419→```ts
-   420→match(value);
-   421→```
-   422→
-   423→Create a `Match` object on which you can later call `.with`, `.when`, `.otherwise` and `.run`.
-   424→
    742→## Patterns …
-   857→#### `P._` wildcard
-   859→The `P._` pattern will match any value. You can also use `P.any`, which is an alias to `P._`.
-   860→
-   861→```ts
-   862→import { match, P } from 'ts-pattern';
-   863→
-   864→const input = 'hello';
-   865→
-   866→const output = match(input)
-      →…
   1405→## `P.string` predicates …
   1500→## `P.number` and `P.bigint` predicates …
   1621→## Types …
-  1623→### `P.infer`
-  1625→`P.infer<typeof somePattern>` lets you infer a type of value from a type of pattern.
-  1626→
-  1627→It's particularly useful when validating an API response.
-  1628→
-  1629→```ts
-  1630→const postPattern = {
-  1631→  title: P.string,
-  1632→  content: P.string,
-  1633→  stars: P.number.between(1, 5).optional(),
-  1634→  author: {
-  1635→    firstName: P.string,
-  1636→    lastName: P.string.optional(),
-  1637→    followerCount: P.number,
-  1638→  },
-  1639→} as const;
-  1640→
-  1641→type Post = P.infer<typeof postPattern>;
-  1642→
-  1643→// posts: Post[]
-      →…
   1766→## Inspirations …
 benchmarks/always-last-digit.ts
      4→type Digit …
 benchmarks/nested-objects.ts
 benchmarks/package.json
+     2→  "name": "ts-pattern-benchmarks",
+     3→  "version": "1.0.0",
+     4→  "description": "",
+     5→  "main": "index.js",
+     6→  "scripts": {
+    11→  },
+    12→  "author": "",
+    13→  "license": "ISC",
+    14→  "devDependencies": {
+    19→}
 benchmarks/random-digit.ts
      4→type Digit …
 docs/roadmap.md
 docs/v3-to-v4-migration-guide.md
-     3→## Breaking changes …
-     5→### Imports …
-   128→#### `P.array(pattern)` …
-   159→#### `P.optional(pattern)` …
-   298→#### `P.infer<typeof pattern>` …
-   336→#### `P.symbol` …
 docs/v4-to-v5-migration-guide.md
-     7→## TypeScript v5 …
-    65→## chainable methods …
 examples/gif-fetcher/package.json
 examples/gif-fetcher/src/App.tsx
     11→type State …
@@ -111,10 +75,6 @@ examples/gif-fetcher/src/searchGif.ts
      2→import { API_KEY } from './constants';
      4→const delay …
      6→export function searchGif(query: string) {
-     7→  return fetch(
-     8→    `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${query}&limit=25&offset=0&rating=g&lang=en`
-     9→  )
-      →…
 examples/gif-fetcher/tsconfig.json
 examples/one-file-demo/one-file-demo.ts
     20→type Response …
@@ -122,7 +82,15 @@ examples/one-file-demo/one-file-demo.ts
     79→const example3 …
    102→const User …
 examples/one-file-demo/package.json
+     2→  "name": "ts-pattern-examples",
+     3→  "version": "1.0.0",
+     4→  "main": "one-file-demo.ts",
+     5→  "author": "gvergnaud",
+     6→  "dependencies": {
+     9→}
 examples/one-file-demo/tsconfig.json
+     2→  "compilerOptions": {
+     9→}
 jsr.json
      2→  "name": "@gabriel/ts-pattern",
      3→  "version": "5.9.0",
@@ -441,7 +409,26 @@ src/types/Match.ts
     25→  handledCases extends any[] = [],
     26→  inferredOutput = never
     27→> = {
-   132→  with …
+   132→  with<
+   133→    const pat extends Pattern<i>,
+   134→    pred extends (value: MatchedValue<i, InvertPattern<pat, i>>) => unknown,
+   135→    c,
+   136→    value extends GuardValue<pred>
+   137→  >(
+   138→    pattern: pat,
+   139→    predicate: pred,
+   140→    handler: (
+   141→      selections: FindSelected<value, pat>,
+   142→      value: value
+   143→    ) => PickReturnValue<o, c>
+   144→  ): pred extends (value: any) => value is infer narrowed
+   145→    ? Match<
+   146→        Exclude<i, narrowed>,
+   147→        o,
+   148→        [...handledCases, narrowed],
+   149→        Union<inferredOutput, c>
+   150→      >
+   151→    : Match<i, o, handledCases, Union<inferredOutput, c>>;
    159→  when …
    180→  otherwise …
    205→  run …
@@ -499,7 +486,9 @@ src/types/Pattern.ts
    223→      optional …
    237→      and …
    253→      or …
-   269→      select …
+   269→      select<input, k extends string>(
+   270→        key: k
+   271→      ): Chainable<SelectP<k, input, p>, omitted | 'select' | 'or' | 'and'>;
    291→      startsWith …
    306→      endsWith …
    321→      minLength …
@@ -524,7 +513,9 @@ src/types/Pattern.ts
    622→      positive …
    635→      negative …
    661→      optional …
-   678→      select …
+   678→      select<input, k extends string>(
+   679→        key: k
+   680→      ): ArrayChainable<SelectP<k, input, pattern>, omitted | 'select'>;
 src/types/helpers.ts
      5→/**
       →…
@@ -555,6 +546,10 @@ tests/types-catalog/utils.ts
      5→  kind: 'some',
      6→  value,
      7→});
+    56→export interface BaseAsyncResult …
+    62→export interface AsyncResultIdleOrLoading …
+    67→export interface AsyncResultSuccess …
+    73→export interface AsyncResultError …
 tsconfig.json
      2→  "compilerOptions": {
     11→  },
