@@ -2,29 +2,41 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (991 tokens)
+budget: 1000 (1005 tokens)
 
 into_either.rs
      4→use super::{Either, Left, Right};
      6→/// Provides methods for converting a type `Self` into either a [`Left`] or [`Right`]
      7→/// variant of [`Either<Self, Self>`](Either).
      8→///
-     9→/// The [`into_either`](IntoEither::into_either) method takes a [`bool`] to determine
       →…
     14→pub trait IntoEither: Sized {
+    15→    /// Converts `self` into a [`Left`] variant of [`Either<Self, Self>`](Either)
+    16→    /// if `into_left` is `true`.
+      →    …
+    29→    fn into_either(self, into_left: bool) -> Either<Self, Self> {
+    37→    /// Converts `self` into a [`Left`] variant of [`Either<Self, Self>`](Either)
+    38→    /// if `into_left(&self)` returns `true`.
+      →    …
+    55→    fn into_either_with<F>(self, into_left: F) -> Either<Self, Self>
+    56→    where
+    57→        F: FnOnce(&Self) -> bool,
+    58→    {
+    64→impl<T> IntoEither for T {}
 
 iterator.rs
      1→use super::{for_both, Either, Left, Right};
+     2→use core::iter;
      4→macro_rules! wrap_either {
     13→/// Iterator that maps left or right iterators to corresponding `Either`-wrapped items.
     14→///
     15→/// This struct is created by the [`Either::factor_into_iter`],
-    16→/// [`factor_iter`][Either::factor_iter],
       →…
     19→pub struct IterEither<L, R> {
     20→    inner: Either<L, R>,
     21→}
     24→    pub(crate) fn new(inner: Either<L, R>) -> Self {
+    43→impl<L, R> Iterator for Either<L, R> …
     48→    type Item = L::Item;
    185→    type Item = Either<L::Item, R::Item>;
 
@@ -39,7 +51,6 @@ lib.rs
     41→/// The enum `Either` with variants `Left` and `Right` is a general purpose
     42→/// sum type with two cases.
     43→///
-    44→/// The `Either` type is symmetric and treats its variants the same way, without
       →…
     49→pub enum Either<L, R> {
     50→    /// A value of type `L`.
@@ -47,16 +58,8 @@ lib.rs
     52→    /// A value of type `R`.
     53→    Right(R),
     54→}
-    56→/// Evaluate the provided expression for both [`Either::Left`] and [`Either::Right`].
-    57→///
-      →…
     81→macro_rules! for_both {
-    90→/// Macro for unwrapping the left side of an [`Either`], which fails early
-    91→/// with the opposite side. Can only be used in functions that return
-      →…
    113→macro_rules! try_left {
-   122→/// Dual to [`try_left!`], see its documentation for more information.
-   123→#[macro_export]
    124→macro_rules! try_right {
    133→macro_rules! map_either {
    142→mod iterator;
@@ -66,28 +69,29 @@ lib.rs
   1143→    type Output = L::Output;
   1253→macro_rules! impl_specific_ref_and_mut {
   1327→    type Target = L::Target;
-  1521→/// A helper macro to check if AsRef and AsMut are implemented for a given type.
   1522→macro_rules! check_t {
   1536→fn _unsized_ref_propagation() {
   1552→#[cfg(feature = "std")]
   1553→fn _unsized_std_propagation() {
-  1554→    check_t!(::std::path::Path);
-  1555→    check_t!(::std::ffi::OsStr);
-  1556→    check_t!(::std::ffi::CStr);
-  1557→}
 
 serde_untagged.rs
+    36→use serde::{Deserialize, Deserializer, Serialize, Serializer};
     38→#[derive(serde::Serialize, serde::Deserialize)]
     39→#[serde(untagged)]
     40→enum Either<L, R> {
     41→    Left(L),
     42→    Right(R),
     43→}
+    45→pub fn serialize …
+    58→pub fn deserialize …
 
 serde_untagged_optional.rs
+    36→use serde::{Deserialize, Deserializer, Serialize, Serializer};
     38→#[derive(Serialize, Deserialize)]
-    39→#[serde(untagged)]
+      →…
     40→enum Either<L, R> {
     41→    Left(L),
     42→    Right(R),
     43→}
+    45→pub fn serialize …
+    62→pub fn deserialize …

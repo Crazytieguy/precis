@@ -2,37 +2,43 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1004 tokens)
+budget: 1000 (1016 tokens)
 
 checkmark.tsx
      1→import { styled, keyframes } from 'goober';
-     3→const circleAnimation …
-    13→const checkmarkAnimation …
+     3→const circleAnimation = keyframes`
+    13→const checkmarkAnimation = keyframes`
     29→export interface CheckmarkTheme {
     30→  primary?: string;
     31→  secondary?: string;
     32→}
     34→export const CheckmarkIcon = styled('div')<CheckmarkTheme>`
+    35→  width: 20px;
+      →  …
 
 error.tsx
      1→import { styled, keyframes } from 'goober';
-     3→const circleAnimation …
-    13→const firstLineAnimation …
-    23→const secondLineAnimation …
+     3→const circleAnimation = keyframes`
+    13→const firstLineAnimation = keyframes`
+    23→const secondLineAnimation = keyframes`
     33→export interface ErrorTheme {
     34→  primary?: string;
     35→  secondary?: string;
     36→}
     38→export const ErrorIcon = styled('div')<ErrorTheme>`
+    39→  width: 20px;
+      →  …
 
 loader.tsx
      1→import { styled, keyframes } from 'goober';
-     3→const rotate …
+     3→const rotate = keyframes`
     12→export interface LoaderTheme {
     13→  primary?: string;
     14→  secondary?: string;
     15→}
     17→export const LoaderIcon = styled('div')<LoaderTheme>`
+    18→  width: 12px;
+      →  …
 
 toast-bar.tsx
      1→import * as React from 'react';
@@ -42,19 +48,17 @@ toast-bar.tsx
      6→import { prefersReducedMotion } from '../core/utils';
      8→const enterAnimation …
     13→const exitAnimation …
-    18→const fadeInAnimation …
-    19→const fadeOutAnimation …
-    22→const ToastBarBase …
-    38→const Message …
+    18→const fadeInAnimation = `0%{opacity:0;} 100%{opacity:1;}`;
+    19→const fadeOutAnimation = `0%{opacity:1;} 100%{opacity:0;}`;
+    22→const ToastBarBase = styled('div')`
+    38→const Message = styled('div')`
     47→interface ToastBarProps {
     48→  toast: Toast;
     49→  position?: ToastPosition;
     50→  style?: React.CSSProperties;
     51→  children?: (components: {
     52→    icon: Renderable;
-    53→    message: Renderable;
-    54→  }) => Renderable;
-    55→}
+      →    …
     57→const getAnimationStyle …
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
 
@@ -65,37 +69,30 @@ toast-icon.tsx
      5→import { ErrorIcon, ErrorTheme } from './error';
      6→import { LoaderIcon, LoaderTheme } from './loader';
      7→import { CheckmarkIcon, CheckmarkTheme } from './checkmark';
-     9→const StatusWrapper …
-    13→const IndicatorWrapper …
-    22→const enter …
+     9→const StatusWrapper = styled('div')`
+    13→const IndicatorWrapper = styled('div')`
+    22→const enter = keyframes`
     32→export const AnimatedIconWrapper = styled('div')`
     41→export type IconThemes = Partial<{
     47→export const ToastIcon: React.FC<{
     48→  toast: Toast;
     49→}> = ({ toast }) => {
-    50→  const { icon, type, iconTheme } = toast;
-    51→  if (icon !== undefined) {
-    52→    if (typeof icon === 'string') {
-    53→      return <AnimatedIconWrapper>{icon}</AnimatedIconWrapper>;
-    54→    } else {
-      →    …
+      →…
 
 toaster.tsx
      1→import { css, setup } from 'goober';
      2→import * as React from 'react';
-     3→import {
-     4→  resolveValue,
-     5→  ToasterProps,
-     6→  ToastPosition,
-     7→  ToastWrapperProps,
-     8→} from '../core/types';
-     9→import { useToaster } from '../core/use-toaster';
-    10→import { prefersReducedMotion } from '../core/utils';
-    11→import { ToastBar } from './toast-bar';
-    15→const ToastWrapper …
-    47→const getPositionStyle …
-    76→const activeClass …
-    83→const DEFAULT_OFFSET …
+     3→import { …
+     9→import { useToaster } from '../core/use-toaster …
+    10→import { prefersReducedMotion } from '../core/utils …
+    11→import { ToastBar } from './toast-bar …
+    15→const ToastWrapper = ({
+    47→const getPositionStyle = (
+    48→  position: ToastPosition,
+    49→  offset: number
+    50→): React.CSSProperties => {
+    76→const activeClass = css`
+    83→const DEFAULT_OFFSET = 16;
     85→export const Toaster: React.FC<ToasterProps> = ({
     86→  reverseOrder,
     87→  position = 'top-center',
@@ -103,5 +100,4 @@ toaster.tsx
     89→  gutter,
     90→  children,
     91→  toasterId,
-    92→  containerStyle,
       →  …

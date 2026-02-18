@@ -2,33 +2,35 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1002 tokens)
-
-docs/conf.py
-     2→from importlib.metadata import version as get_version
+budget: 1000 (1006 tokens)
 
 pyproject.toml
 
 src/typeguard/__init__.py
-    34→config …
+    34→config: TypeCheckConfiguration
+    37→def __getattr__(name: str) -> Any:
 
 src/typeguard/_checkers.py
     42→from typing_extensions import is_typeddict
-    81→TypeCheckerCallable …
-    84→TypeCheckLookupCallback …
-    88→checker_lookup_functions …
-    89→generic_alias_types …
     98→# Lifted from mypy.sharedparse
     99→BINARY_MAGIC_METHODS = {
-   586→def _is_literal_type …
+   586→def _is_literal_type(typ: object) -> bool:
   1004→# Equality checks are applied to these
   1005→origin_type_checkers: dict[
 
 src/typeguard/_config.py
-    11→T …
+     9→    from ._functions import TypeCheckFailCallback
+    11→T = TypeVar("T")
     14→class ForwardRefPolicy(Enum):
+    24→
+      →…
     30→class CollectionCheckStrategy(Enum):
+    48→
+    52→    def iterate_samples(self, collection: Iterable[T]) -> Iterable[T]:
+    62→@dataclass
     63→class TypeCheckConfiguration:
+    64→    """
+      →    …
     97→
     98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
     99→    typecheck_fail_callback: TypeCheckFailCallback | None = None
@@ -42,16 +44,21 @@ src/typeguard/_decorators.py
 src/typeguard/_exceptions.py
      5→class TypeHintWarning(UserWarning):
     12→class TypeCheckWarning(UserWarning):
+    14→
     19→class InstrumentationWarning(UserWarning):
+    21→
     26→class TypeCheckError(Exception):
+    30→
 
 src/typeguard/_functions.py
-    24→T …
-    25→TypeCheckFailCallback …
+    24→T = TypeVar("T")
+    25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
 
 src/typeguard/_importhook.py
-    40→P …
-    41→T …
+    17→from ._config …
+    18→from ._transformer …
+    40→P = ParamSpec("P")
+    41→T = TypeVar("T")
     45→def _call_with_frames_removed …
     55→class TypeguardLoader(SourceFileLoader):
     56→    @staticmethod
@@ -61,23 +68,28 @@ src/typeguard/_importhook.py
     60→        *,
     61→        _optimize: int = -1,
     62→    ) -> CodeType:
-    63→        if isinstance(path, (str, PathLike)):
-    64→            filename = path
-    65→        else:
-    66→            filename = os.fsdecode(bytes(path))
-    67→
-      →…
    109→class TypeguardFinder(MetaPathFinder):
+   119→
    156→class ImportHookManager:
+   160→
 
 src/typeguard/_memo.py
      8→class TypeCheckMemo:
+    34→
+    37→    def __init__ …
 
 src/typeguard/_pytest_plugin.py
+    16→def pytest_addoption(parser: Parser) -> None:
+    75→def pytest_configure(config: Config) -> None:
 
 src/typeguard/_suppression.py
-    15→P …
-    16→T …
+    15→P = ParamSpec("P")
+    16→T = TypeVar("T")
+    30→def suppress_type_checks(
+    31→    func: Callable[P, T] | None = None,
+    32→) -> Callable[P, T] | ContextManager[None]:
+    33→    """
+      →    …
 
 src/typeguard/_transformer.py
     67→PreliminaryNameTypePair …
@@ -86,43 +98,21 @@ src/typeguard/_transformer.py
    119→    node: Module | ClassDef | FunctionDef | AsyncFunctionDef | None
    120→    parent: TransformMemo | None
    121→    path: tuple[str, ...]
-   122→    joined_path: Constant = field(init=False)
-   123→    return_annotation: expr | None = None
-   124→    yield_annotation: expr | None = None
-   125→    send_annotation: expr | None = None
-   126→    is_async: bool = False
    285→class NameCollector(NodeVisitor):
    313→class GeneratorDetector(NodeVisitor):
    338→class AnnotationTransformer(NodeTransformer):
    488→class TypeguardTransformer(NodeTransformer):
    517→    def _use_memo …
-   570→    def _get_import …
-   580→    def _convert_annotation …
 
 src/typeguard/_utils.py
+    21→    from ._memo import TypeCheckMemo
+   172→@final
    173→class Unset:
    174→    __slots__ = ()
    175→
 
-tests/dummymodule.py
-    40→T …
-    41→P …
-    77→class DummyClass(metaclass=Metaclass):
-    78→    bar: str
-    79→    baz: int
-    80→
-   118→class Outer:
-   305→class OverrideClass:
-   365→class ModuleLocalClass:
+tests/conftest.py
+    29→def sample_set() -> set:
 
 tests/dummymodule_py312.py
     17→class ParametrizedClass[T]:
-
-tests/mypy/negative.py
-    39→class MyClass:
-
-tests/mypy/positive.py
-    28→class MyClass:
-
-tests/test_checkers.py
-    79→P …

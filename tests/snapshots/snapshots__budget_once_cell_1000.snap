@@ -2,52 +2,45 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (997 tokens)
-
-CHANGELOG.md
-     1→# Changelog
+budget: 1000 (1009 tokens)
 
 Cargo.toml
-     1→[package]
-    19→[workspace]
-    22→[dependencies]
-    27→[dev-dependencies]
-    31→[features]
-    66→[[example]]
-    70→[[example]]
-    74→[[example]]
-    78→[[example]]
-    82→[[example]]
-    86→[[example]]
-    90→[package.metadata.docs.rs]
 
 README.md
      8→# Overview
-    10→`once_cell` provides two new cell-like types, `unsync::OnceCell` and `sync::OnceCell`. `OnceCell`
-      →…
     47→# Related crates
-    49→* [double-checked-cell](https://github.com/niklasf/double-checked-cell)
-      →…
-
-examples/bench_acquire.rs
-    25→#[inline(never)]
-    26→fn thread_main(i: usize) {
-
-examples/regex.rs
-     5→macro_rules! regex {
 
 src/imp_cs.rs
      6→use crate::unsync;
      8→pub(crate) struct OnceCell<T> {
+     9→    initialized: AtomicBool,
+      →    …
+    27→    pub(crate) const fn new() -> OnceCell<T> {
+    31→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
 
 src/imp_pl.rs
+     1→use std::{ …
      7→pub(crate) struct OnceCell<T> {
+    12→const INCOMPLETE …
+    13→const RUNNING …
+    14→const COMPLETE …
+    28→    pub(crate) const fn new() -> OnceCell<T> {
+    32→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
    122→struct Guard<'a> {
+   128→    fn drop(&mut self) {
+   129→        self.state.store(self.new_state, Ordering::Release);
+   130→        unsafe {
+      →        …
 
 src/imp_std.rs
+     6→use std::{ …
     14→pub(crate) struct OnceCell<T> {
    138→struct Waiter {
    145→struct Guard<'a> {
+   151→    fn drop(&mut self) {
+   152→        let queue = self.queue.swap(self.new_queue, Ordering::AcqRel);
+   153→
+      →…
    245→mod strict {
 
 src/lib.rs
@@ -56,6 +49,7 @@ src/lib.rs
    380→mod imp;
    382→/// Single-threaded version of `OnceCell`.
    383→pub mod unsync {
+   384→    use core::{ …
    411→    pub struct OnceCell<T> {
    412→        // Invariant: written to at most once.
    413→        inner: UnsafeCell<Option<T>>,
@@ -68,6 +62,7 @@ src/lib.rs
    861→/// Thread-safe, blocking version of `OnceCell`.
    862→#[cfg(any(feature = "std", feature = "critical-section"))]
    863→pub mod sync {
+   864→    use core::{ …
    871→    use super::imp::OnceCell as Imp;
    901→    pub struct OnceCell<T>(Imp<T>);
   1255→    pub struct Lazy<T, F = fn() -> T> {
@@ -75,6 +70,10 @@ src/lib.rs
   1257→        init: Cell<Option<F>>,
   1258→    }
   1374→        type Target = T;
+  1393→    /// ```compile_fail
+  1394→    /// struct S(*mut ());
+      →    …
+  1408→    fn _dummy() {}
   1411→#[cfg(feature = "race")]
   1412→pub mod race;
 
@@ -91,33 +90,26 @@ src/race.rs
    233→    inner: AtomicPtr<T>,
    234→    ghost: PhantomData<UnsafeCell<&'a T>>,
    235→}
+   241→    fn fmt …
+   247→    fn default …
    351→pub use self::once_box::OnceBox;
+   353→#[cfg(feature = "alloc")]
    354→mod once_box {
    355→    use super::atomic::{AtomicPtr, Ordering};
    361→    pub struct OnceBox<T> {
    362→        inner: AtomicPtr<T>,
    363→        ghost: PhantomData<Option<Box<T>>>,
    364→    }
-
-tests/it/race_once_box.rs
-    11→struct Heap {
-    16→struct Pebble<T> {
-    22→    fn drop(&mut self) {
-
-tests/it/sync_once_cell.rs
-   181→fn reentrant_init() {
+   367→        fn fmt …
+   373→        fn default …
+   379→        fn drop …
+   482→        fn clone …
 
 xtask/Cargo.toml
      1→[package]
      8→[dependencies]
 
 xtask/src/main.rs
-     4→use std::time::Instant;
-     6→use xshell::{cmd, Shell};
-     8→fn main …
-   116→fn push_toolchain …
-   126→fn section …
-   136→fn defer …
 
 xtask/src/tidy.rs
      1→use xshell::{cmd, Shell};

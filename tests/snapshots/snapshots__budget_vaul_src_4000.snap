@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4015 tokens)
+budget: 4000 (4016 tokens)
 
 browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -33,16 +33,18 @@ context.ts
      6→  overlayRef: React.RefObject<HTMLDivElement>;
      7→  onPress: (event: React.PointerEvent<HTMLDivElement>) => void;
      8→  onRelease: (event: React.PointerEvent<HTMLDivElement> | null) => void;
-     9→  onDrag: (event: React.PointerEvent<HTMLDivElement>) => void;
-    10→  onNestedDrag: (event: React.PointerEvent<HTMLDivElement>, percentageDragged: number) => void;
-    11→  onNestedOpenChange: (o: boolean) => void;
-    12→  onNestedRelease: (event: React.PointerEvent<HTMLDivElement>, open: boolean) => void;
-    13→  dismissible: boolean;
       →  …
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
     38→  drawerRef: { current: null },
+    39→  overlayRef: { current: null },
       →  …
     69→export const useDrawerContext = () => {
+    70→  const context = React.useContext(DrawerContext);
+    71→  if (!context) {
+    72→    throw new Error('useDrawerContext must be used within a Drawer.Root');
+    73→  }
+    74→  return context;
+    75→};
 
 helpers.ts
      1→import { AnyFunction, DrawerDirection } from './types';
@@ -72,27 +74,18 @@ helpers.ts
 index.tsx
      3→import * as DialogPrimitive from '@radix-ui/react-dialog';
      4→import React from 'react';
-     5→import { DrawerContext, useDrawerContext } from './context';
-     6→import './style.css';
-     7→import { usePreventScroll, isInput } from './use-prevent-scroll';
-     8→import { useComposedRefs } from './use-composed-refs';
-     9→import { useSnapPoints } from './use-snap-points';
-    10→import { set, getTranslate, dampenValue, isVertical, reset } from './helpers';
-    11→import {
-    12→  TRANSITIONS,
-    13→  VELOCITY_THRESHOLD,
-    14→  CLOSE_THRESHOLD,
-    15→  SCROLL_LOCK_TIMEOUT,
-    16→  BORDER_RADIUS,
-    17→  NESTED_DISPLACEMENT,
-    18→  WINDOW_TOP_OFFSET,
-    19→  DRAG_CLASS,
-    20→} from './constants';
-    21→import { DrawerDirection } from './types';
-    22→import { useControllableState } from './use-controllable-state';
-    23→import { useScaleBackground } from './use-scale-background';
-    24→import { usePositionFixed } from './use-position-fixed';
-    25→import { isIOS, isMobileFirefox } from './browser';
+     5→import { DrawerContext, useDrawerContext } from './context …
+     6→import './style.css …
+     7→import { usePreventScroll, isInput } from './use-prevent-scroll …
+     8→import { useComposedRefs } from './use-composed-refs …
+     9→import { useSnapPoints } from './use-snap-points …
+    10→import { set, getTranslate, dampenValue, isVertical, reset } from './helpers …
+    11→import { …
+    21→import { DrawerDirection } from './types …
+    22→import { useControllableState } from './use-controllable-state …
+    23→import { useScaleBackground } from './use-scale-background …
+    24→import { usePositionFixed } from './use-position-fixed …
+    25→import { isIOS, isMobileFirefox } from './browser …
     27→export interface WithFadeFromProps {
     28→  /**
     29→   * Array of numbers from 0 to 100 that corresponds to % of the screen a given snap point should take up.
@@ -115,41 +108,7 @@ index.tsx
     47→  fadeFromIndex?: never;
     48→}
     50→export type DialogProps = {
-   139→export function Root({
-   140→  open: openProp,
-   141→  onOpenChange,
-   142→  children,
-   143→  onDrag: onDragProp,
-   144→  onRelease: onReleaseProp,
-   145→  snapPoints,
-   146→  shouldScaleBackground = false,
-   147→  setBackgroundColorOnScale = true,
-   148→  closeThreshold = CLOSE_THRESHOLD,
-   149→  scrollLockTimeout = SCROLL_LOCK_TIMEOUT,
-   150→  dismissible = true,
-   151→  handleOnly = false,
-   152→  fadeFromIndex = snapPoints && snapPoints.length - 1,
-   153→  activeSnapPoint: activeSnapPointProp,
-   154→  setActiveSnapPoint: setActiveSnapPointProp,
-   155→  fixed,
-   156→  modal = true,
-   157→  onClose,
-   158→  nested,
-   159→  noBodyStyles = false,
-   160→  direction = 'bottom',
-   161→  defaultOpen = false,
-   162→  disablePreventScroll = true,
-   163→  snapToSequentialPoint = false,
-   164→  preventScrollRestoration = false,
-   165→  repositionInputs = true,
-   166→  onAnimationEnd,
-   167→  container,
-   168→  autoFocus = false,
-   169→}: DialogProps) {
-   170→  const [isOpen = false, setIsOpen] = useControllableState({
-   171→    defaultProp: defaultOpen,
-   172→    prop: openProp,
-      →    …
+   139→export function Root …
    803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(
    831→export type ContentProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
    833→export const Content = React.forwardRef<HTMLDivElement, ContentProps>(function (
@@ -157,17 +116,9 @@ index.tsx
    993→const LONG_HANDLE_PRESS_TIMEOUT = 250;
    994→const DOUBLE_TAP_TIMEOUT = 120;
    996→export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(function (
-  1098→export function NestedRoot({ onDrag, onOpenChange, open: nestedIsOpen, ...rest }: DialogProps) {
-  1099→  const { onNestedDrag, onNestedOpenChange, onNestedRelease } = useDrawerContext();
-  1100→
-  1101→  if (!onNestedDrag) {
-      →  …
+  1098→export function NestedRoot …
   1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
-  1130→export function Portal(props: PortalProps) {
-  1131→  const context = useDrawerContext();
-  1132→  const { container = context.container, ...portalProps } = props;
-  1133→
-      →…
+  1130→export function Portal …
   1137→export const Drawer = {
 
 types.ts
@@ -184,31 +135,29 @@ use-composed-refs.ts
      8→ * Set a given ref to a given value
      9→ * This utility takes care of different types of refs: callback refs and RefObject(s)
     11→function setRef<T>(ref: PossibleRef<T>, value: T) {
-    12→  if (typeof ref === 'function') {
-    13→    ref(value);
-    14→  } else if (ref !== null && ref !== undefined) {
-    15→    (ref as React.MutableRefObject<T>).current = value;
-    16→  }
-    17→}
     20→ * A utility to compose multiple refs together
     21→ * Accepts callback refs and RefObject(s)
     23→function composeRefs<T>(...refs: PossibleRef<T>[]) {
-    24→  return (node: T) => refs.forEach((ref) => setRef(ref, node));
-    25→}
     28→ * A custom hook that composes multiple refs
     29→ * Accepts callback refs and RefObject(s)
     31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
-    32→  // eslint-disable-next-line react-hooks/exhaustive-deps
-    33→  return React.useCallback(composeRefs(...refs), refs);
-    34→}
 
 use-controllable-state.ts
      3→import React from 'react';
      5→type UseControllableStateParams<T> = {
     11→type SetStateFn<T> = (prevState?: T) => T;
-    13→function useCallbackRef …
-    24→function useUncontrolledState …
+    13→function useCallbackRef<T extends (...args: any[]) => any>(callback: T | undefined): T {
+    24→function useUncontrolledState<T>({ defaultProp, onChange }: Omit<UseControllableStateParams<T>, 'prop'>) {
     39→export function useControllableState<T>({ prop, defaultProp, onChange = () => {} }: UseControllableStateParams<T>) {
+    40→  const [uncontrolledProp, setUncontrolledProp] = useUncontrolledState({ defaultProp, onChange });
+    41→  const isControlled = prop !== undefined;
+    42→  const value = isControlled ? prop : uncontrolledProp;
+    43→  const handleChange = useCallbackRef(onChange);
+    44→
+    45→  const setValue: React.Dispatch<React.SetStateAction<T | undefined>> = React.useCallback(
+    46→    (nextValue) => {
+    47→      if (isControlled) {
+      →      …
 
 use-position-fixed.ts
      1→import React from 'react';
@@ -250,6 +199,8 @@ use-position-fixed.ts
     43→        height: document.body.style.height,
     44→        right: 'unset',
     45→      };
+    46→
+    47→      // Update the dom inside an animation frame
       →      …
 
 use-prevent-scroll.ts
@@ -265,7 +216,19 @@ use-prevent-scroll.ts
     16→function chain …
     27→const visualViewport = typeof document !== 'undefined' && window.visualViewport;
     29→export function isScrollable(node: Element): boolean {
+    30→  let style = window.getComputedStyle(node);
+    31→  return /(auto|scroll)/.test(style.overflow + style.overflowX + style.overflowY);
+    32→}
     34→export function getScrollParent(node: Element): Element {
+    35→  if (isScrollable(node)) {
+    36→    node = node.parentElement as HTMLElement;
+    37→  }
+    38→
+    39→  while (node && !isScrollable(node)) {
+    40→    node = node.parentElement as HTMLElement;
+    41→  }
+    42→
+      →…
     47→const nonTextInputTypes = new Set([
     64→ * Prevents scrolling on the document body on mount, and
     65→ * restores it on unmount. Also ensures that content does not
@@ -287,20 +250,41 @@ use-prevent-scroll.ts
     82→
     83→    return () => {
     84→      preventScrollCount--;
-      →      …
+    85→      if (preventScrollCount === 0) {
+    86→        restore?.();
+    87→      }
+    88→    };
+    89→  }, [isDisabled]);
+    90→}
    118→function preventScrollMobileSafari …
    243→function setStyle …
    257→function addEvent …
    272→function scrollIntoView …
    294→export function isInput(target: Element) {
+   295→  return (
+   296→    (target instanceof HTMLInputElement && !nonTextInputTypes.has(target.type)) ||
+   297→    target instanceof HTMLTextAreaElement ||
+   298→    (target instanceof HTMLElement && target.isContentEditable)
+   299→  );
+   300→}
 
 use-scale-background.ts
      1→import React, { useMemo } from 'react';
      2→import { useDrawerContext } from './context';
      3→import { assignStyle, chain, isVertical, reset } from './helpers';
      4→import { BORDER_RADIUS, TRANSITIONS, WINDOW_TOP_OFFSET } from './constants';
-     6→const noop …
+     6→const noop = () => () => {};
      8→export function useScaleBackground() {
+     9→  const { direction, isOpen, shouldScaleBackground, setBackgroundColorOnScale, noBodyStyles } = useDrawerContext();
+    10→  const timeoutIdRef = React.useRef<number | null>(null);
+    11→  const initialBackgroundColor = useMemo(() => document.body.style.backgroundColor, []);
+    12→
+    13→  function getScale() {
+    14→    return (window.innerWidth - WINDOW_TOP_OFFSET) / window.innerWidth;
+    15→  }
+    16→
+    17→  React.useEffect(() => {
+      →  …
 
 use-snap-points.ts
      1→import React from 'react';
@@ -331,3 +315,19 @@ use-snap-points.ts
     27→  container?: HTMLElement | null | undefined;
     28→  snapToSequentialPoint?: boolean;
     29→}) {
+    30→  const [activeSnapPoint, setActiveSnapPoint] = useControllableState<string | number | null>({
+    31→    prop: activeSnapPointProp,
+    32→    defaultProp: snapPoints?.[0],
+    33→    onChange: setActiveSnapPointProp,
+    34→  });
+    35→
+    36→  const [windowDimensions, setWindowDimensions] = React.useState(
+    37→    typeof window !== 'undefined'
+    38→      ? {
+    39→          innerWidth: window.innerWidth,
+    40→          innerHeight: window.innerHeight,
+    41→        }
+    42→      : undefined,
+    43→  );
+    44→
+      →…

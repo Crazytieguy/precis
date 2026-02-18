@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2018 tokens)
+budget: 2000 (2016 tokens)
 
 CHANGELOG.md
      1→# neverthrow
@@ -23,32 +23,8 @@ README.md
   1681→### License
 
 package.json
-     2→  "name": "neverthrow",
-     3→  "version": "8.2.0",
-     4→  "description": "Stop throwing errors, and instead return Results!",
-     5→  "main": "dist/index.cjs.js",
-     6→  "module": "dist/index.es.js",
-     7→  "types": "dist/index.d.ts",
-     8→  "files": [
-    10→  ],
-    11→  "scripts": {
-    23→  },
-    24→  "repository": {
-    27→  },
-    28→  "author": "Giorgio Delgado",
-    29→  "license": "MIT",
-    30→  "bugs": {
-    32→  },
-    33→  "homepage": "https://github.com/supermacro/neverthrow#readme",
-    34→  "devDependencies": {
-    52→  },
-    53→  "keywords": [
-    58→  ],
-    59→  "engines": {
-    62→  },
-    63→  "optionalDependencies": {
-    65→  }
-    66→}
+
+rollup.config.mjs
 
 src/_internals/error.ts
      1→import { Result } from '../result'
@@ -70,7 +46,10 @@ src/_internals/error.ts
     30→  config: ErrorConfig = defaultErrorConfig,
     31→): NeverThrowError<T, E> => {
     32→  const data = result.isOk()
-      →  …
+    33→    ? { type: 'Ok', value: result.value }
+    34→    : { type: 'Err', value: result.error }
+    35→
+      →…
 
 src/_internals/utils.ts
      1→import { Result, ok, err } from '../result'
@@ -113,12 +92,28 @@ src/result-async.ts
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
     23→  private _promise: Promise<Result<T, E>>
     24→
+   211→   * @deprecated will be removed in 9.0.0.
+   212→   *
+   213→   * You can use `safeTry` without this method.
+   214→   * @example
+   215→   * ```typescript
+   216→   * safeTry(async function* () {
+   217→   *   const okValue = yield* yourResult
+   218→   * })
+   219→   * ```
+   220→   * Emulates Rust's `?` operator in `safeTry`'s body. See also `safeTry`.
    222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
+   223→    return yield* await this._promise.then((res) => res.safeUnwrap())
+   224→  }
    259→export const fromPromise …
    260→export const fromSafePromise …
    262→export const fromAsyncThrowable …
    265→export type CombineResultAsyncs …
    272→export type CombineResultsWithAllErrorsArrayAsync …
+   279→type UnwrapAsync …
+   300→type TraverseAsync …
+   330→type TraverseWithAllErrorsAsync …
+   338→type Writable …
 
 src/result.ts
      1→import { errAsync, ResultAsync } from './ …
@@ -127,8 +122,6 @@ src/result.ts
     14→export namespace Result {
     15→  /**
     16→   * Wraps a function with a try catch, creating a new function with the same
-    17→   * arguments but returning `Ok` if successful, `Err` if the function throws
-    18→   *
     62→export type Result …
    134→interface IResult<T, E> {
    140→  isOk(): this is Ok<T, E>
@@ -151,22 +144,30 @@ src/result.ts
    505→  _unsafeUnwrap(config?: ErrorConfig): T {
    509→  _unsafeUnwrapErr(_?: ErrorConfig): E {
    523→export const fromThrowable …
+   530→type Prev …
+   590→type CollectResults …
    614→export type Transpose …
    635→export type Combine …
    645→export type Dedup …
    652→export type MemberListOf …
    669→export type EmptyArrayToNever …
+   680→type UnknownMembersToNever …
    685→export type MembersToUnion …
    688→export type IsLiteralArray …
+   698→type Traverse …
+   704→type TraverseWithAllErrors …
    712→export type CombineResults …
    719→export type CombineResultsWithAllErrorsArray …
 
+tests/index.test.ts
+     3→import { …
+
+tests/safe-try.test.ts
+     1→import { …
+
 tests/tsconfig.tests.json
      2→  "compilerOptions": {
-    22→  },
     23→  "include": [
-    26→  ]
-    27→}
 
 tests/typecheck-tests.ts
     19→type CreateTuple …

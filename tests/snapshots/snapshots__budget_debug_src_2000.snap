@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2005 tokens)
+budget: 2000 (2010 tokens)
 
 browser.js
    115→function useColors() {
@@ -33,14 +33,6 @@ browser.js
    155→		'+' + module.exports.humanize(this.diff);
    156→
    157→	if (!this.useColors) {
-   158→		return;
-   159→	}
-   160→
-   161→	const c = 'color: ' + this.color;
-   162→	args.splice(1, 0, c, 'color: inherit');
-   163→
-   164→	// The final "%c" is somewhat tricky, because there could be other
-   165→	// arguments passed either before or after the %c, so we need to
       →	…
    195→ * Save `namespaces`.
    196→ *
@@ -55,9 +47,7 @@ browser.js
    206→		}
    207→	} catch (error) {
    208→		// Swallow
-   209→		// XXX (@Qix-) should we be logging these?
-   210→	}
-   211→}
+      →		…
    214→ * Load `namespaces`.
    215→ *
    216→ * @return {String} returns the previously persisted debug modes
@@ -71,13 +61,7 @@ browser.js
    225→		// XXX (@Qix-) should we be logging these?
    226→	}
    227→
-   228→	// If debug isn't set in LS, and we're in Electron, try to load $DEBUG
-   229→	if (!r && typeof process !== 'undefined' && 'env' in process) {
-   230→		r = process.env.DEBUG;
-   231→	}
-   232→
-   233→	return r;
-   234→}
+      →…
    237→ * Localstorage attempts to return the localstorage.
    238→ *
    239→ * This is necessary because safari throws
@@ -95,7 +79,7 @@ browser.js
    253→		// Swallow
    254→		// XXX (@Qix-) should we be logging these?
    255→	}
-   256→}
+      →	…
 
 common.js
      3→ * This is the common logic for both the Node.js and web browser
@@ -117,6 +101,24 @@ common.js
     21→	/**
     22→	* The currently active debug mode names, and names to skip.
     23→	*/
+    24→
+    25→	createDebug.names = [];
+    26→	createDebug.skips = [];
+    27→
+    28→	/**
+    29→	* Map of special "%n" handling functions, for the debug "format" argument.
+    30→	*
+    31→	* Valid key names are a single, lower or upper-case letter, i.e. "n" and "N".
+    32→	*/
+    33→	createDebug.formatters = {};
+    34→
+    35→	/**
+    36→	* Selects a color for a debug namespace
+    37→	* @param {String} namespace The namespace string for the debug instance to be colored
+    38→	* @return {Number|String} An ANSI color code for the given namespace
+    39→	* @api private
+    40→	*/
+    41→	function selectColor(namespace) {
       →	…
 
 node.js

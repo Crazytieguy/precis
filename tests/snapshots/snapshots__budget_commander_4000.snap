@@ -2,14 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4005 tokens)
+budget: 4000 (4011 tokens)
 
 CHANGELOG.md
      1→# Changelog
-     3→All notable changes to this project will be documented in this file.
-     4→
-      →…
-   911→#### Testing for no arguments
 
 CONTRIBUTING.md
      1→# Contributing
@@ -25,87 +21,24 @@ Readme.md
     12→- [Commander.js](#commanderjs)
     13→  - [Installation](#installation)
     14→  - [Quick Start](#quick-start)
-    15→  - [Declaring _program_ variable](#declaring-program-variable)
-    16→  - [Options](#options)
-    17→    - [Common option types, boolean and value](#common-option-types-boolean-and-value)
-    18→    - [Default option value](#default-option-value)
-    19→    - [Other option types, negatable boolean and boolean|value](#other-option-types-negatable-boolean-and-booleanvalue)
-    20→    - [Required option](#required-option)
-    21→    - [Variadic option](#variadic-option)
-    22→    - [Version option](#version-option)
-    23→    - [More configuration](#more-configuration)
-    24→    - [Custom option processing](#custom-option-processing)
-    25→  - [Commands](#commands)
-    26→    - [Command-arguments](#command-arguments)
-      →    …
+      →  …
     61→## Installation
     67→## Quick Start
    147→## Declaring _program_ variable
    177→## Options
-   211→### Common option types, boolean and value
-   254→### Default option value
-   276→### Other option types, negatable boolean and boolean|value
-   342→### Required option
-   362→### Variadic option
-   396→### Version option
-   416→### More configuration
-   459→### Custom option processing
    523→## Commands
-   567→### Command-arguments
    613→#### More configuration
-   615→There are some additional features available by constructing an `Argument` explicitly for less common cases.
-   616→
-   617→Example file: [arguments-extra.js](./examples/arguments-extra.js)
-   618→
-      →…
    625→#### Custom argument processing
-   627→You may specify a function to do custom processing of command-arguments (like for option-arguments).
-   628→The callback function receives two parameters, the user specified command-argument and the previous value for the argument.
-   629→It returns the new value for the argument.
-   630→
-      →…
-   648→### Action handler
-   700→### Stand-alone executable (sub)commands
-   725→### Life cycle hooks
    754→## Automated help
-   787→### Custom help
-   830→### Display help after errors
-   860→### Display help from code
-   868→### .name
-   884→### .usage
-   900→### .description and .summary
-   914→### .helpOption(flags, description)
-   925→### .helpCommand()
-   937→### Help Groups
-   947→### More configuration
    956→## Custom event listeners
    966→## Bits and pieces
-   968→### .parse() and .parseAsync()
-   988→### Parsing Configuration
-  1023→### Legacy options as properties
-  1042→### TypeScript
-  1058→### createCommand()
-  1071→### Node options such as `--harmony`
-  1078→### Debugging stand-alone executable subcommands
-  1087→### npm run-script
-  1098→### Display error
-  1110→### Override exit and output handling
-  1154→### Additional documentation
   1164→## Support
-  1172→### Commander for enterprise
 
 Readme_zh-CN.md
      1→# Commander.js
-     8→完整的 [node.js](http://nodejs.org) 命令行解决方案。
-     9→
-      →…
-   570→#### 其他参数配置
-   582→#### 自定义参数处理
 
 SECURITY.md
      1→# Security Policy
-     3→To report a security vulnerability, please use the
-      →…
 
 docs/deprecated.md
      1→# Deprecated
@@ -119,8 +52,6 @@ docs/help-in-depth.md
 
 docs/options-in-depth.md
      2→# Options in Depth
-    15→## Options taking varying numbers of option-arguments
-   148→## Combining short options, and options taking arguments
 
 docs/parsing-and-hooks.md
      1→# Parsing life cycle and hooks
@@ -132,42 +63,153 @@ docs/terminology.md
      1→# Terminology
 
 eslint.config.js
-     8→const tsconfigTsFiles …
-     9→const tsconfigJsFiles …
 
 esm.mjs
      1→import commander from './index.js';
 
+examples/action-this.js
+     6→const program = new Command();
+
+examples/alias.js
+     6→const program = new Command();
+
+examples/argument.js
+     6→const program = new Command();
+
+examples/arguments-custom-processing.js
+     8→const program = new commander.Command();
+
+examples/arguments-extra.js
+     6→const program = new commander.Command();
+
 examples/color-help-replacement.mjs
-    20→class MyHelp extends Help {
-    64→class MyCommand extends Command {
     73→const program = new MyCommand();
 
 examples/color-help.mjs
      6→const program = new Command();
 
+examples/configure-help.js
+     2→const program = new commander.Command();
+
+examples/configure-output.js
+     2→const program = new commander.Command();
+     4→function errorColor(str) {
+
 examples/custom-command-class.js
      6→class CommandWithTrace extends commander.Command {
      7→  createCommand(name) {
+    15→function inspectCommand(command) {
+    22→const program = new CommandWithTrace('program')
+
+examples/custom-help-text.js
+     6→const program = new Command();
+
+examples/defaultCommand.js
+     4→const program = new commander.Command();
 
 examples/global-options-added.js
     16→class MyRootCommand extends Command {
     17→  createCommand(name) {
+    24→const program = new MyRootCommand();
+
+examples/global-options-nested.js
+    10→const program = new Command();
 
 examples/help-centered.mjs
-     6→class MyHelp extends Help {
-    17→class MyCommand extends Command {
+     7→  formatItem(term, termWidth, description, helper) {
+    18→  createCommand(name) {
+    21→  createHelp() {
     26→const program = new MyCommand();
 
 examples/man-style-help.mjs
-     5→function formatItem(term, termWidth, description, helper) {
+     1→import { Command } from 'commander';
+     5→function formatItem …
     25→const program = new Command();
 
+examples/nestedCommands.js
+    21→function makeHeatCommand() {
+
+examples/options-conflicts.js
+     3→const program = new Command();
+
+examples/options-defaults.js
+     7→const program = new commander.Command();
+
+examples/options-env.js
+     3→const program = new Command();
+
+examples/options-extra.js
+     8→const program = new Command();
+
+examples/options-implies.js
+     3→const program = new Command();
+
+examples/options-required.js
+     9→const program = new commander.Command();
+
+examples/options-variadic.js
+     6→const program = new commander.Command();
+
+examples/pass-through-options.js
+     4→const program = new Command();
+
+examples/positional-options.js
+     4→const program = new Command();
+
+examples/string-util.js
+     2→const program = new Command();
+
+examples/thank.js
+     6→const program = new Command();
+
 jest.config.js
-     1→const config …
+     1→const config = {
 
 lib/argument.js
      3→class Argument {
+     5→   * Initialize a new command argument with the given name and description.
+     6→   * The default is that the argument is required, and you can explicitly
+     7→   * indicate this with <> around the name. Put [] around the name for an optional argument.
+     8→   *
+     9→   * @param {string} name
+    10→   * @param {string} [description]
+    13→  constructor(name, description) {
+    43→   * Return argument name.
+    44→   *
+    45→   * @return {string}
+    48→  name() {
+    53→   * @package
+    56→  _collectValue(value, previous) {
+    66→   * Set the default value, and optionally supply the description to be displayed in the help.
+    67→   *
+    68→   * @param {*} value
+    69→   * @param {string} [description]
+    70→   * @return {Argument}
+    73→  default(value, description) {
+    80→   * Set the custom handler for processing CLI command arguments into argument values.
+    81→   *
+    82→   * @param {Function} [fn]
+    83→   * @return {Argument}
+    86→  argParser(fn) {
+    92→   * Only allow argument value to be one of choices.
+    93→   *
+    94→   * @param {string[]} values
+    95→   * @return {Argument}
+    98→  choices(values) {
+   115→   * Make argument required.
+   116→   *
+   117→   * @returns {Argument}
+   119→  argRequired() {
+   125→   * Make argument optional.
+   126→   *
+   127→   * @returns {Argument}
+   129→  argOptional() {
+   136→ * Takes an argument and returns its human readable equivalent for help usage.
+   137→ *
+   138→ * @param {Argument} arg
+   139→ * @return {string}
+   140→ * @private
+   143→function humanReadableArgName(arg) {
 
 lib/command.js
     13→class Command extends EventEmitter {
@@ -176,12 +218,56 @@ lib/command.js
 lib/error.js
      2→ * CommanderError class
      4→class CommanderError extends Error {
+     6→   * Constructs the CommanderError class
+     7→   * @param {number} exitCode suggested exit code which could be used with process.exit
+     8→   * @param {string} code an id string representing the error
+     9→   * @param {string} message human-readable description of the error
+    11→  constructor(exitCode, code, message) {
+    12→    super(message);
+    13→    // properly capture stack trace in Node.js
+    14→    Error.captureStackTrace(this, this.constructor);
+    15→    this.name = this.constructor.name;
+    16→    this.code = code;
+    17→    this.exitCode = exitCode;
+    18→    this.nestedError = undefined;
+    19→  }
     23→ * InvalidArgumentError class
     25→class InvalidArgumentError extends CommanderError {
+    27→   * Constructs the InvalidArgumentError class
+    28→   * @param {string} [message] explanation of why argument is invalid
+    30→  constructor(message) {
+    31→    super(1, 'commander.invalidArgument', message);
+    32→    // properly capture stack trace in Node.js
+    33→    Error.captureStackTrace(this, this.constructor);
+    34→    this.name = this.constructor.name;
+    35→  }
 
 lib/help.js
     12→class Help {
     13→  constructor() {
+    29→  prepareContext(contextOptions) {
+    40→  visibleCommands(cmd) {
+    62→  compareOptions(a, b) {
+    79→  visibleOptions(cmd) {
+   112→  visibleGlobalOptions(cmd) {
+   139→  visibleArguments(cmd) {
+   162→  subcommandTerm(cmd) {
+   182→  optionTerm(option) {
+   193→  argumentTerm(argument) {
+   205→  longestSubcommandTermLength(cmd, helper) {
+   224→  longestOptionTermLength(cmd, helper) {
+   241→  longestGlobalOptionTermLength(cmd, helper) {
+   258→  longestArgumentTermLength(cmd, helper) {
+   276→  commandUsage(cmd) {
+   300→  commandDescription(cmd) {
+   313→  subcommandDescription(cmd) {
+   325→  optionDescription(option) {
+   372→  argumentDescription(argument) {
+   403→  formatItemList(heading, items, helper) {
+   417→  groupItems(unsortedItems, visibleItems, getGroup) {
+   443→  formatHelp(cmd, helper) {
+   535→  displayWidth(str) {
+   545→  styleTitle(str) {
    549→  styleUsage(str) {
    563→  styleCommandDescription(str) {
    566→  styleOptionDescription(str) {
@@ -195,19 +281,67 @@ lib/help.js
    600→  styleArgumentText(str) {
    603→  styleSubcommandText(str) {
    606→  styleCommandText(str) {
+   618→  padWidth(cmd, helper) {
+   633→  preformatted(str) {
+   650→  formatItem(term, termWidth, description, helper) {
+   695→  boxWrap(str, width) {
+   733→ * Strip style ANSI escape sequences from the string. In particular, SGR (Select Graphic Rendition) codes.
+   734→ *
+   735→ * @param {string} str
+   736→ * @returns {string}
+   737→ * @package
+   740→function stripColor(str) {
+   741→  // eslint-disable-next-line no-control-regex
+      →  …
 
 lib/option.js
      3→class Option {
+    11→  constructor(flags, description) {
+    47→  default(value, description) {
+    65→  preset(arg) {
+    82→  conflicts(names) {
+   100→  implies(impliedOptionValues) {
+   120→  env(name) {
+   132→  argParser(fn) {
+   144→  makeOptionMandatory(mandatory = true) {
+   156→  hideHelp(hide = true) {
+   162→   * @package
+   165→  _collectValue(value, previous) {
+   181→  choices(values) {
+   203→  name() {
+   217→  attributeName() {
+   230→  helpGroup(heading) {
+   243→  is(arg) {
+   256→  isBoolean() {
    262→ * This class is to make it easier to work with dual options, without changing the existing
    263→ * implementation. We support separate dual options for separate positive and negative options,
-   264→ * like `--build` and `--no-build`, which share a single option value. This works nicely for some
-   265→ * use cases, but is tricky for others where we want separate behaviours despite
-   266→ * the single shared option value.
+      → …
    268→class DualOptions {
+   272→  constructor(options) {
+   297→  valueFromOption(value, option) {
+   309→ * Convert string from kebab-case to camelCase.
+   310→ *
+   311→ * @param {string} str
+   312→ * @return {string}
+   313→ * @private
+   316→function camelcase(str) {
+   323→ * Split the short and long flag out of something like '-m,--mixed <value>'
+   324→ *
+   325→ * @private
+   328→function splitOptionFlags(flags) {
 
 lib/suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
+    49→ * Find close matches, restricted to same number of edits.
+    50→ *
+    51→ * @param {string} word
+    52→ * @param {string[]} candidates
+    53→ * @returns {string}
+    56→function suggestSimilar(word, candidates) {
+    57→  if (!candidates || candidates.length === 0) return '';
+    58→  // remove possible duplicates
+      →  …
 
 package-support.json
      2→  "versions": [
@@ -240,27 +374,46 @@ package.json
     81→  "support": true
     82→}
 
+tests/command.action.test.js
+   128→function getTestCases(arg) {
+
 tests/command.createArgument.test.js
-     3→class MyArgument extends commander.Argument {
      4→  constructor(name, description) {
-    10→class MyCommand extends commander.Command {
     11→  createArgument(name, description) {
     16→  createCommand(name) {
 
 tests/command.createOption.test.js
-     3→class MyOption extends commander.Option {
      4→  constructor(flags, description) {
-    10→class MyCommand extends commander.Command {
     11→  createOption(flags, description) {
+
+tests/command.executableSubcommand.mock.test.js
+     8→function makeSystemError(code) {
+    18→const testOrSkipOnWindows …
+
+tests/command.option-misuse.test.js
+     6→const expectedMessage =
+
+tests/command.showSuggestionAfterError.test.js
+     3→function getSuggestion(program, arg) {
 
 tests/esm-imports-test.mjs
      1→import { …
-    19→function check(condition, explanation) {
-    26→function checkClass(obj, name) {
+
+tests/help.suggestion.test.js
+     6→function getSuggestion(program, arg) {
+
+tests/negatives.test.js
+     4→const negativeNumbers = [
+
+tests/options.bool.combo.test.js
+    49→function createPepperProgramWithDefault(defaultValue) {
+
+tests/program.test.js
+    20→function checkClass(obj, name) {
 
 tests/ts-imports.test.ts
      1→import { …
-    17→function checkClass(obj: object, name: string): void {
+    17→function checkClass …
 
 tsconfig.js.json
      7→  "extends": "./tsconfig.json",
@@ -289,92 +442,16 @@ typings/index.d.ts
     13→  | LiteralType
     14→  | (BaseType & Record<never, never>);
     16→export class CommanderError extends Error {
-    17→  code: string;
-    18→  exitCode: number;
-    19→  message: string;
-    20→  nestedError?: string;
-    21→
     31→export class InvalidArgumentError extends CommanderError {
     40→export interface ErrorOptions {
-    41→  // optional parameter for error()
-    42→  /** an id string representing the error */
-    43→  code?: string;
-    44→  /** suggested exit code which could be used with process.exit */
-    45→  exitCode?: number;
-    46→}
     48→export class Argument {
-    49→  description: string;
-    50→  required: boolean;
-    51→  variadic: boolean;
-    52→  defaultValue?: any;
-    53→  defaultValueDescription?: string;
-    54→  parseArg?: <T>(value: string, previous: T) => T;
-    55→  argChoices?: string[];
-    56→
     95→export class Option {
-    96→  flags: string;
-    97→  description: string;
-    98→
-    99→  required: boolean; // A value must be supplied when the option is specified.
-   100→  optional: boolean; // A value is optional when the option is specified.
-   101→  variadic: boolean;
-   102→  mandatory: boolean; // The option must have a value after parsing, which usually means it must be specified on command line.
-   103→  short?: string;
-   104→  long?: string;
-   105→  negate: boolean;
-   106→  defaultValue?: any;
-   107→  defaultValueDescription?: string;
-   108→  presetArg?: unknown;
-   109→  envVar?: string;
-   110→  parseArg?: <T>(value: string, previous: T) => T;
-   111→  hidden: boolean;
-   112→  argChoices?: string[];
-   113→  helpGroupHeading?: string;
-   114→
-   115→  constructor(flags: string, description?: string);
    210→export class Help {
-   211→  /** output helpWidth, long lines are wrapped to fit */
-   212→  helpWidth?: number;
-   213→  minWidthToWrap: number;
-   214→  sortSubcommands: boolean;
-   215→  sortOptions: boolean;
-   216→  showGlobalOptions: boolean;
-   217→
-   218→  constructor();
-   226→  prepareContext(contextOptions: {
-   227→    error?: boolean;
-   228→    helpWidth?: number;
-   229→    outputHasColors?: boolean;
-   230→  }): void;
-   279→  styleCommandDescription(str: string): string;
-   280→  styleOptionDescription(str: string): string;
-   281→  styleSubcommandDescription(str: string): string;
-   282→  styleArgumentDescription(str: string): string;
-   286→  styleOptionTerm(str: string): string;
-   287→  styleSubcommandTerm(str: string): string;
-   288→  styleArgumentTerm(str: string): string;
    340→export type HelpConfiguration = Partial<Help>;
    342→export interface ParseOptions {
-   343→  from: 'node' | 'electron' | 'user';
-   344→}
    345→export interface HelpContext {
-   346→  // optional parameter for .help() and .outputHelp()
-   347→  error: boolean;
-   348→}
    349→export interface AddHelpTextContext {
-   350→  // passed to text function used with .addHelpText()
-   351→  error: boolean;
-   352→  command: Command;
-   353→}
    354→export interface OutputConfiguration {
-   355→  writeOut?(str: string): void;
-   356→  writeErr?(str: string): void;
-   357→  outputError?(str: string, write: (str: string) => void): void;
-   359→  getOutHelpWidth?(): number;
-   360→  getErrHelpWidth?(): number;
-   362→  getOutHasColors?(): boolean;
-   363→  getErrHasColors?(): boolean;
-   364→  stripColor?(str: string): string;
    367→export type AddHelpTextPosition = 'beforeAll' | 'before' | 'after' | 'afterAll';
    368→export type HookEvent = 'preSubcommand' | 'preAction' | 'postAction';
    370→export type OptionValueSource =
@@ -382,42 +459,13 @@ typings/index.d.ts
    372→  | undefined;
    374→export type OptionValues = Record<string, any>;
    376→export class Command {
-   377→  args: string[];
-   378→  processedArgs: any[];
-   379→  readonly commands: readonly Command[];
-   380→  readonly options: readonly Option[];
-   381→  readonly registeredArguments: readonly Argument[];
-   382→  parent: Command | null;
-   383→
-   384→  constructor(name?: string);
-   493→  argument(name: string, description?: string, defaultValue?: unknown): this;
-   528→  helpCommand(enable: boolean): this;
-   718→  storeOptionsAsProperties(storeAsProperties?: boolean): this;
-  1083→  addHelpText(
-  1084→    position: AddHelpTextPosition,
-  1085→    text: (context: AddHelpTextContext) => string,
-  1086→  ): this;
   1094→export interface CommandOptions {
-  1095→  hidden?: boolean;
-  1096→  isDefault?: boolean;
-  1097→  /** @deprecated since v7, replaced by hidden */
-  1098→  noHelp?: boolean;
-  1099→}
   1100→export interface ExecutableCommandOptions extends CommandOptions {
-  1101→  executableFile?: string;
-  1102→}
   1104→export interface ParseOptionsResult {
-  1105→  operands: string[];
-  1106→  unknown: string[];
-  1107→}
   1113→export const program: Command;
 
 typings/index.test-d.ts
      1→import * as commander from './index';
      2→import { expectType } from 'tsd';
-   384→interface MyCheeseOption {
-   385→  cheese: string;
-   386→}
-   509→class MyCommand extends commander.Command {
    510→  createCommand(name?: string): MyCommand {
    514→  myFunction(): void {

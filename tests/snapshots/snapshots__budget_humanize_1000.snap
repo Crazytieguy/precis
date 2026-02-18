@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1000 tokens)
+budget: 1000 (1003 tokens)
 
 README.md
      1→# humanize
@@ -10,89 +10,95 @@ README.md
     13→number into a fuzzy human-readable duration ("3 minutes ago") or into a human-readable
     14→size or throughput. It is localized to:
     15→
-    16→- Arabic
-    17→- Basque
-    18→- Bengali
-    19→- Brazilian Portuguese
-    20→- Catalan
-    21→- Danish
       →…
     49→## API reference
-    51→[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
-    52→
-    53→<!-- usage-start -->
-    54→
     55→## Installation
-    57→### From PyPI
-    63→### From source
     71→## Usage
-    73→### Integer humanization
-    89→### Date & time humanization
-   110→### Precise time delta
    124→#### Smaller units
-   126→If seconds are too large, set `minimum_unit` to milliseconds or microseconds:
-   127→
-      →…
-   154→### File size humanization
-   166→### Human-readable floating point numbers
-   182→### Scientific notation
    200→## Localization
-   202→How to change locale at runtime:
-   203→
-   204→```pycon
-   205→>>> import humanize
-      →…
 
-RELEASING.md
-     1→# Release checklist
+docs/filesize.md
+     1→# Filesize
+
+docs/i18n.md
+     1→# Internationalisation
+
+docs/index.md
+     1→# humanize
+
+docs/lists.md
+     1→# Lists
+
+docs/number.md
+     1→# Number
+
+docs/time.md
+     1→# Time
 
 mkdocs.yml
-     1→site_name: humanize
-     2→site_url: https://humanize.readthedocs.io
-     3→repo_url: https://github.com/python-humanize/humanize
-     4→theme:
-    18→nav:
-    26→plugins:
-    31→markdown_extensions:
-    37→extra_css:
-    40→watch:
 
 pyproject.toml
-     1→[build-system]
-     8→[project]
-    50→[tool.hatch]
-    53→[tool.hatch.build]
-    56→[tool.hatch.build.hooks.vcs]
-    59→[tool.hatch.version.raw-options]
-    62→[tool.ruff]
-   103→[tool.pyproject-fmt]
-   106→[tool.pytest.ini_options]
-   113→[tool.coverage.report]
-   120→[tool.mypy]
 
 src/humanize/__init__.py
+    26→from ._version import __version__
     28→__all__ = [
 
 src/humanize/filesize.py
+     5→from math import log
+    36→def naturalsize(
+    37→    value: float | str,
+    38→    binary: bool = False,
+    39→    gnu: bool = False,
+    40→    format: str = "%.1f",
+    41→) -> str:
+    42→    """Format a number of bytes like a human-readable filesize (e.g. 10 kB).
+    43→
+      →…
 
 src/humanize/i18n.py
      8→TYPE_CHECKING = False
     13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
     15→_TRANSLATIONS: dict[str | None, gettext_module.NullTranslations] = {
     18→_CURRENT = local()
-    21→# Mapping of locale to thousands separator
     22→_THOUSANDS_SEPARATOR = {
-    30→# Mapping of locale to decimal separator
     31→_DECIMAL_SEPARATOR = {
+    51→def get_translation …
+    58→def activate …
+    96→def deactivate …
+   183→def thousands_separator …
+   196→def decimal_separator …
 
 src/humanize/lists.py
      5→TYPE_CHECKING = False
+     7→    from typing import Any
      9→__all__ = ["natural_list"]
+    12→def natural_list(items: list[Any]) -> str:
+    13→    """Natural list.
+    14→
+      →…
 
 src/humanize/number.py
+     5→import bisect
+     7→from .i18n …
+     8→from .i18n …
+     9→from .i18n …
+    10→from .i18n …
     12→TYPE_CHECKING = False
+    14→    from typing import TypeAlias
+    21→def _format_not_finite(value: float) -> str:
+    34→def ordinal …
+   110→def intcomma …
+   195→def intword …
+   269→def apnumber …
+   321→def fractional …
+   385→def scientific …
+   454→def clamp …
+   531→def metric …
 
 src/humanize/time.py
+    11→from .i18n import _gettext as _
+    12→from .i18n import _ngettext
+    13→from .number import intcomma
     15→TYPE_CHECKING = False
     21→__all__ = [
     30→@total_ordering
@@ -106,13 +112,18 @@ src/humanize/time.py
     38→    MONTHS = 6
     39→    YEARS = 7
     40→
+    41→    def __lt__ …
+    95→def naturaldelta …
+   249→def naturaltime …
+   311→def naturalday …
+   343→def naturaldate …
+   451→def precisedelta …
 
 tests/test_i18n.py
-    18→def test_i18n() -> None:
    225→class TestActivate:
-   226→    expected_msg = (
-   250→    def test_en_locale(self) -> None:
-   263→    def test_none_locale(self) -> None:
+
+tests/test_lists.py
+    20→def test_natural_list …
 
 tests/test_time.py
     17→ONE_MICROSECOND = 1 / 1000000

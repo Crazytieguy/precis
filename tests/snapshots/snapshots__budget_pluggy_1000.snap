@@ -4,36 +4,33 @@ expression: output
 ---
 budget: 1000 (1006 tokens)
 
-SECURITY.md
-     1→# Security
-
 codecov.yml
      1→coverage:
      5→    changes: true
      6→
      7→comment: off
 
-docs/conf.py
-   106→def configure_logging …
-   130→def setup …
-
-docs/examples/eggsample-spam/eggsample_spam.py
-     5→def eggsample_add_ingredients(ingredients):
-    15→def eggsample_prep_condiments(condiments):
-
-docs/examples/toy-example.py
-
 pyproject.toml
+
+scripts/towncrier-draft-to-file.py
+     5→def main() -> int:
 
 src/pluggy/__init__.py
      1→__all__ = [
+    32→def __getattr__(name: str) -> str:
 
 src/pluggy/_callers.py
     22→# Need to distinguish between old- and new-style hook wrappers.
     23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
     24→Teardown: TypeAlias = Generator[None, object, object]
+    27→def run_old_style_hookwrapper(
+    28→    hook_impl: HookImpl, hook_name: str, args: Sequence[object]
+    29→) -> Teardown:
+    30→    """
+      →    …
 
 src/pluggy/_hooks.py
+    25→from ._result import Result
     40→class HookspecOpts(TypedDict):
     42→
       →…
@@ -42,16 +39,10 @@ src/pluggy/_hooks.py
       →…
     78→class HookspecMarker:
     85→
-    86→    __slots__ = ("project_name",)
-    87→
    165→class HookimplMarker:
    172→
-   173→    __slots__ = ("project_name",)
-   174→
    359→class HookRelay:
    362→
-   363→    __slots__ = ("__dict__",)
-   364→
    382→class HookCaller:
    384→
    419→    # TODO: Document, or make private.
@@ -64,22 +55,14 @@ src/pluggy/_hooks.py
    428→    ) -> None:
    593→class _SubsetHookCaller(HookCaller):
    596→
-   618→    @property  # type: ignore[misc]
-   619→    def _hookimpls(self) -> list[HookImpl]:
+   619→    def _hookimpls …
    626→    @property
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
-   630→    @property
-   631→    def _call_history(self) -> _CallHistory | None:  # type: ignore[override]
+   631→    def _call_history …
    639→class HookImpl:
    641→
-   642→    __slots__ = (
-   643→        "function",
-   644→        "argnames",
    697→class HookSpec:
    698→    __slots__ = (
-   699→        "namespace",
-   700→        "function",
-   701→        "name",
 
 src/pluggy/_manager.py
     33→    import importlib.metadata
@@ -89,36 +72,52 @@ src/pluggy/_manager.py
     67→
     71→    @property
     72→    def project_name(self) -> str:
+    73→        name: str = self.metadata["name"]
+    74→        return name
     83→class PluginManager:
     99→
 
 src/pluggy/_result.py
+    16→_ExcInfo …
     20→class HookCallError(Exception):
+    21→    """Hook was called incorrectly."""
+    24→@final
     25→class Result(Generic[ResultType]):
     28→
     29→    __slots__ = ("_result", "_exception", "_traceback")
     30→
+    31→    def __init__ …
     42→    @property
     43→    def excinfo(self) -> _ExcInfo | None:
-    44→        """:meta private:"""
     51→    @property
     52→    def exception(self) -> BaseException | None:
-    53→        """:meta private:"""
     56→    @classmethod
     57→    def from_call(cls, func: Callable[[], ResultType]) -> Result[ResultType]:
-    58→        """:meta private:"""
+    67→    def force_result …
+    80→    def force_exception …
+    91→    def get_result …
 
 src/pluggy/_tracing.py
     16→class TagTracer:
     59→class TagTracerSub:
 
 src/pluggy/_warnings.py
+     1→from typing import final
      4→class PluggyWarning(UserWarning):
+     5→    """Base class for all warnings emitted by pluggy."""
      6→
-      →…
+     7→    __module__ = "pluggy"
+    10→@final
     11→class PluggyTeardownRaisedWarning(PluggyWarning):
     26→
     27→    __module__ = "pluggy"
 
+testing/conftest.py
+    11→def he_pm …
+    24→def pm() -> PluginManager:
+
 testing/test_hookcaller.py
     34→class AddMeth:
+
+testing/test_tracer.py
+     7→def rootlogger() -> TagTracer:

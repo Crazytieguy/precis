@@ -2,32 +2,43 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2044 tokens)
+budget: 2000 (2041 tokens)
 
 assets.tsx
      2→import React from 'react';
-     3→import type { ToastTypes } from './types …
+     3→import type { ToastTypes } from './types';
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
      6→  switch (type) {
-      →  …
+     7→    case 'success':
+     8→      return SuccessIcon;
+     9→
+      →…
     24→const bars = Array(12).fill(0);
     26→export const Loader = ({ visible, className }: { visible: boolean; className?: string }) => {
     27→  return (
-      →  …
+    28→    <div className={['sonner-loading-wrapper', className].filter(Boolean).join(' ')} data-visible={visible}>
+    29→      <div className="sonner-spinner">
+    30→        {bars.map((_, i) => (
+      →        …
     38→const SuccessIcon = (
     48→const WarningIcon = (
     58→const InfoIcon = (
     68→const ErrorIcon = (
     78→export const CloseIcon = (
     79→  <svg
-    80→    xmlns="http://www.w3.org/2000/svg"
-      →    …
+      →  …
 
 hooks.tsx
      1→import React from 'react';
      3→export const useIsDocumentHidden = () => {
      4→  const [isDocumentHidden, setIsDocumentHidden] = React.useState(document.hidden);
-      →  …
+     5→
+     6→  React.useEffect(() => {
+     7→    const callback = () => {
+     8→      setIsDocumentHidden(document.hidden);
+     9→    };
+    10→    document.addEventListener('visibilitychange', callback);
+      →    …
 
 index.tsx
      3→import React from 'react';
@@ -88,17 +99,14 @@ state.ts
    249→  getActiveToasts = () => {
    254→export const ToastState = new Observer();
    257→const toastFunction = (message: titleT, data?: ExternalToast) => {
-   258→  const id = data?.id || toastsCounter++;
-   259→
-      →…
    268→const isHttpResponse = (data: any): data is Response => {
-   269→  return (
-   270→    data &&
-      →    …
    279→const basicToast = toastFunction;
    281→const getHistory = () => ToastState.toasts;
    282→const getToasts = () => ToastState.getActiveToasts();
    285→export const toast = Object.assign(
+   286→  basicToast,
+   287→  {
+      →  …
 
 types.ts
      1→import React from 'react';
@@ -106,7 +114,7 @@ types.ts
      5→export type PromiseT<Data = any> = Promise<Data> | (() => Promise<Data>);
      7→export interface PromiseIExtendedResult extends ExternalToast {
      8→  message: React.ReactNode;
-     9→}
+      →  …
     11→export type PromiseTExtendedResult<Data = any> =
     12→  | PromiseIExtendedResult
     13→  | ((data: Data) => PromiseIExtendedResult | Promise<PromiseIExtendedResult>);
@@ -118,25 +126,22 @@ types.ts
     22→export type PromiseData<ToastData = any> = PromiseExternalToast & {
     30→export interface ToastClassnames {
     31→  toast?: string;
-    32→  title?: string;
       →  …
     48→export interface ToastIcons {
     49→  success?: React.ReactNode;
-    50→  info?: React.ReactNode;
       →  …
     57→export interface Action {
     58→  label: React.ReactNode;
-    59→  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
       →  …
     63→export interface ToastT {
     64→  id: number | string;
-    65→  toasterId?: string;
       →  …
     93→export function isAction(action: Action | React.ReactNode): action is Action {
+    94→  return (action as Action).label !== undefined;
+    95→}
     97→export type Position = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'top-center' | 'bottom-center';
     98→export interface HeightT {
     99→  height: number;
-   100→  toastId: number | string;
       →  …
    104→interface ToastOptions {
    105→  className?: string;
@@ -147,26 +152,21 @@ types.ts
    110→  actionButtonStyle?: React.CSSProperties;
    111→  duration?: number;
    112→  unstyled?: boolean;
-   113→  classNames?: ToastClassnames;
       →  …
    118→type Offset =
    119→  | {
    128→export interface ToasterProps {
    129→  id?: string;
-   130→  invert?: boolean;
       →  …
    152→export type SwipeDirection = 'top' | 'right' | 'bottom' | 'left';
    154→export interface ToastProps {
    155→  toast: ToastT;
-   156→  toasts: ToastT[];
       →  …
    184→export enum SwipeStateTypes {
    185→  SwipedOut = 'SwipedOut',
-   186→  SwipedBack = 'SwipedBack',
       →  …
    190→export type Theme = 'light' | 'dark';
    192→export interface ToastToDismiss {
    193→  id: number | string;
-   194→  dismiss: boolean;
       →  …
    197→export type ExternalToast = Omit<ToastT, 'id' | 'type' | 'title' | 'jsx' | 'delete' | 'promise'> & {

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2011 tokens)
+budget: 2000 (2005 tokens)
 
 input.tsx
      3→import * as React from 'react'
@@ -46,6 +46,9 @@ input.tsx
    546→}
    553→const NOSCRIPT_CSS_FALLBACK = `
    554→[data-input-otp] {
+   555→  --nojs-bg: white !important;
+   556→  --nojs-fg: black !important;
+   557→
       →…
 
 regexp.ts
@@ -114,6 +117,8 @@ use-pwm-badge.tsx
      6→const PWM_BADGE_SPACE_WIDTH = `${PWM_BADGE_SPACE_WIDTH_PX}px` as const
      8→const PASSWORD_MANAGERS_SELECTORS = [
      9→  '[data-lastpass-icon-root]', // LastPass
+    10→  'com-1password-button', // 1Password
+    11→  '[data-dashlanecreated]', // Dashlane
       →  …
     15→export function usePasswordManagerBadge({
     16→  containerRef,
@@ -182,9 +187,4 @@ use-pwm-badge.tsx
     79→    if (pmws.length === 0) {
     80→      const maybeBadgeEl = document.elementFromPoint(x, y)
     81→
-    82→      // If the found element is the input itself,
-    83→      // then we assume it's not a password manager badge.
-    84→      // We are not sure. Most times that means there isn't a badge.
-    85→      if (maybeBadgeEl === container) {
-    86→        return
-      →        …
+      →…

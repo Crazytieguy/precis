@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1003 tokens)
+budget: 1000 (1017 tokens)
 
 clean.js
      4→const clean = (version, options) => {
@@ -14,21 +14,20 @@ cmp.js
     10→const cmp = (a, op, b, loose) => {
     11→  switch (op) {
     12→    case '===':
-    13→      if (typeof a === 'object') {
-      →      …
+      →    …
 
 coerce.js
      7→const coerce = (version, options) => {
      8→  if (version instanceof SemVer) {
      9→    return version
     10→  }
-      →  …
+    11→
+      →…
 
 compare-build.js
      4→const compareBuild = (a, b, loose) => {
      5→  const versionA = new SemVer(a, loose)
      6→  const versionB = new SemVer(b, loose)
-     7→  return versionA.compare(versionB) || versionA.compareBuild(versionB)
       →  …
 
 compare-loose.js
@@ -43,7 +42,8 @@ diff.js
      6→  const v1 = parse(version1, null, true)
      7→  const v2 = parse(version2, null, true)
      8→  const comparison = v1.compare(v2)
-      →  …
+     9→
+      →…
 
 eq.js
      4→const eq = (a, b, loose) => compare(a, b, loose) === 0
@@ -59,7 +59,10 @@ inc.js
      6→  if (typeof (options) === 'string') {
      7→    identifierBase = identifier
      8→    identifier = options
-      →    …
+     9→    options = undefined
+    10→  }
+    11→
+      →…
 
 lt.js
      4→const lt = (a, b, loose) => compare(a, b, loose) < 0
@@ -81,6 +84,7 @@ parse.js
      5→  if (version instanceof SemVer) {
      6→    return version
      7→  }
+     8→  try {
       →  …
 
 patch.js
@@ -103,6 +107,8 @@ satisfies.js
      5→  try {
      6→    range = new Range(range, options)
      7→  } catch (er) {
+     8→    return false
+     9→  }
       →  …
 
 sort.js

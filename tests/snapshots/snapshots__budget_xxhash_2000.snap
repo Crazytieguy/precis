@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2025 tokens)
+budget: 2000 (2021 tokens)
 
 README.md
      1→# xxhash
@@ -19,39 +19,27 @@ README.md
     16→    func New() *Digest
     17→```
     18→
-    19→The `Digest` type implements hash.Hash64. Its key methods are:
-    20→
-    21→```
       →…
     33→## Compatibility
     35→This package is in a module and the latest code is in version 2 of the module.
-    36→You need a version of Go with at least "minimal module compatibility" to use
-    37→github.com/cespare/xxhash/v2:
       →…
     45→## Benchmarks
     47→Here are some quick benchmarks comparing the pure-Go and assembly
-    48→implementations of Sum64.
-    49→
       →…
     66→## Projects using this package
     68→- [InfluxDB](https://github.com/influxdata/influxdb)
-    69→- [Prometheus](https://github.com/prometheus/prometheus)
-    70→- [VictoriaMetrics](https://github.com/VictoriaMetrics/VictoriaMetrics)
       →…
 
 bench_test.go
      3→import …
      8→var benchmarks = []struct {
-     9→	name string
-      →	…
 
 dynamic/dynamic_test.go
      6→import …
     15→// This is a cursory test that checks whether things work under dynamic linking.
     17→func TestMain(m *testing.M) {
     18→	cmd := exec.Command(
-    19→		"go", "build",
-      →		…
+      →	…
     33→func TestDynamic(t *testing.T) {
 
 dynamic/plugin.go
@@ -61,21 +49,13 @@ dynamic/plugin.go
     16→	want = uint64(0x02a2e85470d6fd96)
     19→func TestSum(t *testing.T) {
     20→	got := xxhash.Sum64String(in)
-    21→	if got != want {
       →	…
     26→func TestDigest(t *testing.T) {
     27→	for chunkSize := 1; chunkSize <= len(in); chunkSize++ {
-    28→		name := fmt.Sprintf("[chunkSize=%d]", chunkSize)
-      →		…
+      →	…
 
 xxhash.go
      5→import …
-    11→const …
-    12→	prime1 …
-    13→	prime2 …
-    14→	prime3 …
-    15→	prime4 …
-    16→	prime5 …
     19→// Store the primes in an array as well.
     20→//
     21→// The consts are used when possible in Go code to avoid MOVs but we need a
@@ -114,9 +94,6 @@ xxhash.go
    113→func (d *Digest) Sum(b []byte) []byte {
    128→// Sum64 returns the current hash.
    129→func (d *Digest) Sum64() uint64 {
-   170→const …
-   171→	magic …
-   172→	marshaledSize …
    175→// MarshalBinary implements the encoding.BinaryMarshaler interface.
    176→func (d *Digest) MarshalBinary() ([]byte, error) {
    189→// UnmarshalBinary implements the encoding.BinaryUnmarshaler interface.
@@ -133,25 +110,52 @@ xxhash_asm.go
 xxhash_other.go
      6→// Sum64 computes the 64-bit xxHash digest of b with a zero seed.
      7→func Sum64(b []byte) uint64 {
+     8→	// A simpler version would be
+     9→	//   d := New()
+    10→	//   d.Write(b)
+    11→	//   return d.Sum64()
+    12→	// but this is faster, particularly for small inputs.
+    13→
+    14→	n := len(b)
+    15→	var h uint64
+    16→
+    17→	if n >= 32 {
+      →	…
+    64→func writeBlocks(d *Digest, b []byte) int {
 
 xxhash_safe.go
      8→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
      9→func Sum64String(s string) uint64 {
+    10→	return Sum64([]byte(s))
+    11→}
     13→// WriteString adds more data to d. It always returns len(s), nil.
     14→func (d *Digest) WriteString(s string) (n int, err error) {
+    15→	return d.Write([]byte(s))
+    16→}
 
 xxhash_test.go
      3→import …
    168→var sink uint64
 
 xxhash_unsafe.go
-     9→import …
+     9→import (
+    10→	"unsafe"
+    11→)
     36→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
     37→// It may be faster than Sum64([]byte(s)) by avoiding a copy.
     38→func Sum64String(s string) uint64 {
+    39→	b := *(*[]byte)(unsafe.Pointer(&sliceHeader{s, len(s)}))
+    40→	return Sum64(b)
+    41→}
     43→// WriteString adds more data to d. It always returns len(s), nil.
     44→// It may be faster than Write([]byte(s)) by avoiding a copy.
     45→func (d *Digest) WriteString(s string) (n int, err error) {
+    46→	d.Write(*(*[]byte)(unsafe.Pointer(&sliceHeader{s, len(s)})))
+    47→	// d.Write always returns len(s), nil.
+    48→	// Ignoring the return output and returning these fixed values buys a
+    49→	// savings of 6 in the inliner's cost model.
+    50→	return len(s), nil
+    51→}
     53→// sliceHeader is similar to reflect.SliceHeader, but it assumes that the layout
     54→// of the first two words is the same as the layout of a string.
     55→type sliceHeader struct {
@@ -161,25 +165,18 @@ xxhash_unsafe.go
 
 xxhash_unsafe_test.go
      6→import …
+    13→func TestStringAllocs(t *testing.T) {
     29→// This test is inspired by the Go runtime tests in https://go.dev/cl/57410.
     30→// It asserts that certain important functions may be inlined.
     31→func TestInlining(t *testing.T) {
     32→	funcs := map[string]struct{}{
-    33→		"Sum64String":           {},
-    34→		"(*Digest).WriteString": {},
-    35→	}
-    36→
-      →…
+      →	…
 
 xxhashbench/xxhashbench_test.go
      3→import …
     18→var sink uint64
     20→var benchmarks = []struct {
    108→func BenchmarkHashes(b *testing.B) {
-   109→	for _, bb := range benchmarks {
-      →	…
-   152→func benchmarkHashBytes …
-   159→func benchmarkHashString …
 
 xxhsum/xxhsum.go
      3→import …

@@ -2,19 +2,27 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1004 tokens)
+budget: 1000 (1009 tokens)
 
 __init__.py
      1→__all__ = [
-     2→    "__version__",
-      →    …
+    32→def __getattr__(name: str) -> str:
 
 _callers.py
     22→# Need to distinguish between old- and new-style hook wrappers.
     23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
     24→Teardown: TypeAlias = Generator[None, object, object]
+    27→def run_old_style_hookwrapper(
+    28→    hook_impl: HookImpl, hook_name: str, args: Sequence[object]
+    29→) -> Teardown:
+    30→    """
+    31→    backward compatibility wrapper to run a old style hookwrapper as a wrapper
+    32→    """
+    33→    if TYPE_CHECKING:
+      →    …
 
 _hooks.py
+    25→from ._result import Result
     40→class HookspecOpts(TypedDict):
     42→
       →…
@@ -23,16 +31,10 @@ _hooks.py
       →…
     78→class HookspecMarker:
     85→
-    86→    __slots__ = ("project_name",)
-    87→
    165→class HookimplMarker:
    172→
-   173→    __slots__ = ("project_name",)
-   174→
    359→class HookRelay:
    362→
-   363→    __slots__ = ("__dict__",)
-   364→
    382→class HookCaller:
    384→
    419→    # TODO: Document, or make private.
@@ -45,76 +47,67 @@ _hooks.py
    428→    ) -> None:
    593→class _SubsetHookCaller(HookCaller):
    596→
-   618→    @property  # type: ignore[misc]
    619→    def _hookimpls(self) -> list[HookImpl]:
    626→    @property
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
-   630→    @property
    631→    def _call_history(self) -> _CallHistory | None:  # type: ignore[override]
    639→class HookImpl:
    641→
-   642→    __slots__ = (
-   643→        "function",
-   644→        "argnames",
-   645→        "kwargnames",
-   646→        "plugin",
-   647→        "opts",
-   648→        "plugin_name",
-   649→        "wrapper",
-   650→        "hookwrapper",
-   651→        "optionalhook",
-   652→        "tryfirst",
-   653→        "trylast",
-   654→    )
-   655→
    697→class HookSpec:
    698→    __slots__ = (
-   699→        "namespace",
-   700→        "function",
-   701→        "name",
-   702→        "argnames",
-   703→        "kwargnames",
-   704→        "opts",
-   705→        "warn_on_impl",
-   706→        "warn_on_impl_args",
-   707→    )
-   708→
 
 _manager.py
     33→    import importlib.metadata
+    36→_BeforeTrace …
+    37→_AfterTrace …
     52→class PluginValidationError(Exception):
     58→
     65→class DistFacade:
     67→
     71→    @property
     72→    def project_name(self) -> str:
+    73→        name: str = self.metadata["name"]
+    74→        return name
     83→class PluginManager:
     99→
 
 _result.py
+    16→_ExcInfo …
     20→class HookCallError(Exception):
+    21→    """Hook was called incorrectly."""
+    24→@final
     25→class Result(Generic[ResultType]):
+    26→    """An object used to inspect and set the result in a :ref:`hook wrapper
+    27→    <hookwrappers>`."""
     28→
     29→    __slots__ = ("_result", "_exception", "_traceback")
     30→
+    31→    def __init__ …
     42→    @property
     43→    def excinfo(self) -> _ExcInfo | None:
-    44→        """:meta private:"""
     51→    @property
     52→    def exception(self) -> BaseException | None:
-    53→        """:meta private:"""
     56→    @classmethod
     57→    def from_call(cls, func: Callable[[], ResultType]) -> Result[ResultType]:
-    58→        """:meta private:"""
+    67→    def force_result …
+    80→    def force_exception …
+    91→    def get_result …
 
 _tracing.py
     16→class TagTracer:
     59→class TagTracerSub:
 
 _warnings.py
+     1→from typing import final
      4→class PluggyWarning(UserWarning):
+     5→    """Base class for all warnings emitted by pluggy."""
      6→
-      →…
+     7→    __module__ = "pluggy"
+    10→@final
     11→class PluggyTeardownRaisedWarning(PluggyWarning):
+    12→    """A plugin raised an exception during an :ref:`old-style hookwrapper
+    13→    <old_style_hookwrappers>` teardown.
+    14→
+      →…
     26→
     27→    __module__ = "pluggy"

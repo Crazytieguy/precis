@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1894 tokens)
+budget: 2000 (2005 tokens)
 
 README.md
      1→# Command-line tool
@@ -21,6 +21,11 @@ README.md
 
 arg-watcher.md
      1→#### `--watcher`
+     3→There are different backends used to determine when a file has changed.
+     4→
+     5→* `poll` (default) --- Checks for file modifications by scanning the filesystem every second.
+     6→* `native` --- Uses the native operating system facilities to receive notifications when files change.
+      →…
 
 build.md
      1→# The build command
@@ -38,8 +43,14 @@ build.md
     14→convenience. Large books will therefore remain structured when rendered.
     15→
     16→#### Specify a directory
+    18→The `build` command can take a directory as an argument to use as the book's
+      →…
     25→#### `--open`
+    27→When you use the `--open` (`-o`) flag, mdbook will open the rendered book in
+      →…
     30→#### `--dest-dir`
+    32→The `--dest-dir` (`-d`) option allows you to change the output directory for the
+      →…
 
 clean.md
      1→# The clean command
@@ -51,7 +62,15 @@ clean.md
      8→```
      9→
     10→#### Specify a directory
+    12→The `clean` command can take a directory as an argument to use as the book's
+    13→root instead of the current working directory.
+    14→
+      →…
     19→#### `--dest-dir`
+    21→The `--dest-dir` (`-d`) option allows you to override the book's output
+    22→directory, which will be deleted by this command. Relative paths are interpreted
+    23→relative to the current directory. If not specified it will default to the
+      →…
 
 completions.md
      1→# The completions command
@@ -72,7 +91,7 @@ completions.md
     17→Run `mdbook completions --help` for a list of supported shells.
     18→
     19→Where to place the completions depend on which shell you are using and your operating system.
-    20→Consult your shell's documentation for more information one where to place the script.
+      →…
 
 init.md
      1→# The init command
@@ -95,16 +114,7 @@ init.md
     19→    └── SUMMARY.md
     20→```
     21→
-    22→- The `src` directory is where you write your book in markdown. It contains all
-    23→  the source files, configuration files, etc.
-    24→
-    25→- The `book` directory is where your book is rendered. All the output is ready
-    26→  to be uploaded to a server to be seen by your audience.
-    27→
-    28→- The `SUMMARY.md` is the skeleton of your
-    29→  book, and is discussed in more detail [in another
-    30→  chapter](../format/summary.md).
-    31→
+      →…
     32→#### Tip: Generate chapters from SUMMARY.md
     39→#### Specify a directory
     48→#### `--theme`

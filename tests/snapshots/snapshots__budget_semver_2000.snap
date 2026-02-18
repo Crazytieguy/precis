@@ -2,10 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2005 tokens)
-
-.eslintrc.js
-     7→const localConfigs = readdir(__dirname)
+budget: 2000 (2002 tokens)
 
 .github/ISSUE_TEMPLATE/bug.yml
      3→name: Bug
@@ -20,9 +17,7 @@ budget: 2000 (2005 tokens)
 .github/actions/create-check/action.yml
      3→name: 'Create Check'
      4→inputs:
-    12→    default: ''
     13→outputs:
-    15→    value: ${{ steps.create-check.outputs.check_id }}
     16→runs:
 
 .github/actions/install-latest-npm/action.yml
@@ -76,6 +71,8 @@ budget: 2000 (2005 tokens)
      3→name: Post Dependabot
      5→on: pull_request
      7→permissions:
+     8→  contents: write
+     9→
     10→jobs:
 
 .github/workflows/pull-request.yml
@@ -100,46 +97,19 @@ budget: 2000 (2005 tokens)
      2→  ".": "7.7.4"
      3→}
 
-CHANGELOG.md
-     1→# Changelog
-
-CONTRIBUTING.md
-     3→# Contributing
-
 README.md
      1→semver(1) -- The semantic versioner for npm
      4→## Install
     10→## Usage
    139→## Versions
    148→## Ranges
-   184→### Prerelease Tags
-   219→#### Prerelease Identifiers
-   250→#### Prerelease Identifier Base
-   279→### Advanced Range Syntax
-   287→#### Hyphen Ranges `X.Y.Z - A.B.C`
-   306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*`
-   324→#### Tilde Ranges `~1.2.3` `~1.2` `~1`
-   341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4`
-   384→### Range Grammar
    408→## Functions
-   453→### Comparison
-   478→### Sorting
-   485→### Comparators
-   489→### Ranges
-   531→### Coercion
-   558→### Clean
    576→## Constants
-   580→### `RELEASE_TYPES`
-   600→### `SEMVER_SPEC_VERSION`
    610→## Exported Modules
 
 bin/semver.js
      8→const argv = process.argv.slice(2)
     12→const range = []
-    37→const main = () => {
-   132→const failInc = () => {
-   137→const fail = () => process.exit(1)
-   139→const help = () => console.log(
 
 classes/comparator.js
      3→const ANY = Symbol('SemVer ANY')
@@ -174,33 +144,98 @@ classes/semver.js
    168→  compareBuild (other) {
    194→  inc (release, identifier, identifierBase) {
 
+functions/clean.js
+     4→const clean = (version, options) => {
+
+functions/cmp.js
+    10→const cmp = (a, op, b, loose) => {
+
+functions/coerce.js
+     7→const coerce = (version, options) => {
+
+functions/compare-build.js
+     4→const compareBuild = (a, b, loose) => {
+
+functions/compare-loose.js
+     4→const compareLoose = (a, b) => compare(a, b, true)
+
+functions/compare.js
+     4→const compare = (a, b, loose) =>
+
+functions/diff.js
+     5→const diff = (version1, version2) => {
+
+functions/eq.js
+     4→const eq = (a, b, loose) => compare(a, b, loose) === 0
+
+functions/gt.js
+     4→const gt = (a, b, loose) => compare(a, b, loose) > 0
+
+functions/gte.js
+     4→const gte = (a, b, loose) => compare(a, b, loose) >= 0
+
+functions/inc.js
+     5→const inc = (version, release, options, identifier, identifierBase) => {
+
+functions/lt.js
+     4→const lt = (a, b, loose) => compare(a, b, loose) < 0
+
+functions/lte.js
+     4→const lte …
+
+functions/major.js
+     4→const major = (a, loose) => new SemVer(a, loose).major
+
+functions/minor.js
+     4→const minor = (a, loose) => new SemVer(a, loose).minor
+
+functions/neq.js
+     4→const neq …
+
+functions/parse.js
+     4→const parse = (version, options, throwErrors = false) => {
+
+functions/patch.js
+     4→const patch = (a, loose) => new SemVer(a, loose).patch
+
+functions/prerelease.js
+     4→const prerelease = (version, options) => {
+
+functions/rcompare.js
+     4→const rcompare = (a, b, loose) => compare(b, a, loose)
+
+functions/rsort.js
+     4→const rsort …
+
+functions/satisfies.js
+     4→const satisfies = (version, range, options) => {
+
+functions/sort.js
+     4→const sort …
+
+functions/valid.js
+     4→const valid = (version, options) => {
+
 internal/constants.js
 
 internal/debug.js
+     3→const debug = (
 
 internal/identifiers.js
-     4→const compareIdentifiers = (a, b) => {
-    24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
+     3→const numeric = /^[0-9]+$/
+     4→const compareIdentifiers …
+    24→const rcompareIdentifiers …
 
 internal/lrucache.js
      3→class LRUCache {
      4→  constructor () {
-     5→    this.max = 1000
-     6→    this.map = new Map()
-      →    …
      9→  get (key) {
-    10→    const value = this.map.get(key)
-    11→    if (value === undefined) {
-      →    …
     21→  delete (key) {
-    22→    return this.map.delete(key)
-    23→  }
     25→  set (key, value) {
-    26→    const deleted = this.delete(key)
-    27→
-      →…
 
 internal/parse-options.js
+     4→const looseOption = Object.freeze({ loose: true })
+     5→const emptyOpts = Object.freeze({ })
      6→const parseOptions = options => {
 
 internal/re.js
@@ -208,49 +243,36 @@ internal/re.js
     42→const createToken = (name, value, isGlobal) => {
 
 package.json
-     2→  "name": "semver",
-     3→  "version": "7.7.4",
-     4→  "description": "The semantic version parser used by npm.",
-     5→  "main": "index.js",
-     6→  "scripts": {
-    15→  },
-    16→  "devDependencies": {
-    21→  },
-    22→  "license": "ISC",
-    23→  "repository": {
-    26→  },
-    27→  "bin": {
-    29→  },
-    30→  "files": [
-    40→  ],
-    41→  "tap": {
-    48→  },
-    49→  "engines": {
-    51→  },
-    52→  "author": "GitHub Inc.",
-    53→  "templateOSS": {
-    77→  }
-    78→}
+
+ranges/gtr.js
+     5→const gtr = (version, range, options) => outside(version, range, '>', options)
+
+ranges/intersects.js
+     4→const intersects = (r1, r2, options) => {
+
+ranges/ltr.js
+     5→const ltr = (version, range, options) => outside(version, range, '<', options)
+
+ranges/max-satisfying.js
+     6→const maxSatisfying = (versions, range, options) => {
+
+ranges/min-satisfying.js
+     5→const minSatisfying = (versions, range, options) => {
+
+ranges/min-version.js
+     7→const minVersion = (range, loose) => {
+
+ranges/outside.js
+    13→const outside = (version, range, hilo, options) => {
 
 ranges/subset.js
-    73→const minimumVersionWithPreRelease = [new Comparator('>=0.0.0-0')]
-    74→const minimumVersion = [new Comparator('>=0.0.0')]
+    73→const minimumVersionWithPreRelease …
+    74→const minimumVersion …
+
+ranges/to-comparators.js
+     6→const toComparators = (range, options) =>
+
+ranges/valid.js
+     4→const validRange = (range, options) => {
 
 release-please-config.json
-     2→  "group-pull-request-title-pattern": "chore: release ${version}",
-     3→  "pull-request-title-pattern": "chore: release${component} ${version}",
-     4→  "changelog-sections": [
-    30→  ],
-    31→  "packages": {
-    35→  },
-    36→  "prerelease-type": "pre.0"
-    37→}
-
-test/bin/semver.js
-     9→const bin = require.resolve('../../bin/semver')
-    10→const run = args => new Promise((resolve, reject) => {
-
-test/internal/debug.js
-     3→const main = () => {
-
-test/map.js

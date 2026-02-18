@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4016 tokens)
+budget: 4000 (4042 tokens)
 
 README.md
     28→## Features
@@ -46,38 +46,6 @@ README.md
     72→Find the full API reference on [official documentation](https://react-hot-toast.com/docs).
 
 package.json
-     2→  "name": "react-hot-toast",
-     3→  "description": "Smoking hot React Notifications. Lightweight, customizable and beautiful by default.",
-     4→  "version": "2.6.0",
-     5→  "author": "Timo Lins",
-     6→  "license": "MIT",
-     7→  "repository": "timolins/react-hot-toast",
-     8→  "keywords": [
-    13→  ],
-    14→  "main": "dist/index.js",
-    15→  "types": "dist/index.d.ts",
-    16→  "exports": {
-    28→  },
-    29→  "files": [
-    33→  ],
-    34→  "engines": {
-    36→  },
-    37→  "scripts": {
-    44→  },
-    45→  "husky": {
-    49→  },
-    50→  "prettier": {
-    56→  },
-    57→  "size-limit": [
-    74→  ],
-    75→  "devDependencies": {
-    94→  },
-    95→  "dependencies": {
-    98→  },
-    99→  "peerDependencies": {
-   102→  },
-   103→  "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0"
-   104→}
 
 site/README.md
      3→## Getting Started
@@ -87,36 +55,54 @@ site/README.md
 site/components/code.tsx
      8→const theme: PrismTheme = {
    104→export const Code: React.FC<{
+   105→  snippet: string;
+      →  …
 
 site/components/docs-layout.tsx
      5→import { Footer } from './sections/footer';
      6→import Logo from '../assets/logo-small.svg';
-     8→const TableItem: React.FC<{
-    19→const TableHeader: React.FC<{
     27→export default function DocsLayout({ meta, children }) {
+    28→  return (
+      →  …
 
 site/components/emoji-button.tsx
      1→export const EmojiButton: React.FC<{
 
+site/components/sections/footer.tsx
+     4→export function Footer({ noBadge }: { noBadge?: boolean }) {
+     5→  return (
+      →  …
+
+site/components/sections/splitbee-counter.tsx
+     4→export const useSplitbeeCount …
+    36→export const SplitbeeCounter …
+
 site/components/sections/toast-example.tsx
+     4→import { EmojiButton } from '../emoji-button';
+     5→import { Code } from '../code';
      7→const examples: Array<{
+   270→export const ToastExample = () => {
 
 site/components/sections/toaster-example.tsx
      8→export const positions: Array<ToastPosition> = [
+    17→export const ToasterExample: React.FC<{
 
 site/next.config.mjs
     15→const nextConfig = {
-    17→  webpack(config) {
-    24→  async rewrites() {
 
 site/package.json
      2→  "name": "site",
      3→  "scripts": {
+     7→  },
      8→  "dependencies": {
+    24→  },
     25→  "devDependencies": {
+    34→  }
+    35→}
 
 site/pages/_app.tsx
     12→const components = {
+    71→function MyApp({ Component, pageProps }) {
 
 site/pages/index.tsx
     22→const version = packageInfo.version;
@@ -124,8 +110,12 @@ site/pages/index.tsx
 
 site/tsconfig.json
      2→  "compilerOptions": {
+    21→  },
     22→  "include": [
+    31→  ],
     32→  "exclude": [
+    34→  ]
+    35→}
 
 site/types/svg.d.ts
      1→interface SvgrComponent …
@@ -140,6 +130,9 @@ src/components/checkmark.tsx
     31→  secondary?: string;
     32→}
     34→export const CheckmarkIcon = styled('div')<CheckmarkTheme>`
+    35→  width: 20px;
+    36→  opacity: 0;
+      →  …
 
 src/components/error.tsx
      1→import { styled, keyframes } from 'goober';
@@ -151,6 +144,9 @@ src/components/error.tsx
     35→  secondary?: string;
     36→}
     38→export const ErrorIcon = styled('div')<ErrorTheme>`
+    39→  width: 20px;
+    40→  opacity: 0;
+      →  …
 
 src/components/loader.tsx
      1→import { styled, keyframes } from 'goober';
@@ -160,6 +156,9 @@ src/components/loader.tsx
     14→  secondary?: string;
     15→}
     17→export const LoaderIcon = styled('div')<LoaderTheme>`
+    18→  width: 12px;
+    19→  height: 12px;
+      →  …
 
 src/components/toast-bar.tsx
      1→import * as React from 'react';
@@ -184,6 +183,8 @@ src/components/toast-bar.tsx
     55→}
     57→const getAnimationStyle …
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
+    76→  ({ toast, position, style, children }) => {
+      →  …
 
 src/components/toast-icon.tsx
      1→import * as React from 'react';
@@ -203,7 +204,13 @@ src/components/toast-icon.tsx
     50→  const { icon, type, iconTheme } = toast;
     51→  if (icon !== undefined) {
     52→    if (typeof icon === 'string') {
-      →    …
+    53→      return <AnimatedIconWrapper>{icon}</AnimatedIconWrapper>;
+    54→    } else {
+    55→      return icon;
+    56→    }
+    57→  }
+    58→
+      →…
 
 src/components/toaster.tsx
      1→import { css, setup } from 'goober';
@@ -217,8 +224,15 @@ src/components/toaster.tsx
      9→import { useToaster } from '../core/use-toaster';
     10→import { prefersReducedMotion } from '../core/utils';
     11→import { ToastBar } from './toast-bar';
-    15→const ToastWrapper …
-    47→const getPositionStyle …
+    15→const ToastWrapper = ({
+    16→  id,
+      →  …
+    47→const getPositionStyle = (
+    48→  position: ToastPosition,
+    49→  offset: number
+    50→): React.CSSProperties => {
+    51→  const top = position.includes('top');
+      →  …
     76→const activeClass = css`
     83→const DEFAULT_OFFSET = 16;
     85→export const Toaster: React.FC<ToasterProps> = ({
@@ -227,14 +241,18 @@ src/components/toaster.tsx
     88→  toastOptions,
     89→  gutter,
     90→  children,
-      →  …
+    91→  toasterId,
+    92→  containerStyle,
+    93→  containerClassName,
+    94→}) => {
+      →…
 
 src/core/store.ts
      1→import { useEffect, useState, useRef } from 'react';
-     2→import { DefaultToastOptions, Toast, ToastType } from './types …
-     4→export const TOAST_EXPIRE_DISMISS_DELAY …
-     5→export const TOAST_LIMIT …
-     6→export const DEFAULT_TOASTER_ID …
+     2→import { DefaultToastOptions, Toast, ToastType } from './types';
+     4→export const TOAST_EXPIRE_DISMISS_DELAY = 1000;
+     5→export const TOAST_LIMIT = 20;
+     6→export const DEFAULT_TOASTER_ID = 'default';
      8→interface ToasterSettings {
      9→  toastLimit: number;
     10→}
@@ -247,7 +265,8 @@ src/core/store.ts
     18→  START_PAUSE,
     19→  END_PAUSE,
     20→}
-    22→export type Action …
+    22→export type Action =
+    23→  | {
     52→interface ToasterState {
     53→  toasts: Toast[];
     54→  settings: ToasterSettings;
@@ -275,7 +294,7 @@ src/core/store.ts
    171→  (action: Action) => {
    172→    dispatch(action, toasterId);
       →    …
-   175→export const defaultTimeouts …
+   175→export const defaultTimeouts: {
    185→export const useStore = (
    186→  toastOptions: DefaultToastOptions = {},
    187→  toasterId: string = DEFAULT_TOASTER_ID
@@ -304,7 +323,10 @@ src/core/types.ts
     17→}
     19→export type ValueFunction …
     20→export type ValueOrFunction …
-    24→const isFunction …
+    24→const isFunction = <TValue, TArg>(
+    25→  valOrFunction: ValueOrFunction<TValue, TArg>
+    26→): valOrFunction is ValueFunction<TValue, TArg> =>
+    27→  typeof valOrFunction === 'function';
     29→export const resolveValue = <TValue, TArg>(
     30→  valOrFunction: ValueOrFunction<TValue, TArg>,
     31→  arg: TArg
@@ -356,20 +378,25 @@ src/core/types.ts
 
 src/core/use-toaster.ts
      1→import { useEffect, useCallback, useRef } from 'react';
-     2→import { createDispatch, ActionType, useStore, dispatch } from './store …
-     3→import { toast } from './toast …
-     4→import { DefaultToastOptions, Toast, ToastPosition } from './types …
-     6→export const REMOVE_DELAY …
+     2→import { createDispatch, ActionType, useStore, dispatch } from './store';
+     3→import { toast } from './toast';
+     4→import { DefaultToastOptions, Toast, ToastPosition } from './types';
+     6→export const REMOVE_DELAY = 1000;
      8→export const useToaster = (
      9→  toastOptions?: DefaultToastOptions,
     10→  toasterId: string = 'default'
     11→) => {
     12→  const { toasts, pausedAt } = useStore(toastOptions, toasterId);
+    13→  const toastTimeouts = useRef(
+    14→    new Map<Toast['id'], ReturnType<typeof setTimeout>>()
+    15→  ).current;
+    16→
+    17→  const addToRemoveQueue = useCallback(
       →  …
 
 src/core/utils.ts
-     1→export const genId …
-     8→export const prefersReducedMotion …
+     1→export const genId = (() => {
+     8→export const prefersReducedMotion = (() => {
 
 src/headless/index.ts
      1→import { toast } from '../core/toast';
@@ -381,11 +408,6 @@ test/setup.ts
      1→import '@testing-library/jest-dom';
 
 test/toast.test.tsx
-     1→import React, { useEffect, useState } from 'react …
-     2→import { …
-    10→import toast, { resolveValue, Toaster, ToastIcon } from '../src';
-    11→import { defaultTimeouts } from '../src/core/store';
-    12→import { REMOVE_DELAY } from '../src/core/use-toaster';
     29→const waitTime = (time: number) => {
     35→const TOAST_DURATION = 1000;
 
@@ -396,6 +418,4 @@ tsconfig.json
     33→}
 
 tsup.config.ts
-     1→import { defineConfig, Options } from 'tsup';
-     2→import { minifyTemplates, writeFiles } from 'esbuild-minify-templates';
      4→const commonConfig: Options = {

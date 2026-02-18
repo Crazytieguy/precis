@@ -2,19 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1010 tokens)
+budget: 1000 (1011 tokens)
 
 constants.js
      5→const SEMVER_SPEC_VERSION = '2.0.0'
      7→const MAX_LENGTH = 256
      8→const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER ||
-     9→/* istanbul ignore next */ 9007199254740991
     12→const MAX_SAFE_COMPONENT_LENGTH = 16
     16→const MAX_SAFE_BUILD_LENGTH = MAX_LENGTH - 6
     18→const RELEASE_TYPES = [
-    19→  'major',
-    20→  'premajor',
-      →  …
 
 debug.js
      3→const debug = (
@@ -30,7 +26,14 @@ identifiers.js
      7→  }
      8→
      9→  const anum = numeric.test(a)
-      →  …
+    10→  const bnum = numeric.test(b)
+    11→
+    12→  if (anum && bnum) {
+    13→    a = +a
+    14→    b = +b
+    15→  }
+    16→
+      →…
     24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
 
 lrucache.js
@@ -78,7 +81,11 @@ parse-options.js
      9→  }
     10→
     11→  if (typeof options !== 'object') {
-      →  …
+    12→    return looseOption
+    13→  }
+    14→
+    15→  return options
+    16→}
 
 re.js
     12→const re = exports.re = []
@@ -95,13 +102,9 @@ re.js
     34→  for (const [token, max] of safeRegexReplacements) {
     35→    value = value
     36→      .split(`${token}*`).join(`${token}{0,${max}}`)
-    37→      .split(`${token}+`).join(`${token}{1,${max}}`)
-    38→  }
-      →  …
+      →      …
     42→const createToken = (name, value, isGlobal) => {
     43→  const safe = makeSafeRegex(value)
     44→  const index = R++
     45→  debug(name, index, value)
-    46→  t[name] = index
-    47→  src[index] = value
       →  …

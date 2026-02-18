@@ -2,10 +2,9 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1003 tokens)
+budget: 1000 (1005 tokens)
 
 CHANGELOG.md
-     1→# Changelog
 
 README.md
      1→# The only accessible & unstyled & full featured Input OTP component in the Web.
@@ -28,13 +27,15 @@ apps/storybook/README.md
     83→## Contribute
     87→## Learning Storybook
 
+apps/storybook/components.json
+
+apps/storybook/package.json
+
 apps/storybook/src/components/ui/input-otp.tsx
      7→import { cn } from "../../lib/utils"
 
 apps/storybook/src/lib/utils.ts
      4→export function cn(...inputs: ClassValue[]) {
-     5→  return twMerge(clsx(inputs))
-     6→}
 
 apps/storybook/src/stories/Button.stories.ts
      1→import { Button } from './Button';
@@ -47,26 +48,23 @@ apps/storybook/src/stories/Button.tsx
      3→import './button.css';
      6→ * Primary UI component for user interaction
      8→export const Button = ({ primary, backgroundColor, size, label, ...props }) => {
-     9→  const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
-    10→  return (
-    11→    <button
-      →    …
 
 apps/storybook/src/stories/InputOTP.stories.tsx
      1→import { InputOTP, InputOTPGroup, InputOTPSlot } from "../components/ui/input-otp"
-     4→const meta = {
-    27→type Story = StoryObj<typeof meta>
     29→export const Default: Story = {}
 
-apps/storybook/tailwind.config.js
-     2→const config = {
+apps/storybook/tsconfig.json
+     2→  "compilerOptions": {
+    21→  },
+    22→  "include": ["src"],
+    23→  "references": [{ "path": "./tsconfig.node.json" }]
+    24→}
 
-apps/test/README.md
-
-apps/website/README.md
-
-apps/website/src/components/icons.tsx
-     3→export const Icons = {
+apps/storybook/tsconfig.node.json
+     2→  "compilerOptions": {
+     7→  },
+     8→  "include": ["vite.config.ts"]
+     9→}
 
 package.json
 
@@ -77,6 +75,7 @@ packages/input-otp/src/input.tsx
     10→export const OTPInputContext = React.createContext<RenderProps>(
     14→export const OTPInput = React.forwardRef<HTMLInputElement, OTPInputProps>(
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
+   553→const NOSCRIPT_CSS_FALLBACK = `
 
 packages/input-otp/src/regexp.ts
      1→export const REGEXP_ONLY_DIGITS = '^\\d+$'
@@ -89,18 +88,10 @@ packages/input-otp/src/sync-timeouts.ts
 packages/input-otp/src/types.ts
      1→export interface SlotProps {
      2→  isActive: boolean
-     3→  char: string | null
-     4→  placeholderChar: string | null
-     5→  hasFakeCaret: boolean
-     6→}
+      →  …
      7→export interface RenderProps {
      8→  slots: SlotProps[]
-     9→  isFocused: boolean
-    10→  isHovering: boolean
-    11→}
-    12→type OverrideProps …
-    13→type OTPInputBaseProps …
-    32→type InputOTPRenderFn …
+      →  …
     33→export type OTPInputProps = OTPInputBaseProps &
     34→  (
     35→    | {
@@ -111,11 +102,21 @@ packages/input-otp/src/use-previous.ts
 
 packages/input-otp/src/use-pwm-badge.tsx
      1→import * as React from 'react'
+     2→import { OTPInputProps } from './types'
     15→export function usePasswordManagerBadge …
 
 packages/input-otp/tsconfig.json
+     2→  "compilerOptions": {
+    11→  },
+    12→  "include": ["src"]
+    13→}
 
 pnpm-workspace.yaml
      1→packages:
 
 turbo.json
+     2→  "extends": ["//"],
+     3→  "$schema": "https://turbo.build/schema.json",
+     4→  "pipeline": {
+    35→  }
+    36→}

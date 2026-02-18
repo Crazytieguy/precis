@@ -2,9 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1020 tokens)
+budget: 1000 (1013 tokens)
 
 components/checkmark.tsx
+     1→import { styled, keyframes } from 'goober';
+     3→const circleAnimation = keyframes`
+    13→const checkmarkAnimation = keyframes`
     29→export interface CheckmarkTheme {
     30→  primary?: string;
     31→  secondary?: string;
@@ -12,6 +15,7 @@ components/checkmark.tsx
     34→export const CheckmarkIcon = styled('div')<CheckmarkTheme>`
 
 components/error.tsx
+     1→import { styled, keyframes } from 'goober';
     33→export interface ErrorTheme {
     34→  primary?: string;
     35→  secondary?: string;
@@ -19,6 +23,8 @@ components/error.tsx
     38→export const ErrorIcon = styled('div')<ErrorTheme>`
 
 components/loader.tsx
+     1→import { styled, keyframes } from 'goober';
+     3→const rotate = keyframes`
     12→export interface LoaderTheme {
     13→  primary?: string;
     14→  secondary?: string;
@@ -26,15 +32,9 @@ components/loader.tsx
     17→export const LoaderIcon = styled('div')<LoaderTheme>`
 
 components/toast-bar.tsx
-     8→const enterAnimation …
-    13→const exitAnimation …
     47→interface ToastBarProps {
     48→  toast: Toast;
-    49→  position?: ToastPosition;
-    50→  style?: React.CSSProperties;
-    51→  children?: (components: {
       →  …
-    57→const getAnimationStyle …
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
 
 components/toast-icon.tsx
@@ -42,28 +42,36 @@ components/toast-icon.tsx
     41→export type IconThemes = Partial<{
     47→export const ToastIcon: React.FC<{
     48→  toast: Toast;
-    49→}> = ({ toast }) => {
-      →…
+      →  …
 
 components/toaster.tsx
+     1→import { css, setup } from 'goober';
+     2→import * as React from 'react';
     15→const ToastWrapper …
     47→const getPositionStyle …
+    76→const activeClass = css`
+    83→const DEFAULT_OFFSET = 16;
     85→export const Toaster: React.FC<ToasterProps> = ({
     86→  reverseOrder,
-    87→  position = 'top-center',
       →  …
 
 core/store.ts
      1→import { useEffect, useState, useRef } from 'react';
-     4→export const TOAST_EXPIRE_DISMISS_DELAY …
-     5→export const TOAST_LIMIT …
-     6→export const DEFAULT_TOASTER_ID …
+     2→import { DefaultToastOptions, Toast, ToastType } from './types';
+     4→export const TOAST_EXPIRE_DISMISS_DELAY = 1000;
+     5→export const TOAST_LIMIT = 20;
+     6→export const DEFAULT_TOASTER_ID = 'default';
      8→interface ToasterSettings {
     12→export enum ActionType {
     13→  ADD_TOAST,
     14→  UPDATE_TOAST,
+    15→  UPSERT_TOAST,
+    16→  DISMISS_TOAST,
+    17→  REMOVE_TOAST,
+    18→  START_PAUSE,
       →  …
-    22→export type Action …
+    22→export type Action =
+    23→  | {
     52→interface ToasterState {
     58→interface State {
     62→export const reducer …
@@ -73,52 +81,36 @@ core/store.ts
    161→export const dispatchAll …
    164→export const getToasterIdFromToastId …
    169→export const createDispatch …
-   175→export const defaultTimeouts …
+   175→export const defaultTimeouts: {
    185→export const useStore …
 
 core/toast.ts
-    19→type Message = ValueOrFunction<Renderable, Toast>;
-    21→type ToastHandler = (message: Message, options?: ToastOptions) => string;
-    23→const createToast …
-    42→const createHandler …
-    55→const toast …
+     1→import { …
+    10→import { genId } from './utils …
+    11→import { …
+    19→type Message …
+    21→type ToastHandler …
 
 core/types.ts
      1→import { CSSProperties } from 'react';
-     3→export type ToastType …
-     4→export type ToastPosition …
-    12→export type Renderable …
     14→export interface IconTheme {
-    15→  primary: string;
-    16→  secondary: string;
-      →  …
-    19→export type ValueFunction …
-    20→export type ValueOrFunction …
     24→const isFunction …
     29→export const resolveValue …
     34→export interface Toast {
-    35→  type: ToastType;
-    36→  id: string;
-      →  …
-    60→export type ToastOptions …
-    76→export type DefaultToastOptions …
     80→export interface ToasterProps {
-    81→  position?: ToastPosition;
-    82→  toastOptions?: DefaultToastOptions;
-      →  …
     91→export interface ToastWrapperProps {
-    92→  id: string;
-    93→  className?: string;
-      →  …
 
 core/use-toaster.ts
      1→import { useEffect, useCallback, useRef } from 'react';
-     6→export const REMOVE_DELAY …
-     8→export const useToaster …
+     6→export const REMOVE_DELAY = 1000;
+     8→export const useToaster = (
+     9→  toastOptions?: DefaultToastOptions,
+    10→  toasterId: string = 'default'
+    11→) => {
 
 core/utils.ts
-     1→export const genId …
-     8→export const prefersReducedMotion …
+     1→export const genId = (() => {
+     8→export const prefersReducedMotion = (() => {
 
 headless/index.ts
      1→import { toast } from '../core/toast';

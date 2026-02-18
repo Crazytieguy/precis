@@ -2,40 +2,33 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1001 tokens)
+budget: 1000 (1012 tokens)
 
 CHANGELOG.md
-     1→# Changelog
-
-CONTRIBUTING.md
-     1→# Contributing
 
 Readme.md
      1→# Commander.js
      8→The complete solution for [node.js](http://nodejs.org) command-line interfaces.
      9→
-    10→Read this in other languages: English | [简体中文](./Readme_zh-CN.md)
-    11→
-    12→- [Commander.js](#commanderjs)
-    13→  - [Installation](#installation)
-      →  …
-    61→## Installation
-    67→## Quick Start
-   147→## Declaring _program_ variable
-   177→## Options
-   523→## Commands
+      →…
    613→#### More configuration
    625→#### Custom argument processing
-   754→## Automated help
-   956→## Custom event listeners
-   966→## Bits and pieces
-  1164→## Support
 
-Readme_zh-CN.md
-     1→# Commander.js
+docs/deprecated.md
+     1→# Deprecated
+   227→## Removed
 
-SECURITY.md
-     1→# Security Policy
+docs/help-in-depth.md
+     1→# Help in Depth
+
+docs/options-in-depth.md
+     2→# Options in Depth
+
+docs/release-policy.md
+     1→# Release Policy
+
+docs/terminology.md
+     1→# Terminology
 
 esm.mjs
      1→import commander from './index.js';
@@ -48,85 +41,105 @@ examples/global-options-added.js
 
 lib/argument.js
      3→class Argument {
+    13→  constructor(name, description) {
+    48→  name() {
+    56→  _collectValue(value, previous) {
+    73→  default(value, description) {
+    86→  argParser(fn) {
+    98→  choices(values) {
+   119→  argRequired() {
+   129→  argOptional() {
+   143→function humanReadableArgName(arg) {
 
 lib/command.js
     13→class Command extends EventEmitter {
   1127→  _prepareForParse() {
 
 lib/error.js
+     2→ * CommanderError class
      4→class CommanderError extends Error {
+     6→   * Constructs the CommanderError class
+      →   …
+    11→  constructor(exitCode, code, message) {
+    23→ * InvalidArgumentError class
     25→class InvalidArgumentError extends CommanderError {
+    27→   * Constructs the InvalidArgumentError class
+      →   …
+    30→  constructor(message) {
 
 lib/help.js
     12→class Help {
-    13→  constructor() {
-   549→  styleUsage(str) {
-   563→  styleCommandDescription(str) {
-   566→  styleOptionDescription(str) {
-   569→  styleSubcommandDescription(str) {
-   572→  styleArgumentDescription(str) {
-   575→  styleDescriptionText(str) {
-   578→  styleOptionTerm(str) {
-   581→  styleSubcommandTerm(str) {
-   594→  styleArgumentTerm(str) {
-   597→  styleOptionText(str) {
-   600→  styleArgumentText(str) {
-   603→  styleSubcommandText(str) {
-   606→  styleCommandText(str) {
+   733→ * Strip style ANSI escape sequences from the string. In particular, SGR (Select Graphic Rendition) codes.
+   734→ *
+      → …
+   740→function stripColor(str) {
 
 lib/option.js
      3→class Option {
+    11→  constructor(flags, description) {
+    47→  default(value, description) {
+    65→  preset(arg) {
+    82→  conflicts(names) {
+   100→  implies(impliedOptionValues) {
+   120→  env(name) {
+   132→  argParser(fn) {
+   144→  makeOptionMandatory(mandatory = true) {
+   156→  hideHelp(hide = true) {
+   165→  _collectValue(value, previous) {
+   181→  choices(values) {
+   203→  name() {
+   217→  attributeName() {
+   230→  helpGroup(heading) {
+   243→  is(arg) {
+   256→  isBoolean() {
    268→class DualOptions {
+   272→  constructor(options) {
+   297→  valueFromOption(value, option) {
+   316→function camelcase(str) {
+   328→function splitOptionFlags(flags) {
 
 lib/suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
+    49→ * Find close matches, restricted to same number of edits.
+    50→ *
+      → …
+    56→function suggestSimilar(word, candidates) {
 
 package-support.json
+     2→  "versions": [
+    18→  ]
+    19→}
 
 package.json
 
-tests/esm-imports-test.mjs
-     1→import { …
-
-tests/ts-imports.test.ts
-     1→import { …
-    17→function checkClass …
-
 tsconfig.js.json
+     7→  "extends": "./tsconfig.json",
+     8→  "include": [
+    14→  ],
+    15→}
 
 tsconfig.json
+    12→  "compilerOptions": {
+    32→  },
+    33→  "include": [
+    42→  ],
+    43→  "exclude": ["node_modules"],
+    44→}
 
 tsconfig.ts.json
+     8→  "extends": "./tsconfig.json",
+     9→  "compilerOptions": {
+    14→  },
+    15→  "include": [
+    19→  ],
+    20→}
 
 typings/index.d.ts
-    12→type LiteralUnion<LiteralType, BaseType extends string | number> =
-    13→  | LiteralType
-    14→  | (BaseType & Record<never, never>);
-    16→export class CommanderError extends Error {
-    31→export class InvalidArgumentError extends CommanderError {
-    40→export interface ErrorOptions {
-    48→export class Argument {
-    95→export class Option {
-   210→export class Help {
-   340→export type HelpConfiguration = Partial<Help>;
-   342→export interface ParseOptions {
-   345→export interface HelpContext {
-   349→export interface AddHelpTextContext {
-   354→export interface OutputConfiguration {
-   367→export type AddHelpTextPosition = 'beforeAll' | 'before' | 'after' | 'afterAll';
-   368→export type HookEvent = 'preSubcommand' | 'preAction' | 'postAction';
-   370→export type OptionValueSource =
-   371→  | LiteralUnion<'default' | 'config' | 'env' | 'cli' | 'implied', string>
-   372→  | undefined;
-   374→export type OptionValues = Record<string, any>;
-   376→export class Command {
-  1094→export interface CommandOptions {
-  1100→export interface ExecutableCommandOptions extends CommandOptions {
-  1104→export interface ParseOptionsResult {
-  1113→export const program: Command;
-
-typings/index.test-d.ts
-     1→import * as commander from './index';
-   510→  createCommand(name?: string): MyCommand {
-   514→  myFunction(): void {
+    12→type LiteralUnion …
+   340→export type HelpConfiguration …
+   367→export type AddHelpTextPosition …
+   368→export type HookEvent …
+   370→export type OptionValueSource …
+   374→export type OptionValues …
+  1113→export const program …

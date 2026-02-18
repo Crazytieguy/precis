@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2049 tokens)
+budget: 2000 (2012 tokens)
 
 _internals/error.ts
      1→import { Result } from '../result'
@@ -20,16 +20,17 @@ _internals/error.ts
     18→        type: string
     19→        value: E
     20→      }
-    21→  message: string
-    22→  stack: string | undefined
-    23→}
+      →      …
     27→export const createNeverThrowError = <T, E>(
     28→  message: string,
     29→  result: Result<T, E>,
     30→  config: ErrorConfig = defaultErrorConfig,
     31→): NeverThrowError<T, E> => {
     32→  const data = result.isOk()
-      →  …
+    33→    ? { type: 'Ok', value: result.value }
+    34→    : { type: 'Err', value: result.error }
+    35→
+      →…
 
 _internals/utils.ts
      1→import { Result, ok, err } from '../result'
@@ -51,12 +52,11 @@ _internals/utils.ts
     38→  for (const result of resultList) {
     39→    if (result.isErr()) {
     40→      acc = err(result.error)
-    41→      break
-    42→    } else {
-      →    …
+      →      …
     54→export const combineResultAsyncList = <T, E>(
     55→  asyncResultList: readonly ResultAsync<T, E>[],
-      →  …
+    56→): ResultAsync<readonly T[], E> =>
+      →…
     62→ * Give a list of all the errors we find
     64→export const combineResultListWithAllErrors = <T, E>(
     65→  resultList: readonly Result<T, E>[],
@@ -66,12 +66,11 @@ _internals/utils.ts
     69→  for (const result of resultList) {
     70→    if (result.isErr() && acc.isErr()) {
     71→      acc.error.push(result.error)
-    72→    } else if (result.isErr() && acc.isOk()) {
-    73→      acc = err([result.error])
       →      …
     82→export const combineResultAsyncListWithAllErrors = <T, E>(
     83→  asyncResultList: readonly ResultAsync<T, E>[],
-      →  …
+    84→): ResultAsync<readonly T[], E[]> =>
+      →…
 
 result-async.ts
      1→import type { …
@@ -80,9 +79,37 @@ result-async.ts
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
     23→  private _promise: Promise<Result<T, E>>
     24→
+    25→  constructor …
+    30→  static fromSafePromise …
+    37→  static fromPromise …
+    46→  static fromThrowable …
+    69→  static combine …
+    81→  static combineWithAllErrors …
+    89→  map …
+   101→  andThrough …
+   117→  andTee …
+   133→  orTee …
+   149→  mapErr …
+   169→  andThen …
+   190→  orElse …
+   202→  match …
+   206→  unwrapOr …
    211→   * @deprecated will be removed in 9.0.0.
-      →   …
+   212→   *
+   213→   * You can use `safeTry` without this method.
+   214→   * @example
+   215→   * ```typescript
+   216→   * safeTry(async function* () {
+   217→   *   const okValue = yield* yourResult
+   218→   * })
+   219→   * ```
+   220→   * Emulates Rust's `?` operator in `safeTry`'s body. See also `safeTry`.
    222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
+   223→    return yield* await this._promise.then((res) => res.safeUnwrap())
+   224→  }
+   227→  then …
+   249→export function okAsync …
+   255→export function errAsync …
    259→export const fromPromise …
    260→export const fromSafePromise …
    262→export const fromAsyncThrowable …
@@ -104,44 +131,18 @@ result.ts
     18→   *
     62→export type Result …
    134→interface IResult<T, E> {
-   136→   * Used to check if a `Result` is an `OK`
-      →   …
    140→  isOk(): this is Ok<T, E>
-   143→   * Used to check if a `Result` is an `Err`
-      →   …
    147→  isErr(): this is Err<T, E>
-   150→   * Maps a `Result<T, E>` to `Result<U, E>`
-      →   …
    157→  map<A>(f: (t: T) => A): Result<A, E>
-   160→   * Maps a `Result<T, E>` to `Result<T, F>` by applying a function to a
-      →   …
    168→  mapErr<U>(f: (e: E) => U): Result<T, U>
-   186→   * This "tee"s the current value to an passed-in computation such as side
-      →   …
    195→  andTee(f: (t: T) => unknown): Result<T, E>
-   198→   * This "tee"s the current `Err` value to an passed-in computation such as side
-      →   …
    207→  orTee(f: (t: E) => unknown): Result<T, E>
-   236→   * Similar to `map` Except you must return a new `Result`.
-      →   …
    244→  asyncAndThen<U, F>(f: (t: T) => ResultAsync<U, F>): ResultAsync<U, E | F>
-   247→   * Maps a `Result<T, E>` to `ResultAsync<U, E>`
-      →   …
    253→  asyncMap<U>(f: (t: T) => Promise<U>): ResultAsync<U, E>
-   256→   * Unwrap the `Ok` value, or return the default if there is an `Err`
-      →   …
    260→  unwrapOr<A>(v: A): T | A
-   263→   *
-      →   …
    276→  match<A, B = A>(ok: (t: T) => A, err: (e: E) => B): A | B
-   279→   * @deprecated will be removed in 9.0.0.
-      →   …
    290→  safeUnwrap(): Generator<Err<never, E>, T>
-   293→   * **This method is unsafe, and should only be used in a test environments**
-      →   …
    299→  _unsafeUnwrap(config?: ErrorConfig): T
-   302→   * **This method is unsafe, and should only be used in a test environments**
-      →   …
    309→  _unsafeUnwrapErr(config?: ErrorConfig): E
    312→export class Ok<T, E> implements IResult<T, E> {
    405→  _unsafeUnwrap(_?: ErrorConfig): T {

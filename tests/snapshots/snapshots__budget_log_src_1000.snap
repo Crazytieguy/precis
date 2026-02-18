@@ -2,38 +2,57 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1001 tokens)
+budget: 1000 (991 tokens)
 
 __private_api.rs
      7→pub use std::{format_args, module_path, stringify};
      9→#[cfg(not(feature = "kv"))]
     10→pub type Value<'a> = &'a str;
     12→mod sealed {
+    13→    /// Types for the `kv` argument.
     14→    pub trait KVs<'a> {
+    37→/// The global logger proxy.
+    38→#[derive(Debug)]
     39→pub struct GlobalLogger;
+    56→fn log_impl …
    113→mod kv_support {
    116→    pub type Value<'a> = kv::Value<'a>;
    151→pub use self::kv_support::*;
 
 kv/error.rs
+     3→/// An error encountered while working with structured data.
+     4→#[derive(Debug)]
      5→pub struct Error {
      6→    inner: Inner,
      7→}
     10→enum Inner {
-    11→    #[cfg(feature = "std")]
-      →    …
-    73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
+    21→    pub fn msg …
+    49→    fn fmt …
+    63→    fn from …
+    69→mod std_support {
+    70→    use super::*;
+    77→        pub fn boxed …
+    90→        fn from …
 
 kv/key.rs
      7→pub trait ToKey {
+     9→    fn to_key(&self) -> Key<'_>;
     37→pub struct Key<'k> {
     38→    // NOTE: This may become `Cow<'k, str>`
     39→    key: &'k str,
     40→}
+    45→    pub fn from_str(key: &'k str) -> Self {
+    53→    pub fn as_str(&self) -> &str {
+    61→    pub fn to_borrowed_str(&self) -> Option<&'k str> {
+    94→mod std_support {
+   113→mod sval_support {
+   136→mod serde_support {
 
 kv/mod.rs
    246→mod error;
    247→mod key;
+   250→mod source;
+   252→mod value;
    254→pub use self::error::Error;
    255→pub use self::key::{Key, ToKey};
    256→pub use self::source::{Source, VisitSource};
@@ -46,7 +65,14 @@ kv/mod.rs
 
 kv/source.rs
     51→pub trait Source {
+    62→    fn visit …
+    73→    fn get …
+    85→    fn count …
+    91→fn get_default …
+   114→fn count_default …
    235→pub trait VisitSource<'kvs> {
+   237→    fn visit_pair …
+   280→mod std_support {
    462→pub use VisitSource as Visitor;
 
 kv/value.rs
@@ -55,6 +81,8 @@ kv/value.rs
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
    121→}
+   204→    fn from_inner …
+   395→    use super::*;
    462→pub trait VisitValue<'v> {
    610→    use super::*;
    612→    pub use value_bag::ValueBag as Inner;
@@ -65,48 +93,23 @@ kv/value.rs
    740→        Bool(bool),
    741→        Str(&'v str),
    742→        Char(char),
-   743→        I64(i64),
-   744→        U64(u64),
-   745→        F64(f64),
-   746→        I128(i128),
       →        …
   1123→pub use VisitValue as Visit;
-  1129→macro_rules! as_debug {
-  1139→macro_rules! as_display {
-  1149→macro_rules! as_error {
-  1159→macro_rules! as_serde {
-  1169→macro_rules! as_sval {
 
 lib.rs
    406→mod macros;
    407→mod serde;
    409→#[cfg(feature = "kv")]
    410→pub mod kv;
-   421→struct AtomicUsize {
-   475→pub enum Level {
    516→    type Err = ParseLevelError;
-   636→pub enum LevelFilter {
    666→    type Err = ParseLevelError;
-   781→enum MaybeStaticStr<'a> {
-   788→    fn get …
-   842→pub struct Record<'a> {
-   858→struct KeyValues<'a>(&'a dyn kv::Source);
-  1003→pub struct RecordBuilder<'a> {
-  1158→pub struct Metadata<'a> {
-  1200→pub struct MetadataBuilder<'a> {
-  1249→pub trait Log: Sync + Send {
-  1283→struct NopLogger;
-  1483→fn set_logger_inner …
-  1549→pub struct SetLoggerError(());
-  1566→pub struct ParseLevelError(());
   1600→pub mod __private_api;
   1602→/// The statically resolved maximum log level.
   1603→///
-  1604→/// See the crate level documentation for information on how to configure this.
-  1605→///
       →…
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
 
 macros.rs
 
 serde.rs
+     9→use crate::{Level, LevelFilter, LOG_LEVEL_NAMES};

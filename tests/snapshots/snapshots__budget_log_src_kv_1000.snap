@@ -2,33 +2,48 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (994 tokens)
+budget: 1000 (995 tokens)
 
 error.rs
+     3→/// An error encountered while working with structured data.
+     4→#[derive(Debug)]
      5→pub struct Error {
      6→    inner: Inner,
      7→}
-     9→#[derive(Debug)]
     10→enum Inner {
     11→    #[cfg(feature = "std")]
-    12→    Boxed(std_support::BoxedError),
-    13→    Msg(&'static str),
-    14→    #[cfg(feature = "value-bag")]
-    15→    Value(crate::kv::value::inner::Error),
-    16→    Fmt,
-    17→}
+      →    …
+    20→    /// Create an error from a message.
+    21→    pub fn msg(msg: &'static str) -> Self {
+    22→        Error {
+      →        …
     29→    pub(super) fn from_value …
     37→    pub(super) fn into_value …
+    49→    fn fmt …
+    63→    fn from …
+    68→#[cfg(feature = "std")]
     69→mod std_support {
     70→    use super::*;
-    73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
+    73→    pub(super) type BoxedError …
+    76→        /// Create an error from a standard error type.
+    77→        pub fn boxed<E>(err: E) -> Self
+    78→        where
+    79→            E: Into<BoxedError>,
+    80→        {
+    81→            Error {
+      →            …
+    90→        fn from …
 
 key.rs
      7→pub trait ToKey {
+     9→    fn to_key(&self) -> Key<'_>;
     37→pub struct Key<'k> {
     38→    // NOTE: This may become `Cow<'k, str>`
     39→    key: &'k str,
     40→}
+    45→    pub fn from_str(key: &'k str) -> Self {
+    53→    pub fn as_str(&self) -> &str {
+    61→    pub fn to_borrowed_str(&self) -> Option<&'k str> {
     94→mod std_support {
     95→    use super::*;
    113→mod sval_support {
@@ -53,10 +68,19 @@ mod.rs
 
 source.rs
      6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
+     9→/// A source of key-values.
+    10→///
+      →…
     51→pub trait Source {
+    62→    fn visit …
+    73→    fn get …
+    85→    fn count …
     91→fn get_default …
    114→fn count_default …
+   234→/// A visitor for the key-value pairs in a [`Source`](trait.Source.html).
    235→pub trait VisitSource<'kvs> {
+   237→    fn visit_pair …
+   279→#[cfg(feature = "std")]
    280→mod std_support {
    281→    use super::*;
    462→pub use VisitSource as Visitor;
@@ -68,15 +92,6 @@ value.rs
    120→    inner: inner::Inner<'v>,
    121→}
    204→    fn from_inner …
-   288→macro_rules! impl_to_value_primitive {
-   289→    ($($into_ty:ty,)*) => {
-      →    …
-   312→macro_rules! impl_to_value_nonzero_primitive {
-   313→    ($($into_ty:ident,)*) => {
-      →    …
-   336→macro_rules! impl_value_to_primitive {
-   337→    ($(#[doc = $doc:tt] $into_name:ident -> $into_ty:ty,)*) => {
-      →    …
    390→mod std_support {
    395→    use super::*;
    462→pub trait VisitValue<'v> {
@@ -92,16 +107,5 @@ value.rs
    741→        Str(&'v str),
    742→        Char(char),
    743→        I64(i64),
-   744→        U64(u64),
-   745→        F64(f64),
-   746→        I128(i128),
-   747→        U128(u128),
-   748→        Debug(&'v dyn fmt::Debug),
-   749→        Display(&'v dyn fmt::Display),
-   750→    }
+      →        …
   1123→pub use VisitValue as Visit;
-  1129→macro_rules! as_debug {
-  1139→macro_rules! as_display {
-  1149→macro_rules! as_error {
-  1159→macro_rules! as_serde {
-  1169→macro_rules! as_sval {

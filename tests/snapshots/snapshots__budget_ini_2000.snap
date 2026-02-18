@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1999 tokens)
+budget: 2000 (1993 tokens)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -51,49 +51,79 @@ budget: 2000 (1999 tokens)
 .github/workflows/audit.yml
      3→name: Audit
      5→on:
+     9→    - cron: "0 8 * * 1"
+    10→
     11→permissions:
+    12→  contents: read
+    13→
     14→jobs:
 
 .github/workflows/ci-release.yml
      3→name: CI - Release
      5→on:
+    19→        type: string
+    20→
     21→permissions:
+    23→  checks: write
+    24→
     25→jobs:
 
 .github/workflows/ci.yml
      3→name: CI
      5→on:
+    13→    - cron: "0 9 * * 1"
+    14→
     15→permissions:
+    16→  contents: read
+    17→
     18→jobs:
 
 .github/workflows/codeql-analysis.yml
      3→name: CodeQL
      5→on:
+    14→    - cron: "0 10 * * 1"
+    15→
     16→permissions:
+    17→  contents: read
+    18→
     19→jobs:
 
 .github/workflows/post-dependabot.yml
      3→name: Post Dependabot
      5→on: pull_request
      7→permissions:
+     8→  contents: write
+     9→
     10→jobs:
 
 .github/workflows/pull-request.yml
      3→name: Pull Request
      5→on:
+    11→      - synchronize
+    12→
     13→permissions:
+    14→  contents: read
+    15→
     16→jobs:
 
 .github/workflows/release-integration.yml
      3→name: Release Integration
      5→on:
+    20→        required: true
+    21→
     22→permissions:
+    24→  id-token: write
+    25→
     26→jobs:
 
 .github/workflows/release.yml
      3→name: Release
      5→on:
+     8→      - main
+     9→
     10→permissions:
+    13→  checks: write
+    14→
     15→jobs:
 
 .release-please-manifest.json
@@ -108,12 +138,7 @@ CONTRIBUTING.md
      5→## Code of Conduct
      9→## Reporting Bugs
     17→## Pull Request Conventions
-    19→### Commits
-    30→### Test Coverage
-    36→### Linting
     42→## What _not_ to contribute?
-    44→### Dependencies
-    48→### Tools/Automation
 
 README.md
      4→## Note
@@ -143,22 +168,6 @@ README.md
     30→You can **read**, **modify** and **write** it like so:
     31→
     32→```js
-    33→import { writeFile , readFile } from 'node:fs/promises'
-    34→import { stringify , parse } from 'ini'
-    35→
-    36→//  Read INI file as text
-    37→
-    38→let text = await readFile(`./Original.ini`,{
-    39→    encoding : 'utf-8'
-    40→})
-    41→
-    42→//  Parse text data to object
-    43→
-    44→const config = parse(text)
-    45→
-    46→//  Modify data object
-    47→
-    48→config.scope = 'local'
       →…
     82→## API
     84→### Parse
@@ -186,20 +195,6 @@ README.md
    108→    whitespace : false ,
    109→
    110→    /**
-   111→     *  Whether to align the `=` character for each section.
-   112→     *  -> Also enables the `whitespace` option
-   113→     */
-   114→
-   115→    align : false ,
-   116→
-   117→    /**
-   118→     *  Identifier to use for global items 
-   119→     *  and to prepend to all other sections.
-   120→     */
-   121→
-   122→    section ,
-   123→
-   124→    /**
       →    …
    167→### Un / Escape
    169→Turn the given string into a safe to  
@@ -255,3 +250,16 @@ release-please-config.json
     35→  },
     36→  "prerelease-type": "pre.0"
     37→}
+
+test/duplicate-properties.js
+     3→const test …
+     7→const fixture …
+     8→const data …
+
+test/foo.js
+     3→const test …
+     6→const fixture …
+     7→const data …
+
+test/win32.js
+     5→const res = ini.encode({ foo: { bar: 'baz' } })

@@ -2,38 +2,17 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1992 tokens)
+budget: 2000 (1996 tokens)
 
 ast.rs
+     1→use crate::attr::{self, Attrs};
+     2→use crate::generics::ParamsInScope;
+     3→use crate::unraw::{IdentUnraw, MemberUnraw};
     10→pub enum Input<'a> {
-    11→    Struct(Struct<'a>),
-    12→    Enum(Enum<'a>),
-    13→}
     15→pub struct Struct<'a> {
-    16→    pub attrs: Attrs<'a>,
-    17→    pub ident: Ident,
-    18→    pub generics: &'a Generics,
-    19→    pub fields: Vec<Field<'a>>,
-    20→}
     22→pub struct Enum<'a> {
-    23→    pub attrs: Attrs<'a>,
-    24→    pub ident: Ident,
-    25→    pub generics: &'a Generics,
-    26→    pub variants: Vec<Variant<'a>>,
-    27→}
     29→pub struct Variant<'a> {
-    30→    pub original: &'a syn::Variant,
-    31→    pub attrs: Attrs<'a>,
-    32→    pub ident: Ident,
-    33→    pub fields: Vec<Field<'a>>,
-    34→}
     36→pub struct Field<'a> {
-    37→    pub original: &'a syn::Field,
-    38→    pub attrs: Attrs<'a>,
-    39→    pub member: MemberUnraw,
-    40→    pub ty: &'a Type,
-    41→    pub contains_generic: bool,
-    42→}
     44→#[derive(Copy, Clone)]
     45→pub enum ContainerKind {
     46→    Struct,
@@ -43,8 +22,8 @@ ast.rs
     50→    TupleVariant,
     51→    UnitVariant,
     52→}
-    55→    pub fn from_syn …
-   175→    fn fmt …
+    55→    pub fn from_syn(node: &'a DeriveInput) -> Result<Self> {
+   175→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
 
 attr.rs
     11→pub struct Attrs<'a> {
@@ -98,17 +77,46 @@ attr.rs
     65→    LowerExp,
     66→    UpperExp,
     67→}
-    69→pub fn get …
-   303→    fn to_tokens …
-   343→    fn to_tokens …
+    69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
+   124→fn parse_error_attribute …
+   196→fn parse_token_expr …
+   302→impl ToTokens for Display<'_> {
+   303→    fn to_tokens(&self, tokens: &mut TokenStream) {
+   342→impl ToTokens for Trait {
+   343→    fn to_tokens(&self, tokens: &mut TokenStream) {
 
 expand.rs
-    12→pub fn derive …
+     1→use crate::ast::{Enum, Field, Input, Struct};
+     2→use crate::attr::Trait;
+     3→use crate::fallback;
+     4→use crate::generics::InferredBounds;
+     5→use crate::private;
+     6→use crate::unraw::MemberUnraw;
+    12→pub fn derive(input: &DeriveInput) -> TokenStream {
+    13→    match try_expand(input) {
+    14→        Ok(expanded) => expanded,
+      →        …
 
 fallback.rs
+     1→use crate::expand::call_site_ident;
+     2→use crate::private;
+     3→use proc_macro2::TokenStream;
+     4→use quote::quote;
+     5→use syn::DeriveInput;
+     7→pub(crate) fn expand(input: &DeriveInput, error: syn::Error) -> TokenStream {
 
 fmt.rs
-    16→    pub fn expand_shorthand …
+     1→use crate::ast::{ContainerKind, Field};
+     2→use crate::attr::{Display, Trait};
+     3→use crate::private;
+     4→use crate::scan_expr::scan_expr;
+     5→use crate::unraw::{IdentUnraw, MemberUnraw};
+    15→impl Display<'_> {
+    16→    pub fn expand_shorthand(&mut self, fields: &[Field], container: ContainerKind) -> Result<()> {
+    17→        let raw_args = self.args.clone();
+    18→        let FmtArguments {
+    19→            named: user_named_args,
+      →            …
    166→struct FmtArguments {
    167→    named: BTreeSet<IdentUnraw>,
    168→    first_unnamed: Option<TokenStream>,
@@ -116,49 +124,26 @@ fmt.rs
    171→#[allow(clippy::unnecessary_wraps)]
    172→fn explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
    173→    let ahead = input.fork();
-   174→    if let Ok(set) = try_explicit_named_args(&ahead) {
-   175→        input.advance_to(&ahead);
-   176→        return Ok(set);
-   177→    }
-   178→
-   179→    let ahead = input.fork();
-   180→    if let Ok(set) = fallback_explicit_named_args(&ahead) {
-   181→        input.advance_to(&ahead);
-   182→        return Ok(set);
-   183→    }
-   184→
-   185→    input.parse::<TokenStream>().unwrap();
-   186→    Ok(FmtArguments {
-   187→        named: BTreeSet::new(),
-   188→        first_unnamed: None,
-   189→    })
-   190→}
+      →    …
 
 generics.rs
      8→pub struct ParamsInScope<'a> {
      9→    names: Set<&'a Ident>,
     10→}
-    13→    pub fn new …
-    19→    pub fn intersects …
+    12→impl<'a> ParamsInScope<'a> {
+    13→    pub fn new(generics: &'a Generics) -> Self {
+    19→    pub fn intersects(&self, ty: &Type) -> bool {
+    26→fn crawl(in_scope: &ParamsInScope, ty: &Type, found: &mut bool) {
     48→pub struct InferredBounds {
     49→    bounds: Map<String, (Set<String>, Punctuated<TokenStream, Token![+]>)>,
     50→    order: Vec<TokenStream>,
     51→}
-    54→    pub fn new …
-    61→    pub fn insert …
-    74→    pub fn augment_where_clause …
+    53→impl InferredBounds {
+    54→    pub fn new() -> Self {
+    61→    pub fn insert(&mut self, ty: impl ToTokens, bound: impl ToTokens) {
+    74→    pub fn augment_where_clause(&self, generics: &Generics) -> WhereClause {
 
 lib.rs
-    23→mod ast;
-    24→mod attr;
-    25→mod expand;
-    26→mod fallback;
-    27→mod fmt;
-    28→mod generics;
-    29→mod prop;
-    30→mod scan_expr;
-    31→mod unraw;
-    32→mod valid;
     39→#[proc_macro_derive(Error, attributes(backtrace, error, from, source))]
     40→pub fn derive_error(input: TokenStream) -> TokenStream {
     41→    let input = parse_macro_input!(input as DeriveInput);
@@ -166,60 +151,43 @@ lib.rs
     43→}
     45→#[allow(non_camel_case_types)]
     46→struct private;
-    49→    fn to_tokens …
+    48→impl ToTokens for private {
+    49→    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    50→        tokens.append(Ident::new(
+      →        …
 
 prop.rs
+     1→use crate::ast::{Enum, Field, Struct, Variant};
+     2→use crate::unraw::MemberUnraw;
+     3→use proc_macro2::Span;
+     4→use syn::Type;
+     6→impl Struct<'_> {
+    25→impl Enum<'_> {
+    53→impl Variant<'_> {
+    72→impl Field<'_> {
 
 scan_expr.rs
+     1→use self::{Action::*, Input::*};
      6→enum Input {
-     7→    Keyword(&'static str),
-     8→    Punct(&'static str),
-     9→    ConsumeAny,
-    10→    ConsumeBinOp,
-    11→    ConsumeBrace,
-    12→    ConsumeDelimiter,
-    13→    ConsumeIdent,
-    14→    ConsumeLifetime,
-    15→    ConsumeLiteral,
-    16→    ConsumeNestedBrace,
-    17→    ExpectPath,
-    18→    ExpectTurbofish,
-    19→    ExpectType,
-    20→    CanBeginExpr,
-    21→    Otherwise,
-    22→    Empty,
-    23→}
     25→enum Action {
-    26→    SetState(&'static [(Input, Action)]),
-    27→    IncDepth,
-    28→    DecDepth,
-    29→    Finish,
-    30→}
+   192→pub(crate) fn scan_expr(input: ParseStream) -> Result<()> {
 
 unraw.rs
     10→#[derive(Clone)]
     11→#[repr(transparent)]
     12→pub struct IdentUnraw(Ident);
-    15→    pub fn new …
-    19→    pub fn to_local …
-    32→    pub fn set_span …
-    38→    fn fmt …
-    46→    fn eq …
-    52→    fn eq …
-    58→    fn cmp …
-    64→    fn partial_cmp …
-    70→    fn parse …
-    76→    fn to_tokens …
     81→#[derive(Clone)]
     82→pub enum MemberUnraw {
     83→    Named(IdentUnraw),
     84→    Unnamed(Index),
     85→}
-    88→    pub fn span …
-    97→    fn fmt …
-   108→    fn eq …
-   118→    fn eq …
-   127→    fn hash …
-   136→    fn to_tokens …
 
 valid.rs
+     1→use crate::ast::{Enum, Field, Input, Struct, Variant};
+     2→use crate::attr::Attrs;
+     3→use syn::{Error, GenericArgument, PathArguments, Result, Type};
+     5→impl Input<'_> {
+    14→impl Struct<'_> {
+    45→impl Enum<'_> {
+    66→impl Variant<'_> {
+    91→impl Field<'_> {

@@ -2,27 +2,37 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (995 tokens)
+budget: 1000 (1017 tokens)
 
 __init__.py
+    34→config: TypeCheckConfiguration
+    37→def __getattr__(name: str) -> Any:
 
 _checkers.py
     42→from typing_extensions import is_typeddict
+    81→TypeCheckerCallable …
+    84→TypeCheckLookupCallback …
+    88→checker_lookup_functions …
+    89→generic_alias_types …
     98→# Lifted from mypy.sharedparse
     99→BINARY_MAGIC_METHODS = {
-   586→def _is_literal_type …
+   586→def _is_literal_type(typ: object) -> bool:
   1004→# Equality checks are applied to these
   1005→origin_type_checkers: dict[
 
 _config.py
+     9→    from ._functions import TypeCheckFailCallback
+    11→T = TypeVar("T")
     14→class ForwardRefPolicy(Enum):
+    24→
+      →…
     30→class CollectionCheckStrategy(Enum):
+    48→
+    52→    def iterate_samples(self, collection: Iterable[T]) -> Iterable[T]:
     62→@dataclass
     63→class TypeCheckConfiguration:
     64→    """
-    65→     You can change Typeguard's behavior with these settings.
-    66→
-      →…
+      →    …
     97→
     98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
     99→    typecheck_fail_callback: TypeCheckFailCallback | None = None
@@ -36,12 +46,21 @@ _decorators.py
 _exceptions.py
      5→class TypeHintWarning(UserWarning):
     12→class TypeCheckWarning(UserWarning):
+    14→
     19→class InstrumentationWarning(UserWarning):
+    21→
     26→class TypeCheckError(Exception):
+    30→
 
 _functions.py
+    24→T = TypeVar("T")
+    25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
 
 _importhook.py
+    17→from ._config …
+    18→from ._transformer …
+    40→P = ParamSpec("P")
+    41→T = TypeVar("T")
     45→def _call_with_frames_removed …
     55→class TypeguardLoader(SourceFileLoader):
     56→    @staticmethod
@@ -52,55 +71,49 @@ _importhook.py
     61→        _optimize: int = -1,
     62→    ) -> CodeType:
     63→        if isinstance(path, (str, PathLike)):
-    64→            filename = path
-    65→        else:
-    66→            filename = os.fsdecode(bytes(path))
-    67→
-      →…
+      →        …
    109→class TypeguardFinder(MetaPathFinder):
+   110→    """
+      →    …
+   119→
    156→class ImportHookManager:
+   157→    """
+      →    …
+   160→
 
 _memo.py
      8→class TypeCheckMemo:
+    34→
+    37→    def __init__ …
 
 _pytest_plugin.py
+    16→def pytest_addoption(parser: Parser) -> None:
+    75→def pytest_configure(config: Config) -> None:
 
 _suppression.py
+    15→P = ParamSpec("P")
+    16→T = TypeVar("T")
+    30→def suppress_type_checks(
+    31→    func: Callable[P, T] | None = None,
+    32→) -> Callable[P, T] | ContextManager[None]:
+    33→    """
+      →    …
 
 _transformer.py
-   117→@dataclass
+    67→PreliminaryNameTypePair: typing.TypeAlias = tuple[Constant, "expr | None"]
+    68→NameTypePair: typing.TypeAlias = tuple[Constant, expr]
    118→class TransformMemo:
    119→    node: Module | ClassDef | FunctionDef | AsyncFunctionDef | None
    120→    parent: TransformMemo | None
    121→    path: tuple[str, ...]
-   122→    joined_path: Constant = field(init=False)
-   123→    return_annotation: expr | None = None
-   124→    yield_annotation: expr | None = None
-   125→    send_annotation: expr | None = None
-   126→    is_async: bool = False
-   127→    local_names: set[str] = field(init=False, default_factory=set)
-   128→    imported_names: dict[str, str] = field(init=False, default_factory=dict)
-   129→    ignored_names: set[str] = field(init=False, default_factory=set)
-   130→    load_names: defaultdict[str, dict[str, Name]] = field(
-   131→        init=False, default_factory=lambda: defaultdict(dict)
-   132→    )
-   133→    has_yield_expressions: bool = field(init=False, default=False)
-   134→    has_return_expressions: bool = field(init=False, default=False)
-   135→    memo_var_name: Name | None = field(init=False, default=None)
-   136→    should_instrument: bool = field(init=False, default=True)
-   137→    variable_annotations: dict[str, expr] = field(init=False, default_factory=dict)
-   138→    configuration_overrides: dict[str, Any] = field(init=False, default_factory=dict)
-   139→    code_inject_index: int = field(init=False, default=0)
-   140→
    285→class NameCollector(NodeVisitor):
    313→class GeneratorDetector(NodeVisitor):
    338→class AnnotationTransformer(NodeTransformer):
    488→class TypeguardTransformer(NodeTransformer):
    517→    def _use_memo …
-   570→    def _get_import …
-   580→    def _convert_annotation …
 
 _utils.py
+    21→    from ._memo import TypeCheckMemo
    172→@final
    173→class Unset:
    174→    __slots__ = ()

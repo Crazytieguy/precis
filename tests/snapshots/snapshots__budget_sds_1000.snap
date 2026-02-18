@@ -2,17 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1008 tokens)
+budget: 1000 (1013 tokens)
 
 README.md
 
 sds.c
     33→#include <stdio.h>
-    34→#include <stdlib.h>
-    35→#include <string.h>
-    36→#include <ctype.h>
-    37→#include <assert.h>
-    38→#include <limits.h>
     39→#include "sds.h"
     40→#include "sdsalloc.h"
     44→static inline int sdsHdrSize(char type) {
@@ -26,19 +21,20 @@ sds.c
    450→#define SDS_LLSTR_SIZE 21
    451→int sdsll2str(char *s, long long value) {
    452→    char *p, aux;
+   453→    unsigned long long v;
       →    …
   1137→void *sds_realloc(void *ptr, size_t size) { return s_realloc(ptr,size); }
   1138→void sds_free(void *ptr) { s_free(ptr); }
-  1141→#include <stdio.h>
   1142→#include "testhelp.h"
   1143→#include "limits.h"
   1145→#define UNUSED(x) (void)(x)
   1146→int sdsTest(void) {
   1147→    {
-      →    …
+  1148→        sds x = sdsnew("foo"), y;
+      →        …
   1325→int main(void) {
   1326→    return sdsTest();
-      →    …
+  1327→}
 
 sds.h
     34→#define __SDS_H
@@ -69,8 +65,7 @@ sds.h
    181→    unsigned char flags = s[-1];
    182→    switch(flags&SDS_TYPE_MASK) {
    183→        case SDS_TYPE_5:
-   184→            return SDS_TYPE_5_LEN(flags);
-      →            …
+      →        …
    255→/* Low level functions exposed to the user API */
    256→sds sdsMakeRoomFor(sds s, size_t addlen);
    262→/* Export the allocator used by SDS to the program using SDS.
@@ -87,6 +82,10 @@ sdsalloc.h
     37→ * the include of your alternate allocator if needed (not needed in order
     38→ * to use the default libc allocator). */
     40→#define s_malloc malloc
+    41→#define s_realloc realloc
+    42→#define s_free free
 
 testhelp.h
     40→#define __TESTHELP_H
+    44→#define test_cond(descr,_c) do { \
+    48→#define test_report() do { \

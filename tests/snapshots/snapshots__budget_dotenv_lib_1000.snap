@@ -2,13 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1002 tokens)
+budget: 1000 (999 tokens)
 
 cli-options.js
-     1→const re …
+     1→const re = /^dotenv_config_(encoding|path|quiet|debug|override|DOTENV_KEY)=(.+)$/
 
 env-options.js
-     2→const options …
+     2→const options = {}
 
 main.d.ts
      3→import type { URL } from 'url';
@@ -37,20 +37,6 @@ main.d.ts
     41→   *
     42→   * example: `require('dotenv').config({ encoding: 'latin1' })`
     43→   */
-    44→  encoding?: string;
-    45→
-    46→  /**
-    47→   * Default: `false`
-    48→   *
-    49→   * Suppress all output (except errors).
-    50→   *
-    51→   * example: `require('dotenv').config({ quiet: true })`
-    52→   */
-    53→  quiet?: boolean;
-    54→
-    55→  /**
-    56→   * Default: `false`
-    57→   *
       →   …
     92→export interface DotenvConfigOutput {
     93→  error?: DotenvError;
@@ -83,13 +69,13 @@ main.d.ts
    128→}
 
 main.js
-     7→const version …
-    10→const TIPS …
+     7→const version = packageJson.version
+    10→const TIPS = [
     27→function _getRandomTip () {
     31→function parseBoolean (value) {
     38→function supportsAnsi () {
     42→function dim (text) {
-    46→const LINE …
+    46→const LINE = /(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/mg
     49→function parse (src) {
     87→function _parseVault (options) {
    130→function _warn (message) {
@@ -104,4 +90,4 @@ main.js
    328→function config (options) {
    346→function decrypt (encrypted, keyStr) {
    378→function populate (processEnv, parsed, options = {}) {
-   413→const DotenvModule …
+   413→const DotenvModule = {

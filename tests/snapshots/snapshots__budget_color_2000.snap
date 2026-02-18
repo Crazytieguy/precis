@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2008 tokens)
+budget: 2000 (2004 tokens)
 
 README.md
      1→# color
@@ -90,8 +90,6 @@ color.go
     75→	ResetConcealed
     76→	ResetCrossedOut
     79→var mapResetAttributes map[Attribute]Attribute = map[Attribute]Attribute{
-    80→	Bold:         ResetBold,
-      →	…
     91→// Foreground text colors
     92→const (
     93→	FgBlack Attribute = iota + 30
@@ -165,14 +163,15 @@ color_test.go
     19→
     20→	NoColor = false
     21→
-    22→	testColors := []struct {
-    23→		text string
-    24→		code Attribute
-      →		…
+      →…
    462→func readRaw(t *testing.T, r io.Reader) string {
-   463→	t.Helper()
-      →	…
 
 color_windows.go
-     3→import …
+     3→import (
+     4→	"os"
+     5→
+     6→	"golang.org/x/sys/windows"
+     7→)
      9→func init() {
+    10→	// Opt-in for ansi color support for current process.
+      →	…

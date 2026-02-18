@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2043 tokens)
+budget: 2000 (2019 tokens)
 
 __init__.py
      5→from humanize.filesize …
@@ -14,16 +14,10 @@ __init__.py
     28→__all__ = [
     29→    "__version__",
     30→    "activate",
-    31→    "apnumber",
-    32→    "clamp",
-    33→    "deactivate",
-    34→    "decimal_separator",
-    35→    "fractional",
-    36→    "intcomma",
       →    …
 
 filesize.py
-     5→from math …
+     5→from math import log
     36→def naturalsize(
     37→    value: float | str,
     38→    binary: bool = False,
@@ -32,29 +26,31 @@ filesize.py
     41→) -> str:
     42→    """Format a number of bytes like a human-readable filesize (e.g. 10 kB).
     43→
-      →…
+    44→    By default, decimal suffixes (kB, MB) are used.
+    45→
+    46→    Non-GNU modes are compatible with jinja2's `filesizeformat` filter.
+    47→
+    48→    Examples:
+    49→        ```pycon
+    50→        >>> naturalsize(3000000)
+    51→        '3.0 MB'
+    52→        >>> naturalsize(300, False, True)
+    53→        '300B'
+      →        …
 
 i18n.py
-     5→import gettext …
-     6→from threading …
+     5→import gettext as gettext_module
+     6→from threading import local
      8→TYPE_CHECKING = False
-    10→    import os …
-    11→    import pathlib …
+    10→    import os
+    11→    import pathlib
     13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
     15→_TRANSLATIONS: dict[str | None, gettext_module.NullTranslations] = {
-    16→    None: gettext_module.NullTranslations()
-    17→}
     18→_CURRENT = local()
     21→# Mapping of locale to thousands separator
     22→_THOUSANDS_SEPARATOR = {
-    23→    "de_DE": ".",
-    24→    "fr_FR": " ",
-      →    …
     30→# Mapping of locale to decimal separator
     31→_DECIMAL_SEPARATOR = {
-    32→    "de_DE": ",",
-    33→    "fr_FR": ".",
-      →    …
     40→def _get_default_locale_path …
     51→def get_translation() -> gettext_module.NullTranslations:
     58→def activate(
@@ -62,7 +58,18 @@ i18n.py
     60→) -> gettext_module.NullTranslations:
     61→    """Activate internationalisation.
     62→
-      →…
+    63→    Set `locale` as current locale. Search for locale in directory `path`.
+    64→
+    65→    Args:
+    66→        locale (str | None): Language name, e.g. `en_GB`. If `None`, defaults to no
+    67→            transaltion. Similar to calling ``deactivate()``.
+    68→        path (str | pathlib.Path): Path to search for locales.
+    69→
+    70→    Returns:
+    71→        dict: Translations.
+    72→
+    73→    Raises:
+      →    …
     96→def deactivate() -> None:
     97→    """Deactivate internationalisation."""
    101→def _gettext …
@@ -73,87 +80,82 @@ i18n.py
    183→def thousands_separator() -> str:
    184→    """Return the thousands separator for a locale, default to comma.
    185→
-      →…
+   186→    Returns:
+   187→         str: Thousands separator.
+   188→    """
    196→def decimal_separator() -> str:
    197→    """Return the decimal separator for a locale, default to dot.
    198→
-      →…
+   199→    Returns:
+   200→         str: Decimal separator.
+   201→    """
 
 lists.py
      5→TYPE_CHECKING = False
-     7→    from typing …
+     7→    from typing import Any
      9→__all__ = ["natural_list"]
     12→def natural_list(items: list[Any]) -> str:
     13→    """Natural list.
     14→
-      →…
+    15→    Convert a list of items into a human-readable string with commas and 'and'.
+    16→
+    17→    Examples:
+    18→        >>> natural_list(["one", "two", "three"])
+    19→        'one, two and three'
+    20→        >>> natural_list(["one", "two"])
+    21→        'one and two'
+    22→        >>> natural_list(["one"])
+    23→        'one'
+    24→
+    25→    Args:
+    26→        items (list): An iterable of items.
+    27→
+    28→    Returns:
+    29→        str: A string with commas and 'and' in the right places.
+    30→    """
+    31→    if len(items) == 1:
+    32→        return str(items[0])
+    33→    elif len(items) == 2:
+    34→        return f"{str(items[0])} and {str(items[1])}"
+    35→    else:
+      →    …
 
 number.py
-     5→import bisect …
+     5→import bisect
      7→from .i18n import _gettext as _
      8→from .i18n import _ngettext, decimal_separator, thousands_separator
      9→from .i18n import _ngettext_noop as NS_
     10→from .i18n import _pgettext as P_
     12→TYPE_CHECKING = False
-    14→    from typing …
-    21→def _format_not_finite …
-    34→def ordinal(value: NumberOrString, gender: str = "male") -> str:
-    35→    """Converts an integer to its ordinal as a string.
-    36→
+    14→    from typing import TypeAlias
+    21→def _format_not_finite(value: float) -> str:
+    22→    """Utility function to handle infinite and nan cases."""
+    23→    import math
+    24→
       →…
-   110→def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
-   111→    """Converts an integer to a string containing commas every three digits.
-   112→
-      →…
-   195→def intword(value: NumberOrString, format: str = "%.1f") -> str:
-   196→    """Converts a large integer to a friendly text representation.
-   197→
-      →…
-   269→def apnumber(value: NumberOrString) -> str:
-   270→    """Converts an integer to Associated Press style.
-   271→
-      →…
-   321→def fractional(value: NumberOrString) -> str:
-   322→    """Convert to fractional number.
-   323→
-      →…
-   385→def scientific(value: NumberOrString, precision: int = 2) -> str:
-   386→    """Return number in string scientific notation z.wq x 10ⁿ.
-   387→
-      →…
-   454→def clamp(
-   455→    value: float,
-   456→    format: str = "{:}",
-   457→    floor: float | None = None,
-   458→    ceil: float | None = None,
-   459→    floor_token: str = "<",
-   460→    ceil_token: str = ">",
-   461→) -> str:
-   462→    """Returns number with the specified format, clamped between floor and ceil.
-   463→
-      →…
-   531→def metric(value: float, unit: str = "", precision: int = 3) -> str:
-   532→    """Return a value with a metric SI unit-prefix appended.
-   533→
-      →…
+    34→def ordinal …
+   110→def intcomma …
+   195→def intword …
+   269→def apnumber …
+   321→def fractional …
+   385→def scientific …
+   454→def clamp …
+   531→def metric …
 
 time.py
-     8→from enum …
-     9→from functools …
+     8→from enum import Enum
+     9→from functools import total_ordering
     11→from .i18n import _gettext as _
     12→from .i18n import _ngettext
     13→from .number import intcomma
     15→TYPE_CHECKING = False
-    17→    import datetime …
-    18→    from collections.abc …
-    19→    from typing …
+    17→    import datetime as dt
+    18→    from collections.abc import Iterable
+    19→    from typing import Any
     21→__all__ = [
     22→    "naturaldate",
     23→    "naturalday",
-    24→    "naturaldelta",
-    25→    "naturaltime",
-    26→    "precisedelta",
-    27→]
+      →    …
     30→@total_ordering
     31→class Unit(Enum):
     32→    MICROSECONDS = 0
@@ -166,9 +168,6 @@ time.py
     39→    YEARS = 7
     40→
     41→    def __lt__(self, other: Any) -> Any:
-    47→def _now …
-    53→def _abs_timedelta …
-    68→def _date_and_delta …
     95→def naturaldelta(
     96→    value: dt.timedelta | float,
     97→    months: bool = True,
@@ -187,16 +186,12 @@ time.py
    256→    """Return a natural representation of a time in a resolution that makes sense.
    257→
       →…
-   300→def _convert_aware_datetime …
    311→def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
    312→    """Return a natural day.
    313→
       →…
    343→def naturaldate(value: dt.date | dt.datetime) -> str:
    344→    """Like `naturalday`, but append a year for dates more than ~five months away."""
-   361→def _quotient_and_remainder …
-   406→def _suitable_minimum_unit …
-   435→def _suppress_lower_units …
    451→def precisedelta(
    452→    value: dt.timedelta | float | None,
    453→    minimum_unit: str = "seconds",
@@ -206,4 +201,3 @@ time.py
    457→    """Return a precise representation of a timedelta or number of seconds.
    458→
       →…
-   654→def _rounding_by_fmt …

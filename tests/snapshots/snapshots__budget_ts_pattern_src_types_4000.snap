@@ -2,14 +2,22 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3996 tokens)
+budget: 4000 (4004 tokens)
 
 BuildMany.ts
-     1→import { Iterator, IsOptionalKeysOf, UpdateAt, ValueOf } from './helpers …
-    11→type BuildOne …
+     1→import { Iterator, IsOptionalKeysOf, UpdateAt, ValueOf } from './helpers';
+     4→export type BuildMany …
+    11→type BuildOne<data, xs extends readonly any[]> = xs extends [
+    12→  [infer value, infer path],
+    13→  ...infer tail
+    14→]
+    15→  ? BuildOne<SetDeep<data, value, path>, tail>
+    16→  : data;
+    19→export type SetDeep …
 
 DeepExclude.ts
-     1→import { DistributeMatchingUnions } from './DistributeUnions …
+     1→import { DistributeMatchingUnions } from './DistributeUnions';
+     3→export type DeepExclude<a, b> = Exclude<DistributeMatchingUnions<a, b>, b>;
 
 DistributeUnions.ts
      1→import { BuildMany } from './BuildMany …
@@ -24,22 +32,11 @@ DistributeUnions.ts
     24→ * It does this in 3 main steps:
     25→ *  - 1. Find all unions contained in the data structure, that matches `p`
     26→ *    with `FindUnions<a, p>`. It returns a tree of [union, path] pairs.
-    27→ *  - 2. this tree is passed to the `Distribute` type level function,
-    28→ *    Which turns it into a union of list of `[singleValue, path]` pairs.
-    29→ *    Each list correspond to one of the possible combination of the unions
-    30→ *    found in `a`.
-    31→ *  - 3. build a data structure with the same shape as `a` for each combination
-    32→ *    and return the union of these data structures.
-    33→ *
-    34→ * @example
-    35→ * type t1 = DistributeMatchingUnions<['a' | 'b', 1 | 2], ['a', 1]>;
-    36→ * // => ['a', 1] | ['a', 2] | ['b', 1] | ['b', 2]
-    37→ *
-    38→ * type t2 = DistributeMatchingUnions<['a' | 'b', 1 | 2], ['a', unknown]>;
-    39→ * // => ['a', 1 | 2] | ['b', 1 | 2]
+      → …
     41→export type DistributeMatchingUnions<a, p> = IsAny<a> extends true
     42→  ? any
     43→  : BuildMany<a, Distribute<FindUnionsMany<a, p>>>;
+    46→export type FindUnionsMany …
     63→ * The reason we don't look further down the tree with lists,
     64→ * Set and Maps is that they can be heterogeneous,
     65→ * so matching on a A[] for a in input of (A|B)[]
@@ -49,13 +46,7 @@ DistributeUnions.ts
     69→ * Kinds are types of types.
     70→ *
     71→ * kind UnionConfig = {
-    72→ *  cases: Union<{
-    73→ *    value: b,
-    74→ *    subUnions: UnionConfig[]
-    75→ *  }>,
-    76→ *  path: string[]
-    77→ * }
-    78→ * FindUnions :: Pattern a p => a -> p -> UnionConfig[]
+      → …
     80→export type FindUnions<
     81→  a,
     82→  p,
@@ -69,38 +60,39 @@ DistributeUnions.ts
     90→  : IsUnion<a> extends true
     91→  ? [
     92→      {
-    93→        cases: a extends any
-    94→          ? {
-    95→              value: a;
-    96→              subUnions: FindUnionsMany<a, p, path>;
-    97→            }
-    98→          : never;
-    99→        path: path;
-   100→      }
-   101→    ]
-   102→  : [a, p] extends [readonly any[], readonly any[]]
-   103→  ? [a, p] extends [
-   104→      readonly [infer a1, infer a2, infer a3, infer a4, infer a5],
-   105→      readonly [infer p1, infer p2, infer p3, infer p4, infer p5]
-   106→    ]
-   107→    ? [
-   108→        ...FindUnions<a1, p1, [...path, 0]>,
-      →        …
+   174→export type ArrayToVariadicUnion …
+   183→export type Distribute …
 
 ExtractPreciseValue.ts
      1→import type { Override } from './Pattern …
      2→import type { …
+    13→export type ExtractPreciseValue …
     81→type ExtractPreciseArrayValue …
 
 FindSelected.ts
-     1→import type * as symbols from '../internals/symbols …
-     2→import type { AnyMatcher, Matcher, Pattern } from './Pattern …
-     3→import type { …
+     1→import type * as symbols from '../internals/symbols';
+     2→import type { AnyMatcher, Matcher, Pattern } from './Pattern';
+     3→import type {
+     4→  Equal,
+     5→  Primitives,
+     6→  ValueOf,
+     7→  MergeUnion,
+     8→  IsUnion,
+     9→} from './helpers';
     11→type SelectionsRecord …
+    13→export type None …
+    16→export type Some …
+    21→export type SelectionType …
     24→type MapOptional …
     31→type MapList …
     38→type ReduceFindSelectionUnion …
     47→type FindSelectionUnionInArray …
+    96→export type FindSelectionUnion …
+   159→export type SeveralAnonymousSelectError …
+   165→export type MixedNamedAndAnonymousSelectError …
+   174→export type SelectionToArgs …
+   185→export type Selections …
+   191→export type FindSelected …
 
 InvertPattern.ts
      1→import { DeepExclude } from './DeepExclude …
@@ -117,6 +109,28 @@ InvertPattern.ts
    107→  ? never
    108→  : InvertPatternInternal<p, input>;
    110→type InvertPatternInternal …
+   180→export type ReduceIntersectionForExclude<
+   181→  tuple extends readonly any[],
+   182→  i,
+   183→  output = unknown
+   184→> = tuple extends readonly [infer p, ...infer tail]
+   185→  ? ReduceIntersectionForExclude<
+   186→      tail,
+   187→      i,
+   188→      output & InvertPatternForExcludeInternal<p, i, unknown>
+   189→    >
+   190→  : output;
+   192→export type ReduceUnionForExclude<
+   193→  tuple extends readonly any[],
+   194→  i,
+   195→  output = never
+   196→> = tuple extends readonly [infer p, ...infer tail]
+   197→  ? ReduceUnionForExclude<
+   198→      tail,
+   199→      i,
+   200→      output | InvertPatternForExcludeInternal<p, i, never>
+   201→    >
+   202→  : output;
    204→type ExcludeIfExists …
    231→type InvertArrayPatternForExclude …
    301→ * ### InvertPatternForExclude
@@ -129,14 +143,16 @@ IsMatching.ts
      1→import { …
     12→type IsMatchingTuple …
     26→type IsMatchingArray …
+    57→export type IsMatching …
 
 Match.ts
-     1→import type * as symbols from '../internals/symbols …
-     2→import type { Pattern, MatchedValue } from './Pattern …
-     3→import type { InvertPatternForExclude, InvertPattern } from './InvertPattern …
-     4→import type { DeepExclude } from './DeepExclude …
-     5→import type { Union, GuardValue, IsNever } from './helpers …
-     6→import type { FindSelected } from './FindSelected …
+     1→import type * as symbols from '../internals/symbols';
+     2→import type { Pattern, MatchedValue } from './Pattern';
+     3→import type { InvertPatternForExclude, InvertPattern } from './InvertPattern';
+     4→import type { DeepExclude } from './DeepExclude';
+     5→import type { Union, GuardValue, IsNever } from './helpers';
+     6→import type { FindSelected } from './FindSelected';
+     8→export type PickReturnValue<a, b> = a extends symbols.unset ? b : a;
     10→interface NonExhaustiveError<i> {
     11→  __nonExhaustive: never;
     12→}
@@ -152,21 +168,6 @@ Match.ts
     26→  inferredOutput = never
     27→> = {
     28→  /**
-    29→   * `.with(pattern, handler)` Registers a pattern and an handler function that
-    30→   * will be called if the pattern matches the input value.
-    31→   *
-    32→   * [Read the documentation for `.with()` on GitHub](https://github.com/gvergnaud/ts-pattern#with)
-    33→   **/
-    34→  with<
-    35→    const p extends Pattern<i>,
-    36→    c,
-    37→    value extends MatchedValue<i, InvertPattern<p, i>>
-    38→  >(
-    39→    pattern: IsNever<p> extends true
-    40→      ? /**
-    41→         * HACK: Using `IsNever<p>` here is a hack to
-    42→         * make sure the type checker forwards
-    43→         * the input type parameter to pattern
    132→  with<
    133→    const pat extends Pattern<i>,
    134→    pred extends (value: MatchedValue<i, InvertPattern<pat, i>>) => unknown,
@@ -187,56 +188,67 @@ Match.ts
    149→        Union<inferredOutput, c>
    150→      >
    151→    : Match<i, o, handledCases, Union<inferredOutput, c>>;
-   159→  when …
-   180→  otherwise …
-   205→  run …
-   225→  narrow …
+   154→   * `.when(predicate, handler)` Registers a predicate function and an handler function.
+   155→   * If the predicate returns true, the handler function will be called.
+   156→   *
+   157→   * [Read the documentation for `.when()` on GitHub](https://github.com/gvergnaud/ts-pattern#when)
+   158→   **/
+   159→  when<pred extends (value: i) => unknown, c, value extends GuardValue<pred>>(
+   160→    predicate: pred,
+   161→    handler: (value: value) => PickReturnValue<o, c>
+   162→  ): pred extends (value: any) => value is infer narrowed
+   163→    ? Match<
+   164→        Exclude<i, narrowed>,
+   165→        o,
+   166→        [...handledCases, narrowed],
+   167→        Union<inferredOutput, c>
+   168→      >
+   169→    : Match<i, o, handledCases, Union<inferredOutput, c>>;
+   172→   * `.otherwise()` takes a **default handler function** that will be
+   173→   * called if no previous pattern matched your input.
+   174→   *
+   175→   * Equivalent to `.with(P._, () => x).exhaustive()`
+   176→   *
+   177→   * [Read the documentation for `.otherwise()` on GitHub](https://github.com/gvergnaud/ts-pattern#otherwise)
+   178→   *
+   179→   **/
+   180→  otherwise<c>(
+   181→    handler: (value: i) => PickReturnValue<o, c>
+   182→  ): PickReturnValue<o, Union<inferredOutput, c>>;
+   201→   * `.run()` return the resulting value.
+   202→   *
+   203→   * ⚠️ calling this function is unsafe, and may throw if no pattern matches your input.
+   205→  run(): PickReturnValue<o, inferredOutput>;
+   217→   * `.narrow()` narrows the input type to exclude all cases that have previously been handled.
+   218→   *
+   219→   * `.narrow()` is only useful if you want to excluded cases from union types or nullable
+   220→   * properties that are deeply nested. Handled cases from top level union types are excluded
+   221→   * by default.
+   222→   *
+   223→   * [Read the documentation for `.narrow() on GitHub](https://github.com/gvergnaud/ts-pattern#narrow)
+   225→  narrow(): Match<DeepExcludeAll<i, handledCases>, o, [], inferredOutput>;
    229→ * Potential for optimization here:
    230→ *
    231→ * Since DeepExclude distributes the union of the input type, it can
-   232→ * generate very large union types on patterns touching several unions at once.
-   233→ * If we were sorting patterns from those which distribute the smallest
-   234→ * amount of union types to those which distribute the largest, we would eliminate
-   235→ * cheap cases more quickly and have less cases in the input type for patterns
-   236→ * that will be expensive to exclude.
-   237→ *
-   238→ * This pre supposes that we have a cheap way of telling if the number
-   239→ * of union types a pattern touches and a cheap way of sorting the tuple
-   240→ * of patterns.
-   241→ * - For the first part, we could reuse `FindMatchingUnions` and pick the `length`
-   242→ *   of the returned tuple.
-   243→ * - For the second part though I'm not aware a cheap way of sorting a tuple.
+      → …
    245→type DeepExcludeAll<a, tupleList extends any[]> = [a] extends [never]
    246→  ? never
    247→  : tupleList extends [infer excluded, ...infer tail]
    248→  ? DeepExcludeAll<DeepExclude<a, excluded>, tail>
    249→  : a;
-   251→type MakeTuples …
+   251→type MakeTuples<ps extends readonly any[], value> = {
    256→ * The type of an overloaded function for `.exhaustive`,
    257→ * permitting calling it with or without a catch-all handler function.
    258→ *
-   259→ * By default, TS-Pattern will throw an error if a runtime value isn't handled.
+      → …
    261→type Exhaustive<output, inferredOutput> = {
-   262→  /**
-   263→   * `.exhaustive()` checks that all cases are handled, and returns the result value.
-   264→   *
-   265→   * If you get a `NonExhaustiveError`, it means that you aren't handling
-   266→   * all cases. You should probably add another `.with(...)` clause
-   267→   * to match the missing case and prevent runtime errors.
-   268→   *
-   269→   * [Read the documentation for `.exhaustive()` on GitHub](https://github.com/gvergnaud/ts-pattern#exhaustive)
-   270→   *
-   271→   */
-   272→  (): PickReturnValue<output, inferredOutput>;
-   273→  /**
-      →  …
 
 Pattern.ts
-     1→import type * as symbols from '../internals/symbols …
-     2→import { MergeUnion, Primitives, WithDefault } from './helpers …
-     3→import { None, Some, SelectionType } from './FindSelected …
-     4→import { matcher } from '../patterns …
-     5→import { ExtractPreciseValue } from './ExtractPreciseValue …
+     1→import type * as symbols from '../internals/symbols';
+     2→import { MergeUnion, Primitives, WithDefault } from './helpers';
+     3→import { None, Some, SelectionType } from './FindSelected';
+     4→import { matcher } from '../patterns';
+     5→import { ExtractPreciseValue } from './ExtractPreciseValue';
     44→ * A `Matcher` is an object implementing the match
     45→ * protocol. It must define a `symbols.matcher` property
     46→ * which returns an object with a `match()` method, taking
@@ -332,7 +344,7 @@ helpers.ts
    184→  : fn extends (value: infer a) => unknown
    185→  ? a
    186→  : never;
-   204→type AllKeys …
+   204→type AllKeys<a> = a extends any ? keyof a : never;
    266→export interface Fn {
    267→  input: unknown;
    268→  output: unknown;

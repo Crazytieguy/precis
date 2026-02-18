@@ -2,12 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4050 tokens)
+budget: 4000 (4032 tokens)
 
 __init__.py
-     1→from typing …
+     1→from typing import Any, Optional
      3→from .main import dotenv_values, find_dotenv, get_key, load_dotenv, set_key, unset_key
      6→def load_ipython_extension(ipython: Any) -> None:
+     7→    from .ipython import load_ipython_extension
+     8→
+     9→    load_ipython_extension(ipython)
     12→def get_cli_string(
     13→    path: Optional[str] = None,
     14→    action: Optional[str] = None,
@@ -18,35 +21,58 @@ __init__.py
     19→    """Returns a string suitable for running as a shell script.
     20→
     21→    Useful for converting a arguments passed to a fabric task
-      →    …
+    22→    to be passed to a `local` or `run` command.
+    23→    """
+    24→    command = ["dotenv"]
+    25→    if quote:
+    26→        command.append(f"-q {quote}")
+    27→    if path:
+    28→        command.append(f"-f {path}")
+    29→    if action:
+    30→        command.append(action)
+    31→        if key:
+    32→            command.append(key)
+    33→            if value:
+    34→                if " " in value:
+    35→                    command.append(f'"{value}"')
+    36→                else:
+    37→                    command.append(value)
+    38→
+    39→    return " ".join(command).strip()
     42→__all__ = [
     43→    "get_cli_string",
     44→    "load_dotenv",
     45→    "dotenv_values",
     46→    "get_key",
     47→    "set_key",
-    48→    "unset_key",
       →    …
 
 __main__.py
      3→from .cli import cli
 
 cli.py
-     1→import json …
-     2→import os …
-     3→import shlex …
-     4→import sys …
-     5→from contextlib …
-     6→from typing …
-     9→    from subprocess …
-    12→    import click …
+     1→import json
+     2→import os
+     3→import shlex
+     4→import sys
+     5→from contextlib import contextmanager
+     6→from typing import IO, Any, Dict, Iterator, List, Optional
+     9→    from subprocess import Popen
+    12→    import click
     20→from .main import dotenv_values, set_key, unset_key
     21→from .version import __version__
     24→def enumerate_env() -> Optional[str]:
     25→    """
     26→    Return a path for the ${pwd}/.env file.
     27→
-      →…
+    28→    If pwd does not exist, return None.
+    29→    """
+    30→    try:
+    31→        cwd = os.getcwd()
+    32→    except FileNotFoundError:
+    33→        return None
+    34→    path = os.path.join(cwd, ".env")
+    35→    return path
     60→@click.version_option(version=__version__)
     61→@click.pass_context
     62→def cli(ctx: click.Context, file: Any, quote: Any, export: Any) -> None:
@@ -67,6 +93,13 @@ cli.py
       →    …
     93→def list_values(ctx: click.Context, output_format: str) -> None:
     94→    """Display all the stored key/value."""
+    95→    file = ctx.obj["FILE"]
+    96→
+    97→    with stream_file(file) as stream:
+    98→        values = dotenv_values(stream=stream)
+    99→
+   100→    if output_format == "json":
+      →    …
    112→@cli.command(name="set")
    113→@click.pass_context
    114→@click.argument("key", required=True)
@@ -114,10 +147,31 @@ cli.py
    194→    """Replace the current process with the specified command.
    195→
    196→    Replaces the current process with the specified command and the variables from `env`
+   197→    added in the current environment variables.
+   198→
+   199→    Parameters
+   200→    ----------
+   201→    command: List[str]
+   202→        The command and it's parameters
+   203→    env: Dict
+   204→        The additional environment variables
+   205→
+   206→    Returns
+   207→    -------
+   208→    None
+   209→        This function does not return any value. It replaces the current process with the new one.
+   210→
+   211→    """
+   212→    # copy the current environment variables and add the vales from
+   213→    # `env`
+   214→    cmd_env = os.environ.copy()
+   215→    cmd_env.update(env)
+   216→
+   217→    if sys.platform == "win32":
       →    …
 
 ipython.py
-     1→from IPython.core.magic …
+     1→from IPython.core.magic import Magics, line_magic, magics_class  # type: ignore
      2→from IPython.core.magic_arguments import (
      3→    argument,
      4→    magic_arguments,
@@ -153,22 +207,28 @@ ipython.py
     37→        dotenv_path = args.dotenv_path
     38→        try:
     39→            dotenv_path = find_dotenv(dotenv_path, True, True)
-      →            …
+    40→        except IOError:
+    41→            print("cannot find .env file")
+    42→            return
+    43→
+    44→        # Load the .env file
+    45→        load_dotenv(dotenv_path, verbose=args.verbose, override=args.override)
     48→def load_ipython_extension(ipython):
     49→    """Register the %dotenv magic."""
+    50→    ipython.register_magics(IPythonDotEnv)
 
 main.py
-     1→import io …
-     2→import logging …
-     3→import os …
-     4→import pathlib …
-     5→import shutil …
-     6→import stat …
-     7→import sys …
-     8→import tempfile …
-     9→from collections …
-    10→from contextlib …
-    11→from typing …
+     1→import io
+     2→import logging
+     3→import os
+     4→import pathlib
+     5→import shutil
+     6→import stat
+     7→import sys
+     8→import tempfile
+     9→from collections import OrderedDict
+    10→from contextlib import contextmanager
+    11→from typing import IO, Dict, Iterable, Iterator, Mapping, Optional, Tuple, Union
     13→from .parser import Binding, parse_stream
     14→from .variables import parse_variables
     25→def _load_dotenv_disabled() -> bool:
@@ -176,19 +236,10 @@ main.py
     27→    Determine if dotenv loading has been disabled.
     28→    """
     29→    if "PYTHON_DOTENV_DISABLED" not in os.environ:
-    30→        return False
-      →        …
-    35→def with_warn_for_invalid_lines(mappings: Iterator[Binding]) -> Iterator[Binding]:
+      →    …
+    35→def with_warn_for_invalid_lines …
     45→class DotEnv:
-    46→    def __init__(
-    47→        self,
-    48→        dotenv_path: Optional[StrPath],
-    49→        stream: Optional[IO[str]] = None,
-    50→        verbose: bool = False,
-    51→        encoding: Optional[str] = None,
-    52→        interpolate: bool = True,
-    53→        override: bool = True,
-    54→    ) -> None:
+    46→    def __init__ …
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
     65→        if self.dotenv_path and _is_file_or_fifo(self.dotenv_path):
@@ -203,24 +254,11 @@ main.py
     74→                    self.dotenv_path or ".env",
     75→                )
     76→            yield io.StringIO("")
-    78→    def dict(self) -> Dict[str, Optional[str]]:
-    79→        """Return dotenv as dict"""
-    94→    def parse(self) -> Iterator[Tuple[str, Optional[str]]]:
-   100→    def set_as_environment_variables(self) -> bool:
-   101→        """
-   102→        Load the current dotenv as system environment variable.
-   103→        """
-   115→    def get(self, key: str) -> Optional[str]:
-   116→        """ """
-   128→def get_key(
-   129→    dotenv_path: StrPath,
-   130→    key_to_get: str,
-   131→    encoding: Optional[str] = "utf-8",
-   132→) -> Optional[str]:
-   133→    """
-   134→    Get the value of a given key from the given .env.
-   135→
-      →…
+    78→    def dict …
+    94→    def parse …
+   100→    def set_as_environment_variables …
+   115→    def get …
+   128→def get_key …
    141→@contextmanager
    142→def rewrite(
    143→    path: StrPath,
@@ -231,84 +269,47 @@ main.py
    148→    with tempfile.NamedTemporaryFile(mode="w", encoding=encoding, delete=False) as dest:
    149→        error = None
    150→        try:
-      →        …
-   163→def set_key(
-   164→    dotenv_path: StrPath,
-   165→    key_to_set: str,
-   166→    value_to_set: str,
-   167→    quote_mode: str = "always",
-   168→    export: bool = False,
-   169→    encoding: Optional[str] = "utf-8",
-   170→) -> Tuple[Optional[bool], str, str]:
-   171→    """
-   172→    Adds or Updates a key/value to the given .env
-   173→
-      →…
-   211→def unset_key(
-   212→    dotenv_path: StrPath,
-   213→    key_to_unset: str,
-   214→    quote_mode: str = "always",
-   215→    encoding: Optional[str] = "utf-8",
-   216→) -> Tuple[Optional[bool], str]:
-   217→    """
-   218→    Removes a given key from the given `.env` file.
-   219→
-      →…
-   244→def resolve_variables(
-   245→    values: Iterable[Tuple[str, Optional[str]]],
-   246→    override: bool,
-   247→) -> Mapping[str, Optional[str]]:
+   151→            with open(path, encoding=encoding) as source:
+   152→                yield (source, dest)
+   153→        except BaseException as err:
+   154→            error = err
+   155→
+   156→    if error is None:
+   157→        shutil.move(dest.name, path)
+   158→    else:
+   159→        os.unlink(dest.name)
+   160→        raise error from None
+   163→def set_key …
+   211→def unset_key …
+   244→def resolve_variables …
    269→def _walk_to_root(path: str) -> Iterator[str]:
    270→    """
    271→    Yield directories starting from the given directory up to the root
    272→    """
    273→    if not os.path.exists(path):
-   274→        raise IOError("Starting path not found")
-      →        …
-   287→def find_dotenv(
-   288→    filename: str = ".env",
-   289→    raise_error_if_not_found: bool = False,
-   290→    usecwd: bool = False,
-   291→) -> str:
-   292→    """
-   293→    Search in increasingly higher folders for the given file
-   294→
-      →…
-   338→def load_dotenv(
-   339→    dotenv_path: Optional[StrPath] = None,
-   340→    stream: Optional[IO[str]] = None,
-   341→    verbose: bool = False,
-   342→    override: bool = False,
-   343→    interpolate: bool = True,
-   344→    encoding: Optional[str] = "utf-8",
-   345→) -> bool:
-   346→    """Parse a .env file and then load all the variables found as environment variables.
-   347→
-   348→    Parameters:
       →    …
-   387→def dotenv_values(
-   388→    dotenv_path: Optional[StrPath] = None,
-   389→    stream: Optional[IO[str]] = None,
-   390→    verbose: bool = False,
-   391→    interpolate: bool = True,
-   392→    encoding: Optional[str] = "utf-8",
-   393→) -> Dict[str, Optional[str]]:
-   394→    """
-   395→    Parse a .env file and return its content as a dict.
-   396→
-      →…
+   287→def find_dotenv …
+   338→def load_dotenv …
+   387→def dotenv_values …
    423→def _is_file_or_fifo(path: StrPath) -> bool:
    424→    """
    425→    Return True if `path` exists and is either a regular file or a FIFO.
    426→    """
    427→    if os.path.isfile(path):
-   428→        return True
-      →        …
+      →    …
 
 parser.py
-     1→import codecs …
-     2→import re …
-     3→from typing …
+     1→import codecs
+     2→import re
+     3→from typing import (
+     4→    IO,
+     5→    Iterator,
+     6→    Match,
+     7→    NamedTuple,
+     8→    Optional,
+     9→    Pattern,
+    10→    Sequence,
+    11→)
     14→def make_regex(string: str, extra_flags: int = 0) -> Pattern[str]:
     35→class Original(NamedTuple):
     36→    string: str
@@ -343,9 +344,9 @@ parser.py
    179→def parse_stream(stream: IO[str]) -> Iterator[Binding]:
 
 variables.py
-     1→import re …
-     2→from abc …
-     3→from typing …
+     1→import re
+     2→from abc import ABCMeta, abstractmethod
+     3→from typing import Iterator, Mapping, Optional, Pattern
      5→_posix_variable: Pattern[str] = re.compile(
      6→    r"""
      7→    \$\{

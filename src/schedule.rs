@@ -277,12 +277,17 @@ fn is_config_file(relative_path: &Path, filename: &str) -> bool {
 }
 
 /// Grouping dimensions. All symbols sharing a GroupKey are treated identically.
+/// Groups are per-file: symbols from different files are never pooled together,
+/// even if they share the same directory, kind, and visibility. This prevents
+/// large directories (many files with many methods) from creating oversized
+/// groups whose Names cost outweighs their per-token priority.
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Ord, PartialOrd)]
 pub struct GroupKey {
     pub is_public: bool,
     pub kind_category: KindCategory,
-    pub parent_dir: PathBuf,
-    pub extension: String,
+    /// Relative file path (from project root). Per-file grouping ensures
+    /// each file's symbols compete independently in the scheduler.
+    pub file_path: PathBuf,
     pub is_documented: bool,
     pub file_role: FileRole,
     /// Whether the file is a build/tool config file (e.g., eslint.config.js, jest.config.ts).
@@ -399,15 +404,7 @@ pub fn build_groups(
             None => continue,
         };
         let relative = file.strip_prefix(root).unwrap_or(file);
-        let parent_dir = relative
-            .parent()
-            .unwrap_or(Path::new(""))
-            .to_path_buf();
-        let extension = relative
-            .extension()
-            .and_then(|e| e.to_str())
-            .unwrap_or("")
-            .to_string();
+        let file_path = relative.to_path_buf();
         let lines: Vec<&str> = source.lines().collect();
         let file_role = FileRole::from_path(relative);
         let is_config = relative.file_name()
@@ -437,8 +434,7 @@ pub fn build_groups(
             let key = GroupKey {
                 is_public: sym.is_public,
                 kind_category,
-                parent_dir: parent_dir.clone(),
-                extension: extension.clone(),
+                file_path: file_path.clone(),
                 is_documented,
                 file_role,
                 is_config,
@@ -595,7 +591,8 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     // meaningful hierarchy. Without this, `src/pluggy/_manager.py` (depth 2, factor
     // 0.7) would be penalized relative to `docs/conf.py` (depth 1, factor 1.0),
     // even though the source code is more valuable than build configuration.
-    let depth = effective_depth(&key.parent_dir);
+    let parent_dir = key.file_path.parent().unwrap_or(Path::new(""));
+    let depth = effective_depth(parent_dir);
     let depth_factor = match depth {
         0..=1 => 1.0,
         2..=3 => 0.7,

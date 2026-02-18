@@ -2,45 +2,18 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1012 tokens)
-
-.eslintrc.js
-     7→const localConfigs = readdir(__dirname)
-
-.github/ISSUE_TEMPLATE/bug.yml
-     3→name: Bug
-     4→description: File a bug/issue
-     5→title: "[BUG] <title>"
-     6→labels: [ Bug, Needs Triage ]
-     8→body:
+budget: 1000 (999 tokens)
 
 .github/ISSUE_TEMPLATE/config.yml
      3→blank_issues_enabled: true
 
 .github/actions/create-check/action.yml
-     3→name: 'Create Check'
-     4→inputs:
-    12→    default: ''
-    13→outputs:
-    15→    value: ${{ steps.create-check.outputs.check_id }}
-    16→runs:
-
-.github/actions/install-latest-npm/action.yml
-     3→name: 'Install Latest npm'
-     4→description: 'Install the latest version of npm compatible with the Node version'
-     5→inputs:
-     8→    required: true
-     9→runs:
 
 .github/dependabot.yml
      3→version: 2
      5→updates:
 
 .github/matchers/tap.json
-     2→  "//@npmcli/template-oss": "This file is automatically added by @npmcli/template-oss. Do not edit.",
-     3→  "problemMatcher": [
-    31→  ]
-    32→}
 
 .github/settings.yml
      3→repository:
@@ -48,98 +21,167 @@ budget: 1000 (1012 tokens)
     12→
     13→branches:
 
+.github/workflows/audit.yml
+     3→name: Audit
+     5→on:
+    11→permissions:
+    14→jobs:
+
+.github/workflows/ci-release.yml
+
+.github/workflows/ci.yml
+     3→name: CI
+     5→on:
+    16→permissions:
+    19→jobs:
+
+.github/workflows/codeql-analysis.yml
+
+.github/workflows/pull-request.yml
+
+.github/workflows/release.yml
+     3→name: Release
+     5→on:
+    11→permissions:
+    16→jobs:
+
 .release-please-manifest.json
-
-CHANGELOG.md
-     1→# Changelog
-
-CONTRIBUTING.md
-     3→# Contributing
+     2→  ".": "7.7.4"
+     3→}
 
 README.md
-     1→semver(1) -- The semantic versioner for npm
-     4→## Install
-    10→## Usage
-   139→## Versions
-   148→## Ranges
-   184→### Prerelease Tags
-   279→### Advanced Range Syntax
-   384→### Range Grammar
-   408→## Functions
-   453→### Comparison
-   478→### Sorting
-   485→### Comparators
-   489→### Ranges
-   531→### Coercion
-   558→### Clean
-   576→## Constants
-   580→### `RELEASE_TYPES`
-   600→### `SEMVER_SPEC_VERSION`
-   610→## Exported Modules
-
-bin/semver.js
-     8→const argv = process.argv.slice(2)
-    12→const range = []
-    37→const main = () => {
-   132→const failInc = () => {
-   137→const fail = () => process.exit(1)
-   139→const help = () => console.log(
 
 classes/comparator.js
      3→const ANY = Symbol('SemVer ANY')
      5→class Comparator {
+     6→  static get ANY () {
+    10→  constructor (comp, options) {
+    36→  parse (comp) {
+    57→  toString () {
+    61→  test (version) {
+    79→  intersects (comp, options) {
 
 classes/range.js
-     3→const SPACE_CHARACTERS = /\s+/g
      6→class Range {
-   218→const cache = new LRU()
 
 classes/semver.js
      9→class SemVer {
 
-internal/constants.js
+functions/clean.js
+     4→const clean = (version, options) => {
+
+functions/cmp.js
+    10→const cmp …
+
+functions/coerce.js
+     7→const coerce = (version, options) => {
+
+functions/compare-build.js
+     4→const compareBuild = (a, b, loose) => {
+
+functions/compare-loose.js
+     4→const compareLoose …
+
+functions/compare.js
+     4→const compare = (a, b, loose) =>
+
+functions/diff.js
+     5→const diff = (version1, version2) => {
+
+functions/eq.js
+     4→const eq …
+
+functions/gt.js
+     4→const gt …
+
+functions/gte.js
+     4→const gte …
+
+functions/inc.js
+     5→const inc …
+
+functions/lt.js
+     4→const lt …
+
+functions/lte.js
+     4→const lte …
+
+functions/major.js
+     4→const major …
+
+functions/minor.js
+     4→const minor …
+
+functions/neq.js
+     4→const neq …
+
+functions/parse.js
+     4→const parse …
+
+functions/patch.js
+     4→const patch …
+
+functions/prerelease.js
+     4→const prerelease = (version, options) => {
+
+functions/rcompare.js
+     4→const rcompare …
+
+functions/rsort.js
+     4→const rsort …
+
+functions/satisfies.js
+     4→const satisfies = (version, range, options) => {
+
+functions/sort.js
+     4→const sort …
+
+functions/valid.js
+     4→const valid = (version, options) => {
 
 internal/debug.js
+     3→const debug = (
 
 internal/identifiers.js
-     4→const compareIdentifiers = (a, b) => {
-    24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
+     3→const numeric = /^[0-9]+$/
 
 internal/lrucache.js
      3→class LRUCache {
      4→  constructor () {
-     5→    this.max = 1000
-      →    …
      9→  get (key) {
-    10→    const value = this.map.get(key)
-      →    …
     21→  delete (key) {
-    22→    return this.map.delete(key)
-      →    …
     25→  set (key, value) {
-    26→    const deleted = this.delete(key)
-      →    …
 
 internal/parse-options.js
      6→const parseOptions = options => {
 
-internal/re.js
-    33→const makeSafeRegex = (value) => {
-    42→const createToken = (name, value, isGlobal) => {
-
 package.json
 
-ranges/subset.js
-    73→const minimumVersionWithPreRelease = [new Comparator('>=0.0.0-0')]
-    74→const minimumVersion = [new Comparator('>=0.0.0')]
+ranges/gtr.js
+     5→const gtr …
+
+ranges/intersects.js
+     4→const intersects …
+
+ranges/ltr.js
+     5→const ltr …
+
+ranges/max-satisfying.js
+     6→const maxSatisfying = (versions, range, options) => {
+
+ranges/min-satisfying.js
+     5→const minSatisfying = (versions, range, options) => {
+
+ranges/min-version.js
+     7→const minVersion = (range, loose) => {
+
+ranges/outside.js
+    13→const outside …
+
+ranges/to-comparators.js
+     6→const toComparators = (range, options) =>
+
+ranges/valid.js
+     4→const validRange = (range, options) => {
 
 release-please-config.json
-
-test/bin/semver.js
-     9→const bin = require.resolve('../../bin/semver')
-    10→const run …
-
-test/internal/debug.js
-     3→const main = () => {
-
-test/map.js

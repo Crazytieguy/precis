@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2018 tokens)
+budget: 2000 (2029 tokens)
 
 CHANGELOG.md
 
@@ -13,6 +13,10 @@ CONTRIBUTING.md
 
 README-es.md
      1→# dotenv
+   331→### Inicio rápido
+   587→### Config
+   692→### Parse
+   721→### Populate
 
 README.md
      1→# dotenv
@@ -80,10 +84,10 @@ README.md
       →…
 
 lib/cli-options.js
-     1→const re …
+     1→const re = /^dotenv_config_(encoding|path|quiet|debug|override|DOTENV_KEY)=(.+)$/
 
 lib/env-options.js
-     2→const options …
+     2→const options = {}
 
 lib/main.d.ts
      3→import type { URL } from 'url';
@@ -106,32 +110,14 @@ lib/main.d.ts
     35→  path?: string | string[] | URL;
     36→
     37→  /**
-    38→   * Default: `utf8`
-    39→   *
-    40→   * Specify the encoding of your file containing environment variables.
-    41→   *
-    42→   * example: `require('dotenv').config({ encoding: 'latin1' })`
-    43→   */
-    44→  encoding?: string;
-    45→
-    46→  /**
-    47→   * Default: `false`
-    48→   *
-    49→   * Suppress all output (except errors).
-    50→   *
-    51→   * example: `require('dotenv').config({ quiet: true })`
-    52→   */
-    53→  quiet?: boolean;
-    54→
-    55→  /**
-    56→   * Default: `false`
-    57→   *
-      →   …
+      →  …
     92→export interface DotenvConfigOutput {
     93→  error?: DotenvError;
     94→  parsed?: DotenvParseOutput;
     95→}
     97→type DotenvError = Error & {
+    98→  code: 
+      →  …
    106→export interface DotenvPopulateOptions {
    107→  /**
    108→   * Default: `false`
@@ -145,24 +131,19 @@ lib/main.d.ts
    116→  /**
    117→   * Default: `false`
    118→   *
-   119→   * Override any environment variables that have already been set on your machine with values from your .env file.
-   120→   *
-   121→   * example: `require('dotenv').config({ override: true })`
-   122→   */
-   123→  override?: boolean;
-   124→}
+      →   …
    126→export interface DotenvPopulateInput {
    127→  [name: string]: string | undefined;
    128→}
 
 lib/main.js
-     7→const version …
-    10→const TIPS …
+     7→const version = packageJson.version
+    10→const TIPS = [
     27→function _getRandomTip () {
     31→function parseBoolean (value) {
     38→function supportsAnsi () {
     42→function dim (text) {
-    46→const LINE …
+    46→const LINE = /(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/mg
     49→function parse (src) {
     87→function _parseVault (options) {
    130→function _warn (message) {
@@ -177,7 +158,7 @@ lib/main.js
    328→function config (options) {
    346→function decrypt (encrypted, keyStr) {
    378→function populate (processEnv, parsed, options = {}) {
-   413→const DotenvModule …
+   413→const DotenvModule = {
 
 package.json
      2→  "name": "dotenv",
@@ -204,6 +185,24 @@ package.json
     59→  "browser": {
     61→  }
     62→}
+
+tests/test-config-cli.js
+     6→function spawn (cmd, options = {}) {
+
+tests/test-config-vault.js
+     8→const testPath …
+    10→const dotenvKey …
+
+tests/test-env-options.js
+    16→function options () {
+    21→function testOption (envVar, tmpVal, expect) {
+
+tests/test-parse-multiline.js
+
+tests/test-parse.js
+
+tests/test-populate.js
+     8→const mockParseResponse = { test: 'foo' }
 
 tests/types/test.ts
      1→import { config, parse } from "dotenv";

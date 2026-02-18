@@ -2,10 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1003 tokens)
-
-.eslintrc.js
-     7→const localConfigs = readdir(__dirname)
+budget: 1000 (1008 tokens)
 
 .github/ISSUE_TEMPLATE/bug.yml
      3→name: Bug
@@ -48,8 +45,79 @@ budget: 1000 (1003 tokens)
     12→
     13→branches:
 
+.github/workflows/audit.yml
+     3→name: Audit
+     5→on:
+     9→    - cron: "0 8 * * 1"
+      →    …
+    11→permissions:
+    12→  contents: read
+      →  …
+    14→jobs:
+
+.github/workflows/ci-release.yml
+     3→name: CI - Release
+     5→on:
+    19→        type: string
+    20→
+    21→permissions:
+    23→  checks: write
+    24→
+    25→jobs:
+
+.github/workflows/ci.yml
+     3→name: CI
+     5→on:
+    15→permissions:
+    18→jobs:
+
+.github/workflows/codeql-analysis.yml
+     3→name: CodeQL
+     5→on:
+    16→permissions:
+    19→jobs:
+
+.github/workflows/post-dependabot.yml
+     3→name: Post Dependabot
+     5→on: pull_request
+     7→permissions:
+     8→  contents: write
+     9→
+    10→jobs:
+
+.github/workflows/pull-request.yml
+     3→name: Pull Request
+     5→on:
+    11→      - synchronize
+    12→
+    13→permissions:
+    14→  contents: read
+    15→
+    16→jobs:
+
+.github/workflows/release-integration.yml
+     3→name: Release Integration
+     5→on:
+    20→        required: true
+    21→
+    22→permissions:
+    24→  id-token: write
+    25→
+    26→jobs:
+
+.github/workflows/release.yml
+     3→name: Release
+     5→on:
+     8→      - main
+     9→
+    10→permissions:
+    13→  checks: write
+    14→
+    15→jobs:
+
 .release-please-manifest.json
      2→  ".": "6.0.0"
+     3→}
 
 CHANGELOG.md
      1→# Changelog
@@ -61,67 +129,26 @@ README.md
      4→## Note
      6→-   Sections are treated as nested objects.
      7→
-     8→-   Section-less items are treated as globals.
-     9→
+      →…
     10→## Usage
     12→Consider an INI file such as the following:
     13→
-    14→```ini
-    15→; This comment is being ignored
-    16→scope = global
-    17→
-    18→[database]
-    19→user = dbuser
-    20→password = dbpassword
-    21→database = use_this_database
-    22→
-    23→[paths.default]
-    24→datadir = /var/lib/data
-    25→array[] = first value
       →…
     82→## API
     84→### Parse
-    86→Attempts to turn the given INI string into a nested data object.
-    87→
-    88→```js
-      →…
     93→### Stringify
-    95→Encodes the given data object as an INI formatted string.
-    96→
-    97→```js
-      →…
    167→### Un / Escape
-   169→Turn the given string into a safe to  
-   170→use key or value in your INI file.
-   171→
-      →…
 
 lib/ini.js
-     3→const encode = (obj, opt = {}) => {
-    80→function splitSections (str, separator) {
-   106→const decode = (str, opt = {}) => {
-   212→const isQuoted = val => {
-   217→const safe = val => {
-   230→const unsafe = val => {
 
 package.json
-     2→  "author": "GitHub Inc.",
-     3→  "name": "ini",
-     4→  "description": "An ini encoder/decoder for node",
-     5→  "version": "6.0.0",
-     6→  "repository": {
-    10→  "main": "lib/ini.js",
-    11→  "scripts": {
-    21→  "devDependencies": {
-    26→  "license": "ISC",
-    27→  "files": [
-    31→  "engines": {
-    34→  "templateOSS": {
-    39→  "tap": {
 
 release-please-config.json
      2→  "group-pull-request-title-pattern": "chore: release ${version}",
      3→  "pull-request-title-pattern": "chore: release${component} ${version}",
      4→  "changelog-sections": [
+    30→  ],
     31→  "packages": {
+    35→  },
     36→  "prerelease-type": "pre.0"
+    37→}

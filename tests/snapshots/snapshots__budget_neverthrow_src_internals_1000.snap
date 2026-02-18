@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (997 tokens)
+budget: 1000 (993 tokens)
 
 error.ts
      1→import { Result } from '../result'
@@ -10,6 +10,8 @@ error.ts
      4→  withStackTrace: boolean
      5→}
      7→const defaultErrorConfig: ErrorConfig = {
+     8→  withStackTrace: false,
+     9→}
     11→interface NeverThrowError<T, E> {
     12→  data:
     13→    | {
@@ -30,7 +32,16 @@ error.ts
     31→): NeverThrowError<T, E> => {
     32→  const data = result.isOk()
     33→    ? { type: 'Ok', value: result.value }
-      →    …
+    34→    : { type: 'Err', value: result.error }
+    35→
+    36→  const maybeStack = config.withStackTrace ? new Error().stack : undefined
+    37→
+    38→  return {
+    39→    data,
+    40→    message,
+    41→    stack: maybeStack,
+    42→  }
+    43→}
 
 utils.ts
      1→import { Result, ok, err } from '../result'
@@ -54,11 +65,7 @@ utils.ts
     40→      acc = err(result.error)
     41→      break
     42→    } else {
-    43→      acc.map((list) => list.push(result.value))
-    44→    }
-    45→  }
-    46→  return acc
-    47→}
+      →    …
     54→export const combineResultAsyncList = <T, E>(
     55→  asyncResultList: readonly ResultAsync<T, E>[],
     56→): ResultAsync<readonly T[], E> =>
@@ -74,13 +81,7 @@ utils.ts
     71→      acc.error.push(result.error)
     72→    } else if (result.isErr() && acc.isOk()) {
     73→      acc = err([result.error])
-    74→    } else if (result.isOk() && acc.isOk()) {
-    75→      acc.value.push(result.value)
-    76→    }
-    77→    // do nothing when result.isOk() && acc.isErr()
-    78→  }
-    79→  return acc
-    80→}
+      →      …
     82→export const combineResultAsyncListWithAllErrors = <T, E>(
     83→  asyncResultList: readonly ResultAsync<T, E>[],
     84→): ResultAsync<readonly T[], E[]> =>

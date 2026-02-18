@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4031 tokens)
+budget: 4000 (4034 tokens)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -40,11 +40,6 @@ ARCHITECTURE.md
     34→```tsx
     35→// YES
     36→<>
-    37→  <BlogItems />
-    38→  {staticItems}
-    39→</>
-    40→```
-    41→
       →…
     46→## Approach
     48→⌘K always keeps every item and group rendered in the React tree. Each item and group adds or removes itself from the DOM based on the search input. The DOM is authoritative. Item selection order is based on the DOM order, which is based on the React render order, which the consumer provides.
@@ -62,25 +57,7 @@ ARCHITECTURE.md
     67→</List>
     68→```
     69→
-    70→The "A" item should not be shown! But we cannot remove it from the React tree, because the user controls it. In most cases, this is easy because the rendered items is sourced from a backing data array:
-    71→
-    72→```tsx
-    73→<>
-    74→  {['A', 'B'].map((item) => {
-    75→    if (matches(item, search)) {
-    76→      return <Item>{item}</Item>
-    77→    }
-    78→  })}
-    79→</>
-    80→```
-    81→
-    82→But in our case, the item will remain in the React tree and just be removed from the DOM:
-    83→
-    84→```tsx
-    85→<List>
-    86→  {/* returns `null`, no DOM created */}
-    87→  <Item>A</Item>
-      →  …
+      →…
     92→## Performance
     94→This is more expensive memory wise, because if there are 2,000 items but the list is filtered to only 2 items, we still allocate memory for 2,000 instances of the Item component. But it's our only option! Thankfully we can still keep the DOM size to 2 items.
     95→
@@ -101,12 +78,6 @@ README.md
     18→import { Command } from 'cmdk'
     19→
     20→const CommandMenu = () => {
-    21→  return (
-    22→    <Command label="Command Menu">
-    23→      <Command.Input />
-    24→      <Command.List>
-    25→        <Command.Empty>No results found.</Command.Empty>
-    26→
       →…
     82→## Parts and styling
     84→All parts forward props, including `ref`, to an appropriate element. Each part has a specific data-attribute (starting with `cmdk-`) that can be used for styling.
@@ -134,12 +105,6 @@ README.md
    433→
    434→**Virtualization?** No. Good performance up to 2,000-3,000 items, though. Read below to bring your own.
    435→
-   436→**Filter/sort items manually?** Yes. Pass `shouldFilter={false}` to [Command](#command-cmdk-root). Better memory usage and performance. Bring your own virtualization this way.
-   437→
-   438→**React 18 safe?** Yes, required. Uses React 18 hooks like `useId` and `useSyncExternalStore`.
-   439→
-   440→**Unstyled?** Yes, use the listed CSS selectors.
-   441→
       →…
    456→## History
    458→Written in 2019 by Paco ([@pacocoursey](https://twitter.com/pacocoursey)) to see if a composable combobox API was possible. Used for the Vercel command menu and autocomplete by Rauno ([@raunofreiberg](https://twitter.com/raunofreiberg)) in 2020. Re-written independently in 2022 with a simpler and more performant approach. Ideas and help from Shu ([@shuding\_](https://twitter.com/shuding_)).
@@ -151,12 +116,6 @@ README.md
    465→
    466→```bash
    467→pnpm install
-   468→pnpm playwright install
-   469→```
-   470→
-   471→Then ensure you've built the library:
-   472→
-   473→```bash
       →…
 
 cmdk/package.json
@@ -198,19 +157,13 @@ cmdk/src/command-score.ts
     60→  abbreviationIndex,
     61→  memoizedResults,
     62→) {
-    63→  if (abbreviationIndex === abbreviation.length) {
-      →  …
    150→function formatInput(string) {
-   151→  // convert all valid space characters to space so they match each other
-      →  …
    155→export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
    156→  /* NOTE:
    157→   * in the original, we used to do the lower-casing on each recursive call, but this meant that toLowerCase()
    158→   * was the dominating cost in the algorithm, passing both is a little ugly, but considerably faster.
    159→   */
-   160→  string = aliases && aliases.length > 0 ? `${string + ' ' + aliases.join(' ')}` : string
-   161→  return commandScoreInner(string, abbreviation, formatInput(string), formatInput(abbreviation), 0, 0, {})
-   162→}
+      →   …
 
 cmdk/src/index.tsx
      3→import * as RadixDialog from '@radix-ui/react-dialog'
@@ -222,27 +175,13 @@ cmdk/src/index.tsx
    161→const defaultFilter …
    164→const useCommand …
    166→const useStore …
-   660→ * Command menu item. Becomes active on pointer enter or through keyboard navigation.
-   661→ * Preferably pass a `value`, otherwise the value will be inferred from `children` or
-   662→ * the rendered item's `textContent`.
    664→const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
-   726→ * Group command menu items together with a heading.
-   727→ * Grouped items are always shown together.
    729→const Group = React.forwardRef<HTMLDivElement, GroupProps>((props, forwardedRef) => {
-   771→ * A visual and semantic separator between items or groups.
-   772→ * Visible when the search query is empty or `alwaysRender` is true, hidden otherwise.
    774→const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>((props, forwardedRef) => {
-   784→ * Command menu input.
-   785→ * All props are forwarded to the underyling `input` element.
    787→const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
-   830→ * Contains `Item`, `Group`, and `Separator`.
-   831→ * Use the `--cmdk-list-height` CSS variable to animate height based on the number of results.
    833→const List = React.forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) => {
-   880→ * Renders the command menu in a Radix Dialog.
    882→const Dialog = React.forwardRef<HTMLDivElement, DialogProps>((props, forwardedRef) => {
-   897→ * Automatically renders when there are no results for the search query.
    899→const Empty = React.forwardRef<HTMLDivElement, EmptyProps>((props, forwardedRef) => {
-   907→ * You should conditionally render this with `progress` while loading asynchronous items.
    909→const Loading = React.forwardRef<HTMLDivElement, LoadingProps>((props, forwardedRef) => {
    956→ *
    957→ *
@@ -289,6 +228,24 @@ playwright.config.ts
 pnpm-workspace.yaml
      1→packages:
 
+test/basic.test.ts
+     1→import { expect, test } from '@playwright/test'
+
+test/dialog.test.ts
+     1→import { expect, test } from '@playwright/test'
+
+test/group.test.ts
+     1→import { expect, test } from '@playwright/test'
+
+test/item.test.ts
+     1→import { expect, test } from '@playwright/test'
+
+test/keybind.test.ts
+     1→import { expect, test } from '@playwright/test'
+
+test/numeric.test.ts
+     1→import { expect, test } from '@playwright/test'
+
 test/package.json
      2→  "name": "cmdk-tests",
      3→  "version": "0.0.0",
@@ -304,8 +261,52 @@ test/pages/_app.tsx
      4→  return <Component {...pageProps} />
      5→}
 
+test/pages/dialog.tsx
+     1→import { Command } from 'cmdk'
+     2→import * as React from 'react'
+     4→const Page = () => {
+
+test/pages/group.tsx
+     1→import { Command } from 'cmdk'
+     2→import * as React from 'react'
+     4→const Page = () => {
+
 test/pages/huge.tsx
+     1→import { Command } from 'cmdk'
+     2→import * as React from 'react'
      4→const items = new Array(1000).fill(0)
+     6→const Page = () => {
+    28→const Item = () => {
+
+test/pages/index.tsx
+     1→import { Command } from 'cmdk'
+     3→const Page = () => {
+
+test/pages/item-advanced.tsx
+     1→import { Command } from 'cmdk'
+     2→import * as React from 'react'
+     4→const Page = () => {
+
+test/pages/item.tsx
+     1→import { Command } from 'cmdk'
+     2→import * as React from 'react'
+     4→const Page = () => {
+
+test/pages/keybinds.tsx
+     5→const Page = () => {
+
+test/pages/numeric.tsx
+     1→import { Command } from 'cmdk'
+     3→const Page = () => {
+
+test/pages/portal.tsx
+     5→const Page = () => {
+
+test/pages/props.tsx
+     5→const Page = () => {
+
+test/props.test.ts
+     1→import { expect, test } from '@playwright/test'
 
 test/tsconfig.json
      2→  "compilerOptions": {
@@ -327,16 +328,23 @@ website/README.md
     28→## Deploy on Vercel
 
 website/components/cmdk/framer.tsx
+     1→import { Command } from 'cmdk'
+     2→import React from 'react'
      4→export function FramerCMDK() {
 
 website/components/cmdk/linear.tsx
+     1→import { Command } from 'cmdk'
      3→export function LinearCMDK() {
+     4→  return (
+      →  …
     30→const items = [
 
 website/components/cmdk/raycast.tsx
      7→export function RaycastCMDK() {
 
 website/components/cmdk/vercel.tsx
+     1→import React from 'react'
+     2→import { Command } from 'cmdk'
      4→export function VercelCMDK() {
 
 website/components/code/index.tsx
@@ -353,13 +361,36 @@ website/next.config.js
      2→const nextConfig = {
 
 website/package.json
+     2→  "name": "cmdk-website",
+     3→  "version": "0.1.0",
+     4→  "private": true,
+     5→  "scripts": {
+    10→  },
+    11→  "dependencies": {
+    23→  },
+    24→  "devDependencies": {
+    37→  },
+    38→  "lint-staged": {
+    42→  },
+    43→  "husky": {
+    47→  }
+    48→}
 
 website/pages/_app.tsx
+    13→const title …
+    14→const description …
+    15→const siteUrl …
     17→export default function App({ Component, pageProps }: AppProps) {
+    18→  return (
+    19→    <>
+      →    …
 
 website/pages/_document.tsx
      5→export default class Document extends NextDocument {
      6→  render() {
+     7→    return (
+     8→      <Html lang="en">
+      →      …
 
 website/pages/index.tsx
     18→import packageJSON from '../../cmdk/package.json'
@@ -374,5 +405,13 @@ website/pages/index.tsx
    296→function VersionBadge() {
 
 website/tsconfig.json
+     2→  "compilerOptions": {
+    18→  },
+    19→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+    20→  "exclude": ["node_modules"]
+    21→}
 
 website/vercel.json
+     2→  "headers": [
+    12→  ]
+    13→}

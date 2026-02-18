@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1001 tokens)
+budget: 1000 (1029 tokens)
 
 README.md
      1→# Format
@@ -10,38 +10,52 @@ README.md
      4→
      5→- Structure your book correctly
      6→- Format your `SUMMARY.md` file
-     7→- Configure your book using `book.toml`
-     8→- Customize your theme
+      →…
 
 configuration/README.md
      1→# Configuration
      3→This section details the configuration options available in the ***book.toml***:
      4→- **[General]** configuration including the `book`, `rust`, `build` sections
-     5→- **[Preprocessor]** configuration for default and custom book preprocessors
-     6→- **[Renderer]** configuration for the HTML, Markdown and custom renderers
-     7→- **[Environment Variable]** configuration for overriding configuration options in your environment
-     8→
-     9→[General]: general.md
-    10→[Preprocessor]: preprocessors.md
-    11→[Renderer]: renderers.md
-    12→[Environment Variable]: environment-variables.md
+      →…
 
 configuration/environment-variables.md
      1→# Environment variables
+     3→All configuration values can be overridden from the command line by setting the
+     4→corresponding environment variable. Because many operating systems restrict
+      →…
 
 configuration/general.md
      1→# General configuration
+     3→You can configure the parameters for your book in the ***book.toml*** file.
+     4→
+      →…
     31→## Supported configuration options
+    33→It is important to note that **any** relative path specified in the
+      →…
+    37→### General metadata
+    64→### Rust options
+    85→### Build options
 
 configuration/preprocessors.md
      1→# Configuring Preprocessors
+     3→Preprocessors are extensions that can modify the raw Markdown source before it gets sent to the renderer.
+     4→
+     5→The following preprocessors are built-in and included by default:
+     6→
+      →…
     26→## Custom preprocessor configuration
     45→## Locking a preprocessor dependency to a renderer
     55→## Provide your own command
+    67→### Optional preprocessors
     79→## Require a certain order
 
 configuration/renderers.md
      1→# Configuring Renderers
+     3→Renderers (also called "backends") are responsible for creating the output of the book.
+     4→
+     5→The following backends are built-in:
+     6→
+      →…
     20→## Output tables
     84→## HTML renderer options
    286→#### `[output.html.search.chapter]`
@@ -50,8 +64,7 @@ configuration/renderers.md
 example.rs
      1→fn main() {
      2→    println!("Hello World!");
-     3→#
-      →…
+      →    …
 
 markdown.md
      1→# Markdown
@@ -67,22 +80,24 @@ markdown.md
 
 mathjax.md
      1→# MathJax support
+     3→mdBook has optional support for math equations through
+     4→[MathJax](https://www.mathjax.org/).
+     5→
+      →…
+    24→### Inline equations
+    32→### Block equations
 
 mdbook.md
      1→# mdBook-specific features
-     3→## Hiding code lines
-    74→## Rust playground
-   102→## Rust code block attributes
-   133→## Including files
-   154→## Including portions of a file
-   215→## Including a file but initially hiding all except specified lines
-   279→## Inserting runnable Rust files
-   310→## Controlling page \<title\>
-   319→## HTML classes provided by mdBook
-   341→## Font-Awesome icons
+   323→### `class="left"` and `"right"`
+   331→### `class="hidden"`
 
 summary.md
      1→# SUMMARY.md
+     3→The summary file is used by mdBook to know what chapters to include, in what
+      →…
+    12→### Structure
+    93→### Example
 
 theme/README.md
      1→# Theme
@@ -90,13 +105,6 @@ theme/README.md
      4→render your markdown files and comes with a default theme included in the mdBook
      5→binary.
      6→
-     7→The theme is totally customizable, you can selectively replace every file from
-     8→the theme by your own by adding a `theme` directory next to `src` folder in your
-     9→project root. Create a new file with the name of the file you want to override
-    10→and now that file will be used instead of the default file.
-    11→
-    12→Here are the files you can override:
-    13→
       →…
 
 theme/editor.md
@@ -108,6 +116,8 @@ theme/editor.md
 theme/index-hbs.md
      1→# index.hbs
      3→`index.hbs` is the handlebars template that is used to render the book. The
+     4→markdown files are processed to html and then injected in that template.
+     5→
       →…
      9→## Data
     41→## Handlebars helpers
@@ -118,6 +128,8 @@ theme/index-hbs.md
 theme/syntax-highlighting.md
      1→# Syntax highlighting
      3→mdBook uses [Highlight.js](https://highlightjs.org) with a custom theme
+     4→for syntax highlighting.
+     5→
       →…
     17→## Supported languages
     68→## Custom theme

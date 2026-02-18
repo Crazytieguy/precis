@@ -2,15 +2,23 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4024 tokens)
+budget: 4000 (4017 tokens)
 
 checkmark.tsx
      1→import { styled, keyframes } from 'goober';
      3→const circleAnimation = keyframes`
      4→from {
+     5→  transform: scale(0) rotate(45deg);
+     6→	opacity: 0;
+     7→}
+     8→to {
       →…
     13→const checkmarkAnimation = keyframes`
     14→0% {
+    15→	height: 0;
+    16→	width: 0;
+    17→	opacity: 0;
+    18→}
       →…
     29→export interface CheckmarkTheme {
     30→  primary?: string;
@@ -37,13 +45,7 @@ checkmark.tsx
     52→    position: absolute;
     53→    border-right: 2px solid;
     54→    border-bottom: 2px solid;
-    55→    border-color: ${(p) => p.secondary || '#fff'};
-    56→    bottom: 6px;
-    57→    left: 6px;
-    58→    height: 10px;
-    59→    width: 6px;
-    60→  }
-    61→`;
+      →    …
 
 error.tsx
      1→import { styled, keyframes } from 'goober';
@@ -95,7 +97,12 @@ loader.tsx
      1→import { styled, keyframes } from 'goober';
      3→const rotate = keyframes`
      4→  from {
-      →  …
+     5→    transform: rotate(0deg);
+     6→  }
+     7→  to {
+     8→    transform: rotate(360deg);
+     9→  }
+    10→`;
     12→export interface LoaderTheme {
     13→  primary?: string;
     14→  secondary?: string;
@@ -129,9 +136,13 @@ toast-bar.tsx
     19→const fadeOutAnimation = `0%{opacity:1;} 100%{opacity:0;}`;
     22→const ToastBarBase = styled('div')`
     23→  :where(&) {
-      →  …
+    24→    display: flex;
+    25→    align-items: center;
+      →    …
     38→const Message = styled('div')`
     39→  display: flex;
+    40→  justify-content: center;
+    41→  margin: 4px 10px;
       →  …
     47→interface ToastBarProps {
     48→  toast: Toast;
@@ -188,7 +199,17 @@ toast-bar.tsx
    101→          children({
    102→            icon,
    103→            message,
-      →            …
+   104→          })
+   105→        ) : (
+   106→          <>
+   107→            {icon}
+   108→            {message}
+   109→          </>
+   110→        )}
+   111→      </ToastBarBase>
+   112→    );
+   113→  }
+   114→);
 
 toast-icon.tsx
      1→import * as React from 'react';
@@ -199,12 +220,18 @@ toast-icon.tsx
      7→import { CheckmarkIcon, CheckmarkTheme } from './checkmark';
      9→const StatusWrapper = styled('div')`
     10→  position: absolute;
-      →  …
+    11→`;
     13→const IndicatorWrapper = styled('div')`
     14→  position: relative;
+    15→  display: flex;
+    16→  justify-content: center;
+    17→  align-items: center;
       →  …
     22→const enter = keyframes`
     23→from {
+    24→  transform: scale(0.6);
+    25→  opacity: 0.4;
+    26→}
       →…
     32→export const AnimatedIconWrapper = styled('div')`
     33→  position: relative;
@@ -278,22 +305,7 @@ toaster.tsx
     27→          onHeightUpdate(id, height);
     28→        };
     29→        updateHeight();
-    30→        new MutationObserver(updateHeight).observe(el, {
-    31→          subtree: true,
-    32→          childList: true,
-    33→          characterData: true,
-    34→        });
-    35→      }
-    36→    },
-    37→    [id, onHeightUpdate]
-    38→  );
-    39→
-    40→  return (
-    41→    <div ref={ref} className={className} style={style}>
-    42→      {children}
-    43→    </div>
-    44→  );
-    45→};
+      →        …
     47→const getPositionStyle = (
     48→  position: ToastPosition,
     49→  offset: number
@@ -312,19 +324,13 @@ toaster.tsx
     62→  return {
     63→    left: 0,
     64→    right: 0,
-    65→    display: 'flex',
-    66→    position: 'absolute',
-    67→    transition: prefersReducedMotion()
-    68→      ? undefined
-    69→      : `all 230ms cubic-bezier(.21,1.02,.73,1)`,
-    70→    transform: `translateY(${offset * (top ? 1 : -1)}px)`,
-    71→    ...verticalStyle,
-    72→    ...horizontalStyle,
-    73→  };
-    74→};
+      →    …
     76→const activeClass = css`
     77→  z-index: 9999;
-      →  …
+    78→  > * {
+    79→    pointer-events: auto;
+    80→  }
+    81→`;
     83→const DEFAULT_OFFSET = 16;
     85→export const Toaster: React.FC<ToasterProps> = ({
     86→  reverseOrder,

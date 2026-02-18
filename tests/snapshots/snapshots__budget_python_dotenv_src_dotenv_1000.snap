@@ -2,42 +2,33 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1011 tokens)
+budget: 1000 (1006 tokens)
 
 __init__.py
+     1→from typing import Any, Optional
      3→from .main …
+     6→def load_ipython_extension …
+    12→def get_cli_string …
     42→__all__ = [
 
 __main__.py
-     3→from .cli …
+     3→from .cli import cli
 
 cli.py
-    20→from .main …
-    21→from .version …
-    60→@click.version_option(version=__version__)
-    61→@click.pass_context
+    20→from .main import dotenv_values, set_key, unset_key
+    21→from .version import __version__
+    24→def enumerate_env() -> Optional[str]:
     62→def cli(ctx: click.Context, file: Any, quote: Any, export: Any) -> None:
-    67→@contextmanager
     68→def stream_file(path: os.PathLike) -> Iterator[IO[str]]:
-    69→    """
-      →    …
-   112→@cli.command(name="set")
-   113→@click.pass_context
-      →…
+    93→def list_values(ctx: click.Context, output_format: str) -> None:
    116→def set_value(ctx: click.Context, key: Any, value: Any) -> None:
-   128→@cli.command()
-   129→@click.pass_context
-      →…
    131→def get(ctx: click.Context, key: Any) -> None:
-   145→@cli.command()
-   146→@click.pass_context
-      →…
    148→def unset(ctx: click.Context, key: Any) -> None:
-   172→@click.argument("commandline", nargs=-1, type=click.UNPROCESSED)
    173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
-   174→    """Run command with environment variables present."""
+   193→def run_command(command: List[str], env: Dict[str, str]) -> None:
 
 ipython.py
+     1→from IPython.core.magic …
      2→from IPython.core.magic_arguments …
      8→from .main import find_dotenv, load_dotenv
     11→@magics_class
@@ -64,13 +55,16 @@ ipython.py
     32→    )
     33→    @line_magic
     34→    def dotenv(self, line):
+    35→        args = parse_argstring(self.dotenv, line)
+    36→        # Locate the .env file
+      →        …
+    48→def load_ipython_extension(ipython):
+    49→    """Register the %dotenv magic."""
+    50→    ipython.register_magics(IPythonDotEnv)
 
 main.py
-    13→from .parser …
-    14→from .variables …
-    25→def _load_dotenv_disabled() -> bool:
-    26→    """
-      →    …
+    13→from .parser import Binding, parse_stream
+    14→from .variables import parse_variables
     45→class DotEnv:
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
@@ -79,12 +73,9 @@ main.py
    143→    path: StrPath,
    144→    encoding: Optional[str],
    145→) -> Iterator[Tuple[IO[str], IO[str]]]:
-   269→def _walk_to_root(path: str) -> Iterator[str]:
-   270→    """
-      →    …
-   423→def _is_file_or_fifo(path: StrPath) -> bool:
-   424→    """
-      →    …
+   146→    pathlib.Path(path).touch()
+   147→
+      →…
 
 parser.py
     35→class Original(NamedTuple):
@@ -98,6 +89,7 @@ parser.py
     47→class Position:
     52→    @classmethod
     53→    def start(cls) -> "Position":
+    54→        return cls(chars=0, line=1)
     65→class Error(Exception):
     66→    pass
     69→class Reader:
@@ -105,7 +97,6 @@ parser.py
 variables.py
      5→_posix_variable: Pattern[str] = re.compile(
      6→    r"""
-     7→    \$\{
       →    …
     18→class Atom(metaclass=ABCMeta):
     25→    @abstractmethod

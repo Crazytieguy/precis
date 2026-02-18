@@ -2,20 +2,11 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1005 tokens)
-
-CHANGELOG.md
-     1→# Changelog
-    21→### Fixed
-
-CONTRIBUTING.md
-     1→Contributing
+budget: 1000 (1014 tokens)
 
 README.md
      1→# python-dotenv
      3→[![Build Status][build_status_badge]][build_status_link]
-     4→[![PyPI version][pypi_badge]][pypi_link]
-     5→
       →…
     22→## Getting Started
     78→## Other Use Cases
@@ -28,44 +19,39 @@ docs/reference.md
      1→# ::: dotenv
 
 mkdocs.yml
-     1→site_name: python-dotenv
-     2→repo_url: https://github.com/theskumar/python-dotenv
-     3→edit_uri: ""
-     4→theme:
-    10→    - navigation.sections
-    11→
-    12→markdown_extensions:
-    13→  - mdx_truly_sane_lists
-    14→
-    15→plugins:
-    24→  - search
-    25→nav:
 
 pyproject.toml
 
 ruff.toml
+     1→[lint]
 
 src/dotenv/__init__.py
+     1→from typing import Any, Optional
      3→from .main …
+     6→def load_ipython_extension …
+    12→def get_cli_string …
     42→__all__ = [
 
 src/dotenv/__main__.py
-     3→from .cli …
+     3→from .cli import cli
 
 src/dotenv/cli.py
     20→from .main …
     21→from .version …
+    24→def enumerate_env() -> Optional[str]:
     62→def cli …
     68→def stream_file …
+    93→def list_values(ctx: click.Context, output_format: str) -> None:
    116→def set_value …
    131→def get …
    148→def unset …
    173→def run …
+   193→def run_command(command: List[str], env: Dict[str, str]) -> None:
 
 src/dotenv/ipython.py
+     1→from IPython.core.magic …
      2→from IPython.core.magic_arguments …
      8→from .main import find_dotenv, load_dotenv
-    11→@magics_class
     12→class IPythonDotEnv(Magics):
     13→    @magic_arguments()
     14→    @argument(
@@ -76,41 +62,40 @@ src/dotenv/ipython.py
     19→    )
     20→    @argument(
     21→        "-v",
-    22→        "--verbose",
-    23→        action="store_true",
-    24→        help="Indicate function calls to be verbose",
-    25→    )
-    26→    @argument(
-    27→        "dotenv_path",
-    28→        nargs="?",
-    29→        type=str,
-    30→        default=".env",
-    31→        help="Search in increasingly higher folders for the `dotenv_path`",
-    32→    )
-    34→    def dotenv …
+    33→    @line_magic
+    34→    def dotenv(self, line):
+    35→        args = parse_argstring(self.dotenv, line)
+    36→        # Locate the .env file
+      →        …
+    48→def load_ipython_extension(ipython):
+    49→    """Register the %dotenv magic."""
 
 src/dotenv/main.py
-    13→from .parser …
-    14→from .variables …
-    25→def _load_dotenv_disabled() -> bool:
+    13→from .parser import Binding, parse_stream
+    14→from .variables import parse_variables
     45→class DotEnv:
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
-   142→def rewrite …
-   269→def _walk_to_root(path: str) -> Iterator[str]:
-   423→def _is_file_or_fifo(path: StrPath) -> bool:
+   141→@contextmanager
+   142→def rewrite(
+   143→    path: StrPath,
+   144→    encoding: Optional[str],
+   145→) -> Iterator[Tuple[IO[str], IO[str]]]:
+   146→    pathlib.Path(path).touch()
+   147→
+      →…
 
 src/dotenv/parser.py
     35→class Original(NamedTuple):
     36→    string: str
-    37→    line: int
+      →    …
     40→class Binding(NamedTuple):
     41→    key: Optional[str]
-    42→    value: Optional[str]
-    43→    original: Original
-    44→    error: bool
+      →    …
     47→class Position:
-    53→    def start …
+    52→    @classmethod
+    53→    def start(cls) -> "Position":
+    54→        return cls(chars=0, line=1)
     65→class Error(Exception):
     66→    pass
     69→class Reader:
@@ -118,19 +103,34 @@ src/dotenv/parser.py
 src/dotenv/variables.py
      5→_posix_variable: Pattern[str] = re.compile(
      6→    r"""
-     7→    \$\{
       →    …
     18→class Atom(metaclass=ABCMeta):
-    26→    def resolve …
+    25→    @abstractmethod
+    26→    def resolve(self, env: Mapping[str, Optional[str]]) -> str: ...
     29→class Literal(Atom):
     48→class Variable(Atom):
 
 src/dotenv/version.py
      1→__version__ = "1.2.1"
 
+tests/conftest.py
+     6→def cli():
+    13→def dotenv_path(tmp_path):
+
+tests/test_cli.py
+
 tests/test_is_interactive.py
      8→class TestIsInteractive:
     31→
+
+tests/test_parser.py
+   550→def test_parse_stream(test_input, expected):
+
+tests/test_utils.py
+     4→def test_to_cli_string():
+
+tests/test_variables.py
+    32→def test_parse_variables(value, expected):
 
 tests/test_zip_imports.py
     23→class FileToAdd:

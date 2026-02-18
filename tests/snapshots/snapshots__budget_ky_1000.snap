@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1012 tokens)
+budget: 1000 (1009 tokens)
 
 package.json
 
@@ -10,11 +10,11 @@ readme.md
 
 source/core/Ky.ts
     33→export class Ky {
-    34→	static create(input: Input, options: Options): ResponsePromise {
-   200→	constructor(input: Input, options: Options = {}) {
+    34→	static create …
+   200→	constructor …
 
 source/core/constants.ts
-     1→import type {Expect, Equal} from '@type-challenges/utils';
+    41→const validate …
     66→Options for forcing a retry via `ky.retry()`.
     68→export type ForceRetryOptions = {
     69→	/**
@@ -29,7 +29,7 @@ source/core/constants.ts
 
 source/errors/ForceRetryError.ts
      5→Internal error used to signal a forced retry from afterResponse hooks.
-     6→This is thrown when a user returns ky.retry() from an afterResponse hook.
+      →…
      8→export class ForceRetryError extends Error {
      9→	override name = 'ForceRetryError' as const;
     10→	customDelay: number | undefined;
@@ -41,9 +41,6 @@ source/errors/ForceRetryError.ts
 source/errors/HTTPError.ts
      5→export class HTTPError<T = unknown> extends Error {
      6→	public response: KyResponse<T>;
-     7→	public request: KyRequest;
-     8→	public options: NormalizedOptions;
-     9→
     10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
 
 source/errors/NonError.ts
@@ -57,58 +54,87 @@ source/errors/NonError.ts
     10→	constructor(value: unknown) {
 
 source/errors/TimeoutError.ts
+     1→import type {KyRequest} from '../types/request.js';
      3→export class TimeoutError extends Error {
      4→	public request: KyRequest;
      5→
      6→	constructor(request: Request) {
 
 source/index.ts
-    10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
+    10→const createInstance …
     34→const ky = createInstance();
 
 source/types/ResponsePromise.ts
      4→import {type KyResponse} from './response.js';
+     6→export type ResponsePromise<T = unknown> = {
+
+source/types/common.ts
+
+source/types/hooks.ts
+
+source/types/ky.ts
+     5→export type KyInstance = {
 
 source/types/options.ts
     30→Custom Ky options
     33→export type KyOptions = {
-    34→	/**
-      →	…
    303→Each key from KyOptions is present and set to `true`.
    304→
-   305→This type is used for identifying and working with the known keys in KyOptions.
-   307→export type KyOptionsRegistry = {[K in keyof KyOptions]-?: true};
-   312→export interface Options extends KyOptions, Omit<RequestInit, 'headers'> { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
-   313→	/**
-   314→	HTTP method used to make the request.
-   315→
       →…
-   373→export interface NormalizedOptions extends RequestInit { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
-   374→	// Extended from `RequestInit`, but ensured to be set (not optional).
-   375→	method: NonNullable<RequestInit['method']>;
-   376→	credentials?: NonNullable<RequestInit['credentials']>;
-      →	…
+   307→export type KyOptionsRegistry = {[K in keyof KyOptions]-?: true};
+   312→export interface Options …
+   373→export interface NormalizedOptions …
+
+source/types/request.ts
+     1→export type KyRequest<T = unknown> = {
+
+source/types/response.ts
+     1→export type KyResponse<T = unknown> = {
+
+source/types/retry.ts
+     1→import type {HttpMethod} from './options.js';
+     3→export type ShouldRetryState = {
+    15→export type RetryOptions = {
+
+source/utils/body.ts
+    57→const withProgress …
 
 source/utils/delay.ts
-     5→export type DelayOptions …
+     3→import {type InternalOptions} from '../types/options.js';
+     5→export type DelayOptions = {
+     9→export default async function delay …
+
+source/utils/is.ts
+     2→export const isObject = (value: unknown): value is object => value !== null && typeof value === 'object';
+
+source/utils/merge.ts
 
 source/utils/normalize.ts
+     5→export const normalizeRequestMethod …
+    28→export const normalizeRetryOptions …
+
+source/utils/options.ts
+     4→export const findUnknownOptions …
+    30→export const hasSearchParameters …
 
 source/utils/timeout.ts
-     3→export type TimeoutOptions …
+     1→import {TimeoutError} from '../errors/TimeoutError.js';
+     3→export type TimeoutOptions = {
+     9→export default async function timeout …
 
 source/utils/type-guards.ts
-    27→export function isKyError(error: unknown): error is HTTPError | TimeoutError | ForceRetryError {
-    49→export function isHTTPError<T = unknown>(error: unknown): error is HTTPError<T> {
-    71→export function isTimeoutError(error: unknown): error is TimeoutError {
-    98→export function isForceRetryError(error: unknown): error is ForceRetryError {
+    27→export function isKyError …
+    49→export function isHTTPError …
+    71→export function isTimeoutError …
+    98→export function isForceRetryError …
 
 source/utils/types.ts
      1→export type Mutable …
      5→export type ObjectEntries …
 
-test/browser.ts
-
 tsconfig.dist.json
+     2→	"extends": "./tsconfig",
+     3→	"compilerOptions": {
+     9→	"include": [
 
 tsconfig.json

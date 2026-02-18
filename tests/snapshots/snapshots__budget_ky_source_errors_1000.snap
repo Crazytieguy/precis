@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (994 tokens)
+budget: 1000 (993 tokens)
 
 ForceRetryError.ts
      1→import type {ForceRetryOptions} from '../core/constants.js';
@@ -29,8 +29,7 @@ ForceRetryError.ts
     25→
     26→		this.customDelay = options?.delay;
     27→		this.code = options?.code;
-    28→		this.customRequest = options?.request;
-    29→	}
+      →		…
 
 HTTPError.ts
      1→import type {NormalizedOptions} from '../types/options.js';
@@ -79,7 +78,8 @@ NonError.ts
     23→
     24→		super(message);
     25→
-      →…
+    26→		this.value = value;
+    27→	}
 
 TimeoutError.ts
      1→import type {KyRequest} from '../types/request.js';

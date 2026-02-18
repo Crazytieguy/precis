@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4029 tokens)
+budget: 4000 (4038 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -18,46 +18,18 @@ README.md
     13→- [Intro](#intro)
     14→- [Installation](#installation)
     15→- [Usage](#usage)
-    16→  - [Parse a TOML string](#parse-a-toml-string)
-    17→  - [Parse a TOML file](#parse-a-toml-file)
-    18→  - [Handle invalid TOML](#handle-invalid-toml)
-      →  …
+      →…
     32→## Intro<a name="intro"></a>
     34→Tomli is a Python library for parsing [TOML](https://toml.io).
-    35→Version 2.4.0 and later are compatible with [TOML v1.1.0](https://toml.io/en/v1.1.0).
-    36→Older versions are [TOML v1.0.0](https://toml.io/en/v1.0.0) compatible.
-    37→
-    38→A version of Tomli, the `tomllib` module,
-    39→was added to the standard library in Python 3.11
-    40→via [PEP 680](https://www.python.org/dev/peps/pep-0680/).
-    41→Tomli continues to provide a backport on PyPI for Python versions
-    42→where the standard library module is not available
-    43→and that have not yet reached their end-of-life.
-    44→
       →…
     50→## Installation<a name="installation"></a>
     52→```bash
-    53→pip install tomli
-    54→```
-    55→
+      →…
     56→## Usage<a name="usage"></a>
-    58→### Parse a TOML string<a name="parse-a-toml-string"></a>
-    79→### Parse a TOML file<a name="parse-a-toml-file"></a>
-    92→### Handle invalid TOML<a name="handle-invalid-toml"></a>
-   106→### Construct `decimal.Decimal`s from TOML floats<a name="construct-decimaldecimals-from-toml-floats"></a>
-   123→### Building a `tomli`/`tomllib` compatibility layer<a name="building-a-tomlitomllib-compatibility-layer"></a>
    152→## FAQ<a name="faq"></a>
-   154→### Why this parser?<a name="why-this-parser"></a>
-   167→### Is comment preserving round-trip parsing supported?<a name="is-comment-preserving-round-trip-parsing-supported"></a>
-   177→### Is there a `dumps`, `write` or `encode` function?<a name="is-there-a-dumps-write-or-encode-function"></a>
-   183→### How do TOML types map into Python types?<a name="how-do-toml-types-map-into-python-types"></a>
    201→## Performance<a name="performance"></a>
    203→The `benchmark/` folder in this repository contains a performance benchmark for comparing the various Python TOML parsers.
-   204→
-   205→Below are the results for commit [064e492](https://github.com/hukkin/tomli/tree/064e492919b2338def788753b8c981c9131334c0).
-   206→
-   207→### Mypyc generated wheel<a name="mypyc-generated-wheel"></a>
-   230→### Pure Python<a name="pure-python"></a>
+      →…
 
 benchmark/README.md
      1→# Benchmark
@@ -66,11 +38,7 @@ benchmark/README.md
       →…
     10→## Running
     12→### Against the local Tomli state
-    14→```bash
-      →…
     18→### Against the latest Tomli PyPI release
-    20→```bash
-      →…
 
 benchmark/data.toml
 
@@ -86,18 +54,10 @@ fuzzer/fuzz.py
      8→    import tomli_w
     10→    import tomli
     20→def test_one_input(input_bytes: bytes) -> None:
-    21→    # We need a Unicode string, not bytes
-      →    …
     53→def print_err(data):
-    54→    codepoints = [hex(ord(x)) for x in data]
-      →    …
     59→def normalize_toml_obj(toml_obj: dict) -> None:
     60→    """Make NaNs equal when compared (without using recursion)."""
-    61→    to_process = [toml_obj]
-      →    …
     71→def main():
-    72→    # For possible options, see https://llvm.org/docs/LibFuzzer.html#options
-      →    …
 
 profiler/profiler_script.py
      8→from pathlib import Path
@@ -124,12 +84,7 @@ pyproject.toml
    167→[[tool.mypy.overrides]]
 
 scripts/use_setuptools.py
-     6→from pathlib import Path
-     7→import tomllib
-     9→import tomli_w  # type: ignore[import-not-found]
     12→def use_setuptools() -> None:
-    13→    pyproject_path = Path(__file__).parent.parent / "pyproject.toml"
-      →    …
 
 setup.py
 
@@ -144,18 +99,11 @@ src/tomli/__init__.py
 src/tomli/_parser.py
      7→import sys
      8→from types import MappingProxyType
-    10→from ._re import (
-    11→    RE_DATETIME,
-    12→    RE_LOCALTIME,
-    13→    RE_NUMBER,
-    14→    match_to_datetime,
-    15→    match_to_localtime,
-    16→    match_to_number,
-    17→)
+    10→from ._re …
     19→TYPE_CHECKING = False
     21→    from collections.abc import Iterable
     22→    from typing import IO, Any, Final
-    24→    from ._types import Key, ParseFloat, Pos
+    24→    from ._types …
     26→# Inline tables/arrays are implemented using recursion. Pathologically
     27→# nested documents cause pure Python to raise RecursionError (which is OK),
     28→# but mypyc binary wheels will crash unrecoverably (not OK). According to
@@ -194,9 +142,6 @@ src/tomli/_parser.py
     84→    colno: The column corresponding to pos
     85→    """
     86→
-    87→    def __init__ …
-   137→def load …
-   149→def loads …
    220→class Flags:
    221→    """Flags that map to parsed keys/namespaces."""
    222→
@@ -206,40 +151,8 @@ src/tomli/_parser.py
    226→    # be opened using the "[table]" syntax.
    227→    EXPLICIT_NEST: Final = 1
    228→
-   229→    def __init__ …
-   233→    def add_pending …
-   236→    def finalize_pending …
-   241→    def unset_all …
-   249→    def set …
-   260→    def is_ …
    278→class NestedDict:
-   279→    def __init__ …
-   283→    def get_or_create_nest …
-   300→    def append_nest_to_list …
    312→class Output:
-   313→    def __init__ …
-   318→def skip_chars …
-   327→def skip_until …
-   349→def skip_comment …
-   361→def skip_comments_and_array_ws …
-   370→def create_dict_rule …
-   390→def create_list_rule …
-   413→def key_value_rule …
-   447→def parse_key_value_pair …
-   463→def parse_key …
-   481→def parse_key_part …
-   497→def parse_one_line_basic_str …
-   502→def parse_array …
-   528→def parse_inline_table …
-   564→def parse_basic_str_escape …
-   595→def parse_basic_str_escape_multiline …
-   599→def parse_hex_char …
-   612→def parse_literal_str …
-   621→def parse_multiline_str …
-   652→def parse_basic_str …
-   684→def parse_value …
-   760→def is_unicode_scalar_value …
-   764→def make_safe_parse_float …
 
 src/tomli/_re.py
      7→from datetime import date, datetime, time, timedelta, timezone, tzinfo
@@ -255,12 +168,7 @@ src/tomli/_re.py
     29→(?:
     30→    x[0-9A-Fa-f](?:_?[0-9A-Fa-f])*   # hex
     31→    |
-    32→    b[01](?:_?[01])*                 # bin
-    33→    |
-    34→    o[0-7](?:_?[0-7])*               # oct
-    35→)
-    36→|
-      →…
+      →    …
     45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)
     46→RE_DATETIME: Final = re.compile(
     47→    rf"""
@@ -268,10 +176,15 @@ src/tomli/_re.py
     49→(?:
     50→    [Tt ]
     51→    {_TIME_RE_STR}
-    52→    (?:([Zz])|([+-])([01][0-9]|2[0-3]):([0-5][0-9]))?  # optional time offset
-    53→)?
-    54→""",
-    59→def match_to_datetime …
+      →    …
+    59→def match_to_datetime(match: re.Match[str]) -> datetime | date:
+    60→    """Convert a `RE_DATETIME` match to `datetime.datetime` or `datetime.date`.
+    61→
+    62→    Raises ValueError if the match does not correspond to a valid date
+    63→    or datetime.
+    64→    """
+    65→    (
+      →    …
     95→# No need to limit cache size. This is only ever called on input
     96→# that matched RE_DATETIME, so there is an implicit bound of
     97→# 24 (hours) * 60 (minutes) * 2 (offset direction) = 2880.
@@ -284,8 +197,12 @@ src/tomli/_re.py
    104→            minutes=sign * int(minute_str),
    105→        )
    106→    )
-   109→def match_to_localtime …
-   116→def match_to_number …
+   109→def match_to_localtime(match: re.Match[str]) -> time:
+   110→    hour_str, minute_str, sec_str, micros_str = match.groups()
+      →    …
+   116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
+   117→    if match.group("floatpart"):
+      →    …
 
 src/tomli/_types.py
      5→from typing import Any, Callable, Tuple
@@ -298,30 +215,162 @@ tests/__init__.py
      9→import tomli as tomllib
 
 tests/burntsushi.py
+     7→import datetime
+     8→from typing import Any
+    11→def convert(obj):
+    42→def normalize(obj: Any) -> Any:
+    43→    """Normalize test objects.
+    44→
+      →…
 
-tests/data/invalid/keys-and-vals/overwrite-with-deep-table.toml
-     2→[a.b.c.d]
+tests/data/invalid/_external/toml-test/invalid/table/llbrace.toml
+     1→[ [table]]
+
+tests/data/invalid/_external/toml-test/invalid/table/newline-01.toml
+     1→[tbl
+
+tests/data/invalid/_external/toml-test/invalid/table/newline-03.toml
+     1→["tbl"
+
+tests/data/invalid/_external/toml-test/invalid/table/newline-04.toml
+     1→[tbl.
+
+tests/data/invalid/_external/toml-test/invalid/table/newline-05.toml
+     1→[tbl
+
+tests/data/invalid/_external/toml-test/invalid/table/no-close-08.toml
+     1→[''']
+
+tests/data/invalid/_external/toml-test/invalid/table/trailing-dot.toml
+     1→[a.]
+
+tests/data/invalid/_external/toml-test/invalid/table/whitespace.toml
+     1→[invalid key]
+
+tests/data/invalid/array-of-tables/overwrite-bool-with-aot.toml
+     2→[[a]]
+
+tests/data/invalid/inline-table/override-val-with-array.toml
+     3→[[inline-t.nest]]
+
+tests/data/invalid/inline-table/override-val-with-table.toml
+     3→[inline-t.nest]
+
+tests/data/valid/_external/toml-test/valid/array/bool.json
+     2→    "a": [
+     5→    ]
+     6→}
+
+tests/data/valid/_external/toml-test/valid/array/nested.json
+     2→    "nest": [
+     5→    ]
+      →    …
+
+tests/data/valid/_external/toml-test/valid/example.toml
+     3→[numtheory]
+
+tests/data/valid/_external/toml-test/valid/implicit-groups.json
+     2→    "a": {
+     8→    }
+      →    …
+
+tests/data/valid/_external/toml-test/valid/key/dotted-empty.toml
+     3→[a]
+
+tests/data/valid/_external/toml-test/valid/key/space.toml
+     6→[ " tbl " ]
+
+tests/data/valid/_external/toml-test/valid/table/array-empty.json
+     2→    "a": [{}]
+     3→}
+
+tests/data/valid/_external/toml-test/valid/table/array-empty.toml
+     1→[[a]]
+
+tests/data/valid/_external/toml-test/valid/table/array-many.json
+     2→    "people": [
+
+tests/data/valid/_external/toml-test/valid/table/array-one.json
+     2→    "people": [{
+
+tests/data/valid/_external/toml-test/valid/table/array-one.toml
+     1→[[people]]
+
+tests/data/valid/_external/toml-test/valid/table/empty-name.json
+     8→    "a": {
+
+tests/data/valid/_external/toml-test/valid/table/empty.json
+     2→    "a": {}
+     3→}
+
+tests/data/valid/_external/toml-test/valid/table/empty.toml
+     1→[a]
+
+tests/data/valid/_external/toml-test/valid/table/no-eol.json
+     2→    "table": {}
+     3→}
+
+tests/data/valid/_external/toml-test/valid/table/no-eol.toml
+     1→[table]
+
+tests/data/valid/_external/toml-test/valid/table/sub-empty.json
+     2→    "a": {
+
+tests/data/valid/_external/toml-test/valid/table/sub.json
+     2→    "a": {
+
+tests/data/valid/_external/toml-test/valid/table/whitespace.json
+     2→    "valid key": {}
+     3→}
+
+tests/data/valid/_external/toml-test/valid/table/whitespace.toml
+     1→["valid key"]
+
+tests/data/valid/_external/toml-test/valid/table/without-super.json
+     2→    "x": {
 
 tests/data/valid/array/array-subtables.json
      1→{"arr":
-    10→  }
-      →  …
 
 tests/data/valid/array/open-parent-table.json
      2→  "parent-table": {
-     5→  }
-      →  …
+
+tests/data/valid/boolean.json
+     2→  "a": {"type":"bool","value":"true"},
+     3→  "b": {"type":"bool","value":"false"}
+     4→}
+
+tests/data/valid/five-quotes.json
+
+tests/data/valid/hex-char.json
+
+tests/data/valid/inline-table/empty-inline-table.json
+     1→{"empty":  {}}
+
+tests/data/valid/inline-table/multiline-inline-table.json
+     2→  "multiline": {
+
+tests/data/valid/trailing-comma.json
+     1→{"arr":
+     6→  }
+     7→}
 
 tests/test_data.py
      5→import json
+     6→from pathlib import Path
+     7→import unittest
      9→from . import burntsushi, tomllib
-    11→DATA_DIR = Path(__file__).parent / "data"
-    13→VALID_FILES = tuple((DATA_DIR / "valid").glob("**/*.toml"))
-    21→VALID_FILES_EXPECTED = tuple(_expected_files)
-    23→INVALID_FILES = tuple((DATA_DIR / "invalid").glob("**/*.toml"))
+    11→DATA_DIR …
+    13→VALID_FILES …
+    21→VALID_FILES_EXPECTED …
+    23→INVALID_FILES …
     27→class TestData(unittest.TestCase):
+    28→    def test_invalid(self):
+    40→    def test_valid(self):
 
 tests/test_error.py
+     7→from typing import Any
+     8→import unittest
     10→from . import tomllib
     13→class TestError(unittest.TestCase):
 
@@ -329,6 +378,16 @@ tests/test_misc.py
      5→import copy
     14→from . import tomllib
     17→class TestMiscellaneous(unittest.TestCase):
+    18→    def test_load(self):
+    29→    def test_incorrect_load(self):
+    47→    def test_parse_float(self):
+    75→    def test_deepcopy(self):
+   103→    def test_inline_array_recursion_limit(self):
+   118→    def test_inline_table_recursion_limit(self):
+   133→    def test_types_import(self):
+   134→        """Test that `_types` module runs.
+   135→
+      →…
 
 tomllib.md
      1→# `tomllib` – Tomli in the standard library
@@ -337,7 +396,6 @@ tomllib.md
      5→Relevant links:
      6→
      7→- Python Issue Tracker: https://bugs.python.org/issue40059
-     8→- Tomli issue tracker: https://github.com/hukkin/tomli/issues/141
       →…
     13→## Converting Tomli to tomllib
     15→### Sync status

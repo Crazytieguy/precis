@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2013 tokens)
+budget: 2000 (2007 tokens)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -19,15 +19,6 @@ ARCHITECTURE.md
     13→</>
     14→```
     15→
-    16→We didn't want to provide a render prop:
-    17→
-    18→```tsx
-    19→// No
-    20→onItemRender={({ item }) => {
-    21→  return <div>{item}</div>
-    22→}}
-    23→```
-    24→
       →…
     46→## Approach
     50→### Discarded approach
@@ -45,22 +36,7 @@ README.md
      9→## Install
     15→## Use
     82→## Parts and styling
-    86→### Command `[cmdk-root]`
-   153→### Dialog `[cmdk-dialog]` `[cmdk-overlay]`
-   180→### Input `[cmdk-input]`
-   190→### List `[cmdk-list]`
-   212→### Item `[cmdk-item]` `[data-disabled?]` `[data-selected?]`
-   242→### Group `[cmdk-group]` `[hidden?]`
-   256→### Separator `[cmdk-separator]`
-   260→### Empty `[cmdk-empty]`
-   264→### Loading `[cmdk-loading]`
-   274→### `useCommandState(state => state.selectedField)`
    285→## Examples
-   289→### Nested items
-   338→### Show sub-items when searching
-   361→### Asynchronous results
-   397→### Use inside Popover
-   426→### Drop in stylesheets
    430→## FAQ
    456→## History
    462→## Testing
@@ -99,18 +75,10 @@ cmdk/src/command-score.ts
    150→function formatInput …
    155→export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
    156→  /* NOTE:
-   157→   * in the original, we used to do the lower-casing on each recursive call, but this meant that toLowerCase()
-   158→   * was the dominating cost in the algorithm, passing both is a little ugly, but considerably faster.
-   159→   */
-      →   …
+      →  …
 
 cmdk/src/index.tsx
-     3→import * as RadixDialog from '@radix-ui/react-dialog'
-     4→import * as React from 'react'
      5→import { commandScore } from './command-score'
-     6→import { Primitive } from '@radix-ui/react-primitive'
-     7→import { useId } from '@radix-ui/react-id'
-     8→import { composeRefs } from '@radix-ui/react-compose-refs'
    664→const Item …
    729→const Group …
    774→const Separator …
@@ -152,18 +120,68 @@ playwright.config.ts
 pnpm-workspace.yaml
      1→packages:
 
+test/basic.test.ts
+     1→import { expect, test } from '@playwright/test'
+
+test/dialog.test.ts
+     1→import { expect, test } from '@playwright/test'
+
+test/group.test.ts
+     1→import { expect, test } from '@playwright/test'
+
+test/item.test.ts
+     1→import { expect, test } from '@playwright/test'
+
+test/keybind.test.ts
+     1→import { expect, test } from '@playwright/test'
+
+test/numeric.test.ts
+     1→import { expect, test } from '@playwright/test'
+
 test/package.json
 
 test/pages/_app.tsx
      1→import '../style.css'
      3→export default function App({ Component, pageProps }) {
-     4→  return <Component {...pageProps} />
-      →  …
 
-test/pages/huge.tsx
-     4→const items = new Array(1000).fill(0)
+test/pages/dialog.tsx
+     4→const Page = () => {
+
+test/pages/group.tsx
+     4→const Page = () => {
+
+test/pages/index.tsx
+     1→import { Command } from 'cmdk'
+     3→const Page = () => {
+
+test/pages/item-advanced.tsx
+     4→const Page = () => {
+
+test/pages/item.tsx
+     4→const Page = () => {
+
+test/pages/keybinds.tsx
+     5→const Page = () => {
+
+test/pages/numeric.tsx
+     1→import { Command } from 'cmdk'
+     3→const Page = () => {
+
+test/pages/portal.tsx
+     5→const Page = () => {
+
+test/pages/props.tsx
+     5→const Page = () => {
+
+test/props.test.ts
+     1→import { expect, test } from '@playwright/test'
 
 test/tsconfig.json
+     2→  "compilerOptions": {
+    17→  },
+    18→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "../dialog.test.ts"],
+    19→  "exclude": ["node_modules"]
+    20→}
 
 tsconfig.json
      2→  "compilerOptions": {
@@ -181,6 +199,7 @@ website/components/cmdk/framer.tsx
      4→export function FramerCMDK() {
 
 website/components/cmdk/linear.tsx
+     1→import { Command } from 'cmdk'
      3→export function LinearCMDK() {
     30→const items = [
 
@@ -194,14 +213,9 @@ website/components/code/index.tsx
      4→import styles from './code.module.scss'
      7→const theme = {
     41→export function Code({ children }: { children: string }) {
-    42→  return (
-      →  …
 
 website/components/icons/index.tsx
      1→import styles from './icons.module.scss'
-
-website/next.config.js
-     2→const nextConfig = {
 
 website/package.json
 
@@ -222,5 +236,13 @@ website/pages/index.tsx
    296→function VersionBadge() {
 
 website/tsconfig.json
+     2→  "compilerOptions": {
+    18→  },
+    19→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+    20→  "exclude": ["node_modules"]
+    21→}
 
 website/vercel.json
+     2→  "headers": [
+    12→  ]
+    13→}

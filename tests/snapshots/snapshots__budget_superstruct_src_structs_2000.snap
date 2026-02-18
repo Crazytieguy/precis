@@ -2,182 +2,146 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2008 tokens)
+budget: 2000 (2000 tokens)
 
 coercions.ts
      1→import { Struct, is, Coercer } from '../struct.js'
      2→import { isPlainObject } from '../utils.js'
      3→import { string, unknown } from './types.js'
-    16→export function coerce …
-    38→export function defaulted …
-    79→export function trimmed …
+     6→ * Augment a `Struct` to add an additional coercion step to its input.
+     7→ *
+     8→ * This allows you to transform input data before validating it, to increase the
+     9→ * likelihood that it passes validation—for example for default values, parsing
+    10→ * different formats, etc.
+    11→ *
+    12→ * Note: You must use `create(value, Struct)` on the value to have the coercion
+    13→ * take effect! Using simply `assert()` or `is()` will not use coercion.
+    16→export function coerce<T, S, C>(
+    17→  struct: Struct<T, S>,
+    18→  condition: Struct<C, any>,
+    19→  coercer: Coercer<C>
+    20→): Struct<T, S> {
+    21→  return new Struct({
+    22→    ...struct,
+    23→    coercer: (value, ctx) => {
+    24→      return is(value, condition)
+    25→        ? struct.coercer(coercer(value, ctx), ctx)
+    26→        : struct.coercer(value, ctx)
+    27→    },
+    28→  })
+    29→}
+    32→ * Augment a struct to replace `undefined` values with a default.
+    33→ *
+    34→ * Note: You must use `create(value, Struct)` on the value to have the coercion
+    35→ * take effect! Using simply `assert()` or `is()` will not use coercion.
+    38→export function defaulted<T, S>(
+    39→  struct: Struct<T, S>,
+    40→  fallback: any,
+    41→  options: {
+    42→    strict?: boolean
+    43→  } = {}
+    44→): Struct<T, S> {
+    45→  return coerce(struct, unknown(), (x) => {
+    46→    const f = typeof fallback === 'function' ? fallback() : fallback
+    47→
+    48→    if (x === undefined) {
+    49→      return f
+    50→    }
+    51→
+    52→    if (!options.strict && isPlainObject(x) && isPlainObject(f)) {
+    53→      const ret = { ...x }
+    54→      let changed = false
+    55→
+      →…
+    73→ * Augment a struct to trim string inputs.
+    74→ *
+    75→ * Note: You must use `create(value, Struct)` on the value to have the coercion
+    76→ * take effect! Using simply `assert()` or `is()` will not use coercion.
+    79→export function trimmed<T, S>(struct: Struct<T, S>): Struct<T, S> {
+    80→  return coerce(struct, string(), (x) => x.trim())
+    81→}
 
 refinements.ts
      1→import { Struct, Refiner } from '../struct.js'
      2→import { toFailures } from '../utils.js'
-     8→export function empty …
+     5→ * Ensure that a string, array, map, or set is empty.
+     8→export function empty<
+     9→  T extends string | any[] | Map<any, any> | Set<any>,
+    10→  S extends any,
+    11→>(struct: Struct<T, S>): Struct<T, S> {
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
     22→  if (value instanceof Map || value instanceof Set) {
     23→    return value.size
     24→  } else {
-    25→    return value.length
-    26→  }
-    27→}
-    33→export function max …
-    55→export function min …
-    77→export function nonempty …
-    93→export function pattern …
-   109→export function size …
-   146→export function refine …
+      →  …
+    30→ * Ensure that a number or date is below a threshold.
+    33→export function max<T extends number | Date, S extends any>(
+    34→  struct: Struct<T, S>,
+    35→  threshold: T,
+    36→  options: {
+    37→    exclusive?: boolean
+    38→  } = {}
+    39→): Struct<T, S> {
+    52→ * Ensure that a number or date is above a threshold.
+    55→export function min<T extends number | Date, S extends any>(
+    56→  struct: Struct<T, S>,
+    57→  threshold: T,
+    58→  options: {
+    59→    exclusive?: boolean
+    60→  } = {}
+    61→): Struct<T, S> {
+    74→ * Ensure that a string, array, map or set is not empty.
+    77→export function nonempty<
+    78→  T extends string | any[] | Map<any, any> | Set<any>,
+    79→  S extends any,
+    80→>(struct: Struct<T, S>): Struct<T, S> {
+    90→ * Ensure that a string matches a regular expression.
+    93→export function pattern<T extends string, S extends any>(
+    94→  struct: Struct<T, S>,
+    95→  regexp: RegExp
+    96→): Struct<T, S> {
+   106→ * Ensure that a string, array, number, date, map, or set has a size (or length, or time) between `min` and `max`.
+   109→export function size<
+   110→  T extends string | number | Date | any[] | Map<any, any> | Set<any>,
+   111→  S extends any,
+   112→>(struct: Struct<T, S>, min: number, max: number = min): Struct<T, S> {
+   139→ * Augment a `Struct` to add an additional refinement to the validation.
+   140→ *
+   141→ * The refiner function is guaranteed to receive a value of the struct's type,
+   142→ * because the struct's existing validation will already have passed. This
+   143→ * allows you to layer additional validation on top of existing structs.
+   146→export function refine<T, S>(
+   147→  struct: Struct<T, S>,
+   148→  name: string,
+   149→  refiner: Refiner<T>
+   150→): Struct<T, S> {
 
 types.ts
-     1→import { Infer, Struct } from '../struct.js'
-     2→import { define } from './utilities.js'
-     3→import {
-     4→  ObjectSchema,
-     5→  ObjectType,
-     6→  print,
-     7→  run,
-     8→  isObject,
-     9→  isNonArrayObject,
-    10→  AnyStruct,
-    11→  InferStructTuple,
-    12→  UnionToIntersection,
-    13→} from '../utils.js'
+     1→import { Infer, Struct } from '../struct.js …
+     2→import { define } from './utilities.js …
+     3→import { …
     19→export function any …
     33→export function array<T extends Struct<any>>(Element?: T): any {
-    34→  return new Struct({
-    35→    type: 'array',
-    36→    schema: Element,
-    37→    *entries(value) {
-    38→      if (Element && Array.isArray(value)) {
-    39→        for (const [i, v] of value.entries()) {
-    40→          yield [i, v, Element]
-    41→        }
-    42→      }
-    43→    },
-    44→    coercer(value) {
-    45→      return Array.isArray(value) ? value.slice() : value
-    46→    },
-    47→    validator(value) {
-    48→      return (
-    49→        Array.isArray(value) ||
-    50→        `Expected an array value, but received: ${print(value)}`
-    51→      )
-    52→    },
-      →    …
     60→export function bigint …
     70→export function boolean …
     83→export function date …
    105→export function enums<U extends string | number, T extends readonly U[]>(
    106→  values: T
    107→): any {
-   108→  const schema: any = {}
-   109→  const description = values.map((v) => print(v)).join()
-   110→
-   111→  for (const key of values) {
-   112→    schema[key] = key
-   113→  }
-   114→
-   115→  return new Struct({
-   116→    type: 'enums',
-   117→    schema,
-   118→    validator(value) {
-   119→      return (
-   120→        values.includes(value as any) ||
-   121→        `Expected one of \`${description}\`, but received: ${print(value)}`
-   122→      )
-   123→    },
-   124→  })
-   125→}
    131→export function func …
    144→export function instance …
    159→export function integer …
    172→export function intersection …
    204→export function literal<T>(constant: T): any {
-   205→  const description = print(constant)
-   206→  const t = typeof constant
-   207→  return new Struct({
-   208→    type: 'literal',
-   209→    schema:
-   210→      t === 'string' || t === 'number' || t === 'boolean' ? constant : null,
-   211→    validator(value) {
-   212→      return (
-   213→        value === constant ||
-   214→        `Expected the literal \`${description}\`, but received: ${print(value)}`
-   215→      )
-   216→    },
-   217→  })
-   218→}
    230→export function map<K, V>(Key?: Struct<K>, Value?: Struct<V>): any {
-   231→  return new Struct({
-   232→    type: 'map',
-   233→    schema: null,
-   234→    *entries(value) {
-   235→      if (Key && Value && value instanceof Map) {
-   236→        for (const [k, v] of value.entries()) {
-   237→          yield [k as string, k, Key]
-   238→          yield [k as string, v, Value]
-   239→        }
-   240→      }
-   241→    },
-   242→    coercer(value) {
-   243→      return value instanceof Map ? new Map(value) : value
-   244→    },
-   245→    validator(value) {
-   246→      return (
-   247→        value instanceof Map ||
-   248→        `Expected a \`Map\` object, but received: ${print(value)}`
-   249→      )
-      →      …
    258→export function never …
    266→export function nullable …
    278→export function number …
    298→export function object<S extends ObjectSchema>(schema?: S): any {
-   299→  const knowns = schema ? Object.keys(schema) : []
-   300→  const Never = never()
-   301→  return new Struct({
-   302→    type: 'object',
-   303→    schema: schema ? schema : null,
-   304→    *entries(value) {
-   305→      if (schema && isObject(value)) {
-   306→        const unknowns = new Set(Object.keys(value))
-   307→
-   308→        for (const key of knowns) {
-   309→          unknowns.delete(key)
-   310→          yield [key, value[key], schema[key]]
-   311→        }
-   312→
-   313→        for (const key of unknowns) {
-   314→          yield [key, value[key], Never]
-   315→        }
-   316→      }
-   317→    },
-      →    …
    351→export function optional …
    367→export function record …
    402→export function regexp …
    415→export function set<T>(Element?: Struct<T>): any {
-   416→  return new Struct({
-   417→    type: 'set',
-   418→    schema: null,
-   419→    *entries(value) {
-   420→      if (Element && value instanceof Set) {
-   421→        for (const v of value) {
-   422→          yield [v as string, v, Element]
-   423→        }
-   424→      }
-   425→    },
-   426→    coercer(value) {
-   427→      return value instanceof Set ? new Set(value) : value
-   428→    },
-   429→    validator(value) {
-   430→      return (
-   431→        value instanceof Set ||
-   432→        `Expected a \`Set\` object, but received: ${print(value)}`
-   433→      )
-   434→    },
-      →    …
    442→export function string …
    456→export function tuple …
    492→export function type …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1006 tokens)
+budget: 1000 (1007 tokens)
 
 _internals/error.ts
      1→import { Result } from '../result'
@@ -14,28 +14,19 @@ _internals/error.ts
     12→  data:
     13→    | {
     14→        type: string
-    15→        value: T
-    16→      }
-    17→    | {
-    18→        type: string
       →        …
     27→export const createNeverThrowError = <T, E>(
     28→  message: string,
     29→  result: Result<T, E>,
     30→  config: ErrorConfig = defaultErrorConfig,
     31→): NeverThrowError<T, E> => {
+    32→  const data = result.isOk()
+    33→    ? { type: 'Ok', value: result.value }
+      →    …
 
 _internals/utils.ts
      1→import { Result, ok, err } from '../result'
      2→import { ResultAsync } from '../result-async'
-     5→export type ExtractOkTypes<T extends readonly Result<unknown, unknown>[]> = {
-    10→export type ExtractOkAsyncTypes<T extends readonly ResultAsync<unknown, unknown>[]> = {
-    15→export type ExtractErrTypes<T extends readonly Result<unknown, unknown>[]> = {
-    20→export type ExtractErrAsyncTypes<T extends readonly ResultAsync<unknown, unknown>[]> = {
-    24→export type InferOkTypes<R> = R extends Result<infer T, unknown> ? T : never
-    25→export type InferErrTypes<R> = R extends Result<unknown, infer E> ? E : never
-    27→export type InferAsyncOkTypes<R> = R extends ResultAsync<infer T, unknown> ? T : never
-    28→export type InferAsyncErrTypes<R> = R extends ResultAsync<unknown, infer E> ? E : never
     31→ * Short circuits on the FIRST Err value that we find
     33→export const combineResultList = <T, E>(
     34→  resultList: readonly Result<T, E>[],
@@ -60,7 +51,28 @@ result-async.ts
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
     23→  private _promise: Promise<Result<T, E>>
     24→
-   222→  async *safeUnwrap …
+   211→   * @deprecated will be removed in 9.0.0.
+   212→   *
+   213→   * You can use `safeTry` without this method.
+   214→   * @example
+   215→   * ```typescript
+   216→   * safeTry(async function* () {
+   217→   *   const okValue = yield* yourResult
+   218→   * })
+   219→   * ```
+   220→   * Emulates Rust's `?` operator in `safeTry`'s body. See also `safeTry`.
+   222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
+   223→    return yield* await this._promise.then((res) => res.safeUnwrap())
+   224→  }
+   259→export const fromPromise …
+   260→export const fromSafePromise …
+   262→export const fromAsyncThrowable …
+   265→export type CombineResultAsyncs …
+   272→export type CombineResultsWithAllErrorsArrayAsync …
+   279→type UnwrapAsync …
+   300→type TraverseAsync …
+   330→type TraverseWithAllErrorsAsync …
+   338→type Writable …
 
 result.ts
      1→import { errAsync, ResultAsync } from './ …
@@ -83,8 +95,4 @@ result.ts
    299→  _unsafeUnwrap …
    309→  _unsafeUnwrapErr …
    312→export class Ok<T, E> implements IResult<T, E> {
-   405→  _unsafeUnwrap(_?: ErrorConfig): T {
-   409→  _unsafeUnwrapErr(config?: ErrorConfig): E {
    419→export class Err<T, E> implements IResult<T, E> {
-   505→  _unsafeUnwrap(config?: ErrorConfig): T {
-   509→  _unsafeUnwrapErr(_?: ErrorConfig): E {

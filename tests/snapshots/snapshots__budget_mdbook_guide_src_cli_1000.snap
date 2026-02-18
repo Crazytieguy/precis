@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1004 tokens)
+budget: 1000 (1014 tokens)
 
 README.md
      1→# Command-line tool
@@ -11,15 +11,13 @@ README.md
      5→
      6→This following sections provide in-depth information on the different commands available.
      7→
-     8→* [`mdbook init <directory>`](init.md) --- Creates a new book with minimal boilerplate to start with.
-     9→* [`mdbook build`](build.md) --- Renders the book.
-    10→* [`mdbook watch`](watch.md) --- Rebuilds the book any time a source file changes.
-    11→* [`mdbook serve`](serve.md) --- Runs a web server to view the book, and rebuilds on changes.
-    12→* [`mdbook test`](test.md) --- Tests Rust code samples.
-    13→* [`mdbook clean`](clean.md) --- Deletes the rendered output.
-    14→* [`mdbook completions`](completions.md) --- Support for shell auto-completion.
+      →…
 
 arg-watcher.md
+     1→#### `--watcher`
+     3→There are different backends used to determine when a file has changed.
+     4→
+      →…
 
 build.md
      1→# The build command
@@ -30,6 +28,9 @@ build.md
      7→```
      8→
       →…
+    16→#### Specify a directory
+    25→#### `--open`
+    30→#### `--dest-dir`
 
 clean.md
      1→# The clean command
@@ -39,7 +40,9 @@ clean.md
      6→```bash
      7→mdbook clean
      8→```
-      →…
+     9→
+    10→#### Specify a directory
+    19→#### `--dest-dir`
 
 completions.md
      1→# The completions command
@@ -49,6 +52,7 @@ completions.md
      6→The completions first need to be installed for your shell:
      7→
      8→```bash
+     9→# bash
       →…
 
 init.md
@@ -59,6 +63,9 @@ init.md
      6→The `init` command is used like this:
      7→
      8→```bash
+     9→mdbook init
+    10→```
+    11→
       →…
 
 serve.md
@@ -69,14 +76,17 @@ serve.md
      6→```bash
      7→mdbook serve
      8→```
+     9→
       →…
+    18→#### Specify a directory
     27→### Server options
     29→The `serve` hostname defaults to `localhost`, and the port defaults to `3000`. Either option can be specified on the command line:
     30→
     31→```bash
-    32→mdbook serve path/to/book -p 8000 -n 127.0.0.1 
-    33→```
-    34→
+      →…
+    35→#### `--open`
+    40→#### `--dest-dir`
+    49→#### Specify exclude patterns
 
 test.md
      1→# The test command
@@ -85,8 +95,11 @@ test.md
      5→of code examples that could get outdated. Therefore it is very important for
      6→them to be able to automatically test these code examples.
      7→
-     8→mdBook supports a `test` command that will run all available tests in a book. At
       →…
+    11→#### Disable tests on a code block
+    31→#### Specify a directory
+    40→#### `--library-path`
+    57→#### `--chapter`
 
 watch.md
      1→# The watch command
@@ -96,3 +109,7 @@ watch.md
      6→build automatically whenever you modify a file; this includes re-creating
      7→deleted files still mentioned in `SUMMARY.md`!
      8→
+     9→#### Specify a directory
+    18→#### `--open`
+    23→#### `--dest-dir`
+    32→#### Specify exclude patterns

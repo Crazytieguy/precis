@@ -2,15 +2,9 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (997 tokens)
+budget: 1000 (998 tokens)
 
 Cargo.toml
-     1→[package]
-    14→[features]
-    30→[dependencies]
-    33→[dev-dependencies]
-    39→[workspace]
-    42→[package.metadata.docs.rs]
 
 README.md
      1→derive(Error)
@@ -20,27 +14,23 @@ README.md
    223→#### License
 
 build/probe.rs
-    11→struct MyError(Thing);
-    12→struct Thing;
-    14→impl Debug for MyError {
     15→    fn fmt …
-    20→impl Display for MyError {
     21→    fn fmt …
-    26→impl Error for MyError {
     27→    fn provide …
 
-build.rs
-
 impl/Cargo.toml
-     1→[package]
-    11→[lib]
-    14→[dependencies]
-    19→[package.metadata.docs.rs]
 
 impl/src/ast.rs
     45→pub enum ContainerKind {
+    46→    Struct,
+    47→    TupleStruct,
+    48→    UnitStruct,
+      →    …
+    55→    pub fn from_syn …
+   175→    fn fmt …
 
 impl/src/attr.rs
+    11→pub struct Attrs<'a> {
     21→pub struct Display<'a> {
     33→pub struct Source<'a> {
     39→pub struct From<'a> {
@@ -49,85 +39,88 @@ impl/src/attr.rs
     57→pub enum Trait {
 
 impl/src/expand.rs
+    12→pub fn derive(input: &DeriveInput) -> TokenStream {
 
 impl/src/fmt.rs
-   171→#[allow(clippy::unnecessary_wraps)]
-   172→fn explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
+    15→impl Display<'_> {
+    16→    pub fn expand_shorthand …
+   166→struct FmtArguments {
+   172→fn explicit_named_args …
 
 impl/src/generics.rs
+     8→pub struct ParamsInScope<'a> {
+    26→fn crawl …
+    48→pub struct InferredBounds {
 
 impl/src/lib.rs
     39→#[proc_macro_derive(Error, attributes(backtrace, error, from, source))]
     40→pub fn derive_error(input: TokenStream) -> TokenStream {
-    41→    let input = parse_macro_input!(input as DeriveInput);
-    42→    expand::derive(&input).into()
-    43→}
-    45→#[allow(non_camel_case_types)]
     46→struct private;
+    48→impl ToTokens for private {
+    49→    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+
+impl/src/scan_expr.rs
+     1→use self::{Action::*, Input::*};
 
 impl/src/unraw.rs
+    10→#[derive(Clone)]
+    11→#[repr(transparent)]
     12→pub struct IdentUnraw(Ident);
+    81→#[derive(Clone)]
     82→pub enum MemberUnraw {
+    83→    Named(IdentUnraw),
+    84→    Unnamed(Index),
+    85→}
 
 rust-toolchain.toml
      1→[toolchain]
 
 src/aserror.rs
-     6→    fn as_dyn_error …
+     5→pub trait AsDynError<'a>: Sealed {
+     6→    fn as_dyn_error(&self) -> &(dyn Error + 'a);
     11→    fn as_dyn_error …
     18→    fn as_dyn_error …
     25→    fn as_dyn_error …
     32→    fn as_dyn_error …
     39→    fn as_dyn_error …
+    45→pub trait Sealed {}
 
 src/display.rs
      3→use std::path::{self, Path, PathBuf};
+     6→pub trait AsDisplay<'a>: Sealed {
     11→    fn as_display …
-    18→    type Target = &'a T;
     20→    fn as_display …
-    26→impl<'a> AsDisplay<'a> for Path {
-    27→    type Target = path::Display<'a>;
-    30→    fn as_display …
-    36→impl<'a> AsDisplay<'a> for PathBuf {
-    37→    type Target = path::Display<'a>;
-    40→    fn as_display …
-    49→impl Sealed for Path {}
-    51→impl Sealed for PathBuf {}
+    29→    #[inline]
+    30→    fn as_display(&'a self) -> Self::Target {
+    39→    #[inline]
+    40→    fn as_display(&'a self) -> Self::Target {
+    46→pub trait Sealed {}
     59→mod placeholder {
     60→    use super::{AsDisplay, Sealed};
     63→    #[allow(dead_code)]
     64→    pub struct Placeholder;
-    67→        type Target = Self;
-    70→        fn as_display …
+    69→        #[inline]
+    70→        fn as_display(&'a self) -> Self::Target {
     76→        fn fmt …
 
 src/lib.rs
-   281→mod aserror;
-   282→mod display;
    284→mod provide;
-   285→mod var;
    287→pub use thiserror_impl::*;
-   289→mod private;
 
 src/private.rs
-     2→pub use crate::aserror::AsDynError;
-     4→pub use crate::display::AsDisplay;
-     7→pub use crate::provide::ThiserrorProvide;
-     9→pub use crate::var::Var;
-    11→pub use core::error::Error;
-    14→pub use std::backtrace::Backtrace;
 
 src/provide.rs
-     5→    fn thiserror_provide …
-    13→    fn thiserror_provide …
+     4→pub trait ThiserrorProvide: Sealed {
+     5→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>);
+    12→    #[inline]
+    13→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>) {
+    14→        self.provide(request);
+    15→    }
+    19→pub trait Sealed {}
 
 src/var.rs
      3→pub struct Var<'a, T: ?Sized>(pub &'a T);
-     6→    fn fmt …
+     6→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
 
-tests/no-std/test.rs
-     6→pub enum Error {
-    13→pub struct SourceError {
-
-tests/test_expr.rs
-    56→fn assert …
+tests/ui/display-underscore.rs
+     5→pub struct Error;

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1034 tokens)
+budget: 1000 (1026 tokens)
 
 browser.js
    115→function useColors() {
@@ -13,32 +13,26 @@ browser.js
    120→		return true;
    121→	}
    122→
-   123→	// Internet Explorer and Edge do not support colors.
-   124→	if (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/(edge|trident)\/(\d+)/)) {
-   125→		return false;
-      →		…
+      →…
    144→ * Colorize log arguments if enabled.
    145→ *
    146→ * @api public
    149→function formatArgs(args) {
    150→	args[0] = (this.useColors ? '%c' : '') +
-   151→		this.namespace +
-      →		…
+      →	…
    195→ * Save `namespaces`.
    196→ *
    197→ * @param {String} namespaces
    198→ * @api private
    200→function save(namespaces) {
    201→	try {
-   202→		if (namespaces) {
-      →		…
+      →	…
    214→ * Load `namespaces`.
    215→ *
    216→ * @return {String} returns the previously persisted debug modes
    217→ * @api private
    219→function load() {
    220→	let r;
-   221→	try {
       →	…
    237→ * Localstorage attempts to return the localstorage.
    238→ *
@@ -50,8 +44,7 @@ browser.js
    244→ * @api private
    247→function localstorage() {
    248→	try {
-   249→		// TVMLKit (Apple TV JS Runtime) does not have a window object, just localStorage in the global context
-      →		…
+      →	…
 
 common.js
      3→ * This is the common logic for both the Node.js and web browser
@@ -59,6 +52,18 @@ common.js
      7→function setup(env) {
      8→	createDebug.debug = createDebug;
      9→	createDebug.default = createDebug;
+    10→	createDebug.coerce = coerce;
+    11→	createDebug.disable = disable;
+    12→	createDebug.enable = enable;
+    13→	createDebug.enabled = enabled;
+    14→	createDebug.humanize = require('ms');
+    15→	createDebug.destroy = destroy;
+    16→
+    17→	Object.keys(env).forEach(key => {
+    18→		createDebug[key] = env[key];
+    19→	});
+    20→
+    21→	/**
       →	…
 
 node.js

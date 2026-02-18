@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1007 tokens)
+budget: 1000 (1012 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
@@ -21,60 +21,49 @@ README.md
 
 package.json
 
-playwright.config.ts
-
 pnpm-workspace.yaml
      1→packages:
 
 src/assets.tsx
      2→import React from 'react';
-     3→import type { ToastTypes } from './types …
+     3→import type { ToastTypes } from './types';
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
-    26→export const Loader = ({ visible, className }: { visible: boolean; className?: string }) => {
-    78→export const CloseIcon = (
-    79→  <svg
+     6→  switch (type) {
       →  …
+    24→const bars = Array(12).fill(0);
+    26→export const Loader = ({ visible, className }: { visible: boolean; className?: string }) => {
+    27→  return (
+      →  …
+    38→const SuccessIcon = (
+    48→const WarningIcon = (
+    58→const InfoIcon = (
+    68→const ErrorIcon = (
+    78→export const CloseIcon = (
 
 src/hooks.tsx
      1→import React from 'react';
      3→export const useIsDocumentHidden = () => {
+     4→  const [isDocumentHidden, setIsDocumentHidden] = React.useState(document.hidden);
+     5→
+      →…
 
 src/index.tsx
      3→import React from 'react';
      4→import ReactDOM from 'react-dom';
-     6→import { CloseIcon, getAsset, Loader } from './assets …
-     7→import { useIsDocumentHidden } from './hooks …
-     8→import { toast, ToastState } from './state …
-     9→import './styles.css …
-    10→import { …
 
 src/state.ts
      1→import type { …
     11→import React from 'react';
     15→type titleT = (() => React.ReactNode) | React.ReactNode;
     17→class Observer {
-    22→  constructor …
-    29→  subscribe …
-    38→  publish …
-    42→  addToast …
-    47→  create …
-    88→  dismiss …
-   101→  message …
-   105→  error …
-   109→  success …
-   113→  info …
-   117→  warning …
-   121→  loading …
-   125→  promise …
-   243→  custom …
-   249→  getActiveToasts …
-   254→export const ToastState …
+    18→  subscribers: Array<(toast: ExternalToast | ToastToDismiss) => void>;
+   254→export const ToastState = new Observer();
    257→const toastFunction …
    268→const isHttpResponse …
    279→const basicToast = toastFunction;
    281→const getHistory …
    282→const getToasts …
-   285→export const toast …
+   285→export const toast = Object.assign(
 
 src/types.ts
      1→import React from 'react';
@@ -89,10 +78,15 @@ src/types.ts
     48→export interface ToastIcons {
     57→export interface Action {
     63→export interface ToastT {
-    93→export function isAction …
+    93→export function isAction(action: Action | React.ReactNode): action is Action {
+    94→  return (action as Action).label !== undefined;
+    95→}
     97→export type Position …
     98→export interface HeightT {
    104→interface ToastOptions {
+   105→  className?: string;
+   106→  closeButton?: boolean;
+      →  …
    118→type Offset =
    119→  | {
    128→export interface ToasterProps {
@@ -104,34 +98,38 @@ src/types.ts
    197→export type ExternalToast …
 
 test/README.md
-     3→## Getting Started
-    25→## Learn More
-    34→## Deploy on Vercel
+
+test/package.json
+
+test/src/app/action.tsx
+     4→export async function action() {
 
 test/src/app/layout.tsx
      1→export const metadata = {
+     6→export default function RootLayout …
+
+test/src/app/page.tsx
+     9→export default function Home({ searchParams }: any) {
 
 tsconfig.json
+     2→  "compilerOptions": {
+     8→  },
+     9→  "include": ["src"]
+    10→}
 
 turbo.json
+     2→  "$schema": "https://turbo.build/schema.json",
+     3→  "extends": ["//"],
+     4→  "pipeline": {
+    12→  }
+    13→}
 
 website/README.md
-     3→## Getting Started
-    25→## Learn More
-    34→## Deploy on Vercel
 
-website/src/components/ExpandModes/index.tsx
-     4→export const ExpandModes = ({
+website/package.json
 
-website/src/components/Footer/index.tsx
-     5→export const Footer = () => {
+website/src/pages/_app.tsx
+     7→export default function Nextra …
 
-website/src/components/Hero/index.tsx
-     6→export const Hero = () => {
-
-website/src/components/Other/Other.tsx
-     7→export const Other = ({
-
-website/src/components/Position/index.tsx
-     7→export type Position = (typeof positions)[number];
-     9→export const Position = ({
+website/src/pages/index.tsx
+    14→export default function Home() {

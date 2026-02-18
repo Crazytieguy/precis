@@ -2,17 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1006 tokens)
+budget: 1000 (1007 tokens)
 
 README.md
     91→# Documentation
     93→- [Sandbox examples](#sandbox-examples)
-    94→- [Getting Started](#getting-started)
-    95→- [API Reference](#api-reference)
       →…
-
-examples/gif-fetcher/src/App.tsx
-    75→export default function App() {
 
 jsr.json
 
@@ -22,39 +17,34 @@ src/errors.ts
      2→ * Error when the given input value does not match any included pattern
      3→ * and .exhaustive() was specified
      5→export class NonExhaustiveError extends Error {
+     6→  constructor(public input: unknown) {
 
 src/index.ts
+     1→import * as Pattern from './patterns';
 
 src/internals/helpers.ts
      7→import * as symbols from './symbols';
-     8→import { SelectionType } from '../types/FindSelected';
-     9→import { Pattern, Matcher, MatcherType, AnyMatcher } from '../types/Pattern';
-    12→export const isObject …
-    16→export const isMatcher …
     24→const isOptionalPattern …
-    32→export const matchPattern …
-   120→export const getSelectionKeys …
-   132→export const flatMap …
 
 src/internals/symbols.ts
      2→ * Symbols used internally within ts-pattern to construct and discriminate
      3→ * Guard, Not, and Select, and AnonymousSelect patterns
      4→ *
-     5→ * Symbols have the advantage of not appearing in auto-complete suggestions in
-     6→ * user defined patterns, and eliminate the risk of property
-     7→ * overlap between ts-pattern internals and user defined patterns.
-     8→ *
       → …
     16→export const matcher = Symbol.for('@ts-pattern/matcher');
 
 src/is-matching.ts
     11→type PatternConstraint …
+    53→export function isMatching …
 
 src/match.ts
-    32→export function match …
-    39→ * This class represents a match expression. It follows the
+    17→ * `match` creates a **pattern matching expression**.
       → …
+    32→export function match<const input, output = symbols.unset>(
+    33→  value: input
+    34→): Match<input, output> {
     47→class MatchExpression<input, output> {
+   133→function defaultCatcher(input: unknown): never {
 
 src/patterns.ts
      8→import { matchPattern, getSelectionKeys, flatMap } from './internals/helpers';
@@ -64,58 +54,73 @@ src/patterns.ts
    611→export function not …
   1251→export function instanceOf …
 
+src/types/BuildMany.ts
+     1→import { Iterator, IsOptionalKeysOf, UpdateAt, ValueOf } from './helpers';
+     4→export type BuildMany …
+    11→type BuildOne …
+    19→export type SetDeep …
+
+src/types/DeepExclude.ts
+     1→import { DistributeMatchingUnions } from './DistributeUnions';
+     3→export type DeepExclude<a, b> = Exclude<DistributeMatchingUnions<a, b>, b>;
+
 src/types/DistributeUnions.ts
     41→export type DistributeMatchingUnions …
     80→export type FindUnions …
 
+src/types/ExtractPreciseValue.ts
+    13→export type ExtractPreciseValue …
+    81→type ExtractPreciseArrayValue …
+
+src/types/FindSelected.ts
+
 src/types/InvertPattern.ts
    106→export type InvertPattern …
+   180→export type ReduceIntersectionForExclude …
+   192→export type ReduceUnionForExclude …
    303→export type InvertPatternForExclude …
 
+src/types/IsMatching.ts
+     1→import { …
+    57→export type IsMatching …
+
 src/types/Match.ts
-    10→interface NonExhaustiveError<i> {
-    14→interface TSPatternError<i> {
-    22→export type Match …
+     8→export type PickReturnValue<a, b> = a extends symbols.unset ? b : a;
+    19→ * #### Match
+    20→ * An interface to create a pattern matching clause.
+    22→export type Match<
+    23→  i,
+    24→  o,
+    25→  handledCases extends any[] = [],
+    26→  inferredOutput = never
+    27→> = {
    132→  with …
+   159→  when …
+   180→  otherwise …
+   205→  run …
+   225→  narrow …
    245→type DeepExcludeAll …
+   251→type MakeTuples<ps extends readonly any[], value> = {
    261→type Exhaustive …
 
 src/types/Pattern.ts
-    44→ * A `Matcher` is an object implementing the match
-    45→ * protocol. It must define a `symbols.matcher` property
-    46→ * which returns an object with a `match()` method, taking
-    47→ * the input value and returning whether the pattern matches
-    48→ * or not, along with optional selections.
-    50→export interface Matcher<
-    51→  input,
-    52→  narrowed,
-    53→  // Type of what this pattern selected from the input
-    54→  matcherType extends MatcherType = 'default',
-    55→  selections extends SelectionType = None,
-    56→  // Type to exclude from the input union because
-    57→  // it has been fully matched by this pattern
-    58→  excluded = narrowed
-    59→> {
-    60→  [matcher](): MatcherProtocol<
-    61→    input,
-    62→    narrowed,
-    63→    matcherType,
-    64→    selections,
-    65→    excluded
-    66→  >;
-    67→  // only used for array matchers
-    68→  [symbols.isVariadic]?: boolean;
-    69→}
+    50→export interface Matcher …
    132→export interface Override<a> {
    133→  [symbols.override]: a;
    134→}
-   157→export type Pattern …
+   147→ * `Pattern<a>` is the generic type for patterns matching a value of type `a`. A pattern can be any (nested) javascript value.
+   148→ *
+      → …
+   157→export type Pattern<a = unknown> = unknown extends a
+   158→  ? UnknownValuePattern
+   159→  : KnownPattern<a>;
    269→      select …
    678→      select …
 
 src/types/helpers.ts
     14→export type LeastUpperBound …
    182→export type GuardValue …
+   204→type AllKeys …
    266→export interface Fn {
    267→  input: unknown;
    268→  output: unknown;

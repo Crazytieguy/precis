@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (982 tokens)
+budget: 1000 (1000 tokens)
 
 CHANGELOG.md
 
@@ -13,8 +13,7 @@ README.md
      8→can sort a collection of versions properly, handles prerelease/beta
      9→versions, can increment versions, etc.
     10→
-    11→Versions used with go-version must follow [SemVer](http://semver.org/).
-    12→
+      →…
     13→## Installation and Usage
     15→Package documentation can be found on
     16→[Go Reference](https://pkg.go.dev/github.com/hashicorp/go-version).
@@ -22,18 +21,10 @@ README.md
     18→Installation can be done with a normal `go get`:
     19→
     20→```
-    21→$ go get github.com/hashicorp/go-version
-    22→```
-    23→
+      →…
     24→#### Version Parsing and Comparison
-    26→```go
-      →…
     37→#### Version Constraints
-    39→```go
-      →…
     49→#### Version Sorting
-    51→```go
-      →…
     63→## Issues and Contributing
     65→If you find an issue with this library, please report an issue. If you'd
     66→like, we welcome any contributions. Fork this library and submit a pull
@@ -57,9 +48,16 @@ constraint.go
     51→	op operator
     52→	f  constraintFunc
     53→}
+    58→func NewConstraint(v string) (Constraints, error) {
+    75→func MustConstraints(c Constraints, err error) Constraints {
+    84→func (cs Constraints) Check(v *Version) bool {
+   102→func (cs Constraints) Equals(c Constraints) bool {
    125→func (cs Constraints) Len() int {
    129→func (cs Constraints) Less(i, j int) bool {
    140→func (cs Constraints) Swap(i, j int) {
+   145→func (cs Constraints) String() string {
+   155→func (c *Constraint) Check(v *Version) bool {
+   161→func (c *Constraint) Prerelease() bool {
    165→func (c *Constraint) String() string {
    228→//-------------------------------------------------------------------
    229→// Constraint functions
@@ -73,14 +71,16 @@ version.go
      6→import …
     15→// The compiled regular expression used to test the validity of a version.
     16→var (
+    17→	versionRegexp     *regexp.Regexp
+    18→	versionRegexpOnce sync.Once
+    19→	semverRegexp      *regexp.Regexp
+    20→	semverRegexpOnce  sync.Once
     37→// The raw regular expression string used for testing the validity
     38→// of a version.
     39→const (
     40→	VersionRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     45→	// SemverRegexpRaw requires a separator between version and prerelease
     46→	SemverRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
-    47→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
-      →		…
     52→// Version represents a single version.
     53→type Version struct {
     54→	metadata string
@@ -100,6 +100,7 @@ version_collection.go
 
 version_collection_test.go
      6→import …
+    12→func TestCollection(t *testing.T) {
 
 version_test.go
      6→import …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1007 tokens)
+budget: 1000 (1011 tokens)
 
 README.md
      1→# xxhash
@@ -10,20 +10,13 @@ README.md
      7→high-quality hashing algorithm that is much faster than anything in the Go
      8→standard library.
      9→
-    10→This package provides a straightforward API:
-    11→
-    12→```
       →…
     33→## Compatibility
     45→## Benchmarks
     66→## Projects using this package
 
 dynamic/dynamic_test.go
-     6→import …
-    15→// This is a cursory test that checks whether things work under dynamic linking.
     17→func TestMain(m *testing.M) {
-    18→	cmd := exec.Command(
-      →	…
     33→func TestDynamic(t *testing.T) {
 
 dynamic/plugin.go
@@ -42,8 +35,7 @@ xxhash.go
     23→var primes = [...]uint64{prime1, prime2, prime3, prime4, prime5}
     25→// Digest implements hash.Hash64.
     26→//
-    27→// Note that a zero-valued Digest is not ready to receive writes.
-    28→// Call Reset or create a Digest using New before calling other methods.
+      →…
     29→type Digest struct {
     30→	v1    uint64
     31→	v2    uint64
@@ -66,41 +58,48 @@ xxhash.go
    190→func (d *Digest) UnmarshalBinary(b []byte) error {
 
 xxhash_asm.go
+     9→// Sum64 computes the 64-bit xxHash digest of b with a zero seed.
+    10→//
+    11→//go:noescape
     12→func Sum64(b []byte) uint64
     14→//go:noescape
     15→func writeBlocks(d *Digest, b []byte) int
 
 xxhash_other.go
+     6→// Sum64 computes the 64-bit xxHash digest of b with a zero seed.
      7→func Sum64(b []byte) uint64 {
+     8→	// A simpler version would be
+     9→	//   d := New()
+    10→	//   d.Write(b)
+      →	…
+    64→func writeBlocks(d *Digest, b []byte) int {
 
 xxhash_safe.go
+     8→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
      9→func Sum64String(s string) uint64 {
+    10→	return Sum64([]byte(s))
+    11→}
+    13→// WriteString adds more data to d. It always returns len(s), nil.
     14→func (d *Digest) WriteString(s string) (n int, err error) {
+    15→	return d.Write([]byte(s))
+    16→}
 
 xxhash_unsafe.go
      9→import …
+    36→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
+      →…
     38→func Sum64String(s string) uint64 {
+    43→// WriteString adds more data to d. It always returns len(s), nil.
+      →…
     45→func (d *Digest) WriteString(s string) (n int, err error) {
-    53→// sliceHeader is similar to reflect.SliceHeader, but it assumes that the layout
-    54→// of the first two words is the same as the layout of a string.
     55→type sliceHeader struct {
     56→	s   string
     57→	cap int
     58→}
 
 xxhash_unsafe_test.go
-    29→// This test is inspired by the Go runtime tests in https://go.dev/cl/57410.
-      →…
+    13→func TestStringAllocs(t *testing.T) {
     31→func TestInlining(t *testing.T) {
-
-xxhashbench/xxhashbench_test.go
-     3→import …
-    18→var sink uint64
-    20→var benchmarks = []struct {
-   108→func BenchmarkHashes(b *testing.B) {
 
 xxhsum/xxhsum.go
      3→import …
-    11→func main() {
-    34→func contains(ss []string, s string) bool {
-    43→func printHash(r io.Reader, name string) {

@@ -2,100 +2,98 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1995 tokens)
+budget: 2000 (2024 tokens)
 
 argument.js
      3→class Argument {
+     5→   * Initialize a new command argument with the given name and description.
+     6→   * The default is that the argument is required, and you can explicitly
+     7→   * indicate this with <> around the name. Put [] around the name for an optional argument.
+     8→   *
+     9→   * @param {string} name
+    10→   * @param {string} [description]
     13→  constructor(name, description) {
+    14→    this.description = description || '';
+      →    …
+    43→   * Return argument name.
+    44→   *
+    45→   * @return {string}
     48→  name() {
+    49→    return this._name;
+      →    …
+    53→   * @package
+    56→  _collectValue(value, previous) {
+    66→   * Set the default value, and optionally supply the description to be displayed in the help.
+    67→   *
+    68→   * @param {*} value
+    69→   * @param {string} [description]
+    70→   * @return {Argument}
     73→  default(value, description) {
+    74→    this.defaultValue = value;
+      →    …
+    80→   * Set the custom handler for processing CLI command arguments into argument values.
+    81→   *
+    82→   * @param {Function} [fn]
+    83→   * @return {Argument}
     86→  argParser(fn) {
+    87→    this.parseArg = fn;
+      →    …
+    92→   * Only allow argument value to be one of choices.
+    93→   *
+    94→   * @param {string[]} values
+    95→   * @return {Argument}
     98→  choices(values) {
+    99→    this.argChoices = values.slice();
+      →    …
+   115→   * Make argument required.
+   116→   *
+   117→   * @returns {Argument}
    119→  argRequired() {
+   120→    this.required = true;
+      →    …
+   125→   * Make argument optional.
+   126→   *
+   127→   * @returns {Argument}
    129→  argOptional() {
+   130→    this.required = false;
+      →    …
+   136→ * Takes an argument and returns its human readable equivalent for help usage.
+   137→ *
+   138→ * @param {Argument} arg
+   139→ * @return {string}
+   140→ * @private
+   143→function humanReadableArgName(arg) {
 
 command.js
     13→class Command extends EventEmitter {
-    20→  constructor(name) {
-    99→  copyInheritedSettings(sourceCommand) {
-   155→  command(nameAndArgs, actionOptsOrExecDesc, execOpts) {
-   192→  createCommand(name) {
-   203→  createHelp() {
-   215→  configureHelp(configuration) {
-   245→  configureOutput(configuration) {
-   261→  showHelpAfterError(displayHelp = true) {
-   273→  showSuggestionAfterError(displaySuggestion = true) {
-   288→  addCommand(cmd, opts) {
-   316→  createArgument(name, description) {
-   336→  argument(name, description, parseArg, defaultValue) {
-   359→  arguments(names) {
-   375→  addArgument(argument) {
-   409→  helpCommand(enableOrNameAndArgs, description) {
-   443→  addHelpCommand(helpCommand, deprecatedDescription) {
-   487→  hook(event, listener) {
-   508→  exitOverride(fn) {
-   556→  action(fn) {
-   585→  createOption(flags, description) {
-   670→  addOption(option) {
-   788→  option(flags, description, parseArg, defaultValue) {
-   805→  requiredOption(flags, description, parseArg, defaultValue) {
-   826→  combineFlagAndOptionalValue(combine = true) {
-   837→  allowUnknownOption(allowUnknown = true) {
-   848→  allowExcessArguments(allowExcess = true) {
-   861→  enablePositionalOptions(positional = true) {
-   875→  passThroughOptions(passThrough = true) {
-   905→  storeOptionsAsProperties(storeAsProperties = true) {
-   925→  getOptionValue(key) {
-   940→  setOptionValue(key, value) {
-   953→  setOptionValueWithSource(key, value, source) {
-   971→  getOptionValueSource(key) {
-   983→  getOptionValueSourceWithGlobals(key) {
-  1090→  parse(argv, parseOptions) {
-  1119→  async parseAsync(argv, parseOptions) {
   1127→  _prepareForParse() {
-  1128→    if (this._savedState === null) {
-  1129→      this.saveStateBeforeParse();
-  1130→    } else {
-  1131→      this.restoreStateBeforeParse();
-  1132→    }
-  1133→  }
-  1141→  saveStateBeforeParse() {
-  1158→  restoreStateBeforeParse() {
-  1748→  parseOptions(args) {
-  1902→  opts() {
-  1924→  optsWithGlobals() {
-  1940→  error(message, errorOptions) {
-  2034→  missingArgument(name) {
-  2046→  optionMissingArgument(option) {
-  2058→  missingMandatoryOptionValue(option) {
-  2114→  unknownOption(flag) {
-  2162→  unknownCommand() {
-  2195→  version(str, flags, description) {
-  2218→  description(str, argsDescription) {
-  2234→  summary(str) {
-  2249→  alias(alias) {
-  2289→  aliases(aliases) {
-  2304→  usage(str) {
-  2331→  name(str) {
-  2344→  helpGroup(heading) {
-  2363→  commandsGroup(heading) {
-  2382→  optionsGroup(heading) {
-  2419→  nameFromFilename(filename) {
-  2437→  executableDir(path) {
-  2450→  helpInformation(contextOptions) {
-  2505→  outputHelp(contextOptions) {
-  2559→  helpOption(flags, description) {
-  2607→  addHelpOption(option) {
-  2621→  help(contextOptions) {
-  2656→  addHelpText(position, text) {
 
 error.js
      2→ * CommanderError class
      4→class CommanderError extends Error {
+     6→   * Constructs the CommanderError class
+     7→   * @param {number} exitCode suggested exit code which could be used with process.exit
+     8→   * @param {string} code an id string representing the error
+     9→   * @param {string} message human-readable description of the error
     11→  constructor(exitCode, code, message) {
+    12→    super(message);
+    13→    // properly capture stack trace in Node.js
+    14→    Error.captureStackTrace(this, this.constructor);
+    15→    this.name = this.constructor.name;
+    16→    this.code = code;
+    17→    this.exitCode = exitCode;
+    18→    this.nestedError = undefined;
+    19→  }
     23→ * InvalidArgumentError class
     25→class InvalidArgumentError extends CommanderError {
+    27→   * Constructs the InvalidArgumentError class
+    28→   * @param {string} [message] explanation of why argument is invalid
     30→  constructor(message) {
+    31→    super(1, 'commander.invalidArgument', message);
+    32→    // properly capture stack trace in Node.js
+    33→    Error.captureStackTrace(this, this.constructor);
+    34→    this.name = this.constructor.name;
+    35→  }
 
 help.js
     12→class Help {
@@ -140,6 +138,14 @@ help.js
    633→  preformatted(str) {
    650→  formatItem(term, termWidth, description, helper) {
    695→  boxWrap(str, width) {
+   733→ * Strip style ANSI escape sequences from the string. In particular, SGR (Select Graphic Rendition) codes.
+   734→ *
+   735→ * @param {string} str
+   736→ * @returns {string}
+   737→ * @package
+   740→function stripColor(str) {
+   741→  // eslint-disable-next-line no-control-regex
+      →  …
 
 option.js
      3→class Option {
@@ -152,6 +158,8 @@ option.js
    132→  argParser(fn) {
    144→  makeOptionMandatory(mandatory = true) {
    156→  hideHelp(hide = true) {
+   162→   * @package
+   165→  _collectValue(value, previous) {
    181→  choices(values) {
    203→  name() {
    217→  attributeName() {
@@ -160,25 +168,30 @@ option.js
    256→  isBoolean() {
    262→ * This class is to make it easier to work with dual options, without changing the existing
    263→ * implementation. We support separate dual options for separate positive and negative options,
-   264→ * like `--build` and `--no-build`, which share a single option value. This works nicely for some
-   265→ * use cases, but is tricky for others where we want separate behaviours despite
-   266→ * the single shared option value.
+      → …
    268→class DualOptions {
    272→  constructor(options) {
    297→  valueFromOption(value, option) {
+   309→ * Convert string from kebab-case to camelCase.
+   310→ *
+   311→ * @param {string} str
+   312→ * @return {string}
+   313→ * @private
+   316→function camelcase(str) {
+   323→ * Split the short and long flag out of something like '-m,--mixed <value>'
+   324→ *
+   325→ * @private
+   328→function splitOptionFlags(flags) {
 
 suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
-     4→  // https://en.wikipedia.org/wiki/Damerau–Levenshtein_distance
-     5→  // Calculating optimal string alignment distance, no substring is edited more than once.
-     6→  // (Simple implementation.)
-     7→
-     8→  // Quick early exit, return worst case.
-     9→  if (Math.abs(a.length - b.length) > maxDistance)
-    10→    return Math.max(a.length, b.length);
-    11→
-    12→  // distance between prefix substrings of a and b
-    13→  const d = [];
-    14→
-      →…
+    49→ * Find close matches, restricted to same number of edits.
+    50→ *
+    51→ * @param {string} word
+    52→ * @param {string[]} candidates
+    53→ * @returns {string}
+    56→function suggestSimilar(word, candidates) {
+    57→  if (!candidates || candidates.length === 0) return '';
+    58→  // remove possible duplicates
+      →  …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2009 tokens)
+budget: 2000 (2002 tokens)
 
 clean.js
      4→const clean = (version, options) => {
@@ -37,6 +37,21 @@ cmp.js
     33→      return eq(a, b, loose)
     34→
     35→    case '!=':
+    36→      return neq(a, b, loose)
+    37→
+    38→    case '>':
+    39→      return gt(a, b, loose)
+    40→
+    41→    case '>=':
+    42→      return gte(a, b, loose)
+    43→
+    44→    case '<':
+    45→      return lt(a, b, loose)
+    46→
+    47→    case '<=':
+    48→      return lte(a, b, loose)
+    49→
+    50→    default:
       →    …
 
 coerce.js
@@ -60,12 +75,6 @@ coerce.js
     24→    match = version.match(options.includePrerelease ? re[t.COERCEFULL] : re[t.COERCE])
     25→  } else {
     26→    // Find the right-most coercible string that does not share
-    27→    // a terminus with a more left-ward coercible string.
-    28→    // Eg, '1.2.3.4' wants to coerce '2.3.4', not '3.4' or '4'
-    29→    // With includePrerelease option set, '1.2.3.4-rc' wants to coerce '2.3.4-rc', not '2.3.4'
-    30→    //
-    31→    // Walk through the string checking with a /g regexp
-    32→    // Manually set the index so as to pick up overlapping matches.
       →    …
 
 compare-build.js
@@ -109,7 +118,8 @@ diff.js
     28→    if (!lowVersion.patch && !lowVersion.minor) {
     29→      return 'major'
     30→    }
-      →    …
+    31→
+      →…
 
 eq.js
      4→const eq = (a, b, loose) => compare(a, b, loose) === 0

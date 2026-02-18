@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4046 tokens)
+budget: 4000 (4048 tokens)
 
 components/checkmark.tsx
      1→import { styled, keyframes } from 'goober';
@@ -14,6 +14,8 @@ components/checkmark.tsx
     32→}
     34→export const CheckmarkIcon = styled('div')<CheckmarkTheme>`
     35→  width: 20px;
+    36→  opacity: 0;
+    37→  height: 20px;
       →  …
 
 components/error.tsx
@@ -27,17 +29,23 @@ components/error.tsx
     36→}
     38→export const ErrorIcon = styled('div')<ErrorTheme>`
     39→  width: 20px;
+    40→  opacity: 0;
+    41→  height: 20px;
       →  …
 
 components/loader.tsx
      1→import { styled, keyframes } from 'goober';
      3→const rotate = keyframes`
+     4→  from {
+      →  …
     12→export interface LoaderTheme {
     13→  primary?: string;
     14→  secondary?: string;
     15→}
     17→export const LoaderIcon = styled('div')<LoaderTheme>`
     18→  width: 12px;
+    19→  height: 12px;
+    20→  box-sizing: border-box;
       →  …
 
 components/toast-bar.tsx
@@ -46,14 +54,8 @@ components/toast-bar.tsx
      4→import { Toast, ToastPosition, resolveValue, Renderable } from '../core/types';
      5→import { ToastIcon } from './toast-icon';
      6→import { prefersReducedMotion } from '../core/utils';
-     8→const enterAnimation = (factor: number) => `
-     9→0% {transform: translate3d(0,${factor * -200}%,0) scale(.6); opacity:.5;}
-    10→100% {transform: translate3d(0,0,0) scale(1); opacity:1;}
-    11→`;
-    13→const exitAnimation = (factor: number) => `
-    14→0% {transform: translate3d(0,0,-1px) scale(1); opacity:1;}
-    15→100% {transform: translate3d(0,${factor * -150}%,-1px) scale(.6); opacity:0;}
-    16→`;
+     8→const enterAnimation …
+    13→const exitAnimation …
     18→const fadeInAnimation = `0%{opacity:0;} 100%{opacity:1;}`;
     19→const fadeOutAnimation = `0%{opacity:1;} 100%{opacity:0;}`;
     22→const ToastBarBase = styled('div')`
@@ -67,15 +69,12 @@ components/toast-bar.tsx
     53→    message: Renderable;
     54→  }) => Renderable;
     55→}
-    57→const getAnimationStyle = (
-    58→  position: ToastPosition,
-    59→  visible: boolean
-    60→): React.CSSProperties => {
-    61→  const top = position.includes('top');
-      →  …
+    57→const getAnimationStyle …
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
     76→  ({ toast, position, style, children }) => {
-      →  …
+    77→    const animationStyle: React.CSSProperties = toast.height
+    78→      ? getAnimationStyle(
+      →      …
 
 components/toast-icon.tsx
      1→import * as React from 'react';
@@ -110,7 +109,8 @@ components/toast-icon.tsx
     61→  }
     62→
     63→  return (
-      →  …
+    64→    <IndicatorWrapper>
+      →    …
 
 components/toaster.tsx
      1→import { css, setup } from 'goober';
@@ -175,6 +175,7 @@ core/store.ts
     22→export type Action =
     23→  | {
     24→      type: ActionType.ADD_TOAST;
+    25→      toast: Toast;
       →      …
     52→interface ToasterState {
     53→  toasts: Toast[];
@@ -213,7 +214,8 @@ core/store.ts
    173→  };
    175→export const defaultTimeouts: {
    176→  [key in ToastType]: number;
-      →  …
+   177→} = {
+      →…
    185→export const useStore = (
    186→  toastOptions: DefaultToastOptions = {},
    187→  toasterId: string = DEFAULT_TOASTER_ID
@@ -252,20 +254,12 @@ core/toast.ts
     27→): Toast => ({
     28→  createdAt: Date.now(),
     29→  visible: true,
-    30→  dismissed: false,
-    31→  type,
-    32→  ariaProps: {
-    33→    role: 'status',
-      →    …
+      →  …
     42→const createHandler =
     43→  (type?: ToastType): ToastHandler =>
     44→  (message, options) => {
     45→    const toast = createToast(message, type, options);
     46→
-    47→    const dispatch = createDispatch(
-    48→      toast.toasterId || getToasterIdFromToastId(toast.id)
-    49→    );
-    50→
       →…
     55→const toast = (message: Message, opts?: ToastOptions) =>
     56→  createHandler('blank')(message, opts);
@@ -339,7 +333,7 @@ core/types.ts
     74→>;
     76→export type DefaultToastOptions = ToastOptions & {
     77→  [key in ToastType]?: ToastOptions;
-      →  …
+    78→};
     80→export interface ToasterProps {
     81→  position?: ToastPosition;
     82→  toastOptions?: DefaultToastOptions;
@@ -373,6 +367,20 @@ core/use-toaster.ts
     14→    new Map<Toast['id'], ReturnType<typeof setTimeout>>()
     15→  ).current;
     16→
+    17→  const addToRemoveQueue = useCallback(
+    18→    (toastId: string, removeDelay = REMOVE_DELAY) => {
+    19→      if (toastTimeouts.has(toastId)) {
+    20→        return;
+    21→      }
+    22→
+    23→      const timeout = setTimeout(() => {
+    24→        toastTimeouts.delete(toastId);
+    25→        dispatch({
+    26→          type: ActionType.REMOVE_TOAST,
+    27→          toastId: toastId,
+    28→        });
+    29→      }, removeDelay);
+    30→
       →…
 
 core/utils.ts

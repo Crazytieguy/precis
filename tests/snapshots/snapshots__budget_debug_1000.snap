@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1008 tokens)
+budget: 1000 (1020 tokens)
 
 README.md
      1→# debug
@@ -16,31 +16,15 @@ README.md
     77→On Windows the environment variable is set using the `set` command.
     78→
     79→```cmd
-    80→set DEBUG=*,-not_this
-    81→```
-    82→
-    83→Example:
-    84→
-    85→```cmd
       →…
     89→##### PowerShell (VS Code default)
     91→PowerShell uses different syntax to set environment variables.
     92→
     93→```cmd
-    94→$env:DEBUG = "*,-not_this"
-    95→```
-    96→
-    97→Example:
-    98→
-    99→```cmd
       →…
    110→## Namespace Colors
    116→#### Node.js
-   118→In Node.js, colors are enabled when stderr is a TTY. You also _should_ install
-      →…
    124→#### Web Browser
-   126→Colors are also enabled on "Web Inspectors" that understand the `%c` formatting
-      →…
    134→## Millisecond diff
    145→## Conventions
    149→## Wildcards
@@ -53,12 +37,6 @@ README.md
    201→
    202→```js
    203→const createDebug = require('debug')
-   204→createDebug.formatters.h = (v) => {
-   205→  return v.toString('hex')
-   206→}
-   207→
-   208→// …elsewhere
-   209→const debug = createDebug('foo')
       →…
    215→## Browser Support
    248→## Output streams
@@ -103,18 +81,43 @@ package.json
 
 src/browser.js
    115→function useColors() {
+   144→ * Colorize log arguments if enabled.
+   145→ *
+      → …
    149→function formatArgs(args) {
+   195→ * Save `namespaces`.
+   196→ *
+      → …
    200→function save(namespaces) {
+   214→ * Load `namespaces`.
+   215→ *
+      → …
    219→function load() {
+   237→ * Localstorage attempts to return the localstorage.
+   238→ *
+      → …
    247→function localstorage() {
 
 src/common.js
+     3→ * This is the common logic for both the Node.js and web browser
+     4→ * implementations of `debug()`.
      7→function setup(env) {
+     8→	createDebug.debug = createDebug;
+     9→	createDebug.default = createDebug;
+    10→	createDebug.coerce = coerce;
+    11→	createDebug.disable = disable;
+    12→	createDebug.enable = enable;
+    13→	createDebug.enabled = enabled;
+      →	…
 
 src/node.js
    155→function useColors() {
    167→function formatArgs(args) {
    182→function getDate() {
+   183→	if (exports.inspectOpts.hideDate) {
+   184→		return '';
+   185→	}
+      →	…
    193→function log(...args) {
    203→function save(namespaces) {
    220→function load() {

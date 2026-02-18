@@ -2,7 +2,9 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1005 tokens)
+budget: 1000 (1011 tokens)
+
+Cargo.toml
 
 README.md
      1→# mdBook
@@ -15,17 +17,31 @@ crates/mdbook-core/README.md
      1→# mdbook-core
     11→## License
 
+crates/mdbook-core/src/config.rs
+    91→    type Err = Error;
+
 crates/mdbook-core/src/lib.rs
      7→pub const MDBOOK_VERSION: &str = env!("CARGO_PKG_VERSION");
     14→pub mod errors {
-    15→    pub use anyhow::{Error, Result};
 
 crates/mdbook-driver/README.md
      1→# mdbook-driver
     11→## License
 
+crates/mdbook-driver/src/builtin_preprocessors/index.rs
+    12→pub struct IndexPreprocessor;
+    16→    pub const NAME: &'static str = "index";
+    19→    pub fn new() -> Self {
+
+crates/mdbook-driver/src/builtin_renderers/mod.rs
+    11→pub use self::markdown_renderer::MarkdownRenderer;
+    20→pub struct CmdRenderer {
+    27→    pub fn new …
+
 crates/mdbook-driver/src/init.rs
     13→pub struct BookBuilder {
+    14→    root: PathBuf,
+      →    …
 
 crates/mdbook-driver/src/mdbook.rs
     29→pub struct MDBook {
@@ -34,17 +50,11 @@ crates/mdbook-html/README.md
      1→# mdbook-html
     11→## License
 
-crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
-    22→pub struct HtmlHandlebars;
-    26→    pub fn new() -> Self {
-
 crates/mdbook-html/src/lib.rs
      5→pub mod theme;
-     8→pub use html_handlebars::HtmlHandlebars;
 
 crates/mdbook-html/src/theme/mod.rs
     40→pub struct Theme {
-   201→    fn default() -> Theme {
 
 crates/mdbook-markdown/README.md
      1→# mdbook-markdown
@@ -80,13 +90,11 @@ crates/mdbook-summary/README.md
     11→## License
 
 crates/mdbook-summary/src/lib.rs
-     8→pub use mdbook_core::book::SectionNumber;
     59→pub fn parse_summary …
     67→pub struct Summary {
     84→pub struct Link {
     98→    pub fn new …
    122→pub enum SummaryItem {
-   173→struct SummaryParser<'a> {
    190→macro_rules! collect_events {
 
 crates/xtask/README.md
@@ -106,9 +114,6 @@ guide/src/cli/README.md
 
 guide/src/for_developers/README.md
      1→# For developers
-
-guide/src/for_developers/mdbook-wordcount/src/main.rs
-    46→pub struct WordcountConfig {
 
 guide/src/format/README.md
      1→# Format
@@ -133,7 +138,7 @@ src/cmd/mod.rs
 
 src/cmd/serve.rs
      3→use super::watch;
-    20→const LIVE_RELOAD_ENDPOINT …
+   109→async fn serve …
 
 src/cmd/watch/poller.rs
     18→pub fn rebuild_on_change …

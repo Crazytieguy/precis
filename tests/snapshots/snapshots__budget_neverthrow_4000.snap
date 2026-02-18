@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4047 tokens)
+budget: 4000 (4044 tokens)
 
 CHANGELOG.md
      1→# neverthrow
@@ -10,25 +10,10 @@ CHANGELOG.md
 README.md
      1→# NeverThrow 🙅
      5→## Description
-     7→Encode failure into your program.
-     8→
-      →…
     19→## Table Of Contents
-    21→* [Installation](#installation)
-    22→* [Recommended: Use `eslint-plugin-neverthrow`](#recommended-use-eslint-plugin-neverthrow)
-      →…
     73→## Installation
-    75→```sh
-    76→> npm install neverthrow
-      →…
     79→## Recommended: Use `eslint-plugin-neverthrow`
-    81→As part of `neverthrow`s [bounty program](https://github.com/supermacro/neverthrow/issues/314), user [mdbetancourt](https://github.com/mdbetancourt) created [`eslint-plugin-neverthrow`](https://github.com/mdbetancourt/eslint-plugin-neverthrow) to ensure that errors are not gone unhandled.
-    82→
-      →…
    100→## Top-Level API
-   102→`neverthrow` exposes the following:
-   103→
-      →…
    139→## API Documentation
    141→### Synchronous API (`Result`)
    863→### Asynchronous API (`ResultAsync`)
@@ -38,24 +23,8 @@ README.md
   1636→
   1637→`_unsafeUnwrap` takes a `Result<T, E>` and returns a `T` when the result is an `Ok`, otherwise it throws a custom object.
   1638→
-  1639→`_unsafeUnwrapErr` takes a `Result<T, E>` and returns a `E` when the result is an `Err`, otherwise it throws a custom object.
-  1640→
-  1641→That way you can do something like:
-  1642→
-  1643→```typescript
-  1644→expect(myResult._unsafeUnwrap()).toBe(someExpectation)
-  1645→```
-  1646→
-  1647→However, do note that `Result` instances are comparable. So you don't necessarily need to unwrap them in order to assert expectations in your tests. So you could also do something like this:
-  1648→
-  1649→```typescript
-  1650→import { ok } from 'neverthrow'
-  1651→
       →…
   1673→## A note on the Package Name
-  1675→Although the package is called `neverthrow`, please don't take this literally. I am simply encouraging the developer to think a bit more about the ergonomics and usage of whatever software they are writing.
-  1676→
-      →…
   1681→### License
   1683→The neverthrow project is available as open source under the terms of the [MIT license](https://github.com/supermacro/neverthrow/blob/master/LICENSE).
 
@@ -97,8 +66,6 @@ src/_internals/error.ts
      4→  withStackTrace: boolean
      5→}
      7→const defaultErrorConfig: ErrorConfig = {
-     8→  withStackTrace: false,
-     9→}
     11→interface NeverThrowError<T, E> {
     12→  data:
     13→    | {
@@ -160,9 +127,7 @@ src/_internals/utils.ts
     54→export const combineResultAsyncList = <T, E>(
     55→  asyncResultList: readonly ResultAsync<T, E>[],
     56→): ResultAsync<readonly T[], E> =>
-    57→  ResultAsync.fromSafePromise(Promise.all(asyncResultList)).andThen(
-    58→    combineResultList,
-    59→  ) as ResultAsync<T[], E>
+      →…
     62→ * Give a list of all the errors we find
     64→export const combineResultListWithAllErrors = <T, E>(
     65→  resultList: readonly Result<T, E>[],
@@ -184,9 +149,7 @@ src/_internals/utils.ts
     82→export const combineResultAsyncListWithAllErrors = <T, E>(
     83→  asyncResultList: readonly ResultAsync<T, E>[],
     84→): ResultAsync<readonly T[], E[]> =>
-    85→  ResultAsync.fromSafePromise(Promise.all(asyncResultList)).andThen(
-    86→    combineResultListWithAllErrors,
-    87→  ) as ResultAsync<T[], E[]>
+      →…
 
 src/result-async.ts
      1→import type { …
@@ -195,16 +158,50 @@ src/result-async.ts
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
     23→  private _promise: Promise<Result<T, E>>
     24→
+    25→  constructor …
+    30→  static fromSafePromise …
+    37→  static fromPromise …
+    46→  static fromThrowable …
+    69→  static combine …
+    81→  static combineWithAllErrors …
+    89→  map …
+   101→  andThrough …
+   117→  andTee …
+   133→  orTee …
+   149→  mapErr …
+   169→  andThen …
+   190→  orElse …
+   202→  match …
+   206→  unwrapOr …
    211→   * @deprecated will be removed in 9.0.0.
    212→   *
    213→   * You can use `safeTry` without this method.
-      →   …
+   214→   * @example
+   215→   * ```typescript
+   216→   * safeTry(async function* () {
+   217→   *   const okValue = yield* yourResult
+   218→   * })
+   219→   * ```
+   220→   * Emulates Rust's `?` operator in `safeTry`'s body. See also `safeTry`.
    222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
-   259→export const fromPromise …
-   260→export const fromSafePromise …
-   262→export const fromAsyncThrowable …
-   265→export type CombineResultAsyncs …
-   272→export type CombineResultsWithAllErrorsArrayAsync …
+   223→    return yield* await this._promise.then((res) => res.safeUnwrap())
+   224→  }
+   227→  then …
+   249→export function okAsync …
+   255→export function errAsync …
+   259→export const fromPromise = ResultAsync.fromPromise
+   260→export const fromSafePromise = ResultAsync.fromSafePromise
+   262→export const fromAsyncThrowable = ResultAsync.fromThrowable
+   265→export type CombineResultAsyncs<
+   266→  T extends readonly ResultAsync<unknown, unknown>[]
+   267→> = IsLiteralArray<T> extends 1
+   268→  ? TraverseAsync<UnwrapAsync<T>>
+   269→  : ResultAsync<ExtractOkAsyncTypes<T>, ExtractErrAsyncTypes<T>[number]>
+   272→export type CombineResultsWithAllErrorsArrayAsync<
+   273→  T extends readonly ResultAsync<unknown, unknown>[]
+   274→> = IsLiteralArray<T> extends 1
+   275→  ? TraverseWithAllErrorsAsync<UnwrapAsync<T>>
+   276→  : ResultAsync<ExtractOkAsyncTypes<T>, ExtractErrAsyncTypes<T>[number][]>
    279→type UnwrapAsync …
    300→type TraverseAsync …
    330→type TraverseWithAllErrorsAsync …
@@ -219,78 +216,105 @@ src/result.ts
     16→   * Wraps a function with a try catch, creating a new function with the same
     17→   * arguments but returning `Ok` if successful, `Err` if the function throws
     18→   *
-    19→   * @param fn function to wrap with ok on success or err on failure
-    20→   * @param errorFn when an error is thrown, this will wrap the error result if provided
-    21→   */
-    22→  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    23→  export function fromThrowable …
+    43→  export function combine …
+    55→  export function combineWithAllErrors …
     62→export type Result …
+    66→export function ok …
+    73→export function err …
+   122→export function safeTry …
    134→interface IResult<T, E> {
    136→   * Used to check if a `Result` is an `OK`
    137→   *
-   138→   * @returns `true` if the result is an `OK` variant of Result
+      →   …
    140→  isOk(): this is Ok<T, E>
    143→   * Used to check if a `Result` is an `Err`
    144→   *
-   145→   * @returns `true` if the result is an `Err` variant of Result
+      →   …
    147→  isErr(): this is Err<T, E>
    150→   * Maps a `Result<T, E>` to `Result<U, E>`
    151→   * by applying a function to a contained `Ok` value, leaving an `Err` value
-   152→   * untouched.
       →   …
    157→  map<A>(f: (t: T) => A): Result<A, E>
    160→   * Maps a `Result<T, E>` to `Result<T, F>` by applying a function to a
    161→   * contained `Err` value, leaving an `Ok` value untouched.
-   162→   *
       →   …
    168→  mapErr<U>(f: (e: E) => U): Result<T, U>
+   183→  andThen …
    186→   * This "tee"s the current value to an passed-in computation such as side
    187→   * effect functions but still returns the same current value as the result.
-   188→   *
       →   …
    195→  andTee(f: (t: T) => unknown): Result<T, E>
    198→   * This "tee"s the current `Err` value to an passed-in computation such as side
    199→   * effect functions but still returns the same `Err` value as the result.
-   200→   *
       →   …
    207→  orTee(f: (t: E) => unknown): Result<T, E>
+   219→  andThrough …
+   233→  orElse …
    236→   * Similar to `map` Except you must return a new `Result`.
    237→   *
-   238→   * This is useful for when you need to do a subsequent async computation using
       →   …
    244→  asyncAndThen<U, F>(f: (t: T) => ResultAsync<U, F>): ResultAsync<U, E | F>
    247→   * Maps a `Result<T, E>` to `ResultAsync<U, E>`
    248→   * by applying an async function to a contained `Ok` value, leaving an `Err`
-   249→   * value untouched.
       →   …
    253→  asyncMap<U>(f: (t: T) => Promise<U>): ResultAsync<U, E>
    256→   * Unwrap the `Ok` value, or return the default if there is an `Err`
    257→   *
-   258→   * @param v the default value to return if there is an `Err`
+      →   …
    260→  unwrapOr<A>(v: A): T | A
    263→   *
    264→   * Given 2 functions (one for the `Ok` variant and one for the `Err` variant)
-   265→   * execute the function that matches the `Result` variant.
       →   …
    276→  match<A, B = A>(ok: (t: T) => A, err: (e: E) => B): A | B
    279→   * @deprecated will be removed in 9.0.0.
    280→   *
-   281→   * You can use `safeTry` without this method.
       →   …
    290→  safeUnwrap(): Generator<Err<never, E>, T>
    293→   * **This method is unsafe, and should only be used in a test environments**
    294→   *
-   295→   * Takes a `Result<T, E>` and returns a `T` when the result is an `Ok`, otherwise it throws a custom object.
       →   …
    299→  _unsafeUnwrap(config?: ErrorConfig): T
    302→   * **This method is unsafe, and should only be used in a test environments**
    303→   *
-   304→   * takes a `Result<T, E>` and returns a `E` when the result is an `Err`,
       →   …
    309→  _unsafeUnwrapErr(config?: ErrorConfig): E
    312→export class Ok<T, E> implements IResult<T, E> {
+   313→  constructor …
+   315→  isOk …
+   319→  isErr …
+   323→  map …
+   328→  mapErr …
+   337→  andThen …
+   344→  andThrough …
+   348→  andTee …
+   357→  orTee …
+   366→  orElse …
+   370→  asyncAndThen …
+   379→  asyncAndThrough …
+   383→  asyncMap …
+   388→  unwrapOr …
+   393→  match …
+   397→  safeUnwrap …
    405→  _unsafeUnwrap(_?: ErrorConfig): T {
    409→  _unsafeUnwrapErr(config?: ErrorConfig): E {
    419→export class Err<T, E> implements IResult<T, E> {
+   420→  constructor …
+   422→  isOk …
+   426→  isErr …
+   431→  map …
+   435→  mapErr …
+   439→  andThrough …
+   443→  andTee …
+   447→  orTee …
+   461→  andThen …
+   470→  orElse …
+   475→  asyncAndThen …
+   479→  asyncAndThrough …
+   484→  asyncMap …
+   488→  unwrapOr …
+   492→  match …
+   496→  safeUnwrap …
    505→  _unsafeUnwrap(config?: ErrorConfig): T {
    509→  _unsafeUnwrapErr(_?: ErrorConfig): E {
    523→export const fromThrowable …
@@ -314,6 +338,7 @@ tests/index.test.ts
 
 tests/safe-try.test.ts
      1→import { …
+    13→import { describe, expect, test } from 'vitest'
 
 tests/tsconfig.tests.json
      2→  "compilerOptions": {
@@ -325,6 +350,7 @@ tests/tsconfig.tests.json
 tests/typecheck-tests.ts
      7→import { …
     16→import { safeTry, Transpose } from '../src/result …
+    17→import { type N, Test } from 'ts-toolbelt'
     19→type CreateTuple …
   2607→const input = <T>(): T => 123 as any
 

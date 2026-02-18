@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3997 tokens)
+budget: 4000 (4005 tokens)
 
 Cargo.toml
      1→[package]
@@ -24,8 +24,53 @@ src/into_either.rs
     12→/// The [`into_either_with`](IntoEither::into_either_with) method takes a
     13→/// [predicate function](FnOnce) to determine whether to convert to [`Left`] or [`Right`].
     14→pub trait IntoEither: Sized {
-    29→    fn into_either …
-    55→    fn into_either_with …
+    15→    /// Converts `self` into a [`Left`] variant of [`Either<Self, Self>`](Either)
+    16→    /// if `into_left` is `true`.
+    17→    /// Converts `self` into a [`Right`] variant of [`Either<Self, Self>`](Either)
+    18→    /// otherwise.
+    19→    ///
+    20→    /// # Examples
+    21→    ///
+    22→    /// ```
+    23→    /// use either::{IntoEither, Left, Right};
+    24→    ///
+    25→    /// let x = 0;
+    26→    /// assert_eq!(x.into_either(true), Left(x));
+    27→    /// assert_eq!(x.into_either(false), Right(x));
+    28→    /// ```
+    29→    fn into_either(self, into_left: bool) -> Either<Self, Self> {
+    30→        if into_left {
+    31→            Left(self)
+    32→        } else {
+    33→            Right(self)
+    34→        }
+    35→    }
+    37→    /// Converts `self` into a [`Left`] variant of [`Either<Self, Self>`](Either)
+    38→    /// if `into_left(&self)` returns `true`.
+    39→    /// Converts `self` into a [`Right`] variant of [`Either<Self, Self>`](Either)
+    40→    /// otherwise.
+    41→    ///
+    42→    /// # Examples
+    43→    ///
+    44→    /// ```
+    45→    /// use either::{IntoEither, Left, Right};
+    46→    ///
+    47→    /// fn is_even(x: &u8) -> bool {
+    48→    ///     x % 2 == 0
+    49→    /// }
+    50→    ///
+    51→    /// let x = 0;
+    52→    /// assert_eq!(x.into_either_with(is_even), Left(x));
+    53→    /// assert_eq!(x.into_either_with(|x| !is_even(x)), Right(x));
+    54→    /// ```
+    55→    fn into_either_with<F>(self, into_left: F) -> Either<Self, Self>
+    56→    where
+    57→        F: FnOnce(&Self) -> bool,
+    58→    {
+    59→        let into_left = into_left(&self);
+    60→        self.into_either(into_left)
+    61→    }
+    64→impl<T> IntoEither for T {}
 
 src/iterator.rs
      1→use super::{for_both, Either, Left, Right};
@@ -127,67 +172,19 @@ src/lib.rs
     58→/// This macro is useful in cases where both sides of [`Either`] can be interacted with
     59→/// in the same way even though the don't share the same type.
     60→///
-    61→/// Syntax: `either::for_both!(` *expression* `,` *pattern* `=>` *expression* `)`
-    62→///
-    63→/// # Example
-    64→///
-    65→/// ```
-    66→/// use either::Either;
-    67→///
-    68→/// fn length(owned_or_borrowed: Either<String, &'static str>) -> usize {
-    69→///     either::for_both!(owned_or_borrowed, s => s.len())
-    70→/// }
-    71→///
-    72→/// fn main() {
-    73→///     let borrowed = Either::Right("Hello world!");
-    74→///     let owned = Either::Left("Hello world!".to_owned());
-    75→///
-    76→///     assert_eq!(length(borrowed), 12);
-    77→///     assert_eq!(length(owned), 12);
-    78→/// }
-    79→/// ```
-    80→#[macro_export]
+      →…
     81→macro_rules! for_both {
-    82→    ($value:expr, $pattern:pat => $result:expr) => {
-    83→        match $value {
-      →        …
     90→/// Macro for unwrapping the left side of an [`Either`], which fails early
     91→/// with the opposite side. Can only be used in functions that return
     92→/// `Either` because of the early return of `Right` that it provides.
     93→///
     94→/// See also [`try_right!`] for its dual, which applies the same just to the
-    95→/// right side.
-    96→///
-    97→/// # Example
-    98→///
-    99→/// ```
-   100→/// use either::{Either, Left, Right};
-   101→///
-   102→/// fn twice(wrapper: Either<u32, &str>) -> Either<u32, &str> {
-   103→///     let value = either::try_left!(wrapper);
-   104→///     Left(value * 2)
-   105→/// }
-   106→///
-   107→/// fn main() {
-   108→///     assert_eq!(twice(Left(2)), Left(4));
-   109→///     assert_eq!(twice(Right("ups")), Right("ups"));
-   110→/// }
-   111→/// ```
-   112→#[macro_export]
+      →…
    113→macro_rules! try_left {
-   114→    ($expr:expr) => {
-   115→        match $expr {
-      →        …
    122→/// Dual to [`try_left!`], see its documentation for more information.
    123→#[macro_export]
    124→macro_rules! try_right {
-   125→    ($expr:expr) => {
-   126→        match $expr {
-      →        …
    133→macro_rules! map_either {
-   134→    ($value:expr, $pattern:pat => $result:expr) => {
-   135→        match $value {
-      →        …
    142→mod iterator;
    143→pub use self::iterator::IterEither;
    145→mod into_either;
@@ -239,82 +236,39 @@ src/lib.rs
   1086→    pub fn copied …
   1098→    pub fn cloned …
   1108→    pub fn copied …
-  1117→/// Convert from `Result` to `Either` with `Ok => Right` and `Err => Left`.
-  1118→impl<L, R> From<Result<R, L>> for Either<L, R> {
+  1118→impl<L, R> From<Result<R, L>> for Either<L, R> …
   1119→    fn from …
-  1127→/// Convert from `Either` to `Result` with `Right => Ok` and `Left => Err`.
-  1128→impl<L, R> From<Either<L, R>> for Result<R, L> {
+  1128→impl<L, R> From<Either<L, R>> for Result<R, L> …
   1129→    fn from …
-  1137→/// `Either<L, R>` is a future if both `L` and `R` are futures.
-  1138→impl<L, R> Future for Either<L, R>
-  1139→where
-  1140→    L: Future,
-  1141→    R: Future<Output = L::Output>,
-  1142→{
+  1138→impl<L, R> Future for Either<L, R> …
   1143→    type Output = L::Output;
   1145→    fn poll …
-  1154→/// `Either<L, R>` implements `Read` if both `L` and `R` do.
-  1155→///
-  1156→/// Requires crate feature `"std"`
-  1157→impl<L, R> Read for Either<L, R>
-  1158→where
-  1159→    L: Read,
-  1160→    R: Read,
-  1161→{
+  1157→impl<L, R> Read for Either<L, R> …
   1162→    fn read …
   1166→    fn read_exact …
   1170→    fn read_to_end …
   1174→    fn read_to_string …
-  1180→/// `Either<L, R>` implements `Seek` if both `L` and `R` do.
-  1181→///
-  1182→/// Requires crate feature `"std"`
-  1183→impl<L, R> Seek for Either<L, R>
-  1184→where
-  1185→    L: Seek,
-  1186→    R: Seek,
-  1187→{
+  1183→impl<L, R> Seek for Either<L, R> …
   1188→    fn seek …
-  1194→/// Requires crate feature `"std"`
-  1195→impl<L, R> BufRead for Either<L, R>
-  1196→where
-  1197→    L: BufRead,
-  1198→    R: BufRead,
-  1199→{
+  1195→impl<L, R> BufRead for Either<L, R> …
   1200→    fn fill_buf …
   1204→    fn consume …
   1208→    fn read_until …
   1212→    fn read_line …
-  1218→/// `Either<L, R>` implements `Write` if both `L` and `R` do.
-  1219→///
-  1220→/// Requires crate feature `"std"`
-  1221→impl<L, R> Write for Either<L, R>
-  1222→where
-  1223→    L: Write,
-  1224→    R: Write,
-  1225→{
+  1221→impl<L, R> Write for Either<L, R> …
   1226→    fn write …
   1230→    fn write_all …
   1234→    fn write_fmt …
   1238→    fn flush …
   1248→    fn as_ref …
   1253→macro_rules! impl_specific_ref_and_mut {
-  1254→    ($t:ty, $($attr:meta),* ) => {
-  1255→        $(#[$attr])*
-      →        …
   1297→    fn as_ref …
   1307→    fn as_mut …
   1317→    fn as_mut …
   1327→    type Target = L::Target;
   1329→    fn deref …
   1339→    fn deref_mut …
-  1345→/// `Either` implements `Error` if *both* `L` and `R` implement it.
-  1346→///
-  1347→/// Requires crate feature `"std"`
-  1348→impl<L, R> Error for Either<L, R>
-  1349→where
-  1350→    L: Error,
-  1351→    R: Error,
-  1352→{
+  1348→impl<L, R> Error for Either<L, R> …
   1353→    fn source …
   1358→    fn description …
   1363→    fn cause …
@@ -324,15 +278,9 @@ src/lib.rs
   1391→    fn write_fmt …
   1521→/// A helper macro to check if AsRef and AsMut are implemented for a given type.
   1522→macro_rules! check_t {
-  1523→    ($t:ty) => {{
-  1524→        fn check_ref<T: AsRef<$t>>() {}
-      →        …
   1536→fn _unsized_ref_propagation() {
   1537→    check_t!(str);
   1538→
-  1539→    fn check_array_ref<T: AsRef<[Item]>, Item>() {}
-  1540→    fn check_array_mut<T: AsMut<[Item]>, Item>() {}
-  1541→
       →…
   1552→#[cfg(feature = "std")]
   1553→fn _unsized_std_propagation() {
@@ -349,8 +297,30 @@ src/serde_untagged.rs
     41→    Left(L),
     42→    Right(R),
     43→}
-    45→pub fn serialize …
-    58→pub fn deserialize …
+    45→pub fn serialize<L, R, S>(this: &super::Either<L, R>, serializer: S) -> Result<S::Ok, S::Error>
+    46→where
+    47→    S: Serializer,
+    48→    L: Serialize,
+    49→    R: Serialize,
+    50→{
+    51→    let untagged = match this {
+    52→        super::Either::Left(left) => Either::Left(left),
+    53→        super::Either::Right(right) => Either::Right(right),
+    54→    };
+    55→    untagged.serialize(serializer)
+    56→}
+    58→pub fn deserialize<'de, L, R, D>(deserializer: D) -> Result<super::Either<L, R>, D::Error>
+    59→where
+    60→    D: Deserializer<'de>,
+    61→    L: Deserialize<'de>,
+    62→    R: Deserialize<'de>,
+    63→{
+    64→    match Either::deserialize(deserializer) {
+    65→        Ok(Either::Left(left)) => Ok(super::Either::Left(left)),
+    66→        Ok(Either::Right(right)) => Ok(super::Either::Right(right)),
+    67→        Err(error) => Err(error),
+    68→    }
+    69→}
 
 src/serde_untagged_optional.rs
     36→use serde::{Deserialize, Deserializer, Serialize, Serializer};
@@ -360,5 +330,26 @@ src/serde_untagged_optional.rs
     41→    Left(L),
     42→    Right(R),
     43→}
-    45→pub fn serialize …
-    62→pub fn deserialize …
+    45→pub fn serialize<L, R, S>(
+    46→    this: &Option<super::Either<L, R>>,
+    47→    serializer: S,
+    48→) -> Result<S::Ok, S::Error>
+    49→where
+    50→    S: Serializer,
+    51→    L: Serialize,
+    52→    R: Serialize,
+    53→{
+    54→    let untagged = match this {
+    55→        Some(super::Either::Left(left)) => Some(Either::Left(left)),
+    56→        Some(super::Either::Right(right)) => Some(Either::Right(right)),
+      →        …
+    62→pub fn deserialize<'de, L, R, D>(deserializer: D) -> Result<Option<super::Either<L, R>>, D::Error>
+    63→where
+    64→    D: Deserializer<'de>,
+    65→    L: Deserialize<'de>,
+    66→    R: Deserialize<'de>,
+    67→{
+    68→    match Option::deserialize(deserializer) {
+    69→        Ok(Some(Either::Left(left))) => Ok(Some(super::Either::Left(left))),
+    70→        Ok(Some(Either::Right(right))) => Ok(Some(super::Either::Right(right))),
+      →        …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4069 tokens)
+budget: 4000 (4077 tokens)
 
 README.md
      1→# humanize
@@ -31,18 +31,7 @@ README.md
     34→- Korean
     35→- Norwegian
     36→- Persian
-    37→- Polish
-    38→- Russian
-    39→- Simplified Chinese
-    40→- Slovak
-    41→- Slovenian
-    42→- Spanish
-    43→- Swedish
-    44→- Turkish
-    45→- Ukrainian
-    46→- Uzbek
-    47→- Vietnamese
-    48→
+      →…
     49→## API reference
     51→[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
     52→
@@ -51,24 +40,19 @@ README.md
     55→## Installation
     57→### From PyPI
     59→```bash
-    60→python3 -m pip install --upgrade humanize
       →…
     63→### From source
     65→```bash
-    66→git clone https://github.com/python-humanize/humanize
       →…
     71→## Usage
     73→### Integer humanization
     75→```pycon
-    76→>>> import humanize
       →…
     89→### Date & time humanization
     91→```pycon
-    92→>>> import humanize
       →…
    110→### Precise time delta
    112→```pycon
-   113→>>> import humanize
       →…
    124→#### Smaller units
    126→If seconds are too large, set `minimum_unit` to milliseconds or microseconds:
@@ -76,28 +60,15 @@ README.md
    128→```pycon
    129→>>> import humanize
    130→>>> import datetime as dt
-   131→>>> humanize.naturaldelta(dt.timedelta(seconds=2))
-   132→'2 seconds'
-   133→```
-   134→
-   135→```pycon
-   136→>>> delta = dt.timedelta(milliseconds=4)
-   137→>>> humanize.naturaldelta(delta)
-   138→'a moment'
-   139→>>> humanize.naturaldelta(delta, minimum_unit="milliseconds")
-   140→'4 milliseconds'
       →…
    154→### File size humanization
    156→```pycon
-   157→>>> import humanize
       →…
    166→### Human-readable floating point numbers
    168→```pycon
-   169→>>> import humanize
       →…
    182→### Scientific notation
    184→```pycon
-   185→>>> import humanize
       →…
    200→## Localization
    202→How to change locale at runtime:
@@ -107,37 +78,10 @@ README.md
    206→>>> import datetime as dt
    207→>>> humanize.naturaltime(dt.timedelta(seconds=3))
    208→'3 seconds ago'
-   209→>>> _t = humanize.i18n.activate("ru_RU")
-   210→>>> humanize.naturaltime(dt.timedelta(seconds=3))
-   211→'3 секунды назад'
-   212→>>> humanize.i18n.deactivate()
-   213→>>> humanize.naturaltime(dt.timedelta(seconds=3))
-   214→'3 seconds ago'
-   215→```
-   216→
-   217→You can pass additional parameter `path` to `activate` to specify a path to search
-   218→locales in.
-   219→
-   220→```pycon
-   221→>>> import humanize
-   222→>>> humanize.i18n.activate("xx_XX")
-   223→<...>
-   224→FileNotFoundError: [Errno 2] No translation file found for domain: 'humanize'
-   225→>>> humanize.i18n.activate("pt_BR", path="path/to/my/own/translation/")
-   226→<gettext.GNUTranslations instance ...>
-   227→```
-   228→
-   229→<!-- usage-end -->
-   230→
-   231→How to add new phrases to existing locale files:
-   232→
-   233→```sh
       →…
 
 RELEASING.md
      1→# Release checklist
-     3→- [ ] Get `main` to the appropriate code release state.
-      →…
 
 docs/filesize.md
      1→# Filesize
@@ -151,9 +95,6 @@ docs/index.md
      1→# humanize
      3→Welcome to the humanize API reference.
      4→
-     5→- [Number](number.md)
-     6→- [Time](time.md)
-     7→- [Filesize](filesize.md)
       →…
 
 docs/lists.md
@@ -212,11 +153,10 @@ src/humanize/__init__.py
     28→__all__ = [
     29→    "__version__",
     30→    "activate",
-    31→    "apnumber",
       →    …
 
 src/humanize/filesize.py
-     5→from math …
+     5→from math import log
     36→def naturalsize(
     37→    value: float | str,
     38→    binary: bool = False,
@@ -225,69 +165,125 @@ src/humanize/filesize.py
     41→) -> str:
     42→    """Format a number of bytes like a human-readable filesize (e.g. 10 kB).
     43→
-      →…
+    44→    By default, decimal suffixes (kB, MB) are used.
+    45→
+    46→    Non-GNU modes are compatible with jinja2's `filesizeformat` filter.
+    47→
+    48→    Examples:
+    49→        ```pycon
+    50→        >>> naturalsize(3000000)
+    51→        '3.0 MB'
+    52→        >>> naturalsize(300, False, True)
+    53→        '300B'
+    54→        >>> naturalsize(3000, False, True)
+    55→        '2.9K'
+      →        …
 
 src/humanize/i18n.py
-     5→import gettext …
-     6→from threading …
+     5→import gettext as gettext_module
+     6→from threading import local
      8→TYPE_CHECKING = False
-    10→    import os …
-    11→    import pathlib …
+    10→    import os
+    11→    import pathlib
     13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
     15→_TRANSLATIONS: dict[str | None, gettext_module.NullTranslations] = {
-    16→    None: gettext_module.NullTranslations()
-    17→}
     18→_CURRENT = local()
     21→# Mapping of locale to thousands separator
     22→_THOUSANDS_SEPARATOR = {
-    23→    "de_DE": ".",
-      →    …
     30→# Mapping of locale to decimal separator
     31→_DECIMAL_SEPARATOR = {
-    32→    "de_DE": ",",
-      →    …
-    40→def _get_default_locale_path …
+    40→def _get_default_locale_path() -> pathlib.Path | None:
     51→def get_translation() -> gettext_module.NullTranslations:
+    52→    try:
+      →    …
     58→def activate(
     59→    locale: str | None, path: str | os.PathLike[str] | None = None
     60→) -> gettext_module.NullTranslations:
     61→    """Activate internationalisation.
     62→
-      →…
+    63→    Set `locale` as current locale. Search for locale in directory `path`.
+    64→
+    65→    Args:
+    66→        locale (str | None): Language name, e.g. `en_GB`. If `None`, defaults to no
+    67→            transaltion. Similar to calling ``deactivate()``.
+    68→        path (str | pathlib.Path): Path to search for locales.
+    69→
+    70→    Returns:
+    71→        dict: Translations.
+    72→
+    73→    Raises:
+    74→        FileNotFoundError: If humanize cannot find the locale folder.
+    75→    """
+    76→    if locale is None or locale.startswith("en"):
+      →    …
     96→def deactivate() -> None:
     97→    """Deactivate internationalisation."""
-   101→def _gettext …
-   113→def _pgettext …
-   129→def _ngettext …
-   144→def _gettext_noop …
-   163→def _ngettext_noop …
+    98→    _CURRENT.locale = None
+   101→def _gettext(message: str) -> str:
+   113→def _pgettext(msgctxt: str, message: str) -> str:
+   129→def _ngettext(message: str, plural: str, num: int) -> str:
+   144→def _gettext_noop(message: str) -> str:
+   163→def _ngettext_noop(singular: str, plural: str) -> tuple[str, str]:
    183→def thousands_separator() -> str:
    184→    """Return the thousands separator for a locale, default to comma.
    185→
-      →…
+   186→    Returns:
+   187→         str: Thousands separator.
+   188→    """
+   189→    try:
+      →    …
    196→def decimal_separator() -> str:
    197→    """Return the decimal separator for a locale, default to dot.
    198→
-      →…
+   199→    Returns:
+   200→         str: Decimal separator.
+   201→    """
+   202→    try:
+      →    …
 
 src/humanize/lists.py
      5→TYPE_CHECKING = False
-     7→    from typing …
+     7→    from typing import Any
      9→__all__ = ["natural_list"]
     12→def natural_list(items: list[Any]) -> str:
     13→    """Natural list.
     14→
-      →…
+    15→    Convert a list of items into a human-readable string with commas and 'and'.
+    16→
+    17→    Examples:
+    18→        >>> natural_list(["one", "two", "three"])
+    19→        'one, two and three'
+    20→        >>> natural_list(["one", "two"])
+    21→        'one and two'
+    22→        >>> natural_list(["one"])
+    23→        'one'
+    24→
+    25→    Args:
+    26→        items (list): An iterable of items.
+    27→
+    28→    Returns:
+    29→        str: A string with commas and 'and' in the right places.
+    30→    """
+    31→    if len(items) == 1:
+    32→        return str(items[0])
+    33→    elif len(items) == 2:
+    34→        return f"{str(items[0])} and {str(items[1])}"
+    35→    else:
+      →    …
 
 src/humanize/number.py
-     5→import bisect …
+     5→import bisect
      7→from .i18n import _gettext as _
      8→from .i18n import _ngettext, decimal_separator, thousands_separator
      9→from .i18n import _ngettext_noop as NS_
     10→from .i18n import _pgettext as P_
     12→TYPE_CHECKING = False
-    14→    from typing …
-    21→def _format_not_finite …
+    14→    from typing import TypeAlias
+    21→def _format_not_finite(value: float) -> str:
+    22→    """Utility function to handle infinite and nan cases."""
+    23→    import math
+    24→
+      →…
     34→def ordinal(value: NumberOrString, gender: str = "male") -> str:
     35→    """Converts an integer to its ordinal as a string.
     36→
@@ -329,19 +325,18 @@ src/humanize/number.py
       →…
 
 src/humanize/time.py
-     8→from enum …
-     9→from functools …
+     8→from enum import Enum
+     9→from functools import total_ordering
     11→from .i18n import _gettext as _
     12→from .i18n import _ngettext
     13→from .number import intcomma
     15→TYPE_CHECKING = False
-    17→    import datetime …
-    18→    from collections.abc …
-    19→    from typing …
+    17→    import datetime as dt
+    18→    from collections.abc import Iterable
+    19→    from typing import Any
     21→__all__ = [
     22→    "naturaldate",
     23→    "naturalday",
-    24→    "naturaldelta",
       →    …
     30→@total_ordering
     31→class Unit(Enum):
@@ -398,39 +393,37 @@ src/humanize/time.py
    654→def _rounding_by_fmt …
 
 tests/test_filesize.py
+     6→import pytest
+     8→import humanize
+    86→def test_naturalsize(test_args: list[int] | list[int | bool], expected: str) -> None:
 
 tests/test_i18n.py
     17→@freeze_time("2020-02-02")
     18→def test_i18n() -> None:
    225→class TestActivate:
    226→    expected_msg = (
-   227→        "Humanize cannot determinate the default location of the"
-   228→        " 'locale' folder. You need to pass the path explicitly."
-   229→    )
-   230→
    249→    @freeze_time("2020-02-02")
    250→    def test_en_locale(self) -> None:
    262→    @freeze_time("2020-02-02")
    263→    def test_none_locale(self) -> None:
 
 tests/test_lists.py
+     3→import pytest
+     5→import humanize
+    20→def test_natural_list(
+    21→    test_args: list[str] | list[int] | list[str | int], expected: str
+    22→) -> None:
 
 tests/test_number.py
 
 tests/test_time.py
-    14→ONE_DAY_DELTA = dt.timedelta(days=1)
     16→# In seconds
     17→ONE_MICROSECOND = 1 / 1000000
-    18→FOUR_MICROSECONDS = 4 / 1000000
-    19→ONE_MILLISECOND = 1 / 1000
-    20→FOUR_MILLISECONDS = 4 / 1000
     22→MILLISECONDS_1_337 = 1337 / 1000  # 1.337 seconds
     23→ONE_HOUR = 3600
-    24→ONE_DAY = 24 * ONE_HOUR
-    25→ONE_YEAR = 365.25 * ONE_DAY
-    26→FROZEN_DATE = "2010-02-02"
     37→class FakeDate:
-    45→VALUE_ERROR_TEST = FakeDate(290149024, 2, 2)
-    46→OVERFLOW_ERROR_TEST = FakeDate(120390192341, 2, 2)
     58→# These are not considered "public" interfaces, but require tests anyway.
     61→def test_date_and_delta() -> None:
+    62→    now = dt.datetime.now()
+    63→    td = dt.timedelta
+      →    …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4018 tokens)
+budget: 4000 (4030 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
@@ -45,16 +45,18 @@ pnpm-workspace.yaml
      1→packages:
 
 src/browser.ts
-     1→export function isMobileFirefox …
-    10→export function isMac …
-    14→export function isIPhone …
-    18→export function isSafari …
-    22→export function isIPad …
-    30→export function isIOS …
-    34→export function testPlatform …
+     1→export function isMobileFirefox(): boolean | undefined {
+    10→export function isMac(): boolean | undefined {
+    14→export function isIPhone(): boolean | undefined {
+    18→export function isSafari(): boolean | undefined {
+    22→export function isIPad(): boolean | undefined {
+    30→export function isIOS(): boolean | undefined {
+    34→export function testPlatform(re: RegExp): boolean | undefined {
 
 src/constants.ts
      1→export const TRANSITIONS = {
+     2→  DURATION: 0.5,
+      →  …
      6→export const VELOCITY_THRESHOLD = 0.4;
      8→export const CLOSE_THRESHOLD = 0.25;
     10→export const SCROLL_LOCK_TIMEOUT = 100;
@@ -69,9 +71,18 @@ src/context.ts
      4→interface DrawerContextValue {
      5→  drawerRef: React.RefObject<HTMLDivElement>;
      6→  overlayRef: React.RefObject<HTMLDivElement>;
+     7→  onPress: (event: React.PointerEvent<HTMLDivElement>) => void;
       →  …
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
-    69→export const useDrawerContext …
+    38→  drawerRef: { current: null },
+      →  …
+    69→export const useDrawerContext = () => {
+    70→  const context = React.useContext(DrawerContext);
+    71→  if (!context) {
+    72→    throw new Error('useDrawerContext must be used within a Drawer.Root');
+    73→  }
+    74→  return context;
+    75→};
 
 src/helpers.ts
      1→import { AnyFunction, DrawerDirection } from './types';
@@ -79,13 +90,13 @@ src/helpers.ts
      4→  [key: string]: string;
      5→}
      7→const cache = new WeakMap();
-     9→export function isInView …
-    23→export function set …
-    42→export function reset …
-    59→export const isVertical …
-    72→export function getTranslate …
-    90→export function dampenValue …
-    94→export function assignStyle …
+     9→export function isInView(el: HTMLElement): boolean {
+    23→export function set(el: Element | HTMLElement | null | undefined, styles: Style, ignoreCache = false) {
+    42→export function reset(el: Element | HTMLElement | null, prop?: string) {
+    59→export const isVertical = (direction: DrawerDirection) => {
+    72→export function getTranslate(element: HTMLElement, direction: DrawerDirection): number | null {
+    90→export function dampenValue(v: number) {
+    94→export function assignStyle(element: HTMLElement | null | undefined, style: Partial<CSSStyleDeclaration>) {
    106→ * Receives functions as arguments and returns a new function that calls all.
    108→export function chain<T>(...fns: T[]) {
    109→  return (...args: T extends AnyFunction ? Parameters<T> : never) => {
@@ -95,23 +106,12 @@ src/helpers.ts
    113→        fn(...args);
    114→      }
    115→    }
-      →    …
+   116→  };
+   117→}
 
 src/index.tsx
      3→import * as DialogPrimitive from '@radix-ui/react-dialog';
      4→import React from 'react';
-     5→import { DrawerContext, useDrawerContext } from './context …
-     6→import './style.css …
-     7→import { usePreventScroll, isInput } from './use-prevent-scroll …
-     8→import { useComposedRefs } from './use-composed-refs …
-     9→import { useSnapPoints } from './use-snap-points …
-    10→import { set, getTranslate, dampenValue, isVertical, reset } from './helpers …
-    11→import { …
-    21→import { DrawerDirection } from './types …
-    22→import { useControllableState } from './use-controllable-state …
-    23→import { useScaleBackground } from './use-scale-background …
-    24→import { usePositionFixed } from './use-position-fixed …
-    25→import { isIOS, isMobileFirefox } from './browser …
     27→export interface WithFadeFromProps {
     28→  /**
     29→   * Array of numbers from 0 to 100 that corresponds to % of the screen a given snap point should take up.
@@ -134,41 +134,7 @@ src/index.tsx
     47→  fadeFromIndex?: never;
     48→}
     50→export type DialogProps = {
-   139→export function Root({
-   140→  open: openProp,
-   141→  onOpenChange,
-   142→  children,
-   143→  onDrag: onDragProp,
-   144→  onRelease: onReleaseProp,
-   145→  snapPoints,
-   146→  shouldScaleBackground = false,
-   147→  setBackgroundColorOnScale = true,
-   148→  closeThreshold = CLOSE_THRESHOLD,
-   149→  scrollLockTimeout = SCROLL_LOCK_TIMEOUT,
-   150→  dismissible = true,
-   151→  handleOnly = false,
-   152→  fadeFromIndex = snapPoints && snapPoints.length - 1,
-   153→  activeSnapPoint: activeSnapPointProp,
-   154→  setActiveSnapPoint: setActiveSnapPointProp,
-   155→  fixed,
-   156→  modal = true,
-   157→  onClose,
-   158→  nested,
-   159→  noBodyStyles = false,
-   160→  direction = 'bottom',
-   161→  defaultOpen = false,
-   162→  disablePreventScroll = true,
-   163→  snapToSequentialPoint = false,
-   164→  preventScrollRestoration = false,
-   165→  repositionInputs = true,
-   166→  onAnimationEnd,
-   167→  container,
-   168→  autoFocus = false,
-   169→}: DialogProps) {
-   170→  const [isOpen = false, setIsOpen] = useControllableState({
-   171→    defaultProp: defaultOpen,
-   172→    prop: openProp,
-      →    …
+   139→export function Root …
    803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(
    831→export type ContentProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
    833→export const Content = React.forwardRef<HTMLDivElement, ContentProps>(function (
@@ -176,17 +142,9 @@ src/index.tsx
    993→const LONG_HANDLE_PRESS_TIMEOUT = 250;
    994→const DOUBLE_TAP_TIMEOUT = 120;
    996→export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(function (
-  1098→export function NestedRoot({ onDrag, onOpenChange, open: nestedIsOpen, ...rest }: DialogProps) {
-  1099→  const { onNestedDrag, onNestedOpenChange, onNestedRelease } = useDrawerContext();
-  1100→
-  1101→  if (!onNestedDrag) {
-      →  …
+  1098→export function NestedRoot …
   1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
-  1130→export function Portal(props: PortalProps) {
-  1131→  const context = useDrawerContext();
-  1132→  const { container = context.container, ...portalProps } = props;
-  1133→
-      →…
+  1130→export function Portal …
   1137→export const Drawer = {
 
 src/types.ts
@@ -201,22 +159,28 @@ src/use-composed-refs.ts
      3→import * as React from 'react';
      5→type PossibleRef<T> = React.Ref<T> | undefined;
      8→ * Set a given ref to a given value
-     9→ * This utility takes care of different types of refs: callback refs and RefObject(s)
+      → …
     11→function setRef<T>(ref: PossibleRef<T>, value: T) {
     20→ * A utility to compose multiple refs together
-    21→ * Accepts callback refs and RefObject(s)
+      → …
     23→function composeRefs<T>(...refs: PossibleRef<T>[]) {
     28→ * A custom hook that composes multiple refs
-    29→ * Accepts callback refs and RefObject(s)
+      → …
     31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
 
 src/use-controllable-state.ts
      3→import React from 'react';
      5→type UseControllableStateParams<T> = {
     11→type SetStateFn<T> = (prevState?: T) => T;
-    13→function useCallbackRef …
-    24→function useUncontrolledState …
-    39→export function useControllableState …
+    13→function useCallbackRef<T extends (...args: any[]) => any>(callback: T | undefined): T {
+    24→function useUncontrolledState<T>({ defaultProp, onChange }: Omit<UseControllableStateParams<T>, 'prop'>) {
+    39→export function useControllableState<T>({ prop, defaultProp, onChange = () => {} }: UseControllableStateParams<T>) {
+    40→  const [uncontrolledProp, setUncontrolledProp] = useUncontrolledState({ defaultProp, onChange });
+    41→  const isControlled = prop !== undefined;
+    42→  const value = isControlled ? prop : uncontrolledProp;
+    43→  const handleChange = useCallbackRef(onChange);
+    44→
+      →…
 
 src/use-position-fixed.ts
      1→import React from 'react';
@@ -259,11 +223,16 @@ src/use-prevent-scroll.ts
     10→interface PreventScrollOptions {
     11→  /** Whether the scroll lock is disabled. */
     12→  isDisabled?: boolean;
-      →  …
+    13→  focusCallback?: () => void;
+    14→}
     16→function chain …
     27→const visualViewport = typeof document !== 'undefined' && window.visualViewport;
-    29→export function isScrollable …
-    34→export function getScrollParent …
+    29→export function isScrollable(node: Element): boolean {
+    30→  let style = window.getComputedStyle(node);
+      →  …
+    34→export function getScrollParent(node: Element): Element {
+    35→  if (isScrollable(node)) {
+      →  …
     47→const nonTextInputTypes = new Set([
     64→ * Prevents scrolling on the document body on mount, and
     65→ * restores it on unmount. Also ensures that content does not
@@ -276,20 +245,36 @@ src/use-prevent-scroll.ts
     73→      return;
     74→    }
     75→
-      →…
+    76→    preventScrollCount++;
+    77→    if (preventScrollCount === 1) {
+    78→      if (isIOS()) {
+    79→        restore = preventScrollMobileSafari();
+    80→      }
+    81→    }
+    82→
+    83→    return () => {
+      →    …
    118→function preventScrollMobileSafari …
    243→function setStyle …
    257→function addEvent …
    272→function scrollIntoView …
-   294→export function isInput …
+   294→export function isInput(target: Element) {
+   295→  return (
+      →  …
 
 src/use-scale-background.ts
      1→import React, { useMemo } from 'react';
      2→import { useDrawerContext } from './context';
      3→import { assignStyle, chain, isVertical, reset } from './helpers';
      4→import { BORDER_RADIUS, TRANSITIONS, WINDOW_TOP_OFFSET } from './constants';
-     6→const noop …
-     8→export function useScaleBackground …
+     6→const noop = () => () => {};
+     8→export function useScaleBackground() {
+     9→  const { direction, isOpen, shouldScaleBackground, setBackgroundColorOnScale, noBodyStyles } = useDrawerContext();
+    10→  const timeoutIdRef = React.useRef<number | null>(null);
+    11→  const initialBackgroundColor = useMemo(() => document.body.style.backgroundColor, []);
+    12→
+    13→  function getScale() {
+      →  …
 
 src/use-snap-points.ts
      1→import React from 'react';
@@ -304,9 +289,6 @@ test/README.md
     21→## Learn More
     30→## Deploy on Vercel
 
-test/next.config.js
-     2→const nextConfig = {
-
 test/package.json
 
 test/src/app/controlled/page.tsx
@@ -319,12 +301,11 @@ test/src/app/different-directions/page.tsx
    118→export default function Page() {
 
 test/src/app/initial-snap/page.tsx
-     7→const snapPoints …
      9→export default function Page() {
 
 test/src/app/layout.tsx
      1→import './globals.css';
-     5→const inter = Inter({ subsets: ['latin'] });
+     5→const inter …
      7→export const metadata: Metadata = {
     12→export default function RootLayout({ children }: { children: React.ReactNode }) {
 
@@ -335,6 +316,7 @@ test/src/app/non-dismissible/page.tsx
      6→export default function Page() {
 
 test/src/app/page.tsx
+     3→import Link from 'next/link';
      5→export default function Page() {
 
 test/src/app/parent-container/page.tsx
@@ -347,11 +329,9 @@ test/src/app/scrollable-with-inputs/page.tsx
      5→export default function Page() {
 
 test/src/app/with-handle/page.tsx
-     7→const snapPoints …
      9→export default function Page() {
 
 test/src/app/with-modal-false/page.tsx
-     7→const snapPoints …
      9→export default function Page() {
 
 test/src/app/with-redirect/long-page/page.tsx
@@ -364,24 +344,42 @@ test/src/app/with-scaled-background/page.tsx
     65→export default function Page() {
 
 test/src/app/with-snap-points/page.tsx
-     7→const snapPoints …
      9→export default function Page() {
 
 test/src/app/without-scaled-background/page.tsx
      6→export default function Page() {
 
+test/tests/base.spec.ts
+
 test/tests/constants.ts
      1→export const ANIMATION_DURATION = 500;
 
+test/tests/controlled.spec.ts
+     2→import { ANIMATION_DURATION } from './constants';
+
 test/tests/helpers.ts
+     2→import { ANIMATION_DURATION } from './constants';
      4→export async function openDrawer …
     11→export async function dragWithSpeed …
 
 test/tests/initial-snap.spec.ts
+     2→import { ANIMATION_DURATION } from './constants';
      8→const snapPointYPositions = {
     15→const snapTo …
 
+test/tests/with-handle.spec.ts
+     2→import { ANIMATION_DURATION } from './constants';
+
+test/tests/with-redirect.spec.ts
+     2→import { openDrawer } from './helpers';
+
+test/tests/with-scaled-background.spec.ts
+     2→import { openDrawer } from './helpers';
+
 test/tsconfig.json
+     2→  "compilerOptions": {
+    32→  "include": [
+    38→  "exclude": [
 
 tsconfig.json
      2→  "compilerOptions": {

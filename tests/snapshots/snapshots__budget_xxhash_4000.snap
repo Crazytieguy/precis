@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4048 tokens)
+budget: 4000 (4059 tokens)
 
 README.md
      1→# xxhash
@@ -60,10 +60,7 @@ README.md
     59→CPU using the following commands under Go 1.19.2:
     60→
     61→```
-    62→benchstat <(go test -tags purego -benchtime 500ms -count 15 -bench 'Sum64$')
-    63→benchstat <(go test -benchtime 500ms -count 15 -bench 'Sum64$')
-    64→```
-    65→
+      →…
     66→## Projects using this package
     68→- [InfluxDB](https://github.com/influxdata/influxdb)
     69→- [Prometheus](https://github.com/prometheus/prometheus)
@@ -92,7 +89,6 @@ dynamic/dynamic_test.go
     22→		"plugin.go",
     23→	)
     24→	var out bytes.Buffer
-    25→	cmd.Stdout = &out
       →	…
     33→func TestDynamic(t *testing.T) {
     34→	plug, err := plugin.Open("plugin.so")
@@ -129,13 +125,7 @@ dynamic/plugin.go
     34→					chunk = chunk[:chunkSize]
     35→				}
     36→				n, err := d.WriteString(chunk)
-    37→				if err != nil || n != len(chunk) {
-    38→					t.Fatalf("Digest.WriteString: got (%d, %v); want (%d, nil)",
-    39→						n, err, len(chunk))
-    40→				}
-    41→			}
-    42→			if got := d.Sum64(); got != want {
-      →			…
+      →				…
 
 xxhash.go
      5→import (
@@ -255,8 +245,24 @@ xxhash_other.go
      8→	// A simpler version would be
      9→	//   d := New()
     10→	//   d.Write(b)
+    11→	//   return d.Sum64()
+    12→	// but this is faster, particularly for small inputs.
+    13→
+    14→	n := len(b)
+    15→	var h uint64
+    16→
+    17→	if n >= 32 {
+    18→		v1 := primes[0] + prime2
+    19→		v2 := prime2
+    20→		v3 := uint64(0)
+    21→		v4 := -primes[0]
+    22→		for len(b) >= 32 {
+      →		…
+    64→func writeBlocks(d *Digest, b []byte) int {
+    65→	v1, v2, v3, v4 := d.v1, d.v2, d.v3, d.v4
+    66→	n := len(b)
+    67→	for len(b) >= 32 {
       →	…
-    64→func writeBlocks …
 
 xxhash_safe.go
      8→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
@@ -296,7 +302,9 @@ xxhash_unsafe.go
     46→	d.Write(*(*[]byte)(unsafe.Pointer(&sliceHeader{s, len(s)})))
     47→	// d.Write always returns len(s), nil.
     48→	// Ignoring the return output and returning these fixed values buys a
-      →	…
+    49→	// savings of 6 in the inliner's cost model.
+    50→	return len(s), nil
+    51→}
     53→// sliceHeader is similar to reflect.SliceHeader, but it assumes that the layout
     54→// of the first two words is the same as the layout of a string.
     55→type sliceHeader struct {
@@ -307,6 +315,8 @@ xxhash_unsafe.go
 xxhash_unsafe_test.go
      6→import …
     13→func TestStringAllocs(t *testing.T) {
+    14→	longStr := strings.Repeat("a", 1000)
+      →	…
     29→// This test is inspired by the Go runtime tests in https://go.dev/cl/57410.
     30→// It asserts that certain important functions may be inlined.
     31→func TestInlining(t *testing.T) {
@@ -320,19 +330,16 @@ xxhash_unsafe_test.go
 xxhashbench/xxhashbench_test.go
      3→import …
     14→// TODO: The main benchmarks live in the xxhash package now, so the only purpose
-    15→// of this is to compare different hash functions. Consider deleting xxhashbench
-    16→// or replacing it with a more minimal comparison.
+      →…
     18→var sink uint64
     20→var benchmarks = []struct {
    108→func BenchmarkHashes(b *testing.B) {
    109→	for _, bb := range benchmarks {
    110→		for _, benchSize := range []struct {
    111→			name string
-   112→			n    int
-   113→		}{
-      →		…
-   152→func benchmarkHashBytes(b *testing.B, input []byte, fn func([]byte) uint64) {
-   159→func benchmarkHashString(b *testing.B, input string, fn func(string) uint64) {
+      →			…
+   152→func benchmarkHashBytes …
+   159→func benchmarkHashString …
 
 xxhsum/xxhsum.go
      3→import (

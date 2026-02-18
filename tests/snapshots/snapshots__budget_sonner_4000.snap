@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4038 tokens)
+budget: 4000 (4062 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
@@ -27,12 +27,7 @@ README.md
     22→  return (
     23→    <div>
     24→      <Toaster />
-    25→      <button onClick={() => toast('My first toast')}>Give me a toast</button>
-    26→    </div>
-    27→  );
-    28→}
-    29→```
-    30→
+      →      …
     31→## Documentation
     33→Find the full API reference in the [documentation](https://sonner.emilkowal.ski/getting-started).
 
@@ -92,9 +87,7 @@ src/assets.tsx
     68→const ErrorIcon = (
     78→export const CloseIcon = (
     79→  <svg
-    80→    xmlns="http://www.w3.org/2000/svg"
-    81→    width="12"
-      →    …
+      →  …
 
 src/hooks.tsx
      1→import React from 'react';
@@ -103,7 +96,14 @@ src/hooks.tsx
      5→
      6→  React.useEffect(() => {
      7→    const callback = () => {
-      →    …
+     8→      setIsDocumentHidden(document.hidden);
+     9→    };
+    10→    document.addEventListener('visibilitychange', callback);
+    11→    return () => document.removeEventListener('visibilitychange', callback);
+    12→  }, []);
+    13→
+    14→  return isDocumentHidden;
+    15→};
 
 src/index.tsx
      3→import React from 'react';
@@ -137,6 +137,8 @@ src/index.tsx
    520→function assignOffset(defaultOffset: ToasterProps['offset'], mobileOffset: ToasterProps['mobileOffset']) {
    552→function useSonner() {
    593→const Toaster = React.forwardRef<HTMLElement, ToasterProps>(function Toaster(props, ref) {
+   594→  const {
+      →  …
 
 src/state.ts
      1→import type {
@@ -184,6 +186,9 @@ src/state.ts
    281→const getHistory = () => ToastState.toasts;
    282→const getToasts = () => ToastState.getActiveToasts();
    285→export const toast = Object.assign(
+   286→  basicToast,
+   287→  {
+      →  …
 
 src/types.ts
      1→import React from 'react';
@@ -204,41 +209,27 @@ src/types.ts
     30→export interface ToastClassnames {
     31→  toast?: string;
     32→  title?: string;
-    33→  description?: string;
-    34→  loader?: string;
-    35→  closeButton?: string;
-    36→  cancelButton?: string;
-    37→  actionButton?: string;
       →  …
     48→export interface ToastIcons {
     49→  success?: React.ReactNode;
     50→  info?: React.ReactNode;
-    51→  warning?: React.ReactNode;
-    52→  error?: React.ReactNode;
-    53→  loading?: React.ReactNode;
-    54→  close?: React.ReactNode;
-    55→}
+      →  …
     57→export interface Action {
     58→  label: React.ReactNode;
     59→  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-    60→  actionButtonStyle?: React.CSSProperties;
-    61→}
+      →  …
     63→export interface ToastT {
     64→  id: number | string;
     65→  toasterId?: string;
-    66→  title?: (() => React.ReactNode) | React.ReactNode;
-    67→  type?: ToastTypes;
-    68→  icon?: React.ReactNode;
-    69→  jsx?: React.ReactNode;
-    70→  richColors?: boolean;
       →  …
     93→export function isAction(action: Action | React.ReactNode): action is Action {
+    94→  return (action as Action).label !== undefined;
+    95→}
     97→export type Position = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'top-center' | 'bottom-center';
     98→export interface HeightT {
     99→  height: number;
    100→  toastId: number | string;
-   101→  position: Position;
-   102→}
+      →  …
    104→interface ToastOptions {
    105→  className?: string;
    106→  closeButton?: boolean;
@@ -257,32 +248,21 @@ src/types.ts
    128→export interface ToasterProps {
    129→  id?: string;
    130→  invert?: boolean;
-   131→  theme?: 'light' | 'dark' | 'system';
-   132→  position?: Position;
-   133→  hotkey?: string[];
-   134→  richColors?: boolean;
-   135→  expand?: boolean;
       →  …
    152→export type SwipeDirection = 'top' | 'right' | 'bottom' | 'left';
    154→export interface ToastProps {
    155→  toast: ToastT;
    156→  toasts: ToastT[];
-   157→  index: number;
-   158→  swipeDirections?: SwipeDirection[];
-   159→  expanded: boolean;
-   160→  invert: boolean;
-   161→  heights: HeightT[];
       →  …
    184→export enum SwipeStateTypes {
    185→  SwipedOut = 'SwipedOut',
    186→  SwipedBack = 'SwipedBack',
-   187→  NotSwiped = 'NotSwiped',
-   188→}
+      →  …
    190→export type Theme = 'light' | 'dark';
    192→export interface ToastToDismiss {
    193→  id: number | string;
    194→  dismiss: boolean;
-   195→}
+      →  …
    197→export type ExternalToast = Omit<ToastT, 'id' | 'type' | 'title' | 'jsx' | 'delete' | 'promise'> & {
 
 test/README.md
@@ -294,19 +274,37 @@ test/next.config.js
      2→const nextConfig = {};
 
 test/package.json
+     2→  "name": "test",
+     3→  "version": "0.1.0",
+     4→  "private": true,
+     5→  "scripts": {
+    10→  },
+    11→  "dependencies": {
+    23→  }
+    24→}
 
 test/src/app/action.tsx
+     2→import { createStreamableUI } from 'ai/rsc';
      4→export async function action() {
+     5→  'use server';
+      →  …
 
 test/src/app/layout.tsx
      1→export const metadata = {
      6→export default function RootLayout({ children }: { children: React.ReactNode }) {
+     7→  return (
+      →  …
 
 test/src/app/page.tsx
      7→const promise …
      9→export default function Home({ searchParams }: any) {
 
 test/tsconfig.json
+     2→  "compilerOptions": {
+    25→  },
+    26→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "../playwright.config.ts"],
+    27→  "exclude": ["node_modules"]
+    28→}
 
 tsconfig.json
      2→  "compilerOptions": {
@@ -330,6 +328,15 @@ website/next.config.js
      2→const nextConfig = {
 
 website/package.json
+     2→  "name": "website",
+     3→  "version": "0.1.0",
+     4→  "scripts": {
+     9→  },
+    10→  "dependencies": {
+    29→  },
+    30→  "devDependencies": {
+    34→  }
+    35→}
 
 website/src/components/CodeBlock/index.tsx
      7→import styles from './code-block.module.css';
@@ -347,20 +354,14 @@ website/src/components/ExpandModes/index.tsx
 website/src/components/Footer/index.tsx
      3→import styles from './footer.module.css';
      5→export const Footer = () => {
-     6→  return (
-      →  …
 
 website/src/components/Hero/index.tsx
      3→import styles from './hero.module.css';
      6→export const Hero = () => {
-     7→  return (
-      →  …
 
 website/src/components/How/How.tsx
      1→import React from 'react';
      3→export const How = () => {
-     4→  return (
-      →  …
 
 website/src/components/Installation/index.tsx
      7→import styles from './installation.module.css';
@@ -368,8 +369,6 @@ website/src/components/Installation/index.tsx
     14→export const Installation = () => {
 
 website/src/components/Other/Other.tsx
-     4→import { CodeBlock } from '../CodeBlock';
-     5→import styles from './other.module.css';
      7→export const Other = ({
 
 website/src/components/Position/index.tsx
@@ -387,20 +386,27 @@ website/src/components/Usage/index.tsx
      3→export const Usage = () => {
 
 website/src/pages/_app.tsx
+     4→import '../style.css';
+     5→import '../globals.css';
      7→export default function Nextra({ Component, pageProps }: AppProps): ReactElement {
+     8→  return (
+     9→    <>
+      →    …
 
 website/src/pages/_meta.json
-     2→  "getting-started": {
-     6→  "-- API": {
-    10→  "toast": {
-    14→  "toaster": {
-    18→  "-- More": {
-    22→  "styling": {
 
 website/src/pages/index.tsx
+    10→import Head from '../components/Head';
+    11→import { How } from '../components/How/How';
+    12→import { Footer } from '../components/Footer';
     14→export default function Home() {
 
 website/theme.config.jsx
      7→  useNextSeoProps() {
 
 website/tsconfig.json
+     2→  "compilerOptions": {
+    26→  },
+    27→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+    28→  "exclude": ["node_modules"]
+    29→}

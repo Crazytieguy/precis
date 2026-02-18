@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1005 tokens)
+budget: 1000 (1006 tokens)
 
 CHANGELOG.md
 
@@ -47,10 +47,10 @@ README.md
    770→## Who's using dotenv?
 
 lib/cli-options.js
-     1→const re …
+     1→const re = /^dotenv_config_(encoding|path|quiet|debug|override|DOTENV_KEY)=(.+)$/
 
 lib/env-options.js
-     2→const options …
+     2→const options = {}
 
 lib/main.d.ts
      3→import type { URL } from 'url';
@@ -64,8 +64,6 @@ lib/main.d.ts
     26→  /**
     27→   * Default: `path.resolve(process.cwd(), '.env')`
     28→   *
-    29→   * Specify a custom path if your file containing environment variables is located elsewhere.
-    30→   * Can also be an array of strings, specifying multiple paths.
       →   …
     92→export interface DotenvConfigOutput {
     93→  error?: DotenvError;
@@ -76,8 +74,6 @@ lib/main.d.ts
    107→  /**
    108→   * Default: `false`
    109→   *
-   110→   * Turn on logging to help debug why certain keys or values are not being set as you expect.
-   111→   *
       →   …
    126→export interface DotenvPopulateInput {
    127→  [name: string]: string | undefined;
@@ -114,6 +110,14 @@ package.json
     59→  "browser": {
     61→  }
     62→}
+
+tests/test-config-cli.js
+     6→function spawn (cmd, options = {}) {
+
+tests/test-env-options.js
+
+tests/test-populate.js
+     8→const mockParseResponse = { test: 'foo' }
 
 tests/types/tsconfig.json
      2→  "compilerOptions": {

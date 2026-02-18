@@ -2,31 +2,43 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4001 tokens)
+budget: 4000 (4022 tokens)
 
 __init__.py
      1→__all__ = [
      2→    "__version__",
      3→    "PluginManager",
-     4→    "PluginValidationError",
-     5→    "HookCaller",
-     6→    "HookCallError",
       →    …
-    17→from ._hooks import HookCaller
-    18→from ._hooks import HookImpl
-    19→from ._hooks import HookimplMarker
-    20→from ._hooks import HookimplOpts
-    21→from ._hooks import HookRelay
-    22→from ._hooks import HookspecMarker
-    23→from ._hooks import HookspecOpts
-    24→from ._manager import PluginManager
-    25→from ._manager import PluginValidationError
-    26→from ._result import HookCallError
-    27→from ._result import Result
-    28→from ._warnings import PluggyTeardownRaisedWarning
-    29→from ._warnings import PluggyWarning
+    17→from ._hooks …
+    18→from ._hooks …
+    19→from ._hooks …
+    20→from ._hooks …
+    21→from ._hooks …
+    22→from ._hooks …
+    23→from ._hooks …
+    24→from ._manager …
+    25→from ._manager …
+    26→from ._result …
+    27→from ._result …
+    28→from ._warnings …
+    29→from ._warnings …
+    32→def __getattr__(name: str) -> str:
+    33→    if name == "__version__":
+    34→        from importlib.metadata import version
+    35→
+    36→        return version("pluggy")
+    37→
+      →…
 
 _callers.py
+     7→from collections.abc import Generator
+     8→from collections.abc import Mapping
+     9→from collections.abc import Sequence
+    10→from typing import cast
+    11→from typing import NoReturn
+    12→from typing import TYPE_CHECKING
+    13→from typing import TypeAlias
+    14→import warnings
     16→from ._hooks import HookImpl
     17→from ._result import HookCallError
     18→from ._result import Result
@@ -34,65 +46,46 @@ _callers.py
     22→# Need to distinguish between old- and new-style hook wrappers.
     23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
     24→Teardown: TypeAlias = Generator[None, object, object]
-    60→def _raise_wrapfail(
-    61→    wrap_controller: Generator[None, object, object],
-    62→    msg: str,
-    63→) -> NoReturn:
-    70→def _warn_teardown_exception(
-    71→    hook_name: str, hook_impl: HookImpl, e: BaseException
-    72→) -> None:
-    82→def _multicall(
-    83→    hook_name: str,
-    84→    hook_impls: Sequence[HookImpl],
-    85→    caller_kwargs: Mapping[str, object],
-    86→    firstresult: bool,
-    87→) -> object | list[object]:
-    88→    """Execute a call into multiple python functions/methods and return the
-    89→    result(s).
-    90→
-      →…
+    27→def run_old_style_hookwrapper(
+    28→    hook_impl: HookImpl, hook_name: str, args: Sequence[object]
+    29→) -> Teardown:
+    30→    """
+    31→    backward compatibility wrapper to run a old style hookwrapper as a wrapper
+    32→    """
+    33→    if TYPE_CHECKING:
+    34→        teardown = cast(Teardown, hook_impl.function(*args))
+    35→    else:
+    36→        teardown = hook_impl.function(*args)
+    37→    try:
+    38→        next(teardown)
+    39→    except StopIteration:
+      →    …
+    60→def _raise_wrapfail …
+    70→def _warn_teardown_exception …
+    82→def _multicall …
 
 _hooks.py
     25→from ._result import Result
-    28→_T = TypeVar("_T")
-    29→_F = TypeVar("_F", bound=Callable[..., object])
-    31→_Namespace: TypeAlias = ModuleType | type
-    32→_Plugin: TypeAlias = object
-    33→_HookExec: TypeAlias = Callable[
-    37→_HookImplFunction: TypeAlias = Callable[..., _T | Generator[None, Result[_T], None]]
+    28→_T …
+    29→_F …
+    31→_Namespace …
+    32→_Plugin …
+    33→_HookExec …
+    37→_HookImplFunction …
     40→class HookspecOpts(TypedDict):
-    41→    """Options for a hook specification."""
     42→
     43→    #: Whether the hook is :ref:`first result only <firstresult>`.
     44→    firstresult: bool
     45→    #: Whether the hook is :ref:`historic <historic>`.
     46→    historic: bool
-    47→    #: Whether the hook :ref:`warns when implemented <warn_on_impl>`.
-    48→    warn_on_impl: Warning | None
-    49→    #: Whether the hook warns when :ref:`certain arguments are requested
-    50→    #: <warn_on_impl>`.
-    51→    #:
-    52→    #: .. versionadded:: 1.5
-    53→    warn_on_impl_args: Mapping[str, Warning] | None
+      →    …
     56→class HookimplOpts(TypedDict):
-    57→    """Options for a hook implementation."""
     58→
     59→    #: Whether the hook implementation is a :ref:`wrapper <hookwrapper>`.
     60→    wrapper: bool
     61→    #: Whether the hook implementation is an :ref:`old-style wrapper
     62→    #: <old_style_hookwrappers>`.
-    63→    hookwrapper: bool
-    64→    #: Whether validation against a hook specification is :ref:`optional
-    65→    #: <optionalhook>`.
-    66→    optionalhook: bool
-    67→    #: Whether to try to order this hook implementation :ref:`first
-    68→    #: <callorder>`.
-    69→    tryfirst: bool
-    70→    #: Whether to try to order this hook implementation :ref:`last
-    71→    #: <callorder>`.
-    72→    trylast: bool
-    73→    #: The name of the hook specification to match, see :ref:`specname`.
-    74→    specname: str | None
+      →    …
     77→@final
     78→class HookspecMarker:
     79→    """Decorator for marking functions as hook specifications.
@@ -104,6 +97,8 @@ _hooks.py
     85→
     86→    __slots__ = ("project_name",)
     87→
+    88→    def __init__ …
+   111→    def __call__ …
    164→@final
    165→class HookimplMarker:
    166→    """Decorator for marking functions as hook implementations.
@@ -115,7 +110,11 @@ _hooks.py
    172→
    173→    __slots__ = ("project_name",)
    174→
-   290→_PYPY = hasattr(sys, "pypy_version_info")
+   175→    def __init__ …
+   202→    def __call__ …
+   281→def normalize_hookimpl_opts …
+   290→_PYPY …
+   293→def varnames …
    358→@final
    359→class HookRelay:
    360→    """Hook holder object for performing 1:N hook calls where N is the number
@@ -123,18 +122,16 @@ _hooks.py
    362→
    363→    __slots__ = ("__dict__",)
    364→
-   377→_CallHistory: TypeAlias = list[
+   365→    def __init__ …
+   370→        def __getattr__ …
+   377→_CallHistory …
    382→class HookCaller:
-   383→    """A caller of all registered implementations of a hook specification."""
    384→
    385→    __slots__ = (
    386→        "name",
    387→        "spec",
    388→        "_hookexec",
-   389→        "_hookimpls",
-   390→        "_call_history",
-   391→    )
-   392→
+   393→    def __init__ …
    419→    # TODO: Document, or make private.
    420→    def has_spec(self) -> bool:
    421→        return self.spec is not None
@@ -152,44 +149,34 @@ _hooks.py
    434→        self.spec = HookSpec(specmodule_or_class, self.name, spec_opts)
    435→        if spec_opts.get("historic"):
    436→            self._call_history = []
+   438→    def is_historic …
    442→    def _remove_plugin(self, plugin: _Plugin) -> None:
+   449→    def get_hookimpls …
    453→    def _add_hookimpl(self, hookimpl: HookImpl) -> None:
    454→        """Add an implementation to the callback chain."""
+   477→    def __repr__ …
    480→    def _verify_all_args_are_provided(self, kwargs: Mapping[str, object]) -> None:
+   499→    def __call__ …
+   516→    def call_historic …
+   543→    def call_extra …
    577→    def _maybe_apply_history(self, method: HookImpl) -> None:
    578→        """Apply call history to a new hookimpl if it is marked as historic."""
    593→class _SubsetHookCaller(HookCaller):
-   594→    """A proxy to another HookCaller which manages calls to all registered
-   595→    plugins except the ones from remove_plugins."""
    596→
    597→    # This class is unusual: in inhertits from `HookCaller` so all of
-   598→    # the *code* runs in the class, but it delegates all underlying *data*
-   599→    # to the original HookCaller.
-   600→    # `subset_hook_caller` used to be implemented by creating a full-fledged
-   601→    # HookCaller, copying all hookimpls from the original. This had problems
-   602→    # with memory leaks (#346) and historic calls (#347), which make a proxy
-   603→    # approach better.
-   604→    # An alternative implementation is to use a `_getattr__`/`__getattribute__`
-   605→    # proxy, however that adds more overhead and is more tricky to implement.
-   606→
-   607→    __slots__ = (
-   608→        "_orig",
-   609→        "_remove_plugins",
-   610→    )
-   611→
+   612→    def __init__ …
    618→    @property  # type: ignore[misc]
    619→    def _hookimpls(self) -> list[HookImpl]:
    620→        return [
    621→            impl
-   622→            for impl in self._orig._hookimpls
-   623→            if impl.plugin not in self._remove_plugins
-   624→        ]
+      →            …
    626→    @property
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
    628→        return self._orig.spec
    630→    @property
    631→    def _call_history(self) -> _CallHistory | None:  # type: ignore[override]
    632→        return self._orig._call_history
+   634→    def __repr__ …
    638→@final
    639→class HookImpl:
    640→    """A hook implementation in a :class:`HookCaller`."""
@@ -208,6 +195,8 @@ _hooks.py
    653→        "trylast",
    654→    )
    655→
+   656→    def __init__ …
+   692→    def __repr__ …
    696→@final
    697→class HookSpec:
    698→    __slots__ = (
@@ -221,25 +210,26 @@ _hooks.py
    706→        "warn_on_impl_args",
    707→    )
    708→
+   709→    def __init__ …
 
 _manager.py
-    16→from . import _tracing
-    17→from ._callers import _multicall
-    18→from ._hooks import _HookImplFunction
-    19→from ._hooks import _Namespace
-    20→from ._hooks import _Plugin
-    21→from ._hooks import _SubsetHookCaller
-    22→from ._hooks import HookCaller
-    23→from ._hooks import HookImpl
-    24→from ._hooks import HookimplOpts
-    25→from ._hooks import HookRelay
-    26→from ._hooks import HookspecOpts
-    27→from ._hooks import normalize_hookimpl_opts
-    28→from ._result import Result
+    16→from . …
+    17→from ._callers …
+    18→from ._hooks …
+    19→from ._hooks …
+    20→from ._hooks …
+    21→from ._hooks …
+    22→from ._hooks …
+    23→from ._hooks …
+    24→from ._hooks …
+    25→from ._hooks …
+    26→from ._hooks …
+    27→from ._hooks …
+    28→from ._result …
     33→    import importlib.metadata
     36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
     37→_AfterTrace: TypeAlias = Callable[
-    42→def _warn_for_function(warning: Warning, function: Callable[..., object]) -> None:
+    42→def _warn_for_function …
     52→class PluginValidationError(Exception):
     53→    """Plugin failed validation.
     54→
@@ -264,24 +254,20 @@ _manager.py
     90→    You can register plugin objects (which contain hook implementations) by
     91→    calling :meth:`register(plugin) <PluginManager.register>`.
     92→
-    93→    For debugging purposes you can call :meth:`PluginManager.enable_tracing`
-    94→    which will subsequently send debug information to the trace helper.
-    95→
-    96→    :param project_name:
-    97→        The short project name. Prefer snake case. Make sure it's unique!
-    98→    """
+      →…
     99→
-   114→    def _hookexec(
-   115→        self,
-   116→        hook_name: str,
-   117→        methods: Sequence[HookImpl],
-   118→        kwargs: Mapping[str, object],
-   119→        firstresult: bool,
-   120→    ) -> object | list[object]:
-   331→    def _verify_hook(self, hook: HookCaller, hookimpl: HookImpl) -> None:
-   525→def _formatdef(func: Callable[..., object]) -> str:
+   114→    def _hookexec …
+   331→    def _verify_hook …
+   525→def _formatdef …
 
 _result.py
+     7→from collections.abc import Callable
+     8→from types import TracebackType
+     9→from typing import cast
+    10→from typing import final
+    11→from typing import Generic
+    12→from typing import TypeAlias
+    13→from typing import TypeVar
     16→_ExcInfo: TypeAlias = tuple[type[BaseException], BaseException, TracebackType | None]
     20→class HookCallError(Exception):
     21→    """Hook was called incorrectly."""
@@ -292,6 +278,14 @@ _result.py
     28→
     29→    __slots__ = ("_result", "_exception", "_traceback")
     30→
+    31→    def __init__(
+    32→        self,
+    33→        result: ResultType | None,
+    34→        exception: BaseException | None,
+    35→    ) -> None:
+    36→        """:meta private:"""
+    37→        self._result = result
+      →        …
     42→    @property
     43→    def excinfo(self) -> _ExcInfo | None:
     44→        """:meta private:"""
@@ -314,14 +308,53 @@ _result.py
     63→        except BaseException as exc:
     64→            exception = exc
     65→        return cls(result, exception)
+    67→    def force_result(self, result: ResultType) -> None:
+    68→        """Force the result(s) to ``result``.
+    69→
+    70→        If the hook was marked as a ``firstresult`` a single value should
+    71→        be set, otherwise set a (modified) list of results. Any exceptions
+    72→        found during invocation will be deleted.
+    73→
+    74→        This overrides any previous result or exception.
+    75→        """
+    76→        self._result = result
+      →        …
+    80→    def force_exception(self, exception: BaseException) -> None:
+    81→        """Force the result to fail with ``exception``.
+    82→
+    83→        This overrides any previous result or exception.
+    84→
+    85→        .. versionadded:: 1.1.0
+    86→        """
+    87→        self._result = None
+      →        …
+    91→    def get_result(self) -> ResultType:
+    92→        """Get the result(s) for this hook call.
+    93→
+    94→        If the hook was marked as a ``firstresult`` only a single value
+    95→        will be returned, otherwise a list of results.
+    96→        """
+    97→        __tracebackhide__ = True
+      →        …
 
 _tracing.py
+     7→from collections.abc import Callable
+     8→from collections.abc import Sequence
+     9→from typing import Any
     16→class TagTracer:
+    17→    def __init__(self) -> None:
+    22→    def get(self, name: str) -> TagTracerSub:
     25→    def _format_message(self, tags: Sequence[str], args: Sequence[object]) -> str:
     42→    def _processmessage(self, tags: tuple[str, ...], args: tuple[object, ...]) -> None:
+    48→    def setwriter(self, writer: _Writer | None) -> None:
+    51→    def setprocessor(self, tags: str | tuple[str, ...], processor: _Processor) -> None:
     59→class TagTracerSub:
+    60→    def __init__(self, root: TagTracer, tags: tuple[str, ...]) -> None:
+    64→    def __call__(self, *args: object) -> None:
+    67→    def get(self, name: str) -> TagTracerSub:
 
 _warnings.py
+     1→from typing import final
      4→class PluggyWarning(UserWarning):
      5→    """Base class for all warnings emitted by pluggy."""
      6→

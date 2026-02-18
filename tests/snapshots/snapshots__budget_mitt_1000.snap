@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1012 tokens)
+budget: 1000 (999 tokens)
 
 README.md
      9→# Mitt
@@ -17,14 +17,8 @@ README.md
     19→Mitt was made for the browser, but works in any JavaScript runtime. It has no dependencies and supports IE9+.
     20→
     21→## Table of Contents
-    23→-   [Install](#install)
-      →…
     30→## Install
-    32→This project uses [node](http://nodejs.org) and [npm](https://npmjs.com). Go check them out if you don't have them locally installed.
-      →…
     56→## Usage
-    58→```js
-      →…
     81→### Typescript
    113→## Examples & Demos
    123→## API
@@ -38,12 +32,9 @@ README.md
    167→### emit
    174→#### Parameters
    179→## Contribute
-   181→First off, thanks for taking the time to contribute!
-      →…
    184→### Reporting Issues
    189→### Submitting pull requests
    203→## License
-   205→[MIT License](https://opensource.org/licenses/MIT) © [Jason Miller](https://jasonformat.com/)
 
 package.json
 
@@ -89,12 +80,25 @@ src/index.ts
     58→		all,
     59→
     60→		/**
-      →		…
+    61→		 * Register an event handler for the given type.
+      →		 …
+
+test/index_test.ts
 
 test/test-types-compilation.ts
+     3→import mitt from '..';
      5→interface SomeEventData {
      6→	name: string;
      7→}
      9→const emitter = mitt<{
+    15→const barHandler …
+    16→const fooHandler …
+    17→const wildcardHandler …
 
 tsconfig.json
+     2→	"compileOnSave": false,
+     3→	"compilerOptions": {
+    10→	},
+    11→	"include": [
+    14→	]
+    15→}

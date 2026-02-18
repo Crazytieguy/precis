@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3935 tokens)
+budget: 4000 (4008 tokens)
 
 README.md
      1→# Command-line tool
@@ -25,7 +25,7 @@ arg-watcher.md
      4→
      5→* `poll` (default) --- Checks for file modifications by scanning the filesystem every second.
      6→* `native` --- Uses the native operating system facilities to receive notifications when files change.
-     7→  This can have less constant overhead, but may not be as reliable as the `poll` based watcher. See these issues for more information: [#383](https://github.com/rust-lang/mdBook/issues/383) [#1441](https://github.com/rust-lang/mdBook/issues/1441) [#1707](https://github.com/rust-lang/mdBook/issues/1707) [#2035](https://github.com/rust-lang/mdBook/issues/2035) [#2102](https://github.com/rust-lang/mdBook/issues/2102)
+      →…
 
 build.md
      1→# The build command
@@ -62,7 +62,8 @@ build.md
     36→
     37→-------------------
     38→
-      →…
+    39→***Note:*** *The build command copies all files (excluding files with `.md` extension) from the source directory
+    40→into the build directory.*
 
 clean.md
      1→# The clean command
@@ -89,7 +90,9 @@ clean.md
     25→
     26→```bash
     27→mdbook clean --dest-dir=path/to/book
-      →…
+    28→```
+    29→
+    30→`path/to/book` could be absolute or relative.
 
 completions.md
      1→# The completions command
@@ -180,7 +183,12 @@ init.md
     71→mdbook init --ignore=none
     72→```
     73→
-      →…
+    74→```bash
+    75→mdbook init --ignore=git
+    76→```
+    77→
+    78→[building]: build.md
+    79→
     80→#### `--force`
     82→Skip the prompts to create a `.gitignore` and for the title for the book.
 
@@ -256,6 +264,11 @@ test.md
     17→    ```
     18→
     19→rustdoc also doesn't test code blocks which specify a language other than Rust:
+    20→
+    21→    ```markdown
+    22→    **Foo**: _bar_
+    23→    ```
+    24→
       →…
     31→#### Specify a directory
     33→The `test` command can take a directory as an argument to use as the book's root
@@ -273,6 +286,11 @@ test.md
     46→[build cache](https://doc.rust-lang.org/cargo/guide/build-cache.html) `deps` directory that
     47→contains the build output of your project. For example, if your Rust project's book is in a directory
     48→named `my-book`, the following command would include the crate's dependencies when running `test`:
+    49→
+    50→```shell
+    51→mdbook test my-book -L target/debug/deps/
+    52→```
+    53→
       →…
     57→#### `--chapter`
     59→The `--chapter` (`-c`) option allows you to test a specific chapter of the
@@ -314,4 +332,4 @@ watch.md
     38→ignoring temporary files created by some editors.
     39→
     40→_Note: Only `.gitignore` from book root directory is used. Global
-      →…
+    41→`$HOME/.gitignore` or `.gitignore` files in parent directories are not used._
