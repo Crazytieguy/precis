@@ -4,7 +4,6 @@ use std::path::{Path, PathBuf};
 use crate::format;
 use crate::parse;
 use crate::walk;
-use crate::Lang;
 
 // ---------------------------------------------------------------------------
 // Data model
@@ -364,6 +363,7 @@ pub fn build_groups(
     files: &[PathBuf],
     sources: &[Option<String>],
     all_symbols: &[Vec<parse::Symbol>],
+    layouts: &[Vec<format::SymbolLayout>],
 ) -> Vec<Group> {
     let mut group_map: HashMap<GroupKey, Group> = HashMap::new();
 
@@ -373,7 +373,6 @@ pub fn build_groups(
             None => continue,
         };
         let relative = file.strip_prefix(root).unwrap_or(file);
-        let lang = Lang::from_path(relative);
         let parent_dir = relative
             .parent()
             .unwrap_or(Path::new(""))
@@ -393,10 +392,10 @@ pub fn build_groups(
         for (symbol_idx, sym) in symbols.iter().enumerate() {
             let sym_line_0 = sym.line - 1;
             let kind_category = KindCategory::from_symbol_kind(sym.kind);
+            let layout = &layouts[file_idx][symbol_idx];
 
-            // Detect documentation
-            let doc_start = format::doc_comment_start(&lines, sym_line_0, lang);
-            let is_documented = doc_start < sym_line_0;
+            // Detect documentation from layout
+            let is_documented = layout.doc_start < sym_line_0;
 
             let heading_depth = if kind_category == KindCategory::Section {
                 Some(detect_heading_depth(&lines, sym_line_0, sym.end_line))
@@ -422,9 +421,7 @@ pub fn build_groups(
                 symbol_idx,
                 sym,
                 &lines,
-                lang,
-                doc_start,
-                symbols,
+                layout,
             );
 
             let group = group_map.entry(key.clone()).or_insert_with(|| Group {
@@ -447,16 +444,15 @@ pub fn build_groups(
 }
 
 /// Compute word costs for each rendering stage of a single symbol.
+/// Reads all line ranges from the pre-computed layout.
 fn compute_symbol_costs(
     file_idx: usize,
     symbol_idx: usize,
     sym: &parse::Symbol,
     lines: &[&str],
-    lang: Option<Lang>,
-    doc_start: usize,
-    all_symbols: &[parse::Symbol],
+    layout: &format::SymbolLayout,
 ) -> SymbolCosts {
-    let sym_line_0 = sym.line - 1;
+    let sym_line_0 = layout.sym_line_0;
 
     // Name: word count of the formatted name line, plus 1 for the " …" suffix
     // that the renderer appends to names-only entries. Including the ellipsis
@@ -469,7 +465,7 @@ fn compute_symbol_costs(
 
     // Signature: additional words from showing full signature lines (with line numbers)
     // beyond what the name-only line shows.
-    let sig_end = format::signature_end_line(lines, sym, lang);
+    let sig_end = layout.sig_end;
     let is_section = sym.kind == parse::SymbolKind::Section;
     let mut sig_formatted_words = 0;
     for (i, line) in lines.iter().enumerate().take(sig_end + 1).skip(sym_line_0) {
@@ -483,81 +479,33 @@ fn compute_symbol_costs(
     }
     let signature_words = sig_formatted_words.saturating_sub(name_words);
 
-    // Doc comment lines
+    // Doc comment lines (pre-symbol comments + Python docstrings)
     let mut doc_line_words = Vec::new();
-    if doc_start < sym_line_0 {
-        for (i, line) in lines.iter().enumerate().take(sym_line_0).skip(doc_start) {
+    if layout.doc_start < sym_line_0 {
+        for (i, line) in lines.iter().enumerate().take(sym_line_0).skip(layout.doc_start) {
             doc_line_words.push(format::count_words(&format::fmt_line(i, line)));
         }
     }
-    // Python docstrings: lines after the signature
-    if lang == Some(Lang::Python) {
-        let ds_end = format::docstring_end(lines, sig_end);
-        if ds_end > sig_end + 1 {
-            for (i, line) in lines.iter().enumerate().take(ds_end).skip(sig_end + 1) {
-                doc_line_words.push(format::count_words(&format::fmt_line(i, line)));
-            }
+    // Python docstrings
+    if layout.ds_end > layout.ds_start {
+        for (i, line) in lines.iter().enumerate().take(layout.ds_end).skip(layout.ds_start) {
+            doc_line_words.push(format::count_words(&format::fmt_line(i, line)));
         }
     }
 
-    // Body lines (after signature, up to end_line)
+    // Body lines — ranges come from layout (already truncated at first child)
     let mut body_line_words = Vec::new();
-    let body_start = sig_end + 1;
-    let body_end = sym.end_line.min(lines.len());
-
-    if sym.kind == parse::SymbolKind::Section {
-        // Markdown: body is content text after heading, up to next heading
-        let next_heading_line = all_symbols
-            .iter()
-            .skip(symbol_idx + 1)
-            .find(|s| s.kind == parse::SymbolKind::Section)
-            .map(|s| s.line - 1)
-            .unwrap_or(lines.len());
-        // Skip leading noise (badges, link refs, blank lines) after heading
-        let heading_end = (sym.end_line - 1).max(sym_line_0 + 1);
-        let mut content_start = heading_end;
-        while content_start < next_heading_line
-            && format::is_markdown_leading_noise(lines[content_start])
-        {
-            content_start += 1;
-        }
-        for (i, line) in lines.iter().enumerate().take(next_heading_line).skip(content_start) {
+    if is_section {
+        // Markdown: body is content text between headings
+        for (i, line) in lines.iter().enumerate().take(layout.md_section_end).skip(layout.md_content_start) {
             body_line_words.push(format::count_words(&format::fmt_line(i, line)));
         }
     } else {
-        // Code: body lines after signature
-        // Skip Python docstrings if present (already counted in doc_line_words)
-        let actual_body_start = if lang == Some(Lang::Python) {
-            let ds_end = format::docstring_end(lines, sig_end);
-            if ds_end > sig_end + 1 { ds_end } else { body_start }
-        } else {
-            body_start
-        };
-        for (i, line) in lines.iter().enumerate().take(body_end).skip(actual_body_start) {
+        // Code: body_start..body_end (truncated at first child by layout)
+        for (i, line) in lines.iter().enumerate().take(layout.body_end).skip(layout.body_start) {
             body_line_words.push(format::count_words(&format::fmt_line(i, line)));
         }
     }
-
-    // Check if body region contains nested symbols (used to predict
-    // whether the renderer will suppress body truncation markers).
-    let body_has_nested = if sym.kind == parse::SymbolKind::Section {
-        false // Markdown sections don't suppress truncation markers
-    } else {
-        let body_end = sym.end_line.min(lines.len());
-        let actual_body_start = if lang == Some(Lang::Python) {
-            let ds_end = format::docstring_end(lines, sig_end);
-            if ds_end > sig_end + 1 { ds_end } else { sig_end + 1 }
-        } else {
-            sig_end + 1
-        };
-        all_symbols
-            .iter()
-            .skip(symbol_idx + 1)
-            .any(|s| {
-                let sl = s.line - 1;
-                sl >= actual_body_start && sl < body_end
-            })
-    };
 
     SymbolCosts {
         file_idx,
@@ -566,7 +514,7 @@ fn compute_symbol_costs(
         signature_words,
         doc_line_words,
         body_line_words,
-        body_has_nested,
+        body_has_nested: layout.has_children,
     }
 }
 

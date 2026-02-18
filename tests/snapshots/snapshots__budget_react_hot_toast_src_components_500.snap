@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (515 words)
+budget: 500 (500 words)
 
 checkmark.tsx
      3→const circleAnimation = keyframes`
@@ -12,8 +12,6 @@ checkmark.tsx
     31→  secondary?: string;
     32→}
     34→export const CheckmarkIcon = styled('div')<CheckmarkTheme>`
-    35→  width: 20px;
-      →…
 error.tsx
      3→const circleAnimation = keyframes`
     13→const firstLineAnimation = keyframes`
@@ -23,8 +21,6 @@ error.tsx
     35→  secondary?: string;
     36→}
     38→export const ErrorIcon = styled('div')<ErrorTheme>`
-    39→  width: 20px;
-      →…
 loader.tsx
      3→const rotate = keyframes`
     12→export interface LoaderTheme {
@@ -32,8 +28,6 @@ loader.tsx
     14→  secondary?: string;
     15→}
     17→export const LoaderIcon = styled('div')<LoaderTheme>`
-    18→  width: 12px;
-      →…
 toast-bar.tsx
      8→const enterAnimation = (factor: number) => `
      9→0% {transform: translate3d(0,${factor * -200}%,0) scale(.6); opacity:.5;}
@@ -63,20 +57,12 @@ toast-bar.tsx
     61→  const top = position.includes('top');
       →…
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
-    76→  ({ toast, position, style, children }) => {
-      →…
 toast-icon.tsx
      9→const StatusWrapper = styled('div')`
     13→const IndicatorWrapper = styled('div')`
     22→const enter = keyframes`
     32→export const AnimatedIconWrapper = styled('div')`
-    33→  position: relative;
-      →…
     41→export type IconThemes = Partial<{
-    42→  success: CheckmarkTheme;
-    43→  error: ErrorTheme;
-    44→  loading: LoaderTheme;
-    45→}>;
     47→export const ToastIcon: React.FC<{
     48→  toast: Toast;
     49→}> = ({ toast }) => {
@@ -162,4 +148,10 @@ toaster.tsx
    124→          <ToastWrapper
    125→            id={t.id}
    126→            key={t.id}
+   127→            onHeightUpdate={handlers.updateHeight}
+   128→            className={t.visible ? activeClass : ''}
+   129→            style={positionStyle}
+   130→          >
+   131→            {t.type === 'custom' ? (
+   132→              resolveValue(t.message, t)
       →…

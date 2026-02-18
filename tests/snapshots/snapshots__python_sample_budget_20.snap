@@ -3,9 +3,11 @@ source: tests/snapshots.rs
 expression: output
 ---
 sample.py
-     8→def process_items(items: list[str]) -> int:
+     5→T …
     15→class Token:
+    16→    kind: str
+      →…
     21→class Visitor:
     29→class TokenParser(Generic[T]):
     34→
-    47→    def from_file(cls, path: str) -> "TokenParser[T]":
+    54→VERSION …

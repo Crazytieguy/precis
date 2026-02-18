@@ -2,10 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (508 words)
+budget: 500 (490 words)
 
 error.ts
      5→export type Failure …
+    16→/**
+    17→ * `StructError` objects are thrown (or returned) when validation fails.
+    18→ *
+      →…
     25→export class StructError extends TypeError {
     26→  value: any
     27→  key!: any
@@ -18,17 +22,14 @@ error.ts
     34→
     35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
     36→    let cached: Array<Failure> | undefined
-    37→    const { message, explanation, ...rest } = failure
-    38→    const { path } = failure
-    39→    const msg =
-    40→      path.length === 0 ? message : `At path: ${path.join('.')} -- ${message}`
-    41→    super(explanation ?? msg)
-    42→    if (explanation != null) this.cause = msg
-    43→    Object.assign(this, rest)
       →…
 struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
      2→import { StructError, Failure } from './error.js'
+     4→/**
+     5→ * `Struct` objects encapsulate the validation logic for a specific type of
+     6→ * values. Once constructed, you use the `assert`, `is` or `validate` helpers to
+      →…
     10→export class Struct<T = unknown, S = unknown> {
     11→  readonly TYPE!: T
     12→  type: string
@@ -43,11 +44,7 @@ struct.ts
     21→
     22→  constructor(props: {
     23→    type: string
-    24→    schema: S
-    25→    coercer?: Coercer
-    26→    validator?: Validator
-    27→    refiner?: Refiner<T>
-    28→    entries?: Struct<T, S>['entries']
+      →…
     67→  assert …
     75→  create …
     83→  is …

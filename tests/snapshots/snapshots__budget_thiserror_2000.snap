@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1912 words)
+budget: 2000 (1942 words)
 
 README.md
      1→derive(Error)
@@ -119,6 +119,8 @@ build/probe.rs
     29→    }
 build.rs
     10→const PRIVATE: &str = "\
+    11→#[doc(hidden)]
+      →…
     18→fn main() {
     91→fn compile_probe(rustc_bootstrap: bool) -> bool {
    179→fn rustc_minor_version() -> Option<u32> {
@@ -245,9 +247,7 @@ impl/src/fmt.rs
    185→    input.parse::<TokenStream>().unwrap();
    186→    Ok(FmtArguments {
    187→        named: BTreeSet::new(),
-   188→        first_unnamed: None,
-   189→    })
-   190→}
+      →…
 impl/src/generics.rs
      8→pub struct ParamsInScope<'a> {
      9→    names: Set<&'a Ident>,
@@ -306,6 +306,28 @@ impl/src/scan_expr.rs
     28→    DecDepth,
     29→    Finish,
     30→}
+    32→static INIT …
+    63→static POSTFIX …
+    76→static ASYNC …
+    82→static BLOCK …
+    84→static BREAK_LABEL …
+    89→static BREAK_VALUE …
+    95→static CLOSURE …
+   104→static CLOSURE_ARGS …
+   109→static CLOSURE_RET …
+   114→static CONST …
+   119→static CONTINUE …
+   124→static DOT …
+   130→static FOR …
+   135→static IF_ELSE …
+   136→static IF_THEN …
+   139→static METHOD …
+   141→static PATH …
+   148→static PATTERN …
+   166→static RANGE …
+   175→static RAW …
+   181→static REFERENCE …
+   187→static RETURN …
 impl/src/unraw.rs
     10→#[derive(Clone)]
     11→#[repr(transparent)]
@@ -338,7 +360,6 @@ src/aserror.rs
      4→#[doc(hidden)]
      5→pub trait AsDynError<'a>: Sealed {
      6→    fn as_dyn_error(&self) -> &(dyn Error + 'a);
-     7→}
     10→    #[inline]
     11→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
     12→        self
@@ -371,7 +392,6 @@ src/display.rs
      9→    type Target: Display;
     10→
     11→    fn as_display(&'a self) -> Self::Target;
-    12→}
     18→    type Target = &'a T;
     20→    fn as_display(&'a self) -> Self::Target {
     21→        *self
@@ -379,21 +399,17 @@ src/display.rs
     25→#[cfg(feature = "std")]
     26→impl<'a> AsDisplay<'a> for Path {
     27→    type Target = path::Display<'a>;
-    28→
     29→    #[inline]
     30→    fn as_display(&'a self) -> Self::Target {
     31→        self.display()
     32→    }
-    33→}
     35→#[cfg(feature = "std")]
     36→impl<'a> AsDisplay<'a> for PathBuf {
     37→    type Target = path::Display<'a>;
-    38→
     39→    #[inline]
     40→    fn as_display(&'a self) -> Self::Target {
     41→        self.display()
     42→    }
-    43→}
     45→#[doc(hidden)]
     46→pub trait Sealed {}
     48→#[cfg(feature = "std")]
@@ -404,19 +420,13 @@ src/display.rs
     59→mod placeholder {
     60→    use super::{AsDisplay, Sealed};
     61→    use core::fmt::{self, Display};
-    62→
     63→    #[allow(dead_code)]
     64→    pub struct Placeholder;
-    65→
-    66→    impl<'a> AsDisplay<'a> for Placeholder {
     67→        type Target = Self;
-    68→
     69→        #[inline]
     70→        fn as_display(&'a self) -> Self::Target {
     71→            Placeholder
     72→        }
-    73→    }
-    74→
     76→        fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
     77→            unreachable!()
     78→        }
@@ -440,7 +450,6 @@ src/provide.rs
      3→#[doc(hidden)]
      4→pub trait ThiserrorProvide: Sealed {
      5→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>);
-     6→}
     12→    #[inline]
     13→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>) {
     14→        self.provide(request);
@@ -469,11 +478,9 @@ tests/test_backtrace.rs
      4→use thiserror::Error;
     17→#[cfg(thiserror_nightly_testing)]
     18→pub mod structs {
-    19→    use super::{Inner, InnerBacktrace};
     25→    mod not_backtrace {
    162→#[cfg(thiserror_nightly_testing)]
    163→pub mod enums {
-   164→    use super::{Inner, InnerBacktrace};
 tests/test_display.rs
     12→fn assert<T: Display>(expected: &str, value: T) {
    414→mod util {
@@ -516,10 +523,8 @@ tests/test_option.rs
      3→
      4→#[cfg(thiserror_nightly_testing)]
      5→pub mod structs {
-     6→    use std::backtrace::Backtrace;
     49→#[cfg(thiserror_nightly_testing)]
     50→pub mod enums {
-    51→    use std::backtrace::Backtrace;
 tests/test_path.rs
      3→use core::fmt::Display;
     10→struct StructPathBuf {

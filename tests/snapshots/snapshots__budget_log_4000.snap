@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3928 words)
+budget: 4000 (3927 words)
 
 CHANGELOG.md
      1→# Change Log …
@@ -94,6 +94,8 @@ README.md
     87→    * [`db_logger`](https://docs.rs/db_logger/*/db_logger/)
     88→    * [`log-to-defmt`](https://docs.rs/log-to-defmt/*/log_to_defmt/)
     89→    * [`logcontrol-log`](https://docs.rs/logcontrol-log/*/logcontrol_log/)
+    90→* For WebAssembly binaries:
+    91→    * [`console_log`](https://docs.rs/console_log/*/console_log/)
       →…
    106→## Structured logging
    108→If you enable the `kv` feature, you can associate structured data with your log records:
@@ -177,7 +179,10 @@ rfcs/0296-structured-logging.md
    101→This section introduces `log`'s structured logging API through a tour of how structured records can be captured and consumed.
    102→
    103→## Logging structured key-value pairs …
+   107→### What can be captured as a structured value? …
    255→## Supporting key-value pairs in `Log` implementations …
+   316→### Writing key-value pairs as text …
+   348→### Writing key-value pairs as JSON …
    401→## Integrating log frameworks with `log` …
    489→## How producers and consumers of structured values interact …
    495→# Reference-level explanation
@@ -187,13 +192,28 @@ rfcs/0296-structured-logging.md
    502→### Don't break anything
    504→Allow structured logging to be added in the current `0.4.x` series of `log`. This gives us the option of including structured logging in an `0.4.x` release, or bumping the minor crate version without introducing any actual breaking changes.
    505→
+   506→### Don't create a public dependency …
+   510→### Support arbitrary producers and arbitrary consumers …
+   514→### Remain object safe …
+   518→### Enable the next round of `log` development …
    522→## Cargo features …
+   533→### `kv_sval` and `kv_serde` …
    541→## A complete key-values API …
+   545→### `Error` …
+   625→### `Value` …
+   788→### `ToValue` …
+   981→### `Key` …
+  1089→### `ToKey` …
+  1130→### `Source` …
+  1403→### `Visitor` …
+  1430→### `Record` and `RecordBuilder` …
   1460→## A minimal key-values API …
   1569→## The `log!` macros …
   1575→# Drawbacks, rationale, and alternatives
   1578→## Supporting structured logging at all …
   1582→## Internalizing `sval` and `serde` …
+  1588→### Drawbacks …
+  1596→### Alternatives …
   1598→#### Build a serialization contract in `log`
   1600→Instead of internalizing a few serialization frameworks, `log` could provide a public common contract for them to conform to:
   1601→
@@ -232,24 +252,34 @@ src/__private_api.rs
     13→    /// Types for the `kv` argument.
     14→    pub trait KVs<'a> {
     15→        fn into_kvs …
+    23→    fn into_kvs …
+    30→    fn into_kvs …
     37→/// The global logger proxy.
     38→#[derive(Debug)]
     39→pub struct GlobalLogger;
     42→    fn enabled …
     46→    fn log …
     50→    fn flush …
-    56→fn log_impl …
+    56→fn log_impl<L: Log>(
+    57→    logger: L,
+    58→    args: Arguments,
+    59→    level: Level,
+    60→    &(target, module_path, loc): &(&str, &'static str, &'static Location),
+    61→    kvs: Option<&[(&str, Value)]>,
+    62→) {
     84→pub fn log …
    103→pub fn enabled …
+   108→pub fn loc …
    112→#[cfg(feature = "kv")]
    113→mod kv_support {
    114→    use crate::kv;
-   115→
    116→    pub type Value<'a> = kv::Value<'a>;
-   117→
    122→    pub fn capture_to_value …
    126→    pub fn capture_debug …
    130→    pub fn capture_display …
+   135→    pub fn capture_error …
+   140→    pub fn capture_sval …
+   145→    pub fn capture_serde …
    151→pub use self::kv_support::*;
 src/kv/error.rs
      3→/// An error encountered while working with structured data.
@@ -269,8 +299,14 @@ src/kv/error.rs
     21→    pub fn msg …
     28→    #[cfg(feature = "value-bag")]
     29→    pub(super) fn from_value(err: crate::kv::value::inner::Error) -> Self {
+    30→        Error {
+    31→            inner: Inner::Value(err),
+      →…
     36→    #[cfg(feature = "value-bag")]
     37→    pub(super) fn into_value(self) -> crate::kv::value::inner::Error {
+    38→        match self.inner {
+    39→            Inner::Value(err) => err,
+      →…
     68→#[cfg(feature = "std")]
     69→mod std_support {
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
@@ -279,9 +315,7 @@ src/kv/key.rs
      3→use std::borrow::Borrow;
      6→/// A type that can be converted into a [`Key`](struct.Key.html).
      7→pub trait ToKey {
-     8→    /// Perform the conversion.
-     9→    fn to_key(&self) -> Key<'_>;
-    10→}
+     9→    fn to_key …
     36→#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
     37→pub struct Key<'k> {
     38→    // NOTE: This may become `Cow<'k, str>`
@@ -335,54 +369,37 @@ src/kv/source.rs
     14→///
     15→/// A source is like an iterator over its key-values, except with a push-based API
     16→/// instead of a pull-based one.
+    17→///
+    18→/// # Examples
+    19→///
+    20→/// Enumerating the key-values in a source:
+    21→///
+    22→/// ```
+    23→/// # fn main() -> Result<(), log::kv::Error> {
+    24→/// use log::kv::{self, Source, Key, Value, VisitSource};
+    25→///
+    26→/// // A `VisitSource` that prints all key-values
+    27→/// // VisitSources are fed the key-value pairs of each key-values
+    28→/// struct Printer;
+    29→///
       →…
     51→pub trait Source {
-    52→    /// Visit key-values.
-    53→    ///
-    54→    /// A source doesn't have to guarantee any ordering or uniqueness of key-values.
-    55→    /// If the given visitor returns an error then the source may early-return with it,
-    56→    /// even if there are more key-values.
-    57→    ///
-    58→    /// # Implementation notes
-    59→    ///
-    60→    /// A source should yield the same key-values to a subsequent visitor unless
-    61→    /// that visitor itself fails.
-    62→    fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error>;
-    63→
-    64→    /// Get the value for a given key.
-    65→    ///
-    66→    /// If the key appears multiple times in the source then which key is returned
-    67→    /// is implementation specific.
-    68→    ///
-    69→    /// # Implementation notes
-    70→    ///
-    71→    /// A source that can provide a more efficient implementation of this method
-    72→    /// should override it.
-    73→    fn get(&self, key: Key) -> Option<Value<'_>> {
-    74→        get_default(self, key)
-    75→    }
-    76→
-    77→    /// Count the number of key-values that can be visited.
-    78→    ///
-    79→    /// # Implementation notes
-    80→    ///
-    81→    /// A source that knows the number of key-values upfront may provide a more
-    82→    /// efficient implementation.
-    83→    ///
-    84→    /// A subsequent call to `visit` should yield the same number of key-values.
-    85→    fn count(&self) -> usize {
-    86→        count_default(self)
-    87→    }
-    88→}
+    62→    fn visit …
+    73→    fn get …
+    85→    fn count …
     90→/// The default implementation of `Source::get`
     91→fn get_default<'v>(source: &'v (impl Source + ?Sized), key: Key) -> Option<Value<'v>> {
+    92→    struct Get<'k, 'v> {
+    93→        key: Key<'k>,
+      →…
    113→/// The default implementation of `Source::count`.
    114→fn count_default(source: impl Source) -> usize {
+   115→    struct Count(usize);
+   116→
+      →…
    234→/// A visitor for the key-value pairs in a [`Source`](trait.Source.html).
    235→pub trait VisitSource<'kvs> {
-   236→    /// Visit a key-value pair.
-   237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
-   238→}
+   237→    fn visit_pair …
    240→#[allow(clippy::needless_lifetimes)] // Not needless.
    241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T
    242→where
@@ -396,9 +413,7 @@ src/kv/value.rs
      8→pub use crate::kv::Error;
     10→/// A type that can be converted into a [`Value`](struct.Value.html).
     11→pub trait ToValue {
-    12→    /// Perform the conversion.
-    13→    fn to_value(&self) -> Value<'_>;
-    14→}
+    13→    fn to_value …
     33→/// A value in a key-value.
     34→///
     35→/// Values are an anonymous bag containing some structured datum.
@@ -407,6 +422,19 @@ src/kv/value.rs
     38→///
     39→/// There are a few ways to capture a value:
     40→///
+    41→/// - Using the `Value::from_*` methods.
+    42→/// - Using the `ToValue` trait.
+    43→/// - Using the standard `From` trait.
+    44→///
+    45→/// ## Using the `Value::from_*` methods
+    46→///
+    47→/// `Value` offers a few constructor methods that capture values of different kinds.
+    48→///
+    49→/// ```
+    50→/// use log::kv::Value;
+    51→///
+    52→/// let value = Value::from_debug(&42i32);
+    53→///
       →…
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
@@ -425,6 +453,9 @@ src/kv/value.rs
    205→    where
    206→        T: Into<inner::Inner<'v>>,
    207→    {
+   208→        Value {
+   209→            inner: value.into(),
+      →…
    217→    pub fn visit …
    234→#[cfg(feature = "kv_serde")]
    235→impl<'v> serde_core::Serialize for Value<'v> {
@@ -448,82 +479,24 @@ src/kv/value.rs
    455→/// [`VisitValue::visit_str`], but more complex types like maps and sequences
    456→/// will fallthrough to [`VisitValue::visit_any`].
    457→///
-      →…
+   458→/// If you're trying to serialize a value to a format like JSON, you can use either `serde`
+   459→/// or `sval` directly with the value. You don't need a visitor.
+   460→///
+   461→/// [`Value`'s documentation on serialization]: Value#serialization
    462→pub trait VisitValue<'v> {
-   463→    /// Visit a `Value`.
-   464→    ///
-   465→    /// This is the only required method on `VisitValue` and acts as a fallback for any
-   466→    /// more specific methods that aren't overridden.
-   467→    /// The `Value` may be formatted using its `fmt::Debug` or `fmt::Display` implementation,
-   468→    /// or serialized using its `sval::Value` or `serde::Serialize` implementation.
-   469→    fn visit_any(&mut self, value: Value) -> Result<(), Error>;
-   470→
-   471→    /// Visit an empty value.
-   472→    fn visit_null(&mut self) -> Result<(), Error> {
-   473→        self.visit_any(Value::null())
-   474→    }
-   475→
-   476→    /// Visit an unsigned integer.
-   477→    fn visit_u64(&mut self, value: u64) -> Result<(), Error> {
-   478→        self.visit_any(value.into())
-   479→    }
-   480→
-   481→    /// Visit a signed integer.
-   482→    fn visit_i64(&mut self, value: i64) -> Result<(), Error> {
-   483→        self.visit_any(value.into())
-   484→    }
-   485→
-   486→    /// Visit a big unsigned integer.
-   487→    fn visit_u128(&mut self, value: u128) -> Result<(), Error> {
-   488→        self.visit_any((value).into())
-   489→    }
-   490→
-   491→    /// Visit a big signed integer.
-   492→    fn visit_i128(&mut self, value: i128) -> Result<(), Error> {
-   493→        self.visit_any((value).into())
-   494→    }
-   495→
-   496→    /// Visit a floating point.
-   497→    fn visit_f64(&mut self, value: f64) -> Result<(), Error> {
-   498→        self.visit_any(value.into())
-   499→    }
-   500→
-   501→    /// Visit a boolean.
-   502→    fn visit_bool(&mut self, value: bool) -> Result<(), Error> {
-   503→        self.visit_any(value.into())
-   504→    }
-   505→
-   506→    /// Visit a string.
-   507→    fn visit_str(&mut self, value: &str) -> Result<(), Error> {
-   508→        self.visit_any(value.into())
-   509→    }
-   510→
-   511→    /// Visit a string.
-   512→    fn visit_borrowed_str(&mut self, value: &'v str) -> Result<(), Error> {
-   513→        self.visit_str(value)
-   514→    }
-   515→
-   516→    /// Visit a Unicode character.
-   517→    fn visit_char(&mut self, value: char) -> Result<(), Error> {
-   518→        let mut b = [0; 4];
-   519→        self.visit_str(&*value.encode_utf8(&mut b))
-   520→    }
-   521→
-   522→    /// Visit an error.
-   523→    #[cfg(feature = "kv_std")]
-   524→    fn visit_error(&mut self, err: &(dyn std::error::Error + 'static)) -> Result<(), Error> {
-   525→        self.visit_any(Value::from_dyn_error(err))
-   526→    }
-   527→
-   528→    /// Visit an error.
-   529→    #[cfg(feature = "kv_std")]
-   530→    fn visit_borrowed_error(
-   531→        &mut self,
-   532→        err: &'v (dyn std::error::Error + 'static),
-   533→    ) -> Result<(), Error> {
-   534→        self.visit_any(Value::from_dyn_error(err))
-   535→    }
-   536→}
+   469→    fn visit_any …
+   472→    fn visit_null …
+   477→    fn visit_u64 …
+   482→    fn visit_i64 …
+   487→    fn visit_u128 …
+   492→    fn visit_i128 …
+   497→    fn visit_f64 …
+   502→    fn visit_bool …
+   507→    fn visit_str …
+   512→    fn visit_borrowed_str …
+   517→    fn visit_char …
+   524→    fn visit_error …
+   530→    fn visit_borrowed_error …
    538→#[allow(clippy::needless_lifetimes)] // Not needless.
    539→impl<'a, 'v, T: ?Sized> VisitValue<'v> for &'a mut T
    540→where
@@ -561,23 +534,47 @@ src/kv/value.rs
   1123→pub use VisitValue as Visit;
   1125→/// Get a value from a type implementing `std::fmt::Debug`.
   1126→#[cfg(feature = "kv_unstable")]
-      →…
+  1127→#[deprecated(note = "use the `key:? = value` macro syntax instead")]
+  1128→#[macro_export]
   1129→macro_rules! as_debug {
+  1130→    ($capture:expr) => {
+  1131→        $crate::kv::Value::from_debug(&$capture)
+  1132→    };
+  1133→}
   1135→/// Get a value from a type implementing `std::fmt::Display`.
   1136→#[cfg(feature = "kv_unstable")]
-      →…
+  1137→#[deprecated(note = "use the `key:% = value` macro syntax instead")]
+  1138→#[macro_export]
   1139→macro_rules! as_display {
+  1140→    ($capture:expr) => {
+  1141→        $crate::kv::Value::from_display(&$capture)
+  1142→    };
+  1143→}
   1145→/// Get a value from an error.
   1146→#[cfg(feature = "kv_unstable_std")]
-      →…
+  1147→#[deprecated(note = "use the `key:err = value` macro syntax instead")]
+  1148→#[macro_export]
   1149→macro_rules! as_error {
+  1150→    ($capture:expr) => {
+  1151→        $crate::kv::Value::from_dyn_error(&$capture)
+  1152→    };
+  1153→}
   1157→/// Get a value from a type implementing `serde::Serialize`.
   1158→#[macro_export]
   1159→macro_rules! as_serde {
+  1160→    ($capture:expr) => {
+  1161→        $crate::kv::Value::from_serde(&$capture)
+  1162→    };
+  1163→}
   1165→/// Get a value from a type implementing `sval::Value`.
   1166→#[cfg(feature = "kv_unstable_sval")]
-      →…
+  1167→#[deprecated(note = "use the `key:sval = value` macro syntax instead")]
+  1168→#[macro_export]
   1169→macro_rules! as_sval {
+  1170→    ($capture:expr) => {
+  1171→        $crate::kv::Value::from_sval(&$capture)
+  1172→    };
+  1173→}
 src/lib.rs
    399→use std::cfg;
    401→use std::error;
@@ -597,9 +594,9 @@ src/lib.rs
    423→}
    425→#[cfg(not(target_has_atomic = "ptr"))]
    426→impl AtomicUsize {
-   427→    const fn new …
-   431→    fn load …
-   435→    fn store …
+   427→    const fn new(v: usize) -> AtomicUsize {
+   431→    fn load(&self, _order: Ordering) -> usize {
+   435→    fn store(&self, val: usize, _order: Ordering) {
    442→#[cfg(not(target_has_atomic = "ptr"))]
    443→unsafe impl Sync for AtomicUsize {}
    447→static mut LOGGER: &dyn Log = &NopLogger;
@@ -639,10 +636,18 @@ src/lib.rs
    497→    /// Designates very low priority, often extremely verbose, information.
    498→    Trace,
    499→}
+   503→    fn eq …
+   510→    fn partial_cmp …
    516→    type Err = ParseLevelError;
    517→    fn from_str …
    529→    fn fmt …
-   535→    fn from_usize …
+   535→    fn from_usize(u: usize) -> Option<Level> {
+   548→    pub fn max …
+   554→    pub fn to_level_filter …
+   561→    pub fn as_str …
+   579→    pub fn iter …
+   599→    pub fn increment_severity …
+   620→    pub fn decrement_severity …
    626→/// An enum representing the available verbosity level filters of the logger.
    627→///
       →…
@@ -660,10 +665,18 @@ src/lib.rs
    647→    /// Corresponds to the `Trace` log level.
    648→    Trace,
    649→}
+   653→    fn eq …
+   660→    fn partial_cmp …
    666→    type Err = ParseLevelError;
    667→    fn from_str …
    679→    fn fmt …
-   685→    fn from_usize …
+   685→    fn from_usize(u: usize) -> Option<LevelFilter> {
+   699→    pub fn max …
+   707→    pub fn to_level …
+   714→    pub fn as_str …
+   732→    pub fn iter …
+   752→    pub fn increment_severity …
+   774→    pub fn decrement_severity …
    780→#[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug)]
    781→enum MaybeStaticStr<'a> {
    782→    Static(&'static str),
@@ -694,12 +707,36 @@ src/lib.rs
    860→#[cfg(feature = "kv")]
    861→impl<'a> fmt::Debug for KeyValues<'a> {
    862→    fn fmt …
+   872→    pub fn builder …
+   878→    pub fn args …
+   884→    pub fn metadata …
+   890→    pub fn level …
+   896→    pub fn target …
+   902→    pub fn module_path …
+   908→    pub fn module_path_static …
+   917→    pub fn file …
+   923→    pub fn file_static …
+   932→    pub fn line …
+   939→    pub fn key_values …
+   946→    pub fn to_builder …
    963→/// Builder for [`Record`](struct.Record.html).
    964→///
       →…
   1003→pub struct RecordBuilder<'a> {
   1004→    record: Record<'a>,
   1005→}
+  1021→    pub fn new …
+  1037→    pub fn args …
+  1044→    pub fn metadata …
+  1051→    pub fn level …
+  1058→    pub fn target …
+  1065→    pub fn module_path …
+  1072→    pub fn module_path_static …
+  1079→    pub fn file …
+  1086→    pub fn file_static …
+  1093→    pub fn line …
+  1101→    pub fn key_values …
+  1108→    pub fn build …
   1114→    fn default …
   1119→/// Metadata about a log message.
   1120→///
@@ -708,46 +745,25 @@ src/lib.rs
   1159→    level: Level,
   1160→    target: &'a str,
   1161→}
+  1166→    pub fn builder …
+  1172→    pub fn level …
+  1178→    pub fn target …
   1183→/// Builder for [`Metadata`](struct.Metadata.html).
   1184→///
       →…
   1200→pub struct MetadataBuilder<'a> {
   1201→    metadata: Metadata<'a>,
   1202→}
+  1212→    pub fn new …
+  1223→    pub fn level …
+  1230→    pub fn target …
+  1237→    pub fn build …
   1243→    fn default …
   1248→/// A trait encapsulating the operations required of a logger.
   1249→pub trait Log: Sync + Send {
-  1250→    /// Determines if a log message with the specified metadata would be
-  1251→    /// logged.
-  1252→    ///
-  1253→    /// This is used by the `log_enabled!` macro to allow callers to avoid
-  1254→    /// expensive computation of log message arguments if the message would be
-  1255→    /// discarded anyway.
-  1256→    ///
-  1257→    /// # For implementors
-  1258→    ///
-  1259→    /// This method isn't called automatically by the `log!` macros.
-  1260→    /// It's up to an implementation of the `Log` trait to call `enabled` in its own
-  1261→    /// `log` method implementation to guarantee that filtering is applied.
-  1262→    fn enabled(&self, metadata: &Metadata) -> bool;
-  1263→
-  1264→    /// Logs the `Record`.
-  1265→    ///
-  1266→    /// # For implementors
-  1267→    ///
-  1268→    /// Note that `enabled` is *not* necessarily called before this method.
-  1269→    /// Implementations of `log` should perform all necessary filtering
-  1270→    /// internally.
-  1271→    fn log(&self, record: &Record);
-  1272→
-  1273→    /// Flushes any buffered records.
-  1274→    ///
-  1275→    /// # For implementors
-  1276→    ///
-  1277→    /// This method isn't called automatically by the `log!` macros.
-  1278→    /// It can be called manually on shut-down to ensure any in-flight records are flushed.
-  1279→    fn flush(&self);
-  1280→}
+  1262→    fn enabled …
+  1271→    fn log …
+  1279→    fn flush …
   1282→/// A dummy initial value for LOGGER.
   1283→struct NopLogger;
   1286→    fn enabled …
@@ -772,6 +788,11 @@ src/lib.rs
   1332→    fn enabled …
   1336→    fn log …
   1339→    fn flush …
+  1351→pub fn set_max_level …
+  1375→pub unsafe fn set_max_level_racy …
+  1396→pub fn max_level …
+  1420→pub fn set_boxed_logger …
+  1478→pub fn set_logger …
   1482→#[cfg(target_has_atomic = "ptr")]
   1483→fn set_logger_inner<F>(make_logger: F) -> Result<(), SetLoggerError>
   1484→where
@@ -786,7 +807,12 @@ src/lib.rs
   1493→        Ok(UNINITIALIZED) => {
   1494→            unsafe {
   1495→                LOGGER = make_logger();
+  1496→            }
+  1497→            STATE.store(INITIALIZED, Ordering::Release);
+  1498→            Ok(())
+  1499→        }
       →…
+  1529→pub unsafe fn set_logger_racy …
   1544→/// The type returned by [`set_logger`] if [`set_logger`] has already been called.
   1545→///
       →…
@@ -801,6 +827,7 @@ src/lib.rs
   1569→    fn fmt …
   1575→#[cfg(feature = "std")]
   1576→impl error::Error for ParseLevelError {}
+  1581→pub fn logger …
   1599→#[doc(hidden)]
   1600→pub mod __private_api;
   1602→/// The statically resolved maximum log level.
@@ -815,6 +842,8 @@ src/lib.rs
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
   1612→    false if cfg!(feature = "release_max_level_off") => LevelFilter::Off,
   1613→    false if cfg!(feature = "release_max_level_error") => LevelFilter::Error,
+  1614→    false if cfg!(feature = "release_max_level_warn") => LevelFilter::Warn,
+  1615→    false if cfg!(feature = "release_max_level_info") => LevelFilter::Info,
       →…
 src/macros.rs
     75→macro_rules! log {
@@ -866,7 +895,6 @@ test_max_level_features/main.rs
     18→    fn enabled(&self, _: &Metadata) -> bool {
     19→        true
     20→    }
-    21→
     22→    fn log(&self, record: &Record) {
     23→        *self.0.last_log.lock().unwrap() = Some(record.level());
     24→    }

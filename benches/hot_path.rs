@@ -41,9 +41,10 @@ fn bench_build_groups(c: &mut Criterion) {
         let Some(f) = Fixture::load(subpath) else {
             continue;
         };
+        let layouts = format::compute_all_layouts(&f.files, &f.sources, &f.all_symbols);
         c.bench_function(bench_name, |b| {
             b.iter(|| {
-                schedule::build_groups(&f.root, &f.files, &f.sources, &f.all_symbols);
+                schedule::build_groups(&f.root, &f.files, &f.sources, &f.all_symbols, &layouts);
             });
         });
     }
@@ -60,7 +61,8 @@ fn bench_schedule(c: &mut Criterion) {
         let Some(f) = Fixture::load(subpath) else {
             continue;
         };
-        let groups = schedule::build_groups(&f.root, &f.files, &f.sources, &f.all_symbols);
+        let layouts = format::compute_all_layouts(&f.files, &f.sources, &f.all_symbols);
+        let groups = schedule::build_groups(&f.root, &f.files, &f.sources, &f.all_symbols, &layouts);
         c.bench_function(bench_name, |b| {
             b.iter(|| {
                 schedule::schedule(&groups, 1000, &f.root, &f.files);

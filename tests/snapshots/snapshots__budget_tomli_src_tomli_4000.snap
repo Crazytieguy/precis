@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3956 words)
+budget: 4000 (3986 words)
 
 __init__.py
      1→# SPDX-License-Identifier: MIT
@@ -201,7 +201,10 @@ _parser.py
    211→        if char != "\n":
    212→            raise TOMLDecodeError(
    213→                "Expected newline or end of document after a statement", src, pos
-      →…
+   214→            )
+   215→        pos += 1
+   216→
+   217→    return out.data.dict
    220→class Flags:
    221→    """Flags that map to parsed keys/namespaces."""
    222→
@@ -214,15 +217,12 @@ _parser.py
    229→    def __init__(self) -> None:
    230→        self._flags: dict[str, dict[Any, Any]] = {}
    231→        self._pending_flags: set[tuple[Key, int]] = set()
-   232→
    233→    def add_pending(self, key: Key, flag: int) -> None:
    234→        self._pending_flags.add((key, flag))
-   235→
    236→    def finalize_pending(self) -> None:
    237→        for key, flag in self._pending_flags:
    238→            self.set(key, flag, recursive=False)
    239→        self._pending_flags.clear()
-   240→
    241→    def unset_all(self, key: Key) -> None:
    242→        cont = self._flags
    243→        for k in key[:-1]:
@@ -230,7 +230,6 @@ _parser.py
    245→                return
    246→            cont = cont[k]["nested"]
    247→        cont.pop(key[-1], None)
-   248→
    249→    def set(self, key: Key, flag: int, *, recursive: bool) -> None:  # noqa: A003
    250→        cont = self._flags
    251→        key_parent, key_stem = key[:-1], key[-1]
@@ -241,7 +240,6 @@ _parser.py
    256→        if key_stem not in cont:
    257→            cont[key_stem] = {"flags": set(), "recursive_flags": set(), "nested": {}}
    258→        cont[key_stem]["recursive_flags" if recursive else "flags"].add(flag)
-   259→
    260→    def is_(self, key: Key, flag: int) -> bool:
    261→        if not key:
    262→            return False  # document root has no flags
@@ -262,7 +260,6 @@ _parser.py
    279→    def __init__(self) -> None:
    280→        # The parsed content of the TOML document
    281→        self.dict: dict[str, Any] = {}
-   282→
    283→    def get_or_create_nest(
    284→        self,
    285→        key: Key,
@@ -279,7 +276,6 @@ _parser.py
    296→            if not isinstance(cont, dict):
    297→                raise KeyError("There is no nest behind this key")
    298→        return cont  # type: ignore[no-any-return]
-   299→
    300→    def append_nest_to_list(self, key: Key) -> None:
    301→        cont = self.get_or_create_nest(key[:-1])
    302→        last_key = key[-1]
@@ -688,6 +684,10 @@ _parser.py
    747→        return number_match.end(), match_to_number(number_match, parse_float)
    748→
    749→    # Special floats
+   750→    first_three = src[pos : pos + 3]
+   751→    if first_three in {"inf", "nan"}:
+   752→        return pos + 3, parse_float(first_three)
+   753→    first_four = src[pos : pos + 4]
       →…
    760→def is_unicode_scalar_value(codepoint: int) -> bool:
    761→    return (0 <= codepoint <= 55295) or (57344 <= codepoint <= 1114111)

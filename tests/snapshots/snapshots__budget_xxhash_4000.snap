@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4060 words)
+budget: 4000 (3993 words)
 
 README.md
      1→# xxhash
@@ -194,7 +194,6 @@ dynamic/plugin.go
     14→const (
     15→	in   = "Call me Ishmael. Some years ago--never mind how long precisely-"
     16→	want = uint64(0x02a2e85470d6fd96)
-    17→)
     19→func TestSum(t *testing.T) {
     20→	got := xxhash.Sum64String(in)
     21→	if got != want {
@@ -235,7 +234,6 @@ xxhash.go
     14→	prime3 uint64 = 1609587929392839161
     15→	prime4 uint64 = 9650029242287828579
     16→	prime5 uint64 = 2870177450012600261
-    17→)
     19→// Store the primes in an array as well.
     20→//
     21→// The consts are used when possible in Go code to avoid MOVs but we need a
@@ -379,7 +377,6 @@ xxhash.go
    170→const (
    171→	magic         = "xxh\x06"
    172→	marshaledSize = len(magic) + 8*5 + 32
-   173→)
    175→// MarshalBinary implements the encoding.BinaryMarshaler interface.
    176→func (d *Digest) MarshalBinary() ([]byte, error) {
    177→	b := make([]byte, 0, marshaledSize)
@@ -600,18 +597,7 @@ xxhash_test.go
     72→			t.Fatalf("Digest.WriteString: got (%d, %v); want (%d, nil)", n, err, len(chunk))
     73→		}
     74→	}
-    75→	if got := d.Sum64(); got != want {
-    76→		t.Fatalf("Digest.Sum64: got 0x%x; want 0x%x", got, want)
-    77→	}
-    78→	if got := ds.Sum64(); got != want {
-    79→		t.Fatalf("Digest.Sum64 (WriteString): got 0x%x; want 0x%x", got, want)
-    80→	}
-    81→	var b [8]byte
-    82→	binary.BigEndian.PutUint64(b[:], want)
-    83→	if got := d.Sum(nil); !bytes.Equal(got, b[:]) {
-    84→		t.Fatalf("Sum: got %v; want %v", got, b[:])
-    85→	}
-    86→}
+      →…
     88→func testSum(t *testing.T, input string, want uint64) {
     89→	if got := Sum64([]byte(input)); got != want {
     90→		t.Fatalf("Sum64: got 0x%x; want 0x%x", got, want)

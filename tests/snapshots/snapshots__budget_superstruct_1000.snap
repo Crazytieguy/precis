@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1020 words)
+budget: 1000 (990 words)
 
 Changelog.md
      1→# Changelog …
@@ -132,6 +132,15 @@ examples/README.md
 rollup.config.js
 src/error.ts
      5→export type Failure …
+    16→/**
+    17→ * `StructError` objects are thrown (or returned) when validation fails.
+    18→ *
+    19→ * Validation logic is design to exit early for maximum performance. The error
+    20→ * represents the first error encountered during validation. For more detail,
+    21→ * the `error.failures` property is a generator function that can be run to
+    22→ * continue validation and receive all the failures in the data.
+    23→ */
+    24→
     25→export class StructError extends TypeError {
     26→  value: any
     27→  key!: any
@@ -146,6 +155,12 @@ src/error.ts
     36→    let cached: Array<Failure> | undefined
       →…
 src/struct.ts
+     4→/**
+     5→ * `Struct` objects encapsulate the validation logic for a specific type of
+     6→ * values. Once constructed, you use the `assert`, `is` or `validate` helpers to
+     7→ * validate unknown input data against the struct.
+     8→ */
+     9→
     10→export class Struct<T = unknown, S = unknown> {
     11→  readonly TYPE!: T
     12→  type: string
@@ -156,56 +171,21 @@ src/struct.ts
     17→  entries: (
     18→    value: unknown,
     19→    context: Context
+    20→  ) => Iterable<[string | number, unknown, Struct<any> | Struct<never>]>
+    21→
     22→  constructor(props: {
     23→    type: string
       →…
-    63→  /**
-      →…
-    67→  assert(value: unknown, message?: string): asserts value is T {
-    71→  /**
-      →…
-    75→  create(value: unknown, message?: string): T {
-    79→  /**
-      →…
-    83→  is(value: unknown): value is T {
-    87→  /**
-      →…
-    93→  mask(value: unknown, message?: string): T {
-    97→  /**
-      →…
-   107→  validate(
-   108→    value: unknown,
-   109→    options: {
-   119→/**
-      →…
-   123→export function assert<T, S>(
-   124→  value: unknown,
-   125→  struct: Struct<T, S>,
-   126→  message?: string
-   127→): asserts value is T {
-   135→/**
-      →…
-   139→export function create<T, S>(
-   140→  value: unknown,
-   141→  struct: Struct<T, S>,
-   142→  message?: string
-   143→): T {
-   153→/**
-      →…
-   157→export function mask<T, S>(
-   158→  value: unknown,
-   159→  struct: Struct<T, S>,
-   160→  message?: string
-   161→): T {
-   171→/**
-      →…
-   175→export function is<T, S>(value: unknown, struct: Struct<T, S>): value is T {
-   180→/**
-      →…
-   185→export function validate<T, S>(
-   186→  value: unknown,
-   187→  struct: Struct<T, S>,
-   188→  options: {
+    67→  assert …
+    75→  create …
+    83→  is …
+    93→  mask …
+   107→  validate …
+   123→export function assert …
+   139→export function create …
+   157→export function mask …
+   175→export function is …
+   185→export function validate …
    221→export type Context …
    231→export type Infer …
    237→export type Describe …
@@ -235,29 +215,12 @@ src/utils.ts
      8→function isIterable<T>(x: unknown): x is Iterable<T> {
      9→  return isObject(x) && typeof x[Symbol.iterator] === 'function'
     10→}
-    12→/**
-      →…
-    16→export function isObject(x: unknown): x is object {
-    20→/**
-      →…
-    24→export function isNonArrayObject(x: unknown): x is object {
-    28→/**
-      →…
-    32→export function isPlainObject(x: unknown): x is { [key: string]: any } {
-    41→/**
-      →…
-    45→export function print(value: any): string {
-    53→/**
-      →…
-    58→export function shiftIterator<T>(input: Iterator<T>): T | undefined {
-    63→/**
-      →…
-    67→export function toFailure<T, S>(
-    68→  result: string | boolean | Partial<Failure>,
-    69→  context: Context,
-    70→  struct: Struct<T, S>,
-    71→  value: any
-    72→): Failure | undefined {
+    16→export function isObject …
+    24→export function isNonArrayObject …
+    32→export function isPlainObject …
+    45→export function print …
+    58→export function shiftIterator …
+    67→export function toFailure …
    202→export type UnionToIntersection …
    212→export type Assign …
    218→export type EnumSchema …
@@ -296,11 +259,23 @@ test/validation/bigint/invalid.ts
 test/validation/bigint/valid.ts
 test/validation/boolean/invalid.ts
 test/validation/boolean/valid.ts
+test/validation/date/invalid-date.ts
+test/validation/date/invalid.ts
+test/validation/date/valid.ts
+test/validation/enums/invalid-numbers.ts
+test/validation/enums/invalid-strings.ts
+test/validation/enums/valid.ts
 test/validation/function/invalid.ts
 test/validation/function/valid.ts
      5→export const data = function () {}
 test/validation/instance/invalid.ts
 test/validation/instance/valid.ts
+test/validation/integer/invalid-decimal.ts
+test/validation/integer/invalid.ts
+test/validation/integer/valid.ts
+test/validation/lazy/invalid.ts
+test/validation/lazy/valid.ts
+test/validation/lazy/with-refiners.ts
 test/validation/literal/invalid.ts
 test/validation/literal/valid.ts
 test/validation/never/invalid.ts
@@ -321,3 +296,6 @@ test/validation/trimmed/valid.ts
 test/validation/type/valid-instance.ts
      3→class Person {
      6→  constructor(name: string) {
+test/validation/unknown/valid-number.ts
+test/validation/unknown/valid-string.ts
+test/validation/unknown/valid-undefined.ts

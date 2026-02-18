@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4015 words)
+budget: 4000 (3981 words)
 
 error.ts
      1→/**
@@ -52,7 +52,6 @@ error.ts
     46→      return (cached ??= [failure, ...failures()])
     47→    }
     48→  }
-    49→}
 struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
      2→import { StructError, Failure } from './error.js'
@@ -114,7 +113,6 @@ struct.ts
     59→      this.refiner = () => []
     60→    }
     61→  }
-    62→
     63→  /**
     64→   * Assert that a value passes the struct's validation, throwing if it doesn't.
     65→   */
@@ -122,7 +120,6 @@ struct.ts
     67→  assert(value: unknown, message?: string): asserts value is T {
     68→    return assert(value, this, message)
     69→  }
-    70→
     71→  /**
     72→   * Create a value with the struct's coercion logic, then validate it.
     73→   */
@@ -130,7 +127,6 @@ struct.ts
     75→  create(value: unknown, message?: string): T {
     76→    return create(value, this, message)
     77→  }
-    78→
     79→  /**
     80→   * Check if a value passes the struct's validation.
     81→   */
@@ -138,7 +134,6 @@ struct.ts
     83→  is(value: unknown): value is T {
     84→    return is(value, this)
     85→  }
-    86→
     87→  /**
     88→   * Mask a value, coercing and validating it, but returning only the subset of
     89→   * properties defined by the struct's schema. Masking applies recursively to
@@ -148,7 +143,6 @@ struct.ts
     93→  mask(value: unknown, message?: string): T {
     94→    return mask(value, this, message)
     95→  }
-    96→
     97→  /**
     98→   * Validate a value with the struct's validation logic, returning a tuple
     99→   * representing the result.
@@ -169,7 +163,6 @@ struct.ts
    114→  ): [StructError, undefined] | [undefined, T] {
    115→    return validate(value, this, options)
    116→  }
-   117→}
    119→/**
    120→ * Assert that a value passes a struct, throwing if it doesn't.
    121→ */
@@ -545,8 +538,6 @@ structs/types.ts
    328→
    329→      const coerced = { ...value }
    330→
-   331→      // The `object` struct has special behaviour enabled by the mask flag.
-   332→      // When masking, properties that are not in the schema are deleted from
       →…
    347→/**
       →…

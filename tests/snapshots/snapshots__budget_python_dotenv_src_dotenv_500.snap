@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (499 words)
+budget: 500 (486 words)
 
 __init__.py
     42→__all__ = [
@@ -10,13 +10,18 @@ __init__.py
     44→    "load_dotenv",
     45→    "dotenv_values",
     46→    "get_key",
-      →…
+    47→    "set_key",
+    48→    "unset_key",
+    49→    "find_dotenv",
+    50→    "load_ipython_extension",
+    51→]
 __main__.py
 cli.py
     60→@click.version_option(version=__version__)
     61→@click.pass_context
     62→def cli(ctx: click.Context, file: Any, quote: Any, export: Any) -> None:
     63→    """This script is used to set, get or unset values from a .env file."""
+    64→    ctx.obj = {"QUOTE": quote, "EXPORT": export, "FILE": file}
     67→@contextmanager
     68→def stream_file(path: os.PathLike) -> Iterator[IO[str]]:
     69→    """
@@ -24,25 +29,45 @@ cli.py
     71→
     72→    Exits with error code 2 if the file cannot be opened.
     73→    """
+    74→
+    75→    try:
+    76→        with open(path) as stream:
+      →…
    112→@cli.command(name="set")
    113→@click.pass_context
    114→@click.argument("key", required=True)
    115→@click.argument("value", required=True)
    116→def set_value(ctx: click.Context, key: Any, value: Any) -> None:
    117→    """Store the given key/value."""
+   118→    file = ctx.obj["FILE"]
+   119→    quote = ctx.obj["QUOTE"]
+   120→    export = ctx.obj["EXPORT"]
+      →…
    128→@cli.command()
    129→@click.pass_context
    130→@click.argument("key", required=True)
    131→def get(ctx: click.Context, key: Any) -> None:
    132→    """Retrieve the value for the given key."""
+   133→    file = ctx.obj["FILE"]
+   134→
+   135→    with stream_file(file) as stream:
+      →…
    145→@cli.command()
    146→@click.pass_context
    147→@click.argument("key", required=True)
    148→def unset(ctx: click.Context, key: Any) -> None:
    149→    """Removes the given key."""
+   150→    file = ctx.obj["FILE"]
+   151→    quote = ctx.obj["QUOTE"]
+   152→    success, key = unset_key(file, key, quote)
+      →…
    172→@click.argument("commandline", nargs=-1, type=click.UNPROCESSED)
    173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
    174→    """Run command with environment variables present."""
+   175→    file = ctx.obj["FILE"]
+   176→    if not os.path.isfile(file):
+   177→        raise click.BadParameter(
+      →…
 ipython.py
     11→@magics_class
     12→class IPythonDotEnv(Magics):
@@ -71,22 +96,12 @@ ipython.py
     35→        args = parse_argstring(self.dotenv, line)
     36→        # Locate the .env file
     37→        dotenv_path = args.dotenv_path
-    38→        try:
-    39→            dotenv_path = find_dotenv(dotenv_path, True, True)
-    40→        except IOError:
-    41→            print("cannot find .env file")
-    42→            return
-    43→
-    44→        # Load the .env file
-    45→        load_dotenv(dotenv_path, verbose=args.verbose, override=args.override)
+      →…
 main.py
     25→def _load_dotenv_disabled() -> bool:
     26→    """
       →…
     45→class DotEnv:
-    46→    def __init__(
-    47→        self,
-    48→        dotenv_path: Optional[StrPath],
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
     65→        if self.dotenv_path and _is_file_or_fifo(self.dotenv_path):
@@ -95,12 +110,18 @@ main.py
     68→        elif self.stream is not None:
     69→            yield self.stream
     70→        else:
+    71→            if self.verbose:
+    72→                logger.info(
       →…
    141→@contextmanager
    142→def rewrite(
    143→    path: StrPath,
    144→    encoding: Optional[str],
    145→) -> Iterator[Tuple[IO[str], IO[str]]]:
+   146→    pathlib.Path(path).touch()
+   147→
+   148→    with tempfile.NamedTemporaryFile(mode="w", encoding=encoding, delete=False) as dest:
+      →…
    269→def _walk_to_root(path: str) -> Iterator[str]:
    270→    """
       →…
@@ -115,19 +136,14 @@ parser.py
     41→    key: Optional[str]
     42→    value: Optional[str]
     43→    original: Original
-      →…
+    44→    error: bool
     47→class Position:
-    48→    def __init__(self, chars: int, line: int) -> None:
-    49→        self.chars = chars
-    50→        self.line = line
     52→    @classmethod
     53→    def start(cls) -> "Position":
+    54→        return cls(chars=0, line=1)
     65→class Error(Exception):
     66→    pass
     69→class Reader:
-    70→    def __init__(self, stream: IO[str]) -> None:
-    71→        self.string = stream.read()
-    72→        self.position = Position.start()
 variables.py
      5→_posix_variable: Pattern[str] = re.compile(
      6→    r"""
@@ -141,18 +157,9 @@ variables.py
     14→    re.VERBOSE,
     15→)
     18→class Atom(metaclass=ABCMeta):
-    19→    def __ne__(self, other: object) -> bool:
-    20→        result = self.__eq__(other)
-    21→        if result is NotImplemented:
     25→    @abstractmethod
     26→    def resolve(self, env: Mapping[str, Optional[str]]) -> str: ...
     29→class Literal(Atom):
-    30→    def __init__(self, value: str) -> None:
-    31→        self.value = value
-    32→
     48→class Variable(Atom):
-    49→    def __init__(self, name: str, default: Optional[str]) -> None:
-    50→        self.name = name
-    51→        self.default = default
 version.py
      1→__version__ = "1.2.1"

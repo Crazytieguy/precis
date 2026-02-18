@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (477 words)
+budget: 500 (492 words)
 
 README.md
      9→# Mitt
@@ -23,7 +23,7 @@ README.md
     26→-   [API](#api)
     27→-   [Contribute](#contribute)
     28→-   [License](#license)
-      →…
+    29→
     30→## Install
     32→This project uses [node](http://nodejs.org) and [npm](https://npmjs.com). Go check them out if you don't have them locally installed.
     33→
@@ -31,6 +31,12 @@ README.md
     35→$ npm install --save mitt
     36→```
     37→
+    38→Then with a module bundler like [rollup](http://rollupjs.org/) or [webpack](https://webpack.js.org/), use as you would anything else:
+    39→
+    40→```javascript
+    41→// using ES6 modules
+    42→import mitt from 'mitt'
+    43→
       →…
     56→## Usage
     58→```js
@@ -39,6 +45,12 @@ README.md
     61→const emitter = mitt()
     62→
     63→// listen to an event
+    64→emitter.on('foo', e => console.log('foo', e) )
+    65→
+    66→// listen to all events
+    67→emitter.on('*', (type, e) => console.log(type, e) )
+    68→
+    69→// fire an event
       →…
     81→### Typescript …
    113→## Examples & Demos
@@ -80,18 +92,10 @@ src/index.ts
     25→
     26→	on<Key extends keyof Events>(type: Key, handler: Handler<Events[Key]>): void;
     27→	on(type: '*', handler: WildcardHandler<Events>): void;
-    28→
-    29→	off<Key extends keyof Events>(
-    30→		type: Key,
-    31→		handler?: Handler<Events[Key]>
-    32→	): void;
     33→	off(type: '*', handler: WildcardHandler<Events>): void;
-    34→
-    35→	emit<Key extends keyof Events>(type: Key, event: Events[Key]): void;
     36→	emit<Key extends keyof Events>(
     37→		type: undefined extends Events[Key] ? Key : never
     38→	): void;
-    39→}
     41→/**
     42→ * Mitt: Tiny (~200b) functional event emitter / pubsub.
     43→ * @name mitt
@@ -122,6 +126,3 @@ test/test-types-compilation.ts
     10→	foo: string;
     11→	someEvent: SomeEventData;
       →…
-    15→const barHandler …
-    16→const fooHandler …
-    17→const wildcardHandler …

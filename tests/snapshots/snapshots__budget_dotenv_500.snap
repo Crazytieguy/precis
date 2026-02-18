@@ -2,18 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (489 words)
+budget: 500 (480 words)
 
 CHANGELOG.md
-     1→# Changelog
-     3→All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
-     4→
+     1→# Changelog …
      7→## [17.3.1](https://github.com/motdotla/dotenv/compare/v17.3.0...v17.3.1) (2026-02-12) …
-   484→# [8.0.0](https://github.com/motdotla/dotenv/compare/v7.0.0...v8.0.0) (2019-05-02)
+   484→# [8.0.0](https://github.com/motdotla/dotenv/compare/v7.0.0...v8.0.0) (2019-05-02) …
 CONTRIBUTING.md
      1→# Contributing
      3→1. [Fork it](https://help.github.com/articles/fork-a-repo/)
-     4→2. Install dependencies (`npm install`)
       →…
     11→## Testing …
     19→## Code Style …
@@ -130,23 +127,22 @@ lib/main.d.ts
     26→  /**
     27→   * Default: `path.resolve(process.cwd(), '.env')`
     28→   *
+    29→   * Specify a custom path if your file containing environment variables is located elsewhere.
+    30→   * Can also be an array of strings, specifying multiple paths.
+    31→   *
       →…
     92→export interface DotenvConfigOutput {
     93→  error?: DotenvError;
     94→  parsed?: DotenvParseOutput;
     95→}
     97→type DotenvError = Error & {
-    98→  code: 
-    99→    | 'MISSING_DATA'
-   100→    | 'INVALID_DOTENV_KEY'
-   101→    | 'NOT_FOUND_DOTENV_ENVIRONMENT'
-   102→    | 'DECRYPTION_FAILED'
-   103→    | 'OBJECT_REQUIRED';
-   104→}
    106→export interface DotenvPopulateOptions {
    107→  /**
    108→   * Default: `false`
    109→   *
+   110→   * Turn on logging to help debug why certain keys or values are not being set as you expect.
+   111→   *
+   112→   * example: `require('dotenv').config({ debug: process.env.DEBUG })`
       →…
    126→export interface DotenvPopulateInput {
    127→  [name: string]: string | undefined;
@@ -157,13 +153,5 @@ lib/main.js
     46→const LINE = /(?:^|^)\s*(?:export\s+)?([\w.-]+)(?:\s*=\s*?|:\s+?)(\s*'(?:\\'|[^'])*'|\s*"(?:\\"|[^"])*"|\s*`(?:\\`|[^`])*`|[^#\r\n]+)?\s*(?:#.*)?(?:$|$)/mg
    413→const DotenvModule = {
 tests/test-config-cli.js
-     6→function spawn (cmd, options = {}) {
-tests/test-config-vault.js
 tests/test-env-options.js
-    16→function options () {
-    21→function testOption (envVar, tmpVal, expect) {
-tests/test-parse-multiline.js
-tests/test-parse.js
-tests/test-populate.js
 tests/types/test.ts
-     1→import { config, parse } from "dotenv";

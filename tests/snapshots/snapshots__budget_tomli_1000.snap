@@ -2,12 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (995 words)
+budget: 1000 (966 words)
 
 CHANGELOG.md
      1→# Changelog …
      3→## 2.4.0
      5→- Added
+     6→  - TOML v1.1.0 compatibility
       →…
 README.md
      5→# Tomli
@@ -23,10 +24,6 @@ README.md
     16→  - [Parse a TOML string](#parse-a-toml-string)
     17→  - [Parse a TOML file](#parse-a-toml-file)
     18→  - [Handle invalid TOML](#handle-invalid-toml)
-    19→  - [Construct `decimal.Decimal`s from TOML floats](#construct-decimaldecimals-from-toml-floats)
-    20→  - [Building a `tomli`/`tomllib` compatibility layer](#building-a-tomlitomllib-compatibility-layer)
-    21→- [FAQ](#faq)
-    22→  - [Why this parser?](#why-this-parser)
       →…
     32→## Intro<a name="intro"></a>
     34→Tomli is a Python library for parsing [TOML](https://toml.io).
@@ -136,8 +133,7 @@ src/tomli/_parser.py
     30→# https://mypyc.readthedocs.io/en/latest/differences_from_python.html#stack-overflows
     31→# Before mypyc's fix is in, recursion needs to be limited by this library.
     32→# Choosing `sys.getrecursionlimit()` as maximum inline table/array nesting
-    33→# level, as it allows more nesting than pure Python, but still seems a far
-    34→# lower number than where mypyc binaries crash.
+      →…
     35→MAX_INLINE_NESTING: Final = sys.getrecursionlimit()
     37→ASCII_CTRL: Final = frozenset(chr(i) for i in range(32)) | frozenset(chr(127))
     39→# Neither of these sets include quotation mark or backslash. They are
@@ -154,23 +150,27 @@ src/tomli/_parser.py
     55→HEXDIGIT_CHARS: Final = frozenset("abcdef" "ABCDEF" "0123456789")
     57→BASIC_STR_ESCAPE_REPLACEMENTS: Final = MappingProxyType(
     71→class DEPRECATED_DEFAULT:
+    72→    """Sentinel to be used as default arg during deprecation
+    73→    period of TOMLDecodeError's free-form arguments."""
     76→class TOMLDecodeError(ValueError):
-    86→
-    87→    def __init__(
-    88→        self,
+    77→    """An error raised if a document is not valid TOML.
+    78→
+    79→    Adds the following attributes to ValueError:
+    80→    msg: The unformatted error message
+    81→    doc: The TOML document being parsed
       →…
+    86→
    220→class Flags:
+   221→    """Flags that map to parsed keys/namespaces."""
    222→
    223→    # Marks an immutable namespace (inline array or inline table).
    224→    FROZEN: Final = 0
+   225→    # Marks a nest that has been explicitly created and can no longer
+   226→    # be opened using the "[table]" syntax.
+   227→    EXPLICIT_NEST: Final = 1
+   228→
    278→class NestedDict:
-   279→    def __init__(self) -> None:
-   280→        # The parsed content of the TOML document
-   281→        self.dict: dict[str, Any] = {}
    312→class Output:
-   313→    def __init__(self) -> None:
-   314→        self.data = NestedDict()
-   315→        self.flags = Flags()
 src/tomli/_re.py
     11→TYPE_CHECKING = False
     17→_TIME_RE_STR: Final = r"""
@@ -222,10 +222,10 @@ tests/__init__.py
 tests/burntsushi.py
 tests/test_data.py
      5→import json
-    11→DATA_DIR = Path(__file__).parent / "data"
-    13→VALID_FILES = tuple((DATA_DIR / "valid").glob("**/*.toml"))
-    21→VALID_FILES_EXPECTED = tuple(_expected_files)
-    23→INVALID_FILES = tuple((DATA_DIR / "invalid").glob("**/*.toml"))
+    11→DATA_DIR …
+    13→VALID_FILES …
+    21→VALID_FILES_EXPECTED …
+    23→INVALID_FILES …
     27→class TestData(unittest.TestCase):
 tests/test_error.py
     13→class TestError(unittest.TestCase):
@@ -240,10 +240,7 @@ tomllib.md
      6→
      7→- Python Issue Tracker: https://bugs.python.org/issue40059
      8→- Tomli issue tracker: https://github.com/hukkin/tomli/issues/141
-     9→- Discussion on PyPA "blessing" a TOML parser and/or including one in the standard library: https://discuss.python.org/t/adopting-recommending-a-toml-parser/4068
-    10→- Python Enhancement Proposal: https://peps.python.org/pep-0680
-    11→- CPython pull request: https://github.com/python/cpython/pull/31498
-    12→
+      →…
     13→## Converting Tomli to tomllib …
     15→### Sync status
     17→`tomllib` in CPython commit https://github.com/python/cpython/commit/deaf509e8fc6e0363bd6f26d52ad42f976ec42f2

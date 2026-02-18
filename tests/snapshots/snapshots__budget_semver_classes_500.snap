@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (505 words)
+budget: 500 (452 words)
 
 comparator.js
      3→const ANY = Symbol('SemVer ANY')
@@ -10,29 +10,24 @@ comparator.js
      6→  static get ANY () {
      7→    return ANY
      8→  }
-     9→
     10→  constructor (comp, options) {
     11→    options = parseOptions(options)
     12→
-    13→    if (comp instanceof Comparator) {
-    14→      if (comp.loose === !!options.loose) {
-    15→        return comp
-    16→      } else {
-    17→        comp = comp.value
-    18→      }
-    19→    }
-    20→
+      →…
     36→  parse (comp) {
     37→    const r = this.options.loose ? re[t.COMPARATORLOOSE] : re[t.COMPARATOR]
+    38→    const m = comp.match(r)
       →…
     57→  toString () {
     58→    return this.value
-      →…
+    59→  }
     61→  test (version) {
     62→    debug('Comparator.test', version, this.options.loose)
+    63→
       →…
     79→  intersects (comp, options) {
     80→    if (!(comp instanceof Comparator)) {
+    81→      throw new TypeError('a Comparator is required')
       →…
 range.js
      3→const SPACE_CHARACTERS = /\s+/g
@@ -40,35 +35,28 @@ range.js
      7→  constructor (range, options) {
      8→    options = parseOptions(options)
      9→
-    10→    if (range instanceof Range) {
-    11→      if (
-    12→        range.loose === !!options.loose &&
-    13→        range.includePrerelease === !!options.includePrerelease
-    14→      ) {
-    15→        return range
-    16→      } else {
-    17→        return new Range(range.raw, options)
-    18→      }
-    19→    }
-    20→
-    21→    if (range instanceof Comparator) {
+      →…
     73→  get range () {
     74→    if (this.formatted === undefined) {
+    75→      this.formatted = ''
       →…
     92→  format () {
     93→    return this.range
-      →…
+    94→  }
     96→  toString () {
     97→    return this.range
-      →…
+    98→  }
    100→  parseRange (range) {
    101→    // memoize range parsing for performance.
+   102→    // this is a very hot path, and fully deterministic.
       →…
    170→  intersects (range, options) {
    171→    if (!(range instanceof Range)) {
+   172→      throw new TypeError('a Range is required')
       →…
    193→  test (version) {
    194→    if (!version) {
+   195→      return false
       →…
    218→const cache = new LRU()
    233→const isNullSet = c => c.value === '<0.0.0-0'
@@ -93,36 +81,31 @@ semver.js
     10→  constructor (version, options) {
     11→    options = parseOptions(options)
     12→
-    13→    if (version instanceof SemVer) {
-    14→      if (version.loose === !!options.loose &&
-    15→        version.includePrerelease === !!options.includePrerelease) {
-    16→        return version
-    17→      } else {
-    18→        version = version.version
-    19→      }
-    20→    } else if (typeof version !== 'string') {
-    21→      throw new TypeError(`Invalid version. Must be a string. Got type "${typeof version}".`)
-    22→    }
-    23→
-    24→    if (version.length > MAX_LENGTH) {
+      →…
     81→  format () {
     82→    this.version = `${this.major}.${this.minor}.${this.patch}`
+    83→    if (this.prerelease.length) {
       →…
     89→  toString () {
     90→    return this.version
-      →…
+    91→  }
     93→  compare (other) {
     94→    debug('SemVer.compare', this.version, this.options, other)
+    95→    if (!(other instanceof SemVer)) {
       →…
    109→  compareMain (other) {
    110→    if (!(other instanceof SemVer)) {
+   111→      other = new SemVer(other, this.options)
       →…
    135→  comparePre (other) {
    136→    if (!(other instanceof SemVer)) {
+   137→      other = new SemVer(other, this.options)
       →…
    168→  compareBuild (other) {
    169→    if (!(other instanceof SemVer)) {
+   170→      other = new SemVer(other, this.options)
       →…
    194→  inc (release, identifier, identifierBase) {
    195→    if (release.startsWith('pre')) {
+   196→      if (!identifier && identifierBase === false) {
       →…

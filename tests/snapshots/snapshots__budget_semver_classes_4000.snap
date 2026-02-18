@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3714 words)
+budget: 4000 (3999 words)
 
 comparator.js
      3→const ANY = Symbol('SemVer ANY')
@@ -10,7 +10,6 @@ comparator.js
      6→  static get ANY () {
      7→    return ANY
      8→  }
-     9→
     10→  constructor (comp, options) {
     11→    options = parseOptions(options)
     12→
@@ -36,7 +35,6 @@ comparator.js
     32→
     33→    debug('comp', this)
     34→  }
-    35→
     36→  parse (comp) {
     37→    const r = this.options.loose ? re[t.COMPARATORLOOSE] : re[t.COMPARATOR]
     38→    const m = comp.match(r)
@@ -57,11 +55,9 @@ comparator.js
     53→      this.semver = new SemVer(m[2], this.options.loose)
     54→    }
     55→  }
-    56→
     57→  toString () {
     58→    return this.value
     59→  }
-    60→
     61→  test (version) {
     62→    debug('Comparator.test', version, this.options.loose)
     63→
@@ -79,7 +75,6 @@ comparator.js
     75→
     76→    return cmp(version, this.operator, this.semver, this.options)
     77→  }
-    78→
     79→  intersects (comp, options) {
     80→    if (!(comp instanceof Comparator)) {
     81→      throw new TypeError('a Comparator is required')
@@ -113,7 +108,28 @@ comparator.js
    109→    if (this.operator.startsWith('>') && comp.operator.startsWith('>')) {
    110→      return true
    111→    }
-      →…
+   112→    // Same direction decreasing (< or <=)
+   113→    if (this.operator.startsWith('<') && comp.operator.startsWith('<')) {
+   114→      return true
+   115→    }
+   116→    // same SemVer and both sides are inclusive (<= or >=)
+   117→    if (
+   118→      (this.semver.version === comp.semver.version) &&
+   119→      this.operator.includes('=') && comp.operator.includes('=')) {
+   120→      return true
+   121→    }
+   122→    // opposite directions less than
+   123→    if (cmp(this.semver, '<', comp.semver, options) &&
+   124→      this.operator.startsWith('>') && comp.operator.startsWith('<')) {
+   125→      return true
+   126→    }
+   127→    // opposite directions greater than
+   128→    if (cmp(this.semver, '>', comp.semver, options) &&
+   129→      this.operator.startsWith('<') && comp.operator.startsWith('>')) {
+   130→      return true
+   131→    }
+   132→    return false
+   133→  }
 range.js
      3→const SPACE_CHARACTERS = /\s+/g
      6→class Range {
@@ -182,7 +198,6 @@ range.js
     69→
     70→    this.formatted = undefined
     71→  }
-    72→
     73→  get range () {
     74→    if (this.formatted === undefined) {
     75→      this.formatted = ''
@@ -201,15 +216,12 @@ range.js
     88→    }
     89→    return this.formatted
     90→  }
-    91→
     92→  format () {
     93→    return this.range
     94→  }
-    95→
     96→  toString () {
     97→    return this.range
     98→  }
-    99→
    100→  parseRange (range) {
    101→    // memoize range parsing for performance.
    102→    // this is a very hot path, and fully deterministic.
@@ -223,6 +235,62 @@ range.js
    110→    }
    111→
    112→    const loose = this.options.loose
+   113→    // `1.2.3 - 1.2.4` => `>=1.2.3 <=1.2.4`
+   114→    const hr = loose ? re[t.HYPHENRANGELOOSE] : re[t.HYPHENRANGE]
+   115→    range = range.replace(hr, hyphenReplace(this.options.includePrerelease))
+   116→    debug('hyphen replace', range)
+   117→
+   118→    // `> 1.2.3 < 1.2.5` => `>1.2.3 <1.2.5`
+   119→    range = range.replace(re[t.COMPARATORTRIM], comparatorTrimReplace)
+   120→    debug('comparator trim', range)
+   121→
+   122→    // `~ 1.2.3` => `~1.2.3`
+   123→    range = range.replace(re[t.TILDETRIM], tildeTrimReplace)
+   124→    debug('tilde trim', range)
+   125→
+   126→    // `^ 1.2.3` => `^1.2.3`
+   127→    range = range.replace(re[t.CARETTRIM], caretTrimReplace)
+   128→    debug('caret trim', range)
+   129→
+   130→    // At this point, the range is completely trimmed and
+   131→    // ready to be split into comparators.
+   132→
+   133→    let rangeList = range
+   134→      .split(' ')
+   135→      .map(comp => parseComparator(comp, this.options))
+   136→      .join(' ')
+   137→      .split(/\s+/)
+   138→      // >=0.0.0 is equivalent to *
+   139→      .map(comp => replaceGTE0(comp, this.options))
+   140→
+   141→    if (loose) {
+   142→      // in loose mode, throw out any that are not valid comparators
+   143→      rangeList = rangeList.filter(comp => {
+   144→        debug('loose invalid filter', comp, this.options)
+   145→        return !!comp.match(re[t.COMPARATORLOOSE])
+   146→      })
+   147→    }
+   148→    debug('range list', rangeList)
+   149→
+   150→    // if any comparators are the null set, then replace with JUST null set
+   151→    // if more than one comparator, remove any * comparators
+   152→    // also, don't include the same comparator more than once
+   153→    const rangeMap = new Map()
+   154→    const comparators = rangeList.map(comp => new Comparator(comp, this.options))
+   155→    for (const comp of comparators) {
+   156→      if (isNullSet(comp)) {
+   157→        return [comp]
+   158→      }
+   159→      rangeMap.set(comp.value, comp)
+   160→    }
+   161→    if (rangeMap.size > 1 && rangeMap.has('')) {
+   162→      rangeMap.delete('')
+   163→    }
+   164→
+   165→    const result = [...rangeMap.values()]
+   166→    cache.set(memoKey, result)
+   167→    return result
+   168→  }
    170→  intersects (range, options) {
    171→    if (!(range instanceof Range)) {
    172→      throw new TypeError('a Range is required')
@@ -382,13 +450,7 @@ range.js
    374→      } else {
    375→        ret = `>=${M}.${m}.${p
    376→        } <${+M + 1}.0.0-0`
-   377→      }
-   378→    }
-   379→
-   380→    debug('caret return', ret)
-   381→    return ret
-   382→  })
-   383→}
+      →…
    385→const replaceXRanges = (comp, options) => {
    386→  debug('replaceXRanges', comp, options)
    387→  return comp
@@ -441,35 +503,7 @@ range.js
    435→        } else {
    436→          m = +m + 1
    437→          p = 0
-   438→        }
-   439→      } else if (gtlt === '<=') {
-   440→        // <=0.7.x is actually <0.8.0, since any 0.7.x should
-   441→        // pass.  Similarly, <=7.x is actually <8.0.0, etc.
-   442→        gtlt = '<'
-   443→        if (xm) {
-   444→          M = +M + 1
-   445→        } else {
-   446→          m = +m + 1
-   447→        }
-   448→      }
-   449→
-   450→      if (gtlt === '<') {
-   451→        pr = '-0'
-   452→      }
-   453→
-   454→      ret = `${gtlt + M}.${m}.${p}${pr}`
-   455→    } else if (xm) {
-   456→      ret = `>=${M}.0.0${pr} <${+M + 1}.0.0-0`
-   457→    } else if (xp) {
-   458→      ret = `>=${M}.${m}.0${pr
-   459→      } <${M}.${+m + 1}.0-0`
-   460→    }
-   461→
-   462→    debug('xRange return', ret)
-   463→
-   464→    return ret
-   465→  })
-   466→}
+      →…
    470→const replaceStars = (comp, options) => {
    471→  debug('replaceStars', comp, options)
    472→  // Looseness is ignored here.  star is always as loose as it gets!
@@ -621,7 +655,6 @@ semver.js
     77→    this.build = m[5] ? m[5].split('.') : []
     78→    this.format()
     79→  }
-    80→
     81→  format () {
     82→    this.version = `${this.major}.${this.minor}.${this.patch}`
     83→    if (this.prerelease.length) {
@@ -629,11 +662,9 @@ semver.js
     85→    }
     86→    return this.version
     87→  }
-    88→
     89→  toString () {
     90→    return this.version
     91→  }
-    92→
     93→  compare (other) {
     94→    debug('SemVer.compare', this.version, this.options, other)
     95→    if (!(other instanceof SemVer)) {
@@ -649,7 +680,6 @@ semver.js
    105→
    106→    return this.compareMain(other) || this.comparePre(other)
    107→  }
-   108→
    109→  compareMain (other) {
    110→    if (!(other instanceof SemVer)) {
    111→      other = new SemVer(other, this.options)
@@ -657,6 +687,24 @@ semver.js
    113→
    114→    if (this.major < other.major) {
    115→      return -1
+   116→    }
+   117→    if (this.major > other.major) {
+   118→      return 1
+   119→    }
+   120→    if (this.minor < other.minor) {
+   121→      return -1
+   122→    }
+   123→    if (this.minor > other.minor) {
+   124→      return 1
+   125→    }
+   126→    if (this.patch < other.patch) {
+   127→      return -1
+   128→    }
+   129→    if (this.patch > other.patch) {
+   130→      return 1
+   131→    }
+   132→    return 0
+   133→  }
    135→  comparePre (other) {
    136→    if (!(other instanceof SemVer)) {
    137→      other = new SemVer(other, this.options)

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4002 words)
+budget: 4000 (3881 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -55,7 +55,6 @@ README.md
     60→        {slots.slice(3).map((slot, idx) => (
     61→          <Slot key={idx} {...slot} />
     62→        ))}
-    63→      </div>
       →…
    136→## How it works
    138→There's currently no native OTP/2FA/MFA input in HTML, which means people are either going with 1. a simple input design or 2. custom designs like this one.
@@ -84,7 +83,6 @@ README.md
    162→<summary>Supports screen readers (a11y)</summary>
    163→
    164→Stripe was my first inspiration to build this library.
-   165→
       →…
    198→### Auto tracks if the input has space in the right side for the badge
    200→https://github.com/guilhermerodz/input-otp/assets/10366880/bf01af88-1f82-463e-adf4-54a737a92f59
@@ -149,7 +147,6 @@ README.md
    317→</details>
    318→
    319→<details>
-   320→<summary>Automatically focus the input when the page loads</summary>
       →…
    377→## Caveats
    382→By default, `input-otp` handles password managers for you.
@@ -174,7 +171,6 @@ README.md
    401→</details>
    402→
    403→<details>
-   404→<summary>[Setting] If you want to customize the `noscript` CSS fallback</summary>
       →…
    539→#### Sponsors
    541→> [Clerk](https://go.clerk.com/input-otp) is the easiest way to add authentication to your application.
@@ -650,9 +646,6 @@ apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
     32→        // value={value}
     33→        // onChange={setValue}
     34→        maxLength={6}
-    35→        render={({ slots }) => (
-    36→          <>
-    37→            <InputOTPGroup>
       →…
 apps/website/src/app/(local-pages)/shadcn/static/page.tsx
      3→import { default as ShadcnPage } from '../page'
@@ -775,7 +768,6 @@ apps/website/src/app/(pages)/layout.tsx
     21→  keywords: [
     22→    'React',
     23→    'one-time-code',
-    24→    'Input',
       →…
     68→export default function RootLayout({
     69→  children,
@@ -814,7 +806,6 @@ apps/website/src/components/code.tsx
       →…
     36→async function highlightCode(code: string, dark: boolean) {
     37→  const file = await unified()
-    38→    .use(remarkParse)
       →…
 apps/website/src/components/copy-button.tsx
     17→interface CopyButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
@@ -870,19 +861,15 @@ apps/website/src/components/mode-toggle.tsx
 apps/website/src/components/page-header.tsx
      3→function PageHeader({
      4→  className,
-     5→  children,
       →…
     21→function PageHeaderHeading({
     22→  className,
-    23→  ...props
       →…
     36→function PageHeaderDescription({
     37→  className,
-    38→  ...props
       →…
     51→function PageActions({
     52→  className,
-    53→  ...props
       →…
 apps/website/src/components/provider.tsx
      5→export function AppProvider({
@@ -1036,17 +1023,7 @@ packages/input-otp/src/types.ts
     18→
     19→    maxLength: number
     20→
-    21→    textAlign?: 'left' | 'center' | 'right'
-    22→
-    23→    onComplete?: (...args: any[]) => unknown
-    24→    pushPasswordManagerStrategy?: 'increase-width' | 'none'
-    25→    pasteTransformer?: (pasted: string) => string
-    26→
-    27→    containerClassName?: string
-    28→
-    29→    noScriptCSSFallback?: string | null
-    30→  }
-    31→>
+      →…
     32→type InputOTPRenderFn = (props: RenderProps) => React.ReactNode
     33→export type OTPInputProps = OTPInputBaseProps &
     34→  (
@@ -1110,18 +1087,6 @@ packages/input-otp/src/use-pwm-badge.tsx
     45→    return increaseWidthCase
     46→  }, [hasPWMBadge, hasPWMBadgeSpace, pushPasswordManagerStrategy])
     47→
-    48→  const trackPWMBadge = React.useCallback(() => {
-    49→    const container = containerRef.current
-    50→    const input = inputRef.current
-    51→    if (
-    52→      !container ||
-    53→      !input ||
-    54→      done ||
-    55→      pushPasswordManagerStrategy === 'none'
-    56→    ) {
-    57→      return
-    58→    }
-    59→
       →…
 packages/input-otp/tsup.config.ts
      1→import { defineConfig } from 'tsup';

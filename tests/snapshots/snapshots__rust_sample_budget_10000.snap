@@ -27,18 +27,15 @@ sample.rs
     27→            self.visit_token(t);
     28→        }
     29→    }
-    30→}
     32→impl std::fmt::Display for Token {
     33→    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
     34→        write!(f, "{:?}", self.kind)
     35→    }
-    36→}
     38→impl Token {
     39→    /// Create a new token with the given kind and span.
     40→    pub fn new(kind: TokenKind, span: Span) -> Self {
     41→        Self { kind, span }
     42→    }
-    43→}
     45→pub type Span = (usize, usize);
     47→const MAX_TOKENS: usize = 1024;
     49→pub static VERSION: &str = "0.1.0";

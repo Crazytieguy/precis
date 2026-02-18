@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1991 words)
+budget: 2000 (1996 words)
 
 error.ts
      5→export type Failure …
@@ -31,15 +31,7 @@ error.ts
     38→    const { path } = failure
     39→    const msg =
     40→      path.length === 0 ? message : `At path: ${path.join('.')} -- ${message}`
-    41→    super(explanation ?? msg)
-    42→    if (explanation != null) this.cause = msg
-    43→    Object.assign(this, rest)
-    44→    this.name = this.constructor.name
-    45→    this.failures = () => {
-    46→      return (cached ??= [failure, ...failures()])
-    47→    }
-    48→  }
-    49→}
+      →…
 struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
      2→import { StructError, Failure } from './error.js'
@@ -67,41 +59,7 @@ struct.ts
     25→    coercer?: Coercer
     26→    validator?: Validator
     27→    refiner?: Refiner<T>
-    28→    entries?: Struct<T, S>['entries']
-    29→  }) {
-    30→    const {
-    31→      type,
-    32→      schema,
-    33→      validator,
-    34→      refiner,
-    35→      coercer = (value: unknown) => value,
-    36→      entries = function* () {},
-    37→    } = props
-    38→
-    39→    this.type = type
-    40→    this.schema = schema
-    41→    this.entries = entries
-    42→    this.coercer = coercer
-    43→
-    44→    if (validator) {
-    45→      this.validator = (value, context) => {
-    46→        const result = validator(value, context)
-    47→        return toFailures(result, context, this, value)
-    48→      }
-    49→    } else {
-    50→      this.validator = () => []
-    51→    }
-    52→
-    53→    if (refiner) {
-    54→      this.refiner = (value, context) => {
-    55→        const result = refiner(value, context)
-    56→        return toFailures(result, context, this, value)
-    57→      }
-    58→    } else {
-    59→      this.refiner = () => []
-    60→    }
-    61→  }
-    62→
+      →…
     63→  /**
     64→   * Assert that a value passes the struct's validation, throwing if it doesn't.
     65→   */
@@ -109,7 +67,6 @@ struct.ts
     67→  assert(value: unknown, message?: string): asserts value is T {
     68→    return assert(value, this, message)
     69→  }
-    70→
     71→  /**
     72→   * Create a value with the struct's coercion logic, then validate it.
     73→   */
@@ -117,7 +74,6 @@ struct.ts
     75→  create(value: unknown, message?: string): T {
     76→    return create(value, this, message)
     77→  }
-    78→
     79→  /**
     80→   * Check if a value passes the struct's validation.
     81→   */
@@ -125,7 +81,6 @@ struct.ts
     83→  is(value: unknown): value is T {
     84→    return is(value, this)
     85→  }
-    86→
     87→  /**
     88→   * Mask a value, coercing and validating it, but returning only the subset of
     89→   * properties defined by the struct's schema. Masking applies recursively to
@@ -135,7 +90,6 @@ struct.ts
     93→  mask(value: unknown, message?: string): T {
     94→    return mask(value, this, message)
     95→  }
-    96→
     97→  /**
     98→   * Validate a value with the struct's validation logic, returning a tuple
     99→   * representing the result.
@@ -151,12 +105,7 @@ struct.ts
    109→    options: {
    110→      coerce?: boolean
    111→      mask?: boolean
-   112→      message?: string
-   113→    } = {}
-   114→  ): [StructError, undefined] | [undefined, T] {
-   115→    return validate(value, this, options)
-   116→  }
-   117→}
+      →…
    119→/**
    120→ * Assert that a value passes a struct, throwing if it doesn't.
    121→ */
@@ -166,6 +115,9 @@ struct.ts
    125→  struct: Struct<T, S>,
    126→  message?: string
    127→): asserts value is T {
+   128→  const result = validate(value, struct, { message })
+   129→
+      →…
    135→/**
    136→ * Create a value with the coercion logic of struct and validate it.
    137→ */
@@ -175,6 +127,9 @@ struct.ts
    141→  struct: Struct<T, S>,
    142→  message?: string
    143→): T {
+   144→  const result = validate(value, struct, { coerce: true, message })
+   145→
+      →…
    153→/**
    154→ * Mask a value, returning only the subset of properties defined by a struct.
    155→ */
@@ -184,11 +139,17 @@ struct.ts
    159→  struct: Struct<T, S>,
    160→  message?: string
    161→): T {
+   162→  const result = validate(value, struct, { coerce: true, mask: true, message })
+   163→
+      →…
    171→/**
    172→ * Check if a value passes a struct.
    173→ */
    174→
    175→export function is<T, S>(value: unknown, struct: Struct<T, S>): value is T {
+   176→  const result = validate(value, struct)
+   177→  return !result[0]
+      →…
    180→/**
    181→ * Validate a value against a struct, returning an error if invalid, or the
    182→ * value (with potential coercion) if valid.
@@ -198,6 +159,9 @@ struct.ts
    186→  value: unknown,
    187→  struct: Struct<T, S>,
    188→  options: {
+   189→    coerce?: boolean
+   190→    mask?: boolean
+      →…
    221→export type Context …
    231→export type Infer …
    237→export type Describe …
@@ -206,6 +170,9 @@ struct.ts
    259→export type Validator …
    266→export type Refiner …
 structs/coercions.ts
+     1→import { Struct, is, Coercer } from '../struct.js …
+     2→import { isPlainObject } from '../utils.js …
+     3→import { string, unknown } from './types.js …
      5→/**
       →…
     16→export function coerce<T, S, C>(
@@ -223,6 +190,8 @@ structs/coercions.ts
       →…
     79→export function trimmed<T, S>(struct: Struct<T, S>): Struct<T, S> {
 structs/refinements.ts
+     1→import { Struct, Refiner } from '../struct.js …
+     2→import { toFailures } from '../utils.js …
      4→/**
       →…
      8→export function empty<
@@ -274,6 +243,9 @@ structs/refinements.ts
    149→  refiner: Refiner<T>
    150→): Struct<T, S> {
 structs/types.ts
+     1→import { Infer, Struct } from '../struct.js …
+     2→import { define } from './utilities.js …
+     3→../utils.js …
     15→/**
       →…
     19→export function any(): Struct<any, null> {
@@ -365,6 +337,9 @@ structs/types.ts
       →…
    574→export function unknown(): Struct<unknown, null> {
 structs/utilities.ts
+     1→import { Context, Struct, Validator } from '../struct.js …
+     2→../utils.js …
+     8→import { object, optional, type } from './types.js …
     60→export function assign(...Structs: Struct<any>[]): any {
     61→  const isType = Structs[0].type === 'type'
       →…
@@ -420,27 +395,40 @@ utils.ts
     14→ */
     15→
     16→export function isObject(x: unknown): x is object {
+    17→  return typeof x === 'object' && x != null
+    18→}
     20→/**
     21→ * Check if a value is a non-array object.
     22→ */
     23→
     24→export function isNonArrayObject(x: unknown): x is object {
+    25→  return isObject(x) && !Array.isArray(x)
+    26→}
     28→/**
     29→ * Check if a value is a plain object.
     30→ */
     31→
     32→export function isPlainObject(x: unknown): x is { [key: string]: any } {
+    33→  if (Object.prototype.toString.call(x) !== '[object Object]') {
+    34→    return false
+      →…
     41→/**
     42→ * Return a value as a printable string.
     43→ */
     44→
     45→export function print(value: any): string {
+    46→  if (typeof value === 'symbol') {
+    47→    return value.toString()
+      →…
     53→/**
     54→ * Shifts (removes and returns) the first value from the `input` iterator.
     55→ * Like `Array.prototype.shift()` but for an `Iterator`.
     56→ */
     57→
     58→export function shiftIterator<T>(input: Iterator<T>): T | undefined {
+    59→  const { done, value } = input.next()
+    60→  return done ? undefined : value
+      →…
     63→/**
     64→ * Convert a single validation result to a failure.
     65→ */
@@ -451,6 +439,9 @@ utils.ts
     70→  struct: Struct<T, S>,
     71→  value: any
     72→): Failure | undefined {
+    73→  if (result === true) {
+    74→    return
+      →…
    202→export type UnionToIntersection …
    212→export type Assign …
    218→export type EnumSchema …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1000 words)
+budget: 1000 (953 words)
 
 README.md
      1→derive(Error)
@@ -47,20 +47,10 @@ build.rs
     10→const PRIVATE: &str = "\
 impl/src/ast.rs
     10→pub enum Input<'a> {
-    11→    Struct(Struct<'a>),
-      →…
     15→pub struct Struct<'a> {
-    16→    pub attrs: Attrs<'a>,
-      →…
     22→pub struct Enum<'a> {
-    23→    pub attrs: Attrs<'a>,
-      →…
     29→pub struct Variant<'a> {
-    30→    pub original: &'a syn::Variant,
-      →…
     36→pub struct Field<'a> {
-    37→    pub original: &'a syn::Field,
-      →…
     44→#[derive(Copy, Clone)]
     45→pub enum ContainerKind {
     46→    Struct,
@@ -72,8 +62,6 @@ impl/src/ast.rs
     52→}
 impl/src/attr.rs
     11→pub struct Attrs<'a> {
-    12→    pub display: Option<Display<'a>>,
-      →…
     20→#[derive(Clone)]
     21→pub struct Display<'a> {
     22→    pub original: &'a Attribute,
@@ -135,11 +123,7 @@ impl/src/fmt.rs
       →…
 impl/src/generics.rs
      8→pub struct ParamsInScope<'a> {
-     9→    names: Set<&'a Ident>,
-      →…
     48→pub struct InferredBounds {
-    49→    bounds: Map<String, (Set<String>, Punctuated<TokenStream, Token![+]>)>,
-      →…
 impl/src/lib.rs
     23→mod ast;
     24→mod attr;
@@ -167,6 +151,7 @@ impl/src/scan_expr.rs
     10→    ConsumeBinOp,
     11→    ConsumeBrace,
     12→    ConsumeDelimiter,
+    13→    ConsumeIdent,
       →…
     25→enum Action {
     26→    SetState(&'static [(Input, Action)]),
@@ -190,7 +175,6 @@ src/aserror.rs
      4→#[doc(hidden)]
      5→pub trait AsDynError<'a>: Sealed {
      6→    fn as_dyn_error(&self) -> &(dyn Error + 'a);
-     7→}
     10→    #[inline]
     11→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
     12→        self
@@ -223,7 +207,6 @@ src/display.rs
      9→    type Target: Display;
     10→
     11→    fn as_display(&'a self) -> Self::Target;
-    12→}
     18→    type Target = &'a T;
     20→    fn as_display(&'a self) -> Self::Target {
     21→        *self
@@ -231,7 +214,6 @@ src/display.rs
     25→#[cfg(feature = "std")]
     26→impl<'a> AsDisplay<'a> for Path {
     27→    type Target = path::Display<'a>;
-    28→
     29→    #[inline]
     30→    fn as_display(&'a self) -> Self::Target {
     31→        self.display()
@@ -239,7 +221,6 @@ src/display.rs
     35→#[cfg(feature = "std")]
     36→impl<'a> AsDisplay<'a> for PathBuf {
     37→    type Target = path::Display<'a>;
-    38→
     39→    #[inline]
     40→    fn as_display(&'a self) -> Self::Target {
     41→        self.display()
@@ -254,10 +235,8 @@ src/display.rs
     59→mod placeholder {
     60→    use super::{AsDisplay, Sealed};
     61→    use core::fmt::{self, Display};
-    62→
     63→    #[allow(dead_code)]
     64→    pub struct Placeholder;
-    65→
     67→        type Target = Self;
     69→        #[inline]
     70→        fn as_display(&'a self) -> Self::Target {
@@ -286,7 +265,6 @@ src/provide.rs
      3→#[doc(hidden)]
      4→pub trait ThiserrorProvide: Sealed {
      5→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>);
-     6→}
     12→    #[inline]
     13→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>) {
     14→        self.provide(request);

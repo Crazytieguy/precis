@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1006 words)
+budget: 1000 (977 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -58,13 +58,10 @@ README.md
     55→* [generic_once_cell](https://crates.io/crates/generic_once_cell) (bring your own mutex)
     56→
     57→Parts of `once_cell` API are included into `std` [as of Rust 1.70.0](https://github.com/rust-lang/rust/pull/105587).
-examples/bench.rs
 examples/bench_acquire.rs
      5→use once_cell::sync::OnceCell;
     25→#[inline(never)]
     26→fn thread_main(i: usize) {
-examples/lazy_static.rs
-examples/reentrant_init_deadlocks.rs
 examples/regex.rs
      5→macro_rules! regex {
 examples/test_synchronization.rs
@@ -72,17 +69,22 @@ examples/test_synchronization.rs
 src/imp_cs.rs
      8→pub(crate) struct OnceCell<T> {
      9→    initialized: AtomicBool,
-      →…
+    10→    // Use `unsync::OnceCell` internally since `Mutex` does not provide
+    11→    // interior mutability and to be able to re-use `get_or_try_init`.
+    12→    value: Mutex<unsync::OnceCell<T>>,
+    13→}
 src/imp_pl.rs
      7→pub(crate) struct OnceCell<T> {
      8→    state: AtomicU8,
-      →…
+     9→    value: UnsafeCell<Option<T>>,
+    10→}
     12→const INCOMPLETE …
     13→const RUNNING …
     14→const COMPLETE …
    122→struct Guard<'a> {
    123→    state: &'a AtomicU8,
-      →…
+   124→    new_state: u8,
+   125→}
    128→    fn drop …
 src/imp_std.rs
     13→#[derive(Debug)]
@@ -119,8 +121,6 @@ src/imp_std.rs
    148→}
    151→    fn drop …
    245→mod strict {
-   246→    #[must_use]
-   247→    #[inline]
 src/lib.rs
    370→#[cfg(all(feature = "critical-section", not(feature = "std")))]
    371→#[path = "imp_cs.rs"]
@@ -133,13 +133,6 @@ src/lib.rs
    380→mod imp;
    382→/// Single-threaded version of `OnceCell`.
    383→pub mod unsync {
-   384→    use core::{
-   385→        cell::{Cell, UnsafeCell},
-   386→        fmt, mem,
-   387→        ops::{Deref, DerefMut},
-   388→        panic::{RefUnwindSafe, UnwindSafe},
-   389→    };
-   390→
    391→    /// A cell which can be written to only once. It is not thread safe.
    392→    ///
    393→    /// Unlike [`std::cell::RefCell`], a `OnceCell` provides simple `&`
@@ -171,13 +164,6 @@ src/lib.rs
    861→/// Thread-safe, blocking version of `OnceCell`.
    862→#[cfg(any(feature = "std", feature = "critical-section"))]
    863→pub mod sync {
-   864→    use core::{
-   865→        cell::Cell,
-   866→        fmt, mem,
-   867→        ops::{Deref, DerefMut},
-   868→        panic::RefUnwindSafe,
-   869→    };
-   870→
    873→    /// A thread-safe cell which can be written to only once.
    874→    ///
    875→    /// `OnceCell` provides `&` references to the contents without RAII guards.
@@ -228,11 +214,6 @@ src/race.rs
    351→pub use self::once_box::OnceBox;
    353→#[cfg(feature = "alloc")]
    354→mod once_box {
-   355→    use super::atomic::{AtomicPtr, Ordering};
-   356→    use core::{marker::PhantomData, ptr};
-   357→
-   358→    use alloc::boxed::Box;
-   359→
    360→    /// A thread-safe cell which can be written to only once.
    361→    pub struct OnceBox<T> {
    362→        inner: AtomicPtr<T>,
@@ -254,8 +235,6 @@ tests/it/race_once_box.rs
     11→struct Heap {
     16→struct Pebble<T> {
     22→    fn drop(&mut self) {
-    23→        self.total.fetch_sub(1, SeqCst);
-    24→    }
 tests/it/sync_once_cell.rs
    178→#[test]
       →…

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2016 words)
+budget: 2000 (1959 words)
 
 README.md
      5→## Usage
@@ -133,8 +133,6 @@ src/state.ts
     20→  dismissedToasts: Set<string | number>;
     21→
     22→  constructor() {
-    23→    this.subscribers = [];
-    24→    this.toasts = [];
     29→  subscribe = (subscriber: (toast: ToastT | ToastToDismiss) => void) => {
     38→  publish = (data: ToastT) => {
     42→  addToast = (data: ToastT) => {
@@ -163,11 +161,6 @@ src/state.ts
    281→const getHistory = () => ToastState.toasts;
    282→const getToasts = () => ToastState.getActiveToasts();
    285→export const toast = Object.assign(
-   286→  basicToast,
-   287→  {
-   288→    success: ToastState.success,
-   289→    info: ToastState.info,
-      →…
 src/types.ts
      1→import React from 'react';
      3→export type ToastTypes = 'normal' | 'action' | 'success' | 'info' | 'warning' | 'error' | 'loading' | 'default';
@@ -184,12 +177,6 @@ src/types.ts
     18→  | ((data: Data) => React.ReactNode | string | Promise<React.ReactNode | string>);
     20→export type PromiseExternalToast = Omit<ExternalToast, 'description'>;
     22→export type PromiseData<ToastData = any> = PromiseExternalToast & {
-    23→  loading?: string | React.ReactNode;
-    24→  success?: PromiseTResult<ToastData> | PromiseTExtendedResult<ToastData>;
-    25→  error?: PromiseTResult | PromiseTExtendedResult;
-    26→  description?: PromiseTResult;
-    27→  finally?: () => void | Promise<void>;
-    28→};
     30→export interface ToastClassnames {
     31→  toast?: string;
     32→  title?: string;
@@ -242,16 +229,13 @@ src/types.ts
    109→  cancelButtonStyle?: React.CSSProperties;
    110→  actionButtonStyle?: React.CSSProperties;
    111→  duration?: number;
-      →…
+   112→  unstyled?: boolean;
+   113→  classNames?: ToastClassnames;
+   114→  closeButtonAriaLabel?: string;
+   115→  toasterId?: string;
+   116→}
    118→type Offset =
    119→  | {
-   120→      top?: string | number;
-   121→      right?: string | number;
-   122→      bottom?: string | number;
-   123→      left?: string | number;
-   124→    }
-   125→  | string
-   126→  | number;
    128→export interface ToasterProps {
    129→  id?: string;
    130→  invert?: boolean;
@@ -288,9 +272,6 @@ src/types.ts
    194→  dismiss: boolean;
    195→}
    197→export type ExternalToast = Omit<ToastT, 'id' | 'type' | 'title' | 'jsx' | 'delete' | 'promise'> & {
-   198→  id?: number | string;
-   199→  toasterId?: string;
-   200→};
 test/README.md
      3→## Getting Started …
     25→## Learn More …
@@ -303,7 +284,7 @@ test/src/app/layout.tsx
      1→export const metadata = {
      6→export default function RootLayout({ children }: { children: React.ReactNode }) {
 test/src/app/page.tsx
-     7→const promise …
+     7→const promise = () => new Promise((resolve) => setTimeout(resolve, 2000));
      9→export default function Home({ searchParams }: any) {
 test/tests/basic.spec.ts
 website/README.md
@@ -401,6 +382,7 @@ website/src/components/Hero/index.tsx
     11→        <div className={styles.toast} />
     12→        <div className={styles.toast} />
     13→      </div>
+    14→      <h1 className={styles.heading}>Sonner</h1>
       →…
 website/src/components/How/How.tsx
      1→import React from 'react';
@@ -497,6 +479,7 @@ website/src/pages/index.tsx
     28→        position={position}
     29→        duration={Infinity}
     30→      />
+    31→      <main className="container">
       →…
 website/theme.config.jsx
      7→  useNextSeoProps() {

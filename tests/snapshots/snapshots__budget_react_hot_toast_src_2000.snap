@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2024 words)
+budget: 2000 (1967 words)
 
 components/checkmark.tsx
      1→import { styled, keyframes } from 'goober';
@@ -80,6 +80,7 @@ components/toast-bar.tsx
     64→  const [enter, exit] = prefersReducedMotion()
     65→    ? [fadeInAnimation, fadeOutAnimation]
     66→    : [enterAnimation(factor), exitAnimation(factor)];
+    67→
       →…
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
     76→  ({ toast, position, style, children }) => {
@@ -105,7 +106,7 @@ components/toast-icon.tsx
     42→  success: CheckmarkTheme;
     43→  error: ErrorTheme;
     44→  loading: LoaderTheme;
-    45→}>;
+      →…
     47→export const ToastIcon: React.FC<{
     48→  toast: Toast;
     49→}> = ({ toast }) => {
@@ -156,6 +157,7 @@ components/toaster.tsx
     19→  onHeightUpdate,
     20→  children,
     21→}: ToastWrapperProps) => {
+    22→  const ref = React.useCallback(
       →…
     47→const getPositionStyle = (
     48→  position: ToastPosition,
@@ -167,6 +169,7 @@ components/toaster.tsx
     54→    ? {
     55→        justifyContent: 'center',
     56→      }
+    57→    : position.includes('right')
       →…
     76→const activeClass = css`
     83→const DEFAULT_OFFSET = 16;
@@ -253,29 +256,7 @@ core/store.ts
     25→      toast: Toast;
     26→    }
     27→  | {
-    28→      type: ActionType.UPSERT_TOAST;
-    29→      toast: Toast;
-    30→    }
-    31→  | {
-    32→      type: ActionType.UPDATE_TOAST;
-    33→      toast: Partial<Toast>;
-    34→    }
-    35→  | {
-    36→      type: ActionType.DISMISS_TOAST;
-    37→      toastId?: string;
-    38→    }
-    39→  | {
-    40→      type: ActionType.REMOVE_TOAST;
-    41→      toastId?: string;
-    42→    }
-    43→  | {
-    44→      type: ActionType.START_PAUSE;
-    45→      time: number;
-    46→    }
-    47→  | {
-    48→      type: ActionType.END_PAUSE;
-    49→      time: number;
-    50→    };
+      →…
     52→interface ToasterState {
     53→  toasts: Toast[];
     54→  settings: ToasterSettings;
@@ -309,6 +290,10 @@ core/store.ts
     84→          ? ActionType.UPDATE_TOAST
     85→          : ActionType.ADD_TOAST,
     86→        toast,
+    87→      });
+    88→
+    89→    case ActionType.DISMISS_TOAST:
+    90→      const { toastId } = action;
       →…
    136→const listeners: Array<
    137→  [toasterId: string, reducer: (state: ToasterState) => void]
@@ -347,10 +332,7 @@ core/store.ts
    177→} = {
    178→  blank: 4000,
    179→  error: 4000,
-   180→  success: 2000,
-   181→  loading: Infinity,
-   182→  custom: 4000,
-   183→};
+      →…
    185→export const useStore = (
    186→  toastOptions: DefaultToastOptions = {},
    187→  toasterId: string = DEFAULT_TOASTER_ID
@@ -379,6 +361,10 @@ core/store.ts
    210→    ...toastOptions[t.type],
    211→    ...t,
    212→    removeDelay:
+   213→      t.removeDelay ||
+   214→      toastOptions[t.type]?.removeDelay ||
+   215→      toastOptions?.removeDelay,
+   216→    duration:
       →…
 core/toast.ts
      1→import {
@@ -553,6 +539,10 @@ core/use-toaster.ts
     33→    []
     34→  );
     35→
+    36→  useEffect(() => {
+    37→    if (pausedAt) {
+    38→      return;
+    39→    }
       →…
 core/utils.ts
      1→export const genId = (() => {
@@ -560,19 +550,13 @@ core/utils.ts
      3→  return () => {
      4→    return (++count).toString();
      5→  };
-     6→})();
+      →…
      8→export const prefersReducedMotion = (() => {
      9→  // Cache result
     10→  let shouldReduceMotion: boolean | undefined = undefined;
     11→
     12→  return () => {
-    13→    if (shouldReduceMotion === undefined && typeof window !== 'undefined') {
-    14→      const mediaQuery = matchMedia('(prefers-reduced-motion: reduce)');
-    15→      shouldReduceMotion = !mediaQuery || mediaQuery.matches;
-    16→    }
-    17→    return shouldReduceMotion;
-    18→  };
-    19→})();
+      →…
 headless/index.ts
      1→import { toast } from '../core/toast';
 index.ts

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3962 words)
+budget: 4000 (3956 words)
 
 README.md
      1→# humanize
@@ -348,6 +348,8 @@ src/humanize/filesize.py
     52→        >>> naturalsize(300, False, True)
     53→        '300B'
     54→        >>> naturalsize(3000, False, True)
+    55→        '2.9K'
+    56→        >>> naturalsize(3000, False, True, "%.3f")
       →…
 src/humanize/i18n.py
      5→import gettext as gettext_module
@@ -379,7 +381,6 @@ src/humanize/i18n.py
     40→def _get_default_locale_path() -> pathlib.Path | None:
     41→    package = __spec__ and __spec__.parent
     42→    if not package:
-    43→        return None
       →…
     51→def get_translation() -> gettext_module.NullTranslations:
     58→def activate(
@@ -398,7 +399,8 @@ src/humanize/i18n.py
     71→        dict: Translations.
     72→
     73→    Raises:
-      →…
+    74→        FileNotFoundError: If humanize cannot find the locale folder.
+    75→    """
     96→def deactivate() -> None:
     97→    """Deactivate internationalisation."""
    101→def _gettext(message: str) -> str:
@@ -503,6 +505,8 @@ src/humanize/lists.py
     23→        'one'
     24→
     25→    Args:
+    26→        items (list): An iterable of items.
+    27→
       →…
 src/humanize/number.py
      5→import bisect
@@ -516,7 +520,6 @@ src/humanize/number.py
     22→    """Utility function to handle infinite and nan cases."""
     23→    import math
     24→
-    25→    if math.isnan(value):
       →…
     34→def ordinal(value: NumberOrString, gender: str = "male") -> str:
     35→    """Converts an integer to its ordinal as a string.
@@ -532,6 +535,8 @@ src/humanize/number.py
     45→        >>> ordinal(1002)
     46→        '1002nd'
     47→        >>> ordinal(103)
+    48→        '103rd'
+    49→        >>> ordinal(4)
       →…
    110→def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
    111→    """Converts an integer to a string containing commas every three digits.
@@ -547,6 +552,8 @@ src/humanize/number.py
    121→        '1,000'
    122→        >>> intcomma(1_000_000)
    123→        '1,000,000'
+   124→        >>> intcomma(1_234_567.25)
+   125→        '1,234,567.25'
       →…
    195→def intword(value: NumberOrString, format: str = "%.1f") -> str:
    196→    """Converts a large integer to a friendly text representation.
@@ -562,6 +569,8 @@ src/humanize/number.py
    206→        >>> intword("12400")
    207→        '12.4 thousand'
    208→        >>> intword("1000000")
+   209→        '1.0 million'
+   210→        >>> intword(1_200_000_000)
       →…
    269→def apnumber(value: NumberOrString) -> str:
    270→    """Converts an integer to Associated Press style.
@@ -577,6 +586,8 @@ src/humanize/number.py
    280→      >>> apnumber("7")
    281→      'seven'
    282→      >>> apnumber("foo")
+   283→      'foo'
+   284→      >>> apnumber(None)
       →…
    321→def fractional(value: NumberOrString) -> str:
    322→    """Convert to fractional number.
@@ -592,6 +603,8 @@ src/humanize/number.py
    332→    * a string representation of a fraction
    333→    * or a whole number
    334→    * or a mixed fraction
+   335→    * or the str output of the value, if it could not be converted
+   336→
       →…
    385→def scientific(value: NumberOrString, precision: int = 2) -> str:
    386→    """Return number in string scientific notation z.wq x 10ⁿ.
@@ -607,6 +620,8 @@ src/humanize/number.py
    396→        >>> scientific(1000, 1)
    397→        '1.0 x 10³'
    398→        >>> scientific(1000, 3)
+   399→        '1.000 x 10³'
+   400→        >>> scientific("99")
       →…
    454→def clamp(
    455→    value: float,
@@ -629,6 +644,8 @@ src/humanize/number.py
    472→        '<0.01'
    473→        >>> clamp(0.99, format="{:.0%}", ceil=0.99)
    474→        '99%'
+   475→        >>> clamp(0.999, format="{:.0%}", ceil=0.99)
+   476→        '>99%'
       →…
    531→def metric(value: float, unit: str = "", precision: int = 3) -> str:
    532→    """Return a value with a metric SI unit-prefix appended.
@@ -644,6 +661,8 @@ src/humanize/number.py
    542→        >>> metric(1e-14, precision=4)
    543→        '10.00 f'
    544→
+   545→        ```
+   546→
       →…
 src/humanize/time.py
      8→from enum import Enum
@@ -674,13 +693,10 @@ src/humanize/time.py
     39→    YEARS = 7
     40→
     41→    def __lt__(self, other: Any) -> Any:
-    42→        if self.__class__ is other.__class__:
-    43→            return self.value < other.value
-    44→        return NotImplemented
     47→def _now() -> dt.datetime:
     48→    import datetime as dt
     49→
-    50→    return dt.datetime.now()
+      →…
     53→def _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:
     54→    """Return an "absolute" value for a timedelta, always representing a time distance.
     55→
@@ -692,7 +708,6 @@ src/humanize/time.py
     61→    """
     62→    if delta.days < 0:
     63→        now = _now()
-    64→        return now - (now + delta)
       →…
     68→def _date_and_delta(
     69→    value: Any, *, now: dt.datetime | None = None, precise: bool = False
@@ -703,7 +718,6 @@ src/humanize/time.py
     74→    """
     75→    import datetime as dt
     76→
-    77→    if not now:
       →…
     95→def naturaldelta(
     96→    value: dt.timedelta | float,
@@ -723,6 +737,8 @@ src/humanize/time.py
    110→        minimum_unit (str): The lowest unit that can be used.
    111→
    112→    Returns:
+   113→        str (str or `value`): A natural representation of the amount of time
+   114→            elapsed unless `value` is not datetime.timedelta or cannot be
       →…
    249→def naturaltime(
    250→    value: dt.datetime | dt.timedelta | float,
@@ -744,6 +760,8 @@ src/humanize/time.py
    266→            always figured out based on the current time. For integers and floats, the
    267→            return value will be past tense by default, unless future is `True`.
    268→        months (bool): If `True`, then a number of months (based on 30.5 days) will be
+   269→            used for fuzziness between years.
+   270→        minimum_unit (str): The lowest unit that can be used.
       →…
    300→def _convert_aware_datetime(
    301→    value: dt.datetime | dt.timedelta | float | None,
@@ -751,7 +769,6 @@ src/humanize/time.py
    303→    """Convert aware datetime to naive datetime and pass through any other type."""
    304→    import datetime as dt
    305→
-   306→    if isinstance(value, dt.datetime) and value.tzinfo is not None:
       →…
    311→def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
    312→    """Return a natural day.
@@ -797,7 +814,6 @@ src/humanize/time.py
    392→    """
    393→    if unit == minimum_unit:
    394→        return _rounding_by_fmt(format, value / divisor), 0
-   395→
       →…
    406→def _suitable_minimum_unit(min_unit: Unit, suppress: Iterable[Unit]) -> Unit:
    407→    """Return a minimum unit suitable that is not suppressed.
@@ -819,7 +835,6 @@ src/humanize/time.py
    423→    """
    424→    if min_unit in suppress:
    425→        for unit in Unit:
-   426→            if unit > min_unit and unit not in suppress:
       →…
    435→def _suppress_lower_units(min_unit: Unit, suppress: Iterable[Unit]) -> set[Unit]:
    436→    """Extend suppressed units (if any) with all units lower than the minimum unit.
@@ -830,7 +845,6 @@ src/humanize/time.py
    441→    """
    442→    suppress = set(suppress)
    443→    for unit in Unit:
-   444→        if unit == min_unit:
       →…
    451→def precisedelta(
    452→    value: dt.timedelta | float | None,
@@ -851,6 +865,8 @@ src/humanize/time.py
    467→    ```
    468→
    469→    A custom `format` can be specified to control how the fractional part
+   470→    is represented:
+   471→
       →…
    654→def _rounding_by_fmt(format: str, value: float) -> float | int:
    655→    """Round a number according to the string format provided.
@@ -865,7 +881,6 @@ src/humanize/time.py
    664→    """
    665→    result = format % value
    666→
-   667→    try:
       →…
 tests/test_filesize.py
      6→import pytest
@@ -899,7 +914,7 @@ tests/test_i18n.py
     36→        humanize.i18n.deactivate()
     37→        assert humanize.naturaltime(three_seconds) == "3 seconds ago"
     38→        assert humanize.ordinal(5) == "5th"
-    39→        assert humanize.precisedelta(one_min_three_seconds) == "1 minute and 7 seconds"
+      →…
     42→def test_intcomma …
     72→def test_naturaldelta …
    149→def test_intword_i18n …
@@ -914,24 +929,8 @@ tests/test_i18n.py
    228→        " 'locale' folder. You need to pass the path explicitly."
    229→    )
    230→
-   231→    def test_default_locale_path_null__spec__(
-   232→        self, monkeypatch: pytest.MonkeyPatch
-   233→    ) -> None:
-   234→        i18n = importlib.import_module("humanize.i18n")
-   235→        monkeypatch.setattr(i18n, "__spec__", None)
-   236→
-   237→        with pytest.raises(FileNotFoundError, match=self.expected_msg):
-   238→            i18n.activate("ru_RU")
-   239→
-   240→    def test_default_locale_path_undefined__spec__(
-   241→        self, monkeypatch: pytest.MonkeyPatch
-   242→    ) -> None:
-   243→        i18n = importlib.import_module("humanize.i18n")
-   244→        monkeypatch.delattr(i18n, "__spec__")
-   245→
-   246→        with pytest.raises(FileNotFoundError, match=self.expected_msg):
-   247→            i18n.activate("ru_RU")
-   248→
+   231→    def test_default_locale_path_null__spec__ …
+   240→    def test_default_locale_path_undefined__spec__ …
    249→    @freeze_time("2020-02-02")
    250→    def test_en_locale(self) -> None:
    251→        three_seconds = NOW - dt.timedelta(seconds=3)
@@ -944,7 +943,6 @@ tests/test_i18n.py
    258→        assert test_str == humanize.naturaltime(three_seconds)
    259→
    260→        humanize.i18n.deactivate()
-   261→
    262→    @freeze_time("2020-02-02")
    263→    def test_none_locale(self) -> None:
    264→        three_seconds = NOW - dt.timedelta(seconds=3)
@@ -962,7 +960,7 @@ tests/test_i18n.py
    276→        finally:
    277→            humanize.i18n.deactivate()
    278→
-      →…
+   279→        assert test_str == humanize.naturaltime(three_seconds)
 tests/test_lists.py
      3→import pytest
      5→import humanize
@@ -1000,11 +998,8 @@ tests/test_time.py
     25→ONE_YEAR = 365.25 * ONE_DAY
     26→FROZEN_DATE = "2010-02-02"
     37→class FakeDate:
-    38→    def __init__(self, year: int, month: int, day: int) -> None:
-    39→        self.year, self.month, self.day = year, month, day
-    40→
-    41→    def __str__(self) -> str:
-    42→        return f"{self.year}-{self.month}-{self.day}"
+    38→    def __init__ …
+    41→    def __str__ …
     45→VALUE_ERROR_TEST = FakeDate(290149024, 2, 2)
     46→OVERFLOW_ERROR_TEST = FakeDate(120390192341, 2, 2)
     49→def assert_equal_datetime …

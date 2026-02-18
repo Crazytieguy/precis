@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4094 words)
+budget: 4000 (3971 words)
 
 README.md
      1→# debug
@@ -810,40 +810,6 @@ src/common.js
    221→			templateIndex++;
    222→		}
    223→
-   224→		return templateIndex === template.length;
-   225→	}
-   226→
-   227→	/**
-   228→	* Disable debug output.
-   229→	*
-   230→	* @return {String} namespaces
-   231→	* @api public
-   232→	*/
-   233→	function disable() {
-   234→		const namespaces = [
-   235→			...createDebug.names,
-   236→			...createDebug.skips.map(namespace => '-' + namespace)
-   237→		].join(',');
-   238→		createDebug.enable('');
-   239→		return namespaces;
-   240→	}
-   241→
-   242→	/**
-   243→	* Returns true if the given mode name is enabled, false otherwise.
-   244→	*
-   245→	* @param {String} name
-   246→	* @return {Boolean}
-   247→	* @api public
-   248→	*/
-   249→	function enabled(name) {
-   250→		for (const skip of createDebug.skips) {
-   251→			if (matchesTemplate(name, skip)) {
-   252→				return false;
-   253→			}
-   254→		}
-   255→
-   256→		for (const ns of createDebug.names) {
-   257→			if (matchesTemplate(name, ns)) {
       →…
 src/node.js
    151→/**

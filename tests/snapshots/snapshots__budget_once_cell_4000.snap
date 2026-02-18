@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3927 words)
+budget: 4000 (3953 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -62,25 +62,32 @@ README.md
 examples/bench.rs
      1→use std::mem::size_of;
      3→use once_cell::sync::OnceCell;
-     5→const N_THREADS …
-     6→const N_ROUNDS …
-     8→static CELL …
+     5→const N_THREADS: usize = 32;
+     6→const N_ROUNDS: usize = 100_000_000;
+     8→static CELL: OnceCell<usize> = OnceCell::new();
     10→fn main() {
     23→fn thread_main(i: usize) {
 examples/bench_acquire.rs
      5→use once_cell::sync::OnceCell;
      6→use std::sync::atomic::{AtomicUsize, Ordering};
-     8→const N_THREADS …
-     9→const N_ROUNDS …
-    11→static CELL …
-    12→static OTHER …
+     8→const N_THREADS: usize = 16;
+     9→const N_ROUNDS: usize = 1_000_000;
+    11→static CELL: OnceCell<usize> = OnceCell::new();
+    12→static OTHER: AtomicUsize = AtomicUsize::new(0);
     14→fn main() {
     25→#[inline(never)]
     26→fn thread_main(i: usize) {
+    27→    // The operations we do here don't really matter, as long as we do multiple writes, and
+    28→    // everything is messy enough to prevent the compiler from optimizing the loop away.
+    29→    let mut data = [i; 128];
+    30→    let mut accum = 0usize;
+    31→    for _ in 0..N_ROUNDS {
+    32→        let _value = CELL.get_or_init(|| i + 1);
+      →…
 examples/lazy_static.rs
      3→use once_cell::sync::{Lazy, OnceCell};
      4→use std::collections::HashMap;
-     6→static HASHMAP …
+     6→static HASHMAP: Lazy<HashMap<u32, &'static str>> = Lazy::new(|| {
     15→fn hashmap() -> &'static HashMap<u32, &'static str> {
     26→fn main() {
 examples/reentrant_init_deadlocks.rs
@@ -99,10 +106,10 @@ examples/regex.rs
     41→fn main() {
 examples/test_synchronization.rs
     10→use once_cell::sync::OnceCell;
-    12→const N_THREADS …
-    13→const N_ROUNDS …
-    15→static CELLS …
-    16→static RESULT …
+    12→const N_THREADS: usize = 32;
+    13→const N_ROUNDS: usize = 1_000_000;
+    15→static CELLS: OnceCell<Vec<OnceCell<usize>>> = OnceCell::new();
+    16→static RESULT: OnceCell<usize> = OnceCell::new();
     18→fn main() {
     30→fn thread_main(i: usize) {
 src/imp_cs.rs
@@ -310,7 +317,20 @@ src/imp_std.rs
    223→            Ordering::Release,
    224→            Ordering::Relaxed,
    225→        );
-      →…
+   226→        if let Err(new_queue) = exchange {
+   227→            if strict::addr(new_queue) & STATE_MASK != curr_state {
+   228→                return;
+   229→            }
+   230→            curr_queue = new_queue;
+   231→            continue;
+   232→        }
+   233→
+   234→        while !node.signaled.load(Ordering::Acquire) {
+   235→            thread::park();
+   236→        }
+   237→        break;
+   238→    }
+   239→}
    245→mod strict {
    246→    #[must_use]
    247→    #[inline]
@@ -318,12 +338,6 @@ src/imp_std.rs
    249→    where
    250→        T: Sized,
    251→    {
-   252→        // FIXME(strict_provenance_magic): I am magic and should be a compiler intrinsic.
-   253→        // SAFETY: Pointer-to-integer transmutes are valid (if you are okay with losing the
-   254→        // provenance).
-   255→        unsafe { core::mem::transmute(ptr) }
-   256→    }
-   257→
    258→    #[must_use]
    259→    #[inline]
    260→    pub(crate) fn with_addr<T>(ptr: *mut T, addr: usize) -> *mut T
@@ -354,7 +368,6 @@ src/lib.rs
    387→        ops::{Deref, DerefMut},
    388→        panic::{RefUnwindSafe, UnwindSafe},
    389→    };
-   390→
    391→    /// A cell which can be written to only once. It is not thread safe.
    392→    ///
    393→    /// Unlike [`std::cell::RefCell`], a `OnceCell` provides simple `&`
@@ -379,20 +392,9 @@ src/lib.rs
    412→        // Invariant: written to at most once.
    413→        inner: UnsafeCell<Option<T>>,
    414→    }
-   415→
-   416→    // Similarly to a `Sync` bound on `sync::OnceCell`, we can use
-   417→    // `&unsync::OnceCell` to sneak a `T` through `catch_unwind`,
-   418→    // by initializing the cell in closure and extracting the value in the
-   419→    // `Drop`.
-   420→    impl<T: RefUnwindSafe + UnwindSafe> RefUnwindSafe for OnceCell<T> {}
-   421→    impl<T: UnwindSafe> UnwindSafe for OnceCell<T> {}
-   422→
-   423→    impl<T> Default for OnceCell<T> {
    424→        fn default() -> Self {
    425→            Self::new()
    426→        }
-   427→    }
-   428→
    430→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
    431→            match self.get() {
    432→                Some(v) => f.debug_tuple("OnceCell").field(v).finish(),
@@ -483,9 +485,7 @@ src/lib.rs
    867→        ops::{Deref, DerefMut},
    868→        panic::RefUnwindSafe,
    869→    };
-   870→
    871→    use super::imp::OnceCell as Imp;
-   872→
    873→    /// A thread-safe cell which can be written to only once.
    874→    ///
    875→    /// `OnceCell` provides `&` references to the contents without RAII guards.
@@ -515,13 +515,9 @@ src/lib.rs
    899→    /// assert_eq!(value.unwrap().as_str(), "Hello, World!");
    900→    /// ```
    901→    pub struct OnceCell<T>(Imp<T>);
-   902→
-   903→    impl<T> Default for OnceCell<T> {
    904→        fn default() -> OnceCell<T> {
    905→            OnceCell::new()
    906→        }
-   907→    }
-   908→
    910→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
    911→            match self.get() {
    912→                Some(v) => f.debug_tuple("OnceCell").field(v).finish(),
@@ -734,37 +730,24 @@ src/race.rs
    354→mod once_box {
    355→    use super::atomic::{AtomicPtr, Ordering};
    356→    use core::{marker::PhantomData, ptr};
-   357→
    358→    use alloc::boxed::Box;
-   359→
    360→    /// A thread-safe cell which can be written to only once.
    361→    pub struct OnceBox<T> {
    362→        inner: AtomicPtr<T>,
    363→        ghost: PhantomData<Option<Box<T>>>,
    364→    }
-   365→
-   366→    impl<T> core::fmt::Debug for OnceBox<T> {
    367→        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
    368→            write!(f, "OnceBox({:?})", self.inner.load(Ordering::Relaxed))
    369→        }
-   370→    }
-   371→
-   372→    impl<T> Default for OnceBox<T> {
    373→        fn default() -> Self {
    374→            Self::new()
    375→        }
-   376→    }
-   377→
-   378→    impl<T> Drop for OnceBox<T> {
    379→        fn drop(&mut self) {
    380→            let ptr = *self.inner.get_mut();
    381→            if !ptr.is_null() {
    382→                drop(unsafe { Box::from_raw(ptr) })
    383→            }
    384→        }
-   385→    }
-   386→
-   387→    impl<T> OnceBox<T> {
    389→        pub const fn new() -> Self {
    394→        pub fn with_value(value: Box<T>) -> Self {
    399→        pub fn get(&self) -> Option<&T> {
@@ -841,6 +824,9 @@ tests/it/sync_once_cell.rs
    186→        exe.push("examples");
    187→        exe
    188→    };
+   189→    let bin = examples_dir
+   190→        .join("reentrant_init_deadlocks")
+   191→        .with_extension(std::env::consts::EXE_EXTENSION);
       →…
    296→fn arrrrrrrrrrrrrrrrrrrrrr() {
 tests/it/unsync_lazy.rs
@@ -852,18 +838,26 @@ xtask/src/main.rs
      6→use xshell::{cmd, Shell};
      8→fn main() -> xshell::Result<()> {
      9→    let sh = Shell::new()?;
+    10→
+    11→    let _e = push_toolchain(&sh, "stable")?;
       →…
    116→fn push_toolchain<'a>(
    117→    sh: &'a xshell::Shell,
    118→    toolchain: &str,
    119→) -> xshell::Result<xshell::PushEnv<'a>> {
    120→    cmd!(sh, "rustup toolchain install {toolchain} --no-self-update").run()?;
+   121→    let res = sh.push_env("RUSTUP_TOOLCHAIN", toolchain);
+   122→    cmd!(sh, "rustc --version").run()?;
       →…
    126→fn section(name: &'static str) -> impl Drop {
    127→    println!("::group::{name}");
+   128→    let start = Instant::now();
+   129→    defer(move || {
       →…
    136→fn defer<F: FnOnce()>(f: F) -> impl Drop {
    137→    struct D<F: FnOnce()>(Option<F>);
+   138→    impl<F: FnOnce()> Drop for D<F> {
+   139→        fn drop(&mut self) {
       →…
 xtask/src/tidy.rs
      1→use xshell::{cmd, Shell};

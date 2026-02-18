@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (499 words)
+budget: 500 (498 words)
 
 readme.md
     20→## Benefits over plain `fetch` …
@@ -22,21 +22,9 @@ readme.md
    485→###### hooks.afterResponse …
   1050→## Tips …
   1052→### Sending form data …
-  1158→#### Native proxy support
-  1160→Node.js 24.5+ supports automatic proxy configuration via environment variables. Set `NODE_USE_ENV_PROXY=1` or use the `--use-env-proxy` CLI flag.
-  1161→
-  1162→```sh
-  1163→NODE_USE_ENV_PROXY=1 HTTP_PROXY=http://proxy.example.com:8080 node app.js
-  1164→```
-  1165→
-  1166→Or:
-  1167→
-  1168→```sh
-      →…
+  1158→#### Native proxy support …
   1292→## FAQ …
-  1294→#### How do I use this in Node.js?
-  1296→Node.js 18 and later supports `fetch` natively, so you can just use this package directly.
-  1297→
+  1294→#### How do I use this in Node.js? …
   1339→## Browser support …
   1343→## Node.js support …
   1347→## Related …
@@ -44,34 +32,42 @@ readme.md
 source/core/Ky.ts
     33→export class Ky {
     34→	static create(input: Input, options: Options): ResponsePromise {
-    35→		const ky = new Ky(input, options);
-    36→
    200→	constructor(input: Input, options: Options = {}) {
 source/core/constants.ts
-    68→export type ForceRetryOptions …
+    65→/**
+    66→Options for forcing a retry via `ky.retry()`.
+    67→*/
+    68→export type ForceRetryOptions = {
    145→/**
    146→Marker returned by ky.retry() to signal a forced retry from afterResponse hooks.
    147→*/
    148→export class RetryMarker {
    149→	constructor(public options?: ForceRetryOptions) {}
-   150→}
    152→/**
    153→Force a retry from an `afterResponse` hook.
    154→
       →…
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
 source/errors/ForceRetryError.ts
+     4→/**
+      →…
      8→export class ForceRetryError extends Error {
      9→	override name = 'ForceRetryError' as const;
     10→	customDelay: number | undefined;
     11→	code: string | undefined;
+    12→	customRequest: Request | undefined;
+    13→
     14→	constructor(options?: ForceRetryOptions) {
 source/errors/HTTPError.ts
      5→export class HTTPError<T = unknown> extends Error {
      6→	public response: KyResponse<T>;
      7→	public request: KyRequest;
+     8→	public options: NormalizedOptions;
+     9→
     10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
 source/errors/NonError.ts
+     1→/**
+      →…
      6→export class NonError extends Error {
      7→	override name = 'NonError';
      8→	readonly value: unknown;
@@ -91,8 +87,16 @@ source/types/common.ts
 source/types/hooks.ts
 source/types/ky.ts
 source/types/options.ts
-    33→export type KyOptions …
-   307→export type KyOptionsRegistry …
+    29→/**
+    30→Custom Ky options
+    31→*/
+      →…
+    33→export type KyOptions = {
+   302→/**
+   303→Each key from KyOptions is present and set to `true`.
+   304→
+      →…
+   307→export type KyOptionsRegistry = {[K in keyof KyOptions]-?: true};
    312→export interface Options extends KyOptions, Omit<RequestInit, 'headers'> { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
    313→	/**
    314→	HTTP method used to make the request.
@@ -131,4 +135,5 @@ source/utils/type-guards.ts
 source/utils/types.ts
      1→export type Mutable …
      5→export type ObjectEntries …
+test/browser.ts
 test/helpers/create-http-test-server.ts

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4053 words)
+budget: 4000 (3931 words)
 
 404.md
      1→# Document not found (404)
@@ -402,12 +402,6 @@ format/configuration/renderers.md
    289→
    290→```toml
    291→[output.html.search.chapter]
-   292→# Disables search indexing for all chapters in the `appendix` directory.
-   293→"appendix" = { enable = false }
-   294→# Enables search indexing for just this one appendix chapter.
-   295→"appendix/glossary.md" = { enable = true }
-   296→```
-   297→
       →…
    300→### `[output.html.redirect]` …
    325→## Markdown renderer …
@@ -586,16 +580,6 @@ format/theme/README.md
     19→    - **_css/general.css_** is the base styles.
     20→    - **_css/print.css_** is the style for printer output.
     21→    - **_css/variables.css_** contains variables used in other CSS files.
-    22→- **_book.js_** is mostly used to add client side functionality, like hiding /
-    23→  un-hiding the sidebar, changing the theme, ...
-    24→- **_highlight.js_** is the JavaScript that is used to highlight code snippets,
-    25→  you should not need to modify this.
-    26→- **_highlight.css_** is the theme used for the code highlighting.
-    27→- **_favicon.svg_** and **_favicon.png_** the favicon that will be used. The SVG
-    28→  version is used by [newer browsers].
-    29→- **fonts/fonts.css** contains the definition of which fonts to load.
-    30→  Custom fonts can be included in the `fonts` directory.
-    31→
       →…
 format/theme/editor.md
      1→# Editor
@@ -629,7 +613,8 @@ format/theme/editor.md
     30→}
     31→```
     32→
-      →…
+    33→Note the new `Undo Changes` button in the editable playgrounds.
+    34→
     35→## Customizing the editor
     37→By default, the editor is the [Ace](https://ace.c9.io/) editor, but, if desired,
     38→the functionality may be overridden by providing a different folder:
@@ -778,5 +763,4 @@ misc/contributors.md
      6→- [mdinger](https://github.com/mdinger)
      7→- Kevin ([kbknapp](https://github.com/kbknapp))
      8→- Steve Klabnik ([steveklabnik](https://github.com/steveklabnik))
-     9→- Adam Solove ([asolove](https://github.com/asolove))
       →…

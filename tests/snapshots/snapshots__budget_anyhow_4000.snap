@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4015 words)
+budget: 4000 (3926 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
@@ -67,6 +67,11 @@ README.md
     63→      No such file or directory (os error 2)
     64→  ```
     65→
+    66→- Downcasting is supported and can be by value, by shared reference, or by
+    67→  mutable reference as needed.
+    68→
+    69→  ```rust
+    70→  // If the error was caused by redaction, then return a
       →…
    126→## No-std support
    128→In no_std mode, almost all of the same API is available and works the same way.
@@ -153,26 +158,14 @@ src/backtrace.rs
       →…
     70→#[cfg(all(not(std_backtrace), feature = "backtrace"))]
     71→mod capture {
-    72→    use alloc::borrow::{Cow, ToOwned as _};
-    73→    use alloc::vec::Vec;
-    74→    use backtrace::{BacktraceFmt, BytesOrWideString, Frame, PrintFmt, SymbolName};
-    75→    use core::cell::UnsafeCell;
-    76→    use core::fmt::{self, Debug, Display};
-    77→    use core::sync::atomic::{AtomicUsize, Ordering};
-    78→    use std::env;
-    79→    use std::path::{self, Path, PathBuf};
-    80→    use std::sync::Once;
-    81→
     82→    pub(crate) struct Backtrace {
     83→        inner: Inner,
     84→    }
-    85→
     86→    pub(crate) enum BacktraceStatus {
     87→        Unsupported,
     88→        Disabled,
     89→        Captured,
     90→    }
-    91→
     92→    enum Inner {
     93→        Unsupported,
     94→        Disabled,
@@ -247,13 +240,8 @@ src/chain.rs
 src/context.rs
      7→use crate::nightly::{self, Request};
      9→mod ext {
-    10→    use super::*;
-    11→
     12→    pub trait StdError {
-    13→        fn ext_context<C>(self, context: C) -> Error
-    14→        where
-    15→            C: Display + Send + Sync + 'static;
-    16→    }
+    13→        fn ext_context …
     18→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
     19→    impl<E> StdError for E
     20→    where
@@ -298,19 +286,15 @@ src/context.rs
    172→    fn fmt …
    181→    fn write_str …
    186→pub(crate) mod private {
-   187→    use super::*;
-   188→
    189→    pub trait Sealed {}
 src/ensure.rs
      9→#[doc(hidden)]
     10→pub trait BothDebug {
-    11→    fn __dispatch_ensure(self, msg: &'static str) -> Error;
-    12→}
+    11→    fn __dispatch_ensure …
     19→    fn __dispatch_ensure …
     24→#[doc(hidden)]
     25→pub trait NotBothDebug {
-    26→    fn __dispatch_ensure(self, msg: &'static str) -> Error;
-    27→}
+    26→    fn __dispatch_ensure …
     30→    fn __dispatch_ensure …
     35→struct Buf {
     36→    bytes: [MaybeUninit<u8>; 40],
@@ -518,9 +502,6 @@ src/kind.rs
     58→pub trait AdhocKind: Sized {
     59→    #[inline]
     60→    fn anyhow_kind(&self) -> Adhoc {
-    61→        Adhoc
-    62→    }
-    63→}
     68→    #[cold]
     69→    pub fn new<M>(self, message: M) -> Error
     70→    where
@@ -531,9 +512,6 @@ src/kind.rs
     80→pub trait TraitKind: Sized {
     81→    #[inline]
     82→    fn anyhow_kind(&self) -> Trait {
-    83→        Trait
-    84→    }
-    85→}
     90→    #[cold]
     91→    pub fn new<E>(self, error: E) -> Error
     92→    where
@@ -546,9 +524,6 @@ src/kind.rs
    104→pub trait BoxedKind: Sized {
    105→    #[inline]
    106→    fn anyhow_kind(&self) -> Boxed {
-   107→        Boxed
-   108→    }
-   109→}
    111→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    112→impl BoxedKind for Box<dyn StdError + Send + Sync> {}
    114→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
@@ -574,10 +549,7 @@ src/lib.rs
    276→use core::error::Error as StdError;
    278→#[cfg(all(not(feature = "std"), anyhow_no_core_error))]
    279→trait StdError: Debug + Display {
-   280→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
-   281→        None
-   282→    }
-   283→}
+   280→    fn source …
    286→pub use anyhow as format_err;
    288→/// The `Error` type, a wrapper around a dynamic error type.
    289→///
@@ -606,6 +578,7 @@ src/lib.rs
    312→/// To print causes as well using anyhow's default formatting of causes, use the
    313→/// alternate selector "{:#}".
    314→///
+   315→/// ```console
       →…
    390→pub struct Error {
    391→    inner: Own<ErrorImpl>,
@@ -711,71 +684,41 @@ src/lib.rs
    494→///     # }
    495→/// }
    496→///
+   497→/// pub fn do_it(mut it: ImportantThing) -> Result<Vec<u8>> {
       →…
    616→pub trait Context<T, E>: context::private::Sealed {
    617→    /// Wrap the error value with additional context.
    618→    fn context<C>(self, context: C) -> Result<T, Error>
    619→    where
    620→        C: Display + Send + Sync + 'static;
-   621→
    622→    /// Wrap the error value with additional context that is evaluated lazily
    623→    /// only once an error does occur.
    624→    fn with_context<C, F>(self, f: F) -> Result<T, Error>
    625→    where
    626→        C: Display + Send + Sync + 'static,
    627→        F: FnOnce() -> C;
-   628→}
    630→/// Equivalent to `Ok::<_, anyhow::Error>(value)`.
    631→///
       →…
    650→pub fn Ok<T>(value: T) -> Result<T> {
    655→#[doc(hidden)]
    656→pub mod __private {
-   657→    use self::not::Bool;
-   658→    use crate::Error;
-   659→    use alloc::fmt;
-   660→    use core::fmt::Arguments;
-   661→
-   662→    #[doc(hidden)]
    663→    pub use crate::ensure::{BothDebug, NotBothDebug};
-   664→    #[doc(hidden)]
    665→    pub use alloc::format;
-   666→    #[doc(hidden)]
    667→    pub use core::result::Result::Err;
-   668→    #[doc(hidden)]
    669→    pub use core::{concat, format_args, stringify};
-   670→
    671→    #[doc(hidden)]
    672→    pub mod kind {
-   673→        #[doc(hidden)]
    674→        pub use crate::kind::{AdhocKind, TraitKind};
-   675→
-   676→        #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
-   677→        #[doc(hidden)]
    678→        pub use crate::kind::BoxedKind;
-   679→    }
-   680→
    681→    #[doc(hidden)]
    682→    #[inline]
-   683→    #[cold]
+      →…
    684→    pub fn format_err(args: Arguments) -> Error {
-   685→        if let Some(message) = args.as_str() {
-   686→            // anyhow!("literal"), can downcast to &'static str
-   687→            Error::msg(message)
-   688→        } else {
-   689→            // anyhow!("interpolate {var}"), can downcast to String
-   690→            Error::msg(fmt::format(args))
-   691→        }
-   692→    }
-   693→
    694→    #[doc(hidden)]
    695→    #[inline]
-   696→    #[cold]
-   697→    #[must_use]
+      →…
    698→    pub fn must_use(error: Error) -> Error {
-   699→        error
-   700→    }
-   701→
    702→    #[doc(hidden)]
    703→    #[inline]
    704→    pub fn not(cond: impl Bool) -> bool {
@@ -924,14 +867,19 @@ tests/drop/mod.rs
      9→pub struct Flag {
     10→    atomic: Arc<AtomicBool>,
     11→}
+    13→impl Flag {
     14→    pub fn new() -> Self {
     20→    pub fn get(&self) -> bool {
     25→#[derive(Debug)]
     26→pub struct DetectDrop {
     27→    has_dropped: Flag,
     28→}
+    30→impl DetectDrop {
     31→    pub fn new(has_dropped: &Flag) -> Self {
+    40→impl StdError for DetectDrop {}
+    42→impl Display for DetectDrop {
     43→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    48→impl Drop for DetectDrop {
     49→    fn drop(&mut self) {
 tests/test_autotrait.rs
      3→use anyhow::Error;
@@ -945,6 +893,9 @@ tests/test_chain.rs
 tests/test_context.rs
      6→mod drop;
     22→macro_rules! context_type {
+    23→    ($name:ident) => {
+    24→        #[derive(Debug)]
+      →…
     42→#[derive(Error, Debug)]
     43→#[error("{message}")]
     44→struct LowLevel {
@@ -952,6 +903,10 @@ tests/test_context.rs
     46→    drop: DetectDrop,
     47→}
     49→struct Dropped {
+    50→    low: Flag,
+    51→    mid: Flag,
+    52→    high: Flag,
+    53→}
 tests/test_convert.rs
      1→#![allow(clippy::unnecessary_wraps)]
      2→
@@ -968,6 +923,10 @@ tests/test_ensure.rs
     50→trait Trait: Sized {
     52→    fn t(self, i: i32) -> i32 {
     59→enum Enum<T: ?Sized> {
+    60→    #[allow(dead_code)]
+    61→    Thing(PhantomData<T>),
+    62→    Generic,
+    63→}
     66→    fn eq(&self, rhs: &Self) -> bool {
     72→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
     77→#[track_caller]
@@ -1003,6 +962,8 @@ tests/test_source.rs
      9→}
     12→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
     20→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
+tests/ui/chained-comparison.rs
+tests/ui/empty-ensure.rs
 tests/ui/ensure-nonbool.rs
      4→struct Bool(bool);
      6→struct DerefBool(bool);
@@ -1022,3 +983,5 @@ tests/ui/must-use.rs
 tests/ui/no-impl.rs
      3→#[derive(Debug)]
      4→struct Error;
+tests/ui/temporary-value.rs
+tests/ui/wrong-interpolation.rs

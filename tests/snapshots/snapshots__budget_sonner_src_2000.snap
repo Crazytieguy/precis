@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1989 words)
+budget: 2000 (1984 words)
 
 assets.tsx
      2→import React from 'react';
@@ -148,8 +148,6 @@ state.ts
     24→    this.toasts = [];
     25→    this.dismissedToasts = new Set();
     26→  }
-    27→
-    28→  // We use arrow functions to maintain the correct `this` reference
     29→  subscribe = (subscriber: (toast: ToastT | ToastToDismiss) => void) => {
     30→    this.subscribers.push(subscriber);
     31→
@@ -158,16 +156,13 @@ state.ts
     34→      this.subscribers.splice(index, 1);
     35→    };
     36→  };
-    37→
     38→  publish = (data: ToastT) => {
     39→    this.subscribers.forEach((subscriber) => subscriber(data));
     40→  };
-    41→
     42→  addToast = (data: ToastT) => {
     43→    this.publish(data);
     44→    this.toasts = [...this.toasts, data];
     45→  };
-    46→
     47→  create = (
     48→    data: ExternalToast & {
     49→      message?: titleT;
@@ -208,7 +203,6 @@ state.ts
     84→
     85→    return id;
     86→  };
-    87→
     88→  dismiss = (id?: number | string) => {
     89→    if (id) {
     90→      this.dismissedToasts.add(id);
@@ -282,6 +276,9 @@ state.ts
    165→          const isExtendedResult = typeof promiseData === 'object' && !React.isValidElement(promiseData);
    166→
    167→          const toastSettings: PromiseIExtendedResult = isExtendedResult
+   168→            ? (promiseData as PromiseIExtendedResult)
+   169→            : { message: promiseData };
+   170→
       →…
    243→  custom = (jsx: (id: number | string) => React.ReactElement, data?: ExternalToast) => {
    244→    const id = data?.id || toastsCounter++;

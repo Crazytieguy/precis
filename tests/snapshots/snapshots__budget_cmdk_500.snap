@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (504 words)
+budget: 500 (494 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -51,17 +51,25 @@ cmdk/src/index.tsx
    882→const Dialog …
    899→const Empty …
    909→const Loading …
+   955→/**
+   956→ *
+   957→ *
+   958→ * Helpers
+   959→ *
+   960→ *
+   961→ */
+   962→
    963→function findNextSibling(el: Element, selector: string) {
+  1003→/** Run a selector against the store state. */
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
+  1045→/** Imperatively run a function on the next layout effect cycle. */
   1046→const useScheduleLayoutEffect = () => {
 cmdk/tsup.config.ts
-     1→import { defineConfig } from 'tsup'
 playwright.config.ts
      3→const config: PlaywrightTestConfig = {
 test/pages/_app.tsx
      3→export default function App({ Component, pageProps }) {
 test/pages/huge.tsx
-     4→const items = new Array(1000).fill(0)
 website/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -111,19 +119,6 @@ website/pages/_app.tsx
 website/pages/_document.tsx
      5→export default class Document extends NextDocument {
      6→  render() {
-     7→    return (
-     8→      <Html lang="en">
-     9→        <Head>
-    10→          <link rel="preload" href="/inter-var-latin.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-    11→        </Head>
-    12→        <body>
-    13→          <Main />
-    14→          <NextScript />
-    15→        </body>
-    16→      </Html>
-    17→    )
-    18→  }
-    19→}
 website/pages/index.tsx
     29→export default function Index() {
     99→//////////////////////////////////////////////////////////////////

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3801 words)
+budget: 4000 (3916 words)
 
 README.md
      1→derive(Error)
@@ -169,7 +169,48 @@ README.md
    166→  }
    167→  ```
    168→
-      →…
+   169→- Errors may use `error(transparent)` to forward the source and Display methods
+   170→  straight through to an underlying error without adding an additional message.
+   171→  This would be appropriate for enums that need an "anything else" variant.
+   172→
+   173→  ```rust
+   174→  #[derive(Error, Debug)]
+   175→  pub enum MyError {
+   176→      ...
+   177→
+   178→      #[error(transparent)]
+   179→      Other(#[from] anyhow::Error),  // source and Display delegate to anyhow::Error
+   180→  }
+   181→  ```
+   182→
+   183→  Another use case is hiding implementation details of an error representation
+   184→  behind an opaque error type, so that the representation is able to evolve
+   185→  without breaking the crate's public API.
+   186→
+   187→  ```rust
+   188→  // PublicError is public, but opaque and easy to keep compatible.
+   189→  #[derive(Error, Debug)]
+   190→  #[error(transparent)]
+   191→  pub struct PublicError(#[from] ErrorRepr);
+   192→
+   193→  impl PublicError {
+   194→      // Accessors for anything we do want to expose publicly.
+   195→  }
+   196→
+   197→  // Private and free to change across minor version of the crate.
+   198→  #[derive(Error, Debug)]
+   199→  enum ErrorRepr {
+   200→      ...
+   201→  }
+   202→  ```
+   203→
+   204→- See also the [`anyhow`] library for a convenient single error type to use in
+   205→  application code.
+   206→
+   207→  [`anyhow`]: https://github.com/dtolnay/anyhow
+   208→
+   209→<br>
+   210→
    211→## Comparison to anyhow
    213→Use thiserror if you care about designing your own dedicated error type(s) so
    214→that the caller receives exactly the information that you choose in the event of
@@ -202,17 +243,14 @@ build/probe.rs
     15→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
     16→        unimplemented!()
     17→    }
-    18→}
     20→impl Display for MyError {
     21→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
     22→        unimplemented!()
     23→    }
-    24→}
     26→impl Error for MyError {
     27→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
     28→        request.provide_ref(&self.0);
     29→    }
-    30→}
 build.rs
      1→use std::env;
      2→use std::ffi::OsString;
@@ -504,7 +542,6 @@ src/aserror.rs
      4→#[doc(hidden)]
      5→pub trait AsDynError<'a>: Sealed {
      6→    fn as_dyn_error(&self) -> &(dyn Error + 'a);
-     7→}
      9→impl<'a, T: Error + 'a> AsDynError<'a> for T {
     10→    #[inline]
     11→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
@@ -547,7 +584,6 @@ src/display.rs
      9→    type Target: Display;
     10→
     11→    fn as_display(&'a self) -> Self::Target;
-    12→}
     14→impl<'a, T> AsDisplay<'a> for &T
     15→where
     16→    T: Display + ?Sized + 'a,
@@ -559,21 +595,17 @@ src/display.rs
     25→#[cfg(feature = "std")]
     26→impl<'a> AsDisplay<'a> for Path {
     27→    type Target = path::Display<'a>;
-    28→
     29→    #[inline]
     30→    fn as_display(&'a self) -> Self::Target {
     31→        self.display()
     32→    }
-    33→}
     35→#[cfg(feature = "std")]
     36→impl<'a> AsDisplay<'a> for PathBuf {
     37→    type Target = path::Display<'a>;
-    38→
     39→    #[inline]
     40→    fn as_display(&'a self) -> Self::Target {
     41→        self.display()
     42→    }
-    43→}
     45→#[doc(hidden)]
     46→pub trait Sealed {}
     47→impl<T: Display + ?Sized> Sealed for &T {}
@@ -585,27 +617,19 @@ src/display.rs
     59→mod placeholder {
     60→    use super::{AsDisplay, Sealed};
     61→    use core::fmt::{self, Display};
-    62→
     63→    #[allow(dead_code)]
     64→    pub struct Placeholder;
-    65→
     66→    impl<'a> AsDisplay<'a> for Placeholder {
     67→        type Target = Self;
-    68→
     69→        #[inline]
     70→        fn as_display(&'a self) -> Self::Target {
     71→            Placeholder
     72→        }
-    73→    }
-    74→
     75→    impl Display for Placeholder {
     76→        fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
     77→            unreachable!()
     78→        }
-    79→    }
-    80→
     81→    impl Sealed for Placeholder {}
-    82→}
 src/lib.rs
    281→mod aserror;
    282→mod display;
@@ -626,7 +650,6 @@ src/provide.rs
      3→#[doc(hidden)]
      4→pub trait ThiserrorProvide: Sealed {
      5→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>);
-     6→}
      8→impl<T> ThiserrorProvide for T
      9→where
     10→    T: Error + ?Sized,
@@ -643,7 +666,8 @@ src/var.rs
      3→pub struct Var<'a, T: ?Sized>(pub &'a T);
      5→impl<'a, T: Pointer + ?Sized> Pointer for Var<'a, T> {
      6→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-      →…
+     7→        Pointer::fmt(self.0, formatter)
+     8→    }
 tests/no-std/test.rs
      3→use thiserror::Error;
      5→#[derive(Error, Debug)]
@@ -662,12 +686,6 @@ tests/test_backtrace.rs
     13→pub struct InnerBacktrace {
     17→#[cfg(thiserror_nightly_testing)]
     18→pub mod structs {
-    19→    use super::{Inner, InnerBacktrace};
-    20→    use std::backtrace::Backtrace;
-    21→    use std::error::{self, Error};
-    22→    use std::sync::Arc;
-    23→    use thiserror::Error;
-    24→
     25→    mod not_backtrace {
     27→        pub struct Backtrace;
     32→    pub struct PlainBacktrace {
@@ -683,13 +701,6 @@ tests/test_backtrace.rs
    107→    pub struct BoxDynErrorBacktrace {
    162→#[cfg(thiserror_nightly_testing)]
    163→pub mod enums {
-   164→    use super::{Inner, InnerBacktrace};
-   165→    use std::backtrace::Backtrace;
-   166→    use std::error;
-   167→    use std::sync::Arc;
-   168→    use thiserror::Error;
-   169→
-   170→    #[derive(Error, Debug)]
    171→    pub enum PlainBacktrace {
    177→    pub enum ExplicitBacktrace {
    186→    pub enum OptBacktrace {
@@ -703,8 +714,6 @@ tests/test_display.rs
     13→    assert_eq!(expected, value.to_string());
     14→}
    414→mod util {
-   415→    use core::fmt::{self, Octal};
-   416→
    417→    pub fn octal<T: Octal>(value: &T, formatter: &mut fmt::Formatter) -> fmt::Result {
    418→        write!(formatter, "0o{:o}", value)
    419→    }
@@ -712,6 +721,7 @@ tests/test_error.rs
      3→use core::fmt::{self, Display};
      7→macro_rules! unimplemented_display {
      8→    ($ty:ty) => {
+     9→        impl Display for $ty {
       →…
     17→#[derive(Error, Debug)]
     18→struct BracedError {
@@ -795,26 +805,14 @@ tests/test_option.rs
      3→
      4→#[cfg(thiserror_nightly_testing)]
      5→pub mod structs {
-     6→    use std::backtrace::Backtrace;
-     7→    use thiserror::Error;
-     8→
-     9→    #[derive(Error, Debug)]
-    10→    #[error("...")]
     11→    pub struct OptSourceNoBacktrace {
-    12→        #[source]
     18→    pub struct OptSourceAlwaysBacktrace {
     26→    pub struct NoSourceOptBacktrace {
     33→    pub struct AlwaysSourceOptBacktrace {
     41→    pub struct OptSourceOptBacktrace {
     49→#[cfg(thiserror_nightly_testing)]
     50→pub mod enums {
-    51→    use std::backtrace::Backtrace;
-    52→    use thiserror::Error;
-    53→
-    54→    #[derive(Error, Debug)]
     55→    pub enum OptSourceNoBacktrace {
-    56→        #[error("...")]
-    57→        Test {
     64→    pub enum OptSourceAlwaysBacktrace {
     74→    pub enum NoSourceOptBacktrace {
     83→    pub enum AlwaysSourceOptBacktrace {
@@ -848,6 +846,7 @@ tests/test_source.rs
     21→pub struct BoxedSource {
     50→macro_rules! error_from_macro {
     51→    ($($variants:tt)*) => {
+    52→        #[derive(Error)]
       →…
 tests/test_transparent.rs
 tests/ui/bad-field-attr.rs
@@ -917,7 +916,6 @@ tests/ui/fallback-impl-with-display.rs
      9→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
     10→        unimplemented!()
     11→    }
-    12→}
 tests/ui/from-backtrace-backtrace.rs
      6→#[derive(Error, Debug)]
      7→#[error("...")]

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1016 words)
+budget: 1000 (986 words)
 
 README.md
     28→## Features
@@ -56,8 +56,7 @@ site/README.md
     12→
     13→Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
     14→
-    15→You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-    16→
+      →…
     17→## Learn More
     19→To learn more about Next.js, take a look at the following resources:
     20→
@@ -101,6 +100,8 @@ site/components/sections/toaster-example.tsx
      9→  'top-left',
     10→  'top-center',
     11→  'top-right',
+    12→  'bottom-left',
+    13→  'bottom-center',
       →…
     17→export const ToasterExample: React.FC<{
 site/next.config.mjs
@@ -108,7 +109,11 @@ site/next.config.mjs
     14→/** @type {import('next').NextConfig} */
     15→const nextConfig = {
     17→  webpack(config) {
+    18→    config.module.rules.push({
+      →…
     24→  async rewrites() {
+    25→    return [
+      →…
 site/pages/_app.tsx
     12→const components = {
     71→function MyApp …
@@ -124,10 +129,6 @@ site/pages/index.tsx
    105→  const { toasts: allToasts } = useToasterStore();
    106→
    107→  const shouldFade =
-   108→    allToasts.filter((t) => t.visible).length && position.includes('top');
-   109→  return (
-   110→    <div className="overflow-x-hidden">
-   111→      <NextSeo
       →…
 site/types/svg.d.ts
      1→interface SvgrComponent
@@ -168,10 +169,6 @@ src/components/toast-bar.tsx
 src/components/toast-icon.tsx
     32→export const AnimatedIconWrapper = styled('div')`
     41→export type IconThemes = Partial<{
-    42→  success: CheckmarkTheme;
-    43→  error: ErrorTheme;
-    44→  loading: LoaderTheme;
-    45→}>;
     47→export const ToastIcon: React.FC<{
     48→  toast: Toast;
     49→}> = ({ toast }) => {

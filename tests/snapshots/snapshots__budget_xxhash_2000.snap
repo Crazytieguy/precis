@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2037 words)
+budget: 2000 (1994 words)
 
 README.md
      1→# xxhash
@@ -99,9 +99,6 @@ dynamic/dynamic_test.go
     35→	if err != nil {
     36→		t.Fatal(err)
     37→	}
-    38→	for _, test := range []string{
-    39→		"TestSum",
-    40→		"TestDigest",
       →…
 dynamic/plugin.go
      6→import (
@@ -114,7 +111,6 @@ dynamic/plugin.go
     14→const (
     15→	in   = "Call me Ishmael. Some years ago--never mind how long precisely-"
     16→	want = uint64(0x02a2e85470d6fd96)
-    17→)
     19→func TestSum(t *testing.T) {
     20→	got := xxhash.Sum64String(in)
     21→	if got != want {
@@ -282,19 +278,11 @@ xxhash.go
    203→	copy(d.mem[:], b)
       →…
    208→func appendUint64(b []byte, x uint64) []byte {
-   209→	var a [8]byte
-      →…
    214→func consumeUint64(b []byte) ([]byte, uint64) {
-   215→	x := u64(b)
-      →…
    219→func u64(b []byte) uint64 { return binary.LittleEndian.Uint64(b) }
    220→func u32(b []byte) uint32 { return binary.LittleEndian.Uint32(b) }
    222→func round(acc, input uint64) uint64 {
-   223→	acc += input * prime2
-      →…
    229→func mergeRound(acc, val uint64) uint64 {
-   230→	val = round(0, val)
-      →…
    236→func rol1(x uint64) uint64  { return bits.RotateLeft64(x, 1) }
    237→func rol7(x uint64) uint64  { return bits.RotateLeft64(x, 7) }
    238→func rol11(x uint64) uint64 { return bits.RotateLeft64(x, 11) }
@@ -328,8 +316,6 @@ xxhash_other.go
     20→		v3 := uint64(0)
       →…
     64→func writeBlocks(d *Digest, b []byte) int {
-    65→	v1, v2, v3, v4 := d.v1, d.v2, d.v3, d.v4
-      →…
 xxhash_safe.go
      8→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
      9→func Sum64String(s string) uint64 {
@@ -410,6 +396,7 @@ xxhashbench/xxhashbench_test.go
    113→		}{
    114→			{"5B", 5},
    115→			{"100B", 100},
+   116→			{"4KB", 4e3},
       →…
    152→func benchmarkHashBytes(b *testing.B, input []byte, fn func([]byte) uint64) {
    153→	b.SetBytes(int64(len(input)))

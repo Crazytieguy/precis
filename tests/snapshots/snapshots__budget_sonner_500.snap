@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (507 words)
+budget: 500 (492 words)
 
 README.md
      5→## Usage
@@ -28,13 +28,12 @@ src/index.tsx
 src/state.ts
      1→./types …
     11→import React from 'react …
-    15→type titleT …
+    15→type titleT = (() => React.ReactNode) | React.ReactNode;
     17→class Observer {
-    18→  subscribers: Array<(toast: ExternalToast | ToastToDismiss) => void>;
    254→export const ToastState …
    257→const toastFunction …
    268→const isHttpResponse …
-   279→const basicToast …
+   279→const basicToast = toastFunction;
    281→const getHistory …
    282→const getToasts …
    285→export const toast …
@@ -54,9 +53,8 @@ src/types.ts
     97→export type Position …
     98→export interface HeightT {
    104→interface ToastOptions {
-   105→  className?: string;
-      →…
-   118→type Offset …
+   118→type Offset =
+   119→  | {
    128→export interface ToasterProps {
    152→export type SwipeDirection …
    154→export interface ToastProps {
@@ -69,6 +67,7 @@ test/src/app/action.tsx
 test/src/app/layout.tsx
      1→export const metadata = {
 test/src/app/page.tsx
+test/tests/basic.spec.ts
 website/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -94,12 +93,10 @@ website/src/components/ExpandModes/index.tsx
      4→export const ExpandModes = ({
      5→  expand,
      6→  setExpand,
-     7→}: {
       →…
 website/src/components/Footer/index.tsx
      5→export const Footer = () => {
      6→  return (
-     7→    <footer className={styles.wrapper}>
       →…
 website/src/components/Head/index.tsx
      1→import NextHead from 'next/head';
@@ -136,9 +133,6 @@ website/src/components/Position/index.tsx
 website/src/components/Types/Types.tsx
      5→const promiseCode …
      7→export const Types = () => {
-     8→  const [activeType, setActiveType] = React.useState(allTypes[0]);
-     9→
-      →…
     34→const allTypes …
 website/src/components/Usage/index.tsx
      1→import { CodeBlock } from '../CodeBlock';

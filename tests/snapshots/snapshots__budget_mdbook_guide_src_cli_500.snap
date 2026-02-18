@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (494 words)
+budget: 500 (468 words)
 
 README.md
      1→# Command-line tool
@@ -27,7 +27,6 @@ build.md
      6→mdbook build
      7→```
      8→
-     9→It will try to parse your `SUMMARY.md` file to understand the structure of your
       →…
 clean.md
      1→# The clean command
@@ -37,7 +36,7 @@ clean.md
      6→```bash
      7→mdbook clean
      8→```
-     9→
+      →…
 completions.md
      1→# The completions command
      3→The completions command is used to generate auto-completions for some common shells.
@@ -46,7 +45,6 @@ completions.md
      6→The completions first need to be installed for your shell:
      7→
      8→```bash
-     9→# bash
       →…
 init.md
      1→# The init command
@@ -56,7 +54,6 @@ init.md
      6→The `init` command is used like this:
      7→
      8→```bash
-     9→mdbook init
       →…
 serve.md
      1→# The serve command
@@ -66,7 +63,6 @@ serve.md
      6→```bash
      7→mdbook serve
      8→```
-     9→
       →…
     27→### Server options
     29→The `serve` hostname defaults to `localhost`, and the port defaults to `3000`. Either option can be specified on the command line:
@@ -83,7 +79,6 @@ test.md
      6→them to be able to automatically test these code examples.
      7→
      8→mdBook supports a `test` command that will run all available tests in a book. At
-     9→the moment, only Rust tests are supported.
       →…
 watch.md
      1→# The watch command

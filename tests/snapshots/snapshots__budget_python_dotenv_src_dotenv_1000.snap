@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (970 words)
+budget: 1000 (988 words)
 
 __init__.py
      6→def load_ipython_extension …
@@ -37,7 +37,8 @@ cli.py
     76→        with open(path) as stream:
     77→            yield stream
     78→    except OSError as exc:
-      →…
+    79→        print(f"Error opening env file: {exc}", file=sys.stderr)
+    80→        sys.exit(2)
     93→def list_values …
    112→@cli.command(name="set")
    113→@click.pass_context
@@ -50,7 +51,9 @@ cli.py
    120→    export = ctx.obj["EXPORT"]
    121→    success, key, value = set_key(file, key, value, quote, export)
    122→    if success:
-      →…
+   123→        click.echo(f"{key}={value}")
+   124→    else:
+   125→        sys.exit(1)
    128→@cli.command()
    129→@click.pass_context
    130→@click.argument("key", required=True)
@@ -61,7 +64,11 @@ cli.py
    135→    with stream_file(file) as stream:
    136→        values = dotenv_values(stream=stream)
    137→
-      →…
+   138→    stored_value = values.get(key)
+   139→    if stored_value:
+   140→        click.echo(stored_value)
+   141→    else:
+   142→        sys.exit(1)
    145→@cli.command()
    146→@click.pass_context
    147→@click.argument("key", required=True)
@@ -72,7 +79,8 @@ cli.py
    152→    success, key = unset_key(file, key, quote)
    153→    if success:
    154→        click.echo(f"Successfully removed {key}")
-      →…
+   155→    else:
+   156→        sys.exit(1)
    172→@click.argument("commandline", nargs=-1, type=click.UNPROCESSED)
    173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
    174→    """Run command with environment variables present."""
@@ -81,7 +89,17 @@ cli.py
    177→        raise click.BadParameter(
    178→            f"Invalid value for '-f' \"{file}\" does not exist.", ctx=ctx
    179→        )
-      →…
+   180→    dotenv_as_dict = {
+   181→        k: v
+   182→        for (k, v) in dotenv_values(file).items()
+   183→        if v is not None and (override or k not in os.environ)
+   184→    }
+   185→
+   186→    if not commandline:
+   187→        click.echo("No command given.")
+   188→        sys.exit(1)
+   189→
+   190→    run_command([*commandline, *ctx.args], dotenv_as_dict)
    193→def run_command …
 ipython.py
     11→@magics_class
@@ -128,18 +146,10 @@ main.py
     29→    if "PYTHON_DOTENV_DISABLED" not in os.environ:
     30→        return False
     31→    value = os.environ["PYTHON_DOTENV_DISABLED"].casefold()
-      →…
+    32→    return value in {"1", "true", "t", "yes", "y"}
     35→def with_warn_for_invalid_lines …
     45→class DotEnv:
-    46→    def __init__(
-    47→        self,
-    48→        dotenv_path: Optional[StrPath],
-    49→        stream: Optional[IO[str]] = None,
-    50→        verbose: bool = False,
-    51→        encoding: Optional[str] = None,
-    52→        interpolate: bool = True,
-    53→        override: bool = True,
-    54→    ) -> None:
+    46→    def __init__ …
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
     65→        if self.dotenv_path and _is_file_or_fifo(self.dotenv_path):
@@ -169,7 +179,16 @@ main.py
    148→    with tempfile.NamedTemporaryFile(mode="w", encoding=encoding, delete=False) as dest:
    149→        error = None
    150→        try:
-      →…
+   151→            with open(path, encoding=encoding) as source:
+   152→                yield (source, dest)
+   153→        except BaseException as err:
+   154→            error = err
+   155→
+   156→    if error is None:
+   157→        shutil.move(dest.name, path)
+   158→    else:
+   159→        os.unlink(dest.name)
+   160→        raise error from None
    163→def set_key …
    211→def unset_key …
    244→def resolve_variables …
@@ -180,7 +199,15 @@ main.py
    273→    if not os.path.exists(path):
    274→        raise IOError("Starting path not found")
    275→
-      →…
+   276→    if os.path.isfile(path):
+   277→        path = os.path.dirname(path)
+   278→
+   279→    last_dir = None
+   280→    current_dir = os.path.abspath(path)
+   281→    while last_dir != current_dir:
+   282→        yield current_dir
+   283→        parent_dir = os.path.abspath(os.path.join(current_dir, os.path.pardir))
+   284→        last_dir, current_dir = current_dir, parent_dir
    287→def find_dotenv …
    338→def load_dotenv …
    387→def dotenv_values …
@@ -191,7 +218,12 @@ main.py
    427→    if os.path.isfile(path):
    428→        return True
    429→
-      →…
+   430→    try:
+   431→        st = os.stat(path)
+   432→    except (FileNotFoundError, OSError):
+   433→        return False
+   434→
+   435→    return stat.S_ISFIFO(st.st_mode)
 parser.py
     14→def make_regex …
     35→class Original(NamedTuple):
@@ -203,28 +235,18 @@ parser.py
     43→    original: Original
     44→    error: bool
     47→class Position:
-    48→    def __init__(self, chars: int, line: int) -> None:
-    49→        self.chars = chars
-    50→        self.line = line
-    51→
+    48→    def __init__ …
     52→    @classmethod
     53→    def start(cls) -> "Position":
     54→        return cls(chars=0, line=1)
-    55→
-    56→    def set(self, other: "Position") -> None:
+    56→    def set …
     60→    def advance …
     65→class Error(Exception):
     66→    pass
     69→class Reader:
-    70→    def __init__(self, stream: IO[str]) -> None:
-    71→        self.string = stream.read()
-    72→        self.position = Position.start()
-    73→        self.mark = Position.start()
-    74→
-    75→    def has_next(self) -> bool:
-    76→        return self.position.chars < len(self.string)
-    77→
-    78→    def set_mark(self) -> None:
+    70→    def __init__ …
+    75→    def has_next …
+    78→    def set_mark …
     81→    def get_marked …
     87→    def peek …
     90→    def read …
@@ -248,36 +270,19 @@ variables.py
     14→    re.VERBOSE,
     15→)
     18→class Atom(metaclass=ABCMeta):
-    19→    def __ne__(self, other: object) -> bool:
-    20→        result = self.__eq__(other)
-    21→        if result is NotImplemented:
-    22→            return NotImplemented
-    23→        return not result
-    24→
+    19→    def __ne__ …
     25→    @abstractmethod
     26→    def resolve(self, env: Mapping[str, Optional[str]]) -> str: ...
     29→class Literal(Atom):
-    30→    def __init__(self, value: str) -> None:
-    31→        self.value = value
-    32→
-    33→    def __repr__(self) -> str:
-    34→        return f"Literal(value={self.value})"
-    35→
-    36→    def __eq__(self, other: object) -> bool:
-    37→        if not isinstance(other, self.__class__):
-    38→            return NotImplemented
+    30→    def __init__ …
+    33→    def __repr__ …
+    36→    def __eq__ …
     41→    def __hash__ …
     44→    def resolve …
     48→class Variable(Atom):
-    49→    def __init__(self, name: str, default: Optional[str]) -> None:
-    50→        self.name = name
-    51→        self.default = default
-    52→
-    53→    def __repr__(self) -> str:
-    54→        return f"Variable(name={self.name}, default={self.default})"
-    55→
-    56→    def __eq__(self, other: object) -> bool:
-    57→        if not isinstance(other, self.__class__):
+    49→    def __init__ …
+    53→    def __repr__ …
+    56→    def __eq__ …
     61→    def __hash__ …
     64→    def resolve …
     70→def parse_variables …

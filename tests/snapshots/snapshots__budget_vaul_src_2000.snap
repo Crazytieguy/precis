@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2026 words)
+budget: 2000 (1965 words)
 
 browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -66,6 +66,12 @@ context.ts
     41→  onRelease: () => {},
     42→  onDrag: () => {},
     43→  onNestedDrag: () => {},
+    44→  onNestedOpenChange: () => {},
+    45→  onNestedRelease: () => {},
+    46→  openProp: undefined,
+    47→  dismissible: false,
+    48→  isOpen: false,
+    49→  isDragging: false,
       →…
     69→export const useDrawerContext = () => {
 helpers.ts
@@ -139,7 +145,7 @@ index.tsx
     46→  snapPoints?: (number | string)[];
     47→  fadeFromIndex?: never;
     48→}
-    50→export type DialogProps …
+    50→export type DialogProps = {
    139→export function Root({
    140→  open: openProp,
    141→  onOpenChange,
@@ -183,14 +189,16 @@ index.tsx
    179→
    180→      setTimeout(() => {
    181→        onAnimationEnd?.(o);
+   182→      }, TRANSITIONS.DURATION * 1000);
+   183→
       →…
-   803→export const Overlay …
-   831→export type ContentProps …
-   833→export const Content …
-   989→export type HandleProps …
+   803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(
+   831→export type ContentProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
+   833→export const Content = React.forwardRef<HTMLDivElement, ContentProps>(function (
+   989→export type HandleProps = React.ComponentPropsWithoutRef<'div'> & {
    993→const LONG_HANDLE_PRESS_TIMEOUT = 250;
    994→const DOUBLE_TAP_TIMEOUT = 120;
-   996→export const Handle …
+   996→export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(function (
   1098→export function NestedRoot({ onDrag, onOpenChange, open: nestedIsOpen, ...rest }: DialogProps) {
   1099→  const { onNestedDrag, onNestedOpenChange, onNestedRelease } = useDrawerContext();
   1100→
@@ -227,7 +235,7 @@ index.tsx
   1133→
   1134→  return <DialogPrimitive.Portal container={container} {...portalProps} />;
   1135→}
-  1137→export const Drawer …
+  1137→export const Drawer = {
 types.ts
      1→export type DrawerDirection = 'top' | 'bottom' | 'left' | 'right';
      2→export interface SnapPoint {
@@ -269,8 +277,7 @@ use-controllable-state.ts
      5→type UseControllableStateParams<T> = {
      6→  prop?: T | undefined;
      7→  defaultProp?: T | undefined;
-     8→  onChange?: (state: T) => void;
-     9→};
+      →…
     11→type SetStateFn<T> = (prevState?: T) => T;
     13→function useCallbackRef<T extends (...args: any[]) => any>(callback: T | undefined): T {
     24→function useUncontrolledState<T>({ defaultProp, onChange }: Omit<UseControllableStateParams<T>, 'prop'>) {
@@ -349,36 +356,6 @@ use-position-fixed.ts
     74→    // All browsers on iOS will return true here.
     75→    if (!isSafari()) return;
     76→
-    77→    if (previousBodyPosition !== null && !noBodyStyles) {
-    78→      // Convert the position from "px" to Int
-    79→      const y = -parseInt(document.body.style.top, 10);
-    80→      const x = -parseInt(document.body.style.left, 10);
-    81→
-    82→      // Restore styles
-    83→      Object.assign(document.body.style, previousBodyPosition);
-    84→
-    85→      window.requestAnimationFrame(() => {
-    86→        if (preventScrollRestoration && activeUrl !== window.location.href) {
-    87→          setActiveUrl(window.location.href);
-    88→          return;
-    89→        }
-    90→
-    91→        window.scrollTo(x, y);
-    92→      });
-    93→
-    94→      previousBodyPosition = null;
-    95→    }
-    96→  }, [activeUrl]);
-    97→
-    98→  React.useEffect(() => {
-    99→    function onScroll() {
-   100→      scrollPos.current = window.scrollY;
-   101→    }
-   102→
-   103→    onScroll();
-   104→
-   105→    window.addEventListener('scroll', onScroll);
-   106→
       →…
 use-prevent-scroll.ts
      3→import { useEffect, useLayoutEffect } from 'react';
@@ -397,8 +374,6 @@ use-prevent-scroll.ts
     47→const nonTextInputTypes = new Set([
     48→  'checkbox',
     49→  'radio',
-    50→  'range',
-    51→  'color',
       →…
     63→/**
     64→ * Prevents scrolling on the document body on mount, and

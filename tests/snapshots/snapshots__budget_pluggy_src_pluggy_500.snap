@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (496 words)
+budget: 500 (475 words)
 
 __init__.py
      1→__all__ = [
@@ -10,9 +10,6 @@ __init__.py
      3→    "PluginManager",
      4→    "PluginValidationError",
      5→    "HookCaller",
-     6→    "HookCallError",
-     7→    "HookspecOpts",
-     8→    "HookimplOpts",
       →…
 _callers.py
     22→# Need to distinguish between old- and new-style hook wrappers.
@@ -27,41 +24,41 @@ _hooks.py
     37→_HookImplFunction …
     40→class HookspecOpts(TypedDict):
     42→
+    43→    #: Whether the hook is :ref:`first result only <firstresult>`.
+    44→    firstresult: bool
+    45→    #: Whether the hook is :ref:`historic <historic>`.
+    46→    historic: bool
       →…
     56→class HookimplOpts(TypedDict):
     58→
+    59→    #: Whether the hook implementation is a :ref:`wrapper <hookwrapper>`.
+    60→    wrapper: bool
+    61→    #: Whether the hook implementation is an :ref:`old-style wrapper
+    62→    #: <old_style_hookwrappers>`.
       →…
+    77→@final
     78→class HookspecMarker:
     85→
     86→    __slots__ = ("project_name",)
     87→
-    88→    def __init__(self, project_name: str) -> None:
-    89→        self.project_name: Final = project_name
-    90→
-    91→    @overload
-    92→    def __call__(
+   164→@final
    165→class HookimplMarker:
    172→
    173→    __slots__ = ("project_name",)
    174→
-   175→    def __init__(self, project_name: str) -> None:
-   176→        self.project_name: Final = project_name
-   177→
-   178→    @overload
-   179→    def __call__(
    290→_PYPY …
+   358→@final
    359→class HookRelay:
    362→
    363→    __slots__ = ("__dict__",)
    364→
-   365→    def __init__(self) -> None:
-   366→        """:meta private:"""
-   367→
-   368→    if TYPE_CHECKING:
-   369→
    377→_CallHistory …
    382→class HookCaller:
    384→
+   385→    __slots__ = (
+   386→        "name",
+   387→        "spec",
+   388→        "_hookexec",
    419→    # TODO: Document, or make private.
    420→    def has_spec(self) -> bool:
    421→        return self.spec is not None
@@ -78,20 +75,19 @@ _hooks.py
       →…
    593→class _SubsetHookCaller(HookCaller):
    596→
-   597→    # This class is unusual: in inhertits from `HookCaller` so all of
    618→    @property  # type: ignore[misc]
    619→    def _hookimpls(self) -> list[HookImpl]:
    620→        return [
    621→            impl
    622→            for impl in self._orig._hookimpls
-   623→            if impl.plugin not in self._remove_plugins
-   624→        ]
+      →…
    626→    @property
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
    628→        return self._orig.spec
    630→    @property
    631→    def _call_history(self) -> _CallHistory | None:  # type: ignore[override]
    632→        return self._orig._call_history
+   638→@final
    639→class HookImpl:
    641→
    642→    __slots__ = (
@@ -101,6 +97,14 @@ _hooks.py
    646→        "plugin",
    647→        "opts",
    648→        "plugin_name",
+   649→        "wrapper",
+   650→        "hookwrapper",
+   651→        "optionalhook",
+   652→        "tryfirst",
+   653→        "trylast",
+   654→    )
+   655→
+   696→@final
    697→class HookSpec:
    698→    __slots__ = (
    699→        "namespace",
@@ -110,6 +114,9 @@ _hooks.py
    703→        "kwargnames",
    704→        "opts",
    705→        "warn_on_impl",
+   706→        "warn_on_impl_args",
+   707→    )
+   708→
 _manager.py
     33→    import importlib.metadata
     36→_BeforeTrace …
@@ -127,15 +134,11 @@ _manager.py
 _result.py
     16→_ExcInfo …
     20→class HookCallError(Exception):
+    24→@final
     25→class Result(Generic[ResultType]):
     28→
     29→    __slots__ = ("_result", "_exception", "_traceback")
     30→
-    31→    def __init__(
-    32→        self,
-    33→        result: ResultType | None,
-    34→        exception: BaseException | None,
-    35→    ) -> None:
     42→    @property
     43→    def excinfo(self) -> _ExcInfo | None:
     44→        """:meta private:"""
@@ -158,13 +161,12 @@ _result.py
       →…
 _tracing.py
     16→class TagTracer:
-    17→    def __init__(self) -> None:
     59→class TagTracerSub:
-    60→    def __init__(self, root: TagTracer, tags: tuple[str, ...]) -> None:
 _warnings.py
      4→class PluggyWarning(UserWarning):
      6→
-      →…
+     7→    __module__ = "pluggy"
+    10→@final
     11→class PluggyTeardownRaisedWarning(PluggyWarning):
     26→
     27→    __module__ = "pluggy"

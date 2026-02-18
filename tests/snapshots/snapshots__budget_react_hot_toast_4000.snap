@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4016 words)
+budget: 4000 (3912 words)
 
 README.md
     28→## Features
@@ -253,9 +253,6 @@ site/components/sections/footer.tsx
     12→          GitHub
     13→        </a>
     14→        <Link href="/docs">
-    15→          <a className="underline">Docs</a>
-    16→        </Link>
-    17→        <a className="underline" href="https://twitter.com/timolins">
       →…
 site/components/sections/splitbee-counter.tsx
      1→import React from 'react';
@@ -274,9 +271,6 @@ site/components/sections/splitbee-counter.tsx
     15→          JSON.stringify({
     16→            type: 'subscribe',
     17→            data: {
-    18→              token: token,
-    19→              events: [event],
-    20→            },
       →…
     36→export const SplitbeeCounter = () => {
     37→  const count = useSplitbeeCount('Trigger Toast', 'NTV7AYBLEXW3');
@@ -289,9 +283,6 @@ site/components/sections/splitbee-counter.tsx
     44→        Toasts made on this website so far
     45→      </div>
     46→      <div
-    47→        className={clsx('grid gap-2 grid-flow-col', count === 0 && 'opacity-0')}
-    48→      >
-    49→        {letters.map((l, i) => (
       →…
 site/components/sections/toast-example.tsx
      1→import React, { useState } from 'react';
@@ -317,9 +308,6 @@ site/components/sections/toast-example.tsx
    278→              key={e.title}
    279→              emoji={e.emoji}
    280→              onClick={() => {
-   281→                if (e.snippet) {
-   282→                  setSnippet(e.snippet);
-   283→                }
       →…
 site/components/sections/toaster-example.tsx
      1→import clsx from 'clsx';
@@ -346,9 +334,6 @@ site/components/sections/toaster-example.tsx
     25→      toast('Notification 1', {
     26→        icon: '1️⃣',
     27→        id: 'reverse-1',
-    28→      });
-    29→    }, 10);
-    30→
       →…
 site/next.config.mjs
      1→import rehypeSlug from 'rehype-slug';
@@ -356,7 +341,6 @@ site/next.config.mjs
      3→import nextMdx from '@next/mdx';
      5→const withMDX = nextMdx({
      6→  extension: /\.mdx?$/,
-     7→  options: {
       →…
     14→/** @type {import('next').NextConfig} */
     15→const nextConfig = {
@@ -364,6 +348,10 @@ site/next.config.mjs
     17→  webpack(config) {
     18→    config.module.rules.push({
     19→      test: /\.svg$/,
+    20→      use: ['@svgr/webpack'],
+    21→    });
+    22→    return config;
+    23→  },
     24→  async rewrites() {
     25→    return [
     26→      {
@@ -499,20 +487,6 @@ site/pages/index.tsx
    142→              }}
    143→            />
    144→          </div>
-   145→          <div className="text-center my-12 relative duration-200">
-   146→            <h1 className="text-3xl md:text-4xl animate-custom-enter font-bold text-toast-900">
-   147→              The Best Toast in Town.
-   148→            </h1>
-   149→            <h2 className="text-xl md:text-2xl font-bold text-toast-600 mt-2">
-   150→              Smoking hot React notifications.
-   151→            </h2>
-   152→          </div>
-   153→
-   154→          <div className="grid md:grid-cols-2 gap-4 rounded-2xl bg-toast-200 p-4 w-full max-w-lg">
-   155→            <button
-   156→              data-splitbee-event="Trigger Toast"
-   157→              data-splitbee-event-example="CTA"
-   158→              className={clsx(
       →…
 site/types/svg.d.ts
      1→interface SvgrComponent
@@ -620,7 +594,7 @@ src/components/toast-icon.tsx
     42→  success: CheckmarkTheme;
     43→  error: ErrorTheme;
     44→  loading: LoaderTheme;
-    45→}>;
+      →…
     47→export const ToastIcon: React.FC<{
     48→  toast: Toast;
     49→}> = ({ toast }) => {
@@ -791,8 +765,7 @@ src/core/store.ts
     46→    }
     47→  | {
     48→      type: ActionType.END_PAUSE;
-    49→      time: number;
-    50→    };
+      →…
     52→interface ToasterState {
     53→  toasts: Toast[];
     54→  settings: ToasterSettings;
@@ -1134,5 +1107,4 @@ tsup.config.ts
      2→import { minifyTemplates, writeFiles } from 'esbuild-minify-templates';
      4→const commonConfig: Options = {
      5→  minify: true,
-     6→  dts: true,
       →…

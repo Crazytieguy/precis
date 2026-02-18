@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2044 words)
+budget: 2000 (1976 words)
 
 command-score.ts
     54→function commandScoreInner(
@@ -119,36 +119,68 @@ index.tsx
      6→import { Primitive } from '@radix-ui/react-primitive'
      7→import { useId } from '@radix-ui/react-id'
      8→import { composeRefs } from '@radix-ui/react-compose-refs'
-    10→type Children …
-    11→type DivProps …
-    13→type LoadingProps …
-    23→type EmptyProps …
-    24→type SeparatorProps …
-    28→type DialogProps …
-    37→type ListProps …
-    44→type ItemProps …
-    60→type GroupProps …
-    69→type InputProps …
-    79→type CommandFilter …
-    80→type CommandProps …
-   123→type Context …
-   137→type State …
-   143→type Store …
-   149→type Group …
-   154→const GROUP_SELECTOR …
-   155→const GROUP_ITEMS_SELECTOR …
-   156→const GROUP_HEADING_SELECTOR …
-   157→const ITEM_SELECTOR …
-   158→const VALID_ITEM_SELECTOR …
-   159→const SELECT_EVENT …
-   160→const VALUE_ATTR …
+    10→type Children = { children?: React.ReactNode }
+    11→type DivProps = React.ComponentPropsWithoutRef<typeof Primitive.div>
+    13→type LoadingProps = Children &
+    14→  DivProps & {
+    15→    /** Estimated progress of loading asynchronous options. */
+      →…
+    23→type EmptyProps = Children & DivProps & {}
+    24→type SeparatorProps = DivProps & {
+    25→  /** Whether this separator should always be rendered. Useful if you disable automatic filtering. */
+      →…
+    28→type DialogProps = RadixDialog.DialogProps &
+    29→  CommandProps & {
+    30→    /** Provide a className to the Dialog overlay. */
+      →…
+    37→type ListProps = Children &
+    38→  DivProps & {
+    39→    /**
+      →…
+    44→type ItemProps = Children &
+    45→  Omit<DivProps, 'disabled' | 'onSelect' | 'value'> & {
+    46→    /** Whether this item is currently disabled. */
+      →…
+    60→type GroupProps = Children &
+    61→  Omit<DivProps, 'heading' | 'value'> & {
+    62→    /** Optional heading to render for this group. */
+      →…
+    69→type InputProps = Omit<React.ComponentPropsWithoutRef<typeof Primitive.input>, 'value' | 'onChange' | 'type'> & {
+    70→  /**
+      →…
+    79→type CommandFilter = (value: string, search: string, keywords?: string[]) => number
+    80→type CommandProps = Children &
+    81→  DivProps & {
+    82→    /**
+      →…
+   123→type Context = {
+   124→  value: (id: string, value: string, keywords?: string[]) => void
+      →…
+   137→type State = {
+   138→  search: string
+      →…
+   143→type Store = {
+   144→  subscribe: (callback: () => void) => () => void
+      →…
+   149→type Group = {
+   150→  id: string
+      →…
+   154→const GROUP_SELECTOR = `[cmdk-group=""]`
+   155→const GROUP_ITEMS_SELECTOR = `[cmdk-group-items=""]`
+   156→const GROUP_HEADING_SELECTOR = `[cmdk-group-heading=""]`
+   157→const ITEM_SELECTOR = `[cmdk-item=""]`
+   158→const VALID_ITEM_SELECTOR = `${ITEM_SELECTOR}:not([aria-disabled="true"])`
+   159→const SELECT_EVENT = `cmdk-item-select`
+   160→const VALUE_ATTR = `data-value`
    161→const defaultFilter: CommandFilter = (value, search, keywords) => commandScore(value, search, keywords)
-   163→const CommandContext …
+   163→const CommandContext = React.createContext<Context>(undefined)
    164→const useCommand = () => React.useContext(CommandContext)
-   165→const StoreContext …
+   165→const StoreContext = React.createContext<Store>(undefined)
    166→const useStore = () => React.useContext(StoreContext)
-   167→const GroupContext …
-   169→const Command …
+   167→const GroupContext = React.createContext<Group>(undefined)
+   169→const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwardedRef) => {
+   170→  const state = useLazyRef<State>(() => ({
+      →…
    659→/**
    660→ * Command menu item. Becomes active on pointer enter or through keyboard navigation.
    661→ * Preferably pass a `value`, otherwise the value will be inferred from `children` or
@@ -171,29 +203,6 @@ index.tsx
    678→  const value = useValue(id, ref, [props.value, props.children, ref], props.keywords)
    679→
    680→  const store = useStore()
-   681→  const selected = useCmdk((state) => state.value && state.value === value.current)
-   682→  const render = useCmdk((state) =>
-   683→    forceMount ? true : context.filter() === false ? true : !state.search ? true : state.filtered.items.get(id) > 0,
-   684→  )
-   685→
-   686→  React.useEffect(() => {
-   687→    const element = ref.current
-   688→    if (!element || props.disabled) return
-   689→    element.addEventListener(SELECT_EVENT, onSelect)
-   690→    return () => element.removeEventListener(SELECT_EVENT, onSelect)
-   691→  }, [render, props.onSelect, props.disabled])
-   692→
-   693→  function onSelect() {
-   694→    select()
-   695→    propsRef.current.onSelect?.(value.current)
-   696→  }
-   697→
-   698→  function select() {
-   699→    store.setState('value', value.current, true)
-   700→  }
-   701→
-   702→  if (!render) return null
-   703→
       →…
    725→/**
    726→ * Group command menu items together with a heading.
@@ -216,29 +225,7 @@ index.tsx
    743→
    744→  useValue(id, ref, [props.value, props.heading, headingRef])
    745→
-   746→  const contextValue = React.useMemo(() => ({ id, forceMount }), [forceMount])
-   747→
-   748→  return (
-   749→    <Primitive.div
-   750→      ref={composeRefs(ref, forwardedRef)}
-   751→      {...etc}
-   752→      cmdk-group=""
-   753→      role="presentation"
-   754→      hidden={render ? undefined : true}
-   755→    >
-   756→      {heading && (
-   757→        <div ref={headingRef} cmdk-group-heading="" aria-hidden id={headingId}>
-   758→          {heading}
-   759→        </div>
-   760→      )}
-   761→      {SlottableWithNestedChildren(props, (child) => (
-   762→        <div cmdk-group-items="" role="group" aria-labelledby={heading ? headingId : undefined}>
-   763→          <GroupContext.Provider value={contextValue}>{child}</GroupContext.Provider>
-   764→        </div>
-   765→      ))}
-   766→    </Primitive.div>
-   767→  )
-   768→})
+      →…
    770→/**
    771→ * A visual and semantic separator between items or groups.
    772→ * Visible when the search query is empty or `alwaysRender` is true, hidden otherwise.
@@ -272,29 +259,6 @@ index.tsx
    801→  return (
    802→    <Primitive.input
    803→      ref={forwardedRef}
-   804→      {...etc}
-   805→      cmdk-input=""
-   806→      autoComplete="off"
-   807→      autoCorrect="off"
-   808→      spellCheck={false}
-   809→      aria-autocomplete="list"
-   810→      role="combobox"
-   811→      aria-expanded={true}
-   812→      aria-controls={context.listId}
-   813→      aria-labelledby={context.labelId}
-   814→      aria-activedescendant={selectedItemId}
-   815→      id={context.inputId}
-   816→      type="text"
-   817→      value={isControlled ? props.value : search}
-   818→      onChange={(e) => {
-   819→        if (!isControlled) {
-   820→          store.setState('search', e.target.value)
-   821→        }
-   822→
-   823→        onValueChange?.(e.target.value)
-   824→      }}
-   825→    />
-   826→  )
       →…
    829→/**
    830→ * Contains `Item`, `Group`, and `Separator`.
@@ -317,29 +281,6 @@ index.tsx
    847→          const height = el.offsetHeight
    848→          wrapper.style.setProperty(`--cmdk-list-height`, height.toFixed(1) + 'px')
    849→        })
-   850→      })
-   851→      observer.observe(el)
-   852→      return () => {
-   853→        cancelAnimationFrame(animationFrame)
-   854→        observer.unobserve(el)
-   855→      }
-   856→    }
-   857→  }, [])
-   858→
-   859→  return (
-   860→    <Primitive.div
-   861→      ref={composeRefs(ref, forwardedRef)}
-   862→      {...etc}
-   863→      cmdk-list=""
-   864→      role="listbox"
-   865→      tabIndex={-1}
-   866→      aria-activedescendant={selectedItemId}
-   867→      aria-label={label}
-   868→      id={context.listId}
-   869→    >
-   870→      {SlottableWithNestedChildren(props, (child) => (
-   871→        <div ref={composeRefs(height, context.listInnerRef)} cmdk-list-sizer="">
-   872→          {child}
       →…
    879→/**
    880→ * Renders the command menu in a Radix Dialog.
@@ -386,10 +327,10 @@ index.tsx
    923→      {SlottableWithNestedChildren(props, (child) => (
    924→        <div aria-hidden>{child}</div>
    925→      ))}
-   926→    </Primitive.div>
-   927→  )
-   928→})
-   930→const pkg …
+      →…
+   930→const pkg = Object.assign(Command, {
+   931→  List,
+      →…
    955→/**
    956→ *
    957→ *
@@ -423,7 +364,7 @@ index.tsx
    987→
    988→  return ref
    989→}
-   991→const useLayoutEffect …
+   991→const useLayoutEffect = typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect
    993→function useLazyRef<T>(fn: () => T) {
    994→  const ref = React.useRef<T>()
    995→
@@ -506,4 +447,6 @@ index.tsx
   1077→  }
   1078→  return render(children)
   1079→}
-  1081→const srOnlyStyles …
+  1081→const srOnlyStyles = {
+  1082→  position: 'absolute',
+      →…

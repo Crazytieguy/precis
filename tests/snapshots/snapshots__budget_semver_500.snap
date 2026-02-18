@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (492 words)
+budget: 500 (490 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -65,8 +65,6 @@ classes/comparator.js
      3→const ANY = Symbol('SemVer ANY')
      5→class Comparator {
      6→  static get ANY () {
-     7→    return ANY
-     8→  }
     10→  constructor (comp, options) {
     36→  parse (comp) {
     57→  toString () {
@@ -76,8 +74,6 @@ classes/range.js
      3→const SPACE_CHARACTERS = /\s+/g
      6→class Range {
      7→  constructor (range, options) {
-     8→    options = parseOptions(options)
-     9→
     73→  get range () {
     92→  format () {
     96→  toString () {
@@ -88,8 +84,6 @@ classes/range.js
 classes/semver.js
      9→class SemVer {
     10→  constructor (version, options) {
-    11→    options = parseOptions(options)
-    12→
     81→  format () {
     89→  toString () {
     93→  compare (other) {
@@ -107,10 +101,11 @@ internal/lrucache.js
      4→  constructor () {
      5→    this.max = 1000
      6→    this.map = new Map()
-     7→  }
-     8→
+      →…
      9→  get (key) {
     10→    const value = this.map.get(key)
+    11→    if (value === undefined) {
+      →…
     21→  delete (key) {
     22→    return this.map.delete(key)
     23→  }
@@ -143,4 +138,6 @@ test/internal/debug.js
      3→const main = () => {
 test/map.js
 test/ranges/simplify.js
+     6→const versions = [
 test/ranges/subset.js
+     8→const cases = [

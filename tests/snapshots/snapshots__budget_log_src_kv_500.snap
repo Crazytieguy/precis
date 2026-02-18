@@ -2,9 +2,11 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (488 words)
+budget: 500 (470 words)
 
 error.rs
+     3→/// An error encountered while working with structured data.
+     4→#[derive(Debug)]
      5→pub struct Error {
      6→    inner: Inner,
      7→}
@@ -17,23 +19,20 @@ error.rs
     15→    Value(crate::kv::value::inner::Error),
     16→    Fmt,
     17→}
-    28→    #[cfg(feature = "value-bag")]
     29→    pub(super) fn from_value(err: crate::kv::value::inner::Error) -> Self {
-    36→    #[cfg(feature = "value-bag")]
     37→    pub(super) fn into_value(self) -> crate::kv::value::inner::Error {
     68→#[cfg(feature = "std")]
     69→mod std_support {
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
 key.rs
      3→use std::borrow::Borrow;
+     6→/// A type that can be converted into a [`Key`](struct.Key.html).
      7→pub trait ToKey {
-     8→    /// Perform the conversion.
-     9→    fn to_key(&self) -> Key<'_>;
-      →…
+    36→#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
     37→pub struct Key<'k> {
     38→    // NOTE: This may become `Cow<'k, str>`
     39→    key: &'k str,
-      →…
+    40→}
     93→#[cfg(feature = "std")]
     94→mod std_support {
    112→#[cfg(feature = "kv_sval")]
@@ -43,16 +42,6 @@ key.rs
 mod.rs
      1→//! Structured logging.
      2→//!
-     3→//! Add the `kv` feature to your `Cargo.toml` to enable
-     4→//! this module:
-     5→//!
-     6→//! ```toml
-     7→//! [dependencies.log]
-     8→//! features = ["kv"]
-     9→//! ```
-    10→//!
-    11→//! # Structured logging in `log`
-    12→//!
       →…
    246→mod error;
    247→mod key;
@@ -71,17 +60,14 @@ mod.rs
    265→pub use self::source::Visitor;
 source.rs
      6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
-    51→pub trait Source {
-    52→    /// Visit key-values.
-    53→    ///
-    90→/// The default implementation of `Source::get`
-    91→fn get_default<'v>(source: &'v (impl Source + ?Sized), key: Key) -> Option<Value<'v>> {
-   113→/// The default implementation of `Source::count`.
-   114→fn count_default(source: impl Source) -> usize {
-   235→pub trait VisitSource<'kvs> {
-   236→    /// Visit a key-value pair.
-   237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
+     9→/// A source of key-values.
+    10→///
       →…
+    51→pub trait Source {
+    91→fn get_default<'v>(source: &'v (impl Source + ?Sized), key: Key) -> Option<Value<'v>> {
+   114→fn count_default(source: impl Source) -> usize {
+   234→/// A visitor for the key-value pairs in a [`Source`](trait.Source.html).
+   235→pub trait VisitSource<'kvs> {
    240→#[allow(clippy::needless_lifetimes)] // Not needless.
    241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T
    242→where
@@ -93,14 +79,14 @@ source.rs
 value.rs
      6→use std::fmt;
      8→pub use crate::kv::Error;
+    10→/// A type that can be converted into a [`Value`](struct.Value.html).
     11→pub trait ToValue {
-    12→    /// Perform the conversion.
-    13→    fn to_value(&self) -> Value<'_>;
+    33→/// A value in a key-value.
+    34→///
       →…
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
    121→}
-   203→    /// Get a value from an internal primitive.
    204→    fn from_inner<T>(value: T) -> Self
    205→    where
    206→        T: Into<inner::Inner<'v>>,
@@ -116,9 +102,10 @@ value.rs
    336→macro_rules! impl_value_to_primitive {
    389→#[cfg(feature = "kv_std")]
    390→mod std_support {
+   450→/// A visitor for a [`Value`].
+   451→///
+      →…
    462→pub trait VisitValue<'v> {
-   463→    /// Visit a `Value`.
-   464→    ///
    538→#[allow(clippy::needless_lifetimes)] // Not needless.
    539→impl<'a, 'v, T: ?Sized> VisitValue<'v> for &'a mut T
    540→where
@@ -132,10 +119,20 @@ value.rs
    720→#[cfg(not(feature = "value-bag"))]
    721→pub(in crate::kv) mod inner {
    735→    use super::*;
+   737→    #[derive(Clone)]
    738→    pub enum Inner<'v> {
    739→        None,
    740→        Bool(bool),
-      →…
+   741→        Str(&'v str),
+   742→        Char(char),
+   743→        I64(i64),
+   744→        U64(u64),
+   745→        F64(f64),
+   746→        I128(i128),
+   747→        U128(u128),
+   748→        Debug(&'v dyn fmt::Debug),
+   749→        Display(&'v dyn fmt::Display),
+   750→    }
   1123→pub use VisitValue as Visit;
   1129→macro_rules! as_debug {
   1139→macro_rules! as_display {

@@ -2,10 +2,9 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (479 words)
+budget: 500 (471 words)
 
 __private_api.rs
-     3→use self::sealed::KVs;
      7→pub use std::{format_args, module_path, stringify};
      9→#[cfg(not(feature = "kv"))]
     10→pub type Value<'a> = &'a str;
@@ -14,12 +13,12 @@ __private_api.rs
     39→pub struct GlobalLogger;
    112→#[cfg(feature = "kv")]
    113→mod kv_support {
-   114→    use crate::kv;
-   115→
    116→    pub type Value<'a> = kv::Value<'a>;
    151→pub use self::kv_support::*;
 kv/error.rs
      5→pub struct Error {
+     6→    inner: Inner,
+     7→}
      9→#[derive(Debug)]
     10→enum Inner {
     11→    #[cfg(feature = "std")]
@@ -31,20 +30,16 @@ kv/error.rs
     17→}
     29→    pub(super) fn from_value …
     37→    pub(super) fn into_value …
-    69→mod std_support {
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
 kv/key.rs
      3→use std::borrow::Borrow;
      7→pub trait ToKey {
     37→pub struct Key<'k> {
-    94→mod std_support {
-   113→mod sval_support {
-   136→mod serde_support {
+    38→    // NOTE: This may become `Cow<'k, str>`
+    39→    key: &'k str,
+    40→}
 kv/mod.rs
-   246→mod error;
    247→mod key;
-   250→mod source;
-   252→mod value;
    254→pub use self::error::Error;
    255→pub use self::key::{Key, ToKey};
    256→pub use self::source::{Source, VisitSource};
@@ -60,26 +55,36 @@ kv/source.rs
     91→fn get_default …
    114→fn count_default …
    235→pub trait VisitSource<'kvs> {
-   280→mod std_support {
    462→pub use VisitSource as Visitor;
 kv/value.rs
      6→use std::fmt;
      8→pub use crate::kv::Error;
     11→pub trait ToValue {
    119→pub struct Value<'v> {
+   120→    inner: inner::Inner<'v>,
+   121→}
    204→    fn from_inner …
    288→macro_rules! impl_to_value_primitive {
    312→macro_rules! impl_to_value_nonzero_primitive {
    336→macro_rules! impl_value_to_primitive {
-   390→mod std_support {
    462→pub trait VisitValue<'v> {
-   602→pub(in crate::kv) mod inner {
    610→    use super::*;
    612→    pub use value_bag::ValueBag as Inner;
    614→    pub use value_bag::Error;
-   721→pub(in crate::kv) mod inner {
    735→    use super::*;
    738→    pub enum Inner<'v> {
+   739→        None,
+   740→        Bool(bool),
+   741→        Str(&'v str),
+   742→        Char(char),
+   743→        I64(i64),
+   744→        U64(u64),
+   745→        F64(f64),
+   746→        I128(i128),
+   747→        U128(u128),
+   748→        Debug(&'v dyn fmt::Debug),
+   749→        Display(&'v dyn fmt::Display),
+   750→    }
   1123→pub use VisitValue as Visit;
   1129→macro_rules! as_debug {
   1139→macro_rules! as_display {
@@ -87,21 +92,23 @@ kv/value.rs
   1159→macro_rules! as_serde {
   1169→macro_rules! as_sval {
 lib.rs
-   401→use std::error;
    405→#[macro_use]
    406→mod macros;
    407→mod serde;
    409→#[cfg(feature = "kv")]
    410→pub mod kv;
-   413→use std::sync::atomic::{AtomicUsize, Ordering};
-   416→use std::cell::Cell;
-   418→use std::sync::atomic::Ordering;
    421→struct AtomicUsize {
    422→    v: Cell<usize>,
    423→}
    475→pub enum Level {
+   476→    /// The "error" level.
+   477→    ///
+      →…
    516→    type Err = ParseLevelError;
    636→pub enum LevelFilter {
+   637→    /// A level lower than all log levels.
+   638→    Off,
+      →…
    666→    type Err = ParseLevelError;
    781→enum MaybeStaticStr<'a> {
    782→    Static(&'static str),
@@ -110,10 +117,20 @@ lib.rs
    787→    #[inline]
    788→    fn get(&self) -> &'a str {
    842→pub struct Record<'a> {
+   843→    metadata: Metadata<'a>,
+   844→    args: fmt::Arguments<'a>,
+      →…
    858→struct KeyValues<'a>(&'a dyn kv::Source);
   1003→pub struct RecordBuilder<'a> {
+  1004→    record: Record<'a>,
+  1005→}
   1158→pub struct Metadata<'a> {
+  1159→    level: Level,
+  1160→    target: &'a str,
+      →…
   1200→pub struct MetadataBuilder<'a> {
+  1201→    metadata: Metadata<'a>,
+  1202→}
   1249→pub trait Log: Sync + Send {
   1283→struct NopLogger;
   1482→#[cfg(target_has_atomic = "ptr")]
@@ -129,15 +146,7 @@ lib.rs
   1603→///
   1604→/// See the crate level documentation for information on how to configure this.
   1605→///
-  1606→/// This value is checked by the log macros, but not by the `Log`ger returned by
-  1607→/// the [`logger`] function. Code that manually calls functions on that value
-  1608→/// should compare the level against this value.
-  1609→///
-  1610→/// [`logger`]: fn.logger.html
+      →…
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
 macros.rs
 serde.rs
-     3→use serde_core::de::{
-     4→    Deserialize, DeserializeSeed, Deserializer, EnumAccess, Error, Unexpected, VariantAccess,
-     5→    Visitor,
-     6→};

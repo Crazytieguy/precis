@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1929 words)
+budget: 2000 (1947 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -257,7 +257,10 @@ src/dotenv/cli.py
     74→
     75→    try:
     76→        with open(path) as stream:
-      →…
+    77→            yield stream
+    78→    except OSError as exc:
+    79→        print(f"Error opening env file: {exc}", file=sys.stderr)
+    80→        sys.exit(2)
     93→def list_values …
    112→@cli.command(name="set")
    113→@click.pass_context
@@ -268,7 +271,11 @@ src/dotenv/cli.py
    118→    file = ctx.obj["FILE"]
    119→    quote = ctx.obj["QUOTE"]
    120→    export = ctx.obj["EXPORT"]
-      →…
+   121→    success, key, value = set_key(file, key, value, quote, export)
+   122→    if success:
+   123→        click.echo(f"{key}={value}")
+   124→    else:
+   125→        sys.exit(1)
    128→@cli.command()
    129→@click.pass_context
    130→@click.argument("key", required=True)
@@ -277,7 +284,13 @@ src/dotenv/cli.py
    133→    file = ctx.obj["FILE"]
    134→
    135→    with stream_file(file) as stream:
-      →…
+   136→        values = dotenv_values(stream=stream)
+   137→
+   138→    stored_value = values.get(key)
+   139→    if stored_value:
+   140→        click.echo(stored_value)
+   141→    else:
+   142→        sys.exit(1)
    145→@cli.command()
    146→@click.pass_context
    147→@click.argument("key", required=True)
@@ -286,14 +299,29 @@ src/dotenv/cli.py
    150→    file = ctx.obj["FILE"]
    151→    quote = ctx.obj["QUOTE"]
    152→    success, key = unset_key(file, key, quote)
-      →…
+   153→    if success:
+   154→        click.echo(f"Successfully removed {key}")
+   155→    else:
+   156→        sys.exit(1)
    172→@click.argument("commandline", nargs=-1, type=click.UNPROCESSED)
    173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
    174→    """Run command with environment variables present."""
    175→    file = ctx.obj["FILE"]
    176→    if not os.path.isfile(file):
    177→        raise click.BadParameter(
-      →…
+   178→            f"Invalid value for '-f' \"{file}\" does not exist.", ctx=ctx
+   179→        )
+   180→    dotenv_as_dict = {
+   181→        k: v
+   182→        for (k, v) in dotenv_values(file).items()
+   183→        if v is not None and (override or k not in os.environ)
+   184→    }
+   185→
+   186→    if not commandline:
+   187→        click.echo("No command given.")
+   188→        sys.exit(1)
+   189→
+   190→    run_command([*commandline, *ctx.args], dotenv_as_dict)
    193→def run_command …
 src/dotenv/ipython.py
     11→@magics_class
@@ -343,13 +371,7 @@ src/dotenv/main.py
       →…
     35→def with_warn_for_invalid_lines …
     45→class DotEnv:
-    46→    def __init__(
-    47→        self,
-    48→        dotenv_path: Optional[StrPath],
-    49→        stream: Optional[IO[str]] = None,
-    50→        verbose: bool = False,
-    51→        encoding: Optional[str] = None,
-    52→        interpolate: bool = True,
+    46→    def __init__ …
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
     65→        if self.dotenv_path and _is_file_or_fifo(self.dotenv_path):
@@ -377,7 +399,18 @@ src/dotenv/main.py
    146→    pathlib.Path(path).touch()
    147→
    148→    with tempfile.NamedTemporaryFile(mode="w", encoding=encoding, delete=False) as dest:
-      →…
+   149→        error = None
+   150→        try:
+   151→            with open(path, encoding=encoding) as source:
+   152→                yield (source, dest)
+   153→        except BaseException as err:
+   154→            error = err
+   155→
+   156→    if error is None:
+   157→        shutil.move(dest.name, path)
+   158→    else:
+   159→        os.unlink(dest.name)
+   160→        raise error from None
    163→def set_key …
    211→def unset_key …
    244→def resolve_variables …
@@ -411,10 +444,7 @@ src/dotenv/parser.py
     43→    original: Original
     44→    error: bool
     47→class Position:
-    48→    def __init__(self, chars: int, line: int) -> None:
-    49→        self.chars = chars
-    50→        self.line = line
-    51→
+    48→    def __init__ …
     52→    @classmethod
     53→    def start(cls) -> "Position":
     54→        return cls(chars=0, line=1)
@@ -423,13 +453,8 @@ src/dotenv/parser.py
     65→class Error(Exception):
     66→    pass
     69→class Reader:
-    70→    def __init__(self, stream: IO[str]) -> None:
-    71→        self.string = stream.read()
-    72→        self.position = Position.start()
-    73→        self.mark = Position.start()
-    74→
-    75→    def has_next(self) -> bool:
-    76→        return self.position.chars < len(self.string)
+    70→    def __init__ …
+    75→    def has_next …
     78→    def set_mark …
     81→    def get_marked …
     87→    def peek …
@@ -454,32 +479,18 @@ src/dotenv/variables.py
     14→    re.VERBOSE,
     15→)
     18→class Atom(metaclass=ABCMeta):
-    19→    def __ne__(self, other: object) -> bool:
-    20→        result = self.__eq__(other)
-    21→        if result is NotImplemented:
-    22→            return NotImplemented
-    23→        return not result
-    24→
+    19→    def __ne__ …
     25→    @abstractmethod
     26→    def resolve(self, env: Mapping[str, Optional[str]]) -> str: ...
     29→class Literal(Atom):
-    30→    def __init__(self, value: str) -> None:
-    31→        self.value = value
-    32→
-    33→    def __repr__(self) -> str:
-    34→        return f"Literal(value={self.value})"
-    35→
-    36→    def __eq__(self, other: object) -> bool:
+    30→    def __init__ …
+    33→    def __repr__ …
+    36→    def __eq__ …
     41→    def __hash__ …
     44→    def resolve …
     48→class Variable(Atom):
-    49→    def __init__(self, name: str, default: Optional[str]) -> None:
-    50→        self.name = name
-    51→        self.default = default
-    52→
-    53→    def __repr__(self) -> str:
-    54→        return f"Variable(name={self.name}, default={self.default})"
-    55→
+    49→    def __init__ …
+    53→    def __repr__ …
     56→    def __eq__ …
     61→    def __hash__ …
     64→    def resolve …
@@ -503,13 +514,11 @@ tests/test_ipython.py
     52→def test_ipython_new_variable(tmp_path):
 tests/test_is_interactive.py
      8→class TestIsInteractive:
+     9→    """Tests for the _is_interactive helper function within find_dotenv.
+    10→
+      →…
     31→
     32→    def _create_dotenv_file(self, tmp_path):
-    33→        """Helper to create a test .env file."""
-    34→        dotenv_path = tmp_path / ".env"
-    35→        dotenv_path.write_text("TEST=value")
-    36→        return dotenv_path
-    37→
     38→    def _setup_subdir_and_chdir(self, tmp_path, monkeypatch):
     45→    def _remove_ps_attributes(self, monkeypatch):
     52→    def _mock_main_import(self, monkeypatch, mock_main_module):
@@ -529,8 +538,5 @@ tests/test_utils.py
 tests/test_variables.py
 tests/test_zip_imports.py
     23→class FileToAdd:
-    24→    def __init__(self, content: str, path: str):
-    25→        self.content = content
-    26→        self.path = path
     46→def test_load_dotenv_gracefully_handles_zip_imports_when_no_env_file(tmp_path):
     69→def test_load_dotenv_outside_zip_file_when_called_in_zipfile(tmp_path):

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (964 words)
+budget: 1000 (951 words)
 
 __init__.py
      5→from humanize.filesize import naturalsize
@@ -194,9 +194,6 @@ time.py
     39→    YEARS = 7
     40→
     41→    def __lt__(self, other: Any) -> Any:
-    42→        if self.__class__ is other.__class__:
-    43→            return self.value < other.value
-    44→        return NotImplemented
     47→def _now() -> dt.datetime:
     53→def _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:
     68→def _date_and_delta(

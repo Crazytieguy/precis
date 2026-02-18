@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (508 words)
+budget: 500 (493 words)
 
 Changelog.md
      1→# Changelog …
@@ -74,26 +74,20 @@ docs/summary.md
      5→- [Getting Started](./guides/01-getting-started.md)
      6→- [Validating Data](./guides/02-validating-data.md)
      7→- [Coercing Data](./guides/03-coercing-data.md)
-     8→- [Refining Validation](./guides/04-refining-validation.md)
-     9→- [Handling Errors](./guides/05-handling-errors.md)
-    10→- [Using TypeScript](./guides/06-using-typescript.md)
-    11→
+      →…
     12→## API Reference
     14→- [Core](./reference/core.md)
     15→- [Types](./reference/types.md)
     16→- [Refinements](./reference/refinements.md)
-    17→- [Coercions](./reference/coercions.md)
-    18→- [Utilities](./reference/utilities.md)
-    19→- [Errors](./reference/errors.md)
-    20→- [TypeScript](./reference/typescript.md)
-    21→
+      →…
     22→## Resources
     24→- [FAQ](./resources/faq.md)
     25→- [Links](./resources/links.md)
 examples/README.md
      1→# Examples …
-rollup.config.js
 src/error.ts
+    16→/**
+      →…
     25→export class StructError extends TypeError {
     26→  value: any
     27→  key!: any
@@ -106,6 +100,8 @@ src/error.ts
     34→
     35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
 src/struct.ts
+     4→/**
+      →…
     10→export class Struct<T = unknown, S = unknown> {
     11→  readonly TYPE!: T
     12→  type: string
@@ -116,6 +112,8 @@ src/struct.ts
     17→  entries: (
     18→    value: unknown,
     19→    context: Context
+    20→  ) => Iterable<[string | number, unknown, Struct<any> | Struct<never>]>
+    21→
     22→  constructor(props: {
     67→  assert …
     75→  create …
@@ -159,19 +157,9 @@ test/index.ts
      1→/**
       →…
      5→export function test<T>(fn: (x: unknown) => T) {}
-test/typings/infer.ts
-test/validation/boolean/invalid.ts
-test/validation/boolean/valid.ts
 test/validation/function/invalid.ts
 test/validation/function/valid.ts
      5→export const data = function () {}
-test/validation/instance/invalid.ts
-test/validation/instance/valid.ts
-test/validation/literal/invalid.ts
-test/validation/literal/valid.ts
 test/validation/never/invalid.ts
-test/validation/number/invalid.ts
-test/validation/number/valid.ts
 test/validation/type/valid-instance.ts
-     3→class Person {
      6→  constructor(name: string) {

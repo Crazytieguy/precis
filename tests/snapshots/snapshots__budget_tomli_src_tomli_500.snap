@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (508 words)
+budget: 500 (495 words)
 
 __init__.py
      1→# SPDX-License-Identifier: MIT
@@ -38,32 +38,28 @@ _parser.py
     55→HEXDIGIT_CHARS: Final = frozenset("abcdef" "ABCDEF" "0123456789")
     57→BASIC_STR_ESCAPE_REPLACEMENTS: Final = MappingProxyType(
     71→class DEPRECATED_DEFAULT:
+    72→    """Sentinel to be used as default arg during deprecation
+    73→    period of TOMLDecodeError's free-form arguments."""
     76→class TOMLDecodeError(ValueError):
-    86→
-    87→    def __init__(
-    88→        self,
-    89→        msg: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
-    90→        doc: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
-    91→        pos: Pos | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
+    77→    """An error raised if a document is not valid TOML.
+    78→
+    79→    Adds the following attributes to ValueError:
+    80→    msg: The unformatted error message
+    81→    doc: The TOML document being parsed
+    82→    pos: The index of doc where parsing failed
       →…
+    86→
    220→class Flags:
+   221→    """Flags that map to parsed keys/namespaces."""
    222→
    223→    # Marks an immutable namespace (inline array or inline table).
    224→    FROZEN: Final = 0
    225→    # Marks a nest that has been explicitly created and can no longer
    226→    # be opened using the "[table]" syntax.
    227→    EXPLICIT_NEST: Final = 1
+   228→
    278→class NestedDict:
-   279→    def __init__(self) -> None:
-   280→        # The parsed content of the TOML document
-   281→        self.dict: dict[str, Any] = {}
-   282→
-   283→    def get_or_create_nest(
-   284→        self,
    312→class Output:
-   313→    def __init__(self) -> None:
-   314→        self.data = NestedDict()
-   315→        self.flags = Flags()
 _re.py
     11→TYPE_CHECKING = False
     17→_TIME_RE_STR: Final = r"""
@@ -80,10 +76,7 @@ _re.py
     36→|
     37→[+-]?(?:0|[1-9](?:_?[0-9])*)         # dec, integer part
     38→(?P<floatpart>
-    39→    (?:\.[0-9](?:_?[0-9])*)?         # optional fractional part
-    40→    (?:[eE][+-]?[0-9](?:_?[0-9])*)?  # optional exponent part
-    41→)
-    42→""",
+      →…
     45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)
     46→RE_DATETIME: Final = re.compile(
     47→    rf"""

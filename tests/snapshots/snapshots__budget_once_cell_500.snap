@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (496 words)
+budget: 500 (484 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -18,6 +18,12 @@ README.md
     13→
     14→```rust
     15→impl OnceCell<T> {
+    16→    fn new() -> OnceCell<T> { ... }
+    17→    fn set(&self, value: T) -> Result<(), T> { ... }
+    18→    fn get(&self) -> Option<&T> { ... }
+    19→}
+    20→```
+    21→
       →…
     47→# Related crates
     49→* [double-checked-cell](https://github.com/niklasf/double-checked-cell)
@@ -26,7 +32,9 @@ README.md
     52→* [mitochondria](https://crates.io/crates/mitochondria)
     53→* [lazy_static](https://crates.io/crates/lazy_static)
     54→* [async_once_cell](https://crates.io/crates/async_once_cell)
-      →…
+    55→* [generic_once_cell](https://crates.io/crates/generic_once_cell) (bring your own mutex)
+    56→
+    57→Parts of `once_cell` API are included into `std` [as of Rust 1.70.0](https://github.com/rust-lang/rust/pull/105587).
 examples/bench_acquire.rs
      5→use once_cell::sync::OnceCell;
     25→#[inline(never)]
@@ -71,8 +79,6 @@ src/imp_std.rs
    147→    new_queue: *mut Waiter,
    148→}
    245→mod strict {
-   246→    #[must_use]
-   247→    #[inline]
 src/lib.rs
    370→#[cfg(all(feature = "critical-section", not(feature = "std")))]
    371→#[path = "imp_cs.rs"]
@@ -85,13 +91,6 @@ src/lib.rs
    380→mod imp;
    382→/// Single-threaded version of `OnceCell`.
    383→pub mod unsync {
-   384→    use core::{
-   385→        cell::{Cell, UnsafeCell},
-   386→        fmt, mem,
-   387→        ops::{Deref, DerefMut},
-   388→        panic::{RefUnwindSafe, UnwindSafe},
-   389→    };
-   390→
    411→    pub struct OnceCell<T> {
    412→        // Invariant: written to at most once.
    413→        inner: UnsafeCell<Option<T>>,
@@ -104,13 +103,6 @@ src/lib.rs
    861→/// Thread-safe, blocking version of `OnceCell`.
    862→#[cfg(any(feature = "std", feature = "critical-section"))]
    863→pub mod sync {
-   864→    use core::{
-   865→        cell::Cell,
-   866→        fmt, mem,
-   867→        ops::{Deref, DerefMut},
-   868→        panic::RefUnwindSafe,
-   869→    };
-   870→
    901→    pub struct OnceCell<T>(Imp<T>);
   1255→    pub struct Lazy<T, F = fn() -> T> {
   1256→        cell: OnceCell<T>,
@@ -135,25 +127,16 @@ src/race.rs
    351→pub use self::once_box::OnceBox;
    353→#[cfg(feature = "alloc")]
    354→mod once_box {
-   355→    use super::atomic::{AtomicPtr, Ordering};
-   356→    use core::{marker::PhantomData, ptr};
-   357→
-   358→    use alloc::boxed::Box;
-   359→
    361→    pub struct OnceBox<T> {
    362→        inner: AtomicPtr<T>,
    363→        ghost: PhantomData<Option<Box<T>>>,
    364→    }
 tests/it/main.rs
-     1→mod unsync_once_cell;
-     5→mod unsync_lazy;
 tests/it/race.rs
 tests/it/race_once_box.rs
     11→struct Heap {
     16→struct Pebble<T> {
     22→    fn drop(&mut self) {
-    23→        self.total.fetch_sub(1, SeqCst);
-    24→    }
 tests/it/sync_once_cell.rs
    178→#[test]
       →…

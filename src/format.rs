@@ -20,11 +20,6 @@ pub fn render_with_budget(
 }
 
 /// Render files within a word budget, returning output and actual word count.
-///
-/// Compensates for the scheduler/renderer cost mismatch: the scheduler charges
-/// per-symbol but the renderer deduplicates at the line level (`emitted_up_to`),
-/// causing nested symbols to be skipped. A small budget inflation absorbs the
-/// typical mismatch without an extra scheduling pass.
 pub fn render_with_budget_stats(
     budget: usize,
     root: &Path,
@@ -32,25 +27,11 @@ pub fn render_with_budget_stats(
     sources: &[Option<String>],
 ) -> (String, usize) {
     let all_symbols = extract_all_symbols(files, sources);
-    let groups = schedule::build_groups(root, files, sources, &all_symbols);
-
-    // Inflate budget by ~3% to compensate for renderer-side line deduplication.
-    // Nested symbols (e.g., methods inside class bodies) are charged by the
-    // scheduler but skipped by the renderer when their lines are already emitted.
-    let effective_budget = budget + budget / 33;
-    let sched = schedule::schedule(&groups, effective_budget, root, files);
-    let mut output = render_scheduled(root, files, sources, &all_symbols, &groups, &sched);
-    let mut actual = count_words(&output);
-
-    // If still significantly underutilized (>5%), retry with larger inflation.
-    let underuse = budget.saturating_sub(actual);
-    if underuse > budget / 20 {
-        let retry_budget = effective_budget + underuse;
-        let sched = schedule::schedule(&groups, retry_budget, root, files);
-        output = render_scheduled(root, files, sources, &all_symbols, &groups, &sched);
-        actual = count_words(&output);
-    }
-
+    let layouts = compute_all_layouts(files, sources, &all_symbols);
+    let groups = schedule::build_groups(root, files, sources, &all_symbols, &layouts);
+    let sched = schedule::schedule(&groups, budget, root, files);
+    let output = render_scheduled(root, files, sources, &all_symbols, &layouts, &groups, &sched);
+    let actual = count_words(&output);
     (output, actual)
 }
 
@@ -100,6 +81,7 @@ fn render_scheduled(
     files: &[PathBuf],
     sources: &[Option<String>],
     all_symbols: &[Vec<parse::Symbol>],
+    layouts: &[Vec<SymbolLayout>],
     groups: &[schedule::Group],
     sched: &schedule::Schedule,
 ) -> String {
@@ -117,11 +99,7 @@ fn render_scheduled(
             None => continue,
         };
         let lines: Vec<&str> = source.lines().collect();
-        let lang = Lang::from_path(relative);
         let symbols = &all_symbols[file_idx];
-
-        // Track emitted lines to avoid duplication when ranges overlap
-        let mut emitted_up_to: usize = 0; // 0-indexed, exclusive
 
         for (sym_idx, sym) in symbols.iter().enumerate() {
             let group_idx = match sched.symbol_to_group.get(&(file_idx, sym_idx)) {
@@ -138,21 +116,13 @@ fn render_scheduled(
                 continue;
             }
 
-            let sym_line_0 = sym.line - 1;
-            if sym_line_0 < emitted_up_to {
-                continue;
-            }
-
             render_symbol(
                 &mut out,
                 &lines,
                 sym,
-                sym_idx,
-                symbols,
-                lang,
+                &layouts[file_idx][sym_idx],
                 included,
                 &groups[group_idx],
-                &mut emitted_up_to,
             );
         }
     }
@@ -161,19 +131,17 @@ fn render_scheduled(
 }
 
 /// Render a single symbol at the given included stage.
-#[allow(clippy::too_many_arguments)]
+/// All line ranges come from the pre-computed layout — no overlap is possible
+/// because parent body ranges are truncated at the first child's doc_start.
 fn render_symbol(
     out: &mut String,
     lines: &[&str],
     sym: &parse::Symbol,
-    sym_idx: usize,
-    all_symbols: &[parse::Symbol],
-    lang: Option<Lang>,
+    layout: &SymbolLayout,
     included: &IncludedStage,
     group: &schedule::Group,
-    emitted_up_to: &mut usize,
 ) {
-    let sym_line_0 = sym.line - 1;
+    let sym_line_0 = layout.sym_line_0;
     let stages = group.key.kind_category.stage_sequence();
 
     // Determine what to show based on the group's included stage.
@@ -203,23 +171,21 @@ fn render_symbol(
         return;
     }
 
-    // Signature lines
+    // Signature range from layout
     let sig_end = if show_sigs {
-        signature_end_line(lines, sym, lang)
+        layout.sig_end
     } else {
         sym_line_0 // just the first line
     };
 
     // Doc comment lines (before symbol for most languages)
-    let doc_start = doc_comment_start(lines, sym_line_0, lang);
     let mut doc_lines_shown = 0;
-    if doc_n > 0 && doc_start < sym_line_0 {
-        let doc_lines_available = sym_line_0 - doc_start;
+    if doc_n > 0 && layout.doc_start < sym_line_0 {
+        let doc_lines_available = sym_line_0 - layout.doc_start;
         let doc_lines_to_show = doc_lines_available.min(doc_n);
         doc_lines_shown = doc_lines_to_show;
-        let start = doc_start.max(*emitted_up_to);
-        let end = (doc_start + doc_lines_to_show).min(sym_line_0);
-        for (i, line) in lines.iter().enumerate().take(end).skip(start) {
+        let end = layout.doc_start + doc_lines_to_show;
+        for (i, line) in lines.iter().enumerate().take(end).skip(layout.doc_start) {
             out.push_str(&fmt_line(i, line));
         }
         if doc_lines_to_show < doc_lines_available {
@@ -230,94 +196,53 @@ fn render_symbol(
     // Signature lines (strip trailing badges from markdown heading lines)
     let is_section = sym.kind == parse::SymbolKind::Section;
     for (i, line) in lines.iter().enumerate().take(sig_end + 1).skip(sym_line_0) {
-        if i >= *emitted_up_to {
-            if is_section && i == sym_line_0 {
-                out.push_str(&fmt_line(i, strip_heading_badges(line)));
-            } else {
-                out.push_str(&fmt_line(i, line));
-            }
+        if is_section && i == sym_line_0 {
+            out.push_str(&fmt_line(i, strip_heading_badges(line)));
+        } else {
+            out.push_str(&fmt_line(i, line));
         }
     }
-    *emitted_up_to = (*emitted_up_to).max(sig_end + 1);
 
     // Python docstrings (after signature)
     // doc_n is a cumulative limit across pre-symbol comments and docstrings,
     // matching the scheduler's flat doc_line_words vector.
     let doc_n_remaining = doc_n.saturating_sub(doc_lines_shown);
-    if doc_n_remaining > 0 && lang == Some(Lang::Python) {
-        let ds_end = docstring_end(lines, sig_end);
-        if ds_end > sig_end + 1 {
-            let ds_lines_available = ds_end - (sig_end + 1);
-            let ds_lines_to_show = ds_lines_available.min(doc_n_remaining);
-            let end = sig_end + 1 + ds_lines_to_show;
-            for (i, line) in lines.iter().enumerate().take(end).skip(sig_end + 1) {
-                out.push_str(&fmt_line(i, line));
-            }
-            if ds_lines_to_show < ds_lines_available {
-                out.push_str(TRUNCATION_MARKER);
-            }
-            *emitted_up_to = (*emitted_up_to).max(end);
+    if doc_n_remaining > 0 && layout.ds_end > layout.ds_start {
+        let ds_lines_available = layout.ds_end - layout.ds_start;
+        let ds_lines_to_show = ds_lines_available.min(doc_n_remaining);
+        let end = layout.ds_start + ds_lines_to_show;
+        for (i, line) in lines.iter().enumerate().take(end).skip(layout.ds_start) {
+            out.push_str(&fmt_line(i, line));
+        }
+        if ds_lines_to_show < ds_lines_available {
+            out.push_str(TRUNCATION_MARKER);
         }
     }
 
-    // Body lines
+    // Body lines — all ranges from layout
     if body_n > 0 {
-        if sym.kind == parse::SymbolKind::Section {
-            // Markdown: body is content text after heading
-            let heading_end = (sym.end_line - 1).max(sym_line_0 + 1);
-            let next_heading_line = all_symbols
-                .iter()
-                .skip(sym_idx + 1)
-                .find(|s| s.kind == parse::SymbolKind::Section)
-                .map(|s| s.line - 1)
-                .unwrap_or(lines.len());
-            // Skip leading noise (badges, link refs, blank lines)
-            let mut content_start = heading_end;
-            while content_start < next_heading_line
-                && is_markdown_leading_noise(lines[content_start])
-            {
-                content_start += 1;
-            }
-            let body_lines_available = next_heading_line.saturating_sub(content_start);
+        if is_section {
+            // Markdown: body is content text between headings
+            let body_lines_available = layout.md_section_end.saturating_sub(layout.md_content_start);
             let body_lines_to_show = body_lines_available.min(body_n);
-            let start = content_start.max(*emitted_up_to);
-            let end = content_start + body_lines_to_show;
-            for (i, line) in lines.iter().enumerate().take(end).skip(start) {
+            let end = layout.md_content_start + body_lines_to_show;
+            for (i, line) in lines.iter().enumerate().take(end).skip(layout.md_content_start) {
                 out.push_str(&fmt_line(i, line));
             }
             if body_lines_to_show < body_lines_available {
                 out.push_str(TRUNCATION_MARKER);
             }
-            *emitted_up_to = (*emitted_up_to).max(end);
         } else {
-            // Code: body lines after signature (skip Python docstrings)
-            let body_start = if lang == Some(Lang::Python) {
-                let ds_end = docstring_end(lines, sig_end);
-                if ds_end > sig_end + 1 { ds_end } else { sig_end + 1 }
-            } else {
-                sig_end + 1
-            };
-            let body_end = sym.end_line.min(lines.len());
-            let body_lines_available = body_end.saturating_sub(body_start);
+            // Code: body lines from layout (already truncated at first child)
+            let body_lines_available = layout.body_end.saturating_sub(layout.body_start);
             let body_lines_to_show = body_lines_available.min(body_n);
-            let start = body_start.max(*emitted_up_to);
-            let end = body_start + body_lines_to_show;
-            for (i, line) in lines.iter().enumerate().take(end).skip(start) {
+            let end = layout.body_start + body_lines_to_show;
+            for (i, line) in lines.iter().enumerate().take(end).skip(layout.body_start) {
                 out.push_str(&fmt_line(i, line));
             }
-            if body_lines_to_show < body_lines_available {
-                // Skip marker when truncated lines overlap with nested symbols
-                // (e.g., class body containing methods that render individually)
-                let trunc_start = body_start + body_lines_to_show;
-                let has_nested = all_symbols.iter().skip(sym_idx + 1).any(|s| {
-                    let sl = s.line - 1;
-                    sl >= trunc_start && sl < body_end
-                });
-                if !has_nested {
-                    out.push_str(TRUNCATION_MARKER);
-                }
+            if body_lines_to_show < body_lines_available && !layout.has_children {
+                out.push_str(TRUNCATION_MARKER);
             }
-            *emitted_up_to = (*emitted_up_to).max(end);
         }
     }
 }
@@ -510,11 +435,23 @@ fn has_multiline_signature(kind: parse::SymbolKind) -> bool {
 /// Returns sym.line - 1 for single-line or non-function symbols.
 pub(crate) fn signature_end_line(lines: &[&str], sym: &parse::Symbol, lang: Option<Lang>) -> usize {
     let sym_line_0 = sym.line - 1;
-    // Type aliases and imports: the entire declaration IS the signature,
-    // so show all lines. For type aliases, this handles multi-line TypeScript
-    // types. For imports, this shows the full import statement including
-    // multi-line Rust `use foo::{A, B, C};` or Go grouped imports.
-    if matches!(sym.kind, parse::SymbolKind::TypeAlias | parse::SymbolKind::Import) {
+    // Imports: the entire declaration IS the signature (multi-line
+    // Rust `use foo::{A, B, C};` or Go grouped imports).
+    if sym.kind == parse::SymbolKind::Import {
+        return sym.end_line.min(lines.len()) - 1;
+    }
+    // Type aliases: scan for `{` to find the end of the signature.
+    // Simple aliases (`type Foo = Bar;`) use the entire declaration.
+    // Complex aliases (`type Foo = { ... }`) stop at `{` so the body
+    // with nested method signatures isn't part of the signature.
+    if sym.kind == parse::SymbolKind::TypeAlias {
+        let max_line = sym.end_line.min(lines.len());
+        for (i, line) in lines.iter().enumerate().take(max_line).skip(sym_line_0) {
+            let code = strip_c_line_comment(line.trim());
+            if code.ends_with('{') {
+                return i;
+            }
+        }
         return sym.end_line.min(lines.len()) - 1;
     }
     if !has_multiline_signature(sym.kind) {
@@ -756,6 +693,173 @@ fn find_word(needle: &str, haystack: &str) -> Option<usize> {
         start = abs + 1;
     }
     first_match
+}
+
+// ---------------------------------------------------------------------------
+// Symbol layout (shared between scheduler and renderer)
+// ---------------------------------------------------------------------------
+
+/// Pre-computed line ranges for a single symbol. Computed once per symbol,
+/// then read by both the scheduler (for word-cost counting) and the renderer
+/// (for line emission). All line numbers are 0-indexed.
+pub struct SymbolLayout {
+    /// First line of the doc comment block preceding the symbol.
+    /// Equal to `sym_line_0` when no doc comment exists.
+    pub doc_start: usize,
+    /// The symbol's own first line (`sym.line - 1`).
+    pub sym_line_0: usize,
+    /// Last line of the signature (inclusive). For single-line symbols this
+    /// equals `sym_line_0`; for multi-line sigs it's the line with `{`/`;`/`:`.
+    pub sig_end: usize,
+    /// Python docstring start (exclusive of signature). Equal to `ds_end`
+    /// when no docstring exists.
+    pub ds_start: usize,
+    /// Python docstring end (exclusive). Equal to `ds_start` when no docstring.
+    pub ds_end: usize,
+    /// First body line (after signature and any Python docstring).
+    pub body_start: usize,
+    /// Exclusive end of body. For code symbols with nested children, this is
+    /// truncated to the first child symbol's line. For symbols without children
+    /// this is `sym.end_line.min(lines.len())`.
+    pub body_end: usize,
+    /// For markdown sections: first content line after leading noise (badges,
+    /// blank lines, link refs). Zero for non-section symbols.
+    pub md_content_start: usize,
+    /// For markdown sections: the line of the next heading (or EOF). Zero for
+    /// non-section symbols.
+    pub md_section_end: usize,
+    /// Whether this symbol's body region contains nested child symbols
+    /// (e.g. methods inside a class or impl block).
+    pub has_children: bool,
+}
+
+/// Compute the layout for a single symbol within a file.
+pub(crate) fn compute_layout(
+    sym: &parse::Symbol,
+    sym_idx: usize,
+    all_symbols: &[parse::Symbol],
+    lines: &[&str],
+    lang: Option<Lang>,
+) -> SymbolLayout {
+    let sym_line_0 = sym.line - 1;
+    let doc_start = doc_comment_start(lines, sym_line_0, lang);
+    let sig_end = signature_end_line(lines, sym, lang);
+
+    // Python docstring range
+    let (ds_start, ds_end) = if lang == Some(Lang::Python) {
+        let ds_end = docstring_end(lines, sig_end);
+        if ds_end > sig_end + 1 {
+            (sig_end + 1, ds_end)
+        } else {
+            (sig_end + 1, sig_end + 1)
+        }
+    } else {
+        (sig_end + 1, sig_end + 1)
+    };
+
+    // Markdown section body range
+    let (md_content_start, md_section_end) = if sym.kind == parse::SymbolKind::Section {
+        let next_heading_line = all_symbols
+            .iter()
+            .skip(sym_idx + 1)
+            .find(|s| s.kind == parse::SymbolKind::Section)
+            .map(|s| s.line - 1)
+            .unwrap_or(lines.len());
+        let heading_end = (sym.end_line - 1).max(sym_line_0 + 1);
+        let mut content_start = heading_end;
+        while content_start < next_heading_line
+            && is_markdown_leading_noise(lines[content_start])
+        {
+            content_start += 1;
+        }
+        (content_start, next_heading_line)
+    } else {
+        (0, 0)
+    };
+
+    // Code body range
+    let raw_body_start = if sym.kind == parse::SymbolKind::Section {
+        // For markdown, body_start/body_end aren't used (md_content_start/md_section_end are)
+        0
+    } else if ds_end > ds_start {
+        ds_end // skip past Python docstring
+    } else {
+        sig_end + 1
+    };
+    let raw_body_end = if sym.kind == parse::SymbolKind::Section {
+        0
+    } else {
+        sym.end_line.min(lines.len())
+    };
+
+    // Find first child symbol within body (for nesting detection and body truncation).
+    // Truncate at the child's doc_start (not sym.line) so the parent doesn't claim
+    // the child's doc comment lines.
+    let (has_children, first_child_start) = if sym.kind == parse::SymbolKind::Section {
+        (false, None)
+    } else {
+        let first = all_symbols
+            .iter()
+            .skip(sym_idx + 1)
+            .find(|s| {
+                let sl = s.line - 1;
+                sl >= raw_body_start && sl < raw_body_end
+            });
+        match first {
+            Some(child) => {
+                let child_doc = doc_comment_start(lines, child.line - 1, lang);
+                (true, Some(child_doc.max(raw_body_start)))
+            }
+            None => (false, None),
+        }
+    };
+
+    // Truncate body at first child — the parent only "owns" lines before children
+    let body_start = raw_body_start;
+    let body_end = if let Some(child_start) = first_child_start {
+        child_start.min(raw_body_end)
+    } else {
+        raw_body_end
+    };
+
+    SymbolLayout {
+        doc_start,
+        sym_line_0,
+        sig_end,
+        ds_start,
+        ds_end,
+        body_start,
+        body_end,
+        md_content_start,
+        md_section_end,
+        has_children,
+    }
+}
+
+/// Compute layouts for all symbols across all files.
+pub fn compute_all_layouts(
+    files: &[PathBuf],
+    sources: &[Option<String>],
+    all_symbols: &[Vec<parse::Symbol>],
+) -> Vec<Vec<SymbolLayout>> {
+    files
+        .iter()
+        .zip(sources.iter())
+        .zip(all_symbols.iter())
+        .map(|((file, source), symbols)| {
+            let source = match source {
+                Some(s) => s,
+                None => return Vec::new(),
+            };
+            let lines: Vec<&str> = source.lines().collect();
+            let lang = Lang::from_path(file);
+            symbols
+                .iter()
+                .enumerate()
+                .map(|(sym_idx, sym)| compute_layout(sym, sym_idx, symbols, &lines, lang))
+                .collect()
+        })
+        .collect()
 }
 
 #[cfg(test)]

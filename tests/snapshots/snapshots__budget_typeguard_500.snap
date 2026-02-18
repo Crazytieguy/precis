@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (489 words)
+budget: 500 (476 words)
 
 docs/conf.py
      2→from importlib.metadata import version as get_version
@@ -17,7 +17,7 @@ src/typeguard/_checkers.py
     89→generic_alias_types: tuple[type, ...] = (
     98→# Lifted from mypy.sharedparse
     99→BINARY_MAGIC_METHODS = {
-   586→def _is_literal_type(typ: object) -> bool:
+   586→def _is_literal_type …
   1004→# Equality checks are applied to these
   1005→origin_type_checkers: dict[
 src/typeguard/_config.py
@@ -27,7 +27,15 @@ src/typeguard/_config.py
       →…
     30→class CollectionCheckStrategy(Enum):
     48→
+    62→@dataclass
     63→class TypeCheckConfiguration:
+    64→    """
+    65→     You can change Typeguard's behavior with these settings.
+    66→
+    67→    .. attribute:: typecheck_fail_callback
+    68→       :type: Callable[[TypeCheckError, TypeCheckMemo], Any]
+    69→
+      →…
     97→
     98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
     99→    typecheck_fail_callback: TypeCheckFailCallback | None = None
@@ -50,7 +58,6 @@ src/typeguard/_functions.py
 src/typeguard/_importhook.py
     40→P = ParamSpec("P")
     41→T = TypeVar("T")
-    44→# The name of this function is magical
     45→def _call_with_frames_removed(
     46→    f: Callable[P, T], *args: P.args, **kwargs: P.kwargs
     47→) -> T:
@@ -67,18 +74,6 @@ src/typeguard/_importhook.py
     65→        else:
     66→            filename = os.fsdecode(bytes(path))
     67→
-    68→        if isinstance(data, (ast.Module, ast.Expression, ast.Interactive)):
-    69→            module = data
-    70→        else:
-    71→            if isinstance(data, str):
-    72→                source = data
-    73→            else:
-    74→                source = decode_source(data)
-    75→
-    76→            module = _call_with_frames_removed(
-    77→                ast.parse,
-    78→                source,
-    79→                filename,
       →…
    109→class TypeguardFinder(MetaPathFinder):
    119→
@@ -94,6 +89,7 @@ src/typeguard/_suppression.py
 src/typeguard/_transformer.py
     67→PreliminaryNameTypePair: typing.TypeAlias = tuple[Constant, "expr | None"]
     68→NameTypePair: typing.TypeAlias = tuple[Constant, expr]
+   117→@dataclass
    118→class TransformMemo:
    119→    node: Module | ClassDef | FunctionDef | AsyncFunctionDef | None
    120→    parent: TransformMemo | None
@@ -111,43 +107,48 @@ src/typeguard/_transformer.py
    132→    )
    133→    has_yield_expressions: bool = field(init=False, default=False)
    134→    has_return_expressions: bool = field(init=False, default=False)
+   135→    memo_var_name: Name | None = field(init=False, default=None)
+   136→    should_instrument: bool = field(init=False, default=True)
+   137→    variable_annotations: dict[str, expr] = field(init=False, default_factory=dict)
+   138→    configuration_overrides: dict[str, Any] = field(init=False, default_factory=dict)
+   139→    code_inject_index: int = field(init=False, default=0)
+   140→
    285→class NameCollector(NodeVisitor):
-   286→    def __init__(self) -> None:
    313→class GeneratorDetector(NodeVisitor):
    315→
    338→class AnnotationTransformer(NodeTransformer):
    339→    type_substitutions: ClassVar[dict[str, tuple[str, str]]] = {
    488→class TypeguardTransformer(NodeTransformer):
-   489→    def __init__(
-   516→    @contextmanager
    517→    def _use_memo(
    518→        self, node: ClassDef | FunctionDef | AsyncFunctionDef
    519→    ) -> Generator[None, Any, None]:
-   570→    def _get_import(self, module: str, name: str) -> Name:
-   580→    def _convert_annotation(self, annotation: expr | None) -> expr | None:
+   570→    def _get_import …
+   580→    def _convert_annotation …
 src/typeguard/_utils.py
+   172→@final
    173→class Unset:
    174→    __slots__ = ()
    175→
-   176→    def __repr__(self) -> str:
-   177→        return "<unset>"
 tests/dummymodule.py
     40→T = TypeVar("T", bound="DummyClass")
     41→P = ParamSpec("P")
     77→class DummyClass(metaclass=Metaclass):
+    78→    bar: str
+    79→    baz: int
+    80→
    118→class Outer:
    305→class OverrideClass:
    365→class ModuleLocalClass:
 tests/dummymodule_py312.py
     17→class ParametrizedClass[T]:
 tests/mypy/negative.py
+    38→@typechecked
     39→class MyClass:
 tests/mypy/positive.py
+    27→@typechecked
     28→class MyClass:
 tests/mypy/test_type_annotations.py
      8→POSITIVE_FILE = "positive.py"
      9→NEGATIVE_FILE = "negative.py"
 tests/test_checkers.py
     79→P = ParamSpec("P")
-tests/test_instrumentation.py
-    40→def _fixture_module(name: str, method: str):

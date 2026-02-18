@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1023 words)
+budget: 1000 (995 words)
 
 ini.js
      3→const encode = (obj, opt = {}) => {
@@ -64,9 +64,6 @@ ini.js
     59→  if (opt.section && out.length) {
     60→    out = '[' + safe(opt.section) + ']' + (opt.newline ? eol + eol : eol) + out
     61→  }
-    62→
-    63→  for (const k of children) {
-    64→    const nk = splitSections(k, '.').join('\\.')
       →…
     80→function splitSections (str, separator) {
     81→  var lastMatchIndex = 0
@@ -152,9 +149,6 @@ ini.js
    162→    }
    163→
    164→    // safeguard against resetting a previously defined
-   165→    // array by accidentally forgetting the brackets
-   166→    if (Array.isArray(p[key])) {
-   167→      p[key].push(value)
       →…
    212→const isQuoted = val => {
    213→  return (val.startsWith('"') && val.endsWith('"')) ||

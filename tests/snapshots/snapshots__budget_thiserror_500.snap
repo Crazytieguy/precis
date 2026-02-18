@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (480 words)
+budget: 500 (477 words)
 
 README.md
      1→derive(Error) …
@@ -15,8 +15,11 @@ build/probe.rs
      9→use core::fmt::{self, Debug, Display};
     11→struct MyError(Thing);
     12→struct Thing;
+    14→impl Debug for MyError {
     15→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
+    20→impl Display for MyError {
     21→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
+    26→impl Error for MyError {
     27→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
 impl/src/ast.rs
     10→pub enum Input<'a> {
@@ -49,19 +52,16 @@ impl/src/lib.rs
     43→}
     45→#[allow(non_camel_case_types)]
     46→struct private;
-impl/src/prop.rs
 impl/src/scan_expr.rs
      6→enum Input {
     25→enum Action {
 impl/src/unraw.rs
     12→pub struct IdentUnraw(Ident);
     82→pub enum MemberUnraw {
-impl/src/valid.rs
 src/aserror.rs
      4→#[doc(hidden)]
      5→pub trait AsDynError<'a>: Sealed {
-     6→    fn as_dyn_error(&self) -> &(dyn Error + 'a);
-     7→}
+     6→    fn as_dyn_error …
     10→    #[inline]
     11→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
     17→    #[inline]
@@ -82,8 +82,7 @@ src/display.rs
      8→    // https://github.com/dtolnay/thiserror/pull/253
      9→    type Target: Display;
     10→
-    11→    fn as_display(&'a self) -> Self::Target;
-    12→}
+    11→    fn as_display …
     18→    type Target = &'a T;
     20→    fn as_display …
     26→impl<'a> AsDisplay<'a> for Path {
@@ -124,8 +123,7 @@ src/private.rs
 src/provide.rs
      3→#[doc(hidden)]
      4→pub trait ThiserrorProvide: Sealed {
-     5→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>);
-     6→}
+     5→    fn thiserror_provide …
     12→    #[inline]
     13→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>) {
     18→#[doc(hidden)]
@@ -138,8 +136,6 @@ tests/no-std/test.rs
     13→pub struct SourceError {
 tests/test_backtrace.rs
 tests/test_display.rs
-tests/test_expr.rs
-    56→fn assert …
 tests/test_generics.rs
      7→pub struct NoFormat;
     12→pub struct DisplayOnly;

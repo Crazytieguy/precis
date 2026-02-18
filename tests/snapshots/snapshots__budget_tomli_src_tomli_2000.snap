@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1942 words)
+budget: 2000 (1978 words)
 
 __init__.py
      1→# SPDX-License-Identifier: MIT
@@ -90,51 +90,22 @@ _parser.py
     96→            or not isinstance(msg, str)
     97→            or not isinstance(doc, str)
     98→            or not isinstance(pos, int)
-    99→        ):
-   100→            import warnings
-   101→
-   102→            warnings.warn(
-   103→                "Free-form arguments for TOMLDecodeError are deprecated. "
-   104→                "Please set 'msg' (str), 'doc' (str) and 'pos' (int) arguments only.",
-   105→                DeprecationWarning,
-   106→                stacklevel=2,
-   107→            )
-   108→            if pos is not DEPRECATED_DEFAULT:
-   109→                args = pos, *args
-   110→            if doc is not DEPRECATED_DEFAULT:
-   111→                args = doc, *args
-   112→            if msg is not DEPRECATED_DEFAULT:
-   113→                args = msg, *args
-   114→            ValueError.__init__(self, *args)
-   115→            return
-   116→
-   117→        lineno = doc.count("\n", 0, pos) + 1
-   118→        if lineno == 1:
-   119→            colno = pos + 1
-   120→        else:
-   121→            colno = pos - doc.rindex("\n", 0, pos)
-   122→
-   123→        if pos >= len(doc):
-   124→            coord_repr = "end of document"
-   125→        else:
-   126→            coord_repr = f"line {lineno}, column {colno}"
-   127→        errmsg = f"{msg} (at {coord_repr})"
-   128→        ValueError.__init__(self, errmsg)
-   129→
-   130→        self.msg = msg
-   131→        self.doc = doc
-   132→        self.pos = pos
-   133→        self.lineno = lineno
-   134→        self.colno = colno
+      →…
    137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
    138→    """Parse TOML from a binary file object."""
    139→    b = __fp.read()
    140→    try:
+   141→        s = b.decode()
+   142→    except AttributeError:
+   143→        raise TypeError(
       →…
    149→def loads(__s: str, *, parse_float: ParseFloat = float) -> dict[str, Any]:
    150→    """Parse TOML from a string."""
    151→
    152→    # The spec allows converting "\r\n" to "\n", even in string
+   153→    # literals. Let's do so to simplify parsing.
+   154→    try:
+   155→        src = __s.replace("\r\n", "\n")
       →…
    220→class Flags:
    221→    """Flags that map to parsed keys/namespaces."""
@@ -148,55 +119,37 @@ _parser.py
    229→    def __init__(self) -> None:
    230→        self._flags: dict[str, dict[Any, Any]] = {}
    231→        self._pending_flags: set[tuple[Key, int]] = set()
-   232→
    233→    def add_pending(self, key: Key, flag: int) -> None:
    234→        self._pending_flags.add((key, flag))
-   235→
    236→    def finalize_pending(self) -> None:
    237→        for key, flag in self._pending_flags:
    238→            self.set(key, flag, recursive=False)
    239→        self._pending_flags.clear()
-   240→
    241→    def unset_all(self, key: Key) -> None:
    242→        cont = self._flags
    243→        for k in key[:-1]:
    244→            if k not in cont:
    245→                return
    246→            cont = cont[k]["nested"]
-   247→        cont.pop(key[-1], None)
-   248→
+      →…
    249→    def set(self, key: Key, flag: int, *, recursive: bool) -> None:  # noqa: A003
    250→        cont = self._flags
    251→        key_parent, key_stem = key[:-1], key[-1]
    252→        for k in key_parent:
    253→            if k not in cont:
    254→                cont[k] = {"flags": set(), "recursive_flags": set(), "nested": {}}
-   255→            cont = cont[k]["nested"]
-   256→        if key_stem not in cont:
-   257→            cont[key_stem] = {"flags": set(), "recursive_flags": set(), "nested": {}}
-   258→        cont[key_stem]["recursive_flags" if recursive else "flags"].add(flag)
-   259→
+      →…
    260→    def is_(self, key: Key, flag: int) -> bool:
    261→        if not key:
    262→            return False  # document root has no flags
    263→        cont = self._flags
    264→        for k in key[:-1]:
    265→            if k not in cont:
-   266→                return False
-   267→            inner_cont = cont[k]
-   268→            if flag in inner_cont["recursive_flags"]:
-   269→                return True
-   270→            cont = inner_cont["nested"]
-   271→        key_stem = key[-1]
-   272→        if key_stem in cont:
-   273→            inner_cont = cont[key_stem]
-   274→            return flag in inner_cont["flags"] or flag in inner_cont["recursive_flags"]
-   275→        return False
+      →…
    278→class NestedDict:
    279→    def __init__(self) -> None:
    280→        # The parsed content of the TOML document
    281→        self.dict: dict[str, Any] = {}
-   282→
    283→    def get_or_create_nest(
    284→        self,
    285→        key: Key,
@@ -208,22 +161,14 @@ _parser.py
    291→            if k not in cont:
    292→                cont[k] = {}
    293→            cont = cont[k]
-   294→            if access_lists and isinstance(cont, list):
-   295→                cont = cont[-1]
-   296→            if not isinstance(cont, dict):
-   297→                raise KeyError("There is no nest behind this key")
-   298→        return cont  # type: ignore[no-any-return]
-   299→
+      →…
    300→    def append_nest_to_list(self, key: Key) -> None:
    301→        cont = self.get_or_create_nest(key[:-1])
    302→        last_key = key[-1]
    303→        if last_key in cont:
    304→            list_ = cont[last_key]
    305→            if not isinstance(list_, list):
-   306→                raise KeyError("An object other than list found behind this key")
-   307→            list_.append({})
-   308→        else:
-   309→            cont[last_key] = [{}]
+      →…
    312→class Output:
    313→    def __init__(self) -> None:
    314→        self.data = NestedDict()
@@ -231,6 +176,9 @@ _parser.py
    318→def skip_chars(src: str, pos: Pos, chars: Iterable[str]) -> Pos:
    319→    try:
    320→        while src[pos] in chars:
+   321→            pos += 1
+   322→    except IndexError:
+   323→        pass
       →…
    327→def skip_until(
    328→    src: str,
@@ -242,42 +190,69 @@ _parser.py
    334→) -> Pos:
    335→    try:
    336→        new_pos = src.index(expect, pos)
+   337→    except ValueError:
+   338→        new_pos = len(src)
+   339→        if error_on_eof:
       →…
    349→def skip_comment(src: str, pos: Pos) -> Pos:
    350→    try:
    351→        char: str | None = src[pos]
+   352→    except IndexError:
+   353→        char = None
+   354→    if char == "#":
       →…
    361→def skip_comments_and_array_ws(src: str, pos: Pos) -> Pos:
    362→    while True:
    363→        pos_before_skip = pos
+   364→        pos = skip_chars(src, pos, TOML_WS_AND_NEWLINE)
+   365→        pos = skip_comment(src, pos)
+   366→        if pos == pos_before_skip:
       →…
    370→def create_dict_rule(src: str, pos: Pos, out: Output) -> tuple[Pos, Key]:
    371→    pos += 1  # Skip "["
    372→    pos = skip_chars(src, pos, TOML_WS)
+   373→    pos, key = parse_key(src, pos)
+   374→
+   375→    if out.flags.is_(key, Flags.EXPLICIT_NEST) or out.flags.is_(key, Flags.FROZEN):
       →…
    390→def create_list_rule(src: str, pos: Pos, out: Output) -> tuple[Pos, Key]:
    391→    pos += 2  # Skip "[["
    392→    pos = skip_chars(src, pos, TOML_WS)
+   393→    pos, key = parse_key(src, pos)
+   394→
+   395→    if out.flags.is_(key, Flags.FROZEN):
       →…
    413→def key_value_rule(
    414→    src: str, pos: Pos, out: Output, header: Key, parse_float: ParseFloat
    415→) -> Pos:
    416→    pos, key, value = parse_key_value_pair(src, pos, parse_float, nest_lvl=0)
    417→    key_parent, key_stem = key[:-1], key[-1]
+   418→    abs_key_parent = header + key_parent
+   419→
+   420→    relative_path_cont_keys = (header + key[:i] for i in range(1, len(key)))
       →…
    447→def parse_key_value_pair(
    448→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
    449→) -> tuple[Pos, Key, Any]:
    450→    pos, key = parse_key(src, pos)
    451→    try:
+   452→        char: str | None = src[pos]
+   453→    except IndexError:
+   454→        char = None
       →…
    463→def parse_key(src: str, pos: Pos) -> tuple[Pos, Key]:
    464→    pos, key_part = parse_key_part(src, pos)
    465→    key: Key = (key_part,)
+   466→    pos = skip_chars(src, pos, TOML_WS)
+   467→    while True:
+   468→        try:
       →…
    481→def parse_key_part(src: str, pos: Pos) -> tuple[Pos, str]:
    482→    try:
    483→        char: str | None = src[pos]
+   484→    except IndexError:
+   485→        char = None
+   486→    if char in BARE_KEY_CHARS:
       →…
    497→def parse_one_line_basic_str(src: str, pos: Pos) -> tuple[Pos, str]:
    498→    pos += 1
@@ -287,42 +262,66 @@ _parser.py
    504→) -> tuple[Pos, list[Any]]:
    505→    pos += 1
    506→    array: list[Any] = []
+   507→
+   508→    pos = skip_comments_and_array_ws(src, pos)
+   509→    if src.startswith("]", pos):
       →…
    528→def parse_inline_table(
    529→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
    530→) -> tuple[Pos, dict[str, Any]]:
    531→    pos += 1
    532→    nested_dict = NestedDict()
+   533→    flags = Flags()
+   534→
+   535→    pos = skip_comments_and_array_ws(src, pos)
       →…
    564→def parse_basic_str_escape(
    565→    src: str, pos: Pos, *, multiline: bool = False
    566→) -> tuple[Pos, str]:
    567→    escape_id = src[pos : pos + 2]
    568→    pos += 2
+   569→    if multiline and escape_id in {"\\ ", "\\\t", "\\\n"}:
+   570→        # Skip whitespace until next non-whitespace character or end of
+   571→        # the doc. Error if non-whitespace is found before newline.
       →…
    595→def parse_basic_str_escape_multiline(src: str, pos: Pos) -> tuple[Pos, str]:
    596→    return parse_basic_str_escape(src, pos, multiline=True)
    599→def parse_hex_char(src: str, pos: Pos, hex_len: int) -> tuple[Pos, str]:
    600→    hex_str = src[pos : pos + hex_len]
    601→    if len(hex_str) != hex_len or not HEXDIGIT_CHARS.issuperset(hex_str):
+   602→        raise TOMLDecodeError("Invalid hex value", src, pos)
+   603→    pos += hex_len
+   604→    hex_int = int(hex_str, 16)
       →…
    612→def parse_literal_str(src: str, pos: Pos) -> tuple[Pos, str]:
    613→    pos += 1  # Skip starting apostrophe
    614→    start_pos = pos
+   615→    pos = skip_until(
+   616→        src, pos, "'", error_on=ILLEGAL_LITERAL_STR_CHARS, error_on_eof=True
+   617→    )
       →…
    621→def parse_multiline_str(src: str, pos: Pos, *, literal: bool) -> tuple[Pos, str]:
    622→    pos += 3
    623→    if src.startswith("\n", pos):
+   624→        pos += 1
+   625→
+   626→    if literal:
       →…
    652→def parse_basic_str(src: str, pos: Pos, *, multiline: bool) -> tuple[Pos, str]:
    653→    if multiline:
    654→        error_on = ILLEGAL_MULTILINE_BASIC_STR_CHARS
+   655→        parse_escapes = parse_basic_str_escape_multiline
+   656→    else:
+   657→        error_on = ILLEGAL_BASIC_STR_CHARS
       →…
    684→def parse_value(
    685→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
    686→) -> tuple[Pos, Any]:
    687→    if nest_lvl > MAX_INLINE_NESTING:
    688→        # Pure Python should have raised RecursionError already.
+   689→        # This ensures mypyc binaries eventually do the same.
+   690→        raise RecursionError(  # pragma: no cover
+   691→            "TOML inline arrays/tables are nested more than the allowed"
       →…
    760→def is_unicode_scalar_value(codepoint: int) -> bool:
    761→    return (0 <= codepoint <= 55295) or (57344 <= codepoint <= 1114111)
@@ -336,6 +335,9 @@ _parser.py
    771→    """
    772→    # The default `float` callable never returns illegal types. Optimize it.
    773→    if parse_float is float:
+   774→        return float
+   775→
+   776→    def safe_parse_float(float_str: str) -> Any:
       →…
 _re.py
      7→from datetime import date, datetime, time, timedelta, timezone, tzinfo
@@ -391,6 +393,9 @@ _re.py
     64→    """
     65→    (
     66→        year_str,
+    67→        month_str,
+    68→        day_str,
+    69→        hour_str,
       →…
     95→# No need to limit cache size. This is only ever called on input
     96→# that matched RE_DATETIME, so there is an implicit bound of
@@ -407,10 +412,11 @@ _re.py
    109→def match_to_localtime(match: re.Match[str]) -> time:
    110→    hour_str, minute_str, sec_str, micros_str = match.groups()
    111→    sec = int(sec_str) if sec_str else 0
-      →…
+   112→    micros = int(micros_str.ljust(6, "0")) if micros_str else 0
+   113→    return time(int(hour_str), int(minute_str), sec, micros)
    116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
    117→    if match.group("floatpart"):
    118→        return parse_float(match.group())
-      →…
+   119→    return int(match.group(), 0)
 _types.py
      5→from typing import Any, Callable, Tuple

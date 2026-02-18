@@ -2,10 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1998 words)
+budget: 2000 (1967 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
+     8→  .filter((file) => file.startsWith('.eslintrc.local.'))
+      →…
 CHANGELOG.md
      1→# Changelog …
      3→## [7.7.4](https://github.com/npm/node-semver/compare/v7.7.3...v7.7.4) (2026-01-16) …
@@ -17,6 +19,8 @@ CONTRIBUTING.md
      9→## Reporting Bugs
     11→Before submitting a new bug report please search for an existing or similar report.
     12→
+    13→Use one of our existing issue templates if you believe you've come across a unique problem.
+    14→
       →…
     17→## Pull Request Conventions
     19→### Commits
@@ -235,12 +239,7 @@ classes/comparator.js
      3→const ANY = Symbol('SemVer ANY')
      5→class Comparator {
      6→  static get ANY () {
-     7→    return ANY
-     8→  }
-     9→
     10→  constructor (comp, options) {
-    11→    options = parseOptions(options)
-    12→
     36→  parse (comp) {
     57→  toString () {
     61→  test (version) {
@@ -249,12 +248,6 @@ classes/range.js
      3→const SPACE_CHARACTERS = /\s+/g
      6→class Range {
      7→  constructor (range, options) {
-     8→    options = parseOptions(options)
-     9→
-    10→    if (range instanceof Range) {
-    11→      if (
-    12→        range.loose === !!options.loose &&
-    13→        range.includePrerelease === !!options.includePrerelease
     73→  get range () {
     92→  format () {
     96→  toString () {
@@ -282,12 +275,6 @@ classes/range.js
 classes/semver.js
      9→class SemVer {
     10→  constructor (version, options) {
-    11→    options = parseOptions(options)
-    12→
-    13→    if (version instanceof SemVer) {
-    14→      if (version.loose === !!options.loose &&
-    15→        version.includePrerelease === !!options.includePrerelease) {
-    16→        return version
     81→  format () {
     89→  toString () {
     93→  compare (other) {
@@ -364,7 +351,6 @@ internal/lrucache.js
      5→    this.max = 1000
      6→    this.map = new Map()
      7→  }
-     8→
      9→  get (key) {
     10→    const value = this.map.get(key)
     11→    if (value === undefined) {
@@ -376,11 +362,9 @@ internal/lrucache.js
     17→      return value
     18→    }
     19→  }
-    20→
     21→  delete (key) {
     22→    return this.map.delete(key)
     23→  }
-    24→
     25→  set (key, value) {
     26→    const deleted = this.delete(key)
     27→
@@ -396,7 +380,6 @@ internal/lrucache.js
     37→
     38→    return this
     39→  }
-    40→}
 internal/parse-options.js
      4→const looseOption = Object.freeze({ loose: true })
      5→const emptyOpts = Object.freeze({ })
@@ -445,6 +428,9 @@ ranges/valid.js
 test/bin/semver.js
      9→const bin = require.resolve('../../bin/semver')
     10→const run = args => new Promise((resolve, reject) => {
+    11→  const c = spawn(process.execPath, [bin].concat(args))
+    12→  c.on('error', reject)
+      →…
 test/integration/whitespace.js
     12→const wsMedium = ' '.repeat(125)
     13→const wsLarge = ' '.repeat(500000)

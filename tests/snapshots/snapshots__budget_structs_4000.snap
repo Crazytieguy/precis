@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4091 words)
+budget: 4000 (3990 words)
 
 README.md
      1→# Archived project. No maintenance. 
@@ -318,10 +318,6 @@ field_test.go
     32→func newStruct() *Struct {
     33→	b := &Bar{
     34→		E: "example",
-    35→		F: 2,
-    36→		g: []string{"zeynep", "fatih"},
-    37→	}
-    38→
       →…
 structs.go
      4→import (
@@ -563,25 +559,7 @@ structs.go
    250→	t := v.Type()
    251→
    252→	var fields []*Field
-   253→
-   254→	for i := 0; i < t.NumField(); i++ {
-   255→		field := t.Field(i)
-   256→
-   257→		if tag := field.Tag.Get(tagName); tag == "-" {
-   258→			continue
-   259→		}
-   260→
-   261→		f := &Field{
-   262→			field: field,
-   263→			value: v.FieldByName(field.Name),
-   264→		}
-   265→
-   266→		fields = append(fields, f)
-   267→
-   268→	}
-   269→
-   270→	return fields
-   271→}
+      →…
    273→// Field returns a new Field struct that provides several high level functions
    274→// around a single struct field entity. It panics if the field is not found.
    275→func (s *Struct) Field(name string) *Field {
@@ -721,8 +699,6 @@ structs.go
    414→			continue
    415→		}
    416→
-   417→		// don't check if it's omitted
-   418→		if tag := field.Tag.Get(s.TagName); tag == "-" {
       →…
    428→func strctVal(s interface{}) reflect.Value {
    429→	v := reflect.ValueOf(s)
@@ -732,12 +708,7 @@ structs.go
    433→		v = v.Elem()
    434→	}
    435→
-   436→	if v.Kind() != reflect.Struct {
-   437→		panic("not struct")
-   438→	}
-   439→
-   440→	return v
-   441→}
+      →…
    443→// Map converts the given struct to a map[string]interface{}. For more info
    444→// refer to Struct types Map() method. It panics if s's kind is not struct.
    445→func Map(s interface{}) map[string]interface{} {
@@ -807,8 +778,6 @@ structs.go
    518→	case reflect.Struct:
    519→		n := New(val.Interface())
    520→		n.TagName = s.TagName
-   521→		m := n.Map()
-   522→
       →…
 structs_example_test.go
      3→import …

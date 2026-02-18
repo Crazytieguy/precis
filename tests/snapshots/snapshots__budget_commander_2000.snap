@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2025 words)
+budget: 2000 (1977 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -13,13 +13,21 @@ CHANGELOG.md
    913→If you were previously using code like:
    914→
    915→```js
+   916→if (!program.args.length) ...
+   917→```
+   918→
       →…
 CONTRIBUTING.md
      1→# Contributing
      3→## Issues
      5→New issues are welcome, whether questions or suggestions or reporting bugs.
+     6→You are also welcome to contribute by adding helpful comments on an existing issue.
+     7→
       →…
-    13→## Pull Requests …
+    13→## Pull Requests
+    15→Pull Requests will be considered. Please submit pull requests against the develop branch.
+    16→
+      →…
 Readme.md
      1→# Commander.js
      8→The complete solution for [node.js](http://nodejs.org) command-line interfaces.
@@ -58,6 +66,12 @@ Readme.md
     41→    - [Help Groups](#help-groups)
     42→    - [More configuration](#more-configuration-2)
     43→  - [Custom event listeners](#custom-event-listeners)
+    44→  - [Bits and pieces](#bits-and-pieces)
+    45→    - [.parse() and .parseAsync()](#parse-and-parseasync)
+    46→    - [Parsing Configuration](#parsing-configuration)
+    47→    - [Legacy options as properties](#legacy-options-as-properties)
+    48→    - [TypeScript](#typescript)
+    49→    - [createCommand()](#createcommand)
       →…
     61→## Installation …
     67→## Quick Start …
@@ -110,10 +124,13 @@ Readme_zh-CN.md
     10→使用其他语言阅读：[English](./Readme.md) | 简体中文
     11→
     12→- [Commander.js](#commanderjs)
-    13→  - [安装](#%e5%ae%89%e8%a3%85)
       →…
-   570→#### 其他参数配置 …
-   582→#### 自定义参数处理 …
+   570→#### 其他参数配置
+   572→有少数附加功能可以直接构造`Argument`对象，对参数进行更详尽的配置。
+      →…
+   582→#### 自定义参数处理
+   584→选项的参数可以通过自定义函数来处理（与处理选项参数时类似），该函数接收两个参数：用户新输入的参数值和当前已有的参数值（即上一次调用自定义处理函数后的返回值），返回新的命令参数值。
+      →…
    907→### .parse() 和 .parseAsync()
    909→`.parse`的第一个参数是要解析的字符串数组，也可以省略参数而使用`process.argv`。
    910→
@@ -200,11 +217,9 @@ examples/color-help.mjs
 examples/custom-command-class.js
      6→class CommandWithTrace extends commander.Command {
      7→  createCommand(name) {
-      →…
 examples/global-options-added.js
     16→class MyRootCommand extends Command {
     17→  createCommand(name) {
-      →…
 examples/help-centered.mjs
 examples/man-style-help.mjs
      5→function formatItem(term, termWidth, description, helper) {
@@ -212,22 +227,17 @@ jest.config.js
      1→const config …
 lib/argument.js
      3→class Argument {
-     4→  /**
     13→  constructor(name, description) {
     48→  name() {
-    56→  _collectValue(value, previous) {
     73→  default(value, description) {
     86→  argParser(fn) {
     98→  choices(values) {
    119→  argRequired() {
    129→  argOptional() {
-   143→function humanReadableArgName(arg) {
 lib/command.js
     13→class Command extends EventEmitter {
-    14→  /**
     20→  constructor(name) {
     99→  copyInheritedSettings(sourceCommand) {
-   121→  _getCommandAndAncestors() {
    155→  command(nameAndArgs, actionOptsOrExecDesc, execOpts) {
    192→  createCommand(name) {
    203→  createHelp() {
@@ -242,17 +252,11 @@ lib/command.js
    375→  addArgument(argument) {
    409→  helpCommand(enableOrNameAndArgs, description) {
    443→  addHelpCommand(helpCommand, deprecatedDescription) {
-   463→  _getHelpCommand() {
    487→  hook(event, listener) {
    508→  exitOverride(fn) {
-   533→  _exit(exitCode, code, message) {
    556→  action(fn) {
    585→  createOption(flags, description) {
-   599→  _callParseArg(target, value, previous, invalidArgumentMessage) {
-   619→  _registerOption(option) {
-   644→  _registerCommand(command) {
    670→  addOption(option) {
-   741→  _optionEx(config, flags, description, fn, defaultValue) {
    788→  option(flags, description, parseArg, defaultValue) {
    805→  requiredOption(flags, description, parseArg, defaultValue) {
    826→  combineFlagAndOptionalValue(combine = true) {
@@ -260,14 +264,12 @@ lib/command.js
    848→  allowExcessArguments(allowExcess = true) {
    861→  enablePositionalOptions(positional = true) {
    875→  passThroughOptions(passThrough = true) {
-   885→  _checkForBrokenPassThrough() {
    905→  storeOptionsAsProperties(storeAsProperties = true) {
    925→  getOptionValue(key) {
    940→  setOptionValue(key, value) {
    953→  setOptionValueWithSource(key, value, source) {
    971→  getOptionValueSource(key) {
    983→  getOptionValueSourceWithGlobals(key) {
-  1001→  _prepareUserArgs(argv, parseOptions) {
   1090→  parse(argv, parseOptions) {
   1119→  async parseAsync(argv, parseOptions) {
   1127→  _prepareForParse() {
@@ -275,33 +277,14 @@ lib/command.js
       →…
   1141→  saveStateBeforeParse() {
   1158→  restoreStateBeforeParse() {
-  1183→  _checkForMissingExecutable(executableFile, executableDir, subcommandName) {
-  1202→  _executeSubCommand(subcommand, args) {
-  1352→  _dispatchSubcommand(commandName, operands, unknown) {
-  1380→  _dispatchHelpCommand(subcommandName) {
-  1403→  _checkNumberOfArguments() {
-  1428→  _processArguments() {
-  1481→  _chainOrCall(promise, fn) {
-  1499→  _chainOrCallHooks(promise, event) {
-  1531→  _chainOrCallSubCommandHook(promise, subCommand, event) {
-  1550→  _parseCommand(operands, unknown) {
-  1649→  _findCommand(name) {
-  1664→  _findOption(arg) {
-  1675→  _checkForMissingMandatoryOptions() {
-  1694→  _checkForConflictingLocalOptions() {
-  1723→  _checkForConflictingOptions() {
   1748→  parseOptions(args) {
   1902→  opts() {
   1924→  optsWithGlobals() {
   1940→  error(message, errorOptions) {
-  1966→  _parseOptionsEnv() {
-  1996→  _parseOptionsImplied() {
   2034→  missingArgument(name) {
   2046→  optionMissingArgument(option) {
   2058→  missingMandatoryOptionValue(option) {
-  2070→  _conflictingOption(option, conflictingOption) {
   2114→  unknownOption(flag) {
-  2146→  _excessArguments(receivedArgs) {
   2162→  unknownCommand() {
   2195→  version(str, flags, description) {
   2218→  description(str, argsDescription) {
@@ -313,29 +296,24 @@ lib/command.js
   2344→  helpGroup(heading) {
   2363→  commandsGroup(heading) {
   2382→  optionsGroup(heading) {
-  2392→  _initOptionGroup(option) {
-  2401→  _initCommandGroup(cmd) {
   2419→  nameFromFilename(filename) {
   2437→  executableDir(path) {
   2450→  helpInformation(contextOptions) {
-  2475→  _getOutputContext(contextOptions) {
   2505→  outputHelp(contextOptions) {
   2559→  helpOption(flags, description) {
-  2592→  _getHelpOption() {
   2607→  addHelpOption(option) {
   2621→  help(contextOptions) {
   2656→  addHelpText(position, text) {
-  2686→  _outputHelpIfRequested(args) {
-  2705→function incrementNodeInspectorPort(args) {
-  2752→function useColor() {
 lib/error.js
+     1→/**
+     2→ * CommanderError class
+     3→ */
      4→class CommanderError extends Error {
-     5→  /**
-     6→   * Constructs the CommanderError class
     11→  constructor(exitCode, code, message) {
+    22→/**
+    23→ * InvalidArgumentError class
+    24→ */
     25→class InvalidArgumentError extends CommanderError {
-    26→  /**
-    27→   * Constructs the InvalidArgumentError class
     30→  constructor(message) {
 lib/help.js
     12→class Help {
@@ -380,10 +358,8 @@ lib/help.js
    633→  preformatted(str) {
    650→  formatItem(term, termWidth, description, helper) {
    695→  boxWrap(str, width) {
-   740→function stripColor(str) {
 lib/option.js
      3→class Option {
-     4→  /**
     11→  constructor(flags, description) {
     47→  default(value, description) {
     65→  preset(arg) {
@@ -393,26 +369,24 @@ lib/option.js
    132→  argParser(fn) {
    144→  makeOptionMandatory(mandatory = true) {
    156→  hideHelp(hide = true) {
-   165→  _collectValue(value, previous) {
    181→  choices(values) {
    203→  name() {
    217→  attributeName() {
    230→  helpGroup(heading) {
    243→  is(arg) {
    256→  isBoolean() {
+   261→/**
+   262→ * This class is to make it easier to work with dual options, without changing the existing
+   263→ * implementation. We support separate dual options for separate positive and negative options,
+      →…
    268→class DualOptions {
-   269→  /**
-   270→   * @param {Option[]} options
    272→  constructor(options) {
    297→  valueFromOption(value, option) {
-   316→function camelcase(str) {
-   328→function splitOptionFlags(flags) {
 lib/suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
      4→  // https://en.wikipedia.org/wiki/Damerau–Levenshtein_distance
       →…
-    56→function suggestSimilar(word, candidates) {
 tests/command.createArgument.test.js
      4→  constructor(name, description) {
     11→  createArgument(name, description) {
@@ -434,23 +408,26 @@ typings/index.d.ts
     16→export class CommanderError extends Error {
     17→  code: string;
     18→  exitCode: number;
+    19→  message: string;
     31→export class InvalidArgumentError extends CommanderError {
-    32→  /**
-    33→   * Constructs the InvalidArgumentError class
     40→export interface ErrorOptions {
     41→  // optional parameter for error()
     42→  /** an id string representing the error */
+    43→  code?: string;
       →…
     48→export class Argument {
     49→  description: string;
     50→  required: boolean;
+    51→  variadic: boolean;
     95→export class Option {
     96→  flags: string;
     97→  description: string;
+    98→
    115→  constructor(flags: string, description?: string);
    210→export class Help {
    211→  /** output helpWidth, long lines are wrapped to fit */
    212→  helpWidth?: number;
+   213→  minWidthToWrap: number;
    218→  constructor();
    226→  prepareContext(contextOptions: {
    227→    error?: boolean;
@@ -471,10 +448,11 @@ typings/index.d.ts
    345→export interface HelpContext {
    346→  // optional parameter for .help() and .outputHelp()
    347→  error: boolean;
-      →…
+   348→}
    349→export interface AddHelpTextContext {
    350→  // passed to text function used with .addHelpText()
    351→  error: boolean;
+   352→  command: Command;
       →…
    354→export interface OutputConfiguration {
    355→  writeOut?(str: string): void;
@@ -494,6 +472,7 @@ typings/index.d.ts
    376→export class Command {
    377→  args: string[];
    378→  processedArgs: any[];
+   379→  readonly commands: readonly Command[];
    384→  constructor(name?: string);
    493→  argument(name: string, description?: string, defaultValue?: unknown): this;
    528→  helpCommand(enable: boolean): this;
@@ -505,6 +484,7 @@ typings/index.d.ts
   1094→export interface CommandOptions {
   1095→  hidden?: boolean;
   1096→  isDefault?: boolean;
+  1097→  /** @deprecated since v7, replaced by hidden */
       →…
   1100→export interface ExecutableCommandOptions extends CommandOptions {
   1101→  executableFile?: string;
@@ -512,10 +492,12 @@ typings/index.d.ts
   1104→export interface ParseOptionsResult {
   1105→  operands: string[];
   1106→  unknown: string[];
-      →…
+  1107→}
   1113→export const program: Command;
 typings/index.test-d.ts
    384→interface MyCheeseOption {
+   385→  cheese: string;
+   386→}
    509→class MyCommand extends commander.Command {
    510→  createCommand(name?: string): MyCommand {
    514→  myFunction(): void {

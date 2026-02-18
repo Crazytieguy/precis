@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (510 words)
+budget: 500 (497 words)
 
 CHANGELOG.md
      1→# neverthrow …
@@ -137,13 +137,8 @@ src/result.ts
       →…
    309→  _unsafeUnwrapErr(config?: ErrorConfig): E
    312→export class Ok<T, E> implements IResult<T, E> {
-   313→  constructor(readonly value: T) {}
-   314→
    405→  _unsafeUnwrap(_?: ErrorConfig): T {
    409→  _unsafeUnwrapErr(config?: ErrorConfig): E {
    419→export class Err<T, E> implements IResult<T, E> {
-   420→  constructor(readonly error: E) {}
-   421→
    505→  _unsafeUnwrap(config?: ErrorConfig): T {
    509→  _unsafeUnwrapErr(_?: ErrorConfig): E {
-tests/typecheck-tests.ts

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4074 words)
+budget: 4000 (3977 words)
 
 BuildMany.ts
      1→import { Iterator, IsOptionalKeysOf, UpdateAt, ValueOf } from './helpers';
@@ -101,72 +101,7 @@ DistributeUnions.ts
    104→      readonly [infer a1, infer a2, infer a3, infer a4, infer a5],
    105→      readonly [infer p1, infer p2, infer p3, infer p4, infer p5]
    106→    ]
-   107→    ? [
-   108→        ...FindUnions<a1, p1, [...path, 0]>,
-   109→        ...FindUnions<a2, p2, [...path, 1]>,
-   110→        ...FindUnions<a3, p3, [...path, 2]>,
-   111→        ...FindUnions<a4, p4, [...path, 3]>,
-   112→        ...FindUnions<a5, p5, [...path, 4]>
-   113→      ]
-   114→    : [a, p] extends [
-   115→        readonly [infer a1, infer a2, infer a3, infer a4],
-   116→        readonly [infer p1, infer p2, infer p3, infer p4]
-   117→      ]
-   118→    ? [
-   119→        ...FindUnions<a1, p1, [...path, 0]>,
-   120→        ...FindUnions<a2, p2, [...path, 1]>,
-   121→        ...FindUnions<a3, p3, [...path, 2]>,
-   122→        ...FindUnions<a4, p4, [...path, 3]>
-   123→      ]
-   124→    : [a, p] extends [
-   125→        readonly [infer a1, infer a2, infer a3],
-   126→        readonly [infer p1, infer p2, infer p3]
-   127→      ]
-   128→    ? [
-   129→        ...FindUnions<a1, p1, [...path, 0]>,
-   130→        ...FindUnions<a2, p2, [...path, 1]>,
-   131→        ...FindUnions<a3, p3, [...path, 2]>
-   132→      ]
-   133→    : [a, p] extends [
-   134→        readonly [infer a1, infer a2],
-   135→        readonly [infer p1, infer p2]
-   136→      ]
-   137→    ? [...FindUnions<a1, p1, [...path, 0]>, ...FindUnions<a2, p2, [...path, 1]>]
-   138→    : [a, p] extends [readonly [infer a1], readonly [infer p1]]
-   139→    ? FindUnions<a1, p1, [...path, 0]>
-   140→    : /**
-   141→     * Special case when matching with a variadic tuple on a regular array.
-   142→     * in this case we turn the input array `A[]` into `[] | [A, ...A[]]`
-   143→     * to remove one of these cases during DeepExclude.
-   144→     */
-   145→    p extends readonly [] | readonly [any, ...any] | readonly [...any, any]
-   146→    ? IsStrictArray<Extract<a, readonly any[]>> extends false
-   147→      ? []
-   148→      : [
-   149→          ArrayToVariadicUnion<a, p> extends infer aUnion
-   150→            ? {
-   151→                cases: aUnion extends any
-   152→                  ? {
-   153→                      value: aUnion;
-   154→                      subUnions: [];
-   155→                    }
-   156→                  : never;
-   157→                path: path;
-   158→              }
-   159→            : never
-   160→        ]
-   161→    : []
-   162→  : a extends Set<any>
-   163→  ? []
-   164→  : a extends Map<any, any>
-   165→  ? []
-   166→  : [IsPlainObject<a>, IsPlainObject<p>] extends [true, true]
-   167→  ? Flatten<
-   168→      Values<{
-   169→        [k in keyof a & keyof p]: FindUnions<a[k], p[k], [...path, k]>;
-   170→      }>
-   171→    >
-   172→  : [];
+      →…
    174→export type ArrayToVariadicUnion …
    183→export type Distribute …
 ExtractPreciseValue.ts
@@ -311,96 +246,6 @@ Match.ts
     39→    pattern: IsNever<p> extends true
     40→      ? /**
     41→         * HACK: Using `IsNever<p>` here is a hack to
-    42→         * make sure the type checker forwards
-    43→         * the input type parameter to pattern
-    44→         * creator functions like `P.when`, `P.not`
-    45→         * `P.union` when they are passed to `.with`
-    46→         * directly.
-    47→         */
-    48→        Pattern<i>
-    49→      : p,
-    50→    handler: (
-    51→      selections: FindSelected<value, p>,
-    52→      value: value
-    53→    ) => PickReturnValue<o, c>
-    54→  ): InvertPatternForExclude<p, value> extends infer excluded
-    55→    ? Match<
-    56→        Exclude<i, excluded>,
-    57→        o,
-    58→        [...handledCases, excluded],
-    59→        Union<inferredOutput, c>
-    60→      >
-    61→    : never;
-    62→
-    63→  with<
-    64→    const p1 extends Pattern<i>,
-    65→    const p2 extends Pattern<i>,
-    66→    c,
-    67→    p extends p1 | p2,
-    68→    value extends p extends any ? MatchedValue<i, InvertPattern<p, i>> : never
-    69→  >(
-    70→    p1: p1,
-    71→    p2: p2,
-    72→    handler: (value: value) => PickReturnValue<o, c>
-    73→  ): [
-    74→    InvertPatternForExclude<p1, value>,
-    75→    InvertPatternForExclude<p2, value>
-    76→  ] extends [infer excluded1, infer excluded2]
-    77→    ? Match<
-    78→        Exclude<i, excluded1 | excluded2>,
-    79→        o,
-    80→        [...handledCases, excluded1, excluded2],
-    81→        Union<inferredOutput, c>
-    82→      >
-    83→    : never;
-    84→
-    85→  with<
-    86→    const p1 extends Pattern<i>,
-    87→    const p2 extends Pattern<i>,
-    88→    const p3 extends Pattern<i>,
-    89→    const ps extends readonly Pattern<i>[],
-    90→    c,
-    91→    p extends p1 | p2 | p3 | ps[number],
-    92→    value extends MatchedValue<i, InvertPattern<p, i>>
-    93→  >(
-    94→    ...args: [
-    95→      p1: p1,
-    96→      p2: p2,
-    97→      p3: p3,
-    98→      ...patterns: ps,
-    99→      handler: (value: value) => PickReturnValue<o, c>
-   100→    ]
-   101→  ): [
-   102→    InvertPatternForExclude<p1, value>,
-   103→    InvertPatternForExclude<p2, value>,
-   104→    InvertPatternForExclude<p3, value>,
-   105→    MakeTuples<ps, value>
-   106→  ] extends [
-   107→    infer excluded1,
-   108→    infer excluded2,
-   109→    infer excluded3,
-   110→    infer excludedRest
-   111→  ]
-   112→    ? Match<
-   113→        Exclude<
-   114→          i,
-   115→          | excluded1
-   116→          | excluded2
-   117→          | excluded3
-   118→          | Extract<excludedRest, any[]>[number]
-   119→        >,
-   120→        o,
-   121→        [
-   122→          ...handledCases,
-   123→          excluded1,
-   124→          excluded2,
-   125→          excluded3,
-   126→          ...Extract<excludedRest, any[]>
-   127→        ],
-   128→        Union<inferredOutput, c>
-   129→      >
-   130→    : never;
-   131→
    132→  with<
    133→    const pat extends Pattern<i>,
    134→    pred extends (value: MatchedValue<i, InvertPattern<pat, i>>) => unknown,
@@ -421,7 +266,6 @@ Match.ts
    149→        Union<inferredOutput, c>
    150→      >
    151→    : Match<i, o, handledCases, Union<inferredOutput, c>>;
-   152→
    153→  /**
    154→   * `.when(predicate, handler)` Registers a predicate function and an handler function.
    155→   * If the predicate returns true, the handler function will be called.
@@ -439,7 +283,6 @@ Match.ts
    167→        Union<inferredOutput, c>
    168→      >
    169→    : Match<i, o, handledCases, Union<inferredOutput, c>>;
-   170→
    171→  /**
    172→   * `.otherwise()` takes a **default handler function** that will be
    173→   * called if no previous pattern matched your input.
@@ -447,44 +290,16 @@ Match.ts
    175→   * Equivalent to `.with(P._, () => x).exhaustive()`
    176→   *
    177→   * [Read the documentation for `.otherwise()` on GitHub](https://github.com/gvergnaud/ts-pattern#otherwise)
-   178→   *
-   179→   **/
+      →…
    180→  otherwise<c>(
    181→    handler: (value: i) => PickReturnValue<o, c>
    182→  ): PickReturnValue<o, Union<inferredOutput, c>>;
-   183→
-   184→  /**
-   185→   * `.exhaustive()` checks that all cases are handled, and returns the result value.
-   186→   *
-   187→   * If you get a `NonExhaustiveError`, it means that you aren't handling
-   188→   * all cases. You should probably add another `.with(...)` clause
-   189→   * to match the missing case and prevent runtime errors.
-   190→   *
-   191→   * [Read the documentation for `.exhaustive()` on GitHub](https://github.com/gvergnaud/ts-pattern#exhaustive)
-   192→   *
-   193→   */
-   194→  exhaustive: DeepExcludeAll<i, handledCases> extends infer remainingCases
-   195→    ? [remainingCases] extends [never]
-   196→      ? Exhaustive<o, inferredOutput>
-   197→      : NonExhaustiveError<remainingCases>
-   198→    : never;
-   199→
    200→  /**
    201→   * `.run()` return the resulting value.
    202→   *
    203→   * ⚠️ calling this function is unsafe, and may throw if no pattern matches your input.
    204→   */
    205→  run(): PickReturnValue<o, inferredOutput>;
-   206→
-   207→  /**
-   208→   * `.returnType<T>()` Lets you specify the return type for all of your branches.
-   209→   *
-   210→   * [Read the documentation for `.returnType()` on GitHub](https://github.com/gvergnaud/ts-pattern#returnType)
-   211→   */
-   212→  returnType: [inferredOutput] extends [never]
-   213→    ? <output>() => Match<i, output, handledCases>
-   214→    : TSPatternError<'calling `.returnType<T>()` is only allowed directly after `match(...)`.'>;
-   215→
    216→  /**
    217→   * `.narrow()` narrows the input type to exclude all cases that have previously been handled.
    218→   *
@@ -492,10 +307,8 @@ Match.ts
    220→   * properties that are deeply nested. Handled cases from top level union types are excluded
    221→   * by default.
    222→   *
-   223→   * [Read the documentation for `.narrow() on GitHub](https://github.com/gvergnaud/ts-pattern#narrow)
-   224→   */
+      →…
    225→  narrow(): Match<DeepExcludeAll<i, handledCases>, o, [], inferredOutput>;
-   226→};
    228→/**
    229→ * Potential for optimization here:
    230→ *
@@ -538,21 +351,7 @@ Match.ts
    271→   */
    272→  (): PickReturnValue<output, inferredOutput>;
    273→  /**
-   274→   * `.exhaustive(fallback)` checks that all cases are handled and returns the result value.
-   275→   *
-   276→   * The fallback function will be called if your input value doesn't match any pattern.
-   277→   * This can only happen if the value you passed to `match` has an incorrect type.
-   278→   *
-   279→   * If you get a `NonExhaustiveError`, it means that you aren't handling
-   280→   * all cases. You should probably add another `.with(...)` clause
-   281→   * to match the missing case.
-   282→   *
-   283→   * [Read the documentation for `.exhaustive()` on GitHub](https://github.com/gvergnaud/ts-pattern#exhaustive)
-   284→   */
-   285→  <otherOutput>(
-   286→    handler: (unexpectedValue: unknown) => PickReturnValue<output, otherOutput>
-   287→  ): PickReturnValue<output, Union<inferredOutput, otherOutput>>;
-   288→};
+      →…
 Pattern.ts
      1→import type * as symbols from '../internals/symbols';
      2→import { MergeUnion, Primitives, WithDefault } from './helpers';
@@ -640,14 +439,32 @@ Pattern.ts
    203→type MergeGuards …
    210→export type Chainable …
    213→      /**
+   214→       * `.optional()` returns a pattern which matches if the
+   215→       * key is undefined or if it is defined and the previous pattern matches its value.
+   216→       *
+   217→       * [Read the documentation for `P.optional` on GitHub](https://github.com/gvergnaud/ts-pattern#poptional-patterns)
+   218→       *
+   219→       * @example
       →…
    223→      optional<input>(): Chainable<OptionalP<input, p>, omitted | 'optional'>;
    224→      /**
+   225→       * `pattern.and(pattern)` returns a pattern that matches
+   226→       * if the previous pattern and the next one match the input.
+   227→       *
+   228→       * [Read the documentation for `P.intersection` on GitHub](https://github.com/gvergnaud/ts-pattern#pintersection-patterns)
+   229→       *
+   230→       * @example
       →…
    237→      and<input, const p2 extends Pattern<input>>(
    238→        pattern: p2
    239→      ): Chainable<AndP<input, [p, p2]>, omitted>;
    240→      /**
+   241→       * `pattern.or(pattern)` returns a pattern that matches
+   242→       * if **either** the previous pattern or the next one match the input.
+   243→       *
+   244→       * [Read the documentation for `P.union` on GitHub](https://github.com/gvergnaud/ts-pattern#punion-patterns)
+   245→       *
+   246→       * @example
       →…
    253→      or<input, const p2 extends Pattern<input>>(
    254→        pattern: p2
@@ -657,6 +474,12 @@ Pattern.ts
    271→      ): Chainable<SelectP<k, input, p>, omitted | 'select' | 'or' | 'and'>;
    276→export type StringChainable …
    282→      /**
+   283→       * `P.string.startsWith(start)` is a pattern, matching **strings** starting with `start`.
+   284→       *
+   285→       * [Read the documentation for `P.string.startsWith` on GitHub](https://github.com/gvergnaud/ts-pattern#pstringstartsWith)
+   286→       *
+   287→       * @example
+   288→       *  match(value)
       →…
    291→      startsWith<input, const start extends string>(
    292→        start: start
@@ -665,6 +488,12 @@ Pattern.ts
    295→        omitted | 'startsWith'
    296→      >;
    297→      /**
+   298→       * `P.string.endsWith(end)` is a pattern, matching **strings** ending with `end`.
+   299→       *
+   300→       * [Read the documentation for `P.string.endsWith` on GitHub](https://github.com/gvergnaud/ts-pattern#pstringendsWith)
+   301→       *
+   302→       * @example
+   303→       *  match(value)
       →…
    306→      endsWith<input, const end extends string>(
    307→        end: end
@@ -673,6 +502,12 @@ Pattern.ts
    310→        omitted | 'endsWith'
    311→      >;
    312→      /**
+   313→       * `P.string.minLength(min)` is a pattern, matching **strings** with at least `min` characters.
+   314→       *
+   315→       * [Read the documentation for `P.string.minLength` on GitHub](https://github.com/gvergnaud/ts-pattern#pstringminLength)
+   316→       *
+   317→       * @example
+   318→       *  match(value)
       →…
    321→      minLength<input, const min extends number>(
    322→        min: min
@@ -681,6 +516,12 @@ Pattern.ts
    325→        omitted | 'minLength'
    326→      >;
    327→      /**
+   328→       * `P.string.length(len)` is a pattern, matching **strings** with exactly `len` characters.
+   329→       *
+   330→       * [Read the documentation for `P.string.length` on GitHub](https://github.com/gvergnaud/ts-pattern#pstringlength)
+   331→       *
+   332→       * @example
+   333→       *  match(value)
       →…
    336→      length<input, const len extends number>(
    337→        len: len
@@ -689,6 +530,12 @@ Pattern.ts
    340→        omitted | 'length' | 'minLength' | 'maxLength'
    341→      >;
    342→      /**
+   343→       * `P.string.maxLength(max)` is a pattern, matching **strings** with at most `max` characters.
+   344→       *
+   345→       * [Read the documentation for `P.string.maxLength` on GitHub](https://github.com/gvergnaud/ts-pattern#pstringmaxLength)
+   346→       *
+   347→       * @example
+   348→       *  match(value)
       →…
    351→      maxLength<input, const max extends number>(
    352→        max: max
@@ -697,6 +544,12 @@ Pattern.ts
    355→        omitted | 'maxLength'
    356→      >;
    357→      /**
+   358→       * `P.string.includes(substr)` is a pattern, matching **strings** containing `substr`.
+   359→       *
+   360→       * [Read the documentation for `P.string.includes` on GitHub](https://github.com/gvergnaud/ts-pattern#pstringincludes)
+   361→       *
+   362→       * @example
+   363→       *  match(value)
       →…
    366→      includes<input, const substr extends string>(
    367→        substr: substr
@@ -705,6 +558,12 @@ Pattern.ts
    370→        omitted
    371→      >;
    372→      /**
+   373→       * `P.string.regex(expr)` is a pattern, matching **strings** that `expr` regular expression.
+   374→       *
+   375→       * [Read the documentation for `P.string.regex` on GitHub](https://github.com/gvergnaud/ts-pattern#pstringregex)
+   376→       *
+   377→       * @example
+   378→       *  match(value)
       →…
    381→      regex<input, const expr extends string | RegExp>(
    382→        expr: expr
@@ -714,6 +573,12 @@ Pattern.ts
    386→      >;
    391→export type NumberChainable …
    397→      /**
+   398→       * `P.number.between(min, max)` matches **number** between `min` and `max`,
+   399→       * equal to min or equal to max.
+   400→       *
+   401→       * [Read the documentation for `P.number.between` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberbetween)
+   402→       *
+   403→       * @example
       →…
    407→      between<input, const min extends number, const max extends number>(
    408→        min: min,
@@ -723,6 +588,12 @@ Pattern.ts
    412→        omitted
    413→      >;
    414→      /**
+   415→       * `P.number.lt(max)` matches **number** smaller than `max`.
+   416→       *
+   417→       * [Read the documentation for `P.number.lt` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberlt)
+   418→       *
+   419→       * @example
+   420→       *  match(value)
       →…
    423→      lt<input, const max extends number>(
    424→        max: max
@@ -731,6 +602,12 @@ Pattern.ts
    427→        omitted
    428→      >;
    429→      /**
+   430→       * `P.number.gt(min)` matches **number** greater than `min`.
+   431→       *
+   432→       * [Read the documentation for `P.number.gt` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumbergt)
+   433→       *
+   434→       * @example
+   435→       *  match(value)
       →…
    438→      gt<input, const min extends number>(
    439→        min: min
@@ -739,6 +616,12 @@ Pattern.ts
    442→        omitted
    443→      >;
    444→      /**
+   445→       * `P.number.lte(max)` matches **number** smaller than or equal to `max`.
+   446→       *
+   447→       * [Read the documentation for `P.number.lte` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberlte)
+   448→       *
+   449→       * @example
+   450→       *  match(value)
       →…
    453→      lte<input, const max extends number>(
    454→        max: max
@@ -747,6 +630,12 @@ Pattern.ts
    457→        omitted
    458→      >;
    459→      /**
+   460→       * `P.number.gte(min)` matches **number** greater than or equal to `min`.
+   461→       *
+   462→       * [Read the documentation for `P.number.gte` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumbergte)
+   463→       *
+   464→       * @example
+   465→       *  match(value)
       →…
    468→      gte<input, const min extends number>(
    469→        min: min
@@ -755,24 +644,48 @@ Pattern.ts
    472→        omitted
    473→      >;
    474→      /**
+   475→       * `P.number.int` matches **integer** numbers.
+   476→       *
+   477→       * [Read the documentation for `P.number.int` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberint)
+   478→       *
+   479→       * @example
+   480→       *  match(value)
       →…
    483→      int<input>(): NumberChainable<
    484→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
    485→        omitted | 'int'
    486→      >;
    487→      /**
+   488→       * `P.number.finite` matches **finite numbers**.
+   489→       *
+   490→       * [Read the documentation for `P.number.finite` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberfinite)
+   491→       *
+   492→       * @example
+   493→       *  match(value)
       →…
    496→      finite<input>(): NumberChainable<
    497→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
    498→        omitted | 'finite'
    499→      >;
    500→      /**
+   501→       * `P.number.positive` matches **positive** numbers.
+   502→       *
+   503→       * [Read the documentation for `P.number.positive` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberpositive)
+   504→       *
+   505→       * @example
+   506→       *  match(value)
       →…
    509→      positive<input>(): NumberChainable<
    510→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
    511→        omitted | 'positive' | 'negative'
    512→      >;
    513→      /**
+   514→       * `P.number.negative` matches **negative** numbers.
+   515→       *
+   516→       * [Read the documentation for `P.number.negative` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumbernegative)
+   517→       *
+   518→       * @example
+   519→       *  match(value)
       →…
    522→      negative<input>(): NumberChainable<
    523→        MergeGuards<input, p, GuardExcludeP<unknown, number, never>>,
@@ -780,6 +693,12 @@ Pattern.ts
    525→      >;
    530→export type BigIntChainable …
    536→      /**
+   537→       * `P.bigint.between(min, max)` matches **bigint** between `min` and `max`,
+   538→       * equal to min or equal to max.
+   539→       *
+   540→       * [Read the documentation for `P.bigint.between` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberbetween)
+   541→       *
+   542→       * @example
       →…
    546→      between<input, const min extends bigint, const max extends bigint>(
    547→        min: min,
@@ -789,6 +708,12 @@ Pattern.ts
    551→        omitted
    552→      >;
    553→      /**
+   554→       * `P.bigint.lt(max)` matches **bigint** smaller than `max`.
+   555→       *
+   556→       * [Read the documentation for `P.bigint.lt` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberlt)
+   557→       *
+   558→       * @example
+   559→       *  match(value)
       →…
    562→      lt<input, const max extends bigint>(
    563→        max: max
@@ -797,6 +722,12 @@ Pattern.ts
    566→        omitted
    567→      >;
    568→      /**
+   569→       * `P.bigint.gt(min)` matches **bigint** greater than `min`.
+   570→       *
+   571→       * [Read the documentation for `P.bigint.gt` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumbergt)
+   572→       *
+   573→       * @example
+   574→       *  match(value)
       →…
    577→      gt<input, const min extends bigint>(
    578→        min: min
@@ -805,6 +736,12 @@ Pattern.ts
    581→        omitted
    582→      >;
    583→      /**
+   584→       * `P.bigint.lte(max)` matches **bigint** smaller than or equal to `max`.
+   585→       *
+   586→       * [Read the documentation for `P.bigint.lte` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberlte)
+   587→       *
+   588→       * @example
+   589→       *  match(value)
       →…
    592→      lte<input, const max extends bigint>(
    593→        max: max
@@ -813,6 +750,12 @@ Pattern.ts
    596→        omitted
    597→      >;
    598→      /**
+   599→       * `P.bigint.gte(min)` matches **bigint** greater than or equal to `min`.
+   600→       *
+   601→       * [Read the documentation for `P.bigint.gte` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumbergte)
+   602→       *
+   603→       * @example
+   604→       *  match(value)
       →…
    607→      gte<input, const min extends bigint>(
    608→        min: min
@@ -821,12 +764,24 @@ Pattern.ts
    611→        omitted
    612→      >;
    613→      /**
+   614→       * `P.bigint.positive` matches **positive** bigints.
+   615→       *
+   616→       * [Read the documentation for `P.bigint.positive` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumberpositive)
+   617→       *
+   618→       * @example
+   619→       *  match(value)
       →…
    622→      positive<input>(): BigIntChainable<
    623→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
    624→        omitted | 'positive' | 'negative'
    625→      >;
    626→      /**
+   627→       * `P.bigint.negative` matches **negative** bigints.
+   628→       *
+   629→       * [Read the documentation for `P.bigint.negative` on GitHub](https://github.com/gvergnaud/ts-pattern#pnumbernegative)
+   630→       *
+   631→       * @example
+   632→       *  match(value)
       →…
    635→      negative<input>(): BigIntChainable<
    636→        MergeGuards<input, p, GuardExcludeP<unknown, bigint, never>>,
@@ -835,6 +790,12 @@ Pattern.ts
    643→export type Variadic …
    645→export type ArrayChainable …
    651→      /**
+   652→       * `.optional()` returns a pattern which matches if the
+   653→       * key is undefined or if it is defined and the previous pattern matches its value.
+   654→       *
+   655→       * [Read the documentation for `P.optional` on GitHub](https://github.com/gvergnaud/ts-pattern#poptional-patterns)
+   656→       *
+   657→       * @example
       →…
    661→      optional<input>(): ArrayChainable<
    662→        OptionalP<input, pattern>,

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4016 words)
+budget: 4000 (3954 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -236,16 +236,30 @@ Readme_zh-CN.md
     13→  - [安装](#%e5%ae%89%e8%a3%85)
     14→  - [快速开始](#%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B)
       →…
+    59→## 安装 …
+    65→## 快速开始 …
+   144→## 声明 program 变量 …
+   173→## 选项 …
+   496→## 命令 …
    570→#### 其他参数配置
    572→有少数附加功能可以直接构造`Argument`对象，对参数进行更详尽的配置。
    573→
    574→示例代码：[arguments-extra.js](./examples/arguments-extra.js)
+   575→
+   576→```js
+   577→program
       →…
    582→#### 自定义参数处理
    584→选项的参数可以通过自定义函数来处理（与处理选项参数时类似），该函数接收两个参数：用户新输入的参数值和当前已有的参数值（即上一次调用自定义处理函数后的返回值），返回新的命令参数值。
    585→
    586→处理后的参数值会传递给命令处理函数，同时可通过`.processedArgs`获取。
+   587→
+   588→可以在自定义函数的后面设置命令参数的默认值或初始值。
+   589→
       →…
+   705→## 自动化帮助信息 …
+   895→## 自定义事件监听 …
+   905→## 零碎知识 …
    907→### .parse() 和 .parseAsync()
    909→`.parse`的第一个参数是要解析的字符串数组，也可以省略参数而使用`process.argv`。
    910→
@@ -259,6 +273,7 @@ Readme_zh-CN.md
    918→
    919→```js
       →…
+  1061→## 支持 …
 SECURITY.md
      1→# Security Policy
      3→To report a security vulnerability, please use the
@@ -306,19 +321,32 @@ docs/help-in-depth.md
     23→
     24→- `helpWidth`: specify the wrap width, useful for unit tests
     25→- `minWidthToWrap`: specify required width to allow wrapping (default 40)
+    26→- `showGlobalOptions`: show a section with the global options from the parent command(s)
+    27→- `sortSubcommands`: sort the subcommands alphabetically
+    28→- `sortOptions`: sort the options alphabetically
+    29→
+    30→Example files:
       →…
     34→## Stringify and Style
     36→The `Help` object has narrowly focused methods to allow customising the displayed help.
     37→
     38→The stringify routines take an object (`Command` or `Option` or `Argument`) and produce a string. For example you could change the way subcommands are listed:
     39→
+    40→```js
+    41→program.configureHelp({
+    42→  subcommandTerm: (cmd) => cmd.name() // just show the name instead of usage
+    43→});
+    44→```
       →…
    118→## Layout
    120→Utility methods which control the layout include `padWidth`, `boxWrap`, and `formatItem`. These can be overridden to change the layout or replace with an alternative implementation.
    121→
    122→Example files:
    123→
-      →…
+   124→- `formatItem`: [help-centered.mjs](../examples/help-centered.mjs)
+   125→- `formatItem`: [man-style-help.mjs](../examples/man-style-help.mjs)
+   126→- `boxwrap`: [color-help-replacement.mjs](../examples/color-help-replacement.mjs)
+   127→
 docs/options-in-depth.md
      2→# Options in Depth
      4→The README covers declaring and using options, and mostly parsing will work the way you and your users expect. This page covers some special cases
@@ -331,6 +359,11 @@ docs/options-in-depth.md
     18→
     19→```js
     20→program
+    21→   .option('-c, --compress [percentage]') // 0 or 1
+    22→   .option('--preprocess <file...>') // 1 or more
+    23→   .option('--test [name...]') // 0 or more
+    24→```
+    25→
       →…
     30→### Parsing ambiguity …
     79→#### Alternative: Make `--` part of your syntax
@@ -362,6 +395,11 @@ docs/options-in-depth.md
    151→a single short option which might take a value, as any following characters will
    152→be taken as the value.
    153→
+   154→This means that by default you can not combine short options which may take an argument.
+   155→
+   156→```js
+   157→program
+   158→  .name('collect')
       →…
    191→### Combining short options as if boolean …
 docs/parsing-and-hooks.md
@@ -436,10 +474,12 @@ examples/configure-output.js
 examples/custom-command-class.js
      6→class CommandWithTrace extends commander.Command {
      7→  createCommand(name) {
+     8→    const cmd = new CommandWithTrace(name);
       →…
 examples/global-options-added.js
     16→class MyRootCommand extends Command {
     17→  createCommand(name) {
+    18→    const cmd = new Command(name);
       →…
 examples/help-centered.mjs
      6→class MyHelp extends Help {
@@ -457,7 +497,6 @@ jest.config.js
      1→const config = {
 lib/argument.js
      3→class Argument {
-     4→  /**
     13→  constructor(name, description) {
     48→  name() {
     56→  _collectValue(value, previous) {
@@ -469,7 +508,6 @@ lib/argument.js
    143→function humanReadableArgName(arg) {
 lib/command.js
     13→class Command extends EventEmitter {
-    14→  /**
     20→  constructor(name) {
     99→  copyInheritedSettings(sourceCommand) {
    121→  _getCommandAndAncestors() {
@@ -517,6 +555,9 @@ lib/command.js
   1119→  async parseAsync(argv, parseOptions) {
   1127→  _prepareForParse() {
   1128→    if (this._savedState === null) {
+  1129→      this.saveStateBeforeParse();
+  1130→    } else {
+  1131→      this.restoreStateBeforeParse();
       →…
   1141→  saveStateBeforeParse() {
   1158→  restoreStateBeforeParse() {
@@ -578,37 +619,12 @@ lib/error.js
      2→ * CommanderError class
      3→ */
      4→class CommanderError extends Error {
-     5→  /**
-     6→   * Constructs the CommanderError class
-     7→   * @param {number} exitCode suggested exit code which could be used with process.exit
-     8→   * @param {string} code an id string representing the error
-     9→   * @param {string} message human-readable description of the error
-    10→   */
     11→  constructor(exitCode, code, message) {
-    12→    super(message);
-    13→    // properly capture stack trace in Node.js
-    14→    Error.captureStackTrace(this, this.constructor);
-    15→    this.name = this.constructor.name;
-    16→    this.code = code;
-    17→    this.exitCode = exitCode;
-    18→    this.nestedError = undefined;
-    19→  }
-    20→}
     22→/**
     23→ * InvalidArgumentError class
     24→ */
     25→class InvalidArgumentError extends CommanderError {
-    26→  /**
-    27→   * Constructs the InvalidArgumentError class
-    28→   * @param {string} [message] explanation of why argument is invalid
-    29→   */
     30→  constructor(message) {
-    31→    super(1, 'commander.invalidArgument', message);
-    32→    // properly capture stack trace in Node.js
-    33→    Error.captureStackTrace(this, this.constructor);
-    34→    this.name = this.constructor.name;
-    35→  }
-    36→}
 lib/help.js
     12→class Help {
     13→  constructor() {
@@ -655,7 +671,6 @@ lib/help.js
    740→function stripColor(str) {
 lib/option.js
      3→class Option {
-     4→  /**
     11→  constructor(flags, description) {
     47→  default(value, description) {
     65→  preset(arg) {
@@ -680,50 +695,17 @@ lib/option.js
    266→ * the single shared option value.
    267→ */
    268→class DualOptions {
-   269→  /**
-   270→   * @param {Option[]} options
-   271→   */
    272→  constructor(options) {
-   273→    this.positiveOptions = new Map();
-   274→    this.negativeOptions = new Map();
-   275→    this.dualOptions = new Set();
-   276→    options.forEach((option) => {
-   277→      if (option.negate) {
-   278→        this.negativeOptions.set(option.attributeName(), option);
-   279→      } else {
-   280→        this.positiveOptions.set(option.attributeName(), option);
-   281→      }
-   282→    });
-   283→    this.negativeOptions.forEach((value, key) => {
-   284→      if (this.positiveOptions.has(key)) {
-   285→        this.dualOptions.add(key);
-   286→      }
-   287→    });
-   288→  }
-   289→
-   290→  /**
-   291→   * Did the value come from the option, and not from possible matching dual option?
-   292→   *
-   293→   * @param {*} value
-   294→   * @param {Option} option
-   295→   * @returns {boolean}
-   296→   */
    297→  valueFromOption(value, option) {
-   298→    const optionKey = option.attributeName();
-   299→    if (!this.dualOptions.has(optionKey)) return true;
-   300→
-   301→    // Use the value to deduce if (probably) came from the option.
-   302→    const preset = this.negativeOptions.get(optionKey).presetArg;
-   303→    const negativeValue = preset !== undefined ? preset : false;
-   304→    return option.negate === (negativeValue === value);
-   305→  }
-   306→}
    316→function camelcase(str) {
    328→function splitOptionFlags(flags) {
 lib/suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
      4→  // https://en.wikipedia.org/wiki/Damerau–Levenshtein_distance
+     5→  // Calculating optimal string alignment distance, no substring is edited more than once.
+     6→  // (Simple implementation.)
+     7→
       →…
     56→function suggestSimilar(word, candidates) {
 tests/command.createArgument.test.js
@@ -757,15 +739,9 @@ typings/index.d.ts
     19→  message: string;
     20→  nestedError?: string;
     21→
-    22→  /**
     28→  constructor …
     31→export class InvalidArgumentError extends CommanderError {
-    32→  /**
-    33→   * Constructs the InvalidArgumentError class
-    34→   * @param message - explanation of why argument is invalid
-    35→   */
-    36→  constructor(message: string);
-    37→}
+    36→  constructor …
     40→export interface ErrorOptions {
     41→  // optional parameter for error()
     42→  /** an id string representing the error */
@@ -780,6 +756,8 @@ typings/index.d.ts
     52→  defaultValue?: any;
     53→  defaultValueDescription?: string;
     54→  parseArg?: <T>(value: string, previous: T) => T;
+    55→  argChoices?: string[];
+    56→
     62→  constructor …
     67→  name …
     72→  default …
@@ -794,6 +772,19 @@ typings/index.d.ts
     99→  required: boolean; // A value must be supplied when the option is specified.
    100→  optional: boolean; // A value is optional when the option is specified.
    101→  variadic: boolean;
+   102→  mandatory: boolean; // The option must have a value after parsing, which usually means it must be specified on command line.
+   103→  short?: string;
+   104→  long?: string;
+   105→  negate: boolean;
+   106→  defaultValue?: any;
+   107→  defaultValueDescription?: string;
+   108→  presetArg?: unknown;
+   109→  envVar?: string;
+   110→  parseArg?: <T>(value: string, previous: T) => T;
+   111→  hidden: boolean;
+   112→  argChoices?: string[];
+   113→  helpGroupHeading?: string;
+   114→
    115→  constructor(flags: string, description?: string);
    120→  default …
    132→  preset …
@@ -815,6 +806,7 @@ typings/index.d.ts
    214→  sortSubcommands: boolean;
    215→  sortOptions: boolean;
    216→  showGlobalOptions: boolean;
+   217→
    218→  constructor();
    226→  prepareContext(contextOptions: {
    227→    error?: boolean;
@@ -876,7 +868,6 @@ typings/index.d.ts
    355→  writeOut?(str: string): void;
    356→  writeErr?(str: string): void;
    357→  outputError?(str: string, write: (str: string) => void): void;
-   358→
    359→  getOutHelpWidth?(): number;
    360→  getErrHelpWidth?(): number;
    362→  getOutHasColors?(): boolean;
@@ -895,6 +886,7 @@ typings/index.d.ts
    380→  readonly options: readonly Option[];
    381→  readonly registeredArguments: readonly Argument[];
    382→  parent: Command | null;
+   383→
    384→  constructor(name?: string);
    398→  version …
    442→  command …
@@ -983,7 +975,6 @@ typings/index.test-d.ts
    510→  createCommand(name?: string): MyCommand {
    511→    return new MyCommand(name);
    512→  }
-   513→
    514→  myFunction(): void {
    515→    // do nothing.
    516→  }

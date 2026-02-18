@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (973 words)
+budget: 1000 (975 words)
 
 readme.md
     20→## Benefits over plain `fetch`
@@ -60,7 +60,6 @@ readme.md
   1169→node --use-env-proxy app.js
   1170→```
   1171→
-  1172→Supported environment variables:
       →…
   1292→## FAQ
   1294→#### How do I use this in Node.js?
@@ -83,36 +82,33 @@ source/core/Ky.ts
     34→	static create(input: Input, options: Options): ResponsePromise {
     35→		const ky = new Ky(input, options);
     36→
-    37→		const function_ = async (): Promise<Response> => {
+      →…
    200→	constructor(input: Input, options: Options = {}) {
    201→		this.#input = input;
    202→
       →…
 source/core/constants.ts
-    68→export type ForceRetryOptions …
+    65→/**
+    66→Options for forcing a retry via `ky.retry()`.
+    67→*/
+    68→export type ForceRetryOptions = {
+    69→	/**
+      →…
    145→/**
    146→Marker returned by ky.retry() to signal a forced retry from afterResponse hooks.
    147→*/
    148→export class RetryMarker {
    149→	constructor(public options?: ForceRetryOptions) {}
-   150→}
    152→/**
    153→Force a retry from an `afterResponse` hook.
    154→
-   155→This allows you to retry a request based on the response content, even if the response has a successful status code. The retry will respect the `retry.limit` option and skip the `shouldRetry` check. The forced retry is observable in `beforeRetry` hooks, where the error will be a `ForceRetryError`.
-   156→
-   157→@param options - Optional configuration for the retry.
-   158→
-   159→@example
-   160→```
-   161→import ky, {isForceRetryError} from 'ky';
-   162→
-   163→const api = ky.extend({
-   164→	hooks: {
-   165→		afterResponse: [
       →…
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
 source/errors/ForceRetryError.ts
+     4→/**
+     5→Internal error used to signal a forced retry from afterResponse hooks.
+     6→This is thrown when a user returns ky.retry() from an afterResponse hook.
+      →…
      8→export class ForceRetryError extends Error {
      9→	override name = 'ForceRetryError' as const;
     10→	customDelay: number | undefined;
@@ -120,7 +116,6 @@ source/errors/ForceRetryError.ts
     12→	customRequest: Request | undefined;
     13→
     14→	constructor(options?: ForceRetryOptions) {
-      →…
 source/errors/HTTPError.ts
      5→export class HTTPError<T = unknown> extends Error {
      6→	public response: KyResponse<T>;
@@ -129,21 +124,20 @@ source/errors/HTTPError.ts
      9→
     10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
 source/errors/NonError.ts
+     1→/**
+     2→Wrapper for non-Error values that were thrown.
+     3→
+      →…
      6→export class NonError extends Error {
      7→	override name = 'NonError';
      8→	readonly value: unknown;
      9→
     10→	constructor(value: unknown) {
-    11→		let message = 'Non-error value was thrown';
-    12→
-      →…
 source/errors/TimeoutError.ts
      3→export class TimeoutError extends Error {
      4→	public request: KyRequest;
      5→
      6→	constructor(request: Request) {
-     7→		super(`Request timed out: ${request.method} ${request.url}`);
-      →…
 source/index.ts
     10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
     11→	// eslint-disable-next-line @typescript-eslint/promise-function-async
@@ -155,8 +149,19 @@ source/types/common.ts
 source/types/hooks.ts
 source/types/ky.ts
 source/types/options.ts
-    33→export type KyOptions …
-   307→export type KyOptionsRegistry …
+    29→/**
+    30→Custom Ky options
+    31→*/
+    32→
+    33→export type KyOptions = {
+    34→	/**
+      →…
+   302→/**
+   303→Each key from KyOptions is present and set to `true`.
+   304→
+   305→This type is used for identifying and working with the known keys in KyOptions.
+   306→*/
+   307→export type KyOptionsRegistry = {[K in keyof KyOptions]-?: true};
    309→/**
    310→Options are the same as `window.fetch`, except for the KyOptions
    311→*/
@@ -226,7 +231,7 @@ source/types/retry.ts
 source/utils/body.ts
     57→const withProgress …
 source/utils/delay.ts
-     5→export type DelayOptions …
+     5→export type DelayOptions = {
 source/utils/is.ts
 source/utils/merge.ts
     32→function newHookValue …
@@ -239,7 +244,7 @@ source/utils/normalize.ts
     16→const defaultRetryOptions …
 source/utils/options.ts
 source/utils/timeout.ts
-     3→export type TimeoutOptions …
+     3→export type TimeoutOptions = {
 source/utils/type-guards.ts
      5→/**
       →…
@@ -254,12 +259,14 @@ source/utils/type-guards.ts
       →…
     98→export function isForceRetryError(error: unknown): error is ForceRetryError {
 source/utils/types.ts
-     1→export type Mutable …
-     5→export type ObjectEntries …
+     1→export type Mutable<T> = {
+     5→export type ObjectEntries<T> = T extends ArrayLike<infer U>
+     6→	? Array<[string, U]>
+     7→	: Array<{[K in keyof T]: [K, T[K]]}[keyof T]>;
 test/browser.ts
     13→	interface Window {
-    14→		ky: typeof ky;
-    15→	}
 test/helpers/create-http-test-server.ts
-     7→export type HttpServerOptions …
-    11→export type ExtendedHttpTestServer …
+     7→export type HttpServerOptions = {
+    11→export type ExtendedHttpTestServer = {
+test/helpers/with-page.ts
+test/helpers/with-performance.ts

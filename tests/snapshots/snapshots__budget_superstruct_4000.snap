@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4042 words)
+budget: 4000 (3972 words)
 
 Changelog.md
      1→# Changelog
@@ -262,11 +262,7 @@ src/error.ts
     42→    if (explanation != null) this.cause = msg
     43→    Object.assign(this, rest)
     44→    this.name = this.constructor.name
-    45→    this.failures = () => {
-    46→      return (cached ??= [failure, ...failures()])
-    47→    }
-    48→  }
-    49→}
+      →…
 src/struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
      2→import { StructError, Failure } from './error.js'
@@ -298,37 +294,7 @@ src/struct.ts
     29→  }) {
     30→    const {
     31→      type,
-    32→      schema,
-    33→      validator,
-    34→      refiner,
-    35→      coercer = (value: unknown) => value,
-    36→      entries = function* () {},
-    37→    } = props
-    38→
-    39→    this.type = type
-    40→    this.schema = schema
-    41→    this.entries = entries
-    42→    this.coercer = coercer
-    43→
-    44→    if (validator) {
-    45→      this.validator = (value, context) => {
-    46→        const result = validator(value, context)
-    47→        return toFailures(result, context, this, value)
-    48→      }
-    49→    } else {
-    50→      this.validator = () => []
-    51→    }
-    52→
-    53→    if (refiner) {
-    54→      this.refiner = (value, context) => {
-    55→        const result = refiner(value, context)
-    56→        return toFailures(result, context, this, value)
-    57→      }
-    58→    } else {
-    59→      this.refiner = () => []
-    60→    }
-    61→  }
-    62→
+      →…
     63→  /**
     64→   * Assert that a value passes the struct's validation, throwing if it doesn't.
     65→   */
@@ -336,7 +302,6 @@ src/struct.ts
     67→  assert(value: unknown, message?: string): asserts value is T {
     68→    return assert(value, this, message)
     69→  }
-    70→
     71→  /**
     72→   * Create a value with the struct's coercion logic, then validate it.
     73→   */
@@ -344,7 +309,6 @@ src/struct.ts
     75→  create(value: unknown, message?: string): T {
     76→    return create(value, this, message)
     77→  }
-    78→
     79→  /**
     80→   * Check if a value passes the struct's validation.
     81→   */
@@ -352,7 +316,6 @@ src/struct.ts
     83→  is(value: unknown): value is T {
     84→    return is(value, this)
     85→  }
-    86→
     87→  /**
     88→   * Mask a value, coercing and validating it, but returning only the subset of
     89→   * properties defined by the struct's schema. Masking applies recursively to
@@ -362,7 +325,6 @@ src/struct.ts
     93→  mask(value: unknown, message?: string): T {
     94→    return mask(value, this, message)
     95→  }
-    96→
     97→  /**
     98→   * Validate a value with the struct's validation logic, returning a tuple
     99→   * representing the result.
@@ -380,10 +342,7 @@ src/struct.ts
    111→      mask?: boolean
    112→      message?: string
    113→    } = {}
-   114→  ): [StructError, undefined] | [undefined, T] {
-   115→    return validate(value, this, options)
-   116→  }
-   117→}
+      →…
    119→/**
    120→ * Assert that a value passes a struct, throwing if it doesn't.
    121→ */
@@ -820,8 +779,17 @@ test/validation/coerce/changed.ts
 test/validation/coerce/condition-not-met.ts
 test/validation/coerce/unchanged.ts
 test/validation/date/invalid-date.ts
+     3→export const Struct = date()
+     5→export const data = new Date('invalid')
+     7→export const failures = [
 test/validation/date/invalid.ts
+     3→export const Struct = date()
+     5→export const data = 'invalid'
+     7→export const failures = [
 test/validation/date/valid.ts
+     3→export const Struct = date()
+     5→export const data = new Date(0)
+     7→export const output = new Date(0)
 test/validation/defaulted/function.ts
 test/validation/defaulted/mixin.ts
 test/validation/defaulted/nested-double.ts
@@ -848,12 +816,23 @@ test/validation/empty/valid-map.ts
 test/validation/empty/valid-set.ts
 test/validation/empty/valid-string.ts
 test/validation/enums/invalid-numbers.ts
+     3→export const Struct = enums([1, 2])
+     5→export const data = 'invalid'
+     7→export const failures = [
 test/validation/enums/invalid-strings.ts
+     3→export const Struct = enums(['one', 'two'])
+     5→export const data = 'invalid'
+     7→export const failures = [
 test/validation/enums/valid.ts
+     3→export const Struct = enums(['one', 'two'])
+     5→export const data = 'two'
+     7→export const output = 'two'
 test/validation/function/invalid.ts
      3→export const Struct = func()
      5→export const data = false
      7→export const failures = [
+     8→  {
+      →…
 test/validation/function/valid.ts
      3→export const Struct = func()
      5→export const data = function () {}
@@ -911,6 +890,8 @@ test/validation/never/invalid.ts
      3→export const Struct = never()
      5→export const data = true
      7→export const failures = [
+     8→  {
+      →…
 test/validation/nullable/invalid.ts
 test/validation/nullable/valid-defined-nested.ts
 test/validation/nullable/valid-defined.ts
@@ -924,21 +905,10 @@ test/validation/number/valid.ts
      3→export const Struct = number()
      5→export const data = 42
      7→export const output = 42
-test/validation/object/invalid-array.ts
-test/validation/object/invalid-element-nested.ts
-test/validation/object/invalid-opaque.ts
-test/validation/object/invalid-property-nested.ts
-test/validation/object/invalid-property-unknown.ts
-test/validation/object/invalid-property.ts
 test/validation/object/invalid-referential.ts
      3→const Section = pattern(string(), /^\d+(\.\d+)*$/)
-test/validation/object/invalid.ts
-test/validation/object/valid-frozen.ts
-test/validation/object/valid-nested.ts
-test/validation/object/valid-opaque.ts
 test/validation/object/valid-referential.ts
      3→const Section = pattern(string(), /^\d+(\.\d+)*$/)
-test/validation/object/valid.ts
 test/validation/omit/invalid-element-nested.ts
 test/validation/omit/invalid-property-nested.ts
 test/validation/omit/invalid-property-unknown.ts
@@ -968,14 +938,6 @@ test/validation/pattern/valid.ts
      3→export const Struct = pattern(string(), /\d+/)
      5→export const data = '123'
      7→export const output = '123'
-test/validation/pick/invalid-element-nested.ts
-test/validation/pick/invalid-property-nested.ts
-test/validation/pick/invalid-property-unknown.ts
-test/validation/pick/invalid-property.ts
-test/validation/pick/invalid.ts
-test/validation/pick/valid-nested.ts
-test/validation/pick/valid-type.ts
-test/validation/pick/valid.ts
 test/validation/record/invalid-array.ts
 test/validation/record/invalid-property.ts
 test/validation/record/invalid.ts

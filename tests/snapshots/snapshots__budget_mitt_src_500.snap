@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (480 words)
+budget: 500 (498 words)
 
 index.ts
      1→export type EventType = string | symbol;
@@ -24,18 +24,10 @@ index.ts
     25→
     26→	on<Key extends keyof Events>(type: Key, handler: Handler<Events[Key]>): void;
     27→	on(type: '*', handler: WildcardHandler<Events>): void;
-    28→
-    29→	off<Key extends keyof Events>(
-    30→		type: Key,
-    31→		handler?: Handler<Events[Key]>
-    32→	): void;
     33→	off(type: '*', handler: WildcardHandler<Events>): void;
-    34→
-    35→	emit<Key extends keyof Events>(type: Key, event: Events[Key]): void;
     36→	emit<Key extends keyof Events>(
     37→		type: undefined extends Events[Key] ? Key : never
     38→	): void;
-    39→}
     41→/**
     42→ * Mitt: Tiny (~200b) functional event emitter / pubsub.
     43→ * @name mitt
@@ -98,4 +90,16 @@ index.ts
    100→		 * @param {Any} [evt] Any value (object is recommended and powerful), passed to each handler
    101→		 * @memberOf mitt
    102→		 */
+   103→		emit<Key extends keyof Events>(type: Key, evt?: Events[Key]) {
+   104→			let handlers = all!.get(type);
+   105→			if (handlers) {
+   106→				(handlers as EventHandlerList<Events[keyof Events]>)
+   107→					.slice()
+   108→					.map((handler) => {
+   109→						handler(evt!);
+   110→					});
+   111→			}
+   112→
+   113→			handlers = all!.get('*');
+   114→			if (handlers) {
       →…

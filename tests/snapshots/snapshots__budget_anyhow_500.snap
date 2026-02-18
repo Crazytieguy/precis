@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (490 words)
+budget: 500 (482 words)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯ …
@@ -32,17 +32,12 @@ src/backtrace.rs
     64→macro_rules! backtrace_if_absent {
     70→#[cfg(all(not(std_backtrace), feature = "backtrace"))]
     71→mod capture {
-    72→    use alloc::borrow::{Cow, ToOwned as _};
 src/chain.rs
     11→pub(crate) struct Chain<'a> {
     16→pub(crate) enum ChainState<'a> {
     36→    type Item = &'a (dyn StdError + 'static);
 src/context.rs
     12→    pub trait StdError {
-    13→        fn ext_context<C>(self, context: C) -> Error
-    14→        where
-    15→            C: Display + Send + Sync + 'static;
-    16→    }
    189→    pub trait Sealed {}
 src/ensure.rs
     10→pub trait BothDebug {
@@ -70,7 +65,11 @@ src/lib.rs
    279→trait StdError: Debug + Display {
    286→pub use anyhow as format_err;
    390→pub struct Error {
+   391→    inner: Own<ErrorImpl>,
+   392→}
    415→pub struct Chain<'a> {
+   416→    state: crate::chain::ChainState<'a>,
+   417→}
    419→/// `Result<T, Error>`
    420→///
    421→/// This is a reasonable return type to use throughout your application but also
@@ -87,18 +86,13 @@ src/lib.rs
    616→pub trait Context<T, E>: context::private::Sealed {
    655→#[doc(hidden)]
    656→pub mod __private {
-   657→    use self::not::Bool;
-   658→    use crate::Error;
-   659→    use alloc::fmt;
    663→    pub use crate::ensure::{BothDebug, NotBothDebug};
    665→    pub use alloc::format;
    667→    pub use core::result::Result::Err;
    669→    pub use core::{concat, format_args, stringify};
    671→    #[doc(hidden)]
    672→    pub mod kind {
-   673→        #[doc(hidden)]
    674→        pub use crate::kind::{AdhocKind, TraitKind};
-   675→
    678→        pub use crate::kind::BoxedKind;
    710→        pub trait Bool {
 src/macros.rs
@@ -113,14 +107,22 @@ src/ptr.rs
      7→where
      8→    T: ?Sized,
      9→{
+    10→    pub ptr: NonNull<T>,
+    11→}
     64→pub struct Ref<'a, T>
     65→where
     66→    T: ?Sized,
     67→{
+    68→    pub ptr: NonNull<T>,
+    69→    lifetime: PhantomData<&'a T>,
+    70→}
    125→pub struct Mut<'a, T>
    126→where
    127→    T: ?Sized,
    128→{
+   129→    pub ptr: NonNull<T>,
+   130→    lifetime: PhantomData<&'a mut T>,
+   131→}
    181→pub trait CastTo {
    182→    type Target;
    183→}
@@ -142,15 +144,15 @@ tests/drop/mod.rs
     27→    has_dropped: Flag,
     28→}
 tests/test_autotrait.rs
-     3→use anyhow::Error;
 tests/test_boxed.rs
+tests/test_chain.rs
 tests/test_context.rs
     22→macro_rules! context_type {
 tests/test_ensure.rs
     43→    type Output = bool;
     78→fn assert_err …
 tests/test_ffi.rs
-     4→use anyhow::anyhow;
+tests/test_fmt.rs
 tests/test_source.rs
 tests/ui/ensure-nonbool.rs
 tests/ui/must-use.rs

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2017 words)
+budget: 2000 (1957 words)
 
 README.md
     28→## Features
@@ -79,6 +79,7 @@ site/components/code.tsx
      6→} from 'prism-react-renderer';
      8→const theme: PrismTheme = {
      9→  plain: {
+    10→    backgroundColor: '#351e11',
       →…
    104→export const Code: React.FC<{
    105→  snippet: string;
@@ -268,10 +269,6 @@ src/components/toast-icon.tsx
     22→const enter = keyframes`
     32→export const AnimatedIconWrapper = styled('div')`
     41→export type IconThemes = Partial<{
-    42→  success: CheckmarkTheme;
-    43→  error: ErrorTheme;
-    44→  loading: LoaderTheme;
-    45→}>;
     47→export const ToastIcon: React.FC<{
     48→  toast: Toast;
     49→}> = ({ toast }) => {
@@ -338,33 +335,6 @@ src/core/store.ts
     20→}
     22→export type Action =
     23→  | {
-    24→      type: ActionType.ADD_TOAST;
-    25→      toast: Toast;
-    26→    }
-    27→  | {
-    28→      type: ActionType.UPSERT_TOAST;
-    29→      toast: Toast;
-    30→    }
-    31→  | {
-    32→      type: ActionType.UPDATE_TOAST;
-    33→      toast: Partial<Toast>;
-    34→    }
-    35→  | {
-    36→      type: ActionType.DISMISS_TOAST;
-    37→      toastId?: string;
-    38→    }
-    39→  | {
-    40→      type: ActionType.REMOVE_TOAST;
-    41→      toastId?: string;
-    42→    }
-    43→  | {
-    44→      type: ActionType.START_PAUSE;
-    45→      time: number;
-    46→    }
-    47→  | {
-    48→      type: ActionType.END_PAUSE;
-    49→      time: number;
-    50→    };
     52→interface ToasterState {
     53→  toasts: Toast[];
     54→  settings: ToasterSettings;
@@ -438,12 +408,20 @@ src/core/toast.ts
     27→): Toast => ({
     28→  createdAt: Date.now(),
     29→  visible: true,
+    30→  dismissed: false,
+    31→  type,
+    32→  ariaProps: {
+    33→    role: 'status',
       →…
     42→const createHandler =
     43→  (type?: ToastType): ToastHandler =>
     44→  (message, options) => {
     45→    const toast = createToast(message, type, options);
     46→
+    47→    const dispatch = createDispatch(
+    48→      toast.toasterId || getToasterIdFromToastId(toast.id)
+    49→    );
+    50→
       →…
     55→const toast = (message: Message, opts?: ToastOptions) =>
     56→  createHandler('blank')(message, opts);
@@ -515,8 +493,6 @@ src/core/types.ts
     73→  >
     74→>;
     76→export type DefaultToastOptions = ToastOptions & {
-    77→  [key in ToastType]?: ToastOptions;
-    78→};
     80→export interface ToasterProps {
     81→  position?: ToastPosition;
     82→  toastOptions?: DefaultToastOptions;
@@ -562,7 +538,9 @@ test/setup.ts
 test/toast.test.tsx
     29→const waitTime = (time: number) => {
     30→  act(() => {
-      →…
+    31→    jest.advanceTimersByTime(time);
+    32→  });
+    33→};
     35→const TOAST_DURATION = 1000;
 tsup.config.ts
      1→import { defineConfig, Options } from 'tsup';

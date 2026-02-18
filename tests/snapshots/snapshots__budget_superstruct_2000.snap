@@ -2,10 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1941 words)
+budget: 2000 (1979 words)
 
 Changelog.md
-     1→# Changelog …
+     1→# Changelog
+     3→This document maintains a list of major changes to Superstruct with each new release.
+     4→
 Readme.md
     42→### Usage …
    145→### Why? …
@@ -45,7 +47,14 @@ docs/guides/01-getting-started.md
     30→})
     31→```
     32→
-      →…
+    33→If you'd rather use a `<script>` tag, you can use the UMD build:
+    34→
+    35→```html
+    36→<script src="https://unpkg.com/superstruct/lib/index.cjs"></script>
+    37→```
+    38→
+    39→This will expose the `Superstruct` global.
+    40→
     41→## Defining Structs …
 docs/guides/02-validating-data.md
      1→# Validating Data …
@@ -163,8 +172,11 @@ docs/summary.md
     24→- [FAQ](./resources/faq.md)
     25→- [Links](./resources/links.md)
 examples/README.md
-     1→# Examples …
+     1→# Examples
+     3→To run the examples locally, first run `npm install` in this directory. Then use node to run any of the examples like so: `node basic-validation.js`, `node composing-structs.js`, etc.
 rollup.config.js
+     1→import { defineConfig } from 'rollup'
+     2→import typescript from '@rollup/plugin-typescript'
 src/error.ts
      5→export type Failure …
     16→/**
@@ -191,16 +203,7 @@ src/error.ts
     37→    const { message, explanation, ...rest } = failure
     38→    const { path } = failure
     39→    const msg =
-    40→      path.length === 0 ? message : `At path: ${path.join('.')} -- ${message}`
-    41→    super(explanation ?? msg)
-    42→    if (explanation != null) this.cause = msg
-    43→    Object.assign(this, rest)
-    44→    this.name = this.constructor.name
-    45→    this.failures = () => {
-    46→      return (cached ??= [failure, ...failures()])
-    47→    }
-    48→  }
-    49→}
+      →…
 src/struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
      2→import { StructError, Failure } from './error.js'
@@ -227,97 +230,24 @@ src/struct.ts
     24→    schema: S
     25→    coercer?: Coercer
     26→    validator?: Validator
-    27→    refiner?: Refiner<T>
-    28→    entries?: Struct<T, S>['entries']
-    29→  }) {
-    30→    const {
-    31→      type,
-    32→      schema,
-    33→      validator,
-    34→      refiner,
-    35→      coercer = (value: unknown) => value,
-    36→      entries = function* () {},
-    37→    } = props
-    38→
-    39→    this.type = type
-    40→    this.schema = schema
-    41→    this.entries = entries
-    42→    this.coercer = coercer
-    43→
-    44→    if (validator) {
-    45→      this.validator = (value, context) => {
-    46→        const result = validator(value, context)
-    47→        return toFailures(result, context, this, value)
-    48→      }
-    49→    } else {
-    50→      this.validator = () => []
-    51→    }
-    52→
-    53→    if (refiner) {
-    54→      this.refiner = (value, context) => {
-    55→        const result = refiner(value, context)
-    56→        return toFailures(result, context, this, value)
-    57→      }
-    58→    } else {
-    59→      this.refiner = () => []
-    60→    }
-    61→  }
-    62→
+      →…
     63→  /**
-    64→   * Assert that a value passes the struct's validation, throwing if it doesn't.
-    65→   */
-    66→
+      →…
     67→  assert(value: unknown, message?: string): asserts value is T {
-    68→    return assert(value, this, message)
-    69→  }
-    70→
     71→  /**
-    72→   * Create a value with the struct's coercion logic, then validate it.
-    73→   */
-    74→
+      →…
     75→  create(value: unknown, message?: string): T {
-    76→    return create(value, this, message)
-    77→  }
-    78→
     79→  /**
-    80→   * Check if a value passes the struct's validation.
-    81→   */
-    82→
+      →…
     83→  is(value: unknown): value is T {
-    84→    return is(value, this)
-    85→  }
-    86→
     87→  /**
-    88→   * Mask a value, coercing and validating it, but returning only the subset of
-    89→   * properties defined by the struct's schema. Masking applies recursively to
-    90→   * props of `object` structs only.
-    91→   */
-    92→
+      →…
     93→  mask(value: unknown, message?: string): T {
-    94→    return mask(value, this, message)
-    95→  }
-    96→
     97→  /**
-    98→   * Validate a value with the struct's validation logic, returning a tuple
-    99→   * representing the result.
-   100→   *
-   101→   * You may optionally pass `true` for the `coerce` argument to coerce
-   102→   * the value before attempting to validate it. If you do, the result will
-   103→   * contain the coerced result when successful. Also, `mask` will turn on
-   104→   * masking of the unknown `object` props recursively if passed.
-   105→   */
-   106→
+      →…
    107→  validate(
    108→    value: unknown,
    109→    options: {
-   110→      coerce?: boolean
-   111→      mask?: boolean
-   112→      message?: string
-   113→    } = {}
-   114→  ): [StructError, undefined] | [undefined, T] {
-   115→    return validate(value, this, options)
-   116→  }
-   117→}
    119→/**
       →…
    123→export function assert<T, S>(
@@ -364,7 +294,10 @@ src/structs/refinements.ts
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
     22→  if (value instanceof Map || value instanceof Set) {
     23→    return value.size
-      →…
+    24→  } else {
+    25→    return value.length
+    26→  }
+    27→}
     33→export function max …
     55→export function min …
     77→export function nonempty …
@@ -470,6 +403,8 @@ src/utils.ts
    407→> = Index extends Length
    408→  ? Accumulated
    409→  : _InferTuple<Tuple, Length, [...Accumulated, Infer<Tuple[Index]>]>
+test/deprecated.test.ts
+test/index.test.ts
 test/index.ts
      1→/**
      2→ * A helper for testing type signatures.
@@ -477,59 +412,180 @@ test/index.ts
      4→
      5→export function test<T>(fn: (x: unknown) => T) {}
 test/typings/infer.ts
+     4→const Struct = object()
+     5→type T = Infer<typeof Struct>
 test/validation/any/valid-number.ts
 test/validation/any/valid-string.ts
 test/validation/any/valid-undefined.ts
+test/validation/assign/invalid-object.ts
+test/validation/assign/invalid-type.ts
+test/validation/assign/valid-object.ts
+test/validation/assign/valid-type.ts
 test/validation/bigint/invalid-number.ts
 test/validation/bigint/invalid.ts
 test/validation/bigint/valid.ts
 test/validation/boolean/invalid.ts
+     3→export const Struct = boolean()
+     5→export const data = 'invalid'
+     7→export const failures = [
 test/validation/boolean/valid.ts
+     3→export const Struct = boolean()
+     5→export const data = true
+     7→export const output = true
 test/validation/coerce/changed.ts
 test/validation/coerce/condition-not-met.ts
 test/validation/coerce/unchanged.ts
 test/validation/date/invalid-date.ts
 test/validation/date/invalid.ts
 test/validation/date/valid.ts
+test/validation/deprecated/invalid-null.ts
+test/validation/deprecated/invalid-property.ts
+test/validation/deprecated/invalid.ts
+test/validation/deprecated/valid-property.ts
+test/validation/deprecated/valid-undefined.ts
+test/validation/deprecated/valid.ts
+test/validation/dynamic/invalid-reference.ts
+test/validation/dynamic/invalid.ts
+test/validation/dynamic/valid-reference.ts
+test/validation/dynamic/valid.ts
+test/validation/dynamic/with-refiners.ts
 test/validation/enums/invalid-numbers.ts
 test/validation/enums/invalid-strings.ts
 test/validation/enums/valid.ts
 test/validation/function/invalid.ts
+     3→export const Struct = func()
+     5→export const data = false
+     7→export const failures = [
 test/validation/function/valid.ts
+     3→export const Struct = func()
      5→export const data = function () {}
+     7→export const output = data
 test/validation/instance/invalid.ts
+     3→export const Struct = instance(Array)
+     5→export const data = false
+     7→export const failures = [
 test/validation/instance/valid.ts
+     3→export const Struct = instance(Array)
+     5→export const data = [1]
+     7→export const output = [1]
 test/validation/integer/invalid-decimal.ts
 test/validation/integer/invalid.ts
 test/validation/integer/valid.ts
+test/validation/intersection/invalid-refinement.ts
+test/validation/intersection/invalid.ts
+test/validation/intersection/valid-refinement.ts
+test/validation/intersection/valid.ts
 test/validation/lazy/invalid.ts
 test/validation/lazy/valid.ts
 test/validation/lazy/with-refiners.ts
 test/validation/literal/invalid.ts
+     3→export const Struct = literal(42)
+     5→export const data = false
+     7→export const failures = [
 test/validation/literal/valid.ts
+     3→export const Struct = literal(42)
+     5→export const data = 42
+     7→export const output = 42
+test/validation/map/invalid-opaque.ts
+test/validation/map/invalid-property.ts
+test/validation/map/invalid.ts
+test/validation/map/valid-opaque.ts
+test/validation/map/valid.ts
+test/validation/max/invalid-exclusive.ts
+test/validation/max/invalid.ts
+test/validation/max/valid-inclusive.ts
+test/validation/max/valid.ts
+test/validation/min/invalid-exclusive.ts
+test/validation/min/invalid.ts
+test/validation/min/valid-inclusive.ts
+test/validation/min/valid.ts
 test/validation/never/invalid.ts
+     1→import { never } from '../../../src'
      3→export const Struct = never()
      5→export const data = true
      7→export const failures = [
+test/validation/nullable/invalid.ts
+test/validation/nullable/valid-defined-nested.ts
+test/validation/nullable/valid-defined.ts
+test/validation/nullable/valid-null-nested.ts
+test/validation/nullable/valid-null.ts
 test/validation/number/invalid.ts
+     3→export const Struct = number()
+     5→export const data = 'invalid'
+     7→export const failures = [
 test/validation/number/valid.ts
+     3→export const Struct = number()
+     5→export const data = 42
+     7→export const output = 42
+test/validation/object/invalid-referential.ts
+     3→const Section = pattern(string(), /^\d+(\.\d+)*$/)
+test/validation/object/valid-referential.ts
+     3→const Section = pattern(string(), /^\d+(\.\d+)*$/)
+test/validation/optional/invalid.ts
+test/validation/optional/valid-defined-nested.ts
+test/validation/optional/valid-defined.ts
+test/validation/optional/valid-undefined-nested.ts
+test/validation/optional/valid-undefined.ts
 test/validation/pattern/invalid.ts
+     3→export const Struct = pattern(string(), /\d+/)
+     5→export const data = 'invalid'
+     7→export const failures = [
 test/validation/pattern/valid.ts
+     3→export const Struct = pattern(string(), /\d+/)
+     5→export const data = '123'
+     7→export const output = '123'
+test/validation/record/invalid-array.ts
+test/validation/record/invalid-property.ts
+test/validation/record/invalid.ts
+test/validation/record/valid-frozen.ts
+test/validation/record/valid.ts
 test/validation/refine/invalid-multiple-refinements.ts
+     3→const PasswordValidator = refine(string(), 'MinimumLength', (pw) =>
+     6→const changePasswordStruct = object({
 test/validation/refine/invalid-shorthand.ts
 test/validation/refine/invalid.ts
 test/validation/refine/valid.ts
 test/validation/regexp/invalid.ts
+     3→export const Struct = regexp()
+     5→export const data = 'invalid'
+     7→export const failures = [
 test/validation/regexp/valid.ts
+     3→export const Struct = regexp()
+     5→export const data = /./
+     7→export const output = data
+test/validation/set/invalid-element.ts
+test/validation/set/invalid-opaque.ts
+test/validation/set/invalid.ts
+test/validation/set/valid-opaque.ts
+test/validation/set/valid.ts
 test/validation/string/invalid.ts
+     3→export const Struct = string()
+     5→export const data = false
+     7→export const failures = [
 test/validation/string/valid.ts
+     3→export const Struct = string()
+     5→export const data = 'valid'
+     7→export const output = 'valid'
 test/validation/trimmed/invalid.ts
 test/validation/trimmed/valid.ts
+test/validation/tuple/invalid-element-missing.ts
+test/validation/tuple/invalid-element-unknown.ts
+test/validation/tuple/invalid-element.ts
+test/validation/tuple/invalid.ts
+test/validation/tuple/valid-frozen.ts
+test/validation/tuple/valid.ts
 test/validation/type/valid-instance.ts
      3→class Person {
      4→  name: string
      5→
      6→  constructor(name: string) {
+     7→    this.name = name
+     8→  }
+test/validation/union/coercion-object.ts
+test/validation/union/coercion-type.ts
+test/validation/union/coercion.ts
+test/validation/union/invalid.ts
+test/validation/union/valid.ts
 test/validation/unknown/valid-number.ts
 test/validation/unknown/valid-string.ts
 test/validation/unknown/valid-undefined.ts

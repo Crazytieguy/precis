@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (495 words)
+budget: 500 (479 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -28,12 +28,16 @@ README.md
     60→```python
     61→import tomli
     62→
+    63→toml_str = """
+    64→[[players]]
       →…
    152→## FAQ<a name="faq"></a> …
    154→### Why this parser?<a name="why-this-parser"></a>
    156→- it's lil'
    157→- pure Python with zero dependencies
    158→- the fastest pure Python parser [\*](#pure-python):
+   159→  14x as fast as [tomlkit](https://pypi.org/project/tomlkit/),
+   160→  2.1x as fast as [toml](https://pypi.org/project/toml/)
       →…
    201→## Performance<a name="performance"></a> …
 benchmark/README.md
@@ -49,6 +53,9 @@ benchmark/README.md
     15→tox -e benchmark
     16→```
     17→
+    18→### Against the latest Tomli PyPI release
+    20→```bash
+      →…
 benchmark/run.py
     15→def benchmark …
     37→def run …
@@ -63,26 +70,19 @@ profiler/profiler_script.py
     10→import tomli
 scripts/use_setuptools.py
     12→def use_setuptools() -> None:
-setup.py
 src/tomli/__init__.py
      1→# SPDX-License-Identifier: MIT
-     2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
-     3→# Licensed to PSF under a Contributor Agreement.
-     4→
+      →…
      5→__all__ = ("loads", "load", "TOMLDecodeError")
      6→__version__ …
 src/tomli/_parser.py
     19→TYPE_CHECKING …
     26→# Inline tables/arrays are implemented using recursion. Pathologically
-    27→# nested documents cause pure Python to raise RecursionError (which is OK),
-    28→# but mypyc binary wheels will crash unrecoverably (not OK). According to
-    29→# mypyc docs this will be fixed in the future:
-    30→# https://mypyc.readthedocs.io/en/latest/differences_from_python.html#stack-overflows
       →…
     35→MAX_INLINE_NESTING: Final = sys.getrecursionlimit()
     37→ASCII_CTRL …
     39→# Neither of these sets include quotation mark or backslash. They are
-    40→# currently handled as separate cases in the parser functions.
+      →…
     41→ILLEGAL_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t")
     42→ILLEGAL_MULTILINE_BASIC_STR_CHARS …
     44→ILLEGAL_LITERAL_STR_CHARS …
@@ -99,11 +99,10 @@ src/tomli/_parser.py
     86→
    220→class Flags:
    222→
+   223→    # Marks an immutable namespace (inline array or inline table).
+   224→    FROZEN: Final = 0
    278→class NestedDict:
-   279→    def __init__(self) -> None:
    312→class Output:
-   313→    def __init__(self) -> None:
-      →…
 src/tomli/_re.py
     11→TYPE_CHECKING …
     17→_TIME_RE_STR: Final = r"""
@@ -130,6 +129,10 @@ tests/__init__.py
      5→__all__ = ("tomllib",)
 tests/burntsushi.py
 tests/test_data.py
+    11→DATA_DIR …
+    13→VALID_FILES …
+    21→VALID_FILES_EXPECTED …
+    23→INVALID_FILES …
     27→class TestData(unittest.TestCase):
 tests/test_error.py
     13→class TestError(unittest.TestCase):
@@ -142,6 +145,7 @@ tomllib.md
      5→Relevant links:
      6→
      7→- Python Issue Tracker: https://bugs.python.org/issue40059
+     8→- Tomli issue tracker: https://github.com/hukkin/tomli/issues/141
       →…
     13→## Converting Tomli to tomllib …
     15→### Sync status

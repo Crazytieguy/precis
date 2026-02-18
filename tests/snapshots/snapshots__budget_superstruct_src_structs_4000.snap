@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4072 words)
+budget: 4000 (3986 words)
 
 coercions.ts
      1→import { Struct, is, Coercer } from '../struct.js'
@@ -66,13 +66,7 @@ coercions.ts
     61→      }
     62→
     63→      if (changed) {
-    64→        return ret
-    65→      }
-    66→    }
-    67→
-    68→    return x
-    69→  })
-    70→}
+      →…
     72→/**
     73→ * Augment a struct to trim string inputs.
     74→ *
@@ -211,8 +205,7 @@ refinements.ts
    132→        `${expected} with a length ${of} but received one with a length of \`${length}\``
    133→      )
    134→    }
-   135→  })
-   136→}
+      →…
    138→/**
    139→ * Augment a `Struct` to add an additional refinement to the validation.
    140→ *
@@ -562,7 +555,7 @@ types.ts
    390→      return isNonArrayObject(value) ? { ...value } : value
    391→    },
    392→  })
-   393→}
+      →…
    395→/**
    396→ * Ensure that a value is a `RegExp`.
    397→ *
@@ -639,9 +632,7 @@ types.ts
    478→    },
    479→    coercer(value) {
    480→      return Array.isArray(value) ? value.slice() : value
-   481→    },
-   482→  })
-   483→}
+      →…
    485→/**
    486→ * Ensure that a value has a set of known properties of specific types.
    487→ *
@@ -703,28 +694,7 @@ types.ts
    544→
    545→      for (const S of Structs) {
    546→        const [...tuples] = run(value, S, ctx)
-   547→        const [first] = tuples
-   548→
-   549→        if (!first[0]) {
-   550→          return []
-   551→        } else {
-   552→          for (const [failure] of tuples) {
-   553→            if (failure) {
-   554→              failures.push(failure)
-   555→            }
-   556→          }
-   557→        }
-   558→      }
-   559→
-   560→      return [
-   561→        `Expected the value to satisfy a union of \`${description}\`, but received: ${print(
-   562→          value
-   563→        )}`,
-   564→        ...failures,
-   565→      ]
-   566→    },
-   567→  })
-   568→}
+      →…
    570→/**
    571→ * Ensure that any value passes validation, without widening its type to `any`.
    572→ */

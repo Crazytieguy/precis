@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1943 words)
+budget: 2000 (1898 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -41,7 +41,6 @@ crates/mdbook-core/src/book/tests.rs
      1→use super::*;
 crates/mdbook-core/src/book.rs
      3→use serde::{Deserialize, Serialize};
-    99→fn for_each_mut …
    245→    type Target = Vec<u32>;
    274→    type Item = &'a BookItem;
 crates/mdbook-core/src/config.rs
@@ -49,7 +48,6 @@ crates/mdbook-core/src/config.rs
     81→fn is_default …
     86→fn toml_is_empty …
     91→    type Err = Error;
-   308→fn parse_env …
    336→fn is_default_src …
    718→trait Updateable<'de>: Serialize + Deserialize<'de> {
 crates/mdbook-core/src/lib.rs
@@ -63,7 +61,6 @@ crates/mdbook-core/src/lib.rs
     13→/// The error types used in mdbook.
     14→pub mod errors {
     15→    pub use anyhow::{Error, Result};
-    16→}
 crates/mdbook-core/src/utils/fs.rs
    155→fn copy …
 crates/mdbook-core/src/utils/html.rs
@@ -88,17 +85,17 @@ crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
     17→    root: PathBuf,
     18→    optional: bool,
     19→}
-    23→    pub fn new(name: String, cmd: String, root: PathBuf, optional: bool) -> CmdPreprocessor {
-    52→    pub fn cmd(&self) -> &str {
+    23→    pub fn new …
+    52→    pub fn cmd …
 crates/mdbook-driver/src/builtin_preprocessors/index.rs
     12→pub struct IndexPreprocessor;
     16→    pub const NAME: &'static str = "index";
-    19→    pub fn new() -> Self {
+    19→    pub fn new …
 crates/mdbook-driver/src/builtin_preprocessors/links/take_lines.rs
 crates/mdbook-driver/src/builtin_preprocessors/links.rs
     32→pub struct LinkPreprocessor;
     36→    pub const NAME: &'static str = "links";
-    39→    pub fn new() -> Self {
+    39→    pub fn new …
    398→struct LinkIter<'a>(CaptureMatches<'a, 'a>);
    401→    type Item = Link<'a>;
 crates/mdbook-driver/src/builtin_preprocessors/mod.rs
@@ -166,13 +163,13 @@ crates/mdbook-html/src/html/admonitions.rs
 crates/mdbook-html/src/html/mod.rs
 crates/mdbook-html/src/html/tokenizer.rs
     22→    type Handle = ();
-    24→    fn process_token(&self, token: Token, _line_number: u64) -> TokenSinkResult<()> {
+    24→    fn process_token …
 crates/mdbook-html/src/html/tree.rs
     25→macro_rules! attr_qual_name {
    126→type Attributes = IndexMap<QualName, StrTendril>;
    130→    /// Converts self to a [`StrTendril`].
    131→    fn into_tendril(self) -> StrTendril;
-   135→    fn into_tendril(self) -> StrTendril {
+   135→    fn into_tendril …
 crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
     19→/// The HTML renderer for mdBook.
     20→#[derive(Default)]
@@ -189,6 +186,7 @@ crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
       →…
    649→type CombinedRedirects = BTreeMap<String, (String, BTreeMap<String, String>)>;
 crates/mdbook-html/src/html_handlebars/helpers/fontawesome.rs
+crates/mdbook-html/src/html_handlebars/helpers/mod.rs
 crates/mdbook-html/src/html_handlebars/helpers/resources.rs
     11→pub(crate) struct ResourceHelper {
     16→    fn call …
@@ -234,7 +232,6 @@ crates/mdbook-html/src/utils.rs
      4→use std::path::{Component, Path, PathBuf};
     42→pub(crate) trait ToUrlPath {
     43→    fn to_url_path(&self) -> String;
-    44→}
     46→impl ToUrlPath for Path {
     47→    fn to_url_path(&self) -> String {
 crates/mdbook-markdown/README.md
@@ -288,15 +285,14 @@ crates/mdbook-preprocessor/src/lib.rs
     20→pub use mdbook_core::config;
     21→pub use mdbook_core::errors;
     30→pub trait Preprocessor {
-    31→    /// Get the `Preprocessor`'s name.
     32→    fn name(&self) -> &str;
-    33→
     36→    fn run(&self, ctx: &PreprocessorContext, book: Book) -> Result<Book>;
     42→    fn supports_renderer(&self, _renderer: &str) -> Result<bool> {
     51→pub struct PreprocessorContext {
     52→    /// The location of the book directory on disk.
     53→    pub root: PathBuf,
     54→    /// The book configuration (`book.toml`).
+    55→    pub config: Config,
       →…
     68→impl PreprocessorContext {
     70→    pub fn new(root: PathBuf, config: Config, renderer: String) -> Self {
@@ -315,11 +311,13 @@ crates/mdbook-renderer/src/lib.rs
     19→pub use mdbook_core::config;
     20→pub use mdbook_core::errors;
     28→pub trait Renderer {
-    29→    /// The `Renderer`'s name.
     30→    fn name …
     34→    fn render …
     40→pub struct RenderContext {
     41→    /// Which version of `mdbook` did this come from (as written in `mdbook`'s
+    42→    /// `Cargo.toml`). Useful if you know the renderer is only compatible with
+    43→    /// certain versions of `mdbook`.
+    44→    pub version: String,
       →…
     63→impl RenderContext {
     65→    pub fn new …
@@ -362,11 +360,9 @@ crates/xtask/README.md
      4→See [CONTRIBUTING.md](../../CONTRIBUTING.md) for how to use this.
 crates/xtask/src/changelog.rs
      3→use super::Result;
-     8→const CHANGELOG_PATH …
 crates/xtask/src/main.rs
      3→use std::collections::BTreeMap;
      9→mod changelog;
-    11→type Result …
 eslint.config.mjs
      7→            preprocess(text, filename) {
     16→            postprocess(messages, filename) {
@@ -497,14 +493,6 @@ src/cmd/clean.rs
 src/cmd/command_prelude.rs
      3→pub use clap::{Arg, ArgMatches, Command, arg};
      7→pub trait CommandExt: Sized {
-     8→    fn _arg(self, arg: Arg) -> Self;
-     9→
-    10→    fn arg_dest_dir(self) -> Self {
-    11→        self._arg(
-    12→            Arg::new("dest-dir")
-    13→                .short('d')
-    14→                .long("dest-dir")
-    15→                .value_name("dest-dir")
     41→    #[cfg(any(feature = "watch", feature = "serve"))]
     42→    fn arg_watcher(self) -> Self {
 src/cmd/init.rs

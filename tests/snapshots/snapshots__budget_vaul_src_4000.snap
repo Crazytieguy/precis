@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4083 words)
+budget: 4000 (3961 words)
 
 browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -102,7 +102,17 @@ context.ts
     54→  modal: false,
     55→  shouldFade: false,
     56→  activeSnapPoint: null,
-      →…
+    57→  onOpenChange: () => {},
+    58→  setActiveSnapPoint: () => {},
+    59→  closeDrawer: () => {},
+    60→  direction: 'bottom',
+    61→  shouldAnimate: { current: true },
+    62→  shouldScaleBackground: false,
+    63→  setBackgroundColorOnScale: true,
+    64→  noBodyStyles: false,
+    65→  container: null,
+    66→  autoFocus: false,
+    67→});
     69→export const useDrawerContext = () => {
     70→  const context = React.useContext(DrawerContext);
     71→  if (!context) {
@@ -269,88 +279,7 @@ index.tsx
     53→  children?: React.ReactNode;
     54→  open?: boolean;
     55→  /**
-    56→   * Number between 0 and 1 that determines when the drawer should be closed.
-    57→   * Example: threshold of 0.5 would close the drawer if the user swiped for 50% of the height of the drawer or more.
-    58→   * @default 0.25
-    59→   */
-    60→  closeThreshold?: number;
-    61→  /**
-    62→   * When `true` the `body` doesn't get any styles assigned from Vaul
-    63→   */
-    64→  noBodyStyles?: boolean;
-    65→  onOpenChange?: (open: boolean) => void;
-    66→  shouldScaleBackground?: boolean;
-    67→  /**
-    68→   * When `false` we don't change body's background color when the drawer is open.
-    69→   * @default true
-    70→   */
-    71→  setBackgroundColorOnScale?: boolean;
-    72→  /**
-    73→   * Duration for which the drawer is not draggable after scrolling content inside of the drawer.
-    74→   * @default 500ms
-    75→   */
-    76→  scrollLockTimeout?: number;
-    77→  /**
-    78→   * When `true`, don't move the drawer upwards if there's space, but rather only change it's height so it's fully scrollable when the keyboard is open
-    79→   */
-    80→  fixed?: boolean;
-    81→  /**
-    82→   * When `true` only allows the drawer to be dragged by the `<Drawer.Handle />` component.
-    83→   * @default false
-    84→   */
-    85→  handleOnly?: boolean;
-    86→  /**
-    87→   * When `false` dragging, clicking outside, pressing esc, etc. will not close the drawer.
-    88→   * Use this in comination with the `open` prop, otherwise you won't be able to open/close the drawer.
-    89→   * @default true
-    90→   */
-    91→  dismissible?: boolean;
-    92→  onDrag?: (event: React.PointerEvent<HTMLDivElement>, percentageDragged: number) => void;
-    93→  onRelease?: (event: React.PointerEvent<HTMLDivElement>, open: boolean) => void;
-    94→  /**
-    95→   * When `false` it allows to interact with elements outside of the drawer without closing it.
-    96→   * @default true
-    97→   */
-    98→  modal?: boolean;
-    99→  nested?: boolean;
-   100→  onClose?: () => void;
-   101→  /**
-   102→   * Direction of the drawer. Can be `top` or `bottom`, `left`, `right`.
-   103→   * @default 'bottom'
-   104→   */
-   105→  direction?: 'top' | 'bottom' | 'left' | 'right';
-   106→  /**
-   107→   * Opened by default, skips initial enter animation. Still reacts to `open` state changes
-   108→   * @default false
-   109→   */
-   110→  defaultOpen?: boolean;
-   111→  /**
-   112→   * When set to `true` prevents scrolling on the document body on mount, and restores it on unmount.
-   113→   * @default false
-   114→   */
-   115→  disablePreventScroll?: boolean;
-   116→  /**
-   117→   * When `true` Vaul will reposition inputs rather than scroll then into view if the keyboard is in the way.
-   118→   * Setting it to `false` will fall back to the default browser behavior.
-   119→   * @default true when {@link snapPoints} is defined
-   120→   */
-   121→  repositionInputs?: boolean;
-   122→  /**
-   123→   * Disabled velocity based swiping for snap points.
-   124→   * This means that a snap point won't be skipped even if the velocity is high enough.
-   125→   * Useful if each snap point in a drawer is equally important.
-   126→   * @default false
-   127→   */
-   128→  snapToSequentialPoint?: boolean;
-   129→  container?: HTMLElement | null;
-   130→  /**
-   131→   * Gets triggered after the open or close animation ends, it receives an `open` argument with the `open` state of the drawer by the time the function was triggered.
-   132→   * Useful to revert any state changes for example.
-   133→   */
-   134→  onAnimationEnd?: (open: boolean) => void;
-   135→  preventScrollRestoration?: boolean;
-   136→  autoFocus?: boolean;
-   137→} & (WithFadeFromProps | WithoutFadeFromProps);
+      →…
    139→export function Root({
    140→  open: openProp,
    141→  onOpenChange,
@@ -410,6 +339,71 @@ index.tsx
    195→      }
    196→    },
    197→  });
+   198→  const [hasBeenOpened, setHasBeenOpened] = React.useState<boolean>(false);
+   199→  const [isDragging, setIsDragging] = React.useState<boolean>(false);
+   200→  const [justReleased, setJustReleased] = React.useState<boolean>(false);
+   201→  const overlayRef = React.useRef<HTMLDivElement>(null);
+   202→  const openTime = React.useRef<Date | null>(null);
+   203→  const dragStartTime = React.useRef<Date | null>(null);
+   204→  const dragEndTime = React.useRef<Date | null>(null);
+   205→  const lastTimeDragPrevented = React.useRef<Date | null>(null);
+   206→  const isAllowedToDrag = React.useRef<boolean>(false);
+   207→  const nestedOpenChangeTimer = React.useRef<NodeJS.Timeout | null>(null);
+   208→  const pointerStart = React.useRef(0);
+   209→  const keyboardIsOpen = React.useRef(false);
+   210→  const shouldAnimate = React.useRef(!defaultOpen);
+   211→  const previousDiffFromInitial = React.useRef(0);
+   212→  const drawerRef = React.useRef<HTMLDivElement>(null);
+   213→  const drawerHeightRef = React.useRef(drawerRef.current?.getBoundingClientRect().height || 0);
+   214→  const drawerWidthRef = React.useRef(drawerRef.current?.getBoundingClientRect().width || 0);
+   215→  const initialDrawerHeight = React.useRef(0);
+   216→
+   217→  const onSnapPointChange = React.useCallback((activeSnapPointIndex: number) => {
+   218→    // Change openTime ref when we reach the last snap point to prevent dragging for 500ms incase it's scrollable.
+   219→    if (snapPoints && activeSnapPointIndex === snapPointsOffset.length - 1) openTime.current = new Date();
+   220→  }, []);
+   221→
+   222→  const {
+   223→    activeSnapPoint,
+   224→    activeSnapPointIndex,
+   225→    setActiveSnapPoint,
+   226→    onRelease: onReleaseSnapPoints,
+   227→    snapPointsOffset,
+   228→    onDrag: onDragSnapPoints,
+   229→    shouldFade,
+   230→    getPercentageDragged: getSnapPointsPercentageDragged,
+   231→  } = useSnapPoints({
+   232→    snapPoints,
+   233→    activeSnapPointProp,
+   234→    setActiveSnapPointProp,
+   235→    drawerRef,
+   236→    fadeFromIndex,
+   237→    overlayRef,
+   238→    onSnapPointChange,
+   239→    direction,
+   240→    container,
+   241→    snapToSequentialPoint,
+   242→  });
+   243→
+   244→  usePreventScroll({
+   245→    isDisabled:
+   246→      !isOpen || isDragging || !modal || justReleased || !hasBeenOpened || !repositionInputs || !disablePreventScroll,
+   247→  });
+   248→
+   249→  const { restorePositionSetting } = usePositionFixed({
+   250→    isOpen,
+   251→    modal,
+   252→    nested: nested ?? false,
+   253→    hasBeenOpened,
+   254→    preventScrollRestoration,
+   255→    noBodyStyles,
+   256→  });
+   257→
+   258→  function getScale() {
+   259→    return (window.innerWidth - WINDOW_TOP_OFFSET) / window.innerWidth;
+   260→  }
+   261→
+   262→  function onPress(event: React.PointerEvent<HTMLDivElement>) {
       →…
    803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(
    804→  function ({ ...rest }, ref) {
@@ -417,7 +411,6 @@ index.tsx
    806→    const composedRef = useComposedRefs(ref, overlayRef);
    807→    const hasSnapPoints = snapPoints && snapPoints.length > 0;
    808→    const onMouseUp = React.useCallback((event: React.PointerEvent<HTMLDivElement>) => onRelease(event), [onRelease]);
-   809→
       →…
    831→export type ContentProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
    833→export const Content = React.forwardRef<HTMLDivElement, ContentProps>(function (
@@ -426,7 +419,6 @@ index.tsx
    836→) {
    837→  const {
    838→    drawerRef,
-   839→    onPress,
       →…
    989→export type HandleProps = React.ComponentPropsWithoutRef<'div'> & {
    990→  preventCycle?: boolean;
@@ -439,7 +431,6 @@ index.tsx
    999→) {
   1000→  const {
   1001→    closeDrawer,
-  1002→    isDragging,
       →…
   1098→export function NestedRoot({ onDrag, onOpenChange, open: nestedIsOpen, ...rest }: DialogProps) {
   1099→  const { onNestedDrag, onNestedOpenChange, onNestedRelease } = useDrawerContext();
@@ -483,7 +474,6 @@ index.tsx
   1140→  Content,
   1141→  Overlay,
   1142→  Trigger: DialogPrimitive.Trigger,
-  1143→  Portal,
       →…
 types.ts
      1→export type DrawerDirection = 'top' | 'bottom' | 'left' | 'right';
@@ -931,4 +921,29 @@ use-snap-points.ts
     72→      snapPoints[fadeFromIndex] === activeSnapPoint) ||
     73→    !snapPoints;
     74→
+    75→  const snapPointsOffset = React.useMemo(() => {
+    76→    const containerSize = container
+    77→      ? { width: container.getBoundingClientRect().width, height: container.getBoundingClientRect().height }
+    78→      : typeof window !== 'undefined'
+    79→      ? { width: window.innerWidth, height: window.innerHeight }
+    80→      : { width: 0, height: 0 };
+    81→
+    82→    return (
+    83→      snapPoints?.map((snapPoint) => {
+    84→        const isPx = typeof snapPoint === 'string';
+    85→        let snapPointAsNumber = 0;
+    86→
+    87→        if (isPx) {
+    88→          snapPointAsNumber = parseInt(snapPoint, 10);
+    89→        }
+    90→
+    91→        if (isVertical(direction)) {
+    92→          const height = isPx ? snapPointAsNumber : windowDimensions ? snapPoint * containerSize.height : 0;
+    93→
+    94→          if (windowDimensions) {
+    95→            return direction === 'bottom' ? containerSize.height - height : -containerSize.height + height;
+    96→          }
+    97→
+    98→          return height;
+    99→        }
       →…

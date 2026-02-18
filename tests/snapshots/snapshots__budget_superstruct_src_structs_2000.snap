@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2039 words)
+budget: 2000 (1977 words)
 
 coercions.ts
      1→import { Struct, is, Coercer } from '../struct.js'
@@ -141,9 +141,6 @@ types.ts
     38→      if (Element && Array.isArray(value)) {
     39→        for (const [i, v] of value.entries()) {
     40→          yield [i, v, Element]
-    41→        }
-    42→      }
-    43→    },
       →…
     56→/**
     57→ * Ensure that a value is a bigint.
@@ -173,9 +170,6 @@ types.ts
    112→    schema[key] = key
    113→  }
    114→
-   115→  return new Struct({
-   116→    type: 'enums',
-   117→    schema,
       →…
    127→/**
    128→ * Ensure that a value is a function.
@@ -209,9 +203,6 @@ types.ts
    209→    schema:
    210→      t === 'string' || t === 'number' || t === 'boolean' ? constant : null,
    211→    validator(value) {
-   212→      return (
-   213→        value === constant ||
-   214→        `Expected the literal \`${description}\`, but received: ${print(value)}`
       →…
    230→export function map<K, V>(Key?: Struct<K>, Value?: Struct<V>): any {
    231→  return new Struct({
@@ -221,9 +212,6 @@ types.ts
    235→      if (Key && Value && value instanceof Map) {
    236→        for (const [k, v] of value.entries()) {
    237→          yield [k as string, k, Key]
-   238→          yield [k as string, v, Value]
-   239→        }
-   240→      }
       →…
    254→/**
    255→ * Ensure that no value ever passes validation.
@@ -248,9 +236,6 @@ types.ts
    303→    schema: schema ? schema : null,
    304→    *entries(value) {
    305→      if (schema && isObject(value)) {
-   306→        const unknowns = new Set(Object.keys(value))
-   307→
-   308→        for (const key of knowns) {
       →…
    347→/**
    348→ * Augment a struct to allow `undefined` values.
@@ -284,9 +269,6 @@ types.ts
    420→      if (Element && value instanceof Set) {
    421→        for (const v of value) {
    422→          yield [v as string, v, Element]
-   423→        }
-   424→      }
-   425→    },
       →…
    438→/**
    439→ * Ensure that a value is a string.

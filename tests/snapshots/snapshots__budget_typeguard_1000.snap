@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1001 words)
+budget: 1000 (975 words)
 
 docs/conf.py
      2→from importlib.metadata import version as get_version
@@ -12,17 +12,9 @@ src/typeguard/__init__.py
 src/typeguard/_checkers.py
     42→from typing_extensions import is_typeddict
     81→TypeCheckerCallable: TypeAlias = Callable[
-    82→    [Any, Any, Tuple[Any, ...], TypeCheckMemo], Any
-    83→]
     84→TypeCheckLookupCallback: TypeAlias = Callable[
-    85→    [Any, Tuple[Any, ...], Tuple[Any, ...]], Optional[TypeCheckerCallable]
-    86→]
     88→checker_lookup_functions: list[TypeCheckLookupCallback] = []
     89→generic_alias_types: tuple[type, ...] = (
-    90→    type(List),
-    91→    type(List[Any]),
-    92→    types.GenericAlias,
-    93→)
     98→# Lifted from mypy.sharedparse
     99→BINARY_MAGIC_METHODS = {
    100→    "__add__",
@@ -30,7 +22,6 @@ src/typeguard/_checkers.py
    102→    "__cmp__",
    103→    "__divmod__",
    104→    "__div__",
-   105→    "__eq__",
       →…
    586→def _is_literal_type(typ: object) -> bool:
   1004→# Equality checks are applied to these
@@ -40,16 +31,54 @@ src/typeguard/_checkers.py
   1008→    bytes: check_byteslike,
   1009→    AbstractSet: check_set,
   1010→    BinaryIO: check_io,
-  1011→    Callable: check_callable,
       →…
 src/typeguard/_config.py
     11→T = TypeVar("T")
     14→class ForwardRefPolicy(Enum):
-    24→
+    15→    """
       →…
+    24→
+    25→    ERROR = auto()
+    26→    WARN = auto()
+    27→    IGNORE = auto()
     30→class CollectionCheckStrategy(Enum):
+    31→    """
+      →…
     48→
+    49→    FIRST_ITEM = auto()
+    50→    ALL_ITEMS = auto()
+    51→
+    62→@dataclass
     63→class TypeCheckConfiguration:
+    64→    """
+    65→     You can change Typeguard's behavior with these settings.
+    66→
+    67→    .. attribute:: typecheck_fail_callback
+    68→       :type: Callable[[TypeCheckError, TypeCheckMemo], Any]
+    69→
+    70→         Callable that is called when type checking fails.
+    71→
+    72→         Default: ``None`` (the :exc:`~.TypeCheckError` is raised directly)
+    73→
+    74→    .. attribute:: forward_ref_policy
+    75→       :type: ForwardRefPolicy
+    76→
+    77→         Specifies what to do when a forward reference fails to resolve.
+    78→
+    79→         Default: ``WARN``
+    80→
+    81→    .. attribute:: collection_check_strategy
+    82→       :type: CollectionCheckStrategy
+    83→
+    84→         Specifies how thoroughly the contents of collections (list, dict, etc.) are
+    85→         type checked.
+    86→
+    87→         Default: ``FIRST_ITEM``
+    88→
+    89→    .. attribute:: debug_instrumentation
+    90→       :type: bool
+    91→
+      →…
     97→
     98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
     99→    typecheck_fail_callback: TypeCheckFailCallback | None = None
@@ -60,11 +89,17 @@ src/typeguard/_config.py
 src/typeguard/_decorators.py
 src/typeguard/_exceptions.py
      5→class TypeHintWarning(UserWarning):
+     6→    """
+      →…
     12→class TypeCheckWarning(UserWarning):
+    13→    """Emitted by typeguard's type checkers when a type mismatch is detected."""
     14→
     19→class InstrumentationWarning(UserWarning):
+    20→    """Emitted when there's a problem with instrumenting a function for type checks."""
     21→
     26→class TypeCheckError(Exception):
+    27→    """
+      →…
     30→
 src/typeguard/_functions.py
     24→T = TypeVar("T")
@@ -120,12 +155,20 @@ src/typeguard/_importhook.py
     95→        return _call_with_frames_removed(
       →…
    109→class TypeguardFinder(MetaPathFinder):
+   110→    """
+      →…
    119→
    156→class ImportHookManager:
+   157→    """
+      →…
    160→
 src/typeguard/_memo.py
      8→class TypeCheckMemo:
+     9→    """
+      →…
     34→
+    35→    __slots__ = "globals", "locals", "self_type", "config"
+    36→
 src/typeguard/_pytest_plugin.py
 src/typeguard/_suppression.py
     15→P = ParamSpec("P")
@@ -133,6 +176,7 @@ src/typeguard/_suppression.py
 src/typeguard/_transformer.py
     67→PreliminaryNameTypePair: typing.TypeAlias = tuple[Constant, "expr | None"]
     68→NameTypePair: typing.TypeAlias = tuple[Constant, expr]
+   117→@dataclass
    118→class TransformMemo:
    119→    node: Module | ClassDef | FunctionDef | AsyncFunctionDef | None
    120→    parent: TransformMemo | None
@@ -156,56 +200,23 @@ src/typeguard/_transformer.py
    138→    configuration_overrides: dict[str, Any] = field(init=False, default_factory=dict)
    139→    code_inject_index: int = field(init=False, default=0)
    140→
-   141→    def __post_init__(self) -> None:
-   142→        elements: list[str] = []
-   143→        memo = self
-   144→        while isinstance(memo.node, (ClassDef, FunctionDef, AsyncFunctionDef)):
-   145→            elements.insert(0, memo.node.name)
-   146→            if not memo.parent:
-   147→                break
-   148→
-   149→            memo = memo.parent
-   150→            if isinstance(memo.node, (FunctionDef, AsyncFunctionDef)):
-   151→                elements.insert(0, "<locals>")
-   152→
-   153→        self.joined_path = Constant(".".join(elements))
-   154→
-   155→        # Figure out where to insert instrumentation code
-   156→        if self.node:
-   157→            for index, child in enumerate(self.node.body):
-   158→                if isinstance(child, ImportFrom) and child.module == "__future__":
-   159→                    # (module only) __future__ imports must come first
-   160→                    continue
-   161→                elif (
-   162→                    isinstance(child, Expr)
-   163→                    and isinstance(child.value, Constant)
-   164→                    and isinstance(child.value.value, str)
-   165→                ):
-   166→                    continue  # docstring
-   167→
-   168→                self.code_inject_index = index
-   169→                break
-   170→
-   171→    def get_unused_name(self, name: str) -> str:
-   172→        memo: TransformMemo | None = self
-   173→        while memo is not None:
-   174→            if name in memo.local_names:
-   175→                memo = self
-   176→                name += "_"
-   177→            else:
-   178→                memo = memo.parent
-   179→
-   180→        self.local_names.add(name)
-   181→        return name
-   182→
    285→class NameCollector(NodeVisitor):
-   286→    def __init__(self) -> None:
    313→class GeneratorDetector(NodeVisitor):
+   314→    """Detects if a function node is a generator function."""
    315→
+   316→    contains_yields: bool = False
+   317→    in_root_function: bool = False
+   318→
    338→class AnnotationTransformer(NodeTransformer):
    339→    type_substitutions: ClassVar[dict[str, tuple[str, str]]] = {
+   340→        "builtins.dict": ("typing", "Dict"),
+   341→        "builtins.list": ("typing", "List"),
+   342→        "builtins.tuple": ("typing", "Tuple"),
+   343→        "builtins.set": ("typing", "Set"),
+   344→        "builtins.frozenset": ("typing", "FrozenSet"),
+   345→    }
+   346→
    488→class TypeguardTransformer(NodeTransformer):
-   489→    def __init__(
    516→    @contextmanager
    517→    def _use_memo(
    518→        self, node: ClassDef | FunctionDef | AsyncFunctionDef
@@ -220,34 +231,31 @@ src/typeguard/_transformer.py
    570→    def _get_import(self, module: str, name: str) -> Name:
    580→    def _convert_annotation(self, annotation: expr | None) -> expr | None:
 src/typeguard/_utils.py
+   172→@final
    173→class Unset:
    174→    __slots__ = ()
    175→
-   176→    def __repr__(self) -> str:
-   177→        return "<unset>"
 tests/__init__.py
 tests/conftest.py
 tests/deferredannos.py
 tests/dummymodule.py
     40→T = TypeVar("T", bound="DummyClass")
     41→P = ParamSpec("P")
+    76→@typechecked
     77→class DummyClass(metaclass=Metaclass):
     78→    bar: str
     79→    baz: int
     80→
+   117→@typechecked
    118→class Outer:
-   119→    class Inner:
-   120→        pass
-   121→
+   304→@typechecked(typecheck_fail_callback=lambda exc, memo: print(exc))
    305→class OverrideClass:
-   306→    def override_typecheck_fail_callback(self, value: int) -> None:
-   307→        pass
-   308→
+   364→# Regression test for #536 - forward reference evaluation on Python 3.14
    365→class ModuleLocalClass:
+   366→    """A class only available in this module's namespace, not the caller's."""
 tests/dummymodule_py312.py
+    16→@typechecked
     17→class ParametrizedClass[T]:
-    18→    def method(self, x: T, y: str) -> T:
-    19→        return x
 tests/mypy/negative.py
      4→@typechecked
      5→def foo(x: int) -> int:
@@ -263,11 +271,6 @@ tests/mypy/negative.py
     30→def ret_type() -> str:
     38→@typechecked
     39→class MyClass:
-    40→    def __init__(self, x: int = 0) -> None:
-    41→        self.x = x
-    42→
-    43→    def add(self, y: int) -> int:
-    44→        return self.x + y
 tests/mypy/positive.py
      6→@typechecked
      7→def foo(x: str) -> str:
@@ -275,11 +278,6 @@ tests/mypy/positive.py
     19→def has_valid_arguments(x: int, y: str) -> None:
     27→@typechecked
     28→class MyClass:
-    29→    def __init__(self, x: int) -> None:
-    30→        self.x = x
-    31→
-    32→    def add(self, y: int) -> int:
-    33→        return self.x + y
     40→@typechecked
     41→def get_value_checked(c: MyClass) -> int:
     49→@typechecked

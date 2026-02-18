@@ -2,36 +2,19 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (501 words)
+budget: 500 (499 words)
 
 BuildMany.ts
-    11→type BuildOne …
 DeepExclude.ts
 DistributeUnions.ts
     41→export type DistributeMatchingUnions …
     80→export type FindUnions …
 ExtractPreciseValue.ts
-    81→type ExtractPreciseArrayValue …
 FindSelected.ts
-    11→type SelectionsRecord …
-    24→type MapOptional …
-    31→type MapList …
-    38→type ReduceFindSelectionUnion …
-    47→type FindSelectionUnionInArray …
 InvertPattern.ts
-    29→type OptionalKeys …
-    39→type ReduceUnion …
-    47→type ReduceIntersection …
-    55→type InvertArrayPattern …
    106→export type InvertPattern …
-   110→type InvertPatternInternal …
-   204→type ExcludeIfExists …
-   231→type InvertArrayPatternForExclude …
    303→export type InvertPatternForExclude …
-   307→type InvertPatternForExcludeInternal …
 IsMatching.ts
-    12→type IsMatchingTuple …
-    26→type IsMatchingArray …
 Match.ts
     10→interface NonExhaustiveError<i> {
     11→  __nonExhaustive: never;
@@ -64,9 +47,22 @@ Match.ts
    180→  otherwise …
    205→  run …
    225→  narrow …
-   245→type DeepExcludeAll …
-   251→type MakeTuples …
-   261→type Exhaustive …
+   228→/**
+   229→ * Potential for optimization here:
+   230→ *
+   231→ * Since DeepExclude distributes the union of the input type, it can
+      →…
+   245→type DeepExcludeAll<a, tupleList extends any[]> = [a] extends [never]
+   246→  ? never
+   247→  : tupleList extends [infer excluded, ...infer tail]
+   248→  ? DeepExcludeAll<DeepExclude<a, excluded>, tail>
+   249→  : a;
+   255→/**
+   256→ * The type of an overloaded function for `.exhaustive`,
+   257→ * permitting calling it with or without a catch-all handler function.
+   258→ *
+      →…
+   261→type Exhaustive<output, inferredOutput> = {
 Pattern.ts
     43→/**
     44→ * A `Matcher` is an object implementing the match
@@ -95,17 +91,10 @@ Pattern.ts
     67→  // only used for array matchers
     68→  [symbols.isVariadic]?: boolean;
     69→}
-    71→type PatternMatcher …
-    81→type UnknownMatcher …
    132→export interface Override<a> {
    133→  [symbols.override]: a;
    134→}
    157→export type Pattern …
-   161→type KnownPattern …
-   163→type KnownPatternInternal …
-   174→type ObjectPattern …
-   180→type ArrayPattern …
-   203→type MergeGuards …
    223→      optional …
    237→      and …
    253→      or …
@@ -142,7 +131,6 @@ Pattern.ts
 helpers.ts
     14→export type LeastUpperBound …
    182→export type GuardValue …
-   204→type AllKeys …
    266→export interface Fn {
    267→  input: unknown;
    268→  output: unknown;

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1960 words)
+budget: 2000 (1973 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -71,6 +71,10 @@ examples/regex.rs
 examples/test_synchronization.rs
     10→use once_cell::sync::OnceCell;
 src/imp_cs.rs
+     1→use core::panic::{RefUnwindSafe, UnwindSafe} …
+     3→use critical_section::{CriticalSection, Mutex} …
+     4→use portable_atomic::{AtomicBool, Ordering} …
+     6→use crate::unsync …
      8→pub(crate) struct OnceCell<T> {
      9→    initialized: AtomicBool,
     10→    // Use `unsync::OnceCell` internally since `Mutex` does not provide
@@ -80,6 +84,11 @@ src/imp_cs.rs
     27→    pub(crate) const fn new() -> OnceCell<T> {
     31→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
 src/imp_pl.rs
+     1→std::{
+    cell::UnsafeCell,
+    panic::{RefUnwindSafe, UnwindSafe},
+    sync::atomic::{AtomicU8, Ordering},
+} …
      7→pub(crate) struct OnceCell<T> {
      8→    state: AtomicU8,
      9→    value: UnsafeCell<Option<T>>,
@@ -95,6 +104,12 @@ src/imp_pl.rs
    125→}
    128→    fn drop(&mut self) {
 src/imp_std.rs
+     6→std::{
+    cell::{Cell, UnsafeCell},
+    panic::{RefUnwindSafe, UnwindSafe},
+    sync::atomic::{AtomicBool, AtomicPtr, Ordering},
+    thread::{self, Thread},
+} …
     13→#[derive(Debug)]
     14→pub(crate) struct OnceCell<T> {
     15→    // This `queue` field is the core of the implementation. It encodes two
@@ -132,12 +147,6 @@ src/imp_std.rs
    151→    fn drop(&mut self) {
    210→fn wait(queue: &AtomicPtr<Waiter>, mut curr_queue: *mut Waiter) {
    245→mod strict {
-   246→    #[must_use]
-   247→    #[inline]
-   248→    pub(crate) fn addr<T>(ptr: *mut T) -> usize
-   249→    where
-   250→        T: Sized,
-   251→    {
 src/lib.rs
    370→#[cfg(all(feature = "critical-section", not(feature = "std")))]
    371→#[path = "imp_cs.rs"]
@@ -150,13 +159,12 @@ src/lib.rs
    380→mod imp;
    382→/// Single-threaded version of `OnceCell`.
    383→pub mod unsync {
-   384→    use core::{
-   385→        cell::{Cell, UnsafeCell},
-   386→        fmt, mem,
-   387→        ops::{Deref, DerefMut},
-   388→        panic::{RefUnwindSafe, UnwindSafe},
-   389→    };
-   390→
+   384→core::{
+        cell::{Cell, UnsafeCell},
+        fmt, mem,
+        ops::{Deref, DerefMut},
+        panic::{RefUnwindSafe, UnwindSafe},
+    } …
    391→    /// A cell which can be written to only once. It is not thread safe.
    392→    ///
    393→    /// Unlike [`std::cell::RefCell`], a `OnceCell` provides simple `&`
@@ -235,15 +243,13 @@ src/lib.rs
    861→/// Thread-safe, blocking version of `OnceCell`.
    862→#[cfg(any(feature = "std", feature = "critical-section"))]
    863→pub mod sync {
-   864→    use core::{
-   865→        cell::Cell,
-   866→        fmt, mem,
-   867→        ops::{Deref, DerefMut},
-   868→        panic::RefUnwindSafe,
-   869→    };
-   870→
-   871→    use super::imp::OnceCell as Imp;
-   872→
+   864→core::{
+        cell::Cell,
+        fmt, mem,
+        ops::{Deref, DerefMut},
+        panic::RefUnwindSafe,
+    } …
+   871→    use super::imp::OnceCell as Imp …
    873→    /// A thread-safe cell which can be written to only once.
    874→    ///
    875→    /// `OnceCell` provides `&` references to the contents without RAII guards.
@@ -344,6 +350,11 @@ src/lib.rs
 src/race.rs
     31→use core::sync::atomic;
     33→use portable_atomic as atomic;
+    35→use atomic::{AtomicPtr, AtomicUsize, Ordering} …
+    36→use core::cell::UnsafeCell …
+    37→use core::marker::PhantomData …
+    38→use core::num::NonZeroUsize …
+    39→use core::ptr …
     41→/// A thread-safe cell which can be written to only once.
     42→#[derive(Default, Debug)]
     43→pub struct OnceNonZeroUsize {
@@ -380,17 +391,14 @@ src/race.rs
    351→pub use self::once_box::OnceBox;
    353→#[cfg(feature = "alloc")]
    354→mod once_box {
-   355→    use super::atomic::{AtomicPtr, Ordering};
-   356→    use core::{marker::PhantomData, ptr};
-   357→
-   358→    use alloc::boxed::Box;
-   359→
+   355→    use super::atomic::{AtomicPtr, Ordering} …
+   356→    use core::{marker::PhantomData, ptr} …
+   358→    use alloc::boxed::Box …
    360→    /// A thread-safe cell which can be written to only once.
    361→    pub struct OnceBox<T> {
    362→        inner: AtomicPtr<T>,
    363→        ghost: PhantomData<Option<Box<T>>>,
    364→    }
-   365→
    367→        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
    373→        fn default() -> Self {
    379→        fn drop(&mut self) {
@@ -434,8 +442,6 @@ tests/it/sync_once_cell.rs
    179→#[cfg_attr(miri, ignore)] // miri doesn't support processes
    180→#[cfg(feature = "std")]
    181→fn reentrant_init() {
-   182→    let examples_dir = {
-      →…
 tests/it/unsync_lazy.rs
 tests/it/unsync_once_cell.rs
 xtask/src/main.rs

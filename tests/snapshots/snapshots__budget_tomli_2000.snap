@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1965 words)
+budget: 2000 (1938 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -161,7 +161,11 @@ benchmark/run.py
     19→    col_width: tuple,
     20→    compare_to: float | None = None,
     21→) -> float:
+    22→    placeholder = "Running..."
+      →…
     37→def run(run_count: int) -> None:
+    38→    data_path = Path(__file__).parent / "data.toml"
+      →…
 fuzzer/fuzz.py
      1→import atheris
      4→    from math import isnan
@@ -193,6 +197,12 @@ fuzzer/fuzz.py
     41→    roundtripped_obj = tomli.loads(recovered_data)
     42→    normalize_toml_obj(roundtripped_obj)
     43→    normalize_toml_obj(toml_obj)
+    44→    if roundtripped_obj != toml_obj:
+    45→        sys.stderr.write(
+    46→            f"Original dict:\n{toml_obj}\nRoundtripped dict:\n{roundtripped_obj}\n"
+    47→        )
+    48→        sys.stderr.flush()
+    49→        print_err(data)
       →…
     53→def print_err(data):
     54→    codepoints = [hex(ord(x)) for x in data]
@@ -281,25 +291,24 @@ src/tomli/_parser.py
     61→        "\\n": "\u000a",  # linefeed
       →…
     71→class DEPRECATED_DEFAULT:
+    72→    """Sentinel to be used as default arg during deprecation
+    73→    period of TOMLDecodeError's free-form arguments."""
     76→class TOMLDecodeError(ValueError):
+    77→    """An error raised if a document is not valid TOML.
+    78→
+    79→    Adds the following attributes to ValueError:
+    80→    msg: The unformatted error message
+    81→    doc: The TOML document being parsed
+    82→    pos: The index of doc where parsing failed
+    83→    lineno: The line corresponding to pos
+    84→    colno: The column corresponding to pos
+    85→    """
     86→
-    87→    def __init__(
-    88→        self,
-    89→        msg: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
-    90→        doc: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
-    91→        pos: Pos | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
-    92→        *args: Any,
-    93→    ):
-    94→        if (
-    95→            args
-    96→            or not isinstance(msg, str)
-    97→            or not isinstance(doc, str)
-    98→            or not isinstance(pos, int)
-    99→        ):
-      →…
+    87→    def __init__ …
    137→def load …
    149→def loads …
    220→class Flags:
+   221→    """Flags that map to parsed keys/namespaces."""
    222→
    223→    # Marks an immutable namespace (inline array or inline table).
    224→    FROZEN: Final = 0
@@ -307,37 +316,18 @@ src/tomli/_parser.py
    226→    # be opened using the "[table]" syntax.
    227→    EXPLICIT_NEST: Final = 1
    228→
-   229→    def __init__(self) -> None:
-   230→        self._flags: dict[str, dict[Any, Any]] = {}
-   231→        self._pending_flags: set[tuple[Key, int]] = set()
-   232→
-   233→    def add_pending(self, key: Key, flag: int) -> None:
-   234→        self._pending_flags.add((key, flag))
-   235→
+   229→    def __init__ …
+   233→    def add_pending …
    236→    def finalize_pending …
    241→    def unset_all …
    249→    def set …
    260→    def is_ …
    278→class NestedDict:
-   279→    def __init__(self) -> None:
-   280→        # The parsed content of the TOML document
-   281→        self.dict: dict[str, Any] = {}
-   282→
-   283→    def get_or_create_nest(
-   284→        self,
-   285→        key: Key,
-   286→        *,
-   287→        access_lists: bool = True,
-   288→    ) -> dict[str, Any]:
-   289→        cont: Any = self.dict
-   290→        for k in key:
-   291→            if k not in cont:
-   292→                cont[k] = {}
+   279→    def __init__ …
+   283→    def get_or_create_nest …
    300→    def append_nest_to_list …
    312→class Output:
-   313→    def __init__(self) -> None:
-   314→        self.data = NestedDict()
-   315→        self.flags = Flags()
+   313→    def __init__ …
    318→def skip_chars …
    327→def skip_until …
    349→def skip_comment …

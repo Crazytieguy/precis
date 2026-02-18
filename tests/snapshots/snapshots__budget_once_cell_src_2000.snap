@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1932 words)
+budget: 2000 (1987 words)
 
 imp_cs.rs
      8→pub(crate) struct OnceCell<T> {
@@ -13,6 +13,11 @@ imp_cs.rs
     13→}
     27→    pub(crate) const fn new() -> OnceCell<T> {
     31→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
+    39→    pub(crate) fn is_initialized …
+    44→    pub(crate) fn initialize …
+    63→    pub(crate) unsafe fn get_unchecked …
+    70→    pub(crate) fn get_mut …
+    75→    pub(crate) fn into_inner …
 imp_pl.rs
      7→pub(crate) struct OnceCell<T> {
      8→    state: AtomicU8,
@@ -23,11 +28,18 @@ imp_pl.rs
     14→const COMPLETE: u8 = 0x2;
     28→    pub(crate) const fn new() -> OnceCell<T> {
     32→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
+    38→    pub(crate) fn is_initialized …
+    45→    pub(crate) fn initialize …
+    80→    pub(crate) fn wait …
+   101→    pub(crate) unsafe fn get_unchecked …
+   109→    pub(crate) fn get_mut …
+   117→    pub(crate) fn into_inner …
    122→struct Guard<'a> {
    123→    state: &'a AtomicU8,
    124→    new_state: u8,
    125→}
    128→    fn drop(&mut self) {
+   139→fn initialize_inner …
 imp_std.rs
     13→#[derive(Debug)]
     14→pub(crate) struct OnceCell<T> {
@@ -44,6 +56,12 @@ imp_std.rs
     25→}
     39→    pub(crate) const fn new() -> OnceCell<T> {
     43→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
+    49→    pub(crate) fn is_initialized …
+    61→    pub(crate) fn initialize …
+    88→    pub(crate) fn wait …
+    99→    pub(crate) unsafe fn get_unchecked …
+   107→    pub(crate) fn get_mut …
+   115→    pub(crate) fn into_inner …
    125→const INCOMPLETE: usize = 0x0;
    126→const RUNNING: usize = 0x1;
    127→const COMPLETE: usize = 0x2;
@@ -64,14 +82,12 @@ imp_std.rs
    147→    new_queue: *mut Waiter,
    148→}
    151→    fn drop(&mut self) {
+   177→fn initialize_or_wait …
    210→fn wait(queue: &AtomicPtr<Waiter>, mut curr_queue: *mut Waiter) {
    245→mod strict {
-   246→    #[must_use]
-   247→    #[inline]
-   248→    pub(crate) fn addr<T>(ptr: *mut T) -> usize
-   249→    where
-   250→        T: Sized,
-   251→    {
+   248→    pub(crate) fn addr …
+   260→    pub(crate) fn with_addr …
+   281→    pub(crate) fn map_addr …
 lib.rs
    370→#[cfg(all(feature = "critical-section", not(feature = "std")))]
    371→#[path = "imp_cs.rs"]
@@ -84,13 +100,6 @@ lib.rs
    380→mod imp;
    382→/// Single-threaded version of `OnceCell`.
    383→pub mod unsync {
-   384→    use core::{
-   385→        cell::{Cell, UnsafeCell},
-   386→        fmt, mem,
-   387→        ops::{Deref, DerefMut},
-   388→        panic::{RefUnwindSafe, UnwindSafe},
-   389→    };
-   390→
    391→    /// A cell which can be written to only once. It is not thread safe.
    392→    ///
    393→    /// Unlike [`std::cell::RefCell`], a `OnceCell` provides simple `&`
@@ -175,15 +184,6 @@ lib.rs
    861→/// Thread-safe, blocking version of `OnceCell`.
    862→#[cfg(any(feature = "std", feature = "critical-section"))]
    863→pub mod sync {
-   864→    use core::{
-   865→        cell::Cell,
-   866→        fmt, mem,
-   867→        ops::{Deref, DerefMut},
-   868→        panic::RefUnwindSafe,
-   869→    };
-   870→
-   871→    use super::imp::OnceCell as Imp;
-   872→
    873→    /// A thread-safe cell which can be written to only once.
    874→    ///
    875→    /// `OnceCell` provides `&` references to the contents without RAII guards.
@@ -285,6 +285,7 @@ lib.rs
   1375→        fn deref(&self) -> &T {
   1381→        fn deref_mut(&mut self) -> &mut T {
   1388→        fn default() -> Lazy<T> {
+  1408→    fn _dummy …
   1411→#[cfg(feature = "race")]
   1412→pub mod race;
 race.rs
@@ -307,6 +308,8 @@ race.rs
    139→    where
    140→        F: FnOnce() -> Result<NonZeroUsize, E>,
    141→    {
+   150→    fn init …
+   160→    fn compare_exchange …
    165→/// A thread-safe cell which can be written to only once.
    166→#[derive(Default, Debug)]
    167→pub struct OnceBool {
@@ -323,6 +326,8 @@ race.rs
    214→    where
    215→        F: FnOnce() -> Result<bool, E>,
    216→    {
+   221→    fn from_usize …
+   226→    fn to_usize …
    231→/// A thread-safe cell which can be written to only once.
    232→pub struct OnceRef<'a, T> {
    233→    inner: AtomicPtr<T>,
@@ -341,27 +346,18 @@ race.rs
    300→    where
    301→        F: FnOnce() -> Result<&'a T, E>,
    302→    {
+   311→    fn init …
+   320→    fn compare_exchange …
+   347→    fn _dummy …
    351→pub use self::once_box::OnceBox;
    353→#[cfg(feature = "alloc")]
    354→mod once_box {
-   355→    use super::atomic::{AtomicPtr, Ordering};
-   356→    use core::{marker::PhantomData, ptr};
-   357→
-   358→    use alloc::boxed::Box;
-   359→
    360→    /// A thread-safe cell which can be written to only once.
    361→    pub struct OnceBox<T> {
    362→        inner: AtomicPtr<T>,
    363→        ghost: PhantomData<Option<Box<T>>>,
    364→    }
-   365→
-   366→    impl<T> core::fmt::Debug for OnceBox<T> {
    367→        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-   368→            write!(f, "OnceBox({:?})", self.inner.load(Ordering::Relaxed))
-   369→        }
-   370→    }
-   371→
-   372→    impl<T> Default for OnceBox<T> {
    373→        fn default() -> Self {
    379→        fn drop(&mut self) {
    389→        pub const fn new() -> Self {
@@ -376,4 +372,6 @@ race.rs
    451→        where
    452→            F: FnOnce() -> Result<Box<T>, E>,
    453→        {
+   462→        fn init …
    482→        fn clone(&self) -> Self {
+   497→    fn _dummy …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1053 words)
+budget: 1000 (960 words)
 
 CHANGELOG.md
 README.md
@@ -144,13 +144,12 @@ constraint.go
    264→func constraintLessThanEqual(v, c *Version) bool {
    268→func constraintPessimistic(v, c *Version) bool {
 constraint_test.go
-     6→import …
-    13→func TestNewConstraint(t *testing.T) {
-    43→func TestConstraintCheck(t *testing.T) {
-   106→func TestConstraintPrerelease(t *testing.T) {
-   134→func TestConstraintEqual(t *testing.T) {
-   190→func TestConstraint_sort(t *testing.T) {
-   232→func TestConstraintsString(t *testing.T) {
+     6→import (
+     7→	"fmt"
+     8→	"reflect"
+     9→	"sort"
+    10→	"testing"
+    11→)
 version.go
      6→import (
      7→	"database/sql/driver"
@@ -166,7 +165,6 @@ version.go
     18→	versionRegexpOnce sync.Once
     19→	semverRegexp      *regexp.Regexp
     20→	semverRegexpOnce  sync.Once
-    21→)
     23→func getVersionRegexp() *regexp.Regexp {
     30→func getSemverRegexp() *regexp.Regexp {
     37→// The raw regular expression string used for testing the validity
@@ -176,7 +174,6 @@ version.go
     41→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-?([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
     42→		`(\+([0-9A-Za-z\-~]+(\.[0-9A-Za-z\-~]+)*))?` +
     43→		`?`
-    44→
     45→	// SemverRegexpRaw requires a separator between version and prerelease
     46→	SemverRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     47→		`(-([0-9]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)|(-([A-Za-z\-~]+[0-9A-Za-z\-~]*(\.[0-9A-Za-z\-~]+)*)))?` +
@@ -230,29 +227,15 @@ version_collection.go
     19→	v[i], v[j] = v[j], v[i]
     20→}
 version_collection_test.go
-     6→import …
-    12→func TestCollection(t *testing.T) {
+     6→import (
+     7→	"reflect"
+     8→	"sort"
+     9→	"testing"
+    10→)
 version_test.go
-     6→import …
-    13→func TestNewVersion(t *testing.T) {
-    54→func TestNewSemver(t *testing.T) {
-    95→func TestCore(t *testing.T) {
-   127→func TestVersionCompare(t *testing.T) {
-   174→func TestVersionCompare_versionAndSemver(t *testing.T) {
-   212→func TestVersionEqual_nil(t *testing.T) {
-   238→func TestComparePreReleases(t *testing.T) {
-   285→func TestVersionMetadata(t *testing.T) {
-   311→func TestVersionPrerelease(t *testing.T) {
-   339→func TestVersionSegments(t *testing.T) {
-   366→func TestVersionSegments64(t *testing.T) {
-   401→func TestJsonMarshal(t *testing.T) {
-   436→func TestJsonUnmarshal(t *testing.T) {
-   470→func TestVersionString(t *testing.T) {
-   497→func TestEqual(t *testing.T) {
-   544→func TestGreaterThan(t *testing.T) {
-   591→func TestLessThan(t *testing.T) {
-   638→func TestGreaterThanOrEqual(t *testing.T) {
-   685→func TestLessThanOrEqual(t *testing.T) {
-   732→func BenchmarkVersionString(b *testing.B) {
-   743→func BenchmarkCompareVersionV1(b *testing.B) {
-   753→func BenchmarkVersionCompareV2(b *testing.B) {
+     6→import (
+     7→	"encoding/json"
+     8→	"fmt"
+     9→	"reflect"
+    10→	"testing"
+    11→)

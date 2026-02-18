@@ -2,54 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4015 words)
+budget: 4000 (3912 words)
 
 argument.js
      3→class Argument {
      4→  /**
-     5→   * Initialize a new command argument with the given name and description.
-     6→   * The default is that the argument is required, and you can explicitly
-     7→   * indicate this with <> around the name. Put [] around the name for an optional argument.
-     8→   *
-     9→   * @param {string} name
-    10→   * @param {string} [description]
-    11→   */
-    12→
+      →…
     13→  constructor(name, description) {
-    14→    this.description = description || '';
-    15→    this.variadic = false;
-    16→    this.parseArg = undefined;
-    17→    this.defaultValue = undefined;
-    18→    this.defaultValueDescription = undefined;
-    19→    this.argChoices = undefined;
-    20→
-    21→    switch (name[0]) {
-    22→      case '<': // e.g. <required>
-    23→        this.required = true;
-    24→        this._name = name.slice(1, -1);
-    25→        break;
-    26→      case '[': // e.g. [optional]
-    27→        this.required = false;
-    28→        this._name = name.slice(1, -1);
-    29→        break;
-    30→      default:
-    31→        this.required = true;
-    32→        this._name = name;
-    33→        break;
-    34→    }
-    35→
-    36→    if (this._name.endsWith('...')) {
-    37→      this.variadic = true;
-    38→      this._name = this._name.slice(0, -3);
-    39→    }
-    40→  }
-    41→
     42→  /**
-    43→   * Return argument name.
-    44→   *
-    45→   * @return {string}
-    46→   */
-    47→
       →…
     48→  name() {
     52→  /**
@@ -58,6 +18,11 @@ argument.js
     55→
     56→  _collectValue(value, previous) {
     57→    if (previous === this.defaultValue || !Array.isArray(previous)) {
+    58→      return [value];
+    59→    }
+    60→
+    61→    previous.push(value);
+    62→    return previous;
       →…
     65→  /**
       →…
@@ -84,53 +49,14 @@ argument.js
    142→
    143→function humanReadableArgName(arg) {
    144→  const nameOutput = arg.name() + (arg.variadic === true ? '...' : '');
-      →…
+   145→
+   146→  return arg.required ? '<' + nameOutput + '>' : '[' + nameOutput + ']';
+   147→}
 command.js
     13→class Command extends EventEmitter {
     14→  /**
-    15→   * Initialize a new `Command`.
-    16→   *
-    17→   * @param {string} [name]
-    18→   */
-    19→
+      →…
     20→  constructor(name) {
-    21→    super();
-    22→    /** @type {Command[]} */
-    23→    this.commands = [];
-    24→    /** @type {Option[]} */
-    25→    this.options = [];
-    26→    this.parent = null;
-    27→    this._allowUnknownOption = false;
-    28→    this._allowExcessArguments = false;
-    29→    /** @type {Argument[]} */
-    30→    this.registeredArguments = [];
-    31→    this._args = this.registeredArguments; // deprecated old name
-    32→    /** @type {string[]} */
-    33→    this.args = []; // cli args with options removed
-    34→    this.rawArgs = [];
-    35→    this.processedArgs = []; // like .args but after custom processing and collecting variadic
-    36→    this._scriptPath = null;
-    37→    this._name = name || '';
-    38→    this._optionValues = {};
-    39→    this._optionValueSources = {}; // default, env, cli etc
-    40→    this._storeOptionsAsProperties = false;
-    41→    this._actionHandler = null;
-    42→    this._executableHandler = false;
-    43→    this._executableFile = null; // custom name for executable
-    44→    this._executableDir = null; // custom search directory for subcommands
-    45→    this._defaultCommandName = null;
-    46→    this._exitCallback = null;
-    47→    this._aliases = [];
-    48→    this._combineFlagAndOptionalValue = true;
-    49→    this._description = '';
-    50→    this._summary = '';
-    51→    this._argsDescription = undefined; // legacy
-    52→    this._enablePositionalOptions = false;
-    53→    this._passThroughOptions = false;
-    54→    this._lifeCycleHooks = {}; // a hash of arrays
-    55→    /** @type {(boolean | string)} */
-    56→    this._showHelpAfterError = false;
-    57→    this._showSuggestionAfterError = true;
     91→  /**
       →…
     99→  copyInheritedSettings(sourceCommand) {
@@ -141,6 +67,11 @@ command.js
    120→
    121→  _getCommandAndAncestors() {
    122→    const result = [];
+   123→    // eslint-disable-next-line @typescript-eslint/no-this-alias
+   124→    for (let command = this; command; command = command.parent) {
+   125→      result.push(command);
+   126→    }
+   127→    return result;
       →…
    130→  /**
       →…
@@ -192,6 +123,11 @@ command.js
    462→   */
    463→  _getHelpCommand() {
    464→    const hasImplicitHelpCommand =
+   465→      this._addImplicitHelpCommand ??
+   466→      (this.commands.length &&
+   467→        !this._actionHandler &&
+   468→        !this._findCommand('help'));
+   469→
       →…
    479→  /**
       →…
@@ -211,7 +147,11 @@ command.js
    532→
    533→  _exit(exitCode, code, message) {
    534→    if (this._exitCallback) {
-      →…
+   535→      this._exitCallback(new CommanderError(exitCode, code, message));
+   536→      // Expecting this line is not reached.
+   537→    }
+   538→    process.exit(exitCode);
+   539→  }
    541→  /**
       →…
    556→  action(fn) {
@@ -230,6 +170,11 @@ command.js
    598→
    599→  _callParseArg(target, value, previous, invalidArgumentMessage) {
    600→    try {
+   601→      return target.parseArg(value, previous);
+   602→    } catch (err) {
+   603→      if (err.code === 'commander.invalidArgument') {
+   604→        const message = `${invalidArgumentMessage} ${err.message}`;
+   605→        this.error(message, { exitCode: err.exitCode, code: err.code });
       →…
    611→  /**
    612→   * Check for option flag conflicts.
@@ -241,6 +186,11 @@ command.js
    618→
    619→  _registerOption(option) {
    620→    const matchingOption =
+   621→      (option.short && this._findOption(option.short)) ||
+   622→      (option.long && this._findOption(option.long));
+   623→    if (matchingOption) {
+   624→      const matchingFlag =
+   625→        option.long && this._findOption(option.long)
       →…
    636→  /**
    637→   * Check for command name and alias conflicts with existing commands.
@@ -252,6 +202,11 @@ command.js
    643→
    644→  _registerCommand(command) {
    645→    const knownBy = (cmd) => {
+   646→      return [cmd.name()].concat(cmd.aliases());
+   647→    };
+   648→
+   649→    const alreadyUsed = knownBy(command).find((name) =>
+   650→      this._findCommand(name),
       →…
    664→  /**
       →…
@@ -264,6 +219,11 @@ command.js
    740→   */
    741→  _optionEx(config, flags, description, fn, defaultValue) {
    742→    if (typeof flags === 'object' && flags instanceof Option) {
+   743→      throw new Error(
+   744→        'To add an Option object use addOption() instead of option() or requiredOption()',
+   745→      );
+   746→    }
+   747→    const option = this.createOption(flags, description);
       →…
    766→  /**
       →…
@@ -292,6 +252,11 @@ command.js
    884→
    885→  _checkForBrokenPassThrough() {
    886→    if (
+   887→      this.parent &&
+   888→      this._passThroughOptions &&
+   889→      !this.parent._enablePositionalOptions
+   890→    ) {
+   891→      throw new Error(
       →…
    897→  /**
       →…
@@ -320,6 +285,11 @@ command.js
   1000→
   1001→  _prepareUserArgs(argv, parseOptions) {
   1002→    if (argv !== undefined && !Array.isArray(argv)) {
+  1003→      throw new Error('first parameter to parse must be array or undefined');
+  1004→    }
+  1005→    parseOptions = parseOptions || {};
+  1006→
+  1007→    // auto-detect argument conventions if nothing supplied
       →…
   1067→  /**
       →…
@@ -349,6 +319,11 @@ command.js
   1182→   */
   1183→  _checkForMissingExecutable(executableFile, executableDir, subcommandName) {
   1184→    if (fs.existsSync(executableFile)) return;
+  1185→
+  1186→    const executableDirMessage = executableDir
+  1187→      ? `searched for local subcommand relative to directory '${executableDir}'`
+  1188→      : 'no directory for search for local subcommand, use .executableDir() to supply a custom directory';
+  1189→    const executableMissing = `'${executableFile}' does not exist
       →…
   1196→  /**
   1197→   * Execute a sub-command executable.
@@ -358,6 +333,11 @@ command.js
   1201→
   1202→  _executeSubCommand(subcommand, args) {
   1203→    args = args.slice();
+  1204→    let launchWithNode = false; // Use node for source targets so do not need to get permissions correct, and on Windows.
+  1205→    const sourceExt = ['.js', '.ts', '.tsx', '.mjs', '.cjs'];
+  1206→
+  1207→    function findFile(baseDir, baseName) {
+  1208→      // Look for specified file
       →…
   1348→  /**
   1349→   * @private
@@ -365,6 +345,11 @@ command.js
   1351→
   1352→  _dispatchSubcommand(commandName, operands, unknown) {
   1353→    const subCommand = this._findCommand(commandName);
+  1354→    if (!subCommand) this.help({ error: true });
+  1355→
+  1356→    subCommand._prepareForParse();
+  1357→    let promiseChain;
+  1358→    promiseChain = this._chainOrCallSubCommandHook(
       →…
   1373→  /**
   1374→   * Invoke help directly if possible, or dispatch if necessary.
@@ -375,6 +360,11 @@ command.js
   1379→
   1380→  _dispatchHelpCommand(subcommandName) {
   1381→    if (!subcommandName) {
+  1382→      this.help();
+  1383→    }
+  1384→    const subCommand = this._findCommand(subcommandName);
+  1385→    if (subCommand && !subCommand._executableHandler) {
+  1386→      subCommand.help();
       →…
   1397→  /**
   1398→   * Check this.args against expected this.registeredArguments.
@@ -384,6 +374,11 @@ command.js
   1402→
   1403→  _checkNumberOfArguments() {
   1404→    // too few
+  1405→    this.registeredArguments.forEach((arg, i) => {
+  1406→      if (arg.required && this.args[i] == null) {
+  1407→        this.missingArgument(arg.name());
+  1408→      }
+  1409→    });
       →…
   1422→  /**
   1423→   * Process this.args using this.registeredArguments and save as this.processedArgs!
@@ -393,6 +388,11 @@ command.js
   1427→
   1428→  _processArguments() {
   1429→    const myParseArg = (argument, value, previous) => {
+  1430→      // Extra processing for nice error message on parsing failure.
+  1431→      let parsedValue = value;
+  1432→      if (value !== null && argument.parseArg) {
+  1433→        const invalidValueMessage = `error: command-argument value '${value}' is invalid for argument '${argument.name()}'.`;
+  1434→        parsedValue = this._callParseArg(
       →…
   1472→  /**
   1473→   * Once we have a promise we chain, but call synchronously until then.
@@ -405,6 +405,11 @@ command.js
   1480→
   1481→  _chainOrCall(promise, fn) {
   1482→    // thenable
+  1483→    if (promise?.then && typeof promise.then === 'function') {
+  1484→      // already have a promise, chain callback
+  1485→      return promise.then(() => fn());
+  1486→    }
+  1487→    // callback might return a promise
       →…
   1491→  /**
   1492→   *
@@ -416,6 +421,11 @@ command.js
   1498→
   1499→  _chainOrCallHooks(promise, event) {
   1500→    let result = promise;
+  1501→    const hooks = [];
+  1502→    this._getCommandAndAncestors()
+  1503→      .reverse()
+  1504→      .filter((cmd) => cmd._lifeCycleHooks[event] !== undefined)
+  1505→      .forEach((hookedCommand) => {
       →…
   1522→  /**
   1523→   *
@@ -428,6 +438,11 @@ command.js
   1530→
   1531→  _chainOrCallSubCommandHook(promise, subCommand, event) {
   1532→    let result = promise;
+  1533→    if (this._lifeCycleHooks[event] !== undefined) {
+  1534→      this._lifeCycleHooks[event].forEach((hook) => {
+  1535→        result = this._chainOrCall(result, () => {
+  1536→          return hook(this, subCommand);
+  1537→        });
       →…
   1543→  /**
   1544→   * Process arguments in context of this command.
@@ -438,6 +453,11 @@ command.js
   1549→
   1550→  _parseCommand(operands, unknown) {
   1551→    const parsed = this.parseOptions(unknown);
+  1552→    this._parseOptionsEnv(); // after cli, so parseArg not called on both cli and env
+  1553→    this._parseOptionsImplied();
+  1554→    operands = operands.concat(parsed.operands);
+  1555→    unknown = parsed.unknown;
+  1556→    this.args = operands.concat(unknown);
       →…
   1643→  /**
   1644→   * Find matching command.
@@ -447,7 +467,10 @@ command.js
   1648→   */
   1649→  _findCommand(name) {
   1650→    if (!name) return undefined;
-      →…
+  1651→    return this.commands.find(
+  1652→      (cmd) => cmd._name === name || cmd._aliases.includes(name),
+  1653→    );
+  1654→  }
   1656→  /**
   1657→   * Return an option matching `arg` if any.
   1658→   *
@@ -458,7 +481,7 @@ command.js
   1663→
   1664→  _findOption(arg) {
   1665→    return this.options.find((option) => option.is(arg));
-      →…
+  1666→  }
   1668→  /**
   1669→   * Display an error message if a mandatory option does not have a value.
   1670→   * Called after checking for help flags in leaf subcommand.
@@ -468,6 +491,11 @@ command.js
   1674→
   1675→  _checkForMissingMandatoryOptions() {
   1676→    // Walk up hierarchy so can call in subcommand after checking for displaying help.
+  1677→    this._getCommandAndAncestors().forEach((cmd) => {
+  1678→      cmd.options.forEach((anOption) => {
+  1679→        if (
+  1680→          anOption.mandatory &&
+  1681→          cmd.getOptionValue(anOption.attributeName()) === undefined
       →…
   1689→  /**
   1690→   * Display an error message if conflicting options are used together in this.
@@ -476,6 +504,11 @@ command.js
   1693→   */
   1694→  _checkForConflictingLocalOptions() {
   1695→    const definedNonDefaultOptions = this.options.filter((option) => {
+  1696→      const optionKey = option.attributeName();
+  1697→      if (this.getOptionValue(optionKey) === undefined) {
+  1698→        return false;
+  1699→      }
+  1700→      return this.getOptionValueSource(optionKey) !== 'default';
       →…
   1717→  /**
   1718→   * Display an error message if conflicting options are used together.
@@ -485,7 +518,10 @@ command.js
   1722→   */
   1723→  _checkForConflictingOptions() {
   1724→    // Walk up hierarchy so can call in subcommand after checking for displaying help.
-      →…
+  1725→    this._getCommandAndAncestors().forEach((cmd) => {
+  1726→      cmd._checkForConflictingLocalOptions();
+  1727→    });
+  1728→  }
   1730→  /**
       →…
   1748→  parseOptions(args) {
@@ -506,6 +542,11 @@ command.js
   1965→   */
   1966→  _parseOptionsEnv() {
   1967→    this.options.forEach((option) => {
+  1968→      if (option.envVar && option.envVar in process.env) {
+  1969→        const optionKey = option.attributeName();
+  1970→        // Priority check. Do not overwrite cli or options from unknown source (client-code).
+  1971→        if (
+  1972→          this.getOptionValue(optionKey) === undefined ||
       →…
   1991→  /**
   1992→   * Apply any implied option values, if option is undefined or default value.
@@ -514,6 +555,11 @@ command.js
   1995→   */
   1996→  _parseOptionsImplied() {
   1997→    const dualHelper = new DualOptions(this.options);
+  1998→    const hasCustomOptionValue = (optionKey) => {
+  1999→      return (
+  2000→        this.getOptionValue(optionKey) !== undefined &&
+  2001→        !['default', 'implied'].includes(this.getOptionValueSource(optionKey))
+  2002→      );
       →…
   2027→  /**
       →…
@@ -533,6 +579,11 @@ command.js
   2069→   */
   2070→  _conflictingOption(option, conflictingOption) {
   2071→    // The calling code does not know whether a negated option is the source of the
+  2072→    // value, so do some work to take an educated guess.
+  2073→    const findBestOptionFromValue = (option) => {
+  2074→      const optionKey = option.attributeName();
+  2075→      const optionValue = this.getOptionValue(optionKey);
+  2076→      const negativeOption = this.options.find(
       →…
   2107→  /**
       →…
@@ -546,6 +597,11 @@ command.js
   2145→
   2146→  _excessArguments(receivedArgs) {
   2147→    if (this._allowExcessArguments) return;
+  2148→
+  2149→    const expected = this.registeredArguments.length;
+  2150→    const s = expected === 1 ? '' : 's';
+  2151→    const forSubcommand = this.parent ? ` for '${this.name()}'` : '';
+  2152→    const message = `error: too many arguments${forSubcommand}. Expected ${expected} argument${s} but got ${receivedArgs.length}.`;
       →…
   2156→  /**
       →…
@@ -586,14 +642,16 @@ command.js
   2391→   */
   2392→  _initOptionGroup(option) {
   2393→    if (this._defaultOptionGroup && !option.helpGroupHeading)
-      →…
+  2394→      option.helpGroup(this._defaultOptionGroup);
+  2395→  }
   2397→  /**
   2398→   * @param {Command} cmd
   2399→   * @private
   2400→   */
   2401→  _initCommandGroup(cmd) {
   2402→    if (this._defaultCommandGroup && !cmd.helpGroup())
-      →…
+  2403→      cmd.helpGroup(this._defaultCommandGroup);
+  2404→  }
   2406→  /**
       →…
   2419→  nameFromFilename(filename) {
@@ -617,6 +675,11 @@ command.js
   2474→
   2475→  _getOutputContext(contextOptions) {
   2476→    contextOptions = contextOptions || {};
+  2477→    const error = !!contextOptions.error;
+  2478→    let baseWrite;
+  2479→    let hasColors;
+  2480→    let helpWidth;
+  2481→    if (error) {
       →…
   2497→  /**
       →…
@@ -633,7 +696,11 @@ command.js
   2591→   */
   2592→  _getHelpOption() {
   2593→    // Lazy create help option on demand.
-      →…
+  2594→    if (this._helpOption === undefined) {
+  2595→      this.helpOption(undefined, undefined);
+  2596→    }
+  2597→    return this._helpOption;
+  2598→  }
   2600→  /**
       →…
   2607→  addHelpOption(option) {
@@ -652,6 +719,11 @@ command.js
   2685→
   2686→  _outputHelpIfRequested(args) {
   2687→    const helpOption = this._getHelpOption();
+  2688→    const helpRequested = helpOption && args.find((arg) => helpOption.is(arg));
+  2689→    if (helpRequested) {
+  2690→      this.outputHelp();
+  2691→      // (Do not have all displayed text available so only passing placeholder.)
+  2692→      this._exit(0, 'commander.helpDisplayed', '(outputHelp)');
       →…
   2697→/**
   2698→ * Scan arguments and increment port number for inspect calls (to avoid conflicts when spawning new command).
@@ -663,6 +735,11 @@ command.js
   2704→
   2705→function incrementNodeInspectorPort(args) {
   2706→  // Testing for these options:
+  2707→  //  --inspect[=[host:]port]
+  2708→  //  --inspect-brk[=[host:]port]
+  2709→  //  --inspect-port=[host:]port
+  2710→  return args.map((arg) => {
+  2711→    if (!arg.startsWith('--inspect')) {
       →…
   2748→/**
   2749→ * @returns {boolean | undefined}
@@ -670,6 +747,11 @@ command.js
   2751→ */
   2752→function useColor() {
   2753→  // Test for common conventions.
+  2754→  // NB: the observed behaviour is in combination with how author adds color! For example:
+  2755→  //   - we do not test NODE_DISABLE_COLORS, but util:styletext does
+  2756→  //   - we do test NO_COLOR, but Chalk does not
+  2757→  //
+  2758→  // References:
       →…
 error.js
      1→/**
@@ -677,36 +759,15 @@ error.js
      3→ */
      4→class CommanderError extends Error {
      5→  /**
-     6→   * Constructs the CommanderError class
-     7→   * @param {number} exitCode suggested exit code which could be used with process.exit
-     8→   * @param {string} code an id string representing the error
-     9→   * @param {string} message human-readable description of the error
-    10→   */
+      →…
     11→  constructor(exitCode, code, message) {
-    12→    super(message);
-    13→    // properly capture stack trace in Node.js
-    14→    Error.captureStackTrace(this, this.constructor);
-    15→    this.name = this.constructor.name;
-    16→    this.code = code;
-    17→    this.exitCode = exitCode;
-    18→    this.nestedError = undefined;
-    19→  }
-    20→}
     22→/**
     23→ * InvalidArgumentError class
     24→ */
     25→class InvalidArgumentError extends CommanderError {
     26→  /**
-    27→   * Constructs the InvalidArgumentError class
-    28→   * @param {string} [message] explanation of why argument is invalid
-    29→   */
+      →…
     30→  constructor(message) {
-    31→    super(1, 'commander.invalidArgument', message);
-    32→    // properly capture stack trace in Node.js
-    33→    Error.captureStackTrace(this, this.constructor);
-    34→    this.name = this.constructor.name;
-    35→  }
-    36→}
 help.js
     12→class Help {
     13→  constructor() {
@@ -716,43 +777,13 @@ help.js
     17→    this.sortOptions = false;
     18→    this.showGlobalOptions = false;
     19→  }
-    20→
     21→  /**
-    22→   * prepareContext is called by Commander after applying overrides from `Command.configureHelp()`
-    23→   * and just before calling `formatHelp()`.
-    24→   *
-    25→   * Commander just uses the helpWidth and the rest is provided for optional use by more complex subclasses.
-    26→   *
-    27→   * @param {{ error?: boolean, helpWidth?: number, outputHasColors?: boolean }} contextOptions
-    28→   */
+      →…
     29→  prepareContext(contextOptions) {
-    30→    this.helpWidth = this.helpWidth ?? contextOptions.helpWidth ?? 80;
-    31→  }
-    32→
     33→  /**
-    34→   * Get an array of the visible subcommands. Includes a placeholder for the implicit help command, if there is one.
-    35→   *
-    36→   * @param {Command} cmd
-    37→   * @returns {Command[]}
-    38→   */
-    39→
+      →…
     40→  visibleCommands(cmd) {
-    41→    const visibleCommands = cmd.commands.filter((cmd) => !cmd._hidden);
-    42→    const helpCommand = cmd._getHelpCommand();
-    43→    if (helpCommand && !helpCommand._hidden) {
-    44→      visibleCommands.push(helpCommand);
-    45→    }
-    46→    if (this.sortSubcommands) {
-    47→      visibleCommands.sort((a, b) => {
-    48→        // @ts-ignore: because overloaded return type
-    49→        return a.name().localeCompare(b.name());
-    50→      });
-    51→    }
-    52→    return visibleCommands;
-    53→  }
-    54→
     55→  /**
-    56→   * Compare options for sort.
       →…
     62→  compareOptions(a, b) {
     72→  /**
@@ -897,52 +928,16 @@ help.js
    739→
    740→function stripColor(str) {
    741→  // eslint-disable-next-line no-control-regex
-      →…
+   742→  const sgrPattern = /\x1b\[\d*(;\d*)*m/g;
+   743→  return str.replace(sgrPattern, '');
+   744→}
 option.js
      3→class Option {
      4→  /**
-     5→   * Initialize a new `Option` with the given `flags` and `description`.
-     6→   *
-     7→   * @param {string} flags
-     8→   * @param {string} [description]
-     9→   */
-    10→
+      →…
     11→  constructor(flags, description) {
-    12→    this.flags = flags;
-    13→    this.description = description || '';
-    14→
-    15→    this.required = flags.includes('<'); // A value must be supplied when the option is specified.
-    16→    this.optional = flags.includes('['); // A value is optional when the option is specified.
-    17→    // variadic test ignores <value,...> et al which might be used to describe custom splitting of single argument
-    18→    this.variadic = /\w\.\.\.[>\]]$/.test(flags); // The option can take multiple values.
-    19→    this.mandatory = false; // The option must have a value after parsing, which usually means it must be specified on command line.
-    20→    const optionFlags = splitOptionFlags(flags);
-    21→    this.short = optionFlags.shortFlag; // May be a short flag, undefined, or even a long flag (if option has two long flags).
-    22→    this.long = optionFlags.longFlag;
-    23→    this.negate = false;
-    24→    if (this.long) {
-    25→      this.negate = this.long.startsWith('--no-');
-    26→    }
-    27→    this.defaultValue = undefined;
-    28→    this.defaultValueDescription = undefined;
-    29→    this.presetArg = undefined;
-    30→    this.envVar = undefined;
-    31→    this.parseArg = undefined;
-    32→    this.hidden = false;
-    33→    this.argChoices = undefined;
-    34→    this.conflictsWith = [];
-    35→    this.implied = undefined;
-    36→    this.helpGroupHeading = undefined; // soft initialised when option added to command
-    37→  }
-    38→
     39→  /**
-    40→   * Set the default value, and optionally supply the description to be displayed in the help.
-    41→   *
-    42→   * @param {*} value
-    43→   * @param {string} [description]
-    44→   * @return {Option}
-    45→   */
-    46→
+      →…
     47→  default(value, description) {
     53→  /**
       →…
@@ -971,6 +966,11 @@ option.js
    164→
    165→  _collectValue(value, previous) {
    166→    if (previous === this.defaultValue || !Array.isArray(previous)) {
+   167→      return [value];
+   168→    }
+   169→
+   170→    previous.push(value);
+   171→    return previous;
       →…
    174→  /**
       →…
@@ -999,43 +999,11 @@ option.js
    267→ */
    268→class DualOptions {
    269→  /**
-   270→   * @param {Option[]} options
-   271→   */
+      →…
    272→  constructor(options) {
-   273→    this.positiveOptions = new Map();
-   274→    this.negativeOptions = new Map();
-   275→    this.dualOptions = new Set();
-   276→    options.forEach((option) => {
-   277→      if (option.negate) {
-   278→        this.negativeOptions.set(option.attributeName(), option);
-   279→      } else {
-   280→        this.positiveOptions.set(option.attributeName(), option);
-   281→      }
-   282→    });
-   283→    this.negativeOptions.forEach((value, key) => {
-   284→      if (this.positiveOptions.has(key)) {
-   285→        this.dualOptions.add(key);
-   286→      }
-   287→    });
-   288→  }
-   289→
    290→  /**
-   291→   * Did the value come from the option, and not from possible matching dual option?
-   292→   *
-   293→   * @param {*} value
-   294→   * @param {Option} option
-   295→   * @returns {boolean}
-   296→   */
+      →…
    297→  valueFromOption(value, option) {
-   298→    const optionKey = option.attributeName();
-   299→    if (!this.dualOptions.has(optionKey)) return true;
-   300→
-   301→    // Use the value to deduce if (probably) came from the option.
-   302→    const preset = this.negativeOptions.get(optionKey).presetArg;
-   303→    const negativeValue = preset !== undefined ? preset : false;
-   304→    return option.negate === (negativeValue === value);
-   305→  }
-   306→}
    308→/**
    309→ * Convert string from kebab-case to camelCase.
    310→ *
@@ -1046,7 +1014,9 @@ option.js
    315→
    316→function camelcase(str) {
    317→  return str.split('-').reduce((str, word) => {
-      →…
+   318→    return str + word[0].toUpperCase() + word.slice(1);
+   319→  });
+   320→}
    322→/**
    323→ * Split the short and long flag out of something like '-m,--mixed <value>'
    324→ *
@@ -1055,6 +1025,11 @@ option.js
    327→
    328→function splitOptionFlags(flags) {
    329→  let shortFlag;
+   330→  let longFlag;
+   331→  // short flag, single dash and single character
+   332→  const shortFlagExp = /^-[^-]$/;
+   333→  // long flag, double dash and at least one character
+   334→  const longFlagExp = /^--[^-]/;
       →…
 suggestSimilar.js
      1→const maxDistance = 3;
@@ -1094,7 +1069,14 @@ suggestSimilar.js
     36→        d[i - 1][j - 1] + cost, // substitution
     37→      );
     38→      // transposition
-      →…
+    39→      if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) {
+    40→        d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1);
+    41→      }
+    42→    }
+    43→  }
+    44→
+    45→  return d[a.length][b.length];
+    46→}
     48→/**
     49→ * Find close matches, restricted to same number of edits.
     50→ *
@@ -1105,4 +1087,9 @@ suggestSimilar.js
     55→
     56→function suggestSimilar(word, candidates) {
     57→  if (!candidates || candidates.length === 0) return '';
+    58→  // remove possible duplicates
+    59→  candidates = Array.from(new Set(candidates));
+    60→
+    61→  const searchingOptions = word.startsWith('--');
+    62→  if (searchingOptions) {
       →…

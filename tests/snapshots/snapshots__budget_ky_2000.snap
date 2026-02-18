@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1983 words)
+budget: 2000 (1961 words)
 
 readme.md
     20→## Benefits over plain `fetch`
@@ -65,6 +65,17 @@ readme.md
     87→### ky(input, options?)
     89→The `input` and `options` are the same as [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch), with additional `options` available (see below).
     90→
+    91→Returns a [`Response` object](https://developer.mozilla.org/en-US/docs/Web/API/Response) with [`Body` methods](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#body) added for convenience. So you can, for example, call `ky.get(input).json()` directly without having to await the `Response` first. When called like that, an appropriate `Accept` header will be set depending on the body method used. Unlike the `Body` methods of `window.Fetch`, these will throw an `HTTPError` if the response status is not in the range of `200...299`. Also, `.json()` will return an empty string if body is empty or the response status is `204` instead of throwing a parse error due to an empty body.
+    92→
+    93→Available body shortcuts: `.json()`, `.text()`, `.formData()`, `.arrayBuffer()`, `.blob()`, and `.bytes()`. The `.bytes()` shortcut is only present when the runtime supports `Response.prototype.bytes()`.
+    94→
+    95→```js
+    96→import ky from 'ky';
+    97→
+    98→const user = await ky('/api/user').json();
+    99→
+   100→console.log(user);
+   101→```
       →…
    122→### ky.get(input, options?) …
    123→### ky.post(input, options?)
@@ -74,7 +85,8 @@ readme.md
    127→### ky.delete(input, options?)
    129→Sets `options.method` to the method name and makes a request.
    130→
-      →…
+   131→⌨️ **TypeScript:** Accepts an optional type parameter for use with JSON responses (see [`ky()`](#kyinput-options)).
+   132→
    147→##### method …
    156→##### json …
    162→##### searchParams …
@@ -123,6 +135,17 @@ readme.md
   1052→### Sending form data
   1054→Sending form data in Ky is identical to `fetch`. Just pass a [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance to the `body` option. The `Content-Type` header will be automatically set to `multipart/form-data`, overriding any existing `Content-Type` header.
   1055→
+  1056→```js
+  1057→import ky from 'ky';
+  1058→
+  1059→// `multipart/form-data`
+  1060→const formData = new FormData();
+  1061→formData.append('food', 'fries');
+  1062→formData.append('drink', 'icetea');
+  1063→
+  1064→const response = await ky.post(url, {body: formData});
+  1065→```
+  1066→
       →…
   1109→### Setting a custom `Content-Type` …
   1129→### Cancellation …
@@ -168,13 +191,7 @@ source/core/Ky.ts
     34→	static create(input: Input, options: Options): ResponsePromise {
     35→		const ky = new Ky(input, options);
     36→
-    37→		const function_ = async (): Promise<Response> => {
-    38→			if (typeof ky.#options.timeout === 'number' && ky.#options.timeout > maxSafeTimeout) {
-    39→				throw new RangeError(`The \`timeout\` option cannot be greater than ${maxSafeTimeout}`);
-    40→			}
-    41→
-    42→			// Delay the fetch so that body method shortcuts can set the Accept header
-    43→			await Promise.resolve();
+      →…
    200→	constructor(input: Input, options: Options = {}) {
    201→		this.#input = input;
    202→
@@ -190,13 +207,19 @@ source/core/constants.ts
     58→export const maxSafeTimeout = 2_147_483_647;
     61→export const usualFormBoundarySize = new TextEncoder().encode('------WebKitFormBoundaryaxpyiPgbbPti10Rw').length;
     63→export const stop = Symbol('stop');
-    68→export type ForceRetryOptions …
+    65→/**
+    66→Options for forcing a retry via `ky.retry()`.
+    67→*/
+    68→export type ForceRetryOptions = {
+    69→	/**
+    70→	Custom delay in milliseconds before retrying.
+    71→
+      →…
    145→/**
    146→Marker returned by ky.retry() to signal a forced retry from afterResponse hooks.
    147→*/
    148→export class RetryMarker {
    149→	constructor(public options?: ForceRetryOptions) {}
-   150→}
    152→/**
    153→Force a retry from an `afterResponse` hook.
    154→
@@ -248,22 +271,6 @@ source/errors/ForceRetryError.ts
     12→	customRequest: Request | undefined;
     13→
     14→	constructor(options?: ForceRetryOptions) {
-    15→		// Runtime protection: wrap non-Error causes in NonError
-    16→		// TypeScript type is Error for guidance, but JS users can pass anything
-    17→		const cause = options?.cause
-    18→			? (options.cause instanceof Error ? options.cause : new NonError(options.cause))
-    19→			: undefined;
-    20→
-    21→		super(
-    22→			options?.code ? `Forced retry: ${options.code}` : 'Forced retry',
-    23→			cause ? {cause} : undefined,
-    24→		);
-    25→
-    26→		this.customDelay = options?.delay;
-    27→		this.code = options?.code;
-    28→		this.customRequest = options?.request;
-    29→	}
-    30→}
 source/errors/HTTPError.ts
      1→import type {NormalizedOptions} from '../types/options.js';
      2→import type {KyRequest} from '../types/request.js';
@@ -274,7 +281,6 @@ source/errors/HTTPError.ts
      8→	public options: NormalizedOptions;
      9→
     10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
-      →…
 source/errors/NonError.ts
      1→/**
      2→Wrapper for non-Error values that were thrown.
@@ -286,33 +292,12 @@ source/errors/NonError.ts
      8→	readonly value: unknown;
      9→
     10→	constructor(value: unknown) {
-    11→		let message = 'Non-error value was thrown';
-    12→
-    13→		// Intentionally minimal as this error is just an edge-case.
-    14→		try {
-    15→			if (typeof value === 'string') {
-    16→				message = value;
-    17→			} else if (value && typeof value === 'object' && 'message' in value && typeof value.message === 'string') {
-    18→				message = value.message;
-    19→			}
-    20→		} catch {
-    21→			// Use default message if accessing properties throws
-    22→		}
-    23→
-    24→		super(message);
-    25→
-    26→		this.value = value;
-    27→	}
-    28→}
 source/errors/TimeoutError.ts
      1→import type {KyRequest} from '../types/request.js';
      3→export class TimeoutError extends Error {
      4→	public request: KyRequest;
      5→
      6→	constructor(request: Request) {
-     7→		super(`Request timed out: ${request.method} ${request.url}`);
-     8→		this.name = 'TimeoutError';
-      →…
 source/index.ts
      3→import {Ky} from './core/Ky.js';
      4→import {requestMethods, stop, retry} from './core/constants.js';
@@ -330,8 +315,21 @@ source/types/common.ts
 source/types/hooks.ts
 source/types/ky.ts
 source/types/options.ts
-    33→export type KyOptions …
-   307→export type KyOptionsRegistry …
+    29→/**
+    30→Custom Ky options
+    31→*/
+    32→
+    33→export type KyOptions = {
+    34→	/**
+    35→	Shortcut for sending JSON. Use this instead of the `body` option.
+    36→
+      →…
+   302→/**
+   303→Each key from KyOptions is present and set to `true`.
+   304→
+   305→This type is used for identifying and working with the known keys in KyOptions.
+   306→*/
+   307→export type KyOptionsRegistry = {[K in keyof KyOptions]-?: true};
    309→/**
    310→Options are the same as `window.fetch`, except for the KyOptions
    311→*/
@@ -405,8 +403,6 @@ source/utils/body.ts
    119→export const streamRequest …
 source/utils/delay.ts
      5→export type DelayOptions = {
-     6→	signal?: InternalOptions['signal'];
-     7→};
      9→export default async function delay …
 source/utils/is.ts
      2→export const isObject …
@@ -419,20 +415,17 @@ source/utils/merge.ts
     86→export const deepMerge …
 source/utils/normalize.ts
      5→export const normalizeRequestMethod …
-     8→const retryMethods: HttpMethod[] = ['get', 'put', 'head', 'delete', 'options', 'trace'];
-    10→const retryStatusCodes = [408, 413, 429, 500, 502, 503, 504];
-    12→const retryAfterStatusCodes = [413, 429, 503];
-    14→type InternalRetryOptions = Required<Omit<RetryOptions, 'shouldRetry'>> & Pick<RetryOptions, 'shouldRetry'>;
-    16→const defaultRetryOptions: InternalRetryOptions = {
+     8→const retryMethods …
+    10→const retryStatusCodes …
+    12→const retryAfterStatusCodes …
+    14→type InternalRetryOptions …
+    16→const defaultRetryOptions …
     28→export const normalizeRetryOptions …
 source/utils/options.ts
      4→export const findUnknownOptions …
     30→export const hasSearchParameters …
 source/utils/timeout.ts
      3→export type TimeoutOptions = {
-     4→	timeout: number;
-     5→	fetch: typeof fetch;
-     6→};
      9→export default async function timeout …
 source/utils/type-guards.ts
      5→/**
@@ -477,8 +470,6 @@ source/utils/type-guards.ts
     98→export function isForceRetryError(error: unknown): error is ForceRetryError {
 source/utils/types.ts
      1→export type Mutable<T> = {
-     2→	-readonly[P in keyof T]: T[P]
-     3→};
      5→export type ObjectEntries<T> = T extends ArrayLike<infer U>
      6→	? Array<[string, U]>
      7→	: Array<{[K in keyof T]: [K, T[K]]}[keyof T]>;
@@ -487,8 +478,8 @@ test/browser.ts
     14→		ky: typeof ky;
     15→	}
 test/helpers/create-http-test-server.ts
-     7→export type HttpServerOptions …
-    11→export type ExtendedHttpTestServer …
+     7→export type HttpServerOptions = {
+    11→export type ExtendedHttpTestServer = {
 test/helpers/create-large-file.ts
 test/helpers/parse-body.ts
 test/helpers/with-page.ts

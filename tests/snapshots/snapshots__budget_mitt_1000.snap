@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (981 words)
+budget: 1000 (978 words)
 
 README.md
      9→# Mitt
@@ -84,6 +84,8 @@ README.md
     90→  bar?: number;
     91→};
     92→
+    93→const emitter = mitt<Events>(); // inferred as Emitter<Events>
+    94→
       →…
    113→## Examples & Demos
    123→## API
@@ -149,7 +151,8 @@ README.md
    198→-   Make your changes.
    199→-   Commit your changes: `git commit -am 'Add some feature'`
    200→-   Push to the branch: `git push origin my-new-feature`
-      →…
+   201→-   Submit a pull request with full remarks documenting your changes.
+   202→
    203→## License
    205→[MIT License](https://opensource.org/licenses/MIT) © [Jason Miller](https://jasonformat.com/)
 src/index.ts
@@ -172,18 +175,10 @@ src/index.ts
     25→
     26→	on<Key extends keyof Events>(type: Key, handler: Handler<Events[Key]>): void;
     27→	on(type: '*', handler: WildcardHandler<Events>): void;
-    28→
-    29→	off<Key extends keyof Events>(
-    30→		type: Key,
-    31→		handler?: Handler<Events[Key]>
-    32→	): void;
     33→	off(type: '*', handler: WildcardHandler<Events>): void;
-    34→
-    35→	emit<Key extends keyof Events>(type: Key, event: Events[Key]): void;
     36→	emit<Key extends keyof Events>(
     37→		type: undefined extends Events[Key] ? Key : never
     38→	): void;
-    39→}
     41→/**
     42→ * Mitt: Tiny (~200b) functional event emitter / pubsub.
     43→ * @name mitt
@@ -227,6 +222,7 @@ test/test-types-compilation.ts
      7→}
      9→const emitter = mitt<{
     10→	foo: string;
+    11→	someEvent: SomeEventData;
       →…
     15→const barHandler …
     16→const fooHandler …

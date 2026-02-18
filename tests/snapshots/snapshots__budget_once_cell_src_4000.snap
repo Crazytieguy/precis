@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4215 words)
+budget: 4000 (3942 words)
 
 imp_cs.rs
      1→use core::panic::{RefUnwindSafe, UnwindSafe};
@@ -209,7 +209,20 @@ imp_std.rs
    223→            Ordering::Release,
    224→            Ordering::Relaxed,
    225→        );
-      →…
+   226→        if let Err(new_queue) = exchange {
+   227→            if strict::addr(new_queue) & STATE_MASK != curr_state {
+   228→                return;
+   229→            }
+   230→            curr_queue = new_queue;
+   231→            continue;
+   232→        }
+   233→
+   234→        while !node.signaled.load(Ordering::Acquire) {
+   235→            thread::park();
+   236→        }
+   237→        break;
+   238→    }
+   239→}
    245→mod strict {
    246→    #[must_use]
    247→    #[inline]
@@ -217,12 +230,6 @@ imp_std.rs
    249→    where
    250→        T: Sized,
    251→    {
-   252→        // FIXME(strict_provenance_magic): I am magic and should be a compiler intrinsic.
-   253→        // SAFETY: Pointer-to-integer transmutes are valid (if you are okay with losing the
-   254→        // provenance).
-   255→        unsafe { core::mem::transmute(ptr) }
-   256→    }
-   257→
    258→    #[must_use]
    259→    #[inline]
    260→    pub(crate) fn with_addr<T>(ptr: *mut T, addr: usize) -> *mut T
@@ -253,7 +260,6 @@ lib.rs
    387→        ops::{Deref, DerefMut},
    388→        panic::{RefUnwindSafe, UnwindSafe},
    389→    };
-   390→
    391→    /// A cell which can be written to only once. It is not thread safe.
    392→    ///
    393→    /// Unlike [`std::cell::RefCell`], a `OnceCell` provides simple `&`
@@ -278,7 +284,6 @@ lib.rs
    412→        // Invariant: written to at most once.
    413→        inner: UnsafeCell<Option<T>>,
    414→    }
-   415→
    424→        fn default() -> Self {
    425→            Self::new()
    426→        }
@@ -311,41 +316,33 @@ lib.rs
    474→        /// Creates a new initialized cell.
    475→        pub const fn with_value(value: T) -> OnceCell<T> {
    479→        /// Gets a reference to the underlying value.
-   480→        ///
       →…
    483→        pub fn get(&self) -> Option<&T> {
    491→        /// Gets a mutable reference to the underlying value.
-   492→        ///
       →…
    508→        pub fn get_mut(&mut self) -> Option<&mut T> {
    513→        /// Sets the contents of this cell to `value`.
-   514→        ///
       →…
    530→        pub fn set(&self, value: T) -> Result<(), T> {
    537→        /// Like [`set`](Self::set), but also returns a reference to the final cell value.
-   538→        ///
       →…
    551→        pub fn try_insert(&self, value: T) -> Result<&T, (&T, T)> {
    565→        /// Gets the contents of the cell, initializing it with `f`
-   566→        /// if the cell was empty.
       →…
    586→        pub fn get_or_init<F>(&self, f: F) -> &T
    587→        where
    588→            F: FnOnce() -> T,
    589→        {
    597→        /// Gets the contents of the cell, initializing it with `f` if
-   598→        /// the cell was empty. If the cell was empty and `f` failed, an
       →…
    622→        pub fn get_or_try_init<F, E>(&self, f: F) -> Result<&T, E>
    623→        where
    624→            F: FnOnce() -> Result<T, E>,
    625→        {
    638→        /// Takes the value out of this `OnceCell`, moving it back to an uninitialized state.
-   639→        ///
       →…
    667→        pub fn take(&mut self) -> Option<T> {
    671→        /// Consumes the `OnceCell`, returning the wrapped value.
-   672→        ///
       →…
    687→        pub fn into_inner(self) -> Option<T> {
    694→    /// A value which is initialized on the first access.
@@ -376,27 +373,21 @@ lib.rs
    723→            f.debug_struct("Lazy").field("cell", &self.cell).field("init", &"..").finish()
    724→        }
    728→        /// Creates a new lazy value with the given initializing function.
-   729→        ///
       →…
    742→        pub const fn new(init: F) -> Lazy<T, F> {
    746→        /// Consumes this `Lazy` returning the stored value.
-   747→        ///
       →…
    749→        pub fn into_value(this: Lazy<T, F>) -> Result<T, F> {
    759→        /// Forces the evaluation of this lazy value and returns a reference to
-   760→        /// the result.
       →…
    773→        pub fn force(this: &Lazy<T, F>) -> &T {
    780→        /// Forces the evaluation of this lazy value and returns a mutable reference to
-   781→        /// the result.
       →…
    794→        pub fn force_mut(this: &mut Lazy<T, F>) -> &mut T {
    805→        /// Gets the reference to the result of this lazy value if
-   806→        /// it was initialized, otherwise returns `None`.
       →…
    818→        pub fn get(this: &Lazy<T, F>) -> Option<&T> {
    822→        /// Gets the mutable reference to the result of this lazy value if
-   823→        /// it was initialized, otherwise returns `None`.
       →…
    835→        pub fn get_mut(this: &mut Lazy<T, F>) -> Option<&mut T> {
    841→        type Target = T;
@@ -417,9 +408,7 @@ lib.rs
    867→        ops::{Deref, DerefMut},
    868→        panic::RefUnwindSafe,
    869→    };
-   870→
    871→    use super::imp::OnceCell as Imp;
-   872→
    873→    /// A thread-safe cell which can be written to only once.
    874→    ///
    875→    /// `OnceCell` provides `&` references to the contents without RAII guards.
@@ -481,49 +470,39 @@ lib.rs
    954→        /// Creates a new initialized cell.
    955→        pub const fn with_value(value: T) -> OnceCell<T> {
    959→        /// Gets the reference to the underlying value.
-   960→        ///
       →…
    963→        pub fn get(&self) -> Option<&T> {
    972→        /// Gets the reference to the underlying value, blocking the current
-   973→        /// thread until it is set.
       →…
    993→        pub fn wait(&self) -> &T {
   1003→        /// Gets the mutable reference to the underlying value.
-  1004→        ///
       →…
   1019→        pub fn get_mut(&mut self) -> Option<&mut T> {
   1023→        /// Get the reference to the underlying value, without checking if the
-  1024→        /// cell is initialized.
       →…
   1031→        pub unsafe fn get_unchecked(&self) -> &T {
   1035→        /// Sets the contents of this cell to `value`.
-  1036→        ///
       →…
   1058→        pub fn set(&self, value: T) -> Result<(), T> {
   1065→        /// Like [`set`](Self::set), but also returns a reference to the final cell value.
-  1066→        ///
       →…
   1080→        pub fn try_insert(&self, value: T) -> Result<&T, (&T, T)> {
   1089→        /// Gets the contents of the cell, initializing it with `f` if the cell
-  1090→        /// was empty.
       →…
   1115→        pub fn get_or_init<F>(&self, f: F) -> &T
   1116→        where
   1117→            F: FnOnce() -> T,
   1118→        {
   1126→        /// Gets the contents of the cell, initializing it with `f` if
-  1127→        /// the cell was empty. If the cell was empty and `f` failed, an
       →…
   1152→        pub fn get_or_try_init<F, E>(&self, f: F) -> Result<&T, E>
   1153→        where
   1154→            F: FnOnce() -> Result<T, E>,
   1155→        {
   1168→        /// Takes the value out of this `OnceCell`, moving it back to an uninitialized state.
-  1169→        ///
       →…
   1197→        pub fn take(&mut self) -> Option<T> {
   1201→        /// Consumes the `OnceCell`, returning the wrapped value. Returns
-  1202→        /// `None` if the cell was empty.
       →…
   1217→        pub fn into_inner(self) -> Option<T> {
   1222→    /// A value which is initialized on the first access.
@@ -567,26 +546,21 @@ lib.rs
   1262→            f.debug_struct("Lazy").field("cell", &self.cell).field("init", &"..").finish()
   1263→        }
   1276→        /// Creates a new lazy value with the given initializing
-  1277→        /// function.
+      →…
   1278→        pub const fn new(f: F) -> Lazy<T, F> {
   1282→        /// Consumes this `Lazy` returning the stored value.
-  1283→        ///
       →…
   1285→        pub fn into_value(this: Lazy<T, F>) -> Result<T, F> {
   1295→        /// Forces the evaluation of this lazy value and
-  1296→        /// returns a reference to the result. This is equivalent
       →…
   1308→        pub fn force(this: &Lazy<T, F>) -> &T {
   1315→        /// Forces the evaluation of this lazy value and
-  1316→        /// returns a mutable reference to the result. This is equivalent
       →…
   1327→        pub fn force_mut(this: &mut Lazy<T, F>) -> &mut T {
   1338→        /// Gets the reference to the result of this lazy value if
-  1339→        /// it was initialized, otherwise returns `None`.
       →…
   1351→        pub fn get(this: &Lazy<T, F>) -> Option<&T> {
   1355→        /// Gets the reference to the result of this lazy value if
-  1356→        /// it was initialized, otherwise returns `None`.
       →…
   1368→        pub fn get_mut(this: &mut Lazy<T, F>) -> Option<&mut T> {
   1374→        type Target = T;
@@ -630,28 +604,24 @@ race.rs
     44→    inner: AtomicUsize,
     45→}
     48→    /// Creates a new empty cell.
-    49→    #[inline]
+      →…
     50→    pub const fn new() -> Self {
     54→    /// Gets the underlying value.
-    55→    #[inline]
+      →…
     56→    pub fn get(&self) -> Option<NonZeroUsize> {
     61→    /// Get the reference to the underlying value, without checking if the cell
-    62→    /// is initialized.
       →…
     68→    pub unsafe fn get_unchecked(&self) -> NonZeroUsize {
    102→    /// Sets the contents of this cell to `value`.
-   103→    ///
       →…
    107→    pub fn set(&self, value: NonZeroUsize) -> Result<(), ()> {
    114→    /// Gets the contents of the cell, initializing it with `f` if the cell was
-   115→    /// empty.
       →…
    120→    pub fn get_or_init<F>(&self, f: F) -> NonZeroUsize
    121→    where
    122→        F: FnOnce() -> NonZeroUsize,
    123→    {
    131→    /// Gets the contents of the cell, initializing it with `f` if
-   132→    /// the cell was empty. If the cell was empty and `f` failed, an
       →…
    138→    pub fn get_or_try_init<F, E>(&self, f: F) -> Result<NonZeroUsize, E>
    139→    where
@@ -668,24 +638,21 @@ race.rs
    168→    inner: OnceNonZeroUsize,
    169→}
    172→    /// Creates a new empty cell.
-   173→    #[inline]
+      →…
    174→    pub const fn new() -> Self {
    178→    /// Gets the underlying value.
-   179→    #[inline]
+      →…
    180→    pub fn get(&self) -> Option<bool> {
    184→    /// Sets the contents of this cell to `value`.
-   185→    ///
       →…
    189→    pub fn set(&self, value: bool) -> Result<(), ()> {
    193→    /// Gets the contents of the cell, initializing it with `f` if the cell was
-   194→    /// empty.
       →…
    199→    pub fn get_or_init<F>(&self, f: F) -> bool
    200→    where
    201→        F: FnOnce() -> bool,
    202→    {
    206→    /// Gets the contents of the cell, initializing it with `f` if
-   207→    /// the cell was empty. If the cell was empty and `f` failed, an
       →…
    213→    pub fn get_or_try_init<F, E>(&self, f: F) -> Result<bool, E>
    214→    where
@@ -711,18 +678,15 @@ race.rs
    258→    /// Gets a reference to the underlying value.
    259→    pub fn get(&self) -> Option<&'a T> {
    264→    /// Sets the contents of this cell to `value`.
-   265→    ///
       →…
    268→    pub fn set(&self, value: &'a T) -> Result<(), ()> {
    275→    /// Gets the contents of the cell, initializing it with `f` if the cell was
-   276→    /// empty.
       →…
    281→    pub fn get_or_init<F>(&self, f: F) -> &'a T
    282→    where
    283→        F: FnOnce() -> &'a T,
    284→    {
    292→    /// Gets the contents of the cell, initializing it with `f` if
-   293→    /// the cell was empty. If the cell was empty and `f` failed, an
       →…
    299→    pub fn get_or_try_init<F, E>(&self, f: F) -> Result<&'a T, E>
    300→    where
@@ -754,36 +718,24 @@ race.rs
    354→mod once_box {
    355→    use super::atomic::{AtomicPtr, Ordering};
    356→    use core::{marker::PhantomData, ptr};
-   357→
    358→    use alloc::boxed::Box;
-   359→
    360→    /// A thread-safe cell which can be written to only once.
    361→    pub struct OnceBox<T> {
    362→        inner: AtomicPtr<T>,
    363→        ghost: PhantomData<Option<Box<T>>>,
    364→    }
-   365→
-   366→    impl<T> core::fmt::Debug for OnceBox<T> {
    367→        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
    368→            write!(f, "OnceBox({:?})", self.inner.load(Ordering::Relaxed))
    369→        }
-   370→    }
-   371→
-   372→    impl<T> Default for OnceBox<T> {
    373→        fn default() -> Self {
    374→            Self::new()
    375→        }
-   376→    }
-   377→
-   378→    impl<T> Drop for OnceBox<T> {
    379→        fn drop(&mut self) {
    380→            let ptr = *self.inner.get_mut();
    381→            if !ptr.is_null() {
    382→                drop(unsafe { Box::from_raw(ptr) })
    383→            }
    384→        }
-   385→    }
-   386→
    388→        /// Creates a new empty cell.
    389→        pub const fn new() -> Self {
    393→        /// Creates a new cell with the given value.
@@ -791,18 +743,15 @@ race.rs
    398→        /// Gets a reference to the underlying value.
    399→        pub fn get(&self) -> Option<&T> {
    407→        /// Sets the contents of this cell to `value`.
-   408→        ///
       →…
    411→        pub fn set(&self, value: Box<T>) -> Result<(), Box<T>> {
    426→        /// Gets the contents of the cell, initializing it with `f` if the cell was
-   427→        /// empty.
       →…
    432→        pub fn get_or_init<F>(&self, f: F) -> &T
    433→        where
    434→            F: FnOnce() -> Box<T>,
    435→        {
    443→        /// Gets the contents of the cell, initializing it with `f` if
-   444→        /// the cell was empty. If the cell was empty and `f` failed, an
       →…
    450→        pub fn get_or_try_init<F, E>(&self, f: F) -> Result<&T, E>
    451→        where

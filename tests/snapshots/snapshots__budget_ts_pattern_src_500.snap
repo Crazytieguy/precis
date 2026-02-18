@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (513 words)
+budget: 500 (495 words)
 
 errors.ts
      1→/**
@@ -10,16 +10,6 @@ errors.ts
      3→ * and .exhaustive() was specified
      4→ */
      5→export class NonExhaustiveError extends Error {
-     6→  constructor(public input: unknown) {
-     7→    let displayedValue;
-     8→    try {
-     9→      displayedValue = JSON.stringify(input);
-    10→    } catch (e) {
-    11→      displayedValue = input;
-    12→    }
-    13→    super(`Pattern matching error: no pattern matches value ${displayedValue}`);
-    14→  }
-    15→}
 index.ts
 internals/helpers.ts
      7→import * as symbols from './symbols';
@@ -47,6 +37,7 @@ internals/symbols.ts
     30→export type override = typeof override;
 is-matching.ts
      6→/**
+     7→ * This constraint allows using additional properties
       →…
     11→type PatternConstraint<T> = T extends readonly any[]
     12→  ? P.Pattern<T>
@@ -55,12 +46,9 @@ is-matching.ts
     15→  : P.Pattern<T>;
 match.ts
     32→export function match …
+    38→/**
+      →…
     47→class MatchExpression<input, output> {
-    48→  constructor(private input: input, private state: MatchState<output>) {}
-    49→
-    50→  with(...args: any[]): MatchExpression<input, output> {
-    51→    if (this.state.matched) return this;
-    52→
 patterns.ts
      8→import { matchPattern, getSelectionKeys, flatMap } from './internals/helpers';
     81→export type unstable_Matchable …
@@ -102,8 +90,16 @@ types/Match.ts
     16→}
     22→export type Match …
    132→  with …
-   245→type DeepExcludeAll …
-   261→type Exhaustive …
+   228→/**
+      →…
+   245→type DeepExcludeAll<a, tupleList extends any[]> = [a] extends [never]
+   246→  ? never
+   247→  : tupleList extends [infer excluded, ...infer tail]
+   248→  ? DeepExcludeAll<DeepExclude<a, excluded>, tail>
+   249→  : a;
+   255→/**
+      →…
+   261→type Exhaustive<output, inferredOutput> = {
 types/Pattern.ts
     43→/**
     44→ * A `Matcher` is an object implementing the match

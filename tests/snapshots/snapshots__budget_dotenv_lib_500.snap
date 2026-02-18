@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (513 words)
+budget: 500 (497 words)
 
 cli-options.js
      1→const re = /^dotenv_config_(encoding|path|quiet|debug|override|DOTENV_KEY)=(.+)$/
@@ -77,9 +77,7 @@ main.d.ts
     99→    | 'MISSING_DATA'
    100→    | 'INVALID_DOTENV_KEY'
    101→    | 'NOT_FOUND_DOTENV_ENVIRONMENT'
-   102→    | 'DECRYPTION_FAILED'
-   103→    | 'OBJECT_REQUIRED';
-   104→}
+      →…
    106→export interface DotenvPopulateOptions {
    107→  /**
    108→   * Default: `false`
@@ -106,7 +104,6 @@ main.js
      7→const version = packageJson.version
     10→const TIPS = [
     11→  '🔐 encrypt with Dotenvx: https://dotenvx.com',
-    12→  '🔐 prevent committing .env to code: https://dotenvx.com/precommit',
       →…
     27→function _getRandomTip () {
     31→function parseBoolean (value) {
@@ -129,5 +126,4 @@ main.js
    378→function populate (processEnv, parsed, options = {}) {
    413→const DotenvModule = {
    414→  configDotenv,
-   415→  _configVault,
       →…

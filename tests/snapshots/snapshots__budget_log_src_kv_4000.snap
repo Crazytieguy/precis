@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3958 words)
+budget: 4000 (3955 words)
 
 error.rs
      1→use std::fmt;
@@ -66,7 +66,6 @@ key.rs
      7→pub trait ToKey {
      8→    /// Perform the conversion.
      9→    fn to_key(&self) -> Key<'_>;
-    10→}
     16→    fn to_key …
     22→    fn to_key …
     28→    fn to_key …
@@ -160,6 +159,18 @@ mod.rs
     38→//! info!(a; "Something of interest");
     39→//! ```
     40→//!
+    41→//! Values are capturing using the [`ToValue`] trait by default. To capture a value
+    42→//! using a different trait implementation, use a modifier after its key. Here's how
+    43→//! the same example can capture `a` using its `Debug` implementation instead:
+    44→//!
+    45→//! ```
+    46→//! # use log::info;
+    47→//! info!(a:? = 1; "Something of interest");
+    48→//! ```
+    49→//!
+    50→//! The following capturing modifiers are supported:
+    51→//!
+    52→//! - `:?` will capture the value using `Debug`.
       →…
    246→mod error;
    247→mod key;
@@ -233,7 +244,6 @@ source.rs
     60→    /// A source should yield the same key-values to a subsequent visitor unless
     61→    /// that visitor itself fails.
     62→    fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error>;
-    63→
     64→    /// Get the value for a given key.
     65→    ///
     66→    /// If the key appears multiple times in the source then which key is returned
@@ -246,7 +256,6 @@ source.rs
     73→    fn get(&self, key: Key) -> Option<Value<'_>> {
     74→        get_default(self, key)
     75→    }
-    76→
     77→    /// Count the number of key-values that can be visited.
     78→    ///
     79→    /// # Implementation notes
@@ -258,7 +267,6 @@ source.rs
     85→    fn count(&self) -> usize {
     86→        count_default(self)
     87→    }
-    88→}
     90→/// The default implementation of `Source::get`
     91→fn get_default<'v>(source: &'v (impl Source + ?Sized), key: Key) -> Option<Value<'v>> {
     92→    struct Get<'k, 'v> {
@@ -316,16 +324,12 @@ source.rs
    235→pub trait VisitSource<'kvs> {
    236→    /// Visit a key-value pair.
    237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
-   238→}
    240→#[allow(clippy::needless_lifetimes)] // Not needless.
    241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T
    242→where
    243→    T: VisitSource<'kvs> + ?Sized,
    244→{
-   245→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error> {
-   246→        (**self).visit_pair(key, value)
-   247→    }
-   248→}
+   245→    fn visit_pair …
    251→    fn visit_pair …
    258→    fn visit_pair …
    265→    fn visit_pair …
@@ -365,7 +369,6 @@ value.rs
     11→pub trait ToValue {
     12→    /// Perform the conversion.
     13→    fn to_value(&self) -> Value<'_>;
-    14→}
     20→    fn to_value …
     26→    fn to_value …
     33→/// A value in a key-value.
@@ -448,7 +451,12 @@ value.rs
    110→///
    111→/// You don't need a visitor to serialize values through `serde` or `sval`.
    112→///
-      →…
+   113→/// A value can always be serialized using any supported framework, regardless
+   114→/// of how it was captured. If, for example, a value was captured using its
+   115→/// `Display` implementation, it will serialize through `serde` as a string. If it was
+   116→/// captured as a struct using `serde`, it will also serialize as a struct
+   117→/// through `sval`, or can be formatted using a `Debug`-compatible representation.
+   118→#[derive(Clone)]
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
    121→}
@@ -542,25 +550,13 @@ value.rs
    229→    fn fmt …
    234→#[cfg(feature = "kv_serde")]
    235→impl<'v> serde_core::Serialize for Value<'v> {
-   236→    fn serialize<S>(&self, s: S) -> Result<S::Ok, S::Error>
-   237→    where
-   238→        S: serde_core::Serializer,
-   239→    {
-   240→        self.inner.serialize(s)
-   241→    }
-   242→}
+   236→    fn serialize …
    244→#[cfg(feature = "kv_sval")]
    245→impl<'v> sval::Value for Value<'v> {
-   246→    fn stream<'sval, S: sval::Stream<'sval> + ?Sized>(&'sval self, stream: &mut S) -> sval::Result {
-   247→        sval::Value::stream(&self.inner, stream)
-   248→    }
-   249→}
+   246→    fn stream …
    251→#[cfg(feature = "kv_sval")]
    252→impl<'v> sval_ref::ValueRef<'v> for Value<'v> {
-   253→    fn stream_ref<S: sval::Stream<'v> + ?Sized>(&self, stream: &mut S) -> sval::Result {
-   254→        sval_ref::ValueRef::stream_ref(&self.inner, stream)
-   255→    }
-   256→}
+   253→    fn stream_ref …
    259→    fn to_value …
    265→    fn from …
    271→    fn to_value …
@@ -640,64 +636,52 @@ value.rs
    467→    /// The `Value` may be formatted using its `fmt::Debug` or `fmt::Display` implementation,
    468→    /// or serialized using its `sval::Value` or `serde::Serialize` implementation.
    469→    fn visit_any(&mut self, value: Value) -> Result<(), Error>;
-   470→
    471→    /// Visit an empty value.
    472→    fn visit_null(&mut self) -> Result<(), Error> {
    473→        self.visit_any(Value::null())
    474→    }
-   475→
    476→    /// Visit an unsigned integer.
    477→    fn visit_u64(&mut self, value: u64) -> Result<(), Error> {
    478→        self.visit_any(value.into())
    479→    }
-   480→
    481→    /// Visit a signed integer.
    482→    fn visit_i64(&mut self, value: i64) -> Result<(), Error> {
    483→        self.visit_any(value.into())
    484→    }
-   485→
    486→    /// Visit a big unsigned integer.
    487→    fn visit_u128(&mut self, value: u128) -> Result<(), Error> {
    488→        self.visit_any((value).into())
    489→    }
-   490→
    491→    /// Visit a big signed integer.
    492→    fn visit_i128(&mut self, value: i128) -> Result<(), Error> {
    493→        self.visit_any((value).into())
    494→    }
-   495→
    496→    /// Visit a floating point.
    497→    fn visit_f64(&mut self, value: f64) -> Result<(), Error> {
    498→        self.visit_any(value.into())
    499→    }
-   500→
    501→    /// Visit a boolean.
    502→    fn visit_bool(&mut self, value: bool) -> Result<(), Error> {
    503→        self.visit_any(value.into())
    504→    }
-   505→
    506→    /// Visit a string.
    507→    fn visit_str(&mut self, value: &str) -> Result<(), Error> {
    508→        self.visit_any(value.into())
    509→    }
-   510→
    511→    /// Visit a string.
    512→    fn visit_borrowed_str(&mut self, value: &'v str) -> Result<(), Error> {
    513→        self.visit_str(value)
    514→    }
-   515→
    516→    /// Visit a Unicode character.
    517→    fn visit_char(&mut self, value: char) -> Result<(), Error> {
    518→        let mut b = [0; 4];
    519→        self.visit_str(&*value.encode_utf8(&mut b))
    520→    }
-   521→
    522→    /// Visit an error.
    523→    #[cfg(feature = "kv_std")]
    524→    fn visit_error(&mut self, err: &(dyn std::error::Error + 'static)) -> Result<(), Error> {
    525→        self.visit_any(Value::from_dyn_error(err))
    526→    }
-   527→
    528→    /// Visit an error.
    529→    #[cfg(feature = "kv_std")]
    530→    fn visit_borrowed_error(
@@ -706,36 +690,17 @@ value.rs
    533→    ) -> Result<(), Error> {
    534→        self.visit_any(Value::from_dyn_error(err))
    535→    }
-   536→}
    538→#[allow(clippy::needless_lifetimes)] // Not needless.
    539→impl<'a, 'v, T: ?Sized> VisitValue<'v> for &'a mut T
    540→where
    541→    T: VisitValue<'v>,
    542→{
-   543→    fn visit_any(&mut self, value: Value) -> Result<(), Error> {
-   544→        (**self).visit_any(value)
-   545→    }
-   546→
-   547→    fn visit_null(&mut self) -> Result<(), Error> {
-   548→        (**self).visit_null()
-   549→    }
-   550→
-   551→    fn visit_u64(&mut self, value: u64) -> Result<(), Error> {
-   552→        (**self).visit_u64(value)
-   553→    }
-   554→
-   555→    fn visit_i64(&mut self, value: i64) -> Result<(), Error> {
-   556→        (**self).visit_i64(value)
-   557→    }
-   558→
-   559→    fn visit_u128(&mut self, value: u128) -> Result<(), Error> {
-   560→        (**self).visit_u128(value)
-   561→    }
-   562→
-   563→    fn visit_i128(&mut self, value: i128) -> Result<(), Error> {
-   564→        (**self).visit_i128(value)
-   565→    }
-   566→
+   543→    fn visit_any …
+   547→    fn visit_null …
+   551→    fn visit_u64 …
+   555→    fn visit_i64 …
+   559→    fn visit_u128 …
+   563→    fn visit_i128 …
    567→    fn visit_f64 …
    571→    fn visit_bool …
    575→    fn visit_str …

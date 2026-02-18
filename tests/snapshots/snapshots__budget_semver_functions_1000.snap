@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1030 words)
+budget: 1000 (994 words)
 
 clean.js
      4→const clean = (version, options) => {
@@ -49,9 +49,6 @@ cmp.js
     46→
     47→    case '<=':
     48→      return lte(a, b, loose)
-    49→
-    50→    default:
-    51→      throw new TypeError(`Invalid operator: ${op}`)
       →…
 coerce.js
      7→const coerce = (version, options) => {
@@ -93,9 +90,6 @@ coerce.js
     43→      }
     44→      coerceRtlRegex.lastIndex = next.index + next[1].length + next[2].length
     45→    }
-    46→    // leave it in a clean state
-    47→    coerceRtlRegex.lastIndex = -1
-    48→  }
       →…
 compare-build.js
      4→const compareBuild = (a, b, loose) => {
@@ -148,9 +142,6 @@ diff.js
     41→  // add the `pre` prefix if we are going to a prerelease version
     42→  const prefix = highHasPre ? 'pre' : ''
     43→
-    44→  if (v1.major !== v2.major) {
-    45→    return prefix + 'major'
-    46→  }
       →…
 eq.js
      4→const eq = (a, b, loose) => compare(a, b, loose) === 0

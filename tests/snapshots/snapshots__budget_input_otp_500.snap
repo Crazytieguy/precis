@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (505 words)
+budget: 500 (490 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -40,10 +40,6 @@ apps/storybook/src/lib/utils.ts
      5→  return twMerge(clsx(inputs))
      6→}
 apps/storybook/src/stories/Button.stories.ts
-    14→export const Primary = {
-    21→export const Secondary = {
-    27→export const Large = {
-    34→export const Small = {
 apps/storybook/src/stories/Button.tsx
      5→/**
      6→ * Primary UI component for user interaction
@@ -54,6 +50,7 @@ apps/storybook/src/stories/InputOTP.stories.tsx
 apps/storybook/tailwind.config.js
      2→const config = {
 apps/test/README.md
+apps/test/src/app/base/page.tsx
 apps/website/README.md
      3→## Getting Started …
     23→## Learn More …
@@ -75,6 +72,7 @@ apps/website/src/app/(local-pages)/example-playground/page.tsx
 apps/website/src/app/(local-pages)/layout.tsx
      7→export default function RootLayout({
      8→  children,
+     9→}: Readonly<{
       →…
 apps/website/src/app/(local-pages)/raw-input/page.tsx
      3→import React from 'react'
@@ -130,21 +128,21 @@ packages/input-otp/src/input.tsx
     14→export const OTPInput = React.forwardRef<HTMLInputElement, OTPInputProps>(
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
 packages/input-otp/src/regexp.ts
-     1→export const REGEXP_ONLY_DIGITS …
-     2→export const REGEXP_ONLY_CHARS …
-     3→export const REGEXP_ONLY_DIGITS_AND_CHARS …
+     1→export const REGEXP_ONLY_DIGITS = '^\\d+$'
+     2→export const REGEXP_ONLY_CHARS = '^[a-zA-Z]+$'
+     3→export const REGEXP_ONLY_DIGITS_AND_CHARS = '^[a-zA-Z0-9]+$'
 packages/input-otp/src/sync-timeouts.ts
      1→export function syncTimeouts(cb: (...args: any[]) => unknown): number[] {
 packages/input-otp/src/types.ts
      1→export interface SlotProps {
      2→  isActive: boolean
-     3→  char: string | null
       →…
      7→export interface RenderProps {
      8→  slots: SlotProps[]
-     9→  isFocused: boolean
       →…
-    33→export type OTPInputProps …
+    33→export type OTPInputProps = OTPInputBaseProps &
+    34→  (
+    35→    | {
 packages/input-otp/src/use-previous.ts
      1→import * as React from 'react'
      3→export function usePrevious<T>(value: T) {

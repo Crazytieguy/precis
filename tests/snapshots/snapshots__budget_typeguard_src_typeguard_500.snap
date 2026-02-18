@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (494 words)
+budget: 500 (483 words)
 
 __init__.py
     34→config: TypeCheckConfiguration
@@ -14,15 +14,9 @@ _checkers.py
     89→generic_alias_types: tuple[type, ...] = (
     98→# Lifted from mypy.sharedparse
     99→BINARY_MAGIC_METHODS = {
-   100→    "__add__",
-   101→    "__and__",
-      →…
    586→def _is_literal_type(typ: object) -> bool:
   1004→# Equality checks are applied to these
   1005→origin_type_checkers: dict[
-  1006→    Any, Callable[[Any, Any, tuple[Any, ...], TypeCheckMemo], None]
-  1007→] = {
-      →…
 _config.py
     11→T = TypeVar("T")
     14→class ForwardRefPolicy(Enum):
@@ -30,7 +24,22 @@ _config.py
       →…
     30→class CollectionCheckStrategy(Enum):
     48→
+    62→@dataclass
     63→class TypeCheckConfiguration:
+    64→    """
+    65→     You can change Typeguard's behavior with these settings.
+    66→
+    67→    .. attribute:: typecheck_fail_callback
+    68→       :type: Callable[[TypeCheckError, TypeCheckMemo], Any]
+    69→
+    70→         Callable that is called when type checking fails.
+    71→
+    72→         Default: ``None`` (the :exc:`~.TypeCheckError` is raised directly)
+    73→
+    74→    .. attribute:: forward_ref_policy
+    75→       :type: ForwardRefPolicy
+    76→
+      →…
     97→
     98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
     99→    typecheck_fail_callback: TypeCheckFailCallback | None = None
@@ -57,7 +66,6 @@ _importhook.py
     45→def _call_with_frames_removed(
     46→    f: Callable[P, T], *args: P.args, **kwargs: P.kwargs
     47→) -> T:
-    48→    return f(*args, **kwargs)
     55→class TypeguardLoader(SourceFileLoader):
     56→    @staticmethod
     57→    def source_to_code(
@@ -74,18 +82,6 @@ _importhook.py
     68→        if isinstance(data, (ast.Module, ast.Expression, ast.Interactive)):
     69→            module = data
     70→        else:
-    71→            if isinstance(data, str):
-    72→                source = data
-    73→            else:
-    74→                source = decode_source(data)
-    75→
-    76→            module = _call_with_frames_removed(
-    77→                ast.parse,
-    78→                source,
-    79→                filename,
-    80→                "exec",
-    81→            )
-    82→
       →…
    109→class TypeguardFinder(MetaPathFinder):
    119→
@@ -101,6 +97,7 @@ _suppression.py
 _transformer.py
     67→PreliminaryNameTypePair: typing.TypeAlias = tuple[Constant, "expr | None"]
     68→NameTypePair: typing.TypeAlias = tuple[Constant, expr]
+   117→@dataclass
    118→class TransformMemo:
    119→    node: Module | ClassDef | FunctionDef | AsyncFunctionDef | None
    120→    parent: TransformMemo | None
@@ -120,28 +117,24 @@ _transformer.py
    134→    has_return_expressions: bool = field(init=False, default=False)
    135→    memo_var_name: Name | None = field(init=False, default=None)
    136→    should_instrument: bool = field(init=False, default=True)
+   137→    variable_annotations: dict[str, expr] = field(init=False, default_factory=dict)
+   138→    configuration_overrides: dict[str, Any] = field(init=False, default_factory=dict)
+   139→    code_inject_index: int = field(init=False, default=0)
+   140→
    285→class NameCollector(NodeVisitor):
-   286→    def __init__(self) -> None:
    313→class GeneratorDetector(NodeVisitor):
    315→
    338→class AnnotationTransformer(NodeTransformer):
    339→    type_substitutions: ClassVar[dict[str, tuple[str, str]]] = {
    488→class TypeguardTransformer(NodeTransformer):
-   489→    def __init__(
    516→    @contextmanager
    517→    def _use_memo(
    518→        self, node: ClassDef | FunctionDef | AsyncFunctionDef
    519→    ) -> Generator[None, Any, None]:
-   520→        new_memo = TransformMemo(node, self._memo, self._memo.path + (node.name,))
-   521→        old_memo = self._memo
-   522→        self._memo = new_memo
-   523→
-      →…
    570→    def _get_import(self, module: str, name: str) -> Name:
    580→    def _convert_annotation(self, annotation: expr | None) -> expr | None:
 _utils.py
+   172→@final
    173→class Unset:
    174→    __slots__ = ()
    175→
-   176→    def __repr__(self) -> str:
-   177→        return "<unset>"

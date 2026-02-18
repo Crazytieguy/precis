@@ -2,14 +2,11 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (502 words)
+budget: 500 (491 words)
 
 README.md
-    28→## Features
-    30→- 🔥 **Hot by default**
-    31→- 🔩 **Easily Customizable**
-      →…
-    37→## Installation
+    28→## Features …
+    37→## Installation …
     39→#### With pnpm
     41→```sh
     42→pnpm add react-hot-toast
@@ -20,12 +17,8 @@ README.md
     48→npm install react-hot-toast
     49→```
     50→
-    51→## Getting Started
-    53→Add the Toaster to your app first. It will take care of rendering all notifications emitted. Now you can trigger `toast()` from anywhere!
-    54→
-      →…
-    70→## Documentation
-    72→Find the full API reference on [official documentation](https://react-hot-toast.com/docs).
+    51→## Getting Started …
+    70→## Documentation …
 site/README.md
      3→## Getting Started
      5→First, run the development server:
@@ -61,6 +54,7 @@ site/components/sections/toaster-example.tsx
     17→export const ToasterExample …
 site/next.config.mjs
      5→const withMDX = nextMdx({
+    14→/** @type {import('next').NextConfig} */
     15→const nextConfig = {
     17→  webpack(config) {
     24→  async rewrites() {
@@ -94,23 +88,24 @@ src/components/loader.tsx
     15→}
     17→export const LoaderIcon = styled('div')<LoaderTheme>`
 src/components/toast-bar.tsx
+     8→const enterAnimation …
+    13→const exitAnimation …
     47→interface ToastBarProps {
     48→  toast: Toast;
     49→  position?: ToastPosition;
     50→  style?: React.CSSProperties;
       →…
+    57→const getAnimationStyle …
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
 src/components/toast-icon.tsx
     32→export const AnimatedIconWrapper = styled('div')`
     41→export type IconThemes = Partial<{
-    42→  success: CheckmarkTheme;
-    43→  error: ErrorTheme;
-    44→  loading: LoaderTheme;
-    45→}>;
     47→export const ToastIcon: React.FC<{
     48→  toast: Toast;
       →…
 src/components/toaster.tsx
+    15→const ToastWrapper …
+    47→const getPositionStyle …
     85→export const Toaster: React.FC<ToasterProps> = ({
     86→  reverseOrder,
       →…
@@ -119,6 +114,7 @@ src/core/store.ts
     12→export enum ActionType {
     13→  ADD_TOAST,
     14→  UPDATE_TOAST,
+    15→  UPSERT_TOAST,
       →…
     52→interface ToasterState {
     58→interface State {
@@ -140,20 +136,23 @@ src/core/types.ts
     14→export interface IconTheme {
     15→  primary: string;
     16→  secondary: string;
-      →…
+    17→}
     24→const isFunction …
     29→export const resolveValue …
     34→export interface Toast {
     35→  type: ToastType;
     36→  id: string;
+    37→  toasterId?: string;
       →…
     80→export interface ToasterProps {
     81→  position?: ToastPosition;
     82→  toastOptions?: DefaultToastOptions;
+    83→  reverseOrder?: boolean;
       →…
     91→export interface ToastWrapperProps {
     92→  id: string;
     93→  className?: string;
+    94→  style?: React.CSSProperties;
       →…
 src/core/use-toaster.ts
      8→export const useToaster …
@@ -164,5 +163,8 @@ src/index.ts
      1→import { toast } from './core/toast';
 test/setup.ts
      1→import '@testing-library/jest-dom';
+test/toast.test.tsx
+    29→const waitTime …
+    35→const TOAST_DURATION = 1000;
 tsup.config.ts
      4→const commonConfig: Options = {

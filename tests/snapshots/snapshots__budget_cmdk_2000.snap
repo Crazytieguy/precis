@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2007 words)
+budget: 2000 (1959 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -218,9 +218,7 @@ cmdk/src/command-score.ts
    157→   * in the original, we used to do the lower-casing on each recursive call, but this meant that toLowerCase()
    158→   * was the dominating cost in the algorithm, passing both is a little ugly, but considerably faster.
    159→   */
-   160→  string = aliases && aliases.length > 0 ? `${string + ' ' + aliases.join(' ')}` : string
-   161→  return commandScoreInner(string, abbreviation, formatInput(string), formatInput(abbreviation), 0, 0, {})
-   162→}
+      →…
 cmdk/src/index.tsx
      3→import * as RadixDialog from '@radix-ui/react-dialog'
      4→import * as React from 'react'
@@ -364,7 +362,6 @@ website/components/code/index.tsx
      5→import { CopyIcon } from 'components/icons'
      7→const theme = {
      8→  plain: {
-     9→    color: 'var(--gray12)',
       →…
     41→export function Code({ children }: { children: string }) {
     42→  return (
@@ -412,21 +409,11 @@ website/pages/_document.tsx
      7→    return (
      8→      <Html lang="en">
      9→        <Head>
-    10→          <link rel="preload" href="/inter-var-latin.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-    11→        </Head>
-    12→        <body>
-    13→          <Main />
-    14→          <NextScript />
-    15→        </body>
-    16→      </Html>
-    17→    )
-    18→  }
-    19→}
+      →…
 website/pages/index.tsx
     20→type TTheme = {
     21→  theme: Themes
-    22→  setTheme: Function
-    23→}
+      →…
     25→type Themes = 'linear' | 'raycast' | 'vercel' | 'framer'
     27→const ThemeContext = React.createContext<TTheme>({} as TTheme)
     29→export default function Index() {
@@ -449,6 +436,10 @@ website/pages/index.tsx
    138→
    139→const themes = [
    140→  {
+   141→    icon: <RaycastIcon />,
+   142→    key: 'raycast',
+   143→  },
+   144→  {
       →…
    158→function ThemeSwitcher() {
    260→//////////////////////////////////////////////////////////////////

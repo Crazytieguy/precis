@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (508 words)
+budget: 500 (489 words)
 
 README.md
     91→# Documentation
@@ -13,7 +13,6 @@ README.md
     97→  - [`.with`](#with)
     98→  - [`.when`](#when)
     99→  - [`.returnType`](#returntype)
-   100→  - [`.exhaustive`](#exhaustive)
       →…
    417→### `match`
    419→```ts
@@ -34,6 +33,7 @@ README.md
       →…
 docs/roadmap.md
 docs/v3-to-v4-migration-guide.md
+     1→# TS-Pattern v3 to v4 Migration Guide
      3→## Breaking changes …
      5→### Imports
      7→type-specific wildcard patterns have moved from `__.<pattern>` to a new `Pattern` qualified module, also exported as `P` by ts-pattern.
@@ -45,29 +45,22 @@ docs/v3-to-v4-migration-guide.md
    298→#### `P.infer<typeof pattern>` …
    336→#### `P.symbol` …
 docs/v4-to-v5-migration-guide.md
+     1→# TS-Pattern v4 to v5 Migration Guide
+     3→This file contains all breaking changes and new features between the version 4 and 5 of TS-Pattern.
+     4→
+     5→# Breaking changes
      7→## TypeScript v5 …
+    63→# New features
     65→## chainable methods …
 examples/gif-fetcher/src/App.tsx
-    75→export default function App() {
 examples/gif-fetcher/src/constants.ts
 examples/gif-fetcher/src/searchGif.ts
-     6→export function searchGif(query: string) {
 src/errors.ts
      1→/**
      2→ * Error when the given input value does not match any included pattern
      3→ * and .exhaustive() was specified
      4→ */
      5→export class NonExhaustiveError extends Error {
-     6→  constructor(public input: unknown) {
-     7→    let displayedValue;
-     8→    try {
-     9→      displayedValue = JSON.stringify(input);
-    10→    } catch (e) {
-    11→      displayedValue = input;
-    12→    }
-    13→    super(`Pattern matching error: no pattern matches value ${displayedValue}`);
-    14→  }
-    15→}
 src/index.ts
 src/internals/helpers.ts
      7→import * as symbols from './symbols';
@@ -88,9 +81,9 @@ src/is-matching.ts
     11→type PatternConstraint …
 src/match.ts
     32→export function match …
+    38→/**
+      →…
     47→class MatchExpression<input, output> {
-    48→  constructor(private input: input, private state: MatchState<output>) {}
-    49→
 src/patterns.ts
      8→import { matchPattern, getSelectionKeys, flatMap } from './internals/helpers';
    187→export function optional …
@@ -153,4 +146,5 @@ src/types/helpers.ts
    267→  input: unknown;
    268→  output: unknown;
    269→}
+tests/types-catalog/definition.ts
 tests/types-catalog/utils.ts

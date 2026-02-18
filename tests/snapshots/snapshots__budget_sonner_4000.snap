@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3875 words)
+budget: 4000 (3925 words)
 
 README.md
      5→## Usage
@@ -178,8 +178,6 @@ src/state.ts
     24→    this.toasts = [];
     25→    this.dismissedToasts = new Set();
     26→  }
-    27→
-    28→  // We use arrow functions to maintain the correct `this` reference
     29→  subscribe = (subscriber: (toast: ToastT | ToastToDismiss) => void) => {
     30→    this.subscribers.push(subscriber);
     31→
@@ -188,16 +186,13 @@ src/state.ts
     34→      this.subscribers.splice(index, 1);
     35→    };
     36→  };
-    37→
     38→  publish = (data: ToastT) => {
     39→    this.subscribers.forEach((subscriber) => subscriber(data));
     40→  };
-    41→
     42→  addToast = (data: ToastT) => {
     43→    this.publish(data);
     44→    this.toasts = [...this.toasts, data];
     45→  };
-    46→
     47→  create = (
     48→    data: ExternalToast & {
     49→      message?: titleT;
@@ -227,18 +222,7 @@ src/state.ts
     73→            id,
     74→            dismissible,
     75→            title: message,
-    76→          };
-    77→        }
-    78→
-    79→        return toast;
-    80→      });
-    81→    } else {
-    82→      this.addToast({ title: message, ...rest, dismissible, id });
-    83→    }
-    84→
-    85→    return id;
-    86→  };
-    87→
+      →…
     88→  dismiss = (id?: number | string) => {
     89→    if (id) {
     90→      this.dismissedToasts.add(id);
@@ -288,6 +272,15 @@ src/state.ts
    141→
    142→    const p = Promise.resolve(promise instanceof Function ? promise() : promise);
    143→
+   144→    let shouldDismiss = id !== undefined;
+   145→    let result: ['resolve', ToastData] | ['reject', unknown];
+   146→
+   147→    const originalPromise = p
+   148→      .then(async (response) => {
+   149→        result = ['resolve', response];
+   150→        const isReactElementResponse = React.isValidElement(response);
+   151→        if (isReactElementResponse) {
+   152→          shouldDismiss = false;
       →…
    243→  custom = (jsx: (id: number | string) => React.ReactElement, data?: ExternalToast) => {
    244→    const id = data?.id || toastsCounter++;
@@ -610,6 +603,9 @@ website/next.config.js
      5→  },
      6→};
      8→const withNextra = require('nextra')({
+     9→  title: 'Sonner',
+    10→  theme: 'nextra-theme-docs',
+      →…
 website/src/components/CodeBlock/index.tsx
      1→import React from 'react';
      2→import Highlight, { defaultProps } from 'prism-react-renderer';
@@ -652,6 +648,19 @@ website/src/components/CodeBlock/index.tsx
     78→                  <path d="M20 6L9 17l-5-5"></path>
     79→                </svg>
     80→              </motion.div>
+    81→            ) : (
+    82→              <motion.div animate="visible" exit="hidden" initial="hidden" key="copy" variants={variants}>
+    83→                <svg
+    84→                  viewBox="0 0 24 24"
+    85→                  width="14"
+    86→                  height="14"
+    87→                  stroke="currentColor"
+    88→                  strokeWidth="1.5"
+    89→                  strokeLinecap="round"
+    90→                  strokeLinejoin="round"
+    91→                  fill="none"
+    92→                  shapeRendering="geometricPrecision"
+    93→                >
       →…
 website/src/components/ExpandModes/index.tsx
      1→import { toast } from 'sonner';
@@ -817,6 +826,9 @@ website/src/components/Installation/index.tsx
     43→                    fill="none"
     44→                    shapeRendering="geometricPrecision"
     45→                  >
+    46→                    <path d="M20 6L9 17l-5-5"></path>
+    47→                  </svg>
+    48→                </motion.div>
       →…
 website/src/components/Other/Other.tsx
      1→import React from 'react';

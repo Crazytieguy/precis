@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (491 words)
+budget: 500 (477 words)
 
 README.md
      1→# humanize
@@ -38,6 +38,7 @@ README.md
     41→- Slovenian
     42→- Spanish
     43→- Swedish
+    44→- Turkish
       →…
     49→## API reference
     51→[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
@@ -177,14 +178,11 @@ src/humanize/time.py
     38→    MONTHS = 6
     39→    YEARS = 7
     40→
-    41→    def __lt__(self, other: Any) -> Any:
-    42→        if self.__class__ is other.__class__:
-    43→            return self.value < other.value
-    44→        return NotImplemented
 tests/test_i18n.py
     17→@freeze_time("2020-02-02")
     18→def test_i18n() -> None:
    225→class TestActivate:
+   226→    expected_msg = (
    249→    @freeze_time("2020-02-02")
    250→    def test_en_locale(self) -> None:
    262→    @freeze_time("2020-02-02")

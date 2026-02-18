@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1962 words)
+budget: 2000 (1968 words)
 
 src/into_either.rs
      4→use super::{Either, Left, Right};
@@ -15,54 +15,9 @@ src/into_either.rs
     12→/// The [`into_either_with`](IntoEither::into_either_with) method takes a
     13→/// [predicate function](FnOnce) to determine whether to convert to [`Left`] or [`Right`].
     14→pub trait IntoEither: Sized {
-    15→    /// Converts `self` into a [`Left`] variant of [`Either<Self, Self>`](Either)
-    16→    /// if `into_left` is `true`.
-    17→    /// Converts `self` into a [`Right`] variant of [`Either<Self, Self>`](Either)
-    18→    /// otherwise.
-    19→    ///
-    20→    /// # Examples
-    21→    ///
-    22→    /// ```
-    23→    /// use either::{IntoEither, Left, Right};
-    24→    ///
-    25→    /// let x = 0;
-    26→    /// assert_eq!(x.into_either(true), Left(x));
-    27→    /// assert_eq!(x.into_either(false), Right(x));
-    28→    /// ```
-    29→    fn into_either(self, into_left: bool) -> Either<Self, Self> {
-    30→        if into_left {
-    31→            Left(self)
-    32→        } else {
-    33→            Right(self)
-    34→        }
-    35→    }
-    36→
-    37→    /// Converts `self` into a [`Left`] variant of [`Either<Self, Self>`](Either)
-    38→    /// if `into_left(&self)` returns `true`.
-    39→    /// Converts `self` into a [`Right`] variant of [`Either<Self, Self>`](Either)
-    40→    /// otherwise.
-    41→    ///
-    42→    /// # Examples
-    43→    ///
-    44→    /// ```
-    45→    /// use either::{IntoEither, Left, Right};
-    46→    ///
-    47→    /// fn is_even(x: &u8) -> bool {
-    48→    ///     x % 2 == 0
-    49→    /// }
-    50→    ///
-    51→    /// let x = 0;
-    52→    /// assert_eq!(x.into_either_with(is_even), Left(x));
-    53→    /// assert_eq!(x.into_either_with(|x| !is_even(x)), Right(x));
-    54→    /// ```
-    55→    fn into_either_with<F>(self, into_left: F) -> Either<Self, Self>
-    56→    where
-    57→        F: FnOnce(&Self) -> bool,
-    58→    {
-    59→        let into_left = into_left(&self);
-    60→        self.into_either(into_left)
-    61→    }
-    62→}
+    29→    fn into_either …
+    55→    fn into_either_with …
+    64→impl<T> IntoEither for T {}
 src/iterator.rs
      1→use super::{for_both, Either, Left, Right};
      2→use core::iter;
@@ -83,9 +38,15 @@ src/iterator.rs
     19→pub struct IterEither<L, R> {
     20→    inner: Either<L, R>,
     21→}
+    23→impl<L, R> IterEither<L, R> {
     24→    pub(crate) fn new(inner: Either<L, R>) -> Self {
     25→        IterEither { inner }
     26→    }
+    29→impl<L, R, A> Extend<A> for Either<L, R>
+    30→where
+    31→    L: Extend<A>,
+    32→    R: Extend<A>,
+    33→{
     34→    fn extend …
     42→/// `Either<L, R>` is an iterator if both `L` and `R` are iterators.
     43→impl<L, R> Iterator for Either<L, R>
@@ -94,9 +55,7 @@ src/iterator.rs
     46→    R: Iterator<Item = L::Item>,
     47→{
     48→    type Item = L::Item;
-    49→
-    50→    fn next(&mut self) -> Option<Self::Item> {
-    51→        for_both!(self, inner => inner.next())
+    50→    fn next …
     54→    fn size_hint …
     58→    fn fold …
     65→    fn for_each …
@@ -110,11 +69,32 @@ src/iterator.rs
    113→    fn find …
    120→    fn find_map …
    127→    fn position …
+   135→impl<L, R> DoubleEndedIterator for Either<L, R>
+   136→where
+   137→    L: DoubleEndedIterator,
+   138→    R: DoubleEndedIterator<Item = L::Item>,
+   139→{
    140→    fn next_back …
    144→    fn nth_back …
    148→    fn rfold …
    155→    fn rfind …
+   163→impl<L, R> ExactSizeIterator for Either<L, R>
+   164→where
+   165→    L: ExactSizeIterator,
+   166→    R: ExactSizeIterator<Item = L::Item>,
+   167→{
    168→    fn len …
+   173→impl<L, R> iter::FusedIterator for Either<L, R>
+   174→where
+   175→    L: iter::FusedIterator,
+   176→    R: iter::FusedIterator<Item = L::Item>,
+   177→{
+   178→}
+   180→impl<L, R> Iterator for IterEither<L, R>
+   181→where
+   182→    L: Iterator,
+   183→    R: Iterator,
+   184→{
    185→    type Item = Either<L::Item, R::Item>;
    187→    fn next …
    191→    fn size_hint …
@@ -130,11 +110,27 @@ src/iterator.rs
    250→    fn find …
    257→    fn find_map …
    264→    fn position …
+   272→impl<L, R> DoubleEndedIterator for IterEither<L, R>
+   273→where
+   274→    L: DoubleEndedIterator,
+   275→    R: DoubleEndedIterator,
+   276→{
    277→    fn next_back …
    281→    fn nth_back …
    285→    fn rfold …
    292→    fn rfind …
+   300→impl<L, R> ExactSizeIterator for IterEither<L, R>
+   301→where
+   302→    L: ExactSizeIterator,
+   303→    R: ExactSizeIterator,
+   304→{
    305→    fn len …
+   310→impl<L, R> iter::FusedIterator for IterEither<L, R>
+   311→where
+   312→    L: iter::FusedIterator,
+   313→    R: iter::FusedIterator,
+   314→{
+   315→}
 src/lib.rs
     21→#[cfg(feature = "serde")]
     22→pub mod serde_untagged;
@@ -249,8 +245,10 @@ src/lib.rs
    143→pub use self::iterator::IterEither;
    145→mod into_either;
    146→pub use self::into_either::IntoEither;
+   148→impl<L: Clone, R: Clone> Clone for Either<L, R> {
    149→    fn clone …
    156→    fn clone_from …
+   165→impl<L, R> Either<L, R> {
    175→    pub fn is_left …
    191→    pub fn is_right …
    206→    pub fn left …
@@ -285,31 +283,31 @@ src/lib.rs
    871→    pub fn expect_left …
    901→    pub fn expect_right …
    923→    pub fn either_into …
+   932→impl<L, R> Either<Option<L>, Option<R>> {
    944→    pub fn factor_none …
+   952→impl<L, R, E> Either<Result<L, E>, Result<R, E>> {
    966→    pub fn factor_err …
+   974→impl<T, L, R> Either<Result<T, L>, Result<T, R>> {
    988→    pub fn factor_ok …
+   996→impl<T, L, R> Either<(T, L), (T, R)> {
   1009→    pub fn factor_first …
+  1017→impl<T, L, R> Either<(L, T), (R, T)> {
   1030→    pub fn factor_second …
+  1038→impl<T> Either<T, T> {
   1050→    pub fn into_inner …
   1065→    pub fn map …
+  1073→impl<L, R> Either<&L, &R> {
   1076→    pub fn cloned …
   1086→    pub fn copied …
+  1095→impl<L, R> Either<&mut L, &mut R> {
   1098→    pub fn cloned …
   1108→    pub fn copied …
   1117→/// Convert from `Result` to `Either` with `Ok => Right` and `Err => Left`.
   1118→impl<L, R> From<Result<R, L>> for Either<L, R> {
-  1119→    fn from(r: Result<R, L>) -> Self {
-  1120→        match r {
-  1121→            Err(e) => Left(e),
-  1122→            Ok(o) => Right(o),
-      →…
+  1119→    fn from …
   1127→/// Convert from `Either` to `Result` with `Right => Ok` and `Left => Err`.
   1128→impl<L, R> From<Either<L, R>> for Result<R, L> {
-  1129→    fn from(val: Either<L, R>) -> Self {
-  1130→        match val {
-  1131→            Left(l) => Err(l),
-  1132→            Right(r) => Ok(r),
-      →…
+  1129→    fn from …
   1137→/// `Either<L, R>` is a future if both `L` and `R` are futures.
   1138→impl<L, R> Future for Either<L, R>
   1139→where
@@ -317,10 +315,7 @@ src/lib.rs
   1141→    R: Future<Output = L::Output>,
   1142→{
   1143→    type Output = L::Output;
-  1144→
-  1145→    fn poll(
-  1146→        self: Pin<&mut Self>,
-      →…
+  1145→    fn poll …
   1154→/// `Either<L, R>` implements `Read` if both `L` and `R` do.
   1155→///
   1156→/// Requires crate feature `"std"`
@@ -329,10 +324,7 @@ src/lib.rs
   1159→    L: Read,
   1160→    R: Read,
   1161→{
-  1162→    fn read(&mut self, buf: &mut [u8]) -> io::Result<usize> {
-  1163→        for_both!(self, inner => inner.read(buf))
-  1164→    }
-  1165→
+  1162→    fn read …
   1166→    fn read_exact …
   1170→    fn read_to_end …
   1174→    fn read_to_string …
@@ -344,20 +336,14 @@ src/lib.rs
   1185→    L: Seek,
   1186→    R: Seek,
   1187→{
-  1188→    fn seek(&mut self, pos: SeekFrom) -> io::Result<u64> {
-  1189→        for_both!(self, inner => inner.seek(pos))
-  1190→    }
-  1191→}
+  1188→    fn seek …
   1194→/// Requires crate feature `"std"`
   1195→impl<L, R> BufRead for Either<L, R>
   1196→where
   1197→    L: BufRead,
   1198→    R: BufRead,
   1199→{
-  1200→    fn fill_buf(&mut self) -> io::Result<&[u8]> {
-  1201→        for_both!(self, inner => inner.fill_buf())
-  1202→    }
-  1203→
+  1200→    fn fill_buf …
   1204→    fn consume …
   1208→    fn read_until …
   1212→    fn read_line …
@@ -369,13 +355,15 @@ src/lib.rs
   1223→    L: Write,
   1224→    R: Write,
   1225→{
-  1226→    fn write(&mut self, buf: &[u8]) -> io::Result<usize> {
-  1227→        for_both!(self, inner => inner.write(buf))
-  1228→    }
-  1229→
+  1226→    fn write …
   1230→    fn write_all …
   1234→    fn write_fmt …
   1238→    fn flush …
+  1243→impl<L, R, Target> AsRef<Target> for Either<L, R>
+  1244→where
+  1245→    L: AsRef<Target>,
+  1246→    R: AsRef<Target>,
+  1247→{
   1248→    fn as_ref …
   1253→macro_rules! impl_specific_ref_and_mut {
   1254→    ($t:ty, $($attr:meta),* ) => {
@@ -398,11 +386,36 @@ src/lib.rs
   1271→        }
   1272→    };
   1273→}
+  1292→impl<L, R, Target> AsRef<[Target]> for Either<L, R>
+  1293→where
+  1294→    L: AsRef<[Target]>,
+  1295→    R: AsRef<[Target]>,
+  1296→{
   1297→    fn as_ref …
+  1302→impl<L, R, Target> AsMut<Target> for Either<L, R>
+  1303→where
+  1304→    L: AsMut<Target>,
+  1305→    R: AsMut<Target>,
+  1306→{
   1307→    fn as_mut …
+  1312→impl<L, R, Target> AsMut<[Target]> for Either<L, R>
+  1313→where
+  1314→    L: AsMut<[Target]>,
+  1315→    R: AsMut<[Target]>,
+  1316→{
   1317→    fn as_mut …
+  1322→impl<L, R> Deref for Either<L, R>
+  1323→where
+  1324→    L: Deref,
+  1325→    R: Deref<Target = L::Target>,
+  1326→{
   1327→    type Target = L::Target;
   1329→    fn deref …
+  1334→impl<L, R> DerefMut for Either<L, R>
+  1335→where
+  1336→    L: DerefMut,
+  1337→    R: DerefMut<Target = L::Target>,
+  1338→{
   1339→    fn deref_mut …
   1345→/// `Either` implements `Error` if *both* `L` and `R` implement it.
   1346→///
@@ -412,13 +425,20 @@ src/lib.rs
   1350→    L: Error,
   1351→    R: Error,
   1352→{
-  1353→    fn source(&self) -> Option<&(dyn Error + 'static)> {
-  1354→        for_both!(self, inner => inner.source())
-  1355→    }
-  1356→
+  1353→    fn source …
   1358→    fn description …
   1363→    fn cause …
+  1368→impl<L, R> fmt::Display for Either<L, R>
+  1369→where
+  1370→    L: fmt::Display,
+  1371→    R: fmt::Display,
+  1372→{
   1373→    fn fmt …
+  1378→impl<L, R> fmt::Write for Either<L, R>
+  1379→where
+  1380→    L: fmt::Write,
+  1381→    R: fmt::Write,
+  1382→{
   1383→    fn write_str …
   1387→    fn write_char …
   1391→    fn write_fmt …

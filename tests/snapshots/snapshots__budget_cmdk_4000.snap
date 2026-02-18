@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4009 words)
+budget: 4000 (3925 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -180,8 +180,6 @@ README.md
     93→
     94→```tsx
     95→const [value, setValue] = React.useState('apple')
-    96→
-    97→return (
       →…
    153→### Dialog `[cmdk-dialog]` `[cmdk-overlay]`
    155→Props are forwarded to [Command](#command-cmdk-root). Composes Radix UI's Dialog component. The overlay is always rendered. See the [Radix Documentation](https://www.radix-ui.com/docs/primitives/components/dialog) for more information. Can be controlled with the `open` and `onOpenChange` props.
@@ -192,8 +190,6 @@ README.md
    160→return (
    161→  <Command.Dialog open={open} onOpenChange={setOpen}>
    162→    ...
-   163→  </Command.Dialog>
-   164→)
       →…
    180→### Input `[cmdk-input]`
    182→All props are forwarded to the underlying `input` element. Can be controlled with the `value` and `onValueChange` props.
@@ -213,8 +209,6 @@ README.md
    197→  height: var(--cmdk-list-height);
    198→  max-height: 500px;
    199→  transition: height 100ms ease;
-   200→}
-   201→```
       →…
    212→### Item `[cmdk-item]` `[data-disabled?]` `[data-selected?]`
    214→Item that becomes active on pointer enter. You should provide a unique `value` for each item, but it will be automatically inferred from the `.textContent`.
@@ -225,8 +219,6 @@ README.md
    219→  // Value is implicity "apple" because of the provided text content
    220→>
    221→  Apple
-   222→</Command.Item>
-   223→```
       →…
    242→### Group `[cmdk-group]` `[hidden?]`
    244→Groups items together with the given `heading` (`[cmdk-group-heading]`).
@@ -237,8 +229,6 @@ README.md
    249→</Command.Group>
    250→```
    251→
-   252→Groups will not unmount from the DOM, rather the `hidden` attribute is applied to hide it from view. This may be relevant in your styling.
-   253→
       →…
    256→### Separator `[cmdk-separator]`
    258→Visible when the search query is empty or `alwaysRender` is true, hidden otherwise.
@@ -264,7 +254,7 @@ README.md
    281→const search = useCommandState((state) => state.search)
    282→return <Command.Empty>No results found for "{search}".</Command.Empty>
    283→```
-   284→
+      →…
    285→## Examples
    287→Code snippets for common use cases.
    288→
@@ -277,8 +267,6 @@ README.md
    296→const [search, setSearch] = React.useState('')
    297→const [pages, setPages] = React.useState([])
    298→const page = pages[pages.length - 1]
-   299→
-   300→return (
       →…
    338→### Show sub-items when searching
    340→If your items have nested sub-items that you only want to reveal when searching, render based on the search state:
@@ -289,8 +277,6 @@ README.md
    345→  if (!search) return null
    346→  return <Command.Item {...props} />
    347→}
-   348→
-   349→return (
       →…
    361→### Asynchronous results
    363→Render the items as they become available. Filtering and sorting will happen automatically.
@@ -301,8 +287,6 @@ README.md
    368→
    369→React.useEffect(() => {
    370→  async function getItems() {
-   371→    setLoading(true)
-   372→    const res = await api.get('/dictionary')
       →…
    397→### Use inside Popover
    399→We recommend using the [Radix UI popover](https://www.radix-ui.com/docs/primitives/components/popover) component. ⌘K relies on the Radix UI Dialog component, so this will reduce your bundle size a bit due to shared dependencies.
@@ -313,8 +297,6 @@ README.md
    404→
    405→Render `Command` inside of the popover content:
    406→
-   407→```tsx
-   408→import * as Popover from '@radix-ui/react-popover'
       →…
    426→### Drop in stylesheets
    428→You can find global stylesheets to drop in as a starting point for styling. See [website/styles/cmdk](website/styles/cmdk) for examples.
@@ -814,7 +796,6 @@ website/pages/_document.tsx
     16→      </Html>
     17→    )
     18→  }
-    19→}
 website/pages/index.tsx
      1→import styles from 'styles/index.module.scss'
      2→import React from 'react'
@@ -886,10 +867,15 @@ website/pages/index.tsx
     72→          <ThemeSwitcher />
     73→        </ThemeContext.Provider>
     74→
-      →…
+    75→        <div aria-hidden className={styles.line} />
+    76→
+    77→        <Codeblock />
+    78→      </div>
+    79→      <Footer />
+    80→    </main>
+    81→  )
+    82→}
     84→function CMDKWrapper(props: MotionProps & { children: React.ReactNode }) {
-    85→  return (
-      →…
     99→//////////////////////////////////////////////////////////////////
    100→
    101→function InstallButton() {
@@ -907,8 +893,6 @@ website/pages/index.tsx
    113→          }, 2000)
       →…
    123→function GitHubButton() {
-   124→  return (
-      →…
    137→//////////////////////////////////////////////////////////////////
    138→
    139→const themes = [
@@ -917,14 +901,8 @@ website/pages/index.tsx
    142→    key: 'raycast',
    143→  },
    144→  {
-   145→    icon: <LinearIcon />,
-   146→    key: 'linear',
-   147→  },
-   148→  {
       →…
    158→function ThemeSwitcher() {
-   159→  const { theme, setTheme } = React.useContext(ThemeContext)
-      →…
    260→//////////////////////////////////////////////////////////////////
    261→
    262→function Codeblock() {
@@ -947,11 +925,5 @@ website/pages/index.tsx
    297→  return <span className={styles.versionBadge}>v{packageJSON.version}</span>
    298→}
    300→function Footer() {
-   301→  const ref = React.useRef<HTMLElement | null>(null)
-      →…
    326→function RaunoSignature() {
-   327→  return (
-      →…
    350→function PacoSignature() {
-   351→  return (
-      →…

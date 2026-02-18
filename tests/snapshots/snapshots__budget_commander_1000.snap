@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1018 words)
+budget: 1000 (990 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -36,6 +36,9 @@ Readme.md
     28→      - [Custom argument processing](#custom-argument-processing)
     29→    - [Action handler](#action-handler)
     30→    - [Stand-alone executable (sub)commands](#stand-alone-executable-subcommands)
+    31→    - [Life cycle hooks](#life-cycle-hooks)
+    32→  - [Automated help](#automated-help)
+    33→    - [Custom help](#custom-help)
       →…
     61→## Installation …
     67→## Quick Start …
@@ -44,15 +47,9 @@ Readme.md
    523→## Commands …
    613→#### More configuration
    615→There are some additional features available by constructing an `Argument` explicitly for less common cases.
-   616→
-   617→Example file: [arguments-extra.js](./examples/arguments-extra.js)
-   618→
       →…
    625→#### Custom argument processing
    627→You may specify a function to do custom processing of command-arguments (like for option-arguments).
-   628→The callback function receives two parameters, the user specified command-argument and the previous value for the argument.
-   629→It returns the new value for the argument.
-   630→
       →…
    754→## Automated help …
    956→## Custom event listeners …
@@ -122,8 +119,11 @@ docs/release-policy.md
 docs/terminology.md
      1→# Terminology …
 docs/zh-CN/不再推荐使用的功能.md
+     1→# 不再推荐使用的功能 …
 docs/zh-CN/可变参数的选项.md
+     1→# 可变参数的选项 …
 docs/zh-CN/术语表.md
+     1→# 术语表 …
 eslint.config.js
 esm.mjs
      1→import commander from './index.js';
@@ -141,18 +141,16 @@ examples/man-style-help.mjs
 jest.config.js
 lib/argument.js
      3→class Argument {
-     4→  /**
 lib/command.js
     13→class Command extends EventEmitter {
-    14→  /**
   1127→  _prepareForParse() {
 lib/error.js
+     1→/**
+      →…
      4→class CommanderError extends Error {
-     5→  /**
-     6→   * Constructs the CommanderError class
+    22→/**
+      →…
     25→class InvalidArgumentError extends CommanderError {
-    26→  /**
-    27→   * Constructs the InvalidArgumentError class
 lib/help.js
     12→class Help {
     13→  constructor() {
@@ -171,10 +169,9 @@ lib/help.js
    606→  styleCommandText(str) {
 lib/option.js
      3→class Option {
-     4→  /**
+   261→/**
+      →…
    268→class DualOptions {
-   269→  /**
-   270→   * @param {Option[]} options
 lib/suggestSimilar.js
      1→const maxDistance = 3;
      3→function editDistance(a, b) {
@@ -250,6 +247,8 @@ typings/index.d.ts
   1113→export const program: Command;
 typings/index.test-d.ts
    384→interface MyCheeseOption {
+   385→  cheese: string;
+   386→}
    509→class MyCommand extends commander.Command {
    510→  createCommand(name?: string): MyCommand {
    514→  myFunction(): void {

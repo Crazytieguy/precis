@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (509 words)
+budget: 500 (496 words)
 
 _internals/error.ts
      1→import { Result } from '../result'
@@ -16,11 +16,6 @@ _internals/error.ts
     14→        type: string
     15→        value: T
     16→      }
-    17→    | {
-    18→        type: string
-    19→        value: E
-    20→      }
-    21→  message: string
       →…
     27→export const createNeverThrowError = <T, E>(
     28→  message: string,
@@ -68,20 +63,20 @@ result-async.ts
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
     23→  private _promise: Promise<Result<T, E>>
     24→
-    25→  constructor(res: Promise<Result<T, E>>) {
-    26→    this._promise = res
-    27→  }
-    28→
    210→  /**
       →…
    222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
+   259→export const fromPromise …
+   260→export const fromSafePromise …
+   262→export const fromAsyncThrowable …
+   265→export type CombineResultAsyncs …
+   272→export type CombineResultsWithAllErrorsArrayAsync …
 result.ts
     14→export namespace Result {
     15→  /**
+    62→export type Result …
    134→interface IResult<T, E> {
    135→  /**
-   136→   * Used to check if a `Result` is an `OK`
-   137→   *
       →…
    140→  isOk(): this is Ok<T, E>
    142→  /**
@@ -121,20 +116,18 @@ result.ts
       →…
    309→  _unsafeUnwrapErr(config?: ErrorConfig): E
    312→export class Ok<T, E> implements IResult<T, E> {
-   313→  constructor(readonly value: T) {}
-   314→
-   315→  isOk(): this is Ok<T, E> {
-   316→    return true
-   317→  }
-   318→
    405→  _unsafeUnwrap(_?: ErrorConfig): T {
    409→  _unsafeUnwrapErr(config?: ErrorConfig): E {
    419→export class Err<T, E> implements IResult<T, E> {
-   420→  constructor(readonly error: E) {}
-   421→
-   422→  isOk(): this is Ok<T, E> {
-   423→    return false
-   424→  }
-   425→
    505→  _unsafeUnwrap(config?: ErrorConfig): T {
    509→  _unsafeUnwrapErr(_?: ErrorConfig): E {
+   523→export const fromThrowable …
+   614→export type Transpose …
+   635→export type Combine …
+   645→export type Dedup …
+   652→export type MemberListOf …
+   669→export type EmptyArrayToNever …
+   685→export type MembersToUnion …
+   688→export type IsLiteralArray …
+   712→export type CombineResults …
+   719→export type CombineResultsWithAllErrorsArray …

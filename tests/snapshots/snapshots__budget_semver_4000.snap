@@ -2,12 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3916 words)
+budget: 4000 (3967 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
-     8→  .filter((file) => file.startsWith('.eslintrc.local.'))
-      →…
 CHANGELOG.md
      1→# Changelog …
      3→## [7.7.4](https://github.com/npm/node-semver/compare/v7.7.3...v7.7.4) (2026-01-16) …
@@ -239,6 +237,9 @@ README.md
    188→comparator with the same `[major, minor, patch]` tuple also has a
    189→prerelease tag.
    190→
+   191→For example, the range `>1.2.3-alpha.3` would be allowed to match the
+   192→version `1.2.3-alpha.7`, but it would *not* be satisfied by
+   193→`3.4.5-alpha.9`, even though `3.4.5-alpha.9` is technically "greater
       →…
    219→#### Prerelease Identifiers
    221→The method `.inc` takes an additional `identifier` string argument that
@@ -249,6 +250,7 @@ README.md
    226→// '1.2.4-beta.0'
    227→```
    228→
+   229→command-line example:
       →…
    250→#### Prerelease Identifier Base
    252→The method `.inc` takes an optional parameter 'identifierBase' string
@@ -259,6 +261,7 @@ README.md
    257→```javascript
    258→semver.inc('1.2.3', 'prerelease', 'beta', '1')
    259→// '1.2.4-beta.1'
+   260→```
       →…
    279→### Advanced Range Syntax
    281→Advanced range syntax desugars to primitive comparators in
@@ -266,7 +269,7 @@ README.md
    283→
    284→Advanced ranges may be combined in the same way as primitive
    285→comparators using white space or `||`.
-      →…
+   286→
    287→#### Hyphen Ranges `X.Y.Z - A.B.C`
    289→Specifies an inclusive set.
    290→
@@ -276,6 +279,7 @@ README.md
    294→range, then the missing pieces are replaced with zeroes.
    295→
    296→* `1.2 - 2.3.4` := `>=1.2.0 <=2.3.4`
+   297→
       →…
    306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*`
    308→Any of `X`, `x`, or `*` may be used to "stand in" for one of the
@@ -286,6 +290,7 @@ README.md
    313→  satisfies)
    314→* `1.x` := `>=1.0.0 <2.0.0-0` (Matching major version)
    315→* `1.2.x` := `>=1.2.0 <1.3.0-0` (Matching major and minor versions)
+   316→
       →…
    324→#### Tilde Ranges `~1.2.3` `~1.2` `~1`
    326→Allows patch-level changes if a minor version is specified on the
@@ -296,6 +301,7 @@ README.md
    331→* `~1` := `>=1.0.0 <(1+1).0.0` := `>=1.0.0 <2.0.0-0` (Same as `1.x`)
    332→* `~0.2.3` := `>=0.2.3 <0.(2+1).0` := `>=0.2.3 <0.3.0-0`
    333→* `~0.2` := `>=0.2.0 <0.(2+1).0` := `>=0.2.0 <0.3.0-0` (Same as `0.2.x`)
+   334→* `~0` := `>=0.0.0 <(0+1).0.0` := `>=0.0.0 <1.0.0-0` (Same as `0.x`)
       →…
    341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4`
    343→Allows changes that do not modify the left-most non-zero element in the
@@ -306,6 +312,7 @@ README.md
    348→Many authors treat a `0.x` version as if the `x` were the major
    349→"breaking-change" indicator.
    350→
+   351→Caret ranges are ideal when an author may make breaking changes
       →…
    384→### Range Grammar
    386→Putting all this together, here is a Backus-Naur grammar for ranges,
@@ -313,6 +320,9 @@ README.md
    388→
    389→```bnf
    390→range-set  ::= range ( logical-or range ) *
+   391→logical-or ::= ( ' ' ) * '||' ( ' ' ) *
+   392→range      ::= hyphen | simple ( ' ' simple ) * | ''
+   393→hyphen     ::= partial ' - ' partial
       →…
    408→## Functions
    410→All methods and classes take a final `options` object argument.  All
@@ -364,6 +374,9 @@ README.md
    457→* `lt(v1, v2)`: `v1 < v2`
    458→* `lte(v1, v2)`: `v1 <= v2`
    459→* `eq(v1, v2)`: `v1 == v2` This is true if they're logically equivalent,
+   460→  even if they're not the same string.  You already know how to
+   461→  compare strings.
+   462→* `neq(v1, v2)`: `v1 != v2` The opposite of `eq`.
       →…
    478→### Sorting
    480→* `sort(versions)`: Returns a sorted array of versions based on the `compareBuild` 
@@ -380,6 +393,9 @@ README.md
    493→  range.
    494→* `maxSatisfying(versions, range)`: Return the highest version in the list
    495→  that satisfies the range, or `null` if none of them do.
+   496→* `minSatisfying(versions, range)`: Return the lowest version in the list
+   497→  that satisfies the range, or `null` if none of them do.
+   498→* `minVersion(range)`: Return the lowest version that can match
       →…
    531→### Coercion
    533→* `coerce(version, options)`: Coerces a string to semver if possible
@@ -387,6 +403,9 @@ README.md
    535→This aims to provide a very forgiving translation of a non-semver string to
    536→semver. It looks for the first digit in a string and consumes all
    537→remaining characters which satisfy at least a partial semver (e.g., `1`,
+   538→`1.2`, `1.2.3`) up to the max permitted length (256 characters).  Longer
+   539→versions are simply truncated (`4.6.3.9.2-alpha2` becomes `4.6.3`).  All
+   540→surrounding text is simply ignored (`v3.4 replaces v3.3.1` becomes
       →…
    558→### Clean
    560→* `clean(version)`: Clean a string to be a valid semver if possible
@@ -394,6 +413,9 @@ README.md
    562→This will return a cleaned and trimmed semver version. If the provided
    563→version is not valid a null will be returned. This does not work for
    564→ranges.
+   565→
+   566→ex.
+   567→* `s.clean(' = v 2.1.5foo')`: `null`
       →…
    576→## Constants
    578→As a convenience, helper constants are exported to provide information about what `node-semver` supports:
@@ -404,6 +426,9 @@ README.md
    584→- minor
    585→- preminor
    586→- patch
+   587→- prepatch
+   588→- prerelease
+   589→
       →…
    600→### `SEMVER_SPEC_VERSION`
    602→2.0.0
@@ -411,7 +436,9 @@ README.md
    604→```
    605→const semver = require('semver');
    606→
-      →…
+   607→console.log('We are currently using the semver specification version:', semver.SEMVER_SPEC_VERSION);
+   608→```
+   609→
    610→## Exported Modules
    613→TODO: Make sure that all of these items are documented (classes aren't,
    614→eg), and then pull the module name into the documentation for that specific
@@ -467,11 +494,27 @@ README.md
    664→* `require('semver/ranges/valid')`
    665→
 benchmarks/bench-compare.js
+     5→const suite …
 benchmarks/bench-diff.js
+     5→const suite …
+     7→const cases …
 benchmarks/bench-parse-options.js
+     5→const suite …
+     7→const options1 …
+    11→const options2 …
+    16→const options3 …
 benchmarks/bench-parse.js
+     5→const suite …
 benchmarks/bench-satisfies.js
+     5→const suite …
+     7→const versions …
+     8→const versionToCompare …
+     9→const option1 …
+    10→const option2 …
+    11→const option3 …
 benchmarks/bench-subset.js
+     5→const suite …
+     8→const cases …
 bin/semver.js
      8→const argv = process.argv.slice(2)
     12→const range = []
@@ -486,6 +529,8 @@ bin/semver.js
     45→      const value = a.slice(indexOfEqualSign + 1)
     46→      a = a.slice(0, indexOfEqualSign)
     47→      argv.unshift(value)
+    48→    }
+    49→    switch (a) {
       →…
    132→const failInc = () => {
    133→  console.error('--inc can only be used on a single version with no range')
@@ -503,6 +548,8 @@ bin/semver.js
    147→
    148→Options:
    149→-r --range <range>
+   150→        Print versions that match the specified range.
+   151→
       →…
 classes/comparator.js
      3→const ANY = Symbol('SemVer ANY')
@@ -510,24 +557,10 @@ classes/comparator.js
      6→  static get ANY () {
      7→    return ANY
      8→  }
-     9→
     10→  constructor (comp, options) {
     11→    options = parseOptions(options)
     12→
-    13→    if (comp instanceof Comparator) {
-    14→      if (comp.loose === !!options.loose) {
-    15→        return comp
-    16→      } else {
-    17→        comp = comp.value
-    18→      }
-    19→    }
-    20→
-    21→    comp = comp.trim().split(/\s+/).join(' ')
-    22→    debug('comparator', comp, options)
-    23→    this.options = options
-    24→    this.loose = !!options.loose
-    25→    this.parse(comp)
-    26→
+      →…
     36→  parse (comp) {
     37→    const r = this.options.loose ? re[t.COMPARATORLOOSE] : re[t.COMPARATOR]
     38→    const m = comp.match(r)
@@ -549,24 +582,7 @@ classes/range.js
      7→  constructor (range, options) {
      8→    options = parseOptions(options)
      9→
-    10→    if (range instanceof Range) {
-    11→      if (
-    12→        range.loose === !!options.loose &&
-    13→        range.includePrerelease === !!options.includePrerelease
-    14→      ) {
-    15→        return range
-    16→      } else {
-    17→        return new Range(range.raw, options)
-    18→      }
-    19→    }
-    20→
-    21→    if (range instanceof Comparator) {
-    22→      // just put it in the set and return
-    23→      this.raw = range.value
-    24→      this.set = [[range]]
-    25→      this.formatted = undefined
-    26→      return this
-    27→    }
+      →…
     73→  get range () {
     74→    if (this.formatted === undefined) {
     75→      this.formatted = ''
@@ -612,24 +628,7 @@ classes/semver.js
     10→  constructor (version, options) {
     11→    options = parseOptions(options)
     12→
-    13→    if (version instanceof SemVer) {
-    14→      if (version.loose === !!options.loose &&
-    15→        version.includePrerelease === !!options.includePrerelease) {
-    16→        return version
-    17→      } else {
-    18→        version = version.version
-    19→      }
-    20→    } else if (typeof version !== 'string') {
-    21→      throw new TypeError(`Invalid version. Must be a string. Got type "${typeof version}".`)
-    22→    }
-    23→
-    24→    if (version.length > MAX_LENGTH) {
-    25→      throw new TypeError(
-    26→        `version is longer than ${MAX_LENGTH} characters`
-    27→      )
-    28→    }
-    29→
-    30→    debug('SemVer', version, options)
+      →…
     81→  format () {
     82→    this.version = `${this.major}.${this.minor}.${this.patch}`
     83→    if (this.prerelease.length) {
@@ -729,7 +728,6 @@ internal/lrucache.js
      5→    this.max = 1000
      6→    this.map = new Map()
      7→  }
-     8→
      9→  get (key) {
     10→    const value = this.map.get(key)
     11→    if (value === undefined) {
@@ -741,11 +739,9 @@ internal/lrucache.js
     17→      return value
     18→    }
     19→  }
-    20→
     21→  delete (key) {
     22→    return this.map.delete(key)
     23→  }
-    24→
     25→  set (key, value) {
     26→    const deleted = this.delete(key)
     27→
@@ -761,7 +757,6 @@ internal/lrucache.js
     37→
     38→    return this
     39→  }
-    40→}
 internal/parse-options.js
      4→const looseOption = Object.freeze({ loose: true })
      5→const emptyOpts = Object.freeze({ })

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (493 words)
+budget: 500 (484 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -57,6 +57,7 @@ docs/reference.md
 src/dotenv/__init__.py
     42→__all__ = [
     43→    "get_cli_string",
+    44→    "load_dotenv",
       →…
 src/dotenv/__main__.py
 src/dotenv/cli.py
@@ -107,19 +108,10 @@ src/dotenv/ipython.py
     32→    )
     33→    @line_magic
     34→    def dotenv(self, line):
-    35→        args = parse_argstring(self.dotenv, line)
-    36→        # Locate the .env file
-    37→        dotenv_path = args.dotenv_path
-    38→        try:
-    39→            dotenv_path = find_dotenv(dotenv_path, True, True)
-    40→        except IOError:
-    41→            print("cannot find .env file")
-    42→            return
-    43→
-    44→        # Load the .env file
-    45→        load_dotenv(dotenv_path, verbose=args.verbose, override=args.override)
 src/dotenv/main.py
     25→def _load_dotenv_disabled() -> bool:
+    26→    """
+      →…
     45→class DotEnv:
     63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
@@ -131,14 +123,25 @@ src/dotenv/main.py
    144→    encoding: Optional[str],
    145→) -> Iterator[Tuple[IO[str], IO[str]]]:
    269→def _walk_to_root(path: str) -> Iterator[str]:
+   270→    """
+      →…
    423→def _is_file_or_fifo(path: StrPath) -> bool:
+   424→    """
+      →…
 src/dotenv/parser.py
     35→class Original(NamedTuple):
+    36→    string: str
+    37→    line: int
     40→class Binding(NamedTuple):
+    41→    key: Optional[str]
+    42→    value: Optional[str]
+    43→    original: Original
+    44→    error: bool
     47→class Position:
     52→    @classmethod
     53→    def start(cls) -> "Position":
     65→class Error(Exception):
+    66→    pass
     69→class Reader:
 src/dotenv/variables.py
      5→_posix_variable: Pattern[str] = re.compile(
@@ -148,7 +151,8 @@ src/dotenv/variables.py
      9→        (?::-
     10→            (?P<default>[^\}]*)
     11→        )?
-      →…
+    12→    \}
+    13→    """,
     18→class Atom(metaclass=ABCMeta):
     25→    @abstractmethod
     26→    def resolve(self, env: Mapping[str, Optional[str]]) -> str: ...
@@ -161,6 +165,7 @@ tests/test_cli.py
 tests/test_ipython.py
 tests/test_is_interactive.py
      8→class TestIsInteractive:
+    31→
 tests/test_main.py
 tests/test_zip_imports.py
     23→class FileToAdd:

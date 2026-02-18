@@ -2,10 +2,19 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (986 words)
+budget: 1000 (991 words)
 
 error.ts
      5→export type Failure …
+    16→/**
+    17→ * `StructError` objects are thrown (or returned) when validation fails.
+    18→ *
+    19→ * Validation logic is design to exit early for maximum performance. The error
+    20→ * represents the first error encountered during validation. For more detail,
+    21→ * the `error.failures` property is a generator function that can be run to
+    22→ * continue validation and receive all the failures in the data.
+    23→ */
+    24→
     25→export class StructError extends TypeError {
     26→  value: any
     27→  key!: any
@@ -25,15 +34,16 @@ error.ts
     41→    super(explanation ?? msg)
     42→    if (explanation != null) this.cause = msg
     43→    Object.assign(this, rest)
-    44→    this.name = this.constructor.name
-    45→    this.failures = () => {
-    46→      return (cached ??= [failure, ...failures()])
-    47→    }
-    48→  }
-    49→}
+      →…
 struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
      2→import { StructError, Failure } from './error.js'
+     4→/**
+     5→ * `Struct` objects encapsulate the validation logic for a specific type of
+     6→ * values. Once constructed, you use the `assert`, `is` or `validate` helpers to
+     7→ * validate unknown input data against the struct.
+     8→ */
+     9→
     10→export class Struct<T = unknown, S = unknown> {
     11→  readonly TYPE!: T
     12→  type: string
@@ -55,29 +65,7 @@ struct.ts
     28→    entries?: Struct<T, S>['entries']
     29→  }) {
     30→    const {
-    31→      type,
-    32→      schema,
-    33→      validator,
-    34→      refiner,
-    35→      coercer = (value: unknown) => value,
-    36→      entries = function* () {},
-    37→    } = props
-    38→
-    39→    this.type = type
-    40→    this.schema = schema
-    41→    this.entries = entries
-    42→    this.coercer = coercer
-    43→
-    44→    if (validator) {
-    45→      this.validator = (value, context) => {
-    46→        const result = validator(value, context)
-    47→        return toFailures(result, context, this, value)
-    48→      }
-    49→    } else {
-    50→      this.validator = () => []
-    51→    }
-    52→
-    53→    if (refiner) {
+      →…
     63→  /**
       →…
     67→  assert(value: unknown, message?: string): asserts value is T {

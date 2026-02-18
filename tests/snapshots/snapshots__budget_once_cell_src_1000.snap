@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1016 words)
+budget: 1000 (989 words)
 
 imp_cs.rs
      8→pub(crate) struct OnceCell<T> {
@@ -66,8 +66,6 @@ imp_std.rs
    151→    fn drop(&mut self) {
    210→fn wait(queue: &AtomicPtr<Waiter>, mut curr_queue: *mut Waiter) {
    245→mod strict {
-   246→    #[must_use]
-   247→    #[inline]
 lib.rs
    370→#[cfg(all(feature = "critical-section", not(feature = "std")))]
    371→#[path = "imp_cs.rs"]
@@ -80,13 +78,6 @@ lib.rs
    380→mod imp;
    382→/// Single-threaded version of `OnceCell`.
    383→pub mod unsync {
-   384→    use core::{
-   385→        cell::{Cell, UnsafeCell},
-   386→        fmt, mem,
-   387→        ops::{Deref, DerefMut},
-   388→        panic::{RefUnwindSafe, UnwindSafe},
-   389→    };
-   390→
    391→    /// A cell which can be written to only once. It is not thread safe.
    392→    ///
    393→    /// Unlike [`std::cell::RefCell`], a `OnceCell` provides simple `&`
@@ -96,6 +87,8 @@ lib.rs
    397→    ///
    398→    /// # Example
    399→    /// ```
+   400→    /// use once_cell::unsync::OnceCell;
+   401→    ///
       →…
    411→    pub struct OnceCell<T> {
    412→        // Invariant: written to at most once.
@@ -116,6 +109,8 @@ lib.rs
    700→    /// let lazy: Lazy<i32> = Lazy::new(|| {
    701→    ///     println!("initializing");
    702→    ///     92
+   703→    /// });
+   704→    /// println!("ready");
       →…
    714→    pub struct Lazy<T, F = fn() -> T> {
    715→        cell: OnceCell<T>,
@@ -128,13 +123,6 @@ lib.rs
    861→/// Thread-safe, blocking version of `OnceCell`.
    862→#[cfg(any(feature = "std", feature = "critical-section"))]
    863→pub mod sync {
-   864→    use core::{
-   865→        cell::Cell,
-   866→        fmt, mem,
-   867→        ops::{Deref, DerefMut},
-   868→        panic::RefUnwindSafe,
-   869→    };
-   870→
    873→    /// A thread-safe cell which can be written to only once.
    874→    ///
    875→    /// `OnceCell` provides `&` references to the contents without RAII guards.
@@ -144,6 +132,8 @@ lib.rs
    879→    /// thread A initializes the cell with `get_or_init(f)`, and thread B
    880→    /// subsequently reads the result of this call, B also observes all the side
    881→    /// effects of `f`.
+   882→    ///
+   883→    /// # Example
       →…
    901→    pub struct OnceCell<T>(Imp<T>);
    904→        fn default() -> OnceCell<T> {
@@ -161,6 +151,8 @@ lib.rs
   1228→    /// ```
   1229→    /// use std::collections::HashMap;
   1230→    ///
+  1231→    /// use once_cell::sync::Lazy;
+  1232→    ///
       →…
   1255→    pub struct Lazy<T, F = fn() -> T> {
   1256→        cell: OnceCell<T>,
@@ -195,11 +187,6 @@ race.rs
    351→pub use self::once_box::OnceBox;
    353→#[cfg(feature = "alloc")]
    354→mod once_box {
-   355→    use super::atomic::{AtomicPtr, Ordering};
-   356→    use core::{marker::PhantomData, ptr};
-   357→
-   358→    use alloc::boxed::Box;
-   359→
    360→    /// A thread-safe cell which can be written to only once.
    361→    pub struct OnceBox<T> {
    362→        inner: AtomicPtr<T>,

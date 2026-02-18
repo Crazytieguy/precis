@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (568 words)
+budget: 1000 (542 words)
 
 aserror.rs
      1→use core::error::Error;
@@ -10,37 +10,31 @@ aserror.rs
      4→#[doc(hidden)]
      5→pub trait AsDynError<'a>: Sealed {
      6→    fn as_dyn_error(&self) -> &(dyn Error + 'a);
-     7→}
      9→impl<'a, T: Error + 'a> AsDynError<'a> for T {
     10→    #[inline]
     11→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
     12→        self
     13→    }
-    14→}
     16→impl<'a> AsDynError<'a> for dyn Error + 'a {
     17→    #[inline]
     18→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
     19→        self
     20→    }
-    21→}
     23→impl<'a> AsDynError<'a> for dyn Error + Send + 'a {
     24→    #[inline]
     25→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
     26→        self
     27→    }
-    28→}
     30→impl<'a> AsDynError<'a> for dyn Error + Send + Sync + 'a {
     31→    #[inline]
     32→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
     33→        self
     34→    }
-    35→}
     37→impl<'a> AsDynError<'a> for dyn Error + Send + Sync + UnwindSafe + 'a {
     38→    #[inline]
     39→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
     40→        self
     41→    }
-    42→}
     44→#[doc(hidden)]
     45→pub trait Sealed {}
     46→impl<T: Error> Sealed for T {}
@@ -58,35 +52,28 @@ display.rs
      9→    type Target: Display;
     10→
     11→    fn as_display(&'a self) -> Self::Target;
-    12→}
     14→impl<'a, T> AsDisplay<'a> for &T
     15→where
     16→    T: Display + ?Sized + 'a,
     17→{
     18→    type Target = &'a T;
-    19→
     20→    fn as_display(&'a self) -> Self::Target {
     21→        *self
     22→    }
-    23→}
     25→#[cfg(feature = "std")]
     26→impl<'a> AsDisplay<'a> for Path {
     27→    type Target = path::Display<'a>;
-    28→
     29→    #[inline]
     30→    fn as_display(&'a self) -> Self::Target {
     31→        self.display()
     32→    }
-    33→}
     35→#[cfg(feature = "std")]
     36→impl<'a> AsDisplay<'a> for PathBuf {
     37→    type Target = path::Display<'a>;
-    38→
     39→    #[inline]
     40→    fn as_display(&'a self) -> Self::Target {
     41→        self.display()
     42→    }
-    43→}
     45→#[doc(hidden)]
     46→pub trait Sealed {}
     47→impl<T: Display + ?Sized> Sealed for &T {}
@@ -98,27 +85,19 @@ display.rs
     59→mod placeholder {
     60→    use super::{AsDisplay, Sealed};
     61→    use core::fmt::{self, Display};
-    62→
     63→    #[allow(dead_code)]
     64→    pub struct Placeholder;
-    65→
     66→    impl<'a> AsDisplay<'a> for Placeholder {
     67→        type Target = Self;
-    68→
     69→        #[inline]
     70→        fn as_display(&'a self) -> Self::Target {
     71→            Placeholder
     72→        }
-    73→    }
-    74→
     75→    impl Display for Placeholder {
     76→        fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
     77→            unreachable!()
     78→        }
-    79→    }
-    80→
     81→    impl Sealed for Placeholder {}
-    82→}
 lib.rs
    281→mod aserror;
    282→mod display;
@@ -139,7 +118,6 @@ provide.rs
      3→#[doc(hidden)]
      4→pub trait ThiserrorProvide: Sealed {
      5→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>);
-     6→}
      8→impl<T> ThiserrorProvide for T
      9→where
     10→    T: Error + ?Sized,
@@ -148,7 +126,6 @@ provide.rs
     13→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>) {
     14→        self.provide(request);
     15→    }
-    16→}
     18→#[doc(hidden)]
     19→pub trait Sealed {}
     20→impl<T: Error + ?Sized> Sealed for T {}
@@ -159,4 +136,3 @@ var.rs
      6→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
      7→        Pointer::fmt(self.0, formatter)
      8→    }
-     9→}

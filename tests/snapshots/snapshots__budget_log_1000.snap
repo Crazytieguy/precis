@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (980 words)
+budget: 1000 (950 words)
 
 CHANGELOG.md
      1→# Change Log …
@@ -31,7 +31,6 @@ README.md
     40→pub fn shave_the_yak(yak: &mut Yak) {
     41→    trace!("Commencing yak shaving");
     42→
-    43→    loop {
       →…
     58→### In executables
     60→In order to produce log output, executables have to use a logger implementation compatible with the facade.
@@ -74,19 +73,15 @@ src/__private_api.rs
     10→pub type Value<'a> = &'a str;
     12→mod sealed {
     14→    pub trait KVs<'a> {
-    15→        fn into_kvs(self) -> Option<&'a [(&'a str, super::Value<'a>)]>;
-    16→    }
     39→pub struct GlobalLogger;
    112→#[cfg(feature = "kv")]
    113→mod kv_support {
-   114→    use crate::kv;
-   115→
    116→    pub type Value<'a> = kv::Value<'a>;
    151→pub use self::kv_support::*;
 src/kv/error.rs
      5→pub struct Error {
      6→    inner: Inner,
-      →…
+     7→}
      9→#[derive(Debug)]
     10→enum Inner {
     11→    #[cfg(feature = "std")]
@@ -103,10 +98,10 @@ src/kv/error.rs
 src/kv/key.rs
      3→use std::borrow::Borrow;
      7→pub trait ToKey {
-     8→    /// Perform the conversion.
     37→pub struct Key<'k> {
     38→    // NOTE: This may become `Cow<'k, str>`
-      →…
+    39→    key: &'k str,
+    40→}
     94→mod std_support {
    113→mod sval_support {
    136→mod serde_support {
@@ -127,11 +122,9 @@ src/kv/mod.rs
 src/kv/source.rs
      6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
     51→pub trait Source {
-    52→    /// Visit key-values.
     91→fn get_default …
    114→fn count_default …
    235→pub trait VisitSource<'kvs> {
-   236→    /// Visit a key-value pair.
    241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T
    242→where
    243→    T: VisitSource<'kvs> + ?Sized,
@@ -142,10 +135,9 @@ src/kv/value.rs
      6→use std::fmt;
      8→pub use crate::kv::Error;
     11→pub trait ToValue {
-    12→    /// Perform the conversion.
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
-      →…
+   121→}
    204→    fn from_inner …
    235→impl<'v> serde_core::Serialize for Value<'v> {
    245→impl<'v> sval::Value for Value<'v> {
@@ -155,7 +147,6 @@ src/kv/value.rs
    336→macro_rules! impl_value_to_primitive {
    390→mod std_support {
    462→pub trait VisitValue<'v> {
-   463→    /// Visit a `Value`.
    539→impl<'a, 'v, T: ?Sized> VisitValue<'v> for &'a mut T
    540→where
    541→    T: VisitValue<'v>,
@@ -168,7 +159,17 @@ src/kv/value.rs
    735→    use super::*;
    738→    pub enum Inner<'v> {
    739→        None,
-      →…
+   740→        Bool(bool),
+   741→        Str(&'v str),
+   742→        Char(char),
+   743→        I64(i64),
+   744→        U64(u64),
+   745→        F64(f64),
+   746→        I128(i128),
+   747→        U128(u128),
+   748→        Debug(&'v dyn fmt::Debug),
+   749→        Display(&'v dyn fmt::Display),
+   750→    }
   1123→pub use VisitValue as Visit;
   1129→macro_rules! as_debug {
   1139→macro_rules! as_display {
@@ -223,9 +224,6 @@ src/lib.rs
   1201→    metadata: Metadata<'a>,
   1202→}
   1249→pub trait Log: Sync + Send {
-  1250→    /// Determines if a log message with the specified metadata would be
-  1251→    /// logged.
-  1252→    ///
   1283→struct NopLogger;
   1482→#[cfg(target_has_atomic = "ptr")]
   1483→fn set_logger_inner<F>(make_logger: F) -> Result<(), SetLoggerError>

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (490 words)
+budget: 500 (479 words)
 
 CHANGELOG.md
 README.md
@@ -19,8 +19,6 @@ README.md
     35→```
     36→
     37→```rust
-    38→use log::{info, trace, warn};
-    39→
       →…
     58→### In executables …
    106→## Structured logging …
@@ -38,12 +36,12 @@ src/__private_api.rs
     39→pub struct GlobalLogger;
    112→#[cfg(feature = "kv")]
    113→mod kv_support {
-   114→    use crate::kv;
-   115→
    116→    pub type Value<'a> = kv::Value<'a>;
    151→pub use self::kv_support::*;
 src/kv/error.rs
      5→pub struct Error {
+     6→    inner: Inner,
+     7→}
      9→#[derive(Debug)]
     10→enum Inner {
     11→    #[cfg(feature = "std")]
@@ -55,9 +53,11 @@ src/kv/error.rs
     17→}
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
 src/kv/key.rs
-     3→use std::borrow::Borrow;
      7→pub trait ToKey {
     37→pub struct Key<'k> {
+    38→    // NOTE: This may become `Cow<'k, str>`
+    39→    key: &'k str,
+    40→}
 src/kv/mod.rs
    247→mod key;
    259→#[cfg(feature = "kv_unstable")]
@@ -66,21 +66,29 @@ src/kv/mod.rs
    262→pub mod value;
    265→pub use self::source::Visitor;
 src/kv/source.rs
-     6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
     51→pub trait Source {
    235→pub trait VisitSource<'kvs> {
    462→pub use VisitSource as Visitor;
 src/kv/value.rs
-     6→use std::fmt;
     11→pub trait ToValue {
    119→pub struct Value<'v> {
+   120→    inner: inner::Inner<'v>,
+   121→}
    288→macro_rules! impl_to_value_primitive {
    312→macro_rules! impl_to_value_nonzero_primitive {
    336→macro_rules! impl_value_to_primitive {
    462→pub trait VisitValue<'v> {
-   610→    use super::*;
-   735→    use super::*;
    738→    pub enum Inner<'v> {
+   739→        None,
+   740→        Bool(bool),
+   741→        Str(&'v str),
+   742→        Char(char),
+   743→        I64(i64),
+   744→        U64(u64),
+   745→        F64(f64),
+   746→        I128(i128),
+   747→        U128(u128),
+      →…
   1123→pub use VisitValue as Visit;
   1129→macro_rules! as_debug {
   1139→macro_rules! as_display {
@@ -104,8 +112,7 @@ src/lib.rs
    782→    Static(&'static str),
    783→    Borrowed(&'a str),
    784→}
-   787→    #[inline]
-   788→    fn get(&self) -> &'a str {
+   788→    fn get …
    842→pub struct Record<'a> {
    858→struct KeyValues<'a>(&'a dyn kv::Source);
   1003→pub struct RecordBuilder<'a> {
@@ -113,11 +120,7 @@ src/lib.rs
   1200→pub struct MetadataBuilder<'a> {
   1249→pub trait Log: Sync + Send {
   1283→struct NopLogger;
-  1482→#[cfg(target_has_atomic = "ptr")]
-  1483→fn set_logger_inner<F>(make_logger: F) -> Result<(), SetLoggerError>
-  1484→where
-  1485→    F: FnOnce() -> &'static dyn Log,
-  1486→{
+  1483→fn set_logger_inner …
   1549→pub struct SetLoggerError(());
   1566→pub struct ParseLevelError(());
   1599→#[doc(hidden)]
@@ -142,15 +145,12 @@ test_max_level_features/main.rs
     15→struct Logger(Arc<State>);
     17→impl Log for Logger {
     18→    fn enabled(&self, _: &Metadata) -> bool {
-    19→        true
-    20→    }
     22→    fn log(&self, record: &Record) {
-    23→        *self.0.last_log.lock().unwrap() = Some(record.level());
-    24→    }
     26→    fn flush(&self) {}
     29→fn main() {
     44→fn test(a: &State, filter: LevelFilter) {
     72→fn last(state: &State, expected: Option<Level>) {
 tests/integration.rs
 tests/macros.rs
+     3→macro_rules! all_log_macros {
    420→enum Type {

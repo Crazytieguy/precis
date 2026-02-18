@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1004 words)
+budget: 1000 (986 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -164,6 +164,8 @@ website/README.md
     12→
     13→You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
     14→
+    15→[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+    16→
       →…
     19→## Learn More
     21→To learn more about Next.js, take a look at the following resources:
@@ -228,24 +230,13 @@ website/pages/_app.tsx
     17→export default function App({ Component, pageProps }: AppProps) {
     18→  return (
     19→    <>
-    20→      <Head>
       →…
 website/pages/_document.tsx
      5→export default class Document extends NextDocument {
      6→  render() {
      7→    return (
      8→      <Html lang="en">
-     9→        <Head>
-    10→          <link rel="preload" href="/inter-var-latin.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-    11→        </Head>
-    12→        <body>
-    13→          <Main />
-    14→          <NextScript />
-    15→        </body>
-    16→      </Html>
-    17→    )
-    18→  }
-    19→}
+      →…
 website/pages/index.tsx
     20→type TTheme …
     25→type Themes …
@@ -253,7 +244,6 @@ website/pages/index.tsx
     29→export default function Index() {
     30→  const [theme, setTheme] = React.useState<Themes>('raycast')
     31→
-    32→  return (
       →…
     84→function CMDKWrapper(props: MotionProps & { children: React.ReactNode }) {
     99→//////////////////////////////////////////////////////////////////

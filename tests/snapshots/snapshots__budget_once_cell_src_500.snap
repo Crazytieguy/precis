@@ -2,26 +2,24 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (504 words)
+budget: 500 (488 words)
 
 imp_cs.rs
      8→pub(crate) struct OnceCell<T> {
      9→    initialized: AtomicBool,
-    10→    // Use `unsync::OnceCell` internally since `Mutex` does not provide
       →…
 imp_pl.rs
      7→pub(crate) struct OnceCell<T> {
      8→    state: AtomicU8,
-     9→    value: UnsafeCell<Option<T>>,
       →…
     12→const INCOMPLETE …
     13→const RUNNING …
     14→const COMPLETE …
    122→struct Guard<'a> {
    123→    state: &'a AtomicU8,
-   124→    new_state: u8,
       →…
 imp_std.rs
+    13→#[derive(Debug)]
     14→pub(crate) struct OnceCell<T> {
     15→    // This `queue` field is the core of the implementation. It encodes two
     16→    // pieces of information:
@@ -29,25 +27,30 @@ imp_std.rs
     18→    // * The current state of the cell (`INCOMPLETE`, `RUNNING`, `COMPLETE`)
     19→    // * Linked list of threads waiting for the current cell.
     20→    //
-      →…
+    21→    // State is encoded in two low bits. Only `INCOMPLETE` and `RUNNING` states
+    22→    // allow waiters.
+    23→    queue: AtomicPtr<Waiter>,
+    24→    value: UnsafeCell<Option<T>>,
+    25→}
    125→const INCOMPLETE …
    126→const RUNNING …
    127→const COMPLETE …
    128→const INCOMPLETE_PTR …
    129→const COMPLETE_PTR …
    133→const STATE_MASK …
+   135→/// Representation of a node in the linked list of waiters in the RUNNING state.
+      →…
    138→struct Waiter {
    139→    thread: Cell<Option<Thread>>,
    140→    signaled: AtomicBool,
    141→    next: *mut Waiter,
    142→}
+   144→/// Drains and notifies the queue of waiters on drop.
    145→struct Guard<'a> {
    146→    queue: &'a AtomicPtr<Waiter>,
    147→    new_queue: *mut Waiter,
    148→}
    245→mod strict {
-   246→    #[must_use]
-   247→    #[inline]
 lib.rs
    370→#[cfg(all(feature = "critical-section", not(feature = "std")))]
    371→#[path = "imp_cs.rs"]
@@ -60,13 +63,6 @@ lib.rs
    380→mod imp;
    382→/// Single-threaded version of `OnceCell`.
    383→pub mod unsync {
-   384→    use core::{
-   385→        cell::{Cell, UnsafeCell},
-   386→        fmt, mem,
-   387→        ops::{Deref, DerefMut},
-   388→        panic::{RefUnwindSafe, UnwindSafe},
-   389→    };
-   390→
    391→    /// A cell which can be written to only once. It is not thread safe.
    392→    ///
       →…
@@ -85,13 +81,6 @@ lib.rs
    861→/// Thread-safe, blocking version of `OnceCell`.
    862→#[cfg(any(feature = "std", feature = "critical-section"))]
    863→pub mod sync {
-   864→    use core::{
-   865→        cell::Cell,
-   866→        fmt, mem,
-   867→        ops::{Deref, DerefMut},
-   868→        panic::RefUnwindSafe,
-   869→    };
-   870→
    873→    /// A thread-safe cell which can be written to only once.
    874→    ///
       →…
@@ -127,11 +116,6 @@ race.rs
    351→pub use self::once_box::OnceBox;
    353→#[cfg(feature = "alloc")]
    354→mod once_box {
-   355→    use super::atomic::{AtomicPtr, Ordering};
-   356→    use core::{marker::PhantomData, ptr};
-   357→
-   358→    use alloc::boxed::Box;
-   359→
    360→    /// A thread-safe cell which can be written to only once.
    361→    pub struct OnceBox<T> {
    362→        inner: AtomicPtr<T>,

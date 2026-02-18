@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1000 words)
+budget: 1000 (972 words)
 
 checkmark.tsx
      1→import { styled, keyframes } from 'goober';
@@ -17,7 +17,6 @@ checkmark.tsx
     36→  opacity: 0;
     37→  height: 20px;
     38→  border-radius: 10px;
-    39→  background: ${(p) => p.primary || '#61d345'};
       →…
 error.tsx
      1→import { styled, keyframes } from 'goober';
@@ -33,7 +32,6 @@ error.tsx
     40→  opacity: 0;
     41→  height: 20px;
     42→  border-radius: 10px;
-    43→  background: ${(p) => p.primary || '#ff4b4b'};
       →…
 loader.tsx
      1→import { styled, keyframes } from 'goober';
@@ -47,7 +45,6 @@ loader.tsx
     19→  height: 12px;
     20→  box-sizing: border-box;
     21→  border: 2px solid;
-    22→  border-radius: 100%;
       →…
 toast-bar.tsx
      1→import * as React from 'react';
@@ -98,7 +95,6 @@ toast-bar.tsx
     77→    const animationStyle: React.CSSProperties = toast.height
     78→      ? getAnimationStyle(
     79→          toast.position || position || 'top-center',
-    80→          toast.visible
       →…
 toast-icon.tsx
      1→import * as React from 'react';
@@ -115,7 +111,6 @@ toast-icon.tsx
     34→  transform: scale(0.6);
     35→  opacity: 0.4;
     36→  min-width: 20px;
-    37→  animation: ${enter} 0.3s 0.12s cubic-bezier(0.175, 0.885, 0.32, 1.275)
       →…
     41→export type IconThemes = Partial<{
     42→  success: CheckmarkTheme;

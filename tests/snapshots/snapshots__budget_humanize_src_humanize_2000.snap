@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2024 words)
+budget: 2000 (1947 words)
 
 __init__.py
      5→from humanize.filesize import naturalsize
@@ -68,7 +68,6 @@ filesize.py
     51→        '3.0 MB'
     52→        >>> naturalsize(300, False, True)
     53→        '300B'
-    54→        >>> naturalsize(3000, False, True)
       →…
 i18n.py
      5→import gettext as gettext_module
@@ -114,7 +113,6 @@ i18n.py
     70→    Returns:
     71→        dict: Translations.
     72→
-    73→    Raises:
       →…
     96→def deactivate() -> None:
     97→    """Deactivate internationalisation."""
@@ -177,7 +175,6 @@ lists.py
     22→        >>> natural_list(["one"])
     23→        'one'
     24→
-    25→    Args:
       →…
 number.py
      5→import bisect
@@ -202,7 +199,6 @@ number.py
     44→        '1st'
     45→        >>> ordinal(1002)
     46→        '1002nd'
-    47→        >>> ordinal(103)
       →…
    110→def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
    111→    """Converts an integer to a string containing commas every three digits.
@@ -217,7 +213,6 @@ number.py
    120→        >>> intcomma("1000")
    121→        '1,000'
    122→        >>> intcomma(1_000_000)
-   123→        '1,000,000'
       →…
    195→def intword(value: NumberOrString, format: str = "%.1f") -> str:
    196→    """Converts a large integer to a friendly text representation.
@@ -232,7 +227,6 @@ number.py
    205→        '100'
    206→        >>> intword("12400")
    207→        '12.4 thousand'
-   208→        >>> intword("1000000")
       →…
    269→def apnumber(value: NumberOrString) -> str:
    270→    """Converts an integer to Associated Press style.
@@ -247,7 +241,6 @@ number.py
    279→      '10'
    280→      >>> apnumber("7")
    281→      'seven'
-   282→      >>> apnumber("foo")
       →…
    321→def fractional(value: NumberOrString) -> str:
    322→    """Convert to fractional number.
@@ -262,7 +255,6 @@ number.py
    331→
    332→    * a string representation of a fraction
    333→    * or a whole number
-   334→    * or a mixed fraction
       →…
    385→def scientific(value: NumberOrString, precision: int = 2) -> str:
    386→    """Return number in string scientific notation z.wq x 10ⁿ.
@@ -277,7 +269,6 @@ number.py
    395→        '-1.00 x 10³'
    396→        >>> scientific(1000, 1)
    397→        '1.0 x 10³'
-   398→        >>> scientific(1000, 3)
       →…
    454→def clamp(
    455→    value: float,
@@ -299,7 +290,6 @@ number.py
    471→        >>> clamp(0.0001, floor=0.01)
    472→        '<0.01'
    473→        >>> clamp(0.99, format="{:.0%}", ceil=0.99)
-   474→        '99%'
       →…
    531→def metric(value: float, unit: str = "", precision: int = 3) -> str:
    532→    """Return a value with a metric SI unit-prefix appended.
@@ -314,7 +304,6 @@ number.py
    541→        '220 μF'
    542→        >>> metric(1e-14, precision=4)
    543→        '10.00 f'
-   544→
       →…
 time.py
      8→from enum import Enum
@@ -345,9 +334,6 @@ time.py
     39→    YEARS = 7
     40→
     41→    def __lt__(self, other: Any) -> Any:
-    42→        if self.__class__ is other.__class__:
-    43→            return self.value < other.value
-    44→        return NotImplemented
     47→def _now() -> dt.datetime:
     53→def _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:
     54→    """Return an "absolute" value for a timedelta, always representing a time distance.
@@ -379,7 +365,6 @@ time.py
    109→            used for fuzziness between years.
    110→        minimum_unit (str): The lowest unit that can be used.
    111→
-   112→    Returns:
       →…
    249→def naturaltime(
    250→    value: dt.datetime | dt.timedelta | float,
@@ -400,7 +385,6 @@ time.py
    265→        future (bool): Ignored for `datetime`s and `timedelta`s, where the tense is
    266→            always figured out based on the current time. For integers and floats, the
    267→            return value will be past tense by default, unless future is `True`.
-   268→        months (bool): If `True`, then a number of months (based on 30.5 days) will be
       →…
    300→def _convert_aware_datetime(
    301→    value: dt.datetime | dt.timedelta | float | None,
@@ -459,7 +443,6 @@ time.py
    466→
    467→    ```
    468→
-   469→    A custom `format` can be specified to control how the fractional part
       →…
    654→def _rounding_by_fmt(format: str, value: float) -> float | int:
    655→    """Round a number according to the string format provided.

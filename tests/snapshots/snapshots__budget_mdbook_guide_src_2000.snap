@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2011 words)
+budget: 2000 (1955 words)
 
 404.md
      1→# Document not found (404)
@@ -65,19 +65,7 @@ SUMMARY.md
     28→        - [Environment variables](format/configuration/environment-variables.md)
     29→    - [Theme](format/theme/README.md)
     30→        - [index.hbs](format/theme/index-hbs.md)
-    31→        - [Syntax highlighting](format/theme/syntax-highlighting.md)
-    32→        - [Editor](format/theme/editor.md)
-    33→    - [MathJax support](format/mathjax.md)
-    34→    - [mdBook-specific features](format/mdbook.md)
-    35→    - [Markdown](format/markdown.md)
-    36→- [Continuous integration](continuous-integration.md)
-    37→- [For developers](for_developers/README.md)
-    38→    - [Preprocessors](for_developers/preprocessors.md)
-    39→    - [Alternative backends](for_developers/backends.md)
-    40→
-    41→-----------
-    42→
-    43→[Contributors](misc/contributors.md)
+      →…
 cli/README.md
      1→# Command-line tool
      3→The `mdbook` command-line tool is used to create and build books.
@@ -347,7 +335,6 @@ format/theme/README.md
     12→Here are the files you can override:
     13→
     14→- **_index.hbs_** is the handlebars template.
-    15→- **_head.hbs_** is appended to the HTML `<head>` section.
       →…
 format/theme/editor.md
      1→# Editor
@@ -366,15 +353,12 @@ format/theme/index-hbs.md
     41→## Handlebars helpers …
     46→### toc
     48→The toc helper is used like this
-    49→
       →…
     80→### resource
     82→The path to a static file.
-    83→It implicitly includes `path_to_root`,
       →…
     90→### fa
     92→mdBook includes a copy of [Font Awesome Free's](https://fontawesome.com)
-    93→MIT-licensed SVG files. It accepts three positional arguments:
       →…
 format/theme/syntax-highlighting.md
      1→# Syntax highlighting

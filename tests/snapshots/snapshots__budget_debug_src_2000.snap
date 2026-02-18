@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2056 words)
+budget: 2000 (1998 words)
 
 browser.js
    115→function useColors() {
@@ -381,25 +381,6 @@ common.js
    246→	* @return {Boolean}
    247→	* @api public
    248→	*/
-   249→	function enabled(name) {
-   250→		for (const skip of createDebug.skips) {
-   251→			if (matchesTemplate(name, skip)) {
-   252→				return false;
-   253→			}
-   254→		}
-   255→
-   256→		for (const ns of createDebug.names) {
-   257→			if (matchesTemplate(name, ns)) {
-   258→				return true;
-   259→			}
-   260→		}
-   261→
-   262→		return false;
-   263→	}
-   264→
-   265→	/**
-   266→	* Coerce `val`.
-   267→	*
       →…
 node.js
    151→/**

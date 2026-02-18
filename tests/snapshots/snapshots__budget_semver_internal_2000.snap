@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (505 words)
+budget: 2000 (501 words)
 
 constants.js
      5→const SEMVER_SPEC_VERSION = '2.0.0'
@@ -56,7 +56,6 @@ lrucache.js
      5→    this.max = 1000
      6→    this.map = new Map()
      7→  }
-     8→
      9→  get (key) {
     10→    const value = this.map.get(key)
     11→    if (value === undefined) {
@@ -68,11 +67,9 @@ lrucache.js
     17→      return value
     18→    }
     19→  }
-    20→
     21→  delete (key) {
     22→    return this.map.delete(key)
     23→  }
-    24→
     25→  set (key, value) {
     26→    const deleted = this.delete(key)
     27→
@@ -88,7 +85,6 @@ lrucache.js
     37→
     38→    return this
     39→  }
-    40→}
 parse-options.js
      4→const looseOption = Object.freeze({ loose: true })
      5→const emptyOpts = Object.freeze({ })

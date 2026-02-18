@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (512 words)
+budget: 500 (500 words)
 
 assets.tsx
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
@@ -10,22 +10,21 @@ assets.tsx
      7→    case 'success':
      8→      return SuccessIcon;
       →…
-    24→const bars = Array(12).fill(0);
+    24→const bars …
     26→export const Loader = ({ visible, className }: { visible: boolean; className?: string }) => {
     27→  return (
     28→    <div className={['sonner-loading-wrapper', className].filter(Boolean).join(' ')} data-visible={visible}>
     29→      <div className="sonner-spinner">
       →…
-    38→const SuccessIcon = (
-    48→const WarningIcon = (
-    58→const InfoIcon = (
-    68→const ErrorIcon = (
+    38→const SuccessIcon …
+    48→const WarningIcon …
+    58→const InfoIcon …
+    68→const ErrorIcon …
     78→export const CloseIcon = (
     79→  <svg
     80→    xmlns="http://www.w3.org/2000/svg"
     81→    width="12"
     82→    height="12"
-    83→    viewBox="0 0 24 24"
       →…
 hooks.tsx
      3→export const useIsDocumentHidden = () => {
@@ -34,31 +33,31 @@ hooks.tsx
      6→  React.useEffect(() => {
       →…
 index.tsx
-    22→const VISIBLE_TOASTS_AMOUNT = 3;
-    25→const VIEWPORT_OFFSET = '24px';
-    28→const MOBILE_VIEWPORT_OFFSET = '16px';
-    31→const TOAST_LIFETIME = 4000;
-    34→const TOAST_WIDTH = 356;
-    37→const GAP = 14;
-    40→const SWIPE_THRESHOLD = 45;
-    43→const TIME_BEFORE_UNMOUNT = 200;
+    22→const VISIBLE_TOASTS_AMOUNT …
+    25→const VIEWPORT_OFFSET …
+    28→const MOBILE_VIEWPORT_OFFSET …
+    31→const TOAST_LIFETIME …
+    34→const TOAST_WIDTH …
+    37→const GAP …
+    40→const SWIPE_THRESHOLD …
+    43→const TIME_BEFORE_UNMOUNT …
     45→function cn(...classes: (string | undefined)[]) {
     49→function getDefaultSwipeDirections(position: string): Array<SwipeDirection> {
     64→const Toast = (props: ToastProps) => {
    507→function getDocumentDirection(): ToasterProps['dir'] {
    520→function assignOffset(defaultOffset: ToasterProps['offset'], mobileOffset: ToasterProps['mobileOffset']) {
    552→function useSonner() {
-   593→const Toaster = React.forwardRef<HTMLElement, ToasterProps>(function Toaster(props, ref) {
+   593→const Toaster …
 state.ts
      1→./types …
     11→import React from 'react …
-    15→type titleT …
+    15→type titleT = (() => React.ReactNode) | React.ReactNode;
     17→class Observer {
     18→  subscribers: Array<(toast: ExternalToast | ToastToDismiss) => void>;
     19→  toasts: Array<ToastT | ToastToDismiss>;
     20→  dismissedToasts: Set<string | number>;
     21→
-    22→  constructor() {
+    22→  constructor …
     29→  subscribe …
     38→  publish …
     42→  addToast …
@@ -75,14 +74,8 @@ state.ts
    249→  getActiveToasts …
    254→export const ToastState …
    257→const toastFunction = (message: titleT, data?: ExternalToast) => {
-   258→  const id = data?.id || toastsCounter++;
-   259→
-      →…
    268→const isHttpResponse = (data: any): data is Response => {
-   269→  return (
-   270→    data &&
-      →…
-   279→const basicToast …
+   279→const basicToast = toastFunction;
    281→const getHistory = () => ToastState.toasts;
    282→const getToasts = () => ToastState.getActiveToasts();
    285→export const toast …
@@ -125,8 +118,15 @@ types.ts
    107→  descriptionClassName?: string;
    108→  style?: React.CSSProperties;
    109→  cancelButtonStyle?: React.CSSProperties;
-      →…
-   118→type Offset …
+   110→  actionButtonStyle?: React.CSSProperties;
+   111→  duration?: number;
+   112→  unstyled?: boolean;
+   113→  classNames?: ToastClassnames;
+   114→  closeButtonAriaLabel?: string;
+   115→  toasterId?: string;
+   116→}
+   118→type Offset =
+   119→  | {
    128→export interface ToasterProps {
    129→  id?: string;
    130→  invert?: boolean;

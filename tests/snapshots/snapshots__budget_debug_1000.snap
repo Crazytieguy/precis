@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1018 words)
+budget: 1000 (990 words)
 
 README.md
      1→# debug
@@ -116,6 +116,9 @@ src/browser.js
    132→	// eslint-disable-next-line no-return-assign
    133→	return (typeof document !== 'undefined' && document.documentElement && document.documentElement.style && document.documentElement.style.WebkitAppearance) ||
    134→		// Is firebug? http://stackoverflow.com/a/398120/376773
+   135→		(typeof window !== 'undefined' && window.console && (window.console.firebug || (window.console.exception && window.console.table))) ||
+   136→		// Is firefox >= v31?
+   137→		// https://developer.mozilla.org/en-US/docs/Tools/Web_Console#Styling_messages
       →…
    143→/**
    144→ * Colorize log arguments if enabled.
@@ -128,7 +131,6 @@ src/browser.js
    151→		this.namespace +
    152→		(this.useColors ? ' %c' : ' ') +
    153→		args[0] +
-   154→		(this.useColors ? '%c ' : ' ') +
       →…
    194→/**
    195→ * Save `namespaces`.
@@ -141,7 +143,6 @@ src/browser.js
    202→		if (namespaces) {
    203→			exports.storage.setItem('debug', namespaces);
    204→		} else {
-   205→			exports.storage.removeItem('debug');
       →…
    213→/**
    214→ * Load `namespaces`.
@@ -154,7 +155,6 @@ src/browser.js
    221→	try {
    222→		r = exports.storage.getItem('debug') || exports.storage.getItem('DEBUG') ;
    223→	} catch (error) {
-   224→		// Swallow
       →…
    236→/**
    237→ * Localstorage attempts to return the localstorage.
@@ -172,7 +172,6 @@ src/browser.js
    249→		// TVMLKit (Apple TV JS Runtime) does not have a window object, just localStorage in the global context
    250→		// The Browser also has localStorage in the global context.
    251→		return localStorage;
-   252→	} catch (error) {
       →…
 src/common.js
      2→/**
@@ -185,7 +184,6 @@ src/common.js
      9→	createDebug.default = createDebug;
     10→	createDebug.coerce = coerce;
     11→	createDebug.disable = disable;
-    12→	createDebug.enable = enable;
       →…
 src/node.js
    151→/**
@@ -208,7 +206,6 @@ src/node.js
    169→
    170→	if (useColors) {
    171→		const c = this.color;
-   172→		const colorCode = '\u001B[3' + (c < 8 ? c : '8;5;' + c);
       →…
    182→function getDate() {
    183→	if (exports.inspectOpts.hideDate) {
@@ -234,7 +231,6 @@ src/node.js
    205→		process.env.DEBUG = namespaces;
    206→	} else {
    207→		// If you set a process.env field to null or undefined, it gets cast to the
-   208→		// string 'null' or 'undefined'. Just delete instead.
       →…
    213→/**
    214→ * Load `namespaces`.
@@ -258,7 +254,6 @@ src/node.js
    233→
    234→	const keys = Object.keys(exports.inspectOpts);
    235→	for (let i = 0; i < keys.length; i++) {
-   236→		debug.inspectOpts[keys[i]] = exports.inspectOpts[keys[i]];
       →…
 test.node.js
      8→const formatWithOptionsSpy = sinon.spy(util, 'formatWithOptions');

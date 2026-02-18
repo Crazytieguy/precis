@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4000 words)
+budget: 4000 (3986 words)
 
 assets.tsx
      2→import React from 'react';
@@ -503,6 +503,9 @@ index.tsx
    629→  const [expanded, setExpanded] = React.useState(false);
    630→  const [interacting, setInteracting] = React.useState(false);
    631→  const [actualTheme, setActualTheme] = React.useState(
+   632→    theme !== 'system'
+   633→      ? theme
+   634→      : typeof window !== 'undefined'
       →…
 state.ts
      1→import type {
@@ -526,8 +529,6 @@ state.ts
     24→    this.toasts = [];
     25→    this.dismissedToasts = new Set();
     26→  }
-    27→
-    28→  // We use arrow functions to maintain the correct `this` reference
     29→  subscribe = (subscriber: (toast: ToastT | ToastToDismiss) => void) => {
     30→    this.subscribers.push(subscriber);
     31→
@@ -536,16 +537,13 @@ state.ts
     34→      this.subscribers.splice(index, 1);
     35→    };
     36→  };
-    37→
     38→  publish = (data: ToastT) => {
     39→    this.subscribers.forEach((subscriber) => subscriber(data));
     40→  };
-    41→
     42→  addToast = (data: ToastT) => {
     43→    this.publish(data);
     44→    this.toasts = [...this.toasts, data];
     45→  };
-    46→
     47→  create = (
     48→    data: ExternalToast & {
     49→      message?: titleT;
@@ -586,7 +584,6 @@ state.ts
     84→
     85→    return id;
     86→  };
-    87→
     88→  dismiss = (id?: number | string) => {
     89→    if (id) {
     90→      this.dismissedToasts.add(id);
@@ -599,31 +596,24 @@ state.ts
     97→
     98→    return id;
     99→  };
-   100→
    101→  message = (message: titleT | React.ReactNode, data?: ExternalToast) => {
    102→    return this.create({ ...data, message });
    103→  };
-   104→
    105→  error = (message: titleT | React.ReactNode, data?: ExternalToast) => {
    106→    return this.create({ ...data, message, type: 'error' });
    107→  };
-   108→
    109→  success = (message: titleT | React.ReactNode, data?: ExternalToast) => {
    110→    return this.create({ ...data, type: 'success', message });
    111→  };
-   112→
    113→  info = (message: titleT | React.ReactNode, data?: ExternalToast) => {
    114→    return this.create({ ...data, type: 'info', message });
    115→  };
-   116→
    117→  warning = (message: titleT | React.ReactNode, data?: ExternalToast) => {
    118→    return this.create({ ...data, type: 'warning', message });
    119→  };
-   120→
    121→  loading = (message: titleT | React.ReactNode, data?: ExternalToast) => {
    122→    return this.create({ ...data, type: 'loading', message });
    123→  };
-   124→
    125→  promise = <ToastData>(promise: PromiseT<ToastData>, data?: PromiseData<ToastData>) => {
    126→    if (!data) {
    127→      // Nothing to show
@@ -741,17 +731,14 @@ state.ts
    239→      return Object.assign(id, { unwrap });
    240→    }
    241→  };
-   242→
    243→  custom = (jsx: (id: number | string) => React.ReactElement, data?: ExternalToast) => {
    244→    const id = data?.id || toastsCounter++;
    245→    this.create({ jsx: jsx(id), ...data, id });
    246→    return id;
    247→  };
-   248→
    249→  getActiveToasts = () => {
    250→    return this.toasts.filter((toast) => !this.dismissedToasts.has(toast.id));
    251→  };
-   252→}
    254→export const ToastState = new Observer();
    257→const toastFunction = (message: titleT, data?: ExternalToast) => {
    258→  const id = data?.id || toastsCounter++;
