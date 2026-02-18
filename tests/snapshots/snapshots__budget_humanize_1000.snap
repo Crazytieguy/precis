@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (975 words)
+budget: 1000 (969 words)
 
 README.md
      1→# humanize
@@ -98,12 +98,7 @@ README.md
    145→```pycon
    146→>>> humanize.naturaltime(delta)
    147→'now'
-   148→>>> humanize.naturaltime(delta, minimum_unit="milliseconds")
-   149→'4 milliseconds ago'
-   150→>>> humanize.naturaltime(delta, minimum_unit="microseconds")
-   151→'4 milliseconds ago'
-   152→```
-   153→
+      →…
    154→### File size humanization
    156→```pycon
    157→>>> import humanize
@@ -186,15 +181,25 @@ docs/time.md
      1→# Time
      3→::: humanize.time
 mkdocs.yml
-     1→site_name …
-     2→site_url …
-     3→repo_url …
-     4→theme …
-    18→nav …
-    26→plugins …
-    31→markdown_extensions …
-    37→extra_css …
-    40→watch …
+     1→site_name: humanize
+     2→site_url: https://humanize.readthedocs.io
+     3→repo_url: https://github.com/python-humanize/humanize
+     4→theme:
+    16→        name: Switch to light mode
+    17→
+    18→nav:
+    24→  - Internationalisation: i18n.md
+    25→
+    26→plugins:
+    29→  - include-markdown
+    30→
+    31→markdown_extensions:
+    35→  - pymdownx.superfences
+    36→
+    37→extra_css:
+    38→  - css/code_select.css
+    39→
+    40→watch:
 pyproject.toml
      1→[build-system …
      8→[project …
@@ -223,8 +228,6 @@ src/humanize/__init__.py
     34→    "decimal_separator",
     35→    "fractional",
     36→    "intcomma",
-    37→    "intword",
-    38→    "metric",
       →…
 src/humanize/filesize.py
      5→from math …
@@ -243,12 +246,10 @@ src/humanize/i18n.py
     21→# Mapping of locale to thousands separator
     22→_THOUSANDS_SEPARATOR = {
     23→    "de_DE": ".",
-    24→    "fr_FR": " ",
       →…
     30→# Mapping of locale to decimal separator
     31→_DECIMAL_SEPARATOR = {
     32→    "de_DE": ",",
-    33→    "fr_FR": ".",
       →…
     40→def _get_default_locale_path …
     51→def get_translation …

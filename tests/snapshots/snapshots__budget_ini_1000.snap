@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1007 words)
+budget: 1000 (999 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -17,66 +17,101 @@ budget: 1000 (1007 words)
 .github/ISSUE_TEMPLATE/config.yml
      3→blank_issues_enabled …
 .github/actions/create-check/action.yml
-     3→name …
-     4→inputs …
-    13→outputs …
-    16→runs …
+     3→name: 'Create Check'
+     4→inputs:
+    12→    default: ''
+    13→outputs:
+    15→    value: ${{ steps.create-check.outputs.check_id }}
+    16→runs:
 .github/actions/install-latest-npm/action.yml
-     3→name …
-     4→description …
-     5→inputs …
-     9→runs …
+     3→name: 'Install Latest npm'
+     4→description: 'Install the latest version of npm compatible with the Node version'
+     5→inputs:
+     8→    required: true
+     9→runs:
 .github/dependabot.yml
-     3→version …
-     5→updates …
+     3→version: 2
+     5→updates:
 .github/matchers/tap.json
      2→  "//@npmcli/template-oss": "This file is automatically added by @npmcli/template-oss. Do not edit.",
      3→  "problemMatcher": [
     31→  ]
     32→}
 .github/settings.yml
-     3→repository …
-    13→branches …
+     3→repository:
+    11→  enable_vulnerability_alerts: true
+    12→
+    13→branches:
 .github/workflows/audit.yml
-     3→name …
-     5→on …
-    11→permissions …
-    14→jobs …
+     3→name: Audit
+     5→on:
+     9→    - cron: "0 8 * * 1"
+    10→
+    11→permissions:
+    12→  contents: read
+    13→
+    14→jobs:
 .github/workflows/ci-release.yml
-     3→name …
-     5→on …
-    21→permissions …
-    25→jobs …
+     3→name: CI - Release
+     5→on:
+    19→        type: string
+    20→
+    21→permissions:
+    23→  checks: write
+    24→
+    25→jobs:
 .github/workflows/ci.yml
-     3→name …
-     5→on …
-    15→permissions …
-    18→jobs …
+     3→name: CI
+     5→on:
+    13→    - cron: "0 9 * * 1"
+    14→
+    15→permissions:
+    16→  contents: read
+    17→
+    18→jobs:
 .github/workflows/codeql-analysis.yml
-     3→name …
-     5→on …
-    16→permissions …
-    19→jobs …
+     3→name: CodeQL
+     5→on:
+    14→    - cron: "0 10 * * 1"
+    15→
+    16→permissions:
+    17→  contents: read
+    18→
+    19→jobs:
 .github/workflows/post-dependabot.yml
-     3→name …
-     5→on …
-     7→permissions …
-    10→jobs …
+     3→name: Post Dependabot
+     5→on: pull_request
+     7→permissions:
+     8→  contents: write
+     9→
+    10→jobs:
 .github/workflows/pull-request.yml
-     3→name …
-     5→on …
-    13→permissions …
-    16→jobs …
+     3→name: Pull Request
+     5→on:
+    11→      - synchronize
+    12→
+    13→permissions:
+    14→  contents: read
+    15→
+    16→jobs:
 .github/workflows/release-integration.yml
-     3→name …
-     5→on …
-    22→permissions …
-    26→jobs …
+     3→name: Release Integration
+     5→on:
+    20→        required: true
+    21→
+    22→permissions:
+    24→  id-token: write
+    25→
+    26→jobs:
 .github/workflows/release.yml
-     3→name …
-     5→on …
-    10→permissions …
-    15→jobs …
+     3→name: Release
+     5→on:
+     8→      - main
+     9→
+    10→permissions:
+    13→  checks: write
+    14→
+    15→jobs:
 .release-please-manifest.json
      2→  ".": "6.0.0"
      3→}
@@ -93,18 +128,13 @@ CHANGELOG.md
    101→## [3.0.0](https://github.com/npm/ini/compare/v2.0.1...v3.0.0) (2022-04-05) …
 CONTRIBUTING.md
      3→# Contributing …
-     5→## Code of Conduct
-     7→All interactions in the **npm** organization on GitHub are considered to be covered by our standard [Code of Conduct](https://docs.npmjs.com/policies/conduct).
-     8→
-     9→## Reporting Bugs
-    11→Before submitting a new bug report please search for an existing or similar report.
-    12→
-      →…
-    17→## Pull Request Conventions
+     5→## Code of Conduct …
+     9→## Reporting Bugs …
+    17→## Pull Request Conventions …
     19→### Commits …
     30→### Test Coverage …
     36→### Linting …
-    42→## What _not_ to contribute?
+    42→## What _not_ to contribute? …
     44→### Dependencies …
     48→### Tools/Automation …
 README.md
@@ -249,23 +279,7 @@ README.md
    147→    platform ,
    148→
    149→    /**
-   150→     *  Whether to append `[]` to array keys.
-   151→     * 
-   152→     *  Some parsers treat duplicate names by themselves as arrays
-   153→     */
-   154→
-   155→    bracketedArray : true
-   156→
-   157→})
-   158→```
-   159→
-   160→*For backwards compatibility any string passed as the*  
-   161→*options parameter is treated as the `section` option.*
-   162→
-   163→```js
-   164→stringify(object,'section')
-   165→```
-   166→
+      →…
    167→### Un / Escape
    169→Turn the given string into a safe to  
    170→use key or value in your INI file.

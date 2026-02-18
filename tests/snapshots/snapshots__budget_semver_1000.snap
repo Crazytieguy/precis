@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1012 words)
+budget: 1000 (1016 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -15,26 +15,31 @@ budget: 1000 (1012 words)
 .github/ISSUE_TEMPLATE/config.yml
      3→blank_issues_enabled …
 .github/actions/create-check/action.yml
-     3→name …
-     4→inputs …
-    13→outputs …
-    16→runs …
+     3→name: 'Create Check'
+     4→inputs:
+    12→    default: ''
+    13→outputs:
+    15→    value: ${{ steps.create-check.outputs.check_id }}
+    16→runs:
 .github/actions/install-latest-npm/action.yml
-     3→name …
-     4→description …
-     5→inputs …
-     9→runs …
+     3→name: 'Install Latest npm'
+     4→description: 'Install the latest version of npm compatible with the Node version'
+     5→inputs:
+     8→    required: true
+     9→runs:
 .github/dependabot.yml
-     3→version …
-     5→updates …
+     3→version: 2
+     5→updates:
 .github/matchers/tap.json
      2→  "//@npmcli/template-oss": "This file is automatically added by @npmcli/template-oss. Do not edit.",
      3→  "problemMatcher": [
     31→  ]
     32→}
 .github/settings.yml
-     3→repository …
-    13→branches …
+     3→repository:
+    11→  enable_vulnerability_alerts: true
+    12→
+    13→branches:
 .github/workflows/audit.yml
      3→name …
      5→on …
@@ -82,6 +87,10 @@ CHANGELOG.md
      1→# Changelog …
 CONTRIBUTING.md
      3→# Contributing …
+     5→## Code of Conduct …
+     9→## Reporting Bugs …
+    17→## Pull Request Conventions …
+    42→## What _not_ to contribute? …
 README.md
      1→semver(1) -- The semantic versioner for npm
      4→## Install
@@ -134,6 +143,12 @@ README.md
    614→eg), and then pull the module name into the documentation for that specific
    615→thing.
       →…
+benchmarks/bench-compare.js
+benchmarks/bench-diff.js
+benchmarks/bench-parse-options.js
+benchmarks/bench-parse.js
+benchmarks/bench-satisfies.js
+benchmarks/bench-subset.js
 bin/semver.js
      8→const argv = process.argv.slice(2)
     12→const range = []
@@ -209,13 +224,7 @@ internal/lrucache.js
     10→    const value = this.map.get(key)
     11→    if (value === undefined) {
     12→      return undefined
-    13→    } else {
-    14→      // Remove the key from the map and add it to the end
-    15→      this.map.delete(key)
-    16→      this.map.set(key, value)
-    17→      return value
-    18→    }
-    19→  }
+      →…
     21→  delete (key) {
     22→    return this.map.delete(key)
     23→  }
@@ -223,15 +232,6 @@ internal/lrucache.js
     26→    const deleted = this.delete(key)
     27→
     28→    if (!deleted && value !== undefined) {
-    29→      // If cache is full, delete the least recently used item
-    30→      if (this.map.size >= this.max) {
-    31→        const firstKey = this.map.keys().next().value
-    32→        this.delete(firstKey)
-    33→      }
-    34→
-    35→      this.map.set(key, value)
-    36→    }
-    37→
       →…
 internal/parse-options.js
      4→const looseOption = Object.freeze({ loose: true })
@@ -307,8 +307,11 @@ release-please-config.json
     37→}
 test/bin/semver.js
      9→const bin = require.resolve('../../bin/semver')
-    10→const run …
+    10→const run = args => new Promise((resolve, reject) => {
 test/integration/whitespace.js
+    12→const wsMedium = ' '.repeat(125)
+    13→const wsLarge = ' '.repeat(500000)
+    14→const zeroLarge = '0'.repeat(500000)
 test/internal/debug.js
      3→const main = () => {
 test/map.js

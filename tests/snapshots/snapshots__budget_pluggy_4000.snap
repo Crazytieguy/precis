@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3945 words)
+budget: 4000 (3936 words)
 
 AGENTS.md
      1→# AGENTS.md
@@ -24,8 +24,10 @@ SECURITY.md
      1→# Security
      3→Please report any security vulnerabilities at https://github.com/pytest-dev/pluggy/security.
 codecov.yml
-     1→coverage …
-     7→comment …
+     1→coverage:
+     5→    changes: true
+     6→
+     7→comment: off
 docs/conf.py
      1→from importlib import metadata
      2→from typing import TYPE_CHECKING
@@ -49,7 +51,6 @@ docs/conf.py
    122→            return True
    123→
    124→    logger = logging.getLogger(sphinx.util.logging.NAMESPACE)
-   125→    warn_handler = [x for x in logger.handlers if x.level == logging.WARNING]
       →…
    130→def setup(app: "sphinx.application.Sphinx") -> None:
    131→    configure_logging(app)

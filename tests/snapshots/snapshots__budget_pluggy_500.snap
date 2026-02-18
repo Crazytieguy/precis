@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (462 words)
+budget: 500 (459 words)
 
 AGENTS.md
      1→# AGENTS.md …
@@ -11,18 +11,25 @@ CLAUDE.md
 SECURITY.md
      1→# Security …
 codecov.yml
-     1→coverage …
-     7→comment …
+     1→coverage:
+     5→    changes: true
+     6→
+     7→comment: off
 docs/conf.py
    106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
    130→def setup(app: "sphinx.application.Sphinx") -> None:
+docs/examples/eggsample/eggsample/__init__.py
 docs/examples/eggsample/eggsample/hookspecs.py
+     7→@hookspec
      8→def eggsample_add_ingredients(ingredients: tuple):
+    16→@hookspec
     17→def eggsample_prep_condiments(condiments: dict):
 docs/examples/eggsample/eggsample/host.py
     29→class EggsellentCook:
 docs/examples/eggsample/eggsample/lib.py
+     4→@eggsample.hookimpl
      5→def eggsample_add_ingredients():
+    12→@eggsample.hookimpl
     13→def eggsample_prep_condiments(condiments):
 docs/examples/eggsample/setup.py
 docs/examples/eggsample-spam/eggsample_spam.py
@@ -64,17 +71,12 @@ pyproject.toml
    107→  [[tool.towncrier.type …
    112→[tool.mypy …
 scripts/release.py
-    15→def create_branch …
-    30→def get_upstream …
-    39→def pre_release …
-    50→def changelog …
-    59→def main …
 scripts/towncrier-draft-to-file.py
-     5→def main …
 src/pluggy/__init__.py
      1→__all__ = [
      2→    "__version__",
      3→    "PluginManager",
+     4→    "PluginValidationError",
       →…
 src/pluggy/_callers.py
     22→# Need to distinguish between old- and new-style hook wrappers.
@@ -118,6 +120,7 @@ src/pluggy/_hooks.py
    619→    def _hookimpls(self) -> list[HookImpl]:
    620→        return [
    621→            impl
+   622→            for impl in self._orig._hookimpls
       →…
    626→    @property
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]

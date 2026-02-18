@@ -2,13 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1950 words)
+budget: 2000 (1943 words)
 
 CHANGELOG.md
      1→# Changelog
      3→All notable changes to this project will be documented in this file.
      4→
-     5→The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this
       →…
     21→### Fixed …
 CONTRIBUTING.md
@@ -177,13 +176,18 @@ README.md
 docs/reference.md
      1→# ::: dotenv …
 mkdocs.yml
-     1→site_name …
-     2→repo_url …
-     3→edit_uri …
-     4→theme …
-    12→markdown_extensions …
-    15→plugins …
-    25→nav …
+     1→site_name: python-dotenv
+     2→repo_url: https://github.com/theskumar/python-dotenv
+     3→edit_uri: ""
+     4→theme:
+    10→    - navigation.sections
+    11→
+    12→markdown_extensions:
+    13→  - mdx_truly_sane_lists
+    14→
+    15→plugins:
+    24→  - search
+    25→nav:
 pyproject.toml
      1→[build-system …
      5→[project …
@@ -528,7 +532,6 @@ tests/test_is_interactive.py
     12→    is running in an interactive environment (like a REPL, IPython notebook, etc.)
     13→    versus a normal script execution.
     14→
-    15→    Interactive environments include:
       →…
     31→
     32→    def _create_dotenv_file(self, tmp_path):

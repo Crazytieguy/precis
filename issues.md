@@ -2,7 +2,6 @@
 
 ## Remaining work
 
-- **Migrate YAML/TOML to tree-sitter** — these formats currently use text-based heuristics to extract top-level structure. Tree-sitter grammars exist for both (`tree-sitter-yaml`, `tree-sitter-toml`) and would give more accurate and robust extraction (nested keys, multi-line values, inline tables/arrays). JSON was migrated to tree-sitter already.
 - **Per-group stage value tuning** — the initial stage values (1.0, 0.7, 0.6, etc.) are starting points. Review snapshots across languages and tune per-kind values for better output quality.
 ## Implementation notes
 

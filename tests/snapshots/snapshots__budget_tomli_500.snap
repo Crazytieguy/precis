@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (486 words)
+budget: 500 (487 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -127,15 +127,13 @@ src/tomli/_types.py
      5→from typing import Any, Callable, Tuple
 tests/__init__.py
      1→# SPDX-License-Identifier: MIT
+     2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
       →…
      5→__all__ = ("tomllib",)
 tests/burntsushi.py
 tests/data/invalid/keys-and-vals/overwrite-with-deep-table.toml
      2→[a.b.c.d …
-tests/data/invalid/missing-closing-double-square-bracket.toml
-     1→[[closing-bracket.missing …
 tests/data/valid/_external/toml-test/valid/bool/bool.json
-tests/data/valid/_external/toml-test/valid/comment/tricky.toml
 tests/data/valid/array/array-subtables.json
 tests/data/valid/array/open-parent-table.json
 tests/test_data.py

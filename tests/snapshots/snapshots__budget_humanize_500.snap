@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (482 words)
+budget: 500 (484 words)
 
 README.md
      1→# humanize
@@ -25,7 +25,6 @@ README.md
     28→- Greek
     29→- Hebrew
     30→- Indonesian
-    31→- Italian
       →…
     49→## API reference
     51→[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
@@ -33,37 +32,20 @@ README.md
     53→<!-- usage-start -->
     54→
     55→## Installation
-    57→### From PyPI
-    59→```bash
-      →…
-    63→### From source
-    65→```bash
-      →…
+    57→### From PyPI …
+    63→### From source …
     71→## Usage
-    73→### Integer humanization
-    75→```pycon
-      →…
-    89→### Date & time humanization
-    91→```pycon
-      →…
-   110→### Precise time delta
-   112→```pycon
-      →…
+    73→### Integer humanization …
+    89→### Date & time humanization …
+   110→### Precise time delta …
    124→#### Smaller units
    126→If seconds are too large, set `minimum_unit` to milliseconds or microseconds:
    127→
    128→```pycon
-   129→>>> import humanize
       →…
-   154→### File size humanization
-   156→```pycon
-      →…
-   166→### Human-readable floating point numbers
-   168→```pycon
-      →…
-   182→### Scientific notation
-   184→```pycon
-      →…
+   154→### File size humanization …
+   166→### Human-readable floating point numbers …
+   182→### Scientific notation …
    200→## Localization
    202→How to change locale at runtime:
    203→
@@ -84,15 +66,25 @@ README.md
 RELEASING.md
      1→# Release checklist …
 mkdocs.yml
-     1→site_name …
-     2→site_url …
-     3→repo_url …
-     4→theme …
-    18→nav …
-    26→plugins …
-    31→markdown_extensions …
-    37→extra_css …
-    40→watch …
+     1→site_name: humanize
+     2→site_url: https://humanize.readthedocs.io
+     3→repo_url: https://github.com/python-humanize/humanize
+     4→theme:
+    16→        name: Switch to light mode
+    17→
+    18→nav:
+    24→  - Internationalisation: i18n.md
+    25→
+    26→plugins:
+    29→  - include-markdown
+    30→
+    31→markdown_extensions:
+    35→  - pymdownx.superfences
+    36→
+    37→extra_css:
+    38→  - css/code_select.css
+    39→
+    40→watch:
 pyproject.toml
      1→[build-system …
      8→[project …
@@ -165,7 +157,6 @@ src/humanize/time.py
    311→def naturalday …
    343→def naturaldate …
    451→def precisedelta …
-tests/test_filesize.py
 tests/test_i18n.py
     17→@freeze_time("2020-02-02")
     18→def test_i18n() -> None:
@@ -175,8 +166,6 @@ tests/test_i18n.py
    250→    def test_en_locale(self) -> None:
    262→    @freeze_time("2020-02-02")
    263→    def test_none_locale(self) -> None:
-tests/test_lists.py
-tests/test_number.py
 tests/test_time.py
     16→# In seconds
     17→ONE_MICROSECOND = 1 / 1000000

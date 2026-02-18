@@ -60,4 +60,4 @@ Line numbers use a right-aligned format with an arrow separator (e.g. `    12→
 - **TOML** (`.toml`) — section headers (`[section]`, `[[array]]`)
 - **YAML** (`.yaml`, `.yml`) — top-level keys as sections (lockfiles excluded)
 
-Code languages and JSON use tree-sitter grammars with query files defining which node types count as symbols, how to extract signatures, and what signals "public". Config file formats (TOML, YAML) use text-based heuristics to extract top-level structure as sections.
+All languages use tree-sitter grammars with query files defining which node types count as symbols, how to extract signatures, and what signals "public".

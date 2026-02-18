@@ -24,6 +24,8 @@ README.md
     36→Older versions are [TOML v1.0.0](https://toml.io/en/v1.0.0) compatible.
     37→
     38→A version of Tomli, the `tomllib` module,
+    39→was added to the standard library in Python 3.11
+    40→via [PEP 680](https://www.python.org/dev/peps/pep-0680/).
       →…
     50→## Installation<a name="installation"></a>
     52→```bash
@@ -205,10 +207,7 @@ tests/__init__.py
      9→import tomli as tomllib
 tests/burntsushi.py
 tests/data/invalid/_external/toml-test/invalid/key/no-eol-04.toml
-     1→[[0000l0 …
 tests/data/invalid/_external/toml-test/invalid/key/start-bracket.toml
-     1→[a …
-     3→[b …
 tests/data/invalid/array-of-tables/overwrite-array-in-parent.toml
      1→[[parent-table.arr …
      2→[parent-table …
@@ -216,17 +215,14 @@ tests/data/invalid/array-of-tables/overwrite-bool-with-aot.toml
      2→[[a …
 tests/data/invalid/keys-and-vals/overwrite-with-deep-table.toml
      2→[a.b.c.d …
-tests/data/invalid/missing-closing-double-square-bracket.toml
-     1→[[closing-bracket.missing …
 tests/data/invalid/table/redefine-1.toml
 tests/data/invalid/table/redefine-2.toml
 tests/data/valid/_external/toml-test/valid/bool/bool.json
      2→    "f": {"type": "bool", "value": "false"},
      3→    "t": {"type": "bool", "value": "true"}
      4→}
+tests/data/valid/_external/toml-test/valid/comment/everywhere.toml
 tests/data/valid/_external/toml-test/valid/comment/tricky.toml
-    18→["hash#tag" …
-    27→["#"]]]]# …
 tests/data/valid/_external/toml-test/valid/inline-table/key-dotted-03.toml
 tests/data/valid/_external/toml-test/valid/inline-table/key-dotted-04.toml
 tests/data/valid/array/array-subtables.json

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (512 words)
+budget: 500 (514 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -15,26 +15,31 @@ budget: 500 (512 words)
 .github/ISSUE_TEMPLATE/config.yml
      3→blank_issues_enabled …
 .github/actions/create-check/action.yml
-     3→name …
-     4→inputs …
-    13→outputs …
-    16→runs …
+     3→name: 'Create Check'
+     4→inputs:
+    12→    default: ''
+    13→outputs:
+    15→    value: ${{ steps.create-check.outputs.check_id }}
+    16→runs:
 .github/actions/install-latest-npm/action.yml
-     3→name …
-     4→description …
-     5→inputs …
-     9→runs …
+     3→name: 'Install Latest npm'
+     4→description: 'Install the latest version of npm compatible with the Node version'
+     5→inputs:
+     8→    required: true
+     9→runs:
 .github/dependabot.yml
-     3→version …
-     5→updates …
+     3→version: 2
+     5→updates:
 .github/matchers/tap.json
      2→  "//@npmcli/template-oss": "This file is automatically added by @npmcli/template-oss. Do not edit.",
      3→  "problemMatcher": [
     31→  ]
     32→}
 .github/settings.yml
-     3→repository …
-    13→branches …
+     3→repository:
+    11→  enable_vulnerability_alerts: true
+    12→
+    13→branches:
 .github/workflows/audit.yml
      3→name …
      5→on …
@@ -119,12 +124,6 @@ README.md
     35→
     36→//  Read INI file as text
     37→
-    38→let text = await readFile(`./Original.ini`,{
-    39→    encoding : 'utf-8'
-    40→})
-    41→
-    42→//  Parse text data to object
-    43→
       →…
     82→## API
     84→### Parse

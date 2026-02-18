@@ -2,12 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3991 words)
+budget: 4000 (3978 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
      8→  .filter((file) => file.startsWith('.eslintrc.local.'))
-      →…
+     9→  .map((file) => `./${file}`)
 .github/ISSUE_TEMPLATE/bug.yml
      3→name …
      4→description …
@@ -17,66 +17,101 @@ budget: 4000 (3991 words)
 .github/ISSUE_TEMPLATE/config.yml
      3→blank_issues_enabled …
 .github/actions/create-check/action.yml
-     3→name …
-     4→inputs …
-    13→outputs …
-    16→runs …
+     3→name: 'Create Check'
+     4→inputs:
+    12→    default: ''
+    13→outputs:
+    15→    value: ${{ steps.create-check.outputs.check_id }}
+    16→runs:
 .github/actions/install-latest-npm/action.yml
-     3→name …
-     4→description …
-     5→inputs …
-     9→runs …
+     3→name: 'Install Latest npm'
+     4→description: 'Install the latest version of npm compatible with the Node version'
+     5→inputs:
+     8→    required: true
+     9→runs:
 .github/dependabot.yml
-     3→version …
-     5→updates …
+     3→version: 2
+     5→updates:
 .github/matchers/tap.json
      2→  "//@npmcli/template-oss": "This file is automatically added by @npmcli/template-oss. Do not edit.",
      3→  "problemMatcher": [
     31→  ]
     32→}
 .github/settings.yml
-     3→repository …
-    13→branches …
+     3→repository:
+    11→  enable_vulnerability_alerts: true
+    12→
+    13→branches:
 .github/workflows/audit.yml
-     3→name …
-     5→on …
-    11→permissions …
-    14→jobs …
+     3→name: Audit
+     5→on:
+     9→    - cron: "0 8 * * 1"
+    10→
+    11→permissions:
+    12→  contents: read
+    13→
+    14→jobs:
 .github/workflows/ci-release.yml
-     3→name …
-     5→on …
-    21→permissions …
-    25→jobs …
+     3→name: CI - Release
+     5→on:
+    19→        type: string
+    20→
+    21→permissions:
+    23→  checks: write
+    24→
+    25→jobs:
 .github/workflows/ci.yml
-     3→name …
-     5→on …
-    16→permissions …
-    19→jobs …
+     3→name: CI
+     5→on:
+    14→    - cron: "0 9 * * 1"
+    15→
+    16→permissions:
+    17→  contents: read
+    18→
+    19→jobs:
 .github/workflows/codeql-analysis.yml
-     3→name …
-     5→on …
-    18→permissions …
-    21→jobs …
+     3→name: CodeQL
+     5→on:
+    16→    - cron: "0 10 * * 1"
+    17→
+    18→permissions:
+    19→  contents: read
+    20→
+    21→jobs:
 .github/workflows/post-dependabot.yml
-     3→name …
-     5→on …
-     7→permissions …
-    10→jobs …
+     3→name: Post Dependabot
+     5→on: pull_request
+     7→permissions:
+     8→  contents: write
+     9→
+    10→jobs:
 .github/workflows/pull-request.yml
-     3→name …
-     5→on …
-    13→permissions …
-    16→jobs …
+     3→name: Pull Request
+     5→on:
+    11→      - synchronize
+    12→
+    13→permissions:
+    14→  contents: read
+    15→
+    16→jobs:
 .github/workflows/release-integration.yml
-     3→name …
-     5→on …
-    22→permissions …
-    26→jobs …
+     3→name: Release Integration
+     5→on:
+    20→        required: true
+    21→
+    22→permissions:
+    24→  id-token: write
+    25→
+    26→jobs:
 .github/workflows/release.yml
-     3→name …
-     5→on …
-    11→permissions …
-    16→jobs …
+     3→name: Release
+     5→on:
+     9→      - release/v*
+    10→
+    11→permissions:
+    14→  checks: write
+    15→
+    16→jobs:
 .release-please-manifest.json
      2→  ".": "7.7.4"
      3→}
@@ -272,7 +307,6 @@ README.md
    186→If a version has a prerelease tag (for example, `1.2.3-alpha.3`) then
    187→it will only be allowed to satisfy comparator sets if at least one
    188→comparator with the same `[major, minor, patch]` tuple also has a
-   189→prerelease tag.
       →…
    219→#### Prerelease Identifiers
    221→The method `.inc` takes an additional `identifier` string argument that
@@ -290,7 +324,6 @@ README.md
    281→Advanced range syntax desugars to primitive comparators in
    282→deterministic ways.
    283→
-   284→Advanced ranges may be combined in the same way as primitive
       →…
    287→#### Hyphen Ranges `X.Y.Z - A.B.C`
    289→Specifies an inclusive set.
@@ -320,7 +353,6 @@ README.md
    386→Putting all this together, here is a Backus-Naur grammar for ranges,
    387→for the benefit of parser authors:
    388→
-   389→```bnf
       →…
    408→## Functions
    410→All methods and classes take a final `options` object argument.  All
@@ -370,13 +402,11 @@ README.md
    455→* `gt(v1, v2)`: `v1 > v2`
    456→* `gte(v1, v2)`: `v1 >= v2`
    457→* `lt(v1, v2)`: `v1 < v2`
-   458→* `lte(v1, v2)`: `v1 <= v2`
       →…
    478→### Sorting
    480→* `sort(versions)`: Returns a sorted array of versions based on the `compareBuild` 
    481→  function.
    482→* `rsort(versions)`: The reverse of `sort`. Returns an array of versions based on
-   483→  the `compareBuild` function in descending order.
       →…
    485→### Comparators
    487→* `intersects(comparator)`: Return true if the comparators intersect
@@ -385,19 +415,16 @@ README.md
    491→* `validRange(range)`: Return the valid range or null if it's not valid.
    492→* `satisfies(version, range)`: Return true if the version satisfies the
    493→  range.
-   494→* `maxSatisfying(versions, range)`: Return the highest version in the list
       →…
    531→### Coercion
    533→* `coerce(version, options)`: Coerces a string to semver if possible
    534→
    535→This aims to provide a very forgiving translation of a non-semver string to
-   536→semver. It looks for the first digit in a string and consumes all
       →…
    558→### Clean
    560→* `clean(version)`: Clean a string to be a valid semver if possible
    561→
    562→This will return a cleaned and trimmed semver version. If the provided
-   563→version is not valid a null will be returned. This does not work for
       →…
    576→## Constants
    578→As a convenience, helper constants are exported to provide information about what `node-semver` supports:
@@ -406,13 +433,11 @@ README.md
    582→- major
    583→- premajor
    584→- minor
-   585→- preminor
       →…
    600→### `SEMVER_SPEC_VERSION`
    602→2.0.0
    603→
    604→```
-   605→const semver = require('semver');
       →…
    610→## Exported Modules
    613→TODO: Make sure that all of these items are documented (classes aren't,
@@ -735,18 +760,11 @@ internal/constants.js
      5→const SEMVER_SPEC_VERSION = '2.0.0'
      7→const MAX_LENGTH = 256
      8→const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER ||
-     9→/* istanbul ignore next */ 9007199254740991
     12→const MAX_SAFE_COMPONENT_LENGTH = 16
     16→const MAX_SAFE_BUILD_LENGTH = MAX_LENGTH - 6
     18→const RELEASE_TYPES = [
-    19→  'major',
-    20→  'premajor',
-      →…
 internal/debug.js
      3→const debug = (
-     4→  typeof process === 'object' &&
-     5→  process.env &&
-      →…
 internal/identifiers.js
      3→const numeric = /^[0-9]+$/
      4→const compareIdentifiers = (a, b) => {
@@ -826,9 +844,6 @@ internal/re.js
     16→const t = exports.t = {}
     19→const LETTERDASHNUMBER = '[a-zA-Z0-9-]'
     27→const safeRegexReplacements = [
-    28→  ['\\s', 1],
-    29→  ['\\d', MAX_LENGTH],
-      →…
     33→const makeSafeRegex = (value) => {
     34→  for (const [token, max] of safeRegexReplacements) {
     35→    value = value
@@ -932,6 +947,7 @@ test/bin/semver.js
     10→const run = args => new Promise((resolve, reject) => {
     11→  const c = spawn(process.execPath, [bin].concat(args))
     12→  c.on('error', reject)
+    13→  const out = []
       →…
 test/integration/whitespace.js
     12→const wsMedium = ' '.repeat(125)

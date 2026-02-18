@@ -11,8 +11,10 @@ CLAUDE.md
 SECURITY.md
      1→# Security …
 codecov.yml
-     1→coverage …
-     7→comment …
+     1→coverage:
+     5→    changes: true
+     6→
+     7→comment: off
 docs/conf.py
    106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
    107→    """Configure Sphinx's WarningHandler to handle (expected) missing include."""
@@ -21,7 +23,6 @@ docs/conf.py
       →…
    130→def setup(app: "sphinx.application.Sphinx") -> None:
    131→    configure_logging(app)
-docs/examples/eggsample/eggsample/__init__.py
 docs/examples/eggsample/eggsample/hookspecs.py
      7→@hookspec
      8→def eggsample_add_ingredients(ingredients: tuple):
@@ -93,7 +94,6 @@ src/pluggy/__init__.py
      4→    "PluginValidationError",
      5→    "HookCaller",
      6→    "HookCallError",
-     7→    "HookspecOpts",
       →…
 src/pluggy/_callers.py
     22→# Need to distinguish between old- and new-style hook wrappers.

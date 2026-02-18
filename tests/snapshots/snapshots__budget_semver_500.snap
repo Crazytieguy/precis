@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (517 words)
+budget: 500 (525 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -15,26 +15,31 @@ budget: 500 (517 words)
 .github/ISSUE_TEMPLATE/config.yml
      3→blank_issues_enabled …
 .github/actions/create-check/action.yml
-     3→name …
-     4→inputs …
-    13→outputs …
-    16→runs …
+     3→name: 'Create Check'
+     4→inputs:
+    12→    default: ''
+    13→outputs:
+    15→    value: ${{ steps.create-check.outputs.check_id }}
+    16→runs:
 .github/actions/install-latest-npm/action.yml
-     3→name …
-     4→description …
-     5→inputs …
-     9→runs …
+     3→name: 'Install Latest npm'
+     4→description: 'Install the latest version of npm compatible with the Node version'
+     5→inputs:
+     8→    required: true
+     9→runs:
 .github/dependabot.yml
-     3→version …
-     5→updates …
+     3→version: 2
+     5→updates:
 .github/matchers/tap.json
      2→  "//@npmcli/template-oss": "This file is automatically added by @npmcli/template-oss. Do not edit.",
      3→  "problemMatcher": [
     31→  ]
     32→}
 .github/settings.yml
-     3→repository …
-    13→branches …
+     3→repository:
+    11→  enable_vulnerability_alerts: true
+    12→
+    13→branches:
 .github/workflows/audit.yml
 .github/workflows/ci-release.yml
 .github/workflows/ci.yml
@@ -153,18 +158,9 @@ package.json
     53→  "templateOSS": {
     77→  }
     78→}
-ranges/gtr.js
-ranges/intersects.js
-ranges/ltr.js
-ranges/max-satisfying.js
-ranges/min-satisfying.js
-ranges/min-version.js
-ranges/outside.js
 ranges/subset.js
     73→const minimumVersionWithPreRelease = [new Comparator('>=0.0.0-0')]
     74→const minimumVersion = [new Comparator('>=0.0.0')]
-ranges/to-comparators.js
-ranges/valid.js
 release-please-config.json
      2→  "group-pull-request-title-pattern": "chore: release ${version}",
      3→  "pull-request-title-pattern": "chore: release${component} ${version}",
@@ -179,7 +175,7 @@ test/bin/semver.js
     10→const run …
 test/integration/whitespace.js
 test/internal/debug.js
-     3→const main = () => {
+     3→const main …
 test/map.js
 test/ranges/simplify.js
 test/ranges/subset.js

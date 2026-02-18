@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3957 words)
+budget: 4000 (3952 words)
 
 README.md
      1→# humanize
@@ -250,8 +250,7 @@ RELEASING.md
     19→- [ ] Check installation:
     20→
     21→```bash
-    22→pip3 uninstall -y humanize && pip3 install -U humanize && python3 -c "import humanize; print(humanize.__version__)"
-    23→```
+      →…
 docs/filesize.md
      1→# Filesize
      3→::: humanize.filesize
@@ -284,15 +283,25 @@ docs/time.md
      1→# Time
      3→::: humanize.time
 mkdocs.yml
-     1→site_name …
-     2→site_url …
-     3→repo_url …
-     4→theme …
-    18→nav …
-    26→plugins …
-    31→markdown_extensions …
-    37→extra_css …
-    40→watch …
+     1→site_name: humanize
+     2→site_url: https://humanize.readthedocs.io
+     3→repo_url: https://github.com/python-humanize/humanize
+     4→theme:
+    16→        name: Switch to light mode
+    17→
+    18→nav:
+    24→  - Internationalisation: i18n.md
+    25→
+    26→plugins:
+    29→  - include-markdown
+    30→
+    31→markdown_extensions:
+    35→  - pymdownx.superfences
+    36→
+    37→extra_css:
+    38→  - css/code_select.css
+    39→
+    40→watch:
 pyproject.toml
      1→[build-system …
      8→[project …
@@ -926,7 +935,7 @@ tests/test_i18n.py
     36→        humanize.i18n.deactivate()
     37→        assert humanize.naturaltime(three_seconds) == "3 seconds ago"
     38→        assert humanize.ordinal(5) == "5th"
-    39→        assert humanize.precisedelta(one_min_three_seconds) == "1 minute and 7 seconds"
+      →…
     42→def test_intcomma …
     72→def test_naturaldelta …
    149→def test_intword_i18n …

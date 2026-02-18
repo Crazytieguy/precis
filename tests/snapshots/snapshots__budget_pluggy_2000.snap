@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1958 words)
+budget: 2000 (1957 words)
 
 AGENTS.md
      1→# AGENTS.md …
@@ -21,8 +21,10 @@ SECURITY.md
      1→# Security
      3→Please report any security vulnerabilities at https://github.com/pytest-dev/pluggy/security.
 codecov.yml
-     1→coverage …
-     7→comment …
+     1→coverage:
+     5→    changes: true
+     6→
+     7→comment: off
 docs/conf.py
      1→from importlib import metadata
      2→from typing import TYPE_CHECKING
@@ -131,8 +133,6 @@ src/pluggy/__init__.py
      7→    "HookspecOpts",
      8→    "HookimplOpts",
      9→    "HookImpl",
-    10→    "HookRelay",
-    11→    "HookspecMarker",
       →…
     17→from ._hooks import HookCaller
     18→from ._hooks import HookImpl

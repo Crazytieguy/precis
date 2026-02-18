@@ -179,42 +179,48 @@ pub fn is_supported_extension(ext: &str) -> bool {
 /// the appropriate tree-sitter grammar (e.g. TSX vs TypeScript for `.tsx`).
 fn language_for_extension(ext: &str) -> Option<(Language, &'static str)> {
     let lang = Lang::from_extension(ext)?;
-    match (lang, ext) {
-        (Lang::Rust, _) => Some((
+    Some(match (lang, ext) {
+        (Lang::Rust, _) => (
             tree_sitter_rust::LANGUAGE.into(),
             include_str!("../queries/rust.scm"),
-        )),
-        (Lang::JsTs, "tsx" | "jsx") => Some((
+        ),
+        (Lang::JsTs, "tsx" | "jsx") => (
             tree_sitter_typescript::LANGUAGE_TSX.into(),
             include_str!("../queries/typescript.scm"),
-        )),
-        (Lang::JsTs, _) => Some((
+        ),
+        (Lang::JsTs, _) => (
             tree_sitter_typescript::LANGUAGE_TYPESCRIPT.into(),
             include_str!("../queries/typescript.scm"),
-        )),
-        (Lang::Go, _) => Some((
+        ),
+        (Lang::Go, _) => (
             tree_sitter_go::LANGUAGE.into(),
             include_str!("../queries/go.scm"),
-        )),
-        (Lang::C, _) => Some((
+        ),
+        (Lang::C, _) => (
             tree_sitter_c::LANGUAGE.into(),
             include_str!("../queries/c.scm"),
-        )),
-        (Lang::Python, _) => Some((
+        ),
+        (Lang::Python, _) => (
             tree_sitter_python::LANGUAGE.into(),
             include_str!("../queries/python.scm"),
-        )),
-        (Lang::Markdown, _) => Some((
+        ),
+        (Lang::Markdown, _) => (
             tree_sitter_md::LANGUAGE.into(),
             include_str!("../queries/markdown.scm"),
-        )),
-        (Lang::Json, _) => Some((
+        ),
+        (Lang::Json, _) => (
             tree_sitter_json::LANGUAGE.into(),
             include_str!("../queries/json.scm"),
-        )),
-        // Config file langs have no tree-sitter grammar; handled by extract_config_symbols
-        _ => None,
-    }
+        ),
+        (Lang::Toml, _) => (
+            tree_sitter_toml_ng::LANGUAGE.into(),
+            include_str!("../queries/toml.scm"),
+        ),
+        (Lang::Yaml, _) => (
+            tree_sitter_yaml::LANGUAGE.into(),
+            include_str!("../queries/yaml.scm"),
+        ),
+    })
 }
 
 /// Extract symbols from a source file.
@@ -228,11 +234,6 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
         Some(l) => l,
         None => return vec![],
     };
-
-    // Config files without tree-sitter grammars: text-based extraction
-    if matches!(lang, Lang::Toml | Lang::Yaml) {
-        return extract_config_symbols(source, lang);
-    }
 
     let (language, query_src) = match language_for_extension(ext) {
         Some(pair) => pair,
@@ -415,8 +416,9 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             // Python
             "function_definition" => SymbolKind::Function,
             "class_definition" => SymbolKind::Class,
-            // Markdown / JSON
-            "atx_heading" | "setext_heading" | "pair" => SymbolKind::Section,
+            // Markdown / JSON / TOML / YAML
+            "atx_heading" | "setext_heading" | "pair" | "table" | "table_array_element"
+            | "block_mapping_pair" => SymbolKind::Section,
             // Imports
             "use_declaration" => SymbolKind::Import,              // Rust
             "import_statement" => {
@@ -532,7 +534,7 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             match lang {
                 Lang::Go => name.starts_with(|c: char| c.is_ascii_uppercase()),
                 Lang::Python => !name.starts_with('_') || (name.starts_with("__") && name.ends_with("__")),
-                Lang::Markdown | Lang::Json => true,
+                Lang::Markdown | Lang::Json | Lang::Toml | Lang::Yaml => true,
                 // C: non-static symbols are public; underscore-prefixed names are conventionally private
                 Lang::C => !is_c_static(symbol_node, source) && !name.starts_with('_'),
                 _ => is_public_symbol(symbol_node, source),
@@ -567,111 +569,6 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
     }
 
     dedup_overloads(symbols, lang)
-}
-
-// ---------------------------------------------------------------------------
-// Config file extraction (JSON, TOML, YAML)
-// ---------------------------------------------------------------------------
-
-/// Extract symbols from config files using text-based heuristics.
-/// Config files don't have traditional code symbols — instead, top-level keys
-/// are extracted as Section symbols (analogous to markdown headings).
-fn extract_config_symbols(source: &str, lang: Lang) -> Vec<Symbol> {
-    match lang {
-        Lang::Toml => extract_toml_symbols(source),
-        Lang::Yaml => extract_yaml_symbols(source),
-        _ => vec![],
-    }
-}
-
-/// Extract section headers and top-level keys from TOML as Section symbols.
-/// `[section]` and `[[array]]` headers are extracted, plus top-level
-/// key-value pairs that appear before any section header.
-fn extract_toml_symbols(source: &str) -> Vec<Symbol> {
-    let lines: Vec<&str> = source.lines().collect();
-    let mut symbols = Vec::new();
-
-    for (i, line) in lines.iter().enumerate() {
-        let trimmed = line.trim();
-        // Section headers: [section] or [[array-of-tables]]
-        if (trimmed.starts_with('[') && trimmed.ends_with(']'))
-            || (trimmed.starts_with("[[") && trimmed.ends_with("]]"))
-        {
-            let name = trimmed
-                .trim_start_matches('[')
-                .trim_end_matches(']')
-                .trim()
-                .to_string();
-            if !name.is_empty() {
-                symbols.push(Symbol {
-                    kind: SymbolKind::Section,
-                    name,
-                    is_public: true,
-                    is_first_party: false,
-                    line: i + 1,
-                    end_line: i + 2, // placeholder, computed below
-                });
-            }
-        }
-    }
-
-    // Compute end_line for each section: spans until the next section header
-    for idx in 0..symbols.len() {
-        symbols[idx].end_line = if idx + 1 < symbols.len() {
-            symbols[idx + 1].line
-        } else {
-            lines.len() + 1
-        };
-    }
-
-    symbols
-}
-
-/// Extract top-level keys from YAML as Section symbols.
-/// Top-level keys are lines at indent 0 that contain `:` and aren't
-/// comments or document markers.
-fn extract_yaml_symbols(source: &str) -> Vec<Symbol> {
-    let lines: Vec<&str> = source.lines().collect();
-    let mut symbols = Vec::new();
-
-    for (i, line) in lines.iter().enumerate() {
-        // Skip blank lines, comments, document markers (---, ...)
-        let trimmed = line.trim();
-        if trimmed.is_empty()
-            || trimmed.starts_with('#')
-            || trimmed == "---"
-            || trimmed == "..."
-        {
-            continue;
-        }
-        // Top-level keys: no leading whitespace, contains ':'
-        if !line.starts_with(|c: char| c.is_whitespace())
-            && let Some(colon_pos) = line.find(':')
-        {
-            let key = line[..colon_pos].trim();
-            if !key.is_empty() && !key.starts_with('-') {
-                symbols.push(Symbol {
-                    kind: SymbolKind::Section,
-                    name: key.to_string(),
-                    is_public: true,
-                    is_first_party: false,
-                    line: i + 1,
-                    end_line: i + 2, // placeholder, computed below
-                });
-            }
-        }
-    }
-
-    // Compute end_line: each key spans until the next top-level key
-    for idx in 0..symbols.len() {
-        symbols[idx].end_line = if idx + 1 < symbols.len() {
-            symbols[idx + 1].line
-        } else {
-            lines.len() + 1
-        };
-    }
-
-    symbols
 }
 
 /// Collapse consecutive function symbols with the same name, keeping only the last in each run.
