@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1919 words)
+budget: 2000 (1918 words)
 
 Cargo.toml
      1→[package …
@@ -78,11 +78,6 @@ README.md
     68→  ```rust
     69→  #[derive(Error, Debug)]
     70→  pub enum Error {
-    71→      #[error("invalid rdo_lookahead_frames {0} (expected < {max})", max = i32::MAX)]
-    72→      InvalidLookahead(u32),
-    73→  }
-    74→  ```
-    75→
       →…
    211→## Comparison to anyhow
    213→Use thiserror if you care about designing your own dedicated error type(s) so
@@ -103,7 +98,6 @@ README.md
    230→<br>
    231→
    232→<sub>
-   233→Unless you explicitly state otherwise, any contribution intentionally submitted
       →…
 build/probe.rs
      8→use core::error::{Error, Request};
@@ -262,6 +256,14 @@ impl/src/fmt.rs
    176→        return Ok(set);
    177→    }
    178→
+   179→    let ahead = input.fork();
+   180→    if let Ok(set) = fallback_explicit_named_args(&ahead) {
+   181→        input.advance_to(&ahead);
+   182→        return Ok(set);
+   183→    }
+   184→
+   185→    input.parse::<TokenStream>().unwrap();
+   186→    Ok(FmtArguments {
       →…
 impl/src/generics.rs
      8→pub struct ParamsInScope<'a> {

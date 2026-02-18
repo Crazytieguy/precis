@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1962 words)
+budget: 2000 (1955 words)
 
 README.md
      1→# humanize
@@ -243,15 +243,7 @@ RELEASING.md
     12→
     13→- [ ] Publish release
     14→
-    15→- [ ] Check the tagged
-    16→      [GitHub Actions build](https://github.com/python-humanize/humanize/actions/workflows/release.yml)
-    17→      has released to [PyPI](https://pypi.org/project/humanize/#history)
-    18→
-    19→- [ ] Check installation:
-    20→
-    21→```bash
-    22→pip3 uninstall -y humanize && pip3 install -U humanize && python3 -c "import humanize; print(humanize.__version__)"
-    23→```
+      →…
 docs/filesize.md
      1→# Filesize
      3→::: humanize.filesize
@@ -548,13 +540,19 @@ src/humanize/time.py
       →…
    654→def _rounding_by_fmt(format: str, value: float) -> float | int:
 tests/test_filesize.py
+     6→import pytest
+     8→import humanize
 tests/test_i18n.py
+     5→import datetime as dt
+     6→import importlib
+     8→import pytest
+     9→from freezegun import freeze_time
+    11→import humanize
     17→@freeze_time("2020-02-02")
     18→def test_i18n() -> None:
     19→    three_seconds = NOW - dt.timedelta(seconds=3)
     20→    one_min_three_seconds = dt.timedelta(milliseconds=67_000)
     21→
-    22→    assert humanize.naturaltime(three_seconds) == "3 seconds ago"
       →…
    225→class TestActivate:
    226→    expected_msg = (
@@ -567,18 +565,29 @@ tests/test_i18n.py
    251→        three_seconds = NOW - dt.timedelta(seconds=3)
    252→        test_str = humanize.naturaltime(three_seconds)
    253→
-   254→        humanize.i18n.activate("en_US")
       →…
    262→    @freeze_time("2020-02-02")
    263→    def test_none_locale(self) -> None:
    264→        three_seconds = NOW - dt.timedelta(seconds=3)
    265→
    266→        try:
-   267→            humanize.i18n.activate("fr")
       →…
 tests/test_lists.py
+     3→import pytest
+     5→import humanize
 tests/test_number.py
+     5→import math
+     6→import typing
+     8→import pytest
+    10→import humanize
+    11→from humanize import number
 tests/test_time.py
+     5→import datetime as dt
+     6→import typing
+     8→import pytest
+     9→from freezegun import freeze_time
+    11→import humanize
+    12→from humanize import time
     14→ONE_DAY_DELTA = dt.timedelta(days=1)
     16→# In seconds
     17→ONE_MICROSECOND = 1 / 1000000
@@ -599,5 +608,4 @@ tests/test_time.py
     62→    now = dt.datetime.now()
     63→    td = dt.timedelta
     64→    int_tests = (3, 29, 86399, 86400, 86401 * 30)
-    65→    date_tests = [now - td(seconds=x) for x in int_tests]
       →…

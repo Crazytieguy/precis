@@ -19,22 +19,16 @@ README.md
     23→-   [Install](#install)
     24→-   [Usage](#usage)
     25→-   [Examples & Demos](#examples--demos)
-    26→-   [API](#api)
-    27→-   [Contribute](#contribute)
       →…
     30→## Install
     32→This project uses [node](http://nodejs.org) and [npm](https://npmjs.com). Go check them out if you don't have them locally installed.
     33→
     34→```sh
-    35→$ npm install --save mitt
-    36→```
       →…
     56→## Usage
     58→```js
     59→import mitt from 'mitt'
     60→
-    61→const emitter = mitt()
-    62→
       →…
     81→### Typescript …
    113→## Examples & Demos
@@ -128,11 +122,17 @@ src/index.ts
     57→		 */
     58→		all,
     59→
+    60→		/**
       →…
 test/index_test.ts
 test/test-types-compilation.ts
      5→interface SomeEventData {
+     6→	name: string;
+     7→}
      9→const emitter = mitt<{
+    15→const barHandler …
+    16→const fooHandler …
+    17→const wildcardHandler …
 tsconfig.json
      2→	"compileOnSave": false,
      3→	"compilerOptions": {

@@ -24,10 +24,6 @@ README.md
     27→- German
     28→- Greek
     29→- Hebrew
-    30→- Indonesian
-    31→- Italian
-    32→- Japanese
-    33→- Klingon
       →…
     49→## API reference
     51→[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
@@ -69,7 +65,6 @@ README.md
    126→If seconds are too large, set `minimum_unit` to milliseconds or microseconds:
    127→
    128→```pycon
-   129→>>> import humanize
       →…
    154→### File size humanization
    156→```pycon
@@ -92,10 +87,6 @@ README.md
    210→>>> humanize.naturaltime(dt.timedelta(seconds=3))
    211→'3 секунды назад'
    212→>>> humanize.i18n.deactivate()
-   213→>>> humanize.naturaltime(dt.timedelta(seconds=3))
-   214→'3 seconds ago'
-   215→```
-   216→
       →…
 RELEASING.md
      1→# Release checklist …
@@ -188,13 +179,19 @@ src/humanize/time.py
     39→    YEARS = 7
     40→
 tests/test_i18n.py
+    17→@freeze_time("2020-02-02")
     18→def test_i18n() -> None:
    225→class TestActivate:
    226→    expected_msg = (
+   249→    @freeze_time("2020-02-02")
    250→    def test_en_locale(self) -> None:
+   262→    @freeze_time("2020-02-02")
    263→    def test_none_locale(self) -> None:
 tests/test_time.py
     16→# In seconds
     17→ONE_MICROSECOND = 1 / 1000000
     37→class FakeDate:
+    58→# These are not considered "public" interfaces, but require tests anyway.
+    59→
+    60→
     61→def test_date_and_delta() -> None:

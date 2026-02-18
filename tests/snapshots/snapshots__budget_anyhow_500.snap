@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (477 words)
+budget: 500 (478 words)
 
 Cargo.toml
      1→[package …
@@ -16,15 +16,7 @@ README.md
    126→## No-std support …
    144→## Comparison to failure …
    155→## Comparison to thiserror …
-   166→#### License
-   169→Licensed under either of <a href="LICENSE-APACHE">Apache License, Version
-   170→2.0</a> or <a href="LICENSE-MIT">MIT license</a> at your option.
-   171→</sup>
-   172→
-   173→<br>
-   174→
-   175→<sub>
-      →…
+   166→#### License …
 build.rs
      3→use std::env;
 rust-toolchain.toml
@@ -148,13 +140,17 @@ tests/drop/mod.rs
     28→}
 tests/test_autotrait.rs
 tests/test_boxed.rs
-tests/test_chain.rs
 tests/test_context.rs
-    22→macro_rules! context_type {
 tests/test_ensure.rs
     43→    type Output = bool;
     78→fn assert_err …
 tests/test_ffi.rs
+     6→#[no_mangle]
+     7→pub extern "C" fn anyhow1(err: anyhow::Error) {
+    11→#[no_mangle]
+    12→pub extern "C" fn anyhow2(err: &mut Option<anyhow::Error>) {
+    16→#[no_mangle]
+    17→pub extern "C" fn anyhow3() -> Option<anyhow::Error> {
 tests/test_fmt.rs
 tests/test_source.rs
 tests/ui/ensure-nonbool.rs

@@ -151,13 +151,9 @@ README.md
       →…
    219→#### Prerelease Identifiers
    221→The method `.inc` takes an additional `identifier` string argument that
-   222→will append the value of the string as a prerelease identifier:
-   223→
       →…
    250→#### Prerelease Identifier Base
    252→The method `.inc` takes an optional parameter 'identifierBase' string
-   253→that will let you let your prerelease number as zero-based or one-based.
-   254→Set to `false` to omit the prerelease number altogether.
       →…
    279→### Advanced Range Syntax
    281→Advanced range syntax desugars to primitive comparators in
@@ -165,23 +161,15 @@ README.md
       →…
    287→#### Hyphen Ranges `X.Y.Z - A.B.C`
    289→Specifies an inclusive set.
-   290→
-   291→* `1.2.3 - 2.3.4` := `>=1.2.3 <=2.3.4`
       →…
    306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*`
    308→Any of `X`, `x`, or `*` may be used to "stand in" for one of the
-   309→numeric values in the `[major, minor, patch]` tuple.
-   310→
       →…
    324→#### Tilde Ranges `~1.2.3` `~1.2` `~1`
    326→Allows patch-level changes if a minor version is specified on the
-   327→comparator.  Allows minor-level changes if not.
-   328→
       →…
    341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4`
    343→Allows changes that do not modify the left-most non-zero element in the
-   344→`[major, minor, patch]` tuple.  In other words, this allows patch and
-   345→minor updates for versions `1.0.0` and above, patch updates for
       →…
    384→### Range Grammar
    386→Putting all this together, here is a Backus-Naur grammar for ranges,
@@ -388,6 +376,11 @@ internal/debug.js
 internal/identifiers.js
      3→const numeric = /^[0-9]+$/
      4→const compareIdentifiers = (a, b) => {
+     5→  if (typeof a === 'number' && typeof b === 'number') {
+     6→    return a === b ? 0 : a < b ? -1 : 1
+     7→  }
+     8→
+      →…
     24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
 internal/lrucache.js
      3→class LRUCache {
@@ -428,6 +421,11 @@ internal/parse-options.js
      4→const looseOption = Object.freeze({ loose: true })
      5→const emptyOpts = Object.freeze({ })
      6→const parseOptions = options => {
+     7→  if (!options) {
+     8→    return emptyOpts
+     9→  }
+    10→
+      →…
 internal/re.js
     12→const re = exports.re = []
     13→const safeRe = exports.safeRe = []
@@ -437,7 +435,17 @@ internal/re.js
     19→const LETTERDASHNUMBER = '[a-zA-Z0-9-]'
     27→const safeRegexReplacements = [
     33→const makeSafeRegex = (value) => {
+    34→  for (const [token, max] of safeRegexReplacements) {
+    35→    value = value
+    36→      .split(`${token}*`).join(`${token}{0,${max}}`)
+    37→      .split(`${token}+`).join(`${token}{1,${max}}`)
+      →…
     42→const createToken = (name, value, isGlobal) => {
+    43→  const safe = makeSafeRegex(value)
+    44→  const index = R++
+    45→  debug(name, index, value)
+    46→  t[name] = index
+      →…
 package.json
      2→  "name": "semver",
      3→  "version": "7.7.4",

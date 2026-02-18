@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1960 words)
+budget: 2000 (1961 words)
 
 package.json
      2→	"name": "ky",
@@ -46,8 +46,7 @@ readme.md
     28→- URL prefix option
     29→- Instances with custom defaults
     30→- Hooks
-    31→- TypeScript niceties (e.g. `.json()` supports generics and defaults to `unknown`, not `any`)
-    32→
+      →…
     33→## Install
     35→```sh
     36→npm install ky
@@ -68,29 +67,6 @@ readme.md
     53→//=> {data: '🦄'}
     54→```
     55→
-    56→With plain `fetch`, it would be:
-    57→
-    58→```js
-    59→class HTTPError extends Error {}
-    60→
-    61→const response = await fetch('https://example.com', {
-    62→	method: 'POST',
-    63→	body: JSON.stringify({foo: true}),
-    64→	headers: {
-    65→		'content-type': 'application/json'
-    66→	}
-    67→});
-    68→
-    69→if (!response.ok) {
-    70→	throw new HTTPError(`Fetch error: ${response.statusText}`);
-    71→}
-    72→
-    73→const json = await response.json();
-    74→
-    75→console.log(json);
-    76→//=> {data: '🦄'}
-    77→```
-    78→
       →…
     85→## API
     87→### ky(input, options?)
@@ -261,6 +237,17 @@ source/core/constants.ts
    181→						});
    182→					}
    183→
+   184→					// Retry with a modified request (e.g., fallback endpoint)
+   185→					if (data.error?.code === 'FALLBACK_TO_BACKUP') {
+   186→						return ky.retry({
+   187→							request: new Request('https://backup-api.com/endpoint', {
+   188→								method: request.method,
+   189→								headers: request.headers,
+   190→							}),
+   191→							code: 'BACKUP_ENDPOINT'
+   192→						});
+   193→					}
+   194→
       →…
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
    237→export const kyOptionKeys: KyOptionsRegistry = {
@@ -339,6 +326,8 @@ source/types/options.ts
     32→
     33→export type KyOptions = {
     34→	/**
+    35→	Shortcut for sending JSON. Use this instead of the `body` option.
+    36→
       →…
    302→/**
    303→Each key from KyOptions is present and set to `true`.
@@ -432,11 +421,11 @@ source/utils/merge.ts
     86→export const deepMerge …
 source/utils/normalize.ts
      5→export const normalizeRequestMethod …
-     8→const retryMethods …
-    10→const retryStatusCodes …
-    12→const retryAfterStatusCodes …
-    14→type InternalRetryOptions …
-    16→const defaultRetryOptions …
+     8→const retryMethods: HttpMethod[] = ['get', 'put', 'head', 'delete', 'options', 'trace'];
+    10→const retryStatusCodes = [408, 413, 429, 500, 502, 503, 504];
+    12→const retryAfterStatusCodes = [413, 429, 503];
+    14→type InternalRetryOptions = Required<Omit<RetryOptions, 'shouldRetry'>> & Pick<RetryOptions, 'shouldRetry'>;
+    16→const defaultRetryOptions: InternalRetryOptions = {
     28→export const normalizeRetryOptions …
 source/utils/options.ts
      4→export const findUnknownOptions …
@@ -494,7 +483,6 @@ test/browser.ts
     13→	interface Window {
     14→		ky: typeof ky;
     15→	}
-test/headers.ts
 test/helpers/create-http-test-server.ts
      7→export type HttpServerOptions = {
     11→export type ExtendedHttpTestServer = {
@@ -502,8 +490,6 @@ test/helpers/create-large-file.ts
 test/helpers/parse-body.ts
 test/helpers/with-page.ts
 test/helpers/with-performance.ts
-test/hooks.ts
-test/http-error.ts
 tsconfig.dist.json
      2→	"extends": "./tsconfig",
      3→	"compilerOptions": {

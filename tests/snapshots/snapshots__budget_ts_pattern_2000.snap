@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1997 words)
+budget: 2000 (1996 words)
 
 README.md
     40→## About …
@@ -32,9 +32,6 @@ README.md
    111→    - [`P.set`](#pset-patterns)
    112→    - [`P.map`](#pmap-patterns)
    113→    - [`P.when` patterns](#pwhen-patterns)
-   114→    - [`P.not` patterns](#pnot-patterns)
-   115→    - [`P.select` patterns](#pselect-patterns)
-   116→    - [`P.optional` patterns](#poptional-patterns)
       →…
    128→## Sandbox examples …
    139→## Getting Started …
@@ -56,15 +53,7 @@ README.md
    864→const input = 'hello';
    865→
    866→const output = match(input)
-   867→  .with(P._, () => 'It will always match')
-   868→  // OR
-   869→  .with(P.any, () => 'It will always match')
-   870→  .otherwise(() => 'This string will never be used');
-   871→
-   872→console.log(output);
-   873→// => 'It will always match'
-   874→```
-   875→
+      →…
   1405→## `P.string` predicates …
   1500→## `P.number` and `P.bigint` predicates …
   1621→## Types …
@@ -88,14 +77,14 @@ README.md
   1641→type Post = P.infer<typeof postPattern>;
   1642→
   1643→// posts: Post[]
-  1644→const posts = await fetch(someUrl)
-  1645→  .then((res) => res.json())
       →…
   1766→## Inspirations …
 benchmarks/always-last-digit.ts
+     4→type Digit …
 benchmarks/nested-objects.ts
 benchmarks/package.json
 benchmarks/random-digit.ts
+     4→type Digit …
 docs/roadmap.md
 docs/v3-to-v4-migration-guide.md
      1→# TS-Pattern v3 to v4 Migration Guide
@@ -217,6 +206,8 @@ src/internals/helpers.ts
     16→export const isMatcher = (
     17→  x: unknown
     18→): x is Matcher<unknown, unknown, MatcherType, SelectionType> => {
+    19→  const pattern = x as Matcher<unknown, unknown, MatcherType, SelectionType>;
+      →…
     24→const isOptionalPattern = (
     25→  x: unknown
     26→): x is Matcher<unknown, unknown, 'optional', SelectionType> => {
@@ -227,7 +218,11 @@ src/internals/helpers.ts
     34→  value: any,
     35→  select: (key: string, value: unknown) => void
     36→): boolean => {
+    37→  if (isMatcher(pattern)) {
+      →…
    120→export const getSelectionKeys = (pattern: any): string[] => {
+   121→  if (isObject(pattern)) {
+      →…
    132→export const flatMap = <a, b>(
    133→  xs: readonly a[],
    134→  f: (v: a) => readonly b[]
@@ -271,6 +266,8 @@ src/is-matching.ts
     15→  : P.Pattern<T>;
     53→export function isMatching …
 src/match.ts
+     7→type MatchState …
+    11→const unmatched …
     16→/**
       →…
     32→export function match<const input, output = symbols.unset>(
@@ -321,6 +318,13 @@ src/patterns.ts
    190→    ? UnknownValuePattern
    191→    : Pattern<input>
    192→>(pattern: pattern): Chainable<OptionalP<input, pattern>, 'optional'> {
+   217→type UnwrapArray …
+   219→type UnwrapSet …
+   221→type UnwrapMapKey …
+   223→type UnwrapMapValue …
+   225→type UnwrapRecordKey …
+   227→type UnwrapRecordValue …
+   229→type WithDefault …
    246→export function array …
    299→export function set …
    362→export function map …
@@ -345,6 +349,7 @@ src/patterns.ts
    614→>(pattern: pattern): Chainable<NotP<input, pattern>> {
    646→export function when …
    696→export function select …
+   766→type AnyConstructor …
    773→/**
       →…
    782→export const any: UnknownPattern = chainable(when(isUnknown));

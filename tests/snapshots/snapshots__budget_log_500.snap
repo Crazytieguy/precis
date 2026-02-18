@@ -2,8 +2,9 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (468 words)
+budget: 500 (469 words)
 
+CHANGELOG.md
 Cargo.toml
      1→[package …
     19→[package.metadata.docs.rs …
@@ -14,17 +15,7 @@ README.md
      1→log …
     19→## Minimum supported `rustc` …
     25→## Usage …
-    27→### In libraries
-    29→Libraries should link only to the `log` crate, and use the provided macros to
-    30→log whatever information will be useful to downstream consumers:
-    31→
-    32→```toml
-    33→[dependencies]
-    34→log = "0.4"
-    35→```
-    36→
-    37→```rust
-      →…
+    27→### In libraries …
     58→### In executables …
    106→## Structured logging …
 rfcs/0296-structured-logging.md
@@ -46,10 +37,15 @@ src/kv/error.rs
      5→pub struct Error {
      6→    inner: Inner,
      7→}
+     9→#[derive(Debug)]
     10→enum Inner {
     11→    #[cfg(feature = "std")]
     12→    Boxed(std_support::BoxedError),
-      →…
+    13→    Msg(&'static str),
+    14→    #[cfg(feature = "value-bag")]
+    15→    Value(crate::kv::value::inner::Error),
+    16→    Fmt,
+    17→}
     73→    pub(super) type BoxedError …
 src/kv/key.rs
      3→use std::borrow::Borrow;
@@ -81,6 +77,9 @@ src/kv/value.rs
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
    121→}
+   288→macro_rules! impl_to_value_primitive {
+   312→macro_rules! impl_to_value_nonzero_primitive {
+   336→macro_rules! impl_value_to_primitive {
    462→pub trait VisitValue<'v> {
    610→    use super::*;
    612→    pub use value_bag::ValueBag as Inner;
@@ -110,11 +109,16 @@ src/lib.rs
    409→#[cfg(feature = "kv")]
    410→pub mod kv;
    421→struct AtomicUsize {
+   422→    v: Cell<usize>,
+   423→}
    475→pub enum Level {
    516→    type Err = ParseLevelError;
    636→pub enum LevelFilter {
    666→    type Err = ParseLevelError;
    781→enum MaybeStaticStr<'a> {
+   782→    Static(&'static str),
+   783→    Borrowed(&'a str),
+   784→}
    788→    fn get …
    842→pub struct Record<'a> {
    858→struct KeyValues<'a>(&'a dyn kv::Source);

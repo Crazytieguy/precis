@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (981 words)
+budget: 1000 (986 words)
 
 README.md
      9→# Mitt
@@ -78,12 +78,6 @@ README.md
     84→
     85→```ts
     86→import mitt from 'mitt';
-    87→
-    88→type Events = {
-    89→  foo: string;
-    90→  bar?: number;
-    91→};
-    92→
       →…
    113→## Examples & Demos
    123→## API
@@ -125,7 +119,7 @@ README.md
    170→If present, `'*'` handlers are invoked after type-matched handlers.
    171→
    172→Note: Manually firing '\*' handlers is not supported.
-   173→
+      →…
    174→#### Parameters
    176→-   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol))** The event type to invoke
    177→-   `evt` **Any?** Any value (object is recommended and powerful), passed to each handler
@@ -143,12 +137,6 @@ README.md
    192→
    193→-   Fork it!
    194→-   Clone your fork: `git clone https://github.com/<your-username>/mitt`
-   195→-   Navigate to the newly cloned directory: `cd mitt`
-   196→-   Create a new branch for the new feature: `git checkout -b my-new-feature`
-   197→-   Install the tools necessary for development: `npm install`
-   198→-   Make your changes.
-   199→-   Commit your changes: `git commit -am 'Add some feature'`
-   200→-   Push to the branch: `git push origin my-new-feature`
       →…
    203→## License
    205→[MIT License](https://opensource.org/licenses/MIT) © [Jason Miller](https://jasonformat.com/)
@@ -226,6 +214,20 @@ src/index.ts
     59→
     60→		/**
     61→		 * Register an event handler for the given type.
+    62→		 * @param {string|symbol} type Type of event to listen for, or `'*'` for all events
+    63→		 * @param {Function} handler Function to call in response to given event
+    64→		 * @memberOf mitt
+    65→		 */
+    66→		on<Key extends keyof Events>(type: Key, handler: GenericEventHandler) {
+    67→			const handlers: Array<GenericEventHandler> | undefined = all!.get(type);
+    68→			if (handlers) {
+    69→				handlers.push(handler);
+    70→			} else {
+    71→				all!.set(type, [handler] as EventHandlerList<Events[keyof Events]>);
+    72→			}
+    73→		},
+    74→
+    75→		/**
       →…
 test/index_test.ts
 test/test-types-compilation.ts
@@ -235,8 +237,7 @@ test/test-types-compilation.ts
      9→const emitter = mitt<{
     10→	foo: string;
     11→	someEvent: SomeEventData;
-    12→	bar?: number;
-    13→}>();
+      →…
     15→const barHandler …
     16→const fooHandler …
     17→const wildcardHandler …

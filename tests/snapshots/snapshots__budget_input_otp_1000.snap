@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (976 words)
+budget: 1000 (973 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -25,16 +25,10 @@ README.md
    206→### OTPInput
    208→The root container. Define settings for the input via props. Then, use the `render` prop to create the slots.
    209→
-   210→#### Props
-   212→```ts
-   213→type OTPInputProps = {
-      →…
+   210→#### Props …
    293→## Examples …
    377→## Caveats …
-   539→#### Sponsors
-   541→> [Clerk](https://go.clerk.com/input-otp) is the easiest way to add authentication to your application.
-   542→
-      →…
+   539→#### Sponsors …
 apps/storybook/README.md
     13→## 🚅 Quick start …
     44→## 🔎 What's inside? …
@@ -75,7 +69,10 @@ apps/storybook/tailwind.config.js
      2→const config = {
 apps/storybook/tsconfig.json
 apps/storybook/tsconfig.node.json
+apps/storybook/vite.config.js
 apps/test/README.md
+apps/test/next.config.mjs
+apps/test/package.json
 apps/test/src/app/base/page.tsx
      7→export default function Page() {
 apps/test/src/app/layout.tsx
@@ -95,32 +92,16 @@ apps/test/src/lib/utils.ts
      4→export function cn(...inputs: ClassValue[]) {
 apps/test/src/tests/util/modifier.ts
      1→export const modifier …
+apps/test/tsconfig.json
 apps/website/README.md
      3→## Getting Started …
     23→## Learn More …
     32→## Deploy on Vercel …
 apps/website/components.json
-     2→  "$schema": "https://ui.shadcn.com/schema.json",
-     3→  "style": "default",
-     4→  "rsc": true,
-     5→  "tsx": true,
-     6→  "tailwind": {
-    12→  },
-    13→  "aliases": {
-    17→}
 apps/website/next.config.mjs
      4→const nextProdConfig = {}
      6→const nextDevConfig = withHydrationOverlay({
 apps/website/package.json
-     2→  "name": "website",
-     3→  "version": "0.1.0",
-     4→  "private": true,
-     5→  "scripts": {
-    10→  },
-    11→  "dependencies": {
-    36→  },
-    37→  "devDependencies": {
-    48→}
 apps/website/src/app/(local-pages)/example-auto-submit/page.tsx
      6→import { formAction } from './server/form-action'
      7→import { ExampleComponent } from '../example-playground/component'
@@ -130,6 +111,11 @@ apps/website/src/app/(local-pages)/example-auto-submit/page.tsx
       →…
 apps/website/src/app/(local-pages)/example-auto-submit/server/form-action.ts
      3→export async function formAction(formData: FormData) {
+     4→  const rawFormData = {
+     5→    otp: formData.get('otp'),
+     6→  }
+     7→
+      →…
 apps/website/src/app/(local-pages)/example-playground/code.tsx
     99→export function ExampleCode() {
 apps/website/src/app/(local-pages)/example-playground/component.tsx
@@ -243,12 +229,6 @@ apps/website/src/lib/utils.ts
 apps/website/tailwind.config.ts
      3→const config = {
 apps/website/tsconfig.json
-     2→  "compilerOptions": {
-    29→  },
-    30→  "include": [
-    36→  ],
-    37→  "exclude": [
-    40→}
 package.json
      2→  "name": "root",
      3→  "private": true,
@@ -268,9 +248,16 @@ package.json
 packages/input-otp/package.json
 packages/input-otp/src/input.tsx
      3→import * as React from 'react'
+     5→import { syncTimeouts } from './sync-timeouts'
+     6→import { OTPInputProps, RenderProps } from './types'
+     7→import { usePrevious } from './use-previous'
+     8→import { usePasswordManagerBadge } from './use-pwm-badge'
     10→export const OTPInputContext = React.createContext<RenderProps>(
     14→export const OTPInput = React.forwardRef<HTMLInputElement, OTPInputProps>(
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
+   541→  try {
+      →…
+   553→const NOSCRIPT_CSS_FALLBACK = `
 packages/input-otp/src/regexp.ts
      1→export const REGEXP_ONLY_DIGITS = '^\\d+$'
      2→export const REGEXP_ONLY_CHARS = '^[a-zA-Z]+$'
@@ -300,6 +287,11 @@ packages/input-otp/src/use-previous.ts
      3→export function usePrevious<T>(value: T) {
 packages/input-otp/src/use-pwm-badge.tsx
      1→import * as React from 'react'
+     2→import { OTPInputProps } from './types'
+     4→const PWM_BADGE_MARGIN_RIGHT = 18
+     5→const PWM_BADGE_SPACE_WIDTH_PX = 40
+     6→const PWM_BADGE_SPACE_WIDTH = `${PWM_BADGE_SPACE_WIDTH_PX}px` as const
+     8→const PASSWORD_MANAGERS_SELECTORS = [
     15→export function usePasswordManagerBadge({
     16→  containerRef,
     17→  inputRef,

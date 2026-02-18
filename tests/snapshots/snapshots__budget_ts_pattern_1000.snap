@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (984 words)
+budget: 1000 (987 words)
 
 README.md
     91→# Documentation
@@ -16,7 +16,6 @@ README.md
    100→  - [`.exhaustive`](#exhaustive)
    101→  - [`.otherwise`](#otherwise)
    102→  - [`.narrow`](#narrow)
-   103→  - [`isMatching`](#ismatching)
       →…
    417→### `match`
    419→```ts
@@ -43,7 +42,7 @@ benchmarks/package.json
 docs/roadmap.md
 docs/v3-to-v4-migration-guide.md
      1→# TS-Pattern v3 to v4 Migration Guide
-     3→## Breaking changes
+     3→## Breaking changes …
      5→### Imports
      7→type-specific wildcard patterns have moved from `__.<pattern>` to a new `Pattern` qualified module, also exported as `P` by ts-pattern.
      8→
@@ -59,26 +58,23 @@ docs/v4-to-v5-migration-guide.md
      3→This file contains all breaking changes and new features between the version 4 and 5 of TS-Pattern.
      4→
      5→# Breaking changes
-     7→## TypeScript v5
-     9→Because it relies on [const type parameters](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-0.html#const-type-parameters), TS-Pattern v5 requires TypeScript v5+!
-    10→
+     7→## TypeScript v5 …
     11→## `.with` is now evaluated eagerly …
     42→## Matching on Map and Sets …
     63→# New features
-    65→## chainable methods
-    67→TS-Pattern v5's major addition is the ability to chain methods to narrow down the values matched by primitive patterns, like `P.string` or `P.number`.
-    68→
-    69→Since a few examples is worth a thousand words, here are a few ways you can use chainable methods:
-    70→
+    65→## chainable methods …
    156→## Variadic tuple patterns …
    214→## `.returnType` …
 examples/gif-fetcher/src/App.tsx
+    42→const reducer …
     75→export default function App() {
 examples/gif-fetcher/src/constants.ts
      1→export const API_KEY = 'xxxxxxxxxxxxxxxx';
+examples/gif-fetcher/src/index.tsx
 examples/gif-fetcher/src/searchGif.ts
      6→export function searchGif(query: string) {
 examples/one-file-demo/one-file-demo.ts
+    79→const example3 …
 jsr.json
 package.json
 src/errors.ts
@@ -94,7 +90,9 @@ src/internals/helpers.ts
      9→import { Pattern, Matcher, MatcherType, AnyMatcher } from '../types/Pattern';
     12→export const isObject …
     16→export const isMatcher …
-    24→const isOptionalPattern …
+    24→const isOptionalPattern = (
+    25→  x: unknown
+    26→): x is Matcher<unknown, unknown, 'optional', SelectionType> => {
     32→export const matchPattern …
    120→export const getSelectionKeys …
    132→export const flatMap …
@@ -116,6 +114,7 @@ src/internals/symbols.ts
     30→export type override = typeof override;
 src/is-matching.ts
      6→/**
+     7→ * This constraint allows using additional properties
       →…
     11→type PatternConstraint<T> = T extends readonly any[]
     12→  ? P.Pattern<T>
@@ -251,7 +250,10 @@ src/types/Pattern.ts
     43→/**
     44→ * A `Matcher` is an object implementing the match
     45→ * protocol. It must define a `symbols.matcher` property
-      →…
+    46→ * which returns an object with a `match()` method, taking
+    47→ * the input value and returning whether the pattern matches
+    48→ * or not, along with optional selections.
+    49→ */
     50→export interface Matcher<
     51→  input,
     52→  narrowed,
@@ -285,6 +287,7 @@ src/types/helpers.ts
    267→  input: unknown;
    268→  output: unknown;
    269→}
+tests/instance-of.test.ts
 tests/tsconfig.json
 tests/types-catalog/definition.ts
 tests/types-catalog/utils.ts

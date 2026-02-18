@@ -624,7 +624,7 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
         KindCategory::Section => match stage {
             StageKind::FilePath => 0.3,
             StageKind::Names => 1.0,
-            StageKind::Body => 0.5,
+            StageKind::Body => 0.3,
             _ => 0.1,
         },
         // Imports: supplementary context for understanding file dependencies.

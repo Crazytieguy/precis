@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (964 words)
+budget: 1000 (965 words)
 
 AGENTS.md
      1→# AGENTS.md …
@@ -10,8 +10,7 @@ CLAUDE.md
      1→# CLAUDE.md …
     34→### Main Components …
 SECURITY.md
-     1→# Security
-     3→Please report any security vulnerabilities at https://github.com/pytest-dev/pluggy/security.
+     1→# Security …
 codecov.yml
      1→coverage …
      7→comment …
@@ -57,6 +56,7 @@ docs/examples/toy-example.py
     10→
     11→    @hookspec
     12→    def myhook(self, arg1, arg2):
+    13→        """My special little hook that you can customize."""
     16→class Plugin_1:
     18→
     19→    @hookimpl
@@ -98,7 +98,6 @@ src/pluggy/__init__.py
      4→    "PluginValidationError",
      5→    "HookCaller",
      6→    "HookCallError",
-     7→    "HookspecOpts",
       →…
 src/pluggy/_callers.py
     22→# Need to distinguish between old- and new-style hook wrappers.

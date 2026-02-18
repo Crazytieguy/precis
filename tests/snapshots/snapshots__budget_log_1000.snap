@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (942 words)
+budget: 1000 (947 words)
 
 CHANGELOG.md
      1→# Change Log …
@@ -13,15 +13,9 @@ Cargo.toml
     56→[dependencies …
     62→[dev-dependencies …
 README.md
-     1→log
-     4→A Rust library providing a lightweight logging *facade*.
-     5→
-      →…
-    19→## Minimum supported `rustc`
-    21→`1.68.0+`
-    22→
-      →…
-    25→## Usage
+     1→log …
+    19→## Minimum supported `rustc` …
+    25→## Usage …
     27→### In libraries
     29→Libraries should link only to the `log` crate, and use the provided macros to
     30→log whatever information will be useful to downstream consumers:
@@ -35,21 +29,8 @@ README.md
     38→use log::{info, trace, warn};
     39→
       →…
-    58→### In executables
-    60→In order to produce log output, executables have to use a logger implementation compatible with the facade.
-    61→There are many available implementations to choose from, here are some options:
-    62→
-    63→* Simple minimal loggers:
-    64→    * [`env_logger`](https://docs.rs/env_logger/*/env_logger/)
-    65→    * [`colog`](https://docs.rs/colog/*/colog/)
-    66→    * [`simple_logger`](https://docs.rs/simple_logger/*/simple_logger/)
-    67→    * [`simplelog`](https://docs.rs/simplelog/*/simplelog/)
-    68→    * [`pretty_env_logger`](https://docs.rs/pretty_env_logger/*/pretty_env_logger/)
-      →…
-   106→## Structured logging
-   108→If you enable the `kv` feature, you can associate structured data with your log records:
-   109→
-      →…
+    58→### In executables …
+   106→## Structured logging …
 benches/value.rs
      4→use log::kv::Value;
 rfcs/0296-structured-logging.md
@@ -60,13 +41,7 @@ rfcs/0296-structured-logging.md
    495→# Reference-level explanation …
    502→### Don't break anything …
   1575→# Drawbacks, rationale, and alternatives …
-  1598→#### Build a serialization contract in `log`
-  1600→Instead of internalizing a few serialization frameworks, `log` could provide a public common contract for them to conform to:
-  1601→
-  1602→```rust
-  1603→// Instead of `Value::from_any` + `FromAny`
-  1604→
-      →…
+  1598→#### Build a serialization contract in `log` …
   1629→# Prior art …
   1650→# Unresolved questions …
 src/__private_api.rs
@@ -200,14 +175,18 @@ src/lib.rs
    421→struct AtomicUsize {
    422→    v: Cell<usize>,
    423→}
+   426→impl AtomicUsize {
+   443→unsafe impl Sync for AtomicUsize {}
    475→pub enum Level {
    476→    /// The "error" level.
    477→    ///
+   478→    /// Designates very serious errors.
       →…
    516→    type Err = ParseLevelError;
    636→pub enum LevelFilter {
    637→    /// A level lower than all log levels.
    638→    Off,
+   639→    /// Corresponds to the `Error` log level.
       →…
    666→    type Err = ParseLevelError;
    781→enum MaybeStaticStr<'a> {
@@ -219,34 +198,50 @@ src/lib.rs
    842→pub struct Record<'a> {
    843→    metadata: Metadata<'a>,
    844→    args: fmt::Arguments<'a>,
+   845→    module_path: Option<MaybeStaticStr<'a>>,
       →…
    858→struct KeyValues<'a>(&'a dyn kv::Source);
+   861→impl<'a> fmt::Debug for KeyValues<'a> {
   1003→pub struct RecordBuilder<'a> {
   1004→    record: Record<'a>,
   1005→}
   1158→pub struct Metadata<'a> {
   1159→    level: Level,
   1160→    target: &'a str,
-      →…
+  1161→}
   1200→pub struct MetadataBuilder<'a> {
   1201→    metadata: Metadata<'a>,
   1202→}
   1249→pub trait Log: Sync + Send {
   1283→struct NopLogger;
+  1311→impl<T> Log for std::boxed::Box<T>
+  1312→where
+  1313→    T: ?Sized + Log,
+  1314→{
+  1328→impl<T> Log for std::sync::Arc<T>
+  1329→where
+  1330→    T: ?Sized + Log,
+  1331→{
   1482→#[cfg(target_has_atomic = "ptr")]
   1483→fn set_logger_inner<F>(make_logger: F) -> Result<(), SetLoggerError>
   1484→where
   1485→    F: FnOnce() -> &'static dyn Log,
   1486→{
   1549→pub struct SetLoggerError(());
+  1559→impl error::Error for SetLoggerError {}
   1566→pub struct ParseLevelError(());
+  1576→impl error::Error for ParseLevelError {}
   1599→#[doc(hidden)]
   1600→pub mod __private_api;
   1602→/// The statically resolved maximum log level.
   1603→///
   1604→/// See the crate level documentation for information on how to configure this.
   1605→///
-      →…
+  1606→/// This value is checked by the log macros, but not by the `Log`ger returned by
+  1607→/// the [`logger`] function. Code that manually calls functions on that value
+  1608→/// should compare the level against this value.
+  1609→///
+  1610→/// [`logger`]: fn.logger.html
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
 src/macros.rs
 src/serde.rs
@@ -283,6 +278,8 @@ test_max_level_features/main.rs
     44→fn test(a: &State, filter: LevelFilter) {
     72→fn last(state: &State, expected: Option<Level>) {
 tests/integration.rs
+    62→fn test_filter …
+    89→fn test_line_numbers …
 tests/macros.rs
      3→macro_rules! all_log_macros {
    420→enum Type {

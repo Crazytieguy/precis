@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1971 words)
+budget: 2000 (1984 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -84,40 +84,24 @@ CHANGELOG.md
      3→## [6.0.0](https://github.com/npm/ini/compare/v5.0.0...v6.0.0) (2025-10-22) …
      4→### ⚠️ BREAKING CHANGES
      5→* `ini` now supports node `^20.17.0 || >=22.9.0`
-     6→### Bug Fixes
-     7→* [`6d395a4`](https://github.com/npm/ini/commit/6d395a4aaf7d7a5e32e250809cb7bd04c6a27b66) [#291](https://github.com/npm/ini/pull/291) align to npm 11 node engine range (#291) (@owlstronaut)
-     8→### Chores
-     9→* [`23a36a9`](https://github.com/npm/ini/commit/23a36a9ca194d97486ed367f63d13a2cde1d1ce5) [#290](https://github.com/npm/ini/pull/290) bump @npmcli/template-oss from 4.26.0 to 4.27.1 (#290) (@dependabot[bot], @npm-cli-bot)
-    10→
+     6→### Bug Fixes …
+     8→### Chores …
     11→## [5.0.0](https://github.com/npm/ini/compare/v4.1.3...v5.0.0) (2024-09-03) …
     12→### ⚠️ BREAKING CHANGES
     13→* `ini` now supports node `^18.17.0 || >=20.5.0`
-    14→### Bug Fixes
-    15→* [`3eca645`](https://github.com/npm/ini/commit/3eca645de8586b8349acd79211b01a9199d8fd32) [#279](https://github.com/npm/ini/pull/279) align to npm 10 node engine range (@hashtagchris)
-    16→### Chores
-    17→* [`c89e209`](https://github.com/npm/ini/commit/c89e2090d7989bb91255ec46eaaf5f8cb1c34b34) [#279](https://github.com/npm/ini/pull/279) run template-oss-apply (@hashtagchris)
-    18→* [`fc44750`](https://github.com/npm/ini/commit/fc447500efe6523746fd9db9d3123485eed14b76) [#276](https://github.com/npm/ini/pull/276) bump @npmcli/eslint-config from 4.0.5 to 5.0.0 (@dependabot[bot])
-      →…
+    14→### Bug Fixes …
+    16→### Chores …
     22→## [4.1.3](https://github.com/npm/ini/compare/v4.1.2...v4.1.3) (2024-05-22) …
     24→### Bug Fixes
     26→* [`858cc82`](https://github.com/npm/ini/commit/858cc82dff7eac9ff9a56181132d66d0e09a803c) [#252](https://github.com/npm/ini/pull/252) decoding bracketed arrays (#252) (@Cherry)
     27→
-    28→### Chores
-    30→* [`2da0471`](https://github.com/npm/ini/commit/2da047162452b6c74fbec797c115530547216685) [#251](https://github.com/npm/ini/pull/251) bump @npmcli/template-oss to 4.22.0 (@lukekarrys)
-    31→* [`1eaf0fb`](https://github.com/npm/ini/commit/1eaf0fb982e6c905342e7fac3cb43574231a22f5) [#251](https://github.com/npm/ini/pull/251) postinstall for dependabot template-oss PR (@lukekarrys)
-      →…
+    28→### Chores …
     34→## [4.1.2](https://github.com/npm/ini/compare/v4.1.1...v4.1.2) (2024-03-04) …
     36→### Bug Fixes
     38→* [`e237377`](https://github.com/npm/ini/commit/e237377029caa6fe76b1290eb6e64247e3e11cf3) [#243](https://github.com/npm/ini/pull/243) Removed the unused doUnesc param in the unsafe function (#243) (@LoicE5)
     39→
-    40→### Documentation
-    42→* [`31b3209`](https://github.com/npm/ini/commit/31b3209c45498d1e0f4e38ee5d451ea80b56aa01) [#239](https://github.com/npm/ini/pull/239) Fix typo in `bracketedArray` option name in README.md (#239) (@futpib)
-    43→* [`24eb9a0`](https://github.com/npm/ini/commit/24eb9a0a8e5b3de43c993d463314d64f88ca1d50) Reworked README (#235) (@PhoneDroid)
-      →…
-    46→### Chores
-    48→* [`29caa7c`](https://github.com/npm/ini/commit/29caa7c7578b9ed0b3d36987dc48cec30608d05a) [#240](https://github.com/npm/ini/pull/240) postinstall for dependabot template-oss PR (@lukekarrys)
-    49→* [`eafd8f7`](https://github.com/npm/ini/commit/eafd8f75194ba913a5aa23a920c84808452b0f24) [#240](https://github.com/npm/ini/pull/240) bump @npmcli/template-oss from 4.21.1 to 4.21.3 (@dependabot[bot])
-      →…
+    40→### Documentation …
+    46→### Chores …
     63→## [4.1.1](https://github.com/npm/ini/compare/v4.1.0...v4.1.1) (2023-05-16) …
     65→### Bug Fixes
     67→* [`090f64e`](https://github.com/npm/ini/commit/090f64e92a7ff722adf723dc13e7b468e591f057) [#208](https://github.com/npm/ini/pull/208) check process on browser (#208) (@Creskendoll)
@@ -129,17 +113,12 @@ CHANGELOG.md
     75→* [`6a3cb38`](https://github.com/npm/ini/commit/6a3cb38b134f674dff1a7b5d3732553e8bace777) [#199](https://github.com/npm/ini/pull/199) add platform option to force line endings (#199) (@wraithgar, Francois-Xavier Kowalski)
     76→* [`b363ae6`](https://github.com/npm/ini/commit/b363ae67ddf9b1232daafb3cc2b2b1e5cb656406) [#198](https://github.com/npm/ini/pull/198) add newline option (#198) (@wraithgar, Francois-Xavier Kowalski)
     77→
-    78→### Bug Fixes
-    80→* [`ad4b5d8`](https://github.com/npm/ini/commit/ad4b5d8423f67d67b8683ac8e809b9dd23fe82e2) [#200](https://github.com/npm/ini/pull/200) Refactored section split logic (#200) (@wraithgar, @platinumazure)
-    81→* [`5b5c9b7`](https://github.com/npm/ini/commit/5b5c9b777209bae480f62fb80149008350d37bc5) [#123](https://github.com/npm/ini/pull/123) residual space after section causes bad parsing (#123) (@Nautigsam)
-      →…
+    78→### Bug Fixes …
     84→## [4.0.0](https://github.com/npm/ini/compare/v3.0.1...v4.0.0) (2023-03-08) …
     86→### ⚠️ BREAKING CHANGES
     88→* `ini` is now compatible with the following semver range for node: `^14.17.0 || ^16.13.0 || >=18.0.0`
     89→
-    90→### Features
-    92→* [`6b70a48`](https://github.com/npm/ini/commit/6b70a480a47cac47b2da4ec40aba6b9b4bb77608) [#176](https://github.com/npm/ini/pull/176) postinstall for dependabot template-oss PR (@lukekarrys)
-    93→
+    90→### Features …
     94→## [3.0.1](https://github.com/npm/ini/compare/v3.0.0...v3.0.1) (2022-08-22) …
     97→### Bug Fixes
     99→* linting ([#166](https://github.com/npm/ini/issues/166)) ([5d9ab39](https://github.com/npm/ini/commit/5d9ab392643a93358e1d7595e8efb3d6d97d1181))
@@ -148,12 +127,8 @@ CHANGELOG.md
    104→### ⚠ BREAKING CHANGES
    106→* this drops support for node 10 and non-LTS versions of node 12 and node 14
    107→
-   108→### Bug Fixes
-   110→* replace deprecated String.prototype.substr() ([#155](https://github.com/npm/ini/issues/155)) ([e3a5d18](https://github.com/npm/ini/commit/e3a5d183269744f6b590c1a9916ef151de09bf64))
-   111→
-      →…
-   113→### Dependencies
-   115→* @npmcli/template-oss@3.2.2 ([#156](https://github.com/npm/ini/issues/156)) ([837831a](https://github.com/npm/ini/commit/837831a44ba1f04f62a9d0b369525a4f8d8116e9))
+   108→### Bug Fixes …
+   113→### Dependencies …
 CONTRIBUTING.md
      3→# Contributing …
      5→## Code of Conduct
@@ -379,6 +354,14 @@ lib/ini.js
     13→  opt.platform = opt.platform || (typeof process !== 'undefined' && process.platform)
     14→  opt.bracketedArray = opt.bracketedArray !== false
     15→
+    16→  /* istanbul ignore next */
+    17→  const eol = opt.platform === 'win32' ? '\r\n' : '\n'
+    18→  const separator = opt.whitespace ? ' = ' : '='
+    19→  const children = []
+    20→
+    21→  const keys = opt.sort ? Object.keys(obj).sort() : Object.keys(obj)
+    22→
+    23→  let padToChars = 0
       →…
     80→function splitSections (str, separator) {
     81→  var lastMatchIndex = 0
@@ -393,6 +376,14 @@ lib/ini.js
     90→      lastMatchIndex = nextIndex + separator.length
     91→
     92→      if (nextIndex > 0 && str[nextIndex - 1] === '\\') {
+    93→        continue
+    94→      }
+    95→
+    96→      sections.push(str.slice(lastSeparatorIndex, nextIndex))
+    97→      lastSeparatorIndex = nextIndex + separator.length
+    98→    }
+    99→  } while (nextIndex !== -1)
+   100→
       →…
    106→const decode = (str, opt = {}) => {
    107→  opt.bracketedArray = opt.bracketedArray !== false
@@ -407,6 +398,14 @@ lib/ini.js
    116→  for (const line of lines) {
    117→    if (!line || line.match(/^\s*[;#]/) || line.match(/^\s*$/)) {
    118→      continue
+   119→    }
+   120→    const match = line.match(re)
+   121→    if (!match) {
+   122→      continue
+   123→    }
+   124→    if (match[1] !== undefined) {
+   125→      section = unsafe(match[1])
+   126→      if (section === '__proto__') {
       →…
    212→const isQuoted = val => {
    213→  return (val.startsWith('"') && val.endsWith('"')) ||
@@ -437,6 +436,14 @@ lib/ini.js
    240→      // ignore errors
    241→    }
    242→  } else {
+   243→    // walk the val to find the first not-escaped ; character
+   244→    let esc = false
+   245→    let unesc = ''
+   246→    for (let i = 0, l = val.length; i < l; i++) {
+   247→      const c = val.charAt(i)
+   248→      if (esc) {
+   249→        if ('\\;#'.indexOf(c) !== -1) {
+   250→          unesc += c
       →…
 package.json
      2→  "author": "GitHub Inc.",

@@ -70,9 +70,6 @@ README.md
     70→    * [`flexi_logger`](https://docs.rs/flexi_logger/*/flexi_logger/)
     71→    * [`call_logger`](https://docs.rs/call_logger/*/call_logger/)
     72→    * [`std-logger`](https://docs.rs/std-logger/*/std_logger/)
-    73→    * [`structured-logger`](https://docs.rs/structured-logger/latest/structured_logger/)
-    74→    * [`clang_log`](https://docs.rs/clang_log/latest/clang_log)
-    75→    * [`ftail`](https://docs.rs/ftail/latest/ftail/)
       →…
    106→## Structured logging
    108→If you enable the `kv` feature, you can associate structured data with your log records:
@@ -105,10 +102,6 @@ rfcs/0296-structured-logging.md
   1603→// Instead of `Value::from_any` + `FromAny`
   1604→
   1605→pub trait Visit {
-  1606→    fn visit(&self, visitor: &mut dyn Visitor) -> Result<(), Error>;
-  1607→}
-  1608→
-  1609→pub trait Visitor {
       →…
   1629→# Prior art …
   1650→# Unresolved questions …
@@ -184,6 +177,8 @@ src/kv/mod.rs
      8→//! features = ["kv"]
      9→//! ```
     10→//!
+    11→//! # Structured logging in `log`
+    12→//!
       →…
    246→mod error;
    247→mod key;
@@ -440,6 +435,7 @@ src/lib.rs
   1489→        INITIALIZING,
   1490→        Ordering::Acquire,
   1491→        Ordering::Relaxed,
+  1492→    ) {
       →…
   1544→/// The type returned by [`set_logger`] if [`set_logger`] has already been called.
   1545→///
@@ -466,6 +462,7 @@ src/lib.rs
   1610→/// [`logger`]: fn.logger.html
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
   1612→    false if cfg!(feature = "release_max_level_off") => LevelFilter::Off,
+  1613→    false if cfg!(feature = "release_max_level_error") => LevelFilter::Error,
       →…
 src/macros.rs
     75→macro_rules! log {
@@ -527,6 +524,9 @@ test_max_level_features/main.rs
 tests/integration.rs
      3→use log::{debug, error, info, trace, warn, Level, LevelFilter, Log, Metadata, Record};
      6→struct State {
+     7→    last_log_level: Mutex<Option<Level>>,
+     8→    last_log_location: Mutex<Option<u32>>,
+     9→}
     11→struct Logger(Arc<State>);
     13→impl Log for Logger {
     62→fn test_filter …

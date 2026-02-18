@@ -2,42 +2,27 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (972 words)
+budget: 1000 (984 words)
 
 package.json
 readme.md
-    20→## Benefits over plain `fetch`
-    22→- Simpler API
-      →…
-    33→## Install
-    35→```sh
-      →…
+    20→## Benefits over plain `fetch` …
+    33→## Install …
     39→###### CDN …
-    45→## Usage
-    47→```js
-      →…
-    85→## API
-    87→### ky(input, options?)
-    89→The `input` and `options` are the same as [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch), with additional `options` available (see below).
-    90→
-      →…
-   123→### ky.post(input, options?)
-   124→### ky.put(input, options?)
-   125→### ky.patch(input, options?)
-   126→### ky.head(input, options?)
-   127→### ky.delete(input, options?)
-   129→Sets `options.method` to the method name and makes a request.
-   130→
-      →…
+    45→## Usage …
+    85→## API …
+    87→### ky(input, options?) …
+   123→### ky.post(input, options?) …
+   124→### ky.put(input, options?) …
+   125→### ky.patch(input, options?) …
+   126→### ky.head(input, options?) …
+   127→### ky.delete(input, options?) …
    342→###### hooks.beforeRequest …
    373→###### hooks.beforeRetry …
    446→###### hooks.beforeError …
    485→###### hooks.afterResponse …
-  1050→## Tips
-  1052→### Sending form data
-  1054→Sending form data in Ky is identical to `fetch`. Just pass a [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) instance to the `body` option. The `Content-Type` header will be automatically set to `multipart/form-data`, overriding any existing `Content-Type` header.
-  1055→
-      →…
+  1050→## Tips …
+  1052→### Sending form data …
   1158→#### Native proxy support
   1160→Node.js 24.5+ supports automatic proxy configuration via environment variables. Set `NODE_USE_ENV_PROXY=1` or use the `--use-env-proxy` CLI flag.
   1161→
@@ -52,22 +37,14 @@ readme.md
   1170→```
   1171→
       →…
-  1292→## FAQ
+  1292→## FAQ …
   1294→#### How do I use this in Node.js?
   1296→Node.js 18 and later supports `fetch` natively, so you can just use this package directly.
   1297→
-  1339→## Browser support
-  1341→The latest version of Chrome, Firefox, and Safari.
-      →…
-  1343→## Node.js support
-  1345→Node.js 18 and later.
-      →…
-  1347→## Related
-  1349→- [fetch-extras](https://github.com/sindresorhus/fetch-extras) - Useful utilities for working with Fetch
-      →…
-  1352→## Maintainers
-  1354→- [Sindre Sorhus](https://github.com/sindresorhus)
-      →…
+  1339→## Browser support …
+  1343→## Node.js support …
+  1347→## Related …
+  1352→## Maintainers …
 source/core/Ky.ts
     33→export class Ky {
     34→	static create(input: Input, options: Options): ResponsePromise {
@@ -88,9 +65,20 @@ source/core/constants.ts
    152→/**
    153→Force a retry from an `afterResponse` hook.
    154→
+   155→This allows you to retry a request based on the response content, even if the response has a successful status code. The retry will respect the `retry.limit` option and skip the `shouldRetry` check. The forced retry is observable in `beforeRetry` hooks, where the error will be a `ForceRetryError`.
+   156→
+   157→@param options - Optional configuration for the retry.
+   158→
+   159→@example
+   160→```
+   161→import ky, {isForceRetryError} from 'ky';
+   162→
+   163→const api = ky.extend({
       →…
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
 source/errors/ForceRetryError.ts
+     1→import type {ForceRetryOptions} from '../core/constants.js';
+     2→import {NonError} from './NonError.js';
      4→/**
      5→Internal error used to signal a forced retry from afterResponse hooks.
      6→This is thrown when a user returns ky.retry() from an afterResponse hook.
@@ -103,6 +91,9 @@ source/errors/ForceRetryError.ts
     13→
     14→	constructor(options?: ForceRetryOptions) {
 source/errors/HTTPError.ts
+     1→import type {NormalizedOptions} from '../types/options.js';
+     2→import type {KyRequest} from '../types/request.js';
+     3→import type {KyResponse} from '../types/response.js';
      5→export class HTTPError<T = unknown> extends Error {
      6→	public response: KyResponse<T>;
      7→	public request: KyRequest;
@@ -120,6 +111,7 @@ source/errors/NonError.ts
      9→
     10→	constructor(value: unknown) {
 source/errors/TimeoutError.ts
+     1→import type {KyRequest} from '../types/request.js';
      3→export class TimeoutError extends Error {
      4→	public request: KyRequest;
      5→
@@ -132,8 +124,6 @@ source/index.ts
      7→import {validateAndMerge} from './utils/merge.js';
      8→import {type Mutable} from './utils/types.js';
     10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
-    11→	// eslint-disable-next-line @typescript-eslint/promise-function-async
-      →…
     34→const ky = createInstance();
 source/types/ResponsePromise.ts
      4→import {type KyResponse} from './response.js';

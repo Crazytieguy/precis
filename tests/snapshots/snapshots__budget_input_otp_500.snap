@@ -2,16 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (485 words)
+budget: 500 (486 words)
 
 CHANGELOG.md
      1→# Changelog …
      3→## [1.4.2] …
 README.md
      1→# The only accessible & unstyled & full featured Input OTP component in the Web. …
-     3→### OTP Input for React 🔐 by [@guilhermerodz](https://twitter.com/guilherme_rodz)
-    18→https://github.com/guilhermerodz/input-otp/assets/10366880/753751f5-eda8-4145-a4b9-7ef51ca5e453
-    19→
+     3→### OTP Input for React 🔐 by [@guilhermerodz](https://twitter.com/guilherme_rodz) …
     20→## Usage …
     39→## Default example …
    136→## How it works …
@@ -22,9 +20,7 @@ README.md
    202→</details>
    203→
    204→## API Reference …
-   206→### OTPInput
-   208→The root container. Define settings for the input via props. Then, use the `render` prop to create the slots.
-   209→
+   206→### OTPInput …
    210→#### Props …
    293→## Examples …
    377→## Caveats …
@@ -67,12 +63,18 @@ apps/website/src/app/(local-pages)/example-auto-submit/page.tsx
 apps/website/src/app/(local-pages)/example-auto-submit/server/form-action.ts
      3→export async function formAction(formData: FormData) {
 apps/website/src/app/(local-pages)/example-playground/code.tsx
+    99→export function ExampleCode() {
 apps/website/src/app/(local-pages)/example-playground/component.tsx
+     8→export function ExampleComponent(
+     9→  props: Partial<Omit<React.ComponentProps<typeof OTPInput>, 'children'>>,
+    10→) {
 apps/website/src/app/(local-pages)/example-playground/page.tsx
      1→import { ExampleComponent } from './component'
+     3→export default function ExamplePlayground() {
 apps/website/src/app/(local-pages)/layout.tsx
      7→export default function RootLayout({
 apps/website/src/app/(local-pages)/raw-input/page.tsx
+     3→import React from 'react'
      5→export default function ShadcnPage() {
 apps/website/src/app/(local-pages)/shadcn/page.tsx
     12→export default function ShadcnPage() {
@@ -143,7 +145,6 @@ packages/input-otp/src/use-pwm-badge.tsx
     15→export function usePasswordManagerBadge({
     16→  containerRef,
     17→  inputRef,
-    18→  pushPasswordManagerStrategy,
       →…
 packages/input-otp/tsconfig.json
 pnpm-workspace.yaml

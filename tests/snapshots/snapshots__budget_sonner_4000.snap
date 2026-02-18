@@ -530,8 +530,6 @@ test/README.md
     12→pnpm dev
     13→```
     14→
-    15→Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-    16→
       →…
     25→## Learn More
     27→To learn more about Next.js, take a look at the following resources:
@@ -563,6 +561,8 @@ test/src/app/action.tsx
       →…
 test/src/app/layout.tsx
      1→export const metadata = {
+     2→  title: 'Create Next App',
+      →…
      6→export default function RootLayout({ children }: { children: React.ReactNode }) {
      7→  return (
       →…
@@ -635,6 +635,8 @@ website/next.config.js
      5→  },
      6→};
      8→const withNextra = require('nextra')({
+     9→  title: 'Sonner',
+      →…
 website/package.json
      2→  "name": "website",
      3→  "version": "0.1.0",

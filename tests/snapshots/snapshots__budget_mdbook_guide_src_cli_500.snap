@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (468 words)
+budget: 500 (490 words)
 
 README.md
      1→# Command-line tool
@@ -19,51 +19,49 @@ README.md
     13→* [`mdbook clean`](clean.md) --- Deletes the rendered output.
     14→* [`mdbook completions`](completions.md) --- Support for shell auto-completion.
 arg-watcher.md
+     1→#### `--watcher` …
 build.md
      1→# The build command
      3→The build command is used to render your book:
      4→
      5→```bash
-     6→mdbook build
-     7→```
-     8→
       →…
+    16→#### Specify a directory …
+    25→#### `--open` …
+    30→#### `--dest-dir` …
 clean.md
      1→# The clean command
      3→The clean command is used to delete the generated book and any other build
      4→artifacts.
      5→
-     6→```bash
-     7→mdbook clean
-     8→```
       →…
+    10→#### Specify a directory …
+    19→#### `--dest-dir` …
 completions.md
      1→# The completions command
      3→The completions command is used to generate auto-completions for some common shells.
      4→This means when you type `mdbook` in your shell, you can then press your shell's auto-complete key (usually the Tab key) and it may display what the valid options are, or finish partial input.
      5→
-     6→The completions first need to be installed for your shell:
-     7→
-     8→```bash
       →…
 init.md
      1→# The init command
      3→There is some minimal boilerplate that is the same for every new book. It's for
      4→this purpose that mdBook includes an `init` command.
      5→
-     6→The `init` command is used like this:
-     7→
-     8→```bash
       →…
+    32→#### Tip: Generate chapters from SUMMARY.md …
+    39→#### Specify a directory …
+    48→#### `--theme` …
+    56→#### `--title` …
+    65→#### `--ignore` …
+    80→#### `--force` …
 serve.md
      1→# The serve command
      3→The serve command is used to preview a book by serving it via HTTP at
      4→`localhost:3000` by default: 
      5→
-     6→```bash
-     7→mdbook serve
-     8→```
       →…
+    18→#### Specify a directory …
     27→### Server options
     29→The `serve` hostname defaults to `localhost`, and the port defaults to `3000`. Either option can be specified on the command line:
     30→
@@ -71,20 +69,26 @@ serve.md
     32→mdbook serve path/to/book -p 8000 -n 127.0.0.1 
     33→```
     34→
+    35→#### `--open` …
+    40→#### `--dest-dir` …
+    49→#### Specify exclude patterns …
 test.md
      1→# The test command
      3→When writing a book, you sometimes need to automate some tests. For example,
      4→[The Rust Programming Book](https://doc.rust-lang.org/stable/book/) uses a lot
      5→of code examples that could get outdated. Therefore it is very important for
-     6→them to be able to automatically test these code examples.
-     7→
-     8→mdBook supports a `test` command that will run all available tests in a book. At
       →…
+    11→#### Disable tests on a code block …
+    31→#### Specify a directory …
+    40→#### `--library-path` …
+    57→#### `--chapter` …
 watch.md
      1→# The watch command
      3→The `watch` command is useful when you want your book to be rendered on every
      4→file change. You could repeatedly issue `mdbook build` every time a file is
      5→changed. But using `mdbook watch` once will watch your files and will trigger a
-     6→build automatically whenever you modify a file; this includes re-creating
-     7→deleted files still mentioned in `SUMMARY.md`!
-     8→
+      →…
+     9→#### Specify a directory …
+    18→#### `--open` …
+    23→#### `--dest-dir` …
+    32→#### Specify exclude patterns …

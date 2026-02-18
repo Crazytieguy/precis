@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (996 words)
+budget: 1000 (995 words)
 
 README.md
      1→# xxhash
@@ -33,29 +33,19 @@ README.md
     36→You need a version of Go with at least "minimal module compatibility" to use
     37→github.com/cespare/xxhash/v2:
     38→
-    39→* 1.9.7+ for Go 1.9
-    40→* 1.10.3+ for Go 1.10
-    41→* Go 1.11 or later
-    42→
       →…
     45→## Benchmarks
     47→Here are some quick benchmarks comparing the pure-Go and assembly
     48→implementations of Sum64.
     49→
     50→| input size | purego    | asm       |
-    51→| ---------- | --------- | --------- |
-    52→| 4 B        |  1.3 GB/s |  1.2 GB/s |
-    53→| 16 B       |  2.9 GB/s |  3.5 GB/s |
-    54→| 100 B      |  6.9 GB/s |  8.1 GB/s |
       →…
     66→## Projects using this package
     68→- [InfluxDB](https://github.com/influxdata/influxdb)
     69→- [Prometheus](https://github.com/prometheus/prometheus)
     70→- [VictoriaMetrics](https://github.com/VictoriaMetrics/VictoriaMetrics)
     71→- [FreeCache](https://github.com/coocood/freecache)
-    72→- [FastCache](https://github.com/VictoriaMetrics/fastcache)
-    73→- [Ristretto](https://github.com/dgraph-io/ristretto)
-    74→- [Badger](https://github.com/dgraph-io/badger)
+      →…
 bench_test.go
      3→import …
      8→var benchmarks = []struct {
@@ -69,8 +59,12 @@ dynamic/dynamic_test.go
     20→		"-buildmode", "plugin",
     21→		"-o", "plugin.so",
     22→		"plugin.go",
+    23→	)
+    24→	var out bytes.Buffer
       →…
     33→func TestDynamic(t *testing.T) {
+    34→	plug, err := plugin.Open("plugin.so")
+      →…
 dynamic/plugin.go
      6→import (
      7→	"fmt"
@@ -151,6 +145,20 @@ xxhash.go
    176→func (d *Digest) MarshalBinary() ([]byte, error) {
    189→// UnmarshalBinary implements the encoding.BinaryUnmarshaler interface.
    190→func (d *Digest) UnmarshalBinary(b []byte) error {
+   208→func appendUint64 …
+   214→func consumeUint64 …
+   219→func u64 …
+   220→func u32 …
+   222→func round …
+   229→func mergeRound …
+   236→func rol1 …
+   237→func rol7 …
+   238→func rol11 …
+   239→func rol12 …
+   240→func rol18 …
+   241→func rol23 …
+   242→func rol27 …
+   243→func rol31 …
 xxhash_asm.go
      9→// Sum64 computes the 64-bit xxHash digest of b with a zero seed.
     10→//
@@ -161,6 +169,7 @@ xxhash_asm.go
 xxhash_other.go
      6→// Sum64 computes the 64-bit xxHash digest of b with a zero seed.
      7→func Sum64(b []byte) uint64 {
+    64→func writeBlocks …
 xxhash_safe.go
      8→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
      9→func Sum64String(s string) uint64 {

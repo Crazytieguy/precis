@@ -16,6 +16,9 @@ CONTRIBUTING.md
     19→## Code Style …
 README-es.md
      1→# dotenv …
+   607→##### path …
+   707→##### debug …
+   750→##### Debug …
 README.md
      1→# dotenv
      5→Dotenv is a zero-dependency module that loads environment variables from a `.env` file into [`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env). Storing configuration in the environment separate from code is based on [The Twelve-Factor App](https://12factor.net/config) methodology.
@@ -50,11 +53,6 @@ README.md
    607→##### path
    609→Default: `path.resolve(process.cwd(), '.env')`
    610→
-   611→Specify a custom path if your file containing environment variables is located elsewhere.
-   612→
-   613→```js
-   614→require('dotenv').config({ path: '/custom/path/to/.env' })
-   615→```
       →…
    625→##### quiet
    627→Default: `false`
@@ -81,19 +79,13 @@ README.md
    707→##### debug
    709→Default: `false`
    710→
-   711→Turn on logging to help debug why certain keys or values are not being set as you expect.
-   712→
-   713→```js
-   714→const dotenv = require('dotenv')
-   715→const buf = Buffer.from('hello world')
       →…
    721→### Populate …
    748→#### options …
    750→##### Debug
    752→Default: `false`
    753→
-   754→Turn on logging to help debug why certain keys or values are not being populated as you expect.
-   755→
+      →…
    756→##### override
    758→Default: `false`
    759→
@@ -122,6 +114,9 @@ lib/main.d.ts
     26→  /**
     27→   * Default: `path.resolve(process.cwd(), '.env')`
     28→   *
+    29→   * Specify a custom path if your file containing environment variables is located elsewhere.
+    30→   * Can also be an array of strings, specifying multiple paths.
+    31→   *
       →…
     92→export interface DotenvConfigOutput {
     93→  error?: DotenvError;
@@ -134,6 +129,9 @@ lib/main.d.ts
    107→  /**
    108→   * Default: `false`
    109→   *
+   110→   * Turn on logging to help debug why certain keys or values are not being set as you expect.
+   111→   *
+   112→   * example: `require('dotenv').config({ debug: process.env.DEBUG })`
       →…
    126→export interface DotenvPopulateInput {
    127→  [name: string]: string | undefined;

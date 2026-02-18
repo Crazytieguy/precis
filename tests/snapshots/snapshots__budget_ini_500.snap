@@ -2,10 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (511 words)
+budget: 500 (510 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
+     8→  .filter((file) => file.startsWith('.eslintrc.local.'))
+      →…
 .github/ISSUE_TEMPLATE/bug.yml
      3→name …
      4→description …
@@ -85,8 +87,14 @@ CONTRIBUTING.md
      5→## Code of Conduct
      7→All interactions in the **npm** organization on GitHub are considered to be covered by our standard [Code of Conduct](https://docs.npmjs.com/policies/conduct).
      8→
+     9→## Reporting Bugs …
+    17→## Pull Request Conventions …
     19→### Commits …
+    30→### Test Coverage …
+    36→### Linting …
+    42→## What _not_ to contribute? …
     44→### Dependencies …
+    48→### Tools/Automation …
 README.md
      4→## Note
      6→-   Sections are treated as nested objects.
@@ -115,14 +123,6 @@ README.md
     30→You can **read**, **modify** and **write** it like so:
     31→
     32→```js
-    33→import { writeFile , readFile } from 'node:fs/promises'
-    34→import { stringify , parse } from 'ini'
-    35→
-    36→//  Read INI file as text
-    37→
-    38→let text = await readFile(`./Original.ini`,{
-    39→    encoding : 'utf-8'
-    40→})
       →…
     82→## API
     84→### Parse
@@ -188,3 +188,6 @@ release-please-config.json
     35→  },
     36→  "prerelease-type": "pre.0"
     37→}
+test/duplicate-properties.js
+test/foo.js
+test/win32.js

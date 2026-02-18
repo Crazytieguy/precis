@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (960 words)
+budget: 1000 (975 words)
 
 CHANGELOG.md
 README.md
@@ -29,37 +29,19 @@ README.md
     27→v1, err := version.NewVersion("1.2")
     28→v2, err := version.NewVersion("1.5+metadata")
     29→
-    30→// Comparison example. There is also GreaterThan, Equal, and just
-    31→// a simple Compare that returns an int allowing easy >=, <=, etc.
-    32→if v1.LessThan(v2) {
-    33→    fmt.Printf("%s is less than %s", v1, v2)
-    34→}
-    35→```
-    36→
+      →…
     37→#### Version Constraints
     39→```go
     40→v1, err := version.NewVersion("1.2")
     41→
     42→// Constraints example.
-    43→constraints, err := version.NewConstraint(">= 1.0, < 1.4")
-    44→if constraints.Check(v1) {
-    45→	fmt.Printf("%s satisfies constraints %s", v1, constraints)
-    46→}
-    47→```
-    48→
+      →…
     49→#### Version Sorting
     51→```go
     52→versionsRaw := []string{"1.1", "0.7.1", "1.4-beta", "1.4", "2"}
     53→versions := make([]*version.Version, len(versionsRaw))
     54→for i, raw := range versionsRaw {
-    55→    v, _ := version.NewVersion(raw)
-    56→    versions[i] = v
-    57→}
-    58→
-    59→// After this, the versions are properly sorted
-    60→sort.Sort(version.Collection(versions))
-    61→```
-    62→
+      →…
     63→## Issues and Contributing
     65→If you find an issue with this library, please report an issue. If you'd
     66→like, we welcome any contributions. Fork this library and submit a pull
@@ -144,12 +126,13 @@ constraint.go
    264→func constraintLessThanEqual(v, c *Version) bool {
    268→func constraintPessimistic(v, c *Version) bool {
 constraint_test.go
-     6→import (
-     7→	"fmt"
-     8→	"reflect"
-     9→	"sort"
-    10→	"testing"
-    11→)
+     6→import …
+    13→func TestNewConstraint(t *testing.T) {
+    43→func TestConstraintCheck(t *testing.T) {
+   106→func TestConstraintPrerelease(t *testing.T) {
+   134→func TestConstraintEqual(t *testing.T) {
+   190→func TestConstraint_sort(t *testing.T) {
+   232→func TestConstraintsString(t *testing.T) {
 version.go
      6→import (
      7→	"database/sql/driver"
@@ -227,15 +210,29 @@ version_collection.go
     19→	v[i], v[j] = v[j], v[i]
     20→}
 version_collection_test.go
-     6→import (
-     7→	"reflect"
-     8→	"sort"
-     9→	"testing"
-    10→)
+     6→import …
+    12→func TestCollection(t *testing.T) {
 version_test.go
-     6→import (
-     7→	"encoding/json"
-     8→	"fmt"
-     9→	"reflect"
-    10→	"testing"
-    11→)
+     6→import …
+    13→func TestNewVersion(t *testing.T) {
+    54→func TestNewSemver(t *testing.T) {
+    95→func TestCore(t *testing.T) {
+   127→func TestVersionCompare(t *testing.T) {
+   174→func TestVersionCompare_versionAndSemver(t *testing.T) {
+   212→func TestVersionEqual_nil(t *testing.T) {
+   238→func TestComparePreReleases(t *testing.T) {
+   285→func TestVersionMetadata(t *testing.T) {
+   311→func TestVersionPrerelease(t *testing.T) {
+   339→func TestVersionSegments(t *testing.T) {
+   366→func TestVersionSegments64(t *testing.T) {
+   401→func TestJsonMarshal(t *testing.T) {
+   436→func TestJsonUnmarshal(t *testing.T) {
+   470→func TestVersionString(t *testing.T) {
+   497→func TestEqual(t *testing.T) {
+   544→func TestGreaterThan(t *testing.T) {
+   591→func TestLessThan(t *testing.T) {
+   638→func TestGreaterThanOrEqual(t *testing.T) {
+   685→func TestLessThanOrEqual(t *testing.T) {
+   732→func BenchmarkVersionString(b *testing.B) {
+   743→func BenchmarkCompareVersionV1(b *testing.B) {
+   753→func BenchmarkVersionCompareV2(b *testing.B) {

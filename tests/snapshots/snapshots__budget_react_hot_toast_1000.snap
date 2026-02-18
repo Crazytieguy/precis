@@ -2,17 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (988 words)
+budget: 1000 (977 words)
 
 README.md
     28→## Features
     30→- 🔥 **Hot by default**
     31→- 🔩 **Easily Customizable**
     32→- ⏳ **Promise API** - _Automatic loader from a promise_
-    33→- 🕊 **Lightweight** - _less than 5kb including styles_
-    34→- ✅ **Accessible**
-    35→- 🤯 **Headless Hooks** - _Create your own with [`useToaster()`](https://react-hot-toast.com/docs/use-toaster)_
-    36→
+      →…
     37→## Installation
     39→#### With pnpm
     41→```sh
@@ -28,78 +25,43 @@ README.md
     53→Add the Toaster to your app first. It will take care of rendering all notifications emitted. Now you can trigger `toast()` from anywhere!
     54→
     55→```jsx
-    56→import toast, { Toaster } from 'react-hot-toast';
-    57→
-    58→const notify = () => toast('Here is your toast.');
-    59→
-    60→const App = () => {
-    61→  return (
-    62→    <div>
-    63→      <button onClick={notify}>Make me a toast</button>
-    64→      <Toaster />
-    65→    </div>
-    66→  );
-    67→};
-    68→```
-    69→
+      →…
     70→## Documentation
     72→Find the full API reference on [official documentation](https://react-hot-toast.com/docs).
 package.json
-     2→  "name": "react-hot-toast",
-     3→  "description": "Smoking hot React Notifications. Lightweight, customizable and beautiful by default.",
-     4→  "version": "2.6.0",
-     5→  "author": "Timo Lins",
-     6→  "license": "MIT",
-     7→  "repository": "timolins/react-hot-toast",
-     8→  "keywords": [
-    13→  ],
-    14→  "main": "dist/index.js",
-    15→  "types": "dist/index.d.ts",
-    16→  "exports": {
-    28→  },
-    29→  "files": [
-    33→  ],
-    34→  "engines": {
-    36→  },
-    37→  "scripts": {
-    44→  },
-    45→  "husky": {
-    49→  },
-    50→  "prettier": {
-    56→  },
-    57→  "size-limit": [
-    74→  ],
-    75→  "devDependencies": {
-    94→  },
-    95→  "dependencies": {
-    98→  },
-    99→  "peerDependencies": {
-   102→  },
-   103→  "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0"
-   104→}
+     2→  "name …
+     3→  "description …
+     4→  "version …
+     5→  "author …
+     6→  "license …
+     7→  "repository …
+     8→  "keywords …
+    14→  "main …
+    15→  "types …
+    16→  "exports …
+    29→  "files …
+    34→  "engines …
+    37→  "scripts …
+    45→  "husky …
+    50→  "prettier …
+    57→  "size-limit …
+    75→  "devDependencies …
+    95→  "dependencies …
+    99→  "peerDependencies …
+   103→  "packageManager …
 site/README.md
      3→## Getting Started
      5→First, run the development server:
      6→
-     7→```bash
-     8→npm run dev
-     9→# or
-    10→yarn dev
-    11→```
-    12→
       →…
     17→## Learn More
     19→To learn more about Next.js, take a look at the following resources:
     20→
-    21→- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-    22→- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-    23→
-    24→You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-    25→
+      →…
     26→## Deploy on Vercel
     28→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
     29→
-    30→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+      →…
 site/components/code.tsx
      8→const theme: PrismTheme = {
    104→export const Code: React.FC<{
@@ -130,7 +92,6 @@ site/components/sections/toaster-example.tsx
      6→import { EmojiButton } from '../emoji-button';
      8→export const positions: Array<ToastPosition> = [
      9→  'top-left',
-    10→  'top-center',
       →…
     17→export const ToasterExample: React.FC<{
 site/next.config.mjs
@@ -196,7 +157,11 @@ src/components/toast-bar.tsx
     48→  toast: Toast;
     49→  position?: ToastPosition;
     50→  style?: React.CSSProperties;
-      →…
+    51→  children?: (components: {
+    52→    icon: Renderable;
+    53→    message: Renderable;
+    54→  }) => Renderable;
+    55→}
     57→const getAnimationStyle …
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
 src/components/toast-icon.tsx
@@ -213,6 +178,7 @@ src/components/toaster.tsx
       →…
 src/core/store.ts
      1→import { useEffect, useState, useRef } from 'react';
+     2→import { DefaultToastOptions, Toast, ToastType } from './types …
      4→export const TOAST_EXPIRE_DISMISS_DELAY …
      5→export const TOAST_LIMIT …
      6→export const DEFAULT_TOASTER_ID …
@@ -223,7 +189,11 @@ src/core/store.ts
     13→  ADD_TOAST,
     14→  UPDATE_TOAST,
     15→  UPSERT_TOAST,
-      →…
+    16→  DISMISS_TOAST,
+    17→  REMOVE_TOAST,
+    18→  START_PAUSE,
+    19→  END_PAUSE,
+    20→}
     22→export type Action …
     52→interface ToasterState {
     53→  toasts: Toast[];
@@ -243,6 +213,9 @@ src/core/store.ts
    175→export const defaultTimeouts …
    185→export const useStore …
 src/core/toast.ts
+     1→./types …
+    10→import { genId } from './utils …
+    11→./store …
     19→type Message = ValueOrFunction<Renderable, Toast>;
     21→type ToastHandler = (message: Message, options?: ToastOptions) => string;
     23→const createToast …
@@ -265,6 +238,22 @@ src/core/types.ts
     35→  type: ToastType;
     36→  id: string;
     37→  toasterId?: string;
+    38→  message: ValueOrFunction<Renderable, Toast>;
+    39→  icon?: Renderable;
+    40→  duration?: number;
+    41→  pauseDuration: number;
+    42→  position?: ToastPosition;
+    43→  removeDelay?: number;
+    44→
+    45→  ariaProps: {
+    46→    role: 'status' | 'alert';
+    47→    'aria-live': 'assertive' | 'off' | 'polite';
+    48→  };
+    49→
+    50→  style?: CSSProperties;
+    51→  className?: string;
+    52→  iconTheme?: IconTheme;
+    53→
       →…
     60→export type ToastOptions …
     76→export type DefaultToastOptions …
@@ -272,14 +261,24 @@ src/core/types.ts
     81→  position?: ToastPosition;
     82→  toastOptions?: DefaultToastOptions;
     83→  reverseOrder?: boolean;
-      →…
+    84→  gutter?: number;
+    85→  containerStyle?: React.CSSProperties;
+    86→  containerClassName?: string;
+    87→  toasterId?: string;
+    88→  children?: (toast: Toast) => React.ReactElement;
+    89→}
     91→export interface ToastWrapperProps {
     92→  id: string;
     93→  className?: string;
     94→  style?: React.CSSProperties;
-      →…
+    95→  onHeightUpdate: (id: string, height: number) => void;
+    96→  children?: React.ReactNode;
+    97→}
 src/core/use-toaster.ts
      1→import { useEffect, useCallback, useRef } from 'react';
+     2→import { createDispatch, ActionType, useStore, dispatch } from './store …
+     3→import { toast } from './toast …
+     4→import { DefaultToastOptions, Toast, ToastPosition } from './types …
      6→export const REMOVE_DELAY …
      8→export const useToaster …
 src/core/utils.ts
@@ -295,8 +294,7 @@ test/toast.test.tsx
     29→const waitTime …
     35→const TOAST_DURATION = 1000;
 tsconfig.json
-     3→  "include": ["src", "types", "test"],
-     4→  "compilerOptions": {
-    33→}
+     3→  "include …
+     4→  "compilerOptions …
 tsup.config.ts
      4→const commonConfig: Options = {

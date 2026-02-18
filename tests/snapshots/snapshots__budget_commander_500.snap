@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (495 words)
+budget: 500 (494 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -18,8 +18,6 @@ Readme.md
     12→- [Commander.js](#commanderjs)
     13→  - [Installation](#installation)
     14→  - [Quick Start](#quick-start)
-    15→  - [Declaring _program_ variable](#declaring-program-variable)
-    16→  - [Options](#options)
       →…
     61→## Installation …
     67→## Quick Start …
@@ -50,7 +48,6 @@ docs/deprecated.md
    231→Short option flags like `-ws` were never supported, but the old README did not make this clear. The README now states that short options are a single character.
    232→
    233→- README updated in Commander v3.
-   234→- Deprecated from Commander v9.
       →…
 docs/help-in-depth.md
      1→# Help in Depth …
@@ -67,14 +64,17 @@ docs/release-policy.md
      1→# Release Policy …
 docs/terminology.md
      1→# Terminology …
+docs/zh-CN/可变参数的选项.md
 esm.mjs
      1→import commander from './index.js';
 examples/color-help-replacement.mjs
+examples/color-help.mjs
 examples/custom-command-class.js
      7→  createCommand(name) {
 examples/global-options-added.js
     17→  createCommand(name) {
 examples/help-centered.mjs
+examples/man-style-help.mjs
 lib/argument.js
      3→class Argument {
 lib/command.js
@@ -119,6 +119,7 @@ tests/esm-imports-test.mjs
      1→../esm.mjs …
 tests/ts-imports.test.ts
      1→../ …
+    17→function checkClass …
 tsconfig.js.json
 tsconfig.json
 tsconfig.ts.json
@@ -147,5 +148,6 @@ typings/index.d.ts
   1104→export interface ParseOptionsResult {
   1113→export const program: Command;
 typings/index.test-d.ts
+     1→import * as commander from './index';
    510→  createCommand(name?: string): MyCommand {
    514→  myFunction(): void {

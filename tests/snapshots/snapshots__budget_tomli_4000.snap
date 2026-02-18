@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4057 words)
+budget: 4000 (3961 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -862,48 +862,11 @@ tests/data/valid/_external/toml-test/valid/inline-table/newline-comment.json
 tests/data/valid/_external/toml-test/valid/inline-table/newline.json
 tests/data/valid/_external/toml-test/valid/inline-table/spaces.json
 tests/data/valid/_external/toml-test/valid/integer/float64-max.json
-     2→    "max_int": {"type": "integer", "value": "9007199254740991"},
-     3→    "min_int": {"type": "integer", "value": "-9007199254740991"}
-     4→}
 tests/data/valid/_external/toml-test/valid/integer/integer.json
-     2→    "answer":    {"type": "integer", "value": "42"},
-     3→    "neganswer": {"type": "integer", "value": "-42"},
-     4→    "posanswer": {"type": "integer", "value": "42"},
-     5→    "zero":      {"type": "integer", "value": "0"}
-     6→}
 tests/data/valid/_external/toml-test/valid/integer/literals.json
-     2→    "bin1": {"type": "integer", "value": "214"},
-     3→    "bin2": {"type": "integer", "value": "5"},
-     4→    "hex1": {"type": "integer", "value": "3735928559"},
-     5→    "hex2": {"type": "integer", "value": "3735928559"},
-     6→    "hex3": {"type": "integer", "value": "3735928559"},
-     7→    "hex4": {"type": "integer", "value": "2439"},
-     8→    "oct1": {"type": "integer", "value": "342391"},
-     9→    "oct2": {"type": "integer", "value": "493"},
-    10→    "oct3": {"type": "integer", "value": "501"}
-    11→}
 tests/data/valid/_external/toml-test/valid/integer/long.json
-     2→    "int64-max":     {"type": "integer", "value": "9223372036854775807"},
-     3→    "int64-max-neg": {"type": "integer", "value": "-9223372036854775808"}
-     4→}
 tests/data/valid/_external/toml-test/valid/integer/underscore.json
-     2→    "kilo": {"type": "integer", "value": "1000"},
-     3→    "x":    {"type": "integer", "value": "1111"}
-     4→}
 tests/data/valid/_external/toml-test/valid/integer/zero.json
-     2→    "a2": {"type": "integer", "value": "0"},
-     3→    "a3": {"type": "integer", "value": "0"},
-     4→    "b1": {"type": "integer", "value": "0"},
-     5→    "b2": {"type": "integer", "value": "0"},
-     6→    "b3": {"type": "integer", "value": "0"},
-     7→    "d1": {"type": "integer", "value": "0"},
-     8→    "d2": {"type": "integer", "value": "0"},
-     9→    "d3": {"type": "integer", "value": "0"},
-    10→    "h1": {"type": "integer", "value": "0"},
-    11→    "h2": {"type": "integer", "value": "0"},
-    12→    "h3": {"type": "integer", "value": "0"},
-    13→    "o1": {"type": "integer", "value": "0"}
-    14→}
 tests/data/valid/_external/toml-test/valid/key/alphanum.toml
     10→[2018_10 …
     13→[a-a-a …
@@ -958,21 +921,46 @@ tests/data/valid/_external/toml-test/valid/newline-lf.json
      3→    "os":      {"type": "string", "value": "unix"}
      4→}
 tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-37.toml
+     1→[table …
 tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-38.toml
+     1→[table-1 …
+     5→[table-2 …
 tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-39.toml
+     1→[dog."tater.man" …
 tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-40.toml
+     2→[ d.e.f ]          # same as [d.e.f …
+     3→[ g .  h  . i ]    # same as [g.h.i …
+     4→[ j . "ʞ" . 'l' ]  # same as [j."ʞ".'l' …
 tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-42.toml
      2→[fruit.apple …
+     3→[animal …
+     4→[fruit.orange …
 tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-43.toml
      2→[fruit.apple …
+     3→[fruit.orange …
+     4→[animal …
 tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-44.toml
      6→[owner …
 tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-46.toml
+     1→[fruit …
 tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-48.toml
+     1→[name …
+     5→[point …
+     9→[animal …
+    12→[contact.personal …
+    16→[contact.work …
 tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-49.toml
+     1→[product …
 tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-50.toml
+     1→[product …
 tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-51.toml
+     1→[[product …
+     7→[[product …
 tests/data/valid/_external/toml-test/valid/spec-1.1.0/common-52.toml
+     1→[[fruits …
+    11→[[fruits.varieties …
+    15→[[fruits …
+    18→[[fruits.varieties …
 tests/data/valid/_external/toml-test/valid/spec-example-1-compact.json
      2→    "title": {"type": "string", "value": "TOML Example"},
      3→    "clients": {
@@ -1009,8 +997,28 @@ tests/data/valid/_external/toml-test/valid/spec-example-1.toml
     26→[clients …
 tests/data/valid/_external/toml-test/valid/table/array-empty-name.toml
      3→[['' …
+tests/data/valid/_external/toml-test/valid/table/array-empty.toml
+tests/data/valid/_external/toml-test/valid/table/array-implicit-and-explicit-after.toml
+tests/data/valid/_external/toml-test/valid/table/array-implicit.toml
+tests/data/valid/_external/toml-test/valid/table/array-many.toml
+tests/data/valid/_external/toml-test/valid/table/array-nest.toml
+tests/data/valid/_external/toml-test/valid/table/array-one.toml
+tests/data/valid/_external/toml-test/valid/table/array-table-array.toml
+tests/data/valid/_external/toml-test/valid/table/array-within-dotted.toml
+tests/data/valid/_external/toml-test/valid/table/empty-name.toml
+tests/data/valid/_external/toml-test/valid/table/empty.toml
+tests/data/valid/_external/toml-test/valid/table/keyword-with-values.toml
+tests/data/valid/_external/toml-test/valid/table/keyword.toml
+tests/data/valid/_external/toml-test/valid/table/names-with-values.toml
+tests/data/valid/_external/toml-test/valid/table/names.toml
+tests/data/valid/_external/toml-test/valid/table/no-eol.toml
+tests/data/valid/_external/toml-test/valid/table/sub-empty.toml
 tests/data/valid/_external/toml-test/valid/table/sub.toml
      5→[a.extend …
+tests/data/valid/_external/toml-test/valid/table/whitespace.toml
+tests/data/valid/_external/toml-test/valid/table/with-literal-string.toml
+tests/data/valid/_external/toml-test/valid/table/with-pound.toml
+tests/data/valid/_external/toml-test/valid/table/with-single-quotes.toml
 tests/data/valid/array/array-subtables.toml
      1→[[arr …
      2→[arr.subtab …

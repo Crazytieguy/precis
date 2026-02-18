@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1989 words)
+budget: 2000 (1994 words)
 
 CHANGELOG.md
 README.md
@@ -29,37 +29,19 @@ README.md
     27→v1, err := version.NewVersion("1.2")
     28→v2, err := version.NewVersion("1.5+metadata")
     29→
-    30→// Comparison example. There is also GreaterThan, Equal, and just
-    31→// a simple Compare that returns an int allowing easy >=, <=, etc.
-    32→if v1.LessThan(v2) {
-    33→    fmt.Printf("%s is less than %s", v1, v2)
-    34→}
-    35→```
-    36→
+      →…
     37→#### Version Constraints
     39→```go
     40→v1, err := version.NewVersion("1.2")
     41→
     42→// Constraints example.
-    43→constraints, err := version.NewConstraint(">= 1.0, < 1.4")
-    44→if constraints.Check(v1) {
-    45→	fmt.Printf("%s satisfies constraints %s", v1, constraints)
-    46→}
-    47→```
-    48→
+      →…
     49→#### Version Sorting
     51→```go
     52→versionsRaw := []string{"1.1", "0.7.1", "1.4-beta", "1.4", "2"}
     53→versions := make([]*version.Version, len(versionsRaw))
     54→for i, raw := range versionsRaw {
-    55→    v, _ := version.NewVersion(raw)
-    56→    versions[i] = v
-    57→}
-    58→
-    59→// After this, the versions are properly sorted
-    60→sort.Sort(version.Collection(versions))
-    61→```
-    62→
+      →…
     63→## Issues and Contributing
     65→If you find an issue with this library, please report an issue. If you'd
     66→like, we welcome any contributions. Fork this library and submit a pull
@@ -154,7 +136,13 @@ constraint.go
    114→
    115→	// compare sorted slices
    116→	for i, con := range left {
-      →…
+   117→		if !con.Equals(right[i]) {
+   118→			return false
+   119→		}
+   120→	}
+   121→
+   122→	return true
+   123→}
    125→func (cs Constraints) Len() int {
    126→	return len(cs)
    127→}
@@ -295,6 +283,22 @@ version.go
    140→		}
    141→		if preSelf == "" {
    142→			return 1
+   143→		}
+   144→		if preOther == "" {
+   145→			return -1
+   146→		}
+   147→
+   148→		return comparePrereleases(preSelf, preOther)
+   149→	}
+   150→
+   151→	segmentsSelf := v.Segments64()
+   152→	segmentsOther := other.Segments64()
+   153→	// Get the highest specificity (hS), or if they're equal, just use segmentSelf length
+   154→	lenSelf := len(segmentsSelf)
+   155→	lenOther := len(segmentsOther)
+   156→	hS := lenSelf
+   157→	if lenSelf < lenOther {
+   158→		hS = lenOther
       →…
    196→func (v *Version) equalSegments(other *Version) bool {
    211→func allZero(segs []int64) bool {

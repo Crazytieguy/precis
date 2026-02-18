@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (493 words)
+budget: 500 (491 words)
 
 Changelog.md
      1→# Changelog …
@@ -23,9 +23,6 @@ docs/guides/01-getting-started.md
      8→npm install --save superstruct
      9→```
     10→
-    11→And then you can import it:
-    12→
-    13→```ts
       →…
 docs/guides/02-validating-data.md
      1→# Validating Data …
@@ -61,34 +58,25 @@ docs/reference/typescript.md
 docs/reference/utilities.md
      1→# Utilities …
 docs/resources/faq.md
-     1→# FAQ
-     3→Some common questions you might have when first learning Superstruct.
-     4→
+     1→# FAQ …
 docs/resources/links.md
-     1→# Resources
-     3→A few resources that are helpful for building with Superstruct.
-     4→
+     1→# Resources …
      5→## Libraries …
 docs/summary.md
      3→## Guides
      5→- [Getting Started](./guides/01-getting-started.md)
-     6→- [Validating Data](./guides/02-validating-data.md)
-     7→- [Coercing Data](./guides/03-coercing-data.md)
       →…
     12→## API Reference
     14→- [Core](./reference/core.md)
-    15→- [Types](./reference/types.md)
-    16→- [Refinements](./reference/refinements.md)
       →…
     22→## Resources
     24→- [FAQ](./resources/faq.md)
-    25→- [Links](./resources/links.md)
+      →…
 examples/README.md
      1→# Examples …
 examples/package.json
 jsr.json
 package.json
-rollup.config.js
 src/error.ts
     16→/**
       →…
@@ -104,6 +92,8 @@ src/error.ts
     34→
     35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
 src/struct.ts
+     1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
+     2→import { StructError, Failure } from './error.js'
      4→/**
       →…
     10→export class Struct<T = unknown, S = unknown> {
@@ -142,11 +132,15 @@ src/structs/types.ts
 src/structs/utilities.ts
     60→export function assign …
 src/utils.ts
+     1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
+     2→import { Failure } from './error.js'
      4→/**
      5→ * Check if a value is an iterator.
      6→ */
      7→
      8→function isIterable<T>(x: unknown): x is Iterable<T> {
+     9→  return isObject(x) && typeof x[Symbol.iterator] === 'function'
+    10→}
     16→export function isObject …
     24→export function isNonArrayObject …
     32→export function isPlainObject …
@@ -165,6 +159,5 @@ test/validation/function/valid.ts
      5→export const data = function () {}
 test/validation/never/invalid.ts
 test/validation/type/valid-instance.ts
-     3→class Person {
      6→  constructor(name: string) {
 tsconfig.json

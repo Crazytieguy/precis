@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (995 words)
+budget: 1000 (992 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -19,38 +19,9 @@ ARCHITECTURE.md
     13→</>
     14→```
     15→
-    16→We didn't want to provide a render prop:
-    17→
-    18→```tsx
-    19→// No
-    20→onItemRender={({ item }) => {
-    21→  return <div>{item}</div>
-    22→}}
-    23→```
-    24→
-    25→Instead, we wanted to render components:
-    26→
-    27→```tsx
-    28→// Yes
-    29→<Item>My item</Item>
-    30→```
-    31→
-    32→Especially, we wanted full component composition:
-    33→
-    34→```tsx
-    35→// YES
-    36→<>
-    37→  <BlogItems />
-    38→  {staticItems}
-    39→</>
-    40→```
-    41→
       →…
     46→## Approach …
-    50→### Discarded approach
-    52→We did not use `React.Children` iteration because it will not support component composition. There is no way to "peek inside" the items contained within `<BlogItems />`, so those items cannot be filtered.
-    53→
-      →…
+    50→### Discarded approach …
     60→## Example …
     92→## Performance …
     96→## Groups …
@@ -61,7 +32,22 @@ README.md
      9→## Install …
     15→## Use …
     82→## Parts and styling …
+    86→### Command `[cmdk-root]` …
+   153→### Dialog `[cmdk-dialog]` `[cmdk-overlay]` …
+   180→### Input `[cmdk-input]` …
+   190→### List `[cmdk-list]` …
+   212→### Item `[cmdk-item]` `[data-disabled?]` `[data-selected?]` …
+   242→### Group `[cmdk-group]` `[hidden?]` …
+   256→### Separator `[cmdk-separator]` …
+   260→### Empty `[cmdk-empty]` …
+   264→### Loading `[cmdk-loading]` …
+   274→### `useCommandState(state => state.selectedField)` …
    285→## Examples …
+   289→### Nested items …
+   338→### Show sub-items when searching …
+   361→### Asynchronous results …
+   397→### Use inside Popover …
+   426→### Drop in stylesheets …
    430→## FAQ …
    456→## History …
    462→## Testing …
@@ -108,14 +94,30 @@ cmdk/src/command-score.ts
       →…
 cmdk/src/index.tsx
      5→import { commandScore } from './command-score'
-   664→const Item …
-   729→const Group …
-   774→const Separator …
-   787→const Input …
-   833→const List …
-   882→const Dialog …
-   899→const Empty …
-   909→const Loading …
+   659→/**
+      →…
+   664→const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
+   725→/**
+      →…
+   729→const Group = React.forwardRef<HTMLDivElement, GroupProps>((props, forwardedRef) => {
+   770→/**
+      →…
+   774→const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>((props, forwardedRef) => {
+   783→/**
+      →…
+   787→const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
+   829→/**
+      →…
+   833→const List = React.forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) => {
+   879→/**
+      →…
+   882→const Dialog = React.forwardRef<HTMLDivElement, DialogProps>((props, forwardedRef) => {
+   896→/**
+      →…
+   899→const Empty = React.forwardRef<HTMLDivElement, EmptyProps>((props, forwardedRef) => {
+   906→/**
+      →…
+   909→const Loading = React.forwardRef<HTMLDivElement, LoadingProps>((props, forwardedRef) => {
    955→/**
    956→ *
    957→ *
@@ -147,25 +149,12 @@ playwright.config.ts
 pnpm-workspace.yaml
      1→packages …
 test/package.json
-     2→  "name": "cmdk-tests",
-     3→  "version": "0.0.0",
-     4→  "scripts": {
-     6→  },
-     7→  "dependencies": {
-    18→}
 test/pages/_app.tsx
      1→import '../style.css'
      3→export default function App({ Component, pageProps }) {
-     4→  return <Component {...pageProps} />
-     5→}
 test/pages/huge.tsx
      4→const items = new Array(1000).fill(0)
 test/tsconfig.json
-     2→  "compilerOptions": {
-    17→  },
-    18→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "../dialog.test.ts"],
-    19→  "exclude": ["node_modules"]
-    20→}
 tsconfig.json
      2→  "compilerOptions": {
     16→  },
@@ -179,9 +168,6 @@ website/README.md
      7→```bash
      8→pnpm run dev
      9→```
-    10→
-    11→Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-    12→
       →…
     19→## Learn More
     21→To learn more about Next.js, take a look at the following resources:
@@ -189,8 +175,7 @@ website/README.md
     23→- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
     24→- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
     25→
-    26→You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-    27→
+      →…
     28→## Deploy on Vercel
     30→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
     31→
@@ -200,8 +185,6 @@ website/components/cmdk/framer.tsx
 website/components/cmdk/linear.tsx
      3→export function LinearCMDK() {
     30→const items = [
-    31→  {
-      →…
 website/components/cmdk/raycast.tsx
      7→export function RaycastCMDK() {
 website/components/cmdk/vercel.tsx
@@ -216,6 +199,15 @@ website/components/code/index.tsx
     41→export function Code({ children }: { children: string }) {
     42→  return (
     43→    <Highlight {...defaultProps} theme={theme} code={children} language="jsx">
+    44→      {({ className, style, tokens, getLineProps, getTokenProps }) => (
+    45→        <pre className={`${className} ${styles.root}`} style={style}>
+    46→          <button
+    47→            aria-label="Copy Code"
+    48→            onClick={() => {
+    49→              copy(children)
+    50→            }}
+    51→          >
+    52→            <CopyIcon />
       →…
 website/components/icons/index.tsx
      1→import styles from './icons.module.scss'
@@ -254,14 +246,12 @@ website/pages/_app.tsx
     17→export default function App({ Component, pageProps }: AppProps) {
     18→  return (
     19→    <>
-    20→      <Head>
       →…
 website/pages/_document.tsx
      5→export default class Document extends NextDocument {
      6→  render() {
      7→    return (
      8→      <Html lang="en">
-     9→        <Head>
       →…
 website/pages/index.tsx
     18→import packageJSON from '../../cmdk/package.json'
@@ -271,7 +261,6 @@ website/pages/index.tsx
     29→export default function Index() {
     30→  const [theme, setTheme] = React.useState<Themes>('raycast')
     31→
-    32→  return (
       →…
     84→function CMDKWrapper(props: MotionProps & { children: React.ReactNode }) {
     99→//////////////////////////////////////////////////////////////////

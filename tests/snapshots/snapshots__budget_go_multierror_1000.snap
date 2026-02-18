@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (994 words)
+budget: 1000 (989 words)
 
 CHANGELOG.md
      1→## Unreleased …
@@ -20,24 +20,6 @@ README.md
     16→// Before (go-multierror)
     17→var result error
     18→result = multierror.Append(result, err1)
-    19→result = multierror.Append(result, err2)
-    20→return result
-    21→
-    22→// After (stdlib)
-    23→var errs []error
-    24→if err1 != nil {
-    25→    errs = append(errs, err1)
-    26→}
-    27→if err2 != nil {
-    28→    errs = append(errs, err2)
-    29→}
-    30→if len(errs) > 0 {
-    31→    return errors.Join(errs...)
-    32→}
-    33→return nil
-    34→```
-    35→
-    36→**Custom formatting:**
       →…
    104→## Installation and Docs
    106→Install using `go get github.com/hashicorp/go-multierror`.
@@ -68,28 +50,13 @@ README.md
    133→
    134→**Building a list of errors**
    135→
-   136→The `Append` function is used to create a list of errors. This function
-   137→behaves a lot like the Go built-in `append` function: it doesn't matter
-   138→if the first argument is nil, a `multierror.Error`, or any other `error`,
-   139→the function behaves as you would expect.
-   140→
-   141→```go
-   142→var result error
-   143→
-   144→if err := step1(); err != nil {
-   145→	result = multierror.Append(result, err)
-   146→}
-   147→if err := step2(); err != nil {
-   148→	result = multierror.Append(result, err)
-   149→}
-   150→
-   151→return result
-   152→```
-   153→
       →…
 append.go
      6→// Append is a helper function that will append more errors
      7→// onto an Error in order to create a larger multi-error.
+     8→//
+     9→// If err is not a multierror.Error, then it will be turned into
+    10→// one. If any of the errs are multierr.Error, they will be flattened
       →…
     14→func Append(err error, errs ...error) *Error {
 append_test.go
@@ -131,7 +98,8 @@ group.go
     14→}
     16→// Go calls the given function in a new goroutine.
     17→//
-      →…
+    18→// If the function returns an error it is added to the group multierror which
+    19→// is returned by Wait.
     20→func (g *Group) Go(f func() error) {
     34→// Wait blocks until all function calls from the Go method have returned, then
     35→// returns the multierror.
@@ -158,17 +126,24 @@ multierror.go
     25→}
     27→// ErrorOrNil returns an error interface if this Error represents
     28→// a list of errors, or returns nil if the list of errors is empty. This
-      →…
+    29→// function is useful at the end of accumulation to make sure that the value
+    30→// returned represents the existence of errors.
     31→func (e *Error) ErrorOrNil() error {
     42→func (e *Error) GoString() string {
     43→	return fmt.Sprintf("*%#v", *e)
     44→}
     46→// WrappedErrors returns the list of errors that this Error is wrapping. It is
     47→// an implementation of the errwrap.Wrapper interface so that multierror.Error
+    48→// can be used with that library.
+    49→//
+    50→// This method is not safe to be called concurrently. Unlike accessing the
       →…
     53→func (e *Error) WrappedErrors() []error {
     60→// Unwrap returns an error from Error (or nil if there are no errors).
     61→// This error returned will further support Unwrap to get the next error,
+    62→// etc. The order will match the order of Errors in the multierror.Error
+    63→// at the time of calling.
+    64→//
       →…
     71→func (e *Error) Unwrap() error {
     88→// chain implements the interfaces necessary for errors.Is/As/Unwrap to
@@ -197,6 +172,9 @@ prefix.go
      8→)
     10→// Prefix is a helper function that will prefix some text
     11→// to the given error. If the error is a multierror.Error, then
+    12→// it will be prefixed to each wrapped error.
+    13→//
+    14→// This is useful to use when appending multiple multierrors
       →…
     16→func Prefix(err error, prefix string) error {
 prefix_test.go

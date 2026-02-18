@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1973 words)
+budget: 2000 (1969 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -16,10 +16,7 @@ CONTRIBUTING.md
      4→2. Install dependencies (`npm install`)
      5→3. Create your feature branch (`git checkout -b my-new-feature`)
      6→4. Commit your changes (`git commit -am 'Added some feature'`)
-     7→5. Test your changes (`npm test`)
-     8→6. Push to the branch (`git push origin my-new-feature`)
-     9→7. [Create new Pull Request](https://help.github.com/articles/creating-a-pull-request/)
-    10→
+      →…
     11→## Testing
     13→We use [TAP](https://github.com/tapjs/node-tap) to write tests. Run our test suite with this command:
     14→
@@ -417,7 +414,9 @@ lib/main.d.ts
     99→    | 'MISSING_DATA'
    100→    | 'INVALID_DOTENV_KEY'
    101→    | 'NOT_FOUND_DOTENV_ENVIRONMENT'
-      →…
+   102→    | 'DECRYPTION_FAILED'
+   103→    | 'OBJECT_REQUIRED';
+   104→}
    106→export interface DotenvPopulateOptions {
    107→  /**
    108→   * Default: `false`
@@ -443,6 +442,8 @@ lib/main.d.ts
 lib/main.js
      7→const version = packageJson.version
     10→const TIPS = [
+    11→  '🔐 encrypt with Dotenvx: https://dotenvx.com',
+      →…
     27→function _getRandomTip () {
     31→function parseBoolean (value) {
     38→function supportsAnsi () {
@@ -463,6 +464,8 @@ lib/main.js
    346→function decrypt (encrypted, keyStr) {
    378→function populate (processEnv, parsed, options = {}) {
    413→const DotenvModule = {
+   414→  configDotenv,
+      →…
 package.json
      2→  "name": "dotenv",
      3→  "version": "17.3.1",

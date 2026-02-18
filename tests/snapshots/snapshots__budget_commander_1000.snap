@@ -68,7 +68,6 @@ Readme_zh-CN.md
    907→### .parse() 和 .parseAsync()
    909→`.parse`的第一个参数是要解析的字符串数组，也可以省略参数而使用`process.argv`。
    910→
-   911→如果参数遵循与 node 不同的约定，可以在第二个参数中传递`from`选项：
       →…
 SECURITY.md
      1→# Security Policy …
@@ -80,9 +79,7 @@ docs/deprecated.md
    232→
    233→- README updated in Commander v3.
    234→- Deprecated from Commander v9.
-   235→- Throws an exception in Commander v13. Deprecated and gone!
-   236→- Replacement added in Commander v13.1 with support for dual long options, like `--ws, --workspace`.
-   237→
+      →…
 docs/help-in-depth.md
      1→# Help in Depth …
     20→## Data Properties …
@@ -102,21 +99,29 @@ docs/release-policy.md
 docs/terminology.md
      1→# Terminology …
 docs/zh-CN/不再推荐使用的功能.md
+     1→# 不再推荐使用的功能 …
 docs/zh-CN/可变参数的选项.md
+     1→# 可变参数的选项 …
 docs/zh-CN/术语表.md
+     1→# 术语表 …
 eslint.config.js
+     8→const tsconfigTsFiles …
+     9→const tsconfigJsFiles …
 esm.mjs
      1→import commander from './index.js';
 examples/color-help-replacement.mjs
 examples/color-help.mjs
 examples/custom-command-class.js
+     6→class CommandWithTrace extends commander.Command {
      7→  createCommand(name) {
 examples/global-options-added.js
+    16→class MyRootCommand extends Command {
     17→  createCommand(name) {
 examples/help-centered.mjs
 examples/man-style-help.mjs
      5→function formatItem(term, termWidth, description, helper) {
 jest.config.js
+     1→const config …
 lib/argument.js
      3→class Argument {
 lib/command.js

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1915 words)
+budget: 2000 (1916 words)
 
 Cargo.toml
      1→[package …
@@ -13,23 +13,18 @@ Cargo.toml
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
      4→[<img alt="github" src="https://img.shields.io/badge/github-dtolnay/anyhow-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/dtolnay/anyhow)
-     5→[<img alt="crates.io" src="https://img.shields.io/crates/v/anyhow.svg?style=for-the-badge&color=fc8d62&logo=rust" height="20">](https://crates.io/crates/anyhow)
       →…
     21→## Details
     23→- Use `Result<T, anyhow::Error>`, or equivalently `anyhow::Result<T>`, as the
-    24→  return type of any fallible function.
       →…
    126→## No-std support
    128→In no_std mode, almost all of the same API is available and works the same way.
-   129→To depend on Anyhow in no_std mode, disable our default enabled "std" feature in
       →…
    144→## Comparison to failure
    146→The `anyhow::Error` type works something like `failure::Error`, but unlike
-   147→failure ours is built around the standard library's `std::error::Error` trait
       →…
    155→## Comparison to thiserror
    157→Use Anyhow if you don't care what error type your functions return, you just
-   158→want it to be easy. This is common in application code. Use [thiserror] if you
       →…
    166→#### License
    169→Licensed under either of <a href="LICENSE-APACHE">Apache License, Version
@@ -284,6 +279,9 @@ src/lib.rs
    295→///   error type does not provide one.
    296→/// - `Error` is represented as a narrow pointer &mdash; exactly one word in
    297→///   size instead of two.
+   298→///
+   299→/// <br>
+   300→///
       →…
    390→pub struct Error {
    391→    inner: Own<ErrorImpl>,
@@ -298,6 +296,9 @@ src/lib.rs
    401→/// use anyhow::Error;
    402→/// use std::io;
    403→///
+   404→/// pub fn underlying_io_error_kind(error: &Error) -> Option<io::ErrorKind> {
+   405→///     for cause in error.chain() {
+   406→///         if let Some(io_error) = cause.downcast_ref::<io::Error>() {
       →…
    415→pub struct Chain<'a> {
    416→    state: crate::chain::ChainState<'a>,
@@ -362,6 +363,9 @@ src/lib.rs
    477→/// # Example
    478→///
    479→/// ```
+   480→/// use anyhow::{Context, Result};
+   481→/// use std::fs;
+   482→/// use std::path::PathBuf;
       →…
    616→pub trait Context<T, E>: context::private::Sealed {
    618→    fn context …
@@ -492,6 +496,7 @@ tests/test_context.rs
     45→    message: &'static str,
     46→    drop: DetectDrop,
     47→}
+    49→struct Dropped {
 tests/test_convert.rs
      1→#![allow(clippy::unnecessary_wraps)]
      2→
@@ -502,16 +507,16 @@ tests/test_downcast.rs
      3→mod common;
      4→mod drop;
 tests/test_ensure.rs
+    40→struct S;
     43→    type Output = bool;
     44→    fn add …
+    50→trait Trait: Sized {
     52→    fn t …
+    59→enum Enum<T: ?Sized> {
     66→    fn eq …
     72→    fn fmt …
     77→#[track_caller]
     78→fn assert_err<T: Debug>(result: impl FnOnce() -> Result<T>, expected: &'static str) {
-    79→    let actual = result().unwrap_err().to_string();
-    80→
-      →…
 tests/test_ffi.rs
      4→use anyhow::anyhow;
      6→#[no_mangle]
@@ -544,8 +549,10 @@ tests/ui/ensure-nonbool.rs
      4→struct Bool(bool);
      6→struct DerefBool(bool);
      8→struct NotBool(bool);
+    10→impl Deref for DerefBool {
     11→    type Target = bool;
     12→    fn deref(&self) -> &Self::Target {
+    17→impl Not for NotBool {
     18→    type Output = bool;
     19→    fn not(self) -> Self::Output {
 tests/ui/must-use.rs

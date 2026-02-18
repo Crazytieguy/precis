@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3945 words)
+budget: 4000 (3940 words)
 
 Changelog.md
      1→# Changelog
@@ -117,10 +117,7 @@ docs/reference/core.md
      8→assert(value, User, 'The user is invalid!')
      9→```
     10→
-    11→Assert that `value` is valid according to a `struct`. If the value is invalid a [`StructError`](./errors.md#structerror) will be thrown (the optional `message` parameter allows you to override error's message).
-    12→
-    13→> 🤖 When using TypeScript `assert` acts as an [assertion function](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#assertion-functions), so you can ensure that after calling it the type of the `value` matches the shape of the struct.
-    14→
+      →…
 docs/reference/errors.md
      1→# Errors …
 docs/reference/refinements.md
@@ -137,14 +134,6 @@ docs/reference/typescript.md
     12→type User = {
     13→  id: number
     14→  name: string
-    15→}
-    16→
-    17→const User: Describe<User> = object({
-    18→  id: string(), // This mistake will fail to pass type checking!
-    19→  name: string(),
-    20→})
-    21→```
-    22→
       →…
 docs/reference/utilities.md
      1→# Utilities …
@@ -152,14 +141,8 @@ docs/resources/faq.md
      1→# FAQ
      3→Some common questions you might have when first learning Superstruct.
      4→
-     5→### How can I allow unknown keys with `object` structs?
-     7→The [`object`](../reference/types.md#object) struct validates that a value matches a known object shape. Just like it's TypeScript counterpart, it does not allow unknown keys—this is very useful in catching bugs in the majority of cases.
-     8→
-      →…
-    11→### Why not have a built-in `json` struct?
-    13→The problem with a built-in `json` struct is that it needs to recursively iterate through deep objects to guarantee they're valid JSON. What's wrong with that? Nothing, except that it would be a footgun.
-    14→
-      →…
+     5→### How can I allow unknown keys with `object` structs? …
+    11→### Why not have a built-in `json` struct? …
 docs/resources/links.md
      1→# Resources
      3→A few resources that are helpful for building with Superstruct.
@@ -189,8 +172,7 @@ docs/summary.md
     24→- [FAQ](./resources/faq.md)
     25→- [Links](./resources/links.md)
 examples/README.md
-     1→# Examples
-     3→To run the examples locally, first run `npm install` in this directory. Then use node to run any of the examples like so: `node basic-validation.js`, `node composing-structs.js`, etc.
+     1→# Examples …
 examples/package.json
      2→  "type": "module",
      3→  "license": "MIT",
@@ -255,6 +237,13 @@ src/error.ts
     37→    const { message, explanation, ...rest } = failure
     38→    const { path } = failure
     39→    const msg =
+    40→      path.length === 0 ? message : `At path: ${path.join('.')} -- ${message}`
+    41→    super(explanation ?? msg)
+    42→    if (explanation != null) this.cause = msg
+    43→    Object.assign(this, rest)
+    44→    this.name = this.constructor.name
+    45→    this.failures = () => {
+    46→      return (cached ??= [failure, ...failures()])
       →…
 src/struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
@@ -282,6 +271,13 @@ src/struct.ts
     24→    schema: S
     25→    coercer?: Coercer
     26→    validator?: Validator
+    27→    refiner?: Refiner<T>
+    28→    entries?: Struct<T, S>['entries']
+    29→  }) {
+    30→    const {
+    31→      type,
+    32→      schema,
+    33→      validator,
       →…
     63→  /**
     64→   * Assert that a value passes the struct's validation, throwing if it doesn't.
@@ -799,8 +795,11 @@ test/validation/boolean/valid.ts
      5→export const data = true
      7→export const output = true
 test/validation/coerce/changed.ts
+     1→import { string, unknown, coerce } from '../../../src'
 test/validation/coerce/condition-not-met.ts
+     1→import { string, number, coerce } from '../../../src'
 test/validation/coerce/unchanged.ts
+     1→import { string, unknown, coerce } from '../../../src'
 test/validation/date/invalid-date.ts
      1→import { date } from '../../../src'
      3→export const Struct = date()
@@ -861,8 +860,6 @@ test/validation/function/invalid.ts
      3→export const Struct = func()
      5→export const data = false
      7→export const failures = [
-     8→  {
-      →…
 test/validation/function/valid.ts
      1→import { func } from '../../../src'
      3→export const Struct = func()
@@ -898,8 +895,20 @@ test/validation/intersection/invalid.ts
 test/validation/intersection/valid-refinement.ts
 test/validation/intersection/valid.ts
 test/validation/lazy/invalid.ts
+     1→import { lazy, string } from '../../../src'
+     3→export const Struct = lazy(() => string())
+     5→export const data = 3
+     7→export const failures = [
 test/validation/lazy/valid.ts
+     1→import { lazy, string } from '../../../src'
+     3→export const Struct = lazy(() => string())
+     5→export const data = 'two'
+     7→export const output = 'two'
 test/validation/lazy/with-refiners.ts
+     1→import { lazy, nonempty, string } from '../../../src'
+     3→export const Struct = lazy(() => nonempty(string()))
+     5→export const data = ''
+     7→export const failures = [
 test/validation/literal/invalid.ts
      1→import { literal } from '../../../src'
      3→export const Struct = literal(42)
@@ -928,8 +937,6 @@ test/validation/never/invalid.ts
      3→export const Struct = never()
      5→export const data = true
      7→export const failures = [
-     8→  {
-      →…
 test/validation/nullable/invalid.ts
 test/validation/nullable/valid-defined-nested.ts
 test/validation/nullable/valid-defined.ts
@@ -949,11 +956,27 @@ test/validation/object/invalid-referential.ts
      3→const Section = pattern(string(), /^\d+(\.\d+)*$/)
 test/validation/object/valid-referential.ts
      3→const Section = pattern(string(), /^\d+(\.\d+)*$/)
+test/validation/omit/invalid-element-nested.ts
+test/validation/omit/invalid-property-nested.ts
+test/validation/omit/invalid-property-unknown.ts
+test/validation/omit/invalid-property.ts
+test/validation/omit/invalid.ts
+test/validation/omit/valid-nested.ts
+test/validation/omit/valid-type.ts
+test/validation/omit/valid.ts
 test/validation/optional/invalid.ts
 test/validation/optional/valid-defined-nested.ts
 test/validation/optional/valid-defined.ts
 test/validation/optional/valid-undefined-nested.ts
 test/validation/optional/valid-undefined.ts
+test/validation/partial/composed.ts
+test/validation/partial/invalid-property-unknown.ts
+test/validation/partial/invalid-property.ts
+test/validation/partial/invalid.ts
+test/validation/partial/valid-empty.ts
+test/validation/partial/valid-full.ts
+test/validation/partial/valid-partial.ts
+test/validation/partial/valid-type.ts
 test/validation/pattern/invalid.ts
      1→import { string, pattern } from '../../../src'
      3→export const Struct = pattern(string(), /\d+/)
@@ -964,6 +987,14 @@ test/validation/pattern/valid.ts
      3→export const Struct = pattern(string(), /\d+/)
      5→export const data = '123'
      7→export const output = '123'
+test/validation/pick/invalid-element-nested.ts
+test/validation/pick/invalid-property-nested.ts
+test/validation/pick/invalid-property-unknown.ts
+test/validation/pick/invalid-property.ts
+test/validation/pick/invalid.ts
+test/validation/pick/valid-nested.ts
+test/validation/pick/valid-type.ts
+test/validation/pick/valid.ts
 test/validation/record/invalid-array.ts
 test/validation/record/invalid-property.ts
 test/validation/record/invalid.ts

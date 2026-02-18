@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (979 words)
+budget: 1000 (968 words)
 
 FUNDING.yml
      1→github …
@@ -18,32 +18,23 @@ README.md
     31→## Documentation
     33→Find the full API reference in the [documentation](https://sonner.emilkowal.ski/getting-started).
 package.json
-     2→  "name": "sonner",
-     3→  "version": "2.0.7",
-     4→  "description": "An opinionated toast component for React.",
-     5→  "exports": {
-    18→  },
-    19→  "main": "./dist/index.js",
-    20→  "types": "./dist/index.d.ts",
-    21→  "files": [
-    23→  ],
-    24→  "scripts": {
-    32→  },
-    33→  "keywords": [
-    39→  ],
-    40→  "author": "Emil Kowalski <e@emilkowal.ski>",
-    41→  "license": "MIT",
-    42→  "homepage": "https://sonner.emilkowal.ski/",
-    43→  "repository": {
-    46→  },
-    47→  "bugs": {
-    49→  },
-    50→  "devDependencies": {
-    60→  },
-    61→  "peerDependencies": {
-    64→  },
-    65→  "packageManager": "pnpm@9.15.9"
-    66→}
+     2→  "name …
+     3→  "version …
+     4→  "description …
+     5→  "exports …
+    19→  "main …
+    20→  "types …
+    21→  "files …
+    24→  "scripts …
+    33→  "keywords …
+    40→  "author …
+    41→  "license …
+    42→  "homepage …
+    43→  "repository …
+    47→  "bugs …
+    50→  "devDependencies …
+    61→  "peerDependencies …
+    65→  "packageManager …
 playwright.config.ts
 pnpm-workspace.yaml
      1→packages …
@@ -51,7 +42,11 @@ src/assets.tsx
      2→import React from 'react';
      3→import type { ToastTypes } from './types …
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
+     6→  switch (type) {
+      →…
     26→export const Loader = ({ visible, className }: { visible: boolean; className?: string }) => {
+    27→  return (
+      →…
     78→export const CloseIcon = (
     79→  <svg
     80→    xmlns="http://www.w3.org/2000/svg"
@@ -59,6 +54,8 @@ src/assets.tsx
 src/hooks.tsx
      1→import React from 'react';
      3→export const useIsDocumentHidden = () => {
+     4→  const [isDocumentHidden, setIsDocumentHidden] = React.useState(document.hidden);
+      →…
 src/index.tsx
      3→import React from 'react';
      4→import ReactDOM from 'react-dom';
@@ -79,6 +76,7 @@ src/state.ts
     15→type titleT = (() => React.ReactNode) | React.ReactNode;
     17→class Observer {
     18→  subscribers: Array<(toast: ExternalToast | ToastToDismiss) => void>;
+    19→  toasts: Array<ToastT | ToastToDismiss>;
     22→  constructor …
     29→  subscribe …
     38→  publish …
@@ -119,6 +117,7 @@ src/types.ts
     98→export interface HeightT {
    104→interface ToastOptions {
    105→  className?: string;
+   106→  closeButton?: boolean;
       →…
    118→type Offset =
    119→  | {
@@ -130,50 +129,36 @@ src/types.ts
    192→export interface ToastToDismiss {
    197→export type ExternalToast …
 test/README.md
-test/next.config.js
+     3→## Getting Started …
+    25→## Learn More …
+    34→## Deploy on Vercel …
 test/package.json
 test/src/app/action.tsx
 test/src/app/layout.tsx
      1→export const metadata = {
 test/src/app/page.tsx
      7→const promise …
-test/tests/basic.spec.ts
 test/tsconfig.json
 tsconfig.json
-     2→  "compilerOptions": {
-     8→  },
-     9→  "include": ["src"]
-    10→}
+     2→  "compilerOptions …
+     9→  "include …
 turbo.json
-     2→  "$schema": "https://turbo.build/schema.json",
-     3→  "extends": ["//"],
-     4→  "pipeline": {
-    13→}
+     2→  "$schema …
+     3→  "extends …
+     4→  "pipeline …
 website/README.md
      3→## Getting Started
      5→First, run the development server:
      6→
-     7→```bash
-     8→npm run dev
-     9→# or
-    10→yarn dev
-    11→# or
-    12→pnpm dev
-    13→```
-    14→
       →…
     25→## Learn More
     27→To learn more about Next.js, take a look at the following resources:
     28→
-    29→- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-    30→- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-    31→
-    32→You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-    33→
+      →…
     34→## Deploy on Vercel
     36→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
     37→
-    38→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+      →…
 website/next.config.js
      1→/** @type {import('next').NextConfig} */
      2→const nextConfig = {
@@ -192,6 +177,8 @@ website/src/components/CodeBlock/index.tsx
      9→const variants = {
     14→const theme = {
     48→export const CodeBlock = ({ children, initialHeight = 0 }: { children: string; initialHeight?: number }) => {
+    49→  const [ref, bounds] = useMeasure();
+      →…
 website/src/components/ExpandModes/index.tsx
      1→import { toast } from 'sonner';
      2→import { CodeBlock } from '../CodeBlock';
@@ -213,7 +200,9 @@ website/src/components/Head/index.tsx
      3→const ogImage = 'https://sonner.emilkowal.ski/og.png';
      5→const Head …
 website/src/components/Hero/index.tsx
+     1→import { toast } from 'sonner';
      3→import styles from './hero.module.css';
+     4→import Link from 'next/link';
      6→export const Hero = () => {
      7→  return (
      8→    <div className={styles.wrapper}>
@@ -250,6 +239,8 @@ website/src/components/Position/index.tsx
     12→}: {
       →…
 website/src/components/Types/Types.tsx
+     1→import React from 'react';
+     2→import { toast } from 'sonner';
      3→import { CodeBlock } from '../CodeBlock';
      5→const promiseCode = '`${data.name} toast has been added`';
      7→export const Types = () => {
@@ -268,6 +259,8 @@ website/src/pages/_app.tsx
      4→import '../style.css';
      5→import '../globals.css';
      7→export default function Nextra({ Component, pageProps }: AppProps): ReactElement {
+     8→  return (
+      →…
 website/src/pages/_meta.json
      2→  "getting-started": {
      5→  },
@@ -286,6 +279,8 @@ website/src/pages/index.tsx
     11→import { How } from '../components/How/How';
     12→import { Footer } from '../components/Footer';
     14→export default function Home() {
+    15→  const [expand, setExpand] = React.useState(false);
+      →…
 website/theme.config.jsx
      7→  useNextSeoProps() {
 website/tsconfig.json

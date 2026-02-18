@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3930 words)
+budget: 4000 (3931 words)
 
 404.md
      1→# Document not found (404)
@@ -118,6 +118,7 @@ cli/README.md
     13→* [`mdbook clean`](clean.md) --- Deletes the rendered output.
     14→* [`mdbook completions`](completions.md) --- Support for shell auto-completion.
 cli/arg-watcher.md
+     1→#### `--watcher` …
 cli/build.md
      1→# The build command
      3→The build command is used to render your book:
@@ -127,6 +128,9 @@ cli/build.md
      7→```
      8→
       →…
+    16→#### Specify a directory …
+    25→#### `--open` …
+    30→#### `--dest-dir` …
 cli/clean.md
      1→# The clean command
      3→The clean command is used to delete the generated book and any other build
@@ -136,6 +140,8 @@ cli/clean.md
      7→mdbook clean
      8→```
       →…
+    10→#### Specify a directory …
+    19→#### `--dest-dir` …
 cli/completions.md
      1→# The completions command
      3→The completions command is used to generate auto-completions for some common shells.
@@ -154,6 +160,12 @@ cli/init.md
      7→
      8→```bash
       →…
+    32→#### Tip: Generate chapters from SUMMARY.md …
+    39→#### Specify a directory …
+    48→#### `--theme` …
+    56→#### `--title` …
+    65→#### `--ignore` …
+    80→#### `--force` …
 cli/serve.md
      1→# The serve command
      3→The serve command is used to preview a book by serving it via HTTP at
@@ -163,6 +175,7 @@ cli/serve.md
      7→mdbook serve
      8→```
       →…
+    18→#### Specify a directory …
     27→### Server options
     29→The `serve` hostname defaults to `localhost`, and the port defaults to `3000`. Either option can be specified on the command line:
     30→
@@ -170,6 +183,9 @@ cli/serve.md
     32→mdbook serve path/to/book -p 8000 -n 127.0.0.1 
     33→```
     34→
+    35→#### `--open` …
+    40→#### `--dest-dir` …
+    49→#### Specify exclude patterns …
 cli/test.md
      1→# The test command
      3→When writing a book, you sometimes need to automate some tests. For example,
@@ -179,6 +195,10 @@ cli/test.md
      7→
      8→mdBook supports a `test` command that will run all available tests in a book. At
       →…
+    11→#### Disable tests on a code block …
+    31→#### Specify a directory …
+    40→#### `--library-path` …
+    57→#### `--chapter` …
 cli/watch.md
      1→# The watch command
      3→The `watch` command is useful when you want your book to be rendered on every
@@ -187,6 +207,10 @@ cli/watch.md
      6→build automatically whenever you modify a file; this includes re-creating
      7→deleted files still mentioned in `SUMMARY.md`!
      8→
+     9→#### Specify a directory …
+    18→#### `--open` …
+    23→#### `--dest-dir` …
+    32→#### Specify exclude patterns …
 continuous-integration.md
      1→# Running `mdbook` in continuous integration
      3→There are a variety of services such as [GitHub Actions] or [GitLab CI/CD] which can be used to test and deploy your book automatically.
@@ -217,16 +241,12 @@ continuous-integration.md
     70→This can be used to validate Rust code examples in the book.
     71→
     72→This will require having Rust installed.
-    73→Some services have Rust pre-installed, but if your service does not, you will need to add a step to install it.
-    74→
       →…
     83→## Deploying
     85→You may want to automatically deploy your book.
     86→Some may want to do this every time a change is pushed, and others may want to only deploy when a specific release is tagged.
     87→
     88→You'll also need to understand the specifics on how to push a change to your web service.
-    89→For example, [GitHub Pages] just requires committing the output onto a specific git branch.
-    90→Other services may require using something like SSH to connect to a remote server.
       →…
    100→### 404 handling
    102→mdBook automatically generates a 404 page to be used for broken links.
@@ -716,15 +736,12 @@ guide/creating.md
     32→## Anatomy of a book …
     36→### `book.toml`
     38→In the root of your book, there is a `book.toml` file which contains settings for describing how to build your book.
-    39→This is written in the [TOML markup language](https://toml.io/).
       →…
     50→### `SUMMARY.md`
     52→The next major part of a book is the summary file located at `src/SUMMARY.md`.
-    53→This file contains a list of all the chapters in the book.
       →…
     73→### Source files
     75→The content of your book is all contained in the `src` directory.
-    76→Each chapter is a separate Markdown file.
       →…
     96→## Publishing a book …
 guide/installation.md
@@ -739,7 +756,6 @@ guide/installation.md
     19→## Build from source using Rust …
     41→### Installing the latest master version
     43→The version published to crates.io will ever so slightly be behind the version hosted on GitHub.
-    44→If you need the latest version you can build the git version of mdBook yourself.
       →…
     53→## Modifying and contributing …
 guide/reading.md
@@ -765,5 +781,4 @@ misc/contributors.md
      6→- [mdinger](https://github.com/mdinger)
      7→- Kevin ([kbknapp](https://github.com/kbknapp))
      8→- Steve Klabnik ([steveklabnik](https://github.com/steveklabnik))
-     9→- Adam Solove ([asolove](https://github.com/asolove))
       →…

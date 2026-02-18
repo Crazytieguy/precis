@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (989 words)
+budget: 1000 (991 words)
 
 README.md
      1→# Archived project. No maintenance. 
@@ -49,10 +49,6 @@ README.md
     46→// => {"Name":"gopher", "ID":123456, "Enabled":true}
     47→m := structs.Map(server)
     48→
-    49→// Convert the values of a struct to a []interface{}
-    50→// => ["gopher", 123456, true]
-    51→v := structs.Values(server)
-    52→
       →…
     74→### Struct methods
     76→The structs functions can be also used as independent methods by creating a new
@@ -175,6 +171,8 @@ structs.go
    405→func (s *Struct) structFields() []reflect.StructField {
    406→	t := s.value.Type()
    407→
+   408→	var f []reflect.StructField
+   409→
       →…
    428→func strctVal(s interface{}) reflect.Value {
    429→	v := reflect.ValueOf(s)
@@ -194,6 +192,8 @@ structs.go
    509→func (s *Struct) nested(val reflect.Value) interface{} {
    510→	var finalVal interface{}
    511→
+   512→	v := reflect.ValueOf(val.Interface())
+   513→	if v.Kind() == reflect.Ptr {
       →…
 structs_example_test.go
      3→import …
@@ -221,6 +221,8 @@ tags.go
     22→func parseTag(tag string) (string, tagOptions) {
     23→	// tag is one of followings:
     24→	// ""
+    25→	// "name"
+    26→	// "name,opt"
       →…
 tags_test.go
      3→import "testing …

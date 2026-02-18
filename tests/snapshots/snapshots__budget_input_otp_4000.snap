@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3887 words)
+budget: 4000 (3889 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -54,7 +54,6 @@ README.md
     59→      <div className="flex">
     60→        {slots.slice(3).map((slot, idx) => (
     61→          <Slot key={idx} {...slot} />
-    62→        ))}
       →…
    136→## How it works
    138→There's currently no native OTP/2FA/MFA input in HTML, which means people are either going with 1. a simple input design or 2. custom designs like this one.
@@ -82,7 +81,6 @@ README.md
    161→<details>
    162→<summary>Supports screen readers (a11y)</summary>
    163→
-   164→Stripe was my first inspiration to build this library.
       →…
    198→### Auto tracks if the input has space in the right side for the badge
    200→https://github.com/guilhermerodz/input-otp/assets/10366880/bf01af88-1f82-463e-adf4-54a737a92f59
@@ -110,17 +108,6 @@ README.md
    225→
    226→  // Value state controlling the input
    227→  value?: string
-   228→  // Setter for the controlled value (or callback for uncontrolled value)
-   229→  onChange?: (newValue: string) => unknown
-   230→
-   231→  // Callback when the input is complete
-   232→  onComplete?: (...args: any[]) => unknown
-   233→
-   234→  // Where is the text located within the input
-   235→  // Affects click-holding or long-press behavior
-   236→  // Default: 'left'
-   237→  textAlign?: 'left' | 'center' | 'right'
-   238→
       →…
    293→## Examples
    298→```tsx
@@ -144,7 +131,6 @@ README.md
    316→```
    317→</details>
    318→
-   319→<details>
       →…
    377→## Caveats
    382→By default, `input-otp` handles password managers for you.
@@ -168,7 +154,6 @@ README.md
    400→```
    401→</details>
    402→
-   403→<details>
       →…
    539→#### Sponsors
    541→> [Clerk](https://go.clerk.com/input-otp) is the easiest way to add authentication to your application.
@@ -195,10 +180,6 @@ apps/storybook/README.md
     29→    # Navigate to the directory
     30→    cd taskbox/
     31→
-    32→    # Install the dependencies
-    33→    yarn
-    34→    ```
-    35→
       →…
     44→## 🔎 What's inside?
     46→A quick look at the top-level files and directories included with this template.
@@ -218,10 +199,6 @@ apps/storybook/README.md
     60→
     61→1.  **`.storybook`**: This directory contains Storybook's [configuration](https://storybook.js.org/docs/react/configure/overview) files.
     62→
-    63→2.  **`node_modules`**: This directory contains all of the modules of code that your project depends on (npm packages).
-    64→
-    65→3.  **`public`**: This directory will contain the development and production build of the site.
-    66→
       →…
     83→## Contribute
     85→If you encounter an issue with the template, we encourage you to open an issue in this template's repository.
@@ -300,6 +277,8 @@ apps/storybook/src/stories/InputOTP.stories.tsx
      1→import { InputOTP, InputOTPGroup, InputOTPSlot } from "../components/ui/input-otp"
      2→import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"
      4→const meta = {
+     5→  title: "ui/InputOTP",
+      →…
     27→type Story = StoryObj<typeof meta>
     29→export const Default: Story = {}
 apps/storybook/tailwind.config.js
@@ -320,32 +299,9 @@ apps/storybook/vite.config.js
      1→import { defineConfig } from 'vite'
      2→import react from '@vitejs/plugin-react'
 apps/test/README.md
-     3→## Getting Started
-     5→First, run the development server:
-     6→
-     7→```bash
-     8→npm run dev
-     9→# or
-    10→yarn dev
-    11→# or
-    12→pnpm dev
-    13→# or
-    14→bun dev
-    15→```
-    16→
-      →…
-    23→## Learn More
-    25→To learn more about Next.js, take a look at the following resources:
-    26→
-    27→- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-    28→- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-    29→
-    30→You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-    31→
-    32→## Deploy on Vercel
-    34→The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-    35→
-    36→Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+     3→## Getting Started …
+    23→## Learn More …
+    32→## Deploy on Vercel …
 apps/test/next.config.mjs
      1→/** @type {import('next').NextConfig} */
      2→const nextConfig = {};
@@ -394,12 +350,15 @@ apps/test/src/app/with-on-complete/page.tsx
      7→export default function Page() {
      8→  const [disabled, setDisabled] = React.useState(false)
      9→
+    10→  return (
       →…
 apps/test/src/components/base-input.tsx
      6→export function BaseOTPInput(
      7→  overrideProps: Partial<React.ComponentProps<typeof OTPInput>> = {},
      8→) {
      9→  const [value, setValue] = React.useState('')
+    10→  const [disabled, setDisabled] = React.useState(false)
+    11→
       →…
 apps/test/src/lib/fonts.ts
     10→export const fontSans = GeistSans
@@ -639,6 +598,14 @@ apps/website/src/app/(local-pages)/shadcn/page.tsx
     28→            </InputOTPGroup>
     29→            <InputOTPSeparator />
     30→            <InputOTPGroup>
+    31→              {slots.slice(3).map((slot, index) => (
+    32→                <InputOTPRenderSlot key={index} {...slot} />
+    33→              ))}
+    34→            </InputOTPGroup>
+    35→          </>
+    36→        )}
+    37→      />
+    38→      
       →…
 apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
      3→import {
@@ -691,6 +658,7 @@ apps/website/src/app/(pages)/(home)/_components/confetti.tsx
      9→  }
     10→}) {
     11→  return (
+    12→    <VFX
       →…
 apps/website/src/app/(pages)/(home)/_components/showcase.tsx
      3→import React, { useMemo } from 'react'
@@ -710,6 +678,7 @@ apps/website/src/app/(pages)/(home)/_components/showcase.tsx
     20→
     21→  const inputRef = React.useRef<HTMLInputElement>(null)
     22→
+    23→  React.useEffect(() => {
       →…
    151→function Slot(props: {
    152→  char: string | null
@@ -902,23 +871,55 @@ apps/website/src/components/site-header.tsx
     10→  return (
       →…
 apps/website/src/components/ui/badge.tsx
+     6→const badgeVariants = cva(
     26→export interface BadgeProps
     27→  extends React.HTMLAttributes<HTMLDivElement>,
     28→    VariantProps<typeof badgeVariants> {}
     30→function Badge({ className, variant, ...props }: BadgeProps) {
+    31→  return (
+      →…
 apps/website/src/components/ui/button.tsx
      5→import { cn } from "../../lib/utils"
+     7→const buttonVariants = cva(
     36→export interface ButtonProps
     37→  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     38→    VariantProps<typeof buttonVariants> {
     39→  asChild?: boolean
     40→}
+    42→const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 apps/website/src/components/ui/dropdown-menu.tsx
+     9→const DropdownMenu = DropdownMenuPrimitive.Root
+    11→const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger
+    13→const DropdownMenuGroup = DropdownMenuPrimitive.Group
+    15→const DropdownMenuPortal = DropdownMenuPrimitive.Portal
+    17→const DropdownMenuSub = DropdownMenuPrimitive.Sub
+    19→const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup
+    21→const DropdownMenuSubTrigger = React.forwardRef<
+    43→const DropdownMenuSubContent = React.forwardRef<
+    59→const DropdownMenuContent = React.forwardRef<
+    77→const DropdownMenuItem = React.forwardRef<
+    95→const DropdownMenuCheckboxItem = React.forwardRef<
+   119→const DropdownMenuRadioItem = React.forwardRef<
+   141→const DropdownMenuLabel = React.forwardRef<
+   159→const DropdownMenuSeparator = React.forwardRef<
    171→const DropdownMenuShortcut = ({
+   172→  className,
+      →…
 apps/website/src/components/ui/input-otp.tsx
+     9→const InputOTP = React.forwardRef<
+    25→const InputOTPGroup = React.forwardRef<
+    33→type InputOTPSlotProps = { index: number }
+    34→const InputOTPSlot = React.forwardRef<
+    63→const InputOTPRenderSlot = React.forwardRef<
+    90→const InputOTPSeparator = React.forwardRef<
 apps/website/src/components/ui/scroll-area.tsx
+     8→const ScrollArea = React.forwardRef<
+    26→const ScrollBar = React.forwardRef<
 apps/website/src/components/ui/sonner.tsx
+     6→type ToasterProps = React.ComponentProps<typeof Sonner>
      8→const Toaster = ({ ...props }: ToasterProps) => {
+     9→  const { theme = 'system' } = useTheme()
+      →…
 apps/website/src/config/site.ts
      1→export const siteConfig = {
      2→  name: 'rodz/input-otp',
@@ -1013,6 +1014,8 @@ packages/input-otp/src/input.tsx
     20→      textAlign = 'left',
     21→      pattern,
     22→      placeholder,
+    23→      inputMode = 'numeric',
+    24→      onComplete,
       →…
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
    541→  try {
@@ -1022,6 +1025,8 @@ packages/input-otp/src/input.tsx
    545→  }
    546→}
    553→const NOSCRIPT_CSS_FALLBACK = `
+   554→[data-input-otp] {
+      →…
 packages/input-otp/src/regexp.ts
      1→export const REGEXP_ONLY_DIGITS = '^\\d+$'
      2→export const REGEXP_ONLY_CHARS = '^[a-zA-Z]+$'
@@ -1050,6 +1055,8 @@ packages/input-otp/src/types.ts
     14→  React.InputHTMLAttributes<HTMLInputElement>,
     15→  {
     16→    value?: string
+    17→    onChange?: (newValue: string) => unknown
+    18→
       →…
     32→type InputOTPRenderFn = (props: RenderProps) => React.ReactNode
     33→export type OTPInputProps = OTPInputBaseProps &
@@ -1079,6 +1086,8 @@ packages/input-otp/src/use-pwm-badge.tsx
      5→const PWM_BADGE_SPACE_WIDTH_PX = 40
      6→const PWM_BADGE_SPACE_WIDTH = `${PWM_BADGE_SPACE_WIDTH_PX}px` as const
      8→const PASSWORD_MANAGERS_SELECTORS = [
+     9→  '[data-lastpass-icon-root]', // LastPass
+      →…
     15→export function usePasswordManagerBadge({
     16→  containerRef,
     17→  inputRef,
@@ -1103,6 +1112,15 @@ packages/input-otp/src/use-pwm-badge.tsx
     36→    }
     37→
     38→    const increaseWidthCase =
+    39→      (pushPasswordManagerStrategy === 'increase-width' ||
+    40→        // TODO: remove 'experimental-no-flickering' support in 2.0.0
+    41→        pushPasswordManagerStrategy === 'experimental-no-flickering') &&
+    42→      hasPWMBadge &&
+    43→      hasPWMBadgeSpace
+    44→
+    45→    return increaseWidthCase
+    46→  }, [hasPWMBadge, hasPWMBadgeSpace, pushPasswordManagerStrategy])
+    47→
       →…
 packages/input-otp/tsconfig.json
      2→  "compilerOptions": {

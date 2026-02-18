@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1965 words)
+budget: 2000 (1964 words)
 
 FUNDING.yml
      1→github …
@@ -330,8 +330,6 @@ website/README.md
     14→
     15→Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
     16→
-    17→You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-    18→
       →…
     25→## Learn More
     27→To learn more about Next.js, take a look at the following resources:
@@ -377,6 +375,10 @@ website/src/components/ExpandModes/index.tsx
      8→  expand: boolean;
      9→  setExpand: React.Dispatch<React.SetStateAction<boolean>>;
     10→}) => {
+    11→  return (
+    12→    <div>
+    13→      <h2>Expand</h2>
+    14→      <p>
       →…
 website/src/components/Footer/index.tsx
      1→import Image from 'next/image';
@@ -431,6 +433,7 @@ website/src/components/Other/Other.tsx
     10→}: {
     11→  setRichColors: React.Dispatch<React.SetStateAction<boolean>>;
     12→  setCloseButton: React.Dispatch<React.SetStateAction<boolean>>;
+    13→}) => {
       →…
 website/src/components/Position/index.tsx
      1→import { toast, useSonner } from 'sonner';
@@ -444,6 +447,7 @@ website/src/components/Position/index.tsx
     12→}: {
     13→  position: Position;
     14→  setPosition: React.Dispatch<React.SetStateAction<Position>>;
+    15→}) => {
       →…
 website/src/components/Types/Types.tsx
      1→import React from 'react';
@@ -510,6 +514,7 @@ website/src/pages/index.tsx
     27→        expand={expand}
     28→        position={position}
     29→        duration={Infinity}
+    30→      />
       →…
 website/theme.config.jsx
      7→  useNextSeoProps() {

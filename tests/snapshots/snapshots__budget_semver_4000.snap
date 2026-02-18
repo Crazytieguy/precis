@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3985 words)
+budget: 4000 (3989 words)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -110,14 +110,11 @@ CONTRIBUTING.md
     12→
     13→Use one of our existing issue templates if you believe you've come across a unique problem.
     14→
-    15→Duplicate issues, or issues that don't use one of our templates may get closed without a response.
-    16→
+      →…
     17→## Pull Request Conventions
     19→### Commits
     21→We use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
     22→
-    23→When opening a pull request please be sure that either the pull request title, or each commit in the pull request, has one of the following prefixes:
-    24→
       →…
     30→### Test Coverage …
     36→### Linting …
@@ -250,17 +247,7 @@ README.md
    125→        Coerce version strings right to left
    126→
    127→--ltr
-   128→        Coerce version strings left to right (default)
-   129→
-   130→Program exits successfully if any valid version satisfies
-   131→all supplied ranges, and prints all satisfying versions.
-   132→
-   133→If no satisfying versions are found, then exits failure.
-   134→
-   135→Versions are printed in ascending order, so supplying
-   136→multiple versions to the utility will just sort them.
-   137→```
-   138→
+      →…
    139→## Versions
    141→A "version" is described by the `v2.0.0` specification found at
    142→<https://semver.org/>.
@@ -308,88 +295,52 @@ README.md
    186→If a version has a prerelease tag (for example, `1.2.3-alpha.3`) then
    187→it will only be allowed to satisfy comparator sets if at least one
    188→comparator with the same `[major, minor, patch]` tuple also has a
-   189→prerelease tag.
-   190→
       →…
    219→#### Prerelease Identifiers
    221→The method `.inc` takes an additional `identifier` string argument that
    222→will append the value of the string as a prerelease identifier:
    223→
    224→```javascript
-   225→semver.inc('1.2.3', 'prerelease', 'beta')
-   226→// '1.2.4-beta.0'
-   227→```
-   228→
-   229→command-line example:
       →…
    250→#### Prerelease Identifier Base
    252→The method `.inc` takes an optional parameter 'identifierBase' string
    253→that will let you let your prerelease number as zero-based or one-based.
    254→Set to `false` to omit the prerelease number altogether.
    255→If you do not specify this parameter, it will default to zero-based.
-   256→
-   257→```javascript
-   258→semver.inc('1.2.3', 'prerelease', 'beta', '1')
-   259→// '1.2.4-beta.1'
-   260→```
       →…
    279→### Advanced Range Syntax
    281→Advanced range syntax desugars to primitive comparators in
    282→deterministic ways.
    283→
-   284→Advanced ranges may be combined in the same way as primitive
-   285→comparators using white space or `||`.
       →…
    287→#### Hyphen Ranges `X.Y.Z - A.B.C`
    289→Specifies an inclusive set.
    290→
    291→* `1.2.3 - 2.3.4` := `>=1.2.3 <=2.3.4`
    292→
-   293→If a partial version is provided as the first version in the inclusive
-   294→range, then the missing pieces are replaced with zeroes.
-   295→
-   296→* `1.2 - 2.3.4` := `>=1.2.0 <=2.3.4`
-   297→
       →…
    306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*`
    308→Any of `X`, `x`, or `*` may be used to "stand in" for one of the
    309→numeric values in the `[major, minor, patch]` tuple.
    310→
    311→* `*` := `>=0.0.0` (Any non-prerelease version satisfies, unless
-   312→  `includePrerelease` is specified, in which case any version at all
-   313→  satisfies)
-   314→* `1.x` := `>=1.0.0 <2.0.0-0` (Matching major version)
-   315→* `1.2.x` := `>=1.2.0 <1.3.0-0` (Matching major and minor versions)
-   316→
       →…
    324→#### Tilde Ranges `~1.2.3` `~1.2` `~1`
    326→Allows patch-level changes if a minor version is specified on the
    327→comparator.  Allows minor-level changes if not.
    328→
    329→* `~1.2.3` := `>=1.2.3 <1.(2+1).0` := `>=1.2.3 <1.3.0-0`
-   330→* `~1.2` := `>=1.2.0 <1.(2+1).0` := `>=1.2.0 <1.3.0-0` (Same as `1.2.x`)
-   331→* `~1` := `>=1.0.0 <(1+1).0.0` := `>=1.0.0 <2.0.0-0` (Same as `1.x`)
-   332→* `~0.2.3` := `>=0.2.3 <0.(2+1).0` := `>=0.2.3 <0.3.0-0`
-   333→* `~0.2` := `>=0.2.0 <0.(2+1).0` := `>=0.2.0 <0.3.0-0` (Same as `0.2.x`)
-   334→* `~0` := `>=0.0.0 <(0+1).0.0` := `>=0.0.0 <1.0.0-0` (Same as `0.x`)
       →…
    341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4`
    343→Allows changes that do not modify the left-most non-zero element in the
    344→`[major, minor, patch]` tuple.  In other words, this allows patch and
    345→minor updates for versions `1.0.0` and above, patch updates for
    346→versions `0.X >=0.1.0`, and *no* updates for versions `0.0.X`.
-   347→
-   348→Many authors treat a `0.x` version as if the `x` were the major
-   349→"breaking-change" indicator.
-   350→
-   351→Caret ranges are ideal when an author may make breaking changes
       →…
    384→### Range Grammar
    386→Putting all this together, here is a Backus-Naur grammar for ranges,
    387→for the benefit of parser authors:
    388→
-   389→```bnf
-   390→range-set  ::= range ( logical-or range ) *
       →…
    408→## Functions
    410→All methods and classes take a final `options` object argument.  All
@@ -439,15 +390,12 @@ README.md
    455→* `gt(v1, v2)`: `v1 > v2`
    456→* `gte(v1, v2)`: `v1 >= v2`
    457→* `lt(v1, v2)`: `v1 < v2`
-   458→* `lte(v1, v2)`: `v1 <= v2`
-   459→* `eq(v1, v2)`: `v1 == v2` This is true if they're logically equivalent,
       →…
    478→### Sorting
    480→* `sort(versions)`: Returns a sorted array of versions based on the `compareBuild` 
    481→  function.
    482→* `rsort(versions)`: The reverse of `sort`. Returns an array of versions based on
-   483→  the `compareBuild` function in descending order.
-   484→
+      →…
    485→### Comparators
    487→* `intersects(comparator)`: Return true if the comparators intersect
    488→
@@ -455,22 +403,16 @@ README.md
    491→* `validRange(range)`: Return the valid range or null if it's not valid.
    492→* `satisfies(version, range)`: Return true if the version satisfies the
    493→  range.
-   494→* `maxSatisfying(versions, range)`: Return the highest version in the list
-   495→  that satisfies the range, or `null` if none of them do.
       →…
    531→### Coercion
    533→* `coerce(version, options)`: Coerces a string to semver if possible
    534→
    535→This aims to provide a very forgiving translation of a non-semver string to
-   536→semver. It looks for the first digit in a string and consumes all
-   537→remaining characters which satisfy at least a partial semver (e.g., `1`,
       →…
    558→### Clean
    560→* `clean(version)`: Clean a string to be a valid semver if possible
    561→
    562→This will return a cleaned and trimmed semver version. If the provided
-   563→version is not valid a null will be returned. This does not work for
-   564→ranges.
       →…
    576→## Constants
    578→As a convenience, helper constants are exported to provide information about what `node-semver` supports:
@@ -479,15 +421,11 @@ README.md
    582→- major
    583→- premajor
    584→- minor
-   585→- preminor
-   586→- patch
       →…
    600→### `SEMVER_SPEC_VERSION`
    602→2.0.0
    603→
    604→```
-   605→const semver = require('semver');
-   606→
       →…
    610→## Exported Modules
    613→TODO: Make sure that all of these items are documented (classes aren't,
@@ -544,11 +482,27 @@ README.md
    664→* `require('semver/ranges/valid')`
    665→
 benchmarks/bench-compare.js
+     5→const suite …
 benchmarks/bench-diff.js
+     5→const suite …
+     7→const cases …
 benchmarks/bench-parse-options.js
+     5→const suite …
+     7→const options1 …
+    11→const options2 …
+    16→const options3 …
 benchmarks/bench-parse.js
+     5→const suite …
 benchmarks/bench-satisfies.js
+     5→const suite …
+     7→const versions …
+     8→const versionToCompare …
+     9→const option1 …
+    10→const option2 …
+    11→const option3 …
 benchmarks/bench-subset.js
+     5→const suite …
+     8→const cases …
 bin/semver.js
      8→const argv = process.argv.slice(2)
     12→const range = []
@@ -594,10 +548,14 @@ classes/comparator.js
     10→  constructor (comp, options) {
     11→    options = parseOptions(options)
     12→
+    13→    if (comp instanceof Comparator) {
+    14→      if (comp.loose === !!options.loose) {
       →…
     36→  parse (comp) {
     37→    const r = this.options.loose ? re[t.COMPARATORLOOSE] : re[t.COMPARATOR]
     38→    const m = comp.match(r)
+    39→
+    40→    if (!m) {
       →…
     57→  toString () {
     58→    return this.value
@@ -605,10 +563,14 @@ classes/comparator.js
     61→  test (version) {
     62→    debug('Comparator.test', version, this.options.loose)
     63→
+    64→    if (this.semver === ANY || version === ANY) {
+    65→      return true
       →…
     79→  intersects (comp, options) {
     80→    if (!(comp instanceof Comparator)) {
     81→      throw new TypeError('a Comparator is required')
+    82→    }
+    83→
       →…
 classes/range.js
      3→const SPACE_CHARACTERS = /\s+/g
@@ -616,10 +578,14 @@ classes/range.js
      7→  constructor (range, options) {
      8→    options = parseOptions(options)
      9→
+    10→    if (range instanceof Range) {
+    11→      if (
       →…
     73→  get range () {
     74→    if (this.formatted === undefined) {
     75→      this.formatted = ''
+    76→      for (let i = 0; i < this.set.length; i++) {
+    77→        if (i > 0) {
       →…
     92→  format () {
     93→    return this.range
@@ -630,42 +596,76 @@ classes/range.js
    100→  parseRange (range) {
    101→    // memoize range parsing for performance.
    102→    // this is a very hot path, and fully deterministic.
+   103→    const memoOpts =
+   104→      (this.options.includePrerelease && FLAG_INCLUDE_PRERELEASE) |
       →…
    170→  intersects (range, options) {
    171→    if (!(range instanceof Range)) {
    172→      throw new TypeError('a Range is required')
+   173→    }
+   174→
       →…
    193→  test (version) {
    194→    if (!version) {
    195→      return false
+   196→    }
+   197→
       →…
    218→const cache = new LRU()
    233→const isNullSet = c => c.value === '<0.0.0-0'
    234→const isAny = c => c.value === ''
    238→const isSatisfiable = (comparators, options) => {
+   239→  let result = true
+      →…
    257→const parseComparator = (comp, options) => {
+   258→  comp = comp.replace(re[t.BUILD], '')
+      →…
    271→const isX = id => !id || id.toLowerCase() === 'x' || id === '*'
    280→const replaceTildes = (comp, options) => {
+   281→  return comp
+      →…
    288→const replaceTilde = (comp, options) => {
+   289→  const r = options.loose ? re[t.TILDELOOSE] : re[t.TILDE]
+      →…
    324→const replaceCarets = (comp, options) => {
+   325→  return comp
+      →…
    332→const replaceCaret = (comp, options) => {
+   333→  debug('caret', comp, options)
+      →…
    385→const replaceXRanges = (comp, options) => {
+   386→  debug('replaceXRanges', comp, options)
+      →…
    393→const replaceXRange = (comp, options) => {
+   394→  comp = comp.trim()
+      →…
    470→const replaceStars = (comp, options) => {
+   471→  debug('replaceStars', comp, options)
+      →…
    478→const replaceGTE0 = (comp, options) => {
+   479→  debug('replaceGTE0', comp, options)
+      →…
    491→const hyphenReplace = incPr => ($0,
    492→  from, fM, fm, fp, fpr, fb,
    493→  to, tM, tm, tp, tpr) => {
+   494→  if (isX(fM)) {
+      →…
    523→const testSet = (set, version, options) => {
+   524→  for (let i = 0; i < set.length; i++) {
+      →…
 classes/semver.js
      9→class SemVer {
     10→  constructor (version, options) {
     11→    options = parseOptions(options)
     12→
+    13→    if (version instanceof SemVer) {
+    14→      if (version.loose === !!options.loose &&
       →…
     81→  format () {
     82→    this.version = `${this.major}.${this.minor}.${this.patch}`
     83→    if (this.prerelease.length) {
+    84→      this.version += `-${this.prerelease.join('.')}`
+    85→    }
       →…
     89→  toString () {
     90→    return this.version
@@ -673,22 +673,32 @@ classes/semver.js
     93→  compare (other) {
     94→    debug('SemVer.compare', this.version, this.options, other)
     95→    if (!(other instanceof SemVer)) {
+    96→      if (typeof other === 'string' && other === this.version) {
+    97→        return 0
       →…
    109→  compareMain (other) {
    110→    if (!(other instanceof SemVer)) {
    111→      other = new SemVer(other, this.options)
+   112→    }
+   113→
       →…
    135→  comparePre (other) {
    136→    if (!(other instanceof SemVer)) {
    137→      other = new SemVer(other, this.options)
+   138→    }
+   139→
       →…
    168→  compareBuild (other) {
    169→    if (!(other instanceof SemVer)) {
    170→      other = new SemVer(other, this.options)
+   171→    }
+   172→
       →…
    194→  inc (release, identifier, identifierBase) {
    195→    if (release.startsWith('pre')) {
    196→      if (!identifier && identifierBase === false) {
+   197→        throw new Error('invalid increment argument: identifier is empty')
+   198→      }
       →…
 functions/clean.js
      4→const clean = (version, options) => {
@@ -754,6 +764,14 @@ internal/identifiers.js
      6→    return a === b ? 0 : a < b ? -1 : 1
      7→  }
      8→
+     9→  const anum = numeric.test(a)
+    10→  const bnum = numeric.test(b)
+    11→
+    12→  if (anum && bnum) {
+    13→    a = +a
+    14→    b = +b
+    15→  }
+    16→
       →…
     24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
 internal/lrucache.js
@@ -799,7 +817,12 @@ internal/parse-options.js
      8→    return emptyOpts
      9→  }
     10→
-      →…
+    11→  if (typeof options !== 'object') {
+    12→    return looseOption
+    13→  }
+    14→
+    15→  return options
+    16→}
 internal/re.js
     12→const re = exports.re = []
     13→const safeRe = exports.safeRe = []
@@ -813,13 +836,19 @@ internal/re.js
     35→    value = value
     36→      .split(`${token}*`).join(`${token}{0,${max}}`)
     37→      .split(`${token}+`).join(`${token}{1,${max}}`)
-      →…
+    38→  }
+    39→  return value
+    40→}
     42→const createToken = (name, value, isGlobal) => {
     43→  const safe = makeSafeRegex(value)
     44→  const index = R++
     45→  debug(name, index, value)
     46→  t[name] = index
-      →…
+    47→  src[index] = value
+    48→  safeSrc[index] = safe
+    49→  re[index] = new RegExp(value, isGlobal ? 'g' : undefined)
+    50→  safeRe[index] = new RegExp(safe, isGlobal ? 'g' : undefined)
+    51→}
 package.json
      2→  "name": "semver",
      3→  "version": "7.7.4",
@@ -847,27 +876,49 @@ ranges/gtr.js
      5→const gtr = (version, range, options) => outside(version, range, '>', options)
 ranges/intersects.js
      4→const intersects = (r1, r2, options) => {
+     5→  r1 = new Range(r1, options)
+      →…
 ranges/ltr.js
      5→const ltr = (version, range, options) => outside(version, range, '<', options)
 ranges/max-satisfying.js
      6→const maxSatisfying = (versions, range, options) => {
+     7→  let max = null
+      →…
 ranges/min-satisfying.js
      5→const minSatisfying = (versions, range, options) => {
+     6→  let min = null
+      →…
 ranges/min-version.js
      7→const minVersion = (range, loose) => {
+     8→  range = new Range(range, loose)
+      →…
 ranges/outside.js
     13→const outside = (version, range, hilo, options) => {
+    14→  version = new SemVer(version, options)
+      →…
 ranges/subset.js
     45→const subset = (sub, dom, options = {}) => {
+    46→  if (sub === dom) {
+      →…
     73→const minimumVersionWithPreRelease = [new Comparator('>=0.0.0-0')]
     74→const minimumVersion = [new Comparator('>=0.0.0')]
     76→const simpleSubset = (sub, dom, options) => {
+    77→  if (sub === dom) {
+      →…
    226→const higherGT = (a, b, options) => {
+   227→  if (!a) {
+      →…
    238→const lowerLT = (a, b, options) => {
+   239→  if (!a) {
+      →…
 ranges/to-comparators.js
      6→const toComparators = (range, options) =>
+     7→  new Range(range, options).set
+      →…
 ranges/valid.js
      4→const validRange = (range, options) => {
+     5→  try {
+      →…
 release-please-config.json
      2→  "group-pull-request-title-pattern": "chore: release ${version}",
      3→  "pull-request-title-pattern": "chore: release${component} ${version}",

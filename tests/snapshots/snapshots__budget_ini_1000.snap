@@ -7,7 +7,7 @@ budget: 1000 (1006 words)
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
      8→  .filter((file) => file.startsWith('.eslintrc.local.'))
-     9→  .map((file) => `./${file}`)
+      →…
 .github/ISSUE_TEMPLATE/bug.yml
      3→name …
      4→description …
@@ -107,6 +107,8 @@ CONTRIBUTING.md
      9→## Reporting Bugs
     11→Before submitting a new bug report please search for an existing or similar report.
     12→
+    13→Use one of our existing issue templates if you believe you've come across a unique problem.
+    14→
       →…
     17→## Pull Request Conventions
     19→### Commits …
@@ -257,23 +259,7 @@ README.md
    147→    platform ,
    148→
    149→    /**
-   150→     *  Whether to append `[]` to array keys.
-   151→     * 
-   152→     *  Some parsers treat duplicate names by themselves as arrays
-   153→     */
-   154→
-   155→    bracketedArray : true
-   156→
-   157→})
-   158→```
-   159→
-   160→*For backwards compatibility any string passed as the*  
-   161→*options parameter is treated as the `section` option.*
-   162→
-   163→```js
-   164→stringify(object,'section')
-   165→```
-   166→
+      →…
    167→### Un / Escape
    169→Turn the given string into a safe to  
    170→use key or value in your INI file.
@@ -289,11 +275,23 @@ README.md
    180→```
 lib/ini.js
      3→const encode = (obj, opt = {}) => {
+     4→  if (typeof opt === 'string') {
+      →…
     80→function splitSections (str, separator) {
+    81→  var lastMatchIndex = 0
+      →…
    106→const decode = (str, opt = {}) => {
+   107→  opt.bracketedArray = opt.bracketedArray !== false
+      →…
    212→const isQuoted = val => {
+   213→  return (val.startsWith('"') && val.endsWith('"')) ||
+      →…
    217→const safe = val => {
+   218→  if (
+      →…
    230→const unsafe = val => {
+   231→  val = (val || '').trim()
+      →…
 package.json
      2→  "author": "GitHub Inc.",
      3→  "name": "ini",

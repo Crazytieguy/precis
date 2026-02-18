@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1967 words)
+budget: 2000 (1969 words)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -74,16 +74,7 @@ ARCHITECTURE.md
     79→</>
     80→```
     81→
-    82→But in our case, the item will remain in the React tree and just be removed from the DOM:
-    83→
-    84→```tsx
-    85→<List>
-    86→  {/* returns `null`, no DOM created */}
-    87→  <Item>A</Item>
-    88→  <Item>B</Item>
-    89→</List>
-    90→```
-    91→
+      →…
     92→## Performance
     94→This is more expensive memory wise, because if there are 2,000 items but the list is filtered to only 2 items, we still allocate memory for 2,000 instances of the Item component. But it's our only option! Thankfully we can still keep the DOM size to 2 items.
     95→
@@ -203,7 +194,9 @@ cmdk/src/command-score.ts
    157→   * in the original, we used to do the lower-casing on each recursive call, but this meant that toLowerCase()
    158→   * was the dominating cost in the algorithm, passing both is a little ugly, but considerably faster.
    159→   */
-      →…
+   160→  string = aliases && aliases.length > 0 ? `${string + ' ' + aliases.join(' ')}` : string
+   161→  return commandScoreInner(string, abbreviation, formatInput(string), formatInput(abbreviation), 0, 0, {})
+   162→}
 cmdk/src/index.tsx
      3→import * as RadixDialog from '@radix-ui/react-dialog'
      4→import * as React from 'react'
@@ -444,6 +437,8 @@ website/pages/_document.tsx
 website/pages/index.tsx
     18→import packageJSON from '../../cmdk/package.json'
     20→type TTheme = {
+    21→  theme: Themes
+      →…
     25→type Themes = 'linear' | 'raycast' | 'vercel' | 'framer'
     27→const ThemeContext = React.createContext<TTheme>({} as TTheme)
     29→export default function Index() {
@@ -467,6 +462,9 @@ website/pages/index.tsx
    139→const themes = [
    140→  {
    141→    icon: <RaycastIcon />,
+   142→    key: 'raycast',
+   143→  },
+   144→  {
       →…
    158→function ThemeSwitcher() {
    260→//////////////////////////////////////////////////////////////////

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3898 words)
+budget: 4000 (3899 words)
 
 CHANGELOG.md
      1→# Changelog
@@ -25,25 +25,6 @@ CONTRIBUTING.md
      8→Executing the tests:
      9→
     10→    $ uv venv
-    11→    $ uv pip install -r requirements.txt
-    12→    $ uv pip install -e .
-    13→    $ uv ruff check .
-    14→    $ uv format .
-    15→    $ uv run pytest
-    16→
-    17→or with [tox](https://pypi.org/project/tox/) installed:
-    18→
-    19→    $ tox
-    20→
-    21→
-    22→Use of pre-commit is recommended:
-    23→
-    24→    $ uv run precommit install
-    25→
-    26→
-    27→Documentation is published with [mkdocs]():
-    28→
-    29→```shell
       →…
 README.md
      1→# python-dotenv
@@ -119,8 +100,7 @@ README.md
     73→You will probably want to add `.env` to your `.gitignore`, especially if it
     74→contains secrets like a password.
     75→
-    76→See the section "[File format](#file-format)" below for more information about what you can write in a `.env` file.
-    77→
+      →…
     78→## Other Use Cases
     80→### Load configuration without altering the environment
     82→The function `dotenv_values` works more or less the same way as `load_dotenv`,
@@ -794,14 +774,16 @@ src/dotenv/version.py
 tests/conftest.py
      5→@pytest.fixture
      6→def cli():
-     7→    runner = CliRunner()
-      →…
     12→@pytest.fixture
     13→def dotenv_path(tmp_path):
-    14→    path = tmp_path / ".env"
-      →…
 tests/test_cli.py
     17→def invoke_sub(args: Sequence[str]) -> subprocess.CompletedProcess:
+    18→    """
+    19→    Invoke the `dotenv` CLI in a subprocess.
+    20→
+    21→    This is necessary to test subcommands like `dotenv run` that replace the
+    22→    current process.
+    23→    """
     47→def test_list(
     48→    cli, dotenv_path, output_format: Optional[str], content: str, expected: str
     49→):
@@ -820,48 +802,38 @@ tests/test_cli.py
    188→def test_set_no_file(cli):
    195→@pytest.mark.skipif(sys.platform == "win32", reason="sh module doesn't support Windows")
    196→def test_get_default_path(tmp_path):
-   197→    with sh.pushd(tmp_path):
-      →…
    205→@pytest.mark.skipif(sys.platform == "win32", reason="sh module doesn't support Windows")
    206→def test_run(tmp_path):
-   207→    with sh.pushd(tmp_path):
-      →…
    215→@pytest.mark.skipif(sys.platform == "win32", reason="sh module doesn't support Windows")
    216→def test_run_with_existing_variable(tmp_path):
-   217→    with sh.pushd(tmp_path):
-      →…
    227→@pytest.mark.skipif(sys.platform == "win32", reason="sh module doesn't support Windows")
    228→def test_run_with_existing_variable_not_overridden(tmp_path):
-   229→    with sh.pushd(tmp_path):
-      →…
    239→@pytest.mark.skipif(sys.platform == "win32", reason="sh module doesn't support Windows")
    240→def test_run_with_none_value(tmp_path):
-   241→    with sh.pushd(tmp_path):
-      →…
    249→@pytest.mark.skipif(sys.platform == "win32", reason="sh module doesn't support Windows")
    250→def test_run_with_other_env(dotenv_path):
-   251→    dotenv_path.write_text("a=b")
-      →…
    258→def test_run_without_cmd(cli):
    265→def test_run_with_invalid_cmd(cli):
    272→def test_run_with_version(cli):
    279→def test_run_with_command_flags(dotenv_path):
+   280→    """
+   281→    Check that command flags passed after `dotenv run` are not interpreted.
+   282→
+   283→    Here, we want to run `printenv --version`, not `dotenv --version`.
+   284→    """
    292→def test_run_with_dotenv_and_command_flags(cli, dotenv_path):
+   293→    """
+   294→    Check that dotenv flags supersede command flags.
+   295→    """
 tests/test_fifo_dotenv.py
     13→def test_load_dotenv_from_fifo(tmp_path: pathlib.Path, monkeypatch):
 tests/test_ipython.py
     13→@mock.patch.dict(os.environ, {}, clear=True)
     14→def test_ipython_existing_variable_no_override(tmp_path):
-    15→    from IPython.terminal.embed import InteractiveShellEmbed
-      →…
     32→@mock.patch.dict(os.environ, {}, clear=True)
     33→def test_ipython_existing_variable_override(tmp_path):
-    34→    from IPython.terminal.embed import InteractiveShellEmbed
-      →…
     51→@mock.patch.dict(os.environ, {}, clear=True)
     52→def test_ipython_new_variable(tmp_path):
-    53→    from IPython.terminal.embed import InteractiveShellEmbed
-      →…
 tests/test_is_interactive.py
      8→class TestIsInteractive:
      9→    """Tests for the _is_interactive helper function within find_dotenv.
@@ -881,11 +853,7 @@ tests/test_is_interactive.py
     23→
     24→    Examples of the behavior:
     25→    >>> import sys
-    26→    >>> # In a REPL:
-    27→    >>> hasattr(sys, 'ps1')  # True
-    28→    >>> # In a script:
-    29→    >>> hasattr(sys, 'ps1')  # False
-    30→    """
+      →…
     31→
     32→    def _create_dotenv_file(self, tmp_path):
     38→    def _setup_subdir_and_chdir(self, tmp_path, monkeypatch):
@@ -893,19 +861,29 @@ tests/test_is_interactive.py
     52→    def _mock_main_import(self, monkeypatch, mock_main_module):
     63→    def _mock_main_import_error(self, monkeypatch):
     74→    def test_is_interactive_with_ps1(self, tmp_path, monkeypatch):
+    75→        """Test that _is_interactive returns True when sys.ps1 exists."""
     87→    def test_is_interactive_with_ps2(self, tmp_path, monkeypatch):
+    88→        """Test that _is_interactive returns True when sys.ps2 exists."""
    100→    def test_is_interactive_main_module_not_found(self, tmp_path, monkeypatch):
+   101→        """Test that _is_interactive returns False when __main__ module import fails."""
    113→    def test_is_interactive_main_without_file(self, tmp_path, monkeypatch):
+   114→        """Test that _is_interactive returns True when __main__ has no __file__ attribute."""
    129→    def test_is_interactive_main_with_file(self, tmp_path, monkeypatch):
+   130→        """Test that _is_interactive returns False when __main__ has __file__ attribute."""
    147→    def test_is_interactive_precedence_ps1_over_main(self, tmp_path, monkeypatch):
+   148→        """Test that ps1/ps2 attributes take precedence over __main__ module check."""
    165→    def test_is_interactive_ps1_and_ps2_both_exist(self, tmp_path, monkeypatch):
+   166→        """Test that _is_interactive returns True when both ps1 and ps2 exist."""
    179→    def test_is_interactive_main_module_with_file_attribute_none(
    180→        self, tmp_path, monkeypatch
    181→    ):
+   182→        """Test _is_interactive when __main__ has __file__ attribute set to None."""
    201→    def test_is_interactive_no_ps_attributes_and_normal_execution(
    202→        self, tmp_path, monkeypatch
    203→    ):
+   204→        """Test normal script execution scenario where _is_interactive should return False."""
    218→    def test_is_interactive_with_usecwd_override(self, tmp_path, monkeypatch):
+   219→        """Test that usecwd=True overrides _is_interactive behavior."""
 tests/test_main.py
     17→def test_set_key_no_file(tmp_path):
     46→def test_set_key(dotenv_path, before, key, value, expected, after):
@@ -921,50 +899,41 @@ tests/test_main.py
    176→def test_unset_encoding(dotenv_path):
    186→def test_unset_non_existent_file(tmp_path):
    200→def prepare_file_hierarchy(path):
+   201→    """
+   202→    Create a temporary folder structure like the following:
+   203→
+   204→        test_find_dotenv0/
+   205→        └── child1
+   206→            ├── child2
+   207→            │   └── child3
+   208→            │       └── child4
+      →…
    219→def test_find_dotenv_no_file_raise(tmp_path):
    227→def test_find_dotenv_no_file_no_raise(tmp_path):
    236→def test_find_dotenv_found(tmp_path):
    250→@mock.patch.dict(os.environ, {}, clear=True)
    251→def test_load_dotenv_existing_file(dotenv_path):
-   252→    dotenv_path.write_text("a=b")
-      →…
    276→def test_load_dotenv_disabled(dotenv_path, flag_value):
    305→def test_load_dotenv_disabled_notification(dotenv_path, flag_value):
    341→def test_load_dotenv_enabled(dotenv_path, flag_value):
    371→def test_load_dotenv_enabled_no_notification(dotenv_path, flag_value):
    385→@mock.patch.dict(os.environ, {}, clear=True)
    386→def test_load_dotenv_doesnt_disable_itself(dotenv_path):
-   387→    dotenv_path.write_text("PYTHON_DOTENV_DISABLED=true")
-      →…
    395→def test_load_dotenv_no_file_verbose():
    410→@mock.patch.dict(os.environ, {"a": "c"}, clear=True)
    411→def test_load_dotenv_existing_variable_no_override(dotenv_path):
-   412→    dotenv_path.write_text("a=b")
-      →…
    423→@mock.patch.dict(os.environ, {"a": "c"}, clear=True)
    424→def test_load_dotenv_existing_variable_override(dotenv_path):
-   425→    dotenv_path.write_text("a=b")
-      →…
    436→@mock.patch.dict(os.environ, {"a": "c"}, clear=True)
    437→def test_load_dotenv_redefine_var_used_in_file_no_override(dotenv_path):
-   438→    dotenv_path.write_text('a=b\nd="${a}"')
-      →…
    449→@mock.patch.dict(os.environ, {"a": "c"}, clear=True)
    450→def test_load_dotenv_redefine_var_used_in_file_with_override(dotenv_path):
-   451→    dotenv_path.write_text('a=b\nd="${a}"')
-      →…
    462→@mock.patch.dict(os.environ, {}, clear=True)
    463→def test_load_dotenv_string_io_utf_8():
-   464→    stream = io.StringIO("a=à")
-      →…
    475→@mock.patch.dict(os.environ, {}, clear=True)
    476→def test_load_dotenv_file_stream(dotenv_path):
-   477→    dotenv_path.write_text("a=b")
-      →…
    486→@pytest.mark.skipif(sys.platform == "win32", reason="sh module doesn't support Windows")
    487→def test_load_dotenv_in_current_dir(tmp_path):
-   488→    dotenv_path = tmp_path / ".env"
-      →…
    507→def test_dotenv_values_file(dotenv_path):
    551→def test_dotenv_values_string_io(env, string, interpolate, expected):
    561→def test_dotenv_values_file_stream(dotenv_path):
@@ -981,9 +950,5 @@ tests/test_zip_imports.py
     29→def setup_zipfile(path, files: List[FileToAdd]):
     45→@mock.patch.object(sys, "path", list(sys.path))
     46→def test_load_dotenv_gracefully_handles_zip_imports_when_no_env_file(tmp_path):
-    47→    zip_file_path = setup_zipfile(
-      →…
     68→@pytest.mark.skipif(sys.platform == "win32", reason="sh module doesn't support Windows")
     69→def test_load_dotenv_outside_zip_file_when_called_in_zipfile(tmp_path):
-    70→    zip_file_path = setup_zipfile(
-      →…

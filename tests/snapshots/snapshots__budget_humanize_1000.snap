@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (974 words)
+budget: 1000 (976 words)
 
 README.md
      1→# humanize
@@ -58,8 +58,6 @@ README.md
     65→```bash
     66→git clone https://github.com/python-humanize/humanize
     67→cd humanize
-    68→python3 -m pip install -e .
-    69→```
       →…
     71→## Usage
     73→### Integer humanization
@@ -81,15 +79,11 @@ README.md
     91→```pycon
     92→>>> import humanize
     93→>>> import datetime as dt
-    94→>>> humanize.naturalday(dt.datetime.now())
-    95→'today'
       →…
    110→### Precise time delta
    112→```pycon
    113→>>> import humanize
    114→>>> import datetime as dt
-   115→>>> delta = dt.timedelta(seconds=3633, days=2, microseconds=123000)
-   116→>>> humanize.precisedelta(delta)
       →…
    124→#### Smaller units
    126→If seconds are too large, set `minimum_unit` to milliseconds or microseconds:
@@ -114,32 +108,21 @@ README.md
    145→```pycon
    146→>>> humanize.naturaltime(delta)
    147→'now'
-   148→>>> humanize.naturaltime(delta, minimum_unit="milliseconds")
-   149→'4 milliseconds ago'
-   150→>>> humanize.naturaltime(delta, minimum_unit="microseconds")
-   151→'4 milliseconds ago'
-   152→```
-   153→
+      →…
    154→### File size humanization
    156→```pycon
    157→>>> import humanize
    158→>>> humanize.naturalsize(1_000_000)
-   159→'1.0 MB'
-   160→>>> humanize.naturalsize(1_000_000, binary=True)
       →…
    166→### Human-readable floating point numbers
    168→```pycon
    169→>>> import humanize
    170→>>> humanize.fractional(1/3)
-   171→'1/3'
-   172→>>> humanize.fractional(1.5)
       →…
    182→### Scientific notation
    184→```pycon
    185→>>> import humanize
    186→>>> humanize.scientific(0.3)
-   187→'3.00 x 10⁻¹'
-   188→>>> humanize.scientific(500)
       →…
    200→## Localization
    202→How to change locale at runtime:
@@ -243,6 +226,10 @@ src/humanize/__init__.py
     28→__all__ = [
     29→    "__version__",
     30→    "activate",
+    31→    "apnumber",
+    32→    "clamp",
+    33→    "deactivate",
+    34→    "decimal_separator",
       →…
 src/humanize/filesize.py
      5→from math …
@@ -260,8 +247,12 @@ src/humanize/i18n.py
     18→_CURRENT = local()
     21→# Mapping of locale to thousands separator
     22→_THOUSANDS_SEPARATOR = {
+    23→    "de_DE": ".",
+      →…
     30→# Mapping of locale to decimal separator
     31→_DECIMAL_SEPARATOR = {
+    32→    "de_DE": ",",
+      →…
     40→def _get_default_locale_path …
     51→def get_translation …
     58→def activate …
@@ -308,7 +299,10 @@ src/humanize/time.py
     21→__all__ = [
     22→    "naturaldate",
     23→    "naturalday",
-      →…
+    24→    "naturaldelta",
+    25→    "naturaltime",
+    26→    "precisedelta",
+    27→]
     30→@total_ordering
     31→class Unit(Enum):
     32→    MICROSECONDS = 0
@@ -351,19 +345,19 @@ tests/test_i18n.py
 tests/test_lists.py
 tests/test_number.py
 tests/test_time.py
-    14→ONE_DAY_DELTA …
+    14→ONE_DAY_DELTA = dt.timedelta(days=1)
     16→# In seconds
     17→ONE_MICROSECOND = 1 / 1000000
-    18→FOUR_MICROSECONDS …
-    19→ONE_MILLISECOND …
-    20→FOUR_MILLISECONDS …
-    23→ONE_HOUR …
-    24→ONE_DAY …
-    25→ONE_YEAR …
-    26→FROZEN_DATE …
+    18→FOUR_MICROSECONDS = 4 / 1000000
+    19→ONE_MILLISECOND = 1 / 1000
+    20→FOUR_MILLISECONDS = 4 / 1000
+    23→ONE_HOUR = 3600
+    24→ONE_DAY = 24 * ONE_HOUR
+    25→ONE_YEAR = 365.25 * ONE_DAY
+    26→FROZEN_DATE = "2010-02-02"
     37→class FakeDate:
-    45→VALUE_ERROR_TEST …
-    46→OVERFLOW_ERROR_TEST …
+    45→VALUE_ERROR_TEST = FakeDate(290149024, 2, 2)
+    46→OVERFLOW_ERROR_TEST = FakeDate(120390192341, 2, 2)
     58→# These are not considered "public" interfaces, but require tests anyway.
     59→
     60→

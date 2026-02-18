@@ -2,16 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (957 words)
+budget: 1000 (956 words)
 
 CHANGELOG.md
-     1→# Changelog
-     3→All notable changes to this project will be documented in this file.
-     4→
-      →…
+     1→# Changelog …
     21→### Fixed …
 CONTRIBUTING.md
-     1→Contributing …
+     1→Contributing
+     4→All the contributions are welcome! Please open [an
+      →…
 README.md
      1→# python-dotenv
      3→[![Build Status][build_status_badge]][build_status_link]
@@ -128,7 +127,9 @@ src/dotenv/__init__.py
     46→    "get_key",
     47→    "set_key",
     48→    "unset_key",
-      →…
+    49→    "find_dotenv",
+    50→    "load_ipython_extension",
+    51→]
 src/dotenv/__main__.py
      3→from .cli import cli
 src/dotenv/cli.py

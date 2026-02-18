@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (975 words)
+budget: 1000 (978 words)
 
 404.md
      1→# Document not found (404) …
@@ -86,28 +86,23 @@ for_developers/README.md
      6→consumers (often referred to as *backends*) if you need to do some analysis of
      7→the book or render it in a different format.
      8→
-     9→The *For Developers* chapters are here to show you the more advanced usage of
-    10→`mdbook`.
-    11→
-    12→The two main ways a developer can hook into the book's build process is via,
-    13→
-    14→- [Preprocessors](preprocessors.md)
-    15→- [Alternative Backends](backends.md)
-    16→
+      →…
     17→## The build process
     19→The process of rendering a book project goes through several steps.
     20→
-    21→1. Load the book
       →…
     30→## Using `mdbook` as a library
     32→The `mdbook` binary is just a wrapper around the underlying mdBook crates,
     33→exposing their functionality as a command-line program. If you want to
-    34→programmatically drive mdBook, you can use the [`mdbook-driver`] crate.
       →…
 for_developers/backends.md
-     1→# Alternative backends
-     3→A "backend" is simply a program which `mdbook` will invoke during the book
-      →…
+     1→# Alternative backends …
+    13→## Setting up …
+    53→## Inspecting the book …
+    82→## Enabling the backend …
+   159→## Configuration …
+   219→## Output and signalling failure …
+   322→## Wrapping up …
 for_developers/mdbook-wordcount/Cargo.toml
      1→[package …
      6→[dependencies …
@@ -126,9 +121,10 @@ for_developers/mdbook-wordcount/src/main.rs
     48→    pub deny_odds: bool,
     49→}
 for_developers/preprocessors.md
-     1→# Preprocessors
-     3→A *preprocessor* is simply a bit of code which gets run immediately after the
-      →…
+     1→# Preprocessors …
+    13→## Hooking into MDBook …
+    46→## Hints for implementing a preprocessor …
+    74→## Implementing a preprocessor with a different language …
 format/README.md
      1→# Format
      3→In this section you will learn how to:
@@ -194,12 +190,6 @@ format/mdbook.md
     23→```rust
     24→# fn main() {
     25→    let x = 5;
-    26→    let y = 6;
-    27→
-    28→    println!("{}", x + y);
-    29→# }
-    30→```
-    31→
       →…
 format/summary.md
      1→# SUMMARY.md …
@@ -234,13 +224,23 @@ guide/README.md
      7→- [Creating a Book](creating.md)
 guide/creating.md
      1→# Creating a book …
+     5→## Initializing a book …
+    32→## Anatomy of a book …
     36→### `book.toml` …
     50→### `SUMMARY.md` …
     73→### Source files …
+    96→## Publishing a book …
 guide/installation.md
      1→# Installation …
+     9→## Pre-compiled binaries …
+    19→## Build from source using Rust …
     41→### Installing the latest master version …
+    53→## Modifying and contributing …
 guide/reading.md
      1→# Reading books …
+    12→## Navigation …
+    26→## Top menu bar …
+    42→## Search …
+    54→## Code blocks …
 misc/contributors.md
      1→# Contributors …

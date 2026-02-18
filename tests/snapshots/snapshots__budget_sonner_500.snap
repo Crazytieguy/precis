@@ -18,6 +18,7 @@ README.md
     31→## Documentation
     33→Find the full API reference in the [documentation](https://sonner.emilkowal.ski/getting-started).
 package.json
+playwright.config.ts
 pnpm-workspace.yaml
      1→packages …
 src/assets.tsx
@@ -53,8 +54,12 @@ src/types.ts
    184→export enum SwipeStateTypes {
    192→export interface ToastToDismiss {
 test/README.md
+test/package.json
+test/src/app/action.tsx
 test/src/app/layout.tsx
      1→export const metadata = {
+test/src/app/page.tsx
+test/tsconfig.json
 tsconfig.json
 turbo.json
 website/README.md
@@ -130,21 +135,18 @@ website/src/components/Types/Types.tsx
 website/src/components/Usage/index.tsx
      1→import { CodeBlock } from '../CodeBlock';
      3→export const Usage = () => {
+     4→  return (
+     5→    <div>
+      →…
 website/src/pages/_app.tsx
      7→export default function Nextra({ Component, pageProps }: AppProps): ReactElement {
 website/src/pages/_meta.json
-     2→  "getting-started": {
-     5→  },
-     6→  "-- API": {
-     9→  },
-    10→  "toast": {
-    13→  },
-    14→  "toaster": {
-    17→  },
-    18→  "-- More": {
-    21→  },
-    22→  "styling": {
-    26→}
+     2→  "getting-started …
+     6→  "-- API …
+    10→  "toast …
+    14→  "toaster …
+    18→  "-- More …
+    22→  "styling …
 website/src/pages/index.tsx
     14→export default function Home() {
 website/theme.config.jsx
