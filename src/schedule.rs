@@ -661,6 +661,32 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
 // Priority queue algorithm
 // ---------------------------------------------------------------------------
 
+/// Mutable state for the lazy-deletion priority queue.
+struct ScheduleQueue {
+    /// Monotonic counter; each enqueued/invalidated item gets a unique value.
+    generation: u64,
+    /// Per-group map from (stage_kind, n) to the latest generation. Heap
+    /// entries whose generation doesn't match are stale and get skipped.
+    current_gen: Vec<HashMap<(StageKind, usize), u64>>,
+    heap: BinaryHeap<QueueItem>,
+}
+
+impl ScheduleQueue {
+    fn new(num_groups: usize) -> Self {
+        Self {
+            generation: 0,
+            current_gen: vec![HashMap::new(); num_groups],
+            heap: BinaryHeap::new(),
+        }
+    }
+
+    fn next_generation(&mut self) -> u64 {
+        let g = self.generation;
+        self.generation += 1;
+        g
+    }
+}
+
 /// An item in the scheduling priority queue.
 #[derive(Debug)]
 struct QueueItem {
@@ -742,9 +768,7 @@ fn enqueue_group_items(
     file_path_costs: &[usize],
     files_shown: &HashSet<usize>,
     remaining_budget: usize,
-    generation: &mut u64,
-    current_gen: &mut [HashMap<(StageKind, usize), u64>],
-    heap: &mut BinaryHeap<QueueItem>,
+    queue: &mut ScheduleQueue,
 ) {
     for &group_idx in group_indices {
         let group = &groups[group_idx];
@@ -793,18 +817,16 @@ fn enqueue_group_items(
                 // affected_groups and items will be re-evaluated.
                 if total_cost > remaining_budget {
                     for invalidate_n in n..=max_n {
-                        let item_gen = *generation;
-                        *generation += 1;
-                        current_gen[group_idx].insert((stage_kind, invalidate_n), item_gen);
+                        let item_gen = queue.next_generation();
+                        queue.current_gen[group_idx].insert((stage_kind, invalidate_n), item_gen);
                     }
                     break;
                 }
 
-                let item_gen = *generation;
-                *generation += 1;
-                current_gen[group_idx].insert((stage_kind, n), item_gen);
+                let item_gen = queue.next_generation();
+                queue.current_gen[group_idx].insert((stage_kind, n), item_gen);
 
-                heap.push(QueueItem {
+                queue.heap.push(QueueItem {
                     group_idx,
                     stage_kind,
                     n,
@@ -861,10 +883,7 @@ pub fn schedule(
     let mut group_stages: Vec<Option<IncludedStage>> = vec![None; groups.len()];
 
     // Build all queue items
-    let mut generation: u64 = 0;
-    let mut current_gen: Vec<HashMap<(StageKind, usize), u64>> =
-        vec![HashMap::new(); groups.len()];
-    let mut heap: BinaryHeap<QueueItem> = BinaryHeap::new();
+    let mut queue = ScheduleQueue::new(groups.len());
 
     let all_indices: Vec<usize> = (0..groups.len()).collect();
     enqueue_group_items(
@@ -874,16 +893,14 @@ pub fn schedule(
         &file_path_costs,
         &files_shown,
         budget,
-        &mut generation,
-        &mut current_gen,
-        &mut heap,
+        &mut queue,
     );
 
     let mut remaining_budget = budget;
 
-    while let Some(item) = heap.pop() {
+    while let Some(item) = queue.heap.pop() {
         // Lazy deletion: skip stale items
-        let current = current_gen[item.group_idx]
+        let current = queue.current_gen[item.group_idx]
             .get(&(item.stage_kind, item.n));
         match current {
             Some(&g) if g == item.generation => {}
@@ -985,9 +1002,7 @@ pub fn schedule(
             &file_path_costs,
             &files_shown,
             remaining_budget,
-            &mut generation,
-            &mut current_gen,
-            &mut heap,
+            &mut queue,
         );
     }
 
