@@ -153,15 +153,10 @@ fn render_symbol(
     // Determine what to show based on the group's included stage.
     // The included stage is the HIGHEST stage reached. All earlier stages
     // in the progression are implicitly included.
-    let stage_pos = stages
-        .iter()
-        .position(|&s| s == included.kind)
-        .unwrap_or(0);
-
-    let show_names = stages.iter().position(|&s| s == StageKind::Names).is_some_and(|p| p <= stage_pos);
-    let show_sigs = stages.iter().position(|&s| s == StageKind::Signatures).is_some_and(|p| p <= stage_pos);
-    let show_doc = stages.iter().position(|&s| s == StageKind::Doc).is_some_and(|p| p <= stage_pos);
-    let show_body = stages.iter().position(|&s| s == StageKind::Body).is_some_and(|p| p <= stage_pos);
+    let show_names = included.covers(stages, StageKind::Names, 1);
+    let show_sigs = included.covers(stages, StageKind::Signatures, 1);
+    let show_doc = included.covers(stages, StageKind::Doc, 1);
+    let show_body = included.covers(stages, StageKind::Body, 1);
 
     let doc_n = if included.kind == StageKind::Doc { included.n_lines } else if show_doc { usize::MAX } else { 0 };
     let body_n = if included.kind == StageKind::Body { included.n_lines } else if show_body { usize::MAX } else { 0 };

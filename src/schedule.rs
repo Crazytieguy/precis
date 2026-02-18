@@ -356,6 +356,23 @@ pub struct IncludedStage {
     pub n_lines: usize,
 }
 
+impl IncludedStage {
+    /// Check if a given (stage_kind, n) is fully covered by this inclusion.
+    ///
+    /// A stage item is covered if it's earlier in the progression than the
+    /// included stage, or if it's the same stage with n <= the included n_lines.
+    /// Use `n = 1` to test whether a stage is included at all.
+    pub fn covers(&self, stages: &[StageKind], stage_kind: StageKind, n: usize) -> bool {
+        let Some(inc_pos) = stages.iter().position(|&s| s == self.kind) else {
+            return false;
+        };
+        let Some(this_pos) = stages.iter().position(|&s| s == stage_kind) else {
+            return false;
+        };
+        this_pos < inc_pos || (this_pos == inc_pos && n <= self.n_lines)
+    }
+}
+
 // ---------------------------------------------------------------------------
 // Group construction
 // ---------------------------------------------------------------------------
@@ -780,14 +797,11 @@ fn enqueue_group_items(
             }
             for n in 1..=max_n {
                 // Skip items already included
-                if let Some(ref included) = group_stages[group_idx] {
-                    let inc_pos = stages.iter().position(|&s| s == included.kind);
-                    let this_pos = stages.iter().position(|&s| s == stage_kind);
-                    if let (Some(ip), Some(tp)) = (inc_pos, this_pos)
-                        && (tp < ip || (tp == ip && n <= included.n_lines))
-                    {
-                        continue;
-                    }
+                if group_stages[group_idx]
+                    .as_ref()
+                    .is_some_and(|inc| inc.covers(stages, stage_kind, n))
+                {
+                    continue;
                 }
 
                 let own_value = compute_value(group, stage_kind, n);
@@ -913,15 +927,14 @@ pub fn schedule(
         // the high-level item pays for Names as a prerequisite, but the original
         // Names heap entry still has a valid generation number. Without this
         // check, popping that stale Names entry would deduct its cost again.
-        if let Some(ref included) = group_stages[item.group_idx] {
-            let stages = groups[item.group_idx].key.kind_category.stage_sequence();
-            let inc_pos = stages.iter().position(|&s| s == included.kind);
-            let this_pos = stages.iter().position(|&s| s == item.stage_kind);
-            if let (Some(ip), Some(tp)) = (inc_pos, this_pos)
-                && (tp < ip || (tp == ip && item.n <= included.n_lines))
-            {
-                continue;
-            }
+        if group_stages[item.group_idx]
+            .as_ref()
+            .is_some_and(|inc| {
+                let stages = groups[item.group_idx].key.kind_category.stage_sequence();
+                inc.covers(stages, item.stage_kind, item.n)
+            })
+        {
+            continue;
         }
 
         let total_cost = item.total_cost();
@@ -960,20 +973,9 @@ pub fn schedule(
             if target_n == 0 {
                 continue;
             }
-            let current_stage = group_stages[item.group_idx];
-            let should_update = match current_stage {
-                None => true,
-                Some(ref cs) => {
-                    let current_pos = stages.iter().position(|&s| s == cs.kind);
-                    let new_pos = stages.iter().position(|&s| s == sk);
-                    match (current_pos, new_pos) {
-                        (Some(cp), Some(np)) => {
-                            np > cp || (np == cp && target_n > cs.n_lines)
-                        }
-                        _ => true,
-                    }
-                }
-            };
+            let should_update = group_stages[item.group_idx]
+                .as_ref()
+                .is_none_or(|cs| !cs.covers(stages, sk, target_n));
             if should_update {
                 group_stages[item.group_idx] = Some(IncludedStage {
                     kind: sk,
