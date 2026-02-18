@@ -57,13 +57,15 @@ docs/resources/links.md
 docs/summary.md
      3→## Guides
      5→- [Getting Started](./guides/01-getting-started.md)
+     6→- [Validating Data](./guides/02-validating-data.md)
       →…
     12→## API Reference
     14→- [Core](./reference/core.md)
+    15→- [Types](./reference/types.md)
       →…
     22→## Resources
     24→- [FAQ](./resources/faq.md)
-      →…
+    25→- [Links](./resources/links.md)
 examples/README.md
      1→# Examples …
 examples/package.json
@@ -162,6 +164,13 @@ src/struct.ts
     24→    schema: S
     25→    coercer?: Coercer
     26→    validator?: Validator
+    27→    refiner?: Refiner<T>
+    28→    entries?: Struct<T, S>['entries']
+    29→  }) {
+    30→    const {
+    31→      type,
+    32→      schema,
+    33→      validator,
       →…
     63→  /**
     64→   * Assert that a value passes the struct's validation, throwing if it doesn't.
@@ -210,7 +219,9 @@ src/struct.ts
    111→      mask?: boolean
    112→      message?: string
    113→    } = {}
-      →…
+   114→  ): [StructError, undefined] | [undefined, T] {
+   115→    return validate(value, this, options)
+   116→  }
    119→/**
    120→ * Assert that a value passes a struct, throwing if it doesn't.
    121→ */
@@ -274,6 +285,11 @@ src/struct.ts
    190→    mask?: boolean
    191→    message?: string
    192→  } = {}
+   193→): [StructError, undefined] | [undefined, T] {
+   194→  const tuples = run(value, struct, options)
+   195→  const tuple = shiftIterator(tuples)!
+   196→
+   197→  if (tuple[0]) {
       →…
    213→/**
       →…
@@ -317,6 +333,9 @@ src/structs/coercions.ts
     39→  struct: Struct<T, S>,
     40→  fallback: any,
     41→  options: {
+    42→    strict?: boolean
+    43→  } = {}
+    44→): Struct<T, S> {
     72→/**
       →…
     79→export function trimmed<T, S>(struct: Struct<T, S>): Struct<T, S> {
@@ -342,12 +361,18 @@ src/structs/refinements.ts
     34→  struct: Struct<T, S>,
     35→  threshold: T,
     36→  options: {
+    37→    exclusive?: boolean
+    38→  } = {}
+    39→): Struct<T, S> {
     51→/**
       →…
     55→export function min<T extends number | Date, S extends any>(
     56→  struct: Struct<T, S>,
     57→  threshold: T,
     58→  options: {
+    59→    exclusive?: boolean
+    60→  } = {}
+    61→): Struct<T, S> {
     73→/**
       →…
     77→export function nonempty<
@@ -822,19 +847,10 @@ test/validation/coerce/condition-not-met.ts
 test/validation/coerce/unchanged.ts
 test/validation/date/invalid-date.ts
      1→import { date } from '../../../src'
-     3→export const Struct = date()
-     5→export const data = new Date('invalid')
-     7→export const failures = [
 test/validation/date/invalid.ts
      1→import { date } from '../../../src'
-     3→export const Struct = date()
-     5→export const data = 'invalid'
-     7→export const failures = [
 test/validation/date/valid.ts
      1→import { date } from '../../../src'
-     3→export const Struct = date()
-     5→export const data = new Date(0)
-     7→export const output = new Date(0)
 test/validation/defaulted/function.ts
 test/validation/defaulted/mixin.ts
 test/validation/defaulted/nested-double.ts
@@ -862,19 +878,10 @@ test/validation/empty/valid-set.ts
 test/validation/empty/valid-string.ts
 test/validation/enums/invalid-numbers.ts
      1→import { enums } from '../../../src'
-     3→export const Struct = enums([1, 2])
-     5→export const data = 'invalid'
-     7→export const failures = [
 test/validation/enums/invalid-strings.ts
      1→import { enums } from '../../../src'
-     3→export const Struct = enums(['one', 'two'])
-     5→export const data = 'invalid'
-     7→export const failures = [
 test/validation/enums/valid.ts
      1→import { enums } from '../../../src'
-     3→export const Struct = enums(['one', 'two'])
-     5→export const data = 'two'
-     7→export const output = 'two'
 test/validation/function/invalid.ts
      1→import { func } from '../../../src'
      3→export const Struct = func()

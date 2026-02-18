@@ -317,6 +317,9 @@ structs/coercions.ts
     39→  struct: Struct<T, S>,
     40→  fallback: any,
     41→  options: {
+    42→    strict?: boolean
+    43→  } = {}
+    44→): Struct<T, S> {
     72→/**
       →…
     79→export function trimmed<T, S>(struct: Struct<T, S>): Struct<T, S> {
@@ -342,12 +345,18 @@ structs/refinements.ts
     34→  struct: Struct<T, S>,
     35→  threshold: T,
     36→  options: {
+    37→    exclusive?: boolean
+    38→  } = {}
+    39→): Struct<T, S> {
     51→/**
       →…
     55→export function min<T extends number | Date, S extends any>(
     56→  struct: Struct<T, S>,
     57→  threshold: T,
     58→  options: {
+    59→    exclusive?: boolean
+    60→  } = {}
+    61→): Struct<T, S> {
     73→/**
       →…
     77→export function nonempty<
@@ -528,16 +537,6 @@ structs/types.ts
    318→    validator(value) {
    319→      return (
    320→        isNonArrayObject(value) ||
-   321→        `Expected an object, but received: ${print(value)}`
-   322→      )
-   323→    },
-   324→    coercer(value, ctx) {
-   325→      if (!isNonArrayObject(value)) {
-   326→        return value
-   327→      }
-   328→
-   329→      const coerced = { ...value }
-   330→
       →…
    347→/**
       →…

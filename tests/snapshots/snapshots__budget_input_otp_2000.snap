@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1959 words)
+budget: 2000 (1973 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -102,12 +102,6 @@ apps/storybook/README.md
     23→
     24→1.  **Install the dependencies.**
     25→
-    26→    Navigate into your new site’s directory and install the necessary dependencies.
-    27→
-    28→    ```shell
-    29→    # Navigate to the directory
-    30→    cd taskbox/
-    31→
       →…
     44→## 🔎 What's inside?
     46→A quick look at the top-level files and directories included with this template.
@@ -121,12 +115,6 @@ apps/storybook/README.md
     54→    ├── .index.html
     55→    ├── LICENSE
     56→    ├── package.json
-    57→    ├── yarn.lock
-    58→    ├── vite.config.js
-    59→    └── README.md
-    60→
-    61→1.  **`.storybook`**: This directory contains Storybook's [configuration](https://storybook.js.org/docs/react/configure/overview) files.
-    62→
       →…
     83→## Contribute
     85→If you encounter an issue with the template, we encourage you to open an issue in this template's repository.
@@ -251,6 +239,10 @@ apps/test/src/app/layout.tsx
      5→const inter = Inter({ subsets: ['latin'] })
      7→export const metadata: Metadata = {
     12→export default function RootLayout({
+    13→  children,
+    14→}: Readonly<{
+    15→  children: React.ReactNode
+    16→}>) {
 apps/test/src/app/page.tsx
      3→export default function Home() {
 apps/test/src/app/props/page.tsx
@@ -278,17 +270,14 @@ apps/test/src/lib/utils.ts
      5→  return twMerge(clsx(inputs))
      6→}
 apps/test/src/tests/base.delete-word.spec.ts
-     2→import { modifier } from './util/modifier'
 apps/test/src/tests/base.render.spec.ts
      3→const modifier …
 apps/test/src/tests/base.slot.spec.ts
      3→const modifier …
 apps/test/src/tests/base.typing.spec.ts
-     2→import { modifier } from './util/modifier'
 apps/test/src/tests/util/modifier.ts
      1→export const modifier = process.platform === 'darwin' ? 'Meta' : 'Control'
 apps/test/src/tests/with-on-complete.spec.ts
-     2→import { modifier } from './util/modifier'
 apps/test/tailwind.config.ts
      3→const config: Config = {
 apps/test/tsconfig.json
@@ -337,6 +326,9 @@ apps/website/src/app/(local-pages)/layout.tsx
      7→export default function RootLayout({
      8→  children,
      9→}: Readonly<{
+    10→  children: React.ReactNode
+    11→}>) {
+    12→  return (
       →…
 apps/website/src/app/(local-pages)/raw-input/page.tsx
      3→import React from 'react'
@@ -364,12 +356,12 @@ apps/website/src/app/(local-pages)/shadcn/static/page.tsx
      8→  )
      9→}
 apps/website/src/app/(pages)/(home)/_components/confetti.tsx
-     3→export function Confetti({
+     3→export function Confetti …
 apps/website/src/app/(pages)/(home)/_components/showcase.tsx
     10→const DynamicConfetti = dynamic(() =>
-    14→export function Showcase({ className, ...props }: { className?: string }) {
-   151→function Slot(props: {
-   199→function FakeCaret() {
+    14→export function Showcase …
+   151→function Slot …
+   199→function FakeCaret …
 apps/website/src/app/(pages)/(home)/page.tsx
     13→import { Showcase } from './_components/showcase'
     19→const fadeUpClassname =
@@ -385,26 +377,20 @@ apps/website/src/app/(pages)/layout.tsx
     68→export default function RootLayout({
     69→  children,
     70→}: Readonly<{
+    71→  children: React.ReactNode
+    72→}>) {
+    73→  return (
       →…
 apps/website/src/components/code.tsx
-     9→export async function Code({
 apps/website/src/components/copy-button.tsx
-    22→export async function copyToClipboardWithMeta(value: string) {
-    26→export function CopyButton({
-    70→export function CopyWithClassNames({
-   129→export function CopyNpmCommandButton({
 apps/website/src/components/icons.tsx
      1→type IconProps = React.HTMLAttributes<SVGElement>
      3→export const Icons = {
 apps/website/src/components/mode-toggle.tsx
-    15→export function ModeToggle() {
 apps/website/src/components/page-header.tsx
 apps/website/src/components/provider.tsx
-     5→export function AppProvider({
 apps/website/src/components/site-footer.tsx
-     3→export function SiteFooter() {
 apps/website/src/components/site-header.tsx
-     9→export function SiteHeader() {
 apps/website/src/components/ui/badge.tsx
     26→export interface BadgeProps
     27→  extends React.HTMLAttributes<HTMLDivElement>,
@@ -572,6 +558,27 @@ packages/input-otp/src/use-pwm-badge.tsx
     24→  isFocused: boolean
     25→}) {
     26→  /** Password managers have a badge
+    27→   *  and I'll use this state to push them
+    28→   *  outside the input */
+    29→  const [hasPWMBadge, setHasPWMBadge] = React.useState(false)
+    30→  const [hasPWMBadgeSpace, setHasPWMBadgeSpace] = React.useState(false)
+    31→  const [done, setDone] = React.useState(false)
+    32→
+    33→  const willPushPWMBadge = React.useMemo(() => {
+    34→    if (pushPasswordManagerStrategy === 'none') {
+    35→      return false
+    36→    }
+    37→
+    38→    const increaseWidthCase =
+    39→      (pushPasswordManagerStrategy === 'increase-width' ||
+    40→        // TODO: remove 'experimental-no-flickering' support in 2.0.0
+    41→        pushPasswordManagerStrategy === 'experimental-no-flickering') &&
+    42→      hasPWMBadge &&
+    43→      hasPWMBadgeSpace
+    44→
+    45→    return increaseWidthCase
+    46→  }, [hasPWMBadge, hasPWMBadgeSpace, pushPasswordManagerStrategy])
+    47→
       →…
 packages/input-otp/tsconfig.json
      2→  "compilerOptions": {

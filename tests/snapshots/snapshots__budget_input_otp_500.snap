@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (499 words)
+budget: 500 (502 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -62,8 +62,6 @@ apps/storybook/tsconfig.node.json
 apps/test/README.md
 apps/test/src/app/base/page.tsx
      7→export default function Page() {
-apps/test/src/app/layout.tsx
-apps/test/src/app/page.tsx
 apps/test/src/app/props/page.tsx
      7→export default function Page() {
 apps/test/src/app/with-autofocus/page.tsx
@@ -73,24 +71,18 @@ apps/test/src/app/with-on-complete/page.tsx
 apps/test/src/components/base-input.tsx
 apps/test/src/lib/utils.ts
      4→export function cn(...inputs: ClassValue[]) {
-apps/test/src/tests/util/modifier.ts
 apps/website/README.md
 apps/website/src/app/(local-pages)/example-auto-submit/page.tsx
      9→export default function ExampleAutoSubmit() {
-apps/website/src/app/(local-pages)/example-auto-submit/server/form-action.ts
 apps/website/src/app/(local-pages)/layout.tsx
-     7→export default function RootLayout({
 apps/website/src/app/(local-pages)/raw-input/page.tsx
      5→export default function ShadcnPage() {
 apps/website/src/app/(local-pages)/shadcn/page.tsx
     12→export default function ShadcnPage() {
 apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
     13→export default function ShadcnPage() {
-apps/website/src/app/(local-pages)/shadcn/static/page.tsx
 apps/website/src/app/(pages)/(home)/page.tsx
    148→export const revalidate = 3600
-apps/website/src/app/(pages)/layout.tsx
-    68→export default function RootLayout({
 apps/website/src/components/icons.tsx
      3→export const Icons = {
 apps/website/src/lib/utils.ts
@@ -149,7 +141,13 @@ packages/input-otp/src/use-pwm-badge.tsx
     16→  containerRef,
     17→  inputRef,
     18→  pushPasswordManagerStrategy,
-      →…
+    19→  isFocused,
+    20→}: {
+    21→  containerRef: React.RefObject<HTMLDivElement>
+    22→  inputRef: React.RefObject<HTMLInputElement>
+    23→  pushPasswordManagerStrategy: OTPInputProps['pushPasswordManagerStrategy']
+    24→  isFocused: boolean
+    25→}) {
 packages/input-otp/tsconfig.json
 pnpm-workspace.yaml
      1→packages …

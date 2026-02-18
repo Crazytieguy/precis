@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3961 words)
+budget: 4000 (3967 words)
 
 browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -404,6 +404,7 @@ index.tsx
    260→  }
    261→
    262→  function onPress(event: React.PointerEvent<HTMLDivElement>) {
+   263→    if (!dismissible && !snapPoints) return;
       →…
    803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(
    804→  function ({ ...rest }, ref) {

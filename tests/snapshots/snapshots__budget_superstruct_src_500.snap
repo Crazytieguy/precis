@@ -2,14 +2,18 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 500 (490 words)
+budget: 500 (495 words)
 
 error.ts
-     5→export type Failure …
     16→/**
     17→ * `StructError` objects are thrown (or returned) when validation fails.
     18→ *
-      →…
+    19→ * Validation logic is design to exit early for maximum performance. The error
+    20→ * represents the first error encountered during validation. For more detail,
+    21→ * the `error.failures` property is a generator function that can be run to
+    22→ * continue validation and receive all the failures in the data.
+    23→ */
+    24→
     25→export class StructError extends TypeError {
     26→  value: any
     27→  key!: any
@@ -22,6 +26,9 @@ error.ts
     34→
     35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
     36→    let cached: Array<Failure> | undefined
+    37→    const { message, explanation, ...rest } = failure
+    38→    const { path } = failure
+    39→    const msg =
       →…
 struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
@@ -29,7 +36,9 @@ struct.ts
      4→/**
      5→ * `Struct` objects encapsulate the validation logic for a specific type of
      6→ * values. Once constructed, you use the `assert`, `is` or `validate` helpers to
-      →…
+     7→ * validate unknown input data against the struct.
+     8→ */
+     9→
     10→export class Struct<T = unknown, S = unknown> {
     11→  readonly TYPE!: T
     12→  type: string
@@ -44,6 +53,16 @@ struct.ts
     21→
     22→  constructor(props: {
     23→    type: string
+    24→    schema: S
+    25→    coercer?: Coercer
+    26→    validator?: Validator
+    27→    refiner?: Refiner<T>
+    28→    entries?: Struct<T, S>['entries']
+    29→  }) {
+    30→    const {
+    31→      type,
+    32→      schema,
+    33→      validator,
       →…
     67→  assert …
     75→  create …
@@ -55,13 +74,6 @@ struct.ts
    157→export function mask …
    175→export function is …
    185→export function validate …
-   221→export type Context …
-   231→export type Infer …
-   237→export type Describe …
-   243→export type Result …
-   253→export type Coercer …
-   259→export type Validator …
-   266→export type Refiner …
 structs/coercions.ts
 structs/refinements.ts
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
@@ -92,24 +104,5 @@ utils.ts
     45→export function print …
     58→export function shiftIterator …
     67→export function toFailure …
-   202→export type UnionToIntersection …
-   212→export type Assign …
-   218→export type EnumSchema …
-   227→export type IsMatch …
-   233→export type IsExactMatch …
-   242→export type IsRecord …
-   251→export type IsTuple …
-   267→export type IsUnion …
-   277→export type ObjectSchema …
-   283→export type ObjectType …
-   291→export type OmitBy …
-   300→export type Optionalize …
-   307→export type PartialObjectSchema …
-   315→export type PickBy …
-   324→export type Simplify …
    328→export type If<B extends Boolean, Then, Else> = B extends true ? Then : Else
-   334→export type StructSchema …
-   379→export type TupleSchema …
-   385→export type AnyStruct …
-   394→export type InferStructTuple …
    402→type _InferTuple …

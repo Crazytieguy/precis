@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1965 words)
+budget: 2000 (1968 words)
 
 FUNDING.yml
      1→github …
@@ -41,13 +41,13 @@ playwright.config.ts
 pnpm-workspace.yaml
      1→packages …
 src/browser.ts
-     1→export function isMobileFirefox(): boolean | undefined {
-    10→export function isMac(): boolean | undefined {
-    14→export function isIPhone(): boolean | undefined {
-    18→export function isSafari(): boolean | undefined {
-    22→export function isIPad(): boolean | undefined {
-    30→export function isIOS(): boolean | undefined {
-    34→export function testPlatform(re: RegExp): boolean | undefined {
+     1→export function isMobileFirefox …
+    10→export function isMac …
+    14→export function isIPhone …
+    18→export function isSafari …
+    22→export function isIPad …
+    30→export function isIOS …
+    34→export function testPlatform …
 src/constants.ts
      1→export const TRANSITIONS = {
      2→  DURATION: 0.5,
@@ -75,29 +75,24 @@ src/context.ts
     14→  isOpen: boolean;
     15→  isDragging: boolean;
     16→  keyboardIsOpen: React.MutableRefObject<boolean>;
-    17→  snapPointsOffset: number[] | null;
-    18→  snapPoints?: (number | string)[] | null;
-    19→  activeSnapPointIndex?: number | null;
-    20→  modal: boolean;
-    21→  shouldFade: boolean;
       →…
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
     38→  drawerRef: { current: null },
       →…
-    69→export const useDrawerContext = () => {
+    69→export const useDrawerContext …
 src/helpers.ts
      1→import { AnyFunction, DrawerDirection } from './types';
      3→interface Style {
      4→  [key: string]: string;
      5→}
      7→const cache = new WeakMap();
-     9→export function isInView(el: HTMLElement): boolean {
-    23→export function set(el: Element | HTMLElement | null | undefined, styles: Style, ignoreCache = false) {
-    42→export function reset(el: Element | HTMLElement | null, prop?: string) {
-    59→export const isVertical = (direction: DrawerDirection) => {
-    72→export function getTranslate(element: HTMLElement, direction: DrawerDirection): number | null {
-    90→export function dampenValue(v: number) {
-    94→export function assignStyle(element: HTMLElement | null | undefined, style: Partial<CSSStyleDeclaration>) {
+     9→export function isInView …
+    23→export function set …
+    42→export function reset …
+    59→export const isVertical …
+    72→export function getTranslate …
+    90→export function dampenValue …
+    94→export function assignStyle …
    105→/**
    106→ * Receives functions as arguments and returns a new function that calls all.
    107→ */
@@ -170,6 +165,34 @@ src/index.tsx
    149→  scrollLockTimeout = SCROLL_LOCK_TIMEOUT,
    150→  dismissible = true,
    151→  handleOnly = false,
+   152→  fadeFromIndex = snapPoints && snapPoints.length - 1,
+   153→  activeSnapPoint: activeSnapPointProp,
+   154→  setActiveSnapPoint: setActiveSnapPointProp,
+   155→  fixed,
+   156→  modal = true,
+   157→  onClose,
+   158→  nested,
+   159→  noBodyStyles = false,
+   160→  direction = 'bottom',
+   161→  defaultOpen = false,
+   162→  disablePreventScroll = true,
+   163→  snapToSequentialPoint = false,
+   164→  preventScrollRestoration = false,
+   165→  repositionInputs = true,
+   166→  onAnimationEnd,
+   167→  container,
+   168→  autoFocus = false,
+   169→}: DialogProps) {
+   170→  const [isOpen = false, setIsOpen] = useControllableState({
+   171→    defaultProp: defaultOpen,
+   172→    prop: openProp,
+   173→    onChange: (o: boolean) => {
+   174→      onOpenChange?.(o);
+   175→
+   176→      if (!o && !nested) {
+   177→        restorePositionSetting();
+   178→      }
+   179→
       →…
    803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(
    831→export type ContentProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
@@ -189,8 +212,6 @@ src/index.tsx
   1106→    <Root
   1107→      nested
   1108→      open={nestedIsOpen}
-  1109→      onClose={() => {
-  1110→        onNestedOpenChange(false);
       →…
   1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
   1130→export function Portal(props: PortalProps) {
@@ -240,9 +261,9 @@ src/use-controllable-state.ts
      3→import React from 'react';
      5→type UseControllableStateParams<T> = {
     11→type SetStateFn<T> = (prevState?: T) => T;
-    13→function useCallbackRef<T extends (...args: any[]) => any>(callback: T | undefined): T {
-    24→function useUncontrolledState<T>({ defaultProp, onChange }: Omit<UseControllableStateParams<T>, 'prop'>) {
-    39→export function useControllableState<T>({ prop, defaultProp, onChange = () => {} }: UseControllableStateParams<T>) {
+    13→function useCallbackRef …
+    24→function useUncontrolledState …
+    39→export function useControllableState …
 src/use-position-fixed.ts
      1→import React from 'react';
      2→import { isSafari } from './browser';
@@ -270,6 +291,36 @@ src/use-position-fixed.ts
     27→  preventScrollRestoration: boolean;
     28→  noBodyStyles: boolean;
     29→}) {
+    30→  const [activeUrl, setActiveUrl] = React.useState(() => (typeof window !== 'undefined' ? window.location.href : ''));
+    31→  const scrollPos = React.useRef(0);
+    32→
+    33→  const setPositionFixed = React.useCallback(() => {
+    34→    // All browsers on iOS will return true here.
+    35→    if (!isSafari()) return;
+    36→
+    37→    // If previousBodyPosition is already set, don't set it again.
+    38→    if (previousBodyPosition === null && isOpen && !noBodyStyles) {
+    39→      previousBodyPosition = {
+    40→        position: document.body.style.position,
+    41→        top: document.body.style.top,
+    42→        left: document.body.style.left,
+    43→        height: document.body.style.height,
+    44→        right: 'unset',
+    45→      };
+    46→
+    47→      // Update the dom inside an animation frame
+    48→      const { scrollX, innerHeight } = window;
+    49→
+    50→      document.body.style.setProperty('position', 'fixed', 'important');
+    51→      Object.assign(document.body.style, {
+    52→        top: `${-scrollPos.current}px`,
+    53→        left: `${-scrollX}px`,
+    54→        right: '0px',
+    55→        height: 'auto',
+    56→      });
+    57→
+    58→      window.setTimeout(
+    59→        () =>
       →…
 src/use-prevent-scroll.ts
      3→import { useEffect, useLayoutEffect } from 'react';
@@ -281,10 +332,10 @@ src/use-prevent-scroll.ts
     12→  isDisabled?: boolean;
     13→  focusCallback?: () => void;
     14→}
-    16→function chain(...callbacks: any[]): (...args: any[]) => void {
+    16→function chain …
     27→const visualViewport = typeof document !== 'undefined' && window.visualViewport;
-    29→export function isScrollable(node: Element): boolean {
-    34→export function getScrollParent(node: Element): Element {
+    29→export function isScrollable …
+    34→export function getScrollParent …
     47→const nonTextInputTypes = new Set([
     63→/**
     64→ * Prevents scrolling on the document body on mount, and
@@ -306,37 +357,38 @@ src/use-prevent-scroll.ts
     80→      }
     81→    }
     82→
-      →…
-   118→function preventScrollMobileSafari() {
-   243→function setStyle(element: HTMLElement, style: keyof React.CSSProperties, value: string) {
-   257→function addEvent<K extends keyof GlobalEventHandlersEventMap>(
-   258→  target: EventTarget,
-   259→  event: K,
-   260→  handler: (this: Document, ev: GlobalEventHandlersEventMap[K]) => any,
-   261→  options?: boolean | AddEventListenerOptions,
-   262→) {
-   272→function scrollIntoView(target: Element) {
-   294→export function isInput(target: Element) {
+    83→    return () => {
+    84→      preventScrollCount--;
+    85→      if (preventScrollCount === 0) {
+    86→        restore?.();
+    87→      }
+    88→    };
+    89→  }, [isDisabled]);
+    90→}
+   118→function preventScrollMobileSafari …
+   243→function setStyle …
+   257→function addEvent …
+   272→function scrollIntoView …
+   294→export function isInput …
 src/use-scale-background.ts
      1→import React, { useMemo } from 'react';
      2→import { useDrawerContext } from './context';
      3→import { assignStyle, chain, isVertical, reset } from './helpers';
      4→import { BORDER_RADIUS, TRANSITIONS, WINDOW_TOP_OFFSET } from './constants';
-     6→const noop = () => () => {};
-     8→export function useScaleBackground() {
+     6→const noop …
+     8→export function useScaleBackground …
 src/use-snap-points.ts
      1→import React from 'react';
      2→import { set, isVertical } from './helpers';
      3→import { TRANSITIONS, VELOCITY_THRESHOLD } from './constants';
      4→import { useControllableState } from './use-controllable-state';
      5→import { DrawerDirection } from './types';
-     7→export function useSnapPoints({
+     7→export function useSnapPoints …
 test/README.md
      3→## Getting Started …
     21→## Learn More …
     30→## Deploy on Vercel …
 test/next.config.js
-     1→/** @type {import('next').NextConfig} */
      2→const nextConfig = {
 test/package.json
      2→  "name": "test",
@@ -356,7 +408,7 @@ test/src/app/default-open/page.tsx
      7→  return (
       →…
 test/src/app/different-directions/page.tsx
-     6→function DirectionalDrawer({
+     6→function DirectionalDrawer …
    118→export default function Page() {
    119→  return (
       →…
@@ -368,8 +420,6 @@ test/src/app/layout.tsx
      5→const inter = Inter({ subsets: ['latin'] });
      7→export const metadata: Metadata = {
     12→export default function RootLayout({ children }: { children: React.ReactNode }) {
-    13→  return (
-      →…
 test/src/app/nested-drawers/page.tsx
      3→import { Drawer } from 'vaul';
      5→export default function Page() {
@@ -378,13 +428,11 @@ test/src/app/nested-drawers/page.tsx
 test/src/app/non-dismissible/page.tsx
      6→export default function Page() {
 test/src/app/open-another-drawer/page.tsx
-     6→export function MyDrawer({
-    96→export function MyDrawer2({ open, setOpen }: { open: boolean; setOpen: (open: boolean) => void }) {
-   195→export default function Home() {
+     6→export function MyDrawer …
+    96→export function MyDrawer2 …
+   195→export default function Home …
 test/src/app/page.tsx
      5→export default function Page() {
-     6→  return (
-      →…
 test/src/app/parent-container/page.tsx
      6→export default function Page() {
      7→  return (
@@ -393,10 +441,6 @@ test/src/app/parent-container/page.tsx
     39→function WithNested() {
 test/src/app/scrollable-page/page.tsx
      6→export default function Page() {
-     7→  const [open, setOpen] = useState(false);
-     8→
-     9→  return (
-      →…
 test/src/app/scrollable-with-inputs/page.tsx
      3→import { Drawer } from 'vaul';
      5→export default function Page() {
@@ -410,34 +454,20 @@ test/src/app/with-modal-false/page.tsx
      9→export default function Page() {
 test/src/app/with-redirect/long-page/page.tsx
      3→export default function Page() {
-     4→  return (
-      →…
 test/src/app/with-redirect/page.tsx
      6→export default function Page() {
-     7→  return (
-      →…
 test/src/app/with-scaled-background/page.tsx
-     8→const CenteredContent …
-    29→const DrawerContent …
     65→export default function Page() {
-    66→  const [direction, setDirection] = useState<DrawerDirection>('bottom');
-    67→
-      →…
 test/src/app/with-snap-points/page.tsx
      7→const snapPoints = ['148px', '355px', 1];
      9→export default function Page() {
 test/src/app/without-scaled-background/page.tsx
      6→export default function Page() {
 test/tailwind.config.ts
-     3→const config: Config = {
-test/tests/base.spec.ts
 test/tests/constants.ts
      1→export const ANIMATION_DURATION = 500;
-test/tests/controlled.spec.ts
 test/tests/helpers.ts
      4→export async function openDrawer(page: Page) {
-     5→  await expect(page.getByTestId('content')).not.toBeVisible();
-      →…
     11→export async function dragWithSpeed(
     12→  page: Page,
     13→  selector: string,
@@ -445,17 +475,9 @@ test/tests/helpers.ts
     15→  endY: number,
     16→  speed: number = 10,
     17→): Promise<void> {
-    18→  const startX = 0;
-      →…
 test/tests/initial-snap.spec.ts
      8→const snapPointYPositions = {
-    15→const snapTo = async (page: Page, snapPointIndex: keyof typeof snapPointYPositions) => {
-test/tests/nested.spec.ts
-test/tests/non-dismissible.spec.ts
-test/tests/with-handle.spec.ts
-test/tests/with-redirect.spec.ts
-test/tests/with-scaled-background.spec.ts
-test/tests/without-scaled-background.spec.ts
+    15→const snapTo …
 test/tsconfig.json
      2→  "compilerOptions": {
     31→  },

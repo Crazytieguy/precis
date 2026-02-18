@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1965 words)
+budget: 2000 (1969 words)
 
 browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -45,33 +45,12 @@ context.ts
     19→  activeSnapPointIndex?: number | null;
     20→  modal: boolean;
     21→  shouldFade: boolean;
-    22→  activeSnapPoint?: number | string | null;
-    23→  setActiveSnapPoint: (o: number | string | null) => void;
-    24→  closeDrawer: () => void;
-    25→  openProp?: boolean;
-    26→  onOpenChange?: (o: boolean) => void;
-    27→  direction: DrawerDirection;
-    28→  shouldScaleBackground: boolean;
-    29→  setBackgroundColorOnScale: boolean;
-    30→  noBodyStyles: boolean;
-    31→  handleOnly?: boolean;
-    32→  container?: HTMLElement | null;
-    33→  autoFocus?: boolean;
-    34→  shouldAnimate?: React.RefObject<boolean>;
-    35→}
+      →…
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
     38→  drawerRef: { current: null },
     39→  overlayRef: { current: null },
     40→  onPress: () => {},
     41→  onRelease: () => {},
-    42→  onDrag: () => {},
-    43→  onNestedDrag: () => {},
-    44→  onNestedOpenChange: () => {},
-    45→  onNestedRelease: () => {},
-    46→  openProp: undefined,
-    47→  dismissible: false,
-    48→  isOpen: false,
-    49→  isDragging: false,
       →…
     69→export const useDrawerContext = () => {
 helpers.ts
@@ -214,20 +193,7 @@ index.tsx
   1110→        onNestedOpenChange(false);
   1111→      }}
   1112→      onDrag={(e, p) => {
-  1113→        onNestedDrag(e, p);
-  1114→        onDrag?.(e, p);
-  1115→      }}
-  1116→      onOpenChange={(o) => {
-  1117→        if (o) {
-  1118→          onNestedOpenChange(o);
-  1119→        }
-  1120→        onOpenChange?.(o);
-  1121→      }}
-  1122→      onRelease={onNestedRelease}
-  1123→      {...rest}
-  1124→    />
-  1125→  );
-  1126→}
+      →…
   1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
   1130→export function Portal(props: PortalProps) {
   1131→  const context = useDrawerContext();
@@ -275,9 +241,6 @@ use-composed-refs.ts
 use-controllable-state.ts
      3→import React from 'react';
      5→type UseControllableStateParams<T> = {
-     6→  prop?: T | undefined;
-     7→  defaultProp?: T | undefined;
-      →…
     11→type SetStateFn<T> = (prevState?: T) => T;
     13→function useCallbackRef<T extends (...args: any[]) => any>(callback: T | undefined): T {
     24→function useUncontrolledState<T>({ defaultProp, onChange }: Omit<UseControllableStateParams<T>, 'prop'>) {
@@ -356,6 +319,25 @@ use-position-fixed.ts
     74→    // All browsers on iOS will return true here.
     75→    if (!isSafari()) return;
     76→
+    77→    if (previousBodyPosition !== null && !noBodyStyles) {
+    78→      // Convert the position from "px" to Int
+    79→      const y = -parseInt(document.body.style.top, 10);
+    80→      const x = -parseInt(document.body.style.left, 10);
+    81→
+    82→      // Restore styles
+    83→      Object.assign(document.body.style, previousBodyPosition);
+    84→
+    85→      window.requestAnimationFrame(() => {
+    86→        if (preventScrollRestoration && activeUrl !== window.location.href) {
+    87→          setActiveUrl(window.location.href);
+    88→          return;
+    89→        }
+    90→
+    91→        window.scrollTo(x, y);
+    92→      });
+    93→
+    94→      previousBodyPosition = null;
+    95→    }
       →…
 use-prevent-scroll.ts
      3→import { useEffect, useLayoutEffect } from 'react';
@@ -372,9 +354,6 @@ use-prevent-scroll.ts
     29→export function isScrollable(node: Element): boolean {
     34→export function getScrollParent(node: Element): Element {
     47→const nonTextInputTypes = new Set([
-    48→  'checkbox',
-    49→  'radio',
-      →…
     63→/**
     64→ * Prevents scrolling on the document body on mount, and
     65→ * restores it on unmount. Also ensures that content does not
@@ -427,3 +406,25 @@ use-snap-points.ts
      4→import { useControllableState } from './use-controllable-state';
      5→import { DrawerDirection } from './types';
      7→export function useSnapPoints({
+     8→  activeSnapPointProp,
+     9→  setActiveSnapPointProp,
+    10→  snapPoints,
+    11→  drawerRef,
+    12→  overlayRef,
+    13→  fadeFromIndex,
+    14→  onSnapPointChange,
+    15→  direction = 'bottom',
+    16→  container,
+    17→  snapToSequentialPoint,
+    18→}: {
+    19→  activeSnapPointProp?: number | string | null;
+    20→  setActiveSnapPointProp?(snapPoint: number | null | string): void;
+    21→  snapPoints?: (number | string)[];
+    22→  fadeFromIndex?: number;
+    23→  drawerRef: React.RefObject<HTMLDivElement>;
+    24→  overlayRef: React.RefObject<HTMLDivElement>;
+    25→  onSnapPointChange(activeSnapPointIndex: number): void;
+    26→  direction?: DrawerDirection;
+    27→  container?: HTMLElement | null | undefined;
+    28→  snapToSequentialPoint?: boolean;
+    29→}) {

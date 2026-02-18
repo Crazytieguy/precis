@@ -15,6 +15,12 @@ pub struct Symbol {
     pub is_first_party: bool,
     pub line: usize,
     pub end_line: usize,
+    /// End line of the symbol's signature (1-indexed), computed from tree-sitter
+    /// AST by locating the body/block child. For C-like languages this is the
+    /// line containing `{`; for Python it's the line containing `:`.
+    /// `None` when tree-sitter couldn't determine the boundary (fallback to
+    /// text heuristics in `format::signature_end_line`).
+    pub sig_end_line: Option<usize>,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -565,6 +571,7 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             } else {
                 symbol_node.end_position().row + 1
             },
+            sig_end_line: compute_sig_end_line(symbol_node, lang),
         });
     }
 
@@ -849,6 +856,66 @@ fn is_inside_rust_anon_const(node: tree_sitter::Node, source: &str) -> bool {
         current = parent.parent();
     }
     false
+}
+
+/// Compute the signature end line (1-indexed) from the tree-sitter AST.
+///
+/// For C-like languages (Rust, TS/JS, Go, C), the body child (block,
+/// field_declaration_list, etc.) starts at `{`, so `sig_end = body.start.row + 1`.
+///
+/// For Python, the body (block) starts at the first statement after `:`.
+/// We find the `:` token that's a direct child of the function/class definition
+/// and use its row.
+///
+/// For Go `type_spec`, the body braces are inside the `type` child (struct_type,
+/// interface_type), so we look for `{` there.
+///
+/// Returns `None` for nodes without a detectable body (type aliases, constants,
+/// method signatures, etc.) — the caller should fall back to text heuristics.
+fn compute_sig_end_line(node: tree_sitter::Node, lang: Lang) -> Option<usize> {
+    if lang == Lang::Python {
+        let body = node.child_by_field_name("body")?;
+        // Walk backwards from body to find the ':' token
+        let body_id = body.id();
+        let mut body_idx = None;
+        for i in 0..node.child_count() {
+            if node.child(i).is_some_and(|c| c.id() == body_id) {
+                body_idx = Some(i);
+                break;
+            }
+        }
+        if let Some(idx) = body_idx {
+            for i in (0..idx).rev() {
+                if let Some(child) = node.child(i)
+                    && child.kind() == ":"
+                {
+                    return Some(child.start_position().row + 1);
+                }
+            }
+        }
+        return None;
+    }
+
+    // C-like languages: body field starts at '{'
+    if let Some(body) = node.child_by_field_name("body") {
+        return Some(body.start_position().row + 1);
+    }
+
+    // Go type_spec: the type child (struct_type, interface_type) contains the body.
+    // Look for '{' token inside the type child.
+    if node.kind() == "type_spec"
+        && let Some(type_child) = node.child_by_field_name("type")
+    {
+        for i in 0..type_child.child_count() {
+            if let Some(child) = type_child.child(i)
+                && child.kind() == "{"
+            {
+                return Some(child.start_position().row + 1);
+            }
+        }
+    }
+
+    None
 }
 
 /// Check if a Rust node is test code that should be filtered from output.

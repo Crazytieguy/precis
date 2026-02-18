@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3986 words)
+budget: 4000 (3973 words)
 
 coercions.ts
      1→import { Struct, is, Coercer } from '../struct.js'
@@ -66,6 +66,8 @@ coercions.ts
     61→      }
     62→
     63→      if (changed) {
+    64→        return ret
+    65→      }
       →…
     72→/**
     73→ * Augment a struct to trim string inputs.
@@ -204,7 +206,6 @@ refinements.ts
    131→        (min <= length && length <= max) ||
    132→        `${expected} with a length ${of} but received one with a length of \`${length}\``
    133→      )
-   134→    }
       →…
    138→/**
    139→ * Augment a `Struct` to add an additional refinement to the validation.
@@ -554,7 +555,6 @@ types.ts
    389→    coercer(value) {
    390→      return isNonArrayObject(value) ? { ...value } : value
    391→    },
-   392→  })
       →…
    395→/**
    396→ * Ensure that a value is a `RegExp`.
@@ -631,7 +631,6 @@ types.ts
    477→      )
    478→    },
    479→    coercer(value) {
-   480→      return Array.isArray(value) ? value.slice() : value
       →…
    485→/**
    486→ * Ensure that a value has a set of known properties of specific types.
@@ -664,7 +663,7 @@ types.ts
    513→      return isNonArrayObject(value) ? { ...value } : value
    514→    },
    515→  })
-   516→}
+      →…
    518→/**
    519→ * Ensure that a value matches one of a set of types.
    520→ */
@@ -693,7 +692,6 @@ types.ts
    543→      const failures = []
    544→
    545→      for (const S of Structs) {
-   546→        const [...tuples] = run(value, S, ctx)
       →…
    570→/**
    571→ * Ensure that any value passes validation, without widening its type to `any`.
@@ -809,7 +807,7 @@ utilities.ts
    159→      return struct.refiner(value, ctx)
    160→    },
    161→  })
-   162→}
+      →…
    164→/**
    165→ * Create a new struct based on an existing object struct, but excluding
    166→ * specific properties.

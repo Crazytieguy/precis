@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (989 words)
+budget: 1000 (990 words)
 
 README.md
     28→## Features
@@ -97,18 +97,18 @@ site/components/sections/toast-example.tsx
 site/components/sections/toaster-example.tsx
      8→export const positions: Array<ToastPosition> = [
 site/next.config.mjs
+     5→const withMDX …
     15→const nextConfig = {
     17→  webpack(config) {
     24→  async rewrites() {
 site/package.json
 site/pages/_app.tsx
-    12→const components …
 site/pages/index.tsx
-    22→const version …
    102→export default function Home() {
 site/tsconfig.json
 site/types/svg.d.ts
      1→interface SvgrComponent
+     2→  extends React.StatelessComponent<React.SVGAttributes<SVGElement>> {}
      5→  const value: SvgrComponent;
 src/components/checkmark.tsx
     29→export interface CheckmarkTheme {

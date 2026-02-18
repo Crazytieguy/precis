@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1986 words)
+budget: 2000 (1992 words)
 
 input.tsx
      3→import * as React from 'react'
@@ -286,6 +286,7 @@ input.tsx
    284→          return
    285→        }
    286→        const maybeHasDeleted =
+   287→          typeof previousValue === 'string' &&
       →…
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
    541→  try {

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (976 words)
+budget: 1000 (980 words)
 
 browser.ts
      1→export function isMobileFirefox …
@@ -14,6 +14,8 @@ browser.ts
     34→export function testPlatform …
 constants.ts
      1→export const TRANSITIONS = {
+     2→  DURATION: 0.5,
+      →…
      6→export const VELOCITY_THRESHOLD = 0.4;
      8→export const CLOSE_THRESHOLD = 0.25;
     10→export const SCROLL_LOCK_TIMEOUT = 100;
@@ -29,8 +31,13 @@ context.ts
      6→  overlayRef: React.RefObject<HTMLDivElement>;
      7→  onPress: (event: React.PointerEvent<HTMLDivElement>) => void;
      8→  onRelease: (event: React.PointerEvent<HTMLDivElement> | null) => void;
+     9→  onDrag: (event: React.PointerEvent<HTMLDivElement>) => void;
+    10→  onNestedDrag: (event: React.PointerEvent<HTMLDivElement>, percentageDragged: number) => void;
+    11→  onNestedOpenChange: (o: boolean) => void;
       →…
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
+    38→  drawerRef: { current: null },
+      →…
     69→export const useDrawerContext …
 helpers.ts
      1→import { AnyFunction, DrawerDirection } from './types';
@@ -56,8 +63,7 @@ helpers.ts
    113→        fn(...args);
    114→      }
    115→    }
-   116→  };
-   117→}
+      →…
 index.tsx
      3→import * as DialogPrimitive from '@radix-ui/react-dialog';
      4→import React from 'react';
@@ -83,11 +89,7 @@ index.tsx
     47→  fadeFromIndex?: never;
     48→}
     50→export type DialogProps = {
-   139→export function Root({
-   140→  open: openProp,
-   141→  onOpenChange,
-   142→  children,
-      →…
+   139→export function Root …
    803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(
    831→export type ContentProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
    833→export const Content = React.forwardRef<HTMLDivElement, ContentProps>(function (
@@ -95,17 +97,9 @@ index.tsx
    993→const LONG_HANDLE_PRESS_TIMEOUT = 250;
    994→const DOUBLE_TAP_TIMEOUT = 120;
    996→export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(function (
-  1098→export function NestedRoot({ onDrag, onOpenChange, open: nestedIsOpen, ...rest }: DialogProps) {
-  1099→  const { onNestedDrag, onNestedOpenChange, onNestedRelease } = useDrawerContext();
-  1100→
-  1101→  if (!onNestedDrag) {
-      →…
+  1098→export function NestedRoot …
   1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
-  1130→export function Portal(props: PortalProps) {
-  1131→  const context = useDrawerContext();
-  1132→  const { container = context.container, ...portalProps } = props;
-  1133→
-      →…
+  1130→export function Portal …
   1137→export const Drawer = {
 types.ts
      1→export type DrawerDirection = 'top' | 'bottom' | 'left' | 'right';
@@ -160,6 +154,13 @@ use-position-fixed.ts
     27→  preventScrollRestoration: boolean;
     28→  noBodyStyles: boolean;
     29→}) {
+    30→  const [activeUrl, setActiveUrl] = React.useState(() => (typeof window !== 'undefined' ? window.location.href : ''));
+    31→  const scrollPos = React.useRef(0);
+    32→
+    33→  const setPositionFixed = React.useCallback(() => {
+    34→    // All browsers on iOS will return true here.
+    35→    if (!isSafari()) return;
+    36→
       →…
 use-prevent-scroll.ts
      3→import { useEffect, useLayoutEffect } from 'react';
@@ -189,13 +190,6 @@ use-prevent-scroll.ts
     73→      return;
     74→    }
     75→
-    76→    preventScrollCount++;
-    77→    if (preventScrollCount === 1) {
-    78→      if (isIOS()) {
-    79→        restore = preventScrollMobileSafari();
-    80→      }
-    81→    }
-    82→
       →…
    118→function preventScrollMobileSafari …
    243→function setStyle …

@@ -25,7 +25,7 @@ site/README.md
     17→## Learn More …
     26→## Deploy on Vercel …
 site/components/code.tsx
-     8→const theme …
+     8→const theme: PrismTheme = {
 site/components/docs-layout.tsx
 site/components/emoji-button.tsx
 site/components/sections/footer.tsx
@@ -41,7 +41,6 @@ site/pages/index.tsx
    102→export default function Home() {
 site/tsconfig.json
 site/types/svg.d.ts
-     1→interface SvgrComponent
      5→  const value: SvgrComponent;
 src/components/checkmark.tsx
     29→export interface CheckmarkTheme {

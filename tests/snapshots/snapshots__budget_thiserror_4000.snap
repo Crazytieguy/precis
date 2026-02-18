@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3854 words)
+budget: 4000 (3853 words)
 
 Cargo.toml
      1→[package …
@@ -867,7 +867,6 @@ tests/ui/concat-display.rs
      3→macro_rules! error_type {
      4→    ($name:ident, $what:expr) => {
      5→        // Use #[error("invalid {}", $what)] instead.
-     6→
       →…
 tests/ui/display-underscore.rs
      3→#[derive(Error, Debug)]

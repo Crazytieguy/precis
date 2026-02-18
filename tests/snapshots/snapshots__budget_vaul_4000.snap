@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3917 words)
+budget: 4000 (3933 words)
 
 FUNDING.yml
      1→github …
@@ -124,13 +124,6 @@ src/context.ts
     47→  dismissible: false,
     48→  isOpen: false,
     49→  isDragging: false,
-    50→  keyboardIsOpen: { current: false },
-    51→  snapPointsOffset: null,
-    52→  snapPoints: null,
-    53→  handleOnly: false,
-    54→  modal: false,
-    55→  shouldFade: false,
-    56→  activeSnapPoint: null,
       →…
     69→export const useDrawerContext = () => {
     70→  const context = React.useContext(DrawerContext);
@@ -229,8 +222,6 @@ src/index.tsx
     48→}
     50→export type DialogProps = {
     51→  activeSnapPoint?: number | string | null;
-    52→  setActiveSnapPoint?: (snapPoint: number | string | null) => void;
-    53→  children?: React.ReactNode;
       →…
    139→export function Root({
    140→  open: openProp,
@@ -291,27 +282,69 @@ src/index.tsx
    195→      }
    196→    },
    197→  });
+   198→  const [hasBeenOpened, setHasBeenOpened] = React.useState<boolean>(false);
+   199→  const [isDragging, setIsDragging] = React.useState<boolean>(false);
+   200→  const [justReleased, setJustReleased] = React.useState<boolean>(false);
+   201→  const overlayRef = React.useRef<HTMLDivElement>(null);
+   202→  const openTime = React.useRef<Date | null>(null);
+   203→  const dragStartTime = React.useRef<Date | null>(null);
+   204→  const dragEndTime = React.useRef<Date | null>(null);
+   205→  const lastTimeDragPrevented = React.useRef<Date | null>(null);
+   206→  const isAllowedToDrag = React.useRef<boolean>(false);
+   207→  const nestedOpenChangeTimer = React.useRef<NodeJS.Timeout | null>(null);
+   208→  const pointerStart = React.useRef(0);
+   209→  const keyboardIsOpen = React.useRef(false);
+   210→  const shouldAnimate = React.useRef(!defaultOpen);
+   211→  const previousDiffFromInitial = React.useRef(0);
+   212→  const drawerRef = React.useRef<HTMLDivElement>(null);
+   213→  const drawerHeightRef = React.useRef(drawerRef.current?.getBoundingClientRect().height || 0);
+   214→  const drawerWidthRef = React.useRef(drawerRef.current?.getBoundingClientRect().width || 0);
+   215→  const initialDrawerHeight = React.useRef(0);
+   216→
+   217→  const onSnapPointChange = React.useCallback((activeSnapPointIndex: number) => {
+   218→    // Change openTime ref when we reach the last snap point to prevent dragging for 500ms incase it's scrollable.
+   219→    if (snapPoints && activeSnapPointIndex === snapPointsOffset.length - 1) openTime.current = new Date();
+   220→  }, []);
+   221→
+   222→  const {
+   223→    activeSnapPoint,
+   224→    activeSnapPointIndex,
+   225→    setActiveSnapPoint,
+   226→    onRelease: onReleaseSnapPoints,
+   227→    snapPointsOffset,
+   228→    onDrag: onDragSnapPoints,
+   229→    shouldFade,
+   230→    getPercentageDragged: getSnapPointsPercentageDragged,
+   231→  } = useSnapPoints({
+   232→    snapPoints,
+   233→    activeSnapPointProp,
+   234→    setActiveSnapPointProp,
+   235→    drawerRef,
+   236→    fadeFromIndex,
+   237→    overlayRef,
+   238→    onSnapPointChange,
+   239→    direction,
+   240→    container,
+   241→    snapToSequentialPoint,
+   242→  });
+   243→
+   244→  usePreventScroll({
+   245→    isDisabled:
       →…
    803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(
    804→  function ({ ...rest }, ref) {
-   805→    const { overlayRef, snapPoints, onRelease, shouldFade, isOpen, modal, shouldAnimate } = useDrawerContext();
-   806→    const composedRef = useComposedRefs(ref, overlayRef);
       →…
    831→export type ContentProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
    833→export const Content = React.forwardRef<HTMLDivElement, ContentProps>(function (
    834→  { onPointerDownOutside, style, onOpenAutoFocus, ...rest },
-   835→  ref,
-   836→) {
       →…
    989→export type HandleProps = React.ComponentPropsWithoutRef<'div'> & {
    990→  preventCycle?: boolean;
-   991→};
+      →…
    993→const LONG_HANDLE_PRESS_TIMEOUT = 250;
    994→const DOUBLE_TAP_TIMEOUT = 120;
    996→export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(function (
    997→  { preventCycle = false, children, ...rest },
-   998→  ref,
-   999→) {
       →…
   1098→export function NestedRoot({ onDrag, onOpenChange, open: nestedIsOpen, ...rest }: DialogProps) {
   1099→  const { onNestedDrag, onNestedOpenChange, onNestedRelease } = useDrawerContext();
@@ -351,8 +384,6 @@ src/index.tsx
   1135→}
   1137→export const Drawer = {
   1138→  Root,
-  1139→  NestedRoot,
-  1140→  Content,
       →…
 src/types.ts
      1→export type DrawerDirection = 'top' | 'bottom' | 'left' | 'right';
@@ -400,11 +431,9 @@ src/use-controllable-state.ts
     11→type SetStateFn<T> = (prevState?: T) => T;
     13→function useCallbackRef<T extends (...args: any[]) => any>(callback: T | undefined): T {
     14→  const callbackRef = React.useRef(callback);
-    15→
       →…
     24→function useUncontrolledState<T>({ defaultProp, onChange }: Omit<UseControllableStateParams<T>, 'prop'>) {
     25→  const uncontrolledState = React.useState<T | undefined>(defaultProp);
-    26→  const [value] = uncontrolledState;
       →…
     39→export function useControllableState<T>({ prop, defaultProp, onChange = () => {} }: UseControllableStateParams<T>) {
     40→  const [uncontrolledProp, setUncontrolledProp] = useUncontrolledState({ defaultProp, onChange });
@@ -547,7 +576,6 @@ src/use-prevent-scroll.ts
     14→}
     16→function chain(...callbacks: any[]): (...args: any[]) => void {
     17→  return (...args: any[]) => {
-    18→    for (let callback of callbacks) {
       →…
     27→const visualViewport = typeof document !== 'undefined' && window.visualViewport;
     29→export function isScrollable(node: Element): boolean {
@@ -599,11 +627,9 @@ src/use-prevent-scroll.ts
     90→}
    118→function preventScrollMobileSafari() {
    119→  let scrollable: Element;
-   120→  let lastY = 0;
       →…
    243→function setStyle(element: HTMLElement, style: keyof React.CSSProperties, value: string) {
    244→  // https://github.com/microsoft/TypeScript/issues/17827#issuecomment-391663310
-   245→  // @ts-ignore
       →…
    257→function addEvent<K extends keyof GlobalEventHandlersEventMap>(
    258→  target: EventTarget,
@@ -612,11 +638,9 @@ src/use-prevent-scroll.ts
    261→  options?: boolean | AddEventListenerOptions,
    262→) {
    263→  // @ts-ignore
-   264→  target.addEventListener(event, handler, options);
       →…
    272→function scrollIntoView(target: Element) {
    273→  let root = document.scrollingElement || document.documentElement;
-   274→  while (target && target !== root) {
       →…
    294→export function isInput(target: Element) {
    295→  return (
@@ -641,6 +665,28 @@ src/use-snap-points.ts
      7→export function useSnapPoints({
      8→  activeSnapPointProp,
      9→  setActiveSnapPointProp,
+    10→  snapPoints,
+    11→  drawerRef,
+    12→  overlayRef,
+    13→  fadeFromIndex,
+    14→  onSnapPointChange,
+    15→  direction = 'bottom',
+    16→  container,
+    17→  snapToSequentialPoint,
+    18→}: {
+    19→  activeSnapPointProp?: number | string | null;
+    20→  setActiveSnapPointProp?(snapPoint: number | null | string): void;
+    21→  snapPoints?: (number | string)[];
+    22→  fadeFromIndex?: number;
+    23→  drawerRef: React.RefObject<HTMLDivElement>;
+    24→  overlayRef: React.RefObject<HTMLDivElement>;
+    25→  onSnapPointChange(activeSnapPointIndex: number): void;
+    26→  direction?: DrawerDirection;
+    27→  container?: HTMLElement | null | undefined;
+    28→  snapToSequentialPoint?: boolean;
+    29→}) {
+    30→  const [activeSnapPoint, setActiveSnapPoint] = useControllableState<string | number | null>({
+    31→    prop: activeSnapPointProp,
       →…
 test/README.md
      3→## Getting Started
@@ -700,11 +746,6 @@ test/src/app/default-open/page.tsx
      8→    <div className="w-screen h-screen bg-white p-8 flex justify-center items-center" data-vaul-drawer-wrapper="">
      9→      <Drawer.Root defaultOpen>
     10→        <Drawer.Trigger asChild>
-    11→          <button data-testid="trigger" className="text-2xl">
-    12→            Open Drawer
-    13→          </button>
-    14→        </Drawer.Trigger>
-    15→        <Drawer.Portal>
       →…
 test/src/app/different-directions/page.tsx
      3→import clsx from 'clsx';
@@ -713,17 +754,14 @@ test/src/app/different-directions/page.tsx
      7→  direction,
      8→  children,
      9→}: {
+    10→  direction: DialogProps['direction'];
+    11→  children: React.ReactNode;
+    12→}) {
+    13→  return (
       →…
    118→export default function Page() {
    119→  return (
-   120→    <div className="w-screen h-screen bg-white p-8 flex justify-center items-center flex-col gap-4">
-   121→      <DirectionalDrawer direction="top">Top</DirectionalDrawer>
-   122→      <DirectionalDrawer direction="right">Right</DirectionalDrawer>
-   123→      <DirectionalDrawer direction="bottom">Bottom</DirectionalDrawer>
-   124→      <DirectionalDrawer direction="left">Left</DirectionalDrawer>
-   125→    </div>
-   126→  );
-   127→}
+      →…
 test/src/app/initial-snap/page.tsx
      3→import { clsx } from 'clsx';
      4→import { useState } from 'react';
@@ -743,13 +781,9 @@ test/src/app/layout.tsx
      5→const inter = Inter({ subsets: ['latin'] });
      7→export const metadata: Metadata = {
      8→  title: 'Create Next App',
-     9→  description: 'Generated by create next app',
-    10→};
+      →…
     12→export default function RootLayout({ children }: { children: React.ReactNode }) {
     13→  return (
-    14→    <html lang="en">
-    15→      <body className={inter.className}>{children}</body>
-    16→    </html>
       →…
 test/src/app/nested-drawers/page.tsx
      3→import { Drawer } from 'vaul';
@@ -758,9 +792,6 @@ test/src/app/nested-drawers/page.tsx
      7→    <div className="w-screen h-screen bg-white p-8 flex justify-center items-center" data-vaul-drawer-wrapper="">
      8→      <Drawer.Root>
      9→        <Drawer.Trigger asChild>
-    10→          <button data-testid="trigger">Open Drawer</button>
-    11→        </Drawer.Trigger>
-    12→        <Drawer.Portal>
       →…
 test/src/app/non-dismissible/page.tsx
      3→import { useState } from 'react';
@@ -774,20 +805,19 @@ test/src/app/open-another-drawer/page.tsx
      4→import { useState } from 'react';
      6→export function MyDrawer({
      7→  open,
-      →…
+     8→  setOpen,
+     9→  setOpen2,
+    10→}: {
+    11→  open: boolean;
+    12→  setOpen: (open: boolean) => void;
+    13→  setOpen2: (open: boolean) => void;
+    14→}) {
     96→export function MyDrawer2({ open, setOpen }: { open: boolean; setOpen: (open: boolean) => void }) {
-    97→  return (
-      →…
    195→export default function Home() {
-   196→  const [open, setOpen] = useState(false);
-      →…
 test/src/app/page.tsx
      3→import Link from 'next/link';
      5→export default function Page() {
      6→  return (
-     7→    <div className="w-scareen h-screen bg-white p-8 flex flex-col justify-center gap-6 items-center">
-     8→      <Link href="/with-scaled-background">With scaled background</Link>
-     9→      <Link href="/without-scaled-background">Without scaled background</Link>
       →…
 test/src/app/parent-container/page.tsx
      2→import clsx from 'clsx';
@@ -833,7 +863,6 @@ test/src/app/with-handle/page.tsx
     11→
     12→  const activeSnapPointIndex = snapPoints.indexOf(snap as string);
     13→
-    14→  return (
       →…
 test/src/app/with-modal-false/page.tsx
      3→import { clsx } from 'clsx';
@@ -845,7 +874,6 @@ test/src/app/with-modal-false/page.tsx
     11→
     12→  const activeSnapPointIndex = snapPoints.indexOf(snap as string);
     13→
-    14→  return (
       →…
 test/src/app/with-redirect/long-page/page.tsx
      3→export default function Page() {
@@ -860,11 +888,6 @@ test/src/app/with-redirect/page.tsx
      8→    <div className="w-screen h-screen bg-white p-8 flex justify-center items-center">
      9→      <Drawer.Root>
     10→        <Drawer.Trigger asChild>
-    11→          <button data-testid="trigger" className="text-2xl">
-    12→            Open Drawer
-    13→          </button>
-    14→        </Drawer.Trigger>
-    15→        <Drawer.Portal>
       →…
 test/src/app/with-scaled-background/page.tsx
      3→import { useState } from 'react';
@@ -889,7 +912,6 @@ test/src/app/with-snap-points/page.tsx
     11→
     12→  const activeSnapPointIndex = snapPoints.indexOf(snap as string);
     13→
-    14→  return (
       →…
 test/src/app/without-scaled-background/page.tsx
      3→import { useState } from 'react';
@@ -904,18 +926,13 @@ test/tailwind.config.ts
      1→import type { Config } from 'tailwindcss';
      3→const config: Config = {
 test/tests/base.spec.ts
-     2→import { ANIMATION_DURATION } from './constants';
-     3→import { openDrawer } from './helpers';
 test/tests/constants.ts
      1→export const ANIMATION_DURATION = 500;
 test/tests/controlled.spec.ts
-     2→import { ANIMATION_DURATION } from './constants';
 test/tests/helpers.ts
-     2→import { ANIMATION_DURATION } from './constants';
      4→export async function openDrawer(page: Page) {
      5→  await expect(page.getByTestId('content')).not.toBeVisible();
      6→  await page.getByTestId('trigger').click();
-     7→  await page.waitForTimeout(ANIMATION_DURATION);
       →…
     11→export async function dragWithSpeed(
     12→  page: Page,
@@ -926,28 +943,18 @@ test/tests/helpers.ts
     17→): Promise<void> {
     18→  const startX = 0;
     19→  const distance = Math.abs(endY - startY);
-    20→  const steps = distance / speed;
       →…
 test/tests/initial-snap.spec.ts
-     2→import { ANIMATION_DURATION } from './constants';
      8→const snapPointYPositions = {
     15→const snapTo = async (page: Page, snapPointIndex: keyof typeof snapPointYPositions) => {
     16→  await page.hover('[data-vaul-drawer]');
     17→  await page.mouse.down();
-    18→  await page.mouse.move(0, snapPointYPositions[snapPointIndex]);
       →…
 test/tests/nested.spec.ts
-     2→import { ANIMATION_DURATION } from './constants';
-     3→import { openDrawer } from './helpers';
 test/tests/non-dismissible.spec.ts
-     2→import { openDrawer } from './helpers';
-     3→import { ANIMATION_DURATION } from './constants';
 test/tests/with-handle.spec.ts
-     2→import { ANIMATION_DURATION } from './constants';
 test/tests/with-redirect.spec.ts
-     2→import { openDrawer } from './helpers';
 test/tests/with-scaled-background.spec.ts
-     2→import { openDrawer } from './helpers';
 test/tests/without-scaled-background.spec.ts
 test/tsconfig.json
      2→  "compilerOptions": {

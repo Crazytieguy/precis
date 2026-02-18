@@ -428,10 +428,16 @@ fn has_multiline_signature(kind: parse::SymbolKind) -> bool {
 }
 
 /// Find the last line of a function's signature (0-indexed).
-/// For multi-line signatures, scans forward for the opening body delimiter
-/// (`{` or `;` for C-like languages, `:` for Python).
-/// Strips trailing line comments (`//` or `#`) before checking delimiters,
-/// so `interface Foo { // eslint-disable` correctly matches on `{`.
+///
+/// Prefers the tree-sitter-computed `sig_end_line` from [`parse::Symbol`] when
+/// available, falling back to text heuristics for symbols where tree-sitter
+/// couldn't determine the boundary (type aliases, method signatures, constants).
+///
+/// The text fallback scans forward for the opening body delimiter (`{` or `;`
+/// for C-like languages, `:` for Python). Strips trailing line comments (`//`
+/// or `#`) before checking delimiters, so `interface Foo { // eslint-disable`
+/// correctly matches on `{`.
+///
 /// Returns sym.line - 1 for single-line or non-function symbols.
 pub(crate) fn signature_end_line(lines: &[&str], sym: &parse::Symbol, lang: Option<Lang>) -> usize {
     let sym_line_0 = sym.line - 1;
@@ -440,6 +446,12 @@ pub(crate) fn signature_end_line(lines: &[&str], sym: &parse::Symbol, lang: Opti
     if sym.kind == parse::SymbolKind::Import {
         return sym.end_line.min(lines.len()) - 1;
     }
+    // Tree-sitter computed sig_end takes precedence over text heuristics.
+    // Converted from 1-indexed to 0-indexed.
+    if let Some(sig_end) = sym.sig_end_line {
+        return (sig_end - 1).min(lines.len().saturating_sub(1));
+    }
+    // --- Text heuristic fallback for nodes without tree-sitter body data ---
     // Type aliases: scan for `{` to find the end of the signature.
     // Simple aliases (`type Foo = Bar;`) use the entire declaration.
     // Complex aliases (`type Foo = { ... }`) stop at `{` so the body
@@ -927,6 +939,7 @@ mod tests {
             is_first_party: false,
             line: 1,
             end_line: 3,
+            sig_end_line: None, // test text fallback
         };
         assert_eq!(signature_end_line(&lines, &sym, Some(Lang::JsTs)), 0);
     }

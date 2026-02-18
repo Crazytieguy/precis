@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (990 words)
+budget: 1000 (995 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -129,9 +129,7 @@ apps/test/src/app/base/page.tsx
 apps/test/src/app/layout.tsx
      3→import './globals.css'
      7→export const metadata: Metadata = {
-    12→export default function RootLayout({
 apps/test/src/app/page.tsx
-     3→export default function Home() {
 apps/test/src/app/props/page.tsx
      7→export default function Page() {
 apps/test/src/app/with-autofocus/page.tsx
@@ -152,8 +150,6 @@ apps/website/README.md
      3→## Getting Started …
     23→## Learn More …
     32→## Deploy on Vercel …
-apps/website/components.json
-apps/website/package.json
 apps/website/src/app/(local-pages)/example-auto-submit/page.tsx
      9→export default function ExampleAutoSubmit() {
 apps/website/src/app/(local-pages)/example-auto-submit/server/form-action.ts
@@ -162,7 +158,7 @@ apps/website/src/app/(local-pages)/example-playground/code.tsx
 apps/website/src/app/(local-pages)/example-playground/component.tsx
 apps/website/src/app/(local-pages)/example-playground/page.tsx
 apps/website/src/app/(local-pages)/layout.tsx
-     7→export default function RootLayout({
+     7→export default function RootLayout …
 apps/website/src/app/(local-pages)/raw-input/page.tsx
      5→export default function ShadcnPage() {
 apps/website/src/app/(local-pages)/shadcn/page.tsx
@@ -179,7 +175,7 @@ apps/website/src/app/(pages)/(home)/page.tsx
    148→export const revalidate = 3600
 apps/website/src/app/(pages)/layout.tsx
     14→export const metadata: Metadata = {
-    68→export default function RootLayout({
+    68→export default function RootLayout …
 apps/website/src/components/icons.tsx
      3→export const Icons = {
 apps/website/src/components/ui/badge.tsx
@@ -192,7 +188,6 @@ apps/website/src/lib/fonts.ts
     12→export const fontMono = FontMono({
 apps/website/src/lib/utils.ts
      4→export function cn(...inputs: ClassValue[]) {
-apps/website/tsconfig.json
 package.json
      2→  "name": "root",
      3→  "private": true,
@@ -294,6 +289,12 @@ packages/input-otp/src/use-pwm-badge.tsx
     18→  pushPasswordManagerStrategy,
     19→  isFocused,
     20→}: {
+    21→  containerRef: React.RefObject<HTMLDivElement>
+    22→  inputRef: React.RefObject<HTMLInputElement>
+    23→  pushPasswordManagerStrategy: OTPInputProps['pushPasswordManagerStrategy']
+    24→  isFocused: boolean
+    25→}) {
+    26→  /** Password managers have a badge
       →…
 packages/input-otp/tsconfig.json
      2→  "compilerOptions": {
@@ -301,7 +302,6 @@ packages/input-otp/tsconfig.json
     12→  "include": ["src"]
     13→}
 packages/input-otp/tsup.config.ts
-     1→import { defineConfig } from 'tsup';
 pnpm-workspace.yaml
      1→packages …
 turbo.json

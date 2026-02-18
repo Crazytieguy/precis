@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1972 words)
+budget: 2000 (1975 words)
 
 Changelog.md
      1→# Changelog …
@@ -152,6 +152,13 @@ src/struct.ts
     24→    schema: S
     25→    coercer?: Coercer
     26→    validator?: Validator
+    27→    refiner?: Refiner<T>
+    28→    entries?: Struct<T, S>['entries']
+    29→  }) {
+    30→    const {
+    31→      type,
+    32→      schema,
+    33→      validator,
       →…
     63→  /**
       →…
@@ -170,6 +177,11 @@ src/struct.ts
    107→  validate(
    108→    value: unknown,
    109→    options: {
+   110→      coerce?: boolean
+   111→      mask?: boolean
+   112→      message?: string
+   113→    } = {}
+   114→  ): [StructError, undefined] | [undefined, T] {
    119→/**
       →…
    123→export function assert<T, S>(
@@ -200,6 +212,11 @@ src/struct.ts
    186→  value: unknown,
    187→  struct: Struct<T, S>,
    188→  options: {
+   189→    coerce?: boolean
+   190→    mask?: boolean
+   191→    message?: string
+   192→  } = {}
+   193→): [StructError, undefined] | [undefined, T] {
    221→export type Context …
    231→export type Infer …
    237→export type Describe …
@@ -247,38 +264,26 @@ src/structs/types.ts
     13→} from '../utils.js'
     19→export function any …
     33→export function array<T extends Struct<any>>(Element?: T): any {
-    34→  return new Struct({
-      →…
     60→export function bigint …
     70→export function boolean …
     83→export function date …
    105→export function enums<U extends string | number, T extends readonly U[]>(
    106→  values: T
    107→): any {
-   108→  const schema: any = {}
-      →…
    131→export function func …
    144→export function instance …
    159→export function integer …
    172→export function intersection …
    204→export function literal<T>(constant: T): any {
-   205→  const description = print(constant)
-      →…
    230→export function map<K, V>(Key?: Struct<K>, Value?: Struct<V>): any {
-   231→  return new Struct({
-      →…
    258→export function never …
    266→export function nullable …
    278→export function number …
    298→export function object<S extends ObjectSchema>(schema?: S): any {
-   299→  const knowns = schema ? Object.keys(schema) : []
-      →…
    351→export function optional …
    367→export function record …
    402→export function regexp …
    415→export function set<T>(Element?: Struct<T>): any {
-   416→  return new Struct({
-      →…
    442→export function string …
    456→export function tuple …
    492→export function type …
@@ -294,8 +299,6 @@ src/structs/utilities.ts
      7→} from '../utils.js'
      8→import { object, optional, type } from './types.js'
     60→export function assign(...Structs: Struct<any>[]): any {
-    61→  const isType = Structs[0].type === 'type'
-      →…
     71→export function define …
     80→export function deprecated …
    106→export function dynamic …
@@ -385,11 +388,15 @@ test/typings/infer.ts
      4→const Struct = object()
      5→type T = Infer<typeof Struct>
 test/validation/any/valid-number.ts
-     1→import { any } from '../../../src'
 test/validation/any/valid-string.ts
-     1→import { any } from '../../../src'
 test/validation/any/valid-undefined.ts
-     1→import { any } from '../../../src'
+test/validation/array/invalid-element-property.ts
+test/validation/array/invalid-element.ts
+test/validation/array/invalid-opaque.ts
+test/validation/array/invalid.ts
+test/validation/array/valid-frozen.ts
+test/validation/array/valid-opaque.ts
+test/validation/array/valid.ts
 test/validation/assign/invalid-object.ts
 test/validation/assign/invalid-type.ts
 test/validation/assign/valid-object.ts

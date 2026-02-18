@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1986 words)
+budget: 2000 (1982 words)
 
 error.ts
      5→export type Failure …
@@ -33,12 +33,7 @@ error.ts
     40→      path.length === 0 ? message : `At path: ${path.join('.')} -- ${message}`
     41→    super(explanation ?? msg)
     42→    if (explanation != null) this.cause = msg
-    43→    Object.assign(this, rest)
-    44→    this.name = this.constructor.name
-    45→    this.failures = () => {
-    46→      return (cached ??= [failure, ...failures()])
-    47→    }
-    48→  }
+      →…
 struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
      2→import { StructError, Failure } from './error.js'
@@ -75,13 +70,6 @@ struct.ts
     34→      refiner,
     35→      coercer = (value: unknown) => value,
     36→      entries = function* () {},
-    37→    } = props
-    38→
-    39→    this.type = type
-    40→    this.schema = schema
-    41→    this.entries = entries
-    42→    this.coercer = coercer
-    43→
       →…
     63→  /**
     64→   * Assert that a value passes the struct's validation, throwing if it doesn't.
@@ -118,6 +106,11 @@ struct.ts
    107→  validate(
    108→    value: unknown,
    109→    options: {
+   110→      coerce?: boolean
+   111→      mask?: boolean
+   112→      message?: string
+   113→    } = {}
+   114→  ): [StructError, undefined] | [undefined, T] {
    119→/**
    120→ * Assert that a value passes a struct, throwing if it doesn't.
    121→ */
@@ -159,6 +152,11 @@ struct.ts
    186→  value: unknown,
    187→  struct: Struct<T, S>,
    188→  options: {
+   189→    coerce?: boolean
+   190→    mask?: boolean
+   191→    message?: string
+   192→  } = {}
+   193→): [StructError, undefined] | [undefined, T] {
    221→export type Context …
    231→export type Infer …
    237→export type Describe …
@@ -183,6 +181,9 @@ structs/coercions.ts
     39→  struct: Struct<T, S>,
     40→  fallback: any,
     41→  options: {
+    42→    strict?: boolean
+    43→  } = {}
+    44→): Struct<T, S> {
     72→/**
       →…
     79→export function trimmed<T, S>(struct: Struct<T, S>): Struct<T, S> {
@@ -208,12 +209,18 @@ structs/refinements.ts
     34→  struct: Struct<T, S>,
     35→  threshold: T,
     36→  options: {
+    37→    exclusive?: boolean
+    38→  } = {}
+    39→): Struct<T, S> {
     51→/**
       →…
     55→export function min<T extends number | Date, S extends any>(
     56→  struct: Struct<T, S>,
     57→  threshold: T,
     58→  options: {
+    59→    exclusive?: boolean
+    60→  } = {}
+    61→): Struct<T, S> {
     73→/**
       →…
     77→export function nonempty<
@@ -258,7 +265,6 @@ structs/types.ts
     19→export function any(): Struct<any, null> {
     33→export function array<T extends Struct<any>>(Element?: T): any {
     34→  return new Struct({
-    35→    type: 'array',
       →…
     56→/**
       →…
@@ -273,7 +279,6 @@ structs/types.ts
    106→  values: T
    107→): any {
    108→  const schema: any = {}
-   109→  const description = values.map((v) => print(v)).join()
       →…
    127→/**
       →…
@@ -293,11 +298,9 @@ structs/types.ts
    174→): Struct<Infer<A> & UnionToIntersection<InferStructTuple<B>[number]>, null> {
    204→export function literal<T>(constant: T): any {
    205→  const description = print(constant)
-   206→  const t = typeof constant
       →…
    230→export function map<K, V>(Key?: Struct<K>, Value?: Struct<V>): any {
    231→  return new Struct({
-   232→    type: 'map',
       →…
    254→/**
       →…
@@ -310,7 +313,6 @@ structs/types.ts
    278→export function number(): Struct<number, null> {
    298→export function object<S extends ObjectSchema>(schema?: S): any {
    299→  const knowns = schema ? Object.keys(schema) : []
-   300→  const Never = never()
       →…
    347→/**
       →…
@@ -326,7 +328,6 @@ structs/types.ts
    402→export function regexp(): Struct<RegExp, null> {
    415→export function set<T>(Element?: Struct<T>): any {
    416→  return new Struct({
-   417→    type: 'set',
       →…
    438→/**
       →…
@@ -360,7 +361,6 @@ structs/utilities.ts
      8→import { object, optional, type } from './types.js'
     60→export function assign(...Structs: Struct<any>[]): any {
     61→  const isType = Structs[0].type === 'type'
-    62→  const schemas = Structs.map((s) => s.schema)
       →…
     67→/**
       →…

@@ -37,7 +37,6 @@ package.json
 rollup.config.js
 src/error.ts
     16→/**
-    17→ * `StructError` objects are thrown (or returned) when validation fails.
       →…
     25→export class StructError extends TypeError {
     26→  value: any
@@ -56,7 +55,6 @@ src/struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
      2→import { StructError, Failure } from './error.js'
      4→/**
-     5→ * `Struct` objects encapsulate the validation logic for a specific type of
       →…
     10→export class Struct<T = unknown, S = unknown> {
     11→  readonly TYPE!: T
@@ -72,6 +70,13 @@ src/struct.ts
     21→
     22→  constructor(props: {
     23→    type: string
+    24→    schema: S
+    25→    coercer?: Coercer
+    26→    validator?: Validator
+    27→    refiner?: Refiner<T>
+    28→    entries?: Struct<T, S>['entries']
+    29→  }) {
+    30→    const {
       →…
     67→  assert …
     75→  create …
@@ -142,6 +147,8 @@ test/validation/number/invalid.ts
 test/validation/number/valid.ts
 test/validation/pattern/invalid.ts
 test/validation/pattern/valid.ts
+test/validation/regexp/invalid.ts
+test/validation/regexp/valid.ts
 test/validation/type/valid-instance.ts
      3→class Person {
      6→  constructor(name: string) {

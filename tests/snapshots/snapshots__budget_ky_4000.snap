@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3922 words)
+budget: 4000 (3923 words)
 
 package.json
      2→	"name": "ky",
@@ -526,8 +526,7 @@ source/index.ts
     28→	ky.stop = stop;
     29→	ky.retry = retry;
     30→
-    31→	return ky as KyInstance;
-    32→};
+      →…
     34→const ky = createInstance();
 source/types/ResponsePromise.ts
      4→import {type KyResponse} from './response.js';
@@ -743,7 +742,6 @@ source/utils/normalize.ts
     17→	limit: 2,
     18→	methods: retryMethods,
     19→	statusCodes: retryStatusCodes,
-    20→	afterStatusCodes: retryAfterStatusCodes,
       →…
     28→export const normalizeRetryOptions = (retry: number | RetryOptions = {}): InternalRetryOptions => {
     29→	if (typeof retry === 'number') {
@@ -915,6 +913,10 @@ test/helpers/with-performance.ts
     13→const nodeVersion …
     14→const allowedOffset …
     16→export async function withPerformance({
+    17→	expectedDuration,
+    18→	t,
+    19→	test,
+    20→}: Argument) {
 test/hooks.ts
      7→const createStreamBody …
     14→const createStreamFetch …

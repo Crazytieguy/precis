@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (991 words)
+budget: 1000 (988 words)
 
 error.ts
      5→export type Failure …
@@ -30,10 +30,6 @@ error.ts
     37→    const { message, explanation, ...rest } = failure
     38→    const { path } = failure
     39→    const msg =
-    40→      path.length === 0 ? message : `At path: ${path.join('.')} -- ${message}`
-    41→    super(explanation ?? msg)
-    42→    if (explanation != null) this.cause = msg
-    43→    Object.assign(this, rest)
       →…
 struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
@@ -65,6 +61,9 @@ struct.ts
     28→    entries?: Struct<T, S>['entries']
     29→  }) {
     30→    const {
+    31→      type,
+    32→      schema,
+    33→      validator,
       →…
     63→  /**
       →…
@@ -83,6 +82,11 @@ struct.ts
    107→  validate(
    108→    value: unknown,
    109→    options: {
+   110→      coerce?: boolean
+   111→      mask?: boolean
+   112→      message?: string
+   113→    } = {}
+   114→  ): [StructError, undefined] | [undefined, T] {
    119→/**
       →…
    123→export function assert<T, S>(
@@ -113,6 +117,11 @@ struct.ts
    186→  value: unknown,
    187→  struct: Struct<T, S>,
    188→  options: {
+   189→    coerce?: boolean
+   190→    mask?: boolean
+   191→    message?: string
+   192→  } = {}
+   193→): [StructError, undefined] | [undefined, T] {
    221→export type Context …
    231→export type Infer …
    237→export type Describe …
@@ -127,12 +136,6 @@ structs/coercions.ts
 structs/refinements.ts
      8→export function empty …
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
-    22→  if (value instanceof Map || value instanceof Set) {
-    23→    return value.size
-    24→  } else {
-    25→    return value.length
-    26→  }
-    27→}
     33→export function max …
     55→export function min …
     77→export function nonempty …
