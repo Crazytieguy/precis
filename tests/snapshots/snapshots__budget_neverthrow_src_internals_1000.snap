@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (990 tokens)
+budget: 1000 (997 tokens)
 
 error.ts
      1→import { Result } from '../result'
@@ -10,8 +10,6 @@ error.ts
      4→  withStackTrace: boolean
      5→}
      7→const defaultErrorConfig: ErrorConfig = {
-     8→  withStackTrace: false,
-     9→}
     11→interface NeverThrowError<T, E> {
     12→  data:
     13→    | {
@@ -31,7 +29,8 @@ error.ts
     30→  config: ErrorConfig = defaultErrorConfig,
     31→): NeverThrowError<T, E> => {
     32→  const data = result.isOk()
-      →  …
+    33→    ? { type: 'Ok', value: result.value }
+      →    …
 
 utils.ts
      1→import { Result, ok, err } from '../result'
@@ -44,9 +43,7 @@ utils.ts
     25→export type InferErrTypes<R> = R extends Result<unknown, infer E> ? E : never
     27→export type InferAsyncOkTypes<R> = R extends ResultAsync<infer T, unknown> ? T : never
     28→export type InferAsyncErrTypes<R> = R extends ResultAsync<unknown, infer E> ? E : never
-    30→/**
     31→ * Short circuits on the FIRST Err value that we find
-    32→ */
     33→export const combineResultList = <T, E>(
     34→  resultList: readonly Result<T, E>[],
     35→): Result<readonly T[], E> => {
@@ -64,10 +61,9 @@ utils.ts
     47→}
     54→export const combineResultAsyncList = <T, E>(
     55→  asyncResultList: readonly ResultAsync<T, E>[],
-      →  …
-    61→/**
+    56→): ResultAsync<readonly T[], E> =>
+      →…
     62→ * Give a list of all the errors we find
-    63→ */
     64→export const combineResultListWithAllErrors = <T, E>(
     65→  resultList: readonly Result<T, E>[],
     66→): Result<readonly T[], E[]> => {
@@ -87,4 +83,5 @@ utils.ts
     80→}
     82→export const combineResultAsyncListWithAllErrors = <T, E>(
     83→  asyncResultList: readonly ResultAsync<T, E>[],
-      →  …
+    84→): ResultAsync<readonly T[], E[]> =>
+      →…

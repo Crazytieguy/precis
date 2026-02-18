@@ -195,8 +195,8 @@ fn render_symbol(
 
     // Doc comment lines (before symbol for most languages)
     let mut doc_lines_shown = 0;
-    if doc_n > 0 && layout.doc_start < sym_line_0 {
-        let doc_lines_available = sym_line_0 - layout.doc_start;
+    if doc_n > 0 && layout.doc_start < layout.doc_end {
+        let doc_lines_available = layout.doc_end - layout.doc_start;
         let doc_lines_to_show = doc_lines_available.min(doc_n);
         doc_lines_shown = doc_lines_to_show;
         let end = layout.doc_start + doc_lines_to_show;
@@ -656,6 +656,44 @@ pub(crate) fn doc_comment_start(lines: &[&str], symbol_line_0: usize, lang: Opti
     idx
 }
 
+/// Trim pure block-comment delimiter lines from the doc comment range.
+///
+/// Block comments like `/** ... */` have delimiter-only lines (`/**`, ` */`)
+/// that carry no information. Showing these as Doc(1) wastes budget on noise
+/// instead of actual description text. This trims leading openers and trailing
+/// closers so Doc(1) shows the first real content line.
+///
+/// Returns `(trimmed_start, trimmed_end)` where the range is `start..end`.
+fn trim_doc_delimiters(lines: &[&str], doc_start: usize, sym_line_0: usize) -> (usize, usize) {
+    if doc_start >= sym_line_0 {
+        return (sym_line_0, sym_line_0);
+    }
+
+    let mut start = doc_start;
+    let mut end = sym_line_0;
+
+    // Trim leading block-comment opener: `/**`, `/*`
+    let first = lines[start].trim();
+    if first == "/**" || first == "/*" {
+        start += 1;
+    }
+
+    // Trim trailing blank lines and block-comment closer (`*/`)
+    while end > start && lines[end - 1].trim().is_empty() {
+        end -= 1;
+    }
+    if end > start && lines[end - 1].trim() == "*/" {
+        end -= 1;
+    }
+
+    // If trimming eliminated all lines, report no doc comment
+    if start >= end {
+        (sym_line_0, sym_line_0)
+    } else {
+        (start, end)
+    }
+}
+
 /// For Python files, find the end of a docstring following a symbol definition.
 /// Returns the end position (0-indexed, exclusive) of the docstring lines.
 /// Returns `sym_line_0 + 1` if no docstring is found.
@@ -757,9 +795,14 @@ fn find_word(needle: &str, haystack: &str) -> Option<usize> {
 /// then read by both the scheduler (for word-cost counting) and the renderer
 /// (for line emission). All line numbers are 0-indexed.
 pub struct SymbolLayout {
-    /// First line of the doc comment block preceding the symbol.
-    /// Equal to `sym_line_0` when no doc comment exists.
+    /// First content line of the doc comment block preceding the symbol.
+    /// Skips pure block-comment delimiters (`/**`, `/*`) that carry no
+    /// information. Equal to `doc_end` when no doc comment exists.
     pub doc_start: usize,
+    /// Exclusive end of doc comment content lines. Skips trailing
+    /// block-comment closing delimiters (` */`). Equal to `doc_start`
+    /// when no doc comment exists.
+    pub doc_end: usize,
     /// The symbol's own first line (`sym.line - 1`).
     pub sym_line_0: usize,
     /// Last line of the signature (inclusive). For single-line symbols this
@@ -796,10 +839,15 @@ pub(crate) fn compute_layout(
     lang: Option<Lang>,
 ) -> SymbolLayout {
     let sym_line_0 = sym.line - 1;
-    let doc_start = sym
+    let raw_doc_start = sym
         .doc_start_line
         .map(|l| l - 1)
         .unwrap_or_else(|| doc_comment_start(lines, sym_line_0, lang));
+
+    // Trim pure block-comment delimiters from doc range so Doc(1) shows
+    // actual content instead of a bare `/**` or `/*`.
+    let (doc_start, doc_end) = trim_doc_delimiters(lines, raw_doc_start, sym_line_0);
+
     let sig_end = signature_end_line(lines, sym, lang);
 
     // Python docstring range
@@ -884,6 +932,7 @@ pub(crate) fn compute_layout(
 
     SymbolLayout {
         doc_start,
+        doc_end,
         sym_line_0,
         sig_end,
         ds_start,

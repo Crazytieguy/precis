@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1001 tokens)
+budget: 1000 (993 tokens)
 
 argument.js
      3→class Argument {
@@ -26,7 +26,7 @@ command.js
   1130→    } else {
   1131→      this.restoreStateBeforeParse();
   1132→    }
-      →    …
+  1133→  }
   1183→  _checkForMissingExecutable …
   1202→  _executeSubCommand …
   1352→  _dispatchSubcommand …
@@ -55,13 +55,9 @@ command.js
   2752→function useColor …
 
 error.js
-     1→/**
      2→ * CommanderError class
-     3→ */
      4→class CommanderError extends Error {
-    22→/**
     23→ * InvalidArgumentError class
-    24→ */
     25→class InvalidArgumentError extends CommanderError {
 
 help.js
@@ -85,13 +81,11 @@ help.js
 option.js
      3→class Option {
    165→  _collectValue …
-   261→/**
    262→ * This class is to make it easier to work with dual options, without changing the existing
    263→ * implementation. We support separate dual options for separate positive and negative options,
    264→ * like `--build` and `--no-build`, which share a single option value. This works nicely for some
    265→ * use cases, but is tricky for others where we want separate behaviours despite
    266→ * the single shared option value.
-   267→ */
    268→class DualOptions {
    316→function camelcase …
    328→function splitOptionFlags …
@@ -104,5 +98,6 @@ suggestSimilar.js
      6→  // (Simple implementation.)
      7→
      8→  // Quick early exit, return worst case.
+     9→  if (Math.abs(a.length - b.length) > maxDistance)
       →  …
     56→function suggestSimilar …

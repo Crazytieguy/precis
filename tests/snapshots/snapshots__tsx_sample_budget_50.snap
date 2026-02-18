@@ -4,7 +4,7 @@ expression: output
 ---
 sample.tsx
      5→export interface ButtonProps {
-    11→/**
-      →…
+     6→    label: string;
+      →    …
     15→export function Button({ label, onClick, disabled }: ButtonProps) {
     29→export const Input …

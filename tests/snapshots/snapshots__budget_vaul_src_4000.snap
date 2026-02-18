@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4018 tokens)
+budget: 4000 (4015 tokens)
 
 browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -34,6 +34,10 @@ context.ts
      7→  onPress: (event: React.PointerEvent<HTMLDivElement>) => void;
      8→  onRelease: (event: React.PointerEvent<HTMLDivElement> | null) => void;
      9→  onDrag: (event: React.PointerEvent<HTMLDivElement>) => void;
+    10→  onNestedDrag: (event: React.PointerEvent<HTMLDivElement>, percentageDragged: number) => void;
+    11→  onNestedOpenChange: (o: boolean) => void;
+    12→  onNestedRelease: (event: React.PointerEvent<HTMLDivElement>, open: boolean) => void;
+    13→  dismissible: boolean;
       →  …
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
     38→  drawerRef: { current: null },
@@ -53,9 +57,7 @@ helpers.ts
     72→export function getTranslate(element: HTMLElement, direction: DrawerDirection): number | null {
     90→export function dampenValue(v: number) {
     94→export function assignStyle(element: HTMLElement | null | undefined, style: Partial<CSSStyleDeclaration>) {
-   105→/**
    106→ * Receives functions as arguments and returns a new function that calls all.
-   107→ */
    108→export function chain<T>(...fns: T[]) {
    109→  return (...args: T extends AnyFunction ? Parameters<T> : never) => {
    110→    for (const fn of fns) {
@@ -179,10 +181,8 @@ types.ts
 use-composed-refs.ts
      3→import * as React from 'react';
      5→type PossibleRef<T> = React.Ref<T> | undefined;
-     7→/**
      8→ * Set a given ref to a given value
      9→ * This utility takes care of different types of refs: callback refs and RefObject(s)
-    10→ */
     11→function setRef<T>(ref: PossibleRef<T>, value: T) {
     12→  if (typeof ref === 'function') {
     13→    ref(value);
@@ -190,17 +190,13 @@ use-composed-refs.ts
     15→    (ref as React.MutableRefObject<T>).current = value;
     16→  }
     17→}
-    19→/**
     20→ * A utility to compose multiple refs together
     21→ * Accepts callback refs and RefObject(s)
-    22→ */
     23→function composeRefs<T>(...refs: PossibleRef<T>[]) {
     24→  return (node: T) => refs.forEach((ref) => setRef(ref, node));
     25→}
-    27→/**
     28→ * A custom hook that composes multiple refs
     29→ * Accepts callback refs and RefObject(s)
-    30→ */
     31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
     32→  // eslint-disable-next-line react-hooks/exhaustive-deps
     33→  return React.useCallback(composeRefs(...refs), refs);
@@ -217,15 +213,12 @@ use-controllable-state.ts
 use-position-fixed.ts
      1→import React from 'react';
      2→import { isSafari } from './browser';
-     6→/**
      7→ * This hook is necessary to prevent buggy behavior on iOS devices (need to test on Android).
      8→ * I won't get into too much detail about what bugs it solves, but so far I've found that setting the body to `position: fixed` is the most reliable way to prevent those bugs.
      9→ * Issues that this hook solves:
     10→ * https://github.com/emilkowalski/vaul/issues/435
     11→ * https://github.com/emilkowalski/vaul/issues/433
     12→ * And more that I discovered, but were just not reported.
-    13→ */
-    14→
     15→export function usePositionFixed({
     16→  isOpen,
     17→  modal,
@@ -257,8 +250,7 @@ use-position-fixed.ts
     43→        height: document.body.style.height,
     44→        right: 'unset',
     45→      };
-    46→
-      →…
+      →      …
 
 use-prevent-scroll.ts
      3→import { useEffect, useLayoutEffect } from 'react';
@@ -275,11 +267,9 @@ use-prevent-scroll.ts
     29→export function isScrollable(node: Element): boolean {
     34→export function getScrollParent(node: Element): Element {
     47→const nonTextInputTypes = new Set([
-    63→/**
     64→ * Prevents scrolling on the document body on mount, and
     65→ * restores it on unmount. Also ensures that content does not
     66→ * shift due to the scrollbars disappearing.
-    67→ */
     68→export function usePreventScroll(options: PreventScrollOptions = {}) {
     69→  let { isDisabled } = options;
     70→
@@ -297,7 +287,6 @@ use-prevent-scroll.ts
     82→
     83→    return () => {
     84→      preventScrollCount--;
-    85→      if (preventScrollCount === 0) {
       →      …
    118→function preventScrollMobileSafari …
    243→function setStyle …

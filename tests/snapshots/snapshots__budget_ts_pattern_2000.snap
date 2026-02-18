@@ -37,7 +37,6 @@ examples/gif-fetcher/src/constants.ts
 
 examples/gif-fetcher/src/searchGif.ts
      2→import { API_KEY } from './constants';
-     4→const delay …
      6→export function searchGif(query: string) {
 
 jsr.json
@@ -45,10 +44,8 @@ jsr.json
 package.json
 
 src/errors.ts
-     1→/**
      2→ * Error when the given input value does not match any included pattern
      3→ * and .exhaustive() was specified
-     4→ */
      5→export class NonExhaustiveError extends Error {
      6→  constructor …
 
@@ -68,7 +65,6 @@ src/internals/helpers.ts
    132→export const flatMap …
 
 src/internals/symbols.ts
-     1→/**
      2→ * Symbols used internally within ts-pattern to construct and discriminate
      3→ * Guard, Not, and Select, and AnonymousSelect patterns
      4→ *
@@ -81,8 +77,6 @@ src/internals/symbols.ts
     11→ * @module
     12→ * @private
     13→ * @internal
-    14→ */
-    15→
     16→export const matcher = Symbol.for('@ts-pattern/matcher');
     17→export type matcher = typeof matcher;
     19→export const unset = Symbol.for('@ts-pattern/unset');
@@ -95,11 +89,9 @@ src/internals/symbols.ts
     30→export type override = typeof override;
 
 src/is-matching.ts
-     6→/**
      7→ * This constraint allows using additional properties
      8→ * in object patterns. See "should allow targetting unknown properties"
      9→ * unit test in `is-matching.test.ts`.
-    10→ */
     11→type PatternConstraint<T> = T extends readonly any[]
     12→  ? P.Pattern<T>
     13→  : T extends object
@@ -109,8 +101,8 @@ src/is-matching.ts
 
 src/match.ts
     32→export function match …
-    38→/**
     39→ * This class represents a match expression. It follows the
+    40→ * builder pattern, we chain methods to add features to the expression
       → …
     47→class MatchExpression<input, output> {
     48→  constructor …
@@ -168,25 +160,25 @@ src/types/Match.ts
     16→}
     22→export type Match …
    132→  with …
-   228→/**
-      →…
+   229→ * Potential for optimization here:
+   230→ *
+      → …
    245→type DeepExcludeAll<a, tupleList extends any[]> = [a] extends [never]
    246→  ? never
    247→  : tupleList extends [infer excluded, ...infer tail]
    248→  ? DeepExcludeAll<DeepExclude<a, excluded>, tail>
    249→  : a;
-   255→/**
-      →…
+   256→ * The type of an overloaded function for `.exhaustive`,
+   257→ * permitting calling it with or without a catch-all handler function.
+      → …
    261→type Exhaustive<output, inferredOutput> = {
 
 src/types/Pattern.ts
-    43→/**
     44→ * A `Matcher` is an object implementing the match
     45→ * protocol. It must define a `symbols.matcher` property
     46→ * which returns an object with a `match()` method, taking
     47→ * the input value and returning whether the pattern matches
     48→ * or not, along with optional selections.
-    49→ */
     50→export interface Matcher<
     51→  input,
     52→  narrowed,

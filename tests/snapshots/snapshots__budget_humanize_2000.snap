@@ -33,6 +33,14 @@ README.md
     36→- Persian
     37→- Polish
     38→- Russian
+    39→- Simplified Chinese
+    40→- Slovak
+    41→- Slovenian
+    42→- Spanish
+    43→- Swedish
+    44→- Turkish
+    45→- Ukrainian
+    46→- Uzbek
       →…
     49→## API reference
     51→[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
@@ -219,8 +227,9 @@ src/humanize/time.py
    343→def naturaldate …
    451→def precisedelta …
 
+tests/test_filesize.py
+
 tests/test_i18n.py
-    17→@freeze_time("2020-02-02")
     18→def test_i18n() -> None:
    225→class TestActivate:
    226→    expected_msg = (
@@ -228,10 +237,12 @@ tests/test_i18n.py
    228→        " 'locale' folder. You need to pass the path explicitly."
    229→    )
    230→
-   249→    @freeze_time("2020-02-02")
    250→    def test_en_locale(self) -> None:
-   262→    @freeze_time("2020-02-02")
    263→    def test_none_locale(self) -> None:
+
+tests/test_lists.py
+
+tests/test_number.py
 
 tests/test_time.py
     16→# In seconds
@@ -239,7 +250,4 @@ tests/test_time.py
     22→MILLISECONDS_1_337 = 1337 / 1000  # 1.337 seconds
     23→ONE_HOUR = 3600
     37→class FakeDate:
-    58→# These are not considered "public" interfaces, but require tests anyway.
-    59→
-    60→
     61→def test_date_and_delta() -> None:

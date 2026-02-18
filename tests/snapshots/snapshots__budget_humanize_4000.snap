@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4066 tokens)
+budget: 4000 (4069 tokens)
 
 README.md
      1→# humanize
@@ -153,6 +153,7 @@ docs/index.md
      4→
      5→- [Number](number.md)
      6→- [Time](time.md)
+     7→- [Filesize](filesize.md)
       →…
 
 docs/lists.md
@@ -432,6 +433,4 @@ tests/test_time.py
     45→VALUE_ERROR_TEST = FakeDate(290149024, 2, 2)
     46→OVERFLOW_ERROR_TEST = FakeDate(120390192341, 2, 2)
     58→# These are not considered "public" interfaces, but require tests anyway.
-    59→
-    60→
     61→def test_date_and_delta() -> None:

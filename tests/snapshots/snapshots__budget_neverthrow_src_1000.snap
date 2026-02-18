@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1005 tokens)
+budget: 1000 (1006 tokens)
 
 _internals/error.ts
      1→import { Result } from '../result'
@@ -18,7 +18,6 @@ _internals/error.ts
     16→      }
     17→    | {
     18→        type: string
-    19→        value: E
       →        …
     27→export const createNeverThrowError = <T, E>(
     28→  message: string,
@@ -29,35 +28,29 @@ _internals/error.ts
 _internals/utils.ts
      1→import { Result, ok, err } from '../result'
      2→import { ResultAsync } from '../result-async'
-     5→export type ExtractOkTypes …
-    10→export type ExtractOkAsyncTypes …
-    15→export type ExtractErrTypes …
-    20→export type ExtractErrAsyncTypes …
-    24→export type InferOkTypes …
-    25→export type InferErrTypes …
-    27→export type InferAsyncOkTypes …
-    28→export type InferAsyncErrTypes …
-    30→/**
+     5→export type ExtractOkTypes<T extends readonly Result<unknown, unknown>[]> = {
+    10→export type ExtractOkAsyncTypes<T extends readonly ResultAsync<unknown, unknown>[]> = {
+    15→export type ExtractErrTypes<T extends readonly Result<unknown, unknown>[]> = {
+    20→export type ExtractErrAsyncTypes<T extends readonly ResultAsync<unknown, unknown>[]> = {
+    24→export type InferOkTypes<R> = R extends Result<infer T, unknown> ? T : never
+    25→export type InferErrTypes<R> = R extends Result<unknown, infer E> ? E : never
+    27→export type InferAsyncOkTypes<R> = R extends ResultAsync<infer T, unknown> ? T : never
+    28→export type InferAsyncErrTypes<R> = R extends ResultAsync<unknown, infer E> ? E : never
     31→ * Short circuits on the FIRST Err value that we find
-    32→ */
     33→export const combineResultList = <T, E>(
     34→  resultList: readonly Result<T, E>[],
     35→): Result<readonly T[], E> => {
     36→  let acc = ok([]) as Result<T[], E>
     37→
-    38→  for (const result of resultList) {
-      →  …
+      →…
     54→export const combineResultAsyncList = <T, E>(
-    61→/**
     62→ * Give a list of all the errors we find
-    63→ */
     64→export const combineResultListWithAllErrors = <T, E>(
     65→  resultList: readonly Result<T, E>[],
     66→): Result<readonly T[], E[]> => {
     67→  let acc = ok([]) as Result<T[], E[]>
     68→
-    69→  for (const result of resultList) {
-      →  …
+      →…
     82→export const combineResultAsyncListWithAllErrors = <T, E>(
 
 result-async.ts
@@ -75,9 +68,6 @@ result.ts
      3→import { …
     14→export namespace Result {
     15→  /**
-    16→   * Wraps a function with a try catch, creating a new function with the same
-    17→   * arguments but returning `Ok` if successful, `Err` if the function throws
-    18→   *
    134→interface IResult<T, E> {
    140→  isOk …
    147→  isErr …

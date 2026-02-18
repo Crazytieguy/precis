@@ -20,12 +20,10 @@ sample.c
     19→    TOKEN_SYMBOL,
     20→};
     22→typedef int (*Comparator)(const void *, const void *);
-    24→/**
     25→ * Process the input and return a list of tokens.
     26→ * @param input The source text to tokenize.
     27→ * @param len Length of the input.
     28→ * @return Number of tokens extracted, or -1 on error.
-    29→ */
     30→int process(const char *input, int len) {
     31→    return len;
     32→}

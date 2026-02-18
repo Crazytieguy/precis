@@ -420,8 +420,8 @@ pub fn build_groups(
             let kind_category = KindCategory::from_symbol_kind(sym.kind);
             let layout = &layouts[file_idx][symbol_idx];
 
-            // Detect documentation from layout
-            let is_documented = layout.doc_start < sym_line_0;
+            // Detect documentation from layout (uses trimmed range)
+            let is_documented = layout.doc_start < layout.doc_end;
 
             let lang = crate::Lang::from_path(relative);
             let heading_depth = if kind_category == KindCategory::Section {
@@ -522,8 +522,8 @@ fn compute_symbol_costs(
 
     // Doc comment lines (pre-symbol comments + Python docstrings)
     let mut doc_line_words = Vec::new();
-    if layout.doc_start < sym_line_0 {
-        for (i, line) in lines.iter().enumerate().take(sym_line_0).skip(layout.doc_start) {
+    if layout.doc_start < layout.doc_end {
+        for (i, line) in lines.iter().enumerate().take(layout.doc_end).skip(layout.doc_start) {
             doc_line_words.push(format::count_tokens(&format::fmt_line(i, line)));
         }
     }

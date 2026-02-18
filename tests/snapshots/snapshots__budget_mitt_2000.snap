@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2002 tokens)
+budget: 2000 (2006 tokens)
 
 README.md
      9→# Mitt
@@ -136,11 +136,9 @@ src/index.ts
     36→	emit<Key extends keyof Events>(
     37→		type: undefined extends Events[Key] ? Key : never
     38→	): void;
-    41→/**
     42→ * Mitt: Tiny (~200b) functional event emitter / pubsub.
     43→ * @name mitt
     44→ * @returns {Mitt}
-    45→ */
     46→export default function mitt<Events extends Record<EventType, unknown>>(
     47→	all?: EventHandlerMap<Events>
     48→): Emitter<Events> {
@@ -171,7 +169,8 @@ src/index.ts
     73→		},
     74→
     75→		/**
-      →		…
+    76→		 * Remove an event handler for the given type.
+      →		 …
 
 test/index_test.ts
 

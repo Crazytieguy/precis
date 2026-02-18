@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4015 tokens)
+budget: 4000 (4005 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -36,7 +36,8 @@ Readme.md
     23→    - [More configuration](#more-configuration)
     24→    - [Custom option processing](#custom-option-processing)
     25→  - [Commands](#commands)
-      →  …
+    26→    - [Command-arguments](#command-arguments)
+      →    …
     61→## Installation
     67→## Quick Start
    147→## Declaring _program_ variable
@@ -98,6 +99,8 @@ Readme_zh-CN.md
      8→完整的 [node.js](http://nodejs.org) 命令行解决方案。
      9→
       →…
+   570→#### 其他参数配置
+   582→#### 自定义参数处理
 
 SECURITY.md
      1→# Security Policy
@@ -158,8 +161,6 @@ examples/help-centered.mjs
 
 examples/man-style-help.mjs
      5→function formatItem(term, termWidth, description, helper) {
-     6→  const termIndent = 2;
-      →  …
     25→const program = new Command();
 
 jest.config.js
@@ -173,13 +174,9 @@ lib/command.js
   1127→  _prepareForParse() {
 
 lib/error.js
-     1→/**
      2→ * CommanderError class
-     3→ */
      4→class CommanderError extends Error {
-    22→/**
     23→ * InvalidArgumentError class
-    24→ */
     25→class InvalidArgumentError extends CommanderError {
 
 lib/help.js
@@ -201,13 +198,11 @@ lib/help.js
 
 lib/option.js
      3→class Option {
-   261→/**
    262→ * This class is to make it easier to work with dual options, without changing the existing
    263→ * implementation. We support separate dual options for separate positive and negative options,
    264→ * like `--build` and `--no-build`, which share a single option value. This works nicely for some
    265→ * use cases, but is tricky for others where we want separate behaviours despite
    266→ * the single shared option value.
-   267→ */
    268→class DualOptions {
 
 lib/suggestSimilar.js

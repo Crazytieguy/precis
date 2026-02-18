@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4032 tokens)
+budget: 4000 (4035 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -54,12 +54,14 @@ apps/storybook/README.md
     16→
     17→    Use [degit](https://github.com/Rich-Harris/degit) to get this template.
     18→
-      →…
+    19→    ```shell
+      →    …
     44→## 🔎 What's inside?
     46→A quick look at the top-level files and directories included with this template.
     47→
     48→    .
     49→    ├── .storybook
+    50→    ├── node_modules
       →    …
     83→## Contribute
     85→If you encounter an issue with the template, we encourage you to open an issue in this template's repository.
@@ -126,9 +128,7 @@ apps/storybook/src/stories/Button.tsx
      1→import React from 'react';
      2→import PropTypes from 'prop-types';
      3→import './button.css';
-     5→/**
      6→ * Primary UI component for user interaction
-     7→ */
      8→export const Button = ({ primary, backgroundColor, size, label, ...props }) => {
      9→  const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
     10→  return (
@@ -252,7 +252,7 @@ apps/website/src/app/(pages)/layout.tsx
     68→export default function RootLayout …
 
 apps/website/src/components/icons.tsx
-     1→type IconProps = React.HTMLAttributes<SVGElement>
+     1→type IconProps …
      3→export const Icons = {
 
 apps/website/src/components/ui/badge.tsx

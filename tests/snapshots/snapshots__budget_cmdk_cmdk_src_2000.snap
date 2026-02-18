@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2020 tokens)
+budget: 2000 (2018 tokens)
 
 command-score.ts
     54→function commandScoreInner(
@@ -22,6 +22,13 @@ command-score.ts
     68→  }
     69→
     70→  var memoizeKey = `${stringIndex},${abbreviationIndex}`
+    71→  if (memoizedResults[memoizeKey] !== undefined) {
+    72→    return memoizedResults[memoizeKey]
+    73→  }
+    74→
+    75→  var abbreviationChar = lowerAbbreviation.charAt(abbreviationIndex)
+    76→  var index = lowerString.indexOf(abbreviationChar, stringIndex)
+    77→  var highScore = 0
       →  …
    150→function formatInput(string) {
    151→  // convert all valid space characters to space so they match each other
@@ -73,53 +80,34 @@ index.tsx
    166→const useStore = () => React.useContext(StoreContext)
    167→const GroupContext …
    169→const Command …
-   659→/**
    660→ * Command menu item. Becomes active on pointer enter or through keyboard navigation.
    661→ * Preferably pass a `value`, otherwise the value will be inferred from `children` or
    662→ * the rendered item's `textContent`.
-   663→ */
    664→const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
-   725→/**
    726→ * Group command menu items together with a heading.
    727→ * Grouped items are always shown together.
-   728→ */
    729→const Group = React.forwardRef<HTMLDivElement, GroupProps>((props, forwardedRef) => {
-   770→/**
    771→ * A visual and semantic separator between items or groups.
    772→ * Visible when the search query is empty or `alwaysRender` is true, hidden otherwise.
-   773→ */
    774→const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>((props, forwardedRef) => {
-   783→/**
    784→ * Command menu input.
    785→ * All props are forwarded to the underyling `input` element.
-   786→ */
    787→const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
-   829→/**
    830→ * Contains `Item`, `Group`, and `Separator`.
    831→ * Use the `--cmdk-list-height` CSS variable to animate height based on the number of results.
-   832→ */
    833→const List = React.forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) => {
-   879→/**
    880→ * Renders the command menu in a Radix Dialog.
-   881→ */
    882→const Dialog = React.forwardRef<HTMLDivElement, DialogProps>((props, forwardedRef) => {
-   896→/**
    897→ * Automatically renders when there are no results for the search query.
-   898→ */
    899→const Empty = React.forwardRef<HTMLDivElement, EmptyProps>((props, forwardedRef) => {
-   906→/**
    907→ * You should conditionally render this with `progress` while loading asynchronous items.
-   908→ */
    909→const Loading = React.forwardRef<HTMLDivElement, LoadingProps>((props, forwardedRef) => {
    930→const pkg …
-   955→/**
    956→ *
    957→ *
    958→ * Helpers
    959→ *
    960→ *
-   961→ */
-   962→
    963→function findNextSibling(el: Element, selector: string) {
    964→  let sibling = el.nextElementSibling
    965→

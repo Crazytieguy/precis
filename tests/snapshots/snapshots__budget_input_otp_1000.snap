@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1000 tokens)
+budget: 1000 (1003 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -45,9 +45,7 @@ apps/storybook/src/stories/Button.stories.ts
 
 apps/storybook/src/stories/Button.tsx
      3→import './button.css';
-     5→/**
      6→ * Primary UI component for user interaction
-     7→ */
      8→export const Button = ({ primary, backgroundColor, size, label, ...props }) => {
      9→  const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
     10→  return (
@@ -62,6 +60,10 @@ apps/storybook/src/stories/InputOTP.stories.tsx
 
 apps/storybook/tailwind.config.js
      2→const config = {
+
+apps/test/README.md
+
+apps/website/README.md
 
 apps/website/src/components/icons.tsx
      3→export const Icons = {

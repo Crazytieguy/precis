@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2017 tokens)
+budget: 2000 (2018 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
@@ -34,9 +34,7 @@ src/context.ts
 src/helpers.ts
      3→interface Style {
      7→const cache = new WeakMap();
-   105→/**
    106→ * Receives functions as arguments and returns a new function that calls all.
-   107→ */
    108→export function chain<T>(...fns: T[]) {
    109→  return (...args: T extends AnyFunction ? Parameters<T> : never) => {
    110→    for (const fn of fns) {
@@ -83,14 +81,14 @@ src/types.ts
 
 src/use-composed-refs.ts
      5→type PossibleRef<T> = React.Ref<T> | undefined;
-     7→/**
-      →…
+     8→ * Set a given ref to a given value
+      → …
     11→function setRef<T>(ref: PossibleRef<T>, value: T) {
-    19→/**
-      →…
+    20→ * A utility to compose multiple refs together
+      → …
     23→function composeRefs<T>(...refs: PossibleRef<T>[]) {
-    27→/**
-      →…
+    28→ * A custom hook that composes multiple refs
+      → …
     31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
 
 src/use-controllable-state.ts
@@ -98,15 +96,12 @@ src/use-controllable-state.ts
     11→type SetStateFn<T> = (prevState?: T) => T;
 
 src/use-position-fixed.ts
-     6→/**
      7→ * This hook is necessary to prevent buggy behavior on iOS devices (need to test on Android).
      8→ * I won't get into too much detail about what bugs it solves, but so far I've found that setting the body to `position: fixed` is the most reliable way to prevent those bugs.
      9→ * Issues that this hook solves:
     10→ * https://github.com/emilkowalski/vaul/issues/435
     11→ * https://github.com/emilkowalski/vaul/issues/433
     12→ * And more that I discovered, but were just not reported.
-    13→ */
-    14→
     15→export function usePositionFixed({
     16→  isOpen,
     17→  modal,
@@ -132,11 +127,9 @@ src/use-prevent-scroll.ts
     10→interface PreventScrollOptions {
     27→const visualViewport = typeof document !== 'undefined' && window.visualViewport;
     47→const nonTextInputTypes = new Set([
-    63→/**
     64→ * Prevents scrolling on the document body on mount, and
     65→ * restores it on unmount. Also ensures that content does not
     66→ * shift due to the scrollbars disappearing.
-    67→ */
     68→export function usePreventScroll(options: PreventScrollOptions = {}) {
     69→  let { isDisabled } = options;
     70→
@@ -150,6 +143,8 @@ test/README.md
      3→## Getting Started
     21→## Learn More
     30→## Deploy on Vercel
+
+test/package.json
 
 test/src/app/controlled/page.tsx
      6→export default function Page() {
@@ -214,6 +209,8 @@ test/tests/constants.ts
 test/tests/helpers.ts
      4→export async function openDrawer …
     11→export async function dragWithSpeed …
+
+test/tsconfig.json
 
 tsconfig.json
 

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1007 tokens)
+budget: 1000 (1006 tokens)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -49,14 +49,11 @@ cmdk/src/index.tsx
    882→const Dialog …
    899→const Empty …
    909→const Loading …
-   955→/**
    956→ *
    957→ *
    958→ * Helpers
    959→ *
    960→ *
-   961→ */
-   962→
    963→function findNextSibling(el: Element, selector: string) {
   1003→/** Run a selector against the store state. */
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
@@ -79,6 +76,7 @@ package.json
     28→}
 
 playwright.config.ts
+     1→import { PlaywrightTestConfig, devices } from '@playwright/test'
      3→const config: PlaywrightTestConfig = {
 
 pnpm-workspace.yaml
@@ -123,5 +121,4 @@ website/pages/index.tsx
     18→import packageJSON from '../../cmdk/package.json'
     29→export default function Index() {
    137→//////////////////////////////////////////////////////////////////
-   138→
    139→const themes = [

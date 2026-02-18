@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3991 tokens)
+budget: 4000 (3997 tokens)
 
 browser.js
    115→function useColors() {
@@ -32,12 +32,9 @@ browser.js
    139→		// Double check webkit in userAgent just in case we are in a worker
    140→		(typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.toLowerCase().match(/applewebkit\/(\d+)/));
    141→}
-   143→/**
    144→ * Colorize log arguments if enabled.
    145→ *
    146→ * @api public
-   147→ */
-   148→
    149→function formatArgs(args) {
    150→	args[0] = (this.useColors ? '%c' : '') +
    151→		this.namespace +
@@ -72,12 +69,10 @@ browser.js
    180→
    181→	args.splice(lastC, 0, c);
    182→}
-   194→/**
    195→ * Save `namespaces`.
    196→ *
    197→ * @param {String} namespaces
    198→ * @api private
-   199→ */
    200→function save(namespaces) {
    201→	try {
    202→		if (namespaces) {
@@ -90,12 +85,10 @@ browser.js
    209→		// XXX (@Qix-) should we be logging these?
    210→	}
    211→}
-   213→/**
    214→ * Load `namespaces`.
    215→ *
    216→ * @return {String} returns the previously persisted debug modes
    217→ * @api private
-   218→ */
    219→function load() {
    220→	let r;
    221→	try {
@@ -112,7 +105,6 @@ browser.js
    232→
    233→	return r;
    234→}
-   236→/**
    237→ * Localstorage attempts to return the localstorage.
    238→ *
    239→ * This is necessary because safari throws
@@ -121,8 +113,6 @@ browser.js
    242→ *
    243→ * @return {LocalStorage}
    244→ * @api private
-   245→ */
-   246→
    247→function localstorage() {
    248→	try {
    249→		// TVMLKit (Apple TV JS Runtime) does not have a window object, just localStorage in the global context
@@ -135,11 +125,8 @@ browser.js
    256→}
 
 common.js
-     2→/**
      3→ * This is the common logic for both the Node.js and web browser
      4→ * implementations of `debug()`.
-     5→ */
-     6→
      7→function setup(env) {
      8→	createDebug.debug = createDebug;
      9→	createDebug.default = createDebug;
@@ -283,24 +270,32 @@ common.js
    147→	}
    148→
    149→	function extend(namespace, delimiter) {
-      →	…
+   150→		const newDebug = createDebug(this.namespace + (typeof delimiter === 'undefined' ? ':' : delimiter) + namespace);
+   151→		newDebug.log = this.log;
+   152→		return newDebug;
+   153→	}
+   154→
+   155→	/**
+   156→	* Enables a debug mode by namespaces. This can include modes
+   157→	* separated by a colon and wildcards.
+   158→	*
+   159→	* @param {String} namespaces
+   160→	* @api public
+   161→	*/
+   162→	function enable(namespaces) {
+   163→		createDebug.save(namespaces);
+      →		…
 
 node.js
-   151→/**
    152→ * Is stdout a TTY? Colored output is enabled when `true`.
-   153→ */
-   154→
    155→function useColors() {
    156→	return 'colors' in exports.inspectOpts ?
    157→		Boolean(exports.inspectOpts.colors) :
    158→		tty.isatty(process.stderr.fd);
    159→}
-   161→/**
    162→ * Adds ANSI color escape codes if enabled.
    163→ *
    164→ * @api public
-   165→ */
-   166→
    167→function formatArgs(args) {
    168→	const {namespace: name, useColors} = this;
    169→
@@ -321,19 +316,14 @@ node.js
    185→	}
    186→	return new Date().toISOString() + ' ';
    187→}
-   189→/**
    190→ * Invokes `util.formatWithOptions()` with the specified arguments and writes to stderr.
-   191→ */
-   192→
    193→function log(...args) {
    194→	return process.stderr.write(util.formatWithOptions(exports.inspectOpts, ...args) + '\n');
    195→}
-   197→/**
    198→ * Save `namespaces`.
    199→ *
    200→ * @param {String} namespaces
    201→ * @api private
-   202→ */
    203→function save(namespaces) {
    204→	if (namespaces) {
    205→		process.env.DEBUG = namespaces;
@@ -343,23 +333,17 @@ node.js
    209→		delete process.env.DEBUG;
    210→	}
    211→}
-   213→/**
    214→ * Load `namespaces`.
    215→ *
    216→ * @return {String} returns the previously persisted debug modes
    217→ * @api private
-   218→ */
-   219→
    220→function load() {
    221→	return process.env.DEBUG;
    222→}
-   224→/**
    225→ * Init logic for `debug` instances.
    226→ *
    227→ * Create a new `inspectOpts` object in case `useColors` is set
    228→ * differently for a particular `debug` instance.
-   229→ */
-   230→
    231→function init(debug) {
    232→	debug.inspectOpts = {};
    233→

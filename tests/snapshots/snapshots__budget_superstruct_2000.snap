@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2004 tokens)
+budget: 2000 (2003 tokens)
 
 Changelog.md
      1→# Changelog
@@ -41,6 +41,8 @@ examples/package.json
      2→  "type": "module",
      3→  "license": "MIT",
      4→  "dependencies": {
+     9→  }
+    10→}
 
 jsr.json
 
@@ -48,15 +50,12 @@ package.json
 
 src/error.ts
      5→export type Failure …
-    16→/**
     17→ * `StructError` objects are thrown (or returned) when validation fails.
     18→ *
     19→ * Validation logic is design to exit early for maximum performance. The error
     20→ * represents the first error encountered during validation. For more detail,
     21→ * the `error.failures` property is a generator function that can be run to
     22→ * continue validation and receive all the failures in the data.
-    23→ */
-    24→
     25→export class StructError extends TypeError {
     26→  value: any
     27→  key!: any
@@ -74,12 +73,9 @@ src/error.ts
 src/struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
      2→import { StructError, Failure } from './error.js'
-     4→/**
      5→ * `Struct` objects encapsulate the validation logic for a specific type of
      6→ * values. Once constructed, you use the `assert`, `is` or `validate` helpers to
      7→ * validate unknown input data against the struct.
-     8→ */
-     9→
     10→export class Struct<T = unknown, S = unknown> {
     11→  readonly TYPE!: T
     12→  type: string
@@ -178,10 +174,7 @@ src/structs/utilities.ts
 src/utils.ts
      1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
      2→import { Failure } from './error.js'
-     4→/**
      5→ * Check if a value is an iterator.
-     6→ */
-     7→
      8→function isIterable<T>(x: unknown): x is Iterable<T> {
      9→  return isObject(x) && typeof x[Symbol.iterator] === 'function'
     10→}
@@ -214,13 +207,15 @@ src/utils.ts
    402→type _InferTuple …
 
 test/index.ts
-     1→/**
      2→ * A helper for testing type signatures.
-     3→ */
-     4→
      5→export function test<T>(fn: (x: unknown) => T) {}
 
 test/tsconfig.json
+     2→  "extends": "../tsconfig.json",
+     3→  "include": ["./**/*.ts"],
+     4→  "compilerOptions": {
+     6→  }
+     7→}
 
 test/validation/function/valid.ts
      5→export const data = function () {}

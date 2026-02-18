@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2009 tokens)
+budget: 2000 (2015 tokens)
 
 browser.ts
      1→export function isMobileFirefox …
@@ -27,7 +27,6 @@ context.ts
      1→import React from 'react';
      4→interface DrawerContextValue {
      5→  drawerRef: React.RefObject<HTMLDivElement>;
-     6→  overlayRef: React.RefObject<HTMLDivElement>;
       →  …
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
     69→export const useDrawerContext …
@@ -35,7 +34,7 @@ context.ts
 helpers.ts
      3→interface Style {
      4→  [key: string]: string;
-     5→}
+      →  …
      7→const cache = new WeakMap();
      9→export function isInView …
     23→export function set …
@@ -44,9 +43,7 @@ helpers.ts
     72→export function getTranslate …
     90→export function dampenValue …
     94→export function assignStyle …
-   105→/**
    106→ * Receives functions as arguments and returns a new function that calls all.
-   107→ */
    108→export function chain<T>(...fns: T[]) {
    109→  return (...args: T extends AnyFunction ? Parameters<T> : never) => {
    110→    for (const fn of fns) {
@@ -102,14 +99,14 @@ types.ts
 use-composed-refs.ts
      3→import * as React from 'react';
      5→type PossibleRef<T> = React.Ref<T> | undefined;
-     7→/**
-      →…
+     8→ * Set a given ref to a given value
+     9→ * This utility takes care of different types of refs: callback refs and RefObject(s)
     11→function setRef<T>(ref: PossibleRef<T>, value: T) {
-    19→/**
-      →…
+    20→ * A utility to compose multiple refs together
+    21→ * Accepts callback refs and RefObject(s)
     23→function composeRefs<T>(...refs: PossibleRef<T>[]) {
-    27→/**
-      →…
+    28→ * A custom hook that composes multiple refs
+    29→ * Accepts callback refs and RefObject(s)
     31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
 
 use-controllable-state.ts
@@ -122,15 +119,12 @@ use-controllable-state.ts
 
 use-position-fixed.ts
      1→import React from 'react';
-     6→/**
      7→ * This hook is necessary to prevent buggy behavior on iOS devices (need to test on Android).
      8→ * I won't get into too much detail about what bugs it solves, but so far I've found that setting the body to `position: fixed` is the most reliable way to prevent those bugs.
      9→ * Issues that this hook solves:
     10→ * https://github.com/emilkowalski/vaul/issues/435
     11→ * https://github.com/emilkowalski/vaul/issues/433
     12→ * And more that I discovered, but were just not reported.
-    13→ */
-    14→
     15→export function usePositionFixed({
     16→  isOpen,
     17→  modal,
@@ -157,18 +151,15 @@ use-prevent-scroll.ts
      8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
     10→interface PreventScrollOptions {
     11→  /** Whether the scroll lock is disabled. */
-    12→  isDisabled?: boolean;
       →  …
     16→function chain …
     27→const visualViewport = typeof document !== 'undefined' && window.visualViewport;
     29→export function isScrollable …
     34→export function getScrollParent …
     47→const nonTextInputTypes = new Set([
-    63→/**
     64→ * Prevents scrolling on the document body on mount, and
     65→ * restores it on unmount. Also ensures that content does not
     66→ * shift due to the scrollbars disappearing.
-    67→ */
     68→export function usePreventScroll(options: PreventScrollOptions = {}) {
     69→  let { isDisabled } = options;
     70→

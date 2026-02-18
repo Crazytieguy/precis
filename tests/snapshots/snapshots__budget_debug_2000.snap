@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2001 tokens)
+budget: 2000 (2025 tokens)
 
 README.md
      1→# debug
@@ -131,28 +131,26 @@ src/browser.js
    122→
    123→	// Internet Explorer and Edge do not support colors.
       →	…
-   143→/**
    144→ * Colorize log arguments if enabled.
    145→ *
    146→ * @api public
-   147→ */
-   148→
    149→function formatArgs(args) {
-   194→/**
+   150→	args[0] = (this.useColors ? '%c' : '') +
+      →	…
    195→ * Save `namespaces`.
    196→ *
    197→ * @param {String} namespaces
    198→ * @api private
-   199→ */
    200→function save(namespaces) {
-   213→/**
+   201→	try {
+      →	…
    214→ * Load `namespaces`.
    215→ *
    216→ * @return {String} returns the previously persisted debug modes
    217→ * @api private
-   218→ */
    219→function load() {
-   236→/**
+   220→	let r;
+      →	…
    237→ * Localstorage attempts to return the localstorage.
    238→ *
    239→ * This is necessary because safari throws
@@ -161,65 +159,59 @@ src/browser.js
    242→ *
    243→ * @return {LocalStorage}
    244→ * @api private
-   245→ */
-   246→
    247→function localstorage() {
+   248→	try {
+      →	…
 
 src/common.js
-     2→/**
      3→ * This is the common logic for both the Node.js and web browser
      4→ * implementations of `debug()`.
-     5→ */
-     6→
      7→function setup(env) {
+     8→	createDebug.debug = createDebug;
+      →	…
 
 src/node.js
-   151→/**
    152→ * Is stdout a TTY? Colored output is enabled when `true`.
-   153→ */
-   154→
    155→function useColors() {
-   161→/**
+   156→	return 'colors' in exports.inspectOpts ?
+      →	…
    162→ * Adds ANSI color escape codes if enabled.
    163→ *
    164→ * @api public
-   165→ */
-   166→
    167→function formatArgs(args) {
+   168→	const {namespace: name, useColors} = this;
+      →	…
    182→function getDate() {
    183→	if (exports.inspectOpts.hideDate) {
    184→		return '';
    185→	}
    186→	return new Date().toISOString() + ' ';
    187→}
-   189→/**
    190→ * Invokes `util.formatWithOptions()` with the specified arguments and writes to stderr.
-   191→ */
-   192→
    193→function log(...args) {
-   197→/**
+   194→	return process.stderr.write(util.formatWithOptions(exports.inspectOpts, ...args) + '\n');
+      →	…
    198→ * Save `namespaces`.
    199→ *
    200→ * @param {String} namespaces
    201→ * @api private
-   202→ */
    203→function save(namespaces) {
-   213→/**
+   204→	if (namespaces) {
+      →	…
    214→ * Load `namespaces`.
    215→ *
    216→ * @return {String} returns the previously persisted debug modes
    217→ * @api private
-   218→ */
-   219→
    220→function load() {
-   224→/**
+   221→	return process.env.DEBUG;
+      →	…
    225→ * Init logic for `debug` instances.
    226→ *
    227→ * Create a new `inspectOpts` object in case `useColors` is set
    228→ * differently for a particular `debug` instance.
-   229→ */
-   230→
    231→function init(debug) {
+   232→	debug.inspectOpts = {};
+      →	…
 
 test.node.js
      8→const formatWithOptionsSpy = sinon.spy(util, 'formatWithOptions');

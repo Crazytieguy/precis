@@ -51,7 +51,6 @@ src/tomli/__init__.py
      1→# SPDX-License-Identifier: MIT
      2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
      3→# Licensed to PSF under a Contributor Agreement.
-     4→
      5→__all__ = ("loads", "load", "TOMLDecodeError")
      8→from ._parser import TOMLDecodeError, load, loads
 
@@ -102,6 +101,8 @@ tests/__init__.py
      5→__all__ = ("tomllib",)
 
 tests/test_data.py
+
+tests/test_misc.py
 
 tomllib.md
      1→# `tomllib` – Tomli in the standard library

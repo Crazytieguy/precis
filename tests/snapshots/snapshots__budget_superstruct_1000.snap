@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1000 tokens)
+budget: 1000 (999 tokens)
 
 Changelog.md
      1→# Changelog
@@ -35,9 +35,10 @@ jsr.json
 package.json
 
 src/error.ts
-    16→/**
     17→ * `StructError` objects are thrown (or returned) when validation fails.
     18→ *
+    19→ * Validation logic is design to exit early for maximum performance. The error
+    20→ * represents the first error encountered during validation. For more detail,
       → …
     25→export class StructError extends TypeError {
     26→  value: any
@@ -54,10 +55,9 @@ src/error.ts
 src/struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
      2→import { StructError, Failure } from './error.js'
-     4→/**
      5→ * `Struct` objects encapsulate the validation logic for a specific type of
      6→ * values. Once constructed, you use the `assert`, `is` or `validate` helpers to
-      → …
+     7→ * validate unknown input data against the struct.
     10→export class Struct<T = unknown, S = unknown> {
     11→  readonly TYPE!: T
     12→  type: string
@@ -101,10 +101,7 @@ src/structs/utilities.ts
 src/utils.ts
      1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
      2→import { Failure } from './error.js'
-     4→/**
      5→ * Check if a value is an iterator.
-     6→ */
-     7→
      8→function isIterable<T>(x: unknown): x is Iterable<T> {
     16→export function isObject …
     24→export function isNonArrayObject …
@@ -116,17 +113,13 @@ src/utils.ts
    402→type _InferTuple …
 
 test/index.ts
-     1→/**
      2→ * A helper for testing type signatures.
-     3→ */
-     4→
      5→export function test<T>(fn: (x: unknown) => T) {}
 
 test/validation/function/valid.ts
      5→export const data = function () {}
 
 test/validation/type/valid-instance.ts
-     3→class Person {
      6→  constructor(name: string) {
 
 tsconfig.json

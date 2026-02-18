@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2012 tokens)
+budget: 2000 (2010 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -51,9 +51,7 @@ apps/storybook/src/stories/Button.stories.ts
 
 apps/storybook/src/stories/Button.tsx
      3→import './button.css';
-     5→/**
      6→ * Primary UI component for user interaction
-     7→ */
      8→export const Button = ({ primary, backgroundColor, size, label, ...props }) => {
      9→  const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
     10→  return (
@@ -118,9 +116,6 @@ apps/website/src/app/(local-pages)/raw-input/page.tsx
 apps/website/src/app/(local-pages)/shadcn/page.tsx
     12→export default function ShadcnPage() {
 
-apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
-    13→export default function ShadcnPage() {
-
 apps/website/src/app/(pages)/(home)/page.tsx
     34→export default async function IndexPage() {
    148→export const revalidate = 3600
@@ -166,6 +161,7 @@ packages/input-otp/src/input.tsx
    540→function safeInsertRule(sheet: CSSStyleSheet, rule: string) {
    541→  try {
       →  …
+   553→const NOSCRIPT_CSS_FALLBACK = `
 
 packages/input-otp/src/regexp.ts
      1→export const REGEXP_ONLY_DIGITS = '^\\d+$'
@@ -174,8 +170,6 @@ packages/input-otp/src/regexp.ts
 
 packages/input-otp/src/sync-timeouts.ts
      1→export function syncTimeouts(cb: (...args: any[]) => unknown): number[] {
-     2→  const t1 = setTimeout(cb, 0) // For faster machines
-      →  …
 
 packages/input-otp/src/types.ts
      1→export interface SlotProps {
@@ -199,12 +193,14 @@ packages/input-otp/src/types.ts
 packages/input-otp/src/use-previous.ts
      1→import * as React from 'react'
      3→export function usePrevious<T>(value: T) {
-     4→  const ref = React.useRef<T>()
-      →  …
 
 packages/input-otp/src/use-pwm-badge.tsx
      1→import * as React from 'react'
      2→import { OTPInputProps } from './types'
+     4→const PWM_BADGE_MARGIN_RIGHT = 18
+     5→const PWM_BADGE_SPACE_WIDTH_PX = 40
+     6→const PWM_BADGE_SPACE_WIDTH = `${PWM_BADGE_SPACE_WIDTH_PX}px` as const
+     8→const PASSWORD_MANAGERS_SELECTORS = [
     15→export function usePasswordManagerBadge({
     16→  containerRef,
     17→  inputRef,

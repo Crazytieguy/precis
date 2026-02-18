@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1010 tokens)
+budget: 1000 (1012 tokens)
 
 README.md
      9→# Mitt
@@ -14,7 +14,8 @@ README.md
     16→-   **Functional:** methods don't rely on `this`
     17→-   **Great Name:** somehow [mitt](https://npm.im/mitt) wasn't taken
     18→
-      →…
+    19→Mitt was made for the browser, but works in any JavaScript runtime. It has no dependencies and supports IE9+.
+    20→
     21→## Table of Contents
     23→-   [Install](#install)
       →…
@@ -70,11 +71,9 @@ src/index.ts
     36→	emit<Key extends keyof Events>(
     37→		type: undefined extends Events[Key] ? Key : never
     38→	): void;
-    41→/**
     42→ * Mitt: Tiny (~200b) functional event emitter / pubsub.
     43→ * @name mitt
     44→ * @returns {Mitt}
-    45→ */
     46→export default function mitt<Events extends Record<EventType, unknown>>(
     47→	all?: EventHandlerMap<Events>
     48→): Emitter<Events> {
@@ -90,10 +89,7 @@ src/index.ts
     58→		all,
     59→
     60→		/**
-    61→		 * Register an event handler for the given type.
-      →		 …
-
-test/index_test.ts
+      →		…
 
 test/test-types-compilation.ts
      5→interface SomeEventData {

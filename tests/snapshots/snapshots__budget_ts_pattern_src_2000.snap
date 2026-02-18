@@ -2,14 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2011 tokens)
+budget: 2000 (2002 tokens)
 
 errors.ts
-     1→/**
      2→ * Error when the given input value does not match any included pattern
      3→ * and .exhaustive() was specified
-     4→ */
      5→export class NonExhaustiveError extends Error {
+     6→  constructor …
 
 index.ts
 
@@ -22,12 +21,13 @@ internals/helpers.ts
     24→const isOptionalPattern = (
     25→  x: unknown
     26→): x is Matcher<unknown, unknown, 'optional', SelectionType> => {
+    27→  return isMatcher(x) && x[symbols.matcher]().matcherType === 'optional';
+    28→};
     32→export const matchPattern …
    120→export const getSelectionKeys …
    132→export const flatMap …
 
 internals/symbols.ts
-     1→/**
      2→ * Symbols used internally within ts-pattern to construct and discriminate
      3→ * Guard, Not, and Select, and AnonymousSelect patterns
      4→ *
@@ -40,8 +40,6 @@ internals/symbols.ts
     11→ * @module
     12→ * @private
     13→ * @internal
-    14→ */
-    15→
     16→export const matcher = Symbol.for('@ts-pattern/matcher');
     17→export type matcher = typeof matcher;
     19→export const unset = Symbol.for('@ts-pattern/unset');
@@ -54,25 +52,33 @@ internals/symbols.ts
     30→export type override = typeof override;
 
 is-matching.ts
-     6→/**
      7→ * This constraint allows using additional properties
-      → …
+     8→ * in object patterns. See "should allow targetting unknown properties"
+     9→ * unit test in `is-matching.test.ts`.
     11→type PatternConstraint<T> = T extends readonly any[]
     12→  ? P.Pattern<T>
     13→  : T extends object
     14→  ? P.Pattern<T> & UnknownProperties
     15→  : P.Pattern<T>;
+    53→export function isMatching …
 
 match.ts
-    16→/**
-      →…
-    32→export function match<const input, output = symbols.unset>(
-    33→  value: input
-    34→): Match<input, output> {
-    38→/**
+    32→export function match …
     39→ * This class represents a match expression. It follows the
+    40→ * builder pattern, we chain methods to add features to the expression
+    41→ * until we call `.exhaustive`, `.otherwise` or the unsafe `.run`
+    42→ * method to execute it.
+    43→ *
       → …
     47→class MatchExpression<input, output> {
+    48→  constructor …
+    50→  with …
+    94→  when …
+   110→  otherwise …
+   115→  exhaustive …
+   120→  run …
+   124→  returnType …
+   128→  narrow …
 
 patterns.ts
      8→import { matchPattern, getSelectionKeys, flatMap } from './internals/helpers';
@@ -80,32 +86,16 @@ patterns.ts
    100→export type unstable_Matcher …
    116→export type infer …
    131→export type narrow …
-   177→/**
-      →…
-   187→export function optional<
-   188→  input,
-   189→  const pattern extends unknown extends input
-   190→    ? UnknownValuePattern
-   191→    : Pattern<input>
-   192→>(pattern: pattern): Chainable<OptionalP<input, pattern>, 'optional'> {
-   517→/**
-      →…
-   536→export function intersection<
-   537→  input,
-   538→  const patterns extends readonly [Pattern<input>, ...Pattern<input>[]]
-   539→>(...patterns: patterns): Chainable<AndP<input, patterns>> {
-   559→/**
-      →…
-   572→export function union<
-   573→  input,
-   574→  const patterns extends readonly [Pattern<input>, ...Pattern<input>[]]
-   575→>(...patterns: patterns): Chainable<OrP<input, patterns>> {
-   599→/**
-      →…
-   611→export function not<
-   612→  input,
-   613→  const pattern extends Pattern<input> | UnknownValuePattern
-   614→>(pattern: pattern): Chainable<NotP<input, pattern>> {
+   187→export function optional …
+   246→export function array …
+   299→export function set …
+   362→export function map …
+   445→export function record …
+   536→export function intersection …
+   572→export function union …
+   611→export function not …
+   646→export function when …
+   696→export function select …
    782→export const any …
    793→export const unknown …
    805→export const _ …
@@ -116,19 +106,26 @@ patterns.ts
   1221→export const symbol …
   1231→export const nullish …
   1241→export const nonNullable …
-  1243→/**
-      →…
-  1251→export function instanceOf<T extends AnyConstructor>(
-  1252→  classConstructor: T
-  1253→): Chainable<GuardP<unknown, InstanceType<T>>> {
+  1251→export function instanceOf …
+  1274→export function shape …
+
+types/BuildMany.ts
+
+types/DeepExclude.ts
 
 types/DistributeUnions.ts
     41→export type DistributeMatchingUnions …
     80→export type FindUnions …
 
+types/ExtractPreciseValue.ts
+
+types/FindSelected.ts
+
 types/InvertPattern.ts
    106→export type InvertPattern …
    303→export type InvertPatternForExclude …
+
+types/IsMatching.ts
 
 types/Match.ts
     10→interface NonExhaustiveError<i> {
@@ -143,25 +140,27 @@ types/Match.ts
    180→  otherwise …
    205→  run …
    225→  narrow …
-   228→/**
-      →…
+   229→ * Potential for optimization here:
+   230→ *
+   231→ * Since DeepExclude distributes the union of the input type, it can
+      → …
    245→type DeepExcludeAll<a, tupleList extends any[]> = [a] extends [never]
    246→  ? never
    247→  : tupleList extends [infer excluded, ...infer tail]
    248→  ? DeepExcludeAll<DeepExclude<a, excluded>, tail>
    249→  : a;
-   255→/**
-      →…
+   256→ * The type of an overloaded function for `.exhaustive`,
+   257→ * permitting calling it with or without a catch-all handler function.
+   258→ *
+      → …
    261→type Exhaustive<output, inferredOutput> = {
 
 types/Pattern.ts
-    43→/**
     44→ * A `Matcher` is an object implementing the match
     45→ * protocol. It must define a `symbols.matcher` property
     46→ * which returns an object with a `match()` method, taking
     47→ * the input value and returning whether the pattern matches
     48→ * or not, along with optional selections.
-    49→ */
     50→export interface Matcher<
     51→  input,
     52→  narrowed,

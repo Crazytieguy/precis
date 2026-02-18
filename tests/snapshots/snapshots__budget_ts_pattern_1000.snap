@@ -2,23 +2,25 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1008 tokens)
+budget: 1000 (1006 tokens)
 
 README.md
     91→# Documentation
     93→- [Sandbox examples](#sandbox-examples)
     94→- [Getting Started](#getting-started)
+    95→- [API Reference](#api-reference)
       →…
+
+examples/gif-fetcher/src/App.tsx
+    75→export default function App() {
 
 jsr.json
 
 package.json
 
 src/errors.ts
-     1→/**
      2→ * Error when the given input value does not match any included pattern
      3→ * and .exhaustive() was specified
-     4→ */
      5→export class NonExhaustiveError extends Error {
 
 src/index.ts
@@ -35,10 +37,13 @@ src/internals/helpers.ts
    132→export const flatMap …
 
 src/internals/symbols.ts
-     1→/**
      2→ * Symbols used internally within ts-pattern to construct and discriminate
      3→ * Guard, Not, and Select, and AnonymousSelect patterns
      4→ *
+     5→ * Symbols have the advantage of not appearing in auto-complete suggestions in
+     6→ * user defined patterns, and eliminate the risk of property
+     7→ * overlap between ts-pattern internals and user defined patterns.
+     8→ *
       → …
     16→export const matcher = Symbol.for('@ts-pattern/matcher');
 
@@ -47,30 +52,16 @@ src/is-matching.ts
 
 src/match.ts
     32→export function match …
-    38→/**
-      →…
+    39→ * This class represents a match expression. It follows the
+      → …
     47→class MatchExpression<input, output> {
 
 src/patterns.ts
      8→import { matchPattern, getSelectionKeys, flatMap } from './internals/helpers';
-    81→export type unstable_Matchable …
-   100→export type unstable_Matcher …
-   116→export type infer …
-   131→export type narrow …
    187→export function optional …
    536→export function intersection …
    572→export function union …
    611→export function not …
-   782→export const any …
-   793→export const unknown …
-   805→export const _ …
-   928→export const string …
-  1075→export const number …
-  1201→export const bigint …
-  1211→export const boolean …
-  1221→export const symbol …
-  1231→export const nullish …
-  1241→export const nonNullable …
   1251→export function instanceOf …
 
 src/types/DistributeUnions.ts
@@ -90,10 +81,11 @@ src/types/Match.ts
    261→type Exhaustive …
 
 src/types/Pattern.ts
-    43→/**
     44→ * A `Matcher` is an object implementing the match
     45→ * protocol. It must define a `symbols.matcher` property
-      → …
+    46→ * which returns an object with a `match()` method, taking
+    47→ * the input value and returning whether the pattern matches
+    48→ * or not, along with optional selections.
     50→export interface Matcher<
     51→  input,
     52→  narrowed,

@@ -2,12 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1009 tokens)
+budget: 1000 (1001 tokens)
 
 CHANGELOG.md
      1→# Changelog
 
 CONTRIBUTING.md
+     1→# Contributing
 
 Readme.md
      1→# Commander.js
@@ -34,6 +35,7 @@ Readme_zh-CN.md
      1→# Commander.js
 
 SECURITY.md
+     1→# Security Policy
 
 esm.mjs
      1→import commander from './index.js';
@@ -52,11 +54,7 @@ lib/command.js
   1127→  _prepareForParse() {
 
 lib/error.js
-     1→/**
-      →…
      4→class CommanderError extends Error {
-    22→/**
-      →…
     25→class InvalidArgumentError extends CommanderError {
 
 lib/help.js
@@ -78,8 +76,6 @@ lib/help.js
 
 lib/option.js
      3→class Option {
-   261→/**
-      →…
    268→class DualOptions {
 
 lib/suggestSimilar.js

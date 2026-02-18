@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1032 tokens)
+budget: 1000 (1008 tokens)
 
 README.md
      1→# debug
@@ -16,11 +16,23 @@ README.md
     77→On Windows the environment variable is set using the `set` command.
     78→
     79→```cmd
+    80→set DEBUG=*,-not_this
+    81→```
+    82→
+    83→Example:
+    84→
+    85→```cmd
       →…
     89→##### PowerShell (VS Code default)
     91→PowerShell uses different syntax to set environment variables.
     92→
     93→```cmd
+    94→$env:DEBUG = "*,-not_this"
+    95→```
+    96→
+    97→Example:
+    98→
+    99→```cmd
       →…
    110→## Namespace Colors
    116→#### Node.js
@@ -47,7 +59,6 @@ README.md
    207→
    208→// …elsewhere
    209→const debug = createDebug('foo')
-   210→debug('this is hex: %h', new Buffer('hello world'))
       →…
    215→## Browser Support
    248→## Output streams
@@ -92,43 +103,21 @@ package.json
 
 src/browser.js
    115→function useColors() {
-   143→/**
-      →…
    149→function formatArgs(args) {
-   194→/**
-      →…
    200→function save(namespaces) {
-   213→/**
-      →…
    219→function load() {
-   236→/**
-      →…
    247→function localstorage() {
 
 src/common.js
-     2→/**
-      →…
      7→function setup(env) {
 
 src/node.js
-   151→/**
-      →…
    155→function useColors() {
-   161→/**
-      →…
    167→function formatArgs(args) {
    182→function getDate() {
-   189→/**
-      →…
    193→function log(...args) {
-   197→/**
-      →…
    203→function save(namespaces) {
-   213→/**
-      →…
    220→function load() {
-   224→/**
-      →…
    231→function init(debug) {
 
 test.node.js

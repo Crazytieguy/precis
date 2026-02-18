@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1000 tokens)
+budget: 1000 (1008 tokens)
 
 README.md
 
@@ -69,7 +69,8 @@ sds.h
    181→    unsigned char flags = s[-1];
    182→    switch(flags&SDS_TYPE_MASK) {
    183→        case SDS_TYPE_5:
-      →        …
+   184→            return SDS_TYPE_5_LEN(flags);
+      →            …
    255→/* Low level functions exposed to the user API */
    256→sds sdsMakeRoomFor(sds s, size_t addlen);
    262→/* Export the allocator used by SDS to the program using SDS.
@@ -85,7 +86,6 @@ sdsalloc.h
     36→ * Just define the following defines to what you want to use. Also add
     37→ * the include of your alternate allocator if needed (not needed in order
     38→ * to use the default libc allocator). */
-    39→
     40→#define s_malloc malloc
 
 testhelp.h

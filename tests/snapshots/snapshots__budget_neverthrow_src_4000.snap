@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3970 tokens)
+budget: 4000 (4008 tokens)
 
 _internals/error.ts
      1→import { Result } from '../result'
@@ -48,23 +48,21 @@ _internals/utils.ts
      2→import { ResultAsync } from '../result-async'
      5→export type ExtractOkTypes<T extends readonly Result<unknown, unknown>[]> = {
      6→  [idx in keyof T]: T[idx] extends Result<infer U, unknown> ? U : never
-     7→}
+      →  …
     10→export type ExtractOkAsyncTypes<T extends readonly ResultAsync<unknown, unknown>[]> = {
     11→  [idx in keyof T]: T[idx] extends ResultAsync<infer U, unknown> ? U : never
-    12→}
+      →  …
     15→export type ExtractErrTypes<T extends readonly Result<unknown, unknown>[]> = {
     16→  [idx in keyof T]: T[idx] extends Result<unknown, infer E> ? E : never
-    17→}
+      →  …
     20→export type ExtractErrAsyncTypes<T extends readonly ResultAsync<unknown, unknown>[]> = {
     21→  [idx in keyof T]: T[idx] extends ResultAsync<unknown, infer E> ? E : never
-    22→}
+      →  …
     24→export type InferOkTypes<R> = R extends Result<infer T, unknown> ? T : never
     25→export type InferErrTypes<R> = R extends Result<unknown, infer E> ? E : never
     27→export type InferAsyncOkTypes<R> = R extends ResultAsync<infer T, unknown> ? T : never
     28→export type InferAsyncErrTypes<R> = R extends ResultAsync<unknown, infer E> ? E : never
-    30→/**
     31→ * Short circuits on the FIRST Err value that we find
-    32→ */
     33→export const combineResultList = <T, E>(
     34→  resultList: readonly Result<T, E>[],
     35→): Result<readonly T[], E> => {
@@ -86,9 +84,7 @@ _internals/utils.ts
     57→  ResultAsync.fromSafePromise(Promise.all(asyncResultList)).andThen(
     58→    combineResultList,
     59→  ) as ResultAsync<T[], E>
-    61→/**
     62→ * Give a list of all the errors we find
-    63→ */
     64→export const combineResultListWithAllErrors = <T, E>(
     65→  resultList: readonly Result<T, E>[],
     66→): Result<readonly T[], E[]> => {
@@ -114,13 +110,28 @@ _internals/utils.ts
     87→  ) as ResultAsync<T[], E[]>
 
 result-async.ts
-     1→import type { …
-    10→import { Err, Ok, Result } from './ …
-    11→import { …
+     1→import type {
+     2→  Combine,
+     3→  Dedup,
+     4→  EmptyArrayToNever,
+     5→  IsLiteralArray,
+     6→  MemberListOf,
+     7→  MembersToUnion,
+     8→} from './result'
+    10→import { Err, Ok, Result } from './'
+    11→import {
+    12→  combineResultAsyncList,
+    13→  combineResultAsyncListWithAllErrors,
+    14→  ExtractErrAsyncTypes,
+    15→  ExtractOkAsyncTypes,
+    16→  InferAsyncErrTypes,
+    17→  InferAsyncOkTypes,
+    18→  InferErrTypes,
+    19→  InferOkTypes,
+    20→} from './_internals/utils'
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
     23→  private _promise: Promise<Result<T, E>>
     24→
-   210→  /**
    211→   * @deprecated will be removed in 9.0.0.
    212→   *
    213→   * You can use `safeTry` without this method.
@@ -131,7 +142,6 @@ result-async.ts
    218→   * })
    219→   * ```
    220→   * Emulates Rust's `?` operator in `safeTry`'s body. See also `safeTry`.
-   221→   */
    222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
    223→    return yield* await this._promise.then((res) => res.safeUnwrap())
    224→  }
@@ -146,9 +156,17 @@ result-async.ts
    338→type Writable …
 
 result.ts
-     1→import { errAsync, ResultAsync } from './ …
-     2→import { createNeverThrowError, ErrorConfig } from './_internals/error …
-     3→import { …
+     1→import { errAsync, ResultAsync } from './'
+     2→import { createNeverThrowError, ErrorConfig } from './_internals/error'
+     3→import {
+     4→  combineResultList,
+     5→  combineResultListWithAllErrors,
+     6→  ExtractErrTypes,
+     7→  ExtractOkTypes,
+     8→  InferAsyncErrTypes,
+     9→  InferErrTypes,
+    10→  InferOkTypes,
+    11→} from './_internals/utils'
     14→export namespace Result {
     15→  /**
     16→   * Wraps a function with a try catch, creating a new function with the same
@@ -160,28 +178,21 @@ result.ts
     22→  // eslint-disable-next-line @typescript-eslint/no-explicit-any
     62→export type Result …
    134→interface IResult<T, E> {
-   135→  /**
    136→   * Used to check if a `Result` is an `OK`
    137→   *
    138→   * @returns `true` if the result is an `OK` variant of Result
-   139→   */
    140→  isOk(): this is Ok<T, E>
-   142→  /**
    143→   * Used to check if a `Result` is an `Err`
    144→   *
    145→   * @returns `true` if the result is an `Err` variant of Result
-   146→   */
    147→  isErr(): this is Err<T, E>
-   149→  /**
    150→   * Maps a `Result<T, E>` to `Result<U, E>`
    151→   * by applying a function to a contained `Ok` value, leaving an `Err` value
    152→   * untouched.
    153→   *
    154→   * @param f The function to apply an `OK` value
    155→   * @returns the result of applying `f` or an `Err` untouched
-   156→   */
    157→  map<A>(f: (t: T) => A): Result<A, E>
-   159→  /**
    160→   * Maps a `Result<T, E>` to `Result<T, F>` by applying a function to a
    161→   * contained `Err` value, leaving an `Ok` value untouched.
    162→   *
@@ -189,9 +200,7 @@ result.ts
    164→   * handling an error.
    165→   *
    166→   * @param f a function to apply to the error `Err` value
-   167→   */
    168→  mapErr<U>(f: (e: E) => U): Result<T, U>
-   185→  /**
    186→   * This "tee"s the current value to an passed-in computation such as side
    187→   * effect functions but still returns the same current value as the result.
    188→   *
@@ -200,9 +209,7 @@ result.ts
    191→   * This method does not care about the result of the passed in computation.
    192→   *
    193→   * @param f The function to apply to the current value
-   194→   */
    195→  andTee(f: (t: T) => unknown): Result<T, E>
-   197→  /**
    198→   * This "tee"s the current `Err` value to an passed-in computation such as side
    199→   * effect functions but still returns the same `Err` value as the result.
    200→   *
@@ -211,9 +218,7 @@ result.ts
    203→   * This method does not care about the result of the passed in computation.
    204→   *
    205→   * @param f The function to apply to the current `Err` value
-   206→   */
    207→  orTee(f: (t: E) => unknown): Result<T, E>
-   235→  /**
    236→   * Similar to `map` Except you must return a new `Result`.
    237→   *
    238→   * This is useful for when you need to do a subsequent async computation using
@@ -221,23 +226,17 @@ result.ts
    240→   *
    241→   * @param f The function that returns a `ResultAsync` to apply to the current
    242→   * value
-   243→   */
    244→  asyncAndThen<U, F>(f: (t: T) => ResultAsync<U, F>): ResultAsync<U, E | F>
-   246→  /**
    247→   * Maps a `Result<T, E>` to `ResultAsync<U, E>`
    248→   * by applying an async function to a contained `Ok` value, leaving an `Err`
    249→   * value untouched.
    250→   *
    251→   * @param f An async function to apply an `OK` value
-   252→   */
    253→  asyncMap<U>(f: (t: T) => Promise<U>): ResultAsync<U, E>
-   255→  /**
    256→   * Unwrap the `Ok` value, or return the default if there is an `Err`
    257→   *
    258→   * @param v the default value to return if there is an `Err`
-   259→   */
    260→  unwrapOr<A>(v: A): T | A
-   262→  /**
    263→   *
    264→   * Given 2 functions (one for the `Ok` variant and one for the `Err` variant)
    265→   * execute the function that matches the `Result` variant.
@@ -250,9 +249,7 @@ result.ts
    272→   *
    273→   * @param ok
    274→   * @param err
-   275→   */
    276→  match<A, B = A>(ok: (t: T) => A, err: (e: E) => B): A | B
-   278→  /**
    279→   * @deprecated will be removed in 9.0.0.
    280→   *
    281→   * You can use `safeTry` without this method.
@@ -263,24 +260,19 @@ result.ts
    286→   * })
    287→   * ```
    288→   * Emulates Rust's `?` operator in `safeTry`'s body. See also `safeTry`.
-   289→   */
    290→  safeUnwrap(): Generator<Err<never, E>, T>
-   292→  /**
    293→   * **This method is unsafe, and should only be used in a test environments**
    294→   *
    295→   * Takes a `Result<T, E>` and returns a `T` when the result is an `Ok`, otherwise it throws a custom object.
    296→   *
    297→   * @param config
-   298→   */
    299→  _unsafeUnwrap(config?: ErrorConfig): T
-   301→  /**
    302→   * **This method is unsafe, and should only be used in a test environments**
    303→   *
    304→   * takes a `Result<T, E>` and returns a `E` when the result is an `Err`,
    305→   * otherwise it throws a custom object.
    306→   *
    307→   * @param config
-   308→   */
    309→  _unsafeUnwrapErr(config?: ErrorConfig): E
    312→export class Ok<T, E> implements IResult<T, E> {
    405→  _unsafeUnwrap(_?: ErrorConfig): T {

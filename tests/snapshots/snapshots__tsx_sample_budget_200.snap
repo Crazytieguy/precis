@@ -9,9 +9,8 @@ sample.tsx
      7→    onClick: () => void;
      8→    disabled?: boolean;
      9→}
-    11→/**
     12→ * A clickable button component.
-      → …
+    13→ * @param props - The button props.
     15→export function Button({ label, onClick, disabled }: ButtonProps) {
     19→export const IconButton = ({ icon, ...rest }: { icon: string } & ButtonProps) => {
     23→function useToggle …

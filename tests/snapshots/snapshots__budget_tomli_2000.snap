@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2009 tokens)
+budget: 2000 (2019 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -72,7 +72,6 @@ src/tomli/__init__.py
      1→# SPDX-License-Identifier: MIT
      2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
      3→# Licensed to PSF under a Contributor Agreement.
-     4→
      5→__all__ = ("loads", "load", "TOMLDecodeError")
      6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
      8→from ._parser import TOMLDecodeError, load, loads
@@ -114,6 +113,7 @@ src/tomli/_parser.py
     79→    Adds the following attributes to ValueError:
     80→    msg: The unformatted error message
     81→    doc: The TOML document being parsed
+    82→    pos: The index of doc where parsing failed
       →    …
     86→
    220→class Flags:

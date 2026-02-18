@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2007 tokens)
+budget: 2000 (2002 tokens)
 
 README.md
      1→Simple Dynamic Strings
@@ -167,7 +167,6 @@ sdsalloc.h
     36→ * Just define the following defines to what you want to use. Also add
     37→ * the include of your alternate allocator if needed (not needed in order
     38→ * to use the default libc allocator). */
-    39→
     40→#define s_malloc malloc
     41→#define s_realloc realloc
     42→#define s_free free

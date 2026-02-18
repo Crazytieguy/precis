@@ -2,18 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1005 tokens)
+budget: 1000 (1004 tokens)
 
 error.ts
-    16→/**
     17→ * `StructError` objects are thrown (or returned) when validation fails.
     18→ *
     19→ * Validation logic is design to exit early for maximum performance. The error
     20→ * represents the first error encountered during validation. For more detail,
     21→ * the `error.failures` property is a generator function that can be run to
     22→ * continue validation and receive all the failures in the data.
-    23→ */
-    24→
     25→export class StructError extends TypeError {
     26→  value: any
     27→  key!: any
@@ -26,17 +23,15 @@ error.ts
     34→
     35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
     36→    let cached: Array<Failure> | undefined
+    37→    const { message, explanation, ...rest } = failure
       →    …
 
 struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
      2→import { StructError, Failure } from './error.js'
-     4→/**
      5→ * `Struct` objects encapsulate the validation logic for a specific type of
      6→ * values. Once constructed, you use the `assert`, `is` or `validate` helpers to
      7→ * validate unknown input data against the struct.
-     8→ */
-     9→
     10→export class Struct<T = unknown, S = unknown> {
     11→  readonly TYPE!: T
     12→  type: string
@@ -58,7 +53,8 @@ struct.ts
     28→    entries?: Struct<T, S>['entries']
     29→  }) {
     30→    const {
-      →    …
+    31→      type,
+      →      …
     67→  assert …
     75→  create …
     83→  is …
@@ -74,6 +70,8 @@ structs/coercions.ts
 
 structs/refinements.ts
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
+    22→  if (value instanceof Map || value instanceof Set) {
+      →  …
 
 structs/types.ts
     33→export function array …
@@ -89,10 +87,7 @@ structs/utilities.ts
 utils.ts
      1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
      2→import { Failure } from './error.js'
-     4→/**
      5→ * Check if a value is an iterator.
-     6→ */
-     7→
      8→function isIterable<T>(x: unknown): x is Iterable<T> {
      9→  return isObject(x) && typeof x[Symbol.iterator] === 'function'
     10→}

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1005 tokens)
+budget: 1000 (1007 tokens)
 
 CHANGELOG.md
      1→# neverthrow
@@ -35,6 +35,9 @@ src/_internals/error.ts
     13→    | {
     14→        type: string
     15→        value: T
+    16→      }
+    17→    | {
+    18→        type: string
       →        …
     27→export const createNeverThrowError = <T, E>(
     28→  message: string,
@@ -53,9 +56,7 @@ src/_internals/utils.ts
     25→export type InferErrTypes …
     27→export type InferAsyncOkTypes …
     28→export type InferAsyncErrTypes …
-    30→/**
     31→ * Short circuits on the FIRST Err value that we find
-    32→ */
     33→export const combineResultList = <T, E>(
     34→  resultList: readonly Result<T, E>[],
     35→): Result<readonly T[], E> => {
@@ -63,9 +64,7 @@ src/_internals/utils.ts
     37→
       →…
     54→export const combineResultAsyncList = <T, E>(
-    61→/**
     62→ * Give a list of all the errors we find
-    63→ */
     64→export const combineResultListWithAllErrors = <T, E>(
     65→  resultList: readonly Result<T, E>[],
     66→): Result<readonly T[], E[]> => {

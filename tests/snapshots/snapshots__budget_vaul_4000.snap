@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4033 tokens)
+budget: 4000 (4018 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
@@ -69,7 +69,6 @@ src/context.ts
      4→interface DrawerContextValue {
      5→  drawerRef: React.RefObject<HTMLDivElement>;
      6→  overlayRef: React.RefObject<HTMLDivElement>;
-     7→  onPress: (event: React.PointerEvent<HTMLDivElement>) => void;
       →  …
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
     69→export const useDrawerContext …
@@ -87,9 +86,7 @@ src/helpers.ts
     72→export function getTranslate …
     90→export function dampenValue …
     94→export function assignStyle …
-   105→/**
    106→ * Receives functions as arguments and returns a new function that calls all.
-   107→ */
    108→export function chain<T>(...fns: T[]) {
    109→  return (...args: T extends AnyFunction ? Parameters<T> : never) => {
    110→    for (const fn of fns) {
@@ -103,27 +100,18 @@ src/helpers.ts
 src/index.tsx
      3→import * as DialogPrimitive from '@radix-ui/react-dialog';
      4→import React from 'react';
-     5→import { DrawerContext, useDrawerContext } from './context';
-     6→import './style.css';
-     7→import { usePreventScroll, isInput } from './use-prevent-scroll';
-     8→import { useComposedRefs } from './use-composed-refs';
-     9→import { useSnapPoints } from './use-snap-points';
-    10→import { set, getTranslate, dampenValue, isVertical, reset } from './helpers';
-    11→import {
-    12→  TRANSITIONS,
-    13→  VELOCITY_THRESHOLD,
-    14→  CLOSE_THRESHOLD,
-    15→  SCROLL_LOCK_TIMEOUT,
-    16→  BORDER_RADIUS,
-    17→  NESTED_DISPLACEMENT,
-    18→  WINDOW_TOP_OFFSET,
-    19→  DRAG_CLASS,
-    20→} from './constants';
-    21→import { DrawerDirection } from './types';
-    22→import { useControllableState } from './use-controllable-state';
-    23→import { useScaleBackground } from './use-scale-background';
-    24→import { usePositionFixed } from './use-position-fixed';
-    25→import { isIOS, isMobileFirefox } from './browser';
+     5→import { DrawerContext, useDrawerContext } from './context …
+     6→import './style.css …
+     7→import { usePreventScroll, isInput } from './use-prevent-scroll …
+     8→import { useComposedRefs } from './use-composed-refs …
+     9→import { useSnapPoints } from './use-snap-points …
+    10→import { set, getTranslate, dampenValue, isVertical, reset } from './helpers …
+    11→import { …
+    21→import { DrawerDirection } from './types …
+    22→import { useControllableState } from './use-controllable-state …
+    23→import { useScaleBackground } from './use-scale-background …
+    24→import { usePositionFixed } from './use-position-fixed …
+    25→import { isIOS, isMobileFirefox } from './browser …
     27→export interface WithFadeFromProps {
     28→  /**
     29→   * Array of numbers from 0 to 100 that corresponds to % of the screen a given snap point should take up.
@@ -146,7 +134,41 @@ src/index.tsx
     47→  fadeFromIndex?: never;
     48→}
     50→export type DialogProps = {
-   139→export function Root …
+   139→export function Root({
+   140→  open: openProp,
+   141→  onOpenChange,
+   142→  children,
+   143→  onDrag: onDragProp,
+   144→  onRelease: onReleaseProp,
+   145→  snapPoints,
+   146→  shouldScaleBackground = false,
+   147→  setBackgroundColorOnScale = true,
+   148→  closeThreshold = CLOSE_THRESHOLD,
+   149→  scrollLockTimeout = SCROLL_LOCK_TIMEOUT,
+   150→  dismissible = true,
+   151→  handleOnly = false,
+   152→  fadeFromIndex = snapPoints && snapPoints.length - 1,
+   153→  activeSnapPoint: activeSnapPointProp,
+   154→  setActiveSnapPoint: setActiveSnapPointProp,
+   155→  fixed,
+   156→  modal = true,
+   157→  onClose,
+   158→  nested,
+   159→  noBodyStyles = false,
+   160→  direction = 'bottom',
+   161→  defaultOpen = false,
+   162→  disablePreventScroll = true,
+   163→  snapToSequentialPoint = false,
+   164→  preventScrollRestoration = false,
+   165→  repositionInputs = true,
+   166→  onAnimationEnd,
+   167→  container,
+   168→  autoFocus = false,
+   169→}: DialogProps) {
+   170→  const [isOpen = false, setIsOpen] = useControllableState({
+   171→    defaultProp: defaultOpen,
+   172→    prop: openProp,
+      →    …
    803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(
    831→export type ContentProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
    833→export const Content = React.forwardRef<HTMLDivElement, ContentProps>(function (
@@ -154,9 +176,17 @@ src/index.tsx
    993→const LONG_HANDLE_PRESS_TIMEOUT = 250;
    994→const DOUBLE_TAP_TIMEOUT = 120;
    996→export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(function (
-  1098→export function NestedRoot …
+  1098→export function NestedRoot({ onDrag, onOpenChange, open: nestedIsOpen, ...rest }: DialogProps) {
+  1099→  const { onNestedDrag, onNestedOpenChange, onNestedRelease } = useDrawerContext();
+  1100→
+  1101→  if (!onNestedDrag) {
+      →  …
   1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
-  1130→export function Portal …
+  1130→export function Portal(props: PortalProps) {
+  1131→  const context = useDrawerContext();
+  1132→  const { container = context.container, ...portalProps } = props;
+  1133→
+      →…
   1137→export const Drawer = {
 
 src/types.ts
@@ -170,32 +200,15 @@ src/types.ts
 src/use-composed-refs.ts
      3→import * as React from 'react';
      5→type PossibleRef<T> = React.Ref<T> | undefined;
-     7→/**
      8→ * Set a given ref to a given value
      9→ * This utility takes care of different types of refs: callback refs and RefObject(s)
-    10→ */
     11→function setRef<T>(ref: PossibleRef<T>, value: T) {
-    12→  if (typeof ref === 'function') {
-    13→    ref(value);
-    14→  } else if (ref !== null && ref !== undefined) {
-    15→    (ref as React.MutableRefObject<T>).current = value;
-    16→  }
-    17→}
-    19→/**
     20→ * A utility to compose multiple refs together
     21→ * Accepts callback refs and RefObject(s)
-    22→ */
     23→function composeRefs<T>(...refs: PossibleRef<T>[]) {
-    24→  return (node: T) => refs.forEach((ref) => setRef(ref, node));
-    25→}
-    27→/**
     28→ * A custom hook that composes multiple refs
     29→ * Accepts callback refs and RefObject(s)
-    30→ */
     31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
-    32→  // eslint-disable-next-line react-hooks/exhaustive-deps
-    33→  return React.useCallback(composeRefs(...refs), refs);
-    34→}
 
 src/use-controllable-state.ts
      3→import React from 'react';
@@ -208,15 +221,12 @@ src/use-controllable-state.ts
 src/use-position-fixed.ts
      1→import React from 'react';
      2→import { isSafari } from './browser';
-     6→/**
      7→ * This hook is necessary to prevent buggy behavior on iOS devices (need to test on Android).
      8→ * I won't get into too much detail about what bugs it solves, but so far I've found that setting the body to `position: fixed` is the most reliable way to prevent those bugs.
      9→ * Issues that this hook solves:
     10→ * https://github.com/emilkowalski/vaul/issues/435
     11→ * https://github.com/emilkowalski/vaul/issues/433
     12→ * And more that I discovered, but were just not reported.
-    13→ */
-    14→
     15→export function usePositionFixed({
     16→  isOpen,
     17→  modal,
@@ -249,18 +259,15 @@ src/use-prevent-scroll.ts
     10→interface PreventScrollOptions {
     11→  /** Whether the scroll lock is disabled. */
     12→  isDisabled?: boolean;
-    13→  focusCallback?: () => void;
       →  …
     16→function chain …
     27→const visualViewport = typeof document !== 'undefined' && window.visualViewport;
     29→export function isScrollable …
     34→export function getScrollParent …
     47→const nonTextInputTypes = new Set([
-    63→/**
     64→ * Prevents scrolling on the document body on mount, and
     65→ * restores it on unmount. Also ensures that content does not
     66→ * shift due to the scrollbars disappearing.
-    67→ */
     68→export function usePreventScroll(options: PreventScrollOptions = {}) {
     69→  let { isDisabled } = options;
     70→
@@ -307,14 +314,9 @@ test/src/app/controlled/page.tsx
 
 test/src/app/default-open/page.tsx
      6→export default function Page() {
-     7→  return (
-      →  …
 
 test/src/app/different-directions/page.tsx
-     6→function DirectionalDrawer …
    118→export default function Page() {
-   119→  return (
-      →  …
 
 test/src/app/initial-snap/page.tsx
      7→const snapPoints …
@@ -327,40 +329,25 @@ test/src/app/layout.tsx
     12→export default function RootLayout({ children }: { children: React.ReactNode }) {
 
 test/src/app/nested-drawers/page.tsx
-     3→import { Drawer } from 'vaul';
      5→export default function Page() {
-     6→  return (
-      →  …
 
 test/src/app/non-dismissible/page.tsx
      6→export default function Page() {
-
-test/src/app/open-another-drawer/page.tsx
-     6→export function MyDrawer …
-    96→export function MyDrawer2 …
-   195→export default function Home …
 
 test/src/app/page.tsx
      5→export default function Page() {
 
 test/src/app/parent-container/page.tsx
      6→export default function Page() {
-     7→  return (
-      →  …
-    15→function Default() {
-    39→function WithNested() {
 
 test/src/app/scrollable-page/page.tsx
      6→export default function Page() {
 
 test/src/app/scrollable-with-inputs/page.tsx
-     3→import { Drawer } from 'vaul';
      5→export default function Page() {
-     6→  return (
-      →  …
 
 test/src/app/with-handle/page.tsx
-     7→const snapPoints = ['148px', '355px'];
+     7→const snapPoints …
      9→export default function Page() {
 
 test/src/app/with-modal-false/page.tsx
@@ -369,13 +356,9 @@ test/src/app/with-modal-false/page.tsx
 
 test/src/app/with-redirect/long-page/page.tsx
      3→export default function Page() {
-     4→  return (
-      →  …
 
 test/src/app/with-redirect/page.tsx
      6→export default function Page() {
-     7→  return (
-      →  …
 
 test/src/app/with-scaled-background/page.tsx
     65→export default function Page() {

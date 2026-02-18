@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2027 tokens)
+budget: 2000 (2028 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -47,18 +47,10 @@ Readme_zh-CN.md
 SECURITY.md
      1→# Security Policy
 
-docs/deprecated.md
-
-docs/help-in-depth.md
-
-docs/options-in-depth.md
-
 eslint.config.js
 
 esm.mjs
      1→import commander from './index.js';
-
-examples/color-help-replacement.mjs
 
 examples/custom-command-class.js
      6→class CommandWithTrace extends commander.Command {
@@ -67,8 +59,6 @@ examples/custom-command-class.js
 examples/global-options-added.js
     16→class MyRootCommand extends Command {
     17→  createCommand(name) {
-
-examples/help-centered.mjs
 
 examples/man-style-help.mjs
      5→function formatItem(term, termWidth, description, helper) {
@@ -83,13 +73,9 @@ lib/command.js
   1127→  _prepareForParse() {
 
 lib/error.js
-     1→/**
      2→ * CommanderError class
-     3→ */
      4→class CommanderError extends Error {
-    22→/**
     23→ * InvalidArgumentError class
-    24→ */
     25→class InvalidArgumentError extends CommanderError {
 
 lib/help.js
@@ -111,10 +97,11 @@ lib/help.js
 
 lib/option.js
      3→class Option {
-   261→/**
    262→ * This class is to make it easier to work with dual options, without changing the existing
    263→ * implementation. We support separate dual options for separate positive and negative options,
-      → …
+   264→ * like `--build` and `--no-build`, which share a single option value. This works nicely for some
+   265→ * use cases, but is tricky for others where we want separate behaviours despite
+   266→ * the single shared option value.
    268→class DualOptions {
 
 lib/suggestSimilar.js

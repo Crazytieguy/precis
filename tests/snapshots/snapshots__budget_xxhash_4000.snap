@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4047 tokens)
+budget: 4000 (4048 tokens)
 
 README.md
      1→# xxhash
@@ -84,7 +84,6 @@ bench_test.go
 dynamic/dynamic_test.go
      6→import …
     15→// This is a cursory test that checks whether things work under dynamic linking.
-    16→
     17→func TestMain(m *testing.M) {
     18→	cmd := exec.Command(
     19→		"go", "build",
@@ -93,6 +92,7 @@ dynamic/dynamic_test.go
     22→		"plugin.go",
     23→	)
     24→	var out bytes.Buffer
+    25→	cmd.Stdout = &out
       →	…
     33→func TestDynamic(t *testing.T) {
     34→	plug, err := plugin.Open("plugin.so")
@@ -322,7 +322,6 @@ xxhashbench/xxhashbench_test.go
     14→// TODO: The main benchmarks live in the xxhash package now, so the only purpose
     15→// of this is to compare different hash functions. Consider deleting xxhashbench
     16→// or replacing it with a more minimal comparison.
-    17→
     18→var sink uint64
     20→var benchmarks = []struct {
    108→func BenchmarkHashes(b *testing.B) {

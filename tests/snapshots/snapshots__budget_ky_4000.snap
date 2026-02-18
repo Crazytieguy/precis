@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4025 tokens)
+budget: 4000 (4016 tokens)
 
 package.json
      2→	"name": "ky",
@@ -39,15 +39,9 @@ package.json
 
 readme.md
     20→## Benefits over plain `fetch`
-    22→- Simpler API
-      →…
     33→## Install
-    35→```sh
-      →…
     39→###### CDN
     45→## Usage
-    47→```js
-      →…
     85→## API
     87→### ky(input, options?)
    122→### ky.get(input, options?)
@@ -76,17 +70,9 @@ readme.md
   1264→### Extending types
   1292→## FAQ
   1339→## Browser support
-  1341→The latest version of Chrome, Firefox, and Safari.
-      →…
   1343→## Node.js support
-  1345→Node.js 18 and later.
-      →…
   1347→## Related
-  1349→- [fetch-extras](https://github.com/sindresorhus/fetch-extras) - Useful utilities for working with Fetch
-      →…
   1352→## Maintainers
-  1354→- [Sindre Sorhus](https://github.com/sindresorhus)
-      →…
 
 source/core/Ky.ts
     33→export class Ky {
@@ -111,20 +97,15 @@ source/core/constants.ts
     58→export const maxSafeTimeout = 2_147_483_647;
     61→export const usualFormBoundarySize = new TextEncoder().encode('------WebKitFormBoundaryaxpyiPgbbPti10Rw').length;
     63→export const stop = Symbol('stop');
-    65→/**
     66→Options for forcing a retry via `ky.retry()`.
-    67→*/
     68→export type ForceRetryOptions = {
     69→	/**
     70→	Custom delay in milliseconds before retrying.
     71→
       →…
-   145→/**
    146→Marker returned by ky.retry() to signal a forced retry from afterResponse hooks.
-   147→*/
    148→export class RetryMarker {
    149→	constructor(public options?: ForceRetryOptions) {}
-   152→/**
    153→Force a retry from an `afterResponse` hook.
    154→
    155→This allows you to retry a request based on the response content, even if the response has a successful status code. The retry will respect the `retry.limit` option and skip the `shouldRetry` check. The forced retry is observable in `beforeRetry` hooks, where the error will be a `ForceRetryError`.
@@ -148,7 +129,10 @@ source/core/constants.ts
    173→						return ky.retry();
    174→					}
    175→
-      →…
+   176→					// Retry with custom delay from API response
+   177→					if (data.error?.code === 'RATE_LIMIT') {
+   178→						return ky.retry({
+      →						…
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
    237→export const kyOptionKeys: KyOptionsRegistry = {
    256→export const vendorSpecificOptions = {
@@ -157,10 +141,8 @@ source/core/constants.ts
 source/errors/ForceRetryError.ts
      1→import type {ForceRetryOptions} from '../core/constants.js';
      2→import {NonError} from './NonError.js';
-     4→/**
      5→Internal error used to signal a forced retry from afterResponse hooks.
      6→This is thrown when a user returns ky.retry() from an afterResponse hook.
-     7→*/
      8→export class ForceRetryError extends Error {
      9→	override name = 'ForceRetryError' as const;
     10→	customDelay: number | undefined;
@@ -181,11 +163,9 @@ source/errors/HTTPError.ts
     10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
 
 source/errors/NonError.ts
-     1→/**
      2→Wrapper for non-Error values that were thrown.
      3→
      4→In JavaScript, any value can be thrown (not just Error instances). This class wraps such values to ensure consistent error handling.
-     5→*/
      6→export class NonError extends Error {
      7→	override name = 'NonError';
      8→	readonly value: unknown;
@@ -230,22 +210,17 @@ source/types/options.ts
      1→import type {LiteralUnion, Required} from './common.js';
      2→import type {Hooks} from './hooks.js';
      3→import type {RetryOptions} from './retry.js';
-    29→/**
     30→Custom Ky options
-    31→*/
-    32→
     33→export type KyOptions = {
     34→	/**
-      →	…
-   302→/**
+    35→	Shortcut for sending JSON. Use this instead of the `body` option.
+    36→
+      →…
    303→Each key from KyOptions is present and set to `true`.
    304→
    305→This type is used for identifying and working with the known keys in KyOptions.
-   306→*/
    307→export type KyOptionsRegistry = {[K in keyof KyOptions]-?: true};
-   309→/**
    310→Options are the same as `window.fetch`, except for the KyOptions
-   311→*/
    312→export interface Options extends KyOptions, Omit<RequestInit, 'headers'> { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
    313→	/**
    314→	HTTP method used to make the request.
@@ -291,9 +266,7 @@ source/types/options.ts
    354→	*/
    355→	headers?: KyHeadersInit;
    356→}
-   370→/**
    371→Normalized options passed to the `fetch` call and the `beforeRequest` hooks.
-   372→*/
    373→export interface NormalizedOptions extends RequestInit { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
    374→	// Extended from `RequestInit`, but ensured to be set (not optional).
    375→	method: NonNullable<RequestInit['method']>;
@@ -353,28 +326,40 @@ source/utils/timeout.ts
      9→export default async function timeout …
 
 source/utils/type-guards.ts
-     5→/**
      6→Type guard to check if an error is a Ky error.
      7→
      8→@param error - The error to check
+     9→@returns `true` if the error is a Ky error, `false` otherwise
+    10→
+    11→@example
+    12→```
       →…
     27→export function isKyError(error: unknown): error is HTTPError | TimeoutError | ForceRetryError {
-    31→/**
     32→Type guard to check if an error is an HTTPError.
     33→
     34→@param error - The error to check
+    35→@returns `true` if the error is an HTTPError, `false` otherwise
+    36→
+    37→@example
+    38→```
       →…
     49→export function isHTTPError<T = unknown>(error: unknown): error is HTTPError<T> {
-    53→/**
     54→Type guard to check if an error is a TimeoutError.
     55→
     56→@param error - The error to check
+    57→@returns `true` if the error is a TimeoutError, `false` otherwise
+    58→
+    59→@example
+    60→```
       →…
     71→export function isTimeoutError(error: unknown): error is TimeoutError {
-    75→/**
     76→Type guard to check if an error is a ForceRetryError.
     77→
     78→@param error - The error to check
+    79→@returns `true` if the error is a ForceRetryError, `false` otherwise
+    80→
+    81→@example
+    82→```
       →…
     98→export function isForceRetryError(error: unknown): error is ForceRetryError {
 

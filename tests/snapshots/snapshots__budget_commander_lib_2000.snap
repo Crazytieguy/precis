@@ -90,14 +90,10 @@ command.js
   2656→  addHelpText(position, text) {
 
 error.js
-     1→/**
      2→ * CommanderError class
-     3→ */
      4→class CommanderError extends Error {
     11→  constructor(exitCode, code, message) {
-    22→/**
     23→ * InvalidArgumentError class
-    24→ */
     25→class InvalidArgumentError extends CommanderError {
     30→  constructor(message) {
 
@@ -162,13 +158,11 @@ option.js
    230→  helpGroup(heading) {
    243→  is(arg) {
    256→  isBoolean() {
-   261→/**
    262→ * This class is to make it easier to work with dual options, without changing the existing
    263→ * implementation. We support separate dual options for separate positive and negative options,
    264→ * like `--build` and `--no-build`, which share a single option value. This works nicely for some
    265→ * use cases, but is tricky for others where we want separate behaviours despite
    266→ * the single shared option value.
-   267→ */
    268→class DualOptions {
    272→  constructor(options) {
    297→  valueFromOption(value, option) {
@@ -184,4 +178,7 @@ suggestSimilar.js
      9→  if (Math.abs(a.length - b.length) > maxDistance)
     10→    return Math.max(a.length, b.length);
     11→
+    12→  // distance between prefix substrings of a and b
+    13→  const d = [];
+    14→
       →…

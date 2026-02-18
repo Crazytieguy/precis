@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (1331 tokens)
+budget: 4000 (1311 tokens)
 
 error.ts
      1→import { Result } from '../result'
@@ -62,9 +62,7 @@ utils.ts
     25→export type InferErrTypes<R> = R extends Result<unknown, infer E> ? E : never
     27→export type InferAsyncOkTypes<R> = R extends ResultAsync<infer T, unknown> ? T : never
     28→export type InferAsyncErrTypes<R> = R extends ResultAsync<unknown, infer E> ? E : never
-    30→/**
     31→ * Short circuits on the FIRST Err value that we find
-    32→ */
     33→export const combineResultList = <T, E>(
     34→  resultList: readonly Result<T, E>[],
     35→): Result<readonly T[], E> => {
@@ -86,9 +84,7 @@ utils.ts
     57→  ResultAsync.fromSafePromise(Promise.all(asyncResultList)).andThen(
     58→    combineResultList,
     59→  ) as ResultAsync<T[], E>
-    61→/**
     62→ * Give a list of all the errors we find
-    63→ */
     64→export const combineResultListWithAllErrors = <T, E>(
     65→  resultList: readonly Result<T, E>[],
     66→): Result<readonly T[], E[]> => {

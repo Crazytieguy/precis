@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2019 tokens)
+budget: 2000 (2025 tokens)
 
 README.md
      1→# xxhash
@@ -42,11 +42,12 @@ README.md
 bench_test.go
      3→import …
      8→var benchmarks = []struct {
+     9→	name string
+      →	…
 
 dynamic/dynamic_test.go
      6→import …
     15→// This is a cursory test that checks whether things work under dynamic linking.
-    16→
     17→func TestMain(m *testing.M) {
     18→	cmd := exec.Command(
     19→		"go", "build",

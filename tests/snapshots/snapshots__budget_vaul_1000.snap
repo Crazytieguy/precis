@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1012 tokens)
+budget: 1000 (1006 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
@@ -21,9 +21,7 @@ src/context.ts
 
 src/helpers.ts
      3→interface Style {
-   105→/**
    106→ * Receives functions as arguments and returns a new function that calls all.
-   107→ */
    108→export function chain<T>(...fns: T[]) {
 
 src/index.tsx
@@ -56,28 +54,19 @@ src/types.ts
      5→}
 
 src/use-composed-refs.ts
-     7→/**
-      →…
     11→function setRef<T>(ref: PossibleRef<T>, value: T) {
-    19→/**
-      →…
     23→function composeRefs<T>(...refs: PossibleRef<T>[]) {
-    27→/**
-      →…
     31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
 
 src/use-controllable-state.ts
 
 src/use-position-fixed.ts
-     6→/**
      7→ * This hook is necessary to prevent buggy behavior on iOS devices (need to test on Android).
      8→ * I won't get into too much detail about what bugs it solves, but so far I've found that setting the body to `position: fixed` is the most reliable way to prevent those bugs.
      9→ * Issues that this hook solves:
     10→ * https://github.com/emilkowalski/vaul/issues/435
     11→ * https://github.com/emilkowalski/vaul/issues/433
     12→ * And more that I discovered, but were just not reported.
-    13→ */
-    14→
     15→export function usePositionFixed({
     16→  isOpen,
     17→  modal,
@@ -96,11 +85,9 @@ src/use-position-fixed.ts
 
 src/use-prevent-scroll.ts
     10→interface PreventScrollOptions {
-    63→/**
     64→ * Prevents scrolling on the document body on mount, and
     65→ * restores it on unmount. Also ensures that content does not
     66→ * shift due to the scrollbars disappearing.
-    67→ */
     68→export function usePreventScroll(options: PreventScrollOptions = {}) {
 
 src/use-scale-background.ts
@@ -108,6 +95,9 @@ src/use-scale-background.ts
 src/use-snap-points.ts
 
 test/README.md
+     3→## Getting Started
+    21→## Learn More
+    30→## Deploy on Vercel
 
 test/src/app/controlled/page.tsx
      6→export default function Page() {
@@ -117,7 +107,11 @@ test/src/app/default-open/page.tsx
 
 test/src/app/layout.tsx
      1→import './globals.css';
+     5→const inter …
      7→export const metadata: Metadata = {
+
+test/src/app/non-dismissible/page.tsx
+     6→export default function Page() {
 
 test/tests/constants.ts
      1→export const ANIMATION_DURATION = 500;

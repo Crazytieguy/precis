@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1004 tokens)
+budget: 1000 (1007 tokens)
 
 README.md
      1→# xxhash
@@ -21,8 +21,9 @@ README.md
 dynamic/dynamic_test.go
      6→import …
     15→// This is a cursory test that checks whether things work under dynamic linking.
-    16→
     17→func TestMain(m *testing.M) {
+    18→	cmd := exec.Command(
+      →	…
     33→func TestDynamic(t *testing.T) {
 
 dynamic/plugin.go
@@ -75,8 +76,6 @@ xxhash_other.go
 xxhash_safe.go
      9→func Sum64String(s string) uint64 {
     14→func (d *Digest) WriteString(s string) (n int, err error) {
-
-xxhash_test.go
 
 xxhash_unsafe.go
      9→import …

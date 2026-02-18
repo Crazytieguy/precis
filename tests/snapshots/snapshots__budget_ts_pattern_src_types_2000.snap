@@ -2,14 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2008 tokens)
+budget: 2000 (1989 tokens)
 
 BuildMany.ts
 
 DeepExclude.ts
 
 DistributeUnions.ts
-    17→/**
     18→ * DistributeMatchingUnions takes two arguments:
     19→ * - a data structure of type `a` containing unions
     20→ * - a pattern `p`, matching this data structure
@@ -22,7 +21,6 @@ DistributeUnions.ts
     41→export type DistributeMatchingUnions<a, p> = IsAny<a> extends true
     42→  ? any
     43→  : BuildMany<a, Distribute<FindUnionsMany<a, p>>>;
-    62→/**
     63→ * The reason we don't look further down the tree with lists,
     64→ * Set and Maps is that they can be heterogeneous,
     65→ * so matching on a A[] for a in input of (A|B)[]
@@ -51,17 +49,13 @@ ExtractPreciseValue.ts
 FindSelected.ts
 
 InvertPattern.ts
-   101→/**
    102→ * ### InvertPatternInternal
    103→ * Since patterns have special wildcard values, we need a way
    104→ * to transform a pattern into the type of value it represents
-   105→ */
    106→export type InvertPattern<p, input> = Equal<Pattern<input>, p> extends true
    107→  ? never
    108→  : InvertPatternInternal<p, input>;
-   300→/**
    301→ * ### InvertPatternForExclude
-   302→ */
    303→export type InvertPatternForExclude<p, i> = Equal<Pattern<i>, p> extends true
    304→  ? never
    305→  : InvertPatternForExcludeInternal<p, i>;
@@ -75,10 +69,8 @@ Match.ts
     14→interface TSPatternError<i> {
     15→  __nonExhaustive: never;
     16→}
-    18→/**
     19→ * #### Match
     20→ * An interface to create a pattern matching clause.
-    21→ */
     22→export type Match<
     23→  i,
     24→  o,
@@ -90,33 +82,33 @@ Match.ts
    180→  otherwise …
    205→  run …
    225→  narrow …
-   228→/**
    229→ * Potential for optimization here:
    230→ *
    231→ * Since DeepExclude distributes the union of the input type, it can
    232→ * generate very large union types on patterns touching several unions at once.
+   233→ * If we were sorting patterns from those which distribute the smallest
+   234→ * amount of union types to those which distribute the largest, we would eliminate
+   235→ * cheap cases more quickly and have less cases in the input type for patterns
+   236→ * that will be expensive to exclude.
+   237→ *
       → …
    245→type DeepExcludeAll<a, tupleList extends any[]> = [a] extends [never]
    246→  ? never
    247→  : tupleList extends [infer excluded, ...infer tail]
    248→  ? DeepExcludeAll<DeepExclude<a, excluded>, tail>
    249→  : a;
-   255→/**
    256→ * The type of an overloaded function for `.exhaustive`,
    257→ * permitting calling it with or without a catch-all handler function.
    258→ *
    259→ * By default, TS-Pattern will throw an error if a runtime value isn't handled.
-      → …
    261→type Exhaustive<output, inferredOutput> = {
 
 Pattern.ts
-    43→/**
     44→ * A `Matcher` is an object implementing the match
     45→ * protocol. It must define a `symbols.matcher` property
     46→ * which returns an object with a `match()` method, taking
     47→ * the input value and returning whether the pattern matches
     48→ * or not, along with optional selections.
-    49→ */
     50→export interface Matcher<
     51→  input,
     52→  narrowed,
@@ -140,7 +132,6 @@ Pattern.ts
    132→export interface Override<a> {
    133→  [symbols.override]: a;
    134→}
-   146→/**
    147→ * `Pattern<a>` is the generic type for patterns matching a value of type `a`. A pattern can be any (nested) javascript value.
    148→ *
    149→ * They can also be wildcards, like `P._`, `P.string`, `P.number`,
@@ -184,19 +175,14 @@ Pattern.ts
    678→      select …
 
 helpers.ts
-     5→/**
      6→ * ### LeastUpperBound
      7→ * An interesting one. A type taking two imbricated sets and returning the
      8→ * smallest one.
      9→ * We need that because sometimes the pattern's inferred type holds more
     10→ * information than the value on which we are matching (if the value is any
     11→ * or unknown for instance).
-    12→ */
-    13→
     14→export type LeastUpperBound<a, b> = b extends a ? b : a extends b ? a : never;
-   179→/**
    180→ * GuardValue returns the value guarded by a type guard function.
-   181→ */
    182→export type GuardValue<fn> = fn extends (value: any) => value is infer b
    183→  ? b
    184→  : fn extends (value: infer a) => unknown

@@ -2,29 +2,27 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (988 tokens)
+budget: 1000 (1005 tokens)
 
 browser.ts
 
 constants.ts
-     1→export const TRANSITIONS …
-     6→export const VELOCITY_THRESHOLD …
-     8→export const CLOSE_THRESHOLD …
-    10→export const SCROLL_LOCK_TIMEOUT …
-    12→export const BORDER_RADIUS …
-    14→export const NESTED_DISPLACEMENT …
-    16→export const WINDOW_TOP_OFFSET …
-    18→export const DRAG_CLASS …
+     1→export const TRANSITIONS = {
+     6→export const VELOCITY_THRESHOLD = 0.4;
+     8→export const CLOSE_THRESHOLD = 0.25;
+    10→export const SCROLL_LOCK_TIMEOUT = 100;
+    12→export const BORDER_RADIUS = 8;
+    14→export const NESTED_DISPLACEMENT = 16;
+    16→export const WINDOW_TOP_OFFSET = 26;
+    18→export const DRAG_CLASS = 'vaul-dragging';
 
 context.ts
      4→interface DrawerContextValue {
-    37→export const DrawerContext …
+    37→export const DrawerContext = React.createContext<DrawerContextValue>({
 
 helpers.ts
      3→interface Style {
-   105→/**
    106→ * Receives functions as arguments and returns a new function that calls all.
-   107→ */
    108→export function chain<T>(...fns: T[]) {
 
 index.tsx
@@ -51,36 +49,27 @@ index.tsx
   1137→export const Drawer = {
 
 types.ts
-     1→export type DrawerDirection …
+     1→export type DrawerDirection = 'top' | 'bottom' | 'left' | 'right';
      2→export interface SnapPoint {
      3→  fraction: number;
      4→  height: number;
      5→}
-     7→export type AnyFunction …
+     7→export type AnyFunction = (...args: any) => any;
 
 use-composed-refs.ts
-     7→/**
-      →…
     11→function setRef<T>(ref: PossibleRef<T>, value: T) {
-    19→/**
-      →…
     23→function composeRefs<T>(...refs: PossibleRef<T>[]) {
-    27→/**
-      →…
     31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
 
 use-controllable-state.ts
 
 use-position-fixed.ts
-     6→/**
      7→ * This hook is necessary to prevent buggy behavior on iOS devices (need to test on Android).
      8→ * I won't get into too much detail about what bugs it solves, but so far I've found that setting the body to `position: fixed` is the most reliable way to prevent those bugs.
      9→ * Issues that this hook solves:
     10→ * https://github.com/emilkowalski/vaul/issues/435
     11→ * https://github.com/emilkowalski/vaul/issues/433
     12→ * And more that I discovered, but were just not reported.
-    13→ */
-    14→
     15→export function usePositionFixed({
     16→  isOpen,
     17→  modal,
@@ -98,13 +87,11 @@ use-position-fixed.ts
     29→}) {
 
 use-prevent-scroll.ts
-     8→export const useIsomorphicLayoutEffect …
+     8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
     10→interface PreventScrollOptions {
-    63→/**
     64→ * Prevents scrolling on the document body on mount, and
     65→ * restores it on unmount. Also ensures that content does not
     66→ * shift due to the scrollbars disappearing.
-    67→ */
     68→export function usePreventScroll(options: PreventScrollOptions = {}) {
 
 use-scale-background.ts
