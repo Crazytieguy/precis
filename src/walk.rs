@@ -29,18 +29,19 @@ fn is_source_file(path: &Path) -> bool {
 }
 
 /// Check if a file is an auto-generated lockfile that should be excluded.
-/// Lockfiles (package-lock.json, pnpm-lock.yaml, etc.) are machine-generated,
-/// often huge, and contain no human-authored information.
+/// Lockfiles are machine-generated, often huge, and contain no human-authored
+/// information. Only lists lockfiles whose extensions are in the supported set
+/// (json, yaml); other lockfiles use `.lock`/`.lockb` extensions that are
+/// already filtered out by `is_source_file`.
 fn is_lockfile(path: &Path) -> bool {
     let name = match path.file_name().and_then(|n| n.to_str()) {
         Some(n) => n,
         None => return false,
     };
-    let lower = name.to_ascii_lowercase();
-    // package-lock.json, npm-shrinkwrap.json
-    // pnpm-lock.yaml, bun.lockb (not a supported ext, won't match)
-    // composer.lock (not a supported ext)
-    lower.contains("lock")
+    matches!(
+        name,
+        "package-lock.json" | "npm-shrinkwrap.json" | "pnpm-lock.yaml"
+    )
 }
 
 /// Check if a file is vendored third-party code or test fixture data that should
@@ -155,6 +156,7 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         fs::write(dir.path().join("package.json"), r#"{"name": "test"}"#).unwrap();
         fs::write(dir.path().join("package-lock.json"), "{}").unwrap();
+        fs::write(dir.path().join("npm-shrinkwrap.json"), "{}").unwrap();
         fs::write(dir.path().join("pnpm-lock.yaml"), "lockfileVersion: 6").unwrap();
 
         let files = discover_source_files(dir.path());
@@ -165,7 +167,27 @@ mod tests {
 
         assert!(names.contains(&"package.json".to_string()));
         assert!(!names.contains(&"package-lock.json".to_string()));
+        assert!(!names.contains(&"npm-shrinkwrap.json".to_string()));
         assert!(!names.contains(&"pnpm-lock.yaml".to_string()));
+    }
+
+    #[test]
+    fn lockfile_detection_no_false_positives() {
+        // Ensure files with "lock" as a substring are NOT excluded
+        let dir = tempfile::tempdir().unwrap();
+        fs::write(dir.path().join("spinlock.h"), "typedef struct {} spinlock_t;").unwrap();
+        fs::write(dir.path().join("block.json"), r#"{"height": 42}"#).unwrap();
+        fs::write(dir.path().join("clock.yaml"), "timezone: UTC").unwrap();
+
+        let files = discover_source_files(dir.path());
+        let names: Vec<_> = files
+            .iter()
+            .map(|p| p.file_name().unwrap().to_string_lossy().to_string())
+            .collect();
+
+        assert!(names.contains(&"spinlock.h".to_string()));
+        assert!(names.contains(&"block.json".to_string()));
+        assert!(names.contains(&"clock.yaml".to_string()));
     }
 
     #[test]

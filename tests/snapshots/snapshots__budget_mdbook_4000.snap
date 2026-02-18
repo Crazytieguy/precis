@@ -333,6 +333,7 @@ crates/mdbook-html/src/html/tokenizer.rs
 crates/mdbook-html/src/html/tree.rs
     24→/// Helper to create a [`QualName`].
     25→macro_rules! attr_qual_name {
+   125→/// A map of attributes on an [`Element`].
    126→type Attributes = IndexMap<QualName, StrTendril>;
    130→    /// Converts self to a [`StrTendril`].
    131→    fn into_tendril(self) -> StrTendril;
@@ -422,7 +423,6 @@ crates/mdbook-html/src/theme/mod.rs
     45→    pub(crate) toc_js: Vec<u8>,
     46→    pub(crate) toc_html: Vec<u8>,
     47→    pub(crate) chrome_css: Vec<u8>,
-    48→    pub(crate) general_css: Vec<u8>,
       →…
     63→impl Theme {
     64→    /// Creates a `Theme` from the given `theme_dir`.
@@ -1270,9 +1270,6 @@ tests/testsuite/renderer/renderer_with_arguments/book.toml
 
 tests/testsuite/rendering/code_blocks_fenced_with_indent/book.toml
      1→[book …
-
-tests/testsuite/rendering/code_blocks_fenced_with_indent/src/SUMMARY.md
-     1→# Summary …
 
 tests/testsuite/rendering/default_rust_edition/book.toml
 

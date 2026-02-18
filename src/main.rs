@@ -23,7 +23,7 @@ fn main() {
     let path = &cli.path;
     let budget = cli.budget;
 
-    let (output, n_files) = if path.is_file() {
+    let (output, n_files, words) = if path.is_file() {
         let source = match std::fs::read_to_string(path) {
             Ok(s) => s,
             Err(e) => {
@@ -33,19 +33,18 @@ fn main() {
         };
         let root = path.parent().unwrap_or(path);
         let output = format::render_file_with_budget(budget, path, root, &source);
-        (output, 1)
+        let words = format::count_words(&output);
+        (output, 1, words)
     } else if path.is_dir() {
         let files = walk::discover_source_files(path);
         let sources = format::read_sources(&files);
         let n_files = files.len();
-        let (output, _actual_words) = format::render_with_budget_stats(budget, path, &files, &sources);
-        (output, n_files)
+        let (output, words) = format::render_with_budget_stats(budget, path, &files, &sources);
+        (output, n_files, words)
     } else {
         eprintln!("Error: {:?} is not a file or directory", path);
         std::process::exit(1);
     };
-
-    let words = format::count_words(&output);
     eprintln!(
         "({} {}, budget {}, {} words, {:.0}% utilization)",
         n_files,

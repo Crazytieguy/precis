@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3955 words)
+budget: 4000 (3954 words)
 
 CHANGELOG.md
      1→# Changelog …
@@ -103,6 +103,9 @@ examples/lazy_static.rs
      6→static HASHMAP: Lazy<HashMap<u32, &'static str>> = Lazy::new(|| {
     15→fn hashmap() -> &'static HashMap<u32, &'static str> {
     26→fn main() {
+
+examples/reentrant_init_deadlocks.rs
+     1→fn main() {
 
 examples/regex.rs
      1→use std::{str::FromStr, time::Instant};
@@ -847,7 +850,6 @@ tests/it/sync_once_cell.rs
    186→        exe.push("examples");
    187→        exe
    188→    };
-   189→    let bin = examples_dir
       →…
    296→fn arrrrrrrrrrrrrrrrrrrrrr() {
 
