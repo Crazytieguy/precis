@@ -1032,54 +1032,48 @@ fn stage_cost(group: &Group, stage: StageKind, n: usize) -> usize {
         StageKind::Names => group.symbols.iter().map(|s| s.name_words).sum(),
         StageKind::Signatures => group.symbols.iter().map(|s| s.signature_words).sum(),
         StageKind::Doc => {
-            let line_cost: usize = group
-                .symbols
-                .iter()
-                .filter_map(|s| s.doc_line_words.get(n - 1))
-                .sum();
-            // Truncation markers: count symbols with more doc lines than shown
-            let markers_at_n = group
-                .symbols
-                .iter()
-                .filter(|s| s.doc_line_words.len() > n)
-                .count();
-            let markers_at_prev = if n >= 2 {
-                group
-                    .symbols
-                    .iter()
-                    .filter(|s| s.doc_line_words.len() > (n - 1))
-                    .count()
-            } else {
-                0
-            };
-            (line_cost + markers_at_n).saturating_sub(markers_at_prev)
+            line_stage_cost(group, n, |s| &s.doc_line_words, |_| true)
         }
+        // Body truncation markers are suppressed for symbols with nested
+        // children (e.g., class bodies containing individually-rendered
+        // methods). Only count markers for symbols without nested children.
         StageKind::Body => {
-            let line_cost: usize = group
-                .symbols
-                .iter()
-                .filter_map(|s| s.body_line_words.get(n - 1))
-                .sum();
-            // Body truncation markers are suppressed for symbols with nested
-            // children (e.g., class bodies containing individually-rendered
-            // methods). Only count markers for symbols without nested children.
-            let markers_at_n = group
-                .symbols
-                .iter()
-                .filter(|s| s.body_line_words.len() > n && !s.body_has_nested)
-                .count();
-            let markers_at_prev = if n >= 2 {
-                group
-                    .symbols
-                    .iter()
-                    .filter(|s| s.body_line_words.len() > (n - 1) && !s.body_has_nested)
-                    .count()
-            } else {
-                0
-            };
-            (line_cost + markers_at_n).saturating_sub(markers_at_prev)
+            line_stage_cost(group, n, |s| &s.body_line_words, |s| !s.body_has_nested)
         }
     }
+}
+
+/// Shared cost computation for line-based stages (Doc/Body).
+///
+/// `get_lines` selects which line-words vector to read from each symbol.
+/// `show_marker` filters which symbols get truncation markers (always true
+/// for Doc; excludes nested-body symbols for Body).
+fn line_stage_cost(
+    group: &Group,
+    n: usize,
+    get_lines: fn(&SymbolCosts) -> &Vec<usize>,
+    show_marker: fn(&SymbolCosts) -> bool,
+) -> usize {
+    let line_cost: usize = group
+        .symbols
+        .iter()
+        .filter_map(|s| get_lines(s).get(n - 1))
+        .sum();
+    let markers_at_n = group
+        .symbols
+        .iter()
+        .filter(|s| get_lines(s).len() > n && show_marker(s))
+        .count();
+    let markers_at_prev = if n >= 2 {
+        group
+            .symbols
+            .iter()
+            .filter(|s| get_lines(s).len() > (n - 1) && show_marker(s))
+            .count()
+    } else {
+        0
+    };
+    (line_cost + markers_at_n).saturating_sub(markers_at_prev)
 }
 
 /// Compute prerequisite costs for an item, accounting for already-included stages.

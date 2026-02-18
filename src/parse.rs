@@ -374,21 +374,10 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             "var_spec" => SymbolKind::Static,
             // C
             "function_definition" if lang == Lang::C => SymbolKind::Function,
-            "struct_specifier" => {
-                // Only capture struct definitions, not forward declarations or typedef inner structs.
-                if symbol_node.child_by_field_name("body").is_none() {
-                    continue;
-                }
-                // Skip struct definitions inside typedef — the typedef captures the whole thing
-                if symbol_node
-                    .parent()
-                    .is_some_and(|p| p.kind() == "type_definition")
-                {
-                    continue;
-                }
-                SymbolKind::Struct
-            }
-            "union_specifier" => {
+            // C type specifiers: only capture definitions (with body), not forward
+            // declarations. Skip specifiers inside typedef — the typedef node
+            // captures the whole thing.
+            "struct_specifier" | "union_specifier" | "enum_specifier" => {
                 if symbol_node.child_by_field_name("body").is_none() {
                     continue;
                 }
@@ -398,19 +387,11 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
                 {
                     continue;
                 }
-                SymbolKind::Struct
-            }
-            "enum_specifier" => {
-                if symbol_node.child_by_field_name("body").is_none() {
-                    continue;
+                if symbol_node.kind() == "enum_specifier" {
+                    SymbolKind::Enum
+                } else {
+                    SymbolKind::Struct
                 }
-                if symbol_node
-                    .parent()
-                    .is_some_and(|p| p.kind() == "type_definition")
-                {
-                    continue;
-                }
-                SymbolKind::Enum
             }
             "type_definition" => SymbolKind::TypeAlias,
             "preproc_def" | "preproc_function_def" => SymbolKind::Macro,
@@ -730,21 +711,21 @@ fn typedef_name(node: tree_sitter::Node, source: &str) -> String {
     // For pointer typedefs: declarator is pointer_declarator wrapping type_identifier
     // For function pointer typedefs: deeply nested
     if let Some(decl) = node.child_by_field_name("declarator")
-        && let Some(name) = find_type_identifier(decl, source)
+        && let Some(name) = find_first_of_kind(decl, "type_identifier", source)
     {
         return name;
     }
     "?".to_string()
 }
 
-/// Recursively find the first type_identifier in a declarator subtree.
-fn find_type_identifier(node: tree_sitter::Node, source: &str) -> Option<String> {
-    if node.kind() == "type_identifier" {
+/// Recursively find the first descendant of the given kind in a subtree.
+fn find_first_of_kind(node: tree_sitter::Node, target_kind: &str, source: &str) -> Option<String> {
+    if node.kind() == target_kind {
         return node.utf8_text(source.as_bytes()).ok().map(|s| s.to_string());
     }
     let mut cursor = node.walk();
     for child in node.children(&mut cursor) {
-        if let Some(name) = find_type_identifier(child, source) {
+        if let Some(name) = find_first_of_kind(child, target_kind, source) {
             return Some(name);
         }
     }
@@ -756,25 +737,11 @@ fn c_declaration_name(node: tree_sitter::Node, source: &str) -> String {
     // The declarator field contains the name, possibly nested in pointer_declarator
     // or function_declarator.
     if let Some(decl) = node.child_by_field_name("declarator")
-        && let Some(name) = find_identifier(decl, source)
+        && let Some(name) = find_first_of_kind(decl, "identifier", source)
     {
         return name;
     }
     "?".to_string()
-}
-
-/// Recursively find the first identifier in a declarator subtree.
-fn find_identifier(node: tree_sitter::Node, source: &str) -> Option<String> {
-    if node.kind() == "identifier" {
-        return node.utf8_text(source.as_bytes()).ok().map(|s| s.to_string());
-    }
-    let mut cursor = node.walk();
-    for child in node.children(&mut cursor) {
-        if let Some(name) = find_identifier(child, source) {
-            return Some(name);
-        }
-    }
-    None
 }
 
 /// Check if a C symbol has `static` storage class (file-scoped, not public).
