@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1973 tokens)
+budget: 2000 (1985 tokens)
 
 README.md
      1→Simple Dynamic Strings
@@ -34,6 +34,11 @@ README.md
 
 sds.c
     33→#include <stdio.h>
+    34→#include <stdlib.h>
+    35→#include <string.h>
+    36→#include <ctype.h>
+    37→#include <assert.h>
+    38→#include <limits.h>
     39→#include "sds.h"
     40→#include "sdsalloc.h"
     44→static inline int sdsHdrSize(char type) {
@@ -86,6 +91,7 @@ sds.c
   1136→void *sds_malloc(size_t size) { return s_malloc(size); }
   1137→void *sds_realloc(void *ptr, size_t size) { return s_realloc(ptr,size); }
   1138→void sds_free(void *ptr) { s_free(ptr); }
+  1141→#include <stdio.h>
   1142→#include "testhelp.h"
   1143→#include "limits.h"
   1145→#define UNUSED(x) (void)(x)
@@ -132,9 +138,7 @@ sdsalloc.h
     33→/* SDS allocator selection.
     34→ *
     35→ * This file is used in order to change the SDS allocator at compile time.
-    36→ * Just define the following defines to what you want to use. Also add
-    37→ * the include of your alternate allocator if needed (not needed in order
-    38→ * to use the default libc allocator). */
+      → …
     40→#define s_malloc malloc
     41→#define s_realloc realloc
     42→#define s_free free

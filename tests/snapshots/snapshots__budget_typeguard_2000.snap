@@ -133,8 +133,8 @@ src/typeguard/_importhook.py
    183→def install_import_hook …
 
 src/typeguard/_memo.py
-     3→from typing …
-     5→from typeguard._config …
+     3→from typing import Any
+     5→from typeguard._config import TypeCheckConfiguration, global_config
      8→class TypeCheckMemo:
      9→    """
       →    …
@@ -165,7 +165,6 @@ src/typeguard/_transformer.py
    119→    node: Module | ClassDef | FunctionDef | AsyncFunctionDef | None
    120→    parent: TransformMemo | None
    121→    path: tuple[str, ...]
-   122→    joined_path: Constant = field(init=False)
    285→class NameCollector(NodeVisitor):
    313→class GeneratorDetector(NodeVisitor):
    338→class AnnotationTransformer(NodeTransformer):
@@ -207,13 +206,11 @@ tests/mypy/negative.py
 tests/mypy/positive.py
     28→class MyClass:
 
-tests/test_checkers.py
-
 tests/test_importhook.py
     63→def test_debug_instrumentation(monkeypatch, capsys):
 
 tests/test_pytest_plugin.py
-    10→def config …
+    10→def config(monkeypatch: MonkeyPatch) -> TypeCheckConfiguration:
 
 tests/test_suppression.py
     41→def test_decorator_typechecked():

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1996 tokens)
+budget: 2000 (1995 tokens)
 
 Cargo.toml
      1→[package]
@@ -119,6 +119,7 @@ src/fmt.rs
 
 src/kind.rs
     47→use crate::Error;
+    48→use core::fmt::{Debug, Display};
     51→use crate::StdError;
     53→use alloc::boxed::Box;
     55→pub struct Adhoc;
@@ -142,6 +143,8 @@ src/lib.rs
    261→mod nightly;
    279→trait StdError: Debug + Display {
    280→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
+   281→        None
+   282→    }
    286→pub use anyhow as format_err;
    390→pub struct Error {
    391→    inner: Own<ErrorImpl>,
@@ -164,9 +167,7 @@ src/lib.rs
    678→        pub use crate::kind::BoxedKind;
    710→        pub trait Bool {
    711→            fn not(self) -> bool;
-   714→        impl Bool for bool {
    716→            fn not …
-   721→        impl Bool for &bool {
    723→            fn not …
 
 src/macros.rs
@@ -210,5 +211,3 @@ src/wrapper.rs
     76→    fn source …
     80→    #[cfg(error_generic_member_access)]
     81→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
-
-tests/test_ffi.rs

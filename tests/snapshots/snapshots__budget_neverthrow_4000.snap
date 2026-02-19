@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4014 tokens)
+budget: 4000 (4012 tokens)
 
 CHANGELOG.md
      1→# neverthrow
@@ -16,53 +16,15 @@ README.md
    100→## Top-Level API
    139→## API Documentation
    141→### Synchronous API (`Result`)
-   143→#### `ok`
-   168→#### `err`
-   193→#### `Result.isOk` (method)
-   207→#### `Result.isErr` (method)
-   221→#### `Result.map` (method)
-   259→#### `Result.mapErr` (method)
-   297→#### `Result.unwrapOr` (method)
-   323→#### `Result.andThen` (method)
-   384→#### `Result.asyncAndThen` (method)
-   404→#### `Result.orElse` (method)
-   445→#### `Result.match` (method)
-   514→#### `Result.asyncMap` (method)
-   551→#### `Result.andTee` (method)
-   598→#### `Result.orTee` (method)
-   645→#### `Result.andThrough` (method)
-   692→#### `Result.asyncAndThrough` (method)
-   728→#### `Result.fromThrowable` (static class method)
-   761→#### `Result.combine` (static class method)
-   814→#### `Result.combineWithAllErrors` (static class method)
-   852→#### `Result.safeUnwrap()`
    863→### Asynchronous API (`ResultAsync`)
-   865→#### `okAsync`
-   892→#### `errAsync`
-   919→#### `ResultAsync.fromThrowable` (static class method)
-   960→#### `ResultAsync.fromPromise` (static class method)
-   996→#### `ResultAsync.fromSafePromise` (static class method)
-  1041→#### `ResultAsync.map` (method)
-  1087→#### `ResultAsync.mapErr` (method)
-  1142→#### `ResultAsync.unwrapOr` (method)
-  1166→#### `ResultAsync.andThen` (method)
-  1223→#### `ResultAsync.orElse` (method)
-  1241→#### `ResultAsync.match` (method)
-  1283→#### `ResultAsync.andTee` (method)
-  1330→#### `ResultAsync.orTee` (method)
-  1377→#### `ResultAsync.andThrough` (method)
-  1425→#### `ResultAsync.combine` (static class method)
-  1475→#### `ResultAsync.combineWithAllErrors` (static class method)
-  1509→#### `ResultAsync.safeUnwrap()`
   1519→### Utilities
-  1521→#### `fromThrowable`
-  1528→#### `fromAsyncThrowable`
-  1535→#### `fromPromise`
-  1542→#### `fromSafePromise`
-  1549→#### `safeTry`
   1633→### Testing
+  1635→`Result` instances have two unsafe methods, aptly called `_unsafeUnwrap` and `_unsafeUnwrapErr` which **should only be used in a test environment**.
+  1636→
+      →…
   1673→## A note on the Package Name
   1681→### License
+  1683→The neverthrow project is available as open source under the terms of the [MIT license](https://github.com/supermacro/neverthrow/blob/master/LICENSE).
 
 package.json
      2→  "name": "neverthrow",
@@ -92,6 +54,10 @@ package.json
     65→  }
     66→}
 
+rollup.config.mjs
+     1→import typescript from "rollup-plugin-typescript2";
+     2→import dts from "rollup-plugin-dts";
+
 src/_internals/error.ts
      1→import { Result } from '../result'
      3→export interface ErrorConfig {
@@ -99,6 +65,9 @@ src/_internals/error.ts
      5→}
      7→const defaultErrorConfig: ErrorConfig = {
     11→interface NeverThrowError<T, E> {
+    12→  data:
+    13→    | {
+      →    …
     27→export const createNeverThrowError = <T, E>(
     28→  message: string,
     29→  result: Result<T, E>,
@@ -108,7 +77,14 @@ src/_internals/error.ts
     33→    ? { type: 'Ok', value: result.value }
     34→    : { type: 'Err', value: result.error }
     35→
-      →…
+    36→  const maybeStack = config.withStackTrace ? new Error().stack : undefined
+    37→
+    38→  return {
+    39→    data,
+    40→    message,
+    41→    stack: maybeStack,
+    42→  }
+    43→}
 
 src/_internals/utils.ts
      1→import { Result, ok, err } from '../result'
@@ -128,10 +104,15 @@ src/_internals/utils.ts
     36→  let acc = ok([]) as Result<T[], E>
     37→
     38→  for (const result of resultList) {
-      →  …
+    39→    if (result.isErr()) {
+    40→      acc = err(result.error)
+    41→      break
+    42→    } else {
+      →    …
     54→export const combineResultAsyncList = <T, E>(
     55→  asyncResultList: readonly ResultAsync<T, E>[],
-      →  …
+    56→): ResultAsync<readonly T[], E> =>
+      →…
     62→ * Give a list of all the errors we find
     64→export const combineResultListWithAllErrors = <T, E>(
     65→  resultList: readonly Result<T, E>[],
@@ -139,15 +120,36 @@ src/_internals/utils.ts
     67→  let acc = ok([]) as Result<T[], E[]>
     68→
     69→  for (const result of resultList) {
-      →  …
+    70→    if (result.isErr() && acc.isErr()) {
+    71→      acc.error.push(result.error)
+    72→    } else if (result.isErr() && acc.isOk()) {
+    73→      acc = err([result.error])
+      →      …
     82→export const combineResultAsyncListWithAllErrors = <T, E>(
     83→  asyncResultList: readonly ResultAsync<T, E>[],
-      →  …
+    84→): ResultAsync<readonly T[], E[]> =>
+      →…
 
 src/result-async.ts
-     1→import type { …
-    10→import { Err, Ok, Result } from './ …
-    11→import { …
+     1→import type {
+     2→  Combine,
+     3→  Dedup,
+     4→  EmptyArrayToNever,
+     5→  IsLiteralArray,
+     6→  MemberListOf,
+     7→  MembersToUnion,
+     8→} from './result'
+    10→import { Err, Ok, Result } from './'
+    11→import {
+    12→  combineResultAsyncList,
+    13→  combineResultAsyncListWithAllErrors,
+    14→  ExtractErrAsyncTypes,
+    15→  ExtractOkAsyncTypes,
+    16→  InferAsyncErrTypes,
+    17→  InferAsyncOkTypes,
+    18→  InferErrTypes,
+    19→  InferOkTypes,
+    20→} from './_internals/utils'
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
     23→  private _promise: Promise<Result<T, E>>
     24→
@@ -306,10 +308,13 @@ src/result.ts
    719→export type CombineResultsWithAllErrorsArray …
 
 tests/index.test.ts
+     1→import * as td from 'testdouble'
      3→import { …
+    18→import { vitest, describe, expect, it } from 'vitest'
 
 tests/safe-try.test.ts
      1→import { …
+    13→import { describe, expect, test } from 'vitest'
 
 tests/tsconfig.tests.json
      2→  "compilerOptions": {
@@ -321,8 +326,9 @@ tests/tsconfig.tests.json
 tests/typecheck-tests.ts
      7→import { …
     16→import { safeTry, Transpose } from '../src/result …
+    17→import { type N, Test } from 'ts-toolbelt'
     19→type CreateTuple …
-  2607→const input …
+  2607→const input = <T>(): T => 123 as any
 
 tsconfig.json
      2→  "compilerOptions": {

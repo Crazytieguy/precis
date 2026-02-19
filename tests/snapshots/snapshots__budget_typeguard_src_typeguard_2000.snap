@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2031 tokens)
+budget: 2000 (2030 tokens)
 
 __init__.py
      1→import os
@@ -14,10 +14,10 @@ __init__.py
 
 _checkers.py
     42→from typing_extensions import is_typeddict
-    44→from ._config …
-    45→from ._exceptions …
-    46→from ._memo …
-    47→from ._utils …
+    44→from ._config import ForwardRefPolicy
+    45→from ._exceptions import TypeCheckError, TypeHintWarning
+    46→from ._memo import TypeCheckMemo
+    47→from ._utils import evaluate_forwardref, get_stacklevel, get_type_name, qualified_name
     81→TypeCheckerCallable: TypeAlias = Callable[
     84→TypeCheckLookupCallback: TypeAlias = Callable[
     88→checker_lookup_functions: list[TypeCheckLookupCallback] = []
@@ -29,10 +29,10 @@ _checkers.py
   1005→origin_type_checkers: dict[
 
 _config.py
-     3→from collections.abc …
-     4→from dataclasses …
-     5→from enum …
-     6→from typing …
+     3→from collections.abc import Iterable
+     4→from dataclasses import dataclass
+     5→from enum import Enum, auto
+     6→from typing import TYPE_CHECKING, TypeVar
      9→    from ._functions import TypeCheckFailCallback
     11→T = TypeVar("T")
     14→class ForwardRefPolicy(Enum):
@@ -147,8 +147,8 @@ _importhook.py
    183→def install_import_hook …
 
 _memo.py
-     3→from typing …
-     5→from typeguard._config …
+     3→from typing import Any
+     5→from typeguard._config import TypeCheckConfiguration, global_config
      8→class TypeCheckMemo:
      9→    """
     10→    Contains information necessary for type checkers to do their work.
@@ -183,7 +183,6 @@ _transformer.py
    121→    path: tuple[str, ...]
    122→    joined_path: Constant = field(init=False)
    123→    return_annotation: expr | None = None
-   124→    yield_annotation: expr | None = None
    285→class NameCollector(NodeVisitor):
    313→class GeneratorDetector(NodeVisitor):
    315→
@@ -195,12 +194,6 @@ _transformer.py
    580→    def _convert_annotation …
 
 _utils.py
-     3→import inspect …
-     4→import sys …
-     5→from importlib …
-     6→from inspect …
-     7→from types …
-     8→from typing …
     21→    from ._memo import TypeCheckMemo
     48→    def evaluate_forwardref(forwardref: ForwardRef, memo: TypeCheckMemo) -> Any:
     66→def get_type_name(type_: Any) -> str:

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1002 tokens)
+budget: 1000 (1004 tokens)
 
 core/Ky.ts
     33→export class Ky {
@@ -10,10 +10,10 @@ core/Ky.ts
    200→	constructor(input: Input, options: Options = {}) {
 
 core/constants.ts
+     2→import {type KyOptionsRegistry, type RequestHttpMethod} from '../types/options.js';
     41→const validate …
     66→Options for forcing a retry via `ky.retry()`.
     68→export type ForceRetryOptions = {
-   146→Marker returned by ky.retry() to signal a forced retry from afterResponse hooks.
    148→export class RetryMarker {
    149→	constructor(public options?: ForceRetryOptions) {}
    153→Force a retry from an `afterResponse` hook.

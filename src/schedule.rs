@@ -663,7 +663,7 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
         KindCategory::Import => match stage {
             StageKind::FilePath => 0.3,
             StageKind::Names => 1.0,
-            StageKind::Signatures => 0.3,
+            StageKind::Signatures => 0.5,
             _ => 0.1,
         },
         // Constants: signature captures the value for short constants;

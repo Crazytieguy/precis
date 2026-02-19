@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2015 tokens)
+budget: 2000 (2005 tokens)
 
 package.json
 
@@ -29,12 +29,11 @@ source/core/Ky.ts
    200→	constructor(input: Input, options: Options = {}) {
 
 source/core/constants.ts
+     1→import type {Expect, Equal} from '@type-challenges/utils';
      2→import {type KyOptionsRegistry, type RequestHttpMethod} from '../types/options.js';
     41→const validate …
     66→Options for forcing a retry via `ky.retry()`.
     68→export type ForceRetryOptions = {
-    69→	/**
-      →	…
    146→Marker returned by ky.retry() to signal a forced retry from afterResponse hooks.
    148→export class RetryMarker {
    149→	constructor(public options?: ForceRetryOptions) {}
@@ -83,6 +82,12 @@ source/errors/TimeoutError.ts
      6→	constructor(request: Request) {
 
 source/index.ts
+     3→import {Ky} from './core/Ky.js';
+     4→import {requestMethods, stop, retry} from './core/constants.js';
+     5→import type {KyInstance} from './types/ky.js';
+     6→import type {Input, Options} from './types/options.js';
+     7→import {validateAndMerge} from './utils/merge.js';
+     8→import {type Mutable} from './utils/types.js';
     10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
     34→const ky = createInstance();
 
@@ -129,13 +134,9 @@ source/types/options.ts
    304→
       →…
    307→export type KyOptionsRegistry = {[K in keyof KyOptions]-?: true};
-   312→export interface Options extends KyOptions, Omit<RequestInit, 'headers'> { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
-   313→	/**
-      →	…
+   312→export interface Options …
    358→export type InternalOptions …
-   373→export interface NormalizedOptions extends RequestInit { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
-   374→	// Extended from `RequestInit`, but ensured to be set (not optional).
-      →	…
+   373→export interface NormalizedOptions …
 
 source/types/request.ts
      1→export type KyRequest<T = unknown> = {

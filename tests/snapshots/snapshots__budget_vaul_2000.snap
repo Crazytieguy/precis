@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2015 tokens)
+budget: 2000 (2014 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
@@ -168,8 +168,8 @@ src/use-snap-points.ts
      7→export function useSnapPoints …
 
 test/src/app/layout.tsx
+     1→import './globals.css';
      7→export const metadata: Metadata = {
-    12→export default function RootLayout …
 
 test/src/app/page.tsx
      5→export default function Page() {

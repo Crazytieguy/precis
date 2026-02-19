@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2003 tokens)
+budget: 2000 (2000 tokens)
 
 error.rs
      1→use std::fmt;
@@ -12,18 +12,22 @@ error.rs
      6→    inner: Inner,
      7→}
     10→enum Inner {
+    19→impl Error {
     20→    /// Create an error from a message.
     21→    pub fn msg(msg: &'static str) -> Self {
     22→        Error {
       →        …
     29→    pub(super) fn from_value(err: crate::kv::value::inner::Error) -> Self {
     37→    pub(super) fn into_value(self) -> crate::kv::value::inner::Error {
+    48→impl fmt::Display for Error {
     49→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    62→impl From<fmt::Error> for Error {
     63→    fn from(_: fmt::Error) -> Self {
     69→mod std_support {
     70→    use super::*;
     71→    use std::{error, io};
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
+    75→    impl Error {
     76→        /// Create an error from a standard error type.
     77→        pub fn boxed<E>(err: E) -> Self
     78→        where
@@ -31,6 +35,8 @@ error.rs
     80→        {
     81→            Error {
       →            …
+    87→    impl error::Error for Error {}
+    89→    impl From<io::Error> for Error {
     90→        fn from(err: io::Error) -> Self {
 
 key.rs
@@ -103,15 +109,13 @@ source.rs
    235→pub trait VisitSource<'kvs> {
    236→    /// Visit a key-value pair.
    237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
-   241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T
-   242→where
-   243→    T: VisitSource<'kvs> + ?Sized,
-   244→{
+   241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T …
    280→mod std_support {
    281→    use super::*;
    462→pub use VisitSource as Visitor;
 
 value.rs
+     6→use std::fmt;
      8→pub use crate::kv::Error;
     11→pub trait ToValue {
     13→    fn to_value …
@@ -129,15 +133,15 @@ value.rs
    197→    pub fn null …
    204→    fn from_inner …
    217→    pub fn visit …
-   235→impl<'v> serde_core::Serialize for Value<'v> {
-   245→impl<'v> sval::Value for Value<'v> {
-   252→impl<'v> sval_ref::ValueRef<'v> for Value<'v> {
    288→macro_rules! impl_to_value_primitive {
    312→macro_rules! impl_to_value_nonzero_primitive {
    336→macro_rules! impl_value_to_primitive {
    379→    pub fn to_borrowed_error …
    384→    pub fn to_borrowed_str …
    390→mod std_support {
+   391→    use std::borrow::Cow;
+   392→    use std::rc::Rc;
+   393→    use std::sync::Arc;
    395→    use super::*;
    438→        pub fn to_cow_str …
    462→pub trait VisitValue<'v> {
@@ -154,10 +158,6 @@ value.rs
    517→    fn visit_char …
    524→    fn visit_error …
    530→    fn visit_borrowed_error …
-   539→impl<'a, 'v, T: ?Sized> VisitValue<'v> for &'a mut T
-   540→where
-   541→    T: VisitValue<'v>,
-   542→{
    588→    fn visit_error …
    593→    fn visit_borrowed_error …
    602→pub(in crate::kv) mod inner {
@@ -174,6 +174,8 @@ value.rs
    743→        I64(i64),
    744→        U64(u64),
    745→        F64(f64),
+   746→        I128(i128),
+   747→        U128(u128),
       →        …
   1055→    pub fn capture_debug …
   1065→    pub fn capture_display …

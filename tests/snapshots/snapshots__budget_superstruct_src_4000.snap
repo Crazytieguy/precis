@@ -2,13 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4022 tokens)
+budget: 4000 (4019 tokens)
 
 error.ts
      2→ * A `StructFailure` represents a single specific failure in validation.
      5→export type Failure = {
      6→  value: any
-     7→  key: any
       →  …
     17→ * `StructError` objects are thrown (or returned) when validation fails.
     18→ *
@@ -58,7 +57,6 @@ struct.ts
     30→    const {
     31→      type,
     32→      schema,
-    33→      validator,
       →      …
     67→  assert(value: unknown, message?: string): asserts value is T {
     75→  create(value: unknown, message?: string): T {
@@ -103,8 +101,6 @@ struct.ts
    217→ * (via `mask()` or via `validate()`), plus it applies recursively
    218→ * to all of the nested structs.
    221→export type Context = {
-   222→  branch: Array<any>
-      →  …
    228→ * A type utility to extract the type from a `Struct` class.
    231→export type Infer<T extends Struct<any, any>> = T['TYPE']
    234→ * A type utility to describe that a struct represents a TypeScript type.
@@ -194,7 +190,7 @@ structs/refinements.ts
    140→ *
    141→ * The refiner function is guaranteed to receive a value of the struct's type,
    142→ * because the struct's existing validation will already have passed. This
-   143→ * allows you to layer additional validation on top of existing structs.
+      → …
    146→export function refine<T, S>(
    147→  struct: Struct<T, S>,
    148→  name: string,
@@ -247,9 +243,14 @@ structs/types.ts
    574→export function unknown(): Struct<unknown, null> {
 
 structs/utilities.ts
-     1→import { Context, Struct, Validator } from '../struct.js …
-     2→import { …
-     8→import { object, optional, type } from './types.js …
+     1→import { Context, Struct, Validator } from '../struct.js'
+     2→import {
+     3→  Assign,
+     4→  ObjectSchema,
+     5→  ObjectType,
+     6→  PartialObjectSchema,
+     7→} from '../utils.js'
+     8→import { object, optional, type } from './types.js'
     60→export function assign(...Structs: Struct<any>[]): any {
     61→  const isType = Structs[0].type === 'type'
       →  …

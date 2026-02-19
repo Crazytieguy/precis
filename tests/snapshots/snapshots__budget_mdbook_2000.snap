@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2009 tokens)
+budget: 2000 (2008 tokens)
 
 Cargo.toml
 
@@ -85,6 +85,7 @@ crates/mdbook-driver/src/builtin_renderers/mod.rs
     27→    pub fn new …
 
 crates/mdbook-driver/src/init.rs
+     3→use super::MDBook;
     13→pub struct BookBuilder {
     14→    root: PathBuf,
       →    …
@@ -168,11 +169,11 @@ crates/mdbook-summary/src/lib.rs
 crates/xtask/README.md
      1→# xtask
 
+guide/book.toml
+
 guide/guide-helper/src/lib.rs
      9→/// Preprocessing entry point.
     10→pub fn handle_preprocessing() -> Result<()> {
-    36→    fn name …
-    40→    fn run …
 
 guide/src/README.md
      1→# Introduction

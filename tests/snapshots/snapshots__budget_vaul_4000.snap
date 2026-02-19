@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4023 tokens)
+budget: 4000 (4024 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
@@ -68,6 +68,8 @@ src/context.ts
      2→import { DrawerDirection } from './types';
      4→interface DrawerContextValue {
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
+    38→  drawerRef: { current: null },
+      →  …
     69→export const useDrawerContext = () => {
     70→  const context = React.useContext(DrawerContext);
     71→  if (!context) {
@@ -213,7 +215,7 @@ src/use-prevent-scroll.ts
      6→const KEYBOARD_BUFFER = 24;
      8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
     10→interface PreventScrollOptions {
-    16→function chain(...callbacks: any[]): (...args: any[]) => void {
+    16→function chain …
     27→const visualViewport = typeof document !== 'undefined' && window.visualViewport;
     29→export function isScrollable(node: Element): boolean {
     30→  let style = window.getComputedStyle(node);
@@ -235,15 +237,10 @@ src/use-prevent-scroll.ts
     75→
     76→    preventScrollCount++;
       →    …
-   118→function preventScrollMobileSafari() {
-   243→function setStyle(element: HTMLElement, style: keyof React.CSSProperties, value: string) {
-   257→function addEvent<K extends keyof GlobalEventHandlersEventMap>(
-   258→  target: EventTarget,
-   259→  event: K,
-   260→  handler: (this: Document, ev: GlobalEventHandlersEventMap[K]) => any,
-   261→  options?: boolean | AddEventListenerOptions,
-   262→) {
-   272→function scrollIntoView(target: Element) {
+   118→function preventScrollMobileSafari …
+   243→function setStyle …
+   257→function addEvent …
+   272→function scrollIntoView …
    294→export function isInput(target: Element) {
    295→  return (
       →  …
@@ -297,7 +294,7 @@ test/src/app/initial-snap/page.tsx
 
 test/src/app/layout.tsx
      1→import './globals.css';
-     5→const inter …
+     5→const inter = Inter({ subsets: ['latin'] });
      7→export const metadata: Metadata = {
     12→export default function RootLayout({ children }: { children: React.ReactNode }) {
 
@@ -308,6 +305,7 @@ test/src/app/non-dismissible/page.tsx
      6→export default function Page() {
 
 test/src/app/page.tsx
+     3→import Link from 'next/link';
      5→export default function Page() {
 
 test/src/app/parent-container/page.tsx
@@ -359,6 +357,14 @@ test/tests/initial-snap.spec.ts
      2→import { ANIMATION_DURATION } from './constants';
      8→const snapPointYPositions = {
     15→const snapTo …
+
+test/tests/nested.spec.ts
+     2→import { ANIMATION_DURATION } from './constants';
+     3→import { openDrawer } from './helpers';
+
+test/tests/non-dismissible.spec.ts
+     2→import { openDrawer } from './helpers';
+     3→import { ANIMATION_DURATION } from './constants';
 
 test/tests/with-handle.spec.ts
      2→import { ANIMATION_DURATION } from './constants';

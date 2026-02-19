@@ -2,15 +2,17 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3987 tokens)
+budget: 4000 (4004 tokens)
 
 ast.rs
      1→use crate::attr::{self, Attrs};
      2→use crate::generics::ParamsInScope;
      3→use crate::unraw::{IdentUnraw, MemberUnraw};
-     4→use proc_macro2::Span …
-     5→use std::fmt::{self, Display} …
-     6→use syn::{ …
+     4→use proc_macro2::Span;
+     5→use std::fmt::{self, Display};
+     6→use syn::{
+     7→    Data, DataEnum, DataStruct, DeriveInput, Error, Fields, Generics, Ident, Index, Result, Type,
+     8→};
     10→pub enum Input<'a> {
     11→    Struct(Struct<'a>),
       →    …
@@ -115,12 +117,18 @@ attr.rs
     66→    UpperExp,
     67→}
     69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
+    70→    let mut attrs = Attrs {
+      →    …
    124→fn parse_error_attribute<'a>(attrs: &mut Attrs<'a>, attr: &'a Attribute) -> Result<()> {
    196→fn parse_token_expr(input: ParseStream, mut begin_expr: bool) -> Result<TokenStream> {
    302→impl ToTokens for Display<'_> {
    303→    fn to_tokens(&self, tokens: &mut TokenStream) {
+   304→        if self.infinite_recursive {
+      →        …
    342→impl ToTokens for Trait {
    343→    fn to_tokens(&self, tokens: &mut TokenStream) {
+   344→        let trait_name = match self {
+      →        …
 
 expand.rs
      1→use crate::ast::{Enum, Field, Input, Struct};
@@ -175,15 +183,16 @@ fmt.rs
     17→        let raw_args = self.args.clone();
     18→        let FmtArguments {
     19→            named: user_named_args,
+    20→            first_unnamed,
       →            …
    166→struct FmtArguments {
    172→fn explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
-   192→fn try_explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
-   231→fn fallback_explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
-   255→fn is_syn_full() -> bool {
-   273→fn take_int<'a>(read: &mut &'a str) -> &'a str {
-   286→fn take_ident<'a>(read: &mut &'a str) -> &'a str {
-   299→fn between<'a>(begin: ParseStream<'a>, end: ParseStream<'a>) -> TokenStream {
+   192→fn try_explicit_named_args …
+   231→fn fallback_explicit_named_args …
+   255→fn is_syn_full …
+   273→fn take_int …
+   286→fn take_ident …
+   299→fn between …
 
 generics.rs
      1→use proc_macro2::TokenStream;

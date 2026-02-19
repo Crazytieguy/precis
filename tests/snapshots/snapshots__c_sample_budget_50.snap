@@ -3,9 +3,9 @@ source: tests/snapshots.rs
 expression: output
 ---
 sample.c
+     4→#include "token.h"
     16→enum TokenKind {
     17→    TOKEN_IDENT,
-    18→    TOKEN_NUMBER,
       →    …
     30→int process …
     37→Token *token_new …

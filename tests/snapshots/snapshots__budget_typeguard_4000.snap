@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4038 tokens)
+budget: 4000 (4034 tokens)
 
 pyproject.toml
      1→[build-system]
@@ -105,11 +105,7 @@ src/typeguard/_config.py
     65→     You can change Typeguard's behavior with these settings.
     66→
     67→    .. attribute:: typecheck_fail_callback
-    68→       :type: Callable[[TypeCheckError, TypeCheckMemo], Any]
-    69→
-    70→         Callable that is called when type checking fails.
-    71→
-      →…
+      →    …
     97→
     98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
     99→    typecheck_fail_callback: TypeCheckFailCallback | None = None
@@ -119,11 +115,11 @@ src/typeguard/_config.py
    103→    debug_instrumentation: bool = False
 
 src/typeguard/_decorators.py
-    13→from ._config …
-    14→from ._exceptions …
-    15→from ._functions …
-    16→from ._transformer …
-    17→from ._utils …
+    13→from ._config import CollectionCheckStrategy, ForwardRefPolicy, global_config
+    14→from ._exceptions import InstrumentationWarning
+    15→from ._functions import TypeCheckFailCallback
+    16→from ._transformer import TypeguardTransformer
+    17→from ._utils import Unset, function_name, get_stacklevel, is_method_of, unset
     24→    def typeguard_ignore …
     32→def make_cell …
     36→def find_target_function …
@@ -147,18 +143,18 @@ src/typeguard/_exceptions.py
     38→    def __str__(self) -> str:
 
 src/typeguard/_functions.py
-     3→import sys …
-     4→import warnings …
-     5→from collections.abc …
-     6→from typing …
+     3→import sys
+     4→import warnings
+     5→from collections.abc import Sequence
+     6→from typing import Any, Callable, NoReturn, TypeVar, Union, overload
      8→from . …
      9→from ._checkers …
     10→from ._config …
     15→from ._exceptions …
     16→from ._memo …
     17→from ._utils …
-    20→    from typing …
-    22→    from typing_extensions …
+    20→    from typing import Literal, Never, TypeAlias
+    22→    from typing_extensions import Literal, Never, TypeAlias
     24→T = TypeVar("T")
     25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
     50→def check_type …
@@ -189,9 +185,7 @@ src/typeguard/_importhook.py
     63→        if isinstance(path, (str, PathLike)):
     64→            filename = path
     65→        else:
-    66→            filename = os.fsdecode(bytes(path))
-    67→
-      →…
+      →        …
     99→    def exec_module …
    109→class TypeguardFinder(MetaPathFinder):
    110→    """
@@ -217,8 +211,7 @@ src/typeguard/_memo.py
      9→    """
     10→    Contains information necessary for type checkers to do their work.
     11→
-    12→    .. attribute:: globals
-      →    …
+      →…
     34→
     35→    __slots__ = "globals", "locals", "self_type", "config"
     36→
@@ -231,7 +224,6 @@ src/typeguard/_memo.py
     43→        config: TypeCheckConfiguration = global_config,
     44→    ):
     45→        self.globals = globals
-    46→        self.locals = locals
       →        …
 
 src/typeguard/_pytest_plugin.py
@@ -247,14 +239,14 @@ src/typeguard/_pytest_plugin.py
     75→def pytest_configure(config: Config) -> None:
 
 src/typeguard/_suppression.py
-     3→import sys …
-     4→from collections.abc …
-     5→from contextlib …
-     6→from functools …
-     7→from threading …
-     8→from typing …
-    11→    from typing …
-    13→    from typing_extensions …
+     3→import sys
+     4→from collections.abc import Callable, Generator
+     5→from contextlib import contextmanager
+     6→from functools import update_wrapper
+     7→from threading import Lock
+     8→from typing import ContextManager, TypeVar, overload
+    11→    from typing import ParamSpec
+    13→    from typing_extensions import ParamSpec
     15→P = ParamSpec("P")
     16→T = TypeVar("T")
     30→def suppress_type_checks(
@@ -339,7 +331,6 @@ tests/dummymodule.py
     72→class Metaclass(type):
     77→class DummyClass(metaclass=Metaclass):
     78→    bar: str
-    79→    baz: int
    118→class Outer:
    119→    class Inner:
    305→class OverrideClass:
@@ -380,8 +371,6 @@ tests/test_importhook.py
     20→def import_dummymodule():
     35→def test_blanket_import():
     45→def test_package_name_matching():
-    46→    """
-      →    …
     63→def test_debug_instrumentation(monkeypatch, capsys):
 
 tests/test_instrumentation.py

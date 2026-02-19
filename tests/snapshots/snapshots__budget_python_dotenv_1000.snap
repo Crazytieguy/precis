@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1007 tokens)
+budget: 1000 (1004 tokens)
 
 README.md
      1→# python-dotenv
@@ -14,8 +14,6 @@ README.md
    169→## File format
    234→## Related Projects
    246→## Acknowledgements
-
-docs/reference.md
 
 mkdocs.yml
      1→site_name: python-dotenv
@@ -42,8 +40,8 @@ src/dotenv/__main__.py
      3→from .cli import cli
 
 src/dotenv/cli.py
-    20→from .main …
-    21→from .version …
+    20→from .main import dotenv_values, set_key, unset_key
+    21→from .version import __version__
     24→def enumerate_env() -> Optional[str]:
     62→def cli(ctx: click.Context, file: Any, quote: Any, export: Any) -> None:
     68→def stream_file(path: os.PathLike) -> Iterator[IO[str]]:
@@ -99,9 +97,6 @@ src/dotenv/parser.py
     69→class Reader:
 
 src/dotenv/variables.py
-     1→import re …
-     2→from abc …
-     3→from typing …
      5→_posix_variable: Pattern[str] = re.compile(
     18→class Atom(metaclass=ABCMeta):
     25→    @abstractmethod
@@ -116,4 +111,5 @@ tests/conftest.py
      6→def cli():
     13→def dotenv_path(tmp_path):
 
-tests/test_cli.py
+tests/test_utils.py
+     4→def test_to_cli_string():

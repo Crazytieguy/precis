@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1007 tokens)
+budget: 1000 (1011 tokens)
 
 README.md
     91→# Documentation
@@ -68,13 +68,13 @@ src/patterns.ts
   1251→export function instanceOf …
 
 src/types/BuildMany.ts
+     1→import { Iterator, IsOptionalKeysOf, UpdateAt, ValueOf } from './helpers';
      4→export type BuildMany …
-    11→type BuildOne …
     19→export type SetDeep …
 
 src/types/DeepExclude.ts
      1→import { DistributeMatchingUnions } from './DistributeUnions';
-     3→export type DeepExclude<a, b> = Exclude<DistributeMatchingUnions<a, b>, b>;
+     3→export type DeepExclude …
 
 src/types/DistributeUnions.ts
     41→export type DistributeMatchingUnions …
@@ -85,6 +85,8 @@ src/types/DistributeUnions.ts
 
 src/types/ExtractPreciseValue.ts
     13→export type ExtractPreciseValue …
+
+src/types/FindSelected.ts
 
 src/types/InvertPattern.ts
    106→export type InvertPattern …

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (993 tokens)
+budget: 1000 (994 tokens)
 
 ast.rs
      1→use crate::attr::{self, Attrs};
@@ -36,8 +36,6 @@ attr.rs
     51→pub struct Fmt<'a> {
     57→pub enum Trait {
     69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
-   124→fn parse_error_attribute …
-   196→fn parse_token_expr …
    302→impl ToTokens for Display<'_> {
    303→    fn to_tokens(&self, tokens: &mut TokenStream) {
    342→impl ToTokens for Trait {
@@ -101,3 +99,4 @@ unraw.rs
 valid.rs
      1→use crate::ast::{Enum, Field, Input, Struct, Variant};
      2→use crate::attr::Attrs;
+     3→use syn::{Error, GenericArgument, PathArguments, Result, Type};

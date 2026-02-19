@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2026 tokens)
+budget: 2000 (2027 tokens)
 
 CHANGELOG.md
      1→## Unreleased
@@ -61,7 +61,10 @@ flatten_test.go
     43→func TestFlatten_nonError(t *testing.T) {
 
 format.go
-     6→import …
+     6→import (
+     7→	"fmt"
+     8→	"strings"
+     9→)
     11→// ErrorFormatFunc is a function callback that is called by Error to
     12→// turn the list of errors into a string.
     13→type ErrorFormatFunc func([]error) string
@@ -72,9 +75,7 @@ format.go
     19→		return fmt.Sprintf("1 error occurred:\n\t* %s\n\n", es[0])
     20→	}
     21→
-    22→	points := make([]string, len(es))
-    23→	for i, err := range es {
-      →	…
+      →…
 
 format_test.go
      6→import …
@@ -112,7 +113,10 @@ group_test.go
     12→func TestGroup(t *testing.T) {
 
 multierror.go
-     6→import …
+     6→import (
+     7→	"errors"
+     8→	"fmt"
+     9→)
     11→// Error is an error type to track multiple errors. This is used to
     12→// accumulate errors in cases and return them as a single "error".
     13→type Error struct {
@@ -125,8 +129,7 @@ multierror.go
     21→		fn = ListFormatFunc
     22→	}
     23→
-    24→	return fn(e.Errors)
-    25→}
+      →…
     27→// ErrorOrNil returns an error interface if this Error represents
       →…
     31→func (e *Error) ErrorOrNil() error {

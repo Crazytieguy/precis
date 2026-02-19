@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4059 tokens)
+budget: 4000 (4050 tokens)
 
 README.md
      1→# humanize
@@ -27,7 +27,6 @@ README.md
     30→- Indonesian
     31→- Italian
     32→- Japanese
-    33→- Klingon
       →…
     49→## API reference
     51→[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
@@ -170,8 +169,6 @@ src/humanize/i18n.py
     31→_DECIMAL_SEPARATOR = {
     40→def _get_default_locale_path() -> pathlib.Path | None:
     51→def get_translation() -> gettext_module.NullTranslations:
-    52→    try:
-      →    …
     58→def activate(
     59→    locale: str | None, path: str | os.PathLike[str] | None = None
     60→) -> gettext_module.NullTranslations:
@@ -188,13 +185,9 @@ src/humanize/i18n.py
     71→        dict: Translations.
     72→
     73→    Raises:
-    74→        FileNotFoundError: If humanize cannot find the locale folder.
-    75→    """
-    76→    if locale is None or locale.startswith("en"):
       →    …
     96→def deactivate() -> None:
     97→    """Deactivate internationalisation."""
-    98→    _CURRENT.locale = None
    101→def _gettext(message: str) -> str:
    113→def _pgettext(msgctxt: str, message: str) -> str:
    129→def _ngettext(message: str, plural: str, num: int) -> str:
@@ -206,16 +199,12 @@ src/humanize/i18n.py
    186→    Returns:
    187→         str: Thousands separator.
    188→    """
-   189→    try:
-      →    …
    196→def decimal_separator() -> str:
    197→    """Return the decimal separator for a locale, default to dot.
    198→
    199→    Returns:
    200→         str: Decimal separator.
    201→    """
-   202→    try:
-      →    …
 
 src/humanize/lists.py
      5→TYPE_CHECKING = False
@@ -369,6 +358,11 @@ tests/test_filesize.py
     86→def test_naturalsize(test_args: list[int] | list[int | bool], expected: str) -> None:
 
 tests/test_i18n.py
+     5→import datetime as dt
+     6→import importlib
+     8→import pytest
+     9→from freezegun import freeze_time
+    11→import humanize
     18→def test_i18n() -> None:
    225→class TestActivate:
    226→    expected_msg = (
@@ -383,6 +377,11 @@ tests/test_lists.py
     22→) -> None:
 
 tests/test_number.py
+     5→import math
+     6→import typing
+     8→import pytest
+    10→import humanize
+    11→from humanize import number
     37→def test_ordinal …
     80→def test_intcomma …
     86→def test_intword_powers …

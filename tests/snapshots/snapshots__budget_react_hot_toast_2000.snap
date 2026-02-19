@@ -2,17 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2024 tokens)
+budget: 2000 (2020 tokens)
 
 README.md
     28→## Features
     37→## Installation
     39→#### With pnpm
-    41→```sh
-      →…
     45→#### With NPM
-    47→```sh
-      →…
     51→## Getting Started
     70→## Documentation
 
@@ -31,9 +27,6 @@ site/components/docs-layout.tsx
 
 site/components/emoji-button.tsx
      1→export const EmojiButton: React.FC<{
-
-site/components/sections/footer.tsx
-     4→export function Footer …
 
 site/components/sections/toast-example.tsx
    270→export const ToastExample = () => {
@@ -113,10 +106,15 @@ src/components/toast-icon.tsx
 src/components/toaster.tsx
      1→import { css, setup } from 'goober';
      2→import * as React from 'react';
-     3→import { …
-     9→import { useToaster } from '../core/use-toaster …
-    10→import { prefersReducedMotion } from '../core/utils …
-    11→import { ToastBar } from './toast-bar …
+     3→import {
+     4→  resolveValue,
+     5→  ToasterProps,
+     6→  ToastPosition,
+     7→  ToastWrapperProps,
+     8→} from '../core/types';
+     9→import { useToaster } from '../core/use-toaster';
+    10→import { prefersReducedMotion } from '../core/utils';
+    11→import { ToastBar } from './toast-bar';
     15→const ToastWrapper = ({
     47→const getPositionStyle = (
     48→  position: ToastPosition,
@@ -127,8 +125,6 @@ src/components/toaster.tsx
     85→export const Toaster: React.FC<ToasterProps> = ({
     86→  reverseOrder,
     87→  position = 'top-center',
-    88→  toastOptions,
-    89→  gutter,
       →  …
 
 src/core/store.ts
@@ -218,6 +214,8 @@ src/headless/index.ts
 
 src/index.ts
      1→import { toast } from './core/toast';
+
+test/setup.ts
 
 tsconfig.json
      3→  "include": ["src", "types", "test"],

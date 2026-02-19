@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4027 tokens)
+budget: 4000 (4030 tokens)
 
 README.md
     28→## Features
@@ -13,10 +13,14 @@ README.md
     37→## Installation
     39→#### With pnpm
     41→```sh
-      →…
+    42→pnpm add react-hot-toast
+    43→```
+    44→
     45→#### With NPM
     47→```sh
-      →…
+    48→npm install react-hot-toast
+    49→```
+    50→
     51→## Getting Started
     53→Add the Toaster to your app first. It will take care of rendering all notifications emitted. Now you can trigger `toast()` from anywhere!
     54→
@@ -65,6 +69,8 @@ site/components/emoji-button.tsx
      1→export const EmojiButton: React.FC<{
 
 site/components/sections/footer.tsx
+     1→import React from 'react';
+     2→import Link from 'next/link';
      4→export function Footer({ noBadge }: { noBadge?: boolean }) {
 
 site/components/sections/splitbee-counter.tsx
@@ -78,8 +84,13 @@ site/components/sections/toast-example.tsx
    270→export const ToastExample = () => {
 
 site/components/sections/toaster-example.tsx
+     3→import Arrow from '../../assets/arrow.svg';
+     4→import { Code } from '../code';
+     6→import { EmojiButton } from '../emoji-button';
      8→export const positions: Array<ToastPosition> = [
     17→export const ToasterExample: React.FC<{
+
+site/next.config.mjs
 
 site/package.json
      2→  "name": "site",
@@ -247,9 +258,23 @@ src/core/store.ts
    188→): ToasterState => {
 
 src/core/toast.ts
-     1→import { …
-    10→import { genId } from './utils …
-    11→import { …
+     1→import {
+     2→  Renderable,
+     3→  Toast,
+     4→  ToastOptions,
+     5→  ToastType,
+     6→  DefaultToastOptions,
+     7→  ValueOrFunction,
+     8→  resolveValue,
+     9→} from './types';
+    10→import { genId } from './utils';
+    11→import {
+    12→  createDispatch,
+    13→  Action,
+    14→  ActionType,
+    15→  dispatchAll,
+    16→  getToasterIdFromToastId,
+    17→} from './store';
     19→type Message = ValueOrFunction<Renderable, Toast>;
     21→type ToastHandler = (message: Message, options?: ToastOptions) => string;
     23→const createToast = (
@@ -294,20 +319,6 @@ src/core/types.ts
     35→  type: ToastType;
     36→  id: string;
     37→  toasterId?: string;
-    38→  message: ValueOrFunction<Renderable, Toast>;
-    39→  icon?: Renderable;
-    40→  duration?: number;
-    41→  pauseDuration: number;
-    42→  position?: ToastPosition;
-    43→  removeDelay?: number;
-    44→
-    45→  ariaProps: {
-    46→    role: 'status' | 'alert';
-    47→    'aria-live': 'assertive' | 'off' | 'polite';
-    48→  };
-    49→
-    50→  style?: CSSProperties;
-    51→  className?: string;
       →  …
     60→export type ToastOptions = Partial<
     61→  Pick<
@@ -325,23 +336,18 @@ src/core/types.ts
     73→  >
     74→>;
     76→export type DefaultToastOptions = ToastOptions & {
+    77→  [key in ToastType]?: ToastOptions;
+    78→};
     80→export interface ToasterProps {
     81→  position?: ToastPosition;
     82→  toastOptions?: DefaultToastOptions;
     83→  reverseOrder?: boolean;
-    84→  gutter?: number;
-    85→  containerStyle?: React.CSSProperties;
-    86→  containerClassName?: string;
-    87→  toasterId?: string;
-    88→  children?: (toast: Toast) => React.ReactElement;
-    89→}
+      →  …
     91→export interface ToastWrapperProps {
     92→  id: string;
     93→  className?: string;
     94→  style?: React.CSSProperties;
-    95→  onHeightUpdate: (id: string, height: number) => void;
-    96→  children?: React.ReactNode;
-    97→}
+      →  …
 
 src/core/use-toaster.ts
      1→import { useEffect, useCallback, useRef } from 'react';

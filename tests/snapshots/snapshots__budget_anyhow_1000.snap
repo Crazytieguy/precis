@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1001 tokens)
+budget: 1000 (994 tokens)
 
 Cargo.toml
 
@@ -22,8 +22,6 @@ src/chain.rs
      2→use crate::StdError;
     27→    #[cold]
     28→    pub fn new(head: &'a (dyn StdError + 'static)) -> Self {
-    29→        Chain {
-      →        …
     36→    type Item = &'a (dyn StdError + 'static);
     57→impl DoubleEndedIterator for Chain<'_> {
     94→impl Default for Chain<'_> {
@@ -44,6 +42,7 @@ src/ensure.rs
 src/error.rs
      4→use crate::nightly::{self, Request};
      6→use crate::ptr::Mut;
+    14→use core::ops::{Deref, DerefMut};
    705→    type Target = dyn StdError + Send + Sync + 'static;
    740→struct ErrorVTable {
 
@@ -68,7 +67,7 @@ src/lib.rs
    252→mod backtrace;
    261→mod nightly;
    279→trait StdError: Debug + Display {
-   280→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
+   280→    fn source …
    286→pub use anyhow as format_err;
    390→pub struct Error {
    415→pub struct Chain<'a> {
@@ -81,23 +80,22 @@ src/lib.rs
    624→    fn with_context …
    650→pub fn Ok …
    656→pub mod __private {
+   663→    pub use crate::ensure::{BothDebug, NotBothDebug};
    672→    pub mod kind {
+   674→        pub use crate::kind::{AdhocKind, TraitKind};
+   678→        pub use crate::kind::BoxedKind;
    710→        pub trait Bool {
-   711→            fn not(self) -> bool;
+   711→            fn not …
    716→            fn not …
    723→            fn not …
 
 src/macros.rs
     58→macro_rules! bail {
-    70→macro_rules! __ensure {
    204→macro_rules! anyhow {
    230→macro_rules! __anyhow {
 
 src/nightly.rs
     10→pub use core::error::Request;
-    41→pub fn request_ref_backtrace …
-    52→pub fn provide_ref_backtrace …
-    56→pub fn provide …
 
 src/ptr.rs
      6→pub struct Own …
@@ -117,5 +115,3 @@ src/wrapper.rs
     58→pub struct BoxedError(pub Box<dyn StdError + Send + Sync>);
     80→    #[cfg(error_generic_member_access)]
     81→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
-
-tests/drop/mod.rs

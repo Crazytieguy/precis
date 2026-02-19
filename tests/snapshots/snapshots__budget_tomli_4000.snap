@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4033 tokens)
+budget: 4000 (4029 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -95,9 +95,9 @@ pyproject.toml
    167→[[tool.mypy.overrides]]
 
 scripts/use_setuptools.py
-     6→from pathlib …
-     7→import tomllib …
-     9→import tomli_w …
+     6→from pathlib import Path
+     7→import tomllib
+     9→import tomli_w  # type: ignore[import-not-found]
     12→def use_setuptools() -> None:
 
 setup.py
@@ -281,8 +281,6 @@ tests/burntsushi.py
 
 tests/data/valid/array/array-subtables.json
      1→{"arr":
-    10→  }
-      →  …
 
 tests/data/valid/array/open-parent-table.json
      2→  "parent-table": {
@@ -304,9 +302,6 @@ tests/data/valid/hex-char.json
 
 tests/data/valid/inline-table/empty-inline-table.json
      1→{"empty":  {}}
-
-tests/data/valid/inline-table/multiline-inline-table.json
-     2→  "multiline": {
 
 tests/data/valid/trailing-comma.json
      1→{"arr":
@@ -360,6 +355,7 @@ tomllib.md
      4→
      5→Relevant links:
      6→
+     7→- Python Issue Tracker: https://bugs.python.org/issue40059
       →…
     13→## Converting Tomli to tomllib
     15→### Sync status

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1989 tokens)
+budget: 2000 (1991 tokens)
 
 Cargo.toml
      1→[package]
@@ -20,16 +20,10 @@ README.md
    106→## Structured logging
 
 rfcs/0296-structured-logging.md
-     5→# Summary
-    16→# Contents
-    43→# Motivation
-    98→# Guide-level explanation
-   495→# Reference-level explanation
-  1575→# Drawbacks, rationale, and alternatives
-  1629→# Prior art
-  1650→# Unresolved questions
 
 src/__private_api.rs
+     3→use self::sealed::KVs;
+     4→use crate::{logger, Level, Log, Metadata, Record};
      7→pub use std::{format_args, module_path, stringify};
      9→#[cfg(not(feature = "kv"))]
     10→pub type Value<'a> = &'a str;
@@ -44,6 +38,7 @@ src/__private_api.rs
     56→fn log_impl …
    108→pub fn loc …
    113→mod kv_support {
+   114→    use crate::kv;
    116→    pub type Value<'a> = kv::Value<'a>;
    135→    pub fn capture_error …
    140→    pub fn capture_sval …
@@ -106,12 +101,16 @@ src/kv/mod.rs
 
 src/kv/source.rs
      6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
+     9→/// A source of key-values.
+    10→///
+      →…
     51→pub trait Source {
     62→    fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error>;
     73→    fn get(&self, key: Key) -> Option<Value<'_>> {
     85→    fn count(&self) -> usize {
     91→fn get_default …
    114→fn count_default …
+   234→/// A visitor for the key-value pairs in a [`Source`](trait.Source.html).
    235→pub trait VisitSource<'kvs> {
    237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
    280→mod std_support {
@@ -205,8 +204,6 @@ test_max_level_features/main.rs
     18→    fn enabled(&self, _: &Metadata) -> bool {
     22→    fn log(&self, record: &Record) {
     26→    fn flush(&self) {}
-
-tests/integration.rs
 
 triagebot.toml
      1→[assign]

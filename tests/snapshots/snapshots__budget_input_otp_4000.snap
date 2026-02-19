@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4009 tokens)
+budget: 4000 (4012 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -97,7 +97,6 @@ apps/storybook/src/stories/Button.tsx
     10→  return (
     11→    <button
     12→      type="button"
-    13→      className="bg-[red]"
       →      …
 
 apps/storybook/src/stories/InputOTP.stories.tsx
@@ -140,7 +139,6 @@ apps/test/src/app/base/page.tsx
 
 apps/test/src/app/layout.tsx
      3→import './globals.css'
-     5→const inter …
      7→export const metadata: Metadata = {
     12→export default function RootLayout …
 
@@ -171,10 +169,8 @@ apps/test/src/tests/util/modifier.ts
 
 apps/test/tsconfig.json
      2→  "compilerOptions": {
-    23→  },
     24→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
     25→  "exclude": ["node_modules"]
-    26→}
 
 apps/website/README.md
      3→## Getting Started
@@ -218,6 +214,7 @@ apps/website/src/app/(local-pages)/layout.tsx
      7→export default function RootLayout …
 
 apps/website/src/app/(local-pages)/raw-input/page.tsx
+     3→import React from 'react'
      5→export default function ShadcnPage() {
 
 apps/website/src/app/(local-pages)/shadcn/page.tsx
@@ -255,6 +252,9 @@ apps/website/src/components/icons.tsx
 
 apps/website/src/components/mode-toggle.tsx
     15→export function ModeToggle() {
+
+apps/website/src/components/page-header.tsx
+     1→import { cn } from "../lib/utils"
 
 apps/website/src/components/provider.tsx
      5→export function AppProvider …

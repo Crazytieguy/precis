@@ -140,7 +140,6 @@ src/struct.ts
     30→    const {
     31→      type,
     32→      schema,
-    33→      validator,
       →      …
     67→  assert(value: unknown, message?: string): asserts value is T {
     75→  create(value: unknown, message?: string): T {
@@ -276,9 +275,14 @@ src/structs/types.ts
    574→export function unknown(): Struct<unknown, null> {
 
 src/structs/utilities.ts
-     1→import { Context, Struct, Validator } from '../struct.js …
-     2→import { …
-     8→import { object, optional, type } from './types.js …
+     1→import { Context, Struct, Validator } from '../struct.js'
+     2→import {
+     3→  Assign,
+     4→  ObjectSchema,
+     5→  ObjectType,
+     6→  PartialObjectSchema,
+     7→} from '../utils.js'
+     8→import { object, optional, type } from './types.js'
     60→export function assign(...Structs: Struct<any>[]): any {
     61→  const isType = Structs[0].type === 'type'
       →  …
@@ -355,9 +359,8 @@ test/index.ts
      2→ * A helper for testing type signatures.
      5→export function test<T>(fn: (x: unknown) => T) {}
 
-test/tsconfig.json
-
 test/validation/function/valid.ts
+     1→import { func } from '../../../src'
      3→export const Struct = func()
      5→export const data = function () {}
      7→export const output = data
@@ -368,11 +371,7 @@ test/validation/object/valid.ts
     13→export const output = {
 
 test/validation/type/valid-instance.ts
-     3→class Person {
      6→  constructor(name: string) {
-    11→export const Struct = type({
-    15→export const data = new Person('john')
-    17→export const output = data
 
 tsconfig.json
      2→  "include": ["./src/**/*.ts"],

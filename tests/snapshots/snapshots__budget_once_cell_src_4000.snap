@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4006 tokens)
+budget: 4000 (4014 tokens)
 
 imp_cs.rs
      1→use core::panic::{RefUnwindSafe, UnwindSafe};
@@ -10,6 +10,8 @@ imp_cs.rs
      4→use portable_atomic::{AtomicBool, Ordering};
      6→use crate::unsync;
      8→pub(crate) struct OnceCell<T> {
+     9→    initialized: AtomicBool,
+      →    …
     20→unsafe impl<T: Sync + Send> Sync for OnceCell<T> {}
     21→unsafe impl<T: Send> Send for OnceCell<T> {}
     23→impl<T: RefUnwindSafe + UnwindSafe> RefUnwindSafe for OnceCell<T> {}
@@ -32,11 +34,6 @@ imp_pl.rs
     12→const INCOMPLETE: u8 = 0x0;
     13→const RUNNING: u8 = 0x1;
     14→const COMPLETE: u8 = 0x2;
-    21→unsafe impl<T: Sync + Send> Sync for OnceCell<T> {}
-    22→unsafe impl<T: Send> Send for OnceCell<T> {}
-    24→impl<T: RefUnwindSafe + UnwindSafe> RefUnwindSafe for OnceCell<T> {}
-    25→impl<T: UnwindSafe> UnwindSafe for OnceCell<T> {}
-    27→impl<T> OnceCell<T> {
     28→    pub(crate) const fn new() -> OnceCell<T> {
     32→    pub(crate) const fn with_value(value: T) -> OnceCell<T> {
     38→    pub(crate) fn is_initialized(&self) -> bool {
@@ -49,7 +46,6 @@ imp_pl.rs
    109→    pub(crate) fn get_mut(&mut self) -> Option<&mut T> {
    117→    pub(crate) fn into_inner(self) -> Option<T> {
    122→struct Guard<'a> {
-   127→impl<'a> Drop for Guard<'a> {
    128→    fn drop(&mut self) {
    129→        self.state.store(self.new_state, Ordering::Release);
    130→        unsafe {
@@ -204,6 +200,11 @@ lib.rs
 race.rs
     31→use core::sync::atomic;
     33→use portable_atomic as atomic;
+    35→use atomic::{AtomicPtr, AtomicUsize, Ordering};
+    36→use core::cell::UnsafeCell;
+    37→use core::marker::PhantomData;
+    38→use core::num::NonZeroUsize;
+    39→use core::ptr;
     41→/// A thread-safe cell which can be written to only once.
     42→#[derive(Default, Debug)]
     43→pub struct OnceNonZeroUsize {
@@ -263,8 +264,11 @@ race.rs
    320→    fn compare_exchange …
    347→    fn _dummy …
    351→pub use self::once_box::OnceBox;
+   353→#[cfg(feature = "alloc")]
    354→mod once_box {
    355→    use super::atomic::{AtomicPtr, Ordering};
+   356→    use core::{marker::PhantomData, ptr};
+   358→    use alloc::boxed::Box;
    360→    /// A thread-safe cell which can be written to only once.
    361→    pub struct OnceBox<T> {
    362→        inner: AtomicPtr<T>,

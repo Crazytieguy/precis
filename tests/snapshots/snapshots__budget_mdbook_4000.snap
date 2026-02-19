@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4010 tokens)
+budget: 4000 (4007 tokens)
 
 Cargo.toml
 
@@ -17,12 +17,6 @@ crates/mdbook-compare/Cargo.toml
 
 crates/mdbook-compare/README.md
      1→# mdbook-compare
-
-crates/mdbook-core/Cargo.toml
-     1→[package]
-    10→[dependencies]
-    18→[dev-dependencies]
-    21→[lints]
 
 crates/mdbook-core/README.md
      1→# mdbook-core
@@ -77,7 +71,6 @@ crates/mdbook-core/src/utils/mod.rs
     29→pub fn log_backtrace(e: &Error) {
 
 crates/mdbook-core/src/utils/toml_ext.rs
-     6→pub(crate) trait TomlExt {
      8→    fn read …
     10→    fn insert …
 
@@ -108,6 +101,11 @@ crates/mdbook-driver/src/builtin_preprocessors/links.rs
     36→    pub const NAME: &'static str = "links";
     39→    pub fn new() -> Self {
    401→    type Item = Link<'a>;
+
+crates/mdbook-driver/src/builtin_preprocessors/mod.rs
+     3→pub use self::cmd::CmdPreprocessor;
+     4→pub use self::index::IndexPreprocessor;
+     5→pub use self::links::LinkPreprocessor;
 
 crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs
     10→pub struct MarkdownRenderer;
@@ -161,8 +159,6 @@ crates/mdbook-html/src/html/tokenizer.rs
     24→    fn process_token …
 
 crates/mdbook-html/src/html/tree.rs
-    25→macro_rules! attr_qual_name {
-   126→type Attributes …
    131→    fn into_tendril(self) -> StrTendril;
    135→    fn into_tendril(self) -> StrTendril {
 
@@ -220,6 +216,10 @@ crates/mdbook-preprocessor/README.md
     11→## License
 
 crates/mdbook-preprocessor/src/lib.rs
+    18→pub use mdbook_core::MDBOOK_VERSION;
+    19→pub use mdbook_core::book;
+    20→pub use mdbook_core::config;
+    21→pub use mdbook_core::errors;
     30→pub trait Preprocessor {
     32→    fn name …
     36→    fn run …
@@ -242,6 +242,10 @@ crates/mdbook-renderer/README.md
     11→## License
 
 crates/mdbook-renderer/src/lib.rs
+    17→pub use mdbook_core::MDBOOK_VERSION;
+    18→pub use mdbook_core::book;
+    19→pub use mdbook_core::config;
+    20→pub use mdbook_core::errors;
     28→pub trait Renderer {
     30→    fn name …
     34→    fn render …
@@ -282,8 +286,6 @@ crates/xtask/README.md
 
 crates/xtask/src/changelog.rs
      3→use super::Result;
-
-eslint.config.mjs
 
 examples/nop-preprocessor.rs
     79→    pub struct Nop;
@@ -342,9 +344,6 @@ guide/src/cli/watch.md
 
 guide/src/continuous-integration.md
      1→# Running `mdbook` in continuous integration
-    12→## Installing mdBook
-    67→## Running tests
-    83→## Deploying
 
 guide/src/for_developers/README.md
      1→# For developers
@@ -382,9 +381,6 @@ guide/src/format/summary.md
 
 guide/src/format/theme/README.md
      1→# Theme
-
-guide/src/format/theme/editor.md
-     1→# Editor
 
 guide/src/guide/README.md
      1→# User guide
@@ -426,15 +422,15 @@ src/cmd/clean.rs
 src/cmd/command_prelude.rs
      3→pub use clap::{Arg, ArgMatches, Command, arg};
      7→pub trait CommandExt: Sized {
-     8→    fn _arg(self, arg: Arg) -> Self;
-    10→    fn arg_dest_dir(self) -> Self {
-    26→    fn arg_root_dir(self) -> Self {
-    37→    fn arg_open(self) -> Self {
+     8→    fn _arg …
+    10→    fn arg_dest_dir …
+    26→    fn arg_root_dir …
+    37→    fn arg_open …
     41→    #[cfg(any(feature = "watch", feature = "serve"))]
     42→    fn arg_watcher(self) -> Self {
     56→impl CommandExt for Command {
-    57→    fn _arg(self, arg: Arg) -> Self {
-    62→pub fn set_dest_dir(args: &ArgMatches, book: &mut MDBook) {
+    57→    fn _arg …
+    62→pub fn set_dest_dir …
 
 src/cmd/init.rs
      1→use crate::get_book_dir;

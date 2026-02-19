@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1001 tokens)
+budget: 1000 (988 tokens)
 
 backtrace.rs
      8→pub(crate) enum Backtrace {}
@@ -12,12 +12,8 @@ backtrace.rs
 chain.rs
      1→use self::ChainState::*;
      2→use crate::StdError;
-    11→pub(crate) struct Chain<'a> {
-    16→pub(crate) enum ChainState<'a> {
     27→    #[cold]
     28→    pub fn new(head: &'a (dyn StdError + 'static)) -> Self {
-    29→        Chain {
-      →        …
     36→    type Item = &'a (dyn StdError + 'static);
     57→impl DoubleEndedIterator for Chain<'_> {
     94→impl Default for Chain<'_> {
@@ -27,7 +23,6 @@ context.rs
     12→    pub trait StdError {
    147→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
    161→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
-   166→struct Quoted<C>(C);
    189→    pub trait Sealed {}
 
 ensure.rs
@@ -39,11 +34,11 @@ ensure.rs
 error.rs
      4→use crate::nightly::{self, Request};
      6→use crate::ptr::Mut;
+    14→use core::ops::{Deref, DerefMut};
    705→    type Target = dyn StdError + Send + Sync + 'static;
    740→struct ErrorVTable {
 
 fmt.rs
-    69→struct Indented<'a, D> {
     79→    fn write_str(&mut self, s: &str) -> fmt::Result {
 
 kind.rs
@@ -64,7 +59,7 @@ lib.rs
    252→mod backtrace;
    261→mod nightly;
    279→trait StdError: Debug + Display {
-   280→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
+   280→    fn source …
    286→pub use anyhow as format_err;
    390→pub struct Error {
    415→pub struct Chain<'a> {
@@ -77,9 +72,12 @@ lib.rs
    624→    fn with_context …
    650→pub fn Ok …
    656→pub mod __private {
+   663→    pub use crate::ensure::{BothDebug, NotBothDebug};
    672→    pub mod kind {
+   674→        pub use crate::kind::{AdhocKind, TraitKind};
+   678→        pub use crate::kind::BoxedKind;
    710→        pub trait Bool {
-   711→            fn not(self) -> bool;
+   711→            fn not …
    716→            fn not …
    723→            fn not …
 

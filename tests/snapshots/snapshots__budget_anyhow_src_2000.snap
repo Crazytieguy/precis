@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1991 tokens)
+budget: 2000 (1994 tokens)
 
 backtrace.rs
      8→pub(crate) enum Backtrace {}
@@ -105,7 +105,6 @@ fmt.rs
 
 kind.rs
     47→use crate::Error;
-    48→use core::fmt::{Debug, Display};
     51→use crate::StdError;
     53→use alloc::boxed::Box;
     55→pub struct Adhoc;
@@ -127,8 +126,12 @@ kind.rs
 lib.rs
    252→mod backtrace;
    261→mod nightly;
+   265→use crate::error::ErrorImpl;
+   266→use crate::ptr::Own;
    279→trait StdError: Debug + Display {
    280→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
+   281→        None
+      →        …
    286→pub use anyhow as format_err;
    390→pub struct Error {
    391→    inner: Own<ErrorImpl>,
@@ -145,18 +148,18 @@ lib.rs
    624→    fn with_context …
    650→pub fn Ok …
    656→pub mod __private {
+   657→    use self::not::Bool;
+   658→    use crate::Error;
    663→    pub use crate::ensure::{BothDebug, NotBothDebug};
    672→    pub mod kind {
    674→        pub use crate::kind::{AdhocKind, TraitKind};
    678→        pub use crate::kind::BoxedKind;
-   684→    pub fn format_err(args: Arguments) -> Error {
-   698→    pub fn must_use(error: Error) -> Error {
-   704→    pub fn not(cond: impl Bool) -> bool {
+   684→    pub fn format_err …
+   698→    pub fn must_use …
+   704→    pub fn not …
    710→        pub trait Bool {
    711→            fn not(self) -> bool;
-   714→        impl Bool for bool {
    716→            fn not …
-   721→        impl Bool for &bool {
    723→            fn not …
 
 macros.rs

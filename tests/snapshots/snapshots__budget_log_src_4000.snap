@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3995 tokens)
+budget: 4000 (4001 tokens)
 
 __private_api.rs
      3→use self::sealed::KVs;
@@ -47,22 +47,18 @@ kv/error.rs
      6→    inner: Inner,
      7→}
     10→enum Inner {
-    19→impl Error {
     20→    /// Create an error from a message.
     21→    pub fn msg(msg: &'static str) -> Self {
     22→        Error {
       →        …
     29→    pub(super) fn from_value(err: crate::kv::value::inner::Error) -> Self {
     37→    pub(super) fn into_value(self) -> crate::kv::value::inner::Error {
-    48→impl fmt::Display for Error {
     49→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-    62→impl From<fmt::Error> for Error {
     63→    fn from(_: fmt::Error) -> Self {
     69→mod std_support {
     70→    use super::*;
     71→    use std::{error, io};
     73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
-    75→    impl Error {
     76→        /// Create an error from a standard error type.
     77→        pub fn boxed<E>(err: E) -> Self
     78→        where
@@ -70,8 +66,6 @@ kv/error.rs
     80→        {
     81→            Error {
       →            …
-    87→    impl error::Error for Error {}
-    89→    impl From<io::Error> for Error {
     90→        fn from(err: io::Error) -> Self {
 
 kv/key.rs
@@ -144,12 +138,16 @@ kv/source.rs
    235→pub trait VisitSource<'kvs> {
    236→    /// Visit a key-value pair.
    237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
-   241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T …
+   241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T
+   242→where
+   243→    T: VisitSource<'kvs> + ?Sized,
+   244→{
    280→mod std_support {
    281→    use super::*;
    462→pub use VisitSource as Visitor;
 
 kv/value.rs
+     6→use std::fmt;
      8→pub use crate::kv::Error;
     11→pub trait ToValue {
     13→    fn to_value …
@@ -176,6 +174,9 @@ kv/value.rs
    379→    pub fn to_borrowed_error …
    384→    pub fn to_borrowed_str …
    390→mod std_support {
+   391→    use std::borrow::Cow;
+   392→    use std::rc::Rc;
+   393→    use std::sync::Arc;
    395→    use super::*;
    438→        pub fn to_cow_str …
    462→pub trait VisitValue<'v> {

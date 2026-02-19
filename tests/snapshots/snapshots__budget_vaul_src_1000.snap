@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1002 tokens)
+budget: 1000 (1005 tokens)
 
 browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -72,7 +72,7 @@ types.ts
 
 use-composed-refs.ts
      3→import * as React from 'react';
-     5→type PossibleRef …
+     5→type PossibleRef<T> = React.Ref<T> | undefined;
     11→function setRef …
     23→function composeRefs …
     31→function useComposedRefs …
@@ -96,12 +96,10 @@ use-prevent-scroll.ts
     65→ * restores it on unmount. Also ensures that content does not
     66→ * shift due to the scrollbars disappearing.
     68→export function usePreventScroll(options: PreventScrollOptions = {}) {
-    69→  let { isDisabled } = options;
-    70→
-      →…
    294→export function isInput(target: Element) {
 
 use-scale-background.ts
+     1→import React, { useMemo } from 'react';
      6→const noop = () => () => {};
      8→export function useScaleBackground() {
 

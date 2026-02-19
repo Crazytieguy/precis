@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2005 tokens)
+budget: 2000 (1997 tokens)
 
 coercions.ts
      1→import { Struct, is, Coercer } from '../struct.js'
@@ -34,13 +34,11 @@ coercions.ts
 refinements.ts
      1→import { Struct, Refiner } from '../struct.js'
      2→import { toFailures } from '../utils.js'
-     5→ * Ensure that a string, array, map, or set is empty.
      8→export function empty<
      9→  T extends string | any[] | Map<any, any> | Set<any>,
     10→  S extends any,
     11→>(struct: Struct<T, S>): Struct<T, S> {
     21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
-    30→ * Ensure that a number or date is below a threshold.
     33→export function max<T extends number | Date, S extends any>(
     34→  struct: Struct<T, S>,
     35→  threshold: T,
@@ -48,7 +46,6 @@ refinements.ts
     37→    exclusive?: boolean
     38→  } = {}
     39→): Struct<T, S> {
-    52→ * Ensure that a number or date is above a threshold.
     55→export function min<T extends number | Date, S extends any>(
     56→  struct: Struct<T, S>,
     57→  threshold: T,
@@ -56,24 +53,18 @@ refinements.ts
     59→    exclusive?: boolean
     60→  } = {}
     61→): Struct<T, S> {
-    74→ * Ensure that a string, array, map or set is not empty.
     77→export function nonempty<
     78→  T extends string | any[] | Map<any, any> | Set<any>,
     79→  S extends any,
     80→>(struct: Struct<T, S>): Struct<T, S> {
-    90→ * Ensure that a string matches a regular expression.
     93→export function pattern<T extends string, S extends any>(
     94→  struct: Struct<T, S>,
     95→  regexp: RegExp
     96→): Struct<T, S> {
-   106→ * Ensure that a string, array, number, date, map, or set has a size (or length, or time) between `min` and `max`.
    109→export function size<
    110→  T extends string | number | Date | any[] | Map<any, any> | Set<any>,
    111→  S extends any,
    112→>(struct: Struct<T, S>, min: number, max: number = min): Struct<T, S> {
-   139→ * Augment a `Struct` to add an additional refinement to the validation.
-   140→ *
-      → …
    146→export function refine<T, S>(
    147→  struct: Struct<T, S>,
    148→  name: string,
@@ -81,9 +72,19 @@ refinements.ts
    150→): Struct<T, S> {
 
 types.ts
-     1→import { Infer, Struct } from '../struct.js …
-     2→import { define } from './utilities.js …
-     3→import { …
+     1→import { Infer, Struct } from '../struct.js'
+     2→import { define } from './utilities.js'
+     3→import {
+     4→  ObjectSchema,
+     5→  ObjectType,
+     6→  print,
+     7→  run,
+     8→  isObject,
+     9→  isNonArrayObject,
+    10→  AnyStruct,
+    11→  InferStructTuple,
+    12→  UnionToIntersection,
+    13→} from '../utils.js'
     19→export function any(): Struct<any, null> {
     33→export function array<T extends Struct<any>>(Element?: T): any {
     60→export function bigint(): Struct<bigint, null> {
@@ -126,11 +127,17 @@ types.ts
    574→export function unknown(): Struct<unknown, null> {
 
 utilities.ts
-     1→import { Context, Struct, Validator } from '../struct.js …
-     2→import { …
-     8→import { object, optional, type } from './types.js …
+     1→import { Context, Struct, Validator } from '../struct.js'
+     2→import {
+     3→  Assign,
+     4→  ObjectSchema,
+     5→  ObjectType,
+     6→  PartialObjectSchema,
+     7→} from '../utils.js'
+     8→import { object, optional, type } from './types.js'
     60→export function assign(...Structs: Struct<any>[]): any {
     61→  const isType = Structs[0].type === 'type'
+    62→  const schemas = Structs.map((s) => s.schema)
       →  …
     71→export function define<T>(name: string, validator: Validator): Struct<T, null> {
     80→export function deprecated<T>(

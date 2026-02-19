@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4052 tokens)
+budget: 4000 (4053 tokens)
 
 README.md
      1→# Archived project. No maintenance. 
@@ -308,7 +308,10 @@ structs.go
    509→func (s *Struct) nested(val reflect.Value) interface{} {
 
 structs_example_test.go
-     3→import …
+     3→import (
+     4→	"fmt"
+     5→	"time"
+     6→)
      8→func ExampleNew() {
     33→func ExampleMap() {
     58→func ExampleMap_tags() {
@@ -359,9 +362,7 @@ tags_test.go
      3→import "testing"
      5→func TestParseTag_Name(t *testing.T) {
      6→	tags := []struct {
-     7→		tag string
-      →		…
+      →	…
     26→func TestParseTag_Opts(t *testing.T) {
     27→	tags := []struct {
-    28→		opts string
-      →		…
+      →	…

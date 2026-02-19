@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1006 tokens)
+budget: 1000 (1008 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
@@ -94,18 +94,20 @@ src/use-prevent-scroll.ts
     29→export function isScrollable(node: Element): boolean {
     34→export function getScrollParent(node: Element): Element {
     64→ * Prevents scrolling on the document body on mount, and
-    65→ * restores it on unmount. Also ensures that content does not
       → …
     68→export function usePreventScroll(options: PreventScrollOptions = {}) {
    294→export function isInput(target: Element) {
 
 src/use-scale-background.ts
+     1→import React, { useMemo } from 'react';
      6→const noop = () => () => {};
      8→export function useScaleBackground() {
 
 src/use-snap-points.ts
      1→import React from 'react';
      7→export function useSnapPoints …
+
+test/README.md
 
 tsconfig.json
      2→  "compilerOptions": {

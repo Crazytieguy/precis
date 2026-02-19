@@ -17,10 +17,10 @@ src/pluggy/__init__.py
     32→def __getattr__(name: str) -> str:
 
 src/pluggy/_callers.py
-    16→from ._hooks …
-    17→from ._result …
-    18→from ._result …
-    19→from ._warnings …
+    16→from ._hooks import HookImpl
+    17→from ._result import HookCallError
+    18→from ._result import Result
+    19→from ._warnings import PluggyTeardownRaisedWarning
     22→# Need to distinguish between old- and new-style hook wrappers.
       →…
     24→Teardown: TypeAlias = Generator[None, object, object]
@@ -108,7 +108,6 @@ src/pluggy/_tracing.py
 src/pluggy/_warnings.py
      1→from typing import final
      4→class PluggyWarning(UserWarning):
-     5→    """Base class for all warnings emitted by pluggy."""
      6→
      7→    __module__ = "pluggy"
     10→@final

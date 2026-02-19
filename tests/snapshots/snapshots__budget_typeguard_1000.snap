@@ -2,11 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1005 tokens)
+budget: 1000 (1006 tokens)
+
+docs/conf.py
 
 pyproject.toml
 
 src/typeguard/__init__.py
+     1→import os
+     2→from typing import Any
     34→config: TypeCheckConfiguration
     37→def __getattr__(name: str) -> Any:
 
@@ -18,6 +22,7 @@ src/typeguard/_checkers.py
     89→generic_alias_types: tuple[type, ...] = (
     98→# Lifted from mypy.sharedparse
     99→BINARY_MAGIC_METHODS = {
+   586→def _is_literal_type …
   1004→# Equality checks are applied to these
   1005→origin_type_checkers: dict[
 
@@ -32,7 +37,8 @@ src/typeguard/_config.py
     52→    def iterate_samples(self, collection: Iterable[T]) -> Iterable[T]:
     63→class TypeCheckConfiguration:
     97→
-      →…
+    98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
+      →    …
 
 src/typeguard/_decorators.py
     24→    def typeguard_ignore …
@@ -58,17 +64,10 @@ src/typeguard/_exceptions.py
 src/typeguard/_functions.py
     24→T = TypeVar("T")
     25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
-    50→def check_type …
-   118→def check_argument_types …
-   149→def check_return_type …
-   185→def check_send_type …
-   216→def check_yield_type …
-   245→def check_variable_assignment …
-   291→def warn_on_error …
 
 src/typeguard/_importhook.py
-    17→from ._config …
-    18→from ._transformer …
+    17→from ._config import global_config
+    18→from ._transformer import TypeguardTransformer
     40→P = ParamSpec("P")
     41→T = TypeVar("T")
     45→def _call_with_frames_removed …
@@ -99,6 +98,7 @@ src/typeguard/_transformer.py
    118→class TransformMemo:
    119→    node: Module | ClassDef | FunctionDef | AsyncFunctionDef | None
    120→    parent: TransformMemo | None
+   121→    path: tuple[str, ...]
    285→class NameCollector(NodeVisitor):
    313→class GeneratorDetector(NodeVisitor):
    338→class AnnotationTransformer(NodeTransformer):
@@ -114,5 +114,3 @@ src/typeguard/_utils.py
 
 tests/conftest.py
     29→def sample_set() -> set:
-
-tests/test_plugins.py

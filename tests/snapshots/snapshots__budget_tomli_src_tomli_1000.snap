@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1009 tokens)
+budget: 1000 (1010 tokens)
 
 __init__.py
      1→# SPDX-License-Identifier: MIT
@@ -13,20 +13,19 @@ __init__.py
      8→from ._parser import TOMLDecodeError, load, loads
 
 _parser.py
-     7→import sys …
-     8→from types …
+     7→import sys
+     8→from types import MappingProxyType
     10→from ._re …
     19→TYPE_CHECKING = False
-    21→    from collections.abc …
-    22→    from typing …
+    21→    from collections.abc import Iterable
+    22→    from typing import IO, Any, Final
     24→    from ._types …
     26→# Inline tables/arrays are implemented using recursion. Pathologically
-    27→# nested documents cause pure Python to raise RecursionError (which is OK),
       →…
     35→MAX_INLINE_NESTING: Final = sys.getrecursionlimit()
     37→ASCII_CTRL: Final = frozenset(chr(i) for i in range(32)) | frozenset(chr(127))
     39→# Neither of these sets include quotation mark or backslash. They are
-    40→# currently handled as separate cases in the parser functions.
+      →…
     41→ILLEGAL_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t")
     42→ILLEGAL_MULTILINE_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t\n")
     44→ILLEGAL_LITERAL_STR_CHARS: Final = ILLEGAL_BASIC_STR_CHARS
@@ -48,11 +47,11 @@ _parser.py
    312→class Output:
 
 _re.py
-     7→from datetime …
-     8→from functools …
-     9→import re …
+     7→from datetime import date, datetime, time, timedelta, timezone, tzinfo
+     8→from functools import lru_cache
+     9→import re
     11→TYPE_CHECKING = False
-    13→    from typing …
+    13→    from typing import Any, Final
     15→    from ._types import ParseFloat
     17→_TIME_RE_STR: Final = r"""
     26→RE_NUMBER: Final = re.compile(

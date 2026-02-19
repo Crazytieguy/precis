@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1982 tokens)
+budget: 2000 (1986 tokens)
 
 __private_api.rs
      3→use self::sealed::KVs;
@@ -40,6 +40,7 @@ __private_api.rs
    151→pub use self::kv_support::*;
 
 kv/error.rs
+     1→use std::fmt;
      3→/// An error encountered while working with structured data.
      4→#[derive(Debug)]
      5→pub struct Error {
@@ -48,25 +49,28 @@ kv/error.rs
     10→enum Inner {
     20→    /// Create an error from a message.
     21→    pub fn msg(msg: &'static str) -> Self {
+    22→        Error {
+      →        …
     29→    pub(super) fn from_value …
     37→    pub(super) fn into_value …
     49→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
     63→    fn from(_: fmt::Error) -> Self {
     69→mod std_support {
     70→    use super::*;
+    71→    use std::{error, io};
+    73→    pub(super) type BoxedError …
     76→        /// Create an error from a standard error type.
     77→        pub fn boxed<E>(err: E) -> Self
     78→        where
     79→            E: Into<BoxedError>,
     80→        {
+    81→            Error {
+      →            …
     90→        fn from(err: io::Error) -> Self {
 
 kv/key.rs
      7→pub trait ToKey {
      9→    fn to_key(&self) -> Key<'_>;
-    16→    fn to_key …
-    22→    fn to_key …
-    28→    fn to_key …
     37→pub struct Key<'k> {
     38→    // NOTE: This may become `Cow<'k, str>`
     39→    key: &'k str,
@@ -74,21 +78,12 @@ kv/key.rs
     45→    pub fn from_str(key: &'k str) -> Self {
     53→    pub fn as_str(&self) -> &str {
     61→    pub fn to_borrowed_str(&self) -> Option<&'k str> {
-    70→    fn fmt …
-    76→    fn as_ref …
-    82→    fn borrow …
-    88→    fn from …
     94→mod std_support {
     95→    use super::*;
-   100→        fn to_key …
-   106→        fn to_key …
    113→mod sval_support {
    114→    use super::*;
-   120→        fn stream …
-   129→        fn stream_ref …
    136→mod serde_support {
    137→    use super::*;
-   142→        fn serialize …
 
 kv/mod.rs
    246→mod error;
@@ -119,6 +114,7 @@ kv/source.rs
    234→/// A visitor for the key-value pairs in a [`Source`](trait.Source.html).
    235→pub trait VisitSource<'kvs> {
    237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
+   241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T …
    280→mod std_support {
    281→    use super::*;
    462→pub use VisitSource as Visitor;
@@ -181,6 +177,8 @@ lib.rs
   1600→pub mod __private_api;
   1602→/// The statically resolved maximum log level.
   1603→///
+  1604→/// See the crate level documentation for information on how to configure this.
+  1605→///
       →…
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
 

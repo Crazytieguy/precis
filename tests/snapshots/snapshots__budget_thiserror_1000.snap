@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1001 tokens)
+budget: 1000 (1000 tokens)
 
 Cargo.toml
 
@@ -28,7 +28,6 @@ impl/src/ast.rs
     45→pub enum ContainerKind {
     46→    Struct,
     47→    TupleStruct,
-    48→    UnitStruct,
       →    …
     55→    pub fn from_syn …
    175→    fn fmt …
@@ -44,6 +43,8 @@ impl/src/attr.rs
 
 impl/src/expand.rs
     12→pub fn derive(input: &DeriveInput) -> TokenStream {
+
+impl/src/fallback.rs
 
 impl/src/fmt.rs
     16→    pub fn expand_shorthand …
@@ -79,6 +80,7 @@ src/aserror.rs
     45→pub trait Sealed {}
 
 src/display.rs
+     3→use std::path::{self, Path, PathBuf};
      6→pub trait AsDisplay<'a>: Sealed {
     11→    fn as_display …
     18→    type Target = &'a T;
@@ -115,4 +117,4 @@ src/provide.rs
 
 src/var.rs
      3→pub struct Var<'a, T: ?Sized>(pub &'a T);
-     6→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+     6→    fn fmt …

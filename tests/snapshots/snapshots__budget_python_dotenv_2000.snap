@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2013 tokens)
+budget: 2000 (2014 tokens)
 
 README.md
      1→# python-dotenv
@@ -97,7 +97,6 @@ src/dotenv/ipython.py
     19→    )
     20→    @argument(
     21→        "-v",
-    22→        "--verbose",
     33→    @line_magic
     34→    def dotenv(self, line):
     35→        args = parse_argstring(self.dotenv, line)
@@ -169,9 +168,9 @@ src/dotenv/parser.py
    179→def parse_stream …
 
 src/dotenv/variables.py
-     1→import re …
-     2→from abc …
-     3→from typing …
+     1→import re
+     2→from abc import ABCMeta, abstractmethod
+     3→from typing import Iterator, Mapping, Optional, Pattern
      5→_posix_variable: Pattern[str] = re.compile(
     18→class Atom(metaclass=ABCMeta):
     19→    def __ne__(self, other: object) -> bool:
@@ -208,8 +207,6 @@ tests/test_ipython.py
 tests/test_is_interactive.py
      8→class TestIsInteractive:
     31→
-
-tests/test_main.py
 
 tests/test_parser.py
    550→def test_parse_stream(test_input, expected):

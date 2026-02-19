@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2009 tokens)
+budget: 2000 (2006 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
@@ -62,17 +62,25 @@ src/hooks.tsx
      3→export const useIsDocumentHidden = () => {
      4→  const [isDocumentHidden, setIsDocumentHidden] = React.useState(document.hidden);
      5→
-     6→  React.useEffect(() => {
-      →  …
+      →…
 
 src/index.tsx
      3→import React from 'react';
      4→import ReactDOM from 'react-dom';
-     6→import { CloseIcon, getAsset, Loader } from './assets …
-     7→import { useIsDocumentHidden } from './hooks …
-     8→import { toast, ToastState } from './state …
-     9→import './styles.css …
-    10→import { …
+     6→import { CloseIcon, getAsset, Loader } from './assets';
+     7→import { useIsDocumentHidden } from './hooks';
+     8→import { toast, ToastState } from './state';
+     9→import './styles.css';
+    10→import {
+    11→  isAction,
+    12→  SwipeDirection,
+    13→  type ExternalToast,
+    14→  type HeightT,
+    15→  type ToasterProps,
+    16→  type ToastProps,
+    17→  type ToastT,
+    18→  type ToastToDismiss,
+    19→} from './types';
     22→const VISIBLE_TOASTS_AMOUNT = 3;
     25→const VIEWPORT_OFFSET = '24px';
     28→const MOBILE_VIEWPORT_OFFSET = '16px';
@@ -186,20 +194,10 @@ website/README.md
 
 website/package.json
 
-website/src/components/Footer/index.tsx
-     5→export const Footer = () => {
-
-website/src/components/Other/Other.tsx
-     7→export const Other = ({
-
-website/src/components/Position/index.tsx
-     7→export type Position = (typeof positions)[number];
-     9→export const Position = ({
-
 website/src/pages/_app.tsx
-     7→export default function Nextra({ Component, pageProps }: AppProps): ReactElement {
+     4→import '../style.css';
+     5→import '../globals.css';
+     7→export default function Nextra …
 
 website/src/pages/index.tsx
     14→export default function Home() {
-
-website/tsconfig.json

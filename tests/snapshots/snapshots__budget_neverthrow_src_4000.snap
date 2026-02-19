@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4004 tokens)
+budget: 4000 (4010 tokens)
 
 _internals/error.ts
      1→import { Result } from '../result'
@@ -13,8 +13,7 @@ _internals/error.ts
     11→interface NeverThrowError<T, E> {
     12→  data:
     13→    | {
-    14→        type: string
-      →        …
+      →    …
     27→export const createNeverThrowError = <T, E>(
     28→  message: string,
     29→  result: Result<T, E>,
@@ -55,11 +54,7 @@ _internals/utils.ts
     40→      acc = err(result.error)
     41→      break
     42→    } else {
-    43→      acc.map((list) => list.push(result.value))
-    44→    }
-    45→  }
-    46→  return acc
-    47→}
+      →    …
     54→export const combineResultAsyncList = <T, E>(
     55→  asyncResultList: readonly ResultAsync<T, E>[],
     56→): ResultAsync<readonly T[], E> =>
@@ -75,22 +70,32 @@ _internals/utils.ts
     71→      acc.error.push(result.error)
     72→    } else if (result.isErr() && acc.isOk()) {
     73→      acc = err([result.error])
-    74→    } else if (result.isOk() && acc.isOk()) {
-    75→      acc.value.push(result.value)
-    76→    }
-    77→    // do nothing when result.isOk() && acc.isErr()
-    78→  }
-    79→  return acc
-    80→}
+      →      …
     82→export const combineResultAsyncListWithAllErrors = <T, E>(
     83→  asyncResultList: readonly ResultAsync<T, E>[],
     84→): ResultAsync<readonly T[], E[]> =>
       →…
 
 result-async.ts
-     1→import type { …
-    10→import { Err, Ok, Result } from './ …
-    11→import { …
+     1→import type {
+     2→  Combine,
+     3→  Dedup,
+     4→  EmptyArrayToNever,
+     5→  IsLiteralArray,
+     6→  MemberListOf,
+     7→  MembersToUnion,
+     8→} from './result'
+    10→import { Err, Ok, Result } from './'
+    11→import {
+    12→  combineResultAsyncList,
+    13→  combineResultAsyncListWithAllErrors,
+    14→  ExtractErrAsyncTypes,
+    15→  ExtractOkAsyncTypes,
+    16→  InferAsyncErrTypes,
+    17→  InferAsyncOkTypes,
+    18→  InferErrTypes,
+    19→  InferOkTypes,
+    20→} from './_internals/utils'
     22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
     23→  private _promise: Promise<Result<T, E>>
     24→
@@ -171,8 +176,6 @@ result.ts
     17→   * arguments but returning `Ok` if successful, `Err` if the function throws
     18→   *
     19→   * @param fn function to wrap with ok on success or err on failure
-    20→   * @param errorFn when an error is thrown, this will wrap the error result if provided
-    21→   */
     23→  export function fromThrowable<Fn extends (...args: readonly any[]) => any, E>(
     24→    fn: Fn,
     25→    errorFn?: (e: unknown) => E,

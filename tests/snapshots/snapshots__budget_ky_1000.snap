@@ -7,16 +7,6 @@ budget: 1000 (1002 tokens)
 package.json
 
 readme.md
-    20→## Benefits over plain `fetch`
-    33→## Install
-    45→## Usage
-    85→## API
-  1050→## Tips
-  1292→## FAQ
-  1339→## Browser support
-  1343→## Node.js support
-  1347→## Related
-  1352→## Maintainers
 
 source/core/Ky.ts
     33→export class Ky {
@@ -42,7 +32,7 @@ source/errors/ForceRetryError.ts
 source/errors/HTTPError.ts
      5→export class HTTPError<T = unknown> extends Error {
      6→	public response: KyResponse<T>;
-    10→	constructor …
+    10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
 
 source/errors/NonError.ts
      2→Wrapper for non-Error values that were thrown.
@@ -55,6 +45,7 @@ source/errors/NonError.ts
     10→	constructor(value: unknown) {
 
 source/errors/TimeoutError.ts
+     1→import type {KyRequest} from '../types/request.js';
      3→export class TimeoutError extends Error {
      4→	public request: KyRequest;
      5→
@@ -91,6 +82,7 @@ source/types/response.ts
      1→export type KyResponse<T = unknown> = {
 
 source/types/retry.ts
+     1→import type {HttpMethod} from './options.js';
      3→export type ShouldRetryState = {
     15→export type RetryOptions = {
 
@@ -100,11 +92,14 @@ source/utils/body.ts
    119→export const streamRequest …
 
 source/utils/delay.ts
+     3→import {type InternalOptions} from '../types/options.js';
      5→export type DelayOptions = {
      9→export default async function delay …
 
 source/utils/is.ts
      2→export const isObject …
+
+source/utils/merge.ts
 
 source/utils/normalize.ts
      5→export const normalizeRequestMethod …
@@ -115,6 +110,7 @@ source/utils/options.ts
     30→export const hasSearchParameters …
 
 source/utils/timeout.ts
+     1→import {TimeoutError} from '../errors/TimeoutError.js';
      3→export type TimeoutOptions = {
      9→export default async function timeout …
 

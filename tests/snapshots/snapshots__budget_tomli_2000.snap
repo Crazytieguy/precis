@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2014 tokens)
+budget: 2000 (2017 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -69,8 +69,6 @@ pyproject.toml
 scripts/use_setuptools.py
     12→def use_setuptools() -> None:
 
-setup.py
-
 src/tomli/__init__.py
      1→# SPDX-License-Identifier: MIT
      2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
@@ -118,11 +116,11 @@ src/tomli/_parser.py
    312→class Output:
 
 src/tomli/_re.py
-     7→from datetime …
-     8→from functools …
-     9→import re …
+     7→from datetime import date, datetime, time, timedelta, timezone, tzinfo
+     8→from functools import lru_cache
+     9→import re
     11→TYPE_CHECKING = False
-    13→    from typing …
+    13→    from typing import Any, Final
     15→    from ._types import ParseFloat
     17→_TIME_RE_STR: Final = r"""
     26→RE_NUMBER: Final = re.compile(
@@ -147,9 +145,7 @@ src/tomli/_re.py
    101→    return timezone(
    102→        timedelta(
    103→            hours=sign * int(hour_str),
-   104→            minutes=sign * int(minute_str),
-   105→        )
-   106→    )
+      →            …
    109→def match_to_localtime(match: re.Match[str]) -> time:
    116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
 
@@ -171,7 +167,7 @@ tests/data/valid/trailing-comma.json
 
 tests/test_data.py
      5→import json
-     9→from . …
+     9→from . import burntsushi, tomllib
     11→DATA_DIR …
     13→VALID_FILES …
     21→VALID_FILES_EXPECTED …
