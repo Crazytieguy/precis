@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2001 tokens)
+budget: 2000 (2005 tokens)
 
 README.md
      1→# Archived project. No maintenance. 
@@ -116,6 +116,23 @@ structs_example_test.go
    322→func ExampleHasZero() {
 
 structs_test.go
+    10→func TestMapNonStruct(t *testing.T) {
+    24→func TestStructIndexes(t *testing.T) {
+    46→func TestMap(t *testing.T) {
+    86→func TestMap_Tag(t *testing.T) {
+   116→func TestMap_CustomTag(t *testing.T) {
+   167→func TestMap_MultipleCustomTag(t *testing.T) {
+   192→func TestMap_OmitEmpty(t *testing.T) {
+   213→func TestMap_OmitNested(t *testing.T) {
+   244→func TestMap_Nested(t *testing.T) {
+   271→func TestMap_NestedMapWithStructValues(t *testing.T) {
+   305→func TestMap_NestedMapWithStringValues(t *testing.T) {
+   338→func TestMap_NestedMapWithInterfaceValues(t *testing.T) {
+   372→func TestMap_NestedMapWithSliceIntValues(t *testing.T) {
+   406→func TestMap_NestedMapWithSliceStructValues(t *testing.T) {
+   453→func TestMap_NestedSliceWithStructValues(t *testing.T) {
+   482→func TestMap_NestedSliceWithPointerOfStructValues(t *testing.T) {
+   511→func TestMap_NestedSliceWithIntValues(t *testing.T) {
    533→func TestMap_Anonymous(t *testing.T) {
    561→func TestMap_Flatnested(t *testing.T) {
    588→func TestMap_FlatnestedOverwrite(t *testing.T) {
@@ -133,25 +150,9 @@ structs_test.go
    916→func TestFields_OmitNested(t *testing.T) {
    953→func TestFields_Anonymous(t *testing.T) {
    984→func TestIsZero(t *testing.T) {
-  1023→func TestIsZero_OmitNested(t *testing.T) {
-  1051→func TestIsZero_Nested(t *testing.T) {
-  1079→func TestIsZero_Anonymous(t *testing.T) {
-  1108→func TestHasZero(t *testing.T) {
-  1150→func TestHasZero_OmitNested(t *testing.T) {
-  1171→func TestHasZero_Nested(t *testing.T) {
-  1190→func TestHasZero_Anonymous(t *testing.T) {
-  1210→func TestName(t *testing.T) {
-  1238→func TestNestedNilPointer(t *testing.T) {
-  1287→func TestSetValueOnNestedField(t *testing.T) {
   1309→type Person struct {
-  1314→func (p *Person) String() string {
-  1318→func TestTagWithStringOption(t *testing.T) {
   1358→type Animal struct {
   1363→type Dog struct {
-  1367→func TestNonStringerTagWithStringOption(t *testing.T) {
-  1395→func TestMap_InterfaceValue(t *testing.T) {
-  1409→func TestPointer2Pointer(t *testing.T) {
-  1430→func TestMap_InterfaceTypeWithMapValue(t *testing.T) {
 
 tags.go
      3→import "strings"
@@ -164,11 +165,9 @@ tags.go
     13→		}
     14→	}
     15→
-    16→	return false
-    17→}
+      →…
     22→func parseTag(tag string) (string, tagOptions) {
 
 tags_test.go
-     3→import "testing"
      5→func TestParseTag_Name(t *testing.T) {
     26→func TestParseTag_Opts(t *testing.T) {

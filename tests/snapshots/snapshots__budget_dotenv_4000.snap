@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4023 tokens)
+budget: 4000 (4044 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -68,61 +68,42 @@ CHANGELOG.md
    426→### Changed
    432→### Changed
    438→### Changed
-   442→## [8.6.0](https://github.com/motdotla/dotenv/compare/v8.5.1...v8.6.0) (2021-05-05)
    444→### Added
-   448→## [8.5.1](https://github.com/motdotla/dotenv/compare/v8.5.0...v8.5.1) (2021-05-05)
    450→### Changed
-   454→## [8.5.0](https://github.com/motdotla/dotenv/compare/v8.4.0...v8.5.0) (2021-05-05)
    456→### Added
-   460→## [8.4.0](https://github.com/motdotla/dotenv/compare/v8.3.0...v8.4.0) (2021-05-05)
    462→### Changed
-   466→## [8.3.0](https://github.com/motdotla/dotenv/compare/v8.2.0...v8.3.0) (2021-05-05)
    468→### Changed
-   472→## [8.2.0](https://github.com/motdotla/dotenv/compare/v8.1.0...v8.2.0) (2019-10-16)
    474→### Added
-   478→## [8.1.0](https://github.com/motdotla/dotenv/compare/v8.0.0...v8.1.0) (2019-08-18)
    480→### Changed
    484→# [8.0.0](https://github.com/motdotla/dotenv/compare/v7.0.0...v8.0.0) (2019-05-02)
    486→### Changed
-   490→## [7.0.0] - 2019-03-12
    492→### Fixed
    496→### Removed
-   500→## [6.2.0] - 2018-12-03
    502→### Added
-   506→## [6.1.0] - 2018-10-08
    508→### Added
-   512→## [6.0.0] - 2018-06-02
    514→### Changed
-   518→## [5.0.0] - 2018-01-29
    520→### Added
    526→### Changed
    532→### Removed
-   536→## [4.0.0] - 2016-12-23
    538→### Changed
    542→### Removed
-   546→## [3.0.0] - 2016-12-20
    548→### Added
    554→### Changed
    559→### Fixed
    563→### Removed
-   567→## [2.0.0] - 2016-01-20
    569→### Added
    577→### Changed
    581→### Removed
-   585→## [1.2.0] - 2015-06-20
    587→### Added
    591→### Changed
    595→### Fixed
-   599→## [1.1.0] - 2015-03-31
    601→### Added
-   605→## [1.0.0] - 2015-03-13
    607→### Removed
 
 CONTRIBUTING.md
      1→# Contributing
      3→1. [Fork it](https://help.github.com/articles/fork-a-repo/)
      4→2. Install dependencies (`npm install`)
-     5→3. Create your feature branch (`git checkout -b my-new-feature`)
       →…
     11→## Testing
     19→## Code Style
@@ -176,6 +157,9 @@ README.md
    331→### Quickstart
    333→Install vestauth and initialize your agent.
    334→
+   335→```bash
+   336→npm i -g vestauth
+   337→
       →…
    357→## FAQ
    361→No.
@@ -188,27 +172,63 @@ README.md
    587→### Config
    589→`config` will read your `.env` file, parse the contents, assign it to
    590→[`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env),
+   591→and return an Object with a `parsed` key containing the loaded content or an `error` key if it failed.
+   592→
+   593→```js
       →…
    605→#### Options
    607→##### path
+   609→Default: `path.resolve(process.cwd(), '.env')`
+   610→
+      →…
    625→##### quiet
+   627→Default: `false`
+   628→
+      →…
    648→##### encoding
+   650→Default: `utf8`
+   651→
+      →…
    658→##### debug
+   660→Default: `false`
+   661→
+      →…
    668→##### override
+   670→Default: `false`
+   671→
+      →…
    678→##### processEnv
+   680→Default: `process.env`
+   681→
+      →…
    692→### Parse
    694→The engine which parses the contents of your file containing environment
    695→variables is available to use. It accepts a String or Buffer and will return
+   696→an Object with the parsed keys and values.
+   697→
+   698→```js
       →…
    705→#### Options
    707→##### debug
+   709→Default: `false`
+   710→
+      →…
    721→### Populate
    723→The engine which populates the contents of your .env file to `process.env` is available for use. It accepts a target, a source, and options. This is useful for power users who want to supply their own objects.
    724→
+   725→For example, customizing the source:
+   726→
+   727→```js
       →…
    748→#### options
    750→##### Debug
+   752→Default: `false`
+   753→
+      →…
    756→##### override
+   758→Default: `false`
+   759→
+      →…
    764→## CHANGELOG
    766→See [CHANGELOG.md](CHANGELOG.md)
    767→
@@ -265,12 +285,23 @@ lib/main.d.ts
     55→  /**
     56→   * Default: `false`
     57→   *
+    58→   * Turn on logging to help debug why certain keys or values are not being set as you expect.
+    59→   *
+    60→   * example: `require('dotenv').config({ debug: process.env.DEBUG })`
+    61→   */
+    62→  debug?: boolean;
+    63→
+    64→  /**
+    65→   * Default: `false`
+    66→   *
       →   …
     92→export interface DotenvConfigOutput {
     93→  error?: DotenvError;
     94→  parsed?: DotenvParseOutput;
     95→}
     97→type DotenvError = Error & {
+    98→  code: 
+      →  …
    106→export interface DotenvPopulateOptions {
    107→  /**
    108→   * Default: `false`
@@ -362,22 +393,22 @@ tests/test-env-options.js
     21→function testOption (envVar, tmpVal, expect) {
 
 tests/test-parse-multiline.js
-     6→const parsed …
-    50→const multiPem …
-    59→const payload …
-    62→const expectedPayload …
-    64→const RPayload …
-    67→const NPayload …
-    70→const RNPayload …
+     6→const parsed = dotenv.parse(fs.readFileSync('tests/.env.multiline', { encoding: 'utf8' }))
+    50→const multiPem = `-----BEGIN PUBLIC KEY-----
+    59→const payload = dotenv.parse(Buffer.from('BUFFER=true'))
+    62→const expectedPayload = { SERVER: 'localhost', PASSWORD: 'password', DB: 'tests' }
+    64→const RPayload = dotenv.parse(Buffer.from('SERVER=localhost\rPASSWORD=password\rDB=tests\r'))
+    67→const NPayload = dotenv.parse(Buffer.from('SERVER=localhost\nPASSWORD=password\nDB=tests\n'))
+    70→const RNPayload = dotenv.parse(Buffer.from('SERVER=localhost\r\nPASSWORD=password\r\nDB=tests\r\n'))
 
 tests/test-parse.js
-     6→const parsed …
-    82→const payload …
-    85→const duplicate …
-    88→const expectedPayload …
-    90→const RPayload …
-    93→const NPayload …
-    96→const RNPayload …
+     6→const parsed = dotenv.parse(fs.readFileSync('tests/.env', { encoding: 'utf8' }))
+    82→const payload = dotenv.parse(Buffer.from('BUFFER=true'))
+    85→const duplicate = dotenv.parse(Buffer.from('DUP=one\nDUP=two'))
+    88→const expectedPayload = { SERVER: 'localhost', PASSWORD: 'password', DB: 'tests' }
+    90→const RPayload = dotenv.parse(Buffer.from('SERVER=localhost\rPASSWORD=password\rDB=tests\r'))
+    93→const NPayload = dotenv.parse(Buffer.from('SERVER=localhost\nPASSWORD=password\nDB=tests\n'))
+    96→const RNPayload = dotenv.parse(Buffer.from('SERVER=localhost\r\nPASSWORD=password\r\nDB=tests\r\n'))
 
 tests/test-populate.js
      8→const mockParseResponse = { test: 'foo' }

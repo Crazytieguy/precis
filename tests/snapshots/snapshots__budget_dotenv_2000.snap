@@ -61,42 +61,6 @@ CHANGELOG.md
    387→### Changed
    393→### Changed
    399→### Removed
-   403→### Changed
-   411→### Changed
-   418→### Added
-   426→### Changed
-   432→### Changed
-   438→### Changed
-   444→### Added
-   450→### Changed
-   456→### Added
-   462→### Changed
-   468→### Changed
-   474→### Added
-   480→### Changed
-   486→### Changed
-   492→### Fixed
-   496→### Removed
-   502→### Added
-   508→### Added
-   514→### Changed
-   520→### Added
-   526→### Changed
-   532→### Removed
-   538→### Changed
-   542→### Removed
-   548→### Added
-   554→### Changed
-   559→### Fixed
-   563→### Removed
-   569→### Added
-   577→### Changed
-   581→### Removed
-   587→### Added
-   591→### Changed
-   595→### Fixed
-   601→### Added
-   607→### Removed
 
 CONTRIBUTING.md
      1→# Contributing
@@ -235,8 +199,45 @@ package.json
 tests/test-config-cli.js
      6→function spawn (cmd, options = {}) {
 
+tests/test-config-vault.js
+     8→const testPath …
+    10→const dotenvKey …
+
+tests/test-env-options.js
+     8→const e …
+     9→const p …
+    10→const q …
+    11→const d …
+    12→const o …
+    13→const dk …
+    16→function options () {
+    21→function testOption (envVar, tmpVal, expect) {
+
+tests/test-parse-multiline.js
+     6→const parsed …
+    50→const multiPem …
+    59→const payload …
+    62→const expectedPayload …
+    64→const RPayload …
+    67→const NPayload …
+    70→const RNPayload …
+
+tests/test-parse.js
+     6→const parsed …
+    82→const payload …
+    85→const duplicate …
+    88→const expectedPayload …
+    90→const RPayload …
+    93→const NPayload …
+    96→const RNPayload …
+
 tests/test-populate.js
+     8→const mockParseResponse = { test: 'foo' }
+
+tests/types/test.ts
 
 tests/types/tsconfig.json
      2→  "compilerOptions": {
+    15→  },
     16→  "include": ["./test.ts", "../../main.d.ts"]
+    17→}

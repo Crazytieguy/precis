@@ -2,7 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1000 tokens)
+budget: 1000 (999 tokens)
+
+Readme.md
+     1→# Commander.js
 
 lib/argument.js
     13→  constructor(name, description) {
@@ -14,38 +17,23 @@ lib/argument.js
    129→  argOptional() {
 
 lib/command.js
-   983→  getOptionValueSourceWithGlobals(key) {
-  1090→  parse(argv, parseOptions) {
-  1119→  async parseAsync(argv, parseOptions) {
-  1141→  saveStateBeforeParse() {
-  1158→  restoreStateBeforeParse() {
-  1748→  parseOptions(args) {
-  1902→  opts() {
-  1924→  optsWithGlobals() {
-  1940→  error(message, errorOptions) {
-  2034→  missingArgument(name) {
-  2046→  optionMissingArgument(option) {
-  2058→  missingMandatoryOptionValue(option) {
-  2114→  unknownOption(flag) {
-  2162→  unknownCommand() {
-  2195→  version(str, flags, description) {
-  2218→  description(str, argsDescription) {
-  2234→  summary(str) {
-  2249→  alias(alias) {
-  2289→  aliases(aliases) {
-  2304→  usage(str) {
-  2331→  name(str) {
-  2344→  helpGroup(heading) {
-  2363→  commandsGroup(heading) {
-  2382→  optionsGroup(heading) {
-  2419→  nameFromFilename(filename) {
-  2437→  executableDir(path) {
-  2450→  helpInformation(contextOptions) {
-  2505→  outputHelp(contextOptions) {
-  2559→  helpOption(flags, description) {
-  2607→  addHelpOption(option) {
-  2621→  help(contextOptions) {
-  2656→  addHelpText(position, text) {
+    20→  constructor(name) {
+    99→  copyInheritedSettings(sourceCommand) {
+   155→  command(nameAndArgs, actionOptsOrExecDesc, execOpts) {
+   192→  createCommand(name) {
+   203→  createHelp() {
+   215→  configureHelp(configuration) {
+   245→  configureOutput(configuration) {
+   261→  showHelpAfterError(displayHelp = true) {
+   273→  showSuggestionAfterError(displaySuggestion = true) {
+   288→  addCommand(cmd, opts) {
+   316→  createArgument(name, description) {
+   336→  argument(name, description, parseArg, defaultValue) {
+   359→  arguments(names) {
+   375→  addArgument(argument) {
+   409→  helpCommand(enableOrNameAndArgs, description) {
+   443→  addHelpCommand(helpCommand, deprecatedDescription) {
+   487→  hook(event, listener) {
 
 lib/error.js
     11→  constructor(exitCode, code, message) {
@@ -79,6 +67,7 @@ lib/help.js
    633→  preformatted(str) {
    650→  formatItem(term, termWidth, description, helper) {
    695→  boxWrap(str, width) {
+   740→function stripColor(str) {
 
 lib/option.js
     11→  constructor(flags, description) {
@@ -100,4 +89,23 @@ lib/option.js
    272→  constructor(options) {
    297→  valueFromOption(value, option) {
 
-package.json
+typings/index.d.ts
+    28→  constructor …
+    36→  constructor …
+    62→  constructor …
+    67→  name …
+    72→  default …
+    77→  argParser …
+    82→  choices …
+    87→  argRequired …
+    92→  argOptional …
+   120→  default …
+   132→  preset …
+   144→  conflicts …
+   156→  implies …
+   164→  env …
+   169→  argParser …
+   174→  makeOptionMandatory …
+   179→  hideHelp …
+   184→  choices …
+   189→  name …

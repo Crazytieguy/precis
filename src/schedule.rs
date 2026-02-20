@@ -340,6 +340,10 @@ pub struct Group {
     pub max_doc_n: usize,
     /// Cached: max body lines across all symbols in this group.
     pub max_body_n: usize,
+    /// Position within a split group (0 = first chunk). `None` if the group
+    /// was never split. Used to prefer earlier chunks (which typically contain
+    /// more important API surface) when budget is tight.
+    pub split_position: Option<usize>,
 }
 
 impl Group {
@@ -469,6 +473,7 @@ pub fn build_groups(
                 file_indices: HashSet::new(),
                 max_doc_n: 0,
                 max_body_n: 0,
+                split_position: None,
             });
             group.max_doc_n = group.max_doc_n.max(costs.doc_line_tokens.len());
             group.max_body_n = group.max_body_n.max(costs.body_line_tokens.len());
@@ -520,6 +525,7 @@ fn split_large_groups(groups: Vec<Group>) -> Vec<Group> {
                 file_indices,
                 max_doc_n,
                 max_body_n,
+                split_position: Some(i),
             });
             offset += chunk_size;
         }
@@ -777,7 +783,18 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
         1.0
     };
 
-    base_value * stage_value * private_detail_penalty * count_factor / n as f64
+    // When a large group is split into sub-groups, prefer earlier chunks.
+    // In most code, the most important API methods appear first (constructor,
+    // core operations), while later methods are utilities or edge cases.
+    // Without this, the scheduler may show a later chunk (e.g. helper methods
+    // at line 983) while skipping the first chunk (constructor, parse, action).
+    let split_position_factor = match group.split_position {
+        None | Some(0) => 1.0,
+        Some(pos) => 1.0 / (1.0 + 0.1 * pos as f64),
+    };
+
+    base_value * stage_value * private_detail_penalty * count_factor * split_position_factor
+        / n as f64
 }
 
 // ---------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4009 tokens)
+budget: 4000 (4006 tokens)
 
 README.md
     40→## About
@@ -20,17 +20,32 @@ README.md
    252→### P.select(name?)
    299→### P.not(pattern)
    310→### `P.when()` and guard functions
+   319→#### using P.when(predicate)
+   334→#### Passing a guard function to `.with(...)`
    349→### the `P._` wildcard
    364→### .exhaustive(), .otherwise() and .run()
    380→### Matching several patterns
    415→## API Reference
    417→### `match`
+   425→#### Signature
+   431→#### Arguments
    437→### `.with`
+   444→#### Signature
+   471→#### Arguments
    490→### `.when`
+   497→#### Signature
+   506→#### Arguments
    516→### `.returnType`
+   528→#### Signature
+   534→#### Type arguments
    539→### `.exhaustive`
+   572→#### Signature
+   579→#### Example
    603→### `.otherwise`
+   613→#### Signature
+   619→#### Arguments
    627→### `.run`
+   637→#### Signature
    643→### `.narrow`
    680→### `isMatching`
    742→## Patterns
@@ -53,26 +68,8 @@ README.md
   1405→## `P.string` predicates
   1409→### `P.string.startsWith`
   1422→### `P.string.endsWith`
-  1435→### `P.string.minLength`
-  1448→### `P.string.length`
-  1461→### `P.string.maxLength`
-  1474→### `P.string.includes`
-  1487→### `P.string.regex`
   1500→## `P.number` and `P.bigint` predicates
-  1504→### `P.number.between`
-  1517→### `P.number.lt`
-  1530→### `P.number.gt`
-  1543→### `P.number.lte`
-  1556→### `P.number.gte`
-  1569→### `P.number.int`
-  1582→### `P.number.finite`
-  1595→### `P.number.positive`
-  1608→### `P.number.negative`
   1621→## Types
-  1623→### `P.infer`
-  1653→### `P.narrow`
-  1667→### `P.Pattern`
-  1679→### Type inference
   1766→## Inspirations
 
 jsr.json
@@ -288,6 +285,11 @@ src/types/Match.ts
    261→type Exhaustive …
 
 src/types/Pattern.ts
+     1→import type * as symbols from '../internals/symbols';
+     2→import { MergeUnion, Primitives, WithDefault } from './helpers';
+     3→import { None, Some, SelectionType } from './FindSelected';
+     4→import { matcher } from '../patterns';
+     5→import { ExtractPreciseValue } from './ExtractPreciseValue';
      7→export type MatcherType …
     23→export type MatcherProtocol …
     38→export type MatchResult …

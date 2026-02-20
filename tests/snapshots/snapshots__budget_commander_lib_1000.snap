@@ -14,22 +14,23 @@ argument.js
    129→  argOptional() {
 
 command.js
-   983→  getOptionValueSourceWithGlobals(key) {
-  1090→  parse(argv, parseOptions) {
-  1119→  async parseAsync(argv, parseOptions) {
-  1141→  saveStateBeforeParse() {
-  1158→  restoreStateBeforeParse() {
-  1748→  parseOptions(args) {
-  1902→  opts() {
-  1924→  optsWithGlobals() {
-  1940→  error(message, errorOptions) {
-  2034→  missingArgument(name) {
-  2046→  optionMissingArgument(option) {
-  2058→  missingMandatoryOptionValue(option) {
-  2114→  unknownOption(flag) {
-  2162→  unknownCommand() {
-  2195→  version(str, flags, description) {
-  2218→  description(str, argsDescription) {
+    20→  constructor(name) {
+    99→  copyInheritedSettings(sourceCommand) {
+   155→  command(nameAndArgs, actionOptsOrExecDesc, execOpts) {
+   192→  createCommand(name) {
+   203→  createHelp() {
+   215→  configureHelp(configuration) {
+   245→  configureOutput(configuration) {
+   261→  showHelpAfterError(displayHelp = true) {
+   273→  showSuggestionAfterError(displaySuggestion = true) {
+   288→  addCommand(cmd, opts) {
+   316→  createArgument(name, description) {
+   336→  argument(name, description, parseArg, defaultValue) {
+   359→  arguments(names) {
+   375→  addArgument(argument) {
+   409→  helpCommand(enableOrNameAndArgs, description) {
+   443→  addHelpCommand(helpCommand, deprecatedDescription) {
+   487→  hook(event, listener) {
   2234→  summary(str) {
   2249→  alias(alias) {
   2289→  aliases(aliases) {
@@ -79,7 +80,6 @@ help.js
    633→  preformatted(str) {
    650→  formatItem(term, termWidth, description, helper) {
    695→  boxWrap(str, width) {
-   740→function stripColor(str) {
 
 option.js
     11→  constructor(flags, description) {
@@ -97,6 +97,5 @@ option.js
    230→  helpGroup(heading) {
    243→  is(arg) {
    256→  isBoolean() {
-   268→class DualOptions {
    272→  constructor(options) {
    297→  valueFromOption(value, option) {

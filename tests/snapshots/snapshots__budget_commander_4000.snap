@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4001 tokens)
+budget: 4000 (3999 tokens)
 
 Readme.md
      1→# Commander.js
@@ -15,6 +15,9 @@ Readme.md
    956→## Custom event listeners
    966→## Bits and pieces
   1164→## Support
+
+esm.mjs
+     1→import commander from './index.js';
 
 lib/argument.js
      3→class Argument {
@@ -29,6 +32,7 @@ lib/argument.js
    143→function humanReadableArgName(arg) {
 
 lib/command.js
+    13→class Command extends EventEmitter {
     20→  constructor(name) {
     99→  copyInheritedSettings(sourceCommand) {
    155→  command(nameAndArgs, actionOptsOrExecDesc, execOpts) {
@@ -170,10 +174,29 @@ lib/option.js
    316→function camelcase(str) {
    328→function splitOptionFlags(flags) {
 
+lib/suggestSimilar.js
+    56→function suggestSimilar(word, candidates) {
+
 package-support.json
      2→  "versions": [
 
 package.json
+     2→  "name": "commander",
+     3→  "version": "14.0.3",
+     4→  "description": "the complete solution for node.js command-line programs",
+     5→  "keywords": [
+    15→  "author": "TJ Holowaychuk <tj@vision-media.ca>",
+    16→  "license": "MIT",
+    17→  "repository": {
+    21→  "scripts": {
+    35→  "files": [
+    43→  "type": "commonjs",
+    44→  "main": "./index.js",
+    45→  "exports": {
+    62→  "devDependencies": {
+    77→  "types": "typings/index.d.ts",
+    78→  "engines": {
+    81→  "support": true
 
 tsconfig.js.json
      7→  "extends": "./tsconfig.json",
@@ -236,38 +259,29 @@ typings/index.d.ts
    260→  longestSubcommandTermLength(cmd: Command, helper: Help): number;
    262→  longestOptionTermLength(cmd: Command, helper: Help): number;
    264→  longestGlobalOptionTermLength(cmd: Command, helper: Help): number;
-   266→  longestArgumentTermLength(cmd: Command, helper: Help): number;
-   269→  displayWidth(str: string): number;
-   272→  styleTitle(title: string): string;
-   275→  styleUsage(str: string): string;
-   277→  styleCommandText(str: string): string;
+   266→  longestArgumentTermLength …
+   269→  displayWidth …
+   272→  styleTitle …
+   275→  styleUsage …
+   277→  styleCommandText …
    279→  styleCommandDescription(str: string): string;
    280→  styleOptionDescription(str: string): string;
    281→  styleSubcommandDescription(str: string): string;
    282→  styleArgumentDescription(str: string): string;
-   284→  styleDescriptionText(str: string): string;
+   284→  styleDescriptionText …
    286→  styleOptionTerm(str: string): string;
    287→  styleSubcommandTerm(str: string): string;
    288→  styleArgumentTerm(str: string): string;
-   291→  styleOptionText(str: string): string;
-   293→  styleSubcommandText(str: string): string;
-   295→  styleArgumentText(str: string): string;
-   298→  padWidth(cmd: Command, helper: Help): number;
-   304→  boxWrap(str: string, width: number): string;
-   307→  preformatted(str: string): boolean;
-   316→  formatItem(
-   317→    term: string,
-   318→    termWidth: number,
-   319→    description: string,
-   320→    helper: Help,
-   321→  ): string;
-   326→  formatItemList(heading: string, items: string[], helper: Help): string[];
-   331→  groupItems<T extends Command | Option>(
-   332→    unsortedItems: T[],
-   333→    visibleItems: T[],
-   334→    getGroup: (item: T) => string,
-   335→  ): Map<string, T[]>;
-   338→  formatHelp(cmd: Command, helper: Help): string;
+   291→  styleOptionText …
+   293→  styleSubcommandText …
+   295→  styleArgumentText …
+   298→  padWidth …
+   304→  boxWrap …
+   307→  preformatted …
+   316→  formatItem …
+   326→  formatItemList …
+   331→  groupItems …
+   338→  formatHelp …
    340→export type HelpConfiguration …
    342→export interface ParseOptions {
    345→export interface HelpContext {
@@ -287,12 +301,8 @@ typings/index.d.ts
    374→export type OptionValues …
    376→export class Command {
    384→  constructor …
-   398→  version(): string | undefined;
-   442→  command(
-   443→    nameAndArgs: string,
-   444→    description: string,
-   445→    opts?: ExecutableCommandOptions,
-   446→  ): this;
+   398→  version …
+   442→  command …
    454→  createCommand …
    463→  addCommand …
    471→  createArgument …

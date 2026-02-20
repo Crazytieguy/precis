@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3984 tokens)
+budget: 4000 (3987 tokens)
 
 Cargo.toml
      1→[package]
@@ -98,6 +98,7 @@ impl/src/fallback.rs
      3→use proc_macro2::TokenStream;
      4→use quote::quote;
      5→use syn::DeriveInput;
+     7→pub(crate) fn expand …
 
 impl/src/fmt.rs
      1→use crate::ast::{ContainerKind, Field};
@@ -153,17 +154,6 @@ impl/src/scan_expr.rs
      1→use self::{Action::*, Input::*};
      6→enum Input {
     25→enum Action {
-   124→static DOT …
-   130→static FOR …
-   135→static IF_ELSE …
-   136→static IF_THEN …
-   139→static METHOD …
-   141→static PATH …
-   148→static PATTERN …
-   166→static RANGE …
-   175→static RAW …
-   181→static REFERENCE …
-   187→static RETURN …
 
 impl/src/unraw.rs
     10→#[derive(Clone)]
@@ -271,6 +261,7 @@ src/provide.rs
 src/var.rs
      1→use core::fmt::{self, Pointer};
      3→pub struct Var<'a, T: ?Sized>(pub &'a T);
+     5→impl<'a, T: Pointer + ?Sized> Pointer for Var<'a, T> {
      6→    fn fmt …
 
 tests/no-std/test.rs
@@ -383,8 +374,13 @@ tests/ui/from-backtrace-backtrace.rs
 tests/ui/from-not-source.rs
      4→pub struct Error {
 
+tests/ui/invalid-input-impl-anyway.rs
+     5→pub struct MyError;
+
 tests/ui/missing-display.rs
      4→pub enum MyError {
+     5→    First,
+      →    …
 
 tests/ui/missing-fmt.rs
      4→pub enum Error {
@@ -392,6 +388,9 @@ tests/ui/missing-fmt.rs
 tests/ui/no-display.rs
      8→pub struct Error {
     14→pub struct ErrorOctal {
+
+tests/ui/numbered-positional-tuple.rs
+     5→pub struct Error(u32);
 
 tests/ui/raw-identifier.rs
      5→pub struct Error {
