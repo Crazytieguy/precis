@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4016 tokens)
+budget: 4000 (4009 tokens)
 
 __init__.py
      1→import os
@@ -34,6 +34,18 @@ __init__.py
     37→def __getattr__(name: str) -> Any:
 
 _checkers.py
+     3→import collections.abc
+     4→import inspect
+     5→import sys
+     6→import types
+     7→import typing
+     8→import warnings
+     9→from collections.abc import Mapping, MutableMapping, Sequence
+    10→from enum import Enum
+    11→from inspect import Parameter, isclass, isfunction
+    12→from io import BufferedIOBase, IOBase, RawIOBase, TextIOBase
+    13→from itertools import zip_longest
+    14→from textwrap import indent
     42→from typing_extensions import is_typeddict
     44→from ._config import ForwardRefPolicy
     45→from ._exceptions import TypeCheckError, TypeHintWarning
@@ -199,15 +211,11 @@ _importhook.py
     62→    ) -> CodeType:
     99→    def exec_module …
    109→class TypeguardFinder(MetaPathFinder):
-   110→    """
-      →    …
    119→
    120→    def __init__ …
    124→    def find_spec …
    138→    def should_instrument …
    156→class ImportHookManager:
-   157→    """
-      →    …
    160→
    161→    def __init__ …
    164→    def __enter__ …
@@ -223,14 +231,6 @@ _memo.py
     37→    def __init__ …
 
 _pytest_plugin.py
-     3→import sys
-     4→import warnings
-     5→from typing import TYPE_CHECKING, Any, Literal
-     7→from typeguard._config import CollectionCheckStrategy, ForwardRefPolicy, global_config
-     8→from typeguard._exceptions import InstrumentationWarning
-     9→from typeguard._importhook import install_import_hook
-    10→from typeguard._utils import qualified_name, resolve_reference
-    13→    from pytest import Config, Parser
     16→def pytest_addoption(parser: Parser) -> None:
     75→def pytest_configure(config: Config) -> None:
 
@@ -275,6 +275,7 @@ _transformer.py
    206→    def get_memo_name(self) -> Name:
    212→    def get_import(self, module: str, name: str) -> Name:
    225→    def insert_imports(self, node: Module | FunctionDef | AsyncFunctionDef) -> None:
+   226→        """Insert imports needed by injected code."""
    238→    def name_matches(self, expression: expr | Expr | None, *names: str) -> bool:
    275→    def get_config_keywords(self) -> list[keyword]:
    285→class NameCollector(NodeVisitor):
@@ -306,8 +307,6 @@ _transformer.py
    491→    ) -> None:
    498→    def generic_visit(self, node: AST) -> AST:
    517→    def _use_memo …
-   570→    def _get_import …
-   580→    def _convert_annotation …
    596→    def visit_Name(self, node: Name) -> Name:
    600→    def visit_Module(self, node: Module) -> Module:
    608→    def visit_Import(self, node: Import) -> Import:

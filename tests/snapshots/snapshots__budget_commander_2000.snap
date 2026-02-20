@@ -2,22 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1998 tokens)
+budget: 2000 (2000 tokens)
 
 Readme.md
      1→# Commander.js
-    61→## Installation
-    67→## Quick Start
-   147→## Declaring _program_ variable
-   177→## Options
-   523→## Commands
-   754→## Automated help
-   956→## Custom event listeners
-   966→## Bits and pieces
-  1164→## Support
 
 lib/argument.js
-     3→class Argument {
     13→  constructor(name, description) {
     48→  name() {
     73→  default(value, description) {
@@ -94,13 +84,10 @@ lib/command.js
   2656→  addHelpText(position, text) {
 
 lib/error.js
-     4→class CommanderError extends Error {
     11→  constructor(exitCode, code, message) {
-    25→class InvalidArgumentError extends CommanderError {
     30→  constructor(message) {
 
 lib/help.js
-    13→  constructor() {
     29→  prepareContext(contextOptions) {
     40→  visibleCommands(cmd) {
     62→  compareOptions(a, b) {
@@ -124,19 +111,6 @@ lib/help.js
    443→  formatHelp(cmd, helper) {
    535→  displayWidth(str) {
    545→  styleTitle(str) {
-   549→  styleUsage(str) {
-   563→  styleCommandDescription(str) {
-   566→  styleOptionDescription(str) {
-   569→  styleSubcommandDescription(str) {
-   572→  styleArgumentDescription(str) {
-   575→  styleDescriptionText(str) {
-   578→  styleOptionTerm(str) {
-   581→  styleSubcommandTerm(str) {
-   594→  styleArgumentTerm(str) {
-   597→  styleOptionText(str) {
-   600→  styleArgumentText(str) {
-   603→  styleSubcommandText(str) {
-   606→  styleCommandText(str) {
    618→  padWidth(cmd, helper) {
    633→  preformatted(str) {
    650→  formatItem(term, termWidth, description, helper) {
@@ -153,7 +127,6 @@ lib/option.js
    132→  argParser(fn) {
    144→  makeOptionMandatory(mandatory = true) {
    156→  hideHelp(hide = true) {
-   165→  _collectValue(value, previous) {
    181→  choices(values) {
    203→  name() {
    217→  attributeName() {
@@ -163,37 +136,63 @@ lib/option.js
    268→class DualOptions {
    272→  constructor(options) {
    297→  valueFromOption(value, option) {
-   316→function camelcase(str) {
-   328→function splitOptionFlags(flags) {
 
 package-support.json
      2→  "versions": [
 
-package.json
-
-tsconfig.json
-    12→  "compilerOptions": {
-    33→  "include": [
-    43→  "exclude": ["node_modules"],
-
 typings/index.d.ts
-    16→export class CommanderError extends Error {
-    31→export class InvalidArgumentError extends CommanderError {
-    40→export interface ErrorOptions {
-    48→export class Argument {
-    95→export class Option {
-   210→export class Help {
-   340→export type HelpConfiguration …
-   342→export interface ParseOptions {
-   345→export interface HelpContext {
-   349→export interface AddHelpTextContext {
-   354→export interface OutputConfiguration {
-   367→export type AddHelpTextPosition …
-   368→export type HookEvent …
-   370→export type OptionValueSource …
-   374→export type OptionValues …
-   376→export class Command {
-  1094→export interface CommandOptions {
-  1100→export interface ExecutableCommandOptions extends CommandOptions {
-  1104→export interface ParseOptionsResult {
-  1113→export const program …
+    28→  constructor …
+    36→  constructor …
+    62→  constructor …
+    67→  name …
+    72→  default …
+    77→  argParser …
+    82→  choices …
+    87→  argRequired …
+    92→  argOptional …
+   120→  default …
+   132→  preset …
+   144→  conflicts …
+   156→  implies …
+   164→  env …
+   169→  argParser …
+   174→  makeOptionMandatory …
+   179→  hideHelp …
+   184→  choices …
+   189→  name …
+   454→  createCommand …
+   463→  addCommand …
+   471→  createArgument …
+   500→  addArgument …
+   514→  arguments …
+   537→  addHelpCommand …
+   542→  hook …
+   553→  exitOverride …
+   558→  error …
+   564→  createHelp …
+   572→  configureHelp …
+   592→  configureOutput …
+   599→  copyInheritedSettings …
+   604→  showHelpAfterError …
+   609→  showSuggestionAfterError …
+   626→  action …
+   660→  option …
+   685→  requiredOption …
+   883→  optsWithGlobals<T extends OptionValues>(): T;
+   897→  description(): string;
+   909→  summary(): string;
+   922→  alias(): string;
+   935→  aliases(): string[];
+   946→  usage(): string;
+   957→  name(): string;
+   972→  nameFromFilename(filename: string): this;
+   990→  executableDir(): string | null;
+  1001→  helpGroup(): string;
+  1019→  commandsGroup(): string;
+  1037→  optionsGroup(): string;
+  1047→  outputHelp(cb: (str: string) => string): void;
+  1052→  helpInformation(context?: HelpContext): string;
+  1059→  helpOption(flags?: string | boolean, description?: string): this;
+  1065→  addHelpOption(option: Option): this;
+  1074→  help(cb: (str: string) => string): never;
+  1091→  on(event: string | symbol, listener: (...args: any[]) => void): this;

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2005 tokens)
+budget: 2000 (2004 tokens)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -73,27 +73,21 @@ cmdk/src/index.tsx
      6→import { Primitive } from '@radix-ui/react-primitive'
      7→import { useId } from '@radix-ui/react-id'
      8→import { composeRefs } from '@radix-ui/react-compose-refs'
-    10→type Children = { children?: React.ReactNode }
-    11→type DivProps = React.ComponentPropsWithoutRef<typeof Primitive.div>
-    13→type LoadingProps = Children &
-    14→  DivProps & {
-    23→type EmptyProps = Children & DivProps & {}
-    24→type SeparatorProps = DivProps & {
-    28→type DialogProps = RadixDialog.DialogProps &
-    29→  CommandProps & {
-    37→type ListProps = Children &
-    38→  DivProps & {
-    44→type ItemProps = Children &
-    45→  Omit<DivProps, 'disabled' | 'onSelect' | 'value'> & {
-    60→type GroupProps = Children &
-    61→  Omit<DivProps, 'heading' | 'value'> & {
-    69→type InputProps = Omit<React.ComponentPropsWithoutRef<typeof Primitive.input>, 'value' | 'onChange' | 'type'> & {
-    79→type CommandFilter = (value: string, search: string, keywords?: string[]) => number
-    80→type CommandProps = Children &
-    81→  DivProps & {
-   123→type Context = {
-   137→type State = {
-   143→type Store = {
+    10→type Children …
+    11→type DivProps …
+    13→type LoadingProps …
+    23→type EmptyProps …
+    24→type SeparatorProps …
+    28→type DialogProps …
+    37→type ListProps …
+    44→type ItemProps …
+    60→type GroupProps …
+    69→type InputProps …
+    79→type CommandFilter …
+    80→type CommandProps …
+   123→type Context …
+   137→type State …
+   143→type Store …
    149→type Group = {
    154→const GROUP_SELECTOR = `[cmdk-group=""]`
    155→const GROUP_ITEMS_SELECTOR = `[cmdk-group-items=""]`
@@ -142,8 +136,6 @@ package.json
     27→  }
     28→}
 
-playwright.config.ts
-
 pnpm-workspace.yaml
      1→packages:
 
@@ -164,6 +156,22 @@ website/README.md
      3→## Getting Started
     19→## Learn More
     28→## Deploy on Vercel
+
+website/components/cmdk/linear.tsx
+     3→export function LinearCMDK() {
+
+website/components/icons/index.tsx
+     3→export function FigmaIcon() {
+    15→export function RaycastIcon() {
+    28→export function YouTubeIcon() {
+    40→export function SlackIcon() {
+    79→export function VercelIcon() {
+    87→export function LinearIcon({ style }: { style?: Object }) {
+   110→export function Logo({ children, size = '20px' }: { children: React.ReactNode; size?: string }) {
+   127→export function CopyIcon() {
+   146→export function CopiedIcon() {
+   154→export function GitHubIcon() {
+   165→export function FramerIcon() {
 
 website/package.json
      2→  "name": "cmdk-website",

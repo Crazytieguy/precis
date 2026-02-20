@@ -2,12 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (997 tokens)
+budget: 1000 (1000 tokens)
 
 README.md
      1→# color
-     3→Color lets you use colorized outputs in terms of [ANSI Escape
-      →…
     10→## Install
     16→## Examples
    177→## GitHub Actions
@@ -15,22 +13,53 @@ README.md
    187→## License
 
 color.go
-     3→import …
     22→	NoColor = noColorIsSet() || os.Getenv("TERM") == "dumb" ||
     27→	Output = colorable.NewColorableStdout()
     30→	Error = colorable.NewColorableStderr()
     34→	colorsCache   = make(map[Attribute]*Color)
-    39→func noColorIsSet() bool {
-    43→// Color defines a custom color object which is defined by SGR parameters.
+    39→func noColorIsSet …
     44→type Color struct {
     45→	params  []Attribute
     46→	noColor *bool
     47→}
     50→type Attribute int
     55→const (
+    56→	Reset Attribute = iota
+    57→	Bold
+    58→	Faint
+    59→	Italic
+    60→	Underline
+    61→	BlinkSlow
+    62→	BlinkRapid
+    63→	ReverseVideo
+    64→	Concealed
+    65→	CrossedOut
+    69→	ResetBold Attribute = iota + 22
+    70→	ResetItalic
+    71→	ResetUnderline
+    72→	ResetBlinking
+    74→	ResetReversed
+    75→	ResetConcealed
+    76→	ResetCrossedOut
     92→const (
+    93→	FgBlack Attribute = iota + 30
+    94→	FgRed
+    95→	FgGreen
+    96→	FgYellow
+    97→	FgBlue
+    98→	FgMagenta
+    99→	FgCyan
+   100→	FgWhite
    103→	foreground
    107→const (
+   108→	FgHiBlack Attribute = iota + 90
+   109→	FgHiRed
+   110→	FgHiGreen
+   111→	FgHiYellow
+   112→	FgHiBlue
+   113→	FgHiMagenta
+   114→	FgHiCyan
+   115→	FgHiWhite
    119→const (
    130→	background
    134→const (
@@ -50,24 +79,8 @@ color.go
    276→func (c *Color) Fprintf …
    286→func (c *Color) Printf …
    297→func (c *Color) Fprintln …
-   306→func (c *Color) Println …
-   311→func (c *Color) Sprint …
-   316→func (c *Color) Sprintln …
-   321→func (c *Color) Sprintf …
-   327→func (c *Color) FprintFunc …
-   335→func (c *Color) PrintFunc …
-   343→func (c *Color) FprintfFunc …
-   351→func (c *Color) PrintfFunc …
-   359→func (c *Color) FprintlnFunc …
-   367→func (c *Color) PrintlnFunc …
-   379→func (c *Color) SprintFunc …
-   388→func (c *Color) SprintfFunc …
-   397→func (c *Color) SprintlnFunc …
-   405→func (c *Color) sequence() string {
-   416→func (c *Color) wrap(s string) string {
-   446→func (c *Color) DisableColor …
-   452→func (c *Color) EnableColor …
-   467→func (c *Color) Equals …
+   405→func (c *Color) sequence …
+   416→func (c *Color) wrap …
    540→func Black …
    544→func Red …
    548→func Green …
@@ -100,12 +113,7 @@ color.go
    664→func HiMagentaString …
    670→func HiCyanString …
    674→func HiWhiteString …
-   679→func sprintln(a ...interface{}) string {
-
-color_test.go
-     3→import …
-    16→func TestColor(t *testing.T) {
+   679→func sprintln …
 
 color_windows.go
-     3→import …
      9→func init() {

@@ -2,13 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (991 tokens)
-
-Cargo.toml
-     1→[package]
-    22→[features]
-    56→[dependencies]
-    62→[dev-dependencies]
+budget: 1000 (994 tokens)
 
 README.md
      1→log
@@ -22,7 +16,6 @@ src/__private_api.rs
     39→pub struct GlobalLogger;
    108→pub fn loc …
    113→mod kv_support {
-   116→    pub type Value …
    135→    pub fn capture_error …
    140→    pub fn capture_sval …
    145→    pub fn capture_serde …
@@ -35,7 +28,6 @@ src/kv/error.rs
     10→enum Inner {
     21→    pub fn msg …
     69→mod std_support {
-    70→    use super::*;
     77→        pub fn boxed …
 
 src/kv/key.rs
@@ -45,9 +37,6 @@ src/kv/key.rs
     45→    pub fn from_str(key: &'k str) -> Self {
     53→    pub fn as_str(&self) -> &str {
     61→    pub fn to_borrowed_str(&self) -> Option<&'k str> {
-    94→mod std_support {
-   113→mod sval_support {
-   136→mod serde_support {
 
 src/kv/mod.rs
    250→mod source;
@@ -67,18 +56,14 @@ src/kv/source.rs
     85→    fn count …
    235→pub trait VisitSource<'kvs> {
    237→    fn visit_pair …
-   280→mod std_support {
    462→pub use VisitSource as Visitor;
 
 src/kv/value.rs
      8→pub use crate::kv::Error;
     11→pub trait ToValue {
    119→pub struct Value<'v> {
-   395→    use super::*;
    462→pub trait VisitValue<'v> {
    610→    use super::*;
-   612→    pub use value_bag::ValueBag as Inner;
-   614→    pub use value_bag::Error;
    735→    use super::*;
    738→    pub enum Inner<'v> {
   1123→pub use VisitValue as Visit;
@@ -89,20 +74,35 @@ src/kv/value.rs
   1169→macro_rules! as_sval {
 
 src/lib.rs
-   406→mod macros;
-   409→#[cfg(feature = "kv")]
    410→pub mod kv;
    475→pub enum Level {
+   548→    pub fn max …
+   554→    pub fn to_level_filter …
+   561→    pub fn as_str …
+   579→    pub fn iter …
+   599→    pub fn increment_severity …
+   620→    pub fn decrement_severity …
    636→pub enum LevelFilter {
+   699→    pub fn max …
+   707→    pub fn to_level …
+   714→    pub fn as_str …
+   732→    pub fn iter …
+   752→    pub fn increment_severity …
+   774→    pub fn decrement_severity …
    842→pub struct Record<'a> {
+   872→    pub fn builder …
+   878→    pub fn args …
+   884→    pub fn metadata …
+   890→    pub fn level …
+   896→    pub fn target …
+   902→    pub fn module_path …
   1003→pub struct RecordBuilder<'a> {
   1158→pub struct Metadata<'a> {
   1200→pub struct MetadataBuilder<'a> {
   1249→pub trait Log: Sync + Send {
   1549→pub struct SetLoggerError(());
   1566→pub struct ParseLevelError(());
-  1600→pub mod __private_api;
-  1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
+  1611→pub const STATIC_MAX_LEVEL …
 
 src/macros.rs
     75→macro_rules! log {
@@ -112,6 +112,3 @@ src/macros.rs
    292→macro_rules! debug {
    336→macro_rules! trace {
    391→macro_rules! log_enabled {
-
-triagebot.toml
-     1→[assign]

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1999 tokens)
+budget: 2000 (2003 tokens)
 
 __init__.py
      1→__all__ = [
@@ -22,14 +22,6 @@ __init__.py
     32→def __getattr__(name: str) -> str:
 
 _callers.py
-     7→from collections.abc import Generator
-     8→from collections.abc import Mapping
-     9→from collections.abc import Sequence
-    10→from typing import cast
-    11→from typing import NoReturn
-    12→from typing import TYPE_CHECKING
-    13→from typing import TypeAlias
-    14→import warnings
     16→from ._hooks import HookImpl
     17→from ._result import HookCallError
     18→from ._result import Result
@@ -69,7 +61,6 @@ _hooks.py
    516→    def call_historic …
    543→    def call_extra …
    593→class _SubsetHookCaller(HookCaller):
-   596→
    612→    def __init__ …
    619→    def _hookimpls …
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
@@ -127,31 +118,27 @@ _manager.py
    252→    def add_hookspecs …
    278→    def parse_hookspec_opts …
    296→    def get_plugins …
-   300→    def is_registered …
-   304→    def get_canonical_name …
-   315→    def get_plugin …
-   319→    def has_plugin …
-   323→    def get_name …
-   379→    def check_pending …
-   395→    def load_setuptools_entrypoints …
-   425→    def list_plugin_distinfo …
-   430→    def list_name_plugin …
-   434→    def get_hookcallers …
-   450→    def add_hookcall_monitoring …
-   487→    def enable_tracing …
-   512→    def subset_hook_caller …
+   300→    def is_registered(self, plugin: _Plugin) -> bool:
+   304→    def get_canonical_name(self, plugin: _Plugin) -> str:
+   315→    def get_plugin(self, name: str) -> Any | None:
+   319→    def has_plugin(self, name: str) -> bool:
+   323→    def get_name(self, plugin: _Plugin) -> str | None:
+   379→    def check_pending(self) -> None:
+   395→    def load_setuptools_entrypoints(self, group: str, name: str | None = None) -> int:
+   425→    def list_plugin_distinfo(self) -> list[tuple[_Plugin, DistFacade]]:
+   430→    def list_name_plugin(self) -> list[tuple[str, _Plugin]]:
+   434→    def get_hookcallers(self, plugin: _Plugin) -> list[HookCaller] | None:
+   450→    def add_hookcall_monitoring(
+   451→        self, before: _BeforeTrace, after: _AfterTrace
+   452→    ) -> Callable[[], None]:
+   487→    def enable_tracing(self) -> Callable[[], None]:
+   512→    def subset_hook_caller(
+   513→        self, name: str, remove_plugins: Iterable[_Plugin]
+   514→    ) -> HookCaller:
 
 _result.py
-     7→from collections.abc import Callable
-     8→from types import TracebackType
-     9→from typing import cast
-    10→from typing import final
-    11→from typing import Generic
-    12→from typing import TypeAlias
-    13→from typing import TypeVar
     16→_ExcInfo …
     20→class HookCallError(Exception):
-    21→    """Hook was called incorrectly."""
     24→@final
     25→class Result(Generic[ResultType]):
     28→

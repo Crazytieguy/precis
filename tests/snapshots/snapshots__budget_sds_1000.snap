@@ -2,9 +2,35 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (992 tokens)
+budget: 1000 (993 tokens)
 
 README.md
+     1→Simple Dynamic Strings
+    18→How SDS strings work
+    55→Advantages and disadvantages of SDS
+   119→SDS basics
+   143→Creating SDS strings
+   195→Obtaining the string length
+   224→Destroying strings
+   243→Concatenating strings
+   310→Formatting strings
+   350→Fast number to string operations
+   370→Trimming strings and getting ranges
+   464→String copying
+   509→Quoting strings
+   563→Tokenization
+   622→Command line oriented tokenization
+   658→String joining
+   686→Error handling
+   696→SDS internals and advanced usage
+   761→Shrinking strings
+   796→Manual modifications of SDS strings
+   820→Sharing SDS strings
+   851→Interactions with heap checkers
+   860→Zero copy append from syscalls
+   882→Embedding SDS into your project
+   895→Using a different allocator for SDS
+   911→Credits and license
 
 sds.c
     33→#include <stdio.h>
@@ -28,34 +54,32 @@ sds.c
    440→sds sdscpy(sds s, const char *t) {
    450→#define SDS_LLSTR_SIZE 21
    494→int sdsull2str(char *s, unsigned long long v) {
-   526→sds sdsfromlonglong(long long value) {
-   534→sds sdscatvprintf(sds s, const char *fmt, va_list ap) {
-   591→sds sdscatprintf(sds s, const char *fmt, ...) {
-   616→sds sdscatfmt(sds s, char const *fmt, ...) {
-   725→sds sdstrim(sds s, const char *cset) {
-   756→void sdsrange(sds s, ssize_t start, ssize_t end) {
-   783→void sdstolower(sds s) {
-   790→void sdstoupper(sds s) {
-   807→int sdscmp(const sds s1, const sds s2) {
-   835→sds *sdssplitlen(const char *s, ssize_t len, const char *sep, int seplen, int *count) {
-   885→void sdsfreesplitres(sds *tokens, int count) {
-   898→sds sdscatrepr(sds s, const char *p, size_t len) {
-   925→int is_hex_digit(char c) {
-   932→int hex_digit_to_int(char c) {
-   973→sds *sdssplitargs(const char *line, int *argc) {
-  1092→sds sdsmapchars(sds s, const char *from, const char *to, size_t setlen) {
-  1108→sds sdsjoin(char **argv, int argc, char *sep) {
-  1120→sds sdsjoinsds(sds *argv, int argc, const char *sep, size_t seplen) {
-  1136→void *sds_malloc(size_t size) { return s_malloc(size); }
+   526→sds sdsfromlonglong …
+   534→sds sdscatvprintf …
+   591→sds sdscatprintf …
+   616→sds sdscatfmt …
+   725→sds sdstrim …
+   756→void sdsrange …
+   783→void sdstolower …
+   790→void sdstoupper …
+   807→int sdscmp …
+   835→sds *sdssplitlen …
+   885→void sdsfreesplitres …
+   898→sds sdscatrepr …
+   925→int is_hex_digit …
+   932→int hex_digit_to_int …
+   973→sds *sdssplitargs …
+  1092→sds sdsmapchars …
+  1108→sds sdsjoin …
+  1120→sds sdsjoinsds …
+  1136→void *sds_malloc …
   1145→#define UNUSED(x) (void)(x)
 
 sds.h
+    34→#define __SDS_H
     43→typedef char *sds;
     47→struct __attribute__ ((__packed__)) sdshdr5 {
-    51→struct __attribute__ ((__packed__)) sdshdr8 {
-    57→struct __attribute__ ((__packed__)) sdshdr16 {
-    63→struct __attribute__ ((__packed__)) sdshdr32 {
-    69→struct __attribute__ ((__packed__)) sdshdr64 {
+   180→static inline size_t sdsalloc(const sds s) {
    256→sds sdsMakeRoomFor(sds s, size_t addlen);
    266→void *sds_malloc(size_t size);
 

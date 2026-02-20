@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1979 tokens)
+budget: 2000 (1987 tokens)
 
 error.rs
      1→use std::fmt;
@@ -12,31 +12,18 @@ error.rs
      6→    inner: Inner,
      7→}
     10→enum Inner {
-    19→impl Error {
-    20→    /// Create an error from a message.
     21→    pub fn msg(msg: &'static str) -> Self {
     29→    pub(super) fn from_value …
     37→    pub(super) fn into_value …
-    48→impl fmt::Display for Error {
-    49→    fn fmt …
-    62→impl From<fmt::Error> for Error {
-    63→    fn from …
     69→mod std_support {
     70→    use super::*;
     71→    use std::{error, io};
-    75→    impl Error {
-    76→        /// Create an error from a standard error type.
     77→        pub fn boxed<E>(err: E) -> Self
     78→        where
     79→            E: Into<BoxedError>,
     80→        {
-    87→    impl error::Error for Error {}
-    89→    impl From<io::Error> for Error {
-    90→        fn from …
 
 key.rs
-     3→use std::borrow::Borrow;
-     4→use std::fmt;
      7→pub trait ToKey {
      9→    fn to_key(&self) -> Key<'_>;
     37→pub struct Key<'k> {
@@ -48,14 +35,10 @@ key.rs
     61→    pub fn to_borrowed_str(&self) -> Option<&'k str> {
     94→mod std_support {
     95→    use super::*;
-    97→    use std::borrow::Cow;
    113→mod sval_support {
    114→    use super::*;
-   116→    use sval::Value;
-   117→    use sval_ref::ValueRef;
    136→mod serde_support {
    137→    use super::*;
-   139→    use serde_core::{Serialize, Serializer};
 
 mod.rs
    246→mod error;
@@ -66,9 +49,7 @@ mod.rs
    255→pub use self::key::{Key, ToKey};
    256→pub use self::source::{Source, VisitSource};
    257→pub use self::value::{ToValue, Value, VisitValue};
-   259→#[cfg(feature = "kv_unstable")]
    260→pub mod source;
-   261→#[cfg(feature = "kv_unstable")]
    262→pub mod value;
    265→pub use self::source::Visitor;
 
@@ -87,38 +68,46 @@ source.rs
    462→pub use VisitSource as Visitor;
 
 value.rs
-     6→use std::fmt;
      8→pub use crate::kv::Error;
     11→pub trait ToValue {
-    13→    fn to_value …
+    13→    fn to_value(&self) -> Value<'_>;
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
    121→}
-   125→    pub fn from_any …
-   133→    pub fn from_debug …
-   143→    pub fn from_display …
-   154→    pub fn from_serde …
-   165→    pub fn from_sval …
-   175→    pub fn from_dyn_debug …
-   182→    pub fn from_dyn_display …
-   190→    pub fn from_dyn_error …
-   197→    pub fn null …
+   125→    pub fn from_any<T>(value: &'v T) -> Self
+   126→    where
+   127→        T: ToValue,
+   128→    {
+   133→    pub fn from_debug<T>(value: &'v T) -> Self
+   134→    where
+   135→        T: fmt::Debug,
+   136→    {
+   143→    pub fn from_display<T>(value: &'v T) -> Self
+   144→    where
+   145→        T: fmt::Display,
+   146→    {
+   154→    pub fn from_serde<T>(value: &'v T) -> Self
+   155→    where
+   156→        T: serde_core::Serialize,
+   157→    {
+   165→    pub fn from_sval<T>(value: &'v T) -> Self
+   166→    where
+   167→        T: sval::Value,
+   168→    {
+   175→    pub fn from_dyn_debug(value: &'v dyn fmt::Debug) -> Self {
+   182→    pub fn from_dyn_display(value: &'v dyn fmt::Display) -> Self {
+   190→    pub fn from_dyn_error(err: &'v (dyn std::error::Error + 'static)) -> Self {
+   197→    pub fn null() -> Self {
    204→    fn from_inner …
-   217→    pub fn visit …
-   288→macro_rules! impl_to_value_primitive {
-   312→macro_rules! impl_to_value_nonzero_primitive {
-   336→macro_rules! impl_value_to_primitive {
-   379→    pub fn to_borrowed_error …
-   384→    pub fn to_borrowed_str …
+   217→    pub fn visit(&self, visitor: impl VisitValue<'v>) -> Result<(), Error> {
+   379→    pub fn to_borrowed_error(&self) -> Option<&(dyn std::error::Error + 'static)> {
+   384→    pub fn to_borrowed_str(&self) -> Option<&'v str> {
    390→mod std_support {
-   391→    use std::borrow::Cow;
-   392→    use std::rc::Rc;
-   393→    use std::sync::Arc;
    395→    use super::*;
-   438→        pub fn to_cow_str …
+   438→        pub fn to_cow_str(&self) -> Option<Cow<'v, str>> {
    462→pub trait VisitValue<'v> {
-   469→    fn visit_any …
-   472→    fn visit_null …
+   469→    fn visit_any(&mut self, value: Value) -> Result<(), Error>;
+   472→    fn visit_null(&mut self) -> Result<(), Error> {
    477→    fn visit_u64 …
    482→    fn visit_i64 …
    487→    fn visit_u128 …
@@ -145,6 +134,7 @@ value.rs
    738→    pub enum Inner<'v> {
    739→        None,
    740→        Bool(bool),
+   741→        Str(&'v str),
       →        …
    897→        pub fn from_debug<T: fmt::Debug>(value: &'v T) -> Self {
    901→        pub fn from_display<T: fmt::Display>(value: &'v T) -> Self {

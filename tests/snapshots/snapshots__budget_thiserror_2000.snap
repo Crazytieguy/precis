@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1989 tokens)
+budget: 2000 (1993 tokens)
 
 Cargo.toml
      1→[package]
@@ -22,11 +22,8 @@ build/probe.rs
     11→struct MyError(Thing);
     12→struct Thing;
     14→impl Debug for MyError {
-    15→    fn fmt …
     20→impl Display for MyError {
-    21→    fn fmt …
     26→impl Error for MyError {
-    27→    fn provide …
 
 impl/Cargo.toml
      1→[package]
@@ -87,6 +84,7 @@ impl/src/generics.rs
      8→pub struct ParamsInScope<'a> {
     13→    pub fn new(generics: &'a Generics) -> Self {
     19→    pub fn intersects(&self, ty: &Type) -> bool {
+    26→fn crawl …
     48→pub struct InferredBounds {
     54→    pub fn new() -> Self {
     61→    pub fn insert(&mut self, ty: impl ToTokens, bound: impl ToTokens) {
@@ -107,10 +105,6 @@ impl/src/lib.rs
     46→struct private;
     48→impl ToTokens for private {
 
-impl/src/prop.rs
-     1→use crate::ast::{Enum, Field, Struct, Variant};
-     2→use crate::unraw::MemberUnraw;
-
 impl/src/scan_expr.rs
      1→use self::{Action::*, Input::*};
      6→enum Input {
@@ -127,16 +121,10 @@ impl/src/unraw.rs
     85→}
     88→    pub fn span(&self) -> Span {
 
-impl/src/valid.rs
-     1→use crate::ast::{Enum, Field, Input, Struct, Variant};
-     2→use crate::attr::Attrs;
-
 rust-toolchain.toml
      1→[toolchain]
 
 src/aserror.rs
-     1→use core::error::Error;
-     2→use core::panic::UnwindSafe;
      5→pub trait AsDynError<'a>: Sealed {
      6→    fn as_dyn_error(&self) -> &(dyn Error + 'a);
     11→    fn as_dyn_error …
@@ -194,7 +182,18 @@ src/var.rs
      6→    fn fmt …
 
 tests/test_backtrace.rs
+     8→pub struct Inner;
+    13→pub struct InnerBacktrace {
     18→pub mod structs {
+    27→        pub struct Backtrace;
+    32→    pub struct PlainBacktrace {
+    38→    pub struct ExplicitBacktrace {
+    45→    pub struct NotBacktrace {
+    51→    pub struct OptBacktrace {
+    58→    pub struct ArcBacktrace {
+    65→    pub struct BacktraceFrom {
+    74→    pub struct CombinedBacktraceFrom {
+    82→    pub struct OptBacktraceFrom {
    163→pub mod enums {
 
 tests/test_expr.rs

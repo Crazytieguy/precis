@@ -2,11 +2,101 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2006 tokens)
+budget: 2000 (2004 tokens)
 
 CHANGELOG.md
-     1→# Changelog
-   484→# [8.0.0](https://github.com/motdotla/dotenv/compare/v7.0.0...v8.0.0) (2019-05-02)
+     9→### Changed
+    15→### Added
+    19→### Changed
+    25→### Changed
+    32→### Changed
+    38→### Added
+    44→### Changed
+    50→### Added
+    76→### Added
+    98→### Changed
+   104→### Changed
+   110→### Changed
+   118→### Added
+   126→### Added
+   136→### Changed
+   142→### Changed
+   148→### Changed
+   155→### Changed
+   161→### Changed
+   167→### Changed
+   173→### Changed
+   188→### Added
+   192→### Changed
+   199→### Added
+   205→### Added
+   211→### Added
+   218→### Added
+   224→### Removed
+   230→### Changed
+   236→### Added
+   240→### Changed
+   246→### Added
+   256→### Changed
+   262→### Changed
+   268→### Added
+   274→### Changed
+   281→### Added
+   289→### Changed
+   297→### Added
+   301→### Changed
+   307→### Removed
+   313→### Changed
+   319→### Changed
+   325→### Added
+   331→### Added
+   338→### Added
+   344→### Added
+   350→### Added
+   356→### Added
+   362→### Changed
+   368→### Added
+   374→### Changed
+   381→### Changed
+   387→### Changed
+   393→### Changed
+   399→### Removed
+   403→### Changed
+   411→### Changed
+   418→### Added
+   426→### Changed
+   432→### Changed
+   438→### Changed
+   444→### Added
+   450→### Changed
+   456→### Added
+   462→### Changed
+   468→### Changed
+   474→### Added
+   480→### Changed
+   486→### Changed
+   492→### Fixed
+   496→### Removed
+   502→### Added
+   508→### Added
+   514→### Changed
+   520→### Added
+   526→### Changed
+   532→### Removed
+   538→### Changed
+   542→### Removed
+   548→### Added
+   554→### Changed
+   559→### Fixed
+   563→### Removed
+   569→### Added
+   577→### Changed
+   581→### Removed
+   587→### Added
+   591→### Changed
+   595→### Fixed
+   601→### Added
+   607→### Removed
 
 CONTRIBUTING.md
      1→# Contributing
@@ -22,20 +112,8 @@ README-es.md
    357→## FAQ
    579→## Docs
    587→### Config
-   605→#### Options
-   607→##### path
-   625→##### quiet
-   648→##### encoding
-   658→##### debug
-   668→##### override
-   678→##### processEnv
    692→### Parse
-   705→#### Options
-   707→##### debug
    721→### Populate
-   748→#### options
-   750→##### Debug
-   756→##### override
    764→## CHANGELOG
    770→## Who's using dotenv?
 
@@ -89,26 +167,16 @@ lib/main.d.ts
     26→  /**
     27→   * Default: `path.resolve(process.cwd(), '.env')`
     28→   *
-    29→   * Specify a custom path if your file containing environment variables is located elsewhere.
-    30→   * Can also be an array of strings, specifying multiple paths.
-    31→   *
-    32→   * example: `require('dotenv').config({ path: '/custom/path/to/.env' })`
       →   …
     92→export interface DotenvConfigOutput {
     93→  error?: DotenvError;
     94→  parsed?: DotenvParseOutput;
     95→}
     97→type DotenvError = Error & {
-    98→  code: 
-      →  …
    106→export interface DotenvPopulateOptions {
    107→  /**
    108→   * Default: `false`
    109→   *
-   110→   * Turn on logging to help debug why certain keys or values are not being set as you expect.
-   111→   *
-   112→   * example: `require('dotenv').config({ debug: process.env.DEBUG })`
-   113→   */
       →   …
    126→export interface DotenvPopulateInput {
    127→  [name: string]: string | undefined;
@@ -167,52 +235,8 @@ package.json
 tests/test-config-cli.js
      6→function spawn (cmd, options = {}) {
 
-tests/test-config-vault.js
-     8→const testPath …
-    10→const dotenvKey …
-
-tests/test-env-options.js
-     8→const e = process.env.DOTENV_CONFIG_ENCODING
-     9→const p = process.env.DOTENV_CONFIG_PATH
-    10→const q = process.env.DOTENV_CONFIG_QUIET
-    11→const d = process.env.DOTENV_CONFIG_DEBUG
-    12→const o = process.env.DOTENV_CONFIG_OVERRIDE
-    13→const dk = process.env.DOTENV_CONFIG_DOTENV_KEY
-    16→function options () {
-    21→function testOption (envVar, tmpVal, expect) {
-
-tests/test-parse-multiline.js
-     6→const parsed …
-    50→const multiPem …
-    59→const payload …
-    62→const expectedPayload …
-    64→const RPayload …
-    67→const NPayload …
-    70→const RNPayload …
-
-tests/test-parse.js
-     6→const parsed …
-    82→const payload …
-    85→const duplicate …
-    88→const expectedPayload …
-    90→const RPayload …
-    93→const NPayload …
-    96→const RNPayload …
-
 tests/test-populate.js
-     8→const mockParseResponse = { test: 'foo' }
-
-tests/types/test.ts
-     1→import { config, parse } from "dotenv";
-     3→const env …
-     4→const dbUrl …
-    15→const parsed …
-    16→const dbHost …
-    18→const parsedFromBuffer …
-    19→const justice …
 
 tests/types/tsconfig.json
      2→  "compilerOptions": {
-    15→  },
     16→  "include": ["./test.ts", "../../main.d.ts"]
-    17→}

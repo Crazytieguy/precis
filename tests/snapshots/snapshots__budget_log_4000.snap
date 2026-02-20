@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3988 tokens)
+budget: 4000 (3991 tokens)
 
 CHANGELOG.md
 
@@ -24,33 +24,15 @@ rfcs/0296-structured-logging.md
      5→# Summary
     16→# Contents
     43→# Motivation
-    46→## What is structured logging?
-    86→## Why do we need structured logging in `log`?
     98→# Guide-level explanation
-   103→## Logging structured key-value pairs
-   255→## Supporting key-value pairs in `Log` implementations
-   401→## Integrating log frameworks with `log`
-   489→## How producers and consumers of structured values interact
    495→# Reference-level explanation
-   500→## Design considerations
-   522→## Cargo features
-   541→## A complete key-values API
-  1460→## A minimal key-values API
-  1569→## The `log!` macros
   1575→# Drawbacks, rationale, and alternatives
-  1578→## Supporting structured logging at all
-  1582→## Internalizing `sval` and `serde`
   1629→# Prior art
-  1634→## Rust
-  1640→## Go
-  1644→## .NET
   1650→# Unresolved questions
 
 src/__private_api.rs
      3→use self::sealed::KVs;
      4→use crate::{logger, Level, Log, Metadata, Record};
-     5→use std::fmt::Arguments;
-     6→use std::panic::Location;
      7→pub use std::{format_args, module_path, stringify};
      9→#[cfg(not(feature = "kv"))]
     10→pub type Value<'a> = &'a str;
@@ -60,7 +42,6 @@ src/__private_api.rs
     23→    fn into_kvs …
     30→    fn into_kvs …
     39→pub struct GlobalLogger;
-    56→fn log_impl …
     84→pub fn log …
    103→pub fn enabled …
    108→pub fn loc() -> &'static Location<'static> {
@@ -83,8 +64,6 @@ src/kv/error.rs
      7→}
     10→enum Inner {
     21→    pub fn msg(msg: &'static str) -> Self {
-    29→    pub(super) fn from_value …
-    37→    pub(super) fn into_value …
     69→mod std_support {
     70→    use super::*;
     77→        pub fn boxed<E>(err: E) -> Self
@@ -139,29 +118,44 @@ src/kv/source.rs
 src/kv/value.rs
      8→pub use crate::kv::Error;
     11→pub trait ToValue {
-    13→    fn to_value …
+    13→    fn to_value(&self) -> Value<'_>;
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
-   121→}
-   125→    pub fn from_any …
-   133→    pub fn from_debug …
-   143→    pub fn from_display …
-   154→    pub fn from_serde …
-   165→    pub fn from_sval …
-   175→    pub fn from_dyn_debug …
-   182→    pub fn from_dyn_display …
-   190→    pub fn from_dyn_error …
-   197→    pub fn null …
+      →    …
+   125→    pub fn from_any<T>(value: &'v T) -> Self
+   126→    where
+   127→        T: ToValue,
+   128→    {
+   133→    pub fn from_debug<T>(value: &'v T) -> Self
+   134→    where
+   135→        T: fmt::Debug,
+   136→    {
+   143→    pub fn from_display<T>(value: &'v T) -> Self
+   144→    where
+   145→        T: fmt::Display,
+   146→    {
+   154→    pub fn from_serde<T>(value: &'v T) -> Self
+   155→    where
+   156→        T: serde_core::Serialize,
+   157→    {
+   165→    pub fn from_sval<T>(value: &'v T) -> Self
+   166→    where
+   167→        T: sval::Value,
+   168→    {
+   175→    pub fn from_dyn_debug(value: &'v dyn fmt::Debug) -> Self {
+   182→    pub fn from_dyn_display(value: &'v dyn fmt::Display) -> Self {
+   190→    pub fn from_dyn_error(err: &'v (dyn std::error::Error + 'static)) -> Self {
+   197→    pub fn null() -> Self {
    204→    fn from_inner …
-   217→    pub fn visit …
-   379→    pub fn to_borrowed_error …
-   384→    pub fn to_borrowed_str …
+   217→    pub fn visit(&self, visitor: impl VisitValue<'v>) -> Result<(), Error> {
+   379→    pub fn to_borrowed_error(&self) -> Option<&(dyn std::error::Error + 'static)> {
+   384→    pub fn to_borrowed_str(&self) -> Option<&'v str> {
    390→mod std_support {
    395→    use super::*;
-   438→        pub fn to_cow_str …
+   438→        pub fn to_cow_str(&self) -> Option<Cow<'v, str>> {
    462→pub trait VisitValue<'v> {
-   469→    fn visit_any …
-   472→    fn visit_null …
+   469→    fn visit_any(&mut self, value: Value) -> Result<(), Error>;
+   472→    fn visit_null(&mut self) -> Result<(), Error> {
    477→    fn visit_u64 …
    482→    fn visit_i64 …
    487→    fn visit_u128 …
@@ -184,7 +178,6 @@ src/kv/value.rs
    735→    use super::*;
    738→    pub enum Inner<'v> {
    739→        None,
-   740→        Bool(bool),
       →        …
    897→        pub fn from_debug …
    901→        pub fn from_display …
@@ -227,7 +220,6 @@ src/lib.rs
    475→pub enum Level {
    503→    fn eq …
    510→    fn partial_cmp …
-   516→    type Err = ParseLevelError;
    548→    pub fn max() -> Level {
    554→    pub fn to_level_filter(&self) -> LevelFilter {
    561→    pub fn as_str(&self) -> &'static str {
@@ -237,7 +229,6 @@ src/lib.rs
    636→pub enum LevelFilter {
    653→    fn eq …
    660→    fn partial_cmp …
-   666→    type Err = ParseLevelError;
    699→    pub fn max() -> LevelFilter {
    707→    pub fn to_level(&self) -> Option<Level> {
    714→    pub fn as_str(&self) -> &'static str {
@@ -339,9 +330,6 @@ test_max_level_features/main.rs
     11→struct State {
     15→struct Logger(Arc<State>);
     17→impl Log for Logger {
-    29→fn main …
-    44→fn test …
-    72→fn last …
 
 triagebot.toml
      1→[assign]

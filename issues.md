@@ -5,7 +5,6 @@
 - **Per-group stage value tuning** — the initial stage values (1.0, 0.7, 0.6, etc.) are starting points. Review snapshots across languages and tune per-kind values for better output quality.
 - **Tiktoken build_groups performance** — switching from word counting to tiktoken BPE encoding made `build_groups` ~25x slower (from ~0.6ms to ~17ms for either_src). The full pipeline is ~1.5x slower overall (still under 250ms for the largest fixture). If this becomes a bottleneck for larger codebases, consider: (a) a cheaper token approximation for scheduling with tiktoken only for final output counting, or (b) batch encoding optimizations.
 
-- **Large-group Names-stage cliff** — groups with many symbols (60+) have an all-or-nothing problem at the Names stage. The entire group's Names cost must fit within the remaining budget in a single scheduling step. When it doesn't, the group stays at FilePath even though individual symbols within it are high-value. This particularly affects files like commander's `command.js` (60+ methods) at tight budgets — the whole file shows no methods while smaller, less important files consume the budget. Possible fixes: sub-group splitting by nested scope, or allowing partial Names rendering for large groups.
 - **format.rs module size** — `format.rs` is ~1080 lines handling rendering, doc detection helpers, layout computation, markdown processing, and line truncation. Consider splitting into focused modules (e.g., `render.rs` for output formatting, `layout.rs` for line-range computation).
 
 ## Implementation notes

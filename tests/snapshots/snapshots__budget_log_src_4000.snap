@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3984 tokens)
+budget: 4000 (3987 tokens)
 
 __private_api.rs
      3→use self::sealed::KVs;
@@ -18,7 +18,6 @@ __private_api.rs
     23→    fn into_kvs …
     30→    fn into_kvs …
     39→pub struct GlobalLogger;
-    56→fn log_impl …
     84→pub fn log …
    103→pub fn enabled …
    108→pub fn loc() -> &'static Location<'static> {
@@ -34,29 +33,21 @@ __private_api.rs
    151→pub use self::kv_support::*;
 
 kv/error.rs
-     1→use std::fmt;
      3→/// An error encountered while working with structured data.
      4→#[derive(Debug)]
      5→pub struct Error {
      6→    inner: Inner,
      7→}
     10→enum Inner {
-    19→impl Error {
     21→    pub fn msg(msg: &'static str) -> Self {
     29→    pub(super) fn from_value …
     37→    pub(super) fn into_value …
-    48→impl fmt::Display for Error {
-    62→impl From<fmt::Error> for Error {
     69→mod std_support {
     70→    use super::*;
-    71→    use std::{error, io};
-    75→    impl Error {
     77→        pub fn boxed<E>(err: E) -> Self
     78→        where
     79→            E: Into<BoxedError>,
     80→        {
-    87→    impl error::Error for Error {}
-    89→    impl From<io::Error> for Error {
 
 kv/key.rs
      7→pub trait ToKey {
@@ -105,29 +96,44 @@ kv/source.rs
 kv/value.rs
      8→pub use crate::kv::Error;
     11→pub trait ToValue {
-    13→    fn to_value …
+    13→    fn to_value(&self) -> Value<'_>;
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
    121→}
-   125→    pub fn from_any …
-   133→    pub fn from_debug …
-   143→    pub fn from_display …
-   154→    pub fn from_serde …
-   165→    pub fn from_sval …
-   175→    pub fn from_dyn_debug …
-   182→    pub fn from_dyn_display …
-   190→    pub fn from_dyn_error …
-   197→    pub fn null …
+   125→    pub fn from_any<T>(value: &'v T) -> Self
+   126→    where
+   127→        T: ToValue,
+   128→    {
+   133→    pub fn from_debug<T>(value: &'v T) -> Self
+   134→    where
+   135→        T: fmt::Debug,
+   136→    {
+   143→    pub fn from_display<T>(value: &'v T) -> Self
+   144→    where
+   145→        T: fmt::Display,
+   146→    {
+   154→    pub fn from_serde<T>(value: &'v T) -> Self
+   155→    where
+   156→        T: serde_core::Serialize,
+   157→    {
+   165→    pub fn from_sval<T>(value: &'v T) -> Self
+   166→    where
+   167→        T: sval::Value,
+   168→    {
+   175→    pub fn from_dyn_debug(value: &'v dyn fmt::Debug) -> Self {
+   182→    pub fn from_dyn_display(value: &'v dyn fmt::Display) -> Self {
+   190→    pub fn from_dyn_error(err: &'v (dyn std::error::Error + 'static)) -> Self {
+   197→    pub fn null() -> Self {
    204→    fn from_inner …
-   217→    pub fn visit …
-   379→    pub fn to_borrowed_error …
-   384→    pub fn to_borrowed_str …
+   217→    pub fn visit(&self, visitor: impl VisitValue<'v>) -> Result<(), Error> {
+   379→    pub fn to_borrowed_error(&self) -> Option<&(dyn std::error::Error + 'static)> {
+   384→    pub fn to_borrowed_str(&self) -> Option<&'v str> {
    390→mod std_support {
    395→    use super::*;
-   438→        pub fn to_cow_str …
+   438→        pub fn to_cow_str(&self) -> Option<Cow<'v, str>> {
    462→pub trait VisitValue<'v> {
-   469→    fn visit_any …
-   472→    fn visit_null …
+   469→    fn visit_any(&mut self, value: Value) -> Result<(), Error>;
+   472→    fn visit_null(&mut self) -> Result<(), Error> {
    477→    fn visit_u64 …
    482→    fn visit_i64 …
    487→    fn visit_u128 …
@@ -154,8 +160,6 @@ kv/value.rs
    738→    pub enum Inner<'v> {
    739→        None,
    740→        Bool(bool),
-   741→        Str(&'v str),
-   742→        Char(char),
       →        …
    897→        pub fn from_debug<T: fmt::Debug>(value: &'v T) -> Self {
    901→        pub fn from_display<T: fmt::Display>(value: &'v T) -> Self {
@@ -198,12 +202,9 @@ lib.rs
    416→use std::cell::Cell;
    418→use std::sync::atomic::Ordering;
    421→struct AtomicUsize {
-   426→impl AtomicUsize {
-   443→unsafe impl Sync for AtomicUsize {}
    475→pub enum Level {
    503→    fn eq …
    510→    fn partial_cmp …
-   516→    type Err = ParseLevelError;
    548→    pub fn max() -> Level {
    554→    pub fn to_level_filter(&self) -> LevelFilter {
    561→    pub fn as_str(&self) -> &'static str {
@@ -213,7 +214,6 @@ lib.rs
    636→pub enum LevelFilter {
    653→    fn eq …
    660→    fn partial_cmp …
-   666→    type Err = ParseLevelError;
    699→    pub fn max() -> LevelFilter {
    707→    pub fn to_level(&self) -> Option<Level> {
    714→    pub fn as_str(&self) -> &'static str {
@@ -224,7 +224,6 @@ lib.rs
    788→    fn get …
    842→pub struct Record<'a> {
    858→struct KeyValues<'a>(&'a dyn kv::Source);
-   861→impl<'a> fmt::Debug for KeyValues<'a> {
    872→    pub fn builder() -> RecordBuilder<'a> {
    878→    pub fn args(&self) -> &fmt::Arguments<'a> {
    884→    pub fn metadata(&self) -> &Metadata<'a> {
@@ -264,14 +263,6 @@ lib.rs
   1271→    fn log(&self, record: &Record);
   1279→    fn flush(&self);
   1283→struct NopLogger;
-  1311→impl<T> Log for std::boxed::Box<T>
-  1312→where
-  1313→    T: ?Sized + Log,
-  1314→{
-  1328→impl<T> Log for std::sync::Arc<T>
-  1329→where
-  1330→    T: ?Sized + Log,
-  1331→{
   1351→pub fn set_max_level(level: LevelFilter) {
   1375→pub unsafe fn set_max_level_racy(level: LevelFilter) {
   1396→pub fn max_level() -> LevelFilter {
@@ -280,9 +271,7 @@ lib.rs
   1483→fn set_logger_inner …
   1529→pub unsafe fn set_logger_racy(logger: &'static dyn Log) -> Result<(), SetLoggerError> {
   1549→pub struct SetLoggerError(());
-  1559→impl error::Error for SetLoggerError {}
   1566→pub struct ParseLevelError(());
-  1576→impl error::Error for ParseLevelError {}
   1581→pub fn logger() -> &'static dyn Log {
   1600→pub mod __private_api;
   1602→/// The statically resolved maximum log level.

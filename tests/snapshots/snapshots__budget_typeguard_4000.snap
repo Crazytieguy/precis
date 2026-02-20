@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4013 tokens)
+budget: 4000 (4004 tokens)
 
 pyproject.toml
      1→[build-system]
@@ -52,6 +52,18 @@ src/typeguard/__init__.py
     37→def __getattr__(name: str) -> Any:
 
 src/typeguard/_checkers.py
+     3→import collections.abc
+     4→import inspect
+     5→import sys
+     6→import types
+     7→import typing
+     8→import warnings
+     9→from collections.abc import Mapping, MutableMapping, Sequence
+    10→from enum import Enum
+    11→from inspect import Parameter, isclass, isfunction
+    12→from io import BufferedIOBase, IOBase, RawIOBase, TextIOBase
+    13→from itertools import zip_longest
+    14→from textwrap import indent
     42→from typing_extensions import is_typeddict
     44→from ._config import ForwardRefPolicy
     45→from ._exceptions import TypeCheckError, TypeHintWarning
@@ -76,7 +88,6 @@ src/typeguard/_checkers.py
    536→def check_newtype …
    545→def check_instance …
    555→def check_typevar …
-   586→def _is_literal_type(typ: object) -> bool:
    590→def check_literal …
    623→def check_literal_string …
    632→def check_typeguard …
@@ -232,11 +243,7 @@ src/typeguard/_suppression.py
     13→    from typing_extensions import ParamSpec
     15→P = ParamSpec("P")
     16→T = TypeVar("T")
-    30→def suppress_type_checks(
-    31→    func: Callable[P, T] | None = None,
-    32→) -> Callable[P, T] | ContextManager[None]:
-    33→    """
-      →    …
+    30→def suppress_type_checks …
 
 src/typeguard/_transformer.py
      3→import ast …
@@ -262,6 +269,7 @@ src/typeguard/_transformer.py
    206→    def get_memo_name(self) -> Name:
    212→    def get_import(self, module: str, name: str) -> Name:
    225→    def insert_imports(self, node: Module | FunctionDef | AsyncFunctionDef) -> None:
+   226→        """Insert imports needed by injected code."""
    238→    def name_matches(self, expression: expr | Expr | None, *names: str) -> bool:
    275→    def get_config_keywords(self) -> list[keyword]:
    285→class NameCollector(NodeVisitor):
@@ -293,8 +301,6 @@ src/typeguard/_transformer.py
    491→    ) -> None:
    498→    def generic_visit(self, node: AST) -> AST:
    517→    def _use_memo …
-   570→    def _get_import …
-   580→    def _convert_annotation …
    596→    def visit_Name(self, node: Name) -> Name:
    600→    def visit_Module(self, node: Module) -> Module:
    608→    def visit_Import(self, node: Import) -> Import:
@@ -325,11 +331,7 @@ src/typeguard/_utils.py
     48→    def evaluate_forwardref(forwardref: ForwardRef, memo: TypeCheckMemo) -> Any:
     66→def get_type_name(type_: Any) -> str:
    104→def qualified_name(obj: Any, *, add_class_prefix: bool = False) -> str:
-   105→    """
-      →    …
    127→def function_name(func: Callable[..., Any]) -> str:
-   128→    """
-      →    …
    142→def resolve_reference(reference: str) -> Any:
    154→def is_method_of(obj: object, cls: type) -> bool:
    162→def get_stacklevel() -> int:
@@ -340,6 +342,7 @@ src/typeguard/_utils.py
    176→    def __repr__(self) -> str:
 
 tests/conftest.py
+    28→@pytest.fixture
     29→def sample_set() -> set:
 
 tests/dummymodule.py
@@ -347,17 +350,6 @@ tests/dummymodule.py
    118→class Outer:
    305→class OverrideClass:
    365→class ModuleLocalClass:
-
-tests/dummymodule_py312.py
-    17→class ParametrizedClass[T]:
-
-tests/mypy/negative.py
-    39→class MyClass:
-
-tests/mypy/positive.py
-    28→class MyClass:
-
-tests/test_importhook.py
 
 tests/test_suppression.py
     41→def test_decorator_typechecked():

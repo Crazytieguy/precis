@@ -2,21 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (989 tokens)
+budget: 1000 (994 tokens)
 
 __private_api.rs
     10→pub type Value<'a> = &'a str;
     14→    pub trait KVs<'a> {
-    15→        fn into_kvs …
     39→pub struct GlobalLogger;
-    84→pub fn log …
-   103→pub fn enabled …
    108→pub fn loc …
-   113→mod kv_support {
-   116→    pub type Value<'a> = kv::Value<'a>;
-   122→    pub fn capture_to_value …
-   126→    pub fn capture_debug …
-   130→    pub fn capture_display …
    135→    pub fn capture_error …
    140→    pub fn capture_sval …
    145→    pub fn capture_serde …
@@ -24,31 +16,19 @@ __private_api.rs
 
 kv/error.rs
      5→pub struct Error {
-     6→    inner: Inner,
-     7→}
     10→enum Inner {
     21→    pub fn msg …
-    69→mod std_support {
-    70→    use super::*;
     77→        pub fn boxed …
 
 kv/key.rs
      7→pub trait ToKey {
-     9→    fn to_key(&self) -> Key<'_>;
+     9→    fn to_key …
     37→pub struct Key<'k> {
-    45→    pub fn from_str(key: &'k str) -> Self {
-    53→    pub fn as_str(&self) -> &str {
-    61→    pub fn to_borrowed_str(&self) -> Option<&'k str> {
-    94→mod std_support {
-    95→    use super::*;
-   113→mod sval_support {
-   114→    use super::*;
-   136→mod serde_support {
-   137→    use super::*;
+    45→    pub fn from_str …
+    53→    pub fn as_str …
+    61→    pub fn to_borrowed_str …
 
 kv/mod.rs
-   250→mod source;
-   252→mod value;
    254→pub use self::error::Error;
    255→pub use self::key::{Key, ToKey};
    256→pub use self::source::{Source, VisitSource};
@@ -64,18 +44,14 @@ kv/source.rs
     85→    fn count …
    235→pub trait VisitSource<'kvs> {
    237→    fn visit_pair …
-   280→mod std_support {
    462→pub use VisitSource as Visitor;
 
 kv/value.rs
      8→pub use crate::kv::Error;
     11→pub trait ToValue {
    119→pub struct Value<'v> {
-   395→    use super::*;
    462→pub trait VisitValue<'v> {
    610→    use super::*;
-   612→    pub use value_bag::ValueBag as Inner;
-   614→    pub use value_bag::Error;
    735→    use super::*;
    738→    pub enum Inner<'v> {
   1123→pub use VisitValue as Visit;
@@ -86,20 +62,35 @@ kv/value.rs
   1169→macro_rules! as_sval {
 
 lib.rs
-   406→mod macros;
-   409→#[cfg(feature = "kv")]
    410→pub mod kv;
    475→pub enum Level {
+   548→    pub fn max() -> Level {
+   554→    pub fn to_level_filter(&self) -> LevelFilter {
+   561→    pub fn as_str(&self) -> &'static str {
+   579→    pub fn iter() -> impl Iterator<Item = Self> {
+   599→    pub fn increment_severity(&self) -> Self {
+   620→    pub fn decrement_severity(&self) -> Self {
    636→pub enum LevelFilter {
+   699→    pub fn max() -> LevelFilter {
+   707→    pub fn to_level(&self) -> Option<Level> {
+   714→    pub fn as_str(&self) -> &'static str {
+   732→    pub fn iter() -> impl Iterator<Item = Self> {
+   752→    pub fn increment_severity(&self) -> Self {
+   774→    pub fn decrement_severity(&self) -> Self {
    842→pub struct Record<'a> {
+   872→    pub fn builder() -> RecordBuilder<'a> {
+   878→    pub fn args(&self) -> &fmt::Arguments<'a> {
+   884→    pub fn metadata(&self) -> &Metadata<'a> {
+   890→    pub fn level(&self) -> Level {
+   896→    pub fn target(&self) -> &'a str {
+   902→    pub fn module_path(&self) -> Option<&'a str> {
   1003→pub struct RecordBuilder<'a> {
   1158→pub struct Metadata<'a> {
   1200→pub struct MetadataBuilder<'a> {
   1249→pub trait Log: Sync + Send {
   1549→pub struct SetLoggerError(());
   1566→pub struct ParseLevelError(());
-  1600→pub mod __private_api;
-  1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
+  1611→pub const STATIC_MAX_LEVEL …
 
 macros.rs
     75→macro_rules! log {

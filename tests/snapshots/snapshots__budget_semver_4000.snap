@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4013 tokens)
+budget: 4000 (4000 tokens)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -132,6 +132,25 @@ budget: 4000 (4013 tokens)
 
 CHANGELOG.md
      1→# Changelog
+   233→## 7.2.0
+   239→## 7.1.2
+   244→## 7.1.0
+   249→## 7.0.0
+   255→## 6.3.0
+   259→## 6.2.0
+   264→## 6.1.3
+   268→## 6.1.2
+   272→## 6.1.1
+   277→## 6.1.0
+   282→## 6.0
+   290→## 5.7
+   294→## 5.6
+   301→## 5.5
+   305→## 5.4
+   309→## 5.3
+   313→## 5.2
+   317→## 5.1
+   322→## 5.0
 
 CONTRIBUTING.md
      3→# Contributing
@@ -172,9 +191,6 @@ README.md
    600→### `SEMVER_SPEC_VERSION`
    610→## Exported Modules
 
-benchmarks/bench-compare.js
-     5→const suite = new Benchmark.Suite()
-
 benchmarks/bench-diff.js
      5→const suite = new Benchmark.Suite()
      7→const cases = [
@@ -184,17 +200,6 @@ benchmarks/bench-parse-options.js
      7→const options1 = {
     11→const options2 = {
     16→const options3 = {
-
-benchmarks/bench-parse.js
-     5→const suite = new Benchmark.Suite()
-
-benchmarks/bench-satisfies.js
-     5→const suite …
-     7→const versions …
-     8→const versionToCompare …
-     9→const option1 …
-    10→const option2 …
-    11→const option3 …
 
 benchmarks/bench-subset.js
      5→const suite = new Benchmark.Suite()
@@ -349,17 +354,9 @@ internal/identifiers.js
 internal/lrucache.js
      3→class LRUCache {
      4→  constructor () {
-     5→    this.max = 1000
-      →    …
      9→  get (key) {
-    10→    const value = this.map.get(key)
-      →    …
     21→  delete (key) {
-    22→    return this.map.delete(key)
-      →    …
     25→  set (key, value) {
-    26→    const deleted = this.delete(key)
-      →    …
 
 internal/parse-options.js
      4→const looseOption = Object.freeze({ loose: true })
@@ -447,11 +444,6 @@ release-please-config.json
     36→  "prerelease-type": "pre.0"
     37→}
 
-test/integration/whitespace.js
-    12→const wsMedium …
-    13→const wsLarge …
-    14→const zeroLarge …
-
 test/internal/debug.js
      3→const main = () => {
 
@@ -462,9 +454,3 @@ test/map.js
     13→const getFile …
     23→const walk …
     28→const walkAll …
-
-test/ranges/simplify.js
-     6→const versions = [
-
-test/ranges/subset.js
-     8→const cases = [

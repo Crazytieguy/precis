@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2007 tokens)
+budget: 2000 (2014 tokens)
 
 __init__.py
      1→# SPDX-License-Identifier: MIT
@@ -51,7 +51,6 @@ _parser.py
    149→def loads(__s: str, *, parse_float: ParseFloat = float) -> dict[str, Any]:
    220→class Flags:
    222→
-   223→    # Marks an immutable namespace (inline array or inline table).
    229→    def __init__(self) -> None:
    233→    def add_pending(self, key: Key, flag: int) -> None:
    236→    def finalize_pending(self) -> None:
@@ -110,6 +109,9 @@ _parser.py
    686→) -> tuple[Pos, Any]:
    760→def is_unicode_scalar_value(codepoint: int) -> bool:
    764→def make_safe_parse_float(parse_float: ParseFloat) -> ParseFloat:
+   765→    """A decorator to make `parse_float` safe.
+   766→
+      →…
 
 _re.py
      7→from datetime import date, datetime, time, timedelta, timezone, tzinfo

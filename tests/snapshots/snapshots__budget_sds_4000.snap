@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (4017 tokens)
 
 README.md
      1→Simple Dynamic Strings
@@ -42,13 +42,7 @@ sds.c
     39→#include "sds.h"
     40→#include "sdsalloc.h"
     44→static inline int sdsHdrSize(char type) {
-    45→    switch(type&SDS_TYPE_MASK) {
-    46→        case SDS_TYPE_5:
-      →        …
     60→static inline char sdsReqType(size_t string_size) {
-    61→    if (string_size < 1<<5)
-    62→        return SDS_TYPE_5;
-      →        …
     89→sds sdsnewlen(const void *init, size_t initlen) {
    149→sds sdsempty(void) {
    154→sds sdsnew(const char *init) {
@@ -79,44 +73,70 @@ sds.c
    453→    unsigned long long v;
    454→    size_t l;
    455→
-   456→    /* Generate the string representation, this method produces
-   457→     * an reversed string. */
-   458→    if (value < 0) {
-   459→        /* Since v is unsigned, if value==LLONG_MIN then
-   460→         * -LLONG_MIN will overflow. */
-   461→        if (value != LLONG_MIN) {
-   462→            v = -value;
-   463→        } else {
-   464→            v = ((unsigned long long)LLONG_MAX) + 1;
-   465→        }
-   466→    } else {
-   467→        v = value;
-   468→    }
-   469→
-   470→    p = s;
-   471→    do {
-   472→        *p++ = '0'+(v%10);
-   473→        v /= 10;
-      →        …
+      →…
    494→int sdsull2str(char *s, unsigned long long v) {
+   522→/* Create an sds string from a long long value. It is much faster than:
+   523→ *
+      → …
    526→sds sdsfromlonglong(long long value) {
+   533→/* Like sdscatprintf() but gets va_list instead of being variadic. */
    534→sds sdscatvprintf(sds s, const char *fmt, va_list ap) {
+   575→/* Append to the sds string 's' a string obtained using printf-alike format
+   576→ * specifier.
+      → …
    591→sds sdscatprintf(sds s, const char *fmt, ...) {
+   600→/* This function is similar to sdscatprintf, but much faster as it does
+   601→ * not rely on sprintf() family functions implemented by the libc that
+      → …
    616→sds sdscatfmt(sds s, char const *fmt, ...) {
+   711→/* Remove the part of the string from left and from right composed just of
+   712→ * contiguous characters found in 'cset', that is a null terminated C string.
+      → …
    725→sds sdstrim(sds s, const char *cset) {
+   740→/* Turn the string into a smaller (or equal) string containing only the
+   741→ * substring specified by the 'start' and 'end' indexes.
+      → …
    756→void sdsrange(sds s, ssize_t start, ssize_t end) {
+   782→/* Apply tolower() to every character of the sds string 's'. */
    783→void sdstolower(sds s) {
+   789→/* Apply toupper() to every character of the sds string 's'. */
    790→void sdstoupper(sds s) {
+   796→/* Compare two sds strings s1 and s2 with memcmp().
+   797→ *
+      → …
    807→int sdscmp(const sds s1, const sds s2) {
+   819→/* Split 's' with separator in 'sep'. An array
+   820→ * of sds strings is returned. *count will be set
+      → …
    835→sds *sdssplitlen(const char *s, ssize_t len, const char *sep, int seplen, int *count) {
+   884→/* Free the result returned by sdssplitlen(), or do nothing if 'tokens' is NULL. */
    885→void sdsfreesplitres(sds *tokens, int count) {
+   892→/* Append to the sds string "s" an escaped string representation where
+   893→ * all the non-printable characters (tested with isprint()) are turned into
+      → …
    898→sds sdscatrepr(sds s, const char *p, size_t len) {
+   923→/* Helper function for sdssplitargs() that returns non zero if 'c'
+   924→ * is a valid hex digit. */
    925→int is_hex_digit(char c) {
+   930→/* Helper function for sdssplitargs() that converts a hex digit into an
+   931→ * integer from 0 to 15 */
    932→int hex_digit_to_int(char c) {
+   954→/* Split a line into arguments, where every argument can be in the
+   955→ * following programming-language REPL-alike form:
+      → …
    973→sds *sdssplitargs(const char *line, int *argc) {
+  1083→/* Modify the string substituting all the occurrences of the set of
+  1084→ * characters specified in the 'from' string to the corresponding character
+      → …
   1092→sds sdsmapchars(sds s, const char *from, const char *to, size_t setlen) {
+  1106→/* Join an array of C strings using the specified separator (also a C string).
+  1107→ * Returns the result as an sds string. */
   1108→sds sdsjoin(char **argv, int argc, char *sep) {
+  1119→/* Like sdsjoin, but joins an array of SDS strings. */
   1120→sds sdsjoinsds(sds *argv, int argc, const char *sep, size_t seplen) {
+  1131→/* Wrappers to the allocators used by SDS. Note that SDS will actually
+  1132→ * just use the macros defined into sdsalloc.h in order to avoid to pay
+      → …
   1136→void *sds_malloc(size_t size) { return s_malloc(size); }
   1137→void *sds_realloc(void *ptr, size_t size) { return s_realloc(ptr,size); }
   1138→void sds_free(void *ptr) { s_free(ptr); }
@@ -129,25 +149,7 @@ sds.c
   1148→        sds x = sdsnew("foo"), y;
   1149→
   1150→        test_cond("Create a string and obtain the length",
-  1151→            sdslen(x) == 3 && memcmp(x,"foo\0",4) == 0)
-  1152→
-  1153→        sdsfree(x);
-  1154→        x = sdsnewlen("foo",2);
-  1155→        test_cond("Create a string with specified length",
-  1156→            sdslen(x) == 2 && memcmp(x,"fo\0",3) == 0)
-  1157→
-  1158→        x = sdscat(x,"bar");
-  1159→        test_cond("Strings concatenation",
-  1160→            sdslen(x) == 5 && memcmp(x,"fobar\0",6) == 0);
-  1161→
-  1162→        x = sdscpy(x,"a");
-  1163→        test_cond("sdscpy() against an originally longer string",
-  1164→            sdslen(x) == 1 && memcmp(x,"a\0",2) == 0)
-  1165→
-  1166→        x = sdscpy(x,"xyzxxxxxxxxxxyyyyyyyyyykkkkkkkkkk");
-  1167→        test_cond("sdscpy() against an originally shorter string",
-  1168→            sdslen(x) == 33 &&
-      →            …
+      →        …
   1325→int main(void) {
   1326→    return sdsTest();
   1327→}
@@ -207,12 +209,7 @@ sds.h
    180→static inline size_t sdsalloc(const sds s) {
    181→    unsigned char flags = s[-1];
    182→    switch(flags&SDS_TYPE_MASK) {
-   183→        case SDS_TYPE_5:
-   184→            return SDS_TYPE_5_LEN(flags);
-   185→        case SDS_TYPE_8:
-   186→            return SDS_HDR(8,s)->alloc;
-   187→        case SDS_TYPE_16:
-      →        …
+      →    …
    197→static inline void sdssetalloc(sds s, size_t newlen) {
    218→sds sdsnewlen(const void *init, size_t initlen);
    219→sds sdsnew(const char *init);

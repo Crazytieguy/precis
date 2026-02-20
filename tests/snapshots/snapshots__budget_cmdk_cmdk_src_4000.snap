@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4015 tokens)
+budget: 4000 (4066 tokens)
 
 command-score.ts
     54→function commandScoreInner(
@@ -72,34 +72,7 @@ command-score.ts
    118→    if (
    119→      (score < SCORE_TRANSPOSITION &&
    120→        lowerString.charAt(index - 1) === lowerAbbreviation.charAt(abbreviationIndex + 1)) ||
-   121→      (lowerAbbreviation.charAt(abbreviationIndex + 1) === lowerAbbreviation.charAt(abbreviationIndex) && // allow duplicate letters. Ref #7428
-   122→        lowerString.charAt(index - 1) !== lowerAbbreviation.charAt(abbreviationIndex))
-   123→    ) {
-   124→      transposedScore = commandScoreInner(
-   125→        string,
-   126→        abbreviation,
-   127→        lowerString,
-   128→        lowerAbbreviation,
-   129→        index + 1,
-   130→        abbreviationIndex + 2,
-   131→        memoizedResults,
-   132→      )
-   133→
-   134→      if (transposedScore * SCORE_TRANSPOSITION > score) {
-   135→        score = transposedScore * SCORE_TRANSPOSITION
-   136→      }
-   137→    }
-   138→
-   139→    if (score > highScore) {
-   140→      highScore = score
-   141→    }
-   142→
-   143→    index = lowerString.indexOf(abbreviationChar, index + 1)
-   144→  }
-   145→
-   146→  memoizedResults[memoizeKey] = highScore
-   147→  return highScore
-   148→}
+      →        …
    150→function formatInput(string) {
    151→  // convert all valid space characters to space so they match each other
    152→  return string.toLowerCase().replace(COUNT_SPACE_REGEXP, ' ')
@@ -124,24 +97,49 @@ index.tsx
     11→type DivProps = React.ComponentPropsWithoutRef<typeof Primitive.div>
     13→type LoadingProps = Children &
     14→  DivProps & {
+    15→    /** Estimated progress of loading asynchronous options. */
+      →    …
     23→type EmptyProps = Children & DivProps & {}
     24→type SeparatorProps = DivProps & {
+    25→  /** Whether this separator should always be rendered. Useful if you disable automatic filtering. */
+      →  …
     28→type DialogProps = RadixDialog.DialogProps &
     29→  CommandProps & {
+    30→    /** Provide a className to the Dialog overlay. */
+      →    …
     37→type ListProps = Children &
     38→  DivProps & {
+    39→    /**
+      →    …
     44→type ItemProps = Children &
     45→  Omit<DivProps, 'disabled' | 'onSelect' | 'value'> & {
+    46→    /** Whether this item is currently disabled. */
+      →    …
     60→type GroupProps = Children &
     61→  Omit<DivProps, 'heading' | 'value'> & {
+    62→    /** Optional heading to render for this group. */
+      →    …
     69→type InputProps = Omit<React.ComponentPropsWithoutRef<typeof Primitive.input>, 'value' | 'onChange' | 'type'> & {
+    70→  /**
+      →  …
     79→type CommandFilter = (value: string, search: string, keywords?: string[]) => number
     80→type CommandProps = Children &
     81→  DivProps & {
+    82→    /**
+      →    …
    123→type Context = {
+   124→  value: (id: string, value: string, keywords?: string[]) => void
+      →  …
    137→type State = {
+   138→  search: string
+      →  …
    143→type Store = {
+   144→  subscribe: (callback: () => void) => () => void
+      →  …
    149→type Group = {
+   150→  id: string
+   151→  forceMount?: boolean
+   152→}
    154→const GROUP_SELECTOR = `[cmdk-group=""]`
    155→const GROUP_ITEMS_SELECTOR = `[cmdk-group-items=""]`
    156→const GROUP_HEADING_SELECTOR = `[cmdk-group-heading=""]`
@@ -156,6 +154,11 @@ index.tsx
    166→const useStore = () => React.useContext(StoreContext)
    167→const GroupContext = React.createContext<Group>(undefined)
    169→const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwardedRef) => {
+   170→  const state = useLazyRef<State>(() => ({
+   171→    /** Value of the search query. */
+   172→    search: '',
+   173→    /** Currently selected item value. */
+      →    …
    660→ * Command menu item. Becomes active on pointer enter or through keyboard navigation.
    661→ * Preferably pass a `value`, otherwise the value will be inferred from `children` or
    662→ * the rendered item's `textContent`.
@@ -203,6 +206,11 @@ index.tsx
    911→
       →…
    930→const pkg = Object.assign(Command, {
+   931→  List,
+   932→  Item,
+   933→  Input,
+   934→  Group,
+      →  …
    956→ *
    957→ *
    958→ * Helpers
@@ -317,3 +325,8 @@ index.tsx
   1078→  return render(children)
   1079→}
   1081→const srOnlyStyles = {
+  1082→  position: 'absolute',
+  1083→  width: '1px',
+  1084→  height: '1px',
+  1085→  padding: '0',
+      →  …

@@ -32,17 +32,14 @@ iterator.rs
     14→///
     15→/// This struct is created by the [`Either::factor_into_iter`],
     16→/// [`factor_iter`][Either::factor_iter],
+    17→/// and [`factor_iter_mut`][Either::factor_iter_mut] methods.
       →…
     19→pub struct IterEither<L, R> {
     20→    inner: Either<L, R>,
     21→}
     24→    pub(crate) fn new(inner: Either<L, R>) -> Self {
     34→    fn extend …
-    43→impl<L, R> Iterator for Either<L, R>
-    44→where
-    45→    L: Iterator,
-    46→    R: Iterator<Item = L::Item>,
-    47→{
+    43→impl<L, R> Iterator for Either<L, R> …
     48→    type Item = L::Item;
     50→    fn next …
     54→    fn size_hint …
@@ -101,7 +98,6 @@ lib.rs
     41→/// The enum `Either` with variants `Left` and `Right` is a general purpose
     42→/// sum type with two cases.
     43→///
-    44→/// The `Either` type is symmetric and treats its variants the same way, without
       →…
     49→pub enum Either<L, R> {
     50→    /// A value of type `L`.
@@ -109,16 +105,8 @@ lib.rs
     52→    /// A value of type `R`.
     53→    Right(R),
     54→}
-    56→/// Evaluate the provided expression for both [`Either::Left`] and [`Either::Right`].
-    57→///
-      →…
     81→macro_rules! for_both {
-    90→/// Macro for unwrapping the left side of an [`Either`], which fails early
-    91→/// with the opposite side. Can only be used in functions that return
-      →…
    113→macro_rules! try_left {
-   122→/// Dual to [`try_left!`], see its documentation for more information.
-   123→#[macro_export]
    124→macro_rules! try_right {
    133→macro_rules! map_either {
    142→mod iterator;
@@ -298,27 +286,25 @@ lib.rs
   1212→    fn read_line …
   1221→impl<L, R> Write for Either<L, R> …
   1226→    fn write …
-  1230→    fn write_all …
-  1234→    fn write_fmt …
-  1238→    fn flush …
-  1248→    fn as_ref …
+  1230→    fn write_all(&mut self, buf: &[u8]) -> io::Result<()> {
+  1234→    fn write_fmt(&mut self, fmt: fmt::Arguments<'_>) -> io::Result<()> {
+  1238→    fn flush(&mut self) -> io::Result<()> {
+  1248→    fn as_ref(&self) -> &Target {
   1253→macro_rules! impl_specific_ref_and_mut {
-  1297→    fn as_ref …
-  1307→    fn as_mut …
-  1317→    fn as_mut …
+  1297→    fn as_ref(&self) -> &[Target] {
+  1307→    fn as_mut(&mut self) -> &mut Target {
+  1317→    fn as_mut(&mut self) -> &mut [Target] {
   1327→    type Target = L::Target;
-  1329→    fn deref …
-  1339→    fn deref_mut …
+  1329→    fn deref(&self) -> &Self::Target {
+  1339→    fn deref_mut(&mut self) -> &mut Self::Target {
   1348→impl<L, R> Error for Either<L, R> …
-  1353→    fn source …
-  1357→    #[allow(deprecated)]
+  1353→    fn source(&self) -> Option<&(dyn Error + 'static)> {
   1358→    fn description(&self) -> &str {
-  1362→    #[allow(deprecated)]
   1363→    fn cause(&self) -> Option<&dyn Error> {
-  1373→    fn fmt …
-  1383→    fn write_str …
-  1387→    fn write_char …
-  1391→    fn write_fmt …
+  1373→    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+  1383→    fn write_str(&mut self, s: &str) -> fmt::Result {
+  1387→    fn write_char(&mut self, c: char) -> fmt::Result {
+  1391→    fn write_fmt(&mut self, args: fmt::Arguments<'_>) -> fmt::Result {
   1522→macro_rules! check_t {
   1536→fn _unsized_ref_propagation() {
   1553→fn _unsized_std_propagation() {

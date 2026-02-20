@@ -308,6 +308,7 @@ pub struct GroupKey {
 }
 
 /// A symbol's precomputed content costs (token counts per rendering stage).
+#[derive(Clone)]
 pub struct SymbolCosts {
     pub file_idx: usize,
     pub symbol_idx: usize,
@@ -476,8 +477,53 @@ pub fn build_groups(
     }
 
     let mut groups: Vec<Group> = group_map.into_values().collect();
+    groups = split_large_groups(groups);
     groups.sort_by(|a, b| a.key.cmp(&b.key));
     groups
+}
+
+/// Maximum number of symbols per group. Groups exceeding this threshold
+/// are split into roughly equal sub-groups. This prevents the "Names-stage
+/// cliff" where a group with 60+ symbols has an all-or-nothing cost at
+/// the Names stage — the entire lump sum must fit within the remaining
+/// budget, or the group stays at FilePath showing no symbols at all.
+/// Splitting into sub-groups of ≤20 symbols keeps the per-group Names
+/// cost manageable (~100–200 tokens), allowing partial inclusion when
+/// the full set wouldn't fit.
+const MAX_GROUP_SIZE: usize = 20;
+
+fn split_large_groups(groups: Vec<Group>) -> Vec<Group> {
+    let mut result = Vec::with_capacity(groups.len());
+    for group in groups {
+        let count = group.symbols.len();
+        if count <= MAX_GROUP_SIZE {
+            result.push(group);
+            continue;
+        }
+        // Split into roughly equal sub-groups.
+        // ceiling division: number of sub-groups needed
+        let n_subgroups = (count + MAX_GROUP_SIZE - 1) / MAX_GROUP_SIZE;
+        let base_size = count / n_subgroups;
+        let remainder = count % n_subgroups;
+        let mut offset = 0;
+        for i in 0..n_subgroups {
+            // Distribute remainder across the first `remainder` sub-groups
+            let chunk_size = base_size + if i < remainder { 1 } else { 0 };
+            let chunk: Vec<SymbolCosts> = group.symbols[offset..offset + chunk_size].to_vec();
+            let file_indices: HashSet<usize> = chunk.iter().map(|s| s.file_idx).collect();
+            let max_doc_n = chunk.iter().map(|s| s.doc_line_tokens.len()).max().unwrap_or(0);
+            let max_body_n = chunk.iter().map(|s| s.body_line_tokens.len()).max().unwrap_or(0);
+            result.push(Group {
+                key: group.key.clone(),
+                symbols: chunk,
+                file_indices,
+                max_doc_n,
+                max_body_n,
+            });
+            offset += chunk_size;
+        }
+    }
+    result
 }
 
 /// Compute token costs for each rendering stage of a single symbol.

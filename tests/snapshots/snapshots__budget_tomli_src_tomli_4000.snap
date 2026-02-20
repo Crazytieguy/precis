@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3868 tokens)
+budget: 4000 (4030 tokens)
 
 __init__.py
      1→# SPDX-License-Identifier: MIT
@@ -85,10 +85,16 @@ _parser.py
     91→        pos: Pos | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
     92→        *args: Any,
     93→    ):
+    94→        if (
+      →        …
    137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
    138→    """Parse TOML from a binary file object."""
+   139→    b = __fp.read()
+      →    …
    149→def loads(__s: str, *, parse_float: ParseFloat = float) -> dict[str, Any]:
    150→    """Parse TOML from a string."""
+   151→
+      →…
    220→class Flags:
    221→    """Flags that map to parsed keys/namespaces."""
    222→
@@ -99,23 +105,44 @@ _parser.py
    227→    EXPLICIT_NEST: Final = 1
    228→
    229→    def __init__(self) -> None:
+   230→        self._flags: dict[str, dict[Any, Any]] = {}
+      →        …
    233→    def add_pending(self, key: Key, flag: int) -> None:
+   234→        self._pending_flags.add((key, flag))
    236→    def finalize_pending(self) -> None:
+   237→        for key, flag in self._pending_flags:
+      →        …
    241→    def unset_all(self, key: Key) -> None:
+   242→        cont = self._flags
+      →        …
    249→    def set(self, key: Key, flag: int, *, recursive: bool) -> None:  # noqa: A003
+   250→        cont = self._flags
+      →        …
    260→    def is_(self, key: Key, flag: int) -> bool:
+   261→        if not key:
+      →        …
    278→class NestedDict:
    279→    def __init__(self) -> None:
+   280→        # The parsed content of the TOML document
+      →        …
    283→    def get_or_create_nest(
    284→        self,
    285→        key: Key,
    286→        *,
    287→        access_lists: bool = True,
    288→    ) -> dict[str, Any]:
+   289→        cont: Any = self.dict
+      →        …
    300→    def append_nest_to_list(self, key: Key) -> None:
+   301→        cont = self.get_or_create_nest(key[:-1])
+      →        …
    312→class Output:
    313→    def __init__(self) -> None:
+   314→        self.data = NestedDict()
+      →        …
    318→def skip_chars(src: str, pos: Pos, chars: Iterable[str]) -> Pos:
+   319→    try:
+      →    …
    327→def skip_until(
    328→    src: str,
    329→    pos: Pos,
@@ -124,9 +151,17 @@ _parser.py
    332→    error_on: frozenset[str],
    333→    error_on_eof: bool,
    334→) -> Pos:
+   335→    try:
+      →    …
    349→def skip_comment(src: str, pos: Pos) -> Pos:
+   350→    try:
+      →    …
    361→def skip_comments_and_array_ws(src: str, pos: Pos) -> Pos:
+   362→    while True:
+      →    …
    370→def create_dict_rule(src: str, pos: Pos, out: Output) -> tuple[Pos, Key]:
+   371→    pos += 1  # Skip "["
+      →    …
    390→def create_list_rule(src: str, pos: Pos, out: Output) -> tuple[Pos, Key]:
    413→def key_value_rule(
    414→    src: str, pos: Pos, out: Output, header: Key, parse_float: ParseFloat
@@ -172,13 +207,6 @@ _re.py
     13→    from typing import Any, Final
     15→    from ._types import ParseFloat
     17→_TIME_RE_STR: Final = r"""
-    18→([01][0-9]|2[0-3])             # hours
-    19→:([0-5][0-9])                  # minutes
-    20→(?:
-    21→    :([0-5][0-9])              # optional seconds
-    22→    (?:\.([0-9]{1,6})[0-9]*)?  # optional fractions of a second
-    23→)?
-    24→"""
     26→RE_NUMBER: Final = re.compile(
     27→    r"""
     28→0
