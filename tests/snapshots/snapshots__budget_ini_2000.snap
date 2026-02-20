@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1997 tokens)
+budget: 2000 (2007 tokens)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -132,6 +132,26 @@ budget: 2000 (1997 tokens)
 
 CHANGELOG.md
      1→# Changelog
+     4→### ⚠️ BREAKING CHANGES
+     6→### Bug Fixes
+     8→### Chores
+    12→### ⚠️ BREAKING CHANGES
+    14→### Bug Fixes
+    16→### Chores
+    24→### Bug Fixes
+    28→### Chores
+    36→### Bug Fixes
+    40→### Documentation
+    46→### Chores
+    65→### Bug Fixes
+    71→### Features
+    78→### Bug Fixes
+    86→### ⚠️ BREAKING CHANGES
+    90→### Features
+    97→### Bug Fixes
+   104→### ⚠ BREAKING CHANGES
+   108→### Bug Fixes
+   113→### Dependencies
 
 CONTRIBUTING.md
      3→# Contributing
@@ -170,40 +190,22 @@ README.md
     27→array[] = third value
     28→```
     29→
-    30→You can **read**, **modify** and **write** it like so:
-    31→
-    32→```js
       →…
     82→## API
     84→### Parse
     86→Attempts to turn the given INI string into a nested data object.
     87→
     88→```js
-    89→// You can also use `decode`
-    90→const object = parse(`<INI Text>`) 
-    91→```
-    92→
+      →…
     93→### Stringify
     95→Encodes the given data object as an INI formatted string.
     96→
     97→```js
-    98→// You can also use `encode`
-    99→stringify(object,{
-   100→
-   101→    /**
-   102→     *  Whether to insert spaces before & after `=`
-   103→     * 
-      →     …
+      →…
    167→### Un / Escape
    169→Turn the given string into a safe to  
    170→use key or value in your INI file.
    171→
-   172→```js
-   173→safe(`"unsafe string"`) // -> \"unsafe string\"
-   174→```
-   175→
-   176→Or reverse the process with:
-   177→
       →…
 
 lib/ini.js

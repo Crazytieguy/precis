@@ -2,12 +2,31 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2014 tokens)
+budget: 2000 (2008 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
 
 package.json
+     2→  "name": "vaul",
+     3→  "version": "1.1.2",
+     4→  "description": "Drawer component for React.",
+     5→  "main": "./dist/index.js",
+     6→  "module": "./dist/index.mjs",
+     7→  "types": "./dist/index.d.ts",
+     8→  "files": [
+    12→  "exports": {
+    22→  "scripts": {
+    31→  "keywords": [
+    37→  "author": "Emil Kowalski <e@emilkowal.ski>",
+    38→  "license": "MIT",
+    39→  "homepage": "https://vaul.emilkowal.ski/",
+    40→  "repository": {
+    44→  "bugs": {
+    47→  "devDependencies": {
+    61→  "peerDependencies": {
+    65→  "packageManager": "pnpm@8.8.0",
+    66→  "dependencies": {
 
 pnpm-workspace.yaml
      1→packages:
@@ -37,8 +56,6 @@ src/context.ts
      4→interface DrawerContextValue {
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
     69→export const useDrawerContext = () => {
-    70→  const context = React.useContext(DrawerContext);
-      →  …
 
 src/helpers.ts
      1→import { AnyFunction, DrawerDirection } from './types';
@@ -53,13 +70,31 @@ src/helpers.ts
     94→export function assignStyle(element: HTMLElement | null | undefined, style: Partial<CSSStyleDeclaration>) {
    106→ * Receives functions as arguments and returns a new function that calls all.
    108→export function chain<T>(...fns: T[]) {
-   109→  return (...args: T extends AnyFunction ? Parameters<T> : never) => {
-   110→    for (const fn of fns) {
-      →    …
 
 src/index.tsx
      3→import * as DialogPrimitive from '@radix-ui/react-dialog';
      4→import React from 'react';
+     5→import { DrawerContext, useDrawerContext } from './context';
+     6→import './style.css';
+     7→import { usePreventScroll, isInput } from './use-prevent-scroll';
+     8→import { useComposedRefs } from './use-composed-refs';
+     9→import { useSnapPoints } from './use-snap-points';
+    10→import { set, getTranslate, dampenValue, isVertical, reset } from './helpers';
+    11→import {
+    12→  TRANSITIONS,
+    13→  VELOCITY_THRESHOLD,
+    14→  CLOSE_THRESHOLD,
+    15→  SCROLL_LOCK_TIMEOUT,
+    16→  BORDER_RADIUS,
+    17→  NESTED_DISPLACEMENT,
+    18→  WINDOW_TOP_OFFSET,
+    19→  DRAG_CLASS,
+    20→} from './constants';
+    21→import { DrawerDirection } from './types';
+    22→import { useControllableState } from './use-controllable-state';
+    23→import { useScaleBackground } from './use-scale-background';
+    24→import { usePositionFixed } from './use-position-fixed';
+    25→import { isIOS, isMobileFirefox } from './browser';
     27→export interface WithFadeFromProps {
     28→  /**
       →  …
@@ -72,11 +107,8 @@ src/index.tsx
    831→export type ContentProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
    833→export const Content = React.forwardRef<HTMLDivElement, ContentProps>(function (
    989→export type HandleProps = React.ComponentPropsWithoutRef<'div'> & {
-   993→const LONG_HANDLE_PRESS_TIMEOUT = 250;
-   994→const DOUBLE_TAP_TIMEOUT = 120;
    996→export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(function (
   1098→export function NestedRoot …
-  1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
   1130→export function Portal …
   1137→export const Drawer = {
 
@@ -90,45 +122,21 @@ src/types.ts
 
 src/use-composed-refs.ts
      3→import * as React from 'react';
-     5→type PossibleRef<T> = React.Ref<T> | undefined;
+     5→type PossibleRef …
     11→function setRef<T>(ref: PossibleRef<T>, value: T) {
     23→function composeRefs<T>(...refs: PossibleRef<T>[]) {
     31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
 
 src/use-controllable-state.ts
      3→import React from 'react';
-     5→type UseControllableStateParams<T> = {
-    11→type SetStateFn<T> = (prevState?: T) => T;
-    13→function useCallbackRef …
-    24→function useUncontrolledState …
     39→export function useControllableState<T>({ prop, defaultProp, onChange = () => {} }: UseControllableStateParams<T>) {
 
 src/use-position-fixed.ts
      1→import React from 'react';
      2→import { isSafari } from './browser';
-     7→ * This hook is necessary to prevent buggy behavior on iOS devices (need to test on Android).
-     8→ * I won't get into too much detail about what bugs it solves, but so far I've found that setting the body to `position: fixed` is the most reliable way to prevent those bugs.
-     9→ * Issues that this hook solves:
-    10→ * https://github.com/emilkowalski/vaul/issues/435
-      → …
-    15→export function usePositionFixed({
-    16→  isOpen,
-    17→  modal,
-    18→  nested,
-    19→  hasBeenOpened,
-    20→  preventScrollRestoration,
-    21→  noBodyStyles,
-    22→}: {
-    23→  isOpen: boolean;
-    24→  modal: boolean;
-    25→  nested: boolean;
-    26→  hasBeenOpened: boolean;
-    27→  preventScrollRestoration: boolean;
-    28→  noBodyStyles: boolean;
-    29→}) {
+    15→export function usePositionFixed …
 
 src/use-prevent-scroll.ts
-     3→import { useEffect, useLayoutEffect } from 'react';
      4→import { isIOS } from './browser';
      6→const KEYBOARD_BUFFER = 24;
      8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
@@ -139,12 +147,8 @@ src/use-prevent-scroll.ts
     34→export function getScrollParent(node: Element): Element {
     47→const nonTextInputTypes = new Set([
     64→ * Prevents scrolling on the document body on mount, and
-    65→ * restores it on unmount. Also ensures that content does not
-    66→ * shift due to the scrollbars disappearing.
+      → …
     68→export function usePreventScroll(options: PreventScrollOptions = {}) {
-    69→  let { isDisabled } = options;
-    70→
-      →…
    118→function preventScrollMobileSafari …
    243→function setStyle …
    257→function addEvent …
@@ -166,16 +170,6 @@ src/use-snap-points.ts
      4→import { useControllableState } from './use-controllable-state';
      5→import { DrawerDirection } from './types';
      7→export function useSnapPoints …
-
-test/src/app/layout.tsx
-     1→import './globals.css';
-     7→export const metadata: Metadata = {
-
-test/src/app/page.tsx
-     5→export default function Page() {
-
-test/tests/constants.ts
-     1→export const ANIMATION_DURATION = 500;
 
 tsconfig.json
      2→  "compilerOptions": {

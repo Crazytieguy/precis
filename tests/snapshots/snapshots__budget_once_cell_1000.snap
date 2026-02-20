@@ -2,9 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1008 tokens)
-
-CHANGELOG.md
+budget: 1000 (997 tokens)
 
 Cargo.toml
      1→[package]
@@ -18,27 +16,15 @@ Cargo.toml
     78→[[example]]
     82→[[example]]
     86→[[example]]
-    90→[package.metadata.docs.rs]
 
 README.md
      8→# Overview
     47→# Related crates
 
-src/imp_cs.rs
-     6→use crate::unsync;
-     8→pub(crate) struct OnceCell<T> {
-
 src/imp_pl.rs
-     1→use std::{ …
-     7→pub(crate) struct OnceCell<T> {
-   122→struct Guard<'a> {
    128→    fn drop(&mut self) {
 
 src/imp_std.rs
-     6→use std::{ …
-    14→pub(crate) struct OnceCell<T> {
-   138→struct Waiter {
-   145→struct Guard<'a> {
    151→    fn drop(&mut self) {
    245→mod strict {
 
@@ -46,33 +32,53 @@ src/lib.rs
    372→mod imp;
    376→mod imp;
    380→mod imp;
-   382→/// Single-threaded version of `OnceCell`.
    383→pub mod unsync {
-   384→    use core::{ …
    411→    pub struct OnceCell<T> {
-   412→        // Invariant: written to at most once.
-      →        …
+   470→        pub const fn new …
+   475→        pub const fn with_value …
+   483→        pub fn get …
+   508→        pub fn get_mut …
+   530→        pub fn set …
+   551→        pub fn try_insert …
+   586→        pub fn get_or_init …
+   622→        pub fn get_or_try_init …
+   667→        pub fn take …
+   687→        pub fn into_inner …
    714→    pub struct Lazy<T, F = fn() -> T> {
-   715→        cell: OnceCell<T>,
-      →        …
+   742→        pub const fn new …
+   749→        pub fn into_value …
+   773→        pub fn force …
+   794→        pub fn force_mut …
+   818→        pub fn get …
+   835→        pub fn get_mut …
    841→        type Target = T;
-   861→/// Thread-safe, blocking version of `OnceCell`.
-   862→#[cfg(any(feature = "std", feature = "critical-section"))]
+   855→        fn default …
    863→pub mod sync {
-   864→    use core::{ …
-   871→    use super::imp::OnceCell as Imp;
    901→    pub struct OnceCell<T>(Imp<T>);
+   950→        pub const fn new …
+   955→        pub const fn with_value …
+   963→        pub fn get …
+   993→        pub fn wait …
+  1019→        pub fn get_mut …
+  1031→        pub unsafe fn get_unchecked …
+  1058→        pub fn set …
+  1080→        pub fn try_insert …
+  1115→        pub fn get_or_init …
+  1152→        pub fn get_or_try_init …
+  1197→        pub fn take …
+  1217→        pub fn into_inner …
   1255→    pub struct Lazy<T, F = fn() -> T> {
-  1256→        cell: OnceCell<T>,
-      →        …
+  1278→        pub const fn new …
+  1285→        pub fn into_value …
+  1308→        pub fn force …
+  1327→        pub fn force_mut …
+  1351→        pub fn get …
+  1368→        pub fn get_mut …
   1374→        type Target = T;
-  1408→    fn _dummy() {}
-  1411→#[cfg(feature = "race")]
+  1388→        fn default …
   1412→pub mod race;
 
 src/race.rs
-    31→use core::sync::atomic;
-    33→use portable_atomic as atomic;
     43→pub struct OnceNonZeroUsize {
     50→    pub const fn new …
     56→    pub fn get …
@@ -87,8 +93,8 @@ src/race.rs
    199→    pub fn get_or_init …
    213→    pub fn get_or_try_init …
    232→pub struct OnceRef<'a, T> {
-   241→    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-   247→    fn default() -> Self {
+   241→    fn fmt …
+   247→    fn default …
    254→    pub const fn new …
    259→    pub fn get …
    268→    pub fn set …
@@ -96,19 +102,14 @@ src/race.rs
    299→    pub fn get_or_try_init …
    351→pub use self::once_box::OnceBox;
    354→mod once_box {
-   355→    use super::atomic::{AtomicPtr, Ordering};
    361→    pub struct OnceBox<T> {
-   367→        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-   373→        fn default() -> Self {
-   379→        fn drop(&mut self) {
+   367→        fn fmt …
+   373→        fn default …
+   379→        fn drop …
    389→        pub const fn new …
    394→        pub fn with_value …
    399→        pub fn get …
    411→        pub fn set …
    432→        pub fn get_or_init …
    450→        pub fn get_or_try_init …
-   482→        fn clone(&self) -> Self {
-
-xtask/Cargo.toml
-     1→[package]
-     8→[dependencies]
+   482→        fn clone …

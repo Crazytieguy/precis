@@ -45,25 +45,24 @@ apps/storybook/package.json
      4→  "version": "0.2.0",
      5→  "type": "module",
      6→  "repository": {
-     9→  },
     10→  "bugs": {
-    12→  },
     13→  "license": "MIT",
     14→  "dependencies": {
-    23→  },
     24→  "scripts": {
-    28→  },
     29→  "devDependencies": {
-    50→  }
-    51→}
 
 apps/storybook/src/components/ui/input-otp.tsx
+     3→import * as React from "react"
+     4→import { DashIcon } from "@radix-ui/react-icons"
+     5→import { OTPInput, SlotProps } from "input-otp"
      7→import { cn } from "../../lib/utils"
+     9→const InputOTP = React.forwardRef<
+    21→const InputOTPGroup = React.forwardRef<
+    29→const InputOTPSlot = React.forwardRef<
+    54→const InputOTPSeparator = React.forwardRef<
 
 apps/storybook/src/lib/utils.ts
      4→export function cn(...inputs: ClassValue[]) {
-     5→  return twMerge(clsx(inputs))
-     6→}
 
 apps/storybook/src/stories/Button.stories.ts
      1→import { Button } from './Button';
@@ -78,14 +77,9 @@ apps/storybook/src/stories/Button.tsx
      3→import './button.css';
      6→ * Primary UI component for user interaction
      8→export const Button = ({ primary, backgroundColor, size, label, ...props }) => {
-     9→  const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
-    10→  return (
-    11→    <button
-      →    …
 
 apps/storybook/src/stories/InputOTP.stories.tsx
      1→import { InputOTP, InputOTPGroup, InputOTPSlot } from "../components/ui/input-otp"
-     2→import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"
      4→const meta = {
     27→type Story = StoryObj<typeof meta>
     29→export const Default: Story = {}
@@ -107,6 +101,14 @@ apps/storybook/tsconfig.node.json
      9→}
 
 apps/test/README.md
+     3→## Getting Started
+    23→## Learn More
+    32→## Deploy on Vercel
+
+apps/website/README.md
+     3→## Getting Started
+    23→## Learn More
+    32→## Deploy on Vercel
 
 package.json
      2→  "name": "root",
@@ -168,15 +170,10 @@ packages/input-otp/src/sync-timeouts.ts
 packages/input-otp/src/types.ts
      1→export interface SlotProps {
      2→  isActive: boolean
-     3→  char: string | null
-     4→  placeholderChar: string | null
-     5→  hasFakeCaret: boolean
-     6→}
+      →  …
      7→export interface RenderProps {
      8→  slots: SlotProps[]
-     9→  isFocused: boolean
-    10→  isHovering: boolean
-    11→}
+      →  …
     12→type OverrideProps …
     13→type OTPInputBaseProps …
     32→type InputOTPRenderFn …
@@ -188,6 +185,7 @@ packages/input-otp/src/use-previous.ts
      1→import * as React from 'react'
      3→export function usePrevious<T>(value: T) {
      4→  const ref = React.useRef<T>()
+     5→  React.useEffect(() => {
       →  …
 
 packages/input-otp/src/use-pwm-badge.tsx

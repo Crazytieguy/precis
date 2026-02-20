@@ -2,15 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1997 tokens)
+budget: 2000 (2002 tokens)
 
 README.md
      1→# color
      3→Color lets you use colorized outputs in terms of [ANSI Escape
      4→Codes](http://en.wikipedia.org/wiki/ANSI_escape_code#Colors) in Go (Golang). It
-     5→has support for Windows too! The API can be used in several ways, pick one that
-     6→suits you.
-     7→
       →…
     10→## Install
     16→## Examples
@@ -30,17 +27,8 @@ README.md
 color.go
      3→import …
     15→var (
-    16→	// NoColor defines if the output is colorized or not. It's dynamically set to
-    17→	// false or true based on the stdout's file descriptor referring to a terminal
-    18→	// or not. It's also set to true if the NO_COLOR environment variable is
-    19→	// set (regardless of its value). This is a global option and affects all
-    20→	// colors. For more control over each color block use the methods
-    21→	// DisableColor() individually.
     22→	NoColor = noColorIsSet() || os.Getenv("TERM") == "dumb" ||
-    25→	// Output defines the standard output of the print functions. By default,
-    26→	// os.Stdout is used.
     27→	Output = colorable.NewColorableStdout()
-    29→	// Error defines a color supporting writer for os.Stderr.
     30→	Error = colorable.NewColorableStderr()
     34→	colorsCache   = make(map[Attribute]*Color)
     35→	colorsCacheMu sync.Mutex // protects colorsCache
@@ -50,7 +38,6 @@ color.go
     45→	params  []Attribute
     46→	noColor *bool
     47→}
-    49→// Attribute defines a single SGR Code
     50→type Attribute int
     52→const escape = "\x1b"
     55→const (
@@ -191,6 +178,21 @@ color.go
 color_test.go
      3→import …
     16→func TestColor(t *testing.T) {
+    73→func TestColorEquals(t *testing.T) {
+   107→func TestNoColor(t *testing.T) {
+   161→func TestNoColor_Env(t *testing.T) {
+   203→func Test_noColorIsSet(t *testing.T) {
+   238→func TestColorVisual(t *testing.T) {
+   339→func TestNoFormat(t *testing.T) {
+   389→func TestNoFormatString(t *testing.T) {
+   423→func TestColor_Println_Newline(t *testing.T) {
+   438→func TestColor_Sprintln_Newline(t *testing.T) {
+   449→func TestColor_Fprintln_Newline(t *testing.T) {
+   462→func readRaw …
+   473→func TestIssue206_1(t *testing.T) {
+   492→func TestIssue206_2(t *testing.T) {
+   508→func TestIssue218(t *testing.T) {
+   539→func TestRGB(t *testing.T) {
 
 color_windows.go
      3→import …

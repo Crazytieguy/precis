@@ -2,19 +2,108 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4031 tokens)
+budget: 4000 (4044 tokens)
 
 CHANGELOG.md
      1→# Changelog
-     3→All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
-     4→
+     9→### Changed
+    15→### Added
+    19→### Changed
+    25→### Changed
+    32→### Changed
+    38→### Added
+    44→### Changed
+    50→### Added
+    76→### Added
+    98→### Changed
+   104→### Changed
+   110→### Changed
+   118→### Added
+   126→### Added
+   136→### Changed
+   142→### Changed
+   148→### Changed
+   155→### Changed
+   161→### Changed
+   167→### Changed
+   173→### Changed
+   188→### Added
+   192→### Changed
+   199→### Added
+   205→### Added
+   211→### Added
+   218→### Added
+   224→### Removed
+   230→### Changed
+   236→### Added
+   240→### Changed
+   246→### Added
+   256→### Changed
+   262→### Changed
+   268→### Added
+   274→### Changed
+   281→### Added
+   289→### Changed
+   297→### Added
+   301→### Changed
+   307→### Removed
+   313→### Changed
+   319→### Changed
+   325→### Added
+   331→### Added
+   338→### Added
+   344→### Added
+   350→### Added
+   356→### Added
+   362→### Changed
+   368→### Added
+   374→### Changed
+   381→### Changed
+   387→### Changed
+   393→### Changed
+   399→### Removed
+   403→### Changed
+   411→### Changed
+   418→### Added
+   426→### Changed
+   432→### Changed
+   438→### Changed
+   444→### Added
+   450→### Changed
+   456→### Added
+   462→### Changed
+   468→### Changed
+   474→### Added
+   480→### Changed
    484→# [8.0.0](https://github.com/motdotla/dotenv/compare/v7.0.0...v8.0.0) (2019-05-02)
+   486→### Changed
+   492→### Fixed
+   496→### Removed
+   502→### Added
+   508→### Added
+   514→### Changed
+   520→### Added
+   526→### Changed
+   532→### Removed
+   538→### Changed
+   542→### Removed
+   548→### Added
+   554→### Changed
+   559→### Fixed
+   563→### Removed
+   569→### Added
+   577→### Changed
+   581→### Removed
+   587→### Added
+   591→### Changed
+   595→### Fixed
+   601→### Added
+   607→### Removed
 
 CONTRIBUTING.md
      1→# Contributing
      3→1. [Fork it](https://help.github.com/articles/fork-a-repo/)
      4→2. Install dependencies (`npm install`)
-     5→3. Create your feature branch (`git checkout -b my-new-feature`)
       →…
     11→## Testing
     19→## Code Style
@@ -56,74 +145,36 @@ README.md
     11→## Usage
     13→Install it.
     14→
-    15→```sh
-    16→npm install dotenv --save
-    17→```
-    18→
-    19→Create a `.env` file in the root of your project:
-    20→
-    21→```ini
-    22→# .env
       →…
     39→## Advanced
     43→Import with [ES6](#how-do-i-use-dotenv-with-import):
     44→
-    45→```javascript
-    46→import 'dotenv/config'
-    47→```
-    48→
-    49→ES6 import if you need to set config options:
-    50→
-    51→```javascript
-    52→import dotenv from 'dotenv'
       →…
    319→## Agents
    323→> Software is changing, and dotenv must change with it—that is why I built [agentic secret storage (AS2)](https://dotenvx.com/as2). Agents run code without humans at terminals, so plaintext `.env` files are the wrong primitive.
    324→>
-   325→> AS2 is built for autonomous software: encrypted by default, zero console access, and cryptography‑first delivery that keeps operators out of the loop.
-   326→>
-   327→> It is backed by [Vestauth](https://github.com/vestauth/vestauth), the trusted, pioneering auth layer for agents—giving each agent a cryptographic identity so requests are signed with private keys and verified with public keys. No shared secrets to leak.
-   328→>
-   329→> It's what I'm using now. - [motdotla](https://mot.la)
-   330→
+      →…
    331→### Quickstart
    333→Install vestauth and initialize your agent.
    334→
    335→```bash
    336→npm i -g vestauth
    337→
-   338→vestauth agent init
-   339→```
-   340→
       →…
    357→## FAQ
    361→No.
    362→
-   363→Unless you encrypt it with [dotenvx](https://github.com/dotenvx/dotenvx). Then we recommend you do.
-   364→
-   365→</details>
-   366→<details><summary>What about variable expansion?</summary><br/>
-   367→
-   368→Use [dotenvx](https://github.com/dotenvx/dotenvx).
-   369→
-   370→</details>
       →…
    579→## Docs
    581→Dotenv exposes four functions:
    582→
-   583→* `config`
-   584→* `parse`
-   585→* `populate`
-   586→
+      →…
    587→### Config
    589→`config` will read your `.env` file, parse the contents, assign it to
    590→[`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env),
    591→and return an Object with a `parsed` key containing the loaded content or an `error` key if it failed.
    592→
    593→```js
-   594→const result = dotenv.config()
-   595→
-   596→if (result.error) {
       →…
    605→#### Options
    607→##### path
@@ -156,9 +207,6 @@ README.md
    696→an Object with the parsed keys and values.
    697→
    698→```js
-   699→const dotenv = require('dotenv')
-   700→const buf = Buffer.from('BASIC=basic')
-   701→const config = dotenv.parse(buf) // will return an object
       →…
    705→#### Options
    707→##### debug
@@ -171,9 +219,6 @@ README.md
    725→For example, customizing the source:
    726→
    727→```js
-   728→const dotenv = require('dotenv')
-   729→const parsed = { HELLO: 'world' }
-   730→
       →…
    748→#### options
    750→##### Debug
@@ -187,12 +232,11 @@ README.md
    764→## CHANGELOG
    766→See [CHANGELOG.md](CHANGELOG.md)
    767→
-   768→&nbsp;
-   769→
+      →…
    770→## Who's using dotenv?
    772→[These npm modules depend on it.](https://www.npmjs.com/browse/depended/dotenv)
    773→
-   774→Projects that expand it often use the [keyword "dotenv" on npm](https://www.npmjs.com/search?q=keywords:dotenv).
+      →…
 
 lib/cli-options.js
      1→const re = /^dotenv_config_(encoding|path|quiet|debug|override|DOTENV_KEY)=(.+)$/
@@ -250,30 +294,14 @@ lib/main.d.ts
     64→  /**
     65→   * Default: `false`
     66→   *
-    67→   * Override any environment variables that have already been set on your machine with values from your .env file.
-    68→   *
-    69→   * example: `require('dotenv').config({ override: true })`
-    70→   */
-    71→  override?: boolean;
-    72→
-    73→  /**
-    74→   * Default: `process.env`
-    75→   *
-    76→   * Specify an object to write your secrets to. Defaults to process.env environment variables.
-    77→   *
-    78→   * example: `const processEnv = {}; require('dotenv').config({ processEnv: processEnv })`
-    79→   */
-    80→  processEnv?: DotenvPopulateInput;
-    81→
-    82→  /**
-    83→   * Default: `undefined`
-    84→   *
       →   …
     92→export interface DotenvConfigOutput {
     93→  error?: DotenvError;
     94→  parsed?: DotenvParseOutput;
     95→}
     97→type DotenvError = Error & {
+    98→  code: 
+      →  …
    106→export interface DotenvPopulateOptions {
    107→  /**
    108→   * Default: `false`
@@ -351,8 +379,8 @@ tests/test-config-cli.js
      6→function spawn (cmd, options = {}) {
 
 tests/test-config-vault.js
-     8→const testPath = 'tests/.env'
-    10→const dotenvKey = 'dotenv://:key_ddcaa26504cd70a6fef9801901c3981538563a1767c297cb8416e8a38c62fe00@dotenvx.com/vault/.env.vault?environment=development'
+     8→const testPath …
+    10→const dotenvKey …
 
 tests/test-env-options.js
      8→const e = process.env.DOTENV_CONFIG_ENCODING
@@ -365,22 +393,22 @@ tests/test-env-options.js
     21→function testOption (envVar, tmpVal, expect) {
 
 tests/test-parse-multiline.js
-     6→const parsed …
-    50→const multiPem …
-    59→const payload …
-    62→const expectedPayload …
-    64→const RPayload …
-    67→const NPayload …
-    70→const RNPayload …
+     6→const parsed = dotenv.parse(fs.readFileSync('tests/.env.multiline', { encoding: 'utf8' }))
+    50→const multiPem = `-----BEGIN PUBLIC KEY-----
+    59→const payload = dotenv.parse(Buffer.from('BUFFER=true'))
+    62→const expectedPayload = { SERVER: 'localhost', PASSWORD: 'password', DB: 'tests' }
+    64→const RPayload = dotenv.parse(Buffer.from('SERVER=localhost\rPASSWORD=password\rDB=tests\r'))
+    67→const NPayload = dotenv.parse(Buffer.from('SERVER=localhost\nPASSWORD=password\nDB=tests\n'))
+    70→const RNPayload = dotenv.parse(Buffer.from('SERVER=localhost\r\nPASSWORD=password\r\nDB=tests\r\n'))
 
 tests/test-parse.js
-     6→const parsed …
-    82→const payload …
-    85→const duplicate …
-    88→const expectedPayload …
-    90→const RPayload …
-    93→const NPayload …
-    96→const RNPayload …
+     6→const parsed = dotenv.parse(fs.readFileSync('tests/.env', { encoding: 'utf8' }))
+    82→const payload = dotenv.parse(Buffer.from('BUFFER=true'))
+    85→const duplicate = dotenv.parse(Buffer.from('DUP=one\nDUP=two'))
+    88→const expectedPayload = { SERVER: 'localhost', PASSWORD: 'password', DB: 'tests' }
+    90→const RPayload = dotenv.parse(Buffer.from('SERVER=localhost\rPASSWORD=password\rDB=tests\r'))
+    93→const NPayload = dotenv.parse(Buffer.from('SERVER=localhost\nPASSWORD=password\nDB=tests\n'))
+    96→const RNPayload = dotenv.parse(Buffer.from('SERVER=localhost\r\nPASSWORD=password\r\nDB=tests\r\n'))
 
 tests/test-populate.js
      8→const mockParseResponse = { test: 'foo' }

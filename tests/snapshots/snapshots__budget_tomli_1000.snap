@@ -2,32 +2,21 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1016 tokens)
+budget: 1000 (1002 tokens)
 
 README.md
      5→# Tomli
-     7→> A lil' TOML parser
-     8→
-      →…
     32→## Intro<a name="intro"></a>
     50→## Installation<a name="installation"></a>
     56→## Usage<a name="usage"></a>
    152→## FAQ<a name="faq"></a>
    201→## Performance<a name="performance"></a>
 
-benchmark/README.md
-     1→# Benchmark
-
 fuzzer/fuzz.py
     20→def test_one_input(input_bytes: bytes) -> None:
     53→def print_err(data):
     59→def normalize_toml_obj(toml_obj: dict) -> None:
-    60→    """Make NaNs equal when compared (without using recursion)."""
     71→def main():
-
-profiler/profiler_script.py
-     8→from pathlib import Path
-    10→import tomli
 
 pyproject.toml
      1→[build-system]
@@ -37,76 +26,80 @@ pyproject.toml
     46→[tool.tox]
    145→[tool.mypy]
 
-scripts/use_setuptools.py
-    12→def use_setuptools() -> None:
-
 src/tomli/__init__.py
      1→# SPDX-License-Identifier: MIT
-     2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
-     3→# Licensed to PSF under a Contributor Agreement.
+      →…
      5→__all__ = ("loads", "load", "TOMLDecodeError")
-     6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
+     6→__version__ …
      8→from ._parser import TOMLDecodeError, load, loads
 
 src/tomli/_parser.py
-    10→from ._re …
-    24→    from ._types …
-    26→# Inline tables/arrays are implemented using recursion. Pathologically
-      →…
+    19→TYPE_CHECKING …
     35→MAX_INLINE_NESTING: Final = sys.getrecursionlimit()
-    39→# Neither of these sets include quotation mark or backslash. They are
-      →…
+    37→ASCII_CTRL …
     41→ILLEGAL_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t")
+    42→ILLEGAL_MULTILINE_BASIC_STR_CHARS …
+    44→ILLEGAL_LITERAL_STR_CHARS …
+    45→ILLEGAL_MULTILINE_LITERAL_STR_CHARS …
+    47→ILLEGAL_COMMENT_CHARS …
+    49→TOML_WS …
+    50→TOML_WS_AND_NEWLINE …
+    51→BARE_KEY_CHARS …
+    54→KEY_INITIAL_CHARS …
+    55→HEXDIGIT_CHARS …
+    57→BASIC_STR_ESCAPE_REPLACEMENTS …
     71→class DEPRECATED_DEFAULT:
     76→class TOMLDecodeError(ValueError):
-    86→
+    87→    def __init__ …
+   137→def load …
+   149→def loads …
    220→class Flags:
-   222→
+   229→    def __init__ …
+   233→    def add_pending …
+   236→    def finalize_pending …
+   241→    def unset_all …
+   249→    def set …
+   260→    def is_ …
    278→class NestedDict:
+   279→    def __init__ …
+   283→    def get_or_create_nest …
+   300→    def append_nest_to_list …
    312→class Output:
+   313→    def __init__ …
+   318→def skip_chars …
+   327→def skip_until …
+   349→def skip_comment …
+   361→def skip_comments_and_array_ws …
+   370→def create_dict_rule …
+   390→def create_list_rule …
+   413→def key_value_rule …
+   447→def parse_key_value_pair …
+   463→def parse_key …
+   481→def parse_key_part …
+   497→def parse_one_line_basic_str …
+   502→def parse_array …
+   528→def parse_inline_table …
+   564→def parse_basic_str_escape …
+   595→def parse_basic_str_escape_multiline …
+   599→def parse_hex_char …
+   612→def parse_literal_str …
+   621→def parse_multiline_str …
+   652→def parse_basic_str …
+   684→def parse_value …
+   760→def is_unicode_scalar_value …
+   764→def make_safe_parse_float …
 
 src/tomli/_re.py
-     7→from datetime …
-     8→from functools …
-     9→import re …
     11→TYPE_CHECKING = False
-    13→    from typing …
     15→    from ._types import ParseFloat
-    17→_TIME_RE_STR: Final = r"""
     26→RE_NUMBER: Final = re.compile(
-    27→    r"""
-      →    …
     45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)
     46→RE_DATETIME: Final = re.compile(
-    47→    rf"""
-      →    …
     59→def match_to_datetime(match: re.Match[str]) -> datetime | date:
-    60→    """Convert a `RE_DATETIME` match to `datetime.datetime` or `datetime.date`.
-    61→
-      →…
-    95→# No need to limit cache size. This is only ever called on input
-    96→# that matched RE_DATETIME, so there is an implicit bound of
-      →…
     99→def cached_tz(hour_str: str, minute_str: str, sign_str: str) -> timezone:
    109→def match_to_localtime(match: re.Match[str]) -> time:
    116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
 
-src/tomli/_types.py
-     5→from typing import Any, Callable, Tuple
-
-tests/__init__.py
-     5→__all__ = ("tomllib",)
-
-tests/test_data.py
-     5→import json
-    27→class TestData(unittest.TestCase):
-
-tests/test_error.py
-    10→from . import tomllib
-    13→class TestError(unittest.TestCase):
-
 tomllib.md
      1→# `tomllib` – Tomli in the standard library
     13→## Converting Tomli to tomllib
-    15→### Sync status
-    20→### Steps to convert

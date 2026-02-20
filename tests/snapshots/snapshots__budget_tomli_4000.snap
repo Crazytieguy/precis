@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4023 tokens)
+budget: 4000 (4012 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -13,18 +13,9 @@ README.md
      8→
      9→**Table of Contents** *generated with [mdformat-toc](https://github.com/hukkin/mdformat-toc)*
     10→
-    11→<!-- mdformat-toc start --slug=github --maxlevel=6 --minlevel=2 -->
-    12→
-    13→- [Intro](#intro)
-    14→- [Installation](#installation)
-    15→- [Usage](#usage)
       →…
     32→## Intro<a name="intro"></a>
-    34→Tomli is a Python library for parsing [TOML](https://toml.io).
-      →…
     50→## Installation<a name="installation"></a>
-    52→```bash
-      →…
     56→## Usage<a name="usage"></a>
     58→### Parse a TOML string<a name="parse-a-toml-string"></a>
     79→### Parse a TOML file<a name="parse-a-toml-file"></a>
@@ -37,28 +28,30 @@ README.md
    177→### Is there a `dumps`, `write` or `encode` function?<a name="is-there-a-dumps-write-or-encode-function"></a>
    183→### How do TOML types map into Python types?<a name="how-do-toml-types-map-into-python-types"></a>
    201→## Performance<a name="performance"></a>
-   203→The `benchmark/` folder in this repository contains a performance benchmark for comparing the various Python TOML parsers.
-      →…
    207→### Mypyc generated wheel<a name="mypyc-generated-wheel"></a>
    230→### Pure Python<a name="pure-python"></a>
 
 benchmark/README.md
      1→# Benchmark
      3→## Acknowledgments
-     5→This benchmark was shamelessly copied from
-      →…
     10→## Running
     12→### Against the local Tomli state
     18→### Against the latest Tomli PyPI release
 
 benchmark/data.toml
     46→[contain]
-    55→        [contain.righteous-imperfect-remarkable.deeply-night-gold]
+    50→    [contain.righteous-imperfect-remarkable]
     60→[crime]
     70→[license-bat]
     75→[rapid]
+    83→    [rapid.clean-leather]
     90→[run-overjoyed]
     95→[inline-tables]
+    99→[[dynamic-arrays.products]]
+   101→    [[dynamic-arrays.products]]
+   103→[[dynamic-arrays.products]]
+   105→    [[dynamic-arrays.products]]
+   107→[[dynamic-arrays.products]]
    117→[multiline-strings]
 
 benchmark/run.py
@@ -137,11 +130,7 @@ src/tomli/_parser.py
     27→# nested documents cause pure Python to raise RecursionError (which is OK),
     28→# but mypyc binary wheels will crash unrecoverably (not OK). According to
     29→# mypyc docs this will be fixed in the future:
-    30→# https://mypyc.readthedocs.io/en/latest/differences_from_python.html#stack-overflows
-    31→# Before mypyc's fix is in, recursion needs to be limited by this library.
-    32→# Choosing `sys.getrecursionlimit()` as maximum inline table/array nesting
-    33→# level, as it allows more nesting than pure Python, but still seems a far
-    34→# lower number than where mypyc binaries crash.
+      →…
     35→MAX_INLINE_NESTING: Final = sys.getrecursionlimit()
     37→ASCII_CTRL: Final = frozenset(chr(i) for i in range(32)) | frozenset(chr(127))
     39→# Neither of these sets include quotation mark or backslash. They are
@@ -158,65 +147,84 @@ src/tomli/_parser.py
     55→HEXDIGIT_CHARS: Final = frozenset("abcdef" "ABCDEF" "0123456789")
     57→BASIC_STR_ESCAPE_REPLACEMENTS: Final = MappingProxyType(
     71→class DEPRECATED_DEFAULT:
-    72→    """Sentinel to be used as default arg during deprecation
-    73→    period of TOMLDecodeError's free-form arguments."""
     76→class TOMLDecodeError(ValueError):
-    77→    """An error raised if a document is not valid TOML.
-    78→
-    79→    Adds the following attributes to ValueError:
-    80→    msg: The unformatted error message
-    81→    doc: The TOML document being parsed
-    82→    pos: The index of doc where parsing failed
-    83→    lineno: The line corresponding to pos
-    84→    colno: The column corresponding to pos
-    85→    """
     86→
-    87→    def __init__ …
-   137→def load …
-   149→def loads …
+    87→    def __init__(
+    88→        self,
+    89→        msg: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
+    90→        doc: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
+    91→        pos: Pos | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
+    92→        *args: Any,
+    93→    ):
+   137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
+   138→    """Parse TOML from a binary file object."""
+   149→def loads(__s: str, *, parse_float: ParseFloat = float) -> dict[str, Any]:
+   150→    """Parse TOML from a string."""
    220→class Flags:
-   221→    """Flags that map to parsed keys/namespaces."""
    222→
    223→    # Marks an immutable namespace (inline array or inline table).
    224→    FROZEN: Final = 0
-   225→    # Marks a nest that has been explicitly created and can no longer
-   226→    # be opened using the "[table]" syntax.
-   227→    EXPLICIT_NEST: Final = 1
-   228→
-   229→    def __init__ …
-   233→    def add_pending …
-   236→    def finalize_pending …
-   241→    def unset_all …
-   249→    def set …
-   260→    def is_ …
+   229→    def __init__(self) -> None:
+   233→    def add_pending(self, key: Key, flag: int) -> None:
+   236→    def finalize_pending(self) -> None:
+   241→    def unset_all(self, key: Key) -> None:
+   249→    def set(self, key: Key, flag: int, *, recursive: bool) -> None:  # noqa: A003
+   260→    def is_(self, key: Key, flag: int) -> bool:
    278→class NestedDict:
-   279→    def __init__ …
-   283→    def get_or_create_nest …
-   300→    def append_nest_to_list …
+   279→    def __init__(self) -> None:
+   283→    def get_or_create_nest(
+   284→        self,
+   285→        key: Key,
+   286→        *,
+   287→        access_lists: bool = True,
+   288→    ) -> dict[str, Any]:
+   300→    def append_nest_to_list(self, key: Key) -> None:
    312→class Output:
-   313→    def __init__ …
-   318→def skip_chars …
-   327→def skip_until …
-   349→def skip_comment …
-   361→def skip_comments_and_array_ws …
-   370→def create_dict_rule …
-   390→def create_list_rule …
-   413→def key_value_rule …
-   447→def parse_key_value_pair …
-   463→def parse_key …
-   481→def parse_key_part …
-   497→def parse_one_line_basic_str …
-   502→def parse_array …
-   528→def parse_inline_table …
-   564→def parse_basic_str_escape …
-   595→def parse_basic_str_escape_multiline …
-   599→def parse_hex_char …
-   612→def parse_literal_str …
-   621→def parse_multiline_str …
-   652→def parse_basic_str …
-   684→def parse_value …
-   760→def is_unicode_scalar_value …
-   764→def make_safe_parse_float …
+   313→    def __init__(self) -> None:
+   318→def skip_chars(src: str, pos: Pos, chars: Iterable[str]) -> Pos:
+   327→def skip_until(
+   328→    src: str,
+   329→    pos: Pos,
+   330→    expect: str,
+   331→    *,
+   332→    error_on: frozenset[str],
+   333→    error_on_eof: bool,
+   334→) -> Pos:
+   349→def skip_comment(src: str, pos: Pos) -> Pos:
+   361→def skip_comments_and_array_ws(src: str, pos: Pos) -> Pos:
+   370→def create_dict_rule(src: str, pos: Pos, out: Output) -> tuple[Pos, Key]:
+   390→def create_list_rule(src: str, pos: Pos, out: Output) -> tuple[Pos, Key]:
+   413→def key_value_rule(
+   414→    src: str, pos: Pos, out: Output, header: Key, parse_float: ParseFloat
+   415→) -> Pos:
+   447→def parse_key_value_pair(
+   448→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
+   449→) -> tuple[Pos, Key, Any]:
+   463→def parse_key(src: str, pos: Pos) -> tuple[Pos, Key]:
+   481→def parse_key_part(src: str, pos: Pos) -> tuple[Pos, str]:
+   497→def parse_one_line_basic_str(src: str, pos: Pos) -> tuple[Pos, str]:
+   502→def parse_array(
+   503→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
+   504→) -> tuple[Pos, list[Any]]:
+   528→def parse_inline_table(
+   529→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
+   530→) -> tuple[Pos, dict[str, Any]]:
+   564→def parse_basic_str_escape(
+   565→    src: str, pos: Pos, *, multiline: bool = False
+   566→) -> tuple[Pos, str]:
+   595→def parse_basic_str_escape_multiline(src: str, pos: Pos) -> tuple[Pos, str]:
+   599→def parse_hex_char(src: str, pos: Pos, hex_len: int) -> tuple[Pos, str]:
+   612→def parse_literal_str(src: str, pos: Pos) -> tuple[Pos, str]:
+   621→def parse_multiline_str(src: str, pos: Pos, *, literal: bool) -> tuple[Pos, str]:
+   652→def parse_basic_str(src: str, pos: Pos, *, multiline: bool) -> tuple[Pos, str]:
+   684→def parse_value(
+   685→    src: str, pos: Pos, parse_float: ParseFloat, nest_lvl: int
+   686→) -> tuple[Pos, Any]:
+   760→def is_unicode_scalar_value(codepoint: int) -> bool:
+   764→def make_safe_parse_float(parse_float: ParseFloat) -> ParseFloat:
+   765→    """A decorator to make `parse_float` safe.
+   766→
+      →…
 
 src/tomli/_re.py
      7→from datetime import date, datetime, time, timedelta, timezone, tzinfo
@@ -228,23 +236,17 @@ src/tomli/_re.py
     17→_TIME_RE_STR: Final = r"""
     26→RE_NUMBER: Final = re.compile(
     27→    r"""
-    28→0
-    29→(?:
-      →…
+      →    …
     45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)
     46→RE_DATETIME: Final = re.compile(
     47→    rf"""
-    48→([0-9]{{4}})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])  # date, e.g. 1988-10-27
-    49→(?:
-      →…
+      →    …
     59→def match_to_datetime(match: re.Match[str]) -> datetime | date:
     60→    """Convert a `RE_DATETIME` match to `datetime.datetime` or `datetime.date`.
     61→
     62→    Raises ValueError if the match does not correspond to a valid date
     63→    or datetime.
     64→    """
-    65→    (
-      →    …
     95→# No need to limit cache size. This is only ever called on input
     96→# that matched RE_DATETIME, so there is an implicit bound of
     97→# 24 (hours) * 60 (minutes) * 2 (offset direction) = 2880.
@@ -258,19 +260,14 @@ src/tomli/_re.py
    105→        )
    106→    )
    109→def match_to_localtime(match: re.Match[str]) -> time:
-   110→    hour_str, minute_str, sec_str, micros_str = match.groups()
-      →    …
    116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
-   117→    if match.group("floatpart"):
-      →    …
 
 src/tomli/_types.py
      5→from typing import Any, Callable, Tuple
 
 tests/__init__.py
      1→# SPDX-License-Identifier: MIT
-     2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
-     3→# Licensed to PSF under a Contributor Agreement.
+      →…
      5→__all__ = ("tomllib",)
      9→import tomli as tomllib
 
@@ -279,41 +276,9 @@ tests/burntsushi.py
      8→from typing import Any
     11→def convert(obj):
     42→def normalize(obj: Any) -> Any:
-    43→    """Normalize test objects.
-    44→
-      →…
-
-tests/data/invalid/table/redefine-1.toml
-     1→[t1]
-     3→[t1.t2]
-
-tests/data/invalid/table/redefine-2.toml
-     1→[t1]
-
-tests/data/valid/array/array-subtables.json
-     1→{"arr":
-
-tests/data/valid/array/array-subtables.toml
-     1→[[arr]]
-     5→[[arr]]
-
-tests/data/valid/array/open-parent-table.json
-     2→  "parent-table": {
-
-tests/data/valid/array/open-parent-table.toml
-     3→[parent-table]
-
-tests/data/valid/boolean.json
-     2→  "a": {"type":"bool","value":"true"},
-     3→  "b": {"type":"bool","value":"false"}
-     4→}
-
-tests/data/valid/hex-char.json
 
 tests/data/valid/trailing-comma.json
      1→{"arr":
-     6→  }
-     7→}
 
 tests/test_data.py
      5→import json
@@ -352,9 +317,6 @@ tests/test_misc.py
    103→    def test_inline_array_recursion_limit(self):
    118→    def test_inline_table_recursion_limit(self):
    133→    def test_types_import(self):
-   134→        """Test that `_types` module runs.
-   135→
-      →…
 
 tomllib.md
      1→# `tomllib` – Tomli in the standard library

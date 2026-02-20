@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4048 tokens)
+budget: 4000 (4058 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
@@ -26,13 +26,7 @@ README.md
     21→function App() {
     22→  return (
     23→    <div>
-    24→      <Toaster />
-    25→      <button onClick={() => toast('My first toast')}>Give me a toast</button>
-    26→    </div>
-    27→  );
-    28→}
-    29→```
-    30→
+      →    …
     31→## Documentation
     33→Find the full API reference in the [documentation](https://sonner.emilkowal.ski/getting-started).
 
@@ -189,7 +183,7 @@ src/types.ts
      5→export type PromiseT<Data = any> = Promise<Data> | (() => Promise<Data>);
      7→export interface PromiseIExtendedResult extends ExternalToast {
      8→  message: React.ReactNode;
-     9→}
+      →  …
     11→export type PromiseTExtendedResult<Data = any> =
     12→  | PromiseIExtendedResult
     13→  | ((data: Data) => PromiseIExtendedResult | Promise<PromiseIExtendedResult>);
@@ -201,19 +195,15 @@ src/types.ts
     22→export type PromiseData<ToastData = any> = PromiseExternalToast & {
     30→export interface ToastClassnames {
     31→  toast?: string;
-    32→  title?: string;
       →  …
     48→export interface ToastIcons {
     49→  success?: React.ReactNode;
-    50→  info?: React.ReactNode;
       →  …
     57→export interface Action {
     58→  label: React.ReactNode;
-    59→  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
       →  …
     63→export interface ToastT {
     64→  id: number | string;
-    65→  toasterId?: string;
       →  …
     93→export function isAction(action: Action | React.ReactNode): action is Action {
     94→  return (action as Action).label !== undefined;
@@ -221,7 +211,6 @@ src/types.ts
     97→export type Position = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'top-center' | 'bottom-center';
     98→export interface HeightT {
     99→  height: number;
-   100→  toastId: number | string;
       →  …
    104→interface ToastOptions {
    105→  className?: string;
@@ -230,21 +219,17 @@ src/types.ts
    119→  | {
    128→export interface ToasterProps {
    129→  id?: string;
-   130→  invert?: boolean;
       →  …
    152→export type SwipeDirection = 'top' | 'right' | 'bottom' | 'left';
    154→export interface ToastProps {
    155→  toast: ToastT;
-   156→  toasts: ToastT[];
       →  …
    184→export enum SwipeStateTypes {
    185→  SwipedOut = 'SwipedOut',
-   186→  SwipedBack = 'SwipedBack',
       →  …
    190→export type Theme = 'light' | 'dark';
    192→export interface ToastToDismiss {
    193→  id: number | string;
-   194→  dismiss: boolean;
       →  …
    197→export type ExternalToast = Omit<ToastT, 'id' | 'type' | 'title' | 'jsx' | 'delete' | 'promise'> & {
 
@@ -332,14 +317,11 @@ website/src/components/CodeBlock/index.tsx
      7→import styles from './code-block.module.css';
      9→const variants = {
     14→const theme = {
-    48→export const CodeBlock = ({ children, initialHeight = 0 }: { children: string; initialHeight?: number }) => {
+    48→export const CodeBlock …
 
 website/src/components/ExpandModes/index.tsx
-     1→import { toast } from 'sonner';
      2→import { CodeBlock } from '../CodeBlock';
      4→export const ExpandModes = ({
-     5→  expand,
-      →  …
 
 website/src/components/Footer/index.tsx
      3→import styles from './footer.module.css';
@@ -370,14 +352,21 @@ website/src/components/Position/index.tsx
      9→export const Position = ({
 
 website/src/components/Types/Types.tsx
+     1→import React from 'react';
+     2→import { toast } from 'sonner';
      3→import { CodeBlock } from '../CodeBlock';
+     5→const promiseCode …
      7→export const Types = () => {
+    34→const allTypes …
 
 website/src/components/Usage/index.tsx
      1→import { CodeBlock } from '../CodeBlock';
      3→export const Usage = () => {
 
 website/src/pages/_app.tsx
+     1→import type { ReactElement } from 'react';
+     2→import type { AppProps } from 'next/app';
+     3→import { Analytics } from '@vercel/analytics/react';
      4→import '../style.css';
      5→import '../globals.css';
      7→export default function Nextra({ Component, pageProps }: AppProps): ReactElement {
@@ -394,6 +383,15 @@ website/src/pages/_meta.json
     22→  "styling": {
 
 website/src/pages/index.tsx
+     1→import React, { StrictMode } from 'react';
+     2→import { Toaster } from 'sonner';
+     3→import { Installation } from '@/src/components/Installation';
+     4→import { Hero } from '@/src/components/Hero';
+     5→import { Types } from '@/src/components/Types/Types';
+     6→import { ExpandModes } from '@/src/components/ExpandModes';
+     7→import { Position } from '@/src/components/Position';
+     8→import { Usage } from '@/src/components/Usage';
+     9→import { Other } from '@/src/components/Other/Other';
     10→import Head from '../components/Head';
     11→import { How } from '../components/How/How';
     12→import { Footer } from '../components/Footer';

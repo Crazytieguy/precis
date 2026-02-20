@@ -2,15 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1009 tokens)
+budget: 1000 (1001 tokens)
 
 README.md
      1→# xxhash
-     6→xxhash is a Go implementation of the 64-bit [xxHash] algorithm, XXH64. This is a
-     7→high-quality hashing algorithm that is much faster than anything in the Go
-     8→standard library.
-     9→
-      →…
     33→## Compatibility
     45→## Benchmarks
     66→## Projects using this package
@@ -31,10 +26,15 @@ dynamic/plugin.go
 
 xxhash.go
      5→import …
+    11→const …
+    12→	prime1 …
+    13→	prime2 …
+    14→	prime3 …
+    15→	prime4 …
+    16→	prime5 …
     23→var primes = [...]uint64{prime1, prime2, prime3, prime4, prime5}
     25→// Digest implements hash.Hash64.
     26→//
-    27→// Note that a zero-valued Digest is not ready to receive writes.
       →…
     29→type Digest struct {
     30→	v1    uint64
@@ -54,8 +54,25 @@ xxhash.go
     75→func (d *Digest) Write(b []byte) (n int, err error) {
    113→func (d *Digest) Sum(b []byte) []byte {
    129→func (d *Digest) Sum64() uint64 {
+   170→const …
+   171→	magic …
+   172→	marshaledSize …
    176→func (d *Digest) MarshalBinary() ([]byte, error) {
    190→func (d *Digest) UnmarshalBinary(b []byte) error {
+   208→func appendUint64 …
+   214→func consumeUint64 …
+   219→func u64 …
+   220→func u32 …
+   222→func round …
+   229→func mergeRound …
+   236→func rol1 …
+   237→func rol7 …
+   238→func rol11 …
+   239→func rol12 …
+   240→func rol18 …
+   241→func rol23 …
+   242→func rol27 …
+   243→func rol31 …
 
 xxhash_asm.go
      9→// Sum64 computes the 64-bit xxHash digest of b with a zero seed.
@@ -68,32 +85,22 @@ xxhash_other.go
      6→// Sum64 computes the 64-bit xxHash digest of b with a zero seed.
      7→func Sum64(b []byte) uint64 {
      8→	// A simpler version would be
-     9→	//   d := New()
       →	…
     64→func writeBlocks(d *Digest, b []byte) int {
 
 xxhash_safe.go
      8→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
      9→func Sum64String(s string) uint64 {
-    10→	return Sum64([]byte(s))
-    11→}
     13→// WriteString adds more data to d. It always returns len(s), nil.
     14→func (d *Digest) WriteString(s string) (n int, err error) {
-    15→	return d.Write([]byte(s))
-    16→}
 
 xxhash_unsafe.go
      9→import …
-    36→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
-      →…
     38→func Sum64String(s string) uint64 {
-    43→// WriteString adds more data to d. It always returns len(s), nil.
-      →…
     45→func (d *Digest) WriteString(s string) (n int, err error) {
     55→type sliceHeader struct {
 
 xxhash_unsafe_test.go
-    13→func TestStringAllocs(t *testing.T) {
     31→func TestInlining(t *testing.T) {
 
 xxhsum/xxhsum.go

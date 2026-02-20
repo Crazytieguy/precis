@@ -48,8 +48,16 @@ configuration/renderers.md
      4→
       →…
     20→## Output tables
+    59→### Custom backend commands
+    71→### Optional backends
     84→## HTML renderer options
+   176→### `[output.html.print]`
+   191→### `[output.html.fold]`
+   206→### `[output.html.playground]`
+   230→### `[output.html.code]`
+   244→### `[output.html.search]`
    286→#### `[output.html.search.chapter]`
+   300→### `[output.html.redirect]`
    325→## Markdown renderer
 
 example.rs
@@ -100,8 +108,6 @@ mdbook.md
 
 summary.md
      1→# SUMMARY.md
-     3→The summary file is used by mdBook to know what chapters to include, in what
-      →…
     12→### Structure
     93→### Example
 
@@ -115,8 +121,6 @@ theme/README.md
 
 theme/editor.md
      1→# Editor
-     3→In addition to providing runnable code playgrounds, mdBook optionally allows them
-      →…
     35→## Customizing the editor
 
 theme/index-hbs.md
@@ -129,10 +133,6 @@ theme/index-hbs.md
 
 theme/syntax-highlighting.md
      1→# Syntax highlighting
-     3→mdBook uses [Highlight.js](https://highlightjs.org) with a custom theme
-     4→for syntax highlighting.
-     5→
-      →…
     17→## Supported languages
     68→## Custom theme
     82→## Improve default theme

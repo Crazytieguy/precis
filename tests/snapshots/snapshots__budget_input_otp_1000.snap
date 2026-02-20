@@ -2,20 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1006 tokens)
-
-CHANGELOG.md
+budget: 1000 (1001 tokens)
 
 README.md
      1→# The only accessible & unstyled & full featured Input OTP component in the Web.
-     3→### OTP Input for React 🔐 by [@guilhermerodz](https://twitter.com/guilherme_rodz)
     20→## Usage
     39→## Default example
    136→## How it works
    141→## Features
-   198→### Auto tracks if the input has space in the right side for the badge
    204→## API Reference
-   206→### OTPInput
    210→#### Props
    293→## Examples
    377→## Caveats
@@ -36,12 +31,21 @@ apps/storybook/components.json
     13→  "aliases": {
 
 apps/storybook/package.json
+     2→  "name": "storybook",
+     3→  "private": true,
+     4→  "version": "0.2.0",
+     5→  "type": "module",
+     6→  "repository": {
+    10→  "bugs": {
+    13→  "license": "MIT",
+    14→  "dependencies": {
+    24→  "scripts": {
+    29→  "devDependencies": {
 
 apps/storybook/src/lib/utils.ts
      4→export function cn(...inputs: ClassValue[]) {
 
 apps/storybook/src/stories/Button.stories.ts
-     1→import { Button } from './Button';
     14→export const Primary = {
     21→export const Secondary = {
     27→export const Large = {
@@ -49,11 +53,7 @@ apps/storybook/src/stories/Button.stories.ts
 
 apps/storybook/src/stories/Button.tsx
      3→import './button.css';
-     6→ * Primary UI component for user interaction
      8→export const Button = ({ primary, backgroundColor, size, label, ...props }) => {
-
-apps/storybook/src/stories/InputOTP.stories.tsx
-    29→export const Default: Story = {}
 
 apps/storybook/tsconfig.json
      2→  "compilerOptions": {
@@ -62,20 +62,24 @@ apps/storybook/tsconfig.json
 
 apps/storybook/tsconfig.node.json
      2→  "compilerOptions": {
-     7→  },
      8→  "include": ["vite.config.ts"]
-     9→}
 
 package.json
-
-packages/input-otp/package.json
+     2→  "name": "root",
+     3→  "private": true,
+     4→  "author": "Guilherme Rodz <g@rodz.dev>",
+     5→  "description": "One-time password input component for React.",
+     6→  "homepage": "https://input-otp.rodz.dev/",
+     7→  "workspaces": [
+    11→  "scripts": {
+    31→  "prettier": {
+    41→  "trustedDependencies": [
+    44→  "devDependencies": {
 
 packages/input-otp/src/input.tsx
-     3→import * as React from 'react'
     10→export const OTPInputContext = React.createContext<RenderProps>(
     14→export const OTPInput = React.forwardRef<HTMLInputElement, OTPInputProps>(
    540→function safeInsertRule …
-   553→const NOSCRIPT_CSS_FALLBACK = `
 
 packages/input-otp/src/regexp.ts
      1→export const REGEXP_ONLY_DIGITS = '^\\d+$'
@@ -87,29 +91,19 @@ packages/input-otp/src/sync-timeouts.ts
 
 packages/input-otp/src/types.ts
      1→export interface SlotProps {
-     2→  isActive: boolean
-      →  …
      7→export interface RenderProps {
-     8→  slots: SlotProps[]
-      →  …
-    33→export type OTPInputProps = OTPInputBaseProps &
-    34→  (
-    35→    | {
+    33→export type OTPInputProps …
 
 packages/input-otp/src/use-previous.ts
-     1→import * as React from 'react'
      3→export function usePrevious<T>(value: T) {
 
 packages/input-otp/src/use-pwm-badge.tsx
-     1→import * as React from 'react'
      2→import { OTPInputProps } from './types'
     15→export function usePasswordManagerBadge …
 
 packages/input-otp/tsconfig.json
      2→  "compilerOptions": {
-    11→  },
     12→  "include": ["src"]
-    13→}
 
 pnpm-workspace.yaml
      1→packages:

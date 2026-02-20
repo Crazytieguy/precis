@@ -4,9 +4,6 @@ expression: output
 ---
 budget: 1000 (998 tokens)
 
-.github/ISSUE_TEMPLATE/config.yml
-     3→blank_issues_enabled: true
-
 .github/actions/create-check/action.yml
      3→name: 'Create Check'
      4→inputs:
@@ -69,22 +66,28 @@ budget: 1000 (998 tokens)
     11→permissions:
     16→jobs:
 
-.release-please-manifest.json
-     2→  ".": "7.7.4"
-     3→}
-
 README.md
      1→semver(1) -- The semantic versioner for npm
      4→## Install
     10→## Usage
    139→## Versions
    148→## Ranges
+   184→### Prerelease Tags
+   279→### Advanced Range Syntax
+   384→### Range Grammar
    408→## Functions
+   453→### Comparison
+   478→### Sorting
+   485→### Comparators
+   489→### Ranges
+   531→### Coercion
+   558→### Clean
    576→## Constants
+   580→### `RELEASE_TYPES`
+   600→### `SEMVER_SPEC_VERSION`
    610→## Exported Modules
 
 classes/comparator.js
-     3→const ANY = Symbol('SemVer ANY')
      5→class Comparator {
      6→  static get ANY () {
     10→  constructor (comp, options) {
@@ -114,48 +117,6 @@ classes/semver.js
    168→  compareBuild (other) {
    194→  inc (release, identifier, identifierBase) {
 
-functions/clean.js
-     4→const clean = (version, options) => {
-
-functions/cmp.js
-    10→const cmp …
-
-functions/compare.js
-     4→const compare …
-
-functions/diff.js
-     5→const diff …
-
-functions/eq.js
-     4→const eq …
-
-functions/gt.js
-     4→const gt …
-
-functions/inc.js
-     5→const inc …
-
-functions/lt.js
-     4→const lt …
-
-functions/major.js
-     4→const major …
-
-functions/minor.js
-     4→const minor …
-
-functions/neq.js
-     4→const neq …
-
-functions/parse.js
-     4→const parse …
-
-functions/patch.js
-     4→const patch …
-
-internal/debug.js
-     3→const debug = (
-
 internal/lrucache.js
      3→class LRUCache {
      4→  constructor () {
@@ -163,9 +124,20 @@ internal/lrucache.js
     21→  delete (key) {
     25→  set (key, value) {
 
-internal/parse-options.js
-     6→const parseOptions = options => {
-
 package.json
+     2→  "name": "semver",
+     3→  "version": "7.7.4",
+     4→  "description": "The semantic version parser used by npm.",
+     5→  "main": "index.js",
+     6→  "scripts": {
+    16→  "devDependencies": {
+    22→  "license": "ISC",
+    23→  "repository": {
+    27→  "bin": {
+    30→  "files": [
+    41→  "tap": {
+    49→  "engines": {
+    52→  "author": "GitHub Inc.",
+    53→  "templateOSS": {
 
 release-please-config.json

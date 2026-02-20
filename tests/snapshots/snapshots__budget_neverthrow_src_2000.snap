@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2001 tokens)
+budget: 2000 (2004 tokens)
 
 _internals/error.ts
      1→import { Result } from '../result'
@@ -13,13 +13,7 @@ _internals/error.ts
     11→interface NeverThrowError<T, E> {
     12→  data:
       →  …
-    27→export const createNeverThrowError = <T, E>(
-    28→  message: string,
-    29→  result: Result<T, E>,
-    30→  config: ErrorConfig = defaultErrorConfig,
-    31→): NeverThrowError<T, E> => {
-    32→  const data = result.isOk()
-      →  …
+    27→export const createNeverThrowError …
 
 _internals/utils.ts
      1→import { Result, ok, err } from '../result'
@@ -71,21 +65,24 @@ result-async.ts
    214→   * @example
    215→   * ```typescript
    216→   * safeTry(async function* () {
-   217→   *   const okValue = yield* yourResult
-   218→   * })
-   219→   * ```
-   220→   * Emulates Rust's `?` operator in `safeTry`'s body. See also `safeTry`.
+      →   …
    222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
-   223→    return yield* await this._promise.then((res) => res.safeUnwrap())
-   224→  }
    227→  then …
    249→export function okAsync …
    255→export function errAsync …
-   259→export const fromPromise …
-   260→export const fromSafePromise …
-   262→export const fromAsyncThrowable …
-   265→export type CombineResultAsyncs …
-   272→export type CombineResultsWithAllErrorsArrayAsync …
+   259→export const fromPromise = ResultAsync.fromPromise
+   260→export const fromSafePromise = ResultAsync.fromSafePromise
+   262→export const fromAsyncThrowable = ResultAsync.fromThrowable
+   265→export type CombineResultAsyncs<
+   266→  T extends readonly ResultAsync<unknown, unknown>[]
+   267→> = IsLiteralArray<T> extends 1
+   268→  ? TraverseAsync<UnwrapAsync<T>>
+   269→  : ResultAsync<ExtractOkAsyncTypes<T>, ExtractErrAsyncTypes<T>[number]>
+   272→export type CombineResultsWithAllErrorsArrayAsync<
+   273→  T extends readonly ResultAsync<unknown, unknown>[]
+   274→> = IsLiteralArray<T> extends 1
+   275→  ? TraverseWithAllErrorsAsync<UnwrapAsync<T>>
+   276→  : ResultAsync<ExtractOkAsyncTypes<T>, ExtractErrAsyncTypes<T>[number][]>
    279→type UnwrapAsync …
    300→type TraverseAsync …
    330→type TraverseWithAllErrorsAsync …

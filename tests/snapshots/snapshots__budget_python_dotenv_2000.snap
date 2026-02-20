@@ -2,12 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2014 tokens)
+budget: 2000 (2000 tokens)
 
 README.md
      1→# python-dotenv
-     3→[![Build Status][build_status_badge]][build_status_link]
-      →…
     22→## Getting Started
     78→## Other Use Cases
     80→### Load configuration without altering the environment
@@ -21,9 +19,6 @@ README.md
    214→### Variable expansion
    234→## Related Projects
    246→## Acknowledgements
-
-docs/reference.md
-     1→# ::: dotenv
 
 mkdocs.yml
      1→site_name: python-dotenv
@@ -54,23 +49,22 @@ ruff.toml
 src/dotenv/__init__.py
      1→from typing import Any, Optional
      3→from .main …
-     6→def load_ipython_extension(ipython: Any) -> None:
-    12→def get_cli_string(
-    13→    path: Optional[str] = None,
-    14→    action: Optional[str] = None,
-    15→    key: Optional[str] = None,
-    16→    value: Optional[str] = None,
-    17→    quote: Optional[str] = None,
-    18→):
-    19→    """Returns a string suitable for running as a shell script.
-    20→
-      →…
+     6→def load_ipython_extension …
+    12→def get_cli_string …
     42→__all__ = [
 
 src/dotenv/__main__.py
      3→from .cli import cli
 
 src/dotenv/cli.py
+     1→import json
+     2→import os
+     3→import shlex
+     4→import sys
+     5→from contextlib import contextmanager
+     6→from typing import IO, Any, Dict, Iterator, List, Optional
+     9→    from subprocess import Popen
+    12→    import click
     20→from .main import dotenv_values, set_key, unset_key
     21→from .version import __version__
     24→def enumerate_env() -> Optional[str]:
@@ -92,20 +86,23 @@ src/dotenv/ipython.py
     14→    @argument(
     15→        "-o",
     16→        "--override",
-    17→        action="store_true",
-    18→        help="Indicate to override existing variables",
-    19→    )
-    20→    @argument(
-    21→        "-v",
     33→    @line_magic
     34→    def dotenv(self, line):
-    35→        args = parse_argstring(self.dotenv, line)
-    36→        # Locate the .env file
-      →        …
     48→def load_ipython_extension(ipython):
     49→    """Register the %dotenv magic."""
 
 src/dotenv/main.py
+     1→import io
+     2→import logging
+     3→import os
+     4→import pathlib
+     5→import shutil
+     6→import stat
+     7→import sys
+     8→import tempfile
+     9→from collections import OrderedDict
+    10→from contextlib import contextmanager
+    11→from typing import IO, Dict, Iterable, Iterator, Mapping, Optional, Tuple, Union
     13→from .parser import Binding, parse_stream
     14→from .variables import parse_variables
     35→def with_warn_for_invalid_lines …
@@ -136,41 +133,35 @@ src/dotenv/parser.py
      1→import codecs …
      2→import re …
      3→from typing …
-    14→def make_regex …
+    14→def make_regex(string: str, extra_flags: int = 0) -> Pattern[str]:
     35→class Original(NamedTuple):
-    36→    string: str
-      →    …
     40→class Binding(NamedTuple):
-    41→    key: Optional[str]
-      →    …
     47→class Position:
-    48→    def __init__ …
+    48→    def __init__(self, chars: int, line: int) -> None:
     52→    @classmethod
     53→    def start(cls) -> "Position":
-    54→        return cls(chars=0, line=1)
-    56→    def set …
-    60→    def advance …
+    56→    def set(self, other: "Position") -> None:
+    60→    def advance(self, string: str) -> None:
     65→class Error(Exception):
-    66→    pass
     69→class Reader:
-    70→    def __init__ …
-    75→    def has_next …
-    78→    def set_mark …
-    81→    def get_marked …
-    87→    def peek …
-    90→    def read …
-    97→    def read_regex …
-   105→def decode_escapes …
-   112→def parse_key …
-   123→def parse_unquoted_value …
-   128→def parse_value …
-   142→def parse_binding …
-   179→def parse_stream …
+    70→    def __init__(self, stream: IO[str]) -> None:
+    75→    def has_next(self) -> bool:
+    78→    def set_mark(self) -> None:
+    81→    def get_marked(self) -> Original:
+    87→    def peek(self, count: int) -> str:
+    90→    def read(self, count: int) -> str:
+    97→    def read_regex(self, regex: Pattern[str]) -> Sequence[str]:
+   105→def decode_escapes(regex: Pattern[str], string: str) -> str:
+   112→def parse_key(reader: Reader) -> Optional[str]:
+   123→def parse_unquoted_value(reader: Reader) -> str:
+   128→def parse_value(reader: Reader) -> str:
+   142→def parse_binding(reader: Reader) -> Binding:
+   179→def parse_stream(stream: IO[str]) -> Iterator[Binding]:
 
 src/dotenv/variables.py
-     1→import re
-     2→from abc import ABCMeta, abstractmethod
-     3→from typing import Iterator, Mapping, Optional, Pattern
+     1→import re …
+     2→from abc …
+     3→from typing …
      5→_posix_variable: Pattern[str] = re.compile(
     18→class Atom(metaclass=ABCMeta):
     19→    def __ne__(self, other: object) -> bool:
@@ -198,24 +189,11 @@ tests/conftest.py
     13→def dotenv_path(tmp_path):
 
 tests/test_cli.py
+   196→def test_get_default_path(tmp_path):
+   206→def test_run(tmp_path):
+   216→def test_run_with_existing_variable(tmp_path):
+   228→def test_run_with_existing_variable_not_overridden(tmp_path):
+   240→def test_run_with_none_value(tmp_path):
+   250→def test_run_with_other_env(dotenv_path):
 
-tests/test_ipython.py
-    14→def test_ipython_existing_variable_no_override(tmp_path):
-    33→def test_ipython_existing_variable_override(tmp_path):
-    52→def test_ipython_new_variable(tmp_path):
-
-tests/test_is_interactive.py
-     8→class TestIsInteractive:
-    31→
-
-tests/test_parser.py
-   550→def test_parse_stream(test_input, expected):
-
-tests/test_utils.py
-     4→def test_to_cli_string():
-
-tests/test_variables.py
-    32→def test_parse_variables(value, expected):
-
-tests/test_zip_imports.py
-    23→class FileToAdd:
+tests/test_main.py

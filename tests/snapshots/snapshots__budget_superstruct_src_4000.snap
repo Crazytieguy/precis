@@ -2,18 +2,20 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4019 tokens)
+budget: 4000 (4014 tokens)
 
 error.ts
      2→ * A `StructFailure` represents a single specific failure in validation.
      5→export type Failure = {
      6→  value: any
+     7→  key: any
       →  …
     17→ * `StructError` objects are thrown (or returned) when validation fails.
     18→ *
     19→ * Validation logic is design to exit early for maximum performance. The error
     20→ * represents the first error encountered during validation. For more detail,
-      → …
+    21→ * the `error.failures` property is a generator function that can be run to
+    22→ * continue validation and receive all the failures in the data.
     25→export class StructError extends TypeError {
     26→  value: any
     27→  key!: any
@@ -26,6 +28,9 @@ error.ts
     34→
     35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
     36→    let cached: Array<Failure> | undefined
+    37→    const { message, explanation, ...rest } = failure
+    38→    const { path } = failure
+    39→    const msg =
       →    …
 
 struct.ts
@@ -57,6 +62,7 @@ struct.ts
     30→    const {
     31→      type,
     32→      schema,
+    33→      validator,
       →      …
     67→  assert(value: unknown, message?: string): asserts value is T {
     75→  create(value: unknown, message?: string): T {
@@ -95,28 +101,16 @@ struct.ts
    191→    message?: string
    192→  } = {}
    193→): [StructError, undefined] | [undefined, T] {
-   214→ * A `Context` contains information about the current location of the
-   215→ * validation inside the initial input value. It also carries `mask`
-   216→ * since it's a run-time flag determining how the validation was invoked
-   217→ * (via `mask()` or via `validate()`), plus it applies recursively
-   218→ * to all of the nested structs.
    221→export type Context = {
-   228→ * A type utility to extract the type from a `Struct` class.
    231→export type Infer<T extends Struct<any, any>> = T['TYPE']
-   234→ * A type utility to describe that a struct represents a TypeScript type.
    237→export type Describe<T> = Struct<T, StructSchema<T>>
-   240→ * A `Result` is returned from validation functions.
    243→export type Result =
    244→  | boolean
    245→  | string
    246→  | Partial<Failure>
    247→  | Iterable<boolean | string | Partial<Failure>>
-   250→ * A `Coercer` takes an unknown value and optionally coerces it.
    253→export type Coercer<T = unknown> = (value: T, context: Context) => unknown
-   256→ * A `Validator` takes an unknown value and validates it.
    259→export type Validator = (value: unknown, context: Context) => Result
-   262→ * A `Refiner` takes a value of a known type and validates it against a further
-   263→ * constraint.
    266→export type Refiner<T> = (value: T, context: Context) => Result
 
 structs/coercions.ts
@@ -190,7 +184,7 @@ structs/refinements.ts
    140→ *
    141→ * The refiner function is guaranteed to receive a value of the struct's type,
    142→ * because the struct's existing validation will already have passed. This
-      → …
+   143→ * allows you to layer additional validation on top of existing structs.
    146→export function refine<T, S>(
    147→  struct: Struct<T, S>,
    148→  name: string,
@@ -198,9 +192,19 @@ structs/refinements.ts
    150→): Struct<T, S> {
 
 structs/types.ts
-     1→import { Infer, Struct } from '../struct.js …
-     2→import { define } from './utilities.js …
-     3→import { …
+     1→import { Infer, Struct } from '../struct.js'
+     2→import { define } from './utilities.js'
+     3→import {
+     4→  ObjectSchema,
+     5→  ObjectType,
+     6→  print,
+     7→  run,
+     8→  isObject,
+     9→  isNonArrayObject,
+    10→  AnyStruct,
+    11→  InferStructTuple,
+    12→  UnionToIntersection,
+    13→} from '../utils.js'
     19→export function any(): Struct<any, null> {
     33→export function array<T extends Struct<any>>(Element?: T): any {
     60→export function bigint(): Struct<bigint, null> {
@@ -253,6 +257,7 @@ structs/utilities.ts
      8→import { object, optional, type } from './types.js'
     60→export function assign(...Structs: Struct<any>[]): any {
     61→  const isType = Structs[0].type === 'type'
+    62→  const schemas = Structs.map((s) => s.schema)
       →  …
     71→export function define<T>(name: string, validator: Validator): Struct<T, null> {
     80→export function deprecated<T>(

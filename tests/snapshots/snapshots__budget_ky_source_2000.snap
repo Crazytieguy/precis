@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2008 tokens)
+budget: 2000 (2005 tokens)
 
 core/Ky.ts
     33→export class Ky {
@@ -10,30 +10,37 @@ core/Ky.ts
    200→	constructor(input: Input, options: Options = {}) {
 
 core/constants.ts
-     1→import type {Expect, Equal} from '@type-challenges/utils';
      2→import {type KyOptionsRegistry, type RequestHttpMethod} from '../types/options.js';
+     4→export const supportsRequestStreams = (() => {
+    34→export const supportsAbortController = typeof globalThis.AbortController === 'function';
+    35→export const supportsAbortSignal = typeof globalThis.AbortSignal === 'function' && typeof globalThis.AbortSignal.any === 'function';
+    36→export const supportsResponseStreams = typeof globalThis.ReadableStream === 'function';
+    37→export const supportsFormData = typeof globalThis.FormData === 'function';
+    39→export const requestMethods = ['get', 'post', 'put', 'patch', 'head', 'delete'] as const;
     41→const validate …
+    46→export const responseTypes = {
+    58→export const maxSafeTimeout = 2_147_483_647;
+    61→export const usualFormBoundarySize = new TextEncoder().encode('------WebKitFormBoundaryaxpyiPgbbPti10Rw').length;
+    63→export const stop = Symbol('stop');
     66→Options for forcing a retry via `ky.retry()`.
     68→export type ForceRetryOptions = {
-   146→Marker returned by ky.retry() to signal a forced retry from afterResponse hooks.
    148→export class RetryMarker {
    149→	constructor(public options?: ForceRetryOptions) {}
    153→Force a retry from an `afterResponse` hook.
    154→
       →…
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
+   237→export const kyOptionKeys: KyOptionsRegistry = {
+   256→export const vendorSpecificOptions = {
+   265→export const requestOptionsRegistry = {
 
 errors/ForceRetryError.ts
      1→import type {ForceRetryOptions} from '../core/constants.js';
      2→import {NonError} from './NonError.js';
-     5→Internal error used to signal a forced retry from afterResponse hooks.
-     6→This is thrown when a user returns ky.retry() from an afterResponse hook.
      8→export class ForceRetryError extends Error {
      9→	override name = 'ForceRetryError' as const;
     10→	customDelay: number | undefined;
     11→	code: string | undefined;
-    12→	customRequest: Request | undefined;
-    13→
     14→	constructor(options?: ForceRetryOptions) {
 
 errors/HTTPError.ts
@@ -42,9 +49,6 @@ errors/HTTPError.ts
      3→import type {KyResponse} from '../types/response.js';
      5→export class HTTPError<T = unknown> extends Error {
      6→	public response: KyResponse<T>;
-     7→	public request: KyRequest;
-     8→	public options: NormalizedOptions;
-     9→
     10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
 
 errors/NonError.ts
@@ -65,6 +69,12 @@ errors/TimeoutError.ts
      6→	constructor(request: Request) {
 
 index.ts
+     3→import {Ky} from './core/Ky.js';
+     4→import {requestMethods, stop, retry} from './core/constants.js';
+     5→import type {KyInstance} from './types/ky.js';
+     6→import type {Input, Options} from './types/options.js';
+     7→import {validateAndMerge} from './utils/merge.js';
+     8→import {type Mutable} from './utils/types.js';
     10→const createInstance …
     34→const ky = createInstance();
 
@@ -114,13 +124,9 @@ types/options.ts
    304→
       →…
    307→export type KyOptionsRegistry = {[K in keyof KyOptions]-?: true};
-   312→export interface Options extends KyOptions, Omit<RequestInit, 'headers'> { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
-   313→	/**
-      →	…
+   312→export interface Options …
    358→export type InternalOptions …
-   373→export interface NormalizedOptions extends RequestInit { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
-   374→	// Extended from `RequestInit`, but ensured to be set (not optional).
-      →	…
+   373→export interface NormalizedOptions …
 
 types/request.ts
      1→export type KyRequest<T = unknown> = {
@@ -137,20 +143,16 @@ utils/body.ts
      1→import type {Options} from '../types/options.js';
      2→import {usualFormBoundarySize} from '../core/constants.js';
      5→export const getBodySize …
-    57→const withProgress …
     90→export const streamResponse …
    119→export const streamRequest …
 
 utils/delay.ts
      3→import {type InternalOptions} from '../types/options.js';
      5→export type DelayOptions = {
-     9→export default async function delay(
-    10→	ms: number,
-    11→	{signal}: DelayOptions,
-    12→): Promise<void> {
+     9→export default async function delay …
 
 utils/is.ts
-     2→export const isObject = (value: unknown): value is object => value !== null && typeof value === 'object';
+     2→export const isObject …
 
 utils/merge.ts
      1→import type {KyHeadersInit, Options} from '../types/options.js';
@@ -159,9 +161,7 @@ utils/merge.ts
      4→import {isObject} from './is.js';
      6→export const validateAndMerge …
     16→export const mergeHeaders …
-    32→function newHookValue …
     38→export const mergeHooks …
-    47→const appendSearchParameters …
     86→export const deepMerge …
 
 utils/normalize.ts
@@ -174,11 +174,8 @@ utils/normalize.ts
 utils/options.ts
      1→import {kyOptionKeys, requestOptionsRegistry, vendorSpecificOptions} from '../core/constants.js';
      2→import type {SearchParamsOption} from '../types/options.js';
-     4→export const findUnknownOptions = (
-     5→	request: Request,
-     6→	options: Record<string, unknown>,
-     7→): Record<string, unknown> => {
-    30→export const hasSearchParameters = (search: SearchParamsOption): boolean => {
+     4→export const findUnknownOptions …
+    30→export const hasSearchParameters …
 
 utils/timeout.ts
      1→import {TimeoutError} from '../errors/TimeoutError.js';

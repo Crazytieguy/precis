@@ -2,19 +2,34 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (991 tokens)
+budget: 1000 (994 tokens)
+
+CHANGELOG.md
+
+Cargo.toml
+     1→[package]
+    22→[features]
+    56→[dependencies]
+    62→[dev-dependencies]
 
 README.md
+     1→log
+    19→## Minimum supported `rustc`
+    25→## Usage
+   106→## Structured logging
 
 src/__private_api.rs
-     7→pub use std::{format_args, module_path, stringify};
-     9→#[cfg(not(feature = "kv"))]
     10→pub type Value<'a> = &'a str;
-    12→mod sealed {
     14→    pub trait KVs<'a> {
+    23→    fn into_kvs …
+    30→    fn into_kvs …
     39→pub struct GlobalLogger;
+   108→pub fn loc …
    113→mod kv_support {
-   116→    pub type Value<'a> = kv::Value<'a>;
+   116→    pub type Value …
+   135→    pub fn capture_error …
+   140→    pub fn capture_sval …
+   145→    pub fn capture_serde …
    151→pub use self::kv_support::*;
 
 src/kv/error.rs
@@ -23,9 +38,11 @@ src/kv/error.rs
      7→}
     10→enum Inner {
     21→    pub fn msg …
+    49→    fn fmt …
+    63→    fn from …
     69→mod std_support {
-    70→    use super::*;
     77→        pub fn boxed …
+    90→        fn from …
 
 src/kv/key.rs
      7→pub trait ToKey {
@@ -34,6 +51,9 @@ src/kv/key.rs
     45→    pub fn from_str(key: &'k str) -> Self {
     53→    pub fn as_str(&self) -> &str {
     61→    pub fn to_borrowed_str(&self) -> Option<&'k str> {
+    94→mod std_support {
+   113→mod sval_support {
+   136→mod serde_support {
 
 src/kv/mod.rs
    250→mod source;
@@ -60,11 +80,8 @@ src/kv/value.rs
      8→pub use crate::kv::Error;
     11→pub trait ToValue {
    119→pub struct Value<'v> {
-   395→    use super::*;
    462→pub trait VisitValue<'v> {
    610→    use super::*;
-   612→    pub use value_bag::ValueBag as Inner;
-   614→    pub use value_bag::Error;
    735→    use super::*;
    738→    pub enum Inner<'v> {
   1123→pub use VisitValue as Visit;
@@ -76,8 +93,6 @@ src/kv/value.rs
 
 src/lib.rs
    406→mod macros;
-   407→mod serde;
-   409→#[cfg(feature = "kv")]
    410→pub mod kv;
    475→pub enum Level {
    516→    type Err = ParseLevelError;
@@ -91,9 +106,6 @@ src/lib.rs
   1549→pub struct SetLoggerError(());
   1566→pub struct ParseLevelError(());
   1600→pub mod __private_api;
-  1602→/// The statically resolved maximum log level.
-  1603→///
-      →…
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
 
 src/macros.rs
@@ -104,11 +116,3 @@ src/macros.rs
    292→macro_rules! debug {
    336→macro_rules! trace {
    391→macro_rules! log_enabled {
-
-test_max_level_features/Cargo.toml
-     1→[package]
-     7→[[bin]]
-    11→[dependencies.log]
-
-triagebot.toml
-     1→[assign]

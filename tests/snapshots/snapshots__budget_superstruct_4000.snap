@@ -2,10 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4017 tokens)
-
-Changelog.md
-     1→# Changelog
+budget: 4000 (4005 tokens)
 
 Readme.md
     42→### Usage
@@ -16,42 +13,8 @@ Readme.md
    205→### Documentation
    231→### License
 
-docs/readme.md
-     7→### Usage
-
-docs/reference/coercions.md
-     1→# Coercions
-
-docs/reference/core.md
-     1→# Core
-
-docs/reference/errors.md
-     1→# Errors
-
-docs/reference/refinements.md
-     1→# Refinements
-
-docs/reference/types.md
-     1→# Types
-
-docs/reference/typescript.md
-     1→# TypeScript
-     5→## Utilities
-
-docs/reference/utilities.md
-     1→# Utilities
-
-docs/resources/faq.md
-     1→# FAQ
-
-docs/resources/links.md
-     1→# Resources
-     5→## Libraries
-
 examples/README.md
      1→# Examples
-
-examples/package.json
 
 jsr.json
      2→  "$schema": "https://jsr.io/schema/config-file.v1.json",
@@ -74,28 +37,18 @@ package.json
     10→  "types": "./dist/index.d.ts",
     11→  "sideEffects": false,
     12→  "files": [
-    14→  ],
     15→  "publishConfig": {
-    17→  },
     18→  "engines": {
-    20→  },
     21→  "devDependencies": {
-    37→  },
     38→  "scripts": {
-    53→  },
     54→  "keywords": [
-    84→  ]
-    85→}
 
 src/error.ts
      2→ * A `StructFailure` represents a single specific failure in validation.
      5→export type Failure = {
-     6→  value: any
-      →  …
     17→ * `StructError` objects are thrown (or returned) when validation fails.
     18→ *
     19→ * Validation logic is design to exit early for maximum performance. The error
-    20→ * represents the first error encountered during validation. For more detail,
       → …
     25→export class StructError extends TypeError {
     26→  value: any
@@ -108,8 +61,6 @@ src/error.ts
     33→  [x: string]: any
     34→
     35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
-    36→    let cached: Array<Failure> | undefined
-      →    …
 
 src/struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
@@ -129,18 +80,7 @@ src/struct.ts
     19→    context: Context
     20→  ) => Iterable<[string | number, unknown, Struct<any> | Struct<never>]>
     21→
-    22→  constructor(props: {
-    23→    type: string
-    24→    schema: S
-    25→    coercer?: Coercer
-    26→    validator?: Validator
-    27→    refiner?: Refiner<T>
-    28→    entries?: Struct<T, S>['entries']
-    29→  }) {
-    30→    const {
-    31→      type,
-    32→      schema,
-      →      …
+    22→  constructor …
     67→  assert(value: unknown, message?: string): asserts value is T {
     75→  create(value: unknown, message?: string): T {
     83→  is(value: unknown): value is T {
@@ -220,14 +160,42 @@ src/structs/coercions.ts
 src/structs/refinements.ts
      1→import { Struct, Refiner } from '../struct.js'
      2→import { toFailures } from '../utils.js'
-     8→export function empty …
-    21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
-    33→export function max …
-    55→export function min …
-    77→export function nonempty …
-    93→export function pattern …
-   109→export function size …
-   146→export function refine …
+     8→export function empty<
+     9→  T extends string | any[] | Map<any, any> | Set<any>,
+    10→  S extends any,
+    11→>(struct: Struct<T, S>): Struct<T, S> {
+    21→function getSize …
+    33→export function max<T extends number | Date, S extends any>(
+    34→  struct: Struct<T, S>,
+    35→  threshold: T,
+    36→  options: {
+    37→    exclusive?: boolean
+    38→  } = {}
+    39→): Struct<T, S> {
+    55→export function min<T extends number | Date, S extends any>(
+    56→  struct: Struct<T, S>,
+    57→  threshold: T,
+    58→  options: {
+    59→    exclusive?: boolean
+    60→  } = {}
+    61→): Struct<T, S> {
+    77→export function nonempty<
+    78→  T extends string | any[] | Map<any, any> | Set<any>,
+    79→  S extends any,
+    80→>(struct: Struct<T, S>): Struct<T, S> {
+    93→export function pattern<T extends string, S extends any>(
+    94→  struct: Struct<T, S>,
+    95→  regexp: RegExp
+    96→): Struct<T, S> {
+   109→export function size<
+   110→  T extends string | number | Date | any[] | Map<any, any> | Set<any>,
+   111→  S extends any,
+   112→>(struct: Struct<T, S>, min: number, max: number = min): Struct<T, S> {
+   146→export function refine<T, S>(
+   147→  struct: Struct<T, S>,
+   148→  name: string,
+   149→  refiner: Refiner<T>
+   150→): Struct<T, S> {
 
 src/structs/types.ts
      1→import { Infer, Struct } from '../struct.js …
@@ -284,8 +252,6 @@ src/structs/utilities.ts
      7→} from '../utils.js'
      8→import { object, optional, type } from './types.js'
     60→export function assign(...Structs: Struct<any>[]): any {
-    61→  const isType = Structs[0].type === 'type'
-      →  …
     71→export function define<T>(name: string, validator: Validator): Struct<T, null> {
     80→export function deprecated<T>(
     81→  struct: Struct<T>,
@@ -312,18 +278,11 @@ src/utils.ts
      1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
      2→import { Failure } from './error.js'
      8→function isIterable<T>(x: unknown): x is Iterable<T> {
-    13→ * Check if a value is a plain object.
     16→export function isObject(x: unknown): x is object {
-    21→ * Check if a value is a non-array object.
     24→export function isNonArrayObject(x: unknown): x is object {
-    29→ * Check if a value is a plain object.
     32→export function isPlainObject(x: unknown): x is { [key: string]: any } {
-    42→ * Return a value as a printable string.
     45→export function print(value: any): string {
-    54→ * Shifts (removes and returns) the first value from the `input` iterator.
-    55→ * Like `Array.prototype.shift()` but for an `Iterator`.
     58→export function shiftIterator<T>(input: Iterator<T>): T | undefined {
-    64→ * Convert a single validation result to a failure.
     67→export function toFailure<T, S>(
     68→  result: string | boolean | Partial<Failure>,
     69→  context: Context,
@@ -352,26 +311,40 @@ src/utils.ts
    394→export type InferStructTuple …
    402→type _InferTuple …
 
-test/index.test.ts
-     5→import { …
-
 test/index.ts
      2→ * A helper for testing type signatures.
      5→export function test<T>(fn: (x: unknown) => T) {}
 
-test/validation/function/valid.ts
-     1→import { func } from '../../../src'
+test/validation/defaulted/nested.ts
+     3→export const Struct = object({
+     7→export const data = {}
+     9→export const output = {
+    13→export const create = true
+
+test/validation/function/invalid.ts
      3→export const Struct = func()
-     5→export const data = function () {}
-     7→export const output = data
+     5→export const data = false
+     7→export const failures = [
+
+test/validation/object/invalid-array.ts
+     3→export const Struct = object()
+     5→export const data = []
+     7→export const failures = [
+
+test/validation/object/invalid-property.ts
+     3→export const Struct = object({
+     9→export const data = {
+    15→export const failures = [
 
 test/validation/object/valid.ts
      3→export const Struct = object({
      8→export const data = {
     13→export const output = {
 
-test/validation/type/valid-instance.ts
-     6→  constructor(name: string) {
+test/validation/omit/valid.ts
+     3→export const Struct = omit(
+    11→export const data = {
+    15→export const output = {
 
 tsconfig.json
      2→  "include": ["./src/**/*.ts"],

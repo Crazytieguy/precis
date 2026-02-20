@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2021 tokens)
+budget: 2000 (2022 tokens)
 
 __init__.py
      5→from humanize.filesize …
@@ -13,7 +13,6 @@ __init__.py
     26→from ._version import __version__
     28→__all__ = [
     29→    "__version__",
-    30→    "activate",
       →    …
 
 filesize.py
@@ -79,22 +78,6 @@ lists.py
     15→    Convert a list of items into a human-readable string with commas and 'and'.
     16→
     17→    Examples:
-    18→        >>> natural_list(["one", "two", "three"])
-    19→        'one, two and three'
-    20→        >>> natural_list(["one", "two"])
-    21→        'one and two'
-    22→        >>> natural_list(["one"])
-    23→        'one'
-    24→
-    25→    Args:
-    26→        items (list): An iterable of items.
-    27→
-    28→    Returns:
-    29→        str: A string with commas and 'and' in the right places.
-    30→    """
-    31→    if len(items) == 1:
-    32→        return str(items[0])
-    33→    elif len(items) == 2:
       →    …
 
 number.py
@@ -147,9 +130,11 @@ time.py
     39→    YEARS = 7
     40→
     41→    def __lt__(self, other: Any) -> Any:
-    47→def _now …
-    53→def _abs_timedelta …
-    68→def _date_and_delta …
+    47→def _now() -> dt.datetime:
+    53→def _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:
+    68→def _date_and_delta(
+    69→    value: Any, *, now: dt.datetime | None = None, precise: bool = False
+    70→) -> tuple[Any, Any]:
     95→def naturaldelta(
     96→    value: dt.timedelta | float,
     97→    months: bool = True,
@@ -168,16 +153,25 @@ time.py
    256→    """Return a natural representation of a time in a resolution that makes sense.
    257→
       →…
-   300→def _convert_aware_datetime …
+   300→def _convert_aware_datetime(
+   301→    value: dt.datetime | dt.timedelta | float | None,
+   302→) -> Any:
    311→def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
    312→    """Return a natural day.
    313→
       →…
    343→def naturaldate(value: dt.date | dt.datetime) -> str:
    344→    """Like `naturalday`, but append a year for dates more than ~five months away."""
-   361→def _quotient_and_remainder …
-   406→def _suitable_minimum_unit …
-   435→def _suppress_lower_units …
+   361→def _quotient_and_remainder(
+   362→    value: float,
+   363→    divisor: float,
+   364→    unit: Unit,
+   365→    minimum_unit: Unit,
+   366→    suppress: Iterable[Unit],
+   367→    format: str,
+   368→) -> tuple[float, float]:
+   406→def _suitable_minimum_unit(min_unit: Unit, suppress: Iterable[Unit]) -> Unit:
+   435→def _suppress_lower_units(min_unit: Unit, suppress: Iterable[Unit]) -> set[Unit]:
    451→def precisedelta(
    452→    value: dt.timedelta | float | None,
    453→    minimum_unit: str = "seconds",
@@ -187,4 +181,4 @@ time.py
    457→    """Return a precise representation of a timedelta or number of seconds.
    458→
       →…
-   654→def _rounding_by_fmt …
+   654→def _rounding_by_fmt(format: str, value: float) -> float | int:

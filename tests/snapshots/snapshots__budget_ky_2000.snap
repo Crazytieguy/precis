@@ -2,21 +2,74 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2005 tokens)
+budget: 2000 (2000 tokens)
 
 package.json
+     2→	"name": "ky",
+     3→	"version": "1.14.3",
+     4→	"description": "Tiny and elegant HTTP client based on the Fetch API",
+     5→	"license": "MIT",
+     6→	"repository": "sindresorhus/ky",
+     7→	"funding": "https://github.com/sindresorhus/ky?sponsor=1",
+     8→	"author": {
+    13→	"type": "module",
+    14→	"exports": {
+    18→	"main": "./distribution/index.js",
+    19→	"types": "./distribution/index.d.ts",
+    20→	"sideEffects": false,
+    21→	"engines": {
+    24→	"scripts": {
+    31→	"files": [
+    34→	"keywords": [
+    56→	"devDependencies": {
+    78→	"xo": {
+    94→	"ava": {
+   103→	"nyc": {
 
 readme.md
     20→## Benefits over plain `fetch`
     33→## Install
-    39→###### CDN
     45→## Usage
     85→## API
-   342→###### hooks.beforeRequest
-   373→###### hooks.beforeRetry
-   446→###### hooks.beforeError
-   485→###### hooks.afterResponse
+    87→### ky(input, options?)
+   122→### ky.get(input, options?)
+   123→### ky.post(input, options?)
+   124→### ky.put(input, options?)
+   125→### ky.patch(input, options?)
+   126→### ky.head(input, options?)
+   127→### ky.delete(input, options?)
+   147→##### method
+   156→##### json
+   162→##### searchParams
+   173→##### prefixUrl
+   197→##### retry
+   327→##### timeout
+   335→##### hooks
+   553→##### throwHttpErrors
+   566→##### onDownloadProgress
+   592→##### onUploadProgress
+   619→##### parseJson
+   639→##### stringifyJson
+   664→##### fetch
+   683→##### context
+   745→### ky.extend(defaultOptions)
+   811→### ky.create(defaultOptions)
+   833→### ky.stop
+   864→### ky.retry(options?)
+   874→##### delay
+   882→##### code
+   895→##### cause
+   913→##### request
+  1000→### HTTPError
+  1046→### TimeoutError
   1050→## Tips
+  1052→### Sending form data
+  1109→### Setting a custom `Content-Type`
+  1129→### Cancellation
+  1156→### Proxy support (Node.js)
+  1209→### HTTP/2 support (Node.js)
+  1249→### Consuming Server-Sent Events (SSE)
+  1264→### Extending types
   1292→## FAQ
   1339→## Browser support
   1343→## Node.js support
@@ -29,45 +82,38 @@ source/core/Ky.ts
    200→	constructor(input: Input, options: Options = {}) {
 
 source/core/constants.ts
-     1→import type {Expect, Equal} from '@type-challenges/utils';
-     2→import {type KyOptionsRegistry, type RequestHttpMethod} from '../types/options.js';
-    41→const validate …
+     4→export const supportsRequestStreams …
+    34→export const supportsAbortController …
+    35→export const supportsAbortSignal …
+    36→export const supportsResponseStreams …
+    37→export const supportsFormData …
+    39→export const requestMethods …
+    46→export const responseTypes …
+    58→export const maxSafeTimeout …
+    61→export const usualFormBoundarySize …
+    63→export const stop …
     66→Options for forcing a retry via `ky.retry()`.
     68→export type ForceRetryOptions = {
-   146→Marker returned by ky.retry() to signal a forced retry from afterResponse hooks.
    148→export class RetryMarker {
    149→	constructor(public options?: ForceRetryOptions) {}
    153→Force a retry from an `afterResponse` hook.
    154→
       →…
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
+   237→export const kyOptionKeys …
+   256→export const vendorSpecificOptions …
+   265→export const requestOptionsRegistry …
 
 source/errors/ForceRetryError.ts
-     1→import type {ForceRetryOptions} from '../core/constants.js';
-     2→import {NonError} from './NonError.js';
-     5→Internal error used to signal a forced retry from afterResponse hooks.
-      →…
      8→export class ForceRetryError extends Error {
      9→	override name = 'ForceRetryError' as const;
-    10→	customDelay: number | undefined;
-    11→	code: string | undefined;
-    12→	customRequest: Request | undefined;
-    13→
     14→	constructor(options?: ForceRetryOptions) {
 
 source/errors/HTTPError.ts
-     1→import type {NormalizedOptions} from '../types/options.js';
-     2→import type {KyRequest} from '../types/request.js';
-     3→import type {KyResponse} from '../types/response.js';
      5→export class HTTPError<T = unknown> extends Error {
-     6→	public response: KyResponse<T>;
-     7→	public request: KyRequest;
-    10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
+    10→	constructor …
 
 source/errors/NonError.ts
-     2→Wrapper for non-Error values that were thrown.
-     3→
-      →…
      6→export class NonError extends Error {
      7→	override name = 'NonError';
      8→	readonly value: unknown;
@@ -75,10 +121,8 @@ source/errors/NonError.ts
     10→	constructor(value: unknown) {
 
 source/errors/TimeoutError.ts
-     1→import type {KyRequest} from '../types/request.js';
      3→export class TimeoutError extends Error {
      4→	public request: KyRequest;
-     5→
      6→	constructor(request: Request) {
 
 source/index.ts
@@ -88,7 +132,6 @@ source/index.ts
      6→import type {Input, Options} from './types/options.js';
      7→import {validateAndMerge} from './utils/merge.js';
      8→import {type Mutable} from './utils/types.js';
-    10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
     34→const ky = createInstance();
 
 source/types/ResponsePromise.ts
@@ -112,15 +155,9 @@ source/types/hooks.ts
     59→export type Hooks …
 
 source/types/ky.ts
-     1→import {type stop, type retry} from '../core/constants.js';
-     2→import type {Input, Options} from './options.js';
-     3→import type {ResponsePromise} from './ResponsePromise.js';
      5→export type KyInstance = {
 
 source/types/options.ts
-     1→import type {LiteralUnion, Required} from './common.js';
-     2→import type {Hooks} from './hooks.js';
-     3→import type {RetryOptions} from './retry.js';
      6→export type SearchParamsInit …
      9→export type SearchParamsOption …
     11→export type RequestHttpMethod …
@@ -128,11 +165,7 @@ source/types/options.ts
     14→export type Input …
     16→export type Progress …
     27→export type KyHeadersInit …
-    30→Custom Ky options
     33→export type KyOptions = {
-   303→Each key from KyOptions is present and set to `true`.
-   304→
-      →…
    307→export type KyOptionsRegistry = {[K in keyof KyOptions]-?: true};
    312→export interface Options …
    358→export type InternalOptions …
@@ -150,23 +183,16 @@ source/types/retry.ts
     15→export type RetryOptions = {
 
 source/utils/body.ts
-     1→import type {Options} from '../types/options.js';
-     2→import {usualFormBoundarySize} from '../core/constants.js';
      5→export const getBodySize …
-    57→const withProgress …
     90→export const streamResponse …
    119→export const streamRequest …
 
 source/utils/delay.ts
-     3→import {type InternalOptions} from '../types/options.js';
      5→export type DelayOptions = {
-     9→export default async function delay(
-    10→	ms: number,
-    11→	{signal}: DelayOptions,
-    12→): Promise<void> {
+     9→export default async function delay …
 
 source/utils/is.ts
-     2→export const isObject = (value: unknown): value is object => value !== null && typeof value === 'object';
+     2→export const isObject …
 
 source/utils/merge.ts
      6→export const validateAndMerge …
@@ -175,20 +201,14 @@ source/utils/merge.ts
     86→export const deepMerge …
 
 source/utils/normalize.ts
-     1→import {requestMethods} from '../core/constants.js';
-     2→import type {RetryOptions} from '../types/retry.js';
-     3→import type {HttpMethod, RequestHttpMethod} from '../types/options.js';
      5→export const normalizeRequestMethod …
     28→export const normalizeRetryOptions …
 
 source/utils/options.ts
-     1→import {kyOptionKeys, requestOptionsRegistry, vendorSpecificOptions} from '../core/constants.js';
-     2→import type {SearchParamsOption} from '../types/options.js';
      4→export const findUnknownOptions …
     30→export const hasSearchParameters …
 
 source/utils/timeout.ts
-     1→import {TimeoutError} from '../errors/TimeoutError.js';
      3→export type TimeoutOptions = {
      9→export default async function timeout …
 
@@ -205,15 +225,9 @@ source/utils/types.ts
 tsconfig.dist.json
      2→	"extends": "./tsconfig",
      3→	"compilerOptions": {
-     8→	},
      9→	"include": [
-    11→	]
-    12→}
 
 tsconfig.json
      2→	"extends": "@sindresorhus/tsconfig",
      3→	"compilerOptions": {
-     5→	},
      6→	"include": [
-     8→	]
-     9→}

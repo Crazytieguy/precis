@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2006 tokens)
+budget: 2000 (1996 tokens)
 
 Cargo.toml
      1→[package]
@@ -20,13 +20,7 @@ src/into_either.rs
      8→///
       →…
     14→pub trait IntoEither: Sized {
-    15→    /// Converts `self` into a [`Left`] variant of [`Either<Self, Self>`](Either)
-    16→    /// if `into_left` is `true`.
-      →    …
     29→    fn into_either(self, into_left: bool) -> Either<Self, Self> {
-    37→    /// Converts `self` into a [`Left`] variant of [`Either<Self, Self>`](Either)
-    38→    /// if `into_left(&self)` returns `true`.
-      →    …
     55→    fn into_either_with<F>(self, into_left: F) -> Either<Self, Self>
     56→    where
     57→        F: FnOnce(&Self) -> bool,
@@ -39,20 +33,53 @@ src/iterator.rs
      4→macro_rules! wrap_either {
     13→/// Iterator that maps left or right iterators to corresponding `Either`-wrapped items.
     14→///
-    15→/// This struct is created by the [`Either::factor_into_iter`],
-    16→/// [`factor_iter`][Either::factor_iter],
       →…
     19→pub struct IterEither<L, R> {
     20→    inner: Either<L, R>,
     21→}
     24→    pub(crate) fn new(inner: Either<L, R>) -> Self {
-    43→impl<L, R> Iterator for Either<L, R>
-    44→where
-    45→    L: Iterator,
-    46→    R: Iterator<Item = L::Item>,
-    47→{
+    34→    fn extend …
+    43→impl<L, R> Iterator for Either<L, R> …
     48→    type Item = L::Item;
+    50→    fn next …
+    54→    fn size_hint …
+    58→    fn fold …
+    65→    fn for_each …
+    72→    fn count …
+    76→    fn last …
+    80→    fn nth …
+    84→    fn collect …
+    91→    fn partition …
+    99→    fn all …
+   106→    fn any …
+   113→    fn find …
+   120→    fn find_map …
+   127→    fn position …
+   140→    fn next_back …
+   144→    fn nth_back …
+   148→    fn rfold …
+   155→    fn rfind …
+   168→    fn len …
    185→    type Item = Either<L::Item, R::Item>;
+   187→    fn next …
+   191→    fn size_hint …
+   195→    fn fold …
+   202→    fn for_each …
+   209→    fn count …
+   213→    fn last …
+   217→    fn nth …
+   221→    fn collect …
+   228→    fn partition …
+   236→    fn all …
+   243→    fn any …
+   250→    fn find …
+   257→    fn find_map …
+   264→    fn position …
+   277→    fn next_back …
+   281→    fn nth_back …
+   285→    fn rfold …
+   292→    fn rfind …
+   305→    fn len …
 
 src/lib.rs
     21→#[cfg(feature = "serde")]
@@ -71,8 +98,6 @@ src/lib.rs
     41→/// The enum `Either` with variants `Left` and `Right` is a general purpose
     42→/// sum type with two cases.
     43→///
-    44→/// The `Either` type is symmetric and treats its variants the same way, without
-    45→/// preference.
       →…
     49→pub enum Either<L, R> {
     50→    /// A value of type `L`.
@@ -80,16 +105,8 @@ src/lib.rs
     52→    /// A value of type `R`.
     53→    Right(R),
     54→}
-    56→/// Evaluate the provided expression for both [`Either::Left`] and [`Either::Right`].
-    57→///
-      →…
     81→macro_rules! for_both {
-    90→/// Macro for unwrapping the left side of an [`Either`], which fails early
-    91→/// with the opposite side. Can only be used in functions that return
-      →…
    113→macro_rules! try_left {
-   122→/// Dual to [`try_left!`], see its documentation for more information.
-   123→#[macro_export]
    124→macro_rules! try_right {
    133→macro_rules! map_either {
    142→mod iterator;
@@ -180,15 +197,11 @@ src/lib.rs
   1553→fn _unsized_std_propagation() {
 
 src/serde_untagged.rs
-    36→use serde::{Deserialize, Deserializer, Serialize, Serializer};
     40→enum Either<L, R> {
-    41→    Left(L),
-      →    …
     45→pub fn serialize …
     58→pub fn deserialize …
 
 src/serde_untagged_optional.rs
-    36→use serde::{Deserialize, Deserializer, Serialize, Serializer};
     40→enum Either<L, R> {
     45→pub fn serialize …
     62→pub fn deserialize …

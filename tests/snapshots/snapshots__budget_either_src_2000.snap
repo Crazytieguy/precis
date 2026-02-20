@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2008 tokens)
+budget: 2000 (2002 tokens)
 
 into_either.rs
      4→use super::{Either, Left, Right};
@@ -11,13 +11,7 @@ into_either.rs
      8→///
       →…
     14→pub trait IntoEither: Sized {
-    15→    /// Converts `self` into a [`Left`] variant of [`Either<Self, Self>`](Either)
-    16→    /// if `into_left` is `true`.
-      →    …
     29→    fn into_either(self, into_left: bool) -> Either<Self, Self> {
-    37→    /// Converts `self` into a [`Left`] variant of [`Either<Self, Self>`](Either)
-    38→    /// if `into_left(&self)` returns `true`.
-      →    …
     55→    fn into_either_with<F>(self, into_left: F) -> Either<Self, Self>
     56→    where
     57→        F: FnOnce(&Self) -> bool,
@@ -31,6 +25,7 @@ iterator.rs
     13→/// Iterator that maps left or right iterators to corresponding `Either`-wrapped items.
     14→///
     15→/// This struct is created by the [`Either::factor_into_iter`],
+    16→/// [`factor_iter`][Either::factor_iter],
       →…
     19→pub struct IterEither<L, R> {
     20→    inner: Either<L, R>,
@@ -84,6 +79,12 @@ lib.rs
     22→pub mod serde_untagged;
     24→#[cfg(feature = "serde")]
     25→pub mod serde_untagged_optional;
+    27→use core::convert::{AsMut, AsRef};
+    28→use core::fmt;
+    29→use core::future::Future;
+    30→use core::ops::Deref;
+    31→use core::ops::DerefMut;
+    32→use core::pin::Pin;
     35→use std::error::Error;
     37→use std::io::{self, BufRead, Read, Seek, SeekFrom, Write};
     39→pub use crate::Either::{Left, Right};

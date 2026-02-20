@@ -2,22 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2015 tokens)
+budget: 2000 (2006 tokens)
 
 README.md
      1→# humanize
     12→This modest package contains various common humanization utilities, like turning a
-    13→number into a fuzzy human-readable duration ("3 minutes ago") or into a human-readable
-    14→size or throughput. It is localized to:
-    15→
-    16→- Arabic
-    17→- Basque
-    18→- Bengali
       →…
     49→## API reference
-    51→[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
-    52→
-      →…
     55→## Installation
     57→### From PyPI
     63→### From source
@@ -30,27 +21,8 @@ README.md
    166→### Human-readable floating point numbers
    182→### Scientific notation
    200→## Localization
-   202→How to change locale at runtime:
-   203→
-      →…
-
-RELEASING.md
-     1→# Release checklist
-
-docs/filesize.md
-     1→# Filesize
-
-docs/i18n.md
-     1→# Internationalisation
 
 docs/index.md
-     1→# humanize
-
-docs/lists.md
-     1→# Lists
-
-docs/number.md
-     1→# Number
 
 docs/time.md
      1→# Time
@@ -98,8 +70,6 @@ src/humanize/filesize.py
     41→) -> str:
     42→    """Format a number of bytes like a human-readable filesize (e.g. 10 kB).
     43→
-    44→    By default, decimal suffixes (kB, MB) are used.
-    45→
       →…
 
 src/humanize/i18n.py
@@ -113,29 +83,19 @@ src/humanize/i18n.py
     18→_CURRENT = local()
     22→_THOUSANDS_SEPARATOR = {
     31→_DECIMAL_SEPARATOR = {
-    40→def _get_default_locale_path …
+    40→def _get_default_locale_path() -> pathlib.Path | None:
     51→def get_translation() -> gettext_module.NullTranslations:
     58→def activate(
     59→    locale: str | None, path: str | os.PathLike[str] | None = None
     60→) -> gettext_module.NullTranslations:
-    61→    """Activate internationalisation.
-    62→
-      →…
     96→def deactivate() -> None:
-    97→    """Deactivate internationalisation."""
-   101→def _gettext …
-   113→def _pgettext …
-   129→def _ngettext …
-   144→def _gettext_noop …
-   163→def _ngettext_noop …
+   101→def _gettext(message: str) -> str:
+   113→def _pgettext(msgctxt: str, message: str) -> str:
+   129→def _ngettext(message: str, plural: str, num: int) -> str:
+   144→def _gettext_noop(message: str) -> str:
+   163→def _ngettext_noop(singular: str, plural: str) -> tuple[str, str]:
    183→def thousands_separator() -> str:
-   184→    """Return the thousands separator for a locale, default to comma.
-   185→
-      →…
    196→def decimal_separator() -> str:
-   197→    """Return the decimal separator for a locale, default to dot.
-   198→
-      →…
 
 src/humanize/lists.py
      5→TYPE_CHECKING = False
@@ -144,10 +104,7 @@ src/humanize/lists.py
     12→def natural_list(items: list[Any]) -> str:
     13→    """Natural list.
     14→
-    15→    Convert a list of items into a human-readable string with commas and 'and'.
-    16→
-    17→    Examples:
-      →    …
+      →…
 
 src/humanize/number.py
      5→import bisect
@@ -196,25 +153,41 @@ src/humanize/time.py
     38→    MONTHS = 6
     39→    YEARS = 7
     40→
-    41→    def __lt__ …
-    95→def naturaldelta …
-   249→def naturaltime …
-   311→def naturalday …
-   343→def naturaldate …
-   451→def precisedelta …
-
-tests/test_filesize.py
-    86→def test_naturalsize …
+    41→    def __lt__(self, other: Any) -> Any:
+    47→def _now …
+    53→def _abs_timedelta …
+    68→def _date_and_delta …
+    95→def naturaldelta(
+    96→    value: dt.timedelta | float,
+    97→    months: bool = True,
+    98→    minimum_unit: str = "seconds",
+    99→) -> str:
+   249→def naturaltime(
+   250→    value: dt.datetime | dt.timedelta | float,
+   251→    future: bool = False,
+   252→    months: bool = True,
+   253→    minimum_unit: str = "seconds",
+   254→    when: dt.datetime | None = None,
+   255→) -> str:
+   300→def _convert_aware_datetime …
+   311→def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
+   343→def naturaldate(value: dt.date | dt.datetime) -> str:
+   361→def _quotient_and_remainder …
+   406→def _suitable_minimum_unit …
+   435→def _suppress_lower_units …
+   451→def precisedelta(
+   452→    value: dt.timedelta | float | None,
+   453→    minimum_unit: str = "seconds",
+   454→    suppress: Iterable[str] = (),
+   455→    format: str = "%0.2f",
+   456→) -> str:
+   654→def _rounding_by_fmt …
 
 tests/test_i18n.py
     18→def test_i18n() -> None:
    225→class TestActivate:
-   226→    expected_msg = (
    250→    def test_en_locale(self) -> None:
    263→    def test_none_locale(self) -> None:
-
-tests/test_lists.py
-    20→def test_natural_list …
 
 tests/test_time.py
     17→ONE_MICROSECOND = 1 / 1000000

@@ -2,20 +2,17 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (996 tokens)
+budget: 1000 (988 tokens)
 
 __private_api.rs
-     7→pub use std::{format_args, module_path, stringify};
-     9→#[cfg(not(feature = "kv"))]
     10→pub type Value<'a> = &'a str;
-    12→mod sealed {
     14→    pub trait KVs<'a> {
     23→    fn into_kvs …
     30→    fn into_kvs …
     39→pub struct GlobalLogger;
    108→pub fn loc …
    113→mod kv_support {
-   116→    pub type Value<'a> = kv::Value<'a>;
+   116→    pub type Value …
    135→    pub fn capture_error …
    140→    pub fn capture_sval …
    145→    pub fn capture_serde …
@@ -27,19 +24,23 @@ kv/error.rs
      7→}
     10→enum Inner {
     21→    pub fn msg …
+    49→    fn fmt …
+    63→    fn from …
     69→mod std_support {
     70→    use super::*;
     77→        pub fn boxed …
+    90→        fn from …
 
 kv/key.rs
      7→pub trait ToKey {
      9→    fn to_key(&self) -> Key<'_>;
     37→pub struct Key<'k> {
-    38→    // NOTE: This may become `Cow<'k, str>`
-      →    …
     45→    pub fn from_str(key: &'k str) -> Self {
     53→    pub fn as_str(&self) -> &str {
     61→    pub fn to_borrowed_str(&self) -> Option<&'k str> {
+    94→mod std_support {
+   113→mod sval_support {
+   136→mod serde_support {
 
 kv/mod.rs
    250→mod source;
@@ -66,10 +67,11 @@ kv/value.rs
      8→pub use crate::kv::Error;
     11→pub trait ToValue {
    119→pub struct Value<'v> {
-   204→    fn from_inner …
    395→    use super::*;
    462→pub trait VisitValue<'v> {
    610→    use super::*;
+   612→    pub use value_bag::ValueBag as Inner;
+   614→    pub use value_bag::Error;
    735→    use super::*;
    738→    pub enum Inner<'v> {
   1123→pub use VisitValue as Visit;
@@ -81,8 +83,6 @@ kv/value.rs
 
 lib.rs
    406→mod macros;
-   407→mod serde;
-   409→#[cfg(feature = "kv")]
    410→pub mod kv;
    475→pub enum Level {
    516→    type Err = ParseLevelError;
@@ -96,9 +96,6 @@ lib.rs
   1549→pub struct SetLoggerError(());
   1566→pub struct ParseLevelError(());
   1600→pub mod __private_api;
-  1602→/// The statically resolved maximum log level.
-  1603→///
-      →…
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
 
 macros.rs
@@ -111,3 +108,7 @@ macros.rs
    391→macro_rules! log_enabled {
 
 serde.rs
+    17→    fn serialize …
+    32→    fn deserialize …
+   111→    fn serialize …
+   127→    fn deserialize …

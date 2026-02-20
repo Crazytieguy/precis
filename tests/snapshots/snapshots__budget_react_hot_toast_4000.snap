@@ -2,29 +2,23 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4030 tokens)
+budget: 4000 (4029 tokens)
 
 README.md
     28→## Features
     30→- 🔥 **Hot by default**
     31→- 🔩 **Easily Customizable**
-    32→- ⏳ **Promise API** - _Automatic loader from a promise_
       →…
     37→## Installation
     39→#### With pnpm
     41→```sh
-    42→pnpm add react-hot-toast
-    43→```
-    44→
+      →…
     45→#### With NPM
     47→```sh
-    48→npm install react-hot-toast
-    49→```
-    50→
+      →…
     51→## Getting Started
     53→Add the Toaster to your app first. It will take care of rendering all notifications emitted. Now you can trigger `toast()` from anywhere!
     54→
-    55→```jsx
       →…
     70→## Documentation
     72→Find the full API reference on [official documentation](https://react-hot-toast.com/docs).
@@ -63,6 +57,8 @@ site/components/code.tsx
 site/components/docs-layout.tsx
      5→import { Footer } from './sections/footer';
      6→import Logo from '../assets/logo-small.svg';
+     8→const TableItem: React.FC<{
+    19→const TableHeader: React.FC<{
     27→export default function DocsLayout({ meta, children }) {
 
 site/components/emoji-button.tsx
@@ -90,8 +86,6 @@ site/components/sections/toaster-example.tsx
      8→export const positions: Array<ToastPosition> = [
     17→export const ToasterExample: React.FC<{
 
-site/next.config.mjs
-
 site/package.json
      2→  "name": "site",
      3→  "scripts": {
@@ -103,9 +97,19 @@ site/pages/_app.tsx
      2→import '../styles/main.css';
     10→import { Code } from '../components/code';
     12→const components = {
-    71→function MyApp({ Component, pageProps }) {
+    71→function MyApp …
 
 site/pages/index.tsx
+    11→import Logo from '../assets/logo.svg';
+    12→import Butter1 from '../assets/butter-1.svg';
+    13→import Butter2 from '../assets/butter-2.svg';
+    14→import GitHub from '../assets/github.svg';
+    15→import Checkmark from '../assets/checkmark.svg';
+    16→import { ToastExample } from '../components/sections/toast-example';
+    17→import { Footer } from '../components/sections/footer';
+    18→import { ToasterExample } from '../components/sections/toaster-example';
+    19→import { SplitbeeCounter } from '../components/sections/splitbee-counter';
+    21→import packageInfo from '../../package.json';
     22→const version = packageInfo.version;
    102→export default function Home() {
 
@@ -113,10 +117,6 @@ site/tsconfig.json
      2→  "compilerOptions": {
     22→  "include": [
     32→  "exclude": [
-
-site/types/svg.d.ts
-     1→interface SvgrComponent …
-     5→  const value: SvgrComponent;
 
 src/components/checkmark.tsx
      1→import { styled, keyframes } from 'goober';
@@ -185,9 +185,7 @@ src/components/toast-icon.tsx
     47→export const ToastIcon: React.FC<{
     48→  toast: Toast;
     49→}> = ({ toast }) => {
-    50→  const { icon, type, iconTheme } = toast;
-    51→  if (icon !== undefined) {
-      →  …
+      →…
 
 src/components/toaster.tsx
      1→import { css, setup } from 'goober';
@@ -215,7 +213,6 @@ src/components/toaster.tsx
     89→  gutter,
     90→  children,
     91→  toasterId,
-    92→  containerStyle,
       →  …
 
 src/core/store.ts
@@ -307,10 +304,7 @@ src/core/types.ts
     20→export type ValueOrFunction<TValue, TArg> =
     21→  | TValue
     22→  | ValueFunction<TValue, TArg>;
-    24→const isFunction = <TValue, TArg>(
-    25→  valOrFunction: ValueOrFunction<TValue, TArg>
-    26→): valOrFunction is ValueFunction<TValue, TArg> =>
-    27→  typeof valOrFunction === 'function';
+    24→const isFunction …
     29→export const resolveValue = <TValue, TArg>(
     30→  valOrFunction: ValueOrFunction<TValue, TArg>,
     31→  arg: TArg
@@ -336,8 +330,6 @@ src/core/types.ts
     73→  >
     74→>;
     76→export type DefaultToastOptions = ToastOptions & {
-    77→  [key in ToastType]?: ToastOptions;
-    78→};
     80→export interface ToasterProps {
     81→  position?: ToastPosition;
     82→  toastOptions?: DefaultToastOptions;
@@ -393,4 +385,6 @@ tsconfig.json
     33→}
 
 tsup.config.ts
+     1→import { defineConfig, Options } from 'tsup';
+     2→import { minifyTemplates, writeFiles } from 'esbuild-minify-templates';
      4→const commonConfig: Options = {

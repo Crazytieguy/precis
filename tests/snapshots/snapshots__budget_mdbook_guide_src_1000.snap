@@ -2,15 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1007 tokens)
+budget: 1000 (1002 tokens)
 
 404.md
      1→# Document not found (404)
 
 README.md
      1→# Introduction
-     4→    .mdbook-version {
-      →    …
     46→## Contributing
     55→## License
 
@@ -57,27 +55,27 @@ for_developers/README.md
 
 for_developers/backends.md
      1→# Alternative backends
+    13→## Setting up
+    53→## Inspecting the book
+    82→## Enabling the backend
+   159→## Configuration
+   219→## Output and signalling failure
+   322→## Wrapping up
 
 for_developers/mdbook-wordcount/Cargo.toml
      1→[package]
      6→[dependencies]
 
 for_developers/mdbook-wordcount/src/main.rs
-    44→#[derive(Debug, Default, Serialize, Deserialize)]
-      →…
     46→pub struct WordcountConfig {
     47→    pub ignores: Vec<String>,
-    48→    pub deny_odds: bool,
-    49→}
+      →    …
 
 for_developers/preprocessors.md
      1→# Preprocessors
 
 format/README.md
      1→# Format
-     3→In this section you will learn how to:
-     4→
-      →…
 
 format/configuration/README.md
      1→# Configuration
@@ -91,13 +89,6 @@ format/configuration/general.md
 
 format/configuration/preprocessors.md
      1→# Configuring Preprocessors
-    67→### Optional preprocessors
-
-format/configuration/renderers.md
-     1→# Configuring Renderers
-    20→## Output tables
-    84→## HTML renderer options
-   325→## Markdown renderer
 
 format/example.rs
      1→fn main() {
@@ -106,7 +97,6 @@ format/markdown.md
      1→# Markdown
      9→## Text and paragraphs
     25→## Headings
-    43→#### A smaller heading 
     47→## Lists
     69→## Links
    108→## Images
@@ -119,6 +109,16 @@ format/mathjax.md
 
 format/mdbook.md
      1→# mdBook-specific features
+     3→## Hiding code lines
+    74→## Rust playground
+   102→## Rust code block attributes
+   133→## Including files
+   154→## Including portions of a file
+   215→## Including a file but initially hiding all except specified lines
+   279→## Inserting runnable Rust files
+   310→## Controlling page \<title\>
+   319→## HTML classes provided by mdBook
+   341→## Font-Awesome icons
 
 format/summary.md
      1→# SUMMARY.md
@@ -150,16 +150,12 @@ guide/creating.md
      1→# Creating a book
      5→## Initializing a book
     32→## Anatomy of a book
-    36→### `book.toml`
-    50→### `SUMMARY.md`
-    73→### Source files
     96→## Publishing a book
 
 guide/installation.md
      1→# Installation
      9→## Pre-compiled binaries
     19→## Build from source using Rust
-    41→### Installing the latest master version
     53→## Modifying and contributing
 
 guide/reading.md
@@ -168,5 +164,3 @@ guide/reading.md
     26→## Top menu bar
     42→## Search
     54→## Code blocks
-
-misc/contributors.md

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1000 tokens)
+budget: 1000 (1002 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
@@ -12,6 +12,23 @@ README.md
     31→## Documentation
 
 package.json
+     2→  "name": "sonner",
+     3→  "version": "2.0.7",
+     4→  "description": "An opinionated toast component for React.",
+     5→  "exports": {
+    19→  "main": "./dist/index.js",
+    20→  "types": "./dist/index.d.ts",
+    21→  "files": [
+    24→  "scripts": {
+    33→  "keywords": [
+    40→  "author": "Emil Kowalski <e@emilkowal.ski>",
+    41→  "license": "MIT",
+    42→  "homepage": "https://sonner.emilkowal.ski/",
+    43→  "repository": {
+    47→  "bugs": {
+    50→  "devDependencies": {
+    61→  "peerDependencies": {
+    65→  "packageManager": "pnpm@9.15.9"
 
 pnpm-workspace.yaml
      1→packages:
@@ -40,17 +57,10 @@ src/index.tsx
      8→import { toast, ToastState } from './state …
      9→import './styles.css …
     10→import { …
-    45→function cn …
-    49→function getDefaultSwipeDirections …
-    64→const Toast …
-   507→function getDocumentDirection …
-   520→function assignOffset …
-   552→function useSonner …
 
 src/state.ts
      1→import type { …
     11→import React from 'react';
-    15→type titleT = (() => React.ReactNode) | React.ReactNode;
     17→class Observer {
     22→  constructor …
     29→  subscribe …
@@ -68,11 +78,6 @@ src/state.ts
    243→  custom …
    249→  getActiveToasts …
    254→export const ToastState = new Observer();
-   257→const toastFunction …
-   268→const isHttpResponse …
-   279→const basicToast = toastFunction;
-   281→const getHistory …
-   282→const getToasts …
    285→export const toast = Object.assign(
 
 src/types.ts
@@ -89,13 +94,10 @@ src/types.ts
     57→export interface Action {
     63→export interface ToastT {
     93→export function isAction(action: Action | React.ReactNode): action is Action {
-    94→  return (action as Action).label !== undefined;
-    95→}
     97→export type Position …
     98→export interface HeightT {
    104→interface ToastOptions {
-   118→type Offset =
-   119→  | {
+   118→type Offset …
    128→export interface ToasterProps {
    152→export type SwipeDirection …
    154→export interface ToastProps {
@@ -104,27 +106,13 @@ src/types.ts
    192→export interface ToastToDismiss {
    197→export type ExternalToast …
 
-test/package.json
-
-test/src/app/action.tsx
-     4→export async function action() {
-
-test/src/app/layout.tsx
-     1→export const metadata = {
-     6→export default function RootLayout …
-
 tsconfig.json
      2→  "compilerOptions": {
-     8→  },
      9→  "include": ["src"]
-    10→}
 
 turbo.json
      2→  "$schema": "https://turbo.build/schema.json",
      3→  "extends": ["//"],
      4→  "pipeline": {
     12→  }
-    13→}
-
-website/src/pages/index.tsx
-    14→export default function Home() {
+      →  …

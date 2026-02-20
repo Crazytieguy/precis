@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2003 tokens)
+budget: 2000 (2000 tokens)
 
 README.md
      9→# Mitt
@@ -34,9 +34,6 @@ README.md
     38→Then with a module bundler like [rollup](http://rollupjs.org/) or [webpack](https://webpack.js.org/), use as you would anything else:
     39→
     40→```javascript
-    41→// using ES6 modules
-    42→import mitt from 'mitt'
-    43→
       →…
     56→## Usage
     58→```js
@@ -48,9 +45,6 @@ README.md
     64→emitter.on('foo', e => console.log('foo', e) )
     65→
     66→// listen to all events
-    67→emitter.on('*', (type, e) => console.log(type, e) )
-    68→
-    69→// fire an event
       →…
     81→### Typescript
    113→## Examples & Demos
@@ -176,9 +170,12 @@ test/test-types-compilation.ts
      6→	name: string;
      7→}
      9→const emitter = mitt<{
-    15→const barHandler …
-    16→const fooHandler …
-    17→const wildcardHandler …
+    15→const barHandler = (x?: number) => {};
+    16→const fooHandler = (x: string) => {};
+    17→const wildcardHandler = (
+    18→	_type: 'foo' | 'bar' | 'someEvent',
+    19→	_event: string | SomeEventData | number | undefined
+    20→) => {};
 
 tsconfig.json
      2→	"compileOnSave": false,

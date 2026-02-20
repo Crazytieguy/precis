@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4022 tokens)
+budget: 4000 (4019 tokens)
 
 __init__.py
      1→__all__ = [
@@ -84,34 +84,47 @@ _hooks.py
     56→class HookimplOpts(TypedDict):
     58→
       →…
-    77→@final
     78→class HookspecMarker:
     85→
-    86→    __slots__ = ("project_name",)
-    87→
-    88→    def __init__ …
-   111→    def __call__ …
-   164→@final
+    88→    def __init__(self, project_name: str) -> None:
+   111→    def __call__(  # noqa: F811
+   112→        self,
+   113→        function: _F | None = None,
+   114→        firstresult: bool = False,
+   115→        historic: bool = False,
+   116→        warn_on_impl: Warning | None = None,
+   117→        warn_on_impl_args: Mapping[str, Warning] | None = None,
+   118→    ) -> _F | Callable[[_F], _F]:
    165→class HookimplMarker:
    172→
-   173→    __slots__ = ("project_name",)
-   174→
-   175→    def __init__ …
-   202→    def __call__ …
-   281→def normalize_hookimpl_opts …
+   175→    def __init__(self, project_name: str) -> None:
+   202→    def __call__(  # noqa: F811
+   203→        self,
+   204→        function: _F | None = None,
+   205→        hookwrapper: bool = False,
+   206→        optionalhook: bool = False,
+   207→        tryfirst: bool = False,
+   208→        trylast: bool = False,
+   209→        specname: str | None = None,
+   210→        wrapper: bool = False,
+   211→    ) -> _F | Callable[[_F], _F]:
+   281→def normalize_hookimpl_opts(opts: HookimplOpts) -> None:
    290→_PYPY = hasattr(sys, "pypy_version_info")
-   293→def varnames …
-   358→@final
+   293→def varnames(func: object) -> tuple[tuple[str, ...], tuple[str, ...]]:
    359→class HookRelay:
    362→
-   363→    __slots__ = ("__dict__",)
-   364→
-   365→    def __init__ …
-   370→        def __getattr__ …
+   365→    def __init__(self) -> None:
+   370→        def __getattr__(self, name: str) -> HookCaller: ...
    377→_CallHistory: TypeAlias = list[
    382→class HookCaller:
    384→
-   393→    def __init__ …
+   393→    def __init__(
+   394→        self,
+   395→        name: str,
+   396→        hook_execute: _HookExec,
+   397→        specmodule_or_class: _Namespace | None = None,
+   398→        spec_opts: HookspecOpts | None = None,
+   399→    ) -> None:
    419→    # TODO: Document, or make private.
    420→    def has_spec(self) -> bool:
    421→        return self.spec is not None
@@ -123,62 +136,44 @@ _hooks.py
    428→    ) -> None:
    429→        if self.spec is not None:
    430→            raise ValueError(
-   431→                f"Hook {self.spec.name!r} is already registered "
-   432→                f"within namespace {self.spec.namespace}"
-   433→            )
       →            …
-   438→    def is_historic …
+   438→    def is_historic(self) -> bool:
    442→    def _remove_plugin(self, plugin: _Plugin) -> None:
-   449→    def get_hookimpls …
+   449→    def get_hookimpls(self) -> list[HookImpl]:
    453→    def _add_hookimpl(self, hookimpl: HookImpl) -> None:
-   477→    def __repr__ …
+   477→    def __repr__(self) -> str:
    480→    def _verify_all_args_are_provided(self, kwargs: Mapping[str, object]) -> None:
-   499→    def __call__ …
-   516→    def call_historic …
-   543→    def call_extra …
+   499→    def __call__(self, **kwargs: object) -> Any:
+   516→    def call_historic(
+   517→        self,
+   518→        result_callback: Callable[[Any], None] | None = None,
+   519→        kwargs: Mapping[str, object] | None = None,
+   520→    ) -> None:
+   543→    def call_extra(
+   544→        self, methods: Sequence[Callable[..., object]], kwargs: Mapping[str, object]
+   545→    ) -> Any:
    577→    def _maybe_apply_history(self, method: HookImpl) -> None:
    593→class _SubsetHookCaller(HookCaller):
-   596→
-   612→    def __init__ …
+   612→    def __init__(self, orig: HookCaller, remove_plugins: Set[_Plugin]) -> None:
    619→    def _hookimpls(self) -> list[HookImpl]:
    626→    @property
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
    628→        return self._orig.spec
    631→    def _call_history(self) -> _CallHistory | None:  # type: ignore[override]
-   634→    def __repr__ …
-   638→@final
+   634→    def __repr__(self) -> str:
    639→class HookImpl:
    641→
-   642→    __slots__ = (
-   643→        "function",
-   644→        "argnames",
-   645→        "kwargnames",
-   646→        "plugin",
-   647→        "opts",
-   648→        "plugin_name",
-   649→        "wrapper",
-   650→        "hookwrapper",
-   651→        "optionalhook",
-   652→        "tryfirst",
-   653→        "trylast",
-   654→    )
-   655→
-   656→    def __init__ …
-   692→    def __repr__ …
-   696→@final
+   656→    def __init__(
+   657→        self,
+   658→        plugin: _Plugin,
+   659→        plugin_name: str,
+   660→        function: _HookImplFunction[object],
+   661→        hook_impl_opts: HookimplOpts,
+   662→    ) -> None:
+   692→    def __repr__(self) -> str:
    697→class HookSpec:
    698→    __slots__ = (
-   699→        "namespace",
-   700→        "function",
-   701→        "name",
-   702→        "argnames",
-   703→        "kwargnames",
-   704→        "opts",
-   705→        "warn_on_impl",
-   706→        "warn_on_impl_args",
-   707→    )
-   708→
-   709→    def __init__ …
+   709→    def __init__(self, namespace: _Namespace, name: str, opts: HookspecOpts) -> None:
 
 _manager.py
      3→from collections.abc import Callable
@@ -211,13 +206,9 @@ _manager.py
     37→_AfterTrace: TypeAlias = Callable[
     42→def _warn_for_function …
     52→class PluginValidationError(Exception):
-    53→    """Plugin failed validation.
-    54→
-      →…
     58→
     59→    def __init__(self, plugin: _Plugin, message: str) -> None:
     65→class DistFacade:
-    66→    """Emulate a pkg_resources Distribution"""
     67→
     68→    def __init__(self, dist: importlib.metadata.Distribution) -> None:
     71→    @property
@@ -227,9 +218,6 @@ _manager.py
     76→    def __getattr__(self, attr: str, default: Any | None = None) -> Any:
     79→    def __dir__(self) -> list[str]:
     83→class PluginManager:
-    84→    """Core class which manages registration of plugin objects and 1:N hook
-    85→    calling.
-      →    …
     99→
    100→    def __init__(self, project_name: str) -> None:
    114→    def _hookexec …
@@ -289,14 +277,12 @@ _result.py
     33→        result: ResultType | None,
     34→        exception: BaseException | None,
     35→    ) -> None:
-    36→        """:meta private:"""
     42→    @property
     43→    def excinfo(self) -> _ExcInfo | None:
     44→        """:meta private:"""
     45→        exc = self._exception
     46→        if exc is None:
-    47→            return None
-      →            …
+      →        …
     51→    @property
     52→    def exception(self) -> BaseException | None:
     53→        """:meta private:"""
@@ -306,20 +292,10 @@ _result.py
     58→        """:meta private:"""
     59→        __tracebackhide__ = True
     60→        result = exception = None
-    61→        try:
       →        …
     67→    def force_result(self, result: ResultType) -> None:
-    68→        """Force the result(s) to ``result``.
-    69→
-      →…
     80→    def force_exception(self, exception: BaseException) -> None:
-    81→        """Force the result to fail with ``exception``.
-    82→
-      →…
     91→    def get_result(self) -> ResultType:
-    92→        """Get the result(s) for this hook call.
-    93→
-      →…
 
 _tracing.py
      7→from collections.abc import Callable
@@ -349,12 +325,6 @@ _warnings.py
     13→    <old_style_hookwrappers>` teardown.
     14→
     15→    Such exceptions are not handled by pluggy, and may cause subsequent
-    16→    teardowns to be executed at unexpected times, or be skipped entirely.
-    17→
-    18→    This is an issue in the plugin implementation.
-    19→
-    20→    If the exception is unintended, fix the underlying cause.
-    21→
-      →…
+      →    …
     26→
     27→    __module__ = "pluggy"

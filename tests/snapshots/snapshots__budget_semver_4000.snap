@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4008 tokens)
+budget: 4000 (4013 tokens)
 
 .eslintrc.js
      7→const localConfigs = readdir(__dirname)
@@ -188,6 +188,14 @@ benchmarks/bench-parse-options.js
 benchmarks/bench-parse.js
      5→const suite = new Benchmark.Suite()
 
+benchmarks/bench-satisfies.js
+     5→const suite …
+     7→const versions …
+     8→const versionToCompare …
+     9→const option1 …
+    10→const option2 …
+    11→const option3 …
+
 benchmarks/bench-subset.js
      5→const suite = new Benchmark.Suite()
      8→const cases = [
@@ -342,20 +350,15 @@ internal/lrucache.js
      3→class LRUCache {
      4→  constructor () {
      5→    this.max = 1000
-     6→    this.map = new Map()
-     7→  }
+      →    …
      9→  get (key) {
     10→    const value = this.map.get(key)
-    11→    if (value === undefined) {
-    12→      return undefined
-      →      …
+      →    …
     21→  delete (key) {
     22→    return this.map.delete(key)
-    23→  }
+      →    …
     25→  set (key, value) {
     26→    const deleted = this.delete(key)
-    27→
-    28→    if (!deleted && value !== undefined) {
       →    …
 
 internal/parse-options.js
@@ -444,9 +447,10 @@ release-please-config.json
     36→  "prerelease-type": "pre.0"
     37→}
 
-test/bin/semver.js
-     9→const bin = require.resolve('../../bin/semver')
-    10→const run …
+test/integration/whitespace.js
+    12→const wsMedium …
+    13→const wsLarge …
+    14→const zeroLarge …
 
 test/internal/debug.js
      3→const main = () => {

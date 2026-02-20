@@ -2,30 +2,21 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1010 tokens)
+budget: 1000 (999 tokens)
 
 __init__.py
      1→# SPDX-License-Identifier: MIT
-     2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
-     3→# Licensed to PSF under a Contributor Agreement.
+      →…
      5→__all__ = ("loads", "load", "TOMLDecodeError")
-     6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
+     6→__version__ …
      8→from ._parser import TOMLDecodeError, load, loads
 
 _parser.py
-     7→import sys
-     8→from types import MappingProxyType
     10→from ._re …
     19→TYPE_CHECKING = False
-    21→    from collections.abc import Iterable
-    22→    from typing import IO, Any, Final
     24→    from ._types …
-    26→# Inline tables/arrays are implemented using recursion. Pathologically
-      →…
     35→MAX_INLINE_NESTING: Final = sys.getrecursionlimit()
     37→ASCII_CTRL: Final = frozenset(chr(i) for i in range(32)) | frozenset(chr(127))
-    39→# Neither of these sets include quotation mark or backslash. They are
-      →…
     41→ILLEGAL_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t")
     42→ILLEGAL_MULTILINE_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t\n")
     44→ILLEGAL_LITERAL_STR_CHARS: Final = ILLEGAL_BASIC_STR_CHARS
@@ -40,18 +31,48 @@ _parser.py
     71→class DEPRECATED_DEFAULT:
     76→class TOMLDecodeError(ValueError):
     86→
+    87→    def __init__ …
+   137→def load …
+   149→def loads …
    220→class Flags:
    222→
-   223→    # Marks an immutable namespace (inline array or inline table).
+   229→    def __init__ …
+   233→    def add_pending …
+   236→    def finalize_pending …
+   241→    def unset_all …
+   249→    def set …
+   260→    def is_ …
    278→class NestedDict:
+   279→    def __init__ …
+   283→    def get_or_create_nest …
+   300→    def append_nest_to_list …
    312→class Output:
+   313→    def __init__ …
+   318→def skip_chars …
+   327→def skip_until …
+   349→def skip_comment …
+   361→def skip_comments_and_array_ws …
+   370→def create_dict_rule …
+   390→def create_list_rule …
+   413→def key_value_rule …
+   447→def parse_key_value_pair …
+   463→def parse_key …
+   481→def parse_key_part …
+   497→def parse_one_line_basic_str …
+   502→def parse_array …
+   528→def parse_inline_table …
+   564→def parse_basic_str_escape …
+   595→def parse_basic_str_escape_multiline …
+   599→def parse_hex_char …
+   612→def parse_literal_str …
+   621→def parse_multiline_str …
+   652→def parse_basic_str …
+   684→def parse_value …
+   760→def is_unicode_scalar_value …
+   764→def make_safe_parse_float …
 
 _re.py
-     7→from datetime import date, datetime, time, timedelta, timezone, tzinfo
-     8→from functools import lru_cache
-     9→import re
     11→TYPE_CHECKING = False
-    13→    from typing import Any, Final
     15→    from ._types import ParseFloat
     17→_TIME_RE_STR: Final = r"""
     26→RE_NUMBER: Final = re.compile(
@@ -62,18 +83,9 @@ _re.py
     47→    rf"""
       →    …
     59→def match_to_datetime(match: re.Match[str]) -> datetime | date:
-    60→    """Convert a `RE_DATETIME` match to `datetime.datetime` or `datetime.date`.
-    61→
-      →…
     95→# No need to limit cache size. This is only ever called on input
-    96→# that matched RE_DATETIME, so there is an implicit bound of
-    97→# 24 (hours) * 60 (minutes) * 2 (offset direction) = 2880.
-    98→@lru_cache(maxsize=None)
+      →…
     99→def cached_tz(hour_str: str, minute_str: str, sign_str: str) -> timezone:
-   100→    sign = 1 if sign_str == "+" else -1
-   101→    return timezone(
-   102→        timedelta(
-      →        …
    109→def match_to_localtime(match: re.Match[str]) -> time:
    116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
 

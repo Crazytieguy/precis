@@ -4,8 +4,8 @@ expression: output
 ---
 sample.c
      4→#include "token.h"
-     6→#define MAX_TOKENS …
-     7→#define MIN …
+     6→#define MAX_TOKENS 1024
+     7→#define MIN(a, b) ((a) < (b) ? (a) : (b))
      9→typedef struct Token {
     15→/* The kind of a lexical token. */
     16→enum TokenKind {
@@ -15,10 +15,7 @@ sample.c
     20→};
     22→typedef int (*Comparator)(const void *, const void *);
     30→int process(const char *input, int len) {
-    34→static void helper(void) {}
     37→Token *token_new(int kind, int start, int end) {
     45→void token_free(Token *t) {
-    46→    free(t);
-      →    …
-    50→static int _parse_next(const char *input, int pos) {
+    50→static int _parse_next …
     56→void *alloc_node(size_t size);

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4030 tokens)
+budget: 4000 (4022 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -16,11 +16,6 @@ README.md
      3→[![Build Status][build_status_badge]][build_status_link]
      4→[![PyPI version][pypi_badge]][pypi_link]
      5→
-     6→python-dotenv reads key-value pairs from a `.env` file and can set them as
-     7→environment variables. It helps in the development of applications following the
-     8→[12-factor](https://12factor.net/) principles.
-     9→
-    10→- [Getting Started](#getting-started)
       →…
     22→## Getting Started
     78→## Other Use Cases
@@ -74,9 +69,6 @@ src/dotenv/__init__.py
      1→from typing import Any, Optional
      3→from .main import dotenv_values, find_dotenv, get_key, load_dotenv, set_key, unset_key
      6→def load_ipython_extension(ipython: Any) -> None:
-     7→    from .ipython import load_ipython_extension
-     8→
-      →…
     12→def get_cli_string(
     13→    path: Optional[str] = None,
     14→    action: Optional[str] = None,
@@ -89,12 +81,7 @@ src/dotenv/__init__.py
     21→    Useful for converting a arguments passed to a fabric task
     22→    to be passed to a `local` or `run` command.
     23→    """
-    24→    command = ["dotenv"]
-    25→    if quote:
-      →    …
     42→__all__ = [
-    43→    "get_cli_string",
-      →    …
 
 src/dotenv/__main__.py
      3→from .cli import cli
@@ -113,69 +100,29 @@ src/dotenv/cli.py
     24→def enumerate_env() -> Optional[str]:
     25→    """
     26→    Return a path for the ${pwd}/.env file.
-    27→
-    28→    If pwd does not exist, return None.
-    29→    """
+      →    …
     60→@click.version_option(version=__version__)
-    61→@click.pass_context
+      →…
     62→def cli(ctx: click.Context, file: Any, quote: Any, export: Any) -> None:
-    63→    """This script is used to set, get or unset values from a .env file."""
-    64→    ctx.obj = {"QUOTE": quote, "EXPORT": export, "FILE": file}
     67→@contextmanager
     68→def stream_file(path: os.PathLike) -> Iterator[IO[str]]:
-    69→    """
-    70→    Open a file and yield the corresponding (decoded) stream.
-    71→
-    72→    Exits with error code 2 if the file cannot be opened.
-    73→    """
-    74→
-      →…
     93→def list_values(ctx: click.Context, output_format: str) -> None:
     94→    """Display all the stored key/value."""
    112→@cli.command(name="set")
-   113→@click.pass_context
-   114→@click.argument("key", required=True)
-   115→@click.argument("value", required=True)
+      →…
    116→def set_value(ctx: click.Context, key: Any, value: Any) -> None:
-   117→    """Store the given key/value."""
-   118→    file = ctx.obj["FILE"]
-      →    …
    128→@cli.command()
-   129→@click.pass_context
-   130→@click.argument("key", required=True)
+      →…
    131→def get(ctx: click.Context, key: Any) -> None:
-   132→    """Retrieve the value for the given key."""
-   133→    file = ctx.obj["FILE"]
-      →    …
    145→@cli.command()
-   146→@click.pass_context
-   147→@click.argument("key", required=True)
+      →…
    148→def unset(ctx: click.Context, key: Any) -> None:
-   149→    """Removes the given key."""
-   150→    file = ctx.obj["FILE"]
-      →    …
    172→@click.argument("commandline", nargs=-1, type=click.UNPROCESSED)
    173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
-   174→    """Run command with environment variables present."""
-   175→    file = ctx.obj["FILE"]
-      →    …
    193→def run_command(command: List[str], env: Dict[str, str]) -> None:
    194→    """Replace the current process with the specified command.
    195→
-   196→    Replaces the current process with the specified command and the variables from `env`
-   197→    added in the current environment variables.
-   198→
-   199→    Parameters
-   200→    ----------
-   201→    command: List[str]
-   202→        The command and it's parameters
-   203→    env: Dict
-   204→        The additional environment variables
-   205→
-   206→    Returns
-   207→    -------
-   208→    None
-      →    …
+      →…
 
 src/dotenv/ipython.py
      1→from IPython.core.magic import Magics, line_magic, magics_class  # type: ignore
@@ -213,12 +160,7 @@ src/dotenv/ipython.py
     36→        # Locate the .env file
     37→        dotenv_path = args.dotenv_path
     38→        try:
-    39→            dotenv_path = find_dotenv(dotenv_path, True, True)
-    40→        except IOError:
-    41→            print("cannot find .env file")
-    42→            return
-    43→
-      →…
+      →        …
     48→def load_ipython_extension(ipython):
     49→    """Register the %dotenv magic."""
     50→    ipython.register_magics(IPythonDotEnv)
@@ -255,14 +197,6 @@ src/dotenv/main.py
    145→) -> Iterator[Tuple[IO[str], IO[str]]]:
    146→    pathlib.Path(path).touch()
    147→
-   148→    with tempfile.NamedTemporaryFile(mode="w", encoding=encoding, delete=False) as dest:
-   149→        error = None
-   150→        try:
-   151→            with open(path, encoding=encoding) as source:
-   152→                yield (source, dest)
-   153→        except BaseException as err:
-   154→            error = err
-   155→
       →…
    163→def set_key …
    211→def unset_key …
@@ -337,25 +271,49 @@ src/dotenv/version.py
      1→__version__ = "1.2.1"
 
 tests/conftest.py
-     1→import pytest
-     2→from click.testing import CliRunner
      5→@pytest.fixture
      6→def cli():
     12→@pytest.fixture
     13→def dotenv_path(tmp_path):
 
 tests/test_cli.py
+    17→def invoke_sub(args: Sequence[str]) -> subprocess.CompletedProcess:
+    47→def test_list(
+    48→    cli, dotenv_path, output_format: Optional[str], content: str, expected: str
+    49→):
+    61→def test_list_non_existent_file(cli):
+    68→def test_list_not_a_file(cli):
+    75→def test_list_no_file(cli):
+    81→def test_get_existing_value(cli, dotenv_path):
+    89→def test_get_non_existent_value(cli, dotenv_path):
+    95→def test_get_non_existent_file(cli):
+   102→def test_get_not_a_file(cli):
+   109→def test_unset_existing_value(cli, dotenv_path):
+   118→def test_unset_non_existent_value(cli, dotenv_path):
+   135→def test_set_quote_options(cli, dotenv_path, quote_mode, variable, value, expected):
+   162→def test_set_export(cli, dotenv_path, export_mode, variable, value, expected):
+   182→def test_set_non_existent_file(cli):
+   188→def test_set_no_file(cli):
    196→def test_get_default_path(tmp_path):
    206→def test_run(tmp_path):
    216→def test_run_with_existing_variable(tmp_path):
    228→def test_run_with_existing_variable_not_overridden(tmp_path):
    240→def test_run_with_none_value(tmp_path):
    250→def test_run_with_other_env(dotenv_path):
+   258→def test_run_without_cmd(cli):
+   265→def test_run_with_invalid_cmd(cli):
+   272→def test_run_with_version(cli):
+   279→def test_run_with_command_flags(dotenv_path):
+   292→def test_run_with_dotenv_and_command_flags(cli, dotenv_path):
 
 tests/test_fifo_dotenv.py
     13→def test_load_dotenv_from_fifo(tmp_path: pathlib.Path, monkeypatch):
 
 tests/test_ipython.py
+     1→import os
+     2→import sys
+     3→from unittest import mock
+     5→import pytest
     14→def test_ipython_existing_variable_no_override(tmp_path):
     33→def test_ipython_existing_variable_override(tmp_path):
     52→def test_ipython_new_variable(tmp_path):
@@ -365,8 +323,32 @@ tests/test_is_interactive.py
     31→
 
 tests/test_main.py
+    17→def test_set_key_no_file(tmp_path):
+    46→def test_set_key(dotenv_path, before, key, value, expected, after):
+    58→def test_set_key_encoding(dotenv_path):
+    71→def test_set_key_permission_error(dotenv_path):
+    90→def test_get_key_no_file(tmp_path):
+   111→def test_get_key_not_found(dotenv_path):
+   121→def test_get_key_ok(dotenv_path):
+   132→def test_get_key_encoding(dotenv_path):
+   141→def test_get_key_none(dotenv_path):
+   152→def test_unset_with_value(dotenv_path):
+   164→def test_unset_no_value(dotenv_path):
+   176→def test_unset_encoding(dotenv_path):
+   186→def test_unset_non_existent_file(tmp_path):
+   200→def prepare_file_hierarchy(path):
+   201→    """
+      →    …
+   219→def test_find_dotenv_no_file_raise(tmp_path):
+   227→def test_find_dotenv_no_file_no_raise(tmp_path):
+   236→def test_find_dotenv_found(tmp_path):
    251→def test_load_dotenv_existing_file(dotenv_path):
+   276→def test_load_dotenv_disabled(dotenv_path, flag_value):
+   305→def test_load_dotenv_disabled_notification(dotenv_path, flag_value):
+   341→def test_load_dotenv_enabled(dotenv_path, flag_value):
+   371→def test_load_dotenv_enabled_no_notification(dotenv_path, flag_value):
    386→def test_load_dotenv_doesnt_disable_itself(dotenv_path):
+   395→def test_load_dotenv_no_file_verbose():
    411→def test_load_dotenv_existing_variable_no_override(dotenv_path):
    424→def test_load_dotenv_existing_variable_override(dotenv_path):
    437→def test_load_dotenv_redefine_var_used_in_file_no_override(dotenv_path):
@@ -374,6 +356,9 @@ tests/test_main.py
    463→def test_load_dotenv_string_io_utf_8():
    476→def test_load_dotenv_file_stream(dotenv_path):
    487→def test_load_dotenv_in_current_dir(tmp_path):
+   507→def test_dotenv_values_file(dotenv_path):
+   551→def test_dotenv_values_string_io(env, string, interpolate, expected):
+   561→def test_dotenv_values_file_stream(dotenv_path):
 
 tests/test_parser.py
    550→def test_parse_stream(test_input, expected):

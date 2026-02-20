@@ -2,15 +2,23 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1007 tokens)
+budget: 1000 (1000 tokens)
+
+Cargo.toml
+     1→[workspace]
+    72→[package]
+    90→[dependencies]
+   119→[dev-dependencies]
+   129→[features]
+   135→[[bin]]
+   139→[[example]]
+   143→[[example]]
+   149→[[test]]
+   156→[lints]
 
 README.md
      1→# mdBook
     14→## License
-
-crates/mdbook-core/README.md
-     1→# mdbook-core
-    11→## License
 
 crates/mdbook-core/src/book.rs
     26→pub struct Book {
@@ -20,67 +28,74 @@ crates/mdbook-core/src/book.rs
    269→pub struct BookItems<'a> {
 
 crates/mdbook-core/src/config.rs
+    63→pub struct Config {
     91→    type Err = Error;
+    94→    fn from_str …
+   113→    pub fn from_disk …
+   150→    pub fn update_from_env …
+   189→    pub fn get …
+   216→    pub fn contains_key …
+   228→    pub fn preprocessors …
+   236→    pub fn outputs …
+   274→    pub fn set …
+   318→pub struct BookConfig {
+   356→    pub fn realized_text_direction …
+   368→pub enum TextDirection {
+   379→    pub fn from_lang_code …
+   394→pub struct BuildConfig {
+   422→pub struct RustConfig {
+   430→pub enum RustEdition {
+   449→pub struct HtmlConfig {
+   558→    pub fn theme_dir …
+   566→    pub fn get_404_output_file …
+   578→pub struct Print {
+   598→pub struct Fold {
+   611→pub struct Playground {
+   641→pub struct Code {
+   650→pub struct Search {
+   708→pub struct SearchChapterSettings {
 
 crates/mdbook-core/src/lib.rs
-     7→pub const MDBOOK_VERSION: &str = env!("CARGO_PKG_VERSION");
+     7→pub const MDBOOK_VERSION …
      9→pub mod book;
     10→pub mod config;
     11→pub mod utils;
     14→pub mod errors {
-    15→    pub use anyhow::{Error, Result};
-
-crates/mdbook-core/src/utils/mod.rs
-     7→pub mod fs;
-    17→macro_rules! static_regex {
-    29→pub fn log_backtrace(e: &Error) {
-
-crates/mdbook-driver/README.md
-     1→# mdbook-driver
-    11→## License
-
-crates/mdbook-driver/src/builtin_renderers/mod.rs
-    20→pub struct CmdRenderer {
-    27→    pub fn new …
 
 crates/mdbook-driver/src/init.rs
     13→pub struct BookBuilder {
-    14→    root: PathBuf,
-      →    …
+    23→    pub fn new …
+    33→    pub fn with_config …
+    39→    pub fn config …
+    45→    pub fn copy_theme …
+    51→    pub fn create_gitignore …
+    64→    pub fn build …
 
 crates/mdbook-driver/src/mdbook.rs
     29→pub struct MDBook {
 
-crates/mdbook-html/README.md
-     1→# mdbook-html
-    11→## License
-
-crates/mdbook-html/src/lib.rs
-     5→pub mod theme;
-     8→pub use html_handlebars::HtmlHandlebars;
-
-crates/mdbook-html/src/theme/mod.rs
-    40→pub struct Theme {
-
 crates/mdbook-markdown/src/lib.rs
     11→pub use pulldown_cmark;
     15→pub struct MarkdownOptions {
-    16→    /// Enables smart punctuation.
-      →    …
-    34→    fn default() -> MarkdownOptions {
     44→pub fn new_cmark_parser …
 
 crates/mdbook-preprocessor/src/lib.rs
     30→pub trait Preprocessor {
+    32→    fn name …
+    36→    fn run …
+    42→    fn supports_renderer …
     51→pub struct PreprocessorContext {
+    70→    pub fn new …
+    82→pub fn parse_input …
 
 crates/mdbook-renderer/src/lib.rs
     28→pub trait Renderer {
+    30→    fn name …
+    34→    fn render …
     40→pub struct RenderContext {
-
-crates/mdbook-summary/README.md
-     1→# mdbook-summary
-    11→## License
+    65→    pub fn new …
+    81→    pub fn source_dir …
+    86→    pub fn from_json …
 
 crates/mdbook-summary/src/lib.rs
     59→pub fn parse_summary …
@@ -89,34 +104,19 @@ crates/mdbook-summary/src/lib.rs
     98→    pub fn new …
    122→pub enum SummaryItem {
 
-crates/xtask/README.md
-     1→# xtask
+guide/book.toml
+     1→[book]
+     7→[rust]
+    40→[build]
 
 guide/guide-helper/src/lib.rs
     10→pub fn handle_preprocessing() -> Result<()> {
 
-guide/src/README.md
-     1→# Introduction
-    46→## Contributing
-    55→## License
-
-guide/src/cli/README.md
-     1→# Command-line tool
-
-guide/src/format/README.md
-     1→# Format
-
-guide/src/guide/README.md
-     1→# User guide
-
 src/cmd/clean.rs
-    38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
+    38→pub fn human_readable_bytes …
     46→pub struct Clean {
-    47→    num_files_removed: u64,
-      →    …
 
 src/cmd/command_prelude.rs
-     3→pub use clap::{Arg, ArgMatches, Command, arg};
      7→pub trait CommandExt: Sized {
     42→    fn arg_watcher(self) -> Self {
 
@@ -131,14 +131,8 @@ src/cmd/mod.rs
 
 src/cmd/serve.rs
      3→use super::watch;
-    23→pub fn make_subcommand() -> Command {
-    51→pub fn execute(args: &ArgMatches) -> Result<()> {
-   109→async fn serve …
-
-src/cmd/watch/poller.rs
-    18→pub fn rebuild_on_change …
 
 src/cmd/watch.rs
     21→pub enum WatcherKind {
-    22→    Poll,
-      →    …
+
+src/main.rs

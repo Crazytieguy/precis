@@ -3,9 +3,6 @@ source: tests/snapshots.rs
 expression: output
 ---
 sample.c
-     4→#include "token.h"
     16→enum TokenKind {
-    17→    TOKEN_IDENT,
-      →    …
-    30→int process …
-    37→Token *token_new …
+    30→int process(const char *input, int len) {
+    37→Token *token_new(int kind, int start, int end) {

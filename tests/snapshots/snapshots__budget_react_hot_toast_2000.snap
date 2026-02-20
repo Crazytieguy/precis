@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2020 tokens)
+budget: 2000 (2009 tokens)
 
 README.md
     28→## Features
@@ -13,32 +13,28 @@ README.md
     70→## Documentation
 
 package.json
-
-site/README.md
-     3→## Getting Started
-    17→## Learn More
-    26→## Deploy on Vercel
-
-site/components/code.tsx
-   104→export const Code: React.FC<{
-
-site/components/docs-layout.tsx
-    27→export default function DocsLayout({ meta, children }) {
-
-site/components/emoji-button.tsx
-     1→export const EmojiButton: React.FC<{
-
-site/components/sections/toast-example.tsx
-   270→export const ToastExample = () => {
-
-site/components/sections/toaster-example.tsx
-     8→export const positions: Array<ToastPosition> = [
-    17→export const ToasterExample: React.FC<{
+     2→  "name": "react-hot-toast",
+     3→  "description": "Smoking hot React Notifications. Lightweight, customizable and beautiful by default.",
+     4→  "version": "2.6.0",
+     5→  "author": "Timo Lins",
+     6→  "license": "MIT",
+     7→  "repository": "timolins/react-hot-toast",
+     8→  "keywords": [
+    14→  "main": "dist/index.js",
+    15→  "types": "dist/index.d.ts",
+    16→  "exports": {
+    29→  "files": [
+    34→  "engines": {
+    37→  "scripts": {
+    45→  "husky": {
+    50→  "prettier": {
+    57→  "size-limit": [
+    75→  "devDependencies": {
+    95→  "dependencies": {
+    99→  "peerDependencies": {
+   103→  "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0"
 
 site/package.json
-
-site/pages/index.tsx
-   102→export default function Home() {
 
 src/components/checkmark.tsx
      1→import { styled, keyframes } from 'goober';
@@ -78,10 +74,10 @@ src/components/toast-bar.tsx
      6→import { prefersReducedMotion } from '../core/utils';
      8→const enterAnimation …
     13→const exitAnimation …
-    18→const fadeInAnimation …
-    19→const fadeOutAnimation …
-    22→const ToastBarBase …
-    38→const Message …
+    18→const fadeInAnimation = `0%{opacity:0;} 100%{opacity:1;}`;
+    19→const fadeOutAnimation = `0%{opacity:1;} 100%{opacity:0;}`;
+    22→const ToastBarBase = styled('div')`
+    38→const Message = styled('div')`
     47→interface ToastBarProps {
     57→const getAnimationStyle …
     75→export const ToastBar: React.FC<ToastBarProps> = React.memo(
@@ -100,8 +96,7 @@ src/components/toast-icon.tsx
     41→export type IconThemes = Partial<{
     47→export const ToastIcon: React.FC<{
     48→  toast: Toast;
-    49→}> = ({ toast }) => {
-      →…
+      →  …
 
 src/components/toaster.tsx
      1→import { css, setup } from 'goober';
@@ -115,16 +110,12 @@ src/components/toaster.tsx
      9→import { useToaster } from '../core/use-toaster';
     10→import { prefersReducedMotion } from '../core/utils';
     11→import { ToastBar } from './toast-bar';
-    15→const ToastWrapper = ({
-    47→const getPositionStyle = (
-    48→  position: ToastPosition,
-    49→  offset: number
-    50→): React.CSSProperties => {
+    15→const ToastWrapper …
+    47→const getPositionStyle …
     76→const activeClass = css`
     83→const DEFAULT_OFFSET = 16;
     85→export const Toaster: React.FC<ToasterProps> = ({
     86→  reverseOrder,
-    87→  position = 'top-center',
       →  …
 
 src/core/store.ts
@@ -138,11 +129,7 @@ src/core/store.ts
     13→  ADD_TOAST,
     14→  UPDATE_TOAST,
     15→  UPSERT_TOAST,
-    16→  DISMISS_TOAST,
-    17→  REMOVE_TOAST,
-    18→  START_PAUSE,
-    19→  END_PAUSE,
-    20→}
+      →  …
     22→export type Action =
     23→  | {
     52→interface ToasterState {
@@ -173,26 +160,15 @@ src/core/types.ts
      4→export type ToastPosition …
     12→export type Renderable …
     14→export interface IconTheme {
-    15→  primary: string;
-      →  …
     19→export type ValueFunction …
     20→export type ValueOrFunction …
     24→const isFunction …
-    29→export const resolveValue = <TValue, TArg>(
-    30→  valOrFunction: ValueOrFunction<TValue, TArg>,
-    31→  arg: TArg
-    32→): TValue => (isFunction(valOrFunction) ? valOrFunction(arg) : valOrFunction);
+    29→export const resolveValue …
     34→export interface Toast {
-    35→  type: ToastType;
-      →  …
     60→export type ToastOptions …
     76→export type DefaultToastOptions …
     80→export interface ToasterProps {
-    81→  position?: ToastPosition;
-      →  …
     91→export interface ToastWrapperProps {
-    92→  id: string;
-      →  …
 
 src/core/use-toaster.ts
      1→import { useEffect, useCallback, useRef } from 'react';
@@ -214,8 +190,6 @@ src/headless/index.ts
 
 src/index.ts
      1→import { toast } from './core/toast';
-
-test/setup.ts
 
 tsconfig.json
      3→  "include": ["src", "types", "test"],

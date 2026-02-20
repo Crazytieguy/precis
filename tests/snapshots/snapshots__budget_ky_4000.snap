@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4042 tokens)
+budget: 4000 (4017 tokens)
 
 package.json
      2→	"name": "ky",
@@ -39,6 +39,8 @@ readme.md
    125→### ky.patch(input, options?)
    126→### ky.head(input, options?)
    127→### ky.delete(input, options?)
+   133→#### input
+   141→#### options
    147→##### method
    156→##### json
    162→##### searchParams
@@ -59,23 +61,37 @@ readme.md
    683→##### context
    745→### ky.extend(defaultOptions)
    811→### ky.create(defaultOptions)
+   829→#### defaultOptions
    833→### ky.stop
    864→### ky.retry(options?)
+   870→#### options
    874→##### delay
    882→##### code
    895→##### cause
    913→##### request
+   923→#### Example
   1000→### HTTPError
   1046→### TimeoutError
   1050→## Tips
   1052→### Sending form data
+  1080→#### Modifying FormData in hooks
   1109→### Setting a custom `Content-Type`
   1129→### Cancellation
   1156→### Proxy support (Node.js)
+  1158→#### Native proxy support
+  1177→#### Using ProxyAgent
   1209→### HTTP/2 support (Node.js)
   1249→### Consuming Server-Sent Events (SSE)
   1264→### Extending types
   1292→## FAQ
+  1294→#### How do I use this in Node.js?
+  1298→#### How do I use this with a web app (React, Vue.js, etc.) that uses server-side rendering (SSR)?
+  1302→#### How do I test a browser library that uses this?
+  1306→#### How do I use this without a bundler like Webpack?
+  1321→#### How is it different from [`got`](https://github.com/sindresorhus/got)
+  1325→#### How is it different from [`axios`](https://github.com/axios/axios)?
+  1329→#### How is it different from [`r2`](https://github.com/mikeal/r2)?
+  1333→#### What does `ky` mean?
   1339→## Browser support
   1343→## Node.js support
   1347→## Related
@@ -95,7 +111,7 @@ source/core/constants.ts
     36→export const supportsResponseStreams = typeof globalThis.ReadableStream === 'function';
     37→export const supportsFormData = typeof globalThis.FormData === 'function';
     39→export const requestMethods = ['get', 'post', 'put', 'patch', 'head', 'delete'] as const;
-    41→const validate = <T extends Array<true>>() => undefined as unknown as T;
+    41→const validate …
     46→export const responseTypes = {
     58→export const maxSafeTimeout = 2_147_483_647;
     61→export const usualFormBoundarySize = new TextEncoder().encode('------WebKitFormBoundaryaxpyiPgbbPti10Rw').length;
@@ -119,7 +135,7 @@ source/errors/ForceRetryError.ts
      1→import type {ForceRetryOptions} from '../core/constants.js';
      2→import {NonError} from './NonError.js';
      5→Internal error used to signal a forced retry from afterResponse hooks.
-     6→This is thrown when a user returns ky.retry() from an afterResponse hook.
+      →…
      8→export class ForceRetryError extends Error {
      9→	override name = 'ForceRetryError' as const;
     10→	customDelay: number | undefined;
@@ -127,8 +143,6 @@ source/errors/ForceRetryError.ts
     12→	customRequest: Request | undefined;
     13→
     14→	constructor(options?: ForceRetryOptions) {
-    15→		// Runtime protection: wrap non-Error causes in NonError
-      →		…
 
 source/errors/HTTPError.ts
      1→import type {NormalizedOptions} from '../types/options.js';
@@ -137,8 +151,6 @@ source/errors/HTTPError.ts
      5→export class HTTPError<T = unknown> extends Error {
      6→	public response: KyResponse<T>;
      7→	public request: KyRequest;
-     8→	public options: NormalizedOptions;
-     9→
     10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
 
 source/errors/NonError.ts
@@ -150,9 +162,6 @@ source/errors/NonError.ts
      8→	readonly value: unknown;
      9→
     10→	constructor(value: unknown) {
-    11→		let message = 'Non-error value was thrown';
-    12→
-      →…
 
 source/errors/TimeoutError.ts
      1→import type {KyRequest} from '../types/request.js';
@@ -160,8 +169,6 @@ source/errors/TimeoutError.ts
      4→	public request: KyRequest;
      5→
      6→	constructor(request: Request) {
-     7→		super(`Request timed out: ${request.method} ${request.url}`);
-      →		…
 
 source/index.ts
      3→import {Ky} from './core/Ky.js';
@@ -188,15 +195,24 @@ source/types/hooks.ts
      1→import {type stop, type RetryMarker} from '../core/constants.js';
      2→import type {KyRequest, KyResponse, HTTPError} from '../index.js';
      3→import type {NormalizedOptions} from './options.js';
-     5→export type BeforeRequestState …
-    14→export type BeforeRequestHook …
-    20→export type BeforeRetryState …
-    30→export type BeforeRetryHook …
-    32→export type AfterResponseState …
-    41→export type AfterResponseHook …
-    48→export type BeforeErrorState …
-    57→export type BeforeErrorHook …
-    59→export type Hooks …
+     5→export type BeforeRequestState = {
+    14→export type BeforeRequestHook = (
+    15→	request: KyRequest,
+    16→	options: NormalizedOptions,
+    17→	state: BeforeRequestState
+    18→) => Request | Response | void | Promise<Request | Response | void>;
+    20→export type BeforeRetryState = {
+    30→export type BeforeRetryHook = (options: BeforeRetryState) => Request | Response | typeof stop | void | Promise<Request | Response | typeof stop | void>;
+    32→export type AfterResponseState = {
+    41→export type AfterResponseHook = (
+    42→	request: KyRequest,
+    43→	options: NormalizedOptions,
+    44→	response: KyResponse,
+    45→	state: AfterResponseState
+    46→) => Response | RetryMarker | void | Promise<Response | RetryMarker | void>;
+    48→export type BeforeErrorState = {
+    57→export type BeforeErrorHook = (error: HTTPError, state: BeforeErrorState) => HTTPError | Promise<HTTPError>;
+    59→export type Hooks = {
 
 source/types/ky.ts
      1→import {type stop, type retry} from '../core/constants.js';
@@ -208,31 +224,28 @@ source/types/options.ts
      1→import type {LiteralUnion, Required} from './common.js';
      2→import type {Hooks} from './hooks.js';
      3→import type {RetryOptions} from './retry.js';
-     6→export type SearchParamsInit …
-     9→export type SearchParamsOption …
-    11→export type RequestHttpMethod …
-    12→export type HttpMethod …
-    14→export type Input …
-    16→export type Progress …
-    27→export type KyHeadersInit …
+     6→export type SearchParamsInit = string | string[][] | Record<string, string> | URLSearchParams | undefined;
+     9→export type SearchParamsOption = SearchParamsInit | Record<string, string | number | boolean | undefined> | Array<Array<string | number | boolean>>;
+    11→export type RequestHttpMethod = 'get' | 'post' | 'put' | 'patch' | 'head' | 'delete';
+    12→export type HttpMethod = LiteralUnion<RequestHttpMethod | 'options' | 'trace', string>;
+    14→export type Input = string | URL | Request;
+    16→export type Progress = {
+    27→export type KyHeadersInit = NonNullable<RequestInit['headers']> | Record<string, string | undefined>;
     30→Custom Ky options
     33→export type KyOptions = {
-    34→	/**
-      →	…
    303→Each key from KyOptions is present and set to `true`.
    304→
-   305→This type is used for identifying and working with the known keys in KyOptions.
+      →…
    307→export type KyOptionsRegistry = {[K in keyof KyOptions]-?: true};
    312→export interface Options extends KyOptions, Omit<RequestInit, 'headers'> { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
    313→	/**
-   314→	HTTP method used to make the request.
-   315→
-      →…
-   358→export type InternalOptions …
+      →	…
+   358→export type InternalOptions = Required<
+   359→Omit<Options, 'hooks' | 'retry' | 'context' | 'throwHttpErrors'>,
+   360→'fetch' | 'prefixUrl' | 'timeout'
+   361→> & {
    373→export interface NormalizedOptions extends RequestInit { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
    374→	// Extended from `RequestInit`, but ensured to be set (not optional).
-   375→	method: NonNullable<RequestInit['method']>;
-   376→	credentials?: NonNullable<RequestInit['credentials']>;
       →	…
 
 source/types/request.ts
@@ -257,13 +270,7 @@ source/utils/body.ts
 source/utils/delay.ts
      3→import {type InternalOptions} from '../types/options.js';
      5→export type DelayOptions = {
-     9→export default async function delay(
-    10→	ms: number,
-    11→	{signal}: DelayOptions,
-    12→): Promise<void> {
-    13→	return new Promise((resolve, reject) => {
-    14→		if (signal) {
-      →		…
+     9→export default async function delay …
 
 source/utils/is.ts
      2→export const isObject = (value: unknown): value is object => value !== null && typeof value === 'object';
@@ -293,9 +300,6 @@ source/utils/normalize.ts
     14→type InternalRetryOptions …
     16→const defaultRetryOptions …
     28→export const normalizeRetryOptions = (retry: number | RetryOptions = {}): InternalRetryOptions => {
-    29→	if (typeof retry === 'number') {
-    30→		return {
-      →		…
 
 source/utils/options.ts
      1→import {kyOptionKeys, requestOptionsRegistry, vendorSpecificOptions} from '../core/constants.js';
@@ -309,55 +313,20 @@ source/utils/options.ts
 source/utils/timeout.ts
      1→import {TimeoutError} from '../errors/TimeoutError.js';
      3→export type TimeoutOptions = {
-     9→export default async function timeout(
-    10→	request: Request,
-    11→	init: RequestInit,
-    12→	abortController: AbortController | undefined,
-    13→	options: TimeoutOptions,
-    14→): Promise<Response> {
-    15→	return new Promise((resolve, reject) => {
-      →	…
+     9→export default async function timeout …
 
 source/utils/type-guards.ts
      1→import {HTTPError} from '../errors/HTTPError.js';
      2→import {TimeoutError} from '../errors/TimeoutError.js';
      3→import {ForceRetryError} from '../errors/ForceRetryError.js';
-     6→Type guard to check if an error is a Ky error.
-     7→
-      →…
     27→export function isKyError(error: unknown): error is HTTPError | TimeoutError | ForceRetryError {
-    32→Type guard to check if an error is an HTTPError.
-    33→
-      →…
     49→export function isHTTPError<T = unknown>(error: unknown): error is HTTPError<T> {
-    54→Type guard to check if an error is a TimeoutError.
-    55→
-      →…
     71→export function isTimeoutError(error: unknown): error is TimeoutError {
-    76→Type guard to check if an error is a ForceRetryError.
-    77→
-      →…
     98→export function isForceRetryError(error: unknown): error is ForceRetryError {
 
 source/utils/types.ts
-     1→export type Mutable<T> = {
-     5→export type ObjectEntries<T> = T extends ArrayLike<infer U>
-     6→	? Array<[string, U]>
-     7→	: Array<{[K in keyof T]: [K, T[K]]}[keyof T]>;
-
-test/browser.ts
-    13→	interface Window {
-
-test/helpers/create-http-test-server.ts
-     7→export type HttpServerOptions = {
-    11→export type ExtendedHttpTestServer = {
-    19→export const createHttpTestServer …
-
-test/helpers/create-large-file.ts
-     2→export function createLargeBlob(sizeInMB: number): Blob {
-
-test/helpers/with-performance.ts
-    16→export async function withPerformance …
+     1→export type Mutable …
+     5→export type ObjectEntries …
 
 tsconfig.dist.json
      2→	"extends": "./tsconfig",

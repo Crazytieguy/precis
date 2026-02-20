@@ -2,10 +2,32 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4012 tokens)
+budget: 4000 (4007 tokens)
 
 CHANGELOG.md
      1→# Changelog
+     3→## [1.4.2]
+     7→## [1.4.1]
+    11→## [1.4.0]
+    25→## [1.2.5]
+    29→## [1.2.4]
+    33→## [1.2.3]
+    38→## [1.2.2]
+    42→## [1.2.1]
+    48→## [1.2.0]
+    52→## [1.2.0-beta.1]
+    56→## [1.2.0-beta.0]
+    61→## [1.1.0]
+    87→## [1.0.1]
+    92→## [1.0.0]
+    96→## [0.3.31-beta]
+   100→## [0.3.3-beta]
+   104→## [0.3.2-beta]
+   108→## [0.3.11-beta]
+   112→## [0.3.1-beta]
+   116→## [0.2.4]
+   120→## [0.2.1]
+   124→## [0.2]
 
 README.md
      1→# The only accessible & unstyled & full featured Input OTP component in the Web.
@@ -18,15 +40,9 @@ README.md
    204→## API Reference
    206→### OTPInput
    210→#### Props
-   212→```ts
-   213→type OTPInputProps = {
-      →…
    293→## Examples
    377→## Caveats
    539→#### Sponsors
-   541→> [Clerk](https://go.clerk.com/input-otp) is the easiest way to add authentication to your application.
-   542→
-      →…
 
 apps/storybook/README.md
     13→## 🚅 Quick start
@@ -122,6 +138,10 @@ apps/storybook/tsconfig.node.json
      8→  "include": ["vite.config.ts"]
      9→}
 
+apps/storybook/vite.config.js
+     1→import { defineConfig } from 'vite'
+     2→import react from '@vitejs/plugin-react'
+
 apps/test/README.md
      3→## Getting Started
     23→## Learn More
@@ -165,7 +185,7 @@ apps/test/src/lib/utils.ts
      4→export function cn(...inputs: ClassValue[]) {
 
 apps/test/src/tests/util/modifier.ts
-     1→export const modifier = process.platform === 'darwin' ? 'Meta' : 'Control'
+     1→export const modifier …
 
 apps/test/tsconfig.json
      2→  "compilerOptions": {
@@ -202,19 +222,11 @@ apps/website/src/app/(local-pages)/example-auto-submit/server/form-action.ts
 apps/website/src/app/(local-pages)/example-playground/code.tsx
     99→export function ExampleCode() {
 
-apps/website/src/app/(local-pages)/example-playground/component.tsx
-     8→export function ExampleComponent …
-    76→const config = {
-
 apps/website/src/app/(local-pages)/example-playground/page.tsx
      1→import { ExampleComponent } from './component'
      3→export default function ExamplePlayground() {
 
-apps/website/src/app/(local-pages)/layout.tsx
-     7→export default function RootLayout …
-
 apps/website/src/app/(local-pages)/raw-input/page.tsx
-     3→import React from 'react'
      5→export default function ShadcnPage() {
 
 apps/website/src/app/(local-pages)/shadcn/page.tsx
@@ -223,18 +235,7 @@ apps/website/src/app/(local-pages)/shadcn/page.tsx
 apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
     13→export default function ShadcnPage() {
 
-apps/website/src/app/(local-pages)/shadcn/static/page.tsx
-     3→import { default as ShadcnPage } from '../page'
-     5→export default async function StaticPage(pageProps: any) {
-
-apps/website/src/app/(pages)/(home)/_components/confetti.tsx
-     3→export function Confetti …
-
-apps/website/src/app/(pages)/(home)/_components/showcase.tsx
-    14→export function Showcase({ className, ...props }: { className?: string }) {
-
 apps/website/src/app/(pages)/(home)/page.tsx
-    13→import { Showcase } from './_components/showcase'
     19→const fadeUpClassname =
     34→export default async function IndexPage() {
    148→export const revalidate = 3600
@@ -247,14 +248,17 @@ apps/website/src/components/code.tsx
      7→import { CopyButton } from './copy-button'
      9→export async function Code …
 
+apps/website/src/components/copy-button.tsx
+    22→export async function copyToClipboardWithMeta …
+    26→export function CopyButton …
+    70→export function CopyWithClassNames …
+   129→export function CopyNpmCommandButton …
+
 apps/website/src/components/icons.tsx
      3→export const Icons = {
 
 apps/website/src/components/mode-toggle.tsx
     15→export function ModeToggle() {
-
-apps/website/src/components/page-header.tsx
-     1→import { cn } from "../lib/utils"
 
 apps/website/src/components/provider.tsx
      5→export function AppProvider …
@@ -267,9 +271,7 @@ apps/website/src/components/site-header.tsx
      9→export function SiteHeader() {
 
 apps/website/src/components/ui/badge.tsx
-     6→const badgeVariants = cva(
     26→export interface BadgeProps …
-    30→function Badge …
 
 apps/website/src/components/ui/button.tsx
      5→import { cn } from "../../lib/utils"
@@ -359,9 +361,7 @@ packages/input-otp/src/sync-timeouts.ts
      1→export function syncTimeouts(cb: (...args: any[]) => unknown): number[] {
      2→  const t1 = setTimeout(cb, 0) // For faster machines
      3→  const t2 = setTimeout(cb, 1_0)
-     4→  const t3 = setTimeout(cb, 5_0)
-     5→  return [t1, t2, t3]
-     6→}
+      →  …
 
 packages/input-otp/src/types.ts
      1→export interface SlotProps {
@@ -422,9 +422,6 @@ packages/input-otp/tsconfig.json
     11→  },
     12→  "include": ["src"]
     13→}
-
-packages/input-otp/tsup.config.ts
-     1→import { defineConfig } from 'tsup';
 
 pnpm-workspace.yaml
      1→packages:

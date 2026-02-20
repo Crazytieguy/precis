@@ -707,13 +707,14 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     // (each symbol adds its name/signature tokens). Without compensation,
     // large groups (e.g. a class with 50 methods) get extremely low
     // priority because priority = value / cost, and cost grows with N
-    // while value was constant. Scale by sqrt(N) so priority decreases
-    // as 1/sqrt(N) rather than 1/N — a mild penalty for size rather than
-    // a crushing one. This ensures the Command class in commander.js
-    // (50+ methods) still gets its method names shown rather than being
-    // starved by smaller classes that consume the budget first.
+    // while value was constant. Scale value by N so all groups have the
+    // same per-token priority at Names/Signatures regardless of size.
+    // This ensures breadth-first scheduling: all groups reach Names before
+    // any group reaches Doc/Body. The sibling_factor still provides a mild
+    // log-based penalty (28% at N=50) so larger groups don't dominate over
+    // smaller groups with higher base value.
     let count_factor = if matches!(stage, StageKind::Names | StageKind::Signatures) {
-        (group.symbols.len().max(1) as f64).sqrt()
+        group.symbols.len().max(1) as f64
     } else {
         1.0
     };

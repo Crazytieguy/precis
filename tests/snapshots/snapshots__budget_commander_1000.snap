@@ -2,44 +2,35 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1001 tokens)
+budget: 1000 (999 tokens)
 
 Readme.md
      1→# Commander.js
-   613→#### More configuration
-   625→#### Custom argument processing
-
-docs/deprecated.md
-
-esm.mjs
-     1→import commander from './index.js';
-
-examples/custom-command-class.js
+    61→## Installation
+    67→## Quick Start
+   147→## Declaring _program_ variable
+   177→## Options
+   523→## Commands
+   754→## Automated help
+   956→## Custom event listeners
+   966→## Bits and pieces
+  1164→## Support
 
 lib/argument.js
-     3→class Argument {
     13→  constructor(name, description) {
     48→  name() {
-    56→  _collectValue(value, previous) {
     73→  default(value, description) {
     86→  argParser(fn) {
     98→  choices(values) {
    119→  argRequired() {
    129→  argOptional() {
-   143→function humanReadableArgName(arg) {
-
-lib/command.js
-    13→class Command extends EventEmitter {
-  1127→  _prepareForParse() {
 
 lib/error.js
-     4→class CommanderError extends Error {
     11→  constructor(exitCode, code, message) {
-    25→class InvalidArgumentError extends CommanderError {
     30→  constructor(message) {
 
 lib/help.js
-    12→class Help {
+    13→  constructor() {
     29→  prepareContext(contextOptions) {
     40→  visibleCommands(cmd) {
     62→  compareOptions(a, b) {
@@ -63,14 +54,25 @@ lib/help.js
    443→  formatHelp(cmd, helper) {
    535→  displayWidth(str) {
    545→  styleTitle(str) {
+   549→  styleUsage(str) {
+   563→  styleCommandDescription(str) {
+   566→  styleOptionDescription(str) {
+   569→  styleSubcommandDescription(str) {
+   572→  styleArgumentDescription(str) {
+   575→  styleDescriptionText(str) {
+   578→  styleOptionTerm(str) {
+   581→  styleSubcommandTerm(str) {
+   594→  styleArgumentTerm(str) {
+   597→  styleOptionText(str) {
+   600→  styleArgumentText(str) {
+   603→  styleSubcommandText(str) {
+   606→  styleCommandText(str) {
    618→  padWidth(cmd, helper) {
    633→  preformatted(str) {
    650→  formatItem(term, termWidth, description, helper) {
    695→  boxWrap(str, width) {
-   740→function stripColor(str) {
 
 lib/option.js
-     3→class Option {
     11→  constructor(flags, description) {
     47→  default(value, description) {
     65→  preset(arg) {
@@ -80,7 +82,6 @@ lib/option.js
    132→  argParser(fn) {
    144→  makeOptionMandatory(mandatory = true) {
    156→  hideHelp(hide = true) {
-   165→  _collectValue(value, previous) {
    181→  choices(values) {
    203→  name() {
    217→  attributeName() {
@@ -90,36 +91,19 @@ lib/option.js
    268→class DualOptions {
    272→  constructor(options) {
    297→  valueFromOption(value, option) {
-   316→function camelcase(str) {
-   328→function splitOptionFlags(flags) {
-
-lib/suggestSimilar.js
-     1→const maxDistance = 3;
-     3→function editDistance(a, b) {
-    56→function suggestSimilar(word, candidates) {
-
-package-support.json
-     2→  "versions": [
-    18→  ]
-    19→}
-
-package.json
-
-tsconfig.js.json
-     7→  "extends": "./tsconfig.json",
-     8→  "include": [
-    14→  ],
-    15→}
-
-tsconfig.json
-    12→  "compilerOptions": {
-    33→  "include": [
-    43→  "exclude": ["node_modules"],
-
-tsconfig.ts.json
-     8→  "extends": "./tsconfig.json",
-     9→  "compilerOptions": {
-    15→  "include": [
 
 typings/index.d.ts
-    12→type LiteralUnion …
+    16→export class CommanderError extends Error {
+    31→export class InvalidArgumentError extends CommanderError {
+    40→export interface ErrorOptions {
+    48→export class Argument {
+    95→export class Option {
+   210→export class Help {
+   342→export interface ParseOptions {
+   345→export interface HelpContext {
+   349→export interface AddHelpTextContext {
+   354→export interface OutputConfiguration {
+   376→export class Command {
+  1094→export interface CommandOptions {
+  1100→export interface ExecutableCommandOptions extends CommandOptions {
+  1104→export interface ParseOptionsResult {

@@ -2,7 +2,9 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1015 tokens)
+budget: 1000 (1000 tokens)
+
+CHANGELOG.md
 
 CONTRIBUTING.md
      1→# Contributing
@@ -11,6 +13,13 @@ CONTRIBUTING.md
 
 README-es.md
      1→# dotenv
+    11→## Usage
+    39→## Advanced
+   319→## Agentes
+   357→## FAQ
+   579→## Docs
+   764→## CHANGELOG
+   770→## Who's using dotenv?
 
 README.md
      1→# dotenv
@@ -53,24 +62,12 @@ lib/env-options.js
 lib/main.d.ts
      3→import type { URL } from 'url';
      5→export interface DotenvParseOutput {
-     6→  [name: string]: string;
-      →  …
      9→export interface DotenvPopulateOutput {
-    10→  [name: string]: string;
-      →  …
     25→export interface DotenvConfigOptions {
-    26→  /**
-      →  …
     92→export interface DotenvConfigOutput {
-    93→  error?: DotenvError;
-      →  …
     97→type DotenvError = Error & {
    106→export interface DotenvPopulateOptions {
-   107→  /**
-      →  …
    126→export interface DotenvPopulateInput {
-   127→  [name: string]: string | undefined;
-      →  …
 
 lib/main.js
      7→const version …
@@ -113,3 +110,7 @@ package.json
     47→  "devDependencies": {
     56→  "engines": {
     59→  "browser": {
+
+tests/types/test.ts
+
+tests/types/tsconfig.json

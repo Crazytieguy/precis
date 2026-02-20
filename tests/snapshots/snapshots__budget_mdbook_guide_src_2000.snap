@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2026 tokens)
+budget: 2000 (2011 tokens)
 
 404.md
      1→# Document not found (404)
@@ -12,7 +12,6 @@ README.md
      1→# Introduction
      4→    .mdbook-version {
      5→        position: absolute;
-     6→        right: 20px;
       →        …
     46→## Contributing
     55→## License
@@ -34,7 +33,6 @@ cli/build.md
      1→# The build command
      3→The build command is used to render your book:
      4→
-     5→```bash
       →…
     16→#### Specify a directory
     25→#### `--open`
@@ -42,25 +40,23 @@ cli/build.md
 
 cli/clean.md
      1→# The clean command
-     3→The clean command is used to delete the generated book and any other build
-     4→artifacts.
-     5→
-      →…
     10→#### Specify a directory
     19→#### `--dest-dir`
 
 cli/completions.md
      1→# The completions command
-     3→The completions command is used to generate auto-completions for some common shells.
-      →…
 
 cli/init.md
      1→# The init command
+    32→#### Tip: Generate chapters from SUMMARY.md
+    39→#### Specify a directory
+    48→#### `--theme`
+    56→#### `--title`
+    65→#### `--ignore`
+    80→#### `--force`
 
 cli/serve.md
      1→# The serve command
-     3→The serve command is used to preview a book by serving it via HTTP at
-      →…
     18→#### Specify a directory
     27→### Server options
     35→#### `--open`
@@ -69,8 +65,6 @@ cli/serve.md
 
 cli/test.md
      1→# The test command
-     3→When writing a book, you sometimes need to automate some tests. For example,
-      →…
     11→#### Disable tests on a code block
     31→#### Specify a directory
     40→#### `--library-path`
@@ -113,6 +107,11 @@ for_developers/mdbook-wordcount/Cargo.toml
      6→[dependencies]
 
 for_developers/mdbook-wordcount/src/main.rs
+     6→use std::process;
+     7→use std::fs::{self, File};
+     8→use std::io::{self, Write};
+     9→use mdbook::renderer::RenderContext;
+    10→use mdbook::book::{BookItem, Chapter};
     12→fn main() {
     40→fn count_words(ch: &Chapter) -> usize {
     44→#[derive(Debug, Default, Serialize, Deserialize)]
@@ -132,13 +131,10 @@ format/README.md
      1→# Format
      3→In this section you will learn how to:
      4→
-     5→- Structure your book correctly
       →…
 
 format/configuration/README.md
      1→# Configuration
-     3→This section details the configuration options available in the ***book.toml***:
-      →…
 
 format/configuration/environment-variables.md
      1→# Environment variables
@@ -161,8 +157,16 @@ format/configuration/preprocessors.md
 format/configuration/renderers.md
      1→# Configuring Renderers
     20→## Output tables
+    59→### Custom backend commands
+    71→### Optional backends
     84→## HTML renderer options
+   176→### `[output.html.print]`
+   191→### `[output.html.fold]`
+   206→### `[output.html.playground]`
+   230→### `[output.html.code]`
+   244→### `[output.html.search]`
    286→#### `[output.html.search.chapter]`
+   300→### `[output.html.redirect]`
    325→## Markdown renderer
 
 format/example.rs
@@ -239,13 +243,10 @@ guide/README.md
      1→# User guide
      3→This user guide provides an introduction to basic concepts of using mdBook.
      4→
-     5→- [Installation](installation.md)
       →…
 
 guide/creating.md
      1→# Creating a book
-     3→Once you have the `mdbook` CLI tool installed, you can use it to create and render a book.
-     4→
      5→## Initializing a book
     32→## Anatomy of a book
     36→### `book.toml`
@@ -264,8 +265,6 @@ guide/installation.md
 
 guide/reading.md
      1→# Reading books
-     3→This chapter gives an introduction on how to interact with a book produced by mdBook.
-      →…
     12→## Navigation
     26→## Top menu bar
     42→## Search

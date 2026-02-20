@@ -24,7 +24,6 @@ budget: 2000 (1999 tokens)
      3→name: 'Install Latest npm'
      4→description: 'Install the latest version of npm compatible with the Node version'
      5→inputs:
-     8→    required: true
      9→runs:
 
 .github/dependabot.yml
@@ -34,13 +33,9 @@ budget: 2000 (1999 tokens)
 .github/matchers/tap.json
      2→  "//@npmcli/template-oss": "This file is automatically added by @npmcli/template-oss. Do not edit.",
      3→  "problemMatcher": [
-    31→  ]
-    32→}
 
 .github/settings.yml
      3→repository:
-    11→  enable_vulnerability_alerts: true
-    12→
     13→branches:
 
 .github/workflows/audit.yml
@@ -71,8 +66,6 @@ budget: 2000 (1999 tokens)
      3→name: Post Dependabot
      5→on: pull_request
      7→permissions:
-     8→  contents: write
-     9→
     10→jobs:
 
 .github/workflows/pull-request.yml
@@ -163,22 +156,16 @@ functions/clean.js
      4→const clean = (version, options) => {
 
 functions/cmp.js
-    10→const cmp = (a, op, b, loose) => {
+    10→const cmp …
 
 functions/coerce.js
      7→const coerce = (version, options) => {
 
-functions/compare-build.js
-     4→const compareBuild = (a, b, loose) => {
-
-functions/compare-loose.js
-     4→const compareLoose …
-
 functions/compare.js
-     4→const compare = (a, b, loose) =>
+     4→const compare …
 
 functions/diff.js
-     5→const diff = (version1, version2) => {
+     5→const diff …
 
 functions/eq.js
      4→const eq …
@@ -213,17 +200,11 @@ functions/parse.js
 functions/patch.js
      4→const patch …
 
-functions/prerelease.js
-     4→const prerelease = (version, options) => {
-
 functions/rcompare.js
      4→const rcompare …
 
-functions/rsort.js
-     4→const rsort …
-
 functions/satisfies.js
-     4→const satisfies = (version, range, options) => {
+     4→const satisfies …
 
 functions/sort.js
      4→const sort …
@@ -232,14 +213,15 @@ functions/valid.js
      4→const valid = (version, options) => {
 
 internal/constants.js
+     5→const SEMVER_SPEC_VERSION = '2.0.0'
+     7→const MAX_LENGTH = 256
+     8→const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER ||
+    12→const MAX_SAFE_COMPONENT_LENGTH = 16
+    16→const MAX_SAFE_BUILD_LENGTH = MAX_LENGTH - 6
+    18→const RELEASE_TYPES = [
 
 internal/debug.js
      3→const debug = (
-
-internal/identifiers.js
-     3→const numeric = /^[0-9]+$/
-     4→const compareIdentifiers …
-    24→const rcompareIdentifiers …
 
 internal/lrucache.js
      3→class LRUCache {
@@ -254,41 +236,49 @@ internal/parse-options.js
      6→const parseOptions = options => {
 
 internal/re.js
+    12→const re = exports.re = []
+    13→const safeRe = exports.safeRe = []
+    14→const src = exports.src = []
+    15→const safeSrc = exports.safeSrc = []
+    16→const t = exports.t = {}
+    19→const LETTERDASHNUMBER = '[a-zA-Z0-9-]'
+    27→const safeRegexReplacements = [
     33→const makeSafeRegex …
     42→const createToken …
 
 package.json
+     2→  "name": "semver",
+     3→  "version": "7.7.4",
+     4→  "description": "The semantic version parser used by npm.",
+     5→  "main": "index.js",
+     6→  "scripts": {
+    16→  "devDependencies": {
+    22→  "license": "ISC",
+    23→  "repository": {
+    27→  "bin": {
+    30→  "files": [
+    41→  "tap": {
+    49→  "engines": {
+    52→  "author": "GitHub Inc.",
+    53→  "templateOSS": {
 
 ranges/gtr.js
      5→const gtr …
 
 ranges/intersects.js
-     4→const intersects = (r1, r2, options) => {
+     4→const intersects …
 
 ranges/ltr.js
      5→const ltr …
 
-ranges/max-satisfying.js
-     6→const maxSatisfying = (versions, range, options) => {
-
-ranges/min-satisfying.js
-     5→const minSatisfying = (versions, range, options) => {
-
-ranges/min-version.js
-     7→const minVersion = (range, loose) => {
-
 ranges/outside.js
-    13→const outside = (version, range, hilo, options) => {
+    13→const outside …
 
 ranges/subset.js
-    73→const minimumVersionWithPreRelease …
-    74→const minimumVersion …
-
-ranges/to-comparators.js
-     6→const toComparators = (range, options) =>
-
-ranges/valid.js
-     4→const validRange = (range, options) => {
+    45→const subset …
+    76→const simpleSubset …
+   226→const higherGT …
+   238→const lowerLT …
 
 release-please-config.json
      2→  "group-pull-request-title-pattern": "chore: release ${version}",

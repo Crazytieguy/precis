@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (971 tokens)
+budget: 1000 (998 tokens)
 
 command-score.ts
     54→function commandScoreInner(
@@ -18,11 +18,7 @@ command-score.ts
    155→export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
    156→  /* NOTE:
    157→   * in the original, we used to do the lower-casing on each recursive call, but this meant that toLowerCase()
-   158→   * was the dominating cost in the algorithm, passing both is a little ugly, but considerably faster.
-   159→   */
-   160→  string = aliases && aliases.length > 0 ? `${string + ' ' + aliases.join(' ')}` : string
-   161→  return commandScoreInner(string, abbreviation, formatInput(string), formatInput(abbreviation), 0, 0, {})
-   162→}
+      →   …
 
 index.tsx
      3→import * as RadixDialog from '@radix-ui/react-dialog'
@@ -54,11 +50,11 @@ index.tsx
    158→const VALID_ITEM_SELECTOR …
    159→const SELECT_EVENT …
    160→const VALUE_ATTR …
-   161→const defaultFilter …
+   161→const defaultFilter: CommandFilter = (value, search, keywords) => commandScore(value, search, keywords)
    163→const CommandContext …
-   164→const useCommand …
+   164→const useCommand = () => React.useContext(CommandContext)
    165→const StoreContext …
-   166→const useStore …
+   166→const useStore = () => React.useContext(StoreContext)
    167→const GroupContext …
    169→const Command …
    664→const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
@@ -70,21 +66,22 @@ index.tsx
    899→const Empty = React.forwardRef<HTMLDivElement, EmptyProps>((props, forwardedRef) => {
    909→const Loading = React.forwardRef<HTMLDivElement, LoadingProps>((props, forwardedRef) => {
    930→const pkg …
-   956→ *
-   957→ *
-   958→ * Helpers
-   959→ *
-   960→ *
    963→function findNextSibling(el: Element, selector: string) {
-   972→function findPreviousSibling …
-   981→function useAsRef …
+   972→function findPreviousSibling(el: Element, selector: string) {
+   981→function useAsRef<T>(data: T) {
    991→const useLayoutEffect …
-   993→function useLazyRef …
-  1003→/** Run a selector against the store state. */
+   993→function useLazyRef<T>(fn: () => T) {
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
-  1010→function useValue …
-  1045→/** Imperatively run a function on the next layout effect cycle. */
+  1010→function useValue(
+  1011→  id: string,
+  1012→  ref: React.RefObject<HTMLElement>,
+  1013→  deps: (string | React.ReactNode | React.RefObject<HTMLElement>)[],
+  1014→  aliases: string[] = [],
+  1015→) {
   1046→const useScheduleLayoutEffect = () => {
-  1061→function renderChildren …
-  1071→function SlottableWithNestedChildren …
+  1061→function renderChildren(children: React.ReactElement) {
+  1071→function SlottableWithNestedChildren(
+  1072→  { asChild, children }: { asChild?: boolean; children?: React.ReactNode },
+  1073→  render: (child: React.ReactNode) => JSX.Element,
+  1074→) {
   1081→const srOnlyStyles …

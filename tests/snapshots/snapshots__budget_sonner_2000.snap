@@ -2,22 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2006 tokens)
+budget: 2000 (1999 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
 
 README.md
      5→## Usage
-     7→To start using the library, install it in your project:
-     8→
-     9→```bash
-    10→npm install sonner
-    11→```
-    12→
-      →…
     31→## Documentation
-    33→Find the full API reference in the [documentation](https://sonner.emilkowal.ski/getting-started).
 
 package.json
      2→  "name": "sonner",
@@ -45,12 +37,8 @@ src/assets.tsx
      2→import React from 'react';
      3→import type { ToastTypes } from './types';
      5→export const getAsset = (type: ToastTypes): JSX.Element | null => {
-     6→  switch (type) {
-      →  …
     24→const bars = Array(12).fill(0);
     26→export const Loader = ({ visible, className }: { visible: boolean; className?: string }) => {
-    27→  return (
-      →  …
     38→const SuccessIcon = (
     48→const WarningIcon = (
     58→const InfoIcon = (
@@ -60,9 +48,6 @@ src/assets.tsx
 src/hooks.tsx
      1→import React from 'react';
      3→export const useIsDocumentHidden = () => {
-     4→  const [isDocumentHidden, setIsDocumentHidden] = React.useState(document.hidden);
-     5→
-      →…
 
 src/index.tsx
      3→import React from 'react';
@@ -128,13 +113,18 @@ src/state.ts
 
 src/types.ts
      1→import React from 'react';
-     3→export type ToastTypes …
-     5→export type PromiseT …
+     3→export type ToastTypes = 'normal' | 'action' | 'success' | 'info' | 'warning' | 'error' | 'loading' | 'default';
+     5→export type PromiseT<Data = any> = Promise<Data> | (() => Promise<Data>);
      7→export interface PromiseIExtendedResult extends ExternalToast {
-    11→export type PromiseTExtendedResult …
-    15→export type PromiseTResult …
-    20→export type PromiseExternalToast …
-    22→export type PromiseData …
+    11→export type PromiseTExtendedResult<Data = any> =
+    12→  | PromiseIExtendedResult
+    13→  | ((data: Data) => PromiseIExtendedResult | Promise<PromiseIExtendedResult>);
+    15→export type PromiseTResult<Data = any> =
+    16→  | string
+    17→  | React.ReactNode
+    18→  | ((data: Data) => React.ReactNode | string | Promise<React.ReactNode | string>);
+    20→export type PromiseExternalToast = Omit<ExternalToast, 'description'>;
+    22→export type PromiseData<ToastData = any> = PromiseExternalToast & {
     30→export interface ToastClassnames {
     48→export interface ToastIcons {
     57→export interface Action {
@@ -142,18 +132,18 @@ src/types.ts
     93→export function isAction(action: Action | React.ReactNode): action is Action {
     94→  return (action as Action).label !== undefined;
     95→}
-    97→export type Position …
+    97→export type Position = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'top-center' | 'bottom-center';
     98→export interface HeightT {
    104→interface ToastOptions {
    118→type Offset =
    119→  | {
    128→export interface ToasterProps {
-   152→export type SwipeDirection …
+   152→export type SwipeDirection = 'top' | 'right' | 'bottom' | 'left';
    154→export interface ToastProps {
    184→export enum SwipeStateTypes {
-   190→export type Theme …
+   190→export type Theme = 'light' | 'dark';
    192→export interface ToastToDismiss {
-   197→export type ExternalToast …
+   197→export type ExternalToast = Omit<ToastT, 'id' | 'type' | 'title' | 'jsx' | 'delete' | 'promise'> & {
 
 test/README.md
      3→## Getting Started
@@ -167,12 +157,6 @@ test/src/app/action.tsx
 
 test/src/app/layout.tsx
      1→export const metadata = {
-     6→export default function RootLayout({ children }: { children: React.ReactNode }) {
-
-test/src/app/page.tsx
-     9→export default function Home({ searchParams }: any) {
-
-test/tsconfig.json
 
 tsconfig.json
      2→  "compilerOptions": {
@@ -191,13 +175,3 @@ website/README.md
      3→## Getting Started
     25→## Learn More
     34→## Deploy on Vercel
-
-website/package.json
-
-website/src/pages/_app.tsx
-     4→import '../style.css';
-     5→import '../globals.css';
-     7→export default function Nextra …
-
-website/src/pages/index.tsx
-    14→export default function Home() {

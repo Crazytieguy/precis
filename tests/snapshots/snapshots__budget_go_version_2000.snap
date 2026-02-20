@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2002 tokens)
+budget: 2000 (2006 tokens)
 
 CHANGELOG.md
 
@@ -13,23 +13,16 @@ README.md
      8→can sort a collection of versions properly, handles prerelease/beta
      9→versions, can increment versions, etc.
     10→
-    11→Versions used with go-version must follow [SemVer](http://semver.org/).
-    12→
+      →…
     13→## Installation and Usage
     15→Package documentation can be found on
-    16→[Go Reference](https://pkg.go.dev/github.com/hashicorp/go-version).
-    17→
-    18→Installation can be done with a normal `go get`:
-    19→
-    20→```
       →…
     24→#### Version Parsing and Comparison
     37→#### Version Constraints
     49→#### Version Sorting
     63→## Issues and Contributing
     65→If you find an issue with this library, please report an issue. If you'd
-    66→like, we welcome any contributions. Fork this library and submit a pull
-    67→request.
+      →…
 
 constraint.go
      6→import …
@@ -51,41 +44,19 @@ constraint.go
     46→type Constraints []*Constraint
     48→type constraintFunc func(v, c *Version) bool
     50→type constraintOperation struct {
-    51→	op operator
-      →	…
-    55→// NewConstraint will parse one or more constraints from the given
-    56→// constraint string. The string must be a comma-separated list of
-    57→// constraints.
     58→func NewConstraint(v string) (Constraints, error) {
-    73→// MustConstraints is a helper that wraps a call to a function
-    74→// returning (Constraints, error) and panics if error is non-nil.
     75→func MustConstraints(c Constraints, err error) Constraints {
-    83→// Check tests if a version satisfies all the constraints.
     84→func (cs Constraints) Check(v *Version) bool {
-    94→// Equals compares Constraints with other Constraints
-    95→// for equality. This may not represent logical equivalence
-    96→// of compared constraints.
-    97→// e.g. even though '>0.1,>0.2' is logically equivalent
-    98→// to '>0.2' it is *NOT* treated as equal.
-    99→//
-   100→// Missing operator is treated as equal to '=', whitespaces
-   101→// are ignored and constraints are sorted before comparison.
    102→func (cs Constraints) Equals(c Constraints) bool {
    125→func (cs Constraints) Len() int {
    129→func (cs Constraints) Less(i, j int) bool {
    140→func (cs Constraints) Swap(i, j int) {
-   144→// Returns the string format of the constraints
    145→func (cs Constraints) String() string {
-   154→// Check tests if a constraint is validated by the given version.
    155→func (c *Constraint) Check(v *Version) bool {
-   159→// Prerelease returns true if the version underlying this constraint
-   160→// contains a prerelease field.
    161→func (c *Constraint) Prerelease() bool {
    165→func (c *Constraint) String() string {
    169→func parseSingle(v string) (*Constraint, error) {
    208→func prereleaseCheck(v, c *Version) bool {
-   228→//-------------------------------------------------------------------
-      →…
    232→type operator rune
    234→const (
    235→	equal            operator = '='
@@ -104,7 +75,12 @@ constraint.go
    268→func constraintPessimistic(v, c *Version) bool {
 
 constraint_test.go
-     6→import …
+    13→func TestNewConstraint(t *testing.T) {
+    43→func TestConstraintCheck(t *testing.T) {
+   106→func TestConstraintPrerelease(t *testing.T) {
+   134→func TestConstraintEqual(t *testing.T) {
+   190→func TestConstraint_sort(t *testing.T) {
+   232→func TestConstraintsString(t *testing.T) {
 
 version.go
      6→import …
@@ -163,8 +139,28 @@ version_collection.go
     18→func (v Collection) Swap(i, j int) {
 
 version_collection_test.go
-     6→import …
     12→func TestCollection(t *testing.T) {
 
 version_test.go
-     6→import …
+    13→func TestNewVersion(t *testing.T) {
+    54→func TestNewSemver(t *testing.T) {
+    95→func TestCore(t *testing.T) {
+   127→func TestVersionCompare(t *testing.T) {
+   174→func TestVersionCompare_versionAndSemver(t *testing.T) {
+   212→func TestVersionEqual_nil(t *testing.T) {
+   238→func TestComparePreReleases(t *testing.T) {
+   285→func TestVersionMetadata(t *testing.T) {
+   311→func TestVersionPrerelease(t *testing.T) {
+   339→func TestVersionSegments(t *testing.T) {
+   366→func TestVersionSegments64(t *testing.T) {
+   401→func TestJsonMarshal(t *testing.T) {
+   436→func TestJsonUnmarshal(t *testing.T) {
+   470→func TestVersionString(t *testing.T) {
+   497→func TestEqual(t *testing.T) {
+   544→func TestGreaterThan(t *testing.T) {
+   591→func TestLessThan(t *testing.T) {
+   638→func TestGreaterThanOrEqual(t *testing.T) {
+   685→func TestLessThanOrEqual(t *testing.T) {
+   732→func BenchmarkVersionString(b *testing.B) {
+   743→func BenchmarkCompareVersionV1(b *testing.B) {
+   753→func BenchmarkVersionCompareV2(b *testing.B) {

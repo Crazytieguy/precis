@@ -2,11 +2,21 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4009 tokens)
+budget: 4000 (4003 tokens)
 
 Cargo.toml
+     1→[workspace]
     21→[workspace.package]
     27→[workspace.dependencies]
+    72→[package]
+    90→[dependencies]
+   119→[dev-dependencies]
+   129→[features]
+   135→[[bin]]
+   139→[[example]]
+   143→[[example]]
+   149→[[test]]
+   156→[lints]
 
 README.md
      1→# mdBook
@@ -20,51 +30,95 @@ crates/mdbook-compare/Cargo.toml
 crates/mdbook-compare/README.md
      1→# mdbook-compare
 
+crates/mdbook-core/Cargo.toml
+     1→[package]
+    10→[dependencies]
+    18→[dev-dependencies]
+    21→[lints]
+
 crates/mdbook-core/README.md
      1→# mdbook-core
     11→## License
 
 crates/mdbook-core/src/book.rs
     26→pub struct Book {
+    33→    pub fn new …
+    38→    pub fn new_with_items …
+    43→    pub fn iter …
+    50→    pub fn chapters …
+    65→    pub fn for_each_mut …
+    74→    pub fn for_each_chapter_mut …
+    93→    pub fn push_item …
    119→pub enum BookItem {
+   129→    fn from …
    141→pub struct Chapter {
+   173→    pub fn new …
+   192→    pub fn new_draft …
+   204→    pub fn is_draft_chapter …
+   210→    fn fmt …
    222→pub struct SectionNumber(Vec<u32>);
+   226→    pub fn new …
+   232→    fn fmt …
    245→    type Target = Vec<u32>;
+   246→    fn deref …
+   252→    fn deref_mut …
+   258→    fn from_iter …
    269→pub struct BookItems<'a> {
    274→    type Item = &'a BookItem;
+   276→    fn next …
 
 crates/mdbook-core/src/config.rs
     63→pub struct Config {
     91→    type Err = Error;
+    94→    fn from_str …
+   100→    fn default() -> Config {
+   113→    pub fn from_disk …
+   150→    pub fn update_from_env …
+   189→    pub fn get …
+   216→    pub fn contains_key …
+   228→    pub fn preprocessors …
+   236→    pub fn outputs …
+   274→    pub fn set …
    318→pub struct BookConfig {
+   341→    fn default() -> BookConfig {
+   356→    pub fn realized_text_direction …
    368→pub enum TextDirection {
+   379→    pub fn from_lang_code …
    394→pub struct BuildConfig {
+   408→    fn default() -> BuildConfig {
    422→pub struct RustConfig {
    430→pub enum RustEdition {
    449→pub struct HtmlConfig {
+   524→    fn default() -> HtmlConfig {
+   558→    pub fn theme_dir …
+   566→    pub fn get_404_output_file …
    578→pub struct Print {
+   586→    fn default() -> Self {
    598→pub struct Fold {
    611→pub struct Playground {
+   626→    fn default() -> Playground {
    641→pub struct Code {
    650→pub struct Search {
+   686→    fn default() -> Search {
    708→pub struct SearchChapterSettings {
    718→trait Updateable …
+   719→    fn update_value<S: Serialize>(&mut self, key: &str, value: S) -> Result<()> {
 
 crates/mdbook-core/src/lib.rs
-     3→/// The current version of `mdbook`.
-     4→///
-      →…
      7→pub const MDBOOK_VERSION: &str = env!("CARGO_PKG_VERSION");
      9→pub mod book;
     10→pub mod config;
     11→pub mod utils;
-    13→/// The error types used in mdbook.
     14→pub mod errors {
     15→    pub use anyhow::{Error, Result};
 
-crates/mdbook-core/src/utils/html.rs
-     6→pub fn escape_html_attribute …
-    32→pub fn escape_html …
+crates/mdbook-core/src/utils/fs.rs
+    11→pub fn read_to_string …
+    20→pub fn write …
+    31→pub fn create_dir_all …
+    55→pub fn path_to_root …
+    74→pub fn remove_dir_content …
+    93→pub fn copy_files_except_ext …
 
 crates/mdbook-core/src/utils/mod.rs
      7→pub mod fs;
@@ -72,9 +126,11 @@ crates/mdbook-core/src/utils/mod.rs
     17→macro_rules! static_regex {
     29→pub fn log_backtrace(e: &Error) {
 
-crates/mdbook-core/src/utils/toml_ext.rs
-     8→    fn read …
-    10→    fn insert …
+crates/mdbook-driver/Cargo.toml
+     1→[package]
+    10→[dependencies]
+    28→[lints]
+    31→[features]
 
 crates/mdbook-driver/README.md
      1→# mdbook-driver
@@ -82,8 +138,6 @@ crates/mdbook-driver/README.md
 
 crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
     14→pub struct CmdPreprocessor {
-    15→    name: String,
-      →    …
     23→    pub fn new …
     52→    pub fn cmd …
 
@@ -96,7 +150,6 @@ crates/mdbook-driver/src/builtin_preprocessors/links.rs
     32→pub struct LinkPreprocessor;
     36→    pub const NAME: &'static str = "links";
     39→    pub fn new() -> Self {
-   401→    type Item = Link<'a>;
 
 crates/mdbook-driver/src/builtin_preprocessors/mod.rs
      3→pub use self::cmd::CmdPreprocessor;
@@ -110,23 +163,19 @@ crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs
 crates/mdbook-driver/src/builtin_renderers/mod.rs
     11→pub use self::markdown_renderer::MarkdownRenderer;
     20→pub struct CmdRenderer {
-    21→    name: String,
-      →    …
-    27→    pub fn new(name: String, cmd: String) -> CmdRenderer {
+    27→    pub fn new …
 
 crates/mdbook-driver/src/init.rs
      3→use super::MDBook;
     13→pub struct BookBuilder {
     14→    root: PathBuf,
-    15→    create_gitignore: bool,
       →    …
-    20→impl BookBuilder {
-    23→    pub fn new …
-    33→    pub fn with_config …
-    39→    pub fn config …
-    45→    pub fn copy_theme …
-    51→    pub fn create_gitignore …
-    64→    pub fn build …
+    23→    pub fn new<P: Into<PathBuf>>(root: P) -> BookBuilder {
+    33→    pub fn with_config(&mut self, cfg: Config) -> &mut BookBuilder {
+    39→    pub fn config(&self) -> &Config {
+    45→    pub fn copy_theme(&mut self, copy: bool) -> &mut BookBuilder {
+    51→    pub fn create_gitignore(&mut self, create: bool) -> &mut BookBuilder {
+    64→    pub fn build(&self) -> Result<MDBook> {
 
 crates/mdbook-driver/src/lib.rs
     67→pub mod builtin_preprocessors;
@@ -138,48 +187,50 @@ crates/mdbook-driver/src/lib.rs
 crates/mdbook-driver/src/mdbook.rs
     29→pub struct MDBook {
     30→    /// The book's root directory.
-    31→    pub root: PathBuf,
-    32→
-      →…
-    46→impl MDBook {
+      →    …
+    48→    pub fn load …
+    71→    pub fn load_with_config …
+    90→    pub fn load_with_config_and_summary …
+   135→    pub fn iter …
+   156→    pub fn init …
+   161→    pub fn build …
+   172→    pub fn preprocess_book …
+   189→    pub fn execute_build_process …
+   214→    pub fn with_renderer …
+   221→    pub fn with_preprocessor …
+   228→    pub fn test …
+   235→    pub fn test_chapter …
+   371→    pub fn build_dir_for …
+   382→    pub fn source_dir …
+   387→    pub fn theme_dir …
    397→struct OutputConfig {
    435→struct PreprocessorConfig {
+
+crates/mdbook-html/Cargo.toml
+     1→[package]
+    10→[dependencies]
+    29→[dev-dependencies]
+    33→[lints]
+    36→[features]
 
 crates/mdbook-html/README.md
      1→# mdbook-html
     11→## License
 
-crates/mdbook-html/src/html/tokenizer.rs
-    16→struct TokenCollector {
-    22→    type Handle = ();
-    24→    fn process_token …
-
-crates/mdbook-html/src/html/tree.rs
-   126→type Attributes …
-   131→    fn into_tendril(self) -> StrTendril;
-   135→    fn into_tendril(self) -> StrTendril {
-
 crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
     22→pub struct HtmlHandlebars;
     26→    pub fn new() -> Self {
-
-crates/mdbook-html/src/html_handlebars/mod.rs
-     4→mod search;
-     7→pub use self::hbs_renderer::HtmlHandlebars;
 
 crates/mdbook-html/src/lib.rs
      5→pub mod theme;
      8→pub use html_handlebars::HtmlHandlebars;
 
 crates/mdbook-html/src/theme/mod.rs
-    12→pub(crate) mod searcher;
     40→pub struct Theme {
     66→    pub fn new …
    166→    pub fn copy_theme …
-   201→    fn default() -> Theme {
 
 crates/mdbook-html/src/utils.rs
-    42→pub(crate) trait ToUrlPath {
     43→    fn to_url_path(&self) -> String;
     47→    fn to_url_path(&self) -> String {
 
@@ -199,8 +250,7 @@ crates/mdbook-markdown/src/lib.rs
     17→    ///
       →    …
     34→    fn default() -> MarkdownOptions {
-    43→/// Creates a new pulldown-cmark parser of the given text.
-    44→pub fn new_cmark_parser<'text>(text: &'text str, options: &MarkdownOptions) -> Parser<'text> {
+    44→pub fn new_cmark_parser …
 
 crates/mdbook-preprocessor/Cargo.toml
      1→[package]
@@ -217,15 +267,12 @@ crates/mdbook-preprocessor/src/lib.rs
     20→pub use mdbook_core::config;
     21→pub use mdbook_core::errors;
     30→pub trait Preprocessor {
-    32→    fn name …
-    36→    fn run …
-    42→    fn supports_renderer …
+    32→    fn name(&self) -> &str;
+    36→    fn run(&self, ctx: &PreprocessorContext, book: Book) -> Result<Book>;
+    42→    fn supports_renderer(&self, _renderer: &str) -> Result<bool> {
     51→pub struct PreprocessorContext {
-    52→    /// The location of the book directory on disk.
-      →    …
-    68→impl PreprocessorContext {
-    70→    pub fn new …
-    82→pub fn parse_input …
+    70→    pub fn new(root: PathBuf, config: Config, renderer: String) -> Self {
+    82→pub fn parse_input<R: Read>(reader: R) -> Result<(PreprocessorContext, Book)> {
 
 crates/mdbook-renderer/Cargo.toml
      1→[package]
@@ -245,7 +292,6 @@ crates/mdbook-renderer/src/lib.rs
     30→    fn name …
     34→    fn render …
     40→pub struct RenderContext {
-    63→impl RenderContext {
     65→    pub fn new …
     81→    pub fn source_dir …
     86→    pub fn from_json …
@@ -261,10 +307,10 @@ crates/mdbook-summary/README.md
 
 crates/mdbook-summary/src/lib.rs
      8→pub use mdbook_core::book::SectionNumber;
-    59→pub fn parse_summary(summary: &str) -> Result<Summary> {
+    59→pub fn parse_summary …
     67→pub struct Summary {
     84→pub struct Link {
-    98→    pub fn new<S: Into<String>, P: AsRef<Path>>(name: S, location: P) -> Link {
+    98→    pub fn new …
    109→    fn default() -> Self {
    122→pub enum SummaryItem {
    141→    fn from(other: Link) -> SummaryItem {
@@ -278,9 +324,6 @@ crates/xtask/Cargo.toml
 
 crates/xtask/README.md
      1→# xtask
-
-crates/xtask/src/changelog.rs
-     3→use super::Result;
 
 guide/book.toml
      1→[book]
@@ -297,12 +340,8 @@ guide/guide-helper/Cargo.toml
 guide/guide-helper/src/lib.rs
      9→/// Preprocessing entry point.
     10→pub fn handle_preprocessing() -> Result<()> {
-    33→struct GuideHelper;
     36→    fn name …
     40→    fn run …
-
-guide/src/404.md
-     1→# Document not found (404)
 
 guide/src/README.md
      1→# Introduction
@@ -317,79 +356,19 @@ guide/src/SUMMARY.md
 guide/src/cli/README.md
      1→# Command-line tool
 
-guide/src/cli/build.md
-     1→# The build command
-
-guide/src/cli/clean.md
-     1→# The clean command
-
-guide/src/cli/completions.md
-     1→# The completions command
-
-guide/src/cli/init.md
-     1→# The init command
-
-guide/src/cli/serve.md
-     1→# The serve command
-    27→### Server options
-
-guide/src/cli/test.md
-     1→# The test command
-
-guide/src/cli/watch.md
-     1→# The watch command
-
-guide/src/continuous-integration.md
-     1→# Running `mdbook` in continuous integration
-
 guide/src/for_developers/README.md
      1→# For developers
     17→## The build process
     30→## Using `mdbook` as a library
 
-guide/src/for_developers/backends.md
-     1→# Alternative backends
-
 guide/src/for_developers/mdbook-wordcount/src/main.rs
     46→pub struct WordcountConfig {
-    47→    pub ignores: Vec<String>,
-      →    …
-
-guide/src/for_developers/preprocessors.md
-     1→# Preprocessors
 
 guide/src/format/README.md
      1→# Format
 
-guide/src/format/configuration/README.md
-     1→# Configuration
-
-guide/src/format/markdown.md
-     1→# Markdown
-
-guide/src/format/mathjax.md
-     1→# MathJax support
-
-guide/src/format/mdbook.md
-     1→# mdBook-specific features
-
-guide/src/format/summary.md
-     1→# SUMMARY.md
-
-guide/src/format/theme/README.md
-     1→# Theme
-
 guide/src/guide/README.md
      1→# User guide
-
-guide/src/guide/creating.md
-     1→# Creating a book
-
-guide/src/guide/installation.md
-     1→# Installation
-
-guide/src/guide/reading.md
-     1→# Reading books
 
 src/cmd/build.rs
      1→use super::command_prelude::*;
@@ -402,32 +381,22 @@ src/cmd/clean.rs
      2→use crate::get_book_dir;
     11→pub fn make_subcommand() -> Command {
     19→pub fn execute(args: &ArgMatches) -> Result<()> {
-    36→/// Formats a number of bytes into a human readable SI-prefixed size.
-    37→/// Returns a tuple of `(quantity, units)`.
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
-    45→#[derive(Debug)]
     46→pub struct Clean {
     47→    num_files_removed: u64,
-    48→    num_dirs_removed: u64,
-    49→    total_bytes_removed: u64,
-    50→}
-    52→impl Clean {
-    53→    fn new …
-    91→impl fmt::Display for Clean {
+      →    …
     92→    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 
 src/cmd/command_prelude.rs
      3→pub use clap::{Arg, ArgMatches, Command, arg};
      7→pub trait CommandExt: Sized {
-     8→    fn _arg …
-    10→    fn arg_dest_dir …
-    26→    fn arg_root_dir …
-    37→    fn arg_open …
-    41→    #[cfg(any(feature = "watch", feature = "serve"))]
+     8→    fn _arg(self, arg: Arg) -> Self;
+    10→    fn arg_dest_dir(self) -> Self {
+    26→    fn arg_root_dir(self) -> Self {
+    37→    fn arg_open(self) -> Self {
     42→    fn arg_watcher(self) -> Self {
-    56→impl CommandExt for Command {
-    57→    fn _arg …
-    62→pub fn set_dest_dir …
+    57→    fn _arg(self, arg: Arg) -> Self {
+    62→pub fn set_dest_dir(args: &ArgMatches, book: &mut MDBook) {
 
 src/cmd/init.rs
      1→use crate::get_book_dir;
@@ -435,24 +404,20 @@ src/cmd/init.rs
     32→pub fn execute(args: &ArgMatches) -> Result<()> {
     88→fn get_author_name() -> Option<String> {
    102→fn request_book_title() -> Option<String> {
-   116→fn confirm() -> bool {
 
 src/cmd/mod.rs
      3→pub mod build;
      4→pub mod clean;
      5→pub mod command_prelude;
      6→pub mod init;
-     7→#[cfg(feature = "serve")]
      8→pub mod serve;
      9→pub mod test;
-    10→#[cfg(feature = "watch")]
     11→pub mod watch;
 
 src/cmd/serve.rs
      1→use super::command_prelude::*;
      3→use super::watch;
      4→use crate::{get_book_dir, open};
-    20→const LIVE_RELOAD_ENDPOINT: &str = "__livereload";
     23→pub fn make_subcommand() -> Command {
     51→pub fn execute(args: &ArgMatches) -> Result<()> {
    109→async fn serve …
@@ -463,14 +428,10 @@ src/cmd/test.rs
      9→pub fn make_subcommand() -> Command {
     35→pub fn execute(args: &ArgMatches) -> Result<()> {
 
-src/cmd/watch/native.rs
-    11→pub fn rebuild_on_change …
-
 src/cmd/watch/poller.rs
     18→pub fn rebuild_on_change …
     78→struct PathData {
     86→struct Watcher {
-    95→impl Watcher {
 
 src/cmd/watch.rs
      1→use super::command_prelude::*;
@@ -480,17 +441,21 @@ src/cmd/watch.rs
     12→pub fn make_subcommand …
     21→pub enum WatcherKind {
     22→    Poll,
-    23→    Native,
-    24→}
-    26→impl WatcherKind {
+      →    …
     27→    pub fn from_str …
     37→pub fn execute …
     62→pub fn rebuild_on_change …
 
 src/main.rs
     14→mod cmd;
-    16→const VERSION …
     58→fn create_clap_command() -> Command {
 
 triagebot.toml
-    28→[autolabel."S-waiting-on-review"]
+     2→[assign]
+     5→[shortcut]
+     8→[bot-pull-requests]
+    11→[range-diff]
+    13→[relabel]
+    31→[merge-conflicts]
+    36→[review-submitted]
+    40→[review-requested]

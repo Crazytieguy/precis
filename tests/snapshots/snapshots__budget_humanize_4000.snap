@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4050 tokens)
+budget: 4000 (4019 tokens)
 
 README.md
      1→# humanize
@@ -18,15 +18,6 @@ README.md
     21→- Danish
     22→- Dutch
     23→- Esperanto
-    24→- European Portuguese
-    25→- Finnish
-    26→- French
-    27→- German
-    28→- Greek
-    29→- Hebrew
-    30→- Indonesian
-    31→- Italian
-    32→- Japanese
       →…
     49→## API reference
     51→[https://humanize.readthedocs.io](https://humanize.readthedocs.io/)
@@ -44,7 +35,6 @@ README.md
    126→If seconds are too large, set `minimum_unit` to milliseconds or microseconds:
    127→
    128→```pycon
-   129→>>> import humanize
       →…
    154→### File size humanization
    166→### Human-readable floating point numbers
@@ -55,8 +45,6 @@ README.md
    204→```pycon
    205→>>> import humanize
    206→>>> import datetime as dt
-   207→>>> humanize.naturaltime(dt.timedelta(seconds=3))
-   208→'3 seconds ago'
       →…
 
 RELEASING.md
@@ -64,49 +52,31 @@ RELEASING.md
 
 docs/filesize.md
      1→# Filesize
-     3→::: humanize.filesize
 
 docs/i18n.md
      1→# Internationalisation
-     3→::: humanize.i18n
 
 docs/index.md
      1→# humanize
-     3→Welcome to the humanize API reference.
-     4→
-      →…
 
 docs/lists.md
      1→# Lists
-     3→::: humanize.lists
 
 docs/number.md
      1→# Number
-     3→::: humanize.number
 
 docs/time.md
      1→# Time
-     3→::: humanize.time
 
 mkdocs.yml
      1→site_name: humanize
      2→site_url: https://humanize.readthedocs.io
      3→repo_url: https://github.com/python-humanize/humanize
      4→theme:
-    16→        name: Switch to light mode
-    17→
     18→nav:
-    24→  - Internationalisation: i18n.md
-    25→
     26→plugins:
-    29→  - include-markdown
-    30→
     31→markdown_extensions:
-    35→  - pymdownx.superfences
-    36→
     37→extra_css:
-    38→  - css/code_select.css
-    39→
     40→watch:
 
 pyproject.toml
@@ -131,7 +101,6 @@ src/humanize/__init__.py
     26→from ._version import __version__
     28→__all__ = [
     29→    "__version__",
-    30→    "activate",
       →    …
 
 src/humanize/filesize.py
@@ -150,10 +119,6 @@ src/humanize/filesize.py
     47→
     48→    Examples:
     49→        ```pycon
-    50→        >>> naturalsize(3000000)
-    51→        '3.0 MB'
-    52→        >>> naturalsize(300, False, True)
-    53→        '300B'
       →        …
 
 src/humanize/i18n.py
@@ -174,18 +139,7 @@ src/humanize/i18n.py
     60→) -> gettext_module.NullTranslations:
     61→    """Activate internationalisation.
     62→
-    63→    Set `locale` as current locale. Search for locale in directory `path`.
-    64→
-    65→    Args:
-    66→        locale (str | None): Language name, e.g. `en_GB`. If `None`, defaults to no
-    67→            transaltion. Similar to calling ``deactivate()``.
-    68→        path (str | pathlib.Path): Path to search for locales.
-    69→
-    70→    Returns:
-    71→        dict: Translations.
-    72→
-    73→    Raises:
-      →    …
+      →…
     96→def deactivate() -> None:
     97→    """Deactivate internationalisation."""
    101→def _gettext(message: str) -> str:
@@ -196,15 +150,11 @@ src/humanize/i18n.py
    183→def thousands_separator() -> str:
    184→    """Return the thousands separator for a locale, default to comma.
    185→
-   186→    Returns:
-   187→         str: Thousands separator.
-   188→    """
+      →…
    196→def decimal_separator() -> str:
    197→    """Return the decimal separator for a locale, default to dot.
    198→
-   199→    Returns:
-   200→         str: Decimal separator.
-   201→    """
+      →…
 
 src/humanize/lists.py
      5→TYPE_CHECKING = False
@@ -232,8 +182,6 @@ src/humanize/lists.py
     31→    if len(items) == 1:
     32→        return str(items[0])
     33→    elif len(items) == 2:
-    34→        return f"{str(items[0])} and {str(items[1])}"
-    35→    else:
       →    …
 
 src/humanize/number.py
@@ -246,29 +194,11 @@ src/humanize/number.py
     14→    from typing import TypeAlias
     21→def _format_not_finite(value: float) -> str:
     34→def ordinal(value: NumberOrString, gender: str = "male") -> str:
-    35→    """Converts an integer to its ordinal as a string.
-    36→
-      →…
    110→def intcomma(value: NumberOrString, ndigits: int | None = None) -> str:
-   111→    """Converts an integer to a string containing commas every three digits.
-   112→
-      →…
    195→def intword(value: NumberOrString, format: str = "%.1f") -> str:
-   196→    """Converts a large integer to a friendly text representation.
-   197→
-      →…
    269→def apnumber(value: NumberOrString) -> str:
-   270→    """Converts an integer to Associated Press style.
-   271→
-      →…
    321→def fractional(value: NumberOrString) -> str:
-   322→    """Convert to fractional number.
-   323→
-      →…
    385→def scientific(value: NumberOrString, precision: int = 2) -> str:
-   386→    """Return number in string scientific notation z.wq x 10ⁿ.
-   387→
-      →…
    454→def clamp(
    455→    value: float,
    456→    format: str = "{:}",
@@ -277,13 +207,7 @@ src/humanize/number.py
    459→    floor_token: str = "<",
    460→    ceil_token: str = ">",
    461→) -> str:
-   462→    """Returns number with the specified format, clamped between floor and ceil.
-   463→
-      →…
    531→def metric(value: float, unit: str = "", precision: int = 3) -> str:
-   532→    """Return a value with a metric SI unit-prefix appended.
-   533→
-      →…
 
 src/humanize/time.py
      8→from enum import Enum
@@ -296,8 +220,6 @@ src/humanize/time.py
     18→    from collections.abc import Iterable
     19→    from typing import Any
     21→__all__ = [
-    22→    "naturaldate",
-      →    …
     30→@total_ordering
     31→class Unit(Enum):
     32→    MICROSECONDS = 0
@@ -310,17 +232,16 @@ src/humanize/time.py
     39→    YEARS = 7
     40→
     41→    def __lt__(self, other: Any) -> Any:
-    47→def _now …
-    53→def _abs_timedelta …
-    68→def _date_and_delta …
+    47→def _now() -> dt.datetime:
+    53→def _abs_timedelta(delta: dt.timedelta) -> dt.timedelta:
+    68→def _date_and_delta(
+    69→    value: Any, *, now: dt.datetime | None = None, precise: bool = False
+    70→) -> tuple[Any, Any]:
     95→def naturaldelta(
     96→    value: dt.timedelta | float,
     97→    months: bool = True,
     98→    minimum_unit: str = "seconds",
     99→) -> str:
-   100→    """Return a natural representation of a timedelta or number of seconds.
-   101→
-      →…
    249→def naturaltime(
    250→    value: dt.datetime | dt.timedelta | float,
    251→    future: bool = False,
@@ -328,29 +249,28 @@ src/humanize/time.py
    253→    minimum_unit: str = "seconds",
    254→    when: dt.datetime | None = None,
    255→) -> str:
-   256→    """Return a natural representation of a time in a resolution that makes sense.
-   257→
-      →…
-   300→def _convert_aware_datetime …
+   300→def _convert_aware_datetime(
+   301→    value: dt.datetime | dt.timedelta | float | None,
+   302→) -> Any:
    311→def naturalday(value: dt.date | dt.datetime, format: str = "%b %d") -> str:
-   312→    """Return a natural day.
-   313→
-      →…
    343→def naturaldate(value: dt.date | dt.datetime) -> str:
-   344→    """Like `naturalday`, but append a year for dates more than ~five months away."""
-   361→def _quotient_and_remainder …
-   406→def _suitable_minimum_unit …
-   435→def _suppress_lower_units …
+   361→def _quotient_and_remainder(
+   362→    value: float,
+   363→    divisor: float,
+   364→    unit: Unit,
+   365→    minimum_unit: Unit,
+   366→    suppress: Iterable[Unit],
+   367→    format: str,
+   368→) -> tuple[float, float]:
+   406→def _suitable_minimum_unit(min_unit: Unit, suppress: Iterable[Unit]) -> Unit:
+   435→def _suppress_lower_units(min_unit: Unit, suppress: Iterable[Unit]) -> set[Unit]:
    451→def precisedelta(
    452→    value: dt.timedelta | float | None,
    453→    minimum_unit: str = "seconds",
    454→    suppress: Iterable[str] = (),
    455→    format: str = "%0.2f",
    456→) -> str:
-   457→    """Return a precise representation of a timedelta or number of seconds.
-   458→
-      →…
-   654→def _rounding_by_fmt …
+   654→def _rounding_by_fmt(format: str, value: float) -> float | int:
 
 tests/test_filesize.py
      6→import pytest
@@ -364,17 +284,31 @@ tests/test_i18n.py
      9→from freezegun import freeze_time
     11→import humanize
     18→def test_i18n() -> None:
+    42→def test_intcomma() -> None:
+    72→def test_naturaldelta() -> None:
+   149→def test_intword_i18n(locale: str, number: int, expected_result: str) -> None:
+   172→def test_langauge_codes(locale: str, expected_result: str) -> None:
+   195→def test_ordinal_genders(
+   196→    locale: str, number: int, gender: str, expected_result: str
+   197→) -> None:
+   208→def test_default_locale_path_defined__spec__() -> None:
+   213→def test_default_locale_path_none__spec__(monkeypatch: pytest.MonkeyPatch) -> None:
+   219→def test_default_locale_path_undefined__file__(monkeypatch: pytest.MonkeyPatch) -> None:
    225→class TestActivate:
    226→    expected_msg = (
+   231→    def test_default_locale_path_null__spec__(
+   232→        self, monkeypatch: pytest.MonkeyPatch
+   233→    ) -> None:
+   240→    def test_default_locale_path_undefined__spec__(
+   241→        self, monkeypatch: pytest.MonkeyPatch
+   242→    ) -> None:
    250→    def test_en_locale(self) -> None:
    263→    def test_none_locale(self) -> None:
 
 tests/test_lists.py
      3→import pytest
      5→import humanize
-    20→def test_natural_list(
-    21→    test_args: list[str] | list[int] | list[str | int], expected: str
-    22→) -> None:
+    20→def test_natural_list …
 
 tests/test_number.py
      5→import math
@@ -382,33 +316,61 @@ tests/test_number.py
      8→import pytest
     10→import humanize
     11→from humanize import number
-    37→def test_ordinal …
-    80→def test_intcomma …
-    86→def test_intword_powers …
-   139→def test_intword …
-   162→def test_apnumber …
-   188→def test_fractional …
-   219→def test_scientific …
-   239→def test_clamp …
-   308→def test_metric …
+    37→def test_ordinal(test_input: str, expected: str) -> None:
+    80→def test_intcomma(
+    81→    test_args: list[int] | list[float] | list[str], expected: str
+    82→) -> None:
+    86→def test_intword_powers() -> None:
+   139→def test_intword(test_args: list[str], expected: str) -> None:
+   162→def test_apnumber(test_input: int | str, expected: str) -> None:
+   188→def test_fractional(test_input: float | str, expected: str) -> None:
+   219→def test_scientific(test_args: list[typing.Any], expected: str) -> None:
+   239→def test_clamp(test_args: list[typing.Any], expected: str) -> None:
+   308→def test_metric(test_args: list[typing.Any], expected: str) -> None:
 
 tests/test_time.py
+     5→import datetime as dt
+     6→import typing
+     8→import pytest
+     9→from freezegun import freeze_time
+    11→import humanize
+    12→from humanize import time
     14→ONE_DAY_DELTA = dt.timedelta(days=1)
-    16→# In seconds
     17→ONE_MICROSECOND = 1 / 1000000
     18→FOUR_MICROSECONDS = 4 / 1000000
     19→ONE_MILLISECOND = 1 / 1000
     20→FOUR_MILLISECONDS = 4 / 1000
-    22→MILLISECONDS_1_337 = 1337 / 1000  # 1.337 seconds
     23→ONE_HOUR = 3600
     24→ONE_DAY = 24 * ONE_HOUR
     25→ONE_YEAR = 365.25 * ONE_DAY
     26→FROZEN_DATE = "2010-02-02"
     37→class FakeDate:
+    38→    def __init__ …
+    41→    def __str__ …
     45→VALUE_ERROR_TEST = FakeDate(290149024, 2, 2)
     46→OVERFLOW_ERROR_TEST = FakeDate(120390192341, 2, 2)
+    49→def assert_equal_datetime …
+    53→def assert_equal_timedelta …
     58→# These are not considered "public" interfaces, but require tests anyway.
     61→def test_date_and_delta() -> None:
     62→    now = dt.datetime.now()
-    63→    td = dt.timedelta
       →    …
+    88→def test_naturaldelta_nomonths …
+   135→def test_naturaldelta …
+   184→def test_naturaltime …
+   233→def test_naturaltime_nomonths …
+   255→def test_naturalday …
+   299→def test_naturaldate …
+   317→def test_naturaldelta_minimum_unit_default …
+   360→def test_naturaldelta_minimum_unit_explicit …
+   386→def test_naturaltime_minimum_unit_default …
+   430→def test_naturaltime_minimum_unit_explicit …
+   476→def test_naturaltime_timezone …
+   516→def test_naturaltime_timezone_when …
+   541→def test_precisedelta_one_unit_enough …
+   605→def test_precisedelta_multiple_units …
+   707→def test_precisedelta_custom_format …
+   784→def test_precisedelta_suppress_units …
+   792→def test_precisedelta_bogus_call …
+   805→def test_time_unit …
+   827→def test_rounding_by_fmt …

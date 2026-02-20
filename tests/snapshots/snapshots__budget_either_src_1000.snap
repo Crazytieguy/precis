@@ -2,94 +2,102 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1013 tokens)
+budget: 1000 (992 tokens)
 
 into_either.rs
      4→use super::{Either, Left, Right};
-     6→/// Provides methods for converting a type `Self` into either a [`Left`] or [`Right`]
-     7→/// variant of [`Either<Self, Self>`](Either).
-     8→///
-      →…
     14→pub trait IntoEither: Sized {
-    15→    /// Converts `self` into a [`Left`] variant of [`Either<Self, Self>`](Either)
-    16→    /// if `into_left` is `true`.
-      →    …
     29→    fn into_either(self, into_left: bool) -> Either<Self, Self> {
-    37→    /// Converts `self` into a [`Left`] variant of [`Either<Self, Self>`](Either)
-    38→    /// if `into_left(&self)` returns `true`.
-      →    …
     55→    fn into_either_with<F>(self, into_left: F) -> Either<Self, Self>
     56→    where
     57→        F: FnOnce(&Self) -> bool,
     58→    {
-    64→impl<T> IntoEither for T {}
 
 iterator.rs
      1→use super::{for_both, Either, Left, Right};
      2→use core::iter;
      4→macro_rules! wrap_either {
-    13→/// Iterator that maps left or right iterators to corresponding `Either`-wrapped items.
-    14→///
-    15→/// This struct is created by the [`Either::factor_into_iter`],
-    16→/// [`factor_iter`][Either::factor_iter],
-      →…
     19→pub struct IterEither<L, R> {
     20→    inner: Either<L, R>,
     21→}
-    24→    pub(crate) fn new(inner: Either<L, R>) -> Self {
-    43→impl<L, R> Iterator for Either<L, R> …
     48→    type Item = L::Item;
    185→    type Item = Either<L::Item, R::Item>;
 
 lib.rs
-    21→#[cfg(feature = "serde")]
     22→pub mod serde_untagged;
-    24→#[cfg(feature = "serde")]
     25→pub mod serde_untagged_optional;
     35→use std::error::Error;
     37→use std::io::{self, BufRead, Read, Seek, SeekFrom, Write};
     39→pub use crate::Either::{Left, Right};
-    41→/// The enum `Either` with variants `Left` and `Right` is a general purpose
-    42→/// sum type with two cases.
-    43→///
-      →…
     49→pub enum Either<L, R> {
     50→    /// A value of type `L`.
     51→    Left(L),
-    52→    /// A value of type `R`.
-    53→    Right(R),
-    54→}
-    56→/// Evaluate the provided expression for both [`Either::Left`] and [`Either::Right`].
-      →…
+      →    …
     81→macro_rules! for_both {
-    90→/// Macro for unwrapping the left side of an [`Either`], which fails early
-      →…
    113→macro_rules! try_left {
-   122→/// Dual to [`try_left!`], see its documentation for more information.
-      →…
    124→macro_rules! try_right {
-   133→macro_rules! map_either {
    142→mod iterator;
    143→pub use self::iterator::IterEither;
    145→mod into_either;
    146→pub use self::into_either::IntoEither;
+   175→    pub fn is_left …
+   191→    pub fn is_right …
+   206→    pub fn left …
+   224→    pub fn right …
+   242→    pub fn as_ref …
+   264→    pub fn as_mut …
+   270→    pub fn as_pin_ref …
+   278→    pub fn as_pin_mut …
+   298→    pub fn flip …
+   317→    pub fn map_left …
+   339→    pub fn map_right …
+   366→    pub fn map_either …
+   397→    pub fn map_either_with …
+   424→    pub fn either …
+   454→    pub fn either_with …
+   476→    pub fn left_and_then …
+   497→    pub fn right_and_then …
+   521→    pub fn into_iter …
+   544→    pub fn iter …
+   573→    pub fn iter_mut …
+   597→    pub fn factor_into_iter …
+   619→    pub fn factor_iter …
+   645→    pub fn factor_iter_mut …
+   671→    pub fn left_or …
+   690→    pub fn left_or_default …
+   712→    pub fn left_or_else …
+   738→    pub fn right_or …
+   757→    pub fn right_or_default …
+   779→    pub fn right_or_else …
+   809→    pub fn unwrap_left …
+   841→    pub fn unwrap_right …
+   871→    pub fn expect_left …
+   901→    pub fn expect_right …
+   923→    pub fn either_into …
+   944→    pub fn factor_none …
+   966→    pub fn factor_err …
+   988→    pub fn factor_ok …
+  1009→    pub fn factor_first …
+  1030→    pub fn factor_second …
+  1050→    pub fn into_inner …
+  1065→    pub fn map …
+  1076→    pub fn cloned …
+  1086→    pub fn copied …
+  1098→    pub fn cloned …
+  1108→    pub fn copied …
   1143→    type Output = L::Output;
-  1253→macro_rules! impl_specific_ref_and_mut {
   1327→    type Target = L::Target;
+  1358→    fn description …
+  1363→    fn cause …
   1522→macro_rules! check_t {
-  1536→fn _unsized_ref_propagation() {
   1553→fn _unsized_std_propagation() {
 
 serde_untagged.rs
-    36→use serde::{Deserialize, Deserializer, Serialize, Serializer};
     40→enum Either<L, R> {
-    41→    Left(L),
-      →    …
     45→pub fn serialize …
     58→pub fn deserialize …
 
 serde_untagged_optional.rs
-    36→use serde::{Deserialize, Deserializer, Serialize, Serializer};
     40→enum Either<L, R> {
     45→pub fn serialize …
     62→pub fn deserialize …

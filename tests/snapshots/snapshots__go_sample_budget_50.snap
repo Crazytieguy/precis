@@ -3,8 +3,8 @@ source: tests/snapshots.rs
 expression: output
 ---
 sample.go
-     7→type Token …
-    13→type TokenKind int
-    22→type Visitor …
-    35→type TokenParser …
-    53→type Span = [2]int
+     7→type Token struct {
+    13→type TokenKind …
+    22→type Visitor interface {
+    35→type TokenParser[T any] struct {
+    53→type Span …

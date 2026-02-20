@@ -2,22 +2,21 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2027 tokens)
+budget: 2000 (2015 tokens)
 
 CHANGELOG.md
      1→## Unreleased
+     3→### Improvements
+     5→### Changes
+     7→### Fixed
+     9→### Security
 
 README.md
      1→# go-multierror
-    10→> **Note**: As of Go 1.20, the standard library provides [`errors.Join`](https://pkg.go.dev/errors#Join) which offers similar functionality for combining multiple errors. **For new projects, we recommend using `errors.Join` from the standard library.** This package provides additional features like custom formatting, the `Group` pattern for concurrent error collection, and utility functions (`Append`, `Flatten`, `Prefix`).
-    11→
     12→## Migrating to `errors.Join`
    104→## Installation and Docs
    111→### Requires go version 1.13 or newer
    113→`go-multierror` requires go version 1.13 or newer. Go 1.13 introduced
-   114→[error wrapping](https://golang.org/doc/go1.13#error_wrapping), which
-   115→this library takes advantage of.
-   116→
       →…
    129→## Usage
 
@@ -42,6 +41,12 @@ append.go
 
 append_test.go
      6→import …
+    11→func TestAppend_Error(t *testing.T) {
+    45→func TestAppend_NilError(t *testing.T) {
+    53→func TestAppend_NilErrorArg(t *testing.T) {
+    62→func TestAppend_NilErrorIfaceArg(t *testing.T) {
+    71→func TestAppend_NonError(t *testing.T) {
+    79→func TestAppend_NonError_Error(t *testing.T) {
 
 flatten.go
      6→// Flatten flattens the given error, merging any *Errors together into
@@ -130,32 +135,30 @@ multierror.go
     22→	}
     23→
       →…
-    27→// ErrorOrNil returns an error interface if this Error represents
-      →…
     31→func (e *Error) ErrorOrNil() error {
     42→func (e *Error) GoString() string {
     43→	return fmt.Sprintf("*%#v", *e)
     44→}
-    46→// WrappedErrors returns the list of errors that this Error is wrapping. It is
-      →…
     53→func (e *Error) WrappedErrors() []error {
-    60→// Unwrap returns an error from Error (or nil if there are no errors).
-      →…
     71→func (e *Error) Unwrap() error {
     99→type chain []error
-   101→// Error implements the error interface
    102→func (e chain) Error() string {
-   106→// Unwrap implements errors.Unwrap by returning the next error in the
-      →…
    108→func (e chain) Unwrap() error {
-   116→// As implements errors.As by attempting to map to the current value.
    117→func (e chain) As(target interface{}) bool {
-   121→// Is implements errors.Is by comparing the current value directly.
    122→func (e chain) Is(target error) bool {
 
 multierror_test.go
      6→import …
+    13→func TestError_Impl(t *testing.T) {
+    17→func TestErrorError_custom(t *testing.T) {
+    33→func TestErrorError_default(t *testing.T) {
+    51→func TestErrorErrorOrNil(t *testing.T) {
+    65→func TestErrorWrappedErrors(t *testing.T) {
+    82→func TestErrorUnwrap(t *testing.T) {
+   118→func TestErrorIs(t *testing.T) {
+   157→func TestErrorAs(t *testing.T) {
    209→type nestedError struct{}
+   211→func (*nestedError) Error() string { return "" }
 
 prefix.go
      6→import (

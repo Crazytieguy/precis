@@ -2,13 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2015 tokens)
+budget: 2000 (2004 tokens)
 
 codecov.yml
      1→coverage:
-     5→    changes: true
-     6→
      7→comment: off
+
+docs/conf.py
 
 pyproject.toml
      1→[build-system]
@@ -20,16 +20,22 @@ pyproject.toml
     74→[tool.towncrier]
    112→[tool.mypy]
 
-scripts/towncrier-draft-to-file.py
-     5→def main() -> int:
-     6→    """
-      →    …
-
 src/pluggy/__init__.py
      1→__all__ = [
+    17→from ._hooks import HookCaller
+    18→from ._hooks import HookImpl
+    19→from ._hooks import HookimplMarker
+    20→from ._hooks import HookimplOpts
+    21→from ._hooks import HookRelay
+    22→from ._hooks import HookspecMarker
+    23→from ._hooks import HookspecOpts
+    24→from ._manager import PluginManager
+    25→from ._manager import PluginValidationError
+    26→from ._result import HookCallError
+    27→from ._result import Result
+    28→from ._warnings import PluggyTeardownRaisedWarning
+    29→from ._warnings import PluggyWarning
     32→def __getattr__(name: str) -> str:
-    33→    if name == "__version__":
-      →    …
 
 src/pluggy/_callers.py
     16→from ._hooks import HookImpl
@@ -37,48 +43,28 @@ src/pluggy/_callers.py
     18→from ._result import Result
     19→from ._warnings import PluggyTeardownRaisedWarning
     22→# Need to distinguish between old- and new-style hook wrappers.
-    23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
+      →…
     24→Teardown: TypeAlias = Generator[None, object, object]
-    27→def run_old_style_hookwrapper(
-    28→    hook_impl: HookImpl, hook_name: str, args: Sequence[object]
-    29→) -> Teardown:
-    30→    """
-    31→    backward compatibility wrapper to run a old style hookwrapper as a wrapper
-    32→    """
-    33→    if TYPE_CHECKING:
-      →    …
-    60→def _raise_wrapfail …
-    70→def _warn_teardown_exception …
-    82→def _multicall …
+    27→def run_old_style_hookwrapper …
 
 src/pluggy/_hooks.py
     25→from ._result import Result
     40→class HookspecOpts(TypedDict):
-    42→
-      →…
     56→class HookimplOpts(TypedDict):
-    58→
-      →…
     78→class HookspecMarker:
-    85→
     88→    def __init__ …
    111→    def __call__ …
    165→class HookimplMarker:
-   172→
    175→    def __init__ …
    202→    def __call__ …
    281→def normalize_hookimpl_opts …
    293→def varnames …
    359→class HookRelay:
-   362→
    365→    def __init__ …
    370→        def __getattr__ …
    382→class HookCaller:
-   384→
    393→    def __init__ …
-   419→    # TODO: Document, or make private.
    420→    def has_spec(self) -> bool:
-   423→    # TODO: Document, or make private.
    424→    def set_specification(
    425→        self,
    426→        specmodule_or_class: _Namespace,
@@ -92,55 +78,87 @@ src/pluggy/_hooks.py
    543→    def call_extra …
    593→class _SubsetHookCaller(HookCaller):
    612→    def __init__ …
-   619→    def _hookimpls(self) -> list[HookImpl]:
-   626→    @property
+   619→    def _hookimpls …
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
-   631→    def _call_history(self) -> _CallHistory | None:  # type: ignore[override]
+   631→    def _call_history …
    634→    def __repr__ …
    639→class HookImpl:
-   641→
    656→    def __init__ …
    692→    def __repr__ …
    697→class HookSpec:
-   698→    __slots__ = (
    709→    def __init__ …
 
 src/pluggy/_manager.py
-    16→from . …
-    17→from ._callers …
-    18→from ._hooks …
-    19→from ._hooks …
-    20→from ._hooks …
-    21→from ._hooks …
-    22→from ._hooks …
-    23→from ._hooks …
-    24→from ._hooks …
-    25→from ._hooks …
-    26→from ._hooks …
-    27→from ._hooks …
-    28→from ._result …
+     3→from collections.abc import Callable
+     4→from collections.abc import Iterable
+     5→from collections.abc import Mapping
+     6→from collections.abc import Sequence
+     7→import inspect
+     8→import types
+     9→from typing import Any
+    10→from typing import cast
+    11→from typing import Final
+    12→from typing import TYPE_CHECKING
+    13→from typing import TypeAlias
+    14→import warnings
+    16→from . import _tracing
+    17→from ._callers import _multicall
+    18→from ._hooks import _HookImplFunction
+    19→from ._hooks import _Namespace
+    20→from ._hooks import _Plugin
+    21→from ._hooks import _SubsetHookCaller
+    22→from ._hooks import HookCaller
+    23→from ._hooks import HookImpl
+    24→from ._hooks import HookimplOpts
+    25→from ._hooks import HookRelay
+    26→from ._hooks import HookspecOpts
+    27→from ._hooks import normalize_hookimpl_opts
+    28→from ._result import Result
     33→    import importlib.metadata
-    36→_BeforeTrace …
-    37→_AfterTrace …
     52→class PluginValidationError(Exception):
-    58→
+    59→    def __init__ …
     65→class DistFacade:
-    67→
+    68→    def __init__ …
     71→    @property
     72→    def project_name(self) -> str:
-    73→        name: str = self.metadata["name"]
-    74→        return name
+    76→    def __getattr__ …
+    79→    def __dir__ …
     83→class PluginManager:
-    99→
+   100→    def __init__ …
+   125→    def register …
+   176→    def parse_hookimpl_opts …
+   201→    def unregister …
+   233→    def set_blocked …
+   238→    def is_blocked …
+   242→    def unblock …
+   252→    def add_hookspecs …
+   278→    def parse_hookspec_opts …
+   296→    def get_plugins …
+   300→    def is_registered …
+   304→    def get_canonical_name …
+   315→    def get_plugin …
+   319→    def has_plugin …
+   323→    def get_name …
+   379→    def check_pending …
+   395→    def load_setuptools_entrypoints …
+   425→    def list_plugin_distinfo …
+   430→    def list_name_plugin …
+   434→    def get_hookcallers …
+   450→    def add_hookcall_monitoring …
+   487→    def enable_tracing …
+   512→    def subset_hook_caller …
 
 src/pluggy/_result.py
-    16→_ExcInfo …
+     7→from collections.abc import Callable
+     8→from types import TracebackType
+     9→from typing import cast
+    10→from typing import final
+    11→from typing import Generic
+    12→from typing import TypeAlias
+    13→from typing import TypeVar
     20→class HookCallError(Exception):
-    21→    """Hook was called incorrectly."""
     24→@final
     25→class Result(Generic[ResultType]):
-    26→    """An object used to inspect and set the result in a :ref:`hook wrapper
-    27→    <hookwrappers>`."""
     28→
     29→    __slots__ = ("_result", "_exception", "_traceback")
     30→
@@ -149,11 +167,8 @@ src/pluggy/_result.py
     33→        result: ResultType | None,
     34→        exception: BaseException | None,
     35→    ) -> None:
-    42→    @property
     43→    def excinfo(self) -> _ExcInfo | None:
-    51→    @property
     52→    def exception(self) -> BaseException | None:
-    56→    @classmethod
     57→    def from_call(cls, func: Callable[[], ResultType]) -> Result[ResultType]:
     67→    def force_result(self, result: ResultType) -> None:
     80→    def force_exception(self, exception: BaseException) -> None:
@@ -166,8 +181,6 @@ src/pluggy/_tracing.py
     16→class TagTracer:
     17→    def __init__(self) -> None:
     22→    def get(self, name: str) -> TagTracerSub:
-    25→    def _format_message …
-    42→    def _processmessage …
     48→    def setwriter(self, writer: _Writer | None) -> None:
     51→    def setprocessor(self, tags: str | tuple[str, ...], processor: _Processor) -> None:
     59→class TagTracerSub:
@@ -178,41 +191,9 @@ src/pluggy/_tracing.py
 src/pluggy/_warnings.py
      1→from typing import final
      4→class PluggyWarning(UserWarning):
-     5→    """Base class for all warnings emitted by pluggy."""
      6→
-     7→    __module__ = "pluggy"
+      →…
     10→@final
     11→class PluggyTeardownRaisedWarning(PluggyWarning):
-    12→    """A plugin raised an exception during an :ref:`old-style hookwrapper
-    13→    <old_style_hookwrappers>` teardown.
-    14→
-      →…
     26→
     27→    __module__ = "pluggy"
-
-testing/benchmark.py
-    21→def hook …
-    26→def wrapper …
-    31→def hooks …
-    36→def wrappers …
-
-testing/conftest.py
-    11→def he_pm …
-    23→@pytest.fixture
-    24→def pm() -> PluginManager:
-
-testing/test_hookcaller.py
-    21→def hc …
-    34→class AddMeth:
-    61→def addmeth …
-   329→def test_hookimpl …
-
-testing/test_multicall.py
-
-testing/test_pluginmanager.py
-   299→def test_with_result_memorized …
-   699→def test_register_while_calling …
-
-testing/test_tracer.py
-     6→@pytest.fixture
-     7→def rootlogger() -> TagTracer:

@@ -2,9 +2,19 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4015 tokens)
+budget: 4000 (4035 tokens)
 
 CHANGELOG.md
+     1→# 1.8.0 (Nov 28, 2025)
+    24→# 1.7.0 (May 24, 2024)
+    43→# 1.6.0 (June 28, 2022)
+    49→# 1.5.0 (May 18, 2022)
+    56→# 1.4.0 (January 5, 2022)
+    63→# 1.3.0 (March 31, 2021)
+    70→# 1.2.1 (June 17, 2020)
+    75→# 1.2.0 (April 23, 2019)
+    80→# 1.1.0 (Jan 07, 2019)
+    85→# 1.0.0 (August 24, 2018)
 
 README.md
      1→# Versioning Library for Go
@@ -188,6 +198,7 @@ version.go
     11→	"strings"
     12→	"sync"
     13→)
+    15→// The compiled regular expression used to test the validity of a version.
     16→var (
     17→	versionRegexp     *regexp.Regexp
     18→	versionRegexpOnce sync.Once
@@ -195,6 +206,8 @@ version.go
     20→	semverRegexpOnce  sync.Once
     23→func getVersionRegexp() *regexp.Regexp {
     30→func getSemverRegexp() *regexp.Regexp {
+    37→// The raw regular expression string used for testing the validity
+    38→// of a version.
     39→const (
     40→	VersionRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     45→	// SemverRegexpRaw requires a separator between version and prerelease
@@ -222,8 +235,7 @@ version.go
    123→// returns -1, 0, or 1 if this version is smaller, equal,
    124→// or larger than the other version, respectively.
    125→//
-   126→// If you want boolean results, use the LessThan, Equal,
-   127→// GreaterThan, GreaterThanOrEqual or LessThanOrEqual methods.
+      →…
    128→func (v *Version) Compare(other *Version) int {
    196→func (v *Version) equalSegments(other *Version) bool {
    211→func allZero(segs []int64) bool {
@@ -246,35 +258,31 @@ version.go
    345→// string.
    346→//
    347→// Metadata is anything that comes after the "+" in the version.
-   348→// For example, with "1.2.3+beta", the metadata is "beta".
+      →…
    349→func (v *Version) Metadata() string {
    353→// Prerelease returns any prerelease data that is part of the version,
    354→// or blank if there is no prerelease data.
    355→//
    356→// Prerelease information is anything that comes after the "-" in the
-   357→// version (but before any metadata). For example, with "1.2.3-beta",
-   358→// the prerelease information is "beta".
+      →…
    359→func (v *Version) Prerelease() string {
    363→// Segments returns the numeric segments of the version as a slice of ints.
    364→//
    365→// This excludes any metadata or pre-release information. For example,
    366→// for a version "1.2.3-beta", segments will return a slice of
-   367→// 1, 2, 3.
+      →…
    368→func (v *Version) Segments() []int {
    376→// Segments64 returns the numeric segments of the version as a slice of int64s.
    377→//
    378→// This excludes any metadata or pre-release information. For example,
    379→// for a version "1.2.3-beta", segments will return a slice of
-   380→// 1, 2, 3.
+      →…
    381→func (v *Version) Segments64() []int64 {
    387→// String returns the full version string included pre-release
    388→// and metadata information.
    389→//
    390→// This value is rebuilt according to the parsed segments and other
-   391→// information. Therefore, ambiguities in the version string such as
-   392→// prefixed zeroes (1.04.0 => 1.4.0), `v` prefix (v1.0.0 => 1.0.0), and
-   393→// missing parts (1.0 => 1.0.0) will be made into a canonicalized form
-   394→// as shown in the parenthesized examples.
+      →…
    395→func (v *Version) String() string {
    399→func (v *Version) bytes() []byte {
    421→// Original returns the original parsed version as-is, including any
@@ -308,7 +316,6 @@ version_collection_test.go
     12→func TestCollection(t *testing.T) {
     13→	versionsRaw := []string{
     14→		"1.1.1",
-    15→		"1.0",
       →		…
 
 version_test.go

@@ -5,20 +5,16 @@ expression: output
 budget: 1000 (1000 tokens)
 
 error.ts
-     2→ * A `StructFailure` represents a single specific failure in validation.
      5→export type Failure = {
     25→export class StructError extends TypeError {
     26→  value: any
     27→  key!: any
-    28→  type!: string
-    29→  refinement!: string | undefined
-    35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
+    35→  constructor …
 
 struct.ts
     10→export class Struct<T = unknown, S = unknown> {
     11→  readonly TYPE!: T
     12→  type: string
-    13→  schema: S
     22→  constructor …
     67→  assert …
     75→  create …
@@ -30,13 +26,17 @@ struct.ts
    157→export function mask …
    175→export function is …
    185→export function validate …
-   221→export type Context …
-   231→export type Infer …
-   237→export type Describe …
-   243→export type Result …
-   253→export type Coercer …
-   259→export type Validator …
-   266→export type Refiner …
+   221→export type Context = {
+   231→export type Infer<T extends Struct<any, any>> = T['TYPE']
+   237→export type Describe<T> = Struct<T, StructSchema<T>>
+   243→export type Result =
+   244→  | boolean
+   245→  | string
+   246→  | Partial<Failure>
+   247→  | Iterable<boolean | string | Partial<Failure>>
+   253→export type Coercer<T = unknown> = (value: T, context: Context) => unknown
+   259→export type Validator = (value: unknown, context: Context) => Result
+   266→export type Refiner<T> = (value: T, context: Context) => Result
 
 structs/coercions.ts
     16→export function coerce …
@@ -47,7 +47,6 @@ structs/refinements.ts
      1→import { Struct, Refiner } from '../struct.js'
      2→import { toFailures } from '../utils.js'
      8→export function empty …
-    21→function getSize …
     33→export function max …
     55→export function min …
     77→export function nonempty …
@@ -94,7 +93,7 @@ structs/utilities.ts
    247→export function struct …
 
 utils.ts
-     8→function isIterable<T>(x: unknown): x is Iterable<T> {
+     8→function isIterable …
     16→export function isObject …
     24→export function isNonArrayObject …
     32→export function isPlainObject …
@@ -116,9 +115,8 @@ utils.ts
    307→export type PartialObjectSchema …
    315→export type PickBy …
    324→export type Simplify …
-   328→export type If<B extends Boolean, Then, Else> = B extends true ? Then : Else
+   328→export type If …
    334→export type StructSchema …
    379→export type TupleSchema …
    385→export type AnyStruct …
    394→export type InferStructTuple …
-   402→type _InferTuple …

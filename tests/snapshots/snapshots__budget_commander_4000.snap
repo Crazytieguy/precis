@@ -2,55 +2,19 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4009 tokens)
-
-CHANGELOG.md
-     1→# Changelog
+budget: 4000 (3998 tokens)
 
 Readme.md
      1→# Commander.js
-     8→The complete solution for [node.js](http://nodejs.org) command-line interfaces.
-     9→
-      →…
     61→## Installation
     67→## Quick Start
    147→## Declaring _program_ variable
    177→## Options
    523→## Commands
-   613→#### More configuration
-   625→#### Custom argument processing
    754→## Automated help
    956→## Custom event listeners
    966→## Bits and pieces
   1164→## Support
-
-SECURITY.md
-     1→# Security Policy
-
-docs/deprecated.md
-     1→# Deprecated
-   227→## Removed
-
-docs/help-in-depth.md
-     1→# Help in Depth
-
-docs/options-in-depth.md
-     2→# Options in Depth
-
-docs/release-policy.md
-     1→# Release Policy
-
-docs/terminology.md
-     1→# Terminology
-
-esm.mjs
-     1→import commander from './index.js';
-
-examples/custom-command-class.js
-     7→  createCommand(name) {
-
-examples/global-options-added.js
-    17→  createCommand(name) {
 
 lib/argument.js
      3→class Argument {
@@ -65,7 +29,6 @@ lib/argument.js
    143→function humanReadableArgName(arg) {
 
 lib/command.js
-    13→class Command extends EventEmitter {
     20→  constructor(name) {
     99→  copyInheritedSettings(sourceCommand) {
    155→  command(nameAndArgs, actionOptsOrExecDesc, execOpts) {
@@ -102,7 +65,6 @@ lib/command.js
    983→  getOptionValueSourceWithGlobals(key) {
   1090→  parse(argv, parseOptions) {
   1119→  async parseAsync(argv, parseOptions) {
-  1127→  _prepareForParse() {
   1141→  saveStateBeforeParse() {
   1158→  restoreStateBeforeParse() {
   1748→  parseOptions(args) {
@@ -135,16 +97,11 @@ lib/command.js
 
 lib/error.js
      4→class CommanderError extends Error {
-     6→   * Constructs the CommanderError class
-      →   …
     11→  constructor(exitCode, code, message) {
     25→class InvalidArgumentError extends CommanderError {
-    27→   * Constructs the InvalidArgumentError class
-      →   …
     30→  constructor(message) {
 
 lib/help.js
-    12→class Help {
     13→  constructor() {
     29→  prepareContext(contextOptions) {
     40→  visibleCommands(cmd) {
@@ -189,7 +146,6 @@ lib/help.js
    740→function stripColor(str) {
 
 lib/option.js
-     3→class Option {
     11→  constructor(flags, description) {
     47→  default(value, description) {
     65→  preset(arg) {
@@ -212,214 +168,188 @@ lib/option.js
    316→function camelcase(str) {
    328→function splitOptionFlags(flags) {
 
-lib/suggestSimilar.js
-     1→const maxDistance = 3;
-     3→function editDistance(a, b) {
-    56→function suggestSimilar(word, candidates) {
-
 package-support.json
      2→  "versions": [
-    18→  ]
-    19→}
 
 package.json
-     2→  "name": "commander",
-     3→  "version": "14.0.3",
-     4→  "description": "the complete solution for node.js command-line programs",
-     5→  "keywords": [
-    15→  "author": "TJ Holowaychuk <tj@vision-media.ca>",
-    16→  "license": "MIT",
-    17→  "repository": {
-    21→  "scripts": {
-    35→  "files": [
-    43→  "type": "commonjs",
-    44→  "main": "./index.js",
-    45→  "exports": {
-    62→  "devDependencies": {
-    77→  "types": "typings/index.d.ts",
-    78→  "engines": {
-    81→  "support": true
 
 tsconfig.js.json
      7→  "extends": "./tsconfig.json",
      8→  "include": [
-    14→  ],
-    15→}
 
 tsconfig.json
     12→  "compilerOptions": {
-    32→  },
     33→  "include": [
-    42→  ],
     43→  "exclude": ["node_modules"],
-    44→}
 
 tsconfig.ts.json
      8→  "extends": "./tsconfig.json",
      9→  "compilerOptions": {
-    14→  },
     15→  "include": [
-    19→  ],
-    20→}
 
 typings/index.d.ts
-    12→type LiteralUnion …
     16→export class CommanderError extends Error {
-    28→  constructor …
+    28→  constructor(exitCode: number, code: string, message: string);
     31→export class InvalidArgumentError extends CommanderError {
-    36→  constructor …
+    36→  constructor(message: string);
     40→export interface ErrorOptions {
     48→export class Argument {
-    62→  constructor …
-    67→  name …
-    72→  default …
-    77→  argParser …
-    82→  choices …
-    87→  argRequired …
-    92→  argOptional …
+    62→  constructor(arg: string, description?: string);
+    67→  name(): string;
+    72→  default(value: unknown, description?: string): this;
+    77→  argParser<T>(fn: (value: string, previous: T) => T): this;
+    82→  choices(values: readonly string[]): this;
+    87→  argRequired(): this;
+    92→  argOptional(): this;
     95→export class Option {
-   115→  constructor(flags: string, description?: string);
-   120→  default …
-   132→  preset …
-   144→  conflicts …
-   156→  implies …
-   164→  env …
-   169→  argParser …
-   174→  makeOptionMandatory …
-   179→  hideHelp …
-   184→  choices …
-   189→  name …
-   195→  attributeName …
-   200→  helpGroup …
-   207→  isBoolean …
+   120→  default(value: unknown, description?: string): this;
+   132→  preset(arg: unknown): this;
+   144→  conflicts(names: string | string[]): this;
+   156→  implies(optionValues: OptionValues): this;
+   164→  env(name: string): this;
+   169→  argParser<T>(fn: (value: string, previous: T) => T): this;
+   174→  makeOptionMandatory(mandatory?: boolean): this;
+   179→  hideHelp(hide?: boolean): this;
+   184→  choices(values: readonly string[]): this;
+   189→  name(): string;
+   195→  attributeName(): string;
+   200→  helpGroup(heading: string): this;
+   207→  isBoolean(): boolean;
    210→export class Help {
-   218→  constructor();
-   226→  prepareContext(contextOptions: {
-   227→    error?: boolean;
-      →    …
-   233→  subcommandTerm …
-   235→  subcommandDescription …
-   237→  optionTerm …
-   239→  optionDescription …
-   241→  argumentTerm …
-   243→  argumentDescription …
-   246→  commandUsage …
-   248→  commandDescription …
-   251→  visibleCommands …
-   253→  visibleOptions …
-   255→  visibleGlobalOptions …
-   257→  visibleArguments …
-   260→  longestSubcommandTermLength …
-   262→  longestOptionTermLength …
-   264→  longestGlobalOptionTermLength …
-   266→  longestArgumentTermLength …
-   269→  displayWidth …
-   272→  styleTitle …
-   275→  styleUsage …
-   277→  styleCommandText …
-   279→  styleCommandDescription(str: string): string;
-   280→  styleOptionDescription(str: string): string;
-   281→  styleSubcommandDescription(str: string): string;
-   282→  styleArgumentDescription(str: string): string;
-   284→  styleDescriptionText …
-   286→  styleOptionTerm(str: string): string;
-   287→  styleSubcommandTerm(str: string): string;
-   288→  styleArgumentTerm(str: string): string;
-   291→  styleOptionText …
-   293→  styleSubcommandText …
-   295→  styleArgumentText …
-   298→  padWidth …
-   304→  boxWrap …
-   307→  preformatted …
-   316→  formatItem …
-   326→  formatItemList …
-   331→  groupItems …
-   338→  formatHelp …
-   340→export type HelpConfiguration = Partial<Help>;
+   233→  subcommandTerm(cmd: Command): string;
+   235→  subcommandDescription(cmd: Command): string;
+   237→  optionTerm(option: Option): string;
+   239→  optionDescription(option: Option): string;
+   241→  argumentTerm(argument: Argument): string;
+   243→  argumentDescription(argument: Argument): string;
+   246→  commandUsage(cmd: Command): string;
+   248→  commandDescription(cmd: Command): string;
+   251→  visibleCommands(cmd: Command): Command[];
+   253→  visibleOptions(cmd: Command): Option[];
+   255→  visibleGlobalOptions(cmd: Command): Option[];
+   257→  visibleArguments(cmd: Command): Argument[];
+   260→  longestSubcommandTermLength(cmd: Command, helper: Help): number;
+   262→  longestOptionTermLength(cmd: Command, helper: Help): number;
+   264→  longestGlobalOptionTermLength(cmd: Command, helper: Help): number;
+   266→  longestArgumentTermLength(cmd: Command, helper: Help): number;
+   269→  displayWidth(str: string): number;
+   272→  styleTitle(title: string): string;
+   275→  styleUsage(str: string): string;
+   277→  styleCommandText(str: string): string;
+   284→  styleDescriptionText(str: string): string;
+   291→  styleOptionText(str: string): string;
+   293→  styleSubcommandText(str: string): string;
+   295→  styleArgumentText(str: string): string;
+   298→  padWidth(cmd: Command, helper: Help): number;
+   304→  boxWrap(str: string, width: number): string;
+   307→  preformatted(str: string): boolean;
+   316→  formatItem(
+   317→    term: string,
+   318→    termWidth: number,
+   319→    description: string,
+   320→    helper: Help,
+   321→  ): string;
+   326→  formatItemList(heading: string, items: string[], helper: Help): string[];
+   331→  groupItems<T extends Command | Option>(
+   332→    unsortedItems: T[],
+   333→    visibleItems: T[],
+   334→    getGroup: (item: T) => string,
+   335→  ): Map<string, T[]>;
+   338→  formatHelp(cmd: Command, helper: Help): string;
+   340→export type HelpConfiguration …
    342→export interface ParseOptions {
    345→export interface HelpContext {
    349→export interface AddHelpTextContext {
    354→export interface OutputConfiguration {
-   355→  writeOut?(str: string): void;
-   356→  writeErr?(str: string): void;
-   357→  outputError?(str: string, write: (str: string) => void): void;
-   359→  getOutHelpWidth?(): number;
-   360→  getErrHelpWidth?(): number;
-   362→  getOutHasColors?(): boolean;
-   363→  getErrHasColors?(): boolean;
-   364→  stripColor?(str: string): string;
-   367→export type AddHelpTextPosition = 'beforeAll' | 'before' | 'after' | 'afterAll';
-   368→export type HookEvent = 'preSubcommand' | 'preAction' | 'postAction';
-   370→export type OptionValueSource =
-   371→  | LiteralUnion<'default' | 'config' | 'env' | 'cli' | 'implied', string>
-   372→  | undefined;
-   374→export type OptionValues = Record<string, any>;
+   367→export type AddHelpTextPosition …
+   368→export type HookEvent …
+   370→export type OptionValueSource …
+   374→export type OptionValues …
    376→export class Command {
-   384→  constructor(name?: string);
-   398→  version …
-   442→  command …
-   454→  createCommand …
-   463→  addCommand …
-   471→  createArgument …
-   493→  argument(name: string, description?: string, defaultValue?: unknown): this;
-   500→  addArgument …
-   514→  arguments …
-   528→  helpCommand(enable: boolean): this;
-   537→  addHelpCommand …
-   542→  hook …
-   553→  exitOverride …
-   558→  error …
-   564→  createHelp …
-   572→  configureHelp …
-   592→  configureOutput …
-   599→  copyInheritedSettings …
-   604→  showHelpAfterError …
-   609→  showSuggestionAfterError …
-   626→  action …
-   660→  option …
-   685→  requiredOption …
-   699→  createOption …
-   706→  addOption …
-   718→  storeOptionsAsProperties(storeAsProperties?: boolean): this;
-   723→  getOptionValue …
-   728→  setOptionValue …
-   733→  setOptionValueWithSource …
-   742→  getOptionValueSource …
-   747→  getOptionValueSourceWithGlobals …
-   761→  combineFlagAndOptionalValue …
-   768→  allowUnknownOption …
-   775→  allowExcessArguments …
-   785→  enablePositionalOptions …
-   796→  passThroughOptions …
-   819→  parse …
-   840→  parseAsync …
-   851→  saveStateBeforeParse …
-   859→  restoreStateBeforeParse …
-   873→  parseOptions …
-   878→  opts …
-   883→  optsWithGlobals …
-   897→  description …
-   909→  summary …
-   922→  alias …
-   935→  aliases …
-   946→  usage …
-   957→  name …
-   972→  nameFromFilename …
-   990→  executableDir …
-  1001→  helpGroup …
-  1019→  commandsGroup …
-  1037→  optionsGroup …
-  1047→  outputHelp …
-  1052→  helpInformation …
-  1059→  helpOption …
-  1065→  addHelpOption …
-  1074→  help …
-  1083→  addHelpText(
-  1084→    position: AddHelpTextPosition,
-  1085→    text: (context: AddHelpTextContext) => string,
-  1086→  ): this;
-  1091→  on …
+   398→  version(): string | undefined;
+   442→  command(
+   443→    nameAndArgs: string,
+   444→    description: string,
+   445→    opts?: ExecutableCommandOptions,
+   446→  ): this;
+   454→  createCommand(name?: string): Command;
+   463→  addCommand(cmd: Command, opts?: CommandOptions): this;
+   471→  createArgument(name: string, description?: string): Argument;
+   500→  addArgument(arg: Argument): this;
+   514→  arguments(names: string): this;
+   537→  addHelpCommand(enable?: boolean): this;
+   542→  hook(
+   543→    event: HookEvent,
+   544→    listener: (
+   545→      thisCommand: Command,
+   546→      actionCommand: Command,
+   547→    ) => void | Promise<void>,
+   548→  ): this;
+   553→  exitOverride(callback?: (err: CommanderError) => never | void): this;
+   558→  error(message: string, errorOptions?: ErrorOptions): never;
+   564→  createHelp(): Help;
+   572→  configureHelp(): HelpConfiguration;
+   592→  configureOutput(): OutputConfiguration;
+   599→  copyInheritedSettings(sourceCommand: Command): this;
+   604→  showHelpAfterError(displayHelp?: boolean | string): this;
+   609→  showSuggestionAfterError(displaySuggestion?: boolean): this;
+   626→  action(fn: (this: this, ...args: any[]) => void | Promise<void>): this;
+   660→  option(
+   661→    flags: string,
+   662→    description: string,
+   663→    regexp: RegExp,
+   664→    defaultValue?: string | boolean | string[],
+   665→  ): this;
+   685→  requiredOption(
+   686→    flags: string,
+   687→    description: string,
+   688→    regexp: RegExp,
+   689→    defaultValue?: string | boolean | string[],
+   690→  ): this;
+   699→  createOption(flags: string, description?: string): Option;
+   706→  addOption(option: Option): this;
+   723→  getOptionValue(key: string): any;
+   728→  setOptionValue(key: string, value: unknown): this;
+   733→  setOptionValueWithSource(
+   734→    key: string,
+   735→    value: unknown,
+   736→    source: OptionValueSource,
+   737→  ): this;
+   742→  getOptionValueSource(key: string): OptionValueSource | undefined;
+   747→  getOptionValueSourceWithGlobals(key: string): OptionValueSource | undefined;
+   761→  combineFlagAndOptionalValue(combine?: boolean): this;
+   768→  allowUnknownOption(allowUnknown?: boolean): this;
+   775→  allowExcessArguments(allowExcess?: boolean): this;
+   785→  enablePositionalOptions(positional?: boolean): this;
+   796→  passThroughOptions(passThrough?: boolean): this;
+   819→  parse(argv?: readonly string[], parseOptions?: ParseOptions): this;
+   840→  parseAsync(
+   841→    argv?: readonly string[],
+   842→    parseOptions?: ParseOptions,
+   843→  ): Promise<this>;
+   851→  saveStateBeforeParse(): void;
+   859→  restoreStateBeforeParse(): void;
+   873→  parseOptions(argv: string[]): ParseOptionsResult;
+   878→  opts<T extends OptionValues>(): T;
+   883→  optsWithGlobals<T extends OptionValues>(): T;
+   897→  description(): string;
+   909→  summary(): string;
+   922→  alias(): string;
+   935→  aliases(): string[];
+   946→  usage(): string;
+   957→  name(): string;
+   972→  nameFromFilename(filename: string): this;
+   990→  executableDir(): string | null;
+  1001→  helpGroup(): string;
+  1019→  commandsGroup(): string;
+  1037→  optionsGroup(): string;
+  1047→  outputHelp(cb: (str: string) => string): void;
+  1052→  helpInformation(context?: HelpContext): string;
+  1059→  helpOption(flags?: string | boolean, description?: string): this;
+  1065→  addHelpOption(option: Option): this;
+  1074→  help(cb: (str: string) => string): never;
+  1091→  on(event: string | symbol, listener: (...args: any[]) => void): this;
   1094→export interface CommandOptions {
   1100→export interface ExecutableCommandOptions extends CommandOptions {
   1104→export interface ParseOptionsResult {
-  1113→export const program: Command;
+  1113→export const program …

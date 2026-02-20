@@ -2,10 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1004 tokens)
-
-CHANGELOG.md
-     1→# neverthrow
+budget: 1000 (1001 tokens)
 
 README.md
      1→# NeverThrow 🙅
@@ -15,74 +12,62 @@ README.md
     79→## Recommended: Use `eslint-plugin-neverthrow`
    100→## Top-Level API
    139→## API Documentation
-   141→### Synchronous API (`Result`)
-   863→### Asynchronous API (`ResultAsync`)
-  1519→### Utilities
-  1633→### Testing
   1673→## A note on the Package Name
-  1681→### License
 
 package.json
 
 src/_internals/error.ts
      1→import { Result } from '../result'
      3→export interface ErrorConfig {
-     4→  withStackTrace: boolean
-     5→}
-     7→const defaultErrorConfig: ErrorConfig = {
-    11→interface NeverThrowError<T, E> {
     27→export const createNeverThrowError …
 
 src/_internals/utils.ts
-     1→import { Result, ok, err } from '../result'
-     2→import { ResultAsync } from '../result-async'
-     5→export type ExtractOkTypes …
-    10→export type ExtractOkAsyncTypes …
-    15→export type ExtractErrTypes …
-    20→export type ExtractErrAsyncTypes …
-    24→export type InferOkTypes …
-    25→export type InferErrTypes …
-    27→export type InferAsyncOkTypes …
-    28→export type InferAsyncErrTypes …
-    31→ * Short circuits on the FIRST Err value that we find
-    33→export const combineResultList = <T, E>(
-    34→  resultList: readonly Result<T, E>[],
-    35→): Result<readonly T[], E> => {
+    33→export const combineResultList …
     54→export const combineResultAsyncList = <T, E>(
-    62→ * Give a list of all the errors we find
-    64→export const combineResultListWithAllErrors = <T, E>(
-    65→  resultList: readonly Result<T, E>[],
-    66→): Result<readonly T[], E[]> => {
+    64→export const combineResultListWithAllErrors …
     82→export const combineResultAsyncListWithAllErrors = <T, E>(
 
 src/result-async.ts
-     1→import type { …
-    10→import { Err, Ok, Result } from './ …
-    11→import { …
-    22→export class ResultAsync<T, E> implements PromiseLike<Result<T, E>> {
-    23→  private _promise: Promise<Result<T, E>>
-    24→
-   211→   * @deprecated will be removed in 9.0.0.
-   212→   *
-      →   …
+    22→export class ResultAsync …
+    25→  constructor …
+    30→  static fromSafePromise …
+    37→  static fromPromise …
+    46→  static fromThrowable …
+    69→  static combine …
+    81→  static combineWithAllErrors …
+    89→  map …
+   101→  andThrough …
+   117→  andTee …
+   133→  orTee …
+   149→  mapErr …
+   169→  andThen …
+   190→  orElse …
+   202→  match …
+   206→  unwrapOr …
    222→  async *safeUnwrap(): AsyncGenerator<Err<never, E>, T> {
-   259→export const fromPromise …
-   260→export const fromSafePromise …
-   262→export const fromAsyncThrowable …
-   265→export type CombineResultAsyncs …
-   272→export type CombineResultsWithAllErrorsArrayAsync …
+   227→  then …
+   249→export function okAsync …
+   255→export function errAsync …
 
 src/result.ts
     14→export namespace Result {
     15→  /**
+    23→  export function fromThrowable …
+    43→  export function combine …
+    55→  export function combineWithAllErrors …
     62→export type Result …
-   134→interface IResult<T, E> {
+    66→export function ok …
+    73→export function err …
+   122→export function safeTry …
    140→  isOk …
    147→  isErr …
    157→  map …
    168→  mapErr …
+   183→  andThen …
    195→  andTee …
    207→  orTee …
+   219→  andThrough …
+   233→  orElse …
    244→  asyncAndThen …
    253→  asyncMap …
    260→  unwrapOr …
@@ -90,8 +75,40 @@ src/result.ts
    290→  safeUnwrap …
    299→  _unsafeUnwrap …
    309→  _unsafeUnwrapErr …
-   312→export class Ok<T, E> implements IResult<T, E> {
-   419→export class Err<T, E> implements IResult<T, E> {
+   312→export class Ok …
+   313→  constructor …
+   315→  isOk …
+   319→  isErr …
+   323→  map …
+   328→  mapErr …
+   337→  andThen …
+   344→  andThrough …
+   348→  andTee …
+   357→  orTee …
+   366→  orElse …
+   370→  asyncAndThen …
+   379→  asyncAndThrough …
+   383→  asyncMap …
+   388→  unwrapOr …
+   393→  match …
+   397→  safeUnwrap …
+   419→export class Err …
+   420→  constructor …
+   422→  isOk …
+   426→  isErr …
+   431→  map …
+   435→  mapErr …
+   439→  andThrough …
+   443→  andTee …
+   447→  orTee …
+   461→  andThen …
+   470→  orElse …
+   475→  asyncAndThen …
+   479→  asyncAndThrough …
+   484→  asyncMap …
+   488→  unwrapOr …
+   492→  match …
+   496→  safeUnwrap …
    523→export const fromThrowable …
    614→export type Transpose …
    635→export type Combine …

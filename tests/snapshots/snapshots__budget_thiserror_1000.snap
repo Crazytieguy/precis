@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (998 tokens)
+budget: 1000 (1004 tokens)
 
 Cargo.toml
      1→[package]
@@ -19,8 +19,6 @@ README.md
    223→#### License
 
 build/probe.rs
-    11→struct MyError(Thing);
-    12→struct Thing;
     15→    fn fmt …
     21→    fn fmt …
     27→    fn provide …
@@ -31,9 +29,13 @@ impl/Cargo.toml
     14→[dependencies]
 
 impl/src/ast.rs
+    10→pub enum Input<'a> {
+    15→pub struct Struct<'a> {
+    22→pub struct Enum<'a> {
+    29→pub struct Variant<'a> {
+    36→pub struct Field<'a> {
     45→pub enum ContainerKind {
     46→    Struct,
-    47→    TupleStruct,
       →    …
     55→    pub fn from_syn …
    175→    fn fmt …
@@ -46,13 +48,12 @@ impl/src/attr.rs
     45→pub struct Transparent<'a> {
     51→pub struct Fmt<'a> {
     57→pub enum Trait {
+    69→pub fn get …
+   303→    fn to_tokens …
+   343→    fn to_tokens …
 
 impl/src/expand.rs
-    12→pub fn derive(input: &DeriveInput) -> TokenStream {
-
-impl/src/fmt.rs
-    16→    pub fn expand_shorthand …
-   172→fn explicit_named_args …
+    12→pub fn derive …
 
 impl/src/generics.rs
      8→pub struct ParamsInScope<'a> {
@@ -67,8 +68,7 @@ impl/src/unraw.rs
     12→pub struct IdentUnraw(Ident);
     82→pub enum MemberUnraw {
     83→    Named(IdentUnraw),
-    84→    Unnamed(Index),
-    85→}
+      →    …
 
 rust-toolchain.toml
      1→[toolchain]
@@ -76,15 +76,14 @@ rust-toolchain.toml
 src/aserror.rs
      5→pub trait AsDynError<'a>: Sealed {
      6→    fn as_dyn_error(&self) -> &(dyn Error + 'a);
-    11→    fn as_dyn_error …
-    18→    fn as_dyn_error …
-    25→    fn as_dyn_error …
-    32→    fn as_dyn_error …
-    39→    fn as_dyn_error …
+    11→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
+    18→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
+    25→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
+    32→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
+    39→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
     45→pub trait Sealed {}
 
 src/display.rs
-     3→use std::path::{self, Path, PathBuf};
      6→pub trait AsDisplay<'a>: Sealed {
     11→    fn as_display …
     18→    type Target = &'a T;
@@ -95,7 +94,6 @@ src/display.rs
     40→    fn as_display(&'a self) -> Self::Target {
     46→pub trait Sealed {}
     59→mod placeholder {
-    60→    use super::{AsDisplay, Sealed};
     63→    #[allow(dead_code)]
     64→    pub struct Placeholder;
     67→        type Target = Self;
@@ -114,11 +112,11 @@ src/private.rs
 
 src/provide.rs
      4→pub trait ThiserrorProvide: Sealed {
-     5→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>);
+     5→    fn thiserror_provide …
     12→    #[inline]
     13→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>) {
     19→pub trait Sealed {}
 
 src/var.rs
      3→pub struct Var<'a, T: ?Sized>(pub &'a T);
-     6→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+     6→    fn fmt …

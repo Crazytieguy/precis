@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3999 tokens)
+budget: 4000 (4013 tokens)
 
 BuildMany.ts
      1→import { Iterator, IsOptionalKeysOf, UpdateAt, ValueOf } from './helpers';
@@ -15,16 +15,27 @@ DeepExclude.ts
      3→export type DeepExclude<a, b> = Exclude<DistributeMatchingUnions<a, b>, b>;
 
 DistributeUnions.ts
-     1→import { BuildMany } from './BuildMany …
-     2→import type { …
-    15→import { IsMatching } from './IsMatching …
+     1→import { BuildMany } from './BuildMany';
+     2→import type {
+     3→  IsAny,
+     4→  Values,
+     5→  Flatten,
+     6→  IsUnion,
+     7→  IsPlainObject,
+     8→  Length,
+     9→  UnionToTuple,
+    10→  IsReadonlyArray,
+    11→  ValueOf,
+    12→  MaybeAddReadonly,
+    13→  IsStrictArray,
+    14→} from './helpers';
+    15→import { IsMatching } from './IsMatching';
     18→ * DistributeMatchingUnions takes two arguments:
     19→ * - a data structure of type `a` containing unions
     20→ * - a pattern `p`, matching this data structure
     21→ * and turns it into a union of all possible
     22→ * combination of each unions contained in `a` that matches `p`.
     23→ *
-    24→ * It does this in 3 main steps:
       → …
     41→export type DistributeMatchingUnions<a, p> = IsAny<a> extends true
     42→  ? any
@@ -36,7 +47,6 @@ DistributeUnions.ts
     66→ * doesn't rule anything out. You can still have
     67→ * a (A|B)[] afterward. The same logic goes for Set and Maps.
     68→ *
-    69→ * Kinds are types of types.
       → …
     80→export type FindUnions<
     81→  a,
@@ -147,7 +157,6 @@ Match.ts
    132→  with …
    154→   * `.when(predicate, handler)` Registers a predicate function and an handler function.
    155→   * If the predicate returns true, the handler function will be called.
-   156→   *
       →   …
    159→  when<pred extends (value: i) => unknown, c, value extends GuardValue<pred>>(
    160→    predicate: pred,
@@ -162,18 +171,16 @@ Match.ts
    169→    : Match<i, o, handledCases, Union<inferredOutput, c>>;
    172→   * `.otherwise()` takes a **default handler function** that will be
    173→   * called if no previous pattern matched your input.
-   174→   *
       →   …
    180→  otherwise<c>(
    181→    handler: (value: i) => PickReturnValue<o, c>
    182→  ): PickReturnValue<o, Union<inferredOutput, c>>;
    201→   * `.run()` return the resulting value.
    202→   *
-   203→   * ⚠️ calling this function is unsafe, and may throw if no pattern matches your input.
+      →   …
    205→  run(): PickReturnValue<o, inferredOutput>;
    217→   * `.narrow()` narrows the input type to exclude all cases that have previously been handled.
    218→   *
-   219→   * `.narrow()` is only useful if you want to excluded cases from union types or nullable
       →   …
    225→  narrow(): Match<DeepExcludeAll<i, handledCases>, o, [], inferredOutput>;
    245→type DeepExcludeAll<a, tupleList extends any[]> = [a] extends [never]
