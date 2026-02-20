@@ -502,7 +502,7 @@ fn split_large_groups(groups: Vec<Group>) -> Vec<Group> {
         }
         // Split into roughly equal sub-groups.
         // ceiling division: number of sub-groups needed
-        let n_subgroups = (count + MAX_GROUP_SIZE - 1) / MAX_GROUP_SIZE;
+        let n_subgroups = count.div_ceil(MAX_GROUP_SIZE);
         let base_size = count / n_subgroups;
         let remainder = count % n_subgroups;
         let mut offset = 0;
