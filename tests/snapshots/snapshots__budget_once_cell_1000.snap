@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1000 tokens)
+budget: 1000 (999 tokens)
 
 Cargo.toml
      1→[package]
@@ -21,11 +21,14 @@ README.md
      8→# Overview
     47→# Related crates
 
+src/imp_cs.rs
+     6→use crate::unsync;
+
 src/imp_std.rs
-     6→use std::{ …
     14→pub(crate) struct OnceCell<T> {
    138→struct Waiter {
    145→struct Guard<'a> {
+   151→    fn drop(&mut self) {
    245→mod strict {
 
 src/lib.rs
@@ -78,8 +81,6 @@ src/lib.rs
   1412→pub mod race;
 
 src/race.rs
-    31→use core::sync::atomic;
-    33→use portable_atomic as atomic;
     43→pub struct OnceNonZeroUsize {
     50→    pub const fn new …
     56→    pub fn get …

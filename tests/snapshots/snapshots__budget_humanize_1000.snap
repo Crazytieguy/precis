@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1002 tokens)
+budget: 1000 (1001 tokens)
 
 README.md
      1→# humanize
@@ -47,16 +47,18 @@ src/humanize/__init__.py
     28→__all__ = [
 
 src/humanize/filesize.py
-     5→from math import log
+     5→from math …
     36→def naturalsize …
 
 src/humanize/i18n.py
-     5→import gettext as gettext_module
-     6→from threading import local
+     5→import gettext …
+     6→from threading …
      8→TYPE_CHECKING = False
-    10→    import os
-    11→    import pathlib
+    10→    import os …
+    11→    import pathlib …
     13→__all__ = ["activate", "deactivate", "decimal_separator", "thousands_separator"]
+    15→_TRANSLATIONS …
+    18→_CURRENT …
     22→_THOUSANDS_SEPARATOR = {
     31→_DECIMAL_SEPARATOR = {
     51→def get_translation() -> gettext_module.NullTranslations:
@@ -69,7 +71,7 @@ src/humanize/i18n.py
 
 src/humanize/lists.py
      5→TYPE_CHECKING = False
-     7→    from typing import Any
+     7→    from typing …
      9→__all__ = ["natural_list"]
     12→def natural_list(items: list[Any]) -> str:
     13→    """Natural list.
@@ -84,7 +86,6 @@ src/humanize/number.py
     10→from .i18n import _pgettext as P_
     12→TYPE_CHECKING = False
     14→    from typing import TypeAlias
-    21→def _format_not_finite …
     34→def ordinal …
    110→def intcomma …
    195→def intword …
@@ -95,15 +96,10 @@ src/humanize/number.py
    531→def metric …
 
 src/humanize/time.py
-     8→from enum import Enum
-     9→from functools import total_ordering
     11→from .i18n import _gettext as _
     12→from .i18n import _ngettext
     13→from .number import intcomma
     15→TYPE_CHECKING = False
-    17→    import datetime as dt
-    18→    from collections.abc import Iterable
-    19→    from typing import Any
     21→__all__ = [
     31→class Unit(Enum):
     32→    MICROSECONDS = 0
@@ -115,3 +111,9 @@ src/humanize/time.py
    311→def naturalday …
    343→def naturaldate …
    451→def precisedelta …
+
+tests/test_time.py
+    17→ONE_MICROSECOND = 1 / 1000000
+    23→ONE_HOUR = 3600
+    37→class FakeDate:
+    61→def test_date_and_delta() -> None:

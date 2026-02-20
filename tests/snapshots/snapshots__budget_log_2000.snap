@@ -18,11 +18,12 @@ README.md
 
 src/__private_api.rs
     10→pub type Value<'a> = &'a str;
+    12→mod sealed {
     14→    pub trait KVs<'a> {
     39→pub struct GlobalLogger;
    108→pub fn loc …
    113→mod kv_support {
-   116→    pub type Value<'a> = kv::Value<'a>;
+   116→    pub type Value …
    135→    pub fn capture_error …
    140→    pub fn capture_sval …
    145→    pub fn capture_serde …
@@ -104,8 +105,6 @@ src/kv/value.rs
    524→    fn visit_error …
    530→    fn visit_borrowed_error …
    610→    use super::*;
-   612→    pub use value_bag::ValueBag as Inner;
-   614→    pub use value_bag::Error;
    735→    use super::*;
    738→    pub enum Inner<'v> {
   1055→    pub fn capture_debug …
@@ -197,6 +196,11 @@ src/macros.rs
    292→macro_rules! debug {
    336→macro_rules! trace {
    391→macro_rules! log_enabled {
+
+test_max_level_features/Cargo.toml
+     1→[package]
+     7→[[bin]]
+    11→[dependencies.log]
 
 triagebot.toml
      1→[assign]

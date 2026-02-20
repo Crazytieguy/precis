@@ -15,13 +15,14 @@ Cargo.toml
 src/into_either.rs
      4→use super::{Either, Left, Right};
     14→pub trait IntoEither: Sized {
-    29→    fn into_either …
-    55→    fn into_either_with …
-    64→impl<T> IntoEither for T {}
+    29→    fn into_either(self, into_left: bool) -> Either<Self, Self> {
+    55→    fn into_either_with<F>(self, into_left: F) -> Either<Self, Self>
+    56→    where
+    57→        F: FnOnce(&Self) -> bool,
+    58→    {
 
 src/iterator.rs
      1→use super::{for_both, Either, Left, Right};
-     2→use core::iter;
      4→macro_rules! wrap_either {
     13→/// Iterator that maps left or right iterators to corresponding `Either`-wrapped items.
     14→///
@@ -33,8 +34,6 @@ src/iterator.rs
 src/lib.rs
     22→pub mod serde_untagged;
     25→pub mod serde_untagged_optional;
-    35→use std::error::Error;
-    37→use std::io::{self, BufRead, Read, Seek, SeekFrom, Write};
     39→pub use crate::Either::{Left, Right};
     49→pub enum Either<L, R> {
     50→    /// A value of type `L`.

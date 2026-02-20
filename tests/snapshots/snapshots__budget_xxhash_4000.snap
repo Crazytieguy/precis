@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4050 tokens)
+budget: 4000 (4046 tokens)
 
 README.md
      1→# xxhash
@@ -39,13 +39,27 @@ README.md
     37→github.com/cespare/xxhash/v2:
     38→
     39→* 1.9.7+ for Go 1.9
-      →…
+    40→* 1.10.3+ for Go 1.10
+    41→* Go 1.11 or later
+    42→
+    43→I recommend using the latest release of Go.
+    44→
     45→## Benchmarks
     47→Here are some quick benchmarks comparing the pure-Go and assembly
     48→implementations of Sum64.
     49→
     50→| input size | purego    | asm       |
     51→| ---------- | --------- | --------- |
+    52→| 4 B        |  1.3 GB/s |  1.2 GB/s |
+    53→| 16 B       |  2.9 GB/s |  3.5 GB/s |
+    54→| 100 B      |  6.9 GB/s |  8.1 GB/s |
+    55→| 4 KB       | 11.7 GB/s | 16.7 GB/s |
+    56→| 10 MB      | 12.0 GB/s | 17.3 GB/s |
+    57→
+    58→These numbers were generated on Ubuntu 20.04 with an Intel Xeon Platinum 8252C
+    59→CPU using the following commands under Go 1.19.2:
+    60→
+    61→```
       →…
     66→## Projects using this package
     68→- [InfluxDB](https://github.com/influxdata/influxdb)
@@ -53,13 +67,11 @@ README.md
     70→- [VictoriaMetrics](https://github.com/VictoriaMetrics/VictoriaMetrics)
     71→- [FreeCache](https://github.com/coocood/freecache)
     72→- [FastCache](https://github.com/VictoriaMetrics/fastcache)
-      →…
+    73→- [Ristretto](https://github.com/dgraph-io/ristretto)
+    74→- [Badger](https://github.com/dgraph-io/badger)
 
 bench_test.go
-     3→import (
-     4→	"strings"
-     5→	"testing"
-     6→)
+     3→import …
      8→var benchmarks = []struct {
     19→func BenchmarkSum64(b *testing.B) {
     34→func BenchmarkSum64String(b *testing.B) {
@@ -86,13 +98,7 @@ dynamic/dynamic_test.go
       →	…
 
 dynamic/plugin.go
-     6→import (
-     7→	"fmt"
-     8→	"log"
-     9→	"testing"
-    10→
-    11→	"github.com/cespare/xxhash/v2"
-    12→)
+     6→import …
     14→const (
     15→	in   = "Call me Ishmael. Some years ago--never mind how long precisely-"
     16→	want = uint64(0x02a2e85470d6fd96)
@@ -117,11 +123,7 @@ dynamic/plugin.go
       →				…
 
 xxhash.go
-     5→import (
-     6→	"encoding/binary"
-     7→	"errors"
-     8→	"math/bits"
-     9→)
+     5→import …
     11→const (
     12→	prime1 uint64 = 11400714785074694791
     13→	prime2 uint64 = 14029467366897019727
@@ -245,12 +247,6 @@ xxhash_other.go
     20→		v3 := uint64(0)
     21→		v4 := -primes[0]
     22→		for len(b) >= 32 {
-    23→			v1 = round(v1, u64(b[0:8:len(b)]))
-    24→			v2 = round(v2, u64(b[8:16:len(b)]))
-    25→			v3 = round(v3, u64(b[16:24:len(b)]))
-    26→			v4 = round(v4, u64(b[24:32:len(b)]))
-    27→			b = b[32:len(b):len(b)]
-    28→		}
       →		…
     64→func writeBlocks(d *Digest, b []byte) int {
 
@@ -296,7 +292,7 @@ xxhash_unsafe.go
     50→	return len(s), nil
     51→}
     53→// sliceHeader is similar to reflect.SliceHeader, but it assumes that the layout
-    54→// of the first two words is the same as the layout of a string.
+      →…
     55→type sliceHeader struct {
     56→	s   string
     57→	cap int
@@ -330,13 +326,7 @@ xxhashbench/xxhashbench_test.go
    159→func benchmarkHashString(b *testing.B, input string, fn func(string) uint64) {
 
 xxhsum/xxhsum.go
-     3→import (
-     4→	"fmt"
-     5→	"io"
-     6→	"os"
-     7→
-     8→	"github.com/cespare/xxhash/v2"
-     9→)
+     3→import …
     11→func main() {
     34→func contains(ss []string, s string) bool {
     43→func printHash(r io.Reader, name string) {

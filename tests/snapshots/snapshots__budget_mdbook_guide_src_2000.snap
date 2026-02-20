@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2011 tokens)
+budget: 2000 (2021 tokens)
 
 404.md
      1→# Document not found (404)
@@ -33,6 +33,7 @@ cli/build.md
      1→# The build command
      3→The build command is used to render your book:
      4→
+     5→```bash
       →…
     16→#### Specify a directory
     25→#### `--open`
@@ -40,6 +41,10 @@ cli/build.md
 
 cli/clean.md
      1→# The clean command
+     3→The clean command is used to delete the generated book and any other build
+     4→artifacts.
+     5→
+      →…
     10→#### Specify a directory
     19→#### `--dest-dir`
 
@@ -107,11 +112,6 @@ for_developers/mdbook-wordcount/Cargo.toml
      6→[dependencies]
 
 for_developers/mdbook-wordcount/src/main.rs
-     6→use std::process;
-     7→use std::fs::{self, File};
-     8→use std::io::{self, Write};
-     9→use mdbook::renderer::RenderContext;
-    10→use mdbook::book::{BookItem, Chapter};
     12→fn main() {
     40→fn count_words(ch: &Chapter) -> usize {
     44→#[derive(Debug, Default, Serialize, Deserialize)]
@@ -131,10 +131,13 @@ format/README.md
      1→# Format
      3→In this section you will learn how to:
      4→
+     5→- Structure your book correctly
       →…
 
 format/configuration/README.md
      1→# Configuration
+     3→This section details the configuration options available in the ***book.toml***:
+      →…
 
 format/configuration/environment-variables.md
      1→# Environment variables

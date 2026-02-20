@@ -728,10 +728,15 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
         },
         // Imports: supplementary context for understanding file dependencies.
         // Lower base value since they're not API surface, but still useful.
+        // 1st-party imports (local modules) are higher value at Signatures
+        // stage because they reveal internal module structure. 3rd-party
+        // imports (stdlib, external packages) are low value at Signatures —
+        // knowing a file uses `from typing import Any` adds no insight;
+        // the Names stage (`from typing …`) is sufficient.
         KindCategory::Import => match stage {
             StageKind::FilePath => 0.3,
             StageKind::Names => 1.0,
-            StageKind::Signatures => 0.5,
+            StageKind::Signatures => if key.is_first_party { 0.5 } else { 0.1 },
             _ => 0.1,
         },
         // Constants: signature captures the value for short constants;

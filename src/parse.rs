@@ -965,8 +965,6 @@ fn compute_doc_start_line(symbol_node: tree_sitter::Node, source: &str, lang: La
     // Find the nearest doc comment above this symbol.
     // Check the symbol's own prev sibling first, then wrapper parent nodes
     // (export_statement for TypeScript, decorated_definition for Python decorators).
-    // Gap limit: allow at most 1 blank line between doc comment and symbol/wrapper.
-    // Larger gaps indicate section separators, not doc comments.
     // Max gap of 2 rows (allows 1 blank line between doc comment and symbol/wrapper).
     // Larger gaps indicate section separators, not doc comments.
     let max_gap = 2;

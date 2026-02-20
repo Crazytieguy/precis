@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4035 tokens)
+budget: 4000 (4023 tokens)
 
 CHANGELOG.md
      1→# 1.8.0 (Nov 28, 2025)
@@ -50,13 +50,7 @@ README.md
     67→request.
 
 constraint.go
-     6→import (
-     7→	"fmt"
-     8→	"regexp"
-     9→	"sort"
-    10→	"strings"
-    11→	"sync"
-    12→)
+     6→import …
     14→var (
     15→	constraintRegexp     *regexp.Regexp
     16→	constraintRegexpOnce sync.Once
@@ -78,8 +72,7 @@ constraint.go
     48→type constraintFunc func(v, c *Version) bool
     50→type constraintOperation struct {
     51→	op operator
-    52→	f  constraintFunc
-    53→}
+      →	…
     55→// NewConstraint will parse one or more constraints from the given
     56→// constraint string. The string must be a comma-separated list of
     57→// constraints.
@@ -88,7 +81,6 @@ constraint.go
     60→	result := make([]*Constraint, len(vs))
     61→	for i, single := range vs {
     62→		c, err := parseSingle(single)
-    63→		if err != nil {
       →		…
     73→// MustConstraints is a helper that wraps a call to a function
     74→// returning (Constraints, error) and panics if error is non-nil.
@@ -97,16 +89,14 @@ constraint.go
     77→		panic(err)
     78→	}
     79→
-    80→	return c
-      →	…
+      →…
     83→// Check tests if a version satisfies all the constraints.
     84→func (cs Constraints) Check(v *Version) bool {
     85→	for _, c := range cs {
     86→		if !c.Check(v) {
     87→			return false
     88→		}
-    89→	}
-      →	…
+      →		…
     94→// Equals compares Constraints with other Constraints
     95→// for equality. This may not represent logical equivalence
     96→// of compared constraints.
@@ -120,8 +110,7 @@ constraint.go
    104→		return false
    105→	}
    106→
-   107→	// make copies to retain order of the original slices
-      →	…
+      →…
    125→func (cs Constraints) Len() int {
    126→	return len(cs)
    127→}
@@ -133,8 +122,7 @@ constraint.go
    134→		return false
    135→	}
    136→
-   137→	return cs[i].check.LessThan(cs[j].check)
-   138→}
+      →…
    140→func (cs Constraints) Swap(i, j int) {
    141→	cs[i], cs[j] = cs[j], cs[i]
    142→}
@@ -144,8 +132,7 @@ constraint.go
    147→	for i, c := range cs {
    148→		csStr[i] = c.String()
    149→	}
-   150→
-      →…
+      →	…
    154→// Check tests if a constraint is validated by the given version.
    155→func (c *Constraint) Check(v *Version) bool {
    156→	return c.f(v, c.check)
@@ -190,15 +177,7 @@ constraint_test.go
    232→func TestConstraintsString(t *testing.T) {
 
 version.go
-     6→import (
-     7→	"database/sql/driver"
-     8→	"fmt"
-     9→	"regexp"
-    10→	"strconv"
-    11→	"strings"
-    12→	"sync"
-    13→)
-    15→// The compiled regular expression used to test the validity of a version.
+     6→import …
     16→var (
     17→	versionRegexp     *regexp.Regexp
     18→	versionRegexpOnce sync.Once
@@ -206,8 +185,6 @@ version.go
     20→	semverRegexpOnce  sync.Once
     23→func getVersionRegexp() *regexp.Regexp {
     30→func getSemverRegexp() *regexp.Regexp {
-    37→// The raw regular expression string used for testing the validity
-    38→// of a version.
     39→const (
     40→	VersionRegexpRaw string = `v?([0-9]+(\.[0-9]+)*?)` +
     45→	// SemverRegexpRaw requires a separator between version and prerelease
@@ -235,7 +212,8 @@ version.go
    123→// returns -1, 0, or 1 if this version is smaller, equal,
    124→// or larger than the other version, respectively.
    125→//
-      →…
+   126→// If you want boolean results, use the LessThan, Equal,
+   127→// GreaterThan, GreaterThanOrEqual or LessThanOrEqual methods.
    128→func (v *Version) Compare(other *Version) int {
    196→func (v *Version) equalSegments(other *Version) bool {
    211→func allZero(segs []int64) bool {
@@ -258,31 +236,35 @@ version.go
    345→// string.
    346→//
    347→// Metadata is anything that comes after the "+" in the version.
-      →…
+   348→// For example, with "1.2.3+beta", the metadata is "beta".
    349→func (v *Version) Metadata() string {
    353→// Prerelease returns any prerelease data that is part of the version,
    354→// or blank if there is no prerelease data.
    355→//
    356→// Prerelease information is anything that comes after the "-" in the
-      →…
+   357→// version (but before any metadata). For example, with "1.2.3-beta",
+   358→// the prerelease information is "beta".
    359→func (v *Version) Prerelease() string {
    363→// Segments returns the numeric segments of the version as a slice of ints.
    364→//
    365→// This excludes any metadata or pre-release information. For example,
    366→// for a version "1.2.3-beta", segments will return a slice of
-      →…
+   367→// 1, 2, 3.
    368→func (v *Version) Segments() []int {
    376→// Segments64 returns the numeric segments of the version as a slice of int64s.
    377→//
    378→// This excludes any metadata or pre-release information. For example,
    379→// for a version "1.2.3-beta", segments will return a slice of
-      →…
+   380→// 1, 2, 3.
    381→func (v *Version) Segments64() []int64 {
    387→// String returns the full version string included pre-release
    388→// and metadata information.
    389→//
    390→// This value is rebuilt according to the parsed segments and other
-      →…
+   391→// information. Therefore, ambiguities in the version string such as
+   392→// prefixed zeroes (1.04.0 => 1.4.0), `v` prefix (v1.0.0 => 1.0.0), and
+   393→// missing parts (1.0 => 1.0.0) will be made into a canonicalized form
+   394→// as shown in the parenthesized examples.
    395→func (v *Version) String() string {
    399→func (v *Version) bytes() []byte {
    421→// Original returns the original parsed version as-is, including any
@@ -315,8 +297,7 @@ version_collection_test.go
      6→import …
     12→func TestCollection(t *testing.T) {
     13→	versionsRaw := []string{
-    14→		"1.1.1",
-      →		…
+      →	…
 
 version_test.go
      6→import …

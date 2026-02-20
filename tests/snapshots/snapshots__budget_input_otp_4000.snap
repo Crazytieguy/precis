@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4007 tokens)
+budget: 4000 (4011 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -138,10 +138,6 @@ apps/storybook/tsconfig.node.json
      8→  "include": ["vite.config.ts"]
      9→}
 
-apps/storybook/vite.config.js
-     1→import { defineConfig } from 'vite'
-     2→import react from '@vitejs/plugin-react'
-
 apps/test/README.md
      3→## Getting Started
     23→## Learn More
@@ -235,8 +231,11 @@ apps/website/src/app/(local-pages)/shadcn/page.tsx
 apps/website/src/app/(local-pages)/shadcn/pwmb/page.tsx
     13→export default function ShadcnPage() {
 
+apps/website/src/app/(local-pages)/shadcn/static/page.tsx
+     5→export default async function StaticPage(pageProps: any) {
+
 apps/website/src/app/(pages)/(home)/page.tsx
-    19→const fadeUpClassname =
+    13→import { Showcase } from './_components/showcase'
     34→export default async function IndexPage() {
    148→export const revalidate = 3600
 

@@ -2,7 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4001 tokens)
+budget: 4000 (4017 tokens)
+
+CHANGELOG.md
+     1→# Changelog
 
 Cargo.toml
      1→[package]
@@ -22,10 +25,9 @@ README.md
      8→# Overview
     47→# Related crates
 
+examples/regex.rs
+
 src/imp_cs.rs
-     1→use core::panic::{RefUnwindSafe, UnwindSafe};
-     3→use critical_section::{CriticalSection, Mutex};
-     4→use portable_atomic::{AtomicBool, Ordering};
      6→use crate::unsync;
      8→pub(crate) struct OnceCell<T> {
     20→unsafe impl<T: Sync + Send> Sync for OnceCell<T> {}
@@ -207,6 +209,8 @@ src/race.rs
     38→use core::num::NonZeroUsize;
     39→use core::ptr;
     43→pub struct OnceNonZeroUsize {
+    44→    inner: AtomicUsize,
+      →    …
     47→impl OnceNonZeroUsize {
     50→    pub const fn new() -> Self {
     56→    pub fn get(&self) -> Option<NonZeroUsize> {
@@ -223,6 +227,8 @@ src/race.rs
    150→    fn init<E>(&self, f: impl FnOnce() -> Result<NonZeroUsize, E>) -> Result<NonZeroUsize, E> {
    160→    fn compare_exchange(&self, val: NonZeroUsize) -> Result<usize, usize> {
    167→pub struct OnceBool {
+   168→    inner: OnceNonZeroUsize,
+      →    …
    171→impl OnceBool {
    174→    pub const fn new() -> Self {
    180→    pub fn get(&self) -> Option<bool> {
@@ -238,6 +244,8 @@ src/race.rs
    221→    fn from_usize(value: NonZeroUsize) -> bool {
    226→    fn to_usize(value: bool) -> NonZeroUsize {
    232→pub struct OnceRef<'a, T> {
+   233→    inner: AtomicPtr<T>,
+      →    …
    238→unsafe impl<'a, T: Sync> Sync for OnceRef<'a, T> {}
    240→impl<'a, T> core::fmt::Debug for OnceRef<'a, T> {
    241→    fn fmt …
@@ -264,6 +272,8 @@ src/race.rs
    356→    use core::{marker::PhantomData, ptr};
    358→    use alloc::boxed::Box;
    361→    pub struct OnceBox<T> {
+   362→        inner: AtomicPtr<T>,
+      →        …
    366→    impl<T> core::fmt::Debug for OnceBox<T> {
    367→        fn fmt …
    372→    impl<T> Default for OnceBox<T> {
@@ -300,6 +310,3 @@ xtask/src/main.rs
    116→fn push_toolchain …
    126→fn section …
    136→fn defer …
-
-xtask/src/tidy.rs
-     1→use xshell::{cmd, Shell};

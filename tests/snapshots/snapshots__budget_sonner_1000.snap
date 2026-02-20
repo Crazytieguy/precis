@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1002 tokens)
+budget: 1000 (997 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
@@ -50,8 +50,6 @@ src/hooks.tsx
      3→export const useIsDocumentHidden = () => {
 
 src/index.tsx
-     3→import React from 'react';
-     4→import ReactDOM from 'react-dom';
      6→import { CloseIcon, getAsset, Loader } from './assets …
      7→import { useIsDocumentHidden } from './hooks …
      8→import { toast, ToastState } from './state …
@@ -61,6 +59,7 @@ src/index.tsx
 src/state.ts
      1→import type { …
     11→import React from 'react';
+    15→type titleT …
     17→class Observer {
     22→  constructor …
     29→  subscribe …
@@ -78,6 +77,7 @@ src/state.ts
    243→  custom …
    249→  getActiveToasts …
    254→export const ToastState = new Observer();
+   279→const basicToast …
    285→export const toast = Object.assign(
 
 src/types.ts
@@ -115,4 +115,4 @@ turbo.json
      3→  "extends": ["//"],
      4→  "pipeline": {
     12→  }
-      →  …
+    13→}

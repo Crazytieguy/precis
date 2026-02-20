@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2010 tokens)
+budget: 2000 (2015 tokens)
 
 README.md
      1→# xxhash
@@ -98,7 +98,6 @@ xxhash_asm.go
     10→//
     11→//go:noescape
     12→func Sum64(b []byte) uint64
-    14→//go:noescape
     15→func writeBlocks(d *Digest, b []byte) int
 
 xxhash_other.go
@@ -136,9 +135,7 @@ xxhash_test.go
    170→func TestAllocs(t *testing.T) {
 
 xxhash_unsafe.go
-     9→import (
-    10→	"unsafe"
-    11→)
+     9→import …
     36→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
     37→// It may be faster than Sum64([]byte(s)) by avoiding a copy.
     38→func Sum64String(s string) uint64 {
@@ -158,6 +155,8 @@ xxhash_unsafe.go
 xxhash_unsafe_test.go
      6→import …
     13→func TestStringAllocs(t *testing.T) {
+    29→// This test is inspired by the Go runtime tests in https://go.dev/cl/57410.
+      →…
     31→func TestInlining(t *testing.T) {
 
 xxhashbench/xxhashbench_test.go

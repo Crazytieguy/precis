@@ -2,10 +2,9 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1987 tokens)
+budget: 2000 (1981 tokens)
 
 error.rs
-     1→use std::fmt;
      3→/// An error encountered while working with structured data.
      4→#[derive(Debug)]
      5→pub struct Error {
@@ -17,7 +16,6 @@ error.rs
     37→    pub(super) fn into_value …
     69→mod std_support {
     70→    use super::*;
-    71→    use std::{error, io};
     77→        pub fn boxed<E>(err: E) -> Self
     78→        where
     79→            E: Into<BoxedError>,
@@ -49,7 +47,9 @@ mod.rs
    255→pub use self::key::{Key, ToKey};
    256→pub use self::source::{Source, VisitSource};
    257→pub use self::value::{ToValue, Value, VisitValue};
+   259→#[cfg(feature = "kv_unstable")]
    260→pub mod source;
+   261→#[cfg(feature = "kv_unstable")]
    262→pub mod value;
    265→pub use self::source::Visitor;
 
@@ -134,7 +134,6 @@ value.rs
    738→    pub enum Inner<'v> {
    739→        None,
    740→        Bool(bool),
-   741→        Str(&'v str),
       →        …
    897→        pub fn from_debug<T: fmt::Debug>(value: &'v T) -> Self {
    901→        pub fn from_display<T: fmt::Display>(value: &'v T) -> Self {

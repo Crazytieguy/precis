@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (994 tokens)
+budget: 1000 (998 tokens)
 
 into_either.rs
      4→use super::{Either, Left, Right};
@@ -16,7 +16,6 @@ into_either.rs
 
 iterator.rs
      1→use super::{for_both, Either, Left, Right};
-     2→use core::iter;
      4→macro_rules! wrap_either {
     13→/// Iterator that maps left or right iterators to corresponding `Either`-wrapped items.
     14→///
@@ -26,10 +25,10 @@ iterator.rs
     21→}
 
 lib.rs
+    21→#[cfg(feature = "serde")]
     22→pub mod serde_untagged;
+    24→#[cfg(feature = "serde")]
     25→pub mod serde_untagged_optional;
-    35→use std::error::Error;
-    37→use std::io::{self, BufRead, Read, Seek, SeekFrom, Write};
     39→pub use crate::Either::{Left, Right};
     49→pub enum Either<L, R> {
     50→    /// A value of type `L`.
@@ -38,6 +37,7 @@ lib.rs
     81→macro_rules! for_both {
    113→macro_rules! try_left {
    124→macro_rules! try_right {
+   133→macro_rules! map_either {
    142→mod iterator;
    143→pub use self::iterator::IterEither;
    145→mod into_either;
@@ -87,6 +87,7 @@ lib.rs
   1086→    pub fn copied …
   1098→    pub fn cloned …
   1108→    pub fn copied …
+  1253→macro_rules! impl_specific_ref_and_mut {
   1358→    fn description(&self) -> &str {
   1363→    fn cause(&self) -> Option<&dyn Error> {
   1522→macro_rules! check_t {

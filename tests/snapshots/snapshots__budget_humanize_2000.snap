@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2006 tokens)
+budget: 2000 (2002 tokens)
 
 README.md
      1→# humanize
@@ -23,6 +23,7 @@ README.md
    200→## Localization
 
 docs/index.md
+     1→# humanize
 
 docs/time.md
      1→# Time
@@ -132,15 +133,15 @@ src/humanize/number.py
    531→def metric(value: float, unit: str = "", precision: int = 3) -> str:
 
 src/humanize/time.py
-     8→from enum import Enum
-     9→from functools import total_ordering
+     8→from enum …
+     9→from functools …
     11→from .i18n import _gettext as _
     12→from .i18n import _ngettext
     13→from .number import intcomma
     15→TYPE_CHECKING = False
-    17→    import datetime as dt
-    18→    from collections.abc import Iterable
-    19→    from typing import Any
+    17→    import datetime …
+    18→    from collections.abc …
+    19→    from typing …
     21→__all__ = [
     30→@total_ordering
     31→class Unit(Enum):

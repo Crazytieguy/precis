@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2002 tokens)
+budget: 2000 (2003 tokens)
 
 codecov.yml
      1→coverage:
@@ -74,6 +74,7 @@ src/pluggy/_hooks.py
    499→    def __call__ …
    516→    def call_historic …
    543→    def call_extra …
+   593→class _SubsetHookCaller(HookCaller):
    612→    def __init__ …
    619→    def _hookimpls …
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
@@ -138,7 +139,9 @@ src/pluggy/_manager.py
    512→    def subset_hook_caller …
 
 src/pluggy/_result.py
+    16→_ExcInfo …
     20→class HookCallError(Exception):
+    21→    """Hook was called incorrectly."""
     24→@final
     25→class Result(Generic[ResultType]):
     28→
@@ -157,9 +160,6 @@ src/pluggy/_result.py
     91→    def get_result(self) -> ResultType:
 
 src/pluggy/_tracing.py
-     7→from collections.abc import Callable
-     8→from collections.abc import Sequence
-     9→from typing import Any
     16→class TagTracer:
     17→    def __init__(self) -> None:
     22→    def get(self, name: str) -> TagTracerSub:

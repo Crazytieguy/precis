@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (3999 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -60,30 +60,29 @@ crates/mdbook-core/src/book.rs
 
 crates/mdbook-core/src/config.rs
     63→pub struct Config {
-   113→    pub fn from_disk …
-   150→    pub fn update_from_env …
-   189→    pub fn get …
-   216→    pub fn contains_key …
-   228→    pub fn preprocessors …
-   236→    pub fn outputs …
-   274→    pub fn set …
+   113→    pub fn from_disk<P: AsRef<Path>>(config_file: P) -> Result<Config> {
+   150→    pub fn update_from_env(&mut self) -> Result<()> {
+   189→    pub fn get<'de, T: Deserialize<'de>>(&self, name: &str) -> Result<Option<T>> {
+   216→    pub fn contains_key(&self, name: &str) -> bool {
+   228→    pub fn preprocessors<'de, T: Deserialize<'de>>(&self) -> Result<BTreeMap<String, T>> {
+   236→    pub fn outputs<'de, T: Deserialize<'de>>(&self) -> Result<BTreeMap<String, T>> {
+   274→    pub fn set<S: Serialize, I: AsRef<str>>(&mut self, index: I, value: S) -> Result<()> {
    318→pub struct BookConfig {
-   356→    pub fn realized_text_direction …
+   356→    pub fn realized_text_direction(&self) -> TextDirection {
    368→pub enum TextDirection {
-   379→    pub fn from_lang_code …
+   379→    pub fn from_lang_code(code: &str) -> Self {
    394→pub struct BuildConfig {
    422→pub struct RustConfig {
    430→pub enum RustEdition {
    449→pub struct HtmlConfig {
-   558→    pub fn theme_dir …
-   566→    pub fn get_404_output_file …
+   558→    pub fn theme_dir(&self, root: &Path) -> PathBuf {
+   566→    pub fn get_404_output_file(&self) -> String {
    578→pub struct Print {
    598→pub struct Fold {
    611→pub struct Playground {
    641→pub struct Code {
    650→pub struct Search {
    708→pub struct SearchChapterSettings {
-   718→trait Updateable …
    719→    fn update_value …
 
 crates/mdbook-core/src/lib.rs
@@ -92,7 +91,6 @@ crates/mdbook-core/src/lib.rs
     10→pub mod config;
     11→pub mod utils;
     14→pub mod errors {
-    15→    pub use anyhow::{Error, Result};
 
 crates/mdbook-core/src/utils/fs.rs
     11→pub fn read_to_string …
@@ -171,8 +169,6 @@ crates/mdbook-driver/src/lib.rs
     67→pub mod builtin_preprocessors;
     68→pub mod builtin_renderers;
     69→pub mod init;
-    74→pub use mdbook::MDBook;
-    75→pub use mdbook_core::{book, config, errors};
 
 crates/mdbook-driver/src/mdbook.rs
     29→pub struct MDBook {
@@ -216,7 +212,6 @@ crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
 
 crates/mdbook-html/src/lib.rs
      5→pub mod theme;
-     8→pub use html_handlebars::HtmlHandlebars;
 
 crates/mdbook-html/src/theme/mod.rs
     40→pub struct Theme {
@@ -254,10 +249,6 @@ crates/mdbook-preprocessor/README.md
     11→## License
 
 crates/mdbook-preprocessor/src/lib.rs
-    18→pub use mdbook_core::MDBOOK_VERSION;
-    19→pub use mdbook_core::book;
-    20→pub use mdbook_core::config;
-    21→pub use mdbook_core::errors;
     30→pub trait Preprocessor {
     32→    fn name(&self) -> &str;
     36→    fn run(&self, ctx: &PreprocessorContext, book: Book) -> Result<Book>;
@@ -276,10 +267,6 @@ crates/mdbook-renderer/README.md
     11→## License
 
 crates/mdbook-renderer/src/lib.rs
-    17→pub use mdbook_core::MDBOOK_VERSION;
-    18→pub use mdbook_core::book;
-    19→pub use mdbook_core::config;
-    20→pub use mdbook_core::errors;
     28→pub trait Renderer {
     30→    fn name …
     34→    fn render …
@@ -298,7 +285,6 @@ crates/mdbook-summary/README.md
     11→## License
 
 crates/mdbook-summary/src/lib.rs
-     8→pub use mdbook_core::book::SectionNumber;
     59→pub fn parse_summary(summary: &str) -> Result<Summary> {
     67→pub struct Summary {
     84→pub struct Link {
@@ -375,6 +361,9 @@ guide/src/format/markdown.md
     69→## Links
    108→## Images
    127→## Extensions
+
+guide/src/format/summary.md
+     1→# SUMMARY.md
 
 guide/src/guide/README.md
      1→# User guide
@@ -456,6 +445,7 @@ src/cmd/watch.rs
     21→pub enum WatcherKind {
     22→    Poll,
       →    …
+    26→impl WatcherKind {
     27→    pub fn from_str …
     37→pub fn execute …
     62→pub fn rebuild_on_change …

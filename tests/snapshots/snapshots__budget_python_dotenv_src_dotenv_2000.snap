@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2006 tokens)
+budget: 2000 (2007 tokens)
 
 __init__.py
      1→from typing import Any, Optional
@@ -24,25 +24,30 @@ __main__.py
      3→from .cli import cli
 
 cli.py
-     1→import json
-     2→import os
-     3→import shlex
-     4→import sys
-     5→from contextlib import contextmanager
-     6→from typing import IO, Any, Dict, Iterator, List, Optional
-     9→    from subprocess import Popen
-    12→    import click
+     1→import json …
+     2→import os …
+     3→import shlex …
+     4→import sys …
+     5→from contextlib …
+     6→from typing …
+     9→    from subprocess …
+    12→    import click …
     20→from .main import dotenv_values, set_key, unset_key
     21→from .version import __version__
     24→def enumerate_env() -> Optional[str]:
+    25→    """
+      →    …
     62→def cli(ctx: click.Context, file: Any, quote: Any, export: Any) -> None:
     68→def stream_file(path: os.PathLike) -> Iterator[IO[str]]:
     93→def list_values(ctx: click.Context, output_format: str) -> None:
+    94→    """Display all the stored key/value."""
    116→def set_value(ctx: click.Context, key: Any, value: Any) -> None:
    131→def get(ctx: click.Context, key: Any) -> None:
    148→def unset(ctx: click.Context, key: Any) -> None:
    173→def run(ctx: click.Context, override: bool, commandline: tuple[str, ...]) -> None:
    193→def run_command(command: List[str], env: Dict[str, str]) -> None:
+   194→    """Replace the current process with the specified command.
+      →    …
 
 ipython.py
      1→from IPython.core.magic …
@@ -97,7 +102,6 @@ main.py
     35→def with_warn_for_invalid_lines …
     45→class DotEnv:
     46→    def __init__ …
-    63→    @contextmanager
     64→    def _get_stream(self) -> Iterator[IO[str]]:
     78→    def dict …
     94→    def parse …
@@ -159,9 +163,9 @@ parser.py
    179→def parse_stream(stream: IO[str]) -> Iterator[Binding]:
 
 variables.py
-     1→import re
-     2→from abc import ABCMeta, abstractmethod
-     3→from typing import Iterator, Mapping, Optional, Pattern
+     1→import re …
+     2→from abc …
+     3→from typing …
      5→_posix_variable: Pattern[str] = re.compile(
     18→class Atom(metaclass=ABCMeta):
     19→    def __ne__(self, other: object) -> bool:

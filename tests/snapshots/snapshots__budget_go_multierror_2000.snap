@@ -2,17 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2015 tokens)
+budget: 2000 (2014 tokens)
 
 CHANGELOG.md
      1→## Unreleased
-     3→### Improvements
-     5→### Changes
-     7→### Fixed
-     9→### Security
 
 README.md
      1→# go-multierror
+    10→> **Note**: As of Go 1.20, the standard library provides [`errors.Join`](https://pkg.go.dev/errors#Join) which offers similar functionality for combining multiple errors. **For new projects, we recommend using `errors.Join` from the standard library.** This package provides additional features like custom formatting, the `Group` pattern for concurrent error collection, and utility functions (`Append`, `Flatten`, `Prefix`).
+    11→
     12→## Migrating to `errors.Join`
    104→## Installation and Docs
    111→### Requires go version 1.13 or newer
@@ -66,10 +64,7 @@ flatten_test.go
     43→func TestFlatten_nonError(t *testing.T) {
 
 format.go
-     6→import (
-     7→	"fmt"
-     8→	"strings"
-     9→)
+     6→import …
     11→// ErrorFormatFunc is a function callback that is called by Error to
     12→// turn the list of errors into a string.
     13→type ErrorFormatFunc func([]error) string
@@ -118,10 +113,7 @@ group_test.go
     12→func TestGroup(t *testing.T) {
 
 multierror.go
-     6→import (
-     7→	"errors"
-     8→	"fmt"
-     9→)
+     6→import …
     11→// Error is an error type to track multiple errors. This is used to
     12→// accumulate errors in cases and return them as a single "error".
     13→type Error struct {
@@ -131,10 +123,7 @@ multierror.go
     18→func (e *Error) Error() string {
     19→	fn := e.ErrorFormat
     20→	if fn == nil {
-    21→		fn = ListFormatFunc
-    22→	}
-    23→
-      →…
+      →	…
     31→func (e *Error) ErrorOrNil() error {
     42→func (e *Error) GoString() string {
     43→	return fmt.Sprintf("*%#v", *e)
@@ -161,9 +150,7 @@ multierror_test.go
    211→func (*nestedError) Error() string { return "" }
 
 prefix.go
-     6→import (
-     7→	"fmt"
-     8→)
+     6→import …
     10→// Prefix is a helper function that will prefix some text
     11→// to the given error. If the error is a multierror.Error, then
     12→// it will be prefixed to each wrapped error.

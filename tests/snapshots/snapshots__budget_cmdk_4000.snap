@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4007 tokens)
+budget: 4000 (4006 tokens)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -219,25 +219,19 @@ test/package.json
      6→  },
      7→  "dependencies": {
     17→  }
-      →  …
+    18→}
 
 test/pages/_app.tsx
      1→import '../style.css'
      3→export default function App({ Component, pageProps }) {
 
 test/pages/dialog.tsx
-     1→import { Command } from 'cmdk'
-     2→import * as React from 'react'
      4→const Page = () => {
 
 test/pages/group.tsx
-     1→import { Command } from 'cmdk'
-     2→import * as React from 'react'
      4→const Page = () => {
 
 test/pages/huge.tsx
-     1→import { Command } from 'cmdk'
-     2→import * as React from 'react'
      4→const items …
      6→const Page = () => {
     28→const Item = () => {
@@ -250,12 +244,12 @@ test/pages/item-advanced.tsx
      4→const Page = () => {
 
 test/pages/item.tsx
-     1→import { Command } from 'cmdk'
-     2→import * as React from 'react'
      4→const Page = () => {
 
+test/pages/keybinds.tsx
+     5→const Page = () => {
+
 test/pages/numeric.tsx
-     1→import { Command } from 'cmdk'
      3→const Page = () => {
 
 test/pages/portal.tsx
@@ -265,7 +259,6 @@ test/pages/props.tsx
      5→const Page = () => {
 
 test/props.test.ts
-     1→import { expect, test } from '@playwright/test'
 
 test/tsconfig.json
      2→  "compilerOptions": {
@@ -287,8 +280,6 @@ website/README.md
     28→## Deploy on Vercel
 
 website/components/cmdk/framer.tsx
-     1→import { Command } from 'cmdk'
-     2→import React from 'react'
      4→export function FramerCMDK() {
     57→function Button() {
     61→function Input() {
@@ -309,7 +300,6 @@ website/components/cmdk/framer.tsx
    212→function SliderIcon() {
 
 website/components/cmdk/linear.tsx
-     1→import { Command } from 'cmdk'
      3→export function LinearCMDK() {
     30→const items = [
     68→function AssignToIcon() {
@@ -322,11 +312,30 @@ website/components/cmdk/linear.tsx
 
 website/components/cmdk/raycast.tsx
      7→export function RaycastCMDK() {
+    97→function Item …
+   116→function SubCommand …
+   200→function SubItem …
+   213→function TerminalIcon …
+   231→function RaycastLightIcon …
+   244→function RaycastDarkIcon …
+   257→function WindowIcon …
+   271→function FinderIcon …
+   285→function StarIcon …
+   299→function ClipboardIcon …
+   315→function HammerIcon …
 
 website/components/cmdk/vercel.tsx
-     1→import React from 'react'
-     2→import { Command } from 'cmdk'
      4→export function VercelCMDK() {
+    91→function Home …
+   137→function Projects …
+   150→function Item …
+   173→function ProjectsIcon …
+   194→function PlusIcon …
+   213→function TeamsIcon …
+   234→function CopyIcon …
+   252→function DocsIcon …
+   274→function FeedbackIcon …
+   292→function ContactIcon …
 
 website/components/code/index.tsx
      4→import styles from './code.module.scss'

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (996 tokens)
+budget: 1000 (994 tokens)
 
 Cargo.toml
      1→[package]
@@ -25,6 +25,8 @@ src/backtrace.rs
     71→mod capture {
 
 src/chain.rs
+     1→use self::ChainState::*;
+     2→use crate::StdError;
     27→    #[cold]
     28→    pub fn new(head: &'a (dyn StdError + 'static)) -> Self {
 
@@ -61,7 +63,6 @@ src/error.rs
 src/kind.rs
     47→use crate::Error;
     51→use crate::StdError;
-    53→use alloc::boxed::Box;
     55→pub struct Adhoc;
     60→    fn anyhow_kind …
     69→    pub fn new …
@@ -115,7 +116,6 @@ src/ptr.rs
 
 src/wrapper.rs
      1→use crate::StdError;
-     5→use alloc::boxed::Box;
      8→use crate::nightly::{self, Request};
     11→pub struct MessageError<M>(pub M);
     34→pub struct DisplayError<M>(pub M);

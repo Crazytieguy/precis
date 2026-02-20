@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1003 tokens)
+budget: 1000 (1004 tokens)
 
 Cargo.toml
      1→[package]
@@ -17,6 +17,8 @@ README.md
     44→## Details
    211→## Comparison to anyhow
    223→#### License
+
+build.rs
 
 impl/Cargo.toml
      1→[package]
@@ -43,7 +45,7 @@ impl/src/attr.rs
     45→pub struct Transparent<'a> {
     51→pub struct Fmt<'a> {
     57→pub enum Trait {
-    69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
+    69→pub fn get …
 
 impl/src/expand.rs
     12→pub fn derive …
@@ -80,10 +82,14 @@ rust-toolchain.toml
 src/aserror.rs
      5→pub trait AsDynError<'a>: Sealed {
      6→    fn as_dyn_error(&self) -> &(dyn Error + 'a);
+    11→    fn as_dyn_error …
+    18→    fn as_dyn_error …
+    25→    fn as_dyn_error …
+    32→    fn as_dyn_error …
+    39→    fn as_dyn_error …
     45→pub trait Sealed {}
 
 src/display.rs
-     3→use std::path::{self, Path, PathBuf};
      6→pub trait AsDisplay<'a>: Sealed {
     11→    fn as_display(&'a self) -> Self::Target;
     26→impl<'a> AsDisplay<'a> for Path {
@@ -112,8 +118,6 @@ src/private.rs
      4→pub use crate::display::AsDisplay;
      7→pub use crate::provide::ThiserrorProvide;
      9→pub use crate::var::Var;
-    11→pub use core::error::Error;
-    14→pub use std::backtrace::Backtrace;
 
 src/provide.rs
      4→pub trait ThiserrorProvide: Sealed {

@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2004 tokens)
+budget: 2000 (2003 tokens)
 
 __init__.py
      1→__all__ = [
@@ -61,11 +61,10 @@ _hooks.py
    516→    def call_historic …
    543→    def call_extra …
    593→class _SubsetHookCaller(HookCaller):
-   596→
    612→    def __init__ …
-   619→    def _hookimpls …
+   619→    def _hookimpls(self) -> list[HookImpl]:
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
-   631→    def _call_history …
+   631→    def _call_history(self) -> _CallHistory | None:  # type: ignore[override]
    634→    def __repr__ …
    639→class HookImpl:
    656→    def __init__ …
@@ -74,18 +73,6 @@ _hooks.py
    709→    def __init__ …
 
 _manager.py
-     3→from collections.abc import Callable
-     4→from collections.abc import Iterable
-     5→from collections.abc import Mapping
-     6→from collections.abc import Sequence
-     7→import inspect
-     8→import types
-     9→from typing import Any
-    10→from typing import cast
-    11→from typing import Final
-    12→from typing import TYPE_CHECKING
-    13→from typing import TypeAlias
-    14→import warnings
     16→from . import _tracing
     17→from ._callers import _multicall
     18→from ._hooks import _HookImplFunction
@@ -100,15 +87,20 @@ _manager.py
     27→from ._hooks import normalize_hookimpl_opts
     28→from ._result import Result
     33→    import importlib.metadata
+    36→_BeforeTrace …
+    37→_AfterTrace …
     52→class PluginValidationError(Exception):
+    58→
     59→    def __init__(self, plugin: _Plugin, message: str) -> None:
     65→class DistFacade:
+    67→
     68→    def __init__(self, dist: importlib.metadata.Distribution) -> None:
     71→    @property
     72→    def project_name(self) -> str:
     76→    def __getattr__(self, attr: str, default: Any | None = None) -> Any:
     79→    def __dir__(self) -> list[str]:
     83→class PluginManager:
+    99→
    100→    def __init__(self, project_name: str) -> None:
    125→    def register(self, plugin: _Plugin, name: str | None = None) -> str | None:
    176→    def parse_hookimpl_opts(self, plugin: _Plugin, name: str) -> HookimplOpts | None:
@@ -138,7 +130,16 @@ _manager.py
    512→    def subset_hook_caller …
 
 _result.py
+     7→from collections.abc …
+     8→from types …
+     9→from typing …
+    10→from typing …
+    11→from typing …
+    12→from typing …
+    13→from typing …
+    16→_ExcInfo …
     20→class HookCallError(Exception):
+    21→    """Hook was called incorrectly."""
     24→@final
     25→class Result(Generic[ResultType]):
     28→
@@ -149,17 +150,17 @@ _result.py
     33→        result: ResultType | None,
     34→        exception: BaseException | None,
     35→    ) -> None:
+    42→    @property
     43→    def excinfo(self) -> _ExcInfo | None:
+    51→    @property
     52→    def exception(self) -> BaseException | None:
+    56→    @classmethod
     57→    def from_call(cls, func: Callable[[], ResultType]) -> Result[ResultType]:
     67→    def force_result(self, result: ResultType) -> None:
     80→    def force_exception(self, exception: BaseException) -> None:
     91→    def get_result(self) -> ResultType:
 
 _tracing.py
-     7→from collections.abc import Callable
-     8→from collections.abc import Sequence
-     9→from typing import Any
     16→class TagTracer:
     17→    def __init__(self) -> None:
     22→    def get(self, name: str) -> TagTracerSub:

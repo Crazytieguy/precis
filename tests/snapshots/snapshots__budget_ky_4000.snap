@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4017 tokens)
+budget: 4000 (4015 tokens)
 
 package.json
      2→	"name": "ky",
@@ -103,7 +103,6 @@ source/core/Ky.ts
    200→	constructor(input: Input, options: Options = {}) {
 
 source/core/constants.ts
-     1→import type {Expect, Equal} from '@type-challenges/utils';
      2→import {type KyOptionsRegistry, type RequestHttpMethod} from '../types/options.js';
      4→export const supportsRequestStreams = (() => {
     34→export const supportsAbortController = typeof globalThis.AbortController === 'function';
@@ -151,6 +150,8 @@ source/errors/HTTPError.ts
      5→export class HTTPError<T = unknown> extends Error {
      6→	public response: KyResponse<T>;
      7→	public request: KyRequest;
+     8→	public options: NormalizedOptions;
+     9→
     10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
 
 source/errors/NonError.ts

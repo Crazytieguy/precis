@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4011 tokens)
+budget: 4000 (4013 tokens)
 
 pyproject.toml
      1→[build-system]
@@ -21,6 +21,7 @@ pyproject.toml
     99→[tool.mypy]
    105→[tool.tox]
    110→[tool.tox.env_run_base]
+   115→[tool.tox.env.docs]
 
 src/typeguard/__init__.py
      1→import os
@@ -52,19 +53,19 @@ src/typeguard/__init__.py
     37→def __getattr__(name: str) -> Any:
 
 src/typeguard/_checkers.py
-     3→import collections.abc
-     4→import inspect
-     5→import sys
-     6→import types
-     7→import typing
-     8→import warnings
-     9→from collections.abc import Mapping, MutableMapping, Sequence
-    10→from enum import Enum
-    11→from inspect import Parameter, isclass, isfunction
-    12→from io import BufferedIOBase, IOBase, RawIOBase, TextIOBase
-    13→from itertools import zip_longest
-    14→from textwrap import indent
-    42→from typing_extensions import is_typeddict
+     3→import collections.abc …
+     4→import inspect …
+     5→import sys …
+     6→import types …
+     7→import typing …
+     8→import warnings …
+     9→from collections.abc …
+    10→from enum …
+    11→from inspect …
+    12→from io …
+    13→from itertools …
+    14→from textwrap …
+    42→from typing_extensions …
     44→from ._config import ForwardRefPolicy
     45→from ._exceptions import TypeCheckError, TypeHintWarning
     46→from ._memo import TypeCheckMemo
@@ -107,10 +108,10 @@ src/typeguard/_checkers.py
   1099→def load_plugins …
 
 src/typeguard/_config.py
-     3→from collections.abc import Iterable
-     4→from dataclasses import dataclass
-     5→from enum import Enum, auto
-     6→from typing import TYPE_CHECKING, TypeVar
+     3→from collections.abc …
+     4→from dataclasses …
+     5→from enum …
+     6→from typing …
      9→    from ._functions import TypeCheckFailCallback
     11→T = TypeVar("T")
     14→class ForwardRefPolicy(Enum):
@@ -155,8 +156,8 @@ src/typeguard/_decorators.py
    150→def typechecked …
 
 src/typeguard/_exceptions.py
-     1→from collections import deque
-     2→from typing import Deque
+     1→from collections …
+     2→from typing …
      5→class TypeHintWarning(UserWarning):
     12→class TypeCheckWarning(UserWarning):
     14→
@@ -223,25 +224,33 @@ src/typeguard/_importhook.py
    183→def install_import_hook …
 
 src/typeguard/_memo.py
-     3→from typing import Any
-     5→from typeguard._config import TypeCheckConfiguration, global_config
+     3→from typing …
+     5→from typeguard._config …
      8→class TypeCheckMemo:
     34→
     37→    def __init__ …
 
 src/typeguard/_pytest_plugin.py
+     3→import sys …
+     4→import warnings …
+     5→from typing …
+     7→from typeguard._config …
+     8→from typeguard._exceptions …
+     9→from typeguard._importhook …
+    10→from typeguard._utils …
+    13→    from pytest …
     16→def pytest_addoption(parser: Parser) -> None:
     75→def pytest_configure(config: Config) -> None:
 
 src/typeguard/_suppression.py
-     3→import sys
-     4→from collections.abc import Callable, Generator
-     5→from contextlib import contextmanager
-     6→from functools import update_wrapper
-     7→from threading import Lock
-     8→from typing import ContextManager, TypeVar, overload
-    11→    from typing import ParamSpec
-    13→    from typing_extensions import ParamSpec
+     3→import sys …
+     4→from collections.abc …
+     5→from contextlib …
+     6→from functools …
+     7→from threading …
+     8→from typing …
+    11→    from typing …
+    13→    from typing_extensions …
     15→P = ParamSpec("P")
     16→T = TypeVar("T")
     30→def suppress_type_checks(
@@ -306,6 +315,8 @@ src/typeguard/_transformer.py
    491→    ) -> None:
    498→    def generic_visit(self, node: AST) -> AST:
    517→    def _use_memo …
+   570→    def _get_import …
+   580→    def _convert_annotation …
    596→    def visit_Name(self, node: Name) -> Name:
    600→    def visit_Module(self, node: Module) -> Module:
    608→    def visit_Import(self, node: Import) -> Import:

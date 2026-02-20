@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4029 tokens)
+budget: 4000 (4034 tokens)
 
 README.md
     28→## Features
@@ -65,13 +65,14 @@ site/components/emoji-button.tsx
      1→export const EmojiButton: React.FC<{
 
 site/components/sections/footer.tsx
-     1→import React from 'react';
-     2→import Link from 'next/link';
      4→export function Footer({ noBadge }: { noBadge?: boolean }) {
 
 site/components/sections/splitbee-counter.tsx
-     4→export const useSplitbeeCount …
-    36→export const SplitbeeCounter …
+     4→export const useSplitbeeCount = <T extends string>(
+     5→  event: T,
+     6→  token: string
+     7→): number => {
+    36→export const SplitbeeCounter = () => {
 
 site/components/sections/toast-example.tsx
      4→import { EmojiButton } from '../emoji-button';
@@ -185,7 +186,9 @@ src/components/toast-icon.tsx
     47→export const ToastIcon: React.FC<{
     48→  toast: Toast;
     49→}> = ({ toast }) => {
-      →…
+    50→  const { icon, type, iconTheme } = toast;
+    51→  if (icon !== undefined) {
+      →  …
 
 src/components/toaster.tsx
      1→import { css, setup } from 'goober';
@@ -385,6 +388,4 @@ tsconfig.json
     33→}
 
 tsup.config.ts
-     1→import { defineConfig, Options } from 'tsup';
-     2→import { minifyTemplates, writeFiles } from 'esbuild-minify-templates';
      4→const commonConfig: Options = {

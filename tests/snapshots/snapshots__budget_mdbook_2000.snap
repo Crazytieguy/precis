@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2002 tokens)
+budget: 2000 (2009 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -81,6 +81,8 @@ crates/mdbook-core/src/utils/mod.rs
 
 crates/mdbook-driver/src/init.rs
     13→pub struct BookBuilder {
+    14→    root: PathBuf,
+      →    …
     23→    pub fn new …
     33→    pub fn with_config …
     39→    pub fn config …
@@ -124,6 +126,8 @@ crates/mdbook-html/src/theme/mod.rs
 crates/mdbook-markdown/src/lib.rs
     11→pub use pulldown_cmark;
     15→pub struct MarkdownOptions {
+    16→    /// Enables smart punctuation.
+      →    …
     44→pub fn new_cmark_parser …
 
 crates/mdbook-preprocessor/src/lib.rs
@@ -191,7 +195,6 @@ src/cmd/clean.rs
       →    …
 
 src/cmd/command_prelude.rs
-     3→pub use clap::{Arg, ArgMatches, Command, arg};
      7→pub trait CommandExt: Sized {
      8→    fn _arg(self, arg: Arg) -> Self;
     10→    fn arg_dest_dir(self) -> Self {
@@ -234,8 +237,6 @@ src/cmd/watch.rs
     27→    pub fn from_str …
     37→pub fn execute …
     62→pub fn rebuild_on_change …
-
-src/main.rs
 
 triagebot.toml
      2→[assign]

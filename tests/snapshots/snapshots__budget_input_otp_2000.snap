@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2007 tokens)
+budget: 2000 (2011 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -52,9 +52,6 @@ apps/storybook/package.json
     29→  "devDependencies": {
 
 apps/storybook/src/components/ui/input-otp.tsx
-     3→import * as React from "react"
-     4→import { DashIcon } from "@radix-ui/react-icons"
-     5→import { OTPInput, SlotProps } from "input-otp"
      7→import { cn } from "../../lib/utils"
      9→const InputOTP = React.forwardRef<
     21→const InputOTPGroup = React.forwardRef<
@@ -105,10 +102,17 @@ apps/test/README.md
     23→## Learn More
     32→## Deploy on Vercel
 
+apps/test/package.json
+
 apps/website/README.md
      3→## Getting Started
     23→## Learn More
     32→## Deploy on Vercel
+
+apps/website/tsconfig.json
+     2→  "compilerOptions": {
+    30→  "include": [
+    37→  "exclude": [
 
 package.json
      2→  "name": "root",
@@ -170,9 +174,11 @@ packages/input-otp/src/sync-timeouts.ts
 packages/input-otp/src/types.ts
      1→export interface SlotProps {
      2→  isActive: boolean
+     3→  char: string | null
       →  …
      7→export interface RenderProps {
      8→  slots: SlotProps[]
+     9→  isFocused: boolean
       →  …
     12→type OverrideProps …
     13→type OTPInputBaseProps …
@@ -185,7 +191,6 @@ packages/input-otp/src/use-previous.ts
      1→import * as React from 'react'
      3→export function usePrevious<T>(value: T) {
      4→  const ref = React.useRef<T>()
-     5→  React.useEffect(() => {
       →  …
 
 packages/input-otp/src/use-pwm-badge.tsx

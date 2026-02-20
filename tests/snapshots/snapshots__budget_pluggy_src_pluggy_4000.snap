@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4019 tokens)
+budget: 4000 (4015 tokens)
 
 __init__.py
      1→__all__ = [
@@ -21,9 +21,7 @@ __init__.py
     29→from ._warnings import PluggyWarning
     32→def __getattr__(name: str) -> str:
     33→    if name == "__version__":
-    34→        from importlib.metadata import version
-    35→
-      →…
+      →    …
 
 _callers.py
      7→from collections.abc import Generator
@@ -86,6 +84,8 @@ _hooks.py
       →…
     78→class HookspecMarker:
     85→
+    86→    __slots__ = ("project_name",)
+    87→
     88→    def __init__(self, project_name: str) -> None:
    111→    def __call__(  # noqa: F811
    112→        self,
@@ -97,6 +97,8 @@ _hooks.py
    118→    ) -> _F | Callable[[_F], _F]:
    165→class HookimplMarker:
    172→
+   173→    __slots__ = ("project_name",)
+   174→
    175→    def __init__(self, project_name: str) -> None:
    202→    def __call__(  # noqa: F811
    203→        self,
@@ -113,6 +115,8 @@ _hooks.py
    293→def varnames(func: object) -> tuple[tuple[str, ...], tuple[str, ...]]:
    359→class HookRelay:
    362→
+   363→    __slots__ = ("__dict__",)
+   364→
    365→    def __init__(self) -> None:
    370→        def __getattr__(self, name: str) -> HookCaller: ...
    377→_CallHistory: TypeAlias = list[
@@ -154,6 +158,7 @@ _hooks.py
    545→    ) -> Any:
    577→    def _maybe_apply_history(self, method: HookImpl) -> None:
    593→class _SubsetHookCaller(HookCaller):
+   596→
    612→    def __init__(self, orig: HookCaller, remove_plugins: Set[_Plugin]) -> None:
    619→    def _hookimpls(self) -> list[HookImpl]:
    626→    @property
@@ -163,6 +168,9 @@ _hooks.py
    634→    def __repr__(self) -> str:
    639→class HookImpl:
    641→
+   642→    __slots__ = (
+   643→        "function",
+   644→        "argnames",
    656→    def __init__(
    657→        self,
    658→        plugin: _Plugin,
@@ -173,6 +181,9 @@ _hooks.py
    692→    def __repr__(self) -> str:
    697→class HookSpec:
    698→    __slots__ = (
+   699→        "namespace",
+   700→        "function",
+   701→        "name",
    709→    def __init__(self, namespace: _Namespace, name: str, opts: HookspecOpts) -> None:
 
 _manager.py
@@ -255,13 +266,13 @@ _manager.py
    525→def _formatdef …
 
 _result.py
-     7→from collections.abc import Callable
-     8→from types import TracebackType
-     9→from typing import cast
-    10→from typing import final
-    11→from typing import Generic
-    12→from typing import TypeAlias
-    13→from typing import TypeVar
+     7→from collections.abc …
+     8→from types …
+     9→from typing …
+    10→from typing …
+    11→from typing …
+    12→from typing …
+    13→from typing …
     16→_ExcInfo: TypeAlias = tuple[type[BaseException], BaseException, TracebackType | None]
     20→class HookCallError(Exception):
     21→    """Hook was called incorrectly."""
@@ -280,19 +291,12 @@ _result.py
     42→    @property
     43→    def excinfo(self) -> _ExcInfo | None:
     44→        """:meta private:"""
-    45→        exc = self._exception
-    46→        if exc is None:
-      →        …
     51→    @property
     52→    def exception(self) -> BaseException | None:
     53→        """:meta private:"""
-    54→        return self._exception
     56→    @classmethod
     57→    def from_call(cls, func: Callable[[], ResultType]) -> Result[ResultType]:
     58→        """:meta private:"""
-    59→        __tracebackhide__ = True
-    60→        result = exception = None
-      →        …
     67→    def force_result(self, result: ResultType) -> None:
     80→    def force_exception(self, exception: BaseException) -> None:
     91→    def get_result(self) -> ResultType:
@@ -324,7 +328,6 @@ _warnings.py
     12→    """A plugin raised an exception during an :ref:`old-style hookwrapper
     13→    <old_style_hookwrappers>` teardown.
     14→
-    15→    Such exceptions are not handled by pluggy, and may cause subsequent
-      →    …
+      →…
     26→
     27→    __module__ = "pluggy"

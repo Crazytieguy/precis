@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (994 tokens)
+budget: 1000 (996 tokens)
 
 backtrace.rs
      8→pub(crate) enum Backtrace {}
@@ -54,7 +54,6 @@ fmt.rs
 kind.rs
     47→use crate::Error;
     51→use crate::StdError;
-    53→use alloc::boxed::Box;
     55→pub struct Adhoc;
     60→    fn anyhow_kind …
     69→    pub fn new …
@@ -88,6 +87,8 @@ lib.rs
    678→        pub use crate::kind::BoxedKind;
    710→        pub trait Bool {
    711→            fn not …
+   716→            fn not(self) -> bool {
+   723→            fn not(self) -> bool {
 
 macros.rs
     58→macro_rules! bail {
@@ -108,7 +109,6 @@ ptr.rs
 
 wrapper.rs
      1→use crate::StdError;
-     5→use alloc::boxed::Box;
      8→use crate::nightly::{self, Request};
     11→pub struct MessageError<M>(pub M);
     34→pub struct DisplayError<M>(pub M);

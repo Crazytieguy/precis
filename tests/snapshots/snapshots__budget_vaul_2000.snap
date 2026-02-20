@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2008 tokens)
+budget: 2000 (2009 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
@@ -72,8 +72,6 @@ src/helpers.ts
    108→export function chain<T>(...fns: T[]) {
 
 src/index.tsx
-     3→import * as DialogPrimitive from '@radix-ui/react-dialog';
-     4→import React from 'react';
      5→import { DrawerContext, useDrawerContext } from './context';
      6→import './style.css';
      7→import { usePreventScroll, isInput } from './use-prevent-scroll';
@@ -107,8 +105,11 @@ src/index.tsx
    831→export type ContentProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
    833→export const Content = React.forwardRef<HTMLDivElement, ContentProps>(function (
    989→export type HandleProps = React.ComponentPropsWithoutRef<'div'> & {
+   993→const LONG_HANDLE_PRESS_TIMEOUT = 250;
+   994→const DOUBLE_TAP_TIMEOUT = 120;
    996→export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(function (
   1098→export function NestedRoot …
+  1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
   1130→export function Portal …
   1137→export const Drawer = {
 
@@ -121,7 +122,6 @@ src/types.ts
      7→export type AnyFunction = (...args: any) => any;
 
 src/use-composed-refs.ts
-     3→import * as React from 'react';
      5→type PossibleRef …
     11→function setRef<T>(ref: PossibleRef<T>, value: T) {
     23→function composeRefs<T>(...refs: PossibleRef<T>[]) {
@@ -129,6 +129,8 @@ src/use-composed-refs.ts
 
 src/use-controllable-state.ts
      3→import React from 'react';
+    13→function useCallbackRef …
+    24→function useUncontrolledState …
     39→export function useControllableState<T>({ prop, defaultProp, onChange = () => {} }: UseControllableStateParams<T>) {
 
 src/use-position-fixed.ts
@@ -156,7 +158,6 @@ src/use-prevent-scroll.ts
    294→export function isInput(target: Element) {
 
 src/use-scale-background.ts
-     1→import React, { useMemo } from 'react';
      2→import { useDrawerContext } from './context';
      3→import { assignStyle, chain, isVertical, reset } from './helpers';
      4→import { BORDER_RADIUS, TRANSITIONS, WINDOW_TOP_OFFSET } from './constants';
@@ -173,9 +174,7 @@ src/use-snap-points.ts
 
 tsconfig.json
      2→  "compilerOptions": {
-     9→  },
     10→  "include": ["src"],
-    11→}
 
 turbo.json
      2→  "$schema": "https://turbo.build/schema.json",

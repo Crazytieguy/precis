@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4012 tokens)
+budget: 4000 (4017 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -96,12 +96,7 @@ pyproject.toml
    167→[[tool.mypy.overrides]]
 
 scripts/use_setuptools.py
-     6→from pathlib import Path
-     7→import tomllib
-     9→import tomli_w  # type: ignore[import-not-found]
     12→def use_setuptools() -> None:
-
-setup.py
 
 src/tomli/__init__.py
      1→# SPDX-License-Identifier: MIT
@@ -130,6 +125,8 @@ src/tomli/_parser.py
     27→# nested documents cause pure Python to raise RecursionError (which is OK),
     28→# but mypyc binary wheels will crash unrecoverably (not OK). According to
     29→# mypyc docs this will be fixed in the future:
+    30→# https://mypyc.readthedocs.io/en/latest/differences_from_python.html#stack-overflows
+    31→# Before mypyc's fix is in, recursion needs to be limited by this library.
       →…
     35→MAX_INLINE_NESTING: Final = sys.getrecursionlimit()
     37→ASCII_CTRL: Final = frozenset(chr(i) for i in range(32)) | frozenset(chr(127))
@@ -164,6 +161,10 @@ src/tomli/_parser.py
    222→
    223→    # Marks an immutable namespace (inline array or inline table).
    224→    FROZEN: Final = 0
+   225→    # Marks a nest that has been explicitly created and can no longer
+   226→    # be opened using the "[table]" syntax.
+   227→    EXPLICIT_NEST: Final = 1
+   228→
    229→    def __init__(self) -> None:
    233→    def add_pending(self, key: Key, flag: int) -> None:
    236→    def finalize_pending(self) -> None:
@@ -227,11 +228,11 @@ src/tomli/_parser.py
       →…
 
 src/tomli/_re.py
-     7→from datetime import date, datetime, time, timedelta, timezone, tzinfo
-     8→from functools import lru_cache
-     9→import re
+     7→from datetime …
+     8→from functools …
+     9→import re …
     11→TYPE_CHECKING = False
-    13→    from typing import Any, Final
+    13→    from typing …
     15→    from ._types import ParseFloat
     17→_TIME_RE_STR: Final = r"""
     26→RE_NUMBER: Final = re.compile(
@@ -269,22 +270,21 @@ tests/__init__.py
      1→# SPDX-License-Identifier: MIT
       →…
      5→__all__ = ("tomllib",)
-     9→import tomli as tomllib
+     9→import tomli …
 
 tests/burntsushi.py
-     7→import datetime
-     8→from typing import Any
     11→def convert(obj):
     42→def normalize(obj: Any) -> Any:
+    43→    """Normalize test objects.
+    44→
+      →…
 
 tests/data/valid/trailing-comma.json
      1→{"arr":
 
 tests/test_data.py
      5→import json
-     6→from pathlib import Path
-     7→import unittest
-     9→from . import burntsushi, tomllib
+     9→from . …
     11→DATA_DIR = Path(__file__).parent / "data"
     13→VALID_FILES = tuple((DATA_DIR / "valid").glob("**/*.toml"))
     21→VALID_FILES_EXPECTED = tuple(_expected_files)
@@ -294,8 +294,6 @@ tests/test_data.py
     40→    def test_valid(self):
 
 tests/test_error.py
-     7→from typing import Any
-     8→import unittest
     10→from . import tomllib
     13→class TestError(unittest.TestCase):
     14→    def test_line_and_col(self):

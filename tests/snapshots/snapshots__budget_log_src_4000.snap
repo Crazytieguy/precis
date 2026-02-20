@@ -2,13 +2,11 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3987 tokens)
+budget: 4000 (3984 tokens)
 
 __private_api.rs
      3→use self::sealed::KVs;
      4→use crate::{logger, Level, Log, Metadata, Record};
-     5→use std::fmt::Arguments;
-     6→use std::panic::Location;
      7→pub use std::{format_args, module_path, stringify};
      9→#[cfg(not(feature = "kv"))]
     10→pub type Value<'a> = &'a str;
@@ -18,6 +16,7 @@ __private_api.rs
     23→    fn into_kvs …
     30→    fn into_kvs …
     39→pub struct GlobalLogger;
+    56→fn log_impl …
     84→pub fn log …
    103→pub fn enabled …
    108→pub fn loc() -> &'static Location<'static> {
@@ -160,6 +159,7 @@ kv/value.rs
    738→    pub enum Inner<'v> {
    739→        None,
    740→        Bool(bool),
+   741→        Str(&'v str),
       →        …
    897→        pub fn from_debug<T: fmt::Debug>(value: &'v T) -> Self {
    901→        pub fn from_display<T: fmt::Display>(value: &'v T) -> Self {

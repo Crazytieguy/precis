@@ -20,7 +20,7 @@ src/typeguard/__init__.py
     37→def __getattr__(name: str) -> Any:
 
 src/typeguard/_checkers.py
-    42→from typing_extensions import is_typeddict
+    42→from typing_extensions …
     81→TypeCheckerCallable: TypeAlias = Callable[
     84→TypeCheckLookupCallback: TypeAlias = Callable[
     88→checker_lookup_functions: list[TypeCheckLookupCallback] = []
@@ -99,6 +99,7 @@ src/typeguard/_importhook.py
     18→from ._transformer import TypeguardTransformer
     40→P = ParamSpec("P")
     41→T = TypeVar("T")
+    45→def _call_with_frames_removed …
     51→def optimized_cache_from_source …
     55→class TypeguardLoader(SourceFileLoader):
     57→    def source_to_code …
@@ -196,5 +197,3 @@ src/typeguard/_utils.py
    174→    __slots__ = ()
    175→
    176→    def __repr__(self) -> str:
-
-tests/conftest.py

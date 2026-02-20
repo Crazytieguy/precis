@@ -2,17 +2,15 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3994 tokens)
+budget: 4000 (4002 tokens)
 
 ast.rs
      1→use crate::attr::{self, Attrs};
      2→use crate::generics::ParamsInScope;
      3→use crate::unraw::{IdentUnraw, MemberUnraw};
-     4→use proc_macro2::Span;
-     5→use std::fmt::{self, Display};
-     6→use syn::{
-     7→    Data, DataEnum, DataStruct, DeriveInput, Error, Fields, Generics, Ident, Index, Result, Type,
-     8→};
+     4→use proc_macro2::Span …
+     5→use std::fmt::{self, Display} …
+     6→use syn::{ …
     10→pub enum Input<'a> {
     15→pub struct Struct<'a> {
     22→pub struct Enum<'a> {
@@ -47,19 +45,17 @@ ast.rs
    175→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
 
 attr.rs
-     1→use proc_macro2::{Delimiter, Group, Literal, Punct, Spacing, Span, TokenStream, TokenTree};
-     2→use quote::{format_ident, quote, quote_spanned, ToTokens};
-     3→use std::collections::BTreeSet as Set;
-     4→use syn::parse::discouraged::Speculative;
-     5→use syn::parse::{End, ParseStream};
-     6→use syn::{
-     7→    braced, bracketed, parenthesized, token, Attribute, Error, ExprPath, Ident, Index, LitFloat,
-     8→    LitInt, LitStr, Meta, Result, Token,
-     9→};
+     1→use proc_macro2::{Delimiter, Group, Literal, Punct, Spacing, Span, TokenStream, TokenTree} …
+     2→use quote::{format_ident, quote, quote_spanned, ToTokens} …
+     3→use std::collections::BTreeSet as Set …
+     4→use syn::parse::discouraged::Speculative …
+     5→use syn::parse::{End, ParseStream} …
+     6→use syn::{ …
     11→pub struct Attrs<'a> {
     12→    pub display: Option<Display<'a>>,
     13→    pub source: Option<Source<'a>>,
     14→    pub backtrace: Option<&'a Attribute>,
+    15→    pub from: Option<From<'a>>,
       →    …
     21→pub struct Display<'a> {
     22→    pub original: &'a Attribute,
@@ -83,8 +79,8 @@ attr.rs
     70→    let mut attrs = Attrs {
     71→        display: None,
       →        …
-   124→fn parse_error_attribute …
-   196→fn parse_token_expr …
+   124→fn parse_error_attribute<'a>(attrs: &mut Attrs<'a>, attr: &'a Attribute) -> Result<()> {
+   196→fn parse_token_expr(input: ParseStream, mut begin_expr: bool) -> Result<TokenStream> {
    302→impl ToTokens for Display<'_> {
    303→    fn to_tokens(&self, tokens: &mut TokenStream) {
    342→impl ToTokens for Trait {
@@ -103,7 +99,8 @@ expand.rs
     10→use syn::{DeriveInput, GenericArgument, PathArguments, Result, Token, Type};
     12→pub fn derive(input: &DeriveInput) -> TokenStream {
     13→    match try_expand(input) {
-      →    …
+    14→        Ok(expanded) => expanded,
+      →        …
     22→fn try_expand(input: &DeriveInput) -> Result<TokenStream> {
     31→fn impl_struct(input: Struct) -> TokenStream {
    221→fn impl_enum(input: Enum) -> TokenStream {
@@ -144,6 +141,7 @@ fmt.rs
     15→impl Display<'_> {
     16→    pub fn expand_shorthand(&mut self, fields: &[Field], container: ContainerKind) -> Result<()> {
     17→        let raw_args = self.args.clone();
+    18→        let FmtArguments {
       →        …
    166→struct FmtArguments {
    172→fn explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
@@ -167,7 +165,7 @@ generics.rs
     12→impl<'a> ParamsInScope<'a> {
     13→    pub fn new(generics: &'a Generics) -> Self {
     19→    pub fn intersects(&self, ty: &Type) -> bool {
-    26→fn crawl …
+    26→fn crawl(in_scope: &ParamsInScope, ty: &Type, found: &mut bool) {
     48→pub struct InferredBounds {
     49→    bounds: Map<String, (Set<String>, Punctuated<TokenStream, Token![+]>)>,
     50→    order: Vec<TokenStream>,

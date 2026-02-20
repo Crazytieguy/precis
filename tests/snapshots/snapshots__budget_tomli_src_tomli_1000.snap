@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (999 tokens)
+budget: 1000 (1000 tokens)
 
 __init__.py
      1→# SPDX-License-Identifier: MIT
@@ -72,16 +72,16 @@ _parser.py
    764→def make_safe_parse_float …
 
 _re.py
+     7→from datetime …
+     8→from functools …
+     9→import re …
     11→TYPE_CHECKING = False
+    13→    from typing …
     15→    from ._types import ParseFloat
     17→_TIME_RE_STR: Final = r"""
     26→RE_NUMBER: Final = re.compile(
-    27→    r"""
-      →    …
     45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)
     46→RE_DATETIME: Final = re.compile(
-    47→    rf"""
-      →    …
     59→def match_to_datetime(match: re.Match[str]) -> datetime | date:
     95→# No need to limit cache size. This is only ever called on input
       →…
@@ -90,4 +90,4 @@ _re.py
    116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
 
 _types.py
-     5→from typing import Any, Callable, Tuple
+     5→from typing …

@@ -2,9 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3991 tokens)
-
-CHANGELOG.md
+budget: 4000 (3988 tokens)
 
 Cargo.toml
      1→[package]
@@ -24,10 +22,26 @@ rfcs/0296-structured-logging.md
      5→# Summary
     16→# Contents
     43→# Motivation
+    46→## What is structured logging?
+    86→## Why do we need structured logging in `log`?
     98→# Guide-level explanation
+   103→## Logging structured key-value pairs
+   255→## Supporting key-value pairs in `Log` implementations
+   401→## Integrating log frameworks with `log`
+   489→## How producers and consumers of structured values interact
    495→# Reference-level explanation
+   500→## Design considerations
+   522→## Cargo features
+   541→## A complete key-values API
+  1460→## A minimal key-values API
+  1569→## The `log!` macros
   1575→# Drawbacks, rationale, and alternatives
+  1578→## Supporting structured logging at all
+  1582→## Internalizing `sval` and `serde`
   1629→# Prior art
+  1634→## Rust
+  1640→## Go
+  1644→## .NET
   1650→# Unresolved questions
 
 src/__private_api.rs
@@ -102,7 +116,6 @@ src/kv/mod.rs
    265→pub use self::source::Visitor;
 
 src/kv/source.rs
-     6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
     51→pub trait Source {
     62→    fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error>;
     73→    fn get(&self, key: Key) -> Option<Value<'_>> {
@@ -112,7 +125,6 @@ src/kv/source.rs
    235→pub trait VisitSource<'kvs> {
    237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
    280→mod std_support {
-   281→    use super::*;
    462→pub use VisitSource as Visitor;
 
 src/kv/value.rs
@@ -120,8 +132,6 @@ src/kv/value.rs
     11→pub trait ToValue {
     13→    fn to_value(&self) -> Value<'_>;
    119→pub struct Value<'v> {
-   120→    inner: inner::Inner<'v>,
-      →    …
    125→    pub fn from_any<T>(value: &'v T) -> Self
    126→    where
    127→        T: ToValue,
@@ -177,8 +187,6 @@ src/kv/value.rs
    721→pub(in crate::kv) mod inner {
    735→    use super::*;
    738→    pub enum Inner<'v> {
-   739→        None,
-      →        …
    897→        pub fn from_debug …
    901→        pub fn from_display …
    905→        pub fn from_dyn_debug …
@@ -208,14 +216,10 @@ src/kv/value.rs
   1169→macro_rules! as_sval {
 
 src/lib.rs
-   401→use std::error;
    406→mod macros;
    407→mod serde;
    409→#[cfg(feature = "kv")]
    410→pub mod kv;
-   413→use std::sync::atomic::{AtomicUsize, Ordering};
-   416→use std::cell::Cell;
-   418→use std::sync::atomic::Ordering;
    421→struct AtomicUsize {
    475→pub enum Level {
    503→    fn eq …
@@ -316,20 +320,10 @@ src/macros.rs
    564→macro_rules! __log_value_error {
    573→macro_rules! __log_value_error {
 
-src/serde.rs
-     9→use crate::{Level, LevelFilter, LOG_LEVEL_NAMES};
-
 test_max_level_features/Cargo.toml
      1→[package]
      7→[[bin]]
     11→[dependencies.log]
-
-test_max_level_features/main.rs
-     5→use log::set_boxed_logger;
-     7→fn set_boxed_logger …
-    11→struct State {
-    15→struct Logger(Arc<State>);
-    17→impl Log for Logger {
 
 triagebot.toml
      1→[assign]

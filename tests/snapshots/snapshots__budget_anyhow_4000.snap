@@ -2,13 +2,14 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3985 tokens)
+budget: 4000 (3988 tokens)
 
 Cargo.toml
      1→[package]
     14→[features]
     18→[dependencies]
     25→[dev-dependencies]
+    32→[package.metadata.docs.rs]
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
@@ -22,8 +23,6 @@ rust-toolchain.toml
      1→[toolchain]
 
 src/backtrace.rs
-     2→pub(crate) use std::backtrace::{Backtrace, BacktraceStatus};
-     5→pub(crate) use self::capture::{Backtrace, BacktraceStatus};
      8→pub(crate) enum Backtrace {}
     11→macro_rules! impl_backtrace {
     18→macro_rules! impl_backtrace {
@@ -41,12 +40,17 @@ src/backtrace.rs
    109→    struct BacktraceSymbol {
    116→    enum BytesOrWide {
    121→    impl Debug for Backtrace {
+   122→        fn fmt …
    147→    impl Debug for BacktraceFrame {
+   148→        fn fmt …
    155→    impl Debug for BacktraceSymbol {
+   156→        fn fmt …
    177→    impl Debug for BytesOrWide {
+   178→        fn fmt …
    191→    impl Backtrace {
    211→        pub(crate) fn capture() -> Backtrace {
    261→    impl Display for Backtrace {
+   262→        fn fmt …
    311→    struct LazilyResolvedCapture {
    316→    impl LazilyResolvedCapture {
    341→    unsafe impl Sync for LazilyResolvedCapture where Capture: Sync {}
@@ -59,13 +63,21 @@ src/chain.rs
      8→pub(crate) use crate::Chain;
     11→pub(crate) struct Chain<'a> {
     16→pub(crate) enum ChainState<'a> {
+    26→impl<'a> Chain<'a> {
     27→    #[cold]
     28→    pub fn new(head: &'a (dyn StdError + 'static)) -> Self {
     29→        Chain {
       →        …
+    35→impl<'a> Iterator for Chain<'a> {
     36→    type Item …
+    38→    fn next …
+    50→    fn size_hint …
     57→impl DoubleEndedIterator for Chain<'_> {
+    58→    fn next_back …
+    76→impl ExactSizeIterator for Chain<'_> {
+    77→    fn len …
     94→impl Default for Chain<'_> {
+    95→    fn default …
 
 src/context.rs
      1→use crate::error::ContextError;
@@ -86,12 +98,6 @@ src/context.rs
 
 src/ensure.rs
      1→use crate::Error;
-     2→use alloc::string::String;
-     3→use core::fmt::{self, Debug, Write};
-     4→use core::mem::MaybeUninit;
-     5→use core::ptr;
-     6→use core::slice;
-     7→use core::str;
     10→pub trait BothDebug {
     11→    fn __dispatch_ensure(self, msg: &'static str) -> Error;
     25→pub trait NotBothDebug {
@@ -195,7 +201,6 @@ src/fmt.rs
 
 src/kind.rs
     47→use crate::Error;
-    48→use core::fmt::{Debug, Display};
     51→use crate::StdError;
     53→use alloc::boxed::Box;
     55→pub struct Adhoc;
@@ -234,7 +239,6 @@ src/lib.rs
    263→mod wrapper;
    265→use crate::error::ErrorImpl;
    266→use crate::ptr::Own;
-   267→use core::fmt::Display;
    270→use core::fmt::Debug;
    273→use std::error::Error as StdError;
    276→use core::error::Error as StdError;
@@ -263,8 +267,6 @@ src/lib.rs
    656→pub mod __private {
    657→    use self::not::Bool;
    658→    use crate::Error;
-   659→    use alloc::fmt;
-   660→    use core::fmt::Arguments;
    663→    pub use crate::ensure::{BothDebug, NotBothDebug};
    665→    pub use alloc::format;
    667→    pub use core::result::Result::Err;
@@ -297,9 +299,6 @@ src/nightly.rs
     56→pub fn provide<'a>(err: &'a (impl Error + ?Sized), request: &mut Request<'a>) {
 
 src/ptr.rs
-     1→use alloc::boxed::Box;
-     2→use core::marker::PhantomData;
-     3→use core::ptr::NonNull;
      6→pub struct Own<T>
      7→where
      8→    T: ?Sized,
@@ -341,11 +340,18 @@ src/wrapper.rs
      5→use alloc::boxed::Box;
      8→use crate::nightly::{self, Request};
     11→pub struct MessageError<M>(pub M);
+    17→    fn fmt …
+    26→    fn fmt …
     34→pub struct DisplayError<M>(pub M);
+    40→    fn fmt …
+    49→    fn fmt …
     58→pub struct BoxedError(pub Box<dyn StdError + Send + Sync>);
     61→impl Debug for BoxedError {
+    62→    fn fmt …
     68→impl Display for BoxedError {
+    69→    fn fmt …
     75→impl StdError for BoxedError {
+    76→    fn source …
     81→    fn provide …
 
 tests/drop/mod.rs

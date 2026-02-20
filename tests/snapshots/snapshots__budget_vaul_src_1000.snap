@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1000 tokens)
+budget: 1000 (1010 tokens)
 
 browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -24,7 +24,6 @@ constants.ts
     18→export const DRAG_CLASS = 'vaul-dragging';
 
 context.ts
-     1→import React from 'react';
      2→import { DrawerDirection } from './types';
      4→interface DrawerContextValue {
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
@@ -46,7 +45,11 @@ helpers.ts
 
 index.tsx
     27→export interface WithFadeFromProps {
+    28→  /**
+      →  …
     40→export interface WithoutFadeFromProps {
+    41→  /**
+      →  …
     50→export type DialogProps = {
    139→export function Root …
    803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(
@@ -66,16 +69,15 @@ types.ts
      7→export type AnyFunction = (...args: any) => any;
 
 use-composed-refs.ts
+     5→type PossibleRef …
     11→function setRef …
     23→function composeRefs …
     31→function useComposedRefs …
 
 use-controllable-state.ts
-     3→import React from 'react';
     39→export function useControllableState …
 
 use-position-fixed.ts
-     1→import React from 'react';
      2→import { isSafari } from './browser';
     15→export function usePositionFixed …
 
@@ -91,6 +93,7 @@ use-prevent-scroll.ts
    294→export function isInput(target: Element) {
 
 use-scale-background.ts
+     6→const noop = () => () => {};
      8→export function useScaleBackground() {
 
 use-snap-points.ts

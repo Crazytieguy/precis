@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3985 tokens)
+budget: 4000 (3987 tokens)
 
 backtrace.rs
      2→pub(crate) use std::backtrace::{Backtrace, BacktraceStatus};
@@ -32,13 +32,21 @@ backtrace.rs
    177→    impl Debug for BytesOrWide {
    178→        fn fmt …
    191→    impl Backtrace {
+   192→        fn enabled …
    211→        pub(crate) fn capture() -> Backtrace {
+   222→        fn create …
+   252→        pub(crate) fn status …
    261→    impl Display for Backtrace {
    262→        fn fmt …
    311→    struct LazilyResolvedCapture {
    316→    impl LazilyResolvedCapture {
+   317→        fn new …
+   324→        fn force …
    341→    unsafe impl Sync for LazilyResolvedCapture where Capture: Sync {}
    343→    impl Capture {
+   344→        fn resolve …
+   370→    fn output_filename …
+   407→fn _assert_send_sync …
 
 chain.rs
      1→use self::ChainState::*;
@@ -54,9 +62,14 @@ chain.rs
       →        …
     35→impl<'a> Iterator for Chain<'a> {
     36→    type Item …
+    38→    fn next …
+    50→    fn size_hint …
     57→impl DoubleEndedIterator for Chain<'_> {
+    58→    fn next_back …
     76→impl ExactSizeIterator for Chain<'_> {
+    77→    fn len …
     94→impl Default for Chain<'_> {
+    95→    fn default …
 
 context.rs
      1→use crate::error::ContextError;
@@ -77,12 +90,6 @@ context.rs
 
 ensure.rs
      1→use crate::Error;
-     2→use alloc::string::String;
-     3→use core::fmt::{self, Debug, Write};
-     4→use core::mem::MaybeUninit;
-     5→use core::ptr;
-     6→use core::slice;
-     7→use core::str;
     10→pub trait BothDebug {
     11→    fn __dispatch_ensure(self, msg: &'static str) -> Error;
     25→pub trait NotBothDebug {
@@ -181,13 +188,11 @@ fmt.rs
      1→use crate::chain::Chain;
      2→use crate::error::ErrorImpl;
      3→use crate::ptr::Ref;
-     4→use core::fmt::{self, Debug, Write};
     69→struct Indented<'a, D> {
     79→    fn write_str …
 
 kind.rs
     47→use crate::Error;
-    48→use core::fmt::{Debug, Display};
     51→use crate::StdError;
     53→use alloc::boxed::Box;
     55→pub struct Adhoc;
@@ -226,7 +231,6 @@ lib.rs
    263→mod wrapper;
    265→use crate::error::ErrorImpl;
    266→use crate::ptr::Own;
-   267→use core::fmt::Display;
    270→use core::fmt::Debug;
    273→use std::error::Error as StdError;
    276→use core::error::Error as StdError;
@@ -255,8 +259,6 @@ lib.rs
    656→pub mod __private {
    657→    use self::not::Bool;
    658→    use crate::Error;
-   659→    use alloc::fmt;
-   660→    use core::fmt::Arguments;
    663→    pub use crate::ensure::{BothDebug, NotBothDebug};
    665→    pub use alloc::format;
    667→    pub use core::result::Result::Err;
@@ -276,8 +278,14 @@ lib.rs
    723→            fn not(self) -> bool {
 
 macros.rs
+     1→/// Return early with an error.
+     2→///
+      →…
     58→macro_rules! bail {
     70→macro_rules! __ensure {
+   174→/// Construct an ad-hoc error from a string or existing non-`anyhow` error
+   175→/// value.
+      →…
    204→macro_rules! anyhow {
    230→macro_rules! __anyhow {
 
@@ -289,9 +297,6 @@ nightly.rs
     56→pub fn provide<'a>(err: &'a (impl Error + ?Sized), request: &mut Request<'a>) {
 
 ptr.rs
-     1→use alloc::boxed::Box;
-     2→use core::marker::PhantomData;
-     3→use core::ptr::NonNull;
      6→pub struct Own<T>
      7→where
      8→    T: ?Sized,

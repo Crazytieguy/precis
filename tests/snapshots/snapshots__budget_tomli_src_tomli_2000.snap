@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2014 tokens)
+budget: 2000 (2012 tokens)
 
 __init__.py
      1→# SPDX-License-Identifier: MIT
@@ -13,12 +13,12 @@ __init__.py
      8→from ._parser import TOMLDecodeError, load, loads
 
 _parser.py
-     7→import sys
-     8→from types import MappingProxyType
+     7→import sys …
+     8→from types …
     10→from ._re …
     19→TYPE_CHECKING = False
-    21→    from collections.abc import Iterable
-    22→    from typing import IO, Any, Final
+    21→    from collections.abc …
+    22→    from typing …
     24→    from ._types …
     26→# Inline tables/arrays are implemented using recursion. Pathologically
       →…
@@ -51,6 +51,8 @@ _parser.py
    149→def loads(__s: str, *, parse_float: ParseFloat = float) -> dict[str, Any]:
    220→class Flags:
    222→
+   223→    # Marks an immutable namespace (inline array or inline table).
+   224→    FROZEN: Final = 0
    229→    def __init__(self) -> None:
    233→    def add_pending(self, key: Key, flag: int) -> None:
    236→    def finalize_pending(self) -> None:
@@ -114,11 +116,11 @@ _parser.py
       →…
 
 _re.py
-     7→from datetime import date, datetime, time, timedelta, timezone, tzinfo
-     8→from functools import lru_cache
-     9→import re
+     7→from datetime …
+     8→from functools …
+     9→import re …
     11→TYPE_CHECKING = False
-    13→    from typing import Any, Final
+    13→    from typing …
     15→    from ._types import ParseFloat
     17→_TIME_RE_STR: Final = r"""
     26→RE_NUMBER: Final = re.compile(
