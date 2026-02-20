@@ -2,14 +2,13 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1995 tokens)
+budget: 2000 (1999 tokens)
 
 Cargo.toml
      1→[package]
     14→[features]
     18→[dependencies]
     25→[dev-dependencies]
-    32→[package.metadata.docs.rs]
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
@@ -119,7 +118,6 @@ src/fmt.rs
 
 src/kind.rs
     47→use crate::Error;
-    48→use core::fmt::{Debug, Display};
     51→use crate::StdError;
     53→use alloc::boxed::Box;
     55→pub struct Adhoc;
@@ -144,7 +142,7 @@ src/lib.rs
    279→trait StdError: Debug + Display {
    280→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
    281→        None
-   282→    }
+      →        …
    286→pub use anyhow as format_err;
    390→pub struct Error {
    391→    inner: Own<ErrorImpl>,
@@ -165,6 +163,9 @@ src/lib.rs
    672→    pub mod kind {
    674→        pub use crate::kind::{AdhocKind, TraitKind};
    678→        pub use crate::kind::BoxedKind;
+   684→    pub fn format_err …
+   698→    pub fn must_use …
+   704→    pub fn not …
    710→        pub trait Bool {
    711→            fn not(self) -> bool;
    716→            fn not …

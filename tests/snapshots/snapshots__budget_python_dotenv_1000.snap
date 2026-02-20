@@ -2,12 +2,10 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1004 tokens)
+budget: 1000 (1002 tokens)
 
 README.md
      1→# python-dotenv
-     3→[![Build Status][build_status_badge]][build_status_link]
-      →…
     22→## Getting Started
     78→## Other Use Cases
    147→## Command-line Interface
@@ -25,6 +23,13 @@ mkdocs.yml
     25→nav:
 
 pyproject.toml
+     1→[build-system]
+     5→[project]
+    43→[project.urls]
+    46→[project.optional-dependencies]
+    51→[project.scripts]
+    54→[tool.setuptools]
+    87→[tool.mypy]
 
 ruff.toml
      1→[lint]
@@ -64,8 +69,6 @@ src/dotenv/ipython.py
     17→        action="store_true",
     33→    @line_magic
     34→    def dotenv(self, line):
-    35→        args = parse_argstring(self.dotenv, line)
-      →        …
     48→def load_ipython_extension(ipython):
     49→    """Register the %dotenv magic."""
 
@@ -84,9 +87,6 @@ src/dotenv/main.py
       →…
 
 src/dotenv/parser.py
-     1→import codecs …
-     2→import re …
-     3→from typing …
     35→class Original(NamedTuple):
     40→class Binding(NamedTuple):
     47→class Position:

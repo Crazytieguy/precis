@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4029 tokens)
+budget: 4000 (4023 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -52,6 +52,14 @@ benchmark/README.md
     18→### Against the latest Tomli PyPI release
 
 benchmark/data.toml
+    46→[contain]
+    55→        [contain.righteous-imperfect-remarkable.deeply-night-gold]
+    60→[crime]
+    70→[license-bat]
+    75→[rapid]
+    90→[run-overjoyed]
+    95→[inline-tables]
+   117→[multiline-strings]
 
 benchmark/run.py
     15→def benchmark …
@@ -222,17 +230,13 @@ src/tomli/_re.py
     27→    r"""
     28→0
     29→(?:
-    30→    x[0-9A-Fa-f](?:_?[0-9A-Fa-f])*   # hex
-    31→    |
-      →    …
+      →…
     45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)
     46→RE_DATETIME: Final = re.compile(
     47→    rf"""
     48→([0-9]{{4}})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])  # date, e.g. 1988-10-27
     49→(?:
-    50→    [Tt ]
-    51→    {_TIME_RE_STR}
-      →    …
+      →…
     59→def match_to_datetime(match: re.Match[str]) -> datetime | date:
     60→    """Convert a `RE_DATETIME` match to `datetime.datetime` or `datetime.date`.
     61→
@@ -279,29 +283,32 @@ tests/burntsushi.py
     44→
       →…
 
+tests/data/invalid/table/redefine-1.toml
+     1→[t1]
+     3→[t1.t2]
+
+tests/data/invalid/table/redefine-2.toml
+     1→[t1]
+
 tests/data/valid/array/array-subtables.json
      1→{"arr":
 
+tests/data/valid/array/array-subtables.toml
+     1→[[arr]]
+     5→[[arr]]
+
 tests/data/valid/array/open-parent-table.json
      2→  "parent-table": {
+
+tests/data/valid/array/open-parent-table.toml
+     3→[parent-table]
 
 tests/data/valid/boolean.json
      2→  "a": {"type":"bool","value":"true"},
      3→  "b": {"type":"bool","value":"false"}
      4→}
 
-tests/data/valid/dates-and-times/localtime.json
-     1→{"t":
-     3→"t2":
-
 tests/data/valid/hex-char.json
-     2→  "a": {"type":"string","value":"a"},
-     3→  "b": {"type":"string","value":"b"},
-     4→  "c": {"type":"string","value":"c"}
-     5→}
-
-tests/data/valid/inline-table/empty-inline-table.json
-     1→{"empty":  {}}
 
 tests/data/valid/trailing-comma.json
      1→{"arr":
@@ -355,7 +362,6 @@ tomllib.md
      4→
      5→Relevant links:
      6→
-     7→- Python Issue Tracker: https://bugs.python.org/issue40059
       →…
     13→## Converting Tomli to tomllib
     15→### Sync status

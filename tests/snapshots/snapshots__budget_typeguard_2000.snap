@@ -2,9 +2,19 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2025 tokens)
+budget: 2000 (2023 tokens)
 
 pyproject.toml
+     1→[build-system]
+     8→[project]
+    33→[project.urls]
+    39→[project.entry-points]
+    42→[dependency-groups]
+    58→[tool.setuptools_scm]
+    78→[tool.ruff]
+    99→[tool.mypy]
+   105→[tool.tox]
+   115→[tool.tox.env.docs]
 
 src/typeguard/__init__.py
      1→import os
@@ -40,9 +50,7 @@ src/typeguard/_config.py
     62→@dataclass
     63→class TypeCheckConfiguration:
     64→    """
-    65→     You can change Typeguard's behavior with these settings.
-    66→
-      →…
+      →    …
     97→
     98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
     99→    typecheck_fail_callback: TypeCheckFailCallback | None = None
@@ -80,12 +88,6 @@ src/typeguard/_exceptions.py
     38→    def __str__(self) -> str:
 
 src/typeguard/_functions.py
-     8→from . …
-     9→from ._checkers …
-    10→from ._config …
-    15→from ._exceptions …
-    16→from ._memo …
-    17→from ._utils …
     24→T = TypeVar("T")
     25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
     50→def check_type …
@@ -133,8 +135,8 @@ src/typeguard/_importhook.py
    183→def install_import_hook …
 
 src/typeguard/_memo.py
-     3→from typing import Any
-     5→from typeguard._config import TypeCheckConfiguration, global_config
+     3→from typing …
+     5→from typeguard._config …
      8→class TypeCheckMemo:
      9→    """
       →    …
@@ -210,7 +212,7 @@ tests/test_importhook.py
     63→def test_debug_instrumentation(monkeypatch, capsys):
 
 tests/test_pytest_plugin.py
-    10→def config(monkeypatch: MonkeyPatch) -> TypeCheckConfiguration:
+    10→def config …
 
 tests/test_suppression.py
     41→def test_decorator_typechecked():

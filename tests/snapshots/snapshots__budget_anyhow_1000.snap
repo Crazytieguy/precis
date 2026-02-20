@@ -2,12 +2,18 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (994 tokens)
+budget: 1000 (995 tokens)
 
 Cargo.toml
+     1→[package]
+    14→[features]
+    18→[dependencies]
+    25→[dev-dependencies]
 
 README.md
    166→#### License
+
+build.rs
 
 rust-toolchain.toml
      1→[toolchain]
@@ -23,8 +29,6 @@ src/chain.rs
     27→    #[cold]
     28→    pub fn new(head: &'a (dyn StdError + 'static)) -> Self {
     36→    type Item = &'a (dyn StdError + 'static);
-    57→impl DoubleEndedIterator for Chain<'_> {
-    94→impl Default for Chain<'_> {
 
 src/context.rs
      7→use crate::nightly::{self, Request};
@@ -42,7 +46,6 @@ src/ensure.rs
 src/error.rs
      4→use crate::nightly::{self, Request};
      6→use crate::ptr::Mut;
-    14→use core::ops::{Deref, DerefMut};
    705→    type Target = dyn StdError + Send + Sync + 'static;
    740→struct ErrorVTable {
 
@@ -91,6 +94,7 @@ src/lib.rs
 
 src/macros.rs
     58→macro_rules! bail {
+    70→macro_rules! __ensure {
    204→macro_rules! anyhow {
    230→macro_rules! __anyhow {
 

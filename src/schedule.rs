@@ -422,8 +422,12 @@ pub fn build_groups(
 
             let lang = crate::Lang::from_path(relative);
             let heading_depth = if kind_category == KindCategory::Section {
-                if matches!(lang, Some(crate::Lang::Json | crate::Lang::Toml | crate::Lang::Yaml)) {
-                    Some(1) // Config file keys are all top-level
+                if matches!(lang, Some(crate::Lang::Toml)) {
+                    // Count dot-separated segments: [project] → 1, [tool.ruff] → 2
+                    let depth = sym.name.chars().filter(|&c| c == '.').count() as u8 + 1;
+                    Some(depth)
+                } else if matches!(lang, Some(crate::Lang::Json | crate::Lang::Yaml)) {
+                    Some(1) // JSON/YAML sections are all top-level
                 } else {
                     Some(detect_heading_depth(&lines, sym_line_0, sym.end_line))
                 }

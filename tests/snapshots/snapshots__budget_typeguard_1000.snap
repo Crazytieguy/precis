@@ -2,11 +2,12 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1006 tokens)
-
-docs/conf.py
+budget: 1000 (1004 tokens)
 
 pyproject.toml
+     1→[build-system]
+     8→[project]
+    42→[dependency-groups]
 
 src/typeguard/__init__.py
      1→import os
@@ -22,7 +23,6 @@ src/typeguard/_checkers.py
     89→generic_alias_types: tuple[type, ...] = (
     98→# Lifted from mypy.sharedparse
     99→BINARY_MAGIC_METHODS = {
-   586→def _is_literal_type …
   1004→# Equality checks are applied to these
   1005→origin_type_checkers: dict[
 
@@ -37,8 +37,7 @@ src/typeguard/_config.py
     52→    def iterate_samples(self, collection: Iterable[T]) -> Iterable[T]:
     63→class TypeCheckConfiguration:
     97→
-    98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
-      →    …
+      →…
 
 src/typeguard/_decorators.py
     24→    def typeguard_ignore …
@@ -113,4 +112,5 @@ src/typeguard/_utils.py
    175→
 
 tests/conftest.py
+    28→@pytest.fixture
     29→def sample_set() -> set:

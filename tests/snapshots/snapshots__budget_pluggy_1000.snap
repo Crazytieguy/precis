@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (1008 tokens)
+budget: 1000 (1014 tokens)
 
 codecov.yml
      1→coverage:
@@ -10,17 +10,23 @@ codecov.yml
      6→
      7→comment: off
 
+docs/conf.py
+
 pyproject.toml
+     1→[build-system]
+     8→[project]
+    38→[dependency-groups]
+    43→[tool.setuptools]
+    69→[tool.setuptools_scm]
+    71→[tool.uv]
+    74→[tool.towncrier]
+   112→[tool.mypy]
 
 src/pluggy/__init__.py
      1→__all__ = [
     32→def __getattr__(name: str) -> str:
 
 src/pluggy/_callers.py
-    16→from ._hooks import HookImpl
-    17→from ._result import HookCallError
-    18→from ._result import Result
-    19→from ._warnings import PluggyTeardownRaisedWarning
     22→# Need to distinguish between old- and new-style hook wrappers.
       →…
     24→Teardown: TypeAlias = Generator[None, object, object]
@@ -70,7 +76,7 @@ src/pluggy/_manager.py
     71→    @property
     72→    def project_name(self) -> str:
     73→        name: str = self.metadata["name"]
-    74→        return name
+      →        …
     83→class PluginManager:
     99→
 
@@ -109,13 +115,11 @@ src/pluggy/_warnings.py
      1→from typing import final
      4→class PluggyWarning(UserWarning):
      6→
-     7→    __module__ = "pluggy"
+      →…
     10→@final
     11→class PluggyTeardownRaisedWarning(PluggyWarning):
     26→
     27→    __module__ = "pluggy"
-
-testing/benchmark.py
 
 testing/conftest.py
     24→def pm() -> PluginManager:

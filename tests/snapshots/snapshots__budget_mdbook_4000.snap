@@ -2,9 +2,11 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4007 tokens)
+budget: 4000 (4009 tokens)
 
 Cargo.toml
+    21→[workspace.package]
+    27→[workspace.dependencies]
 
 README.md
      1→# mdBook
@@ -73,12 +75,6 @@ crates/mdbook-core/src/utils/mod.rs
 crates/mdbook-core/src/utils/toml_ext.rs
      8→    fn read …
     10→    fn insert …
-
-crates/mdbook-driver/Cargo.toml
-     1→[package]
-    10→[dependencies]
-    28→[lints]
-    31→[features]
 
 crates/mdbook-driver/README.md
      1→# mdbook-driver
@@ -159,6 +155,7 @@ crates/mdbook-html/src/html/tokenizer.rs
     24→    fn process_token …
 
 crates/mdbook-html/src/html/tree.rs
+   126→type Attributes …
    131→    fn into_tendril(self) -> StrTendril;
    135→    fn into_tendril(self) -> StrTendril {
 
@@ -201,7 +198,6 @@ crates/mdbook-markdown/src/lib.rs
     16→    /// Enables smart punctuation.
     17→    ///
       →    …
-    33→impl Default for MarkdownOptions {
     34→    fn default() -> MarkdownOptions {
     43→/// Creates a new pulldown-cmark parser of the given text.
     44→pub fn new_cmark_parser<'text>(text: &'text str, options: &MarkdownOptions) -> Parser<'text> {
@@ -226,7 +222,6 @@ crates/mdbook-preprocessor/src/lib.rs
     42→    fn supports_renderer …
     51→pub struct PreprocessorContext {
     52→    /// The location of the book directory on disk.
-    53→    pub root: PathBuf,
       →    …
     68→impl PreprocessorContext {
     70→    pub fn new …
@@ -287,10 +282,12 @@ crates/xtask/README.md
 crates/xtask/src/changelog.rs
      3→use super::Result;
 
-examples/nop-preprocessor.rs
-    79→    pub struct Nop;
-
 guide/book.toml
+     1→[book]
+     7→[rust]
+    10→[output.html]
+    37→[preprocessor.guide-helper]
+    40→[build]
 
 guide/guide-helper/Cargo.toml
      1→[package]
@@ -496,3 +493,4 @@ src/main.rs
     58→fn create_clap_command() -> Command {
 
 triagebot.toml
+    28→[autolabel."S-waiting-on-review"]

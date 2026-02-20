@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2017 tokens)
+budget: 2000 (2011 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -11,6 +11,8 @@ README.md
      5→# Tomli
      7→> A lil' TOML parser
      8→
+     9→**Table of Contents** *generated with [mdformat-toc](https://github.com/hukkin/mdformat-toc)*
+    10→
       →…
     32→## Intro<a name="intro"></a>
     50→## Installation<a name="installation"></a>
@@ -53,12 +55,6 @@ pyproject.toml
     33→[tool.isort]
     46→[tool.tox]
     51→[tool.tox.env_run_base]
-    58→[tool.tox.env."profile"]
-    75→[tool.tox.env."pre-commit"]
-    83→[tool.tox.env."benchmark"]
-    92→[tool.tox.env."benchmark-pypi"]
-   105→[tool.tox.env."benchmark-import"]
-   111→[tool.tox.env."fuzz"]
    129→[tool.coverage.run]
    133→[tool.coverage.report]
    145→[tool.mypy]
@@ -68,6 +64,8 @@ pyproject.toml
 
 scripts/use_setuptools.py
     12→def use_setuptools() -> None:
+
+setup.py
 
 src/tomli/__init__.py
      1→# SPDX-License-Identifier: MIT
@@ -112,6 +110,7 @@ src/tomli/_parser.py
    222→
    223→    # Marks an immutable namespace (inline array or inline table).
    224→    FROZEN: Final = 0
+   225→    # Marks a nest that has been explicitly created and can no longer
    278→class NestedDict:
    312→class Output:
 
@@ -145,7 +144,9 @@ src/tomli/_re.py
    101→    return timezone(
    102→        timedelta(
    103→            hours=sign * int(hour_str),
-      →            …
+   104→            minutes=sign * int(minute_str),
+   105→        )
+   106→    )
    109→def match_to_localtime(match: re.Match[str]) -> time:
    116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
 
@@ -167,7 +168,7 @@ tests/data/valid/trailing-comma.json
 
 tests/test_data.py
      5→import json
-     9→from . import burntsushi, tomllib
+     9→from . …
     11→DATA_DIR …
     13→VALID_FILES …
     21→VALID_FILES_EXPECTED …

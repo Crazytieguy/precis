@@ -2,9 +2,11 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (2008 tokens)
+budget: 2000 (2012 tokens)
 
 Cargo.toml
+    21→[workspace.package]
+    27→[workspace.dependencies]
 
 README.md
      1→# mdBook
@@ -170,6 +172,9 @@ crates/xtask/README.md
      1→# xtask
 
 guide/book.toml
+     1→[book]
+     7→[rust]
+    40→[build]
 
 guide/guide-helper/src/lib.rs
      9→/// Preprocessing entry point.
@@ -209,12 +214,9 @@ src/cmd/clean.rs
     11→pub fn make_subcommand …
     19→pub fn execute …
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
-    45→#[derive(Debug)]
     46→pub struct Clean {
     47→    num_files_removed: u64,
-    48→    num_dirs_removed: u64,
-    49→    total_bytes_removed: u64,
-    50→}
+      →    …
     92→    fn fmt …
 
 src/cmd/command_prelude.rs
