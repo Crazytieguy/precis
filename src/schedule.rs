@@ -301,6 +301,10 @@ pub struct GroupKey {
     /// Whether the imports in this group are 1st-party (local/relative).
     /// Only meaningful for Import kind; false for all other kinds.
     pub is_first_party: bool,
+    /// Whether symbols are trait implementation methods (Rust only).
+    /// Trait impl methods (fmt, from, clone, etc.) implement an interface
+    /// defined elsewhere and are lower signal than inherent methods.
+    pub is_trait_impl: bool,
 }
 
 /// A symbol's precomputed content costs (token counts per rendering stage).
@@ -445,6 +449,7 @@ pub fn build_groups(
                 is_test,
                 heading_depth,
                 is_first_party: sym.is_first_party,
+                is_trait_impl: sym.is_trait_impl,
             };
 
             // Compute costs
@@ -646,7 +651,13 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
         1.0
     };
 
-    let base_value = visibility * documented * depth_factor * sibling_factor * file_role_factor * config_factor * test_factor * heading_depth_factor * first_party_factor;
+    // Trait implementation methods (Rust `impl Trait for Type { fn fmt ... }`)
+    // implement an interface defined elsewhere. They're lower signal than
+    // inherent methods — the trait definition already documents the API, and
+    // most trait impls (Display::fmt, From::from, Clone::clone) are boilerplate.
+    let trait_impl_factor = if key.is_trait_impl { 0.3 } else { 1.0 };
+
+    let base_value = visibility * documented * depth_factor * sibling_factor * file_role_factor * config_factor * test_factor * heading_depth_factor * first_party_factor * trait_impl_factor;
 
     let stage_value = match key.kind_category {
         KindCategory::Type => match stage {

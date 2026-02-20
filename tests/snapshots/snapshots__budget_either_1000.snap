@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (999 tokens)
+budget: 1000 (1001 tokens)
 
 Cargo.toml
      1→[package]
@@ -17,16 +17,18 @@ src/into_either.rs
     14→pub trait IntoEither: Sized {
     29→    fn into_either …
     55→    fn into_either_with …
+    64→impl<T> IntoEither for T {}
 
 src/iterator.rs
      1→use super::{for_both, Either, Left, Right};
      2→use core::iter;
      4→macro_rules! wrap_either {
+    13→/// Iterator that maps left or right iterators to corresponding `Either`-wrapped items.
+    14→///
+      →…
     19→pub struct IterEither<L, R> {
     20→    inner: Either<L, R>,
     21→}
-    48→    type Item = L::Item;
-   185→    type Item = Either<L::Item, R::Item>;
 
 src/lib.rs
     22→pub mod serde_untagged;
@@ -90,10 +92,8 @@ src/lib.rs
   1086→    pub fn copied …
   1098→    pub fn cloned …
   1108→    pub fn copied …
-  1143→    type Output = L::Output;
-  1327→    type Target = L::Target;
-  1358→    fn description …
-  1363→    fn cause …
+  1358→    fn description(&self) -> &str {
+  1363→    fn cause(&self) -> Option<&dyn Error> {
   1522→macro_rules! check_t {
   1553→fn _unsized_std_propagation() {
 

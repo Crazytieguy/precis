@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1998 tokens)
+budget: 2000 (1989 tokens)
 
 Cargo.toml
      1→[package]
@@ -22,11 +22,11 @@ build/probe.rs
     11→struct MyError(Thing);
     12→struct Thing;
     14→impl Debug for MyError {
-    15→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
+    15→    fn fmt …
     20→impl Display for MyError {
-    21→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
+    21→    fn fmt …
     26→impl Error for MyError {
-    27→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
+    27→    fn provide …
 
 impl/Cargo.toml
      1→[package]
@@ -34,6 +34,9 @@ impl/Cargo.toml
     14→[dependencies]
 
 impl/src/ast.rs
+     1→use crate::attr::{self, Attrs};
+     2→use crate::generics::ParamsInScope;
+     3→use crate::unraw::{IdentUnraw, MemberUnraw};
     10→pub enum Input<'a> {
     15→pub struct Struct<'a> {
     22→pub struct Enum<'a> {
@@ -44,8 +47,7 @@ impl/src/ast.rs
     47→    TupleStruct,
     48→    UnitStruct,
       →    …
-    55→    pub fn from_syn …
-   175→    fn fmt …
+    55→    pub fn from_syn(node: &'a DeriveInput) -> Result<Self> {
 
 impl/src/attr.rs
     11→pub struct Attrs<'a> {
@@ -56,8 +58,6 @@ impl/src/attr.rs
     51→pub struct Fmt<'a> {
     57→pub enum Trait {
     69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
-   303→    fn to_tokens(&self, tokens: &mut TokenStream) {
-   343→    fn to_tokens(&self, tokens: &mut TokenStream) {
 
 impl/src/expand.rs
      1→use crate::ast::{Enum, Field, Input, Struct};
@@ -73,6 +73,12 @@ impl/src/fallback.rs
      2→use crate::private;
 
 impl/src/fmt.rs
+     1→use crate::ast::{ContainerKind, Field};
+     2→use crate::attr::{Display, Trait};
+     3→use crate::private;
+     4→use crate::scan_expr::scan_expr;
+     5→use crate::unraw::{IdentUnraw, MemberUnraw};
+    15→impl Display<'_> {
     16→    pub fn expand_shorthand …
    166→struct FmtArguments {
    172→fn explicit_named_args …
@@ -99,45 +105,45 @@ impl/src/lib.rs
     32→mod valid;
     40→pub fn derive_error(input: TokenStream) -> TokenStream {
     46→struct private;
-    49→    fn to_tokens …
+    48→impl ToTokens for private {
+
+impl/src/prop.rs
+     1→use crate::ast::{Enum, Field, Struct, Variant};
+     2→use crate::unraw::MemberUnraw;
 
 impl/src/scan_expr.rs
      1→use self::{Action::*, Input::*};
+     6→enum Input {
+    25→enum Action {
 
 impl/src/unraw.rs
     12→pub struct IdentUnraw(Ident);
-    15→    pub fn new …
-    19→    pub fn to_local …
-    32→    pub fn set_span …
-    38→    fn fmt …
-    46→    fn eq …
-    52→    fn eq …
-    58→    fn cmp …
-    64→    fn partial_cmp …
-    70→    fn parse …
-    76→    fn to_tokens …
+    15→    pub fn new(ident: Ident) -> Self {
+    19→    pub fn to_local(&self) -> Ident {
+    32→    pub fn set_span(&mut self, span: Span) {
     82→pub enum MemberUnraw {
     83→    Named(IdentUnraw),
     84→    Unnamed(Index),
     85→}
-    88→    pub fn span …
-    97→    fn fmt …
-   108→    fn eq …
-   118→    fn eq …
-   127→    fn hash …
-   136→    fn to_tokens …
+    88→    pub fn span(&self) -> Span {
+
+impl/src/valid.rs
+     1→use crate::ast::{Enum, Field, Input, Struct, Variant};
+     2→use crate::attr::Attrs;
 
 rust-toolchain.toml
      1→[toolchain]
 
 src/aserror.rs
+     1→use core::error::Error;
+     2→use core::panic::UnwindSafe;
      5→pub trait AsDynError<'a>: Sealed {
      6→    fn as_dyn_error(&self) -> &(dyn Error + 'a);
-    11→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
-    18→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
-    25→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
-    32→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
-    39→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
+    11→    fn as_dyn_error …
+    18→    fn as_dyn_error …
+    25→    fn as_dyn_error …
+    32→    fn as_dyn_error …
+    39→    fn as_dyn_error …
     45→pub trait Sealed {}
 
 src/display.rs
@@ -145,14 +151,11 @@ src/display.rs
      6→pub trait AsDisplay<'a>: Sealed {
     11→    fn as_display(&'a self) -> Self::Target;
     18→    type Target = &'a T;
-    20→    fn as_display(&'a self) -> Self::Target {
     26→impl<'a> AsDisplay<'a> for Path {
     27→    type Target = path::Display<'a>;
-    29→    #[inline]
     30→    fn as_display(&'a self) -> Self::Target {
     36→impl<'a> AsDisplay<'a> for PathBuf {
     37→    type Target = path::Display<'a>;
-    39→    #[inline]
     40→    fn as_display(&'a self) -> Self::Target {
     46→pub trait Sealed {}
     49→impl Sealed for Path {}
@@ -162,9 +165,7 @@ src/display.rs
     63→    #[allow(dead_code)]
     64→    pub struct Placeholder;
     67→        type Target = Self;
-    69→        #[inline]
     70→        fn as_display(&'a self) -> Self::Target {
-    76→        fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
 
 src/lib.rs
    281→mod aserror;
@@ -185,15 +186,12 @@ src/private.rs
 src/provide.rs
      4→pub trait ThiserrorProvide: Sealed {
      5→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>);
-    12→    #[inline]
-    13→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>) {
-    14→        self.provide(request);
-    15→    }
+    13→    fn thiserror_provide …
     19→pub trait Sealed {}
 
 src/var.rs
      3→pub struct Var<'a, T: ?Sized>(pub &'a T);
-     6→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+     6→    fn fmt …
 
 tests/test_backtrace.rs
     18→pub mod structs {
@@ -202,6 +200,15 @@ tests/test_backtrace.rs
 tests/test_expr.rs
     11→pub enum CompilerError {
     41→pub enum RustupError {
+
+tests/test_from.rs
+     8→pub struct ErrorStruct {
+    15→pub struct ErrorStructOptional {
+    22→pub struct ErrorTuple(#[from] io::Error);
+    26→pub struct ErrorTupleOptional(#[from] Option<io::Error>);
+    30→pub enum ErrorEnum {
+    39→pub enum ErrorEnumOptional {
+    48→pub enum Many {
 
 tests/test_option.rs
      5→pub mod structs {

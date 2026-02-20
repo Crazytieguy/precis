@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3990 tokens)
+budget: 4000 (3994 tokens)
 
 error.rs
      1→use std::fmt;
@@ -13,9 +13,12 @@ error.rs
      7→}
     10→enum Inner {
     19→impl Error {
+    20→    /// Create an error from a message.
     21→    pub fn msg(msg: &'static str) -> Self {
-    29→    pub(super) fn from_value …
-    37→    pub(super) fn into_value …
+    22→        Error {
+      →        …
+    29→    pub(super) fn from_value(err: crate::kv::value::inner::Error) -> Self {
+    37→    pub(super) fn into_value(self) -> crate::kv::value::inner::Error {
     48→impl fmt::Display for Error {
     49→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
     62→impl From<fmt::Error> for Error {
@@ -23,21 +26,29 @@ error.rs
     69→mod std_support {
     70→    use super::*;
     71→    use std::{error, io};
+    73→    pub(super) type BoxedError = Box<dyn error::Error + Send + Sync>;
     75→    impl Error {
+    76→        /// Create an error from a standard error type.
     77→        pub fn boxed<E>(err: E) -> Self
     78→        where
     79→            E: Into<BoxedError>,
     80→        {
+    81→            Error {
+      →            …
     87→    impl error::Error for Error {}
     89→    impl From<io::Error> for Error {
     90→        fn from(err: io::Error) -> Self {
 
 key.rs
+     3→use std::borrow::Borrow;
+     4→use std::fmt;
+     6→/// A type that can be converted into a [`Key`](struct.Key.html).
      7→pub trait ToKey {
      9→    fn to_key(&self) -> Key<'_>;
     16→    fn to_key …
     22→    fn to_key …
     28→    fn to_key …
+    36→#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
     37→pub struct Key<'k> {
     38→    // NOTE: This may become `Cow<'k, str>`
     39→    key: &'k str,
@@ -51,14 +62,18 @@ key.rs
     88→    fn from …
     94→mod std_support {
     95→    use super::*;
+    97→    use std::borrow::Cow;
    100→        fn to_key …
    106→        fn to_key …
    113→mod sval_support {
    114→    use super::*;
+   116→    use sval::Value;
+   117→    use sval_ref::ValueRef;
    120→        fn stream …
    129→        fn stream_ref …
    136→mod serde_support {
    137→    use super::*;
+   139→    use serde_core::{Serialize, Serializer};
    142→        fn serialize …
 
 mod.rs
@@ -78,12 +93,16 @@ mod.rs
 
 source.rs
      6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
+     7→use std::fmt;
+     9→/// A source of key-values.
+    10→///
+      →…
     51→pub trait Source {
     62→    fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error>;
     73→    fn get(&self, key: Key) -> Option<Value<'_>> {
     85→    fn count(&self) -> usize {
-    91→fn get_default …
-   114→fn count_default …
+    91→fn get_default<'v>(source: &'v (impl Source + ?Sized), key: Key) -> Option<Value<'v>> {
+   114→fn count_default(source: impl Source) -> usize {
    134→    fn visit …
    138→    fn get …
    142→    fn count …
@@ -99,8 +118,10 @@ source.rs
    217→    fn visit …
    225→    fn get …
    229→    fn count …
+   234→/// A visitor for the key-value pairs in a [`Source`](trait.Source.html).
    235→pub trait VisitSource<'kvs> {
    237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
+   241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T …
    245→    fn visit_pair …
    251→    fn visit_pair …
    258→    fn visit_pair …
@@ -108,6 +129,11 @@ source.rs
    272→    fn visit_pair …
    280→mod std_support {
    281→    use super::*;
+   282→    use std::borrow::Borrow;
+   283→    use std::collections::{BTreeMap, HashMap};
+   284→    use std::hash::{BuildHasher, Hash};
+   285→    use std::rc::Rc;
+   286→    use std::sync::Arc;
    292→        fn visit …
    296→        fn get …
    300→        fn count …
@@ -134,8 +160,8 @@ value.rs
      8→pub use crate::kv::Error;
     11→pub trait ToValue {
     13→    fn to_value(&self) -> Value<'_>;
-    20→    fn to_value(&self) -> Value<'_> {
-    26→    fn to_value(&self) -> Value<'_> {
+    20→    fn to_value …
+    26→    fn to_value …
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
    121→}
@@ -165,18 +191,21 @@ value.rs
    197→    pub fn null() -> Self {
    204→    fn from_inner …
    217→    pub fn visit(&self, visitor: impl VisitValue<'v>) -> Result<(), Error> {
-   223→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-   229→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-   236→    fn serialize<S>(&self, s: S) -> Result<S::Ok, S::Error>
-   237→    where
-   238→        S: serde_core::Serializer,
-   239→    {
-   246→    fn stream<'sval, S: sval::Stream<'sval> + ?Sized>(&'sval self, stream: &mut S) -> sval::Result {
-   253→    fn stream_ref<S: sval::Stream<'v> + ?Sized>(&self, stream: &mut S) -> sval::Result {
-   259→    fn to_value(&self) -> Value<'_> {
-   265→    fn from(value: &'v str) -> Self {
-   271→    fn to_value(&self) -> Value<'_> {
-   280→    fn to_value(&self) -> Value<'_> {
+   223→    fn fmt …
+   229→    fn fmt …
+   235→impl<'v> serde_core::Serialize for Value<'v> {
+   236→    fn serialize …
+   245→impl<'v> sval::Value for Value<'v> {
+   246→    fn stream …
+   252→impl<'v> sval_ref::ValueRef<'v> for Value<'v> {
+   253→    fn stream_ref …
+   259→    fn to_value …
+   265→    fn from …
+   271→    fn to_value …
+   280→    fn to_value …
+   288→macro_rules! impl_to_value_primitive {
+   312→macro_rules! impl_to_value_nonzero_primitive {
+   336→macro_rules! impl_value_to_primitive {
    379→    pub fn to_borrowed_error(&self) -> Option<&(dyn std::error::Error + 'static)> {
    384→    pub fn to_borrowed_str(&self) -> Option<&'v str> {
    390→mod std_support {
@@ -184,13 +213,13 @@ value.rs
    392→    use std::rc::Rc;
    393→    use std::sync::Arc;
    395→    use super::*;
-   401→        fn to_value(&self) -> Value<'_> {
-   410→        fn to_value(&self) -> Value<'_> {
-   419→        fn to_value(&self) -> Value<'_> {
-   425→        fn to_value(&self) -> Value<'_> {
-   431→        fn to_value(&self) -> Value<'_> {
+   401→        fn to_value …
+   410→        fn to_value …
+   419→        fn to_value …
+   425→        fn to_value …
+   431→        fn to_value …
    438→        pub fn to_cow_str(&self) -> Option<Cow<'v, str>> {
-   444→        fn from(v: &'v String) -> Self {
+   444→        fn from …
    462→pub trait VisitValue<'v> {
    469→    fn visit_any(&mut self, value: Value) -> Result<(), Error>;
    472→    fn visit_null(&mut self) -> Result<(), Error> {
@@ -208,22 +237,23 @@ value.rs
    531→        &mut self,
    532→        err: &'v (dyn std::error::Error + 'static),
    533→    ) -> Result<(), Error> {
-   543→    fn visit_any(&mut self, value: Value) -> Result<(), Error> {
-   547→    fn visit_null(&mut self) -> Result<(), Error> {
-   551→    fn visit_u64(&mut self, value: u64) -> Result<(), Error> {
-   555→    fn visit_i64(&mut self, value: i64) -> Result<(), Error> {
-   559→    fn visit_u128(&mut self, value: u128) -> Result<(), Error> {
-   563→    fn visit_i128(&mut self, value: i128) -> Result<(), Error> {
-   567→    fn visit_f64(&mut self, value: f64) -> Result<(), Error> {
-   571→    fn visit_bool(&mut self, value: bool) -> Result<(), Error> {
-   575→    fn visit_str(&mut self, value: &str) -> Result<(), Error> {
-   579→    fn visit_borrowed_str(&mut self, value: &'v str) -> Result<(), Error> {
-   583→    fn visit_char(&mut self, value: char) -> Result<(), Error> {
-   588→    fn visit_error(&mut self, err: &(dyn std::error::Error + 'static)) -> Result<(), Error> {
-   593→    fn visit_borrowed_error(
-   594→        &mut self,
-   595→        err: &'v (dyn std::error::Error + 'static),
-   596→    ) -> Result<(), Error> {
+   539→impl<'a, 'v, T: ?Sized> VisitValue<'v> for &'a mut T
+   540→where
+   541→    T: VisitValue<'v>,
+   542→{
+   543→    fn visit_any …
+   547→    fn visit_null …
+   551→    fn visit_u64 …
+   555→    fn visit_i64 …
+   559→    fn visit_u128 …
+   563→    fn visit_i128 …
+   567→    fn visit_f64 …
+   571→    fn visit_bool …
+   575→    fn visit_str …
+   579→    fn visit_borrowed_str …
+   583→    fn visit_char …
+   588→    fn visit_error …
+   593→    fn visit_borrowed_error …
    602→pub(in crate::kv) mod inner {
    610→    use super::*;
    612→    pub use value_bag::ValueBag as Inner;
@@ -238,27 +268,33 @@ value.rs
    739→        None,
    740→        Bool(bool),
    741→        Str(&'v str),
+   742→        Char(char),
+   743→        I64(i64),
+   744→        U64(u64),
+   745→        F64(f64),
+   746→        I128(i128),
+   747→        U128(u128),
       →        …
-   753→        fn from(_: ()) -> Self {
-   759→        fn from(v: bool) -> Self {
-   765→        fn from(v: char) -> Self {
-   771→        fn from(v: f32) -> Self {
-   777→        fn from(v: f64) -> Self {
-   783→        fn from(v: i8) -> Self {
-   789→        fn from(v: i16) -> Self {
-   795→        fn from(v: i32) -> Self {
-   801→        fn from(v: i64) -> Self {
-   807→        fn from(v: isize) -> Self {
-   813→        fn from(v: u8) -> Self {
-   819→        fn from(v: u16) -> Self {
-   825→        fn from(v: u32) -> Self {
-   831→        fn from(v: u64) -> Self {
-   837→        fn from(v: usize) -> Self {
-   843→        fn from(v: i128) -> Self {
-   849→        fn from(v: u128) -> Self {
-   855→        fn from(v: &'v str) -> Self {
-   861→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-   879→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+   753→        fn from …
+   759→        fn from …
+   765→        fn from …
+   771→        fn from …
+   777→        fn from …
+   783→        fn from …
+   789→        fn from …
+   795→        fn from …
+   801→        fn from …
+   807→        fn from …
+   813→        fn from …
+   819→        fn from …
+   825→        fn from …
+   831→        fn from …
+   837→        fn from …
+   843→        fn from …
+   849→        fn from …
+   855→        fn from …
+   861→        fn fmt …
+   879→        fn fmt …
    897→        pub fn from_debug<T: fmt::Debug>(value: &'v T) -> Self {
    901→        pub fn from_display<T: fmt::Display>(value: &'v T) -> Self {
    905→        pub fn from_dyn_debug(value: &'v dyn fmt::Debug) -> Self {

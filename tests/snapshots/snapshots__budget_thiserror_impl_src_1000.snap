@@ -5,6 +5,9 @@ expression: output
 budget: 1000 (990 tokens)
 
 ast.rs
+     1→use crate::attr::{self, Attrs};
+     2→use crate::generics::ParamsInScope;
+     3→use crate::unraw::{IdentUnraw, MemberUnraw};
     10→pub enum Input<'a> {
     15→pub struct Struct<'a> {
     22→pub struct Enum<'a> {
@@ -13,9 +16,9 @@ ast.rs
     45→pub enum ContainerKind {
     46→    Struct,
     47→    TupleStruct,
+    48→    UnitStruct,
       →    …
-    55→    pub fn from_syn …
-   175→    fn fmt …
+    55→    pub fn from_syn(node: &'a DeriveInput) -> Result<Self> {
 
 attr.rs
     11→pub struct Attrs<'a> {
@@ -26,8 +29,6 @@ attr.rs
     51→pub struct Fmt<'a> {
     57→pub enum Trait {
     69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
-   303→    fn to_tokens(&self, tokens: &mut TokenStream) {
-   343→    fn to_tokens(&self, tokens: &mut TokenStream) {
 
 expand.rs
      1→use crate::ast::{Enum, Field, Input, Struct};
@@ -57,6 +58,7 @@ generics.rs
      8→pub struct ParamsInScope<'a> {
     13→    pub fn new(generics: &'a Generics) -> Self {
     19→    pub fn intersects(&self, ty: &Type) -> bool {
+    26→fn crawl …
     48→pub struct InferredBounds {
     54→    pub fn new() -> Self {
     61→    pub fn insert(&mut self, ty: impl ToTokens, bound: impl ToTokens) {
@@ -73,9 +75,10 @@ lib.rs
     30→mod scan_expr;
     31→mod unraw;
     32→mod valid;
+    39→#[proc_macro_derive(Error, attributes(backtrace, error, from, source))]
     40→pub fn derive_error(input: TokenStream) -> TokenStream {
     46→struct private;
-    49→    fn to_tokens …
+    48→impl ToTokens for private {
 
 prop.rs
      1→use crate::ast::{Enum, Field, Struct, Variant};
@@ -87,27 +90,18 @@ scan_expr.rs
     25→enum Action {
 
 unraw.rs
+    10→#[derive(Clone)]
+    11→#[repr(transparent)]
     12→pub struct IdentUnraw(Ident);
-    15→    pub fn new …
-    19→    pub fn to_local …
-    32→    pub fn set_span …
-    38→    fn fmt …
-    46→    fn eq …
-    52→    fn eq …
-    58→    fn cmp …
-    64→    fn partial_cmp …
-    70→    fn parse …
-    76→    fn to_tokens …
+    15→    pub fn new(ident: Ident) -> Self {
+    19→    pub fn to_local(&self) -> Ident {
+    32→    pub fn set_span(&mut self, span: Span) {
+    81→#[derive(Clone)]
     82→pub enum MemberUnraw {
     83→    Named(IdentUnraw),
     84→    Unnamed(Index),
     85→}
-    88→    pub fn span …
-    97→    fn fmt …
-   108→    fn eq …
-   118→    fn eq …
-   127→    fn hash …
-   136→    fn to_tokens …
+    88→    pub fn span(&self) -> Span {
 
 valid.rs
      1→use crate::ast::{Enum, Field, Input, Struct, Variant};

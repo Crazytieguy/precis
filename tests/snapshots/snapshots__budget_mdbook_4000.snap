@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4003 tokens)
+budget: 4000 (4000 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -50,28 +50,16 @@ crates/mdbook-core/src/book.rs
     74→    pub fn for_each_chapter_mut …
     93→    pub fn push_item …
    119→pub enum BookItem {
-   129→    fn from …
    141→pub struct Chapter {
    173→    pub fn new …
    192→    pub fn new_draft …
    204→    pub fn is_draft_chapter …
-   210→    fn fmt …
    222→pub struct SectionNumber(Vec<u32>);
    226→    pub fn new …
-   232→    fn fmt …
-   245→    type Target = Vec<u32>;
-   246→    fn deref …
-   252→    fn deref_mut …
-   258→    fn from_iter …
    269→pub struct BookItems<'a> {
-   274→    type Item = &'a BookItem;
-   276→    fn next …
 
 crates/mdbook-core/src/config.rs
     63→pub struct Config {
-    91→    type Err = Error;
-    94→    fn from_str …
-   100→    fn default() -> Config {
    113→    pub fn from_disk …
    150→    pub fn update_from_env …
    189→    pub fn get …
@@ -80,29 +68,23 @@ crates/mdbook-core/src/config.rs
    236→    pub fn outputs …
    274→    pub fn set …
    318→pub struct BookConfig {
-   341→    fn default() -> BookConfig {
    356→    pub fn realized_text_direction …
    368→pub enum TextDirection {
    379→    pub fn from_lang_code …
    394→pub struct BuildConfig {
-   408→    fn default() -> BuildConfig {
    422→pub struct RustConfig {
    430→pub enum RustEdition {
    449→pub struct HtmlConfig {
-   524→    fn default() -> HtmlConfig {
    558→    pub fn theme_dir …
    566→    pub fn get_404_output_file …
    578→pub struct Print {
-   586→    fn default() -> Self {
    598→pub struct Fold {
    611→pub struct Playground {
-   626→    fn default() -> Playground {
    641→pub struct Code {
    650→pub struct Search {
-   686→    fn default() -> Search {
    708→pub struct SearchChapterSettings {
    718→trait Updateable …
-   719→    fn update_value<S: Serialize>(&mut self, key: &str, value: S) -> Result<()> {
+   719→    fn update_value …
 
 crates/mdbook-core/src/lib.rs
      7→pub const MDBOOK_VERSION: &str = env!("CARGO_PKG_VERSION");
@@ -120,11 +102,19 @@ crates/mdbook-core/src/utils/fs.rs
     74→pub fn remove_dir_content …
     93→pub fn copy_files_except_ext …
 
+crates/mdbook-core/src/utils/html.rs
+     6→pub fn escape_html_attribute …
+    32→pub fn escape_html …
+
 crates/mdbook-core/src/utils/mod.rs
      7→pub mod fs;
     13→pub use self::html::{escape_html, escape_html_attribute};
     17→macro_rules! static_regex {
     29→pub fn log_backtrace(e: &Error) {
+
+crates/mdbook-core/src/utils/toml_ext.rs
+     8→    fn read …
+    10→    fn insert …
 
 crates/mdbook-driver/Cargo.toml
      1→[package]
@@ -217,6 +207,9 @@ crates/mdbook-html/README.md
      1→# mdbook-html
     11→## License
 
+crates/mdbook-html/src/html/tree.rs
+   131→    fn into_tendril(self) -> StrTendril;
+
 crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
     22→pub struct HtmlHandlebars;
     26→    pub fn new() -> Self {
@@ -231,8 +224,8 @@ crates/mdbook-html/src/theme/mod.rs
    166→    pub fn copy_theme …
 
 crates/mdbook-html/src/utils.rs
+    42→pub(crate) trait ToUrlPath {
     43→    fn to_url_path(&self) -> String;
-    47→    fn to_url_path(&self) -> String {
 
 crates/mdbook-markdown/Cargo.toml
      1→[package]
@@ -249,7 +242,6 @@ crates/mdbook-markdown/src/lib.rs
     16→    /// Enables smart punctuation.
     17→    ///
       →    …
-    34→    fn default() -> MarkdownOptions {
     44→pub fn new_cmark_parser …
 
 crates/mdbook-preprocessor/Cargo.toml
@@ -307,13 +299,11 @@ crates/mdbook-summary/README.md
 
 crates/mdbook-summary/src/lib.rs
      8→pub use mdbook_core::book::SectionNumber;
-    59→pub fn parse_summary …
+    59→pub fn parse_summary(summary: &str) -> Result<Summary> {
     67→pub struct Summary {
     84→pub struct Link {
-    98→    pub fn new …
-   109→    fn default() -> Self {
+    98→    pub fn new<S: Into<String>, P: AsRef<Path>>(name: S, location: P) -> Link {
    122→pub enum SummaryItem {
-   141→    fn from(other: Link) -> SummaryItem {
    173→struct SummaryParser<'a> {
    190→macro_rules! collect_events {
 
@@ -340,8 +330,6 @@ guide/guide-helper/Cargo.toml
 guide/guide-helper/src/lib.rs
      9→/// Preprocessing entry point.
     10→pub fn handle_preprocessing() -> Result<()> {
-    36→    fn name …
-    40→    fn run …
 
 guide/src/README.md
      1→# Introduction
@@ -356,6 +344,18 @@ guide/src/SUMMARY.md
 guide/src/cli/README.md
      1→# Command-line tool
 
+guide/src/cli/build.md
+     1→# The build command
+
+guide/src/cli/init.md
+     1→# The init command
+
+guide/src/cli/test.md
+     1→# The test command
+
+guide/src/cli/watch.md
+     1→# The watch command
+
 guide/src/for_developers/README.md
      1→# For developers
     17→## The build process
@@ -367,8 +367,20 @@ guide/src/for_developers/mdbook-wordcount/src/main.rs
 guide/src/format/README.md
      1→# Format
 
+guide/src/format/markdown.md
+     1→# Markdown
+     9→## Text and paragraphs
+    25→## Headings
+    47→## Lists
+    69→## Links
+   108→## Images
+   127→## Extensions
+
 guide/src/guide/README.md
      1→# User guide
+
+guide/src/guide/installation.md
+     1→# Installation
 
 src/cmd/build.rs
      1→use super::command_prelude::*;
@@ -382,10 +394,12 @@ src/cmd/clean.rs
     11→pub fn make_subcommand() -> Command {
     19→pub fn execute(args: &ArgMatches) -> Result<()> {
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
+    45→#[derive(Debug)]
     46→pub struct Clean {
     47→    num_files_removed: u64,
-      →    …
-    92→    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+    48→    num_dirs_removed: u64,
+    49→    total_bytes_removed: u64,
+    50→}
 
 src/cmd/command_prelude.rs
      3→pub use clap::{Arg, ArgMatches, Command, arg};
@@ -395,7 +409,6 @@ src/cmd/command_prelude.rs
     26→    fn arg_root_dir(self) -> Self {
     37→    fn arg_open(self) -> Self {
     42→    fn arg_watcher(self) -> Self {
-    57→    fn _arg(self, arg: Arg) -> Self {
     62→pub fn set_dest_dir(args: &ArgMatches, book: &mut MDBook) {
 
 src/cmd/init.rs
@@ -418,6 +431,7 @@ src/cmd/serve.rs
      1→use super::command_prelude::*;
      3→use super::watch;
      4→use crate::{get_book_dir, open};
+    20→const LIVE_RELOAD_ENDPOINT …
     23→pub fn make_subcommand() -> Command {
     51→pub fn execute(args: &ArgMatches) -> Result<()> {
    109→async fn serve …

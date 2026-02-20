@@ -38,14 +38,10 @@ crates/mdbook-core/src/book.rs
    204→    pub fn is_draft_chapter …
    222→pub struct SectionNumber(Vec<u32>);
    226→    pub fn new …
-   245→    type Target = Vec<u32>;
    269→pub struct BookItems<'a> {
-   274→    type Item = &'a BookItem;
 
 crates/mdbook-core/src/config.rs
     63→pub struct Config {
-    91→    type Err = Error;
-    94→    fn from_str …
    113→    pub fn from_disk …
    150→    pub fn update_from_env …
    189→    pub fn get …
@@ -69,6 +65,7 @@ crates/mdbook-core/src/config.rs
    641→pub struct Code {
    650→pub struct Search {
    708→pub struct SearchChapterSettings {
+   719→    fn update_value …
 
 crates/mdbook-core/src/lib.rs
      7→pub const MDBOOK_VERSION: &str = env!("CARGO_PKG_VERSION");
@@ -76,6 +73,11 @@ crates/mdbook-core/src/lib.rs
     10→pub mod config;
     11→pub mod utils;
     14→pub mod errors {
+
+crates/mdbook-core/src/utils/mod.rs
+     7→pub mod fs;
+    17→macro_rules! static_regex {
+    29→pub fn log_backtrace(e: &Error) {
 
 crates/mdbook-driver/src/init.rs
     13→pub struct BookBuilder {
@@ -108,17 +110,20 @@ crates/mdbook-driver/src/mdbook.rs
    371→    pub fn build_dir_for …
    382→    pub fn source_dir …
    387→    pub fn theme_dir …
+   397→struct OutputConfig {
+   435→struct PreprocessorConfig {
 
 crates/mdbook-html/src/lib.rs
      5→pub mod theme;
 
 crates/mdbook-html/src/theme/mod.rs
     40→pub struct Theme {
+    66→    pub fn new …
+   166→    pub fn copy_theme …
 
 crates/mdbook-markdown/src/lib.rs
     11→pub use pulldown_cmark;
     15→pub struct MarkdownOptions {
-    34→    fn default() -> MarkdownOptions {
     44→pub fn new_cmark_parser …
 
 crates/mdbook-preprocessor/src/lib.rs
@@ -144,9 +149,7 @@ crates/mdbook-summary/src/lib.rs
     67→pub struct Summary {
     84→pub struct Link {
     98→    pub fn new …
-   109→    fn default() -> Self {
    122→pub enum SummaryItem {
-   141→    fn from(other: Link) -> SummaryItem {
 
 crates/xtask/README.md
      1→# xtask
@@ -154,12 +157,12 @@ crates/xtask/README.md
 guide/book.toml
      1→[book]
      7→[rust]
+    10→[output.html]
+    37→[preprocessor.guide-helper]
     40→[build]
 
 guide/guide-helper/src/lib.rs
     10→pub fn handle_preprocessing() -> Result<()> {
-    36→    fn name …
-    40→    fn run …
 
 guide/src/README.md
      1→# Introduction
@@ -180,13 +183,12 @@ src/cmd/build.rs
     17→pub fn execute(args: &ArgMatches) -> Result<()> {
 
 src/cmd/clean.rs
-    11→pub fn make_subcommand …
-    19→pub fn execute …
+    11→pub fn make_subcommand() -> Command {
+    19→pub fn execute(args: &ArgMatches) -> Result<()> {
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
     46→pub struct Clean {
     47→    num_files_removed: u64,
       →    …
-    92→    fn fmt …
 
 src/cmd/command_prelude.rs
      3→pub use clap::{Arg, ArgMatches, Command, arg};
@@ -196,7 +198,6 @@ src/cmd/command_prelude.rs
     26→    fn arg_root_dir(self) -> Self {
     37→    fn arg_open(self) -> Self {
     42→    fn arg_watcher(self) -> Self {
-    57→    fn _arg(self, arg: Arg) -> Self {
     62→pub fn set_dest_dir(args: &ArgMatches, book: &mut MDBook) {
 
 src/cmd/init.rs
@@ -233,6 +234,8 @@ src/cmd/watch.rs
     27→    pub fn from_str …
     37→pub fn execute …
     62→pub fn rebuild_on_change …
+
+src/main.rs
 
 triagebot.toml
      2→[assign]

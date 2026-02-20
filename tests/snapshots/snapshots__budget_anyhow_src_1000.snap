@@ -2,38 +2,35 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (996 tokens)
+budget: 1000 (994 tokens)
 
 backtrace.rs
      8→pub(crate) enum Backtrace {}
+    11→macro_rules! impl_backtrace {
+    18→macro_rules! impl_backtrace {
+    25→macro_rules! backtrace {
+    32→macro_rules! backtrace {
+    39→macro_rules! backtrace_if_absent {
     71→mod capture {
-   122→        fn fmt …
-   148→        fn fmt …
-   156→        fn fmt …
-   178→        fn fmt …
-   262→        fn fmt …
 
 chain.rs
+     1→use self::ChainState::*;
+     2→use crate::StdError;
     27→    #[cold]
     28→    pub fn new(head: &'a (dyn StdError + 'static)) -> Self {
-    36→    type Item …
-    38→    fn next …
-    50→    fn size_hint …
-    58→    fn next_back …
-    77→    fn len …
-    95→    fn default …
 
 context.rs
      7→use crate::nightly::{self, Request};
     12→    pub trait StdError {
-   147→    fn provide …
-   161→    fn provide …
+    13→        fn ext_context …
    189→    pub trait Sealed {}
 
 ensure.rs
      1→use crate::Error;
     10→pub trait BothDebug {
+    11→    fn __dispatch_ensure …
     25→pub trait NotBothDebug {
+    26→    fn __dispatch_ensure …
 
 error.rs
      4→use crate::nightly::{self, Request};
@@ -51,19 +48,13 @@ error.rs
    568→    pub fn downcast_mut …
    622→    pub fn into_boxed_dyn_error …
    663→    pub fn reallocate_into_boxed_dyn_error_without_backtrace …
-   697→    fn from …
-   705→    type Target …
-  1024→    fn provide …
-  1050→    fn from …
-  1058→    fn from …
-  1066→    fn from …
 
 fmt.rs
-    79→    fn write_str …
 
 kind.rs
     47→use crate::Error;
     51→use crate::StdError;
+    53→use alloc::boxed::Box;
     55→pub struct Adhoc;
     60→    fn anyhow_kind …
     69→    pub fn new …
@@ -82,17 +73,21 @@ lib.rs
    286→pub use anyhow as format_err;
    390→pub struct Error {
    415→pub struct Chain<'a> {
+   419→/// `Result<T, Error>`
+   420→///
+      →…
    468→pub type Result<T, E = Error> = core::result::Result<T, E>;
    616→pub trait Context<T, E>: context::private::Sealed {
    618→    fn context …
    624→    fn with_context …
    650→pub fn Ok …
    656→pub mod __private {
+   663→    pub use crate::ensure::{BothDebug, NotBothDebug};
    672→    pub mod kind {
+   674→        pub use crate::kind::{AdhocKind, TraitKind};
+   678→        pub use crate::kind::BoxedKind;
    710→        pub trait Bool {
    711→            fn not …
-   716→            fn not …
-   723→            fn not …
 
 macros.rs
     58→macro_rules! bail {
@@ -101,25 +96,24 @@ macros.rs
 
 nightly.rs
     10→pub use core::error::Request;
+    41→pub fn request_ref_backtrace …
+    52→pub fn provide_ref_backtrace …
+    56→pub fn provide …
 
 ptr.rs
      6→pub struct Own …
     64→pub struct Ref …
    125→pub struct Mut …
    181→pub trait CastTo {
-   186→    type Target = T;
 
 wrapper.rs
      1→use crate::StdError;
+     5→use alloc::boxed::Box;
      8→use crate::nightly::{self, Request};
     11→pub struct MessageError<M>(pub M);
-    17→    fn fmt …
-    26→    fn fmt …
     34→pub struct DisplayError<M>(pub M);
-    40→    fn fmt …
-    49→    fn fmt …
     58→pub struct BoxedError(pub Box<dyn StdError + Send + Sync>);
-    62→    fn fmt …
-    69→    fn fmt …
-    76→    fn source …
-    81→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
+    61→impl Debug for BoxedError {
+    68→impl Display for BoxedError {
+    75→impl StdError for BoxedError {
+    81→    fn provide …

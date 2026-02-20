@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3986 tokens)
+budget: 4000 (3987 tokens)
 
 Cargo.toml
      1→[package]
@@ -25,11 +25,11 @@ build/probe.rs
     11→struct MyError(Thing);
     12→struct Thing;
     14→impl Debug for MyError {
-    15→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
+    15→    fn fmt …
     20→impl Display for MyError {
-    21→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
+    21→    fn fmt …
     26→impl Error for MyError {
-    27→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
+    27→    fn provide …
 
 impl/Cargo.toml
      1→[package]
@@ -63,7 +63,7 @@ impl/src/ast.rs
    130→impl<'a> Field<'a> {
    156→impl ContainerKind {
    174→impl Display for ContainerKind {
-   175→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+   175→    fn fmt …
 
 impl/src/attr.rs
     11→pub struct Attrs<'a> {
@@ -76,10 +76,12 @@ impl/src/attr.rs
     51→pub struct Fmt<'a> {
     57→pub enum Trait {
     69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
+   124→fn parse_error_attribute …
+   196→fn parse_token_expr …
    302→impl ToTokens for Display<'_> {
-   303→    fn to_tokens(&self, tokens: &mut TokenStream) {
+   303→    fn to_tokens …
    342→impl ToTokens for Trait {
-   343→    fn to_tokens(&self, tokens: &mut TokenStream) {
+   343→    fn to_tokens …
 
 impl/src/expand.rs
      1→use crate::ast::{Enum, Field, Input, Struct};
@@ -96,6 +98,7 @@ impl/src/fallback.rs
      3→use proc_macro2::TokenStream;
      4→use quote::quote;
      5→use syn::DeriveInput;
+     7→pub(crate) fn expand …
 
 impl/src/fmt.rs
      1→use crate::ast::{ContainerKind, Field};
@@ -135,7 +138,7 @@ impl/src/lib.rs
     40→pub fn derive_error(input: TokenStream) -> TokenStream {
     46→struct private;
     48→impl ToTokens for private {
-    49→    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+    49→    fn to_tokens …
 
 impl/src/prop.rs
      1→use crate::ast::{Enum, Field, Struct, Variant};
@@ -156,27 +159,31 @@ impl/src/unraw.rs
     10→#[derive(Clone)]
     11→#[repr(transparent)]
     12→pub struct IdentUnraw(Ident);
+    14→impl IdentUnraw {
     15→    pub fn new(ident: Ident) -> Self {
     19→    pub fn to_local(&self) -> Ident {
     32→    pub fn set_span(&mut self, span: Span) {
-    38→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-    46→    fn eq(&self, other: &Self) -> bool {
-    52→    fn eq(&self, other: &str) -> bool {
-    58→    fn cmp(&self, other: &Self) -> Ordering {
-    64→    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-    70→    fn parse(input: ParseStream) -> Result<Self> {
-    76→    fn to_tokens(&self, tokens: &mut TokenStream) {
+    37→impl Display for IdentUnraw {
+    43→impl Eq for IdentUnraw {}
+    45→impl PartialEq for IdentUnraw {
+    51→impl PartialEq<str> for IdentUnraw {
+    57→impl Ord for IdentUnraw {
+    63→impl PartialOrd for IdentUnraw {
+    69→impl Parse for IdentUnraw {
+    75→impl ToTokens for IdentUnraw {
     81→#[derive(Clone)]
     82→pub enum MemberUnraw {
     83→    Named(IdentUnraw),
     84→    Unnamed(Index),
     85→}
+    87→impl MemberUnraw {
     88→    pub fn span(&self) -> Span {
-    97→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-   108→    fn eq(&self, other: &Self) -> bool {
-   118→    fn eq(&self, other: &str) -> bool {
-   127→    fn hash<H: Hasher>(&self, hasher: &mut H) {
-   136→    fn to_tokens(&self, tokens: &mut TokenStream) {
+    96→impl Display for MemberUnraw {
+   105→impl Eq for MemberUnraw {}
+   107→impl PartialEq for MemberUnraw {
+   117→impl PartialEq<str> for MemberUnraw {
+   126→impl Hash for MemberUnraw {
+   135→impl ToTokens for MemberUnraw {
 
 impl/src/valid.rs
      1→use crate::ast::{Enum, Field, Input, Struct, Variant};
@@ -208,14 +215,12 @@ src/display.rs
      6→pub trait AsDisplay<'a>: Sealed {
     11→    fn as_display(&'a self) -> Self::Target;
     18→    type Target = &'a T;
-    20→    fn as_display(&'a self) -> Self::Target {
+    20→    fn as_display …
     26→impl<'a> AsDisplay<'a> for Path {
     27→    type Target = path::Display<'a>;
-    29→    #[inline]
     30→    fn as_display(&'a self) -> Self::Target {
     36→impl<'a> AsDisplay<'a> for PathBuf {
     37→    type Target = path::Display<'a>;
-    39→    #[inline]
     40→    fn as_display(&'a self) -> Self::Target {
     46→pub trait Sealed {}
     49→impl Sealed for Path {}
@@ -226,9 +231,8 @@ src/display.rs
     63→    #[allow(dead_code)]
     64→    pub struct Placeholder;
     67→        type Target = Self;
-    69→        #[inline]
     70→        fn as_display(&'a self) -> Self::Target {
-    76→        fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
+    76→        fn fmt …
 
 src/lib.rs
    281→mod aserror;
@@ -252,14 +256,13 @@ src/provide.rs
      5→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>);
     12→    #[inline]
     13→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>) {
-    14→        self.provide(request);
-    15→    }
     19→pub trait Sealed {}
 
 src/var.rs
      1→use core::fmt::{self, Pointer};
      3→pub struct Var<'a, T: ?Sized>(pub &'a T);
-     6→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+     5→impl<'a, T: Pointer + ?Sized> Pointer for Var<'a, T> {
+     6→    fn fmt …
 
 tests/no-std/test.rs
      6→pub enum Error {
@@ -294,7 +297,6 @@ tests/test_backtrace.rs
 tests/test_expr.rs
     11→pub enum CompilerError {
     41→pub enum RustupError {
-    56→fn assert …
 
 tests/test_from.rs
      8→pub struct ErrorStruct {
@@ -357,8 +359,14 @@ tests/ui/duplicate-fmt.rs
 tests/ui/duplicate-struct-source.rs
      4→pub struct ErrorStruct {
 
+tests/ui/duplicate-transparent.rs
+     6→pub struct Error(anyhow::Error);
+
 tests/ui/expression-fallback.rs
      5→pub struct ArgError;
+
+tests/ui/fallback-impl-with-display.rs
+     6→pub struct MyError;
 
 tests/ui/from-backtrace-backtrace.rs
      8→pub struct Error(
@@ -366,8 +374,13 @@ tests/ui/from-backtrace-backtrace.rs
 tests/ui/from-not-source.rs
      4→pub struct Error {
 
+tests/ui/invalid-input-impl-anyway.rs
+     5→pub struct MyError;
+
 tests/ui/missing-display.rs
      4→pub enum MyError {
+     5→    First,
+      →    …
 
 tests/ui/missing-fmt.rs
      4→pub enum Error {
@@ -375,6 +388,9 @@ tests/ui/missing-fmt.rs
 tests/ui/no-display.rs
      8→pub struct Error {
     14→pub struct ErrorOctal {
+
+tests/ui/numbered-positional-tuple.rs
+     5→pub struct Error(u32);
 
 tests/ui/raw-identifier.rs
      5→pub struct Error {
@@ -390,13 +406,28 @@ tests/ui/source-enum-unnamed-field-not-error.rs
      4→pub struct NotError;
      8→pub enum ErrorEnum {
 
+tests/ui/source-struct-not-error.rs
+     8→pub struct ErrorStruct {
+
+tests/ui/struct-with-fmt.rs
+     5→pub struct Error(i32);
+
+tests/ui/transparent-display.rs
+     6→pub struct Error(anyhow::Error);
+
 tests/ui/transparent-enum-many.rs
+     4→pub enum Error {
+
+tests/ui/transparent-enum-not-error.rs
      4→pub enum Error {
 
 tests/ui/transparent-enum-source.rs
      4→pub enum Error {
 
 tests/ui/transparent-struct-many.rs
+     5→pub struct Error {
+
+tests/ui/transparent-struct-not-error.rs
      5→pub struct Error {
 
 tests/ui/unconditional-recursion.rs

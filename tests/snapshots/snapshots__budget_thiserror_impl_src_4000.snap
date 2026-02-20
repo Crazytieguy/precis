@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3993 tokens)
+budget: 4000 (3997 tokens)
 
 ast.rs
      1→use crate::attr::{self, Attrs};
@@ -29,6 +29,8 @@ ast.rs
     52→}
     54→impl<'a> Input<'a> {
     55→    pub fn from_syn(node: &'a DeriveInput) -> Result<Self> {
+    56→        match &node.data {
+      →        …
     67→impl<'a> Struct<'a> {
     68→    fn from_syn …
     85→impl<'a> Enum<'a> {
@@ -78,6 +80,8 @@ attr.rs
     58→    Debug,
       →    …
     69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
+    70→    let mut attrs = Attrs {
+      →    …
    124→fn parse_error_attribute …
    196→fn parse_token_expr …
    302→impl ToTokens for Display<'_> {
@@ -135,7 +139,6 @@ fmt.rs
     15→impl Display<'_> {
     16→    pub fn expand_shorthand(&mut self, fields: &[Field], container: ContainerKind) -> Result<()> {
     17→        let raw_args = self.args.clone();
-    18→        let FmtArguments {
       →        …
    166→struct FmtArguments {
    172→fn explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
@@ -192,8 +195,6 @@ lib.rs
     46→struct private;
     48→impl ToTokens for private {
     49→    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-    50→        tokens.append(Ident::new(
-      →        …
 
 prop.rs
      1→use crate::ast::{Enum, Field, Struct, Variant};

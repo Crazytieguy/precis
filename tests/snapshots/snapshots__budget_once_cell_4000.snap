@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (4006 tokens)
+budget: 4000 (4001 tokens)
 
 Cargo.toml
      1→[package]
@@ -69,8 +69,6 @@ src/imp_pl.rs
    122→struct Guard<'a> {
    127→impl<'a> Drop for Guard<'a> {
    128→    fn drop(&mut self) {
-   129→        self.state.store(self.new_state, Ordering::Release);
-      →        …
    139→fn initialize_inner(state: &AtomicU8, init: &mut dyn FnMut() -> bool) {
 
 src/imp_std.rs
@@ -110,17 +108,18 @@ src/lib.rs
    372→mod imp;
    376→mod imp;
    380→mod imp;
+   382→/// Single-threaded version of `OnceCell`.
    383→pub mod unsync {
    384→    use core::{ …
    411→    pub struct OnceCell<T> {
    412→        // Invariant: written to at most once.
       →        …
-   424→        fn default() -> Self {
-   430→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-   439→        fn clone(&self) -> OnceCell<T> {
-   446→        fn clone_from(&mut self, source: &Self) {
-   455→        fn eq(&self, other: &Self) -> bool {
-   463→        fn from(value: T) -> Self {
+   424→        fn default …
+   430→        fn fmt …
+   439→        fn clone …
+   446→        fn clone_from …
+   455→        fn eq …
+   463→        fn from …
    470→        pub const fn new() -> OnceCell<T> {
    475→        pub const fn with_value(value: T) -> OnceCell<T> {
    483→        pub fn get(&self) -> Option<&T> {
@@ -140,7 +139,7 @@ src/lib.rs
    714→    pub struct Lazy<T, F = fn() -> T> {
    715→        cell: OnceCell<T>,
       →        …
-   722→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+   722→        fn fmt …
    742→        pub const fn new(init: F) -> Lazy<T, F> {
    749→        pub fn into_value(this: Lazy<T, F>) -> Result<T, F> {
    773→        pub fn force(this: &Lazy<T, F>) -> &T {
@@ -148,19 +147,21 @@ src/lib.rs
    818→        pub fn get(this: &Lazy<T, F>) -> Option<&T> {
    835→        pub fn get_mut(this: &mut Lazy<T, F>) -> Option<&mut T> {
    841→        type Target = T;
-   842→        fn deref(&self) -> &T {
-   848→        fn deref_mut(&mut self) -> &mut T {
+   842→        fn deref …
+   848→        fn deref_mut …
    855→        fn default() -> Lazy<T> {
+   861→/// Thread-safe, blocking version of `OnceCell`.
+   862→#[cfg(any(feature = "std", feature = "critical-section"))]
    863→pub mod sync {
    864→    use core::{ …
    871→    use super::imp::OnceCell as Imp;
    901→    pub struct OnceCell<T>(Imp<T>);
-   904→        fn default() -> OnceCell<T> {
-   910→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-   919→        fn clone(&self) -> OnceCell<T> {
-   926→        fn clone_from(&mut self, source: &Self) {
-   935→        fn from(value: T) -> Self {
-   941→        fn eq(&self, other: &OnceCell<T>) -> bool {
+   904→        fn default …
+   910→        fn fmt …
+   919→        fn clone …
+   926→        fn clone_from …
+   935→        fn from …
+   941→        fn eq …
    950→        pub const fn new() -> OnceCell<T> {
    955→        pub const fn with_value(value: T) -> OnceCell<T> {
    963→        pub fn get(&self) -> Option<&T> {
@@ -182,7 +183,7 @@ src/lib.rs
   1255→    pub struct Lazy<T, F = fn() -> T> {
   1256→        cell: OnceCell<T>,
       →        …
-  1261→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+  1261→        fn fmt …
   1278→        pub const fn new(f: F) -> Lazy<T, F> {
   1285→        pub fn into_value(this: Lazy<T, F>) -> Result<T, F> {
   1308→        pub fn force(this: &Lazy<T, F>) -> &T {
@@ -190,10 +191,11 @@ src/lib.rs
   1351→        pub fn get(this: &Lazy<T, F>) -> Option<&T> {
   1368→        pub fn get_mut(this: &mut Lazy<T, F>) -> Option<&mut T> {
   1374→        type Target = T;
-  1375→        fn deref(&self) -> &T {
-  1381→        fn deref_mut(&mut self) -> &mut T {
+  1375→        fn deref …
+  1381→        fn deref_mut …
   1388→        fn default() -> Lazy<T> {
   1408→    fn _dummy() {}
+  1411→#[cfg(feature = "race")]
   1412→pub mod race;
 
 src/race.rs
@@ -218,8 +220,8 @@ src/race.rs
    139→    where
    140→        F: FnOnce() -> Result<NonZeroUsize, E>,
    141→    {
-   150→    fn init …
-   160→    fn compare_exchange …
+   150→    fn init<E>(&self, f: impl FnOnce() -> Result<NonZeroUsize, E>) -> Result<NonZeroUsize, E> {
+   160→    fn compare_exchange(&self, val: NonZeroUsize) -> Result<usize, usize> {
    167→pub struct OnceBool {
    171→impl OnceBool {
    174→    pub const fn new() -> Self {
@@ -233,14 +235,14 @@ src/race.rs
    214→    where
    215→        F: FnOnce() -> Result<bool, E>,
    216→    {
-   221→    fn from_usize …
-   226→    fn to_usize …
+   221→    fn from_usize(value: NonZeroUsize) -> bool {
+   226→    fn to_usize(value: bool) -> NonZeroUsize {
    232→pub struct OnceRef<'a, T> {
    238→unsafe impl<'a, T: Sync> Sync for OnceRef<'a, T> {}
    240→impl<'a, T> core::fmt::Debug for OnceRef<'a, T> {
-   241→    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+   241→    fn fmt …
    246→impl<'a, T> Default for OnceRef<'a, T> {
-   247→    fn default() -> Self {
+   247→    fn default …
    252→impl<'a, T> OnceRef<'a, T> {
    254→    pub const fn new() -> Self {
    259→    pub fn get(&self) -> Option<&'a T> {
@@ -253,9 +255,9 @@ src/race.rs
    300→    where
    301→        F: FnOnce() -> Result<&'a T, E>,
    302→    {
-   311→    fn init …
-   320→    fn compare_exchange …
-   347→    fn _dummy …
+   311→    fn init<E>(&self, f: impl FnOnce() -> Result<&'a T, E>) -> Result<&'a T, E> {
+   320→    fn compare_exchange(&self, value: &'a T) -> Result<(), *const T> {
+   347→    fn _dummy() {}
    351→pub use self::once_box::OnceBox;
    354→mod once_box {
    355→    use super::atomic::{AtomicPtr, Ordering};
@@ -263,11 +265,11 @@ src/race.rs
    358→    use alloc::boxed::Box;
    361→    pub struct OnceBox<T> {
    366→    impl<T> core::fmt::Debug for OnceBox<T> {
-   367→        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+   367→        fn fmt …
    372→    impl<T> Default for OnceBox<T> {
-   373→        fn default() -> Self {
+   373→        fn default …
    378→    impl<T> Drop for OnceBox<T> {
-   379→        fn drop(&mut self) {
+   379→        fn drop …
    387→    impl<T> OnceBox<T> {
    389→        pub const fn new() -> Self {
    394→        pub fn with_value(value: Box<T>) -> Self {
@@ -281,18 +283,23 @@ src/race.rs
    451→        where
    452→            F: FnOnce() -> Result<Box<T>, E>,
    453→        {
-   462→        fn init …
+   462→        fn init<E>(&self, f: impl FnOnce() -> Result<Box<T>, E>) -> Result<&T, E> {
    479→    unsafe impl<T: Sync + Send> Sync for OnceBox<T> {}
    481→    impl<T: Clone> Clone for OnceBox<T> {
-   482→        fn clone(&self) -> Self {
-   497→    fn _dummy …
+   482→        fn clone …
+   497→    fn _dummy() {}
 
 xtask/Cargo.toml
      1→[package]
      8→[dependencies]
 
 xtask/src/main.rs
+     4→use std::time::Instant;
+     6→use xshell::{cmd, Shell};
      8→fn main …
    116→fn push_toolchain …
    126→fn section …
    136→fn defer …
+
+xtask/src/tidy.rs
+     1→use xshell::{cmd, Shell};

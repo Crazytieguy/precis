@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3987 tokens)
+budget: 4000 (3985 tokens)
 
 Cargo.toml
      1→[package]
@@ -30,6 +30,8 @@ src/backtrace.rs
     25→macro_rules! backtrace {
     32→macro_rules! backtrace {
     39→macro_rules! backtrace_if_absent {
+    53→macro_rules! backtrace_if_absent {
+    64→macro_rules! backtrace_if_absent {
     71→mod capture {
     82→    pub(crate) struct Backtrace {
     86→    pub(crate) enum BacktraceStatus {
@@ -38,13 +40,17 @@ src/backtrace.rs
    104→    struct BacktraceFrame {
    109→    struct BacktraceSymbol {
    116→    enum BytesOrWide {
-   122→        fn fmt …
-   148→        fn fmt …
-   156→        fn fmt …
-   178→        fn fmt …
+   121→    impl Debug for Backtrace {
+   147→    impl Debug for BacktraceFrame {
+   155→    impl Debug for BacktraceSymbol {
+   177→    impl Debug for BytesOrWide {
+   191→    impl Backtrace {
    211→        pub(crate) fn capture() -> Backtrace {
-   262→        fn fmt …
+   261→    impl Display for Backtrace {
    311→    struct LazilyResolvedCapture {
+   316→    impl LazilyResolvedCapture {
+   341→    unsafe impl Sync for LazilyResolvedCapture where Capture: Sync {}
+   343→    impl Capture {
 
 src/chain.rs
      1→use self::ChainState::*;
@@ -57,14 +63,9 @@ src/chain.rs
     28→    pub fn new(head: &'a (dyn StdError + 'static)) -> Self {
     29→        Chain {
       →        …
-    36→    type Item = &'a (dyn StdError + 'static);
-    38→    fn next(&mut self) -> Option<Self::Item> {
-    50→    fn size_hint(&self) -> (usize, Option<usize>) {
+    36→    type Item …
     57→impl DoubleEndedIterator for Chain<'_> {
-    58→    fn next_back(&mut self) -> Option<Self::Item> {
-    77→    fn len(&self) -> usize {
     94→impl Default for Chain<'_> {
-    95→    fn default() -> Self {
 
 src/context.rs
      1→use crate::error::ContextError;
@@ -74,35 +75,31 @@ src/context.rs
     10→    use super::*;
     12→    pub trait StdError {
     13→        fn ext_context …
-    23→        fn ext_context …
-    33→        fn ext_context …
-    46→    fn context …
-    58→    fn with_context …
-    91→    fn context …
-   103→    fn with_context …
-   120→    fn fmt …
-   132→    fn fmt …
-   142→    fn source …
-   147→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
-   156→    fn source …
-   161→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
+    19→    impl<E> StdError for E …
+    90→impl<T> Context<T, Infallible> for Option<T> …
+   147→    fn provide …
+   161→    fn provide …
    166→struct Quoted<C>(C);
-   172→    fn fmt …
-   181→    fn write_str …
    186→pub(crate) mod private {
    187→    use super::*;
    189→    pub trait Sealed {}
 
 src/ensure.rs
      1→use crate::Error;
+     2→use alloc::string::String;
+     3→use core::fmt::{self, Debug, Write};
+     4→use core::mem::MaybeUninit;
+     5→use core::ptr;
+     6→use core::slice;
+     7→use core::str;
     10→pub trait BothDebug {
     11→    fn __dispatch_ensure(self, msg: &'static str) -> Error;
-    19→    fn __dispatch_ensure(self, msg: &'static str) -> Error {
     25→pub trait NotBothDebug {
     26→    fn __dispatch_ensure(self, msg: &'static str) -> Error;
-    30→    fn __dispatch_ensure(self, msg: &'static str) -> Error {
     35→struct Buf {
-    59→    fn write_str(&mut self, s: &str) -> fmt::Result {
+    41→    fn new …
+    48→    fn as_str …
+    81→fn render …
    105→macro_rules! __parse_ensure {
    886→macro_rules! __fancy_ensure {
    912→macro_rules! __fallback_ensure {
@@ -124,6 +121,12 @@ src/error.rs
     79→        M: Display + Debug + Send + Sync + 'static,
     80→    {
    140→    pub fn from_boxed(boxed_error: Box<dyn StdError + Send + Sync + 'static>) -> Self {
+   147→    pub(crate) fn construct_from_std …
+   170→    pub(crate) fn construct_from_adhoc …
+   198→    pub(crate) fn construct_from_display …
+   227→    pub(crate) fn construct_from_context …
+   260→    pub(crate) fn construct_from_boxed …
+   293→    unsafe fn construct …
    372→    pub fn context<C>(self, context: C) -> Self
    373→    where
    374→        C: Display + Send + Sync + 'static,
@@ -151,26 +154,29 @@ src/error.rs
    663→    pub fn reallocate_into_boxed_dyn_error_without_backtrace(
    664→        self,
    665→    ) -> Box<dyn StdError + Send + Sync + 'static> {
+   675→    pub(crate) fn provide …
+   686→    pub fn thiserror_provide …
    692→impl<E> From<E> for Error
    693→where
    694→    E: StdError + Send + Sync + 'static,
    695→{
    697→    fn from(error: E) -> Self {
    704→impl Deref for Error {
-   705→    type Target = dyn StdError + Send + Sync + 'static;
-   707→    fn deref(&self) -> &Self::Target {
+   705→    type Target …
    713→impl DerefMut for Error {
-   714→    fn deref_mut(&mut self) -> &mut Self::Target {
-   720→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-   726→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-   732→    fn drop(&mut self) {
    740→struct ErrorVTable {
+   788→unsafe fn object_boxed …
+   799→unsafe fn object_reallocate_boxed …
+   839→unsafe fn context_downcast …
+   859→unsafe fn context_drop_rest …
+   920→unsafe fn context_backtrace …
    934→pub(crate) struct ErrorImpl<E = ()> {
    952→pub(crate) struct ContextError<C, E> {
-  1019→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
+   974→    pub(crate) unsafe fn error_mut …
+   985→    pub(crate) unsafe fn backtrace …
+  1002→    unsafe fn provide …
+  1010→    pub(crate) unsafe fn chain …
   1024→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
-  1033→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-  1042→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
   1048→impl From<Error> for Box<dyn StdError + Send + Sync + 'static> {
   1050→    fn from(error: Error) -> Self {
   1056→impl From<Error> for Box<dyn StdError + Send + 'static> {
@@ -178,18 +184,18 @@ src/error.rs
   1064→impl From<Error> for Box<dyn StdError + 'static> {
   1066→    fn from(error: Error) -> Self {
   1072→impl AsRef<dyn StdError + Send + Sync> for Error {
-  1073→    fn as_ref(&self) -> &(dyn StdError + Send + Sync + 'static) {
   1079→impl AsRef<dyn StdError> for Error {
-  1080→    fn as_ref(&self) -> &(dyn StdError + 'static) {
 
 src/fmt.rs
      1→use crate::chain::Chain;
      2→use crate::error::ErrorImpl;
      3→use crate::ptr::Ref;
-    79→    fn write_str(&mut self, s: &str) -> fmt::Result {
+    69→struct Indented<'a, D> {
+    79→    fn write_str …
 
 src/kind.rs
     47→use crate::Error;
+    48→use core::fmt::{Debug, Display};
     51→use crate::StdError;
     53→use alloc::boxed::Box;
     55→pub struct Adhoc;
@@ -206,6 +212,7 @@ src/kind.rs
     92→    where
     93→        E: Into<Error>,
     94→    {
+    99→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    100→pub struct Boxed;
    104→pub trait BoxedKind: Sized {
    106→    fn anyhow_kind(&self) -> Boxed {
@@ -227,6 +234,7 @@ src/lib.rs
    263→mod wrapper;
    265→use crate::error::ErrorImpl;
    266→use crate::ptr::Own;
+   267→use core::fmt::Display;
    270→use core::fmt::Debug;
    273→use std::error::Error as StdError;
    276→use core::error::Error as StdError;
@@ -255,6 +263,8 @@ src/lib.rs
    656→pub mod __private {
    657→    use self::not::Bool;
    658→    use crate::Error;
+   659→    use alloc::fmt;
+   660→    use core::fmt::Arguments;
    663→    pub use crate::ensure::{BothDebug, NotBothDebug};
    665→    pub use alloc::format;
    667→    pub use core::result::Result::Err;
@@ -281,11 +291,15 @@ src/macros.rs
 
 src/nightly.rs
     10→pub use core::error::Request;
-    41→pub fn request_ref_backtrace …
-    52→pub fn provide_ref_backtrace …
-    56→pub fn provide …
+    41→pub fn request_ref_backtrace(err: &dyn Error) -> Option<&Backtrace> {
+    45→fn request_ref …
+    52→pub fn provide_ref_backtrace<'a>(request: &mut Request<'a>, backtrace: &'a Backtrace) {
+    56→pub fn provide<'a>(err: &'a (impl Error + ?Sized), request: &mut Request<'a>) {
 
 src/ptr.rs
+     1→use alloc::boxed::Box;
+     2→use core::marker::PhantomData;
+     3→use core::ptr::NonNull;
      6→pub struct Own<T>
      7→where
      8→    T: ?Sized,
@@ -327,19 +341,13 @@ src/wrapper.rs
      5→use alloc::boxed::Box;
      8→use crate::nightly::{self, Request};
     11→pub struct MessageError<M>(pub M);
-    17→    fn fmt …
-    26→    fn fmt …
     34→pub struct DisplayError<M>(pub M);
-    40→    fn fmt …
-    49→    fn fmt …
     58→pub struct BoxedError(pub Box<dyn StdError + Send + Sync>);
     61→impl Debug for BoxedError {
-    62→    fn fmt …
     68→impl Display for BoxedError {
-    69→    fn fmt …
     75→impl StdError for BoxedError {
-    76→    fn source …
-    80→    #[cfg(error_generic_member_access)]
-    81→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
+    81→    fn provide …
 
-tests/test_ffi.rs
+tests/drop/mod.rs
+     9→pub struct Flag {
+    26→pub struct DetectDrop {

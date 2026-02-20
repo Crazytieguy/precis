@@ -2,9 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 1000 (994 tokens)
-
-CHANGELOG.md
+budget: 1000 (991 tokens)
 
 Cargo.toml
      1→[package]
@@ -21,8 +19,6 @@ README.md
 src/__private_api.rs
     10→pub type Value<'a> = &'a str;
     14→    pub trait KVs<'a> {
-    23→    fn into_kvs …
-    30→    fn into_kvs …
     39→pub struct GlobalLogger;
    108→pub fn loc …
    113→mod kv_support {
@@ -38,11 +34,9 @@ src/kv/error.rs
      7→}
     10→enum Inner {
     21→    pub fn msg …
-    49→    fn fmt …
-    63→    fn from …
     69→mod std_support {
+    70→    use super::*;
     77→        pub fn boxed …
-    90→        fn from …
 
 src/kv/key.rs
      7→pub trait ToKey {
@@ -80,8 +74,11 @@ src/kv/value.rs
      8→pub use crate::kv::Error;
     11→pub trait ToValue {
    119→pub struct Value<'v> {
+   395→    use super::*;
    462→pub trait VisitValue<'v> {
    610→    use super::*;
+   612→    pub use value_bag::ValueBag as Inner;
+   614→    pub use value_bag::Error;
    735→    use super::*;
    738→    pub enum Inner<'v> {
   1123→pub use VisitValue as Visit;
@@ -93,11 +90,10 @@ src/kv/value.rs
 
 src/lib.rs
    406→mod macros;
+   409→#[cfg(feature = "kv")]
    410→pub mod kv;
    475→pub enum Level {
-   516→    type Err = ParseLevelError;
    636→pub enum LevelFilter {
-   666→    type Err = ParseLevelError;
    842→pub struct Record<'a> {
   1003→pub struct RecordBuilder<'a> {
   1158→pub struct Metadata<'a> {
@@ -116,3 +112,6 @@ src/macros.rs
    292→macro_rules! debug {
    336→macro_rules! trace {
    391→macro_rules! log_enabled {
+
+triagebot.toml
+     1→[assign]

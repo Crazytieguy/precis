@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1999 tokens)
+budget: 2000 (1997 tokens)
 
 imp_cs.rs
      6→use crate::unsync;
@@ -10,12 +10,8 @@ imp_cs.rs
 
 imp_pl.rs
      1→use std::{ …
-     7→pub(crate) struct OnceCell<T> {
-   122→struct Guard<'a> {
-   128→    fn drop(&mut self) {
 
 imp_std.rs
-     6→use std::{ …
     14→pub(crate) struct OnceCell<T> {
    138→struct Waiter {
    145→struct Guard<'a> {
@@ -28,12 +24,6 @@ lib.rs
    380→mod imp;
    383→pub mod unsync {
    411→    pub struct OnceCell<T> {
-   424→        fn default() -> Self {
-   430→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-   439→        fn clone(&self) -> OnceCell<T> {
-   446→        fn clone_from(&mut self, source: &Self) {
-   455→        fn eq(&self, other: &Self) -> bool {
-   463→        fn from(value: T) -> Self {
    470→        pub const fn new() -> OnceCell<T> {
    475→        pub const fn with_value(value: T) -> OnceCell<T> {
    483→        pub fn get(&self) -> Option<&T> {
@@ -51,7 +41,6 @@ lib.rs
    667→        pub fn take(&mut self) -> Option<T> {
    687→        pub fn into_inner(self) -> Option<T> {
    714→    pub struct Lazy<T, F = fn() -> T> {
-   722→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
    742→        pub const fn new(init: F) -> Lazy<T, F> {
    749→        pub fn into_value(this: Lazy<T, F>) -> Result<T, F> {
    773→        pub fn force(this: &Lazy<T, F>) -> &T {
@@ -59,18 +48,10 @@ lib.rs
    818→        pub fn get(this: &Lazy<T, F>) -> Option<&T> {
    835→        pub fn get_mut(this: &mut Lazy<T, F>) -> Option<&mut T> {
    841→        type Target = T;
-   842→        fn deref(&self) -> &T {
-   848→        fn deref_mut(&mut self) -> &mut T {
    855→        fn default() -> Lazy<T> {
    863→pub mod sync {
    871→    use super::imp::OnceCell as Imp;
    901→    pub struct OnceCell<T>(Imp<T>);
-   904→        fn default() -> OnceCell<T> {
-   910→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-   919→        fn clone(&self) -> OnceCell<T> {
-   926→        fn clone_from(&mut self, source: &Self) {
-   935→        fn from(value: T) -> Self {
-   941→        fn eq(&self, other: &OnceCell<T>) -> bool {
    950→        pub const fn new() -> OnceCell<T> {
    955→        pub const fn with_value(value: T) -> OnceCell<T> {
    963→        pub fn get(&self) -> Option<&T> {
@@ -90,7 +71,6 @@ lib.rs
   1197→        pub fn take(&mut self) -> Option<T> {
   1217→        pub fn into_inner(self) -> Option<T> {
   1255→    pub struct Lazy<T, F = fn() -> T> {
-  1261→        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
   1278→        pub const fn new(f: F) -> Lazy<T, F> {
   1285→        pub fn into_value(this: Lazy<T, F>) -> Result<T, F> {
   1308→        pub fn force(this: &Lazy<T, F>) -> &T {
@@ -98,8 +78,6 @@ lib.rs
   1351→        pub fn get(this: &Lazy<T, F>) -> Option<&T> {
   1368→        pub fn get_mut(this: &mut Lazy<T, F>) -> Option<&mut T> {
   1374→        type Target = T;
-  1375→        fn deref(&self) -> &T {
-  1381→        fn deref_mut(&mut self) -> &mut T {
   1388→        fn default() -> Lazy<T> {
   1408→    fn _dummy() {}
   1412→pub mod race;
@@ -108,30 +86,46 @@ race.rs
     31→use core::sync::atomic;
     33→use portable_atomic as atomic;
     43→pub struct OnceNonZeroUsize {
-    50→    pub const fn new …
-    56→    pub fn get …
-    68→    pub unsafe fn get_unchecked …
-   107→    pub fn set …
-   120→    pub fn get_or_init …
-   138→    pub fn get_or_try_init …
+    50→    pub const fn new() -> Self {
+    56→    pub fn get(&self) -> Option<NonZeroUsize> {
+    68→    pub unsafe fn get_unchecked(&self) -> NonZeroUsize {
+   107→    pub fn set(&self, value: NonZeroUsize) -> Result<(), ()> {
+   120→    pub fn get_or_init<F>(&self, f: F) -> NonZeroUsize
+   121→    where
+   122→        F: FnOnce() -> NonZeroUsize,
+   123→    {
+   138→    pub fn get_or_try_init<F, E>(&self, f: F) -> Result<NonZeroUsize, E>
+   139→    where
+   140→        F: FnOnce() -> Result<NonZeroUsize, E>,
+   141→    {
    150→    fn init …
    160→    fn compare_exchange …
    167→pub struct OnceBool {
-   174→    pub const fn new …
-   180→    pub fn get …
-   189→    pub fn set …
-   199→    pub fn get_or_init …
-   213→    pub fn get_or_try_init …
+   174→    pub const fn new() -> Self {
+   180→    pub fn get(&self) -> Option<bool> {
+   189→    pub fn set(&self, value: bool) -> Result<(), ()> {
+   199→    pub fn get_or_init<F>(&self, f: F) -> bool
+   200→    where
+   201→        F: FnOnce() -> bool,
+   202→    {
+   213→    pub fn get_or_try_init<F, E>(&self, f: F) -> Result<bool, E>
+   214→    where
+   215→        F: FnOnce() -> Result<bool, E>,
+   216→    {
    221→    fn from_usize …
    226→    fn to_usize …
    232→pub struct OnceRef<'a, T> {
-   241→    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-   247→    fn default() -> Self {
-   254→    pub const fn new …
-   259→    pub fn get …
-   268→    pub fn set …
-   281→    pub fn get_or_init …
-   299→    pub fn get_or_try_init …
+   254→    pub const fn new() -> Self {
+   259→    pub fn get(&self) -> Option<&'a T> {
+   268→    pub fn set(&self, value: &'a T) -> Result<(), ()> {
+   281→    pub fn get_or_init<F>(&self, f: F) -> &'a T
+   282→    where
+   283→        F: FnOnce() -> &'a T,
+   284→    {
+   299→    pub fn get_or_try_init<F, E>(&self, f: F) -> Result<&'a T, E>
+   300→    where
+   301→        F: FnOnce() -> Result<&'a T, E>,
+   302→    {
    311→    fn init …
    320→    fn compare_exchange …
    347→    fn _dummy …
@@ -139,15 +133,17 @@ race.rs
    354→mod once_box {
    355→    use super::atomic::{AtomicPtr, Ordering};
    361→    pub struct OnceBox<T> {
-   367→        fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
-   373→        fn default() -> Self {
-   379→        fn drop(&mut self) {
-   389→        pub const fn new …
-   394→        pub fn with_value …
-   399→        pub fn get …
-   411→        pub fn set …
-   432→        pub fn get_or_init …
-   450→        pub fn get_or_try_init …
+   389→        pub const fn new() -> Self {
+   394→        pub fn with_value(value: Box<T>) -> Self {
+   399→        pub fn get(&self) -> Option<&T> {
+   411→        pub fn set(&self, value: Box<T>) -> Result<(), Box<T>> {
+   432→        pub fn get_or_init<F>(&self, f: F) -> &T
+   433→        where
+   434→            F: FnOnce() -> Box<T>,
+   435→        {
+   450→        pub fn get_or_try_init<F, E>(&self, f: F) -> Result<&T, E>
+   451→        where
+   452→            F: FnOnce() -> Result<Box<T>, E>,
+   453→        {
    462→        fn init …
-   482→        fn clone(&self) -> Self {
    497→    fn _dummy …

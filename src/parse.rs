@@ -26,6 +26,12 @@ pub struct Symbol {
     /// `None` when tree-sitter couldn't find a doc comment (fallback to
     /// text heuristics in `format::doc_comment_start`).
     pub doc_start_line: Option<usize>,
+    /// Whether this symbol is a method inside a trait implementation block
+    /// (Rust `impl Trait for Type { ... }`). Trait impl methods implement
+    /// an interface defined elsewhere and are typically boilerplate (fmt,
+    /// from, clone, deref, etc.). Deprioritized relative to inherent methods
+    /// and standalone functions.
+    pub is_trait_impl: bool,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -569,6 +575,12 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             false
         };
 
+        // Detect Rust trait implementation methods: functions inside
+        // `impl Trait for Type { ... }` blocks.
+        let is_trait_impl = lang == Lang::Rust
+            && matches!(kind, SymbolKind::Function | SymbolKind::Const | SymbolKind::TypeAlias)
+            && is_in_trait_impl(symbol_node);
+
         symbols.push(Symbol {
             kind,
             name,
@@ -589,6 +601,7 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             },
             sig_end_line: compute_sig_end_line(symbol_node, lang),
             doc_start_line: compute_doc_start_line(symbol_node, source, lang),
+            is_trait_impl,
         });
     }
 
@@ -691,6 +704,21 @@ fn is_public_symbol(node: tree_sitter::Node, source: &str) -> bool {
             child.kind() == "accessibility_modifier"
                 && child.utf8_text(source.as_bytes()).unwrap_or("") == "public"
         });
+    }
+    false
+}
+
+/// Check if a node is inside a Rust trait implementation block (`impl Trait for Type`).
+/// Used to detect methods that implement an interface defined elsewhere (fmt, from, etc.)
+/// as opposed to inherent methods that define the type's own API.
+fn is_in_trait_impl(node: tree_sitter::Node) -> bool {
+    if let Some(parent) = node.parent()
+        && parent.kind() == "declaration_list"
+        && let Some(grandparent) = parent.parent()
+        && grandparent.kind() == "impl_item"
+        && grandparent.child_by_field_name("trait").is_some()
+    {
+        return true;
     }
     false
 }

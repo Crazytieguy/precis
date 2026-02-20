@@ -1019,6 +1019,7 @@ mod tests {
             end_line: 3,
             sig_end_line: None, // test text fallback
             doc_start_line: None,
+            is_trait_impl: false,
         };
         assert_eq!(signature_end_line(&lines, &sym, Some(Lang::JsTs)), 0);
     }
