@@ -513,7 +513,7 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
         // Many READMEs have `# Project [![badge](url)](link)` — the badge URLs
         // waste token budget and provide no useful information.
         let name = if kind == SymbolKind::Section {
-            crate::format::strip_heading_badges(&name).to_string()
+            crate::layout::strip_heading_badges(&name).to_string()
         } else {
             name
         };

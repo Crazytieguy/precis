@@ -2,6 +2,7 @@ use std::collections::{BinaryHeap, HashMap, HashSet};
 use std::path::{Path, PathBuf};
 
 use crate::format;
+use crate::layout;
 use crate::parse;
 use crate::walk;
 
@@ -399,7 +400,7 @@ pub fn build_groups(
     files: &[PathBuf],
     sources: &[Option<String>],
     all_symbols: &[Vec<parse::Symbol>],
-    layouts: &[Vec<format::SymbolLayout>],
+    layouts: &[Vec<layout::SymbolLayout>],
 ) -> Vec<Group> {
     let mut group_map: HashMap<GroupKey, Group> = HashMap::new();
 
@@ -533,7 +534,7 @@ fn compute_symbol_costs(
     symbol_idx: usize,
     sym: &parse::Symbol,
     lines: &[&str],
-    layout: &format::SymbolLayout,
+    layout: &layout::SymbolLayout,
 ) -> SymbolCosts {
     let sym_line_0 = layout.sym_line_0;
 
@@ -544,7 +545,7 @@ fn compute_symbol_costs(
         // Sections show the full heading/section line at Names stage (no
         // truncation marker). Cost matches the signature line since headings
         // are single-line.
-        let line = format::strip_heading_badges(lines.get(layout.sym_line_0).copied().unwrap_or(""));
+        let line = layout::strip_heading_badges(lines.get(layout.sym_line_0).copied().unwrap_or(""));
         format::count_tokens(&format::fmt_line(layout.sym_line_0, line))
     } else {
         // Token count of the formatted name line, plus 1 for the " …" suffix
@@ -563,7 +564,7 @@ fn compute_symbol_costs(
     for (i, line) in lines.iter().enumerate().take(sig_end + 1).skip(sym_line_0) {
         // Strip trailing badges from markdown heading lines (matches renderer)
         let line = if is_section && i == sym_line_0 {
-            format::strip_heading_badges(line)
+            layout::strip_heading_badges(line)
         } else {
             line
         };

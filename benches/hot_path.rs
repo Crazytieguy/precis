@@ -1,5 +1,5 @@
 use criterion::{criterion_group, criterion_main, Criterion};
-use precis::{format, schedule, walk};
+use precis::{format, layout, schedule, walk};
 use std::path::{Path, PathBuf};
 
 /// Pre-loaded fixture data to avoid I/O in benchmark loops.
@@ -41,7 +41,7 @@ fn bench_build_groups(c: &mut Criterion) {
         let Some(f) = Fixture::load(subpath) else {
             continue;
         };
-        let layouts = format::compute_all_layouts(&f.files, &f.sources, &f.all_symbols);
+        let layouts = layout::compute_all_layouts(&f.files, &f.sources, &f.all_symbols);
         c.bench_function(bench_name, |b| {
             b.iter(|| {
                 schedule::build_groups(&f.root, &f.files, &f.sources, &f.all_symbols, &layouts);
@@ -61,7 +61,7 @@ fn bench_schedule(c: &mut Criterion) {
         let Some(f) = Fixture::load(subpath) else {
             continue;
         };
-        let layouts = format::compute_all_layouts(&f.files, &f.sources, &f.all_symbols);
+        let layouts = layout::compute_all_layouts(&f.files, &f.sources, &f.all_symbols);
         let groups = schedule::build_groups(&f.root, &f.files, &f.sources, &f.all_symbols, &layouts);
         c.bench_function(bench_name, |b| {
             b.iter(|| {
