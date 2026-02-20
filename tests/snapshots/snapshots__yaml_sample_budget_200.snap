@@ -1,0 +1,13 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+ci.yml
+     1→name: CI
+     3→on:
+     6→  pull_request:
+     7→
+     8→env:
+    10→  RUST_BACKTRACE: 1
+    11→
+    12→jobs:

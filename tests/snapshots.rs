@@ -506,6 +506,117 @@ void *alloc_node(size_t size);
 "#
 }
 
+fn toml_sample() -> &'static str {
+    r#"[package]
+name = "example"
+version = "0.1.0"
+edition = "2021"
+description = "An example Rust crate"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+tokio = { version = "1.0", features = ["full"] }
+clap = "4"
+
+[dev-dependencies]
+insta = "1.0"
+tempfile = "3"
+
+[profile.release]
+opt-level = 3
+lto = true
+strip = true
+
+[[bin]]
+name = "example"
+path = "src/main.rs"
+
+[workspace.metadata.release]
+publish = false
+"#
+}
+
+fn yaml_sample() -> &'static str {
+    r#"name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: 1
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        rust: [stable, nightly]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.rust }}
+      - name: Run tests
+        run: cargo test --all-features
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Clippy
+        run: cargo clippy -- -D warnings
+      - name: Format
+        run: cargo fmt -- --check
+
+  release:
+    needs: [test, lint]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish
+        run: cargo publish
+"#
+}
+
+fn json_sample() -> &'static str {
+    r#"{
+  "name": "@example/toolkit",
+  "version": "2.0.0",
+  "description": "A toolkit for building CLI applications",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest --coverage",
+    "lint": "eslint src/",
+    "prepare": "npm run build"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^12.0.0",
+    "fs-extra": "^11.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "jest": "^29.0.0",
+    "typescript": "^5.0.0",
+    "eslint": "^9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/example/toolkit.git"
+  },
+  "keywords": ["cli", "toolkit", "typescript"],
+  "license": "MIT"
+}
+"#
+}
+
 // Budget-based inline sample tests: test each language at small and large budgets.
 
 macro_rules! sample_test {
@@ -563,6 +674,21 @@ sample_test!(markdown_sample_budget_50, "README.md", markdown_sample, 50);
 sample_test!(markdown_sample_budget_200, "README.md", markdown_sample, 200);
 sample_test!(markdown_sample_budget_10000, "README.md", markdown_sample, 10000);
 
+sample_test!(toml_sample_budget_20, "Cargo.toml", toml_sample, 20);
+sample_test!(toml_sample_budget_50, "Cargo.toml", toml_sample, 50);
+sample_test!(toml_sample_budget_200, "Cargo.toml", toml_sample, 200);
+sample_test!(toml_sample_budget_10000, "Cargo.toml", toml_sample, 10000);
+
+sample_test!(yaml_sample_budget_20, "ci.yml", yaml_sample, 20);
+sample_test!(yaml_sample_budget_50, "ci.yml", yaml_sample, 50);
+sample_test!(yaml_sample_budget_200, "ci.yml", yaml_sample, 200);
+sample_test!(yaml_sample_budget_10000, "ci.yml", yaml_sample, 10000);
+
+sample_test!(json_sample_budget_20, "package.json", json_sample, 20);
+sample_test!(json_sample_budget_50, "package.json", json_sample, 50);
+sample_test!(json_sample_budget_200, "package.json", json_sample, 200);
+sample_test!(json_sample_budget_10000, "package.json", json_sample, 10000);
+
 // Budget monotonicity: more budget should never produce fewer tokens.
 #[test]
 fn budget_monotonicity_inline() {
@@ -575,6 +701,9 @@ fn budget_monotonicity_inline() {
         ("sample.go", go_sample()),
         ("sample.c", c_sample()),
         ("README.md", markdown_sample()),
+        ("Cargo.toml", toml_sample()),
+        ("ci.yml", yaml_sample()),
+        ("package.json", json_sample()),
     ];
     let budgets = [0, 10, 20, 50, 100, 200, 500, 1000, 10000];
 
