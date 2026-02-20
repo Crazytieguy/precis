@@ -194,19 +194,7 @@ fn render_symbol(
     };
 
     // Doc comment lines (before symbol for most languages)
-    let mut doc_lines_shown = 0;
-    if doc_n > 0 && layout.doc_start < layout.doc_end {
-        let doc_lines_available = layout.doc_end - layout.doc_start;
-        let doc_lines_to_show = doc_lines_available.min(doc_n);
-        doc_lines_shown = doc_lines_to_show;
-        let end = layout.doc_start + doc_lines_to_show;
-        for (i, line) in lines.iter().enumerate().take(end).skip(layout.doc_start) {
-            out.push_str(&fmt_line(i, line));
-        }
-        if doc_lines_to_show < doc_lines_available {
-            out.push_str(&truncation_marker(lines[end - 1]));
-        }
-    }
+    let doc_lines_shown = render_line_range(out, lines, layout.doc_start, layout.doc_end, doc_n, true);
 
     // Signature lines (strip trailing badges from markdown heading lines)
     let is_section = sym.kind == parse::SymbolKind::Section;
@@ -222,44 +210,43 @@ fn render_symbol(
     // doc_n is a cumulative limit across pre-symbol comments and docstrings,
     // matching the scheduler's flat doc_line_tokens vector.
     let doc_n_remaining = doc_n.saturating_sub(doc_lines_shown);
-    if doc_n_remaining > 0 && layout.ds_end > layout.ds_start {
-        let ds_lines_available = layout.ds_end - layout.ds_start;
-        let ds_lines_to_show = ds_lines_available.min(doc_n_remaining);
-        let end = layout.ds_start + ds_lines_to_show;
-        for (i, line) in lines.iter().enumerate().take(end).skip(layout.ds_start) {
-            out.push_str(&fmt_line(i, line));
-        }
-        if ds_lines_to_show < ds_lines_available {
-            out.push_str(&truncation_marker(lines[end - 1]));
-        }
-    }
+    render_line_range(out, lines, layout.ds_start, layout.ds_end, doc_n_remaining, true);
 
     // Body lines — all ranges from layout
     if body_n > 0 {
         if is_section {
             // Markdown: body is content text between headings
-            let body_lines_available = layout.md_section_end.saturating_sub(layout.md_content_start);
-            let body_lines_to_show = body_lines_available.min(body_n);
-            let end = layout.md_content_start + body_lines_to_show;
-            for (i, line) in lines.iter().enumerate().take(end).skip(layout.md_content_start) {
-                out.push_str(&fmt_line(i, line));
-            }
-            if body_lines_to_show < body_lines_available {
-                out.push_str(&truncation_marker(lines[end - 1]));
-            }
+            render_line_range(out, lines, layout.md_content_start, layout.md_section_end, body_n, true);
         } else {
             // Code: body lines from layout (already truncated at first child)
-            let body_lines_available = layout.body_end.saturating_sub(layout.body_start);
-            let body_lines_to_show = body_lines_available.min(body_n);
-            let end = layout.body_start + body_lines_to_show;
-            for (i, line) in lines.iter().enumerate().take(end).skip(layout.body_start) {
-                out.push_str(&fmt_line(i, line));
-            }
-            if body_lines_to_show < body_lines_available && !layout.has_children {
-                out.push_str(&truncation_marker(lines[end - 1]));
-            }
+            render_line_range(out, lines, layout.body_start, layout.body_end, body_n, !layout.has_children);
         }
     }
+}
+
+/// Render up to `max_lines` from a line range, with an optional truncation marker.
+/// Returns the number of lines actually rendered.
+fn render_line_range(
+    out: &mut String,
+    lines: &[&str],
+    start: usize,
+    end: usize,
+    max_lines: usize,
+    show_truncation: bool,
+) -> usize {
+    if max_lines == 0 || start >= end {
+        return 0;
+    }
+    let available = end - start;
+    let to_show = available.min(max_lines);
+    let render_end = start + to_show;
+    for (i, line) in lines.iter().enumerate().take(render_end).skip(start) {
+        out.push_str(&fmt_line(i, line));
+    }
+    if show_truncation && to_show < available {
+        out.push_str(&truncation_marker(lines[render_end - 1]));
+    }
+    to_show
 }
 
 // ---------------------------------------------------------------------------
