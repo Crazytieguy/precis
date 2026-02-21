@@ -10,7 +10,6 @@ README.md
     25→## Precompiled Binaries
     29→## Building from Source
     53→## Projects made with Soluna
-    57→## License
 
 src/appevent.h
      2→#define soluna_app_event_h
@@ -71,9 +70,9 @@ src/font_system.c
    287→luaopen_font_system …
 
 src/gamepad.c
-    27→#define BUTTON_COUNT …
+    27→#define BUTTON_COUNT (sizeof(gamepad_buttons)/sizeof(gamepad_buttons[0]))
     29→struct gamepad_state {
-   265→#define MAX_GAMEPAD …
+   265→#define MAX_GAMEPAD 4
    267→static struct gamepad_global {
    274→struct gamepad_local {
    390→luaopen_gamepad …
@@ -174,7 +173,6 @@ src/material_text.c
    242→#define iscont …
    330→struct block_context {
    331→	int width;
-   332→	int height;
       →	…
    352→struct position {
    701→luaopen_material_text …

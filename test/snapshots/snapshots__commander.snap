@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2004 tokens)
+budget: 2000 (2006 tokens)
 
 Readme.md
      1→# Commander.js
@@ -16,7 +16,6 @@ Readme.md
    754→## Automated help
    956→## Custom event listeners
    966→## Bits and pieces
-  1164→## Support
 
 esm.mjs
      1→import commander from './index.js';
@@ -192,6 +191,8 @@ package.json
 tsconfig.js.json
      7→  "extends": "./tsconfig.json",
      8→  "include": [
+    14→  ],
+      →  …
 
 tsconfig.json
     12→  "compilerOptions": {

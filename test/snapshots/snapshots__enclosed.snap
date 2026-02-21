@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (4001 tokens)
 
 README.md
     26→## Introduction
@@ -18,9 +18,6 @@ README.md
    123→### View a note
    133→### Configure the enclosed instance to use
    140→## Project Structure
-   150→## Contributing
-   155→## License
-   159→## Credits and Acknowledgements
    168→### Stack
    184→### Hosting
    188→### Inspiration
@@ -215,7 +212,6 @@ packages/app-server/src/index.cloudflare.ts
      2→import { createCloudflareKVStorageFactory } from './modules/storage/factories/cloudflare-kv.storage';
 
 packages/app-server/src/modules/app/auth/auth.errors.ts
-     1→import { createErrorFactory } from '../../shared/errors/errors';
      3→export const createUnauthorizedError = createErrorFactory({
 
 packages/app-server/src/modules/app/auth/auth.middleware.ts
@@ -230,6 +226,9 @@ packages/app-server/src/modules/app/config/config.types.ts
      1→import type { getConfig } from './config';
      3→export type Config = ReturnType<typeof getConfig>;
 
+packages/app-server/src/modules/app/middlewares/config.middleware.ts
+     6→export function createConfigMiddleware …
+
 packages/app-server/src/modules/app/middlewares/cors.middleware.ts
      1→import type { Context } from '../server.types';
      5→export const corsMiddleware = createMiddleware(async (context: Context, next) => {
@@ -240,6 +239,11 @@ packages/app-server/src/modules/app/middlewares/errors.middleware.ts
 packages/app-server/src/modules/app/middlewares/logger.middleware.ts
      2→import { createLogger } from '../../shared/logger/logger';
      6→export const loggerMiddleware = createMiddleware(async (c, next) => {
+
+packages/app-server/src/modules/app/middlewares/timeout.middleware.ts
+     1→import type { Context } from '../server.types';
+     3→import { createError } from '../../shared/errors/errors';
+     5→export const timeoutMiddleware = createMiddleware(async (context: Context, next) => {
 
 packages/app-server/src/modules/app/server.types.ts
      5→export type ServerInstanceGenerics = {
@@ -309,8 +313,6 @@ packages/cli/README.md
     35→### Create a note
     58→### View a note
     68→### Configure the enclosed instance to use
-    75→## License
-    79→## Credits and Acknowledgements
 
 packages/cli/bin/enclosed.mjs
      4→import '../dist/cli.mjs';
@@ -348,8 +350,8 @@ packages/cli/tsconfig.json
 packages/crypto/README.md
      1→# Enclosed crypto library
      5→## Installation
-    18→## License
-    22→## Credits and Acknowledgements
+     7→```bash
+      →…
 
 packages/crypto/package.json
 
@@ -385,8 +387,6 @@ packages/lib/README.md
      1→### Enclosed lib
      5→## Installation
     18→## Usage
-    33→## License
-    37→## Credits and Acknowledgements
 
 packages/lib/package.json
 

@@ -13,7 +13,6 @@ Cargo.toml
 NOTICE.md
      1→## Homebrew
      3→### Sources
-     6→### License
 
 README.md
      1→# sps
@@ -24,8 +23,6 @@ README.md
     77→## 📦 Usage
    123→## 🏗️ Building from Source
    138→## 📥 Using the Latest Nightly Build
-   151→## 🤝 Contributing
-   164→## 📄 License
 
 sps/Cargo.toml
      1→[package]
@@ -69,6 +66,7 @@ sps/src/cli/search.rs
       →    …
     23→pub enum SearchType {
     24→    All,
+    25→    Formula,
       →    …
     29→impl Search {
     30→    pub async fn run …
@@ -342,6 +340,9 @@ sps-core/src/install/bottle/mod.rs
     18→pub async fn download_formula …
     34→pub fn has_bottle_for_current_platform …
 
+sps-core/src/install/cask/artifacts/binary.rs
+    23→pub fn install_binary …
+
 sps-core/src/install/cask/artifacts/font.rs
     21→pub fn install_font …
 
@@ -388,7 +389,7 @@ sps-core/src/lib.rs
      9→pub mod upgrade; // New
     10→#[cfg(target_os = "macos")]
     11→pub mod utils; // New
-    19→pub use uninstall::UninstallOptions; // New
+    19→pub use uninstall::UninstallOptions …
 
 sps-core/src/pipeline/engine.rs
     13→use super::worker;

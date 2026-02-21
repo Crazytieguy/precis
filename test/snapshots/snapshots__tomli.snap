@@ -2,7 +2,9 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2019 tokens)
+budget: 2000 (2018 tokens)
+
+CHANGELOG.md
 
 README.md
      5→# Tomli
@@ -17,7 +19,6 @@ README.md
 
 benchmark/README.md
      1→# Benchmark
-     3→## Acknowledgments
     10→## Running
 
 benchmark/run.py
@@ -167,7 +168,7 @@ src/tomli/_re.py
    116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
 
 src/tomli/_types.py
-     5→from typing import Any, Callable, Tuple
+     5→from typing …
 
 tests/__init__.py
      5→__all__ = ("tomllib",)
@@ -192,6 +193,7 @@ tests/test_error.py
 
 tests/test_misc.py
      5→import copy
+    14→from . import tomllib
     17→class TestMiscellaneous(unittest.TestCase):
 
 tomllib.md

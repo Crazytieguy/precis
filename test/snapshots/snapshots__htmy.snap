@@ -8,7 +8,6 @@ README.md
     10→# `htmy`
     16→## Key features
     33→## Testimonials
-    47→## Support
     51→## Installation
     63→## Concepts
     69→### Components
@@ -26,8 +25,6 @@ README.md
    341→## Why
    353→## Dependencies
    361→## Development
-   367→## Contributing
-   377→## License - MIT
 
 htmy/__init__.py
      1→__version__ = "0.10.2"
@@ -155,6 +152,7 @@ htmy/renderer/context.py
     12→    def from_context(cls, context: Context) -> RendererType:
 
 htmy/renderer/default.py
+    12→from .context import RendererContext
    228→class Renderer:
    235→
 
@@ -174,9 +172,12 @@ htmy/snippet.py
     27→class Slots:
     46→
     49→    class slot_re:
+    57→
+      →…
     83→    def __init__ …
    110→    def resolve_text …
    158→class Snippet:
+   215→
    218→    def __init__ …
    241→    async def htmy …
 

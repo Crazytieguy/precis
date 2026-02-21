@@ -8,13 +8,11 @@ README.md
      1→### Enclosed lib
      5→## Installation
     18→## Usage
-    33→## License
-    37→## Credits and Acknowledgements
 
 package.json
 
 src/api/api.client.ts
-     1→import { ofetch …
+     1→import { ofetch } from 'ofetch';
      2→import { DEFAULT_API_BASE_URL } from './api.constants';
      6→async function tryToGetBody …
     20→async function apiClient …
@@ -70,6 +68,7 @@ src/crypto/serialization/serialization.types.ts
 
 src/files/files.models.ts
      1→import type { NoteAsset } from '../notes/notes.types';
+     2→import { get } from 'lodash-es';
 
 src/index.ts
 

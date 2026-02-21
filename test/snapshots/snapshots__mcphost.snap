@@ -154,7 +154,6 @@ internal/hooks/config.go
 
 internal/hooks/events.go
      5→type HookEvent string
-     7→const (
      9→	PreToolUse HookEvent = "PreToolUse"
     12→	PostToolUse HookEvent = "PostToolUse"
     15→	UserPromptSubmit HookEvent = "UserPromptSubmit"
@@ -225,7 +224,6 @@ internal/models/openai/openai.go
     31→type CustomRoundTripper struct {
 
 internal/models/providers.go
-    28→const (
     32→	ClaudeCodePrompt = "You are Claude Code, Anthropic's official CLI for Claude."
     70→type ProviderConfig struct {
    124→type ProviderResult struct {
@@ -235,6 +233,14 @@ internal/models/providers.go
 
 internal/models/registry.go
     16→type ModelsRegistry struct {
+    27→func NewModelsRegistry …
+    44→func (r *ModelsRegistry) ValidateModel …
+    73→func (r *ModelsRegistry) GetRequiredEnvVars …
+    92→func (r *ModelsRegistry) ValidateEnvironment …
+   143→func (r *ModelsRegistry) SuggestModels …
+   179→func (r *ModelsRegistry) GetSupportedProviders …
+   197→func (r *ModelsRegistry) GetModelsForProvider …
+   216→func GetGlobalRegistry …
 
 internal/session/manager.go
     15→type Manager struct {
@@ -285,7 +291,6 @@ internal/ui/cli.go
 internal/ui/commands.go
      6→type SlashCommand struct {
      7→	Name        string
-     8→	Description string
       →	…
     16→var SlashCommands = []SlashCommand{
     65→func GetCommandByName(name string) *SlashCommand {
@@ -334,9 +339,6 @@ internal/ui/messages.go
 
 internal/ui/progress/ollama.go
     27→type OllamaPullProgress struct {
-    35→type progressMsg struct {
-    41→type progressErrMsg struct{ err error }
-    44→type progressCompleteMsg struct{}
     49→type ProgressModel struct {
     58→func NewProgressModel() ProgressModel {
     67→func (m ProgressModel) Init() tea.Cmd {
@@ -364,9 +366,6 @@ internal/ui/spinner.go
     17→	model  spinner.Model
       →	…
     25→type spinnerModel struct {
-    31→func (m spinnerModel) Init() tea.Cmd {
-    35→func (m spinnerModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-    52→func (m spinnerModel) View() string {
     75→type quitMsg struct{}
     80→func NewSpinner(message string) *Spinner {
    107→func NewThemedSpinner(message string, color lipgloss.AdaptiveColor) *Spinner {
@@ -385,6 +384,8 @@ internal/ui/usage_tracker.go
     30→type SessionStats struct {
     42→type UsageTracker struct {
 
+main.go
+
 sdk/README.md
      1→# MCPHost SDK
      5→## Installation
@@ -398,7 +399,6 @@ sdk/README.md
    117→### Types
    124→### Methods
    136→## Environment Variables
-   146→## License
 
 sdk/mcphost.go
     19→type MCPHost struct {

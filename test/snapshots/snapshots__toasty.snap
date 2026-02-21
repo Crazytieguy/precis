@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3998 tokens)
+budget: 4000 (4000 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -14,7 +14,6 @@ README.md
     76→## SQL and NoSQL
     91→## Application data model vs. database schema
     98→## Current status and roadmap
-   111→## License
    117→### Contribution
 
 compose.yaml
@@ -383,6 +382,7 @@ crates/toasty-driver-integration-suite/src/lib.rs
 
 crates/toasty-driver-integration-suite/src/logging_driver.rs
     14→pub struct LoggingDriver {
+    23→    pub fn new …
     31→    pub fn ops_log_handle(&self) -> Arc<Mutex<Vec<DriverOp>>> {
     63→pub struct DriverOp {
     70→pub struct LoggingConnection {

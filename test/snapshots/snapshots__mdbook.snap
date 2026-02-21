@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4002 tokens)
+budget: 4000 (4003 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -20,7 +20,6 @@ Cargo.toml
 
 README.md
      1→# mdBook
-    14→## License
 
 crates/mdbook-compare/Cargo.toml
      1→[package]
@@ -38,7 +37,6 @@ crates/mdbook-core/Cargo.toml
 
 crates/mdbook-core/README.md
      1→# mdbook-core
-    11→## License
 
 crates/mdbook-core/src/book.rs
     26→pub struct Book {
@@ -128,7 +126,6 @@ crates/mdbook-driver/Cargo.toml
 
 crates/mdbook-driver/README.md
      1→# mdbook-driver
-    11→## License
 
 crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
     14→pub struct CmdPreprocessor {
@@ -157,7 +154,7 @@ crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs
 crates/mdbook-driver/src/builtin_renderers/mod.rs
     11→pub use self::markdown_renderer::MarkdownRenderer;
     20→pub struct CmdRenderer {
-    27→    pub fn new …
+    27→    pub fn new(name: String, cmd: String) -> CmdRenderer {
 
 crates/mdbook-driver/src/init.rs
      3→use super::MDBook;
@@ -207,7 +204,6 @@ crates/mdbook-html/Cargo.toml
 
 crates/mdbook-html/README.md
      1→# mdbook-html
-    11→## License
 
 crates/mdbook-html/src/html/tree.rs
    131→    fn into_tendril(self) -> StrTendril;
@@ -240,7 +236,6 @@ crates/mdbook-markdown/Cargo.toml
 
 crates/mdbook-markdown/README.md
      1→# mdbook-markdown
-    11→## License
 
 crates/mdbook-markdown/src/lib.rs
     11→pub use pulldown_cmark;
@@ -257,7 +252,6 @@ crates/mdbook-preprocessor/Cargo.toml
 
 crates/mdbook-preprocessor/README.md
      1→# mdbook-preprocessor
-    11→## License
 
 crates/mdbook-preprocessor/src/lib.rs
     18→pub use mdbook_core::MDBOOK_VERSION;
@@ -279,7 +273,6 @@ crates/mdbook-renderer/Cargo.toml
 
 crates/mdbook-renderer/README.md
      1→# mdbook-renderer
-    11→## License
 
 crates/mdbook-renderer/src/lib.rs
     17→pub use mdbook_core::MDBOOK_VERSION;
@@ -301,9 +294,9 @@ crates/mdbook-summary/Cargo.toml
 
 crates/mdbook-summary/README.md
      1→# mdbook-summary
-    11→## License
 
 crates/mdbook-summary/src/lib.rs
+     8→pub use mdbook_core::book::SectionNumber;
     59→pub fn parse_summary(summary: &str) -> Result<Summary> {
     67→pub struct Summary {
     84→pub struct Link {
@@ -328,14 +321,13 @@ guide/guide-helper/Cargo.toml
 guide/guide-helper/src/lib.rs
      9→/// Preprocessing entry point.
     10→pub fn handle_preprocessing() -> Result<()> {
+    33→struct GuideHelper;
 
 guide/src/404.md
      1→# Document not found (404)
 
 guide/src/README.md
      1→# Introduction
-    46→## Contributing
-    55→## License
 
 guide/src/SUMMARY.md
      1→# Summary
@@ -382,6 +374,9 @@ guide/src/format/markdown.md
     69→## Links
    108→## Images
    127→## Extensions
+
+guide/src/format/mathjax.md
+     1→# MathJax support
 
 guide/src/format/summary.md
      1→# SUMMARY.md
@@ -435,6 +430,7 @@ src/cmd/command_prelude.rs
     37→    fn arg_open(self) -> Self {
     41→    #[cfg(any(feature = "watch", feature = "serve"))]
     42→    fn arg_watcher(self) -> Self {
+    56→impl CommandExt for Command {
     62→pub fn set_dest_dir(args: &ArgMatches, book: &mut MDBook) {
 
 src/cmd/init.rs
@@ -443,6 +439,7 @@ src/cmd/init.rs
     32→pub fn execute(args: &ArgMatches) -> Result<()> {
     88→fn get_author_name() -> Option<String> {
    102→fn request_book_title() -> Option<String> {
+   116→fn confirm() -> bool {
 
 src/cmd/mod.rs
      3→pub mod build;

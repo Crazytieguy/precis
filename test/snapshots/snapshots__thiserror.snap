@@ -17,7 +17,6 @@ README.md
     21→## Example
     44→## Details
    211→## Comparison to anyhow
-   223→#### License
 
 build/probe.rs
     11→struct MyError(Thing);
@@ -28,6 +27,8 @@ build/probe.rs
     21→    fn fmt …
     26→impl Error for MyError {
     27→    fn provide …
+
+build.rs
 
 impl/Cargo.toml
      1→[package]
@@ -89,7 +90,7 @@ impl/src/fmt.rs
     15→impl Display<'_> {
     16→    pub fn expand_shorthand(&mut self, fields: &[Field], container: ContainerKind) -> Result<()> {
    166→struct FmtArguments {
-   172→fn explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
+   172→fn explicit_named_args …
 
 impl/src/generics.rs
      8→pub struct ParamsInScope<'a> {
@@ -218,6 +219,9 @@ tests/test_source.rs
      7→pub struct ImplicitSource {
     13→pub struct ExplicitSource {
     21→pub struct BoxedSource {
+
+tests/ui/display-underscore.rs
+     5→pub struct Error;
 
 tests/ui/no-display.rs
      8→pub struct Error {

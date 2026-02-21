@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2003 tokens)
+budget: 2000 (2004 tokens)
 
 package.json
 
@@ -21,7 +21,6 @@ readme.md
   1339→## Browser support
   1343→## Node.js support
   1347→## Related
-  1352→## Maintainers
 
 source/core/Ky.ts
     33→export class Ky {
@@ -47,6 +46,7 @@ source/errors/ForceRetryError.ts
      8→export class ForceRetryError extends Error {
      9→	override name = 'ForceRetryError' as const;
     10→	customDelay: number | undefined;
+    11→	code: string | undefined;
     14→	constructor(options?: ForceRetryOptions) {
 
 source/errors/HTTPError.ts

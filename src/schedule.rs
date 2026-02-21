@@ -219,6 +219,30 @@ fn detect_heading_depth(lines: &[&str], sym_line_0: usize, end_line: usize) -> u
     }
 }
 
+/// Detect boilerplate markdown section headings that convey no architectural value.
+/// These are headings like "## License", "## Contributing", "## Acknowledgements"
+/// that appear in READMEs across many repos with identical content.
+fn is_boilerplate_heading(name: &str) -> bool {
+    // Strip leading emoji/punctuation to handle "📃 License", "🤝 Contributing", etc.
+    let stripped = name.trim_start_matches(|c: char| !c.is_ascii_alphanumeric());
+    let lower = stripped.trim().to_ascii_lowercase();
+    // Also handle "License - MIT" style suffixed headings
+    let stem = lower.split(['-', '—', '–']).next().unwrap_or(&lower).trim();
+    matches!(
+        stem,
+        "license" | "licence"
+            | "contribute" | "contributing" | "contributors" | "how to contribute"
+            | "modifying and contributing"
+            | "reporting issues" | "reporting bugs"
+            | "submitting pull requests" | "submitting prs"
+            | "code of conduct"
+            | "acknowledgments" | "acknowledgements"
+            | "credits" | "credits and acknowledgements" | "credits and acknowledgments"
+            | "author" | "authors" | "maintainers"
+            | "support" | "governance" | "security"
+    )
+}
+
 /// Detect build/tool configuration files by filename and path convention.
 /// These are files like `eslint.config.js`, `jest.config.ts`, `.eslintrc.js`, etc.
 /// that configure development tools rather than implementing library/app logic.
@@ -340,6 +364,9 @@ pub struct GroupKey {
     /// Whether the file is a TypeScript declaration file (.d.ts, .d.mts, .d.cts).
     /// These duplicate API signatures already shown from .js/.ts source files.
     pub is_type_declaration: bool,
+    /// Whether this is a boilerplate markdown section (License, Contributing, etc.)
+    /// that conveys no architectural value. Only set for Section kind.
+    pub is_boilerplate_section: bool,
 }
 
 /// A symbol's precomputed content costs (token counts per rendering stage).
@@ -480,6 +507,10 @@ pub fn build_groups(
                 None
             };
 
+            let is_boilerplate_section = kind_category == KindCategory::Section
+                && matches!(lang, Some(crate::Lang::Markdown))
+                && is_boilerplate_heading(&sym.name);
+
             let key = GroupKey {
                 is_public: sym.is_public,
                 kind_category,
@@ -492,6 +523,7 @@ pub fn build_groups(
                 is_first_party: sym.is_first_party,
                 is_trait_impl: sym.is_trait_impl,
                 is_type_declaration,
+                is_boilerplate_section,
             };
 
             // Compute costs
@@ -750,7 +782,11 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     // most trait impls (Display::fmt, From::from, Clone::clone) are boilerplate.
     let trait_impl_factor = if key.is_trait_impl { 0.3 } else { 1.0 };
 
-    let base_value = visibility * documented * depth_factor * sibling_factor * file_role_factor * config_factor * test_factor * type_declaration_factor * heading_depth_factor * first_party_factor * trait_impl_factor;
+    // Boilerplate markdown sections (License, Contributing, etc.) appear in
+    // almost every README with zero architectural value.
+    let boilerplate_factor = if key.is_boilerplate_section { 0.1 } else { 1.0 };
+
+    let base_value = visibility * documented * depth_factor * sibling_factor * file_role_factor * config_factor * test_factor * type_declaration_factor * heading_depth_factor * first_party_factor * trait_impl_factor * boilerplate_factor;
 
     let stage_value = match key.kind_category {
         KindCategory::Type => match stage {

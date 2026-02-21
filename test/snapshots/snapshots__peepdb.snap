@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1998 tokens)
+budget: 2000 (2000 tokens)
 
 README.md
      1→# peepDB
@@ -17,12 +17,7 @@ README.md
    103→### 4. Pagination
    115→### 5. Choose Output Format
    142→### 6. Remove Saved Connections
-   154→## 🔒 Security
-   162→## 🤝 Contributing
-   166→## 📜 License
    170→## 📚 Documentation
-
-docs/README.md
 
 peepdb/__main__.py
      1→from .cli import main
@@ -133,7 +128,11 @@ peepdb/db/mariadb.py
     34→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 peepdb/db/mongodb.py
+     1→import pymongo …
+     2→import pymongo.errors …
      3→from .base import BaseDatabase
+     4→import typing …
+     5→from urllib.parse …
      8→class MongoDBDatabase(BaseDatabase):
      9→    def connect …
     32→    def disconnect …
@@ -201,3 +200,5 @@ peepdb/exceptions.py
 project.toml
      1→[build-system]
      5→[project]
+
+setup.py
