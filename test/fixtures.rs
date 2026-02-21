@@ -119,7 +119,7 @@ with_entries! {
     (htmy,                    "htmy",                            2000), // inspected: logged observation
     (htmy_renderer,           "htmy/htmy/renderer",             1000), // inspected: exceeds explore
     (microbootstrap,          "microbootstrap",                 2000), // inspected: logged observation
-    (microbootstrap_instruments, "microbootstrap/microbootstrap/instruments", 1000),
+    (microbootstrap_instruments, "microbootstrap/microbootstrap/instruments", 1000), // inspected: logged observation
     (py3xui,                  "py3xui",                          2000),
     (py3xui_api,              "py3xui/py3xui/api",              1000),
 
