@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4001 tokens)
+budget: 4000 (4003 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -121,8 +121,6 @@ crates/toasty-cli/src/config.rs
     29→    pub fn migration(mut self, migration: MigrationConfig) -> Self {
 
 crates/toasty-cli/src/lib.rs
-     5→pub use config::*;
-     6→pub use migration::*;
     13→pub struct ToastyCli {
     14→    db: Db,
       →    …
@@ -275,6 +273,8 @@ crates/toasty-core/src/schema/db/migration.rs
 
 crates/toasty-core/src/schema/db/schema.rs
      7→pub struct Schema {
+    30→    pub fn index …
+    39→    pub fn index_mut …
 
 crates/toasty-core/src/schema/db/table.rs
     16→pub struct Table {
@@ -428,7 +428,6 @@ crates/toasty-driver-postgresql/src/lib.rs
 crates/toasty-driver-postgresql/src/statement_cache.rs
      9→pub struct StatementCache {
     15→    pub fn new(capacity: usize) -> Self {
-    49→struct Key …
     56→    pub fn new(query: &'a str, types: &'a [Type]) -> Self {
 
 crates/toasty-driver-postgresql/src/type.rs
@@ -507,3 +506,5 @@ crates/toasty-sql/src/stmt.rs
     46→pub enum Statement {
     64→    pub fn is_update(&self) -> bool {
     69→    pub fn returning_len(&self) -> Option<usize> {
+
+docs/CONTEXT.md

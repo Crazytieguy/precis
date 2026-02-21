@@ -394,6 +394,10 @@ pub struct GroupKey {
     /// Whether this file is an auto-generated API doc README (pdoc, sphinx, etc.)
     /// whose content duplicates source code signatures.
     pub is_autogen_api_doc: bool,
+    /// Whether the imports in this group are `pub use` re-exports from child
+    /// modules (Rust only). These are redundant when precis shows the
+    /// submodule's own symbols.
+    pub is_reexport: bool,
 }
 
 /// A symbol's precomputed content costs (token counts per rendering stage).
@@ -553,6 +557,7 @@ pub fn build_groups(
                 is_type_declaration,
                 is_boilerplate_section,
                 is_autogen_api_doc: is_autogen,
+                is_reexport: sym.is_reexport,
             };
 
             // Compute costs
@@ -820,7 +825,12 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     // listings that are 100% redundant with source code signatures.
     let autogen_api_doc_factor = if key.is_autogen_api_doc { 0.1 } else { 1.0 };
 
-    let base_value = visibility * documented * depth_factor * sibling_factor * file_role_factor * config_factor * test_factor * type_declaration_factor * heading_depth_factor * first_party_factor * trait_impl_factor * boilerplate_factor * autogen_api_doc_factor;
+    // Rust `pub use` re-exports from child modules (e.g. `pub use self::foo::*`,
+    // `pub use bar::Baz` where `mod bar` is declared). These are redundant when
+    // precis also shows the submodule's own symbols.
+    let reexport_factor = if key.is_reexport { 0.1 } else { 1.0 };
+
+    let base_value = visibility * documented * depth_factor * sibling_factor * file_role_factor * config_factor * test_factor * type_declaration_factor * heading_depth_factor * first_party_factor * trait_impl_factor * boilerplate_factor * autogen_api_doc_factor * reexport_factor;
 
     let stage_value = match key.kind_category {
         KindCategory::Type => match stage {

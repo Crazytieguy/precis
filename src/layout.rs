@@ -634,6 +634,7 @@ mod tests {
             sig_end_line: None, // test text fallback
             doc_start_line: None,
             is_trait_impl: false,
+            is_reexport: false,
         };
         assert_eq!(signature_end_line(&lines, &sym, Some(Lang::JsTs)), 0);
     }

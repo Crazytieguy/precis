@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1987 tokens)
+budget: 2000 (1994 tokens)
 
 Cargo.toml
      1→[package]
@@ -19,8 +19,6 @@ README.md
    106→## Structured logging
 
 src/__private_api.rs
-     3→use self::sealed::KVs;
-     4→use crate::{logger, Level, Log, Metadata, Record};
      7→pub use std::{format_args, module_path, stringify};
      9→#[cfg(not(feature = "kv"))]
     10→pub type Value<'a> = &'a str;
@@ -28,12 +26,10 @@ src/__private_api.rs
     14→    pub trait KVs<'a> {
     15→        fn into_kvs …
     39→pub struct GlobalLogger;
-    56→fn log_impl …
     84→pub fn log …
    103→pub fn enabled …
    108→pub fn loc …
    113→mod kv_support {
-   114→    use crate::kv;
    116→    pub type Value<'a> = kv::Value<'a>;
    122→    pub fn capture_to_value …
    126→    pub fn capture_debug …
@@ -41,9 +37,10 @@ src/__private_api.rs
    135→    pub fn capture_error …
    140→    pub fn capture_sval …
    145→    pub fn capture_serde …
-   151→pub use self::kv_support::*;
 
 src/kv/error.rs
+     3→/// An error encountered while working with structured data.
+      →…
      5→pub struct Error {
      6→    inner: Inner,
      7→}
@@ -75,23 +72,18 @@ src/kv/mod.rs
    247→mod key;
    250→mod source;
    252→mod value;
-   254→pub use self::error::Error;
-   255→pub use self::key::{Key, ToKey};
-   256→pub use self::source::{Source, VisitSource};
-   257→pub use self::value::{ToValue, Value, VisitValue};
    260→pub mod source;
    262→pub mod value;
-   265→pub use self::source::Visitor;
 
 src/kv/source.rs
     51→pub trait Source {
-    62→    fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error>;
-    73→    fn get(&self, key: Key) -> Option<Value<'_>> {
-    85→    fn count(&self) -> usize {
+    62→    fn visit …
+    73→    fn get …
+    85→    fn count …
     91→fn get_default …
    114→fn count_default …
    235→pub trait VisitSource<'kvs> {
-   237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
+   237→    fn visit_pair …
    280→mod std_support {
    462→pub use VisitSource as Visitor;
 
@@ -183,7 +175,25 @@ src/lib.rs
    890→    pub fn level …
    896→    pub fn target …
    902→    pub fn module_path …
+   908→    pub fn module_path_static …
+   917→    pub fn file …
+   923→    pub fn file_static …
+   932→    pub fn line …
+   939→    pub fn key_values …
+   946→    pub fn to_builder …
   1003→pub struct RecordBuilder<'a> {
+  1021→    pub fn new …
+  1037→    pub fn args …
+  1044→    pub fn metadata …
+  1051→    pub fn level …
+  1058→    pub fn target …
+  1065→    pub fn module_path …
+  1072→    pub fn module_path_static …
+  1079→    pub fn file …
+  1086→    pub fn file_static …
+  1093→    pub fn line …
+  1101→    pub fn key_values …
+  1108→    pub fn build …
   1158→pub struct Metadata<'a> {
   1200→pub struct MetadataBuilder<'a> {
   1249→pub trait Log: Sync + Send {

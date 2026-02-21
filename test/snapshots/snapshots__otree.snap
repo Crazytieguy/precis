@@ -113,6 +113,7 @@ src/parse/hcl.rs
      5→use super::syntax;
      6→use super::{Parser, SyntaxToken};
      8→pub struct HclParser {}
+    28→fn highlight …
 
 src/parse/json.rs
      4→use super::{Parser, SyntaxToken};
@@ -125,7 +126,6 @@ src/parse/jsonl.rs
      7→pub struct JsonlParser;
 
 src/parse/mod.rs
-    10→pub use syntax::SyntaxToken;
     18→pub enum ContentType {
     19→    Json,
     20→    Yaml,
@@ -169,6 +169,13 @@ src/tree.rs
     25→pub struct ItemValue {
     36→pub struct HighlightKeyword<'a> {
     42→pub enum FieldType {
+    52→    pub fn parse …
+    58→    pub fn from_value …
+    94→    pub fn get_value …
+    98→    pub fn get_parser …
+   386→    pub fn plain_text …
+   390→    pub fn render …
+   394→    pub fn build_highlighted_text …
 
 src/ui/app.rs
     27→enum Refresh {
@@ -188,7 +195,6 @@ src/ui/app.rs
 
 src/ui/data_block.rs
     16→pub struct DataBlock {
-    32→impl DataBlock {
 
 src/ui/filter.rs
     13→pub struct Filter {
@@ -226,14 +232,9 @@ src/ui/header.rs
 
 src/ui/mod.rs
     19→use crate::config::colors::Color;
-    21→pub use app::App;
-    22→pub use header::HeaderContext;
     35→pub fn start(mut app: App) -> Result<()> {
 
 src/ui/popup.rs
-     9→use crate::config::keys::Action;
-    10→use crate::config::Config;
-    11→use crate::ui::app::ScrollDirection;
     13→pub struct PopupData {
     18→pub struct Popup {
     26→impl Popup {

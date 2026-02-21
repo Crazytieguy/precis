@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4039 tokens)
+budget: 4000 (4041 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -33,7 +33,9 @@ sps/Cargo.toml
 sps/src/cli/info.rs
     14→pub struct Info {
     15→    /// Name of the formula or cask
-      →    …
+    16→    pub name: String,
+    17→
+      →…
     23→impl Info {
     25→    pub async fn run(&self, _config: &Config, cache: Arc<Cache>) -> Result<()> {
 
@@ -44,7 +46,9 @@ sps/src/cli/init.rs
 sps/src/cli/install.rs
     16→pub struct InstallArgs {
     17→    #[arg(required = true)]
-      →    …
+    18→    names: Vec<String>,
+    19→
+      →…
     45→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
 
 sps/src/cli/list.rs
@@ -66,7 +70,6 @@ sps/src/cli/search.rs
       →    …
     23→pub enum SearchType {
     24→    All,
-    25→    Formula,
       →    …
     29→impl Search {
     30→    pub async fn run …
@@ -79,6 +82,8 @@ sps/src/cli/status.rs
 
 sps/src/cli/uninstall.rs
     17→pub struct Uninstall {
+    18→    /// The names of the formulas or casks to uninstall
+      →    …
     31→    pub async fn run …
 
 sps/src/cli/update.rs
@@ -119,6 +124,8 @@ sps/src/pipeline/planner.rs
    526→    pub async fn plan_operations …
 
 sps/src/pipeline/runner.rs
+    23→use super::downloader::DownloadCoordinator;
+    24→use super::planner::OperationPlanner;
     31→pub enum CommandType {
     38→pub struct PipelineFlags {
     67→pub async fn run_pipeline …
@@ -133,6 +140,9 @@ sps-common/Cargo.toml
     10→[dependencies]
 
 sps-common/src/cache.rs
+     8→use super::error::{Result, SpsError};
+     9→use crate::Config;
+    12→const CACHE_TTL …
     15→pub struct Cache {
     16→    cache_dir: PathBuf,
       →    …
@@ -152,6 +162,7 @@ sps-common/src/config.rs
 sps-common/src/dependency/definition.rs
     31→pub struct Dependency {
     32→    pub name: String,
+    33→    #[serde(default)]
       →    …
     38→    pub fn new_runtime …
     45→    pub fn new_with_tags …
@@ -164,13 +175,11 @@ sps-common/src/dependency/mod.rs
      1→pub mod definition; // Renamed from 'dependency'
      2→pub mod requirement;
      3→pub mod resolver;
-     6→pub use definition::{Dependency, DependencyExt, DependencyTag} …
-     7→pub use requirement::Requirement …
-     8→pub use resolver::{ …
 
 sps-common/src/dependency/requirement.rs
      7→pub enum Requirement {
      8→    MacOS(String),
+     9→    Xcode(String),
       →    …
 
 sps-common/src/dependency/resolver.rs
@@ -213,10 +222,6 @@ sps-common/src/lib.rs
      7→pub mod keg;
      8→pub mod model;
      9→pub mod pipeline;
-    13→pub use cache::Cache;
-    14→pub use config::Config;
-    15→pub use error::{Result, SpsError};
-    16→pub use model::{Cask, Formula, InstalledArtifact}; // etc.
 
 sps-common/src/model/artifact.rs
      9→pub enum InstalledArtifact {
@@ -258,9 +263,6 @@ sps-common/src/model/mod.rs
      7→pub mod formula;
      8→pub mod tap;
      9→pub mod version;
-    12→pub use artifact::InstalledArtifact;
-    13→pub use cask::Cask;
-    14→pub use formula::Formula;
     17→pub enum InstallTargetIdentifier {
     18→    Formula(Arc<Formula>),
       →    …
@@ -317,8 +319,6 @@ sps-core/src/check/installed.rs
 sps-core/src/check/mod.rs
      1→pub mod installed;
      2→pub mod update;
-     4→pub use installed::{InstalledPackageInfo, PackageType};
-     5→pub use update::UpdateInfo;
 
 sps-core/src/check/update.rs
     23→pub struct UpdateInfo {
@@ -343,11 +343,20 @@ sps-core/src/install/bottle/mod.rs
 sps-core/src/install/cask/artifacts/binary.rs
     23→pub fn install_binary …
 
+sps-core/src/install/cask/artifacts/colorpicker.rs
+    20→pub fn install_colorpicker …
+
+sps-core/src/install/cask/artifacts/dictionary.rs
+    25→pub fn install_dictionary …
+
 sps-core/src/install/cask/artifacts/font.rs
     21→pub fn install_font …
 
 sps-core/src/install/cask/artifacts/service.rs
     21→pub fn install_service …
+
+sps-core/src/install/cask/artifacts/suite.rs
+    20→pub fn install_suite …
 
 sps-core/src/install/cask/mod.rs
      1→pub mod artifacts;
@@ -389,7 +398,6 @@ sps-core/src/lib.rs
      9→pub mod upgrade; // New
     10→#[cfg(target_os = "macos")]
     11→pub mod utils; // New
-    19→pub use uninstall::UninstallOptions …
 
 sps-core/src/pipeline/engine.rs
     13→use super::worker;
@@ -405,6 +413,7 @@ sps-core/src/uninstall/cask.rs
    134→pub async fn zap_cask_artifacts …
 
 sps-core/src/uninstall/common.rs
+    10→#[derive(Debug, Clone, Default)]
     11→pub struct UninstallOptions {
     12→    pub skip_zap: bool,
     13→}
@@ -424,9 +433,6 @@ sps-core/src/upgrade/mod.rs
      3→pub mod bottle;
      4→pub mod cask;
      5→pub mod source;
-     8→pub use self::bottle::upgrade_bottle_formula;
-     9→pub use self::cask::upgrade_cask_package;
-    10→pub use self::source::upgrade_source_formula;
 
 sps-core/src/upgrade/source.rs
     19→pub async fn upgrade_source_formula …
@@ -459,6 +465,7 @@ sps-net/src/lib.rs
      3→pub mod http;
      4→pub mod oci;
      5→pub mod validation;
+    16→pub use sps_common::{ …
     29→pub use crate::validation::{validate_url, verify_checksum, verify_content_type /* ... */};
 
 sps-net/src/oci.rs

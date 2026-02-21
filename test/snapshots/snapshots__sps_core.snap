@@ -2,11 +2,21 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2003 tokens)
+budget: 2000 (2008 tokens)
 
 Cargo.toml
      1→[package]
     10→[dependencies]
+
+src/build/compile/go.rs
+    13→pub fn go_build …
+
+src/build/compile/make.rs
+    53→pub fn configure_and_make …
+   110→pub fn simple_make …
+
+src/build/compile/python.rs
+    13→pub fn python_build …
 
 src/build/env.rs
     12→use crate::install::devtools;
@@ -27,20 +37,23 @@ src/build/mod.rs
 
 src/check/installed.rs
     14→pub enum PackageType {
+    15→    Formula,
+      →    …
     20→pub struct InstalledPackageInfo {
+    21→    pub name: String,
+      →    …
     39→pub async fn get_installed_packages …
    140→pub async fn get_installed_package …
 
 src/check/mod.rs
      1→pub mod installed;
      2→pub mod update;
-     4→pub use installed::{InstalledPackageInfo, PackageType};
-     5→pub use update::UpdateInfo;
 
 src/check/update.rs
     23→pub struct UpdateInfo {
     24→    pub name: String,
       →    …
+    33→async fn ensure_api_data_cached …
     89→pub async fn check_for_updates …
 
 src/install/bottle/macho.rs
@@ -61,6 +74,7 @@ src/install/bottle/mod.rs
 
 src/install/cask/artifacts/app.rs
     16→pub fn find_primary_app_bundle_in_dir(dir: &Path) -> Result<PathBuf> {
+    49→pub fn install_app_from_staged …
 
 src/install/cask/artifacts/audio_unit_plugin.rs
     20→pub fn install_audio_unit_plugin …
@@ -141,6 +155,7 @@ src/install/cask/mod.rs
      1→pub mod artifacts;
      2→pub mod dmg;
      3→pub mod helpers;
+    22→use crate::install::extract;
     25→pub struct CaskInstallManifest {
     26→    pub manifest_format_version: String,
       →    …
@@ -179,7 +194,6 @@ src/lib.rs
      9→pub mod upgrade; // New
     10→#[cfg(target_os = "macos")]
     11→pub mod utils; // New
-    19→pub use uninstall::UninstallOptions …
 
 src/pipeline/engine.rs
     13→use super::worker;
@@ -193,6 +207,8 @@ src/uninstall/cask.rs
     26→use crate::utils::applescript;
     41→pub fn uninstall_cask_artifacts …
    134→pub async fn zap_cask_artifacts …
+   696→fn run_zap_script …
+   730→fn log_command_output …
 
 src/uninstall/common.rs
     10→#[derive(Debug, Clone, Default)]
@@ -207,9 +223,6 @@ src/uninstall/mod.rs
      3→pub mod cask;
      4→pub mod common;
      5→pub mod formula;
-     8→pub use cask::{uninstall_cask_artifacts, zap_cask_artifacts};
-     9→pub use common::UninstallOptions;
-    10→pub use formula::uninstall_formula_artifacts;
 
 src/upgrade/bottle.rs
     11→use crate::check::installed::InstalledPackageInfo;
@@ -225,9 +238,6 @@ src/upgrade/mod.rs
      3→pub mod bottle;
      4→pub mod cask;
      5→pub mod source;
-     8→pub use self::bottle::upgrade_bottle_formula;
-     9→pub use self::cask::upgrade_cask_package;
-    10→pub use self::source::upgrade_source_formula;
 
 src/upgrade/source.rs
     10→use crate::check::installed::InstalledPackageInfo;

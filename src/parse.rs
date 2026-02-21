@@ -32,6 +32,11 @@ pub struct Symbol {
     /// from, clone, deref, etc.). Deprioritized relative to inherent methods
     /// and standalone functions.
     pub is_trait_impl: bool,
+    /// Whether this is a `pub use` re-export from a child module (Rust only).
+    /// Detected when a public import references `self::` or a bare path whose
+    /// first segment matches a `mod` declaration in the same file. These are
+    /// redundant when the submodule's own symbols are already in the output.
+    pub is_reexport: bool,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -621,10 +626,46 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
             sig_end_line: compute_sig_end_line(symbol_node, lang),
             doc_start_line: compute_doc_start_line(symbol_node, source, lang),
             is_trait_impl,
+            is_reexport: false,
         });
     }
 
+    // Detect Rust `pub use` re-exports from child modules.
+    if lang == Lang::Rust {
+        mark_reexports(&mut symbols);
+    }
+
     dedup_overloads(symbols, lang)
+}
+
+/// Mark `pub use` imports as re-exports when they reference a child module
+/// declared in the same file. Re-exports like `pub use self::foo::*` or
+/// `pub use foo::Bar` (where `mod foo` exists in the same file) are redundant
+/// when precis already shows the submodule's symbols directly.
+fn mark_reexports(symbols: &mut [Symbol]) {
+    // Collect names of declared modules in this file.
+    let module_names: Vec<String> = symbols
+        .iter()
+        .filter(|s| s.kind == SymbolKind::Module)
+        .map(|s| s.name.clone())
+        .collect();
+
+    for sym in symbols.iter_mut() {
+        if sym.kind != SymbolKind::Import || !sym.is_public {
+            continue;
+        }
+        // `pub use self::foo::*` or `pub use self::foo::Bar`
+        if sym.name.starts_with("self::") {
+            sym.is_reexport = true;
+            continue;
+        }
+        // `pub use foo::Bar` where `foo` is a declared child module
+        if let Some(first_segment) = sym.name.split("::").next() {
+            if module_names.iter().any(|m| m == first_segment) {
+                sym.is_reexport = true;
+            }
+        }
+    }
 }
 
 /// Collapse consecutive function symbols with the same name, keeping only the last in each run.

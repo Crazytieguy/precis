@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4003 tokens)
+budget: 4000 (4007 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -110,7 +110,6 @@ crates/mdbook-core/src/utils/html.rs
 
 crates/mdbook-core/src/utils/mod.rs
      7→pub mod fs;
-    13→pub use self::html::{escape_html, escape_html_attribute};
     17→macro_rules! static_regex {
     29→pub fn log_backtrace(e: &Error) {
 
@@ -142,17 +141,11 @@ crates/mdbook-driver/src/builtin_preprocessors/links.rs
     36→    pub const NAME: &'static str = "links";
     39→    pub fn new() -> Self {
 
-crates/mdbook-driver/src/builtin_preprocessors/mod.rs
-     3→pub use self::cmd::CmdPreprocessor;
-     4→pub use self::index::IndexPreprocessor;
-     5→pub use self::links::LinkPreprocessor;
-
 crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs
     10→pub struct MarkdownRenderer;
     14→    pub fn new() -> Self {
 
 crates/mdbook-driver/src/builtin_renderers/mod.rs
-    11→pub use self::markdown_renderer::MarkdownRenderer;
     20→pub struct CmdRenderer {
     27→    pub fn new(name: String, cmd: String) -> CmdRenderer {
 
@@ -212,13 +205,8 @@ crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
     22→pub struct HtmlHandlebars;
     26→    pub fn new() -> Self {
 
-crates/mdbook-html/src/html_handlebars/mod.rs
-     4→mod search;
-     7→pub use self::hbs_renderer::HtmlHandlebars;
-
 crates/mdbook-html/src/lib.rs
      5→pub mod theme;
-     8→pub use html_handlebars::HtmlHandlebars;
 
 crates/mdbook-html/src/theme/mod.rs
     40→pub struct Theme {
@@ -243,7 +231,7 @@ crates/mdbook-markdown/src/lib.rs
     16→    /// Enables smart punctuation.
     17→    ///
       →    …
-    44→pub fn new_cmark_parser …
+    44→pub fn new_cmark_parser<'text>(text: &'text str, options: &MarkdownOptions) -> Parser<'text> {
 
 crates/mdbook-preprocessor/Cargo.toml
      1→[package]
@@ -263,6 +251,8 @@ crates/mdbook-preprocessor/src/lib.rs
     36→    fn run …
     42→    fn supports_renderer …
     51→pub struct PreprocessorContext {
+    52→    /// The location of the book directory on disk.
+      →    …
     70→    pub fn new …
     82→pub fn parse_input …
 
@@ -321,7 +311,6 @@ guide/guide-helper/Cargo.toml
 guide/guide-helper/src/lib.rs
      9→/// Preprocessing entry point.
     10→pub fn handle_preprocessing() -> Result<()> {
-    33→struct GuideHelper;
 
 guide/src/404.md
      1→# Document not found (404)
@@ -355,6 +344,12 @@ guide/src/cli/test.md
 guide/src/cli/watch.md
      1→# The watch command
 
+guide/src/continuous-integration.md
+     1→# Running `mdbook` in continuous integration
+    12→## Installing mdBook
+    67→## Running tests
+    83→## Deploying
+
 guide/src/for_developers/README.md
      1→# For developers
     17→## The build process
@@ -378,6 +373,9 @@ guide/src/format/markdown.md
 guide/src/format/mathjax.md
      1→# MathJax support
 
+guide/src/format/mdbook.md
+     1→# mdBook-specific features
+
 guide/src/format/summary.md
      1→# SUMMARY.md
 
@@ -392,6 +390,8 @@ guide/src/guide/creating.md
 
 guide/src/guide/installation.md
      1→# Installation
+     9→## Pre-compiled binaries
+    19→## Build from source using Rust
 
 guide/src/guide/reading.md
      1→# Reading books
@@ -411,6 +411,8 @@ src/cmd/clean.rs
      2→use crate::get_book_dir;
     11→pub fn make_subcommand() -> Command {
     19→pub fn execute(args: &ArgMatches) -> Result<()> {
+    36→/// Formats a number of bytes into a human readable SI-prefixed size.
+      →…
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
     45→#[derive(Debug)]
     46→pub struct Clean {
