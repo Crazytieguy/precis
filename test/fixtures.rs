@@ -97,44 +97,44 @@ with_entries! {
     (superstruct,             "superstruct",                    2000), // inspected: looks good
     (superstruct_src_structs, "superstruct/src/structs",        1000), // validator definitions // inspected: looks good
     (mitt,                    "mitt",                            1000), // inspected: looks good
-    (enclosed,                "enclosed",                        4000),
-    (enclosed_crypto,         "enclosed/packages/crypto",       1000), // crypto package
-    (enclosed_lib,            "enclosed/packages/lib",          1000), // shared library
-    (d2ts,                    "d2ts",                            2000),
-    (d2ts_d2ts,               "d2ts/packages/d2ts",             2000), // main library
+    (enclosed,                "enclosed",                        4000), // inspected: deprioritize locale data files
+    (enclosed_crypto,         "enclosed/packages/crypto",       1000), // crypto package // inspected: looks good
+    (enclosed_lib,            "enclosed/packages/lib",          1000), // shared library // inspected: looks good
+    (d2ts,                    "d2ts",                            2000), // inspected: looks good
+    (d2ts_d2ts,               "d2ts/packages/d2ts",             2000), // main library // inspected: looks good
 
     // ── JavaScript ──────────────────────────────────────────────────────
-    (commander,               "commander",                      2000),
-    (semver,                  "semver",                          2000),
-    (semver_classes,          "semver/classes",                  1000), // class definitions
-    (semver_internal,         "semver/internal",                 1000), // internal helpers
+    (commander,               "commander",                      2000), // inspected: looks good
+    (semver,                  "semver",                          2000), // inspected: deprioritize .github/
+    (semver_classes,          "semver/classes",                  1000), // class definitions // inspected: looks good
+    (semver_internal,         "semver/internal",                 1000), // internal helpers // inspected: looks good
 
     // ── Python ──────────────────────────────────────────────────────────
-    (pluggy,                  "pluggy",                          2000),
-    (typeguard,               "typeguard",                      2000),
-    (tomli,                   "tomli",                           2000),
-    (peepdb,                  "peepdb",                          2000),
-    (peepdb_db,               "peepdb/peepdb/db",               1000), // database adapters
-    (swarm,                   "swarm",                           2000),
-    (htmy,                    "htmy",                            2000),
-    (htmy_renderer,           "htmy/htmy/renderer",             1000), // rendering subsystem
-    (microbootstrap,          "microbootstrap",                 2000),
-    (microbootstrap_instruments, "microbootstrap/microbootstrap/instruments", 1000), // plugins
-    (py3xui,                  "py3xui",                          2000),
-    (py3xui_api,              "py3xui/py3xui/api",              1000), // sync API layer
+    (pluggy,                  "pluggy",                          2000), // inspected: looks good
+    (typeguard,               "typeguard",                      2000), // inspected: looks good
+    (tomli,                   "tomli",                           2000), // inspected: looks good
+    (peepdb,                  "peepdb",                          2000), // inspected: looks good
+    (peepdb_db,               "peepdb/peepdb/db",               1000), // database adapters // inspected: looks good
+    (swarm,                   "swarm",                           2000), // inspected: looks good
+    (htmy,                    "htmy",                            2000), // inspected: looks good
+    (htmy_renderer,           "htmy/htmy/renderer",             1000), // rendering subsystem // inspected: looks good
+    (microbootstrap,          "microbootstrap",                 2000), // inspected: looks good
+    (microbootstrap_instruments, "microbootstrap/microbootstrap/instruments", 1000), // plugins // inspected: looks good
+    (py3xui,                  "py3xui",                          2000), // inspected: looks good
+    (py3xui_api,              "py3xui/py3xui/api",              1000), // sync API layer // inspected: looks good
 
     // ── Python (ML) ─────────────────────────────────────────────────────
-    (xlstm,                   "xlstm",                           2000),
-    (xlstm_blocks,            "xlstm/xlstm/blocks",             1000), // model blocks
-    (nano_vllm,               "nano-vllm",                      2000),
-    (nano_vllm_engine,        "nano-vllm/nanovllm/engine",      1000), // inference engine
-    (chronos,                 "chronos-forecasting",             2000),
+    (xlstm,                   "xlstm",                           2000), // inspected: looks good
+    (xlstm_blocks,            "xlstm/xlstm/blocks",             1000), // model blocks // inspected: looks good
+    (nano_vllm,               "nano-vllm",                      2000), // inspected: looks good
+    (nano_vllm_engine,        "nano-vllm/nanovllm/engine",      1000), // inference engine // inspected: looks good
+    (chronos,                 "chronos-forecasting",             2000), // inspected: looks good
 
     // ── C ───────────────────────────────────────────────────────────────
-    (sds,                     "sds",                             1000),
-    (neco,                    "neco",                            1000),
-    (bareiron,                "bareiron",                        2000),
-    (krep,                    "krep",                            1000),
-    (sqlite_vec,              "sqlite-vec",                     2000),
-    (soluna,                  "soluna",                          2000),
+    (sds,                     "sds",                             1000), // inspected: looks good
+    (neco,                    "neco",                            1000), // inspected: looks good
+    (bareiron,                "bareiron",                        2000), // inspected: looks good
+    (krep,                    "krep",                            1000), // inspected: looks good
+    (sqlite_vec,              "sqlite-vec",                     2000), // inspected: looks good
+    (soluna,                  "soluna",                          2000), // inspected: looks good
 }
