@@ -12,10 +12,8 @@ README.md
 package.json
 
 src/api/api.client.ts
-     1→import { ofetch } from 'ofetch';
+     1→import { ofetch …
      2→import { DEFAULT_API_BASE_URL } from './api.constants';
-     6→async function tryToGetBody …
-    20→async function apiClient …
 
 src/api/api.constants.ts
      1→export const DEFAULT_API_BASE_URL = 'https://enclosed.cc';
@@ -34,6 +32,8 @@ src/crypto/crypto.types.ts
      4→export type KeyDerivationAlgorithm = typeof KEY_DERIVATION_ALGORITHMS[number];
      5→export type CompressionAlgorithm = typeof COMPRESSION_ALGORITHMS[number];
      7→export type CryptoServices = {
+     8→  encryptNote: (args: { content: string; password?: string }) => Promise<{ encryptedContent: string; encryptionKey: string }>;
+     9→};
 
 src/crypto/crypto.usecases.ts
      1→import type { NoteAsset } from '../notes/notes.types';
@@ -52,9 +52,6 @@ src/crypto/serialization/cbor-array/cbor-array.serialization.ts
      3→import { defineSerializationMethods } from '../serialization.models';
      5→export const cborArraySerializationDefinition = defineSerializationMethods({
 
-src/crypto/serialization/serialization.models.ts
-     1→import type { Note } from '../../notes/notes.types';
-
 src/crypto/serialization/serialization.registry.ts
      7→export const serializationMethodDefinitions = [
     11→export const serializationMethodDefinitionsByName: Record<string, SerializationMethodsDefinition> = keyBy(serializationMethodDefinitions, 'name');
@@ -68,31 +65,38 @@ src/crypto/serialization/serialization.types.ts
 
 src/files/files.models.ts
      1→import type { NoteAsset } from '../notes/notes.types';
-     2→import { get } from 'lodash-es';
 
 src/index.ts
 
 src/notes/notes.services.ts
      1→import { apiClient } from '../api/api.client';
-     5→async function storeNote …
-    39→async function fetchNote …
 
 src/notes/notes.types.ts
      1→import type { CompressionAlgorithm, EncryptionAlgorithm, KeyDerivationAlgorithm } from '../crypto/crypto.types';
      2→import type { SerializationFormat } from '../crypto/serialization/serialization.types';
      4→export type NoteAsset = {
+     5→  metadata: {
+     6→    type: string;
+     7→    [key: string]: unknown ;
+     8→  };
+     9→  content: Uint8Array;
+    10→};
     12→export type Note = {
+    13→  content: string;
+    14→  assets: NoteAsset[];
+    15→};
     17→export type EncryptedNote = {
+    18→  version: number;
+    19→  payload: string;
+    20→  encryptionAlgorithm: EncryptionAlgorithm;
+    21→  serializationFormat: SerializationFormat;
+    22→  keyDerivationAlgorithm: KeyDerivationAlgorithm;
+    23→  compressionAlgorithm: CompressionAlgorithm;
+    24→  ttlInSeconds: number;
+    25→  deleteAfterReading: boolean;
+    26→};
 
 src/notes/notes.usecases.ts
-     1→import type { EncryptionAlgorithm } from '../crypto/crypto.types';
-     2→import type { SerializationFormat } from '../crypto/serialization/serialization.types';
-     3→import type { NoteAsset } from './notes.types';
-     4→import { encryptNote } from '../crypto/crypto.usecases';
-     5→import { createNoteUrl } from './notes.models';
-     6→import { storeNote as storeNoteImpl } from './notes.services';
-    10→const BASE_URL = 'https://enclosed.cc';
-    12→async function createNote …
 
 tsconfig.json
      2→  "compilerOptions": {

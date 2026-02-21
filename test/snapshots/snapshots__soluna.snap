@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1995 tokens)
+budget: 2000 (1994 tokens)
 
 README.md
      7→# Soluna
@@ -23,8 +23,6 @@ src/batch.c
     37→batch_reserve …
 
 src/batch.h
-     6→struct draw_primitive {
-    13→struct draw_primitive_external {
     19→struct draw_batch * batch_new(int size);
     20→struct draw_primitive * batch_reserve(struct draw_batch *, int size);
     21→void batch_delete(struct draw_batch *);
@@ -61,6 +59,14 @@ src/font.c
 
 src/font_manager.c
     48→struct font_slot {
+    49→	uint32_t codepoint_key;	// high 8 bits (ttf index)
+    50→	int16_t offset_x;
+    51→	int16_t offset_y;
+    52→	int16_t advance_x;
+    53→	int16_t advance_y;
+    54→	uint16_t w;
+    55→	uint16_t h;
+    56→};
     58→struct priority_list {
     66→struct font_manager {
     94→#define COLLISION_STEP 7
@@ -77,10 +83,7 @@ src/font_system.c
 
 src/gamepad.c
     27→#define BUTTON_COUNT (sizeof(gamepad_buttons)/sizeof(gamepad_buttons[0]))
-    29→struct gamepad_state {
    265→#define MAX_GAMEPAD 4
-   267→static struct gamepad_global {
-   274→struct gamepad_local {
    390→luaopen_gamepad …
    449→luaopen_gamepad_device …
 
@@ -94,8 +97,6 @@ src/lcrypt.c
    205→#define DES_IP(X,Y)											 \
    218→#define DES_FP(X,Y)											 \
    231→#define DES_ROUND(X,Y)						  \
-   373→typedef void (*padding_add …
-   374→typedef int (*padding_remove …
    623→#define LEFTROTATE(x, c) (((x) << (c)) | ((x) >> (32 - (c))))
    790→#define P 0xffffffffffffffc5ull
   1031→int lsha1(lua_State *L);
@@ -130,6 +131,18 @@ src/material_quad.c
 src/material_text.c
    242→#define iscont …
    330→struct block_context {
+   331→	int width;
+   332→	int height;
+   333→	int x;
+   334→	int y;
+   335→	int ascent;
+   336→	int decent;
+   337→	int line_prim;
+   338→	int line_width;
+   339→	int alignment;
+   340→	uint32_t default_color;
+   341→	uint32_t color;
+   342→};
    701→luaopen_material_text …
 
 src/material_util.c
@@ -153,20 +166,17 @@ src/openlibs.c
     11→void
     12→soluna_openlibs(lua_State *L) {
 
-src/openurl.c
-    24→extern void soluna_wasm_open_url(const char *url);
-    88→int
-    89→luaopen_url(lua_State *L) {
-
 src/render.c
     15→#define UNIFORM_MAX 4
     16→#define BINDINGNAME_MAX 32
    223→struct pass {
-   651→int lbindings_new(lua_State *L);
-   652→int lview_new(lua_State *L);
-   653→int luniform_new(lua_State *L);
-   655→int
-   656→luaopen_render(lua_State *L) {
+   224→	sg_pass pass;
+   225→	int swapchain;
+   226→};
+   651→int lbindings_new …
+   652→int lview_new …
+   653→int luniform_new …
+   655→luaopen_render …
 
 src/render_bindings.c
     61→struct view {
@@ -227,12 +237,6 @@ src/srbuffer.h
     24→void srbuffer_init …
     25→int srbuffer_add …
     26→void * srbuffer_commit …
-
-src/tmpbuffer.h
-     2→#define soluna_tmp_buffer_h
-     7→struct tmp_buffer {
-    12→#define TMPBUFFER_PTR(type, obj) (type *)((obj)->ptr)
-    13→#define TMPBUFFER_SIZE(type, obj) ((obj)->sz / sizeof(type))
 
 src/transform.c
      9→sprite_transform_init …

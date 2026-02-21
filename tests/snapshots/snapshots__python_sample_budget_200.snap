@@ -10,13 +10,15 @@ sample.py
     15→class Token:
     16→    kind: str
     17→    span: tuple[int, int]
-      →    …
+    18→    value: Optional[str] = None
     21→class Visitor:
-    22→    def visit_token(self, token: Token) -> None:
-    25→    def visit_all(self, tokens: list[Token]) -> None:
+    22→    def visit_token …
+    25→    def visit_all …
     29→class TokenParser(Generic[T]):
     34→
-    37→    def __init__(self, source: str) -> None:
-    42→    def parse(self) -> list[Token]:
+    35→    MAX_TOKENS: int = 1024
+    36→
+    37→    def __init__ …
+    42→    def parse …
     47→    def from_file(cls, path: str) -> "TokenParser[T]":
     54→VERSION: str = "0.1.0"

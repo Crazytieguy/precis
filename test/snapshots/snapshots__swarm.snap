@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2006 tokens)
+budget: 2000 (2002 tokens)
 
 README.md
      3→# Swarm (experimental, educational)
@@ -36,15 +36,6 @@ examples/airline/README.md
      6→## Agents
     14→## Setup
     22→## Evaluations
-
-examples/airline/configs/tools.py
-     1→def escalate_to_agent(reason=None):
-     5→def valid_to_change_flight():
-     9→def change_flight():
-    13→def initiate_refund():
-    18→def initiate_flight_credits():
-    23→def case_resolved():
-    27→def initiate_baggage_search():
 
 examples/basic/README.md
      1→# Swarm basic
@@ -85,7 +76,6 @@ examples/customer_service_streaming/src/swarm/swarm.py
 examples/customer_service_streaming/src/validator.py
      7→def validate_tool(tool_definition):
     12→def validate_all_tools(engine):
-    51→    # Function to validate all assistants
     52→def validate_all_assistants():
 
 examples/personal_shopper/README.md
@@ -110,16 +100,11 @@ examples/support_bot/README.md
 examples/support_bot/customer_service.py
     13→# Set embedding model
     14→EMBEDDING_MODEL = "text-embedding-3-large"
-    20→# TODO: Make this work
     23→def query_qdrant(query, collection_name, vector_name="article", top_k=5):
     43→def query_docs(query):
     68→def send_email(email_address, message):
     73→def submit_ticket(description):
     90→def transfer_to_help_center():
-
-examples/support_bot/docker-compose.yaml
-     1→version: '3.4'
-     2→services:
 
 examples/support_bot/main.py
     13→# Set embedding model
@@ -144,7 +129,8 @@ examples/triage_agent/agents.py
 
 examples/triage_agent/evals_util.py
      9→class BoolEvalResult(BaseModel):
-    14→def evaluate_with_llm_bool …
+    10→    value: bool
+    11→    reason: Optional[str]
 
 examples/weather_agent/README.md
      1→# Weather agent
@@ -154,11 +140,6 @@ examples/weather_agent/README.md
 examples/weather_agent/agents.py
      6→def get_weather(location, time="now"):
     11→def send_email(recipient, subject, body):
-
-examples/weather_agent/evals.py
-     8→def run_and_get_tool_calls(agent, query):
-    26→def test_calls_weather_when_asked(query):
-    41→def test_does_not_call_weather_when_not_asked(query):
 
 pyproject.toml
      1→[build-system]
@@ -205,13 +186,25 @@ swarm/types.py
      9→from pydantic import BaseModel
     14→class Agent(BaseModel):
     15→    name: str = "Agent"
-      →    …
+    16→    model: str = "gpt-4o"
+    17→    instructions: Union[str, Callable[[], str]] = "You are a helpful agent."
+    18→    functions: List[AgentFunction] = []
+    19→    tool_choice: str = None
+    20→    parallel_tool_calls: bool = True
     23→class Response(BaseModel):
     24→    messages: List = []
-      →    …
+    25→    agent: Optional[Agent] = None
+    26→    context_variables: dict = {}
     29→class Result(BaseModel):
+    30→    """
+    31→    Encapsulates the possible return values for an agent function.
+    32→
+    33→    Attributes:
+      →    …
     38→
-      →…
+    39→    value: str = ""
+    40→    agent: Optional[Agent] = None
+    41→    context_variables: dict = {}
 
 swarm/util.py
      1→import inspect

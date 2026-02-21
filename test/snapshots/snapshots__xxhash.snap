@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2016 tokens)
+budget: 2000 (2018 tokens)
 
 README.md
      1→# xxhash
@@ -139,14 +139,11 @@ xxhash_safe.go
 xxhash_test.go
      3→import …
     12→func TestAll(t *testing.T) {
-    58→func testDigest …
-    88→func testSum …
     97→func TestReset(t *testing.T) {
    114→func TestResetWithSeed(t *testing.T) {
    131→func TestBinaryMarshaling(t *testing.T) {
    168→var sink uint64
    170→func TestAllocs(t *testing.T) {
-   193→func testAllocs …
 
 xxhash_unsafe.go
      9→import …
@@ -167,7 +164,8 @@ xxhash_unsafe.go
     51→}
     55→type sliceHeader struct {
     56→	s   string
-      →	…
+    57→	cap int
+    58→}
 
 xxhash_unsafe_test.go
      6→import …
@@ -181,6 +179,8 @@ xxhashbench/xxhashbench_test.go
     18→var sink uint64
     20→var benchmarks = []struct {
    108→func BenchmarkHashes(b *testing.B) {
+   152→func benchmarkHashBytes …
+   159→func benchmarkHashString …
 
 xxhsum/xxhsum.go
      3→import …

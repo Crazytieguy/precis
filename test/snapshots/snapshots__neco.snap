@@ -2,41 +2,23 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (992 tokens)
+budget: 1000 (999 tokens)
 
 README.md
    469→### More examples
    504→### Fast context switching
    511→### Thread local runtime
+   579→## License
 
 neco.c
-   163→#include <stdatomic.h>
-   172→struct sco_desc {
-   179→struct sco_symbol {
-   234→struct llco_desc {
-   241→struct llco_symbol {
    294→#define LLCO_NOASM
-   343→struct llco_asmctx {
-   422→struct llco_asmctx {
-   513→struct llco_asmctx {
-   726→struct llco_asmctx {
-   789→struct llco_asmctx {
-   902→struct llco_asmctx {
   1067→enum llco_stack_grows { DOWNWARDS, UPWARDS }; 
-  1122→#include <stdio.h>
-  1124→struct llco {
   1282→llco_start …
   1293→llco_switch …
   1320→llco_method …
-  1337→struct llco_dlinfo {
-  1364→struct llco_unwind_context {
   1814→struct sco_link {
-  1819→struct sco {
-  1875→struct sco_map {
   2154→sco_active …
   2192→sco_unwind …
-  2215→#include <unistd.h>
-  2632→#include <stdint.h>
   2798→worker_submit …
   2883→#define NECO_POLL_DISABLED
   2957→#define pwhere(str) \
@@ -67,7 +49,6 @@ neco.c
   5718→struct neco_chan {
   5736→struct coselectcase {
   7082→struct neco_mutex {
-  7933→typedef struct neco_stream neco_stream;
 
 neco.h
     35→int neco_start …
@@ -85,11 +66,26 @@ neco.h
    261→int neco_signal_watch …
    276→int neco_work …
    287→typedef struct neco_stats {
+   288→    size_t coroutines;   ///< Number of active coroutines
+   289→    size_t sleepers;     ///< Number of sleeping coroutines
+   290→    size_t evwaiters;    ///< Number of coroutines waiting on I/O events
+   291→    size_t sigwaiters;   ///<
+   292→    size_t senders;      ///<
+   293→    size_t receivers;    ///<
+   294→    size_t locked;       ///<
+   295→    size_t waitgroupers; ///<
+   296→    size_t condwaiters;  ///<
+   297→    size_t suspended;    ///<
+   298→    size_t workers;      ///< Number of background worker threads
+   299→} neco_stats;
    314→void neco_env_setallocator …
    341→#define NECO_NANOSECOND  INT64_C(1)
    360→#define NECO_OK              0  ///< Successful result (no error)
    396→typedef struct neco_stream neco_stream;
    424→#include <stdio.h>
    446→void __neco_c0 …
+   447→void __neco_c1(int);
+   448→void __neco_exit_prog(int);
 
 tests/tests.h
+    24→#define IS_FAIL_TARGET

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1999 tokens)
+budget: 2000 (2000 tokens)
 
 Readme.md
     42→### Usage
@@ -13,7 +13,8 @@ Readme.md
    205→### Documentation
 
 examples/README.md
-     1→# Examples
+
+examples/package.json
 
 jsr.json
      2→  "$schema": "https://jsr.io/schema/config-file.v1.json",
@@ -25,26 +26,18 @@ jsr.json
      9→}
 
 package.json
-     2→  "name": "superstruct",
-     3→  "description": "A simple and composable way to validate data in JavaScript (and TypeScript).",
-     4→  "version": "2.0.2",
-     5→  "license": "MIT",
-     6→  "repository": "git://github.com/ianstormtaylor/superstruct.git",
-     7→  "type": "module",
-     8→  "main": "./dist/index.cjs",
-     9→  "module": "./dist/index.mjs",
-    10→  "types": "./dist/index.d.ts",
-    11→  "sideEffects": false,
-    12→  "files": [
-    15→  "publishConfig": {
-    18→  "engines": {
-    21→  "devDependencies": {
-    38→  "scripts": {
-    54→  "keywords": [
 
 src/error.ts
-     2→ * A `StructFailure` represents a single specific failure in validation.
      5→export type Failure = {
+     6→  value: any
+     7→  key: any
+     8→  type: string
+     9→  refinement: string | undefined
+    10→  message: string
+    11→  explanation?: string
+    12→  branch: Array<any>
+    13→  path: Array<any>
+    14→}
     25→export class StructError extends TypeError {
     26→  value: any
     27→  key!: any
@@ -52,6 +45,9 @@ src/error.ts
     29→  refinement!: string | undefined
     30→  path!: Array<any>
     31→  branch!: Array<any>
+    32→  failures: () => Array<Failure>;
+    33→  [x: string]: any
+    34→
     35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
 
 src/struct.ts
@@ -62,6 +58,13 @@ src/struct.ts
     12→  type: string
     13→  schema: S
     14→  coercer: (value: unknown, context: Context) => unknown
+    15→  validator: (value: unknown, context: Context) => Iterable<Failure>
+    16→  refiner: (value: T, context: Context) => Iterable<Failure>
+    17→  entries: (
+    18→    value: unknown,
+    19→    context: Context
+    20→  ) => Iterable<[string | number, unknown, Struct<any> | Struct<never>]>
+    21→
     22→  constructor …
     67→  assert …
     75→  create …
@@ -74,6 +77,10 @@ src/struct.ts
    175→export function is …
    185→export function validate …
    221→export type Context = {
+   222→  branch: Array<any>
+   223→  path: Array<any>
+   224→  mask?: boolean
+   225→}
    231→export type Infer<T extends Struct<any, any>> = T['TYPE']
    237→export type Describe<T> = Struct<T, StructSchema<T>>
    243→export type Result =
@@ -197,7 +204,7 @@ src/utils.ts
    402→type _InferTuple …
 
 test/index.ts
-     5→export function test<T>(fn: (x: unknown) => T) {}
+     5→export function test …
 
 tsconfig.json
      2→  "include": ["./src/**/*.ts"],

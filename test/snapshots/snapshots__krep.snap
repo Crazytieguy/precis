@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (999 tokens)
+budget: 1000 (998 tokens)
 
 README.md
      1→# k(r)ep - A high-performance string search utility
@@ -22,14 +22,11 @@ aho_corasick.c
     18→{
     26→struct ac_trie
     27→{
-    34→static ac_node_t *ac_node_create …
-    55→static bool ac_node_add_output …
-    86→static void ac_node_free …
    111→ac_trie_t *ac_trie_build …
    274→void ac_trie_free …
    287→bool ac_trie_root_has_outputs …
    293→extern size_t find_line_start …
-   294→extern bool is_whole_word_match(const char *text, size_t text_len, size_t start, size_t end);
+   294→extern bool is_whole_word_match …
    299→uint64_t aho_corasick_search …
 
 aho_corasick.h
@@ -65,8 +62,17 @@ krep.c
   2274→int search_file …
   3146→typedef struct
   3147→{
+  3148→    char *pattern;
+  3149→    bool negated;
+  3150→    bool dir_only;
+  3151→} gitignore_pattern_t;
   3154→typedef struct gitignore
   3155→{
+  3156→    gitignore_pattern_t *entries;
+  3157→    size_t count;
+  3158→    size_t capacity;
+  3159→    struct gitignore *parent; // Parent directory's gitignore context
+  3160→} gitignore_t;
   3451→int main …
   4506→uint64_t neon_search …
 
@@ -74,20 +80,13 @@ krep.h
     23→typedef struct ac_trie ac_trie_t;
     34→#define KREP_COLOR_RESET "\033[0m"
     42→#define KREP_COLOR_HELP_TITLE "\033[1;38;5;81m"
-    49→typedef struct
-    50→{
+    49→match_position_t …
     55→typedef struct match_result_t // Add the struct tag here
     56→{
-    65→typedef struct search_params
-    66→{
-    98→typedef uint64_t (*search_func_t)(const search_params_t *params,
-    99→                                  const char *text_start,
-   100→                                  size_t text_len,
-   101→                                  match_result_t *result);
-   104→typedef struct
-   105→{
-   125→typedef struct task
-   126→{
+    65→search_params_t …
+    98→typedef uint64_t (*search_func_t …
+   104→thread_data_t …
+   125→task_t …
    132→typedef struct
    133→{
    146→thread_pool_t *thread_pool_init …
@@ -101,3 +100,5 @@ krep.h
    231→bool memory_equals_case_insensitive …
    278→size_t find_line_start …
    288→size_t find_line_end …
+
+test/test_directory.c

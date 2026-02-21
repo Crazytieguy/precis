@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1987 tokens)
+budget: 2000 (1994 tokens)
 
 Cargo.toml
      1→[package]
@@ -21,11 +21,10 @@ build/probe.rs
     11→struct MyError(Thing);
     12→struct Thing;
     14→impl Debug for MyError {
-    15→    fn fmt …
     20→impl Display for MyError {
-    21→    fn fmt …
     26→impl Error for MyError {
-    27→    fn provide …
+
+build.rs
 
 impl/Cargo.toml
      1→[package]
@@ -57,11 +56,39 @@ impl/src/ast.rs
 
 impl/src/attr.rs
     11→pub struct Attrs<'a> {
+    12→    pub display: Option<Display<'a>>,
+    13→    pub source: Option<Source<'a>>,
+    14→    pub backtrace: Option<&'a Attribute>,
+    15→    pub from: Option<From<'a>>,
+    16→    pub transparent: Option<Transparent<'a>>,
+    17→    pub fmt: Option<Fmt<'a>>,
+    18→}
     21→pub struct Display<'a> {
+    22→    pub original: &'a Attribute,
+    23→    pub fmt: LitStr,
+    24→    pub args: TokenStream,
+    25→    pub requires_fmt_machinery: bool,
+    26→    pub has_bonus_display: bool,
+    27→    pub infinite_recursive: bool,
+    28→    pub implied_bounds: Set<(usize, Trait)>,
+    29→    pub bindings: Vec<(Ident, TokenStream)>,
+    30→}
     33→pub struct Source<'a> {
+    34→    pub original: &'a Attribute,
+    35→    pub span: Span,
+    36→}
     39→pub struct From<'a> {
+    40→    pub original: &'a Attribute,
+    41→    pub span: Span,
+    42→}
     45→pub struct Transparent<'a> {
+    46→    pub original: &'a Attribute,
+    47→    pub span: Span,
+    48→}
     51→pub struct Fmt<'a> {
+    52→    pub original: &'a Attribute,
+    53→    pub path: ExprPath,
+    54→}
     57→pub enum Trait {
     58→    Debug,
     59→    Display,
@@ -76,12 +103,6 @@ impl/src/attr.rs
     69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
 
 impl/src/expand.rs
-     1→use crate::ast::{Enum, Field, Input, Struct};
-     2→use crate::attr::Trait;
-     3→use crate::fallback;
-     4→use crate::generics::InferredBounds;
-     5→use crate::private;
-     6→use crate::unraw::MemberUnraw;
     12→pub fn derive(input: &DeriveInput) -> TokenStream {
 
 impl/src/fallback.rs
@@ -89,11 +110,6 @@ impl/src/fallback.rs
      2→use crate::private;
 
 impl/src/fmt.rs
-     1→use crate::ast::{ContainerKind, Field};
-     2→use crate::attr::{Display, Trait};
-     3→use crate::private;
-     4→use crate::scan_expr::scan_expr;
-     5→use crate::unraw::{IdentUnraw, MemberUnraw};
     15→impl Display<'_> {
     16→    pub fn expand_shorthand …
    166→struct FmtArguments {
@@ -109,14 +125,9 @@ impl/src/generics.rs
     74→    pub fn augment_where_clause …
 
 impl/src/lib.rs
-    39→#[proc_macro_derive(Error, attributes(backtrace, error, from, source))]
     40→pub fn derive_error(input: TokenStream) -> TokenStream {
     46→struct private;
     48→impl ToTokens for private {
-
-impl/src/prop.rs
-     1→use crate::ast::{Enum, Field, Struct, Variant};
-     2→use crate::unraw::MemberUnraw;
 
 impl/src/scan_expr.rs
      1→use self::{Action::*, Input::*};
@@ -152,16 +163,11 @@ src/aserror.rs
     45→pub trait Sealed {}
 
 src/display.rs
-     3→use std::path::{self, Path, PathBuf};
      6→pub trait AsDisplay<'a>: Sealed {
     11→    fn as_display(&'a self) -> Self::Target;
-    18→    type Target = &'a T;
-    20→    fn as_display …
     26→impl<'a> AsDisplay<'a> for Path {
-    27→    type Target = path::Display<'a>;
     30→    fn as_display(&'a self) -> Self::Target {
     36→impl<'a> AsDisplay<'a> for PathBuf {
-    37→    type Target = path::Display<'a>;
     40→    fn as_display(&'a self) -> Self::Target {
     46→pub trait Sealed {}
     49→impl Sealed for Path {}
@@ -170,9 +176,7 @@ src/display.rs
     60→    use super::{AsDisplay, Sealed};
     63→    #[allow(dead_code)]
     64→    pub struct Placeholder;
-    67→        type Target = Self;
     70→        fn as_display(&'a self) -> Self::Target {
-    76→        fn fmt …
 
 src/lib.rs
    281→mod aserror;
@@ -193,8 +197,7 @@ src/private.rs
 src/provide.rs
      4→pub trait ThiserrorProvide: Sealed {
      5→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>);
-    12→    #[inline]
-    13→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>) {
+    13→    fn thiserror_provide …
     19→pub trait Sealed {}
 
 src/var.rs
@@ -220,6 +223,9 @@ tests/test_option.rs
 
 tests/test_path.rs
     29→pub struct UnsizedError {
+    30→    pub head: i32,
+    31→    pub tail: str,
+    32→}
     35→pub enum BothError {
 
 tests/test_source.rs

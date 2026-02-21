@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2007 tokens)
+budget: 2000 (2014 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
@@ -83,11 +83,15 @@ src/index.tsx
     41→  /**
       →  …
     50→export type DialogProps = {
+    51→  activeSnapPoint?: number | string | null;
+      →  …
    139→export function Root …
    803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(
    831→export type ContentProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
    833→export const Content = React.forwardRef<HTMLDivElement, ContentProps>(function (
    989→export type HandleProps = React.ComponentPropsWithoutRef<'div'> & {
+   990→  preventCycle?: boolean;
+      →  …
    993→const LONG_HANDLE_PRESS_TIMEOUT = 250;
    994→const DOUBLE_TAP_TIMEOUT = 120;
    996→export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(function (
@@ -169,14 +173,8 @@ test/README.md
     21→## Learn More
     30→## Deploy on Vercel
 
-test/package.json
-
-test/tests/constants.ts
-
-test/tsconfig.json
-     2→  "compilerOptions": {
-    32→  "include": [
-    38→  "exclude": [
+test/src/app/page.tsx
+     5→export default function Page() {
 
 tsconfig.json
      2→  "compilerOptions": {

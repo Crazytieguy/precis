@@ -4,9 +4,13 @@ expression: output
 ---
 sample.c
      4→#include "token.h"
-     6→#define MAX_TOKENS 1024
-     7→#define MIN(a, b) ((a) < (b) ? (a) : (b))
+     6→#define MAX_TOKENS …
+     7→#define MIN …
      9→typedef struct Token {
+    10→    int kind;
+    11→    int start;
+    12→    int end;
+    13→} Token;
     15→/* The kind of a lexical token. */
     16→enum TokenKind {
     17→    TOKEN_IDENT,
@@ -17,5 +21,4 @@ sample.c
     30→int process(const char *input, int len) {
     37→Token *token_new(int kind, int start, int end) {
     45→void token_free(Token *t) {
-    50→static int _parse_next …
     56→void *alloc_node(size_t size);

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (1002 tokens)
+budget: 1000 (1000 tokens)
 
 block_manager.py
      1→from collections …
@@ -20,10 +20,7 @@ block_manager.py
     35→    @classmethod
     36→    def compute_hash(cls, token_ids: list[int], prefix: int = -1):
     37→        h = xxhash.xxh64()
-    38→        if prefix != -1:
       →        …
-    43→    def _allocate_block …
-    51→    def _deallocate_block …
     56→    def can_allocate(self, seq: Sequence) -> bool:
     59→    def allocate(self, seq: Sequence):
     84→    def deallocate(self, seq: Sequence):
@@ -78,9 +75,12 @@ sequence.py
      5→from nanovllm.sampling_params …
      8→class SequenceStatus(Enum):
      9→    WAITING = auto()
-      →    …
+    10→    RUNNING = auto()
+    11→    FINISHED = auto()
     14→class Sequence:
     15→    block_size = 256
+    16→    counter = count()
+    17→
     18→    def __init__(self, token_ids: list[int], sampling_params = SamplingParams()):
     31→    def __len__(self):
     34→    def __getitem__(self, key):

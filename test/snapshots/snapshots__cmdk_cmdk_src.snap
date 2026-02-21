@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (995 tokens)
+budget: 1000 (994 tokens)
 
 command-score.ts
     54→function commandScoreInner(
@@ -45,7 +45,7 @@ index.tsx
    123→type Context …
    137→type State …
    143→type Store …
-   149→type Group = {
+   149→type Group …
    154→const GROUP_SELECTOR = `[cmdk-group=""]`
    155→const GROUP_ITEMS_SELECTOR = `[cmdk-group-items=""]`
    156→const GROUP_HEADING_SELECTOR = `[cmdk-group-heading=""]`

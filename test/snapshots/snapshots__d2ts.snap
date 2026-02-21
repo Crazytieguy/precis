@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2000 tokens)
+budget: 2000 (1998 tokens)
 
 README.md
     26→# D2TS - Differential Dataflow in TypeScript <!-- omit in toc -->
@@ -13,8 +13,6 @@ README.md
    196→## API
    678→## Implementation Details
    699→## References
-
-eslint.base.mjs
 
 package.json
      2→  "name": "d2ts-monorepo",
@@ -33,6 +31,8 @@ packages/d2mini/src/graph.ts
 
 packages/d2mini/src/indexes.ts
      9→export class Index<K, V> {
+    10→  #inner: DefaultMap<K, Map<V, number>>
+    11→
 
 packages/d2mini/src/multiset.ts
      8→export type MultiSetArray …
@@ -52,21 +52,6 @@ packages/d2mini/src/multiset.ts
    207→  extend …
    212→  getInner …
 
-packages/d2mini/src/operators/join.ts
-    17→export type JoinType …
-
-packages/d2mini/src/operators/keying.ts
-     7→export type Keyed<K, V> = [K, V]
-
-packages/d2mini/src/types.ts
-     4→export type KeyValue …
-     6→export interface IOperator<_T> {
-    11→export interface IDifferenceStreamReader<T> {
-    16→export interface IDifferenceStreamWriter<T> {
-    21→export interface ID2 {
-    30→export interface IStreamBuilder<T> {
-    83→export type PipedOperator …
-
 packages/d2mini/src/utils.ts
      6→export class DefaultMap<K, V> extends Map<K, V> {
      7→  constructor …
@@ -76,6 +61,9 @@ packages/d2mini/src/utils.ts
     73→export function hash(data: any): string {
     94→export function binarySearch …
    119→export class ObjectIdGenerator {
+   120→  private objectIds = new WeakMap<object, number>()
+   121→  private nextId = 0
+   122→
    128→  getId(value: any): number {
    151→  getStringId(value: any): string {
    163→export const globalObjectIdGenerator = new ObjectIdGenerator()
@@ -96,6 +84,8 @@ packages/d2ql/src/extractors.ts
    169→export function extractJoinKey …
 
 packages/d2ql/src/functions.ts
+     6→type FunctionImplementation …
+   219→const functionImplementations: Record<
    241→export function evaluateFunction …
    257→export function isFunctionCall …
    276→export function extractFunctionCall …
@@ -109,13 +99,7 @@ packages/d2ql/src/joins.ts
    124→export function processJoinResults …
 
 packages/d2ql/src/schema.ts
-    48→export interface ExplicitLiteral …
     94→export type ConditionOperand …
-   159→export interface JoinClause …
-   207→export interface BaseQuery …
-   225→export interface Query …
-   233→export interface WithQuery …
-   239→export interface KeyedQuery …
 
 packages/d2ql/src/store.ts
     14→export type ChangeInsert …
@@ -123,7 +107,7 @@ packages/d2ql/src/store.ts
     26→export type ChangeUpdate …
     33→export type Change …
     38→export type ChangeSet …
-    40→export class Store<K, V> {
+    40→export class Store …
    163→  query …
    346→  static queryAll …
 
@@ -147,12 +131,6 @@ packages/d2ts/README.md
    210→## API
   1055→## Implementation Details
   1076→## References
-
-packages/d2ts/src/d2.ts
-    11→export type D2Options = {
-    15→export class D2 implements ID2 {
-    93→export class StreamBuilder<T> implements IStreamBuilder<T> {
-   166→export class RootStreamBuilder<T> extends StreamBuilder<T> {
 
 packages/d2ts/src/graph.ts
     20→export class DifferenceStreamReader<T> implements IDifferenceStreamReader<T> {
@@ -190,7 +168,11 @@ packages/d2ts/src/multiset.ts
 packages/d2ts/src/order.ts
     10→export function v(version: number | number[]): Version {
     29→export class Version {
+    30→  #inner: number[]
+    31→
    138→export class Antichain {
+   139→  #inner: Version[]
+   140→
    277→export class Frontier extends Antichain {
 
 packages/d2ts/src/sqlite/context.ts
@@ -208,24 +190,37 @@ packages/d2ts/src/sqlite/database.ts
     36→  exec …
     41→  prepare …
     49→export class BetterSQLite3Wrapper implements SQLiteDb {
+    50→  #db: import('better-sqlite3').Database
+    51→
 
 packages/d2ts/src/types.ts
-    31→export interface IOperator<_T> {
-    37→export interface IDifferenceStreamReader<T> {
-    43→export interface IDifferenceStreamWriter<T> {
-    52→export interface ID2 {
-    64→export interface IStreamBuilder<T> {
+     7→export const MessageType = {
 
 packages/d2ts/src/utils.ts
      7→export class WeakRefMap<K, V extends object> {
+     8→  private cacheMap = new Map<K, WeakRef<V>>()
+     9→  private finalizer = new AnyFinalizationRegistry((key: K) => {
+    10→    this.cacheMap.delete(key)
+    11→  })
+    12→
     31→export class DefaultMap<K, V> extends Map<K, V> {
     49→  update(key: K, updater: (value: V) => V): V {
     98→export function hash(data: any): string | number {
    126→export class WeakRefBasedFinalizationRegistry {
+   127→  private counter = 0
+   128→  private registrations = new Map()
+   129→  private sweepTimeout: NodeJS.Timeout | undefined
+   130→  private finalize: (value: any) => void
+   131→  private sweepIntervalMs = 10_000
+   132→
 
 packages/d2ts/src/version-index.ts
      8→export interface IndexType<K, V> {
     28→export class Index<K, V> implements IndexType<K, V> {
+    29→  #inner: IndexMap<K, V>
+    30→  #compactionFrontier: Antichain | null
+    31→  #modifiedKeys: Set<K>
+    32→
 
 pnpm-workspace.yaml
      1→packages:

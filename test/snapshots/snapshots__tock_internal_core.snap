@@ -2,27 +2,33 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (1036 tokens)
+budget: 1000 (1019 tokens)
 
 dto/activity_dto.go
      3→import …
      9→type StartActivityRequest struct {
     10→	Description string
+    11→	Project     string
       →	…
     17→type StopActivityRequest struct {
     18→	EndTime time.Time
+    19→	Notes   string
       →	…
     23→type AddActivityRequest struct {
     24→	Description string
+    25→	Project     string
       →	…
     32→type ActivityFilter struct {
     33→	FromDate    *time.Time
+    34→	ToDate      *time.Time
       →	…
     40→type Report struct {
     41→	Activities    []models.Activity
+    42→	TotalDuration time.Duration
       →	…
     46→type ProjectReport struct {
     47→	ProjectName string
+    48→	Duration    time.Duration
       →	…
 
 errors/errors.go
@@ -45,26 +51,15 @@ models/activity.go
     16→	Tags        []string   `json:"tags,omitempty"`
     17→}
     19→func (a Activity) ID() string {
-    20→	return a.StartTime.Format("150405")
-      →	…
     23→func (a Activity) Duration() time.Duration {
-    24→	if a.EndTime != nil {
-      →	…
     30→// DurationString returns the duration formatted as "HH:MM:SS".
     31→func (a Activity) DurationString() string {
     32→	d := a.Duration().Round(time.Second)
     33→	h := d / time.Hour
-    34→	d %= time.Hour
-    35→	m := d / time.Minute
-    36→	d %= time.Minute
-    37→	s := d / time.Second
       →	…
     41→func (a Activity) MarshalJSON() ([]byte, error) {
-    42→	type Alias Activity
-      →	…
 
 ports/mocks/mock_activityrepository.go
-     7→import …
     30→type MockActivityRepository struct {
     34→type MockActivityRepository_Expecter struct {
     35→	mock *mock.Mock
@@ -74,41 +69,33 @@ ports/mocks/mock_activityrepository.go
    190→type MockActivityRepository_Save_Call struct {
    247→type MockActivityRepository_Remove_Call struct {
 
-ports/mocks/mock_activityresolver.go
-     7→import …
-    30→type MockActivityResolver struct {
-    34→type MockActivityResolver_Expecter struct {
-    35→	mock *mock.Mock
-    36→}
-    71→type MockActivityResolver_Add_Call struct {
-   139→type MockActivityResolver_GetRecent_Call struct {
-   207→type MockActivityResolver_GetReport_Call struct {
-   275→type MockActivityResolver_List_Call struct {
-   343→type MockActivityResolver_Start_Call struct {
-   411→type MockActivityResolver_Stop_Call struct {
-
 ports/mocks/mock_notesrepository.go
-     7→import …
-    16→func NewMockNotesRepository …
     29→type MockNotesRepository struct {
     33→type MockNotesRepository_Expecter struct {
     34→	mock *mock.Mock
     35→}
-    42→func (_mock *MockNotesRepository) Get …
     76→type MockNotesRepository_Get_Call struct {
-    84→func (_e *MockNotesRepository_Expecter) Get …
-   122→func (_mock *MockNotesRepository) Save …
    139→type MockNotesRepository_Save_Call struct {
-   149→func (_e *MockNotesRepository_Expecter) Save …
 
 ports/ports.go
      3→import …
     11→type ActivityResolver interface {
     12→	Start(ctx context.Context, req dto.StartActivityRequest) (*models.Activity, error)
-      →	…
+    13→	Stop(ctx context.Context, req dto.StopActivityRequest) (*models.Activity, error)
+    14→	Add(ctx context.Context, req dto.AddActivityRequest) (*models.Activity, error)
+    15→	List(ctx context.Context, filter dto.ActivityFilter) ([]models.Activity, error)
+    16→	GetReport(ctx context.Context, filter dto.ActivityFilter) (*dto.Report, error)
+    17→	GetRecent(ctx context.Context, limit int) ([]models.Activity, error)
+    18→	GetLast(ctx context.Context) (*models.Activity, error)
+    19→	Remove(ctx context.Context, activity models.Activity) error
+    20→}
     22→type ActivityRepository interface {
     23→	Save(ctx context.Context, activity models.Activity) error
-      →	…
+    24→	FindLast(ctx context.Context) (*models.Activity, error)
+    25→	Find(ctx context.Context, filter dto.ActivityFilter) ([]models.Activity, error)
+    26→	Remove(ctx context.Context, activity models.Activity) error
+    27→}
     29→type NotesRepository interface {
     30→	Save(ctx context.Context, activityID string, date time.Time, notes string, tags []string) error
-      →	…
+    31→	Get(ctx context.Context, activityID string, date time.Time) (string, []string, error)
+    32→}

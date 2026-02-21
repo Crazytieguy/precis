@@ -90,6 +90,16 @@ packages/app-client/src/modules/config/config.constants.ts
 
 packages/app-client/src/modules/config/config.types.ts
      1→export type Config = {
+     2→  baseApiUrl: string;
+     3→  documentationBaseUrl: string;
+     4→  isAuthenticationRequired: boolean;
+     5→  enclosedVersion: string;
+     6→  defaultDeleteNoteAfterReading: boolean;
+     7→  defaultNoteTtlSeconds: number;
+     8→  isSettingNoExpirationAllowed: boolean;
+     9→  defaultNoteNoExpiration: boolean;
+    10→  viewNotePathPrefix: string;
+    11→};
 
 packages/app-client/src/modules/files/files.models.ts
      6→export const iconByFileType = {
@@ -151,9 +161,6 @@ packages/app-client/src/modules/ui/components/dropdown-menu.tsx
     20→export const DropdownMenuSub = DropdownMenuPrimitive.Sub;
     21→export const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup;
 
-packages/app-client/src/modules/ui/components/sonner.tsx
-     5→export function Toaster(props: Parameters<typeof Sonner>[0]) {
-
 packages/app-client/src/modules/ui/components/switch.tsx
     11→export const SwitchLabel = SwitchPrimitive.Label;
     12→export const Switch = SwitchPrimitive;
@@ -191,18 +198,6 @@ packages/app-client/tsconfig.json
     21→}
 
 packages/app-server/package.json
-     2→  "name": "@enclosed/app-server",
-     3→  "type": "module",
-     4→  "version": "1.16.0",
-     5→  "packageManager": "pnpm@9.15.0",
-     6→  "description": "Enclosed backend server",
-     7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
-     8→  "license": "Apache-2.0",
-     9→  "repository": {
-    13→  "engines": {
-    16→  "scripts": {
-    30→  "dependencies": {
-    45→  "devDependencies": {
 
 packages/app-server/src/index.cloudflare.ts
      1→import { createServer } from './modules/app/server';
@@ -224,6 +219,7 @@ packages/app-server/src/modules/app/config/config.types.ts
      3→export type Config = ReturnType<typeof getConfig>;
 
 packages/app-server/src/modules/app/middlewares/cors.middleware.ts
+     1→import type { Context } from '../server.types';
      5→export const corsMiddleware = createMiddleware(async (context: Context, next) => {
 
 packages/app-server/src/modules/app/middlewares/errors.middleware.ts
@@ -237,6 +233,12 @@ packages/app-server/src/modules/app/middlewares/timeout.middleware.ts
 
 packages/app-server/src/modules/app/server.types.ts
      5→export type ServerInstanceGenerics = {
+     6→  Variables: {
+     7→    config: Config;
+     8→    storage: Storage;
+     9→    isAuthenticated: boolean;
+    10→  };
+    11→};
     13→export type Context = BaseContext<ServerInstanceGenerics>;
     15→export type ServerInstance = Hono<ServerInstanceGenerics>;
 
@@ -254,13 +256,23 @@ packages/app-server/src/modules/notes/notes.errors.ts
 packages/app-server/src/modules/notes/notes.types.ts
      4→export type NotesRepository = ReturnType<typeof createNoteRepository>;
      6→export type DatabaseNote = {
+     7→  payload: string;
+     8→  encryptionAlgorithm: string;
+     9→  serializationFormat: string;
+    10→  expirationDate?: string;
+    11→  deleteAfterReading: boolean;
+    12→  isPublic: boolean;
+    13→
+    14→  // compressionAlgorithm: string
+    15→  // keyDerivationAlgorithm: string;
+    16→
+    17→};
     19→export type Note = Expand<Omit<DatabaseNote, 'expirationDate'> & { expirationDate?: Date }>;
 
 packages/app-server/src/modules/notes/tasks/delete-expired-notes.tasks.ts
      5→export const deleteExpiredNotesTask = defineTask({
 
 packages/app-server/src/modules/shared/errors/errors.ts
-     6→type ErrorOptions = {
     21→  constructor …
 
 packages/app-server/src/modules/shared/logger/logger.test-utils.ts
@@ -275,10 +287,6 @@ packages/app-server/src/modules/shared/validation/validation.ts
     43→export const validateJsonBody …
     44→export const validateQuery …
     45→export const validateParams …
-
-packages/app-server/src/modules/storage/factories/cloudflare-kv.storage.ts
-     9→export const KV_VALUE_LENGTH_EXCEEDED_ERROR_CODE = 'storage.kv.value_length_exceeds_limit';
-    11→export const createCloudflareKVStorageFactory = defineBindableStorageFactory(() => {
 
 packages/app-server/src/modules/storage/factories/memory.storage.ts
      3→import { defineStorage } from '../storage.models';
@@ -407,8 +415,6 @@ packages/lib/src/crypto/serialization/serialization.registry.ts
 packages/lib/src/crypto/serialization/serialization.types.ts
      4→export type SerializationMethodsDefinition = ReturnType<typeof defineSerializationMethods>;
      5→export type SerializationFormat = typeof serializationMethodDefinitions[number]['name'];
-
-packages/lib/src/index.ts
 
 packages/lib/src/notes/notes.types.ts
      4→export type NoteAsset = {

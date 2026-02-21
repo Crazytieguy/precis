@@ -31,11 +31,10 @@ impl KindCategory {
             parse::SymbolKind::Struct
             | parse::SymbolKind::Trait
             | parse::SymbolKind::Interface
-            | parse::SymbolKind::Class => KindCategory::Type,
+            | parse::SymbolKind::Class
+            | parse::SymbolKind::TypeAlias => KindCategory::Type,
             parse::SymbolKind::Enum => KindCategory::Enum,
-            parse::SymbolKind::Const | parse::SymbolKind::Static | parse::SymbolKind::TypeAlias => {
-                KindCategory::Constant
-            }
+            parse::SymbolKind::Const | parse::SymbolKind::Static => KindCategory::Constant,
             parse::SymbolKind::Module => KindCategory::Module,
             parse::SymbolKind::Section => KindCategory::Section,
             parse::SymbolKind::Macro => KindCategory::Macro,
@@ -908,11 +907,15 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     let base_value = visibility * documented * depth_factor * sibling_factor * file_role_factor * config_factor * test_factor * type_declaration_factor * heading_depth_factor * first_party_factor * trait_impl_factor * boilerplate_factor * autogen_api_doc_factor * reexport_factor * dir_cohort_factor;
 
     let stage_value = match key.kind_category {
+        // Type bodies (struct fields, interface props, dataclass fields)
+        // define data schemas — the most architecturally important content
+        // for understanding a type system. High Body value + gentle n-decay
+        // (below) ensures field lists compete with cheap function signatures.
         KindCategory::Type => match stage {
             StageKind::FilePath => 0.3,
             StageKind::Names => 1.0,
             StageKind::Signatures => 0.7,
-            StageKind::Body => 0.6,
+            StageKind::Body => 1.2,
             StageKind::Doc => 0.4,
         },
         // Enum variant lists define type taxonomies — the most
@@ -1032,8 +1035,14 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     // variant is as informative as the 1st). Use very gentle linear decay
     // instead of 1/n so variant lines stay competitive with cheap items
     // from other groups (e.g., wrapper struct signatures).
+    // Enum variant lists and type field definitions: each line is
+    // independently valuable. Use very gentle linear decay instead of
+    // 1/n so these lines stay competitive with cheap items from other
+    // groups (e.g., function signatures at 0.7 stage_value).
     let n_decay = match (key.kind_category, stage) {
-        (KindCategory::Enum, StageKind::Body) => 1.0 + 0.05 * (n as f64 - 1.0),
+        (KindCategory::Enum | KindCategory::Type, StageKind::Body) => {
+            1.0 + 0.05 * (n as f64 - 1.0)
+        }
         _ => n as f64,
     };
 

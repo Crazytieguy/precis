@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2003 tokens)
+budget: 2000 (2006 tokens)
 
 CONTEXT.md
      1→# toasty-core Component Context
@@ -17,9 +17,6 @@ src/driver/capability.rs
      4→pub struct Capability {
     61→pub struct StorageTypes {
    103→pub struct SchemaMutations {
-   120→    pub fn validate …
-   141→    pub fn default_string_max_length …
-   156→    pub fn native_type_for …
    164→    pub const SQLITE: Self = Self {
    189→    pub const POSTGRESQL: Self = Self {
    211→    pub const MYSQL: Self = Self {
@@ -65,6 +62,8 @@ src/driver/operation.rs
 
 src/driver/response.rs
      4→pub struct Response {
+     5→    pub rows: Rows,
+     6→}
      9→pub enum Rows {
     10→    /// Number of rows impacted by the operation
     11→    Count(u64),
@@ -79,17 +78,18 @@ src/driver/response.rs
 
 src/driver.rs
      7→pub mod operation;
-    18→pub trait Driver: Debug + Send + Sync + 'static {
-    45→pub trait Connection: Debug + Send + 'static {
+    18→pub trait Driver …
+    45→pub trait Connection …
 
 src/error.rs
     36→pub struct Error {
+    37→    inner: Arc<ErrorInner>,
+    38→}
     41→pub trait IntoError {
     43→    fn into_error(self) -> Error;
     76→    pub fn context(self, consequent: impl IntoError) -> Error {
 
 src/lib.rs
-     2→mod macros;
      4→pub mod driver;
     10→pub mod schema;
     13→pub mod stmt;
@@ -120,13 +120,13 @@ src/schema/app/field.rs
     60→}
 
 src/schema/app/model.rs
-     6→pub struct Model {
     23→pub enum ModelKind {
-    31→pub struct ModelRoot {
-    41→pub struct ModelId(pub usize);
 
 src/schema/builder.rs
     11→pub struct Builder {
+    12→    /// If set, prefix all table names with this string
+    13→    table_name_prefix: Option<String>,
+    14→}
 
 src/schema/db/index.rs
     12→pub struct Index {
@@ -140,6 +140,11 @@ src/schema/db/migration.rs
      3→    Sql(String),
      4→}
     32→pub struct AppliedMigration {
+    33→    id: u64,
+    34→}
+
+src/schema/db/schema.rs
+     7→pub struct Schema {
 
 src/schema/db/ty.rs
     63→pub enum Type {
@@ -170,38 +175,41 @@ src/schema/mapping/model.rs
 
 src/schema/mapping.rs
     18→pub struct Mapping {
+    19→    /// Per-model mappings indexed by model identifier.
+    20→    pub models: IndexMap<ModelId, Model>,
+    21→}
     29→    pub fn model …
     38→    pub fn model_mut …
 
 src/schema/name.rs
      4→pub struct Name {
+     5→    pub parts: Vec<String>,
+     6→}
 
 src/schema.rs
      1→pub mod app;
      6→pub mod db;
      8→pub mod mapping;
     22→pub struct Schema {
+    23→    /// Application-level schema
+    24→    pub app: app::Schema,
+    25→
+    26→    /// Database-level schema
+    27→    pub db: Arc<db::Schema>,
+    28→
+      →…
 
 src/stmt/delete.rs
     32→    pub fn as_delete(&self) -> Option<&Delete> {
     44→    pub fn into_delete(self) -> Option<Delete> {
     56→    pub fn unwrap_delete(self) -> Delete {
 
-src/stmt/entry.rs
-    27→    pub fn eval …
-    55→    pub fn eval_const …
-    85→    pub fn is_const …
-
-src/stmt/expr_any.rs
-    25→    pub fn any(expr: impl Into<Expr>) -> Self {
-    33→    pub fn is_any(&self) -> bool {
-
-src/stmt/expr_binary_op.rs
-    43→    pub fn is_eq(&self) -> bool {
-
 src/stmt/expr_not.rs
     23→    pub fn not(expr: impl Into<Self>) -> Self {
     31→    pub fn is_not(&self) -> bool {
+
+src/stmt/filter.rs
+    10→    pub const ALL: Filter = Filter { expr: None };
 
 src/stmt/insert.rs
     44→    pub fn as_insert(&self) -> Option<&Insert> {
@@ -217,10 +225,6 @@ src/stmt/order_by.rs
 
 src/stmt/order_by_expr.rs
     14→    pub fn reverse(&mut self) {
-
-src/stmt/projection.rs
-    78→    pub const fn is_identity(&self) -> bool {
-    89→    pub const fn from_index(index: usize) -> Self {
 
 src/stmt/select.rs
     48→    pub fn as_select_unwrap(&self) -> &Select {

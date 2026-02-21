@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2010 tokens)
+budget: 2000 (2009 tokens)
 
 codecov.yml
 
@@ -18,19 +18,6 @@ pyproject.toml
 
 src/pluggy/__init__.py
      1→__all__ = [
-    17→from ._hooks …
-    18→from ._hooks …
-    19→from ._hooks …
-    20→from ._hooks …
-    21→from ._hooks …
-    22→from ._hooks …
-    23→from ._hooks …
-    24→from ._manager …
-    25→from ._manager …
-    26→from ._result …
-    27→from ._result …
-    28→from ._warnings …
-    29→from ._warnings …
     32→def __getattr__(name: str) -> str:
 
 src/pluggy/_callers.py
@@ -57,16 +44,22 @@ src/pluggy/_hooks.py
       →…
     78→class HookspecMarker:
     85→
+    86→    __slots__ = ("project_name",)
+    87→
     88→    def __init__ …
    111→    def __call__ …
    165→class HookimplMarker:
    172→
+   173→    __slots__ = ("project_name",)
+   174→
    175→    def __init__ …
    202→    def __call__ …
    281→def normalize_hookimpl_opts …
    293→def varnames …
    359→class HookRelay:
    362→
+   363→    __slots__ = ("__dict__",)
+   364→
    365→    def __init__ …
    370→        def __getattr__ …
    382→class HookCaller:
@@ -92,26 +85,37 @@ src/pluggy/_hooks.py
    634→    def __repr__ …
    639→class HookImpl:
    641→
+   642→    __slots__ = (
+   643→        "function",
+   644→        "argnames",
+   645→        "kwargnames",
+   646→        "plugin",
+   647→        "opts",
+   648→        "plugin_name",
+   649→        "wrapper",
+   650→        "hookwrapper",
+   651→        "optionalhook",
+   652→        "tryfirst",
+   653→        "trylast",
+   654→    )
+   655→
    656→    def __init__ …
    692→    def __repr__ …
    697→class HookSpec:
    698→    __slots__ = (
+   699→        "namespace",
+   700→        "function",
+   701→        "name",
+   702→        "argnames",
+   703→        "kwargnames",
+   704→        "opts",
+   705→        "warn_on_impl",
+   706→        "warn_on_impl_args",
+   707→    )
+   708→
    709→    def __init__ …
 
 src/pluggy/_manager.py
-    16→from . …
-    17→from ._callers …
-    18→from ._hooks …
-    19→from ._hooks …
-    20→from ._hooks …
-    21→from ._hooks …
-    22→from ._hooks …
-    23→from ._hooks …
-    24→from ._hooks …
-    25→from ._hooks …
-    26→from ._hooks …
-    27→from ._hooks …
-    28→from ._result …
     33→    import importlib.metadata
     36→_BeforeTrace …
     37→_AfterTrace …
@@ -154,13 +158,6 @@ src/pluggy/_manager.py
    512→    def subset_hook_caller …
 
 src/pluggy/_result.py
-     7→from collections.abc …
-     8→from types …
-     9→from typing …
-    10→from typing …
-    11→from typing …
-    12→from typing …
-    13→from typing …
     16→_ExcInfo …
     20→class HookCallError(Exception):
     21→    """Hook was called incorrectly."""
@@ -203,8 +200,9 @@ src/pluggy/_tracing.py
 src/pluggy/_warnings.py
      1→from typing import final
      4→class PluggyWarning(UserWarning):
+     5→    """Base class for all warnings emitted by pluggy."""
      6→
-      →…
+     7→    __module__ = "pluggy"
     10→@final
     11→class PluggyTeardownRaisedWarning(PluggyWarning):
     26→

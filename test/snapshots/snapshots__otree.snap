@@ -4,31 +4,47 @@ expression: output
 ---
 budget: 2000 (2004 tokens)
 
-Cargo.toml
-     1→[package]
-    13→[dependencies]
-    34→[build-dependencies]
-    38→[profile.release]
-    43→[lints.clippy]
-
 README.md
-     1→# OTree - Object Tree TUI Viewer
      7→## Install
     33→## Usage
     52→## Roadmap
     82→## Thanks
 
-src/clipboard.rs
-    28→pub fn write_clipboard(text: &str) -> Result<()> {
+build.rs
 
 src/cmd.rs
     13→pub struct CommandArgs {
-   112→    pub fn parse() -> Result<Option<Self>> {
-   149→    pub fn update_config(&self, cfg: &mut Config) {
-   202→    pub fn get_content_type(&self) -> ContentType {
+    14→    /// The file to read data. If this is empty, read from stdin.
+    15→    pub path: Option<String>,
+    16→
+    17→    /// The config file to use. Default will try to read `~/.config/otree.toml`.
+    18→    #[clap(long)]
+    19→    pub config: Option<String>,
+    20→
+    21→    /// The data content type. This can be automatically inferred by file extension or
+    22→    /// content format.
+    23→    #[clap(short = 't', long)]
+    24→    pub content_type: Option<ContentType>,
+    25→
+    26→    /// Convert data to another content type and print to stdout
+    27→    #[clap(short = 'o', long)]
+    28→    pub to: Option<ContentType>,
+    29→
+    30→    /// Don't show the header.
+    31→    #[clap(long)]
+    32→    pub disable_header: bool,
+    33→
+    34→    /// Don't show the footer.
+    35→    #[clap(long)]
+    36→    pub disable_footer: bool,
+    37→
+    38→    /// Disable the filter.
+    39→    #[clap(long)]
+    40→    pub disable_filter: bool,
+    41→
+      →…
 
 src/config/colors.rs
-     7→use super::Config;
     21→pub struct Colors {
     56→    pub fn default() -> Self {
     78→pub struct DataColors {
@@ -59,8 +75,21 @@ src/config/keys.rs
     71→    Esc,
     72→}
    195→pub struct Keys {
+   196→    #[serde(default = "Keys::default_move_up")]
+   197→    pub move_up: Vec<String>,
+   198→    #[serde(default = "Keys::default_move_down")]
+   199→    pub move_down: Vec<String>,
+   200→
+   201→    #[serde(default = "Keys::default_move_left")]
+   202→    pub move_left: Vec<String>,
+   203→    #[serde(default = "Keys::default_move_right")]
+   204→    pub move_right: Vec<String>,
+   205→
+      →…
    351→pub struct KeyAction {
-   357→    pub fn get_key_action …
+   352→    pub key: Key,
+   353→    pub action: Option<Action>,
+   354→}
 
 src/config/mod.rs
      1→pub mod colors;
@@ -80,44 +109,50 @@ src/config/mod.rs
    100→pub struct Footer {
    106→pub struct Filter {
    118→pub struct Data {
-   128→    pub const MIN_LAYOUT_TREE_SIZE: u16 = 10;
-   129→    pub const MAX_LAYOUT_TREE_SIZE: u16 = 80;
-   131→    pub fn load(path: Option<String>) -> Result<Self> {
-   144→    pub fn parse(&mut self) -> Result<()> {
-   196→    pub fn default() -> Self {
-   212→    pub fn show(&self) -> Result<()> {
 
 src/config/types.rs
     28→pub struct Types {
     29→    #[serde(default = "Types::default_str")]
-      →    …
+    30→    pub str: String,
+    31→
+    32→    #[serde(default = "Types::default_null")]
+    33→    pub null: String,
+    34→
+    35→    #[serde(default = "Types::default_bool")]
+    36→    pub bool: String,
+    37→
+    38→    #[serde(default = "Types::default_num")]
+    39→    pub num: String,
+    40→
+    41→    #[serde(default = "Types::default_arr")]
+    42→    pub arr: String,
+    43→
+    44→    #[serde(default = "Types::default_obj")]
+    45→    pub obj: String,
+    46→}
 
 src/debug.rs
      7→#[macro_export]
      8→macro_rules! debug {
-    19→pub fn set_file(file: String) {
-    23→pub fn write_logs(mut msg: String) -> Result<()> {
 
 src/edit.rs
-     8→use crate::config::Config;
     10→pub struct Edit {
-    17→    pub fn new …
-    40→    pub fn run …
+    11→    path: String,
+    12→    data: String,
+    13→    cmd: Command,
+    14→}
 
 src/live_reload.rs
     16→pub struct FileWatcher {
-    28→    pub fn new …
-    64→    pub fn get_err …
-    71→    pub fn parse_tree …
-
-src/parse/any.rs
-     9→pub struct AnyParser {
-    14→    pub fn new() -> Self {
-    20→    pub fn set_parser(&self, parser: Box<dyn Parser>) {
-
-src/parse/json.rs
-     6→pub struct JsonParser {}
-    26→pub fn highlight …
+    17→    path: PathBuf,
+    18→
+    19→    cfg: Rc<Config>,
+    20→    content_type: ContentType,
+    21→
+    22→    max_data_size: usize,
+    23→
+    24→    data: Arc<Mutex<Data>>,
+    25→}
 
 src/parse/mod.rs
     18→pub enum ContentType {
@@ -138,15 +173,8 @@ src/parse/mod.rs
     33→    Any,
     34→}
     36→pub trait Parser {
-    37→    fn extension …
-    39→    fn allow_array_root …
-    41→    fn parse …
-    43→    fn syntax_highlight …
-    45→    fn parse_root …
-    67→    pub fn new_parser …
 
 src/parse/syntax.rs
-     9→use crate::config::Config;
     11→pub enum SyntaxToken {
     12→    Symbol(&'static str),
     13→
@@ -164,29 +192,18 @@ src/parse/syntax.rs
     25→    Break,
     26→    Indent(usize),
     27→}
-    32→    pub fn render …
-   110→    pub fn pure_text …
-   139→pub fn quote_field_name …
    151→pub enum StringValue {
    152→    String(String),
    153→    MultiLines(Vec<String>),
    154→}
-   157→    pub fn new …
-   201→pub fn is_value_complex …
-
-src/parse/xml.rs
-    12→pub struct XmlParser {}
-    38→    fn insert_text …
-    39→    fn insert_text_node …
-    61→struct NodeValues {
-   176→fn read …
 
 src/tree.rs
     14→pub struct Tree {
     25→pub struct ItemValue {
     36→pub struct HighlightKeyword<'a> {
     37→    pub text: &'a str,
-      →    …
+    38→    pub ignore_case: bool,
+    39→}
     42→pub enum FieldType {
     43→    Null,
     44→    Num,
@@ -207,12 +224,7 @@ src/ui/app.rs
     87→    Edit(Box<Edit>),
     88→    Quit,
     89→}
-   102→    pub fn new(cfg: Rc<Config>, tree: Tree, fw: Option<FileWatcher>) -> Self {
-   133→    pub fn set_header …
-   137→    pub fn show …
-
-src/ui/data_block.rs
-    16→pub struct DataBlock {
+   102→    pub fn new …
 
 src/ui/filter.rs
     13→pub struct Filter {
@@ -230,30 +242,13 @@ src/ui/filter.rs
     38→}
 
 src/ui/footer.rs
-     8→use crate::config::Config;
     10→pub enum FooterText<'a> {
     11→    Identify(&'a [String], Option<String>),
     12→    Message(String),
     13→    None,
     14→}
     16→pub struct Footer {
-    21→    pub fn new …
-    25→    pub fn draw …
 
 src/ui/header.rs
-     9→use crate::config::Config;
     11→pub struct HeaderContext {
-    19→    pub fn new …
     41→pub struct Header {
-    47→    pub fn new …
-    55→    pub fn draw …
-
-src/ui/mod.rs
-    35→pub fn start(mut app: App) -> Result<()> {
-
-src/ui/popup.rs
-    13→pub struct PopupData {
-    18→pub struct Popup {
-
-src/ui/tree_overview.rs
-    19→pub struct TreeOverview {

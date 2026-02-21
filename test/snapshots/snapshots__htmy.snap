@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2004 tokens)
+budget: 2000 (2006 tokens)
 
 README.md
     10→# `htmy`
@@ -10,13 +10,6 @@ README.md
     33→## Testimonials
     51→## Installation
     63→## Concepts
-    69→### Components
-   167→### Built-in components
-   179→### Rendering
-   211→### Context
-   279→### Formatter
-   291→### Error boundary
-   299→### Sync or async?
    307→## XSS prevention
    316→## AI assistance
    324→## Compatibility and performance
@@ -31,17 +24,22 @@ htmy/__init__.py
     48→HTMY = Renderer
 
 htmy/core.py
-    14→    from .typing …
     19→class Fragment:
     21→
+    22→    __slots__ = ("_children",)
+    23→
     38→class WithContext(Fragment):
     64→class ContextAware:
     99→
-   127→    @classmethod
+   100→    __slots__ = ()
+   101→
+   102→    _base_context_type: ClassVar[type[ContextAware] | None] = None
+   103→
    128→    def from_context(cls, context: Context, default: Self | None = None) -> Self:
    146→class SkipProperty(Exception):
    148→
-   151→    @classmethod
+   149→    ...
+   150→
    152→    def format_property(cls, _: Any) -> Never:
    157→class Text(str):
    163→class SafeStr(Text):
@@ -49,24 +47,24 @@ htmy/core.py
    201→class Formatter(ContextAware):
 
 htmy/error_boundary.py
-     5→from .core …
-     6→from .renderer.context …
-     7→from .utils …
-    12→    from .typing …
     15→class ErrorBoundary:
     22→
+    23→    __slots__ = ("_children", "_errors", "_fallback")
+    24→
     25→    def __init__ …
     45→    async def htmy …
 
 htmy/etree.py
-    15→from .core import Fragment, SafeStr
-    16→from .tag import wildcard_tag
-    17→from .typing import ComponentType, Properties
+    15→from .core …
+    16→from .tag …
+    17→from .typing …
     23→class ETreeConverter:
     37→
-    46→    def __init__(self, rules: Mapping[str, Callable[..., ComponentType]]) -> None:
-    55→    def convert(self, element: str) -> ComponentType:
-    63→    def convert_element(self, element: Element) -> ComponentType:
+    38→    __slots__ = ("_rules",)
+    39→
+    46→    def __init__ …
+    55→    def convert …
+    63→    def convert_element …
 
 htmy/function_component.py
      7→from .typing …
@@ -74,10 +72,19 @@ htmy/function_component.py
      9→from .typing …
     37→    def __call__ …
     52→    def __call__ …
+    68→# -- Component decorators.
     71→class ComponentDecorators:
     75→
     76→    __slots__ = ()
     77→
+    78→    # -- Function component decorator.
+    79→
+    80→    @overload
+    81→    def __call__(self, func: _SyncFunctionComponent[TProps]) -> Callable[[TProps], SyncComponent]: ...
+    82→
+    83→    @overload
+    84→    def __call__(self, func: _AsyncFunctionComponent[TProps]) -> Callable[[TProps], AsyncComponent]: ...
+    85→
     86→    def __call__ …
    147→    def function …
    194→    def context_only …
@@ -85,18 +92,15 @@ htmy/function_component.py
    315→    def context_only_method …
 
 htmy/html.py
-     6→    from .typing import ComponentType
-     9→from .core import SafeStr
-    10→from .tag import Tag, TagWithProps
     13→class DOCTYPE:
     63→class Link:
-    67→    def css(href: str) -> ComponentType:
+    67→    def css …
     79→class Meta:
-    83→    def author(content: str) -> ComponentType:
-    87→    def charset(charset: str = "utf-8") -> ComponentType:
-    91→    def description(content: str) -> ComponentType:
-    95→    def keywords(content: str) -> ComponentType:
-    99→    def viewport(content: str = "width=device-width, initial-scale=1.0") -> ComponentType:
+    83→    def author …
+    87→    def charset …
+    91→    def description …
+    95→    def keywords …
+    99→    def viewport …
    831→class entity:
 
 htmy/i18n.py
@@ -107,9 +111,10 @@ htmy/i18n.py
     21→class I18nValueError(I18nError): ...
     24→class I18n(ContextAware):
     28→
+    29→    __slots__ = ("_fallback", "_path")
+    30→
     34→    def __init__ …
     51→    async def get …
-    80→    async def _resolve …
    115→@alru_cache()
    116→async def load_translation_resource(path: Path) -> TranslationResource:
    117→    """
@@ -121,68 +126,72 @@ htmy/io.py
 
 htmy/md/core.py
     20→class MarkdownParser(ContextAware):
+    27→
     33→    @classmethod
     34→    def default(cls) -> MarkdownParser:
     43→    def __init__ …
     53→    def parse …
     81→class MD(Snippet):
+    97→
    103→    def __init__ …
 
 htmy/md/typing.py
     11→MarkdownMetadataDict …
     14→class ParsedMarkdown(TypedDict):
     16→
-      →…
+    17→    content: str
+      →    …
     21→MarkdownParserFunction …
     24→MarkdownRenderFunction …
 
 htmy/renderer/baseline.py
-    10→from .context import RendererContext
     18→class Renderer:
     27→
+    28→    __slots__ = ("_default_context", "_string_formatter")
+    29→
     30→    def __init__ …
     48→    async def render …
     67→    async def stream …
 
 htmy/renderer/context.py
-     3→from .typing …
      6→class RendererContext:
     10→
     11→    @classmethod
     12→    def from_context(cls, context: Context) -> RendererType:
 
 htmy/renderer/default.py
-    12→from .context import RendererContext
    228→class Renderer:
    235→
+   236→    __slots__ = ("_default_context", "_string_formatter")
+   237→
 
 htmy/renderer/typing.py
     12→class RendererType(Protocol):
+    14→
     15→    async def render …
     29→def is_renderer …
     36→class StreamingRendererType(RendererType, Protocol):
+    38→
     39→    def stream …
     53→def is_streaming_renderer …
 
 htmy/snippet.py
-    10→from .core …
-    11→from .io …
-    12→from .typing …
-    19→from .utils …
+    24→# -- Components and utilities
     27→class Slots:
     46→
+    47→    __slots__ = ("_not_found", "_slot_mapping", "_slot_re")
+    48→
     49→    class slot_re:
+    57→
+      →…
     83→    def __init__ …
    110→    def resolve_text …
    158→class Snippet:
+   215→
    218→    def __init__ …
    241→    async def htmy …
-   274→    async def _load_text_file …
 
 htmy/tag.py
-     5→from .core …
-     6→from .utils …
-     9→    from .typing …
     56→class TagWithProps:
     73→class Tag:
 
@@ -216,7 +225,6 @@ htmy/typing.py
    108→    def resolve_text …
 
 htmy/utils.py
-     9→    from .typing …
     12→def join_components …
     42→def join …
     49→def is_htmy_component_type …

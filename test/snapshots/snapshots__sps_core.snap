@@ -2,35 +2,43 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2006 tokens)
+budget: 2000 (1992 tokens)
 
 Cargo.toml
      1→[package]
     10→[dependencies]
-
-src/build/compile/go.rs
-    13→pub fn go_build …
-
-src/build/compile/make.rs
-    53→pub fn configure_and_make …
-   110→pub fn simple_make …
-
-src/build/compile/python.rs
-    13→pub fn python_build …
 
 src/build/env.rs
     12→use crate::install::devtools;
    141→pub struct BuildEnvironment {
    142→    /// The final map of environment variables to be used for build commands.
    143→    vars: HashMap<String, String>,
-      →    …
+   144→    /// The ordered list of directories constituting the final PATH.
+   145→    #[allow(dead_code)]
+   146→    path_dirs: Vec<PathBuf>,
+   147→    /// The root installation directory forsps(e.g., /opt/homebrew or /usr/local).
+   148→    #[allow(dead_code)]
+   149→    sps_prefix: PathBuf,
+   150→    /// The specific installation prefix for the formula being built.
+   151→    #[allow(dead_code)]
+   152→    formula_install_prefix: PathBuf,
+   153→    /// Resolved path to the C compiler.
+   154→    #[allow(dead_code)]
+   155→    cc: PathBuf,
+   156→    /// Resolved path to the C++ compiler.
+   157→    #[allow(dead_code)]
+   158→    cxx: PathBuf,
+   159→    /// Resolved path to the macOS SDK (or "/" if not applicable).
+   160→    #[allow(dead_code)]
+   161→    sdk_path: PathBuf,
+   162→}
    164→impl BuildEnvironment {
    166→    pub fn new …
    463→    pub fn apply_to_command …
    476→    pub fn get_path_string …
    482→    pub fn get_vars …
    488→    pub fn get_var …
-   495→fn filter_initial_environment(vars: &mut HashMap<String, String>) {
+   495→fn filter_initial_environment …
 
 src/build/mod.rs
      1→pub mod compile;
@@ -41,9 +49,13 @@ src/check/installed.rs
     15→    Formula,
     16→    Cask,
     17→}
+    19→#[derive(Debug, Clone, Serialize, Deserialize)]
     20→pub struct InstalledPackageInfo {
     21→    pub name: String,
-      →    …
+    22→    pub version: String, // This will now store keg.version_str
+    23→    pub pkg_type: PackageType,
+    24→    pub path: PathBuf,
+    25→}
     39→pub async fn get_installed_packages …
    140→pub async fn get_installed_package …
 
@@ -52,31 +64,27 @@ src/check/mod.rs
      2→pub mod update;
 
 src/check/update.rs
-    20→use crate::check::installed::{InstalledPackageInfo, PackageType};
+    22→#[derive(Debug, Clone)]
     23→pub struct UpdateInfo {
     24→    pub name: String,
     25→    pub installed_version: String,
-      →    …
-    33→async fn ensure_api_data_cached(cache: &Cache) -> Result<()> {
+    26→    pub available_version: String,
+    27→    pub pkg_type: PackageType,
+    28→    pub target_definition: InstallTargetIdentifier,
+    29→}
     89→pub async fn check_for_updates …
 
-src/install/bottle/exec.rs
-    25→pub async fn download_bottle …
-    33→pub async fn download_bottle_with_progress …
-    44→pub async fn download_bottle_with_progress_and_cache_info …
-   210→pub fn get_bottle_for_platform …
-   331→pub fn install_bottle …
-
-src/install/bottle/link.rs
-    19→pub fn link_formula_artifacts …
-   476→pub fn unlink_formula_artifacts …
-
 src/install/bottle/macho.rs
-    14→use object::{ …
     46→struct PatchInfo {
     55→pub struct SkippedPath {
+    56→    pub old_path: String,
+    57→    pub new_path: String,
+    58→}
     64→pub fn patch_macho_file …
     74→pub struct SkippedPath {
+    75→    pub old_path: String,
+    76→    pub new_path: String,
+    77→}
     81→pub fn patch_macho_file …
 
 src/install/bottle/mod.rs
@@ -87,31 +95,6 @@ src/install/bottle/mod.rs
     34→pub fn has_bottle_for_current_platform …
    159→pub fn get_formula_cellar_path …
    165→pub fn write_receipt …
-
-src/install/cask/artifacts/mod.rs
-     1→pub mod app;
-     2→pub mod audio_unit_plugin;
-     3→pub mod binary;
-     4→pub mod colorpicker;
-     5→pub mod dictionary;
-     6→pub mod font;
-     7→pub mod input_method;
-     8→pub mod installer;
-     9→pub mod internet_plugin;
-    10→pub mod keyboard_layout;
-    11→pub mod manpage;
-    12→pub mod mdimporter;
-    13→pub mod pkg;
-    14→pub mod preflight;
-    15→pub mod prefpane;
-    16→pub mod qlplugin;
-    17→pub mod screen_saver;
-    18→pub mod service;
-    19→pub mod suite;
-    20→pub mod uninstall;
-    21→pub mod vst3_plugin;
-    22→pub mod vst_plugin;
-    23→pub mod zap;
 
 src/install/cask/dmg.rs
     12→pub fn mount_dmg …
@@ -129,15 +112,18 @@ src/install/cask/mod.rs
     22→use crate::install::extract;
     25→pub struct CaskInstallManifest {
     26→    pub manifest_format_version: String,
-      →    …
+    27→    pub token: String,
+    28→    pub version: String,
+    29→    pub installed_at: u64,
+    30→    pub artifacts: Vec<InstalledArtifact>,
+    31→    pub primary_app_file_name: Option<String>,
+    32→    pub is_installed: bool,              // New flag for soft uninstall
+    33→    pub cask_store_path: Option<String>, // Path to private store app, if available
+    34→}
     37→pub fn sps_private_cask_version_dir …
     43→pub fn sps_private_cask_token_dir …
     49→pub fn sps_private_cask_app_path …
-    73→pub async fn download_cask …
-    77→pub async fn download_cask_with_progress …
-   232→pub fn install_cask …
    580→pub fn write_receipt …
-   612→pub fn write_cask_manifest …
    686→pub fn cleanup_empty_parent_dirs_in_private_store …
 
 src/install/devtools.rs
@@ -151,7 +137,6 @@ src/install/extract.rs
    204→#[cfg(target_os = "macos")]
    205→pub fn quarantine_extracted_apps_in_stage(stage_dir: &Path, agent_name: &str) -> Result<()> {
    235→pub fn extract_archive …
-   302→fn extract_xz_tar_archive …
    343→struct DeferredHardLink {
 
 src/install/mod.rs
@@ -159,7 +144,7 @@ src/install/mod.rs
     12→pub mod cask;
     13→pub mod devtools;
     14→pub mod extract;
-    17→pub fn get_formula_opt_path(formula: &Formula, config: &Config) -> PathBuf {
+    17→pub fn get_formula_opt_path …
 
 src/lib.rs
      4→pub mod build;
@@ -178,9 +163,6 @@ src/pipeline/engine.rs
 src/pipeline/mod.rs
      1→pub mod engine;
      2→pub mod worker;
-
-src/pipeline/worker.rs
-    37→fn do_execute_sync_steps …
 
 src/uninstall/cask.rs
     26→use crate::utils::applescript;

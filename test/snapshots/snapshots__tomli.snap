@@ -2,9 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2018 tokens)
-
-CHANGELOG.md
+budget: 2000 (2015 tokens)
 
 README.md
      5→# Tomli
@@ -101,6 +99,11 @@ src/tomli/_parser.py
    220→class Flags:
    222→
    223→    # Marks an immutable namespace (inline array or inline table).
+   224→    FROZEN: Final = 0
+   225→    # Marks a nest that has been explicitly created and can no longer
+   226→    # be opened using the "[table]" syntax.
+   227→    EXPLICIT_NEST: Final = 1
+   228→
    229→    def __init__ …
    233→    def add_pending …
    236→    def finalize_pending …
@@ -188,21 +191,13 @@ tests/test_data.py
     40→    def test_valid(self):
 
 tests/test_error.py
-    10→from . import tomllib
     13→class TestError(unittest.TestCase):
 
 tests/test_misc.py
-     5→import copy
-    14→from . import tomllib
     17→class TestMiscellaneous(unittest.TestCase):
 
 tomllib.md
      1→# `tomllib` – Tomli in the standard library
-     3→Tomli was added to the Python standard library in Python 3.11.
-     4→
-     5→Relevant links:
-     6→
-      →…
     13→## Converting Tomli to tomllib
     15→### Sync status
     20→### Steps to convert

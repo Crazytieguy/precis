@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2028 tokens)
+budget: 2000 (2013 tokens)
 
 README.md
     29→## Overview
@@ -11,17 +11,10 @@ README.md
    336→## Bugs and Feature Requests
 
 demo.py
-     1→from py3xui import Api
-    63→from py3xui import Inbound
-    65→XUI_EXTERNAL_IP = "**********"  # ⬅️ Your external IP here or domain name.
+    65→XUI_EXTERNAL_IP …
     66→MAIN_REMARK = "gmfvbot"  # ⬅️ It can be any string.
     67→SERVER_PORT = 443  # ⬅️ Your server port here.
-    70→def get_connection_string(inbound: Inbound, user_uuid: str, user_email: int) -> str:
-    98→import os
-   100→import qrcode
-
-py3xui/__init__.py
-     2→from py3xui.api.api import Api
+    70→def get_connection_string …
 
 py3xui/api/api.py
     13→class Api:
@@ -33,39 +26,32 @@ py3xui/api/api.py
    189→    def login …
 
 py3xui/api/api_base.py
-     5→import logging
     15→class ApiFields:
     17→
     18→    SUCCESS = "success"
-      →    …
+    19→    MSG = "msg"
+    20→    OBJ = "obj"
+    21→    CLIENT_STATS = "clientStats"
+    22→    NO_IP_RECORD = "No IP Record"
+    23→    GET = "GET"
+    24→    POST = "POST"
     28→class BaseApi:
     60→
     61→    def __init__ …
-    81→    def host(self) -> str:
-    89→    def username(self) -> str:
-    97→    def password(self) -> str:
-   105→    def use_tls_verify(self) -> bool:
-   113→    def custom_certificate_path(self) -> str | None:
-   129→    def max_retries(self, value: int) -> None:
-   145→    def session(self, value: str | None) -> None:
-   161→    def cookie_name(self, value: str | None) -> None:
+    81→    def host …
+    89→    def username …
+    97→    def password …
+   105→    def use_tls_verify …
+   113→    def custom_certificate_path …
+   129→    def max_retries …
+   145→    def session …
+   161→    def cookie_name …
    168→    def login …
-   211→    def cookies(self) -> dict[str, str]:
+   211→    def cookies …
 
 py3xui/api/api_client.py
-     6→import json
     13→class ClientApi(BaseApi):
     51→
-    52→    def get_by_email …
-    89→    def get_ips …
-   121→    def add …
-   157→    def update …
-   189→    def reset_ips …
-   217→    def reset_stats …
-   248→    def delete …
-   280→    def delete_depleted …
-   312→    def online …
-   342→    def get_traffic_by_id …
 
 py3xui/api/api_database.py
      7→class DatabaseApi(BaseApi):
@@ -75,20 +61,10 @@ py3xui/api/api_database.py
 py3xui/api/api_inbound.py
      9→class InboundApi(BaseApi):
     39→
-    40→    def get_list …
-    71→    def get_by_id …
-   111→    def add …
-   159→    def delete …
-   190→    def update …
-   223→    def reset_stats …
-   247→    def reset_client_stats …
 
 py3xui/api/api_server.py
      7→class ServerApi(BaseApi):
     34→
-    35→    def get_db(self, save_path: str) -> None:
-    67→    def get_status(self) -> Server:
-    97→    def generate_reality_keys(self) -> RealityKeyPair:
 
 py3xui/async_api/async_api.py
     18→class AsyncApi:
@@ -100,46 +76,21 @@ py3xui/async_api/async_api.py
    194→    async def login …
 
 py3xui/async_api/async_api_base.py
-     5→import asyncio
-    15→# pylint: disable=R0902
     16→class AsyncBaseApi:
     48→
-    49→    def __init__ …
-    69→    def host(self) -> str:
-    77→    def username(self) -> str:
-    85→    def password(self) -> str:
-    93→    def use_tls_verify(self) -> bool:
-   101→    def custom_certificate_path(self) -> str | None:
-   117→    def max_retries(self, value: int) -> None:
-   133→    def session(self, value: str | None) -> None:
-   149→    def cookie_name(self, value: str | None) -> None:
-   239→    async def login …
-   282→    def cookies(self) -> dict[str, str]:
-
-py3xui/async_api/async_api_client.py
-    12→class AsyncClientApi(AsyncBaseApi):
-    51→
-
-py3xui/async_api/async_api_database.py
-     7→class AsyncDatabaseApi(AsyncBaseApi):
-    31→
-    32→    async def export(self) -> None:
-
-py3xui/async_api/async_api_inbound.py
-    11→class AsyncInboundApi(AsyncBaseApi):
-    41→
-    42→    async def get_list …
-    72→    async def get_by_id …
-   112→    async def add …
-   158→    async def delete …
-   189→    async def update …
-   222→    async def reset_stats …
-   246→    async def reset_client_stats …
+    69→    def host …
+    77→    def username …
+    85→    def password …
+    93→    def use_tls_verify …
+   101→    def custom_certificate_path …
+   117→    def max_retries …
+   133→    def session …
+   149→    def cookie_name …
+   282→    def cookies …
 
 py3xui/async_api/async_api_server.py
      8→class AsyncServerApi(AsyncBaseApi):
     42→
-    43→    # pylint: disable=R0801
     44→    async def get_db(self, save_path: str) -> None:
     76→    async def get_status(self) -> Server:
    105→    async def generate_reality_keys(self) -> RealityKeyPair:
@@ -149,86 +100,140 @@ py3xui/client/client.py
      9→
     10→    EMAIL = "email"
     11→    ENABLE = "enable"
-      →    …
+    12→    PASSWORD = "password"
+    13→
+    14→    ID = "id"
+    15→    INBOUND_ID = "inboundId"
+    16→
+    17→    UP = "up"
+    18→    DOWN = "down"
+    19→
+    20→    EXPIRY_TIME = "expiryTime"
+    21→
+    22→    TOTAL = "total"
+    23→    RESET = "reset"
+    24→
+    25→    FLOW = "flow"
+    26→    METHOD = "method"
+    27→    LIMIT_IP = "limitIp"
+    28→    SUB_ID = "subId"
+    29→    COMMENT = "comment"
+    30→    TG_ID = "tgId"
+    31→    TOTAL_GB = "totalGB"
+    32→
+    33→    UUID = "uuid"
     36→class Client(BaseModel):
     58→
-      →…
+    59→    email: str
+    60→    enable: bool
+      →    …
 
 py3xui/inbound/bases.py
-     8→# pylint: disable=too-few-public-methods
      9→class JsonStringModel(BaseModel):
     11→
-    12→    @model_validator(mode="before")
-    13→    def model_validate(
-    14→        cls,
-    15→        values,
-    16→    ):  # pylint: disable=no-self-argument, arguments-differ
+    13→    def model_validate …
 
 py3xui/inbound/inbound.py
     15→class InboundFields:
     17→
     18→    ENABLE = "enable"
-      →    …
+    19→    PORT = "port"
+    20→    PROTOCOL = "protocol"
+    21→    SETTINGS = "settings"
+    22→    STREAM_SETTINGS = "streamSettings"
+    23→    SNIFFING = "sniffing"
+    24→
+    25→    ID = "id"
+    26→    UP = "up"
+    27→    DOWN = "down"
+    28→    TOTAL = "total"
+    29→    REMARK = "remark"
+    30→
+    31→    EXPIRY_TIME = "expiryTime"
+    32→    CLIENT_STATS = "clientStats"
+    33→    LISTEN = "listen"
+    34→
+    35→    TAG = "tag"
     38→class Inbound(BaseModel):
     58→
-    89→    def validate_stream_settings(  # pylint: disable=no-self-argument
-    90→        cls, value: StreamSettings | str
-    91→    ) -> StreamSettings | str:
-   114→    def to_json(self) -> dict[str, Any]:
+    59→    enable: bool
+    60→    port: int
+    61→    protocol: str
+    62→    settings: Settings
+    89→    def validate_stream_settings …
+   114→    def to_json …
 
 py3xui/inbound/settings.py
      9→class SettingsFields:
     11→
     12→    CLIENTS = "clients"
-      →    …
+    13→    DECRYPTION = "decryption"
+    14→    FALLBACKS = "fallbacks"
     17→class Settings(JsonStringModel):
     25→
-      →…
+    26→    clients: list[Client] = []
+      →    …
 
 py3xui/inbound/sniffing.py
      9→class SniffingFields:
     11→
     12→    ENABLED = "enabled"
     13→
-      →…
+    14→    DEST_OVERRIDE = "destOverride"
+    15→
+    16→    METADATA_ONLY = "metadataOnly"
+    17→    ROUTE_ONLY = "routeOnly"
     20→class Sniffing(JsonStringModel):
     30→
+    31→    enabled: bool
+    32→
       →…
 
 py3xui/inbound/stream_settings.py
      9→class StreamSettingsFields:
     11→
     12→    SECURITY = "security"
-      →    …
+    13→    NETWORK = "network"
+    14→    TCP_SETTINGS = "tcpSettings"
+    15→    KCP_SETTINGS = "kcpSettings"
+    16→
+    17→    EXTERNAL_PROXY = "externalProxy"
+    18→
+    19→    REALITY_SETTINGS = "realitySettings"
+    20→    XTLS_SETTINGS = "xtlsSettings"
+    21→    TLS_SETTINGS = "tlsSettings"
+    22→    XHTTP_SETTINGS = "xhttpSettings"
     25→class StreamSettings(JsonStringModel):
     38→
-      →…
+    39→    security: str
+    40→    network: str
+      →    …
 
 py3xui/server/server.py
      7→class ServerFields:
      9→
     10→    CPU = "cpu"
-      →    …
-    43→class MemoryInfo(BaseModel):
-    54→class XRayInfo(BaseModel):
-    67→class NetworkIO(BaseModel):
-    78→class NetworkTraffic(BaseModel):
-    89→class PublicIP(BaseModel):
-   100→class AppStats(BaseModel):
-   113→class RealityKeyPair(BaseModel):
-   125→class Server(BaseModel):
-
-py3xui/utils/__init__.py
-     2→from py3xui.utils …
-     4→COOKIE_NAMES = ["3x-ui", "session"]
-
-py3xui/utils/env.py
-     7→def parse_env …
-    33→def xui_host …
-    49→def xui_username …
-    65→def xui_password …
-    81→def tls_verify …
-    95→def tls_cert_path …
+    11→    CPU_CORES = "cpuCores"
+    12→    LOGICAL_PRO = "logicalPro"
+    13→    CPU_SPEED_MHZ = "cpuSpeedMhz"
+    14→
+    15→    MEM_CURRENT = "current"
+    16→    MEM_TOTAL = "total"
+    17→
+    18→    XRAY_STATE = "state"
+    19→    XRAY_ERROR_MSG = "errorMsg"
+    20→    XRAY_VERSION = "version"
+    21→
+    22→    UPTIME = "uptime"
+    23→    LOADS = "loads"
+    24→    TCP_COUNT = "tcpCount"
+    25→    UDP_COUNT = "udpCount"
+    26→    NET_IO = "netIO"
+    27→    NET_TRAFFIC = "netTraffic"
+    28→    NET_IO_UP = "up"
+    29→    NET_IO_DOWN = "down"
+    30→
+      →…
 
 pyproject.toml
      1→[build-system]

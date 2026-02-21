@@ -2,9 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (1002 tokens)
-
-README.md
+budget: 1000 (999 tokens)
 
 __init__.py
      2→from py3xui.api.api_client import ClientApi
@@ -41,7 +39,10 @@ api_base.py
     18→    SUCCESS = "success"
     19→    MSG = "msg"
     20→    OBJ = "obj"
-      →    …
+    21→    CLIENT_STATS = "clientStats"
+    22→    NO_IP_RECORD = "No IP Record"
+    23→    GET = "GET"
+    24→    POST = "POST"
     28→class BaseApi:
     60→
     61→    def __init__ …
@@ -81,12 +82,9 @@ api_client.py
    342→    def get_traffic_by_id …
 
 api_database.py
-     4→from py3xui.api.api_base import BaseApi
      7→class DatabaseApi(BaseApi):
     31→
     32→    def export(self) -> None:
-    33→        """This endpoint triggers the creation of a system backup and initiates the delivery of
-      →        …
 
 api_inbound.py
      3→from typing …

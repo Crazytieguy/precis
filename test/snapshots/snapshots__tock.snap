@@ -2,12 +2,10 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4022 tokens)
+budget: 4000 (3997 tokens)
 
 README.md
      1→# Tock
-     5→[Features](#features) • [Quick Start](#quick-start) • [Commands](#commands) •
-      →…
      8→## Features
     26→## Quick Start
     28→### Installation
@@ -61,17 +59,9 @@ cmd/tock/main.go
      3→import …
      7→func main() {
 
-docs/commands.md
-     1→# Commands Reference
-    23→## Core Commands
-   188→## Viewing & Reporting
-
 internal/adapters/cli/add.go
     16→type addOptions struct {
     26→func NewAddCmd() *cobra.Command {
-    27→	var opts addOptions
-    28→
-      →…
     64→func runAdd …
    124→func resolveStartTime …
    163→func resolveEndTimeOrDuration …
@@ -82,7 +72,16 @@ internal/adapters/cli/analyze.go
       →	…
     70→type AnalysisStats struct {
     71→	TotalDuration      time.Duration
-      →	…
+    72→	DeepWorkDuration   time.Duration
+    73→	DeepWorkScore      float64 // 0-100
+    74→	ContextSwitches    int
+    75→	AvgSwitchesPerDay  float64
+    76→	Chronotype         string // "Morning Lark", "Night Owl", etc.
+    77→	PeakHour           int
+    78→	FocusDistribution  map[string]int // "Short (<15m)", "Medium (15-60m)", "Long (>60m)"
+    79→	MostProductiveDay  string
+    80→	AvgSessionDuration time.Duration
+    81→}
     84→func analyzeData(activities []models.Activity) AnalysisStats {
    206→func renderAnalysis(stats AnalysisStats, cfg *config.Config, tf *timeutil.Formatter) {
 
@@ -100,10 +99,6 @@ internal/adapters/cli/calendar.go
 internal/adapters/cli/calendar_sidebar.go
     12→const barChar = "▏"
     15→func formatDurationCompact(d time.Duration) string {
-    27→func (m *reportModel) renderSidebar() string {
-    51→func (m *reportModel) renderProductivityStats() string {
-   128→func (m *reportModel) renderWeeklyActivity() string {
-   211→func (m *reportModel) renderTopProjects(maxHeight int) string {
 
 internal/adapters/cli/continue.go
     15→const (
@@ -112,7 +107,6 @@ internal/adapters/cli/continue.go
     20→func NewContinueCmd() *cobra.Command {
     21→	var description string
     22→	var project string
-    23→	var at string
       →	…
 
 internal/adapters/cli/current.go
@@ -123,21 +117,9 @@ internal/adapters/cli/current.go
 
 internal/adapters/cli/ical.go
     23→func NewICalCmd() *cobra.Command {
-    24→	var outputDir string
-      →	…
-    78→func handleFullExport …
-   155→func parseKeyOrDate …
-   185→func getActivitiesForDate …
-   210→func handleSingleExport …
-   250→func handleBulkExport …
-   302→func openFileInCalendar …
 
 internal/adapters/cli/interactive.go
     17→func SelectActivityMetadata(activities []models.Activity, project, description string, theme Theme) (string, string, error) {
-    36→func selectProject …
-    57→func selectTask …
-    80→func getUniqueProjects …
-    89→func getDescriptionsForProject …
     98→func RunInteractiveInput(header, placeholder string, theme Theme) (string, error) {
    123→type simpleInputModel struct {
    131→func (m simpleInputModel) Init() tea.Cmd { return nil }
@@ -147,17 +129,12 @@ internal/adapters/cli/interactive.go
    201→type simpleListModel struct {
    212→func (m *simpleListModel) Init() tea.Cmd { return nil }
    214→func (m *simpleListModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-   251→func (m *simpleListModel) applyFilter …
    263→func (m *simpleListModel) View() string {
-   301→func (m *simpleListModel) calculateWindow …
 
 internal/adapters/cli/last.go
     16→type lastOptions struct {
     21→func NewLastCmd() *cobra.Command {
-    22→	var opt lastOptions
-    23→
-      →…
-    42→func runLastCmd(cmd *cobra.Command, opt *lastOptions) error {
+    42→func runLastCmd …
 
 internal/adapters/cli/list_gui.go
     22→func NewListCmd() *cobra.Command {
@@ -168,9 +145,6 @@ internal/adapters/cli/list_gui.go
 
 internal/adapters/cli/remove.go
     22→func NewRemoveCmd() *cobra.Command {
-    23→	var skipConfirm bool
-    24→
-      →…
     95→func parseRemoveIndex …
    116→func findLastActivity …
    127→func findActivityByIndex …
@@ -178,28 +152,14 @@ internal/adapters/cli/remove.go
 internal/adapters/cli/report.go
     20→type reportOptions struct {
     31→func NewReportCmd() *cobra.Command {
-    32→	var opt reportOptions
-    33→
-      →…
     61→func runReportCmd(cmd *cobra.Command, opt *reportOptions) error {
 
 internal/adapters/cli/root.go
     21→const (
     22→	defaultRecentActivitiesForCompletion = 1000
     23→	backendTimewarrior                   = "timewarrior"
-    26→type serviceKey struct{}
-    27→type configKey struct{}
-    28→type viperKey struct{}
-    29→type timeFormatterKey struct{}
     31→func NewRootCmd() *cobra.Command {
    107→func Execute() {
-   115→func getService …
-   119→func getConfig …
-   123→func getTimeFormatter …
-   127→func initRepository …
-   134→func getServiceForCompletion …
-   173→func projectRegisterFlagCompletion …
-   195→func descriptionRegisterFlagCompletion …
 
 internal/adapters/cli/start.go
     16→//nolint:gocognit,funlen // Include all logic in one function
@@ -216,10 +176,29 @@ internal/adapters/cli/stop.go
 internal/adapters/cli/theme.go
     11→type Theme struct {
     12→	Primary   lipgloss.Color
-      →	…
+    13→	Secondary lipgloss.Color
+    14→	Text      lipgloss.Color
+    15→	SubText   lipgloss.Color
+    16→	Faint     lipgloss.Color
+    17→	Highlight lipgloss.Color
+    18→	Tag       lipgloss.Color
+    19→}
     22→type Styles struct {
     23→	Wrapper       lipgloss.Style
-      →	…
+    24→	Header        lipgloss.Style
+    25→	Weekday       lipgloss.Style
+    26→	Day           lipgloss.Style
+    27→	Today         lipgloss.Style
+    28→	Selected      lipgloss.Style
+    29→	DetailsHeader lipgloss.Style
+    30→	Time          lipgloss.Style
+    31→	Project       lipgloss.Style
+    32→	Desc          lipgloss.Style
+    33→	Duration      lipgloss.Style
+    34→	Sidebar       lipgloss.Style
+    35→	Dot           lipgloss.Style
+    36→	Line          lipgloss.Style
+    37→}
     40→func DarkTheme() Theme {
     53→func LightTheme() Theme {
     66→func ANSIDarkTheme() Theme {
@@ -239,8 +218,6 @@ internal/adapters/cli/version.go
     12→	commit  = "none"
     13→	date    = "unknown"
     16→func NewVersionCmd() *cobra.Command {
-    17→	return &cobra.Command{
-      →	…
 
 internal/adapters/cli/watch.go
     19→func NewWatchCmd() *cobra.Command {
@@ -257,33 +234,25 @@ internal/adapters/cli/watch.go
 internal/adapters/repositories/file/parser.go
      3→import …
     13→var ErrSkip = errors.New("skip line")
-    15→const …
-    16→	timeLayoutMin …
-    17→	timeLayoutSec …
     20→func ParseActivity(line string) (*models.Activity, error) {
-    64→func parseTime …
     72→func FormatActivity(a models.Activity) string {
 
 internal/adapters/repositories/file/repository.go
      3→import …
     19→type repository struct {
-    23→func NewRepository(filePath string) ports.ActivityRepository {
-    27→func (r *repository) Find(_ context.Context, filter dto.ActivityFilter) ([]models.Activity, error) {
-    93→func (r *repository) FindLast(_ context.Context) (*models.Activity, error) {
-   130→func (r *repository) Save(_ context.Context, activity models.Activity) error {
-   168→func (r *repository) Remove(_ context.Context, activity models.Activity) error {
+    23→func NewRepository …
+    27→func (r *repository) Find …
+    93→func (r *repository) FindLast …
+   130→func (r *repository) Save …
+   168→func (r *repository) Remove …
 
 internal/adapters/repositories/notes/repository.go
      3→import …
-    18→const (
-    19→	fileExtension = ".txt"
-    20→	directoryMode = 0750
-    21→	fileMode      = 0644
     24→type repository struct {
-    28→func NewRepository(basePath string) ports.NotesRepository {
+    28→func NewRepository …
     32→type noteData struct {
-    36→func (r *repository) Save(_ context.Context, activityID string, date time.Time, notes string, tags []string) error {
-    73→func (r *repository) Get(_ context.Context, activityID string, date time.Time) (string, []string, error) {
+    36→func (r *repository) Save …
+    73→func (r *repository) Get …
 
 internal/adapters/repositories/timewarrior/repository.go
      3→import …
@@ -291,11 +260,11 @@ internal/adapters/repositories/timewarrior/repository.go
     25→	timeLayout = "20060102T150405Z"
     28→type twInterval struct {
     35→type repository struct {
-    39→func NewRepository(dataDir string) ports.ActivityRepository {
-    43→func (r *repository) Find(_ context.Context, filter dto.ActivityFilter) ([]models.Activity, error) {
-   112→func (r *repository) FindLast(_ context.Context) (*models.Activity, error) {
-   148→func (r *repository) Save(_ context.Context, activity models.Activity) error {
-   182→func (r *repository) Remove(_ context.Context, activity models.Activity) error {
+    39→func NewRepository …
+    43→func (r *repository) Find …
+   112→func (r *repository) FindLast …
+   148→func (r *repository) Save …
+   182→func (r *repository) Remove …
    352→func parseIncLine(line string) (twInterval, error) {
 
 internal/config/config.go
@@ -352,8 +321,25 @@ internal/core/models/activity.go
 internal/core/ports/ports.go
      3→import …
     11→type ActivityResolver interface {
+    12→	Start(ctx context.Context, req dto.StartActivityRequest) (*models.Activity, error)
+    13→	Stop(ctx context.Context, req dto.StopActivityRequest) (*models.Activity, error)
+    14→	Add(ctx context.Context, req dto.AddActivityRequest) (*models.Activity, error)
+    15→	List(ctx context.Context, filter dto.ActivityFilter) ([]models.Activity, error)
+    16→	GetReport(ctx context.Context, filter dto.ActivityFilter) (*dto.Report, error)
+    17→	GetRecent(ctx context.Context, limit int) ([]models.Activity, error)
+    18→	GetLast(ctx context.Context) (*models.Activity, error)
+    19→	Remove(ctx context.Context, activity models.Activity) error
+    20→}
     22→type ActivityRepository interface {
+    23→	Save(ctx context.Context, activity models.Activity) error
+    24→	FindLast(ctx context.Context) (*models.Activity, error)
+    25→	Find(ctx context.Context, filter dto.ActivityFilter) ([]models.Activity, error)
+    26→	Remove(ctx context.Context, activity models.Activity) error
+    27→}
     29→type NotesRepository interface {
+    30→	Save(ctx context.Context, activityID string, date time.Time, notes string, tags []string) error
+    31→	Get(ctx context.Context, activityID string, date time.Time) (string, []string, error)
+    32→}
 
 internal/extra/extra.go
      3→import …

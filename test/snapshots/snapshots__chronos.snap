@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2006 tokens)
+budget: 2000 (2004 tokens)
 
 README.md
      3→# Chronos: Pretrained Models for Time Series Forecasting
@@ -17,7 +17,6 @@ README.md
 pyproject.toml
      1→[project]
     31→[build-system]
-    38→[tool.hatch.version]
     41→[project.optional-dependencies]
     68→[project.urls]
     74→[tool.mypy]
@@ -28,10 +27,6 @@ src/chronos/__about__.py
 
 src/chronos/__init__.py
      4→from .__about__ import __version__
-     5→from .base …
-     6→from .chronos …
-    13→from .chronos2 …
-    14→from .chronos_bolt …
     16→__all__ = [
 
 src/chronos/base.py
@@ -68,37 +63,63 @@ src/chronos/boto_utils.py
 
 src/chronos/chronos.py
      6→import logging
+    27→@dataclass
     28→class ChronosConfig:
+    29→    """
+      →    …
     33→
     34→    tokenizer_class: str
+    35→    tokenizer_kwargs: Dict[str, Any]
+    36→    context_length: int
+    37→    prediction_length: int
+    38→    n_tokens: int
+    39→    n_special_tokens: int
+    40→    pad_token_id: int
+    41→    eos_token_id: int
+    42→    use_eos_token: bool
+    43→    model_type: Literal["causal", "seq2seq"]
+    44→    num_samples: int
+    45→    temperature: float
+    46→    top_k: int
+    47→    top_p: float
+    48→
     59→class ChronosTokenizer:
+    67→
    154→class MeanScaleUniformBins(ChronosTokenizer):
    243→class ChronosModel(nn.Module):
+   255→
    262→    def device(self):
    355→class ChronosPipeline(BaseChronosPipeline):
+   370→
+   371→    tokenizer: ChronosTokenizer
+   372→    model: ChronosModel
+   373→    forecast_type: ForecastType = ForecastType.SAMPLES
+   374→
    381→    def model_context_length(self) -> int:
    385→    def model_prediction_length(self) -> int:
    399→    def embed(self, context: Union[torch.Tensor, List[torch.Tensor]]) -> Tuple[torch.Tensor, Any]:
    536→    def from_pretrained(cls, pretrained_model_name_or_path, *args, **kwargs):
 
-src/chronos/chronos2/__init__.py
-     6→from .config …
-     7→from .model …
-     8→from .pipeline …
-     9→from .dataset …
-    11→__all__ …
-
 src/chronos/chronos2/config.py
-     6→from dataclasses …
     12→class Chronos2CoreConfig(PretrainedConfig):
     45→
+    46→    model_type = "t5"
+    47→    attribute_map = {
     54→    def __init__ …
+   102→@dataclass
    103→class Chronos2ForecastingConfig:
    104→    context_length: int
+   105→    output_patch_size: int
+   106→    input_patch_size: int
+   107→    input_patch_stride: int
+   108→    quantiles: List[float]
+   109→    use_reg_token: bool = False
+   110→    use_arcsinh: bool = False
+   111→    max_output_patches: int = 1
+   112→    time_encoding_scale: int | None = None
+   113→
    114→    @classmethod
    115→    def editable_fields(cls) -> list[str]:
-   116→        """
-      →        …
 
 src/chronos/chronos2/dataset.py
      6→import math
@@ -108,59 +129,37 @@ src/chronos/chronos2/dataset.py
    472→class Chronos2Dataset(IterableDataset):
 
 src/chronos/chronos2/layers.py
-     6→from dataclasses …
-    15→from .config …
-    18→class RoPE(nn.Module):
     35→    def forward …
     52→    def rotate_half …
     59→    def apply_rotary_pos_emb …
-    86→class Chronos2LayerNorm(nn.Module):
-   110→class MLP(nn.Module):
-   126→class FeedForward(nn.Module):
+   142→@dataclass
    143→class AttentionOutput(ModelOutput):
    144→    hidden_states: torch.Tensor | None = None
-      →    …
-   148→class MHA(nn.Module):
-   294→class TimeSelfAttention(nn.Module):
-   317→class TimeCrossAttention(nn.Module):
-   343→class GroupSelfAttention(nn.Module):
-   369→class ResidualBlock(nn.Module):
+   145→    attn_weights: torch.Tensor | None = None
 
 src/chronos/chronos2/model.py
      6→import copy
-    18→from .config …
-    19→from .layers …
     32→class Chronos2EncoderBlockOutput(ModelOutput):
     38→class Chronos2EncoderBlock(nn.Module):
-    39→    def __init__ …
-    48→    def forward …
     83→class Chronos2EncoderOutput(ModelOutput):
     89→class Chronos2Encoder(nn.Module):
-    90→    def __init__ …
-   134→    def forward …
    191→class Chronos2Output(ModelOutput):
    198→class Chronos2Model(PreTrainedModel):
-   204→    def __init__ …
-   550→    def encode …
-   618→    def forward …
 
 src/chronos/chronos2/pipeline.py
      6→import logging
     39→class Chronos2Pipeline(BaseChronosPipeline):
-    43→    def __init__ …
+    40→    forecast_type: ForecastType = ForecastType.QUANTILES
+    41→    default_context_length: int = 2048
+    42→
     77→    def model_context_length …
     81→    def model_output_patch_size …
     85→    def model_prediction_length …
     89→    def quantiles …
     93→    def max_output_patches …
-    96→    def fit …
    456→    def predict …
-   763→    def predict_quantiles …
-   821→    def predict_df …
-  1027→    def predict_fev …
   1106→    def embed …
   1186→    def from_pretrained …
-  1224→    def save_pretrained …
 
 src/chronos/chronos2/trainer.py
      6→import warnings
@@ -177,33 +176,28 @@ src/chronos/chronos_bolt.py
      8→import copy
     26→from .base …
     33→class ChronosBoltConfig:
+    34→    context_length: int
+    35→    prediction_length: int
+    36→    input_patch_size: int
+    37→    input_patch_stride: int
+    38→    quantiles: List[float]
+    39→    use_reg_token: bool = False
     43→class ChronosBoltOutput(ModelOutput):
+    44→    loss: Optional[torch.Tensor] = None
+    45→    quantile_preds: Optional[torch.Tensor] = None
+    46→    attentions: Optional[torch.Tensor] = None
+    47→    cross_attentions: Optional[torch.Tensor] = None
     50→class Patch(nn.Module):
-    51→    def __init__ …
-    56→    def forward …
     71→class InstanceNorm(nn.Module):
-    76→    def __init__ …
-    81→    def forward …
-   100→    def inverse …
    113→class ResidualBlock(nn.Module):
-   114→    def __init__ …
-   135→    def forward …
    147→class ChronosBoltModelForForecasting(T5PreTrainedModel):
-   155→    def __init__(self, config: T5Config):
-   240→    def encode …
-   294→    def forward …
-   364→    def decode …
+   155→    def __init__ …
    403→class ChronosBoltPipeline(BaseChronosPipeline):
-   407→    def __init__ …
-   412→    def model_context_length(self) -> int:
-   416→    def model_prediction_length(self) -> int:
-   420→    def quantiles(self) -> List[float]:
-   424→    def embed(
-   425→        self, context: Union[torch.Tensor, List[torch.Tensor]]
-   426→    ) -> Tuple[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]]:
-   463→    def predict …
-   559→    def predict_quantiles …
-   610→    def from_pretrained(cls, pretrained_model_name_or_path, *args, **kwargs):
+   412→    def model_context_length …
+   416→    def model_prediction_length …
+   420→    def quantiles …
+   424→    def embed …
+   610→    def from_pretrained …
 
 src/chronos/df_utils.py
      7→import warnings
@@ -211,7 +205,7 @@ src/chronos/df_utils.py
    199→def convert_df_input_to_list_of_dicts_input …
 
 src/chronos/utils.py
-     5→from typing …
+     5→from typing import List
     11→def left_pad_and_stack_1D …
     22→def interpolate_quantiles …
    135→def weighted_quantile …
