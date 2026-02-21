@@ -78,7 +78,7 @@ with_entries! {
     (otree,                   "otree",                          2000),
 
     // ── Go ──────────────────────────────────────────────────────────────
-    (go_multierror,           "go-multierror",                  2000),
+    (go_multierror,           "go-multierror",                  2000), // inspected: exceeds explore
     (xxhash,                  "xxhash",                         2000),
     (xxhash_xxhsum,           "xxhash/xxhsum",                  1000),
     (mcphost,                 "mcphost",                        4000), // inspected: logged observation
