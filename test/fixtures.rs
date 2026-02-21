@@ -83,20 +83,20 @@ with_entries! {
     (xxhash_xxhsum,           "xxhash/xxhsum",                  1000), // inspected: looks good
     (mcphost,                 "mcphost",                        4000), // inspected: logged observation
     (mcphost_sdk,             "mcphost/sdk",                    1000), // inspected: looks good
-    (tock,                    "tock",                            4000),
-    (tock_internal_core,      "tock/internal/core",             1000), // domain models
+    (tock,                    "tock",                            4000), // inspected: deprioritize mocks/
+    (tock_internal_core,      "tock/internal/core",             1000), // inspected: deprioritize mocks/
 
     // ── TypeScript ──────────────────────────────────────────────────────
-    (cmdk,                    "cmdk",                           2000),
-    (cmdk_cmdk_src,           "cmdk/cmdk/src",                  1000), // library source (vs website)
-    (vaul,                    "vaul",                            2000),
-    (ts_pattern,              "ts-pattern",                     2000),
-    (ts_pattern_src_types,    "ts-pattern/src/types",           1000), // type-level programming
-    (ky,                      "ky",                              2000),
-    (ky_source_errors,        "ky/source/errors",               1000), // error hierarchy
-    (superstruct,             "superstruct",                    2000),
-    (superstruct_src_structs, "superstruct/src/structs",        1000), // validator definitions
-    (mitt,                    "mitt",                            1000),
+    (cmdk,                    "cmdk",                           2000), // inspected: looks good
+    (cmdk_cmdk_src,           "cmdk/cmdk/src",                  1000), // inspected: looks good
+    (vaul,                    "vaul",                            2000), // inspected: looks good
+    (ts_pattern,              "ts-pattern",                     2000), // inspected: looks good
+    (ts_pattern_src_types,    "ts-pattern/src/types",           1000), // inspected: looks good
+    (ky,                      "ky",                              2000), // inspected: looks good
+    (ky_source_errors,        "ky/source/errors",               1000), // error hierarchy // inspected: looks good
+    (superstruct,             "superstruct",                    2000), // inspected: looks good
+    (superstruct_src_structs, "superstruct/src/structs",        1000), // validator definitions // inspected: looks good
+    (mitt,                    "mitt",                            1000), // inspected: looks good
     (enclosed,                "enclosed",                        4000),
     (enclosed_crypto,         "enclosed/packages/crypto",       1000), // crypto package
     (enclosed_lib,            "enclosed/packages/lib",          1000), // shared library

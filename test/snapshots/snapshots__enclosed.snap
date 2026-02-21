@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4006 tokens)
+budget: 4000 (4000 tokens)
 
 README.md
     26→## Introduction
@@ -68,131 +68,21 @@ packages/app-client/package.json
     30→  "dependencies": {
     48→  "devDependencies": {
 
-packages/app-client/src/locales/ar.json
-     2→  "app": {
-     6→  "insecureContextWarning": {
-    10→  "navbar": {
-    29→  "footer": {
-    35→  "login": {
-    50→  "create": {
-    97→  "view": {
-   147→  "copy": {
-
-packages/app-client/src/locales/de.json
-     2→  "app": {
-     6→  "insecureContextWarning": {
-    10→  "navbar": {
-    29→  "footer": {
-    35→  "login": {
-    50→  "create": {
-    96→  "view": {
-   144→  "copy": {
-
-packages/app-client/src/locales/en.json
-     2→  "app": {
-     6→  "insecureContextWarning": {
-    10→  "navbar": {
-    34→  "footer": {
-    40→  "login": {
-    55→  "create": {
-   116→  "view": {
-   167→  "copy": {
-
-packages/app-client/src/locales/es.json
-     2→  "app": {
-     6→  "insecureContextWarning": {
-    10→  "navbar": {
-    27→  "footer": {
-    33→  "login": {
-    48→  "create": {
-    94→  "view": {
-   137→  "copy": {
-
-packages/app-client/src/locales/fr.json
-     2→  "app": {
-     6→  "insecureContextWarning": {
-    10→  "navbar": {
-    34→  "footer": {
-    40→  "login": {
-    55→  "create": {
-   116→  "view": {
-   168→  "copy": {
-
-packages/app-client/src/locales/hu.json
-     2→  "app": {
-     6→  "insecureContextWarning": {
-    10→  "navbar": {
-    29→  "footer": {
-    35→  "login": {
-    50→  "create": {
-   107→  "view": {
-   157→  "copy": {
-
-packages/app-client/src/locales/id.json
-     2→  "app": {
-     6→  "insecureContextWarning": {
-    10→  "navbar": {
-    34→  "footer": {
-    40→  "login": {
-    55→  "create": {
-   116→  "view": {
-   167→  "copy": {
-
-packages/app-client/src/locales/it.json
-     2→  "app": {
-     6→  "insecureContextWarning": {
-    10→  "navbar": {
-    34→  "footer": {
-    40→  "login": {
-    55→  "create": {
-   116→  "view": {
-   168→  "copy": {
+packages/app-client/src/index.tsx
+     6→import { I18nProvider } from './modules/i18n/i18n.provider';
+     7→import { NoteContextProvider } from './modules/notes/notes.context';
+     8→import { Toaster } from './modules/ui/components/sonner';
+     9→import { getRoutes } from './routes';
+    12→import './app.css';
 
 packages/app-client/src/locales/locales.ts
      2→export const locales = [
 
-packages/app-client/src/locales/nl.json
-     2→  "app": {
-     6→  "insecureContextWarning": {
-    10→  "navbar": {
-    29→  "footer": {
-    35→  "login": {
-    50→  "create": {
-   108→  "view": {
-   158→  "copy": {
-
-packages/app-client/src/locales/pl.json
-     2→  "app": {
-     6→  "insecureContextWarning": {
-    10→  "navbar": {
-    34→  "footer": {
-    40→  "login": {
-    55→  "create": {
-   116→  "view": {
-   167→  "copy": {
-
-packages/app-client/src/locales/pt.json
-     2→  "app": {
-     6→  "insecureContextWarning": {
-    10→  "navbar": {
-    29→  "footer": {
-    35→  "login": {
-    47→  "create": {
-    94→  "view": {
-   142→  "copy": {
-
-packages/app-client/src/locales/tr.json
-     2→  "app": {
-     6→  "insecureContextWarning": {
-    10→  "navbar": {
-    34→  "footer": {
-    40→  "login": {
-    52→  "create": {
-   113→  "view": {
-   164→  "copy": {
-
 packages/app-client/src/modules/auth/auth.store.ts
      6→export const authStore = createRoot(() => {
+
+packages/app-client/src/modules/auth/pages/login.page.tsx
+    41→export const LoginPage: Component = () => {
 
 packages/app-client/src/modules/config/config.constants.ts
      3→export const buildTimeConfig: Config = {
@@ -206,6 +96,10 @@ packages/app-client/src/modules/files/files.models.ts
 packages/app-client/src/modules/notes/notes.context.tsx
     11→export const NoteContextProvider: ParentComponent = (props) => {
     27→export function useNoteContext() {
+
+packages/app-client/src/modules/shared/utils/copy.tsx
+     6→export function useCopy …
+    19→export const CopyButton …
 
 packages/app-client/src/modules/theme/theme.store.ts
      4→export function useThemeStore() {
@@ -233,6 +127,17 @@ packages/app-client/src/modules/ui/components/dropdown-menu.tsx
     19→export const DropdownMenuGroup = DropdownMenuPrimitive.Group;
     20→export const DropdownMenuSub = DropdownMenuPrimitive.Sub;
     21→export const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup;
+    23→export function DropdownMenu …
+    34→export function DropdownMenuContent …
+    58→export function DropdownMenuItem …
+    81→export function DropdownMenuGroupLabel …
+   100→export function DropdownMenuItemLabel …
+   119→export function DropdownMenuSeparator …
+   132→export function DropdownMenuShortcut …
+   145→export function DropdownMenuSubTrigger …
+   186→export function DropdownMenuSubContent …
+   206→export function DropdownMenuCheckboxItem …
+   248→export function DropdownMenuRadioItem …
 
 packages/app-client/src/modules/ui/components/switch.tsx
     11→export const SwitchLabel = SwitchPrimitive.Label;
@@ -249,18 +154,34 @@ packages/app-client/src/modules/ui/components/tabs.tsx
     73→export function TabsTrigger …
    109→export function TabsIndicator …
 
+packages/app-client/src/modules/ui/components/textfield.tsx
+    20→export function TextFieldRoot …
+    26→export const textfieldLabel = cva(
+    51→export function TextFieldLabel …
+    67→export function TextFieldErrorMessage …
+    85→export function TextFieldDescription …
+   104→export function TextField …
+
 packages/app-client/src/modules/ui/layouts/app.layout.tsx
     72→export const Navbar: Component = () => {
    209→export const Footer: Component = () => {
    240→export const AppLayout: ParentComponent = (props) => {
 
 packages/app-client/src/routes.tsx
+     2→import { LoginPage } from './modules/auth/pages/login.page';
+     3→import { getConfig } from './modules/config/config.provider';
+     4→import { NOTE_ID_REGEX } from './modules/notes/notes.constants';
+     5→import { buildViewNotePagePath } from './modules/notes/notes.models';
+     6→import { CreateNotePage } from './modules/notes/pages/create-note.page';
+     7→import { ViewNotePage } from './modules/notes/pages/view-note.page';
+     8→import { Button } from './modules/ui/components/button';
+     9→import { AppLayout } from './modules/ui/layouts/app.layout';
     11→export function getRoutes(): RouteDefinition[] {
 
 packages/app-client/tsconfig.json
      2→  "compilerOptions": {
     20→  }
-      →  …
+    21→}
 
 packages/app-server/package.json
      2→  "name": "@enclosed/app-server",
@@ -276,22 +197,57 @@ packages/app-server/package.json
     30→  "dependencies": {
     45→  "devDependencies": {
 
+packages/app-server/src/modules/app/auth/auth.errors.ts
+     3→export const createUnauthorizedError = createErrorFactory({
+
+packages/app-server/src/modules/app/auth/auth.middleware.ts
+     7→export const authenticationMiddleware …
+    31→export const protectedRouteMiddleware …
+
 packages/app-server/src/modules/app/config/config.ts
      5→export const configDefinition = {
    258→export function getConfig …
+
+packages/app-server/src/modules/app/config/config.types.ts
+     3→export type Config = ReturnType<typeof getConfig>;
 
 packages/app-server/src/modules/app/server.types.ts
      5→export type ServerInstanceGenerics = {
     13→export type Context = BaseContext<ServerInstanceGenerics>;
     15→export type ServerInstance = Hono<ServerInstanceGenerics>;
 
+packages/app-server/src/modules/notes/notes.errors.ts
+     3→export const createNoteNotFoundError = createErrorFactory({
+     9→export const createNotePayloadTooLargeError = createErrorFactory({
+    15→export const createCannotCreatePrivateNoteOnPublicInstanceError = createErrorFactory({
+    21→export const createExpirationDelayRequiredError = createErrorFactory({
+
+packages/app-server/src/modules/notes/notes.types.ts
+     4→export type NotesRepository …
+     6→export type DatabaseNote …
+    19→export type Note …
+
+packages/app-server/src/modules/shared/errors/errors.ts
+    21→  constructor …
+
 packages/app-server/src/modules/shared/logger/logger.test-utils.ts
      3→export function createTestLogger() {
+
+packages/app-server/src/modules/shared/logger/logger.types.ts
+     3→export type Logger = ReturnType<typeof createLogger>;
+
+packages/app-server/src/modules/shared/validation/validation.ts
+    43→export const validateJsonBody …
+    44→export const validateQuery …
+    45→export const validateParams …
+
+packages/app-server/src/modules/tasks/tasks.types.ts
+     3→export type TaskDefinition = ReturnType<typeof defineTask>;
 
 packages/app-server/tsconfig.json
      2→  "compilerOptions": {
     16→  }
-      →  …
+    17→}
 
 packages/app-server/wrangler.toml
      5→[[kv_namespaces]]
@@ -329,6 +285,12 @@ packages/cli/package.json
     35→  "dependencies": {
     45→  "devDependencies": {
 
+packages/cli/src/cli.ts
+     2→import { configCommand } from './config/config.command';
+     3→import { createNoteCommand } from './create-note/create-note.command';
+     4→import { viewNoteCommand } from './view-note/view-note.command';
+     6→const main = defineCommand({
+
 packages/cli/src/config/config.command.ts
      8→export const configCommand = defineCommand({
 
@@ -343,6 +305,8 @@ packages/cli/src/view-note/view-note.command.ts
 
 packages/cli/tsconfig.json
      2→  "compilerOptions": {
+    18→  }
+    19→}
 
 packages/crypto/README.md
      1→# Enclosed crypto library
@@ -369,6 +333,11 @@ packages/crypto/package.json
     68→  "scripts": {
     79→  "dependencies": {
     82→  "devDependencies": {
+
+packages/crypto/src/encryption-algorithms/encryption-algorithms.types.ts
+     3→export type EncryptionMethodsDefinition = {
+     8→export type EncryptionAlgorithm = typeof ENCRYPTION_ALGORITHMS[number];
+    10→export type EncryptionAlgorithmDefinitions = Record<EncryptionAlgorithm, EncryptionMethodsDefinition>;
 
 packages/crypto/tsconfig.json
      2→  "compilerOptions": {
@@ -415,11 +384,18 @@ packages/lib/package.json
     39→  "dependencies": {
     47→  "devDependencies": {
 
+packages/lib/src/api/api.constants.ts
+     1→export const DEFAULT_API_BASE_URL = 'https://enclosed.cc';
+
 packages/lib/src/crypto/crypto.types.ts
      3→export type EncryptionAlgorithm = typeof ENCRYPTION_ALGORITHMS[number];
      4→export type KeyDerivationAlgorithm = typeof KEY_DERIVATION_ALGORITHMS[number];
      5→export type CompressionAlgorithm = typeof COMPRESSION_ALGORITHMS[number];
      7→export type CryptoServices = {
+
+packages/lib/src/crypto/serialization/serialization.types.ts
+     4→export type SerializationMethodsDefinition = ReturnType<typeof defineSerializationMethods>;
+     5→export type SerializationFormat = typeof serializationMethodDefinitions[number]['name'];
 
 packages/lib/src/notes/notes.types.ts
      4→export type NoteAsset = {

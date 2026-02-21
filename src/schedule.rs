@@ -124,14 +124,13 @@ impl FileRole {
     /// Locale directories override filename-based detection (a translated README
     /// is low value, not high value).
     pub fn from_path(path: &Path) -> Self {
-        let is_doc = path.extension()
-            .and_then(|e| e.to_str())
-            .map(|e| matches!(e, "md" | "markdown" | "txt"))
-            .unwrap_or(false);
-        // For doc files, check if any parent directory is a locale directory
-        // (e.g., docs/zh-CN/guide.md, i18n/es/readme.md).
+        let ext = path.extension().and_then(|e| e.to_str()).unwrap_or("");
+        let is_doc = matches!(ext, "md" | "markdown" | "txt");
+        let is_data = matches!(ext, "json" | "yaml" | "yml" | "toml" | "properties" | "strings" | "xlf" | "po" | "pot");
+        // For doc and data files, check if any parent directory is a locale directory
+        // (e.g., docs/zh-CN/guide.md, i18n/es/readme.md, locales/ar.json).
         // This takes priority over filename-based detection.
-        if is_doc {
+        if is_doc || is_data {
             for component in path.components() {
                 if let std::path::Component::Normal(seg) = component
                     && let Some(s) = seg.to_str()
@@ -1346,8 +1345,14 @@ mod tests {
         assert_eq!(FileRole::from_path(Path::new("l10n/guide.md")), FileRole::Translated);
         assert_eq!(FileRole::from_path(Path::new("locales/readme.md")), FileRole::Translated);
         assert_eq!(FileRole::from_path(Path::new("translations/guide.md")), FileRole::Translated);
-        // Non-doc files in locale dirs stay Normal
+        // Data files in locale dirs are also Translated
+        assert_eq!(FileRole::from_path(Path::new("locales/ar.json")), FileRole::Translated);
+        assert_eq!(FileRole::from_path(Path::new("src/locales/en.json")), FileRole::Translated);
+        assert_eq!(FileRole::from_path(Path::new("i18n/de.yaml")), FileRole::Translated);
+        assert_eq!(FileRole::from_path(Path::new("locales/fr.yml")), FileRole::Translated);
+        // Non-doc non-data files in locale dirs stay Normal (e.g., source code)
         assert_eq!(FileRole::from_path(Path::new("docs/zh-CN/lib.rs")), FileRole::Normal);
+        assert_eq!(FileRole::from_path(Path::new("locales/index.ts")), FileRole::Normal);
         // Plain 2-letter dirs are NOT matched (too many false positives)
         assert_eq!(FileRole::from_path(Path::new("docs/go/guide.md")), FileRole::Normal);
         assert_eq!(FileRole::from_path(Path::new("docs/js/guide.md")), FileRole::Normal);
