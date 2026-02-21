@@ -93,20 +93,20 @@ with_entries! {
     (ts_pattern,              "ts-pattern",                     2000), // inspected: logged observation
     (ts_pattern_src_types,    "ts-pattern/src/types",           1000), // inspected: logged observation
     (ky,                      "ky",                              2000), // inspected: logged observation
-    (ky_source_errors,        "ky/source/errors",               1000), // error hierarchy
+    (ky_source_errors,        "ky/source/errors",               1000),
     (superstruct,             "superstruct",                    2000), // inspected: logged observation
     (superstruct_src_structs, "superstruct/src/structs",        1000), // inspected: logged observation
     (mitt,                    "mitt",                            1000), // inspected: logged observation
     (enclosed,                "enclosed",                        4000), // inspected: deprioritize locale data files
-    (enclosed_crypto,         "enclosed/packages/crypto",       1000), // crypto package
-    (enclosed_lib,            "enclosed/packages/lib",          1000), // shared library
+    (enclosed_crypto,         "enclosed/packages/crypto",       1000),
+    (enclosed_lib,            "enclosed/packages/lib",          1000),
     (d2ts,                    "d2ts",                            2000), // inspected: logged observation
     (d2ts_d2ts,               "d2ts/packages/d2ts",             2000), // inspected: logged observation
 
     // ── JavaScript ──────────────────────────────────────────────────────
     (commander,               "commander",                      2000), // inspected: logged observation
     (semver,                  "semver",                          2000), // inspected: deprioritize .github/
-    (semver_classes,          "semver/classes",                  1000), // class definitions
+    (semver_classes,          "semver/classes",                  1000),
     (semver_internal,         "semver/internal",                 1000), // internal helpers
 
     // ── Python ──────────────────────────────────────────────────────────
@@ -117,17 +117,17 @@ with_entries! {
     (peepdb_db,               "peepdb/peepdb/db",               1000), // inspected: logged observation
     (swarm,                   "swarm",                           2000),
     (htmy,                    "htmy",                            2000),
-    (htmy_renderer,           "htmy/htmy/renderer",             1000), // rendering subsystem
+    (htmy_renderer,           "htmy/htmy/renderer",             1000),
     (microbootstrap,          "microbootstrap",                 2000),
-    (microbootstrap_instruments, "microbootstrap/microbootstrap/instruments", 1000), // plugins
+    (microbootstrap_instruments, "microbootstrap/microbootstrap/instruments", 1000),
     (py3xui,                  "py3xui",                          2000),
-    (py3xui_api,              "py3xui/py3xui/api",              1000), // sync API layer
+    (py3xui_api,              "py3xui/py3xui/api",              1000),
 
     // ── Python (ML) ─────────────────────────────────────────────────────
     (xlstm,                   "xlstm",                           2000),
-    (xlstm_blocks,            "xlstm/xlstm/blocks",             1000), // model blocks
+    (xlstm_blocks,            "xlstm/xlstm/blocks",             1000),
     (nano_vllm,               "nano-vllm",                      2000),
-    (nano_vllm_engine,        "nano-vllm/nanovllm/engine",      1000), // inference engine
+    (nano_vllm_engine,        "nano-vllm/nanovllm/engine",      1000),
     (chronos,                 "chronos-forecasting",             2000),
 
     // ── C ───────────────────────────────────────────────────────────────
