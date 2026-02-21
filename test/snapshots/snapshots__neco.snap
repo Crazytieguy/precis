@@ -2,83 +2,75 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (998 tokens)
-
-deps/sco.c
-   140→#define LLCO_NOASM
-   913→enum llco_stack_grows { DOWNWARDS, UPWARDS }; 
-  1128→llco_start …
-  1139→llco_switch …
-  1166→llco_method …
-  1660→struct sco_link {
-  2000→sco_active …
-  2038→sco_unwind …
-
-deps/sco.h
-    16→struct sco_desc {
-    25→void sco_start(struct sco_desc *desc);
-    29→void sco_yield(void);
-    33→int64_t sco_id(void);
-    37→void sco_pause(void);
-    44→void sco_resume(int64_t id);
-    47→bool sco_active(void);
-    55→void sco_detach(int64_t id);
-    62→void sco_attach(int64_t id);
-    69→void sco_exit(void);
-    72→void *sco_udata(void);
-    75→size_t sco_info_scheduled(void);
-    76→size_t sco_info_running(void);
-    77→size_t sco_info_paused(void);
-    78→size_t sco_info_detached(void);
-    79→const char *sco_info_method(void);
-    82→struct sco_symbol {
-    92→int sco_unwind(bool (*func)(struct sco_symbol *sym, void *udata), void *udata);
-
-deps/stack.c
-    22→#define STACK_API static
-    23→struct stack_opts {
-    33→struct stack { char _[32]; };
-    34→struct stack_mgr { char _[320]; };
-    38→#define STACK_API
-    41→struct stack_group {
-    55→struct stack_freed {
-    61→struct stack_mgr0 {
-    79→struct stack0 {
-
-deps/stack.h
-    10→#define STACK_H
-    15→struct stack_opts {
-    26→struct stack { char _[32]; };
-    27→struct stack_mgr { char _[320]; };
-    35→void *stack_addr(struct stack *stack);
-    38→size_t stack_size(struct stack *stack);
-
-deps/worker.c
-    25→struct worker_opts {
-    33→struct worker_entry {
-    38→struct worker_thread {
-    49→struct worker {
-   175→worker_submit …
-
-deps/worker.h
-    10→#define WORKER_H
-    16→struct worker_opts {
+budget: 1000 (999 tokens)
 
 neco.c
+   172→struct sco_desc {
+   179→struct sco_symbol {
+   234→struct llco_desc {
+   241→struct llco_symbol {
    294→#define LLCO_NOASM
+   343→struct llco_asmctx {
+   422→struct llco_asmctx {
+   513→struct llco_asmctx {
+   726→struct llco_asmctx {
+   789→struct llco_asmctx {
+   902→struct llco_asmctx {
   1067→enum llco_stack_grows { DOWNWARDS, UPWARDS }; 
+  1124→struct llco {
+  1282→llco_start …
+  1293→llco_switch …
+  1320→llco_method …
+  1337→struct llco_dlinfo {
+  1364→struct llco_unwind_context {
   1814→struct sco_link {
+  1819→struct sco {
+  1875→struct sco_map {
+  1899→struct sco_list {
+  2154→sco_active …
+  2165→struct sco_unwind_context {
+  2192→sco_unwind …
+  2229→struct stack_opts {
+  2239→struct stack { char _[32]; };
+  2240→struct stack_mgr { char _[320]; };
+  2247→struct stack_group {
+  2261→struct stack_freed {
+  2267→struct stack_mgr0 {
+  2285→struct stack0 {
+  2648→struct worker_opts {
+  2656→struct worker_entry {
+  2661→struct worker_thread {
+  2672→struct worker {
+  2798→worker_submit …
   2883→#define NECO_POLL_DISABLED
   2957→#define pwhere(str) \
   2963→#define unreachable() \
   2970→#define must(cond) \
+  3033→struct bt_context {
+  3105→int neco_errconv_from_sys …
+  3121→void neco_env_setallocator …
+  3179→void neco_env_setpaniconerror …
+  3188→void neco_env_setcanceltype …
+  3197→void neco_env_setcancelstate …
+  3248→enum evkind {
+  3256→struct cleanup {
   3321→enum cokind { COROUTINE, SELECTCASE };
+  3420→int neco_lasterr …
   3453→#define error_guard(ret) \
   3466→#define async_error_guard(ret) \
+  3560→int neco_gai_lasterr …
   3570→struct runtime {
+  3719→int neco_is_main_thread …
+  3950→void neco_reset_sigcrashed …
+  4142→i64_add_clamp …
+  4442→int neco_start …
+  4454→int neco_startv …
+  4474→int neco_yield …
+  4531→int neco_sleep_dl …
   5718→struct neco_chan {
   5736→struct coselectcase {
   7082→struct neco_mutex {
+  7933→typedef struct neco_stream neco_stream;
 
 neco.h
     35→int neco_start …

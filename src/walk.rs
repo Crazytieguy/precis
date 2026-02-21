@@ -50,8 +50,9 @@ fn is_vendored_or_fixture(path: &Path) -> bool {
     path.components().any(|c| {
         let s = c.as_os_str();
         // vendor/ (vendored third-party dependencies: Go, PHP, Ruby)
+        // deps/ (vendored C/C++ dependencies, e.g. amalgamated single-file libs)
         // testdata/ (Go convention for test fixture data, excluded by go build)
-        s == "vendor" || s == "testdata"
+        s == "vendor" || s == "deps" || s == "testdata"
     })
 }
 
@@ -213,6 +214,10 @@ mod tests {
             "package errors",
         )
         .unwrap();
+        // deps/ directory (vendored C/C++ dependencies — excluded)
+        let deps_dir = dir.path().join("deps");
+        fs::create_dir(&deps_dir).unwrap();
+        fs::write(deps_dir.join("sco.c"), "void sco_start() {}").unwrap();
 
         let files = discover_source_files(dir.path());
         let names: Vec<_> = files
@@ -222,9 +227,10 @@ mod tests {
 
         assert_eq!(files.len(), 1);
         assert!(names.contains(&"index.ts".to_string()));
-        // vendor/ and testdata/ should be completely excluded
+        // vendor/, deps/, and testdata/ should be completely excluded
         assert!(!names.contains(&"fixture.go".to_string()));
         assert!(!names.contains(&"errors.go".to_string()));
+        assert!(!names.contains(&"sco.c".to_string()));
     }
 
     #[test]
