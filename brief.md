@@ -34,4 +34,4 @@ When you have a concrete improvement:
 
 ## When all entries are inspected
 
-If no uninspected entries remain in `test/fixtures.rs`, switch to resolving issues from `issues.md`.
+If no uninspected entries remain in `test/fixtures.rs`, switch to resolving issues from `issues.md` one at a time, following the `## implementation` procedure.
