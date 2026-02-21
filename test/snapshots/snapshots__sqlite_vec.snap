@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1994 tokens)
+budget: 2000 (1986 tokens)
 
 ARCHITECTURE.md
      1→# `sqlite-vec` Architecture
@@ -56,9 +56,6 @@ bindings/python/extra_init.py
     11→def serialize_int8(vector: List[int]) -> bytes:
     44→    def register_numpy(db: Connection, name: str, array):
 
-bindings/rust/build.rs
-     1→fn main() {
-
 bindings/rust/src/lib.rs
      3→    pub fn sqlite3_vec_init();
 
@@ -72,7 +69,6 @@ reference.yaml
    328→vec0:
 
 site/api-reference.md
-     5→# API Reference
 
 sqlite-vec.c
      1→#include "sqlite-vec.h"
@@ -148,25 +144,13 @@ sqlite-vec.c
   4609→typedef struct vec0_cursor vec0_cursor;
   4610→struct vec0_cursor {
   5305→typedef enum  {
-  5306→  // If any values are updated, please update the ARCHITECTURE.md docs accordingly!
-  5307→
-      →…
   5328→typedef enum  {
-  5329→  // If any values are updated, please update the ARCHITECTURE.md docs accordingly!
-  5330→
-      →…
   5349→typedef enum  {
   5769→static int vec0Next …
   5867→int min_idx …
   5948→int vec0_chunks_iter …
   6033→struct Vec0MetadataIn{
-  6034→  // index of argv[i]` the constraint is on
-  6035→  int argv_idx;
-      →  …
   6043→struct Vec0MetadataInTextEntry {
-  6044→  int n;
-  6045→  char * zString;
-      →  …
   6368→int vec0_set_metadata_filter_bitmap …
   7708→int vec0Update_InsertRowidStep …
   7778→int vec0Update_InsertNextAvailableStep …
@@ -174,11 +158,28 @@ sqlite-vec.c
   7969→int vec0Update_InsertWriteFinalStep …
   8248→int vec0Update_Insert …
 
-tests/Cargo.toml
-     1→[package]
-     6→[dependencies]
-     8→[build-dependencies]
-    11→[[bin]]
+test.sql
+     1→
+     2→.load dist/vec0main
+     3→.bail on
+     4→
+     5→.mode qbox
+     6→
+     7→
+     8→.load ./memstat
+     9→.echo on
+    10→
+    11→select name, value from sqlite_memstat where name = 'MEMORY_USED';
+    12→
+    13→create virtual table v using vec0(
+    14→  vector float[1],
+    15→  name1 text,
+    16→  name2 text,
+    17→  age int,
+    18→  chunk_size=8
+    19→);
+    20→
+      →…
 
 tests/conftest.py
      6→def db():

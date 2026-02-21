@@ -26,3 +26,4 @@ Uses **tree-sitter** for language-agnostic symbol extraction. Each supported lan
 - **Python** — functions, classes, module-level constants
 - **Markdown** — heading structure
 - **JSON / TOML / YAML** — top-level keys and sections
+- **Plain text fallback** — files in ~40 additional languages (C++, Java, Kotlin, Lua, Ruby, Swift, etc.) are shown as plain text with first-line preview and body content

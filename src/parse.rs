@@ -196,6 +196,27 @@ pub fn is_supported_extension(ext: &str) -> bool {
     Lang::from_extension(ext).is_some()
 }
 
+/// Create a single Section symbol for files in unsupported languages.
+/// The section spans just line 1 (the "heading"), with body content extending
+/// to EOF via the layout system's next-heading detection.
+fn plain_text_symbol(source: &str) -> Vec<Symbol> {
+    if source.lines().next().is_none() {
+        return vec![];
+    }
+    vec![Symbol {
+        kind: SymbolKind::Section,
+        name: String::new(),
+        is_public: true,
+        is_first_party: false,
+        line: 1,
+        end_line: 1,
+        sig_end_line: None,
+        doc_start_line: None,
+        is_trait_impl: false,
+        is_reexport: false,
+    }]
+}
+
 /// Returns the tree-sitter language and query for a file extension, if supported.
 /// Uses [`Lang::from_extension`] as the canonical extension check, then selects
 /// the appropriate tree-sitter grammar (e.g. TSX vs TypeScript for `.tsx`).
@@ -254,7 +275,7 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
 
     let lang = match Lang::from_extension(ext) {
         Some(l) => l,
-        None => return vec![],
+        None => return plain_text_symbol(source),
     };
 
     let (language, query_src) = match language_for_extension(ext) {
@@ -1386,8 +1407,16 @@ macro_rules! __internal_helper {
     }
 
     #[test]
-    fn unsupported_extension_returns_empty() {
+    fn unsupported_extension_returns_plain_text_section() {
         let symbols = extract_symbols(Path::new("test.rb"), "def foo(): pass");
+        assert_eq!(symbols.len(), 1);
+        assert_eq!(symbols[0].kind, SymbolKind::Section);
+        assert_eq!(symbols[0].line, 1);
+    }
+
+    #[test]
+    fn empty_file_returns_no_symbols() {
+        let symbols = extract_symbols(Path::new("test.rb"), "");
         assert!(symbols.is_empty());
     }
 

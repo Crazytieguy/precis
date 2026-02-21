@@ -24,8 +24,38 @@ pub fn discover_source_files(root: &Path) -> Vec<PathBuf> {
 fn is_source_file(path: &Path) -> bool {
     path.extension()
         .and_then(|ext| ext.to_str())
-        .is_some_and(parse::is_supported_extension)
+        .is_some_and(|ext| parse::is_supported_extension(ext) || is_unsupported_code_extension(ext))
         && !is_lockfile(path)
+}
+
+/// Common programming language extensions without tree-sitter support.
+/// Files with these extensions are included in discovery and rendered as
+/// plain text (first line + body), giving visibility into multi-language
+/// codebases where only some languages have full parser support.
+///
+/// Deliberately excludes non-code text files that cause noise:
+/// shell scripts (.sh), stylesheets (.css/.scss), HTML templates,
+/// documentation markup (.rst/.tex), and shader code (.glsl).
+fn is_unsupported_code_extension(ext: &str) -> bool {
+    matches!(
+        ext,
+        // Systems languages
+        "cpp" | "cc" | "cxx" | "hpp" | "hh" | "hxx" | "cs" | "m" | "mm" | "swift"
+        // JVM languages
+        | "java" | "kt" | "kts" | "scala" | "groovy" | "clj" | "cljs"
+        // Scripting languages
+        | "lua" | "rb" | "pl" | "pm" | "php"
+        // ML/functional languages
+        | "hs" | "ml" | "mli" | "fs" | "fsi" | "ex" | "exs" | "erl"
+        // Modern languages
+        | "dart" | "zig" | "nim" | "r" | "jl"
+        // GPU languages
+        | "cu" | "cuh"
+        // Web component languages (contain logic + template)
+        | "vue" | "svelte"
+        // Query/schema languages
+        | "sql" | "graphql" | "gql" | "proto"
+    )
 }
 
 /// Check if a file is an auto-generated lockfile that should be excluded.

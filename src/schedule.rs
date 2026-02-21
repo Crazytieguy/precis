@@ -601,6 +601,8 @@ pub fn build_groups(
                     Some(depth)
                 } else if matches!(lang, Some(crate::Lang::Json | crate::Lang::Yaml)) {
                     Some(1) // JSON/YAML sections are all top-level
+                } else if lang.is_none() {
+                    Some(1) // Unsupported language plain text: top-level
                 } else {
                     Some(detect_heading_depth(&lines, sym_line_0, sym.end_line))
                 }
