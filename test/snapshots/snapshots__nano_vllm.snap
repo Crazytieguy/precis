@@ -6,6 +6,8 @@ budget: 2000 (2003 tokens)
 
 README.md
      9→# Nano-vLLM
+    11→A lightweight vLLM implementation built from scratch.
+    12→
     13→## Key Features
     19→## Installation
     25→## Model Download
@@ -23,9 +25,6 @@ example.py
      6→def main():
 
 nanovllm/config.py
-     1→import os …
-     2→from dataclasses …
-     3→from transformers …
      6→@dataclass
      7→class Config:
      8→    model: str
@@ -190,7 +189,7 @@ nanovllm/models/qwen3.py
    193→
 
 nanovllm/sampling_params.py
-     1→from dataclasses …
+     1→from dataclasses import dataclass
      4→@dataclass
      5→class SamplingParams:
      6→    temperature: float = 1.0

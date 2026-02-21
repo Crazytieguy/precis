@@ -2,14 +2,22 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (1002 tokens)
+budget: 1000 (1000 tokens)
 
 README.md
      1→# Enclosed crypto library
      5→## Installation
      7→```bash
      8→# with npm
-      →…
+     9→npm install @enclosed/crypto
+    10→
+    11→# with yarn
+    12→yarn add @enclosed/crypto
+    13→
+    14→# with pnpm
+    15→pnpm add @enclosed/crypto
+    16→```
+    17→
 
 package.json
 
@@ -48,6 +56,8 @@ src/index.node.ts
      3→import * as webCryptoApi from './node/crypto.node.usecases';
      4→import { aes256GcmEncryptionAlgorithmDefinition } from './node/encryption-algorithms/crypto.node.aes-256-gcm';
 
+src/index.test.ts
+
 src/index.web.ts
      1→import { createEnclosedCryptoApi } from './api-definition';
      2→import { AES_256_GCM } from './encryption-algorithms/encryption-algorithms.constants';
@@ -66,8 +76,6 @@ src/node/encryption-algorithms/crypto.node.aes-256-gcm.ts
      2→import { defineEncryptionMethods } from '../../encryption-algorithms/encryption-algorithms.models';
      3→import { base64UrlToBuffer, bufferToBase64Url, createRandomBuffer } from '../crypto.node.usecases';
      5→export const aes256GcmEncryptionAlgorithmDefinition = defineEncryptionMethods({
-     6→
-      →…
 
 src/web/crypto.web.usecases.ts
      3→function bufferToBase64Url …
@@ -77,10 +85,6 @@ src/web/crypto.web.usecases.ts
     42→async function deriveMasterKey …
 
 src/web/encryption-algorithms/crypto.web.aes-256-gcm.ts
-     1→import { defineEncryptionMethods } from '../../encryption-algorithms/encryption-algorithms.models';
-     2→import { base64UrlToBuffer, bufferToBase64Url, createRandomBuffer } from '../crypto.web.usecases';
      4→export const aes256GcmEncryptionAlgorithmDefinition = defineEncryptionMethods({
 
 tsconfig.json
-     2→  "compilerOptions": {
-    10→  "include": [

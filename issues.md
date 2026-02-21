@@ -2,7 +2,7 @@
 
 ## Known issues
 
-- **Per-group stage value tuning** — the initial stage values (1.0, 0.7, 0.6, etc.) are starting points. Review snapshots across languages and tune per-kind values for better output quality.
+- ~~**Per-group stage value tuning**~~ (tuned: reviewed all snapshots across Rust, Go, Python, TS/JS, C. Main finding: Section body used standard 1/n n-decay, making README/Architecture body lines beyond the first nearly invisible. Now uses gentle linear decay `1+0.1(n-1)` — steeper than types/enums (0.05) since prose is more verbose, but gentle enough to show 5-10 useful body lines. Architecture body(5) 0.18→0.64, README body(5) 0.09→0.32. Improved 11 snapshots: xxhash/mitt/cmdk/enclosed_crypto gain rich README/Architecture body content; go_multierror gains migration guide and usage examples. Other per-kind values (Function Sig=0.7/Doc=0.5/Body=0.2, Type Body=1.2, Enum Body=1.5, Constant Body=0.05) confirmed well-calibrated across all fixtures.)
 
 ## Observations
 

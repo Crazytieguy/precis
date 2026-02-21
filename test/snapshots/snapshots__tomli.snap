@@ -2,12 +2,21 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2017 tokens)
+budget: 2000 (2019 tokens)
+
+CHANGELOG.md
 
 README.md
      5→# Tomli
      7→> A lil' TOML parser
      8→
+     9→**Table of Contents** *generated with [mdformat-toc](https://github.com/hukkin/mdformat-toc)*
+    10→
+    11→<!-- mdformat-toc start --slug=github --maxlevel=6 --minlevel=2 -->
+    12→
+    13→- [Intro](#intro)
+    14→- [Installation](#installation)
+    15→- [Usage](#usage)
       →…
     32→## Intro<a name="intro"></a>
     50→## Installation<a name="installation"></a>
@@ -44,9 +53,6 @@ pyproject.toml
      1→[build-system]
      5→[project]
     28→[project.urls]
-    33→[tool.isort]
-    46→[tool.tox]
-   145→[tool.mypy]
 
 scripts/use_setuptools.py
     12→def use_setuptools() -> None:
@@ -176,22 +182,12 @@ tests/burntsushi.py
 
 tests/test_data.py
      5→import json
-    11→DATA_DIR …
-    13→VALID_FILES …
-    21→VALID_FILES_EXPECTED …
-    23→INVALID_FILES …
     27→class TestData(unittest.TestCase):
     28→    def test_invalid(self):
     40→    def test_valid(self):
 
 tests/test_error.py
-    10→from . import tomllib
     13→class TestError(unittest.TestCase):
-
-tests/test_misc.py
-     5→import copy
-    14→from . import tomllib
-    17→class TestMiscellaneous(unittest.TestCase):
 
 tomllib.md
      1→# `tomllib` – Tomli in the standard library

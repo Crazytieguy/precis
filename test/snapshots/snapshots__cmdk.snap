@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2008 tokens)
+budget: 2000 (2006 tokens)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -27,6 +27,24 @@ ARCHITECTURE.md
     21→  return <div>{item}</div>
     22→}}
     23→```
+    24→
+    25→Instead, we wanted to render components:
+    26→
+    27→```tsx
+    28→// Yes
+    29→<Item>My item</Item>
+    30→```
+    31→
+    32→Especially, we wanted full component composition:
+    33→
+    34→```tsx
+    35→// YES
+    36→<>
+    37→  <BlogItems />
+    38→  {staticItems}
+    39→</>
+    40→```
+    41→
       →…
     46→## Approach
     48→⌘K always keeps every item and group rendered in the React tree. Each item and group adds or removes itself from the DOM based on the search input. The DOM is authoritative. Item selection order is based on the DOM order, which is based on the React render order, which the consumer provides.
@@ -44,7 +62,28 @@ ARCHITECTURE.md
     67→</List>
     68→```
     69→
-      →…
+    70→The "A" item should not be shown! But we cannot remove it from the React tree, because the user controls it. In most cases, this is easy because the rendered items is sourced from a backing data array:
+    71→
+    72→```tsx
+    73→<>
+    74→  {['A', 'B'].map((item) => {
+    75→    if (matches(item, search)) {
+    76→      return <Item>{item}</Item>
+    77→    }
+    78→  })}
+    79→</>
+    80→```
+    81→
+    82→But in our case, the item will remain in the React tree and just be removed from the DOM:
+    83→
+    84→```tsx
+    85→<List>
+    86→  {/* returns `null`, no DOM created */}
+    87→  <Item>A</Item>
+    88→  <Item>B</Item>
+    89→</List>
+    90→```
+    91→
     92→## Performance
     94→This is more expensive memory wise, because if there are 2,000 items but the list is filtered to only 2 items, we still allocate memory for 2,000 instances of the Item component. But it's our only option! Thankfully we can still keep the DOM size to 2 items.
     95→
@@ -78,8 +117,6 @@ README.md
    456→## History
    462→## Testing
 
-cmdk/package.json
-
 cmdk/src/command-score.ts
     54→function commandScoreInner …
    150→function formatInput …
@@ -110,20 +147,9 @@ cmdk/src/index.tsx
    137→type State …
    143→type Store …
    149→type Group …
-   154→const GROUP_SELECTOR …
-   155→const GROUP_ITEMS_SELECTOR …
-   156→const GROUP_HEADING_SELECTOR …
-   157→const ITEM_SELECTOR …
-   158→const VALID_ITEM_SELECTOR …
-   159→const SELECT_EVENT …
-   160→const VALUE_ATTR …
    161→const defaultFilter …
-   163→const CommandContext …
    164→const useCommand …
-   165→const StoreContext …
    166→const useStore …
-   167→const GroupContext …
-   169→const Command …
    664→const Item …
    729→const Group …
    774→const Separator …
@@ -132,18 +158,15 @@ cmdk/src/index.tsx
    882→const Dialog …
    899→const Empty …
    909→const Loading …
-   930→const pkg …
    963→function findNextSibling(el: Element, selector: string) {
    972→function findPreviousSibling …
    981→function useAsRef …
-   991→const useLayoutEffect …
    993→function useLazyRef …
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
   1010→function useValue …
   1046→const useScheduleLayoutEffect = () => {
   1061→function renderChildren …
   1071→function SlottableWithNestedChildren …
-  1081→const srOnlyStyles …
 
 package.json
      2→  "name": "cmdk-root",
@@ -153,16 +176,10 @@ package.json
     22→  "packageManager": "pnpm@8.8.0",
     23→  "lint-staged": {
 
-playwright.config.ts
-     3→const config: PlaywrightTestConfig = {
-
 pnpm-workspace.yaml
      1→packages:
 
 tsconfig.json
-     2→  "compilerOptions": {
-    17→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
-    18→  "exclude": ["node_modules", "build", "dist", ".next"]
 
 website/README.md
      3→## Getting Started
@@ -174,31 +191,12 @@ website/components/cmdk/framer.tsx
 
 website/components/cmdk/linear.tsx
      3→export function LinearCMDK() {
-    30→const items = [
-
-website/components/cmdk/raycast.tsx
-     7→export function RaycastCMDK() {
-
-website/components/cmdk/vercel.tsx
-     4→export function VercelCMDK() {
-
-website/components/code/index.tsx
-     4→import styles from './code.module.scss'
-     7→const theme = {
-    41→export function Code({ children }: { children: string }) {
-
-website/components/icons/index.tsx
-     1→import styles from './icons.module.scss'
-
-website/pages/_app.tsx
-    17→export default function App({ Component, pageProps }: AppProps) {
 
 website/pages/_document.tsx
      5→export default class Document extends NextDocument {
      6→  render() {
 
 website/pages/index.tsx
-    18→import packageJSON from '../../cmdk/package.json'
     29→export default function Index() {
    101→function InstallButton() {
    139→const themes = [
@@ -207,5 +205,3 @@ website/pages/index.tsx
 
 website/vercel.json
      2→  "headers": [
-    12→  ]
-    13→}

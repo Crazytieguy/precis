@@ -2,13 +2,10 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2019 tokens)
+budget: 2000 (2016 tokens)
 
 CHANGELOG.md
      1→## Unreleased
-     3→### Improvements
-     5→### Changes
-     7→### Fixed
 
 README.md
      1→# go-multierror
@@ -17,20 +14,52 @@ README.md
     12→## Migrating to `errors.Join`
     14→**Basic error aggregation:**
     15→```go
+    16→// Before (go-multierror)
+    17→var result error
+    18→result = multierror.Append(result, err1)
+    19→result = multierror.Append(result, err2)
+    20→return result
+    21→
+    22→// After (stdlib)
+    23→var errs []error
+    24→if err1 != nil {
+    25→    errs = append(errs, err1)
+    26→}
       →…
    104→## Installation and Docs
    106→Install using `go get github.com/hashicorp/go-multierror`.
    107→
-      →…
+   108→Full documentation is available at
+   109→https://pkg.go.dev/github.com/hashicorp/go-multierror
+   110→
    111→### Requires go version 1.13 or newer
    113→`go-multierror` requires go version 1.13 or newer. Go 1.13 introduced
    114→[error wrapping](https://golang.org/doc/go1.13#error_wrapping), which
    115→this library takes advantage of.
    116→
+   117→If you need to use an earlier version of go, you can use the
+   118→[v1.0.0](https://github.com/hashicorp/go-multierror/tree/v1.0.0)
+   119→tag, which doesn't rely on features in go 1.13.
+   120→
+   121→If you see compile errors that look like the below, it's likely that
+   122→you're on an older version of go:
+   123→
+   124→```
       →…
    129→## Usage
    131→go-multierror is easy to use and purposely built to be unobtrusive in
    132→existing Go applications/libraries that may not be aware of it.
+   133→
+   134→**Building a list of errors**
+   135→
+   136→The `Append` function is used to create a list of errors. This function
+   137→behaves a lot like the Go built-in `append` function: it doesn't matter
+   138→if the first argument is nil, a `multierror.Error`, or any other `error`,
+   139→the function behaves as you would expect.
+   140→
+   141→```go
+   142→var result error
+   143→
       →…
 
 append.go
@@ -45,21 +74,9 @@ append.go
     14→func Append(err error, errs ...error) *Error {
     15→	switch err := err.(type) {
     16→	case *Error:
-    17→		// Typed nils can reach here, so initialize if we are nil
-    18→		if err == nil {
-    19→			err = new(Error)
-    20→		}
-    21→
-      →…
+      →	…
 
 append_test.go
-     6→import …
-    11→func TestAppend_Error(t *testing.T) {
-    45→func TestAppend_NilError(t *testing.T) {
-    53→func TestAppend_NilErrorArg(t *testing.T) {
-    62→func TestAppend_NilErrorIfaceArg(t *testing.T) {
-    71→func TestAppend_NonError(t *testing.T) {
-    79→func TestAppend_NonError_Error(t *testing.T) {
 
 flatten.go
      6→// Flatten flattens the given error, merging any *Errors together into
@@ -142,16 +159,7 @@ multierror.go
    122→func (e chain) Is(target error) bool {
 
 multierror_test.go
-    13→func TestError_Impl …
-    17→func TestErrorError_custom …
-    33→func TestErrorError_default …
-    51→func TestErrorErrorOrNil …
-    65→func TestErrorWrappedErrors …
-    82→func TestErrorUnwrap …
-   118→func TestErrorIs …
-   157→func TestErrorAs …
    209→type nestedError struct{}
-   211→func (*nestedError) Error …
 
 prefix.go
      6→import …
@@ -166,9 +174,7 @@ prefix.go
     18→		return nil
     19→	}
     20→
-    21→	switch err := err.(type) {
-    22→	case *Error:
-      →	…
+      →…
 
 prefix_test.go
     11→func TestPrefix_Error(t *testing.T) {
@@ -178,20 +184,10 @@ prefix_test.go
 sort.go
      6→// Len implements sort.Interface function for length
      7→func (err *Error) Len() int {
-     8→	if err == nil {
-     9→		return 0
-    10→	}
-    11→
-    12→	return len(err.Errors)
-    13→}
     15→// Swap implements sort.Interface function for swapping elements
     16→func (err Error) Swap(i, j int) {
-    17→	err.Errors[i], err.Errors[j] = err.Errors[j], err.Errors[i]
-    18→}
     20→// Less implements sort.Interface function for determining order
     21→func (err Error) Less(i, j int) bool {
-    22→	return err.Errors[i].Error() < err.Errors[j].Error()
-    23→}
 
 sort_test.go
     13→func TestSortSingle(t *testing.T) {

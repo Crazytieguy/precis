@@ -10,7 +10,12 @@ README.md
     12→
     13→-   **Microscopic:** weighs less than 200 bytes gzipped
     14→-   **Useful:** a wildcard `"*"` event type listens to all events
-      →…
+    15→-   **Familiar:** same names & ideas as [Node's EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter)
+    16→-   **Functional:** methods don't rely on `this`
+    17→-   **Great Name:** somehow [mitt](https://npm.im/mitt) wasn't taken
+    18→
+    19→Mitt was made for the browser, but works in any JavaScript runtime. It has no dependencies and supports IE9+.
+    20→
     21→## Table of Contents
     23→-   [Install](#install)
     24→-   [Usage](#usage)
@@ -85,25 +90,11 @@ src/index.ts
     53→
     54→	return {
     55→		/**
-    56→		 * A Map of event names to registered handler functions.
-    57→		 */
-    58→		all,
-    59→
-    60→		/**
       →		…
 
-test/test-types-compilation.ts
-     3→import mitt from '..';
-     5→interface SomeEventData {
-     9→const emitter = mitt<{
-    15→const barHandler …
-    16→const fooHandler …
-    17→const wildcardHandler …
+test/index_test.ts
 
 tsconfig.json
      2→	"compileOnSave": false,
      3→	"compilerOptions": {
-    10→	},
     11→	"include": [
-    14→	]
-    15→}

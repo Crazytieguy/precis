@@ -1061,17 +1061,22 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
         Some(pos) => 1.0 / (1.0 + 0.1 * pos as f64),
     };
 
-    // Enum variant lists: each variant is independently valuable (the 10th
-    // variant is as informative as the 1st). Use very gentle linear decay
-    // instead of 1/n so variant lines stay competitive with cheap items
-    // from other groups (e.g., wrapper struct signatures).
     // Enum variant lists and type field definitions: each line is
     // independently valuable. Use very gentle linear decay instead of
     // 1/n so these lines stay competitive with cheap items from other
     // groups (e.g., function signatures at 0.7 stage_value).
+    //
+    // Section body (README paragraphs, Architecture descriptions): each
+    // line carries independent information. Steeper than types (0.1 vs
+    // 0.05) since prose is more verbose than struct field definitions,
+    // but gentler than 1/n so README intros and Architecture overviews
+    // show 5-10 useful lines instead of truncating after 1-2.
     let n_decay = match (key.kind_category, stage) {
         (KindCategory::Enum | KindCategory::Type, StageKind::Body) => {
             1.0 + 0.05 * (n as f64 - 1.0)
+        }
+        (KindCategory::Section, StageKind::Body) => {
+            1.0 + 0.1 * (n as f64 - 1.0)
         }
         _ => n as f64,
     };
