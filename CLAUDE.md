@@ -19,7 +19,7 @@ A CLI tool that extracts a token-efficient summary of a codebase.
 
 ## Codebase Exploration
 
-Use precis itself to explore this codebase instead of spawning Task agents. Run `cargo run -- .` or `cargo run -- src/` to get an overview. If precis output isn't sufficient for a task, that's a signal the tool should be improved — note it in `issues.md`.
+Use precis itself to explore this codebase instead of spawning Task agents. Run `cargo run --release -- .` or `cargo run --release -- src/` to get an overview. If precis output isn't sufficient for a task, that's a signal the tool should be improved — note it in `issues.md`.
 
 ## Documentation
 
