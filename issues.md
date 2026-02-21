@@ -3,10 +3,17 @@
 ## Known issues
 
 - **Per-group stage value tuning** — the initial stage values (1.0, 0.7, 0.6, etc.) are starting points. Review snapshots across languages and tune per-kind values for better output quality.
+- **Duplicate source lines in output** — When two groups/symbols cover overlapping source line ranges, the same line can be emitted twice. Visible in the tock snapshot (Go `const` block line 14 `Format24Hour TimeFormat = iota` appears twice). The formatter should deduplicate lines within the same file.
 
 ## Observations
 
 Patterns noticed during fixture inspections. When multiple observations point to the same issue, it's ready to implement.
+
+- **Repo config files take budget without payoff** (mdbook) — `triagebot.toml` section headers (assign, shortcut, bot-pull-requests, etc.) occupy ~10 lines with no value for understanding the codebase. Similar repo-management config files (`.github/`, CI configs, bot configs) should probably be deprioritized or excluded.
+- **Repetitive "## License" headings in crate READMEs** (mdbook) — Each of the ~8 workspace crates has a README showing "## License" as a heading. These convey no useful information. More generally, boilerplate markdown sections (License, Contributing, etc.) could be deprioritized.
+- **Test/integration crates consume disproportionate budget in workspaces** (toasty) — The integration test suite (ExecLog, LoggingDriver, Test, Setup, Isolate) and its proc macro internals (ThreeValuedBool, BoolExpr, KindVariant, parse helpers) together take ~100 lines (~21% of the 4000-token budget). Meanwhile the core engine module (query compilation pipeline with 66 files) is invisible. Test infrastructure crates could be deprioritized in workspace repos.
+- **Central enum bodies crowded out by wrapper struct signatures** (toasty_core) — The most architecturally important types (`Expr` with 20+ variants, `Operation` with 8 variants, `Statement`, `Type`, `Value`) are all shown as bare declarations without variant lists. Meanwhile ~30 wrapper structs in `src/stmt/expr_*.rs` each get a signature line that adds almost no information beyond what the enum variants themselves would convey. The scheduler prefers many cheap signature items over fewer but more informative enum body lines. Enum bodies for central types are far more valuable for understanding a codebase than individual wrapper struct signatures.
+- **Many small files with identical patterns dominate budget** (sps_core, mcphost) — The `install/cask/artifacts/` directory has 23 small files each exporting one `install_<type>()` function, plus a mod.rs with 23 `pub mod` + 22 `pub use self::*` re-exports. Together these consume ~38% of the 2000-token budget. Meanwhile complex files like `install/bottle/exec.rs` and `install/bottle/link.rs` get no interior detail. In mcphost, UI styling helpers (`With*` options in block_renderer.go, `Style*` in enhanced_styles.go, `Display*` in cli.go) take ~40+ lines while `internal/tools/` (the core MCP connection pool and tool management layer — the project's defining feature) is completely absent. The scheduling treats each file/symbol independently, so N trivial items scoring ok individually outcompete fewer important items. Related: `pub use` re-exports are redundant when both the submodule and the re-exporting mod file are shown.
 
 ## Implementation notes
 

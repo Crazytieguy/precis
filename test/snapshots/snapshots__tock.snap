@@ -2,10 +2,12 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4018 tokens)
+budget: 4000 (4026 tokens)
 
 README.md
      1→# Tock
+     5→[Features](#features) • [Quick Start](#quick-start) • [Commands](#commands) •
+      →…
      8→## Features
     26→## Quick Start
     28→### Installation
@@ -63,15 +65,21 @@ internal/adapters/cli/add.go
      3→import …
     16→type addOptions struct {
     26→func NewAddCmd() *cobra.Command {
+    64→func runAdd …
+   124→func resolveStartTime …
+   163→func resolveEndTimeOrDuration …
 
 internal/adapters/cli/analyze.go
      3→import …
     20→func NewAnalyzeCmd() *cobra.Command {
+    21→	var (
+      →	…
     70→type AnalysisStats struct {
     71→	TotalDuration      time.Duration
+    72→	DeepWorkDuration   time.Duration
       →	…
-    84→func analyzeData …
-   206→func renderAnalysis …
+    84→func analyzeData(activities []models.Activity) AnalysisStats {
+   206→func renderAnalysis(stats AnalysisStats, cfg *config.Config, tf *timeutil.Formatter) {
 
 internal/adapters/cli/calendar.go
      3→import …
@@ -89,6 +97,10 @@ internal/adapters/cli/calendar_sidebar.go
      3→import …
     12→const barChar = "▏"
     15→func formatDurationCompact(d time.Duration) string {
+    27→func (m *reportModel) renderSidebar() string {
+    51→func (m *reportModel) renderProductivityStats() string {
+   128→func (m *reportModel) renderWeeklyActivity() string {
+   211→func (m *reportModel) renderTopProjects(maxHeight int) string {
 
 internal/adapters/cli/continue.go
      3→import …
@@ -97,6 +109,7 @@ internal/adapters/cli/continue.go
     19→//nolint:funlen // Include all logic in one function
     20→func NewContinueCmd() *cobra.Command {
     21→	var description string
+    22→	var project string
       →	…
 
 internal/adapters/cli/current.go
@@ -109,6 +122,12 @@ internal/adapters/cli/current.go
 internal/adapters/cli/ical.go
      3→import …
     23→func NewICalCmd() *cobra.Command {
+    78→func handleFullExport …
+   155→func parseKeyOrDate …
+   185→func getActivitiesForDate …
+   210→func handleSingleExport …
+   250→func handleBulkExport …
+   302→func openFileInCalendar …
 
 internal/adapters/cli/interactive.go
      3→import …
@@ -128,6 +147,7 @@ internal/adapters/cli/last.go
      3→import …
     16→type lastOptions struct {
     21→func NewLastCmd() *cobra.Command {
+    42→func runLastCmd …
 
 internal/adapters/cli/list_gui.go
      3→import …
@@ -140,40 +160,58 @@ internal/adapters/cli/list_gui.go
 internal/adapters/cli/remove.go
      3→import …
     22→func NewRemoveCmd() *cobra.Command {
+    95→func parseRemoveIndex …
+   116→func findLastActivity …
+   127→func findActivityByIndex …
 
 internal/adapters/cli/report.go
      3→import …
     20→type reportOptions struct {
     31→func NewReportCmd() *cobra.Command {
-    61→func runReportCmd …
+    61→func runReportCmd(cmd *cobra.Command, opt *reportOptions) error {
 
 internal/adapters/cli/root.go
      3→import …
+    21→const (
+    22→	defaultRecentActivitiesForCompletion = 1000
+    23→	backendTimewarrior                   = "timewarrior"
     26→type serviceKey struct{}
     27→type configKey struct{}
     28→type viperKey struct{}
     29→type timeFormatterKey struct{}
     31→func NewRootCmd() *cobra.Command {
    107→func Execute() {
+   115→func getService …
+   119→func getConfig …
+   123→func getTimeFormatter …
+   127→func initRepository …
+   134→func getServiceForCompletion …
+   173→func projectRegisterFlagCompletion …
+   195→func descriptionRegisterFlagCompletion …
 
 internal/adapters/cli/start.go
      3→import …
     16→//nolint:gocognit,funlen // Include all logic in one function
     17→func NewStartCmd() *cobra.Command {
     18→	var description string
+    19→	var project string
       →	…
 
 internal/adapters/cli/stop.go
      3→import …
     14→func NewStopCmd() *cobra.Command {
+    15→	var at string
+      →	…
 
 internal/adapters/cli/theme.go
      3→import …
     11→type Theme struct {
     12→	Primary   lipgloss.Color
+    13→	Secondary lipgloss.Color
       →	…
     22→type Styles struct {
     23→	Wrapper       lipgloss.Style
+    24→	Header        lipgloss.Style
       →	…
     40→func DarkTheme() Theme {
     53→func LightTheme() Theme {
@@ -182,6 +220,12 @@ internal/adapters/cli/theme.go
     93→func CustomTheme(cfg config.ThemeConfig) Theme {
    122→func GetTheme(cfg config.ThemeConfig) Theme {
    167→func InitStyles(t Theme) Styles {
+
+internal/adapters/cli/update.go
+     3→import …
+    17→type githubRelease struct {
+    22→func checkUpdate() (githubRelease, error) {
+    45→func runUpdateCheck(cmd *cobra.Command) {
 
 internal/adapters/cli/version.go
      3→import …
@@ -197,10 +241,12 @@ internal/adapters/cli/watch.go
     75→type tickMsg time.Time
     77→type watchModel struct {
     90→type keyMap struct {
+    95→func initialWatchModel …
    115→func (m watchModel) Init() tea.Cmd {
    121→func (m watchModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
    175→func (m watchModel) View() string {
    248→var font = map[rune][]string{
+   262→func renderBigText …
 
 internal/adapters/repositories/file/parser.go
      3→import …
@@ -209,16 +255,38 @@ internal/adapters/repositories/file/parser.go
     72→func FormatActivity(a models.Activity) string {
 
 internal/adapters/repositories/file/repository.go
-    23→func NewRepository …
-    27→func (r *repository) Find …
-    93→func (r *repository) FindLast …
-   130→func (r *repository) Save …
-   168→func (r *repository) Remove …
+     3→import …
+    19→type repository struct {
+    23→func NewRepository(filePath string) ports.ActivityRepository {
+    27→func (r *repository) Find(_ context.Context, filter dto.ActivityFilter) ([]models.Activity, error) {
+    93→func (r *repository) FindLast(_ context.Context) (*models.Activity, error) {
+   130→func (r *repository) Save(_ context.Context, activity models.Activity) error {
+   168→func (r *repository) Remove(_ context.Context, activity models.Activity) error {
 
 internal/adapters/repositories/notes/repository.go
+     3→import …
+    18→const (
+    19→	fileExtension = ".txt"
+    20→	directoryMode = 0750
+    21→	fileMode      = 0644
+    24→type repository struct {
     28→func NewRepository …
+    32→type noteData struct {
     36→func (r *repository) Save …
     73→func (r *repository) Get …
+
+internal/adapters/repositories/timewarrior/repository.go
+     3→import …
+    24→const (
+    25→	timeLayout = "20060102T150405Z"
+    28→type twInterval struct {
+    35→type repository struct {
+    39→func NewRepository(dataDir string) ports.ActivityRepository {
+    43→func (r *repository) Find(_ context.Context, filter dto.ActivityFilter) ([]models.Activity, error) {
+   112→func (r *repository) FindLast(_ context.Context) (*models.Activity, error) {
+   148→func (r *repository) Save(_ context.Context, activity models.Activity) error {
+   182→func (r *repository) Remove(_ context.Context, activity models.Activity) error {
+   352→func parseIncLine(line string) (twInterval, error) {
 
 internal/config/config.go
      3→import …
@@ -254,72 +322,22 @@ internal/core/errors/errors.go
 
 internal/core/models/activity.go
      3→import …
+     9→// Activity represents a time tracking entry.
     10→type Activity struct {
     11→	Description string     `json:"description"`
     12→	Project     string     `json:"project"`
-      →	…
+    13→	StartTime   time.Time  `json:"start_time"`
+    14→	EndTime     *time.Time `json:"end_time,omitempty"` // nil if active
+    15→	Notes       string     `json:"notes,omitempty"`
+    16→	Tags        []string   `json:"tags,omitempty"`
+    17→}
     19→func (a Activity) ID() string {
     23→func (a Activity) Duration() time.Duration {
     30→// DurationString returns the duration formatted as "HH:MM:SS".
     31→func (a Activity) DurationString() string {
+    32→	d := a.Duration().Round(time.Second)
+      →	…
     41→func (a Activity) MarshalJSON() ([]byte, error) {
-
-internal/core/ports/mocks/mock_activityrepository.go
-    17→func NewMockActivityRepository(t interface {
-    18→	mock.TestingT
-    19→	Cleanup(func())
-    20→}) *MockActivityRepository {
-    30→type MockActivityRepository struct {
-    34→type MockActivityRepository_Expecter struct {
-    43→func (_mock *MockActivityRepository) Find(ctx context.Context, filter dto.ActivityFilter) ([]models.Activity, error) {
-    71→type MockActivityRepository_Find_Call struct {
-    78→func (_e *MockActivityRepository_Expecter) Find(ctx interface{}, filter interface{}) *MockActivityRepository_Find_Call {
-   111→func (_mock *MockActivityRepository) FindLast(ctx context.Context) (*models.Activity, error) {
-   139→type MockActivityRepository_FindLast_Call struct {
-   145→func (_e *MockActivityRepository_Expecter) FindLast(ctx interface{}) *MockActivityRepository_FindLast_Call {
-   173→func (_mock *MockActivityRepository) Save(ctx context.Context, activity models.Activity) error {
-   190→type MockActivityRepository_Save_Call struct {
-   197→func (_e *MockActivityRepository_Expecter) Save(ctx interface{}, activity interface{}) *MockActivityRepository_Save_Call {
-   230→func (_mock *MockActivityRepository) Remove(ctx context.Context, activity models.Activity) error {
-   247→type MockActivityRepository_Remove_Call struct {
-   254→func (_e *MockActivityRepository_Expecter) Remove(ctx interface{}, activity interface{}) *MockActivityRepository_Remove_Call {
-
-internal/core/ports/mocks/mock_activityresolver.go
-    17→func NewMockActivityResolver(t interface {
-    18→	mock.TestingT
-    19→	Cleanup(func())
-    20→}) *MockActivityResolver {
-    30→type MockActivityResolver struct {
-    34→type MockActivityResolver_Expecter struct {
-    43→func (_mock *MockActivityResolver) Add(ctx context.Context, req dto.AddActivityRequest) (*models.Activity, error) {
-    71→type MockActivityResolver_Add_Call struct {
-    78→func (_e *MockActivityResolver_Expecter) Add(ctx interface{}, req interface{}) *MockActivityResolver_Add_Call {
-   111→func (_mock *MockActivityResolver) GetRecent(ctx context.Context, limit int) ([]models.Activity, error) {
-   139→type MockActivityResolver_GetRecent_Call struct {
-   146→func (_e *MockActivityResolver_Expecter) GetRecent(ctx interface{}, limit interface{}) *MockActivityResolver_GetRecent_Call {
-   179→func (_mock *MockActivityResolver) GetReport(ctx context.Context, filter dto.ActivityFilter) (*dto.Report, error) {
-   207→type MockActivityResolver_GetReport_Call struct {
-   214→func (_e *MockActivityResolver_Expecter) GetReport(ctx interface{}, filter interface{}) *MockActivityResolver_GetReport_Call {
-   247→func (_mock *MockActivityResolver) List(ctx context.Context, filter dto.ActivityFilter) ([]models.Activity, error) {
-   275→type MockActivityResolver_List_Call struct {
-   282→func (_e *MockActivityResolver_Expecter) List(ctx interface{}, filter interface{}) *MockActivityResolver_List_Call {
-   315→func (_mock *MockActivityResolver) Start(ctx context.Context, req dto.StartActivityRequest) (*models.Activity, error) {
-   343→type MockActivityResolver_Start_Call struct {
-   350→func (_e *MockActivityResolver_Expecter) Start(ctx interface{}, req interface{}) *MockActivityResolver_Start_Call {
-   383→func (_mock *MockActivityResolver) Stop(ctx context.Context, req dto.StopActivityRequest) (*models.Activity, error) {
-   411→type MockActivityResolver_Stop_Call struct {
-   418→func (_e *MockActivityResolver_Expecter) Stop(ctx interface{}, req interface{}) *MockActivityResolver_Stop_Call {
-
-internal/core/ports/mocks/mock_notesrepository.go
-    16→func NewMockNotesRepository …
-    29→type MockNotesRepository struct {
-    33→type MockNotesRepository_Expecter struct {
-    42→func (_mock *MockNotesRepository) Get …
-    76→type MockNotesRepository_Get_Call struct {
-    84→func (_e *MockNotesRepository_Expecter) Get …
-   122→func (_mock *MockNotesRepository) Save …
-   139→type MockNotesRepository_Save_Call struct {
-   149→func (_e *MockNotesRepository_Expecter) Save …
 
 internal/core/ports/ports.go
      3→import …
@@ -329,7 +347,7 @@ internal/core/ports/ports.go
 
 internal/extra/extra.go
      3→import …
-    11→func CalculateEndTime …
+    11→func CalculateEndTime(tf *timeutil.Formatter, startTime time.Time, endStr, durationStr string) (time.Time, error) {
 
 internal/services/activity/service.go
      3→import …
@@ -343,6 +361,7 @@ internal/services/activity/service.go
    186→func (s *service) GetRecent(ctx context.Context, limit int) ([]models.Activity, error) {
    210→func (s *service) GetLast(ctx context.Context) (*models.Activity, error) {
    214→func (s *service) Remove(ctx context.Context, activity models.Activity) error {
+   218→func (s *service) enrichActivities …
 
 internal/services/ics/generator.go
      3→import …
@@ -353,8 +372,10 @@ internal/services/ics/generator.go
 
 internal/timeutil/timeutil.go
      3→import …
+    10→// TimeFormat represents the configured time display format.
     11→type TimeFormat int
     13→const (
+    14→	Format24Hour TimeFormat = iota // default
     14→	Format24Hour TimeFormat = iota // default
     15→	Format12Hour
     18→// Formatter handles time formatting and parsing.

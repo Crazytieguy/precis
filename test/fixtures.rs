@@ -63,26 +63,26 @@ with_fixtures! {
 
 with_entries! {
     // ── Rust ────────────────────────────────────────────────────────────
-    (anyhow,                  "anyhow",                         2000),
-    (thiserror,               "thiserror",                      2000),
-    (thiserror_impl_src,      "thiserror/impl/src",             1000), // proc-macro subcrate
-    (log,                     "log",                            2000),
-    (log_src_kv,              "log/src/kv",                     1000), // kv submodule
-    (mdbook,                  "mdbook",                         4000),
-    (mdbook_guide_src,        "mdbook/guide/src",               2000), // markdown docs section
-    (toasty,                  "toasty",                         4000),
-    (toasty_core,             "toasty/crates/toasty-core",      2000), // core types crate
-    (toasty_codegen,          "toasty/crates/toasty-codegen",   2000), // codegen crate
-    (sps,                     "sps",                            4000),
-    (sps_core,                "sps/sps-core",                   2000), // core logic crate
-    (otree,                   "otree",                          2000),
+    (anyhow,                  "anyhow",                         2000), // inspected: looks good
+    (thiserror,               "thiserror",                      2000), // inspected: looks good
+    (thiserror_impl_src,      "thiserror/impl/src",             1000), // inspected: looks good
+    (log,                     "log",                            2000), // inspected: looks good
+    (log_src_kv,              "log/src/kv",                     1000), // inspected: looks good
+    (mdbook,                  "mdbook",                         4000), // inspected: logged observation
+    (mdbook_guide_src,        "mdbook/guide/src",               2000), // inspected: looks good
+    (toasty,                  "toasty",                         4000), // inspected: logged observation
+    (toasty_core,             "toasty/crates/toasty-core",      2000), // inspected: logged observation
+    (toasty_codegen,          "toasty/crates/toasty-codegen",   2000), // inspected: looks good
+    (sps,                     "sps",                            4000), // inspected: looks good
+    (sps_core,                "sps/sps-core",                   2000), // inspected: logged observation
+    (otree,                   "otree",                          2000), // inspected: looks good
 
     // ── Go ──────────────────────────────────────────────────────────────
-    (go_multierror,           "go-multierror",                  2000),
-    (xxhash,                  "xxhash",                         2000),
-    (xxhash_xxhsum,           "xxhash/xxhsum",                  1000), // separate CLI tool
-    (mcphost,                 "mcphost",                        4000),
-    (mcphost_sdk,             "mcphost/sdk",                    1000), // reusable SDK package
+    (go_multierror,           "go-multierror",                  2000), // inspected: looks good
+    (xxhash,                  "xxhash",                         2000), // inspected: looks good
+    (xxhash_xxhsum,           "xxhash/xxhsum",                  1000), // inspected: looks good
+    (mcphost,                 "mcphost",                        4000), // inspected: logged observation
+    (mcphost_sdk,             "mcphost/sdk",                    1000), // inspected: looks good
     (tock,                    "tock",                            4000),
     (tock_internal_core,      "tock/internal/core",             1000), // domain models
 

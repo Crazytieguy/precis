@@ -65,7 +65,8 @@ pub fn is_test_file(path: &Path) -> bool {
     // benches/ (Rust), benchmark/ and benchmarks/ (cross-language),
     // examples/ and example/ (usage demonstrations, not core API: Rust, Go, JS),
     // website/ and site/ (documentation sites: Docusaurus, Next.js, etc.),
-    // docs/ and doc/ (supplementary documentation, Sphinx configs, GitHub Pages)
+    // docs/ and doc/ (supplementary documentation, Sphinx configs, GitHub Pages),
+    // mocks/ and __mocks__/ (auto-generated test mocks: Go mockery, Jest, etc.)
     if path.components().any(|c| {
         let s = c.as_os_str();
         s == "__tests__"
@@ -81,6 +82,8 @@ pub fn is_test_file(path: &Path) -> bool {
             || s == "site"
             || s == "docs"
             || s == "doc"
+            || s == "mocks"
+            || s == "__mocks__"
     }) {
         return true;
     }
@@ -275,6 +278,10 @@ mod tests {
         assert!(is_test_file(Path::new("site/pages/index.tsx")));
         assert!(is_test_file(Path::new("docs/conf.py")));
         assert!(is_test_file(Path::new("doc/guide.md")));
+        // Mock directories
+        assert!(is_test_file(Path::new("mocks/mock_repo.go")));
+        assert!(is_test_file(Path::new("internal/ports/mocks/mock_service.go")));
+        assert!(is_test_file(Path::new("__mocks__/utils.ts")));
         // Test file naming conventions
         assert!(is_test_file(Path::new("index.test.ts")));
         assert!(is_test_file(Path::new("utils.spec.ts")));
