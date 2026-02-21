@@ -29,7 +29,7 @@ mlstm/cell.py
    133→    def reset_parameters …
 
 mlstm/layer.py
-     3→from dataclasses import dataclass
+     3→from dataclasses …
     19→class mLSTMLayerConfig(UpProjConfigMixin):
     20→    conv1d_kernel_size: int = 4
     34→    def __post_init__ …
@@ -95,12 +95,10 @@ slstm/src/cuda_init.py
 slstm/src/util/device_assert.h
     27→#define device_assert_fail(msg)                                                \
 
-slstm/src/util/util.h
-     4→typedef unsigned int uint;
-
 xlstm_block.py
      3→from dataclasses …
     17→class xLSTMBlockConfig:
+    18→    mlstm: Optional[mLSTMLayerConfig] = None
     27→    def __post_init__ …
     43→class xLSTMBlock(nn.Module):
     48→

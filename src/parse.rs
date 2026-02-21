@@ -399,7 +399,14 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
                     SymbolKind::Struct
                 }
             }
-            "type_definition" => SymbolKind::TypeAlias,
+            "type_definition" => {
+                // Skip simple typedef aliases (typedef int8_t i8;) — boilerplate
+                // type portability definitions with zero architectural value.
+                if is_simple_typedef_alias(symbol_node) {
+                    continue;
+                }
+                SymbolKind::TypeAlias
+            }
             "preproc_def" | "preproc_function_def" => {
                 // Skip C header guard defines (#define FOO_H with no value)
                 if symbol_node.kind() == "preproc_def"
@@ -839,6 +846,33 @@ fn is_c_header_guard(node: tree_sitter::Node, source: &str, path: &Path) -> bool
         None => return false,
     };
     name.contains(&stem)
+}
+
+/// Check if a `type_definition` is a simple typedef alias (`typedef T name;`) where
+/// both the source type and target are plain identifiers. These are type portability
+/// boilerplate (e.g. `typedef int8_t i8;`, `typedef uint8_t u8;`) with zero architectural
+/// value. Preserves typedefs with struct/union/enum bodies, function pointers, and
+/// forward declarations.
+fn is_simple_typedef_alias(node: tree_sitter::Node) -> bool {
+    let type_child = match node.child_by_field_name("type") {
+        Some(t) => t,
+        None => return false,
+    };
+    // Type must be a plain type name or primitive, not struct/union/enum
+    if !matches!(
+        type_child.kind(),
+        "type_identifier" | "primitive_type" | "sized_type_specifier"
+    ) {
+        return false;
+    }
+    // Declarator must be a simple type_identifier, not a pointer/function/array declarator
+    let declarator = match node.child_by_field_name("declarator") {
+        Some(d) => d,
+        None => return false,
+    };
+    // tree-sitter sometimes parses typedef target names as primitive_type
+    // (e.g. `typedef unsigned int uint32_t;` has declarator primitive_type "uint32_t")
+    matches!(declarator.kind(), "type_identifier" | "primitive_type")
 }
 
 /// Check if a node is inside a function body (i.e. it's a local declaration, not a module-level one).
