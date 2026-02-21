@@ -109,6 +109,17 @@ pub fn is_test_file(path: &Path) -> bool {
         || stem == "conftest"
 }
 
+/// Check if a file is a TypeScript declaration file (.d.ts, .d.mts, .d.cts).
+/// These contain type signatures that duplicate the API already shown from
+/// .js/.ts source files, so they are deprioritized by the scheduler.
+pub fn is_type_declaration_file(path: &Path) -> bool {
+    let name = match path.file_name().and_then(|n| n.to_str()) {
+        Some(n) => n,
+        None => return false,
+    };
+    name.ends_with(".d.ts") || name.ends_with(".d.mts") || name.ends_with(".d.cts")
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -302,5 +313,19 @@ mod tests {
         assert!(!is_test_file(Path::new("src/main.rs")));
         assert!(!is_test_file(Path::new("index.ts")));
         assert!(!is_test_file(Path::new("lib/utils.py")));
+    }
+
+    #[test]
+    fn type_declaration_file_detection() {
+        // TypeScript declaration files
+        assert!(is_type_declaration_file(Path::new("index.d.ts")));
+        assert!(is_type_declaration_file(Path::new("typings/index.d.ts")));
+        assert!(is_type_declaration_file(Path::new("lib/types.d.mts")));
+        assert!(is_type_declaration_file(Path::new("utils.d.cts")));
+        // Normal source files (not declarations)
+        assert!(!is_type_declaration_file(Path::new("index.ts")));
+        assert!(!is_type_declaration_file(Path::new("index.js")));
+        assert!(!is_type_declaration_file(Path::new("test.d.py"))); // wrong extension
+        assert!(!is_type_declaration_file(Path::new("src/main.rs")));
     }
 }

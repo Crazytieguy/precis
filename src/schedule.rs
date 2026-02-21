@@ -305,6 +305,9 @@ pub struct GroupKey {
     /// Trait impl methods (fmt, from, clone, etc.) implement an interface
     /// defined elsewhere and are lower signal than inherent methods.
     pub is_trait_impl: bool,
+    /// Whether the file is a TypeScript declaration file (.d.ts, .d.mts, .d.cts).
+    /// These duplicate API signatures already shown from .js/.ts source files.
+    pub is_type_declaration: bool,
 }
 
 /// A symbol's precomputed content costs (token counts per rendering stage).
@@ -420,6 +423,7 @@ pub fn build_groups(
             .and_then(|n| n.to_str())
             .is_some_and(|name| is_config_file(relative, name));
         let is_test = walk::is_test_file(relative);
+        let is_type_declaration = walk::is_type_declaration_file(relative);
 
         for (symbol_idx, sym) in symbols.iter().enumerate() {
             let sym_line_0 = sym.line - 1;
@@ -455,6 +459,7 @@ pub fn build_groups(
                 heading_depth,
                 is_first_party: sym.is_first_party,
                 is_trait_impl: sym.is_trait_impl,
+                is_type_declaration,
             };
 
             // Compute costs
@@ -684,6 +689,10 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     // at generous budgets their symbols are rendered normally.
     let test_factor = if key.is_test { 0.15 } else { 1.0 };
 
+    // TypeScript declaration files (.d.ts) duplicate API signatures already
+    // shown from .js/.ts source files. Deprioritize so source files win.
+    let type_declaration_factor = if key.is_type_declaration { 0.15 } else { 1.0 };
+
     // Heading depth: top-level headings (h1, h2) are more important than
     // subsections (h3+). This lets the scheduler show body content for
     // h1/h2 headings before filling in h3/h4 detail sections.
@@ -709,7 +718,7 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     // most trait impls (Display::fmt, From::from, Clone::clone) are boilerplate.
     let trait_impl_factor = if key.is_trait_impl { 0.3 } else { 1.0 };
 
-    let base_value = visibility * documented * depth_factor * sibling_factor * file_role_factor * config_factor * test_factor * heading_depth_factor * first_party_factor * trait_impl_factor;
+    let base_value = visibility * documented * depth_factor * sibling_factor * file_role_factor * config_factor * test_factor * type_declaration_factor * heading_depth_factor * first_party_factor * trait_impl_factor;
 
     let stage_value = match key.kind_category {
         KindCategory::Type => match stage {
