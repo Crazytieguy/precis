@@ -73,7 +73,7 @@ with_entries! {
     (toasty,                  "toasty",                         4000), // inspected: logged observation
     (toasty_core,             "toasty/crates/toasty-core",      2000), // inspected: logged observation
     (toasty_codegen,          "toasty/crates/toasty-codegen",   2000), // inspected: logged observation
-    (sps,                     "sps",                            4000),
+    (sps,                     "sps",                            4000), // inspected: logged observation
     (sps_core,                "sps/sps-core",                   2000), // inspected: logged observation
     (otree,                   "otree",                          2000), // inspected: logged observation
 
