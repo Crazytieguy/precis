@@ -107,7 +107,7 @@ with_entries! {
     (commander,               "commander",                      2000), // inspected: logged observation
     (semver,                  "semver",                          2000), // inspected: deprioritize .github/
     (semver_classes,          "semver/classes",                  1000),
-    (semver_internal,         "semver/internal",                 1000), // internal helpers
+    (semver_internal,         "semver/internal",                 1000),
 
     // ── Python ──────────────────────────────────────────────────────────
     (pluggy,                  "pluggy",                          2000), // inspected: logged observation
