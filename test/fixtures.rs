@@ -1,7 +1,7 @@
 // Shared fixture data, included by both tests/snapshots.rs and src/bin/clone_fixtures.rs.
 //
 // Includers must define two macros before including this file:
-//   with_fixtures!(($dir, $url), ...)          — called with all fixture repos
+//   with_fixtures!(($dir, $url, $rev), ...)     — called with all fixture repos
 //   with_entries!(($name, $path, $budget), ...) — called with all snapshot entries
 //
 // Entries should be meaningfully diverse — don't add both root and root/src
@@ -15,50 +15,50 @@
 
 with_fixtures! {
     // Rust
-    ("anyhow",              "https://github.com/dtolnay/anyhow.git"),
-    ("thiserror",           "https://github.com/dtolnay/thiserror.git"),
-    ("log",                 "https://github.com/rust-lang/log.git"),
-    ("mdbook",              "https://github.com/rust-lang/mdBook.git"),
-    ("toasty",              "https://github.com/tokio-rs/toasty.git"),
-    ("sps",                 "https://github.com/alexykn/sps.git"),
-    ("otree",               "https://github.com/fioncat/otree.git"),
+    ("anyhow",              "https://github.com/dtolnay/anyhow.git",              "769cba0b"),
+    ("thiserror",           "https://github.com/dtolnay/thiserror.git",           "9ac165c4"),
+    ("log",                 "https://github.com/rust-lang/log.git",               "43f2c283"),
+    ("mdbook",              "https://github.com/rust-lang/mdBook.git",            "b8c90970"),
+    ("toasty",              "https://github.com/tokio-rs/toasty.git",             "0fb6be95"),
+    ("sps",                 "https://github.com/alexykn/sps.git",                 "5a10e7f4"),
+    ("otree",               "https://github.com/fioncat/otree.git",               "a02bdf44"),
     // Go
-    ("go-multierror",       "https://github.com/hashicorp/go-multierror.git"),
-    ("xxhash",              "https://github.com/cespare/xxhash.git"),
-    ("mcphost",             "https://github.com/mark3labs/mcphost.git"),
-    ("tock",                "https://github.com/kriuchkov/tock.git"),
+    ("go-multierror",       "https://github.com/hashicorp/go-multierror.git",     "edef97ed"),
+    ("xxhash",              "https://github.com/cespare/xxhash.git",              "ab37246c"),
+    ("mcphost",             "https://github.com/mark3labs/mcphost.git",           "191dcea1"),
+    ("tock",                "https://github.com/kriuchkov/tock.git",              "b29815f2"),
     // TypeScript
-    ("cmdk",                "https://github.com/pacocoursey/cmdk.git"),
-    ("vaul",                "https://github.com/emilkowalski/vaul.git"),
-    ("ts-pattern",          "https://github.com/gvergnaud/ts-pattern.git"),
-    ("ky",                  "https://github.com/sindresorhus/ky.git"),
-    ("superstruct",         "https://github.com/ianstormtaylor/superstruct.git"),
-    ("mitt",                "https://github.com/developit/mitt.git"),
-    ("enclosed",            "https://github.com/CorentinTh/enclosed.git"),
-    ("d2ts",                "https://github.com/electric-sql/d2ts.git"),
+    ("cmdk",                "https://github.com/pacocoursey/cmdk.git",            "dd2250ed"),
+    ("vaul",                "https://github.com/emilkowalski/vaul.git",           "3e97aac6"),
+    ("ts-pattern",          "https://github.com/gvergnaud/ts-pattern.git",        "2ece6ba5"),
+    ("ky",                  "https://github.com/sindresorhus/ky.git",             "eb5c3eba"),
+    ("superstruct",         "https://github.com/ianstormtaylor/superstruct.git",  "e414c8af"),
+    ("mitt",                "https://github.com/developit/mitt.git",              "6b416705"),
+    ("enclosed",            "https://github.com/CorentinTh/enclosed.git",         "461c3d41"),
+    ("d2ts",                "https://github.com/electric-sql/d2ts.git",           "418591d5"),
     // JavaScript
-    ("commander",           "https://github.com/tj/commander.js.git"),
-    ("semver",              "https://github.com/npm/node-semver.git"),
+    ("commander",           "https://github.com/tj/commander.js.git",             "82473649"),
+    ("semver",              "https://github.com/npm/node-semver.git",             "5993c2e4"),
     // Python
-    ("pluggy",              "https://github.com/pytest-dev/pluggy.git"),
-    ("typeguard",           "https://github.com/agronholm/typeguard.git"),
-    ("tomli",               "https://github.com/hukkin/tomli.git"),
-    ("peepdb",              "https://github.com/evangelosmeklis/peepdb.git"),
-    ("swarm",               "https://github.com/openai/swarm.git"),
-    ("htmy",                "https://github.com/volfpeter/htmy.git"),
-    ("microbootstrap",      "https://github.com/community-of-python/microbootstrap.git"),
-    ("py3xui",              "https://github.com/iwatkot/py3xui.git"),
+    ("pluggy",              "https://github.com/pytest-dev/pluggy.git",           "4cc08c15"),
+    ("typeguard",           "https://github.com/agronholm/typeguard.git",         "b05b7dab"),
+    ("tomli",               "https://github.com/hukkin/tomli.git",                "920e20b1"),
+    ("peepdb",              "https://github.com/evangelosmeklis/peepdb.git",       "929064dd"),
+    ("swarm",               "https://github.com/openai/swarm.git",               "0c82d7d8"),
+    ("htmy",                "https://github.com/volfpeter/htmy.git",              "4694fb86"),
+    ("microbootstrap",      "https://github.com/community-of-python/microbootstrap.git", "609c420b"),
+    ("py3xui",              "https://github.com/iwatkot/py3xui.git",              "6004c163"),
     // Python (ML)
-    ("xlstm",               "https://github.com/NX-AI/xlstm.git"),
-    ("nano-vllm",           "https://github.com/GeeeekExplorer/nano-vllm.git"),
-    ("chronos-forecasting", "https://github.com/amazon-science/chronos-forecasting.git"),
+    ("xlstm",               "https://github.com/NX-AI/xlstm.git",                "032a6fb8"),
+    ("nano-vllm",           "https://github.com/GeeeekExplorer/nano-vllm.git",   "2f214426"),
+    ("chronos-forecasting", "https://github.com/amazon-science/chronos-forecasting.git", "f951d9ae"),
     // C
-    ("sds",                 "https://github.com/antirez/sds.git"),
-    ("neco",                "https://github.com/tidwall/neco.git"),
-    ("bareiron",            "https://github.com/p2r3/bareiron.git"),
-    ("krep",                "https://github.com/davidesantangelo/krep.git"),
-    ("sqlite-vec",          "https://github.com/asg017/sqlite-vec.git"),
-    ("soluna",              "https://github.com/cloudwu/soluna.git"),
+    ("sds",                 "https://github.com/antirez/sds.git",                 "5347739b"),
+    ("neco",                "https://github.com/tidwall/neco.git",                "9e8e19e4"),
+    ("bareiron",            "https://github.com/p2r3/bareiron.git",               "ddb071c3"),
+    ("krep",                "https://github.com/davidesantangelo/krep.git",       "ae96fbd2"),
+    ("sqlite-vec",          "https://github.com/asg017/sqlite-vec.git",           "563a3e60"),
+    ("soluna",              "https://github.com/cloudwu/soluna.git",              "be822052"),
 }
 
 with_entries! {
