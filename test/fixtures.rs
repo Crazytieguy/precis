@@ -96,7 +96,7 @@ with_entries! {
     (ky_source_errors,        "ky/source/errors",               1000), // error hierarchy
     (superstruct,             "superstruct",                    2000),
     (superstruct_src_structs, "superstruct/src/structs",        1000), // validator definitions
-    (mitt,                    "mitt",                            1000),
+    (mitt,                    "mitt",                            1000), // inspected: logged observation
     (enclosed,                "enclosed",                        4000), // inspected: deprioritize locale data files
     (enclosed_crypto,         "enclosed/packages/crypto",       1000), // crypto package
     (enclosed_lib,            "enclosed/packages/lib",          1000), // shared library
