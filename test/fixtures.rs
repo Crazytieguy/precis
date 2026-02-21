@@ -131,7 +131,7 @@ with_entries! {
     (chronos,                 "chronos-forecasting",             2000), // inspected: exceeds explore
 
     // ── C ───────────────────────────────────────────────────────────────
-    (sds,                     "sds",                             1000),
+    (sds,                     "sds",                             1000), // inspected: logged observation
     (neco,                    "neco",                            1000),
     (bareiron,                "bareiron",                        2000),
     (krep,                    "krep",                            1000),
