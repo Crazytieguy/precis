@@ -2,12 +2,10 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4002 tokens)
+budget: 4000 (4017 tokens)
 
 Cargo.toml
      1→[workspace]
-     8→[workspace.lints.clippy]
-    16→[workspace.lints.rust]
     21→[workspace.package]
     27→[workspace.dependencies]
     72→[package]
@@ -33,6 +31,11 @@ crates/mdbook-compare/Cargo.toml
 
 crates/mdbook-compare/README.md
      1→# mdbook-compare
+     3→This is a simple utility to compare the output of two different versions of mdbook.
+     4→
+     5→To use this:
+     6→
+      →…
 
 crates/mdbook-core/Cargo.toml
      1→[package]
@@ -241,11 +244,7 @@ crates/mdbook-preprocessor/src/lib.rs
     59→    pub mdbook_version: String,
     60→    /// Internal mapping of chapter titles.
     61→    ///
-    62→    /// This is used internally by mdbook to compute custom chapter titles.
-    63→    /// This should not be used outside of mdbook's internals.
-    64→    #[serde(skip)]
-    65→    pub chapter_titles: RefCell<HashMap<PathBuf, String>>,
-    66→}
+      →    …
     70→    pub fn new …
     82→pub fn parse_input …
 
@@ -298,7 +297,6 @@ crates/mdbook-summary/src/lib.rs
    127→    /// A part title.
    128→    PartTitle(String),
    129→}
-   190→macro_rules! collect_events {
 
 crates/xtask/Cargo.toml
      1→[package]
@@ -321,6 +319,11 @@ guide/src/404.md
 
 guide/src/README.md
      1→# Introduction
+     4→    .mdbook-version {
+     5→        position: absolute;
+     6→        right: 20px;
+     7→        top: 60px;
+      →        …
 
 guide/src/SUMMARY.md
      1→# Summary
@@ -344,7 +347,6 @@ guide/src/cli/init.md
 
 guide/src/cli/serve.md
      1→# The serve command
-    27→### Server options
 
 guide/src/cli/test.md
      1→# The test command
@@ -386,6 +388,10 @@ guide/src/for_developers/preprocessors.md
 
 guide/src/format/README.md
      1→# Format
+     3→In this section you will learn how to:
+     4→
+     5→- Structure your book correctly
+      →…
 
 guide/src/format/configuration/README.md
      1→# Configuration
@@ -401,22 +407,22 @@ guide/src/format/markdown.md
 
 guide/src/format/mathjax.md
      1→# MathJax support
-    24→### Inline equations
-    32→### Block equations
 
 guide/src/format/mdbook.md
      1→# mdBook-specific features
 
 guide/src/format/summary.md
      1→# SUMMARY.md
-    12→### Structure
-    93→### Example
 
 guide/src/format/theme/README.md
      1→# Theme
 
 guide/src/guide/README.md
      1→# User guide
+     3→This user guide provides an introduction to basic concepts of using mdBook.
+     4→
+     5→- [Installation](installation.md)
+      →…
 
 guide/src/guide/creating.md
      1→# Creating a book
@@ -478,7 +484,6 @@ src/cmd/serve.rs
      3→use super::watch;
     23→pub fn make_subcommand() -> Command {
     51→pub fn execute(args: &ArgMatches) -> Result<()> {
-   109→async fn serve …
 
 src/cmd/test.rs
      9→pub fn make_subcommand() -> Command {
@@ -498,3 +503,5 @@ src/cmd/watch.rs
     27→    pub fn from_str …
     37→pub fn execute …
     62→pub fn rebuild_on_change …
+
+src/main.rs

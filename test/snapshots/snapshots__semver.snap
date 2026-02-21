@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2000 tokens)
+budget: 2000 (1999 tokens)
 
 .github/ISSUE_TEMPLATE/bug.yml
      3→name: Bug
@@ -24,14 +24,23 @@ budget: 2000 (2000 tokens)
      3→name: 'Install Latest npm'
      4→description: 'Install the latest version of npm compatible with the Node version'
      5→inputs:
+     8→    required: true
      9→runs:
 
 .github/dependabot.yml
      3→version: 2
      5→updates:
 
+.github/matchers/tap.json
+     2→  "//@npmcli/template-oss": "This file is automatically added by @npmcli/template-oss. Do not edit.",
+     3→  "problemMatcher": [
+    31→  ]
+    32→}
+
 .github/settings.yml
      3→repository:
+    11→  enable_vulnerability_alerts: true
+    12→
     13→branches:
 
 .github/workflows/audit.yml
@@ -62,6 +71,8 @@ budget: 2000 (2000 tokens)
      3→name: Post Dependabot
      5→on: pull_request
      7→permissions:
+     8→  contents: write
+     9→
     10→jobs:
 
 .github/workflows/pull-request.yml
@@ -91,12 +102,7 @@ CHANGELOG.md
 
 CONTRIBUTING.md
     17→## Pull Request Conventions
-    19→### Commits
-    30→### Test Coverage
-    36→### Linting
     42→## What _not_ to contribute?
-    44→### Dependencies
-    48→### Tools/Automation
 
 README.md
      1→semver(1) -- The semantic versioner for npm
@@ -165,6 +171,9 @@ classes/semver.js
    135→  comparePre (other) {
    168→  compareBuild (other) {
    194→  inc (release, identifier, identifierBase) {
+
+functions/clean.js
+     4→const clean = (version, options) => {
 
 functions/inc.js
      5→const inc …
@@ -246,8 +255,3 @@ ranges/valid.js
      4→const validRange = (range, options) => {
 
 release-please-config.json
-     2→  "group-pull-request-title-pattern": "chore: release ${version}",
-     3→  "pull-request-title-pattern": "chore: release${component} ${version}",
-     4→  "changelog-sections": [
-    31→  "packages": {
-    36→  "prerelease-type": "pre.0"

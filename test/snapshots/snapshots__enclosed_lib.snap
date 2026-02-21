@@ -2,16 +2,36 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (1003 tokens)
+budget: 1000 (999 tokens)
 
 README.md
      1→### Enclosed lib
      5→## Installation
      7→```bash
-      →…
+     8→# with npm
+     9→npm install @enclosed/lib
+    10→
+    11→# with yarn
+    12→yarn add @enclosed/lib
+    13→
+    14→# with pnpm
+    15→pnpm add @enclosed/lib
+    16→```
+    17→
     18→## Usage
     20→```javascript
-      →…
+    21→import { createNote } from '@enclosed/lib';
+    22→
+    23→const { noteUrl } = await createNote({
+    24→  content: 'Hello, World!',
+    25→  password: 'password',
+    26→  ttlInSeconds: 3600,
+    27→  deleteAfterReading: true,
+    28→});
+    29→
+    30→console.log(noteUrl);
+    31→```
+    32→
 
 src/api/api.client.ts
      1→import { ofetch …
@@ -38,20 +58,11 @@ src/crypto/crypto.types.ts
      9→};
 
 src/crypto/crypto.usecases.ts
-     1→import type { NoteAsset } from '../notes/notes.types';
-     2→import type { EncryptionAlgorithm } from './crypto.types';
-     3→import type { SerializationFormat } from './serialization/serialization.types';
-     5→import { getParsingMethod, getSerializationMethod } from './serialization/serialization.registry';
-     9→async function encryptNote …
-    38→async function decryptNote …
 
 src/crypto/encryption-algorithms/encryption-algorithms.types.ts
-     1→import type { defineEncryptionMethods } from './encryption-algorithms.models';
      3→export type EncryptionMethodsDefinition = ReturnType<typeof defineEncryptionMethods>;
 
 src/crypto/serialization/cbor-array/cbor-array.serialization.ts
-     1→import type { Note } from '../../../notes/notes.types';
-     3→import { defineSerializationMethods } from '../serialization.models';
      5→export const cborArraySerializationDefinition = defineSerializationMethods({
 
 src/crypto/serialization/serialization.registry.ts
@@ -60,8 +71,6 @@ src/crypto/serialization/serialization.registry.ts
     12→export const serializationFormats = map(serializationMethodDefinitions, 'name');
 
 src/crypto/serialization/serialization.types.ts
-     1→import type { defineSerializationMethods } from './serialization.models';
-     2→import type { serializationMethodDefinitions } from './serialization.registry';
      4→export type SerializationMethodsDefinition = ReturnType<typeof defineSerializationMethods>;
      5→export type SerializationFormat = typeof serializationMethodDefinitions[number]['name'];
 
@@ -72,8 +81,6 @@ src/index.ts
 
 src/notes/notes.services.ts
      1→import { apiClient } from '../api/api.client';
-     5→async function storeNote …
-    39→async function fetchNote …
 
 src/notes/notes.types.ts
      1→import type { CompressionAlgorithm, EncryptionAlgorithm, KeyDerivationAlgorithm } from '../crypto/crypto.types';

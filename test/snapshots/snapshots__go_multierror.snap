@@ -2,13 +2,10 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2021 tokens)
+budget: 2000 (2020 tokens)
 
 CHANGELOG.md
      1→## Unreleased
-     3→### Improvements
-     5→### Changes
-     7→### Fixed
 
 README.md
      1→# go-multierror
@@ -38,6 +35,14 @@ README.md
     34→```
     35→
     36→**Custom formatting:**
+    37→```go
+    38→// go-multierror allows custom formatting
+    39→// With stdlib, wrap the joined error with a custom type if needed
+    40→type FormattedError struct {
+    41→    errs []error
+    42→}
+    43→
+    44→func (e *FormattedError) Error() string {
       →…
    104→## Installation and Docs
    106→Install using `go get github.com/hashicorp/go-multierror`.
@@ -58,10 +63,7 @@ README.md
    122→you're on an older version of go:
    123→
    124→```
-   125→/go/src/github.com/hashicorp/go-multierror/multierror.go:112:9: undefined: errors.As
-   126→/go/src/github.com/hashicorp/go-multierror/multierror.go:117:9: undefined: errors.Is
-   127→```
-   128→
+      →…
    129→## Usage
    131→go-multierror is easy to use and purposely built to be unobtrusive in
    132→existing Go applications/libraries that may not be aware of it.
@@ -86,6 +88,14 @@ README.md
    151→return result
    152→```
    153→
+   154→**Customizing the formatting of the errors**
+   155→
+   156→By specifying a custom `ErrorFormat`, you can customize the format
+   157→of the `Error() string` function:
+   158→
+   159→```go
+   160→var result *multierror.Error
+   161→
       →…
 
 append.go
@@ -100,14 +110,8 @@ flatten.go
      7→// a single *Error.
      8→func Flatten(err error) error {
      9→	// If it isn't an *Error, just return the error as-is
-    10→	if _, ok := err.(*Error); !ok {
-    11→		return err
-      →		…
+      →	…
     20→func flatten(err error, flatErr *Error) {
-
-flatten_test.go
-    13→func TestFlatten(t *testing.T) {
-    43→func TestFlatten_nonError(t *testing.T) {
 
 format.go
      6→import …
@@ -135,11 +139,13 @@ group.go
     19→// is returned by Wait.
     20→func (g *Group) Go(f func() error) {
     21→	g.wg.Add(1)
-      →	…
+    22→
+      →…
     34→// Wait blocks until all function calls from the Go method have returned, then
     35→// returns the multierror.
     36→func (g *Group) Wait() *Error {
     37→	g.wg.Wait()
+    38→	g.mutex.Lock()
       →	…
 
 group_test.go
@@ -189,7 +195,3 @@ sort.go
     16→func (err Error) Swap(i, j int) {
     20→// Less implements sort.Interface function for determining order
     21→func (err Error) Less(i, j int) bool {
-
-sort_test.go
-    13→func TestSortSingle(t *testing.T) {
-    32→func TestSortMultiple(t *testing.T) {

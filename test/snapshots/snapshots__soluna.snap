@@ -2,17 +2,18 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1999 tokens)
+budget: 2000 (2001 tokens)
 
 README.md
      7→# Soluna
      9→[中文](./README.zh-CN.md)
     10→
+    11→[Live Examples](https://cloudwu.github.io/soluna/)
+    12→
       →…
     19→## Documentation
     25→## Precompiled Binaries
     29→## Building from Source
-    33→### Integration with the Actions of your projects
     53→## Projects made with Soluna
 
 src/appevent.h
@@ -170,6 +171,9 @@ src/openlibs.c
     12→soluna_openlibs(lua_State *L) {
 
 src/openurl.c
+    24→extern void soluna_wasm_open_url(const char *url);
+    88→int
+    89→luaopen_url(lua_State *L) {
 
 src/render.c
     15→#define UNIFORM_MAX 4
@@ -233,12 +237,6 @@ src/srbuffer.c
     50→srbuffer_add …
    122→srbuffer_commit …
    176→main …
-
-src/srbuffer.h
-    23→size_t srbuffer_size …
-    24→void srbuffer_init …
-    25→int srbuffer_add …
-    26→void * srbuffer_commit …
 
 src/transform.c
      9→sprite_transform_init …

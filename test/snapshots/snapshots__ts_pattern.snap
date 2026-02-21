@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1998 tokens)
+budget: 2000 (2000 tokens)
 
 README.md
     40→## About
@@ -11,6 +11,13 @@ README.md
     67→## Installation
     87→## Want to become a TypeScript Expert?
     91→# Documentation
+    93→- [Sandbox examples](#sandbox-examples)
+    94→- [Getting Started](#getting-started)
+    95→- [API Reference](#api-reference)
+    96→  - [`match`](#match)
+    97→  - [`.with`](#with)
+    98→  - [`.when`](#when)
+      →  …
    128→## Sandbox examples
    139→## Getting Started
    415→## API Reference
@@ -61,7 +68,6 @@ src/is-matching.ts
     53→export function isMatching …
 
 src/match.ts
-    11→const unmatched …
     32→export function match …
     47→class MatchExpression<input, output> {
     48→  constructor …
@@ -80,15 +86,9 @@ src/patterns.ts
    116→export type infer …
    131→export type narrow …
    187→export function optional …
-   246→export function array …
-   299→export function set …
-   362→export function map …
-   445→export function record …
    536→export function intersection …
    572→export function union …
    611→export function not …
-   646→export function when …
-   696→export function select …
    782→export const any …
    793→export const unknown …
    805→export const _ …
@@ -100,7 +100,6 @@ src/patterns.ts
   1231→export const nullish …
   1241→export const nonNullable …
   1251→export function instanceOf …
-  1274→export function shape …
 
 src/types/BuildMany.ts
      4→export type BuildMany …
@@ -178,8 +177,6 @@ src/types/Match.ts
    180→  otherwise …
    205→  run …
    225→  narrow …
-   245→type DeepExcludeAll …
-   261→type Exhaustive …
 
 src/types/Pattern.ts
     50→export interface Matcher<

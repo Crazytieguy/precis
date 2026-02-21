@@ -2,29 +2,15 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2002 tokens)
+budget: 2000 (2001 tokens)
 
 README.md
     26→# D2TS - Differential Dataflow in TypeScript <!-- omit in toc -->
     36→## Table of Contents
     51→## Key Features
     88→## Quick Start
-    90→### Installation
-    96→### Basic Usage
-   156→### Using with ElectricSQL
    200→## Examples
    210→## API
-   212→### D2 graph construction
-   228→### Input Streams
-   235→### Versions and Frontiers
-   275→### MultiSet as a changeset
-   320→### Operators
-   656→##### `keyBy`
-   664→##### `unkey`
-   672→##### `rekey`
-   730→##### Aggregate Functions
-   825→##### Combining Multiple Aggregates
-   987→### Using SQLite Backend
   1055→## Implementation Details
   1076→## References
 
@@ -84,7 +70,6 @@ src/multiset.ts
    308→  getInner …
 
 src/operators/buffer.ts
-    17→export class BufferOperator …
     20→  run(): void {
     62→export function buffer<T>(): PipedOperator<T, T> {
 
@@ -244,10 +229,21 @@ src/types.ts
 
 src/utils.ts
      7→export class WeakRefMap<K, V extends object> {
+     8→  private cacheMap = new Map<K, WeakRef<V>>()
+     9→  private finalizer = new AnyFinalizationRegistry((key: K) => {
+    10→    this.cacheMap.delete(key)
+    11→  })
+    12→
     31→export class DefaultMap<K, V> extends Map<K, V> {
     49→  update(key: K, updater: (value: V) => V): V {
     98→export function hash(data: any): string | number {
    126→export class WeakRefBasedFinalizationRegistry {
+   127→  private counter = 0
+   128→  private registrations = new Map()
+   129→  private sweepTimeout: NodeJS.Timeout | undefined
+   130→  private finalize: (value: any) => void
+   131→  private sweepIntervalMs = 10_000
+   132→
 
 src/version-index.ts
      8→export interface IndexType<K, V> {

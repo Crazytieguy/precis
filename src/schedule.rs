@@ -931,9 +931,9 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     let heading_depth_factor = match key.heading_depth {
         Some(1) => 1.0,
         Some(2) => 0.8,
-        Some(3) => 0.5,
-        Some(_) => 0.3, // h4, h5, h6
-        None => 1.0,    // non-section symbols
+        Some(3) => 0.3,
+        Some(_) => 0.15, // h4, h5, h6
+        None => 1.0,     // non-section symbols
     };
 
     // 1st-party imports tell you about internal module structure and are
@@ -1029,7 +1029,7 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
         KindCategory::Section => match stage {
             StageKind::FilePath => 0.3,
             StageKind::Names => 1.0,
-            StageKind::Body => 0.3,
+            StageKind::Body => 0.5,
             _ => 0.1,
         },
         // Imports: supplementary context for understanding file dependencies.

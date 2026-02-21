@@ -2,27 +2,15 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2000 tokens)
+budget: 2000 (2002 tokens)
 
 README.md
     26→# D2TS - Differential Dataflow in TypeScript <!-- omit in toc -->
     36→## Table of Contents
     51→## Key Features
     73→## Quick Start
-    75→### Installation
-    81→### Basic Usage
-   141→### Using with ElectricSQL
    185→## Examples
    196→## API
-   198→### D2 graph construction
-   214→### Input Streams
-   221→### Versions and Frontiers
-   261→### MultiSet as a changeset
-   306→### Operators
-   615→##### `keyBy`
-   623→##### `unkey`
-   631→##### `rekey`
-   653→### Using SQLite Backend
    678→## Implementation Details
    699→## References
 
@@ -109,7 +97,6 @@ packages/d2ql/src/extractors.ts
    169→export function extractJoinKey …
 
 packages/d2ql/src/functions.ts
-     6→type FunctionImplementation …
    219→const functionImplementations: Record<
    241→export function evaluateFunction …
    257→export function isFunctionCall …
@@ -127,6 +114,12 @@ packages/d2ql/src/schema.ts
     94→export type ConditionOperand …
 
 packages/d2ql/src/store.ts
+    14→export type ChangeInsert …
+    20→export type ChangeDelete …
+    26→export type ChangeUpdate …
+    33→export type Change …
+    38→export type ChangeSet …
+    40→export class Store …
    163→  query …
    346→  static queryAll …
 
@@ -151,6 +144,12 @@ packages/d2ts/README.md
    210→## API
   1055→## Implementation Details
   1076→## References
+
+packages/d2ts/src/d2.ts
+    11→export type D2Options = {
+    15→export class D2 implements ID2 {
+    93→export class StreamBuilder<T> implements IStreamBuilder<T> {
+   166→export class RootStreamBuilder<T> extends StreamBuilder<T> {
 
 packages/d2ts/src/graph.ts
     20→export class DifferenceStreamReader<T> implements IDifferenceStreamReader<T> {

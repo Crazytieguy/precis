@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2001 tokens)
+budget: 2000 (2003 tokens)
 
 README.md
      3→# Swarm (experimental, educational)
@@ -41,6 +41,11 @@ examples/basic/README.md
      1→# Swarm basic
      5→### Examples
     31→## Running the Examples
+    33→To run any of the examples, use the following command:
+    34→
+    35→```shell
+    36→python3 <example_name>.py
+    37→```
 
 examples/basic/agent_handoff.py
     16→def transfer_to_spanish_agent():
@@ -117,11 +122,6 @@ examples/support_bot/docker-compose.yaml
 examples/support_bot/main.py
     13→# Set embedding model
     14→EMBEDDING_MODEL = "text-embedding-3-large"
-    20→def query_qdrant …
-    40→def query_docs …
-    66→def send_email …
-    72→def submit_ticket …
-    77→def transfer_to_help_center …
 
 examples/triage_agent/README.md
      1→# Triage agent

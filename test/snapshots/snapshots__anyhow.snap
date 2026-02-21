@@ -2,14 +2,13 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1988 tokens)
+budget: 2000 (1989 tokens)
 
 Cargo.toml
      1→[package]
     14→[features]
     18→[dependencies]
     25→[dev-dependencies]
-    32→[package.metadata.docs.rs]
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
@@ -17,6 +16,8 @@ README.md
    126→## No-std support
    144→## Comparison to failure
    155→## Comparison to thiserror
+
+build.rs
 
 src/backtrace.rs
      8→pub(crate) enum Backtrace {}
@@ -169,6 +170,7 @@ src/macros.rs
 src/nightly.rs
     10→pub use core::error::Request;
     41→pub fn request_ref_backtrace …
+    45→fn request_ref …
     52→pub fn provide_ref_backtrace …
     56→pub fn provide …
 

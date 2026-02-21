@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (1011 tokens)
+budget: 1000 (1001 tokens)
 
 README.md
      1→# MCPHost SDK
@@ -12,17 +12,37 @@ README.md
      7→```bash
      8→go get github.com/mark3labs/mcphost
      9→```
-      →…
+    10→
     11→## Basic Usage
     13→```go
     14→package main
     15→
-      →…
+    16→import (
+    17→    "context"
+    18→    "fmt"
+    19→    "log"
+    20→    
+    21→    "github.com/mark3labs/mcphost/sdk"
+    22→)
+    23→
+    24→func main() {
+    25→    ctx := context.Background()
+    26→    
+    27→    // Create MCPHost instance with default configuration
+    28→    host, err := sdk.New(ctx, nil)
+    29→    if err != nil {
+    30→        log.Fatal(err)
+    31→    }
+    32→    defer host.Close()
+    33→    
+      →    …
     44→## Configuration
     46→The SDK behaves identically to the CLI:
     47→- Loads configuration from `~/.mcphost.yml` by default
     48→- Creates default configuration if none exists
-      →…
+    49→- Respects all environment variables (`MCPHOST_*`)
+    50→- Uses the same defaults as the CLI
+    51→
     52→### Options
     67→## Advanced Usage
     69→### With Tool Callbacks
@@ -34,20 +54,20 @@ README.md
    138→All CLI environment variables work with the SDK:
    139→
    140→- `MCPHOST_MODEL` - Override model
-      →…
+   141→- `ANTHROPIC_API_KEY` - Anthropic API key
+   142→- `OPENAI_API_KEY` - OpenAI API key
+   143→- `GEMINI_API_KEY` - Google API key
+   144→- etc.
+   145→
    146→## License
 
 mcphost.go
      3→import …
-    16→// MCPHost provides programmatic access to mcphost functionality, allowing
-      →…
     19→type MCPHost struct {
     20→	agent       *agent.Agent
     21→	sessionMgr  *session.Manager
     22→	modelString string
     23→}
-    25→// Options configures MCPHost creation with optional overrides for model,
-      →…
     28→type Options struct {
     29→	Model        string // Override model (e.g., "anthropic:claude-3-sonnet")
     30→	SystemPrompt string // Override system prompt
@@ -73,26 +93,10 @@ mcphost.go
    237→func (m *MCPHost) Close() error {
 
 mcphost_test.go
-     3→import …
-    11→func TestNew(t *testing.T) {
-    30→func TestNewWithOptions(t *testing.T) {
-    54→func TestSessionManagement(t *testing.T) {
 
 types.go
      3→import …
-     8→// Message is an alias for session.Message providing SDK users with access
-     9→// to message structures for conversation history and tool interactions.
     10→type Message = session.Message
-    12→// ToolCall is an alias for session.ToolCall representing a tool invocation
-    13→// with its name, arguments, and result within a conversation.
     14→type ToolCall = session.ToolCall
-    16→// ConvertToSchemaMessage converts an SDK message to the underlying schema message
-    17→// format used by the agent for LLM interactions.
     18→func ConvertToSchemaMessage(msg *Message) *schema.Message {
-    19→	return msg.ConvertToSchemaMessage()
-    20→}
-    22→// ConvertFromSchemaMessage converts a schema message from the agent to an SDK
-    23→// message format for use in the SDK API.
     24→func ConvertFromSchemaMessage(msg *schema.Message) Message {
-    25→	return session.ConvertFromSchemaMessage(msg)
-    26→}

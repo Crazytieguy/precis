@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2018 tokens)
+budget: 2000 (2013 tokens)
 
 CHANGELOG.md
 
@@ -18,29 +18,30 @@ README.md
     14→- [Installation](#installation)
     15→- [Usage](#usage)
     16→  - [Parse a TOML string](#parse-a-toml-string)
-      →  …
+    17→  - [Parse a TOML file](#parse-a-toml-file)
+    18→  - [Handle invalid TOML](#handle-invalid-toml)
+    19→  - [Construct `decimal.Decimal`s from TOML floats](#construct-decimaldecimals-from-toml-floats)
+    20→  - [Building a `tomli`/`tomllib` compatibility layer](#building-a-tomlitomllib-compatibility-layer)
+    21→- [FAQ](#faq)
+    22→  - [Why this parser?](#why-this-parser)
+    23→  - [Is comment preserving round-trip parsing supported?](#is-comment-preserving-round-trip-parsing-supported)
+    24→  - [Is there a `dumps`, `write` or `encode` function?](#is-there-a-dumps-write-or-encode-function)
+    25→  - [How do TOML types map into Python types?](#how-do-toml-types-map-into-python-types)
+    26→- [Performance](#performance)
+    27→  - [Mypyc generated wheel](#mypyc-generated-wheel)
+    28→  - [Pure Python](#pure-python)
+    29→
+    30→<!-- mdformat-toc end -->
+    31→
     32→## Intro<a name="intro"></a>
     50→## Installation<a name="installation"></a>
     56→## Usage<a name="usage"></a>
-    58→### Parse a TOML string<a name="parse-a-toml-string"></a>
-    79→### Parse a TOML file<a name="parse-a-toml-file"></a>
-    92→### Handle invalid TOML<a name="handle-invalid-toml"></a>
-   106→### Construct `decimal.Decimal`s from TOML floats<a name="construct-decimaldecimals-from-toml-floats"></a>
-   123→### Building a `tomli`/`tomllib` compatibility layer<a name="building-a-tomlitomllib-compatibility-layer"></a>
    152→## FAQ<a name="faq"></a>
-   154→### Why this parser?<a name="why-this-parser"></a>
-   167→### Is comment preserving round-trip parsing supported?<a name="is-comment-preserving-round-trip-parsing-supported"></a>
-   177→### Is there a `dumps`, `write` or `encode` function?<a name="is-there-a-dumps-write-or-encode-function"></a>
-   183→### How do TOML types map into Python types?<a name="how-do-toml-types-map-into-python-types"></a>
    201→## Performance<a name="performance"></a>
-   207→### Mypyc generated wheel<a name="mypyc-generated-wheel"></a>
-   230→### Pure Python<a name="pure-python"></a>
 
 benchmark/README.md
      1→# Benchmark
     10→## Running
-
-benchmark/run.py
 
 fuzzer/fuzz.py
      1→import atheris
@@ -162,9 +163,6 @@ src/tomli/_re.py
     47→    rf"""
       →    …
     59→def match_to_datetime(match: re.Match[str]) -> datetime | date:
-    60→    """Convert a `RE_DATETIME` match to `datetime.datetime` or `datetime.date`.
-    61→
-      →…
     95→# No need to limit cache size. This is only ever called on input
     96→# that matched RE_DATETIME, so there is an implicit bound of
       →…
@@ -185,6 +183,7 @@ tomllib.md
      5→Relevant links:
      6→
      7→- Python Issue Tracker: https://bugs.python.org/issue40059
+     8→- Tomli issue tracker: https://github.com/hukkin/tomli/issues/141
       →…
     13→## Converting Tomli to tomllib
     15→### Sync status

@@ -11,11 +11,6 @@ README.md
    201→## Settings
    235→## Service settings
    256→## Instruments
-   316→#### FastAPI
-   347→#### Litestar
-   370→#### FastStream
-   436→#### FastStream
-   551→#### FastStream AsyncAPI documentation
    586→## Configuration
    662→> ### Important
    746→## Advanced
@@ -27,6 +22,7 @@ microbootstrap/bootstrappers/base.py
     62→    def use_instrument …
 
 microbootstrap/bootstrappers/fastapi.py
+    27→class FastApiBootstrapper …
     58→class FastApiSwaggerInstrument(SwaggerInstrument):
     74→class FastApiCorsInstrument(CorsInstrument):
     93→class FastApiOpentelemetryInstrument(OpentelemetryInstrument):
@@ -62,6 +58,7 @@ microbootstrap/config/fastapi.py
     24→    title: str = "FastAPI"
     25→    summary: str | None = None
     26→    description: str = ""
+    27→    version: str = "0.1.0"
       →    …
 
 microbootstrap/config/faststream.py
@@ -72,6 +69,7 @@ microbootstrap/config/faststream.py
     25→    provider: Provider | None = None
     26→    serializer: SerializerProto | None = None
     27→    context: ContextRepo | None = None
+    28→    lifespan: Lifespan | None = None
       →    …
 
 microbootstrap/config/litestar.py
@@ -85,6 +83,7 @@ microbootstrap/config/litestar.py
     21→    )
 
 microbootstrap/console_writer.py
+    10→@dataclasses.dataclass
     11→class ConsoleWriter:
     12→    writer_enabled: bool = True
     13→    rich_console: Console = dataclasses.field(init=False, default_factory=Console)
@@ -198,12 +197,8 @@ microbootstrap/settings.py
     90→class FastStreamSettings …
    105→class InstrumentsSetupperSettings …
 
-package.json
-
 pyproject.toml
      1→[project]
     62→[project.optional-dependencies]
     77→[dependency-groups]
     93→[build-system]
-
-tests/test_settings.py

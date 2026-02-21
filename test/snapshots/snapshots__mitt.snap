@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (1005 tokens)
+budget: 1000 (1010 tokens)
 
 README.md
      9→# Mitt
@@ -53,8 +53,6 @@ README.md
    167→### emit
    174→#### Parameters
    179→## Contribute
-   184→### Reporting Issues
-   189→### Submitting pull requests
    203→## License
 
 package.json
@@ -90,9 +88,9 @@ src/index.ts
     47→	all?: EventHandlerMap<Events>
     48→): Emitter<Events> {
     49→	type GenericEventHandler =
-      →	…
-
-test/index_test.ts
+    50→		| Handler<Events[keyof Events]>
+    51→		| WildcardHandler<Events>;
+      →		…
 
 tsconfig.json
      2→	"compileOnSave": false,

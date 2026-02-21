@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1996 tokens)
+budget: 2000 (1994 tokens)
 
 ARCHITECTURE.md
      1→# `sqlite-vec` Architecture
@@ -16,12 +16,6 @@ ARCHITECTURE.md
     10→
     11→## `vec0`
     13→### Shadow Tables
-    15→#### `xyz_chunks`
-    22→#### `xyz_rowids`
-    29→#### `xyz_vector_chunksNN`
-    34→#### `xyz_auxiliary`
-    39→#### `xyz_metadatachunksNN`
-    44→#### `xyz_metadatatextNN`
     49→### idxStr
     51→The `vec0` idxStr is a string composed of single "header" character and 0 or
     52→more "blocks" of 4 characters each.
@@ -32,12 +26,6 @@ ARCHITECTURE.md
     57→| Name                       | Value | Description                                                            |
     58→| -------------------------- | ----- | ---------------------------------------------------------------------- |
       →…
-    69→#### `VEC0_IDXSTR_KIND_KNN_MATCH` (`'{'`)
-    75→#### `VEC0_IDXSTR_KIND_KNN_K` (`'}'`)
-    81→#### `VEC0_IDXSTR_KIND_KNN_ROWID_IN` (`'['`)
-    88→#### `VEC0_IDXSTR_KIND_KNN_PARTITON_CONSTRAINT` (`']'`)
-   102→#### `VEC0_IDXSTR_KIND_POINT_ID` (`'!'`)
-   108→#### `VEC0_IDXSTR_KIND_METADATA_CONSTRAINT` (`'&'`)
 
 README.md
      1→# `sqlite-vec`
@@ -51,6 +39,12 @@ README.md
     12→
     13→<!-- deno-fmt-ignore-end -->
     14→
+    15→- Store and query float, int8, and binary vectors in `vec0` virtual tables
+    16→- Written in pure C, no dependencies, runs anywhere SQLite runs
+    17→  (Linux/MacOS/Windows, in the browser with WASM, Raspberry Pis, etc.)
+    18→- Store non-vector data in metadata, auxiliary, or partition key columns
+    19→
+    20→<p align="center">
       →…
     43→## Installing
     61→## Sample usage
@@ -61,6 +55,9 @@ bindings/python/extra_init.py
      6→def serialize_float32(vector: List[float]) -> bytes:
     11→def serialize_int8(vector: List[int]) -> bytes:
     44→    def register_numpy(db: Connection, name: str, array):
+
+bindings/rust/build.rs
+     1→fn main() {
 
 bindings/rust/src/lib.rs
      3→    pub fn sqlite3_vec_init();
@@ -75,6 +72,7 @@ reference.yaml
    328→vec0:
 
 site/api-reference.md
+     5→# API Reference
 
 sqlite-vec.c
      1→#include "sqlite-vec.h"
@@ -176,8 +174,18 @@ sqlite-vec.c
   7969→int vec0Update_InsertWriteFinalStep …
   8248→int vec0Update_Insert …
 
+tests/Cargo.toml
+     1→[package]
+     6→[dependencies]
+     8→[build-dependencies]
+    11→[[bin]]
+
 tests/conftest.py
      6→def db():
+
+tests/test-metadata.py
+    51→def test_text_knn(db, snapshot):
+   423→def eqp(db, sql):
 
 tmp-static.py
      1→import sqlite3

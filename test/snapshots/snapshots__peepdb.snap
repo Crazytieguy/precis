@@ -2,10 +2,12 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2000 tokens)
+budget: 2000 (1998 tokens)
 
 README.md
      1→# peepDB
+     3→**peepDB** is an open-source command-line tool and Python library designed for developers and database administrators who need a fast and efficient way to inspect their database tables without writing SQL queries. With support for MySQL, PostgreSQL, MariaDB, SQLite, MongoDB, Firebase, MSSQL and OracleDB. peepDB is lightweight, secure, and incredibly easy to use.
+     4→
      5→## 🚀 Features
     15→## 🎬 peepDB in Action
     21→## 🖼️ peepDB stills
@@ -70,9 +72,7 @@ peepdb/config.py
     22→SECURITY_CONFIG_FILE = os.path.join(CONFIG_DIR, "security_config.json")
     23→KEYRING_USERNAME = "PEEP_DB_KEY"
     24→KEYRING_SERVICE_NAME = "PEEP_DB"
-    29→@cached(cache=TTLCache(maxsize=1024, ttl=600))
     30→def generate_key_from_password(salt):
-    41→@cached(cache=TTLCache(maxsize=1024, ttl=600))
     42→def fetch_key_from_keyring():
     49→def get_key_security_config():
     60→def get_key():
@@ -150,10 +150,7 @@ peepdb/db/mongodb.py
     42→    def fetch_data …
 
 peepdb/db/mssql.py
-     1→import pyodbc …
      2→from .base import BaseDatabase
-     3→from typing …
-     4→import logging …
      6→class MSSQLDatabase(BaseDatabase):
      7→    def __init__ …
     12→    def connect …
@@ -190,10 +187,7 @@ peepdb/db/postgresql.py
     34→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 peepdb/db/sqlite.py
-     1→import os …
-     2→import sqlite3 …
      3→from .base import BaseDatabase
-     4→from typing …
      6→class SQLiteDatabase(BaseDatabase):
      7→    def connect(self) -> None:
     22→    def disconnect(self) -> None:
@@ -203,5 +197,3 @@ peepdb/db/sqlite.py
 peepdb/exceptions.py
      1→class InvalidPassword(Exception):
      2→    pass
-
-setup.py

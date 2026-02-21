@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2013 tokens)
+budget: 2000 (2008 tokens)
 
 README.md
      1→# xxhash
@@ -39,28 +39,41 @@ README.md
     37→github.com/cespare/xxhash/v2:
     38→
     39→* 1.9.7+ for Go 1.9
-      →…
+    40→* 1.10.3+ for Go 1.10
+    41→* Go 1.11 or later
+    42→
+    43→I recommend using the latest release of Go.
+    44→
     45→## Benchmarks
     47→Here are some quick benchmarks comparing the pure-Go and assembly
     48→implementations of Sum64.
     49→
     50→| input size | purego    | asm       |
     51→| ---------- | --------- | --------- |
-      →…
+    52→| 4 B        |  1.3 GB/s |  1.2 GB/s |
+    53→| 16 B       |  2.9 GB/s |  3.5 GB/s |
+    54→| 100 B      |  6.9 GB/s |  8.1 GB/s |
+    55→| 4 KB       | 11.7 GB/s | 16.7 GB/s |
+    56→| 10 MB      | 12.0 GB/s | 17.3 GB/s |
+    57→
+    58→These numbers were generated on Ubuntu 20.04 with an Intel Xeon Platinum 8252C
+    59→CPU using the following commands under Go 1.19.2:
+    60→
+    61→```
+    62→benchstat <(go test -tags purego -benchtime 500ms -count 15 -bench 'Sum64$')
+    63→benchstat <(go test -benchtime 500ms -count 15 -bench 'Sum64$')
+    64→```
+    65→
     66→## Projects using this package
     68→- [InfluxDB](https://github.com/influxdata/influxdb)
     69→- [Prometheus](https://github.com/prometheus/prometheus)
     70→- [VictoriaMetrics](https://github.com/VictoriaMetrics/VictoriaMetrics)
     71→- [FreeCache](https://github.com/coocood/freecache)
     72→- [FastCache](https://github.com/VictoriaMetrics/fastcache)
-      →…
+    73→- [Ristretto](https://github.com/dgraph-io/ristretto)
+    74→- [Badger](https://github.com/dgraph-io/badger)
 
 bench_test.go
-     3→import …
-    19→func BenchmarkSum64(b *testing.B) {
-    34→func BenchmarkSum64String(b *testing.B) {
-    46→func BenchmarkDigestBytes(b *testing.B) {
-    63→func BenchmarkDigestString(b *testing.B) {
 
 dynamic/dynamic_test.go
     17→func TestMain(m *testing.M) {
@@ -76,17 +89,17 @@ dynamic/plugin.go
 
 xxhash.go
      5→import …
-    11→const (
-    12→	prime1 uint64 = 11400714785074694791
-    13→	prime2 uint64 = 14029467366897019727
-    14→	prime3 uint64 = 1609587929392839161
-    15→	prime4 uint64 = 9650029242287828579
-    16→	prime5 uint64 = 2870177450012600261
+    11→const …
+    12→	prime1 …
+    13→	prime2 …
+    14→	prime3 …
+    15→	prime4 …
+    16→	prime5 …
     23→var primes = [...]uint64{prime1, prime2, prime3, prime4, prime5}
     25→// Digest implements hash.Hash64.
     26→//
     27→// Note that a zero-valued Digest is not ready to receive writes.
-    28→// Call Reset or create a Digest using New before calling other methods.
+      →…
     29→type Digest struct {
     30→	v1    uint64
     31→	v2    uint64
@@ -105,9 +118,9 @@ xxhash.go
     75→func (d *Digest) Write(b []byte) (n int, err error) {
    113→func (d *Digest) Sum(b []byte) []byte {
    129→func (d *Digest) Sum64() uint64 {
-   170→const (
-   171→	magic         = "xxh\x06"
-   172→	marshaledSize = len(magic) + 8*5 + 32
+   170→const …
+   171→	magic …
+   172→	marshaledSize …
    176→func (d *Digest) MarshalBinary() ([]byte, error) {
    190→func (d *Digest) UnmarshalBinary(b []byte) error {
 
@@ -123,8 +136,6 @@ xxhash_other.go
      7→func Sum64(b []byte) uint64 {
      8→	// A simpler version would be
      9→	//   d := New()
-    10→	//   d.Write(b)
-    11→	//   return d.Sum64()
       →	…
     64→func writeBlocks(d *Digest, b []byte) int {
 
@@ -138,26 +149,14 @@ xxhash_safe.go
     15→	return d.Write([]byte(s))
     16→}
 
-xxhash_test.go
-    12→func TestAll(t *testing.T) {
-    97→func TestReset(t *testing.T) {
-   114→func TestResetWithSeed(t *testing.T) {
-   131→func TestBinaryMarshaling(t *testing.T) {
-   168→var sink uint64
-   170→func TestAllocs(t *testing.T) {
-
 xxhash_unsafe.go
      9→import …
     36→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
-    37→// It may be faster than Sum64([]byte(s)) by avoiding a copy.
+      →…
     38→func Sum64String(s string) uint64 {
-    39→	b := *(*[]byte)(unsafe.Pointer(&sliceHeader{s, len(s)}))
-      →	…
     43→// WriteString adds more data to d. It always returns len(s), nil.
-    44→// It may be faster than Write([]byte(s)) by avoiding a copy.
+      →…
     45→func (d *Digest) WriteString(s string) (n int, err error) {
-    46→	d.Write(*(*[]byte)(unsafe.Pointer(&sliceHeader{s, len(s)})))
-      →	…
     55→type sliceHeader struct {
     56→	s   string
     57→	cap int

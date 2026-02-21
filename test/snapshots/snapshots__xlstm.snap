@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1999 tokens)
+budget: 2000 (1997 tokens)
 
 README.md
      3→# xLSTM: Extended Long Short-Term Memory
@@ -14,9 +14,6 @@ README.md
    115→## Recommendation for other hardware
    138→# Models from the xLSTM NeurIPS Paper
    142→## How to use the xLSTM architecture from our NeurIPS paper
-   146→### Using the sLSTM CUDA kernels
-   168→### xLSTM Block Stack
-   255→### xLSTM Language Model
    297→## Experiments
    312→## Citation
 
@@ -78,7 +75,6 @@ xlstm/blocks/slstm/layer.py
     19→class sLSTMLayerConfig(sLSTMCellConfig):
     20→    embedding_dim: int = -1
     21→    num_heads: int = (
-    33→class sLSTMLayer(nn.Module):
 
 xlstm/blocks/xlstm_block.py
     17→class xLSTMBlockConfig:
@@ -166,9 +162,14 @@ xlstm/xlstm_block_stack.py
     30→
     36→    @property
     37→    def block_map(self) -> list[int]:
+    52→    def __post_init__ …
     77→class xLSTMBlockStack(nn.Module):
     78→    config_class = xLSTMBlockStackConfig
     79→
+    80→    def __init__ …
+   111→    def reset_parameters …
+   117→    def forward …
+   126→    def step …
 
 xlstm/xlstm_large/components.py
     66→    def forward(self, x: torch.Tensor) -> torch.Tensor:
