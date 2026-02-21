@@ -88,7 +88,7 @@ with_entries! {
 
     // ── TypeScript ──────────────────────────────────────────────────────
     (cmdk,                    "cmdk",                           2000), // inspected: logged observation
-    (cmdk_cmdk_src,           "cmdk/cmdk/src",                  1000),
+    (cmdk_cmdk_src,           "cmdk/cmdk/src",                  1000), // inspected: logged observation
     (vaul,                    "vaul",                            2000), // inspected: logged observation
     (ts_pattern,              "ts-pattern",                     2000), // inspected: logged observation
     (ts_pattern_src_types,    "ts-pattern/src/types",           1000),
