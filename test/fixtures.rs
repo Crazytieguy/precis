@@ -121,7 +121,7 @@ with_entries! {
     (microbootstrap,          "microbootstrap",                 2000), // inspected: logged observation
     (microbootstrap_instruments, "microbootstrap/microbootstrap/instruments", 1000), // inspected: logged observation
     (py3xui,                  "py3xui",                          2000),
-    (py3xui_api,              "py3xui/py3xui/api",              1000),
+    (py3xui_api,              "py3xui/py3xui/api",              1000), // inspected: logged observation
 
     // ── Python (ML) ─────────────────────────────────────────────────────
     (xlstm,                   "xlstm",                           2000),
