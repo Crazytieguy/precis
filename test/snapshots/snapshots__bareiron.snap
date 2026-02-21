@@ -47,11 +47,11 @@ include/globals.h
    149→#define ENABLE_CACTUS_DAMAGE
    155→#define DEV_LOG_LENGTH_DISCREPANCY
    165→#define STATE_NONE 0
-   191→typedef struct {
-   200→typedef struct {
-   240→typedef struct {
-   255→union EntityDataValue {
-   260→typedef struct {
+   191→BlockChange …
+   200→PlayerData …
+   240→MobData …
+   255→union EntityDataValue …
+   260→EntityData …
 
 include/packets.h
      5→int cs_handshake (int client_fd);
@@ -86,8 +86,8 @@ include/varnum.h
     12→void writeVarInt (int client_fd, uint32_t value);
 
 include/worldgen.h
-     6→typedef struct {
-    13→typedef struct {
+     6→ChunkAnchor …
+    13→ChunkFeature …
 
 src/crafting.c
      9→void getCraftingOutput …

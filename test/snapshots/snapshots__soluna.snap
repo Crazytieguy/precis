@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1994 tokens)
+budget: 2000 (1998 tokens)
 
 README.md
      7→# Soluna
@@ -107,7 +107,6 @@ src/lfs.c
    825→luaopen_localfs …
 
 src/lsha1.c
-    89→typedef struct {
    114→#define	R0 …
    247→lsha1 …
    272→lhmac_sha1 …
@@ -173,10 +172,11 @@ src/render.c
    224→	sg_pass pass;
    225→	int swapchain;
    226→};
-   651→int lbindings_new …
-   652→int lview_new …
-   653→int luniform_new …
-   655→luaopen_render …
+   651→int lbindings_new(lua_State *L);
+   652→int lview_new(lua_State *L);
+   653→int luniform_new(lua_State *L);
+   655→int
+   656→luaopen_render(lua_State *L) {
 
 src/render_bindings.c
     61→struct view {
@@ -203,7 +203,6 @@ src/sdfimage.c
     19→#define INF 1e20
     20→#define SDF_RADIUS 8
     21→#define SDF_CUTOFF 0.25
-    22→// the same with font glyph size
     23→#define IMAGE_SIZE 64
     77→struct sdf_context {
    229→luaopen_image_sdf …

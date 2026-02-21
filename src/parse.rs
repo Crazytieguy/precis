@@ -1080,6 +1080,28 @@ fn compute_sig_end_line(node: tree_sitter::Node, lang: Lang) -> Option<usize> {
         }
     }
 
+    // C anonymous typedef struct/union: `typedef struct { ... } Name;`
+    // The type name appears on the closing line (`} Name;`), not the opening
+    // (`typedef struct {`). Treat the entire definition as the signature so the
+    // name is always visible. Without this, the signature shows `typedef struct {`
+    // — identical for every anonymous typedef and containing no name — while the
+    // body (fields) rarely wins budget priority against cheap items.
+    // Named typedefs (`typedef struct Foo { ... } Foo;`) already show the name
+    // on the opening line and are not affected. Enum typedefs are excluded because
+    // their variant lists are high-value body content that should stay in the
+    // Body stage (where they benefit from the higher Type body value).
+    if node.kind() == "type_definition" {
+        if let Some(type_child) = node.child_by_field_name("type") {
+            if matches!(type_child.kind(), "struct_specifier" | "union_specifier")
+                && type_child.child_by_field_name("body").is_some()
+                && type_child.child_by_field_name("name").is_none()
+            {
+                let end = node.end_position();
+                return Some(if end.column == 0 { end.row } else { end.row + 1 });
+            }
+        }
+    }
+
     None
 }
 
