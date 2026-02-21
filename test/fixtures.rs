@@ -133,7 +133,7 @@ with_entries! {
     // ── C ───────────────────────────────────────────────────────────────
     (sds,                     "sds",                             1000), // inspected: logged observation
     (neco,                    "neco",                            1000), // inspected: logged observation
-    (bareiron,                "bareiron",                        2000),
+    (bareiron,                "bareiron",                        2000), // inspected: logged observation
     (krep,                    "krep",                            1000), // inspected: logged observation
     (sqlite_vec,              "sqlite-vec",                     2000),
     (soluna,                  "soluna",                          2000),
