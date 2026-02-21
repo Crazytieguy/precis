@@ -79,8 +79,8 @@ with_entries! {
 
     // ── Go ──────────────────────────────────────────────────────────────
     (go_multierror,           "go-multierror",                  2000), // inspected: exceeds explore
-    (xxhash,                  "xxhash",                         2000),
-    (xxhash_xxhsum,           "xxhash/xxhsum",                  1000),
+    (xxhash,                  "xxhash",                         2000), // inspected: exceeds explore
+    (xxhash_xxhsum,           "xxhash/xxhsum",                  1000), // inspected: exceeds explore
     (mcphost,                 "mcphost",                        4000), // inspected: logged observation
     (mcphost_sdk,             "mcphost/sdk",                    1000),
     (tock,                    "tock",                            4000), // inspected: deprioritize mocks/
