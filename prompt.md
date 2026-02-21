@@ -29,7 +29,7 @@ If multiple logged observations point to the same underlying issue, that's also 
 
 ## Session end
 
-Delete `.precis_notes.md`. Provide a brief summary of what you inspected and any changes made.
+Delete `.precis_notes.md`. Commit your changes (include `issues.md` if modified). Provide a brief summary of what you inspected and any changes made.
 
 Don't `<wait-for-user>`.
 
