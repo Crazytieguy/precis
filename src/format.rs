@@ -113,6 +113,11 @@ fn render_scheduled(
         let lines: Vec<&str> = source.lines().collect();
         let symbols = &all_symbols[file_idx];
 
+        // Track the highest source line emitted so far (exclusive) to
+        // deduplicate overlapping ranges (e.g. Go grouped const block +
+        // individual const_spec symbols sharing the same first line).
+        let mut emitted_up_to: usize = 0;
+
         for (sym_idx, sym) in symbols.iter().enumerate() {
             let group_idx = match sched.symbol_to_group.get(&(file_idx, sym_idx)) {
                 Some(&gi) => gi,
@@ -135,6 +140,7 @@ fn render_scheduled(
                 &layouts[file_idx][sym_idx],
                 included,
                 &groups[group_idx],
+                &mut emitted_up_to,
             );
         }
     }
@@ -143,8 +149,9 @@ fn render_scheduled(
 }
 
 /// Render a single symbol at the given included stage.
-/// All line ranges come from the pre-computed layout — no overlap is possible
-/// because parent body ranges are truncated at the first child's doc_start.
+/// Parent body ranges are truncated at the first child's doc_start, but
+/// overlaps can still occur (e.g. Go grouped const blocks). The
+/// `emitted_up_to` high-water mark deduplicates within a file.
 fn render_symbol(
     out: &mut String,
     lines: &[&str],
@@ -152,6 +159,7 @@ fn render_symbol(
     layout: &SymbolLayout,
     included: &IncludedStage,
     group: &schedule::Group,
+    emitted_up_to: &mut usize,
 ) {
     let sym_line_0 = layout.sym_line_0;
     let stages = group.key.kind_category.stage_sequence();
@@ -173,15 +181,18 @@ fn render_symbol(
 
     // Names only
     if !show_sigs && doc_n == 0 && body_n == 0 {
-        if sym.kind == parse::SymbolKind::Section {
-            // Sections: show the full heading/section line without truncation
-            // marker. The heading text IS the name — truncating it looks broken
-            // (e.g. `[package …` instead of `[package]`).
-            let line = lines.get(sym_line_0).copied().unwrap_or("");
-            out.push_str(&fmt_line(sym_line_0, layout::strip_heading_badges(line)));
-        } else {
-            out.push_str(&format_symbol_name(sym, lines));
-            out.push_str(" …\n");
+        if sym_line_0 >= *emitted_up_to {
+            if sym.kind == parse::SymbolKind::Section {
+                // Sections: show the full heading/section line without truncation
+                // marker. The heading text IS the name — truncating it looks broken
+                // (e.g. `[package …` instead of `[package]`).
+                let line = lines.get(sym_line_0).copied().unwrap_or("");
+                out.push_str(&fmt_line(sym_line_0, layout::strip_heading_badges(line)));
+            } else {
+                out.push_str(&format_symbol_name(sym, lines));
+                out.push_str(" …\n");
+            }
+            *emitted_up_to = sym_line_0 + 1;
         }
         return;
     }
@@ -194,37 +205,42 @@ fn render_symbol(
     };
 
     // Doc comment lines (before symbol for most languages)
-    let doc_lines_shown = render_line_range(out, lines, layout.doc_start, layout.doc_end, doc_n, true);
+    let doc_lines_shown = render_line_range(out, lines, layout.doc_start, layout.doc_end, doc_n, true, emitted_up_to);
 
     // Signature lines (strip trailing badges from markdown heading lines)
     let is_section = sym.kind == parse::SymbolKind::Section;
     for (i, line) in lines.iter().enumerate().take(sig_end + 1).skip(sym_line_0) {
+        if i < *emitted_up_to {
+            continue;
+        }
         if is_section && i == sym_line_0 {
             out.push_str(&fmt_line(i, layout::strip_heading_badges(line)));
         } else {
             out.push_str(&fmt_line(i, line));
         }
+        *emitted_up_to = i + 1;
     }
 
     // Python docstrings (after signature)
     // doc_n is a cumulative limit across pre-symbol comments and docstrings,
     // matching the scheduler's flat doc_line_tokens vector.
     let doc_n_remaining = doc_n.saturating_sub(doc_lines_shown);
-    render_line_range(out, lines, layout.ds_start, layout.ds_end, doc_n_remaining, true);
+    render_line_range(out, lines, layout.ds_start, layout.ds_end, doc_n_remaining, true, emitted_up_to);
 
     // Body lines — all ranges from layout
     if body_n > 0 {
         if is_section {
             // Markdown: body is content text between headings
-            render_line_range(out, lines, layout.md_content_start, layout.md_section_end, body_n, true);
+            render_line_range(out, lines, layout.md_content_start, layout.md_section_end, body_n, true, emitted_up_to);
         } else {
             // Code: body lines from layout (already truncated at first child)
-            render_line_range(out, lines, layout.body_start, layout.body_end, body_n, !layout.has_children);
+            render_line_range(out, lines, layout.body_start, layout.body_end, body_n, !layout.has_children, emitted_up_to);
         }
     }
 }
 
 /// Render up to `max_lines` from a line range, with an optional truncation marker.
+/// Skips lines already emitted (index < `*emitted_up_to`).
 /// Returns the number of lines actually rendered.
 fn render_line_range(
     out: &mut String,
@@ -233,16 +249,23 @@ fn render_line_range(
     end: usize,
     max_lines: usize,
     show_truncation: bool,
+    emitted_up_to: &mut usize,
 ) -> usize {
     if max_lines == 0 || start >= end {
         return 0;
     }
-    let available = end - start;
+    // Skip lines already emitted by a previous symbol
+    let effective_start = start.max(*emitted_up_to);
+    if effective_start >= end {
+        return 0;
+    }
+    let available = end - effective_start;
     let to_show = available.min(max_lines);
-    let render_end = start + to_show;
-    for (i, line) in lines.iter().enumerate().take(render_end).skip(start) {
+    let render_end = effective_start + to_show;
+    for (i, line) in lines.iter().enumerate().take(render_end).skip(effective_start) {
         out.push_str(&fmt_line(i, line));
     }
+    *emitted_up_to = render_end;
     if show_truncation && to_show < available {
         out.push_str(&truncation_marker(lines[render_end - 1]));
     }

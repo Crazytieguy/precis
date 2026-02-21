@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4026 tokens)
+budget: 4000 (4010 tokens)
 
 README.md
      1→# Tock
@@ -375,7 +375,6 @@ internal/timeutil/timeutil.go
     10→// TimeFormat represents the configured time display format.
     11→type TimeFormat int
     13→const (
-    14→	Format24Hour TimeFormat = iota // default
     14→	Format24Hour TimeFormat = iota // default
     15→	Format12Hour
     18→// Formatter handles time formatting and parsing.

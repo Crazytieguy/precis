@@ -3,7 +3,6 @@
 ## Known issues
 
 - **Per-group stage value tuning** — the initial stage values (1.0, 0.7, 0.6, etc.) are starting points. Review snapshots across languages and tune per-kind values for better output quality.
-- **Duplicate source lines in output** — When two groups/symbols cover overlapping source line ranges, the same line can be emitted twice. Visible in the tock snapshot (Go `const` block line 14 `Format24Hour TimeFormat = iota` appears twice). The formatter should deduplicate lines within the same file.
 
 ## Observations
 
