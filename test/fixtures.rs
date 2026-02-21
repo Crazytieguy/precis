@@ -110,7 +110,7 @@ with_entries! {
     (semver_internal,         "semver/internal",                 1000), // internal helpers
 
     // ── Python ──────────────────────────────────────────────────────────
-    (pluggy,                  "pluggy",                          2000),
+    (pluggy,                  "pluggy",                          2000), // inspected: logged observation
     (typeguard,               "typeguard",                      2000),
     (tomli,                   "tomli",                           2000),
     (peepdb,                  "peepdb",                          2000),
