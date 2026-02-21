@@ -124,8 +124,8 @@ with_entries! {
     (py3xui_api,              "py3xui/py3xui/api",              1000), // inspected: logged observation
 
     // ── Python (ML) ─────────────────────────────────────────────────────
-    (xlstm,                   "xlstm",                           2000),
-    (xlstm_blocks,            "xlstm/xlstm/blocks",             1000),
+    (xlstm,                   "xlstm",                           2000), // inspected: logged observation
+    (xlstm_blocks,            "xlstm/xlstm/blocks",             1000), // inspected: logged observation
     (nano_vllm,               "nano-vllm",                      2000),
     (nano_vllm_engine,        "nano-vllm/nanovllm/engine",      1000),
     (chronos,                 "chronos-forecasting",             2000),
