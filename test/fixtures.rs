@@ -66,7 +66,7 @@ with_entries! {
     (anyhow,                  "anyhow",                         2000), // inspected: exceeds explore
     (thiserror,               "thiserror",                      2000), // inspected: exceeds explore
     (thiserror_impl_src,      "thiserror/impl/src",             1000),
-    (log,                     "log",                            2000),
+    (log,                     "log",                            2000), // inspected: logged observation
     (log_src_kv,              "log/src/kv",                     1000),
     (mdbook,                  "mdbook",                         4000), // inspected: logged observation
     (mdbook_guide_src,        "mdbook/guide/src",               2000),
