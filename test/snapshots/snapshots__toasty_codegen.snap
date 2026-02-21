@@ -2,18 +2,29 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1987 tokens)
+budget: 2000 (1986 tokens)
 
 CONTEXT.md
      1→# toasty-codegen Component Context
      3→## Purpose
      6→## Key Responsibilities
+     8→### Schema Parsing (`src/schema/`)
+    15→### Code Expansion (`src/expand/`)
     25→## Common Change Patterns
+    27→### Adding a New Model Attribute
+    33→### Adding Query Methods
+    39→### Supporting New Field Types
     45→## Generated Code Structure
     70→## Complete Attribute Support
+    72→### Model-Level Attributes
+    76→### Field-Level Attributes  
+    83→### Relationship Attributes
     88→## Important Files
     96→## Code Generation Principles
    103→## Key Patterns
+   105→### Dynamic Model IDs
+   114→### Query Builder Pattern
+   123→### Relationship Expansion
    128→## Recent Changes Analysis
 
 Cargo.toml
@@ -26,8 +37,6 @@ src/expand/create.rs
      4→use proc_macro2::TokenStream;
      5→use quote::quote;
      7→impl Expand<'_> {
-     8→    pub(super) fn expand_create_builder(&self) -> TokenStream {
-    76→    fn expand_create_methods(&self) -> TokenStream {
 
 src/expand/fields.rs
      1→use super::{util, Expand};
@@ -83,7 +92,6 @@ src/expand/update.rs
      7→impl Expand<'_> {
      9→    pub(super) fn expand_embedded_update_builder(&self) -> TokenStream {
     31→    fn expand_update_field_methods(&self, is_embedded: bool) -> TokenStream {
-   144→    pub(super) fn expand_update_builder(&self) -> TokenStream {
    204→    fn expand_reload_match_arms(&self) -> TokenStream {
    226→    pub(super) fn expand_reload_method(&self) -> TokenStream {
 
@@ -108,10 +116,6 @@ src/expand.rs
     16→use quote::quote;
     18→struct Expand<'a> {
     29→impl Expand<'_> {
-    30→    fn expand …
-    49→pub(super) fn root_model …
-    60→pub(super) fn embedded_model …
-   151→fn wrap_in_const …
 
 src/lib.rs
      1→mod expand;
@@ -133,7 +137,6 @@ src/schema/auto.rs
     11→    V7,
     12→}
     14→impl AutoStrategy {
-    15→    pub(super) fn from_ast …
     23→mod kw {
     31→impl syn::parse::Parse for AutoStrategy {
     32→    fn parse …
@@ -158,6 +161,7 @@ src/schema/column.rs
     91→    Integer(u8),
     92→    UnsignedInteger(u8),
     93→    Text,
+    94→    VarChar(u64),
       →    …
    105→impl syn::parse::Parse for ColumnType {
    106→    fn parse …
@@ -171,7 +175,6 @@ src/schema/error.rs
 src/schema/field.rs
      1→use crate::schema::AutoStrategy;
      3→use super::{BelongsTo, Column, ErrorSet, HasMany, HasOne, Name};
-     5→use syn::spanned::Spanned;
      8→pub(crate) struct Field {
     29→pub(crate) struct FieldAttr {
     47→pub(crate) enum FieldTy {

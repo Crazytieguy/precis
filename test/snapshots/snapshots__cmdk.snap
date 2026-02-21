@@ -2,15 +2,29 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2007 tokens)
+budget: 2000 (2005 tokens)
 
 ARCHITECTURE.md
      1→# Architecture
      3→> Document is a work in progress!
      4→
+     5→⌘K is born from a simple constraint: can you write a combobox with filtering and sorting using the [compound component](https://kentcdodds.com/blog/compound-components-with-react-hooks) approach? We didn't want to render items manually from an array:
+     6→
+     7→```tsx
+     8→// No
+     9→<>
+    10→  {items.map((item) => {
+    11→    return <div>{item}</div>
+    12→  })}
+    13→</>
+    14→```
+    15→
       →…
     46→## Approach
     50→### Discarded approach
+    52→We did not use `React.Children` iteration because it will not support component composition. There is no way to "peek inside" the items contained within `<BlogItems />`, so those items cannot be filtered.
+    53→
+      →…
     60→## Example
     92→## Performance
     96→## Groups
@@ -138,9 +152,6 @@ package.json
     27→  }
     28→}
 
-playwright.config.ts
-     3→const config: PlaywrightTestConfig = {
-
 pnpm-workspace.yaml
      1→packages:
 
@@ -155,9 +166,6 @@ test/pages/_app.tsx
      3→export default function App({ Component, pageProps }) {
 
 test/tsconfig.json
-     2→  "compilerOptions": {
-    18→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "../dialog.test.ts"],
-    19→  "exclude": ["node_modules"]
 
 tsconfig.json
      2→  "compilerOptions": {
@@ -186,18 +194,9 @@ website/components/cmdk/vercel.tsx
 
 website/components/code/index.tsx
      4→import styles from './code.module.scss'
-     7→const theme = {
     41→export function Code({ children }: { children: string }) {
 
 website/package.json
-     2→  "name": "cmdk-website",
-     3→  "version": "0.1.0",
-     4→  "private": true,
-     5→  "scripts": {
-    11→  "dependencies": {
-    24→  "devDependencies": {
-    38→  "lint-staged": {
-    43→  "husky": {
 
 website/pages/_app.tsx
     17→export default function App({ Component, pageProps }: AppProps) {
@@ -207,7 +206,6 @@ website/pages/_document.tsx
      6→  render() {
 
 website/pages/index.tsx
-    18→import packageJSON from '../../cmdk/package.json'
     29→export default function Index() {
    101→function InstallButton() {
    139→const themes = [
@@ -221,5 +219,3 @@ website/tsconfig.json
 
 website/vercel.json
      2→  "headers": [
-    12→  ]
-      →  …

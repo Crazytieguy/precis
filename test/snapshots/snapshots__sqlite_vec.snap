@@ -2,10 +2,12 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1980 tokens)
+budget: 2000 (1982 tokens)
 
 ARCHITECTURE.md
      1→# `sqlite-vec` Architecture
+     3→Internal documentation for how `sqlite-vec` works under-the-hood. Not meant for
+      →…
     11→## `vec0`
     13→### Shadow Tables
     49→### idxStr
@@ -21,9 +23,6 @@ bindings/python/extra_init.py
      6→def serialize_float32(vector: List[float]) -> bytes:
     11→def serialize_int8(vector: List[int]) -> bytes:
     44→    def register_numpy(db: Connection, name: str, array):
-
-bindings/rust/build.rs
-     1→fn main() {
 
 bindings/rust/src/lib.rs
      3→    pub fn sqlite3_vec_init();
@@ -55,7 +54,6 @@ sqlite-vec.c
    166→#define PORTABLE_ALIGN32 …
    169→static f32 l2_sqr_float_neon …
    527→static unsigned int __builtin_popcountl …
-   536→#define __builtin_popcountl __popcnt64
    556→static f32 distance_hamming …
    583→#define vecJsonIsspace …
    585→typedef void (*vector_cleanup)(void *p);
@@ -179,6 +177,8 @@ sqlite-vec.c
 
 tests/conftest.py
      6→def db():
+
+tests/test-loadable.py
 
 tests/test-metadata.py
     51→def test_text_knn(db, snapshot):

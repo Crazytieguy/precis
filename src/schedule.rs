@@ -95,6 +95,10 @@ pub enum FileRole {
     CommunityHealth,
     /// AI coding assistant config files: CLAUDE.md, AGENTS.md, COPILOT.md, etc.
     AiConfig,
+    /// Architecture/design documentation: ARCHITECTURE.md, DESIGN.md, CONTEXT.md.
+    /// Body content of these files is the most valuable information in a repo
+    /// (design philosophy, discarded approaches, code patterns).
+    Architecture,
     /// Everything else.
     Normal,
 }
@@ -114,6 +118,7 @@ impl FileRole {
             | "code_of_conduct" | "codeowners" | "releasing" | "support"
             | "governance" | "authors" | "maintainers" => FileRole::CommunityHealth,
             "claude" | "agents" | "copilot" | "copilot-instructions" => FileRole::AiConfig,
+            "architecture" | "design" | "context" => FileRole::Architecture,
             _ if is_doc && has_locale_suffix(stem) => FileRole::Translated,
             _ => FileRole::Normal,
         }
@@ -760,6 +765,7 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
 
     // File role: README files are high-signal, changelogs/translations/metadata are low-signal.
     let file_role_factor = match key.file_role {
+        FileRole::Architecture => 3.0,
         FileRole::Readme => 1.5,
         FileRole::Normal => 1.0,
         FileRole::Translated => 0.1,
@@ -1418,6 +1424,19 @@ mod tests {
         assert_eq!(FileRole::from_filename("AUTHORS"), FileRole::CommunityHealth);
         assert_eq!(FileRole::from_filename("AUTHORS.md"), FileRole::CommunityHealth);
         assert_eq!(FileRole::from_filename("MAINTAINERS.md"), FileRole::CommunityHealth);
+    }
+
+    #[test]
+    fn file_role_architecture() {
+        assert_eq!(FileRole::from_filename("ARCHITECTURE.md"), FileRole::Architecture);
+        assert_eq!(FileRole::from_filename("architecture.md"), FileRole::Architecture);
+        assert_eq!(FileRole::from_filename("DESIGN.md"), FileRole::Architecture);
+        assert_eq!(FileRole::from_filename("design.md"), FileRole::Architecture);
+        assert_eq!(FileRole::from_filename("CONTEXT.md"), FileRole::Architecture);
+        assert_eq!(FileRole::from_filename("context.md"), FileRole::Architecture);
+        // Non-doc extensions should not match
+        assert_eq!(FileRole::from_filename("architecture.rs"), FileRole::Normal);
+        assert_eq!(FileRole::from_filename("context.py"), FileRole::Normal);
     }
 
     #[test]

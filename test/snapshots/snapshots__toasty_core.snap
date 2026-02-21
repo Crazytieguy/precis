@@ -4,6 +4,15 @@ expression: output
 ---
 budget: 2000 (2000 tokens)
 
+CONTEXT.md
+     1→# toasty-core Component Context
+     3→## Purpose
+     6→## Key Responsibilities
+    60→## Common Change Patterns
+    80→## Important Files
+    89→## Design Principles
+    96→## Recent Changes Analysis
+
 src/driver/capability.rs
      4→pub struct Capability {
     61→pub struct StorageTypes {
@@ -36,12 +45,6 @@ src/lib.rs
 
 src/macros.rs
      2→macro_rules! path {
-
-src/schema/app/field.rs
-    11→pub struct Field {
-    36→pub struct FieldId {
-    42→pub struct FieldName {
-    54→pub enum FieldTy {
 
 src/schema/app/index.rs
      5→pub struct Index {
@@ -127,8 +130,8 @@ src/stmt/expr_and.rs
 
 src/stmt/expr_any.rs
     16→pub struct ExprAny {
-    25→    pub fn any(expr: impl Into<Expr>) -> Self {
-    33→    pub fn is_any(&self) -> bool {
+    25→    pub fn any …
+    33→    pub fn is_any …
 
 src/stmt/expr_arg.rs
     15→pub struct ExprArg {
@@ -208,7 +211,7 @@ src/stmt/expr_ty.rs
 
 src/stmt/filter.rs
      4→pub struct Filter {
-    10→    pub const ALL: Filter = Filter { expr: None };
+    10→    pub const ALL …
 
 src/stmt/func_count.rs
      4→pub struct FuncCount {
