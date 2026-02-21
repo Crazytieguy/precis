@@ -104,7 +104,7 @@ with_entries! {
     (d2ts_d2ts,               "d2ts/packages/d2ts",             2000), // main library
 
     // ── JavaScript ──────────────────────────────────────────────────────
-    (commander,               "commander",                      2000),
+    (commander,               "commander",                      2000), // inspected: logged observation
     (semver,                  "semver",                          2000), // inspected: deprioritize .github/
     (semver_classes,          "semver/classes",                  1000), // class definitions
     (semver_internal,         "semver/internal",                 1000), // internal helpers
