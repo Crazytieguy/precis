@@ -75,7 +75,7 @@ with_entries! {
     (toasty_codegen,          "toasty/crates/toasty-codegen",   2000), // inspected: logged observation
     (sps,                     "sps",                            4000),
     (sps_core,                "sps/sps-core",                   2000), // inspected: logged observation
-    (otree,                   "otree",                          2000),
+    (otree,                   "otree",                          2000), // inspected: logged observation
 
     // ── Go ──────────────────────────────────────────────────────────────
     (go_multierror,           "go-multierror",                  2000), // inspected: exceeds explore
