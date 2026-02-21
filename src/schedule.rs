@@ -219,6 +219,25 @@ fn detect_heading_depth(lines: &[&str], sym_line_0: usize, end_line: usize) -> u
     }
 }
 
+/// Detect auto-generated API documentation READMEs (pdoc, sphinx, etc.).
+/// These files contain structured class/method listings that duplicate the
+/// signatures already extracted from the source code files they document.
+/// Detection: README files whose first non-blank lines contain HTML anchor
+/// tags (`<a id=`, `<a name=`), which doc generators insert for navigation.
+fn is_autogen_api_doc(source: &str, file_role: FileRole) -> bool {
+    if file_role != FileRole::Readme {
+        return false;
+    }
+    source
+        .lines()
+        .filter(|line| !line.trim().is_empty())
+        .take(3)
+        .any(|line| {
+            let trimmed = line.trim();
+            trimmed.starts_with("<a id=") || trimmed.starts_with("<a name=")
+        })
+}
+
 /// Detect boilerplate markdown section headings that convey no architectural value.
 /// These are headings like "## License", "## Contributing", "## Acknowledgements"
 /// that appear in READMEs across many repos with identical content.
@@ -367,6 +386,9 @@ pub struct GroupKey {
     /// Whether this is a boilerplate markdown section (License, Contributing, etc.)
     /// that conveys no architectural value. Only set for Section kind.
     pub is_boilerplate_section: bool,
+    /// Whether this file is an auto-generated API doc README (pdoc, sphinx, etc.)
+    /// whose content duplicates source code signatures.
+    pub is_autogen_api_doc: bool,
 }
 
 /// A symbol's precomputed content costs (token counts per rendering stage).
@@ -483,6 +505,7 @@ pub fn build_groups(
             .is_some_and(|name| is_config_file(relative, name));
         let is_test = walk::is_test_file(relative);
         let is_type_declaration = walk::is_type_declaration_file(relative);
+        let is_autogen = is_autogen_api_doc(source, file_role);
 
         for (symbol_idx, sym) in symbols.iter().enumerate() {
             let sym_line_0 = sym.line - 1;
@@ -524,6 +547,7 @@ pub fn build_groups(
                 is_trait_impl: sym.is_trait_impl,
                 is_type_declaration,
                 is_boilerplate_section,
+                is_autogen_api_doc: is_autogen,
             };
 
             // Compute costs
@@ -786,7 +810,11 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     // almost every README with zero architectural value.
     let boilerplate_factor = if key.is_boilerplate_section { 0.1 } else { 1.0 };
 
-    let base_value = visibility * documented * depth_factor * sibling_factor * file_role_factor * config_factor * test_factor * type_declaration_factor * heading_depth_factor * first_party_factor * trait_impl_factor * boilerplate_factor;
+    // Auto-generated API doc READMEs (pdoc, sphinx, etc.) contain class/method
+    // listings that are 100% redundant with source code signatures.
+    let autogen_api_doc_factor = if key.is_autogen_api_doc { 0.1 } else { 1.0 };
+
+    let base_value = visibility * documented * depth_factor * sibling_factor * file_role_factor * config_factor * test_factor * type_declaration_factor * heading_depth_factor * first_party_factor * trait_impl_factor * boilerplate_factor * autogen_api_doc_factor;
 
     let stage_value = match key.kind_category {
         KindCategory::Type => match stage {

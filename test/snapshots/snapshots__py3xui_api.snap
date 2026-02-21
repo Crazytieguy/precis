@@ -2,22 +2,9 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (1000 tokens)
+budget: 1000 (1001 tokens)
 
 README.md
-     3→# api.api\_database
-    10→## DatabaseApi Objects
-    67→# api.api\_inbound
-    73→## InboundApi Objects
-   345→# api.api
-   351→## Api Objects
-   549→# api.api\_server
-   555→## ServerApi Objects
-   674→# api.api\_client
-   681→## ClientApi Objects
-  1042→# api.api\_base
-  1048→## ApiFields Objects
-  1058→## BaseApi Objects
 
 __init__.py
      2→from py3xui.api.api_client import ClientApi
@@ -67,7 +54,13 @@ api_base.py
    145→    def session(self, value: str | None) -> None:
    161→    def cookie_name(self, value: str | None) -> None:
    168→    def login …
+   194→    def _get_cookie …
    211→    def cookies(self) -> dict[str, str]:
+   220→    def _check_response …
+   236→    def _url …
+   246→    def _request_with_retry …
+   313→    def _post …
+   333→    def _get …
 
 api_client.py
      6→import json
@@ -88,11 +81,15 @@ api_client.py
    342→    def get_traffic_by_id …
 
 api_database.py
+     4→from py3xui.api.api_base import BaseApi
      7→class DatabaseApi(BaseApi):
     31→
     32→    def export(self) -> None:
 
 api_inbound.py
+     3→from typing …
+     5→from py3xui.api.api_base …
+     6→from py3xui.inbound …
      9→class InboundApi(BaseApi):
     39→
     40→    def get_list(self) -> list[Inbound]:
@@ -104,6 +101,8 @@ api_inbound.py
    247→    def reset_client_stats(self, inbound_id: int) -> None:
 
 api_server.py
+     3→from py3xui.api.api_base …
+     4→from py3xui.server.server …
      7→class ServerApi(BaseApi):
     34→
     35→    def get_db(self, save_path: str) -> None:

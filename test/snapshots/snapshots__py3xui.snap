@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2023 tokens)
+budget: 2000 (2028 tokens)
 
 README.md
     29→## Overview
@@ -11,27 +11,17 @@ README.md
    336→## Bugs and Feature Requests
 
 demo.py
+     1→from py3xui import Api
     63→from py3xui import Inbound
-    65→XUI_EXTERNAL_IP …
+    65→XUI_EXTERNAL_IP = "**********"  # ⬅️ Your external IP here or domain name.
     66→MAIN_REMARK = "gmfvbot"  # ⬅️ It can be any string.
     67→SERVER_PORT = 443  # ⬅️ Your server port here.
-    70→def get_connection_string …
+    70→def get_connection_string(inbound: Inbound, user_uuid: str, user_email: int) -> str:
     98→import os
+   100→import qrcode
 
-py3xui/api/README.md
-     3→# api.api\_database
-    10→## DatabaseApi Objects
-    67→# api.api\_inbound
-    73→## InboundApi Objects
-   345→# api.api
-   351→## Api Objects
-   549→# api.api\_server
-   555→## ServerApi Objects
-   674→# api.api\_client
-   681→## ClientApi Objects
-  1042→# api.api\_base
-  1048→## ApiFields Objects
-  1058→## BaseApi Objects
+py3xui/__init__.py
+     2→from py3xui.api.api import Api
 
 py3xui/api/api.py
     13→class Api:
@@ -46,7 +36,8 @@ py3xui/api/api_base.py
      5→import logging
     15→class ApiFields:
     17→
-      →…
+    18→    SUCCESS = "success"
+      →    …
     28→class BaseApi:
     60→
     61→    def __init__ …
@@ -65,6 +56,16 @@ py3xui/api/api_client.py
      6→import json
     13→class ClientApi(BaseApi):
     51→
+    52→    def get_by_email …
+    89→    def get_ips …
+   121→    def add …
+   157→    def update …
+   189→    def reset_ips …
+   217→    def reset_stats …
+   248→    def delete …
+   280→    def delete_depleted …
+   312→    def online …
+   342→    def get_traffic_by_id …
 
 py3xui/api/api_database.py
      7→class DatabaseApi(BaseApi):
@@ -88,14 +89,6 @@ py3xui/api/api_server.py
     35→    def get_db(self, save_path: str) -> None:
     67→    def get_status(self) -> Server:
     97→    def generate_reality_keys(self) -> RealityKeyPair:
-
-py3xui/async_api/README.md
-    10→## AsyncInboundApi Objects
-   285→## AsyncApi Objects
-   489→## AsyncDatabaseApi Objects
-   552→## AsyncServerApi Objects
-   684→## AsyncBaseApi Objects
-   929→## AsyncClientApi Objects
 
 py3xui/async_api/async_api.py
     18→class AsyncApi:
@@ -135,6 +128,13 @@ py3xui/async_api/async_api_database.py
 py3xui/async_api/async_api_inbound.py
     11→class AsyncInboundApi(AsyncBaseApi):
     41→
+    42→    async def get_list …
+    72→    async def get_by_id …
+   112→    async def add …
+   158→    async def delete …
+   189→    async def update …
+   222→    async def reset_stats …
+   246→    async def reset_client_stats …
 
 py3xui/async_api/async_api_server.py
      8→class AsyncServerApi(AsyncBaseApi):
@@ -144,45 +144,43 @@ py3xui/async_api/async_api_server.py
     76→    async def get_status(self) -> Server:
    105→    async def generate_reality_keys(self) -> RealityKeyPair:
 
-py3xui/client/README.md
-     3→# client.client
-     9→## ClientFields Objects
-    19→## Client Objects
-
 py3xui/client/client.py
      7→class ClientFields:
      9→
     10→    EMAIL = "email"
+    11→    ENABLE = "enable"
       →    …
     36→class Client(BaseModel):
     58→
       →…
 
-py3xui/inbound/README.md
-     3→# inbound.settings
-    36→# inbound.inbound
-   124→# inbound.stream\_settings
-   167→# inbound.bases
-   203→# inbound.sniffing
-
 py3xui/inbound/bases.py
+     8→# pylint: disable=too-few-public-methods
      9→class JsonStringModel(BaseModel):
     11→
-    13→    def model_validate …
+    12→    @model_validator(mode="before")
+    13→    def model_validate(
+    14→        cls,
+    15→        values,
+    16→    ):  # pylint: disable=no-self-argument, arguments-differ
 
 py3xui/inbound/inbound.py
     15→class InboundFields:
     17→
-      →…
+    18→    ENABLE = "enable"
+      →    …
     38→class Inbound(BaseModel):
     58→
-    89→    def validate_stream_settings …
-   114→    def to_json …
+    89→    def validate_stream_settings(  # pylint: disable=no-self-argument
+    90→        cls, value: StreamSettings | str
+    91→    ) -> StreamSettings | str:
+   114→    def to_json(self) -> dict[str, Any]:
 
 py3xui/inbound/settings.py
      9→class SettingsFields:
     11→
-      →…
+    12→    CLIENTS = "clients"
+      →    …
     17→class Settings(JsonStringModel):
     25→
       →…
@@ -200,27 +198,17 @@ py3xui/inbound/sniffing.py
 py3xui/inbound/stream_settings.py
      9→class StreamSettingsFields:
     11→
-      →…
+    12→    SECURITY = "security"
+      →    …
     25→class StreamSettings(JsonStringModel):
     38→
       →…
 
-py3xui/server/README.md
-     3→# server.server
-     9→## ServerFields Objects
-    19→## MemoryInfo Objects
-    34→## XRayInfo Objects
-    56→## NetworkIO Objects
-    71→## NetworkTraffic Objects
-    86→## PublicIP Objects
-   101→## AppStats Objects
-   117→## RealityKeyPair Objects
-   132→## Server Objects
-
 py3xui/server/server.py
      7→class ServerFields:
      9→
-      →…
+    10→    CPU = "cpu"
+      →    …
     43→class MemoryInfo(BaseModel):
     54→class XRayInfo(BaseModel):
     67→class NetworkIO(BaseModel):
@@ -230,10 +218,8 @@ py3xui/server/server.py
    113→class RealityKeyPair(BaseModel):
    125→class Server(BaseModel):
 
-py3xui/utils/README.md
-     3→# utils.env
-
 py3xui/utils/__init__.py
+     2→from py3xui.utils …
      4→COOKIE_NAMES = ["3x-ui", "session"]
 
 py3xui/utils/env.py
