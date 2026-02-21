@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2003 tokens)
+budget: 2000 (2008 tokens)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -19,15 +19,37 @@ ARCHITECTURE.md
     13→</>
     14→```
     15→
+    16→We didn't want to provide a render prop:
+    17→
+    18→```tsx
+    19→// No
+    20→onItemRender={({ item }) => {
+    21→  return <div>{item}</div>
+    22→}}
+    23→```
       →…
     46→## Approach
+    48→⌘K always keeps every item and group rendered in the React tree. Each item and group adds or removes itself from the DOM based on the search input. The DOM is authoritative. Item selection order is based on the DOM order, which is based on the React render order, which the consumer provides.
+    49→
     50→### Discarded approach
     52→We did not use `React.Children` iteration because it will not support component composition. There is no way to "peek inside" the items contained within `<BlogItems />`, so those items cannot be filtered.
     53→
       →…
     60→## Example
+    62→```tsx
+    63→<Input value="b" />
+    64→<List>
+    65→  <Item>A</Item>
+    66→  <Item>B</Item>
+    67→</List>
+    68→```
+    69→
+      →…
     92→## Performance
+    94→This is more expensive memory wise, because if there are 2,000 items but the list is filtered to only 2 items, we still allocate memory for 2,000 instances of the Item component. But it's our only option! Thankfully we can still keep the DOM size to 2 items.
+    95→
     96→## Groups
+    98→Item mount informs both the root and the parent group, which keeps track of items within it. Each group informs the root.
 
 README.md
      5→# ⌘K
@@ -57,23 +79,6 @@ README.md
    462→## Testing
 
 cmdk/package.json
-     2→  "name": "cmdk",
-     3→  "version": "1.1.1",
-     4→  "license": "MIT",
-     5→  "main": "./dist/index.js",
-     6→  "module": "./dist/index.mjs",
-     7→  "types": "./dist/index.d.ts",
-     8→  "files": [
-    11→  "exports": {
-    18→  "scripts": {
-    24→  "peerDependencies": {
-    28→  "dependencies": {
-    34→  "devDependencies": {
-    37→  "sideEffects": false,
-    38→  "repository": {
-    43→  "bugs": {
-    46→  "homepage": "https://github.com/pacocoursey/cmdk#readme",
-    47→  "author": {
 
 cmdk/src/command-score.ts
     54→function commandScoreInner …
@@ -144,34 +149,20 @@ package.json
      2→  "name": "cmdk-root",
      3→  "private": true,
      4→  "scripts": {
-    13→  },
     14→  "devDependencies": {
-    21→  },
     22→  "packageManager": "pnpm@8.8.0",
     23→  "lint-staged": {
-    27→  }
-    28→}
+
+playwright.config.ts
+     3→const config: PlaywrightTestConfig = {
 
 pnpm-workspace.yaml
      1→packages:
 
-test/package.json
-     2→  "name": "cmdk-tests",
-     3→  "version": "0.0.0",
-     4→  "scripts": {
-     7→  "dependencies": {
-
-test/tsconfig.json
-     2→  "compilerOptions": {
-    18→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "../dialog.test.ts"],
-    19→  "exclude": ["node_modules"]
-
 tsconfig.json
      2→  "compilerOptions": {
-    16→  },
     17→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
     18→  "exclude": ["node_modules", "build", "dist", ".next"]
-    19→}
 
 website/README.md
      3→## Getting Started
@@ -183,6 +174,7 @@ website/components/cmdk/framer.tsx
 
 website/components/cmdk/linear.tsx
      3→export function LinearCMDK() {
+    30→const items = [
 
 website/components/cmdk/raycast.tsx
      7→export function RaycastCMDK() {
@@ -191,9 +183,12 @@ website/components/cmdk/vercel.tsx
      4→export function VercelCMDK() {
 
 website/components/code/index.tsx
+     4→import styles from './code.module.scss'
+     7→const theme = {
     41→export function Code({ children }: { children: string }) {
 
-website/package.json
+website/components/icons/index.tsx
+     1→import styles from './icons.module.scss'
 
 website/pages/_app.tsx
     17→export default function App({ Component, pageProps }: AppProps) {
@@ -203,16 +198,14 @@ website/pages/_document.tsx
      6→  render() {
 
 website/pages/index.tsx
+    18→import packageJSON from '../../cmdk/package.json'
     29→export default function Index() {
    101→function InstallButton() {
    139→const themes = [
    262→function Codeblock() {
    296→function VersionBadge() {
 
-website/tsconfig.json
-     2→  "compilerOptions": {
-    19→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-    20→  "exclude": ["node_modules"]
-
 website/vercel.json
      2→  "headers": [
+    12→  ]
+    13→}

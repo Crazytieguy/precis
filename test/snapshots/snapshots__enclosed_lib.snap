@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (1000 tokens)
+budget: 1000 (999 tokens)
 
 README.md
      1→### Enclosed lib
@@ -65,11 +65,14 @@ src/crypto/serialization/serialization.types.ts
 
 src/files/files.models.ts
      1→import type { NoteAsset } from '../notes/notes.types';
+     2→import { get } from 'lodash-es';
 
 src/index.ts
 
 src/notes/notes.services.ts
      1→import { apiClient } from '../api/api.client';
+     5→async function storeNote …
+    39→async function fetchNote …
 
 src/notes/notes.types.ts
      1→import type { CompressionAlgorithm, EncryptionAlgorithm, KeyDerivationAlgorithm } from '../crypto/crypto.types';
@@ -95,9 +98,3 @@ src/notes/notes.types.ts
     24→  ttlInSeconds: number;
     25→  deleteAfterReading: boolean;
     26→};
-
-src/notes/notes.usecases.ts
-
-tsconfig.json
-     2→  "compilerOptions": {
-     9→  "include": [

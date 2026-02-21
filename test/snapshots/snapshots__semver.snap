@@ -4,6 +4,9 @@ expression: output
 ---
 budget: 2000 (2000 tokens)
 
+.github/ISSUE_TEMPLATE/config.yml
+     3→blank_issues_enabled: true
+
 .github/actions/create-check/action.yml
      3→name: 'Create Check'
      4→inputs:
@@ -42,11 +45,23 @@ budget: 2000 (2000 tokens)
     18→permissions:
     21→jobs:
 
+.github/workflows/post-dependabot.yml
+     3→name: Post Dependabot
+     5→on: pull_request
+     7→permissions:
+    10→jobs:
+
 .github/workflows/pull-request.yml
      3→name: Pull Request
      5→on:
     13→permissions:
     16→jobs:
+
+.github/workflows/release-integration.yml
+     3→name: Release Integration
+     5→on:
+    22→permissions:
+    26→jobs:
 
 .github/workflows/release.yml
      3→name: Release
@@ -144,6 +159,12 @@ classes/semver.js
    168→  compareBuild (other) {
    194→  inc (release, identifier, identifierBase) {
 
+functions/clean.js
+     4→const clean …
+
+functions/inc.js
+     5→const inc …
+
 internal/constants.js
      5→const SEMVER_SPEC_VERSION = '2.0.0'
      7→const MAX_LENGTH = 256
@@ -184,20 +205,6 @@ internal/re.js
     42→const createToken = (name, value, isGlobal) => {
 
 package.json
-     2→  "name": "semver",
-     3→  "version": "7.7.4",
-     4→  "description": "The semantic version parser used by npm.",
-     5→  "main": "index.js",
-     6→  "scripts": {
-    16→  "devDependencies": {
-    22→  "license": "ISC",
-    23→  "repository": {
-    27→  "bin": {
-    30→  "files": [
-    41→  "tap": {
-    49→  "engines": {
-    52→  "author": "GitHub Inc.",
-    53→  "templateOSS": {
 
 ranges/gtr.js
      5→const gtr …
@@ -221,12 +228,12 @@ ranges/outside.js
     13→const outside = (version, range, hilo, options) => {
 
 ranges/subset.js
-    45→const subset …
+    45→const subset = (sub, dom, options = {}) => {
     73→const minimumVersionWithPreRelease = [new Comparator('>=0.0.0-0')]
     74→const minimumVersion = [new Comparator('>=0.0.0')]
-    76→const simpleSubset …
-   226→const higherGT …
-   238→const lowerLT …
+    76→const simpleSubset = (sub, dom, options) => {
+   226→const higherGT = (a, b, options) => {
+   238→const lowerLT = (a, b, options) => {
 
 ranges/to-comparators.js
      6→const toComparators = (range, options) =>

@@ -2,31 +2,12 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2014 tokens)
+budget: 2000 (2018 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
 
 package.json
-     2→  "name": "vaul",
-     3→  "version": "1.1.2",
-     4→  "description": "Drawer component for React.",
-     5→  "main": "./dist/index.js",
-     6→  "module": "./dist/index.mjs",
-     7→  "types": "./dist/index.d.ts",
-     8→  "files": [
-    12→  "exports": {
-    22→  "scripts": {
-    31→  "keywords": [
-    37→  "author": "Emil Kowalski <e@emilkowal.ski>",
-    38→  "license": "MIT",
-    39→  "homepage": "https://vaul.emilkowal.ski/",
-    40→  "repository": {
-    44→  "bugs": {
-    47→  "devDependencies": {
-    61→  "peerDependencies": {
-    65→  "packageManager": "pnpm@8.8.0",
-    66→  "dependencies": {
 
 pnpm-workspace.yaml
      1→packages:
@@ -71,11 +52,24 @@ src/helpers.ts
    106→ * Receives functions as arguments and returns a new function that calls all.
    108→export function chain<T>(...fns: T[]) {
    109→  return (...args: T extends AnyFunction ? Parameters<T> : never) => {
-      →  …
+   110→    for (const fn of fns) {
+      →    …
 
 src/index.tsx
      3→import * as DialogPrimitive from '@radix-ui/react-dialog';
      4→import React from 'react';
+     5→import { DrawerContext, useDrawerContext } from './context …
+     6→import './style.css …
+     7→import { usePreventScroll, isInput } from './use-prevent-scroll …
+     8→import { useComposedRefs } from './use-composed-refs …
+     9→import { useSnapPoints } from './use-snap-points …
+    10→import { set, getTranslate, dampenValue, isVertical, reset } from './helpers …
+    11→import { …
+    21→import { DrawerDirection } from './types …
+    22→import { useControllableState } from './use-controllable-state …
+    23→import { useScaleBackground } from './use-scale-background …
+    24→import { usePositionFixed } from './use-position-fixed …
+    25→import { isIOS, isMobileFirefox } from './browser …
     27→export interface WithFadeFromProps {
     28→  /**
       →  …
@@ -173,14 +167,19 @@ test/README.md
     21→## Learn More
     30→## Deploy on Vercel
 
+test/src/app/layout.tsx
+     1→import './globals.css';
+     7→export const metadata: Metadata = {
+
 test/src/app/page.tsx
      5→export default function Page() {
 
+test/tests/constants.ts
+     1→export const ANIMATION_DURATION = 500;
+
 tsconfig.json
      2→  "compilerOptions": {
-     9→  },
     10→  "include": ["src"],
-    11→}
 
 turbo.json
      2→  "$schema": "https://turbo.build/schema.json",

@@ -2,19 +2,12 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2009 tokens)
-
-codecov.yml
+budget: 2000 (2007 tokens)
 
 pyproject.toml
      1→[build-system]
      8→[project]
     38→[dependency-groups]
-    43→[tool.setuptools]
-    69→[tool.setuptools_scm]
-    71→[tool.uv]
-    74→[tool.towncrier]
-   112→[tool.mypy]
 
 src/pluggy/__init__.py
      1→__all__ = [
@@ -158,6 +151,13 @@ src/pluggy/_manager.py
    512→    def subset_hook_caller …
 
 src/pluggy/_result.py
+     7→from collections.abc …
+     8→from types …
+     9→from typing …
+    10→from typing …
+    11→from typing …
+    12→from typing …
+    13→from typing …
     16→_ExcInfo …
     20→class HookCallError(Exception):
     21→    """Hook was called incorrectly."""

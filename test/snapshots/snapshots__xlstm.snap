@@ -2,29 +2,17 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1998 tokens)
+budget: 2000 (1996 tokens)
 
 README.md
-
-environment_pt220cu121.yaml
-     1→name: xlstm
-     2→channels:
-     7→dependencies:
-
-environment_pt240cu124.yaml
-     1→name: xlstm
-     2→channels:
-     7→dependencies:
-
-environment_pt260cu126.yaml
-     1→name: xlstm
-     2→channels:
-     7→dependencies:
 
 pyproject.toml
      1→[build-system]
      5→[project]
     50→[project.urls]
+
+xlstm/__init__.py
+     1→__version__ = "2.0.5"
 
 xlstm/blocks/mlstm/block.py
     10→class mLSTMBlockConfig:
@@ -58,6 +46,7 @@ xlstm/blocks/mlstm/layer.py
     31→    _num_blocks: int = 1
     32→    _inner_embedding_dim: int = None
     33→
+    39→class mLSTMLayer(nn.Module):
 
 xlstm/blocks/slstm/block.py
     13→class sLSTMBlockConfig:
@@ -70,6 +59,9 @@ xlstm/blocks/slstm/block.py
     20→
 
 xlstm/blocks/slstm/cell.py
+    28→LOGGER …
+    30→DTYPE_DICT …
+    35→DTYPES …
     62→class sLSTMCellConfig:
     63→    hidden_size: int = -1
     64→    num_heads: int = (
@@ -78,6 +70,7 @@ xlstm/blocks/slstm/layer.py
     19→class sLSTMLayerConfig(sLSTMCellConfig):
     20→    embedding_dim: int = -1
     21→    num_heads: int = (
+    33→class sLSTMLayer(nn.Module):
 
 xlstm/blocks/xlstm_block.py
     17→class xLSTMBlockConfig:
@@ -101,6 +94,7 @@ xlstm/components/conv.py
     17→    channel_mixing: bool = False
     18→    conv1d_kwargs: dict = field(default_factory=dict)
     19→
+    55→class CausalConv1d(nn.Module):
 
 xlstm/components/feedforward.py
     32→class FeedForwardConfig(UpProjConfigMixin):

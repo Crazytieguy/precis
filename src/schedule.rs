@@ -285,6 +285,7 @@ fn is_boilerplate_heading(name: &str) -> bool {
 fn is_config_file(relative_path: &Path, filename: &str) -> bool {
     let lower = filename.to_ascii_lowercase();
     let is_root = relative_path.parent().is_none_or(|p| p.as_os_str().is_empty());
+    let ext = lower.rsplit_once('.').map(|(_, e)| e);
 
     // Build scripts and packaging files — only at project root.
     // build.rs: Rust build scripts (compile-time codegen, feature probing)
@@ -298,6 +299,27 @@ fn is_config_file(relative_path: &Path, filename: &str) -> bool {
         }
     }
 
+    // Package metadata and compiler config — always metadata/tooling, never architecture.
+    // package.json: npm manifest (scripts, devDependencies, repository, keywords, etc.)
+    // tsconfig*.json: TypeScript compiler configuration (compilerOptions, include, exclude)
+    // jsconfig*.json: JavaScript project configuration
+    // These consume significant budget in small libraries while providing zero
+    // architectural value — the source code and README are far more informative.
+    match lower.as_str() {
+        "package.json" => return true,
+        _ if (lower.starts_with("tsconfig") || lower.starts_with("jsconfig"))
+            && ext == Some("json") => return true,
+        _ => {}
+    }
+
+    // Conda/pip environment files (environment_*.yaml, environment.yml, etc.)
+    // These are dependency manifests with zero architectural value.
+    if (lower.starts_with("environment") || lower.starts_with("requirements"))
+        && matches!(ext, Some("yaml" | "yml" | "txt"))
+    {
+        return true;
+    }
+
     // JS task runners — matched by filename anywhere (these names are unambiguous).
     match lower.as_str() {
         "gulpfile.js" | "gruntfile.js" | "jakefile.js" => return true,
@@ -308,7 +330,6 @@ fn is_config_file(relative_path: &Path, filename: &str) -> bool {
     // (e.g., triagebot.toml, rust-toolchain.toml, netlify.toml, book.toml).
     // TOML is a configuration format by design; the only TOML files that
     // define project structure are Cargo.toml and pyproject.toml.
-    let ext = lower.rsplit_once('.').map(|(_, e)| e);
     if ext == Some("toml") && !matches!(lower.as_str(), "cargo.toml" | "pyproject.toml") {
         return true;
     }
@@ -528,7 +549,7 @@ pub fn build_groups(
         let file_path = relative.to_path_buf();
         let lines: Vec<&str> = source.lines().collect();
         let file_role = FileRole::from_path(relative);
-        let is_config = relative.file_name()
+        let is_file_config = relative.file_name()
             .and_then(|n| n.to_str())
             .is_some_and(|name| is_config_file(relative, name));
         let is_test = walk::is_test_file(relative);
@@ -561,6 +582,15 @@ pub fn build_groups(
             let is_boilerplate_section = kind_category == KindCategory::Section
                 && matches!(lang, Some(crate::Lang::Markdown))
                 && is_boilerplate_heading(&sym.name);
+
+            // TOML [tool.*] sections are tool configuration (linters, formatters,
+            // type checkers, test runners) embedded in project manifests. They're
+            // equivalent to dedicated config files like eslint.config.js, and should
+            // be deprioritized similarly.
+            let is_config = is_file_config
+                || (kind_category == KindCategory::Section
+                    && matches!(lang, Some(crate::Lang::Toml))
+                    && sym.name.starts_with("tool."));
 
             let key = GroupKey {
                 is_public: sym.is_public,
@@ -1701,6 +1731,20 @@ mod tests {
         assert!(at_root("codecov.yml"));
         assert!(at_root("codecov.yaml"));
         assert!(at_root("renovate.json"));
+        // Package metadata and compiler config
+        assert!(at_root("package.json"));
+        assert!(at_path("packages/my-lib/package.json")); // monorepo sub-packages too
+        assert!(at_root("tsconfig.json"));
+        assert!(at_root("tsconfig.build.json"));
+        assert!(at_root("tsconfig.node.json"));
+        assert!(at_root("jsconfig.json"));
+        assert!(at_path("packages/app/tsconfig.json")); // monorepo sub-packages too
+        // Conda/pip environment files
+        assert!(at_root("environment.yaml"));
+        assert!(at_root("environment_pt220cu121.yaml"));
+        assert!(at_root("environment.yml"));
+        assert!(at_root("requirements.txt"));
+        assert!(at_root("requirements-dev.txt"));
         // Not config files
         assert!(!at_root("main.js"));
         assert!(!at_root("lib.rs"));
@@ -1709,8 +1753,6 @@ mod tests {
         assert!(!at_root("README.md"));
         assert!(!at_root("build.go")); // build.rs is Rust-specific
         assert!(!at_root("setup.rs")); // setup.py is Python-specific
-        assert!(!at_root("package.json")); // project manifest
-        assert!(!at_root("tsconfig.json")); // project structure
         assert!(!at_root("compose.yaml")); // container orchestration
         assert!(!at_root("pnpm-workspace.yaml")); // monorepo structure
         assert!(!at_root("reference.yaml")); // data file

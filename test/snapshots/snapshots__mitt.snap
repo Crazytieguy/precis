@@ -2,17 +2,33 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (1005 tokens)
+budget: 1000 (1010 tokens)
 
 README.md
      9→# Mitt
     11→> Tiny 200b functional event emitter / pubsub.
     12→
     13→-   **Microscopic:** weighs less than 200 bytes gzipped
+    14→-   **Useful:** a wildcard `"*"` event type listens to all events
       →…
     21→## Table of Contents
+    23→-   [Install](#install)
+    24→-   [Usage](#usage)
+    25→-   [Examples & Demos](#examples--demos)
+    26→-   [API](#api)
+      →…
     30→## Install
+    32→This project uses [node](http://nodejs.org) and [npm](https://npmjs.com). Go check them out if you don't have them locally installed.
+    33→
+    34→```sh
+    35→$ npm install --save mitt
+      →…
     56→## Usage
+    58→```js
+    59→import mitt from 'mitt'
+    60→
+    61→const emitter = mitt()
+      →…
     81→### Typescript
    113→## Examples & Demos
    123→## API
@@ -31,26 +47,6 @@ README.md
    203→## License
 
 package.json
-     2→  "name": "mitt",
-     3→  "version": "3.0.1",
-     4→  "description": "Tiny 200b functional Event Emitter / pubsub.",
-     5→  "module": "dist/mitt.mjs",
-     6→  "main": "dist/mitt.js",
-     7→  "jsnext:main": "dist/mitt.mjs",
-     8→  "umd:main": "dist/mitt.umd.js",
-     9→  "source": "src/index.ts",
-    10→  "typings": "index.d.ts",
-    11→  "exports": {
-    18→  "scripts": {
-    30→  "repository": "developit/mitt",
-    31→  "keywords": [
-    37→  "homepage": "https://github.com/developit/mitt",
-    38→  "authors": [
-    41→  "license": "MIT",
-    42→  "files": [
-    46→  "mocha": {
-    58→  "prettier": {
-    62→  "devDependencies": {
 
 src/index.ts
      1→export type EventType = string | symbol;
@@ -89,11 +85,20 @@ src/index.ts
     53→
     54→	return {
     55→		/**
+    56→		 * A Map of event names to registered handler functions.
+    57→		 */
+    58→		all,
+    59→
+    60→		/**
       →		…
 
-test/index_test.ts
-
 test/test-types-compilation.ts
+     3→import mitt from '..';
+     5→interface SomeEventData {
+     9→const emitter = mitt<{
+    15→const barHandler …
+    16→const fooHandler …
+    17→const wildcardHandler …
 
 tsconfig.json
      2→	"compileOnSave": false,

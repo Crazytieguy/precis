@@ -2,10 +2,13 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2006 tokens)
+budget: 2000 (2008 tokens)
 
 Readme.md
      1→# Commander.js
+     8→The complete solution for [node.js](http://nodejs.org) command-line interfaces.
+     9→
+      →…
     61→## Installation
     67→## Quick Start
    147→## Declaring _program_ variable
@@ -103,8 +106,12 @@ lib/command.js
 
 lib/error.js
      4→class CommanderError extends Error {
+     6→   * Constructs the CommanderError class
+      →   …
     11→  constructor(exitCode, code, message) {
     25→class InvalidArgumentError extends CommanderError {
+    27→   * Constructs the InvalidArgumentError class
+      →   …
     30→  constructor(message) {
 
 lib/help.js
@@ -184,22 +191,13 @@ lib/suggestSimilar.js
 package-support.json
      2→  "versions": [
     18→  ]
-      →  …
+    19→}
 
 package.json
 
-tsconfig.js.json
-     7→  "extends": "./tsconfig.json",
-     8→  "include": [
-    14→  ],
-      →  …
+typings/index.d.ts
+  1113→export const program: Command;
 
-tsconfig.json
-    12→  "compilerOptions": {
-    33→  "include": [
-    43→  "exclude": ["node_modules"],
-
-tsconfig.ts.json
-     8→  "extends": "./tsconfig.json",
-     9→  "compilerOptions": {
-    15→  "include": [
+typings/index.test-d.ts
+   510→  createCommand(name?: string): MyCommand {
+   514→  myFunction(): void {

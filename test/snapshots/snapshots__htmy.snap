@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2006 tokens)
+budget: 2000 (2005 tokens)
 
 README.md
     10→# `htmy`
@@ -62,6 +62,8 @@ htmy/etree.py
     37→
     38→    __slots__ = ("_rules",)
     39→
+    40→    _htmy_fragment: ClassVar[str] = "htmy_fragment"
+    41→    """
     46→    def __init__ …
     55→    def convert …
     63→    def convert_element …
@@ -247,6 +249,3 @@ pyproject.toml
     15→[project.optional-dependencies]
     18→[dependency-groups]
     35→[build-system]
-    39→[tool.mypy]
-    50→[tool.pyright]
-    57→[tool.ruff]

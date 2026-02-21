@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1998 tokens)
+budget: 2000 (1999 tokens)
 
 README.md
     26→# D2TS - Differential Dataflow in TypeScript <!-- omit in toc -->
@@ -15,11 +15,6 @@ README.md
    699→## References
 
 package.json
-     2→  "name": "d2ts-monorepo",
-     3→  "private": true,
-     4→  "license": "Apache-2.0",
-     5→  "scripts": {
-    15→  "devDependencies": {
 
 packages/d2mini/src/graph.ts
     11→export class DifferenceStreamReader …
@@ -51,6 +46,11 @@ packages/d2mini/src/multiset.ts
     73→  consolidate …
    207→  extend …
    212→  getInner …
+
+packages/d2mini/src/operators/keying.ts
+    13→export function keyBy …
+    22→export function unkey …
+    30→export function rekey …
 
 packages/d2mini/src/utils.ts
      6→export class DefaultMap<K, V> extends Map<K, V> {
@@ -131,6 +131,12 @@ packages/d2ts/README.md
    210→## API
   1055→## Implementation Details
   1076→## References
+
+packages/d2ts/src/d2.ts
+    11→export type D2Options = {
+    15→export class D2 implements ID2 {
+    93→export class StreamBuilder<T> implements IStreamBuilder<T> {
+   166→export class RootStreamBuilder<T> extends StreamBuilder<T> {
 
 packages/d2ts/src/graph.ts
     20→export class DifferenceStreamReader<T> implements IDifferenceStreamReader<T> {
@@ -224,8 +230,3 @@ packages/d2ts/src/version-index.ts
 
 pnpm-workspace.yaml
      1→packages:
-
-tsconfig.json
-     2→  "compilerOptions": {
-    33→  "include": ["packages/d2ts/src/**/*"],
-    34→  "exclude": ["node_modules"]

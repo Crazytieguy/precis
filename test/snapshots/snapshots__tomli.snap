@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2015 tokens)
+budget: 2000 (2017 tokens)
 
 README.md
      5→# Tomli
@@ -46,13 +46,7 @@ pyproject.toml
     28→[project.urls]
     33→[tool.isort]
     46→[tool.tox]
-    51→[tool.tox.env_run_base]
-   129→[tool.coverage.run]
-   133→[tool.coverage.report]
    145→[tool.mypy]
-   157→[[tool.mypy.overrides]]
-   161→[[tool.mypy.overrides]]
-   167→[[tool.mypy.overrides]]
 
 scripts/use_setuptools.py
     12→def use_setuptools() -> None:
@@ -191,13 +185,21 @@ tests/test_data.py
     40→    def test_valid(self):
 
 tests/test_error.py
+    10→from . import tomllib
     13→class TestError(unittest.TestCase):
 
 tests/test_misc.py
+     5→import copy
+    14→from . import tomllib
     17→class TestMiscellaneous(unittest.TestCase):
 
 tomllib.md
      1→# `tomllib` – Tomli in the standard library
+     3→Tomli was added to the Python standard library in Python 3.11.
+     4→
+     5→Relevant links:
+     6→
+      →…
     13→## Converting Tomli to tomllib
     15→### Sync status
     20→### Steps to convert

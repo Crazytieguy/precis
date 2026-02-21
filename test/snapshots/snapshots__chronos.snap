@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2004 tokens)
+budget: 2000 (2007 tokens)
 
 README.md
      3→# Chronos: Pretrained Models for Time Series Forecasting
@@ -19,8 +19,6 @@ pyproject.toml
     31→[build-system]
     41→[project.optional-dependencies]
     68→[project.urls]
-    74→[tool.mypy]
-    77→[tool.ruff]
 
 src/chronos/__about__.py
      1→__version__ = "2.2.2"
@@ -105,6 +103,7 @@ src/chronos/chronos2/config.py
     45→
     46→    model_type = "t5"
     47→    attribute_map = {
+    48→        "hidden_size": "d_model",
     54→    def __init__ …
    102→@dataclass
    103→class Chronos2ForecastingConfig:
@@ -120,6 +119,8 @@ src/chronos/chronos2/config.py
    113→
    114→    @classmethod
    115→    def editable_fields(cls) -> list[str]:
+   116→        """
+      →        …
 
 src/chronos/chronos2/dataset.py
      6→import math
@@ -205,7 +206,7 @@ src/chronos/df_utils.py
    199→def convert_df_input_to_list_of_dicts_input …
 
 src/chronos/utils.py
-     5→from typing import List
+     5→from typing …
     11→def left_pad_and_stack_1D …
     22→def interpolate_quantiles …
    135→def weighted_quantile …
