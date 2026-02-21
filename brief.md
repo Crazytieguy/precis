@@ -10,7 +10,7 @@ For each uninspected entry:
 
 1. **Read the snapshot** (in `test/snapshots/`). Take notes in `scratch.md`: what do you understand about this codebase from precis output alone? Where would you look next if starting a task?
 
-2. **Run an Explore agent** on `test/fixtures/<path>` to understand the same codebase.
+2. **Run an Explore agent** on `test/fixtures/<path>` to understand the same codebase. Make it very clear which folder it should explore, it sometimes gets confused and explores the precis codebase.
 
 3. **Compare.** Did the Explore agent surface crucial details that precis missed? Did precis waste budget on content the Explore agent ignored? Is precis output misleading?
 
