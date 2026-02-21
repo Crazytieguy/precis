@@ -63,36 +63,36 @@ with_fixtures! {
 
 with_entries! {
     // ── Rust ────────────────────────────────────────────────────────────
-    (anyhow,                  "anyhow",                         2000), // inspected: exceeds explore
-    (thiserror,               "thiserror",                      2000), // inspected: exceeds explore
-    (thiserror_impl_src,      "thiserror/impl/src",             1000), // inspected: exceeds explore
-    (log,                     "log",                            2000), // inspected: exceeds explore
-    (log_src_kv,              "log/src/kv",                     1000), // inspected: exceeds explore
+    (anyhow,                  "anyhow",                         2000),
+    (thiserror,               "thiserror",                      2000),
+    (thiserror_impl_src,      "thiserror/impl/src",             1000),
+    (log,                     "log",                            2000),
+    (log_src_kv,              "log/src/kv",                     1000),
     (mdbook,                  "mdbook",                         4000), // inspected: logged observation
-    (mdbook_guide_src,        "mdbook/guide/src",               2000), // inspected: exceeds explore
+    (mdbook_guide_src,        "mdbook/guide/src",               2000),
     (toasty,                  "toasty",                         4000), // inspected: logged observation
     (toasty_core,             "toasty/crates/toasty-core",      2000), // inspected: logged observation
-    (toasty_codegen,          "toasty/crates/toasty-codegen",   2000), // inspected: exceeds explore
-    (sps,                     "sps",                            4000), // inspected: exceeds explore
+    (toasty_codegen,          "toasty/crates/toasty-codegen",   2000),
+    (sps,                     "sps",                            4000),
     (sps_core,                "sps/sps-core",                   2000), // inspected: logged observation
-    (otree,                   "otree",                          2000), // inspected: exceeds explore
+    (otree,                   "otree",                          2000),
 
     // ── Go ──────────────────────────────────────────────────────────────
-    (go_multierror,           "go-multierror",                  2000), // inspected: exceeds explore
-    (xxhash,                  "xxhash",                         2000), // inspected: exceeds explore
-    (xxhash_xxhsum,           "xxhash/xxhsum",                  1000), // inspected: exceeds explore
+    (go_multierror,           "go-multierror",                  2000),
+    (xxhash,                  "xxhash",                         2000),
+    (xxhash_xxhsum,           "xxhash/xxhsum",                  1000),
     (mcphost,                 "mcphost",                        4000), // inspected: logged observation
-    (mcphost_sdk,             "mcphost/sdk",                    1000), // inspected: exceeds explore
+    (mcphost_sdk,             "mcphost/sdk",                    1000),
     (tock,                    "tock",                            4000), // inspected: deprioritize mocks/
     (tock_internal_core,      "tock/internal/core",             1000), // inspected: deprioritize mocks/
 
     // ── TypeScript ──────────────────────────────────────────────────────
     (cmdk,                    "cmdk",                           2000), // inspected: logged observation
-    (cmdk_cmdk_src,           "cmdk/cmdk/src",                  1000), // inspected: exceeds explore
-    (vaul,                    "vaul",                            2000), // inspected: exceeds explore
-    (ts_pattern,              "ts-pattern",                     2000), // inspected: exceeds explore
-    (ts_pattern_src_types,    "ts-pattern/src/types",           1000), // inspected: exceeds explore
-    (ky,                      "ky",                              2000), // inspected: exceeds explore
+    (cmdk_cmdk_src,           "cmdk/cmdk/src",                  1000),
+    (vaul,                    "vaul",                            2000),
+    (ts_pattern,              "ts-pattern",                     2000),
+    (ts_pattern_src_types,    "ts-pattern/src/types",           1000),
+    (ky,                      "ky",                              2000),
     (ky_source_errors,        "ky/source/errors",               1000), // error hierarchy
     (superstruct,             "superstruct",                    2000),
     (superstruct_src_structs, "superstruct/src/structs",        1000), // validator definitions

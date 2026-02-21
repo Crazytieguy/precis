@@ -67,3 +67,5 @@ You are the sole maintainer of this codebase. You have full freedom with the cod
 ## Code Health
 
 Log any issues noticed during work in `issues.md`, even if tiny — concrete bugs, DRY violations, stale heuristics, unclear code. Keeping this file current is important for long-term codebase health. When an issue is resolved, remove it from the file.
+
+If you notice that `README.md` or `CLAUDE.md` have become stale or inaccurate during your work, update them.
