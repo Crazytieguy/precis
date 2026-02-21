@@ -4,7 +4,7 @@ Find the next uninspected entry (no `// inspected:` comment).
 
 ## Inspection
 
-1. **Read the snapshot** for this entry (in `test/snapshots/`). Take notes in a temp file (`/tmp/precis_notes.md`): what do you understand about this codebase from precis output alone? Where would you look next if starting a task?
+1. **Read the snapshot** for this entry (in `test/snapshots/`). Take notes in a temp file (`.precis_notes.md`): what do you understand about this codebase from precis output alone? Where would you look next if starting a task?
 
 2. **Run an Explore agent** on `test/fixtures/<path>` to understand the same codebase.
 
@@ -27,7 +27,7 @@ If multiple logged observations point to the same underlying issue, that's also 
 
 ## Session end
 
-Delete `/tmp/precis_notes.md`. Provide a brief summary of what you inspected and any changes made.
+Delete `.precis_notes.md`. Provide a brief summary of what you inspected and any changes made.
 
 Don't `<break>` unless every entry has been inspected. Don't `<wait-for-user>`.
 
