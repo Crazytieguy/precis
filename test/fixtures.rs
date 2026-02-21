@@ -64,7 +64,7 @@ with_fixtures! {
 with_entries! {
     // ── Rust ────────────────────────────────────────────────────────────
     (anyhow,                  "anyhow",                         2000), // inspected: exceeds explore
-    (thiserror,               "thiserror",                      2000),
+    (thiserror,               "thiserror",                      2000), // inspected: exceeds explore
     (thiserror_impl_src,      "thiserror/impl/src",             1000),
     (log,                     "log",                            2000),
     (log_src_kv,              "log/src/kv",                     1000),
