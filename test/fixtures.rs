@@ -126,8 +126,8 @@ with_entries! {
     // ── Python (ML) ─────────────────────────────────────────────────────
     (xlstm,                   "xlstm",                           2000), // inspected: logged observation
     (xlstm_blocks,            "xlstm/xlstm/blocks",             1000), // inspected: logged observation
-    (nano_vllm,               "nano-vllm",                      2000),
-    (nano_vllm_engine,        "nano-vllm/nanovllm/engine",      1000),
+    (nano_vllm,               "nano-vllm",                      2000), // inspected: logged observation
+    (nano_vllm_engine,        "nano-vllm/nanovllm/engine",      1000), // inspected: logged observation
     (chronos,                 "chronos-forecasting",             2000),
 
     // ── C ───────────────────────────────────────────────────────────────
