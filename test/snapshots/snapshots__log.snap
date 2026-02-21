@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1989 tokens)
+budget: 2000 (1988 tokens)
 
 Cargo.toml
      1→[package]
@@ -19,7 +19,6 @@ README.md
    106→## Structured logging
 
 src/__private_api.rs
-     9→#[cfg(not(feature = "kv"))]
     10→pub type Value<'a> = &'a str;
     14→    pub trait KVs<'a> {
     15→        fn into_kvs …
@@ -28,7 +27,7 @@ src/__private_api.rs
    103→pub fn enabled …
    108→pub fn loc …
    113→mod kv_support {
-   116→    pub type Value<'a> = kv::Value<'a>;
+   116→    pub type Value …
    122→    pub fn capture_to_value …
    126→    pub fn capture_debug …
    130→    pub fn capture_display …
@@ -99,6 +98,7 @@ src/kv/value.rs
    217→    pub fn visit …
    379→    pub fn to_borrowed_error …
    384→    pub fn to_borrowed_str …
+   390→mod std_support {
    395→    use super::*;
    438→        pub fn to_cow_str …
    462→pub trait VisitValue<'v> {
@@ -115,7 +115,9 @@ src/kv/value.rs
    517→    fn visit_char …
    524→    fn visit_error …
    530→    fn visit_borrowed_error …
+   602→pub(in crate::kv) mod inner {
    610→    use super::*;
+   721→pub(in crate::kv) mod inner {
    735→    use super::*;
    738→    pub enum Inner<'v> {
   1055→    pub fn capture_debug …
@@ -214,6 +216,3 @@ test_max_level_features/Cargo.toml
      1→[package]
      7→[[bin]]
     11→[dependencies.log]
-
-triagebot.toml
-     1→[assign]

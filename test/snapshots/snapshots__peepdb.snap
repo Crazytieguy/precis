@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2000 tokens)
+budget: 2000 (1998 tokens)
 
 README.md
      1→# peepDB
@@ -22,20 +22,18 @@ README.md
    166→## 📜 License
    170→## 📚 Documentation
 
-docs/index.md
-
 peepdb/__main__.py
      1→from .cli import main
 
 peepdb/cli.py
-     1→import click
-     2→import json
+     1→import click …
+     2→import json …
      3→from .core …
      4→from .config …
     11→from .exceptions …
-    12→from decimal import Decimal
-    13→from datetime import date
-    14→import logging
+    12→from decimal …
+    13→from datetime …
+    14→import logging …
     16→class CustomEncoder(json.JSONEncoder):
     17→    def default(self, obj):
     27→def cli():
@@ -146,7 +144,10 @@ peepdb/db/mongodb.py
     42→    def fetch_data …
 
 peepdb/db/mssql.py
+     1→import pyodbc …
      2→from .base import BaseDatabase
+     3→from typing …
+     4→import logging …
      6→class MSSQLDatabase(BaseDatabase):
      7→    def __init__ …
     12→    def connect …
@@ -183,7 +184,10 @@ peepdb/db/postgresql.py
     34→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 peepdb/db/sqlite.py
+     1→import os …
+     2→import sqlite3 …
      3→from .base import BaseDatabase
+     4→from typing …
      6→class SQLiteDatabase(BaseDatabase):
      7→    def connect(self) -> None:
     22→    def disconnect(self) -> None:
@@ -197,7 +201,3 @@ peepdb/exceptions.py
 project.toml
      1→[build-system]
      5→[project]
-    35→[project.optional-dependencies]
-    42→[project.urls]
-    46→[project.scripts]
-    49→[tool.setuptools.packages.find]

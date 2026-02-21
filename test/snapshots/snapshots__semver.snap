@@ -2,15 +2,13 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2001 tokens)
+budget: 2000 (2002 tokens)
 
 .github/settings.yml
      3→repository:
     13→branches:
 
-.release-please-manifest.json
-     2→  ".": "7.7.4"
-     3→}
+CHANGELOG.md
 
 README.md
      1→semver(1) -- The semantic versioner for npm
@@ -19,7 +17,13 @@ README.md
    139→## Versions
    148→## Ranges
    184→### Prerelease Tags
+   219→#### Prerelease Identifiers
+   250→#### Prerelease Identifier Base
    279→### Advanced Range Syntax
+   287→#### Hyphen Ranges `X.Y.Z - A.B.C`
+   306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*`
+   324→#### Tilde Ranges `~1.2.3` `~1.2` `~1`
+   341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4`
    384→### Range Grammar
    408→## Functions
    453→### Comparison
@@ -239,8 +243,8 @@ ranges/outside.js
 
 ranges/subset.js
     45→const subset …
-    73→const minimumVersionWithPreRelease = [new Comparator('>=0.0.0-0')]
-    74→const minimumVersion = [new Comparator('>=0.0.0')]
+    73→const minimumVersionWithPreRelease …
+    74→const minimumVersion …
     76→const simpleSubset …
    226→const higherGT …
    238→const lowerLT …
@@ -252,8 +256,3 @@ ranges/valid.js
      4→const validRange = (range, options) => {
 
 release-please-config.json
-     2→  "group-pull-request-title-pattern": "chore: release ${version}",
-     3→  "pull-request-title-pattern": "chore: release${component} ${version}",
-     4→  "changelog-sections": [
-    31→  "packages": {
-    36→  "prerelease-type": "pre.0"

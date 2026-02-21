@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1993 tokens)
+budget: 2000 (1991 tokens)
 
 Cargo.toml
      1→[package]
@@ -18,9 +18,6 @@ README.md
    155→## Comparison to thiserror
    166→#### License
 
-rust-toolchain.toml
-     1→[toolchain]
-
 src/backtrace.rs
      8→pub(crate) enum Backtrace {}
     11→macro_rules! impl_backtrace {
@@ -34,6 +31,8 @@ src/backtrace.rs
 src/chain.rs
      1→use self::ChainState::*;
      2→use crate::StdError;
+     5→use alloc::vec::{self, Vec};
+     8→pub(crate) use crate::Chain;
     11→pub(crate) struct Chain<'a> {
     16→pub(crate) enum ChainState<'a> {
     27→    #[cold]
@@ -102,7 +101,6 @@ src/fmt.rs
      1→use crate::chain::Chain;
      2→use crate::error::ErrorImpl;
      3→use crate::ptr::Ref;
-    69→struct Indented<'a, D> {
 
 src/kind.rs
     47→use crate::Error;

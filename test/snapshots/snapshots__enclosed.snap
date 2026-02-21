@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4004 tokens)
+budget: 4000 (4006 tokens)
 
 README.md
     26→## Introduction
@@ -223,9 +223,9 @@ packages/app-server/src/modules/notes/notes.errors.ts
     21→export const createExpirationDelayRequiredError = createErrorFactory({
 
 packages/app-server/src/modules/notes/notes.types.ts
-     4→export type NotesRepository …
-     6→export type DatabaseNote …
-    19→export type Note …
+     4→export type NotesRepository = ReturnType<typeof createNoteRepository>;
+     6→export type DatabaseNote = {
+    19→export type Note = Expand<Omit<DatabaseNote, 'expirationDate'> & { expirationDate?: Date }>;
 
 packages/app-server/src/modules/shared/errors/errors.ts
     21→  constructor …
@@ -253,9 +253,6 @@ packages/app-server/tsconfig.json
      2→  "compilerOptions": {
     16→  }
       →  …
-
-packages/app-server/wrangler.toml
-     5→[[kv_namespaces]]
 
 packages/cli/README.md
      1→# Enclosed CLI
@@ -403,6 +400,11 @@ packages/lib/src/crypto/crypto.types.ts
      5→export type CompressionAlgorithm …
      7→export type CryptoServices …
 
+packages/lib/src/crypto/serialization/serialization.registry.ts
+     7→export const serializationMethodDefinitions …
+    11→export const serializationMethodDefinitionsByName …
+    12→export const serializationFormats …
+
 packages/lib/src/crypto/serialization/serialization.types.ts
      4→export type SerializationMethodsDefinition = ReturnType<typeof defineSerializationMethods>;
      5→export type SerializationFormat = typeof serializationMethodDefinitions[number]['name'];
@@ -419,9 +421,3 @@ packages/lib/tsconfig.json
 pnpm-workspace.yaml
      1→packages:
      4→catalog:
-
-renovate.json
-     2→  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-     3→  "extends": [
-     5→  ]
-     6→}

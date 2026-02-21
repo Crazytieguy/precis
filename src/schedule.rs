@@ -222,7 +222,8 @@ fn detect_heading_depth(lines: &[&str], sym_line_0: usize, end_line: usize) -> u
 /// Detect build/tool configuration files by filename and path convention.
 /// These are files like `eslint.config.js`, `jest.config.ts`, `.eslintrc.js`, etc.
 /// that configure development tools rather than implementing library/app logic.
-/// Also detects files in conventional tooling directories (`scripts/`, `tools/`).
+/// Also detects data-format config files (`triagebot.toml`, `codecov.yml`, etc.)
+/// and files in conventional tooling directories (`scripts/`, `tools/`).
 /// `relative_path` is the path relative to the project root.
 fn is_config_file(relative_path: &Path, filename: &str) -> bool {
     let lower = filename.to_ascii_lowercase();
@@ -246,6 +247,21 @@ fn is_config_file(relative_path: &Path, filename: &str) -> bool {
         _ => {}
     }
 
+    // TOML files that aren't project manifests are tool/service configuration
+    // (e.g., triagebot.toml, rust-toolchain.toml, netlify.toml, book.toml).
+    // TOML is a configuration format by design; the only TOML files that
+    // define project structure are Cargo.toml and pyproject.toml.
+    let ext = lower.rsplit_once('.').map(|(_, e)| e);
+    if ext == Some("toml") && !matches!(lower.as_str(), "cargo.toml" | "pyproject.toml") {
+        return true;
+    }
+
+    // Dotfiles with data-format extensions are tool/service configuration
+    // (e.g., .travis.yml, .codecov.yml, .release-please-manifest.json).
+    if lower.starts_with('.') && matches!(ext, Some("json" | "yml" | "yaml")) {
+        return true;
+    }
+
     // *.config.{ext} — catches eslint.config.js, jest.config.ts, vite.config.mjs,
     // next.config.js, tailwind.config.ts, postcss.config.js, tsup.config.ts,
     // playwright.config.ts, rollup.config.js, webpack.config.js, babel.config.js, etc.
@@ -257,6 +273,22 @@ fn is_config_file(relative_path: &Path, filename: &str) -> bool {
         if stem.starts_with('.') && stem.ends_with("rc") {
             return true;
         }
+        // *-config.{data-ext} and *_config.{data-ext} — catches
+        // release-please-config.json and similar tool/service config files.
+        // Restricted to data-format extensions to avoid matching code files
+        // like my_config.py which may contain configuration logic.
+        if (stem.ends_with("-config") || stem.ends_with("_config"))
+            && matches!(ext, Some("json" | "yml" | "yaml"))
+        {
+            return true;
+        }
+    }
+
+    // Specific well-known repo management config files that don't match
+    // the patterns above (not TOML, not dotfiles, no *-config pattern).
+    match lower.as_str() {
+        "codecov.yml" | "codecov.yaml" | "renovate.json" => return true,
+        _ => {}
     }
 
     // Files in conventional tooling directories are development utilities
@@ -1437,15 +1469,45 @@ mod tests {
         assert!(at_root("gulpfile.js"));
         assert!(at_root("Jakefile.js"));
         assert!(at_path("tools/Gulpfile.js")); // task runners match in subdirs too
+        // TOML files that aren't project manifests
+        assert!(at_root("triagebot.toml"));
+        assert!(at_root("rust-toolchain.toml"));
+        assert!(at_root("netlify.toml"));
+        assert!(at_root("fly.toml"));
+        assert!(at_path("guide/book.toml")); // tool config in subdirs too
+        assert!(at_path("packages/app-server/wrangler.toml"));
+        // Project manifests are NOT config
+        assert!(!at_root("Cargo.toml"));
+        assert!(!at_root("pyproject.toml"));
+        assert!(!at_path("crates/core/Cargo.toml"));
+        // Dotfiles with data-format extensions
+        assert!(at_root(".travis.yml"));
+        assert!(at_root(".gitlab-ci.yml"));
+        assert!(at_root(".codecov.yml"));
+        assert!(at_root(".release-please-manifest.json"));
+        assert!(at_root(".renovaterc.json")); // also caught by .{name}rc pattern
+        // *-config and *_config patterns (data-format extensions only)
+        assert!(at_root("release-please-config.json"));
+        assert!(at_root("app-config.yaml"));
+        assert!(at_root("my_config.json"));
+        assert!(!at_root("my_config.py")); // code file, not data config
+        // Specific well-known repo management files
+        assert!(at_root("codecov.yml"));
+        assert!(at_root("codecov.yaml"));
+        assert!(at_root("renovate.json"));
         // Not config files
         assert!(!at_root("main.js"));
         assert!(!at_root("lib.rs"));
         assert!(!at_root("index.ts"));
-        assert!(!at_root("config.js")); // no *.config.* pattern
-        assert!(!at_root("my_config.py"));
+        assert!(!at_root("config.js")); // no *.config.* pattern (code file)
         assert!(!at_root("README.md"));
         assert!(!at_root("build.go")); // build.rs is Rust-specific
         assert!(!at_root("setup.rs")); // setup.py is Python-specific
+        assert!(!at_root("package.json")); // project manifest
+        assert!(!at_root("tsconfig.json")); // project structure
+        assert!(!at_root("compose.yaml")); // container orchestration
+        assert!(!at_root("pnpm-workspace.yaml")); // monorepo structure
+        assert!(!at_root("reference.yaml")); // data file
         // Files in scripts/ and tools/ directories
         assert!(at_path("scripts/release.py"));
         assert!(at_path("scripts/build.sh"));

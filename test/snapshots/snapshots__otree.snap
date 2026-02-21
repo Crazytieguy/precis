@@ -18,25 +18,6 @@ README.md
     52→## Roadmap
     82→## Thanks
 
-build.rs
-
-config/default.toml
-     1→[tree]
-     5→[editor]
-    10→[layout]
-    14→[header]
-    18→[footer]
-    21→[data]
-    25→[filter]
-    30→[keys]
-    62→[colors]
-    66→[colors.tree]
-    79→[colors.data]
-    90→[colors.footer]
-    95→[colors.popup]
-   100→[colors.filter]
-   103→[types]
-
 src/clipboard.rs
     28→pub fn write_clipboard(text: &str) -> Result<()> {
 
@@ -67,6 +48,9 @@ src/config/mod.rs
      1→pub mod colors;
      2→pub mod keys;
      3→pub mod types;
+    12→use self::colors::Colors;
+    13→use self::keys::Keys;
+    14→use self::types::Types;
     17→pub struct Config {
     53→pub struct Tree {
     62→pub struct Editor {
@@ -85,6 +69,8 @@ src/config/mod.rs
 
 src/config/types.rs
     28→pub struct Types {
+    29→    #[serde(default = "Types::default_str")]
+      →    …
 
 src/debug.rs
      7→#[macro_export]
@@ -95,6 +81,7 @@ src/debug.rs
 src/edit.rs
      8→use crate::config::Config;
     10→pub struct Edit {
+    16→impl Edit {
     17→    pub fn new …
     40→    pub fn run …
 
@@ -103,6 +90,9 @@ src/live_reload.rs
     28→    pub fn new …
     64→    pub fn get_err …
     71→    pub fn parse_tree …
+    93→struct Data {
+
+src/main.rs
 
 src/parse/any.rs
      9→pub struct AnyParser {
@@ -113,6 +103,7 @@ src/parse/hcl.rs
      8→pub struct HclParser {}
 
 src/parse/json.rs
+     4→use super::{Parser, SyntaxToken};
      6→pub struct JsonParser {}
     26→pub fn highlight …
 
@@ -125,6 +116,7 @@ src/parse/mod.rs
     10→pub use syntax::SyntaxToken;
     18→pub enum ContentType {
     19→    Json,
+    20→    Yaml,
       →    …
     36→pub trait Parser {
     37→    fn extension …
@@ -171,6 +163,7 @@ src/tree.rs
    394→    pub fn build_highlighted_text …
 
 src/ui/app.rs
+    27→enum Refresh {
     39→enum ElementInFocus {
     48→pub enum ScrollDirection {
     49→    Up,
@@ -178,6 +171,7 @@ src/ui/app.rs
     51→}
     53→pub struct App {
     86→pub enum ShowResult {
+    91→impl App {
    102→    pub fn new(cfg: Rc<Config>, tree: Tree, fw: Option<FileWatcher>) -> Self {
    133→    pub fn set_header …
    137→    pub fn show …
@@ -215,6 +209,7 @@ src/ui/footer.rs
      8→use crate::config::Config;
     10→pub enum FooterText<'a> {
     16→pub struct Footer {
+    20→impl Footer {
     21→    pub fn new …
     25→    pub fn draw …
 
@@ -234,6 +229,7 @@ src/ui/mod.rs
 src/ui/popup.rs
     13→pub struct PopupData {
     18→pub struct Popup {
+    26→impl Popup {
     27→    pub fn new …
     35→    pub fn set_data …
     39→    pub fn on_key …

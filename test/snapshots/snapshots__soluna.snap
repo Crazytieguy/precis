@@ -76,6 +76,8 @@ src/gamepad.c
     29→struct gamepad_state {
    267→static struct gamepad_global {
    274→struct gamepad_local {
+   390→luaopen_gamepad …
+   449→luaopen_gamepad_device …
 
 src/image.c
    128→struct rect {
@@ -280,7 +282,3 @@ src/version.h
      2→#define soluna_version_h
      4→#define SOLUNA_API_VERSION 3
      6→#define SOLUNA_HASH_VERSION "dev"
-
-web/config.toml
-     7→[pagination]
-    10→[params]

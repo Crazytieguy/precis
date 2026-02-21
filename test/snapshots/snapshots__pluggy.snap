@@ -2,13 +2,9 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2006 tokens)
+budget: 2000 (2008 tokens)
 
 codecov.yml
-     1→coverage:
-     5→    changes: true
-     6→
-     7→comment: off
 
 pyproject.toml
      1→[build-system]
@@ -225,6 +221,11 @@ testing/benchmark.py
 
 testing/conftest.py
     24→def pm() -> PluginManager:
+
+testing/test_hookcaller.py
+    21→def hc …
+    61→def addmeth …
+   329→def test_hookimpl …
 
 testing/test_tracer.py
      7→def rootlogger() -> TagTracer:

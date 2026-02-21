@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1988 tokens)
+budget: 2000 (1987 tokens)
 
 Cargo.toml
      1→[package]
@@ -10,7 +10,6 @@ Cargo.toml
     30→[dependencies]
     33→[dev-dependencies]
     39→[workspace]
-    42→[package.metadata.docs.rs]
 
 README.md
      1→derive(Error)
@@ -33,7 +32,6 @@ impl/Cargo.toml
      1→[package]
     11→[lib]
     14→[dependencies]
-    19→[package.metadata.docs.rs]
 
 impl/src/ast.rs
      1→use crate::attr::{self, Attrs};
@@ -64,8 +62,6 @@ impl/src/attr.rs
     51→pub struct Fmt<'a> {
     57→pub enum Trait {
     69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
-   302→impl ToTokens for Display<'_> {
-   342→impl ToTokens for Trait {
 
 impl/src/expand.rs
      1→use crate::ast::{Enum, Field, Input, Struct};
@@ -95,13 +91,22 @@ impl/src/generics.rs
      8→pub struct ParamsInScope<'a> {
     13→    pub fn new …
     19→    pub fn intersects …
-    26→fn crawl …
     48→pub struct InferredBounds {
     54→    pub fn new …
     61→    pub fn insert …
     74→    pub fn augment_where_clause …
 
 impl/src/lib.rs
+    23→mod ast;
+    24→mod attr;
+    25→mod expand;
+    26→mod fallback;
+    27→mod fmt;
+    28→mod generics;
+    29→mod prop;
+    30→mod scan_expr;
+    31→mod unraw;
+    32→mod valid;
     39→#[proc_macro_derive(Error, attributes(backtrace, error, from, source))]
     40→pub fn derive_error(input: TokenStream) -> TokenStream {
     46→struct private;
@@ -133,9 +138,6 @@ impl/src/unraw.rs
 impl/src/valid.rs
      1→use crate::ast::{Enum, Field, Input, Struct, Variant};
      2→use crate::attr::Attrs;
-
-rust-toolchain.toml
-     1→[toolchain]
 
 src/aserror.rs
      5→pub trait AsDynError<'a>: Sealed {
@@ -209,6 +211,8 @@ tests/test_expr.rs
     11→pub enum CompilerError {
     41→pub enum RustupError {
 
+tests/test_from.rs
+
 tests/test_option.rs
      5→pub mod structs {
     50→pub mod enums {
@@ -221,9 +225,6 @@ tests/test_source.rs
      7→pub struct ImplicitSource {
     13→pub struct ExplicitSource {
     21→pub struct BoxedSource {
-
-tests/ui/display-underscore.rs
-     5→pub struct Error;
 
 tests/ui/no-display.rs
      8→pub struct Error {

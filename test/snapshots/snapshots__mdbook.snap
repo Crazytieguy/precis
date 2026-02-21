@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (4002 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -216,6 +216,10 @@ crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
     22→pub struct HtmlHandlebars;
     26→    pub fn new() -> Self {
 
+crates/mdbook-html/src/html_handlebars/mod.rs
+     4→mod search;
+     7→pub use self::hbs_renderer::HtmlHandlebars;
+
 crates/mdbook-html/src/lib.rs
      5→pub mod theme;
      8→pub use html_handlebars::HtmlHandlebars;
@@ -278,6 +282,10 @@ crates/mdbook-renderer/README.md
     11→## License
 
 crates/mdbook-renderer/src/lib.rs
+    17→pub use mdbook_core::MDBOOK_VERSION;
+    18→pub use mdbook_core::book;
+    19→pub use mdbook_core::config;
+    20→pub use mdbook_core::errors;
     28→pub trait Renderer {
     30→    fn name …
     34→    fn render …
@@ -311,13 +319,6 @@ crates/xtask/Cargo.toml
 
 crates/xtask/README.md
      1→# xtask
-
-guide/book.toml
-     1→[book]
-     7→[rust]
-    10→[output.html]
-    37→[preprocessor.guide-helper]
-    40→[build]
 
 guide/guide-helper/Cargo.toml
      1→[package]
@@ -390,6 +391,9 @@ guide/src/guide/README.md
 
 guide/src/guide/creating.md
      1→# Creating a book
+     5→## Initializing a book
+    32→## Anatomy of a book
+    96→## Publishing a book
 
 guide/src/guide/installation.md
      1→# Installation
@@ -453,7 +457,7 @@ src/cmd/serve.rs
      1→use super::command_prelude::*;
      3→use super::watch;
      4→use crate::{get_book_dir, open};
-    20→const LIVE_RELOAD_ENDPOINT …
+    20→const LIVE_RELOAD_ENDPOINT: &str = "__livereload";
     23→pub fn make_subcommand() -> Command {
     51→pub fn execute(args: &ArgMatches) -> Result<()> {
    109→async fn serve …
@@ -489,13 +493,3 @@ src/cmd/watch.rs
 src/main.rs
     14→mod cmd;
     58→fn create_clap_command() -> Command {
-
-triagebot.toml
-     2→[assign]
-     5→[shortcut]
-     8→[bot-pull-requests]
-    11→[range-diff]
-    13→[relabel]
-    31→[merge-conflicts]
-    36→[review-submitted]
-    40→[review-requested]

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4001 tokens)
+budget: 4000 (4000 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -133,6 +133,9 @@ crates/toasty-cli/src/migration/drop.rs
 crates/toasty-cli/src/migration/history_file.rs
     11→pub struct HistoryFile {
     20→pub struct HistoryFileMigration {
+
+crates/toasty-cli/src/migration/reset.rs
+    11→pub struct ResetCommand {
 
 crates/toasty-cli/src/migration.rs
     25→pub struct MigrationCommand {
@@ -433,7 +436,6 @@ crates/toasty-driver-postgresql/src/lib.rs
 crates/toasty-driver-postgresql/src/statement_cache.rs
      9→pub struct StatementCache {
     15→    pub fn new(capacity: usize) -> Self {
-    49→struct Key …
     56→    pub fn new(query: &'a str, types: &'a [Type]) -> Self {
 
 crates/toasty-driver-postgresql/src/type.rs
@@ -484,6 +486,3 @@ crates/toasty-sql/src/stmt/alter_table.rs
 crates/toasty-sql/src/stmt.rs
     46→pub enum Statement {
     69→    pub fn returning_len(&self) -> Option<usize> {
-
-rust-toolchain.toml
-     1→[toolchain]
