@@ -69,7 +69,7 @@ with_entries! {
     (log,                     "log",                            2000), // inspected: logged observation
     (log_src_kv,              "log/src/kv",                     1000), // inspected: logged observation
     (mdbook,                  "mdbook",                         4000), // inspected: logged observation
-    (mdbook_guide_src,        "mdbook/guide/src",               2000),
+    (mdbook_guide_src,        "mdbook/guide/src",               2000), // inspected: logged observation
     (toasty,                  "toasty",                         4000), // inspected: logged observation
     (toasty_core,             "toasty/crates/toasty-core",      2000), // inspected: logged observation
     (toasty_codegen,          "toasty/crates/toasty-codegen",   2000),
