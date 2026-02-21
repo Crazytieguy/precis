@@ -3,8 +3,9 @@ source: tests/snapshots.rs
 expression: output
 ---
 sample.rs
-     3→pub fn process …
-    10→pub struct Token {
     16→pub enum TokenKind {
-    23→pub trait Visitor {
-    40→    pub fn new …
+    17→    Ident,
+    18→    Number,
+    19→    Symbol,
+    20→}
+    57→pub mod lexer;

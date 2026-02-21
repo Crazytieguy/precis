@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1986 tokens)
+budget: 2000 (1982 tokens)
 
 CONTEXT.md
      1→# toasty-codegen Component Context
@@ -73,22 +73,16 @@ src/expand/query.rs
 src/expand/relation.rs
      1→use super::{util, Expand};
      2→use crate::schema::{BelongsTo, Field, FieldTy, HasMany, HasOne};
-     4→use proc_macro2::TokenStream;
-     5→use quote::quote;
      7→impl Expand<'_> {
 
 src/expand/schema.rs
      1→use super::{util, Expand};
      2→use crate::schema::{AutoStrategy, Column, FieldTy, ModelKind, Name, UuidVersion};
-     4→use proc_macro2::TokenStream;
-     5→use quote::quote;
      7→impl Expand<'_> {
 
 src/expand/update.rs
      1→use super::{util, Expand};
      2→use crate::schema::FieldTy;
-     4→use proc_macro2::TokenStream;
-     5→use quote::quote;
      7→impl Expand<'_> {
      9→    pub(super) fn expand_embedded_update_builder(&self) -> TokenStream {
     31→    fn expand_update_field_methods(&self, is_embedded: bool) -> TokenStream {
@@ -120,7 +114,6 @@ src/expand.rs
 src/lib.rs
      1→mod expand;
      2→mod schema;
-     4→use proc_macro2::TokenStream;
      6→pub fn generate_model(input: TokenStream) -> syn::Result<TokenStream> {
     13→pub fn generate_embed(input: TokenStream) -> syn::Result<TokenStream> {
 
@@ -156,13 +149,22 @@ src/schema/column.rs
     16→impl syn::parse::Parse for Column {
     17→    fn parse …
     60→mod kw {
+    88→#[derive(Debug)]
     89→pub enum ColumnType {
     90→    Boolean,
     91→    Integer(u8),
     92→    UnsignedInteger(u8),
     93→    Text,
     94→    VarChar(u64),
-      →    …
+    95→    Numeric(Option<(u32, u32)>),
+    96→    Binary(u64),
+    97→    Blob,
+    98→    Timestamp(u8),
+    99→    Date,
+   100→    Time(u8),
+   101→    DateTime(u8),
+   102→    Custom(syn::LitStr),
+   103→}
    105→impl syn::parse::Parse for ColumnType {
    106→    fn parse …
    179→impl ColumnType {
@@ -218,10 +220,10 @@ src/schema/model_attr.rs
     12→impl ModelAttr {
 
 src/schema/name.rs
-     1→use proc_macro2::Span;
-     2→use std_util::str;
      5→pub(crate) struct Name {
     13→impl Name {
 
 src/schema/pk.rs
      2→pub(crate) struct PrimaryKey {
+
+src/schema.rs

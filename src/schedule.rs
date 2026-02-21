@@ -14,7 +14,8 @@ use crate::walk;
 #[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, Ord, PartialOrd)]
 pub enum KindCategory {
     Function, // Function, methods
-    Type,     // Struct, Enum, Trait, Interface, Class
+    Type,     // Struct, Trait, Interface, Class
+    Enum,     // Enum variant lists are high-value body content
     Constant, // Const, Static, TypeAlias
     Module,   // Module, Namespace
     Section,  // Markdown headings
@@ -28,10 +29,10 @@ impl KindCategory {
         match kind {
             parse::SymbolKind::Function => KindCategory::Function,
             parse::SymbolKind::Struct
-            | parse::SymbolKind::Enum
             | parse::SymbolKind::Trait
             | parse::SymbolKind::Interface
             | parse::SymbolKind::Class => KindCategory::Type,
+            parse::SymbolKind::Enum => KindCategory::Enum,
             parse::SymbolKind::Const | parse::SymbolKind::Static | parse::SymbolKind::TypeAlias => {
                 KindCategory::Constant
             }
@@ -46,8 +47,17 @@ impl KindCategory {
     /// Ordered stage progression for this kind category.
     pub fn stage_sequence(&self) -> &'static [StageKind] {
         match self {
-            // Types: body before doc (struct fields/enum variants are the useful content)
+            // Types: body before doc (struct fields are useful content)
             KindCategory::Type => &[
+                StageKind::FilePath,
+                StageKind::Names,
+                StageKind::Signatures,
+                StageKind::Body,
+                StageKind::Doc,
+            ],
+            // Enums: same progression as types, but Body gets higher value
+            // in compute_value (variant lists define type taxonomies)
+            KindCategory::Enum => &[
                 StageKind::FilePath,
                 StageKind::Names,
                 StageKind::Signatures,
@@ -840,6 +850,17 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
             StageKind::Body => 0.6,
             StageKind::Doc => 0.4,
         },
+        // Enum variant lists define type taxonomies — the most
+        // architecturally important content for understanding a type system.
+        // High Body value + gentle n-decay (below) ensures variants
+        // compete with cheap struct signature items.
+        KindCategory::Enum => match stage {
+            StageKind::FilePath => 0.3,
+            StageKind::Names => 1.0,
+            StageKind::Signatures => 0.7,
+            StageKind::Body => 1.5,
+            StageKind::Doc => 0.4,
+        },
         KindCategory::Section => match stage {
             StageKind::FilePath => 0.3,
             StageKind::Names => 1.0,
@@ -942,8 +963,17 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
         Some(pos) => 1.0 / (1.0 + 0.1 * pos as f64),
     };
 
+    // Enum variant lists: each variant is independently valuable (the 10th
+    // variant is as informative as the 1st). Use very gentle linear decay
+    // instead of 1/n so variant lines stay competitive with cheap items
+    // from other groups (e.g., wrapper struct signatures).
+    let n_decay = match (key.kind_category, stage) {
+        (KindCategory::Enum, StageKind::Body) => 1.0 + 0.05 * (n as f64 - 1.0),
+        _ => n as f64,
+    };
+
     base_value * stage_value * private_detail_penalty * count_factor * split_position_factor
-        / n as f64
+        / n_decay
 }
 
 // ---------------------------------------------------------------------------

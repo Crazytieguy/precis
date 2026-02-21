@@ -4,5 +4,8 @@ expression: output
 ---
 sample.c
     16→enum TokenKind {
-    30→int process(const char *input, int len) {
-    37→Token *token_new(int kind, int start, int end) {
+    17→    TOKEN_IDENT,
+    18→    TOKEN_NUMBER,
+    19→    TOKEN_SYMBOL,
+    20→};
+    50→static int _parse_next …

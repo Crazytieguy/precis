@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1994 tokens)
+budget: 2000 (1991 tokens)
 
 Cargo.toml
      1→[package]
@@ -19,7 +19,6 @@ README.md
    106→## Structured logging
 
 src/__private_api.rs
-     7→pub use std::{format_args, module_path, stringify};
      9→#[cfg(not(feature = "kv"))]
     10→pub type Value<'a> = &'a str;
     12→mod sealed {
@@ -39,19 +38,14 @@ src/__private_api.rs
    145→    pub fn capture_serde …
 
 src/kv/error.rs
-     3→/// An error encountered while working with structured data.
-      →…
      5→pub struct Error {
      6→    inner: Inner,
      7→}
     10→enum Inner {
-    21→    pub fn msg(msg: &'static str) -> Self {
+    21→    pub fn msg …
     69→mod std_support {
     70→    use super::*;
-    77→        pub fn boxed<E>(err: E) -> Self
-    78→        where
-    79→            E: Into<BoxedError>,
-    80→        {
+    77→        pub fn boxed …
 
 src/kv/key.rs
      7→pub trait ToKey {
@@ -68,8 +62,6 @@ src/kv/key.rs
    137→    use super::*;
 
 src/kv/mod.rs
-   246→mod error;
-   247→mod key;
    250→mod source;
    252→mod value;
    260→pub mod source;
@@ -80,8 +72,6 @@ src/kv/source.rs
     62→    fn visit …
     73→    fn get …
     85→    fn count …
-    91→fn get_default …
-   114→fn count_default …
    235→pub trait VisitSource<'kvs> {
    237→    fn visit_pair …
    280→mod std_support {
@@ -92,6 +82,8 @@ src/kv/value.rs
     11→pub trait ToValue {
     13→    fn to_value …
    119→pub struct Value<'v> {
+   120→    inner: inner::Inner<'v>,
+   121→}
    125→    pub fn from_any …
    133→    pub fn from_debug …
    143→    pub fn from_display …
@@ -111,29 +103,24 @@ src/kv/value.rs
    462→pub trait VisitValue<'v> {
    469→    fn visit_any …
    472→    fn visit_null …
-   477→    fn visit_u64 …
-   482→    fn visit_i64 …
-   487→    fn visit_u128 …
-   492→    fn visit_i128 …
-   497→    fn visit_f64 …
-   502→    fn visit_bool …
-   507→    fn visit_str …
-   512→    fn visit_borrowed_str …
-   517→    fn visit_char …
-   524→    fn visit_error …
-   530→    fn visit_borrowed_error …
    602→pub(in crate::kv) mod inner {
    610→    use super::*;
-   612→    pub use value_bag::ValueBag as Inner;
-   614→    pub use value_bag::Error;
    721→pub(in crate::kv) mod inner {
    735→    use super::*;
+   737→    #[derive(Clone)]
    738→    pub enum Inner<'v> {
-  1055→    pub fn capture_debug …
-  1065→    pub fn capture_display …
-  1075→    pub fn capture_error …
-  1085→    pub fn capture_serde …
-  1095→    pub fn capture_sval …
+   739→        None,
+   740→        Bool(bool),
+   741→        Str(&'v str),
+   742→        Char(char),
+   743→        I64(i64),
+   744→        U64(u64),
+   745→        F64(f64),
+   746→        I128(i128),
+   747→        U128(u128),
+   748→        Debug(&'v dyn fmt::Debug),
+   749→        Display(&'v dyn fmt::Display),
+   750→    }
   1123→pub use VisitValue as Visit;
   1129→macro_rules! as_debug {
   1139→macro_rules! as_display {
@@ -148,8 +135,30 @@ src/lib.rs
    410→pub mod kv;
    421→struct AtomicUsize {
    475→pub enum Level {
-   503→    fn eq …
-   510→    fn partial_cmp …
+   476→    /// The "error" level.
+   477→    ///
+   478→    /// Designates very serious errors.
+   479→    // This way these line up with the discriminants for LevelFilter below
+   480→    // This works because Rust treats field-less enums the same way as C does:
+   481→    // https://doc.rust-lang.org/reference/items/enumerations.html#custom-discriminant-values-for-field-less-enumerations
+   482→    Error = 1,
+   483→    /// The "warn" level.
+   484→    ///
+   485→    /// Designates hazardous situations.
+   486→    Warn,
+   487→    /// The "info" level.
+   488→    ///
+   489→    /// Designates useful information.
+   490→    Info,
+   491→    /// The "debug" level.
+   492→    ///
+   493→    /// Designates lower priority information.
+   494→    Debug,
+   495→    /// The "trace" level.
+   496→    ///
+   497→    /// Designates very low priority, often extremely verbose, information.
+   498→    Trace,
+   499→}
    548→    pub fn max …
    554→    pub fn to_level_filter …
    561→    pub fn as_str …
@@ -157,8 +166,19 @@ src/lib.rs
    599→    pub fn increment_severity …
    620→    pub fn decrement_severity …
    636→pub enum LevelFilter {
-   653→    fn eq …
-   660→    fn partial_cmp …
+   637→    /// A level lower than all log levels.
+   638→    Off,
+   639→    /// Corresponds to the `Error` log level.
+   640→    Error,
+   641→    /// Corresponds to the `Warn` log level.
+   642→    Warn,
+   643→    /// Corresponds to the `Info` log level.
+   644→    Info,
+   645→    /// Corresponds to the `Debug` log level.
+   646→    Debug,
+   647→    /// Corresponds to the `Trace` log level.
+   648→    Trace,
+   649→}
    699→    pub fn max …
    707→    pub fn to_level …
    714→    pub fn as_str …
@@ -166,7 +186,6 @@ src/lib.rs
    752→    pub fn increment_severity …
    774→    pub fn decrement_severity …
    781→enum MaybeStaticStr<'a> {
-   788→    fn get …
    842→pub struct Record<'a> {
    858→struct KeyValues<'a>(&'a dyn kv::Source);
    872→    pub fn builder …
@@ -175,36 +194,14 @@ src/lib.rs
    890→    pub fn level …
    896→    pub fn target …
    902→    pub fn module_path …
-   908→    pub fn module_path_static …
-   917→    pub fn file …
-   923→    pub fn file_static …
-   932→    pub fn line …
-   939→    pub fn key_values …
-   946→    pub fn to_builder …
   1003→pub struct RecordBuilder<'a> {
-  1021→    pub fn new …
-  1037→    pub fn args …
-  1044→    pub fn metadata …
-  1051→    pub fn level …
-  1058→    pub fn target …
-  1065→    pub fn module_path …
-  1072→    pub fn module_path_static …
-  1079→    pub fn file …
-  1086→    pub fn file_static …
-  1093→    pub fn line …
-  1101→    pub fn key_values …
-  1108→    pub fn build …
   1158→pub struct Metadata<'a> {
   1200→pub struct MetadataBuilder<'a> {
   1249→pub trait Log: Sync + Send {
   1283→struct NopLogger;
-  1483→fn set_logger_inner …
   1549→pub struct SetLoggerError(());
   1566→pub struct ParseLevelError(());
   1600→pub mod __private_api;
-  1602→/// The statically resolved maximum log level.
-  1603→///
-      →…
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
 
 src/macros.rs

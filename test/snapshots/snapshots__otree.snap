@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2001 tokens)
+budget: 2000 (2003 tokens)
 
 Cargo.toml
      1→[package]
@@ -23,7 +23,6 @@ src/clipboard.rs
 
 src/cmd.rs
     13→pub struct CommandArgs {
-   111→impl CommandArgs {
    112→    pub fn parse() -> Result<Option<Self>> {
    149→    pub fn update_config(&self, cfg: &mut Config) {
    202→    pub fn get_content_type(&self) -> ContentType {
@@ -41,24 +40,42 @@ src/config/colors.rs
 
 src/config/keys.rs
     54→pub enum Key {
-    74→impl Key {
+    55→    Char(char),
+    56→
+    57→    Ctrl(char),
+    58→    Alt(char),
+    59→
+    60→    F(u8),
+    61→
+    62→    Backspace,
+    63→    Enter,
+    64→    Left,
+    65→    Right,
+    66→    Up,
+    67→    Down,
+    68→    PageUp,
+    69→    PageDown,
+    70→    Tab,
+    71→    Esc,
+    72→}
    195→pub struct Keys {
    351→pub struct KeyAction {
-   356→impl Keys {
    357→    pub fn get_key_action …
 
 src/config/mod.rs
      1→pub mod colors;
      2→pub mod keys;
      3→pub mod types;
-    12→use self::colors::Colors;
-    13→use self::keys::Keys;
-    14→use self::types::Types;
     17→pub struct Config {
     53→pub struct Tree {
     62→pub struct Editor {
     74→pub struct Layout {
     83→pub enum LayoutDirection {
+    84→    #[serde(rename = "vertical")]
+    85→    Vertical,
+    86→    #[serde(rename = "horizontal")]
+    87→    Horizontal,
+    88→}
     91→pub struct Header {
    100→pub struct Footer {
    106→pub struct Filter {
@@ -72,10 +89,6 @@ src/config/mod.rs
 
 src/config/types.rs
     28→pub struct Types {
-    29→    #[serde(default = "Types::default_str")]
-    30→    pub str: String,
-    31→
-      →…
 
 src/debug.rs
      7→#[macro_export]
@@ -86,22 +99,16 @@ src/debug.rs
 src/edit.rs
      8→use crate::config::Config;
     10→pub struct Edit {
-    16→impl Edit {
     17→    pub fn new …
     40→    pub fn run …
 
 src/live_reload.rs
-    11→use crate::config::Config;
-    12→use crate::debug;
-    13→use crate::parse::ContentType;
-    14→use crate::tree::Tree;
     16→pub struct FileWatcher {
     28→    pub fn new …
     64→    pub fn get_err …
     71→    pub fn parse_tree …
-    93→struct Data {
-   112→    fn set_err …
-   118→fn watch_file …
+
+src/main.rs
 
 src/parse/any.rs
      9→pub struct AnyParser {
@@ -109,43 +116,61 @@ src/parse/any.rs
     20→    pub fn set_parser(&self, parser: Box<dyn Parser>) {
 
 src/parse/hcl.rs
-     4→use super::json::highlight as json_highlight;
-     5→use super::syntax;
-     6→use super::{Parser, SyntaxToken};
      8→pub struct HclParser {}
-    28→fn highlight …
 
 src/parse/json.rs
-     4→use super::{Parser, SyntaxToken};
      6→pub struct JsonParser {}
     26→pub fn highlight …
 
 src/parse/jsonl.rs
-     4→use super::json;
-     5→use super::{Parser, SyntaxToken};
      7→pub struct JsonlParser;
 
 src/parse/mod.rs
     18→pub enum ContentType {
     19→    Json,
     20→    Yaml,
-      →    …
+    21→    Toml,
+    22→    Xml,
+    23→
+    24→    /// See: <https://github.com/hashicorp/hcl>
+    25→    Hcl,
+    26→
+    27→    /// Useful for some logs file: <https://jsonlines.org/>
+    28→    // TODO: check out json-seq as specified in RFC7464 (https://datatracker.ietf.org/doc/html/rfc7464)?
+    29→    // basically jsonl but every json object is prefixed with 0x1e
+    30→    Jsonl,
+    31→
+    32→    #[clap(skip)]
+    33→    Any,
+    34→}
     36→pub trait Parser {
-    37→    fn extension …
-    39→    fn allow_array_root …
-    41→    fn parse …
-    43→    fn syntax_highlight …
-    45→    fn parse_root …
-    66→impl ContentType {
-    67→    pub fn new_parser …
 
 src/parse/syntax.rs
      9→use crate::config::Config;
     11→pub enum SyntaxToken {
+    12→    Symbol(&'static str),
+    13→
+    14→    Name(String),
+    15→
+    16→    Tag(String),
+    17→
+    18→    String(String),
+    19→    Number(String),
+    20→    Null(&'static str),
+    21→    Bool(&'static str),
+    22→
+    23→    Section(String),
+    24→
+    25→    Break,
+    26→    Indent(usize),
+    27→}
     32→    pub fn render …
    110→    pub fn pure_text …
    139→pub fn quote_field_name …
    151→pub enum StringValue {
+   152→    String(String),
+   153→    MultiLines(Vec<String>),
+   154→}
    157→    pub fn new …
    201→pub fn is_value_complex …
 
@@ -153,11 +178,9 @@ src/parse/toml.rs
      9→pub struct TomlParser {}
 
 src/parse/xml.rs
-    10→use super::{Parser, SyntaxToken};
     12→pub struct XmlParser {}
-    37→trait AttrMap {
-    38→    fn insert_text(&mut self, value: &Value) -> Option<Value>;
-    39→    fn insert_text_node(&mut self, value: Value);
+    38→    fn insert_text …
+    39→    fn insert_text_node …
     61→struct NodeValues {
    176→fn read …
 
@@ -168,30 +191,31 @@ src/tree.rs
     14→pub struct Tree {
     25→pub struct ItemValue {
     36→pub struct HighlightKeyword<'a> {
+    37→    pub text: &'a str,
+      →    …
     42→pub enum FieldType {
-    52→    pub fn parse …
-    58→    pub fn from_value …
-    94→    pub fn get_value …
-    98→    pub fn get_parser …
-   386→    pub fn plain_text …
-   390→    pub fn render …
-   394→    pub fn build_highlighted_text …
+    43→    Null,
+    44→    Num,
+    45→    Bool,
+    46→    Str,
+    47→    Obj,
+    48→    Arr,
+    49→}
 
 src/ui/app.rs
-    27→enum Refresh {
     39→enum ElementInFocus {
-    47→#[derive(Debug, Clone, Copy)]
     48→pub enum ScrollDirection {
     49→    Up,
     50→    Down,
     51→}
     53→pub struct App {
     86→pub enum ShowResult {
-    91→impl App {
+    87→    Edit(Box<Edit>),
+    88→    Quit,
+    89→}
    102→    pub fn new(cfg: Rc<Config>, tree: Tree, fw: Option<FileWatcher>) -> Self {
    133→    pub fn set_header …
    137→    pub fn show …
-   279→    fn popup_error …
 
 src/ui/data_block.rs
     16→pub struct DataBlock {
@@ -199,26 +223,26 @@ src/ui/data_block.rs
 src/ui/filter.rs
     13→pub struct Filter {
     20→pub enum FilterAction {
+    21→    Edit,
+    22→    Confirm,
+    23→    Skip,
+    24→    Quit,
+    25→}
     27→pub struct FilterOptions {
-    33→#[derive(Debug, Clone, Copy)]
     34→pub enum FilterTarget {
     35→    Key,
     36→    Value,
     37→    All,
     38→}
-    41→    pub fn new …
-    52→    pub fn on_key …
-    94→    pub fn get_options …
-   102→    pub fn set_target …
-   106→    pub fn switch_ignore_case …
-   119→    pub fn draw …
-   153→    pub fn filter …
 
 src/ui/footer.rs
      8→use crate::config::Config;
     10→pub enum FooterText<'a> {
+    11→    Identify(&'a [String], Option<String>),
+    12→    Message(String),
+    13→    None,
+    14→}
     16→pub struct Footer {
-    20→impl Footer {
     21→    pub fn new …
     25→    pub fn draw …
 
@@ -231,21 +255,11 @@ src/ui/header.rs
     55→    pub fn draw …
 
 src/ui/mod.rs
-    19→use crate::config::colors::Color;
     35→pub fn start(mut app: App) -> Result<()> {
 
 src/ui/popup.rs
     13→pub struct PopupData {
     18→pub struct Popup {
-    26→impl Popup {
-    27→    pub fn new …
-    35→    pub fn set_data …
-    39→    pub fn on_key …
-    48→    pub fn on_scroll …
-    77→    pub fn disable …
-    87→    pub fn is_disabled …
-    91→    pub fn draw …
-   118→    fn centered_rect …
 
 src/ui/tree_overview.rs
     19→pub struct TreeOverview {

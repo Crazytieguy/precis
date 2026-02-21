@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4007 tokens)
+budget: 4000 (3998 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -48,6 +48,13 @@ crates/mdbook-core/src/book.rs
     74→    pub fn for_each_chapter_mut …
     93→    pub fn push_item …
    119→pub enum BookItem {
+   120→    /// A nested chapter.
+   121→    Chapter(Chapter),
+   122→    /// A section separator.
+   123→    Separator,
+   124→    /// A part title.
+   125→    PartTitle(String),
+   126→}
    141→pub struct Chapter {
    173→    pub fn new …
    192→    pub fn new_draft …
@@ -68,10 +75,30 @@ crates/mdbook-core/src/config.rs
    318→pub struct BookConfig {
    356→    pub fn realized_text_direction …
    368→pub enum TextDirection {
+   369→    /// Left to right.
+   370→    #[serde(rename = "ltr")]
+   371→    LeftToRight,
+   372→    /// Right to left
+   373→    #[serde(rename = "rtl")]
+   374→    RightToLeft,
+   375→}
    379→    pub fn from_lang_code …
    394→pub struct BuildConfig {
    422→pub struct RustConfig {
    430→pub enum RustEdition {
+   431→    /// The 2024 edition of Rust
+   432→    #[serde(rename = "2024")]
+   433→    E2024,
+   434→    /// The 2021 edition of Rust
+   435→    #[serde(rename = "2021")]
+   436→    E2021,
+   437→    /// The 2018 edition of Rust
+   438→    #[serde(rename = "2018")]
+   439→    E2018,
+   440→    /// The 2015 edition of Rust
+   441→    #[serde(rename = "2015")]
+   442→    E2015,
+   443→}
    449→pub struct HtmlConfig {
    558→    pub fn theme_dir …
    566→    pub fn get_404_output_file …
@@ -81,7 +108,6 @@ crates/mdbook-core/src/config.rs
    641→pub struct Code {
    650→pub struct Search {
    708→pub struct SearchChapterSettings {
-   718→trait Updateable …
    719→    fn update_value …
 
 crates/mdbook-core/src/lib.rs
@@ -147,7 +173,7 @@ crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs
 
 crates/mdbook-driver/src/builtin_renderers/mod.rs
     20→pub struct CmdRenderer {
-    27→    pub fn new(name: String, cmd: String) -> CmdRenderer {
+    27→    pub fn new …
 
 crates/mdbook-driver/src/init.rs
      3→use super::MDBook;
@@ -231,7 +257,7 @@ crates/mdbook-markdown/src/lib.rs
     16→    /// Enables smart punctuation.
     17→    ///
       →    …
-    44→pub fn new_cmark_parser<'text>(text: &'text str, options: &MarkdownOptions) -> Parser<'text> {
+    44→pub fn new_cmark_parser …
 
 crates/mdbook-preprocessor/Cargo.toml
      1→[package]
@@ -242,17 +268,11 @@ crates/mdbook-preprocessor/README.md
      1→# mdbook-preprocessor
 
 crates/mdbook-preprocessor/src/lib.rs
-    18→pub use mdbook_core::MDBOOK_VERSION;
-    19→pub use mdbook_core::book;
-    20→pub use mdbook_core::config;
-    21→pub use mdbook_core::errors;
     30→pub trait Preprocessor {
     32→    fn name …
     36→    fn run …
     42→    fn supports_renderer …
     51→pub struct PreprocessorContext {
-    52→    /// The location of the book directory on disk.
-      →    …
     70→    pub fn new …
     82→pub fn parse_input …
 
@@ -265,10 +285,6 @@ crates/mdbook-renderer/README.md
      1→# mdbook-renderer
 
 crates/mdbook-renderer/src/lib.rs
-    17→pub use mdbook_core::MDBOOK_VERSION;
-    18→pub use mdbook_core::book;
-    19→pub use mdbook_core::config;
-    20→pub use mdbook_core::errors;
     28→pub trait Renderer {
     30→    fn name …
     34→    fn render …
@@ -286,12 +302,18 @@ crates/mdbook-summary/README.md
      1→# mdbook-summary
 
 crates/mdbook-summary/src/lib.rs
-     8→pub use mdbook_core::book::SectionNumber;
     59→pub fn parse_summary(summary: &str) -> Result<Summary> {
     67→pub struct Summary {
     84→pub struct Link {
     98→    pub fn new<S: Into<String>, P: AsRef<Path>>(name: S, location: P) -> Link {
    122→pub enum SummaryItem {
+   123→    /// A link to a chapter.
+   124→    Link(Link),
+   125→    /// A separator (`---`).
+   126→    Separator,
+   127→    /// A part title.
+   128→    PartTitle(String),
+   129→}
    173→struct SummaryParser<'a> {
    190→macro_rules! collect_events {
 
@@ -344,12 +366,6 @@ guide/src/cli/test.md
 guide/src/cli/watch.md
      1→# The watch command
 
-guide/src/continuous-integration.md
-     1→# Running `mdbook` in continuous integration
-    12→## Installing mdBook
-    67→## Running tests
-    83→## Deploying
-
 guide/src/for_developers/README.md
      1→# For developers
     17→## The build process
@@ -370,12 +386,6 @@ guide/src/format/markdown.md
    108→## Images
    127→## Extensions
 
-guide/src/format/mathjax.md
-     1→# MathJax support
-
-guide/src/format/mdbook.md
-     1→# mdBook-specific features
-
 guide/src/format/summary.md
      1→# SUMMARY.md
 
@@ -384,14 +394,9 @@ guide/src/guide/README.md
 
 guide/src/guide/creating.md
      1→# Creating a book
-     5→## Initializing a book
-    32→## Anatomy of a book
-    96→## Publishing a book
 
 guide/src/guide/installation.md
      1→# Installation
-     9→## Pre-compiled binaries
-    19→## Build from source using Rust
 
 guide/src/guide/reading.md
      1→# Reading books
@@ -411,8 +416,6 @@ src/cmd/clean.rs
      2→use crate::get_book_dir;
     11→pub fn make_subcommand() -> Command {
     19→pub fn execute(args: &ArgMatches) -> Result<()> {
-    36→/// Formats a number of bytes into a human readable SI-prefixed size.
-      →…
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
     45→#[derive(Debug)]
     46→pub struct Clean {
@@ -432,7 +435,6 @@ src/cmd/command_prelude.rs
     37→    fn arg_open(self) -> Self {
     41→    #[cfg(any(feature = "watch", feature = "serve"))]
     42→    fn arg_watcher(self) -> Self {
-    56→impl CommandExt for Command {
     62→pub fn set_dest_dir(args: &ArgMatches, book: &mut MDBook) {
 
 src/cmd/init.rs
@@ -441,7 +443,6 @@ src/cmd/init.rs
     32→pub fn execute(args: &ArgMatches) -> Result<()> {
     88→fn get_author_name() -> Option<String> {
    102→fn request_book_title() -> Option<String> {
-   116→fn confirm() -> bool {
 
 src/cmd/mod.rs
      3→pub mod build;
@@ -456,7 +457,7 @@ src/cmd/serve.rs
      1→use super::command_prelude::*;
      3→use super::watch;
      4→use crate::{get_book_dir, open};
-    20→const LIVE_RELOAD_ENDPOINT: &str = "__livereload";
+    20→const LIVE_RELOAD_ENDPOINT …
     23→pub fn make_subcommand() -> Command {
     51→pub fn execute(args: &ArgMatches) -> Result<()> {
    109→async fn serve …
@@ -483,7 +484,8 @@ src/cmd/watch.rs
     12→pub fn make_subcommand …
     21→pub enum WatcherKind {
     22→    Poll,
-      →    …
+    23→    Native,
+    24→}
     26→impl WatcherKind {
     27→    pub fn from_str …
     37→pub fn execute …

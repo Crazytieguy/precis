@@ -7,15 +7,19 @@ sample.ts
      9→function helper(): void {}
     16→export async function fetchData(url: string): Promise<Response> {
     20→export class TokenParser {
-    23→    constructor(input: string) {
-    27→    public parse(): Token[] {
+    23→    constructor …
+    27→    public parse …
     31→    private advance(): void {}
     34→export interface Visitor {
-    35→    visitToken(token: Token): void;
-    36→    visitAll(tokens: Token[]): void;
+    35→    visitToken …
+    36→    visitAll …
     39→export enum TokenKind {
+    40→    Ident = "ident",
+    41→    Number = "number",
+    42→    Symbol = "symbol",
+    43→}
     45→export type Span = [number, number];
     47→export const MAX_TOKENS = 1024;
     49→export default class DefaultExport {
     53→export namespace Utils {
-    54→    export function format(s: string): string {
+    54→    export function format …

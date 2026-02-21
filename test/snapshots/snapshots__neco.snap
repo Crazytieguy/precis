@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (995 tokens)
+budget: 1000 (992 tokens)
 
 README.md
    469→### More examples
@@ -33,7 +33,6 @@ neco.c
   1814→struct sco_link {
   1819→struct sco {
   1875→struct sco_map {
-  1899→struct sco_list {
   2154→sco_active …
   2192→sco_unwind …
   2215→#include <unistd.h>
@@ -48,6 +47,10 @@ neco.c
   3179→void neco_env_setpaniconerror …
   3188→void neco_env_setcanceltype …
   3197→void neco_env_setcancelstate …
+  3248→enum evkind {
+  3249→    EVREAD  = 1, // NECO_WAIT_READ
+  3250→    EVWRITE = 2, // NECO_WAIT_WRITE
+  3251→};
   3321→enum cokind { COROUTINE, SELECTCASE };
   3420→int neco_lasterr …
   3453→#define error_guard(ret) \
@@ -89,10 +92,4 @@ neco.h
    424→#include <stdio.h>
    446→void __neco_c0 …
 
-tests/panic.h
-     8→#define pwhere(str) \
-    14→#define unreachable() \
-    21→#define must(cond) \
-
 tests/tests.h
-    24→#define IS_FAIL_TARGET

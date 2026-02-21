@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1991 tokens)
+budget: 2000 (1990 tokens)
 
 Cargo.toml
      1→[package]
@@ -24,9 +24,10 @@ src/backtrace.rs
     25→macro_rules! backtrace {
     32→macro_rules! backtrace {
     39→macro_rules! backtrace_if_absent {
-    53→macro_rules! backtrace_if_absent {
-    64→macro_rules! backtrace_if_absent {
     71→mod capture {
+    86→    pub(crate) enum BacktraceStatus {
+    92→    enum Inner {
+   116→    enum BytesOrWide {
    211→        pub(crate) fn capture() -> Backtrace {
 
 src/chain.rs
@@ -208,5 +209,3 @@ src/wrapper.rs
     68→impl Display for BoxedError {
     75→impl StdError for BoxedError {
     81→    fn provide …
-
-tests/test_ffi.rs
