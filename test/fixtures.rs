@@ -94,8 +94,8 @@ with_entries! {
     (ts_pattern_src_types,    "ts-pattern/src/types",           1000), // inspected: logged observation
     (ky,                      "ky",                              2000), // inspected: logged observation
     (ky_source_errors,        "ky/source/errors",               1000), // error hierarchy
-    (superstruct,             "superstruct",                    2000),
-    (superstruct_src_structs, "superstruct/src/structs",        1000), // validator definitions
+    (superstruct,             "superstruct",                    2000), // inspected: logged observation
+    (superstruct_src_structs, "superstruct/src/structs",        1000), // inspected: logged observation
     (mitt,                    "mitt",                            1000), // inspected: logged observation
     (enclosed,                "enclosed",                        4000), // inspected: deprioritize locale data files
     (enclosed_crypto,         "enclosed/packages/crypto",       1000), // crypto package
