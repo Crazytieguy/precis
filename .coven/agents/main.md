@@ -5,6 +5,9 @@ args:
   - name: task
     description: "Task identifier"
     required: true
+claude_args:
+  - "--allowedTools"
+  - "Bash(git mv:*),Bash(git rm:*),Bash(git rebase:*),Bash(bash .coven/land.sh)"
 ---
 
 Work on: **{{task}}**
