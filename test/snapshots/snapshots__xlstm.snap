@@ -2,12 +2,20 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2002 tokens)
+budget: 2000 (2009 tokens)
 
 README.md
      3→# xLSTM: Extended Long Short-Term Memory
+    19→## About
+    29→## Minimal Installation
+    49→## Requirements
     61→# xLSTM 7B: A Recurrent LLM for Fast and Efficient Inference
+    80→## How to use the xLSTM Large 7B and its architecture
+   115→## Recommendation for other hardware
    138→# Models from the xLSTM NeurIPS Paper
+   142→## How to use the xLSTM architecture from our NeurIPS paper
+   297→## Experiments
+   312→## Citation
 
 environment_pt220cu121.yaml
      1→name: xlstm
@@ -24,84 +32,6 @@ environment_pt260cu126.yaml
      2→channels:
      7→dependencies:
 
-experiments/data/formal_language/formal_language_dataset.py
-     3→import inspect
-    42→class FormLangDatasetConfig(FormLangDatasetConfigBase):
-    56→class FormLangDataset(torch.utils.data.Dataset):
-   157→    def vocab_size …
-   161→    def context_length …
-   165→class FormLangDatasetGenerator(DataGen):
-   258→    def train_split …
-   262→    def validation_split …
-   266→    def test_split …
-   270→    def train_metrics …
-   278→    def validation_metrics …
-   286→    def test_metrics …
-   294→    def vocab_size …
-   298→    def context_length …
-
-experiments/data/formal_language/online_generate.py
-     6→from . import generate
-     9→class OnlineTaskGenerate(Dataset):
-    41→class OnlineTaskGenerateMaskedSeparate(Dataset):
-    68→    def dataset(self):
-    72→    def dataset_mask(self):
-
-experiments/data/utils.py
-    17→class DataGen:
-    21→    def train_split …
-    26→    def validation_split …
-    31→    def train_metrics …
-    36→    def validation_metrics …
-    39→class SequenceTensorDataset(TensorDataset):
-    47→    def vocab_size …
-    51→    def context_length …
-    55→class CacheMixin:
-    58→    def check_exist …
-    78→    def post_generate …
-    86→    def dataset_hash …
-
-experiments/lr_scheduler.py
-     3→import math
-     9→class BaseLRScheduler(lr_scheduler._LRScheduler):
-    10→    def __init__ …
-    14→    def get_lr(self) -> list[float]:
-    19→    def reinitialize(self, **kwargs) -> None:
-    24→class LinearWarmupCosineAnnealing(BaseLRScheduler):
-    25→    def __init__ …
-    34→    def compute_lr(step, warmup_steps, decay_until_step, max_lr, min_lr):
-    47→    def get_lr …
-
-experiments/main.py
-     3→from argparse …
-    21→dataset_registry: dict[str, Type[DataGen]] = {
-    25→torch_dtype_map: dict[str, torch.dtype] = {
-    32→def load_dataset(name, kwargs):
-    37→def main(cfg: DictConfig):
-
-experiments/metrics.py
-     2→from typing import Optional
-     9→class SequenceAccuracy(Metric):
-    13→    def __init__(self, **kwargs):
-    17→    def update(self, preds: torch.Tensor, target: torch.Tensor):
-    22→    def compute(self):
-    25→    def reset(self, *args, **kwargs):
-
-experiments/parity_xlstm01.yaml
-     1→training:
-    16→model:
-    29→dataset:
-
-experiments/parity_xlstm10.yaml
-     1→training:
-    16→model:
-    27→dataset:
-
-experiments/parity_xlstm11.yaml
-     1→training:
-    16→model:
-    29→dataset:
-
 pyproject.toml
      1→[build-system]
      5→[project]
@@ -112,10 +42,14 @@ xlstm/__init__.py
 
 xlstm/blocks/mlstm/block.py
     10→class mLSTMBlockConfig:
+    17→    def __post_init__(self):
     22→class mLSTMBlock(xLSTMBlock):
+    25→    def __init__(self, config: mLSTMBlockConfig) -> None:
 
 xlstm/blocks/mlstm/cell.py
     14→class mLSTMCellConfig:
+    15→    context_length: int = -1
+      →    …
     20→class mLSTMCell(nn.Module):
     23→    def __init__ …
     43→    def forward …
@@ -124,7 +58,12 @@ xlstm/blocks/mlstm/cell.py
 
 xlstm/blocks/mlstm/layer.py
     19→class mLSTMLayerConfig(UpProjConfigMixin):
+    34→    def __post_init__ …
     39→class mLSTMLayer(nn.Module):
+    42→    def __init__ …
+   101→    def forward …
+   127→    def step …
+   158→    def reset_parameters …
 
 xlstm/blocks/slstm/block.py
     13→class sLSTMBlockConfig:
@@ -133,10 +72,12 @@ xlstm/blocks/slstm/block.py
     32→    def __init__(self, config: sLSTMBlockConfig):
 
 xlstm/blocks/slstm/cell.py
-    28→LOGGER …
-    30→DTYPE_DICT …
-    35→DTYPES …
+     3→import logging
+    28→LOGGER = logging.getLogger(__name__)
+    30→DTYPE_DICT = {
+    35→DTYPES = Literal["bfloat16", "float16", "float32"]
     62→class sLSTMCellConfig:
+    63→    hidden_size: int = -1
    122→    def head_dim(self):
    126→    def input_dim(self):
    130→    def torch_dtype(self) -> torch.dtype:
@@ -145,20 +86,43 @@ xlstm/blocks/slstm/cell.py
    142→    def torch_dtype_w(self) -> torch.dtype:
    146→    def torch_dtype_s(self) -> torch.dtype:
    173→    def defines(self):
+   214→class sLSTMCellBase(nn.Module):
+   277→    def _recurrent_kernel(self):
+   281→    def _bias(self):
    324→    def head_dim(self):
+   509→class sLSTMCellCUDA(object):
    513→    def instance(cls, config: sLSTMCellConfig):
+   591→class sLSTMCell_vanilla(sLSTMCellBase):
+   681→class sLSTMCell_cuda(sLSTMCellBase):
+   777→class sLSTMCell(sLSTMCellBase):
 
 xlstm/blocks/slstm/layer.py
     19→class sLSTMLayerConfig(sLSTMCellConfig):
+    20→    embedding_dim: int = -1
+    28→    def __post_init__ …
     33→class sLSTMLayer(nn.Module):
+    36→    def __init__ …
+    84→    def reset_parameters …
+    92→    def step …
+   123→    def forward …
+
+xlstm/blocks/slstm/src/cuda/slstm.h
+    28→#define SLSTM_NUM_HEADS 1
+    41→#define SLSTM_SIMPLE_AGG true
 
 xlstm/blocks/xlstm_block.py
     17→class xLSTMBlockConfig:
+    27→    def __post_init__ …
     43→class xLSTMBlock(nn.Module):
     48→
+    51→    def __init__ …
+    76→    def forward …
+    82→    def step …
+    89→    def reset_parameters …
 
 xlstm/components/conv.py
     13→class CausalConv1dConfig:
+    14→    feature_dim: int = None  # F
     55→class CausalConv1d(nn.Module):
 
 xlstm/components/feedforward.py
@@ -167,17 +131,31 @@ xlstm/components/feedforward.py
 
 xlstm/components/linear_headwise.py
     13→class LinearHeadwiseExpandConfig:
+    14→    in_features: int = 0
+    31→    def __post_init__ …
     42→class LinearHeadwiseExpand(nn.Module):
     46→
+    49→    def __init__ …
+    67→    def reset_parameters …
+    75→    def forward …
+    84→    def extra_repr …
 
 xlstm/components/ln.py
+     3→import torch
      8→class LayerNorm(nn.Module):
+    11→    def __init__ …
     27→    @property
     28→    def weight_proxy(self) -> torch.Tensor:
+    36→    def forward …
+    41→    def reset_parameters …
     51→class MultiHeadLayerNorm(LayerNorm):
+    53→    def forward …
 
 xlstm/components/util.py
+     3→import torch
     26→class ParameterProxy:
+    27→    """
+      →    …
     33→
     62→    def shape(self):
     66→    def ndim(self):
@@ -186,14 +164,16 @@ xlstm/components/util.py
 xlstm/utils.py
      3→import math
     12→class UpProjConfigMixin:
+    13→    proj_factor: float = None  # will be overridden by subclasses
     32→class WeightDecayOptimGroupMixin(nn.Module, ABC):
     33→    def __init__ …
     36→    def get_weight_decay_optim_groups …
     61→    def get_weight_decay_optim_group_param_names …
 
 xlstm/xlstm_block_stack.py
-     3→from copy import deepcopy
+     3→from copy …
     16→class xLSTMBlockStackConfig:
+    17→    mlstm_block: Optional[mLSTMBlockConfig] = None
     36→    @property
     37→    def block_map(self) -> list[int]:
     52→    def __post_init__ …
@@ -219,7 +199,12 @@ xlstm/xlstm_large/generate.py
 
 xlstm/xlstm_large/model.py
     31→class xLSTMLargeConfig:
+   112→class xLSTMLarge(nn.Module):
+   187→class xLSTMLargeBlockStack(nn.Module):
+   232→class FeedForward(nn.Module):
    281→class mLSTMLayerConfig:
+   310→class mLSTMLayer(nn.Module):
+   455→class mLSTMBlock(nn.Module):
 
 xlstm/xlstm_lm_model.py
      3→from dataclasses …

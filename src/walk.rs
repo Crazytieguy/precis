@@ -65,6 +65,8 @@ pub fn is_test_file(path: &Path) -> bool {
     // __tests__/ (Jest), tests/ (Rust/Python/JS), test/ (JS/TS), testing/ (Python),
     // benches/ (Rust), benchmark/ and benchmarks/ (cross-language),
     // examples/ and example/ (usage demonstrations, not core API: Rust, Go, JS),
+    // experiments/ and experiment/ (ML training scripts, research exploration),
+    // fixtures/ and fixture/ (test fixture code, support files),
     // website/ and site/ (documentation sites: Docusaurus, Next.js, etc.),
     // docs/ and doc/ (supplementary documentation, Sphinx configs, GitHub Pages),
     // mocks/ and __mocks__/ (auto-generated test mocks: Go mockery, Jest, etc.),
@@ -80,6 +82,10 @@ pub fn is_test_file(path: &Path) -> bool {
             || s == "benchmarks"
             || s == "examples"
             || s == "example"
+            || s == "experiments"
+            || s == "experiment"
+            || s == "fixtures"
+            || s == "fixture"
             || s == "website"
             || s == "site"
             || s == "docs"
@@ -293,6 +299,12 @@ mod tests {
         assert!(is_test_file(Path::new("benchmarks/perf.rs")));
         assert!(is_test_file(Path::new("examples/basic.rs")));
         assert!(is_test_file(Path::new("example/demo.ts")));
+        // Experiment directories
+        assert!(is_test_file(Path::new("experiments/train.py")));
+        assert!(is_test_file(Path::new("experiment/run.py")));
+        // Fixture directories
+        assert!(is_test_file(Path::new("fixtures/setup.py")));
+        assert!(is_test_file(Path::new("fixture/helpers.ts")));
         // Documentation site directories
         assert!(is_test_file(Path::new("website/src/App.tsx")));
         assert!(is_test_file(Path::new("site/pages/index.tsx")));
