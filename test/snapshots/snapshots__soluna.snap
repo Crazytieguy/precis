@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2003 tokens)
+budget: 2000 (2001 tokens)
 
 README.md
      7→# Soluna
@@ -24,7 +24,6 @@ src/batch.c
     37→batch_reserve …
 
 src/batch.h
-     2→#define soluna_batch_h
      6→struct draw_primitive {
     13→struct draw_primitive_external {
     19→struct draw_batch * batch_new(int size);
@@ -63,7 +62,6 @@ src/font_manager.c
    361→font_manager_pixelsize …
 
 src/font_manager.h
-     2→#define font_manager_h
     22→int font_manager_flush(struct font_manager *);
     31→const void * font_manager_texture(struct font_manager *F, int *sz);
 
@@ -73,7 +71,9 @@ src/font_system.c
    287→luaopen_font_system …
 
 src/gamepad.c
+    27→#define BUTTON_COUNT …
     29→struct gamepad_state {
+   265→#define MAX_GAMEPAD …
    267→static struct gamepad_global {
    274→struct gamepad_local {
    390→luaopen_gamepad …
@@ -85,11 +85,9 @@ src/image.c
    577→luaopen_image …
 
 src/ime_char_filter.h
-     2→#define SOLUNA_IME_CHAR_FILTER_H
      8→struct soluna_ime_char_filter_state {
 
 src/ime_state.h
-     2→#define SOLUNA_IME_STATE_H
      7→struct soluna_ime_rect_state {
 
 src/lcrypt.c
@@ -107,7 +105,6 @@ src/lfs.c
    825→luaopen_localfs …
 
 src/loginfo.h
-     2→#define soluna_loginfo_h
      6→struct log_info {
 
 src/lsha1.c
@@ -115,9 +112,6 @@ src/lsha1.c
    114→#define	R0 …
    247→lsha1 …
    272→lhmac_sha1 …
-
-src/luabuffer.h
-     2→#define soluna_luabuffer_h
 
 src/luayoga.c
     18→struct enum_string {
@@ -180,6 +174,7 @@ src/material_text.c
    242→#define iscont …
    330→struct block_context {
    331→	int width;
+   332→	int height;
       →	…
    352→struct position {
    701→luaopen_material_text …
@@ -188,6 +183,12 @@ src/material_util.c
      6→util_ref_object …
     24→util_submit_material …
     43→util_make_pipeline …
+
+src/material_util.h
+     8→#define MATERIAL_TEXT_NORMAL 1
+     9→#define MATERIAL_QUAD 2
+    10→#define MATERIAL_MASK 3
+    11→#define MATERIAL_PERSPECTIVE_QUAD 4
 
 src/openlibs.c
      1→#define linit_c
@@ -214,11 +215,17 @@ src/render.c
 
 src/render_bindings.c
     61→struct view {
+    97→#define VIEW_TYPE_INVALID 0
+    98→#define VIEW_TYPE_TEXTURE 1
+    99→#define VIEW_TYPE_STORAGE 2
+   100→#define VIEW_TYPE_COLOR_ATTACHMENT 3
+   101→#define VIEW_TYPE_DEPTH_STENCIL_ATTACHMENT 4
    148→lview_new …
    221→lbindings_new …
 
 src/render_bindings.h
      6→struct soluna_render_bindings {
+    11→#define DRAWFUNC …
 
 src/render_uniform.c
      7→#define UNIFORM_TYPE_FLOAT 1
@@ -231,9 +238,6 @@ src/sdfimage.c
     77→struct sdf_context {
    229→luaopen_image_sdf …
 
-src/sprite_submit.h
-     2→#define soluna_sprite_submit_h
-
 src/spritemgr.c
     11→#define DEFAULT_TEXTURE_SIZE 4096
     12→#define INVALID_TEXTUREID 0xffff
@@ -242,10 +246,8 @@ src/spritemgr.c
     95→struct tmp_context {
    190→struct layer {
    197→struct batch {
-   501→luaopen_spritemgr …
 
 src/spritemgr.h
-     2→#define soluna_spritemgr_h
      7→#define INVALID_TEXTUREID 0xffff
      9→struct sprite_rect {
     16→struct sprite_bank {
@@ -258,7 +260,6 @@ src/srbuffer.c
    176→main …
 
 src/srbuffer.h
-     2→#define soluna_srbuffer_h
      7→struct sr_mat {
     11→struct sr_buffer {
 
@@ -272,13 +273,11 @@ src/transform.c
     76→sprite_transform_point …
 
 src/transform.h
-     2→#define soluna_transform_h
      6→struct transform {
 
 src/truetype.h
     17→struct truetype_font {
 
 src/version.h
-     2→#define soluna_version_h
      4→#define SOLUNA_API_VERSION 3
      6→#define SOLUNA_HASH_VERSION "dev"

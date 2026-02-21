@@ -400,7 +400,15 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
                 }
             }
             "type_definition" => SymbolKind::TypeAlias,
-            "preproc_def" | "preproc_function_def" => SymbolKind::Macro,
+            "preproc_def" | "preproc_function_def" => {
+                // Skip C header guard defines (#define FOO_H with no value)
+                if symbol_node.kind() == "preproc_def"
+                    && is_c_header_guard(symbol_node, source, path)
+                {
+                    continue;
+                }
+                SymbolKind::Macro
+            }
             "preproc_include" => SymbolKind::Import,
             // C: declaration nodes can be function prototypes or global variables
             "declaration" if lang == Lang::C => {
@@ -809,6 +817,28 @@ fn is_c_static(node: tree_sitter::Node, source: &str) -> bool {
         child.kind() == "storage_class_specifier"
             && child.utf8_text(source.as_bytes()).unwrap_or("") == "static"
     })
+}
+
+/// Check if a `preproc_def` is a C/C++ header include guard (`#define FOO_H` with no value,
+/// where the name contains the uppercased filename stem).
+fn is_c_header_guard(node: tree_sitter::Node, source: &str, path: &Path) -> bool {
+    let ext = path.extension().and_then(|e| e.to_str()).unwrap_or("");
+    if !matches!(ext, "h" | "hpp" | "hh" | "hxx") {
+        return false;
+    }
+    // Must have no value (just `#define NAME`, not `#define NAME value`)
+    if node.child_by_field_name("value").is_some() {
+        return false;
+    }
+    let stem = match path.file_stem().and_then(|s| s.to_str()) {
+        Some(s) if !s.is_empty() => s.to_ascii_uppercase(),
+        _ => return false,
+    };
+    let name = match node.child_by_field_name("name") {
+        Some(n) => n.utf8_text(source.as_bytes()).unwrap_or("").to_ascii_uppercase(),
+        None => return false,
+    };
+    name.contains(&stem)
 }
 
 /// Check if a node is inside a function body (i.e. it's a local declaration, not a module-level one).

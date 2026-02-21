@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1994 tokens)
+budget: 2000 (1992 tokens)
 
 README.md
      1→# bareiron
@@ -12,10 +12,7 @@ README.md
     39→## Non-volatile storage (optional)
     48→## Contribution
 
-build_registries.js
-
 include/crafting.h
-     2→#define CRAFTING_H
      4→#include "globals.h"
      6→void getCraftingOutput …
      7→void getSmeltingOutput …
@@ -58,16 +55,10 @@ include/globals.h
    260→typedef struct {
 
 include/packets.h
-     2→#define H_PACKETS
      5→int cs_handshake (int client_fd);
     28→int sc_statusResponse (int client_fd);
 
-include/procedures.h
-     2→#define H_PROCEDURES
-     6→#include "globals.h"
-
 include/serialize.h
-     2→#define SERIALIZE_H
      4→#include "globals.h"
      7→  int initSerializer ();
      8→  void writeBlockChangesToDisk (int from, int to);
@@ -81,17 +72,14 @@ include/serialize.h
     18→  #define initSerializer() 0
 
 include/structures.h
-     2→#define H_STRUCTURES
-     4→void placeTreeStructure (short x, uint8_t y, short z);
+     4→void placeTreeStructure …
 
 include/tools.h
-     2→#define H_TOOLS
      6→#include "globals.h"
     44→  #include "esp_timer.h"
     45→  #define get_program_time esp_timer_get_time
 
 include/varnum.h
-     2→#define H_VARNUM
      6→#define SEGMENT_BITS 0x7F
      7→#define CONTINUE_BIT 0x80
      8→#define VARNUM_ERROR 0xFFFFFFFF
@@ -100,7 +88,6 @@ include/varnum.h
     12→void writeVarInt (int client_fd, uint32_t value);
 
 include/worldgen.h
-     2→#define H_WORLDGEN
      6→typedef struct {
     13→typedef struct {
 
@@ -116,9 +103,6 @@ src/globals.c
 
 src/main.c
      8→#define CLOCK_REALTIME 0
-    44→ * Routes an incoming packet to its packet handler or procedure.
-    45→ *
-      → …
     68→void handlePacket (int client_fd, int length, int packet_id, int state) {
    734→void bareiron_main (void *pvParameters) {
    750→void wifi_init () {
@@ -162,6 +146,19 @@ src/procedures.c
    746→uint8_t isInstantlyMined …
    775→uint8_t isColumnBlock …
    789→uint8_t isPassableBlock …
+   802→uint8_t isPassableSpawnBlock …
+   812→uint8_t isReplaceableBlock …
+   831→uint32_t isCompostItem …
+   858→uint8_t getItemStackSize …
+   909→uint8_t getItemDefensePoints …
+   939→uint8_t getPlayerDefensePoints …
+   954→uint8_t getArmorItemSlot …
+   990→uint8_t handlePlayerEating …
+  1123→void playPickupAnimation …
+  1623→void handleServerTick …
+  1931→void broadcastChestUpdate …
+  1965→int sizeEntityData …
+  1983→int sizeEntityMetadata …
 
 src/serialize.c
      7→  #define FILE_PATH "/littlefs/world.bin"
@@ -176,8 +173,6 @@ src/structures.c
      9→void setBlockIfReplaceable …
     15→// Places a tree centered on the input coordinates
     16→void placeTreeStructure (short x, uint8_t y, short z) {
-    17→
-      →…
 
 src/tools.c
     20→    #define CLOCK_MONOTONIC 1
