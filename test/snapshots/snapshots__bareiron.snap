@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1998 tokens)
+budget: 2000 (1995 tokens)
 
 README.md
      1→# bareiron
@@ -16,6 +16,7 @@ README.md
     48→## Contribution
 
 include/crafting.h
+     4→#include "globals.h"
      6→void getCraftingOutput …
      7→void getSmeltingOutput …
 
@@ -73,7 +74,7 @@ include/serialize.h
     18→  #define initSerializer() 0
 
 include/structures.h
-     4→void placeTreeStructure …
+     4→void placeTreeStructure (short x, uint8_t y, short z);
 
 include/tools.h
     45→  #define get_program_time esp_timer_get_time
@@ -102,9 +103,6 @@ src/globals.c
 
 src/main.c
      8→#define CLOCK_REALTIME 0
-    44→ * Routes an incoming packet to its packet handler or procedure.
-    45→ *
-      → …
     68→void handlePacket (int client_fd, int length, int packet_id, int state) {
    734→void bareiron_main (void *pvParameters) {
    750→void wifi_init () {

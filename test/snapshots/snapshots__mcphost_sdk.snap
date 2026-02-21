@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (1001 tokens)
+budget: 1000 (1000 tokens)
 
 README.md
      1→# MCPHost SDK
@@ -61,6 +61,8 @@ README.md
    145→
    146→## License
 
+examples/basic/main.go
+
 mcphost.go
      3→import …
     19→type MCPHost struct {
@@ -91,8 +93,6 @@ mcphost.go
    224→func (m *MCPHost) ClearSession() {
    230→func (m *MCPHost) GetModelString() string {
    237→func (m *MCPHost) Close() error {
-
-mcphost_test.go
 
 types.go
      3→import …

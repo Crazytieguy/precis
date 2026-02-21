@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2010 tokens)
+budget: 2000 (2001 tokens)
 
 README.md
     55→## Table of Contents
@@ -22,7 +22,6 @@ microbootstrap/bootstrappers/base.py
     62→    def use_instrument …
 
 microbootstrap/bootstrappers/fastapi.py
-    27→class FastApiBootstrapper …
     58→class FastApiSwaggerInstrument(SwaggerInstrument):
     74→class FastApiCorsInstrument(CorsInstrument):
     93→class FastApiOpentelemetryInstrument(OpentelemetryInstrument):
@@ -34,10 +33,10 @@ microbootstrap/bootstrappers/fastapi.py
 
 microbootstrap/bootstrappers/faststream.py
     59→class FastStreamOpentelemetryInstrument(BaseOpentelemetryInstrument[FastStreamOpentelemetryConfig]):
-    71→    def get_config_type …
+    71→    def get_config_type(cls) -> type[FastStreamOpentelemetryConfig]:
     80→class FastStreamLoggingInstrument(LoggingInstrument):
     91→class FastStreamPrometheusInstrument(PrometheusInstrument[FastStreamPrometheusConfig]):
-   116→    def get_config_type …
+   116→    def get_config_type(cls) -> type[FastStreamPrometheusConfig]:
    121→class FastStreamHealthChecksInstrument(HealthChecksInstrument):
 
 microbootstrap/bootstrappers/litestar.py
@@ -83,7 +82,6 @@ microbootstrap/config/litestar.py
     21→    )
 
 microbootstrap/console_writer.py
-    10→@dataclasses.dataclass
     11→class ConsoleWriter:
     12→    writer_enabled: bool = True
     13→    rich_console: Console = dataclasses.field(init=False, default_factory=Console)
@@ -131,8 +129,6 @@ microbootstrap/instruments/logging_instrument.py
 
 microbootstrap/instruments/opentelemetry_instrument.py
     43→class OpenTelemetryInstrumentor:
-    44→    instrumentor: BaseInstrumentor
-      →    …
     73→class FastStreamTelemetryMiddlewareProtocol(typing.Protocol):
    181→    @classmethod
    182→    def get_config_type(cls) -> type[OpentelemetryConfig]:
@@ -202,3 +198,5 @@ pyproject.toml
     62→[project.optional-dependencies]
     77→[dependency-groups]
     93→[build-system]
+
+tests/test_settings.py

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4011 tokens)
+budget: 4000 (3995 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -49,15 +49,6 @@ sps/src/cli/install.rs
 
 sps/src/cli/list.rs
     16→pub struct List {
-
-sps/src/cli/reinstall.rs
-    12→pub struct ReinstallArgs {
-    13→    #[arg(required = true)]
-    14→    pub names: Vec<String>,
-    15→
-    16→    #[arg(
-    17→        long,
-      →        …
 
 sps/src/cli/search.rs
     15→pub struct Search {
@@ -250,7 +241,8 @@ sps-common/src/model/artifact.rs
     27→    Launchd {
     28→        label: String,
     29→        path: Option<PathBuf>,
-      →        …
+    30→    }, // Path is the plist file
+      →    …
 
 sps-common/src/model/cask.rs
      9→pub type Artifact = serde_json::Value;
@@ -342,6 +334,9 @@ sps-core/src/build/env.rs
    153→    /// Resolved path to the C compiler.
    154→    #[allow(dead_code)]
    155→    cc: PathBuf,
+   156→    /// Resolved path to the C++ compiler.
+   157→    #[allow(dead_code)]
+   158→    cxx: PathBuf,
       →    …
    166→    pub fn new …
    463→    pub fn apply_to_command …

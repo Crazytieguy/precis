@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2003 tokens)
+budget: 2000 (2000 tokens)
 
 README.md
      9→# Nano-vLLM
@@ -18,8 +18,6 @@ README.md
 bench.py
      5→# from vllm import LLM, SamplingParams
      8→def main():
-     9→    seed(0)
-      →    …
 
 example.py
      6→def main():
@@ -209,6 +207,7 @@ nanovllm/utils/context.py
     12→    slot_mapping: torch.Tensor | None = None
     13→    context_lens: torch.Tensor | None = None
     14→    block_tables: torch.Tensor | None = None
+    16→_CONTEXT = Context()
     18→def get_context …
     21→def set_context …
     25→def reset_context …

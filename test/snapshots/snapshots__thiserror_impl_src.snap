@@ -96,8 +96,6 @@ lib.rs
     40→pub fn derive_error(input: TokenStream) -> TokenStream {
     46→struct private;
 
-prop.rs
-
 scan_expr.rs
      1→use self::{Action::*, Input::*};
      6→enum Input {
@@ -105,7 +103,7 @@ scan_expr.rs
 
 unraw.rs
     10→#[derive(Clone)]
-      →…
+    11→#[repr(transparent)]
     12→pub struct IdentUnraw(Ident);
     15→    pub fn new(ident: Ident) -> Self {
     19→    pub fn to_local(&self) -> Ident {
@@ -116,5 +114,3 @@ unraw.rs
     84→    Unnamed(Index),
     85→}
     88→    pub fn span(&self) -> Span {
-
-valid.rs

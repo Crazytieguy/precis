@@ -9,7 +9,7 @@ A CLI tool that extracts a token-efficient summary of a codebase.
 
 ## Architecture
 
-**Groups:** Symbols are bucketed into groups by shared properties (visibility, kind, file path, file role, documented, config, test, heading depth, first-party import, trait impl). All symbols in a group receive the same rendering treatment.
+**Groups:** Symbols are bucketed into groups by shared properties (visibility, kind, file path, documented, config, heading depth, first-party import, trait impl, boilerplate section, reexport). File-level properties (file role, test, type declaration) are stored on the group for value computation. All symbols in a group receive the same rendering treatment.
 
 **Stage progressions:** Each group has an ordered progression of rendering stages. Different kind categories have different progressions (e.g. types show body before doc, sections skip signatures). Doc and Body stages are continuous — each additional line is a separate scheduling item.
 

@@ -2,34 +2,16 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (1019 tokens)
+budget: 1000 (997 tokens)
 
 dto/activity_dto.go
      3→import …
      9→type StartActivityRequest struct {
-    10→	Description string
-    11→	Project     string
-      →	…
     17→type StopActivityRequest struct {
-    18→	EndTime time.Time
-    19→	Notes   string
-      →	…
     23→type AddActivityRequest struct {
-    24→	Description string
-    25→	Project     string
-      →	…
     32→type ActivityFilter struct {
-    33→	FromDate    *time.Time
-    34→	ToDate      *time.Time
-      →	…
     40→type Report struct {
-    41→	Activities    []models.Activity
-    42→	TotalDuration time.Duration
-      →	…
     46→type ProjectReport struct {
-    47→	ProjectName string
-    48→	Duration    time.Duration
-      →	…
 
 errors/errors.go
      3→import "errors"
@@ -56,6 +38,7 @@ models/activity.go
     31→func (a Activity) DurationString() string {
     32→	d := a.Duration().Round(time.Second)
     33→	h := d / time.Hour
+    34→	d %= time.Hour
       →	…
     41→func (a Activity) MarshalJSON() ([]byte, error) {
 
@@ -69,13 +52,23 @@ ports/mocks/mock_activityrepository.go
    190→type MockActivityRepository_Save_Call struct {
    247→type MockActivityRepository_Remove_Call struct {
 
+ports/mocks/mock_activityresolver.go
+    34→type MockActivityResolver_Expecter struct {
+    35→	mock *mock.Mock
+    36→}
+
 ports/mocks/mock_notesrepository.go
+    16→func NewMockNotesRepository …
     29→type MockNotesRepository struct {
     33→type MockNotesRepository_Expecter struct {
     34→	mock *mock.Mock
     35→}
+    42→func (_mock *MockNotesRepository) Get …
     76→type MockNotesRepository_Get_Call struct {
+    84→func (_e *MockNotesRepository_Expecter) Get …
+   122→func (_mock *MockNotesRepository) Save …
    139→type MockNotesRepository_Save_Call struct {
+   149→func (_e *MockNotesRepository_Expecter) Save …
 
 ports/ports.go
      3→import …

@@ -135,7 +135,7 @@ pub fn is_test_file(path: &Path) -> bool {
         c.as_os_str().to_str().is_some_and(|name| {
             (name.contains('-') || name.contains('_'))
                 && name
-                    .split(|c: char| c == '-' || c == '_')
+                    .split(['-', '_'])
                     .any(|seg| {
                         matches!(
                             seg,

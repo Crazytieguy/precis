@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2008 tokens)
+budget: 2000 (1998 tokens)
 
 README.md
      1→# xxhash
@@ -73,8 +73,6 @@ README.md
     73→- [Ristretto](https://github.com/dgraph-io/ristretto)
     74→- [Badger](https://github.com/dgraph-io/badger)
 
-bench_test.go
-
 dynamic/dynamic_test.go
     17→func TestMain(m *testing.M) {
     33→func TestDynamic(t *testing.T) {
@@ -99,7 +97,7 @@ xxhash.go
     25→// Digest implements hash.Hash64.
     26→//
     27→// Note that a zero-valued Digest is not ready to receive writes.
-      →…
+    28→// Call Reset or create a Digest using New before calling other methods.
     29→type Digest struct {
     30→	v1    uint64
     31→	v2    uint64
@@ -136,6 +134,7 @@ xxhash_other.go
      7→func Sum64(b []byte) uint64 {
      8→	// A simpler version would be
      9→	//   d := New()
+    10→	//   d.Write(b)
       →	…
     64→func writeBlocks(d *Digest, b []byte) int {
 
@@ -165,10 +164,6 @@ xxhash_unsafe.go
 xxhash_unsafe_test.go
     13→func TestStringAllocs(t *testing.T) {
     31→func TestInlining(t *testing.T) {
-
-xxhashbench/xxhashbench_test.go
-    18→var sink uint64
-   108→func BenchmarkHashes(b *testing.B) {
 
 xxhsum/xxhsum.go
      3→import …

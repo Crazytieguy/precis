@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2006 tokens)
+budget: 2000 (1998 tokens)
 
 Cargo.toml
      1→[package]
@@ -17,8 +17,6 @@ README.md
     33→## Usage
     52→## Roadmap
     82→## Thanks
-
-build.rs
 
 src/cmd.rs
     13→pub struct CommandArgs {
@@ -142,6 +140,8 @@ src/config/types.rs
 src/debug.rs
      7→#[macro_export]
      8→macro_rules! debug {
+    19→pub fn set_file(file: String) {
+    23→pub fn write_logs(mut msg: String) -> Result<()> {
 
 src/edit.rs
     10→pub struct Edit {
@@ -154,7 +154,13 @@ src/live_reload.rs
     16→pub struct FileWatcher {
     17→    path: PathBuf,
     18→
-      →…
+    19→    cfg: Rc<Config>,
+    20→    content_type: ContentType,
+    21→
+    22→    max_data_size: usize,
+    23→
+    24→    data: Arc<Mutex<Data>>,
+    25→}
 
 src/parse/mod.rs
     18→pub enum ContentType {
@@ -178,26 +184,7 @@ src/parse/mod.rs
 
 src/parse/syntax.rs
     11→pub enum SyntaxToken {
-    12→    Symbol(&'static str),
-    13→
-    14→    Name(String),
-    15→
-    16→    Tag(String),
-    17→
-    18→    String(String),
-    19→    Number(String),
-    20→    Null(&'static str),
-    21→    Bool(&'static str),
-    22→
-    23→    Section(String),
-    24→
-    25→    Break,
-    26→    Indent(usize),
-    27→}
    151→pub enum StringValue {
-   152→    String(String),
-   153→    MultiLines(Vec<String>),
-   154→}
 
 src/tree.rs
     14→pub struct Tree {
@@ -250,7 +237,16 @@ src/ui/footer.rs
     13→    None,
     14→}
     16→pub struct Footer {
+    17→    cfg: Rc<Config>,
+    18→}
 
 src/ui/header.rs
     11→pub struct HeaderContext {
     41→pub struct Header {
+
+src/ui/mod.rs
+    35→pub fn start …
+
+src/ui/popup.rs
+    13→pub struct PopupData {
+    18→pub struct Popup {

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1989 tokens)
+budget: 2000 (1986 tokens)
 
 Cargo.toml
      1→[package]
@@ -41,8 +41,6 @@ src/chain.rs
     16→pub(crate) enum ChainState<'a> {
     27→    #[cold]
     28→    pub fn new(head: &'a (dyn StdError + 'static)) -> Self {
-    29→        Chain {
-      →        …
     57→impl DoubleEndedIterator for Chain<'_> {
     94→impl Default for Chain<'_> {
 
@@ -79,6 +77,7 @@ src/error.rs
      6→use crate::ptr::Mut;
      7→use crate::ptr::{Own, Ref};
      8→use crate::{Error, StdError};
+    14→use core::ops::{Deref, DerefMut};
     30→    pub fn new …
     77→    pub fn msg …
    140→    pub fn from_boxed …
@@ -170,7 +169,6 @@ src/macros.rs
 src/nightly.rs
     10→pub use core::error::Request;
     41→pub fn request_ref_backtrace …
-    45→fn request_ref …
     52→pub fn provide_ref_backtrace …
     56→pub fn provide …
 

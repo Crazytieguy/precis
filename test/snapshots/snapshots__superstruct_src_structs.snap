@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (1008 tokens)
+budget: 1000 (990 tokens)
 
 coercions.ts
      1→import { Struct, is, Coercer } from '../struct.js'
@@ -96,7 +96,6 @@ utilities.ts
      8→import { object, optional, type } from './types.js'
     60→export function assign(...Structs: Struct<any>[]): any {
     61→  const isType = Structs[0].type === 'type'
-    62→  const schemas = Structs.map((s) => s.schema)
       →  …
     71→export function define …
     80→export function deprecated …

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2013 tokens)
+budget: 2000 (1999 tokens)
 
 README.md
     29→## Overview
@@ -92,8 +92,6 @@ py3xui/async_api/async_api_server.py
      8→class AsyncServerApi(AsyncBaseApi):
     42→
     44→    async def get_db(self, save_path: str) -> None:
-    76→    async def get_status(self) -> Server:
-   105→    async def generate_reality_keys(self) -> RealityKeyPair:
 
 py3xui/client/client.py
      7→class ClientFields:
@@ -172,7 +170,8 @@ py3xui/inbound/settings.py
     17→class Settings(JsonStringModel):
     25→
     26→    clients: list[Client] = []
-      →    …
+    27→    decryption: str = ""
+    28→    fallbacks: list = []
 
 py3xui/inbound/sniffing.py
      9→class SniffingFields:

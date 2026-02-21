@@ -2,13 +2,14 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2010 tokens)
+budget: 2000 (2000 tokens)
 
 README.md
     10→# `htmy`
     12→**Async**, **pure-Python** server-side rendering engine.
     13→
-      →…
+    14→Unleash your creativity with the full power and Python, without the hassle of learning a new templating language or dealing with its limitations!
+    15→
     16→## Key features
     33→## Testimonials
     51→## Installation
@@ -29,11 +30,14 @@ README.md
    353→## Dependencies
    361→## Development
 
+docs/index.md
+
 htmy/__init__.py
      1→__version__ = "0.10.2"
     48→HTMY = Renderer
 
 htmy/core.py
+    14→    from .typing …
     19→class Fragment:
     21→
     22→    __slots__ = ("_children",)
@@ -65,9 +69,6 @@ htmy/error_boundary.py
     45→    async def htmy …
 
 htmy/etree.py
-    15→from .core …
-    16→from .tag …
-    17→from .typing …
     23→class ETreeConverter:
     37→
     38→    __slots__ = ("_rules",)
@@ -77,9 +78,6 @@ htmy/etree.py
     63→    def convert_element …
 
 htmy/function_component.py
-     7→from .typing …
-     8→from .typing …
-     9→from .typing …
     37→    def __call__ …
     52→    def __call__ …
     68→# -- Component decorators.
@@ -127,8 +125,6 @@ htmy/i18n.py
     51→    async def get …
    115→@alru_cache()
    116→async def load_translation_resource(path: Path) -> TranslationResource:
-   117→    """
-      →    …
    147→def resolve_json_path …
 
 htmy/io.py
@@ -152,7 +148,6 @@ htmy/md/typing.py
     24→MarkdownRenderFunction …
 
 htmy/renderer/baseline.py
-    10→from .context …
     18→class Renderer:
     27→
     28→    __slots__ = ("_default_context", "_string_formatter")
@@ -230,6 +225,7 @@ htmy/typing.py
    108→    def resolve_text …
 
 htmy/utils.py
+     9→    from .typing …
     12→def join_components …
     42→def join …
     49→def is_htmy_component_type …

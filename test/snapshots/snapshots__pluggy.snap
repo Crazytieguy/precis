@@ -2,7 +2,14 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2010 tokens)
+budget: 2000 (1997 tokens)
+
+AGENTS.md
+     1→# AGENTS.md
+
+codecov.yml
+     1→coverage:
+     7→comment: off
 
 pyproject.toml
      1→[build-system]
@@ -19,7 +26,7 @@ src/pluggy/_callers.py
     18→from ._result import Result
     19→from ._warnings import PluggyTeardownRaisedWarning
     22→# Need to distinguish between old- and new-style hook wrappers.
-      →…
+    23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
     24→Teardown: TypeAlias = Generator[None, object, object]
     27→def run_old_style_hookwrapper(
     28→    hook_impl: HookImpl, hook_name: str, args: Sequence[object]
@@ -34,14 +41,10 @@ src/pluggy/_hooks.py
     25→from ._result import Result
     40→class HookspecOpts(TypedDict):
     42→
-    43→    #: Whether the hook is :ref:`first result only <firstresult>`.
-    44→    firstresult: bool
-      →    …
+      →…
     56→class HookimplOpts(TypedDict):
     58→
-    59→    #: Whether the hook implementation is a :ref:`wrapper <hookwrapper>`.
-    60→    wrapper: bool
-      →    …
+      →…
     78→class HookspecMarker:
     85→
     86→    __slots__ = ("project_name",)
@@ -56,8 +59,6 @@ src/pluggy/_hooks.py
    364→
    382→class HookCaller:
    384→
-   385→    __slots__ = (
-   386→        "name",
    419→    # TODO: Document, or make private.
    420→    def has_spec(self) -> bool:
    423→    # TODO: Document, or make private.
@@ -187,8 +188,9 @@ src/pluggy/_tracing.py
     67→    def get(self, name: str) -> TagTracerSub:
 
 src/pluggy/_warnings.py
-     1→from typing …
+     1→from typing import final
      4→class PluggyWarning(UserWarning):
+     5→    """Base class for all warnings emitted by pluggy."""
      6→
      7→    __module__ = "pluggy"
     10→@final

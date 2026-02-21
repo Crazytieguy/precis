@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2016 tokens)
+budget: 2000 (2000 tokens)
 
 readme.md
     20→## Benefits over plain `fetch`
@@ -81,8 +81,6 @@ source/core/constants.ts
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
 
 source/errors/ForceRetryError.ts
-     1→import type {ForceRetryOptions} from '../core/constants.js';
-     2→import {NonError} from './NonError.js';
      8→export class ForceRetryError extends Error {
      9→	override name = 'ForceRetryError' as const;
     10→	customDelay: number | undefined;
@@ -100,9 +98,6 @@ source/errors/HTTPError.ts
     10→	constructor …
 
 source/errors/NonError.ts
-     2→Wrapper for non-Error values that were thrown.
-     3→
-      →…
      6→export class NonError extends Error {
      7→	override name = 'NonError';
      8→	readonly value: unknown;
@@ -110,7 +105,6 @@ source/errors/NonError.ts
     10→	constructor(value: unknown) {
 
 source/errors/TimeoutError.ts
-     1→import type {KyRequest} from '../types/request.js';
      3→export class TimeoutError extends Error {
      4→	public request: KyRequest;
      5→
@@ -167,9 +161,17 @@ source/types/ky.ts
       →	…
 
 source/types/options.ts
+     6→export type SearchParamsInit …
+     9→export type SearchParamsOption …
+    11→export type RequestHttpMethod …
+    12→export type HttpMethod …
+    14→export type Input …
+    16→export type Progress …
+    27→export type KyHeadersInit …
     33→export type KyOptions …
    307→export type KyOptionsRegistry …
    312→export interface Options …
+   358→export type InternalOptions …
    373→export interface NormalizedOptions …
 
 source/types/request.ts
@@ -185,11 +187,7 @@ source/types/response.ts
 source/types/retry.ts
      1→import type {HttpMethod} from './options.js';
      3→export type ShouldRetryState = {
-     4→	/**
-      →	…
     15→export type RetryOptions = {
-    16→	/**
-      →	…
 
 source/utils/body.ts
      5→export const getBodySize …

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2007 tokens)
+budget: 2000 (1999 tokens)
 
 CONTEXT.md
      1→# toasty-core Component Context
@@ -96,7 +96,6 @@ src/error.rs
     76→    pub fn context(self, consequent: impl IntoError) -> Error {
 
 src/lib.rs
-     2→mod macros;
      4→pub mod driver;
     10→pub mod schema;
     13→pub mod stmt;
@@ -150,9 +149,6 @@ src/schema/db/migration.rs
     33→    id: u64,
     34→}
 
-src/schema/db/schema.rs
-     7→pub struct Schema {
-
 src/schema/db/ty.rs
     63→pub enum Type {
     64→    /// A boolean value
@@ -204,12 +200,18 @@ src/schema.rs
     26→    /// Database-level schema
     27→    pub db: Arc<db::Schema>,
     28→
-      →…
+    29→    /// Maps the app-level schema to the db-level schema
+    30→    pub mapping: Mapping,
+    31→}
 
 src/stmt/delete.rs
     32→    pub fn as_delete(&self) -> Option<&Delete> {
     44→    pub fn into_delete(self) -> Option<Delete> {
     56→    pub fn unwrap_delete(self) -> Delete {
+
+src/stmt/expr_not.rs
+    23→    pub fn not(expr: impl Into<Self>) -> Self {
+    31→    pub fn is_not(&self) -> bool {
 
 src/stmt/filter.rs
     10→    pub const ALL: Filter = Filter { expr: None };
@@ -228,11 +230,6 @@ src/stmt/order_by.rs
 
 src/stmt/order_by_expr.rs
     14→    pub fn reverse(&mut self) {
-
-src/stmt/select.rs
-    48→    pub fn as_select_unwrap(&self) -> &Select {
-    74→    pub fn as_select_unwrap(&self) -> &Select {
-    94→    pub fn into_select(self) -> Select {
 
 src/stmt/value_list.rs
     13→    pub fn unwrap_list(self) -> Vec<Value> {

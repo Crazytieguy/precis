@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2001 tokens)
+budget: 2000 (1998 tokens)
 
 Readme.md
      1→# Commander.js
@@ -26,6 +26,8 @@ Readme.md
    754→## Automated help
    956→## Custom event listeners
    966→## Bits and pieces
+
+docs/deprecated.md
 
 esm.mjs
      1→import commander from './index.js';
@@ -186,7 +188,6 @@ lib/option.js
    328→function splitOptionFlags(flags) {
 
 lib/suggestSimilar.js
-     3→function editDistance …
     56→function suggestSimilar(word, candidates) {
 
 package-support.json

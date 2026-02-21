@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4009 tokens)
+budget: 4000 (4000 tokens)
 
 README.md
      1→# MCPHost 🤖
@@ -248,7 +248,7 @@ internal/models/openai/openai.go
     31→type CustomRoundTripper struct {
 
 internal/models/providers.go
-    32→	ClaudeCodePrompt …
+    32→	ClaudeCodePrompt = "You are Claude Code, Anthropic's official CLI for Claude."
     70→type ProviderConfig struct {
    124→type ProviderResult struct {
    153→func CreateProvider …
@@ -361,24 +361,17 @@ internal/ui/messages.go
 internal/ui/progress/ollama.go
     27→type OllamaPullProgress struct {
     49→type ProgressModel struct {
-    58→func NewProgressModel …
-    67→func (m ProgressModel) Init …
-    74→func (m ProgressModel) Update …
-   122→func (m ProgressModel) View …
+    58→func NewProgressModel() ProgressModel {
+    67→func (m ProgressModel) Init() tea.Cmd {
+    74→func (m ProgressModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+   122→func (m ProgressModel) View() string {
    144→type ProgressReader struct {
-   156→func NewProgressReader …
-   184→func (pr *ProgressReader) Read …
-   261→func (pr *ProgressReader) Close …
+   156→func NewProgressReader(reader io.Reader) *ProgressReader {
+   184→func (pr *ProgressReader) Read(p []byte) (n int, err error) {
+   261→func (pr *ProgressReader) Close() error {
 
 internal/ui/slash_command_input.go
     15→type SlashCommandInput struct {
-    16→	textarea      textarea.Model
-    17→	commands      []SlashCommand
-    18→	showPopup     bool
-    19→	filtered      []FuzzyMatch
-    20→	selected      int
-    21→	width         int
-      →	…
 
 internal/ui/spinner.go
     16→type Spinner struct {

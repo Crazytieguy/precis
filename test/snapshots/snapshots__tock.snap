@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3991 tokens)
+budget: 4000 (3980 tokens)
 
 README.md
      1→# Tock
@@ -76,8 +76,6 @@ internal/adapters/cli/add.go
 
 internal/adapters/cli/analyze.go
     20→func NewAnalyzeCmd() *cobra.Command {
-    21→	var (
-      →	…
     70→type AnalysisStats struct {
     71→	TotalDuration      time.Duration
     72→	DeepWorkDuration   time.Duration
@@ -112,7 +110,6 @@ internal/adapters/cli/continue.go
     19→//nolint:funlen // Include all logic in one function
     20→func NewContinueCmd() *cobra.Command {
     21→	var description string
-    22→	var project string
       →	…
 
 internal/adapters/cli/current.go
@@ -125,17 +122,15 @@ internal/adapters/cli/ical.go
     23→func NewICalCmd() *cobra.Command {
 
 internal/adapters/cli/interactive.go
-    17→func SelectActivityMetadata …
-    98→func RunInteractiveInput …
-   123→type simpleInputModel struct {
-   131→func (m simpleInputModel) Init …
-   133→func (m simpleInputModel) Update …
-   155→func (m simpleInputModel) View …
-   176→func RunInteractiveList …
-   201→type simpleListModel struct {
-   212→func (m *simpleListModel) Init …
-   214→func (m *simpleListModel) Update …
-   263→func (m *simpleListModel) View …
+    17→func SelectActivityMetadata(activities []models.Activity, project, description string, theme Theme) (string, string, error) {
+    98→func RunInteractiveInput(header, placeholder string, theme Theme) (string, error) {
+   131→func (m simpleInputModel) Init() tea.Cmd { return nil }
+   133→func (m simpleInputModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+   155→func (m simpleInputModel) View() string {
+   176→func RunInteractiveList(items []string, title string, theme Theme) (string, error) {
+   212→func (m *simpleListModel) Init() tea.Cmd { return nil }
+   214→func (m *simpleListModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+   263→func (m *simpleListModel) View() string {
 
 internal/adapters/cli/last.go
     16→type lastOptions struct {
@@ -171,7 +166,6 @@ internal/adapters/cli/start.go
     16→//nolint:gocognit,funlen // Include all logic in one function
     17→func NewStartCmd() *cobra.Command {
     18→	var description string
-    19→	var project string
       →	…
 
 internal/adapters/cli/stop.go
@@ -260,8 +254,6 @@ internal/adapters/repositories/notes/repository.go
 
 internal/adapters/repositories/timewarrior/repository.go
      3→import …
-    24→const (
-    25→	timeLayout = "20060102T150405Z"
     28→type twInterval struct {
     35→type repository struct {
     39→func NewRepository …
@@ -318,8 +310,6 @@ internal/core/models/activity.go
     23→func (a Activity) Duration() time.Duration {
     30→// DurationString returns the duration formatted as "HH:MM:SS".
     31→func (a Activity) DurationString() string {
-    32→	d := a.Duration().Round(time.Second)
-      →	…
     41→func (a Activity) MarshalJSON() ([]byte, error) {
 
 internal/core/ports/ports.go
@@ -361,7 +351,6 @@ internal/services/activity/service.go
    186→func (s *service) GetRecent …
    210→func (s *service) GetLast …
    214→func (s *service) Remove …
-   218→func (s *service) enrichActivities …
 
 internal/services/ics/generator.go
      3→import …

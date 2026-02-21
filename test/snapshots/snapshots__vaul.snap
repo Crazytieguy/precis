@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2018 tokens)
+budget: 2000 (2000 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
@@ -173,9 +173,6 @@ test/src/app/layout.tsx
 
 test/src/app/page.tsx
      5→export default function Page() {
-
-test/tests/constants.ts
-     1→export const ANIMATION_DURATION = 500;
 
 tsconfig.json
      2→  "compilerOptions": {

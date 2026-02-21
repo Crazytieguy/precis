@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2001 tokens)
+budget: 2000 (2000 tokens)
 
 README.md
     26→# D2TS - Differential Dataflow in TypeScript <!-- omit in toc -->
@@ -21,10 +21,6 @@ src/d2.ts
    166→export class RootStreamBuilder<T> extends StreamBuilder<T> {
 
 src/electric/index.ts
-    40→export interface ElectricStreamToD2InputOptions<T extends Row<unknown> = Row> {
-    41→  /** D2 Graph to send messages to */
-    42→  graph: D2
-      →  …
    103→export function electricStreamToD2Input …
    222→export class OutputElectricMessagesOperator<K, V> extends UnaryOperator<
    223→  [K, V]
@@ -68,6 +64,8 @@ src/multiset.ts
    291→  iterate …
    303→  extend …
    308→  getInner …
+
+src/operators/base.ts
 
 src/operators/buffer.ts
     20→  run(): void {
@@ -118,6 +116,10 @@ src/operators/groupBy.ts
    335→export const groupByOperators = {
 
 src/operators/iterate.ts
+    16→  run …
+    47→  run …
+    89→  constructor …
+   100→  run …
    225→export function iterate …
 
 src/operators/join.ts
@@ -203,6 +205,9 @@ src/sqlite/operators/buffer.ts
     32→export class BufferOperatorSQLite<T> extends UnaryOperator<T> {
     33→  #preparedStatements: {
    149→export function buffer …
+
+src/sqlite/operators/consolidate.ts
+   148→export function consolidate …
 
 src/sqlite/operators/count.ts
     39→export function count …

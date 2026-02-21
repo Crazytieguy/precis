@@ -681,10 +681,10 @@ fn mark_reexports(symbols: &mut [Symbol]) {
             continue;
         }
         // `pub use foo::Bar` where `foo` is a declared child module
-        if let Some(first_segment) = sym.name.split("::").next() {
-            if module_names.iter().any(|m| m == first_segment) {
-                sym.is_reexport = true;
-            }
+        if let Some(first_segment) = sym.name.split("::").next()
+            && module_names.iter().any(|m| m == first_segment)
+        {
+            sym.is_reexport = true;
         }
     }
 }
@@ -1111,16 +1111,14 @@ fn compute_sig_end_line(node: tree_sitter::Node, lang: Lang) -> Option<usize> {
     // on the opening line and are not affected. Enum typedefs are excluded because
     // their variant lists are high-value body content that should stay in the
     // Body stage (where they benefit from the higher Type body value).
-    if node.kind() == "type_definition" {
-        if let Some(type_child) = node.child_by_field_name("type") {
-            if matches!(type_child.kind(), "struct_specifier" | "union_specifier")
-                && type_child.child_by_field_name("body").is_some()
-                && type_child.child_by_field_name("name").is_none()
-            {
-                let end = node.end_position();
-                return Some(if end.column == 0 { end.row } else { end.row + 1 });
-            }
-        }
+    if node.kind() == "type_definition"
+        && let Some(type_child) = node.child_by_field_name("type")
+        && matches!(type_child.kind(), "struct_specifier" | "union_specifier")
+        && type_child.child_by_field_name("body").is_some()
+        && type_child.child_by_field_name("name").is_none()
+    {
+        let end = node.end_position();
+        return Some(if end.column == 0 { end.row } else { end.row + 1 });
     }
 
     None

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2004 tokens)
+budget: 2000 (1999 tokens)
 
 README.md
      7→# Soluna
@@ -37,6 +37,9 @@ src/batch.h
     19→struct draw_batch * batch_new(int size);
     20→struct draw_primitive * batch_reserve(struct draw_batch *, int size);
     21→void batch_delete(struct draw_batch *);
+
+src/drawmgr.c
+   171→luaopen_drawmgr …
 
 src/embedlua.c
     28→#define REG_SOURCE(name) \
@@ -152,8 +155,9 @@ src/material_util.h
 src/openlibs.c
      1→#define linit_c
      2→#define LUA_LIB
-     9→void soluna_embed …
-    11→soluna_openlibs …
+     9→void soluna_embed(lua_State* L);
+    11→void
+    12→soluna_openlibs(lua_State *L) {
 
 src/render.c
     15→#define UNIFORM_MAX 4
@@ -195,11 +199,6 @@ src/sdfimage.c
 
 src/service/gamepad.lua
      1→local ltask = require "ltask"
-     2→local device = require "soluna.gamepad.device"
-     3→
-     4→global pairs
-     5→
-      →…
 
 src/service/loader.lua
      1→local image = require "soluna.image"

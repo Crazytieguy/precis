@@ -391,6 +391,10 @@ fn is_config_file(relative_path: &Path, filename: &str) -> bool {
 /// even if they share the same directory, kind, and visibility. This prevents
 /// large directories (many files with many methods) from creating oversized
 /// groups whose Names cost outweighs their per-token priority.
+///
+/// Only includes dimensions that can differ between symbols in the same file.
+/// File-level properties (file_role, is_test, etc.) are stored on [`Group`]
+/// since `file_path` already ensures per-file separation.
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Ord, PartialOrd)]
 pub struct GroupKey {
     pub is_public: bool,
@@ -399,34 +403,19 @@ pub struct GroupKey {
     /// each file's symbols compete independently in the scheduler.
     pub file_path: PathBuf,
     pub is_documented: bool,
-    pub file_role: FileRole,
-    /// Whether the file is a build/tool config file (e.g., eslint.config.js, jest.config.ts).
+    /// Whether this group is build/tool config. Per-symbol because TOML
+    /// `[tool.*]` sections are config while `[package]` is not.
     pub is_config: bool,
-    /// Whether the file is test/benchmark/example infrastructure.
-    pub is_test: bool,
     /// Heading depth for markdown sections (1 = h1, 2 = h2, etc.).
-    /// None for non-section symbols. Separates top-level headings from
-    /// detail subsections so h1/h2 content gets priority over h3+ detail.
+    /// None for non-section symbols.
     pub heading_depth: Option<u8>,
     /// Whether the imports in this group are 1st-party (local/relative).
-    /// Only meaningful for Import kind; false for all other kinds.
     pub is_first_party: bool,
     /// Whether symbols are trait implementation methods (Rust only).
-    /// Trait impl methods (fmt, from, clone, etc.) implement an interface
-    /// defined elsewhere and are lower signal than inherent methods.
     pub is_trait_impl: bool,
-    /// Whether the file is a TypeScript declaration file (.d.ts, .d.mts, .d.cts).
-    /// These duplicate API signatures already shown from .js/.ts source files.
-    pub is_type_declaration: bool,
-    /// Whether this is a boilerplate markdown section (License, Contributing, etc.)
-    /// that conveys no architectural value. Only set for Section kind.
+    /// Whether this is a boilerplate markdown section (License, Contributing, etc.).
     pub is_boilerplate_section: bool,
-    /// Whether this file is an auto-generated API doc README (pdoc, sphinx, etc.)
-    /// whose content duplicates source code signatures.
-    pub is_autogen_api_doc: bool,
-    /// Whether the imports in this group are `pub use` re-exports from child
-    /// modules (Rust only). These are redundant when precis shows the
-    /// submodule's own symbols.
+    /// Whether the imports are `pub use` re-exports from child modules (Rust only).
     pub is_reexport: bool,
 }
 
@@ -442,12 +431,19 @@ pub struct SymbolCosts {
     /// pre-symbol `#` comments and post-signature docstrings, this is the
     /// concatenation of both sections (pre-comments first, then docstring lines).
     pub doc_line_tokens: Vec<usize>,
+    /// Token cost of the truncation marker after each doc line. Parallel to
+    /// `doc_line_tokens` — `doc_marker_tokens[i]` is the cost of `"      →{indent}…\n"`
+    /// where indent matches `doc_line_tokens[i]`'s source line.
+    pub doc_marker_tokens: Vec<usize>,
     /// Number of pre-symbol comment lines in `doc_line_tokens`. The renderer
     /// emits pre-comments and docstrings as separate sections with a signature
     /// in between, so truncation markers must account for this split point.
     pub pre_doc_count: usize,
     /// Tokens per body line (ordered).
     pub body_line_tokens: Vec<usize>,
+    /// Token cost of the truncation marker after each body line. Parallel to
+    /// `body_line_tokens`.
+    pub body_marker_tokens: Vec<usize>,
     /// Whether the symbol's body contains nested symbols (e.g., class methods).
     /// When true, body truncation markers are suppressed by the renderer.
     pub body_has_nested: bool,
@@ -462,24 +458,28 @@ pub struct Group {
     pub max_doc_n: usize,
     /// Cached: max body lines across all symbols in this group.
     pub max_body_n: usize,
+
+    // --- File-level properties (same for all groups sharing a file_path) ---
+
+    pub file_role: FileRole,
+    /// Whether the file is test/benchmark/example infrastructure.
+    pub is_test: bool,
+    /// Whether the file is a TypeScript declaration file (.d.ts).
+    pub is_type_declaration: bool,
+    /// Whether the file is an auto-generated API doc README.
+    pub is_autogen_api_doc: bool,
+
+    // --- Cross-group statistics (computed after initial grouping) ---
+
     /// Position within a split group (0 = first chunk). `None` if the group
-    /// was never split. Used to prefer earlier chunks (which typically contain
-    /// more important API surface) when budget is tight.
+    /// was never split.
     pub split_position: Option<usize>,
     /// Number of unique files in the same parent directory that have groups
-    /// of the same kind_category. When many files in a directory follow the
-    /// same pattern (e.g., 20 operator files each with class+factory function),
-    /// later instances add diminishing information. Used in `compute_value`
-    /// to deprioritize repetitive sibling files.
+    /// of the same kind_category. Used to deprioritize repetitive sibling files.
     pub dir_cohort_files: usize,
-    /// Average symbols per file in this directory cohort. Low averages (1-2)
-    /// indicate uniform, repetitive files. High averages (4+) indicate diverse
-    /// files that shouldn't be penalized.
+    /// Average symbols per file in this directory cohort.
     pub dir_cohort_avg_symbols: f64,
     /// Size of the largest set of symbols sharing a long common name prefix.
-    /// When many symbols in a group follow a naming pattern (e.g.,
-    /// `vec0_column_idx_is_*`, `vec0_column_idx_to_*`), additional names
-    /// beyond the first few are predictable and add diminishing information.
     pub name_prefix_cohort_max: usize,
 }
 
@@ -599,12 +599,10 @@ pub fn build_groups(
                     // Count dot-separated segments: [project] → 1, [tool.ruff] → 2
                     let depth = sym.name.chars().filter(|&c| c == '.').count() as u8 + 1;
                     Some(depth)
-                } else if matches!(lang, Some(crate::Lang::Json | crate::Lang::Yaml)) {
-                    Some(1) // JSON/YAML sections are all top-level
-                } else if lang.is_none() {
-                    Some(1) // Unsupported language plain text: top-level
-                } else {
+                } else if matches!(lang, Some(crate::Lang::Markdown)) {
                     Some(detect_heading_depth(&lines, sym_line_0, sym.end_line))
+                } else {
+                    Some(1) // JSON/YAML/unsupported: all top-level
                 }
             } else {
                 None
@@ -628,15 +626,11 @@ pub fn build_groups(
                 kind_category,
                 file_path: file_path.clone(),
                 is_documented,
-                file_role,
                 is_config,
-                is_test,
                 heading_depth,
                 is_first_party: sym.is_first_party,
                 is_trait_impl: sym.is_trait_impl,
-                is_type_declaration,
                 is_boilerplate_section,
-                is_autogen_api_doc: is_autogen,
                 is_reexport: sym.is_reexport,
             };
 
@@ -655,6 +649,10 @@ pub fn build_groups(
                 file_indices: HashSet::new(),
                 max_doc_n: 0,
                 max_body_n: 0,
+                file_role,
+                is_test,
+                is_type_declaration,
+                is_autogen_api_doc: is_autogen,
                 split_position: None,
                 dir_cohort_files: 1,
                 dir_cohort_avg_symbols: 1.0,
@@ -753,6 +751,10 @@ fn split_large_groups(groups: Vec<Group>) -> Vec<Group> {
                 file_indices,
                 max_doc_n,
                 max_body_n,
+                file_role: group.file_role,
+                is_test: group.is_test,
+                is_type_declaration: group.is_type_declaration,
+                is_autogen_api_doc: group.is_autogen_api_doc,
                 split_position: Some(i),
                 dir_cohort_files: group.dir_cohort_files,
                 dir_cohort_avg_symbols: group.dir_cohort_avg_symbols,
@@ -762,6 +764,14 @@ fn split_large_groups(groups: Vec<Group>) -> Vec<Group> {
         }
     }
     result
+}
+
+/// Token cost of the truncation marker that would appear after a given source line.
+/// Matches the renderer's `truncation_marker()` format: `"      →{indent}…\n"`.
+fn truncation_marker_cost(source_line: &str) -> usize {
+    let indent_len = source_line.len() - source_line.trim_start().len();
+    let indent = &source_line[..indent_len];
+    format::count_tokens(&format!("      →{}…\n", indent))
 }
 
 /// Compute token costs for each rendering stage of a single symbol.
@@ -785,14 +795,15 @@ fn compute_symbol_costs(
         let line = layout::strip_heading_badges(lines.get(layout.sym_line_0).copied().unwrap_or(""));
         format::count_tokens(&format::fmt_line(layout.sym_line_0, line))
     } else {
-        // Token count of the formatted name line, plus 1 for the " …" suffix
+        // Token count of the formatted name line including the " …\n" suffix
         // that the renderer appends to names-only entries. Including the
         // ellipsis cost keeps Names-only rendering in sync with the budget.
-        // When Signatures are also included (no ellipsis rendered), the +1 is
-        // offset by a corresponding -1 in signature_tokens (sig_total -
-        // name_tokens), so the total Names+Signatures cost remains exact.
+        // When Signatures are also included (no ellipsis rendered), the
+        // ellipsis cost is offset by a corresponding negative delta in
+        // signature_tokens (sig_total - name_tokens), so the total
+        // Names+Signatures cost remains exact.
         let name_line = format::format_symbol_name(sym, lines);
-        format::count_tokens(&name_line) + 1
+        format::count_tokens(&format!("{} …\n", name_line))
     };
 
     // Signature: additional tokens from showing full signature lines (with line numbers)
@@ -811,9 +822,11 @@ fn compute_symbol_costs(
 
     // Doc comment lines (pre-symbol comments + Python docstrings)
     let mut doc_line_tokens = Vec::new();
+    let mut doc_marker_tokens = Vec::new();
     if layout.doc_start < layout.doc_end {
         for (i, line) in lines.iter().enumerate().take(layout.doc_end).skip(layout.doc_start) {
             doc_line_tokens.push(format::count_tokens(&format::fmt_line(i, line)));
+            doc_marker_tokens.push(truncation_marker_cost(line));
         }
     }
     let pre_doc_count = doc_line_tokens.len();
@@ -821,20 +834,24 @@ fn compute_symbol_costs(
     if layout.ds_end > layout.ds_start {
         for (i, line) in lines.iter().enumerate().take(layout.ds_end).skip(layout.ds_start) {
             doc_line_tokens.push(format::count_tokens(&format::fmt_line(i, line)));
+            doc_marker_tokens.push(truncation_marker_cost(line));
         }
     }
 
     // Body lines — ranges come from layout (already truncated at first child)
     let mut body_line_tokens = Vec::new();
+    let mut body_marker_tokens = Vec::new();
     if is_section {
         // Markdown: body is content text between headings
         for (i, line) in lines.iter().enumerate().take(layout.md_section_end).skip(layout.md_content_start) {
             body_line_tokens.push(format::count_tokens(&format::fmt_line(i, line)));
+            body_marker_tokens.push(truncation_marker_cost(line));
         }
     } else {
         // Code: body_start..body_end (truncated at first child by layout)
         for (i, line) in lines.iter().enumerate().take(layout.body_end).skip(layout.body_start) {
             body_line_tokens.push(format::count_tokens(&format::fmt_line(i, line)));
+            body_marker_tokens.push(truncation_marker_cost(line));
         }
     }
 
@@ -844,8 +861,10 @@ fn compute_symbol_costs(
         name_tokens,
         signature_tokens,
         doc_line_tokens,
+        doc_marker_tokens,
         pre_doc_count,
         body_line_tokens,
+        body_marker_tokens,
         body_has_nested: layout.has_children,
     }
 }
@@ -904,7 +923,7 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     let sibling_factor = 1.0 / (1.0 + sibling_count.ln() * 0.1);
 
     // File role: README files are high-signal, changelogs/translations/metadata are low-signal.
-    let file_role_factor = match key.file_role {
+    let file_role_factor = match group.file_role {
         FileRole::Architecture => 3.0,
         FileRole::Readme => 1.5,
         FileRole::Normal => 1.0,
@@ -919,13 +938,11 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     let config_factor = if key.is_config { 0.1 } else { 1.0 };
 
     // Test/benchmark/example files are infrastructure, not core API.
-    // At tight budgets they appear as file paths only (structural context);
-    // at generous budgets their symbols are rendered normally.
-    let test_factor = if key.is_test { 0.15 } else { 1.0 };
+    let test_factor = if group.is_test { 0.15 } else { 1.0 };
 
     // TypeScript declaration files (.d.ts) duplicate API signatures already
     // shown from .js/.ts source files. Deprioritize so source files win.
-    let type_declaration_factor = if key.is_type_declaration { 0.15 } else { 1.0 };
+    let type_declaration_factor = if group.is_type_declaration { 0.15 } else { 1.0 };
 
     // Heading depth: top-level headings (h1, h2) are more important than
     // subsections (h3+). This lets the scheduler show body content for
@@ -958,7 +975,7 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
 
     // Auto-generated API doc READMEs (pdoc, sphinx, etc.) contain class/method
     // listings that are 100% redundant with source code signatures.
-    let autogen_api_doc_factor = if key.is_autogen_api_doc { 0.1 } else { 1.0 };
+    let autogen_api_doc_factor = if group.is_autogen_api_doc { 0.1 } else { 1.0 };
 
     // Rust `pub use` re-exports from child modules (e.g. `pub use self::foo::*`,
     // `pub use bar::Baz` where `mod bar` is declared). These are redundant when
@@ -1003,7 +1020,11 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
         }
     };
 
-    let base_value = visibility * documented * depth_factor * sibling_factor * file_role_factor * config_factor * test_factor * type_declaration_factor * heading_depth_factor * first_party_factor * trait_impl_factor * boilerplate_factor * autogen_api_doc_factor * reexport_factor * dir_cohort_factor * name_prefix_cohort_factor;
+    let base_value = visibility * documented * depth_factor * sibling_factor
+        * file_role_factor * config_factor * test_factor * type_declaration_factor
+        * heading_depth_factor * first_party_factor * trait_impl_factor
+        * boilerplate_factor * autogen_api_doc_factor * reexport_factor
+        * dir_cohort_factor * name_prefix_cohort_factor;
 
     let stage_value = match key.kind_category {
         // Type bodies (struct fields, interface props, dataclass fields)
@@ -1516,7 +1537,7 @@ fn stage_cost(group: &Group, stage: StageKind, n: usize) -> usize {
             // point. The renderer emits these as two sections separated by
             // the signature; at n == pre_doc_count the pre-comments are fully
             // shown (no marker) and the docstring hasn't started (no marker).
-            line_stage_cost(group, n, |s| &s.doc_line_tokens, |s, n| {
+            line_stage_cost(group, n, |s| &s.doc_line_tokens, |s| &s.doc_marker_tokens, |s, n| {
                 let total = s.doc_line_tokens.len();
                 !(total > s.pre_doc_count && n == s.pre_doc_count)
             })
@@ -1525,7 +1546,7 @@ fn stage_cost(group: &Group, stage: StageKind, n: usize) -> usize {
         // children (e.g., class bodies containing individually-rendered
         // methods). Only count markers for symbols without nested children.
         StageKind::Body => {
-            line_stage_cost(group, n, |s| &s.body_line_tokens, |s, _n| !s.body_has_nested)
+            line_stage_cost(group, n, |s| &s.body_line_tokens, |s| &s.body_marker_tokens, |s, _n| !s.body_has_nested)
         }
     }
 }
@@ -1533,6 +1554,7 @@ fn stage_cost(group: &Group, stage: StageKind, n: usize) -> usize {
 /// Shared cost computation for line-based stages (Doc/Body).
 ///
 /// `get_lines` selects which line-cost vector to read from each symbol.
+/// `get_markers` selects the parallel marker-cost vector.
 /// `show_marker` determines whether a symbol shows a truncation marker at
 /// a given line index `n`. For Body, this suppresses markers for symbols
 /// with nested children. For Doc, this suppresses the marker at the
@@ -1541,6 +1563,7 @@ fn line_stage_cost(
     group: &Group,
     n: usize,
     get_lines: fn(&SymbolCosts) -> &Vec<usize>,
+    get_markers: fn(&SymbolCosts) -> &Vec<usize>,
     show_marker: fn(&SymbolCosts, usize) -> bool,
 ) -> usize {
     let line_cost: usize = group
@@ -1548,17 +1571,19 @@ fn line_stage_cost(
         .iter()
         .filter_map(|s| get_lines(s).get(n - 1))
         .sum();
-    let markers_at_n = group
+    let markers_at_n: usize = group
         .symbols
         .iter()
         .filter(|s| get_lines(s).len() > n && show_marker(s, n))
-        .count();
-    let markers_at_prev = if n >= 2 {
+        .map(|s| get_markers(s).get(n - 1).copied().unwrap_or(0))
+        .sum();
+    let markers_at_prev: usize = if n >= 2 {
         group
             .symbols
             .iter()
             .filter(|s| get_lines(s).len() > (n - 1) && show_marker(s, n - 1))
-            .count()
+            .map(|s| get_markers(s).get(n - 2).copied().unwrap_or(0))
+            .sum()
     } else {
         0
     };

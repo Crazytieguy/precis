@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2007 tokens)
+budget: 2000 (2000 tokens)
 
 README.md
      3→# Chronos: Pretrained Models for Time Series Forecasting
@@ -50,8 +50,8 @@ src/chronos/base.py
    343→    ):
 
 src/chronos/boto_utils.py
-     6→import logging …
-    14→from botocore …
+     6→import logging
+    14→from botocore import UNSIGNED
     20→MODEL_FILENAMES …
     21→CLOUDFRONT_MAPPING …
     22→CHUNK_SIZE …
@@ -63,8 +63,6 @@ src/chronos/chronos.py
      6→import logging
     27→@dataclass
     28→class ChronosConfig:
-    29→    """
-      →    …
     33→
     34→    tokenizer_class: str
     35→    tokenizer_kwargs: Dict[str, Any]
@@ -99,6 +97,7 @@ src/chronos/chronos.py
    536→    def from_pretrained(cls, pretrained_model_name_or_path, *args, **kwargs):
 
 src/chronos/chronos2/config.py
+     6→from dataclasses …
     12→class Chronos2CoreConfig(PretrainedConfig):
     45→
     46→    model_type = "t5"
@@ -119,8 +118,6 @@ src/chronos/chronos2/config.py
    113→
    114→    @classmethod
    115→    def editable_fields(cls) -> list[str]:
-   116→        """
-      →        …
 
 src/chronos/chronos2/dataset.py
      6→import math
@@ -206,7 +203,7 @@ src/chronos/df_utils.py
    199→def convert_df_input_to_list_of_dicts_input …
 
 src/chronos/utils.py
-     5→from typing …
+     5→from typing import List
     11→def left_pad_and_stack_1D …
     22→def interpolate_quantiles …
    135→def weighted_quantile …

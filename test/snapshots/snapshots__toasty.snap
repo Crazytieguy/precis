@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4010 tokens)
+budget: 4000 (4000 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -226,7 +226,6 @@ crates/toasty-core/src/error.rs
     38→}
     41→pub trait IntoError {
     43→    fn into_error(self) -> Error;
-    47→struct ErrorInner {
     76→    pub fn context(self, consequent: impl IntoError) -> Error {
 
 crates/toasty-core/src/lib.rs
@@ -341,7 +340,6 @@ crates/toasty-driver-dynamodb/src/lib.rs
     99→}
 
 crates/toasty-driver-dynamodb/src/type.rs
-     4→pub trait TypeExt {
      6→    fn to_ddb_type(&self) -> ScalarAttributeType;
 
 crates/toasty-driver-dynamodb/src/value.rs
@@ -387,6 +385,7 @@ crates/toasty-driver-postgresql/src/statement_cache.rs
     10→    inner: LruCache<Key<'static>, Statement>,
     11→}
     15→    pub fn new …
+    49→struct Key …
     56→    pub fn new …
 
 crates/toasty-driver-postgresql/src/type.rs

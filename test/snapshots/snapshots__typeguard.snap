@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2006 tokens)
+budget: 2000 (2000 tokens)
 
 pyproject.toml
      1→[build-system]
@@ -28,7 +28,6 @@ src/typeguard/_checkers.py
     88→checker_lookup_functions: list[TypeCheckLookupCallback] = []
     89→generic_alias_types: tuple[type, ...] = (
     99→BINARY_MAGIC_METHODS = {
-   586→def _is_literal_type …
   1005→origin_type_checkers: dict[
 
 src/typeguard/_config.py
@@ -70,6 +69,8 @@ src/typeguard/_decorators.py
    150→def typechecked …
 
 src/typeguard/_exceptions.py
+     1→from collections …
+     2→from typing …
      5→class TypeHintWarning(UserWarning):
     12→class TypeCheckWarning(UserWarning):
     14→
@@ -125,8 +126,6 @@ src/typeguard/_importhook.py
 
 src/typeguard/_memo.py
      8→class TypeCheckMemo:
-     9→    """
-      →    …
     34→
     35→    __slots__ = "globals", "locals", "self_type", "config"
     36→

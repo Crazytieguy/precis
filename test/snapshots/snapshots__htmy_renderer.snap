@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (1019 tokens)
+budget: 1000 (1000 tokens)
 
 __init__.py
      1→from .baseline import Renderer as _BaselineRenderer
@@ -49,7 +49,8 @@ context.py
      3→from .typing import RendererType, is_renderer
      6→class RendererContext:
      7→    """
-      →    …
+     8→    Context key for storing, and utility for retrieving the renderer instance from the rendering context.
+     9→    """
     10→
     11→    @classmethod
     12→    def from_context(cls, context: Context) -> RendererType:
@@ -60,8 +61,7 @@ context.py
     17→            context: The context the renderer instance should be loaded from.
     18→
     19→        Raises:
-    20→            KeyError: If no renderer instance was found in the context.
-      →            …
+      →        …
 
 default.py
      3→from asyncio …
@@ -103,12 +103,10 @@ typing.py
      7→    from typing …
      9→    from htmy.typing …
     12→class RendererType(Protocol):
-    13→    """Protocol definition for renderers."""
     14→
     15→    async def render(self, component: Component, context: Context | None = None) -> str:
     29→def is_renderer(obj: Any | None) -> TypeGuard[RendererType]:
     36→class StreamingRendererType(RendererType, Protocol):
-    37→    """Protocol definition for streaming renderers."""
     38→
     39→    def stream(self, component: Component, context: Context | None = None) -> AsyncIterator[str]:
     53→def is_streaming_renderer(obj: Any | None) -> TypeGuard[StreamingRendererType]:

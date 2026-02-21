@@ -2,9 +2,10 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2013 tokens)
+budget: 2000 (1999 tokens)
 
 CHANGELOG.md
+     1→# Changelog
 
 README.md
      5→# Tomli
@@ -156,12 +157,8 @@ src/tomli/_re.py
     15→    from ._types import ParseFloat
     17→_TIME_RE_STR: Final = r"""
     26→RE_NUMBER: Final = re.compile(
-    27→    r"""
-      →    …
     45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)
     46→RE_DATETIME: Final = re.compile(
-    47→    rf"""
-      →    …
     59→def match_to_datetime(match: re.Match[str]) -> datetime | date:
     95→# No need to limit cache size. This is only ever called on input
     96→# that matched RE_DATETIME, so there is an implicit bound of

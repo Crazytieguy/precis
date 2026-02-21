@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2020 tokens)
+budget: 2000 (1998 tokens)
 
 CHANGELOG.md
      1→## Unreleased
@@ -110,8 +110,11 @@ flatten.go
      7→// a single *Error.
      8→func Flatten(err error) error {
      9→	// If it isn't an *Error, just return the error as-is
+    10→	if _, ok := err.(*Error); !ok {
       →	…
     20→func flatten(err error, flatErr *Error) {
+
+flatten_test.go
 
 format.go
      6→import …
@@ -138,15 +141,9 @@ group.go
     18→// If the function returns an error it is added to the group multierror which
     19→// is returned by Wait.
     20→func (g *Group) Go(f func() error) {
-    21→	g.wg.Add(1)
-    22→
-      →…
     34→// Wait blocks until all function calls from the Go method have returned, then
     35→// returns the multierror.
     36→func (g *Group) Wait() *Error {
-    37→	g.wg.Wait()
-    38→	g.mutex.Lock()
-      →	…
 
 group_test.go
     12→func TestGroup(t *testing.T) {

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (1011 tokens)
+budget: 1000 (999 tokens)
 
 constants.js
      5→const SEMVER_SPEC_VERSION = '2.0.0'
@@ -96,7 +96,6 @@ re.js
     19→const LETTERDASHNUMBER = '[a-zA-Z0-9-]'
     27→const safeRegexReplacements = [
     28→  ['\\s', 1],
-    29→  ['\\d', MAX_LENGTH],
       →  …
     33→const makeSafeRegex = (value) => {
     34→  for (const [token, max] of safeRegexReplacements) {
