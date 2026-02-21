@@ -63,78 +63,78 @@ with_fixtures! {
 
 with_entries! {
     // ── Rust ────────────────────────────────────────────────────────────
-    (anyhow,                  "anyhow",                         2000), // inspected: looks good
-    (thiserror,               "thiserror",                      2000), // inspected: looks good
-    (thiserror_impl_src,      "thiserror/impl/src",             1000), // inspected: looks good
-    (log,                     "log",                            2000), // inspected: looks good
-    (log_src_kv,              "log/src/kv",                     1000), // inspected: looks good
+    (anyhow,                  "anyhow",                         2000),
+    (thiserror,               "thiserror",                      2000),
+    (thiserror_impl_src,      "thiserror/impl/src",             1000),
+    (log,                     "log",                            2000),
+    (log_src_kv,              "log/src/kv",                     1000),
     (mdbook,                  "mdbook",                         4000), // inspected: logged observation
-    (mdbook_guide_src,        "mdbook/guide/src",               2000), // inspected: looks good
+    (mdbook_guide_src,        "mdbook/guide/src",               2000),
     (toasty,                  "toasty",                         4000), // inspected: logged observation
     (toasty_core,             "toasty/crates/toasty-core",      2000), // inspected: logged observation
-    (toasty_codegen,          "toasty/crates/toasty-codegen",   2000), // inspected: looks good
-    (sps,                     "sps",                            4000), // inspected: looks good
+    (toasty_codegen,          "toasty/crates/toasty-codegen",   2000),
+    (sps,                     "sps",                            4000),
     (sps_core,                "sps/sps-core",                   2000), // inspected: logged observation
-    (otree,                   "otree",                          2000), // inspected: looks good
+    (otree,                   "otree",                          2000),
 
     // ── Go ──────────────────────────────────────────────────────────────
-    (go_multierror,           "go-multierror",                  2000), // inspected: looks good
-    (xxhash,                  "xxhash",                         2000), // inspected: looks good
-    (xxhash_xxhsum,           "xxhash/xxhsum",                  1000), // inspected: looks good
+    (go_multierror,           "go-multierror",                  2000),
+    (xxhash,                  "xxhash",                         2000),
+    (xxhash_xxhsum,           "xxhash/xxhsum",                  1000),
     (mcphost,                 "mcphost",                        4000), // inspected: logged observation
-    (mcphost_sdk,             "mcphost/sdk",                    1000), // inspected: looks good
+    (mcphost_sdk,             "mcphost/sdk",                    1000),
     (tock,                    "tock",                            4000), // inspected: deprioritize mocks/
     (tock_internal_core,      "tock/internal/core",             1000), // inspected: deprioritize mocks/
 
     // ── TypeScript ──────────────────────────────────────────────────────
-    (cmdk,                    "cmdk",                           2000), // inspected: looks good
-    (cmdk_cmdk_src,           "cmdk/cmdk/src",                  1000), // inspected: looks good
-    (vaul,                    "vaul",                            2000), // inspected: looks good
-    (ts_pattern,              "ts-pattern",                     2000), // inspected: looks good
-    (ts_pattern_src_types,    "ts-pattern/src/types",           1000), // inspected: looks good
-    (ky,                      "ky",                              2000), // inspected: looks good
-    (ky_source_errors,        "ky/source/errors",               1000), // error hierarchy // inspected: looks good
-    (superstruct,             "superstruct",                    2000), // inspected: looks good
-    (superstruct_src_structs, "superstruct/src/structs",        1000), // validator definitions // inspected: looks good
-    (mitt,                    "mitt",                            1000), // inspected: looks good
+    (cmdk,                    "cmdk",                           2000),
+    (cmdk_cmdk_src,           "cmdk/cmdk/src",                  1000),
+    (vaul,                    "vaul",                            2000),
+    (ts_pattern,              "ts-pattern",                     2000),
+    (ts_pattern_src_types,    "ts-pattern/src/types",           1000),
+    (ky,                      "ky",                              2000),
+    (ky_source_errors,        "ky/source/errors",               1000), // error hierarchy
+    (superstruct,             "superstruct",                    2000),
+    (superstruct_src_structs, "superstruct/src/structs",        1000), // validator definitions
+    (mitt,                    "mitt",                            1000),
     (enclosed,                "enclosed",                        4000), // inspected: deprioritize locale data files
-    (enclosed_crypto,         "enclosed/packages/crypto",       1000), // crypto package // inspected: looks good
-    (enclosed_lib,            "enclosed/packages/lib",          1000), // shared library // inspected: looks good
-    (d2ts,                    "d2ts",                            2000), // inspected: looks good
-    (d2ts_d2ts,               "d2ts/packages/d2ts",             2000), // main library // inspected: looks good
+    (enclosed_crypto,         "enclosed/packages/crypto",       1000), // crypto package
+    (enclosed_lib,            "enclosed/packages/lib",          1000), // shared library
+    (d2ts,                    "d2ts",                            2000),
+    (d2ts_d2ts,               "d2ts/packages/d2ts",             2000), // main library
 
     // ── JavaScript ──────────────────────────────────────────────────────
-    (commander,               "commander",                      2000), // inspected: looks good
+    (commander,               "commander",                      2000),
     (semver,                  "semver",                          2000), // inspected: deprioritize .github/
-    (semver_classes,          "semver/classes",                  1000), // class definitions // inspected: looks good
-    (semver_internal,         "semver/internal",                 1000), // internal helpers // inspected: looks good
+    (semver_classes,          "semver/classes",                  1000), // class definitions
+    (semver_internal,         "semver/internal",                 1000), // internal helpers
 
     // ── Python ──────────────────────────────────────────────────────────
-    (pluggy,                  "pluggy",                          2000), // inspected: looks good
-    (typeguard,               "typeguard",                      2000), // inspected: looks good
-    (tomli,                   "tomli",                           2000), // inspected: looks good
-    (peepdb,                  "peepdb",                          2000), // inspected: looks good
-    (peepdb_db,               "peepdb/peepdb/db",               1000), // database adapters // inspected: looks good
-    (swarm,                   "swarm",                           2000), // inspected: looks good
-    (htmy,                    "htmy",                            2000), // inspected: looks good
-    (htmy_renderer,           "htmy/htmy/renderer",             1000), // rendering subsystem // inspected: looks good
-    (microbootstrap,          "microbootstrap",                 2000), // inspected: looks good
-    (microbootstrap_instruments, "microbootstrap/microbootstrap/instruments", 1000), // plugins // inspected: looks good
-    (py3xui,                  "py3xui",                          2000), // inspected: looks good
-    (py3xui_api,              "py3xui/py3xui/api",              1000), // sync API layer // inspected: looks good
+    (pluggy,                  "pluggy",                          2000),
+    (typeguard,               "typeguard",                      2000),
+    (tomli,                   "tomli",                           2000),
+    (peepdb,                  "peepdb",                          2000),
+    (peepdb_db,               "peepdb/peepdb/db",               1000), // database adapters
+    (swarm,                   "swarm",                           2000),
+    (htmy,                    "htmy",                            2000),
+    (htmy_renderer,           "htmy/htmy/renderer",             1000), // rendering subsystem
+    (microbootstrap,          "microbootstrap",                 2000),
+    (microbootstrap_instruments, "microbootstrap/microbootstrap/instruments", 1000), // plugins
+    (py3xui,                  "py3xui",                          2000),
+    (py3xui_api,              "py3xui/py3xui/api",              1000), // sync API layer
 
     // ── Python (ML) ─────────────────────────────────────────────────────
-    (xlstm,                   "xlstm",                           2000), // inspected: looks good
-    (xlstm_blocks,            "xlstm/xlstm/blocks",             1000), // model blocks // inspected: looks good
-    (nano_vllm,               "nano-vllm",                      2000), // inspected: looks good
-    (nano_vllm_engine,        "nano-vllm/nanovllm/engine",      1000), // inference engine // inspected: looks good
-    (chronos,                 "chronos-forecasting",             2000), // inspected: looks good
+    (xlstm,                   "xlstm",                           2000),
+    (xlstm_blocks,            "xlstm/xlstm/blocks",             1000), // model blocks
+    (nano_vllm,               "nano-vllm",                      2000),
+    (nano_vllm_engine,        "nano-vllm/nanovllm/engine",      1000), // inference engine
+    (chronos,                 "chronos-forecasting",             2000),
 
     // ── C ───────────────────────────────────────────────────────────────
-    (sds,                     "sds",                             1000), // inspected: looks good
-    (neco,                    "neco",                            1000), // inspected: looks good
-    (bareiron,                "bareiron",                        2000), // inspected: looks good
-    (krep,                    "krep",                            1000), // inspected: looks good
-    (sqlite_vec,              "sqlite-vec",                     2000), // inspected: looks good
-    (soluna,                  "soluna",                          2000), // inspected: looks good
+    (sds,                     "sds",                             1000),
+    (neco,                    "neco",                            1000),
+    (bareiron,                "bareiron",                        2000),
+    (krep,                    "krep",                            1000),
+    (sqlite_vec,              "sqlite-vec",                     2000),
+    (soluna,                  "soluna",                          2000),
 }

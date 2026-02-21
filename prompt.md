@@ -1,6 +1,6 @@
-You're improving precis by comparing its output against what an Explore agent produces for real codebases. Work through the entries in `test/fixtures.rs` in order — one entry per session.
+You're improving precis by comparing its output against what an Explore agent produces for real codebases.
 
-Find the next uninspected entry (no `// inspected:` comment).
+**Inspect exactly one entry.** Find the next uninspected entry in `test/fixtures.rs` (no `// inspected:` comment), inspect it, then end.
 
 ## Inspection
 
@@ -11,9 +11,11 @@ Find the next uninspected entry (no `// inspected:` comment).
 3. **Compare.** Did the Explore agent surface crucial details that precis missed? Did precis waste budget on content the Explore agent ignored? Is precis output misleading?
 
 4. **Decide:**
-   - **Looks good:** Mark the entry `// inspected: looks good`.
-   - **Issue noted:** Log it in `issues.md` under "Observations" with a specific note. Mark the entry `// inspected: logged observation`.
-   - **Clear general improvement:** Implement it (see below). Mark the entry `// inspected: <short description of change>`.
+   - **Exceeds Explore:** Precis output matches or exceeds the valuable information density from the Explore agent. Mark the entry `// inspected: exceeds explore`.
+   - **Issue noted:** The Explore agent surfaced important details that precis missed, but you don't have a concrete improvement idea. Log the gap in `issues.md` under "Observations" with specifics. Mark the entry `// inspected: logged observation`.
+   - **Clear general improvement:** You identified a concrete, general change that would improve precis output. Implement it (see below). Mark the entry `// inspected: <short description of change>`.
+
+The bar for "exceeds explore" is high. If the Explore agent gave you meaningfully better orientation than precis did, that's an observation worth logging even if you don't know how to fix it.
 
 If multiple logged observations point to the same underlying issue, that's also a good time to implement.
 
@@ -29,6 +31,8 @@ If multiple logged observations point to the same underlying issue, that's also 
 
 Delete `.precis_notes.md`. Provide a brief summary of what you inspected and any changes made.
 
-Don't `<break>` unless every entry has been inspected. Don't `<wait-for-user>`.
+Don't `<wait-for-user>`.
+
+**About `<break>`:** Emitting `<break>` halts the entire loop permanently. Only emit `<break>` after you have inspected the last remaining entry in `test/fixtures.rs`. In all other cases, just end normally — the loop will spawn a new session with the same prompt for the next entry.
 
 If you notice that `README.md` or `CLAUDE.md` have become stale or inaccurate during your work, update them.
