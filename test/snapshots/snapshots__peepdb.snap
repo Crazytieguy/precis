@@ -19,18 +19,36 @@ README.md
    142→### 6. Remove Saved Connections
    170→## 📚 Documentation
 
+docs/README.md
+     1→# just-the-docs-template
+
+docs/index.md
+     6→# peepDB
+    10→## 🚀 Features
+    20→## Getting Started
+
+docs/installation.md
+     6→# 📦 Installation
+    16→## Requirements
+    21→## System Dependencies
+    30→## Verifying the Installation
+    42→## Next Steps
+
+docs/usage.md
+     6→# 🛠️ Usage
+
 peepdb/__main__.py
      1→from .cli import main
 
 peepdb/cli.py
-     1→import click
-     2→import json
+     1→import click …
+     2→import json …
      3→from .core …
      4→from .config …
     11→from .exceptions …
-    12→from decimal import Decimal
-    13→from datetime import date
-    14→import logging
+    12→from decimal …
+    13→from datetime …
+    14→import logging …
     16→class CustomEncoder(json.JSONEncoder):
     17→    def default(self, obj):
     27→def cli():
@@ -105,11 +123,7 @@ peepdb/db/base.py
     37→    def __exit__(self, exc_type, exc_val, exc_tb):
 
 peepdb/db/firebase.py
-     1→import firebase_admin …
-     2→from firebase_admin …
-     3→from typing …
      4→from .base import BaseDatabase
-     5→import logging …
      9→class FirebaseDatabase(BaseDatabase):
     10→    def __init__(self, service_account_path: str, **kwargs):
     15→    def connect(self):
@@ -128,11 +142,7 @@ peepdb/db/mariadb.py
     34→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 peepdb/db/mongodb.py
-     1→import pymongo …
-     2→import pymongo.errors …
      3→from .base import BaseDatabase
-     4→import typing …
-     5→from urllib.parse …
      8→class MongoDBDatabase(BaseDatabase):
      9→    def connect …
     32→    def disconnect …
@@ -162,10 +172,7 @@ peepdb/db/mysql.py
     33→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 peepdb/db/oracle.py
-     1→import oracledb …
-     2→from typing …
      3→from .base import BaseDatabase
-     4→import logging …
      7→class OracleDatabase(BaseDatabase):
      8→    def connect(self) -> None:
     25→    def disconnect(self) -> None:
@@ -196,9 +203,5 @@ peepdb/db/sqlite.py
 peepdb/exceptions.py
      1→class InvalidPassword(Exception):
      2→    pass
-
-project.toml
-     1→[build-system]
-     5→[project]
 
 setup.py

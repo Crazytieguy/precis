@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2019 tokens)
+budget: 2000 (2018 tokens)
 
 CHANGELOG.md
 
@@ -17,20 +17,30 @@ README.md
     13→- [Intro](#intro)
     14→- [Installation](#installation)
     15→- [Usage](#usage)
-      →…
+    16→  - [Parse a TOML string](#parse-a-toml-string)
+      →  …
     32→## Intro<a name="intro"></a>
     50→## Installation<a name="installation"></a>
     56→## Usage<a name="usage"></a>
+    58→### Parse a TOML string<a name="parse-a-toml-string"></a>
+    79→### Parse a TOML file<a name="parse-a-toml-file"></a>
+    92→### Handle invalid TOML<a name="handle-invalid-toml"></a>
+   106→### Construct `decimal.Decimal`s from TOML floats<a name="construct-decimaldecimals-from-toml-floats"></a>
+   123→### Building a `tomli`/`tomllib` compatibility layer<a name="building-a-tomlitomllib-compatibility-layer"></a>
    152→## FAQ<a name="faq"></a>
+   154→### Why this parser?<a name="why-this-parser"></a>
+   167→### Is comment preserving round-trip parsing supported?<a name="is-comment-preserving-round-trip-parsing-supported"></a>
+   177→### Is there a `dumps`, `write` or `encode` function?<a name="is-there-a-dumps-write-or-encode-function"></a>
+   183→### How do TOML types map into Python types?<a name="how-do-toml-types-map-into-python-types"></a>
    201→## Performance<a name="performance"></a>
+   207→### Mypyc generated wheel<a name="mypyc-generated-wheel"></a>
+   230→### Pure Python<a name="pure-python"></a>
 
 benchmark/README.md
      1→# Benchmark
     10→## Running
 
 benchmark/run.py
-    15→def benchmark …
-    37→def run …
 
 fuzzer/fuzz.py
      1→import atheris
@@ -54,9 +64,6 @@ pyproject.toml
      5→[project]
     28→[project.urls]
 
-scripts/use_setuptools.py
-    12→def use_setuptools() -> None:
-
 src/tomli/__init__.py
      1→# SPDX-License-Identifier: MIT
      2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
@@ -69,27 +76,27 @@ src/tomli/_parser.py
      7→import sys …
      8→from types …
     10→from ._re …
-    19→TYPE_CHECKING = False
+    19→TYPE_CHECKING …
     21→    from collections.abc …
     22→    from typing …
     24→    from ._types …
     26→# Inline tables/arrays are implemented using recursion. Pathologically
       →…
     35→MAX_INLINE_NESTING: Final = sys.getrecursionlimit()
-    37→ASCII_CTRL: Final = frozenset(chr(i) for i in range(32)) | frozenset(chr(127))
+    37→ASCII_CTRL …
     39→# Neither of these sets include quotation mark or backslash. They are
       →…
     41→ILLEGAL_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t")
-    42→ILLEGAL_MULTILINE_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t\n")
-    44→ILLEGAL_LITERAL_STR_CHARS: Final = ILLEGAL_BASIC_STR_CHARS
-    45→ILLEGAL_MULTILINE_LITERAL_STR_CHARS: Final = ILLEGAL_MULTILINE_BASIC_STR_CHARS
-    47→ILLEGAL_COMMENT_CHARS: Final = ILLEGAL_BASIC_STR_CHARS
-    49→TOML_WS: Final = frozenset(" \t")
-    50→TOML_WS_AND_NEWLINE: Final = TOML_WS | frozenset("\n")
-    51→BARE_KEY_CHARS: Final = frozenset(
-    54→KEY_INITIAL_CHARS: Final = BARE_KEY_CHARS | frozenset("\"'")
-    55→HEXDIGIT_CHARS: Final = frozenset("abcdef" "ABCDEF" "0123456789")
-    57→BASIC_STR_ESCAPE_REPLACEMENTS: Final = MappingProxyType(
+    42→ILLEGAL_MULTILINE_BASIC_STR_CHARS …
+    44→ILLEGAL_LITERAL_STR_CHARS …
+    45→ILLEGAL_MULTILINE_LITERAL_STR_CHARS …
+    47→ILLEGAL_COMMENT_CHARS …
+    49→TOML_WS …
+    50→TOML_WS_AND_NEWLINE …
+    51→BARE_KEY_CHARS …
+    54→KEY_INITIAL_CHARS …
+    55→HEXDIGIT_CHARS …
+    57→BASIC_STR_ESCAPE_REPLACEMENTS …
     71→class DEPRECATED_DEFAULT:
     76→class TOMLDecodeError(ValueError):
     86→
@@ -160,13 +167,8 @@ src/tomli/_re.py
       →…
     95→# No need to limit cache size. This is only ever called on input
     96→# that matched RE_DATETIME, so there is an implicit bound of
-    97→# 24 (hours) * 60 (minutes) * 2 (offset direction) = 2880.
-    98→@lru_cache(maxsize=None)
+      →…
     99→def cached_tz(hour_str: str, minute_str: str, sign_str: str) -> timezone:
-   100→    sign = 1 if sign_str == "+" else -1
-   101→    return timezone(
-   102→        timedelta(
-      →        …
    109→def match_to_localtime(match: re.Match[str]) -> time:
    116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
 
@@ -176,25 +178,13 @@ src/tomli/_types.py
 tests/__init__.py
      5→__all__ = ("tomllib",)
 
-tests/burntsushi.py
-    11→def convert(obj):
-    42→def normalize(obj: Any) -> Any:
-
-tests/test_data.py
-     5→import json
-    27→class TestData(unittest.TestCase):
-    28→    def test_invalid(self):
-    40→    def test_valid(self):
-
-tests/test_error.py
-    13→class TestError(unittest.TestCase):
-
 tomllib.md
      1→# `tomllib` – Tomli in the standard library
      3→Tomli was added to the Python standard library in Python 3.11.
      4→
      5→Relevant links:
      6→
+     7→- Python Issue Tracker: https://bugs.python.org/issue40059
       →…
     13→## Converting Tomli to tomllib
     15→### Sync status

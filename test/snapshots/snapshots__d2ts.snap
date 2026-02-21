@@ -2,19 +2,35 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1999 tokens)
+budget: 2000 (2000 tokens)
 
 README.md
     26→# D2TS - Differential Dataflow in TypeScript <!-- omit in toc -->
     36→## Table of Contents
     51→## Key Features
     73→## Quick Start
+    75→### Installation
+    81→### Basic Usage
+   141→### Using with ElectricSQL
    185→## Examples
    196→## API
+   198→### D2 graph construction
+   214→### Input Streams
+   221→### Versions and Frontiers
+   261→### MultiSet as a changeset
+   306→### Operators
+   615→##### `keyBy`
+   623→##### `unkey`
+   631→##### `rekey`
+   653→### Using SQLite Backend
    678→## Implementation Details
    699→## References
 
 package.json
+
+packages/d2mini/README.md
+     1→# D2Mini is a minimal IVM implementation based on Differential Dataflow
+     7→### Basic Usage
 
 packages/d2mini/src/graph.ts
     11→export class DifferenceStreamReader …
@@ -47,11 +63,6 @@ packages/d2mini/src/multiset.ts
    207→  extend …
    212→  getInner …
 
-packages/d2mini/src/operators/keying.ts
-    13→export function keyBy …
-    22→export function unkey …
-    30→export function rekey …
-
 packages/d2mini/src/utils.ts
      6→export class DefaultMap<K, V> extends Map<K, V> {
      7→  constructor …
@@ -70,6 +81,20 @@ packages/d2mini/src/utils.ts
 
 packages/d2ql/README.md
      1→# D2QL
+     3→**This is an experimental package**
+     4→
+      →…
+     9→## Basic Usage
+    60→## Current Features
+    79→## Common Table Expressions (CTEs)
+   140→## Planned Features
+   144→## ORDER BY, LIMIT, and OFFSET
+   244→## GROUP BY and Aggregation
+   366→## Wildcard Selects
+   403→## Keyed Streams with keyBy
+   423→## Kitchen Sink Example
+   624→## Query Schema
+   646→## Query Builder
 
 packages/d2ql/src/compiler.ts
     16→export function compileQuery …
@@ -102,12 +127,6 @@ packages/d2ql/src/schema.ts
     94→export type ConditionOperand …
 
 packages/d2ql/src/store.ts
-    14→export type ChangeInsert …
-    20→export type ChangeDelete …
-    26→export type ChangeUpdate …
-    33→export type Change …
-    38→export type ChangeSet …
-    40→export class Store …
    163→  query …
    346→  static queryAll …
 
@@ -124,6 +143,7 @@ packages/d2ql/src/utils.ts
    192→export function isValueInArray …
 
 packages/d2ts/README.md
+    26→# D2TS - Differential Dataflow in TypeScript <!-- omit in toc -->
     36→## Table of Contents
     51→## Key Features
     88→## Quick Start
@@ -131,12 +151,6 @@ packages/d2ts/README.md
    210→## API
   1055→## Implementation Details
   1076→## References
-
-packages/d2ts/src/d2.ts
-    11→export type D2Options = {
-    15→export class D2 implements ID2 {
-    93→export class StreamBuilder<T> implements IStreamBuilder<T> {
-   166→export class RootStreamBuilder<T> extends StreamBuilder<T> {
 
 packages/d2ts/src/graph.ts
     20→export class DifferenceStreamReader<T> implements IDifferenceStreamReader<T> {
@@ -204,21 +218,10 @@ packages/d2ts/src/types.ts
 
 packages/d2ts/src/utils.ts
      7→export class WeakRefMap<K, V extends object> {
-     8→  private cacheMap = new Map<K, WeakRef<V>>()
-     9→  private finalizer = new AnyFinalizationRegistry((key: K) => {
-    10→    this.cacheMap.delete(key)
-    11→  })
-    12→
     31→export class DefaultMap<K, V> extends Map<K, V> {
     49→  update(key: K, updater: (value: V) => V): V {
     98→export function hash(data: any): string | number {
    126→export class WeakRefBasedFinalizationRegistry {
-   127→  private counter = 0
-   128→  private registrations = new Map()
-   129→  private sweepTimeout: NodeJS.Timeout | undefined
-   130→  private finalize: (value: any) => void
-   131→  private sweepIntervalMs = 10_000
-   132→
 
 packages/d2ts/src/version-index.ts
      8→export interface IndexType<K, V> {

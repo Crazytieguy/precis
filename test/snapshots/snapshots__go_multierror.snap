@@ -2,10 +2,13 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2016 tokens)
+budget: 2000 (2021 tokens)
 
 CHANGELOG.md
      1→## Unreleased
+     3→### Improvements
+     5→### Changes
+     7→### Fixed
 
 README.md
      1→# go-multierror
@@ -25,6 +28,16 @@ README.md
     24→if err1 != nil {
     25→    errs = append(errs, err1)
     26→}
+    27→if err2 != nil {
+    28→    errs = append(errs, err2)
+    29→}
+    30→if len(errs) > 0 {
+    31→    return errors.Join(errs...)
+    32→}
+    33→return nil
+    34→```
+    35→
+    36→**Custom formatting:**
       →…
    104→## Installation and Docs
    106→Install using `go get github.com/hashicorp/go-multierror`.
@@ -45,7 +58,10 @@ README.md
    122→you're on an older version of go:
    123→
    124→```
-      →…
+   125→/go/src/github.com/hashicorp/go-multierror/multierror.go:112:9: undefined: errors.As
+   126→/go/src/github.com/hashicorp/go-multierror/multierror.go:117:9: undefined: errors.Is
+   127→```
+   128→
    129→## Usage
    131→go-multierror is easy to use and purposely built to be unobtrusive in
    132→existing Go applications/libraries that may not be aware of it.
@@ -60,23 +76,24 @@ README.md
    141→```go
    142→var result error
    143→
+   144→if err := step1(); err != nil {
+   145→	result = multierror.Append(result, err)
+   146→}
+   147→if err := step2(); err != nil {
+   148→	result = multierror.Append(result, err)
+   149→}
+   150→
+   151→return result
+   152→```
+   153→
       →…
 
 append.go
      6→// Append is a helper function that will append more errors
      7→// onto an Error in order to create a larger multi-error.
      8→//
-     9→// If err is not a multierror.Error, then it will be turned into
-    10→// one. If any of the errs are multierr.Error, they will be flattened
-    11→// one level into err.
-    12→// Any nil errors within errs will be ignored. If err is nil, a new
-    13→// *Error will be returned.
+      →…
     14→func Append(err error, errs ...error) *Error {
-    15→	switch err := err.(type) {
-    16→	case *Error:
-      →	…
-
-append_test.go
 
 flatten.go
      6→// Flatten flattens the given error, merging any *Errors together into
@@ -85,9 +102,7 @@ flatten.go
      9→	// If it isn't an *Error, just return the error as-is
     10→	if _, ok := err.(*Error); !ok {
     11→		return err
-    12→	}
-    13→
-      →…
+      →		…
     20→func flatten(err error, flatErr *Error) {
 
 flatten_test.go
@@ -103,14 +118,7 @@ format.go
     16→// that occurred along with a bullet point list of the errors.
     17→func ListFormatFunc(es []error) string {
     18→	if len(es) == 1 {
-    19→		return fmt.Sprintf("1 error occurred:\n\t* %s\n\n", es[0])
-    20→	}
-    21→
-      →…
-
-format_test.go
-    11→func TestListFormatFuncSingle(t *testing.T) {
-    27→func TestListFormatFuncMultiple(t *testing.T) {
+      →	…
 
 group.go
      6→import "sync"
@@ -127,13 +135,11 @@ group.go
     19→// is returned by Wait.
     20→func (g *Group) Go(f func() error) {
     21→	g.wg.Add(1)
-    22→
-      →…
+      →	…
     34→// Wait blocks until all function calls from the Go method have returned, then
     35→// returns the multierror.
     36→func (g *Group) Wait() *Error {
     37→	g.wg.Wait()
-    38→	g.mutex.Lock()
       →	…
 
 group_test.go
@@ -175,11 +181,6 @@ prefix.go
     19→	}
     20→
       →…
-
-prefix_test.go
-    11→func TestPrefix_Error(t *testing.T) {
-    22→func TestPrefix_NilError(t *testing.T) {
-    30→func TestPrefix_NonError(t *testing.T) {
 
 sort.go
      6→// Len implements sort.Interface function for length

@@ -2,50 +2,52 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (999 tokens)
+budget: 1000 (992 tokens)
 
 README.md
+    18→## Features
+    38→## Goals
+    49→## Using
+    57→## Example 1 (Start a coroutine)
+    77→## Example 2 (Use neco_main instead of main)
+    93→## Example 3 (Multiple coroutines)
+   125→## Example 4 (Coroutine arguments)
+   181→## Example 5 (Channels)
+   228→## Example 6 (Generators)
+   262→## Example 7 (Connect to server)
+   299→## Example 8 (Create a server)
+   344→## Example 9 (Echo server and client)
+   431→## Example 10 (Suspending and resuming a coroutine)
    469→### More examples
+   473→## Platform notes
+   498→## The scheduler
    504→### Fast context switching
    511→### Thread local runtime
    579→## License
 
+docs/README.md
+     1→# Neco Documentation
+
 neco.c
+   163→#include <stdatomic.h>
    294→#define LLCO_NOASM
   1067→enum llco_stack_grows { DOWNWARDS, UPWARDS }; 
-  1282→llco_start …
-  1293→llco_switch …
-  1320→llco_method …
+  1122→#include <stdio.h>
   1814→struct sco_link {
-  2154→sco_active …
-  2192→sco_unwind …
-  2798→worker_submit …
+  2215→#include <unistd.h>
+  2632→#include <stdint.h>
   2883→#define NECO_POLL_DISABLED
   2957→#define pwhere(str) \
   2963→#define unreachable() \
   2970→#define must(cond) \
-  3105→int neco_errconv_from_sys …
-  3121→void neco_env_setallocator …
-  3179→void neco_env_setpaniconerror …
-  3188→void neco_env_setcanceltype …
-  3197→void neco_env_setcancelstate …
   3248→enum evkind {
   3249→    EVREAD  = 1, // NECO_WAIT_READ
   3250→    EVWRITE = 2, // NECO_WAIT_WRITE
   3251→};
   3321→enum cokind { COROUTINE, SELECTCASE };
-  3420→int neco_lasterr …
   3453→#define error_guard(ret) \
   3466→#define async_error_guard(ret) \
-  3560→int neco_gai_lasterr …
   3570→struct runtime {
-  3719→int neco_is_main_thread …
-  3950→void neco_reset_sigcrashed …
-  4142→i64_add_clamp …
-  4442→int neco_start …
-  4454→int neco_startv …
-  4474→int neco_yield …
-  4531→int neco_sleep_dl …
   5718→struct neco_chan {
   5736→struct coselectcase {
   7082→struct neco_mutex {
@@ -84,8 +86,9 @@ neco.h
    396→typedef struct neco_stream neco_stream;
    424→#include <stdio.h>
    446→void __neco_c0 …
-   447→void __neco_c1(int);
-   448→void __neco_exit_prog(int);
+
+tests/README.md
+     1→# Testing
 
 tests/tests.h
     24→#define IS_FAIL_TARGET

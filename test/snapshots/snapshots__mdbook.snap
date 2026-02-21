@@ -2,10 +2,12 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4006 tokens)
+budget: 4000 (4002 tokens)
 
 Cargo.toml
      1→[workspace]
+     8→[workspace.lints.clippy]
+    16→[workspace.lints.rust]
     21→[workspace.package]
     27→[workspace.dependencies]
     72→[package]
@@ -20,6 +22,14 @@ Cargo.toml
 
 README.md
      1→# mdBook
+     7→mdBook is a utility to create modern online books from Markdown files.
+     8→
+      →…
+
+crates/mdbook-compare/Cargo.toml
+     1→[package]
+     9→[dependencies]
+    11→[lints]
 
 crates/mdbook-compare/README.md
      1→# mdbook-compare
@@ -35,16 +45,6 @@ crates/mdbook-core/README.md
 
 crates/mdbook-core/src/book.rs
     26→pub struct Book {
-    27→    /// The items in this book.
-    28→    pub items: Vec<BookItem>,
-    29→}
-    33→    pub fn new …
-    38→    pub fn new_with_items …
-    43→    pub fn iter …
-    50→    pub fn chapters …
-    65→    pub fn for_each_mut …
-    74→    pub fn for_each_chapter_mut …
-    93→    pub fn push_item …
    119→pub enum BookItem {
    120→    /// A nested chapter.
    121→    Chapter(Chapter),
@@ -54,37 +54,12 @@ crates/mdbook-core/src/book.rs
    125→    PartTitle(String),
    126→}
    141→pub struct Chapter {
-   142→    /// The chapter's name.
-   143→    pub name: String,
-   144→    /// The chapter's contents.
-   145→    pub content: String,
-   146→    /// The chapter's section number, if it has one.
-   147→    pub number: Option<SectionNumber>,
-   148→    /// Nested items.
-   149→    pub sub_items: Vec<BookItem>,
-   150→    /// The chapter's location, relative to the `SUMMARY.md` file.
-   151→    ///
-      →    …
-   173→    pub fn new …
-   192→    pub fn new_draft …
-   204→    pub fn is_draft_chapter …
    222→pub struct SectionNumber(Vec<u32>);
-   226→    pub fn new …
    269→pub struct BookItems<'a> {
-   270→    items: VecDeque<&'a BookItem>,
-   271→}
 
 crates/mdbook-core/src/config.rs
     63→pub struct Config {
-   113→    pub fn from_disk …
-   150→    pub fn update_from_env …
-   189→    pub fn get …
-   216→    pub fn contains_key …
-   228→    pub fn preprocessors …
-   236→    pub fn outputs …
-   274→    pub fn set …
    318→pub struct BookConfig {
-   356→    pub fn realized_text_direction …
    368→pub enum TextDirection {
    369→    /// Left to right.
    370→    #[serde(rename = "ltr")]
@@ -93,7 +68,6 @@ crates/mdbook-core/src/config.rs
    373→    #[serde(rename = "rtl")]
    374→    RightToLeft,
    375→}
-   379→    pub fn from_lang_code …
    394→pub struct BuildConfig {
    422→pub struct RustConfig {
    430→pub enum RustEdition {
@@ -111,8 +85,6 @@ crates/mdbook-core/src/config.rs
    442→    E2015,
    443→}
    449→pub struct HtmlConfig {
-   558→    pub fn theme_dir …
-   566→    pub fn get_404_output_file …
    578→pub struct Print {
    598→pub struct Fold {
    611→pub struct Playground {
@@ -151,20 +123,6 @@ crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
     19→}
     23→    pub fn new …
     52→    pub fn cmd …
-
-crates/mdbook-driver/src/builtin_preprocessors/index.rs
-    12→pub struct IndexPreprocessor;
-    16→    pub const NAME: &'static str = "index";
-    19→    pub fn new() -> Self {
-
-crates/mdbook-driver/src/builtin_preprocessors/links.rs
-    32→pub struct LinkPreprocessor;
-    36→    pub const NAME: &'static str = "links";
-    39→    pub fn new() -> Self {
-
-crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs
-    10→pub struct MarkdownRenderer;
-    14→    pub fn new() -> Self {
 
 crates/mdbook-driver/src/builtin_renderers/mod.rs
     20→pub struct CmdRenderer {
@@ -222,20 +180,18 @@ crates/mdbook-html/Cargo.toml
 crates/mdbook-html/README.md
      1→# mdbook-html
 
-crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
-    22→pub struct HtmlHandlebars;
-    26→    pub fn new() -> Self {
-
 crates/mdbook-html/src/lib.rs
      5→pub mod theme;
 
 crates/mdbook-html/src/theme/mod.rs
     40→pub struct Theme {
-    41→    pub(crate) index: Vec<u8>,
-    42→    pub(crate) head: Vec<u8>,
-      →    …
     66→    pub fn new …
    166→    pub fn copy_theme …
+
+crates/mdbook-markdown/Cargo.toml
+     1→[package]
+    10→[dependencies]
+    15→[lints]
 
 crates/mdbook-markdown/README.md
      1→# mdbook-markdown
@@ -260,6 +216,11 @@ crates/mdbook-markdown/src/lib.rs
     30→    pub admonitions: bool,
     31→}
     44→pub fn new_cmark_parser …
+
+crates/mdbook-preprocessor/Cargo.toml
+     1→[package]
+    10→[dependencies]
+    16→[lints]
 
 crates/mdbook-preprocessor/README.md
      1→# mdbook-preprocessor
@@ -288,6 +249,11 @@ crates/mdbook-preprocessor/src/lib.rs
     70→    pub fn new …
     82→pub fn parse_input …
 
+crates/mdbook-renderer/Cargo.toml
+     1→[package]
+    10→[dependencies]
+    16→[lints]
+
 crates/mdbook-renderer/README.md
      1→# mdbook-renderer
 
@@ -306,12 +272,6 @@ crates/mdbook-renderer/src/lib.rs
     48→    pub book: Book,
     49→    /// The loaded configuration file.
     50→    pub config: Config,
-    51→    /// Where the renderer *must* put any build artefacts generated. To allow
-    52→    /// renderers to cache intermediate results, this directory is not
-    53→    /// guaranteed to be empty or even exist.
-    54→    pub destination: PathBuf,
-    55→    /// Internal mapping of chapter titles.
-    56→    ///
       →    …
     65→    pub fn new …
     81→    pub fn source_dir …
@@ -338,7 +298,6 @@ crates/mdbook-summary/src/lib.rs
    127→    /// A part title.
    128→    PartTitle(String),
    129→}
-   173→struct SummaryParser<'a> {
    190→macro_rules! collect_events {
 
 crates/xtask/Cargo.toml
@@ -355,8 +314,10 @@ guide/guide-helper/Cargo.toml
     15→[lints]
 
 guide/guide-helper/src/lib.rs
-     9→/// Preprocessing entry point.
     10→pub fn handle_preprocessing() -> Result<()> {
+
+guide/src/404.md
+     1→# Document not found (404)
 
 guide/src/README.md
      1→# Introduction
@@ -369,10 +330,47 @@ guide/src/SUMMARY.md
 guide/src/cli/README.md
      1→# Command-line tool
 
+guide/src/cli/build.md
+     1→# The build command
+
+guide/src/cli/clean.md
+     1→# The clean command
+
+guide/src/cli/completions.md
+     1→# The completions command
+
+guide/src/cli/init.md
+     1→# The init command
+
+guide/src/cli/serve.md
+     1→# The serve command
+    27→### Server options
+
+guide/src/cli/test.md
+     1→# The test command
+
+guide/src/cli/watch.md
+     1→# The watch command
+
+guide/src/continuous-integration.md
+     1→# Running `mdbook` in continuous integration
+    12→## Installing mdBook
+    67→## Running tests
+    83→## Deploying
+
 guide/src/for_developers/README.md
      1→# For developers
     17→## The build process
     30→## Using `mdbook` as a library
+
+guide/src/for_developers/backends.md
+     1→# Alternative backends
+    13→## Setting up
+    53→## Inspecting the book
+    82→## Enabling the backend
+   159→## Configuration
+   219→## Output and signalling failure
+   322→## Wrapping up
 
 guide/src/for_developers/mdbook-wordcount/src/main.rs
     46→pub struct WordcountConfig {
@@ -380,19 +378,69 @@ guide/src/for_developers/mdbook-wordcount/src/main.rs
     48→    pub deny_odds: bool,
     49→}
 
+guide/src/for_developers/preprocessors.md
+     1→# Preprocessors
+    13→## Hooking into MDBook
+    46→## Hints for implementing a preprocessor
+    74→## Implementing a preprocessor with a different language
+
 guide/src/format/README.md
      1→# Format
 
+guide/src/format/configuration/README.md
+     1→# Configuration
+
+guide/src/format/markdown.md
+     1→# Markdown
+     9→## Text and paragraphs
+    25→## Headings
+    47→## Lists
+    69→## Links
+   108→## Images
+   127→## Extensions
+
+guide/src/format/mathjax.md
+     1→# MathJax support
+    24→### Inline equations
+    32→### Block equations
+
+guide/src/format/mdbook.md
+     1→# mdBook-specific features
+
+guide/src/format/summary.md
+     1→# SUMMARY.md
+    12→### Structure
+    93→### Example
+
+guide/src/format/theme/README.md
+     1→# Theme
+
 guide/src/guide/README.md
      1→# User guide
+
+guide/src/guide/creating.md
+     1→# Creating a book
+     5→## Initializing a book
+    32→## Anatomy of a book
+    96→## Publishing a book
+
+guide/src/guide/installation.md
+     1→# Installation
+     9→## Pre-compiled binaries
+    19→## Build from source using Rust
+
+guide/src/guide/reading.md
+     1→# Reading books
+    12→## Navigation
+    26→## Top menu bar
+    42→## Search
+    54→## Code blocks
 
 src/cmd/build.rs
      8→pub fn make_subcommand() -> Command {
     17→pub fn execute(args: &ArgMatches) -> Result<()> {
 
 src/cmd/clean.rs
-     1→use super::command_prelude::*;
-     2→use crate::get_book_dir;
     11→pub fn make_subcommand() -> Command {
     19→pub fn execute(args: &ArgMatches) -> Result<()> {
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
@@ -416,8 +464,6 @@ src/cmd/init.rs
      1→use crate::get_book_dir;
     12→pub fn make_subcommand() -> ClapCommand {
     32→pub fn execute(args: &ArgMatches) -> Result<()> {
-    88→fn get_author_name() -> Option<String> {
-   102→fn request_book_title() -> Option<String> {
 
 src/cmd/mod.rs
      3→pub mod build;
@@ -435,8 +481,6 @@ src/cmd/serve.rs
    109→async fn serve …
 
 src/cmd/test.rs
-     1→use super::command_prelude::*;
-     2→use crate::get_book_dir;
      9→pub fn make_subcommand() -> Command {
     35→pub fn execute(args: &ArgMatches) -> Result<()> {
 
@@ -454,7 +498,3 @@ src/cmd/watch.rs
     27→    pub fn from_str …
     37→pub fn execute …
     62→pub fn rebuild_on_change …
-
-src/main.rs
-    14→mod cmd;
-    58→fn create_clap_command() -> Command {

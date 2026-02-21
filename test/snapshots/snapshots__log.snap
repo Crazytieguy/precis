@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1992 tokens)
+budget: 2000 (1993 tokens)
 
 Cargo.toml
      1→[package]
@@ -17,6 +17,16 @@ README.md
     27→### In libraries
     58→### In executables
    106→## Structured logging
+
+rfcs/0296-structured-logging.md
+     5→# Summary
+    16→# Contents
+    43→# Motivation
+    98→# Guide-level explanation
+   495→# Reference-level explanation
+  1575→# Drawbacks, rationale, and alternatives
+  1629→# Prior art
+  1650→# Unresolved questions
 
 src/__private_api.rs
     10→pub type Value<'a> = &'a str;
@@ -64,6 +74,8 @@ src/kv/key.rs
    137→    use super::*;
 
 src/kv/mod.rs
+   246→mod error;
+   247→mod key;
    250→mod source;
    252→mod value;
    260→pub mod source;
@@ -74,6 +86,8 @@ src/kv/source.rs
     62→    fn visit …
     73→    fn get …
     85→    fn count …
+    91→fn get_default …
+   114→fn count_default …
    235→pub trait VisitSource<'kvs> {
    237→    fn visit_pair …
    280→mod std_support {
@@ -82,30 +96,17 @@ src/kv/source.rs
 src/kv/value.rs
      8→pub use crate::kv::Error;
     11→pub trait ToValue {
-    13→    fn to_value …
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
    121→}
-   125→    pub fn from_any …
-   133→    pub fn from_debug …
-   143→    pub fn from_display …
-   154→    pub fn from_serde …
-   165→    pub fn from_sval …
-   175→    pub fn from_dyn_debug …
-   182→    pub fn from_dyn_display …
-   190→    pub fn from_dyn_error …
-   197→    pub fn null …
-   217→    pub fn visit …
-   379→    pub fn to_borrowed_error …
-   384→    pub fn to_borrowed_str …
+   204→    fn from_inner …
    390→mod std_support {
    395→    use super::*;
-   438→        pub fn to_cow_str …
    462→pub trait VisitValue<'v> {
-   469→    fn visit_any …
-   472→    fn visit_null …
    602→pub(in crate::kv) mod inner {
    610→    use super::*;
+   612→    pub use value_bag::ValueBag as Inner;
+   614→    pub use value_bag::Error;
    721→pub(in crate::kv) mod inner {
    735→    use super::*;
    737→    #[derive(Clone)]
@@ -200,6 +201,9 @@ src/lib.rs
   1549→pub struct SetLoggerError(());
   1566→pub struct ParseLevelError(());
   1600→pub mod __private_api;
+  1602→/// The statically resolved maximum log level.
+  1603→///
+      →…
   1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
 
 src/macros.rs
@@ -210,5 +214,3 @@ src/macros.rs
    292→macro_rules! debug {
    336→macro_rules! trace {
    391→macro_rules! log_enabled {
-
-src/serde.rs

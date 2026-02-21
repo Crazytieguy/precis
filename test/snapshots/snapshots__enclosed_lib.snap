@@ -2,14 +2,16 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (999 tokens)
+budget: 1000 (1003 tokens)
 
 README.md
      1→### Enclosed lib
      5→## Installation
+     7→```bash
+      →…
     18→## Usage
-
-package.json
+    20→```javascript
+      →…
 
 src/api/api.client.ts
      1→import { ofetch …
@@ -65,7 +67,6 @@ src/crypto/serialization/serialization.types.ts
 
 src/files/files.models.ts
      1→import type { NoteAsset } from '../notes/notes.types';
-     2→import { get } from 'lodash-es';
 
 src/index.ts
 

@@ -11,6 +11,11 @@ README.md
    201→## Settings
    235→## Service settings
    256→## Instruments
+   316→#### FastAPI
+   347→#### Litestar
+   370→#### FastStream
+   436→#### FastStream
+   551→#### FastStream AsyncAPI documentation
    586→## Configuration
    662→> ### Important
    746→## Advanced
@@ -33,10 +38,10 @@ microbootstrap/bootstrappers/fastapi.py
 
 microbootstrap/bootstrappers/faststream.py
     59→class FastStreamOpentelemetryInstrument(BaseOpentelemetryInstrument[FastStreamOpentelemetryConfig]):
-    71→    def get_config_type(cls) -> type[FastStreamOpentelemetryConfig]:
+    71→    def get_config_type …
     80→class FastStreamLoggingInstrument(LoggingInstrument):
     91→class FastStreamPrometheusInstrument(PrometheusInstrument[FastStreamPrometheusConfig]):
-   116→    def get_config_type(cls) -> type[FastStreamPrometheusConfig]:
+   116→    def get_config_type …
    121→class FastStreamHealthChecksInstrument(HealthChecksInstrument):
 
 microbootstrap/bootstrappers/litestar.py
@@ -57,7 +62,6 @@ microbootstrap/config/fastapi.py
     24→    title: str = "FastAPI"
     25→    summary: str | None = None
     26→    description: str = ""
-    27→    version: str = "0.1.0"
       →    …
 
 microbootstrap/config/faststream.py
@@ -68,7 +72,6 @@ microbootstrap/config/faststream.py
     25→    provider: Provider | None = None
     26→    serializer: SerializerProto | None = None
     27→    context: ContextRepo | None = None
-    28→    lifespan: Lifespan | None = None
       →    …
 
 microbootstrap/config/litestar.py
@@ -199,6 +202,7 @@ package.json
 
 pyproject.toml
      1→[project]
+    62→[project.optional-dependencies]
     77→[dependency-groups]
     93→[build-system]
 

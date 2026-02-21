@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2002 tokens)
+budget: 2000 (2001 tokens)
 
 README.md
      3→# Swarm (experimental, educational)
@@ -61,6 +61,10 @@ examples/customer_service_streaming/configs/general.py
 examples/customer_service_streaming/configs/prompts.py
     19→LOCAL_PLANNER_PROMPT = """
 
+examples/customer_service_streaming/docker-compose.yaml
+     1→version: '3.4'
+     2→services:
+
 examples/customer_service_streaming/main.py
     10→def main():
 
@@ -106,14 +110,18 @@ examples/support_bot/customer_service.py
     73→def submit_ticket(description):
     90→def transfer_to_help_center():
 
+examples/support_bot/docker-compose.yaml
+     1→version: '3.4'
+     2→services:
+
 examples/support_bot/main.py
     13→# Set embedding model
     14→EMBEDDING_MODEL = "text-embedding-3-large"
-    20→def query_qdrant(query, collection_name, vector_name="article", top_k=5):
-    40→def query_docs(query):
-    66→def send_email(email_address, message):
-    72→def submit_ticket(description):
-    77→def transfer_to_help_center():
+    20→def query_qdrant …
+    40→def query_docs …
+    66→def send_email …
+    72→def submit_ticket …
+    77→def transfer_to_help_center …
 
 examples/triage_agent/README.md
      1→# Triage agent
@@ -222,12 +230,12 @@ swarm/util.py
       →    …
 
 tests/mock_client.py
-     8→def create_mock_response(message, function_calls=[], model="gpt-4o"):
+     8→def create_mock_response …
     44→class MockOpenAIClient:
-    45→    def __init__(self):
-    49→    def set_response(self, response: ChatCompletion):
-    56→    def set_sequential_responses(self, responses: list[ChatCompletion]):
-    63→    def assert_create_called_with(self, **kwargs):
+    45→    def __init__ …
+    49→    def set_response …
+    56→    def set_sequential_responses …
+    63→    def assert_create_called_with …
 
 tests/test_core.py
      7→DEFAULT_RESPONSE_CONTENT = "sample response content"

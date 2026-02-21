@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2006 tokens)
+budget: 2000 (2003 tokens)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -45,13 +45,20 @@ ARCHITECTURE.md
     39→</>
     40→```
     41→
-      →…
+    42→Compound components are natural and easy to write. A few months after exploring this library, we were pleased to see [Radix UI](https://www.radix-ui.com) released using this exact approach of component structure – setting the standard for ease of use and composability.
+    43→
+    44→However, for a combobox, it is a terrible, terrible constraint that we've spent 2 years fighting.
+    45→
     46→## Approach
     48→⌘K always keeps every item and group rendered in the React tree. Each item and group adds or removes itself from the DOM based on the search input. The DOM is authoritative. Item selection order is based on the DOM order, which is based on the React render order, which the consumer provides.
     49→
     50→### Discarded approach
     52→We did not use `React.Children` iteration because it will not support component composition. There is no way to "peek inside" the items contained within `<BlogItems />`, so those items cannot be filtered.
     53→
+    54→We did not use an object-based data array for each item, like `{ name: "Logout", action: () => logout() }` because this is strict and limiting. In reality, the interface of those objects grows with edge-cases, like `image`, `detailedSubTitle`, `hideWhenRootSearch`, etc. We prefer that you have full control of item rendering, including icons, keyboard shortcuts, and styling. Don't want an item shown? Don't render it. Only want to show an item under condition xyz? Render it.
+    55→
+    56→We did not use a render prop because they are an inelegant pattern and quickly fall to long, centralised if-else logic chains. For example, if you want a fancy sparkle rainbow item, you need a new if statement to render that item specially.
+    57→
       →…
     60→## Example
     62→```tsx
@@ -117,6 +124,8 @@ README.md
    456→## History
    462→## Testing
 
+cmdk/package.json
+
 cmdk/src/command-score.ts
     54→function commandScoreInner …
    150→function formatInput …
@@ -125,28 +134,7 @@ cmdk/src/command-score.ts
       →  …
 
 cmdk/src/index.tsx
-     3→import * as RadixDialog from '@radix-ui/react-dialog'
-     4→import * as React from 'react'
      5→import { commandScore } from './command-score'
-     6→import { Primitive } from '@radix-ui/react-primitive'
-     7→import { useId } from '@radix-ui/react-id'
-     8→import { composeRefs } from '@radix-ui/react-compose-refs'
-    10→type Children …
-    11→type DivProps …
-    13→type LoadingProps …
-    23→type EmptyProps …
-    24→type SeparatorProps …
-    28→type DialogProps …
-    37→type ListProps …
-    44→type ItemProps …
-    60→type GroupProps …
-    69→type InputProps …
-    79→type CommandFilter …
-    80→type CommandProps …
-   123→type Context …
-   137→type State …
-   143→type Store …
-   149→type Group …
    161→const defaultFilter …
    164→const useCommand …
    166→const useStore …
@@ -169,12 +157,6 @@ cmdk/src/index.tsx
   1071→function SlottableWithNestedChildren …
 
 package.json
-     2→  "name": "cmdk-root",
-     3→  "private": true,
-     4→  "scripts": {
-    14→  "devDependencies": {
-    22→  "packageManager": "pnpm@8.8.0",
-    23→  "lint-staged": {
 
 pnpm-workspace.yaml
      1→packages:
@@ -186,11 +168,9 @@ website/README.md
     19→## Learn More
     28→## Deploy on Vercel
 
-website/components/cmdk/framer.tsx
-     4→export function FramerCMDK() {
-
 website/components/cmdk/linear.tsx
      3→export function LinearCMDK() {
+    30→const items = [
 
 website/pages/_document.tsx
      5→export default class Document extends NextDocument {
@@ -205,3 +185,5 @@ website/pages/index.tsx
 
 website/vercel.json
      2→  "headers": [
+    12→  ]
+    13→}

@@ -2,10 +2,13 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3997 tokens)
+budget: 4000 (3991 tokens)
 
 README.md
      1→# Tock
+     5→[Features](#features) • [Quick Start](#quick-start) • [Commands](#commands) •
+     6→[Configuration](#configuration) • [Theme](#theme) • [File Format](#file-format) • [Shell](#shell-completion) • [Inspiration](#inspiration) • [License](#license)
+     7→
      8→## Features
     26→## Quick Start
     28→### Installation
@@ -59,6 +62,11 @@ cmd/tock/main.go
      3→import …
      7→func main() {
 
+docs/commands.md
+     1→# Commands Reference
+    23→## Core Commands
+   188→## Viewing & Reporting
+
 internal/adapters/cli/add.go
     16→type addOptions struct {
     26→func NewAddCmd() *cobra.Command {
@@ -87,13 +95,11 @@ internal/adapters/cli/analyze.go
 
 internal/adapters/cli/calendar.go
     25→func NewCalendarCmd() *cobra.Command {
-    48→type reportModel struct {
     79→func (m *reportModel) Init() tea.Cmd {
     83→func (m *reportModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
    134→func (m *reportModel) View() string {
    256→func (m *reportModel) updateViewportContent() {
    418→type monthDataMsg struct {
-   422→type errMsg struct{ err error }
    488→func (m *reportModel) getWeeklyDuration() (time.Duration, error) {
 
 internal/adapters/cli/calendar_sidebar.go
@@ -119,17 +125,17 @@ internal/adapters/cli/ical.go
     23→func NewICalCmd() *cobra.Command {
 
 internal/adapters/cli/interactive.go
-    17→func SelectActivityMetadata(activities []models.Activity, project, description string, theme Theme) (string, string, error) {
-    98→func RunInteractiveInput(header, placeholder string, theme Theme) (string, error) {
+    17→func SelectActivityMetadata …
+    98→func RunInteractiveInput …
    123→type simpleInputModel struct {
-   131→func (m simpleInputModel) Init() tea.Cmd { return nil }
-   133→func (m simpleInputModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-   155→func (m simpleInputModel) View() string {
-   176→func RunInteractiveList(items []string, title string, theme Theme) (string, error) {
+   131→func (m simpleInputModel) Init …
+   133→func (m simpleInputModel) Update …
+   155→func (m simpleInputModel) View …
+   176→func RunInteractiveList …
    201→type simpleListModel struct {
-   212→func (m *simpleListModel) Init() tea.Cmd { return nil }
-   214→func (m *simpleListModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-   263→func (m *simpleListModel) View() string {
+   212→func (m *simpleListModel) Init …
+   214→func (m *simpleListModel) Update …
+   263→func (m *simpleListModel) View …
 
 internal/adapters/cli/last.go
     16→type lastOptions struct {
@@ -170,8 +176,6 @@ internal/adapters/cli/start.go
 
 internal/adapters/cli/stop.go
     14→func NewStopCmd() *cobra.Command {
-    15→	var at string
-      →	…
 
 internal/adapters/cli/theme.go
     11→type Theme struct {

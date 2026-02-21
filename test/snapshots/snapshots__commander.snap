@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2005 tokens)
+budget: 2000 (2001 tokens)
 
 Readme.md
      1→# Commander.js
@@ -11,17 +11,36 @@ Readme.md
     10→Read this in other languages: English | [简体中文](./Readme_zh-CN.md)
     11→
     12→- [Commander.js](#commanderjs)
-      →…
+    13→  - [Installation](#installation)
+      →  …
     61→## Installation
     67→## Quick Start
    147→## Declaring _program_ variable
    177→## Options
+   211→### Common option types, boolean and value
+   254→### Default option value
+   276→### Other option types, negatable boolean and boolean|value
+   342→### Required option
+   362→### Variadic option
+   396→### Version option
+   416→### More configuration
+   459→### Custom option processing
    523→## Commands
+   567→### Command-arguments
    613→#### More configuration
    625→#### Custom argument processing
+   648→### Action handler
+   700→### Stand-alone executable (sub)commands
+   725→### Life cycle hooks
    754→## Automated help
+   787→### Custom help
+   830→### Display help after errors
+   860→### Display help from code
+   868→### .name
+   884→### .usage
    956→## Custom event listeners
    966→## Bits and pieces
+  1164→## Support
 
 esm.mjs
      1→import commander from './index.js';
@@ -109,17 +128,12 @@ lib/command.js
 
 lib/error.js
      4→class CommanderError extends Error {
-     6→   * Constructs the CommanderError class
-      →   …
     11→  constructor(exitCode, code, message) {
     25→class InvalidArgumentError extends CommanderError {
-    27→   * Constructs the InvalidArgumentError class
-      →   …
     30→  constructor(message) {
 
 lib/help.js
     12→class Help {
-    13→  constructor() {
     29→  prepareContext(contextOptions) {
     40→  visibleCommands(cmd) {
     62→  compareOptions(a, b) {
@@ -143,19 +157,6 @@ lib/help.js
    443→  formatHelp(cmd, helper) {
    535→  displayWidth(str) {
    545→  styleTitle(str) {
-   549→  styleUsage(str) {
-   563→  styleCommandDescription(str) {
-   566→  styleOptionDescription(str) {
-   569→  styleSubcommandDescription(str) {
-   572→  styleArgumentDescription(str) {
-   575→  styleDescriptionText(str) {
-   578→  styleOptionTerm(str) {
-   581→  styleSubcommandTerm(str) {
-   594→  styleArgumentTerm(str) {
-   597→  styleOptionText(str) {
-   600→  styleArgumentText(str) {
-   603→  styleSubcommandText(str) {
-   606→  styleCommandText(str) {
    618→  padWidth(cmd, helper) {
    633→  preformatted(str) {
    650→  formatItem(term, termWidth, description, helper) {
@@ -195,5 +196,3 @@ package-support.json
      2→  "versions": [
     18→  ]
     19→}
-
-package.json

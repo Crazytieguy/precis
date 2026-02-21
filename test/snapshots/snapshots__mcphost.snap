@@ -2,10 +2,39 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4008 tokens)
+budget: 4000 (4006 tokens)
 
 README.md
      1→# MCPHost 🤖
+     7→## Table of Contents
+    41→## Overview 🌟
+    60→## Features ✨
+    77→## Requirements 📋
+    85→## Environment Setup 🔧
+   124→## Installation 📦
+   130→## SDK Usage 🛠️
+   134→### Quick Example
+   165→### SDK Features
+   176→## Configuration ⚙️
+   178→### MCP Servers
+   189→### Environment Variable Substitution
+   225→### Simplified Configuration Schema
+   361→### Tool Filtering
+   387→### Legacy Configuration Support
+   449→### Transport Types
+   462→### System Prompt
+   488→## Usage 🚀
+   492→### Interactive Mode (Default)
+   500→### Script Mode
+   562→##### Variable Syntax
+   594→##### Usage Examples
+   615→##### Default Value Features
+   648→### Hooks System
+   892→## Automation & Scripting 🤖
+   967→## MCP Server Compatibility 🔌
+   971→## Contributing 🤝
+   981→## License 📄
+   985→## Acknowledgments 🙏
 
 cmd/root.go
     67→type agentUIAdapter struct {
@@ -41,22 +70,16 @@ cmd/script.go
    426→	HasDefault   bool   // Whether this variable has a default value
    427→}
 
+contribute/conf/demo.json
+     2→    "mcpServers": {
+
+contribute/conf/demo.yml
+     1→mcpServers:
+
 contribute/contribute.md
      1→# Contribute README
      3→## Run demo
     30→## Contribute your code
-
-internal/agent/agent.go
-    22→type AgentConfig …
-    39→type ToolCallHandler …
-    43→type ToolExecutionHandler …
-    47→type ToolResultHandler …
-    51→type ResponseHandler …
-    55→type StreamingResponseHandler …
-    59→type ToolCallContentHandler …
-    63→type ToolApprovalHandler …
-    67→type Agent …
-   125→type GenerateWithLoopResult …
 
 internal/agent/factory.go
     15→type SpinnerFunc func(message string, fn func() error) error
@@ -72,8 +95,8 @@ internal/agent/factory.go
     28→	// StreamingEnabled controls whether responses are streamed
     29→	StreamingEnabled bool
       →	…
-    43→func CreateAgent(ctx context.Context, opts *AgentCreationOptions) (*Agent, error) {
-    76→func ParseModelName(modelString string) (provider, model string) {
+    43→func CreateAgent …
+    76→func ParseModelName …
 
 internal/agent/streaming.go
     19→func StreamWithCallback …
@@ -358,13 +381,6 @@ internal/ui/progress/ollama.go
    184→func (pr *ProgressReader) Read …
    261→func (pr *ProgressReader) Close …
 
-internal/ui/slash_command_input.go
-    15→type SlashCommandInput struct {
-    16→	textarea      textarea.Model
-    17→	commands      []SlashCommand
-    18→	showPopup     bool
-      →	…
-
 internal/ui/spinner.go
     16→type Spinner struct {
     17→	model  spinner.Model
@@ -415,15 +431,6 @@ sdk/mcphost.go
     33→	Streaming    bool   // Enable streaming (default from config)
     34→	Quiet        bool   // Suppress debug output
     35→}
-    40→func New …
-   130→func (m *MCPHost) Prompt …
-   163→func (m *MCPHost) PromptWithCallbacks …
-   201→func (m *MCPHost) GetSessionManager …
-   207→func (m *MCPHost) LoadSession …
-   218→func (m *MCPHost) SaveSession …
-   224→func (m *MCPHost) ClearSession …
-   230→func (m *MCPHost) GetModelString …
-   237→func (m *MCPHost) Close …
 
 sdk/types.go
     10→type Message = session.Message

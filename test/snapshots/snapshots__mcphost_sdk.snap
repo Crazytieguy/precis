@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (1003 tokens)
+budget: 1000 (1011 tokens)
 
 README.md
      1→# MCPHost SDK
@@ -10,12 +10,18 @@ README.md
      4→
      5→## Installation
      7→```bash
+     8→go get github.com/mark3labs/mcphost
+     9→```
       →…
     11→## Basic Usage
     13→```go
+    14→package main
+    15→
       →…
     44→## Configuration
     46→The SDK behaves identically to the CLI:
+    47→- Loads configuration from `~/.mcphost.yml` by default
+    48→- Creates default configuration if none exists
       →…
     52→### Options
     67→## Advanced Usage
@@ -26,26 +32,22 @@ README.md
    124→### Methods
    136→## Environment Variables
    138→All CLI environment variables work with the SDK:
+   139→
+   140→- `MCPHOST_MODEL` - Override model
       →…
    146→## License
-
-examples/basic/main.go
-     3→import …
-    11→func main() {
 
 mcphost.go
      3→import …
     16→// MCPHost provides programmatic access to mcphost functionality, allowing
-    17→// integration of MCP tools and LLM interactions into Go applications. It manages
-    18→// agents, sessions, and model configurations.
+      →…
     19→type MCPHost struct {
     20→	agent       *agent.Agent
     21→	sessionMgr  *session.Manager
     22→	modelString string
     23→}
     25→// Options configures MCPHost creation with optional overrides for model,
-    26→// prompts, configuration, and behavior settings. All fields are optional
-    27→// and will use CLI defaults if not specified.
+      →…
     28→type Options struct {
     29→	Model        string // Override model (e.g., "anthropic:claude-3-sonnet")
     30→	SystemPrompt string // Override system prompt

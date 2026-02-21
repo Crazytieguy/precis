@@ -2,17 +2,28 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1996 tokens)
+budget: 2000 (1999 tokens)
 
 README.md
+     3→# xLSTM: Extended Long Short-Term Memory
+    19→## About
+    29→## Minimal Installation
+    49→## Requirements
+    61→# xLSTM 7B: A Recurrent LLM for Fast and Efficient Inference
+    80→## How to use the xLSTM Large 7B and its architecture
+   115→## Recommendation for other hardware
+   138→# Models from the xLSTM NeurIPS Paper
+   142→## How to use the xLSTM architecture from our NeurIPS paper
+   146→### Using the sLSTM CUDA kernels
+   168→### xLSTM Block Stack
+   255→### xLSTM Language Model
+   297→## Experiments
+   312→## Citation
 
 pyproject.toml
      1→[build-system]
      5→[project]
     50→[project.urls]
-
-xlstm/__init__.py
-     1→__version__ = "2.0.5"
 
 xlstm/blocks/mlstm/block.py
     10→class mLSTMBlockConfig:
@@ -59,9 +70,6 @@ xlstm/blocks/slstm/block.py
     20→
 
 xlstm/blocks/slstm/cell.py
-    28→LOGGER …
-    30→DTYPE_DICT …
-    35→DTYPES …
     62→class sLSTMCellConfig:
     63→    hidden_size: int = -1
     64→    num_heads: int = (
@@ -94,7 +102,6 @@ xlstm/components/conv.py
     17→    channel_mixing: bool = False
     18→    conv1d_kwargs: dict = field(default_factory=dict)
     19→
-    55→class CausalConv1d(nn.Module):
 
 xlstm/components/feedforward.py
     32→class FeedForwardConfig(UpProjConfigMixin):
@@ -119,6 +126,7 @@ xlstm/components/linear_headwise.py
 
 xlstm/components/ln.py
      8→class LayerNorm(nn.Module):
+    27→    @property
     28→    def weight_proxy(self) -> torch.Tensor:
     51→class MultiHeadLayerNorm(LayerNorm):
 
@@ -141,7 +149,6 @@ xlstm/utils.py
     32→class WeightDecayOptimGroupMixin(nn.Module, ABC):
 
 xlstm/xlstm_block_stack.py
-    15→@dataclass
     16→class xLSTMBlockStackConfig:
     17→    mlstm_block: Optional[mLSTMBlockConfig] = None
     18→    slstm_block: Optional[sLSTMBlockConfig] = None
@@ -157,21 +164,11 @@ xlstm/xlstm_block_stack.py
     28→    # Indexing starts from 0.
     29→    slstm_at: Union[list[int], Literal["all"]] = field(default_factory=list)
     30→
-    31→    # _block_map is a string that specifies which block is used at which position
-    32→    # 0: use the mLSTM block
-    33→    # 1: use the sLSTM block
-    34→    _block_map: str = None
-    35→
     36→    @property
     37→    def block_map(self) -> list[int]:
-    52→    def __post_init__ …
     77→class xLSTMBlockStack(nn.Module):
     78→    config_class = xLSTMBlockStackConfig
     79→
-    80→    def __init__ …
-   111→    def reset_parameters …
-   117→    def forward …
-   126→    def step …
 
 xlstm/xlstm_large/components.py
     66→    def forward(self, x: torch.Tensor) -> torch.Tensor:

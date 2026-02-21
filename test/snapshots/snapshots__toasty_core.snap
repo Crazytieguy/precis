@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2006 tokens)
+budget: 2000 (2007 tokens)
 
 CONTEXT.md
      1→# toasty-core Component Context
@@ -12,6 +12,12 @@ CONTEXT.md
     80→## Important Files
     89→## Design Principles
     96→## Recent Changes Analysis
+
+Cargo.toml
+     1→[package]
+     7→[dependencies]
+    20→[features]
+    28→[dev-dependencies]
 
 src/driver/capability.rs
      4→pub struct Capability {
@@ -90,6 +96,7 @@ src/error.rs
     76→    pub fn context(self, consequent: impl IntoError) -> Error {
 
 src/lib.rs
+     2→mod macros;
      4→pub mod driver;
     10→pub mod schema;
     13→pub mod stmt;
@@ -203,10 +210,6 @@ src/stmt/delete.rs
     32→    pub fn as_delete(&self) -> Option<&Delete> {
     44→    pub fn into_delete(self) -> Option<Delete> {
     56→    pub fn unwrap_delete(self) -> Delete {
-
-src/stmt/expr_not.rs
-    23→    pub fn not(expr: impl Into<Self>) -> Self {
-    31→    pub fn is_not(&self) -> bool {
 
 src/stmt/filter.rs
     10→    pub const ALL: Filter = Filter { expr: None };

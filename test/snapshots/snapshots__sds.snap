@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (990 tokens)
+budget: 1000 (999 tokens)
 
 README.md
      1→Simple Dynamic Strings
@@ -18,34 +18,30 @@ README.md
    370→Trimming strings and getting ranges
    464→String copying
    509→Quoting strings
+   563→Tokenization
+   622→Command line oriented tokenization
+   658→String joining
+   686→Error handling
+   696→SDS internals and advanced usage
+   761→Shrinking strings
+   796→Manual modifications of SDS strings
+   820→Sharing SDS strings
+   851→Interactions with heap checkers
+   860→Zero copy append from syscalls
+   882→Embedding SDS into your project
+   895→Using a different allocator for SDS
+   911→Credits and license
 
 sds.c
     33→#include <stdio.h>
     39→#include "sds.h"
     40→#include "sdsalloc.h"
-    89→sds sdsnewlen …
-   149→sds sdsempty …
-   154→sds sdsnew …
-   160→sds sdsdup …
-   165→void sdsfree …
-   184→void sdsupdatelen …
-   193→void sdsclear …
-   204→sds sdsMakeRoomFor …
-   256→sds sdsRemoveFreeSpace …
-   300→size_t sdsAllocSize …
-   307→void *sdsAllocPtr …
-   334→void sdsIncrLen …
-   380→sds sdsgrowzero …
-   398→sds sdscatlen …
-   413→sds sdscat …
-   421→sds sdscatsds …
-   427→sds sdscpylen …
-   440→sds sdscpy …
+    44→static inline int sdsHdrSize(char type) {
+    60→static inline char sdsReqType(size_t string_size) {
    444→/* Helper for sdscatlonglong() doing the actual number -> string
       →…
    450→#define SDS_LLSTR_SIZE 21
    451→int sdsll2str(char *s, long long value) {
-   494→int sdsull2str …
    526→sds sdsfromlonglong …
    534→sds sdscatvprintf …
    591→sds sdscatprintf …
@@ -75,6 +71,8 @@ sds.c
 
 sds.h
     43→typedef char *sds;
+    45→/* Note: sdshdr5 is never used, we just access the flags byte directly.
+      →…
     47→struct __attribute__ ((__packed__)) sdshdr5 {
     48→    unsigned char flags; /* 3 lsb of type, and 5 msb of string length */
     49→    char buf[];
@@ -84,7 +82,10 @@ sds.h
     63→struct __attribute__ ((__packed__)) sdshdr32 {
     69→struct __attribute__ ((__packed__)) sdshdr64 {
    180→static inline size_t sdsalloc(const sds s) {
+   255→/* Low level functions exposed to the user API */
    256→sds sdsMakeRoomFor(sds s, size_t addlen);
+   262→/* Export the allocator used by SDS to the program using SDS.
+      →…
    266→void *sds_malloc(size_t size);
 
 sdsalloc.h

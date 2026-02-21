@@ -476,6 +476,11 @@ pub struct Group {
     /// indicate uniform, repetitive files. High averages (4+) indicate diverse
     /// files that shouldn't be penalized.
     pub dir_cohort_avg_symbols: f64,
+    /// Size of the largest set of symbols sharing a long common name prefix.
+    /// When many symbols in a group follow a naming pattern (e.g.,
+    /// `vec0_column_idx_is_*`, `vec0_column_idx_to_*`), additional names
+    /// beyond the first few are predictable and add diminishing information.
+    pub name_prefix_cohort_max: usize,
 }
 
 impl Group {
@@ -529,6 +534,30 @@ impl IncludedStage {
 // ---------------------------------------------------------------------------
 // Group construction
 // ---------------------------------------------------------------------------
+
+/// Find the longest "run" of consecutive sorted names where each adjacent pair
+/// shares ≥50% of the shorter name as a common prefix. Returns the run length.
+/// Requires `names` to be sorted.
+fn longest_prefix_run(names: &[&str]) -> usize {
+    if names.len() < 2 {
+        return names.len();
+    }
+    let mut max_run = 1;
+    let mut run = 1;
+    for pair in names.windows(2) {
+        let lcp = pair[0].bytes().zip(pair[1].bytes())
+            .take_while(|(a, b)| a == b)
+            .count();
+        let shorter = pair[0].len().min(pair[1].len());
+        if shorter > 0 && lcp * 2 >= shorter {
+            run += 1;
+        } else {
+            max_run = max_run.max(run);
+            run = 1;
+        }
+    }
+    max_run.max(run)
+}
 
 /// Build groups from extracted symbols, computing per-symbol costs.
 pub fn build_groups(
@@ -627,6 +656,7 @@ pub fn build_groups(
                 split_position: None,
                 dir_cohort_files: 1,
                 dir_cohort_avg_symbols: 1.0,
+                name_prefix_cohort_max: 0,
             });
             group.max_doc_n = group.max_doc_n.max(costs.doc_line_tokens.len());
             group.max_body_n = group.max_body_n.max(costs.body_line_tokens.len());
@@ -664,6 +694,22 @@ pub fn build_groups(
     }
 
     groups = split_large_groups(groups);
+
+    // Compute name prefix cohort: for each group, find the largest set of
+    // symbols sharing a long common name prefix. When many symbols follow a
+    // naming pattern (e.g., vec0_column_idx_is_*, vec0_column_idx_to_*),
+    // additional names beyond a few are predictable.
+    for group in &mut groups {
+        if group.symbols.len() < 5 {
+            continue;
+        }
+        let mut names: Vec<&str> = group.symbols.iter()
+            .map(|sc| all_symbols[sc.file_idx][sc.symbol_idx].name.as_str())
+            .collect();
+        names.sort_unstable();
+        group.name_prefix_cohort_max = longest_prefix_run(&names);
+    }
+
     groups.sort_by(|a, b| a.key.cmp(&b.key));
     groups
 }
@@ -708,6 +754,7 @@ fn split_large_groups(groups: Vec<Group>) -> Vec<Group> {
                 split_position: Some(i),
                 dir_cohort_files: group.dir_cohort_files,
                 dir_cohort_avg_symbols: group.dir_cohort_avg_symbols,
+                name_prefix_cohort_max: 0,
             });
             offset += chunk_size;
         }
@@ -828,7 +875,13 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     let key = &group.key;
 
     let visibility = if key.is_public { 1.0 } else { 0.3 };
-    let documented = if key.is_documented { 1.0 } else { 0.5 };
+    // Sections (markdown headings, TOML/JSON/YAML sections) ARE documentation —
+    // they don't have doc comments but that doesn't make them less important.
+    let documented = if key.is_documented || key.kind_category == KindCategory::Section {
+        1.0
+    } else {
+        0.5
+    };
 
     // Compute effective depth, skipping conventional source root directories
     // (src/, lib/, pkg/, cmd/) that are purely organizational and don't represent
@@ -861,7 +914,7 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
 
     // Config files (eslint.config.js, jest.config.ts, etc.) are build/tool setup,
     // not core library logic. Show them only when there's plenty of budget.
-    let config_factor = if key.is_config { 0.2 } else { 1.0 };
+    let config_factor = if key.is_config { 0.1 } else { 1.0 };
 
     // Test/benchmark/example files are infrastructure, not core API.
     // At tight budgets they appear as file paths only (structural context);
@@ -934,7 +987,21 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
         }
     };
 
-    let base_value = visibility * documented * depth_factor * sibling_factor * file_role_factor * config_factor * test_factor * type_declaration_factor * heading_depth_factor * first_party_factor * trait_impl_factor * boilerplate_factor * autogen_api_doc_factor * reexport_factor * dir_cohort_factor;
+    // Name prefix cohort: when many symbols in a group share a long common
+    // name prefix (e.g., vec0_column_idx_is_*, vec0_column_idx_to_*), the
+    // naming pattern is obvious after a few examples. Additional names are
+    // predictable and add diminishing information compared to diverse names.
+    let name_prefix_cohort_factor = {
+        let cohort = group.name_prefix_cohort_max as f64;
+        if cohort >= 5.0 {
+            // 5 → 1.0, 8 → 0.63, 10 → 0.50, 15 → 0.33, 20 → 0.25
+            5.0 / cohort
+        } else {
+            1.0
+        }
+    };
+
+    let base_value = visibility * documented * depth_factor * sibling_factor * file_role_factor * config_factor * test_factor * type_declaration_factor * heading_depth_factor * first_party_factor * trait_impl_factor * boilerplate_factor * autogen_api_doc_factor * reexport_factor * dir_cohort_factor * name_prefix_cohort_factor;
 
     let stage_value = match key.kind_category {
         // Type bodies (struct fields, interface props, dataclass fields)

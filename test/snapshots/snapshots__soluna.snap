@@ -2,13 +2,17 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1998 tokens)
+budget: 2000 (1999 tokens)
 
 README.md
      7→# Soluna
+     9→[中文](./README.zh-CN.md)
+    10→
+      →…
     19→## Documentation
     25→## Precompiled Binaries
     29→## Building from Source
+    33→### Integration with the Actions of your projects
     53→## Projects made with Soluna
 
 src/appevent.h
@@ -165,6 +169,8 @@ src/openlibs.c
     11→void
     12→soluna_openlibs(lua_State *L) {
 
+src/openurl.c
+
 src/render.c
     15→#define UNIFORM_MAX 4
     16→#define BINDINGNAME_MAX 32
@@ -172,11 +178,10 @@ src/render.c
    224→	sg_pass pass;
    225→	int swapchain;
    226→};
-   651→int lbindings_new(lua_State *L);
-   652→int lview_new(lua_State *L);
-   653→int luniform_new(lua_State *L);
-   655→int
-   656→luaopen_render(lua_State *L) {
+   651→int lbindings_new …
+   652→int lview_new …
+   653→int luniform_new …
+   655→luaopen_render …
 
 src/render_bindings.c
     61→struct view {
@@ -230,8 +235,6 @@ src/srbuffer.c
    176→main …
 
 src/srbuffer.h
-     7→struct sr_mat {
-    11→struct sr_buffer {
     23→size_t srbuffer_size …
     24→void srbuffer_init …
     25→int srbuffer_add …

@@ -18,6 +18,9 @@ README.md
    123→### View a note
    133→### Configure the enclosed instance to use
    140→## Project Structure
+   150→## Contributing
+   155→## License
+   159→## Credits and Acknowledgements
    168→### Stack
    184→### Hosting
    188→### Inspiration
@@ -25,7 +28,12 @@ README.md
 
 docker-compose.yml
      1→services:
+     8→    restart: unless-stopped
+     9→
     10→volumes:
+    12→    driver: local
+
+package.json
 
 packages/app-client/README.md
      1→## Usage
@@ -39,7 +47,10 @@ packages/app-client/README.md
 packages/app-client/components.json
      2→  "$schema": "https://shadcn-solid.com/schema.json",
      3→  "uno": {
+    11→  },
     12→  "alias": {
+    16→  }
+    17→}
 
 packages/app-client/src/index.tsx
      6→import { I18nProvider } from './modules/i18n/i18n.provider';
@@ -52,8 +63,6 @@ packages/app-client/src/locales/locales.ts
      2→export const locales = [
 
 packages/app-client/src/modules/auth/auth.store.ts
-     3→import { createHook } from '../shared/hooks/hooks';
-     4→import { isAccessTokenExpired } from './auth.models';
      6→export const authStore = createRoot(() => {
 
 packages/app-client/src/modules/auth/pages/login.page.tsx
@@ -82,13 +91,7 @@ packages/app-client/src/modules/config/config.types.ts
 packages/app-client/src/modules/files/files.models.ts
      6→export const iconByFileType = {
 
-packages/app-client/src/modules/i18n/i18n.models.ts
-     1→import type { Locale } from './i18n.provider';
-     8→export function findMatchingLocale …
-
 packages/app-client/src/modules/i18n/i18n.provider.tsx
-     7→import defaultDict from '../../locales/en.json';
-     8→import { findMatchingLocale } from './i18n.models';
     44→export const I18nProvider: ParentComponent = (props) => {
 
 packages/app-client/src/modules/notes/components/file-uploader.tsx
@@ -163,9 +166,6 @@ packages/app-client/src/modules/ui/components/tabs.tsx
     73→export function TabsTrigger …
    109→export function TabsIndicator …
 
-packages/app-client/src/modules/ui/components/textarea.tsx
-    14→export function TextArea …
-
 packages/app-client/src/modules/ui/components/textfield.tsx
     20→export function TextFieldRoot …
     26→export const textfieldLabel = cva(
@@ -190,8 +190,8 @@ packages/app-server/src/modules/app/auth/auth.errors.ts
      3→export const createUnauthorizedError = createErrorFactory({
 
 packages/app-server/src/modules/app/auth/auth.middleware.ts
-     7→export const authenticationMiddleware = createMiddleware(async (context: Context, next) => {
-    31→export const protectedRouteMiddleware = createMiddleware(async (context: Context, next) => {
+     7→export const authenticationMiddleware …
+    31→export const protectedRouteMiddleware …
 
 packages/app-server/src/modules/app/config/config.ts
      5→export const configDefinition = {
@@ -202,7 +202,7 @@ packages/app-server/src/modules/app/config/config.types.ts
      3→export type Config = ReturnType<typeof getConfig>;
 
 packages/app-server/src/modules/app/middlewares/config.middleware.ts
-     6→export function createConfigMiddleware({ config: initialConfig }: { config?: Config } = {}) {
+     6→export function createConfigMiddleware …
 
 packages/app-server/src/modules/app/middlewares/cors.middleware.ts
      1→import type { Context } from '../server.types';
@@ -215,7 +215,7 @@ packages/app-server/src/modules/app/middlewares/logger.middleware.ts
      6→export const loggerMiddleware = createMiddleware(async (c, next) => {
 
 packages/app-server/src/modules/app/middlewares/storage.middleware.ts
-     4→export function createStorageMiddleware({ storageFactory }: { storageFactory: BindableStorageFactory }) {
+     4→export function createStorageMiddleware …
 
 packages/app-server/src/modules/app/middlewares/timeout.middleware.ts
      5→export const timeoutMiddleware = createMiddleware(async (context: Context, next) => {
@@ -261,9 +261,6 @@ packages/app-server/src/modules/notes/notes.types.ts
     19→export type Note = Expand<Omit<DatabaseNote, 'expirationDate'> & { expirationDate?: Date }>;
 
 packages/app-server/src/modules/notes/tasks/delete-expired-notes.tasks.ts
-     1→import { defineTask } from '../../tasks/tasks.models';
-     2→import { isNoteExpired } from '../notes.models';
-     3→import { createNoteRepository } from '../notes.repository';
      5→export const deleteExpiredNotesTask = defineTask({
 
 packages/app-server/src/modules/shared/errors/errors.ts
@@ -291,8 +288,6 @@ packages/app-server/src/modules/storage/factories/memory.storage.ts
      5→export const createMemoryStorage = defineStorage(() => {
 
 packages/app-server/src/modules/storage/storage.types.ts
-     2→import type { Config } from '../app/config/config.types';
-     3→import type { Context } from '../app/server.types';
      7→export type BindableStorageFactoryArgs = { config: Config; context: Context };
      8→export type BindableStorageFactory = (args: BindableStorageFactoryArgs) => { storage: Storage };
      9→export type StorageFactory = () => { storage: Storage };
@@ -303,10 +298,18 @@ packages/app-server/src/modules/tasks/tasks.types.ts
 
 packages/cli/README.md
      1→# Enclosed CLI
+     3→This package contains the CLI for [Enclosed](https://enclosed.cc), an open-source project that aims to provide a simple and secure way to share e2e encrypted notes.
+     4→
      5→## Getting Started
+     7→To install the CLI, run the following command:
+     8→
      9→### Create a note
     22→### Configure the enclosed instance to use
     29→## Usage
+    31→```bash
+    32→enclosed <command> [options]
+    33→```
+    34→
     35→### Create a note
     58→### View a note
     68→### Configure the enclosed instance to use
@@ -348,7 +351,12 @@ packages/crypto/README.md
      9→npm install @enclosed/crypto
     10→
     11→# with yarn
-      →…
+    12→yarn add @enclosed/crypto
+    13→
+    14→# with pnpm
+    15→pnpm add @enclosed/crypto
+    16→```
+    17→
 
 packages/crypto/src/api-definition.ts
      1→import type { EncryptionAlgorithmDefinitions } from './encryption-algorithms/encryption-algorithms.types';
@@ -366,12 +374,18 @@ packages/crypto/src/encryption-algorithms/encryption-algorithms.types.ts
 packages/deploy-cloudflare/_routes.json
      2→  "version": 1,
      3→  "include": [
+     5→  ],
      6→  "exclude": []
+     7→}
 
 packages/lib/README.md
      1→### Enclosed lib
      5→## Installation
+     7→```bash
+      →…
     18→## Usage
+    20→```javascript
+      →…
 
 packages/lib/src/api/api.constants.ts
      1→export const DEFAULT_API_BASE_URL = 'https://enclosed.cc';
@@ -386,8 +400,6 @@ packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.types.ts
      3→export type EncryptionMethodsDefinition = ReturnType<typeof defineEncryptionMethods>;
 
 packages/lib/src/crypto/serialization/cbor-array/cbor-array.serialization.ts
-     1→import type { Note } from '../../../notes/notes.types';
-     3→import { defineSerializationMethods } from '../serialization.models';
      5→export const cborArraySerializationDefinition = defineSerializationMethods({
 
 packages/lib/src/crypto/serialization/serialization.registry.ts
@@ -406,4 +418,7 @@ packages/lib/src/notes/notes.types.ts
 
 pnpm-workspace.yaml
      1→packages:
+     2→  - 'packages/*'
+     3→
      4→catalog:
+    12→  "@corentinth/chisels": ^1.2.1

@@ -2,14 +2,24 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2005 tokens)
+budget: 2000 (2010 tokens)
 
 README.md
     10→# `htmy`
+    12→**Async**, **pure-Python** server-side rendering engine.
+    13→
+      →…
     16→## Key features
     33→## Testimonials
     51→## Installation
     63→## Concepts
+    69→### Components
+   167→### Built-in components
+   179→### Rendering
+   211→### Context
+   279→### Formatter
+   291→### Error boundary
+   299→### Sync or async?
    307→## XSS prevention
    316→## AI assistance
    324→## Compatibility and performance
@@ -62,8 +72,6 @@ htmy/etree.py
     37→
     38→    __slots__ = ("_rules",)
     39→
-    40→    _htmy_fragment: ClassVar[str] = "htmy_fragment"
-    41→    """
     46→    def __init__ …
     55→    def convert …
     63→    def convert_element …
@@ -131,11 +139,8 @@ htmy/md/core.py
     27→
     33→    @classmethod
     34→    def default(cls) -> MarkdownParser:
-    43→    def __init__ …
-    53→    def parse …
     81→class MD(Snippet):
     97→
-   103→    def __init__ …
 
 htmy/md/typing.py
     11→MarkdownMetadataDict …
@@ -147,13 +152,11 @@ htmy/md/typing.py
     24→MarkdownRenderFunction …
 
 htmy/renderer/baseline.py
+    10→from .context …
     18→class Renderer:
     27→
     28→    __slots__ = ("_default_context", "_string_formatter")
     29→
-    30→    def __init__ …
-    48→    async def render …
-    67→    async def stream …
 
 htmy/renderer/context.py
      6→class RendererContext:

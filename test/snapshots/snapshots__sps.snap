@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4018 tokens)
+budget: 4000 (4011 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -12,9 +12,19 @@ Cargo.toml
 
 NOTICE.md
      1→## Homebrew
+     3→### Sources
 
 README.md
      1→# sps
+     3→> [!WARNING]
+      →…
+    34→## ⚙️ Project Structure
+    42→## 🚧 Current Status
+    54→## 🚀 Roadmap
+    63→## Trying it out:
+    77→## 📦 Usage
+   123→## 🏗️ Building from Source
+   138→## 📥 Using the Latest Nightly Build
 
 sps/Cargo.toml
      1→[package]
@@ -24,10 +34,6 @@ sps/Cargo.toml
 
 sps/src/cli/info.rs
     14→pub struct Info {
-    15→    /// Name of the formula or cask
-    16→    pub name: String,
-    17→
-      →…
     25→    pub async fn run …
 
 sps/src/cli/init.rs
@@ -244,8 +250,7 @@ sps-common/src/model/artifact.rs
     27→    Launchd {
     28→        label: String,
     29→        path: Option<PathBuf>,
-    30→    }, // Path is the plist file
-      →    …
+      →        …
 
 sps-common/src/model/cask.rs
      9→pub type Artifact = serde_json::Value;
@@ -376,13 +381,6 @@ sps-core/src/check/update.rs
 sps-core/src/install/bottle/macho.rs
     55→pub struct SkippedPath {
     74→pub struct SkippedPath {
-
-sps-core/src/install/cask/mod.rs
-    25→pub struct CaskInstallManifest {
-    26→    pub manifest_format_version: String,
-    27→    pub token: String,
-    28→    pub version: String,
-      →    …
 
 sps-core/src/install/extract.rs
     16→use crate::utils::xattr;

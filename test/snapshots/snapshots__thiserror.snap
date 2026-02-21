@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1994 tokens)
+budget: 2000 (1995 tokens)
 
 Cargo.toml
      1→[package]
@@ -10,6 +10,7 @@ Cargo.toml
     30→[dependencies]
     33→[dev-dependencies]
     39→[workspace]
+    42→[package.metadata.docs.rs]
 
 README.md
      1→derive(Error)
@@ -24,12 +25,11 @@ build/probe.rs
     20→impl Display for MyError {
     26→impl Error for MyError {
 
-build.rs
-
 impl/Cargo.toml
      1→[package]
     11→[lib]
     14→[dependencies]
+    19→[package.metadata.docs.rs]
 
 impl/src/ast.rs
      1→use crate::attr::{self, Attrs};
@@ -127,7 +127,6 @@ impl/src/generics.rs
 impl/src/lib.rs
     40→pub fn derive_error(input: TokenStream) -> TokenStream {
     46→struct private;
-    48→impl ToTokens for private {
 
 impl/src/scan_expr.rs
      1→use self::{Action::*, Input::*};
@@ -136,7 +135,7 @@ impl/src/scan_expr.rs
 
 impl/src/unraw.rs
     10→#[derive(Clone)]
-    11→#[repr(transparent)]
+      →…
     12→pub struct IdentUnraw(Ident);
     15→    pub fn new(ident: Ident) -> Self {
     19→    pub fn to_local(&self) -> Ident {

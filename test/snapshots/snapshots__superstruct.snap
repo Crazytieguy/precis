@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2002 tokens)
+budget: 2000 (2000 tokens)
 
 Readme.md
     42→### Usage
@@ -11,6 +11,17 @@ Readme.md
    181→### Demo
    189→### Examples
    205→### Documentation
+
+docs/readme.md
+     7→### Usage
+
+docs/summary.md
+     3→## Guides
+    12→## API Reference
+    22→## Resources
+
+examples/README.md
+     1→# Examples
 
 jsr.json
      2→  "$schema": "https://jsr.io/schema/config-file.v1.json",
@@ -21,10 +32,7 @@ jsr.json
      8→  }
      9→}
 
-package.json
-
 src/error.ts
-     2→ * A `StructFailure` represents a single specific failure in validation.
      5→export type Failure = {
      6→  value: any
      7→  key: any
@@ -35,9 +43,6 @@ src/error.ts
     12→  branch: Array<any>
     13→  path: Array<any>
     14→}
-    17→ * `StructError` objects are thrown (or returned) when validation fails.
-    18→ *
-      → …
     25→export class StructError extends TypeError {
     26→  value: any
     27→  key!: any
@@ -205,5 +210,3 @@ src/utils.ts
 
 test/index.ts
      5→export function test …
-
-tsconfig.json
