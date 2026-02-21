@@ -100,8 +100,8 @@ with_entries! {
     (enclosed,                "enclosed",                        4000), // inspected: deprioritize locale data files
     (enclosed_crypto,         "enclosed/packages/crypto",       1000), // crypto package
     (enclosed_lib,            "enclosed/packages/lib",          1000), // shared library
-    (d2ts,                    "d2ts",                            2000),
-    (d2ts_d2ts,               "d2ts/packages/d2ts",             2000), // main library
+    (d2ts,                    "d2ts",                            2000), // inspected: logged observation
+    (d2ts_d2ts,               "d2ts/packages/d2ts",             2000), // inspected: logged observation
 
     // ── JavaScript ──────────────────────────────────────────────────────
     (commander,               "commander",                      2000), // inspected: logged observation
