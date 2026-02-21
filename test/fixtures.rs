@@ -106,7 +106,7 @@ with_entries! {
     // ── JavaScript ──────────────────────────────────────────────────────
     (commander,               "commander",                      2000), // inspected: logged observation
     (semver,                  "semver",                          2000), // inspected: deprioritize .github/
-    (semver_classes,          "semver/classes",                  1000),
+    (semver_classes,          "semver/classes",                  1000), // inspected: exceeds explore
     (semver_internal,         "semver/internal",                 1000),
 
     // ── Python ──────────────────────────────────────────────────────────
