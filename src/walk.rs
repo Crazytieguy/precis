@@ -55,10 +55,10 @@ fn is_vendored_or_fixture(path: &Path) -> bool {
     })
 }
 
-/// Check if a file is test/benchmark/example/docs-site infrastructure.
+/// Check if a file is test/benchmark/example/docs-site/CI infrastructure.
 /// These files are included in output but deprioritized by the scheduler.
 /// Matches test directories, benchmark directories, example directories,
-/// documentation site directories, and test file naming conventions.
+/// documentation site directories, CI/CD configuration, and test file naming conventions.
 pub fn is_test_file(path: &Path) -> bool {
     // Check for deprioritized directories anywhere in the path:
     // __tests__/ (Jest), tests/ (Rust/Python/JS), test/ (JS/TS), testing/ (Python),
@@ -66,7 +66,8 @@ pub fn is_test_file(path: &Path) -> bool {
     // examples/ and example/ (usage demonstrations, not core API: Rust, Go, JS),
     // website/ and site/ (documentation sites: Docusaurus, Next.js, etc.),
     // docs/ and doc/ (supplementary documentation, Sphinx configs, GitHub Pages),
-    // mocks/ and __mocks__/ (auto-generated test mocks: Go mockery, Jest, etc.)
+    // mocks/ and __mocks__/ (auto-generated test mocks: Go mockery, Jest, etc.),
+    // .github/ and .circleci/ (CI/CD workflows, issue templates, repo config)
     if path.components().any(|c| {
         let s = c.as_os_str();
         s == "__tests__"
@@ -84,6 +85,8 @@ pub fn is_test_file(path: &Path) -> bool {
             || s == "doc"
             || s == "mocks"
             || s == "__mocks__"
+            || s == ".github"
+            || s == ".circleci"
     }) {
         return true;
     }
