@@ -1,0 +1,370 @@
+---
+source: test/fixtures.rs
+expression: output
+---
+budget: 4000 (4018 tokens)
+
+README.md
+     1→# Tock
+     8→## Features
+    26→## Quick Start
+    28→### Installation
+    30→#### Homebrew (macOS)
+    41→#### Go Install
+    47→#### Build from source
+    53→#### Install Script (Linux & macOS)
+    59→#### Download Binary
+    63→### Basic Usage
+   116→## Configuration
+   127→### Configuration File
+   165→### Environment Variables
+   179→### Storage Backends
+   183→### 1. Flat File (Default)
+   191→### 2. TimeWarrior
+   209→### Calendar View
+   238→## Theming
+   252→### Theme Name
+   262→### Auto-detection
+   270→### Custom Colors
+   283→### Example: Cyberpunk / Fuchsia Theme
+   300→### Time Format
+   316→#### 12-Hour Format Examples
+   328→#### 24-Hour Format (Default)
+   343→## Commands
+   381→### Start tracking
+   401→### Stop tracking
+   418→### Add past activity
+   439→### Remove activity
+   453→### Continue activity
+   472→### Current activity
+   482→### Stopwatch (Watch Mode)
+   500→### Recent activities
+   513→### Calendar View (TUI)
+   528→### Text Report
+   551→### Calendar Integration (iCal)
+   578→### Productivity Analysis
+   602→## Update Check
+   608→## File Format
+   619→## Shell Completion
+   628→### Installation
+   656→## Shell Integration
+   660→### Zsh / Oh My Zsh
+   679→### Starship
+   692→### Technology Stack
+   698→### Project Structure
+   709→## Inspiration
+   713→## License
+
+cmd/tock/main.go
+     3→import …
+     7→func main() {
+
+internal/adapters/cli/add.go
+     3→import …
+    16→type addOptions struct {
+    26→func NewAddCmd() *cobra.Command {
+
+internal/adapters/cli/analyze.go
+     3→import …
+    20→func NewAnalyzeCmd() *cobra.Command {
+    70→type AnalysisStats struct {
+    71→	TotalDuration      time.Duration
+      →	…
+    84→func analyzeData …
+   206→func renderAnalysis …
+
+internal/adapters/cli/calendar.go
+     3→import …
+    25→func NewCalendarCmd() *cobra.Command {
+    48→type reportModel struct {
+    79→func (m *reportModel) Init() tea.Cmd {
+    83→func (m *reportModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+   134→func (m *reportModel) View() string {
+   256→func (m *reportModel) updateViewportContent() {
+   418→type monthDataMsg struct {
+   422→type errMsg struct{ err error }
+   488→func (m *reportModel) getWeeklyDuration() (time.Duration, error) {
+
+internal/adapters/cli/calendar_sidebar.go
+     3→import …
+    12→const barChar = "▏"
+    15→func formatDurationCompact(d time.Duration) string {
+
+internal/adapters/cli/continue.go
+     3→import …
+    15→const (
+    16→	defaultRecentActivitiesForContinuation = 10
+    19→//nolint:funlen // Include all logic in one function
+    20→func NewContinueCmd() *cobra.Command {
+    21→	var description string
+      →	…
+
+internal/adapters/cli/current.go
+     3→import …
+    19→type currentCmdActivity struct {
+    23→func (a currentCmdActivity) Duration() time.Duration {
+    27→func (a currentCmdActivity) DurationHMS() string {
+    35→func NewCurrentCmd() *cobra.Command {
+
+internal/adapters/cli/ical.go
+     3→import …
+    23→func NewICalCmd() *cobra.Command {
+
+internal/adapters/cli/interactive.go
+     3→import …
+    17→func SelectActivityMetadata(activities []models.Activity, project, description string, theme Theme) (string, string, error) {
+    98→func RunInteractiveInput(header, placeholder string, theme Theme) (string, error) {
+   123→type simpleInputModel struct {
+   131→func (m simpleInputModel) Init() tea.Cmd { return nil }
+   133→func (m simpleInputModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+   155→func (m simpleInputModel) View() string {
+   176→func RunInteractiveList(items []string, title string, theme Theme) (string, error) {
+   201→type simpleListModel struct {
+   212→func (m *simpleListModel) Init() tea.Cmd { return nil }
+   214→func (m *simpleListModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+   263→func (m *simpleListModel) View() string {
+
+internal/adapters/cli/last.go
+     3→import …
+    16→type lastOptions struct {
+    21→func NewLastCmd() *cobra.Command {
+
+internal/adapters/cli/list_gui.go
+     3→import …
+    22→func NewListCmd() *cobra.Command {
+    45→type model struct {
+   200→func (m *model) Init() tea.Cmd {
+   204→func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+   230→func (m *model) View() string {
+
+internal/adapters/cli/remove.go
+     3→import …
+    22→func NewRemoveCmd() *cobra.Command {
+
+internal/adapters/cli/report.go
+     3→import …
+    20→type reportOptions struct {
+    31→func NewReportCmd() *cobra.Command {
+    61→func runReportCmd …
+
+internal/adapters/cli/root.go
+     3→import …
+    26→type serviceKey struct{}
+    27→type configKey struct{}
+    28→type viperKey struct{}
+    29→type timeFormatterKey struct{}
+    31→func NewRootCmd() *cobra.Command {
+   107→func Execute() {
+
+internal/adapters/cli/start.go
+     3→import …
+    16→//nolint:gocognit,funlen // Include all logic in one function
+    17→func NewStartCmd() *cobra.Command {
+    18→	var description string
+      →	…
+
+internal/adapters/cli/stop.go
+     3→import …
+    14→func NewStopCmd() *cobra.Command {
+
+internal/adapters/cli/theme.go
+     3→import …
+    11→type Theme struct {
+    12→	Primary   lipgloss.Color
+      →	…
+    22→type Styles struct {
+    23→	Wrapper       lipgloss.Style
+      →	…
+    40→func DarkTheme() Theme {
+    53→func LightTheme() Theme {
+    66→func ANSIDarkTheme() Theme {
+    79→func ANSILightTheme() Theme {
+    93→func CustomTheme(cfg config.ThemeConfig) Theme {
+   122→func GetTheme(cfg config.ThemeConfig) Theme {
+   167→func InitStyles(t Theme) Styles {
+
+internal/adapters/cli/version.go
+     3→import …
+    10→var (
+    11→	version = "dev"
+    12→	commit  = "none"
+    13→	date    = "unknown"
+    16→func NewVersionCmd() *cobra.Command {
+
+internal/adapters/cli/watch.go
+     3→import …
+    19→func NewWatchCmd() *cobra.Command {
+    75→type tickMsg time.Time
+    77→type watchModel struct {
+    90→type keyMap struct {
+   115→func (m watchModel) Init() tea.Cmd {
+   121→func (m watchModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+   175→func (m watchModel) View() string {
+   248→var font = map[rune][]string{
+
+internal/adapters/repositories/file/parser.go
+     3→import …
+    13→var ErrSkip = errors.New("skip line")
+    20→func ParseActivity(line string) (*models.Activity, error) {
+    72→func FormatActivity(a models.Activity) string {
+
+internal/adapters/repositories/file/repository.go
+    23→func NewRepository …
+    27→func (r *repository) Find …
+    93→func (r *repository) FindLast …
+   130→func (r *repository) Save …
+   168→func (r *repository) Remove …
+
+internal/adapters/repositories/notes/repository.go
+    28→func NewRepository …
+    36→func (r *repository) Save …
+    73→func (r *repository) Get …
+
+internal/config/config.go
+     3→import …
+    12→type Config struct {
+    25→type CalendarConfig struct {
+    33→type ExportConfig struct {
+    37→type ICalConfig struct {
+    41→type FileConfig struct {
+    45→type TimewarriorConfig struct {
+    49→type ThemeConfig struct {
+    60→type Option func(*viper.Viper)
+    62→func WithConfigPath(path string) Option {
+    68→func WithConfigName(name string) Option {
+    74→func WithConfigFile(file string) Option {
+    80→func Load(opts ...Option) (*Config, *viper.Viper, error) {
+
+internal/core/dto/activity_dto.go
+     3→import …
+     9→type StartActivityRequest struct {
+    17→type StopActivityRequest struct {
+    23→type AddActivityRequest struct {
+    32→type ActivityFilter struct {
+    40→type Report struct {
+    46→type ProjectReport struct {
+
+internal/core/errors/errors.go
+     3→import "errors"
+     5→var (
+     6→	ErrActivityNotFound       = errors.New("activity not found")
+     7→	ErrNoActiveActivity       = errors.New("no active activity found")
+     8→	ErrActivityAlreadyStarted = errors.New("activity already started")
+     9→	ErrCancelled              = errors.New("operation cancelled")
+
+internal/core/models/activity.go
+     3→import …
+    10→type Activity struct {
+    11→	Description string     `json:"description"`
+    12→	Project     string     `json:"project"`
+      →	…
+    19→func (a Activity) ID() string {
+    23→func (a Activity) Duration() time.Duration {
+    30→// DurationString returns the duration formatted as "HH:MM:SS".
+    31→func (a Activity) DurationString() string {
+    41→func (a Activity) MarshalJSON() ([]byte, error) {
+
+internal/core/ports/mocks/mock_activityrepository.go
+    17→func NewMockActivityRepository(t interface {
+    18→	mock.TestingT
+    19→	Cleanup(func())
+    20→}) *MockActivityRepository {
+    30→type MockActivityRepository struct {
+    34→type MockActivityRepository_Expecter struct {
+    43→func (_mock *MockActivityRepository) Find(ctx context.Context, filter dto.ActivityFilter) ([]models.Activity, error) {
+    71→type MockActivityRepository_Find_Call struct {
+    78→func (_e *MockActivityRepository_Expecter) Find(ctx interface{}, filter interface{}) *MockActivityRepository_Find_Call {
+   111→func (_mock *MockActivityRepository) FindLast(ctx context.Context) (*models.Activity, error) {
+   139→type MockActivityRepository_FindLast_Call struct {
+   145→func (_e *MockActivityRepository_Expecter) FindLast(ctx interface{}) *MockActivityRepository_FindLast_Call {
+   173→func (_mock *MockActivityRepository) Save(ctx context.Context, activity models.Activity) error {
+   190→type MockActivityRepository_Save_Call struct {
+   197→func (_e *MockActivityRepository_Expecter) Save(ctx interface{}, activity interface{}) *MockActivityRepository_Save_Call {
+   230→func (_mock *MockActivityRepository) Remove(ctx context.Context, activity models.Activity) error {
+   247→type MockActivityRepository_Remove_Call struct {
+   254→func (_e *MockActivityRepository_Expecter) Remove(ctx interface{}, activity interface{}) *MockActivityRepository_Remove_Call {
+
+internal/core/ports/mocks/mock_activityresolver.go
+    17→func NewMockActivityResolver(t interface {
+    18→	mock.TestingT
+    19→	Cleanup(func())
+    20→}) *MockActivityResolver {
+    30→type MockActivityResolver struct {
+    34→type MockActivityResolver_Expecter struct {
+    43→func (_mock *MockActivityResolver) Add(ctx context.Context, req dto.AddActivityRequest) (*models.Activity, error) {
+    71→type MockActivityResolver_Add_Call struct {
+    78→func (_e *MockActivityResolver_Expecter) Add(ctx interface{}, req interface{}) *MockActivityResolver_Add_Call {
+   111→func (_mock *MockActivityResolver) GetRecent(ctx context.Context, limit int) ([]models.Activity, error) {
+   139→type MockActivityResolver_GetRecent_Call struct {
+   146→func (_e *MockActivityResolver_Expecter) GetRecent(ctx interface{}, limit interface{}) *MockActivityResolver_GetRecent_Call {
+   179→func (_mock *MockActivityResolver) GetReport(ctx context.Context, filter dto.ActivityFilter) (*dto.Report, error) {
+   207→type MockActivityResolver_GetReport_Call struct {
+   214→func (_e *MockActivityResolver_Expecter) GetReport(ctx interface{}, filter interface{}) *MockActivityResolver_GetReport_Call {
+   247→func (_mock *MockActivityResolver) List(ctx context.Context, filter dto.ActivityFilter) ([]models.Activity, error) {
+   275→type MockActivityResolver_List_Call struct {
+   282→func (_e *MockActivityResolver_Expecter) List(ctx interface{}, filter interface{}) *MockActivityResolver_List_Call {
+   315→func (_mock *MockActivityResolver) Start(ctx context.Context, req dto.StartActivityRequest) (*models.Activity, error) {
+   343→type MockActivityResolver_Start_Call struct {
+   350→func (_e *MockActivityResolver_Expecter) Start(ctx interface{}, req interface{}) *MockActivityResolver_Start_Call {
+   383→func (_mock *MockActivityResolver) Stop(ctx context.Context, req dto.StopActivityRequest) (*models.Activity, error) {
+   411→type MockActivityResolver_Stop_Call struct {
+   418→func (_e *MockActivityResolver_Expecter) Stop(ctx interface{}, req interface{}) *MockActivityResolver_Stop_Call {
+
+internal/core/ports/mocks/mock_notesrepository.go
+    16→func NewMockNotesRepository …
+    29→type MockNotesRepository struct {
+    33→type MockNotesRepository_Expecter struct {
+    42→func (_mock *MockNotesRepository) Get …
+    76→type MockNotesRepository_Get_Call struct {
+    84→func (_e *MockNotesRepository_Expecter) Get …
+   122→func (_mock *MockNotesRepository) Save …
+   139→type MockNotesRepository_Save_Call struct {
+   149→func (_e *MockNotesRepository_Expecter) Save …
+
+internal/core/ports/ports.go
+     3→import …
+    11→type ActivityResolver interface {
+    22→type ActivityRepository interface {
+    29→type NotesRepository interface {
+
+internal/extra/extra.go
+     3→import …
+    11→func CalculateEndTime …
+
+internal/services/activity/service.go
+     3→import …
+    15→type service struct {
+    20→func NewService(repo ports.ActivityRepository, notesRepo ports.NotesRepository) ports.ActivityResolver {
+    24→func (s *service) Start(ctx context.Context, req dto.StartActivityRequest) (*models.Activity, error) {
+    68→func (s *service) Stop(ctx context.Context, req dto.StopActivityRequest) (*models.Activity, error) {
+   118→func (s *service) Add(ctx context.Context, req dto.AddActivityRequest) (*models.Activity, error) {
+   141→func (s *service) List(ctx context.Context, filter dto.ActivityFilter) ([]models.Activity, error) {
+   149→func (s *service) GetReport(ctx context.Context, filter dto.ActivityFilter) (*dto.Report, error) {
+   186→func (s *service) GetRecent(ctx context.Context, limit int) ([]models.Activity, error) {
+   210→func (s *service) GetLast(ctx context.Context) (*models.Activity, error) {
+   214→func (s *service) Remove(ctx context.Context, activity models.Activity) error {
+
+internal/services/ics/generator.go
+     3→import …
+    12→func Generate(act models.Activity, uidKey string) string {
+    18→func WrapCalendar(eventsBody string) string {
+    29→func GenerateEvent(act models.Activity, uidKey string) string {
+    71→func escapeProperty(s string) string {
+
+internal/timeutil/timeutil.go
+     3→import …
+    11→type TimeFormat int
+    13→const (
+    14→	Format24Hour TimeFormat = iota // default
+    15→	Format12Hour
+    18→// Formatter handles time formatting and parsing.
+    19→type Formatter struct {
+    20→	format TimeFormat
+    21→}
+    25→func NewFormatter(formatStr string) *Formatter {
+    34→func (f *Formatter) Format() TimeFormat {
+    39→func (f *Formatter) GetDisplayFormat() string {
+    47→func (f *Formatter) GetDisplayFormatWithDate() string {
+    56→func (f *Formatter) ParseTime(input string) (time.Time, error) {
+   103→func (f *Formatter) ParseTimeWithDate(input string) (time.Time, error) {
+   158→func FormatDuration(d time.Duration, format string) string {

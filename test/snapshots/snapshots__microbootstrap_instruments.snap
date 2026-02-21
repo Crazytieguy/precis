@@ -1,0 +1,101 @@
+---
+source: test/fixtures.rs
+expression: output
+---
+budget: 1000 (999 tokens)
+
+base.py
+    19→class BaseInstrumentConfig(pydantic.BaseModel):
+    24→class Instrument(abc.ABC, typing.Generic[InstrumentConfigT]):
+    25→    instrument_config: InstrumentConfigT
+    29→    def configure_instrument …
+    35→    def write_status …
+    43→    def is_ready(self) -> bool: ...
+    47→    def get_config_type(cls) -> type[InstrumentConfigT]:
+    50→    def bootstrap …
+    53→    def teardown …
+    56→    def bootstrap_before …
+    60→    def bootstrap_after …
+
+cors_instrument.py
+     8→class CorsConfig(BaseInstrumentConfig):
+    18→class CorsInstrument(Instrument[CorsConfig]):
+    22→    def is_ready(self) -> bool:
+    27→    @classmethod
+    28→    def get_config_type(cls) -> type[CorsConfig]:
+
+health_checks_instrument.py
+     8→class HealthCheckTypedDict(typing_extensions.TypedDict, total=False):
+    14→class HealthChecksConfig(BaseInstrumentConfig):
+    26→class HealthChecksInstrument(Instrument[HealthChecksConfig]):
+    30→    def render_health_check_data(self) -> HealthCheckTypedDict:
+    37→    def is_ready(self) -> bool:
+    40→    @classmethod
+    41→    def get_config_type(cls) -> type[HealthChecksConfig]:
+
+instrument_box.py
+    10→class InstrumentBox:
+    14→    def initialize …
+    21→    def configure_instrument …
+    34→    def extend_instruments …
+    48→    @property
+    49→    def instruments(self) -> list[Instrument[typing.Any]]:
+
+logging_instrument.py
+    26→access_logger …
+    76→STRUCTLOG_PRE_CHAIN_PROCESSORS …
+    92→STRUCTLOG_FORMATTER_PROCESSOR …
+    97→class MemoryLoggerFactory(structlog.stdlib.LoggerFactory):
+   127→class LoggingConfig(BaseInstrumentConfig):
+   141→    def remove_trailing_slashes_from_logging_exclude_endpoints(self) -> typing_extensions.Self:
+   148→class LoggingInstrument(Instrument[LoggingConfig]):
+   213→    def get_config_type(cls) -> type[LoggingConfig]:
+
+opentelemetry_instrument.py
+    24→LOGGER_OBJ …
+    43→class OpenTelemetryInstrumentor:
+    44→    instrumentor: BaseInstrumentor
+      →    …
+    73→class FastStreamTelemetryMiddlewareProtocol(typing.Protocol):
+   181→    @classmethod
+   182→    def get_config_type(cls) -> type[OpentelemetryConfig]:
+   186→OTEL_PROFILE_ID_KEY …
+   187→PYROSCOPE_SPAN_ID_KEY …
+   188→PYROSCOPE_SPAN_NAME_KEY …
+   197→class PyroscopeSpanProcessor(SpanProcessor):
+
+prometheus_instrument.py
+    17→class BasePrometheusConfig(BaseInstrumentConfig):
+    24→class LitestarPrometheusConfig(BasePrometheusConfig):
+    28→class FastApiPrometheusConfig(BasePrometheusConfig):
+    35→@typing.runtime_checkable
+    36→class FastStreamPrometheusMiddlewareProtocol(typing.Protocol):
+    37→    def __init__ …
+    46→    def __call__ …
+    55→class FastStreamPrometheusConfig(BasePrometheusConfig):
+    60→class PrometheusInstrument(Instrument[PrometheusConfigT]):
+    64→    def is_ready …
+    69→    @classmethod
+    70→    def get_config_type(cls) -> type[PrometheusConfigT]:
+
+pyroscope_instrument.py
+    15→class PyroscopeConfig(BaseInstrumentConfig):
+    27→class PyroscopeInstrument(Instrument[PyroscopeConfig]):
+    31→    def is_ready(self) -> bool:
+    34→    def teardown(self) -> None:
+    37→    def bootstrap(self) -> None:
+    52→    @classmethod
+    53→    def get_config_type(cls) -> type[PyroscopeConfig]:
+
+sentry_instrument.py
+    15→class SentryConfig(BaseInstrumentConfig):
+    89→class SentryInstrument(Instrument[SentryConfig]):
+   122→    @classmethod
+   123→    def get_config_type(cls) -> type[SentryConfig]:
+
+swagger_instrument.py
+    10→class SwaggerConfig(BaseInstrumentConfig):
+    21→class SwaggerInstrument(Instrument[SwaggerConfig]):
+    25→    def is_ready(self) -> bool:
+    28→    @classmethod
+    29→    def get_config_type(cls) -> type[SwaggerConfig]:

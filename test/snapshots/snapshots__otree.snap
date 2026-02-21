@@ -1,0 +1,258 @@
+---
+source: test/fixtures.rs
+expression: output
+---
+budget: 2000 (2005 tokens)
+
+Cargo.toml
+     1→[package]
+    13→[dependencies]
+    34→[build-dependencies]
+    38→[profile.release]
+    43→[lints.clippy]
+
+README.md
+     1→# OTree - Object Tree TUI Viewer
+     7→## Install
+    33→## Usage
+    52→## Roadmap
+    82→## Thanks
+
+build.rs
+
+config/default.toml
+     1→[tree]
+     5→[editor]
+    10→[layout]
+    14→[header]
+    18→[footer]
+    21→[data]
+    25→[filter]
+    30→[keys]
+    62→[colors]
+    66→[colors.tree]
+    79→[colors.data]
+    90→[colors.footer]
+    95→[colors.popup]
+   100→[colors.filter]
+   103→[types]
+
+src/clipboard.rs
+    28→pub fn write_clipboard(text: &str) -> Result<()> {
+
+src/cmd.rs
+    13→pub struct CommandArgs {
+   112→    pub fn parse() -> Result<Option<Self>> {
+   149→    pub fn update_config(&self, cfg: &mut Config) {
+   202→    pub fn get_content_type(&self) -> ContentType {
+
+src/config/colors.rs
+     7→use super::Config;
+    21→pub struct Colors {
+    56→    pub fn default() -> Self {
+    78→pub struct DataColors {
+   162→pub struct TreeColors {
+   251→pub struct FooterColors {
+   286→pub struct PopupColors {
+   324→pub struct FilterColors {
+   342→pub struct Color {
+
+src/config/keys.rs
+    54→pub enum Key {
+   195→pub struct Keys {
+   351→pub struct KeyAction {
+   357→    pub fn get_key_action …
+
+src/config/mod.rs
+     1→pub mod colors;
+     2→pub mod keys;
+     3→pub mod types;
+    17→pub struct Config {
+    53→pub struct Tree {
+    62→pub struct Editor {
+    74→pub struct Layout {
+    83→pub enum LayoutDirection {
+    91→pub struct Header {
+   100→pub struct Footer {
+   106→pub struct Filter {
+   118→pub struct Data {
+   128→    pub const MIN_LAYOUT_TREE_SIZE: u16 = 10;
+   129→    pub const MAX_LAYOUT_TREE_SIZE: u16 = 80;
+   131→    pub fn load(path: Option<String>) -> Result<Self> {
+   144→    pub fn parse(&mut self) -> Result<()> {
+   196→    pub fn default() -> Self {
+   212→    pub fn show(&self) -> Result<()> {
+
+src/config/types.rs
+    28→pub struct Types {
+
+src/debug.rs
+     7→#[macro_export]
+     8→macro_rules! debug {
+    19→pub fn set_file(file: String) {
+    23→pub fn write_logs(mut msg: String) -> Result<()> {
+
+src/edit.rs
+     8→use crate::config::Config;
+    10→pub struct Edit {
+    17→    pub fn new …
+    40→    pub fn run …
+
+src/live_reload.rs
+    16→pub struct FileWatcher {
+    28→    pub fn new …
+    64→    pub fn get_err …
+    71→    pub fn parse_tree …
+
+src/parse/any.rs
+     9→pub struct AnyParser {
+    14→    pub fn new() -> Self {
+    20→    pub fn set_parser(&self, parser: Box<dyn Parser>) {
+
+src/parse/hcl.rs
+     8→pub struct HclParser {}
+
+src/parse/json.rs
+     6→pub struct JsonParser {}
+    26→pub fn highlight …
+
+src/parse/jsonl.rs
+     4→use super::json;
+     5→use super::{Parser, SyntaxToken};
+     7→pub struct JsonlParser;
+
+src/parse/mod.rs
+    10→pub use syntax::SyntaxToken;
+    18→pub enum ContentType {
+    19→    Json,
+      →    …
+    36→pub trait Parser {
+    37→    fn extension …
+    39→    fn allow_array_root …
+    41→    fn parse …
+    43→    fn syntax_highlight …
+    45→    fn parse_root …
+    67→    pub fn new_parser …
+
+src/parse/syntax.rs
+     9→use crate::config::Config;
+    11→pub enum SyntaxToken {
+    32→    pub fn render …
+   110→    pub fn pure_text …
+   139→pub fn quote_field_name …
+   151→pub enum StringValue {
+   157→    pub fn new …
+   201→pub fn is_value_complex …
+
+src/parse/toml.rs
+     9→pub struct TomlParser {}
+
+src/parse/xml.rs
+    12→pub struct XmlParser {}
+    38→    fn insert_text …
+    39→    fn insert_text_node …
+    61→struct NodeValues {
+   176→fn read …
+
+src/parse/yaml.rs
+     8→pub struct YamlParser {}
+
+src/tree.rs
+    14→pub struct Tree {
+    25→pub struct ItemValue {
+    36→pub struct HighlightKeyword<'a> {
+    42→pub enum FieldType {
+    52→    pub fn parse …
+    58→    pub fn from_value …
+    94→    pub fn get_value …
+    98→    pub fn get_parser …
+   386→    pub fn plain_text …
+   390→    pub fn render …
+   394→    pub fn build_highlighted_text …
+
+src/ui/app.rs
+    39→enum ElementInFocus {
+    48→pub enum ScrollDirection {
+    49→    Up,
+    50→    Down,
+    51→}
+    53→pub struct App {
+    86→pub enum ShowResult {
+   102→    pub fn new(cfg: Rc<Config>, tree: Tree, fw: Option<FileWatcher>) -> Self {
+   133→    pub fn set_header …
+   137→    pub fn show …
+
+src/ui/data_block.rs
+    16→pub struct DataBlock {
+    35→    pub fn new …
+    50→    pub fn on_key …
+    62→    pub fn on_scroll …
+    69→    pub fn scroll_first …
+    86→    pub fn scroll_last …
+    99→    pub fn scroll_down …
+   112→    pub fn scroll_up …
+   122→    pub fn scroll_right …
+   136→    pub fn scroll_left …
+   147→    pub fn draw …
+
+src/ui/filter.rs
+    13→pub struct Filter {
+    20→pub enum FilterAction {
+    27→pub struct FilterOptions {
+    34→pub enum FilterTarget {
+    35→    Key,
+    36→    Value,
+      →    …
+    41→    pub fn new …
+    52→    pub fn on_key …
+    94→    pub fn get_options …
+   102→    pub fn set_target …
+   106→    pub fn switch_ignore_case …
+   119→    pub fn draw …
+   153→    pub fn filter …
+
+src/ui/footer.rs
+     8→use crate::config::Config;
+    10→pub enum FooterText<'a> {
+    16→pub struct Footer {
+    21→    pub fn new …
+    25→    pub fn draw …
+
+src/ui/header.rs
+     9→use crate::config::Config;
+    11→pub struct HeaderContext {
+    19→    pub fn new …
+    41→pub struct Header {
+    47→    pub fn new …
+    55→    pub fn draw …
+
+src/ui/mod.rs
+    21→pub use app::App;
+    22→pub use header::HeaderContext;
+    35→pub fn start(mut app: App) -> Result<()> {
+
+src/ui/popup.rs
+    13→pub struct PopupData {
+    18→pub struct Popup {
+    27→    pub fn new …
+    35→    pub fn set_data …
+    39→    pub fn on_key …
+    48→    pub fn on_scroll …
+    77→    pub fn disable …
+    87→    pub fn is_disabled …
+    91→    pub fn draw …
+
+src/ui/tree_overview.rs
+    19→pub struct TreeOverview {
+    36→    pub fn new …
+    51→    pub fn get_selected …
+    59→    pub fn get_root_identifies …
+    63→    pub fn get_value …
+    67→    pub fn get_parser …
+    71→    pub fn on_key …
+   240→    pub fn on_click …
+   247→    pub fn on_scroll …
+   254→    pub fn draw …
+   319→    pub fn begin_filter …
+   325→    pub fn end_filter …
+   335→    pub fn filter …

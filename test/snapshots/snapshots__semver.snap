@@ -1,0 +1,288 @@
+---
+source: test/fixtures.rs
+expression: output
+---
+budget: 2000 (1999 tokens)
+
+.github/ISSUE_TEMPLATE/bug.yml
+     3→name: Bug
+     4→description: File a bug/issue
+     5→title: "[BUG] <title>"
+     6→labels: [ Bug, Needs Triage ]
+     8→body:
+
+.github/ISSUE_TEMPLATE/config.yml
+     3→blank_issues_enabled: true
+
+.github/actions/create-check/action.yml
+     3→name: 'Create Check'
+     4→inputs:
+    13→outputs:
+    16→runs:
+
+.github/actions/install-latest-npm/action.yml
+     3→name: 'Install Latest npm'
+     4→description: 'Install the latest version of npm compatible with the Node version'
+     5→inputs:
+     9→runs:
+
+.github/dependabot.yml
+     3→version: 2
+     5→updates:
+
+.github/matchers/tap.json
+     2→  "//@npmcli/template-oss": "This file is automatically added by @npmcli/template-oss. Do not edit.",
+     3→  "problemMatcher": [
+
+.github/settings.yml
+     3→repository:
+    13→branches:
+
+.github/workflows/audit.yml
+     3→name: Audit
+     5→on:
+    11→permissions:
+    14→jobs:
+
+.github/workflows/ci-release.yml
+     3→name: CI - Release
+     5→on:
+    21→permissions:
+    25→jobs:
+
+.github/workflows/ci.yml
+     3→name: CI
+     5→on:
+    16→permissions:
+    19→jobs:
+
+.github/workflows/codeql-analysis.yml
+     3→name: CodeQL
+     5→on:
+    18→permissions:
+    21→jobs:
+
+.github/workflows/post-dependabot.yml
+     3→name: Post Dependabot
+     5→on: pull_request
+     7→permissions:
+    10→jobs:
+
+.github/workflows/pull-request.yml
+     3→name: Pull Request
+     5→on:
+    13→permissions:
+    16→jobs:
+
+.github/workflows/release-integration.yml
+     3→name: Release Integration
+     5→on:
+    22→permissions:
+    26→jobs:
+
+.github/workflows/release.yml
+     3→name: Release
+     5→on:
+    11→permissions:
+    16→jobs:
+
+.release-please-manifest.json
+     2→  ".": "7.7.4"
+     3→}
+
+README.md
+     1→semver(1) -- The semantic versioner for npm
+     4→## Install
+    10→## Usage
+   139→## Versions
+   148→## Ranges
+   184→### Prerelease Tags
+   279→### Advanced Range Syntax
+   384→### Range Grammar
+   408→## Functions
+   453→### Comparison
+   478→### Sorting
+   485→### Comparators
+   489→### Ranges
+   531→### Coercion
+   558→### Clean
+   576→## Constants
+   580→### `RELEASE_TYPES`
+   600→### `SEMVER_SPEC_VERSION`
+   610→## Exported Modules
+
+bin/semver.js
+     8→const argv = process.argv.slice(2)
+    12→const range = []
+    37→const main = () => {
+   132→const failInc = () => {
+   137→const fail = () => process.exit(1)
+   139→const help = () => console.log(
+
+classes/comparator.js
+     3→const ANY = Symbol('SemVer ANY')
+     5→class Comparator {
+     6→  static get ANY () {
+    10→  constructor (comp, options) {
+    36→  parse (comp) {
+    57→  toString () {
+    61→  test (version) {
+    79→  intersects (comp, options) {
+
+classes/range.js
+     3→const SPACE_CHARACTERS = /\s+/g
+     6→class Range {
+     7→  constructor (range, options) {
+    73→  get range () {
+    92→  format () {
+    96→  toString () {
+   100→  parseRange (range) {
+   170→  intersects (range, options) {
+   193→  test (version) {
+   218→const cache = new LRU()
+
+classes/semver.js
+     9→class SemVer {
+    10→  constructor (version, options) {
+    81→  format () {
+    89→  toString () {
+    93→  compare (other) {
+   109→  compareMain (other) {
+   135→  comparePre (other) {
+   168→  compareBuild (other) {
+   194→  inc (release, identifier, identifierBase) {
+
+functions/clean.js
+     4→const clean = (version, options) => {
+
+functions/cmp.js
+    10→const cmp …
+
+functions/coerce.js
+     7→const coerce = (version, options) => {
+
+functions/compare.js
+     4→const compare …
+
+functions/diff.js
+     5→const diff …
+
+functions/eq.js
+     4→const eq …
+
+functions/gt.js
+     4→const gt …
+
+functions/gte.js
+     4→const gte …
+
+functions/inc.js
+     5→const inc …
+
+functions/lt.js
+     4→const lt …
+
+functions/lte.js
+     4→const lte …
+
+functions/major.js
+     4→const major …
+
+functions/minor.js
+     4→const minor …
+
+functions/neq.js
+     4→const neq …
+
+functions/parse.js
+     4→const parse …
+
+functions/patch.js
+     4→const patch …
+
+functions/rcompare.js
+     4→const rcompare …
+
+functions/satisfies.js
+     4→const satisfies …
+
+functions/sort.js
+     4→const sort …
+
+functions/valid.js
+     4→const valid = (version, options) => {
+
+internal/constants.js
+     5→const SEMVER_SPEC_VERSION = '2.0.0'
+     7→const MAX_LENGTH = 256
+     8→const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER ||
+    12→const MAX_SAFE_COMPONENT_LENGTH = 16
+    16→const MAX_SAFE_BUILD_LENGTH = MAX_LENGTH - 6
+    18→const RELEASE_TYPES = [
+
+internal/debug.js
+     3→const debug = (
+
+internal/lrucache.js
+     3→class LRUCache {
+     4→  constructor () {
+     9→  get (key) {
+    21→  delete (key) {
+    25→  set (key, value) {
+
+internal/parse-options.js
+     4→const looseOption = Object.freeze({ loose: true })
+     5→const emptyOpts = Object.freeze({ })
+     6→const parseOptions = options => {
+
+internal/re.js
+    12→const re = exports.re = []
+    13→const safeRe = exports.safeRe = []
+    14→const src = exports.src = []
+    15→const safeSrc = exports.safeSrc = []
+    16→const t = exports.t = {}
+    19→const LETTERDASHNUMBER = '[a-zA-Z0-9-]'
+    27→const safeRegexReplacements = [
+    33→const makeSafeRegex …
+    42→const createToken …
+
+package.json
+     2→  "name": "semver",
+     3→  "version": "7.7.4",
+     4→  "description": "The semantic version parser used by npm.",
+     5→  "main": "index.js",
+     6→  "scripts": {
+    16→  "devDependencies": {
+    22→  "license": "ISC",
+    23→  "repository": {
+    27→  "bin": {
+    30→  "files": [
+    41→  "tap": {
+    49→  "engines": {
+    52→  "author": "GitHub Inc.",
+    53→  "templateOSS": {
+
+ranges/gtr.js
+     5→const gtr …
+
+ranges/intersects.js
+     4→const intersects …
+
+ranges/ltr.js
+     5→const ltr …
+
+ranges/outside.js
+    13→const outside …
+
+ranges/subset.js
+    45→const subset …
+    76→const simpleSubset …
+   226→const higherGT …
+   238→const lowerLT …
+
+release-please-config.json
+     2→  "group-pull-request-title-pattern": "chore: release ${version}",
+     3→  "pull-request-title-pattern": "chore: release${component} ${version}",
+     4→  "changelog-sections": [
+    31→  "packages": {
+    36→  "prerelease-type": "pre.0"

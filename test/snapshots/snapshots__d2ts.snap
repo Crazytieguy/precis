@@ -1,0 +1,232 @@
+---
+source: test/fixtures.rs
+expression: output
+---
+budget: 2000 (1998 tokens)
+
+README.md
+    26→# D2TS - Differential Dataflow in TypeScript <!-- omit in toc -->
+    36→## Table of Contents
+    51→## Key Features
+    73→## Quick Start
+   185→## Examples
+   196→## API
+   678→## Implementation Details
+   699→## References
+
+package.json
+
+packages/d2mini/src/graph.ts
+    11→export class DifferenceStreamReader …
+    32→export class DifferenceStreamWriter …
+    56→export abstract class Operator …
+    80→export abstract class UnaryOperator …
+   100→export abstract class BinaryOperator …
+   122→export abstract class LinearUnaryOperator …
+
+packages/d2mini/src/indexes.ts
+     9→export class Index<K, V> {
+
+packages/d2mini/src/multiset.ts
+    14→export class MultiSet<T> {
+    17→  constructor …
+    21→  toString …
+    25→  toJSON …
+    29→  static fromJSON …
+    36→  map<U>(f: (data: T) => U): MultiSet<U> {
+    45→  filter(f: (data: T) => boolean): MultiSet<T> {
+    52→  negate(): MultiSet<T> {
+    61→  concat(other: MultiSet<T>): MultiSet<T> {
+    73→  consolidate(): MultiSet<T> {
+   207→  extend …
+   212→  getInner …
+
+packages/d2mini/src/types.ts
+     6→export interface IOperator<_T> {
+    11→export interface IDifferenceStreamReader<T> {
+    16→export interface IDifferenceStreamWriter<T> {
+    21→export interface ID2 {
+    30→export interface IStreamBuilder<T> {
+
+packages/d2mini/src/utils.ts
+     6→export class DefaultMap<K, V> extends Map<K, V> {
+    24→  update(key: K, updater: (value: V) => V): V {
+    73→export function hash(data: any): string {
+   119→export class ObjectIdGenerator {
+   128→  getId(value: any): number {
+   151→  getStringId(value: any): string {
+   163→export const globalObjectIdGenerator = new ObjectIdGenerator()
+
+packages/d2ql/README.md
+     1→# D2QL
+
+packages/d2ql/src/compiler.ts
+    16→export function compileQuery …
+
+packages/d2ql/src/evaluators.ts
+    14→export function evaluateConditionOnNestedRow …
+   126→export function evaluateSimpleConditionOnNestedRow …
+
+packages/d2ql/src/extractors.ts
+    12→export function extractValueFromNestedRow …
+    80→export function evaluateOperandOnNestedRow …
+   169→export function extractJoinKey …
+
+packages/d2ql/src/functions.ts
+   241→export function evaluateFunction …
+   257→export function isFunctionCall …
+   276→export function extractFunctionCall …
+
+packages/d2ql/src/group-by.ts
+    20→export function processGroupBy …
+    98→export function getAggregateFunction …
+
+packages/d2ql/src/joins.ts
+    16→export function processJoinClause …
+   124→export function processJoinResults …
+
+packages/d2ql/src/query-builder/query-builder.ts
+    36→  constructor …
+    80→  from …
+   116→  select …
+   211→  where …
+   265→  having …
+   298→  buildQuery …
+   388→  join …
+   456→  orderBy …
+   473→  limit …
+   490→  offset …
+   507→  keyBy …
+   524→  groupBy …
+   545→  with …
+   609→export function queryBuilder …
+
+packages/d2ql/src/schema.ts
+    94→export type ConditionOperand …
+
+packages/d2ql/src/store.ts
+    40→export class Store<K, V> {
+   163→  query …
+   346→  static queryAll …
+
+packages/d2ql/src/types.ts
+   234→export type ResultKeyFromPropertyReference …
+   274→export type InferResultTypeFromSelectTuple …
+
+packages/d2ql/src/utils.ts
+     4→export function isAggregateFunctionCall …
+    24→export function isOrderIndexFunctionCall …
+    36→export function isComparable …
+    55→export function compareValues …
+   131→export function convertLikeToRegex …
+   192→export function isValueInArray …
+
+packages/d2ts/README.md
+    36→## Table of Contents
+    51→## Key Features
+    88→## Quick Start
+   200→## Examples
+   210→## API
+  1055→## Implementation Details
+  1076→## References
+
+packages/d2ts/src/graph.ts
+    20→export class DifferenceStreamReader<T> implements IDifferenceStreamReader<T> {
+    54→export class DifferenceStreamWriter<T> implements IDifferenceStreamWriter<T> {
+   111→export abstract class Operator<T> implements IOperator<T> {
+   144→export abstract class UnaryOperator<T> extends Operator<T> {
+   171→export abstract class BinaryOperator<T> extends Operator<T> {
+
+packages/d2ts/src/multiset.ts
+     9→export class MultiSet<T> {
+    31→  map …
+    40→  filter …
+    47→  negate …
+    56→  concat …
+    68→  consolidate …
+   110→  join …
+   128→  reduce …
+   154→  count …
+   167→  sum …
+   183→  min …
+   220→  max …
+   258→  distinct …
+   291→  iterate …
+
+packages/d2ts/src/order.ts
+    10→export function v(version: number | number[]): Version {
+    29→export class Version {
+    32→  constructor(version: number | number[]) {
+    42→  toString(): string {
+    46→  toJSON(): string {
+    50→  static fromJSON(json: string): Version {
+    66→  equals(other: Version): boolean {
+    73→  lessThan(other: Version): boolean {
+    80→  lessEqual(other: Version): boolean {
+    85→  join(other: Version): Version {
+    91→  meet(other: Version): Version {
+    97→  advanceBy(frontier: Antichain): Version {
+   109→  extend(): Version {
+   113→  truncate(): Version {
+   119→  applyStep(step: number): Version {
+   128→  getInner(): number[] {
+   138→export class Antichain {
+   141→  constructor(elements: Version[]) {
+   277→export class Frontier extends Antichain {
+
+packages/d2ts/src/sqlite/context.ts
+    15→  static setDb(db: SQLiteDb): void {
+    23→  static getDb(): SQLiteDb | null {
+    30→  static clear(): void {
+    65→export function withSQLite(db: SQLiteDb) {
+
+packages/d2ts/src/sqlite/database.ts
+     4→export interface SQLiteStatement<Params = unknown, Result = unknown> {
+     9→  run …
+    15→  get …
+    21→  all …
+    32→export interface SQLiteDb {
+    36→  exec …
+    41→  prepare …
+    49→export class BetterSQLite3Wrapper implements SQLiteDb {
+
+packages/d2ts/src/types.ts
+    31→export interface IOperator<_T> {
+    37→export interface IDifferenceStreamReader<T> {
+    43→export interface IDifferenceStreamWriter<T> {
+    52→export interface ID2 {
+    64→export interface IStreamBuilder<T> {
+
+packages/d2ts/src/utils.ts
+     7→export class WeakRefMap<K, V extends object> {
+    13→  set …
+    23→  get …
+    31→export class DefaultMap<K, V> extends Map<K, V> {
+    32→  constructor …
+    39→  get …
+    49→  update(key: K, updater: (value: V) => V): V {
+    62→export function chunkedArrayPush …
+    98→export function hash(data: any): string | number {
+   126→export class WeakRefBasedFinalizationRegistry {
+   133→  constructor …
+   140→  register …
+   150→  unregister …
+
+packages/d2ts/src/version-index.ts
+     8→export interface IndexType<K, V> {
+    28→export class Index<K, V> implements IndexType<K, V> {
+
+packages/d2ts-benchmark/src/base.ts
+     4→export interface Benchmark<T> {
+    19→export interface SuiteOptions {
+    27→export class Suite {
+    36→  constructor …
+    44→  add …
+    48→  skip …
+    52→  runTest …
+    92→  run …
+   103→  printResults …
+   180→  getResults …
+
+pnpm-workspace.yaml
+     1→packages:

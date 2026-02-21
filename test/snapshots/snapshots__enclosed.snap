@@ -1,0 +1,441 @@
+---
+source: test/fixtures.rs
+expression: output
+---
+budget: 4000 (4006 tokens)
+
+README.md
+    26→## Introduction
+    36→## Features
+    52→## Self host
+    54→### Try it with Docker
+    62→### To go further
+    71→### Configuration
+    75→## How It Works
+    93→## CLI
+    97→### Installation
+   110→### Create a note
+   123→### View a note
+   133→### Configure the enclosed instance to use
+   140→## Project Structure
+   150→## Contributing
+   155→## License
+   159→## Credits and Acknowledgements
+   168→### Stack
+   184→### Hosting
+   188→### Inspiration
+   194→## Contact Information
+
+docker-compose.yml
+     1→services:
+    10→volumes:
+
+package.json
+     2→  "name": "@enclosed/root",
+     3→  "version": "1.16.0",
+     4→  "description": "Send private and secure note",
+     5→  "packageManager": "pnpm@9.15.0",
+     6→  "license": "Apache-2.0",
+     7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
+     8→  "repository": {
+    12→  "engines": {
+    15→  "scripts": {
+    20→  "keywords": [
+    30→  "devDependencies": {
+
+packages/app-client/README.md
+     1→## Usage
+    13→## Available Scripts
+    32→## Deployment
+    36→## This project was created with the [Solid CLI](https://solid-cli.netlify.app)
+
+packages/app-client/components.json
+     2→  "$schema": "https://shadcn-solid.com/schema.json",
+     3→  "uno": {
+    12→  "alias": {
+
+packages/app-client/package.json
+     2→  "name": "@enclosed/app-client",
+     3→  "type": "module",
+     4→  "version": "1.16.0",
+     5→  "packageManager": "pnpm@9.15.0",
+     6→  "description": "Enclosed frontend client",
+     7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
+     8→  "license": "Apache-2.0",
+     9→  "repository": {
+    13→  "engines": {
+    16→  "scripts": {
+    30→  "dependencies": {
+    48→  "devDependencies": {
+
+packages/app-client/src/locales/ar.json
+     2→  "app": {
+     6→  "insecureContextWarning": {
+    10→  "navbar": {
+    29→  "footer": {
+    35→  "login": {
+    50→  "create": {
+    97→  "view": {
+   147→  "copy": {
+
+packages/app-client/src/locales/de.json
+     2→  "app": {
+     6→  "insecureContextWarning": {
+    10→  "navbar": {
+    29→  "footer": {
+    35→  "login": {
+    50→  "create": {
+    96→  "view": {
+   144→  "copy": {
+
+packages/app-client/src/locales/en.json
+     2→  "app": {
+     6→  "insecureContextWarning": {
+    10→  "navbar": {
+    34→  "footer": {
+    40→  "login": {
+    55→  "create": {
+   116→  "view": {
+   167→  "copy": {
+
+packages/app-client/src/locales/es.json
+     2→  "app": {
+     6→  "insecureContextWarning": {
+    10→  "navbar": {
+    27→  "footer": {
+    33→  "login": {
+    48→  "create": {
+    94→  "view": {
+   137→  "copy": {
+
+packages/app-client/src/locales/fr.json
+     2→  "app": {
+     6→  "insecureContextWarning": {
+    10→  "navbar": {
+    34→  "footer": {
+    40→  "login": {
+    55→  "create": {
+   116→  "view": {
+   168→  "copy": {
+
+packages/app-client/src/locales/hu.json
+     2→  "app": {
+     6→  "insecureContextWarning": {
+    10→  "navbar": {
+    29→  "footer": {
+    35→  "login": {
+    50→  "create": {
+   107→  "view": {
+   157→  "copy": {
+
+packages/app-client/src/locales/id.json
+     2→  "app": {
+     6→  "insecureContextWarning": {
+    10→  "navbar": {
+    34→  "footer": {
+    40→  "login": {
+    55→  "create": {
+   116→  "view": {
+   167→  "copy": {
+
+packages/app-client/src/locales/it.json
+     2→  "app": {
+     6→  "insecureContextWarning": {
+    10→  "navbar": {
+    34→  "footer": {
+    40→  "login": {
+    55→  "create": {
+   116→  "view": {
+   168→  "copy": {
+
+packages/app-client/src/locales/locales.ts
+     2→export const locales = [
+
+packages/app-client/src/locales/nl.json
+     2→  "app": {
+     6→  "insecureContextWarning": {
+    10→  "navbar": {
+    29→  "footer": {
+    35→  "login": {
+    50→  "create": {
+   108→  "view": {
+   158→  "copy": {
+
+packages/app-client/src/locales/pl.json
+     2→  "app": {
+     6→  "insecureContextWarning": {
+    10→  "navbar": {
+    34→  "footer": {
+    40→  "login": {
+    55→  "create": {
+   116→  "view": {
+   167→  "copy": {
+
+packages/app-client/src/locales/pt.json
+     2→  "app": {
+     6→  "insecureContextWarning": {
+    10→  "navbar": {
+    29→  "footer": {
+    35→  "login": {
+    47→  "create": {
+    94→  "view": {
+   142→  "copy": {
+
+packages/app-client/src/locales/tr.json
+     2→  "app": {
+     6→  "insecureContextWarning": {
+    10→  "navbar": {
+    34→  "footer": {
+    40→  "login": {
+    52→  "create": {
+   113→  "view": {
+   164→  "copy": {
+
+packages/app-client/src/modules/auth/auth.store.ts
+     6→export const authStore = createRoot(() => {
+
+packages/app-client/src/modules/config/config.constants.ts
+     3→export const buildTimeConfig: Config = {
+
+packages/app-client/src/modules/config/config.types.ts
+     1→export type Config = {
+
+packages/app-client/src/modules/files/files.models.ts
+     6→export const iconByFileType = {
+
+packages/app-client/src/modules/notes/notes.context.tsx
+    11→export const NoteContextProvider: ParentComponent = (props) => {
+    27→export function useNoteContext() {
+
+packages/app-client/src/modules/theme/theme.store.ts
+     4→export function useThemeStore() {
+
+packages/app-client/src/modules/ui/components/alert.tsx
+    10→export const alertVariants = cva(
+    30→export function Alert …
+    46→export function AlertTitle …
+    57→export function AlertDescription …
+
+packages/app-client/src/modules/ui/components/button.tsx
+    10→export const buttonVariants = cva(
+    41→export function Button …
+
+packages/app-client/src/modules/ui/components/card.tsx
+     5→export function Card …
+    19→export function CardHeader …
+    27→export const CardTitle …
+    38→export const CardDescription …
+    48→export function CardContent …
+    54→export function CardFooter …
+
+packages/app-client/src/modules/ui/components/dropdown-menu.tsx
+    18→export const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
+    19→export const DropdownMenuGroup = DropdownMenuPrimitive.Group;
+    20→export const DropdownMenuSub = DropdownMenuPrimitive.Sub;
+    21→export const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup;
+
+packages/app-client/src/modules/ui/components/switch.tsx
+    11→export const SwitchLabel = SwitchPrimitive.Label;
+    12→export const Switch = SwitchPrimitive;
+    13→export const SwitchErrorMessage = SwitchPrimitive.ErrorMessage;
+    14→export const SwitchDescription = SwitchPrimitive.Description;
+    18→export function SwitchControl …
+    42→export function SwitchThumb …
+
+packages/app-client/src/modules/ui/components/tabs.tsx
+    20→export function Tabs …
+    35→export function TabsList …
+    54→export function TabsContent …
+    73→export function TabsTrigger …
+   109→export function TabsIndicator …
+
+packages/app-client/src/modules/ui/layouts/app.layout.tsx
+    72→export const Navbar: Component = () => {
+   209→export const Footer: Component = () => {
+   240→export const AppLayout: ParentComponent = (props) => {
+
+packages/app-client/src/routes.tsx
+    11→export function getRoutes(): RouteDefinition[] {
+
+packages/app-client/tsconfig.json
+     2→  "compilerOptions": {
+    20→  }
+      →  …
+
+packages/app-server/package.json
+     2→  "name": "@enclosed/app-server",
+     3→  "type": "module",
+     4→  "version": "1.16.0",
+     5→  "packageManager": "pnpm@9.15.0",
+     6→  "description": "Enclosed backend server",
+     7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
+     8→  "license": "Apache-2.0",
+     9→  "repository": {
+    13→  "engines": {
+    16→  "scripts": {
+    30→  "dependencies": {
+    45→  "devDependencies": {
+
+packages/app-server/src/modules/app/config/config.ts
+     5→export const configDefinition = {
+   258→export function getConfig …
+
+packages/app-server/src/modules/app/server.types.ts
+     5→export type ServerInstanceGenerics = {
+    13→export type Context = BaseContext<ServerInstanceGenerics>;
+    15→export type ServerInstance = Hono<ServerInstanceGenerics>;
+
+packages/app-server/src/modules/shared/logger/logger.test-utils.ts
+     3→export function createTestLogger() {
+
+packages/app-server/tsconfig.json
+     2→  "compilerOptions": {
+    16→  }
+      →  …
+
+packages/app-server/wrangler.toml
+     5→[[kv_namespaces]]
+
+packages/cli/README.md
+     1→# Enclosed CLI
+     5→## Getting Started
+     9→### Create a note
+    22→### Configure the enclosed instance to use
+    29→## Usage
+    35→### Create a note
+    58→### View a note
+    68→### Configure the enclosed instance to use
+    75→## License
+    79→## Credits and Acknowledgements
+
+packages/cli/bin/enclosed.mjs
+     4→import '../dist/cli.mjs';
+
+packages/cli/package.json
+     2→  "name": "@enclosed/cli",
+     3→  "type": "module",
+     4→  "version": "1.16.0",
+     5→  "packageManager": "pnpm@9.15.0",
+     6→  "description": "Enclosed cli to create secure notes.",
+     7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
+     8→  "license": "Apache-2.0",
+     9→  "repository": {
+    13→  "main": "./dist/cli.cjs",
+    14→  "module": "./dist/cli.mjs",
+    15→  "bin": {
+    18→  "files": [
+    21→  "engines": {
+    24→  "scripts": {
+    35→  "dependencies": {
+    45→  "devDependencies": {
+
+packages/cli/src/config/config.command.ts
+     8→export const configCommand = defineCommand({
+
+packages/cli/src/config/config.constants.ts
+     3→export const configDefinition = {
+
+packages/cli/src/create-note/create-note.command.ts
+    13→export const createNoteCommand = defineCommand({
+
+packages/cli/src/view-note/view-note.command.ts
+     7→export const viewNoteCommand = defineCommand({
+
+packages/cli/tsconfig.json
+     2→  "compilerOptions": {
+
+packages/crypto/README.md
+     1→# Enclosed crypto library
+     5→## Installation
+    18→## License
+    22→## Credits and Acknowledgements
+
+packages/crypto/package.json
+     2→  "name": "@enclosed/crypto",
+     3→  "type": "module",
+     4→  "version": "1.16.0",
+     5→  "packageManager": "pnpm@9.15.0",
+     6→  "description": "Enclosed cross-env crypto primitives",
+     7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
+     8→  "license": "Apache-2.0",
+     9→  "repository": {
+    13→  "exports": {
+    58→  "main": "./dist/index.node.cjs",
+    59→  "module": "./dist/index.web.mjs",
+    60→  "types": "./dist/index.web.d.ts",
+    61→  "files": [
+    64→  "engines": {
+    67→  "react-native": "./dist/index.web.mjs",
+    68→  "scripts": {
+    79→  "dependencies": {
+    82→  "devDependencies": {
+
+packages/crypto/tsconfig.json
+     2→  "compilerOptions": {
+    10→  "include": [
+
+packages/deploy-cloudflare/_routes.json
+     2→  "version": 1,
+     3→  "include": [
+     6→  "exclude": []
+
+packages/deploy-cloudflare/package.json
+     2→  "name": "@enclosed/deploy-cloudflare",
+     3→  "version": "1.16.0",
+     4→  "description": "Deploy scripts for Cloudflare Pages",
+     5→  "packageManager": "pnpm@9.15.0",
+     6→  "license": "Apache-2.0",
+     7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
+     8→  "repository": {
+    12→  "scripts": {
+
+packages/lib/README.md
+     1→### Enclosed lib
+     5→## Installation
+    18→## Usage
+    33→## License
+    37→## Credits and Acknowledgements
+
+packages/lib/package.json
+     2→  "name": "@enclosed/lib",
+     3→  "type": "module",
+     4→  "version": "1.16.0",
+     5→  "packageManager": "pnpm@9.15.0",
+     6→  "description": "Enclosed lib to create secure notes.",
+     7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
+     8→  "license": "Apache-2.0",
+     9→  "repository": {
+    13→  "exports": {
+    19→  "main": "./dist/index.cjs",
+    20→  "types": "./dist/index.d.ts",
+    21→  "files": [
+    24→  "engines": {
+    27→  "react-native": "./dist/index.web.mjs",
+    28→  "scripts": {
+    39→  "dependencies": {
+    47→  "devDependencies": {
+
+packages/lib/src/crypto/crypto.types.ts
+     3→export type EncryptionAlgorithm = typeof ENCRYPTION_ALGORITHMS[number];
+     4→export type KeyDerivationAlgorithm = typeof KEY_DERIVATION_ALGORITHMS[number];
+     5→export type CompressionAlgorithm = typeof COMPRESSION_ALGORITHMS[number];
+     7→export type CryptoServices = {
+
+packages/lib/src/notes/notes.types.ts
+     4→export type NoteAsset = {
+    12→export type Note = {
+    17→export type EncryptedNote = {
+
+packages/lib/tsconfig.json
+     2→  "compilerOptions": {
+     9→  "include": [
+
+pnpm-workspace.yaml
+     1→packages:
+     4→catalog:
+
+renovate.json
+     2→  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+     3→  "extends": [
+     5→  ]
+     6→}

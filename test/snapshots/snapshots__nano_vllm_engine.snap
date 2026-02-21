@@ -1,0 +1,92 @@
+---
+source: test/fixtures.rs
+expression: output
+---
+budget: 1000 (1002 tokens)
+
+block_manager.py
+     1→from collections import deque
+     2→import xxhash
+     3→import numpy as np
+     5→from nanovllm.engine.sequence import Sequence
+     8→class Block:
+     9→
+    10→    def __init__(self, block_id):
+    16→    def update(self, hash: int, token_ids: list[int]):
+    20→    def reset(self):
+    26→class BlockManager:
+    27→
+    28→    def __init__(self, num_blocks: int, block_size: int):
+    35→    @classmethod
+    36→    def compute_hash(cls, token_ids: list[int], prefix: int = -1):
+    37→        h = xxhash.xxh64()
+      →        …
+    56→    def can_allocate(self, seq: Sequence) -> bool:
+    59→    def allocate(self, seq: Sequence):
+    84→    def deallocate(self, seq: Sequence):
+    93→    def can_append(self, seq: Sequence) -> bool:
+    96→    def may_append(self, seq: Sequence):
+
+llm_engine.py
+    15→class LLMEngine:
+    16→
+    17→    def __init__(self, model, **kwargs):
+    36→    def exit(self):
+    42→    def add_request(self, prompt: str | list[int], sampling_params: SamplingParams):
+    48→    def step(self):
+    56→    def is_finished(self):
+    59→    def generate(
+    60→        self,
+    61→        prompts: list[str] | list[list[int]],
+    62→        sampling_params: SamplingParams | list[SamplingParams],
+    63→        use_tqdm: bool = True,
+    64→    ) -> list[str]:
+
+model_runner.py
+    15→class ModelRunner:
+    16→
+    17→    def __init__(self, config: Config, rank: int, event: Event | list[Event]):
+    50→    def exit(self):
+    61→    def loop(self):
+    68→    def read_shm(self):
+    76→    def write_shm(self, method_name, *args):
+    85→    def call(self, method_name, *args):
+    91→    def warmup_model(self):
+   100→    def allocate_kv_cache(self):
+   120→    def prepare_block_tables(self, seqs: list[Sequence]):
+   126→    def prepare_prefill(self, seqs: list[Sequence]):
+   164→    def prepare_decode(self, seqs: list[Sequence]):
+   182→    def prepare_sample(self, seqs: list[Sequence]):
+   189→    @torch.inference_mode()
+   190→    def run_model(self, input_ids: torch.Tensor, positions: torch.Tensor, is_prefill: bool):
+   208→    def run(self, seqs: list[Sequence], is_prefill: bool) -> list[int]:
+   216→    @torch.inference_mode()
+   217→    def capture_cudagraph(self):
+
+scheduler.py
+     8→class Scheduler:
+     9→
+    10→    def __init__(self, config: Config):
+    18→    def is_finished(self):
+    21→    def add(self, seq: Sequence):
+    24→    def schedule(self) -> tuple[list[Sequence], bool]:
+    60→    def preempt(self, seq: Sequence):
+    65→    def postprocess(self, seqs: list[Sequence], token_ids: list[int]) -> list[bool]:
+
+sequence.py
+     8→class SequenceStatus(Enum):
+    14→class Sequence:
+    18→    def __init__(self, token_ids: list[int], sampling_params = SamplingParams()):
+    31→    def __len__(self):
+    34→    def __getitem__(self, key):
+    38→    def is_finished(self):
+    42→    def num_completion_tokens(self):
+    46→    def prompt_token_ids(self):
+    50→    def completion_token_ids(self):
+    54→    def num_cached_blocks(self):
+    58→    def num_blocks(self):
+    62→    def last_block_num_tokens(self):
+    65→    def block(self, i):
+    69→    def append_token(self, token_id: int):
+    74→    def __getstate__(self):
+    78→    def __setstate__(self, state):

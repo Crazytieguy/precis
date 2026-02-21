@@ -1,0 +1,233 @@
+---
+source: test/fixtures.rs
+expression: output
+---
+budget: 2000 (1987 tokens)
+
+CONTEXT.md
+     1→# toasty-codegen Component Context
+     3→## Purpose
+     6→## Key Responsibilities
+     8→### Schema Parsing (`src/schema/`)
+    15→### Code Expansion (`src/expand/`)
+    25→## Common Change Patterns
+    27→### Adding a New Model Attribute
+    33→### Adding Query Methods
+    39→### Supporting New Field Types
+    45→## Generated Code Structure
+    70→## Complete Attribute Support
+    72→### Model-Level Attributes
+    76→### Field-Level Attributes  
+    83→### Relationship Attributes
+    88→## Important Files
+    96→## Code Generation Principles
+   103→## Key Patterns
+   105→### Dynamic Model IDs
+   114→### Query Builder Pattern
+   123→### Relationship Expansion
+   128→## Recent Changes Analysis
+
+Cargo.toml
+     1→[package]
+     8→[dependencies]
+
+src/expand/create.rs
+     1→use super::{util, Expand};
+     2→use crate::schema::FieldTy;
+     4→use proc_macro2::TokenStream;
+     5→use quote::quote;
+     7→impl Expand<'_> {
+
+src/expand/fields.rs
+     1→use super::{util, Expand};
+     2→use crate::schema::FieldTy::{BelongsTo, HasMany, HasOne, Primitive};
+     3→use proc_macro2::TokenStream;
+     4→use quote::quote;
+     6→impl Expand<'_> {
+
+src/expand/filters.rs
+     1→use super::Expand;
+     2→use crate::schema::{FieldTy, Index, Model};
+    10→pub(super) struct Filter {
+    36→struct BuildModelFilters<'a> {
+    41→impl Expand<'_> {
+   329→impl Filter {
+   339→impl<'a> BuildModelFilters<'a> {
+
+src/expand/model.rs
+     1→use super::{util, Expand};
+     2→use crate::schema::{FieldTy, ModelKind};
+     4→use proc_macro2::TokenStream;
+     5→use quote::quote;
+     7→impl Expand<'_> {
+   283→    pub(super) fn expand_load_body(&self) -> TokenStream {
+   324→    pub(super) fn expand_embedded_reload_body(&self) -> TokenStream {
+
+src/expand/query.rs
+     1→use super::{util, Expand};
+     2→use crate::schema::{BelongsTo, Field, FieldTy, HasMany, HasOne};
+     4→use proc_macro2::TokenStream;
+     5→use quote::quote;
+     7→impl Expand<'_> {
+
+src/expand/relation.rs
+     1→use super::{util, Expand};
+     2→use crate::schema::{BelongsTo, Field, FieldTy, HasMany, HasOne};
+     7→impl Expand<'_> {
+
+src/expand/schema.rs
+     1→use super::{util, Expand};
+     2→use crate::schema::{AutoStrategy, Column, FieldTy, ModelKind, Name, UuidVersion};
+     7→impl Expand<'_> {
+
+src/expand/update.rs
+     1→use super::{util, Expand};
+     2→use crate::schema::FieldTy;
+     7→impl Expand<'_> {
+     9→    pub(super) fn expand_embedded_update_builder(&self) -> TokenStream {
+    31→    fn expand_update_field_methods(&self, is_embedded: bool) -> TokenStream {
+   204→    fn expand_reload_match_arms(&self) -> TokenStream {
+   226→    pub(super) fn expand_reload_method(&self) -> TokenStream {
+
+src/expand/util.rs
+     1→use proc_macro2::TokenStream;
+     3→pub(crate) fn int(v: usize) -> TokenStream {
+    10→pub(crate) fn ident(name: &str) -> syn::Ident {
+
+src/expand.rs
+     1→mod create;
+     2→mod fields;
+     3→mod filters;
+     4→mod model;
+     5→mod query;
+     6→mod relation;
+     7→mod schema;
+     8→mod update;
+     9→mod util;
+    11→use filters::Filter;
+    13→use crate::schema::Model;
+    15→use proc_macro2::TokenStream;
+    16→use quote::quote;
+    18→struct Expand<'a> {
+    29→impl Expand<'_> {
+
+src/lib.rs
+     1→mod expand;
+     2→mod schema;
+     6→pub fn generate_model(input: TokenStream) -> syn::Result<TokenStream> {
+    13→pub fn generate_embed(input: TokenStream) -> syn::Result<TokenStream> {
+
+src/schema/auto.rs
+     1→#[derive(Debug)]
+     2→pub enum AutoStrategy {
+     3→    Unspecified,
+     4→    Uuid(UuidVersion),
+     5→    Increment,
+     6→}
+     8→#[derive(Debug)]
+     9→pub enum UuidVersion {
+    10→    V4,
+    11→    V7,
+    12→}
+    14→impl AutoStrategy {
+    23→mod kw {
+    31→impl syn::parse::Parse for AutoStrategy {
+    32→    fn parse …
+    48→impl syn::parse::Parse for UuidVersion {
+    49→    fn parse …
+
+src/schema/belongs_to.rs
+     1→use super::ForeignKeyField;
+     4→pub(crate) struct BelongsTo {
+    12→impl BelongsTo {
+
+src/schema/column.rs
+     1→use quote::quote;
+     2→use syn::parenthesized;
+     5→pub(crate) struct Column {
+    10→impl Column {
+    16→impl syn::parse::Parse for Column {
+    17→    fn parse …
+    60→mod kw {
+    89→pub enum ColumnType {
+    90→    Boolean,
+    91→    Integer(u8),
+    92→    UnsignedInteger(u8),
+    93→    Text,
+      →    …
+   105→impl syn::parse::Parse for ColumnType {
+   106→    fn parse …
+   179→impl ColumnType {
+   181→    pub(crate) fn expand_with …
+
+src/schema/error.rs
+     2→pub(crate) struct ErrorSet {
+     6→impl ErrorSet {
+
+src/schema/field.rs
+     1→use crate::schema::AutoStrategy;
+     3→use super::{BelongsTo, Column, ErrorSet, HasMany, HasOne, Name};
+     8→pub(crate) struct Field {
+    29→pub(crate) struct FieldAttr {
+    47→pub(crate) enum FieldTy {
+    54→impl FieldTy {
+    63→impl Field {
+
+src/schema/fk.rs
+     2→pub(crate) struct ForeignKeyField {
+
+src/schema/has_many.rs
+     1→use super::Name;
+     4→pub(crate) struct HasMany {
+    20→impl HasMany {
+
+src/schema/has_one.rs
+     2→pub(crate) struct HasOne {
+     9→impl HasOne {
+
+src/schema/index.rs
+     2→pub(crate) struct Index {
+    14→pub(crate) struct IndexField {
+    23→pub(crate) enum IndexScope {
+
+src/schema/key_attr.rs
+     2→pub(crate) struct KeyAttr {
+     7→impl KeyAttr {
+
+src/schema/model.rs
+     1→use super::{ErrorSet, Field, Index, IndexField, IndexScope, ModelAttr, Name, PrimaryKey};
+     4→pub(crate) enum ModelKind {
+    11→impl ModelKind {
+    28→pub(crate) struct ModelRoot {
+    46→pub(crate) struct ModelEmbedded {
+    55→pub(crate) struct Model {
+    78→impl Model {
+   235→    pub fn primary_key_fields(&self) -> Option<impl ExactSizeIterator<Item = &'_ Field>> {
+
+src/schema/model_attr.rs
+     1→use super::{ErrorSet, KeyAttr};
+     4→pub(crate) struct ModelAttr {
+    12→impl ModelAttr {
+
+src/schema/name.rs
+     5→pub(crate) struct Name {
+    13→impl Name {
+
+src/schema/pk.rs
+     2→pub(crate) struct PrimaryKey {
+
+src/schema.rs
+     1→mod auto;
+     4→mod belongs_to;
+     7→mod error;
+    10→mod field;
+    13→mod fk;
+    16→mod has_many;
+    19→mod has_one;
+    22→mod index;
+    25→mod key_attr;
+    28→mod model;
+    31→mod model_attr;
+    34→mod name;
+    37→mod pk;
+    40→mod column;

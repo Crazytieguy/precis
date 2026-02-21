@@ -9,40 +9,6 @@ fn fixture_path(name: &str) -> Option<std::path::PathBuf> {
     if path.exists() { Some(path) } else { None }
 }
 
-// Clone fixtures with:
-//   git clone --depth 1 https://github.com/rayon-rs/either.git test/fixtures/either
-//   git clone --depth 1 https://github.com/supermacro/neverthrow.git test/fixtures/neverthrow
-//   git clone --depth 1 https://github.com/npm/node-semver.git test/fixtures/semver
-//   git clone --depth 1 https://github.com/pacocoursey/cmdk.git test/fixtures/cmdk
-//   git clone --depth 1 https://github.com/gvergnaud/ts-pattern.git test/fixtures/ts-pattern
-//   git clone --depth 1 https://github.com/dtolnay/anyhow.git test/fixtures/anyhow
-//   git clone --depth 1 https://github.com/matklad/once_cell.git test/fixtures/once_cell
-//   git clone --depth 1 https://github.com/timolins/react-hot-toast.git test/fixtures/react-hot-toast
-//   git clone --depth 1 https://github.com/ianstormtaylor/superstruct.git test/fixtures/superstruct
-//   git clone --depth 1 https://github.com/motdotla/dotenv.git test/fixtures/dotenv
-//   git clone --depth 1 https://github.com/tj/commander.js.git test/fixtures/commander
-//   git clone --depth 1 https://github.com/dtolnay/thiserror.git test/fixtures/thiserror
-//   git clone --depth 1 https://github.com/emilkowalski/sonner.git test/fixtures/sonner
-//   git clone --depth 1 https://github.com/developit/mitt.git test/fixtures/mitt
-//   git clone --depth 1 https://github.com/debug-js/debug.git test/fixtures/debug
-//   git clone --depth 1 https://github.com/rust-lang/log.git test/fixtures/log
-//   git clone --depth 1 https://github.com/sindresorhus/ky.git test/fixtures/ky
-//   git clone --depth 1 https://github.com/npm/ini.git test/fixtures/ini
-//   git clone --depth 1 https://github.com/emilkowalski/vaul.git test/fixtures/vaul
-//   git clone --depth 1 https://github.com/guilhermerodz/input-otp.git test/fixtures/input-otp
-//   git clone --depth 1 https://github.com/pytest-dev/pluggy.git test/fixtures/pluggy
-//   git clone --depth 1 https://github.com/hukkin/tomli.git test/fixtures/tomli
-//   git clone --depth 1 https://github.com/python-humanize/humanize.git test/fixtures/humanize
-//   git clone --depth 1 https://github.com/theskumar/python-dotenv.git test/fixtures/python-dotenv
-//   git clone --depth 1 https://github.com/agronholm/typeguard.git test/fixtures/typeguard
-//   git clone --depth 1 https://github.com/rust-lang/mdBook.git test/fixtures/mdbook
-//   git clone --depth 1 https://github.com/hashicorp/go-multierror.git test/fixtures/go-multierror
-//   git clone --depth 1 https://github.com/cespare/xxhash.git test/fixtures/xxhash
-//   git clone --depth 1 https://github.com/fatih/color.git test/fixtures/color
-//   git clone --depth 1 https://github.com/hashicorp/go-version.git test/fixtures/go-version
-//   git clone --depth 1 https://github.com/fatih/structs.git test/fixtures/structs
-//   git clone --depth 1 https://github.com/antirez/sds.git test/fixtures/sds
-
 /// Generate a snapshot test that renders a fixture with a word budget.
 macro_rules! budget_test {
     ($name:ident, $path:expr, $budget:expr) => {
@@ -60,6 +26,16 @@ macro_rules! budget_test {
         }
     };
 }
+
+// Run `cargo run --bin clone_fixtures` to clone all missing fixtures.
+// Fixture/entry data is defined in test/fixtures.rs (shared with clone_fixtures bin).
+macro_rules! with_fixtures { ($($tt:tt)*) => {} }
+macro_rules! with_entries {
+    ($(($name:ident, $path:expr, $budget:expr)),* $(,)?) => {
+        $(budget_test!($name, $path, $budget);)*
+    };
+}
+include!("../test/fixtures.rs");
 
 fn rust_sample() -> &'static str {
     r#"
@@ -734,8 +710,8 @@ fn budget_monotonicity_inline() {
 
 #[test]
 fn single_file_budget_rust() {
-    let Some(root) = fixture_path("either/src") else {
-        eprintln!("skipping single_file_budget_rust: clone either fixture");
+    let Some(root) = fixture_path("anyhow/src") else {
+        eprintln!("skipping single_file_budget_rust: clone anyhow fixture");
         return;
     };
     let file = root.join("lib.rs");
@@ -758,7 +734,6 @@ fn single_file_budget_rust() {
 }
 
 // Budget-based fixture snapshot tests.
-// Most are commented out — re-introduce as performance and determinism improve.
 
 /// Helper: render a fixture with a token budget and return output with metadata header.
 fn render_with_budget(subpath: &str, budget: usize) -> Option<String> {
@@ -773,223 +748,5 @@ fn render_with_budget(subpath: &str, budget: usize) -> Option<String> {
     ))
 }
 
-// Small fixture tests: one per language family.
-budget_test!(budget_either_src_1000, "either/src", 1000);
-budget_test!(budget_either_src_2000, "either/src", 2000);
-budget_test!(budget_either_src_4000, "either/src", 4000);
-budget_test!(budget_go_multierror_1000, "go-multierror", 1000);
-budget_test!(budget_go_multierror_2000, "go-multierror", 2000);
-budget_test!(budget_go_multierror_4000, "go-multierror", 4000);
-budget_test!(budget_mitt_src_1000, "mitt/src", 1000);
-budget_test!(budget_mitt_src_2000, "mitt/src", 2000);
-budget_test!(budget_mitt_src_4000, "mitt/src", 4000);
-budget_test!(budget_sds_1000, "sds", 1000);
-budget_test!(budget_sds_2000, "sds", 2000);
-budget_test!(budget_sds_4000, "sds", 4000);
-
-// Subdirectory budget tests: running on a subdirectory within a fixture tests
-// that path display and file discovery work correctly at deeper nesting levels.
-
-budget_test!(budget_ts_pattern_src_types_1000, "ts-pattern/src/types", 1000);
-budget_test!(budget_ts_pattern_src_types_2000, "ts-pattern/src/types", 2000);
-budget_test!(budget_ts_pattern_src_types_4000, "ts-pattern/src/types", 4000);
-budget_test!(budget_react_hot_toast_src_components_1000, "react-hot-toast/src/components", 1000);
-budget_test!(budget_react_hot_toast_src_components_2000, "react-hot-toast/src/components", 2000);
-budget_test!(budget_react_hot_toast_src_components_4000, "react-hot-toast/src/components", 4000);
-budget_test!(budget_superstruct_src_structs_1000, "superstruct/src/structs", 1000);
-budget_test!(budget_superstruct_src_structs_2000, "superstruct/src/structs", 2000);
-budget_test!(budget_superstruct_src_structs_4000, "superstruct/src/structs", 4000);
-budget_test!(budget_log_src_kv_1000, "log/src/kv", 1000);
-budget_test!(budget_log_src_kv_2000, "log/src/kv", 2000);
-budget_test!(budget_log_src_kv_4000, "log/src/kv", 4000);
-budget_test!(budget_semver_functions_1000, "semver/functions", 1000);
-budget_test!(budget_semver_functions_2000, "semver/functions", 2000);
-budget_test!(budget_semver_functions_4000, "semver/functions", 4000);
-budget_test!(budget_neverthrow_src_internals_1000, "neverthrow/src/_internals", 1000);
-budget_test!(budget_neverthrow_src_internals_2000, "neverthrow/src/_internals", 2000);
-budget_test!(budget_neverthrow_src_internals_4000, "neverthrow/src/_internals", 4000);
-budget_test!(budget_ky_source_errors_1000, "ky/source/errors", 1000);
-budget_test!(budget_ky_source_errors_2000, "ky/source/errors", 2000);
-budget_test!(budget_ky_source_errors_4000, "ky/source/errors", 4000);
-budget_test!(budget_thiserror_impl_src_1000, "thiserror/impl/src", 1000);
-budget_test!(budget_thiserror_impl_src_2000, "thiserror/impl/src", 2000);
-budget_test!(budget_thiserror_impl_src_4000, "thiserror/impl/src", 4000);
-budget_test!(budget_semver_internal_1000, "semver/internal", 1000);
-budget_test!(budget_semver_internal_2000, "semver/internal", 2000);
-budget_test!(budget_semver_internal_4000, "semver/internal", 4000);
-budget_test!(budget_mdbook_guide_src_cli_1000, "mdbook/guide/src/cli", 1000);
-budget_test!(budget_mdbook_guide_src_cli_2000, "mdbook/guide/src/cli", 2000);
-budget_test!(budget_mdbook_guide_src_cli_4000, "mdbook/guide/src/cli", 4000);
-budget_test!(budget_mdbook_guide_src_format_1000, "mdbook/guide/src/format", 1000);
-budget_test!(budget_mdbook_guide_src_format_2000, "mdbook/guide/src/format", 2000);
-budget_test!(budget_mdbook_guide_src_format_4000, "mdbook/guide/src/format", 4000);
-budget_test!(budget_xxhash_xxhsum_1000, "xxhash/xxhsum", 1000);
-budget_test!(budget_xxhash_xxhsum_2000, "xxhash/xxhsum", 2000);
-budget_test!(budget_xxhash_xxhsum_4000, "xxhash/xxhsum", 4000);
-
-budget_test!(budget_ini_lib_1000, "ini/lib", 1000);
-budget_test!(budget_ini_lib_2000, "ini/lib", 2000);
-budget_test!(budget_ini_lib_4000, "ini/lib", 4000);
-budget_test!(budget_neverthrow_src_1000, "neverthrow/src", 1000);
-budget_test!(budget_neverthrow_src_2000, "neverthrow/src", 2000);
-budget_test!(budget_neverthrow_src_4000, "neverthrow/src", 4000);
-budget_test!(budget_pluggy_src_pluggy_1000, "pluggy/src/pluggy", 1000);
-budget_test!(budget_pluggy_src_pluggy_2000, "pluggy/src/pluggy", 2000);
-budget_test!(budget_pluggy_src_pluggy_4000, "pluggy/src/pluggy", 4000);
-budget_test!(budget_sonner_src_1000, "sonner/src", 1000);
-budget_test!(budget_sonner_src_2000, "sonner/src", 2000);
-budget_test!(budget_sonner_src_4000, "sonner/src", 4000);
-budget_test!(budget_mdbook_guide_src_1000, "mdbook/guide/src", 1000);
-budget_test!(budget_mdbook_guide_src_2000, "mdbook/guide/src", 2000);
-budget_test!(budget_mdbook_guide_src_4000, "mdbook/guide/src", 4000);
-budget_test!(budget_xxhash_1000, "xxhash", 1000);
-budget_test!(budget_xxhash_2000, "xxhash", 2000);
-budget_test!(budget_xxhash_4000, "xxhash", 4000);
-budget_test!(budget_color_1000, "color", 1000);
-budget_test!(budget_color_2000, "color", 2000);
-budget_test!(budget_color_4000, "color", 4000);
-budget_test!(budget_go_version_1000, "go-version", 1000);
-budget_test!(budget_go_version_2000, "go-version", 2000);
-budget_test!(budget_go_version_4000, "go-version", 4000);
-budget_test!(budget_structs_1000, "structs", 1000);
-budget_test!(budget_structs_2000, "structs", 2000);
-budget_test!(budget_structs_4000, "structs", 4000);
-budget_test!(budget_typeguard_src_typeguard_1000, "typeguard/src/typeguard", 1000);
-budget_test!(budget_typeguard_src_typeguard_2000, "typeguard/src/typeguard", 2000);
-budget_test!(budget_typeguard_src_typeguard_4000, "typeguard/src/typeguard", 4000);
-budget_test!(budget_anyhow_src_1000, "anyhow/src", 1000);
-budget_test!(budget_anyhow_src_2000, "anyhow/src", 2000);
-budget_test!(budget_anyhow_src_4000, "anyhow/src", 4000);
-budget_test!(budget_ts_pattern_src_1000, "ts-pattern/src", 1000);
-budget_test!(budget_ts_pattern_src_2000, "ts-pattern/src", 2000);
-budget_test!(budget_ts_pattern_src_4000, "ts-pattern/src", 4000);
-budget_test!(budget_tomli_src_tomli_1000, "tomli/src/tomli", 1000);
-budget_test!(budget_tomli_src_tomli_2000, "tomli/src/tomli", 2000);
-budget_test!(budget_tomli_src_tomli_4000, "tomli/src/tomli", 4000);
-budget_test!(budget_log_src_1000, "log/src", 1000);
-budget_test!(budget_log_src_2000, "log/src", 2000);
-budget_test!(budget_log_src_4000, "log/src", 4000);
-budget_test!(budget_thiserror_src_1000, "thiserror/src", 1000);
-budget_test!(budget_thiserror_src_2000, "thiserror/src", 2000);
-budget_test!(budget_thiserror_src_4000, "thiserror/src", 4000);
-budget_test!(budget_once_cell_src_1000, "once_cell/src", 1000);
-budget_test!(budget_once_cell_src_2000, "once_cell/src", 2000);
-budget_test!(budget_once_cell_src_4000, "once_cell/src", 4000);
-budget_test!(budget_humanize_src_humanize_1000, "humanize/src/humanize", 1000);
-budget_test!(budget_humanize_src_humanize_2000, "humanize/src/humanize", 2000);
-budget_test!(budget_humanize_src_humanize_4000, "humanize/src/humanize", 4000);
-budget_test!(budget_python_dotenv_src_dotenv_1000, "python-dotenv/src/dotenv", 1000);
-budget_test!(budget_python_dotenv_src_dotenv_2000, "python-dotenv/src/dotenv", 2000);
-budget_test!(budget_python_dotenv_src_dotenv_4000, "python-dotenv/src/dotenv", 4000);
-budget_test!(budget_semver_classes_1000, "semver/classes", 1000);
-budget_test!(budget_semver_classes_2000, "semver/classes", 2000);
-budget_test!(budget_semver_classes_4000, "semver/classes", 4000);
-budget_test!(budget_cmdk_cmdk_src_1000, "cmdk/cmdk/src", 1000);
-budget_test!(budget_cmdk_cmdk_src_2000, "cmdk/cmdk/src", 2000);
-budget_test!(budget_cmdk_cmdk_src_4000, "cmdk/cmdk/src", 4000);
-budget_test!(budget_react_hot_toast_src_1000, "react-hot-toast/src", 1000);
-budget_test!(budget_react_hot_toast_src_2000, "react-hot-toast/src", 2000);
-budget_test!(budget_react_hot_toast_src_4000, "react-hot-toast/src", 4000);
-budget_test!(budget_superstruct_src_1000, "superstruct/src", 1000);
-budget_test!(budget_superstruct_src_2000, "superstruct/src", 2000);
-budget_test!(budget_superstruct_src_4000, "superstruct/src", 4000);
-budget_test!(budget_dotenv_lib_1000, "dotenv/lib", 1000);
-budget_test!(budget_dotenv_lib_2000, "dotenv/lib", 2000);
-budget_test!(budget_dotenv_lib_4000, "dotenv/lib", 4000);
-budget_test!(budget_commander_lib_1000, "commander/lib", 1000);
-budget_test!(budget_commander_lib_2000, "commander/lib", 2000);
-budget_test!(budget_commander_lib_4000, "commander/lib", 4000);
-budget_test!(budget_ky_source_1000, "ky/source", 1000);
-budget_test!(budget_ky_source_2000, "ky/source", 2000);
-budget_test!(budget_ky_source_4000, "ky/source", 4000);
-budget_test!(budget_vaul_src_1000, "vaul/src", 1000);
-budget_test!(budget_vaul_src_2000, "vaul/src", 2000);
-budget_test!(budget_vaul_src_4000, "vaul/src", 4000);
-budget_test!(budget_debug_src_1000, "debug/src", 1000);
-budget_test!(budget_debug_src_2000, "debug/src", 2000);
-budget_test!(budget_debug_src_4000, "debug/src", 4000);
-budget_test!(budget_input_otp_packages_input_otp_src_1000, "input-otp/packages/input-otp/src", 1000);
-budget_test!(budget_input_otp_packages_input_otp_src_2000, "input-otp/packages/input-otp/src", 2000);
-budget_test!(budget_input_otp_packages_input_otp_src_4000, "input-otp/packages/input-otp/src", 4000);
-
-// Root-level budget tests: exercise depth factors, multi-language discovery,
-// and file filtering at the repo root.
-
-budget_test!(budget_either_1000, "either", 1000);
-budget_test!(budget_either_2000, "either", 2000);
-budget_test!(budget_either_4000, "either", 4000);
-budget_test!(budget_neverthrow_1000, "neverthrow", 1000);
-budget_test!(budget_neverthrow_2000, "neverthrow", 2000);
-budget_test!(budget_neverthrow_4000, "neverthrow", 4000);
-budget_test!(budget_pluggy_1000, "pluggy", 1000);
-budget_test!(budget_pluggy_2000, "pluggy", 2000);
-budget_test!(budget_pluggy_4000, "pluggy", 4000);
-budget_test!(budget_sonner_1000, "sonner", 1000);
-budget_test!(budget_sonner_2000, "sonner", 2000);
-budget_test!(budget_sonner_4000, "sonner", 4000);
-budget_test!(budget_commander_1000, "commander", 1000);
-budget_test!(budget_commander_2000, "commander", 2000);
-budget_test!(budget_commander_4000, "commander", 4000);
-budget_test!(budget_anyhow_1000, "anyhow", 1000);
-budget_test!(budget_anyhow_2000, "anyhow", 2000);
-budget_test!(budget_anyhow_4000, "anyhow", 4000);
-budget_test!(budget_log_1000, "log", 1000);
-budget_test!(budget_log_2000, "log", 2000);
-budget_test!(budget_log_4000, "log", 4000);
-budget_test!(budget_ts_pattern_1000, "ts-pattern", 1000);
-budget_test!(budget_ts_pattern_2000, "ts-pattern", 2000);
-budget_test!(budget_ts_pattern_4000, "ts-pattern", 4000);
-budget_test!(budget_typeguard_1000, "typeguard", 1000);
-budget_test!(budget_typeguard_2000, "typeguard", 2000);
-budget_test!(budget_typeguard_4000, "typeguard", 4000);
-budget_test!(budget_mdbook_1000, "mdbook", 1000);
-budget_test!(budget_mdbook_2000, "mdbook", 2000);
-budget_test!(budget_mdbook_4000, "mdbook", 4000);
-budget_test!(budget_once_cell_1000, "once_cell", 1000);
-budget_test!(budget_once_cell_2000, "once_cell", 2000);
-budget_test!(budget_once_cell_4000, "once_cell", 4000);
-budget_test!(budget_thiserror_1000, "thiserror", 1000);
-budget_test!(budget_thiserror_2000, "thiserror", 2000);
-budget_test!(budget_thiserror_4000, "thiserror", 4000);
-budget_test!(budget_react_hot_toast_1000, "react-hot-toast", 1000);
-budget_test!(budget_react_hot_toast_2000, "react-hot-toast", 2000);
-budget_test!(budget_react_hot_toast_4000, "react-hot-toast", 4000);
-budget_test!(budget_humanize_1000, "humanize", 1000);
-budget_test!(budget_humanize_2000, "humanize", 2000);
-budget_test!(budget_humanize_4000, "humanize", 4000);
-budget_test!(budget_tomli_1000, "tomli", 1000);
-budget_test!(budget_tomli_2000, "tomli", 2000);
-budget_test!(budget_tomli_4000, "tomli", 4000);
-budget_test!(budget_cmdk_1000, "cmdk", 1000);
-budget_test!(budget_cmdk_2000, "cmdk", 2000);
-budget_test!(budget_cmdk_4000, "cmdk", 4000);
-budget_test!(budget_debug_1000, "debug", 1000);
-budget_test!(budget_debug_2000, "debug", 2000);
-budget_test!(budget_debug_4000, "debug", 4000);
-budget_test!(budget_dotenv_1000, "dotenv", 1000);
-budget_test!(budget_dotenv_2000, "dotenv", 2000);
-budget_test!(budget_dotenv_4000, "dotenv", 4000);
-budget_test!(budget_ini_1000, "ini", 1000);
-budget_test!(budget_ini_2000, "ini", 2000);
-budget_test!(budget_ini_4000, "ini", 4000);
-budget_test!(budget_input_otp_1000, "input-otp", 1000);
-budget_test!(budget_input_otp_2000, "input-otp", 2000);
-budget_test!(budget_input_otp_4000, "input-otp", 4000);
-budget_test!(budget_ky_1000, "ky", 1000);
-budget_test!(budget_ky_2000, "ky", 2000);
-budget_test!(budget_ky_4000, "ky", 4000);
-budget_test!(budget_mitt_1000, "mitt", 1000);
-budget_test!(budget_mitt_2000, "mitt", 2000);
-budget_test!(budget_mitt_4000, "mitt", 4000);
-budget_test!(budget_python_dotenv_1000, "python-dotenv", 1000);
-budget_test!(budget_python_dotenv_2000, "python-dotenv", 2000);
-budget_test!(budget_python_dotenv_4000, "python-dotenv", 4000);
-budget_test!(budget_semver_1000, "semver", 1000);
-budget_test!(budget_semver_2000, "semver", 2000);
-budget_test!(budget_semver_4000, "semver", 4000);
-budget_test!(budget_superstruct_1000, "superstruct", 1000);
-budget_test!(budget_superstruct_2000, "superstruct", 2000);
-budget_test!(budget_superstruct_4000, "superstruct", 4000);
-budget_test!(budget_vaul_1000, "vaul", 1000);
-budget_test!(budget_vaul_2000, "vaul", 2000);
-budget_test!(budget_vaul_4000, "vaul", 4000);
+// Snapshot tests are generated from entries in test/fixtures.rs via the
+// with_entries! callback macro defined above.

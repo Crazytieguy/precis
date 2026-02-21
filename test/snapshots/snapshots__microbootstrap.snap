@@ -1,0 +1,207 @@
+---
+source: test/fixtures.rs
+expression: output
+---
+budget: 2000 (2009 tokens)
+
+README.md
+    55→## Table of Contents
+    74→## Installation
+   102→## Quickstart
+   201→## Settings
+   235→## Service settings
+   256→## Instruments
+   586→## Configuration
+   662→> ### Important
+   746→## Advanced
+
+microbootstrap/__init__.py
+    26→__all__ = (
+
+microbootstrap/bootstrappers/base.py
+    17→class DataclassInstance …
+    25→class ApplicationBootstrapper …
+    62→    def use_instrument …
+
+microbootstrap/bootstrappers/fastapi.py
+    27→class FastApiBootstrapper …
+    58→class FastApiSwaggerInstrument(SwaggerInstrument):
+    74→class FastApiCorsInstrument(CorsInstrument):
+    93→class FastApiOpentelemetryInstrument(OpentelemetryInstrument):
+   104→class FastApiLoggingInstrument(LoggingInstrument):
+   114→class FastApiPrometheusInstrument(PrometheusInstrument[FastApiPrometheusConfig]):
+   131→    @classmethod
+   132→    def get_config_type(cls) -> type[FastApiPrometheusConfig]:
+   137→class FastApiHealthChecksInstrument(HealthChecksInstrument):
+
+microbootstrap/bootstrappers/faststream.py
+    28→tracer …
+    59→class FastStreamOpentelemetryInstrument(BaseOpentelemetryInstrument[FastStreamOpentelemetryConfig]):
+    71→    def get_config_type(cls) -> type[FastStreamOpentelemetryConfig]:
+    75→faststream_app_logger …
+    76→faststream_broker_logger …
+    80→class FastStreamLoggingInstrument(LoggingInstrument):
+    91→class FastStreamPrometheusInstrument(PrometheusInstrument[FastStreamPrometheusConfig]):
+   116→    def get_config_type(cls) -> type[FastStreamPrometheusConfig]:
+   121→class FastStreamHealthChecksInstrument(HealthChecksInstrument):
+
+microbootstrap/bootstrappers/litestar.py
+    63→class LitestarSentryInstrument(SentryInstrument):
+    74→class LitestarSwaggerInstrument(SwaggerInstrument):
+   109→class LitestarCorsInstrument(CorsInstrument):
+   178→class LitestarOpentelemetryInstrument(OpentelemetryInstrument):
+   191→class LitestarLoggingInstrument(LoggingInstrument):
+   200→class LitestarPrometheusInstrument(PrometheusInstrument[LitestarPrometheusConfig]):
+   217→    @classmethod
+   218→    def get_config_type(cls) -> type[LitestarPrometheusConfig]:
+   223→class LitestarHealthChecksInstrument(HealthChecksInstrument):
+
+microbootstrap/config/fastapi.py
+    21→class FastApiConfig:
+    22→    debug: bool = False
+      →    …
+
+microbootstrap/config/faststream.py
+    21→class FastStreamConfig:
+
+microbootstrap/config/litestar.py
+    14→class LitestarConfig(AppConfig):
+
+microbootstrap/console_writer.py
+    11→class ConsoleWriter:
+    12→    writer_enabled: bool = True
+    16→    def __post_init__ …
+    22→    def write_instrument_status …
+    31→    def print_bootstrap_table …
+
+microbootstrap/exceptions.py
+     1→class MicroBootstrapBaseError(Exception):
+     5→class ConfigMergeError(MicroBootstrapBaseError):
+     9→class MissingInstrumentError(MicroBootstrapBaseError):
+
+microbootstrap/granian_server.py
+    16→GRANIAN_LOG_LEVELS_MAP = {
+    27→def create_granian_server …
+
+microbootstrap/helpers.py
+    16→VALID_PATH_PATTERN …
+    19→def dataclass_to_dict_no_defaults …
+    35→def merge_pydantic_configs …
+    48→def merge_dataclasses_configs …
+    60→def merge_dict_configs …
+    96→def is_valid_path …
+   100→def optimize_exclude_paths …
+
+microbootstrap/instruments/base.py
+    19→class BaseInstrumentConfig(pydantic.BaseModel):
+    24→class Instrument(abc.ABC, typing.Generic[InstrumentConfigT]):
+    25→    instrument_config: InstrumentConfigT
+    43→    def is_ready(self) -> bool: ...
+    47→    def get_config_type(cls) -> type[InstrumentConfigT]:
+
+microbootstrap/instruments/cors_instrument.py
+     8→class CorsConfig(BaseInstrumentConfig):
+    18→class CorsInstrument(Instrument[CorsConfig]):
+    22→    def is_ready(self) -> bool:
+    27→    @classmethod
+    28→    def get_config_type(cls) -> type[CorsConfig]:
+
+microbootstrap/instruments/health_checks_instrument.py
+     8→class HealthCheckTypedDict(typing_extensions.TypedDict, total=False):
+    14→class HealthChecksConfig(BaseInstrumentConfig):
+    26→class HealthChecksInstrument(Instrument[HealthChecksConfig]):
+    30→    def render_health_check_data(self) -> HealthCheckTypedDict:
+    37→    def is_ready(self) -> bool:
+    40→    @classmethod
+    41→    def get_config_type(cls) -> type[HealthChecksConfig]:
+
+microbootstrap/instruments/instrument_box.py
+    10→class InstrumentBox:
+    14→    def initialize …
+    21→    def configure_instrument …
+    34→    def extend_instruments …
+    48→    @property
+    49→    def instruments(self) -> list[Instrument[typing.Any]]:
+
+microbootstrap/instruments/logging_instrument.py
+    97→class MemoryLoggerFactory(structlog.stdlib.LoggerFactory):
+   127→class LoggingConfig(BaseInstrumentConfig):
+   141→    def remove_trailing_slashes_from_logging_exclude_endpoints(self) -> typing_extensions.Self:
+   148→class LoggingInstrument(Instrument[LoggingConfig]):
+   213→    def get_config_type(cls) -> type[LoggingConfig]:
+
+microbootstrap/instruments/opentelemetry_instrument.py
+    43→class OpenTelemetryInstrumentor:
+    44→    instrumentor: BaseInstrumentor
+      →    …
+    73→class FastStreamTelemetryMiddlewareProtocol(typing.Protocol):
+   181→    @classmethod
+   182→    def get_config_type(cls) -> type[OpentelemetryConfig]:
+   197→class PyroscopeSpanProcessor(SpanProcessor):
+
+microbootstrap/instruments/prometheus_instrument.py
+    17→class BasePrometheusConfig(BaseInstrumentConfig):
+    24→class LitestarPrometheusConfig(BasePrometheusConfig):
+    28→class FastApiPrometheusConfig(BasePrometheusConfig):
+    36→class FastStreamPrometheusMiddlewareProtocol(typing.Protocol):
+    55→class FastStreamPrometheusConfig(BasePrometheusConfig):
+    60→class PrometheusInstrument(Instrument[PrometheusConfigT]):
+    69→    @classmethod
+    70→    def get_config_type(cls) -> type[PrometheusConfigT]:
+
+microbootstrap/instruments/pyroscope_instrument.py
+    15→class PyroscopeConfig(BaseInstrumentConfig):
+    27→class PyroscopeInstrument(Instrument[PyroscopeConfig]):
+    31→    def is_ready(self) -> bool:
+    34→    def teardown(self) -> None:
+    37→    def bootstrap(self) -> None:
+    52→    @classmethod
+    53→    def get_config_type(cls) -> type[PyroscopeConfig]:
+
+microbootstrap/instruments/sentry_instrument.py
+    15→class SentryConfig(BaseInstrumentConfig):
+    89→class SentryInstrument(Instrument[SentryConfig]):
+   122→    @classmethod
+   123→    def get_config_type(cls) -> type[SentryConfig]:
+
+microbootstrap/instruments/swagger_instrument.py
+    10→class SwaggerConfig(BaseInstrumentConfig):
+    21→class SwaggerInstrument(Instrument[SwaggerConfig]):
+    25→    def is_ready(self) -> bool:
+    28→    @classmethod
+    29→    def get_config_type(cls) -> type[SwaggerConfig]:
+
+microbootstrap/instruments_setupper.py
+    19→class InstrumentsSetupper:
+    23→    def __init__ …
+    28→    def configure_instrument …
+    32→    def configure_instruments …
+    41→    def use_instrument …
+    51→    def setup …
+    57→    def teardown …
+    62→    def __enter__ …
+    65→    def __exit__ …
+
+microbootstrap/settings.py
+    24→ENV_PREFIX_VAR_NAME: typing.Final = "ENVIRONMENT_PREFIX"
+    25→ENV_PREFIX: typing.Final = os.getenv(ENV_PREFIX_VAR_NAME, "")
+    29→class BaseServiceSettings(
+    30→    pydantic_settings.BaseSettings,
+    31→):
+    32→    service_debug: bool = True
+      →    …
+    53→class ServerConfig …
+    60→class LitestarSettings …
+    75→class FastApiSettings …
+    90→class FastStreamSettings …
+   105→class InstrumentsSetupperSettings …
+
+package.json
+
+pyproject.toml
+     1→[project]
+    62→[project.optional-dependencies]
+    77→[dependency-groups]
+    93→[build-system]
+   101→[tool.mypy]
+   109→[tool.ruff]

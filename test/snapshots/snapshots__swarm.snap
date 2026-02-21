@@ -1,0 +1,249 @@
+---
+source: test/fixtures.rs
+expression: output
+---
+budget: 2000 (2011 tokens)
+
+README.md
+     3→# Swarm (experimental, educational)
+    10→## Install
+    24→## Usage
+    60→## Table of Contents
+    72→# Overview
+    83→## Why Swarm
+    89→# Examples
+   100→# Documentation
+   104→## Running Swarm
+   114→### `client.run()`
+   126→#### Arguments
+   141→#### `Response` Fields
+   149→## Agents
+   155→## `Agent` Fields
+   165→### Instructions
+   197→## Functions
+   229→### Handoffs and Updating Context Variables
+   281→### Function Schemas
+   321→## Streaming
+   336→# Evaluations
+   340→# Utils
+   350→# Core Contributors
+
+SECURITY.md
+     1→# Security Policy
+
+examples/airline/README.md
+     1→# Airline customer service
+     6→## Agents
+    14→## Setup
+    22→## Evaluations
+
+examples/airline/configs/agents.py
+     9→def transfer_to_flight_modification():
+    13→def transfer_to_flight_cancel():
+    17→def transfer_to_flight_change():
+    21→def transfer_to_lost_baggage():
+    25→def transfer_to_triage():
+    32→def triage_instructions(context_variables):
+
+examples/airline/configs/tools.py
+     1→def escalate_to_agent(reason=None):
+     5→def valid_to_change_flight():
+     9→def change_flight():
+    13→def initiate_refund():
+    18→def initiate_flight_credits():
+    23→def case_resolved():
+    27→def initiate_baggage_search():
+
+examples/basic/README.md
+     1→# Swarm basic
+     5→### Examples
+    31→## Running the Examples
+
+examples/basic/agent_handoff.py
+    16→def transfer_to_spanish_agent():
+
+examples/basic/context_variables.py
+     6→def instructions(context_variables):
+    11→def print_account_details(context_variables: dict):
+
+examples/basic/function_calling.py
+     6→def get_weather(location) -> str:
+
+examples/basic/simple_loop_no_helpers.py
+    11→def pretty_print_messages(messages):
+
+examples/customer_service_streaming/configs/general.py
+     1→class Colors:
+
+examples/customer_service_streaming/configs/prompts.py
+    19→LOCAL_PLANNER_PROMPT = """
+
+examples/customer_service_streaming/main.py
+    10→def main():
+
+examples/customer_service_streaming/src/arg_parser.py
+     3→def parse_args():
+
+examples/customer_service_streaming/src/swarm/engines/engine.py
+     2→class Engine:
+
+examples/customer_service_streaming/src/swarm/swarm.py
+    11→class Swarm:
+
+examples/customer_service_streaming/src/validator.py
+     7→def validate_tool(tool_definition):
+    12→def validate_all_tools(engine):
+    52→def validate_all_assistants():
+
+examples/personal_shopper/README.md
+     1→# Personal shopper
+     7→## Overview
+    15→## Setup
+
+examples/personal_shopper/database.py
+     7→def get_connection():
+    14→def create_database():
+    61→def add_user(user_id, first_name, last_name, email, phone):
+    84→def add_purchase(user_id, date_of_purchase, item_id, amount):
+   114→def add_product(product_id, product_name, price):
+   132→def close_connection():
+   139→def preview_table(table_name):
+   154→def initialize_database():
+
+examples/personal_shopper/main.py
+    10→def refund_item(user_id, item_id):
+    32→def notify_customer(user_id, method):
+    58→def order_item(user_id, product_id):
+
+examples/support_bot/README.md
+     1→# Support bot
+     6→## Overview
+    13→## Setup
+
+examples/support_bot/customer_service.py
+    13→# Set embedding model
+    14→EMBEDDING_MODEL = "text-embedding-3-large"
+    23→def query_qdrant …
+    43→def query_docs(query):
+    68→def send_email(email_address, message):
+    73→def submit_ticket(description):
+    90→def transfer_to_help_center():
+
+examples/support_bot/main.py
+    13→# Set embedding model
+    14→EMBEDDING_MODEL = "text-embedding-3-large"
+    20→def query_qdrant(query, collection_name, vector_name="article", top_k=5):
+    40→def query_docs(query):
+    66→def send_email(email_address, message):
+    72→def submit_ticket(description):
+    77→def transfer_to_help_center():
+
+examples/triage_agent/README.md
+     1→# Triage agent
+     6→## Setup
+    16→## Evals
+
+examples/triage_agent/agents.py
+     4→def process_refund(item_id, reason="NOT SPECIFIED"):
+    10→def apply_discount():
+    31→def transfer_back_to_triage():
+    36→def transfer_to_sales():
+    40→def transfer_to_refunds():
+
+examples/weather_agent/README.md
+     1→# Weather agent
+     5→## Setup
+    15→## Evals
+
+examples/weather_agent/agents.py
+     6→def get_weather(location, time="now"):
+    11→def send_email(recipient, subject, body):
+
+pyproject.toml
+     1→[build-system]
+     3→build-backend = "setuptools.build_meta"
+
+swarm/__init__.py
+     1→from .core import Swarm
+     2→from .types import Agent, Response
+     4→__all__ = ["Swarm", "Agent", "Response"]
+
+swarm/core.py
+     2→import copy
+     3→import json …
+     4→from collections …
+     5→from typing …
+     8→from openai import OpenAI
+    12→from .util import function_to_json, debug_print, merge_chunk
+    13→from .types …
+    23→__CTX_VARS_NAME__ = "context_variables"
+    26→class Swarm:
+    27→    def __init__ …
+    32→    def get_chat_completion …
+    71→    def handle_function_result …
+    89→    def handle_tool_calls …
+   139→    def run_and_stream …
+   231→    def run …
+
+swarm/repl/__init__.py
+     1→from .repl import run_demo_loop
+
+swarm/repl/repl.py
+     1→import json
+     3→from swarm import Swarm
+     6→def process_and_print_streaming_response(response):
+    37→def pretty_print_messages(messages) -> None:
+    60→def run_demo_loop(
+    61→    starting_agent, context_variables=None, stream=False, debug=False
+    62→) -> None:
+
+swarm/types.py
+     1→from openai.types.chat …
+     2→from openai.types.chat.chat_completion_message_tool_call …
+     6→from typing …
+     9→from pydantic import BaseModel
+    14→class Agent(BaseModel):
+    15→    name: str = "Agent"
+      →    …
+    23→class Response(BaseModel):
+    24→    messages: List = []
+      →    …
+    29→class Result(BaseModel):
+    38→
+      →…
+
+swarm/util.py
+     1→import inspect
+     2→from datetime import datetime
+     5→def debug_print(debug: bool, *args: str) -> None:
+    13→def merge_fields(target, source):
+    21→def merge_chunk(final_response: dict, delta: dict) -> None:
+    31→def function_to_json(func) -> dict:
+    32→    """
+    33→    Converts a Python function into a JSON-serializable dictionary
+    34→    that describes the function's signature, including its name,
+    35→    description, and parameters.
+    36→
+    37→    Args:
+      →    …
+
+tests/mock_client.py
+     8→def create_mock_response(message, function_calls=[], model="gpt-4o"):
+    44→class MockOpenAIClient:
+    45→    def __init__(self):
+    49→    def set_response(self, response: ChatCompletion):
+    56→    def set_sequential_responses(self, responses: list[ChatCompletion]):
+    63→    def assert_create_called_with(self, **kwargs):
+
+tests/test_core.py
+     7→DEFAULT_RESPONSE_CONTENT = "sample response content"
+    10→@pytest.fixture
+    11→def mock_openai_client():
+    19→def test_run_with_simple_message …
+    31→def test_tool_call …
+    70→def test_execute_tools_false …
+   118→def test_handoff …
+
+tests/test_util.py
+     4→def test_basic_function():
+    26→def test_complex_function():

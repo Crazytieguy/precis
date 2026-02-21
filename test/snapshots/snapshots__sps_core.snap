@@ -1,0 +1,240 @@
+---
+source: test/fixtures.rs
+expression: output
+---
+budget: 2000 (2001 tokens)
+
+Cargo.toml
+     1→[package]
+    10→[dependencies]
+
+src/build/env.rs
+   141→pub struct BuildEnvironment {
+   166→    pub fn new …
+   463→    pub fn apply_to_command …
+   476→    pub fn get_path_string …
+   482→    pub fn get_vars …
+   488→    pub fn get_var …
+
+src/build/mod.rs
+     1→pub mod compile;
+     2→pub mod env;
+
+src/check/installed.rs
+    14→pub enum PackageType {
+    20→pub struct InstalledPackageInfo {
+
+src/check/mod.rs
+     1→pub mod installed;
+     2→pub mod update;
+
+src/check/update.rs
+    23→pub struct UpdateInfo {
+    24→    pub name: String,
+      →    …
+    89→pub async fn check_for_updates …
+
+src/install/bottle/macho.rs
+    46→struct PatchInfo {
+    55→pub struct SkippedPath {
+    64→pub fn patch_macho_file …
+    74→pub struct SkippedPath {
+    81→pub fn patch_macho_file …
+
+src/install/bottle/mod.rs
+    13→pub mod exec;
+    14→pub mod link;
+    15→pub mod macho;
+    18→pub async fn download_formula …
+    34→pub fn has_bottle_for_current_platform …
+
+src/install/cask/artifacts/app.rs
+    16→pub fn find_primary_app_bundle_in_dir(dir: &Path) -> Result<PathBuf> {
+
+src/install/cask/artifacts/binary.rs
+    23→pub fn install_binary …
+
+src/install/cask/artifacts/colorpicker.rs
+    20→pub fn install_colorpicker …
+
+src/install/cask/artifacts/dictionary.rs
+    25→pub fn install_dictionary …
+
+src/install/cask/artifacts/font.rs
+    21→pub fn install_font …
+
+src/install/cask/artifacts/input_method.rs
+    17→pub fn install_input_method …
+
+src/install/cask/artifacts/installer.rs
+    47→pub fn run_installer …
+
+src/install/cask/artifacts/keyboard_layout.rs
+    17→pub fn install_keyboard_layout …
+
+src/install/cask/artifacts/manpage.rs
+    24→pub fn install_manpage …
+
+src/install/cask/artifacts/mod.rs
+     1→pub mod app;
+     2→pub mod audio_unit_plugin;
+     3→pub mod binary;
+     4→pub mod colorpicker;
+     5→pub mod dictionary;
+     6→pub mod font;
+     7→pub mod input_method;
+     8→pub mod installer;
+     9→pub mod internet_plugin;
+    10→pub mod keyboard_layout;
+    11→pub mod manpage;
+    12→pub mod mdimporter;
+    13→pub mod pkg;
+    14→pub mod preflight;
+    15→pub mod prefpane;
+    16→pub mod qlplugin;
+    17→pub mod screen_saver;
+    18→pub mod service;
+    19→pub mod suite;
+    20→pub mod uninstall;
+    21→pub mod vst3_plugin;
+    22→pub mod vst_plugin;
+    23→pub mod zap;
+    26→pub use self::app::install_app_from_staged;
+    27→pub use self::audio_unit_plugin::install_audio_unit_plugin;
+    28→pub use self::binary::install_binary;
+    29→pub use self::colorpicker::install_colorpicker;
+    30→pub use self::dictionary::install_dictionary;
+    31→pub use self::font::install_font;
+    32→pub use self::input_method::install_input_method;
+    33→pub use self::installer::run_installer;
+    34→pub use self::internet_plugin::install_internet_plugin;
+    35→pub use self::keyboard_layout::install_keyboard_layout;
+    36→pub use self::manpage::install_manpage;
+    37→pub use self::mdimporter::install_mdimporter;
+    38→pub use self::pkg::install_pkg_from_path;
+    39→pub use self::preflight::run_preflight;
+    40→pub use self::prefpane::install_prefpane;
+    41→pub use self::qlplugin::install_qlplugin;
+    42→pub use self::screen_saver::install_screen_saver;
+    43→pub use self::service::install_service;
+    44→pub use self::suite::install_suite;
+    45→pub use self::uninstall::record_uninstall;
+    46→pub use self::vst3_plugin::install_vst3_plugin;
+    47→pub use self::vst_plugin::install_vst_plugin;
+
+src/install/cask/artifacts/pkg.rs
+    13→pub fn install_pkg_from_path …
+
+src/install/cask/artifacts/preflight.rs
+    13→pub fn run_preflight …
+
+src/install/cask/artifacts/service.rs
+    21→pub fn install_service …
+
+src/install/cask/artifacts/suite.rs
+    20→pub fn install_suite …
+
+src/install/cask/artifacts/uninstall.rs
+     9→pub fn record_uninstall …
+
+src/install/cask/artifacts/zap.rs
+    18→pub fn install_zap …
+
+src/install/cask/dmg.rs
+   153→pub fn extract_dmg_to_stage …
+
+src/install/cask/helpers.rs
+     9→pub fn remove_path_robustly …
+    75→pub fn cleanup_empty_parent_dirs_in_private_store …
+
+src/install/cask/mod.rs
+     1→pub mod artifacts;
+     2→pub mod dmg;
+     3→pub mod helpers;
+    25→pub struct CaskInstallManifest {
+    37→pub fn sps_private_cask_version_dir …
+    43→pub fn sps_private_cask_token_dir …
+    49→pub fn sps_private_cask_app_path …
+   580→pub fn write_receipt …
+   686→pub fn cleanup_empty_parent_dirs_in_private_store …
+
+src/install/devtools.rs
+     9→pub fn find_compiler(name: &str) -> Result<PathBuf> {
+    78→pub fn find_sdk_path() -> Result<PathBuf> {
+   123→pub fn get_macos_version() -> Result<String> {
+   160→pub fn get_arch_flag() -> String {
+
+src/install/extract.rs
+    16→use crate::utils::xattr;
+   205→pub fn quarantine_extracted_apps_in_stage(stage_dir: &Path, agent_name: &str) -> Result<()> {
+   235→pub fn extract_archive …
+   343→struct DeferredHardLink {
+
+src/install/mod.rs
+    11→pub mod bottle;
+    12→pub mod cask;
+    13→pub mod devtools;
+    14→pub mod extract;
+    17→pub fn get_formula_opt_path …
+
+src/lib.rs
+     4→pub mod build;
+     5→pub mod check;
+     6→pub mod install;
+     7→pub mod pipeline;
+     8→pub mod uninstall;
+     9→pub mod upgrade; // New
+    11→pub mod utils; // New
+    19→pub use uninstall::UninstallOptions; // New
+
+src/pipeline/engine.rs
+    13→use super::worker;
+    16→pub fn start_worker_pool_manager …
+
+src/pipeline/mod.rs
+     1→pub mod engine;
+     2→pub mod worker;
+
+src/uninstall/cask.rs
+    26→use crate::utils::applescript;
+    41→pub fn uninstall_cask_artifacts …
+   134→pub async fn zap_cask_artifacts …
+
+src/uninstall/common.rs
+    11→pub struct UninstallOptions {
+    12→    pub skip_zap: bool,
+    13→}
+
+src/uninstall/mod.rs
+     3→pub mod cask;
+     4→pub mod common;
+     5→pub mod formula;
+
+src/upgrade/bottle.rs
+    20→pub async fn upgrade_bottle_formula …
+
+src/upgrade/cask.rs
+    15→pub async fn upgrade_cask_package …
+
+src/upgrade/mod.rs
+     3→pub mod bottle;
+     4→pub mod cask;
+     5→pub mod source;
+     8→pub use self::bottle::upgrade_bottle_formula;
+     9→pub use self::cask::upgrade_cask_package;
+    10→pub use self::source::upgrade_source_formula;
+
+src/upgrade/source.rs
+    19→pub async fn upgrade_source_formula …
+
+src/utils/applescript.rs
+    75→pub fn quit_app_gracefully(app_path: &Path) -> Result<()> {
+
+src/utils/mod.rs
+     2→pub mod applescript;
+     4→pub mod xattr;
+
+src/utils/xattr.rs
+    26→pub fn has_quarantine_attribute(path: &Path) -> anyhow::Result<bool> {
+    41→pub fn ensure_quarantine_attribute(path: &Path, agent: &str) -> anyhow::Result<()> {
+    53→pub fn set_quarantine_attribute(path: &Path, agent_name: &str) -> Result<()> {

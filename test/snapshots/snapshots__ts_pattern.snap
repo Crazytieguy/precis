@@ -1,0 +1,249 @@
+---
+source: test/fixtures.rs
+expression: output
+---
+budget: 2000 (1999 tokens)
+
+README.md
+    40→## About
+    48→## Features
+    59→## What is Pattern Matching?
+    67→## Installation
+    87→## Want to become a TypeScript Expert?
+    91→# Documentation
+   128→## Sandbox examples
+   139→## Getting Started
+   415→## API Reference
+   742→## Patterns
+  1405→## `P.string` predicates
+  1500→## `P.number` and `P.bigint` predicates
+  1621→## Types
+  1766→## Inspirations
+
+jsr.json
+     2→  "name": "@gabriel/ts-pattern",
+     3→  "version": "5.9.0",
+     4→  "exports": {
+
+package.json
+
+src/errors.ts
+     5→export class NonExhaustiveError extends Error {
+     6→  constructor(public input: unknown) {
+
+src/internals/helpers.ts
+     7→import * as symbols from './symbols';
+    12→export const isObject …
+    16→export const isMatcher …
+    32→export const matchPattern …
+   120→export const getSelectionKeys …
+   132→export const flatMap …
+
+src/internals/symbols.ts
+    16→export const matcher = Symbol.for('@ts-pattern/matcher');
+    17→export type matcher = typeof matcher;
+    19→export const unset = Symbol.for('@ts-pattern/unset');
+    20→export type unset = typeof unset;
+    22→export const isVariadic = Symbol.for('@ts-pattern/isVariadic');
+    23→export type isVariadic = typeof isVariadic;
+    26→export const anonymousSelectKey = '@ts-pattern/anonymous-select-key';
+    27→export type anonymousSelectKey = typeof anonymousSelectKey;
+    29→export const override = Symbol.for('@ts-pattern/override');
+    30→export type override = typeof override;
+
+src/is-matching.ts
+    11→type PatternConstraint …
+    53→export function isMatching …
+
+src/match.ts
+    32→export function match …
+    47→class MatchExpression<input, output> {
+    48→  constructor …
+    50→  with …
+    94→  when …
+   110→  otherwise …
+   115→  exhaustive …
+   120→  run …
+   124→  returnType …
+   128→  narrow …
+
+src/patterns.ts
+     8→import { matchPattern, getSelectionKeys, flatMap } from './internals/helpers';
+    81→export type unstable_Matchable …
+   100→export type unstable_Matcher …
+   116→export type infer …
+   131→export type narrow …
+   187→export function optional …
+   246→export function array …
+   299→export function set …
+   362→export function map …
+   445→export function record …
+   536→export function intersection …
+   572→export function union …
+   611→export function not …
+   646→export function when …
+   696→export function select …
+   782→export const any …
+   793→export const unknown …
+   805→export const _ …
+   928→export const string …
+  1075→export const number …
+  1201→export const bigint …
+  1211→export const boolean …
+  1221→export const symbol …
+  1231→export const nullish …
+  1241→export const nonNullable …
+  1251→export function instanceOf …
+  1274→export function shape …
+
+src/types/BuildMany.ts
+     4→export type BuildMany …
+    19→export type SetDeep …
+
+src/types/DeepExclude.ts
+     3→export type DeepExclude …
+
+src/types/DistributeUnions.ts
+    41→export type DistributeMatchingUnions …
+    46→export type FindUnionsMany …
+    80→export type FindUnions …
+   174→export type ArrayToVariadicUnion …
+   183→export type Distribute …
+
+src/types/FindSelected.ts
+    13→export type None …
+    16→export type Some …
+    21→export type SelectionType …
+    96→export type FindSelectionUnion …
+   159→export type SeveralAnonymousSelectError …
+   165→export type MixedNamedAndAnonymousSelectError …
+   174→export type SelectionToArgs …
+   185→export type Selections …
+   191→export type FindSelected …
+
+src/types/InvertPattern.ts
+   106→export type InvertPattern …
+   180→export type ReduceIntersectionForExclude …
+   192→export type ReduceUnionForExclude …
+   303→export type InvertPatternForExclude …
+
+src/types/IsMatching.ts
+     1→import { …
+    57→export type IsMatching …
+
+src/types/Match.ts
+     8→export type PickReturnValue …
+    22→export type Match …
+   132→  with …
+   159→  when …
+   180→  otherwise …
+   205→  run …
+   225→  narrow …
+
+src/types/Pattern.ts
+     7→export type MatcherType …
+    23→export type MatcherProtocol …
+    38→export type MatchResult …
+    50→export interface Matcher …
+    74→export type MatchedValue …
+    79→export type AnyMatcher …
+    83→export type CustomP …
+    94→export type ArrayP …
+    96→export type RecordP …
+   102→export type OptionalP …
+   104→export type MapP …
+   106→export type SetP …
+   108→export type AndP …
+   110→export type OrP …
+   112→export type NotP …
+   114→export type GuardP …
+   116→export type GuardExcludeP …
+   124→export type SelectP …
+   130→export type AnonymousSelectP …
+   132→export interface Override<a> {
+   136→export type UnknownProperties …
+   138→export type UnknownValuePattern …
+   157→export type Pattern …
+   190→export type UnknownPattern …
+   191→export type StringPattern …
+   192→export type NumberPattern …
+   193→export type BooleanPattern …
+   194→export type BigIntPattern …
+   195→export type SymbolPattern …
+   196→export type NullishPattern …
+   201→export type NonNullablePattern …
+   210→export type Chainable …
+   223→      optional …
+   237→      and …
+   253→      or …
+   269→      select …
+   276→export type StringChainable …
+   291→      startsWith …
+   306→      endsWith …
+   321→      minLength …
+   336→      length …
+   351→      maxLength …
+   366→      includes …
+   381→      regex …
+   391→export type NumberChainable …
+   407→      between …
+   423→      lt …
+   438→      gt …
+   453→      lte …
+   468→      gte …
+   483→      int …
+   496→      finite …
+   509→      positive …
+   522→      negative …
+   530→export type BigIntChainable …
+   546→      between …
+   562→      lt …
+   577→      gt …
+   592→      lte …
+   607→      gte …
+   622→      positive …
+   635→      negative …
+   643→export type Variadic …
+   645→export type ArrayChainable …
+   661→      optional …
+   678→      select …
+
+src/types/helpers.ts
+     1→export type ValueOf …
+     3→export type Values …
+    14→export type LeastUpperBound …
+    16→export type Contains …
+    25→export type UnionToIntersection …
+    31→export type IsUnion …
+    33→export type UnionToTuple …
+    42→export type Flatten …
+    49→export type Equal …
+    55→export type Expect …
+    57→export type IsAny …
+    59→export type IsNever …
+    61→export type Length …
+    63→export type Iterator …
+    68→export type Next …
+    69→export type Prev …
+    73→export type Take …
+    83→export type Drop …
+    92→export type UpdateAt …
+   105→export type BuiltInObjects …
+   113→export type IsPlainObject …
+   122→export type Compute …
+   126→export type IntersectObjects …
+   138→export type WithDefault …
+   140→export type IsLiteral …
+   164→export type Primitives …
+   173→export type NonLiteralPrimitive …
+   175→export type TupleKeys …
+   177→export type Union …
+   182→export type GuardValue …
+   188→export type GuardFunction …
+   192→export type Some …
+   196→export type All …
+   200→export type Extends …
+   202→export type Not …
+   266→export interface Fn {
+
+tsconfig.json

@@ -1,0 +1,275 @@
+---
+source: test/fixtures.rs
+expression: output
+---
+budget: 2000 (2004 tokens)
+
+README.md
+     7→# Soluna
+    19→## Documentation
+    25→## Precompiled Binaries
+    29→## Building from Source
+    53→## Projects made with Soluna
+    57→## License
+
+src/appevent.h
+     2→#define soluna_app_event_h
+     4→struct event_message {
+
+src/batch.c
+     6→#define DEFAULT_SIZE 1024
+     8→struct draw_batch {
+    13→batch_new …
+    29→batch_delete …
+    37→batch_reserve …
+
+src/batch.h
+     2→#define soluna_batch_h
+     6→struct draw_primitive {
+    13→struct draw_primitive_external {
+
+src/drawmgr.c
+     8→struct draw_element {
+    15→struct drawmgr {
+   171→luaopen_drawmgr …
+
+src/embedlua.c
+    28→#define REG_SOURCE(name) \
+    34→#define REG_DATALIST(name) \
+    55→luaopen_embedsource …
+
+src/entry.c
+     1→#define SOKOL_IMPL
+    14→#define SOKOL_D3D11
+    18→#define SOKOL_METAL
+    22→#define SOKOL_WGPU
+    26→#define SOKOL_GLCORE
+    36→#define FRAME_CALLBACK 1
+    37→#define CLEANUP_CALLBACK 2
+    38→#define EVENT_CALLBACK 3
+    39→#define CALLBACK_COUNT 3
+    69→#define PLATFORM "windows"
+    73→#define PLATFORM "macos"
+    77→#define PLATFORM "wasm"
+    81→#define PLATFORM "linux"
+    85→#define PLATFORM "unknown"
+    89→struct app_context {
+   103→struct soluna_message {
+   216→struct icon_pixels {
+
+src/file.c
+
+src/font.c
+   133→#define MAX_FONTNAME 256
+
+src/font_define.h
+    11→struct font_glyph {
+
+src/font_manager.c
+    48→struct font_slot {
+    58→struct priority_list {
+    66→struct font_manager {
+    94→#define COLLISION_STEP 7
+   361→font_manager_pixelsize …
+
+src/font_manager.h
+     2→#define font_manager_h
+    22→int font_manager_flush(struct font_manager *);
+    31→const void * font_manager_texture(struct font_manager *F, int *sz);
+
+src/gamepad.c
+    29→struct gamepad_state {
+   267→static struct gamepad_global {
+   274→struct gamepad_local {
+
+src/image.c
+   128→struct rect {
+   321→struct canvas {
+   577→luaopen_image …
+
+src/ime_state.h
+     2→#define SOLUNA_IME_STATE_H
+     7→struct soluna_ime_rect_state {
+
+src/lcrypt.c
+   187→#define GET_UINT32(n,b,i)					   \
+   205→#define DES_IP(X,Y)											 \
+   218→#define DES_FP(X,Y)											 \
+   231→#define DES_ROUND(X,Y)						  \
+   623→#define LEFTROTATE(x, c) (((x) << (c)) | ((x) >> (32 - (c))))
+   790→#define P 0xffffffffffffffc5ull
+  1031→int lsha1(lua_State *L);
+
+src/lfs.c
+    54→struct dir_data {
+   487→struct dir_data {
+   825→luaopen_localfs …
+
+src/loginfo.h
+     2→#define soluna_loginfo_h
+     6→struct log_info {
+
+src/lsha1.c
+    89→typedef struct {
+   114→#define	R0 …
+   247→lsha1 …
+   272→lhmac_sha1 …
+
+src/luayoga.c
+    18→struct enum_string {
+    23→struct set_number {
+    32→struct set_edge_number {
+    38→struct set_two_number {
+    69→struct pos {
+   594→luaopen_layout_yoga …
+
+src/luazip.c
+    79→struct filename_convert {
+   132→struct filename_convert {};
+   151→struct ziphandle {
+   155→struct zipraw {
+   284→struct unzhandle {
+   684→luaopen_zip …
+
+src/material_blit.c
+     9→struct material_blit {
+    53→luaopen_material_blit …
+
+src/material_default.c
+    15→struct inst_object {
+    23→struct material_default {
+   150→luaopen_material_default …
+
+src/material_mask.c
+    15→struct color {
+    19→struct inst_object {
+    28→struct mask {
+    33→struct material_mask {
+   166→struct mask_primitive {
+   193→luaopen_material_mask …
+
+src/material_perspective_quad.c
+    23→struct color {
+    27→struct pquad_meta {
+    34→struct corner_primitive {
+    42→struct inst_object {
+    51→struct material_perspective_quad {
+    62→struct sprite_rect_basis {
+    71→struct sprite_rect_data {
+
+src/material_quad.c
+    15→struct color {
+    19→struct quad {
+    26→struct inst_object {
+    33→struct material_quad {
+   153→struct quad_primitive {
+   182→luaopen_material_quad …
+
+src/material_text.c
+    20→struct text {
+    28→struct inst_object {
+    36→struct material_text {
+   225→struct text_primitive {
+   242→#define iscont …
+   330→struct block_context {
+   331→	int width;
+      →	…
+   352→struct position {
+   701→luaopen_material_text …
+
+src/material_util.h
+     2→#define soluna_material_util_h
+     8→#define MATERIAL_TEXT_NORMAL 1
+     9→#define MATERIAL_QUAD 2
+    10→#define MATERIAL_MASK 3
+    11→#define MATERIAL_PERSPECTIVE_QUAD 4
+
+src/openlibs.c
+     1→#define linit_c
+     2→#define LUA_LIB
+     9→void soluna_embed …
+    11→soluna_openlibs …
+
+src/render.c
+    15→#define UNIFORM_MAX 4
+    16→#define BINDINGNAME_MAX 32
+    18→struct buffer {
+    23→struct image {
+    28→struct sampler {
+   223→struct pass {
+   224→	sg_pass pass;
+      →	…
+   482→struct enum_string {
+   615→struct inst_object {
+   620→struct sprite_object {
+
+src/render_bindings.c
+    61→struct view {
+    97→#define VIEW_TYPE_INVALID 0
+    98→#define VIEW_TYPE_TEXTURE 1
+    99→#define VIEW_TYPE_STORAGE 2
+   100→#define VIEW_TYPE_COLOR_ATTACHMENT 3
+   101→#define VIEW_TYPE_DEPTH_STENCIL_ATTACHMENT 4
+   148→lview_new …
+   221→lbindings_new …
+
+src/render_bindings.h
+     6→struct soluna_render_bindings {
+
+src/render_uniform.c
+     7→#define UNIFORM_TYPE_FLOAT 1
+     8→#define UNIFORM_TYPE_INT 2
+   184→luniform_new …
+
+src/sdfimage.c
+     9→#include "stb/stb_image.h"
+    23→#define IMAGE_SIZE 64
+    77→struct sdf_context {
+
+src/sprite_submit.h
+     2→#define soluna_sprite_submit_h
+
+src/spritemgr.c
+    11→#define DEFAULT_TEXTURE_SIZE 4096
+    12→#define INVALID_TEXTUREID 0xffff
+    14→#define MAX_NODE 8192
+    16→#define STB_RECT_PACK_IMPLEMENTATION
+    95→struct tmp_context {
+   190→struct layer {
+   197→struct batch {
+
+src/spritemgr.h
+     2→#define soluna_spritemgr_h
+     7→#define INVALID_TEXTUREID 0xffff
+     9→struct sprite_rect {
+    16→struct sprite_bank {
+
+src/srbuffer.h
+     2→#define soluna_srbuffer_h
+     7→struct sr_mat {
+    11→struct sr_buffer {
+
+src/tmpbuffer.h
+     7→struct tmp_buffer {
+
+src/transform.c
+     9→sprite_transform_init …
+    31→sprite_transform_apply …
+    66→sprite_transform_set …
+    76→sprite_transform_point …
+
+src/transform.h
+     2→#define soluna_transform_h
+     6→struct transform {
+
+src/truetype.h
+    17→struct truetype_font {
+
+src/version.h
+     2→#define soluna_version_h
+     4→#define SOLUNA_API_VERSION 3
+     6→#define SOLUNA_HASH_VERSION "dev"
+
+web/config.toml
+     7→[pagination]
+    10→[params]

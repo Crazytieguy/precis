@@ -1,0 +1,183 @@
+---
+source: test/fixtures.rs
+expression: output
+---
+budget: 2000 (1975 tokens)
+
+ARCHITECTURE.md
+     1→# `sqlite-vec` Architecture
+    11→## `vec0`
+    13→### Shadow Tables
+    49→### idxStr
+
+README.md
+     1→# `sqlite-vec`
+    43→## Installing
+    61→## Sample usage
+    97→## Sponsors
+   152→## See Also
+
+bindings/rust/src/lib.rs
+     3→    pub fn sqlite3_vec_init();
+
+reference.yaml
+     1→sections:
+    31→meta:
+    40→constructors:
+    83→op:
+   258→distance:
+   308→quantization:
+   328→vec0:
+
+sqlite-dist.toml
+     1→[package]
+    10→[targets]
+
+sqlite-vec.c
+    27→#define UINT32_TYPE uint32_t
+    29→#define UINT32_TYPE unsigned int
+    34→#define UINT16_TYPE uint16_t
+    36→#define UINT16_TYPE unsigned short int
+    41→#define INT16_TYPE int16_t
+    43→#define INT16_TYPE short int
+    48→#define UINT8_TYPE uint8_t
+    50→#define UINT8_TYPE unsigned char
+    55→#define INT8_TYPE int8_t
+    57→#define INT8_TYPE signed char
+    61→#define LONGDOUBLE_TYPE long double
+    68→typedef u_int8_t uint8_t;
+    69→typedef u_int16_t uint16_t;
+    70→typedef u_int64_t uint64_t;
+    76→typedef int8_t i8;
+    77→typedef uint8_t u8;
+    78→typedef int16_t i16;
+    79→typedef int32_t i32;
+    80→typedef sqlite3_int64 i64;
+    81→typedef uint32_t u32;
+    82→typedef uint64_t u64;
+    83→typedef float f32;
+    84→typedef size_t usize;
+    87→#define UNUSED_PARAMETER(X) (void)(X)
+    93→#define COMPILER_SUPPORTS_VTAB_IN 1
+    97→#define SQLITE_SUBTYPE 0x000100000
+   101→#define SQLITE_RESULT_SUBTYPE 0x001000000
+   105→#define SQLITE_INDEX_CONSTRAINT_LIMIT 73
+   109→#define SQLITE_INDEX_CONSTRAINT_OFFSET 74
+   112→#define countof(x) (sizeof(x) / sizeof((x)[0]))
+   113→#define min(a, b) (((a) <= (b)) ? (a) : (b))
+   115→enum VectorElementType {
+   585→typedef void (*vector_cleanup)(void *p);
+   587→void vector_cleanup_noop …
+   591→void vtab_set_error …
+   598→struct Array {
+   614→int array_init …
+   629→int array_append …
+   646→void array_cleanup …
+   656→char *vector_subtype_name …
+   667→char *type_name …
+   683→typedef void (*fvec_cleanup)(f32 *vector);
+   685→void fvec_cleanup_noop …
+   964→int vector_from_value …
+   998→int ensure_vector_match …
+  1050→struct VecNpyFile {
+  1317→char *vec_type_name …
+  1798→enum Vec0TokenType {
+  1806→struct Vec0Token {
+  1812→int is_alpha …
+  1815→int is_digit …
+  1816→int is_whitespace …
+  1824→int vec0_token_next …
+  1880→struct Vec0Scanner {
+  1886→void vec0_scanner_init …
+  1892→int vec0_scanner_next …
+  1900→int vec0_parse_table_option …
+  1956→int vec0_parse_partition_key_definition …
+  2033→int vec0_parse_auxiliary_column_definition …
+  2091→typedef enum {
+  2111→int vec0_parse_metadata_column_definition …
+  2171→int vec0_parse_primary_key_definition …
+  2236→enum Vec0DistanceMetrics {
+  2242→struct VectorColumnDefinition {
+  2250→struct Vec0PartitionColumnDefinition {
+  2256→struct Vec0AuxiliaryColumnDefinition {
+  2261→struct Vec0MetadataColumnDefinition {
+  2294→int vec0_parse_vector_column …
+  2429→typedef struct vec_each_vtab vec_each_vtab;
+  2430→struct vec_each_vtab {
+  2434→typedef struct vec_each_cursor vec_each_cursor;
+  2435→struct vec_each_cursor {
+  2622→enum NpyTokenType {
+  2635→struct NpyToken {
+  2718→struct NpyScanner {
+  2876→typedef struct vec_npy_each_vtab vec_npy_each_vtab;
+  2877→struct vec_npy_each_vtab {
+  2881→typedef enum {
+  2886→typedef struct vec_npy_each_cursor vec_npy_each_cursor;
+  2887→struct vec_npy_each_cursor {
+  3384→#define VEC0_SHADOW_CHUNKS_CREATE                                              \
+  3394→#define VEC0_SHADOW_ROWIDS_CREATE_BASIC                                        \
+  3405→#define VEC0_SHADOW_ROWIDS_CREATE_PK_TEXT                                      \
+  3414→#define VEC0_SHADOW_VECTOR_N_NAME "\"%w\".\"%w_vector_chunks%02d\""
+  3417→#define VEC0_SHADOW_VECTOR_N_CREATE                                            \
+  3431→typedef struct vec0_vtab vec0_vtab;
+  3442→typedef enum {
+  3456→struct vec0_vtab {
+  3582→void vec0_free_resources …
+  3600→void vec0_free …
+  3632→int vec0_column_distance_idx …
+  3643→int vec0_column_k_idx …
+  3652→int vec0_column_idx_is_vector …
+  3662→int vec0_column_idx_to_vector_idx …
+  3670→int vec0_column_idx_is_partition …
+  3680→int vec0_column_idx_to_partition_idx …
+  3689→int vec0_column_idx_is_auxiliary …
+  3699→int vec0_column_idx_to_auxiliary_idx …
+  3708→int vec0_column_idx_is_metadata …
+  3718→int vec0_column_idx_to_metadata_idx …
+  3735→int vec0_get_chunk_position …
+  3805→int vec0_get_id_value_from_rowid …
+  3880→int vec0_get_vector_data …
+  3962→int vec0_get_partition_value_for_rowid …
+  4008→int vec0_get_auxiliary_value_for_rowid …
+  4048→int vec0_result_metadata_value_for_rowid …
+  4409→int vec0_new_chunk …
+  4549→struct vec0_query_fullscan_data {
+  4564→struct vec0_query_knn_data {
+  4587→struct vec0_query_point_data {
+  4601→typedef enum {
+  4609→typedef struct vec0_cursor vec0_cursor;
+  4610→struct vec0_cursor {
+  5305→typedef enum  {
+  5328→typedef enum  {
+  5349→typedef enum  {
+  5360→typedef enum {
+  5867→int min_idx …
+  5948→int vec0_chunks_iter …
+  6033→struct Vec0MetadataIn{
+  6043→struct Vec0MetadataInTextEntry {
+  6368→int vec0_set_metadata_filter_bitmap …
+  7708→int vec0Update_InsertRowidStep …
+  7778→int vec0Update_InsertNextAvailableStep …
+  7969→int vec0Update_InsertWriteFinalStep …
+  8248→int vec0Update_Insert …
+  9085→struct static_blob_definition {
+  9113→typedef struct static_blob static_blob;
+  9114→struct static_blob {
+  9122→typedef struct vec_static_blob_data vec_static_blob_data;
+  9123→struct vec_static_blob_data {
+  9127→typedef struct vec_static_blobs_vtab vec_static_blobs_vtab;
+  9128→struct vec_static_blobs_vtab {
+  9133→typedef struct vec_static_blobs_cursor vec_static_blobs_cursor;
+  9134→struct vec_static_blobs_cursor {
+  9330→typedef struct vec_static_blob_entries_vtab vec_static_blob_entries_vtab;
+  9331→struct vec_static_blob_entries_vtab {
+  9335→typedef enum {
+  9340→struct sbe_query_knn_data {
+  9363→typedef struct vec_static_blob_entries_cursor vec_static_blob_entries_cursor;
+  9364→struct vec_static_blob_entries_cursor {
+
+tests/conftest.py
+     6→def db():
+
+tmp-static.py
+    25→def register_np(array, name):

@@ -1,0 +1,108 @@
+---
+source: test/fixtures.rs
+expression: output
+---
+budget: 1000 (990 tokens)
+
+ast.rs
+     1→use crate::attr::{self, Attrs};
+     2→use crate::generics::ParamsInScope;
+     3→use crate::unraw::{IdentUnraw, MemberUnraw};
+    10→pub enum Input<'a> {
+    15→pub struct Struct<'a> {
+    22→pub struct Enum<'a> {
+    29→pub struct Variant<'a> {
+    36→pub struct Field<'a> {
+    45→pub enum ContainerKind {
+    46→    Struct,
+    47→    TupleStruct,
+    48→    UnitStruct,
+      →    …
+    55→    pub fn from_syn(node: &'a DeriveInput) -> Result<Self> {
+
+attr.rs
+    11→pub struct Attrs<'a> {
+    21→pub struct Display<'a> {
+    33→pub struct Source<'a> {
+    39→pub struct From<'a> {
+    45→pub struct Transparent<'a> {
+    51→pub struct Fmt<'a> {
+    57→pub enum Trait {
+    69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
+
+expand.rs
+     1→use crate::ast::{Enum, Field, Input, Struct};
+     2→use crate::attr::Trait;
+     3→use crate::fallback;
+     4→use crate::generics::InferredBounds;
+     5→use crate::private;
+     6→use crate::unraw::MemberUnraw;
+    12→pub fn derive(input: &DeriveInput) -> TokenStream {
+
+fallback.rs
+     1→use crate::expand::call_site_ident;
+     2→use crate::private;
+
+fmt.rs
+     1→use crate::ast::{ContainerKind, Field};
+     2→use crate::attr::{Display, Trait};
+     3→use crate::private;
+     4→use crate::scan_expr::scan_expr;
+     5→use crate::unraw::{IdentUnraw, MemberUnraw};
+    15→impl Display<'_> {
+    16→    pub fn expand_shorthand …
+   166→struct FmtArguments {
+   172→fn explicit_named_args …
+
+generics.rs
+     8→pub struct ParamsInScope<'a> {
+    13→    pub fn new(generics: &'a Generics) -> Self {
+    19→    pub fn intersects(&self, ty: &Type) -> bool {
+    26→fn crawl …
+    48→pub struct InferredBounds {
+    54→    pub fn new() -> Self {
+    61→    pub fn insert(&mut self, ty: impl ToTokens, bound: impl ToTokens) {
+    74→    pub fn augment_where_clause(&self, generics: &Generics) -> WhereClause {
+
+lib.rs
+    23→mod ast;
+    24→mod attr;
+    25→mod expand;
+    26→mod fallback;
+    27→mod fmt;
+    28→mod generics;
+    29→mod prop;
+    30→mod scan_expr;
+    31→mod unraw;
+    32→mod valid;
+    39→#[proc_macro_derive(Error, attributes(backtrace, error, from, source))]
+    40→pub fn derive_error(input: TokenStream) -> TokenStream {
+    46→struct private;
+    48→impl ToTokens for private {
+
+prop.rs
+     1→use crate::ast::{Enum, Field, Struct, Variant};
+     2→use crate::unraw::MemberUnraw;
+
+scan_expr.rs
+     1→use self::{Action::*, Input::*};
+     6→enum Input {
+    25→enum Action {
+
+unraw.rs
+    10→#[derive(Clone)]
+    11→#[repr(transparent)]
+    12→pub struct IdentUnraw(Ident);
+    15→    pub fn new(ident: Ident) -> Self {
+    19→    pub fn to_local(&self) -> Ident {
+    32→    pub fn set_span(&mut self, span: Span) {
+    81→#[derive(Clone)]
+    82→pub enum MemberUnraw {
+    83→    Named(IdentUnraw),
+    84→    Unnamed(Index),
+    85→}
+    88→    pub fn span(&self) -> Span {
+
+valid.rs
+     1→use crate::ast::{Enum, Field, Input, Struct, Variant};
+     2→use crate::attr::Attrs;

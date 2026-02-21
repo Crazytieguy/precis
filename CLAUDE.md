@@ -9,7 +9,13 @@ A CLI tool that extracts a token-efficient summary of a codebase.
 
 ## Architecture
 
-See @README.md for design decisions.
+**Groups:** Symbols are bucketed into groups by shared properties (visibility, kind, file path, file role, documented, config, test, heading depth, first-party import, trait impl). All symbols in a group receive the same rendering treatment.
+
+**Stage progressions:** Each group has an ordered progression of rendering stages. Different kind categories have different progressions (e.g. types show body before doc, sections skip signatures). Doc and Body stages are continuous — each additional line is a separate scheduling item.
+
+**Greedy scheduling:** A priority queue ranks all (group, stage) items by value/cost ratio including prerequisite costs. The algorithm greedily includes the highest-priority item, deducts its cost from the budget, and repeats until nothing fits.
+
+**Line-prefix constraint:** Each output line is a prefix of the actual source line. The tool extracts from source rather than synthesizing representations.
 
 ## Codebase Exploration
 
@@ -47,7 +53,13 @@ If a command that should be allowed is denied, or if project structure changes s
 
 ## Testing
 
-- Snapshot tests using real open-source projects (cloned into `test/fixtures/`, gitignored)
-- Token budget tests reuse the same test cases
+- Fixture data is defined once in `test/fixtures.rs`, shared by snapshot tests and the clone binary
+- Run `cargo run --bin clone_fixtures` to clone all missing fixtures
+- Each entry has a single budget matching its real use case (1000/2000/4000)
 - Always run tests in release mode: `cargo test --release` (debug mode is much slower)
-- Always run `cargo bench --bench hot_path --quick` after tests to catch performance regressions. If benchmark times increase significantly, note it in `issues.md` or revert the change.
+- Always run `cargo bench --bench hot_path -- --quick` after changes to catch performance regressions
+- When inspecting snapshot changes, read the diffs as a user would — check for regressions (lost useful content, gained noise)
+
+## Code Health
+
+Log any issues noticed during work in `issues.md`, even if tiny — concrete bugs, DRY violations, stale heuristics, unclear code. Keeping this file current is important for long-term codebase health. When an issue is resolved, remove it from the file.

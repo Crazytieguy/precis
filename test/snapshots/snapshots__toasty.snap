@@ -1,0 +1,478 @@
+---
+source: test/fixtures.rs
+expression: output
+---
+budget: 4000 (4001 tokens)
+
+Cargo.toml
+     1→[workspace]
+    37→[workspace.dependencies]
+
+README.md
+     1→# Toasty
+    11→## Using Toasty
+    76→## SQL and NoSQL
+    91→## Application data model vs. database schema
+    98→## Current status and roadmap
+   111→## License
+   117→### Contribution
+
+compose.yaml
+    19→name: toasty
+    20→version: "3.8"
+    22→services:
+
+crates/std-util/src/lib.rs
+     1→pub mod num;
+     2→pub mod option;
+     3→pub mod result;
+     4→pub mod slice;
+     5→pub mod str;
+     7→pub mod prelude {
+     8→    pub use crate::{ …
+
+crates/std-util/src/option.rs
+     1→#[macro_export]
+     2→macro_rules! assert_none {
+
+crates/std-util/src/result.rs
+     2→macro_rules! assert_err {
+    22→macro_rules! assert_ok {
+
+crates/std-util/src/slice.rs
+     4→pub trait SliceUtil {
+     6→    fn is_unique …
+    15→    fn shuffle …
+    26→macro_rules! assert_unique {
+    40→macro_rules! assert_empty {
+
+crates/toasty/src/apply_update.rs
+     9→pub trait ApplyUpdate {
+    14→    fn apply_result(self, values: Vec<Value>) -> Result<()>;
+    19→pub struct Query;
+
+crates/toasty/src/cursor.rs
+     6→pub struct Cursor<M> {
+    12→pub trait FromCursor<A>: Extend<A> + Default {}
+    36→    pub async fn collect …
+
+crates/toasty/src/db/builder.rs
+    17→pub struct Builder {
+
+crates/toasty/src/db/connect.rs
+    14→pub struct Connect {
+
+crates/toasty/src/db/pool.rs
+    18→pub struct PoolConfig {
+    41→pub struct Pool {
+   119→pub struct PoolConnection {
+
+crates/toasty/src/db.rs
+    18→pub struct Db {
+    37→    pub async fn all …
+    69→    pub async fn exec …
+   114→    pub async fn push_schema …
+   124→    pub async fn reset_db …
+
+crates/toasty/src/lib.rs
+     7→pub mod cursor;
+    10→pub mod db;
+    21→pub mod relation;
+    24→pub mod schema;
+    26→pub mod stmt;
+    35→    pub use crate::{ …
+    57→pub mod driver {
+
+crates/toasty/src/model.rs
+    12→pub fn generate_unique_id() -> ModelId {
+    26→pub trait Register {
+    30→    fn id() -> ModelId;
+    33→    fn schema() -> app::Model;
+    41→pub trait Model: Register + Sized {
+    57→    fn load(value: stmt::Value) -> Result<Self, Error>;
+    65→pub trait Embed: Register {
+
+crates/toasty/src/page.rs
+    10→pub struct Page<M> {
+    40→    pub fn has_next(&self) -> bool {
+    45→    pub fn has_prev(&self) -> bool {
+    65→    pub async fn next(&self, db: &Db) -> Result<Option<Page<M>>> {
+    93→    pub async fn prev(&self, db: &Db) -> Result<Option<Page<M>>> {
+
+crates/toasty-cli/src/config.rs
+     9→pub struct Config {
+    16→    pub fn new() -> Self {
+    21→    pub fn load() -> Result<Self> {
+    29→    pub fn migration(mut self, migration: MigrationConfig) -> Self {
+
+crates/toasty-cli/src/lib.rs
+    13→pub struct ToastyCli {
+    14→    db: Db,
+      →    …
+    20→    pub fn new …
+    28→    pub fn with_config …
+    33→    pub fn config …
+    38→    pub async fn parse_and_run …
+    44→    pub async fn parse_from …
+    64→struct Cli {
+    70→enum Command {
+
+crates/toasty-cli/src/migration/config.rs
+     6→pub struct MigrationConfig {
+    27→pub enum MigrationPrefixStyle {
+
+crates/toasty-cli/src/migration/history_file.rs
+    11→pub struct HistoryFile {
+    20→pub struct HistoryFileMigration {
+
+crates/toasty-cli/src/migration.rs
+    25→pub struct MigrationCommand {
+
+crates/toasty-cli/src/theme.rs
+     5→pub fn dialoguer_theme() -> ColorfulTheme {
+
+crates/toasty-codegen/src/schema/auto.rs
+     2→pub enum AutoStrategy {
+     9→pub enum UuidVersion {
+
+crates/toasty-core/src/driver/capability.rs
+     4→pub struct Capability {
+    61→pub struct StorageTypes {
+   103→pub struct SchemaMutations {
+
+crates/toasty-core/src/driver/response.rs
+     4→pub struct Response {
+     9→pub enum Rows {
+    66→    pub fn into_count(self) -> u64 {
+
+crates/toasty-core/src/driver.rs
+     7→pub mod operation;
+    18→pub trait Driver: Debug + Send + Sync + 'static {
+    20→    fn url …
+    23→    fn capability …
+    29→    async fn connect …
+    33→    fn max_connections …
+    38→    fn generate_migration …
+    41→    async fn reset_db …
+    45→pub trait Connection: Debug + Send + 'static {
+    47→    async fn exec …
+    51→    async fn push_schema …
+    54→    async fn applied_migrations …
+    57→    async fn apply_migration …
+
+crates/toasty-core/src/error.rs
+    36→pub struct Error {
+    41→pub trait IntoError {
+    43→    fn into_error(self) -> Error;
+    47→struct ErrorInner {
+    53→enum ErrorKind {
+    76→    pub fn context(self, consequent: impl IntoError) -> Error {
+
+crates/toasty-core/src/lib.rs
+     2→mod macros;
+     4→pub mod driver;
+    10→pub mod schema;
+    13→pub mod stmt;
+    16→pub type Result …
+
+crates/toasty-core/src/macros.rs
+     1→#[macro_export]
+     2→macro_rules! path {
+
+crates/toasty-core/src/schema/app/auto.rs
+     3→pub enum AutoStrategy {
+     9→pub enum UuidVersion {
+    19→    pub fn is_increment(&self) -> bool {
+
+crates/toasty-core/src/schema/app/field.rs
+    11→pub struct Field {
+    36→pub struct FieldId {
+    42→pub struct FieldName {
+    54→pub enum FieldTy {
+
+crates/toasty-core/src/schema/app/fk.rs
+     4→pub struct ForeignKey {
+     9→pub struct ForeignKeyField {
+
+crates/toasty-core/src/schema/app/index.rs
+     5→pub struct Index {
+    20→pub struct IndexId {
+    26→pub struct IndexField {
+
+crates/toasty-core/src/schema/app/model.rs
+     6→pub struct Model {
+    23→pub enum ModelKind {
+    31→pub struct ModelRoot {
+    41→pub struct ModelId(pub usize);
+
+crates/toasty-core/src/schema/app/schema.rs
+     7→pub struct Schema {
+
+crates/toasty-core/src/schema/builder.rs
+    11→pub struct Builder {
+
+crates/toasty-core/src/schema/db/column.rs
+    12→pub struct Column {
+    39→pub struct ColumnId {
+
+crates/toasty-core/src/schema/db/index.rs
+    12→pub struct Index {
+    34→pub struct IndexId {
+    41→pub struct IndexColumn {
+    54→pub enum IndexOp {
+    61→pub enum IndexScope {
+
+crates/toasty-core/src/schema/db/migration.rs
+     2→pub enum Migration {
+    32→pub struct AppliedMigration {
+
+crates/toasty-core/src/schema/db/schema.rs
+     7→pub struct Schema {
+
+crates/toasty-core/src/schema/db/table.rs
+    16→pub struct Table {
+    34→pub struct TableId(pub usize);
+    53→    pub fn resolve …
+
+crates/toasty-core/src/schema/mapping/field.rs
+    14→pub enum Field {
+   105→pub struct FieldPrimitive {
+   140→pub struct FieldEmbedded {
+   180→pub struct FieldRelation {
+
+crates/toasty-core/src/schema/mapping/model.rs
+    19→pub struct Model {
+    74→pub struct TableToModel {
+
+crates/toasty-core/src/schema/mapping.rs
+    18→pub struct Mapping {
+
+crates/toasty-core/src/schema/name.rs
+     4→pub struct Name {
+
+crates/toasty-core/src/schema.rs
+     1→pub mod app;
+     6→pub mod db;
+     8→pub mod mapping;
+    22→pub struct Schema {
+
+crates/toasty-core/src/stmt/assignments.rs
+     9→pub struct Assignments {
+    18→pub struct Assignment {
+    27→pub enum AssignmentOp {
+   106→    pub fn insert …
+
+crates/toasty-core/src/stmt/delete.rs
+     5→pub struct Delete {
+
+crates/toasty-core/src/stmt/expr_reference.rs
+    20→pub enum ExprReference {
+    50→pub struct ExprColumn {
+
+crates/toasty-core/src/stmt/filter.rs
+     4→pub struct Filter {
+    10→    pub const ALL …
+
+crates/toasty-core/src/stmt/join.rs
+     4→pub struct Join {
+    13→pub enum JoinOp {
+
+crates/toasty-core/src/stmt/path.rs
+     8→pub struct Path {
+
+crates/toasty-core/src/stmt/query.rs
+     8→pub struct Query {
+    32→pub enum Lock {
+    38→pub struct QueryBuilder {
+
+crates/toasty-core/src/stmt/select.rs
+     8→pub struct Select {
+
+crates/toasty-core/src/stmt/source.rs
+    11→pub enum Source {
+    20→pub struct SourceModel {
+
+crates/toasty-core/src/stmt/update.rs
+     8→pub struct Update {
+    32→pub enum UpdateTarget {
+
+crates/toasty-core/src/stmt/value.rs
+     6→pub enum Value {
+
+crates/toasty-core/src/stmt.rs
+   235→pub mod visit_mut;
+   243→pub mod visit;
+   253→pub enum Statement {
+   290→    pub fn as_update(&self) -> Option<&Update> {
+   302→    pub fn into_update(self) -> Option<Update> {
+   314→    pub fn unwrap_update(self) -> Update {
+
+crates/toasty-driver-dynamodb/src/lib.rs
+    30→pub struct DynamoDb {
+    96→pub struct Connection {
+   345→struct ExprAttrs {
+
+crates/toasty-driver-dynamodb/src/type.rs
+     4→pub trait TypeExt {
+     6→    fn to_ddb_type(&self) -> ScalarAttributeType;
+
+crates/toasty-driver-dynamodb/src/value.rs
+     5→pub struct Value(CoreValue);
+    15→    pub fn into_inner(self) -> CoreValue {
+    20→    pub fn from_ddb(ty: &stmt::Type, val: &AttributeValue) -> Self {
+    44→    pub fn to_ddb(&self) -> AttributeValue {
+
+crates/toasty-driver-integration-suite/src/exec_log.rs
+     9→pub struct ExecLog {
+    19→    pub fn len(&self) -> usize {
+    24→    pub fn is_empty(&self) -> bool {
+    29→    pub fn clear(&mut self) {
+    36→    pub fn pop(&mut self) -> (Operation, Response) {
+
+crates/toasty-driver-integration-suite/src/helpers.rs
+     2→pub fn table_id …
+    29→pub fn column …
+    38→pub fn columns …
+
+crates/toasty-driver-integration-suite/src/isolate.rs
+     9→pub struct Isolate {
+    19→    pub fn new() -> Self {
+    27→    pub fn table_prefix(&self) -> String {
+
+crates/toasty-driver-integration-suite/src/lib.rs
+     2→mod macros;
+    22→pub mod stmt;
+    24→/// Test implementations
+    25→pub mod tests;
+
+crates/toasty-driver-integration-suite/src/logging_driver.rs
+    14→pub struct LoggingDriver {
+    31→    pub fn ops_log_handle …
+    63→pub struct DriverOp {
+    70→pub struct LoggingConnection {
+
+crates/toasty-driver-integration-suite/src/macros.rs
+     1→#[macro_export]
+     2→macro_rules! assert_eq_unordered {
+
+crates/toasty-driver-integration-suite/src/setup.rs
+     4→pub trait Setup: Send + Sync + 'static {
+     6→    fn driver(&self) -> Box<dyn Driver>;
+    10→    async fn delete_table(&self, name: &str);
+
+crates/toasty-driver-integration-suite/src/stmt.rs
+    11→pub struct Any;
+    28→pub trait ValueStreamExt {
+    34→    fn buffered(&self) -> Vec<Value>;
+
+crates/toasty-driver-integration-suite/src/test.rs
+    19→pub struct Test {
+    56→    pub async fn try_setup_db …
+    77→    pub async fn setup_db …
+    82→    pub fn capability …
+    87→    pub fn log …
+    92→    pub fn set_serial …
+    97→    pub fn run …
+   127→pub struct TestResult {
+
+crates/toasty-driver-integration-suite-macros/src/lib.rs
+    11→pub fn driver_test(attr: TokenStream, item: TokenStream) -> TokenStream {
+    16→pub fn generate_test_registry(input: TokenStream) -> TokenStream {
+    21→pub fn generate_driver_test_variants(input: TokenStream) -> TokenStream {
+    28→pub fn driver_test_cfg(_input: TokenStream) -> TokenStream {
+
+crates/toasty-driver-integration-suite-macros/src/parse.rs
+     4→pub trait ExpansionList {
+     7→    fn needs_module_wrapper …
+    18→pub struct DriverTest {
+    40→pub enum ThreeValuedBool {
+    48→    pub fn or …
+    57→    pub fn and …
+    66→    pub fn not …
+    77→pub struct Expansion {
+    93→    pub fn name …
+   114→    pub fn is_ident_true …
+   140→    pub fn should_include …
+   203→    pub fn has_expansion …
+   208→    pub fn to_ident …
+   220→pub enum BoolExpr {
+   233→pub enum KindVariant {
+   242→    pub fn name …
+   252→pub struct DriverTestAttr {
+   263→    pub fn from_attribute …
+   380→    pub fn parse …
+   430→    pub fn from_item_fn …
+
+crates/toasty-driver-mysql/src/lib.rs
+    22→pub struct MySQL {
+   133→pub struct Connection {
+
+crates/toasty-driver-mysql/src/value.rs
+     5→pub struct Value(CoreValue);
+    15→    pub fn into_inner …
+    20→    pub fn from_sql …
+
+crates/toasty-driver-postgresql/src/lib.rs
+    24→pub struct PostgreSQL {
+    31→    pub fn new …
+   178→pub struct Connection {
+   185→    pub fn new …
+   195→    pub async fn connect …
+   215→    pub async fn create_table …
+
+crates/toasty-driver-postgresql/src/statement_cache.rs
+     9→pub struct StatementCache {
+    15→    pub fn new …
+    56→    pub fn new …
+
+crates/toasty-driver-postgresql/src/type.rs
+     4→pub trait TypeExt {
+     6→    fn to_postgres_type(&self) -> Type;
+
+crates/toasty-driver-postgresql/src/value.rs
+     8→pub struct Value(pub(crate) CoreValue);
+    18→    pub fn into_inner …
+    23→    pub fn from_sql …
+
+crates/toasty-driver-sqlite/src/lib.rs
+    23→pub enum Sqlite {
+    30→    pub fn new(url: impl Into<String>) -> Result<Self> {
+    49→    pub fn in_memory() -> Self {
+    54→    pub fn open<P: AsRef<Path>>(path: P) -> Self {
+   123→pub struct Connection {
+
+crates/toasty-driver-sqlite/src/value.rs
+     8→pub struct Value(CoreValue);
+    18→    pub fn into_inner …
+    23→    pub fn from_sql …
+
+crates/toasty-macros/src/lib.rs
+    18→pub fn derive_embed(input: TokenStream) -> TokenStream {
+    26→pub fn include_schema(_input: TokenStream) -> TokenStream {
+    31→pub fn query(_input: TokenStream) -> TokenStream {
+    36→pub fn create(_input: TokenStream) -> TokenStream {
+
+crates/toasty-sql/src/lib.rs
+     1→pub mod migration;
+     4→pub mod serializer;
+     7→pub mod stmt;
+
+crates/toasty-sql/src/serializer.rs
+     2→mod fmt;
+    36→pub struct InsertContext {
+    43→pub struct Serializer<'a> {
+
+crates/toasty-sql/src/stmt/alter_column.rs
+    12→pub struct AlterColumn {
+    25→pub struct AlterColumnChanges {
+
+crates/toasty-sql/src/stmt/alter_table.rs
+     7→pub struct AlterTable {
+    17→pub enum AlterTableAction {
+
+crates/toasty-sql/src/stmt.rs
+    46→pub enum Statement {
+    69→    pub fn returning_len(&self) -> Option<usize> {
+
+rust-toolchain.toml
+     1→[toolchain]

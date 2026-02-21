@@ -1,0 +1,105 @@
+---
+source: test/fixtures.rs
+expression: output
+---
+budget: 1000 (1025 tokens)
+
+comparator.js
+     3→const ANY = Symbol('SemVer ANY')
+     5→class Comparator {
+     6→  static get ANY () {
+     7→    return ANY
+     8→  }
+    10→  constructor (comp, options) {
+    11→    options = parseOptions(options)
+    12→
+    13→    if (comp instanceof Comparator) {
+      →    …
+    36→  parse (comp) {
+    37→    const r = this.options.loose ? re[t.COMPARATORLOOSE] : re[t.COMPARATOR]
+    38→    const m = comp.match(r)
+    39→
+      →…
+    57→  toString () {
+    58→    return this.value
+    59→  }
+    61→  test (version) {
+    62→    debug('Comparator.test', version, this.options.loose)
+    63→
+    64→    if (this.semver === ANY || version === ANY) {
+      →    …
+    79→  intersects (comp, options) {
+    80→    if (!(comp instanceof Comparator)) {
+    81→      throw new TypeError('a Comparator is required')
+    82→    }
+      →    …
+
+range.js
+     3→const SPACE_CHARACTERS = /\s+/g
+     6→class Range {
+     7→  constructor (range, options) {
+     8→    options = parseOptions(options)
+      →    …
+    73→  get range () {
+    74→    if (this.formatted === undefined) {
+      →    …
+    92→  format () {
+    93→    return this.range
+      →    …
+    96→  toString () {
+    97→    return this.range
+      →    …
+   100→  parseRange (range) {
+   101→    // memoize range parsing for performance.
+      →    …
+   170→  intersects (range, options) {
+   171→    if (!(range instanceof Range)) {
+      →    …
+   193→  test (version) {
+   194→    if (!version) {
+      →    …
+   218→const cache = new LRU()
+   233→const isNullSet = c => c.value === '<0.0.0-0'
+   234→const isAny = c => c.value === ''
+   238→const isSatisfiable = (comparators, options) => {
+   257→const parseComparator = (comp, options) => {
+   271→const isX = id => !id || id.toLowerCase() === 'x' || id === '*'
+   280→const replaceTildes = (comp, options) => {
+   288→const replaceTilde = (comp, options) => {
+   324→const replaceCarets = (comp, options) => {
+   332→const replaceCaret = (comp, options) => {
+   385→const replaceXRanges = (comp, options) => {
+   393→const replaceXRange = (comp, options) => {
+   470→const replaceStars = (comp, options) => {
+   478→const replaceGTE0 = (comp, options) => {
+   491→const hyphenReplace = incPr => ($0,
+   492→  from, fM, fm, fp, fpr, fb,
+   493→  to, tM, tm, tp, tpr) => {
+   523→const testSet = (set, version, options) => {
+
+semver.js
+     9→class SemVer {
+    10→  constructor (version, options) {
+    11→    options = parseOptions(options)
+      →    …
+    81→  format () {
+    82→    this.version = `${this.major}.${this.minor}.${this.patch}`
+      →    …
+    89→  toString () {
+    90→    return this.version
+      →    …
+    93→  compare (other) {
+    94→    debug('SemVer.compare', this.version, this.options, other)
+      →    …
+   109→  compareMain (other) {
+   110→    if (!(other instanceof SemVer)) {
+      →    …
+   135→  comparePre (other) {
+   136→    if (!(other instanceof SemVer)) {
+      →    …
+   168→  compareBuild (other) {
+   169→    if (!(other instanceof SemVer)) {
+      →    …
+   194→  inc (release, identifier, identifierBase) {
+   195→    if (release.startsWith('pre')) {
+      →    …

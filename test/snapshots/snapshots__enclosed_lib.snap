@@ -1,0 +1,93 @@
+---
+source: test/fixtures.rs
+expression: output
+---
+budget: 1000 (1000 tokens)
+
+README.md
+     1→### Enclosed lib
+     5→## Installation
+    18→## Usage
+    33→## License
+    37→## Credits and Acknowledgements
+
+package.json
+     2→  "name": "@enclosed/lib",
+     3→  "type": "module",
+     4→  "version": "1.16.0",
+     5→  "packageManager": "pnpm@9.15.0",
+     6→  "description": "Enclosed lib to create secure notes.",
+     7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
+     8→  "license": "Apache-2.0",
+     9→  "repository": {
+    13→  "exports": {
+    19→  "main": "./dist/index.cjs",
+    20→  "types": "./dist/index.d.ts",
+    21→  "files": [
+    24→  "engines": {
+    27→  "react-native": "./dist/index.web.mjs",
+    28→  "scripts": {
+    39→  "dependencies": {
+    47→  "devDependencies": {
+
+src/api/api.client.ts
+     2→import { DEFAULT_API_BASE_URL } from './api.constants';
+
+src/api/api.constants.ts
+     1→export const DEFAULT_API_BASE_URL = 'https://enclosed.cc';
+
+src/crypto/crypto.constants.ts
+     1→export const ENCRYPTION_ALGORITHM_AES_256_GCM = 'aes-256-gcm';
+     2→export const ENCRYPTION_ALGORITHMS = [ENCRYPTION_ALGORITHM_AES_256_GCM] as const;
+     4→export const KEY_DERIVATION_ALGORITHM_PBKDF2_BASE_KEY_SALTED = 'pbkdf2-base-key-salted';
+     5→export const KEY_DERIVATION_ALGORITHMS = [KEY_DERIVATION_ALGORITHM_PBKDF2_BASE_KEY_SALTED] as const;
+     7→export const COMPRESSION_ALGORITHM_BROTLI = 'brotli';
+     8→export const COMPRESSION_ALGORITHM_NONE = 'none';
+     9→export const COMPRESSION_ALGORITHMS = [COMPRESSION_ALGORITHM_BROTLI, COMPRESSION_ALGORITHM_NONE] as const;
+
+src/crypto/crypto.types.ts
+     3→export type EncryptionAlgorithm = typeof ENCRYPTION_ALGORITHMS[number];
+     4→export type KeyDerivationAlgorithm = typeof KEY_DERIVATION_ALGORITHMS[number];
+     5→export type CompressionAlgorithm = typeof COMPRESSION_ALGORITHMS[number];
+     7→export type CryptoServices = {
+
+src/crypto/encryption-algorithms/encryption-algorithms.types.ts
+     3→export type EncryptionMethodsDefinition = ReturnType<typeof defineEncryptionMethods>;
+
+src/crypto/serialization/cbor-array/cbor-array.serialization.ts
+     5→export const cborArraySerializationDefinition = defineSerializationMethods({
+
+src/crypto/serialization/serialization.registry.ts
+     7→export const serializationMethodDefinitions = [
+    11→export const serializationMethodDefinitionsByName: Record<string, SerializationMethodsDefinition> = keyBy(serializationMethodDefinitions, 'name');
+    12→export const serializationFormats = map(serializationMethodDefinitions, 'name');
+
+src/crypto/serialization/serialization.types.ts
+     4→export type SerializationMethodsDefinition = ReturnType<typeof defineSerializationMethods>;
+     5→export type SerializationFormat = typeof serializationMethodDefinitions[number]['name'];
+
+src/files/files.models.ts
+     1→import type { NoteAsset } from '../notes/notes.types';
+
+src/index.ts
+
+src/notes/notes.services.ts
+     1→import { apiClient } from '../api/api.client';
+
+src/notes/notes.types.ts
+     4→export type NoteAsset = {
+    12→export type Note = {
+    17→export type EncryptedNote = {
+
+src/notes/notes.usecases.ts
+     1→import type { EncryptionAlgorithm } from '../crypto/crypto.types';
+     2→import type { SerializationFormat } from '../crypto/serialization/serialization.types';
+     3→import type { NoteAsset } from './notes.types';
+     4→import { encryptNote } from '../crypto/crypto.usecases';
+     5→import { createNoteUrl } from './notes.models';
+     6→import { storeNote as storeNoteImpl } from './notes.services';
+    10→const BASE_URL = 'https://enclosed.cc';
+
+tsconfig.json
+     2→  "compilerOptions": {
+     9→  "include": [

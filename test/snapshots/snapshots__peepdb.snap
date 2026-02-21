@@ -1,0 +1,190 @@
+---
+source: test/fixtures.rs
+expression: output
+---
+budget: 2000 (1998 tokens)
+
+README.md
+     1→# peepDB
+     5→## 🚀 Features
+    15→## 🎬 peepDB in Action
+    21→## 🖼️ peepDB stills
+    27→## 📦 Installation
+    35→## 🛠️ Usage
+    39→### 1. Save Your Database Connection Details
+    61→### 2. List Saved Connections
+    74→### 3. View Tables
+   103→### 4. Pagination
+   115→### 5. Choose Output Format
+   142→### 6. Remove Saved Connections
+   154→## 🔒 Security
+   162→## 🤝 Contributing
+   166→## 📜 License
+   170→## 📚 Documentation
+
+peepdb/__main__.py
+     1→from .cli import main
+
+peepdb/cli.py
+     1→import click
+     2→import json
+     3→from .core …
+     4→from .config …
+    11→from .exceptions …
+    12→from decimal import Decimal
+    13→from datetime import date
+    14→import logging
+    16→class CustomEncoder(json.JSONEncoder):
+    17→    def default(self, obj):
+    27→def cli():
+    65→def save(connection_name, db_type, host, port, user, password, database, trusted):
+    87→def list():
+   100→def remove(connection_name):
+   115→def remove_all():
+   133→def view(connection_name, table, format, page, page_size, scientific):
+   181→def main():
+
+peepdb/config.py
+    13→from .exceptions import InvalidPassword
+    15→@dataclass
+    16→class KeySecurity:
+    17→    KEYRING = "os-keyring"
+    18→    PASSWORD = "password"
+    20→CONFIG_DIR = os.path.expanduser("~/.peepdb")
+    21→CONFIG_FILE = os.path.join(CONFIG_DIR, "config.json")
+    22→SECURITY_CONFIG_FILE = os.path.join(CONFIG_DIR, "security_config.json")
+    23→KEYRING_USERNAME = "PEEP_DB_KEY"
+    24→KEYRING_SERVICE_NAME = "PEEP_DB"
+    30→def generate_key_from_password(salt):
+    42→def fetch_key_from_keyring():
+    49→def get_key_security_config():
+    60→def get_key():
+    70→def encrypt(message: str) -> str:
+    73→def decrypt(token: str) -> str:
+    76→def save_connection(name, db_type, host, port, user, password, database, trusted):
+   112→def get_connection(name):
+   144→def list_connections():
+   161→def remove_connection(name):
+   178→def remove_all_connections():
+   196→def add_key_security():
+
+peepdb/core.py
+     1→from tabulate …
+     2→import logging …
+     3→from typing …
+     4→from datetime …
+     5→from decimal …
+     7→from .db …
+    27→def connect_to_database …
+    56→def peep_db …
+   101→def format_as_table …
+   118→def format_value …
+
+peepdb/db/__init__.py
+     1→from .base import BaseDatabase
+     2→from .mysql import MySQLDatabase
+     3→from .postgresql import PostgreSQLDatabase
+     4→from .mariadb import MariaDBDatabase
+     5→from .mongodb import MongoDBDatabase
+     6→from .sqlite import SQLiteDatabase
+     7→from .firebase import FirebaseDatabase
+     8→from .mssql import MSSQLDatabase
+     9→from .oracle import OracleDatabase
+    11→__all__ = [
+
+peepdb/db/base.py
+     1→from abc …
+     2→from typing …
+     3→import logging …
+     5→class BaseDatabase(ABC):
+     6→    def __init__(self, host: str, user: str, password: str, database: str, port: int = None, **kwargs):
+    18→    def connect(self) -> None:
+    22→    def disconnect(self) -> None:
+    26→    def fetch_tables(self) -> List[str]:
+    30→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
+    33→    def __enter__(self):
+    37→    def __exit__(self, exc_type, exc_val, exc_tb):
+
+peepdb/db/firebase.py
+     4→from .base import BaseDatabase
+     9→class FirebaseDatabase(BaseDatabase):
+    10→    def __init__(self, service_account_path: str, **kwargs):
+    15→    def connect(self):
+    26→    def disconnect(self):
+    30→    def fetch_tables(self) -> List[str]:
+    39→    def fetch_data(self, table_name: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
+
+peepdb/db/mariadb.py
+     1→import pymysql …
+     2→from .base import BaseDatabase
+     3→from typing …
+     5→class MariaDBDatabase(BaseDatabase):
+     6→    def connect(self) -> None:
+    23→    def disconnect(self) -> None:
+    30→    def fetch_tables(self) -> List[str]:
+    34→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
+
+peepdb/db/mongodb.py
+     3→from .base import BaseDatabase
+     8→class MongoDBDatabase(BaseDatabase):
+     9→    def connect …
+    32→    def disconnect …
+    39→    def fetch_tables …
+    42→    def fetch_data …
+
+peepdb/db/mssql.py
+     2→from .base import BaseDatabase
+     6→class MSSQLDatabase(BaseDatabase):
+     7→    def __init__(self, host: str, user: str, password: str, database: str, port: int = 1433, trusted: bool = False, **kwargs):
+    12→    def connect(self) -> None:
+    28→    def disconnect(self) -> None:
+    35→    def fetch_tables(self) -> List[str]:
+    45→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
+
+peepdb/db/mysql.py
+     1→import mysql.connector …
+     2→from .base import BaseDatabase
+     3→from typing …
+     5→class MySQLDatabase(BaseDatabase):
+     6→    def connect(self) -> None:
+    22→    def disconnect(self) -> None:
+    29→    def fetch_tables(self) -> List[str]:
+    33→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
+
+peepdb/db/oracle.py
+     3→from .base import BaseDatabase
+     7→class OracleDatabase(BaseDatabase):
+     8→    def connect(self) -> None:
+    25→    def disconnect(self) -> None:
+    32→    def fetch_tables(self) -> List[str]:
+    36→    def fetch_data(
+    37→        self, table: str, page: int = 1, page_size: int = 100
+    38→    ) -> Dict[str, Any]:
+
+peepdb/db/postgresql.py
+     3→from .base import BaseDatabase
+     6→class PostgreSQLDatabase(BaseDatabase):
+     7→    def connect(self) -> None:
+    23→    def disconnect(self) -> None:
+    30→    def fetch_tables(self) -> List[str]:
+    34→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
+
+peepdb/db/sqlite.py
+     3→from .base import BaseDatabase
+     6→class SQLiteDatabase(BaseDatabase):
+     7→    def connect(self) -> None:
+    22→    def disconnect(self) -> None:
+    29→    def fetch_tables(self) -> List[str]:
+    43→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
+
+peepdb/exceptions.py
+     1→class InvalidPassword(Exception):
+     2→    pass
+
+project.toml
+     1→[build-system]
+     5→[project]
+    35→[project.optional-dependencies]
+    42→[project.urls]
+    46→[project.scripts]
+    49→[tool.setuptools.packages.find]

@@ -1,0 +1,183 @@
+---
+source: test/fixtures.rs
+expression: output
+---
+budget: 2000 (2009 tokens)
+
+FUNDING.yml
+     1→github: emilkowalski
+
+package.json
+     2→  "name": "vaul",
+     3→  "version": "1.1.2",
+     4→  "description": "Drawer component for React.",
+     5→  "main": "./dist/index.js",
+     6→  "module": "./dist/index.mjs",
+     7→  "types": "./dist/index.d.ts",
+     8→  "files": [
+    12→  "exports": {
+    22→  "scripts": {
+    31→  "keywords": [
+    37→  "author": "Emil Kowalski <e@emilkowal.ski>",
+    38→  "license": "MIT",
+    39→  "homepage": "https://vaul.emilkowal.ski/",
+    40→  "repository": {
+    44→  "bugs": {
+    47→  "devDependencies": {
+    61→  "peerDependencies": {
+    65→  "packageManager": "pnpm@8.8.0",
+    66→  "dependencies": {
+
+pnpm-workspace.yaml
+     1→packages:
+
+src/browser.ts
+     1→export function isMobileFirefox(): boolean | undefined {
+    10→export function isMac(): boolean | undefined {
+    14→export function isIPhone(): boolean | undefined {
+    18→export function isSafari(): boolean | undefined {
+    22→export function isIPad(): boolean | undefined {
+    30→export function isIOS(): boolean | undefined {
+    34→export function testPlatform(re: RegExp): boolean | undefined {
+
+src/constants.ts
+     1→export const TRANSITIONS = {
+     6→export const VELOCITY_THRESHOLD = 0.4;
+     8→export const CLOSE_THRESHOLD = 0.25;
+    10→export const SCROLL_LOCK_TIMEOUT = 100;
+    12→export const BORDER_RADIUS = 8;
+    14→export const NESTED_DISPLACEMENT = 16;
+    16→export const WINDOW_TOP_OFFSET = 26;
+    18→export const DRAG_CLASS = 'vaul-dragging';
+
+src/context.ts
+     1→import React from 'react';
+     2→import { DrawerDirection } from './types';
+     4→interface DrawerContextValue {
+    37→export const DrawerContext = React.createContext<DrawerContextValue>({
+    69→export const useDrawerContext = () => {
+
+src/helpers.ts
+     1→import { AnyFunction, DrawerDirection } from './types';
+     3→interface Style {
+     7→const cache = new WeakMap();
+     9→export function isInView(el: HTMLElement): boolean {
+    23→export function set(el: Element | HTMLElement | null | undefined, styles: Style, ignoreCache = false) {
+    42→export function reset(el: Element | HTMLElement | null, prop?: string) {
+    59→export const isVertical = (direction: DrawerDirection) => {
+    72→export function getTranslate(element: HTMLElement, direction: DrawerDirection): number | null {
+    90→export function dampenValue(v: number) {
+    94→export function assignStyle(element: HTMLElement | null | undefined, style: Partial<CSSStyleDeclaration>) {
+   106→ * Receives functions as arguments and returns a new function that calls all.
+   108→export function chain<T>(...fns: T[]) {
+
+src/index.tsx
+     5→import { DrawerContext, useDrawerContext } from './context';
+     6→import './style.css';
+     7→import { usePreventScroll, isInput } from './use-prevent-scroll';
+     8→import { useComposedRefs } from './use-composed-refs';
+     9→import { useSnapPoints } from './use-snap-points';
+    10→import { set, getTranslate, dampenValue, isVertical, reset } from './helpers';
+    11→import {
+    12→  TRANSITIONS,
+    13→  VELOCITY_THRESHOLD,
+    14→  CLOSE_THRESHOLD,
+    15→  SCROLL_LOCK_TIMEOUT,
+    16→  BORDER_RADIUS,
+    17→  NESTED_DISPLACEMENT,
+    18→  WINDOW_TOP_OFFSET,
+    19→  DRAG_CLASS,
+    20→} from './constants';
+    21→import { DrawerDirection } from './types';
+    22→import { useControllableState } from './use-controllable-state';
+    23→import { useScaleBackground } from './use-scale-background';
+    24→import { usePositionFixed } from './use-position-fixed';
+    25→import { isIOS, isMobileFirefox } from './browser';
+    27→export interface WithFadeFromProps {
+    28→  /**
+      →  …
+    40→export interface WithoutFadeFromProps {
+    41→  /**
+      →  …
+    50→export type DialogProps = {
+   139→export function Root …
+   803→export const Overlay = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>>(
+   831→export type ContentProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>;
+   833→export const Content = React.forwardRef<HTMLDivElement, ContentProps>(function (
+   989→export type HandleProps = React.ComponentPropsWithoutRef<'div'> & {
+   993→const LONG_HANDLE_PRESS_TIMEOUT = 250;
+   994→const DOUBLE_TAP_TIMEOUT = 120;
+   996→export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(function (
+  1098→export function NestedRoot …
+  1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
+  1130→export function Portal …
+  1137→export const Drawer = {
+
+src/types.ts
+     1→export type DrawerDirection = 'top' | 'bottom' | 'left' | 'right';
+     2→export interface SnapPoint {
+     3→  fraction: number;
+     4→  height: number;
+     5→}
+     7→export type AnyFunction = (...args: any) => any;
+
+src/use-composed-refs.ts
+     5→type PossibleRef …
+    11→function setRef<T>(ref: PossibleRef<T>, value: T) {
+    23→function composeRefs<T>(...refs: PossibleRef<T>[]) {
+    31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
+
+src/use-controllable-state.ts
+     3→import React from 'react';
+    13→function useCallbackRef …
+    24→function useUncontrolledState …
+    39→export function useControllableState<T>({ prop, defaultProp, onChange = () => {} }: UseControllableStateParams<T>) {
+
+src/use-position-fixed.ts
+     1→import React from 'react';
+     2→import { isSafari } from './browser';
+    15→export function usePositionFixed …
+
+src/use-prevent-scroll.ts
+     4→import { isIOS } from './browser';
+     6→const KEYBOARD_BUFFER = 24;
+     8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+    10→interface PreventScrollOptions {
+    16→function chain …
+    27→const visualViewport = typeof document !== 'undefined' && window.visualViewport;
+    29→export function isScrollable(node: Element): boolean {
+    34→export function getScrollParent(node: Element): Element {
+    47→const nonTextInputTypes = new Set([
+    64→ * Prevents scrolling on the document body on mount, and
+      → …
+    68→export function usePreventScroll(options: PreventScrollOptions = {}) {
+   118→function preventScrollMobileSafari …
+   243→function setStyle …
+   257→function addEvent …
+   272→function scrollIntoView …
+   294→export function isInput(target: Element) {
+
+src/use-scale-background.ts
+     2→import { useDrawerContext } from './context';
+     3→import { assignStyle, chain, isVertical, reset } from './helpers';
+     4→import { BORDER_RADIUS, TRANSITIONS, WINDOW_TOP_OFFSET } from './constants';
+     6→const noop = () => () => {};
+     8→export function useScaleBackground() {
+
+src/use-snap-points.ts
+     1→import React from 'react';
+     2→import { set, isVertical } from './helpers';
+     3→import { TRANSITIONS, VELOCITY_THRESHOLD } from './constants';
+     4→import { useControllableState } from './use-controllable-state';
+     5→import { DrawerDirection } from './types';
+     7→export function useSnapPoints …
+
+tsconfig.json
+     2→  "compilerOptions": {
+    10→  "include": ["src"],
+
+turbo.json
+     2→  "$schema": "https://turbo.build/schema.json",
+     3→  "pipeline": {
+    11→  }
+    12→}

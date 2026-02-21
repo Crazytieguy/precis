@@ -1,0 +1,102 @@
+---
+source: test/fixtures.rs
+expression: output
+---
+budget: 1000 (998 tokens)
+
+deps/sco.c
+   140→#define LLCO_NOASM
+   913→enum llco_stack_grows { DOWNWARDS, UPWARDS }; 
+  1128→llco_start …
+  1139→llco_switch …
+  1166→llco_method …
+  1660→struct sco_link {
+  2000→sco_active …
+  2038→sco_unwind …
+
+deps/sco.h
+    16→struct sco_desc {
+    25→void sco_start(struct sco_desc *desc);
+    29→void sco_yield(void);
+    33→int64_t sco_id(void);
+    37→void sco_pause(void);
+    44→void sco_resume(int64_t id);
+    47→bool sco_active(void);
+    55→void sco_detach(int64_t id);
+    62→void sco_attach(int64_t id);
+    69→void sco_exit(void);
+    72→void *sco_udata(void);
+    75→size_t sco_info_scheduled(void);
+    76→size_t sco_info_running(void);
+    77→size_t sco_info_paused(void);
+    78→size_t sco_info_detached(void);
+    79→const char *sco_info_method(void);
+    82→struct sco_symbol {
+    92→int sco_unwind(bool (*func)(struct sco_symbol *sym, void *udata), void *udata);
+
+deps/stack.c
+    22→#define STACK_API static
+    23→struct stack_opts {
+    33→struct stack { char _[32]; };
+    34→struct stack_mgr { char _[320]; };
+    38→#define STACK_API
+    41→struct stack_group {
+    55→struct stack_freed {
+    61→struct stack_mgr0 {
+    79→struct stack0 {
+
+deps/stack.h
+    10→#define STACK_H
+    15→struct stack_opts {
+    26→struct stack { char _[32]; };
+    27→struct stack_mgr { char _[320]; };
+    35→void *stack_addr(struct stack *stack);
+    38→size_t stack_size(struct stack *stack);
+
+deps/worker.c
+    25→struct worker_opts {
+    33→struct worker_entry {
+    38→struct worker_thread {
+    49→struct worker {
+   175→worker_submit …
+
+deps/worker.h
+    10→#define WORKER_H
+    16→struct worker_opts {
+
+neco.c
+   294→#define LLCO_NOASM
+  1067→enum llco_stack_grows { DOWNWARDS, UPWARDS }; 
+  1814→struct sco_link {
+  2883→#define NECO_POLL_DISABLED
+  2957→#define pwhere(str) \
+  2963→#define unreachable() \
+  2970→#define must(cond) \
+  3321→enum cokind { COROUTINE, SELECTCASE };
+  3453→#define error_guard(ret) \
+  3466→#define async_error_guard(ret) \
+  3570→struct runtime {
+  5718→struct neco_chan {
+  5736→struct coselectcase {
+  7082→struct neco_mutex {
+
+neco.h
+    35→int neco_start …
+    61→typedef struct neco_chan neco_chan;
+    90→typedef struct neco_gen neco_gen;
+   113→typedef struct { int64_t _0; intptr_t _1[5]; } neco_mutex;
+   135→typedef struct { int64_t _0; intptr_t _1[5]; } neco_waitgroup;
+   149→typedef struct { int64_t _0; intptr_t _1[5]; } neco_cond;
+   169→ssize_t neco_read …
+   188→int neco_setnonblock …
+   191→#define NECO_WAIT_READ  1
+   206→int neco_serve …
+   220→int neco_cancel …
+   244→#define NECO_CSPRNG 0 // Cryptographically secure pseudorandom number generator
+   261→int neco_signal_watch …
+   276→int neco_work …
+   287→typedef struct neco_stats {
+   314→void neco_env_setallocator …
+   341→#define NECO_NANOSECOND  INT64_C(1)
+   360→#define NECO_OK              0  ///< Successful result (no error)
+   396→typedef struct neco_stream neco_stream;

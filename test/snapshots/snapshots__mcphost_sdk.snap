@@ -1,0 +1,96 @@
+---
+source: test/fixtures.rs
+expression: output
+---
+budget: 1000 (1007 tokens)
+
+README.md
+     1→# MCPHost SDK
+     3→The MCPHost SDK allows you to use MCPHost programmatically from Go applications without spawning OS processes.
+     4→
+     5→## Installation
+     7→```bash
+      →…
+    11→## Basic Usage
+    13→```go
+      →…
+    44→## Configuration
+    46→The SDK behaves identically to the CLI:
+      →…
+    52→### Options
+    67→## Advanced Usage
+    69→### With Tool Callbacks
+    93→### Session Management
+   115→## API Reference
+   117→### Types
+   124→### Methods
+   136→## Environment Variables
+   138→All CLI environment variables work with the SDK:
+      →…
+   146→## License
+   148→Same as MCPHost CLI
+
+examples/basic/main.go
+    11→func main() {
+
+mcphost.go
+     3→import …
+    16→// MCPHost provides programmatic access to mcphost functionality, allowing
+    17→// integration of MCP tools and LLM interactions into Go applications. It manages
+    18→// agents, sessions, and model configurations.
+    19→type MCPHost struct {
+    20→	agent       *agent.Agent
+    21→	sessionMgr  *session.Manager
+    22→	modelString string
+    23→}
+    25→// Options configures MCPHost creation with optional overrides for model,
+    26→// prompts, configuration, and behavior settings. All fields are optional
+    27→// and will use CLI defaults if not specified.
+    28→type Options struct {
+    29→	Model        string // Override model (e.g., "anthropic:claude-3-sonnet")
+    30→	SystemPrompt string // Override system prompt
+    31→	ConfigFile   string // Override config file path
+    32→	MaxSteps     int    // Override max steps (0 = use default)
+    33→	Streaming    bool   // Enable streaming (default from config)
+    34→	Quiet        bool   // Suppress debug output
+    35→}
+    40→func New(ctx context.Context, opts *Options) (*MCPHost, error) {
+   130→func (m *MCPHost) Prompt(ctx context.Context, message string) (string, error) {
+   163→func (m *MCPHost) PromptWithCallbacks(
+   164→	ctx context.Context,
+   165→	message string,
+   166→	onToolCall func(name, args string),
+   167→	onToolResult func(name, args, result string, isError bool),
+   168→	onStreaming func(chunk string),
+   169→) (string, error) {
+   201→func (m *MCPHost) GetSessionManager() *session.Manager {
+   207→func (m *MCPHost) LoadSession(path string) error {
+   218→func (m *MCPHost) SaveSession(path string) error {
+   224→func (m *MCPHost) ClearSession() {
+   230→func (m *MCPHost) GetModelString() string {
+   237→func (m *MCPHost) Close() error {
+
+mcphost_test.go
+     3→import …
+    11→func TestNew(t *testing.T) {
+    30→func TestNewWithOptions(t *testing.T) {
+    54→func TestSessionManagement(t *testing.T) {
+
+types.go
+     3→import …
+     8→// Message is an alias for session.Message providing SDK users with access
+     9→// to message structures for conversation history and tool interactions.
+    10→type Message = session.Message
+    12→// ToolCall is an alias for session.ToolCall representing a tool invocation
+    13→// with its name, arguments, and result within a conversation.
+    14→type ToolCall = session.ToolCall
+    16→// ConvertToSchemaMessage converts an SDK message to the underlying schema message
+    17→// format used by the agent for LLM interactions.
+    18→func ConvertToSchemaMessage(msg *Message) *schema.Message {
+    19→	return msg.ConvertToSchemaMessage()
+    20→}
+    22→// ConvertFromSchemaMessage converts a schema message from the agent to an SDK
+    23→// message format for use in the SDK API.
+    24→func ConvertFromSchemaMessage(msg *schema.Message) Message {
+    25→	return session.ConvertFromSchemaMessage(msg)
+    26→}

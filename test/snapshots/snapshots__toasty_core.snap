@@ -1,0 +1,329 @@
+---
+source: test/fixtures.rs
+expression: output
+---
+budget: 2000 (1998 tokens)
+
+src/driver/capability.rs
+     4→pub struct Capability {
+    61→pub struct StorageTypes {
+   103→pub struct SchemaMutations {
+   164→    pub const SQLITE: Self = Self {
+   189→    pub const POSTGRESQL: Self = Self {
+   211→    pub const MYSQL: Self = Self {
+   233→    pub const DYNAMODB: Self = Self {
+   259→    pub const SQLITE: StorageTypes = StorageTypes {
+
+src/driver/operation.rs
+    26→pub enum Operation {
+
+src/driver/response.rs
+     4→pub struct Response {
+     9→pub enum Rows {
+    66→    pub fn into_count(self) -> u64 {
+
+src/driver.rs
+     7→pub mod operation;
+    18→pub trait Driver …
+    45→pub trait Connection …
+
+src/error.rs
+    36→pub struct Error {
+    41→pub trait IntoError {
+    43→    fn into_error …
+    76→    pub fn context …
+
+src/lib.rs
+    16→pub type Result …
+
+src/macros.rs
+     2→macro_rules! path {
+
+src/schema/app/field.rs
+    11→pub struct Field {
+    36→pub struct FieldId {
+    42→pub struct FieldName {
+    54→pub enum FieldTy {
+
+src/schema/app/index.rs
+     5→pub struct Index {
+    20→pub struct IndexId {
+    26→pub struct IndexField {
+
+src/schema/app/model.rs
+     6→pub struct Model {
+    23→pub enum ModelKind {
+    31→pub struct ModelRoot {
+    41→pub struct ModelId(pub usize);
+
+src/schema/app/schema.rs
+     7→pub struct Schema {
+
+src/schema/builder.rs
+    11→pub struct Builder {
+
+src/schema/db/column.rs
+    12→pub struct Column {
+    39→pub struct ColumnId {
+
+src/schema/db/index.rs
+    12→pub struct Index {
+    34→pub struct IndexId {
+    41→pub struct IndexColumn {
+    54→pub enum IndexOp {
+    61→pub enum IndexScope {
+
+src/schema/db/migration.rs
+     2→pub enum Migration {
+    32→pub struct AppliedMigration {
+
+src/schema/db/schema.rs
+     7→pub struct Schema {
+
+src/schema/mapping/field.rs
+    14→pub enum Field {
+   105→pub struct FieldPrimitive {
+   140→pub struct FieldEmbedded {
+   180→pub struct FieldRelation {
+
+src/schema/mapping.rs
+    18→pub struct Mapping {
+    29→    pub fn model …
+    38→    pub fn model_mut …
+
+src/schema/name.rs
+     4→pub struct Name {
+
+src/schema.rs
+    22→pub struct Schema {
+
+src/stmt/assignments.rs
+     9→pub struct Assignments {
+    18→pub struct Assignment {
+    27→pub enum AssignmentOp {
+   106→    pub fn insert …
+
+src/stmt/association.rs
+     4→pub struct Association {
+
+src/stmt/condition.rs
+     4→pub struct Condition {
+
+src/stmt/cte.rs
+     4→pub struct Cte {
+
+src/stmt/cx.rs
+    16→pub struct ExprContext<'a, T = Schema> {
+    34→pub enum ResolvedRef<'a> {
+    82→pub enum ExprTarget<'a> {
+
+src/stmt/delete.rs
+     5→pub struct Delete {
+
+src/stmt/direction.rs
+     3→pub enum Direction {
+
+src/stmt/entry.rs
+     6→pub enum Entry<'a> {
+
+src/stmt/entry_mut.rs
+     4→pub enum EntryMut<'a> {
+
+src/stmt/expr.rs
+    13→pub enum Expr {
+
+src/stmt/expr_and.rs
+    17→pub struct ExprAnd {
+
+src/stmt/expr_any.rs
+    16→pub struct ExprAny {
+    25→    pub fn any …
+    33→    pub fn is_any …
+
+src/stmt/expr_arg.rs
+    15→pub struct ExprArg {
+
+src/stmt/expr_binary_op.rs
+    17→pub struct ExprBinaryOp {
+    43→    pub fn is_eq(&self) -> bool {
+
+src/stmt/expr_cast.rs
+    14→pub struct ExprCast {
+
+src/stmt/expr_concat.rs
+    15→pub struct ExprConcat {
+
+src/stmt/expr_concat_str.rs
+    14→pub struct ExprConcatStr {
+
+src/stmt/expr_exists.rs
+    14→pub struct ExprExists {
+
+src/stmt/expr_func.rs
+    15→pub enum ExprFunc {
+
+src/stmt/expr_in_list.rs
+    15→pub struct ExprInList {
+
+src/stmt/expr_is_null.rs
+    14→pub struct ExprIsNull {
+
+src/stmt/expr_key.rs
+    15→pub struct ExprKey {
+
+src/stmt/expr_like.rs
+    16→pub struct ExprLike {
+
+src/stmt/expr_list.rs
+    14→pub struct ExprList {
+
+src/stmt/expr_map.rs
+    31→pub struct ExprMap {
+
+src/stmt/expr_not.rs
+    16→pub struct ExprNot {
+    23→    pub fn not(expr: impl Into<Self>) -> Self {
+    31→    pub fn is_not(&self) -> bool {
+
+src/stmt/expr_or.rs
+    16→pub struct ExprOr {
+
+src/stmt/expr_pattern.rs
+     7→pub enum ExprPattern {
+
+src/stmt/expr_project.rs
+    19→pub struct ExprProject {
+
+src/stmt/expr_record.rs
+    18→pub struct ExprRecord {
+
+src/stmt/expr_reference.rs
+    20→pub enum ExprReference {
+    50→pub struct ExprColumn {
+
+src/stmt/expr_set.rs
+    18→pub enum ExprSet {
+
+src/stmt/expr_set_op.rs
+    16→pub struct ExprSetOp {
+
+src/stmt/expr_stmt.rs
+    14→pub struct ExprStmt {
+
+src/stmt/expr_ty.rs
+    14→pub struct ExprTy {
+
+src/stmt/filter.rs
+     4→pub struct Filter {
+    10→    pub const ALL …
+
+src/stmt/func_count.rs
+     4→pub struct FuncCount {
+
+src/stmt/input.rs
+    23→pub struct ConstInput {}
+
+src/stmt/insert.rs
+     5→pub struct Insert {
+
+src/stmt/insert_table.rs
+     5→pub struct InsertTable {
+
+src/stmt/insert_target.rs
+     9→pub enum InsertTarget {
+
+src/stmt/join.rs
+     4→pub struct Join {
+    13→pub enum JoinOp {
+
+src/stmt/limit.rs
+     4→pub struct Limit {
+
+src/stmt/offset.rs
+     4→pub enum Offset {
+
+src/stmt/op_binary.rs
+     4→pub enum BinaryOp {
+    43→    pub fn negate(self) -> Option<Self> {
+    60→    pub fn commute(self) -> Self {
+
+src/stmt/op_set.rs
+     4→pub enum SetOp {
+
+src/stmt/order_by.rs
+     4→pub struct OrderBy {
+    10→    pub fn reverse(&mut self) {
+
+src/stmt/order_by_expr.rs
+     4→pub struct OrderByExpr {
+    14→    pub fn reverse(&mut self) {
+
+src/stmt/path.rs
+     8→pub struct Path {
+
+src/stmt/path_field_set.rs
+     6→pub struct PathFieldSet {
+
+src/stmt/projection.rs
+    17→pub struct Projection {
+
+src/stmt/query.rs
+     8→pub struct Query {
+    32→pub enum Lock {
+    38→pub struct QueryBuilder {
+
+src/stmt/returning.rs
+     6→pub enum Returning {
+
+src/stmt/select.rs
+     8→pub struct Select {
+
+src/stmt/source.rs
+    11→pub enum Source {
+    20→pub struct SourceModel {
+
+src/stmt/source_table.rs
+     6→pub struct SourceTable {
+
+src/stmt/source_table_id.rs
+     2→pub struct SourceTableId(pub usize);
+
+src/stmt/sparse_record.rs
+     7→pub struct SparseRecord {
+
+src/stmt/table_derived.rs
+     4→pub struct TableDerived {
+
+src/stmt/table_factor.rs
+     4→pub enum TableFactor {
+
+src/stmt/table_ref.rs
+     6→pub enum TableRef {
+
+src/stmt/table_with_joins.rs
+     4→pub struct TableWithJoins {
+
+src/stmt/ty.rs
+    70→pub enum Type {
+
+src/stmt/update.rs
+     8→pub struct Update {
+    32→pub enum UpdateTarget {
+
+src/stmt/value.rs
+     6→pub enum Value {
+
+src/stmt/value_record.rs
+     6→pub struct ValueRecord {
+
+src/stmt/value_stream.rs
+    15→pub struct ValueStream {
+
+src/stmt/values.rs
+     5→pub struct Values {
+
+src/stmt/with.rs
+     4→pub struct With {
+
+src/stmt.rs
+   253→pub enum Statement {
