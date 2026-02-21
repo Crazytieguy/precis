@@ -112,7 +112,7 @@ with_entries! {
     // ── Python ──────────────────────────────────────────────────────────
     (pluggy,                  "pluggy",                          2000), // inspected: logged observation
     (typeguard,               "typeguard",                      2000), // inspected: logged observation
-    (tomli,                   "tomli",                           2000),
+    (tomli,                   "tomli",                           2000), // inspected: logged observation
     (peepdb,                  "peepdb",                          2000),
     (peepdb_db,               "peepdb/peepdb/db",               1000), // database adapters
     (swarm,                   "swarm",                           2000),
