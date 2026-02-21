@@ -82,7 +82,7 @@ with_entries! {
     (xxhash,                  "xxhash",                         2000), // inspected: exceeds explore
     (xxhash_xxhsum,           "xxhash/xxhsum",                  1000), // inspected: exceeds explore
     (mcphost,                 "mcphost",                        4000), // inspected: logged observation
-    (mcphost_sdk,             "mcphost/sdk",                    1000),
+    (mcphost_sdk,             "mcphost/sdk",                    1000), // inspected: exceeds explore
     (tock,                    "tock",                            4000), // inspected: deprioritize mocks/
     (tock_internal_core,      "tock/internal/core",             1000), // inspected: deprioritize mocks/
 
