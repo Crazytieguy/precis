@@ -29,7 +29,7 @@ When you have a concrete improvement:
 
 1. Implement the change.
 2. Run `cargo test --release`.
-3. **Inspect every changed snapshot.** Read the diffs. If the change isn't a general improvement — if snapshots regressed (lost useful content, gained noise, became confusing) and there's no clear fix — revert with `git checkout` and move on.
+3. **Inspect every changed snapshot.** Read the diffs. If the change isn't a general improvement — if snapshots regressed (lost useful content, gained noise, became confusing) and there's no clear fix — revert with `git checkout` and document the failed attempt in issues.md.
 4. Run `cargo bench --bench hot_path -- --quick`. If benchmarks regressed significantly, note it in `issues.md` or revert.
 
 ## When all entries are inspected
