@@ -113,8 +113,8 @@ with_entries! {
     (pluggy,                  "pluggy",                          2000), // inspected: logged observation
     (typeguard,               "typeguard",                      2000), // inspected: logged observation
     (tomli,                   "tomli",                           2000), // inspected: logged observation
-    (peepdb,                  "peepdb",                          2000),
-    (peepdb_db,               "peepdb/peepdb/db",               1000), // database adapters
+    (peepdb,                  "peepdb",                          2000), // inspected: logged observation
+    (peepdb_db,               "peepdb/peepdb/db",               1000), // inspected: logged observation
     (swarm,                   "swarm",                           2000),
     (htmy,                    "htmy",                            2000),
     (htmy_renderer,           "htmy/htmy/renderer",             1000), // rendering subsystem
