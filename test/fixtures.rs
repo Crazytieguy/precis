@@ -99,7 +99,7 @@ with_entries! {
     (mitt,                    "mitt",                            1000), // inspected: logged observation
     (enclosed,                "enclosed",                        4000), // inspected: deprioritize locale data files
     (enclosed_crypto,         "enclosed/packages/crypto",       1000),
-    (enclosed_lib,            "enclosed/packages/lib",          1000),
+    (enclosed_lib,            "enclosed/packages/lib",          1000), // inspected: logged observation
     (d2ts,                    "d2ts",                            2000), // inspected: logged observation
     (d2ts_d2ts,               "d2ts/packages/d2ts",             2000), // inspected: logged observation
 
