@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2014 tokens)
+budget: 2000 (2016 tokens)
 
 README.md
      5→# Tomli
@@ -12,11 +12,28 @@ README.md
     32→## Intro<a name="intro"></a>
     50→## Installation<a name="installation"></a>
     56→## Usage<a name="usage"></a>
+    58→### Parse a TOML string<a name="parse-a-toml-string"></a>
+    79→### Parse a TOML file<a name="parse-a-toml-file"></a>
+    92→### Handle invalid TOML<a name="handle-invalid-toml"></a>
+   106→### Construct `decimal.Decimal`s from TOML floats<a name="construct-decimaldecimals-from-toml-floats"></a>
+   123→### Building a `tomli`/`tomllib` compatibility layer<a name="building-a-tomlitomllib-compatibility-layer"></a>
    152→## FAQ<a name="faq"></a>
+   154→### Why this parser?<a name="why-this-parser"></a>
+   167→### Is comment preserving round-trip parsing supported?<a name="is-comment-preserving-round-trip-parsing-supported"></a>
+   177→### Is there a `dumps`, `write` or `encode` function?<a name="is-there-a-dumps-write-or-encode-function"></a>
+   183→### How do TOML types map into Python types?<a name="how-do-toml-types-map-into-python-types"></a>
    201→## Performance<a name="performance"></a>
+   207→### Mypyc generated wheel<a name="mypyc-generated-wheel"></a>
+   230→### Pure Python<a name="pure-python"></a>
 
 benchmark/README.md
      1→# Benchmark
+     3→## Acknowledgments
+    10→## Running
+
+benchmark/run.py
+    15→def benchmark …
+    37→def run …
 
 fuzzer/fuzz.py
      1→import atheris
@@ -42,12 +59,23 @@ pyproject.toml
     33→[tool.isort]
     46→[tool.tox]
     51→[tool.tox.env_run_base]
+    58→[tool.tox.env."profile"]
+    75→[tool.tox.env."pre-commit"]
+    83→[tool.tox.env."benchmark"]
+    92→[tool.tox.env."benchmark-pypi"]
+   105→[tool.tox.env."benchmark-import"]
+   111→[tool.tox.env."fuzz"]
    129→[tool.coverage.run]
    133→[tool.coverage.report]
    145→[tool.mypy]
    157→[[tool.mypy.overrides]]
    161→[[tool.mypy.overrides]]
    167→[[tool.mypy.overrides]]
+
+scripts/use_setuptools.py
+    12→def use_setuptools() -> None:
+
+setup.py
 
 src/tomli/__init__.py
      1→# SPDX-License-Identifier: MIT
@@ -61,70 +89,52 @@ src/tomli/_parser.py
      7→import sys …
      8→from types …
     10→from ._re …
-    19→TYPE_CHECKING = False
+    19→TYPE_CHECKING …
     21→    from collections.abc …
     22→    from typing …
     24→    from ._types …
     26→# Inline tables/arrays are implemented using recursion. Pathologically
       →…
     35→MAX_INLINE_NESTING: Final = sys.getrecursionlimit()
-    37→ASCII_CTRL: Final = frozenset(chr(i) for i in range(32)) | frozenset(chr(127))
+    37→ASCII_CTRL …
     39→# Neither of these sets include quotation mark or backslash. They are
       →…
     41→ILLEGAL_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t")
-    42→ILLEGAL_MULTILINE_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t\n")
-    44→ILLEGAL_LITERAL_STR_CHARS: Final = ILLEGAL_BASIC_STR_CHARS
-    45→ILLEGAL_MULTILINE_LITERAL_STR_CHARS: Final = ILLEGAL_MULTILINE_BASIC_STR_CHARS
-    47→ILLEGAL_COMMENT_CHARS: Final = ILLEGAL_BASIC_STR_CHARS
-    49→TOML_WS: Final = frozenset(" \t")
-    50→TOML_WS_AND_NEWLINE: Final = TOML_WS | frozenset("\n")
-    51→BARE_KEY_CHARS: Final = frozenset(
-    54→KEY_INITIAL_CHARS: Final = BARE_KEY_CHARS | frozenset("\"'")
-    55→HEXDIGIT_CHARS: Final = frozenset("abcdef" "ABCDEF" "0123456789")
-    57→BASIC_STR_ESCAPE_REPLACEMENTS: Final = MappingProxyType(
+    42→ILLEGAL_MULTILINE_BASIC_STR_CHARS …
+    44→ILLEGAL_LITERAL_STR_CHARS …
+    45→ILLEGAL_MULTILINE_LITERAL_STR_CHARS …
+    47→ILLEGAL_COMMENT_CHARS …
+    49→TOML_WS …
+    50→TOML_WS_AND_NEWLINE …
+    51→BARE_KEY_CHARS …
+    54→KEY_INITIAL_CHARS …
+    55→HEXDIGIT_CHARS …
+    57→BASIC_STR_ESCAPE_REPLACEMENTS …
     71→class DEPRECATED_DEFAULT:
     76→class TOMLDecodeError(ValueError):
     86→
-    87→    def __init__(
-    88→        self,
-    89→        msg: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
-    90→        doc: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
-    91→        pos: Pos | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
-    92→        *args: Any,
-    93→    ):
-   137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
-   149→def loads(__s: str, *, parse_float: ParseFloat = float) -> dict[str, Any]:
+    87→    def __init__ …
+   137→def load …
+   149→def loads …
    220→class Flags:
    222→
-   229→    def __init__(self) -> None:
-   233→    def add_pending(self, key: Key, flag: int) -> None:
-   236→    def finalize_pending(self) -> None:
-   241→    def unset_all(self, key: Key) -> None:
-   249→    def set(self, key: Key, flag: int, *, recursive: bool) -> None:  # noqa: A003
-   260→    def is_(self, key: Key, flag: int) -> bool:
+   229→    def __init__ …
+   233→    def add_pending …
+   236→    def finalize_pending …
+   241→    def unset_all …
+   249→    def set …
+   260→    def is_ …
    278→class NestedDict:
-   279→    def __init__(self) -> None:
-   283→    def get_or_create_nest(
-   284→        self,
-   285→        key: Key,
-   286→        *,
-   287→        access_lists: bool = True,
-   288→    ) -> dict[str, Any]:
-   300→    def append_nest_to_list(self, key: Key) -> None:
+   279→    def __init__ …
+   283→    def get_or_create_nest …
+   300→    def append_nest_to_list …
    312→class Output:
-   313→    def __init__(self) -> None:
-   318→def skip_chars(src: str, pos: Pos, chars: Iterable[str]) -> Pos:
-   327→def skip_until(
-   328→    src: str,
-   329→    pos: Pos,
-   330→    expect: str,
-   331→    *,
-   332→    error_on: frozenset[str],
-   333→    error_on_eof: bool,
-   334→) -> Pos:
-   349→def skip_comment(src: str, pos: Pos) -> Pos:
-   361→def skip_comments_and_array_ws(src: str, pos: Pos) -> Pos:
-   370→def create_dict_rule(src: str, pos: Pos, out: Output) -> tuple[Pos, Key]:
+   313→    def __init__ …
+   318→def skip_chars …
+   327→def skip_until …
+   349→def skip_comment …
+   361→def skip_comments_and_array_ws …
+   370→def create_dict_rule …
    390→def create_list_rule …
    413→def key_value_rule …
    447→def parse_key_value_pair …
@@ -159,6 +169,9 @@ src/tomli/_re.py
     47→    rf"""
       →    …
     59→def match_to_datetime(match: re.Match[str]) -> datetime | date:
+    60→    """Convert a `RE_DATETIME` match to `datetime.datetime` or `datetime.date`.
+    61→
+      →…
     95→# No need to limit cache size. This is only ever called on input
     96→# that matched RE_DATETIME, so there is an implicit bound of
       →…
@@ -171,6 +184,14 @@ src/tomli/_types.py
 
 tests/__init__.py
      5→__all__ = ("tomllib",)
+
+tests/test_data.py
+    27→class TestData(unittest.TestCase):
+    28→    def test_invalid(self):
+    40→    def test_valid(self):
+
+tests/test_error.py
+    13→class TestError(unittest.TestCase):
 
 tomllib.md
      1→# `tomllib` – Tomli in the standard library

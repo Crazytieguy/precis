@@ -94,10 +94,14 @@ crates/toasty/src/model.rs
 
 crates/toasty/src/page.rs
     10→pub struct Page<M> {
-    40→    pub fn has_next(&self) -> bool {
-    45→    pub fn has_prev(&self) -> bool {
-    65→    pub async fn next(&self, db: &Db) -> Result<Option<Page<M>>> {
-    93→    pub async fn prev(&self, db: &Db) -> Result<Option<Page<M>>> {
+    40→    pub fn has_next …
+    45→    pub fn has_prev …
+    65→    pub async fn next …
+    93→    pub async fn prev …
+
+crates/toasty/src/relation.rs
+    10→pub mod option;
+    16→pub trait Relation {
 
 crates/toasty-cli/src/config.rs
      9→pub struct Config {
@@ -106,6 +110,8 @@ crates/toasty-cli/src/config.rs
     29→    pub fn migration(mut self, migration: MigrationConfig) -> Self {
 
 crates/toasty-cli/src/lib.rs
+     5→pub use config::*;
+     6→pub use migration::*;
     13→pub struct ToastyCli {
     14→    db: Db,
       →    …
@@ -121,12 +127,16 @@ crates/toasty-cli/src/migration/config.rs
      6→pub struct MigrationConfig {
     27→pub enum MigrationPrefixStyle {
 
+crates/toasty-cli/src/migration/drop.rs
+    11→pub struct DropCommand {
+
 crates/toasty-cli/src/migration/history_file.rs
     11→pub struct HistoryFile {
     20→pub struct HistoryFileMigration {
 
 crates/toasty-cli/src/migration.rs
     25→pub struct MigrationCommand {
+    31→enum MigrationSubcommand {
 
 crates/toasty-cli/src/theme.rs
      5→pub fn dialoguer_theme() -> ColorfulTheme {
@@ -347,7 +357,7 @@ crates/toasty-driver-integration-suite/src/lib.rs
 
 crates/toasty-driver-integration-suite/src/logging_driver.rs
     14→pub struct LoggingDriver {
-    31→    pub fn ops_log_handle …
+    31→    pub fn ops_log_handle(&self) -> Arc<Mutex<Vec<DriverOp>>> {
     63→pub struct DriverOp {
     70→pub struct LoggingConnection {
 
@@ -376,10 +386,10 @@ crates/toasty-driver-integration-suite/src/test.rs
    127→pub struct TestResult {
 
 crates/toasty-driver-integration-suite-macros/src/lib.rs
-    11→pub fn driver_test(attr: TokenStream, item: TokenStream) -> TokenStream {
-    16→pub fn generate_test_registry(input: TokenStream) -> TokenStream {
-    21→pub fn generate_driver_test_variants(input: TokenStream) -> TokenStream {
-    28→pub fn driver_test_cfg(_input: TokenStream) -> TokenStream {
+    11→pub fn driver_test …
+    16→pub fn generate_test_registry …
+    21→pub fn generate_driver_test_variants …
+    28→pub fn driver_test_cfg …
 
 crates/toasty-driver-integration-suite-macros/src/parse.rs
      4→pub trait ExpansionList {
@@ -422,8 +432,9 @@ crates/toasty-driver-postgresql/src/lib.rs
 
 crates/toasty-driver-postgresql/src/statement_cache.rs
      9→pub struct StatementCache {
-    15→    pub fn new …
-    56→    pub fn new …
+    15→    pub fn new(capacity: usize) -> Self {
+    49→struct Key …
+    56→    pub fn new(query: &'a str, types: &'a [Type]) -> Self {
 
 crates/toasty-driver-postgresql/src/type.rs
      4→pub trait TypeExt {
@@ -447,10 +458,10 @@ crates/toasty-driver-sqlite/src/value.rs
     23→    pub fn from_sql …
 
 crates/toasty-macros/src/lib.rs
-    18→pub fn derive_embed(input: TokenStream) -> TokenStream {
-    26→pub fn include_schema(_input: TokenStream) -> TokenStream {
-    31→pub fn query(_input: TokenStream) -> TokenStream {
-    36→pub fn create(_input: TokenStream) -> TokenStream {
+    18→pub fn derive_embed …
+    26→pub fn include_schema …
+    31→pub fn query …
+    36→pub fn create …
 
 crates/toasty-sql/src/lib.rs
      1→pub mod migration;

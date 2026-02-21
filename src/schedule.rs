@@ -781,10 +781,25 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     // any group reaches Doc/Body. The sibling_factor still provides a mild
     // log-based penalty (28% at N=50) so larger groups don't dominate over
     // smaller groups with higher base value.
-    let count_factor = if matches!(stage, StageKind::Names | StageKind::Signatures) {
-        group.symbols.len().max(1) as f64
-    } else {
-        1.0
+    //
+    // At Signatures, use diminishing returns so that larger groups have
+    // progressively lower per-token priority. After 3-4 method signatures,
+    // the pattern is usually clear and additional signatures provide
+    // diminishing information. The first 3 signatures get full value;
+    // additional ones are worth 15% each. This prevents groups of 8-20+
+    // repetitive methods (builder setters, visit_* handlers, from_*
+    // constructors) from outcompeting body content, enum variants, and
+    // documentation. Impact: 3 → 3 (100%), 8 → 3.75 (47%), 12 → 4.35
+    // (36%), 20 → 5.55 (28%).
+    let sym_count = group.symbols.len().max(1) as f64;
+    let count_factor = match stage {
+        StageKind::Names => sym_count,
+        StageKind::Signatures => {
+            let full = sym_count.min(3.0);
+            let excess = (sym_count - 3.0).max(0.0);
+            full + excess * 0.15
+        }
+        _ => 1.0,
     };
 
     // When a large group is split into sub-groups, prefer earlier chunks.

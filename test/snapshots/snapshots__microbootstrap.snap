@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2009 tokens)
+budget: 2000 (2005 tokens)
 
 README.md
     55→## Table of Contents
@@ -132,20 +132,14 @@ microbootstrap/instruments/logging_instrument.py
 
 microbootstrap/instruments/opentelemetry_instrument.py
     43→class OpenTelemetryInstrumentor:
-    44→    instrumentor: BaseInstrumentor
-      →    …
     73→class FastStreamTelemetryMiddlewareProtocol(typing.Protocol):
    181→    @classmethod
    182→    def get_config_type(cls) -> type[OpentelemetryConfig]:
    197→class PyroscopeSpanProcessor(SpanProcessor):
 
 microbootstrap/instruments/prometheus_instrument.py
-    17→class BasePrometheusConfig(BaseInstrumentConfig):
-    24→class LitestarPrometheusConfig(BasePrometheusConfig):
-    28→class FastApiPrometheusConfig(BasePrometheusConfig):
+    35→@typing.runtime_checkable
     36→class FastStreamPrometheusMiddlewareProtocol(typing.Protocol):
-    55→class FastStreamPrometheusConfig(BasePrometheusConfig):
-    60→class PrometheusInstrument(Instrument[PrometheusConfigT]):
     69→    @classmethod
     70→    def get_config_type(cls) -> type[PrometheusConfigT]:
 
@@ -183,8 +177,8 @@ microbootstrap/instruments_setupper.py
     65→    def __exit__ …
 
 microbootstrap/settings.py
-    24→ENV_PREFIX_VAR_NAME: typing.Final = "ENVIRONMENT_PREFIX"
-    25→ENV_PREFIX: typing.Final = os.getenv(ENV_PREFIX_VAR_NAME, "")
+    24→ENV_PREFIX_VAR_NAME …
+    25→ENV_PREFIX …
     29→class BaseServiceSettings(
     30→    pydantic_settings.BaseSettings,
     31→):
@@ -197,6 +191,14 @@ microbootstrap/settings.py
    105→class InstrumentsSetupperSettings …
 
 package.json
+     2→  "name": "microbootstrap-docs",
+     3→  "version": "1.0.0",
+     4→  "description": "Vuepress documentation for microbootstrap package",
+     5→  "license": "MIT",
+     6→  "type": "module",
+     7→  "scripts": {
+    13→  "devDependencies": {
+    19→  "dependencies": {
 
 pyproject.toml
      1→[project]

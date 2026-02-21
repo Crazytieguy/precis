@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (1006 tokens)
+budget: 1000 (1019 tokens)
 
 __init__.py
      1→from .baseline import Renderer as _BaselineRenderer
@@ -27,9 +27,20 @@ baseline.py
     27→
     28→    __slots__ = ("_default_context", "_string_formatter")
     29→
-    30→    def __init__ …
-    48→    async def render …
-    67→    async def stream …
+    30→    def __init__(
+    31→        self,
+    32→        default_context: Context | None = None,
+    33→        *,
+    34→        string_formatter: Callable[[str], str] = xml_format_string,
+    35→    ) -> None:
+    36→        """
+      →        …
+    48→    async def render(self, component: Component, context: Context | None = None) -> str:
+    49→        """
+      →        …
+    67→    async def stream(self, component: Component, context: Context | None = None) -> AsyncIterator[str]:
+    68→        """
+      →        …
     92→    async def _stream …
    117→    async def _stream_one …
 
@@ -47,6 +58,9 @@ context.py
     15→
     16→        Arguments:
     17→            context: The context the renderer instance should be loaded from.
+    18→
+    19→        Raises:
+    20→            KeyError: If no renderer instance was found in the context.
       →            …
 
 default.py
@@ -61,22 +75,16 @@ default.py
     15→    from collections.abc …
     17→    from htmy.typing …
     20→class _Node:
-    25→    def __init__(self, component: ComponentType, next: _Node | None = None) -> None:
-    36→    def iter_nodes(self, *, include_self: bool = True) -> Iterator[_Node]:
+    25→    def __init__ …
+    36→    def iter_nodes …
     50→_NodeAndChildContext: TypeAlias = tuple[_Node, Context]
     53→class _ComponentRenderer:
-    60→    def __init__(
-    61→        self,
-    62→        component: ComponentType,
-    63→        context: Context,
-    64→        *,
-    65→        string_formatter: Callable[[str], str],
-    66→    ) -> None:
+    60→    def __init__ …
     92→    async def _extend_context …
    111→    def _process_node_result …
    153→    async def _process_async_node …
    160→    def _schedule_node …
-   174→    async def run(self) -> str:
+   174→    async def run …
    205→async def _render_component …
    228→class Renderer:
    229→    """
@@ -86,13 +94,8 @@ default.py
    235→
    236→    __slots__ = ("_default_context", "_string_formatter")
    237→
-   238→    def __init__(
-   239→        self,
-   240→        default_context: Context | None = None,
-   241→        *,
-   242→        string_formatter: Callable[[str], str] = xml_format_string,
-   243→    ) -> None:
-   256→    async def render(self, component: Component, context: Context | None = None) -> str:
+   238→    def __init__ …
+   256→    async def render …
 
 typing.py
      3→from collections.abc …
@@ -100,10 +103,12 @@ typing.py
      7→    from typing …
      9→    from htmy.typing …
     12→class RendererType(Protocol):
+    13→    """Protocol definition for renderers."""
     14→
     15→    async def render(self, component: Component, context: Context | None = None) -> str:
     29→def is_renderer(obj: Any | None) -> TypeGuard[RendererType]:
     36→class StreamingRendererType(RendererType, Protocol):
+    37→    """Protocol definition for streaming renderers."""
     38→
     39→    def stream(self, component: Component, context: Context | None = None) -> AsyncIterator[str]:
     53→def is_streaming_renderer(obj: Any | None) -> TypeGuard[StreamingRendererType]:

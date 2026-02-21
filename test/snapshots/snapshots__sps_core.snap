@@ -2,14 +2,16 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2001 tokens)
+budget: 2000 (2002 tokens)
 
 Cargo.toml
      1→[package]
     10→[dependencies]
 
 src/build/env.rs
+    12→use crate::install::devtools;
    141→pub struct BuildEnvironment {
+   164→impl BuildEnvironment {
    166→    pub fn new …
    463→    pub fn apply_to_command …
    476→    pub fn get_path_string …
@@ -23,10 +25,14 @@ src/build/mod.rs
 src/check/installed.rs
     14→pub enum PackageType {
     20→pub struct InstalledPackageInfo {
+    39→pub async fn get_installed_packages …
+   140→pub async fn get_installed_package …
 
 src/check/mod.rs
      1→pub mod installed;
      2→pub mod update;
+     4→pub use installed::{InstalledPackageInfo, PackageType};
+     5→pub use update::UpdateInfo;
 
 src/check/update.rs
     23→pub struct UpdateInfo {
@@ -51,6 +57,9 @@ src/install/bottle/mod.rs
 src/install/cask/artifacts/app.rs
     16→pub fn find_primary_app_bundle_in_dir(dir: &Path) -> Result<PathBuf> {
 
+src/install/cask/artifacts/audio_unit_plugin.rs
+    20→pub fn install_audio_unit_plugin …
+
 src/install/cask/artifacts/binary.rs
     23→pub fn install_binary …
 
@@ -69,11 +78,17 @@ src/install/cask/artifacts/input_method.rs
 src/install/cask/artifacts/installer.rs
     47→pub fn run_installer …
 
+src/install/cask/artifacts/internet_plugin.rs
+    21→pub fn install_internet_plugin …
+
 src/install/cask/artifacts/keyboard_layout.rs
     17→pub fn install_keyboard_layout …
 
 src/install/cask/artifacts/manpage.rs
     24→pub fn install_manpage …
+
+src/install/cask/artifacts/mdimporter.rs
+    21→pub fn install_mdimporter …
 
 src/install/cask/artifacts/mod.rs
      1→pub mod app;
@@ -88,17 +103,6 @@ src/install/cask/artifacts/mod.rs
     10→pub mod keyboard_layout;
     11→pub mod manpage;
     12→pub mod mdimporter;
-    13→pub mod pkg;
-    14→pub mod preflight;
-    15→pub mod prefpane;
-    16→pub mod qlplugin;
-    17→pub mod screen_saver;
-    18→pub mod service;
-    19→pub mod suite;
-    20→pub mod uninstall;
-    21→pub mod vst3_plugin;
-    22→pub mod vst_plugin;
-    23→pub mod zap;
     26→pub use self::app::install_app_from_staged;
     27→pub use self::audio_unit_plugin::install_audio_unit_plugin;
     28→pub use self::binary::install_binary;
@@ -110,23 +114,21 @@ src/install/cask/artifacts/mod.rs
     34→pub use self::internet_plugin::install_internet_plugin;
     35→pub use self::keyboard_layout::install_keyboard_layout;
     36→pub use self::manpage::install_manpage;
-    37→pub use self::mdimporter::install_mdimporter;
-    38→pub use self::pkg::install_pkg_from_path;
-    39→pub use self::preflight::run_preflight;
-    40→pub use self::prefpane::install_prefpane;
-    41→pub use self::qlplugin::install_qlplugin;
-    42→pub use self::screen_saver::install_screen_saver;
-    43→pub use self::service::install_service;
-    44→pub use self::suite::install_suite;
-    45→pub use self::uninstall::record_uninstall;
-    46→pub use self::vst3_plugin::install_vst3_plugin;
-    47→pub use self::vst_plugin::install_vst_plugin;
 
 src/install/cask/artifacts/pkg.rs
     13→pub fn install_pkg_from_path …
 
 src/install/cask/artifacts/preflight.rs
     13→pub fn run_preflight …
+
+src/install/cask/artifacts/prefpane.rs
+    21→pub fn install_prefpane …
+
+src/install/cask/artifacts/qlplugin.rs
+    20→pub fn install_qlplugin …
+
+src/install/cask/artifacts/screen_saver.rs
+    20→pub fn install_screen_saver …
 
 src/install/cask/artifacts/service.rs
     21→pub fn install_service …
@@ -136,6 +138,12 @@ src/install/cask/artifacts/suite.rs
 
 src/install/cask/artifacts/uninstall.rs
      9→pub fn record_uninstall …
+
+src/install/cask/artifacts/vst3_plugin.rs
+    20→pub fn install_vst3_plugin …
+
+src/install/cask/artifacts/vst_plugin.rs
+    20→pub fn install_vst_plugin …
 
 src/install/cask/artifacts/zap.rs
     18→pub fn install_zap …
@@ -166,6 +174,7 @@ src/install/devtools.rs
 
 src/install/extract.rs
     16→use crate::utils::xattr;
+   204→#[cfg(target_os = "macos")]
    205→pub fn quarantine_extracted_apps_in_stage(stage_dir: &Path, agent_name: &str) -> Result<()> {
    235→pub fn extract_archive …
    343→struct DeferredHardLink {
@@ -184,8 +193,9 @@ src/lib.rs
      7→pub mod pipeline;
      8→pub mod uninstall;
      9→pub mod upgrade; // New
+    10→#[cfg(target_os = "macos")]
     11→pub mod utils; // New
-    19→pub use uninstall::UninstallOptions; // New
+    19→pub use uninstall::UninstallOptions …
 
 src/pipeline/engine.rs
     13→use super::worker;

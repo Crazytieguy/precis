@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (993 tokens)
+budget: 1000 (1001 tokens)
 
 README.md
      1→Simple Dynamic Strings
@@ -34,26 +34,27 @@ README.md
 
 sds.c
     33→#include <stdio.h>
-    89→sds sdsnewlen(const void *init, size_t initlen) {
-   149→sds sdsempty(void) {
-   154→sds sdsnew(const char *init) {
-   160→sds sdsdup(const sds s) {
-   165→void sdsfree(sds s) {
-   184→void sdsupdatelen(sds s) {
-   193→void sdsclear(sds s) {
-   204→sds sdsMakeRoomFor(sds s, size_t addlen) {
-   256→sds sdsRemoveFreeSpace(sds s) {
-   300→size_t sdsAllocSize(sds s) {
-   307→void *sdsAllocPtr(sds s) {
-   334→void sdsIncrLen(sds s, ssize_t incr) {
-   380→sds sdsgrowzero(sds s, size_t len) {
-   398→sds sdscatlen(sds s, const void *t, size_t len) {
-   413→sds sdscat(sds s, const char *t) {
-   421→sds sdscatsds(sds s, const sds t) {
-   427→sds sdscpylen(sds s, const char *t, size_t len) {
-   440→sds sdscpy(sds s, const char *t) {
+    89→sds sdsnewlen …
+   149→sds sdsempty …
+   154→sds sdsnew …
+   160→sds sdsdup …
+   165→void sdsfree …
+   184→void sdsupdatelen …
+   193→void sdsclear …
+   204→sds sdsMakeRoomFor …
+   256→sds sdsRemoveFreeSpace …
+   300→size_t sdsAllocSize …
+   307→void *sdsAllocPtr …
+   334→void sdsIncrLen …
+   380→sds sdsgrowzero …
+   398→sds sdscatlen …
+   413→sds sdscat …
+   421→sds sdscatsds …
+   427→sds sdscpylen …
+   440→sds sdscpy …
    450→#define SDS_LLSTR_SIZE 21
-   494→int sdsull2str(char *s, unsigned long long v) {
+   451→int sdsll2str(char *s, long long value) {
+   494→int sdsull2str …
    526→sds sdsfromlonglong …
    534→sds sdscatvprintf …
    591→sds sdscatprintf …
@@ -73,12 +74,19 @@ sds.c
   1108→sds sdsjoin …
   1120→sds sdsjoinsds …
   1136→void *sds_malloc …
+  1137→void *sds_realloc(void *ptr, size_t size) { return s_realloc(ptr,size); }
+  1138→void sds_free(void *ptr) { s_free(ptr); }
   1145→#define UNUSED(x) (void)(x)
+  1146→int sdsTest(void) {
+  1325→int main(void) {
 
 sds.h
-    34→#define __SDS_H
     43→typedef char *sds;
     47→struct __attribute__ ((__packed__)) sdshdr5 {
+    51→struct __attribute__ ((__packed__)) sdshdr8 {
+    57→struct __attribute__ ((__packed__)) sdshdr16 {
+    63→struct __attribute__ ((__packed__)) sdshdr32 {
+    69→struct __attribute__ ((__packed__)) sdshdr64 {
    180→static inline size_t sdsalloc(const sds s) {
    256→sds sdsMakeRoomFor(sds s, size_t addlen);
    266→void *sds_malloc(size_t size);

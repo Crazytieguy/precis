@@ -5,10 +5,10 @@ expression: output
 budget: 1000 (1002 tokens)
 
 block_manager.py
-     1→from collections import deque
-     2→import xxhash
-     3→import numpy as np
-     5→from nanovllm.engine.sequence import Sequence
+     1→from collections …
+     2→import xxhash …
+     3→import numpy …
+     5→from nanovllm.engine.sequence …
      8→class Block:
      9→
     10→    def __init__(self, block_id):
@@ -20,7 +20,10 @@ block_manager.py
     35→    @classmethod
     36→    def compute_hash(cls, token_ids: list[int], prefix: int = -1):
     37→        h = xxhash.xxh64()
+    38→        if prefix != -1:
       →        …
+    43→    def _allocate_block …
+    51→    def _deallocate_block …
     56→    def can_allocate(self, seq: Sequence) -> bool:
     59→    def allocate(self, seq: Sequence):
     84→    def deallocate(self, seq: Sequence):
@@ -30,17 +33,12 @@ block_manager.py
 llm_engine.py
     15→class LLMEngine:
     16→
-    17→    def __init__(self, model, **kwargs):
-    36→    def exit(self):
-    42→    def add_request(self, prompt: str | list[int], sampling_params: SamplingParams):
-    48→    def step(self):
-    56→    def is_finished(self):
-    59→    def generate(
-    60→        self,
-    61→        prompts: list[str] | list[list[int]],
-    62→        sampling_params: SamplingParams | list[SamplingParams],
-    63→        use_tqdm: bool = True,
-    64→    ) -> list[str]:
+    17→    def __init__ …
+    36→    def exit …
+    42→    def add_request …
+    48→    def step …
+    56→    def is_finished …
+    59→    def generate …
 
 model_runner.py
     15→class ModelRunner:
@@ -74,8 +72,15 @@ scheduler.py
     65→    def postprocess(self, seqs: list[Sequence], token_ids: list[int]) -> list[bool]:
 
 sequence.py
+     1→from copy …
+     2→from enum …
+     3→from itertools …
+     5→from nanovllm.sampling_params …
      8→class SequenceStatus(Enum):
+     9→    WAITING = auto()
+      →    …
     14→class Sequence:
+    15→    block_size = 256
     18→    def __init__(self, token_ids: list[int], sampling_params = SamplingParams()):
     31→    def __len__(self):
     34→    def __getitem__(self, key):

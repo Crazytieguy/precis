@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1998 tokens)
+budget: 2000 (2000 tokens)
 
 README.md
     26→# D2TS - Differential Dataflow in TypeScript <!-- omit in toc -->
@@ -26,6 +26,17 @@ packages/d2mini/src/graph.ts
 
 packages/d2mini/src/indexes.ts
      9→export class Index<K, V> {
+    12→  constructor …
+    20→  toString …
+    28→  get …
+    33→  getMultiplicity …
+    38→  entries …
+    42→  keys …
+    46→  has …
+    50→  get size …
+    54→  addValue …
+    69→  append …
+    84→  join …
 
 packages/d2mini/src/multiset.ts
     14→export class MultiSet<T> {
@@ -33,20 +44,23 @@ packages/d2mini/src/multiset.ts
     21→  toString …
     25→  toJSON …
     29→  static fromJSON …
-    36→  map<U>(f: (data: T) => U): MultiSet<U> {
-    45→  filter(f: (data: T) => boolean): MultiSet<T> {
-    52→  negate(): MultiSet<T> {
-    61→  concat(other: MultiSet<T>): MultiSet<T> {
-    73→  consolidate(): MultiSet<T> {
+    36→  map …
+    45→  filter …
+    52→  negate …
+    61→  concat …
+    73→  consolidate …
    207→  extend …
    212→  getInner …
 
-packages/d2mini/src/types.ts
-     6→export interface IOperator<_T> {
-    11→export interface IDifferenceStreamReader<T> {
-    16→export interface IDifferenceStreamWriter<T> {
-    21→export interface ID2 {
-    30→export interface IStreamBuilder<T> {
+packages/d2mini/src/operators/groupBy.ts
+    39→export function groupBy …
+   150→export function sum …
+   168→export function count …
+   184→export function avg …
+   214→export function min …
+   235→export function max …
+   257→export function median …
+   305→export function mode …
 
 packages/d2mini/src/utils.ts
      6→export class DefaultMap<K, V> extends Map<K, V> {
@@ -139,6 +153,10 @@ packages/d2ts/src/graph.ts
 
 packages/d2ts/src/multiset.ts
      9→export class MultiSet<T> {
+    12→  constructor …
+    16→  toString …
+    20→  toJSON …
+    24→  static fromJSON …
     31→  map …
     40→  filter …
     47→  negate …
@@ -152,33 +170,24 @@ packages/d2ts/src/multiset.ts
    220→  max …
    258→  distinct …
    291→  iterate …
+   303→  extend …
+   308→  getInner …
+
+packages/d2ts/src/operators/groupBy.ts
+    39→export function groupBy …
+   139→export function sum …
+   157→export function count …
+   173→export function avg …
+   203→export function min …
+   224→export function max …
+   246→export function median …
+   294→export function mode …
 
 packages/d2ts/src/order.ts
     10→export function v(version: number | number[]): Version {
     29→export class Version {
-    32→  constructor(version: number | number[]) {
-    42→  toString(): string {
-    46→  toJSON(): string {
-    50→  static fromJSON(json: string): Version {
-    66→  equals(other: Version): boolean {
-    73→  lessThan(other: Version): boolean {
-    80→  lessEqual(other: Version): boolean {
-    85→  join(other: Version): Version {
-    91→  meet(other: Version): Version {
-    97→  advanceBy(frontier: Antichain): Version {
-   109→  extend(): Version {
-   113→  truncate(): Version {
-   119→  applyStep(step: number): Version {
-   128→  getInner(): number[] {
    138→export class Antichain {
-   141→  constructor(elements: Version[]) {
    277→export class Frontier extends Antichain {
-
-packages/d2ts/src/sqlite/context.ts
-    15→  static setDb(db: SQLiteDb): void {
-    23→  static getDb(): SQLiteDb | null {
-    30→  static clear(): void {
-    65→export function withSQLite(db: SQLiteDb) {
 
 packages/d2ts/src/sqlite/database.ts
      4→export interface SQLiteStatement<Params = unknown, Result = unknown> {
@@ -189,13 +198,6 @@ packages/d2ts/src/sqlite/database.ts
     36→  exec …
     41→  prepare …
     49→export class BetterSQLite3Wrapper implements SQLiteDb {
-
-packages/d2ts/src/types.ts
-    31→export interface IOperator<_T> {
-    37→export interface IDifferenceStreamReader<T> {
-    43→export interface IDifferenceStreamWriter<T> {
-    52→export interface ID2 {
-    64→export interface IStreamBuilder<T> {
 
 packages/d2ts/src/utils.ts
      7→export class WeakRefMap<K, V extends object> {
@@ -214,7 +216,27 @@ packages/d2ts/src/utils.ts
 
 packages/d2ts/src/version-index.ts
      8→export interface IndexType<K, V> {
+     9→  reconstructAt …
+    10→  versions …
+    11→  addValue …
+    12→  append …
+    13→  join …
+    14→  compact …
+    15→  keys …
+    16→  has …
     28→export class Index<K, V> implements IndexType<K, V> {
+    33→  constructor …
+    47→  toString …
+    70→  reconstructAt …
+    84→  get …
+   109→  entries …
+   113→  versions …
+   118→  addValue …
+   128→  append …
+   141→  join …
+   200→  compact …
+   267→  keys …
+   271→  has …
 
 packages/d2ts-benchmark/src/base.ts
      4→export interface Benchmark<T> {
@@ -230,3 +252,5 @@ packages/d2ts-benchmark/src/base.ts
 
 pnpm-workspace.yaml
      1→packages:
+
+tsconfig.json

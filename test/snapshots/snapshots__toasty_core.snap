@@ -2,17 +2,12 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1998 tokens)
+budget: 2000 (2000 tokens)
 
 src/driver/capability.rs
      4→pub struct Capability {
     61→pub struct StorageTypes {
    103→pub struct SchemaMutations {
-   164→    pub const SQLITE: Self = Self {
-   189→    pub const POSTGRESQL: Self = Self {
-   211→    pub const MYSQL: Self = Self {
-   233→    pub const DYNAMODB: Self = Self {
-   259→    pub const SQLITE: StorageTypes = StorageTypes {
 
 src/driver/operation.rs
     26→pub enum Operation {
@@ -30,10 +25,13 @@ src/driver.rs
 src/error.rs
     36→pub struct Error {
     41→pub trait IntoError {
-    43→    fn into_error …
-    76→    pub fn context …
+    43→    fn into_error(self) -> Error;
+    76→    pub fn context(self, consequent: impl IntoError) -> Error {
 
 src/lib.rs
+     4→pub mod driver;
+    10→pub mod schema;
+    13→pub mod stmt;
     16→pub type Result …
 
 src/macros.rs
@@ -50,12 +48,6 @@ src/schema/app/index.rs
     20→pub struct IndexId {
     26→pub struct IndexField {
 
-src/schema/app/model.rs
-     6→pub struct Model {
-    23→pub enum ModelKind {
-    31→pub struct ModelRoot {
-    41→pub struct ModelId(pub usize);
-
 src/schema/app/schema.rs
      7→pub struct Schema {
 
@@ -66,13 +58,6 @@ src/schema/db/column.rs
     12→pub struct Column {
     39→pub struct ColumnId {
 
-src/schema/db/index.rs
-    12→pub struct Index {
-    34→pub struct IndexId {
-    41→pub struct IndexColumn {
-    54→pub enum IndexOp {
-    61→pub enum IndexScope {
-
 src/schema/db/migration.rs
      2→pub enum Migration {
     32→pub struct AppliedMigration {
@@ -80,11 +65,13 @@ src/schema/db/migration.rs
 src/schema/db/schema.rs
      7→pub struct Schema {
 
-src/schema/mapping/field.rs
-    14→pub enum Field {
-   105→pub struct FieldPrimitive {
-   140→pub struct FieldEmbedded {
-   180→pub struct FieldRelation {
+src/schema/db/table.rs
+    16→pub struct Table {
+    34→pub struct TableId(pub usize);
+
+src/schema/mapping/model.rs
+    19→pub struct Model {
+    74→pub struct TableToModel {
 
 src/schema/mapping.rs
     18→pub struct Mapping {
@@ -95,6 +82,9 @@ src/schema/name.rs
      4→pub struct Name {
 
 src/schema.rs
+     1→pub mod app;
+     6→pub mod db;
+     8→pub mod mapping;
     22→pub struct Schema {
 
 src/stmt/assignments.rs
@@ -137,8 +127,8 @@ src/stmt/expr_and.rs
 
 src/stmt/expr_any.rs
     16→pub struct ExprAny {
-    25→    pub fn any …
-    33→    pub fn is_any …
+    25→    pub fn any(expr: impl Into<Expr>) -> Self {
+    33→    pub fn is_any(&self) -> bool {
 
 src/stmt/expr_arg.rs
     15→pub struct ExprArg {
@@ -164,6 +154,9 @@ src/stmt/expr_func.rs
 
 src/stmt/expr_in_list.rs
     15→pub struct ExprInList {
+
+src/stmt/expr_in_subquery.rs
+    15→pub struct ExprInSubquery {
 
 src/stmt/expr_is_null.rs
     14→pub struct ExprIsNull {
@@ -215,10 +208,13 @@ src/stmt/expr_ty.rs
 
 src/stmt/filter.rs
      4→pub struct Filter {
-    10→    pub const ALL …
+    10→    pub const ALL: Filter = Filter { expr: None };
 
 src/stmt/func_count.rs
      4→pub struct FuncCount {
+
+src/stmt/func_last_insert_id.rs
+    20→pub struct FuncLastInsertId;
 
 src/stmt/input.rs
     23→pub struct ConstInput {}
@@ -266,6 +262,8 @@ src/stmt/path_field_set.rs
 
 src/stmt/projection.rs
     17→pub struct Projection {
+    78→    pub const fn is_identity(&self) -> bool {
+    89→    pub const fn from_index(index: usize) -> Self {
 
 src/stmt/query.rs
      8→pub struct Query {

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1998 tokens)
+budget: 2000 (2000 tokens)
 
 README.md
      1→# bareiron
@@ -14,24 +14,26 @@ README.md
 
 include/crafting.h
      2→#define CRAFTING_H
+     6→void getCraftingOutput …
+     7→void getSmeltingOutput …
 
 include/globals.h
     10→  void task_yield ();
-    19→#define PORT 25565
-    23→#define MAX_PLAYERS 16
-    26→#define MAX_MOBS (MAX_PLAYERS)
-    29→#define MOB_DESPAWN_DISTANCE 256
-    32→#define GAMEMODE 0
-    35→#define VIEW_DISTANCE 2
-    38→#define TIME_BETWEEN_TICKS 1000000
-    41→#define TICKS_PER_SECOND ((float)1000000 / TIME_BETWEEN_TICKS)
-    45→#define INITIAL_WORLD_SEED 0xA103DE6C
-    49→#define INITIAL_RNG_SEED 0xE2B9419
-    53→#define CHUNK_SIZE 8
-    56→#define TERRAIN_BASE_HEIGHT 60
-    59→#define CAVE_BASE_DEPTH 24
-    63→#define BIOME_SIZE (CHUNK_SIZE * 8)
-    66→#define BIOME_RADIUS (BIOME_SIZE / 2)
+    19→#define PORT …
+    23→#define MAX_PLAYERS …
+    26→#define MAX_MOBS …
+    29→#define MOB_DESPAWN_DISTANCE …
+    32→#define GAMEMODE …
+    35→#define VIEW_DISTANCE …
+    38→#define TIME_BETWEEN_TICKS …
+    41→#define TICKS_PER_SECOND …
+    45→#define INITIAL_WORLD_SEED …
+    49→#define INITIAL_RNG_SEED …
+    53→#define CHUNK_SIZE …
+    56→#define TERRAIN_BASE_HEIGHT …
+    59→#define CAVE_BASE_DEPTH …
+    63→#define BIOME_SIZE …
+    66→#define BIOME_RADIUS …
     71→#define VISITED_HISTORY 4
     75→#define MAX_BLOCK_CHANGES 20000
     93→#define DISK_SYNC_INTERVAL 15000000
@@ -61,7 +63,12 @@ include/procedures.h
      2→#define H_PROCEDURES
 
 include/serialize.h
+     2→#define SERIALIZE_H
     14→  #define writeBlockChangesToDisk(a, b)
+    15→  #define writeChestChangesToDisk(a, b)
+    16→  #define writePlayerDataToDisk()
+    17→  #define writeDataToDiskOnInterval()
+    18→  #define initSerializer() 0
 
 include/structures.h
      2→#define H_STRUCTURES
@@ -76,6 +83,11 @@ include/worldgen.h
      6→typedef struct {
     13→typedef struct {
 
+src/crafting.c
+     9→void getCraftingOutput …
+   349→#define registerSmeltingRecipe(a, b) \
+   352→void getSmeltingOutput …
+
 src/globals.c
     18→  #define TASK_YIELD_INTERVAL 1000 * 1000
     20→  #define TASK_YIELD_TICKS 1
@@ -83,7 +95,7 @@ src/globals.c
 
 src/main.c
      8→#define CLOCK_REALTIME 0
-    68→void handlePacket …
+    68→void handlePacket (int client_fd, int length, int packet_id, int state) {
    734→void bareiron_main (void *pvParameters) {
    750→void wifi_init () {
    776→void app_main () {
@@ -146,20 +158,20 @@ src/packets.c
   1342→int sc_registries …
 
 src/procedures.c
-    54→void resetPlayerData (PlayerData *player) {
-    75→int reservePlayerData (int client_fd, uint8_t *uuid, char *name) {
-   130→PlayerData *getPlayerByName (int start_offset, int end_offset, uint8_t *buffer) {
-   146→void handlePlayerDisconnect (int client_fd) {
-   177→void handlePlayerJoin (PlayerData* player) {
-   321→void spawnPlayer (PlayerData *player) {
-   396→void broadcastPlayerMetadata (PlayerData *player) {
-   434→void broadcastMobMetadata (int client_fd, int entity_id) {
-   495→void failBlockChange (short x, uint8_t y, short z, uint8_t block) {
-   652→uint16_t getMiningResult (uint16_t held_item, uint8_t block) {
-   721→void bumpToolDurability (PlayerData *player) {
-   746→uint8_t isInstantlyMined (PlayerData *player, uint8_t block) {
-   775→uint8_t isColumnBlock (uint8_t block) {
-   789→uint8_t isPassableBlock (uint8_t block) {
+    54→void resetPlayerData …
+    75→int reservePlayerData …
+   130→PlayerData *getPlayerByName …
+   146→void handlePlayerDisconnect …
+   177→void handlePlayerJoin …
+   321→void spawnPlayer …
+   396→void broadcastPlayerMetadata …
+   434→void broadcastMobMetadata …
+   495→void failBlockChange …
+   652→uint16_t getMiningResult …
+   721→void bumpToolDurability …
+   746→uint8_t isInstantlyMined …
+   775→uint8_t isColumnBlock …
+   789→uint8_t isPassableBlock …
    802→uint8_t isPassableSpawnBlock …
    812→uint8_t isReplaceableBlock …
    831→uint32_t isCompostItem …
@@ -175,6 +187,8 @@ src/procedures.c
   1983→int sizeEntityMetadata …
 
 src/serialize.c
+     7→  #define FILE_PATH "/littlefs/world.bin"
+    10→  #define FILE_PATH "world.bin"
     20→int initSerializer () {
    120→void writeBlockChangesToDisk (int from, int to) {
    148→void writePlayerDataToDisk () {
@@ -182,9 +196,10 @@ src/serialize.c
    190→void writeChestChangesToDisk (uint8_t *storage_ptr, uint8_t slot) {
 
 src/structures.c
-    16→void placeTreeStructure …
+    16→void placeTreeStructure (short x, uint8_t y, short z) {
 
 src/tools.c
+    20→    #define CLOCK_MONOTONIC 1
    232→ssize_t readLengthPrefixedData (int client_fd) {
    244→void readString (int client_fd) {
    249→void readStringN (int client_fd, uint32_t max_length) {

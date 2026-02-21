@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1990 tokens)
+budget: 2000 (1993 tokens)
 
 Cargo.toml
      1→[package]
@@ -17,8 +17,6 @@ README.md
    144→## Comparison to failure
    155→## Comparison to thiserror
    166→#### License
-
-build.rs
 
 rust-toolchain.toml
      1→[toolchain]
@@ -40,6 +38,8 @@ src/chain.rs
     16→pub(crate) enum ChainState<'a> {
     27→    #[cold]
     28→    pub fn new(head: &'a (dyn StdError + 'static)) -> Self {
+    29→        Chain {
+      →        …
     57→impl DoubleEndedIterator for Chain<'_> {
     94→impl Default for Chain<'_> {
 
@@ -47,11 +47,14 @@ src/context.rs
      1→use crate::error::ContextError;
      2→use crate::{Context, Error, StdError};
      7→use crate::nightly::{self, Request};
+     9→mod ext {
     10→    use super::*;
     12→    pub trait StdError {
     13→        fn ext_context …
    147→    fn provide …
    161→    fn provide …
+   166→struct Quoted<C>(C);
+   186→pub(crate) mod private {
    187→    use super::*;
    189→    pub trait Sealed {}
 
@@ -86,13 +89,20 @@ src/error.rs
    568→    pub fn downcast_mut …
    622→    pub fn into_boxed_dyn_error …
    663→    pub fn reallocate_into_boxed_dyn_error_without_backtrace …
+   697→    fn from …
+   740→struct ErrorVTable {
    934→pub(crate) struct ErrorImpl<E = ()> {
    952→pub(crate) struct ContextError<C, E> {
+  1024→    fn provide …
+  1050→    fn from …
+  1058→    fn from …
+  1066→    fn from …
 
 src/fmt.rs
      1→use crate::chain::Chain;
      2→use crate::error::ErrorImpl;
      3→use crate::ptr::Ref;
+    69→struct Indented<'a, D> {
 
 src/kind.rs
     47→use crate::Error;
@@ -100,24 +110,18 @@ src/kind.rs
     53→use alloc::boxed::Box;
     55→pub struct Adhoc;
     58→pub trait AdhocKind: Sized {
-    60→    fn anyhow_kind(&self) -> Adhoc {
-    69→    pub fn new<M>(self, message: M) -> Error
-    70→    where
-    71→        M: Display + Debug + Send + Sync + 'static,
-    72→    {
+    60→    fn anyhow_kind …
+    69→    pub fn new …
     77→pub struct Trait;
     80→pub trait TraitKind: Sized {
-    82→    fn anyhow_kind(&self) -> Trait {
-    91→    pub fn new<E>(self, error: E) -> Error
-    92→    where
-    93→        E: Into<Error>,
-    94→    {
+    82→    fn anyhow_kind …
+    91→    pub fn new …
    100→pub struct Boxed;
    104→pub trait BoxedKind: Sized {
-   106→    fn anyhow_kind(&self) -> Boxed {
+   106→    fn anyhow_kind …
    112→impl BoxedKind for Box<dyn StdError + Send + Sync> {}
    115→impl Boxed {
-   117→    pub fn new(self, error: Box<dyn StdError + Send + Sync>) -> Error {
+   117→    pub fn new …
 
 src/lib.rs
    252→mod backtrace;
@@ -144,6 +148,9 @@ src/lib.rs
    672→    pub mod kind {
    674→        pub use crate::kind::{AdhocKind, TraitKind};
    678→        pub use crate::kind::BoxedKind;
+   684→    pub fn format_err(args: Arguments) -> Error {
+   698→    pub fn must_use(error: Error) -> Error {
+   704→    pub fn not(cond: impl Bool) -> bool {
    710→        pub trait Bool {
    711→            fn not(self) -> bool;
    716→            fn not(self) -> bool {
@@ -151,6 +158,7 @@ src/lib.rs
 
 src/macros.rs
     58→macro_rules! bail {
+    70→macro_rules! __ensure {
    204→macro_rules! anyhow {
    230→macro_rules! __anyhow {
 
@@ -161,31 +169,42 @@ src/nightly.rs
     56→pub fn provide …
 
 src/ptr.rs
-     6→pub struct Own …
-    32→    pub fn new(ptr: Box<T>) -> Self {
-    38→    pub fn cast<U: CastTo>(self) -> Own<U::Target> {
-    44→    pub unsafe fn boxed(self) -> Box<T> {
-    48→    pub fn by_ref(&self) -> Ref<T> {
-    55→    pub fn by_mut(&mut self) -> Mut<T> {
-    64→pub struct Ref …
-    87→    pub fn new(ptr: &'a T) -> Self {
-    94→    pub fn from_raw(ptr: NonNull<T>) -> Self {
-   101→    pub fn cast<U: CastTo>(self) -> Ref<'a, U::Target> {
-   108→    pub fn by_mut(self) -> Mut<'a, T> {
-   115→    pub fn as_ptr(self) -> *const T {
-   119→    pub unsafe fn deref(self) -> &'a T {
-   125→pub struct Mut …
-   148→    pub fn cast<U: CastTo>(self) -> Mut<'a, U::Target> {
-   155→    pub fn by_ref(self) -> Ref<'a, T> {
-   162→    pub fn extend<'b>(self) -> Mut<'b, T> {
-   169→    pub unsafe fn deref_mut(self) -> &'a mut T {
-   175→    pub unsafe fn read(self) -> T {
+     6→pub struct Own<T>
+     7→where
+     8→    T: ?Sized,
+     9→{
+    32→    pub fn new …
+    38→    pub fn cast …
+    44→    pub unsafe fn boxed …
+    48→    pub fn by_ref …
+    55→    pub fn by_mut …
+    64→pub struct Ref<'a, T>
+    65→where
+    66→    T: ?Sized,
+    67→{
+    87→    pub fn new …
+    94→    pub fn from_raw …
+   101→    pub fn cast …
+   108→    pub fn by_mut …
+   115→    pub fn as_ptr …
+   119→    pub unsafe fn deref …
+   125→pub struct Mut<'a, T>
+   126→where
+   127→    T: ?Sized,
+   128→{
+   148→    pub fn cast …
+   155→    pub fn by_ref …
+   162→    pub fn extend …
+   169→    pub unsafe fn deref_mut …
+   175→    pub unsafe fn read …
    181→pub trait CastTo {
    182→    type Target;
    183→}
+   186→    type Target = T;
 
 src/wrapper.rs
      1→use crate::StdError;
+     5→use alloc::boxed::Box;
      8→use crate::nightly::{self, Request};
     11→pub struct MessageError<M>(pub M);
     34→pub struct DisplayError<M>(pub M);

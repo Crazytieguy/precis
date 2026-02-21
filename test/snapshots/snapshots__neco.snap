@@ -2,58 +2,34 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (999 tokens)
+budget: 1000 (998 tokens)
+
+README.md
+   469→### More examples
+   504→### Fast context switching
+   511→### Thread local runtime
+
+docs/README.md
 
 neco.c
-   172→struct sco_desc {
-   179→struct sco_symbol {
-   234→struct llco_desc {
-   241→struct llco_symbol {
    294→#define LLCO_NOASM
-   343→struct llco_asmctx {
-   422→struct llco_asmctx {
-   513→struct llco_asmctx {
-   726→struct llco_asmctx {
-   789→struct llco_asmctx {
-   902→struct llco_asmctx {
   1067→enum llco_stack_grows { DOWNWARDS, UPWARDS }; 
-  1124→struct llco {
   1282→llco_start …
   1293→llco_switch …
   1320→llco_method …
-  1337→struct llco_dlinfo {
-  1364→struct llco_unwind_context {
   1814→struct sco_link {
-  1819→struct sco {
-  1875→struct sco_map {
-  1899→struct sco_list {
   2154→sco_active …
-  2165→struct sco_unwind_context {
   2192→sco_unwind …
-  2229→struct stack_opts {
-  2239→struct stack { char _[32]; };
-  2240→struct stack_mgr { char _[320]; };
-  2247→struct stack_group {
-  2261→struct stack_freed {
-  2267→struct stack_mgr0 {
-  2285→struct stack0 {
-  2648→struct worker_opts {
-  2656→struct worker_entry {
-  2661→struct worker_thread {
-  2672→struct worker {
   2798→worker_submit …
   2883→#define NECO_POLL_DISABLED
   2957→#define pwhere(str) \
   2963→#define unreachable() \
   2970→#define must(cond) \
-  3033→struct bt_context {
   3105→int neco_errconv_from_sys …
   3121→void neco_env_setallocator …
   3179→void neco_env_setpaniconerror …
   3188→void neco_env_setcanceltype …
   3197→void neco_env_setcancelstate …
-  3248→enum evkind {
-  3256→struct cleanup {
   3321→enum cokind { COROUTINE, SELECTCASE };
   3420→int neco_lasterr …
   3453→#define error_guard(ret) \
@@ -67,6 +43,25 @@ neco.c
   4454→int neco_startv …
   4474→int neco_yield …
   4531→int neco_sleep_dl …
+  4545→int neco_sleep …
+  4561→int64_t neco_getid …
+  4587→int64_t neco_lastid …
+  4634→int64_t neco_starterid …
+  4738→int neco_signal_watch …
+  4762→int neco_signal_unwatch …
+  4793→int neco_signal_wait_dl …
+  4806→int neco_signal_wait …
+  4843→int64_t neco_now …
+  4961→int neco_wait_dl …
+  4998→int neco_wait …
+  5130→ssize_t neco_read_dl …
+  5152→ssize_t neco_read …
+  5303→ssize_t neco_write_dl …
+  5334→ssize_t neco_write …
+  5423→int neco_accept_dl …
+  5445→int neco_accept …
+  5504→int neco_connect_dl …
+  5524→int neco_connect …
   5718→struct neco_chan {
   5736→struct coselectcase {
   7082→struct neco_mutex {
@@ -92,3 +87,10 @@ neco.h
    341→#define NECO_NANOSECOND  INT64_C(1)
    360→#define NECO_OK              0  ///< Successful result (no error)
    396→typedef struct neco_stream neco_stream;
+   424→#include <stdio.h>
+   446→void __neco_c0(void*,void(*)(void*),void*); 
+
+tests/panic.h
+
+tests/tests.h
+    24→#define IS_FAIL_TARGET

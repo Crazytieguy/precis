@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (4004 tokens)
 
 README.md
     26→## Introduction
@@ -93,6 +93,9 @@ packages/app-client/src/modules/config/config.types.ts
 packages/app-client/src/modules/files/files.models.ts
      6→export const iconByFileType = {
 
+packages/app-client/src/modules/notes/components/file-uploader.tsx
+    62→export const FileUploaderButton: ParentComponent<{
+
 packages/app-client/src/modules/notes/notes.context.tsx
     11→export const NoteContextProvider: ParentComponent = (props) => {
     27→export function useNoteContext() {
@@ -168,14 +171,6 @@ packages/app-client/src/modules/ui/layouts/app.layout.tsx
    240→export const AppLayout: ParentComponent = (props) => {
 
 packages/app-client/src/routes.tsx
-     2→import { LoginPage } from './modules/auth/pages/login.page';
-     3→import { getConfig } from './modules/config/config.provider';
-     4→import { NOTE_ID_REGEX } from './modules/notes/notes.constants';
-     5→import { buildViewNotePagePath } from './modules/notes/notes.models';
-     6→import { CreateNotePage } from './modules/notes/pages/create-note.page';
-     7→import { ViewNotePage } from './modules/notes/pages/view-note.page';
-     8→import { Button } from './modules/ui/components/button';
-     9→import { AppLayout } from './modules/ui/layouts/app.layout';
     11→export function getRoutes(): RouteDefinition[] {
 
 packages/app-client/tsconfig.json
@@ -216,6 +211,11 @@ packages/app-server/src/modules/app/server.types.ts
     13→export type Context = BaseContext<ServerInstanceGenerics>;
     15→export type ServerInstance = Hono<ServerInstanceGenerics>;
 
+packages/app-server/src/modules/notes/notes.constants.ts
+     1→export const TEN_MINUTES_IN_SECONDS = 10 * 60;
+     2→export const ONE_DAY_IN_SECONDS = 24 * 60 * 60;
+     3→export const ONE_MONTH_IN_SECONDS = 30 * ONE_DAY_IN_SECONDS;
+
 packages/app-server/src/modules/notes/notes.errors.ts
      3→export const createNoteNotFoundError = createErrorFactory({
      9→export const createNotePayloadTooLargeError = createErrorFactory({
@@ -241,13 +241,18 @@ packages/app-server/src/modules/shared/validation/validation.ts
     44→export const validateQuery …
     45→export const validateParams …
 
+packages/app-server/src/modules/storage/storage.types.ts
+     7→export type BindableStorageFactoryArgs …
+     8→export type BindableStorageFactory …
+     9→export type StorageFactory …
+
 packages/app-server/src/modules/tasks/tasks.types.ts
      3→export type TaskDefinition = ReturnType<typeof defineTask>;
 
 packages/app-server/tsconfig.json
      2→  "compilerOptions": {
     16→  }
-    17→}
+      →  …
 
 packages/app-server/wrangler.toml
      5→[[kv_namespaces]]
@@ -300,13 +305,18 @@ packages/cli/src/config/config.constants.ts
 packages/cli/src/create-note/create-note.command.ts
     13→export const createNoteCommand = defineCommand({
 
+packages/cli/src/files/files.services.ts
+     5→export async function checkFileExist …
+    14→export async function checkFilesExist …
+    26→export async function buildFileAssets …
+
 packages/cli/src/view-note/view-note.command.ts
      7→export const viewNoteCommand = defineCommand({
 
 packages/cli/tsconfig.json
      2→  "compilerOptions": {
     18→  }
-    19→}
+      →  …
 
 packages/crypto/README.md
      1→# Enclosed crypto library
@@ -388,10 +398,10 @@ packages/lib/src/api/api.constants.ts
      1→export const DEFAULT_API_BASE_URL = 'https://enclosed.cc';
 
 packages/lib/src/crypto/crypto.types.ts
-     3→export type EncryptionAlgorithm = typeof ENCRYPTION_ALGORITHMS[number];
-     4→export type KeyDerivationAlgorithm = typeof KEY_DERIVATION_ALGORITHMS[number];
-     5→export type CompressionAlgorithm = typeof COMPRESSION_ALGORITHMS[number];
-     7→export type CryptoServices = {
+     3→export type EncryptionAlgorithm …
+     4→export type KeyDerivationAlgorithm …
+     5→export type CompressionAlgorithm …
+     7→export type CryptoServices …
 
 packages/lib/src/crypto/serialization/serialization.types.ts
      4→export type SerializationMethodsDefinition = ReturnType<typeof defineSerializationMethods>;

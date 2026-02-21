@@ -7,30 +7,47 @@ budget: 1000 (1002 tokens)
 README.md
      3→# api.api\_database
     10→## DatabaseApi Objects
+    42→#### export
     67→# api.api\_inbound
     73→## InboundApi Objects
+   111→#### get\_list
+   140→#### get\_by\_id
+   180→#### add
+   228→#### delete
+   259→#### update
+   292→#### reset\_stats
+   314→#### reset\_client\_stats
    345→# api.api
    351→## Api Objects
+   414→#### session
+   429→#### session
+   444→#### cookie\_name
+   459→#### cookie\_name
+   476→#### from\_env
+   522→#### login
    549→# api.api\_server
    555→## ServerApi Objects
+   591→#### get\_db
+   618→#### get\_status
+   646→#### generate\_reality\_keys
    674→# api.api\_client
    681→## ClientApi Objects
+   727→#### get\_by\_email
+   761→#### get\_ips
+   794→#### add
   1042→# api.api\_base
   1048→## ApiFields Objects
   1058→## BaseApi Objects
 
 __init__.py
-     2→from py3xui.api.api_client …
+     2→from py3xui.api.api_client import ClientApi
 
 api.py
     13→class Api:
     66→
     67→    def __init__ …
-   102→    @session.setter
    103→    def session(self, value: str) -> None:
-   124→    @cookie_name.setter
    125→    def cookie_name(self, value: str | None) -> None:
-   139→    @classmethod
    140→    def from_env(
    141→        cls,
    142→        use_tls_verify: bool | None = None,
@@ -65,16 +82,16 @@ api_client.py
      6→import json
     13→class ClientApi(BaseApi):
     51→
-    52→    def get_by_email(self, email: str) -> Client | None:
-    89→    def get_ips(self, email: str) -> list[str]:
-   121→    def add(self, inbound_id: int, clients: list[Client]):
-   157→    def update(self, client_uuid: str, client: Client) -> None:
-   189→    def reset_ips(self, email: str) -> None:
-   217→    def reset_stats(self, inbound_id: int, email: str) -> None:
-   248→    def delete(self, inbound_id: int, client_uuid: str) -> None:
-   280→    def delete_depleted(self, inbound_id: int) -> None:
-   312→    def online(self) -> list[str]:
-   342→    def get_traffic_by_id(self, client_uuid: int) -> list[Client]:
+    52→    def get_by_email …
+    89→    def get_ips …
+   121→    def add …
+   157→    def update …
+   189→    def reset_ips …
+   217→    def reset_stats …
+   248→    def delete …
+   280→    def delete_depleted …
+   312→    def online …
+   342→    def get_traffic_by_id …
 
 api_database.py
      7→class DatabaseApi(BaseApi):
@@ -84,13 +101,13 @@ api_database.py
 api_inbound.py
      9→class InboundApi(BaseApi):
     39→
-    40→    def get_list(self) -> list[Inbound]:
-    71→    def get_by_id(self, inbound_id: int) -> Inbound:
-   111→    def add(self, inbound: Inbound) -> None:
-   159→    def delete(self, inbound_id: int) -> None:
-   190→    def update(self, inbound_id: int, inbound: Inbound) -> None:
-   223→    def reset_stats(self) -> None:
-   247→    def reset_client_stats(self, inbound_id: int) -> None:
+    40→    def get_list …
+    71→    def get_by_id …
+   111→    def add …
+   159→    def delete …
+   190→    def update …
+   223→    def reset_stats …
+   247→    def reset_client_stats …
 
 api_server.py
      7→class ServerApi(BaseApi):

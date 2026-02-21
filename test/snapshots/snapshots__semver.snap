@@ -102,7 +102,7 @@ functions/compare-build.js
      4→const compareBuild = (a, b, loose) => {
 
 functions/compare-loose.js
-     4→const compareLoose …
+     4→const compareLoose = (a, b) => compare(a, b, true)
 
 functions/compare.js
      4→const compare = (a, b, loose) =>
@@ -238,12 +238,12 @@ ranges/outside.js
     13→const outside = (version, range, hilo, options) => {
 
 ranges/subset.js
-    45→const subset = (sub, dom, options = {}) => {
-    73→const minimumVersionWithPreRelease …
-    74→const minimumVersion …
-    76→const simpleSubset = (sub, dom, options) => {
-   226→const higherGT = (a, b, options) => {
-   238→const lowerLT = (a, b, options) => {
+    45→const subset …
+    73→const minimumVersionWithPreRelease = [new Comparator('>=0.0.0-0')]
+    74→const minimumVersion = [new Comparator('>=0.0.0')]
+    76→const simpleSubset …
+   226→const higherGT …
+   238→const lowerLT …
 
 ranges/to-comparators.js
      6→const toComparators = (range, options) =>

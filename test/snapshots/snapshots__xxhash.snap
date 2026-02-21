@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2015 tokens)
+budget: 2000 (2016 tokens)
 
 README.md
      1→# xxhash
@@ -15,8 +15,14 @@ README.md
     12→```
       →…
     33→## Compatibility
+    35→This package is in a module and the latest code is in version 2 of the module.
+      →…
     45→## Benchmarks
+    47→Here are some quick benchmarks comparing the pure-Go and assembly
+      →…
     66→## Projects using this package
+    68→- [InfluxDB](https://github.com/influxdata/influxdb)
+      →…
 
 bench_test.go
      3→import …
@@ -40,7 +46,11 @@ dynamic/plugin.go
     15→	in   = "Call me Ishmael. Some years ago--never mind how long precisely-"
     16→	want = uint64(0x02a2e85470d6fd96)
     19→func TestSum(t *testing.T) {
+    20→	got := xxhash.Sum64String(in)
+      →	…
     26→func TestDigest(t *testing.T) {
+    27→	for chunkSize := 1; chunkSize <= len(in); chunkSize++ {
+      →	…
 
 xxhash.go
      5→import …
@@ -78,26 +88,27 @@ xxhash.go
    172→	marshaledSize = len(magic) + 8*5 + 32
    176→func (d *Digest) MarshalBinary() ([]byte, error) {
    190→func (d *Digest) UnmarshalBinary(b []byte) error {
-   208→func appendUint64(b []byte, x uint64) []byte {
-   214→func consumeUint64(b []byte) ([]byte, uint64) {
-   219→func u64(b []byte) uint64 { return binary.LittleEndian.Uint64(b) }
-   220→func u32(b []byte) uint32 { return binary.LittleEndian.Uint32(b) }
-   222→func round(acc, input uint64) uint64 {
-   229→func mergeRound(acc, val uint64) uint64 {
-   236→func rol1(x uint64) uint64  { return bits.RotateLeft64(x, 1) }
-   237→func rol7(x uint64) uint64  { return bits.RotateLeft64(x, 7) }
-   238→func rol11(x uint64) uint64 { return bits.RotateLeft64(x, 11) }
-   239→func rol12(x uint64) uint64 { return bits.RotateLeft64(x, 12) }
-   240→func rol18(x uint64) uint64 { return bits.RotateLeft64(x, 18) }
-   241→func rol23(x uint64) uint64 { return bits.RotateLeft64(x, 23) }
-   242→func rol27(x uint64) uint64 { return bits.RotateLeft64(x, 27) }
-   243→func rol31(x uint64) uint64 { return bits.RotateLeft64(x, 31) }
+   208→func appendUint64 …
+   214→func consumeUint64 …
+   219→func u64 …
+   220→func u32 …
+   222→func round …
+   229→func mergeRound …
+   236→func rol1 …
+   237→func rol7 …
+   238→func rol11 …
+   239→func rol12 …
+   240→func rol18 …
+   241→func rol23 …
+   242→func rol27 …
+   243→func rol31 …
 
 xxhash_asm.go
      9→// Sum64 computes the 64-bit xxHash digest of b with a zero seed.
     10→//
     11→//go:noescape
     12→func Sum64(b []byte) uint64
+    14→//go:noescape
     15→func writeBlocks(d *Digest, b []byte) int
 
 xxhash_other.go
@@ -128,11 +139,14 @@ xxhash_safe.go
 xxhash_test.go
      3→import …
     12→func TestAll(t *testing.T) {
+    58→func testDigest …
+    88→func testSum …
     97→func TestReset(t *testing.T) {
    114→func TestResetWithSeed(t *testing.T) {
    131→func TestBinaryMarshaling(t *testing.T) {
    168→var sink uint64
    170→func TestAllocs(t *testing.T) {
+   193→func testAllocs …
 
 xxhash_unsafe.go
      9→import …
@@ -141,13 +155,16 @@ xxhash_unsafe.go
     38→func Sum64String(s string) uint64 {
     39→	b := *(*[]byte)(unsafe.Pointer(&sliceHeader{s, len(s)}))
     40→	return Sum64(b)
-      →	…
+    41→}
     43→// WriteString adds more data to d. It always returns len(s), nil.
     44→// It may be faster than Write([]byte(s)) by avoiding a copy.
     45→func (d *Digest) WriteString(s string) (n int, err error) {
     46→	d.Write(*(*[]byte)(unsafe.Pointer(&sliceHeader{s, len(s)})))
     47→	// d.Write always returns len(s), nil.
-      →	…
+    48→	// Ignoring the return output and returning these fixed values buys a
+    49→	// savings of 6 in the inliner's cost model.
+    50→	return len(s), nil
+    51→}
     55→type sliceHeader struct {
     56→	s   string
       →	…
@@ -156,7 +173,7 @@ xxhash_unsafe_test.go
      6→import …
     13→func TestStringAllocs(t *testing.T) {
     29→// This test is inspired by the Go runtime tests in https://go.dev/cl/57410.
-      →…
+    30→// It asserts that certain important functions may be inlined.
     31→func TestInlining(t *testing.T) {
 
 xxhashbench/xxhashbench_test.go

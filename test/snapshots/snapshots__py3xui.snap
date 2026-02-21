@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2022 tokens)
+budget: 2000 (2021 tokens)
 
 README.md
     29→## Overview
@@ -50,16 +50,16 @@ py3xui/api/api_base.py
     28→class BaseApi:
     60→
     61→    def __init__ …
-    81→    def host(self) -> str:
-    89→    def username(self) -> str:
-    97→    def password(self) -> str:
-   105→    def use_tls_verify(self) -> bool:
-   113→    def custom_certificate_path(self) -> str | None:
-   129→    def max_retries(self, value: int) -> None:
-   145→    def session(self, value: str | None) -> None:
-   161→    def cookie_name(self, value: str | None) -> None:
+    81→    def host …
+    89→    def username …
+    97→    def password …
+   105→    def use_tls_verify …
+   113→    def custom_certificate_path …
+   129→    def max_retries …
+   145→    def session …
+   161→    def cookie_name …
    168→    def login …
-   211→    def cookies(self) -> dict[str, str]:
+   211→    def cookies …
 
 py3xui/api/api_client.py
      6→import json
@@ -121,16 +121,29 @@ py3xui/async_api/async_api_base.py
     16→class AsyncBaseApi:
     48→
     49→    def __init__ …
-    69→    def host(self) -> str:
-    77→    def username(self) -> str:
-    85→    def password(self) -> str:
-    93→    def use_tls_verify(self) -> bool:
-   101→    def custom_certificate_path(self) -> str | None:
-   117→    def max_retries(self, value: int) -> None:
-   133→    def session(self, value: str | None) -> None:
-   149→    def cookie_name(self, value: str | None) -> None:
+    69→    def host …
+    77→    def username …
+    85→    def password …
+    93→    def use_tls_verify …
+   101→    def custom_certificate_path …
+   117→    def max_retries …
+   133→    def session …
+   149→    def cookie_name …
    239→    async def login …
-   282→    def cookies(self) -> dict[str, str]:
+   282→    def cookies …
+
+py3xui/async_api/async_api_client.py
+    12→class AsyncClientApi(AsyncBaseApi):
+    51→
+
+py3xui/async_api/async_api_database.py
+     7→class AsyncDatabaseApi(AsyncBaseApi):
+    31→
+    32→    async def export(self) -> None:
+
+py3xui/async_api/async_api_inbound.py
+    11→class AsyncInboundApi(AsyncBaseApi):
+    41→
 
 py3xui/async_api/async_api_server.py
      8→class AsyncServerApi(AsyncBaseApi):
@@ -147,8 +160,7 @@ py3xui/client/README.md
 py3xui/client/client.py
      7→class ClientFields:
      9→
-    10→    EMAIL = "email"
-      →    …
+      →…
     36→class Client(BaseModel):
     58→
       →…
@@ -234,6 +246,9 @@ py3xui/server/server.py
 
 py3xui/utils/README.md
      3→# utils.env
+
+py3xui/utils/__init__.py
+     4→COOKIE_NAMES …
 
 py3xui/utils/env.py
      7→def parse_env …

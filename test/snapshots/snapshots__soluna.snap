@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2004 tokens)
+budget: 2000 (2003 tokens)
 
 README.md
      7→# Soluna
@@ -27,6 +27,9 @@ src/batch.h
      2→#define soluna_batch_h
      6→struct draw_primitive {
     13→struct draw_primitive_external {
+    19→struct draw_batch * batch_new(int size);
+    20→struct draw_primitive * batch_reserve(struct draw_batch *, int size);
+    21→void batch_delete(struct draw_batch *);
 
 src/drawmgr.c
      8→struct draw_element {
@@ -39,28 +42,15 @@ src/embedlua.c
     55→luaopen_embedsource …
 
 src/entry.c
-     1→#define SOKOL_IMPL
-    14→#define SOKOL_D3D11
-    18→#define SOKOL_METAL
-    22→#define SOKOL_WGPU
-    26→#define SOKOL_GLCORE
-    36→#define FRAME_CALLBACK 1
-    37→#define CLEANUP_CALLBACK 2
-    38→#define EVENT_CALLBACK 3
-    39→#define CALLBACK_COUNT 3
-    69→#define PLATFORM "windows"
-    73→#define PLATFORM "macos"
-    77→#define PLATFORM "wasm"
-    81→#define PLATFORM "linux"
-    85→#define PLATFORM "unknown"
     89→struct app_context {
    103→struct soluna_message {
    216→struct icon_pixels {
 
-src/file.c
-
 src/font.c
    133→#define MAX_FONTNAME 256
+   159→luaopen_font …
+   186→void soluna_openlibs …
+   248→luaopen_font_manager …
 
 src/font_define.h
     11→struct font_glyph {
@@ -77,6 +67,11 @@ src/font_manager.h
     22→int font_manager_flush(struct font_manager *);
     31→const void * font_manager_texture(struct font_manager *F, int *sz);
 
+src/font_system.c
+     8→#define MAX_NAME 1024
+    70→#define kCTFontTableTtcf 'ttcf'
+   287→luaopen_font_system …
+
 src/gamepad.c
     29→struct gamepad_state {
    267→static struct gamepad_global {
@@ -87,17 +82,21 @@ src/image.c
    321→struct canvas {
    577→luaopen_image …
 
+src/ime_char_filter.h
+     2→#define SOLUNA_IME_CHAR_FILTER_H
+     8→struct soluna_ime_char_filter_state {
+
 src/ime_state.h
      2→#define SOLUNA_IME_STATE_H
      7→struct soluna_ime_rect_state {
 
 src/lcrypt.c
-   187→#define GET_UINT32(n,b,i)					   \
-   205→#define DES_IP(X,Y)											 \
-   218→#define DES_FP(X,Y)											 \
-   231→#define DES_ROUND(X,Y)						  \
-   623→#define LEFTROTATE(x, c) (((x) << (c)) | ((x) >> (32 - (c))))
-   790→#define P 0xffffffffffffffc5ull
+   187→#define GET_UINT32 …
+   205→#define DES_IP …
+   218→#define DES_FP …
+   231→#define DES_ROUND …
+   623→#define LEFTROTATE …
+   790→#define P …
   1031→int lsha1(lua_State *L);
 
 src/lfs.c
@@ -115,15 +114,21 @@ src/lsha1.c
    247→lsha1 …
    272→lhmac_sha1 …
 
+src/luabuffer.h
+     2→#define soluna_luabuffer_h
+
 src/luayoga.c
     18→struct enum_string {
     23→struct set_number {
     32→struct set_edge_number {
     38→struct set_two_number {
     69→struct pos {
+   104→typedef void (*setfunc …
    594→luaopen_layout_yoga …
 
 src/luazip.c
+    12→#define ZLIB_UTF8_FLAG (1<<11)
+    13→#define FILECHUNK (4096 * 4)
     79→struct filename_convert {
    132→struct filename_convert {};
    151→struct ziphandle {
@@ -177,12 +182,10 @@ src/material_text.c
    352→struct position {
    701→luaopen_material_text …
 
-src/material_util.h
-     2→#define soluna_material_util_h
-     8→#define MATERIAL_TEXT_NORMAL 1
-     9→#define MATERIAL_QUAD 2
-    10→#define MATERIAL_MASK 3
-    11→#define MATERIAL_PERSPECTIVE_QUAD 4
+src/material_util.c
+     6→util_ref_object …
+    24→util_submit_material …
+    43→util_make_pipeline …
 
 src/openlibs.c
      1→#define linit_c
@@ -202,14 +205,13 @@ src/render.c
    482→struct enum_string {
    615→struct inst_object {
    620→struct sprite_object {
+   651→int lbindings_new …
+   652→int lview_new …
+   653→int luniform_new …
+   655→luaopen_render …
 
 src/render_bindings.c
     61→struct view {
-    97→#define VIEW_TYPE_INVALID 0
-    98→#define VIEW_TYPE_TEXTURE 1
-    99→#define VIEW_TYPE_STORAGE 2
-   100→#define VIEW_TYPE_COLOR_ATTACHMENT 3
-   101→#define VIEW_TYPE_DEPTH_STENCIL_ATTACHMENT 4
    148→lview_new …
    221→lbindings_new …
 
@@ -225,6 +227,7 @@ src/sdfimage.c
      9→#include "stb/stb_image.h"
     23→#define IMAGE_SIZE 64
     77→struct sdf_context {
+   229→luaopen_image_sdf …
 
 src/sprite_submit.h
      2→#define soluna_sprite_submit_h
@@ -237,12 +240,20 @@ src/spritemgr.c
     95→struct tmp_context {
    190→struct layer {
    197→struct batch {
+   501→luaopen_spritemgr …
 
 src/spritemgr.h
      2→#define soluna_spritemgr_h
      7→#define INVALID_TEXTUREID 0xffff
      9→struct sprite_rect {
     16→struct sprite_bank {
+
+src/srbuffer.c
+    14→srbuffer_size …
+    25→srbuffer_init …
+    50→srbuffer_add …
+   122→srbuffer_commit …
+   176→main …
 
 src/srbuffer.h
      2→#define soluna_srbuffer_h

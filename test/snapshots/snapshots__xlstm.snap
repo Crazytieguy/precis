@@ -5,11 +5,14 @@ expression: output
 budget: 2000 (2003 tokens)
 
 README.md
+     3→# xLSTM: Extended Long Short-Term Memory
     19→## About
     29→## Minimal Installation
     49→## Requirements
+    61→# xLSTM 7B: A Recurrent LLM for Fast and Efficient Inference
     80→## How to use the xLSTM Large 7B and its architecture
    115→## Recommendation for other hardware
+   138→# Models from the xLSTM NeurIPS Paper
    142→## How to use the xLSTM architecture from our NeurIPS paper
    297→## Experiments
    312→## Citation
@@ -30,19 +33,20 @@ environment_pt260cu126.yaml
      7→dependencies:
 
 experiments/data/formal_language/formal_language_dataset.py
+     3→import inspect
     42→class FormLangDatasetConfig(FormLangDatasetConfigBase):
     56→class FormLangDataset(torch.utils.data.Dataset):
-   157→    def vocab_size(self):
-   161→    def context_length(self):
+   157→    def vocab_size …
+   161→    def context_length …
    165→class FormLangDatasetGenerator(DataGen):
-   258→    def train_split(self) -> FormLangDataset:
-   262→    def validation_split(self) -> Mapping[str, FormLangDataset]:
-   266→    def test_split(self) -> Mapping[str, FormLangDataset]:
-   270→    def train_metrics(self) -> torchmetrics.MetricCollection:
-   278→    def validation_metrics(self) -> torchmetrics.MetricCollection:
-   286→    def test_metrics(self) -> torchmetrics.MetricCollection:
-   294→    def vocab_size(self):
-   298→    def context_length(self):
+   258→    def train_split …
+   262→    def validation_split …
+   266→    def test_split …
+   270→    def train_metrics …
+   278→    def validation_metrics …
+   286→    def test_metrics …
+   294→    def vocab_size …
+   298→    def context_length …
 
 experiments/data/formal_language/online_generate.py
      9→class OnlineTaskGenerate(Dataset):
@@ -52,17 +56,17 @@ experiments/data/formal_language/online_generate.py
 
 experiments/data/utils.py
     17→class DataGen:
-    21→    def train_split(self) -> torch.utils.data.Dataset:
-    26→    def validation_split(self) -> Mapping[str, torch.utils.data.Dataset]:
-    31→    def train_metrics(self) -> torchmetrics.MetricCollection:
-    36→    def validation_metrics(self) -> torchmetrics.MetricCollection:
+    21→    def train_split …
+    26→    def validation_split …
+    31→    def train_metrics …
+    36→    def validation_metrics …
     39→class SequenceTensorDataset(TensorDataset):
-    47→    def vocab_size(self) -> Optional[int]:
-    51→    def context_length(self) -> int:
+    47→    def vocab_size …
+    51→    def context_length …
     55→class CacheMixin:
-    58→    def check_exist(config, directory: Path, check_existing: bool):
-    78→    def post_generate(config, directory):
-    86→    def dataset_hash(subdir):
+    58→    def check_exist …
+    78→    def post_generate …
+    86→    def dataset_hash …
 
 experiments/lr_scheduler.py
      3→import math
@@ -77,13 +81,13 @@ experiments/lr_scheduler.py
 
 experiments/main.py
      3→from argparse …
-    21→dataset_registry …
-    25→torch_dtype_map …
+    21→dataset_registry: dict[str, Type[DataGen]] = {
+    25→torch_dtype_map: dict[str, torch.dtype] = {
     32→def load_dataset(name, kwargs):
     37→def main(cfg: DictConfig):
 
 experiments/metrics.py
-     2→from typing import Optional
+     2→from typing …
      9→class SequenceAccuracy(Metric):
     13→    def __init__(self, **kwargs):
     17→    def update(self, preds: torch.Tensor, target: torch.Tensor):
@@ -127,7 +131,9 @@ xlstm/blocks/mlstm/layer.py
 
 xlstm/blocks/slstm/block.py
     13→class sLSTMBlockConfig:
+    21→    def __post_init__(self):
     29→class sLSTMBlock(xLSTMBlock):
+    32→    def __init__(self, config: sLSTMBlockConfig):
 
 xlstm/blocks/slstm/cell.py
     28→LOGGER …

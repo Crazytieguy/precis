@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2000 tokens)
+budget: 2000 (2002 tokens)
 
 package.json
      2→	"name": "ky",
@@ -29,6 +29,7 @@ package.json
 readme.md
     20→## Benefits over plain `fetch`
     33→## Install
+    39→###### CDN
     45→## Usage
     85→## API
     87→### ky(input, options?)
@@ -45,6 +46,10 @@ readme.md
    197→##### retry
    327→##### timeout
    335→##### hooks
+   342→###### hooks.beforeRequest
+   373→###### hooks.beforeRetry
+   446→###### hooks.beforeError
+   485→###### hooks.afterResponse
    553→##### throwHttpErrors
    566→##### onDownloadProgress
    592→##### onUploadProgress
@@ -114,6 +119,9 @@ source/errors/HTTPError.ts
     10→	constructor …
 
 source/errors/NonError.ts
+     2→Wrapper for non-Error values that were thrown.
+     3→
+      →…
      6→export class NonError extends Error {
      7→	override name = 'NonError';
      8→	readonly value: unknown;
@@ -121,17 +129,13 @@ source/errors/NonError.ts
     10→	constructor(value: unknown) {
 
 source/errors/TimeoutError.ts
+     1→import type {KyRequest} from '../types/request.js';
      3→export class TimeoutError extends Error {
      4→	public request: KyRequest;
+     5→
      6→	constructor(request: Request) {
 
 source/index.ts
-     3→import {Ky} from './core/Ky.js';
-     4→import {requestMethods, stop, retry} from './core/constants.js';
-     5→import type {KyInstance} from './types/ky.js';
-     6→import type {Input, Options} from './types/options.js';
-     7→import {validateAndMerge} from './utils/merge.js';
-     8→import {type Mutable} from './utils/types.js';
     34→const ky = createInstance();
 
 source/types/ResponsePromise.ts
@@ -188,6 +192,7 @@ source/utils/body.ts
    119→export const streamRequest …
 
 source/utils/delay.ts
+     3→import {type InternalOptions} from '../types/options.js';
      5→export type DelayOptions = {
      9→export default async function delay …
 
