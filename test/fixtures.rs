@@ -92,7 +92,7 @@ with_entries! {
     (vaul,                    "vaul",                            2000), // inspected: logged observation
     (ts_pattern,              "ts-pattern",                     2000), // inspected: logged observation
     (ts_pattern_src_types,    "ts-pattern/src/types",           1000), // inspected: logged observation
-    (ky,                      "ky",                              2000),
+    (ky,                      "ky",                              2000), // inspected: logged observation
     (ky_source_errors,        "ky/source/errors",               1000), // error hierarchy
     (superstruct,             "superstruct",                    2000),
     (superstruct_src_structs, "superstruct/src/structs",        1000), // validator definitions
