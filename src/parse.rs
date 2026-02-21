@@ -408,11 +408,15 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
                 SymbolKind::TypeAlias
             }
             "preproc_def" | "preproc_function_def" => {
-                // Skip C header guard defines (#define FOO_H with no value)
-                if symbol_node.kind() == "preproc_def"
-                    && is_c_header_guard(symbol_node, source, path)
-                {
-                    continue;
+                if symbol_node.kind() == "preproc_def" {
+                    // Skip C header guard defines (#define FOO_H with no value)
+                    if is_c_header_guard(symbol_node, source, path) {
+                        continue;
+                    }
+                    // Skip platform-compat type defines (#define UINT32_TYPE uint32_t)
+                    if is_platform_type_define(symbol_node, source) {
+                        continue;
+                    }
                 }
                 SymbolKind::Macro
             }
@@ -846,6 +850,31 @@ fn is_c_header_guard(node: tree_sitter::Node, source: &str, path: &Path) -> bool
         None => return false,
     };
     name.contains(&stem)
+}
+
+/// Check if a `preproc_def` is a platform-compatibility type define
+/// (`#define UINT32_TYPE uint32_t`, `#define INT8_TYPE signed char`, etc.)
+/// These map portable type names to platform-specific C types with zero
+/// architectural value.
+fn is_platform_type_define(node: tree_sitter::Node, source: &str) -> bool {
+    let name = match node.child_by_field_name("name") {
+        Some(n) => n.utf8_text(source.as_bytes()).unwrap_or(""),
+        None => return false,
+    };
+    if !name.ends_with("_TYPE") {
+        return false;
+    }
+    // Value must be a C type expression (identifiers/keywords only, no operators or literals)
+    let value = match node.child_by_field_name("value") {
+        Some(v) => v.utf8_text(source.as_bytes()).unwrap_or(""),
+        None => return false,
+    };
+    let value = value.trim();
+    !value.is_empty()
+        && value.split_whitespace().all(|token| {
+            token.starts_with(|c: char| c.is_ascii_alphabetic() || c == '_')
+                && token.chars().all(|c| c.is_ascii_alphanumeric() || c == '_')
+        })
 }
 
 /// Check if a `type_definition` is a simple typedef alias (`typedef T name;`) where
