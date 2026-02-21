@@ -15,11 +15,11 @@ For each uninspected entry:
 3. **Compare.** Did the Explore agent surface crucial details that precis missed? Did precis waste budget on content the Explore agent ignored? Is precis output misleading?
 
 4. **Decide:**
-   - **Exceeds Explore:** Precis output exceeds the Explore agent output in valuable information density. Mark the entry `// inspected: exceeds explore`.
+   - **Exceeds Explore:** Precis output significantly exceeds the Explore agent output in valuable information density. Mark the entry `// inspected: exceeds explore`.
    - **Issue noted:** The Explore agent surfaced important details that precis missed, but you don't have a concrete improvement idea. Log the gap in `issues.md` under "Observations" with specifics. Mark the entry `// inspected: logged observation`.
    - **Clear general improvement:** You identified a concrete, general change that would improve precis output. Implement it (see below). Mark the entry `// inspected: <short description of change>`.
 
-The bar for "exceeds explore" is high. If the Explore agent gave you meaningfully better orientation than precis did, that's an observation worth logging even if you don't know how to fix it.
+The bar for "exceeds explore" is high. If precis didn't give you meaningfully better orientation than the Explore agent did, that's an observation worth logging even if you don't know how to fix it.
 
 If multiple logged observations point to the same underlying issue, that's also a good time to implement.
 
