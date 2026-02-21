@@ -60,6 +60,10 @@ If a command that should be allowed is denied, or if project structure changes s
 - Always run `cargo bench --bench hot_path -- --quick` after changes to catch performance regressions
 - When inspecting snapshot changes, read the diffs as a user would — check for regressions (lost useful content, gained noise)
 
+## Ownership
+
+You are the sole maintainer of this codebase. You have full freedom with the code — refactor, simplify, rewrite as needed.
+
 ## Code Health
 
 Log any issues noticed during work in `issues.md`, even if tiny — concrete bugs, DRY violations, stale heuristics, unclear code. Keeping this file current is important for long-term codebase health. When an issue is resolved, remove it from the file.
