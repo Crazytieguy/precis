@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (1001 tokens)
+budget: 1000 (990 tokens)
 
 README.md
      1→Simple Dynamic Strings
@@ -18,22 +18,11 @@ README.md
    370→Trimming strings and getting ranges
    464→String copying
    509→Quoting strings
-   563→Tokenization
-   622→Command line oriented tokenization
-   658→String joining
-   686→Error handling
-   696→SDS internals and advanced usage
-   761→Shrinking strings
-   796→Manual modifications of SDS strings
-   820→Sharing SDS strings
-   851→Interactions with heap checkers
-   860→Zero copy append from syscalls
-   882→Embedding SDS into your project
-   895→Using a different allocator for SDS
-   911→Credits and license
 
 sds.c
     33→#include <stdio.h>
+    39→#include "sds.h"
+    40→#include "sdsalloc.h"
     89→sds sdsnewlen …
    149→sds sdsempty …
    154→sds sdsnew …
@@ -52,6 +41,8 @@ sds.c
    421→sds sdscatsds …
    427→sds sdscpylen …
    440→sds sdscpy …
+   444→/* Helper for sdscatlonglong() doing the actual number -> string
+      →…
    450→#define SDS_LLSTR_SIZE 21
    451→int sdsll2str(char *s, long long value) {
    494→int sdsull2str …
@@ -76,6 +67,8 @@ sds.c
   1136→void *sds_malloc …
   1137→void *sds_realloc(void *ptr, size_t size) { return s_realloc(ptr,size); }
   1138→void sds_free(void *ptr) { s_free(ptr); }
+  1142→#include "testhelp.h"
+  1143→#include "limits.h"
   1145→#define UNUSED(x) (void)(x)
   1146→int sdsTest(void) {
   1325→int main(void) {
@@ -83,6 +76,9 @@ sds.c
 sds.h
     43→typedef char *sds;
     47→struct __attribute__ ((__packed__)) sdshdr5 {
+    48→    unsigned char flags; /* 3 lsb of type, and 5 msb of string length */
+    49→    char buf[];
+    50→};
     51→struct __attribute__ ((__packed__)) sdshdr8 {
     57→struct __attribute__ ((__packed__)) sdshdr16 {
     63→struct __attribute__ ((__packed__)) sdshdr32 {

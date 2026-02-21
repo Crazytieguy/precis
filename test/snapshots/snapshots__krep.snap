@@ -2,22 +2,10 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (1000 tokens)
+budget: 1000 (997 tokens)
 
 README.md
      1→# k(r)ep - A high-performance string search utility
-    13→## The Story Behind the Name
-    19→## Key Features
-    36→## What's New in v2.2.0
-    42→## Installation
-    84→## Usage
-    96→## Usage Examples
-   134→## Command Line Options
-   155→## Performance Benchmarks
-   180→## How Krep Works
-   231→## Contributing
-   235→## Author
-   239→## License
 
 aho_corasick.c
     17→typedef struct ac_node
@@ -36,10 +24,10 @@ aho_corasick.h
     15→typedef struct search_params search_params_t;
     20→typedef struct match_result_t match_result_t;
     27→typedef struct ac_trie ac_trie_t;
-    30→ac_trie_t *ac_trie_build …
-    33→void ac_trie_free …
-    36→bool ac_trie_root_has_outputs …
-    39→uint64_t aho_corasick_search …
+    30→ac_trie_t *ac_trie_build(const search_params_t *params);
+    33→void ac_trie_free(ac_trie_t *trie);
+    36→bool ac_trie_root_has_outputs(const ac_trie_t *trie);
+    39→uint64_t aho_corasick_search(const search_params_t *params, const char *text_start, size_t text_len, match_result_t *result);
 
 krep.c
     77→#define MAX_PATTERN_LENGTH 1024
@@ -84,13 +72,20 @@ krep.h
     23→typedef struct ac_trie ac_trie_t;
     34→#define KREP_COLOR_RESET "\033[0m"
     42→#define KREP_COLOR_HELP_TITLE "\033[1;38;5;81m"
-    49→match_position_t …
+    49→typedef struct
+    50→{
     55→typedef struct match_result_t // Add the struct tag here
     56→{
-    65→search_params_t …
-    98→typedef uint64_t (*search_func_t …
-   104→thread_data_t …
-   125→task_t …
+    65→typedef struct search_params
+    66→{
+    98→typedef uint64_t (*search_func_t)(const search_params_t *params,
+    99→                                  const char *text_start,
+   100→                                  size_t text_len,
+   101→                                  match_result_t *result);
+   104→typedef struct
+   105→{
+   125→typedef struct task
+   126→{
    132→typedef struct
    133→{
    146→thread_pool_t *thread_pool_init …

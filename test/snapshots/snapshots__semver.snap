@@ -2,13 +2,15 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2002 tokens)
+budget: 2000 (2001 tokens)
+
+.github/dependabot.yml
+     3→version: 2
+     5→updates:
 
 .github/settings.yml
      3→repository:
     13→branches:
-
-CHANGELOG.md
 
 README.md
      1→semver(1) -- The semantic versioner for npm
@@ -66,21 +68,6 @@ classes/range.js
    170→  intersects (range, options) {
    193→  test (version) {
    218→const cache = new LRU()
-   233→const isNullSet …
-   234→const isAny …
-   238→const isSatisfiable …
-   257→const parseComparator …
-   271→const isX …
-   280→const replaceTildes …
-   288→const replaceTilde …
-   324→const replaceCarets …
-   332→const replaceCaret …
-   385→const replaceXRanges …
-   393→const replaceXRange …
-   470→const replaceStars …
-   478→const replaceGTE0 …
-   491→const hyphenReplace …
-   523→const testSet …
 
 classes/semver.js
      9→class SemVer {
@@ -124,7 +111,7 @@ functions/gte.js
      4→const gte …
 
 functions/inc.js
-     5→const inc …
+     5→const inc = (version, release, options, identifier, identifierBase) => {
 
 functions/lt.js
      4→const lt …
@@ -133,10 +120,10 @@ functions/lte.js
      4→const lte …
 
 functions/major.js
-     4→const major …
+     4→const major = (a, loose) => new SemVer(a, loose).major
 
 functions/minor.js
-     4→const minor …
+     4→const minor = (a, loose) => new SemVer(a, loose).minor
 
 functions/neq.js
      4→const neq …
@@ -145,7 +132,7 @@ functions/parse.js
      4→const parse = (version, options, throwErrors = false) => {
 
 functions/patch.js
-     4→const patch …
+     4→const patch = (a, loose) => new SemVer(a, loose).patch
 
 functions/prerelease.js
      4→const prerelease = (version, options) => {
@@ -242,17 +229,15 @@ ranges/outside.js
     13→const outside = (version, range, hilo, options) => {
 
 ranges/subset.js
-    45→const subset …
-    73→const minimumVersionWithPreRelease …
-    74→const minimumVersion …
-    76→const simpleSubset …
-   226→const higherGT …
-   238→const lowerLT …
+    45→const subset = (sub, dom, options = {}) => {
+    73→const minimumVersionWithPreRelease = [new Comparator('>=0.0.0-0')]
+    74→const minimumVersion = [new Comparator('>=0.0.0')]
+    76→const simpleSubset = (sub, dom, options) => {
+   226→const higherGT = (a, b, options) => {
+   238→const lowerLT = (a, b, options) => {
 
 ranges/to-comparators.js
      6→const toComparators = (range, options) =>
 
 ranges/valid.js
      4→const validRange = (range, options) => {
-
-release-please-config.json

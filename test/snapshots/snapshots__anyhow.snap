@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1991 tokens)
+budget: 2000 (1990 tokens)
 
 Cargo.toml
      1→[package]
@@ -39,6 +39,7 @@ src/chain.rs
     28→    pub fn new(head: &'a (dyn StdError + 'static)) -> Self {
     29→        Chain {
       →        …
+    36→    type Item …
     57→impl DoubleEndedIterator for Chain<'_> {
     94→impl Default for Chain<'_> {
 
@@ -64,6 +65,9 @@ src/ensure.rs
     25→pub trait NotBothDebug {
     26→    fn __dispatch_ensure(self, msg: &'static str) -> Error;
     35→struct Buf {
+    41→    fn new …
+    48→    fn as_str …
+    81→fn render …
    105→macro_rules! __parse_ensure {
    886→macro_rules! __fancy_ensure {
    912→macro_rules! __fallback_ensure {
@@ -75,6 +79,7 @@ src/error.rs
      6→use crate::ptr::Mut;
      7→use crate::ptr::{Own, Ref};
      8→use crate::{Error, StdError};
+    14→use core::ops::{Deref, DerefMut};
     30→    pub fn new …
     77→    pub fn msg …
    140→    pub fn from_boxed …
@@ -89,6 +94,7 @@ src/error.rs
    622→    pub fn into_boxed_dyn_error …
    663→    pub fn reallocate_into_boxed_dyn_error_without_backtrace …
    697→    fn from …
+   705→    type Target …
    740→struct ErrorVTable {
    934→pub(crate) struct ErrorImpl<E = ()> {
    952→pub(crate) struct ContextError<C, E> {
@@ -101,6 +107,7 @@ src/fmt.rs
      1→use crate::chain::Chain;
      2→use crate::error::ErrorImpl;
      3→use crate::ptr::Ref;
+    69→struct Indented<'a, D> {
 
 src/kind.rs
     47→use crate::Error;
@@ -114,6 +121,7 @@ src/kind.rs
     80→pub trait TraitKind: Sized {
     82→    fn anyhow_kind …
     91→    pub fn new …
+    99→#[cfg(any(feature = "std", not(anyhow_no_core_error)))]
    100→pub struct Boxed;
    104→pub trait BoxedKind: Sized {
    106→    fn anyhow_kind …
@@ -130,7 +138,11 @@ src/lib.rs
    280→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
    286→pub use anyhow as format_err;
    390→pub struct Error {
+   391→    inner: Own<ErrorImpl>,
+   392→}
    415→pub struct Chain<'a> {
+   416→    state: crate::chain::ChainState<'a>,
+   417→}
    419→/// `Result<T, Error>`
    420→///
       →…
@@ -151,7 +163,9 @@ src/lib.rs
    704→    pub fn not(cond: impl Bool) -> bool {
    710→        pub trait Bool {
    711→            fn not(self) -> bool;
+   714→        impl Bool for bool {
    716→            fn not(self) -> bool {
+   721→        impl Bool for &bool {
    723→            fn not(self) -> bool {
 
 src/macros.rs
@@ -163,6 +177,7 @@ src/macros.rs
 src/nightly.rs
     10→pub use core::error::Request;
     41→pub fn request_ref_backtrace …
+    45→fn request_ref …
     52→pub fn provide_ref_backtrace …
     56→pub fn provide …
 
@@ -171,30 +186,14 @@ src/ptr.rs
      7→where
      8→    T: ?Sized,
      9→{
-    32→    pub fn new …
-    38→    pub fn cast …
-    44→    pub unsafe fn boxed …
-    48→    pub fn by_ref …
-    55→    pub fn by_mut …
     64→pub struct Ref<'a, T>
     65→where
     66→    T: ?Sized,
     67→{
-    87→    pub fn new …
-    94→    pub fn from_raw …
-   101→    pub fn cast …
-   108→    pub fn by_mut …
-   115→    pub fn as_ptr …
-   119→    pub unsafe fn deref …
    125→pub struct Mut<'a, T>
    126→where
    127→    T: ?Sized,
    128→{
-   148→    pub fn cast …
-   155→    pub fn by_ref …
-   162→    pub fn extend …
-   169→    pub unsafe fn deref_mut …
-   175→    pub unsafe fn read …
    181→pub trait CastTo {
    182→    type Target;
    183→}

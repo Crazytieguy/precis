@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2005 tokens)
+budget: 2000 (2004 tokens)
 
 README.md
     55→## Table of Contents
@@ -36,6 +36,8 @@ microbootstrap/bootstrappers/fastapi.py
 
 microbootstrap/bootstrappers/faststream.py
     28→tracer …
+    31→class KwargsAsgiFastStream …
+    37→class FastStreamBootstrapper …
     59→class FastStreamOpentelemetryInstrument(BaseOpentelemetryInstrument[FastStreamOpentelemetryConfig]):
     71→    def get_config_type(cls) -> type[FastStreamOpentelemetryConfig]:
     75→faststream_app_logger …
@@ -124,6 +126,9 @@ microbootstrap/instruments/instrument_box.py
     49→    def instruments(self) -> list[Instrument[typing.Any]]:
 
 microbootstrap/instruments/logging_instrument.py
+    26→access_logger …
+    76→STRUCTLOG_PRE_CHAIN_PROCESSORS …
+    92→STRUCTLOG_FORMATTER_PROCESSOR …
     97→class MemoryLoggerFactory(structlog.stdlib.LoggerFactory):
    127→class LoggingConfig(BaseInstrumentConfig):
    141→    def remove_trailing_slashes_from_logging_exclude_endpoints(self) -> typing_extensions.Self:
@@ -138,8 +143,10 @@ microbootstrap/instruments/opentelemetry_instrument.py
    197→class PyroscopeSpanProcessor(SpanProcessor):
 
 microbootstrap/instruments/prometheus_instrument.py
-    35→@typing.runtime_checkable
     36→class FastStreamPrometheusMiddlewareProtocol(typing.Protocol):
+    37→    def __init__ …
+    46→    def __call__ …
+    64→    def is_ready …
     69→    @classmethod
     70→    def get_config_type(cls) -> type[PrometheusConfigT]:
 
@@ -177,8 +184,8 @@ microbootstrap/instruments_setupper.py
     65→    def __exit__ …
 
 microbootstrap/settings.py
-    24→ENV_PREFIX_VAR_NAME …
-    25→ENV_PREFIX …
+    24→ENV_PREFIX_VAR_NAME: typing.Final = "ENVIRONMENT_PREFIX"
+    25→ENV_PREFIX: typing.Final = os.getenv(ENV_PREFIX_VAR_NAME, "")
     29→class BaseServiceSettings(
     30→    pydantic_settings.BaseSettings,
     31→):
@@ -191,14 +198,6 @@ microbootstrap/settings.py
    105→class InstrumentsSetupperSettings …
 
 package.json
-     2→  "name": "microbootstrap-docs",
-     3→  "version": "1.0.0",
-     4→  "description": "Vuepress documentation for microbootstrap package",
-     5→  "license": "MIT",
-     6→  "type": "module",
-     7→  "scripts": {
-    13→  "devDependencies": {
-    19→  "dependencies": {
 
 pyproject.toml
      1→[project]
@@ -207,3 +206,5 @@ pyproject.toml
     93→[build-system]
    101→[tool.mypy]
    109→[tool.ruff]
+
+tests/test_settings.py

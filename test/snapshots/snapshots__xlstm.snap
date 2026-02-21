@@ -2,20 +2,12 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2003 tokens)
+budget: 2000 (2002 tokens)
 
 README.md
      3→# xLSTM: Extended Long Short-Term Memory
-    19→## About
-    29→## Minimal Installation
-    49→## Requirements
     61→# xLSTM 7B: A Recurrent LLM for Fast and Efficient Inference
-    80→## How to use the xLSTM Large 7B and its architecture
-   115→## Recommendation for other hardware
    138→# Models from the xLSTM NeurIPS Paper
-   142→## How to use the xLSTM architecture from our NeurIPS paper
-   297→## Experiments
-   312→## Citation
 
 environment_pt220cu121.yaml
      1→name: xlstm
@@ -49,6 +41,7 @@ experiments/data/formal_language/formal_language_dataset.py
    298→    def context_length …
 
 experiments/data/formal_language/online_generate.py
+     6→from . import generate
      9→class OnlineTaskGenerate(Dataset):
     41→class OnlineTaskGenerateMaskedSeparate(Dataset):
     68→    def dataset(self):
@@ -87,7 +80,7 @@ experiments/main.py
     37→def main(cfg: DictConfig):
 
 experiments/metrics.py
-     2→from typing …
+     2→from typing import Optional
      9→class SequenceAccuracy(Metric):
     13→    def __init__(self, **kwargs):
     17→    def update(self, preds: torch.Tensor, target: torch.Tensor):
@@ -124,6 +117,10 @@ xlstm/blocks/mlstm/block.py
 xlstm/blocks/mlstm/cell.py
     14→class mLSTMCellConfig:
     20→class mLSTMCell(nn.Module):
+    23→    def __init__ …
+    43→    def forward …
+    75→    def step …
+   133→    def reset_parameters …
 
 xlstm/blocks/mlstm/layer.py
     19→class mLSTMLayerConfig(UpProjConfigMixin):
@@ -190,9 +187,12 @@ xlstm/utils.py
      3→import math
     12→class UpProjConfigMixin:
     32→class WeightDecayOptimGroupMixin(nn.Module, ABC):
+    33→    def __init__ …
+    36→    def get_weight_decay_optim_groups …
+    61→    def get_weight_decay_optim_group_param_names …
 
 xlstm/xlstm_block_stack.py
-     3→from copy …
+     3→from copy import deepcopy
     16→class xLSTMBlockStackConfig:
     36→    @property
     37→    def block_map(self) -> list[int]:

@@ -823,18 +823,27 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     // log-based penalty (28% at N=50) so larger groups don't dominate over
     // smaller groups with higher base value.
     //
-    // At Signatures, use diminishing returns so that larger groups have
-    // progressively lower per-token priority. After 3-4 method signatures,
-    // the pattern is usually clear and additional signatures provide
-    // diminishing information. The first 3 signatures get full value;
-    // additional ones are worth 15% each. This prevents groups of 8-20+
-    // repetitive methods (builder setters, visit_* handlers, from_*
-    // constructors) from outcompeting body content, enum variants, and
-    // documentation. Impact: 3 → 3 (100%), 8 → 3.75 (47%), 12 → 4.35
-    // (36%), 20 → 5.55 (28%).
+    // Both Names and Signatures use diminishing returns so that larger
+    // groups have progressively lower per-token priority. After a few
+    // symbols, the pattern is usually clear and additional entries provide
+    // diminishing information.
+    //
+    // Names: first 5 at full value, excess at 25%. More generous than
+    // Signatures since names are cheaper tokens and provide structural
+    // overview. Impact: 5 → 5 (100%), 8 → 5.75 (72%), 13 → 7 (54%),
+    // 20 → 8.75 (44%).
+    //
+    // Signatures: first 3 at full value, excess at 15%. More aggressive
+    // since full type annotations are expensive and highly repetitive.
+    // Impact: 3 → 3 (100%), 8 → 3.75 (47%), 12 → 4.35 (36%),
+    // 20 → 5.55 (28%).
     let sym_count = group.symbols.len().max(1) as f64;
     let count_factor = match stage {
-        StageKind::Names => sym_count,
+        StageKind::Names => {
+            let full = sym_count.min(5.0);
+            let excess = (sym_count - 5.0).max(0.0);
+            full + excess * 0.25
+        }
         StageKind::Signatures => {
             let full = sym_count.min(3.0);
             let excess = (sym_count - 3.0).max(0.0);

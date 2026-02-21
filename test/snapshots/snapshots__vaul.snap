@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2007 tokens)
+budget: 2000 (2014 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
@@ -56,36 +56,29 @@ src/context.ts
      4→interface DrawerContextValue {
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
     69→export const useDrawerContext = () => {
+    70→  const context = React.useContext(DrawerContext);
+      →  …
 
 src/helpers.ts
      1→import { AnyFunction, DrawerDirection } from './types';
      3→interface Style {
      7→const cache = new WeakMap();
-     9→export function isInView …
-    23→export function set …
-    42→export function reset …
-    59→export const isVertical …
-    72→export function getTranslate …
-    90→export function dampenValue …
-    94→export function assignStyle …
+     9→export function isInView(el: HTMLElement): boolean {
+    23→export function set(el: Element | HTMLElement | null | undefined, styles: Style, ignoreCache = false) {
+    42→export function reset(el: Element | HTMLElement | null, prop?: string) {
+    59→export const isVertical = (direction: DrawerDirection) => {
+    72→export function getTranslate(element: HTMLElement, direction: DrawerDirection): number | null {
+    90→export function dampenValue(v: number) {
+    94→export function assignStyle(element: HTMLElement | null | undefined, style: Partial<CSSStyleDeclaration>) {
    106→ * Receives functions as arguments and returns a new function that calls all.
    108→export function chain<T>(...fns: T[]) {
+   109→  return (...args: T extends AnyFunction ? Parameters<T> : never) => {
+   110→    for (const fn of fns) {
+      →    …
 
 src/index.tsx
      3→import * as DialogPrimitive from '@radix-ui/react-dialog';
      4→import React from 'react';
-     5→import { DrawerContext, useDrawerContext } from './context …
-     6→import './style.css …
-     7→import { usePreventScroll, isInput } from './use-prevent-scroll …
-     8→import { useComposedRefs } from './use-composed-refs …
-     9→import { useSnapPoints } from './use-snap-points …
-    10→import { set, getTranslate, dampenValue, isVertical, reset } from './helpers …
-    11→import { …
-    21→import { DrawerDirection } from './types …
-    22→import { useControllableState } from './use-controllable-state …
-    23→import { useScaleBackground } from './use-scale-background …
-    24→import { usePositionFixed } from './use-position-fixed …
-    25→import { isIOS, isMobileFirefox } from './browser …
     27→export interface WithFadeFromProps {
     28→  /**
       →  …
@@ -135,6 +128,7 @@ src/use-position-fixed.ts
     15→export function usePositionFixed …
 
 src/use-prevent-scroll.ts
+     3→import { useEffect, useLayoutEffect } from 'react';
      4→import { isIOS } from './browser';
      6→const KEYBOARD_BUFFER = 24;
      8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
@@ -172,6 +166,14 @@ src/use-snap-points.ts
      4→import { useControllableState } from './use-controllable-state';
      5→import { DrawerDirection } from './types';
      7→export function useSnapPoints …
+
+test/README.md
+     3→## Getting Started
+    21→## Learn More
+    30→## Deploy on Vercel
+
+test/src/app/page.tsx
+     5→export default function Page() {
 
 tsconfig.json
      2→  "compilerOptions": {

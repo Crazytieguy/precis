@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1975 tokens)
+budget: 2000 (1997 tokens)
 
 ARCHITECTURE.md
      1→# `sqlite-vec` Architecture
@@ -38,17 +38,17 @@ sqlite-vec.c
      1→#include "sqlite-vec.h"
     19→#include "sqlite3ext.h"
     22→#include "sqlite3.h"
-    27→#define UINT32_TYPE …
-    29→#define UINT32_TYPE …
-    34→#define UINT16_TYPE …
-    36→#define UINT16_TYPE …
-    41→#define INT16_TYPE …
-    43→#define INT16_TYPE …
-    48→#define UINT8_TYPE …
-    50→#define UINT8_TYPE …
-    55→#define INT8_TYPE …
-    57→#define INT8_TYPE …
-    61→#define LONGDOUBLE_TYPE …
+    27→#define UINT32_TYPE uint32_t
+    29→#define UINT32_TYPE unsigned int
+    34→#define UINT16_TYPE uint16_t
+    36→#define UINT16_TYPE unsigned short int
+    41→#define INT16_TYPE int16_t
+    43→#define INT16_TYPE short int
+    48→#define UINT8_TYPE uint8_t
+    50→#define UINT8_TYPE unsigned char
+    55→#define INT8_TYPE int8_t
+    57→#define INT8_TYPE signed char
+    61→#define LONGDOUBLE_TYPE long double
     68→typedef u_int8_t uint8_t;
     69→typedef u_int16_t uint16_t;
     70→typedef u_int64_t uint64_t;
@@ -61,15 +61,19 @@ sqlite-vec.c
     82→typedef uint64_t u64;
     83→typedef float f32;
     84→typedef size_t usize;
-    87→#define UNUSED_PARAMETER …
-    93→#define COMPILER_SUPPORTS_VTAB_IN …
-    97→#define SQLITE_SUBTYPE …
-   101→#define SQLITE_RESULT_SUBTYPE …
-   105→#define SQLITE_INDEX_CONSTRAINT_LIMIT …
-   109→#define SQLITE_INDEX_CONSTRAINT_OFFSET …
-   112→#define countof …
-   113→#define min …
+    87→#define UNUSED_PARAMETER(X) (void)(X)
+    93→#define COMPILER_SUPPORTS_VTAB_IN 1
+    97→#define SQLITE_SUBTYPE 0x000100000
+   101→#define SQLITE_RESULT_SUBTYPE 0x001000000
+   105→#define SQLITE_INDEX_CONSTRAINT_LIMIT 73
+   109→#define SQLITE_INDEX_CONSTRAINT_OFFSET 74
+   112→#define countof(x) (sizeof(x) / sizeof((x)[0]))
+   113→#define min(a, b) (((a) <= (b)) ? (a) : (b))
    115→enum VectorElementType {
+   169→static f32 l2_sqr_float_neon …
+   527→static unsigned int __builtin_popcountl …
+   536→#define __builtin_popcountl __popcnt64
+   556→static f32 distance_hamming …
    585→typedef void (*vector_cleanup)(void *p);
    587→void vector_cleanup_noop …
    591→void vtab_set_error …
@@ -113,18 +117,13 @@ sqlite-vec.c
   2622→enum NpyTokenType {
   2635→struct NpyToken {
   2718→struct NpyScanner {
-  2876→typedef struct vec_npy_each_vtab vec_npy_each_vtab;
   2877→struct vec_npy_each_vtab {
-  2881→typedef enum {
-  2886→typedef struct vec_npy_each_cursor vec_npy_each_cursor;
   2887→struct vec_npy_each_cursor {
   3384→#define VEC0_SHADOW_CHUNKS_CREATE                                              \
   3394→#define VEC0_SHADOW_ROWIDS_CREATE_BASIC                                        \
   3405→#define VEC0_SHADOW_ROWIDS_CREATE_PK_TEXT                                      \
   3414→#define VEC0_SHADOW_VECTOR_N_NAME "\"%w\".\"%w_vector_chunks%02d\""
   3417→#define VEC0_SHADOW_VECTOR_N_CREATE                                            \
-  3431→typedef struct vec0_vtab vec0_vtab;
-  3442→typedef enum {
   3456→struct vec0_vtab {
   3582→void vec0_free_resources …
   3600→void vec0_free …
@@ -148,41 +147,42 @@ sqlite-vec.c
   4549→struct vec0_query_fullscan_data {
   4564→struct vec0_query_knn_data {
   4587→struct vec0_query_point_data {
-  4601→typedef enum {
-  4609→typedef struct vec0_cursor vec0_cursor;
   4610→struct vec0_cursor {
   5305→typedef enum  {
   5328→typedef enum  {
-  5349→typedef enum  {
-  5360→typedef enum {
+  5769→static int vec0Next …
   5867→int min_idx …
   5948→int vec0_chunks_iter …
   6033→struct Vec0MetadataIn{
+  6034→  // index of argv[i]` the constraint is on
+      →  …
   6043→struct Vec0MetadataInTextEntry {
+  6044→  int n;
+      →  …
   6368→int vec0_set_metadata_filter_bitmap …
   7708→int vec0Update_InsertRowidStep …
   7778→int vec0Update_InsertNextAvailableStep …
+  7931→vec0_write_vector_to_vector_blob …
   7969→int vec0Update_InsertWriteFinalStep …
   8248→int vec0Update_Insert …
   9085→struct static_blob_definition {
-  9113→typedef struct static_blob static_blob;
   9114→struct static_blob {
-  9122→typedef struct vec_static_blob_data vec_static_blob_data;
   9123→struct vec_static_blob_data {
-  9127→typedef struct vec_static_blobs_vtab vec_static_blobs_vtab;
   9128→struct vec_static_blobs_vtab {
-  9133→typedef struct vec_static_blobs_cursor vec_static_blobs_cursor;
   9134→struct vec_static_blobs_cursor {
-  9330→typedef struct vec_static_blob_entries_vtab vec_static_blob_entries_vtab;
   9331→struct vec_static_blob_entries_vtab {
-  9335→typedef enum {
   9340→struct sbe_query_knn_data {
-  9363→typedef struct vec_static_blob_entries_cursor vec_static_blob_entries_cursor;
   9364→struct vec_static_blob_entries_cursor {
 
 tests/conftest.py
      5→@pytest.fixture()
      6→def db():
 
+tests/test-metadata.py
+    51→def test_text_knn(db, snapshot):
+   423→def eqp(db, sql):
+
 tmp-static.py
+     1→import sqlite3
+     2→import numpy as np
     25→def register_np(array, name):

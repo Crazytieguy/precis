@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2021 tokens)
+budget: 2000 (2023 tokens)
 
 README.md
     29→## Overview
@@ -11,12 +11,12 @@ README.md
    336→## Bugs and Feature Requests
 
 demo.py
-    63→from py3xui …
+    63→from py3xui import Inbound
     65→XUI_EXTERNAL_IP …
     66→MAIN_REMARK = "gmfvbot"  # ⬅️ It can be any string.
     67→SERVER_PORT = 443  # ⬅️ Your server port here.
     70→def get_connection_string …
-    98→import os …
+    98→import os
 
 py3xui/api/README.md
      3→# api.api\_database
@@ -50,31 +50,21 @@ py3xui/api/api_base.py
     28→class BaseApi:
     60→
     61→    def __init__ …
-    81→    def host …
-    89→    def username …
-    97→    def password …
-   105→    def use_tls_verify …
-   113→    def custom_certificate_path …
-   129→    def max_retries …
-   145→    def session …
-   161→    def cookie_name …
+    81→    def host(self) -> str:
+    89→    def username(self) -> str:
+    97→    def password(self) -> str:
+   105→    def use_tls_verify(self) -> bool:
+   113→    def custom_certificate_path(self) -> str | None:
+   129→    def max_retries(self, value: int) -> None:
+   145→    def session(self, value: str | None) -> None:
+   161→    def cookie_name(self, value: str | None) -> None:
    168→    def login …
-   211→    def cookies …
+   211→    def cookies(self) -> dict[str, str]:
 
 py3xui/api/api_client.py
      6→import json
     13→class ClientApi(BaseApi):
     51→
-    52→    def get_by_email …
-    89→    def get_ips …
-   121→    def add …
-   157→    def update …
-   189→    def reset_ips …
-   217→    def reset_stats …
-   248→    def delete …
-   280→    def delete_depleted …
-   312→    def online …
-   342→    def get_traffic_by_id …
 
 py3xui/api/api_database.py
      7→class DatabaseApi(BaseApi):
@@ -118,19 +108,20 @@ py3xui/async_api/async_api.py
 
 py3xui/async_api/async_api_base.py
      5→import asyncio
+    15→# pylint: disable=R0902
     16→class AsyncBaseApi:
     48→
     49→    def __init__ …
-    69→    def host …
-    77→    def username …
-    85→    def password …
-    93→    def use_tls_verify …
-   101→    def custom_certificate_path …
-   117→    def max_retries …
-   133→    def session …
-   149→    def cookie_name …
+    69→    def host(self) -> str:
+    77→    def username(self) -> str:
+    85→    def password(self) -> str:
+    93→    def use_tls_verify(self) -> bool:
+   101→    def custom_certificate_path(self) -> str | None:
+   117→    def max_retries(self, value: int) -> None:
+   133→    def session(self, value: str | None) -> None:
+   149→    def cookie_name(self, value: str | None) -> None:
    239→    async def login …
-   282→    def cookies …
+   282→    def cookies(self) -> dict[str, str]:
 
 py3xui/async_api/async_api_client.py
     12→class AsyncClientApi(AsyncBaseApi):
@@ -148,6 +139,7 @@ py3xui/async_api/async_api_inbound.py
 py3xui/async_api/async_api_server.py
      8→class AsyncServerApi(AsyncBaseApi):
     42→
+    43→    # pylint: disable=R0801
     44→    async def get_db(self, save_path: str) -> None:
     76→    async def get_status(self) -> Server:
    105→    async def generate_reality_keys(self) -> RealityKeyPair:
@@ -160,26 +152,18 @@ py3xui/client/README.md
 py3xui/client/client.py
      7→class ClientFields:
      9→
-      →…
+    10→    EMAIL = "email"
+      →    …
     36→class Client(BaseModel):
     58→
       →…
 
 py3xui/inbound/README.md
      3→# inbound.settings
-    10→## SettingsFields Objects
-    20→## Settings Objects
     36→# inbound.inbound
-    42→## InboundFields Objects
-    52→## Inbound Objects
    124→# inbound.stream\_settings
-   130→## StreamSettingsFields Objects
-   140→## StreamSettings Objects
    167→# inbound.bases
-   173→## JsonStringModel Objects
    203→# inbound.sniffing
-   209→## SniffingFields Objects
-   219→## Sniffing Objects
 
 py3xui/inbound/bases.py
      9→class JsonStringModel(BaseModel):
@@ -206,6 +190,8 @@ py3xui/inbound/settings.py
 py3xui/inbound/sniffing.py
      9→class SniffingFields:
     11→
+    12→    ENABLED = "enabled"
+    13→
       →…
     20→class Sniffing(JsonStringModel):
     30→
@@ -248,7 +234,7 @@ py3xui/utils/README.md
      3→# utils.env
 
 py3xui/utils/__init__.py
-     4→COOKIE_NAMES …
+     4→COOKIE_NAMES = ["3x-ui", "session"]
 
 py3xui/utils/env.py
      7→def parse_env …

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2002 tokens)
+budget: 2000 (2003 tokens)
 
 Cargo.toml
      1→[package]
@@ -11,12 +11,15 @@ Cargo.toml
 src/build/env.rs
     12→use crate::install::devtools;
    141→pub struct BuildEnvironment {
+   142→    /// The final map of environment variables to be used for build commands.
+      →    …
    164→impl BuildEnvironment {
    166→    pub fn new …
    463→    pub fn apply_to_command …
    476→    pub fn get_path_string …
    482→    pub fn get_vars …
    488→    pub fn get_var …
+   495→fn filter_initial_environment …
 
 src/build/mod.rs
      1→pub mod compile;
@@ -53,6 +56,8 @@ src/install/bottle/mod.rs
     15→pub mod macho;
     18→pub async fn download_formula …
     34→pub fn has_bottle_for_current_platform …
+   159→pub fn get_formula_cellar_path …
+   165→pub fn write_receipt …
 
 src/install/cask/artifacts/app.rs
     16→pub fn find_primary_app_bundle_in_dir(dir: &Path) -> Result<PathBuf> {
@@ -90,31 +95,6 @@ src/install/cask/artifacts/manpage.rs
 src/install/cask/artifacts/mdimporter.rs
     21→pub fn install_mdimporter …
 
-src/install/cask/artifacts/mod.rs
-     1→pub mod app;
-     2→pub mod audio_unit_plugin;
-     3→pub mod binary;
-     4→pub mod colorpicker;
-     5→pub mod dictionary;
-     6→pub mod font;
-     7→pub mod input_method;
-     8→pub mod installer;
-     9→pub mod internet_plugin;
-    10→pub mod keyboard_layout;
-    11→pub mod manpage;
-    12→pub mod mdimporter;
-    26→pub use self::app::install_app_from_staged;
-    27→pub use self::audio_unit_plugin::install_audio_unit_plugin;
-    28→pub use self::binary::install_binary;
-    29→pub use self::colorpicker::install_colorpicker;
-    30→pub use self::dictionary::install_dictionary;
-    31→pub use self::font::install_font;
-    32→pub use self::input_method::install_input_method;
-    33→pub use self::installer::run_installer;
-    34→pub use self::internet_plugin::install_internet_plugin;
-    35→pub use self::keyboard_layout::install_keyboard_layout;
-    36→pub use self::manpage::install_manpage;
-
 src/install/cask/artifacts/pkg.rs
     13→pub fn install_pkg_from_path …
 
@@ -137,7 +117,7 @@ src/install/cask/artifacts/suite.rs
     20→pub fn install_suite …
 
 src/install/cask/artifacts/uninstall.rs
-     9→pub fn record_uninstall …
+     9→pub fn record_uninstall(cask: &Cask) -> Result<Vec<InstalledArtifact>> {
 
 src/install/cask/artifacts/vst3_plugin.rs
     20→pub fn install_vst3_plugin …
@@ -149,7 +129,9 @@ src/install/cask/artifacts/zap.rs
     18→pub fn install_zap …
 
 src/install/cask/dmg.rs
-   153→pub fn extract_dmg_to_stage …
+    12→pub fn mount_dmg …
+    43→pub fn unmount_dmg …
+   153→pub fn extract_dmg_to_stage(dmg_path: &Path, stage_dir: &Path) -> Result<()> {
 
 src/install/cask/helpers.rs
      9→pub fn remove_path_robustly …
@@ -160,6 +142,8 @@ src/install/cask/mod.rs
      2→pub mod dmg;
      3→pub mod helpers;
     25→pub struct CaskInstallManifest {
+    26→    pub manifest_format_version: String,
+      →    …
     37→pub fn sps_private_cask_version_dir …
     43→pub fn sps_private_cask_token_dir …
     49→pub fn sps_private_cask_app_path …
@@ -211,19 +195,30 @@ src/uninstall/cask.rs
    134→pub async fn zap_cask_artifacts …
 
 src/uninstall/common.rs
+    10→#[derive(Debug, Clone, Default)]
     11→pub struct UninstallOptions {
     12→    pub skip_zap: bool,
     13→}
+
+src/uninstall/formula.rs
+    10→pub fn uninstall_formula_artifacts …
 
 src/uninstall/mod.rs
      3→pub mod cask;
      4→pub mod common;
      5→pub mod formula;
+     8→pub use cask::{uninstall_cask_artifacts, zap_cask_artifacts};
+     9→pub use common::UninstallOptions;
+    10→pub use formula::uninstall_formula_artifacts;
 
 src/upgrade/bottle.rs
+    11→use crate::check::installed::InstalledPackageInfo;
+    12→use crate::{install, uninstall};
     20→pub async fn upgrade_bottle_formula …
 
 src/upgrade/cask.rs
+    11→use crate::check::installed::InstalledPackageInfo;
+    12→use crate::{install, uninstall};
     15→pub async fn upgrade_cask_package …
 
 src/upgrade/mod.rs
@@ -235,6 +230,8 @@ src/upgrade/mod.rs
     10→pub use self::source::upgrade_source_formula;
 
 src/upgrade/source.rs
+    10→use crate::check::installed::InstalledPackageInfo;
+    11→use crate::{build, uninstall};
     19→pub async fn upgrade_source_formula …
 
 src/utils/applescript.rs
