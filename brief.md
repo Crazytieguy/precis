@@ -2,7 +2,7 @@ Improve precis by comparing its output against what an Explore agent produces fo
 
 ## Fixture entries
 
-`test/fixtures.rs` defines entries — each is a (name, path, budget) tuple pointing to a cloned repo under `test/fixtures/`. Entries without an `// inspected:` comment haven't been inspected yet.
+`test/fixtures.rs` defines entries — each is a (name, path, budget) tuple pointing to a cloned repo under `test/fixtures/`. Entries without an `// inspected:` comment haven't been inspected yet. Comments that don't start with `inspected:` don't count.
 
 ## Inspection process
 
