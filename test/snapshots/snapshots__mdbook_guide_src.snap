@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2021 tokens)
+budget: 2000 (2020 tokens)
 
 404.md
      1→# Document not found (404)
@@ -12,6 +12,7 @@ README.md
      1→# Introduction
      4→    .mdbook-version {
      5→        position: absolute;
+     6→        right: 20px;
       →        …
     46→## Contributing
     55→## License
@@ -33,7 +34,6 @@ cli/build.md
      1→# The build command
      3→The build command is used to render your book:
      4→
-     5→```bash
       →…
     16→#### Specify a directory
     25→#### `--open`
@@ -181,8 +181,6 @@ format/markdown.md
     25→## Headings
     39→### A heading 
     43→#### A smaller heading 
-    45→More text.
-      →…
     47→## Lists
     69→## Links
    108→## Images
@@ -273,3 +271,5 @@ guide/reading.md
     26→## Top menu bar
     42→## Search
     54→## Code blocks
+
+misc/contributors.md

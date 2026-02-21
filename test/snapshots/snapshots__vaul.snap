@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2014 tokens)
+budget: 2000 (2007 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
@@ -56,8 +56,6 @@ src/context.ts
      4→interface DrawerContextValue {
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
     69→export const useDrawerContext = () => {
-    70→  const context = React.useContext(DrawerContext);
-      →  …
 
 src/helpers.ts
      1→import { AnyFunction, DrawerDirection } from './types';
@@ -73,8 +71,7 @@ src/helpers.ts
    106→ * Receives functions as arguments and returns a new function that calls all.
    108→export function chain<T>(...fns: T[]) {
    109→  return (...args: T extends AnyFunction ? Parameters<T> : never) => {
-   110→    for (const fn of fns) {
-      →    …
+      →  …
 
 src/index.tsx
      3→import * as DialogPrimitive from '@radix-ui/react-dialog';
@@ -172,8 +169,14 @@ test/README.md
     21→## Learn More
     30→## Deploy on Vercel
 
-test/src/app/page.tsx
-     5→export default function Page() {
+test/package.json
+
+test/tests/constants.ts
+
+test/tsconfig.json
+     2→  "compilerOptions": {
+    32→  "include": [
+    38→  "exclude": [
 
 tsconfig.json
      2→  "compilerOptions": {

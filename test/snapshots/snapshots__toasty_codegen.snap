@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1982 tokens)
+budget: 2000 (1979 tokens)
 
 CONTEXT.md
      1→# toasty-codegen Component Context
@@ -37,6 +37,8 @@ src/expand/create.rs
      4→use proc_macro2::TokenStream;
      5→use quote::quote;
      7→impl Expand<'_> {
+     8→    pub(super) fn expand_create_builder(&self) -> TokenStream {
+    76→    fn expand_create_methods(&self) -> TokenStream {
 
 src/expand/fields.rs
      1→use super::{util, Expand};
@@ -73,24 +75,30 @@ src/expand/query.rs
 src/expand/relation.rs
      1→use super::{util, Expand};
      2→use crate::schema::{BelongsTo, Field, FieldTy, HasMany, HasOne};
+     4→use proc_macro2::TokenStream;
+     5→use quote::quote;
      7→impl Expand<'_> {
 
 src/expand/schema.rs
      1→use super::{util, Expand};
      2→use crate::schema::{AutoStrategy, Column, FieldTy, ModelKind, Name, UuidVersion};
+     4→use proc_macro2::TokenStream;
+     5→use quote::quote;
      7→impl Expand<'_> {
 
 src/expand/update.rs
      1→use super::{util, Expand};
      2→use crate::schema::FieldTy;
+     4→use proc_macro2::TokenStream;
+     5→use quote::quote;
      7→impl Expand<'_> {
      9→    pub(super) fn expand_embedded_update_builder(&self) -> TokenStream {
     31→    fn expand_update_field_methods(&self, is_embedded: bool) -> TokenStream {
+   144→    pub(super) fn expand_update_builder(&self) -> TokenStream {
    204→    fn expand_reload_match_arms(&self) -> TokenStream {
    226→    pub(super) fn expand_reload_method(&self) -> TokenStream {
 
 src/expand/util.rs
-     1→use proc_macro2::TokenStream;
      3→pub(crate) fn int(v: usize) -> TokenStream {
     10→pub(crate) fn ident(name: &str) -> syn::Ident {
 
@@ -110,10 +118,15 @@ src/expand.rs
     16→use quote::quote;
     18→struct Expand<'a> {
     29→impl Expand<'_> {
+    30→    fn expand …
+    49→pub(super) fn root_model …
+    60→pub(super) fn embedded_model …
+   151→fn wrap_in_const …
 
 src/lib.rs
      1→mod expand;
      2→mod schema;
+     4→use proc_macro2::TokenStream;
      6→pub fn generate_model(input: TokenStream) -> syn::Result<TokenStream> {
     13→pub fn generate_embed(input: TokenStream) -> syn::Result<TokenStream> {
 
@@ -129,12 +142,7 @@ src/schema/auto.rs
     10→    V4,
     11→    V7,
     12→}
-    14→impl AutoStrategy {
     23→mod kw {
-    31→impl syn::parse::Parse for AutoStrategy {
-    32→    fn parse …
-    48→impl syn::parse::Parse for UuidVersion {
-    49→    fn parse …
 
 src/schema/belongs_to.rs
      1→use super::ForeignKeyField;
@@ -142,12 +150,7 @@ src/schema/belongs_to.rs
     12→impl BelongsTo {
 
 src/schema/column.rs
-     1→use quote::quote;
-     2→use syn::parenthesized;
      5→pub(crate) struct Column {
-    10→impl Column {
-    16→impl syn::parse::Parse for Column {
-    17→    fn parse …
     60→mod kw {
     88→#[derive(Debug)]
     89→pub enum ColumnType {
@@ -165,9 +168,6 @@ src/schema/column.rs
    101→    DateTime(u8),
    102→    Custom(syn::LitStr),
    103→}
-   105→impl syn::parse::Parse for ColumnType {
-   106→    fn parse …
-   179→impl ColumnType {
    181→    pub(crate) fn expand_with …
 
 src/schema/error.rs
@@ -205,7 +205,6 @@ src/schema/key_attr.rs
      7→impl KeyAttr {
 
 src/schema/model.rs
-     1→use super::{ErrorSet, Field, Index, IndexField, IndexScope, ModelAttr, Name, PrimaryKey};
      4→pub(crate) enum ModelKind {
     11→impl ModelKind {
     28→pub(crate) struct ModelRoot {

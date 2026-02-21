@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (999 tokens)
+budget: 1000 (1004 tokens)
 
 base.py
     19→class BaseInstrumentConfig(pydantic.BaseModel):
@@ -65,15 +65,9 @@ opentelemetry_instrument.py
    197→class PyroscopeSpanProcessor(SpanProcessor):
 
 prometheus_instrument.py
-    17→class BasePrometheusConfig(BaseInstrumentConfig):
-    24→class LitestarPrometheusConfig(BasePrometheusConfig):
-    28→class FastApiPrometheusConfig(BasePrometheusConfig):
-    35→@typing.runtime_checkable
     36→class FastStreamPrometheusMiddlewareProtocol(typing.Protocol):
     37→    def __init__ …
     46→    def __call__ …
-    55→class FastStreamPrometheusConfig(BasePrometheusConfig):
-    60→class PrometheusInstrument(Instrument[PrometheusConfigT]):
     64→    def is_ready …
     69→    @classmethod
     70→    def get_config_type(cls) -> type[PrometheusConfigT]:
@@ -89,7 +83,15 @@ pyroscope_instrument.py
 
 sentry_instrument.py
     15→class SentryConfig(BaseInstrumentConfig):
+    31→IGNORED_STRUCTLOG_ATTRIBUTES …
+    34→def enrich_sentry_event_from_structlog_log …
+    63→SENTRY_EXTRA_OTEL_TRACE_ID_KEY …
+    64→SENTRY_EXTRA_OTEL_TRACE_URL_KEY …
+    67→def add_trace_url_to_event …
+    75→def wrap_before_send_callbacks …
     89→class SentryInstrument(Instrument[SentryConfig]):
+    93→    def is_ready …
+    96→    def bootstrap …
    122→    @classmethod
    123→    def get_config_type(cls) -> type[SentryConfig]:
 

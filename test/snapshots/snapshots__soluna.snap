@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2001 tokens)
+budget: 2000 (1995 tokens)
 
 README.md
      7→# Soluna
@@ -41,17 +41,23 @@ src/embedlua.c
 
 src/entry.c
     89→struct app_context {
+   101→void soluna_emit_char …
    103→struct soluna_message {
+   133→soluna_emit_char …
    216→struct icon_pixels {
+   542→luaopen_soluna_app …
+   594→void soluna_openlibs …
+   865→sokol_main …
+
+src/file.c
+     6→FILE * fopen_utf8 …
+    53→luaopen_soluna_file …
 
 src/font.c
    133→#define MAX_FONTNAME 256
    159→luaopen_font …
    186→void soluna_openlibs …
    248→luaopen_font_manager …
-
-src/font_define.h
-    11→struct font_glyph {
 
 src/font_manager.c
     48→struct font_slot {
@@ -83,19 +89,15 @@ src/image.c
    321→struct canvas {
    577→luaopen_image …
 
-src/ime_char_filter.h
-     8→struct soluna_ime_char_filter_state {
-
-src/ime_state.h
-     7→struct soluna_ime_rect_state {
-
 src/lcrypt.c
-   187→#define GET_UINT32 …
-   205→#define DES_IP …
-   218→#define DES_FP …
-   231→#define DES_ROUND …
-   623→#define LEFTROTATE …
-   790→#define P …
+   187→#define GET_UINT32(n,b,i)					   \
+   205→#define DES_IP(X,Y)											 \
+   218→#define DES_FP(X,Y)											 \
+   231→#define DES_ROUND(X,Y)						  \
+   373→typedef void (*padding_add …
+   374→typedef int (*padding_remove …
+   623→#define LEFTROTATE(x, c) (((x) << (c)) | ((x) >> (32 - (c))))
+   790→#define P 0xffffffffffffffc5ull
   1031→int lsha1(lua_State *L);
 
 src/lfs.c
@@ -103,37 +105,16 @@ src/lfs.c
    487→struct dir_data {
    825→luaopen_localfs …
 
-src/loginfo.h
-     6→struct log_info {
-
 src/lsha1.c
     89→typedef struct {
    114→#define	R0 …
    247→lsha1 …
    272→lhmac_sha1 …
 
-src/luayoga.c
-    18→struct enum_string {
-    23→struct set_number {
-    32→struct set_edge_number {
-    38→struct set_two_number {
-    69→struct pos {
-   104→typedef void (*setfunc …
-   594→luaopen_layout_yoga …
-
 src/luazip.c
     12→#define ZLIB_UTF8_FLAG (1<<11)
     13→#define FILECHUNK (4096 * 4)
-    79→struct filename_convert {
-   132→struct filename_convert {};
-   151→struct ziphandle {
-   155→struct zipraw {
-   284→struct unzhandle {
    684→luaopen_zip …
-
-src/material_blit.c
-     9→struct material_blit {
-    53→luaopen_material_blit …
 
 src/material_default.c
     15→struct inst_object {
@@ -141,40 +122,14 @@ src/material_default.c
    150→luaopen_material_default …
 
 src/material_mask.c
-    15→struct color {
-    19→struct inst_object {
-    28→struct mask {
-    33→struct material_mask {
-   166→struct mask_primitive {
    193→luaopen_material_mask …
 
-src/material_perspective_quad.c
-    23→struct color {
-    27→struct pquad_meta {
-    34→struct corner_primitive {
-    42→struct inst_object {
-    51→struct material_perspective_quad {
-    62→struct sprite_rect_basis {
-    71→struct sprite_rect_data {
-
 src/material_quad.c
-    15→struct color {
-    19→struct quad {
-    26→struct inst_object {
-    33→struct material_quad {
-   153→struct quad_primitive {
    182→luaopen_material_quad …
 
 src/material_text.c
-    20→struct text {
-    28→struct inst_object {
-    36→struct material_text {
-   225→struct text_primitive {
    242→#define iscont …
    330→struct block_context {
-   331→	int width;
-      →	…
-   352→struct position {
    701→luaopen_material_text …
 
 src/material_util.c
@@ -187,29 +142,31 @@ src/material_util.h
      9→#define MATERIAL_QUAD 2
     10→#define MATERIAL_MASK 3
     11→#define MATERIAL_PERSPECTIVE_QUAD 4
+    13→void util_ref_object …
+    16→void util_submit_material …
+    19→sg_pipeline util_make_pipeline …
 
 src/openlibs.c
      1→#define linit_c
      2→#define LUA_LIB
-     9→void soluna_embed …
-    11→soluna_openlibs …
+     9→void soluna_embed(lua_State* L);
+    11→void
+    12→soluna_openlibs(lua_State *L) {
+
+src/openurl.c
+    24→extern void soluna_wasm_open_url(const char *url);
+    88→int
+    89→luaopen_url(lua_State *L) {
 
 src/render.c
     15→#define UNIFORM_MAX 4
     16→#define BINDINGNAME_MAX 32
-    18→struct buffer {
-    23→struct image {
-    28→struct sampler {
    223→struct pass {
-   224→	sg_pass pass;
-      →	…
-   482→struct enum_string {
-   615→struct inst_object {
-   620→struct sprite_object {
-   651→int lbindings_new …
-   652→int lview_new …
-   653→int luniform_new …
-   655→luaopen_render …
+   651→int lbindings_new(lua_State *L);
+   652→int lview_new(lua_State *L);
+   653→int luniform_new(lua_State *L);
+   655→int
+   656→luaopen_render(lua_State *L) {
 
 src/render_bindings.c
     61→struct view {
@@ -222,7 +179,6 @@ src/render_bindings.c
    221→lbindings_new …
 
 src/render_bindings.h
-     6→struct soluna_render_bindings {
     11→#define DRAWFUNC …
 
 src/render_uniform.c
@@ -232,6 +188,12 @@ src/render_uniform.c
 
 src/sdfimage.c
      9→#include "stb/stb_image.h"
+    11→#define STB_IMAGE_RESIZE_IMPLEMENTATION
+    18→#define MAX_SIZE 4096
+    19→#define INF 1e20
+    20→#define SDF_RADIUS 8
+    21→#define SDF_CUTOFF 0.25
+    22→// the same with font glyph size
     23→#define IMAGE_SIZE 64
     77→struct sdf_context {
    229→luaopen_image_sdf …
@@ -244,6 +206,7 @@ src/spritemgr.c
     95→struct tmp_context {
    190→struct layer {
    197→struct batch {
+   501→luaopen_spritemgr …
 
 src/spritemgr.h
      7→#define INVALID_TEXTUREID 0xffff
@@ -260,9 +223,16 @@ src/srbuffer.c
 src/srbuffer.h
      7→struct sr_mat {
     11→struct sr_buffer {
+    23→size_t srbuffer_size …
+    24→void srbuffer_init …
+    25→int srbuffer_add …
+    26→void * srbuffer_commit …
 
 src/tmpbuffer.h
+     2→#define soluna_tmp_buffer_h
      7→struct tmp_buffer {
+    12→#define TMPBUFFER_PTR(type, obj) (type *)((obj)->ptr)
+    13→#define TMPBUFFER_SIZE(type, obj) ((obj)->sz / sizeof(type))
 
 src/transform.c
      9→sprite_transform_init …
@@ -272,10 +242,14 @@ src/transform.c
 
 src/transform.h
      6→struct transform {
-
-src/truetype.h
-    17→struct truetype_font {
+    24→void sprite_transform_init …
+    25→void sprite_transform_set …
+    26→void sprite_transform_apply …
+    27→void sprite_transform_point …
 
 src/version.h
      4→#define SOLUNA_API_VERSION 3
      6→#define SOLUNA_HASH_VERSION "dev"
+
+src/winfile.c
+    22→fopen_utf8 …

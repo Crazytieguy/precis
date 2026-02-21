@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4014 tokens)
+budget: 4000 (4022 tokens)
 
 README.md
      1→# Tock
@@ -63,9 +63,10 @@ cmd/tock/main.go
 
 docs/commands.md
      1→# Commands Reference
+    23→## Core Commands
+   188→## Viewing & Reporting
 
 internal/adapters/cli/add.go
-     3→import …
     16→type addOptions struct {
     26→func NewAddCmd() *cobra.Command {
     27→	var opts addOptions
@@ -76,19 +77,16 @@ internal/adapters/cli/add.go
    163→func resolveEndTimeOrDuration …
 
 internal/adapters/cli/analyze.go
-     3→import …
     20→func NewAnalyzeCmd() *cobra.Command {
     21→	var (
       →	…
     70→type AnalysisStats struct {
     71→	TotalDuration      time.Duration
-    72→	DeepWorkDuration   time.Duration
       →	…
     84→func analyzeData(activities []models.Activity) AnalysisStats {
    206→func renderAnalysis(stats AnalysisStats, cfg *config.Config, tf *timeutil.Formatter) {
 
 internal/adapters/cli/calendar.go
-     3→import …
     25→func NewCalendarCmd() *cobra.Command {
     48→type reportModel struct {
     79→func (m *reportModel) Init() tea.Cmd {
@@ -100,7 +98,6 @@ internal/adapters/cli/calendar.go
    488→func (m *reportModel) getWeeklyDuration() (time.Duration, error) {
 
 internal/adapters/cli/calendar_sidebar.go
-     3→import …
     12→const barChar = "▏"
     15→func formatDurationCompact(d time.Duration) string {
     27→func (m *reportModel) renderSidebar() string {
@@ -109,7 +106,6 @@ internal/adapters/cli/calendar_sidebar.go
    211→func (m *reportModel) renderTopProjects(maxHeight int) string {
 
 internal/adapters/cli/continue.go
-     3→import …
     15→const (
     16→	defaultRecentActivitiesForContinuation = 10
     19→//nolint:funlen // Include all logic in one function
@@ -120,14 +116,12 @@ internal/adapters/cli/continue.go
       →	…
 
 internal/adapters/cli/current.go
-     3→import …
     19→type currentCmdActivity struct {
     23→func (a currentCmdActivity) Duration() time.Duration {
     27→func (a currentCmdActivity) DurationHMS() string {
     35→func NewCurrentCmd() *cobra.Command {
 
 internal/adapters/cli/ical.go
-     3→import …
     23→func NewICalCmd() *cobra.Command {
     24→	var outputDir string
       →	…
@@ -139,8 +133,11 @@ internal/adapters/cli/ical.go
    302→func openFileInCalendar …
 
 internal/adapters/cli/interactive.go
-     3→import …
     17→func SelectActivityMetadata(activities []models.Activity, project, description string, theme Theme) (string, string, error) {
+    36→func selectProject …
+    57→func selectTask …
+    80→func getUniqueProjects …
+    89→func getDescriptionsForProject …
     98→func RunInteractiveInput(header, placeholder string, theme Theme) (string, error) {
    123→type simpleInputModel struct {
    131→func (m simpleInputModel) Init() tea.Cmd { return nil }
@@ -150,16 +147,19 @@ internal/adapters/cli/interactive.go
    201→type simpleListModel struct {
    212→func (m *simpleListModel) Init() tea.Cmd { return nil }
    214→func (m *simpleListModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+   251→func (m *simpleListModel) applyFilter …
    263→func (m *simpleListModel) View() string {
+   301→func (m *simpleListModel) calculateWindow …
 
 internal/adapters/cli/last.go
-     3→import …
     16→type lastOptions struct {
     21→func NewLastCmd() *cobra.Command {
-    42→func runLastCmd …
+    22→	var opt lastOptions
+    23→
+      →…
+    42→func runLastCmd(cmd *cobra.Command, opt *lastOptions) error {
 
 internal/adapters/cli/list_gui.go
-     3→import …
     22→func NewListCmd() *cobra.Command {
     45→type model struct {
    200→func (m *model) Init() tea.Cmd {
@@ -167,20 +167,23 @@ internal/adapters/cli/list_gui.go
    230→func (m *model) View() string {
 
 internal/adapters/cli/remove.go
-     3→import …
     22→func NewRemoveCmd() *cobra.Command {
+    23→	var skipConfirm bool
+    24→
+      →…
     95→func parseRemoveIndex …
    116→func findLastActivity …
    127→func findActivityByIndex …
 
 internal/adapters/cli/report.go
-     3→import …
     20→type reportOptions struct {
     31→func NewReportCmd() *cobra.Command {
+    32→	var opt reportOptions
+    33→
+      →…
     61→func runReportCmd(cmd *cobra.Command, opt *reportOptions) error {
 
 internal/adapters/cli/root.go
-     3→import …
     21→const (
     22→	defaultRecentActivitiesForCompletion = 1000
     23→	backendTimewarrior                   = "timewarrior"
@@ -199,7 +202,6 @@ internal/adapters/cli/root.go
    195→func descriptionRegisterFlagCompletion …
 
 internal/adapters/cli/start.go
-     3→import …
     16→//nolint:gocognit,funlen // Include all logic in one function
     17→func NewStartCmd() *cobra.Command {
     18→	var description string
@@ -207,20 +209,16 @@ internal/adapters/cli/start.go
       →	…
 
 internal/adapters/cli/stop.go
-     3→import …
     14→func NewStopCmd() *cobra.Command {
     15→	var at string
       →	…
 
 internal/adapters/cli/theme.go
-     3→import …
     11→type Theme struct {
     12→	Primary   lipgloss.Color
-    13→	Secondary lipgloss.Color
       →	…
     22→type Styles struct {
     23→	Wrapper       lipgloss.Style
-    24→	Header        lipgloss.Style
       →	…
     40→func DarkTheme() Theme {
     53→func LightTheme() Theme {
@@ -231,21 +229,20 @@ internal/adapters/cli/theme.go
    167→func InitStyles(t Theme) Styles {
 
 internal/adapters/cli/update.go
-     3→import …
     17→type githubRelease struct {
     22→func checkUpdate() (githubRelease, error) {
     45→func runUpdateCheck(cmd *cobra.Command) {
 
 internal/adapters/cli/version.go
-     3→import …
     10→var (
     11→	version = "dev"
     12→	commit  = "none"
     13→	date    = "unknown"
     16→func NewVersionCmd() *cobra.Command {
+    17→	return &cobra.Command{
+      →	…
 
 internal/adapters/cli/watch.go
-     3→import …
     19→func NewWatchCmd() *cobra.Command {
     75→type tickMsg time.Time
     77→type watchModel struct {

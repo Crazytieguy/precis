@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (1001 tokens)
+budget: 1000 (1002 tokens)
 
 README.md
 
@@ -85,6 +85,8 @@ api_database.py
      7→class DatabaseApi(BaseApi):
     31→
     32→    def export(self) -> None:
+    33→        """This endpoint triggers the creation of a system backup and initiates the delivery of
+      →        …
 
 api_inbound.py
      3→from typing …
@@ -101,8 +103,6 @@ api_inbound.py
    247→    def reset_client_stats(self, inbound_id: int) -> None:
 
 api_server.py
-     3→from py3xui.api.api_base …
-     4→from py3xui.server.server …
      7→class ServerApi(BaseApi):
     34→
     35→    def get_db(self, save_path: str) -> None:

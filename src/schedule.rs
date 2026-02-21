@@ -446,6 +446,16 @@ pub struct Group {
     /// was never split. Used to prefer earlier chunks (which typically contain
     /// more important API surface) when budget is tight.
     pub split_position: Option<usize>,
+    /// Number of unique files in the same parent directory that have groups
+    /// of the same kind_category. When many files in a directory follow the
+    /// same pattern (e.g., 20 operator files each with class+factory function),
+    /// later instances add diminishing information. Used in `compute_value`
+    /// to deprioritize repetitive sibling files.
+    pub dir_cohort_files: usize,
+    /// Average symbols per file in this directory cohort. Low averages (1-2)
+    /// indicate uniform, repetitive files. High averages (4+) indicate diverse
+    /// files that shouldn't be penalized.
+    pub dir_cohort_avg_symbols: f64,
 }
 
 impl Group {
@@ -586,6 +596,8 @@ pub fn build_groups(
                 max_doc_n: 0,
                 max_body_n: 0,
                 split_position: None,
+                dir_cohort_files: 1,
+                dir_cohort_avg_symbols: 1.0,
             });
             group.max_doc_n = group.max_doc_n.max(costs.doc_line_tokens.len());
             group.max_body_n = group.max_body_n.max(costs.body_line_tokens.len());
@@ -595,6 +607,33 @@ pub fn build_groups(
     }
 
     let mut groups: Vec<Group> = group_map.into_values().collect();
+
+    // Compute directory cohort stats: for each (parent_dir, kind_category),
+    // count unique files and total symbols. Directories with many files
+    // following the same pattern (e.g., 20 adapter files each implementing
+    // the same interface) get a diminishing-returns penalty, modulated by
+    // how uniform the files are (low avg symbols → repetitive, high → diverse).
+    let mut dir_cohorts: HashMap<(PathBuf, KindCategory), (usize, HashSet<PathBuf>)> = HashMap::new();
+    for group in &groups {
+        let parent = group.key.file_path.parent()
+            .unwrap_or(Path::new(""))
+            .to_path_buf();
+        let entry = dir_cohorts
+            .entry((parent, group.key.kind_category))
+            .or_default();
+        entry.0 += group.symbols.len();
+        entry.1.insert(group.key.file_path.clone());
+    }
+    for group in &mut groups {
+        let parent = group.key.file_path.parent()
+            .unwrap_or(Path::new(""))
+            .to_path_buf();
+        if let Some((total_symbols, files)) = dir_cohorts.get(&(parent, group.key.kind_category)) {
+            group.dir_cohort_files = files.len();
+            group.dir_cohort_avg_symbols = *total_symbols as f64 / files.len() as f64;
+        }
+    }
+
     groups = split_large_groups(groups);
     groups.sort_by(|a, b| a.key.cmp(&b.key));
     groups
@@ -638,6 +677,8 @@ fn split_large_groups(groups: Vec<Group>) -> Vec<Group> {
                 max_doc_n,
                 max_body_n,
                 split_position: Some(i),
+                dir_cohort_files: group.dir_cohort_files,
+                dir_cohort_avg_symbols: group.dir_cohort_avg_symbols,
             });
             offset += chunk_size;
         }
@@ -840,7 +881,31 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     // precis also shows the submodule's own symbols.
     let reexport_factor = if key.is_reexport { 0.1 } else { 1.0 };
 
-    let base_value = visibility * documented * depth_factor * sibling_factor * file_role_factor * config_factor * test_factor * type_declaration_factor * heading_depth_factor * first_party_factor * trait_impl_factor * boilerplate_factor * autogen_api_doc_factor * reexport_factor;
+    // Directory cohort penalty: when many files in the same directory have
+    // groups of the same kind_category, they likely follow the same structural
+    // pattern (e.g., 20 operator files each with class + factory function,
+    // 8 database adapters each implementing the same interface). After a few
+    // examples the pattern is clear; additional files add diminishing info.
+    //
+    // The penalty is modulated by how uniform the files are. When average
+    // symbols per file is low (1-2), files are likely copies of the same
+    // template (e.g., each exports one install_* function). When average is
+    // high (5+), files are diverse and shouldn't be penalized — a directory
+    // with 10 files of 20 functions each is a normal codebase, not a pattern.
+    let dir_cohort_factor = {
+        let n = group.dir_cohort_files as f64;
+        if n <= 5.0 {
+            1.0
+        } else {
+            let base = 5.0 / n;
+            // uniformity: 1.0 when avg=1 (all files have 1 symbol), 0.0 when avg>=5
+            let uniformity = ((5.0 - group.dir_cohort_avg_symbols) / 4.0).clamp(0.0, 1.0);
+            // Blend: full penalty when files are uniform, no penalty when diverse
+            1.0 - (1.0 - base) * uniformity
+        }
+    };
+
+    let base_value = visibility * documented * depth_factor * sibling_factor * file_role_factor * config_factor * test_factor * type_declaration_factor * heading_depth_factor * first_party_factor * trait_impl_factor * boilerplate_factor * autogen_api_doc_factor * reexport_factor * dir_cohort_factor;
 
     let stage_value = match key.kind_category {
         KindCategory::Type => match stage {

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (999 tokens)
+budget: 1000 (1000 tokens)
 
 __init__.py
      1→from .base …
@@ -15,11 +15,10 @@ __init__.py
      8→from .mssql …
      9→from .oracle …
     11→__all__ = [
+    12→    'BaseDatabase',
+      →    …
 
 base.py
-     1→from abc …
-     2→from typing …
-     3→import logging …
      5→class BaseDatabase(ABC):
      6→    def __init__(self, host: str, user: str, password: str, database: str, port: int = None, **kwargs):
     18→    def connect(self) -> None:
@@ -39,9 +38,7 @@ firebase.py
     39→    def fetch_data(self, table_name: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 mariadb.py
-     1→import pymysql
      2→from .base import BaseDatabase
-     3→from typing import List, Dict, Any
      5→class MariaDBDatabase(BaseDatabase):
      6→    def connect(self) -> None:
     23→    def disconnect(self) -> None:
@@ -66,9 +63,7 @@ mssql.py
     45→    def fetch_data …
 
 mysql.py
-     1→import mysql.connector
      2→from .base import BaseDatabase
-     3→from typing import List, Dict, Any
      5→class MySQLDatabase(BaseDatabase):
      6→    def connect(self) -> None:
     22→    def disconnect(self) -> None:
@@ -78,10 +73,12 @@ mysql.py
 oracle.py
      3→from .base import BaseDatabase
      7→class OracleDatabase(BaseDatabase):
-     8→    def connect …
-    25→    def disconnect …
-    32→    def fetch_tables …
-    36→    def fetch_data …
+     8→    def connect(self) -> None:
+    25→    def disconnect(self) -> None:
+    32→    def fetch_tables(self) -> List[str]:
+    36→    def fetch_data(
+    37→        self, table: str, page: int = 1, page_size: int = 100
+    38→    ) -> Dict[str, Any]:
 
 postgresql.py
      3→from .base import BaseDatabase

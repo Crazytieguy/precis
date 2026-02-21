@@ -169,9 +169,6 @@ packages/app-client/src/modules/ui/components/tabs.tsx
     73→export function TabsTrigger …
    109→export function TabsIndicator …
 
-packages/app-client/src/modules/ui/components/textarea.tsx
-    14→export function TextArea …
-
 packages/app-client/src/modules/ui/components/textfield.tsx
     20→export function TextFieldRoot …
     26→export const textfieldLabel = cva(
@@ -226,23 +223,16 @@ packages/app-server/src/modules/app/config/config.types.ts
      1→import type { getConfig } from './config';
      3→export type Config = ReturnType<typeof getConfig>;
 
-packages/app-server/src/modules/app/middlewares/config.middleware.ts
-     6→export function createConfigMiddleware …
-
 packages/app-server/src/modules/app/middlewares/cors.middleware.ts
-     1→import type { Context } from '../server.types';
      5→export const corsMiddleware = createMiddleware(async (context: Context, next) => {
 
 packages/app-server/src/modules/app/middlewares/errors.middleware.ts
      7→export function registerErrorMiddleware({ app }: { app: ServerInstance }) {
 
 packages/app-server/src/modules/app/middlewares/logger.middleware.ts
-     2→import { createLogger } from '../../shared/logger/logger';
      6→export const loggerMiddleware = createMiddleware(async (c, next) => {
 
 packages/app-server/src/modules/app/middlewares/timeout.middleware.ts
-     1→import type { Context } from '../server.types';
-     3→import { createError } from '../../shared/errors/errors';
      5→export const timeoutMiddleware = createMiddleware(async (context: Context, next) => {
 
 packages/app-server/src/modules/app/server.types.ts
@@ -285,6 +275,10 @@ packages/app-server/src/modules/shared/validation/validation.ts
     43→export const validateJsonBody …
     44→export const validateQuery …
     45→export const validateParams …
+
+packages/app-server/src/modules/storage/factories/cloudflare-kv.storage.ts
+     9→export const KV_VALUE_LENGTH_EXCEEDED_ERROR_CODE = 'storage.kv.value_length_exceeds_limit';
+    11→export const createCloudflareKVStorageFactory = defineBindableStorageFactory(() => {
 
 packages/app-server/src/modules/storage/factories/memory.storage.ts
      3→import { defineStorage } from '../storage.models';
@@ -399,6 +393,9 @@ packages/lib/src/crypto/crypto.types.ts
      5→export type CompressionAlgorithm = typeof COMPRESSION_ALGORITHMS[number];
      7→export type CryptoServices = {
 
+packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.types.ts
+     3→export type EncryptionMethodsDefinition = ReturnType<typeof defineEncryptionMethods>;
+
 packages/lib/src/crypto/serialization/cbor-array/cbor-array.serialization.ts
      5→export const cborArraySerializationDefinition = defineSerializationMethods({
 
@@ -410,6 +407,8 @@ packages/lib/src/crypto/serialization/serialization.registry.ts
 packages/lib/src/crypto/serialization/serialization.types.ts
      4→export type SerializationMethodsDefinition = ReturnType<typeof defineSerializationMethods>;
      5→export type SerializationFormat = typeof serializationMethodDefinitions[number]['name'];
+
+packages/lib/src/index.ts
 
 packages/lib/src/notes/notes.types.ts
      4→export type NoteAsset = {

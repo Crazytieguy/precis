@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2005 tokens)
+budget: 2000 (2003 tokens)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -161,11 +161,10 @@ test/package.json
      4→  "scripts": {
      7→  "dependencies": {
 
-test/pages/_app.tsx
-     1→import '../style.css'
-     3→export default function App({ Component, pageProps }) {
-
 test/tsconfig.json
+     2→  "compilerOptions": {
+    18→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "../dialog.test.ts"],
+    19→  "exclude": ["node_modules"]
 
 tsconfig.json
      2→  "compilerOptions": {
@@ -184,7 +183,6 @@ website/components/cmdk/framer.tsx
 
 website/components/cmdk/linear.tsx
      3→export function LinearCMDK() {
-    30→const items = [
 
 website/components/cmdk/raycast.tsx
      7→export function RaycastCMDK() {
@@ -193,7 +191,6 @@ website/components/cmdk/vercel.tsx
      4→export function VercelCMDK() {
 
 website/components/code/index.tsx
-     4→import styles from './code.module.scss'
     41→export function Code({ children }: { children: string }) {
 
 website/package.json

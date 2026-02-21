@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1989 tokens)
+budget: 2000 (1987 tokens)
 
 Cargo.toml
      1→[package]
@@ -76,6 +76,12 @@ impl/src/attr.rs
     69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
 
 impl/src/expand.rs
+     1→use crate::ast::{Enum, Field, Input, Struct};
+     2→use crate::attr::Trait;
+     3→use crate::fallback;
+     4→use crate::generics::InferredBounds;
+     5→use crate::private;
+     6→use crate::unraw::MemberUnraw;
     12→pub fn derive(input: &DeriveInput) -> TokenStream {
 
 impl/src/fallback.rs
@@ -187,7 +193,8 @@ src/private.rs
 src/provide.rs
      4→pub trait ThiserrorProvide: Sealed {
      5→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>);
-    13→    fn thiserror_provide …
+    12→    #[inline]
+    13→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>) {
     19→pub trait Sealed {}
 
 src/var.rs
@@ -197,8 +204,6 @@ src/var.rs
 tests/test_backtrace.rs
     18→pub mod structs {
    163→pub mod enums {
-
-tests/test_display.rs
 
 tests/test_expr.rs
     11→pub enum CompilerError {
@@ -216,19 +221,8 @@ tests/test_option.rs
 tests/test_path.rs
     29→pub struct UnsizedError {
     35→pub enum BothError {
-    36→    #[error("display:{0} debug:{0:?}")]
-    37→    DisplayDebug(PathBuf),
-    38→    #[error("debug:{0:?} display:{0}")]
-    39→    DebugDisplay(PathBuf),
-    40→}
 
 tests/test_source.rs
      7→pub struct ImplicitSource {
     13→pub struct ExplicitSource {
     21→pub struct BoxedSource {
-
-tests/ui/missing-display.rs
-     4→pub enum MyError {
-     5→    First,
-     6→    Second,
-     7→}

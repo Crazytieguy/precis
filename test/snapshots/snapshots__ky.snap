@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2004 tokens)
+budget: 2000 (2011 tokens)
 
 package.json
 
@@ -29,9 +29,21 @@ source/core/Ky.ts
 
 source/core/constants.ts
      2→import {type KyOptionsRegistry, type RequestHttpMethod} from '../types/options.js';
+     4→export const supportsRequestStreams …
+    34→export const supportsAbortController …
+    35→export const supportsAbortSignal …
+    36→export const supportsResponseStreams …
+    37→export const supportsFormData …
+    39→export const requestMethods …
     41→const validate …
+    46→export const responseTypes …
+    58→export const maxSafeTimeout …
+    61→export const usualFormBoundarySize …
+    63→export const stop …
     66→Options for forcing a retry via `ky.retry()`.
     68→export type ForceRetryOptions = {
+    69→	/**
+      →	…
    146→Marker returned by ky.retry() to signal a forced retry from afterResponse hooks.
    148→export class RetryMarker {
    149→	constructor(public options?: ForceRetryOptions) {}
@@ -39,14 +51,21 @@ source/core/constants.ts
    154→
       →…
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
+   237→export const kyOptionKeys …
+   256→export const vendorSpecificOptions …
+   265→export const requestOptionsRegistry …
 
 source/errors/ForceRetryError.ts
      1→import type {ForceRetryOptions} from '../core/constants.js';
      2→import {NonError} from './NonError.js';
+     5→Internal error used to signal a forced retry from afterResponse hooks.
+      →…
      8→export class ForceRetryError extends Error {
      9→	override name = 'ForceRetryError' as const;
     10→	customDelay: number | undefined;
     11→	code: string | undefined;
+    12→	customRequest: Request | undefined;
+    13→
     14→	constructor(options?: ForceRetryOptions) {
 
 source/errors/HTTPError.ts
@@ -55,6 +74,7 @@ source/errors/HTTPError.ts
      3→import type {KyResponse} from '../types/response.js';
      5→export class HTTPError<T = unknown> extends Error {
      6→	public response: KyResponse<T>;
+     7→	public request: KyRequest;
     10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
 
 source/errors/NonError.ts
@@ -161,25 +181,16 @@ source/utils/is.ts
      2→export const isObject …
 
 source/utils/merge.ts
-     1→import type {KyHeadersInit, Options} from '../types/options.js';
-     2→import type {Hooks} from '../types/hooks.js';
-     3→import {supportsAbortSignal} from '../core/constants.js';
-     4→import {isObject} from './is.js';
      6→export const validateAndMerge …
     16→export const mergeHeaders …
     38→export const mergeHooks …
     86→export const deepMerge …
 
 source/utils/normalize.ts
-     1→import {requestMethods} from '../core/constants.js';
-     2→import type {RetryOptions} from '../types/retry.js';
-     3→import type {HttpMethod, RequestHttpMethod} from '../types/options.js';
      5→export const normalizeRequestMethod …
     28→export const normalizeRetryOptions …
 
 source/utils/options.ts
-     1→import {kyOptionKeys, requestOptionsRegistry, vendorSpecificOptions} from '../core/constants.js';
-     2→import type {SearchParamsOption} from '../types/options.js';
      4→export const findUnknownOptions …
     30→export const hasSearchParameters …
 
@@ -189,9 +200,6 @@ source/utils/timeout.ts
      9→export default async function timeout …
 
 source/utils/type-guards.ts
-     1→import {HTTPError} from '../errors/HTTPError.js';
-     2→import {TimeoutError} from '../errors/TimeoutError.js';
-     3→import {ForceRetryError} from '../errors/ForceRetryError.js';
     27→export function isKyError(error: unknown): error is HTTPError | TimeoutError | ForceRetryError {
     49→export function isHTTPError<T = unknown>(error: unknown): error is HTTPError<T> {
     71→export function isTimeoutError(error: unknown): error is TimeoutError {
@@ -204,9 +212,15 @@ source/utils/types.ts
 tsconfig.dist.json
      2→	"extends": "./tsconfig",
      3→	"compilerOptions": {
+     8→	},
      9→	"include": [
+    11→	]
+    12→}
 
 tsconfig.json
      2→	"extends": "@sindresorhus/tsconfig",
      3→	"compilerOptions": {
+     5→	},
      6→	"include": [
+     8→	]
+     9→}

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2005 tokens)
+budget: 2000 (2004 tokens)
 
 README.md
     10→# `htmy`
@@ -172,14 +172,12 @@ htmy/snippet.py
     27→class Slots:
     46→
     49→    class slot_re:
-    57→
-      →…
     83→    def __init__ …
    110→    def resolve_text …
    158→class Snippet:
-   215→
    218→    def __init__ …
    241→    async def htmy …
+   274→    async def _load_text_file …
 
 htmy/tag.py
      5→from .core …

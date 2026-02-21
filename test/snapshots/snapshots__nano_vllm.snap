@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2006 tokens)
+budget: 2000 (2004 tokens)
 
 README.md
      9→# Nano-vLLM
@@ -38,6 +38,7 @@ nanovllm/config.py
      7→class Config:
      8→    model: str
      9→    max_num_batched_tokens: int = 16384
+    10→    max_num_seqs: int = 512
     20→    def __post_init__(self):
 
 nanovllm/engine/block_manager.py
@@ -143,8 +144,6 @@ nanovllm/layers/embed_head.py
     56→    def forward …
 
 nanovllm/layers/layernorm.py
-     1→import torch
-     2→from torch import nn
      5→class RMSNorm(nn.Module):
      6→
      7→    def __init__ …
@@ -169,8 +168,6 @@ nanovllm/layers/rotary_embedding.py
     52→def get_rope …
 
 nanovllm/layers/sampler.py
-     1→import torch
-     2→from torch import nn
      5→class Sampler(nn.Module):
      6→
      7→    def __init__(self):
@@ -210,6 +207,8 @@ nanovllm/sampling_params.py
     10→    def __post_init__(self):
 
 nanovllm/utils/context.py
+     1→from dataclasses …
+     2→import torch …
      6→class Context:
      7→    is_prefill: bool = False
       →    …

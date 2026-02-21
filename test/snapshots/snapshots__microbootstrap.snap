@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2004 tokens)
+budget: 2000 (2005 tokens)
 
 README.md
     55→## Table of Contents
@@ -48,9 +48,11 @@ microbootstrap/bootstrappers/faststream.py
    121→class FastStreamHealthChecksInstrument(HealthChecksInstrument):
 
 microbootstrap/bootstrappers/litestar.py
+    48→class LitestarBootstrapper …
     63→class LitestarSentryInstrument(SentryInstrument):
     74→class LitestarSwaggerInstrument(SwaggerInstrument):
    109→class LitestarCorsInstrument(CorsInstrument):
+   158→class LitestarOpenTelemetryInstrumentationMiddleware …
    178→class LitestarOpentelemetryInstrument(OpentelemetryInstrument):
    191→class LitestarLoggingInstrument(LoggingInstrument):
    200→class LitestarPrometheusInstrument(PrometheusInstrument[LitestarPrometheusConfig]):
@@ -97,7 +99,6 @@ microbootstrap/helpers.py
 microbootstrap/instruments/base.py
     19→class BaseInstrumentConfig(pydantic.BaseModel):
     24→class Instrument(abc.ABC, typing.Generic[InstrumentConfigT]):
-    25→    instrument_config: InstrumentConfigT
     43→    def is_ready(self) -> bool: ...
     47→    def get_config_type(cls) -> type[InstrumentConfigT]:
 
@@ -109,9 +110,6 @@ microbootstrap/instruments/cors_instrument.py
     28→    def get_config_type(cls) -> type[CorsConfig]:
 
 microbootstrap/instruments/health_checks_instrument.py
-     8→class HealthCheckTypedDict(typing_extensions.TypedDict, total=False):
-    14→class HealthChecksConfig(BaseInstrumentConfig):
-    26→class HealthChecksInstrument(Instrument[HealthChecksConfig]):
     30→    def render_health_check_data(self) -> HealthCheckTypedDict:
     37→    def is_ready(self) -> bool:
     40→    @classmethod
@@ -136,10 +134,14 @@ microbootstrap/instruments/logging_instrument.py
    213→    def get_config_type(cls) -> type[LoggingConfig]:
 
 microbootstrap/instruments/opentelemetry_instrument.py
+    24→LOGGER_OBJ …
     43→class OpenTelemetryInstrumentor:
     73→class FastStreamTelemetryMiddlewareProtocol(typing.Protocol):
    181→    @classmethod
    182→    def get_config_type(cls) -> type[OpentelemetryConfig]:
+   186→OTEL_PROFILE_ID_KEY …
+   187→PYROSCOPE_SPAN_ID_KEY …
+   188→PYROSCOPE_SPAN_NAME_KEY …
    197→class PyroscopeSpanProcessor(SpanProcessor):
 
 microbootstrap/instruments/prometheus_instrument.py
@@ -206,5 +208,3 @@ pyproject.toml
     93→[build-system]
    101→[tool.mypy]
    109→[tool.ruff]
-
-tests/test_settings.py

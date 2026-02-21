@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2003 tokens)
+budget: 2000 (2004 tokens)
 
 Cargo.toml
      1→[package]
@@ -89,6 +89,8 @@ src/config/mod.rs
 
 src/config/types.rs
     28→pub struct Types {
+    29→    #[serde(default = "Types::default_str")]
+      →    …
 
 src/debug.rs
      7→#[macro_export]
@@ -108,22 +110,14 @@ src/live_reload.rs
     64→    pub fn get_err …
     71→    pub fn parse_tree …
 
-src/main.rs
-
 src/parse/any.rs
      9→pub struct AnyParser {
     14→    pub fn new() -> Self {
     20→    pub fn set_parser(&self, parser: Box<dyn Parser>) {
 
-src/parse/hcl.rs
-     8→pub struct HclParser {}
-
 src/parse/json.rs
      6→pub struct JsonParser {}
     26→pub fn highlight …
-
-src/parse/jsonl.rs
-     7→pub struct JsonlParser;
 
 src/parse/mod.rs
     18→pub enum ContentType {
@@ -144,6 +138,12 @@ src/parse/mod.rs
     33→    Any,
     34→}
     36→pub trait Parser {
+    37→    fn extension …
+    39→    fn allow_array_root …
+    41→    fn parse …
+    43→    fn syntax_highlight …
+    45→    fn parse_root …
+    67→    pub fn new_parser …
 
 src/parse/syntax.rs
      9→use crate::config::Config;
@@ -174,18 +174,12 @@ src/parse/syntax.rs
    157→    pub fn new …
    201→pub fn is_value_complex …
 
-src/parse/toml.rs
-     9→pub struct TomlParser {}
-
 src/parse/xml.rs
     12→pub struct XmlParser {}
     38→    fn insert_text …
     39→    fn insert_text_node …
     61→struct NodeValues {
    176→fn read …
-
-src/parse/yaml.rs
-     8→pub struct YamlParser {}
 
 src/tree.rs
     14→pub struct Tree {

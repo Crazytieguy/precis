@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4037 tokens)
+budget: 4000 (4020 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -40,31 +40,26 @@ sps/src/cli/init.rs
 
 sps/src/cli/install.rs
     16→pub struct InstallArgs {
-    17→    #[arg(required = true)]
-      →    …
     45→    pub async fn run …
 
 sps/src/cli/list.rs
     16→pub struct List {
-    17→    /// Show only formulas
-      →    …
     29→    pub async fn run …
 
 sps/src/cli/reinstall.rs
     12→pub struct ReinstallArgs {
-    13→    #[arg(required = true)]
-      →    …
     24→    pub async fn run …
 
 sps/src/cli/search.rs
     15→pub struct Search {
-    16→    pub query: String,
-      →    …
     23→pub enum SearchType {
     24→    All,
     25→    Formula,
     26→    Cask,
     27→}
+    30→    pub async fn run …
+    42→pub async fn run_search …
+   240→pub fn print_search_results …
 
 sps/src/cli/uninstall.rs
     17→pub struct Uninstall {
@@ -76,8 +71,6 @@ sps/src/cli/update.rs
 
 sps/src/cli/upgrade.rs
     12→pub struct UpgradeArgs {
-    13→    #[arg()]
-      →    …
     24→    pub async fn run …
 
 sps/src/cli.rs
@@ -311,7 +304,6 @@ sps-common/src/model/mod.rs
      7→pub mod formula;
      8→pub mod tap;
      9→pub mod version;
-    16→#[derive(Debug, Clone)]
     17→pub enum InstallTargetIdentifier {
     18→    Formula(Arc<Formula>),
     19→    Cask(Arc<Cask>),
@@ -374,6 +366,7 @@ sps-core/src/check/update.rs
     23→pub struct UpdateInfo {
     24→    pub name: String,
       →    …
+    89→pub async fn check_for_updates …
 
 sps-core/src/install/bottle/macho.rs
     55→pub struct SkippedPath {
@@ -398,6 +391,7 @@ sps-core/src/install/mod.rs
     12→pub mod cask;
     13→pub mod devtools;
     14→pub mod extract;
+    17→pub fn get_formula_opt_path …
 
 sps-core/src/lib.rs
      4→pub mod build;
@@ -466,6 +460,7 @@ sps-net/src/lib.rs
      3→pub mod http;
      4→pub mod oci;
      5→pub mod validation;
+    16→pub use sps_common::{ …
     29→pub use crate::validation::{validate_url, verify_checksum, verify_content_type /* ... */};
 
 sps-net/src/oci.rs

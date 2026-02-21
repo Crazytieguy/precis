@@ -2,7 +2,9 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3998 tokens)
+budget: 4000 (4001 tokens)
+
+CHANGELOG.md
 
 Cargo.toml
      1→[workspace]
@@ -108,6 +110,7 @@ crates/mdbook-core/src/config.rs
    641→pub struct Code {
    650→pub struct Search {
    708→pub struct SearchChapterSettings {
+   718→trait Updateable …
    719→    fn update_value …
 
 crates/mdbook-core/src/lib.rs
@@ -268,6 +271,10 @@ crates/mdbook-preprocessor/README.md
      1→# mdbook-preprocessor
 
 crates/mdbook-preprocessor/src/lib.rs
+    18→pub use mdbook_core::MDBOOK_VERSION;
+    19→pub use mdbook_core::book;
+    20→pub use mdbook_core::config;
+    21→pub use mdbook_core::errors;
     30→pub trait Preprocessor {
     32→    fn name …
     36→    fn run …
@@ -285,6 +292,10 @@ crates/mdbook-renderer/README.md
      1→# mdbook-renderer
 
 crates/mdbook-renderer/src/lib.rs
+    17→pub use mdbook_core::MDBOOK_VERSION;
+    18→pub use mdbook_core::book;
+    19→pub use mdbook_core::config;
+    20→pub use mdbook_core::errors;
     28→pub trait Renderer {
     30→    fn name …
     34→    fn render …
@@ -347,24 +358,6 @@ guide/src/SUMMARY.md
 
 guide/src/cli/README.md
      1→# Command-line tool
-
-guide/src/cli/build.md
-     1→# The build command
-
-guide/src/cli/clean.md
-     1→# The clean command
-
-guide/src/cli/init.md
-     1→# The init command
-
-guide/src/cli/serve.md
-     1→# The serve command
-
-guide/src/cli/test.md
-     1→# The test command
-
-guide/src/cli/watch.md
-     1→# The watch command
 
 guide/src/for_developers/README.md
      1→# For developers
@@ -433,7 +426,6 @@ src/cmd/command_prelude.rs
     10→    fn arg_dest_dir(self) -> Self {
     26→    fn arg_root_dir(self) -> Self {
     37→    fn arg_open(self) -> Self {
-    41→    #[cfg(any(feature = "watch", feature = "serve"))]
     42→    fn arg_watcher(self) -> Self {
     62→pub fn set_dest_dir(args: &ArgMatches, book: &mut MDBook) {
 
@@ -457,7 +449,7 @@ src/cmd/serve.rs
      1→use super::command_prelude::*;
      3→use super::watch;
      4→use crate::{get_book_dir, open};
-    20→const LIVE_RELOAD_ENDPOINT …
+    20→const LIVE_RELOAD_ENDPOINT: &str = "__livereload";
     23→pub fn make_subcommand() -> Command {
     51→pub fn execute(args: &ArgMatches) -> Result<()> {
    109→async fn serve …
