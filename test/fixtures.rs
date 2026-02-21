@@ -116,8 +116,8 @@ with_entries! {
     (peepdb,                  "peepdb",                          2000), // inspected: logged observation
     (peepdb_db,               "peepdb/peepdb/db",               1000), // inspected: logged observation
     (swarm,                   "swarm",                           2000), // inspected: logged observation
-    (htmy,                    "htmy",                            2000),
-    (htmy_renderer,           "htmy/htmy/renderer",             1000),
+    (htmy,                    "htmy",                            2000), // inspected: logged observation
+    (htmy_renderer,           "htmy/htmy/renderer",             1000), // inspected: exceeds explore
     (microbootstrap,          "microbootstrap",                 2000),
     (microbootstrap_instruments, "microbootstrap/microbootstrap/instruments", 1000),
     (py3xui,                  "py3xui",                          2000),
