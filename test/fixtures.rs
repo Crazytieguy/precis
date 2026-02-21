@@ -115,7 +115,7 @@ with_entries! {
     (tomli,                   "tomli",                           2000), // inspected: logged observation
     (peepdb,                  "peepdb",                          2000), // inspected: logged observation
     (peepdb_db,               "peepdb/peepdb/db",               1000), // inspected: logged observation
-    (swarm,                   "swarm",                           2000),
+    (swarm,                   "swarm",                           2000), // inspected: logged observation
     (htmy,                    "htmy",                            2000),
     (htmy_renderer,           "htmy/htmy/renderer",             1000),
     (microbootstrap,          "microbootstrap",                 2000),
