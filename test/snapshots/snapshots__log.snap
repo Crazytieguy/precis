@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1988 tokens)
+budget: 2000 (1987 tokens)
 
 Cargo.toml
      1→[package]
@@ -60,9 +60,6 @@ src/kv/key.rs
      7→pub trait ToKey {
      9→    fn to_key(&self) -> Key<'_>;
     37→pub struct Key<'k> {
-    38→    // NOTE: This may become `Cow<'k, str>`
-    39→    key: &'k str,
-    40→}
     45→    pub fn from_str(key: &'k str) -> Self {
     53→    pub fn as_str(&self) -> &str {
     61→    pub fn to_borrowed_str(&self) -> Option<&'k str> {
@@ -88,13 +85,13 @@ src/kv/mod.rs
 
 src/kv/source.rs
     51→pub trait Source {
-    62→    fn visit …
-    73→    fn get …
-    85→    fn count …
+    62→    fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error>;
+    73→    fn get(&self, key: Key) -> Option<Value<'_>> {
+    85→    fn count(&self) -> usize {
     91→fn get_default …
    114→fn count_default …
    235→pub trait VisitSource<'kvs> {
-   237→    fn visit_pair …
+   237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
    280→mod std_support {
    462→pub use VisitSource as Visitor;
 
@@ -208,8 +205,3 @@ src/macros.rs
    292→macro_rules! debug {
    336→macro_rules! trace {
    391→macro_rules! log_enabled {
-
-test_max_level_features/Cargo.toml
-     1→[package]
-     7→[[bin]]
-    11→[dependencies.log]

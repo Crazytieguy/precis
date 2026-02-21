@@ -98,6 +98,27 @@ pub fn is_test_file(path: &Path) -> bool {
         return true;
     }
 
+    // Check for test-related segments in compound directory names.
+    // Catches workspace crate names like "foo-test-utils", "my-integration-suite",
+    // "toasty-driver-integration-suite-macros" that wouldn't match exact names above.
+    if path.components().any(|c| {
+        c.as_os_str().to_str().is_some_and(|name| {
+            (name.contains('-') || name.contains('_'))
+                && name
+                    .split(|c: char| c == '-' || c == '_')
+                    .any(|seg| {
+                        matches!(
+                            seg,
+                            "test" | "tests" | "testing" | "bench" | "benches"
+                            | "benchmark" | "benchmarks" | "mock" | "mocks"
+                            | "fixture" | "fixtures" | "integration"
+                        )
+                    })
+        })
+    }) {
+        return true;
+    }
+
     let stem = match path.file_stem().and_then(|s| s.to_str()) {
         Some(s) => s,
         None => return false,
@@ -321,10 +342,22 @@ mod tests {
         assert!(is_test_file(Path::new("test_utils.py")));
         assert!(is_test_file(Path::new("utils_test.py")));
         assert!(is_test_file(Path::new("conftest.py")));
+        // Compound directory names with test-related segments (workspace crates)
+        assert!(is_test_file(Path::new("crates/foo-test-utils/src/lib.rs")));
+        assert!(is_test_file(Path::new("crates/my-integration-suite/src/setup.rs")));
+        assert!(is_test_file(Path::new("crates/toasty-driver-integration-suite/src/test.rs")));
+        assert!(is_test_file(Path::new("crates/toasty-driver-integration-suite-macros/src/lib.rs")));
+        assert!(is_test_file(Path::new("packages/app-testing-utils/index.ts")));
+        assert!(is_test_file(Path::new("crates/my-mock-server/src/lib.rs")));
+        assert!(is_test_file(Path::new("crates/bench-utils/src/lib.rs")));
+        assert!(is_test_file(Path::new("crates/my_test_helpers/src/lib.rs")));
         // Normal source files
         assert!(!is_test_file(Path::new("src/main.rs")));
         assert!(!is_test_file(Path::new("index.ts")));
         assert!(!is_test_file(Path::new("lib/utils.py")));
+        // Compound names that should NOT match (no test-related segments)
+        assert!(!is_test_file(Path::new("crates/toasty-core/src/lib.rs")));
+        assert!(!is_test_file(Path::new("crates/my-driver-sqlite/src/lib.rs")));
     }
 
     #[test]
