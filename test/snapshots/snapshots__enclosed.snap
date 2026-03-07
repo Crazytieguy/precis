@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (3999 tokens)
 
 README.md
     26→## Introduction
@@ -18,9 +18,6 @@ README.md
    123→### View a note
    133→### Configure the enclosed instance to use
    140→## Project Structure
-   150→## Contributing
-   155→## License
-   159→## Credits and Acknowledgements
    168→### Stack
    184→### Hosting
    188→### Inspiration
@@ -28,10 +25,18 @@ README.md
 
 docker-compose.yml
      1→services:
+     2→  enclosed:
+     3→    image: corentinth/enclosed
+     4→    ports:
+     5→      - 8787:8787
+     6→    volumes:
+     7→      - enclosed-data:/app/.data
      8→    restart: unless-stopped
-     9→
     10→volumes:
+    11→  enclosed-data:
     12→    driver: local
+
+package.json
 
 packages/app-client/README.md
      1→## Usage
@@ -57,10 +62,17 @@ packages/app-client/README.md
 packages/app-client/components.json
      2→  "$schema": "https://shadcn-solid.com/schema.json",
      3→  "uno": {
-    11→  },
+     4→    "config": "uno.config.ts",
+     5→    "css": {
+     6→      "path": "src/app.css",
+     7→      "variable": true
+     8→    },
+     9→    "color": "neutral",
+    10→    "prefix": ""
     12→  "alias": {
-    16→  }
-    17→}
+    13→    "component": "@/modules/ui/components",
+    14→    "ui": "@/modules/ui/components",
+    15→    "cn": "@/modules/shared/style/cn"
 
 packages/app-client/src/index.tsx
      6→import { I18nProvider } from './modules/i18n/i18n.provider';
@@ -76,8 +88,6 @@ packages/app-client/src/modules/auth/auth.store.ts
      6→export const authStore = createRoot(() => {
 
 packages/app-client/src/modules/auth/pages/login.page.tsx
-    11→import { login } from '../auth.services';
-    12→import { authStore } from '../auth.store';
     14→const quotations = [
     41→export const LoginPage: Component = () => {
 
@@ -101,22 +111,13 @@ packages/app-client/src/modules/config/config.types.ts
 packages/app-client/src/modules/files/files.models.ts
      6→export const iconByFileType = {
 
-packages/app-client/src/modules/i18n/i18n.provider.tsx
-    44→export const I18nProvider: ParentComponent = (props) => {
-
 packages/app-client/src/modules/notes/components/file-uploader.tsx
     62→export const FileUploaderButton: ParentComponent<{
-
-packages/app-client/src/modules/notes/notes.constants.ts
-     1→export const NOTE_ID_REGEX …
 
 packages/app-client/src/modules/notes/notes.context.tsx
      3→import { createHook } from '../shared/hooks/hooks';
     11→export const NoteContextProvider: ParentComponent = (props) => {
     27→export function useNoteContext() {
-
-packages/app-client/src/modules/notes/notes.models.ts
-    16→export function buildViewNotePagePath({ prefix }: { prefix?: string | null }): string {
 
 packages/app-client/src/modules/notes/pages/create-note.page.tsx
    109→export const CreateNotePage: Component = () => {
@@ -173,9 +174,6 @@ packages/app-client/src/modules/ui/components/tabs.tsx
     73→export function TabsTrigger …
    109→export function TabsIndicator …
 
-packages/app-client/src/modules/ui/components/textarea.tsx
-    14→export function TextArea …
-
 packages/app-client/src/modules/ui/components/textfield.tsx
     20→export function TextFieldRoot …
     26→export const textfieldLabel = cva(
@@ -213,9 +211,6 @@ packages/app-server/src/modules/app/config/config.types.ts
 
 packages/app-server/src/modules/app/middlewares/errors.middleware.ts
      7→export function registerErrorMiddleware({ app }: { app: ServerInstance }) {
-
-packages/app-server/src/modules/app/middlewares/logger.middleware.ts
-     6→export const loggerMiddleware = createMiddleware(async (c, next) => {
 
 packages/app-server/src/modules/app/server.types.ts
      5→export type ServerInstanceGenerics = {
@@ -279,12 +274,11 @@ packages/app-server/src/modules/storage/factories/memory.storage.ts
      5→export const createMemoryStorage = defineStorage(() => {
 
 packages/app-server/src/modules/storage/storage.types.ts
-     7→export type BindableStorageFactoryArgs = { config: Config; context: Context };
-     8→export type BindableStorageFactory = (args: BindableStorageFactoryArgs) => { storage: Storage };
-     9→export type StorageFactory = () => { storage: Storage };
+     7→export type BindableStorageFactoryArgs …
+     8→export type BindableStorageFactory …
+     9→export type StorageFactory …
 
 packages/app-server/src/modules/tasks/tasks.types.ts
-     1→import type { defineTask } from './tasks.models';
      3→export type TaskDefinition = ReturnType<typeof defineTask>;
 
 packages/cli/README.md
@@ -356,9 +350,8 @@ packages/crypto/src/encryption-algorithms/encryption-algorithms.types.ts
 packages/deploy-cloudflare/_routes.json
      2→  "version": 1,
      3→  "include": [
-     5→  ],
+     4→    "/api/*"
      6→  "exclude": []
-     7→}
 
 packages/lib/README.md
      1→### Enclosed lib
@@ -398,9 +391,6 @@ packages/lib/src/crypto/crypto.types.ts
      5→export type CompressionAlgorithm = typeof COMPRESSION_ALGORITHMS[number];
      7→export type CryptoServices = {
 
-packages/lib/src/crypto/serialization/cbor-array/cbor-array.serialization.ts
-     5→export const cborArraySerializationDefinition = defineSerializationMethods({
-
 packages/lib/src/crypto/serialization/serialization.registry.ts
      7→export const serializationMethodDefinitions = [
     11→export const serializationMethodDefinitionsByName: Record<string, SerializationMethodsDefinition> = keyBy(serializationMethodDefinitions, 'name');
@@ -410,6 +400,8 @@ packages/lib/src/crypto/serialization/serialization.types.ts
      4→export type SerializationMethodsDefinition = ReturnType<typeof defineSerializationMethods>;
      5→export type SerializationFormat = typeof serializationMethodDefinitions[number]['name'];
 
+packages/lib/src/index.ts
+
 packages/lib/src/notes/notes.types.ts
      4→export type NoteAsset = {
     12→export type Note = {
@@ -418,6 +410,12 @@ packages/lib/src/notes/notes.types.ts
 pnpm-workspace.yaml
      1→packages:
      2→  - 'packages/*'
-     3→
      4→catalog:
+     5→  "@antfu/eslint-config": ^3.6.2
+     6→  "@types/node": ^22.5.4
+     7→  eslint: ^9.10.0
+     8→  tsx: ^4.17.0
+     9→  typescript: ^5.6.2
+    10→  vitest: ^3.0.9
+    11→  "@vitest/coverage-v8": ^3.0.9
     12→  "@corentinth/chisels": ^1.2.1

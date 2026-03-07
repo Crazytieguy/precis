@@ -4,8 +4,22 @@ expression: output
 ---
 Cargo.toml
      1→[package]
+     2→name = "example"
+     3→version = "0.1.0"
+      →…
      7→[dependencies]
+     8→serde = { version = "1", features = ["derive"] }
+     9→tokio = { version = "1.0", features = ["full"] }
+      →…
     12→[dev-dependencies]
+    13→insta = "1.0"
+    14→tempfile = "3"
     16→[profile.release]
+    17→opt-level = 3
+    18→lto = true
+    19→strip = true
     21→[[bin]]
+    22→name = "example"
+    23→path = "src/main.rs"
     25→[workspace.metadata.release]
+    26→publish = false

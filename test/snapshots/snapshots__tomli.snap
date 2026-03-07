@@ -5,7 +5,6 @@ expression: output
 budget: 2000 (1999 tokens)
 
 CHANGELOG.md
-     1→# Changelog
 
 README.md
      5→# Tomli
@@ -25,15 +24,7 @@ README.md
     20→  - [Building a `tomli`/`tomllib` compatibility layer](#building-a-tomlitomllib-compatibility-layer)
     21→- [FAQ](#faq)
     22→  - [Why this parser?](#why-this-parser)
-    23→  - [Is comment preserving round-trip parsing supported?](#is-comment-preserving-round-trip-parsing-supported)
-    24→  - [Is there a `dumps`, `write` or `encode` function?](#is-there-a-dumps-write-or-encode-function)
-    25→  - [How do TOML types map into Python types?](#how-do-toml-types-map-into-python-types)
-    26→- [Performance](#performance)
-    27→  - [Mypyc generated wheel](#mypyc-generated-wheel)
-    28→  - [Pure Python](#pure-python)
-    29→
-    30→<!-- mdformat-toc end -->
-    31→
+      →  …
     32→## Intro<a name="intro"></a>
     50→## Installation<a name="installation"></a>
     56→## Usage<a name="usage"></a>
@@ -45,16 +36,9 @@ benchmark/README.md
     10→## Running
 
 fuzzer/fuzz.py
-     1→import atheris
-     4→    from math import isnan
-     5→    import sys
-     6→    import warnings
-     8→    import tomli_w
-    10→    import tomli
     20→def test_one_input(input_bytes: bytes) -> None:
     53→def print_err(data):
     59→def normalize_toml_obj(toml_obj: dict) -> None:
-    60→    """Make NaNs equal when compared (without using recursion)."""
     71→def main():
 
 profiler/profiler_script.py
@@ -63,15 +47,39 @@ profiler/profiler_script.py
 
 pyproject.toml
      1→[build-system]
+     2→requires = ["flit_core>=3.12,<4"]
+     3→build-backend = "flit_core.buildapi"
      5→[project]
+     6→name = "tomli"
+     7→version = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
+     8→description = "A lil' TOML parser"
+     9→authors = [
+    10→    { name = "Taneli Hukkinen", email = "hukkin@users.noreply.github.com" },
+    11→]
+    12→license = "MIT"
+    13→license-files = ["LICENSE"]
+    14→requires-python = ">=3.8"
+    15→readme = "README.md"
+    16→classifiers = [
+    17→    "Operating System :: MacOS",
+    18→    "Operating System :: Microsoft :: Windows",
+    19→    "Operating System :: POSIX :: Linux",
+    20→    "Programming Language :: Python :: 3 :: Only",
+    21→    "Programming Language :: Python :: Implementation :: CPython",
+    22→    "Programming Language :: Python :: Implementation :: PyPy",
+    23→    "Topic :: Software Development :: Libraries :: Python Modules",
+    24→    "Typing :: Typed",
+    25→]
+    26→keywords = ["toml"]
     28→[project.urls]
+    29→"Homepage" = "https://github.com/hukkin/tomli"
+    30→"Changelog" = "https://github.com/hukkin/tomli/blob/master/CHANGELOG.md"
 
 src/tomli/__init__.py
      1→# SPDX-License-Identifier: MIT
-     2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
-     3→# Licensed to PSF under a Contributor Agreement.
+      →…
      5→__all__ = ("loads", "load", "TOMLDecodeError")
-     6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
+     6→__version__ …
      8→from ._parser import TOMLDecodeError, load, loads
 
 src/tomli/_parser.py
@@ -82,12 +90,8 @@ src/tomli/_parser.py
     21→    from collections.abc …
     22→    from typing …
     24→    from ._types …
-    26→# Inline tables/arrays are implemented using recursion. Pathologically
-      →…
     35→MAX_INLINE_NESTING: Final = sys.getrecursionlimit()
     37→ASCII_CTRL …
-    39→# Neither of these sets include quotation mark or backslash. They are
-      →…
     41→ILLEGAL_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t")
     42→ILLEGAL_MULTILINE_BASIC_STR_CHARS …
     44→ILLEGAL_LITERAL_STR_CHARS …
@@ -161,7 +165,6 @@ src/tomli/_re.py
     46→RE_DATETIME: Final = re.compile(
     59→def match_to_datetime(match: re.Match[str]) -> datetime | date:
     95→# No need to limit cache size. This is only ever called on input
-    96→# that matched RE_DATETIME, so there is an implicit bound of
       →…
     99→def cached_tz(hour_str: str, minute_str: str, sign_str: str) -> timezone:
    109→def match_to_localtime(match: re.Match[str]) -> time:

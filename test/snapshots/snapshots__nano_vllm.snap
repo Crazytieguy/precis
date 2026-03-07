@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2000 tokens)
+budget: 2000 (1994 tokens)
 
 README.md
      9→# Nano-vLLM
@@ -169,25 +169,12 @@ nanovllm/llm.py
 
 nanovllm/models/qwen3.py
     14→class Qwen3Attention(nn.Module):
-    15→
     90→class Qwen3MLP(nn.Module):
-    91→
    119→class Qwen3DecoderLayer(nn.Module):
-   120→
    161→class Qwen3Model(nn.Module):
-   162→
    185→class Qwen3ForCausalLM(nn.Module):
-   186→    packed_modules_mapping = {
-   187→        "q_proj": ("qkv_proj", "q"),
-   188→        "k_proj": ("qkv_proj", "k"),
-   189→        "v_proj": ("qkv_proj", "v"),
-   190→        "gate_proj": ("gate_up_proj", 0),
-   191→        "up_proj": ("gate_up_proj", 1),
-   192→    }
-   193→
 
 nanovllm/sampling_params.py
-     1→from dataclasses import dataclass
      4→@dataclass
      5→class SamplingParams:
      6→    temperature: float = 1.0
@@ -207,7 +194,6 @@ nanovllm/utils/context.py
     12→    slot_mapping: torch.Tensor | None = None
     13→    context_lens: torch.Tensor | None = None
     14→    block_tables: torch.Tensor | None = None
-    16→_CONTEXT = Context()
     18→def get_context …
     21→def set_context …
     25→def reset_context …
@@ -218,5 +204,17 @@ nanovllm/utils/loader.py
 
 pyproject.toml
      1→[build-system]
+     2→requires = ["setuptools>=61"]
+     3→build-backend = "setuptools.build_meta"
      5→[project]
+     6→name = "nano-vllm"
+     7→version = "0.2.0"
+     8→authors = [{ name = "Xingkai Yu" }]
+     9→license = "MIT"
+    10→license-files = ["LICENSE"]
+    11→readme = "README.md"
+    12→description = "a lightweight vLLM implementation built from scratch"
+    13→requires-python = ">=3.10,<3.13"
+    14→dependencies = [
+      →…
     22→[project.urls]

@@ -5,9 +5,22 @@ expression: output
 ci.yml
      1→name: CI
      3→on:
+     4→  push:
+     5→    branches: [main]
      6→  pull_request:
-     7→
      8→env:
+     9→  CARGO_TERM_COLOR: always
     10→  RUST_BACKTRACE: 1
-    11→
     12→jobs:
+    13→  test:
+    14→    runs-on: ubuntu-latest
+    15→    strategy:
+    16→      matrix:
+    17→        rust: [stable, nightly]
+    18→    steps:
+    19→      - uses: actions/checkout@v4
+    20→      - name: Install Rust
+    21→        uses: dtolnay/rust-toolchain@master
+    22→        with:
+    23→          toolchain: ${{ matrix.rust }}
+      →          …

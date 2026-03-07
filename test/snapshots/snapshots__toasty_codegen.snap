@@ -71,17 +71,24 @@ CONTEXT.md
 
 Cargo.toml
      1→[package]
+     2→name = "toasty-codegen"
+     3→version = "0.1.0"
+     4→edition = "2021"
+     5→
+      →…
      8→[dependencies]
+     9→proc-macro2.workspace = true
+    10→quote.workspace = true
+    11→std-util.workspace = true
+    12→syn.workspace = true
 
 src/expand/create.rs
      1→use super::{util, Expand};
      2→use crate::schema::FieldTy;
-     7→impl Expand<'_> {
 
 src/expand/fields.rs
      1→use super::{util, Expand};
      2→use crate::schema::FieldTy::{BelongsTo, HasMany, HasOne, Primitive};
-     6→impl Expand<'_> {
 
 src/expand/filters.rs
      1→use super::Expand;
@@ -119,15 +126,6 @@ src/expand/util.rs
     10→pub(crate) fn ident(name: &str) -> syn::Ident {
 
 src/expand.rs
-     1→mod create;
-     2→mod fields;
-     3→mod filters;
-     4→mod model;
-     5→mod query;
-     6→mod relation;
-     7→mod schema;
-     8→mod update;
-     9→mod util;
     13→use crate::schema::Model;
     18→struct Expand<'a> {
     29→impl Expand<'_> {

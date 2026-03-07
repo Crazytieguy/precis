@@ -12,9 +12,6 @@ Readme.md
    189→### Examples
    205→### Documentation
 
-docs/reference/core.md
-     1→# Core
-
 docs/summary.md
      3→## Guides
     12→## API Reference
@@ -29,8 +26,7 @@ jsr.json
      4→  "version": "2.0.2",
      5→  "exports": "./src/index.ts",
      6→  "publish": {
-     8→  }
-     9→}
+     7→    "include": ["Readme.md", "License.md", "src", "docs"]
 
 src/error.ts
      5→export type Failure = {

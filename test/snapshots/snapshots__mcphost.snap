@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (3998 tokens)
 
 README.md
      1→# MCPHost 🤖
@@ -57,9 +57,6 @@ cmd/script.go
 
 contribute/conf/demo.json
      2→    "mcpServers": {
-    20→    }
-    21→}
-    22→
 
 contribute/conf/demo.yml
      1→mcpServers:
@@ -68,6 +65,18 @@ contribute/contribute.md
      1→# Contribute README
      3→## Run demo
     30→## Contribute your code
+
+internal/agent/agent.go
+    22→type AgentConfig …
+    39→type ToolCallHandler …
+    43→type ToolExecutionHandler …
+    47→type ToolResultHandler …
+    51→type ResponseHandler …
+    55→type StreamingResponseHandler …
+    59→type ToolCallContentHandler …
+    63→type ToolApprovalHandler …
+    67→type Agent …
+   125→type GenerateWithLoopResult …
 
 internal/agent/factory.go
     15→type SpinnerFunc func(message string, fn func() error) error
@@ -248,7 +257,7 @@ internal/models/openai/openai.go
     31→type CustomRoundTripper struct {
 
 internal/models/providers.go
-    32→	ClaudeCodePrompt = "You are Claude Code, Anthropic's official CLI for Claude."
+    32→	ClaudeCodePrompt …
     70→type ProviderConfig struct {
    124→type ProviderResult struct {
    153→func CreateProvider …
@@ -311,7 +320,6 @@ internal/ui/commands.go
      6→type SlashCommand struct {
      7→	Name        string
      8→	Description string
-     9→	Aliases     []string
       →	…
     16→var SlashCommands = []SlashCommand{
     65→func GetCommandByName(name string) *SlashCommand {
@@ -361,17 +369,14 @@ internal/ui/messages.go
 internal/ui/progress/ollama.go
     27→type OllamaPullProgress struct {
     49→type ProgressModel struct {
-    58→func NewProgressModel() ProgressModel {
-    67→func (m ProgressModel) Init() tea.Cmd {
-    74→func (m ProgressModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-   122→func (m ProgressModel) View() string {
+    58→func NewProgressModel …
+    67→func (m ProgressModel) Init …
+    74→func (m ProgressModel) Update …
+   122→func (m ProgressModel) View …
    144→type ProgressReader struct {
-   156→func NewProgressReader(reader io.Reader) *ProgressReader {
-   184→func (pr *ProgressReader) Read(p []byte) (n int, err error) {
-   261→func (pr *ProgressReader) Close() error {
-
-internal/ui/slash_command_input.go
-    15→type SlashCommandInput struct {
+   156→func NewProgressReader …
+   184→func (pr *ProgressReader) Read …
+   261→func (pr *ProgressReader) Close …
 
 internal/ui/spinner.go
     16→type Spinner struct {

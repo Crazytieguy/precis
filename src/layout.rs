@@ -86,14 +86,29 @@ pub(crate) fn compute_layout(
             .find(|s| s.kind == parse::SymbolKind::Section)
             .map(|s| s.line - 1)
             .unwrap_or(lines.len());
-        let heading_end = (sym.end_line - 1).max(sym_line_0 + 1);
+        // Config nodes span the full value; use just the key line as heading.
+        let is_config = matches!(lang, Some(Lang::Json | Lang::Toml | Lang::Yaml));
+        let heading_end = if is_config {
+            sym_line_0 + 1
+        } else {
+            (sym.end_line - 1).max(sym_line_0 + 1)
+        };
         let mut content_start = heading_end;
         while content_start < next_heading_line
             && is_markdown_leading_noise(lines[content_start])
         {
             content_start += 1;
         }
-        (content_start, next_heading_line)
+        // Trim trailing noise from config section bodies (closing delimiters, blank lines)
+        let mut section_end = next_heading_line;
+        if is_config {
+            while section_end > content_start
+                && is_config_trailing_noise(lines[section_end - 1])
+            {
+                section_end -= 1;
+            }
+        }
+        (content_start, section_end)
     } else {
         (0, 0)
     };
@@ -546,6 +561,18 @@ pub(crate) fn is_markdown_leading_noise(line: &str) -> bool {
         return true;
     }
     false
+}
+
+/// Check if a line is trailing noise in config format section bodies.
+/// Matches blank lines and lines that are purely closing delimiters
+/// (`}`, `]`, with optional trailing commas and whitespace).
+fn is_config_trailing_noise(line: &str) -> bool {
+    let trimmed = line.trim();
+    if trimmed.is_empty() {
+        return true;
+    }
+    // Closing delimiters with optional trailing comma: }, ], },, ],
+    matches!(trimmed, "}" | "}," | "]" | "],")
 }
 
 /// Check if a trimmed line is a markdown horizontal rule (thematic break).

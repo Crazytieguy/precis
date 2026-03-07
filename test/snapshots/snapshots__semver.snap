@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1999 tokens)
+budget: 2000 (2000 tokens)
 
 .github/ISSUE_TEMPLATE/bug.yml
      3→name: Bug
@@ -24,23 +24,20 @@ budget: 2000 (1999 tokens)
      3→name: 'Install Latest npm'
      4→description: 'Install the latest version of npm compatible with the Node version'
      5→inputs:
-     8→    required: true
      9→runs:
 
 .github/dependabot.yml
      3→version: 2
      5→updates:
-
-.github/matchers/tap.json
-     2→  "//@npmcli/template-oss": "This file is automatically added by @npmcli/template-oss. Do not edit.",
-     3→  "problemMatcher": [
-    31→  ]
-    32→}
+     6→  - package-ecosystem: npm
+     7→    directory: /
+     8→    schedule:
+     9→      interval: daily
+    10→    target-branch: "main"
+      →    …
 
 .github/settings.yml
      3→repository:
-    11→  enable_vulnerability_alerts: true
-    12→
     13→branches:
 
 .github/workflows/audit.yml
@@ -71,8 +68,6 @@ budget: 2000 (1999 tokens)
      3→name: Post Dependabot
      5→on: pull_request
      7→permissions:
-     8→  contents: write
-     9→
     10→jobs:
 
 .github/workflows/pull-request.yml
@@ -95,7 +90,6 @@ budget: 2000 (1999 tokens)
 
 .release-please-manifest.json
      2→  ".": "7.7.4"
-     3→}
 
 CHANGELOG.md
      1→# Changelog
@@ -172,11 +166,7 @@ classes/semver.js
    168→  compareBuild (other) {
    194→  inc (release, identifier, identifierBase) {
 
-functions/clean.js
-     4→const clean = (version, options) => {
-
 functions/inc.js
-     5→const inc …
 
 internal/constants.js
      5→const SEMVER_SPEC_VERSION = '2.0.0'
@@ -255,3 +245,8 @@ ranges/valid.js
      4→const validRange = (range, options) => {
 
 release-please-config.json
+     2→  "group-pull-request-title-pattern": "chore: release ${version}",
+     3→  "pull-request-title-pattern": "chore: release${component} ${version}",
+     4→  "changelog-sections": [
+    31→  "packages": {
+    36→  "prerelease-type": "pre.0"

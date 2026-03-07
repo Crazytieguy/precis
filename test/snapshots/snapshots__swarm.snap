@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1995 tokens)
+budget: 2000 (1997 tokens)
 
 README.md
      3→# Swarm (experimental, educational)
@@ -151,6 +151,7 @@ examples/weather_agent/agents.py
 
 pyproject.toml
      1→[build-system]
+     2→requires = ["setuptools"]
      3→build-backend = "setuptools.build_meta"
 
 swarm/__init__.py
@@ -160,9 +161,9 @@ swarm/__init__.py
 
 swarm/core.py
      2→import copy
-     3→import json
-     4→from collections import defaultdict
-     5→from typing import List, Callable, Union
+     3→import json …
+     4→from collections …
+     5→from typing …
      8→from openai import OpenAI
     12→from .util import function_to_json, debug_print, merge_chunk
     13→from .types …

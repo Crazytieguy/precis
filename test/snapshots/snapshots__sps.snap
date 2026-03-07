@@ -2,10 +2,13 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3995 tokens)
+budget: 4000 (3996 tokens)
 
 Cargo.toml
      1→[workspace]
+     2→resolver = "3"
+     3→members = [
+      →…
     10→[patch.crates-io]
     16→[workspace.dependencies]
     43→[profile.release]
@@ -57,6 +60,9 @@ sps/src/cli/search.rs
     25→    Formula,
     26→    Cask,
     27→}
+
+sps/src/cli/uninstall.rs
+    17→pub struct Uninstall {
 
 sps/src/cli/update.rs
     11→pub struct Update;
@@ -334,9 +340,6 @@ sps-core/src/build/env.rs
    153→    /// Resolved path to the C compiler.
    154→    #[allow(dead_code)]
    155→    cc: PathBuf,
-   156→    /// Resolved path to the C++ compiler.
-   157→    #[allow(dead_code)]
-   158→    cxx: PathBuf,
       →    …
    166→    pub fn new …
    463→    pub fn apply_to_command …

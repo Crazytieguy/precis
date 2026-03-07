@@ -11,6 +11,8 @@ package.json
 
 pnpm-workspace.yaml
      1→packages:
+     2→  - '.'
+     3→  - 'test'
 
 src/browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -51,9 +53,6 @@ src/helpers.ts
     94→export function assignStyle(element: HTMLElement | null | undefined, style: Partial<CSSStyleDeclaration>) {
    106→ * Receives functions as arguments and returns a new function that calls all.
    108→export function chain<T>(...fns: T[]) {
-   109→  return (...args: T extends AnyFunction ? Parameters<T> : never) => {
-   110→    for (const fn of fns) {
-      →    …
 
 src/index.tsx
      3→import * as DialogPrimitive from '@radix-ui/react-dialog';
@@ -168,11 +167,7 @@ test/README.md
     30→## Deploy on Vercel
 
 test/src/app/layout.tsx
-     1→import './globals.css';
-     7→export const metadata: Metadata = {
-
-test/src/app/page.tsx
-     5→export default function Page() {
+     7→export const metadata …
 
 tsconfig.json
      2→  "compilerOptions": {
@@ -181,5 +176,9 @@ tsconfig.json
 turbo.json
      2→  "$schema": "https://turbo.build/schema.json",
      3→  "pipeline": {
-    11→  }
-    12→}
+     4→    "build": {
+     5→      "dependsOn": ["^build"],
+     6→      "outputs": ["dist/**", ".next/**"]
+     7→    },
+     8→    "dev": {
+     9→      "cache": false

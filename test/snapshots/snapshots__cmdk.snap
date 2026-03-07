@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1999 tokens)
+budget: 2000 (1998 tokens)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -130,8 +130,6 @@ cmdk/src/command-score.ts
     54→function commandScoreInner …
    150→function formatInput …
    155→export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
-   156→  /* NOTE:
-      →  …
 
 cmdk/src/index.tsx
      5→import { commandScore } from './command-score'
@@ -160,6 +158,9 @@ package.json
 
 pnpm-workspace.yaml
      1→packages:
+     2→  - 'website'
+     3→  - 'test'
+     4→  - 'cmdk'
 
 test/package.json
 
@@ -170,21 +171,18 @@ website/README.md
     19→## Learn More
     28→## Deploy on Vercel
 
-website/components/cmdk/linear.tsx
-     3→export function LinearCMDK() {
-
 website/pages/_document.tsx
      5→export default class Document extends NextDocument {
      6→  render() {
 
 website/pages/index.tsx
     29→export default function Index() {
-   101→function InstallButton() {
    139→const themes = [
-   262→function Codeblock() {
-   296→function VersionBadge() {
 
 website/vercel.json
      2→  "headers": [
-    12→  ]
-    13→}
+     3→    {
+     4→      "source": "/inter-var-latin.woff2",
+     5→      "headers": [
+     6→        {
+      →        …

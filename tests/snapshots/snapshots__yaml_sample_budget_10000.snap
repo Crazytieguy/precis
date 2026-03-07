@@ -5,9 +5,41 @@ expression: output
 ci.yml
      1→name: CI
      3→on:
+     4→  push:
+     5→    branches: [main]
      6→  pull_request:
-     7→
      8→env:
+     9→  CARGO_TERM_COLOR: always
     10→  RUST_BACKTRACE: 1
-    11→
     12→jobs:
+    13→  test:
+    14→    runs-on: ubuntu-latest
+    15→    strategy:
+    16→      matrix:
+    17→        rust: [stable, nightly]
+    18→    steps:
+    19→      - uses: actions/checkout@v4
+    20→      - name: Install Rust
+    21→        uses: dtolnay/rust-toolchain@master
+    22→        with:
+    23→          toolchain: ${{ matrix.rust }}
+    24→      - name: Run tests
+    25→        run: cargo test --all-features
+    26→
+    27→  lint:
+    28→    runs-on: ubuntu-latest
+    29→    steps:
+    30→      - uses: actions/checkout@v4
+    31→      - name: Clippy
+    32→        run: cargo clippy -- -D warnings
+    33→      - name: Format
+    34→        run: cargo fmt -- --check
+    35→
+    36→  release:
+    37→    needs: [test, lint]
+    38→    runs-on: ubuntu-latest
+    39→    if: github.ref == 'refs/heads/main'
+    40→    steps:
+    41→      - uses: actions/checkout@v4
+    42→      - name: Publish
+    43→        run: cargo publish
