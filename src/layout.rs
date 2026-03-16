@@ -549,12 +549,8 @@ pub(crate) fn is_markdown_leading_noise(line: &str) -> bool {
     }
     // Table of contents links: `- [Title](#anchor)` or `* [Title](#anchor)`
     // These are navigational, not content — they duplicate the heading structure.
-    // Handles variable whitespace after the list marker (e.g., `-   [Title](#anchor)`).
-    if trimmed.starts_with("- ") || trimmed.starts_with("* ") || trimmed.starts_with("+ ") {
-        let rest = trimmed[2..].trim_start();
-        if rest.starts_with('[') && rest.contains("](#") && rest.ends_with(')') {
-            return true;
-        }
+    if is_toc_link(trimmed) {
+        return true;
     }
     // HTML tags: <div>, </div>, <p align=...>, <img .../>, <br>, <br/>, etc.
     // Also matches HTML comments: <!-- ... -->
@@ -568,6 +564,15 @@ pub(crate) fn is_markdown_leading_noise(line: &str) -> bool {
     // Horizontal rules: 3+ of the same character (-, *, _) with optional spaces
     if is_horizontal_rule(trimmed) {
         return true;
+    }
+    false
+}
+
+/// Check if a line is a table-of-contents link: `- [Title](#anchor)` etc.
+fn is_toc_link(trimmed: &str) -> bool {
+    if trimmed.starts_with("- ") || trimmed.starts_with("* ") || trimmed.starts_with("+ ") {
+        let rest = trimmed[2..].trim_start();
+        return rest.starts_with('[') && rest.contains("](#") && rest.ends_with(')');
     }
     false
 }
