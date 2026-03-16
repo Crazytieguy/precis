@@ -2,12 +2,17 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4005 tokens)
+budget: 4000 (3996 tokens)
 
 CHANGELOG.md
      1→# Changelog
+     3→All notable changes to this project will be documented in this file.
+     4→
+      →…
 
 CONTRIBUTING.md
+     3→## Issues
+    13→## Pull Requests
 
 Readme.md
      1→# Commander.js
@@ -53,17 +58,7 @@ Readme.md
     47→    - [Legacy options as properties](#legacy-options-as-properties)
     48→    - [TypeScript](#typescript)
     49→    - [createCommand()](#createcommand)
-    50→    - [Node options such as `--harmony`](#node-options-such-as---harmony)
-    51→    - [Debugging stand-alone executable subcommands](#debugging-stand-alone-executable-subcommands)
-    52→    - [npm run-script](#npm-run-script)
-    53→    - [Display error](#display-error)
-    54→    - [Override exit and output handling](#override-exit-and-output-handling)
-    55→    - [Additional documentation](#additional-documentation)
-    56→  - [Support](#support)
-    57→    - [Commander for enterprise](#commander-for-enterprise)
-    58→
-    59→For information about terms used in this document see: [terminology](./docs/terminology.md)
-    60→
+      →    …
     61→## Installation
     67→## Quick Start
    147→## Declaring _program_ variable
@@ -110,8 +105,13 @@ Readme.md
   1164→## Support
   1172→### Commander for enterprise
 
+Readme_zh-CN.md
+     1→# Commander.js
+
 SECURITY.md
      1→# Security Policy
+     3→To report a security vulnerability, please use the
+      →…
 
 docs/deprecated.md
      1→# Deprecated
@@ -377,8 +377,18 @@ package-support.json
     13→          "https://github.com/sponsors/abetomo",
     14→          "https://github.com/sponsors/shadowspawn"
 
-tests/
-      →…
+tests/command.createArgument.test.js
+     4→  constructor(name, description) {
+    11→  createArgument(name, description) {
+    16→  createCommand(name) {
+
+tests/command.createOption.test.js
+     4→  constructor(flags, description) {
+    11→  createOption(flags, description) {
 
 typings/index.d.ts
   1113→export const program: Command;
+
+typings/index.test-d.ts
+   510→  createCommand(name?: string): MyCommand {
+   514→  myFunction(): void {

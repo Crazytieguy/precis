@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3999 tokens)
+budget: 4000 (4000 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -57,23 +57,12 @@ README.md
     54→```
     55→
     56→## Usage<a name="usage"></a>
-    58→### Parse a TOML string<a name="parse-a-toml-string"></a>
-    79→### Parse a TOML file<a name="parse-a-toml-file"></a>
-    92→### Handle invalid TOML<a name="handle-invalid-toml"></a>
-   106→### Construct `decimal.Decimal`s from TOML floats<a name="construct-decimaldecimals-from-toml-floats"></a>
-   123→### Building a `tomli`/`tomllib` compatibility layer<a name="building-a-tomlitomllib-compatibility-layer"></a>
    152→## FAQ<a name="faq"></a>
-   154→### Why this parser?<a name="why-this-parser"></a>
-   167→### Is comment preserving round-trip parsing supported?<a name="is-comment-preserving-round-trip-parsing-supported"></a>
-   177→### Is there a `dumps`, `write` or `encode` function?<a name="is-there-a-dumps-write-or-encode-function"></a>
-   183→### How do TOML types map into Python types?<a name="how-do-toml-types-map-into-python-types"></a>
    201→## Performance<a name="performance"></a>
    203→The `benchmark/` folder in this repository contains a performance benchmark for comparing the various Python TOML parsers.
    204→
    205→Below are the results for commit [064e492](https://github.com/hukkin/tomli/tree/064e492919b2338def788753b8c981c9131334c0).
    206→
-   207→### Mypyc generated wheel<a name="mypyc-generated-wheel"></a>
-   230→### Pure Python<a name="pure-python"></a>
 
 benchmark/README.md
      1→# Benchmark
@@ -97,8 +86,8 @@ fuzzer/fuzz.py
     71→def main():
 
 profiler/profiler_script.py
-     8→from pathlib …
-    10→import tomli …
+     8→from pathlib import Path
+    10→import tomli
 
 pyproject.toml
      1→[build-system]
@@ -110,8 +99,6 @@ pyproject.toml
 
 scripts/use_setuptools.py
     12→def use_setuptools() -> None:
-
-setup.py
 
 src/tomli/__init__.py
      1→# SPDX-License-Identifier: MIT
@@ -160,7 +147,9 @@ src/tomli/_parser.py
     92→        *args: Any,
     93→    ):
    137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
+   138→    """Parse TOML from a binary file object."""
    149→def loads(__s: str, *, parse_float: ParseFloat = float) -> dict[str, Any]:
+   150→    """Parse TOML from a string."""
    220→class Flags:
    222→
    223→    # Marks an immutable namespace (inline array or inline table).
@@ -227,6 +216,9 @@ src/tomli/_parser.py
    686→) -> tuple[Pos, Any]:
    760→def is_unicode_scalar_value(codepoint: int) -> bool:
    764→def make_safe_parse_float(parse_float: ParseFloat) -> ParseFloat:
+   765→    """A decorator to make `parse_float` safe.
+   766→
+      →…
 
 src/tomli/_re.py
      7→from datetime …
@@ -244,6 +236,9 @@ src/tomli/_re.py
     47→    rf"""
       →    …
     59→def match_to_datetime(match: re.Match[str]) -> datetime | date:
+    60→    """Convert a `RE_DATETIME` match to `datetime.datetime` or `datetime.date`.
+    61→
+      →…
     95→# No need to limit cache size. This is only ever called on input
     96→# that matched RE_DATETIME, so there is an implicit bound of
     97→# 24 (hours) * 60 (minutes) * 2 (offset direction) = 2880.
@@ -252,8 +247,7 @@ src/tomli/_re.py
    100→    sign = 1 if sign_str == "+" else -1
    101→    return timezone(
    102→        timedelta(
-   103→            hours=sign * int(hour_str),
-      →            …
+      →        …
    109→def match_to_localtime(match: re.Match[str]) -> time:
    116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
 
@@ -266,6 +260,8 @@ tests/__init__.py
      5→__all__ = ("tomllib",)
 
 tests/burntsushi.py
+    11→def convert(obj):
+    42→def normalize(obj: Any) -> Any:
 
 tests/test_data.py
     11→DATA_DIR …
@@ -273,12 +269,28 @@ tests/test_data.py
     21→VALID_FILES_EXPECTED …
     23→INVALID_FILES …
     27→class TestData(unittest.TestCase):
+    28→    def test_invalid(self):
+    40→    def test_valid(self):
 
 tests/test_error.py
     13→class TestError(unittest.TestCase):
+    14→    def test_line_and_col(self):
+    35→    def test_missing_value(self):
+    40→    def test_invalid_char_quotes(self):
+    45→    def test_type_error(self):
+    62→    def test_invalid_parse_float(self):
+    76→    def test_deprecated_tomldecodeerror(self):
+    92→    def test_tomldecodeerror(self):
 
 tests/test_misc.py
     17→class TestMiscellaneous(unittest.TestCase):
+    18→    def test_load(self):
+    29→    def test_incorrect_load(self):
+    47→    def test_parse_float(self):
+    75→    def test_deepcopy(self):
+   103→    def test_inline_array_recursion_limit(self):
+   118→    def test_inline_table_recursion_limit(self):
+   133→    def test_types_import(self):
 
 tomllib.md
      1→# `tomllib` – Tomli in the standard library

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3999 tokens)
+budget: 4000 (3996 tokens)
 
 README.rst
      1→.. image:: https://github.com/agronholm/typeguard/actions/workflows/test.yml/badge.svg
@@ -53,7 +53,7 @@ README.rst
     46→
     47→See the documentation_ for further information.
     48→
-    49→.. _documentation: https://typeguard.readthedocs.io/en/latest/
+      →…
 
 docs/api.rst
      1→API reference
@@ -188,8 +188,7 @@ src/typeguard/_config.py
     64→    """
     65→     You can change Typeguard's behavior with these settings.
     66→
-    67→    .. attribute:: typecheck_fail_callback
-      →    …
+      →…
     97→
     98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
     99→    typecheck_fail_callback: TypeCheckFailCallback | None = None
@@ -397,8 +396,8 @@ src/typeguard/_utils.py
    176→    def __repr__ …
 
 tests/dummymodule.py
-    40→T …
-    41→P …
+    40→T = TypeVar("T", bound="DummyClass")
+    41→P = ParamSpec("P")
     77→class DummyClass(metaclass=Metaclass):
     78→    bar: str
     79→    baz: int
@@ -416,5 +415,7 @@ tests/mypy/negative.py
 tests/mypy/positive.py
     28→class MyClass:
 
+tests/mypy/test_type_annotations.py
+
 tests/test_checkers.py
-    79→P …
+    79→P = ParamSpec("P")

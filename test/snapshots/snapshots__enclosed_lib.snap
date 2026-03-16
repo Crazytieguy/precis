@@ -2,12 +2,10 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1998 tokens)
+budget: 2000 (2000 tokens)
 
 README.md
      1→### Enclosed lib
-     3→This package contains the core functionalities of [Enclosed](https://enclosed.cc/), an open-source project that aims to provide a simple and secure way to share e2e encrypted notes.
-     4→
      5→## Installation
      7→```bash
      8→# with npm
@@ -57,7 +55,6 @@ package.json
     47→  "devDependencies": {
 
 src/api/api.client.ts
-     1→import { ofetch …
      2→import { DEFAULT_API_BASE_URL } from './api.constants';
      6→async function tryToGetBody …
     20→async function apiClient …
@@ -66,7 +63,6 @@ src/api/api.constants.ts
      1→export const DEFAULT_API_BASE_URL = 'https://enclosed.cc';
 
 src/api/api.models.ts
-     1→import { get, isError } from 'lodash-es …
      5→function isApiClientErrorWithStatusCode …
     13→function isApiClientErrorWithCode …
 
@@ -96,15 +92,7 @@ src/crypto/crypto.usecases.ts
      9→async function encryptNote …
     38→async function decryptNote …
 
-src/crypto/encryption-algorithms/encryption-algorithms.models.ts
-     3→function defineEncryptionMethods …
-
-src/crypto/encryption-algorithms/encryption-algorithms.registry.ts
-     1→import type { EncryptionMethodsDefinition } from './encryption-algorithms.types';
-     6→function createEncryptionAlgorithmsRegistry …
-
 src/crypto/encryption-algorithms/encryption-algorithms.types.ts
-     1→import type { defineEncryptionMethods } from './encryption-algorithms.models';
      3→export type EncryptionMethodsDefinition = ReturnType<typeof defineEncryptionMethods>;
 
 src/crypto/serialization/cbor-array/cbor-array.serialization.ts
@@ -131,6 +119,13 @@ src/files/files.models.ts
 
 src/index.ts
      1→import { encryptionAlgorithms } from '@enclosed/crypto';
+     2→import { isApiClientErrorWithCode, isApiClientErrorWithStatusCode } from './api/api.models';
+     3→import { decryptNote, encryptNote } from './crypto/crypto.usecases';
+     4→import { serializationFormats } from './crypto/serialization/serialization.registry';
+     5→import { filesToNoteAssets, fileToNoteAsset, noteAssetsToFiles, noteAssetToFile } from './files/files.models';
+     6→import { createNoteUrl, createNoteUrlHashFragment, parseNoteUrl, parseNoteUrlHashFragment } from './notes/notes.models';
+     7→import { fetchNote, storeNote } from './notes/notes.services';
+     8→import { createNote } from './notes/notes.usecases';
 
 src/notes/notes.models.ts
      6→const PASSWORD_PROTECTED_HASH_FRAGMENT …

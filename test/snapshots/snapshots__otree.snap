@@ -22,13 +22,21 @@ README.md
      5→A command line tool to view objects (JSON/YAML/TOML/XML) in TUI tree widget.
      6→
      7→## Install
-    17→### Arch Linux (AUR)
-    25→### macOS and Linux (Homebrew)
     33→## Usage
     52→## Roadmap
     82→## Thanks
 
 config/default.toml
+     1→[tree]
+     5→[editor]
+    10→[layout]
+    14→[header]
+    18→[footer]
+    21→[data]
+    25→[filter]
+    30→[keys]
+    62→[colors]
+   103→[types]
 
 docs/actions.md
      1→# All Available Actions
@@ -130,10 +138,6 @@ src/cmd.rs
     95→    #[clap(long)]
     96→    pub max_data_size: Option<usize>,
     97→
-    98→    /// Watch file changes, reload tui if updates
-    99→    #[clap(long, short = 'R')]
-   100→    pub live_reload: bool,
-   101→
       →…
    112→    pub fn parse …
    149→    pub fn update_config …

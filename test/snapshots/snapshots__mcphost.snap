@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (8010 tokens)
+budget: 8000 (8011 tokens)
 
 README.md
      1→# MCPHost 🤖
@@ -379,6 +379,8 @@ internal/models/openai/openai.go
    247→func (c *CustomChatModel) IsCallbacksEnabled …
 
 internal/models/providers.go
+    29→	// ClaudeCodePrompt is the required system prompt for OAuth authentication.
+      →	…
     32→	ClaudeCodePrompt = "You are Claude Code, Anthropic's official CLI for Claude."
     70→type ProviderConfig struct {
    124→type ProviderResult struct {
@@ -512,7 +514,7 @@ internal/ui/debug_logger.go
     84→func (l *CLIDebugLogger) IsDebugEnabled …
 
 internal/ui/enhanced_styles.go
-    12→var currentTheme …
+    12→var currentTheme = DefaultTheme()
     16→func GetTheme …
     22→func SetTheme …
     29→type Theme struct {
@@ -658,6 +660,8 @@ internal/ui/usage_tracker.go
    256→func (ut *UsageTracker) SetWidth …
 
 main.go
+    12→var version …
+    14→func main() {
 
 sdk/README.md
      1→# MCPHost SDK
@@ -666,13 +670,8 @@ sdk/README.md
      5→## Installation
     11→## Basic Usage
     44→## Configuration
-    52→### Options
     67→## Advanced Usage
-    69→### With Tool Callbacks
-    93→### Session Management
    115→## API Reference
-   117→### Types
-   124→### Methods
    136→## Environment Variables
 
 sdk/mcphost.go

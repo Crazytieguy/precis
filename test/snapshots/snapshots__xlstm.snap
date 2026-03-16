@@ -33,9 +33,6 @@ README.md
    140→This section explains how to use the models from the xLSTM paper.
    141→
    142→## How to use the xLSTM architecture from our NeurIPS paper
-   146→### Using the sLSTM CUDA kernels
-   168→### xLSTM Block Stack
-   255→### xLSTM Language Model
    297→## Experiments
    312→## Citation
 
@@ -176,6 +173,10 @@ xlstm/blocks/slstm/src/cuda/slstm.h
     37→#define SLSTM_DTYPE_S float
     38→#define SLSTM_DTYPE_A float
     41→#define SLSTM_SIMPLE_AGG true
+
+xlstm/blocks/slstm/src/cuda_init.py
+    14→LOGGER = logging.getLogger(__name__)
+    42→EXTRA_INCLUDE_PATHS = (
 
 xlstm/blocks/slstm/src/util/device_assert.h
     23→__assertfail …

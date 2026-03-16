@@ -4,8 +4,6 @@ expression: output
 ---
 budget: 4000 (4005 tokens)
 
-CHANGELOG.md
-
 README.md
     26→# D2TS - Differential Dataflow in TypeScript <!-- omit in toc -->
     28→D2TS is a TypeScript implementation of [differential dataflow](https://github.com/MaterializeInc/differential) - a powerful data-parallel programming framework that enables incremental computations over changing input data.
@@ -19,32 +17,29 @@ README.md
     36→## Table of Contents
     51→## Key Features
     88→## Quick Start
-    90→### Installation
-    96→### Basic Usage
-   156→### Using with ElectricSQL
    200→## Examples
    210→## API
-   212→### D2 graph construction
-   228→### Input Streams
-   235→### Versions and Frontiers
-   275→### MultiSet as a changeset
-   320→### Operators
-   987→### Using SQLite Backend
   1055→## Implementation Details
   1076→## References
 
-eslint.config.mjs
-
-package.json
-
 src/d2.ts
     11→export type D2Options = {
+    12→  initialFrontier: Antichain | Version | number | number[]
+    13→}
     15→export class D2 implements ID2 {
+    16→  #streams: DifferenceStreamReader<any>[] = []
+    17→  #operators: (UnaryOperator<any> | BinaryOperator<any>)[] = []
+    18→  #frontierStack: Antichain[] = []
+    19→  #nextOperatorId = 0
+    20→  #finalized = false
+    21→
     93→export class StreamBuilder<T> implements IStreamBuilder<T> {
+    94→  #graph: ID2
+    95→  #writer: DifferenceStreamWriter<T>
+    96→
    166→export class RootStreamBuilder<T> extends StreamBuilder<T> {
 
 src/electric/index.ts
-    17→import { …
     40→export interface ElectricStreamToD2InputOptions<T extends Row<unknown> = Row> {
     41→  /** D2 Graph to send messages to */
     42→  graph: D2
@@ -148,7 +143,6 @@ src/operators/filterBy.ts
     14→export function filterBy …
 
 src/operators/groupBy.ts
-    28→function isPipedAggregateFunction …
     39→export function groupBy …
    139→export function sum …
    157→export function count …
@@ -167,8 +161,6 @@ src/operators/iterate.ts
     80→export class FeedbackOperator<T> extends UnaryOperator<T> {
     89→  constructor …
    100→  run …
-   186→function ingress …
-   204→function egress …
    225→export function iterate …
 
 src/operators/join.ts
@@ -266,8 +258,6 @@ src/sqlite/database.ts
 src/sqlite/operators/buffer.ts
     32→export class BufferOperatorSQLite<T> extends UnaryOperator<T> {
     33→  #preparedStatements: {
-    34→    insert: SQLiteStatement<CollectionParams>
-    35→    update: SQLiteStatement<CollectionParams>
     41→  constructor …
     82→  run …
    149→export function buffer …
@@ -275,8 +265,6 @@ src/sqlite/operators/buffer.ts
 src/sqlite/operators/consolidate.ts
     31→export class ConsolidateOperatorSQLite<T> extends UnaryOperator<T> {
     32→  #preparedStatements: {
-    33→    insert: SQLiteStatement<CollectionParams>
-    34→    update: SQLiteStatement<CollectionParams>
     40→  constructor …
     81→  run …
    148→export function consolidate …
@@ -320,8 +308,6 @@ src/sqlite/operators/reduce.ts
     28→  [K, V1 | V2]
     29→> {
     30→  #index: SQLIndex<K, V1>
-    31→  #indexOut: SQLIndex<K, V2>
-    32→  #preparedStatements: {
     41→  constructor …
     97→  run …
    197→  destroy …
@@ -336,8 +322,6 @@ src/sqlite/operators/topKWithFractionalIndex.ts
     38→  [K, V1 | [V1, string]]
     39→> {
     40→  #index: SQLIndex<K, V1>
-    41→  #indexOut: SQLIndex<K, [V1, string]>
-    42→  #preparedStatements: {
     53→  constructor …
    112→  run …
    454→  destroy …
@@ -378,13 +362,24 @@ src/types.ts
     12→export type MessageType = (typeof MessageType)[keyof typeof MessageType]
     14→export type Message<T> =
     15→  | {
+    16→      type: typeof MessageType.DATA
+    17→      data: DataMessage<T>
+    18→    }
+    19→  | {
+    20→      type: typeof MessageType.FRONTIER
+    21→      data: FrontierMessage
+    22→    }
     24→export type DataMessage<T> = {
+    25→  version: Version
+    26→  collection: MultiSet<T>
+    27→}
     29→export type FrontierMessage = Version | Antichain
     31→export interface IOperator<_T> {
     37→export interface IDifferenceStreamReader<T> {
     43→export interface IDifferenceStreamWriter<T> {
     52→export interface ID2 {
     64→export interface IStreamBuilder<T> {
+    65→  writer: DifferenceStreamWriter<T>
    117→export type PipedOperator<I, O> = (
    118→  stream: IStreamBuilder<I>,
    119→) => IStreamBuilder<O>
@@ -405,5 +400,3 @@ src/version-index.ts
 
 tests/
       →…
-
-tsconfig.json

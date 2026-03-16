@@ -39,23 +39,7 @@ readme.md
     60→
     61→const response = await fetch('https://example.com', {
     62→	method: 'POST',
-    63→	body: JSON.stringify({foo: true}),
-    64→	headers: {
-    65→		'content-type': 'application/json'
-    66→	}
-    67→});
-    68→
-    69→if (!response.ok) {
-    70→	throw new HTTPError(`Fetch error: ${response.statusText}`);
-    71→}
-    72→
-    73→const json = await response.json();
-    74→
-    75→console.log(json);
-    76→//=> {data: '🦄'}
-    77→```
-    78→
-      →…
+      →	…
     85→## API
   1050→## Tips
   1292→## FAQ
@@ -69,6 +53,7 @@ readme.md
   1349→- [fetch-extras](https://github.com/sindresorhus/fetch-extras) - Useful utilities for working with Fetch
   1350→- [ky-hooks-change-case](https://github.com/alice-health/ky-hooks-change-case) - Ky hooks to modify cases on requests and responses of objects
   1351→
+  1352→## Maintainers
 
 source/core/Ky.ts
     33→export class Ky {
@@ -76,16 +61,16 @@ source/core/Ky.ts
    200→	constructor(input: Input, options: Options = {}) {
 
 source/core/constants.ts
-     4→export const supportsRequestStreams …
-    34→export const supportsAbortController …
-    35→export const supportsAbortSignal …
-    36→export const supportsResponseStreams …
-    37→export const supportsFormData …
-    39→export const requestMethods …
-    46→export const responseTypes …
-    58→export const maxSafeTimeout …
-    61→export const usualFormBoundarySize …
-    63→export const stop …
+     4→export const supportsRequestStreams = (() => {
+    34→export const supportsAbortController = typeof globalThis.AbortController === 'function';
+    35→export const supportsAbortSignal = typeof globalThis.AbortSignal === 'function' && typeof globalThis.AbortSignal.any === 'function';
+    36→export const supportsResponseStreams = typeof globalThis.ReadableStream === 'function';
+    37→export const supportsFormData = typeof globalThis.FormData === 'function';
+    39→export const requestMethods = ['get', 'post', 'put', 'patch', 'head', 'delete'] as const;
+    46→export const responseTypes = {
+    58→export const maxSafeTimeout = 2_147_483_647;
+    61→export const usualFormBoundarySize = new TextEncoder().encode('------WebKitFormBoundaryaxpyiPgbbPti10Rw').length;
+    63→export const stop = Symbol('stop');
     68→export type ForceRetryOptions = {
     69→	/**
     70→	Custom delay in milliseconds before retrying.
@@ -168,9 +153,9 @@ source/core/constants.ts
    154→
       →…
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
-   237→export const kyOptionKeys …
-   256→export const vendorSpecificOptions …
-   265→export const requestOptionsRegistry …
+   237→export const kyOptionKeys: KyOptionsRegistry = {
+   256→export const vendorSpecificOptions = {
+   265→export const requestOptionsRegistry = {
 
 source/errors/ForceRetryError.ts
      8→export class ForceRetryError extends Error {
@@ -204,7 +189,7 @@ source/errors/TimeoutError.ts
 
 source/index.ts
     10→const createInstance …
-    34→const ky = createInstance();
+    34→const ky …
 
 source/types/ResponsePromise.ts
      6→export type ResponsePromise …
@@ -385,6 +370,7 @@ source/utils/merge.ts
 
 source/utils/normalize.ts
      5→export const normalizeRequestMethod …
+    14→type InternalRetryOptions …
     28→export const normalizeRetryOptions …
 
 source/utils/options.ts

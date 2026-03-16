@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (8004 tokens)
+budget: 8000 (8003 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -51,10 +51,6 @@ crates/mdbook-compare/README.md
     10→4. Run `mdbook-compare` with the arguments to the mdbook executables and the books to build.
     11→
     12→```sh
-    13→cargo run --manifest-path /path/to/mdBook/Cargo.toml -p mdbook-compare -- \
-    14→    /path/to/orig/mdbook /path/to/my-book /path/to/new/mdbook /path/to/my-book
-    15→```
-    16→
       →…
 
 crates/mdbook-core/Cargo.toml
@@ -480,8 +476,22 @@ crates/mdbook-renderer/src/lib.rs
 
 crates/mdbook-summary/Cargo.toml
      1→[package]
+     2→name = "mdbook-summary"
+     3→version = "0.5.2"
+     4→description = "Summary parser for mdBook"
+     5→edition.workspace = true
+     6→license.workspace = true
+     7→repository.workspace = true
+     8→rust-version.workspace = true
     10→[dependencies]
+    11→anyhow.workspace = true
+    12→mdbook-core.workspace = true
+    13→memchr.workspace = true
+    14→pulldown-cmark.workspace = true
+    15→serde.workspace = true
+    16→tracing.workspace = true
     18→[lints]
+    19→workspace = true
 
 crates/mdbook-summary/README.md
      1→# mdbook-summary
@@ -630,11 +640,7 @@ guide/src/for_developers/README.md
      9→The *For Developers* chapters are here to show you the more advanced usage of
     10→`mdbook`.
     11→
-    12→The two main ways a developer can hook into the book's build process is via,
-    13→
-    14→- [Preprocessors](preprocessors.md)
-    15→- [Alternative Backends](backends.md)
-    16→
+      →…
     17→## The build process
     30→## Using `mdbook` as a library
 
@@ -674,8 +680,6 @@ guide/src/format/README.md
 
 guide/src/format/configuration/README.md
      1→# Configuration
-     3→This section details the configuration options available in the ***book.toml***:
-      →…
 
 guide/src/format/markdown.md
      1→# Markdown
@@ -794,7 +798,7 @@ src/cmd/watch.rs
 
 src/main.rs
     14→mod cmd;
-    58→fn create_clap_command() -> Command {
+    58→fn create_clap_command …
 
 tests/
       →…

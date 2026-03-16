@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4005 tokens)
+budget: 4000 (4004 tokens)
 
 404.md
      1→# Document not found (404)
@@ -40,18 +40,7 @@ README.md
     31→* Automated testing of [Rust code samples]
     32→
     33→This guide is an example of what mdBook produces.
-    34→mdBook is used by the Rust programming language project, and [The Rust Programming Language][trpl] book is another fine example of mdBook in action.
-    35→
-    36→[Markdown]: format/markdown.md
-    37→[search]: guide/reading.md#search
-    38→[syntax highlighting]: format/theme/syntax-highlighting.md
-    39→[theme]: format/theme/index.html
-    40→[preprocessors]: format/configuration/preprocessors.md
-    41→[backends]: format/configuration/renderers.md
-    42→[Rust]: https://www.rust-lang.org/
-    43→[trpl]: https://doc.rust-lang.org/book/
-    44→[Rust code samples]: cli/test.md
-    45→
+      →…
     46→## Contributing
     55→## License
 
@@ -70,6 +59,22 @@ SUMMARY.md
     15→    - [build](cli/build.md)
     16→    - [watch](cli/watch.md)
     17→    - [serve](cli/serve.md)
+    18→    - [test](cli/test.md)
+    19→    - [clean](cli/clean.md)
+    20→    - [completions](cli/completions.md)
+    21→- [Format](format/README.md)
+    22→    - [SUMMARY.md](format/summary.md)
+    23→        - [Draft chapter]()
+    24→    - [Configuration](format/configuration/README.md)
+    25→        - [General](format/configuration/general.md)
+    26→        - [Preprocessors](format/configuration/preprocessors.md)
+    27→        - [Renderers](format/configuration/renderers.md)
+    28→        - [Environment variables](format/configuration/environment-variables.md)
+    29→    - [Theme](format/theme/README.md)
+    30→        - [index.hbs](format/theme/index-hbs.md)
+    31→        - [Syntax highlighting](format/theme/syntax-highlighting.md)
+    32→        - [Editor](format/theme/editor.md)
+    33→    - [MathJax support](format/mathjax.md)
       →    …
 
 cli/README.md
@@ -116,7 +121,10 @@ continuous-integration.md
      5→The following provides some general guidelines on how to configure your service to run mdBook.
      6→Specific recipes can be found at the [Automated Deployment] wiki page.
      7→
-      →…
+     8→[GitHub Actions]: https://docs.github.com/en/actions
+     9→[GitLab CI/CD]: https://docs.gitlab.com/ee/ci/
+    10→[Automated Deployment]: https://github.com/rust-lang/mdBook/wiki/Automated-Deployment
+    11→
     12→## Installing mdBook
     17→### Pre-compiled binaries
     39→### Building from source
@@ -146,26 +154,14 @@ for_developers/README.md
     21→1. Load the book
     22→    - Parse the `book.toml`, falling back to the default `Config` if it doesn't
     23→       exist
-    24→    - Load the book chapters into memory
-    25→    - Discover which preprocessors/backends should be used
-    26→2. For each backend:
-    27→   1. Run all the preprocessors.
-    28→   2. Call the backend to render the processed result.
-    29→
+      →       …
     30→## Using `mdbook` as a library
     32→The `mdbook` binary is just a wrapper around the underlying mdBook crates,
     33→exposing their functionality as a command-line program. If you want to
     34→programmatically drive mdBook, you can use the [`mdbook-driver`] crate.
     35→This can be used to add your own functionality or tweak the build process.
     36→
-    37→The easiest way to find out how to use the `mdbook-driver` crate is by looking at the
-    38→[API Docs]. The top level documentation explains how one would use the
-    39→[`MDBook`] type to load and build a book, while the [config] module gives a good
-    40→explanation on the configuration system.
-    41→
-    42→[`MDBook`]: https://docs.rs/mdbook-driver/latest/mdbook_driver/struct.MDBook.html
-    43→[API Docs]: https://docs.rs/mdbook-driver/latest/mdbook_driver/
-    44→[config]: https://docs.rs/mdbook-driver/latest/mdbook_driver/config/index.html
+      →…
 
 for_developers/backends.md
      1→# Alternative backends
@@ -177,7 +173,8 @@ for_developers/backends.md
      8→See [Configuring Renderers](../format/configuration/renderers.md) for more information about using backends.
      9→
     10→The community has developed several backends.
-      →…
+    11→See the [Third Party Plugins] wiki page for a list of available backends.
+    12→
     13→## Setting up
     53→## Inspecting the book
     82→## Enabling the backend
@@ -215,7 +212,8 @@ for_developers/preprocessors.md
      8→- Substituting in latex-style expressions (`$$ \frac{1}{3} $$`) with their
      9→  mathjax equivalents
     10→
-      →…
+    11→See [Configuring Preprocessors](../format/configuration/preprocessors.md) for more information about using preprocessors.
+    12→
     13→## Hooking into MDBook
     46→## Hints for implementing a preprocessor
     74→## Implementing a preprocessor with a different language
@@ -269,6 +267,9 @@ format/markdown.md
      1→# Markdown
      9→## Text and paragraphs
     25→## Headings
+    43→#### A smaller heading 
+    45→More text.
+    46→
     47→## Lists
     69→## Links
    108→## Images
@@ -362,6 +363,7 @@ guide/installation.md
      9→## Pre-compiled binaries
     19→## Build from source using Rust
     41→### Installing the latest master version
+    53→## Modifying and contributing
 
 guide/reading.md
      1→# Reading books

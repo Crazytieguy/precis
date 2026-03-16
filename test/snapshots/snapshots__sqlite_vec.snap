@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3989 tokens)
+budget: 4000 (3987 tokens)
 
 ARCHITECTURE.md
      1→# `sqlite-vec` Architecture
@@ -105,6 +105,9 @@ sqlite-dist.toml
     10→[targets]
 
 sqlite-vec.c
+     1→#include "sqlite-vec.h"
+    19→#include "sqlite3ext.h"
+    22→#include "sqlite3.h"
     87→#define UNUSED_PARAMETER(X) (void)(X)
     93→#define COMPILER_SUPPORTS_VTAB_IN 1
     97→#define SQLITE_SUBTYPE 0x000100000
@@ -323,12 +326,6 @@ sqlite-vec.c
 test.sql
      1→
 
-tests/afbd/README.md
-     2→# hnm
-     4→```
-      →…
-
-tests/sqlite-vec-internal.h
-     3→int min_idx …
+tests/test-unit.c
 
 tmp-static.py

@@ -56,41 +56,28 @@ README.md
     54→You can override specific settings:
     55→
     56→```go
-    57→host, err := sdk.New(ctx, &sdk.Options{
-    58→    Model:        "ollama:llama3",           // Override model
-    59→    SystemPrompt: "You are a helpful bot",   // Override system prompt
-      →    …
+      →…
     67→## Advanced Usage
     69→### With Tool Callbacks
     71→Monitor tool execution in real-time:
     72→
     73→```go
-    74→response, err := host.PromptWithCallbacks(
-    75→    ctx,
-    76→    "List files in the current directory",
-      →    …
+      →…
     93→### Session Management
     95→Maintain conversation context:
     96→
     97→```go
-    98→// First message
-    99→host.Prompt(ctx, "My name is Alice")
-   100→
       →…
    115→## API Reference
    117→### Types
    119→- `MCPHost` - Main SDK type
    120→- `Options` - Configuration options
    121→- `Message` - Conversation message
-   122→- `ToolCall` - Tool invocation details
-   123→
+      →…
    124→### Methods
    126→- `New(ctx, opts)` - Create new MCPHost instance
    127→- `Prompt(ctx, message)` - Send message and get response
    128→- `PromptWithCallbacks(ctx, message, ...)` - Send message with progress callbacks
-   129→- `LoadSession(path)` - Load session from file
-   130→- `SaveSession(path)` - Save session to file
-   131→- `ClearSession()` - Clear conversation history
       →…
    136→## Environment Variables
    138→All CLI environment variables work with the SDK:
@@ -107,17 +94,10 @@ README.md
 examples/basic/main.go
      3→import …
     11→func main() {
-    12→	ctx := context.Background()
-    13→
-      →…
 
 examples/scripting/main.go
      3→import …
     12→func main() {
-    13→	ctx := context.Background()
-    14→
-    15→	// Create MCPHost with environment variable for API key
-      →	…
 
 mcphost.go
      3→import …
@@ -141,13 +121,16 @@ mcphost.go
     34→	Quiet        bool   // Suppress debug output
     35→}
     37→// New creates an MCPHost instance using the same initialization as the CLI.
-      →…
+    38→// It loads configuration, initializes MCP servers, creates the LLM model, and
+    39→// sets up the agent for interaction. Returns an error if initialization fails.
     40→func New(ctx context.Context, opts *Options) (*MCPHost, error) {
    127→// Prompt sends a message to the agent and returns the response. The agent may
-      →…
+   128→// use tools as needed to generate the response. The conversation history is
+   129→// automatically maintained in the session. Returns an error if generation fails.
    130→func (m *MCPHost) Prompt(ctx context.Context, message string) (string, error) {
    160→// PromptWithCallbacks sends a message with callbacks for monitoring tool execution
-      →…
+   161→// and streaming responses. The callbacks allow real-time observation of tool calls,
+   162→// results, and response generation. Returns the final response or an error.
    163→func (m *MCPHost) PromptWithCallbacks(
    164→	ctx context.Context,
    165→	message string,
@@ -156,22 +139,23 @@ mcphost.go
    168→	onStreaming func(chunk string),
    169→) (string, error) {
    199→// GetSessionManager returns the current session manager for direct access
-      →…
+   200→// to conversation history and session manipulation.
    201→func (m *MCPHost) GetSessionManager() *session.Manager {
    205→// LoadSession loads a previously saved session from a file, restoring the
-      →…
+   206→// conversation history. Returns an error if the file cannot be loaded or parsed.
    207→func (m *MCPHost) LoadSession(path string) error {
    216→// SaveSession saves the current session to a file for later restoration.
-      →…
+   217→// Returns an error if the session cannot be written to the specified path.
    218→func (m *MCPHost) SaveSession(path string) error {
    222→// ClearSession clears the current session history, starting a new conversation
-      →…
+   223→// with an empty message history.
    224→func (m *MCPHost) ClearSession() {
    228→// GetModelString returns the current model string identifier (e.g.,
-      →…
+   229→// "anthropic:claude-3-sonnet" or "openai:gpt-4") being used by the agent.
    230→func (m *MCPHost) GetModelString() string {
    234→// Close cleans up resources including MCP server connections and model resources.
-      →…
+   235→// Should be called when the MCPHost instance is no longer needed. Returns an
+   236→// error if cleanup fails.
    237→func (m *MCPHost) Close() error {
 
 mcphost_test.go
@@ -189,8 +173,8 @@ types.go
     13→// with its name, arguments, and result within a conversation.
     14→type ToolCall = session.ToolCall
     16→// ConvertToSchemaMessage converts an SDK message to the underlying schema message
-      →…
+    17→// format used by the agent for LLM interactions.
     18→func ConvertToSchemaMessage(msg *Message) *schema.Message {
     22→// ConvertFromSchemaMessage converts a schema message from the agent to an SDK
-      →…
+    23→// message format for use in the SDK API.
     24→func ConvertFromSchemaMessage(msg *schema.Message) Message {

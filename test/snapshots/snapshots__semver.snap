@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4011 tokens)
+budget: 4000 (4014 tokens)
 
 .eslintrc.js
      7→const localConfigs …
@@ -15,7 +15,8 @@ budget: 4000 (4011 tokens)
      8→body:
      9→  - type: checkboxes
     10→    attributes:
-      →    …
+    11→      label: Is there an existing issue for this?
+      →      …
 
 .github/ISSUE_TEMPLATE/config.yml
      3→blank_issues_enabled: true
@@ -104,6 +105,7 @@ CHANGELOG.md
      1→# Changelog
 
 CONTRIBUTING.md
+     3→# Contributing
     17→## Pull Request Conventions
     42→## What _not_ to contribute?
 
@@ -135,8 +137,6 @@ README.md
     29→you'd like to minimize your footprint.
     30→
     31→```js
-    32→// load the whole API at once in a single object
-    33→const semver = require('semver')
       →…
    139→## Versions
    141→A "version" is described by the `v2.0.0` specification found at
@@ -167,8 +167,6 @@ README.md
    167→`1.0.1` or `1.1.0`.
    168→
    169→Comparators can be joined by whitespace to form a `comparator set`,
-   170→which is satisfied by the **intersection** of all of the comparators
-   171→it includes.
       →…
    184→### Prerelease Tags
    219→#### Prerelease Identifiers
@@ -200,8 +198,6 @@ README.md
    427→* `valid(v)`: Return the parsed version, or null if it's not valid.
    428→* `inc(v, releaseType, options, identifier, identifierBase)`: 
    429→  Return the version incremented by the release
-   430→  type (`major`, `premajor`, `minor`, `preminor`, `patch`,
-   431→  `prepatch`, `prerelease`, or `release`), or null if it's not valid
       →  …
    453→### Comparison
    478→### Sorting
@@ -235,8 +231,6 @@ README.md
    630→* `require('semver/functions/clean')`
    631→* `require('semver/functions/cmp')`
    632→* `require('semver/functions/coerce')`
-   633→* `require('semver/functions/compare')`
-   634→* `require('semver/functions/compare-build')`
       →…
 
 benchmarks/
@@ -371,18 +365,18 @@ functions/valid.js
      4→const valid …
 
 internal/constants.js
-     5→const SEMVER_SPEC_VERSION …
-     7→const MAX_LENGTH …
-     8→const MAX_SAFE_INTEGER …
-    12→const MAX_SAFE_COMPONENT_LENGTH …
-    16→const MAX_SAFE_BUILD_LENGTH …
-    18→const RELEASE_TYPES …
+     5→const SEMVER_SPEC_VERSION = '2.0.0'
+     7→const MAX_LENGTH = 256
+     8→const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER ||
+    12→const MAX_SAFE_COMPONENT_LENGTH = 16
+    16→const MAX_SAFE_BUILD_LENGTH = MAX_LENGTH - 6
+    18→const RELEASE_TYPES = [
 
 internal/debug.js
-     3→const debug …
+     3→const debug = (
 
 internal/identifiers.js
-     3→const numeric …
+     3→const numeric = /^[0-9]+$/
      4→const compareIdentifiers …
     24→const rcompareIdentifiers …
 
@@ -394,18 +388,18 @@ internal/lrucache.js
     25→  set (key, value) {
 
 internal/parse-options.js
-     4→const looseOption …
-     5→const emptyOpts …
+     4→const looseOption = Object.freeze({ loose: true })
+     5→const emptyOpts = Object.freeze({ })
      6→const parseOptions …
 
 internal/re.js
-    12→const re …
-    13→const safeRe …
-    14→const src …
-    15→const safeSrc …
-    16→const t …
-    19→const LETTERDASHNUMBER …
-    27→const safeRegexReplacements …
+    12→const re = exports.re = []
+    13→const safeRe = exports.safeRe = []
+    14→const src = exports.src = []
+    15→const safeSrc = exports.safeSrc = []
+    16→const t = exports.t = {}
+    19→const LETTERDASHNUMBER = '[a-zA-Z0-9-]'
+    27→const safeRegexReplacements = [
     33→const makeSafeRegex …
     42→const createToken …
 
@@ -470,4 +464,10 @@ release-please-config.json
 tap-snapshots/
       →…
 
+test/internal/debug.js
+     3→const main = () => {
+
 test/map.js
+    13→const getFile …
+    23→const walk …
+    28→const walkAll …

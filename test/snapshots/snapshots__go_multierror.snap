@@ -2,13 +2,14 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3998 tokens)
+budget: 4000 (4000 tokens)
 
 CHANGELOG.md
      1→## Unreleased
      3→### Improvements
      5→### Changes
      7→### Fixed
+     9→### Security
 
 README.md
      1→# go-multierror
@@ -91,20 +92,7 @@ README.md
     87→
     88→---
     89→
-    90→`go-multierror` is a package for Go that provides a mechanism for
-    91→representing a list of `error` values as a single `error`.
-    92→
-    93→This allows a function in Go to return an `error` that might actually
-    94→be a list of errors. If the caller knows this, they can unwrap the
-    95→list and access the errors. If the caller doesn't know, the error
-    96→formats to a nice human-readable format.
-    97→
-    98→`go-multierror` is compatible with the Go standard library
-    99→[errors](https://golang.org/pkg/errors/) package, supporting the
-   100→`As`, `Is`, and `Unwrap` functions for error introspection. Note that `Unwrap` 
-   101→returns errors one at a time via chaining, unlike `errors.Join` which 
-   102→implements the newer `Unwrap() []error` signature (Go 1.20+).
-   103→
+      →…
    104→## Installation and Docs
    106→Install using `go get github.com/hashicorp/go-multierror`.
    107→
@@ -205,35 +193,17 @@ README.md
    204→**Checking for an exact error value**
    205→
    206→Some errors are returned as exact errors such as the [`ErrNotExist`](https://golang.org/pkg/os/#pkg-variables)
-   207→error in the `os` package. You can check if this error is present by using
-   208→the standard [`errors.Is`](https://golang.org/pkg/errors/#Is) function.
-   209→
-   210→```go
-   211→// Assume err is a multierror value
-   212→err := somefunc()
-   213→if errors.Is(err, os.ErrNotExist) {
-   214→	// err contains os.ErrNotExist
-   215→}
-   216→```
-   217→
-   218→**Returning a multierror only if there are errors**
-   219→
-   220→If you build a `multierror.Error`, you can use the `ErrorOrNil` function
-   221→to return an `error` implementation only if there are errors to return:
-   222→
-   223→```go
-   224→var result *multierror.Error
-   225→
-   226→// ... accumulate errors here
-   227→
-   228→// Return the `error` only if errors were added to the multierror, otherwise
-   229→// return nil since there are no errors.
-   230→return result.ErrorOrNil()
-   231→```
+      →…
 
 append.go
      6→// Append is a helper function that will append more errors
-      →…
+     7→// onto an Error in order to create a larger multi-error.
+     8→//
+     9→// If err is not a multierror.Error, then it will be turned into
+    10→// one. If any of the errs are multierr.Error, they will be flattened
+    11→// one level into err.
+    12→// Any nil errors within errs will be ignored. If err is nil, a new
+    13→// *Error will be returned.
     14→func Append(err error, errs ...error) *Error {
 
 append_test.go
@@ -247,11 +217,9 @@ append_test.go
 
 flatten.go
      6→// Flatten flattens the given error, merging any *Errors together into
-      →…
+     7→// a single *Error.
      8→func Flatten(err error) error {
     20→func flatten(err error, flatErr *Error) {
-    21→	switch err := err.(type) {
-      →	…
 
 flatten_test.go
      6→import …
@@ -264,7 +232,7 @@ format.go
     12→// turn the list of errors into a string.
     13→type ErrorFormatFunc func([]error) string
     15→// ListFormatFunc is a basic formatter that outputs the number of errors
-      →…
+    16→// that occurred along with a bullet point list of the errors.
     17→func ListFormatFunc(es []error) string {
 
 format_test.go
@@ -286,10 +254,12 @@ group.go
     13→	wg    sync.WaitGroup
     14→}
     16→// Go calls the given function in a new goroutine.
-      →…
+    17→//
+    18→// If the function returns an error it is added to the group multierror which
+    19→// is returned by Wait.
     20→func (g *Group) Go(f func() error) {
     34→// Wait blocks until all function calls from the Go method have returned, then
-      →…
+    35→// returns the multierror.
     36→func (g *Group) Wait() *Error {
 
 group_test.go
@@ -313,24 +283,38 @@ multierror.go
     24→	return fn(e.Errors)
     25→}
     27→// ErrorOrNil returns an error interface if this Error represents
-      →…
+    28→// a list of errors, or returns nil if the list of errors is empty. This
+    29→// function is useful at the end of accumulation to make sure that the value
+    30→// returned represents the existence of errors.
     31→func (e *Error) ErrorOrNil() error {
     42→func (e *Error) GoString() string {
     43→	return fmt.Sprintf("*%#v", *e)
     44→}
     46→// WrappedErrors returns the list of errors that this Error is wrapping. It is
-      →…
+    47→// an implementation of the errwrap.Wrapper interface so that multierror.Error
+    48→// can be used with that library.
+    49→//
+    50→// This method is not safe to be called concurrently. Unlike accessing the
+    51→// Errors field directly, this function also checks if the multierror is nil to
+    52→// prevent a null-pointer panic. It satisfies the errwrap.Wrapper interface.
     53→func (e *Error) WrappedErrors() []error {
     60→// Unwrap returns an error from Error (or nil if there are no errors).
-      →…
+    61→// This error returned will further support Unwrap to get the next error,
+    62→// etc. The order will match the order of Errors in the multierror.Error
+    63→// at the time of calling.
+    64→//
+    65→// The resulting error supports errors.As/Is/Unwrap so you can continue
+    66→// to use the stdlib errors package to introspect further.
+    67→//
+    68→// This will perform a shallow copy of the errors slice. Any errors appended
+    69→// to this error after calling Unwrap will not be available until a new
+    70→// Unwrap is called on the multierror.Error.
     71→func (e *Error) Unwrap() error {
-    88→// chain implements the interfaces necessary for errors.Is/As/Unwrap to
-      →…
     99→type chain []error
    101→// Error implements the error interface
    102→func (e chain) Error() string {
    106→// Unwrap implements errors.Unwrap by returning the next error in the
-      →…
+   107→// chain or nil if there are no more errors.
    108→func (e chain) Unwrap() error {
    116→// As implements errors.As by attempting to map to the current value.
    117→func (e chain) As(target interface{}) bool {
@@ -353,7 +337,11 @@ multierror_test.go
 prefix.go
      6→import …
     10→// Prefix is a helper function that will prefix some text
-      →…
+    11→// to the given error. If the error is a multierror.Error, then
+    12→// it will be prefixed to each wrapped error.
+    13→//
+    14→// This is useful to use when appending multiple multierrors
+    15→// together in order to give better scoping.
     16→func Prefix(err error, prefix string) error {
 
 prefix_test.go

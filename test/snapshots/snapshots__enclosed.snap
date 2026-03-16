@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7999 tokens)
+budget: 8000 (8000 tokens)
 
 CONTRIBUTING.md
      1→# Contributing to Enclosed
@@ -125,7 +125,6 @@ packages/app-client/src/modules/config/config.types.ts
 packages/app-client/src/modules/files/files.models.ts
      6→export const iconByFileType = {
     33→type FileTypes …
-    35→function getFileIcon …
 
 packages/app-client/src/modules/i18n/i18n.models.ts
      8→export function findMatchingLocale({ preferredLocales, supportedLocales }: { preferredLocales: Intl.Locale[]; supportedLocales: Intl.Locale[] }) {
@@ -491,7 +490,9 @@ packages/docs/src/components/credential-inputs.vue
      9→});
     10→
     11→function addCredential() {
-      →…
+    12→  credentials.value = [
+    13→    ...credentials.value,
+      →    …
 
 packages/docs/src/components/toggle.vue
      1→<script setup>
@@ -505,7 +506,9 @@ packages/docs/src/components/toggle.vue
      9→</script>
     10→
     11→<template>
-      →…
+    12→  <div class="switch-wrapper">
+    13→    <div class="switch">
+      →    …
 
 packages/docs/src/data/configuration.data.ts
      5→import { configDefinition } from '../../../app-server/src/modules/app/config/config';
@@ -663,12 +666,11 @@ packages/docs/src/self-hosting/users-authentication-key-generator.md
     61→
     62→---
     63→
+    64→> [!INFO] Escaping in Docker Run
       →…
 
 packages/lib/README.md
      1→### Enclosed lib
-     3→This package contains the core functionalities of [Enclosed](https://enclosed.cc/), an open-source project that aims to provide a simple and secure way to share e2e encrypted notes.
-     4→
      5→## Installation
      7→```bash
      8→# with npm

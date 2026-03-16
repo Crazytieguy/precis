@@ -8,24 +8,11 @@ README.md
     55→## Table of Contents
     74→## Installation
    102→## Quickstart
-   141→### FastAPI
-   171→### FastStream
    201→## Settings
    235→## Service settings
    256→## Instruments
-   270→### [Sentry](https://sentry.io/)
-   312→### [Prometheus](https://prometheus.io/)
-   394→### [OpenTelemetry](https://opentelemetry.io/)
-   451→### [Pyroscope](https://pyroscope.io)
-   463→### Logging
-   498→### CORS
-   524→### Swagger
-   563→### Health checks
    586→## Configuration
-   592→### Instruments configuration
-   639→### Application configuration
    662→> ### Important
-   710→### Using microbootstrap without a framework
    746→## Advanced
 
 examples/fastapi_app.py
@@ -126,7 +113,16 @@ microbootstrap/config/fastapi.py
     52→    openapi_prefix: str = ""
     53→    root_path: str = ""
     54→    root_path_in_servers: bool = True
-      →    …
+    55→    responses: dict[int | str, dict[str, typing.Any]] | None = None
+    56→    callbacks: list[BaseRoute] | None = None
+    57→    webhooks: routing.APIRouter | None = None
+    58→    deprecated: bool | None = None
+    59→    include_in_schema: bool = True
+    60→    swagger_ui_parameters: dict[str, typing.Any] | None = None
+    61→    generate_unique_id_function: typing.Callable[[routing.APIRoute], str] = dataclasses.field(
+    62→        default_factory=lambda: Default(generate_unique_id),
+    63→    )
+    64→    separate_input_output_schemas: bool = True
 
 microbootstrap/config/faststream.py
     21→class FastStreamConfig:
@@ -154,7 +150,6 @@ microbootstrap/config/litestar.py
     21→    )
 
 microbootstrap/console_writer.py
-    10→@dataclasses.dataclass
     11→class ConsoleWriter:
     12→    writer_enabled: bool = True
     13→    rich_console: Console = dataclasses.field(init=False, default_factory=Console)
@@ -324,7 +319,6 @@ microbootstrap/middlewares/litestar.py
 microbootstrap/settings.py
     24→ENV_PREFIX_VAR_NAME: typing.Final = "ENVIRONMENT_PREFIX"
     25→ENV_PREFIX: typing.Final = os.getenv(ENV_PREFIX_VAR_NAME, "")
-    28→# TODO: add offline docs and cors support  # noqa: TD002
     29→class BaseServiceSettings(
     30→    pydantic_settings.BaseSettings,
     31→):
@@ -356,6 +350,8 @@ microbootstrap/settings.py
 package.json
 
 pyproject.toml
+
+tests/conftest.py
 
 tests/test_helpers.py
     54→class InnerDataclass:

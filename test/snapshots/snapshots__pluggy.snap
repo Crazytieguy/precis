@@ -83,21 +83,10 @@ README.rst
     69→
       →…
 
-RELEASING.rst
-     1→Release Procedure
-
-TIDELIFT.rst
-     1→========
-
 changelog/README.rst
      1→This directory contains "newsfragments" which are short files that contain a small **ReST**-formatted
      2→text that will be added to the next ``CHANGELOG``.
      3→
-     4→The ``CHANGELOG`` will be read by users, so this description should be aimed to pytest users
-     5→instead of describing internal changes which are only relevant to the developers.
-     6→
-     7→Make sure to use full sentences with correct case and punctuation, for example::
-     8→
       →…
 
 codecov.yml
@@ -174,6 +163,11 @@ pyproject.toml
      1→[build-system]
      8→[project]
     38→[dependency-groups]
+    43→[tool.setuptools]
+    69→[tool.setuptools_scm]
+    71→[tool.uv]
+    74→[tool.towncrier]
+   112→[tool.mypy]
 
 scripts/
       →…
@@ -234,12 +228,14 @@ src/pluggy/_hooks.py
     72→    trylast: bool
     73→    #: The name of the hook specification to match, see :ref:`specname`.
     74→    specname: str | None
+    77→@final
     78→class HookspecMarker:
     85→
     86→    __slots__ = ("project_name",)
     87→
     88→    def __init__ …
    111→    def __call__ …
+   164→@final
    165→class HookimplMarker:
    172→
    173→    __slots__ = ("project_name",)
@@ -249,6 +245,7 @@ src/pluggy/_hooks.py
    281→def normalize_hookimpl_opts …
    290→_PYPY …
    293→def varnames …
+   358→@final
    359→class HookRelay:
    362→
    363→    __slots__ = ("__dict__",)
@@ -285,6 +282,7 @@ src/pluggy/_hooks.py
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
    631→    def _call_history …
    634→    def __repr__ …
+   638→@final
    639→class HookImpl:
    641→
    642→    __slots__ = (
@@ -303,6 +301,7 @@ src/pluggy/_hooks.py
    655→
    656→    def __init__ …
    692→    def __repr__ …
+   696→@final
    697→class HookSpec:
    698→    __slots__ = (
    699→        "namespace",
@@ -362,6 +361,7 @@ src/pluggy/_manager.py
 src/pluggy/_result.py
     16→_ExcInfo …
     20→class HookCallError(Exception):
+    24→@final
     25→class Result(Generic[ResultType]):
     28→
     29→    __slots__ = ("_result", "_exception", "_traceback")
@@ -389,6 +389,7 @@ src/pluggy/_warnings.py
      4→class PluggyWarning(UserWarning):
      6→
      7→    __module__ = "pluggy"
+    10→@final
     11→class PluggyTeardownRaisedWarning(PluggyWarning):
     26→
     27→    __module__ = "pluggy"

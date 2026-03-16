@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7999 tokens)
+budget: 8000 (7998 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -38,21 +38,7 @@ README.md
     16→>
     17→> Never done that so if anyone has experience with that stuff help is appreciated. 
     18→>
-    19→> For repo architecture I will probably go for a classic unix style repo format with cloudflare r2 and automatic replication to multiple regions. Well that is quite
-    20→> far out. Still it is coming along well, just built my first package with it. Found some small issues with install right after and am working on those now.
-    21→>
-    22→> https://github.com/alexykn/sps2 Take a look if you want!
-    23→
-    24→
-    25→sps is a next‑generation, Rust‑powered package manager inspired by Homebrew. It installs and manages:
-    26→
-    27→- **Formulae:** command‑line tools, libraries, and languages
-    28→- **Casks:** desktop applications and related artifacts on macOS
-    29→
-    30→> _ARM only for now, might add x86 support eventually_
-    31→
-    32→---
-    33→
+      →…
     34→## ⚙️ Project Structure
     42→## 🚧 Current Status
     54→## 🚀 Roadmap
@@ -590,11 +576,16 @@ sps-core/src/build/env.rs
    160→    #[allow(dead_code)]
    161→    sdk_path: PathBuf,
    162→}
-   166→    pub fn new …
-   463→    pub fn apply_to_command …
-   476→    pub fn get_path_string …
-   482→    pub fn get_vars …
-   488→    pub fn get_var …
+   166→    pub fn new<F: FormulaDependencies>(
+   167→        formula: &F,
+   168→        sps_prefix: &Path,
+   169→        cellar_path: &Path,
+   170→        all_installed_opt_paths: &[PathBuf],
+   171→    ) -> Result<Self> {
+   463→    pub fn apply_to_command(&self, command: &mut std::process::Command) {
+   476→    pub fn get_path_string(&self) -> Option<&str> {
+   482→    pub fn get_vars(&self) -> &HashMap<String, String> {
+   488→    pub fn get_var(&self, key: &str) -> Option<&str> {
    495→fn filter_initial_environment …
 
 sps-core/src/build/mod.rs
@@ -670,6 +661,13 @@ sps-core/src/install/cask/artifacts/mod.rs
     22→pub mod vst_plugin;
     23→pub mod zap;
 
+sps-core/src/install/cask/dmg.rs
+   153→pub fn extract_dmg_to_stage …
+
+sps-core/src/install/cask/helpers.rs
+     9→pub fn remove_path_robustly …
+    75→pub fn cleanup_empty_parent_dirs_in_private_store …
+
 sps-core/src/install/cask/mod.rs
      1→pub mod artifacts;
      2→pub mod dmg;
@@ -684,6 +682,11 @@ sps-core/src/install/cask/mod.rs
     32→    pub is_installed: bool,              // New flag for soft uninstall
     33→    pub cask_store_path: Option<String>, // Path to private store app, if available
     34→}
+    37→pub fn sps_private_cask_version_dir …
+    43→pub fn sps_private_cask_token_dir …
+    49→pub fn sps_private_cask_app_path …
+   580→pub fn write_receipt …
+   686→pub fn cleanup_empty_parent_dirs_in_private_store …
 
 sps-core/src/install/devtools.rs
      9→pub fn find_compiler …
@@ -777,9 +780,6 @@ sps-net/Cargo.toml
     12→
     13→tokio = { version = "1.47.1", features = ["full"] }
       →…
-
-sps-net/src/api.rs
-   160→async fn fetch_github_repo_info …
 
 sps-net/src/http.rs
     18→pub type ProgressCallback = Arc<dyn Fn(u64, Option<u64>) + Send + Sync>;

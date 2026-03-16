@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3999 tokens)
+budget: 4000 (3998 tokens)
 
 README.md
     10→# `htmy`
@@ -12,7 +12,6 @@ README.md
     15→
     16→## Key features
     33→## Testimonials
-    47→## Support
     51→## Installation
     63→## Concepts
     69→### Components
@@ -30,8 +29,6 @@ README.md
    341→## Why
    353→## Dependencies
    361→## Development
-   367→## Contributing
-   377→## License - MIT
 
 docs/api/core.md
      1→# ::: htmy.core
@@ -303,6 +300,7 @@ htmy/md/core.py
     37→        """
     43→    def __init__ …
     53→    def parse …
+    64→    def _default_md …
     81→class MD(Snippet):
     97→
     98→    __slots__ = (
@@ -311,6 +309,7 @@ htmy/md/core.py
    101→    )
    102→
    103→    def __init__ …
+   131→    def _render_text …
 
 htmy/md/typing.py
     11→MarkdownMetadataDict: TypeAlias = dict[str, Any]
@@ -478,8 +477,7 @@ tests/renderer/test_renderer_comparison.py
     97→class AsyncError:
 
 tests/test_function_component.py
+    12→rendering_context …
     69→class Data:
     70→    goodbye: str
     71→
-
-tests/test_md.py

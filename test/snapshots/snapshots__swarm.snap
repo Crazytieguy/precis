@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4004 tokens)
+budget: 4000 (4003 tokens)
 
 README.md
      3→# Swarm (experimental, educational)
@@ -22,8 +22,7 @@ README.md
     78→These primitives are powerful enough to express rich dynamics between tools and networks of agents, allowing you to build scalable, real-world solutions while avoiding a steep learning curve.
     79→
     80→> [!NOTE]
-    81→> Swarm Agents are not related to Assistants in the Assistants API. They are named similarly for convenience, but are otherwise completely unrelated. Swarm is entirely powered by the Chat Completions API and is hence stateless between calls.
-    82→
+      →…
     83→## Why Swarm
     89→# Examples
     91→Check out `/examples` for inspiration! Learn more about each one in its README.
@@ -33,8 +32,7 @@ README.md
     95→- [`weather_agent`](examples/weather_agent): Simple example of function calling
     96→- [`airline`](examples/airline): A multi-agent setup for handling different customer service requests in an airline context.
     97→- [`support_bot`](examples/support_bot): A customer service bot which includes a user interface agent and a help center agent with several tools
-    98→- [`personal_shopper`](examples/personal_shopper): A personal shopping agent that can help with making sales and refunding orders
-    99→
+      →…
    100→# Documentation
    104→## Running Swarm
    114→### `client.run()`
@@ -58,7 +56,7 @@ README.md
    346→...
    347→run_demo_loop(agent, stream=True)
    348→```
-   349→
+      →…
    350→# Core Contributors
    352→- Ilan Bigio - [ibigio](https://github.com/ibigio)
    353→- James Hills - [jhills20](https://github.com/jhills20)
@@ -169,6 +167,9 @@ examples/customer_service_streaming/prep_data.py
      6→GPT_MODEL = 'gpt-4'
      7→EMBEDDING_MODEL = "text-embedding-3-large"
 
+examples/customer_service_streaming/src/arg_parser.py
+     3→def parse_args …
+
 examples/customer_service_streaming/src/evals/eval_function.py
      8→class EvalFunction:
      9→
@@ -180,6 +181,9 @@ examples/customer_service_streaming/src/evals/eval_function.py
 
 examples/customer_service_streaming/src/runs/run.py
      5→class Run:
+     6→    def __init__(self,assistant,request,client):
+    14→    def initiate(self, planner):
+    20→    def generate_plan(self,task=None):
 
 examples/customer_service_streaming/src/swarm/engines/engine.py
      1→# engine.py
@@ -195,7 +199,13 @@ examples/customer_service_streaming/src/tasks/task.py
      3→class Task:
     12→class EvaluationTask(Task):
 
+examples/customer_service_streaming/src/utils.py
+     1→def get_completion …
+    39→def is_dict_empty …
+
 examples/customer_service_streaming/src/validator.py
+     7→def validate_tool …
+    12→def validate_all_tools …
     51→    # Function to validate all assistants
     52→def validate_all_assistants():
 
@@ -239,6 +249,7 @@ examples/support_bot/README.md
       →…
 
 examples/support_bot/customer_service.py
+    13→# Set embedding model
     14→EMBEDDING_MODEL = "text-embedding-3-large"
     20→# TODO: Make this work
     23→def query_qdrant(query, collection_name, vector_name="article", top_k=5):
@@ -257,6 +268,7 @@ examples/support_bot/docker-compose.yaml
      7→      - "6335:6335"
 
 examples/support_bot/main.py
+    13→# Set embedding model
     14→EMBEDDING_MODEL = "text-embedding-3-large"
     20→def query_qdrant(query, collection_name, vector_name="article", top_k=5):
     40→def query_docs(query):
@@ -301,11 +313,7 @@ examples/weather_agent/README.md
      3→This example is a weather agent demonstrating function calling with a single agent. The agent has tools to get the weather of a particular city, and send an email.
      4→
      5→## Setup
-     7→To run the weather agent Swarm:
-      →…
     15→## Evals
-    17→> [!NOTE]
-      →…
 
 examples/weather_agent/agents.py
      6→def get_weather(location, time="now"):
@@ -389,5 +397,3 @@ tests/test_core.py
      7→DEFAULT_RESPONSE_CONTENT = "sample response content"
     10→@pytest.fixture
     11→def mock_openai_client():
-
-tests/test_util.py
