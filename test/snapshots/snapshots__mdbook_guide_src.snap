@@ -2,10 +2,11 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4004 tokens)
+budget: 4000 (4005 tokens)
 
 README.md
      1→# Introduction
+     3→<style>
      4→    .mdbook-version {
      5→        position: absolute;
      6→        right: 20px;
@@ -101,6 +102,8 @@ cli/README.md
     13→* [`mdbook clean`](clean.md) --- Deletes the rendered output.
     14→* [`mdbook completions`](completions.md) --- Support for shell auto-completion.
 
+cli/arg-watcher.md
+
 cli/build.md
      1→# The build command
 
@@ -161,15 +164,11 @@ for_developers/README.md
     19→The process of rendering a book project goes through several steps.
     20→
     21→1. Load the book
-    22→    - Parse the `book.toml`, falling back to the default `Config` if it doesn't
-    23→       exist
-      →       …
+      →…
     30→## Using `mdbook` as a library
     32→The `mdbook` binary is just a wrapper around the underlying mdBook crates,
     33→exposing their functionality as a command-line program. If you want to
     34→programmatically drive mdBook, you can use the [`mdbook-driver`] crate.
-    35→This can be used to add your own functionality or tweak the build process.
-    36→
       →…
 
 for_developers/backends.md
@@ -277,6 +276,8 @@ format/markdown.md
      9→## Text and paragraphs
     25→## Headings
     43→#### A smaller heading 
+    45→More text.
+    46→
     47→## Lists
     69→## Links
    108→## Images
@@ -315,6 +316,7 @@ format/theme/README.md
     12→Here are the files you can override:
     13→
     14→- **_index.hbs_** is the handlebars template.
+    15→- **_head.hbs_** is appended to the HTML `<head>` section.
       →…
 
 format/theme/editor.md
@@ -365,6 +367,7 @@ guide/installation.md
      9→## Pre-compiled binaries
     19→## Build from source using Rust
     41→### Installing the latest master version
+    53→## Modifying and contributing
 
 guide/reading.md
      1→# Reading books

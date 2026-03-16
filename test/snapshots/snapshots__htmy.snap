@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3997 tokens)
+budget: 4000 (3998 tokens)
 
 README.md
     10→# `htmy`
@@ -128,6 +128,8 @@ examples/markdown_customization/app.py
 
 examples/markdown_customization/post.md
      1→# Essential reading
+     3→<PostInfo author="John" published_at="1971-10-11" />
+     4→
      5→```python
      6→import this
      7→```
@@ -329,7 +331,9 @@ htmy/renderer/context.py
     11→    @classmethod
     12→    def from_context(cls, context: Context) -> RendererType:
     13→        """
-      →        …
+    14→        Returns the renderer instance from the given context.
+    15→
+      →…
 
 htmy/renderer/default.py
     20→class _Node:
@@ -430,22 +434,18 @@ mkdocs.yaml
      5→theme:
      6→  name: modern
      7→  palette:
-     8→    # Palette toggle for automatic mode
-      →    …
+      →  …
     33→plugins:
     34→  - search:
     35→      lang: en
-    36→  - mkdocstrings:
-      →  …
+      →      …
     41→markdown_extensions:
     42→  - pymdownx.highlight:
     43→      anchor_linenums: true
-    44→      line_spans: __span
       →      …
     50→nav:
     51→  - index.md
     52→  - components-guide.md
-    53→  - function-components.md
       →  …
 
 tests/renderer/test_renderer_comparison.py

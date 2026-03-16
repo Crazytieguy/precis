@@ -72,7 +72,7 @@ fn is_unsupported_code_extension(ext: &str) -> bool {
         | "tf" | "hcl" | "nix" | "gradle" | "cmake"
         // Documentation markup (README.rst etc. are valuable as plain text)
         | "rst"
-        // Go module file (go.mod lists dependencies and Go version)
+        // Module files (.mod — primarily go.mod, also Fortran/Modula-2)
         | "mod"
         // Config files with informative metadata (setup.cfg, .ini)
         | "cfg" | "ini"
@@ -91,15 +91,10 @@ fn is_lockfile(path: &Path) -> bool {
     };
     let lower = name.to_ascii_lowercase();
     // Machine-generated lockfiles
-    if matches!(
-        name,
-        "package-lock.json" | "npm-shrinkwrap.json" | "pnpm-lock.yaml"
-    ) {
-        return true;
-    }
+    matches!(lower.as_str(), "package-lock.json" | "npm-shrinkwrap.json" | "pnpm-lock.yaml")
     // Minified/bundled files — machine-generated, unreadable
-    lower.ends_with(".min.js") || lower.ends_with(".min.css")
-        || lower.ends_with(".bundle.js") || lower.ends_with(".chunk.js")
+    || lower.ends_with(".min.js") || lower.ends_with(".min.css")
+    || lower.ends_with(".bundle.js") || lower.ends_with(".chunk.js")
 }
 
 /// Check if a file is vendored third-party code or test fixture data that should
@@ -147,14 +142,13 @@ pub fn classify_file(path: &Path) -> crate::schedule::FileCategory {
             || s == "fixtures" || s == "fixture"
             || s == "mocks" || s == "__mocks__"
             || s == "changelog" || s == "changelogs"
-            || s == "contribute"
             || s == "stories" || s == "__stories__" || s == ".storybook"
         {
             return FileCategory::Test;
         }
 
         // Compound directory names with test-related segments
-        // (workspace crates like "foo-test-utils", "my-integration-suite")
+        // (workspace crates like "foo-test-utils", "bench-helpers")
         if let Some(name) = s.to_str()
             && (name.contains('-') || name.contains('_'))
             && name.split(['-', '_']).any(|seg| {
@@ -162,7 +156,7 @@ pub fn classify_file(path: &Path) -> crate::schedule::FileCategory {
                     seg,
                     "test" | "tests" | "testing" | "bench" | "benches"
                     | "benchmark" | "benchmarks" | "mock" | "mocks"
-                    | "fixture" | "fixtures" | "integration"
+                    | "fixture" | "fixtures"
                 )
             })
         {
@@ -410,7 +404,10 @@ mod tests {
         assert_eq!(classify_file(Path::new("conftest.py")), Test);
         // Compound directory names with test-related segments
         assert_eq!(classify_file(Path::new("crates/foo-test-utils/src/lib.rs")), Test);
-        assert_eq!(classify_file(Path::new("crates/my-integration-suite/src/setup.rs")), Test);
+        // "integration" alone is not a test signal (could be "api-integration" source)
+        assert_eq!(classify_file(Path::new("crates/my-integration-suite/src/setup.rs")), Source);
+        // But "integration-test" IS a test signal
+        assert_eq!(classify_file(Path::new("crates/integration-test-utils/src/lib.rs")), Test);
         assert_eq!(classify_file(Path::new("crates/my-mock-server/src/lib.rs")), Test);
         // Changelog directories
         assert_eq!(classify_file(Path::new("changelog/README.rst")), Test);
@@ -418,8 +415,8 @@ mod tests {
         // Storybook directories
         assert_eq!(classify_file(Path::new("stories/Button.stories.tsx")), Test);
         assert_eq!(classify_file(Path::new(".storybook/config.js")), Test);
-        // Contribute directories
-        assert_eq!(classify_file(Path::new("contribute/demo.py")), Test);
+        // contribute/ is NOT deprioritized (too generic a name)
+        assert_eq!(classify_file(Path::new("contribute/demo.py")), Source);
         // RFC directories
         assert_eq!(classify_file(Path::new("rfcs/0001-design.md")), DocsSite);
         // GitLab CI

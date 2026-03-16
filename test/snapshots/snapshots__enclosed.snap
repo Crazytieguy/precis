@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (8000 tokens)
+budget: 8000 (7997 tokens)
 
 README.md
     26→## Introduction
@@ -99,27 +99,17 @@ packages/app-client/components.json
     14→    "ui": "@/modules/ui/components",
     15→    "cn": "@/modules/shared/style/cn"
 
-packages/app-client/package.json
-     2→  "name": "@enclosed/app-client",
-     3→  "type": "module",
-     4→  "version": "1.16.0",
-     5→  "packageManager": "pnpm@9.15.0",
-     6→  "description": "Enclosed frontend client",
-     7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
-     8→  "license": "Apache-2.0",
-     9→  "repository": {
-    13→  "engines": {
-    16→  "scripts": {
-    30→  "dependencies": {
-    48→  "devDependencies": {
-
 packages/app-client/src/index.tsx
 
 packages/app-client/src/locales/locales.ts
      2→export const locales = [
 
+packages/app-client/src/modules/auth/auth.models.ts
+     5→function isAccessTokenExpired …
+
 packages/app-client/src/modules/auth/auth.services.ts
      1→import { apiClient } from '../shared/http/http-client';
+     5→async function login …
 
 packages/app-client/src/modules/auth/auth.store.ts
      3→import { createHook } from '../shared/hooks/hooks';
@@ -172,12 +162,13 @@ packages/app-client/src/modules/i18n/i18n.provider.tsx
     15→type Locale …
     16→type RawDictionary …
     17→type Dictionary …
-    19→const I18nContext …
+    19→const I18nContext = createContext<{
     26→function useI18n …
     36→async function fetchDictionary …
     44→export const I18nProvider: ParentComponent = (props) => {
 
 packages/app-client/src/modules/notes/components/file-uploader.tsx
+     6→const DropArea …
     62→export const FileUploaderButton …
 
 packages/app-client/src/modules/notes/components/note-password-field.tsx
@@ -239,9 +230,6 @@ packages/app-client/src/modules/ui/layouts/app.layout.tsx
 packages/app-client/src/routes.tsx
     11→export function getRoutes(): RouteDefinition[] {
 
-packages/app-client/tsconfig.json
-     2→  "compilerOptions": {
-
 packages/app-server/src/index.cloudflare.ts
 
 packages/app-server/src/index.node.ts
@@ -271,9 +259,11 @@ packages/app-server/src/modules/app/middlewares/cors.middleware.ts
      5→export const corsMiddleware = createMiddleware(async (context: Context, next) => {
 
 packages/app-server/src/modules/app/middlewares/errors.middleware.ts
+     5→const logger …
      7→export function registerErrorMiddleware({ app }: { app: ServerInstance }) {
 
 packages/app-server/src/modules/app/middlewares/logger.middleware.ts
+     4→const logger …
      6→export const loggerMiddleware = createMiddleware(async (c, next) => {
 
 packages/app-server/src/modules/app/middlewares/storage.middleware.ts
@@ -382,6 +372,9 @@ packages/cli/README.md
     35→### Create a note
     58→### View a note
     68→### Configure the enclosed instance to use
+    75→## License
+    79→## Credits and Acknowledgements
+    81→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
 
 packages/cli/bin/enclosed.mjs
      4→import '../dist/cli.mjs';
@@ -441,6 +434,9 @@ packages/crypto/README.md
     15→pnpm add @enclosed/crypto
     16→```
     17→
+    18→## License
+    22→## Credits and Acknowledgements
+    24→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
 
 packages/crypto/src/api-definition.ts
      6→function createEnclosedCryptoApi …
@@ -468,6 +464,8 @@ packages/deploy-cloudflare/_routes.json
      3→  "include": [
      4→    "/api/*"
      6→  "exclude": []
+
+packages/deploy-cloudflare/package.json
 
 packages/docs/package.json
      2→  "name": "@enclosed/docs",
@@ -690,6 +688,9 @@ packages/lib/README.md
     30→console.log(noteUrl);
     31→```
     32→
+    33→## License
+    37→## Credits and Acknowledgements
+    39→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
 
 packages/lib/src/api/api.client.ts
      2→import { DEFAULT_API_BASE_URL } from './api.constants';

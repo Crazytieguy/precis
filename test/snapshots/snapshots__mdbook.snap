@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (8003 tokens)
+budget: 8000 (8001 tokens)
 
 README.md
      1→# mdBook
@@ -179,10 +179,13 @@ crates/mdbook-core/src/utils/html.rs
 
 crates/mdbook-core/src/utils/mod.rs
      7→pub mod fs;
+    15→/// Defines a `static` with a [`regex::Regex`].
+    16→#[macro_export]
     17→macro_rules! static_regex {
     29→pub fn log_backtrace …
 
 crates/mdbook-core/src/utils/toml_ext.rs
+     6→pub(crate) trait TomlExt {
      8→    fn read …
     10→    fn insert …
 
@@ -297,6 +300,7 @@ crates/mdbook-html/README.md
      1→# mdbook-html
 
 crates/mdbook-html/src/html/tree.rs
+    25→macro_rules! attr_qual_name {
     33→pub(crate) enum Node {
    130→    /// Converts self to a [`StrTendril`].
    131→    fn into_tendril(self) -> StrTendril;
@@ -554,7 +558,7 @@ crates/mdbook-summary/src/lib.rs
    127→    /// A part title.
    128→    PartTitle(String),
    129→}
-   173→struct SummaryParser<'a> {
+   173→struct SummaryParser …
    190→macro_rules! collect_events {
 
 crates/xtask/Cargo.toml
@@ -592,6 +596,7 @@ guide/src/404.md
 
 guide/src/README.md
      1→# Introduction
+     3→<style>
      4→    .mdbook-version {
      5→        position: absolute;
      6→        right: 20px;
@@ -606,10 +611,6 @@ guide/src/SUMMARY.md
 guide/src/cli/README.md
      1→# Command-line tool
      3→The `mdbook` command-line tool is used to create and build books.
-     4→After you have [installed](../guide/installation.md) `mdbook`, you can run the `mdbook help` command in your terminal to view the available commands.
-     5→
-     6→This following sections provide in-depth information on the different commands available.
-     7→
       →…
 
 guide/src/cli/build.md
@@ -730,6 +731,7 @@ guide/src/guide/installation.md
      1→# Installation
      9→## Pre-compiled binaries
     19→## Build from source using Rust
+    53→## Modifying and contributing
 
 guide/src/guide/reading.md
      1→# Reading books

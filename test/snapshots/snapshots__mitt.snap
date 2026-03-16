@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2000 tokens)
+budget: 2000 (1991 tokens)
 
 README.md
      9→# Mitt
@@ -67,55 +67,33 @@ README.md
     79→```
     80→
     81→### Typescript
-    83→Set `"strict": true` in your tsconfig.json to get improved type inference for `mitt` instance methods.
-    84→
-    85→```ts
-    86→import mitt from 'mitt';
-    87→
-    88→type Events = {
-    89→  foo: string;
-    90→  bar?: number;
-    91→};
-    92→
-    93→const emitter = mitt<Events>(); // inferred as Emitter<Events>
-    94→
-    95→emitter.on('foo', (e) => {}); // 'e' has inferred type 'string'
-    96→
-    97→emitter.emit('foo', 42); // Error: Argument of type 'number' is not assignable to parameter of type 'string'. (2345)
-    98→```
-    99→
-   100→Alternatively, you can use the provided `Emitter` type:
-   101→
-   102→```ts
-      →…
    113→## Examples & Demos
+   115→<a href="http://codepen.io/developit/pen/rjMEwW?editors=0110">
+   116→  <b>Preact + Mitt Codepen Demo</b>
+   117→  <br>
+   118→  <img src="https://i.imgur.com/CjBgOfJ.png" width="278" alt="preact + mitt preview">
+   119→</a>
+   120→
+   121→* * *
+   122→
    123→## API
+   127→#### Table of Contents
    138→### mitt
-   140→Mitt: Tiny (~200b) functional event emitter / pubsub.
-   141→
-   142→Returns **Mitt** 
-   143→
    144→### all
-   146→A Map of event names to registered handler functions.
-   147→
    148→### on
-   150→Register an event handler for the given type.
-   151→
    152→#### Parameters
    157→### off
-   159→Remove an event handler for the given type.
-   160→If `handler` is omitted, all handlers of the given type are removed.
-   161→
    162→#### Parameters
    167→### emit
-   169→Invoke all handlers for the given type.
-   170→If present, `'*'` handlers are invoked after type-matched handlers.
-   171→
-   172→Note: Manually firing '\*' handlers is not supported.
-   173→
    174→#### Parameters
    179→## Contribute
+   181→First off, thanks for taking the time to contribute!
+   182→Now, take a moment to be sure your contributions make sense to everyone else.
+   183→
+   184→### Reporting Issues
+   189→### Submitting pull requests
    203→## License
+   205→[MIT License](https://opensource.org/licenses/MIT) © [Jason Miller](https://jasonformat.com/)
 
 package.json
      2→  "name": "mitt",
@@ -176,10 +154,28 @@ src/index.ts
     53→
     54→	return {
     55→		/**
-      →		…
+    56→		 * A Map of event names to registered handler functions.
+    57→		 */
+    58→		all,
+    59→
+    60→		/**
+    61→		 * Register an event handler for the given type.
+    62→		 * @param {string|symbol} type Type of event to listen for, or `'*'` for all events
+    63→		 * @param {Function} handler Function to call in response to given event
+    64→		 * @memberOf mitt
+    65→		 */
+      →		 …
+
+test/index_test.ts
 
 test/test-types-compilation.ts
-     9→const emitter …
+     5→interface SomeEventData {
+     6→	name: string;
+     7→}
+     9→const emitter = mitt<{
+    15→const barHandler …
+    16→const fooHandler …
+    17→const wildcardHandler …
 
 tsconfig.json
      2→	"compileOnSave": false,

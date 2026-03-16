@@ -575,14 +575,23 @@ pub(crate) fn is_markdown_leading_noise(line: &str) -> bool {
     if is_toc_link(trimmed) {
         return true;
     }
-    // HTML tags: <div>, </div>, <p align=...>, <img .../>, <br>, <br/>, etc.
-    // Also matches HTML comments: <!-- ... -->
-    if let Some(rest) = trimmed.strip_prefix('<')
-        && (rest.starts_with('/')
-            || rest.starts_with('!')
-            || rest.as_bytes().first().is_some_and(|b| b.is_ascii_alphabetic()))
-    {
-        return true;
+    // Block-level HTML tags and comments used for layout/badges, not content.
+    // Only matches tags that are clearly structural (div, p, img, br, details,
+    // table, etc.) — NOT inline tags like <em>, <strong>, <b>, <a> which wrap content.
+    if let Some(rest) = trimmed.strip_prefix('<') {
+        let tag_start = rest.strip_prefix('/').unwrap_or(rest);
+        let tag_name: String = tag_start.chars()
+            .take_while(|c| c.is_ascii_alphabetic())
+            .collect::<String>()
+            .to_ascii_lowercase();
+        if rest.starts_with('!')  // HTML comments: <!-- ... -->
+            || matches!(tag_name.as_str(),
+                "div" | "p" | "img" | "br" | "hr" | "table" | "tr" | "td" | "th"
+                | "details" | "summary" | "picture" | "source" | "figure"
+                | "center" | "align" | "section" | "header" | "footer" | "nav")
+        {
+            return true;
+        }
     }
     // Horizontal rules: 3+ of the same character (-, *, _) with optional spaces
     if is_horizontal_rule(trimmed) {

@@ -9,11 +9,7 @@ README.md
      3→**Current status: Incubating - Toasty is not ready for production usage. The API
      4→is still evolving and documentation is lacking.**
      5→
-     6→Toasty is an ORM for the Rust programming language that prioritizes ease-of-use.
-     7→It supports both SQL databases as well as some NoSQL databases, including DynamoDB
-     8→and Cassandra. Note that Toasty does not hide the database capabilities.
-     9→Instead, Toasty exposes features based on the target database.
-    10→
+      →…
     11→## Using Toasty
     76→## SQL and NoSQL
     91→## Application data model vs. database schema
@@ -27,8 +23,6 @@ Cargo.toml
      5→    "crates/toasty-cli",
       →    …
     37→[workspace.dependencies]
-    38→# Toasty crates
-      →…
 
 benches/
       →…
@@ -70,42 +64,38 @@ crates/toasty/Cargo.toml
 
 crates/toasty/src/apply_update.rs
      9→pub trait ApplyUpdate {
-    14→    fn apply_result(self, values: Vec<Value>) -> Result<()>;
+    14→    fn apply_result …
     19→pub struct Query;
 
 crates/toasty/src/cursor.rs
      6→pub struct Cursor<M> {
     12→pub trait FromCursor<A>: Extend<A> + Default {}
-    36→    pub async fn collect<B>(mut self) -> Result<B, Error>
-    37→    where
-    38→        B: FromCursor<M>,
-    39→    {
+    36→    pub async fn collect …
 
 crates/toasty/src/db/builder.rs
     17→pub struct Builder {
-    35→    pub fn table_name_prefix(&mut self, prefix: &str) -> &mut Self {
+    35→    pub fn table_name_prefix …
 
 crates/toasty/src/db/connect.rs
     14→pub struct Connect {
 
 crates/toasty/src/db/pool.rs
     18→pub struct PoolConfig {
-    25→    pub fn new() -> Self {
+    25→    pub fn new …
     41→pub struct Pool {
-    48→    pub fn new(driver: impl Driver) -> crate::Result<Self> {
-    69→    pub fn connect(url: &str) -> crate::Result<Self> {
-    74→    pub async fn get(&self) -> crate::Result<PoolConnection> {
-    84→    pub fn driver(&self) -> &dyn Driver {
-    89→    pub fn capability(&self) -> &Capability {
-    95→struct Manager {
+    48→    pub fn new …
+    69→    pub fn connect …
+    74→    pub async fn get …
+    84→    pub fn driver …
+    89→    pub fn capability …
    119→pub struct PoolConnection {
 
 crates/toasty/src/db.rs
     18→pub struct Db {
-    37→    pub async fn all<M: Model>(&self, query: stmt::Select<M>) -> Result<Cursor<M>> {
-    69→    pub async fn exec<M: Model>(&self, statement: Statement<M>) -> Result<ValueStream> {
-   114→    pub async fn push_schema(&self) -> Result<()> {
-   124→    pub async fn reset_db(&self) -> Result<()> {
+    37→    pub async fn all …
+    69→    pub async fn exec …
+   114→    pub async fn push_schema …
+   124→    pub async fn reset_db …
 
 crates/toasty/src/engine/lower/relation.rs
     35→    fn selection …
@@ -122,37 +112,31 @@ crates/toasty/src/lib.rs
     57→pub mod driver {
 
 crates/toasty/src/model.rs
-    12→pub fn generate_unique_id() -> ModelId {
+    12→pub fn generate_unique_id …
     26→pub trait Register {
-    30→    fn id() -> ModelId;
-    33→    fn schema() -> app::Model;
+    30→    fn id …
+    33→    fn schema …
     41→pub trait Model: Register + Sized {
-    57→    fn load(value: stmt::Value) -> Result<Self, Error>;
+    57→    fn load …
     65→pub trait Embed: Register {
 
 crates/toasty/src/page.rs
     10→pub struct Page<M> {
-    40→    pub fn has_next(&self) -> bool {
-    45→    pub fn has_prev(&self) -> bool {
-    65→    pub async fn next(&self, db: &Db) -> Result<Option<Page<M>>> {
-    93→    pub async fn prev(&self, db: &Db) -> Result<Option<Page<M>>> {
+    40→    pub fn has_next …
+    45→    pub fn has_prev …
+    65→    pub async fn next …
+    93→    pub async fn prev …
 
 crates/toasty/src/relation/belongs_to.rs
      8→pub struct BelongsTo<T> {
-     9→    value: Option<Box<T>>,
-    10→}
     23→    pub fn get(&self) -> &T {
 
 crates/toasty/src/relation/has_many.rs
      8→pub struct HasMany<T> {
-     9→    values: Option<Vec<T>>,
-    10→}
     32→    pub fn get(&self) -> &[T] {
 
 crates/toasty/src/relation/has_one.rs
      8→pub struct HasOne<T> {
-     9→    value: Option<Box<T>>,
-    10→}
     23→    pub fn get(&self) -> &T {
 
 crates/toasty/src/relation.rs
@@ -164,21 +148,14 @@ crates/toasty/src/stmt/expr.rs
      8→    /// The un-typed expression
      9→    pub(crate) untyped: stmt::Expr,
     10→
-    11→    /// `T` is the type of the expression
-    12→    pub(crate) _p: PhantomData<T>,
-    13→}
+      →…
 
 crates/toasty/src/stmt/paginate.rs
      8→pub struct Paginate<M> {
      9→    /// How to query the data
     10→    query: Select<M>,
     11→
-    12→    /// Whether we are currently paginating backwards.
-    13→    ///
-    14→    /// Because the sort order has to be reversed during backwards pagination,
-    15→    /// we need to reverse the result set again to go back to the expected order.
-    16→    reverse: bool,
-    17→}
+      →…
 
 crates/toasty/src/stmt.rs
     51→pub struct Statement<M> {
@@ -192,24 +169,20 @@ crates/toasty-cli/src/config.rs
     10→    /// Migration-related configuration
     11→    pub migration: MigrationConfig,
     12→}
-    16→    pub fn new() -> Self {
-    21→    pub fn load() -> Result<Self> {
-    29→    pub fn migration(mut self, migration: MigrationConfig) -> Self {
+    16→    pub fn new …
+    21→    pub fn load …
+    29→    pub fn migration …
 
 crates/toasty-cli/src/lib.rs
     13→pub struct ToastyCli {
     14→    db: Db,
     15→    config: Config,
     16→}
-    20→    pub fn new(db: Db) -> Self {
-    28→    pub fn with_config(db: Db, config: Config) -> Self {
-    33→    pub fn config(&self) -> &Config {
-    38→    pub async fn parse_and_run(&self) -> Result<()> {
-    44→    pub async fn parse_from<I, T>(&self, args: I) -> Result<()>
-    45→    where
-    46→        I: IntoIterator<Item = T>,
-    47→        T: Into<std::ffi::OsString> + Clone,
-    48→    {
+    20→    pub fn new …
+    28→    pub fn with_config …
+    33→    pub fn config …
+    38→    pub async fn parse_and_run …
+    44→    pub async fn parse_from …
     64→struct Cli {
     70→enum Command {
 
@@ -225,12 +198,6 @@ crates/toasty-cli/src/migration/config.rs
     31→    /// Timestamp-based (e.g., 20240112_153045_)
     32→    Timestamp,
     33→}
-    48→    pub fn new …
-    53→    pub fn path …
-    59→    pub fn prefix_style …
-    65→    pub fn get_migrations_dir …
-    70→    pub fn get_snapshots_dir …
-    75→    pub fn get_history_file_path …
 
 crates/toasty-cli/src/migration/drop.rs
     11→pub struct DropCommand {
@@ -241,14 +208,7 @@ crates/toasty-cli/src/migration/generate.rs
 crates/toasty-cli/src/migration/history_file.rs
     11→pub struct HistoryFile {
     20→pub struct HistoryFileMigration {
-    37→    pub fn new …
-    45→    pub fn load …
-    51→    pub fn save …
-    57→    pub fn load_or_default …
     64→    pub fn migrations …
-    69→    pub fn next_migration_number …
-    81→    pub fn add_migration …
-    86→    pub fn remove_migration …
 
 crates/toasty-cli/src/migration/reset.rs
     11→pub struct ResetCommand {
@@ -258,9 +218,6 @@ crates/toasty-cli/src/migration/snapshot.rs
 
 crates/toasty-cli/src/migration/snapshot_file.rs
     13→pub struct SnapshotFile {
-    23→    pub fn new …
-    31→    pub fn load …
-    37→    pub fn save …
 
 crates/toasty-cli/src/migration.rs
     25→pub struct MigrationCommand {
@@ -270,7 +227,7 @@ crates/toasty-cli/src/migration.rs
     31→enum MigrationSubcommand {
 
 crates/toasty-cli/src/theme.rs
-     5→pub fn dialoguer_theme() -> ColorfulTheme {
+     5→pub fn dialoguer_theme …
 
 crates/toasty-codegen/Cargo.toml
      1→[package]
@@ -444,9 +401,7 @@ crates/toasty-core/src/schema/app/field/primitive.rs
      7→
      8→    /// The database storage type of the field.
      9→    ///
-    10→    /// This is specified as a hint.
-    11→    pub storage_ty: Option<db::Type>,
-    12→}
+      →    …
 
 crates/toasty-core/src/schema/app/field.rs
     11→pub struct Field {
@@ -474,7 +429,6 @@ crates/toasty-core/src/schema/app/pk.rs
 
 crates/toasty-core/src/schema/app/schema.rs
      7→pub struct Schema {
-    12→struct Builder {
 
 crates/toasty-core/src/schema/builder.rs
     11→pub struct Builder {
@@ -482,7 +436,6 @@ crates/toasty-core/src/schema/builder.rs
 crates/toasty-core/src/schema/db/column.rs
     12→pub struct Column {
     39→pub struct ColumnId {
-   122→pub enum ColumnsDiffItem<'a> {
 
 crates/toasty-core/src/schema/db/diff.rs
      6→pub struct RenameHints {
@@ -502,7 +455,6 @@ crates/toasty-core/src/schema/db/index.rs
     65→    /// The index column is scoped to a physical node.
     66→    Local,
     67→}
-   186→pub enum IndicesDiffItem<'a> {
 
 crates/toasty-core/src/schema/db/migration.rs
      2→pub enum Migration {
@@ -525,7 +477,6 @@ crates/toasty-core/src/schema/db/table.rs
     16→pub struct Table {
     34→pub struct TableId(pub usize);
     53→    pub fn resolve …
-   144→pub enum TablesDiffItem<'a> {
 
 crates/toasty-core/src/schema/db/ty.rs
     63→pub enum Type {
@@ -547,17 +498,6 @@ crates/toasty-core/src/schema/db/ty.rs
     79→    /// 128-bit universally unique identifier (UUID)
     80→    Uuid,
     81→
-    82→    /// Decimal number with optional precision and scale.
-    83→    /// - `None`: Arbitrary-precision decimal
-    84→    /// - `Some((precision, scale))`: Fixed precision and scale
-    85→    Numeric(Option<(u32, u32)>),
-    86→
-    87→    /// Unconstrained binary type
-    88→    Blob,
-    89→
-    90→    /// Fixed-size binary type of `n` bytes
-    91→    Binary(u8),
-    92→
       →…
    111→    pub fn from_app …
    159→    pub fn bridge_type …
@@ -663,6 +603,120 @@ crates/toasty-driver-dynamodb/src/value.rs
     20→    pub fn from_ddb(ty: &stmt::Type, val: &AttributeValue) -> Self {
     44→    pub fn to_ddb(&self) -> AttributeValue {
 
+crates/toasty-driver-integration-suite/Cargo.toml
+     1→[package]
+     7→[dependencies]
+
+crates/toasty-driver-integration-suite/src/exec_log.rs
+     9→pub struct ExecLog {
+    19→    pub fn len …
+    24→    pub fn is_empty …
+    29→    pub fn clear …
+    36→    pub fn pop …
+
+crates/toasty-driver-integration-suite/src/helpers.rs
+     2→pub fn table_id …
+    29→pub fn column …
+    38→pub fn columns …
+
+crates/toasty-driver-integration-suite/src/isolate.rs
+     9→pub struct Isolate {
+    19→    pub fn new …
+    27→    pub fn table_prefix …
+
+crates/toasty-driver-integration-suite/src/lib.rs
+     2→mod macros;
+    24→/// Test implementations
+    25→pub mod tests;
+
+crates/toasty-driver-integration-suite/src/logging_driver.rs
+    14→pub struct LoggingDriver {
+    23→    pub fn new …
+    31→    pub fn ops_log_handle …
+    63→pub struct DriverOp {
+    70→pub struct LoggingConnection {
+
+crates/toasty-driver-integration-suite/src/macros.rs
+     1→#[macro_export]
+     2→macro_rules! assert_eq_unordered {
+
+crates/toasty-driver-integration-suite/src/setup.rs
+     4→pub trait Setup: Send + Sync + 'static {
+     6→    fn driver …
+    10→    async fn delete_table …
+
+crates/toasty-driver-integration-suite/src/stmt.rs
+    11→pub struct Any;
+    28→pub trait ValueStreamExt {
+    34→    fn buffered …
+
+crates/toasty-driver-integration-suite/src/suite.rs
+     5→pub struct IntegrationSuite {
+    10→    pub fn new …
+
+crates/toasty-driver-integration-suite/src/test.rs
+    14→static TEST_LOCK …
+    19→pub struct Test {
+    39→    pub fn new …
+    56→    pub async fn try_setup_db …
+    77→    pub async fn setup_db …
+    82→    pub fn capability …
+    87→    pub fn log …
+    92→    pub fn set_serial …
+    97→    pub fn run …
+   127→pub struct TestResult {
+
+crates/toasty-driver-integration-suite-macros/Cargo.toml
+     1→[package]
+     7→[lib]
+    10→[dependencies]
+
+crates/toasty-driver-integration-suite-macros/src/lib.rs
+    11→pub fn driver_test …
+    16→pub fn generate_test_registry …
+    21→pub fn generate_driver_test_variants …
+    28→pub fn driver_test_cfg …
+
+crates/toasty-driver-integration-suite-macros/src/parse.rs
+     4→pub trait ExpansionList {
+     7→    fn needs_module_wrapper …
+    18→pub struct DriverTest {
+    40→pub enum ThreeValuedBool {
+    41→    True,
+    42→    False,
+    43→    Unknown,
+    44→}
+    48→    pub fn or …
+    57→    pub fn and …
+    66→    pub fn not …
+    77→pub struct Expansion {
+    93→    pub fn name …
+   114→    pub fn is_ident_true …
+   140→    pub fn should_include …
+   203→    pub fn has_expansion …
+   208→    pub fn to_ident …
+   220→pub enum BoolExpr {
+   221→    /// A single identifier (e.g., "single", "auto_increment")
+   222→    Ident(String),
+   223→    /// Logical OR of sub-expressions
+   224→    Or(Vec<BoolExpr>),
+   225→    /// Logical AND of sub-expressions
+   226→    And(Vec<BoolExpr>),
+   227→    /// Logical NOT of a sub-expression
+   228→    Not(Box<BoolExpr>),
+   229→}
+   233→pub enum KindVariant {
+   234→    /// u64 ID type variant
+   235→    IdU64,
+   236→    /// UUID ID type variant
+   237→    IdUuid,
+   238→}
+   242→    pub fn name …
+   252→pub struct DriverTestAttr {
+   263→    pub fn from_attribute …
+   380→    pub fn parse …
+   430→    pub fn from_item_fn …
+
 crates/toasty-driver-mysql/Cargo.toml
      1→[package]
      6→[features]
@@ -709,12 +763,8 @@ crates/toasty-driver-postgresql/src/statement_cache.rs
     10→    inner: LruCache<Key<'static>, Statement>,
     11→}
     15→    pub fn new …
-    21→    pub fn get …
-    27→    pub fn insert …
-    32→    pub async fn prepare_typed …
     49→struct Key<'a> {
     56→    pub fn new …
-    63→    pub fn into_owned …
 
 crates/toasty-driver-postgresql/src/type.rs
      4→pub trait TypeExt {
@@ -741,8 +791,8 @@ crates/toasty-driver-sqlite/src/lib.rs
    123→pub struct Connection {
    124→    connection: RusqliteConnection,
    125→}
-   128→    pub fn in_memory() -> Self {
-   134→    pub fn open<P: AsRef<Path>>(path: P) -> Result<Self> {
+   128→    pub fn in_memory …
+   134→    pub fn open …
 
 crates/toasty-driver-sqlite/src/value.rs
      8→pub struct Value(CoreValue);

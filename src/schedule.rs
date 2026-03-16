@@ -16,7 +16,7 @@ pub enum KindCategory {
     Function, // Function, methods
     Type,     // Struct, Trait, Interface, Class
     Enum,     // Enum variant lists are high-value body content
-    Constant, // Const, Static, TypeAlias
+    Constant, // Const, Static
     Module,   // Module, Namespace
     Section,  // Markdown headings
     Macro,
@@ -302,23 +302,19 @@ fn is_boilerplate_heading(name: &str) -> bool {
     matches!(
         stem,
         "license" | "licence"
-            | "contribute" | "contributing" | "contributors" | "how to contribute"
-            | "modifying and contributing"
-            | "reporting issues" | "reporting bugs"
-            | "submitting pull requests" | "submitting prs"
+            | "contribute" | "contributing" | "contributors"
             | "code of conduct"
-            | "acknowledgments" | "acknowledgements"
-            | "credits" | "credits and acknowledgements" | "credits and acknowledgments"
+            | "acknowledgments" | "acknowledgements" | "credits"
             | "author" | "authors" | "maintainers"
             | "support" | "governance" | "security"
-            | "sponsors" | "backers" | "funding"
+            | "sponsors" | "backers" | "funding" | "donate" | "donations"
             | "changelog" | "release notes" | "releases" | "history"
-            | "related" | "related projects" | "alternatives"
-            | "faq" | "frequently asked questions"
+            | "related" | "alternatives"
+            | "faq"
             | "table of contents" | "contents"
-            | "star history" | "stargazers" | "star gazers"
-            | "development" | "developing" | "local development"
-            | "donate" | "donations" | "community"
+            | "star history" | "stargazers"
+            | "development" | "developing"
+            | "community"
     )
 }
 
@@ -859,10 +855,8 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     };
 
     // Compute effective depth, skipping conventional source root directories
-    // (src/, lib/, pkg/, cmd/) that are purely organizational and don't represent
-    // meaningful hierarchy. Without this, `src/pluggy/_manager.py` (depth 2, factor
-    // 0.7) would be penalized relative to `docs/conf.py` (depth 1, factor 1.0),
-    // even though the source code is more valuable than build configuration.
+    // that are purely organizational. Without this, files under src/ would be
+    // penalized relative to root-level files despite being more valuable.
     let depth = effective_depth(&key.parent_dir);
     let depth_factor = match depth {
         0..=1 => 1.0,
@@ -1601,7 +1595,7 @@ mod tests {
         assert!(is_boilerplate_heading("Acknowledgements"));
         assert!(is_boilerplate_heading("FAQ"));
         assert!(is_boilerplate_heading("Changelog"));
-        assert!(is_boilerplate_heading("Related Projects"));
+        assert!(is_boilerplate_heading("Alternatives"));
         // Non-boilerplate headings
         assert!(!is_boilerplate_heading("Installation"));
         assert!(!is_boilerplate_heading("Usage"));
