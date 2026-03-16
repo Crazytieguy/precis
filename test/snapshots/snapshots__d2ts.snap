@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3997 tokens)
+budget: 4000 (3998 tokens)
 
 README.md
     26→# D2TS - Differential Dataflow in TypeScript <!-- omit in toc -->
@@ -34,10 +34,10 @@ README.md
    678→## Implementation Details
    699→## References
 
+eslint.base.mjs
+
 examples/d2ql/README.md
      1→# D2QL Examples
-     3→This directory contains examples that demonstrate the capabilities of D2QL, a SQL-like query language for D2TS.
-     4→
      5→## Examples
     29→## Running the Examples
     43→## Current D2QL Features
@@ -59,12 +59,6 @@ examples/electric/docker-compose.yml
      1→version: "3.3"
      2→name: "electric_d2_example"
      4→services:
-     5→  postgres:
-      →  …
-
-examples/electric/src/types.ts
-    27→export const IssuePriority = {
-    36→export const IssueStatus = {
 
 packages/d2mini/README.md
      1→# D2Mini is a minimal IVM implementation based on Differential Dataflow
@@ -276,6 +270,12 @@ packages/d2ts/src/d2.ts
    166→export class RootStreamBuilder<T> extends StreamBuilder<T> {
 
 packages/d2ts/src/electric/index.ts
+    40→export interface ElectricStreamToD2InputOptions<T extends Row<unknown> = Row> {
+    41→  /** D2 Graph to send messages to */
+    42→  graph: D2
+    43→  /** The Electric ShapeStream to consume */
+    44→  stream: ShapeStreamInterface<T>
+      →  …
    103→export function electricStreamToD2Input …
    222→export class OutputElectricMessagesOperator<K, V> extends UnaryOperator<
    223→  [K, V]
@@ -367,7 +367,7 @@ packages/d2ts/src/utils.ts
      7→export class WeakRefMap<K, V extends object> {
     31→export class DefaultMap<K, V> extends Map<K, V> {
     49→  update(key: K, updater: (value: V) => V): V {
-    78→function hashReplacer(_key: string, value: any): any {
+    78→function hashReplacer …
     98→export function hash(data: any): string | number {
    126→export class WeakRefBasedFinalizationRegistry {
 

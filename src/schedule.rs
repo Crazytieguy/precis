@@ -559,7 +559,7 @@ pub fn build_groups(
         let is_type_declaration = walk::is_type_declaration_file(relative);
         let is_header = relative.extension()
             .and_then(|e| e.to_str())
-            .is_some_and(|ext| matches!(ext, "h" | "hpp" | "hxx" | "hh"));
+            .is_some_and(walk::is_header_extension);
         let is_autogen = is_autogen_api_doc(source, file_role);
 
         for (symbol_idx, sym) in symbols.iter().enumerate() {
@@ -653,6 +653,20 @@ fn truncation_marker_cost(source_line: &str) -> usize {
     format::count_tokens(&format!("      →{}…\n", indent))
 }
 
+/// Count token costs and truncation marker costs for a range of source lines.
+fn count_line_range(
+    lines: &[&str],
+    start: usize,
+    end: usize,
+    line_tokens: &mut Vec<usize>,
+    marker_tokens: &mut Vec<usize>,
+) {
+    for (i, line) in lines.iter().enumerate().take(end).skip(start) {
+        line_tokens.push(format::count_tokens(&format::fmt_line(i, line)));
+        marker_tokens.push(truncation_marker_cost(line));
+    }
+}
+
 /// Compute token costs for each rendering stage of a single symbol.
 /// Reads all line ranges from the pre-computed layout.
 fn compute_symbol_costs(
@@ -703,36 +717,22 @@ fn compute_symbol_costs(
     let mut doc_line_tokens = Vec::new();
     let mut doc_marker_tokens = Vec::new();
     if layout.doc_start < layout.doc_end {
-        for (i, line) in lines.iter().enumerate().take(layout.doc_end).skip(layout.doc_start) {
-            doc_line_tokens.push(format::count_tokens(&format::fmt_line(i, line)));
-            doc_marker_tokens.push(truncation_marker_cost(line));
-        }
+        count_line_range(lines, layout.doc_start, layout.doc_end, &mut doc_line_tokens, &mut doc_marker_tokens);
     }
     let pre_doc_count = doc_line_tokens.len();
-    // Python docstrings
     if layout.ds_end > layout.ds_start {
-        for (i, line) in lines.iter().enumerate().take(layout.ds_end).skip(layout.ds_start) {
-            doc_line_tokens.push(format::count_tokens(&format::fmt_line(i, line)));
-            doc_marker_tokens.push(truncation_marker_cost(line));
-        }
+        count_line_range(lines, layout.ds_start, layout.ds_end, &mut doc_line_tokens, &mut doc_marker_tokens);
     }
 
     // Body lines — ranges come from layout (already truncated at first child)
     let mut body_line_tokens = Vec::new();
     let mut body_marker_tokens = Vec::new();
-    if is_section {
-        // Markdown: body is content text between headings
-        for (i, line) in lines.iter().enumerate().take(layout.md_section_end).skip(layout.md_content_start) {
-            body_line_tokens.push(format::count_tokens(&format::fmt_line(i, line)));
-            body_marker_tokens.push(truncation_marker_cost(line));
-        }
+    let (body_start, body_end) = if is_section {
+        (layout.md_content_start, layout.md_section_end)
     } else {
-        // Code: body_start..body_end (truncated at first child by layout)
-        for (i, line) in lines.iter().enumerate().take(layout.body_end).skip(layout.body_start) {
-            body_line_tokens.push(format::count_tokens(&format::fmt_line(i, line)));
-            body_marker_tokens.push(truncation_marker_cost(line));
-        }
-    }
+        (layout.body_start, layout.body_end)
+    };
+    count_line_range(lines, body_start, body_end, &mut body_line_tokens, &mut body_marker_tokens);
 
     SymbolCosts {
         file_idx,
@@ -1629,10 +1629,11 @@ mod tests {
         assert!(at_root("fly.toml"));
         assert!(at_path("guide/book.toml")); // tool config in subdirs too
         assert!(at_path("packages/app-server/wrangler.toml"));
-        // Project manifests are NOT config
+        // Cargo.toml is NOT config (dependencies body is useful)
         assert!(!at_root("Cargo.toml"));
-        assert!(!at_root("pyproject.toml"));
         assert!(!at_path("crates/core/Cargo.toml"));
+        // pyproject.toml IS config (body content wastes budget)
+        assert!(at_root("pyproject.toml"));
         // Dotfiles with data-format extensions
         assert!(at_root(".travis.yml"));
         assert!(at_root(".gitlab-ci.yml"));

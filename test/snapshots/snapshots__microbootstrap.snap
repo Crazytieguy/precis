@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (4001 tokens)
 
 README.md
     55→## Table of Contents
@@ -63,6 +63,8 @@ microbootstrap/bootstrappers/base.py
 
 microbootstrap/bootstrappers/fastapi.py
     27→class FastApiBootstrapper …
+    34→    async def _lifespan_manager …
+    42→    async def _wrapped_lifespan_manager …
     58→class FastApiSwaggerInstrument(SwaggerInstrument):
     74→class FastApiCorsInstrument(CorsInstrument):
     93→class FastApiOpentelemetryInstrument(OpentelemetryInstrument):
@@ -97,6 +99,7 @@ microbootstrap/bootstrappers/litestar.py
    223→class LitestarHealthChecksInstrument(HealthChecksInstrument):
 
 microbootstrap/config/fastapi.py
+    20→@dataclasses.dataclass
     21→class FastApiConfig:
     22→    debug: bool = False
     23→    routes: list[BaseRoute] | None = None
@@ -143,6 +146,7 @@ microbootstrap/config/fastapi.py
     64→    separate_input_output_schemas: bool = True
 
 microbootstrap/config/faststream.py
+    20→@dataclasses.dataclass
     21→class FastStreamConfig:
     22→    broker: BrokerUsecase[typing.Any, typing.Any] | None = None
     23→    asgi_routes: typing.Sequence[tuple[str, ASGIApp]] = ()
@@ -158,6 +162,7 @@ microbootstrap/config/faststream.py
     33→    specification: SpecificationFactory | None = None
 
 microbootstrap/config/litestar.py
+    13→@dataclasses.dataclass
     14→class LitestarConfig(AppConfig):
     15→    on_app_init: typing.Sequence[OnAppInitHandler] | None = None
     16→    logging_config: LoggingConfig = dataclasses.field(
@@ -168,6 +173,7 @@ microbootstrap/config/litestar.py
     21→    )
 
 microbootstrap/console_writer.py
+    10→@dataclasses.dataclass
     11→class ConsoleWriter:
     12→    writer_enabled: bool = True
     13→    rich_console: Console = dataclasses.field(init=False, default_factory=Console)
@@ -224,9 +230,9 @@ microbootstrap/instruments/instrument_box.py
     49→    def instruments(self) -> list[Instrument[typing.Any]]:
 
 microbootstrap/instruments/logging_instrument.py
-    26→access_logger …
-    76→STRUCTLOG_PRE_CHAIN_PROCESSORS …
-    92→STRUCTLOG_FORMATTER_PROCESSOR …
+    26→access_logger: typing.Final = structlog.get_logger("api.access")
+    76→STRUCTLOG_PRE_CHAIN_PROCESSORS: typing.Final[list[typing.Any]] = [
+    92→STRUCTLOG_FORMATTER_PROCESSOR: typing.Final = structlog.processors.JSONRenderer(
     97→class MemoryLoggerFactory(structlog.stdlib.LoggerFactory):
    127→class LoggingConfig(BaseInstrumentConfig):
    141→    def remove_trailing_slashes_from_logging_exclude_endpoints(self) -> typing_extensions.Self:
@@ -234,7 +240,8 @@ microbootstrap/instruments/logging_instrument.py
    213→    def get_config_type(cls) -> type[LoggingConfig]:
 
 microbootstrap/instruments/opentelemetry_instrument.py
-    24→LOGGER_OBJ …
+    13→from opentelemetry.sdk …
+    24→LOGGER_OBJ: typing.Final = structlog.get_logger(__name__)
     43→class OpenTelemetryInstrumentor:
     44→    instrumentor: BaseInstrumentor
     45→    additional_params: dict[str, typing.Any] = dataclasses.field(default_factory=dict)
@@ -244,9 +251,9 @@ microbootstrap/instruments/opentelemetry_instrument.py
     99→class BaseOpentelemetryInstrument(Instrument[OpentelemetryConfigT]):
    170→class OpentelemetryInstrument(BaseOpentelemetryInstrument[OpentelemetryConfig]):
    182→    def get_config_type(cls) -> type[OpentelemetryConfig]:
-   186→OTEL_PROFILE_ID_KEY …
-   187→PYROSCOPE_SPAN_ID_KEY …
-   188→PYROSCOPE_SPAN_NAME_KEY …
+   186→OTEL_PROFILE_ID_KEY: typing.Final = "pyroscope.profile.id"
+   187→PYROSCOPE_SPAN_ID_KEY: typing.Final = "span_id"
+   188→PYROSCOPE_SPAN_NAME_KEY: typing.Final = "span_name"
    197→class PyroscopeSpanProcessor(SpanProcessor):
 
 microbootstrap/instruments/prometheus_instrument.py
@@ -264,10 +271,11 @@ microbootstrap/instruments/pyroscope_instrument.py
     53→    def get_config_type(cls) -> type[PyroscopeConfig]:
 
 microbootstrap/instruments/sentry_instrument.py
+    12→from microbootstrap.instruments.base …
     15→class SentryConfig(BaseInstrumentConfig):
-    31→IGNORED_STRUCTLOG_ATTRIBUTES …
-    63→SENTRY_EXTRA_OTEL_TRACE_ID_KEY …
-    64→SENTRY_EXTRA_OTEL_TRACE_URL_KEY …
+    31→IGNORED_STRUCTLOG_ATTRIBUTES: typing.Final = frozenset({"event", "level", "logger", "tracing", "timestamp"})
+    63→SENTRY_EXTRA_OTEL_TRACE_ID_KEY: typing.Final = "otelTraceID"
+    64→SENTRY_EXTRA_OTEL_TRACE_URL_KEY: typing.Final = "otelTraceURL"
     89→class SentryInstrument(Instrument[SentryConfig]):
    123→    def get_config_type(cls) -> type[SentryConfig]:
 
@@ -296,6 +304,7 @@ microbootstrap/middlewares/litestar.py
 microbootstrap/settings.py
     24→ENV_PREFIX_VAR_NAME: typing.Final = "ENVIRONMENT_PREFIX"
     25→ENV_PREFIX: typing.Final = os.getenv(ENV_PREFIX_VAR_NAME, "")
+    28→# TODO: add offline docs and cors support  # noqa: TD002
     29→class BaseServiceSettings(
     30→    pydantic_settings.BaseSettings,
     31→):
@@ -327,28 +336,6 @@ microbootstrap/settings.py
 package.json
 
 pyproject.toml
-     1→[project]
-     2→name = "microbootstrap"
-      →…
-    62→[project.optional-dependencies]
-    63→fastapi = [
-    64→    "fastapi>=0.100",
-    65→    "fastapi-offline-docs>=1",
-    66→    "opentelemetry-instrumentation-fastapi>=0.46b0",
-    67→    "prometheus-fastapi-instrumentator>=6.1",
-    68→]
-    69→litestar = [
-    70→    "litestar>=2.9",
-    71→    "litestar-offline-docs>=1",
-    72→    "prometheus-client>=0.20",
-    73→]
-      →…
-    77→[dependency-groups]
-    78→dev = [
-      →…
-    93→[build-system]
-    94→requires = ["uv_build"]
-      →…
 
 tests/test_helpers.py
     54→class InnerDataclass:

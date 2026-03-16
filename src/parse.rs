@@ -910,7 +910,7 @@ fn is_c_static(node: tree_sitter::Node, source: &str) -> bool {
 /// where the name contains the uppercased filename stem).
 fn is_c_header_guard(node: tree_sitter::Node, source: &str, path: &Path) -> bool {
     let ext = path.extension().and_then(|e| e.to_str()).unwrap_or("");
-    if !matches!(ext, "h" | "hpp" | "hh" | "hxx") {
+    if !crate::walk::is_header_extension(ext) {
         return false;
     }
     // Must have no value (just `#define NAME`, not `#define NAME value`)

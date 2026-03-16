@@ -64,6 +64,9 @@ crates/mdbook-core/Cargo.toml
 
 crates/mdbook-core/README.md
      1→# mdbook-core
+     7→This is the base support library for [mdBook](https://rust-lang.github.io/mdBook/). It is intended for internal use only. Other mdBook crates depend on this for any types that are shared across the crates.
+     8→
+      →…
 
 crates/mdbook-core/src/book.rs
     26→pub struct Book {
@@ -510,9 +513,7 @@ crates/xtask/src/changelog.rs
      3→use super::Result;
 
 examples/nop-preprocessor.rs
-     3→use crate::nop_lib::Nop;
     75→mod nop_lib {
-    76→    use super::*;
     79→    pub struct Nop;
     82→        pub fn new() -> Nop {
 
@@ -520,12 +521,6 @@ examples/remove-emphasis/mdbook-remove-emphasis/Cargo.toml
      1→[package]
      7→[dependencies]
     13→[[bin]]
-
-examples/remove-emphasis/src/SUMMARY.md
-     1→# Summary
-
-examples/remove-emphasis/src/chapter_1.md
-     1→# Chapter 1
 
 guide/guide-helper/Cargo.toml
      1→[package]

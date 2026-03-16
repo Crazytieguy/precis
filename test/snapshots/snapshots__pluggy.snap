@@ -2,17 +2,24 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (3997 tokens)
 
 AGENTS.md
      1→# AGENTS.md
+     3→See @CLAUDE.md for AI coding agent instructions.
 
 CLAUDE.md
      1→# CLAUDE.md
+     3→This file provides guidance to AI coding agents when working with code in this repository.
+     4→
      5→## Project Overview
     10→## Development Commands
+    14→### Testing
+    18→### Code Quality
     22→## Development Process
     32→## Core Architecture
+    34→### Main Components
+    42→### Package Structure
     48→## Configuration Files
 
 codecov.yml
@@ -27,6 +34,8 @@ docs/conf.py
    107→    """Configure Sphinx's WarningHandler to handle (expected) missing include."""
    108→    import logging
    109→
+   110→    import sphinx.util.logging
+   111→
       →…
    130→def setup(app: "sphinx.application.Sphinx") -> None:
    131→    configure_logging(app)
@@ -50,6 +59,9 @@ docs/examples/eggsample/eggsample/lib.py
      5→def eggsample_add_ingredients():
     13→def eggsample_prep_condiments(condiments):
 
+docs/examples/eggsample/setup.py
+     2→from setuptools import setup
+
 docs/examples/eggsample-spam/eggsample_spam.py
      4→@eggsample.hookimpl
      5→def eggsample_add_ingredients(ingredients):
@@ -57,6 +69,7 @@ docs/examples/eggsample-spam/eggsample_spam.py
     15→def eggsample_prep_condiments(condiments):
 
 docs/examples/toy-example.py
+     1→import pluggy
      8→class MySpec:
     10→
     11→    @hookspec
@@ -73,47 +86,30 @@ docs/examples/toy-example.py
 
 pyproject.toml
      1→[build-system]
-     2→requires = [
-     3→  "setuptools>=65.0",
-     4→  "setuptools-scm[toml]>=8.0",
-     5→]
-     6→build-backend = "setuptools.build_meta"
      8→[project]
-     9→name = "pluggy"
-    10→license = {text = "MIT"}
-    11→authors = [{name = "Holger Krekel"}]
-    12→maintainers = [{name="pytest core team", email="core@pytest.org"}]
-    13→classifiers = [
-    14→  "Development Status :: 6 - Mature",
-    15→  "Intended Audience :: Developers",
-    16→  "License :: OSI Approved :: MIT License",
-    17→  "Operating System :: POSIX",
-    18→  "Operating System :: Microsoft :: Windows",
-    19→  "Operating System :: MacOS :: MacOS X",
-    20→  "Topic :: Software Development :: Testing",
-    21→  "Topic :: Software Development :: Libraries",
-    22→  "Topic :: Utilities",
-    23→  "Programming Language :: Python :: Implementation :: CPython",
-    24→  "Programming Language :: Python :: Implementation :: PyPy",
-    25→  "Programming Language :: Python :: 3",
-    26→  "Programming Language :: Python :: 3 :: Only",
-    27→  "Programming Language :: Python :: 3.10",
-    28→  "Programming Language :: Python :: 3.11",
-    29→  "Programming Language :: Python :: 3.12",
-    30→  "Programming Language :: Python :: 3.13",
-    31→  "Programming Language :: Python :: 3.14",
-    32→]
-    33→description = "plugin and hook calling mechanisms for python"
-    34→readme = {file = "README.rst", content-type = "text/x-rst"}
-    35→requires-python = ">=3.10"
-    36→
-    37→dynamic = ["version"]
     38→[dependency-groups]
-    39→dev = ["pre-commit", "tox"]
-    40→testing = ["pytest", "pytest-benchmark", "coverage"]
+    43→[tool.setuptools]
+    49→[tool.ruff.lint]
+    69→[tool.setuptools_scm]
+    71→[tool.uv]
+    74→[tool.towncrier]
+   107→  [[tool.towncrier.type]]
+   112→[tool.mypy]
+
+scripts/release.py
+    15→def create_branch(version: str) -> Repo:
+    30→def get_upstream(repo: Repo) -> Remote:
+    39→def pre_release(version: str) -> None:
+    50→def changelog(version: str, write_out: bool = False) -> None:
+    59→def main() -> int:
+
+scripts/towncrier-draft-to-file.py
+     5→def main() -> int:
 
 src/pluggy/__init__.py
      1→__all__ = [
+     2→    "__version__",
+      →    …
     23→from ._hooks import HookspecOpts
     25→from ._manager import PluginValidationError
     27→from ._result import Result
@@ -121,6 +117,9 @@ src/pluggy/__init__.py
     32→def __getattr__ …
 
 src/pluggy/_callers.py
+     9→from collections.abc import Sequence
+    13→from typing import TypeAlias
+    14→import warnings
     16→from ._hooks import HookImpl
     18→from ._result import Result
     19→from ._warnings import PluggyTeardownRaisedWarning
@@ -133,6 +132,12 @@ src/pluggy/_callers.py
     82→def _multicall …
 
 src/pluggy/_hooks.py
+    11→from collections.abc import Set
+    12→import inspect
+    13→import sys
+    14→from types import ModuleType
+    22→from typing import TypeVar
+    23→import warnings
     25→from ._result import Result
     28→_T = TypeVar("_T")
     29→_F = TypeVar("_F", bound=Callable[..., object])
@@ -268,6 +273,11 @@ src/pluggy/_hooks.py
    709→    def __init__ …
 
 src/pluggy/_manager.py
+     6→from collections.abc import Sequence
+     7→import inspect
+     8→import types
+    13→from typing import TypeAlias
+    14→import warnings
     16→from . import _tracing
     17→from ._callers import _multicall
     27→from ._hooks import normalize_hookimpl_opts
@@ -316,6 +326,9 @@ src/pluggy/_manager.py
    525→def _formatdef …
 
 src/pluggy/_result.py
+     7→from collections.abc import Callable
+     8→from types import TracebackType
+    13→from typing import TypeVar
     16→_ExcInfo: TypeAlias = tuple[type[BaseException], BaseException, TracebackType | None]
     20→class HookCallError(Exception):
     24→@final
@@ -338,6 +351,8 @@ src/pluggy/_result.py
     91→    def get_result …
 
 src/pluggy/_tracing.py
+     8→from collections.abc import Sequence
+     9→from typing import Any
     16→class TagTracer:
     17→    def __init__ …
     22→    def get …
@@ -351,6 +366,7 @@ src/pluggy/_tracing.py
     67→    def get …
 
 src/pluggy/_warnings.py
+     1→from typing import final
      4→class PluggyWarning(UserWarning):
      6→
      7→    __module__ = "pluggy"

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3998 tokens)
+budget: 4000 (3943 tokens)
 
 README.md
     29→## Overview
@@ -40,6 +40,9 @@ demo.py
 py3xui/__init__.py
      2→from py3xui.api.api import Api
 
+py3xui/api/__init__.py
+     2→from py3xui.api.api_client import ClientApi
+
 py3xui/api/api.py
     13→class Api:
     66→
@@ -55,6 +58,8 @@ py3xui/api/api.py
    189→    def login …
 
 py3xui/api/api_base.py
+     5→import logging
+    14→# pylint: disable=too-few-public-methods
     15→class ApiFields:
     17→
     18→    SUCCESS = "success"
@@ -64,6 +69,7 @@ py3xui/api/api_base.py
     22→    NO_IP_RECORD = "No IP Record"
     23→    GET = "GET"
     24→    POST = "POST"
+    27→# pylint: disable=R0902
     28→class BaseApi:
     60→
     61→    def __init__ …
@@ -79,6 +85,7 @@ py3xui/api/api_base.py
    211→    def cookies(self) -> dict[str, str]:
 
 py3xui/api/api_client.py
+     6→import json
     13→class ClientApi(BaseApi):
     51→
     52→    def get_by_email …
@@ -229,7 +236,16 @@ py3xui/client/client.py
     73→
     74→    flow: str = ""
     75→    method: str = ""
-      →    …
+    76→    limit_ip: int = Field(default=0, alias=ClientFields.LIMIT_IP)  # type: ignore
+    77→    sub_id: str = Field(default="", alias=ClientFields.SUB_ID)  # type: ignore
+    78→    comment: str = Field(default="", alias=ClientFields.COMMENT)  # type: ignore
+    79→    tg_id: int | str | None = Field(default="", alias=ClientFields.TG_ID)  # type: ignore
+    80→    total_gb: int = Field(default=0, alias=ClientFields.TOTAL_GB)  # type: ignore
+    81→    uuid: str | None = Field(default=None, alias=ClientFields.UUID)  # type: ignore
+    82→
+    83→    model_config = ConfigDict(
+    84→        populate_by_name=True,
+    85→    )
 
 py3xui/inbound/bases.py
      9→class JsonStringModel(BaseModel):
@@ -376,30 +392,5 @@ py3xui/utils/env.py
 
 pyproject.toml
      1→[build-system]
-     2→requires = ["setuptools>=42", "wheel"]
-     3→build-backend = "setuptools.build_meta"
      5→[project]
-     6→name = "py3xui"
-     7→version = "0.5.0"
-     8→description = "Sync and Async Object-oriented Python SDK for the 3x-ui app."
-     9→authors = [{name = "iwatkot", email = "iwatkot@gmail.com"}]
-    10→license = {text = "MIT License"}
-    11→readme = "README.md"
-    12→keywords = ["vpn", "3x-ui", "sdk", "api"]
-    13→classifiers = [
-    14→    "Programming Language :: Python :: 3.11",
-    15→    "Programming Language :: Python :: 3.12",
-    16→    "License :: OSI Approved :: MIT License",
-    17→    "Operating System :: OS Independent",
-    18→]
-    19→dependencies = [
-    20→    "pydantic>=2.0.0",
-    21→    "requests>=2.0.0",
-    22→    "httpx>=0.20.0",
     25→[project.urls]
-    26→Homepage = "https://github.com/iwatkot/py3xui"
-    27→Repository = "https://github.com/iwatkot/py3xui"
-
-tests/test_api.py
-
-tests/test_async_api.py

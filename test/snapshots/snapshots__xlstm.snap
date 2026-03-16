@@ -20,24 +20,10 @@ README.md
    297→## Experiments
    312→## Citation
 
-experiments/data/formal_language/formal_language_dataset.py
-    42→class FormLangDatasetConfig(FormLangDatasetConfigBase):
-    43→    shift: int = 1
-    44→    enable_mask: bool = False
-    45→    additional_prefix_tokens: int = (
-    46→        0  # e.g. adding [CLS]... before for global attention memory
-    47→    )
-    48→    additional_suffix_tokens: int = (
-      →    …
-
 experiments/lr_scheduler.py
-    14→    def get_lr(self) -> list[float]:
-    19→    def reinitialize(self, **kwargs) -> None:
-    34→    def compute_lr(step, warmup_steps, decay_until_step, max_lr, min_lr):
-
-experiments/main.py
-    21→dataset_registry …
-    25→torch_dtype_map …
+    14→    def get_lr …
+    19→    def reinitialize …
+    34→    def compute_lr …
 
 experiments/parity_xlstm01.yaml
      1→training:
@@ -53,11 +39,6 @@ experiments/parity_xlstm11.yaml
      1→training:
     16→model:
     29→dataset:
-
-pyproject.toml
-     1→[build-system]
-     5→[project]
-    50→[project.urls]
 
 xlstm/__init__.py
      1→__version__ = "2.0.5"
@@ -134,6 +115,15 @@ xlstm/blocks/slstm/cell.py
     81→    )
     82→
     83→    num_gates: int = 4
+    84→    # this option cuts of the gradient for recurrent connection, i.e. no exploding gradient if False
+    85→    gradient_recurrent_cut: bool = False
+    86→    # this option clips the gradient values for recurrent connections at dy
+    87→    gradient_recurrent_clipval: Optional[float] = None
+    88→    # this option clips the y value
+    89→    forward_clipval: Optional[float] = None
+    90→
+    91→    # this can be ignored internally, but may be used to optimize kernels
+    92→    batch_size: int = 8
    122→    def head_dim(self):
    126→    def input_dim(self):
    130→    def torch_dtype(self) -> torch.dtype:
@@ -180,6 +170,7 @@ xlstm/blocks/slstm/src/cuda/slstm.h
     41→#define SLSTM_SIMPLE_AGG true
 
 xlstm/blocks/slstm/src/util/device_assert.h
+    23→__assertfail …
     27→#define device_assert_fail(msg)                                                \
 
 xlstm/blocks/slstm/src/util/support.h
@@ -233,6 +224,8 @@ xlstm/components/feedforward.py
     40→    _num_blocks: int = 1
     41→
     49→class GatedFeedForward(nn.Module):
+
+xlstm/components/init.py
 
 xlstm/components/linear_headwise.py
     13→class LinearHeadwiseExpandConfig:
@@ -332,6 +325,7 @@ xlstm/xlstm_large/model.py
     37→    """Number of blocks."""
     38→    vocab_size: int
     39→    """Vocabulary size."""
+    40→    use_bias: bool = False
       →    …
    112→class xLSTMLarge(nn.Module):
    187→class xLSTMLargeBlockStack(nn.Module):
@@ -345,6 +339,7 @@ xlstm/xlstm_large/model.py
    287→    """Whether to use bias in linear layers."""
    288→    norm_eps: float = 1e-6
    289→    """Epsilon value for numerical stability in the normalization layers."""
+   290→    norm_reduction_force_float32: bool = True
       →    …
    310→class mLSTMLayer(nn.Module):
    455→class mLSTMBlock(nn.Module):

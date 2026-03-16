@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3997 tokens)
+budget: 4000 (3995 tokens)
 
 docs/conf.py
      2→from importlib.metadata import version as get_version
@@ -10,53 +10,14 @@ docs/conf.py
 
 pyproject.toml
      1→[build-system]
-     2→requires = [
-     3→    "setuptools >= 77",
-     4→    "setuptools_scm[toml] >= 6.4"
-     5→]
-     6→build-backend = "setuptools.build_meta"
      8→[project]
-     9→name = "typeguard"
-    10→description = "Run-time type checker for Python"
-    11→readme = "README.rst"
-    12→authors = [{name = "Alex Grönholm", email = "alex.gronholm@nextday.fi"}]
-    13→license = "MIT"
-    14→classifiers = [
-    15→    "Development Status :: 5 - Production/Stable",
-    16→    "Intended Audience :: Developers",
-    17→    "Programming Language :: Python",
-    18→    "Programming Language :: Python :: 3",
-    19→    "Programming Language :: Python :: 3.9",
-    20→    "Programming Language :: Python :: 3.10",
-    21→    "Programming Language :: Python :: 3.11",
-    22→    "Programming Language :: Python :: 3.12",
-    23→    "Programming Language :: Python :: 3.13",
-    24→    "Programming Language :: Python :: 3.14",
-    25→]
-    26→requires-python = ">= 3.9"
-    27→dependencies = [
-    28→    "importlib_metadata >= 3.6; python_version < '3.10'",
-    29→    "typing_extensions >= 4.14.0",
-    30→]
-    31→dynamic = ["version"]
     33→[project.urls]
-    34→Documentation = "https://typeguard.readthedocs.io/en/latest/"
-    35→"Change log" = "https://typeguard.readthedocs.io/en/latest/versionhistory.html"
-    36→"Source code" = "https://github.com/agronholm/typeguard"
-    37→"Issue tracker" = "https://github.com/agronholm/typeguard/issues"
     39→[project.entry-points]
-    40→pytest11 = {typeguard = "typeguard._pytest_plugin"}
     42→[dependency-groups]
-    43→test = [
-    44→    "coverage[toml] >= 7",
-    45→    "pytest >= 7",
-    46→    'mypy >= 1.2.0; python_implementation != "PyPy"',
-    47→]
-    48→doc = [
-    49→    "packaging",
-    50→    "Sphinx >= 7",
-    51→    "sphinx-autodoc-typehints >= 1.2.0",
-    52→    "sphinx-rtd-theme >= 1.3.0",
+    58→[tool.setuptools_scm]
+    78→[tool.ruff]
+    99→[tool.mypy]
+   105→[tool.tox]
 
 src/typeguard/__init__.py
      8→from ._checkers import load_plugins as load_plugins
@@ -133,6 +94,16 @@ src/typeguard/_config.py
     64→    """
     65→     You can change Typeguard's behavior with these settings.
     66→
+    67→    .. attribute:: typecheck_fail_callback
+    68→       :type: Callable[[TypeCheckError, TypeCheckMemo], Any]
+    69→
+    70→         Callable that is called when type checking fails.
+    71→
+    72→         Default: ``None`` (the :exc:`~.TypeCheckError` is raised directly)
+    73→
+    74→    .. attribute:: forward_ref_policy
+    75→       :type: ForwardRefPolicy
+    76→
       →…
     97→
     98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
@@ -194,7 +165,9 @@ src/typeguard/_importhook.py
     18→from ._transformer import TypeguardTransformer
     40→P = ParamSpec("P")
     41→T = TypeVar("T")
-    45→def _call_with_frames_removed …
+    45→def _call_with_frames_removed(
+    46→    f: Callable[P, T], *args: P.args, **kwargs: P.kwargs
+    47→) -> T:
     51→def optimized_cache_from_source …
     55→class TypeguardLoader(SourceFileLoader):
     56→    @staticmethod
@@ -207,7 +180,9 @@ src/typeguard/_importhook.py
     63→        if isinstance(path, (str, PathLike)):
     64→            filename = path
     65→        else:
-      →        …
+    66→            filename = os.fsdecode(bytes(path))
+    67→
+      →…
     99→    def exec_module …
    109→class TypeguardFinder(MetaPathFinder):
    119→
@@ -311,7 +286,9 @@ src/typeguard/_transformer.py
    488→class TypeguardTransformer(NodeTransformer):
    489→    def __init__ …
    498→    def generic_visit …
-   517→    def _use_memo …
+   517→    def _use_memo(
+   518→        self, node: ClassDef | FunctionDef | AsyncFunctionDef
+   519→    ) -> Generator[None, Any, None]:
    570→    def _get_import(self, module: str, name: str) -> Name:
    580→    def _convert_annotation(self, annotation: expr | None) -> expr | None:
    596→    def visit_Name …
@@ -345,8 +322,8 @@ src/typeguard/_utils.py
    176→    def __repr__ …
 
 tests/dummymodule.py
-    40→T …
-    41→P …
+    40→T = TypeVar("T", bound="DummyClass")
+    41→P = ParamSpec("P")
     77→class DummyClass(metaclass=Metaclass):
     78→    bar: str
     79→    baz: int
@@ -359,25 +336,45 @@ tests/dummymodule_py312.py
     17→class ParametrizedClass[T]:
 
 tests/mypy/negative.py
-     5→def foo …
-    10→def bar …
-    15→def non_typeguard_checked_func …
-    20→def returns_str …
-    25→def arg_type …
-    30→def ret_type …
+     5→def foo(x: int) -> int:
+    10→def bar(x: int) -> int:
+    15→def non_typeguard_checked_func(x: int) -> int:
+    20→def returns_str() -> str:
+    25→def arg_type(x: int) -> str:
+    30→def ret_type() -> str:
     39→class MyClass:
+    40→    def __init__(self, x: int = 0) -> None:
+    43→    def add(self, y: int) -> int:
+    47→def get_value(c: MyClass) -> int:
+    51→def create_myclass(x: int) -> MyClass:
 
 tests/mypy/positive.py
-     7→def foo …
-    19→def has_valid_arguments …
+     7→def foo(x: str) -> str:
+    11→def takes_callable(f: Callable[[str], str]) -> str:
+    19→def has_valid_arguments(x: int, y: str) -> None:
+    23→def has_valid_return_type(y: str) -> str:
     28→class MyClass:
-    41→def get_value_checked …
-    50→def create_myclass_checked …
+    29→    def __init__(self, x: int) -> None:
+    32→    def add(self, y: int) -> int:
+    36→def get_value(c: MyClass) -> int:
+    41→def get_value_checked(c: MyClass) -> int:
+    45→def create_myclass(x: int) -> MyClass:
+    50→def create_myclass_checked(x: int) -> MyClass:
 
 tests/mypy/test_type_annotations.py
-    69→def chdir_local …
-    79→def test_positive …
-    87→def test_negative …
+     8→POSITIVE_FILE = "positive.py"
+     9→NEGATIVE_FILE = "negative.py"
+    19→def get_mypy_cmd(filename: str) -> list[str]:
+    23→def get_negative_mypy_output() -> str:
+    35→def get_expected_errors() -> dict[int, str]:
+    54→def get_mypy_errors() -> dict[int, str]:
+    69→def chdir_local() -> None:
+    79→def test_positive() -> None:
+    87→def test_negative() -> None:
 
 tests/test_checkers.py
-    79→P …
+    56→from . …
+    79→P = ParamSpec("P")
+
+tests/test_utils.py
+     5→from . …

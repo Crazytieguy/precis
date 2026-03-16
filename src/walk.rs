@@ -91,7 +91,7 @@ fn is_vendored_or_fixture(path: &Path) -> bool {
 pub fn classify_file(path: &Path) -> crate::schedule::FileCategory {
     use crate::schedule::FileCategory;
 
-    // Check directory components for category signals.
+    // Check directory components for category signals (single pass).
     for component in path.components() {
         let s = component.as_os_str();
 
@@ -101,10 +101,8 @@ pub fn classify_file(path: &Path) -> crate::schedule::FileCategory {
         }
 
         // Documentation sites — Docusaurus, Hugo, etc.
-        // Only website/ and site/ are unambiguously doc-site source.
-        // docs/ and doc/ are ambiguous — they often contain valuable API
-        // reference, design docs, or RST files. Let file_role (Readme,
-        // Architecture, etc.) handle content-level differentiation instead.
+        // docs/ and doc/ are ambiguous (often contain valuable API reference),
+        // so only website/ and site/ are classified as doc-site source.
         if s == "website" || s == "site" {
             return FileCategory::DocsSite;
         }
@@ -122,12 +120,10 @@ pub fn classify_file(path: &Path) -> crate::schedule::FileCategory {
         {
             return FileCategory::Test;
         }
-    }
 
-    // Check for test-related segments in compound directory names.
-    // Catches workspace crate names like "foo-test-utils", "my-integration-suite".
-    for component in path.components() {
-        if let Some(name) = component.as_os_str().to_str() {
+        // Compound directory names with test-related segments
+        // (workspace crates like "foo-test-utils", "my-integration-suite")
+        if let Some(name) = s.to_str() {
             if (name.contains('-') || name.contains('_'))
                 && name.split(['-', '_']).any(|seg| {
                     matches!(
@@ -164,6 +160,11 @@ pub fn classify_file(path: &Path) -> crate::schedule::FileCategory {
 /// a boolean (e.g., file discovery filtering).
 pub fn is_test_file(path: &Path) -> bool {
     !matches!(classify_file(path), crate::schedule::FileCategory::Source)
+}
+
+/// Check if a file extension indicates a C/C++ header file.
+pub fn is_header_extension(ext: &str) -> bool {
+    matches!(ext, "h" | "hpp" | "hxx" | "hh")
 }
 
 /// Check if a file is a TypeScript declaration file (.d.ts, .d.mts, .d.cts).

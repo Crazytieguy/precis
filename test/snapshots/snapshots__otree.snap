@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3999 tokens)
+budget: 4000 (4000 tokens)
 
 Cargo.toml
      1→[package]
@@ -29,61 +29,6 @@ docs/actions.md
      3→| Action                    | Default Keys              | Description                                                  |
      4→| ------------------------- | ------------------------- | ------------------------------------------------------------ |
       →…
-
-examples/edge.json
-     2→  "empty_object": {},
-     3→  "empty_list": [],
-     4→  "null": null,
-     5→  "nested_array": [
-
-examples/edge.yaml
-     1→empty_object: {}
-     2→empty_list: []
-     3→null_value: null
-     4→nested_array:
-
-examples/example.json
-     2→  "string": "Hello, World!",
-     3→  "number": 12345,
-     4→  "float": 123.45,
-     5→  "boolean": true,
-     6→  "null": null,
-     7→  "array": [1, "two", 3.0, false, null],
-     8→  "object": {
-    17→  "complex_array": [
-    22→  "complex_object": {
-
-examples/example.yaml
-     3→apiVersion: apps/v1
-     4→kind: Deployment
-     5→metadata:
-     9→spec:
-    40→apiVersion: v1
-    41→kind: Service
-    42→metadata:
-    46→spec:
-    55→apiVersion: v1
-    56→kind: ConfigMap
-    57→metadata:
-    61→data:
-    64→apiVersion: v1
-    65→kind: Secret
-    66→metadata:
-    70→type: Opaque
-    71→data:
-    75→apiVersion: v1
-    76→kind: ServiceAccount
-    77→metadata:
-    81→secrets:
-    84→apiVersion: rbac.authorization.k8s.io/v1
-    85→kind: Role
-    86→metadata:
-    89→rules:
-   106→apiVersion: rbac.authorization.k8s.io/v1
-   107→kind: RoleBinding
-   108→metadata:
-   111→subjects:
-   115→roleRef:
 
 src/clipboard.rs
     28→pub fn write_clipboard …
@@ -371,12 +316,14 @@ src/parse/syntax.rs
    154→}
    157→    pub fn new …
    201→pub fn is_value_complex …
+   216→struct TextWrapper<'a, 'this> {
 
 src/parse/toml.rs
      9→pub struct TomlParser {}
 
 src/parse/xml.rs
     12→pub struct XmlParser {}
+    37→trait AttrMap {
     38→    fn insert_text …
     39→    fn insert_text_node …
     61→struct NodeValues {
@@ -426,11 +373,23 @@ src/ui/app.rs
     91→impl App {
    101→    #[expect(clippy::needless_pass_by_value)]
    102→    pub fn new(cfg: Rc<Config>, tree: Tree, fw: Option<FileWatcher>) -> Self {
+   133→    pub fn set_header …
+   137→    pub fn show …
    279→    fn popup_error …
 
 src/ui/data_block.rs
     16→pub struct DataBlock {
     32→impl DataBlock {
+    35→    pub fn new …
+    50→    pub fn on_key …
+    62→    pub fn on_scroll …
+    69→    pub fn scroll_first …
+    86→    pub fn scroll_last …
+    99→    pub fn scroll_down …
+   112→    pub fn scroll_up …
+   122→    pub fn scroll_right …
+   136→    pub fn scroll_left …
+   147→    pub fn draw …
 
 src/ui/filter.rs
     13→pub struct Filter {
@@ -447,7 +406,14 @@ src/ui/filter.rs
     37→    All,
     38→}
     40→impl Filter {
+    41→    pub fn new …
+    52→    pub fn on_key …
+    94→    pub fn get_options …
+   102→    pub fn set_target …
+   106→    pub fn switch_ignore_case …
+   119→    pub fn draw …
    152→impl FilterOptions {
+   153→    pub fn filter …
 
 src/ui/footer.rs
     10→pub enum FooterText<'a> {
@@ -457,12 +423,17 @@ src/ui/footer.rs
     14→}
     16→pub struct Footer {
     20→impl Footer {
+    21→    pub fn new …
+    25→    pub fn draw …
 
 src/ui/header.rs
     11→pub struct HeaderContext {
     18→impl HeaderContext {
+    19→    pub fn new …
     41→pub struct Header {
     46→impl Header {
+    47→    pub fn new …
+    55→    pub fn draw …
 
 src/ui/mod.rs
      1→mod app;
@@ -472,13 +443,33 @@ src/ui/mod.rs
      5→mod header;
      6→mod popup;
      7→mod tree_overview;
+    35→pub fn start …
 
 src/ui/popup.rs
     13→pub struct PopupData {
     18→pub struct Popup {
     26→impl Popup {
+    27→    pub fn new …
+    35→    pub fn set_data …
+    39→    pub fn on_key …
+    48→    pub fn on_scroll …
+    77→    pub fn disable …
+    87→    pub fn is_disabled …
+    91→    pub fn draw …
    118→    fn centered_rect …
 
 src/ui/tree_overview.rs
     19→pub struct TreeOverview {
     32→impl TreeOverview {
+    36→    pub fn new …
+    51→    pub fn get_selected …
+    59→    pub fn get_root_identifies …
+    63→    pub fn get_value …
+    67→    pub fn get_parser …
+    71→    pub fn on_key …
+   240→    pub fn on_click …
+   247→    pub fn on_scroll …
+   254→    pub fn draw …
+   319→    pub fn begin_filter …
+   325→    pub fn end_filter …
+   335→    pub fn filter …

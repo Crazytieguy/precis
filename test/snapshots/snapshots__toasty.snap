@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7999 tokens)
+budget: 8000 (7996 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -100,14 +100,20 @@ crates/toasty/src/cursor.rs
 
 crates/toasty/src/db/builder.rs
     17→pub struct Builder {
+    35→    pub fn table_name_prefix …
 
 crates/toasty/src/db/connect.rs
     14→pub struct Connect {
-    89→impl Driver for Connect {
 
 crates/toasty/src/db/pool.rs
     18→pub struct PoolConfig {
+    25→    pub fn new …
     41→pub struct Pool {
+    48→    pub fn new …
+    69→    pub fn connect …
+    74→    pub async fn get …
+    84→    pub fn driver …
+    89→    pub fn capability …
     95→struct Manager {
    119→pub struct PoolConnection {
 
@@ -385,6 +391,10 @@ crates/toasty-core/src/macros.rs
      1→#[macro_export]
      2→macro_rules! path {
 
+crates/toasty-core/src/schema/app/auto.rs
+     3→pub enum AutoStrategy {
+     9→pub enum UuidVersion {
+
 crates/toasty-core/src/schema/app/constraint/length.rs
      6→pub struct ConstraintLength {
      7→    /// The minimum length of the field.
@@ -393,6 +403,9 @@ crates/toasty-core/src/schema/app/constraint/length.rs
     10→    /// The maximum length of the field.
     11→    pub max: Option<u64>,
     12→}
+
+crates/toasty-core/src/schema/app/constraint.rs
+     7→pub enum Constraint {
 
 crates/toasty-core/src/schema/app/field/primitive.rs
      4→pub struct FieldPrimitive {
@@ -404,6 +417,12 @@ crates/toasty-core/src/schema/app/field/primitive.rs
     10→    /// This is specified as a hint.
     11→    pub storage_ty: Option<db::Type>,
     12→}
+
+crates/toasty-core/src/schema/app/field.rs
+    54→pub enum FieldTy {
+
+crates/toasty-core/src/schema/app/model.rs
+    23→pub enum ModelKind {
 
 crates/toasty-core/src/schema/builder.rs
     11→pub struct Builder {
@@ -520,7 +539,6 @@ crates/toasty-core/src/stmt.rs
    230→mod value_jiff;
    235→pub mod visit_mut;
    243→pub mod visit;
-   252→#[derive(Clone, PartialEq)]
    253→pub enum Statement {
    254→    /// Delete one or more existing records
    255→    Delete(Delete),
@@ -922,28 +940,6 @@ docs/roadmap/query-constraints.md
    210→## Implementation Considerations
    245→## Reference Implementation Goals
 
-examples/composite-key/Cargo.toml
-     1→[package]
-     7→[features]
-    13→[dependencies]
-
-examples/hello-toasty/Cargo.toml
-     1→[package]
-     7→[features]
-    14→[dependencies]
-
-examples/todo-with-cli/Cargo.toml
-     1→[package]
-     8→[features]
-    15→[dependencies]
-    26→[[bin]]
-
 examples/todo-with-cli/src/lib.rs
      2→pub struct User {
     17→pub struct Todo {
-    35→pub async fn create_db …
-
-examples/user-has-one-profile/Cargo.toml
-     1→[package]
-     7→[features]
-    14→[dependencies]

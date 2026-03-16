@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (3996 tokens)
 
 README.md
     40→## About
@@ -32,6 +32,7 @@ README.md
    111→    - [`P.set`](#pset-patterns)
    112→    - [`P.map`](#pmap-patterns)
    113→    - [`P.when` patterns](#pwhen-patterns)
+   114→    - [`P.not` patterns](#pnot-patterns)
       →    …
    128→## Sandbox examples
    139→## Getting Started
@@ -74,9 +75,6 @@ docs/v4-to-v5-migration-guide.md
    122→### Global methods
    156→## Variadic tuple patterns
    214→## `.returnType`
-
-examples/gif-fetcher/src/constants.ts
-     1→export const API_KEY = 'xxxxxxxxxxxxxxxx';
 
 jsr.json
      2→  "name": "@gabriel/ts-pattern",

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3999 tokens)
+budget: 4000 (3997 tokens)
 
 README.md
      3→# Swarm (experimental, educational)
@@ -207,13 +207,7 @@ examples/personal_shopper/README.md
      5→In this example, we also use a Sqlite3 database with customer information and transaction data.
      6→
      7→## Overview
-     9→The personal shopper example includes three main agents to handle various customer service requests:
-    10→
-      →…
     15→## Setup
-    17→Once you have installed dependencies and Swarm, run the example using:
-    18→
-      →…
 
 examples/personal_shopper/database.py
      7→def get_connection():
@@ -352,8 +346,6 @@ examples/weather_agent/evals.py
 
 pyproject.toml
      1→[build-system]
-     2→requires = ["setuptools"]
-     3→build-backend = "setuptools.build_meta"
 
 swarm/__init__.py
      1→from .core import Swarm
@@ -362,6 +354,9 @@ swarm/__init__.py
 
 swarm/core.py
      2→import copy
+     3→import json …
+     4→from collections …
+     5→from typing …
      8→from openai import OpenAI
     12→from .util import function_to_json, debug_print, merge_chunk
     13→from .types import (
@@ -386,8 +381,8 @@ swarm/repl/__init__.py
      1→from .repl import run_demo_loop
 
 swarm/repl/repl.py
-     1→import json …
-     3→from swarm …
+     1→import json
+     3→from swarm import Swarm
      6→def process_and_print_streaming_response(response):
     37→def pretty_print_messages(messages) -> None:
     60→def run_demo_loop(
@@ -395,6 +390,9 @@ swarm/repl/repl.py
     62→) -> None:
 
 swarm/types.py
+     1→from openai.types.chat …
+     2→from openai.types.chat.chat_completion_message_tool_call …
+     6→from typing …
      9→from pydantic import BaseModel
     14→class Agent(BaseModel):
     15→    name: str = "Agent"
@@ -419,6 +417,8 @@ swarm/types.py
     41→    context_variables: dict = {}
 
 swarm/util.py
+     1→import inspect …
+     2→from datetime …
      5→def debug_print …
     13→def merge_fields …
     21→def merge_chunk …
@@ -431,3 +431,5 @@ tests/test_core.py
      7→DEFAULT_RESPONSE_CONTENT = "sample response content"
     10→@pytest.fixture
     11→def mock_openai_client():
+
+tests/test_util.py
