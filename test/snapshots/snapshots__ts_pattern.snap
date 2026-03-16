@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4010 tokens)
+budget: 4000 (4005 tokens)
 
 README.md
     40→## About
@@ -20,8 +20,7 @@ README.md
   1621→## Types
   1766→## Inspirations
 
-benchmarks/
-      →…
+benchmarks/package.json
 
 docs/v3-to-v4-migration-guide.md
      1→# TS-Pattern v3 to v4 Migration Guide
@@ -45,15 +44,11 @@ examples/gif-fetcher/public/index.html
      1→<!DOCTYPE html>
      2→<html lang="en">
      3→  <head>
-      →  …
+     4→    <meta charset="utf-8" />
+      →    …
 
-examples/gif-fetcher/src/styles.css
-     1→body {
-     2→  margin: 0;
-     3→}
-     4→
-     5→* {
-      →…
+examples/gif-fetcher/src/constants.ts
+     1→export const API_KEY = 'xxxxxxxxxxxxxxxx';
 
 jsr.json
      2→  "name": "@gabriel/ts-pattern",
@@ -69,6 +64,8 @@ scripts/generate-cts.sh
 src/errors.ts
      5→export class NonExhaustiveError extends Error {
      6→  constructor …
+
+src/index.ts
 
 src/internals/helpers.ts
     12→export const isObject …

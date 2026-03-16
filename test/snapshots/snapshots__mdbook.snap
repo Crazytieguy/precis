@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (8005 tokens)
+budget: 8000 (8003 tokens)
 
 README.md
      1→# mdBook
@@ -176,6 +176,8 @@ crates/mdbook-core/src/utils/html.rs
 
 crates/mdbook-core/src/utils/mod.rs
      7→pub mod fs;
+    15→/// Defines a `static` with a [`regex::Regex`].
+    16→#[macro_export]
     17→macro_rules! static_regex {
     29→pub fn log_backtrace …
 
@@ -242,6 +244,7 @@ crates/mdbook-driver/src/lib.rs
     67→pub mod builtin_preprocessors;
     68→pub mod builtin_renderers;
     69→pub mod init;
+    75→pub use mdbook_core::{book, config, errors};
 
 crates/mdbook-driver/src/mdbook.rs
     29→pub struct MDBook {
@@ -292,27 +295,6 @@ crates/mdbook-html/Cargo.toml
 crates/mdbook-html/README.md
      1→# mdbook-html
 
-crates/mdbook-html/front-end/css/ayu-highlight.css
-     1→/*
-
-crates/mdbook-html/front-end/css/chrome.css
-     1→/* CSS for UI elements (a.k.a. chrome) */
-
-crates/mdbook-html/front-end/css/general.css
-     1→/* Base styles and content styles */
-
-crates/mdbook-html/front-end/css/highlight.css
-     1→/*
-
-crates/mdbook-html/front-end/css/print.css
-     1→
-
-crates/mdbook-html/front-end/css/tomorrow-night.css
-     1→/* Tomorrow Night Theme */
-
-crates/mdbook-html/front-end/css/variables.css
-     1→
-
 crates/mdbook-html/front-end/images/favicon.svg
      1→<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 199.7 184.2">
      2→  <style>
@@ -324,17 +306,20 @@ crates/mdbook-html/front-end/images/favicon.svg
 
 crates/mdbook-html/src/html/tree.rs
     33→pub(crate) enum Node {
+   130→    /// Converts self to a [`StrTendril`].
    131→    fn into_tendril(self) -> StrTendril;
    150→enum TableState {
 
 crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
     22→pub struct HtmlHandlebars;
+    25→    /// Returns a new instance of [`HtmlHandlebars`].
     26→    pub fn new() -> Self {
 
 crates/mdbook-html/src/lib.rs
      5→pub mod theme;
 
 crates/mdbook-html/src/theme/mod.rs
+    12→pub(crate) mod searcher;
     40→pub struct Theme {
     41→    pub(crate) index: Vec<u8>,
     42→    pub(crate) head: Vec<u8>,
@@ -408,6 +393,7 @@ crates/mdbook-markdown/src/lib.rs
     29→    /// This is `true` by default.
     30→    pub admonitions: bool,
     31→}
+    34→    fn default() -> MarkdownOptions {
     43→/// Creates a new pulldown-cmark parser of the given text.
     44→pub fn new_cmark_parser<'text>(text: &'text str, options: &MarkdownOptions) -> Parser<'text> {
 
@@ -507,6 +493,7 @@ crates/mdbook-renderer/src/lib.rs
     59→    #[serde(skip)]
     60→    pub chapter_titles: HashMap<PathBuf, String>,
     61→}
+    63→impl RenderContext {
     65→    pub fn new<P, Q>(root: P, book: Book, config: Config, destination: Q) -> RenderContext
     66→    where
     67→        P: Into<PathBuf>,
@@ -575,7 +562,7 @@ crates/mdbook-summary/src/lib.rs
    127→    /// A part title.
    128→    PartTitle(String),
    129→}
-   173→struct SummaryParser …
+   173→struct SummaryParser<'a> {
    190→macro_rules! collect_events {
 
 crates/xtask/Cargo.toml
@@ -627,6 +614,8 @@ guide/src/SUMMARY.md
 
 guide/src/cli/README.md
      1→# Command-line tool
+     3→The `mdbook` command-line tool is used to create and build books.
+      →…
 
 guide/src/cli/build.md
      1→# The build command
@@ -826,7 +815,8 @@ src/cmd/watch.rs
 
 src/main.rs
     14→mod cmd;
-    58→fn create_clap_command …
+    16→const VERSION …
+    58→fn create_clap_command() -> Command {
 
 tests/
       →…

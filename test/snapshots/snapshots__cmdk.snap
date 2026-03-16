@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3996 tokens)
+budget: 4000 (3998 tokens)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -246,7 +246,12 @@ cmdk/src/command-score.ts
       →  …
 
 cmdk/src/index.tsx
+     3→import * as RadixDialog from '@radix-ui/react-dialog'
+     4→import * as React from 'react'
      5→import { commandScore } from './command-score'
+     6→import { Primitive } from '@radix-ui/react-primitive'
+     7→import { useId } from '@radix-ui/react-id'
+     8→import { composeRefs } from '@radix-ui/react-compose-refs'
     10→type Children …
     11→type DivProps …
     13→type LoadingProps …
@@ -286,14 +291,14 @@ cmdk/src/index.tsx
    899→const Empty …
    909→const Loading …
    930→const pkg …
-   963→function findNextSibling …
+   963→function findNextSibling(el: Element, selector: string) {
    972→function findPreviousSibling …
    981→function useAsRef …
    991→const useLayoutEffect …
    993→function useLazyRef …
-  1004→function useCmdk …
+  1004→function useCmdk<T = any>(selector: (state: State) => T): T {
   1010→function useValue …
-  1046→const useScheduleLayoutEffect …
+  1046→const useScheduleLayoutEffect = () => {
   1061→function renderChildren …
   1071→function SlottableWithNestedChildren …
   1081→const srOnlyStyles …
@@ -309,11 +314,6 @@ pnpm-workspace.yaml
 
 test/pages/_app.tsx
      3→export default function App({ Component, pageProps }) {
-
-test/style.css
-     1→[cmdk-item][aria-selected='true'] {
-     2→  color: red;
-     3→}
 
 tsconfig.json
      2→  "compilerOptions": {
@@ -340,27 +340,15 @@ website/components/cmdk/vercel.tsx
 
 website/components/code/code.module.scss
      1→.root {
-     2→  border-radius: 12px;
-     3→  padding: 16px;
-     4→  backdrop-filter: blur(10px);
-     5→  border: 1px solid var(--gray6);
-     6→  position: relative;
-     7→  line-height: 16px;
-     8→  background: var(--lowContrast);
-     9→  white-space: pre-wrap;
-      →  …
 
 website/components/code/index.tsx
+     7→const theme = {
     41→export function Code({ children }: { children: string }) {
 
 website/components/icons/icons.module.scss
      1→.blurLogo {
      2→  display: flex;
      3→  align-items: center;
-     4→  justify-content: center;
-     5→  position: relative;
-     6→  border-radius: 4px;
-     7→  overflow: hidden;
       →  …
 
 website/components/icons/index.tsx
@@ -384,35 +372,35 @@ website/pages/_document.tsx
      6→  render() {
 
 website/pages/index.tsx
+    20→type TTheme …
+    25→type Themes …
     29→export default function Index() {
    101→function InstallButton() {
    139→const themes = [
    262→function Codeblock() {
    296→function VersionBadge() {
 
-website/styles/cmdk/framer.scss
-     1→.framer {
+website/public/favicon.svg
+     1→<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
 
-website/styles/cmdk/linear.scss
-     1→.linear {
+website/public/grid.svg
+     1→
 
-website/styles/cmdk/raycast.scss
-     1→.raycast {
+website/public/line.svg
+     1→<svg width="80" height="16" viewBox="0 0 80 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 
-website/styles/cmdk/vercel.scss
-     1→.vercel {
+website/public/robots.txt
+     1→User-agent: *
+     2→Disallow:
+
+website/public/vercel.svg
+     1→<svg width="283" height="64" viewBox="0 0 283 64" fill="none" 
 
 website/styles/globals.scss
      1→@font-face {
-     2→  font-family: 'Inter';
-     3→  font-style: normal;
-      →  …
 
 website/styles/index.module.scss
      1→.main {
-     2→  width: 100vw;
-     3→  min-height: 100vh;
-      →  …
 
 website/vercel.json
      2→  "headers": [

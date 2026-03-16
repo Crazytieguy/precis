@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4015 tokens)
+budget: 4000 (4014 tokens)
 
 README.md
      7→# Soluna
@@ -167,6 +167,7 @@ src/data/settingdefault.dl
      8→service_path : "./?.lua"
      9→width : 1024
     10→height : 768
+    11→high_dpi : false
       →…
 
 src/font_define.h
@@ -331,6 +332,9 @@ src/platform/wasm/soluna_wasm_ime.h
    231→EMSCRIPTEN_KEEPALIVE void
    232→soluna_wasm_block_next_keypair(void) {
 
+src/platform/windows/soluna_windows_ime.c
+     1→#define WIN32_LEAN_AND_MEAN
+
 src/platform/windows/soluna_windows_ime.h
      4→void soluna_win32_install_wndproc(void);
      5→void soluna_win32_apply_ime_rect(void);
@@ -365,8 +369,6 @@ src/service/start.lua
     58→-- external message from soluna host
     59→function S.external(p)
     60→	local what, arg1, arg2 = message_unpack(p)
-
-src/sprite_submit.h
 
 src/spritemgr.h
      7→#define INVALID_TEXTUREID 0xffff
@@ -421,11 +423,6 @@ src/yogaone.cpp
 
 test/
       →…
-
-web/assets/site.css
-     1→@font-face {
-     2→  font-family: "Soluna Sans";
-      →  …
 
 web/layouts/_default/baseof.html
      1→<!DOCTYPE html>

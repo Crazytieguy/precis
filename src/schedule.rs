@@ -411,6 +411,23 @@ fn is_config_file(relative_path: &Path, filename: &str) -> bool {
         return true;
     }
 
+    // Dockerfiles (with or without extension variants like Dockerfile.prod)
+    if lower.starts_with("dockerfile") {
+        return true;
+    }
+
+    // Web asset and metadata files — committed but not source code.
+    match lower.as_str() {
+        "robots.txt" | "humans.txt" | "sitemap.xml" | "favicon.ico"
+        | "site.webmanifest" | "manifest.json" | "browserconfig.xml" => return true,
+        _ => {}
+    }
+
+    // Stylesheets are styling, not architecture. Deprioritize so source code wins.
+    if matches!(ext, Some("css" | "scss" | "sass" | "less")) {
+        return true;
+    }
+
     // Specific well-known repo management config files that don't match
     // the patterns above (not TOML, not dotfiles, no *-config pattern).
     match lower.as_str() {

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7999 tokens)
+budget: 8000 (8000 tokens)
 
 README.md
     26→## Introduction
@@ -25,28 +25,6 @@ README.md
    184→### Hosting
    188→### Inspiration
    194→## Contact Information
-
-Dockerfile
-     1→# Base image is node:22-slim, we cannot use node:22-alpine because of
-     2→# a known issue for arm/v7 architecture (hangs on dependency installation)
-     3→# see https://github.com/nodejs/docker-node/issues/2077
-     4→FROM node:22-slim AS builder
-     5→
-     6→# Set the working directory for the app
-     7→WORKDIR /app
-     8→
-      →…
-
-Dockerfile.rootless
-     1→# Base image is node:22-slim, we cannot use node:22-alpine because of
-     2→# a known issue for arm/v7 architecture (hangs on dependency installation)
-     3→# see https://github.com/nodejs/docker-node/issues/2077
-     4→FROM node:22-slim AS builder
-     5→
-     6→# Set the working directory for the app
-     7→WORKDIR /app
-     8→
-      →…
 
 packages/app-client/.env.example
      1→VITE_BASE_API_URL=http://localhost:8787
@@ -102,52 +80,14 @@ packages/app-client/index.html
     14→    
     15→    <!-- Open Graph / Facebook -->
     16→    <meta property="og:type" content="website">
+    17→    <meta property="og:url" content="https://enclosed.cc/">
       →    …
-
-packages/app-client/public/humans.txt
-     1→/* TEAM */
-     2→Developer: Corentin Thomasset
-     3→Site: https://corentin.tech
-     4→Twitter: @cthmsst
-
-packages/app-client/public/robots.txt
-     1→User-agent: *
-     2→Disallow: /
-     3→Allow: /$
-     4→Allow: /og-image.png
-
-packages/app-client/public/site.webmanifest
-     1→{"name":"","short_name":"","icons":[{"src":"/android-chrome-192x192.png","sizes":"192x192","type":"image/png"},{"src":"/android-chrome-512x512.png","sizes":"512x512","type":"image/png"}],"theme_color":"#ffffff","background_color":"#ffffff","display":"standalone"}
 
 packages/app-client/src/app.css
      1→:root {
      2→  --background: 0 0% 100%;
      3→  --foreground: 0 0% 3.9%;
      4→
-     5→  --card: 0 0% 100%;
-     6→  --card-foreground: 0 0% 3.9%;
-     7→
-     8→  --popover: 0 0% 100%;
-     9→  --popover-foreground: 0 0% 3.9%;
-    10→
-    11→  --primary: 0 0% 9%;
-    12→  --primary-foreground: 0 0% 98%;
-    13→
-    14→  --secondary: 0 0% 96.1%;
-    15→  --secondary-foreground: 0 0% 9%;
-    16→
-    17→  --muted: 0 0% 96.1%;
-    18→  --muted-foreground: 0 0% 45.1%;
-    19→
-    20→  --accent: 0 0% 96.1%;
-    21→  --accent-foreground: 0 0% 9%;
-    22→
-    23→  --destructive: 0 84.2% 60.2%;
-    24→  --destructive-foreground: 0 0% 98%;
-    25→
-    26→  --warning: 31 98% 50%;
-    27→  --warning-foreground: 0 0% 98%;
-    28→
       →…
 
 packages/app-client/src/locales/locales.ts
@@ -193,6 +133,13 @@ packages/app-client/src/modules/i18n/i18n.provider.tsx
     36→async function fetchDictionary …
     44→export const I18nProvider: ParentComponent = (props) => {
 
+packages/app-client/src/modules/notes/components/file-uploader.tsx
+     6→const DropArea …
+    62→export const FileUploaderButton …
+
+packages/app-client/src/modules/notes/components/note-password-field.tsx
+     7→export const NotePasswordField …
+
 packages/app-client/src/modules/notes/notes.constants.ts
      1→export const NOTE_ID_REGEX = /[0-7][0-9A-HJKMNP-TV-Z]{25}/i;
 
@@ -214,8 +161,8 @@ packages/app-client/src/modules/shared/style/cn.ts
      5→export const cn = (...classLists: ClassValue[]) => twMerge(clsx(classLists));
 
 packages/app-client/src/modules/shared/utils/copy.tsx
-     6→export function useCopy …
-    19→export const CopyButton …
+     6→export function useCopy() {
+    19→export const CopyButton: ParentComponent<{ text: string; label?: string; copiedLabel?: string } & ComponentProps<typeof Button>> = (props) => {
 
 packages/app-client/src/modules/theme/theme.store.ts
      4→export function useThemeStore() {
@@ -268,6 +215,27 @@ packages/app-server/src/modules/app/config/config.ts
 
 packages/app-server/src/modules/app/config/config.types.ts
      3→export type Config = ReturnType<typeof getConfig>;
+
+packages/app-server/src/modules/app/middlewares/config.middleware.ts
+     6→export function createConfigMiddleware({ config: initialConfig }: { config?: Config } = {}) {
+
+packages/app-server/src/modules/app/middlewares/cors.middleware.ts
+     5→export const corsMiddleware = createMiddleware(async (context: Context, next) => {
+
+packages/app-server/src/modules/app/middlewares/errors.middleware.ts
+     7→export function registerErrorMiddleware({ app }: { app: ServerInstance }) {
+
+packages/app-server/src/modules/app/middlewares/logger.middleware.ts
+     6→export const loggerMiddleware = createMiddleware(async (c, next) => {
+
+packages/app-server/src/modules/app/middlewares/storage.middleware.ts
+     4→export function createStorageMiddleware({ storageFactory }: { storageFactory: BindableStorageFactory }) {
+
+packages/app-server/src/modules/app/middlewares/timeout.middleware.ts
+     5→export const timeoutMiddleware = createMiddleware(async (context: Context, next) => {
+
+packages/app-server/src/modules/app/server.ts
+    19→function createServer …
 
 packages/app-server/src/modules/app/server.types.ts
      5→export type ServerInstanceGenerics = {
@@ -324,6 +292,16 @@ packages/app-server/src/modules/shared/validation/validation.ts
     44→export const validateQuery …
     45→export const validateParams …
 
+packages/app-server/src/modules/storage/factories/cloudflare-kv.storage.ts
+     9→export const KV_VALUE_LENGTH_EXCEEDED_ERROR_CODE = 'storage.kv.value_length_exceeds_limit';
+    11→export const createCloudflareKVStorageFactory = defineBindableStorageFactory(() => {
+
+packages/app-server/src/modules/storage/factories/fs-lite.storage.ts
+     6→export const createFsLiteStorage = defineStorage(({ config }: { config: Config }) => {
+
+packages/app-server/src/modules/storage/factories/memory.storage.ts
+     5→export const createMemoryStorage = defineStorage(() => {
+
 packages/app-server/src/modules/storage/storage.types.ts
      7→export type BindableStorageFactoryArgs = { config: Config; context: Context };
      8→export type BindableStorageFactory = (args: BindableStorageFactoryArgs) => { storage: Storage };
@@ -366,6 +344,11 @@ packages/cli/src/config/config.constants.ts
 packages/cli/src/config/config.models.ts
      7→type ConfigKey …
      8→const config …
+    10→function setConfig …
+    31→function getConfig …
+    57→function deleteConfig …
+    61→function resetConfig …
+    65→function createConfigBindings …
 
 packages/cli/src/create-note/create-note.command.ts
     11→const ONE_HOUR_IN_SECONDS …
@@ -462,6 +445,19 @@ packages/deploy-cloudflare/build.sh
     31→log "Build complete"
 
 packages/docs/package.json
+     2→  "name": "@enclosed/docs",
+     3→  "type": "module",
+     4→  "version": "1.16.0",
+     5→  "packageManager": "pnpm@9.15.0",
+     6→  "description": "Documentation website for Enclosed.",
+     7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
+     8→  "license": "Apache-2.0",
+     9→  "repository": {
+    13→  "keywords": [],
+    14→  "main": "index.js",
+    15→  "scripts": {
+    22→  "dependencies": {
+    25→  "devDependencies": {
 
 packages/docs/src/components/credential-inputs.vue
      1→<script setup>
@@ -557,6 +553,13 @@ packages/docs/src/integrations/versioning.md
      4→
      5→Starting from version `1.5.0`, all the packages of the Enclosed project are aligned to the same version number. So if you are self-hosting an Enclosed instance, you can use the same version number for all the packages.
 
+packages/docs/src/public/humans.txt
+     1→/* TEAM */
+
+packages/docs/src/public/logo-dark.svg
+
+packages/docs/src/public/logo-light.svg
+
 packages/docs/src/public/logos/logo-dark-bg.svg
      1→<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
 
@@ -568,6 +571,9 @@ packages/docs/src/public/logos/logo-light-bg.svg
 
 packages/docs/src/public/logos/logo-light.svg
      1→<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+packages/docs/src/public/robots.txt
+     1→User-agent: *
 
 packages/docs/src/resources/brand-kit.md
      1→# Enclosed Brand Kit
@@ -679,6 +685,7 @@ packages/lib/README.md
     30→console.log(noteUrl);
     31→```
     32→
+    33→## License
     37→## Credits and Acknowledgements
     39→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
 
@@ -751,4 +758,4 @@ pnpm-workspace.yaml
      9→  typescript: ^5.6.2
     10→  vitest: ^3.0.9
     11→  "@vitest/coverage-v8": ^3.0.9
-      →  …
+    12→  "@corentinth/chisels": ^1.2.1
