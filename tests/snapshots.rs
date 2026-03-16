@@ -736,14 +736,6 @@ fn single_file_budget_rust() {
 // Render order: README should appear before other files.
 #[test]
 fn readme_renders_first() {
-    let output = format::render_file_with_budget(
-        200,
-        Path::new("other.rs"),
-        Path::new(""),
-        "pub fn foo() {}\npub fn bar() {}",
-    );
-    // Single-file rendering doesn't have render order to test.
-    // Test with the markdown sample which includes a README.
     let output = format::render_with_budget(
         500,
         Path::new(""),
