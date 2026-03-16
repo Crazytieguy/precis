@@ -31,9 +31,6 @@ api.py
      9→from py3xui.api …
     10→from py3xui.utils …
     13→class Api:
-    14→    """This class provides a high-level interface to interact with the XUI API.
-    15→    Access to the client, inbound, and database APIs is provided through this class.
-      →    …
     66→
     67→    def __init__(
     68→        self,
@@ -44,8 +41,12 @@ api.py
     73→        custom_certificate_path: str | None = None,
     74→        logger: Any | None = None,
     75→    ):  # pylint: disable=R0913, R0917
+    93→    @property
+    94→    def session(self) -> str | None:
    102→    @session.setter
    103→    def session(self, value: str) -> None:
+   115→    @property
+   116→    def cookie_name(self) -> str | None:
    124→    @cookie_name.setter
    125→    def cookie_name(self, value: str | None) -> None:
    139→    @classmethod
@@ -87,7 +88,10 @@ api_base.py
     37→        logger (Any | None): The logger, if not set, a dummy logger is used.
     38→
     39→    Attributes and Properties:
-      →    …
+    40→        host (str): The host of the XUI API.
+    41→        username (str): The username for the XUI API.
+    42→        password (str): The password for the XUI API.
+      →        …
     60→
     61→    def __init__(
     62→        self,
@@ -108,10 +112,16 @@ api_base.py
    105→    def use_tls_verify(self) -> bool:
    112→    @property
    113→    def custom_certificate_path(self) -> str | None:
+   120→    @property
+   121→    def max_retries(self) -> int:
    128→    @max_retries.setter
    129→    def max_retries(self, value: int) -> None:
+   136→    @property
+   137→    def session(self) -> str | None:
    144→    @session.setter
    145→    def session(self, value: str | None) -> None:
+   152→    @property
+   153→    def cookie_name(self) -> str | None:
    160→    @cookie_name.setter
    161→    def cookie_name(self, value: str | None) -> None:
    168→    def login(self, two_factor_code: str | int | None = None) -> None:
@@ -130,9 +140,6 @@ api_client.py
      9→from py3xui.api.api_base …
     10→from py3xui.client …
     13→class ClientApi(BaseApi):
-    14→    """This class provides methods to interact with the clients in the XUI API.
-    15→
-      →…
     51→
     52→    def get_by_email(self, email: str) -> Client | None:
     89→    def get_ips(self, email: str) -> list[str]:
@@ -148,9 +155,6 @@ api_client.py
 api_database.py
      4→from py3xui.api.api_base …
      7→class DatabaseApi(BaseApi):
-     8→    """This class provides methods to interact with the database in the XUI API.
-     9→
-      →…
     31→
     32→    def export(self) -> None:
 
@@ -159,9 +163,6 @@ api_inbound.py
      5→from py3xui.api.api_base …
      6→from py3xui.inbound …
      9→class InboundApi(BaseApi):
-    10→    """This class provides methods to interact with the inbounds in the XUI API.
-    11→
-      →…
     39→
     40→    def get_list(self) -> list[Inbound]:
     71→    def get_by_id(self, inbound_id: int) -> Inbound:
@@ -175,9 +176,6 @@ api_server.py
      3→from py3xui.api.api_base …
      4→from py3xui.server.server …
      7→class ServerApi(BaseApi):
-     8→    """This class provides methods to interact with the server in the XUI API.
-     9→
-      →…
     34→
     35→    def get_db(self, save_path: str) -> None:
     67→    def get_status(self) -> Server:

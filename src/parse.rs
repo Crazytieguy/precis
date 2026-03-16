@@ -716,8 +716,9 @@ fn mark_reexports(symbols: &mut [Symbol]) {
 ///   3. C amalgamation files where embedded deps define the same struct as the main code
 ///
 /// Go is excluded because it allows multiple `init()` functions in one file.
+/// Python is excluded because @property getter/setter pairs share a name.
 fn dedup_overloads(symbols: Vec<Symbol>, lang: Lang) -> Vec<Symbol> {
-    if lang == Lang::Go {
+    if matches!(lang, Lang::Go | Lang::Python) {
         return symbols;
     }
     let mut seen = std::collections::HashSet::new();

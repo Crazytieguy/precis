@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4008 tokens)
+budget: 4000 (4010 tokens)
 
 README.rst
      1→====================================================
@@ -96,6 +96,12 @@ CHANGELOG.rst
      4→
       →…
 
+RELEASING.rst
+     1→Release Procedure
+
+TIDELIFT.rst
+     1→========
+
 changelog/README.rst
 
 codecov.yml
@@ -116,16 +122,10 @@ docs/api_reference.rst
     12→    :show-inheritance:
     13→    :members:
     14→
-    15→.. autodecorator:: pluggy.HookspecMarker
-    16→
-    17→.. autodecorator:: pluggy.HookimplMarker
-    18→
-    19→.. autoclass:: pluggy.HookRelay()
-    20→    :members:
-    21→
-    22→    .. data:: <hook name>
-    23→
       →…
+
+docs/changelog.rst
+     1→.. include:: ../CHANGELOG.rst
 
 docs/conf.py
      1→from importlib …
@@ -172,15 +172,6 @@ docs/index.rst
     11→which are invoked in sequence according to a well defined set of protocols.
     12→
     13→It gives users the ability to extend or modify the behaviour of a
-    14→``host program`` by installing a ``plugin`` for that program.
-    15→The plugin code will run as part of normal program execution, changing or
-    16→enhancing certain aspects of it.
-    17→
-    18→In essence, ``pluggy`` enables function `hooking`_ so you can build
-    19→"pluggable" systems.
-    20→
-    21→Why is it useful?
-    22→*****************
       →…
 
 scripts/
@@ -188,26 +179,15 @@ scripts/
 
 src/pluggy/__init__.py
      1→__all__ = [
-    23→from ._hooks import HookspecOpts
-    25→from ._manager import PluginValidationError
-    27→from ._result import Result
-    29→from ._warnings import PluggyWarning
     32→def __getattr__ …
 
 src/pluggy/_callers.py
-    16→from ._hooks import HookImpl
-    18→from ._result import Result
-    19→from ._warnings import PluggyTeardownRaisedWarning
     22→# Need to distinguish between old- and new-style hook wrappers.
     23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
     24→Teardown: TypeAlias = Generator[None, object, object]
     27→def run_old_style_hookwrapper …
-    60→def _raise_wrapfail …
-    70→def _warn_teardown_exception …
-    82→def _multicall …
 
 src/pluggy/_hooks.py
-    25→from ._result import Result
     28→_T …
     29→_F …
     31→_Namespace …
@@ -251,6 +231,22 @@ src/pluggy/_hooks.py
     86→    __slots__ = ("project_name",)
     87→
     88→    def __init__ …
+    92→    def __call__(
+    93→        self,
+    94→        function: _F,
+    95→        firstresult: bool = False,
+    96→        historic: bool = False,
+    97→        warn_on_impl: Warning | None = None,
+    98→        warn_on_impl_args: Mapping[str, Warning] | None = None,
+    99→    ) -> _F: ...
+   102→    def __call__(  # noqa: F811
+   103→        self,
+   104→        function: None = ...,
+   105→        firstresult: bool = ...,
+   106→        historic: bool = ...,
+   107→        warn_on_impl: Warning | None = ...,
+   108→        warn_on_impl_args: Mapping[str, Warning] | None = ...,
+   109→    ) -> Callable[[_F], _F]: ...
    111→    def __call__ …
    164→@final
    165→class HookimplMarker:
@@ -258,6 +254,26 @@ src/pluggy/_hooks.py
    173→    __slots__ = ("project_name",)
    174→
    175→    def __init__ …
+   179→    def __call__(
+   180→        self,
+   181→        function: _F,
+   182→        hookwrapper: bool = ...,
+   183→        optionalhook: bool = ...,
+   184→        tryfirst: bool = ...,
+   185→        trylast: bool = ...,
+   186→        specname: str | None = ...,
+   187→        wrapper: bool = ...,
+   188→    ) -> _F: ...
+   191→    def __call__(  # noqa: F811
+   192→        self,
+   193→        function: None = ...,
+   194→        hookwrapper: bool = ...,
+   195→        optionalhook: bool = ...,
+   196→        tryfirst: bool = ...,
+   197→        trylast: bool = ...,
+   198→        specname: str | None = ...,
+   199→        wrapper: bool = ...,
+   200→    ) -> Callable[[_F], _F]: ...
    202→    def __call__ …
    281→def normalize_hookimpl_opts …
    290→_PYPY …
@@ -288,15 +304,11 @@ src/pluggy/_hooks.py
    427→        spec_opts: HookspecOpts,
    428→    ) -> None:
    438→    def is_historic …
-   442→    def _remove_plugin …
    449→    def get_hookimpls …
-   453→    def _add_hookimpl …
    477→    def __repr__ …
-   480→    def _verify_all_args_are_provided …
    499→    def __call__ …
    516→    def call_historic …
    543→    def call_extra …
-   577→    def _maybe_apply_history …
    593→class _SubsetHookCaller(HookCaller):
    596→
    612→    def __init__ …
@@ -339,13 +351,8 @@ src/pluggy/_hooks.py
    709→    def __init__ …
 
 src/pluggy/_manager.py
-    16→from . import _tracing
-    17→from ._callers import _multicall
-    27→from ._hooks import normalize_hookimpl_opts
-    28→from ._result import Result
     36→_BeforeTrace …
     37→_AfterTrace …
-    42→def _warn_for_function …
     52→class PluginValidationError(Exception):
     58→
     59→    def __init__ …
@@ -358,7 +365,6 @@ src/pluggy/_manager.py
     83→class PluginManager:
     99→
    100→    def __init__ …
-   114→    def _hookexec …
    125→    def register …
    176→    def parse_hookimpl_opts …
    201→    def unregister …
@@ -373,7 +379,6 @@ src/pluggy/_manager.py
    315→    def get_plugin …
    319→    def has_plugin …
    323→    def get_name …
-   331→    def _verify_hook …
    379→    def check_pending …
    395→    def load_setuptools_entrypoints …
    425→    def list_plugin_distinfo …
@@ -382,7 +387,6 @@ src/pluggy/_manager.py
    450→    def add_hookcall_monitoring …
    487→    def enable_tracing …
    512→    def subset_hook_caller …
-   525→def _formatdef …
 
 src/pluggy/_result.py
     16→_ExcInfo …
@@ -404,8 +408,6 @@ src/pluggy/_tracing.py
     16→class TagTracer:
     17→    def __init__ …
     22→    def get …
-    25→    def _format_message …
-    42→    def _processmessage …
     48→    def setwriter …
     51→    def setprocessor …
     59→class TagTracerSub:

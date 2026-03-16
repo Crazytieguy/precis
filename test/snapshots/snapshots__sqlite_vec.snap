@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3995 tokens)
+budget: 4000 (4000 tokens)
 
 ARCHITECTURE.md
      1→# `sqlite-vec` Architecture
@@ -50,6 +50,7 @@ benchmarks/
 bindings/python/extra_init.py
      6→def serialize_float32(vector: List[float]) -> bytes:
     11→def serialize_int8(vector: List[int]) -> bytes:
+    19→    def register_numpy(db: Connection, name: str, array: npt.NDArray):
     44→    def register_numpy(db: Connection, name: str, array):
 
 bindings/rust/Makefile
@@ -72,8 +73,6 @@ bindings/rust/src/lib.rs
 
 examples/simple-c/Makefile
      1→demo: demo.c
-     2→	gcc \
-      →	…
 
 examples/simple-rust/Cargo.toml
      1→[package]
@@ -99,8 +98,8 @@ reference.yaml
 scripts/
       →…
 
-site/project.data.ts
-    13→  load() {
+site/
+      →…
 
 sqlite-dist.toml
      1→[package]

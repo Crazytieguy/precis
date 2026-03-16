@@ -2,11 +2,12 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1978 tokens)
+budget: 2000 (1999 tokens)
 
 __init__.py
      1→from .baseline import Renderer as _BaselineRenderer
      2→from .default import Renderer as _DefaultRenderer
+     3→from .typing import is_renderer as is_renderer
      4→from .typing import is_streaming_renderer as is_streaming_renderer
 
 baseline.py
@@ -172,6 +173,7 @@ default.py
 
 typing.py
      3→from collections.abc …
+     4→from typing …
      7→    from typing …
      9→    from htmy.typing …
     12→class RendererType(Protocol):

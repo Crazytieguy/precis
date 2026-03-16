@@ -96,8 +96,6 @@ docs/function-components.md
      9→## Function component types
     26→## Creating function components
     41→## Examples
-    80→### Functions
-   150→### Methods
 
 docs/index.md
     10→# `htmy`
@@ -108,13 +106,6 @@ docs/index.md
     33→## Testimonials
     51→## Installation
     63→## Concepts
-    69→### Components
-   167→### Built-in components
-   179→### Rendering
-   211→### Context
-   279→### Formatter
-   291→### Error boundary
-   299→### Sync or async?
    307→## XSS prevention
    316→## AI assistance
    324→## Compatibility and performance
@@ -125,16 +116,11 @@ docs/index.md
 examples/internationalization/app.py
      8→class TranslatedComponent:
     10→
-    11→    async def htmy(self, context: Context) -> Component:
-    34→async def render_hello() -> None:
 
 examples/markdown_customization/app.py
      6→class Page:
-     8→
     36→class PostInfo:
-    38→
     47→class ConversionRules:
-    49→
     51→    def h1 …
     57→    def h2 …
     63→    def ol …
@@ -166,14 +152,10 @@ examples/markdown_essentials/post.md
     19→## Unordered
 
 examples/snippet-slots-fastapi/app.py
-     7→def layout …
     18→class Centered(Fragment):
     20→
-    21→    def htmy …
     28→class RequestHeaders:
     30→
-    31→    def htmy …
-    47→def index_page …
     69→@app.get("/")
       →…
     71→async def index() -> None:
@@ -243,18 +225,32 @@ htmy/function_component.py
     75→
     76→    __slots__ = ()
     77→
-    78→    # -- Function component decorator.
-    79→
-    80→    @overload
     81→    def __call__(self, func: _SyncFunctionComponent[TProps]) -> Callable[[TProps], SyncComponent]: ...
-    82→
-    83→    @overload
     84→    def __call__(self, func: _AsyncFunctionComponent[TProps]) -> Callable[[TProps], AsyncComponent]: ...
-    85→
     86→    def __call__ …
+   142→    def function(self, func: _SyncFunctionComponent[TProps]) -> Callable[[TProps], SyncComponent]: ...
+   145→    def function(self, func: _AsyncFunctionComponent[TProps]) -> Callable[[TProps], AsyncComponent]: ...
    147→    def function …
+   185→    def context_only(
+   186→        self, func: _ContextOnlySyncFunctionComponent
+   187→    ) -> _DecoratedContextOnlySyncFunctionComponent: ...
+   190→    def context_only(
+   191→        self, func: _ContextOnlyAsyncFunctionComponent
+   192→    ) -> _DecoratedContextOnlyAsyncFunctionComponent: ...
    194→    def context_only …
+   235→    def method(
+   236→        self, func: _SyncMethodComponent[TSelf, TProps]
+   237→    ) -> Callable[[TSelf, TProps], SyncComponent]: ...
+   240→    def method(
+   241→        self, func: _AsyncMethodComponent[TSelf, TProps]
+   242→    ) -> Callable[[TSelf, TProps], AsyncComponent]: ...
    244→    def method …
+   306→    def context_only_method(
+   307→        self, func: _SyncFunctionComponent[TSelf]
+   308→    ) -> Callable[[TSelf], SyncComponent]: ...
+   311→    def context_only_method(
+   312→        self, func: _AsyncFunctionComponent[TSelf]
+   313→    ) -> Callable[[TSelf], AsyncComponent]: ...
    315→    def context_only_method …
 
 htmy/html.py
@@ -275,6 +271,8 @@ htmy/i18n.py
     21→class I18nValueError(I18nError): ...
     24→class I18n(ContextAware):
     34→    def __init__ …
+    46→    async def get(self, dotted_path: str, key: str) -> Any: ...
+    49→    async def get(self, dotted_path: str, key: str, **kwargs: Any) -> str: ...
     51→    async def get …
     80→    async def _resolve …
    116→async def load_translation_resource(path: Path) -> TranslationResource:
@@ -283,12 +281,7 @@ htmy/i18n.py
 htmy/io.py
     11→async def load_text_file …
 
-htmy/md/__init__.py
-     2→from .core …
-     6→from .typing …
-
 htmy/md/core.py
-    17→    from .typing …
     20→class MarkdownParser(ContextAware):
     27→
     28→    __slots__ = ("_md",)
@@ -336,15 +329,12 @@ htmy/renderer/context.py
     11→    @classmethod
     12→    def from_context(cls, context: Context) -> RendererType:
     13→        """
-    14→        Returns the renderer instance from the given context.
-    15→
-      →…
+      →        …
 
 htmy/renderer/default.py
     20→class _Node:
     25→    def __init__ …
     36→    def iter_nodes …
-    50→_NodeAndChildContext …
     53→class _ComponentRenderer:
     60→    def __init__ …
    174→    async def run …
@@ -441,40 +431,26 @@ mkdocs.yaml
      6→  name: modern
      7→  palette:
      8→    # Palette toggle for automatic mode
-     9→    - media: "(prefers-color-scheme)"
-    10→      scheme: slate
-      →      …
+      →    …
     33→plugins:
     34→  - search:
     35→      lang: en
     36→  - mkdocstrings:
-    37→      handlers:
-    38→        python:
-      →        …
+      →  …
     41→markdown_extensions:
     42→  - pymdownx.highlight:
     43→      anchor_linenums: true
     44→      line_spans: __span
-    45→      pygments_lang_class: true
-    46→  - pymdownx.inlinehilite
-      →  …
+      →      …
     50→nav:
     51→  - index.md
     52→  - components-guide.md
     53→  - function-components.md
-    54→  - Examples:
-    55→      - Examples: examples/index.md
-      →      …
-
-tests/data/blog-post.md
-     5→# Essential reading
-    15→# Lists
+      →  …
 
 tests/renderer/test_renderer_comparison.py
     61→class WrapAsync:
-    69→class Nested:
     92→class SyncError:
-    97→class AsyncError:
 
 tests/test_function_component.py
     69→class Data:

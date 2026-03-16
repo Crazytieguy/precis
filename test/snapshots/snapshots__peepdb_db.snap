@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1613 tokens)
+budget: 2000 (1621 tokens)
 
 __init__.py
      1→from .base import BaseDatabase
@@ -48,6 +48,7 @@ base.py
     37→    def __exit__(self, exc_type, exc_val, exc_tb):
 
 firebase.py
+     1→import firebase_admin
      2→from firebase_admin import credentials, firestore
      3→from typing import List, Dict, Any
      4→from .base import BaseDatabase
