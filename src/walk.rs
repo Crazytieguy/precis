@@ -124,7 +124,7 @@ pub fn classify_file(path: &Path) -> crate::schedule::FileCategory {
         }
 
         // CI/CD configuration
-        if s == ".github" || s == ".circleci" {
+        if s == ".github" || s == ".circleci" || s == ".gitlab" {
             return FileCategory::CiConfig;
         }
 
