@@ -22,10 +22,17 @@ pub fn discover_source_files(root: &Path) -> Vec<PathBuf> {
 }
 
 fn is_source_file(path: &Path) -> bool {
-    path.extension()
+    // Check extension-based matching first (covers most files)
+    let ext_match = path.extension()
         .and_then(|ext| ext.to_str())
-        .is_some_and(|ext| parse::is_supported_extension(ext) || is_unsupported_code_extension(ext))
-        && !is_lockfile(path)
+        .is_some_and(|ext| parse::is_supported_extension(ext) || is_unsupported_code_extension(ext));
+    if ext_match {
+        return !is_lockfile(path);
+    }
+    // Well-known extensionless files (Makefile, Dockerfile, etc.)
+    path.file_name()
+        .and_then(|n| n.to_str())
+        .is_some_and(|name| matches!(name, "Makefile" | "Dockerfile" | "Vagrantfile" | "Rakefile" | "Gemfile"))
 }
 
 /// Common programming language extensions without tree-sitter support.
