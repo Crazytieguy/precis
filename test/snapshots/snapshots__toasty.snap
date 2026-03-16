@@ -103,6 +103,7 @@ crates/toasty/src/db/builder.rs
 
 crates/toasty/src/db/connect.rs
     14→pub struct Connect {
+    89→impl Driver for Connect {
 
 crates/toasty/src/db/pool.rs
     18→pub struct PoolConfig {
@@ -162,6 +163,7 @@ crates/toasty-cli/Cargo.toml
      7→[dependencies]
 
 crates/toasty-cli/src/config.rs
+     1→use crate::migration::MigrationConfig;
      9→pub struct Config {
     10→    /// Migration-related configuration
     11→    pub migration: MigrationConfig,
@@ -193,6 +195,7 @@ crates/toasty-cli/src/migration/config.rs
     33→}
 
 crates/toasty-cli/src/migration.rs
+    19→use crate::Config;
     25→pub struct MigrationCommand {
     26→    #[command(subcommand)]
     27→    subcommand: MigrationSubcommand,
@@ -377,7 +380,6 @@ crates/toasty-core/src/lib.rs
     10→pub mod schema;
     13→pub mod stmt;
     16→pub type Result<T, E = Error> = core::result::Result<T, E>;
-    18→pub use async_trait::async_trait;
 
 crates/toasty-core/src/macros.rs
      1→#[macro_export]
@@ -773,7 +775,6 @@ crates/toasty-sql/src/stmt/ty.rs
     11→}
 
 crates/toasty-sql/src/stmt.rs
-    43→pub use toasty_core::stmt::*;
     45→#[derive(Debug, Clone)]
     46→pub enum Statement {
     47→    AddColumn(AddColumn),
@@ -946,5 +947,3 @@ examples/user-has-one-profile/Cargo.toml
      1→[package]
      7→[features]
     14→[dependencies]
-
-tests/Cargo.toml

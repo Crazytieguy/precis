@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1991 tokens)
+budget: 2000 (2000 tokens)
 
 README.md
      1→# Enclosed crypto library
@@ -27,10 +27,8 @@ README.md
     24→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
 
 build.config.ts
-     1→import { defineBuildConfig } from 'unbuild';
 
 eslint.config.js
-     1→import antfu from '@antfu/eslint-config';
 
 package.json
      2→  "name": "@enclosed/crypto",
@@ -96,8 +94,6 @@ src/index.node.ts
      4→import { aes256GcmEncryptionAlgorithmDefinition } from './node/encryption-algorithms/crypto.node.aes-256-gcm';
 
 src/index.test.ts
-     1→import { keys, times } from 'lodash-es';
-     2→import { describe, expect, test } from 'vitest';
      3→import * as nodeLib from './index.node';
      4→import * as webLib from './index.web';
 
@@ -121,6 +117,10 @@ src/node/crypto.node.usecases.ts
     21→function generateBaseKey(): { baseKey: Uint8Array } {
     25→function createRandomBuffer({ length = 16 }: { length?: number } = {}): Uint8Array {
     31→async function deriveMasterKey({ baseKey, password = '' }: { baseKey: Uint8Array; password?: string }): Promise<{ masterKey: Uint8Array }> {
+
+src/node/encryption-algorithms/crypto.node.aes-256-gcm.test.ts
+     2→import { runCommonEncryptionAlgorithmTest } from '../../encryption-algorithms/encryption-algorithms.test-utils';
+     3→import { aes256GcmEncryptionAlgorithmDefinition } from './crypto.node.aes-256-gcm';
 
 src/node/encryption-algorithms/crypto.node.aes-256-gcm.ts
      1→import { createCipheriv, createDecipheriv } from 'node:crypto';

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4001 tokens)
+budget: 4000 (4000 tokens)
 
 README.md
     55→## Table of Contents
@@ -234,7 +234,6 @@ microbootstrap/instruments/logging_instrument.py
    213→    def get_config_type(cls) -> type[LoggingConfig]:
 
 microbootstrap/instruments/opentelemetry_instrument.py
-    13→from opentelemetry.sdk …
     24→LOGGER_OBJ …
     43→class OpenTelemetryInstrumentor:
     44→    instrumentor: BaseInstrumentor
@@ -265,7 +264,6 @@ microbootstrap/instruments/pyroscope_instrument.py
     53→    def get_config_type(cls) -> type[PyroscopeConfig]:
 
 microbootstrap/instruments/sentry_instrument.py
-    12→from microbootstrap.instruments.base …
     15→class SentryConfig(BaseInstrumentConfig):
     31→IGNORED_STRUCTLOG_ATTRIBUTES …
     63→SENTRY_EXTRA_OTEL_TRACE_ID_KEY …
@@ -330,6 +328,8 @@ package.json
 
 pyproject.toml
      1→[project]
+     2→name = "microbootstrap"
+      →…
     62→[project.optional-dependencies]
     63→fastapi = [
     64→    "fastapi>=0.100",
@@ -342,10 +342,13 @@ pyproject.toml
     71→    "litestar-offline-docs>=1",
     72→    "prometheus-client>=0.20",
     73→]
-    74→granian = ["granian[reload]>=1"]
       →…
     77→[dependency-groups]
+    78→dev = [
+      →…
     93→[build-system]
+    94→requires = ["uv_build"]
+      →…
 
 tests/test_helpers.py
     54→class InnerDataclass:

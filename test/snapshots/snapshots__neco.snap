@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1996 tokens)
+budget: 2000 (2000 tokens)
 
 README.md
     18→## Features
@@ -23,31 +23,18 @@ README.md
    498→## The scheduler
    504→### Fast context switching
    511→### Thread local runtime
-   579→## License
 
 docs/API.md
      3→# Neco C API
-     5→C API for the Neco coroutine library.
-     6→
-      →…
-    38→### neco_main
-    59→### Neco errors
-   101→### Deadlines and cancelation
 
 docs/README.md
      1→# Neco Documentation
      3→## [API.md](API.md)
      5→The Neco library API reference. This document includes information about each
-     6→type and function and is generated from the [neco.h](../neco.h) and [neco.c](../neco.c)
-     7→source files using a [doxygen](https://www.doxygen.nl) syntax.
-     8→
-     9→To manually generate the document, run the `docs/tools/build-api.sh`.
+      →…
 
 docs/TECHNICAL.md
      1→# Neco Technical Details
-     3→Technical details of the Neco coroutine library.
-     4→
-      →…
 
 docs/assets/API_head.md
      1→# Neco C API
@@ -55,11 +42,6 @@ docs/assets/API_head.md
      4→
       →…
     12→## Table of contents
-    14→- [Programing notes](#programming-notes)
-    15→- [Basic operations](#basic-operations)
-    16→- [Channels](#channels)
-    17→- [Generators](#generators)
-      →…
     34→## Programming notes
 
 examples/README.md
@@ -68,91 +50,50 @@ examples/README.md
      4→
       →…
 
-examples/portscan.c
-
 neco.c
-   163→#include <stdatomic.h>
-   172→struct sco_desc {
-   179→struct sco_symbol {
-   234→struct llco_desc {
-   241→struct llco_symbol {
    294→#define LLCO_NOASM
-   343→struct llco_asmctx {
-   422→struct llco_asmctx {
-   513→struct llco_asmctx {
-   726→struct llco_asmctx {
-   789→struct llco_asmctx {
-   902→struct llco_asmctx {
   1067→enum llco_stack_grows { DOWNWARDS, UPWARDS }; 
-  1122→#include <stdio.h>
-  1124→struct llco {
-  1337→struct llco_dlinfo {
-  1364→struct llco_unwind_context {
   1814→struct sco_link {
-  1819→struct sco {
-  1875→struct sco_map {
-  1899→struct sco_list {
-  2165→struct sco_unwind_context {
-  2215→#include <unistd.h>
-  2229→struct stack_opts {
-  2239→struct stack { char _[32]; };
-  2240→struct stack_mgr { char _[320]; };
-  2247→struct stack_group {
-  2261→struct stack_freed {
-  2267→struct stack_mgr0 {
-  2285→struct stack0 {
-  2632→#include <stdint.h>
-  2648→struct worker_opts {
-  2656→struct worker_entry {
-  2661→struct worker_thread {
-  2672→struct worker {
   2883→#define NECO_POLL_DISABLED
   2957→#define pwhere(str) \
   2963→#define unreachable() \
   2970→#define must(cond) \
-  3033→struct bt_context {
   3248→enum evkind {
   3249→    EVREAD  = 1, // NECO_WAIT_READ
   3250→    EVWRITE = 2, // NECO_WAIT_WRITE
   3251→};
-  3256→struct cleanup {
-  3269→struct colink {
-  3274→struct colist {
   3321→enum cokind { COROUTINE, SELECTCASE };
-  3323→struct coroutine {
   3453→#define error_guard(ret) \
   3466→#define async_error_guard(ret) \
-  3487→struct comap {
-  3522→struct evmap {
   3570→struct runtime {
-  5029→struct ioread {
-  5191→struct iowrite {
   5718→struct neco_chan {
   5736→struct coselectcase {
-  6470→struct getaddrinfo_args {
   7082→struct neco_mutex {
-  7340→struct neco_waitgroup {
-  7489→struct neco_cond {
-  7911→struct bufrd {
-  7917→struct bufwr {
-  7922→struct neco_stream {
-  7933→typedef struct neco_stream neco_stream;
-  8467→struct neco_gen { 
-  8699→struct iowork {
 
 neco.h
     35→int neco_start(void(*coroutine)(int argc, void *argv[]), int argc, ...);
     61→typedef struct neco_chan neco_chan;
     90→typedef struct neco_gen neco_gen;
    113→typedef struct { int64_t _0; intptr_t _1[5]; } neco_mutex;
+   115→#define NECO_MUTEX_INITIALIZER { 0 }
    135→typedef struct { int64_t _0; intptr_t _1[5]; } neco_waitgroup;
+   136→#define NECO_WAITGROUP_INITIALIZER { 0 }
    149→typedef struct { int64_t _0; intptr_t _1[5]; } neco_cond;
+   150→#define NECO_COND_INITIALIZER { 0 }
    169→ssize_t neco_read(int fd, void *data, size_t nbytes);
    188→int neco_setnonblock(int fd, bool nonblock, bool *oldnonblock);
    191→#define NECO_WAIT_READ  1
+   192→#define NECO_WAIT_WRITE 2
    206→int neco_serve(const char *network, const char *address);
    220→int neco_cancel(int64_t id);
+   223→#define NECO_CANCEL_ASYNC      1
+   224→#define NECO_CANCEL_INLINE     2
+   225→#define NECO_CANCEL_ENABLE     3
+   226→#define NECO_CANCEL_DISABLE    4
+   231→#define neco_cleanup_push(routine, arg) {char __neco_handler[32]={0};\
+   233→#define neco_cleanup_pop(execute) __neco_c1(execute);}
    244→#define NECO_CSPRNG 0 // Cryptographically secure pseudorandom number generator
+   245→#define NECO_PRNG   1 // Pseudorandom number generator (non-crypto, faster)
    261→int neco_signal_watch(int signo);
    276→int neco_work(int64_t pin, void(*work)(void *udata), void *udata);
    287→typedef struct neco_stats {
@@ -170,15 +111,37 @@ neco.h
    299→} neco_stats;
    314→void neco_env_setallocator(void *(*malloc)(size_t), void *(*realloc)(void*, size_t), void (*free)(void*));
    341→#define NECO_NANOSECOND  INT64_C(1)
+   342→#define NECO_MICROSECOND INT64_C(1000)
+   343→#define NECO_MILLISECOND INT64_C(1000000)
+   344→#define NECO_SECOND      INT64_C(1000000000)
+   345→#define NECO_MINUTE      INT64_C(60000000000)
+   346→#define NECO_HOUR        INT64_C(3600000000000)
    360→#define NECO_OK              0  ///< Successful result (no error)
+   361→#define NECO_ERROR          -1  ///< System error (check errno)
+   362→#define NECO_INVAL          -2  ///< Invalid argument
+   363→#define NECO_PERM           -3  ///< Operation not permitted
+   364→#define NECO_NOMEM          -4  ///< Cannot allocate memory
+   365→#define NECO_EOF            -5  ///< End of file or stream (neco_stream_*)
+   366→#define NECO_NOTFOUND       -6  ///< No such coroutine (neco_cancel)
+   367→#define NECO_NOSIGWATCH     -7  ///< Not watching on a signal
+   368→#define NECO_CLOSED         -8  ///< Channel is closed
+   369→#define NECO_EMPTY          -9  ///< Channel is empty (neco_chan_tryrecv)
+   370→#define NECO_TIMEDOUT      -10  ///< Deadline has elapsed (neco_*_dl)
+   371→#define NECO_CANCELED      -11  ///< Operation canceled (by neco_cancel)
+   372→#define NECO_BUSY          -12  ///< Resource busy (mutex_trylock)
+   373→#define NECO_NEGWAITGRP    -13  ///< Negative waitgroup counter
+   374→#define NECO_GAIERROR      -14  ///< Error with getaddrinfo (check neco_gai_error)
+   375→#define NECO_UNREADFAIL    -15  ///< Failed to unread byte (neco_stream_unread_byte)
+   376→#define NECO_PARTIALWRITE  -16  ///< Failed to write all data (neco_stream_flush)
+   377→#define NECO_NOTGENERATOR  -17  ///< Coroutine is not a generator (neco_gen_yield)
+   378→#define NECO_NOTSUSPENDED  -18  ///< Coroutine is not suspended (neco_resume)
    396→typedef struct neco_stream neco_stream;
    424→#include <stdio.h>
+   427→#define neco_main \
    446→void __neco_c0(void*,void(*)(void*),void*); 
    447→void __neco_c1(int);
    448→void __neco_exit_prog(int);
-
-tests/README.md
-     1→# Testing
+   453→#define EAI_SYSTEM 11
 
 tests/panic.h
      8→#define pwhere(str) \

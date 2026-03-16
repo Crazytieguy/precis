@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3999 tokens)
+budget: 4000 (3998 tokens)
 
 CONTRIBUTING.md
      1→# Contributing to peepDB
@@ -120,6 +120,11 @@ docs/_config.yml
 
 docs/contributing.md
      6→# 🤝 Contributing to peepDB
+    10→## Steps to Contribute
+    28→## Setting Up Development Environment
+    47→## Code Style
+    54→## Testing
+    63→## Documentation
 
 docs/index.md
      6→# peepDB
@@ -159,17 +164,18 @@ docs/usage.md
     82→## Examples
 
 peepdb/__main__.py
-     1→from .cli …
+     1→from .cli import main
 
 peepdb/cli.py
-     1→import click …
-     2→import json …
-     3→from .core …
-     4→from .config …
-    11→from .exceptions …
-    12→from decimal …
-    13→from datetime …
-    14→import logging …
+     3→from .core import peep_db
+     4→from .config import (
+     5→    get_connection,
+     6→    save_connection,
+     7→    list_connections,
+     8→    remove_connection,
+     9→    remove_all_connections
+    10→)
+    11→from .exceptions import InvalidPassword
     16→class CustomEncoder(json.JSONEncoder):
     17→    def default(self, obj):
     27→def cli():
@@ -181,18 +187,7 @@ peepdb/cli.py
    181→def main():
 
 peepdb/config.py
-     1→import base64 …
-     2→import json …
-     3→import os …
-     4→from dataclasses …
-     5→import logging …
-     7→import click …
-     8→import keyring …
-     9→from cachetools …
-    10→from cryptography.fernet …
-    11→from cryptography.hazmat.primitives …
-    12→from cryptography.hazmat.primitives.kdf.pbkdf2 …
-    13→from .exceptions …
+    13→from .exceptions import InvalidPassword
     15→@dataclass
     16→class KeySecurity:
     17→    KEYRING = "os-keyring"
@@ -216,12 +211,16 @@ peepdb/config.py
    196→def add_key_security():
 
 peepdb/core.py
-     1→from tabulate …
-     2→import logging …
-     3→from typing …
-     4→from datetime …
-     5→from decimal …
-     7→from .db …
+     7→from .db import (
+     8→    MySQLDatabase,
+     9→    PostgreSQLDatabase,
+    10→    MariaDBDatabase,
+    11→    MongoDBDatabase,
+    12→    SQLiteDatabase,
+    13→    FirebaseDatabase,
+    14→    MSSQLDatabase,
+    15→    OracleDatabase
+    16→)
     27→def connect_to_database(db_type: str, host: str, user: str, password: str, database: str, **kwargs):
     56→def peep_db(db_type: str,
     57→            host: str,
@@ -349,5 +348,3 @@ project.toml
     35→[project.optional-dependencies]
     42→[project.urls]
     46→[project.scripts]
-
-setup.py

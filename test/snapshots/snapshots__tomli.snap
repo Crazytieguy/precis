@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (3997 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -81,8 +81,6 @@ benchmark/README.md
     10→## Running
     12→### Against the local Tomli state
     18→### Against the latest Tomli PyPI release
-
-benchmark/data.toml
 
 benchmark/run.py
     15→def benchmark …
@@ -170,6 +168,7 @@ src/tomli/_parser.py
     27→# nested documents cause pure Python to raise RecursionError (which is OK),
     28→# but mypyc binary wheels will crash unrecoverably (not OK). According to
     29→# mypyc docs this will be fixed in the future:
+    30→# https://mypyc.readthedocs.io/en/latest/differences_from_python.html#stack-overflows
       →…
     35→MAX_INLINE_NESTING: Final = sys.getrecursionlimit()
     37→ASCII_CTRL: Final = frozenset(chr(i) for i in range(32)) | frozenset(chr(127))
@@ -273,14 +272,12 @@ tests/__init__.py
      1→# SPDX-License-Identifier: MIT
       →…
      5→__all__ = ("tomllib",)
-     9→import tomli as tomllib
 
 tests/burntsushi.py
     11→def convert(obj):
     42→def normalize(obj: Any) -> Any:
 
 tests/test_data.py
-     5→import json
      9→from . import burntsushi, tomllib
     11→DATA_DIR …
     13→VALID_FILES …
@@ -302,7 +299,6 @@ tests/test_error.py
     92→    def test_tomldecodeerror(self):
 
 tests/test_misc.py
-     5→import copy
     14→from . import tomllib
     17→class TestMiscellaneous(unittest.TestCase):
     18→    def test_load(self):

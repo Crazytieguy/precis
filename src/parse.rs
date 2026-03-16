@@ -711,10 +711,14 @@ fn dedup_overloads(symbols: Vec<Symbol>, lang: Lang) -> Vec<Symbol> {
             *result.last_mut().unwrap() = sym;
             continue;
         }
-        // For non-consecutive duplicates (C #ifdef branches), keep only the first
-        let key = (sym.name.clone(), sym.kind);
-        if !seen.insert(key) {
-            continue;
+        // For non-consecutive type duplicates (C #ifdef branches), keep only the first.
+        // Only applies to types — functions legitimately appear multiple times
+        // (trait methods + impl methods, methods on different types, etc.)
+        if matches!(sym.kind, SymbolKind::Struct | SymbolKind::Enum | SymbolKind::TypeAlias) {
+            let key = (sym.name.clone(), sym.kind);
+            if !seen.insert(key) {
+                continue;
+            }
         }
         result.push(sym);
     }

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7996 tokens)
+budget: 8000 (7995 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -19,6 +19,8 @@ Cargo.toml
 NOTICE.md
      1→## Homebrew
      3→### Sources
+     4→https://github.com/Homebrew/brew
+     5→
 
 README.md
      1→# sps
@@ -140,6 +142,7 @@ sps/src/pipeline/downloader.rs
 
 sps/src/pipeline/planner.rs
     28→struct IntermediatePlan {
+    37→pub(crate) async fn fetch_target_definitions …
    192→    pub fn new …
    526→    pub async fn plan_operations …
 
@@ -464,6 +467,7 @@ sps-common/src/model/tap.rs
 sps-common/src/model/version.rs
     11→pub struct Version(semver::Version);
     14→    pub fn parse …
+    37→    type Err …
 
 sps-common/src/pipeline.rs
     14→pub enum PipelinePackageType {
@@ -635,11 +639,6 @@ sps-core/src/install/bottle/macho.rs
     56→    pub old_path: String,
     57→    pub new_path: String,
     58→}
-    64→pub fn patch_macho_file …
-    74→pub struct SkippedPath {
-    75→    pub old_path: String,
-    76→    pub new_path: String,
-    77→}
     81→pub fn patch_macho_file …
 
 sps-core/src/install/bottle/mod.rs
@@ -794,6 +793,8 @@ sps-net/Cargo.toml
     11→sps-common = "0.1.56"
     12→
       →…
+
+sps-net/src/api.rs
 
 sps-net/src/http.rs
     16→use crate::validation::{validate_url, verify_checksum};

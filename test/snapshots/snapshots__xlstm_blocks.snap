@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1998 tokens)
+budget: 2000 (1999 tokens)
 
 mlstm/backends.py
 
@@ -85,9 +85,6 @@ slstm/cell.py
     88→    # this option clips the y value
     89→    forward_clipval: Optional[float] = None
     90→
-    91→    # this can be ignored internally, but may be used to optimize kernels
-    92→    batch_size: int = 8
-    93→    # input shape from external, definitions see output_shape
    122→    def head_dim(self):
    126→    def input_dim(self):
    130→    def torch_dtype(self) -> torch.dtype:
@@ -120,6 +117,7 @@ slstm/layer.py
 
 slstm/src/cuda/slstm.h
     24→#include "../util/util.h"
+    27→// all needed definitions from external
     28→#define SLSTM_NUM_HEADS 1
     29→#define SLSTM_HIDDEN_SIZE 512
     30→#define SLSTM_BATCH_SIZE 8
@@ -131,6 +129,8 @@ slstm/src/cuda/slstm.h
     36→#define SLSTM_DTYPE_G float
     37→#define SLSTM_DTYPE_S float
     38→#define SLSTM_DTYPE_A float
+    39→// defines whether g = Wx + Ry + b for every gate, enables half the cache for
+    40→// backward
     41→#define SLSTM_SIMPLE_AGG true
 
 slstm/src/cuda_init.py
@@ -140,6 +140,7 @@ slstm/src/cuda_init.py
     60→def load …
 
 slstm/src/util/device_assert.h
+    23→__assertfail …
     27→#define device_assert_fail(msg)                                                \
 
 slstm/src/util/support.h

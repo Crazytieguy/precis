@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3981 tokens)
+budget: 4000 (3987 tokens)
 
 Cargo.toml
      1→[package]
@@ -50,8 +50,6 @@ README.md
    211→## Comparison to anyhow
 
 build/probe.rs
-     8→use core::error::{Error, Request};
-     9→use core::fmt::{self, Debug, Display};
     11→struct MyError(Thing);
     12→struct Thing;
     14→impl Debug for MyError {
@@ -60,6 +58,8 @@ build/probe.rs
     21→    fn fmt …
     26→impl Error for MyError {
     27→    fn provide …
+
+build.rs
 
 impl/Cargo.toml
      1→[package]
@@ -101,6 +101,7 @@ impl/src/ast.rs
     51→    UnitVariant,
     52→}
     55→    pub fn from_syn(node: &'a DeriveInput) -> Result<Self> {
+   175→    fn fmt …
 
 impl/src/attr.rs
     11→pub struct Attrs<'a> {
@@ -148,6 +149,8 @@ impl/src/attr.rs
     66→    UpperExp,
     67→}
     69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
+   303→    fn to_tokens …
+   343→    fn to_tokens …
 
 impl/src/expand.rs
      1→use crate::ast::{Enum, Field, Input, Struct};
@@ -198,6 +201,7 @@ impl/src/lib.rs
     42→    expand::derive(&input).into()
     43→}
     46→struct private;
+    49→    fn to_tokens …
 
 impl/src/prop.rs
      1→use crate::ast::{Enum, Field, Struct, Variant};
@@ -215,12 +219,24 @@ impl/src/unraw.rs
     15→    pub fn new(ident: Ident) -> Self {
     19→    pub fn to_local(&self) -> Ident {
     32→    pub fn set_span(&mut self, span: Span) {
+    38→    fn fmt …
+    46→    fn eq …
+    52→    fn eq …
+    58→    fn cmp …
+    64→    fn partial_cmp …
+    70→    fn parse …
+    76→    fn to_tokens …
     81→#[derive(Clone)]
     82→pub enum MemberUnraw {
     83→    Named(IdentUnraw),
     84→    Unnamed(Index),
     85→}
     88→    pub fn span(&self) -> Span {
+    97→    fn fmt …
+   108→    fn eq …
+   118→    fn eq …
+   127→    fn hash …
+   136→    fn to_tokens …
 
 impl/src/valid.rs
      1→use crate::ast::{Enum, Field, Input, Struct, Variant};
@@ -228,10 +244,9 @@ impl/src/valid.rs
 
 rust-toolchain.toml
      1→[toolchain]
+     2→components = ["rust-src"]
 
 src/aserror.rs
-     1→use core::error::Error;
-     2→use core::panic::UnwindSafe;
      5→pub trait AsDynError<'a>: Sealed {
      6→    fn as_dyn_error(&self) -> &(dyn Error + 'a);
     11→    fn as_dyn_error(&self) -> &(dyn Error + 'a) {
@@ -242,27 +257,22 @@ src/aserror.rs
     45→pub trait Sealed {}
 
 src/display.rs
-     1→use core::fmt::Display;
      3→use std::path::{self, Path, PathBuf};
      6→pub trait AsDisplay<'a>: Sealed {
     11→    fn as_display(&'a self) -> Self::Target;
     18→    type Target = &'a T;
     20→    fn as_display(&'a self) -> Self::Target {
     26→impl<'a> AsDisplay<'a> for Path {
-    27→    type Target = path::Display<'a>;
     30→    fn as_display(&'a self) -> Self::Target {
     36→impl<'a> AsDisplay<'a> for PathBuf {
-    37→    type Target = path::Display<'a>;
     40→    fn as_display(&'a self) -> Self::Target {
     46→pub trait Sealed {}
     49→impl Sealed for Path {}
     51→impl Sealed for PathBuf {}
     59→mod placeholder {
     60→    use super::{AsDisplay, Sealed};
-    61→    use core::fmt::{self, Display};
     63→    #[allow(dead_code)]
     64→    pub struct Placeholder;
-    67→        type Target = Self;
     70→        fn as_display(&'a self) -> Self::Target {
     76→        fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
 
@@ -283,14 +293,12 @@ src/private.rs
     14→pub use std::backtrace::Backtrace;
 
 src/provide.rs
-     1→use core::error::{Error, Request};
      4→pub trait ThiserrorProvide: Sealed {
      5→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>);
     13→    fn thiserror_provide<'a>(&'a self, request: &mut Request<'a>) {
     19→pub trait Sealed {}
 
 src/var.rs
-     1→use core::fmt::{self, Pointer};
      3→pub struct Var<'a, T: ?Sized>(pub &'a T);
      6→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
 

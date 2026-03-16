@@ -3,8 +3,6 @@ source: tests/snapshots.rs
 expression: output
 ---
 sample.py
-     2→from typing …
-     3→from dataclasses …
      5→T = TypeVar("T")
      8→def process_items(items: list[str]) -> int:
     15→class Token:
@@ -15,6 +13,8 @@ sample.py
     22→    def visit_token …
     25→    def visit_all …
     29→class TokenParser(Generic[T]):
+    30→    """A generic token parser.
+      →    …
     34→
     35→    MAX_TOKENS: int = 1024
     36→

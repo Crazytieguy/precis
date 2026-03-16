@@ -2,10 +2,12 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1998 tokens)
+budget: 2000 (1996 tokens)
 
 README.md
      1→### Enclosed lib
+     3→This package contains the core functionalities of [Enclosed](https://enclosed.cc/), an open-source project that aims to provide a simple and secure way to share e2e encrypted notes.
+     4→
      5→## Installation
      7→```bash
      8→# with npm
@@ -35,8 +37,9 @@ README.md
     33→## License
     37→## Credits and Acknowledgements
 
+package.json
+
 src/api/api.client.ts
-     1→import { ofetch …
      2→import { DEFAULT_API_BASE_URL } from './api.constants';
      6→async function tryToGetBody …
     20→async function apiClient …
@@ -45,7 +48,6 @@ src/api/api.constants.ts
      1→export const DEFAULT_API_BASE_URL = 'https://enclosed.cc';
 
 src/api/api.models.ts
-     1→import { get, isError } from 'lodash-es …
      5→function isApiClientErrorWithStatusCode …
     13→function isApiClientErrorWithCode …
 
@@ -125,8 +127,6 @@ src/index.ts
      8→import { createNote } from './notes/notes.usecases';
 
 src/notes/notes.models.ts
-     1→import { buildUrl } from '@corentinth/chisels';
-     2→import { isEmpty } from 'lodash-es';
      6→const PASSWORD_PROTECTED_HASH_FRAGMENT = 'pw';
      7→const DELETED_AFTER_READING_HASH_FRAGMENT = 'dar';
      9→function createNoteUrlHashFragment …
@@ -173,3 +173,5 @@ src/notes/notes.usecases.ts
      6→import { storeNote as storeNoteImpl } from './notes.services';
     10→const BASE_URL = 'https://enclosed.cc';
     12→async function createNote …
+
+tsconfig.json

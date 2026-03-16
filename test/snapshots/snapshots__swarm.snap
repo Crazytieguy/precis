@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (3999 tokens)
 
 README.md
      3→# Swarm (experimental, educational)
@@ -356,18 +356,23 @@ pyproject.toml
      3→build-backend = "setuptools.build_meta"
 
 swarm/__init__.py
-     1→from .core …
-     2→from .types …
+     1→from .core import Swarm
+     2→from .types import Agent, Response
      4→__all__ = ["Swarm", "Agent", "Response"]
 
 swarm/core.py
      2→import copy
-     3→import json …
-     4→from collections …
-     5→from typing …
      8→from openai import OpenAI
     12→from .util import function_to_json, debug_print, merge_chunk
-    13→from .types …
+    13→from .types import (
+    14→    Agent,
+    15→    AgentFunction,
+    16→    ChatCompletionMessage,
+    17→    ChatCompletionMessageToolCall,
+    18→    Function,
+    19→    Response,
+    20→    Result,
+    21→)
     23→__CTX_VARS_NAME__ = "context_variables"
     26→class Swarm:
     27→    def __init__ …
@@ -381,8 +386,8 @@ swarm/repl/__init__.py
      1→from .repl import run_demo_loop
 
 swarm/repl/repl.py
-     1→import json
-     3→from swarm import Swarm
+     1→import json …
+     3→from swarm …
      6→def process_and_print_streaming_response(response):
     37→def pretty_print_messages(messages) -> None:
     60→def run_demo_loop(
@@ -390,9 +395,6 @@ swarm/repl/repl.py
     62→) -> None:
 
 swarm/types.py
-     1→from openai.types.chat …
-     2→from openai.types.chat.chat_completion_message_tool_call …
-     6→from typing …
      9→from pydantic import BaseModel
     14→class Agent(BaseModel):
     15→    name: str = "Agent"
@@ -417,8 +419,6 @@ swarm/types.py
     41→    context_variables: dict = {}
 
 swarm/util.py
-     1→import inspect …
-     2→from datetime …
      5→def debug_print …
     13→def merge_fields …
     21→def merge_chunk …

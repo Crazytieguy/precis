@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1996 tokens)
+budget: 2000 (1999 tokens)
 
 README.md
      1→# k(r)ep - A high-performance string search utility
@@ -17,12 +17,10 @@ README.md
    180→## How Krep Works
 
 aho_corasick.c
-     7→#include <stdio.h>
     17→typedef struct ac_node
     18→{
     26→struct ac_trie
     27→{
-   294→extern bool is_whole_word_match …
 
 aho_corasick.h
     15→typedef struct search_params search_params_t …
@@ -34,10 +32,9 @@ aho_corasick.h
     39→uint64_t aho_corasick_search(const search_params_t *params, const char *text_start, size_t text_len, match_result_t *result);
 
 krep.c
+    10→#define _GNU_SOURCE
     77→#define MAX_PATTERN_LENGTH 1024
     93→#define LIKELY(x)   __builtin_expect(!!(x), 1)
-   461→size_t print_matching_items …
-  2274→int search_file …
   3146→typedef struct
   3147→{
   3148→    char *pattern;
@@ -51,8 +48,6 @@ krep.c
   3158→    size_t capacity;
   3159→    struct gitignore *parent; // Parent directory's gitignore context
   3160→} gitignore_t;
-  3451→int main …
-  4506→uint64_t neon_search …
 
 krep.h
     23→typedef struct ac_trie ac_trie_t …
@@ -164,3 +159,7 @@ krep.h
    234→const char *get_algorithm_name …
    278→size_t find_line_start(const char *text, size_t max_len, size_t pos);
    288→size_t find_line_end(const char *text, size_t text_len, size_t pos);
+   298→static inline bool is_word_char(char c)
+   299→{
+   312→static inline bool is_whole_word_match(const char *text, size_t text_len, size_t start, size_t end)
+   313→{

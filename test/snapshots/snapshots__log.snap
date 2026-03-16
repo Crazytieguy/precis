@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3989 tokens)
+budget: 4000 (3986 tokens)
 
 CHANGELOG.md
 
@@ -47,7 +47,8 @@ rfcs/0296-structured-logging.md
   1650→# Unresolved questions
 
 src/__private_api.rs
-     7→pub use std::{format_args, module_path, stringify};
+     3→use self::sealed::KVs;
+     4→use crate::{logger, Level, Log, Metadata, Record};
     10→pub type Value<'a> = &'a str;
     12→mod sealed {
     14→    pub trait KVs<'a> {
@@ -57,7 +58,7 @@ src/__private_api.rs
    103→pub fn enabled …
    108→pub fn loc() -> &'static Location<'static> {
    113→mod kv_support {
-   116→    pub type Value<'a> = kv::Value<'a>;
+   114→    use crate::kv;
    122→    pub fn capture_to_value …
    126→    pub fn capture_debug …
    130→    pub fn capture_display …
@@ -154,8 +155,6 @@ src/kv/value.rs
    593→    fn visit_borrowed_error …
    602→pub(in crate::kv) mod inner {
    610→    use super::*;
-   612→    pub use value_bag::ValueBag as Inner;
-   614→    pub use value_bag::Error;
    619→    pub fn visit …
    721→pub(in crate::kv) mod inner {
    735→    use super::*;
@@ -348,3 +347,6 @@ src/macros.rs
    535→macro_rules! __log_value_sval {
    553→macro_rules! __log_value_serde {
    573→macro_rules! __log_value_error {
+
+src/serde.rs
+     9→use crate::{Level, LevelFilter, LOG_LEVEL_NAMES};

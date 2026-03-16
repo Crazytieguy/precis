@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3976 tokens)
+budget: 4000 (3974 tokens)
 
 ARCHITECTURE.md
      1→# `sqlite-vec` Architecture
@@ -91,10 +91,12 @@ bindings/rust/src/lib.rs
      3→    pub fn sqlite3_vec_init();
 
 examples/python-recipes/openai-sample.py
-     3→from openai import OpenAI
+     3→from openai …
     10→def serialize(vector: List[float]) -> bytes:
 
 examples/simple-c/demo.c
+     1→#include "sqlite3.h"
+     2→#include "sqlite-vec.h"
      7→int main(int argc, char *argv[]) {
 
 examples/simple-python/demo.py
@@ -134,9 +136,6 @@ examples/sqlite3-cli/core_init.c
 
 examples/wasm/README.md
      1→# `sqlite-vec` statically compiled into WASM builds
-     3→You can compile your own version of SQLite's WASM build with `sqlite-vec`
-     4→builtin. Dynamically loading SQLite extensions is not supported in the official
-      →…
 
 examples/wasm/wasm.c
      4→int sqlite3_wasm_extra_init(const char * unused) {
@@ -152,8 +151,6 @@ reference.yaml
 
 site/project.data.ts
     13→  load() {
-
-sqlite-dist.toml
 
 sqlite-vec.c
      1→#include "sqlite-vec.h"
@@ -342,5 +339,10 @@ test.sql
 
 tests/afbd/README.md
      2→# hnm
+     4→```
+      →…
+
+tests/sqlite-vec-internal.h
+     3→int min_idx …
 
 tmp-static.py

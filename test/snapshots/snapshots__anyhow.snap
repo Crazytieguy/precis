@@ -2,13 +2,36 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3981 tokens)
+budget: 4000 (3988 tokens)
 
 Cargo.toml
      1→[package]
+     2→name = "anyhow"
+     3→version = "1.0.101"
+     4→authors = ["David Tolnay <dtolnay@gmail.com>"]
+     5→categories = ["rust-patterns", "no-std"]
+     6→description = "Flexible concrete Error type built on std::error::Error"
+     7→documentation = "https://docs.rs/anyhow"
+     8→edition = "2021"
+     9→keywords = ["error", "error-handling"]
+    10→license = "MIT OR Apache-2.0"
+    11→repository = "https://github.com/dtolnay/anyhow"
+    12→rust-version = "1.68"
     14→[features]
+    15→default = ["std"]
+    16→std = []
     18→[dependencies]
+    19→# On compilers older than 1.65, features=["backtrace"] may be used to enable
+    20→# backtraces via the `backtrace` crate. This feature has no effect on 1.65+
+    21→# besides bringing in an unused dependency, as `std::backtrace` is always
+    22→# preferred.
+    23→backtrace = { version = "0.3.51", optional = true }
     25→[dev-dependencies]
+    26→futures = { version = "0.3", default-features = false }
+    27→rustversion = "1.0.6"
+    28→syn = { version = "2.0", features = ["full"] }
+    29→thiserror = "2"
+    30→trybuild = { version = "1.0.108", features = ["diff"] }
     32→[package.metadata.docs.rs]
 
 README.md
@@ -22,8 +45,6 @@ rust-toolchain.toml
      1→[toolchain]
 
 src/backtrace.rs
-     2→pub(crate) use std::backtrace::{Backtrace, BacktraceStatus};
-     5→pub(crate) use self::capture::{Backtrace, BacktraceStatus};
      8→pub(crate) enum Backtrace {}
     18→macro_rules! impl_backtrace {
     32→macro_rules! backtrace {
@@ -42,8 +63,6 @@ src/backtrace.rs
 src/chain.rs
      1→use self::ChainState::*;
      2→use crate::StdError;
-     5→use alloc::vec::{self, Vec};
-     8→pub(crate) use crate::Chain;
     11→pub(crate) struct Chain<'a> {
     16→pub(crate) enum ChainState<'a> {
     17→    Linked {
@@ -93,7 +112,6 @@ src/error.rs
      6→use crate::ptr::Mut;
      7→use crate::ptr::{Own, Ref};
      8→use crate::{Error, StdError};
-    14→use core::ops::{Deref, DerefMut};
     30→    pub fn new<E>(error: E) -> Self
     31→    where
     32→        E: StdError + Send + Sync + 'static,
@@ -177,7 +195,6 @@ src/fmt.rs
 src/kind.rs
     47→use crate::Error;
     51→use crate::StdError;
-    53→use alloc::boxed::Box;
     55→pub struct Adhoc;
     58→pub trait AdhocKind: Sized {
     60→    fn anyhow_kind(&self) -> Adhoc {
@@ -213,9 +230,6 @@ src/lib.rs
    263→mod wrapper;
    265→use crate::error::ErrorImpl;
    266→use crate::ptr::Own;
-   270→use core::fmt::Debug;
-   273→use std::error::Error as StdError;
-   276→use core::error::Error as StdError;
    279→trait StdError: Debug + Display {
    280→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
    286→pub use anyhow as format_err;
@@ -239,9 +253,6 @@ src/lib.rs
    657→    use self::not::Bool;
    658→    use crate::Error;
    663→    pub use crate::ensure::{BothDebug, NotBothDebug};
-   665→    pub use alloc::format;
-   667→    pub use core::result::Result::Err;
-   669→    pub use core::{concat, format_args, stringify};
    672→    pub mod kind {
    674→        pub use crate::kind::{AdhocKind, TraitKind};
    678→        pub use crate::kind::BoxedKind;
@@ -318,7 +329,6 @@ src/ptr.rs
 
 src/wrapper.rs
      1→use crate::StdError;
-     5→use alloc::boxed::Box;
      8→use crate::nightly::{self, Request};
     11→pub struct MessageError<M>(pub M);
     34→pub struct DisplayError<M>(pub M);
@@ -328,28 +338,8 @@ src/wrapper.rs
     75→impl StdError for BoxedError {
     81→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
 
-tests/crate/Cargo.toml
-     1→[package]
-     8→[lib]
-    11→[dependencies]
-    14→[features]
-
 tests/drop/mod.rs
      9→pub struct Flag {
-    10→    atomic: Arc<AtomicBool>,
-    11→}
     26→pub struct DetectDrop {
-    27→    has_dropped: Flag,
-    28→}
-
-tests/test_ensure.rs
-    52→    fn t(self, i: i32) -> i32 {
-    78→fn assert_err …
 
 tests/test_ffi.rs
-     7→pub extern "C" fn anyhow1(err: anyhow::Error) {
-    12→pub extern "C" fn anyhow2(err: &mut Option<anyhow::Error>) {
-    17→pub extern "C" fn anyhow3() -> Option<anyhow::Error> {
-
-tests/test_source.rs
-     7→enum TestError {

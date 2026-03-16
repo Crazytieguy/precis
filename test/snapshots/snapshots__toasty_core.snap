@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3996 tokens)
+budget: 4000 (3994 tokens)
 
 CONTEXT.md
      1→# toasty-core Component Context
@@ -28,6 +28,7 @@ Cargo.toml
     28→[dev-dependencies]
 
 src/driver/capability.rs
+     1→use crate::{schema::db, stmt};
      4→pub struct Capability {
     61→pub struct StorageTypes {
    103→pub struct SchemaMutations {
@@ -108,6 +109,7 @@ src/driver/operation.rs
     50→}
 
 src/driver/response.rs
+     1→use crate::{stmt, Result};
      4→pub struct Response {
      9→pub enum Rows {
     10→    /// Number of rows impacted by the operation
@@ -409,9 +411,9 @@ src/stmt/entry_mut.rs
 
 src/stmt/expr.rs
     13→pub enum Expr {
-    96→    pub const TRUE: Expr = Expr::Value(Value::Bool(true));
-    97→    pub const FALSE: Expr = Expr::Value(Value::Bool(false));
-    98→    pub const DEFAULT: Expr = Expr::Default;
+    96→    pub const TRUE …
+    97→    pub const FALSE …
+    98→    pub const DEFAULT …
 
 src/stmt/expr_func.rs
     15→pub enum ExprFunc {

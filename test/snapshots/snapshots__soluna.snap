@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3992 tokens)
+budget: 4000 (3991 tokens)
 
 README.md
      7→# Soluna
@@ -16,7 +16,6 @@ README.md
     29→## Building from Source
     33→### Integration with the Actions of your projects
     53→## Projects made with Soluna
-    57→## License
 
 clibs/datalist/make.lua
      1→local lm = require "luamake"
@@ -27,7 +26,9 @@ clibs/datalist/make.lua
      7→    "datalist.c",
      8→  },
      9→  includes = {
-      →  …
+    10→    lm.basedir .. "/3rd/lua",
+    11→  },
+    12→}
 
 clibs/ltask/make.lua
      1→local lm = require "luamake"
@@ -39,6 +40,8 @@ clibs/yoga/make.lua
      1→local lm = require "luamake"
      2→local fs = require "bee.filesystem"
      3→
+     4→lm.rootdir = lm.basedir .. "/3rd/yoga"
+     5→
       →…
 
 clibs/zip/make.lua
@@ -118,24 +121,12 @@ src/appevent.h
      2→#define soluna_app_event_h
      4→struct event_message {
 
-src/batch.c
-     8→struct draw_batch {
-
 src/batch.h
      6→struct draw_primitive {
     13→struct draw_primitive_external {
-    19→struct draw_batch * batch_new …
-    20→struct draw_primitive * batch_reserve …
-    21→void batch_delete …
-
-src/drawmgr.c
-     8→struct draw_element {
-    15→struct drawmgr {
-
-src/entry.c
-    89→struct app_context {
-   103→struct soluna_message {
-   216→struct icon_pixels {
+    19→struct draw_batch * batch_new(int size);
+    20→struct draw_primitive * batch_reserve(struct draw_batch *, int size);
+    21→void batch_delete(struct draw_batch *);
 
 src/font_define.h
      4→#define FONT_MANAGER_TEXSIZE 2048
@@ -157,39 +148,31 @@ src/font_manager.c
     54→	uint16_t w;
     55→	uint16_t h;
     56→};
-    58→struct priority_list {
-    66→struct font_manager {
     94→#define COLLISION_STEP 7
    361→int
    362→font_manager_pixelsize(struct font_manager *F, int fontid, int pointsize) {
 
 src/font_manager.h
      7→#include "font_define.h"
-    11→size_t font_manager_sizeof …
-    12→void font_manager_init …
-    13→void* font_manager_shutdown …
-    14→void font_manager_import …
-    16→int font_manager_addfont_with_family …
-    17→void font_manager_fontheight …
-    18→int font_manager_pixelsize …
-    19→const char* font_manager_glyph …
+    11→size_t font_manager_sizeof();
+    12→void font_manager_init(struct font_manager *, void *L);
+    13→void* font_manager_shutdown(struct font_manager *);
+    14→void font_manager_import(struct font_manager *F, void* fontdata, size_t sz);
+    16→int font_manager_addfont_with_family(struct font_manager *F, const char* family);
+    17→void font_manager_fontheight(struct font_manager *F, int fontid, int size, int *ascent, int *descent, int *lineGap);
+    18→int font_manager_pixelsize(struct font_manager *F, int fontid, int pointsize);
+    19→const char* font_manager_glyph(struct font_manager *F, int fontid, int codepoint, int size, struct font_glyph *g, struct font_glyph *og);
+    20→//int font_manager_touch(struct font_manager *, int font, int codepoint, struct font_glyph *glyph);
+      →…
     22→int font_manager_flush(struct font_manager *);
-    23→void font_manager_scale …
-    24→int font_manager_underline …
-    25→float font_manager_sdf_mask …
-    26→float font_manager_sdf_distance …
-    27→void font_manager_icon_init …
-    28→int font_manager_enum_fontname …
+    23→void font_manager_scale(struct font_manager *F, struct font_glyph *glyph, int size);
+    24→int font_manager_underline(struct font_manager *F, int fontid, int size, float *underline_position, float *thickness);
+    25→float font_manager_sdf_mask(struct font_manager *F);
+    26→float font_manager_sdf_distance(struct font_manager *F, uint8_t numpixel);
+    27→void font_manager_icon_init(struct font_manager *F, int n, void *data);
+    28→int font_manager_enum_fontname(struct font_manager *F, int idx, char buffer[], int buf_sz);
+    30→// for debug
     31→const void * font_manager_texture(struct font_manager *F, int *sz);
-
-src/gamepad.c
-    29→struct gamepad_state {
-   267→static struct gamepad_global {
-   274→struct gamepad_local {
-
-src/image.c
-   128→struct rect {
-   321→struct canvas {
 
 src/ime_char_filter.h
      8→struct soluna_ime_char_filter_state {
@@ -202,26 +185,14 @@ src/lcrypt.c
    205→#define DES_IP(X,Y)											 \
    218→#define DES_FP(X,Y)											 \
    231→#define DES_ROUND(X,Y)						  \
-   373→typedef void (*padding_add)(uint8_t buf[8], int offset);
-   374→typedef int (*padding_remove)(const uint8_t *last);
    623→#define LEFTROTATE(x, c) (((x) << (c)) | ((x) >> (32 - (c))))
    790→#define P 0xffffffffffffffc5ull
   1031→int lsha1(lua_State *L);
-
-src/lfs.c
-    54→struct dir_data {
-   487→struct dir_data {
 
 src/loginfo.h
      6→struct log_info {
 
 src/lsha1.c
-    85→#include <stdio.h>
-    89→typedef struct {
-    90→	uint32_t state[5];
-    91→	uint32_t count[2];
-    92→	uint8_t  buffer[64];
-    93→} SHA1_CTX;
    114→#define	R0(v,w,x,y,z,i)	z+=((w&(x^y))^y)+blk0(i)+0x5A827999+rol(v,5);w=rol(w,30);
 
 src/lualib/coroutine.lua
@@ -260,56 +231,7 @@ src/lualib/text.lua
 src/lualib/util.lua
      1→local table = table
 
-src/luayoga.c
-    18→struct enum_string {
-    23→struct set_number {
-    32→struct set_edge_number {
-    38→struct set_two_number {
-    69→struct pos {
-   104→typedef void (*setfunc)(lua_State *L, YGNodeRef node);
-
-src/luazip.c
-    79→struct filename_convert {
-   132→struct filename_convert {};
-   151→struct ziphandle {
-   155→struct zipraw {
-   284→struct unzhandle {
-
-src/material_blit.c
-     9→struct material_blit {
-
-src/material_default.c
-    15→struct inst_object {
-    23→struct material_default {
-
-src/material_mask.c
-    15→struct color {
-    19→struct inst_object {
-    28→struct mask {
-    33→struct material_mask {
-   166→struct mask_primitive {
-
-src/material_perspective_quad.c
-    23→struct color {
-    27→struct pquad_meta {
-    34→struct corner_primitive {
-    42→struct inst_object {
-    51→struct material_perspective_quad {
-    62→struct sprite_rect_basis {
-    71→struct sprite_rect_data {
-
-src/material_quad.c
-    15→struct color {
-    19→struct quad {
-    26→struct inst_object {
-    33→struct material_quad {
-   153→struct quad_primitive {
-
 src/material_text.c
-    20→struct text {
-    28→struct inst_object {
-    36→struct material_text {
-   225→struct text_primitive {
    242→#define iscont(c)	(((c) & 0xC0) == 0x80)
    330→struct block_context {
    331→	int width;
@@ -324,7 +246,6 @@ src/material_text.c
    340→	uint32_t default_color;
    341→	uint32_t color;
    342→};
-   352→struct position {
 
 src/material_util.h
      5→#include "sokol/sokol_gfx.h"
@@ -333,11 +254,11 @@ src/material_util.h
      9→#define MATERIAL_QUAD 2
     10→#define MATERIAL_MASK 3
     11→#define MATERIAL_PERSPECTIVE_QUAD 4
-    13→void util_ref_object …
+    13→void util_ref_object(lua_State *L, void *ptr, int uv_index, const char *key, const char *luatype, int direct);
     15→typedef void (*util_submit_func)(lua_State *L, void *m_, struct draw_primitive *prim, int n);
-    16→void util_submit_material …
+    16→void util_submit_material(lua_State *L, int batch_n, void *mat, util_submit_func submit);
     18→typedef const sg_shader_desc* (*util_shader_desc_func)(sg_backend backend);
-    19→sg_pipeline util_make_pipeline …
+    19→sg_pipeline util_make_pipeline(sg_pipeline_desc *desc, util_shader_desc_func func, const char *what, int blend);
 
 src/mutex.h
      6→    #define mutex_t SRWLOCK
@@ -372,8 +293,29 @@ src/platform/macos/soluna_macos_ime.m
      3→
      4→#include <stdint.h>
      5→
-     6→#include "ime_state.h"
       →…
+
+src/platform/wasm/soluna_wasm_ime.h
+    19→#include "ime_state.h"
+    20→#include "ime_char_filter.h"
+    22→void soluna_emit_char(uint32_t codepoint, uint32_t modifiers, bool repeat);
+    23→extern void soluna_wasm_setup_ime(void);
+    24→extern void soluna_wasm_dom_show(float x, float y, float w, float h);
+    25→extern void soluna_wasm_dom_hide(void);
+    26→extern void soluna_wasm_dom_set_font(const char *name, float size);
+    27→extern void soluna_wasm_dom_set_color(uint32_t color);
+   109→void
+   110→soluna_wasm_set_font(const char *name, float size) {
+   159→void
+   160→soluna_wasm_hide(void) {
+   166→void
+   167→soluna_wasm_apply_rect(void) {
+   221→EMSCRIPTEN_KEEPALIVE void
+   222→soluna_wasm_ime_commit(const char *text, int modifiers) {
+   226→EMSCRIPTEN_KEEPALIVE void
+   227→soluna_wasm_set_composing(int active) {
+   231→EMSCRIPTEN_KEEPALIVE void
+   232→soluna_wasm_block_next_keypair(void) {
 
 src/platform/windows/soluna_windows_ime.c
      1→#define WIN32_LEAN_AND_MEAN
@@ -385,19 +327,10 @@ src/platform/windows/soluna_windows_ime.h
      7→void soluna_win32_reset_ime_font(void);
 
 src/render.c
-    18→struct buffer {
-    23→struct image {
-    28→struct sampler {
    223→struct pass {
    224→	sg_pass pass;
    225→	int swapchain;
    226→};
-   482→struct enum_string {
-   615→struct inst_object {
-   620→struct sprite_object {
-
-src/render_bindings.c
-    61→struct view {
 
 src/render_bindings.h
      4→#include "sokol/sokol_gfx.h"
@@ -407,7 +340,6 @@ src/render_bindings.h
 src/sdfimage.c
      9→#include "stb/stb_image.h"
     23→#define IMAGE_SIZE 64
-    77→struct sdf_context {
 
 src/service/gamepad.lua
      1→local ltask = require "ltask"
@@ -430,11 +362,6 @@ src/service/start.lua
 src/sprite_submit.h
      4→#include "batch.h"
 
-src/spritemgr.c
-    95→struct tmp_context {
-   190→struct layer {
-   197→struct batch {
-
 src/spritemgr.h
      7→#define INVALID_TEXTUREID 0xffff
      9→struct sprite_rect {
@@ -443,10 +370,10 @@ src/spritemgr.h
 src/srbuffer.h
      7→struct sr_mat {
     11→struct sr_buffer {
-    23→size_t srbuffer_size …
-    24→void srbuffer_init …
-    25→int srbuffer_add …
-    26→void * srbuffer_commit …
+    23→size_t srbuffer_size(int n);
+    24→void srbuffer_init(struct sr_buffer *SR, int n);
+    25→int srbuffer_add(struct sr_buffer *SR, uint32_t sr);
+    26→void * srbuffer_commit(struct sr_buffer *SR, int *sz);
 
 src/tmpbuffer.h
      2→#define soluna_tmp_buffer_h
@@ -460,10 +387,10 @@ src/transform.c
 
 src/transform.h
      6→struct transform {
-    24→void sprite_transform_init …
-    25→void sprite_transform_set …
-    26→void sprite_transform_apply …
-    27→void sprite_transform_point …
+    24→void sprite_transform_init();
+    25→void sprite_transform_set(struct transform *t, float s, float r, float x, float y);
+    26→void sprite_transform_apply(struct draw_primitive *p, struct transform * t);
+    27→void sprite_transform_point(const struct transform *t, int *x, int *y);
 
 src/truetype.h
     11→#define TRUETYPE_ID "TRUETYPE_ID"

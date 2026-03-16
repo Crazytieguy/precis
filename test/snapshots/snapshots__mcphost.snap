@@ -2,9 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7997 tokens)
-
-AGENTS.md
+budget: 8000 (8000 tokens)
 
 README.md
      1→# MCPHost 🤖
@@ -55,21 +53,18 @@ README.md
    985→## Acknowledgments 🙏
 
 cmd/auth.go
-     3→import …
     17→var authCmd = &cobra.Command{
     37→var authLoginCmd = &cobra.Command{
     58→var authLogoutCmd = &cobra.Command{
     78→var authStatusCmd = &cobra.Command{
 
 cmd/hooks.go
-     3→import …
     16→var hooksCmd = &cobra.Command{
     25→var hooksListCmd = &cobra.Command{
     57→var hooksValidateCmd = &cobra.Command{
     79→var hooksInitCmd = &cobra.Command{
 
 cmd/root.go
-     3→import …
     39→	compactMode      bool           // Enable compact output mode
     40→	scriptMCPConfig  *config.Config // Used to override config in script mode
     41→	approveToolRun   bool
@@ -105,7 +100,6 @@ cmd/root.go
    774→}
 
 cmd/script.go
-     3→import …
     28→var scriptCmd = &cobra.Command{
    423→type Variable struct {
    424→	Name         string // The name of the variable as it appears in the script
@@ -115,9 +109,19 @@ cmd/script.go
 
 contribute/conf/demo.json
      2→    "mcpServers": {
+     3→        "filesystem": {
+     4→            "command": "npx",
+     5→            "args": [
+     6→                "-y",
+      →                …
 
 contribute/conf/demo.yml
      1→mcpServers:
+     2→  filesystem:
+     3→    command: npx
+     4→    args:
+     5→      - "-y"
+      →      …
 
 contribute/contribute.md
      1→# Contribute README
@@ -334,7 +338,6 @@ internal/hooks/executor.go
     57→func (e *Executor) PopulateCommonFields(event HookEvent) CommonInput {
     77→func (e *Executor) ExecuteHooks(ctx context.Context, event HookEvent, input interface{}) (*HookOutput, error) {
    201→type hookResult struct {
-   259→func getCurrentWorkingDir() string {
 
 internal/hooks/schemas.go
     10→type CommonInput struct {
@@ -349,7 +352,6 @@ internal/hooks/validator.go
     75→func ValidateHookConfig(config *HookConfig) error {
 
 internal/models/anthropic/anthropic.go
-     3→import …
     21→type CustomChatModel struct {
     22→	// wrapped is the underlying eino-ext Claude model instance
     23→	wrapped *einoclaude.ChatModel
@@ -365,7 +367,6 @@ internal/models/anthropic/anthropic.go
    274→func (m *CustomChatModel) WithTools(tools []*schema.ToolInfo) (model.ToolCallingChatModel, error) {
 
 internal/models/gemini/gemini.go
-     3→import …
     43→func NewChatModel(_ context.Context, cfg *Config) (*ChatModel, error) {
     58→type Config struct {
     59→	// Client is the Gemini API client instance
@@ -461,7 +462,6 @@ internal/models/models_data.go
     41→func GetModelsData() map[string]ProviderInfo {
 
 internal/models/openai/openai.go
-     3→import …
     21→type CustomChatModel struct {
     22→	// wrapped is the underlying eino-ext OpenAI model instance
     23→	wrapped *einoopenai.ChatModel
@@ -584,7 +584,6 @@ internal/ui/messages.go
    627→type MessageContainer struct {
 
 internal/ui/progress/ollama.go
-     3→import …
     27→type OllamaPullProgress struct {
     28→	Status    string `json:"status"`
     29→	Digest    string `json:"digest,omitempty"`
@@ -673,7 +672,6 @@ sdk/README.md
    146→## License
 
 sdk/mcphost.go
-     3→import …
     19→type MCPHost struct {
     20→	agent       *agent.Agent
     21→	sessionMgr  *session.Manager
@@ -704,7 +702,6 @@ sdk/mcphost.go
    237→func (m *MCPHost) Close() error {
 
 sdk/types.go
-     3→import …
     10→type Message = session.Message
     14→type ToolCall = session.ToolCall
     18→func ConvertToSchemaMessage(msg *Message) *schema.Message {
