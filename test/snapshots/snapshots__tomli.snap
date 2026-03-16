@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (3998 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -78,6 +78,8 @@ README.md
 benchmark/README.md
      1→# Benchmark
     10→## Running
+    12→### Against the local Tomli state
+    18→### Against the latest Tomli PyPI release
 
 benchmark/run.py
     15→def benchmark …
@@ -253,7 +255,8 @@ src/tomli/_re.py
    100→    sign = 1 if sign_str == "+" else -1
    101→    return timezone(
    102→        timedelta(
-      →        …
+   103→            hours=sign * int(hour_str),
+      →            …
    109→def match_to_localtime(match: re.Match[str]) -> time:
    116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
 
@@ -265,10 +268,7 @@ tests/__init__.py
       →…
      5→__all__ = ("tomllib",)
 
-tests/burntsushi.py
-
 tests/test_data.py
-     9→from . import burntsushi, tomllib
     11→DATA_DIR …
     13→VALID_FILES …
     21→VALID_FILES_EXPECTED …
@@ -276,11 +276,9 @@ tests/test_data.py
     27→class TestData(unittest.TestCase):
 
 tests/test_error.py
-    10→from . import tomllib
     13→class TestError(unittest.TestCase):
 
 tests/test_misc.py
-    14→from . import tomllib
     17→class TestMiscellaneous(unittest.TestCase):
 
 tomllib.md

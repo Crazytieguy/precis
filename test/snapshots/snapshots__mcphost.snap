@@ -109,19 +109,9 @@ cmd/script.go
 
 contribute/conf/demo.json
      2→    "mcpServers": {
-     3→        "filesystem": {
-     4→            "command": "npx",
-     5→            "args": [
-     6→                "-y",
-      →                …
 
 contribute/conf/demo.yml
      1→mcpServers:
-     2→  filesystem:
-     3→    command: npx
-     4→    args:
-     5→      - "-y"
-      →      …
 
 contribute/contribute.md
      1→# Contribute README
@@ -142,26 +132,24 @@ contribute/contribute.md
     16→      ./build.sh
     17→   ```
     18→
-    19→4. open `boost.sh` file and fill your model info in.
-    20→   ```bash
-    21→      cat boost.sh
-    22→      vi boost.sh
-    23→   ```
-    24→
       →…
     30→## Contribute your code
     31→just write your code and push it.
 
 examples/hooks/bash-validator.py
     11→DANGEROUS_PATTERNS = [
-    17→SUGGEST_ALTERNATIVES = {
-    22→def main():
 
 examples/hooks/mcp-monitor.py
     12→BLOCKED_MCP_TOOLS = [
-    17→RATE_LIMITS = {
-    21→def check_rate_limit(tool_name, limits):
-    26→def main():
+
+go.mod
+     1→module github.com/mark3labs/mcphost
+     3→go 1.24.0
+     4→
+     5→toolchain go1.24.5
+     6→
+     7→require (
+      →…
 
 internal/agent/agent.go
     22→type AgentConfig struct {
@@ -250,12 +238,9 @@ internal/builtin/bash.go
     44→func NewBashServer() (*server.MCPServer, error) {
 
 internal/builtin/fetch.go
-    20→	defaultFetchTimeout = 30 * time.Second
     27→func NewFetchServer() (*server.MCPServer, error) {
 
 internal/builtin/http.go
-    24→	httpDefaultFetchTimeout = 30 * time.Second
-    29→var httpServerModel model.ToolCallingChatModel
     36→func NewHTTPServer(llmModel model.ToolCallingChatModel) (*server.MCPServer, error) {
 
 internal/builtin/registry.go
@@ -295,18 +280,15 @@ internal/config/config.go
    218→func (c *Config) Validate() error {
    249→func LoadSystemPrompt(input string) (string, error) {
    271→func EnsureConfigExists() error {
-   296→func createDefaultConfig …
    406→func FilepathOr[T any](key string, value *T) error {
    459→func SetConfigPath(path string) {
 
 internal/config/merger.go
     13→func MergeConfigs(baseConfig *Config, scriptConfig *Config) *Config {
     28→func LoadAndValidateConfig() (*Config, error) {
-    48→func fixEnvironmentCase …
 
 internal/config/substitution.go
     11→var (
-    18→func parseVariableWithDefault …
     29→type EnvSubstituter struct{}
     34→func (e *EnvSubstituter) SubstituteEnvVars(content string) (string, error) {
     65→type ArgsSubstituter struct {
@@ -360,11 +342,11 @@ internal/models/anthropic/anthropic.go
     32→	// wrapped is the underlying HTTP transport to use for actual requests
     33→	wrapped http.RoundTripper
     34→}
-    52→func NewCustomChatModel(ctx context.Context, config *einoclaude.Config) (*CustomChatModel, error) {
-    92→func (rt *CustomRoundTripper) RoundTrip(req *http.Request) (*http.Response, error) {
-   244→func (m *CustomChatModel) Generate(ctx context.Context, input []*schema.Message, opts ...model.Option) (*schema.Message, error) {
-   260→func (m *CustomChatModel) Stream(ctx context.Context, input []*schema.Message, opts ...model.Option) (*schema.StreamReader[*schema.Message], error) {
-   274→func (m *CustomChatModel) WithTools(tools []*schema.ToolInfo) (model.ToolCallingChatModel, error) {
+    52→func NewCustomChatModel …
+    92→func (rt *CustomRoundTripper) RoundTrip …
+   244→func (m *CustomChatModel) Generate …
+   260→func (m *CustomChatModel) Stream …
+   274→func (m *CustomChatModel) WithTools …
 
 internal/models/gemini/gemini.go
     43→func NewChatModel(_ context.Context, cfg *Config) (*ChatModel, error) {
@@ -443,7 +425,6 @@ internal/models/gemini/gemini.go
    305→func (cm *ChatModel) BindTools(tools []*schema.ToolInfo) error {
    330→func (cm *ChatModel) BindForcedTools(tools []*schema.ToolInfo) error {
    761→func (cm *ChatModel) IsCallbacksEnabled() bool {
-   765→const typ = "Gemini"
    773→func (cm *ChatModel) GetType() string {
    777→type panicErr struct {
    782→func (p *panicErr) Error() string {
@@ -481,17 +462,15 @@ internal/models/openai/openai.go
    247→func (c *CustomChatModel) IsCallbacksEnabled() bool {
 
 internal/models/providers.go
-    29→	// ClaudeCodePrompt is the required system prompt for OAuth authentication.
-      →	…
     32→	ClaudeCodePrompt = "You are Claude Code, Anthropic's official CLI for Claude."
     70→type ProviderConfig struct {
    124→type ProviderResult struct {
    153→func CreateProvider(ctx context.Context, config *ProviderConfig) (*ProviderResult, error) {
    539→type OllamaLoadingResult struct {
    712→type bearerTransport struct {
-   717→func (t *bearerTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+   717→func (t *bearerTransport) RoundTrip …
    857→type oauthTransport struct {
-   862→func (t *oauthTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+   862→func (t *oauthTransport) RoundTrip …
 
 internal/models/registry.go
     16→type ModelsRegistry struct {
@@ -622,9 +601,6 @@ internal/ui/slash_command_input.go
 internal/ui/spinner.go
     16→type Spinner struct {
     25→type spinnerModel struct {
-    31→func (m spinnerModel) Init() tea.Cmd {
-    35→func (m spinnerModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-    52→func (m spinnerModel) View() string {
     75→type quitMsg struct{}
 
 internal/ui/styles.go
@@ -639,10 +615,6 @@ internal/ui/tool_approval_input.go
     18→	approved bool
     19→	done     bool
     20→}
-    22→func NewToolApprovalInput(toolName, toolArgs string, width int) *ToolApprovalInput {
-    48→func (t *ToolApprovalInput) Init() tea.Cmd {
-    52→func (t *ToolApprovalInput) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-    83→func (t *ToolApprovalInput) View() string {
 
 internal/ui/usage_tracker.go
     15→type UsageStats struct {
@@ -659,8 +631,49 @@ sdk/README.md
      3→The MCPHost SDK allows you to use MCPHost programmatically from Go applications without spawning OS processes.
      4→
      5→## Installation
+     7→```bash
+     8→go get github.com/mark3labs/mcphost
+     9→```
+    10→
     11→## Basic Usage
+    13→```go
+    14→package main
+    15→
+    16→import (
+    17→    "context"
+    18→    "fmt"
+    19→    "log"
+    20→    
+    21→    "github.com/mark3labs/mcphost/sdk"
+    22→)
+    23→
+    24→func main() {
+    25→    ctx := context.Background()
+    26→    
+    27→    // Create MCPHost instance with default configuration
+    28→    host, err := sdk.New(ctx, nil)
+    29→    if err != nil {
+    30→        log.Fatal(err)
+    31→    }
+    32→    defer host.Close()
+    33→    
+    34→    // Send a prompt
+    35→    response, err := host.Prompt(ctx, "What is 2+2?")
+    36→    if err != nil {
+    37→        log.Fatal(err)
+    38→    }
+    39→    
+    40→    fmt.Println(response)
+    41→}
+    42→```
+    43→
     44→## Configuration
+    46→The SDK behaves identically to the CLI:
+    47→- Loads configuration from `~/.mcphost.yml` by default
+    48→- Creates default configuration if none exists
+    49→- Respects all environment variables (`MCPHOST_*`)
+    50→- Uses the same defaults as the CLI
+    51→
     52→### Options
     67→## Advanced Usage
     69→### With Tool Callbacks
@@ -669,6 +682,14 @@ sdk/README.md
    117→### Types
    124→### Methods
    136→## Environment Variables
+   138→All CLI environment variables work with the SDK:
+   139→
+   140→- `MCPHOST_MODEL` - Override model
+   141→- `ANTHROPIC_API_KEY` - Anthropic API key
+   142→- `OPENAI_API_KEY` - OpenAI API key
+   143→- `GEMINI_API_KEY` - Google API key
+   144→- etc.
+   145→
    146→## License
 
 sdk/mcphost.go

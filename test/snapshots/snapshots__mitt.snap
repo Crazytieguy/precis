@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1996 tokens)
+budget: 2000 (1999 tokens)
 
 README.md
      9→# Mitt
@@ -88,7 +88,22 @@ README.md
     94→
     95→emitter.on('foo', (e) => {}); // 'e' has inferred type 'string'
     96→
-      →…
+    97→emitter.emit('foo', 42); // Error: Argument of type 'number' is not assignable to parameter of type 'string'. (2345)
+    98→```
+    99→
+   100→Alternatively, you can use the provided `Emitter` type:
+   101→
+   102→```ts
+   103→import mitt, { Emitter } from 'mitt';
+   104→
+   105→type Events = {
+   106→  foo: string;
+   107→  bar?: number;
+   108→};
+   109→
+   110→const emitter: Emitter<Events> = mitt<Events>();
+   111→```
+   112→
    113→## Examples & Demos
    123→## API
    127→#### Table of Contents
@@ -117,29 +132,15 @@ README.md
    173→
    174→#### Parameters
    179→## Contribute
+   181→First off, thanks for taking the time to contribute!
+   182→Now, take a moment to be sure your contributions make sense to everyone else.
+   183→
+   184→### Reporting Issues
+   189→### Submitting pull requests
    203→## License
+   205→[MIT License](https://opensource.org/licenses/MIT) © [Jason Miller](https://jasonformat.com/)
 
 package.json
-     2→  "name": "mitt",
-     3→  "version": "3.0.1",
-     4→  "description": "Tiny 200b functional Event Emitter / pubsub.",
-     5→  "module": "dist/mitt.mjs",
-     6→  "main": "dist/mitt.js",
-     7→  "jsnext:main": "dist/mitt.mjs",
-     8→  "umd:main": "dist/mitt.umd.js",
-     9→  "source": "src/index.ts",
-    10→  "typings": "index.d.ts",
-    11→  "exports": {
-    18→  "scripts": {
-    30→  "repository": "developit/mitt",
-    31→  "keywords": [
-    37→  "homepage": "https://github.com/developit/mitt",
-    38→  "authors": [
-    41→  "license": "MIT",
-    42→  "files": [
-    46→  "mocha": {
-    58→  "prettier": {
-    62→  "devDependencies": {
 
 src/index.ts
      1→export type EventType = string | symbol;
@@ -177,9 +178,12 @@ src/index.ts
     52→	all = all || new Map();
     53→
     54→	return {
-      →	…
+    55→		/**
+    56→		 * A Map of event names to registered handler functions.
+      →		 …
+
+test/test-types-compilation.ts
+     5→interface SomeEventData {
+     9→const emitter = mitt<{
 
 tsconfig.json
-     2→	"compileOnSave": false,
-     3→	"compilerOptions": {
-    11→	"include": [

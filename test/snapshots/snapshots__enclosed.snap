@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7995 tokens)
+budget: 8000 (7999 tokens)
 
 CONTRIBUTING.md
      1→# Contributing to Enclosed
@@ -129,12 +129,10 @@ packages/app-client/src/modules/config/config.types.ts
 packages/app-client/src/modules/docs/docs.models.ts
      1→import { buildTimeConfig } from '../config/config.constants';
      2→import { joinUrlParts } from '../shared/http/http-client.models';
-     6→function buildDocUrl …
 
 packages/app-client/src/modules/files/files.models.ts
      6→export const iconByFileType = {
-    33→type FileTypes …
-    35→function getFileIcon …
+    33→type FileTypes = keyof typeof iconByFileType;
 
 packages/app-client/src/modules/i18n/i18n.models.ts
      1→import type { Locale } from './i18n.provider';
@@ -303,11 +301,9 @@ packages/app-server/src/modules/app/middlewares/cors.middleware.ts
      5→export const corsMiddleware = createMiddleware(async (context: Context, next) => {
 
 packages/app-server/src/modules/app/middlewares/errors.middleware.ts
-     5→const logger …
      7→export function registerErrorMiddleware({ app }: { app: ServerInstance }) {
 
 packages/app-server/src/modules/app/middlewares/logger.middleware.ts
-     4→const logger …
      6→export const loggerMiddleware = createMiddleware(async (c, next) => {
 
 packages/app-server/src/modules/app/middlewares/storage.middleware.ts
@@ -480,9 +476,6 @@ packages/crypto/README.md
     18→## License
     22→## Credits and Acknowledgements
 
-packages/crypto/src/api-definition.ts
-     6→function createEnclosedCryptoApi …
-
 packages/crypto/src/encryption-algorithms/encryption-algorithms.constants.ts
      1→export const AES_256_GCM = 'aes-256-gcm';
      3→export const ENCRYPTION_ALGORITHMS = [AES_256_GCM] as const;
@@ -652,6 +645,8 @@ packages/docs/src/self-hosting/users-authentication-key-generator.md
 
 packages/lib/README.md
      1→### Enclosed lib
+     3→This package contains the core functionalities of [Enclosed](https://enclosed.cc/), an open-source project that aims to provide a simple and secure way to share e2e encrypted notes.
+     4→
      5→## Installation
      7→```bash
      8→# with npm

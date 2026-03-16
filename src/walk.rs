@@ -59,6 +59,8 @@ fn is_unsupported_code_extension(ext: &str) -> bool {
         | "sql" | "graphql" | "gql" | "proto"
         // Documentation markup (README.rst etc. are valuable as plain text)
         | "rst"
+        // Go module file (go.mod lists dependencies and Go version)
+        | "mod"
     )
 }
 

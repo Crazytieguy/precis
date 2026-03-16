@@ -2,13 +2,12 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (8000 tokens)
+budget: 8000 (7998 tokens)
 
 Cargo.toml
      1→[workspace]
     37→[workspace.dependencies]
     38→# Toasty crates
-    39→toasty = { path = "crates/toasty" }
       →…
 
 README.md
@@ -25,6 +24,7 @@ README.md
     76→## SQL and NoSQL
     91→## Application data model vs. database schema
     98→## Current status and roadmap
+   111→## License
    117→### Contribution
 
 compose.yaml
@@ -514,9 +514,6 @@ crates/toasty-core/src/schema/mapping/field.rs
     21→    /// A relation field that doesn't map to columns in this table.
     22→    Relation(FieldRelation),
     23→}
-    41→    pub fn field_mask …
-    51→    pub fn sub_projection …
-    90→    pub fn columns …
    105→pub struct FieldPrimitive {
    140→pub struct FieldEmbedded {
    180→pub struct FieldRelation {
@@ -524,10 +521,6 @@ crates/toasty-core/src/schema/mapping/field.rs
 crates/toasty-core/src/schema/mapping/model.rs
     19→pub struct Model {
     74→pub struct TableToModel {
-    81→    pub fn new …
-    86→    pub fn lower_returning_model …
-    97→    pub fn lower_expr_reference …
-   132→    pub fn resolve_field_mapping …
 
 crates/toasty-core/src/schema/mapping.rs
     18→pub struct Mapping {
@@ -894,6 +887,16 @@ docs/roadmap/README.md
      4→
      5→## Overview
     11→## Feature Areas
+    13→### Composite Keys
+    23→### Query Capabilities
+    41→### Data Types
+    48→### Relationships & Loading
+    55→### Query Building
+    66→### Data Modification
+    74→### Transactions
+    88→### Schema Management
+    97→### Performance
+   104→### Developer Experience
    126→## Notes
 
 docs/roadmap/composite-keys.md

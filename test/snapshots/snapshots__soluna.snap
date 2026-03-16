@@ -10,12 +10,20 @@ README.md
     10→
     11→[Live Examples](https://cloudwu.github.io/soluna/)
     12→
-      →…
+    13→A framework you can use to make 2D games in Lua with multithreading, living on Windows, Linux, macOS and modern Browsers (via WebAssembly).
+    14→
+    15→It is built on top of [sokol](https://github.com/floooh/sokol) and leverages the power of ltask for multithreading.
+    16→
+    17→[![Nightly](/../../actions/workflows/nightly.yml/badge.svg)](/../../actions/workflows/nightyly.yml)
+    18→
     19→## Documentation
     25→## Precompiled Binaries
     29→## Building from Source
     33→### Integration with the Actions of your projects
+    35→```yaml
+      →…
     53→## Projects made with Soluna
+    57→## License
 
 clibs/datalist/make.lua
      1→local lm = require "luamake"
@@ -32,6 +40,14 @@ clibs/datalist/make.lua
 
 clibs/ltask/make.lua
      1→local lm = require "luamake"
+     3→lm.rootdir = lm.basedir .. "/3rd/ltask"
+     4→
+     5→lm:source_set "ltask_src" {
+     6→  sources = {
+     7→    "src/*.c",
+     8→  },
+     9→  includes = {
+      →  …
 
 clibs/lua/make.lua
      1→local lm = require "luamake"
@@ -40,8 +56,6 @@ clibs/yoga/make.lua
      1→local lm = require "luamake"
      2→local fs = require "bee.filesystem"
      3→
-     4→lm.rootdir = lm.basedir .. "/3rd/yoga"
-     5→
       →…
 
 clibs/zip/make.lua
@@ -115,7 +129,13 @@ make.lua
      5→  if lm.compiler == "emcc" then
      6→    return true
      7→  end
-      →  …
+     8→  if type(lm.cc) == "string" and lm.cc:find("emcc", 1, true) then
+     9→    return true
+    10→  end
+    11→  return false
+    12→end
+    13→
+      →…
 
 src/appevent.h
      2→#define soluna_app_event_h
@@ -194,42 +214,6 @@ src/loginfo.h
 
 src/lsha1.c
    114→#define	R0(v,w,x,y,z,i)	z+=((w&(x^y))^y)+blk0(i)+0x5A827999+rol(v,5);w=rol(w,30);
-
-src/lualib/coroutine.lua
-     1→local co = require "coroutine"
-
-src/lualib/fontmgr.lua
-     1→local ttf = require "soluna.font.truetype"
-
-src/lualib/icon.lua
-     1→local sdf = require "soluna.image.sdf"
-
-src/lualib/initsetting.lua
-     1→local datalist = require "soluna.datalist"
-
-src/lualib/layout.lua
-     1→local yoga = require "soluna.layout.yoga"
-
-src/lualib/main.lua
-     1→local package = package
-
-src/lualib/packageloader.lua
-     1→local file = require "soluna.file"
-
-src/lualib/print_r.lua
-     1→local ltask = require "ltask"
-
-src/lualib/soluna.lua
-     1→local ltask = require "ltask"
-
-src/lualib/spritebundle.lua
-     1→local image = require "soluna.image"
-
-src/lualib/text.lua
-     1→local font = require "soluna.font"
-
-src/lualib/util.lua
-     1→local table = table
 
 src/material_text.c
    242→#define iscont(c)	(((c) & 0xC0) == 0x80)
@@ -417,3 +401,5 @@ src/yogaone.cpp
      7→#include "yoga/YGValue.cpp"
      8→
       →…
+
+web/config.toml

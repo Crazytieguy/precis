@@ -2,10 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3994 tokens)
-
-CONTRIBUTING.md
-     1→# Contributing to peepDB
+budget: 4000 (3999 tokens)
 
 README.md
      1→# peepDB
@@ -110,7 +107,11 @@ docs/README.md
    131→          working-directory: '${{ github.workspace }}/docs'
    132→    ```
    133→
-      →…
+   134→3.  Set the path param for the Upload artifact step:
+   135→
+   136→    ```yaml
+   137→    - name: Upload artifact
+      →    …
    154→## Licensing and Attribution
 
 docs/_config.yml
@@ -119,9 +120,6 @@ docs/_config.yml
      3→theme: just-the-docs
      5→url: https://just-the-docs.github.io
      7→aux_links:
-
-docs/contributing.md
-     6→# 🤝 Contributing to peepDB
 
 docs/index.md
      6→# peepDB

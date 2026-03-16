@@ -258,10 +258,7 @@ flatten_test.go
     43→func TestFlatten_nonError(t *testing.T) {
 
 format.go
-     6→import (
-     7→	"fmt"
-     8→	"strings"
-     9→)
+     6→import …
     11→// ErrorFormatFunc is a function callback that is called by Error to
     12→// turn the list of errors into a string.
     13→type ErrorFormatFunc func([]error) string
@@ -274,8 +271,12 @@ format_test.go
     11→func TestListFormatFuncSingle(t *testing.T) {
     27→func TestListFormatFuncMultiple(t *testing.T) {
 
+go.mod
+     1→module github.com/hashicorp/go-multierror
+     3→go 1.13
+
 group.go
-     6→import "sync"
+     6→import "sync …
      8→// Group is a collection of goroutines which return errors that need to be
      9→// coalesced.
     10→type Group struct {
@@ -295,10 +296,7 @@ group_test.go
     12→func TestGroup(t *testing.T) {
 
 multierror.go
-     6→import (
-     7→	"errors"
-     8→	"fmt"
-     9→)
+     6→import …
     11→// Error is an error type to track multiple errors. This is used to
     12→// accumulate errors in cases and return them as a single "error".
     13→type Error struct {
@@ -325,6 +323,8 @@ multierror.go
     60→// Unwrap returns an error from Error (or nil if there are no errors).
       →…
     71→func (e *Error) Unwrap() error {
+    88→// chain implements the interfaces necessary for errors.Is/As/Unwrap to
+      →…
     99→type chain []error
    101→// Error implements the error interface
    102→func (e chain) Error() string {
@@ -350,9 +350,7 @@ multierror_test.go
    211→func (*nestedError) Error() string { return "" }
 
 prefix.go
-     6→import (
-     7→	"fmt"
-     8→)
+     6→import …
     10→// Prefix is a helper function that will prefix some text
       →…
     16→func Prefix(err error, prefix string) error {

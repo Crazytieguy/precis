@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7983 tokens)
+budget: 8000 (7981 tokens)
 
 README.md
      1→# Tock
@@ -195,13 +195,53 @@ docs/commands.md
    307→### `analyze`
    330→### `ical`
 
+go.mod
+     1→module github.com/kriuchkov/tock
+     3→go 1.25.6
+     4→
+     5→require (
+     6→	github.com/charmbracelet/bubbles v1.0.0
+     7→	github.com/charmbracelet/bubbletea v1.3.10
+     8→	github.com/charmbracelet/lipgloss v1.1.1-0.20250404203927-76690c660834
+     9→	github.com/go-faster/errors v0.7.1
+    10→	github.com/muesli/termenv v0.16.0
+    11→	github.com/samber/lo v1.52.0
+    12→	github.com/spf13/cobra v1.10.2
+    13→	github.com/spf13/pflag v1.0.10
+    14→	github.com/spf13/viper v1.21.0
+    15→	github.com/stretchr/testify v1.11.1
+    16→	gopkg.in/yaml.v3 v3.0.1
+    17→)
+    18→
+    19→require (
+    20→	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
+    21→	github.com/charmbracelet/colorprofile v0.4.1 // indirect
+    22→	github.com/charmbracelet/x/ansi v0.11.6 // indirect
+    23→	github.com/charmbracelet/x/cellbuf v0.0.15 // indirect
+    24→	github.com/charmbracelet/x/term v0.2.2 // indirect
+    25→	github.com/clipperhouse/displaywidth v0.9.0 // indirect
+    26→	github.com/clipperhouse/stringish v0.1.1 // indirect
+    27→	github.com/clipperhouse/uax29/v2 v2.5.0 // indirect
+    28→	github.com/davecgh/go-spew v1.1.1 // indirect
+    29→	github.com/erikgeiser/coninput v0.0.0-20211004153227-1c3628e74d0f // indirect
+    30→	github.com/fsnotify/fsnotify v1.9.0 // indirect
+    31→	github.com/go-viper/mapstructure/v2 v2.4.0 // indirect
+    32→	github.com/inconshreveable/mousetrap v1.1.0 // indirect
+    33→	github.com/lucasb-eyer/go-colorful v1.3.0 // indirect
+    34→	github.com/mattn/go-isatty v0.0.20 // indirect
+    35→	github.com/mattn/go-localereader v0.0.1 // indirect
+    36→	github.com/mattn/go-runewidth v0.0.19 // indirect
+    37→	github.com/muesli/ansi v0.0.0-20230316100256-276c6243b2f6 // indirect
+    38→	github.com/muesli/cancelreader v0.2.2 // indirect
+    39→	github.com/pelletier/go-toml/v2 v2.2.4 // indirect
+    40→	github.com/pmezard/go-difflib v1.0.0 // indirect
+    41→	github.com/rivo/uniseg v0.4.7 // indirect
+      →	…
+
 internal/adapters/cli/add.go
      3→import …
     16→type addOptions struct {
     26→func NewAddCmd() *cobra.Command {
-    64→func runAdd …
-   124→func resolveStartTime …
-   163→func resolveEndTimeOrDuration …
 
 internal/adapters/cli/analyze.go
      3→import …
@@ -225,30 +265,20 @@ internal/adapters/cli/calendar.go
      3→import …
     25→func NewCalendarCmd() *cobra.Command {
     48→type reportModel struct {
-    64→func initialReportModel …
     79→func (m *reportModel) Init() tea.Cmd {
     83→func (m *reportModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
    134→func (m *reportModel) View() string {
-   156→func (m *reportModel) renderCalendar …
-   234→func (m *reportModel) renderDetails …
    256→func (m *reportModel) updateViewportContent() {
-   402→func (m *reportModel) formatProjectStat …
    418→type monthDataMsg struct {
    419→	reports map[int]*dto.Report
    420→}
    422→type errMsg struct{ err error }
-   424→func (m *reportModel) fetchMonthData …
    488→func (m *reportModel) getWeeklyDuration() (time.Duration, error) {
-   520→func (m *reportModel) handleKeyMsg …
 
 internal/adapters/cli/calendar_sidebar.go
      3→import …
     12→const barChar = "▏"
     15→func formatDurationCompact(d time.Duration) string {
-    27→func (m *reportModel) renderSidebar …
-    51→func (m *reportModel) renderProductivityStats …
-   128→func (m *reportModel) renderWeeklyActivity …
-   211→func (m *reportModel) renderTopProjects …
 
 internal/adapters/cli/continue.go
      3→import …
@@ -266,20 +296,10 @@ internal/adapters/cli/current.go
 internal/adapters/cli/ical.go
      3→import …
     23→func NewICalCmd() *cobra.Command {
-    78→func handleFullExport …
-   155→func parseKeyOrDate …
-   185→func getActivitiesForDate …
-   210→func handleSingleExport …
-   250→func handleBulkExport …
-   302→func openFileInCalendar …
 
 internal/adapters/cli/interactive.go
      3→import …
     17→func SelectActivityMetadata(activities []models.Activity, project, description string, theme Theme) (string, string, error) {
-    36→func selectProject …
-    57→func selectTask …
-    80→func getUniqueProjects …
-    89→func getDescriptionsForProject …
     98→func RunInteractiveInput(header, placeholder string, theme Theme) (string, error) {
    123→type simpleInputModel struct {
    131→func (m simpleInputModel) Init() tea.Cmd { return nil }
@@ -289,26 +309,17 @@ internal/adapters/cli/interactive.go
    201→type simpleListModel struct {
    212→func (m *simpleListModel) Init() tea.Cmd { return nil }
    214→func (m *simpleListModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-   251→func (m *simpleListModel) applyFilter …
    263→func (m *simpleListModel) View() string {
-   301→func (m *simpleListModel) calculateWindow …
 
 internal/adapters/cli/last.go
      3→import …
     16→type lastOptions struct {
     21→func NewLastCmd() *cobra.Command {
-    42→func runLastCmd …
 
 internal/adapters/cli/list_gui.go
      3→import …
     22→func NewListCmd() *cobra.Command {
     45→type model struct {
-    57→func initialModel …
-    70→func (m *model) initTable …
-   101→func (m *model) updateActivities …
-   111→func (m *model) navigate …
-   128→func (m *model) findTargetDate …
-   154→func (m *model) renderTable …
    200→func (m *model) Init() tea.Cmd {
    204→func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
    230→func (m *model) View() string {
@@ -316,9 +327,6 @@ internal/adapters/cli/list_gui.go
 internal/adapters/cli/remove.go
      3→import …
     22→func NewRemoveCmd() *cobra.Command {
-    95→func parseRemoveIndex …
-   116→func findLastActivity …
-   127→func findActivityByIndex …
 
 internal/adapters/cli/report.go
      3→import …
@@ -337,13 +345,6 @@ internal/adapters/cli/root.go
     29→type timeFormatterKey struct{}
     31→func NewRootCmd() *cobra.Command {
    107→func Execute() {
-   115→func getService …
-   119→func getConfig …
-   123→func getTimeFormatter …
-   127→func initRepository …
-   134→func getServiceForCompletion …
-   173→func projectRegisterFlagCompletion …
-   195→func descriptionRegisterFlagCompletion …
 
 internal/adapters/cli/start.go
      3→import …
@@ -393,8 +394,6 @@ internal/adapters/cli/theme.go
 internal/adapters/cli/update.go
      3→import …
     17→type githubRelease struct {
-    22→func checkUpdate …
-    45→func runUpdateCheck …
 
 internal/adapters/cli/version.go
      3→import …
@@ -410,19 +409,17 @@ internal/adapters/cli/watch.go
     75→type tickMsg time.Time
     77→type watchModel struct {
     90→type keyMap struct {
-    95→func initialWatchModel …
    115→func (m watchModel) Init() tea.Cmd {
    121→func (m watchModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
    175→func (m watchModel) View() string {
    248→var font = map[rune][]string{
-   262→func renderBigText …
 
 internal/adapters/repositories/file/parser.go
      3→import …
     13→var ErrSkip = errors.New("skip line")
-    15→const (
-    16→	timeLayoutMin = "2006-01-02 15:04"
-    17→	timeLayoutSec = "2006-01-02 15:04:05"
+    15→const …
+    16→	timeLayoutMin …
+    17→	timeLayoutSec …
     20→func ParseActivity(line string) (*models.Activity, error) {
     64→func parseTime(s string) (time.Time, error) {
     72→func FormatActivity(a models.Activity) string {
@@ -512,12 +509,6 @@ internal/config/config.go
     74→func WithConfigFile(file string) Option {
     80→func Load(opts ...Option) (*Config, *viper.Viper, error) {
 
-internal/config/config_test.go
-    12→func TestLoadDefaults(t *testing.T) {
-    25→func TestLoadFromFile(t *testing.T) {
-    64→func TestEnvironmentOverrides(t *testing.T) {
-    95→func TestInitialCreationFromEnv(t *testing.T) {
-
 internal/core/dto/activity_dto.go
      3→import …
      9→type StartActivityRequest struct {
@@ -586,30 +577,8 @@ internal/core/models/activity.go
     34→	d %= time.Hour
     35→	m := d / time.Minute
     36→	d %= time.Minute
-    37→	s := d / time.Second
       →	…
     41→func (a Activity) MarshalJSON() ([]byte, error) {
-
-internal/core/ports/mocks/mock_activityrepository.go
-    30→type MockActivityRepository struct {
-    71→type MockActivityRepository_Find_Call struct {
-   139→type MockActivityRepository_FindLast_Call struct {
-   190→type MockActivityRepository_Save_Call struct {
-   247→type MockActivityRepository_Remove_Call struct {
-
-internal/core/ports/mocks/mock_activityresolver.go
-    30→type MockActivityResolver struct {
-    71→type MockActivityResolver_Add_Call struct {
-   139→type MockActivityResolver_GetRecent_Call struct {
-   207→type MockActivityResolver_GetReport_Call struct {
-   275→type MockActivityResolver_List_Call struct {
-   343→type MockActivityResolver_Start_Call struct {
-   411→type MockActivityResolver_Stop_Call struct {
-
-internal/core/ports/mocks/mock_notesrepository.go
-    29→type MockNotesRepository struct {
-    76→type MockNotesRepository_Get_Call struct {
-   139→type MockNotesRepository_Save_Call struct {
 
 internal/core/ports/ports.go
      3→import …
@@ -690,6 +659,3 @@ internal/timeutil/timeutil.go
     56→func (f *Formatter) ParseTime(input string) (time.Time, error) {
    103→func (f *Formatter) ParseTimeWithDate(input string) (time.Time, error) {
    158→func FormatDuration(d time.Duration, format string) string {
-
-internal/timeutil/timeutil_test.go
-   198→func checkDate …

@@ -6,13 +6,32 @@ budget: 4000 (4000 tokens)
 
 README.md
      3→# xLSTM: Extended Long Short-Term Memory
+    15→> **Paper:** https://arxiv.org/abs/2405.04517
+    16→>
+    17→> **Authors:** Maximilian Beck, Korbinian Pöppel, Markus Spanring, Andreas Auer, Oleksandra Prudnikova, Michael Kopp, Günter Klambauer, Johannes Brandstetter, Sepp Hochreiter
+    18→
     19→## About
     29→## Minimal Installation
     49→## Requirements
     61→# xLSTM 7B: A Recurrent LLM for Fast and Efficient Inference
+    67→> **Paper:** https://arxiv.org/abs/2503.13427
+    68→>
+    69→> **Authors:** Maximilian Beck, Korbinian Pöppel, Phillip Lippe, Richard Kurle, Patrick M. Blies, Günter Klambauer, Sebastian Böck, Sepp Hochreiter
+    70→
+    71→![xLSTM Figure](./res/xlstm_7b_poster.svg)
+    72→
+    73→</div>
+    74→
+    75→We have optimized the xLSTM architecture in terms of training throughput and stability. 
+    76→The code for the updated architecture is located in `xlstm/xlstm_large`.
+    77→
+    78→The model weights are available on Huggingface at https://huggingface.co/NX-AI/xLSTM-7b. 
+    79→
     80→## How to use the xLSTM Large 7B and its architecture
    115→## Recommendation for other hardware
    138→# Models from the xLSTM NeurIPS Paper
+   140→This section explains how to use the models from the xLSTM paper.
+   141→
    142→## How to use the xLSTM architecture from our NeurIPS paper
    146→### Using the sLSTM CUDA kernels
    168→### xLSTM Block Stack
@@ -20,10 +39,17 @@ README.md
    297→## Experiments
    312→## Citation
 
+experiments/data/formal_language/formal_language_dataset.py
+    42→class FormLangDatasetConfig(FormLangDatasetConfigBase):
+    43→    shift: int = 1
+    44→    enable_mask: bool = False
+    45→    additional_prefix_tokens: int = (
+      →    …
+
 experiments/lr_scheduler.py
-    14→    def get_lr …
-    19→    def reinitialize …
-    34→    def compute_lr …
+    14→    def get_lr(self) -> list[float]:
+    19→    def reinitialize(self, **kwargs) -> None:
+    34→    def compute_lr(step, warmup_steps, decay_until_step, max_lr, min_lr):
 
 experiments/parity_xlstm01.yaml
      1→training:
@@ -40,8 +66,16 @@ experiments/parity_xlstm11.yaml
     16→model:
     29→dataset:
 
+pyproject.toml
+    50→[project.urls]
+
 xlstm/__init__.py
      1→__version__ = "2.0.5"
+
+xlstm/blocks/mlstm/backends.py
+     9→def parallel_stabilized_simple …
+    93→def recurrent_step_stabilized_simple …
+   149→def chunkwise_simple …
 
 xlstm/blocks/mlstm/block.py
     10→class mLSTMBlockConfig:
@@ -51,7 +85,9 @@ xlstm/blocks/mlstm/block.py
     14→    _num_blocks: int = None
     15→    _block_idx: int = None
     16→
+    17→    def __post_init__ …
     22→class mLSTMBlock(xLSTMBlock):
+    25→    def __init__ …
 
 xlstm/blocks/mlstm/cell.py
     14→class mLSTMCellConfig:
@@ -59,6 +95,10 @@ xlstm/blocks/mlstm/cell.py
     16→    embedding_dim: int = -1
     17→    num_heads: int = -1
     20→class mLSTMCell(nn.Module):
+    23→    def __init__ …
+    43→    def forward …
+    75→    def step …
+   133→    def reset_parameters …
 
 xlstm/blocks/mlstm/layer.py
     19→class mLSTMLayerConfig(UpProjConfigMixin):
@@ -76,17 +116,15 @@ xlstm/blocks/mlstm/layer.py
     31→    _num_blocks: int = 1
     32→    _inner_embedding_dim: int = None
     33→
+    34→    def __post_init__ …
     39→class mLSTMLayer(nn.Module):
+    42→    def __init__ …
+   101→    def forward …
+   127→    def step …
+   158→    def reset_parameters …
 
 xlstm/blocks/slstm/block.py
     13→class sLSTMBlockConfig:
-    14→    slstm: sLSTMLayerConfig = field(default_factory=sLSTMLayerConfig)
-    15→    feedforward: Optional[FeedForwardConfig] = field(default_factory=FeedForwardConfig)
-    16→
-    17→    # we initialize these with None to catch the case where they are not set
-    18→    _num_blocks: int = None
-    19→    _block_idx: int = None
-    20→
     29→class sLSTMBlock(xLSTMBlock):
 
 xlstm/blocks/slstm/cell.py
@@ -94,36 +132,6 @@ xlstm/blocks/slstm/cell.py
     30→DTYPE_DICT = {
     35→DTYPES = Literal["bfloat16", "float16", "float32"]
     62→class sLSTMCellConfig:
-    63→    hidden_size: int = -1
-    64→    num_heads: int = (
-    65→        4  # this must divide the hidden size, is not yet supported by all versions in this directory
-    66→    )
-    67→    num_states: int = 4  # this is for the sLSTM, a standard LSTM  has 2
-    68→    backend: Literal["vanilla", "cuda"] = "cuda"
-    69→    # the type of function a cell computes
-    70→    function: str = "slstm"
-    71→    bias_init: Literal["powerlaw_blockdependent", "small_init", "standard"] = (
-    72→        "powerlaw_blockdependent"
-    73→    )
-    74→    recurrent_weight_init: Literal["zeros", "standard"] = "zeros"
-    75→
-    76→    _block_idx: int = (
-    77→        0  # index in the block sequence for a residual stacked model, needed for forget gate init
-    78→    )
-    79→    _num_blocks: int = (
-    80→        1  # how many blocks there are in the residually stacked model, needed for forget gate init
-    81→    )
-    82→
-    83→    num_gates: int = 4
-    84→    # this option cuts of the gradient for recurrent connection, i.e. no exploding gradient if False
-    85→    gradient_recurrent_cut: bool = False
-    86→    # this option clips the gradient values for recurrent connections at dy
-    87→    gradient_recurrent_clipval: Optional[float] = None
-    88→    # this option clips the y value
-    89→    forward_clipval: Optional[float] = None
-    90→
-    91→    # this can be ignored internally, but may be used to optimize kernels
-    92→    batch_size: int = 8
    122→    def head_dim(self):
    126→    def input_dim(self):
    130→    def torch_dtype(self) -> torch.dtype:
@@ -144,14 +152,6 @@ xlstm/blocks/slstm/cell.py
 
 xlstm/blocks/slstm/layer.py
     19→class sLSTMLayerConfig(sLSTMCellConfig):
-    20→    embedding_dim: int = -1
-    21→    num_heads: int = (
-    22→        4  # this must divide the hidden size, is not yet supported by all versions in this directory
-    23→    )
-    24→    conv1d_kernel_size: int = 4  # 0 means no convolution included
-    25→    group_norm_weight: bool = True
-    26→    dropout: float = 0.0
-    27→
     33→class sLSTMLayer(nn.Module):
 
 xlstm/blocks/slstm/src/cuda/slstm.h
@@ -213,6 +213,8 @@ xlstm/components/conv.py
     55→class CausalConv1d(nn.Module):
 
 xlstm/components/feedforward.py
+     9→from ..utils import UpProjConfigMixin
+    10→from .init import small_init_init_, wang_init_
     32→class FeedForwardConfig(UpProjConfigMixin):
     33→    proj_factor: float = 1.3
     34→    act_fn: str = "gelu"
@@ -260,6 +262,7 @@ xlstm/components/util.py
     70→    def grad(self):
 
 xlstm/utils.py
+     3→import math …
     12→class UpProjConfigMixin:
     13→    proj_factor: float = None  # will be overridden by subclasses
     14→    round_proj_up_dim_up: bool = True
@@ -273,6 +276,7 @@ xlstm/utils.py
     61→    def get_weight_decay_optim_group_param_names …
 
 xlstm/xlstm_block_stack.py
+     3→from copy …
     16→class xLSTMBlockStackConfig:
     17→    mlstm_block: Optional[mLSTMBlockConfig] = None
     18→    slstm_block: Optional[sLSTMBlockConfig] = None
@@ -326,6 +330,8 @@ xlstm/xlstm_large/model.py
     38→    vocab_size: int
     39→    """Vocabulary size."""
     40→    use_bias: bool = False
+    41→    """Whether to use bias in linear layers."""
+    42→    norm_eps: float = 1e-6
       →    …
    112→class xLSTMLarge(nn.Module):
    187→class xLSTMLargeBlockStack(nn.Module):
@@ -340,11 +346,14 @@ xlstm/xlstm_large/model.py
    288→    norm_eps: float = 1e-6
    289→    """Epsilon value for numerical stability in the normalization layers."""
    290→    norm_reduction_force_float32: bool = True
-      →    …
+   291→    """Whether to force float32 reductions in the normalization layers."""
+   292→
+      →…
    310→class mLSTMLayer(nn.Module):
    455→class mLSTMBlock(nn.Module):
 
 xlstm/xlstm_lm_model.py
+     3→from dataclasses …
     15→class xLSTMLMModelConfig(xLSTMBlockStackConfig):
     16→    vocab_size: int = -1
     17→    tie_weights: bool = False

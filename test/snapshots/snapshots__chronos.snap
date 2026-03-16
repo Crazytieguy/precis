@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (3998 tokens)
 
 CONTRIBUTING.md
      1→# Contributing Guidelines
@@ -12,8 +12,14 @@ README.md
     17→## 🚀 News
     24→## ✨ Introduction
     32→### Available Models
+    36→| Model ID                                                               | Parameters |
+    37→| ---------------------------------------------------------------------- | ---------- |
+      →…
     53→## 📈 Usage
     65→### Forecasting
+    67→A minimal example showing how to perform forecasting using Chronos-2:
+    68→
+      →…
    117→## Example Notebooks
    130→## 📝 Citation
    153→## 🛡️ Security
@@ -22,7 +28,6 @@ README.md
 pyproject.toml
      1→[project]
     31→[build-system]
-    38→[tool.hatch.version]
     41→[project.optional-dependencies]
     68→[project.urls]
     74→[tool.mypy]
@@ -158,7 +163,7 @@ src/chronos/chronos2/__init__.py
      7→from .model …
      8→from .pipeline …
      9→from .dataset …
-    11→__all__ = ["Chronos2CoreConfig", "Chronos2ForecastingConfig", "Chronos2Model", "Chronos2Pipeline", "Chronos2Dataset"]
+    11→__all__ …
 
 src/chronos/chronos2/config.py
      6→from dataclasses import dataclass
@@ -179,7 +184,7 @@ src/chronos/chronos2/config.py
 
 src/chronos/chronos2/dataset.py
      6→import math
-    20→TensorOrArray: TypeAlias = torch.Tensor | np.ndarray
+    20→TensorOrArray …
     23→class PreparedInput(TypedDict):
     33→def left_pad_and_cat_2D …
     50→def validate_and_prepare_single_dict_input …

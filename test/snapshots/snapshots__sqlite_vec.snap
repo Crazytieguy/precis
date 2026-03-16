@@ -16,6 +16,12 @@ ARCHITECTURE.md
     10→
     11→## `vec0`
     13→### Shadow Tables
+    15→#### `xyz_chunks`
+    22→#### `xyz_rowids`
+    29→#### `xyz_vector_chunksNN`
+    34→#### `xyz_auxiliary`
+    39→#### `xyz_metadatachunksNN`
+    44→#### `xyz_metadatatextNN`
     49→### idxStr
     51→The `vec0` idxStr is a string composed of single "header" character and 0 or
     52→more "blocks" of 4 characters each.
@@ -26,6 +32,12 @@ ARCHITECTURE.md
     57→| Name                       | Value | Description                                                            |
     58→| -------------------------- | ----- | ---------------------------------------------------------------------- |
       →…
+    69→#### `VEC0_IDXSTR_KIND_KNN_MATCH` (`'{'`)
+    75→#### `VEC0_IDXSTR_KIND_KNN_K` (`'}'`)
+    81→#### `VEC0_IDXSTR_KIND_KNN_ROWID_IN` (`'['`)
+    88→#### `VEC0_IDXSTR_KIND_KNN_PARTITON_CONSTRAINT` (`']'`)
+   102→#### `VEC0_IDXSTR_KIND_POINT_ID` (`'!'`)
+   108→#### `VEC0_IDXSTR_KIND_METADATA_CONSTRAINT` (`'&'`)
 
 README.md
      1→# `sqlite-vec`
@@ -45,22 +57,63 @@ README.md
     18→- Store non-vector data in metadata, auxiliary, or partition key columns
     19→
     20→<p align="center">
+    21→  <a href="https://hacks.mozilla.org/2024/06/sponsoring-sqlite-vec-to-enable-more-powerful-local-ai-applications/">
+    22→  <picture>
+    23→    <source media="(prefers-color-scheme: dark)" srcset="./.github/logos/mozilla.dark.svg">
+    24→    <source media="(prefers-color-scheme: light)" srcset="./.github/logos/mozilla.svg">
+    25→    <img alt="Mozilla Builders logo" width=400>
+    26→  </picture>
+    27→  </a>
+    28→</p>
+    29→
+    30→<p align="center">
+    31→<i>
+    32→<code>sqlite-vec</code> is a
       →…
     43→## Installing
     61→## Sample usage
     97→## Sponsors
    152→## See Also
 
+benchmarks/exhaustive-memory/bench.py
+    13→class BenchResult:
+   571→class Config:
+
 bindings/python/extra_init.py
      6→def serialize_float32(vector: List[float]) -> bytes:
     11→def serialize_int8(vector: List[int]) -> bytes:
     44→    def register_numpy(db: Connection, name: str, array):
 
+bindings/rust/build.rs
+     1→fn main() {
+
 bindings/rust/src/lib.rs
      3→    pub fn sqlite3_vec_init();
 
+examples/simple-c/demo.c
+     7→int main(int argc, char *argv[]) {
+
+examples/simple-go-cgo/go.mod
+     1→module github.com/asg017/sqlite-vec/examples/go
+     3→go 1.22.5
+     4→
+      →…
+
+examples/simple-go-ncruces/go.mod
+     1→module asg017.com/ex1
+     3→go 1.22.5
+     4→
+     5→require (
+      →…
+
+examples/simple-python/demo.py
+
 examples/simple-ruby/demo.rb
      1→require 'sqlite3'
+     2→require 'sqlite_vec'
+     3→
+     4→
+      →…
 
 examples/simple-rust/Cargo.toml
      1→[package]
@@ -68,9 +121,19 @@ examples/simple-rust/Cargo.toml
     10→[[bin]]
 
 examples/simple-sqlite/demo.sql
+     1→.load ../../dist/vec0
+     2→.mode table
+     3→.header on
+     4→
+     5→select sqlite_version(), vec_version();
+     6→
+      →…
 
 examples/sqlite3-cli/README.md
      1→# `sqlite-vec` statically compiled in the SQLite CLI
+
+examples/sqlite3-cli/core_init.c
+     4→int core_init(const char *dummy) {
 
 examples/wasm/README.md
      1→# `sqlite-vec` statically compiled into WASM builds
@@ -84,6 +147,9 @@ reference.yaml
    308→quantization:
    328→vec0:
 
+site/project.data.ts
+    13→  load() {
+
 sqlite-dist.toml
      1→[package]
     10→[targets]
@@ -92,14 +158,6 @@ sqlite-vec.c
      1→#include "sqlite-vec.h"
     19→#include "sqlite3ext.h"
     22→#include "sqlite3.h"
-    87→#define UNUSED_PARAMETER(X) (void)(X)
-    93→#define COMPILER_SUPPORTS_VTAB_IN 1
-    97→#define SQLITE_SUBTYPE 0x000100000
-   101→#define SQLITE_RESULT_SUBTYPE 0x001000000
-   105→#define SQLITE_INDEX_CONSTRAINT_LIMIT 73
-   109→#define SQLITE_INDEX_CONSTRAINT_OFFSET 74
-   112→#define countof(x) (sizeof(x) / sizeof((x)[0]))
-   113→#define min(a, b) (((a) <= (b)) ? (a) : (b))
    115→enum VectorElementType {
    116→  // clang-format off
    117→  SQLITE_VEC_ELEMENT_TYPE_FLOAT32 = 223 + 0,
@@ -107,18 +165,16 @@ sqlite-vec.c
    119→  SQLITE_VEC_ELEMENT_TYPE_INT8    = 223 + 2,
    120→  // clang-format on
    121→};
-   125→#define PORTABLE_ALIGN32 __attribute__((aligned(32)))
-   126→#define PORTABLE_ALIGN64 __attribute__((aligned(64)))
-   166→#define PORTABLE_ALIGN32 __attribute__((aligned(32)))
-   583→#define vecJsonIsspace(x) (vecJsonIsSpaceX[(unsigned char)x])
+   169→static f32 l2_sqr_float_neon …
+   527→static unsigned int __builtin_popcountl …
+   536→#define __builtin_popcountl __popcnt64
+   556→static f32 distance_hamming …
    585→typedef void (*vector_cleanup)(void *p);
-   589→#define JSON_SUBTYPE 74
    598→struct Array {
    614→int array_init …
    683→typedef void (*fvec_cleanup)(f32 *vector);
    964→int vector_from_value …
   1050→struct VecNpyFile {
-  1054→#define SQLITE_VEC_NPY_FILE_NAME "vec0-npy-file"
   1798→enum Vec0TokenType {
   1799→  TOKEN_TYPE_IDENTIFIER,
   1800→  TOKEN_TYPE_DIGIT,
@@ -128,9 +184,6 @@ sqlite-vec.c
   1804→  TOKEN_TYPE_EQ,
   1805→};
   1806→struct Vec0Token {
-  1820→#define VEC0_TOKEN_RESULT_EOF 1
-  1821→#define VEC0_TOKEN_RESULT_SOME 2
-  1822→#define VEC0_TOKEN_RESULT_ERROR 3
   1880→struct Vec0Scanner {
   1956→int vec0_parse_partition_key_definition …
   2033→int vec0_parse_auxiliary_column_definition …
@@ -165,37 +218,17 @@ sqlite-vec.c
   2633→};
   2635→struct NpyToken {
   2718→struct NpyScanner {
-  2739→#define NPY_PARSE_ERROR "Error parsing numpy array: "
   2876→typedef struct vec_npy_each_vtab vec_npy_each_vtab;
   2877→struct vec_npy_each_vtab {
   2881→typedef enum {
   2886→typedef struct vec_npy_each_cursor vec_npy_each_cursor;
   2887→struct vec_npy_each_cursor {
-  3375→#define VEC0_COLUMN_ID 0
-  3376→#define VEC0_COLUMN_USERN_START 1
-  3377→#define VEC0_COLUMN_OFFSET_DISTANCE 1
-  3378→#define VEC0_COLUMN_OFFSET_K 2
-  3380→#define VEC0_SHADOW_INFO_NAME "\"%w\".\"%w_info\""
-  3382→#define VEC0_SHADOW_CHUNKS_NAME "\"%w\".\"%w_chunks\""
   3384→#define VEC0_SHADOW_CHUNKS_CREATE                                              \
-  3392→#define VEC0_SHADOW_ROWIDS_NAME "\"%w\".\"%w_rowids\""
   3394→#define VEC0_SHADOW_ROWIDS_CREATE_BASIC                                        \
   3405→#define VEC0_SHADOW_ROWIDS_CREATE_PK_TEXT                                      \
   3414→#define VEC0_SHADOW_VECTOR_N_NAME "\"%w\".\"%w_vector_chunks%02d\""
   3417→#define VEC0_SHADOW_VECTOR_N_CREATE                                            \
-  3423→#define VEC0_SHADOW_AUXILIARY_NAME "\"%w\".\"%w_auxiliary\""
-  3425→#define VEC0_SHADOW_METADATA_N_NAME "\"%w\".\"%w_metadatachunks%02d\""
-  3426→#define VEC0_SHADOW_METADATA_TEXT_DATA_NAME "\"%w\".\"%w_metadatatext%02d\""
-  3428→#define VEC_INTERAL_ERROR "Internal sqlite-vec error: "
-  3429→#define REPORT_URL "https://github.com/asg017/sqlite-vec/issues/new"
   3431→typedef struct vec0_vtab vec0_vtab;
-  3433→#define VEC0_MAX_VECTOR_COLUMNS   16
-  3434→#define VEC0_MAX_PARTITION_COLUMNS 4
-  3435→#define VEC0_MAX_AUXILIARY_COLUMNS 16
-  3436→#define VEC0_MAX_METADATA_COLUMNS 16
-  3438→#define SQLITE_VEC_VEC0_MAX_DIMENSIONS 8192
-  3439→#define VEC0_METADATA_TEXT_VIEW_BUFFER_LENGTH 16
-  3440→#define VEC0_METADATA_TEXT_VIEW_DATA_LENGTH 12
   3442→typedef enum {
   3456→struct vec0_vtab {
   3582→void vec0_free_resources …
@@ -223,7 +256,6 @@ sqlite-vec.c
   4601→typedef enum {
   4609→typedef struct vec0_cursor vec0_cursor;
   4610→struct vec0_cursor {
-  4637→#define VEC_CONSTRUCTOR_ERROR "vec0 constructor error: "
   5305→typedef enum  {
   5306→  // If any values are updated, please update the ARCHITECTURE.md docs accordingly!
   5307→
@@ -267,6 +299,7 @@ sqlite-vec.c
   5348→} vec0_partition_operator;
   5349→typedef enum  {
   5360→typedef enum {
+  5769→static int vec0Next …
   5867→int min_idx …
   5948→int vec0_chunks_iter …
   6033→struct Vec0MetadataIn{
@@ -284,10 +317,10 @@ sqlite-vec.c
   6368→int vec0_set_metadata_filter_bitmap …
   7708→int vec0Update_InsertRowidStep …
   7778→int vec0Update_InsertNextAvailableStep …
+  7931→vec0_write_vector_to_vector_blob …
   7969→int vec0Update_InsertWriteFinalStep …
   8248→int vec0Update_Insert …
   9085→struct static_blob_definition {
-  9111→#define MAX_STATIC_BLOBS 16
   9113→typedef struct static_blob static_blob;
   9114→struct static_blob {
   9122→typedef struct vec_static_blob_data vec_static_blob_data;
@@ -302,12 +335,22 @@ sqlite-vec.c
   9340→struct sbe_query_knn_data {
   9363→typedef struct vec_static_blob_entries_cursor vec_static_blob_entries_cursor;
   9364→struct vec_static_blob_entries_cursor {
-  9734→#define SQLITE_VEC_DEBUG_BUILD_AVX ""
-  9739→#define SQLITE_VEC_DEBUG_BUILD_NEON ""
-  9742→#define SQLITE_VEC_DEBUG_BUILD                                                 \
-  9745→#define SQLITE_VEC_DEBUG_STRING                                                \
 
 test.sql
      1→
+
+tests/Cargo.toml
+     1→[package]
+     6→[dependencies]
+     8→[build-dependencies]
+    11→[[bin]]
+
+tests/afbd/README.md
+     2→# hnm
+     4→```
+      →…
+
+tests/sqlite-vec-internal.h
+     3→int min_idx …
 
 tmp-static.py

@@ -2,9 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7989 tokens)
-
-CHANGELOG.md
+budget: 8000 (7988 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -56,6 +54,10 @@ crates/mdbook-compare/README.md
     10→4. Run `mdbook-compare` with the arguments to the mdbook executables and the books to build.
     11→
     12→```sh
+    13→cargo run --manifest-path /path/to/mdBook/Cargo.toml -p mdbook-compare -- \
+    14→    /path/to/orig/mdbook /path/to/my-book /path/to/new/mdbook /path/to/my-book
+    15→```
+    16→
       →…
 
 crates/mdbook-core/Cargo.toml
@@ -68,7 +70,8 @@ crates/mdbook-core/README.md
      1→# mdbook-core
      7→This is the base support library for [mdBook](https://rust-lang.github.io/mdBook/). It is intended for internal use only. Other mdBook crates depend on this for any types that are shared across the crates.
      8→
-      →…
+     9→> This crate is maintained by the mdBook team, primarily for use by mdBook and not intended for external use (except as a transitive dependency). This crate may make major changes to its APIs or be deprecated without warning.
+    10→
 
 crates/mdbook-core/src/book.rs
     26→pub struct Book {
@@ -156,29 +159,10 @@ crates/mdbook-core/src/lib.rs
     11→pub mod utils;
     13→/// The error types used in mdbook.
     14→pub mod errors {
-    15→    pub use anyhow::{Error, Result};
-
-crates/mdbook-core/src/utils/fs.rs
-    11→pub fn read_to_string …
-    20→pub fn write …
-    31→pub fn create_dir_all …
-    55→pub fn path_to_root …
-    74→pub fn remove_dir_content …
-    93→pub fn copy_files_except_ext …
-   155→fn copy …
-
-crates/mdbook-core/src/utils/html.rs
-     6→pub fn escape_html_attribute …
-    32→pub fn escape_html …
 
 crates/mdbook-core/src/utils/mod.rs
      7→pub mod fs;
     17→macro_rules! static_regex {
-    29→pub fn log_backtrace …
-
-crates/mdbook-core/src/utils/toml_ext.rs
-     8→    fn read …
-    10→    fn insert …
 
 crates/mdbook-driver/Cargo.toml
      1→[package]
@@ -228,7 +212,6 @@ crates/mdbook-driver/src/init.rs
     16→    config: Config,
     17→    copy_theme: bool,
     18→}
-    20→impl BookBuilder {
     23→    pub fn new …
     33→    pub fn with_config …
     39→    pub fn config …
@@ -260,7 +243,6 @@ crates/mdbook-driver/src/mdbook.rs
     42→    /// Pre-processors to be run on the book.
     43→    preprocessors: IndexMap<String, Box<dyn Preprocessor>>,
     44→}
-    46→impl MDBook {
     48→    pub fn load …
     71→    pub fn load_with_config …
     90→    pub fn load_with_config_and_summary …
@@ -288,6 +270,10 @@ crates/mdbook-html/Cargo.toml
 
 crates/mdbook-html/README.md
      1→# mdbook-html
+     7→This is the HTML renderer for [mdBook](https://rust-lang.github.io/mdBook/). This is intended for internal use only. It is automatically included by [`mdbook-driver`](https://crates.io/crates/mdbook-driver) to render books to HTML.
+     8→
+     9→> This crate is maintained by the mdBook team, primarily for use by mdBook and not intended for external use (except as a transitive dependency). This crate may make major changes to its APIs or be deprecated without warning.
+    10→
 
 crates/mdbook-html/src/html/tree.rs
     33→pub(crate) enum Node {
@@ -302,7 +288,6 @@ crates/mdbook-html/src/lib.rs
      5→pub mod theme;
 
 crates/mdbook-html/src/theme/mod.rs
-    12→pub(crate) mod searcher;
     40→pub struct Theme {
     41→    pub(crate) index: Vec<u8>,
     42→    pub(crate) head: Vec<u8>,
@@ -341,7 +326,8 @@ crates/mdbook-markdown/README.md
      1→# mdbook-markdown
      7→This is the Markdown support library for [mdBook](https://rust-lang.github.io/mdBook/). Rust crates (such as preprocessors) can use this library to process Markdown in the same way as mdBook.
      8→
-      →…
+     9→> This crate is maintained by the mdBook team for use by the wider ecosystem. This crate follows [semver compatibility](https://doc.rust-lang.org/cargo/reference/semver.html) for its APIs.
+    10→
 
 crates/mdbook-markdown/src/lib.rs
     11→pub use pulldown_cmark;
@@ -364,8 +350,6 @@ crates/mdbook-markdown/src/lib.rs
     29→    /// This is `true` by default.
     30→    pub admonitions: bool,
     31→}
-    33→impl Default for MarkdownOptions {
-    43→/// Creates a new pulldown-cmark parser of the given text.
     44→pub fn new_cmark_parser<'text>(text: &'text str, options: &MarkdownOptions) -> Parser<'text> {
 
 crates/mdbook-preprocessor/Cargo.toml
@@ -377,7 +361,8 @@ crates/mdbook-preprocessor/README.md
      1→# mdbook-preprocessor
      7→This is the Rust library to implement a [preprocessor](https://rust-lang.github.io/mdBook/for_developers/preprocessors.html) for [mdBook](https://rust-lang.github.io/mdBook/).
      8→
-      →…
+     9→> This crate is maintained by the mdBook team for use by the wider ecosystem. This crate follows [semver compatibility](https://doc.rust-lang.org/cargo/reference/semver.html) for its APIs.
+    10→
 
 crates/mdbook-preprocessor/src/lib.rs
     30→pub trait Preprocessor {
@@ -413,7 +398,8 @@ crates/mdbook-renderer/README.md
      1→# mdbook-renderer
      7→This is the Rust library to implement a [renderer](https://rust-lang.github.io/mdBook/for_developers/backends.html) for [mdBook](https://rust-lang.github.io/mdBook/).
      8→
-      →…
+     9→> This crate is maintained by the mdBook team for use by the wider ecosystem. This crate follows [semver compatibility](https://doc.rust-lang.org/cargo/reference/semver.html) for its APIs.
+    10→
 
 crates/mdbook-renderer/src/lib.rs
     28→pub trait Renderer {
@@ -455,7 +441,8 @@ crates/mdbook-summary/README.md
      1→# mdbook-summary
      7→This is the Rust library used to parse the [`SUMMARY.md`](https://rust-lang.github.io/mdBook/format/summary.html) file structure for [mdBook](https://rust-lang.github.io/mdBook/).
      8→
-      →…
+     9→> This crate is maintained by the mdBook team for use by the wider ecosystem. This crate follows [semver compatibility](https://doc.rust-lang.org/cargo/reference/semver.html) for its APIs.
+    10→
 
 crates/mdbook-summary/src/lib.rs
     59→pub fn parse_summary(summary: &str) -> Result<Summary> {
@@ -481,8 +468,6 @@ crates/mdbook-summary/src/lib.rs
     93→    pub nested_items: Vec<SummaryItem>,
     94→}
     98→    pub fn new<S: Into<String>, P: AsRef<Path>>(name: S, location: P) -> Link {
-   119→/// An item in `SUMMARY.md`.
-      →…
    122→pub enum SummaryItem {
    123→    /// A link to a chapter.
    124→    Link(Link),
@@ -518,11 +503,6 @@ examples/nop-preprocessor.rs
     75→mod nop_lib {
     79→    pub struct Nop;
     82→        pub fn new() -> Nop {
-
-examples/remove-emphasis/mdbook-remove-emphasis/Cargo.toml
-     1→[package]
-     7→[dependencies]
-    13→[[bin]]
 
 guide/book.toml
      1→[book]
@@ -740,14 +720,14 @@ guide/src/guide/reading.md
 src/cmd/build.rs
      1→use super::command_prelude::*;
      2→use crate::{get_book_dir, open};
-     8→pub fn make_subcommand() -> Command {
-    17→pub fn execute(args: &ArgMatches) -> Result<()> {
+     8→pub fn make_subcommand …
+    17→pub fn execute …
 
 src/cmd/clean.rs
      1→use super::command_prelude::*;
      2→use crate::get_book_dir;
-    11→pub fn make_subcommand() -> Command {
-    19→pub fn execute(args: &ArgMatches) -> Result<()> {
+    11→pub fn make_subcommand …
+    19→pub fn execute …
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
     45→#[derive(Debug)]
     46→pub struct Clean {
@@ -761,18 +741,18 @@ src/cmd/clean.rs
 src/cmd/command_prelude.rs
      3→pub use clap::{Arg, ArgMatches, Command, arg};
      7→pub trait CommandExt: Sized {
-     8→    fn _arg(self, arg: Arg) -> Self;
-    10→    fn arg_dest_dir(self) -> Self {
-    26→    fn arg_root_dir(self) -> Self {
-    37→    fn arg_open(self) -> Self {
+     8→    fn _arg …
+    10→    fn arg_dest_dir …
+    26→    fn arg_root_dir …
+    37→    fn arg_open …
     42→    fn arg_watcher(self) -> Self {
     56→impl CommandExt for Command {
-    62→pub fn set_dest_dir(args: &ArgMatches, book: &mut MDBook) {
+    62→pub fn set_dest_dir …
 
 src/cmd/init.rs
      1→use crate::get_book_dir;
-    12→pub fn make_subcommand() -> ClapCommand {
-    32→pub fn execute(args: &ArgMatches) -> Result<()> {
+    12→pub fn make_subcommand …
+    32→pub fn execute …
     88→fn get_author_name …
    102→fn request_book_title …
 
@@ -792,15 +772,15 @@ src/cmd/serve.rs
      3→use super::watch;
      4→use crate::{get_book_dir, open};
     20→const LIVE_RELOAD_ENDPOINT: &str = "__livereload";
-    23→pub fn make_subcommand() -> Command {
-    51→pub fn execute(args: &ArgMatches) -> Result<()> {
+    23→pub fn make_subcommand …
+    51→pub fn execute …
    109→async fn serve …
 
 src/cmd/test.rs
      1→use super::command_prelude::*;
      2→use crate::get_book_dir;
-     9→pub fn make_subcommand() -> Command {
-    35→pub fn execute(args: &ArgMatches) -> Result<()> {
+     9→pub fn make_subcommand …
+    35→pub fn execute …
 
 src/cmd/watch/native.rs
     11→pub fn rebuild_on_change …
@@ -818,20 +798,15 @@ src/cmd/watch.rs
      2→use crate::{get_book_dir, open};
      8→mod native;
      9→mod poller;
-    12→pub fn make_subcommand() -> Command {
+    12→pub fn make_subcommand …
     21→pub enum WatcherKind {
     22→    Poll,
     23→    Native,
     24→}
     26→impl WatcherKind {
-    27→    pub fn from_str(s: &str) -> WatcherKind {
-    37→pub fn execute(args: &ArgMatches) -> Result<()> {
-    62→pub fn rebuild_on_change(
-    63→    kind: WatcherKind,
-    64→    book_dir: &Path,
-    65→    update_config: &dyn Fn(&mut MDBook),
-    66→    post_build: &dyn Fn(),
-    67→) {
+    27→    pub fn from_str …
+    37→pub fn execute …
+    62→pub fn rebuild_on_change …
 
 src/main.rs
     14→mod cmd;

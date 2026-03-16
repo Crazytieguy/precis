@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3996 tokens)
+budget: 4000 (4000 tokens)
 
 README.md
     40→## About
@@ -32,33 +32,77 @@ README.md
    111→    - [`P.set`](#pset-patterns)
    112→    - [`P.map`](#pmap-patterns)
    113→    - [`P.when` patterns](#pwhen-patterns)
-   114→    - [`P.not` patterns](#pnot-patterns)
       →    …
    128→## Sandbox examples
    139→## Getting Started
+   143→### Example: a state reducer with ts-pattern
+   209→### match(value)
+   220→### .returnType\<OutputType\>()
+   230→### .with(pattern, handler)
+   252→### P.select(name?)
+   299→### P.not(pattern)
+   310→### `P.when()` and guard functions
+   349→### the `P._` wildcard
+   364→### .exhaustive(), .otherwise() and .run()
+   380→### Matching several patterns
    415→## API Reference
+   417→### `match`
+   437→### `.with`
+   490→### `.when`
+   516→### `.returnType`
+   539→### `.exhaustive`
+   603→### `.otherwise`
+   627→### `.run`
+   643→### `.narrow`
+   680→### `isMatching`
    742→## Patterns
+   777→### Literals
+   800→### Objects
+   826→### Tuples (arrays)
+   855→### Wildcards
+  1003→### `P.array` patterns
+  1030→### Matching variadic tuples with `P.array`
+  1051→### `P.record` patterns
+  1113→### `P.set` patterns
+  1136→### `P.map` patterns
+  1166→### `P.when` patterns
+  1194→### `P.not` patterns
+  1217→### `P.select` patterns
+  1298→### `P.optional` patterns
+  1318→### `P.instanceOf` patterns
+  1350→### `P.union` patterns
+  1375→### `P.intersection` patterns
   1405→## `P.string` predicates
+  1409→### `P.string.startsWith`
+  1422→### `P.string.endsWith`
+  1435→### `P.string.minLength`
+  1448→### `P.string.length`
+  1461→### `P.string.maxLength`
+  1474→### `P.string.includes`
+  1487→### `P.string.regex`
   1500→## `P.number` and `P.bigint` predicates
+  1504→### `P.number.between`
+  1517→### `P.number.lt`
+  1530→### `P.number.gt`
+  1543→### `P.number.lte`
+  1556→### `P.number.gte`
+  1569→### `P.number.int`
+  1582→### `P.number.finite`
+  1595→### `P.number.positive`
+  1608→### `P.number.negative`
   1621→## Types
+  1623→### `P.infer`
+  1653→### `P.narrow`
+  1667→### `P.Pattern`
+  1679→### Type inference
   1766→## Inspirations
 
-docs/roadmap.md
-     1→### Roadmap
+benchmarks/package.json
 
 docs/v3-to-v4-migration-guide.md
      1→# TS-Pattern v3 to v4 Migration Guide
      3→## Breaking changes
-     5→### Imports
-    91→### list patterns
-   111→### NaN
    122→## New features
-   126→### Arrays and unary tuples
-   157→### Optional object properties
-   197→### Union & intersection patterns
-   265→### Select with sub pattern
-   296→### Infer the matching types from a pattern
-   334→### New type specific wildcards
 
 docs/v4-to-v5-migration-guide.md
      1→# TS-Pattern v4 to v5 Migration Guide
@@ -70,9 +114,6 @@ docs/v4-to-v5-migration-guide.md
     42→## Matching on Map and Sets
     63→# New features
     65→## chainable methods
-    71→### P.number methods
-   100→### P.string methods
-   122→### Global methods
    156→## Variadic tuple patterns
    214→## `.returnType`
 
@@ -85,7 +126,7 @@ jsr.json
      7→    "./package.json": "./package.json"
 
 src/errors.ts
-     5→export class NonExhaustiveError extends Error {
+     5→export class NonExhaustiveError …
      6→  constructor …
 
 src/index.ts
@@ -122,7 +163,7 @@ src/is-matching.ts
     53→export function isMatching …
 
 src/match.ts
-    11→const unmatched: MatchState<never> = {
+    11→const unmatched …
     32→export function match …
     47→class MatchExpression …
     48→  constructor …
@@ -136,21 +177,10 @@ src/match.ts
 
 src/patterns.ts
      8→import { matchPattern, getSelectionKeys, flatMap } from './internals/helpers';
-    81→export type unstable_Matchable<
-    82→  narrowedOrFn,
-    83→  input = unknown,
-    84→  pattern = never
-    85→> = CustomP<input, pattern, narrowedOrFn>;
-   100→export type unstable_Matcher<
-   101→  narrowedOrFn,
-   102→  input = unknown,
-   103→  pattern = never
-   104→> = ReturnType<CustomP<input, pattern, narrowedOrFn>[matcher]>;
-   116→export type infer<pattern> = InvertPattern<NoInfer<pattern>, unknown>;
-   131→export type narrow<input, pattern> = ExtractPreciseValue<
-   132→  input,
-   133→  InvertPattern<pattern, input>
-   134→>;
+    81→export type unstable_Matchable …
+   100→export type unstable_Matcher …
+   116→export type infer …
+   131→export type narrow …
    187→export function optional …
    246→export function array …
    299→export function set …
@@ -164,31 +194,8 @@ src/patterns.ts
    782→export const any: UnknownPattern = chainable(when(isUnknown));
    793→export const unknown: UnknownPattern = chainable(when(isUnknown));
    805→export const _ = any;
-   817→const startsWith …
-   831→const endsWith …
-   845→const minLength …
-   857→const length …
-   869→const maxLength …
-   881→const includes …
-   895→const regex …
    928→export const string: StringPattern = stringChainable(when(isString));
-   940→const between …
-   955→const lt …
-   969→const gt …
-   983→const lte …
-   997→const gte …
-  1011→const int …
-  1023→const finite …
-  1035→const positive …
-  1047→const negative …
   1075→export const number: NumberPattern = numberChainable(when(isNumber));
-  1087→const betweenBigInt …
-  1106→const ltBigInt …
-  1120→const gtBigInt …
-  1134→const lteBigInt …
-  1148→const gteBigInt …
-  1162→const positiveBigInt …
-  1174→const negativeBigInt …
   1201→export const bigint: BigIntPattern = bigintChainable(when(isBigInt));
   1211→export const boolean: BooleanPattern = chainable(when(isBoolean));
   1221→export const symbol: SymbolPattern = chainable(when(isSymbol));
@@ -250,11 +257,7 @@ src/types/DistributeUnions.ts
    126→        readonly [infer p1, infer p2, infer p3]
    127→      ]
    128→    ? [
-   129→        ...FindUnions<a1, p1, [...path, 0]>,
-   130→        ...FindUnions<a2, p2, [...path, 1]>,
-   131→        ...FindUnions<a3, p3, [...path, 2]>
-   132→      ]
-      →      …
+      →    …
 
 src/types/InvertPattern.ts
    106→export type InvertPattern<p, input> = Equal<Pattern<input>, p> extends true
@@ -307,10 +310,6 @@ src/types/Match.ts
     61→    : never;
     62→
     63→  with<
-    64→    const p1 extends Pattern<i>,
-    65→    const p2 extends Pattern<i>,
-    66→    c,
-    67→    p extends p1 | p2,
    132→  with …
    159→  when …
    180→  otherwise …

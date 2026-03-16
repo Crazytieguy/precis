@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7995 tokens)
+budget: 8000 (7996 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -31,7 +31,30 @@ README.md
      7→> me for it ;). Defining my own build system will allow for a more performant and maintainable system in the long run. (Just a bit anxious about how to host packages
      8→> / do all the repo stuff. Like really anxious but I'll figure it out)
      9→>
-      →…
+    10→> Another reason is that I made some choices on internal architecture in the beginning that I have come to see as suboptimal but can not easily refactor so this will
+    11→> allow me to go for the better option right from the get go (go for rx/tx for status propagation from the start, build the core fully async etc.)
+    12→>
+    13→> I have just made the repo for sps2 public. There is no repositories yet and core systems still do not work and need debugging. However it passes ci and the
+    14→> architecture is largely in place. I will have to create a automatic upstream tracking system, automatic builds and create build scripts for the most important
+    15→> tools too still + bootstrap the repositories.
+    16→>
+    17→> Never done that so if anyone has experience with that stuff help is appreciated. 
+    18→>
+    19→> For repo architecture I will probably go for a classic unix style repo format with cloudflare r2 and automatic replication to multiple regions. Well that is quite
+    20→> far out. Still it is coming along well, just built my first package with it. Found some small issues with install right after and am working on those now.
+    21→>
+    22→> https://github.com/alexykn/sps2 Take a look if you want!
+    23→
+    24→
+    25→sps is a next‑generation, Rust‑powered package manager inspired by Homebrew. It installs and manages:
+    26→
+    27→- **Formulae:** command‑line tools, libraries, and languages
+    28→- **Casks:** desktop applications and related artifacts on macOS
+    29→
+    30→> _ARM only for now, might add x86 support eventually_
+    31→
+    32→---
+    33→
     34→## ⚙️ Project Structure
     42→## 🚧 Current Status
     54→## 🚀 Roadmap
@@ -142,7 +165,6 @@ sps/src/pipeline/downloader.rs
 
 sps/src/pipeline/planner.rs
     28→struct IntermediatePlan {
-    37→pub(crate) async fn fetch_target_definitions …
    192→    pub fn new …
    526→    pub async fn plan_operations …
 
@@ -169,11 +191,9 @@ sps/src/pipeline.rs
 sps-common/Cargo.toml
      1→[package]
      2→name = "sps-common"
-     3→version = "0.1.56"
       →…
     10→[dependencies]
     11→# Inherited from workspace
-    12→serde_json = "1.0.143"
       →…
 
 sps-common/src/cache.rs
@@ -467,7 +487,6 @@ sps-common/src/model/tap.rs
 sps-common/src/model/version.rs
     11→pub struct Version(semver::Version);
     14→    pub fn parse …
-    37→    type Err …
 
 sps-common/src/pipeline.rs
     14→pub enum PipelinePackageType {
@@ -648,38 +667,6 @@ sps-core/src/install/bottle/mod.rs
     18→pub async fn download_formula …
     34→pub fn has_bottle_for_current_platform …
 
-sps-core/src/install/cask/artifacts/mod.rs
-     1→pub mod app;
-     2→pub mod audio_unit_plugin;
-     3→pub mod binary;
-     4→pub mod colorpicker;
-     5→pub mod dictionary;
-     6→pub mod font;
-     7→pub mod input_method;
-     8→pub mod installer;
-     9→pub mod internet_plugin;
-    10→pub mod keyboard_layout;
-    11→pub mod manpage;
-    12→pub mod mdimporter;
-    13→pub mod pkg;
-    14→pub mod preflight;
-    15→pub mod prefpane;
-    16→pub mod qlplugin;
-    17→pub mod screen_saver;
-    18→pub mod service;
-    19→pub mod suite;
-    20→pub mod uninstall;
-    21→pub mod vst3_plugin;
-    22→pub mod vst_plugin;
-    23→pub mod zap;
-
-sps-core/src/install/cask/dmg.rs
-   153→pub fn extract_dmg_to_stage …
-
-sps-core/src/install/cask/helpers.rs
-     9→pub fn remove_path_robustly …
-    75→pub fn cleanup_empty_parent_dirs_in_private_store …
-
 sps-core/src/install/cask/mod.rs
      1→pub mod artifacts;
      2→pub mod dmg;
@@ -695,11 +682,6 @@ sps-core/src/install/cask/mod.rs
     32→    pub is_installed: bool,              // New flag for soft uninstall
     33→    pub cask_store_path: Option<String>, // Path to private store app, if available
     34→}
-    37→pub fn sps_private_cask_version_dir …
-    43→pub fn sps_private_cask_token_dir …
-    49→pub fn sps_private_cask_app_path …
-   580→pub fn write_receipt …
-   686→pub fn cleanup_empty_parent_dirs_in_private_store …
 
 sps-core/src/install/devtools.rs
      9→pub fn find_compiler …
@@ -794,11 +776,9 @@ sps-net/Cargo.toml
     12→
       →…
 
-sps-net/src/api.rs
-
 sps-net/src/http.rs
     16→use crate::validation::{validate_url, verify_checksum};
-    18→pub type ProgressCallback = Arc<dyn Fn(u64, Option<u64>) + Send + Sync>;
+    18→pub type ProgressCallback …
 
 sps-net/src/lib.rs
      2→pub mod api;

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3943 tokens)
+budget: 4000 (3998 tokens)
 
 README.md
     29→## Overview
@@ -59,7 +59,6 @@ py3xui/api/api.py
 
 py3xui/api/api_base.py
      5→import logging
-    14→# pylint: disable=too-few-public-methods
     15→class ApiFields:
     17→
     18→    SUCCESS = "success"
@@ -69,7 +68,6 @@ py3xui/api/api_base.py
     22→    NO_IP_RECORD = "No IP Record"
     23→    GET = "GET"
     24→    POST = "POST"
-    27→# pylint: disable=R0902
     28→class BaseApi:
     60→
     61→    def __init__ …
@@ -188,6 +186,11 @@ py3xui/async_api/async_api_server.py
     44→    async def get_db(self, save_path: str) -> None:
     76→    async def get_status …
    105→    async def generate_reality_keys …
+
+py3xui/client/README.md
+     3→# client.client
+     9→## ClientFields Objects
+    19→## Client Objects
 
 py3xui/client/client.py
      6→# pylint: disable=too-few-public-methods
@@ -332,9 +335,13 @@ py3xui/inbound/stream_settings.py
     40→    network: str
       →    …
 
+py3xui/server/README.md
+     3→# server.server
+
 py3xui/server/server.py
      6→# pylint: disable=too-few-public-methods
      7→class ServerFields:
+     8→    """Stores fields returned by XUI API for parsing."""
      9→
     10→    CPU = "cpu"
     11→    CPU_CORES = "cpuCores"
@@ -375,6 +382,9 @@ py3xui/server/server.py
    100→class AppStats(BaseModel):
    113→class RealityKeyPair(BaseModel):
    125→class Server(BaseModel):
+
+py3xui/utils/README.md
+     3→# utils.env
 
 py3xui/utils/__init__.py
      2→from py3xui.utils import env

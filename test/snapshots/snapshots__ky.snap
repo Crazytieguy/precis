@@ -2,13 +2,61 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3998 tokens)
+budget: 4000 (3997 tokens)
 
 readme.md
     20→## Benefits over plain `fetch`
+    22→- Simpler API
+    23→- Method shortcuts (`ky.post()`)
+    24→- Treats non-2xx status codes as errors (after redirects)
+    25→- Retries failed requests
+    26→- JSON option
+    27→- Timeout support
+    28→- URL prefix option
+    29→- Instances with custom defaults
+    30→- Hooks
+    31→- TypeScript niceties (e.g. `.json()` supports generics and defaults to `unknown`, not `any`)
+    32→
     33→## Install
+    35→```sh
+    36→npm install ky
+    37→```
+    38→
     39→###### CDN
     45→## Usage
+    47→```js
+    48→import ky from 'ky';
+    49→
+    50→const json = await ky.post('https://example.com', {json: {foo: true}}).json();
+    51→
+    52→console.log(json);
+    53→//=> {data: '🦄'}
+    54→```
+    55→
+    56→With plain `fetch`, it would be:
+    57→
+    58→```js
+    59→class HTTPError extends Error {}
+    60→
+    61→const response = await fetch('https://example.com', {
+    62→	method: 'POST',
+    63→	body: JSON.stringify({foo: true}),
+    64→	headers: {
+    65→		'content-type': 'application/json'
+    66→	}
+    67→});
+    68→
+    69→if (!response.ok) {
+    70→	throw new HTTPError(`Fetch error: ${response.statusText}`);
+    71→}
+    72→
+    73→const json = await response.json();
+    74→
+    75→console.log(json);
+    76→//=> {data: '🦄'}
+    77→```
+    78→
+      →…
     85→## API
     87→### ky(input, options?)
    122→### ky.get(input, options?)
@@ -55,8 +103,15 @@ readme.md
   1264→### Extending types
   1292→## FAQ
   1339→## Browser support
+  1341→The latest version of Chrome, Firefox, and Safari.
+  1342→
   1343→## Node.js support
+  1345→Node.js 18 and later.
+  1346→
   1347→## Related
+  1349→- [fetch-extras](https://github.com/sindresorhus/fetch-extras) - Useful utilities for working with Fetch
+  1350→- [ky-hooks-change-case](https://github.com/alice-health/ky-hooks-change-case) - Ky hooks to modify cases on requests and responses of objects
+  1351→
   1352→## Maintainers
 
 source/core/Ky.ts
@@ -203,35 +258,8 @@ source/index.ts
 
 source/types/ResponsePromise.ts
      4→import {type KyResponse} from './response.js';
-     6→export type ResponsePromise …
-
-source/types/common.ts
-     2→export type Primitive …
-     4→export type Required …
-     6→export type LiteralUnion …
-
-source/types/hooks.ts
-     5→export type BeforeRequestState …
-    14→export type BeforeRequestHook …
-    20→export type BeforeRetryState …
-    30→export type BeforeRetryHook …
-    32→export type AfterResponseState …
-    41→export type AfterResponseHook …
-    48→export type BeforeErrorState …
-    57→export type BeforeErrorHook …
-    59→export type Hooks …
-
-source/types/ky.ts
-     5→export type KyInstance …
 
 source/types/options.ts
-     6→export type SearchParamsInit …
-     9→export type SearchParamsOption …
-    11→export type RequestHttpMethod …
-    12→export type HttpMethod …
-    14→export type Input …
-    16→export type Progress …
-    27→export type KyHeadersInit …
     33→export type KyOptions = {
     34→	/**
     35→	Shortcut for sending JSON. Use this instead of the `body` option.
@@ -337,7 +365,6 @@ source/types/options.ts
    354→	*/
    355→	headers?: KyHeadersInit;
    356→}
-   358→export type InternalOptions …
    373→export interface NormalizedOptions extends RequestInit { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
    374→	// Extended from `RequestInit`, but ensured to be set (not optional).
    375→	method: NonNullable<RequestInit['method']>;
@@ -351,51 +378,11 @@ source/types/options.ts
    383→	context: Record<string, unknown>;
    384→}
 
-source/types/request.ts
-     1→export type KyRequest …
-
-source/types/response.ts
-     1→export type KyResponse …
-
-source/types/retry.ts
-     3→export type ShouldRetryState …
-    15→export type RetryOptions …
-
-source/utils/body.ts
-     5→export const getBodySize …
-    90→export const streamResponse …
-   119→export const streamRequest …
-
 source/utils/delay.ts
-     5→export type DelayOptions = {
-     6→	signal?: InternalOptions['signal'];
-     7→};
-     9→export default async function delay …
-
-source/utils/is.ts
-     2→export const isObject …
-
-source/utils/merge.ts
-     6→export const validateAndMerge …
-    16→export const mergeHeaders …
-    38→export const mergeHooks …
-    86→export const deepMerge …
-
-source/utils/normalize.ts
-     5→export const normalizeRequestMethod …
-    14→type InternalRetryOptions …
-    28→export const normalizeRetryOptions …
-
-source/utils/options.ts
-     4→export const findUnknownOptions …
-    30→export const hasSearchParameters …
+     5→export type DelayOptions …
 
 source/utils/timeout.ts
-     3→export type TimeoutOptions = {
-     4→	timeout: number;
-     5→	fetch: typeof fetch;
-     6→};
-     9→export default async function timeout …
+     3→export type TimeoutOptions …
 
 source/utils/type-guards.ts
     27→export function isKyError(error: unknown): error is HTTPError | TimeoutError | ForceRetryError {
@@ -404,11 +391,5 @@ source/utils/type-guards.ts
     98→export function isForceRetryError(error: unknown): error is ForceRetryError {
 
 source/utils/types.ts
-     1→export type Mutable<T> = {
-     2→	-readonly[P in keyof T]: T[P]
-     3→};
-     5→export type ObjectEntries<T> = T extends ArrayLike<infer U>
-     6→	? Array<[string, U]>
-     7→	: Array<{[K in keyof T]: [K, T[K]]}[keyof T]>;
-
-test/browser.ts
+     1→export type Mutable …
+     5→export type ObjectEntries …
