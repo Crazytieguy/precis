@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1998 tokens)
+budget: 4000 (3999 tokens)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -102,8 +102,79 @@ README.md
      7→⌘K is a command menu React component that can also be used as an accessible combobox. You render items, it filters and sorts them automatically. ⌘K supports a fully composable API <sup><sup>[How?](/ARCHITECTURE.md)</sup></sup>, so you can wrap items in other components or even as static JSX.
      8→
      9→## Install
+    11→```bash
+    12→pnpm install cmdk
+    13→```
+    14→
     15→## Use
+    17→```tsx
+    18→import { Command } from 'cmdk'
+    19→
+    20→const CommandMenu = () => {
+    21→  return (
+    22→    <Command label="Command Menu">
+    23→      <Command.Input />
+    24→      <Command.List>
+    25→        <Command.Empty>No results found.</Command.Empty>
+    26→
+    27→        <Command.Group heading="Letters">
+    28→          <Command.Item>a</Command.Item>
+    29→          <Command.Item>b</Command.Item>
+    30→          <Command.Separator />
+    31→          <Command.Item>c</Command.Item>
+    32→        </Command.Group>
+    33→
+    34→        <Command.Item>Apple</Command.Item>
+    35→      </Command.List>
+    36→    </Command>
+    37→  )
+    38→}
+    39→```
+    40→
+    41→Or in a dialog:
+    42→
+    43→```tsx
+    44→import { Command } from 'cmdk'
+    45→
+    46→const CommandMenu = () => {
+    47→  const [open, setOpen] = React.useState(false)
+    48→
+    49→  // Toggle the menu when ⌘K is pressed
+    50→  React.useEffect(() => {
+    51→    const down = (e) => {
+    52→      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+    53→        e.preventDefault()
+    54→        setOpen((open) => !open)
+    55→      }
+    56→    }
+    57→
+    58→    document.addEventListener('keydown', down)
+    59→    return () => document.removeEventListener('keydown', down)
+    60→  }, [])
+    61→
+    62→  return (
+    63→    <Command.Dialog open={open} onOpenChange={setOpen} label="Global Command Menu">
+    64→      <Command.Input />
+    65→      <Command.List>
+    66→        <Command.Empty>No results found.</Command.Empty>
+    67→
+    68→        <Command.Group heading="Letters">
+    69→          <Command.Item>a</Command.Item>
+    70→          <Command.Item>b</Command.Item>
+    71→          <Command.Separator />
+    72→          <Command.Item>c</Command.Item>
+    73→        </Command.Group>
+    74→
+    75→        <Command.Item>Apple</Command.Item>
+    76→      </Command.List>
+    77→    </Command.Dialog>
+    78→  )
+    79→}
+    80→```
+    81→
     82→## Parts and styling
+    84→All parts forward props, including `ref`, to an appropriate element. Each part has a specific data-attribute (starting with `cmdk-`) that can be used for styling.
+    85→
     86→### Command `[cmdk-root]`
    153→### Dialog `[cmdk-dialog]` `[cmdk-overlay]`
    180→### Input `[cmdk-input]`
@@ -115,14 +186,62 @@ README.md
    264→### Loading `[cmdk-loading]`
    274→### `useCommandState(state => state.selectedField)`
    285→## Examples
+   287→Code snippets for common use cases.
+   288→
    289→### Nested items
    338→### Show sub-items when searching
    361→### Asynchronous results
    397→### Use inside Popover
    426→### Drop in stylesheets
    430→## FAQ
+   432→**Accessible?** Yes. Labeling, aria attributes, and DOM ordering tested with Voice Over and Chrome DevTools. [Dialog](#dialog-cmdk-dialog-cmdk-overlay) composes an accessible Dialog implementation.
+   433→
+   434→**Virtualization?** No. Good performance up to 2,000-3,000 items, though. Read below to bring your own.
+   435→
+   436→**Filter/sort items manually?** Yes. Pass `shouldFilter={false}` to [Command](#command-cmdk-root). Better memory usage and performance. Bring your own virtualization this way.
+   437→
+   438→**React 18 safe?** Yes, required. Uses React 18 hooks like `useId` and `useSyncExternalStore`.
+   439→
+   440→**Unstyled?** Yes, use the listed CSS selectors.
+   441→
+   442→**Hydration mismatch?** No, likely a bug in your code. Ensure the `open` prop to `Command.Dialog` is `false` on the server.
+   443→
+   444→**React strict mode safe?** Yes. Open an issue if you notice an issue.
+   445→
+   446→**Weird/wrong behavior?** Make sure your `Command.Item` has a `key` and unique `value`.
+   447→
+   448→**Concurrent mode safe?** Maybe, but concurrent mode is not yet real. Uses risky approaches like manual DOM ordering.
+   449→
+   450→**React server component?** No, it's a client component.
+   451→
+   452→**Listen for ⌘K automatically?** No, do it yourself to have full control over keybind context.
+   453→
+   454→**React Native?** No, and no plans to support it. If you build a React Native version, let us know and we'll link your repository here.
+   455→
    456→## History
+   458→Written in 2019 by Paco ([@pacocoursey](https://twitter.com/pacocoursey)) to see if a composable combobox API was possible. Used for the Vercel command menu and autocomplete by Rauno ([@raunofreiberg](https://twitter.com/raunofreiberg)) in 2020. Re-written independently in 2022 with a simpler and more performant approach. Ideas and help from Shu ([@shuding\_](https://twitter.com/shuding_)).
+   459→
+   460→[use-descendants](https://github.com/pacocoursey/use-descendants) was extracted from the 2019 version.
+   461→
    462→## Testing
+   464→First, install dependencies and Playwright browsers:
+   465→
+   466→```bash
+   467→pnpm install
+   468→pnpm playwright install
+   469→```
+   470→
+   471→Then ensure you've built the library:
+   472→
+   473→```bash
+   474→pnpm build
+   475→```
+   476→
+   477→Then run the tests using your local build against real browser engines:
+   478→
+   479→```bash
+   480→pnpm test
+   481→```
 
 cmdk/package.json
 
@@ -130,29 +249,61 @@ cmdk/src/command-score.ts
     54→function commandScoreInner …
    150→function formatInput …
    155→export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
+   156→  /* NOTE:
+      →  …
 
 cmdk/src/index.tsx
      5→import { commandScore } from './command-score'
+    10→type Children …
+    11→type DivProps …
+    13→type LoadingProps …
+    23→type EmptyProps …
+    24→type SeparatorProps …
+    28→type DialogProps …
+    37→type ListProps …
+    44→type ItemProps …
+    60→type GroupProps …
+    69→type InputProps …
+    79→type CommandFilter …
+    80→type CommandProps …
+   123→type Context …
+   137→type State …
+   143→type Store …
+   149→type Group …
+   154→const GROUP_SELECTOR …
+   155→const GROUP_ITEMS_SELECTOR …
+   156→const GROUP_HEADING_SELECTOR …
+   157→const ITEM_SELECTOR …
+   158→const VALID_ITEM_SELECTOR …
+   159→const SELECT_EVENT …
+   160→const VALUE_ATTR …
    161→const defaultFilter …
+   163→const CommandContext …
    164→const useCommand …
+   165→const StoreContext …
    166→const useStore …
-   664→const Item …
-   729→const Group …
-   774→const Separator …
-   787→const Input …
-   833→const List …
-   882→const Dialog …
-   899→const Empty …
-   909→const Loading …
+   167→const GroupContext …
+   169→const Command …
+   664→const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
+   729→const Group = React.forwardRef<HTMLDivElement, GroupProps>((props, forwardedRef) => {
+   774→const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>((props, forwardedRef) => {
+   787→const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
+   833→const List = React.forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) => {
+   882→const Dialog = React.forwardRef<HTMLDivElement, DialogProps>((props, forwardedRef) => {
+   899→const Empty = React.forwardRef<HTMLDivElement, EmptyProps>((props, forwardedRef) => {
+   909→const Loading = React.forwardRef<HTMLDivElement, LoadingProps>((props, forwardedRef) => {
+   930→const pkg …
    963→function findNextSibling(el: Element, selector: string) {
    972→function findPreviousSibling …
    981→function useAsRef …
+   991→const useLayoutEffect …
    993→function useLazyRef …
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
   1010→function useValue …
   1046→const useScheduleLayoutEffect = () => {
   1061→function renderChildren …
   1071→function SlottableWithNestedChildren …
+  1081→const srOnlyStyles …
 
 package.json
 
@@ -162,7 +313,9 @@ pnpm-workspace.yaml
      3→  - 'test'
      4→  - 'cmdk'
 
-test/package.json
+test/pages/_app.tsx
+     1→import '../style.css'
+     3→export default function App({ Component, pageProps }) {
 
 tsconfig.json
 
@@ -171,13 +324,27 @@ website/README.md
     19→## Learn More
     28→## Deploy on Vercel
 
+website/components/code/index.tsx
+     4→import styles from './code.module.scss'
+     7→const theme = {
+    41→export function Code({ children }: { children: string }) {
+
+website/components/icons/index.tsx
+
+website/pages/_app.tsx
+    17→export default function App({ Component, pageProps }: AppProps) {
+
 website/pages/_document.tsx
      5→export default class Document extends NextDocument {
      6→  render() {
 
 website/pages/index.tsx
+    18→import packageJSON from '../../cmdk/package.json'
     29→export default function Index() {
+   101→function InstallButton() {
    139→const themes = [
+   262→function Codeblock() {
+   296→function VersionBadge() {
 
 website/vercel.json
      2→  "headers": [
@@ -185,4 +352,5 @@ website/vercel.json
      4→      "source": "/inter-var-latin.woff2",
      5→      "headers": [
      6→        {
-      →        …
+     7→          "key": "Cache-Control",
+      →          …

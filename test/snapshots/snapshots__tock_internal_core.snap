@@ -2,16 +2,51 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (997 tokens)
+budget: 2000 (1979 tokens)
 
 dto/activity_dto.go
-     3→import …
+     3→import (
+     4→	"time"
+     5→
+     6→	"github.com/kriuchkov/tock/internal/core/models"
+     7→)
      9→type StartActivityRequest struct {
+    10→	Description string
+    11→	Project     string
+    12→	StartTime   time.Time
+    13→	Notes       string
+    14→	Tags        []string
+    15→}
     17→type StopActivityRequest struct {
+    18→	EndTime time.Time
+    19→	Notes   string
+    20→	Tags    []string
+    21→}
     23→type AddActivityRequest struct {
+    24→	Description string
+    25→	Project     string
+    26→	StartTime   time.Time
+    27→	EndTime     time.Time
+    28→	Notes       string
+    29→	Tags        []string
+    30→}
     32→type ActivityFilter struct {
+    33→	FromDate    *time.Time
+    34→	ToDate      *time.Time
+    35→	Project     *string
+    36→	Description *string
+    37→	IsRunning   *bool
+    38→}
     40→type Report struct {
+    41→	Activities    []models.Activity
+    42→	TotalDuration time.Duration
+    43→	ByProject     map[string]ProjectReport
+    44→}
     46→type ProjectReport struct {
+    47→	ProjectName string
+    48→	Duration    time.Duration
+    49→	Activities  []models.Activity
+    50→}
 
 errors/errors.go
      3→import "errors"
@@ -22,7 +57,11 @@ errors/errors.go
      9→	ErrCancelled              = errors.New("operation cancelled")
 
 models/activity.go
-     3→import …
+     3→import (
+     4→	"encoding/json"
+     5→	"fmt"
+     6→	"time"
+     7→)
      9→// Activity represents a time tracking entry.
     10→type Activity struct {
     11→	Description string     `json:"description"`
@@ -33,31 +72,84 @@ models/activity.go
     16→	Tags        []string   `json:"tags,omitempty"`
     17→}
     19→func (a Activity) ID() string {
+    20→	return a.StartTime.Format("150405")
+    21→}
     23→func (a Activity) Duration() time.Duration {
+    24→	if a.EndTime != nil {
+    25→		return a.EndTime.Sub(a.StartTime)
+    26→	}
+    27→	return time.Since(a.StartTime)
+    28→}
     30→// DurationString returns the duration formatted as "HH:MM:SS".
     31→func (a Activity) DurationString() string {
     32→	d := a.Duration().Round(time.Second)
     33→	h := d / time.Hour
     34→	d %= time.Hour
-      →	…
+    35→	m := d / time.Minute
+    36→	d %= time.Minute
+    37→	s := d / time.Second
+    38→	return fmt.Sprintf("%02d:%02d:%02d", h, m, s)
+    39→}
     41→func (a Activity) MarshalJSON() ([]byte, error) {
+    42→	type Alias Activity
+    43→	return json.Marshal(&struct {
+    44→		Alias
+    45→
+    46→		Duration string `json:"duration"`
+    47→	}{
+    48→		Alias:    (Alias)(a),
+    49→		Duration: a.DurationString(),
+    50→	})
+    51→}
 
 ports/mocks/mock_activityrepository.go
+     7→import …
+    17→func NewMockActivityRepository …
     30→type MockActivityRepository struct {
     34→type MockActivityRepository_Expecter struct {
     35→	mock *mock.Mock
     36→}
+    43→func (_mock *MockActivityRepository) Find …
     71→type MockActivityRepository_Find_Call struct {
+    78→func (_e *MockActivityRepository_Expecter) Find …
+   111→func (_mock *MockActivityRepository) FindLast …
    139→type MockActivityRepository_FindLast_Call struct {
+   145→func (_e *MockActivityRepository_Expecter) FindLast …
+   173→func (_mock *MockActivityRepository) Save …
    190→type MockActivityRepository_Save_Call struct {
+   197→func (_e *MockActivityRepository_Expecter) Save …
+   230→func (_mock *MockActivityRepository) Remove …
    247→type MockActivityRepository_Remove_Call struct {
+   254→func (_e *MockActivityRepository_Expecter) Remove …
 
 ports/mocks/mock_activityresolver.go
+     7→import …
+    17→func NewMockActivityResolver …
+    30→type MockActivityResolver struct {
     34→type MockActivityResolver_Expecter struct {
     35→	mock *mock.Mock
     36→}
+    43→func (_mock *MockActivityResolver) Add …
+    71→type MockActivityResolver_Add_Call struct {
+    78→func (_e *MockActivityResolver_Expecter) Add …
+   111→func (_mock *MockActivityResolver) GetRecent …
+   139→type MockActivityResolver_GetRecent_Call struct {
+   146→func (_e *MockActivityResolver_Expecter) GetRecent …
+   179→func (_mock *MockActivityResolver) GetReport …
+   207→type MockActivityResolver_GetReport_Call struct {
+   214→func (_e *MockActivityResolver_Expecter) GetReport …
+   247→func (_mock *MockActivityResolver) List …
+   275→type MockActivityResolver_List_Call struct {
+   282→func (_e *MockActivityResolver_Expecter) List …
+   315→func (_mock *MockActivityResolver) Start …
+   343→type MockActivityResolver_Start_Call struct {
+   350→func (_e *MockActivityResolver_Expecter) Start …
+   383→func (_mock *MockActivityResolver) Stop …
+   411→type MockActivityResolver_Stop_Call struct {
+   418→func (_e *MockActivityResolver_Expecter) Stop …
 
 ports/mocks/mock_notesrepository.go
+     7→import …
     16→func NewMockNotesRepository …
     29→type MockNotesRepository struct {
     33→type MockNotesRepository_Expecter struct {

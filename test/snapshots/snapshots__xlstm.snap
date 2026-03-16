@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1997 tokens)
+budget: 4000 (4000 tokens)
 
 README.md
      3→# xLSTM: Extended Long Short-Term Memory
@@ -14,13 +14,62 @@ README.md
    115→## Recommendation for other hardware
    138→# Models from the xLSTM NeurIPS Paper
    142→## How to use the xLSTM architecture from our NeurIPS paper
+   146→### Using the sLSTM CUDA kernels
+   168→### xLSTM Block Stack
+   255→### xLSTM Language Model
    297→## Experiments
    312→## Citation
 
+experiments/data/formal_language/formal_language_dataset.py
+    42→class FormLangDatasetConfig(FormLangDatasetConfigBase):
+    43→    shift: int = 1
+    44→    enable_mask: bool = False
+    45→    additional_prefix_tokens: int = (
+    46→        0  # e.g. adding [CLS]... before for global attention memory
+    47→    )
+    48→    additional_suffix_tokens: int = (
+    49→        0  # e.g. adding [SEP]... after for global attention memory
+    50→    )
+    51→    additional_premask_tokens: int = (
+      →    …
+
+experiments/lr_scheduler.py
+    14→    def get_lr(self) -> list[float]:
+    19→    def reinitialize(self, **kwargs) -> None:
+    34→    def compute_lr(step, warmup_steps, decay_until_step, max_lr, min_lr):
+
+experiments/main.py
+    21→dataset_registry …
+    25→torch_dtype_map …
+
+experiments/parity_xlstm01.yaml
+     1→training:
+    16→model:
+    29→dataset:
+
+experiments/parity_xlstm10.yaml
+     1→training:
+    16→model:
+    27→dataset:
+
+experiments/parity_xlstm11.yaml
+     1→training:
+    16→model:
+    29→dataset:
+
 pyproject.toml
      1→[build-system]
+     2→requires = ["setuptools>=42", "wheel"]
+     3→build-backend = "setuptools.build_meta"
      5→[project]
+     6→name = "xlstm"
+     7→version = "2.0.5"
+     8→authors = [
+      →…
     50→[project.urls]
+
+xlstm/__init__.py
+     1→__version__ = "2.0.5"
 
 xlstm/blocks/mlstm/block.py
     10→class mLSTMBlockConfig:
@@ -30,6 +79,7 @@ xlstm/blocks/mlstm/block.py
     14→    _num_blocks: int = None
     15→    _block_idx: int = None
     16→
+    22→class mLSTMBlock(xLSTMBlock):
 
 xlstm/blocks/mlstm/cell.py
     14→class mLSTMCellConfig:
@@ -65,18 +115,78 @@ xlstm/blocks/slstm/block.py
     18→    _num_blocks: int = None
     19→    _block_idx: int = None
     20→
+    29→class sLSTMBlock(xLSTMBlock):
 
 xlstm/blocks/slstm/cell.py
+    28→LOGGER = logging.getLogger(__name__)
+    30→DTYPE_DICT = {
+    35→DTYPES = Literal["bfloat16", "float16", "float32"]
     62→class sLSTMCellConfig:
     63→    hidden_size: int = -1
     64→    num_heads: int = (
+    65→        4  # this must divide the hidden size, is not yet supported by all versions in this directory
+    66→    )
+    67→    num_states: int = 4  # this is for the sLSTM, a standard LSTM  has 2
+    68→    backend: Literal["vanilla", "cuda"] = "cuda"
+    69→    # the type of function a cell computes
+    70→    function: str = "slstm"
+    71→    bias_init: Literal["powerlaw_blockdependent", "small_init", "standard"] = (
+    72→        "powerlaw_blockdependent"
+    73→    )
+    74→    recurrent_weight_init: Literal["zeros", "standard"] = "zeros"
+    75→
+    76→    _block_idx: int = (
+    77→        0  # index in the block sequence for a residual stacked model, needed for forget gate init
+    78→    )
+    79→    _num_blocks: int = (
+    80→        1  # how many blocks there are in the residually stacked model, needed for forget gate init
+    81→    )
+    82→
+    83→    num_gates: int = 4
+    84→    # this option cuts of the gradient for recurrent connection, i.e. no exploding gradient if False
+    85→    gradient_recurrent_cut: bool = False
+    86→    # this option clips the gradient values for recurrent connections at dy
+    87→    gradient_recurrent_clipval: Optional[float] = None
+    88→    # this option clips the y value
+    89→    forward_clipval: Optional[float] = None
+    90→
+   122→    def head_dim(self):
+   126→    def input_dim(self):
+   130→    def torch_dtype(self) -> torch.dtype:
+   134→    def torch_dtype_b(self) -> torch.dtype:
+   138→    def torch_dtype_r(self) -> torch.dtype:
+   142→    def torch_dtype_w(self) -> torch.dtype:
+   146→    def torch_dtype_s(self) -> torch.dtype:
+   173→    def defines(self):
+   214→class sLSTMCellBase(nn.Module):
+   277→    def _recurrent_kernel(self):
+   281→    def _bias(self):
+   324→    def head_dim(self):
+   509→class sLSTMCellCUDA(object):
+   513→    def instance(cls, config: sLSTMCellConfig):
+   591→class sLSTMCell_vanilla(sLSTMCellBase):
+   681→class sLSTMCell_cuda(sLSTMCellBase):
+   777→class sLSTMCell(sLSTMCellBase):
 
 xlstm/blocks/slstm/layer.py
     19→class sLSTMLayerConfig(sLSTMCellConfig):
     20→    embedding_dim: int = -1
     21→    num_heads: int = (
+    22→        4  # this must divide the hidden size, is not yet supported by all versions in this directory
+    23→    )
+    24→    conv1d_kernel_size: int = 4  # 0 means no convolution included
+    25→    group_norm_weight: bool = True
+    26→    dropout: float = 0.0
+    27→
+    33→class sLSTMLayer(nn.Module):
+
+xlstm/blocks/slstm/src/cuda/slstm.h
+    28→#define SLSTM_NUM_HEADS 1
+    41→#define SLSTM_SIMPLE_AGG true
 
 xlstm/blocks/xlstm_block.py
+     3→from dataclasses import dataclass
+    16→@dataclass
     17→class xLSTMBlockConfig:
     18→    mlstm: Optional[mLSTMLayerConfig] = None
     19→    slstm: Optional[sLSTMLayerConfig] = None
@@ -87,8 +197,15 @@ xlstm/blocks/xlstm_block.py
     24→    _num_blocks: int = None
     25→    _block_idx: int = None
     26→
+    27→    def __post_init__ …
     43→class xLSTMBlock(nn.Module):
     48→
+    49→    config_class = xLSTMBlockConfig
+    50→
+    51→    def __init__ …
+    76→    def forward …
+    82→    def step …
+    89→    def reset_parameters …
 
 xlstm/components/conv.py
     13→class CausalConv1dConfig:
@@ -98,8 +215,11 @@ xlstm/components/conv.py
     17→    channel_mixing: bool = False
     18→    conv1d_kwargs: dict = field(default_factory=dict)
     19→
+    55→class CausalConv1d(nn.Module):
 
 xlstm/components/feedforward.py
+     9→from ..utils …
+    10→from .init …
     32→class FeedForwardConfig(UpProjConfigMixin):
     33→    proj_factor: float = 1.3
     34→    act_fn: str = "gelu"
@@ -111,40 +231,55 @@ xlstm/components/feedforward.py
     40→    _num_blocks: int = 1
     41→
     49→class GatedFeedForward(nn.Module):
-    50→    config_class = FeedForwardConfig
-    51→
 
 xlstm/components/linear_headwise.py
     13→class LinearHeadwiseExpandConfig:
     14→    in_features: int = 0
+    15→    # this is the number of heads that the in_features are split into
+    16→    # if num_heads=1, this is a normal linear layer
+    17→    # if num_heads>1, the in_features are split into num_heads and each head is projected separately
+    18→    # if num_heads=in_features, each feature is projected separately
+    19→    num_heads: int = -1
+    20→    expand_factor_up: float = 1
+    21→
+    22→    # this is internally computed
+    23→    # but can be overwritten if you want to use a different output dimension
+    24→    # if > 0 the expand factor is ignored
+    25→    _out_features: int = -1
+    26→
+    27→    bias: bool = True
+    28→    trainable_weight: bool = True
+    29→    trainable_bias: bool = True
+    30→
     42→class LinearHeadwiseExpand(nn.Module):
-    46→
 
 xlstm/components/ln.py
      8→class LayerNorm(nn.Module):
-    27→    @property
     28→    def weight_proxy(self) -> torch.Tensor:
     51→class MultiHeadLayerNorm(LayerNorm):
 
 xlstm/components/util.py
     26→class ParameterProxy:
-    33→
     62→    def shape(self):
     66→    def ndim(self):
     70→    def grad(self):
 
 xlstm/utils.py
-     3→import math
-    11→@dataclass
+     3→import math …
     12→class UpProjConfigMixin:
     13→    proj_factor: float = None  # will be overridden by subclasses
     14→    round_proj_up_dim_up: bool = True
     15→    round_proj_up_to_multiple_of: int = 64
     16→
     17→    # internal
+    20→    def _set_proj_up_dim(self, embedding_dim: int) -> None:
     32→class WeightDecayOptimGroupMixin(nn.Module, ABC):
+    33→    def __init__ …
+    36→    def get_weight_decay_optim_groups …
+    61→    def get_weight_decay_optim_group_param_names …
 
 xlstm/xlstm_block_stack.py
+     3→from copy …
     16→class xLSTMBlockStackConfig:
     17→    mlstm_block: Optional[mLSTMBlockConfig] = None
     18→    slstm_block: Optional[sLSTMBlockConfig] = None
@@ -160,6 +295,11 @@ xlstm/xlstm_block_stack.py
     28→    # Indexing starts from 0.
     29→    slstm_at: Union[list[int], Literal["all"]] = field(default_factory=list)
     30→
+    31→    # _block_map is a string that specifies which block is used at which position
+    32→    # 0: use the mLSTM block
+    33→    # 1: use the sLSTM block
+    34→    _block_map: str = None
+    35→
     36→    @property
     37→    def block_map(self) -> list[int]:
     52→    def __post_init__ …
@@ -172,17 +312,45 @@ xlstm/xlstm_block_stack.py
    126→    def step …
 
 xlstm/xlstm_large/components.py
-    66→    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    24→class NormLayer(nn.Module, ABC):
+    66→    def forward …
+    70→class RMSNorm(NormLayer):
+    99→class MultiHeadRMSNorm(RMSNorm):
+   155→class LayerNorm(NormLayer):
+   188→class MultiHeadLayerNorm(LayerNorm):
 
 xlstm/xlstm_large/generate.py
     28→def generate_tokens …
 
 xlstm/xlstm_large/model.py
     31→class xLSTMLargeConfig:
+    32→    embedding_dim: int
+    33→    """Embedding dimension of the model."""
+    34→    num_heads: int
+    35→    """Number of heads."""
+    36→    num_blocks: int
+    37→    """Number of blocks."""
+    38→    vocab_size: int
+    39→    """Vocabulary size."""
+      →    …
+   112→class xLSTMLarge(nn.Module):
+   187→class xLSTMLargeBlockStack(nn.Module):
+   232→class FeedForward(nn.Module):
    281→class mLSTMLayerConfig:
+   282→    embedding_dim: int
+   283→    """Embedding dimension of the model."""
+   284→    num_heads: int
+   285→    """Number of heads."""
+   286→    use_bias: bool = False
+   287→    """Whether to use bias in linear layers."""
+   288→    norm_eps: float = 1e-6
+   289→    """Epsilon value for numerical stability in the normalization layers."""
+      →    …
+   310→class mLSTMLayer(nn.Module):
+   455→class mLSTMBlock(nn.Module):
 
 xlstm/xlstm_lm_model.py
-    14→@dataclass
+     3→from dataclasses …
     15→class xLSTMLMModelConfig(xLSTMBlockStackConfig):
     16→    vocab_size: int = -1
     17→    tie_weights: bool = False

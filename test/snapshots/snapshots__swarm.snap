@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1997 tokens)
+budget: 4000 (4000 tokens)
 
 README.md
      3→# Swarm (experimental, educational)
@@ -33,12 +33,49 @@ SECURITY.md
 
 examples/airline/README.md
      1→# Airline customer service
+     3→This example demonstrates a multi-agent setup for handling different customer service requests in an airline context using the Swarm framework. The agents can triage requests, handle flight modifications, cancellations, and lost baggage cases.
+     4→This example uses the helper function `run_demo_loop`, which allows us to create an interactive Swarm session.
+     5→
      6→## Agents
     14→## Setup
     22→## Evaluations
 
+examples/airline/configs/agents.py
+     9→def transfer_to_flight_modification():
+    13→def transfer_to_flight_cancel():
+    17→def transfer_to_flight_change():
+    21→def transfer_to_lost_baggage():
+    25→def transfer_to_triage():
+    32→def triage_instructions(context_variables):
+
+examples/airline/configs/tools.py
+     1→def escalate_to_agent(reason=None):
+     5→def valid_to_change_flight():
+     9→def change_flight():
+    13→def initiate_refund():
+    18→def initiate_flight_credits():
+    23→def case_resolved():
+    27→def initiate_baggage_search():
+
+examples/airline/data/routines/baggage/policies.py
+     1→# Atlas
+     2→# Refund cancellation request
+     3→STARTER_PROMPT = """You are an intelligent and empathetic customer support representative for Fly Airlines customers .
+    21→LOST_BAGGAGE_POLICY = """
+
+examples/airline/data/routines/flight_modification/policies.py
+     2→STARTER_PROMPT = """You are an intelligent and empathetic customer support representative for Fly Airlines customers .
+    20→FLIGHT_CANCELLATION_POLICY = f"""
+    33→FLIGHT_CHANGE_POLICY = f"""
+
+examples/airline/evals/eval_utils.py
+     8→def run_function_evals(agent, test_cases, n=1, eval_path=None):
+    98→def extract_response_info(response):
+
 examples/basic/README.md
      1→# Swarm basic
+     3→This folder contains basic examples demonstrating core Swarm capabilities. These examples show the simplest implementations of Swarm, with one input message, and a corresponding output. The `simple_loop_no_helpers` has a while loop to demonstrate how to create an interactive Swarm session.
+     4→
      5→### Examples
     31→## Running the Examples
     33→To run any of the examples, use the following command:
@@ -62,37 +99,130 @@ examples/basic/simple_loop_no_helpers.py
 
 examples/customer_service_streaming/configs/general.py
      1→class Colors:
+     2→    HEADER = '\033[95m'
+     3→    OKBLUE = '\033[94m'
+     4→    OKCYAN = '\033[96m'
+     5→    OKGREEN = '\033[92m'
+     6→    WARNING = '\033[93m'
+     7→    RED = '\033[91m'
+     8→    ENDC = '\033[0m'
+     9→    BOLD = '\033[1m'
+    10→    UNDERLINE = '\033[4m'
+    11→    GREY = '\033[90m'
 
 examples/customer_service_streaming/configs/prompts.py
+     1→TRIAGE_MESSAGE_PROMPT …
+     2→TRIAGE_SYSTEM_PROMPT …
+     3→EVAL_GROUNDTRUTH_PROMPT …
+     4→EVAL_ASSISTANT_PROMPT …
+     5→EVAL_PLANNING_PROMPT …
+     6→ITERATE_PROMPT …
+     7→EVALUATE_TASK_PROMPT …
+    15→# IMPORTANT: If you are missing
+      →…
     19→LOCAL_PLANNER_PROMPT = """
 
 examples/customer_service_streaming/docker-compose.yaml
      1→version: '3.4'
      2→services:
+     3→  qdrant:
+     4→    image: qdrant/qdrant:v1.3.0
+     5→    restart: on-failure
+     6→    ports:
+     7→      - "6333:6333"
+     8→      - "6334:6334"
 
 examples/customer_service_streaming/main.py
     10→def main():
 
+examples/customer_service_streaming/prep_data.py
+     6→GPT_MODEL = 'gpt-4'
+     7→EMBEDDING_MODEL = "text-embedding-3-large"
+
 examples/customer_service_streaming/src/arg_parser.py
-     3→def parse_args():
+     3→def parse_args …
+
+examples/customer_service_streaming/src/evals/eval_function.py
+     8→class EvalFunction:
+     9→
+    10→  def __init__(self, client, plan, task):
+    17→  def default(self):
+    23→  def numeric(self):
+    42→  def name(self):
+    67→  def evaluate(self):
+
+examples/customer_service_streaming/src/runs/run.py
+     5→class Run:
+     6→    def __init__(self,assistant,request,client):
+    14→    def initiate(self, planner):
+    20→    def generate_plan(self,task=None):
+
+examples/customer_service_streaming/src/swarm/assistants.py
+    10→class Assistant(BaseModel):
+
+examples/customer_service_streaming/src/swarm/conversation.py
+     1→class Conversation:
+
+examples/customer_service_streaming/src/swarm/engines/assistants_engine.py
+    13→class AssistantsEngine:
 
 examples/customer_service_streaming/src/swarm/engines/engine.py
+     1→# engine.py
      2→class Engine:
+
+examples/customer_service_streaming/src/swarm/engines/local_engine.py
+    14→class LocalEngine:
+   379→             #assistant.print_conversation()
+   381→    def load_test_tasks(self, test_file_paths):
 
 examples/customer_service_streaming/src/swarm/swarm.py
     11→class Swarm:
 
+examples/customer_service_streaming/src/swarm/tool.py
+     5→class Parameter(BaseModel):
+    11→class FunctionParameters(BaseModel):
+    17→class FunctionTool(BaseModel):
+    23→class Tool(BaseModel):
+
+examples/customer_service_streaming/src/tasks/task.py
+     3→class Task:
+     4→    def __init__ …
+    12→class EvaluationTask(Task):
+    13→    def __init__ …
+
+examples/customer_service_streaming/src/utils.py
+     1→def get_completion …
+    39→def is_dict_empty …
+
 examples/customer_service_streaming/src/validator.py
-     7→def validate_tool(tool_definition):
-    12→def validate_all_tools(engine):
+     7→def validate_tool …
+    12→def validate_all_tools …
+    51→    # Function to validate all assistants
     52→def validate_all_assistants():
 
 examples/personal_shopper/README.md
      1→# Personal shopper
+     3→This Swarm is a personal shopping agent that can help with making sales and refunding orders.
+     4→This example uses the helper function `run_demo_loop`, which allows us to create an interactive Swarm session.
+     5→In this example, we also use a Sqlite3 database with customer information and transaction data.
+     6→
      7→## Overview
+     9→The personal shopper example includes three main agents to handle various customer service requests:
+    10→
+      →…
     15→## Setup
+    17→Once you have installed dependencies and Swarm, run the example using:
+    18→
+      →…
 
 examples/personal_shopper/database.py
+     7→def get_connection():
+    14→def create_database():
+    61→def add_user(user_id, first_name, last_name, email, phone):
+    84→def add_purchase(user_id, date_of_purchase, item_id, amount):
+   114→def add_product(product_id, product_name, price):
+   132→def close_connection():
+   139→def preview_table(table_name):
    153→# Initialize and load database
    154→def initialize_database():
 
@@ -103,12 +233,47 @@ examples/personal_shopper/main.py
 
 examples/support_bot/README.md
      1→# Support bot
+     3→This example is a customer service bot which includes a user interface agent and a help center agent with several tools.
+     4→This example uses the helper function `run_demo_loop`, which allows us to create an interactive Swarm session.
+     5→
      6→## Overview
+     8→The support bot consists of two main agents:
+     9→
+    10→1. **User Interface Agent**: Handles initial user interactions and directs them to the help center agent based on their needs.
+    11→2. **Help Center Agent**: Provides detailed help and support using various tools and integrated with a Qdrant VectorDB for documentation retrieval.
+    12→
     13→## Setup
+    15→To start the support bot:
+    16→
+    17→1. Ensure Docker is installed and running on your system.
+    18→2. Install the necessary additional libraries:
+    19→
+    20→```shell
+    21→make install
+    22→```
+    23→
+    24→3. Initialize docker
+    25→
+    26→```shell
+    27→docker-compose up -d
+    28→```
+    29→
+    30→4. Prepare the vector DB:
+    31→
+    32→```shell
+    33→make prep
+    34→```
+    35→
+    36→5. Run the main scripy:
+    37→
+    38→```shell
+    39→make run
+    40→```
 
 examples/support_bot/customer_service.py
     13→# Set embedding model
     14→EMBEDDING_MODEL = "text-embedding-3-large"
+    20→# TODO: Make this work
     23→def query_qdrant(query, collection_name, vector_name="article", top_k=5):
     43→def query_docs(query):
     68→def send_email(email_address, message):
@@ -118,13 +283,30 @@ examples/support_bot/customer_service.py
 examples/support_bot/docker-compose.yaml
      1→version: '3.4'
      2→services:
+     3→  qdrant:
+     4→    image: qdrant/qdrant:v1.3.0
+     5→    restart: on-failure
+     6→    ports:
+     7→      - "6335:6335"
 
 examples/support_bot/main.py
     13→# Set embedding model
     14→EMBEDDING_MODEL = "text-embedding-3-large"
+    20→def query_qdrant(query, collection_name, vector_name="article", top_k=5):
+    40→def query_docs(query):
+    66→def send_email(email_address, message):
+    72→def submit_ticket(description):
+    77→def transfer_to_help_center():
+
+examples/support_bot/prep_data.py
+    10→GPT_MODEL = "gpt-4o"
+    11→EMBEDDING_MODEL = "text-embedding-3-large"
 
 examples/triage_agent/README.md
      1→# Triage agent
+     3→This example is a Swarm containing a triage agent, which takes in user inputs and chooses whether to respond directly, or triage the request
+     4→to a sales or refunds agent.
+     5→
      6→## Setup
     16→## Evals
 
@@ -135,19 +317,38 @@ examples/triage_agent/agents.py
     36→def transfer_to_sales():
     40→def transfer_to_refunds():
 
+examples/triage_agent/evals.py
+     9→CONVERSATIONAL_EVAL_SYSTEM_PROMPT = """
+    19→def conversation_was_successful(messages) -> bool:
+    27→def run_and_get_tool_calls(agent, query):
+    44→def test_triage_agent_calls_correct_function(query, function_name):
+    68→def test_conversation_is_successful(messages):
+
 examples/triage_agent/evals_util.py
      9→class BoolEvalResult(BaseModel):
     10→    value: bool
     11→    reason: Optional[str]
+    14→def evaluate_with_llm_bool(instruction, data) -> BoolEvalResult:
 
 examples/weather_agent/README.md
      1→# Weather agent
+     3→This example is a weather agent demonstrating function calling with a single agent. The agent has tools to get the weather of a particular city, and send an email.
+     4→
      5→## Setup
+     7→To run the weather agent Swarm:
+      →…
     15→## Evals
+    17→> [!NOTE]
+      →…
 
 examples/weather_agent/agents.py
      6→def get_weather(location, time="now"):
     11→def send_email(recipient, subject, body):
+
+examples/weather_agent/evals.py
+     8→def run_and_get_tool_calls(agent, query):
+    26→def test_calls_weather_when_asked(query):
+    41→def test_does_not_call_weather_when_not_asked(query):
 
 pyproject.toml
      1→[build-system]
@@ -155,8 +356,8 @@ pyproject.toml
      3→build-backend = "setuptools.build_meta"
 
 swarm/__init__.py
-     1→from .core import Swarm
-     2→from .types import Agent, Response
+     1→from .core …
+     2→from .types …
      4→__all__ = ["Swarm", "Agent", "Response"]
 
 swarm/core.py
@@ -216,36 +417,17 @@ swarm/types.py
     41→    context_variables: dict = {}
 
 swarm/util.py
-     1→import inspect
-     2→from datetime import datetime
-     5→def debug_print(debug: bool, *args: str) -> None:
-    13→def merge_fields(target, source):
-    21→def merge_chunk(final_response: dict, delta: dict) -> None:
-    31→def function_to_json(func) -> dict:
-    32→    """
-    33→    Converts a Python function into a JSON-serializable dictionary
-    34→    that describes the function's signature, including its name,
-    35→    description, and parameters.
-    36→
-      →…
+     1→import inspect …
+     2→from datetime …
+     5→def debug_print …
+    13→def merge_fields …
+    21→def merge_chunk …
+    31→def function_to_json …
 
 tests/mock_client.py
-     8→def create_mock_response …
     44→class MockOpenAIClient:
-    45→    def __init__ …
-    49→    def set_response …
-    56→    def set_sequential_responses …
-    63→    def assert_create_called_with …
 
 tests/test_core.py
      7→DEFAULT_RESPONSE_CONTENT = "sample response content"
     10→@pytest.fixture
     11→def mock_openai_client():
-    19→def test_run_with_simple_message …
-    31→def test_tool_call …
-    70→def test_execute_tools_false …
-   118→def test_handoff …
-
-tests/test_util.py
-     4→def test_basic_function():
-    26→def test_complex_function():

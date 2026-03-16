@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (992 tokens)
+budget: 2000 (1982 tokens)
 
 README.md
     18→## Features
@@ -27,46 +27,135 @@ README.md
 
 docs/README.md
      1→# Neco Documentation
+     3→## [API.md](API.md)
+
+examples/README.md
+     1→# Neco examples 
+     3→This directory contains various example of using Neco.
+     4→
+     5→Also check out the [Bluebox](https://github.com/tidwall/bluebox) project for a
+     6→complete networking example, including benchmarks.
 
 neco.c
+   135→#include "deps/sco.h"
+   136→#include "deps/aat.h"
+   137→#include "deps/stack.h"
+   140→#include "deps/worker.h"
    163→#include <stdatomic.h>
+   167→#include "sco.h"
+   172→struct sco_desc {
+   179→struct sco_symbol {
+   199→#include "deps/llco.h"
+   228→#include "llco.h"
+   234→struct llco_desc {
+   241→struct llco_symbol {
    294→#define LLCO_NOASM
+   343→struct llco_asmctx {
+   422→struct llco_asmctx {
+   513→struct llco_asmctx {
+   726→struct llco_asmctx {
+   789→struct llco_asmctx {
+   902→struct llco_asmctx {
   1067→enum llco_stack_grows { DOWNWARDS, UPWARDS }; 
   1122→#include <stdio.h>
+  1124→struct llco {
+  1337→struct llco_dlinfo {
+  1364→struct llco_unwind_context {
+  1454→#include "deps/aat.h"
   1814→struct sco_link {
+  1815→    struct sco *prev;
+  1816→    struct sco *next;
+  1817→};
+  1819→struct sco {
+  1875→struct sco_map {
+  1899→struct sco_list {
+  2165→struct sco_unwind_context {
   2215→#include <unistd.h>
+  2226→#include "stack.h"
+  2229→struct stack_opts {
+  2239→struct stack { char _[32]; };
+  2240→struct stack_mgr { char _[320]; };
+  2247→struct stack_group {
+  2261→struct stack_freed {
+  2267→struct stack_mgr0 {
+  2285→struct stack0 {
   2632→#include <stdint.h>
+  2648→struct worker_opts {
+  2656→struct worker_entry {
+  2661→struct worker_thread {
+  2672→struct worker {
+  2872→#include "neco.h"
   2883→#define NECO_POLL_DISABLED
+  2954→#include "tests/panic.h"
   2957→#define pwhere(str) \
   2963→#define unreachable() \
   2970→#define must(cond) \
+  2987→#include "tests/signals.h"
+  3033→struct bt_context {
+  3238→#include "tests/fail_counters.h"
   3248→enum evkind {
   3249→    EVREAD  = 1, // NECO_WAIT_READ
   3250→    EVWRITE = 2, // NECO_WAIT_WRITE
   3251→};
+  3256→struct cleanup {
+  3269→struct colink {
+  3274→struct colist {
   3321→enum cokind { COROUTINE, SELECTCASE };
+  3323→struct coroutine {
   3453→#define error_guard(ret) \
   3466→#define async_error_guard(ret) \
+  3487→struct comap {
+  3522→struct evmap {
   3570→struct runtime {
+  3571→    int64_t id;                    // unique runtime identifier
+  3572→    struct stack_mgr stkmgr;       // stack memory manager
+  3573→    int64_t coid;                  // unique coroutine id incrementer
+  3574→    struct coroutine *costarter;   // current coroutine starter
+  3575→    struct comap all;              // all running coroutines.
+  3576→    struct coroutine *deadlines;   // paused coroutines (aat root)
+      →    …
+  5029→struct ioread {
+  5191→struct iowrite {
   5718→struct neco_chan {
+  5719→    int64_t rtid;         // runtime id. for runtime/thread isolation
+  5720→    int rc;               // reference counter
+  5721→    bool sclosed;         // sender closed
+  5722→    bool rclosed;         // receiver closed
+  5723→    bool qrecv;           // queue has all receivers, otherwise all senders
+  5724→    bool lok;             // used for the select-case 'closed' result
+      →    …
   5736→struct coselectcase {
+  5737→    struct coroutine *prev;
+  5738→    struct coroutine *next;
+  5739→    enum cokind kind;
+  5740→
+  5741→    struct neco_chan *chan;
+  5742→    struct coroutine *co;
+      →    …
+  6470→struct getaddrinfo_args {
   7082→struct neco_mutex {
+  7083→    int64_t rtid;        // runtime id
+  7084→    struct colist queue; // coroutine doubly linked list
+  7085→    int  rlocked;        // read lock counter
+  7086→    bool locked;         // mutex is locked (read or write)
+  7087→};
+  7340→struct neco_waitgroup {
+  7489→struct neco_cond {
+  7911→struct bufrd {
+  7917→struct bufwr {
+  7922→struct neco_stream {
+  7933→typedef struct neco_stream neco_stream;
+  8467→struct neco_gen { 
+  8699→struct iowork {
 
 neco.h
-    35→int neco_start …
     61→typedef struct neco_chan neco_chan;
     90→typedef struct neco_gen neco_gen;
    113→typedef struct { int64_t _0; intptr_t _1[5]; } neco_mutex;
    135→typedef struct { int64_t _0; intptr_t _1[5]; } neco_waitgroup;
    149→typedef struct { int64_t _0; intptr_t _1[5]; } neco_cond;
-   169→ssize_t neco_read …
-   188→int neco_setnonblock …
    191→#define NECO_WAIT_READ  1
-   206→int neco_serve …
-   220→int neco_cancel …
    244→#define NECO_CSPRNG 0 // Cryptographically secure pseudorandom number generator
-   261→int neco_signal_watch …
-   276→int neco_work …
    287→typedef struct neco_stats {
    288→    size_t coroutines;   ///< Number of active coroutines
    289→    size_t sleepers;     ///< Number of sleeping coroutines
@@ -74,21 +163,20 @@ neco.h
    291→    size_t sigwaiters;   ///<
    292→    size_t senders;      ///<
    293→    size_t receivers;    ///<
-   294→    size_t locked;       ///<
-   295→    size_t waitgroupers; ///<
-   296→    size_t condwaiters;  ///<
-   297→    size_t suspended;    ///<
-   298→    size_t workers;      ///< Number of background worker threads
-   299→} neco_stats;
-   314→void neco_env_setallocator …
+      →    …
    341→#define NECO_NANOSECOND  INT64_C(1)
    360→#define NECO_OK              0  ///< Successful result (no error)
    396→typedef struct neco_stream neco_stream;
    424→#include <stdio.h>
-   446→void __neco_c0 …
 
 tests/README.md
      1→# Testing
 
+tests/panic.h
+     8→#define pwhere(str) \
+    14→#define unreachable() \
+    21→#define must(cond) \
+
 tests/tests.h
     24→#define IS_FAIL_TARGET
+   207→const char *neco_shortstrerror(int code);

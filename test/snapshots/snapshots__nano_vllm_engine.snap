@@ -2,13 +2,13 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (1000 tokens)
+budget: 2000 (1979 tokens)
 
 block_manager.py
-     1→from collections …
-     2→import xxhash …
-     3→import numpy …
-     5→from nanovllm.engine.sequence …
+     1→from collections import deque
+     2→import xxhash
+     3→import numpy as np
+     5→from nanovllm.engine.sequence import Sequence
      8→class Block:
      9→
     10→    def __init__(self, block_id):
@@ -20,7 +20,12 @@ block_manager.py
     35→    @classmethod
     36→    def compute_hash(cls, token_ids: list[int], prefix: int = -1):
     37→        h = xxhash.xxh64()
-      →        …
+    38→        if prefix != -1:
+    39→            h.update(prefix.to_bytes(8, "little"))
+    40→        h.update(np.array(token_ids).tobytes())
+    41→        return h.intdigest()
+    43→    def _allocate_block(self, block_id: int) -> Block:
+    51→    def _deallocate_block(self, block_id: int) -> Block:
     56→    def can_allocate(self, seq: Sequence) -> bool:
     59→    def allocate(self, seq: Sequence):
     84→    def deallocate(self, seq: Sequence):
@@ -28,16 +33,43 @@ block_manager.py
     96→    def may_append(self, seq: Sequence):
 
 llm_engine.py
+     1→import atexit
+     2→from dataclasses import fields
+     3→from time import perf_counter
+     4→from tqdm.auto import tqdm
+     5→from transformers import AutoTokenizer
+     6→import torch.multiprocessing as mp
+     8→from nanovllm.config import Config
+     9→from nanovllm.sampling_params import SamplingParams
+    10→from nanovllm.engine.sequence import Sequence
+    11→from nanovllm.engine.scheduler import Scheduler
+    12→from nanovllm.engine.model_runner import ModelRunner
     15→class LLMEngine:
     16→
-    17→    def __init__ …
-    36→    def exit …
-    42→    def add_request …
-    48→    def step …
-    56→    def is_finished …
-    59→    def generate …
+    17→    def __init__(self, model, **kwargs):
+    36→    def exit(self):
+    42→    def add_request(self, prompt: str | list[int], sampling_params: SamplingParams):
+    48→    def step(self):
+    56→    def is_finished(self):
+    59→    def generate(
+    60→        self,
+    61→        prompts: list[str] | list[list[int]],
+    62→        sampling_params: SamplingParams | list[SamplingParams],
+    63→        use_tqdm: bool = True,
+    64→    ) -> list[str]:
 
 model_runner.py
+     1→import pickle
+     2→import torch
+     3→import torch.distributed as dist
+     4→from multiprocessing.synchronize import Event
+     5→from multiprocessing.shared_memory import SharedMemory
+     7→from nanovllm.config import Config
+     8→from nanovllm.engine.sequence import Sequence
+     9→from nanovllm.models.qwen3 import Qwen3ForCausalLM
+    10→from nanovllm.layers.sampler import Sampler
+    11→from nanovllm.utils.context import set_context, get_context, reset_context
+    12→from nanovllm.utils.loader import load_model
     15→class ModelRunner:
     16→
     17→    def __init__(self, config: Config, rank: int, event: Event | list[Event]):
@@ -54,11 +86,33 @@ model_runner.py
    182→    def prepare_sample(self, seqs: list[Sequence]):
    189→    @torch.inference_mode()
    190→    def run_model(self, input_ids: torch.Tensor, positions: torch.Tensor, is_prefill: bool):
+   191→        if is_prefill or self.enforce_eager or input_ids.size(0) > 512:
+   192→            return self.model.compute_logits(self.model(input_ids, positions))
+   193→        else:
+   194→            bs = input_ids.size(0)
+   195→            context = get_context()
+   196→            graph = self.graphs[next(x for x in self.graph_bs if x >= bs)]
+   197→            graph_vars = self.graph_vars
+   198→            graph_vars["input_ids"][:bs] = input_ids
+      →            …
    208→    def run(self, seqs: list[Sequence], is_prefill: bool) -> list[int]:
    216→    @torch.inference_mode()
    217→    def capture_cudagraph(self):
+   218→        config = self.config
+   219→        hf_config = config.hf_config
+   220→        max_bs = min(self.config.max_num_seqs, 512)
+   221→        max_num_blocks = (config.max_model_len + self.block_size - 1) // self.block_size
+   222→        input_ids = torch.zeros(max_bs, dtype=torch.int64)
+   223→        positions = torch.zeros(max_bs, dtype=torch.int64)
+   224→        slot_mapping = torch.zeros(max_bs, dtype=torch.int32)
+   225→        context_lens = torch.zeros(max_bs, dtype=torch.int32)
+      →        …
 
 scheduler.py
+     1→from collections import deque
+     3→from nanovllm.config import Config
+     4→from nanovllm.engine.sequence import Sequence, SequenceStatus
+     5→from nanovllm.engine.block_manager import BlockManager
      8→class Scheduler:
      9→
     10→    def __init__(self, config: Config):
@@ -69,10 +123,10 @@ scheduler.py
     65→    def postprocess(self, seqs: list[Sequence], token_ids: list[int]) -> list[bool]:
 
 sequence.py
-     1→from copy …
-     2→from enum …
-     3→from itertools …
-     5→from nanovllm.sampling_params …
+     1→from copy import copy
+     2→from enum import Enum, auto
+     3→from itertools import count
+     5→from nanovllm.sampling_params import SamplingParams
      8→class SequenceStatus(Enum):
      9→    WAITING = auto()
     10→    RUNNING = auto()
@@ -84,13 +138,27 @@ sequence.py
     18→    def __init__(self, token_ids: list[int], sampling_params = SamplingParams()):
     31→    def __len__(self):
     34→    def __getitem__(self, key):
+    37→    @property
     38→    def is_finished(self):
+    39→        return self.status == SequenceStatus.FINISHED
+    41→    @property
     42→    def num_completion_tokens(self):
+    43→        return self.num_tokens - self.num_prompt_tokens
+    45→    @property
     46→    def prompt_token_ids(self):
+    47→        return self.token_ids[:self.num_prompt_tokens]
+    49→    @property
     50→    def completion_token_ids(self):
+    51→        return self.token_ids[self.num_prompt_tokens:]
+    53→    @property
     54→    def num_cached_blocks(self):
+    55→        return self.num_cached_tokens // self.block_size
+    57→    @property
     58→    def num_blocks(self):
+    59→        return (self.num_tokens + self.block_size - 1) // self.block_size
+    61→    @property
     62→    def last_block_num_tokens(self):
+    63→        return self.num_tokens - (self.num_blocks - 1) * self.block_size
     65→    def block(self, i):
     69→    def append_token(self, token_id: int):
     74→    def __getstate__(self):

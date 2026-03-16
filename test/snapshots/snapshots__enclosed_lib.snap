@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (999 tokens)
+budget: 2000 (1998 tokens)
 
 README.md
      1→### Enclosed lib
@@ -32,24 +32,34 @@ README.md
     30→console.log(noteUrl);
     31→```
     32→
+    33→## License
+    37→## Credits and Acknowledgements
 
 src/api/api.client.ts
      1→import { ofetch …
      2→import { DEFAULT_API_BASE_URL } from './api.constants';
+     6→async function tryToGetBody …
+    20→async function apiClient …
 
 src/api/api.constants.ts
      1→export const DEFAULT_API_BASE_URL = 'https://enclosed.cc';
 
+src/api/api.models.ts
+     1→import { get, isError } from 'lodash-es …
+     5→function isApiClientErrorWithStatusCode …
+    13→function isApiClientErrorWithCode …
+
 src/crypto/crypto.constants.ts
-     1→export const ENCRYPTION_ALGORITHM_AES_256_GCM …
-     2→export const ENCRYPTION_ALGORITHMS …
-     4→export const KEY_DERIVATION_ALGORITHM_PBKDF2_BASE_KEY_SALTED …
-     5→export const KEY_DERIVATION_ALGORITHMS …
-     7→export const COMPRESSION_ALGORITHM_BROTLI …
-     8→export const COMPRESSION_ALGORITHM_NONE …
-     9→export const COMPRESSION_ALGORITHMS …
+     1→export const ENCRYPTION_ALGORITHM_AES_256_GCM = 'aes-256-gcm';
+     2→export const ENCRYPTION_ALGORITHMS = [ENCRYPTION_ALGORITHM_AES_256_GCM] as const;
+     4→export const KEY_DERIVATION_ALGORITHM_PBKDF2_BASE_KEY_SALTED = 'pbkdf2-base-key-salted';
+     5→export const KEY_DERIVATION_ALGORITHMS = [KEY_DERIVATION_ALGORITHM_PBKDF2_BASE_KEY_SALTED] as const;
+     7→export const COMPRESSION_ALGORITHM_BROTLI = 'brotli';
+     8→export const COMPRESSION_ALGORITHM_NONE = 'none';
+     9→export const COMPRESSION_ALGORITHMS = [COMPRESSION_ALGORITHM_BROTLI, COMPRESSION_ALGORITHM_NONE] as const;
 
 src/crypto/crypto.types.ts
+     1→import type { COMPRESSION_ALGORITHMS, ENCRYPTION_ALGORITHMS, KEY_DERIVATION_ALGORITHMS } from './crypto.constants';
      3→export type EncryptionAlgorithm = typeof ENCRYPTION_ALGORITHMS[number];
      4→export type KeyDerivationAlgorithm = typeof KEY_DERIVATION_ALGORITHMS[number];
      5→export type CompressionAlgorithm = typeof COMPRESSION_ALGORITHMS[number];
@@ -58,29 +68,76 @@ src/crypto/crypto.types.ts
      9→};
 
 src/crypto/crypto.usecases.ts
+     1→import type { NoteAsset } from '../notes/notes.types';
+     2→import type { EncryptionAlgorithm } from './crypto.types';
+     3→import type { SerializationFormat } from './serialization/serialization.types';
+     5→import { getParsingMethod, getSerializationMethod } from './serialization/serialization.registry';
+     9→async function encryptNote …
+    38→async function decryptNote …
+
+src/crypto/encryption-algorithms/encryption-algorithms.registry.ts
+     1→import type { EncryptionMethodsDefinition } from './encryption-algorithms.types';
 
 src/crypto/encryption-algorithms/encryption-algorithms.types.ts
+     1→import type { defineEncryptionMethods } from './encryption-algorithms.models';
      3→export type EncryptionMethodsDefinition = ReturnType<typeof defineEncryptionMethods>;
 
 src/crypto/serialization/cbor-array/cbor-array.serialization.ts
+     1→import type { Note } from '../../../notes/notes.types';
+     3→import { defineSerializationMethods } from '../serialization.models';
      5→export const cborArraySerializationDefinition = defineSerializationMethods({
 
+src/crypto/serialization/serialization.models.ts
+     1→import type { Note } from '../../notes/notes.types';
+
 src/crypto/serialization/serialization.registry.ts
+     1→import type { SerializationFormat, SerializationMethodsDefinition } from './serialization.types';
+     3→import { cborArraySerializationDefinition } from './cbor-array/cbor-array.serialization';
      7→export const serializationMethodDefinitions = [
     11→export const serializationMethodDefinitionsByName: Record<string, SerializationMethodsDefinition> = keyBy(serializationMethodDefinitions, 'name');
     12→export const serializationFormats = map(serializationMethodDefinitions, 'name');
 
+src/crypto/serialization/serialization.test-utils.ts
+     1→import type { Note } from '../../notes/notes.types';
+
 src/crypto/serialization/serialization.types.ts
+     1→import type { defineSerializationMethods } from './serialization.models';
+     2→import type { serializationMethodDefinitions } from './serialization.registry';
      4→export type SerializationMethodsDefinition = ReturnType<typeof defineSerializationMethods>;
      5→export type SerializationFormat = typeof serializationMethodDefinitions[number]['name'];
 
 src/files/files.models.ts
      1→import type { NoteAsset } from '../notes/notes.types';
+     2→import { get } from 'lodash-es';
+     6→async function fileToNoteAsset …
+    20→async function filesToNoteAssets …
+    24→async function noteAssetToFile …
+    34→async function noteAssetsToFiles …
 
 src/index.ts
+     1→import { encryptionAlgorithms } from '@enclosed/crypto';
+     2→import { isApiClientErrorWithCode, isApiClientErrorWithStatusCode } from './api/api.models';
+     3→import { decryptNote, encryptNote } from './crypto/crypto.usecases';
+     4→import { serializationFormats } from './crypto/serialization/serialization.registry';
+     5→import { filesToNoteAssets, fileToNoteAsset, noteAssetsToFiles, noteAssetToFile } from './files/files.models';
+     6→import { createNoteUrl, createNoteUrlHashFragment, parseNoteUrl, parseNoteUrlHashFragment } from './notes/notes.models';
+     7→import { fetchNote, storeNote } from './notes/notes.services';
+     8→import { createNote } from './notes/notes.usecases';
+
+src/notes/notes.models.ts
+     1→import { buildUrl } from '@corentinth/chisels';
+     2→import { isEmpty } from 'lodash-es';
+     6→const PASSWORD_PROTECTED_HASH_FRAGMENT = 'pw';
+     7→const DELETED_AFTER_READING_HASH_FRAGMENT = 'dar';
+     9→function createNoteUrlHashFragment …
+    19→function parseNoteUrlHashFragment …
+    42→function createNoteUrl …
+    68→function parseNoteUrl …
 
 src/notes/notes.services.ts
      1→import { apiClient } from '../api/api.client';
+     5→async function storeNote …
+    39→async function fetchNote …
 
 src/notes/notes.types.ts
      1→import type { CompressionAlgorithm, EncryptionAlgorithm, KeyDerivationAlgorithm } from '../crypto/crypto.types';
@@ -106,3 +163,13 @@ src/notes/notes.types.ts
     24→  ttlInSeconds: number;
     25→  deleteAfterReading: boolean;
     26→};
+
+src/notes/notes.usecases.ts
+     1→import type { EncryptionAlgorithm } from '../crypto/crypto.types';
+     2→import type { SerializationFormat } from '../crypto/serialization/serialization.types';
+     3→import type { NoteAsset } from './notes.types';
+     4→import { encryptNote } from '../crypto/crypto.usecases';
+     5→import { createNoteUrl } from './notes.models';
+     6→import { storeNote as storeNoteImpl } from './notes.services';
+    10→const BASE_URL = 'https://enclosed.cc';
+    12→async function createNote …

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1983 tokens)
+budget: 4000 (3967 tokens)
 
 CONTEXT.md
      1→# toasty-codegen Component Context
@@ -75,7 +75,7 @@ Cargo.toml
      3→version = "0.1.0"
      4→edition = "2021"
      5→
-      →…
+     6→# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
      8→[dependencies]
      9→proc-macro2.workspace = true
     10→quote.workspace = true
@@ -85,56 +85,145 @@ Cargo.toml
 src/expand/create.rs
      1→use super::{util, Expand};
      2→use crate::schema::FieldTy;
+     4→use proc_macro2::TokenStream;
+     5→use quote::quote;
+     7→impl Expand<'_> {
 
 src/expand/fields.rs
      1→use super::{util, Expand};
      2→use crate::schema::FieldTy::{BelongsTo, HasMany, HasOne, Primitive};
+     3→use proc_macro2::TokenStream;
+     4→use quote::quote;
+     6→impl Expand<'_> {
 
 src/expand/filters.rs
      1→use super::Expand;
      2→use crate::schema::{FieldTy, Index, Model};
+     4→use proc_macro2::{Span, TokenStream};
+     5→use quote::quote;
+     6→use std::collections::HashMap;
     10→pub(super) struct Filter {
+    11→    /// Fields to filter by
+    12→    fields: Vec<usize>,
+    13→
+    14→    /// When true, include a batch filter method
+    15→    batch: bool,
+    16→
+    17→    /// When true, only include the filter on relation structs
+    18→    only_relation: bool,
+    19→
+    20→    /// Get method identifier
+    21→    get_method_ident: syn::Ident,
+    22→
+    23→    /// Filter method identifer
+    24→    pub(super) filter_method_ident: syn::Ident,
+    25→
+    26→    /// Filter method batch identifier
+    27→    filter_method_batch_ident: syn::Ident,
+    28→
+    29→    /// Update method identifier
+    30→    update_method_ident: syn::Ident,
+    31→
+    32→    /// Delete method identifier
+    33→    delete_method_ident: syn::Ident,
+    34→}
     36→struct BuildModelFilters<'a> {
+    37→    model: &'a Model,
+    38→    filters: HashMap<Vec<usize>, Filter>,
+    39→}
+    41→impl Expand<'_> {
+   329→impl Filter {
+   339→impl<'a> BuildModelFilters<'a> {
 
 src/expand/model.rs
      1→use super::{util, Expand};
      2→use crate::schema::{FieldTy, ModelKind};
+     4→use proc_macro2::TokenStream;
+     5→use quote::quote;
+     7→impl Expand<'_> {
    283→    pub(super) fn expand_load_body(&self) -> TokenStream {
    324→    pub(super) fn expand_embedded_reload_body(&self) -> TokenStream {
 
 src/expand/query.rs
      1→use super::{util, Expand};
      2→use crate::schema::{BelongsTo, Field, FieldTy, HasMany, HasOne};
+     4→use proc_macro2::TokenStream;
+     5→use quote::quote;
+     7→impl Expand<'_> {
 
 src/expand/relation.rs
      1→use super::{util, Expand};
      2→use crate::schema::{BelongsTo, Field, FieldTy, HasMany, HasOne};
+     4→use proc_macro2::TokenStream;
+     5→use quote::quote;
+     7→impl Expand<'_> {
 
 src/expand/schema.rs
      1→use super::{util, Expand};
      2→use crate::schema::{AutoStrategy, Column, FieldTy, ModelKind, Name, UuidVersion};
+     4→use proc_macro2::TokenStream;
+     5→use quote::quote;
+     7→impl Expand<'_> {
 
 src/expand/update.rs
      1→use super::{util, Expand};
      2→use crate::schema::FieldTy;
+     4→use proc_macro2::TokenStream;
+     5→use quote::quote;
+     7→impl Expand<'_> {
      9→    pub(super) fn expand_embedded_update_builder(&self) -> TokenStream {
     31→    fn expand_update_field_methods(&self, is_embedded: bool) -> TokenStream {
    204→    fn expand_reload_match_arms(&self) -> TokenStream {
    226→    pub(super) fn expand_reload_method(&self) -> TokenStream {
 
 src/expand/util.rs
+     1→use proc_macro2::TokenStream;
     10→pub(crate) fn ident(name: &str) -> syn::Ident {
 
 src/expand.rs
+     1→mod create;
+     2→mod fields;
+     3→mod filters;
+     4→mod model;
+     5→mod query;
+     6→mod relation;
+     7→mod schema;
+     8→mod update;
+     9→mod util;
+    11→use filters::Filter;
     13→use crate::schema::Model;
+    15→use proc_macro2::TokenStream;
+    16→use quote::quote;
     18→struct Expand<'a> {
+    19→    /// The model being expanded
+    20→    model: &'a Model,
+    21→
+    22→    /// Model filter methods
+    23→    filters: Vec<Filter>,
+    24→
+    25→    /// Path prefix for toasty types
+    26→    toasty: TokenStream,
+    27→}
     29→impl Expand<'_> {
+    30→    fn expand(&self) -> TokenStream {
+    49→pub(super) fn root_model(model: &Model) -> TokenStream {
+    60→pub(super) fn embedded_model(model: &Model) -> TokenStream {
+   151→fn wrap_in_const(code: TokenStream) -> TokenStream {
 
 src/lib.rs
      1→mod expand;
      2→mod schema;
+     4→use proc_macro2::TokenStream;
      6→pub fn generate_model(input: TokenStream) -> syn::Result<TokenStream> {
+     7→    let item: syn::ItemStruct = syn::parse2(input)?;
+     8→    let model = schema::Model::from_ast(&item, false)?;
+     9→
+      →…
     13→pub fn generate_embed(input: TokenStream) -> syn::Result<TokenStream> {
+    14→    let item: syn::ItemStruct = syn::parse2(input)?;
+    15→    let model = schema::Model::from_ast(&item, true)?;
+    16→
+      →…
 
 src/schema/auto.rs
      1→#[derive(Debug)]
@@ -148,14 +237,28 @@ src/schema/auto.rs
     10→    V4,
     11→    V7,
     12→}
+    14→impl AutoStrategy {
+    15→    pub(super) fn from_ast …
     23→mod kw {
+    31→impl syn::parse::Parse for AutoStrategy {
+    32→    fn parse(input: syn::parse::ParseStream) -> syn::Result<Self> {
+    48→impl syn::parse::Parse for UuidVersion {
+    49→    fn parse(input: syn::parse::ParseStream) -> syn::Result<Self> {
 
 src/schema/belongs_to.rs
      1→use super::ForeignKeyField;
      4→pub(crate) struct BelongsTo {
+    12→impl BelongsTo {
+    13→    pub(super) fn from_ast …
 
 src/schema/column.rs
+     1→use quote::quote;
+     2→use syn::parenthesized;
      5→pub(crate) struct Column {
+    10→impl Column {
+    11→    pub(super) fn from_ast …
+    16→impl syn::parse::Parse for Column {
+    17→    fn parse(input: syn::parse::ParseStream) -> syn::Result<Self> {
     60→mod kw {
     88→#[derive(Debug)]
     89→pub enum ColumnType {
@@ -173,40 +276,124 @@ src/schema/column.rs
    101→    DateTime(u8),
    102→    Custom(syn::LitStr),
    103→}
+   105→impl syn::parse::Parse for ColumnType {
+   106→    fn parse(input: syn::parse::ParseStream) -> syn::Result<Self> {
+   179→impl ColumnType {
+   181→    pub(crate) fn expand_with(
+   182→        &self,
+   183→        toasty: &proc_macro2::TokenStream,
+   184→    ) -> proc_macro2::TokenStream {
+
+src/schema/error.rs
+     2→pub(crate) struct ErrorSet {
+     6→impl ErrorSet {
+     7→    pub(crate) fn new …
+    11→    pub(crate) fn push …
+    15→    pub(crate) fn collect …
 
 src/schema/field.rs
      1→use crate::schema::AutoStrategy;
      3→use super::{BelongsTo, Column, ErrorSet, HasMany, HasOne, Name};
+     5→use syn::spanned::Spanned;
      8→pub(crate) struct Field {
     29→pub(crate) struct FieldAttr {
     47→pub(crate) enum FieldTy {
     54→impl FieldTy {
+    55→    pub(crate) fn is_relation …
     63→impl Field {
+    64→    pub(super) fn from_ast …
+   207→fn rewrite_self …
+
+src/schema/fk.rs
+     2→pub(crate) struct ForeignKeyField {
 
 src/schema/has_many.rs
      1→use super::Name;
      4→pub(crate) struct HasMany {
     20→impl HasMany {
+    21→    pub(super) fn from_ast …
+
+src/schema/has_one.rs
+     2→pub(crate) struct HasOne {
+     9→impl HasOne {
+    10→    pub(super) fn from_ast …
 
 src/schema/index.rs
      2→pub(crate) struct Index {
     14→pub(crate) struct IndexField {
     23→pub(crate) enum IndexScope {
 
+src/schema/key_attr.rs
+     2→pub(crate) struct KeyAttr {
+     7→impl KeyAttr {
+     8→    pub(super) fn from_ast …
+
 src/schema/model.rs
+     1→use super::{ErrorSet, Field, Index, IndexField, IndexScope, ModelAttr, Name, PrimaryKey};
      4→pub(crate) enum ModelKind {
     11→impl ModelKind {
+    12→    pub(crate) fn expect_root …
+    19→    pub(crate) fn expect_embedded …
     28→pub(crate) struct ModelRoot {
     46→pub(crate) struct ModelEmbedded {
     55→pub(crate) struct Model {
     78→impl Model {
-   235→    pub fn primary_key_fields …
+    79→    pub(crate) fn from_ast …
+   235→    pub fn primary_key_fields(&self) -> Option<impl ExactSizeIterator<Item = &'_ Field>> {
+   236→        match &self.kind {
+   237→            ModelKind::Root(root) => Some(
+   238→                root.primary_key
+   239→                    .fields
+   240→                    .iter()
+   241→                    .map(|index| &self.fields[*index]),
+   242→            ),
+      →            …
+   247→    pub(crate) fn has_associations …
+   252→fn struct_ident …
 
 src/schema/model_attr.rs
      1→use super::{ErrorSet, KeyAttr};
      4→pub(crate) struct ModelAttr {
     12→impl ModelAttr {
+    13→    pub(super) fn populate_from_ast …
 
 src/schema/name.rs
+     1→use proc_macro2::Span;
+     2→use std_util::str;
      5→pub(crate) struct Name {
     13→impl Name {
+    14→    pub(crate) fn from_ident …
+    18→    pub(crate) fn from_str …
+
+src/schema/pk.rs
+     2→pub(crate) struct PrimaryKey {
+
+src/schema.rs
+     1→mod auto;
+     2→pub(crate) use auto::{AutoStrategy, UuidVersion};
+     4→mod belongs_to;
+     5→pub(crate) use belongs_to::BelongsTo;
+     7→mod error;
+     8→pub(crate) use error::ErrorSet;
+    10→mod field;
+    11→pub(crate) use field::{Field, FieldTy};
+    13→mod fk;
+    14→pub(crate) use fk::ForeignKeyField;
+    16→mod has_many;
+    17→pub(crate) use has_many::HasMany;
+    19→mod has_one;
+    20→pub(crate) use has_one::HasOne;
+    22→mod index;
+    23→pub(crate) use index::{Index, IndexField, IndexScope};
+    25→mod key_attr;
+    26→pub(crate) use key_attr::KeyAttr;
+    28→mod model;
+    29→pub(crate) use model::{Model, ModelKind};
+    31→mod model_attr;
+    32→pub(crate) use model_attr::ModelAttr;
+    34→mod name;
+    35→pub(crate) use name::Name;
+    37→mod pk;
+    38→pub(crate) use pk::PrimaryKey;
+    40→mod column;
+    41→pub(crate) use column::Column;

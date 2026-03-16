@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2000 tokens)
+budget: 4000 (3996 tokens)
 
 README.md
     10→# `htmy`
@@ -12,6 +12,7 @@ README.md
     15→
     16→## Key features
     33→## Testimonials
+    47→## Support
     51→## Installation
     63→## Concepts
     69→### Components
@@ -29,11 +30,123 @@ README.md
    341→## Why
    353→## Dependencies
    361→## Development
+   367→## Contributing
+   377→## License - MIT
+
+docs/components-guide.md
+     1→# Components guide
+
+docs/function-components.md
+     1→# Function components
 
 docs/index.md
+    10→# `htmy`
+
+examples/internationalization/app.py
+     8→class TranslatedComponent:
+    10→
+    11→    async def htmy(self, context: Context) -> Component:
+    34→async def render_hello() -> None:
+
+examples/markdown_customization/app.py
+     6→class Page:
+     8→
+     9→    def __init__ …
+    16→    def htmy …
+    36→class PostInfo:
+    38→
+    39→    def __init__ …
+    43→    def htmy …
+    47→class ConversionRules:
+    49→
+    51→    def h1 …
+    57→    def h2 …
+    63→    def ol …
+    69→    def ul …
+    88→async def render_post …
+
+examples/markdown_customization/post.md
+     1→# Essential reading
+     5→```python
+     6→import this
+     7→```
+     8→
+      →…
+    13→# Lists
+    15→## Ordered
+    21→## Unordered
+
+examples/markdown_essentials/app.py
+     6→async def render_post() -> None:
+
+examples/markdown_essentials/post.md
+     1→# Essential reading
+     3→```python
+     4→import this
+     5→```
+     6→
+      →…
+    11→# Lists
+    13→## Ordered
+    19→## Unordered
+
+examples/snippet-slots-fastapi/app.py
+     7→def layout …
+    18→class Centered(Fragment):
+    20→
+    21→    def htmy …
+    28→class RequestHeaders:
+    30→
+    31→    def htmy …
+    47→def index_page …
+    69→@app.get("/")
+    70→@htmy.page(index_page)
+    71→async def index() -> None:
 
 htmy/__init__.py
      1→__version__ = "0.10.2"
+     3→from .core …
+     4→from .core …
+     5→from .core …
+     6→from .core …
+     7→from .core …
+     8→from .core …
+     9→from .core …
+    10→from .core …
+    11→from .core …
+    12→from .error_boundary …
+    13→from .function_component …
+    14→from .renderer …
+    15→from .renderer …
+    16→from .renderer.typing …
+    17→from .snippet …
+    18→from .snippet …
+    19→from .tag …
+    20→from .tag …
+    21→from .tag …
+    22→from .typing …
+    23→from .typing …
+    24→from .typing …
+    25→from .typing …
+    26→from .typing …
+    27→from .typing …
+    28→from .typing …
+    29→from .typing …
+    30→from .typing …
+    31→from .typing …
+    32→from .typing …
+    33→from .typing …
+    34→from .typing …
+    35→from .typing …
+    36→from .typing …
+    37→from .typing …
+    38→from .utils …
+    39→from .utils …
+    40→from .utils …
+    41→from .utils …
+    42→from .utils …
+    43→from .utils …
+    44→from .utils …
     48→HTMY = Renderer
 
 htmy/core.py
@@ -42,13 +155,20 @@ htmy/core.py
     21→
     22→    __slots__ = ("_children",)
     23→
+    24→    def __init__ …
+    33→    def htmy …
     38→class WithContext(Fragment):
+    45→    def __init__ …
+    56→    def htmy_context …
     64→class ContextAware:
     99→
    100→    __slots__ = ()
    101→
    102→    _base_context_type: ClassVar[type[ContextAware] | None] = None
    103→
+   104→    def __init_subclass__ …
+   108→    def in_context …
+   115→    def to_context …
    128→    def from_context(cls, context: Context, default: Self | None = None) -> Self:
    146→class SkipProperty(Exception):
    148→
@@ -58,29 +178,49 @@ htmy/core.py
    157→class Text(str):
    163→class SafeStr(Text):
    175→class XBool(enum.Enum):
+   186→    def format …
+   196→def xml_format_string …
    201→class Formatter(ContextAware):
+   222→    def __init__ …
+   241→    def add …
+   246→    def format …
+   259→    def format_name …
+   268→    def format_value …
 
 htmy/error_boundary.py
+     5→from .core …
+     6→from .renderer.context …
+     7→from .utils …
+    12→    from .typing …
     15→class ErrorBoundary:
-    22→
-    23→    __slots__ = ("_children", "_errors", "_fallback")
-    24→
     25→    def __init__ …
     45→    async def htmy …
 
 htmy/etree.py
+    12→    from xml.etree.ElementTree …
+    13→    from xml.etree.ElementTree …
+    15→from .core …
+    16→from .tag …
+    17→from .typing …
     23→class ETreeConverter:
-    37→
-    38→    __slots__ = ("_rules",)
-    39→
     46→    def __init__ …
     55→    def convert …
     63→    def convert_element …
 
 htmy/function_component.py
+     7→from .typing …
+     8→from .typing …
+     9→from .typing …
+    13→_SyncFunctionComponent: TypeAlias = Callable[[TProps, Context], Component]
+    18→_AsyncFunctionComponent …
+    25→_ContextOnlySyncFunctionComponent: TypeAlias = Callable[[Context], Component]
+    31→class _DecoratedContextOnlySyncFunctionComponent(SyncComponent, Protocol):
     37→    def __call__ …
+    40→_ContextOnlyAsyncFunctionComponent …
+    46→class _DecoratedContextOnlyAsyncFunctionComponent(SyncComponent, Protocol):
     52→    def __call__ …
-    68→# -- Component decorators.
+    57→_SyncMethodComponent: TypeAlias = Callable[[TSelf, TProps, Context], Component]
+    62→_AsyncMethodComponent …
     71→class ComponentDecorators:
     75→
     76→    __slots__ = ()
@@ -100,70 +240,119 @@ htmy/function_component.py
    315→    def context_only_method …
 
 htmy/html.py
+     6→    from .typing …
+     9→from .core …
+    10→from .tag …
     13→class DOCTYPE:
     63→class Link:
-    67→    def css …
+    67→    def css(href: str) -> ComponentType:
     79→class Meta:
-    83→    def author …
-    87→    def charset …
-    91→    def description …
-    95→    def keywords …
-    99→    def viewport …
+    83→    def author(content: str) -> ComponentType:
+    87→    def charset(charset: str = "utf-8") -> ComponentType:
+    91→    def description(content: str) -> ComponentType:
+    95→    def keywords(content: str) -> ComponentType:
+    99→    def viewport(content: str = "width=device-width, initial-scale=1.0") -> ComponentType:
    831→class entity:
 
 htmy/i18n.py
-     8→from .core import ContextAware
-     9→from .io import open_file
+     8→from .core …
+     9→from .io …
     15→class I18nError(Exception): ...
     18→class I18nKeyError(I18nError): ...
     21→class I18nValueError(I18nError): ...
     24→class I18n(ContextAware):
-    28→
-    29→    __slots__ = ("_fallback", "_path")
-    30→
     34→    def __init__ …
     51→    async def get …
-   115→@alru_cache()
+    80→    async def _resolve …
    116→async def load_translation_resource(path: Path) -> TranslationResource:
    147→def resolve_json_path …
 
 htmy/io.py
-    11→async def load_text_file(path: str | Path) -> str:
+    11→async def load_text_file …
+
+htmy/md/__init__.py
+     1→from .core …
+     2→from .core …
+     3→from .typing …
+     4→from .typing …
+     5→from .typing …
+     6→from .typing …
 
 htmy/md/core.py
+    17→    from .typing …
     20→class MarkdownParser(ContextAware):
     27→
+    28→    __slots__ = ("_md",)
+    29→
+    30→    _default: ClassVar[MarkdownParser | None] = None
+    31→    """The default instance or `None` if one hasn't been created already."""
+    32→
     33→    @classmethod
     34→    def default(cls) -> MarkdownParser:
+    35→        """
+    36→        Returns the default instance.
+    37→        """
+    43→    def __init__ …
+    53→    def parse …
     81→class MD(Snippet):
     97→
+    98→    __slots__ = (
+    99→        "_converter",
+   100→        "_renderer",
+   101→    )
+   102→
+   103→    def __init__ …
 
 htmy/md/typing.py
-    11→MarkdownMetadataDict …
+    11→MarkdownMetadataDict: TypeAlias = dict[str, Any]
     14→class ParsedMarkdown(TypedDict):
     16→
     17→    content: str
-      →    …
-    21→MarkdownParserFunction …
-    24→MarkdownRenderFunction …
+    18→    metadata: NotRequired[MarkdownMetadataDict | None]
+    21→MarkdownParserFunction: TypeAlias = Callable[[str], ParsedMarkdown]
+    24→MarkdownRenderFunction: TypeAlias = Callable[[Component, MarkdownMetadataDict | None], Component]
+
+htmy/renderer/__init__.py
+     1→from .baseline …
+     2→from .default …
+     3→from .typing …
+     4→from .typing …
 
 htmy/renderer/baseline.py
+    10→from .context …
     18→class Renderer:
     27→
     28→    __slots__ = ("_default_context", "_string_formatter")
     29→
+    30→    def __init__ …
+    48→    async def render …
+    67→    async def stream …
 
 htmy/renderer/context.py
+     3→from .typing …
      6→class RendererContext:
     10→
     11→    @classmethod
     12→    def from_context(cls, context: Context) -> RendererType:
+    13→        """
+    14→        Returns the renderer instance from the given context.
+    15→
+      →…
 
 htmy/renderer/default.py
+    12→from .context …
+    20→class _Node:
+    25→    def __init__ …
+    36→    def iter_nodes …
+    53→class _ComponentRenderer:
+    60→    def __init__ …
+   174→    async def run …
    228→class Renderer:
    235→
    236→    __slots__ = ("_default_context", "_string_formatter")
    237→
+   238→    def __init__ …
+   256→    async def render …
 
 htmy/renderer/typing.py
     12→class RendererType(Protocol):
@@ -176,50 +365,69 @@ htmy/renderer/typing.py
     53→def is_streaming_renderer …
 
 htmy/snippet.py
-    24→# -- Components and utilities
+    10→from .core …
+    11→from .io …
+    12→from .typing …
+    19→from .utils …
     27→class Slots:
     46→
     47→    __slots__ = ("_not_found", "_slot_mapping", "_slot_re")
     48→
     49→    class slot_re:
-    57→
-      →…
     83→    def __init__ …
    110→    def resolve_text …
    158→class Snippet:
-   215→
    218→    def __init__ …
    241→    async def htmy …
+   274→    async def _load_text_file …
 
 htmy/tag.py
+     5→from .core …
+     6→from .utils …
+     9→    from .typing …
+    12→class _TagWithPropsImpl:
+    15→    def __init__ …
+    19→    def htmy …
+    24→class _TagImpl:
+    27→    def __init__ …
+    39→    def htmy …
     56→class TagWithProps:
+    66→    def __init__ …
+    69→    def __call__ …
     73→class Tag:
+    76→    def __init__ …
+    80→    def __call__ …
+    84→def wildcard_tag …
 
 htmy/typing.py
-     4→T …
-     5→U …
+     4→T = TypeVar("T")
+     5→U = TypeVar("U")
+     7→# -- Properties
      9→PropertyValue: TypeAlias = Any | None
-    12→Properties …
+    12→Properties: TypeAlias = Mapping[str, PropertyValue]
+    15→# -- Context
     17→ContextKey: TypeAlias = Any
-    20→ContextValue …
-    23→Context …
-    26→MutableContext …
+    20→ContextValue: TypeAlias = Any
+    23→Context: TypeAlias = Mapping[ContextKey, ContextValue]
+    26→MutableContext: TypeAlias = MutableMapping[ContextKey, ContextValue]
     37→class SyncComponent(Protocol):
     39→
     40→    def htmy …
     45→class AsyncComponent(Protocol):
     48→    async def htmy …
-    53→HTMYComponentType …
-    56→StrictComponentType …
-    59→ComponentType …
+    53→HTMYComponentType: TypeAlias = SyncComponent | AsyncComponent
+    56→StrictComponentType: TypeAlias = HTMYComponentType | str
+    59→ComponentType: TypeAlias = StrictComponentType | None
+    62→# Omit strings from this type to simplify checks.
     63→ComponentSequence: TypeAlias = list[ComponentType] | tuple[ComponentType, ...]
-    66→Component …
+    66→Component: TypeAlias = ComponentType | ComponentSequence
     73→class SyncContextProvider(Protocol):
     75→
     76→    def htmy_context …
     81→class AsyncContextProvider(Protocol):
     84→    async def htmy_context …
-    89→ContextProvider …
+    89→ContextProvider: TypeAlias = SyncContextProvider | AsyncContextProvider
+    97→# -- Text processors
     99→TextProcessor: TypeAlias = Callable[[str, Context], str | Coroutine[Any, Any, str]]
    103→class TextResolver(Protocol):
    108→    def resolve_text …
@@ -246,5 +454,15 @@ mkdocs.yaml
 pyproject.toml
      1→[project]
     15→[project.optional-dependencies]
+    16→lxml = ["lxml>=6.0.0"]
     18→[dependency-groups]
     35→[build-system]
+
+tests/renderer/test_renderer_comparison.py
+    61→class WrapAsync:
+    92→class SyncError:
+
+tests/test_function_component.py
+    69→class Data:
+    70→    goodbye: str
+    71→

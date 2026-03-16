@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (1000 tokens)
+budget: 2000 (1993 tokens)
 
 README.md
      1→# MCPHost SDK
@@ -35,7 +35,16 @@ README.md
     31→    }
     32→    defer host.Close()
     33→    
-      →    …
+    34→    // Send a prompt
+    35→    response, err := host.Prompt(ctx, "What is 2+2?")
+    36→    if err != nil {
+    37→        log.Fatal(err)
+    38→    }
+    39→    
+    40→    fmt.Println(response)
+    41→}
+    42→```
+    43→
     44→## Configuration
     46→The SDK behaves identically to the CLI:
     47→- Loads configuration from `~/.mcphost.yml` by default
@@ -44,12 +53,66 @@ README.md
     50→- Uses the same defaults as the CLI
     51→
     52→### Options
+    54→You can override specific settings:
+    55→
+    56→```go
+    57→host, err := sdk.New(ctx, &sdk.Options{
+    58→    Model:        "ollama:llama3",           // Override model
+    59→    SystemPrompt: "You are a helpful bot",   // Override system prompt
+    60→    ConfigFile:   "/path/to/config.yml",     // Use specific config file
+    61→    MaxSteps:     10,                        // Override max steps
+    62→    Streaming:    true,                      // Enable streaming
+    63→    Quiet:        true,                      // Suppress debug output
+    64→})
+    65→```
+      →…
     67→## Advanced Usage
     69→### With Tool Callbacks
+    71→Monitor tool execution in real-time:
+    72→
+    73→```go
+    74→response, err := host.PromptWithCallbacks(
+    75→    ctx,
+    76→    "List files in the current directory",
+    77→    func(name, args string) {
+    78→        fmt.Printf("Calling tool: %s\n", name)
+    79→    },
+    80→    func(name, args, result string, isError bool) {
+    81→        if isError {
+    82→            fmt.Printf("Tool %s failed: %s\n", name, result)
+      →            …
     93→### Session Management
+    95→Maintain conversation context:
+    96→
+    97→```go
+    98→// First message
+    99→host.Prompt(ctx, "My name is Alice")
+   100→
+   101→// Second message (remembers context)
+   102→response, _ := host.Prompt(ctx, "What's my name?")
+   103→// Response: "Your name is Alice"
+   104→
+   105→// Save session
+   106→host.SaveSession("./session.json")
+      →…
    115→## API Reference
    117→### Types
+   119→- `MCPHost` - Main SDK type
+   120→- `Options` - Configuration options
+   121→- `Message` - Conversation message
+   122→- `ToolCall` - Tool invocation details
+   123→
    124→### Methods
+   126→- `New(ctx, opts)` - Create new MCPHost instance
+   127→- `Prompt(ctx, message)` - Send message and get response
+   128→- `PromptWithCallbacks(ctx, message, ...)` - Send message with progress callbacks
+   129→- `LoadSession(path)` - Load session from file
+   130→- `SaveSession(path)` - Save session to file
+   131→- `ClearSession()` - Clear conversation history
+   132→- `GetSessionManager()` - Get session manager for advanced usage
+   133→- `GetModelString()` - Get current model string
+   134→- `Close()` - Clean up resources
+   135→
    136→## Environment Variables
    138→All CLI environment variables work with the SDK:
    139→
@@ -60,16 +123,29 @@ README.md
    144→- etc.
    145→
    146→## License
+   148→Same as MCPHost CLI
 
 examples/basic/main.go
+     3→import …
+    11→func main() {
+
+examples/scripting/main.go
+     3→import …
+    12→func main() {
 
 mcphost.go
      3→import …
+    16→// MCPHost provides programmatic access to mcphost functionality, allowing
+    17→// integration of MCP tools and LLM interactions into Go applications. It manages
+    18→// agents, sessions, and model configurations.
     19→type MCPHost struct {
     20→	agent       *agent.Agent
     21→	sessionMgr  *session.Manager
     22→	modelString string
     23→}
+    25→// Options configures MCPHost creation with optional overrides for model,
+    26→// prompts, configuration, and behavior settings. All fields are optional
+    27→// and will use CLI defaults if not specified.
     28→type Options struct {
     29→	Model        string // Override model (e.g., "anthropic:claude-3-sonnet")
     30→	SystemPrompt string // Override system prompt
@@ -94,9 +170,19 @@ mcphost.go
    230→func (m *MCPHost) GetModelString() string {
    237→func (m *MCPHost) Close() error {
 
+mcphost_test.go
+     3→import …
+    11→func TestNew(t *testing.T) {
+    30→func TestNewWithOptions(t *testing.T) {
+    54→func TestSessionManagement(t *testing.T) {
+
 types.go
      3→import …
+     8→// Message is an alias for session.Message providing SDK users with access
+     9→// to message structures for conversation history and tool interactions.
     10→type Message = session.Message
+    12→// ToolCall is an alias for session.ToolCall representing a tool invocation
+    13→// with its name, arguments, and result within a conversation.
     14→type ToolCall = session.ToolCall
     18→func ConvertToSchemaMessage(msg *Message) *schema.Message {
     24→func ConvertFromSchemaMessage(msg *schema.Message) Message {

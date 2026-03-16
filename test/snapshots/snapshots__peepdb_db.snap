@@ -2,34 +2,57 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (1000 tokens)
+budget: 2000 (1621 tokens)
 
 __init__.py
-     1→from .base …
-     2→from .mysql …
-     3→from .postgresql …
-     4→from .mariadb …
-     5→from .mongodb …
-     6→from .sqlite …
-     7→from .firebase …
-     8→from .mssql …
-     9→from .oracle …
+     1→from .base import BaseDatabase
+     2→from .mysql import MySQLDatabase
+     3→from .postgresql import PostgreSQLDatabase
+     4→from .mariadb import MariaDBDatabase
+     5→from .mongodb import MongoDBDatabase
+     6→from .sqlite import SQLiteDatabase
+     7→from .firebase import FirebaseDatabase
+     8→from .mssql import MSSQLDatabase
+     9→from .oracle import OracleDatabase
     11→__all__ = [
     12→    'BaseDatabase',
-      →    …
+    13→    'MySQLDatabase',
+    14→    'PostgreSQLDatabase',
+    15→    'MariaDBDatabase',
+    16→    'MongoDBDatabase',
+    17→    'SQLiteDatabase',
+    18→    'FirebaseDatabase',
+    19→    'MSSQLDatabase',
+    20→    'OracleDatabase'
+    21→]
 
 base.py
+     1→from abc import ABC, abstractmethod
+     2→from typing import List, Dict, Any
+     3→import logging
      5→class BaseDatabase(ABC):
      6→    def __init__(self, host: str, user: str, password: str, database: str, port: int = None, **kwargs):
+    17→    @abstractmethod
     18→    def connect(self) -> None:
+    19→        pass
+    21→    @abstractmethod
     22→    def disconnect(self) -> None:
+    23→        pass
+    25→    @abstractmethod
     26→    def fetch_tables(self) -> List[str]:
+    27→        pass
+    29→    @abstractmethod
     30→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
+    31→        pass
     33→    def __enter__(self):
     37→    def __exit__(self, exc_type, exc_val, exc_tb):
 
 firebase.py
+     1→import firebase_admin
+     2→from firebase_admin import credentials, firestore
+     3→from typing import List, Dict, Any
      4→from .base import BaseDatabase
+     5→import logging
      9→class FirebaseDatabase(BaseDatabase):
     10→    def __init__(self, service_account_path: str, **kwargs):
     15→    def connect(self):
@@ -38,7 +61,9 @@ firebase.py
     39→    def fetch_data(self, table_name: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 mariadb.py
+     1→import pymysql
      2→from .base import BaseDatabase
+     3→from typing import List, Dict, Any
      5→class MariaDBDatabase(BaseDatabase):
      6→    def connect(self) -> None:
     23→    def disconnect(self) -> None:
@@ -46,24 +71,41 @@ mariadb.py
     34→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 mongodb.py
+     1→import pymongo
+     2→import pymongo.errors
      3→from .base import BaseDatabase
+     4→import typing as t
+     5→from urllib.parse import quote_plus
      8→class MongoDBDatabase(BaseDatabase):
-     9→    def connect …
-    32→    def disconnect …
-    39→    def fetch_tables …
-    42→    def fetch_data …
+     9→    def connect(self) -> None:
+    32→    def disconnect(self) -> None:
+    39→    def fetch_tables(self) -> t.List[str]:
+    42→    def fetch_data(
+    43→        self,
+    44→        table: str,
+    45→        page: int = 1,
+    46→        page_size: int = 100
+    47→    ) -> t.Dict[str, t.Any]:
+    48→        """
+    49→        Fetches data from the MongoDB database.
+    50→        """
 
 mssql.py
+     1→import pyodbc
      2→from .base import BaseDatabase
+     3→from typing import List, Dict, Any
+     4→import logging
      6→class MSSQLDatabase(BaseDatabase):
-     7→    def __init__ …
-    12→    def connect …
-    28→    def disconnect …
-    35→    def fetch_tables …
-    45→    def fetch_data …
+     7→    def __init__(self, host: str, user: str, password: str, database: str, port: int = 1433, trusted: bool = False, **kwargs):
+    12→    def connect(self) -> None:
+    28→    def disconnect(self) -> None:
+    35→    def fetch_tables(self) -> List[str]:
+    45→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 mysql.py
+     1→import mysql.connector
      2→from .base import BaseDatabase
+     3→from typing import List, Dict, Any
      5→class MySQLDatabase(BaseDatabase):
      6→    def connect(self) -> None:
     22→    def disconnect(self) -> None:
@@ -71,7 +113,10 @@ mysql.py
     33→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 oracle.py
+     1→import oracledb
+     2→from typing import List, Dict, Any
      3→from .base import BaseDatabase
+     4→import logging
      7→class OracleDatabase(BaseDatabase):
      8→    def connect(self) -> None:
     25→    def disconnect(self) -> None:
@@ -81,7 +126,10 @@ oracle.py
     38→    ) -> Dict[str, Any]:
 
 postgresql.py
+     1→import psycopg2
+     2→from psycopg2.extras import RealDictCursor
      3→from .base import BaseDatabase
+     4→from typing import List, Dict, Any
      6→class PostgreSQLDatabase(BaseDatabase):
      7→    def connect(self) -> None:
     23→    def disconnect(self) -> None:
@@ -89,7 +137,10 @@ postgresql.py
     34→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 sqlite.py
+     1→import os
+     2→import sqlite3
      3→from .base import BaseDatabase
+     4→from typing import List, Dict, Any
      6→class SQLiteDatabase(BaseDatabase):
      7→    def connect(self) -> None:
     22→    def disconnect(self) -> None:

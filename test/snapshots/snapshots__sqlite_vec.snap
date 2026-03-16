@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1981 tokens)
+budget: 4000 (3976 tokens)
 
 ARCHITECTURE.md
      1→# `sqlite-vec` Architecture
@@ -16,6 +16,12 @@ ARCHITECTURE.md
     10→
     11→## `vec0`
     13→### Shadow Tables
+    15→#### `xyz_chunks`
+    22→#### `xyz_rowids`
+    29→#### `xyz_vector_chunksNN`
+    34→#### `xyz_auxiliary`
+    39→#### `xyz_metadatachunksNN`
+    44→#### `xyz_metadatatextNN`
     49→### idxStr
     51→The `vec0` idxStr is a string composed of single "header" character and 0 or
     52→more "blocks" of 4 characters each.
@@ -26,6 +32,12 @@ ARCHITECTURE.md
     57→| Name                       | Value | Description                                                            |
     58→| -------------------------- | ----- | ---------------------------------------------------------------------- |
       →…
+    69→#### `VEC0_IDXSTR_KIND_KNN_MATCH` (`'{'`)
+    75→#### `VEC0_IDXSTR_KIND_KNN_K` (`'}'`)
+    81→#### `VEC0_IDXSTR_KIND_KNN_ROWID_IN` (`'['`)
+    88→#### `VEC0_IDXSTR_KIND_KNN_PARTITON_CONSTRAINT` (`']'`)
+   102→#### `VEC0_IDXSTR_KIND_POINT_ID` (`'!'`)
+   108→#### `VEC0_IDXSTR_KIND_METADATA_CONSTRAINT` (`'&'`)
 
 README.md
      1→# `sqlite-vec`
@@ -45,19 +57,89 @@ README.md
     18→- Store non-vector data in metadata, auxiliary, or partition key columns
     19→
     20→<p align="center">
+    21→  <a href="https://hacks.mozilla.org/2024/06/sponsoring-sqlite-vec-to-enable-more-powerful-local-ai-applications/">
+    22→  <picture>
+    23→    <source media="(prefers-color-scheme: dark)" srcset="./.github/logos/mozilla.dark.svg">
+    24→    <source media="(prefers-color-scheme: light)" srcset="./.github/logos/mozilla.svg">
+    25→    <img alt="Mozilla Builders logo" width=400>
+    26→  </picture>
+    27→  </a>
+    28→</p>
+    29→
+    30→<p align="center">
+    31→<i>
+    32→<code>sqlite-vec</code> is a
       →…
     43→## Installing
     61→## Sample usage
     97→## Sponsors
    152→## See Also
 
+benchmarks/exhaustive-memory/bench.py
+    13→class BenchResult:
+   571→class Config:
+
 bindings/python/extra_init.py
      6→def serialize_float32(vector: List[float]) -> bytes:
     11→def serialize_int8(vector: List[int]) -> bytes:
     44→    def register_numpy(db: Connection, name: str, array):
 
+bindings/rust/build.rs
+     1→fn main() {
+
 bindings/rust/src/lib.rs
      3→    pub fn sqlite3_vec_init();
+
+examples/python-recipes/openai-sample.py
+     3→from openai import OpenAI
+    10→def serialize(vector: List[float]) -> bytes:
+
+examples/simple-c/demo.c
+     7→int main(int argc, char *argv[]) {
+
+examples/simple-python/demo.py
+     8→def serialize_f32(vector: List[float]) -> bytes:
+
+examples/simple-ruby/demo.rb
+     1→require 'sqlite3'
+     2→require 'sqlite_vec'
+     3→
+     4→
+     5→db = SQLite3::Database.new(':memory:')
+     6→db.enable_load_extension(true)
+     7→SqliteVec.load(db)
+     8→db.enable_load_extension(false)
+     9→
+      →…
+
+examples/simple-rust/Cargo.toml
+     1→[package]
+     5→[dependencies]
+    10→[[bin]]
+
+examples/simple-sqlite/demo.sql
+     1→.load ../../dist/vec0
+     2→.mode table
+     3→.header on
+     4→
+     5→select sqlite_version(), vec_version();
+     6→
+      →…
+
+examples/sqlite3-cli/README.md
+     1→# `sqlite-vec` statically compiled in the SQLite CLI
+
+examples/sqlite3-cli/core_init.c
+     4→int core_init(const char *dummy) {
+
+examples/wasm/README.md
+     1→# `sqlite-vec` statically compiled into WASM builds
+     3→You can compile your own version of SQLite's WASM build with `sqlite-vec`
+     4→builtin. Dynamically loading SQLite extensions is not supported in the official
+      →…
+
+examples/wasm/wasm.c
+     4→int sqlite3_wasm_extra_init(const char * unused) {
 
 reference.yaml
      1→sections:
@@ -68,49 +150,73 @@ reference.yaml
    308→quantization:
    328→vec0:
 
+site/project.data.ts
+    13→  load() {
+
+sqlite-dist.toml
+
 sqlite-vec.c
      1→#include "sqlite-vec.h"
     19→#include "sqlite3ext.h"
     22→#include "sqlite3.h"
    115→enum VectorElementType {
+   116→  // clang-format off
+   117→  SQLITE_VEC_ELEMENT_TYPE_FLOAT32 = 223 + 0,
+   118→  SQLITE_VEC_ELEMENT_TYPE_BIT     = 223 + 1,
+   119→  SQLITE_VEC_ELEMENT_TYPE_INT8    = 223 + 2,
+   120→  // clang-format on
+   121→};
    169→static f32 l2_sqr_float_neon …
    527→static unsigned int __builtin_popcountl …
    536→#define __builtin_popcountl __popcnt64
    556→static f32 distance_hamming …
    585→typedef void (*vector_cleanup)(void *p);
-   587→void vector_cleanup_noop …
-   591→void vtab_set_error …
    598→struct Array {
-   629→int array_append …
-   646→void array_cleanup …
-   656→char *vector_subtype_name …
-   667→char *type_name …
+   614→int array_init …
    683→typedef void (*fvec_cleanup)(f32 *vector);
-   685→void fvec_cleanup_noop …
-   998→int ensure_vector_match …
+   964→int vector_from_value …
   1050→struct VecNpyFile {
-  1317→char *vec_type_name …
   1798→enum Vec0TokenType {
+  1799→  TOKEN_TYPE_IDENTIFIER,
+  1800→  TOKEN_TYPE_DIGIT,
+  1801→  TOKEN_TYPE_LBRACKET,
+  1802→  TOKEN_TYPE_RBRACKET,
+  1803→  TOKEN_TYPE_PLUS,
+  1804→  TOKEN_TYPE_EQ,
+  1805→};
   1806→struct Vec0Token {
-  1812→int is_alpha …
-  1815→int is_digit …
-  1816→int is_whitespace …
-  1824→int vec0_token_next …
   1880→struct Vec0Scanner {
-  1886→void vec0_scanner_init …
-  1892→int vec0_scanner_next …
-  1900→int vec0_parse_table_option …
+  1956→int vec0_parse_partition_key_definition …
+  2033→int vec0_parse_auxiliary_column_definition …
   2091→typedef enum {
+  2111→int vec0_parse_metadata_column_definition …
+  2171→int vec0_parse_primary_key_definition …
   2236→enum Vec0DistanceMetrics {
+  2237→  VEC0_DISTANCE_METRIC_L2 = 1,
+  2238→  VEC0_DISTANCE_METRIC_COSINE = 2,
+  2239→  VEC0_DISTANCE_METRIC_L1 = 3,
+  2240→};
   2242→struct VectorColumnDefinition {
   2250→struct Vec0PartitionColumnDefinition {
   2256→struct Vec0AuxiliaryColumnDefinition {
   2261→struct Vec0MetadataColumnDefinition {
+  2294→int vec0_parse_vector_column …
   2429→typedef struct vec_each_vtab vec_each_vtab;
   2430→struct vec_each_vtab {
   2434→typedef struct vec_each_cursor vec_each_cursor;
   2435→struct vec_each_cursor {
   2622→enum NpyTokenType {
+  2623→  NPY_TOKEN_TYPE_IDENTIFIER,
+  2624→  NPY_TOKEN_TYPE_NUMBER,
+  2625→  NPY_TOKEN_TYPE_LPAREN,
+  2626→  NPY_TOKEN_TYPE_RPAREN,
+  2627→  NPY_TOKEN_TYPE_LBRACE,
+  2628→  NPY_TOKEN_TYPE_RBRACE,
+  2629→  NPY_TOKEN_TYPE_COLON,
+  2630→  NPY_TOKEN_TYPE_COMMA,
+  2631→  NPY_TOKEN_TYPE_STRING,
+  2632→  NPY_TOKEN_TYPE_FALSE,
+  2633→};
   2635→struct NpyToken {
   2718→struct NpyScanner {
   2876→typedef struct vec_npy_each_vtab vec_npy_each_vtab;
@@ -126,6 +232,16 @@ sqlite-vec.c
   3431→typedef struct vec0_vtab vec0_vtab;
   3442→typedef enum {
   3456→struct vec0_vtab {
+  3582→void vec0_free_resources …
+  3600→void vec0_free …
+  3632→int vec0_column_distance_idx …
+  3643→int vec0_column_k_idx …
+  3652→int vec0_column_idx_is_vector …
+  3662→int vec0_column_idx_to_vector_idx …
+  3670→int vec0_column_idx_is_partition …
+  3680→int vec0_column_idx_to_partition_idx …
+  3689→int vec0_column_idx_is_auxiliary …
+  3699→int vec0_column_idx_to_auxiliary_idx …
   3708→int vec0_column_idx_is_metadata …
   3718→int vec0_column_idx_to_metadata_idx …
   3735→int vec0_get_chunk_position …
@@ -142,51 +258,89 @@ sqlite-vec.c
   4609→typedef struct vec0_cursor vec0_cursor;
   4610→struct vec0_cursor {
   5305→typedef enum  {
+  5306→  // If any values are updated, please update the ARCHITECTURE.md docs accordingly!
+  5307→
+  5308→  // ~~~ KNN QUERIES ~~~ //
+  5309→  VEC0_IDXSTR_KIND_KNN_MATCH = '{',
+  5310→  VEC0_IDXSTR_KIND_KNN_K = '}',
+  5311→  VEC0_IDXSTR_KIND_KNN_ROWID_IN = '[',
+  5312→  // argv[i] is a constraint on a PARTITON KEY column in a KNN query
+  5313→  // 
+  5314→  VEC0_IDXSTR_KIND_KNN_PARTITON_CONSTRAINT = ']',
+  5315→
+  5316→  // argv[i] is a constraint on the distance column in a KNN query
+  5317→  VEC0_IDXSTR_KIND_KNN_DISTANCE_CONSTRAINT = '*',
+  5318→
+  5319→  // ~~~ POINT QUERIES ~~~ //
+  5320→  VEC0_IDXSTR_KIND_POINT_ID = '!',
+  5321→
+  5322→  // ~~~ ??? ~~~ //
+  5323→  VEC0_IDXSTR_KIND_METADATA_CONSTRAINT = '&',
+  5324→} vec0_idxstr_kind;
   5328→typedef enum  {
+  5329→  // If any values are updated, please update the ARCHITECTURE.md docs accordingly!
+  5330→
+  5331→  // Equality constraint on a PARTITON KEY column, ex `user_id = 123`
+  5332→  VEC0_PARTITION_OPERATOR_EQ = 'a',
+  5333→  
+  5334→  // "Greater than" constraint on a PARTITON KEY column, ex `year > 2024`
+  5335→  VEC0_PARTITION_OPERATOR_GT = 'b',
+  5336→  
+  5337→  // "Less than or equal to" constraint on a PARTITON KEY column, ex `year <= 2024`
+  5338→  VEC0_PARTITION_OPERATOR_LE = 'c',
+  5339→
+  5340→  // "Less than" constraint on a PARTITON KEY column, ex `year < 2024`
+  5341→  VEC0_PARTITION_OPERATOR_LT = 'd',
+  5342→  
+  5343→  // "Greater than or equal to" constraint on a PARTITON KEY column, ex `year >= 2024`
+  5344→  VEC0_PARTITION_OPERATOR_GE = 'e',
+  5345→  
+  5346→  // "Not equal to" constraint on a PARTITON KEY column, ex `year != 2024`
+  5347→  VEC0_PARTITION_OPERATOR_NE = 'f',
+  5348→} vec0_partition_operator;
   5349→typedef enum  {
+  5360→typedef enum {
   5769→static int vec0Next …
   5867→int min_idx …
   5948→int vec0_chunks_iter …
   6033→struct Vec0MetadataIn{
+  6034→  // index of argv[i]` the constraint is on
+  6035→  int argv_idx;
+  6036→  // metadata column index of the constraint, derived from idxStr + argv_idx
+  6037→  int metadata_idx;
+  6038→  // array of the copied `(...)` values from sqlite3_vtab_in_first()/sqlite3_vtab_in_next()
+  6039→  struct Array array;
+  6040→};
   6043→struct Vec0MetadataInTextEntry {
+  6044→  int n;
+  6045→  char * zString;
+  6046→};
   6368→int vec0_set_metadata_filter_bitmap …
   7708→int vec0Update_InsertRowidStep …
   7778→int vec0Update_InsertNextAvailableStep …
   7931→vec0_write_vector_to_vector_blob …
   7969→int vec0Update_InsertWriteFinalStep …
   8248→int vec0Update_Insert …
+  9085→struct static_blob_definition {
+  9113→typedef struct static_blob static_blob;
+  9114→struct static_blob {
+  9122→typedef struct vec_static_blob_data vec_static_blob_data;
+  9123→struct vec_static_blob_data {
+  9127→typedef struct vec_static_blobs_vtab vec_static_blobs_vtab;
+  9128→struct vec_static_blobs_vtab {
+  9133→typedef struct vec_static_blobs_cursor vec_static_blobs_cursor;
+  9134→struct vec_static_blobs_cursor {
+  9330→typedef struct vec_static_blob_entries_vtab vec_static_blob_entries_vtab;
+  9331→struct vec_static_blob_entries_vtab {
+  9335→typedef enum {
+  9340→struct sbe_query_knn_data {
+  9363→typedef struct vec_static_blob_entries_cursor vec_static_blob_entries_cursor;
+  9364→struct vec_static_blob_entries_cursor {
 
 test.sql
      1→
-     2→.load dist/vec0main
-     3→.bail on
-     4→
-     5→.mode qbox
-     6→
-     7→
-     8→.load ./memstat
-     9→.echo on
-    10→
-    11→select name, value from sqlite_memstat where name = 'MEMORY_USED';
-    12→
-    13→create virtual table v using vec0(
-    14→  vector float[1],
-    15→  name1 text,
-    16→  name2 text,
-    17→  age int,
-    18→  chunk_size=8
-    19→);
-    20→
-      →…
 
-tests/conftest.py
-     6→def db():
-
-tests/test-metadata.py
-    51→def test_text_knn(db, snapshot):
-   423→def eqp(db, sql):
+tests/afbd/README.md
+     2→# hnm
 
 tmp-static.py
-     1→import sqlite3
-     2→import numpy as np
-    25→def register_np(array, name):

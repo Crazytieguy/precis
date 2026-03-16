@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (998 tokens)
+budget: 2000 (1991 tokens)
 
 README.md
      1→# Enclosed crypto library
@@ -21,11 +21,36 @@ README.md
     16→```
     17→
     18→## License
+    20→This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more information.
+    21→
     22→## Credits and Acknowledgements
+    24→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
 
 build.config.ts
+     1→import { defineBuildConfig } from 'unbuild';
+
+eslint.config.js
+     1→import antfu from '@antfu/eslint-config';
 
 package.json
+     2→  "name": "@enclosed/crypto",
+     3→  "type": "module",
+     4→  "version": "1.16.0",
+     5→  "packageManager": "pnpm@9.15.0",
+     6→  "description": "Enclosed cross-env crypto primitives",
+     7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
+     8→  "license": "Apache-2.0",
+     9→  "repository": {
+    13→  "exports": {
+    58→  "main": "./dist/index.node.cjs",
+    59→  "module": "./dist/index.web.mjs",
+    60→  "types": "./dist/index.web.d.ts",
+    61→  "files": [
+    64→  "engines": {
+    67→  "react-native": "./dist/index.web.mjs",
+    68→  "scripts": {
+    79→  "dependencies": {
+    82→  "devDependencies": {
 
 src/api-definition.ts
      1→import type { EncryptionAlgorithmDefinitions } from './encryption-algorithms/encryption-algorithms.types';
@@ -36,6 +61,14 @@ src/encryption-algorithms/encryption-algorithms.constants.ts
      1→export const AES_256_GCM = 'aes-256-gcm';
      3→export const ENCRYPTION_ALGORITHMS = [AES_256_GCM] as const;
 
+src/encryption-algorithms/encryption-algorithms.models.ts
+     3→function defineEncryptionMethods …
+
+src/encryption-algorithms/encryption-algorithms.registry.test.ts
+     1→import type { EncryptionAlgorithmDefinitions } from './encryption-algorithms.types';
+     2→import { describe, expect, test } from 'vitest';
+     3→import { createEncryptionAlgorithmsRegistry } from './encryption-algorithms.registry';
+
 src/encryption-algorithms/encryption-algorithms.registry.ts
      1→import type { EncryptionAlgorithm, EncryptionMethodsDefinition } from './encryption-algorithms.types';
      2→import { keys } from 'lodash-es';
@@ -43,6 +76,8 @@ src/encryption-algorithms/encryption-algorithms.registry.ts
 
 src/encryption-algorithms/encryption-algorithms.test-utils.ts
      1→import type { EncryptionMethodsDefinition } from './encryption-algorithms.types';
+     2→import { times } from 'lodash-es';
+     3→import { describe, expect, test } from 'vitest';
      9→function runCommonEncryptionAlgorithmTest …
 
 src/encryption-algorithms/encryption-algorithms.types.ts
@@ -61,6 +96,10 @@ src/index.node.ts
      4→import { aes256GcmEncryptionAlgorithmDefinition } from './node/encryption-algorithms/crypto.node.aes-256-gcm';
 
 src/index.test.ts
+     1→import { keys, times } from 'lodash-es';
+     2→import { describe, expect, test } from 'vitest';
+     3→import * as nodeLib from './index.node';
+     4→import * as webLib from './index.web';
 
 src/index.web.ts
      1→import { createEnclosedCryptoApi } from './api-definition';
@@ -68,25 +107,47 @@ src/index.web.ts
      3→import * as webCryptoApi from './web/crypto.web.usecases';
      4→import { aes256GcmEncryptionAlgorithmDefinition } from './web/encryption-algorithms/crypto.web.aes-256-gcm';
 
+src/node/crypto.node.usecases.test.ts
+     1→import { describe, expect, test } from 'vitest';
+     2→import { base64UrlToBuffer, bufferToBase64Url } from './crypto.node.usecases';
+
 src/node/crypto.node.usecases.ts
+     1→import { Buffer } from 'node:buffer';
+     2→import { pbkdf2, randomBytes } from 'node:crypto';
+     3→import { promisify, TextEncoder } from 'node:util';
      7→const deriveWithPbkdf2 = promisify(pbkdf2);
-     9→function bufferToBase64Url …
-    15→function base64UrlToBuffer …
-    21→function generateBaseKey …
-    25→function createRandomBuffer …
-    31→async function deriveMasterKey …
+     9→function bufferToBase64Url({ buffer }: { buffer: Uint8Array }): string {
+    15→function base64UrlToBuffer({ base64Url }: { base64Url: string }): Uint8Array {
+    21→function generateBaseKey(): { baseKey: Uint8Array } {
+    25→function createRandomBuffer({ length = 16 }: { length?: number } = {}): Uint8Array {
+    31→async function deriveMasterKey({ baseKey, password = '' }: { baseKey: Uint8Array; password?: string }): Promise<{ masterKey: Uint8Array }> {
 
 src/node/encryption-algorithms/crypto.node.aes-256-gcm.ts
+     1→import { createCipheriv, createDecipheriv } from 'node:crypto';
+     2→import { defineEncryptionMethods } from '../../encryption-algorithms/encryption-algorithms.models';
+     3→import { base64UrlToBuffer, bufferToBase64Url, createRandomBuffer } from '../crypto.node.usecases';
      5→export const aes256GcmEncryptionAlgorithmDefinition = defineEncryptionMethods({
+     6→
+      →…
+
+src/web/crypto.web.usecases.test.ts
+     1→import { describe, expect, test } from 'vitest';
+     2→import { base64UrlToBuffer, bufferToBase64Url } from './crypto.web.usecases';
 
 src/web/crypto.web.usecases.ts
-     3→function bufferToBase64Url …
-    20→function base64UrlToBuffer …
-    31→function createRandomBuffer …
-    38→function generateBaseKey …
-    42→async function deriveMasterKey …
+     3→function bufferToBase64Url({ buffer }: { buffer: Uint8Array }): string {
+    20→function base64UrlToBuffer({ base64Url }: { base64Url: string }): Uint8Array {
+    31→function createRandomBuffer({ length = 16 }: { length?: number } = {}): Uint8Array {
+    38→function generateBaseKey(): { baseKey: Uint8Array } {
+    42→async function deriveMasterKey({ baseKey, password = '' }: { baseKey: Uint8Array; password?: string }) {
 
 src/web/encryption-algorithms/crypto.web.aes-256-gcm.ts
+     1→import { defineEncryptionMethods } from '../../encryption-algorithms/encryption-algorithms.models';
+     2→import { base64UrlToBuffer, bufferToBase64Url, createRandomBuffer } from '../crypto.web.usecases';
      4→export const aes256GcmEncryptionAlgorithmDefinition = defineEncryptionMethods({
+     5→
+      →…
 
 tsconfig.json
+     2→  "compilerOptions": {
+    10→  "include": [

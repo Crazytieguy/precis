@@ -2,13 +2,21 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1999 tokens)
+budget: 4000 (3996 tokens)
 
 CONTEXT.md
      1→# toasty-core Component Context
      3→## Purpose
      6→## Key Responsibilities
+     8→### Schema Definition (`src/schema/`)
+    26→### Statement AST (`src/stmt/`)
+    38→### Advanced Visitor Pattern (`src/stmt/visit*.rs`)
+    46→### Expression Substitution System (`src/stmt/substitute.rs`)
+    53→### Driver Interface (`src/driver/`)
     60→## Common Change Patterns
+    62→### Adding a New Primitive Type
+    68→### Adding a Statement Node
+    74→### Schema Evolution
     80→## Important Files
     89→## Design Principles
     96→## Recent Changes Analysis
@@ -23,11 +31,39 @@ src/driver/capability.rs
      4→pub struct Capability {
     61→pub struct StorageTypes {
    103→pub struct SchemaMutations {
+   120→    pub fn validate(&self) -> crate::Result<()> {
+   141→    pub fn default_string_max_length(&self) -> Option<u64> {
+   156→    pub fn native_type_for(&self, ty: &stmt::Type) -> stmt::Type {
    164→    pub const SQLITE: Self = Self {
    189→    pub const POSTGRESQL: Self = Self {
    211→    pub const MYSQL: Self = Self {
    233→    pub const DYNAMODB: Self = Self {
    259→    pub const SQLITE: StorageTypes = StorageTypes {
+   294→    pub const POSTGRESQL: StorageTypes = StorageTypes {
+   325→    pub const MYSQL: StorageTypes = StorageTypes {
+   360→    pub const DYNAMODB: StorageTypes = StorageTypes {
+   387→    pub const SQLITE: Self = Self {
+   392→    pub const POSTGRESQL: Self = Self {
+   397→    pub const MYSQL: Self = Self {
+   403→    pub const DYNAMODB: Self = Self {
+
+src/driver/operation/delete_by_key.rs
+     5→pub struct DeleteByKey {
+
+src/driver/operation/find_pk_by_index.rs
+     8→pub struct FindPkByIndex {
+
+src/driver/operation/get_by_key.rs
+     9→pub struct GetByKey {
+
+src/driver/operation/insert.rs
+     6→pub struct Insert {
+
+src/driver/operation/query_pk.rs
+     8→pub struct QueryPk {
+
+src/driver/operation/query_sql.rs
+     6→pub struct QuerySql {
 
 src/driver/operation/transaction.rs
      4→pub enum Transaction {
@@ -40,6 +76,9 @@ src/driver/operation/transaction.rs
     11→    /// Rollback a transaction
     12→    Rollback,
     13→}
+
+src/driver/operation/update_by_key.rs
+     6→pub struct UpdateByKey {
 
 src/driver/operation.rs
     26→pub enum Operation {
@@ -64,12 +103,12 @@ src/driver/operation.rs
     45→    /// Execute a transaction lifecycle op
     46→    Transaction(Transaction),
     47→
-      →…
+    48→    /// Update a record by the primary key
+    49→    UpdateByKey(UpdateByKey),
+    50→}
 
 src/driver/response.rs
      4→pub struct Response {
-     5→    pub rows: Rows,
-     6→}
      9→pub enum Rows {
     10→    /// Number of rows impacted by the operation
     11→    Count(u64),
@@ -84,70 +123,177 @@ src/driver/response.rs
 
 src/driver.rs
      7→pub mod operation;
-    18→pub trait Driver …
-    45→pub trait Connection …
+    18→pub trait Driver: Debug + Send + Sync + 'static {
+    20→    fn url …
+    23→    fn capability …
+    29→    async fn connect …
+    33→    fn max_connections …
+    38→    fn generate_migration …
+    41→    async fn reset_db …
+    45→pub trait Connection: Debug + Send + 'static {
+    47→    async fn exec …
+    51→    async fn push_schema …
+    54→    async fn applied_migrations …
+    57→    async fn apply_migration …
+
+src/error/invalid_connection_url.rs
+     9→    pub fn invalid_connection_url(message: impl Into<String>) -> Error {
+    17→    pub fn is_invalid_connection_url(&self) -> bool {
+
+src/error/validation.rs
+    10→pub(super) enum ValidationFailedKind {
 
 src/error.rs
     36→pub struct Error {
     37→    inner: Arc<ErrorInner>,
     38→}
     41→pub trait IntoError {
-    43→    fn into_error(self) -> Error;
-    76→    pub fn context(self, consequent: impl IntoError) -> Error {
+    43→    fn into_error …
+    47→struct ErrorInner {
+    53→enum ErrorKind {
+    76→    pub fn context …
 
 src/lib.rs
+     2→mod macros;
      4→pub mod driver;
     10→pub mod schema;
     13→pub mod stmt;
-    16→pub type Result …
+    16→pub type Result<T, E = Error> = core::result::Result<T, E>;
+    18→pub use async_trait::async_trait;
 
 src/macros.rs
+     1→#[macro_export]
      2→macro_rules! path {
+
+src/schema/app/arg.rs
+     4→pub struct Arg {
 
 src/schema/app/auto.rs
      3→pub enum AutoStrategy {
      9→pub enum UuidVersion {
 
+src/schema/app/constraint/length.rs
+     6→pub struct ConstraintLength {
+     7→    /// The minimum length of the field.
+     8→    pub min: Option<u64>,
+     9→
+    10→    /// The maximum length of the field.
+    11→    pub max: Option<u64>,
+    12→}
+
 src/schema/app/constraint.rs
      7→pub enum Constraint {
-     8→    Length(ConstraintLength),
-     9→}
+
+src/schema/app/embedded.rs
+     7→pub struct Embedded {
+
+src/schema/app/field/primitive.rs
+     4→pub struct FieldPrimitive {
+     5→    /// The field's primitive type
+     6→    pub ty: stmt::Type,
+     7→
+     8→    /// The database storage type of the field.
+     9→    ///
+    10→    /// This is specified as a hint.
+    11→    pub storage_ty: Option<db::Type>,
+    12→}
 
 src/schema/app/field.rs
     11→pub struct Field {
     36→pub struct FieldId {
     42→pub struct FieldName {
     54→pub enum FieldTy {
-    55→    Primitive(FieldPrimitive),
-    56→    Embedded(Embedded),
-    57→    BelongsTo(BelongsTo),
-    58→    HasMany(HasMany),
-    59→    HasOne(HasOne),
-    60→}
+
+src/schema/app/fk.rs
+     4→pub struct ForeignKey {
+     9→pub struct ForeignKeyField {
+
+src/schema/app/index.rs
+     5→pub struct Index {
+    20→pub struct IndexId {
+    26→pub struct IndexField {
 
 src/schema/app/model.rs
+     6→pub struct Model {
     23→pub enum ModelKind {
+    31→pub struct ModelRoot {
+    41→pub struct ModelId(pub usize);
+
+src/schema/app/pk.rs
+     4→pub struct PrimaryKey {
+
+src/schema/app/relation/belongs_to.rs
+     7→pub struct BelongsTo {
+
+src/schema/app/relation/has_many.rs
+     7→pub struct HasMany {
+
+src/schema/app/relation/has_one.rs
+     7→pub struct HasOne {
+
+src/schema/app/schema.rs
+     7→pub struct Schema {
+    12→struct Builder {
 
 src/schema/builder.rs
     11→pub struct Builder {
     12→    /// If set, prefix all table names with this string
     13→    table_name_prefix: Option<String>,
     14→}
+    17→struct BuildSchema<'a> {
+
+src/schema/db/column.rs
+    12→pub struct Column {
+    39→pub struct ColumnId {
+    65→pub struct ColumnsDiff<'a> {
+   122→pub enum ColumnsDiffItem<'a> {
+
+src/schema/db/diff.rs
+     6→pub struct RenameHints {
+    42→pub struct DiffContext<'a> {
 
 src/schema/db/index.rs
     12→pub struct Index {
     34→pub struct IndexId {
     41→pub struct IndexColumn {
     54→pub enum IndexOp {
+    55→    Eq,
+    56→    Sort(stmt::Direction),
+    57→}
     61→pub enum IndexScope {
+    62→    /// The index column is used to partition rows across nodes of a distributed database.
+    63→    Partition,
+    64→
+    65→    /// The index column is scoped to a physical node.
+    66→    Local,
+    67→}
+   100→pub struct IndicesDiff<'a> {
+   186→pub enum IndicesDiffItem<'a> {
 
 src/schema/db/migration.rs
      2→pub enum Migration {
      3→    Sql(String),
      4→}
+     8→    pub fn new_sql …
+    14→    pub fn new_sql_with_breakpoints …
+    24→    pub fn statements …
     32→pub struct AppliedMigration {
-    33→    id: u64,
-    34→}
+
+src/schema/db/pk.rs
+     5→pub struct PrimaryKey {
+
+src/schema/db/schema.rs
+     7→pub struct Schema {
+    30→    pub fn index …
+    39→    pub fn index_mut …
+    55→pub struct SchemaDiff<'a> {
+
+src/schema/db/table.rs
+    16→pub struct Table {
+    34→pub struct TableId(pub usize);
+    53→    pub fn resolve …
+    91→pub struct TablesDiff<'a> {
+   144→pub enum TablesDiffItem<'a> {
 
 src/schema/db/ty.rs
     63→pub enum Type {
@@ -157,7 +303,38 @@ src/schema/db/ty.rs
     67→    /// A signed integer of `n` bytes
     68→    Integer(u8),
     69→
+    70→    /// An unsigned integer of `n` bytes
+    71→    UnsignedInteger(u8),
+    72→
+    73→    /// Unconstrained text type
+    74→    Text,
+    75→
+    76→    /// Text type with an explicit maximum length
+    77→    VarChar(u64),
+    78→
+    79→    /// 128-bit universally unique identifier (UUID)
+    80→    Uuid,
+    81→
+    82→    /// Decimal number with optional precision and scale.
+    83→    /// - `None`: Arbitrary-precision decimal
+    84→    /// - `Some((precision, scale))`: Fixed precision and scale
+    85→    Numeric(Option<(u32, u32)>),
+    86→
+    87→    /// Unconstrained binary type
+    88→    Blob,
+    89→
+    90→    /// Fixed-size binary type of `n` bytes
+    91→    Binary(u8),
+    92→
+    93→    /// An instant in time with fractional seconds precision (0-9 digits).
+    94→    Timestamp(u8),
+    95→
+    96→    /// A representation of a civil date in the Gregorian calendar.
+    97→    Date,
+    98→
       →…
+   111→    pub fn from_app …
+   159→    pub fn bridge_type …
 
 src/schema/mapping/field.rs
     14→pub enum Field {
@@ -167,7 +344,12 @@ src/schema/mapping/field.rs
     18→    /// An embedded struct field flattened into multiple columns.
     19→    Embedded(FieldEmbedded),
     20→
-      →…
+    21→    /// A relation field that doesn't map to columns in this table.
+    22→    Relation(FieldRelation),
+    23→}
+    41→    pub fn field_mask …
+    51→    pub fn sub_projection …
+    90→    pub fn columns …
    105→pub struct FieldPrimitive {
    140→pub struct FieldEmbedded {
    180→pub struct FieldRelation {
@@ -175,14 +357,18 @@ src/schema/mapping/field.rs
 src/schema/mapping/model.rs
     19→pub struct Model {
     74→pub struct TableToModel {
+    81→    pub fn new …
+    86→    pub fn lower_returning_model …
+    97→    pub fn lower_expr_reference …
+   132→    pub fn resolve_field_mapping …
 
 src/schema/mapping.rs
     18→pub struct Mapping {
     19→    /// Per-model mappings indexed by model identifier.
     20→    pub models: IndexMap<ModelId, Model>,
     21→}
-    29→    pub fn model …
-    38→    pub fn model_mut …
+    29→    pub fn model(&self, id: impl Into<ModelId>) -> &Model {
+    38→    pub fn model_mut(&mut self, id: impl Into<ModelId>) -> &mut Model {
 
 src/schema/name.rs
      4→pub struct Name {
@@ -204,39 +390,98 @@ src/schema.rs
     30→    pub mapping: Mapping,
     31→}
 
-src/stmt/delete.rs
-    32→    pub fn as_delete(&self) -> Option<&Delete> {
-    44→    pub fn into_delete(self) -> Option<Delete> {
-    56→    pub fn unwrap_delete(self) -> Delete {
+src/stmt/assignments.rs
+    27→pub enum AssignmentOp {
 
-src/stmt/expr_not.rs
-    23→    pub fn not(expr: impl Into<Self>) -> Self {
-    31→    pub fn is_not(&self) -> bool {
+src/stmt/cx.rs
+    34→pub enum ResolvedRef<'a> {
+    82→pub enum ExprTarget<'a> {
+   121→struct ArgTyStack<'a> {
+
+src/stmt/direction.rs
+     3→pub enum Direction {
+
+src/stmt/entry.rs
+     6→pub enum Entry<'a> {
+
+src/stmt/entry_mut.rs
+     4→pub enum EntryMut<'a> {
+
+src/stmt/expr.rs
+    13→pub enum Expr {
+    96→    pub const TRUE: Expr = Expr::Value(Value::Bool(true));
+    97→    pub const FALSE: Expr = Expr::Value(Value::Bool(false));
+    98→    pub const DEFAULT: Expr = Expr::Default;
+
+src/stmt/expr_func.rs
+    15→pub enum ExprFunc {
+
+src/stmt/expr_pattern.rs
+     7→pub enum ExprPattern {
+
+src/stmt/expr_reference.rs
+    20→pub enum ExprReference {
+
+src/stmt/expr_set.rs
+    18→pub enum ExprSet {
 
 src/stmt/filter.rs
     10→    pub const ALL: Filter = Filter { expr: None };
 
-src/stmt/insert.rs
-    44→    pub fn as_insert(&self) -> Option<&Insert> {
-    56→    pub fn into_insert(self) -> Option<Insert> {
-    68→    pub fn unwrap_insert(self) -> Insert {
+src/stmt/insert_target.rs
+     9→pub enum InsertTarget {
+
+src/stmt/join.rs
+    13→pub enum JoinOp {
+
+src/stmt/offset.rs
+     4→pub enum Offset {
 
 src/stmt/op_binary.rs
-    43→    pub fn negate(self) -> Option<Self> {
-    60→    pub fn commute(self) -> Self {
+     4→pub enum BinaryOp {
 
-src/stmt/order_by.rs
-    10→    pub fn reverse(&mut self) {
+src/stmt/op_set.rs
+     4→pub enum SetOp {
 
-src/stmt/order_by_expr.rs
-    14→    pub fn reverse(&mut self) {
+src/stmt/projection.rs
+    26→enum Steps {
 
-src/stmt/value_list.rs
-    13→    pub fn unwrap_list(self) -> Vec<Value> {
+src/stmt/query.rs
+    32→pub enum Lock {
+
+src/stmt/returning.rs
+     6→pub enum Returning {
+
+src/stmt/source.rs
+    11→pub enum Source {
+
+src/stmt/table_factor.rs
+     4→pub enum TableFactor {
+
+src/stmt/table_ref.rs
+     6→pub enum TableRef {
+
+src/stmt/ty.rs
+    70→pub enum Type {
+
+src/stmt/update.rs
+    32→pub enum UpdateTarget {
+
+src/stmt/value.rs
+     6→pub enum Value {
+   282→    fn partial_cmp …
+
+src/stmt/value_stream.rs
+    24→struct Iter<I> {
+    29→enum Buffer {
 
 src/stmt.rs
+   145→mod like;
+   216→mod ty_jiff;
+   230→mod value_jiff;
    235→pub mod visit_mut;
    243→pub mod visit;
+   252→#[derive(Clone, PartialEq)]
    253→pub enum Statement {
    254→    /// Delete one or more existing records
    255→    Delete(Delete),
@@ -250,6 +495,6 @@ src/stmt.rs
    263→    /// Update one or more existing records
    264→    Update(Update),
    265→}
-   290→    pub fn as_update(&self) -> Option<&Update> {
-   302→    pub fn into_update(self) -> Option<Update> {
-   314→    pub fn unwrap_update(self) -> Update {
+   290→    pub fn as_update …
+   302→    pub fn into_update …
+   314→    pub fn unwrap_update …

@@ -2,13 +2,16 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3996 tokens)
+budget: 8000 (7996 tokens)
 
 Cargo.toml
      1→[workspace]
      2→resolver = "3"
      3→members = [
-      →…
+     4→    "sps",          # was "sps-cli"
+     5→    "sps-common",
+     6→    "sps-core",
+     7→    "sps-net",
     10→[patch.crates-io]
     16→[workspace.dependencies]
     43→[profile.release]
@@ -20,6 +23,12 @@ NOTICE.md
 README.md
      1→# sps
      3→> [!WARNING]
+     4→> I will scrap this project in favor of sps v2 some time in the future (when v2 is built and ready which might take a while). The reason is that I am planning to
+     5→> implement my own packaging system, my own version of atomic installs / updated complete with automatic snapshots and full, down to single package rollbacks +
+     6→> automatic cve checks and some other stuffs. After a lot of thinking and looking at Homebrew's architecture I've come to the conclusion that I do not like it (burn
+     7→> me for it ;). Defining my own build system will allow for a more performant and maintainable system in the long run. (Just a bit anxious about how to host packages
+     8→> / do all the repo stuff. Like really anxious but I'll figure it out)
+     9→>
       →…
     34→## ⚙️ Project Structure
     42→## 🚧 Current Status
@@ -37,21 +46,23 @@ sps/Cargo.toml
 
 sps/src/cli/info.rs
     14→pub struct Info {
-    25→    pub async fn run …
+    25→    pub async fn run(&self, _config: &Config, cache: Arc<Cache>) -> Result<()> {
 
 sps/src/cli/init.rs
     16→pub struct InitArgs {
+    23→    pub async fn run …
 
 sps/src/cli/install.rs
     16→pub struct InstallArgs {
-    17→    #[arg(required = true)]
-    18→    names: Vec<String>,
-    19→
-      →…
-    45→    pub async fn run …
+    45→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
 
 sps/src/cli/list.rs
     16→pub struct List {
+    29→    pub async fn run …
+
+sps/src/cli/reinstall.rs
+    12→pub struct ReinstallArgs {
+    24→    pub async fn run …
 
 sps/src/cli/search.rs
     15→pub struct Search {
@@ -60,22 +71,42 @@ sps/src/cli/search.rs
     25→    Formula,
     26→    Cask,
     27→}
+    30→    pub async fn run …
+    42→pub async fn run_search …
+   240→pub fn print_search_results …
+
+sps/src/cli/status.rs
+    13→enum JobStatus {
+    69→struct JobInfo {
+    94→struct StatusDisplay {
+   399→pub async fn handle_events …
 
 sps/src/cli/uninstall.rs
     17→pub struct Uninstall {
+    31→    pub async fn run …
 
 sps/src/cli/update.rs
     11→pub struct Update;
+    14→    pub async fn run …
 
 sps/src/cli/upgrade.rs
     12→pub struct UpgradeArgs {
-    13→    #[arg()]
-    14→    pub names: Vec<String>,
-    15→
-      →…
+    24→    pub async fn run …
 
 sps/src/cli.rs
+    10→pub mod info;
+    11→pub mod init;
+    12→pub mod install;
+    13→pub mod list;
+    14→pub mod reinstall;
+    15→pub mod search;
+    16→pub mod status;
+    17→pub mod uninstall;
+    18→pub mod update;
+    19→pub mod upgrade;
     23→pub use crate::cli::init::InitArgs;
+    32→#[derive(Parser, Debug)]
+      →…
     35→pub struct CliArgs {
     36→    #[arg(short, long, action = ArgAction::Count, global = true)]
     37→    pub verbose: u8,
@@ -83,6 +114,7 @@ sps/src/cli.rs
     39→    #[command(subcommand)]
     40→    pub command: Command,
     41→}
+    43→#[derive(Subcommand, Debug)]
     44→pub enum Command {
     45→    Init(InitArgs),
     46→    Search(Search),
@@ -94,13 +126,31 @@ sps/src/cli.rs
     52→    Reinstall(ReinstallArgs),
     53→    Upgrade(UpgradeArgs),
     54→}
+    56→impl Command {
+    57→    pub async fn run …
+
+sps/src/main.rs
+    17→mod cli;
+    18→mod pipeline;
+    57→async fn main() -> spResult<()> {
+
+sps/src/pipeline/downloader.rs
+    29→    pub fn new …
+    43→    pub async fn coordinate_downloads …
+
+sps/src/pipeline/planner.rs
+    28→struct IntermediatePlan {
+   192→    pub fn new …
+   526→    pub async fn plan_operations …
 
 sps/src/pipeline/runner.rs
+    30→#[derive(Debug, Clone, PartialEq, Eq)]
     31→pub enum CommandType {
     32→    Install,
     33→    Reinstall,
     34→    Upgrade { all: bool },
     35→}
+    37→#[derive(Debug, Clone)]
     38→pub struct PipelineFlags {
     39→    pub build_from_source: bool,
     40→    pub include_optional: bool,
@@ -115,31 +165,28 @@ sps/src/pipeline.rs
 
 sps-common/Cargo.toml
      1→[package]
+     2→name = "sps-common"
+     3→version = "0.1.56"
+      →…
     10→[dependencies]
+    11→# Inherited from workspace
+    12→serde_json = "1.0.143"
+      →…
 
 sps-common/src/cache.rs
+    12→const CACHE_TTL …
     15→pub struct Cache {
-    16→    cache_dir: PathBuf,
-    17→    _config: Config, // Keep a reference to config if needed for other paths or future use
-    18→}
-    22→    pub fn new …
-    35→    pub fn get_dir …
-    40→    pub fn store_raw …
-    48→    pub fn load_raw …
-    62→    pub fn is_cache_valid …
-    78→    pub fn clear_file …
-    87→    pub fn clear_all …
-    96→    pub fn config …
+    22→    pub fn new(config: &Config) -> Result<Self> {
+    35→    pub fn get_dir(&self) -> &Path {
+    40→    pub fn store_raw(&self, filename: &str, data: &str) -> Result<()> {
+    48→    pub fn load_raw(&self, filename: &str) -> Result<String> {
+    62→    pub fn is_cache_valid(&self, filename: &str) -> Result<bool> {
+    78→    pub fn clear_file(&self, filename: &str) -> Result<()> {
+    87→    pub fn clear_all(&self) -> Result<()> {
+    96→    pub fn config(&self) -> &Config {
 
 sps-common/src/config.rs
     15→pub struct Config {
-    16→    pub sps_root: PathBuf, // Public for direct construction in main for init if needed
-    17→    pub api_base_url: String,
-    18→    pub artifact_domain: Option<String>,
-    19→    pub docker_registry_token: Option<String>,
-    20→    pub docker_registry_basic_auth: Option<String>,
-    21→    pub github_api_token: Option<String>,
-    22→}
 
 sps-common/src/dependency/definition.rs
     31→pub struct Dependency {
@@ -147,7 +194,12 @@ sps-common/src/dependency/definition.rs
     33→    #[serde(default)]
     34→    pub tags: DependencyTag,
     35→}
+    38→    pub fn new_runtime …
+    45→    pub fn new_with_tags …
     53→pub trait DependencyExt {
+    54→    fn filter_by_tags …
+    55→    fn runtime …
+    56→    fn build_time …
 
 sps-common/src/dependency/mod.rs
      1→pub mod definition; // Renamed from 'dependency'
@@ -168,8 +220,19 @@ sps-common/src/dependency/resolver.rs
     18→    BottleOrFail,
     19→}
     22→pub struct PerTargetInstallPreferences {
+    23→    pub force_source_build_targets: HashSet<String>,
+    24→    pub force_bottle_only_targets: HashSet<String>,
+    25→}
     27→pub struct ResolutionContext<'a> {
     42→pub struct ResolvedDependency {
+    43→    pub formula: Arc<Formula>,
+    44→    pub keg_path: Option<PathBuf>,
+    45→    pub opt_path: Option<PathBuf>,
+    46→    pub status: ResolutionStatus,
+    47→    pub accumulated_tags: DependencyTag,
+    48→    pub determined_install_strategy: NodeInstallStrategy,
+    49→    pub failure_reason: Option<String>,
+    50→}
     53→pub enum ResolutionStatus {
     54→    Installed,
     55→    Missing,
@@ -179,7 +242,17 @@ sps-common/src/dependency/resolver.rs
     59→    Failed,
     60→}
     63→pub struct ResolvedGraph {
+    64→    pub install_plan: Vec<ResolvedDependency>,
+    65→    pub build_dependency_opt_paths: Vec<PathBuf>,
+    66→    pub runtime_dependency_opt_paths: Vec<PathBuf>,
+    67→    pub resolution_details: HashMap<String, ResolvedDependency>,
+    68→}
+    72→    pub fn empty …
     77→pub struct DependencyResolver<'a> {
+    86→    pub fn new …
+   156→    pub fn resolve_targets …
+   779→    pub fn should_process_dependency_edge …
+   819→    pub fn should_consider_edge_globally …
 
 sps-common/src/error.rs
      6→pub enum SpsError {
@@ -207,23 +280,46 @@ sps-common/src/error.rs
     28→    #[error("API Request Error: {0}")]
     29→    ApiRequestError(String),
     30→
+    31→    #[error("DownloadError: Failed to download '{0}' from '{1}': {2}")]
+    32→    DownloadError(String, String, String),
+    33→
+    34→    #[error("Cache Error: {0}")]
+    35→    Cache(String),
+    36→
+    37→    #[error("Resource Not Found: {0}")]
+    38→    NotFound(String),
+    39→
+    40→    #[error("Installation Error: {0}")]
+    41→    InstallError(String),
+    42→
+    43→    #[error("Generic Error: {0}")]
+    44→    Generic(String),
+    45→
+    46→    #[error("HttpError: {0}")]
+    47→    HttpError(String),
+    48→
+    49→    #[error("Checksum Mismatch: {0}")]
+    50→    ChecksumMismatch(String),
+    51→
       →…
+   119→pub type Result<T> = std::result::Result<T, SpsError>;
 
 sps-common/src/formulary.rs
     12→pub struct Formulary {
-    13→    cache: Cache,
-    14→    parsed_cache: std::sync::Mutex<HashMap<String, std::sync::Arc<Formula>>>,
-    15→}
 
 sps-common/src/keg.rs
     13→pub struct InstalledKeg {
-    14→    pub name: String,
-    15→    pub version_str: String,
-    16→    pub path: PathBuf,
-    17→}
     21→pub struct KegRegistry {
-    22→    config: Config,
-    23→}
+
+sps-common/src/lib.rs
+     2→pub mod cache;
+     3→pub mod config;
+     4→pub mod dependency;
+     5→pub mod error;
+     6→pub mod formulary;
+     7→pub mod keg;
+     8→pub mod model;
+     9→pub mod pipeline;
 
 sps-common/src/model/artifact.rs
      9→pub enum InstalledArtifact {
@@ -248,23 +344,75 @@ sps-common/src/model/artifact.rs
     28→        label: String,
     29→        path: Option<PathBuf>,
     30→    }, // Path is the plist file
-      →    …
+    31→    /// A symlink created within the Caskroom pointing to the actual installed artifact.
+    32→    /// Primarily for internal reference and potentially easier cleanup if needed.
+    33→    CaskroomLink {
+    34→        link_path: PathBuf,
+    35→        target_path: PathBuf,
+    36→    },
+    37→    /// A file copied *into* the Caskroom (e.g., a .pkg installer).
+    38→    CaskroomReference { path: PathBuf },
+    39→}
 
 sps-common/src/model/cask.rs
      9→pub type Artifact = serde_json::Value;
     14→pub enum UrlField {
+    15→    Simple(String),
+    16→    WithSpec {
+    17→        url: String,
+    18→        #[serde(default)]
+    19→        verified: Option<String>,
+    20→        #[serde(flatten)]
+    21→        other: HashMap<String, serde_json::Value>,
+    22→    },
+    23→}
     28→pub enum Sha256Field {
+    29→    Hex(String),
+    30→    #[serde(rename_all = "snake_case")]
+    31→    NoCheck {
+    32→        no_check: bool,
+    33→    },
+    34→    PerArch(HashMap<String, String>),
+    35→}
     39→pub struct Appcast {
     46→pub struct ConflictsWith {
     57→pub struct ArchSpec {
     66→pub enum ArchReq {
+    67→    One(String),       // e.g., "arm64"
+    68→    Many(Vec<String>), // e.g., ["arm64", "x86_64"]
+    69→    Specs(Vec<ArchSpec>),
+    70→}
     75→pub enum MacOSReq {
+    76→    Symbol(String),       // ":big_sur"
+    77→    Symbols(Vec<String>), // [":catalina", ":big_sur"]
+    78→    Comparison(String),   // ">= :big_sur"
+    79→    Map(HashMap<String, Vec<String>>),
+    80→}
     85→pub enum StringList {
+    86→    One(String),
+    87→    Many(Vec<String>),
+    88→}
    101→pub struct DependsOn {
    116→pub struct Cask {
    156→pub struct CaskList {
    165→pub enum StringOrVec {
+   166→    String(String),
+   167→    Vec(Vec<String>),
+   168→}
+   170→    pub fn into_vec …
    181→pub enum ZapActionDetail {
+   182→    Trash(Vec<String>),
+   183→    Delete(Vec<String>),
+   184→    Rmdir(Vec<String>),
+   185→    Pkgutil(StringOrVec),
+   186→    Launchctl(StringOrVec),
+   187→    Script {
+   188→        executable: String,
+   189→        args: Option<Vec<String>>,
+   190→    },
+   191→    Signal(Vec<String>),
+   192→    // Add more as needed
+   193→}
    197→pub struct ZapStanza(pub std::collections::HashMap<String, ZapActionDetail>);
    204→    pub fn is_installed(&self, config: &Config) -> bool {
    261→    pub fn installed_version(&self, config: &Config) -> Option<String> {
@@ -277,7 +425,22 @@ sps-common/src/model/formula.rs
     39→pub struct BottleStableSpec {
     47→pub struct FormulaVersions {
     57→pub struct Formula {
+   319→    pub fn dependencies …
+   322→    pub fn requirements …
+   327→    pub fn resources …
+   332→    pub fn set_keg_path …
+   335→    pub fn version_str_full …
+   342→    pub fn name …
+   345→    pub fn version …
+   348→    pub fn source_url …
+   351→    pub fn source_sha256 …
+   354→    pub fn get_bottle_spec …
    360→pub trait FormulaDependencies {
+   361→    fn name …
+   362→    fn install_prefix …
+   363→    fn resolved_runtime_dependency_paths …
+   364→    fn resolved_build_dependency_paths …
+   365→    fn all_resolved_dependency_paths …
 
 sps-common/src/model/mod.rs
      5→pub mod artifact;
@@ -292,15 +455,6 @@ sps-common/src/model/mod.rs
 
 sps-common/src/model/tap.rs
     10→pub struct Tap {
-    11→    /// The user part of the tap name (e.g., "homebrew" in "homebrew/core")
-    12→    pub user: String,
-    13→
-    14→    /// The repository part of the tap name (e.g., "core" in "homebrew/core")
-    15→    pub repo: String,
-    16→
-    17→    /// The full path to the tap directory
-    18→    pub path: PathBuf,
-    19→}
     23→    pub fn new(name: &str) -> Result<Self> {
     43→    pub fn update(&self) -> Result<()> {
    102→    pub fn remove(&self) -> Result<()> {
@@ -309,22 +463,108 @@ sps-common/src/model/tap.rs
 
 sps-common/src/model/version.rs
     11→pub struct Version(semver::Version);
+    14→    pub fn parse …
 
 sps-common/src/pipeline.rs
     14→pub enum PipelinePackageType {
+    15→    Formula,
+    16→    Cask,
+    17→}
     20→pub enum JobAction {
+    21→    Install,
+    22→    Upgrade {
+    23→        from_version: String,
+    24→        old_install_path: PathBuf,
+    25→    },
+    26→    Reinstall {
+    27→        version: String,
+    28→        current_install_path: PathBuf,
+    29→    },
+    30→}
     33→pub struct PlannedJob {
     42→pub struct WorkerJob {
     50→pub enum PipelineEvent {
+    51→    PipelineStarted {
+    52→        total_jobs: usize,
+    53→    },
+    54→    PipelineFinished {
+    55→        duration_secs: f64,
+    56→        success_count: usize,
+    57→        fail_count: usize,
+    58→    },
+    59→    PlanningStarted,
+    60→    DependencyResolutionStarted,
+    61→    DependencyResolutionFinished,
+    62→    PlanningFinished {
+    63→        job_count: usize,
+    64→        // Optionally, we can pass the ResolvedGraph here if the status handler needs it,
+    65→        // but it might be too large for a broadcast event.
+    66→        // resolved_graph: Option<Arc<ResolvedGraph>>, // Example
+    67→    },
+    68→    DownloadStarted {
+    69→        target_id: String,
+    70→        url: String,
+    71→    },
+    72→    DownloadFinished {
+    73→        target_id: String,
+    74→        path: PathBuf,
+    75→        size_bytes: u64,
+    76→    },
+    77→    DownloadProgressUpdate {
+    78→        target_id: String,
+    79→        bytes_so_far: u64,
+    80→        total_size: Option<u64>,
+    81→    },
+    82→    DownloadCached {
+    83→        target_id: String,
+    84→        size_bytes: u64,
+    85→    },
+    86→    DownloadFailed {
+    87→        target_id: String,
+    88→        url: String,
+    89→        error: String, // Keep as String for simplicity in events
+    90→    },
+    91→    JobProcessingStarted {
+    92→        // From core worker
+    93→        target_id: String,
+    94→    },
+    95→    JobDispatchedToCore {
+      →    …
    163→pub enum JobProcessingState {
+   164→    /// Waiting for download to be initiated.
+   165→    PendingDownload,
+   166→    /// Download is in progress (managed by DownloadCoordinator).
+   167→    Downloading,
+   168→    /// Download completed successfully, artifact at PathBuf.
+   169→    Downloaded(PathBuf),
+   170→    /// Downloaded, but waiting for dependencies to be in Succeeded state.
+   171→    WaitingForDependencies(PathBuf),
+   172→    /// Dispatched to the core worker pool for installation/processing.
+   173→    DispatchedToCore(PathBuf),
+   174→    /// Installation/processing is in progress by a core worker.
+   175→    Installing(PathBuf), // Path is still relevant
+   176→    /// Job completed successfully.
+   177→    Succeeded,
+   178→    /// Job failed. The String contains the error message. Arc for cheap cloning.
+   179→    Failed(Arc<SpsError>),
+   180→}
    184→pub struct DownloadOutcome {
    191→pub struct PlannedOperations {
 
 sps-core/Cargo.toml
      1→[package]
+     2→name = "sps-core"
+     3→version = "0.1.56"
+     4→edition = "2021"
+      →…
     10→[dependencies]
+    11→sps-net = "0.1.56"
+    12→sps-common = "0.1.56"
+    13→
+      →…
 
 sps-core/src/build/env.rs
+    12→use crate::install::devtools;
    141→pub struct BuildEnvironment {
    142→    /// The final map of environment variables to be used for build commands.
    143→    vars: HashMap<String, String>,
@@ -340,12 +580,20 @@ sps-core/src/build/env.rs
    153→    /// Resolved path to the C compiler.
    154→    #[allow(dead_code)]
    155→    cc: PathBuf,
-      →    …
+   156→    /// Resolved path to the C++ compiler.
+   157→    #[allow(dead_code)]
+   158→    cxx: PathBuf,
+   159→    /// Resolved path to the macOS SDK (or "/" if not applicable).
+   160→    #[allow(dead_code)]
+   161→    sdk_path: PathBuf,
+   162→}
+   164→impl BuildEnvironment {
    166→    pub fn new …
    463→    pub fn apply_to_command …
    476→    pub fn get_path_string …
    482→    pub fn get_vars …
    488→    pub fn get_var …
+   495→fn filter_initial_environment …
 
 sps-core/src/build/mod.rs
      1→pub mod compile;
@@ -362,12 +610,15 @@ sps-core/src/check/installed.rs
     23→    pub pkg_type: PackageType,
     24→    pub path: PathBuf,
     25→}
+    39→pub async fn get_installed_packages …
+   140→pub async fn get_installed_package …
 
 sps-core/src/check/mod.rs
      1→pub mod installed;
      2→pub mod update;
 
 sps-core/src/check/update.rs
+    20→use crate::check::installed::{InstalledPackageInfo, PackageType};
     23→pub struct UpdateInfo {
     24→    pub name: String,
     25→    pub installed_version: String,
@@ -375,20 +626,102 @@ sps-core/src/check/update.rs
     27→    pub pkg_type: PackageType,
     28→    pub target_definition: InstallTargetIdentifier,
     29→}
+    33→async fn ensure_api_data_cached(cache: &Cache) -> Result<()> {
+    89→pub async fn check_for_updates …
 
 sps-core/src/install/bottle/macho.rs
+    46→struct PatchInfo {
     55→pub struct SkippedPath {
+    56→    pub old_path: String,
+    57→    pub new_path: String,
+    58→}
+    64→pub fn patch_macho_file …
     74→pub struct SkippedPath {
+    75→    pub old_path: String,
+    76→    pub new_path: String,
+    77→}
+    81→pub fn patch_macho_file …
+
+sps-core/src/install/bottle/mod.rs
+    13→pub mod exec;
+    14→pub mod link;
+    15→pub mod macho;
+    18→pub async fn download_formula …
+    34→pub fn has_bottle_for_current_platform …
+
+sps-core/src/install/cask/artifacts/mod.rs
+     1→pub mod app;
+     2→pub mod audio_unit_plugin;
+     3→pub mod binary;
+     4→pub mod colorpicker;
+     5→pub mod dictionary;
+     6→pub mod font;
+     7→pub mod input_method;
+     8→pub mod installer;
+     9→pub mod internet_plugin;
+    10→pub mod keyboard_layout;
+    11→pub mod manpage;
+    12→pub mod mdimporter;
+    13→pub mod pkg;
+    14→pub mod preflight;
+    15→pub mod prefpane;
+    16→pub mod qlplugin;
+    17→pub mod screen_saver;
+    18→pub mod service;
+    19→pub mod suite;
+    20→pub mod uninstall;
+    21→pub mod vst3_plugin;
+    22→pub mod vst_plugin;
+    23→pub mod zap;
+
+sps-core/src/install/cask/dmg.rs
+   153→pub fn extract_dmg_to_stage …
+
+sps-core/src/install/cask/helpers.rs
+     9→pub fn remove_path_robustly …
+    75→pub fn cleanup_empty_parent_dirs_in_private_store …
+
+sps-core/src/install/cask/mod.rs
+     1→pub mod artifacts;
+     2→pub mod dmg;
+     3→pub mod helpers;
+    22→use crate::install::extract;
+    25→pub struct CaskInstallManifest {
+    26→    pub manifest_format_version: String,
+    27→    pub token: String,
+    28→    pub version: String,
+    29→    pub installed_at: u64,
+    30→    pub artifacts: Vec<InstalledArtifact>,
+    31→    pub primary_app_file_name: Option<String>,
+    32→    pub is_installed: bool,              // New flag for soft uninstall
+    33→    pub cask_store_path: Option<String>, // Path to private store app, if available
+    34→}
+    37→pub fn sps_private_cask_version_dir …
+    43→pub fn sps_private_cask_token_dir …
+    49→pub fn sps_private_cask_app_path …
+   580→pub fn write_receipt …
+   686→pub fn cleanup_empty_parent_dirs_in_private_store …
+
+sps-core/src/install/devtools.rs
+     9→pub fn find_compiler …
+    78→pub fn find_sdk_path …
+   123→pub fn get_macos_version …
+   160→pub fn get_arch_flag …
 
 sps-core/src/install/extract.rs
     16→use crate::utils::xattr;
-   205→pub fn quarantine_extracted_apps_in_stage …
+   204→#[cfg(target_os = "macos")]
+   205→pub fn quarantine_extracted_apps_in_stage(stage_dir: &Path, agent_name: &str) -> Result<()> {
+   235→pub fn extract_archive …
+   302→fn extract_xz_tar_archive …
+   343→struct DeferredHardLink {
 
 sps-core/src/install/mod.rs
     11→pub mod bottle;
     12→pub mod cask;
     13→pub mod devtools;
     14→pub mod extract;
+    17→pub fn get_formula_opt_path …
 
 sps-core/src/lib.rs
      4→pub mod build;
@@ -397,6 +730,7 @@ sps-core/src/lib.rs
      7→pub mod pipeline;
      8→pub mod uninstall;
      9→pub mod upgrade; // New
+    10→#[cfg(target_os = "macos")]
     11→pub mod utils; // New
 
 sps-core/src/pipeline/engine.rs
@@ -412,9 +746,13 @@ sps-core/src/uninstall/cask.rs
    134→pub async fn zap_cask_artifacts …
 
 sps-core/src/uninstall/common.rs
+    10→#[derive(Debug, Clone, Default)]
     11→pub struct UninstallOptions {
     12→    pub skip_zap: bool,
     13→}
+
+sps-core/src/uninstall/formula.rs
+    10→pub fn uninstall_formula_artifacts …
 
 sps-core/src/uninstall/mod.rs
      3→pub mod cask;
@@ -443,26 +781,60 @@ sps-core/src/utils/mod.rs
      4→pub mod xattr;
 
 sps-core/src/utils/xattr.rs
-    26→pub fn has_quarantine_attribute …
-    41→pub fn ensure_quarantine_attribute …
-    53→pub fn set_quarantine_attribute …
+    26→pub fn has_quarantine_attribute(path: &Path) -> anyhow::Result<bool> {
+    41→pub fn ensure_quarantine_attribute(path: &Path, agent: &str) -> anyhow::Result<()> {
+    53→pub fn set_quarantine_attribute(path: &Path, agent_name: &str) -> Result<()> {
 
 sps-net/Cargo.toml
      1→[package]
+     2→name = "sps-net"
+     3→version = "0.1.56"
+      →…
     10→[dependencies]
+    11→sps-common = "0.1.56"
+    12→
+      →…
+
+sps-net/src/http.rs
+    16→use crate::validation::{validate_url, verify_checksum};
+    18→pub type ProgressCallback = Arc<dyn Fn(u64, Option<u64>) + Send + Sync>;
 
 sps-net/src/lib.rs
      2→pub mod api;
      3→pub mod http;
      4→pub mod oci;
      5→pub mod validation;
+    16→pub use sps_common::{ …
     29→pub use crate::validation::{validate_url, verify_checksum, verify_content_type /* ... */};
 
 sps-net/src/oci.rs
+    18→use crate::http::ProgressCallback;
+    19→use crate::validation::{validate_url, verify_checksum};
+    24→pub const DEFAULT_GHCR_DOMAIN: &str = "ghcr.io";
+    31→struct OciTokenResponse {
     37→pub struct OciManifestIndex {
+    38→    pub schema_version: u32,
+    39→    pub media_type: Option<String>,
+    40→    pub manifests: Vec<OciManifestDescriptor>,
+    41→}
     45→pub struct OciManifestDescriptor {
+    46→    pub media_type: String,
+    47→    pub digest: String,
+    48→    pub size: u64,
+    49→    pub platform: Option<OciPlatform>,
+    50→    pub annotations: Option<HashMap<String, String>>,
+    51→}
     55→pub struct OciPlatform {
+    56→    pub architecture: String,
+    57→    pub os: String,
+    58→    #[serde(rename = "os.version")]
+    59→    pub os_version: Option<String>,
+    60→    #[serde(default)]
+    61→    pub features: Vec<String>,
+    62→    pub variant: Option<String>,
+    63→}
+    66→enum OciAuth {
 
 sps-net/src/validation.rs
-    93→pub fn verify_content_type …
-   121→pub fn validate_url …
+    93→pub fn verify_content_type(path: &Path, expected_ext: &str) -> Result<()> {
+   121→pub fn validate_url(url_str: &str) -> Result<()> {

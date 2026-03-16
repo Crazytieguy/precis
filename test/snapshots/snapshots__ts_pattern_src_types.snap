@@ -2,31 +2,76 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (1000 tokens)
-
-BuildMany.ts
-     4→export type BuildMany …
-    19→export type SetDeep …
-
-DeepExclude.ts
-     3→export type DeepExclude …
+budget: 2000 (1995 tokens)
 
 DistributeUnions.ts
-    41→export type DistributeMatchingUnions …
-    80→export type FindUnions …
+    41→export type DistributeMatchingUnions<a, p> = IsAny<a> extends true
+    42→  ? any
+    43→  : BuildMany<a, Distribute<FindUnionsMany<a, p>>>;
+    80→export type FindUnions<
+    81→  a,
+    82→  p,
+    83→  path extends PropertyKey[] = []
+    84→> = unknown extends p
+    85→  ? []
+    86→  : IsAny<p> extends true
+    87→  ? [] // Don't try to find unions after 5 levels
+    88→  : Length<path> extends 5
+    89→  ? []
+    90→  : IsUnion<a> extends true
+    91→  ? [
+    92→      {
+    93→        cases: a extends any
+    94→          ? {
+    95→              value: a;
+    96→              subUnions: FindUnionsMany<a, p, path>;
+    97→            }
+    98→          : never;
+    99→        path: path;
+   100→      }
+   101→    ]
+   102→  : [a, p] extends [readonly any[], readonly any[]]
+   103→  ? [a, p] extends [
+   104→      readonly [infer a1, infer a2, infer a3, infer a4, infer a5],
+   105→      readonly [infer p1, infer p2, infer p3, infer p4, infer p5]
+   106→    ]
+   107→    ? [
+   108→        ...FindUnions<a1, p1, [...path, 0]>,
+   109→        ...FindUnions<a2, p2, [...path, 1]>,
+   110→        ...FindUnions<a3, p3, [...path, 2]>,
+   111→        ...FindUnions<a4, p4, [...path, 3]>,
+   112→        ...FindUnions<a5, p5, [...path, 4]>
+   113→      ]
+   114→    : [a, p] extends [
+   115→        readonly [infer a1, infer a2, infer a3, infer a4],
+   116→        readonly [infer p1, infer p2, infer p3, infer p4]
+   117→      ]
+   118→    ? [
+   119→        ...FindUnions<a1, p1, [...path, 0]>,
+   120→        ...FindUnions<a2, p2, [...path, 1]>,
+   121→        ...FindUnions<a3, p3, [...path, 2]>,
+   122→        ...FindUnions<a4, p4, [...path, 3]>
+   123→      ]
+   124→    : [a, p] extends [
+   125→        readonly [infer a1, infer a2, infer a3],
+   126→        readonly [infer p1, infer p2, infer p3]
+   127→      ]
+   128→    ? [
+   129→        ...FindUnions<a1, p1, [...path, 0]>,
+   130→        ...FindUnions<a2, p2, [...path, 1]>,
+   131→        ...FindUnions<a3, p3, [...path, 2]>
+   132→      ]
+      →      …
 
 InvertPattern.ts
-   106→export type InvertPattern …
-   180→export type ReduceIntersectionForExclude …
-   192→export type ReduceUnionForExclude …
-   303→export type InvertPatternForExclude …
-
-IsMatching.ts
-     1→import { …
-    57→export type IsMatching …
+   106→export type InvertPattern<p, input> = Equal<Pattern<input>, p> extends true
+   107→  ? never
+   108→  : InvertPatternInternal<p, input>;
+   303→export type InvertPatternForExclude<p, i> = Equal<Pattern<i>, p> extends true
+   304→  ? never
+   305→  : InvertPatternForExcludeInternal<p, i>;
 
 Match.ts
-     8→export type PickReturnValue …
     22→export type Match<
     23→  i,
     24→  o,
@@ -58,11 +103,28 @@ Match.ts
     50→    handler: (
     51→      selections: FindSelected<value, p>,
     52→      value: value
+    53→    ) => PickReturnValue<o, c>
+    54→  ): InvertPatternForExclude<p, value> extends infer excluded
+    55→    ? Match<
+    56→        Exclude<i, excluded>,
+    57→        o,
+    58→        [...handledCases, excluded],
+    59→        Union<inferredOutput, c>
+    60→      >
+    61→    : never;
+    62→
+    63→  with<
+    64→    const p1 extends Pattern<i>,
+    65→    const p2 extends Pattern<i>,
+    66→    c,
+    67→    p extends p1 | p2,
    132→  with …
    159→  when …
    180→  otherwise …
    205→  run …
    225→  narrow …
+   245→type DeepExcludeAll …
+   261→type Exhaustive …
 
 Pattern.ts
     50→export interface Matcher<
@@ -119,5 +181,9 @@ Pattern.ts
    678→      select …
 
 helpers.ts
-    14→export type LeastUpperBound …
-   182→export type GuardValue …
+    14→export type LeastUpperBound<a, b> = b extends a ? b : a extends b ? a : never;
+   182→export type GuardValue<fn> = fn extends (value: any) => value is infer b
+   183→  ? b
+   184→  : fn extends (value: infer a) => unknown
+   185→  ? a
+   186→  : never;

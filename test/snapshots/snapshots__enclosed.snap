@@ -2,7 +2,10 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3999 tokens)
+budget: 8000 (7998 tokens)
+
+CONTRIBUTING.md
+     1→# Contributing to Enclosed
 
 README.md
     26→## Introduction
@@ -18,6 +21,9 @@ README.md
    123→### View a note
    133→### Configure the enclosed instance to use
    140→## Project Structure
+   150→## Contributing
+   155→## License
+   159→## Credits and Acknowledgements
    168→### Stack
    184→### Hosting
    188→### Inspiration
@@ -35,8 +41,6 @@ docker-compose.yml
     10→volumes:
     11→  enclosed-data:
     12→    driver: local
-
-package.json
 
 packages/app-client/README.md
      1→## Usage
@@ -84,16 +88,28 @@ packages/app-client/src/index.tsx
 packages/app-client/src/locales/locales.ts
      2→export const locales = [
 
+packages/app-client/src/modules/auth/auth.services.ts
+     1→import { apiClient } from '../shared/http/http-client';
+
 packages/app-client/src/modules/auth/auth.store.ts
+     3→import { createHook } from '../shared/hooks/hooks';
+     4→import { isAccessTokenExpired } from './auth.models';
      6→export const authStore = createRoot(() => {
 
 packages/app-client/src/modules/auth/pages/login.page.tsx
+    11→import { login } from '../auth.services';
+    12→import { authStore } from '../auth.store';
     14→const quotations = [
     41→export const LoginPage: Component = () => {
 
 packages/app-client/src/modules/config/config.constants.ts
      1→import type { Config } from './config.types';
      3→export const buildTimeConfig: Config = {
+
+packages/app-client/src/modules/config/config.provider.tsx
+     1→import type { Config } from './config.types';
+     3→import { buildTimeConfig } from './config.constants';
+     9→function getConfig(): Config {
 
 packages/app-client/src/modules/config/config.types.ts
      1→export type Config = {
@@ -110,27 +126,68 @@ packages/app-client/src/modules/config/config.types.ts
 
 packages/app-client/src/modules/files/files.models.ts
      6→export const iconByFileType = {
+    33→type FileTypes …
+    35→function getFileIcon …
+
+packages/app-client/src/modules/i18n/i18n.models.ts
+     1→import type { Locale } from './i18n.provider';
+     8→export function findMatchingLocale({ preferredLocales, supportedLocales }: { preferredLocales: Intl.Locale[]; supportedLocales: Intl.Locale[] }) {
+
+packages/app-client/src/modules/i18n/i18n.provider.tsx
+     7→import defaultDict from '../../locales/en.json';
+     8→import { findMatchingLocale } from './i18n.models';
+    15→type Locale …
+    16→type RawDictionary …
+    17→type Dictionary …
+    19→const I18nContext = createContext<{
+    44→export const I18nProvider: ParentComponent = (props) => {
 
 packages/app-client/src/modules/notes/components/file-uploader.tsx
+     6→const DropArea …
     62→export const FileUploaderButton: ParentComponent<{
+
+packages/app-client/src/modules/notes/components/note-password-field.tsx
+     5→import { createRandomPassword } from '../notes.models';
+     7→export const NotePasswordField: Component<{ getPassword: () => string; setPassword: (value: string) => void; dataTestId?: string } > = (props) => {
+
+packages/app-client/src/modules/notes/notes.constants.ts
+     1→export const NOTE_ID_REGEX = /[0-7][0-9A-HJKMNP-TV-Z]{25}/i;
 
 packages/app-client/src/modules/notes/notes.context.tsx
      3→import { createHook } from '../shared/hooks/hooks';
+     5→const noteContext = createContext<{
     11→export const NoteContextProvider: ParentComponent = (props) => {
     27→export function useNoteContext() {
 
+packages/app-client/src/modules/notes/notes.models.ts
+    16→export function buildViewNotePagePath({ prefix }: { prefix?: string | null }): string {
+
+packages/app-client/src/modules/notes/notes.services.ts
+     1→import { apiClient } from '../shared/http/http-client';
+
+packages/app-client/src/modules/notes/notes.usecases.ts
+     2→import { storeNote } from './notes.services';
+
 packages/app-client/src/modules/notes/pages/create-note.page.tsx
+    23→import { FileUploaderButton } from '../components/file-uploader';
+    24→import { NotePasswordField } from '../components/note-password-field';
+    25→import { useNoteContext } from '../notes.context';
+    26→import { encryptAndCreateNote } from '../notes.usecases';
    109→export const CreateNotePage: Component = () => {
 
 packages/app-client/src/modules/notes/pages/view-note.page.tsx
+    16→import { fetchNoteById, fetchNoteExists } from '../notes.services';
     65→export const ViewNotePage: Component = () => {
 
+packages/app-client/src/modules/shared/http/http-client.ts
+     3→import { buildUrl, getBody } from './http-client.models';
+
 packages/app-client/src/modules/shared/style/cn.ts
-     5→export const cn …
+     5→export const cn = (...classLists: ClassValue[]) => twMerge(clsx(classLists));
 
 packages/app-client/src/modules/shared/utils/copy.tsx
-     6→export function useCopy …
-    19→export const CopyButton …
+     6→export function useCopy() {
+    19→export const CopyButton: ParentComponent<{ text: string; label?: string; copiedLabel?: string } & ComponentProps<typeof Button>> = (props) => {
 
 packages/app-client/src/modules/theme/theme.store.ts
      4→export function useThemeStore() {
@@ -158,6 +215,20 @@ packages/app-client/src/modules/ui/components/dropdown-menu.tsx
     19→export const DropdownMenuGroup = DropdownMenuPrimitive.Group;
     20→export const DropdownMenuSub = DropdownMenuPrimitive.Sub;
     21→export const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup;
+    23→export function DropdownMenu …
+    34→export function DropdownMenuContent …
+    58→export function DropdownMenuItem …
+    81→export function DropdownMenuGroupLabel …
+   100→export function DropdownMenuItemLabel …
+   119→export function DropdownMenuSeparator …
+   132→export function DropdownMenuShortcut …
+   145→export function DropdownMenuSubTrigger …
+   186→export function DropdownMenuSubContent …
+   206→export function DropdownMenuCheckboxItem …
+   248→export function DropdownMenuRadioItem …
+
+packages/app-client/src/modules/ui/components/sonner.tsx
+     5→export function Toaster …
 
 packages/app-client/src/modules/ui/components/switch.tsx
     11→export const SwitchLabel = SwitchPrimitive.Label;
@@ -172,7 +243,11 @@ packages/app-client/src/modules/ui/components/tabs.tsx
     35→export function TabsList …
     54→export function TabsContent …
     73→export function TabsTrigger …
+    87→const tabsIndicatorVariants = cva(
    109→export function TabsIndicator …
+
+packages/app-client/src/modules/ui/components/textarea.tsx
+    14→export function TextArea …
 
 packages/app-client/src/modules/ui/components/textfield.tsx
     20→export function TextFieldRoot …
@@ -183,34 +258,106 @@ packages/app-client/src/modules/ui/components/textfield.tsx
    104→export function TextField …
 
 packages/app-client/src/modules/ui/layouts/app.layout.tsx
+    16→const ThemeSwitcher: Component = () => {
+    38→const LanguageSwitcher: Component = () => {
     72→export const Navbar: Component = () => {
    209→export const Footer: Component = () => {
    240→export const AppLayout: ParentComponent = (props) => {
 
 packages/app-client/src/routes.tsx
+     2→import { LoginPage } from './modules/auth/pages/login.page';
+     3→import { getConfig } from './modules/config/config.provider';
+     4→import { NOTE_ID_REGEX } from './modules/notes/notes.constants';
+     5→import { buildViewNotePagePath } from './modules/notes/notes.models';
+     6→import { CreateNotePage } from './modules/notes/pages/create-note.page';
+     7→import { ViewNotePage } from './modules/notes/pages/view-note.page';
+     8→import { Button } from './modules/ui/components/button';
+     9→import { AppLayout } from './modules/ui/layouts/app.layout';
     11→export function getRoutes(): RouteDefinition[] {
 
 packages/app-server/src/index.cloudflare.ts
      1→import { createServer } from './modules/app/server';
      2→import { createCloudflareKVStorageFactory } from './modules/storage/factories/cloudflare-kv.storage';
 
+packages/app-server/src/index.node.ts
+     8→import { getConfig } from './modules/app/config/config';
+     9→import { injectPublicConfigInIndex } from './modules/app/config/config.models';
+    10→import { createServer } from './modules/app/server';
+    11→import { deleteExpiredNotesTask } from './modules/notes/tasks/delete-expired-notes.tasks';
+    12→import { createLogger } from './modules/shared/logger/logger';
+    13→import { createFsLiteStorage } from './modules/storage/factories/fs-lite.storage';
+    14→import { createTaskScheduler } from './modules/tasks/task-scheduler';
+    16→const logger = createLogger({ namespace: 'app-server' });
+    29→const getIndexContent = memoize(async () => {
+    59→const taskScheduler = createTaskScheduler({
+    69→const server = serve(
+
 packages/app-server/src/modules/app/auth/auth.errors.ts
+     1→import { createErrorFactory } from '../../shared/errors/errors';
      3→export const createUnauthorizedError = createErrorFactory({
 
 packages/app-server/src/modules/app/auth/auth.middleware.ts
-     7→export const authenticationMiddleware …
-    31→export const protectedRouteMiddleware …
+     1→import type { Context } from '../server.types';
+     3→import { createUnauthorizedError } from './auth.errors';
+     4→import { extractAccessToken } from './auth.models';
+     5→import { isJwtValid } from './auth.services';
+     7→export const authenticationMiddleware = createMiddleware(async (context: Context, next) => {
+    31→export const protectedRouteMiddleware = createMiddleware(async (context: Context, next) => {
+
+packages/app-server/src/modules/app/auth/auth.routes.ts
+     1→import type { ServerInstance } from '../server.types';
+     3→import { validateJsonBody } from '../../shared/validation/validation';
+     4→import { createUserRepository } from '../users/users.repository';
+     5→import { createUnauthorizedError } from './auth.errors';
+     6→import { arePasswordsMatching, createJwtToken } from './auth.services';
+
+packages/app-server/src/modules/app/config/config.models.ts
+     1→import type { Config } from './config.types';
+
+packages/app-server/src/modules/app/config/config.routes.ts
+     1→import type { ServerInstance } from '../server.types';
+
+packages/app-server/src/modules/app/config/config.test-utils.ts
+     2→import type { Config } from './config.types';
+     4→import { getConfig } from './config';
 
 packages/app-server/src/modules/app/config/config.ts
      5→export const configDefinition = {
-   258→export function getConfig …
+   258→export function getConfig({ env }: { env?: Record<string, string | undefined> } = {}) {
 
 packages/app-server/src/modules/app/config/config.types.ts
      1→import type { getConfig } from './config';
      3→export type Config = ReturnType<typeof getConfig>;
 
+packages/app-server/src/modules/app/middlewares/config.middleware.ts
+     1→import type { Config } from '../config/config.types';
+     4→import { getConfig } from '../config/config';
+     6→export function createConfigMiddleware({ config: initialConfig }: { config?: Config } = {}) {
+
+packages/app-server/src/modules/app/middlewares/cors.middleware.ts
+     1→import type { Context } from '../server.types';
+     5→export const corsMiddleware = createMiddleware(async (context: Context, next) => {
+
 packages/app-server/src/modules/app/middlewares/errors.middleware.ts
+     1→import type { ServerInstance } from '../server.types';
+     2→import { isCustomError } from '../../shared/errors/errors';
+     3→import { createLogger } from '../../shared/logger/logger';
+     5→const logger …
      7→export function registerErrorMiddleware({ app }: { app: ServerInstance }) {
+
+packages/app-server/src/modules/app/middlewares/logger.middleware.ts
+     2→import { createLogger } from '../../shared/logger/logger';
+     4→const logger …
+     6→export const loggerMiddleware = createMiddleware(async (c, next) => {
+
+packages/app-server/src/modules/app/middlewares/storage.middleware.ts
+     1→import type { BindableStorageFactory } from '../../storage/storage.types';
+     4→export function createStorageMiddleware({ storageFactory }: { storageFactory: BindableStorageFactory }) {
+
+packages/app-server/src/modules/app/middlewares/timeout.middleware.ts
+     1→import type { Context } from '../server.types';
+     3→import { createError } from '../../shared/errors/errors';
+     5→export const timeoutMiddleware = createMiddleware(async (context: Context, next) => {
 
 packages/app-server/src/modules/app/server.types.ts
      5→export type ServerInstanceGenerics = {
@@ -222,6 +369,9 @@ packages/app-server/src/modules/app/server.types.ts
     11→};
     13→export type Context = BaseContext<ServerInstanceGenerics>;
     15→export type ServerInstance = Hono<ServerInstanceGenerics>;
+
+packages/app-server/src/modules/app/users/users.repository.ts
+     1→import type { Config } from '../config/config.types';
 
 packages/app-server/src/modules/notes/notes.constants.ts
      1→export const TEN_MINUTES_IN_SECONDS = 10 * 60;
@@ -251,10 +401,15 @@ packages/app-server/src/modules/notes/notes.types.ts
     19→export type Note = Expand<Omit<DatabaseNote, 'expirationDate'> & { expirationDate?: Date }>;
 
 packages/app-server/src/modules/notes/tasks/delete-expired-notes.tasks.ts
+     1→import { defineTask } from '../../tasks/tasks.models';
+     2→import { isNoteExpired } from '../notes.models';
+     3→import { createNoteRepository } from '../notes.repository';
      5→export const deleteExpiredNotesTask = defineTask({
 
 packages/app-server/src/modules/shared/errors/errors.ts
-    21→  constructor …
+     6→type ErrorOptions = {
+    14→class CustomError extends Error {
+    21→  constructor({ message, code, cause, statusCode, isInternal }: ErrorOptions) {
 
 packages/app-server/src/modules/shared/logger/logger.test-utils.ts
      1→import type { Logger } from './logger.types';
@@ -264,19 +419,40 @@ packages/app-server/src/modules/shared/logger/logger.types.ts
      1→import type { createLogger } from './logger';
      3→export type Logger = ReturnType<typeof createLogger>;
 
+packages/app-server/src/modules/shared/utils/random.ts
+     5→const createUlid = ulidFactory();
+     7→function generateId() {
+
 packages/app-server/src/modules/shared/validation/validation.ts
     43→export const validateJsonBody …
     44→export const validateQuery …
     45→export const validateParams …
 
+packages/app-server/src/modules/storage/factories/cloudflare-kv.storage.ts
+     5→import { createError } from '../../shared/errors/errors';
+     6→import { defineBindableStorageFactory } from '../storage.models';
+     7→import { looksLikeCloudflare413Error } from './cloudflare-kv.storage.models';
+     9→export const KV_VALUE_LENGTH_EXCEEDED_ERROR_CODE = 'storage.kv.value_length_exceeds_limit';
+    11→export const createCloudflareKVStorageFactory = defineBindableStorageFactory(() => {
+
+packages/app-server/src/modules/storage/factories/fs-lite.storage.ts
+     1→import type { Config } from '../../app/config/config.types';
+     4→import { defineStorage } from '../storage.models';
+     6→export const createFsLiteStorage = defineStorage(({ config }: { config: Config }) => {
+
 packages/app-server/src/modules/storage/factories/memory.storage.ts
      3→import { defineStorage } from '../storage.models';
      5→export const createMemoryStorage = defineStorage(() => {
 
+packages/app-server/src/modules/storage/storage.models.ts
+     1→import type { BindableStorageFactory, Storage } from './storage.types';
+
 packages/app-server/src/modules/storage/storage.types.ts
-     7→export type BindableStorageFactoryArgs …
-     8→export type BindableStorageFactory …
-     9→export type StorageFactory …
+     2→import type { Config } from '../app/config/config.types';
+     3→import type { Context } from '../app/server.types';
+     7→export type BindableStorageFactoryArgs = { config: Config; context: Context };
+     8→export type BindableStorageFactory = (args: BindableStorageFactoryArgs) => { storage: Storage };
+     9→export type StorageFactory = () => { storage: Storage };
 
 packages/app-server/src/modules/tasks/tasks.types.ts
      3→export type TaskDefinition = ReturnType<typeof defineTask>;
@@ -298,31 +474,56 @@ packages/cli/README.md
     35→### Create a note
     58→### View a note
     68→### Configure the enclosed instance to use
+    75→## License
+    79→## Credits and Acknowledgements
 
 packages/cli/bin/enclosed.mjs
      4→import '../dist/cli.mjs';
 
 packages/cli/src/cli.ts
+     1→import { defineCommand, runMain } from 'citty';
      2→import { configCommand } from './config/config.command';
      3→import { createNoteCommand } from './create-note/create-note.command';
      4→import { viewNoteCommand } from './view-note/view-note.command';
      6→const main = defineCommand({
 
 packages/cli/src/config/config.command.ts
+     3→import { configDefinition } from './config.constants';
+     4→import { deleteConfig, getConfig, resetConfig, setConfig } from './config.models';
+     6→const keysList …
      8→export const configCommand = defineCommand({
 
 packages/cli/src/config/config.constants.ts
      3→export const configDefinition = {
 
+packages/cli/src/config/config.models.ts
+     3→import { configDefinition } from './config.constants';
+     7→type ConfigKey …
+     8→const config …
+
+packages/cli/src/config/config.usecases.ts
+     1→import { createConfigBindings } from './config.models';
+
 packages/cli/src/create-note/create-note.command.ts
+     6→import { getInstanceUrl } from '../config/config.usecases';
+     7→import { buildFileAssets, checkFilesExist } from '../files/files.services';
+     8→import { looksLikeRateLimitError } from '../shared/http.models';
+     9→import { getNoteContent } from './create-note.usecases';
+    11→const ONE_HOUR_IN_SECONDS = 60 * 60;
     13→export const createNoteCommand = defineCommand({
 
+packages/cli/src/create-note/create-note.usecases.ts
+     1→import { readFromStdin as readFromStdinImpl } from '../shared/cli.models';
+     3→export async function getNoteContent …
+
 packages/cli/src/files/files.services.ts
-     5→export async function checkFileExist …
-    14→export async function checkFilesExist …
-    26→export async function buildFileAssets …
+     5→export async function checkFileExist({ filePath }: { filePath: string }): Promise<boolean> {
+    14→export async function checkFilesExist({ filePaths }: { filePaths: string[] }) {
+    26→export async function buildFileAssets({ filePaths }: { filePaths: string[] }) {
 
 packages/cli/src/view-note/view-note.command.ts
+     4→import { getInstanceUrl } from '../config/config.usecases';
+     5→import { promptForPassword } from './view-note.models';
      7→export const viewNoteCommand = defineCommand({
 
 packages/crypto/README.md
@@ -341,11 +542,43 @@ packages/crypto/README.md
     15→pnpm add @enclosed/crypto
     16→```
     17→
+    18→## License
+    22→## Credits and Acknowledgements
+
+packages/crypto/src/api-definition.ts
+     1→import type { EncryptionAlgorithmDefinitions } from './encryption-algorithms/encryption-algorithms.types';
+     2→import { createEncryptionAlgorithmsRegistry } from './encryption-algorithms/encryption-algorithms.registry';
+     6→function createEnclosedCryptoApi …
+
+packages/crypto/src/encryption-algorithms/encryption-algorithms.constants.ts
+     1→export const AES_256_GCM = 'aes-256-gcm';
+     3→export const ENCRYPTION_ALGORITHMS = [AES_256_GCM] as const;
 
 packages/crypto/src/encryption-algorithms/encryption-algorithms.types.ts
      3→export type EncryptionMethodsDefinition = {
+     4→  encryptBuffer: (args: { buffer: Uint8Array; encryptionKey: Uint8Array }) => Promise<{ encryptedString: string }>;
+     5→  decryptString: (args: { encryptedString: string; encryptionKey: Uint8Array }) => Promise<{ decryptedBuffer: Uint8Array }>;
+     6→};
      8→export type EncryptionAlgorithm = typeof ENCRYPTION_ALGORITHMS[number];
     10→export type EncryptionAlgorithmDefinitions = Record<EncryptionAlgorithm, EncryptionMethodsDefinition>;
+
+packages/crypto/src/index.node.ts
+     1→import { createEnclosedCryptoApi } from './api-definition';
+     2→import { AES_256_GCM } from './encryption-algorithms/encryption-algorithms.constants';
+     3→import * as webCryptoApi from './node/crypto.node.usecases';
+     4→import { aes256GcmEncryptionAlgorithmDefinition } from './node/encryption-algorithms/crypto.node.aes-256-gcm';
+
+packages/crypto/src/index.web.ts
+     1→import { createEnclosedCryptoApi } from './api-definition';
+     2→import { AES_256_GCM } from './encryption-algorithms/encryption-algorithms.constants';
+     3→import * as webCryptoApi from './web/crypto.web.usecases';
+     4→import { aes256GcmEncryptionAlgorithmDefinition } from './web/encryption-algorithms/crypto.web.aes-256-gcm';
+
+packages/crypto/src/node/encryption-algorithms/crypto.node.aes-256-gcm.ts
+     5→export const aes256GcmEncryptionAlgorithmDefinition = defineEncryptionMethods({
+
+packages/crypto/src/web/encryption-algorithms/crypto.web.aes-256-gcm.ts
+     4→export const aes256GcmEncryptionAlgorithmDefinition = defineEncryptionMethods({
 
 packages/deploy-cloudflare/_routes.json
      2→  "version": 1,
@@ -353,8 +586,16 @@ packages/deploy-cloudflare/_routes.json
      4→    "/api/*"
      6→  "exclude": []
 
+packages/docs/src/how-it-works.md
+     5→# How It Works
+
+packages/docs/src/index.md
+     5→# Enclosed
+
 packages/lib/README.md
      1→### Enclosed lib
+     3→This package contains the core functionalities of [Enclosed](https://enclosed.cc/), an open-source project that aims to provide a simple and secure way to share e2e encrypted notes.
+     4→
      5→## Installation
      7→```bash
      8→# with npm
@@ -381,15 +622,39 @@ packages/lib/README.md
     30→console.log(noteUrl);
     31→```
     32→
+    33→## License
+    37→## Credits and Acknowledgements
+
+packages/lib/src/api/api.client.ts
+     2→import { DEFAULT_API_BASE_URL } from './api.constants';
 
 packages/lib/src/api/api.constants.ts
      1→export const DEFAULT_API_BASE_URL = 'https://enclosed.cc';
+
+packages/lib/src/crypto/crypto.constants.ts
+     1→export const ENCRYPTION_ALGORITHM_AES_256_GCM = 'aes-256-gcm';
+     2→export const ENCRYPTION_ALGORITHMS = [ENCRYPTION_ALGORITHM_AES_256_GCM] as const;
+     4→export const KEY_DERIVATION_ALGORITHM_PBKDF2_BASE_KEY_SALTED = 'pbkdf2-base-key-salted';
+     5→export const KEY_DERIVATION_ALGORITHMS = [KEY_DERIVATION_ALGORITHM_PBKDF2_BASE_KEY_SALTED] as const;
+     7→export const COMPRESSION_ALGORITHM_BROTLI = 'brotli';
+     8→export const COMPRESSION_ALGORITHM_NONE = 'none';
+     9→export const COMPRESSION_ALGORITHMS = [COMPRESSION_ALGORITHM_BROTLI, COMPRESSION_ALGORITHM_NONE] as const;
 
 packages/lib/src/crypto/crypto.types.ts
      3→export type EncryptionAlgorithm = typeof ENCRYPTION_ALGORITHMS[number];
      4→export type KeyDerivationAlgorithm = typeof KEY_DERIVATION_ALGORITHMS[number];
      5→export type CompressionAlgorithm = typeof COMPRESSION_ALGORITHMS[number];
      7→export type CryptoServices = {
+     8→  encryptNote: (args: { content: string; password?: string }) => Promise<{ encryptedContent: string; encryptionKey: string }>;
+     9→};
+
+packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.types.ts
+     3→export type EncryptionMethodsDefinition = ReturnType<typeof defineEncryptionMethods>;
+
+packages/lib/src/crypto/serialization/cbor-array/cbor-array.serialization.ts
+     1→import type { Note } from '../../../notes/notes.types';
+     3→import { defineSerializationMethods } from '../serialization.models';
+     5→export const cborArraySerializationDefinition = defineSerializationMethods({
 
 packages/lib/src/crypto/serialization/serialization.registry.ts
      7→export const serializationMethodDefinitions = [
@@ -400,12 +665,41 @@ packages/lib/src/crypto/serialization/serialization.types.ts
      4→export type SerializationMethodsDefinition = ReturnType<typeof defineSerializationMethods>;
      5→export type SerializationFormat = typeof serializationMethodDefinitions[number]['name'];
 
+packages/lib/src/files/files.models.ts
+     1→import type { NoteAsset } from '../notes/notes.types';
+
 packages/lib/src/index.ts
+     1→import { encryptionAlgorithms } from '@enclosed/crypto';
+     2→import { isApiClientErrorWithCode, isApiClientErrorWithStatusCode } from './api/api.models';
+     3→import { decryptNote, encryptNote } from './crypto/crypto.usecases';
+     4→import { serializationFormats } from './crypto/serialization/serialization.registry';
+     5→import { filesToNoteAssets, fileToNoteAsset, noteAssetsToFiles, noteAssetToFile } from './files/files.models';
+     6→import { createNoteUrl, createNoteUrlHashFragment, parseNoteUrl, parseNoteUrlHashFragment } from './notes/notes.models';
+     7→import { fetchNote, storeNote } from './notes/notes.services';
+     8→import { createNote } from './notes/notes.usecases';
 
 packages/lib/src/notes/notes.types.ts
      4→export type NoteAsset = {
+     5→  metadata: {
+     6→    type: string;
+     7→    [key: string]: unknown ;
+     8→  };
+     9→  content: Uint8Array;
+    10→};
     12→export type Note = {
+    13→  content: string;
+    14→  assets: NoteAsset[];
+    15→};
     17→export type EncryptedNote = {
+    18→  version: number;
+    19→  payload: string;
+    20→  encryptionAlgorithm: EncryptionAlgorithm;
+    21→  serializationFormat: SerializationFormat;
+    22→  keyDerivationAlgorithm: KeyDerivationAlgorithm;
+    23→  compressionAlgorithm: CompressionAlgorithm;
+    24→  ttlInSeconds: number;
+    25→  deleteAfterReading: boolean;
+    26→};
 
 pnpm-workspace.yaml
      1→packages:

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1999 tokens)
+budget: 4000 (3995 tokens)
 
 README.md
      7→# Soluna
@@ -10,51 +10,182 @@ README.md
     10→
     11→[Live Examples](https://cloudwu.github.io/soluna/)
     12→
-      →…
+    13→A framework you can use to make 2D games in Lua with multithreading, living on Windows, Linux, macOS and modern Browsers (via WebAssembly).
+    14→
+    15→It is built on top of [sokol](https://github.com/floooh/sokol) and leverages the power of ltask for multithreading.
+    16→
+    17→[![Nightly](/../../actions/workflows/nightly.yml/badge.svg)](/../../actions/workflows/nightyly.yml)
+    18→
     19→## Documentation
     25→## Precompiled Binaries
     29→## Building from Source
+    33→### Integration with the Actions of your projects
+    35→```yaml
+    36→- uses: actions/checkout@v5
+    37→  with:
+      →  …
     53→## Projects made with Soluna
+    57→## License
+
+clibs/datalist/make.lua
+     1→local lm = require "luamake"
+     3→lm.rootdir = lm.basedir .. "/3rd/datalist"
+     4→
+     5→lm:source_set "datalist_src" {
+     6→  sources = {
+     7→    "datalist.c",
+     8→  },
+     9→  includes = {
+    10→    lm.basedir .. "/3rd/lua",
+    11→  },
+    12→}
+
+clibs/ltask/make.lua
+     1→local lm = require "luamake"
+     3→lm.rootdir = lm.basedir .. "/3rd/ltask"
+     4→
+     5→lm:source_set "ltask_src" {
+     6→  sources = {
+     7→    "src/*.c",
+     8→  },
+     9→  includes = {
+    10→    lm.basedir .. "/3rd/lua",
+    11→  },
+    12→  defines = {
+    13→    "LTASK_EXTERNAL_OPENLIBS=soluna_openlibs",
+    14→  },
+    15→}
+
+clibs/lua/make.lua
+     1→local lm = require "luamake"
+     3→lm.rootdir = lm.basedir .. "/3rd/lua"
+     4→
+     5→if lm.os == "windows" then
+     6→  lm:source_set "winfile" {
+     7→    sources = {
+     8→      lm.basedir .. "/src/winfile.c",
+     9→    },
+    10→  }
+    11→end
+    12→
+    13→lm:source_set "lua_src" {
+    14→  sources = {
+    15→    "onelua.c",
+    16→  },
+    17→  defines = {
+    18→    "MAKE_LIB",
+    19→  },
+    20→}
+    21→
+      →…
+
+clibs/soluna/compile_lua.lua
+     1→local lm = require "luamake"
+
+clibs/soluna/compile_shader.lua
+     1→local lm = require "luamake"
+
+clibs/soluna/make.lua
+     1→local lm = require "luamake"
+
+clibs/soluna/runlua.lua
+     1→local subprocess = require "bee.subprocess"
+
+clibs/soluna/shader2c.lua
+     1→local subprocess = require "bee.subprocess"
+
+clibs/yoga/make.lua
+     1→local lm = require "luamake"
+     2→local fs = require "bee.filesystem"
+     3→
+     4→lm.rootdir = lm.basedir .. "/3rd/yoga"
+     5→
+     6→lm:source_set "yoga_src" {
+     7→  sources = {
+     8→    "yoga/*.cpp",
+     9→    "yoga/*/*.cpp",
+    10→  },
+    11→  includes = {
+    12→    lm.rootdir,
+    13→  }
+    14→}
+
+clibs/zip/make.lua
+     1→local lm = require "luamake"
+     3→lm.rootdir = lm.basedir .. "/3rd/zlib"
+     4→
+     5→lm:source_set "minizip" {
+     6→  sources = {
+     7→    "contrib/minizip/ioapi.c",
+     8→    "contrib/minizip/unzip.c",
+     9→    "contrib/minizip/zip.c",
+    10→  },
+    11→  windows = {
+    12→    sources = {
+    13→      "contrib/minizip/iowin32.c",
+    14→    },
+    15→    includes = {
+    16→      "contrib/minizip",
+    17→    },
+    18→  },
+    19→  includes = {
+    20→    lm.rootdir,
+    21→  },
+    22→
+    23→}
+    24→
+      →…
 
 make.lua
      1→local lm = require "luamake"
      2→local fs = require "bee.filesystem"
      3→
+     4→local function detect_emcc()
+     5→  if lm.compiler == "emcc" then
+     6→    return true
+     7→  end
+     8→  if type(lm.cc) == "string" and lm.cc:find("emcc", 1, true) then
+     9→    return true
+    10→  end
+    11→  return false
+    12→end
+    13→
+    14→local osplat = (function()
+    15→  if lm.os == "windows" then
+    16→    if lm.compiler == "gcc" then
+    17→      return "mingw"
+    18→    end
+    19→    if lm.cc == "clang-cl" then
+    20→      return "clang-cl"
+    21→    end
+    22→    return "msvc"
+    23→  end
+    24→  return lm.os
+    25→end)()
+    26→
       →…
 
 src/appevent.h
-     2→#define soluna_app_event_h
      4→struct event_message {
 
 src/batch.c
-     6→#define DEFAULT_SIZE 1024
      8→struct draw_batch {
-    13→batch_new …
-    29→batch_delete …
-    37→batch_reserve …
 
 src/batch.h
-    19→struct draw_batch * batch_new(int size);
-    20→struct draw_primitive * batch_reserve(struct draw_batch *, int size);
-    21→void batch_delete(struct draw_batch *);
+     6→struct draw_primitive {
+    13→struct draw_primitive_external {
 
 src/drawmgr.c
-   171→luaopen_drawmgr …
+     8→struct draw_element {
+    15→struct drawmgr {
 
-src/embedlua.c
-    28→#define REG_SOURCE(name) \
-    34→#define REG_DATALIST(name) \
-    55→luaopen_embedsource …
+src/entry.c
+    89→struct app_context {
+   103→struct soluna_message {
+   216→struct icon_pixels {
 
-src/file.c
-     6→FILE * fopen_utf8 …
-    53→luaopen_soluna_file …
-
-src/font.c
-   133→#define MAX_FONTNAME 256
-   159→luaopen_font …
-   186→void soluna_openlibs …
-   248→luaopen_font_manager …
+src/font_define.h
+    11→struct font_glyph {
 
 src/font_manager.c
     48→struct font_slot {
@@ -69,33 +200,35 @@ src/font_manager.c
     58→struct priority_list {
     66→struct font_manager {
     94→#define COLLISION_STEP 7
-   361→font_manager_pixelsize …
+   361→int
+   362→font_manager_pixelsize(struct font_manager *F, int fontid, int pointsize) {
 
 src/font_manager.h
     22→int font_manager_flush(struct font_manager *);
     31→const void * font_manager_texture(struct font_manager *F, int *sz);
 
-src/font_system.c
-     8→#define MAX_NAME 1024
-    70→#define kCTFontTableTtcf 'ttcf'
-   287→luaopen_font_system …
-
 src/gamepad.c
-    27→#define BUTTON_COUNT (sizeof(gamepad_buttons)/sizeof(gamepad_buttons[0]))
-   265→#define MAX_GAMEPAD 4
-   390→luaopen_gamepad …
-   449→luaopen_gamepad_device …
+    29→struct gamepad_state {
+   267→static struct gamepad_global {
+   274→struct gamepad_local {
 
 src/image.c
    128→struct rect {
    321→struct canvas {
-   577→luaopen_image …
+
+src/ime_char_filter.h
+     8→struct soluna_ime_char_filter_state {
+
+src/ime_state.h
+     7→struct soluna_ime_rect_state {
 
 src/lcrypt.c
    187→#define GET_UINT32(n,b,i)					   \
    205→#define DES_IP(X,Y)											 \
    218→#define DES_FP(X,Y)											 \
    231→#define DES_ROUND(X,Y)						  \
+   373→typedef void (*padding_add)(uint8_t buf[8], int offset);
+   374→typedef int (*padding_remove)(const uint8_t *last);
    623→#define LEFTROTATE(x, c) (((x) << (c)) | ((x) >> (32 - (c))))
    790→#define P 0xffffffffffffffc5ull
   1031→int lsha1(lua_State *L);
@@ -103,26 +236,106 @@ src/lcrypt.c
 src/lfs.c
     54→struct dir_data {
    487→struct dir_data {
-   825→luaopen_localfs …
+
+src/loginfo.h
+     6→struct log_info {
 
 src/lsha1.c
-   114→#define	R0 …
-   247→lsha1 …
-   272→lhmac_sha1 …
+    85→#include <stdio.h>
+    89→typedef struct {
+    90→	uint32_t state[5];
+    91→	uint32_t count[2];
+    92→	uint8_t  buffer[64];
+    93→} SHA1_CTX;
+   114→#define	R0(v,w,x,y,z,i)	z+=((w&(x^y))^y)+blk0(i)+0x5A827999+rol(v,5);w=rol(w,30);
+
+src/lualib/coroutine.lua
+     1→local co = require "coroutine"
+
+src/lualib/fontmgr.lua
+     1→local ttf = require "soluna.font.truetype"
+
+src/lualib/icon.lua
+     1→local sdf = require "soluna.image.sdf"
+
+src/lualib/initsetting.lua
+     1→local datalist = require "soluna.datalist"
+
+src/lualib/layout.lua
+     1→local yoga = require "soluna.layout.yoga"
+
+src/lualib/main.lua
+     1→local package = package
+
+src/lualib/packageloader.lua
+     1→local file = require "soluna.file"
+
+src/lualib/print_r.lua
+     1→local ltask = require "ltask"
+
+src/lualib/soluna.lua
+     1→local ltask = require "ltask"
+
+src/lualib/spritebundle.lua
+     1→local image = require "soluna.image"
+
+src/lualib/text.lua
+     1→local font = require "soluna.font"
+
+src/lualib/util.lua
+     1→local table = table
+
+src/luayoga.c
+    18→struct enum_string {
+    23→struct set_number {
+    32→struct set_edge_number {
+    38→struct set_two_number {
+    69→struct pos {
+   104→typedef void (*setfunc)(lua_State *L, YGNodeRef node);
+
+src/luazip.c
+    79→struct filename_convert {
+   132→struct filename_convert {};
+   151→struct ziphandle {
+   155→struct zipraw {
+   284→struct unzhandle {
+
+src/material_blit.c
+     9→struct material_blit {
 
 src/material_default.c
     15→struct inst_object {
     23→struct material_default {
-   150→luaopen_material_default …
 
 src/material_mask.c
-   193→luaopen_material_mask …
+    15→struct color {
+    19→struct inst_object {
+    28→struct mask {
+    33→struct material_mask {
+   166→struct mask_primitive {
+
+src/material_perspective_quad.c
+    23→struct color {
+    27→struct pquad_meta {
+    34→struct corner_primitive {
+    42→struct inst_object {
+    51→struct material_perspective_quad {
+    62→struct sprite_rect_basis {
+    71→struct sprite_rect_data {
 
 src/material_quad.c
-   182→luaopen_material_quad …
+    15→struct color {
+    19→struct quad {
+    26→struct inst_object {
+    33→struct material_quad {
+   153→struct quad_primitive {
 
 src/material_text.c
-   242→#define iscont …
+    20→struct text {
+    28→struct inst_object {
+    36→struct material_text {
+   225→struct text_primitive {
+   242→#define iscont(c)	(((c) & 0xC0) == 0x80)
    330→struct block_context {
    331→	int width;
    332→	int height;
@@ -136,66 +349,67 @@ src/material_text.c
    340→	uint32_t default_color;
    341→	uint32_t color;
    342→};
-   701→luaopen_material_text …
-
-src/material_util.c
-     6→util_ref_object …
-    24→util_submit_material …
-    43→util_make_pipeline …
+   352→struct position {
 
 src/material_util.h
-     8→#define MATERIAL_TEXT_NORMAL 1
-     9→#define MATERIAL_QUAD 2
-    10→#define MATERIAL_MASK 3
-    11→#define MATERIAL_PERSPECTIVE_QUAD 4
-    13→void util_ref_object …
-    16→void util_submit_material …
-    19→sg_pipeline util_make_pipeline …
+    15→typedef void (*util_submit_func)(lua_State *L, void *m_, struct draw_primitive *prim, int n);
+    18→typedef const sg_shader_desc* (*util_shader_desc_func)(sg_backend backend);
 
-src/openlibs.c
-     1→#define linit_c
-     2→#define LUA_LIB
-     9→void soluna_embed(lua_State* L);
-    11→void
-    12→soluna_openlibs(lua_State *L) {
+src/platform/macos/soluna_macos_ime.h
+     6→void soluna_macos_install_ime(void);
+     7→void soluna_macos_hide_ime_label(void);
+     8→void soluna_macos_apply_ime_rect(void);
+     9→void soluna_macos_set_ime_font(const char *font_name, float height_px);
+    10→bool soluna_macos_is_composition_active(void);
+
+src/platform/macos/soluna_macos_ime.m
+     1→#import <Cocoa/Cocoa.h>
+     2→#import <objc/runtime.h>
+     3→
+     4→#include <stdint.h>
+     5→
+     6→#include "ime_state.h"
+     7→#include "soluna_macos_ime.h"
+     8→#include "sokol/sokol_app.h"
+     9→
+    10→@interface _sapp_macos_view : NSView
+    11→@end
+    12→
+    13→static void soluna_emit_nsstring(NSString *text);
+    14→
+    15→@interface SolunaIMETextView : NSTextView
+    16→@end
+    17→
+      →…
+
+src/platform/windows/soluna_windows_ime.c
+     1→#define WIN32_LEAN_AND_MEAN
+    10→#include "sokol/sokol_app.h"
+    12→#include "ime_state.h"
+    13→#include "soluna_windows_ime.h"
 
 src/render.c
-    15→#define UNIFORM_MAX 4
-    16→#define BINDINGNAME_MAX 32
+    18→struct buffer {
+    23→struct image {
+    28→struct sampler {
    223→struct pass {
    224→	sg_pass pass;
    225→	int swapchain;
    226→};
-   651→int lbindings_new …
-   652→int lview_new …
-   653→int luniform_new …
-   655→luaopen_render …
+   482→struct enum_string {
+   615→struct inst_object {
+   620→struct sprite_object {
 
 src/render_bindings.c
     61→struct view {
-    97→#define VIEW_TYPE_INVALID 0
-    98→#define VIEW_TYPE_TEXTURE 1
-    99→#define VIEW_TYPE_STORAGE 2
-   100→#define VIEW_TYPE_COLOR_ATTACHMENT 3
-   101→#define VIEW_TYPE_DEPTH_STENCIL_ATTACHMENT 4
-   148→lview_new …
-   221→lbindings_new …
 
-src/render_uniform.c
-     7→#define UNIFORM_TYPE_FLOAT 1
-     8→#define UNIFORM_TYPE_INT 2
-   184→luniform_new …
+src/render_bindings.h
+     6→struct soluna_render_bindings {
 
 src/sdfimage.c
      9→#include "stb/stb_image.h"
-    11→#define STB_IMAGE_RESIZE_IMPLEMENTATION
-    18→#define MAX_SIZE 4096
-    19→#define INF 1e20
-    20→#define SDF_RADIUS 8
-    21→#define SDF_CUTOFF 0.25
     23→#define IMAGE_SIZE 64
     77→struct sdf_context {
-   229→luaopen_image_sdf …
 
 src/service/gamepad.lua
      1→local ltask = require "ltask"
@@ -211,55 +425,56 @@ src/service/render.lua
 
 src/service/settings.lua
      1→local initsetting = require "soluna.initsetting"
-     3→global assert
-     4→
-     5→local S = {}
-     6→
-     7→local setting
-     8→
-      →…
 
 src/service/start.lua
      1→local ltask = require "ltask"
 
 src/spritemgr.c
-    11→#define DEFAULT_TEXTURE_SIZE 4096
-    12→#define INVALID_TEXTUREID 0xffff
-    14→#define MAX_NODE 8192
-    16→#define STB_RECT_PACK_IMPLEMENTATION
     95→struct tmp_context {
    190→struct layer {
    197→struct batch {
-   501→luaopen_spritemgr …
 
 src/spritemgr.h
-     7→#define INVALID_TEXTUREID 0xffff
      9→struct sprite_rect {
     16→struct sprite_bank {
 
-src/srbuffer.c
-    14→srbuffer_size …
-    25→srbuffer_init …
-    50→srbuffer_add …
-   122→srbuffer_commit …
-   176→main …
+src/srbuffer.h
+     7→struct sr_mat {
+    11→struct sr_buffer {
+
+src/tmpbuffer.h
+     7→struct tmp_buffer {
 
 src/transform.c
-     9→sprite_transform_init …
-    31→sprite_transform_apply …
-    66→sprite_transform_set …
-    76→sprite_transform_point …
+    76→void
+    77→sprite_transform_point(const struct transform *t, int *x, int *y) {
 
 src/transform.h
      6→struct transform {
-    24→void sprite_transform_init …
-    25→void sprite_transform_set …
-    26→void sprite_transform_apply …
-    27→void sprite_transform_point …
 
-src/version.h
-     4→#define SOLUNA_API_VERSION 3
-     6→#define SOLUNA_HASH_VERSION "dev"
+src/truetype.h
+    17→struct truetype_font {
 
 src/yogaone.cpp
      1→#include "yoga/YGConfig.cpp"
+     2→#include "yoga/YGEnums.cpp"
+     3→#include "yoga/YGNode.cpp"
+     4→#include "yoga/YGNodeLayout.cpp"
+     5→#include "yoga/YGNodeStyle.cpp"
+     6→#include "yoga/YGPixelGrid.cpp"
+     7→#include "yoga/YGValue.cpp"
+     8→
+     9→#include "yoga/algorithm/AbsoluteLayout.cpp"
+    10→#include "yoga/algorithm/Baseline.cpp"
+    11→#include "yoga/algorithm/Cache.cpp"
+    12→#include "yoga/algorithm/CalculateLayout.cpp"
+    13→#include "yoga/algorithm/FlexLine.cpp"
+    14→#include "yoga/algorithm/PixelGrid.cpp"
+    15→
+    16→#include "yoga/config/Config.cpp"
+    17→
+    18→#include "yoga/debug/AssertFatal.cpp"
+    19→
+    20→#include "yoga/debug/Log.cpp"
+    21→
+      →…

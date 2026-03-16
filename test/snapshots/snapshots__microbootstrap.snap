@@ -2,51 +2,97 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2001 tokens)
+budget: 4000 (4001 tokens)
 
 README.md
     55→## Table of Contents
     74→## Installation
    102→## Quickstart
+   141→### FastAPI
+   171→### FastStream
    201→## Settings
    235→## Service settings
    256→## Instruments
+   270→### [Sentry](https://sentry.io/)
+   312→### [Prometheus](https://prometheus.io/)
+   316→#### FastAPI
+   347→#### Litestar
+   370→#### FastStream
+   394→### [OpenTelemetry](https://opentelemetry.io/)
+   436→#### FastStream
+   451→### [Pyroscope](https://pyroscope.io)
+   463→### Logging
+   498→### CORS
+   524→### Swagger
+   551→#### FastStream AsyncAPI documentation
+   563→### Health checks
    586→## Configuration
+   592→### Instruments configuration
+   639→### Application configuration
    662→> ### Important
+   710→### Using microbootstrap without a framework
    746→## Advanced
+
+examples/fastapi_app.py
+    13→class Settings(FastApiSettings): ...
+    19→def create_app() -> fastapi.FastAPI:
+
+examples/faststream_app.py
+    17→class Settings(FastStreamSettings): ...
+    20→settings: typing.Final = Settings()
+    23→def create_app() -> AsgiFastStream:
+
+examples/litestar_app.py
+    11→class Settings(LitestarSettings): ...
+    17→@litestar.get("/")
+    18→async def hello_world() -> dict[str, str]:
+    22→def create_app() -> litestar.Litestar:
 
 microbootstrap/__init__.py
     26→__all__ = (
 
 microbootstrap/bootstrappers/base.py
-    62→    def use_instrument …
+    17→class DataclassInstance …
+    25→class ApplicationBootstrapper …
+    62→    def use_instrument(
+    63→        cls,
+    64→    ) -> typing.Callable[
+    65→        [type[Instrument[InstrumentConfigT]]],
+    66→        type[Instrument[InstrumentConfigT]],
+    67→    ]:
 
 microbootstrap/bootstrappers/fastapi.py
+    27→class FastApiBootstrapper …
     58→class FastApiSwaggerInstrument(SwaggerInstrument):
     74→class FastApiCorsInstrument(CorsInstrument):
     93→class FastApiOpentelemetryInstrument(OpentelemetryInstrument):
    104→class FastApiLoggingInstrument(LoggingInstrument):
    114→class FastApiPrometheusInstrument(PrometheusInstrument[FastApiPrometheusConfig]):
-   131→    @classmethod
    132→    def get_config_type(cls) -> type[FastApiPrometheusConfig]:
    137→class FastApiHealthChecksInstrument(HealthChecksInstrument):
 
 microbootstrap/bootstrappers/faststream.py
+    28→tracer: typing.Final = trace.get_tracer(__name__)
+    31→class KwargsAsgiFastStream …
+    37→class FastStreamBootstrapper …
     59→class FastStreamOpentelemetryInstrument(BaseOpentelemetryInstrument[FastStreamOpentelemetryConfig]):
     71→    def get_config_type(cls) -> type[FastStreamOpentelemetryConfig]:
+    75→faststream_app_logger: typing.Final = structlog.get_logger("microbootstrap.faststream.app")
+    76→faststream_broker_logger: typing.Final = structlog.get_logger("microbootstrap.faststream.broker")
     80→class FastStreamLoggingInstrument(LoggingInstrument):
     91→class FastStreamPrometheusInstrument(PrometheusInstrument[FastStreamPrometheusConfig]):
    116→    def get_config_type(cls) -> type[FastStreamPrometheusConfig]:
    121→class FastStreamHealthChecksInstrument(HealthChecksInstrument):
 
 microbootstrap/bootstrappers/litestar.py
+    48→class LitestarBootstrapper …
     63→class LitestarSentryInstrument(SentryInstrument):
     74→class LitestarSwaggerInstrument(SwaggerInstrument):
    109→class LitestarCorsInstrument(CorsInstrument):
+   158→class LitestarOpenTelemetryInstrumentationMiddleware …
    178→class LitestarOpentelemetryInstrument(OpentelemetryInstrument):
    191→class LitestarLoggingInstrument(LoggingInstrument):
    200→class LitestarPrometheusInstrument(PrometheusInstrument[LitestarPrometheusConfig]):
-   217→    @classmethod
    218→    def get_config_type(cls) -> type[LitestarPrometheusConfig]:
    223→class LitestarHealthChecksInstrument(HealthChecksInstrument):
 
@@ -58,7 +104,43 @@ microbootstrap/config/fastapi.py
     25→    summary: str | None = None
     26→    description: str = ""
     27→    version: str = "0.1.0"
-      →    …
+    28→    openapi_url: str | None = "/openapi.json"
+    29→    openapi_tags: list[dict[str, typing.Any]] | None = None
+    30→    servers: list[dict[str, str | typing.Any]] | None = None
+    31→    dependencies: typing.Sequence[Depends] | None = None
+    32→    default_response_class: type[Response] = dataclasses.field(default_factory=lambda: Default(JSONResponse))
+    33→    redirect_slashes: bool = True
+    34→    docs_url: str | None = "/docs"
+    35→    redoc_url: str | None = "/redoc"
+    36→    swagger_ui_oauth2_redirect_url: str | None = "/docs/oauth2-redirect"
+    37→    swagger_ui_init_oauth: dict[str, typing.Any] | None = None
+    38→    middleware: typing.Sequence[Middleware] | None = None
+    39→    exception_handlers: (
+    40→        dict[
+    41→            int | type[Exception],
+    42→            typing.Callable[[Request, typing.Any], typing.Coroutine[typing.Any, typing.Any, Response]],
+    43→        ]
+    44→        | None
+    45→    ) = None
+    46→    on_startup: typing.Sequence[typing.Callable[[], typing.Any]] | None = None
+    47→    on_shutdown: typing.Sequence[typing.Callable[[], typing.Any]] | None = None
+    48→    lifespan: Lifespan[AppType] | None = None  # type: ignore[valid-type]
+    49→    terms_of_service: str | None = None
+    50→    contact: dict[str, str | typing.Any] | None = None
+    51→    license_info: dict[str, str | typing.Any] | None = None
+    52→    openapi_prefix: str = ""
+    53→    root_path: str = ""
+    54→    root_path_in_servers: bool = True
+    55→    responses: dict[int | str, dict[str, typing.Any]] | None = None
+    56→    callbacks: list[BaseRoute] | None = None
+    57→    webhooks: routing.APIRouter | None = None
+    58→    deprecated: bool | None = None
+    59→    include_in_schema: bool = True
+    60→    swagger_ui_parameters: dict[str, typing.Any] | None = None
+    61→    generate_unique_id_function: typing.Callable[[routing.APIRoute], str] = dataclasses.field(
+    62→        default_factory=lambda: Default(generate_unique_id),
+    63→    )
+    64→    separate_input_output_schemas: bool = True
 
 microbootstrap/config/faststream.py
     21→class FastStreamConfig:
@@ -69,7 +151,11 @@ microbootstrap/config/faststream.py
     26→    serializer: SerializerProto | None = None
     27→    context: ContextRepo | None = None
     28→    lifespan: Lifespan | None = None
-      →    …
+    29→    on_startup: typing.Sequence[AnyCallable] = ()
+    30→    after_startup: typing.Sequence[AnyCallable] = ()
+    31→    on_shutdown: typing.Sequence[AnyCallable] = ()
+    32→    after_shutdown: typing.Sequence[AnyCallable] = ()
+    33→    specification: SpecificationFactory | None = None
 
 microbootstrap/config/litestar.py
     14→class LitestarConfig(AppConfig):
@@ -87,20 +173,30 @@ microbootstrap/console_writer.py
     13→    rich_console: Console = dataclasses.field(init=False, default_factory=Console)
     14→    rich_table: Table = dataclasses.field(init=False)
     15→
+    16→    def __post_init__ …
+    22→    def write_instrument_status …
+    31→    def print_bootstrap_table …
 
 microbootstrap/exceptions.py
-     1→class MicroBootstrapBaseError(Exception):
-     5→class ConfigMergeError(MicroBootstrapBaseError):
-     9→class MissingInstrumentError(MicroBootstrapBaseError):
+     1→class MicroBootstrapBaseError …
+     5→class ConfigMergeError …
+     9→class MissingInstrumentError …
 
 microbootstrap/granian_server.py
     16→GRANIAN_LOG_LEVELS_MAP = {
     27→def create_granian_server …
 
 microbootstrap/helpers.py
-    16→VALID_PATH_PATTERN …
+    16→VALID_PATH_PATTERN: typing.Final = r"^(/[a-zA-Z0-9_-]+)+/?$"
+    19→def dataclass_to_dict_no_defaults …
+    35→def merge_pydantic_configs …
+    48→def merge_dataclasses_configs …
+    60→def merge_dict_configs …
+    96→def is_valid_path …
+   100→def optimize_exclude_paths …
 
 microbootstrap/instruments/base.py
+    19→class BaseInstrumentConfig(pydantic.BaseModel):
     24→class Instrument(abc.ABC, typing.Generic[InstrumentConfigT]):
     25→    instrument_config: InstrumentConfigT
     26→    instrument_name: typing.ClassVar[str]
@@ -110,61 +206,98 @@ microbootstrap/instruments/base.py
     47→    def get_config_type(cls) -> type[InstrumentConfigT]:
 
 microbootstrap/instruments/cors_instrument.py
-    22→    def is_ready(self) -> bool:
-    27→    @classmethod
+     8→class CorsConfig(BaseInstrumentConfig):
+    18→class CorsInstrument(Instrument[CorsConfig]):
     28→    def get_config_type(cls) -> type[CorsConfig]:
 
 microbootstrap/instruments/health_checks_instrument.py
-    40→    @classmethod
+     8→class HealthCheckTypedDict(typing_extensions.TypedDict, total=False):
+    14→class HealthChecksConfig(BaseInstrumentConfig):
+    26→class HealthChecksInstrument(Instrument[HealthChecksConfig]):
     41→    def get_config_type(cls) -> type[HealthChecksConfig]:
 
 microbootstrap/instruments/instrument_box.py
     10→class InstrumentBox:
-    48→    @property
+    11→    __instruments__: list[type[Instrument[typing.Any]]] = dataclasses.field(default_factory=list)
+    12→    __initialized_instruments__: list[Instrument[typing.Any]] = dataclasses.field(default_factory=list)
+    13→
     49→    def instruments(self) -> list[Instrument[typing.Any]]:
 
 microbootstrap/instruments/logging_instrument.py
+    26→access_logger …
+    76→STRUCTLOG_PRE_CHAIN_PROCESSORS …
+    92→STRUCTLOG_FORMATTER_PROCESSOR …
+    97→class MemoryLoggerFactory(structlog.stdlib.LoggerFactory):
+   127→class LoggingConfig(BaseInstrumentConfig):
    141→    def remove_trailing_slashes_from_logging_exclude_endpoints(self) -> typing_extensions.Self:
+   148→class LoggingInstrument(Instrument[LoggingConfig]):
    213→    def get_config_type(cls) -> type[LoggingConfig]:
 
 microbootstrap/instruments/opentelemetry_instrument.py
+    13→from opentelemetry.sdk …
+    24→LOGGER_OBJ …
     43→class OpenTelemetryInstrumentor:
+    44→    instrumentor: BaseInstrumentor
+    45→    additional_params: dict[str, typing.Any] = dataclasses.field(default_factory=dict)
+    48→class OpentelemetryConfig(BaseInstrumentConfig):
     73→class FastStreamTelemetryMiddlewareProtocol(typing.Protocol):
-   181→    @classmethod
+    91→class FastStreamOpentelemetryConfig(OpentelemetryConfig):
+    99→class BaseOpentelemetryInstrument(Instrument[OpentelemetryConfigT]):
+   170→class OpentelemetryInstrument(BaseOpentelemetryInstrument[OpentelemetryConfig]):
    182→    def get_config_type(cls) -> type[OpentelemetryConfig]:
+   186→OTEL_PROFILE_ID_KEY …
+   187→PYROSCOPE_SPAN_ID_KEY …
+   188→PYROSCOPE_SPAN_NAME_KEY …
    197→class PyroscopeSpanProcessor(SpanProcessor):
 
 microbootstrap/instruments/prometheus_instrument.py
+    17→class BasePrometheusConfig(BaseInstrumentConfig):
+    24→class LitestarPrometheusConfig(BasePrometheusConfig):
+    28→class FastApiPrometheusConfig(BasePrometheusConfig):
     36→class FastStreamPrometheusMiddlewareProtocol(typing.Protocol):
-    69→    @classmethod
+    55→class FastStreamPrometheusConfig(BasePrometheusConfig):
+    60→class PrometheusInstrument(Instrument[PrometheusConfigT]):
     70→    def get_config_type(cls) -> type[PrometheusConfigT]:
 
 microbootstrap/instruments/pyroscope_instrument.py
-    31→    def is_ready(self) -> bool:
-    34→    def teardown(self) -> None:
-    37→    def bootstrap(self) -> None:
-    52→    @classmethod
+    15→class PyroscopeConfig(BaseInstrumentConfig):
+    27→class PyroscopeInstrument(Instrument[PyroscopeConfig]):
     53→    def get_config_type(cls) -> type[PyroscopeConfig]:
 
 microbootstrap/instruments/sentry_instrument.py
-   122→    @classmethod
+    12→from microbootstrap.instruments.base …
+    15→class SentryConfig(BaseInstrumentConfig):
+    31→IGNORED_STRUCTLOG_ATTRIBUTES …
+    63→SENTRY_EXTRA_OTEL_TRACE_ID_KEY …
+    64→SENTRY_EXTRA_OTEL_TRACE_URL_KEY …
+    89→class SentryInstrument(Instrument[SentryConfig]):
    123→    def get_config_type(cls) -> type[SentryConfig]:
 
 microbootstrap/instruments/swagger_instrument.py
-    25→    def is_ready(self) -> bool:
-    28→    @classmethod
+    10→class SwaggerConfig(BaseInstrumentConfig):
+    21→class SwaggerInstrument(Instrument[SwaggerConfig]):
     29→    def get_config_type(cls) -> type[SwaggerConfig]:
 
 microbootstrap/instruments_setupper.py
-    19→class InstrumentsSetupper:
-    20→    console_writer: ConsoleWriter
-    21→    instrument_box: InstrumentBox
-    22→
+    19→class InstrumentsSetupper …
+    23→    def __init__ …
+    28→    def configure_instrument …
+    32→    def configure_instruments …
     41→    def use_instrument …
+    51→    def setup …
+    57→    def teardown …
+    62→    def __enter__ …
+    65→    def __exit__ …
+
+microbootstrap/middlewares/fastapi.py
+    12→def build_fastapi_logging_middleware …
+
+microbootstrap/middlewares/litestar.py
+    14→def build_litestar_logging_middleware …
 
 microbootstrap/settings.py
-    24→ENV_PREFIX_VAR_NAME …
-    25→ENV_PREFIX …
+    24→ENV_PREFIX_VAR_NAME: typing.Final = "ENVIRONMENT_PREFIX"
+    25→ENV_PREFIX: typing.Final = os.getenv(ENV_PREFIX_VAR_NAME, "")
     29→class BaseServiceSettings(
     30→    pydantic_settings.BaseSettings,
     31→):
@@ -193,10 +326,27 @@ microbootstrap/settings.py
     90→class FastStreamSettings …
    105→class InstrumentsSetupperSettings …
 
+package.json
+
 pyproject.toml
      1→[project]
     62→[project.optional-dependencies]
+    63→fastapi = [
+    64→    "fastapi>=0.100",
+    65→    "fastapi-offline-docs>=1",
+    66→    "opentelemetry-instrumentation-fastapi>=0.46b0",
+    67→    "prometheus-fastapi-instrumentator>=6.1",
+    68→]
+    69→litestar = [
+    70→    "litestar>=2.9",
+    71→    "litestar-offline-docs>=1",
+    72→    "prometheus-client>=0.20",
+    73→]
+    74→granian = ["granian[reload]>=1"]
+      →…
     77→[dependency-groups]
     93→[build-system]
 
-tests/test_settings.py
+tests/test_helpers.py
+    54→class InnerDataclass:
+   109→class DataclassConfig:

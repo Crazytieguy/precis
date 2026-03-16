@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2000 tokens)
+budget: 4000 (4000 tokens)
 
 .github/ISSUE_TEMPLATE/bug.yml
      3→name: Bug
@@ -10,6 +10,9 @@ budget: 2000 (2000 tokens)
      5→title: "[BUG] <title>"
      6→labels: [ Bug, Needs Triage ]
      8→body:
+     9→  - type: checkboxes
+    10→    attributes:
+      →    …
 
 .github/ISSUE_TEMPLATE/config.yml
      3→blank_issues_enabled: true
@@ -29,64 +32,19 @@ budget: 2000 (2000 tokens)
 .github/dependabot.yml
      3→version: 2
      5→updates:
-     6→  - package-ecosystem: npm
-     7→    directory: /
-     8→    schedule:
-     9→      interval: daily
-    10→    target-branch: "main"
-      →    …
+
+.github/matchers/tap.json
+     2→  "//@npmcli/template-oss": "This file is automatically added by @npmcli/template-oss. Do not edit.",
+     3→  "problemMatcher": [
+     4→    {
+     5→      "owner": "tap",
+     6→      "pattern": [
+     7→        {
+      →        …
 
 .github/settings.yml
      3→repository:
     13→branches:
-
-.github/workflows/audit.yml
-     3→name: Audit
-     5→on:
-    11→permissions:
-    14→jobs:
-
-.github/workflows/ci-release.yml
-     3→name: CI - Release
-     5→on:
-    21→permissions:
-    25→jobs:
-
-.github/workflows/ci.yml
-     3→name: CI
-     5→on:
-    16→permissions:
-    19→jobs:
-
-.github/workflows/codeql-analysis.yml
-     3→name: CodeQL
-     5→on:
-    18→permissions:
-    21→jobs:
-
-.github/workflows/post-dependabot.yml
-     3→name: Post Dependabot
-     5→on: pull_request
-     7→permissions:
-    10→jobs:
-
-.github/workflows/pull-request.yml
-     3→name: Pull Request
-     5→on:
-    13→permissions:
-    16→jobs:
-
-.github/workflows/release-integration.yml
-     3→name: Release Integration
-     5→on:
-    22→permissions:
-    26→jobs:
-
-.github/workflows/release.yml
-     3→name: Release
-     5→on:
-    11→permissions:
-    16→jobs:
 
 .release-please-manifest.json
      2→  ".": "7.7.4"
@@ -101,9 +59,62 @@ CONTRIBUTING.md
 README.md
      1→semver(1) -- The semantic versioner for npm
      4→## Install
+     6→```bash
+     7→npm install semver
+     8→````
+     9→
     10→## Usage
+    12→As a node module:
+    13→
+    14→```js
+    15→const semver = require('semver')
+    16→
+    17→semver.valid('1.2.3') // '1.2.3'
+    18→semver.valid('a.b.c') // null
+    19→semver.clean('  =v1.2.3   ') // '1.2.3'
+    20→semver.satisfies('1.2.3', '1.x || >=2.5.0 || 5.0.0 - 7.2.3') // true
+    21→semver.gt('1.2.3', '9.8.7') // false
+    22→semver.lt('1.2.3', '9.8.7') // true
+    23→semver.minVersion('>=1.0.0') // '1.0.0'
+    24→semver.valid(semver.coerce('v2')) // '2.0.0'
+    25→semver.valid(semver.coerce('42.6.7.9.3-alpha')) // '42.6.7'
+    26→```
+    27→
+    28→You can also just load the module for the function that you care about if
+    29→you'd like to minimize your footprint.
+    30→
+    31→```js
+      →…
    139→## Versions
+   141→A "version" is described by the `v2.0.0` specification found at
+   142→<https://semver.org/>.
+   143→
+   144→A leading `"="` or `"v"` character is stripped off and ignored.
+   145→Support for stripping a leading "v" is kept for compatibility with `v1.0.0` of the SemVer
+   146→specification but should not be used anymore.
+   147→
    148→## Ranges
+   150→A `version range` is a set of `comparators` that specify versions
+   151→that satisfy the range.
+   152→
+   153→A `comparator` is composed of an `operator` and a `version`.  The set
+   154→of primitive `operators` is:
+   155→
+   156→* `<` Less than
+   157→* `<=` Less than or equal to
+   158→* `>` Greater than
+   159→* `>=` Greater than or equal to
+   160→* `=` Equal.  If no operator is specified, then equality is assumed,
+   161→  so this operator is optional but MAY be included.
+   162→
+   163→For example, the comparator `>=1.2.7` would match the versions
+   164→`1.2.7`, `1.2.8`, `2.5.3`, and `1.3.9`, but not the versions `1.2.6`
+   165→or `1.1.0`. The comparator `>1` is equivalent to `>=2.0.0` and
+   166→would match the versions `2.0.0` and `3.1.0`, but not the versions
+   167→`1.0.1` or `1.1.0`.
+   168→
+   169→Comparators can be joined by whitespace to form a `comparator set`,
+      →…
    184→### Prerelease Tags
    219→#### Prerelease Identifiers
    250→#### Prerelease Identifier Base
@@ -114,6 +125,27 @@ README.md
    341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4`
    384→### Range Grammar
    408→## Functions
+   410→All methods and classes take a final `options` object argument.  All
+   411→options in this object are `false` by default.  The options supported
+   412→are:
+   413→
+   414→- `loose`: Be more forgiving about not-quite-valid semver strings.
+   415→  (Any resulting output will always be 100% strict compliant, of
+   416→  course.)  For backwards compatibility reasons, if the `options`
+   417→  argument is a boolean value instead of an object, it is interpreted
+   418→  to be the `loose` param.
+   419→- `includePrerelease`: Set to suppress the [default
+   420→  behavior](https://github.com/npm/node-semver#prerelease-tags) of
+   421→  excluding prerelease tagged versions from ranges unless they are
+   422→  explicitly opted into.
+   423→
+   424→Strict-mode Comparators and Ranges will be strict about the SemVer
+   425→strings that they parse.
+   426→
+   427→* `valid(v)`: Return the parsed version, or null if it's not valid.
+   428→* `inc(v, releaseType, options, identifier, identifierBase)`: 
+   429→  Return the version incremented by the release
+      →  …
    453→### Comparison
    478→### Sorting
    485→### Comparators
@@ -121,9 +153,32 @@ README.md
    531→### Coercion
    558→### Clean
    576→## Constants
+   578→As a convenience, helper constants are exported to provide information about what `node-semver` supports:
+   579→
    580→### `RELEASE_TYPES`
    600→### `SEMVER_SPEC_VERSION`
    610→## Exported Modules
+   613→TODO: Make sure that all of these items are documented (classes aren't,
+   614→eg), and then pull the module name into the documentation for that specific
+   615→thing.
+   616→-->
+   617→
+   618→You may pull in just the part of this semver utility that you need if you
+   619→are sensitive to packing and tree-shaking concerns.  The main
+   620→`require('semver')` export uses getter functions to lazily load the parts
+   621→of the API that are used.
+   622→
+   623→The following modules are available:
+   624→
+   625→* `require('semver')`
+   626→* `require('semver/classes')`
+   627→* `require('semver/classes/comparator')`
+   628→* `require('semver/classes/range')`
+   629→* `require('semver/classes/semver')`
+   630→* `require('semver/functions/clean')`
+   631→* `require('semver/functions/cmp')`
+   632→* `require('semver/functions/coerce')`
+      →…
 
 bin/semver.js
      8→const argv = process.argv.slice(2)
@@ -154,6 +209,23 @@ classes/range.js
    170→  intersects (range, options) {
    193→  test (version) {
    218→const cache = new LRU()
+   233→const isNullSet = c => c.value === '<0.0.0-0'
+   234→const isAny = c => c.value === ''
+   238→const isSatisfiable = (comparators, options) => {
+   257→const parseComparator = (comp, options) => {
+   271→const isX = id => !id || id.toLowerCase() === 'x' || id === '*'
+   280→const replaceTildes = (comp, options) => {
+   288→const replaceTilde = (comp, options) => {
+   324→const replaceCarets = (comp, options) => {
+   332→const replaceCaret = (comp, options) => {
+   385→const replaceXRanges = (comp, options) => {
+   393→const replaceXRange = (comp, options) => {
+   470→const replaceStars = (comp, options) => {
+   478→const replaceGTE0 = (comp, options) => {
+   491→const hyphenReplace = incPr => ($0,
+   492→  from, fM, fm, fp, fpr, fb,
+   493→  to, tM, tm, tp, tpr) => {
+   523→const testSet = (set, version, options) => {
 
 classes/semver.js
      9→class SemVer {
@@ -166,7 +238,77 @@ classes/semver.js
    168→  compareBuild (other) {
    194→  inc (release, identifier, identifierBase) {
 
+functions/clean.js
+     4→const clean …
+
+functions/cmp.js
+    10→const cmp …
+
+functions/coerce.js
+     7→const coerce …
+
+functions/compare-build.js
+     4→const compareBuild …
+
+functions/compare-loose.js
+     4→const compareLoose …
+
+functions/compare.js
+     4→const compare …
+
+functions/diff.js
+     5→const diff …
+
+functions/eq.js
+     4→const eq …
+
+functions/gt.js
+     4→const gt …
+
+functions/gte.js
+     4→const gte …
+
 functions/inc.js
+     5→const inc …
+
+functions/lt.js
+     4→const lt …
+
+functions/lte.js
+     4→const lte …
+
+functions/major.js
+     4→const major …
+
+functions/minor.js
+     4→const minor …
+
+functions/neq.js
+     4→const neq …
+
+functions/parse.js
+     4→const parse …
+
+functions/patch.js
+     4→const patch …
+
+functions/prerelease.js
+     4→const prerelease …
+
+functions/rcompare.js
+     4→const rcompare …
+
+functions/rsort.js
+     4→const rsort …
+
+functions/satisfies.js
+     4→const satisfies …
+
+functions/sort.js
+     4→const sort …
+
+functions/valid.js
+     4→const valid …
 
 internal/constants.js
      5→const SEMVER_SPEC_VERSION = '2.0.0'
@@ -208,15 +350,29 @@ internal/re.js
     42→const createToken = (name, value, isGlobal) => {
 
 package.json
+     2→  "name": "semver",
+     3→  "version": "7.7.4",
+     4→  "description": "The semantic version parser used by npm.",
+     5→  "main": "index.js",
+     6→  "scripts": {
+    16→  "devDependencies": {
+    22→  "license": "ISC",
+    23→  "repository": {
+    27→  "bin": {
+    30→  "files": [
+    41→  "tap": {
+    49→  "engines": {
+    52→  "author": "GitHub Inc.",
+    53→  "templateOSS": {
 
 ranges/gtr.js
-     5→const gtr …
+     5→const gtr = (version, range, options) => outside(version, range, '>', options)
 
 ranges/intersects.js
      4→const intersects = (r1, r2, options) => {
 
 ranges/ltr.js
-     5→const ltr …
+     5→const ltr = (version, range, options) => outside(version, range, '<', options)
 
 ranges/max-satisfying.js
      6→const maxSatisfying = (versions, range, options) => {
@@ -231,12 +387,12 @@ ranges/outside.js
     13→const outside = (version, range, hilo, options) => {
 
 ranges/subset.js
-    45→const subset …
+    45→const subset = (sub, dom, options = {}) => {
     73→const minimumVersionWithPreRelease = [new Comparator('>=0.0.0-0')]
     74→const minimumVersion = [new Comparator('>=0.0.0')]
-    76→const simpleSubset …
-   226→const higherGT …
-   238→const lowerLT …
+    76→const simpleSubset = (sub, dom, options) => {
+   226→const higherGT = (a, b, options) => {
+   238→const lowerLT = (a, b, options) => {
 
 ranges/to-comparators.js
      6→const toComparators = (range, options) =>
@@ -250,3 +406,5 @@ release-please-config.json
      4→  "changelog-sections": [
     31→  "packages": {
     36→  "prerelease-type": "pre.0"
+
+test/map.js

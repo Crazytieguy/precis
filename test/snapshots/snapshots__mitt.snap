@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (997 tokens)
+budget: 2000 (1999 tokens)
 
 README.md
      9→# Mitt
@@ -23,7 +23,7 @@ README.md
     26→-   [API](#api)
     27→-   [Contribute](#contribute)
     28→-   [License](#license)
-      →…
+    29→
     30→## Install
     32→This project uses [node](http://nodejs.org) and [npm](https://npmjs.com). Go check them out if you don't have them locally installed.
     33→
@@ -31,7 +31,24 @@ README.md
     35→$ npm install --save mitt
     36→```
     37→
-      →…
+    38→Then with a module bundler like [rollup](http://rollupjs.org/) or [webpack](https://webpack.js.org/), use as you would anything else:
+    39→
+    40→```javascript
+    41→// using ES6 modules
+    42→import mitt from 'mitt'
+    43→
+    44→// using CommonJS modules
+    45→var mitt = require('mitt')
+    46→```
+    47→
+    48→The [UMD](https://github.com/umdjs/umd) build is also available on [unpkg](https://unpkg.com):
+    49→
+    50→```html
+    51→<script src="https://unpkg.com/mitt/dist/mitt.umd.js"></script>
+    52→```
+    53→
+    54→You can find the library on `window.mitt`.
+    55→
     56→## Usage
     58→```js
     59→import mitt from 'mitt'
@@ -39,20 +56,84 @@ README.md
     61→const emitter = mitt()
     62→
     63→// listen to an event
-      →…
+    64→emitter.on('foo', e => console.log('foo', e) )
+    65→
+    66→// listen to all events
+    67→emitter.on('*', (type, e) => console.log(type, e) )
+    68→
+    69→// fire an event
+    70→emitter.emit('foo', { a: 'b' })
+    71→
+    72→// clearing all events
+    73→emitter.all.clear()
+    74→
+    75→// working with handler references:
+    76→function onFoo() {}
+    77→emitter.on('foo', onFoo)   // listen
+    78→emitter.off('foo', onFoo)  // unlisten
+    79→```
+    80→
     81→### Typescript
+    83→Set `"strict": true` in your tsconfig.json to get improved type inference for `mitt` instance methods.
+    84→
+    85→```ts
+    86→import mitt from 'mitt';
+    87→
+    88→type Events = {
+    89→  foo: string;
+    90→  bar?: number;
+    91→};
+    92→
+    93→const emitter = mitt<Events>(); // inferred as Emitter<Events>
+    94→
+    95→emitter.on('foo', (e) => {}); // 'e' has inferred type 'string'
+    96→
+    97→emitter.emit('foo', 42); // Error: Argument of type 'number' is not assignable to parameter of type 'string'. (2345)
+    98→```
+    99→
+   100→Alternatively, you can use the provided `Emitter` type:
+   101→
+   102→```ts
+   103→import mitt, { Emitter } from 'mitt';
+   104→
+   105→type Events = {
+   106→  foo: string;
+   107→  bar?: number;
+   108→};
+   109→
+   110→const emitter: Emitter<Events> = mitt<Events>();
+   111→```
+   112→
    113→## Examples & Demos
    123→## API
    127→#### Table of Contents
    138→### mitt
+   140→Mitt: Tiny (~200b) functional event emitter / pubsub.
+   141→
+   142→Returns **Mitt** 
+   143→
    144→### all
+   146→A Map of event names to registered handler functions.
+   147→
    148→### on
+   150→Register an event handler for the given type.
+   151→
    152→#### Parameters
    157→### off
+   159→Remove an event handler for the given type.
+   160→If `handler` is omitted, all handlers of the given type are removed.
+   161→
    162→#### Parameters
    167→### emit
+   169→Invoke all handlers for the given type.
+   170→If present, `'*'` handlers are invoked after type-matched handlers.
+   171→
+   172→Note: Manually firing '\*' handlers is not supported.
+   173→
    174→#### Parameters
    179→## Contribute
+   184→### Reporting Issues
+   189→### Submitting pull requests
    203→## License
 
 package.json
@@ -89,9 +170,26 @@ src/index.ts
     48→): Emitter<Events> {
     49→	type GenericEventHandler =
     50→		| Handler<Events[keyof Events]>
-      →		…
+    51→		| WildcardHandler<Events>;
+    52→	all = all || new Map();
+    53→
+    54→	return {
+    55→		/**
+    56→		 * A Map of event names to registered handler functions.
+    57→		 */
+    58→		all,
+    59→
+    60→		/**
+    61→		 * Register an event handler for the given type.
+      →		 …
+
+test/index_test.ts
+
+test/test-types-compilation.ts
+     5→interface SomeEventData {
+     9→const emitter = mitt<{
+    15→const barHandler …
+    16→const fooHandler …
+    17→const wildcardHandler …
 
 tsconfig.json
-     2→	"compileOnSave": false,
-     3→	"compilerOptions": {
-    11→	"include": [

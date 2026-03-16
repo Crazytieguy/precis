@@ -2,10 +2,17 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (995 tokens)
+budget: 2000 (1990 tokens)
 
 README.md
      1→# k(r)ep - A high-performance string search utility
+     6→`krep` is an optimized string search utility designed for maximum throughput and efficiency when processing large files and directories. It is built with performance in mind, offering multiple search algorithms and SIMD acceleration when available.
+     7→
+     8→> **Note:**  
+     9→> Krep is not intended to be a full replacement or direct competitor to feature-rich tools like `grep` or `ripgrep`. Instead, it aims to be a minimal, efficient, and pragmatic tool focused on speed and simplicity.
+    10→>
+    11→> Krep provides the essential features needed for fast searching, without the extensive options and complexity of more comprehensive search utilities. Its design philosophy is to deliver the fastest possible search for the most common use cases, with a clean and minimal interface.
+    12→
     13→## The Story Behind the Name
     19→## Key Features
     36→## What's New in v2.2.0
@@ -15,34 +22,32 @@ README.md
    134→## Command Line Options
    155→## Performance Benchmarks
    180→## How Krep Works
+   231→## Contributing
+   235→## Author
+   239→## License
 
 aho_corasick.c
      7→#include <stdio.h>
-    17→typedef struct ac_node
-    18→{
-    26→struct ac_trie
-    27→{
+    17→ac_node_t …
+    26→struct ac_trie …
    111→ac_trie_t *ac_trie_build …
    274→void ac_trie_free …
    287→bool ac_trie_root_has_outputs …
    293→extern size_t find_line_start …
-   294→extern bool is_whole_word_match(const char *text, size_t text_len, size_t start, size_t end);
    299→uint64_t aho_corasick_search …
 
 aho_corasick.h
-    15→typedef struct search_params search_params_t;
-    20→typedef struct match_result_t match_result_t;
-    27→typedef struct ac_trie ac_trie_t;
-    30→ac_trie_t *ac_trie_build(const search_params_t *params);
-    33→void ac_trie_free(ac_trie_t *trie);
-    36→bool ac_trie_root_has_outputs(const ac_trie_t *trie);
-    39→uint64_t aho_corasick_search(const search_params_t *params, const char *text_start, size_t text_len, match_result_t *result);
+    15→typedef struct search_params search_params_t …
+    20→typedef struct match_result_t …
+    27→typedef struct ac_trie ac_trie_t …
+    30→ac_trie_t *ac_trie_build …
+    33→void ac_trie_free …
+    36→bool ac_trie_root_has_outputs …
+    39→uint64_t aho_corasick_search …
 
 krep.c
     10→#define _GNU_SOURCE
-    76→// Constants
     77→#define MAX_PATTERN_LENGTH 1024
-    92→// Compiler hints for better optimization
     93→#define LIKELY(x)   __builtin_expect(!!(x), 1)
    139→match_result_t *match_result_init …
    175→inline bool match_result_add …
@@ -50,7 +55,6 @@ krep.c
    256→bool match_result_merge …
    363→size_t find_line_start …
    401→size_t find_line_end …
-   461→size_t print_matching_items …
   1125→double get_time …
   1137→void print_usage …
   1198→inline bool memory_equals_case_insensitive …
@@ -59,7 +63,9 @@ krep.c
   1389→uint64_t regex_search …
   1628→uint64_t kmp_search …
   1771→search_func_t select_search_algorithm …
-  2274→int search_file …
+  1919→void *search_chunk_thread …
+  1964→const char *get_algorithm_name …
+  1999→int search_string …
   3146→typedef struct
   3147→{
   3148→    char *pattern;
@@ -73,19 +79,86 @@ krep.c
   3158→    size_t capacity;
   3159→    struct gitignore *parent; // Parent directory's gitignore context
   3160→} gitignore_t;
-  3451→int main …
-  4506→uint64_t neon_search …
+  3442→int search_directory_recursive …
+  3891→uint64_t memchr_search …
+  4104→thread_pool_t *thread_pool_init …
+  4209→bool thread_pool_submit …
+  4313→void thread_pool_wait_all …
+  4332→void thread_pool_destroy …
+  4371→uint64_t memchr_short_search …
+  4702→uint64_t simd_sse42_search …
+  4877→uint64_t simd_avx2_search …
+  5107→simd_avx512_search …
 
 krep.h
     23→typedef struct ac_trie ac_trie_t …
     34→#define KREP_COLOR_RESET "\033[0m"
     42→#define KREP_COLOR_HELP_TITLE "\033[1;38;5;81m"
-    49→match_position_t …
+    49→typedef struct
+    50→{
+    51→   size_t start_offset; // Starting position of the match
+    52→   size_t end_offset;   // Ending position of the match (exclusive)
+    53→} match_position_t;
     55→typedef struct match_result_t …
-    65→search_params_t …
-    98→typedef uint64_t (*search_func_t …
-   104→thread_data_t …
-   125→task_t …
+    65→typedef struct search_params
+    66→{
+    67→   // Single pattern legacy fields (still used by some functions)
+    68→   const char *pattern;
+    69→   size_t pattern_len;
+    70→
+    71→   // Multiple pattern fields
+    72→   const char **patterns; // Array of patterns (for multiple -e options)
+    73→   size_t *pattern_lens;  // Array of pattern lengths
+    74→   size_t num_patterns;   // Number of patterns
+    75→
+    76→   // Search options
+    77→   bool case_sensitive;
+    78→   bool use_regex;
+    79→   bool count_lines_mode;   // True for -c mode (count lines)
+    80→   bool count_matches_mode; // True for -co mode (count matches - internal concept)
+    81→   bool track_positions;    // True for default or -o mode (track positions)
+    82→   bool whole_word;         // True for -w mode (whole word search)
+    83→   // bool overlapping_mode; // Implicitly true for -o, handled by algorithm advance logic
+    84→
+    85→   // Compiled regex (if applicable, compiled once per file/string)
+    86→   const regex_t *compiled_regex;
+    87→
+    88→   // Compiled Aho-Corasick trie (if applicable)
+    89→   ac_trie_t *ac_trie; // Add pointer for pre-built trie
+    90→
+    91→   // Max count limit from options
+    92→   size_t max_count;
+    93→
+    94→} search_params_t;
+    98→typedef uint64_t (*search_func_t)(const search_params_t *params,
+    99→                                  const char *text_start,
+   100→                                  size_t text_len,
+   101→                                  match_result_t *result);
+   104→typedef struct
+   105→{
+   106→   int thread_id;
+   107→   const search_params_t *params; // Pointer to shared search parameters
+   108→   const char *chunk_start;       // Pointer to the start of the memory chunk for this thread
+   109→   size_t chunk_len;              // Length of the chunk to process (may include overlap)
+   110→   search_func_t search_algo;     // Pre-selected search algorithm for this chunk
+   111→
+   112→   // Thread-specific results
+   113→   match_result_t *local_result; // For position tracking (default/-o)
+   114→   uint64_t count_result;        // For line counting (-c) or match counting (-co)
+   115→
+   116→   // Status flags
+   117→   bool error_flag; // Flag to indicate an error occurred in the thread
+   118→
+   119→   // Padding to prevent false sharing (ensure struct size is multiple of 64 bytes)
+   120→   // Current size approx 56 bytes. Adding sufficient padding.
+   121→   char padding[64]; 
+   122→} thread_data_t;
+   125→typedef struct task
+   126→{
+   127→   void *(*func)(void *); // Task function
+   128→   void *arg;             // Function argument
+   129→   struct task *next;     // Next task in queue
+   130→} task_t;
    132→thread_pool_t …
    146→thread_pool_t *thread_pool_init …
    161→int search_file …

@@ -2,10 +2,16 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3998 tokens)
+budget: 8000 (7997 tokens)
+
+AGENTS.md
 
 README.md
      1→# MCPHost 🤖
+     3→A CLI host application that enables Large Language Models (LLMs) to interact with external tools through the Model Context Protocol (MCP). Currently supports Claude, OpenAI, Google Gemini, and Ollama models.
+     4→
+     5→Discuss the Project on [Discord](https://discord.gg/RqSS2NQVsY)
+     6→
      7→## Table of Contents
     41→## Overview 🌟
     60→## Features ✨
@@ -13,19 +19,70 @@ README.md
     85→## Environment Setup 🔧
    124→## Installation 📦
    130→## SDK Usage 🛠️
+   134→### Quick Example
+   165→### SDK Features
    176→## Configuration ⚙️
+   178→### MCP Servers
+   189→### Environment Variable Substitution
+   225→### Simplified Configuration Schema
+   361→### Tool Filtering
+   387→### Legacy Configuration Support
+   449→### Transport Types
+   462→### System Prompt
    488→## Usage 🚀
+   492→### Interactive Mode (Default)
+   500→### Script Mode
+   562→##### Variable Syntax
+   594→##### Usage Examples
+   615→##### Default Value Features
+   648→### Hooks System
+   714→### Non-Interactive Mode
+   729→### Model Generation Parameters
+   752→### Available Models
+   760→### Examples
+   795→### Flags
+   809→### Authentication Subcommands
+   823→### Configuration File Support
+   872→### Interactive Commands
+   882→### Authentication Commands
+   889→### Global Flags
    892→## Automation & Scripting 🤖
+   896→### Use Cases
+   938→### Tips for Scripting
    967→## MCP Server Compatibility 🔌
    971→## Contributing 🤝
    981→## License 📄
    985→## Acknowledgments 🙏
 
+cmd/auth.go
+     3→import …
+    17→var authCmd = &cobra.Command{
+    37→var authLoginCmd = &cobra.Command{
+    58→var authLogoutCmd = &cobra.Command{
+    78→var authStatusCmd = &cobra.Command{
+
+cmd/hooks.go
+     3→import …
+    16→var hooksCmd = &cobra.Command{
+    25→var hooksListCmd = &cobra.Command{
+    57→var hooksValidateCmd = &cobra.Command{
+    79→var hooksInitCmd = &cobra.Command{
+
 cmd/root.go
+     3→import …
+    39→	compactMode      bool           // Enable compact output mode
+    40→	scriptMCPConfig  *config.Config // Used to override config in script mode
+    41→	approveToolRun   bool
+    44→	saveSessionPath string
+    49→	maxTokens     int
+    56→	numGPU  int32
+    60→	noHooks bool
+    63→	tlsSkipVerify bool
     67→type agentUIAdapter struct {
     71→func (a *agentUIAdapter) GetLoadingMessage() string {
     75→func (a *agentUIAdapter) GetTools() []any {
     84→func (a *agentUIAdapter) GetLoadedServerNames() []string {
+    92→var rootCmd = &cobra.Command{
    131→func GetRootCommand(v string) *cobra.Command {
    143→func InitConfig() {
    225→func LoadConfigWithEnvSubstitution(configPath string) error {
@@ -48,6 +105,7 @@ cmd/root.go
    774→}
 
 cmd/script.go
+     3→import …
     28→var scriptCmd = &cobra.Command{
    423→type Variable struct {
    424→	Name         string // The name of the variable as it appears in the script
@@ -63,35 +121,70 @@ contribute/conf/demo.yml
 
 contribute/contribute.md
      1→# Contribute README
+     2→Thanks for your contribution, you can follow these step to run this repo and debug it.
      3→## Run demo
+     4→1. clone this repo to your work dir.
+     5→    ```bash
+     6→    git clone https://github.com/mark3labs/mcphost.git
+     7→    ```
+     8→
+     9→2. enter the `contribute` dir.
+    10→    ```bash
+    11→    cd mcphost/contribute
+    12→    ```
+    13→
+    14→3. run `build.sh` to build your binary file.
+    15→   ```bash
+    16→      ./build.sh
+    17→   ```
+    18→
+    19→4. open `boost.sh` file and fill your model info in.
+    20→   ```bash
+    21→      cat boost.sh
+    22→      vi boost.sh
+    23→   ```
+    24→
+      →…
     30→## Contribute your code
+    31→just write your code and push it.
+
+examples/hooks/bash-validator.py
+    11→DANGEROUS_PATTERNS = [
+    17→SUGGEST_ALTERNATIVES = {
+    22→def main():
+
+examples/hooks/mcp-monitor.py
+    12→BLOCKED_MCP_TOOLS = [
+    17→RATE_LIMITS = {
+    21→def check_rate_limit(tool_name, limits):
+    26→def main():
 
 internal/agent/agent.go
-    22→type AgentConfig …
-    39→type ToolCallHandler …
-    43→type ToolExecutionHandler …
-    47→type ToolResultHandler …
-    51→type ResponseHandler …
-    55→type StreamingResponseHandler …
-    59→type ToolCallContentHandler …
-    63→type ToolApprovalHandler …
-    67→type Agent …
-   125→type GenerateWithLoopResult …
+    22→type AgentConfig struct {
+    39→type ToolCallHandler func(toolName, toolArgs string)
+    43→type ToolExecutionHandler func(toolName string, isStarting bool)
+    47→type ToolResultHandler func(toolName, toolArgs, result string, isError bool)
+    51→type ResponseHandler func(content string)
+    55→type StreamingResponseHandler func(content string)
+    59→type ToolCallContentHandler func(content string)
+    63→type ToolApprovalHandler func(toolName, toolArgs string) (bool, error)
+    67→type Agent struct {
+    81→func NewAgent …
+   125→type GenerateWithLoopResult struct {
+   135→func (a *Agent) GenerateWithLoop …
+   144→func (a *Agent) GenerateWithLoopAndStreaming …
+   303→func (a *Agent) GetTools …
+   309→func (a *Agent) GetLoadingMessage …
+   315→func (a *Agent) GetLoadedServerNames …
+   456→type escListenerModel struct {
+   460→func (m escListenerModel) Init() tea.Cmd {
+   464→func (m escListenerModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+   479→func (m escListenerModel) View() string {
+   536→func (a *Agent) Close …
 
 internal/agent/factory.go
     15→type SpinnerFunc func(message string, fn func() error) error
     19→type AgentCreationOptions struct {
-    20→	// ModelConfig specifies the LLM provider and model to use
-    21→	ModelConfig *models.ProviderConfig
-    22→	// MCPConfig contains MCP server configurations
-    23→	MCPConfig *config.Config
-    24→	// SystemPrompt is the initial system message for the agent
-    25→	SystemPrompt string
-    26→	// MaxSteps limits the number of tool calls (0 for unlimited)
-    27→	MaxSteps int
-    28→	// StreamingEnabled controls whether responses are streamed
-    29→	StreamingEnabled bool
-      →	…
     43→func CreateAgent …
     76→func ParseModelName …
 
@@ -104,8 +197,30 @@ internal/auth/browser.go
 
 internal/auth/credentials.go
     14→type CredentialStore struct {
+    15→	Anthropic *AnthropicCredentials `json:"anthropic,omitempty"`
+    16→}
     22→type AnthropicCredentials struct {
+    23→	Type         string    `json:"type"`                    // "oauth" or "api_key"
+    24→	APIKey       string    `json:"api_key,omitempty"`       // For API key auth
+    25→	AccessToken  string    `json:"access_token,omitempty"`  // For OAuth
+    26→	RefreshToken string    `json:"refresh_token,omitempty"` // For OAuth
+    27→	ExpiresAt    int64     `json:"expires_at,omitempty"`    // For OAuth
+    28→	CreatedAt    time.Time `json:"created_at"`
+    29→}
+    33→func (c *AnthropicCredentials) IsExpired() bool {
+    44→func (c *AnthropicCredentials) NeedsRefresh() bool {
     54→type CredentialManager struct {
+    55→	credentialsPath string
+    56→}
+    62→func NewCredentialManager() (*CredentialManager, error) {
+    92→func (cm *CredentialManager) LoadCredentials() (*CredentialStore, error) {
+   115→func (cm *CredentialManager) SaveCredentials(store *CredentialStore) error {
+   139→func (cm *CredentialManager) SetAnthropicCredentials(apiKey string) error {
+   161→func (cm *CredentialManager) GetAnthropicCredentials() (*AnthropicCredentials, error) {
+   173→func (cm *CredentialManager) RemoveAnthropicCredentials() error {
+   195→func (cm *CredentialManager) HasAnthropicCredentials() (bool, error) {
+   217→func (cm *CredentialManager) GetCredentialsPath() string {
+   247→func GetAnthropicAPIKey(flagValue string) (string, string, error) {
 
 internal/auth/oauth.go
     19→type OAuthClient struct {
@@ -119,24 +234,38 @@ internal/auth/oauth.go
     31→	URL      string
     32→	Verifier string
     33→}
+    39→func NewOAuthClient() *OAuthClient {
+    57→func GeneratePKCE() (verifier, challenge string, err error) {
+    78→func (c *OAuthClient) GetAuthorizationURL() (*AuthData, error) {
+   107→func (c *OAuthClient) ExchangeCode(code, verifier string) (*AnthropicCredentials, error) {
+   133→func (c *OAuthClient) RefreshToken(refreshToken string) (*AnthropicCredentials, error) {
+   205→func (cm *CredentialManager) SetOAuthCredentials(creds *AnthropicCredentials) error {
+   219→func (cm *CredentialManager) GetValidAccessToken() (string, error) {
 
 internal/builtin/bash.go
     44→func NewBashServer() (*server.MCPServer, error) {
 
 internal/builtin/fetch.go
+    20→	defaultFetchTimeout = 30 * time.Second
     27→func NewFetchServer() (*server.MCPServer, error) {
 
 internal/builtin/http.go
-    36→func NewHTTPServer …
+    24→	httpDefaultFetchTimeout = 30 * time.Second
+    29→var httpServerModel model.ToolCallingChatModel
+    36→func NewHTTPServer(llmModel model.ToolCallingChatModel) (*server.MCPServer, error) {
 
 internal/builtin/registry.go
     14→type BuiltinServerWrapper struct {
-    21→func (w *BuiltinServerWrapper) Initialize …
-    28→func (w *BuiltinServerWrapper) GetServer …
+    15→	server *server.MCPServer
+    16→}
+    21→func (w *BuiltinServerWrapper) Initialize() error {
+    28→func (w *BuiltinServerWrapper) GetServer() *server.MCPServer {
     35→type Registry struct {
-    42→func NewRegistry …
-    61→func (r *Registry) CreateServer …
-    72→func (r *Registry) ListServers …
+    36→	servers map[string]func(options map[string]any, model model.ToolCallingChatModel) (*BuiltinServerWrapper, error)
+    37→}
+    42→func NewRegistry() *Registry {
+    61→func (r *Registry) CreateServer(name string, options map[string]any, model model.ToolCallingChatModel) (*BuiltinServerWrapper, error) {
+    72→func (r *Registry) ListServers() []string {
 
 internal/builtin/todo.go
     17→type TodoInfo struct {
@@ -162,20 +291,21 @@ internal/config/config.go
    218→func (c *Config) Validate() error {
    249→func LoadSystemPrompt(input string) (string, error) {
    271→func EnsureConfigExists() error {
+   296→func createDefaultConfig …
    406→func FilepathOr[T any](key string, value *T) error {
    459→func SetConfigPath(path string) {
 
 internal/config/merger.go
     13→func MergeConfigs(baseConfig *Config, scriptConfig *Config) *Config {
     28→func LoadAndValidateConfig() (*Config, error) {
+    48→func fixEnvironmentCase …
 
 internal/config/substitution.go
     11→var (
+    18→func parseVariableWithDefault …
     29→type EnvSubstituter struct{}
     34→func (e *EnvSubstituter) SubstituteEnvVars(content string) (string, error) {
     65→type ArgsSubstituter struct {
-    66→	args map[string]string
-    67→}
     71→func NewArgsSubstituter(args map[string]string) *ArgsSubstituter {
     78→func (a *ArgsSubstituter) SubstituteArgs(content string) (string, error) {
    109→func HasEnvVars(content string) bool {
@@ -189,7 +319,6 @@ internal/hooks/config.go
 
 internal/hooks/events.go
      5→type HookEvent string
-     7→const (
      9→	PreToolUse HookEvent = "PreToolUse"
     12→	PostToolUse HookEvent = "PostToolUse"
     15→	UserPromptSubmit HookEvent = "UserPromptSubmit"
@@ -199,18 +328,13 @@ internal/hooks/events.go
 
 internal/hooks/executor.go
     18→type Executor struct {
-    19→	config      *HookConfig
-    20→	sessionID   string
-    21→	transcript  string
-    22→	model       string
-    23→	interactive bool
-    24→	mu          sync.RWMutex
-    25→}
-    30→func NewExecutor …
-    40→func (e *Executor) SetModel …
-    48→func (e *Executor) SetInteractive …
-    57→func (e *Executor) PopulateCommonFields …
-    77→func (e *Executor) ExecuteHooks …
+    30→func NewExecutor(config *HookConfig, sessionID, transcriptPath string) *Executor {
+    40→func (e *Executor) SetModel(model string) {
+    48→func (e *Executor) SetInteractive(interactive bool) {
+    57→func (e *Executor) PopulateCommonFields(event HookEvent) CommonInput {
+    77→func (e *Executor) ExecuteHooks(ctx context.Context, event HookEvent, input interface{}) (*HookOutput, error) {
+   201→type hookResult struct {
+   259→func getCurrentWorkingDir() string {
 
 internal/hooks/schemas.go
     10→type CommonInput struct {
@@ -225,18 +349,102 @@ internal/hooks/validator.go
     75→func ValidateHookConfig(config *HookConfig) error {
 
 internal/models/anthropic/anthropic.go
+     3→import …
     21→type CustomChatModel struct {
+    22→	// wrapped is the underlying eino-ext Claude model instance
+    23→	wrapped *einoclaude.ChatModel
+    24→}
     31→type CustomRoundTripper struct {
-    52→func NewCustomChatModel …
-    92→func (rt *CustomRoundTripper) RoundTrip …
-   244→func (m *CustomChatModel) Generate …
-   260→func (m *CustomChatModel) Stream …
-   274→func (m *CustomChatModel) WithTools …
+    32→	// wrapped is the underlying HTTP transport to use for actual requests
+    33→	wrapped http.RoundTripper
+    34→}
+    52→func NewCustomChatModel(ctx context.Context, config *einoclaude.Config) (*CustomChatModel, error) {
+    92→func (rt *CustomRoundTripper) RoundTrip(req *http.Request) (*http.Response, error) {
+   244→func (m *CustomChatModel) Generate(ctx context.Context, input []*schema.Message, opts ...model.Option) (*schema.Message, error) {
+   260→func (m *CustomChatModel) Stream(ctx context.Context, input []*schema.Message, opts ...model.Option) (*schema.StreamReader[*schema.Message], error) {
+   274→func (m *CustomChatModel) WithTools(tools []*schema.ToolInfo) (model.ToolCallingChatModel, error) {
 
 internal/models/gemini/gemini.go
+     3→import …
+    43→func NewChatModel(_ context.Context, cfg *Config) (*ChatModel, error) {
     58→type Config struct {
+    59→	// Client is the Gemini API client instance
+    60→	// Required for making API calls to Gemini
+    61→	Client *genai.Client
+    62→
+    63→	// Model specifies which Gemini model to use
+    64→	// Examples: "gemini-pro", "gemini-pro-vision", "gemini-1.5-flash"
+    65→	Model string
+    66→
+    67→	// MaxTokens limits the maximum number of tokens in the response
+    68→	// Optional. Example: maxTokens := 100
+    69→	MaxTokens *int
+    70→
+    71→	// Temperature controls randomness in responses
+    72→	// Range: [0.0, 1.0], where 0.0 is more focused and 1.0 is more creative
+    73→	// Optional. Example: temperature := float32(0.7)
+    74→	Temperature *float32
+    75→
+    76→	// TopP controls diversity via nucleus sampling
+    77→	// Range: [0.0, 1.0], where 1.0 disables nucleus sampling
+    78→	// Optional. Example: topP := float32(0.95)
+    79→	TopP *float32
+    80→
+    81→	// TopK controls diversity by limiting the top K tokens to sample from
+    82→	// Optional. Example: topK := int32(40)
+    83→	TopK *int32
+    84→
+    85→	// ResponseSchema defines the structure for JSON responses
+    86→	// Optional. Used when you want structured output in JSON format
+    87→	ResponseSchema *jsonschema.Schema
+    88→
+    89→	// EnableCodeExecution allows the model to execute code
+    90→	// Warning: Be cautious with code execution in production
+    91→	// Optional. Default: false
+    92→	EnableCodeExecution bool
+    93→
+    94→	// SafetySettings configures content filtering for different harm categories
+    95→	// Controls the model's filtering behavior for potentially harmful content
+    96→	// Optional.
+    97→	SafetySettings []*genai.SafetySetting
+    98→}
    103→type options struct {
    113→type ChatModel struct {
+   114→	// cli is the Gemini API client instance
+   115→	cli *genai.Client
+   116→
+   117→	// model specifies which Gemini model to use
+   118→	model string
+   119→	// maxTokens limits the response length
+   120→	maxTokens *int
+   121→	// topP controls nucleus sampling
+   122→	topP *float32
+   123→	// temperature controls randomness
+   124→	temperature *float32
+   125→	// topK limits token sampling
+   126→	topK *int32
+   127→	// responseSchema for structured JSON output
+   128→	responseSchema *jsonschema.Schema
+   129→	// tools converted to Gemini format
+   130→	tools []*genai.Tool
+   131→	// origTools stores the original tool definitions
+   132→	origTools []*schema.ToolInfo
+   133→	// toolChoice controls how tools are used
+   134→	toolChoice *schema.ToolChoice
+   135→	// enableCodeExecution allows code execution (use with caution)
+   136→	enableCodeExecution bool
+   137→	// safetySettings for content filtering
+   138→	safetySettings []*genai.SafetySetting
+   139→}
+   152→func (cm *ChatModel) Generate(ctx context.Context, input []*schema.Message, opts ...model.Option) (message *schema.Message, err error) {
+   205→func (cm *ChatModel) Stream(ctx context.Context, input []*schema.Message, opts ...model.Option) (result *schema.StreamReader[*schema.Message], err error) {
+   279→func (cm *ChatModel) WithTools(tools []*schema.ToolInfo) (model.ToolCallingChatModel, error) {
+   305→func (cm *ChatModel) BindTools(tools []*schema.ToolInfo) error {
+   330→func (cm *ChatModel) BindForcedTools(tools []*schema.ToolInfo) error {
+   761→func (cm *ChatModel) IsCallbacksEnabled() bool {
+   765→const typ = "Gemini"
+   773→func (cm *ChatModel) GetType() string {
+   777→type panicErr struct {
    782→func (p *panicErr) Error() string {
 
 internal/models/generate_models.go
@@ -253,29 +461,63 @@ internal/models/models_data.go
     41→func GetModelsData() map[string]ProviderInfo {
 
 internal/models/openai/openai.go
+     3→import …
     21→type CustomChatModel struct {
+    22→	// wrapped is the underlying eino-ext OpenAI model instance
+    23→	wrapped *einoopenai.ChatModel
+    24→}
     31→type CustomRoundTripper struct {
+    32→	// wrapped is the underlying HTTP transport to use for actual requests
+    33→	wrapped http.RoundTripper
+    34→}
+    53→func NewCustomChatModel(ctx context.Context, config *einoopenai.ChatModelConfig) (*CustomChatModel, error) {
+    91→func (c *CustomRoundTripper) RoundTrip(req *http.Request) (*http.Response, error) {
+   161→func (c *CustomChatModel) Generate(ctx context.Context, in []*schema.Message, opts ...model.Option) (*schema.Message, error) {
+   177→func (c *CustomChatModel) Stream(ctx context.Context, in []*schema.Message, opts ...model.Option) (*schema.StreamReader[*schema.Message], error) {
+   191→func (c *CustomChatModel) WithTools(tools []*schema.ToolInfo) (model.ToolCallingChatModel, error) {
+   215→func (c *CustomChatModel) BindTools(tools []*schema.ToolInfo) error {
+   228→func (c *CustomChatModel) BindForcedTools(tools []*schema.ToolInfo) error {
+   237→func (c *CustomChatModel) GetType() string {
+   247→func (c *CustomChatModel) IsCallbacksEnabled() bool {
 
 internal/models/providers.go
-    32→	ClaudeCodePrompt …
+    29→	// ClaudeCodePrompt is the required system prompt for OAuth authentication.
+      →	…
+    32→	ClaudeCodePrompt = "You are Claude Code, Anthropic's official CLI for Claude."
     70→type ProviderConfig struct {
    124→type ProviderResult struct {
-   153→func CreateProvider …
+   153→func CreateProvider(ctx context.Context, config *ProviderConfig) (*ProviderResult, error) {
    539→type OllamaLoadingResult struct {
+   712→type bearerTransport struct {
+   717→func (t *bearerTransport) RoundTrip(req *http.Request) (*http.Response, error) {
    857→type oauthTransport struct {
+   862→func (t *oauthTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 
 internal/models/registry.go
     16→type ModelsRegistry struct {
-    17→	// providers maps provider IDs to their information and available models
-    18→	providers map[string]ProviderInfo
-    19→}
+    27→func NewModelsRegistry() *ModelsRegistry {
+    44→func (r *ModelsRegistry) ValidateModel(provider, modelID string) (*ModelInfo, error) {
+    73→func (r *ModelsRegistry) GetRequiredEnvVars(provider string) ([]string, error) {
+    92→func (r *ModelsRegistry) ValidateEnvironment(provider string, apiKey string) error {
+   143→func (r *ModelsRegistry) SuggestModels(provider, invalidModel string) []string {
+   179→func (r *ModelsRegistry) GetSupportedProviders() []string {
+   197→func (r *ModelsRegistry) GetModelsForProvider(provider string) (map[string]ModelInfo, error) {
+   207→var globalRegistry = NewModelsRegistry()
+   216→func GetGlobalRegistry() *ModelsRegistry {
 
 internal/session/manager.go
     15→type Manager struct {
-    16→	session  *Session
-    17→	filePath string
-    18→	mutex    sync.RWMutex
-    19→}
+    25→func NewManager(filePath string) *Manager {
+    37→func NewManagerWithSession(session *Session, filePath string) *Manager {
+    50→func (m *Manager) AddMessage(msg *schema.Message) error {
+    69→func (m *Manager) AddMessages(msgs []*schema.Message) error {
+    91→func (m *Manager) ReplaceAllMessages(msgs []*schema.Message) error {
+   116→func (m *Manager) SetMetadata(metadata Metadata) error {
+   134→func (m *Manager) GetMessages() []*schema.Message {
+   151→func (m *Manager) GetSession() *Session {
+   168→func (m *Manager) Save() error {
+   182→func (m *Manager) GetFilePath() string {
+   189→func (m *Manager) MessageCount() int {
 
 internal/session/session.go
     19→type Session struct {
@@ -289,6 +531,7 @@ internal/session/session.go
    137→func LoadFromFile(filePath string) (*Session, error) {
    157→func ConvertFromSchemaMessage(msg *schema.Message) Message {
    190→func (m *Message) ConvertToSchemaMessage() *schema.Message {
+   230→func generateMessageID() string {
 
 internal/tokens/counter.go
     21→func EstimateTokens(text string) int {
@@ -298,19 +541,10 @@ internal/tokens/init.go
     50→func InitializeTokenCountersWithKeys() {
 
 internal/ui/block_renderer.go
-    27→func WithFullWidth …
-    36→func WithAlign …
-    45→func WithBorderColor …
-    54→func WithMarginTop …
-    63→func WithMarginBottom …
-    72→func WithPaddingLeft …
-    81→func WithPaddingRight …
-    90→func WithPaddingTop …
-    99→func WithPaddingBottom …
-   108→func WithWidth …
+     8→type blockRenderer struct {
+    22→type renderingOption func(*blockRenderer)
 
 internal/ui/callbacks.go
-    17→func (c *CLI) CreateCallbackHandler() callbacks.Handler {
 
 internal/ui/cli.go
     22→type CLI struct {
@@ -318,41 +552,24 @@ internal/ui/cli.go
 
 internal/ui/commands.go
      6→type SlashCommand struct {
-     7→	Name        string
-     8→	Description string
-      →	…
     16→var SlashCommands = []SlashCommand{
-    65→func GetCommandByName(name string) *SlashCommand {
-    83→func GetAllCommandNames() []string {
 
 internal/ui/compact_renderer.go
     14→type CompactRenderer struct {
-    15→	width int
-    16→	debug bool
-    17→}
 
 internal/ui/debug_logger.go
     13→type CLIDebugLogger struct {
-    14→	cli *CLI
-    15→}
-    20→func NewCLIDebugLogger(cli *CLI) *CLIDebugLogger {
-    28→func (l *CLIDebugLogger) LogDebug(message string) {
-    84→func (l *CLIDebugLogger) IsDebugEnabled() bool {
 
 internal/ui/enhanced_styles.go
+    12→var currentTheme = DefaultTheme()
     29→type Theme struct {
 
 internal/ui/factory.go
     13→type AgentInterface interface {
     22→type CLISetupOptions struct {
-    45→func SetupCLI(opts *CLISetupOptions) (*CLI, error) {
 
 internal/ui/fuzzy.go
     10→type FuzzyMatch struct {
-    11→	Command *SlashCommand
-    12→	Score   int
-    13→}
-    18→func FuzzyMatchCommands(query string, commands []SlashCommand) []FuzzyMatch {
 
 internal/ui/messages.go
     15→type MessageType int
@@ -367,38 +584,76 @@ internal/ui/messages.go
    627→type MessageContainer struct {
 
 internal/ui/progress/ollama.go
+     3→import …
     27→type OllamaPullProgress struct {
+    28→	Status    string `json:"status"`
+    29→	Digest    string `json:"digest,omitempty"`
+    30→	Total     int64  `json:"total,omitempty"`
+    31→	Completed int64  `json:"completed,omitempty"`
+    32→}
+    35→type progressMsg struct {
+    41→type progressErrMsg struct{ err error }
+    44→type progressCompleteMsg struct{}
     49→type ProgressModel struct {
-    58→func NewProgressModel …
-    67→func (m ProgressModel) Init …
-    74→func (m ProgressModel) Update …
-   122→func (m ProgressModel) View …
+    50→	progress progress.Model
+    51→	status   string
+    52→	err      error
+    53→	complete bool
+    54→}
+    58→func NewProgressModel() ProgressModel {
+    67→func (m ProgressModel) Init() tea.Cmd {
+    74→func (m ProgressModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+   122→func (m ProgressModel) View() string {
    144→type ProgressReader struct {
-   156→func NewProgressReader …
-   184→func (pr *ProgressReader) Read …
-   261→func (pr *ProgressReader) Close …
+   145→	reader   io.Reader
+   146→	program  *tea.Program
+   147→	model    ProgressModel
+   148→	lastLine string
+   149→	done     chan struct{}
+   150→	wg       sync.WaitGroup
+   151→}
+   156→func NewProgressReader(reader io.Reader) *ProgressReader {
+   184→func (pr *ProgressReader) Read(p []byte) (n int, err error) {
+   216→func (pr *ProgressReader) parseProgressLine(line string) {
+   261→func (pr *ProgressReader) Close() error {
+
+internal/ui/slash_command_input.go
+    15→type SlashCommandInput struct {
 
 internal/ui/spinner.go
     16→type Spinner struct {
-    17→	model  spinner.Model
-    18→	done   chan struct{}
-    19→	prog   *tea.Program
-    20→	ctx    context.Context
-    21→	cancel context.CancelFunc
-    22→}
-    80→func NewSpinner(message string) *Spinner {
-   107→func NewThemedSpinner(message string, color lipgloss.AdaptiveColor) *Spinner {
-   133→func (s *Spinner) Start() {
-   149→func (s *Spinner) Stop() {
+    25→type spinnerModel struct {
+    31→func (m spinnerModel) Init() tea.Cmd {
+    35→func (m spinnerModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+    52→func (m spinnerModel) View() string {
+    75→type quitMsg struct{}
 
 internal/ui/styles.go
-    21→func BaseStyle() lipgloss.Style {
-    28→func GetMarkdownRenderer(width int) *glamour.TermRenderer {
+
+internal/ui/tool_approval_input.go
+    12→type ToolApprovalInput struct {
+    13→	textarea textarea.Model
+    14→	toolName string
+    15→	toolArgs string
+    16→	width    int
+    17→	selected bool // true when "yes" is highlighted and false when "no" is
+    18→	approved bool
+    19→	done     bool
+    20→}
+    22→func NewToolApprovalInput(toolName, toolArgs string, width int) *ToolApprovalInput {
+    48→func (t *ToolApprovalInput) Init() tea.Cmd {
+    52→func (t *ToolApprovalInput) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+    83→func (t *ToolApprovalInput) View() string {
 
 internal/ui/usage_tracker.go
     15→type UsageStats struct {
     30→type SessionStats struct {
     42→type UsageTracker struct {
+
+main.go
+     3→import …
+    12→var version = "dev"
+    14→func main() {
 
 sdk/README.md
      1→# MCPHost SDK
@@ -415,8 +670,10 @@ sdk/README.md
    117→### Types
    124→### Methods
    136→## Environment Variables
+   146→## License
 
 sdk/mcphost.go
+     3→import …
     19→type MCPHost struct {
     20→	agent       *agent.Agent
     21→	sessionMgr  *session.Manager
@@ -430,8 +687,24 @@ sdk/mcphost.go
     33→	Streaming    bool   // Enable streaming (default from config)
     34→	Quiet        bool   // Suppress debug output
     35→}
+    40→func New(ctx context.Context, opts *Options) (*MCPHost, error) {
+   130→func (m *MCPHost) Prompt(ctx context.Context, message string) (string, error) {
+   163→func (m *MCPHost) PromptWithCallbacks(
+   164→	ctx context.Context,
+   165→	message string,
+   166→	onToolCall func(name, args string),
+   167→	onToolResult func(name, args, result string, isError bool),
+   168→	onStreaming func(chunk string),
+   169→) (string, error) {
+   201→func (m *MCPHost) GetSessionManager() *session.Manager {
+   207→func (m *MCPHost) LoadSession(path string) error {
+   218→func (m *MCPHost) SaveSession(path string) error {
+   224→func (m *MCPHost) ClearSession() {
+   230→func (m *MCPHost) GetModelString() string {
+   237→func (m *MCPHost) Close() error {
 
 sdk/types.go
+     3→import …
     10→type Message = session.Message
     14→type ToolCall = session.ToolCall
     18→func ConvertToSchemaMessage(msg *Message) *schema.Message {

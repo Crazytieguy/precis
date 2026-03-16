@@ -2,27 +2,85 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1994 tokens)
+budget: 4000 (3997 tokens)
 
 README.md
      9→# Nano-vLLM
     11→A lightweight vLLM implementation built from scratch.
     12→
     13→## Key Features
+    15→* 🚀 **Fast offline inference** - Comparable inference speeds to vLLM
+    16→* 📖 **Readable codebase** - Clean implementation in ~ 1,200 lines of Python code
+    17→* ⚡ **Optimization Suite** - Prefix caching, Tensor Parallelism, Torch compilation, CUDA graph, etc.
+    18→
     19→## Installation
+    21→```bash
+    22→pip install git+https://github.com/GeeeekExplorer/nano-vllm.git
+    23→```
+    24→
     25→## Model Download
+    27→To download the model weights manually, use the following command:
+    28→```bash
+    29→huggingface-cli download --resume-download Qwen/Qwen3-0.6B \
+    30→  --local-dir ~/huggingface/Qwen3-0.6B/ \
+    31→  --local-dir-use-symlinks False
+    32→```
+    33→
     34→## Quick Start
+    36→See `example.py` for usage. The API mirrors vLLM's interface with minor differences in the `LLM.generate` method:
+    37→```python
+    38→from nanovllm import LLM, SamplingParams
+    39→llm = LLM("/YOUR/MODEL/PATH", enforce_eager=True, tensor_parallel_size=1)
+    40→sampling_params = SamplingParams(temperature=0.6, max_tokens=256)
+    41→prompts = ["Hello, Nano-vLLM."]
+    42→outputs = llm.generate(prompts, sampling_params)
+    43→outputs[0]["text"]
+    44→```
+    45→
     46→## Benchmark
+    48→See `bench.py` for benchmark.
+    49→
+    50→**Test Configuration:**
+    51→- Hardware: RTX 4070 Laptop (8GB)
+    52→- Model: Qwen3-0.6B
+    53→- Total Requests: 256 sequences
+    54→- Input Length: Randomly sampled between 100–1024 tokens
+    55→- Output Length: Randomly sampled between 100–1024 tokens
+    56→
+    57→**Performance Results:**
+    58→| Inference Engine | Output Tokens | Time (s) | Throughput (tokens/s) |
+    59→|----------------|-------------|----------|-----------------------|
+    60→| vLLM           | 133,966     | 98.37    | 1361.84               |
+    61→| Nano-vLLM      | 133,966     | 93.41    | 1434.13               |
+    62→
+    63→
     64→## Star History
 
 bench.py
+     1→import os …
+     2→import time …
+     3→from random …
+     4→from nanovllm …
      5→# from vllm import LLM, SamplingParams
      8→def main():
+     9→    seed(0)
+    10→    num_seqs = 256
+      →    …
 
 example.py
+     1→import os …
+     2→from nanovllm …
+     3→from transformers …
      6→def main():
 
+nanovllm/__init__.py
+     1→from nanovllm.llm …
+     2→from nanovllm.sampling_params …
+
 nanovllm/config.py
+     1→import os …
+     2→from dataclasses …
+     3→from transformers …
      6→@dataclass
      7→class Config:
      8→    model: str
@@ -42,45 +100,64 @@ nanovllm/config.py
 nanovllm/engine/block_manager.py
      8→class Block:
      9→
-    10→    def __init__ …
-    16→    def update …
-    20→    def reset …
+    10→    def __init__(self, block_id):
+    16→    def update(self, hash: int, token_ids: list[int]):
+    20→    def reset(self):
     26→class BlockManager:
     27→
-    28→    def __init__ …
-    35→    @classmethod
+    28→    def __init__(self, num_blocks: int, block_size: int):
     36→    def compute_hash(cls, token_ids: list[int], prefix: int = -1):
-    56→    def can_allocate …
-    59→    def allocate …
-    84→    def deallocate …
-    93→    def can_append …
-    96→    def may_append …
+    43→    def _allocate_block(self, block_id: int) -> Block:
+    51→    def _deallocate_block(self, block_id: int) -> Block:
+    56→    def can_allocate(self, seq: Sequence) -> bool:
+    59→    def allocate(self, seq: Sequence):
+    84→    def deallocate(self, seq: Sequence):
+    93→    def can_append(self, seq: Sequence) -> bool:
+    96→    def may_append(self, seq: Sequence):
 
 nanovllm/engine/llm_engine.py
     15→class LLMEngine:
     16→
-    17→    def __init__ …
-    36→    def exit …
-    42→    def add_request …
-    48→    def step …
-    56→    def is_finished …
-    59→    def generate …
+    17→    def __init__(self, model, **kwargs):
+    36→    def exit(self):
+    42→    def add_request(self, prompt: str | list[int], sampling_params: SamplingParams):
+    48→    def step(self):
+    56→    def is_finished(self):
+    59→    def generate(
+    60→        self,
+    61→        prompts: list[str] | list[list[int]],
+    62→        sampling_params: SamplingParams | list[SamplingParams],
+    63→        use_tqdm: bool = True,
+    64→    ) -> list[str]:
 
 nanovllm/engine/model_runner.py
     15→class ModelRunner:
     16→
+    17→    def __init__(self, config: Config, rank: int, event: Event | list[Event]):
+    50→    def exit(self):
+    61→    def loop(self):
+    68→    def read_shm(self):
+    76→    def write_shm(self, method_name, *args):
+    85→    def call(self, method_name, *args):
+    91→    def warmup_model(self):
+   100→    def allocate_kv_cache(self):
+   120→    def prepare_block_tables(self, seqs: list[Sequence]):
+   126→    def prepare_prefill(self, seqs: list[Sequence]):
+   164→    def prepare_decode(self, seqs: list[Sequence]):
+   182→    def prepare_sample(self, seqs: list[Sequence]):
    190→    def run_model(self, input_ids: torch.Tensor, positions: torch.Tensor, is_prefill: bool):
+   208→    def run(self, seqs: list[Sequence], is_prefill: bool) -> list[int]:
    217→    def capture_cudagraph(self):
 
 nanovllm/engine/scheduler.py
      8→class Scheduler:
      9→
-    10→    def __init__ …
-    18→    def is_finished …
-    21→    def add …
-    24→    def schedule …
-    60→    def preempt …
-    65→    def postprocess …
+    10→    def __init__(self, config: Config):
+    18→    def is_finished(self):
+    21→    def add(self, seq: Sequence):
+    24→    def schedule(self) -> tuple[list[Sequence], bool]:
+    60→    def preempt(self, seq: Sequence):
+    65→    def postprocess(self, seqs: list[Sequence], token_ids: list[int]) -> list[bool]:
 
 nanovllm/engine/sequence.py
      8→class SequenceStatus(Enum):
@@ -109,12 +186,20 @@ nanovllm/engine/sequence.py
 nanovllm/layers/activation.py
      6→class SiluAndMul(nn.Module):
      7→
-     8→    def __init__(self):
-    11→    @torch.compile
+     8→    def __init__ …
     12→    def forward(self, x: torch.Tensor) -> torch.Tensor:
 
 nanovllm/layers/attention.py
-    11→def store_kvcache_kernel …
+    11→def store_kvcache_kernel(
+    12→    key_ptr,
+    13→    key_stride,
+    14→    value_ptr,
+    15→    value_stride,
+    16→    k_cache_ptr,
+    17→    v_cache_ptr,
+    18→    slot_mapping_ptr,
+    19→    D: tl.constexpr,
+    20→):
     33→def store_kvcache …
     43→class Attention(nn.Module):
     44→
@@ -136,45 +221,109 @@ nanovllm/layers/layernorm.py
      5→class RMSNorm(nn.Module):
      6→
      7→    def __init__ …
-    17→    def rms_forward …
-    29→    def add_rms_forward …
+    17→    def rms_forward(
+    18→        self,
+    19→        x: torch.Tensor,
+    20→    ) -> torch.Tensor:
+    29→    def add_rms_forward(
+    30→        self,
+    31→        x: torch.Tensor,
+    32→        residual: torch.Tensor,
+    33→    ) -> tuple[torch.Tensor, torch.Tensor]:
     42→    def forward …
 
 nanovllm/layers/linear.py
+     7→def divide …
     12→class LinearBase(nn.Module):
+    13→
+    14→    def __init__ …
+    33→    def forward …
     37→class ReplicatedLinear(LinearBase):
+    38→
+    39→    def __init__ …
+    47→    def weight_loader …
+    50→    def forward …
     54→class ColumnParallelLinear(LinearBase):
+    55→
+    56→    def __init__ …
+    65→    def weight_loader …
+    72→    def forward …
     76→class MergedColumnParallelLinear(ColumnParallelLinear):
+    77→
+    78→    def __init__ …
+    87→    def weight_loader …
     96→class QKVParallelLinear(ColumnParallelLinear):
+    97→
+    98→    def __init__ …
+   114→    def weight_loader …
    131→class RowParallelLinear(LinearBase):
+   132→
+   133→    def __init__ …
+   142→    def weight_loader …
+   149→    def forward …
 
 nanovllm/layers/rotary_embedding.py
      6→def apply_rotary_emb …
     17→class RotaryEmbedding(nn.Module):
     18→
     19→    def __init__ …
-    38→    def forward …
-    52→def get_rope …
+    38→    def forward(
+    39→        self,
+    40→        positions: torch.Tensor,
+    41→        query: torch.Tensor,
+    42→        key: torch.Tensor,
+    43→    ) -> tuple[torch.Tensor, torch.Tensor]:
+    52→def get_rope(
+    53→    head_size: int,
+    54→    rotary_dim: int,
+    55→    max_position: int,
+    56→    base: float,
+    57→    rope_scaling: dict | None = None,
+    58→):
 
 nanovllm/layers/sampler.py
      5→class Sampler(nn.Module):
      6→
-     7→    def __init__(self):
-    10→    @torch.compile
+     7→    def __init__ …
     11→    def forward(self, logits: torch.Tensor, temperatures: torch.Tensor):
 
 nanovllm/llm.py
+     1→from nanovllm.engine.llm_engine …
      4→class LLM(LLMEngine):
      5→    pass
 
 nanovllm/models/qwen3.py
     14→class Qwen3Attention(nn.Module):
+    15→
+    16→    def __init__ …
+    71→    def forward …
     90→class Qwen3MLP(nn.Module):
+    91→
+    92→    def __init__ …
+   112→    def forward …
    119→class Qwen3DecoderLayer(nn.Module):
+   120→
+   121→    def __init__ …
+   145→    def forward …
    161→class Qwen3Model(nn.Module):
+   162→
+   163→    def __init__ …
+   172→    def forward …
    185→class Qwen3ForCausalLM(nn.Module):
+   186→    packed_modules_mapping = {
+   187→        "q_proj": ("qkv_proj", "q"),
+   188→        "k_proj": ("qkv_proj", "k"),
+   189→        "v_proj": ("qkv_proj", "v"),
+   190→        "gate_proj": ("gate_up_proj", 0),
+   191→        "up_proj": ("gate_up_proj", 1),
+   192→    }
+   193→
+   194→    def __init__ …
+   204→    def forward …
+   211→    def compute_logits …
 
 nanovllm/sampling_params.py
+     1→from dataclasses …
      4→@dataclass
      5→class SamplingParams:
      6→    temperature: float = 1.0
@@ -184,6 +333,8 @@ nanovllm/sampling_params.py
     10→    def __post_init__(self):
 
 nanovllm/utils/context.py
+     1→from dataclasses …
+     2→import torch …
      5→@dataclass
      6→class Context:
      7→    is_prefill: bool = False
@@ -194,11 +345,17 @@ nanovllm/utils/context.py
     12→    slot_mapping: torch.Tensor | None = None
     13→    context_lens: torch.Tensor | None = None
     14→    block_tables: torch.Tensor | None = None
-    18→def get_context …
-    21→def set_context …
-    25→def reset_context …
+    16→_CONTEXT = Context()
+    18→def get_context():
+    21→def set_context(is_prefill, cu_seqlens_q=None, cu_seqlens_k=None, max_seqlen_q=0, max_seqlen_k=0, slot_mapping=None, context_lens=None, block_tables=None):
+    25→def reset_context():
 
 nanovllm/utils/loader.py
+     1→import os …
+     2→from glob …
+     3→import torch …
+     4→from torch …
+     5→from safetensors …
      8→def default_weight_loader(param: nn.Parameter, loaded_weight: torch.Tensor):
     12→def load_model(model: nn.Module, path: str):
 
@@ -216,5 +373,10 @@ pyproject.toml
     12→description = "a lightweight vLLM implementation built from scratch"
     13→requires-python = ">=3.10,<3.13"
     14→dependencies = [
-      →…
+    15→    "torch>=2.4.0",
+    16→    "triton>=3.0.0",
+    17→    "transformers>=4.51.0",
+    18→    "flash-attn",
+    19→    "xxhash",
     22→[project.urls]
+    23→Homepage="https://github.com/GeeeekExplorer/nano-vllm"

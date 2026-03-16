@@ -2,12 +2,28 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 1000 (999 tokens)
+budget: 2000 (1986 tokens)
 
 README.md
+     3→# api.api\_database
+    10→## DatabaseApi Objects
+    67→# api.api\_inbound
+    73→## InboundApi Objects
+   345→# api.api
+   351→## Api Objects
+   549→# api.api\_server
+   555→## ServerApi Objects
+   674→# api.api\_client
+   681→## ClientApi Objects
+  1042→# api.api\_base
+  1048→## ApiFields Objects
+  1058→## BaseApi Objects
 
 __init__.py
-     2→from py3xui.api.api_client …
+     2→from py3xui.api.api_client import ClientApi
+     3→from py3xui.api.api_database …
+     4→from py3xui.api.api_inbound …
+     5→from py3xui.api.api_server …
 
 api.py
      6→import logging …
@@ -16,7 +32,15 @@ api.py
     10→from py3xui.utils …
     13→class Api:
     66→
-    67→    def __init__ …
+    67→    def __init__(
+    68→        self,
+    69→        host: str,
+    70→        username: str,
+    71→        password: str,
+    72→        use_tls_verify: bool = True,
+    73→        custom_certificate_path: str | None = None,
+    74→        logger: Any | None = None,
+    75→    ):  # pylint: disable=R0913, R0917
    102→    @session.setter
    103→    def session(self, value: str) -> None:
    124→    @cookie_name.setter
@@ -28,7 +52,7 @@ api.py
    143→        custom_certificate_path: str | None = None,
    144→        logger: Any | None = None,
    145→    ) -> Api:
-   189→    def login …
+   189→    def login(self, two_factor_code: str | int | None = None) -> None:
 
 api_base.py
      5→import logging
@@ -36,7 +60,9 @@ api_base.py
      7→from typing …
      9→import requests …
     11→from py3xui.utils …
+    14→# pylint: disable=too-few-public-methods
     15→class ApiFields:
+    16→    """Stores the fields returned by the XUI API for parsing."""
     17→
     18→    SUCCESS = "success"
     19→    MSG = "msg"
@@ -45,25 +71,64 @@ api_base.py
     22→    NO_IP_RECORD = "No IP Record"
     23→    GET = "GET"
     24→    POST = "POST"
+    27→# pylint: disable=R0902
     28→class BaseApi:
+    29→    """Base class for the XUI API. Contains common methods for making requests.
+    30→
+    31→    Arguments:
+    32→        host (str): The host of the XUI API.
+    33→        username (str): The username for the XUI API.
+    34→        password (str): The password for the XUI API.
+    35→        use_tls_verify (bool): Whether to verify the server TLS certificate.
+    36→        custom_certificate_path (str | None): Path to a custom certificate file.
+    37→        logger (Any | None): The logger, if not set, a dummy logger is used.
+    38→
+    39→    Attributes and Properties:
+    40→        host (str): The host of the XUI API.
+      →        …
     60→
-    61→    def __init__ …
+    61→    def __init__(
+    62→        self,
+    63→        host: str,
+    64→        username: str,
+    65→        password: str,
+    66→        use_tls_verify: bool = True,
+    67→        custom_certificate_path: str | None = None,
+    68→        logger: Any | None = None,
+    69→    ):  # pylint: disable=R0913, R0917
+    80→    @property
     81→    def host(self) -> str:
+    88→    @property
     89→    def username(self) -> str:
+    96→    @property
     97→    def password(self) -> str:
+   104→    @property
    105→    def use_tls_verify(self) -> bool:
+   112→    @property
    113→    def custom_certificate_path(self) -> str | None:
+   128→    @max_retries.setter
    129→    def max_retries(self, value: int) -> None:
+   144→    @session.setter
    145→    def session(self, value: str | None) -> None:
+   160→    @cookie_name.setter
    161→    def cookie_name(self, value: str | None) -> None:
-   168→    def login …
-   194→    def _get_cookie …
+   168→    def login(self, two_factor_code: str | int | None = None) -> None:
+   194→    def _get_cookie(self, response: requests.Response) -> str | None:
+   210→    @property
    211→    def cookies(self) -> dict[str, str]:
-   220→    def _check_response …
-   236→    def _url …
-   246→    def _request_with_retry …
-   313→    def _post …
-   333→    def _get …
+   220→    def _check_response(self, response: requests.Response) -> None:
+   236→    def _url(self, endpoint: str) -> str:
+   246→    def _request_with_retry(
+   247→        self,
+   248→        method: Callable[..., requests.Response],
+   249→        url: str,
+   250→        headers: dict[str, str],
+   251→        **kwargs: Any,
+   252→    ) -> requests.Response:
+   313→    def _post(
+   314→        self, url: str, headers: dict[str, str], data: dict[str, Any], **kwargs
+   315→    ) -> requests.Response:
+   333→    def _get(self, url: str, headers: dict[str, str], **kwargs) -> requests.Response:
 
 api_client.py
      6→import json
@@ -72,18 +137,19 @@ api_client.py
     10→from py3xui.client …
     13→class ClientApi(BaseApi):
     51→
-    52→    def get_by_email …
-    89→    def get_ips …
-   121→    def add …
-   157→    def update …
-   189→    def reset_ips …
-   217→    def reset_stats …
-   248→    def delete …
-   280→    def delete_depleted …
-   312→    def online …
-   342→    def get_traffic_by_id …
+    52→    def get_by_email(self, email: str) -> Client | None:
+    89→    def get_ips(self, email: str) -> list[str]:
+   121→    def add(self, inbound_id: int, clients: list[Client]):
+   157→    def update(self, client_uuid: str, client: Client) -> None:
+   189→    def reset_ips(self, email: str) -> None:
+   217→    def reset_stats(self, inbound_id: int, email: str) -> None:
+   248→    def delete(self, inbound_id: int, client_uuid: str) -> None:
+   280→    def delete_depleted(self, inbound_id: int) -> None:
+   312→    def online(self) -> list[str]:
+   342→    def get_traffic_by_id(self, client_uuid: int) -> list[Client]:
 
 api_database.py
+     4→from py3xui.api.api_base …
      7→class DatabaseApi(BaseApi):
     31→
     32→    def export(self) -> None:
@@ -103,6 +169,8 @@ api_inbound.py
    247→    def reset_client_stats(self, inbound_id: int) -> None:
 
 api_server.py
+     3→from py3xui.api.api_base …
+     4→from py3xui.server.server …
      7→class ServerApi(BaseApi):
     34→
     35→    def get_db(self, save_path: str) -> None:

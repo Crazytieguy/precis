@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1998 tokens)
+budget: 4000 (4000 tokens)
 
 Cargo.toml
      1→[package]
@@ -13,10 +13,75 @@ Cargo.toml
 
 README.md
      1→# OTree - Object Tree TUI Viewer
+     5→A command line tool to view objects (JSON/YAML/TOML/XML) in TUI tree widget.
+     6→
      7→## Install
+    17→### Arch Linux (AUR)
+    25→### macOS and Linux (Homebrew)
     33→## Usage
     52→## Roadmap
     82→## Thanks
+
+docs/actions.md
+     1→# All Available Actions
+
+examples/edge.json
+     2→  "empty_object": {},
+     3→  "empty_list": [],
+     4→  "null": null,
+     5→  "nested_array": [
+
+examples/edge.yaml
+     1→empty_object: {}
+     2→empty_list: []
+     3→null_value: null
+     4→nested_array:
+
+examples/example.json
+     2→  "string": "Hello, World!",
+     3→  "number": 12345,
+     4→  "float": 123.45,
+     5→  "boolean": true,
+     6→  "null": null,
+     7→  "array": [1, "two", 3.0, false, null],
+     8→  "object": {
+    17→  "complex_array": [
+    22→  "complex_object": {
+
+examples/example.yaml
+     3→apiVersion: apps/v1
+     4→kind: Deployment
+     5→metadata:
+     9→spec:
+    40→apiVersion: v1
+    41→kind: Service
+    42→metadata:
+    46→spec:
+    55→apiVersion: v1
+    56→kind: ConfigMap
+    57→metadata:
+    61→data:
+    64→apiVersion: v1
+    65→kind: Secret
+    66→metadata:
+    70→type: Opaque
+    71→data:
+    75→apiVersion: v1
+    76→kind: ServiceAccount
+    77→metadata:
+    81→secrets:
+    84→apiVersion: rbac.authorization.k8s.io/v1
+    85→kind: Role
+    86→metadata:
+    89→rules:
+   106→apiVersion: rbac.authorization.k8s.io/v1
+   107→kind: RoleBinding
+   108→metadata:
+   111→subjects:
+   115→roleRef:
+
+src/clipboard.rs
+    28→pub fn write_clipboard …
 
 src/cmd.rs
     13→pub struct CommandArgs {
@@ -48,9 +113,81 @@ src/cmd.rs
     39→    #[clap(long)]
     40→    pub disable_filter: bool,
     41→
-      →…
+    42→    /// Disable highlight the selected item in tree.
+    43→    #[clap(long)]
+    44→    pub tree_disable_selected_highlight: bool,
+    45→
+    46→    /// The symbol to indicate the selected item in tree.
+    47→    #[clap(long)]
+    48→    pub tree_selected_symbol: Option<String>,
+    49→
+    50→    /// Ignore case when filtering.
+    51→    #[clap(long)]
+    52→    pub filter_ignore_case: bool,
+    53→
+    54→    /// Hide items that do not match the filter.
+    55→    #[clap(long)]
+    56→    pub filter_exclude_mode: bool,
+    57→
+    58→    /// The header format.
+    59→    #[clap(short = 'f', long)]
+    60→    pub header_format: Option<String>,
+    61→
+    62→    /// Use vertical layout.
+    63→    #[clap(short = 'V', long)]
+    64→    pub vertical: bool,
+    65→
+    66→    /// Use horizontal layout.
+    67→    #[clap(short = 'H', long)]
+    68→    pub horizontal: bool,
+    69→
+    70→    /// The tree widget size (percent), should be in range [10, 80].
+    71→    #[clap(short, long)]
+    72→    pub size: Option<u16>,
+    73→
+    74→    /// Disable syntax highlighting in data block.
+    75→    #[clap(long)]
+    76→    pub disable_highlight: bool,
+    77→
+    78→    /// Enable wrap mode in data block.
+    79→    #[clap(short, long)]
+    80→    pub wrap: bool,
+    81→
+    82→    /// Print loaded config.
+    83→    #[clap(long)]
+    84→    pub show_config: bool,
+    85→
+    86→    /// Force to use the default config.
+    87→    #[clap(long)]
+    88→    pub ignore_config: bool,
+    89→
+    90→    /// Print build info.
+    91→    #[clap(long)]
+    92→    pub build_info: bool,
+    93→
+    94→    /// Limit data size to read. In MiB
+    95→    #[clap(long)]
+    96→    pub max_data_size: Option<usize>,
+    97→
+    98→    /// Watch file changes, reload tui if updates
+    99→    #[clap(long, short = 'R')]
+   100→    pub live_reload: bool,
+   101→
+   102→    /// Write debug logs into this file. The file will be created if not exists.
+   103→    #[clap(long)]
+   104→    pub debug: Option<String>,
+   105→
+   106→    /// Print version.
+   107→    #[clap(short, long)]
+   108→    pub version: bool,
+   109→}
+   111→impl CommandArgs {
+   112→    pub fn parse …
+   149→    pub fn update_config …
+   202→    pub fn get_content_type …
 
 src/config/colors.rs
+     7→use super::Config;
     21→pub struct Colors {
     56→    pub fn default() -> Self {
     78→pub struct DataColors {
@@ -81,26 +218,16 @@ src/config/keys.rs
     71→    Esc,
     72→}
    195→pub struct Keys {
-   196→    #[serde(default = "Keys::default_move_up")]
-   197→    pub move_up: Vec<String>,
-   198→    #[serde(default = "Keys::default_move_down")]
-   199→    pub move_down: Vec<String>,
-   200→
-   201→    #[serde(default = "Keys::default_move_left")]
-   202→    pub move_left: Vec<String>,
-   203→    #[serde(default = "Keys::default_move_right")]
-   204→    pub move_right: Vec<String>,
-   205→
-      →…
    351→pub struct KeyAction {
-   352→    pub key: Key,
-   353→    pub action: Option<Action>,
-   354→}
+   357→    pub fn get_key_action(&self, event: KeyEvent) -> Option<KeyAction> {
 
 src/config/mod.rs
      1→pub mod colors;
      2→pub mod keys;
      3→pub mod types;
+    12→use self::colors::Colors;
+    13→use self::keys::Keys;
+    14→use self::types::Types;
     17→pub struct Config {
     53→pub struct Tree {
     62→pub struct Editor {
@@ -115,54 +242,78 @@ src/config/mod.rs
    100→pub struct Footer {
    106→pub struct Filter {
    118→pub struct Data {
+   128→    pub const MIN_LAYOUT_TREE_SIZE: u16 = 10;
+   129→    pub const MAX_LAYOUT_TREE_SIZE: u16 = 80;
+   131→    pub fn load(path: Option<String>) -> Result<Self> {
+   144→    pub fn parse(&mut self) -> Result<()> {
+   196→    pub fn default() -> Self {
+   212→    pub fn show(&self) -> Result<()> {
 
 src/config/types.rs
     28→pub struct Types {
-    29→    #[serde(default = "Types::default_str")]
-    30→    pub str: String,
-    31→
-    32→    #[serde(default = "Types::default_null")]
-    33→    pub null: String,
-    34→
-    35→    #[serde(default = "Types::default_bool")]
-    36→    pub bool: String,
-    37→
-    38→    #[serde(default = "Types::default_num")]
-    39→    pub num: String,
-    40→
-    41→    #[serde(default = "Types::default_arr")]
-    42→    pub arr: String,
-    43→
-    44→    #[serde(default = "Types::default_obj")]
-    45→    pub obj: String,
-    46→}
 
 src/debug.rs
      7→#[macro_export]
      8→macro_rules! debug {
-    19→pub fn set_file(file: String) {
-    23→pub fn write_logs(mut msg: String) -> Result<()> {
+    17→static FILE …
+    19→pub fn set_file …
+    23→pub fn write_logs …
 
 src/edit.rs
     10→pub struct Edit {
-    11→    path: String,
-    12→    data: String,
-    13→    cmd: Command,
-    14→}
+    16→impl Edit {
+    17→    pub fn new …
+    40→    pub fn run …
 
 src/live_reload.rs
     16→pub struct FileWatcher {
-    17→    path: PathBuf,
-    18→
-    19→    cfg: Rc<Config>,
-    20→    content_type: ContentType,
-    21→
-    22→    max_data_size: usize,
-    23→
-    24→    data: Arc<Mutex<Data>>,
-    25→}
+    27→impl FileWatcher {
+    28→    pub fn new …
+    64→    pub fn get_err …
+    71→    pub fn parse_tree …
+    93→struct Data {
+    98→impl Data {
+   112→    fn set_err …
+   118→fn watch_file …
+
+src/main.rs
+     1→mod clipboard;
+     2→mod cmd;
+     3→mod config;
+     4→mod debug;
+     5→mod edit;
+     6→mod live_reload;
+     7→mod parse;
+     8→mod tree;
+     9→mod ui;
+
+src/parse/any.rs
+     9→pub struct AnyParser {
+    10→    inner: RefCell<Option<Box<dyn Parser>>>,
+    11→}
+    14→    pub fn new …
+    20→    pub fn set_parser …
+
+src/parse/hcl.rs
+     8→pub struct HclParser {}
+
+src/parse/json.rs
+     6→pub struct JsonParser {}
+    26→pub fn highlight …
+
+src/parse/jsonl.rs
+     7→pub struct JsonlParser;
 
 src/parse/mod.rs
+     1→mod any;
+     2→mod hcl;
+     3→mod json;
+     4→mod jsonl;
+     5→mod syntax;
+     6→mod toml;
+     7→mod xml;
+     8→mod yaml;
+    17→#[derive(Debug, Clone, Copy, ValueEnum, EnumIter)]
     18→pub enum ContentType {
     19→    Json,
     20→    Yaml,
@@ -181,10 +332,55 @@ src/parse/mod.rs
     33→    Any,
     34→}
     36→pub trait Parser {
+    37→    fn extension …
+    39→    fn allow_array_root …
+    41→    fn parse …
+    43→    fn syntax_highlight …
+    45→    fn parse_root …
+    67→    pub fn new_parser …
 
 src/parse/syntax.rs
     11→pub enum SyntaxToken {
+    12→    Symbol(&'static str),
+    13→
+    14→    Name(String),
+    15→
+    16→    Tag(String),
+    17→
+    18→    String(String),
+    19→    Number(String),
+    20→    Null(&'static str),
+    21→    Bool(&'static str),
+    22→
+    23→    Section(String),
+    24→
+    25→    Break,
+    26→    Indent(usize),
+    27→}
+    32→    pub fn render …
+   110→    pub fn pure_text …
+   139→pub fn quote_field_name …
    151→pub enum StringValue {
+   152→    String(String),
+   153→    MultiLines(Vec<String>),
+   154→}
+   157→    pub fn new …
+   201→pub fn is_value_complex …
+   216→struct TextWrapper<'a, 'this> {
+
+src/parse/toml.rs
+     9→pub struct TomlParser {}
+
+src/parse/xml.rs
+    12→pub struct XmlParser {}
+    37→trait AttrMap {
+    38→    fn insert_text …
+    39→    fn insert_text_node …
+    61→struct NodeValues {
+   176→fn read …
+
+src/parse/yaml.rs
+     8→pub struct YamlParser {}
 
 src/tree.rs
     14→pub struct Tree {
@@ -193,6 +389,7 @@ src/tree.rs
     37→    pub text: &'a str,
     38→    pub ignore_case: bool,
     39→}
+    41→#[derive(Debug, Clone, Copy)]
     42→pub enum FieldType {
     43→    Null,
     44→    Num,
@@ -201,9 +398,20 @@ src/tree.rs
     47→    Obj,
     48→    Arr,
     49→}
+    51→impl Tree {
+    52→    pub fn parse …
+    58→    pub fn from_value …
+    94→    pub fn get_value …
+    98→    pub fn get_parser …
+   385→impl ItemValue {
+   386→    pub fn plain_text …
+   390→    pub fn render …
+   394→    pub fn build_highlighted_text …
 
 src/ui/app.rs
+    27→enum Refresh {
     39→enum ElementInFocus {
+    47→#[derive(Debug, Clone, Copy)]
     48→pub enum ScrollDirection {
     49→    Up,
     50→    Down,
@@ -213,7 +421,14 @@ src/ui/app.rs
     87→    Edit(Box<Edit>),
     88→    Quit,
     89→}
-   102→    pub fn new …
+    91→impl App {
+   101→    #[expect(clippy::needless_pass_by_value)]
+   102→    pub fn new(cfg: Rc<Config>, tree: Tree, fw: Option<FileWatcher>) -> Self {
+   279→    fn popup_error …
+
+src/ui/data_block.rs
+    16→pub struct DataBlock {
+    32→impl DataBlock {
 
 src/ui/filter.rs
     13→pub struct Filter {
@@ -224,11 +439,14 @@ src/ui/filter.rs
     24→    Quit,
     25→}
     27→pub struct FilterOptions {
+    33→#[derive(Debug, Clone, Copy)]
     34→pub enum FilterTarget {
     35→    Key,
     36→    Value,
     37→    All,
     38→}
+    40→impl Filter {
+   152→impl FilterOptions {
 
 src/ui/footer.rs
     10→pub enum FooterText<'a> {
@@ -237,16 +455,29 @@ src/ui/footer.rs
     13→    None,
     14→}
     16→pub struct Footer {
-    17→    cfg: Rc<Config>,
-    18→}
+    20→impl Footer {
 
 src/ui/header.rs
     11→pub struct HeaderContext {
+    18→impl HeaderContext {
     41→pub struct Header {
+    46→impl Header {
 
 src/ui/mod.rs
-    35→pub fn start …
+     1→mod app;
+     2→mod data_block;
+     3→mod filter;
+     4→mod footer;
+     5→mod header;
+     6→mod popup;
+     7→mod tree_overview;
 
 src/ui/popup.rs
     13→pub struct PopupData {
     18→pub struct Popup {
+    26→impl Popup {
+   118→    fn centered_rect …
+
+src/ui/tree_overview.rs
+    19→pub struct TreeOverview {
+    32→impl TreeOverview {

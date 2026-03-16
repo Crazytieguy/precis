@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1999 tokens)
+budget: 4000 (4000 tokens)
 
 README.md
     40→## About
@@ -16,7 +16,28 @@ README.md
     95→- [API Reference](#api-reference)
     96→  - [`match`](#match)
     97→  - [`.with`](#with)
-      →  …
+    98→  - [`.when`](#when)
+    99→  - [`.returnType`](#returntype)
+   100→  - [`.exhaustive`](#exhaustive)
+   101→  - [`.otherwise`](#otherwise)
+   102→  - [`.narrow`](#narrow)
+   103→  - [`isMatching`](#ismatching)
+   104→  - [Patterns](#patterns)
+   105→    - [Literals](#literals)
+   106→    - [Wildcards](#wildcards)
+   107→    - [Objects](#objects)
+   108→    - [Tuples (arrays)](#tuples-arrays)
+   109→    - [`P.array` patterns](#parray-patterns)
+   110→    - [`P.record` patterns](#precord-patterns)
+   111→    - [`P.set`](#pset-patterns)
+   112→    - [`P.map`](#pmap-patterns)
+   113→    - [`P.when` patterns](#pwhen-patterns)
+   114→    - [`P.not` patterns](#pnot-patterns)
+   115→    - [`P.select` patterns](#pselect-patterns)
+   116→    - [`P.optional` patterns](#poptional-patterns)
+   117→    - [`P.instanceOf` patterns](#pinstanceof-patterns)
+   118→    - [`P.union` patterns](#punion-patterns)
+      →    …
    128→## Sandbox examples
    139→## Getting Started
    415→## API Reference
@@ -26,41 +47,73 @@ README.md
   1621→## Types
   1766→## Inspirations
 
+examples/gif-fetcher/src/App.tsx
+    11→type State …
+    24→type Event …
+    33→const initState: State = {
+    42→const reducer …
+    75→export default function App() {
+
+examples/gif-fetcher/src/constants.ts
+     1→export const API_KEY = 'xxxxxxxxxxxxxxxx';
+
+examples/gif-fetcher/src/searchGif.ts
+     4→const delay …
+     6→export function searchGif(query: string) {
+
+examples/one-file-demo/one-file-demo.ts
+    79→const example3 …
+   102→const User = {
+
 jsr.json
      2→  "name": "@gabriel/ts-pattern",
      3→  "version": "5.9.0",
      4→  "exports": {
+     5→    ".": "./src/index.ts",
+     6→    "./types": "./src/index.ts",
+     7→    "./package.json": "./package.json"
 
 src/errors.ts
      5→export class NonExhaustiveError extends Error {
-     6→  constructor(public input: unknown) {
+     6→  constructor …
+
+src/index.ts
 
 src/internals/helpers.ts
      7→import * as symbols from './symbols';
+     8→import { SelectionType } from '../types/FindSelected';
+     9→import { Pattern, Matcher, MatcherType, AnyMatcher } from '../types/Pattern';
     12→export const isObject …
     16→export const isMatcher …
+    24→const isOptionalPattern …
     32→export const matchPattern …
    120→export const getSelectionKeys …
    132→export const flatMap …
 
 src/internals/symbols.ts
+     2→ * Symbols used internally within ts-pattern to construct and discriminate
+     3→ * Guard, Not, and Select, and AnonymousSelect patterns
+     4→ *
+      → …
     16→export const matcher = Symbol.for('@ts-pattern/matcher');
     17→export type matcher = typeof matcher;
-    19→export const unset …
+    19→export const unset = Symbol.for('@ts-pattern/unset');
     20→export type unset = typeof unset;
-    22→export const isVariadic …
+    22→export const isVariadic = Symbol.for('@ts-pattern/isVariadic');
     23→export type isVariadic = typeof isVariadic;
-    26→export const anonymousSelectKey …
+    26→export const anonymousSelectKey = '@ts-pattern/anonymous-select-key';
     27→export type anonymousSelectKey = typeof anonymousSelectKey;
-    29→export const override …
+    29→export const override = Symbol.for('@ts-pattern/override');
     30→export type override = typeof override;
 
 src/is-matching.ts
+    11→type PatternConstraint …
     53→export function isMatching …
 
 src/match.ts
+    11→const unmatched: MatchState<never> = {
     32→export function match …
-    47→class MatchExpression<input, output> {
+    47→class MatchExpression …
     48→  constructor …
     50→  with …
     94→  when …
@@ -72,10 +125,21 @@ src/match.ts
 
 src/patterns.ts
      8→import { matchPattern, getSelectionKeys, flatMap } from './internals/helpers';
-    81→export type unstable_Matchable …
-   100→export type unstable_Matcher …
-   116→export type infer …
-   131→export type narrow …
+    81→export type unstable_Matchable<
+    82→  narrowedOrFn,
+    83→  input = unknown,
+    84→  pattern = never
+    85→> = CustomP<input, pattern, narrowedOrFn>;
+   100→export type unstable_Matcher<
+   101→  narrowedOrFn,
+   102→  input = unknown,
+   103→  pattern = never
+   104→> = ReturnType<CustomP<input, pattern, narrowedOrFn>[matcher]>;
+   116→export type infer<pattern> = InvertPattern<NoInfer<pattern>, unknown>;
+   131→export type narrow<input, pattern> = ExtractPreciseValue<
+   132→  input,
+   133→  InvertPattern<pattern, input>
+   134→>;
    187→export function optional …
    246→export function array …
    299→export function set …
@@ -86,44 +150,114 @@ src/patterns.ts
    611→export function not …
    646→export function when …
    696→export function select …
-   782→export const any …
-   793→export const unknown …
-   805→export const _ …
-   928→export const string …
-  1075→export const number …
-  1201→export const bigint …
-  1211→export const boolean …
-  1221→export const symbol …
-  1231→export const nullish …
-  1241→export const nonNullable …
+   782→export const any: UnknownPattern = chainable(when(isUnknown));
+   793→export const unknown: UnknownPattern = chainable(when(isUnknown));
+   805→export const _ = any;
+   817→const startsWith …
+   831→const endsWith …
+   845→const minLength …
+   857→const length …
+   869→const maxLength …
+   881→const includes …
+   895→const regex …
+   928→export const string: StringPattern = stringChainable(when(isString));
+   940→const between …
+   955→const lt …
+   969→const gt …
+   983→const lte …
+   997→const gte …
+  1011→const int …
+  1023→const finite …
+  1035→const positive …
+  1047→const negative …
+  1075→export const number: NumberPattern = numberChainable(when(isNumber));
+  1087→const betweenBigInt …
+  1106→const ltBigInt …
+  1120→const gtBigInt …
+  1134→const lteBigInt …
+  1148→const gteBigInt …
+  1162→const positiveBigInt …
+  1174→const negativeBigInt …
+  1201→export const bigint: BigIntPattern = bigintChainable(when(isBigInt));
+  1211→export const boolean: BooleanPattern = chainable(when(isBoolean));
+  1221→export const symbol: SymbolPattern = chainable(when(isSymbol));
+  1231→export const nullish: NullishPattern = chainable(when(isNullish));
+  1241→export const nonNullable: NonNullablePattern = chainable(when(isNonNullable));
   1251→export function instanceOf …
   1274→export function shape …
 
-src/types/BuildMany.ts
-     4→export type BuildMany …
-    19→export type SetDeep …
-
-src/types/DeepExclude.ts
-     3→export type DeepExclude …
-
 src/types/DistributeUnions.ts
-    41→export type DistributeMatchingUnions …
-    46→export type FindUnionsMany …
-    80→export type FindUnions …
-   174→export type ArrayToVariadicUnion …
-   183→export type Distribute …
+    41→export type DistributeMatchingUnions<a, p> = IsAny<a> extends true
+    42→  ? any
+    43→  : BuildMany<a, Distribute<FindUnionsMany<a, p>>>;
+    80→export type FindUnions<
+    81→  a,
+    82→  p,
+    83→  path extends PropertyKey[] = []
+    84→> = unknown extends p
+    85→  ? []
+    86→  : IsAny<p> extends true
+    87→  ? [] // Don't try to find unions after 5 levels
+    88→  : Length<path> extends 5
+    89→  ? []
+    90→  : IsUnion<a> extends true
+    91→  ? [
+    92→      {
+    93→        cases: a extends any
+    94→          ? {
+    95→              value: a;
+    96→              subUnions: FindUnionsMany<a, p, path>;
+    97→            }
+    98→          : never;
+    99→        path: path;
+   100→      }
+   101→    ]
+   102→  : [a, p] extends [readonly any[], readonly any[]]
+   103→  ? [a, p] extends [
+   104→      readonly [infer a1, infer a2, infer a3, infer a4, infer a5],
+   105→      readonly [infer p1, infer p2, infer p3, infer p4, infer p5]
+   106→    ]
+   107→    ? [
+   108→        ...FindUnions<a1, p1, [...path, 0]>,
+   109→        ...FindUnions<a2, p2, [...path, 1]>,
+   110→        ...FindUnions<a3, p3, [...path, 2]>,
+   111→        ...FindUnions<a4, p4, [...path, 3]>,
+   112→        ...FindUnions<a5, p5, [...path, 4]>
+   113→      ]
+   114→    : [a, p] extends [
+   115→        readonly [infer a1, infer a2, infer a3, infer a4],
+   116→        readonly [infer p1, infer p2, infer p3, infer p4]
+   117→      ]
+   118→    ? [
+   119→        ...FindUnions<a1, p1, [...path, 0]>,
+   120→        ...FindUnions<a2, p2, [...path, 1]>,
+   121→        ...FindUnions<a3, p3, [...path, 2]>,
+   122→        ...FindUnions<a4, p4, [...path, 3]>
+   123→      ]
+   124→    : [a, p] extends [
+   125→        readonly [infer a1, infer a2, infer a3],
+   126→        readonly [infer p1, infer p2, infer p3]
+   127→      ]
+   128→    ? [
+   129→        ...FindUnions<a1, p1, [...path, 0]>,
+   130→        ...FindUnions<a2, p2, [...path, 1]>,
+   131→        ...FindUnions<a3, p3, [...path, 2]>
+   132→      ]
+   133→    : [a, p] extends [
+   134→        readonly [infer a1, infer a2],
+   135→        readonly [infer p1, infer p2]
+   136→      ]
+      →      …
 
 src/types/InvertPattern.ts
-   106→export type InvertPattern …
-   180→export type ReduceIntersectionForExclude …
-   192→export type ReduceUnionForExclude …
-   303→export type InvertPatternForExclude …
-
-src/types/IsMatching.ts
-    57→export type IsMatching …
+   106→export type InvertPattern<p, input> = Equal<Pattern<input>, p> extends true
+   107→  ? never
+   108→  : InvertPatternInternal<p, input>;
+   303→export type InvertPatternForExclude<p, i> = Equal<Pattern<i>, p> extends true
+   304→  ? never
+   305→  : InvertPatternForExcludeInternal<p, i>;
 
 src/types/Match.ts
-     8→export type PickReturnValue …
     22→export type Match<
     23→  i,
     24→  o,
@@ -169,11 +303,18 @@ src/types/Match.ts
     64→    const p1 extends Pattern<i>,
     65→    const p2 extends Pattern<i>,
     66→    c,
+    67→    p extends p1 | p2,
+    68→    value extends p extends any ? MatchedValue<i, InvertPattern<p, i>> : never
+    69→  >(
+    70→    p1: p1,
+    71→    p2: p2,
    132→  with …
    159→  when …
    180→  otherwise …
    205→  run …
    225→  narrow …
+   245→type DeepExcludeAll …
+   261→type Exhaustive …
 
 src/types/Pattern.ts
     50→export interface Matcher<
@@ -230,5 +371,9 @@ src/types/Pattern.ts
    678→      select …
 
 src/types/helpers.ts
-    14→export type LeastUpperBound …
-   182→export type GuardValue …
+    14→export type LeastUpperBound<a, b> = b extends a ? b : a extends b ? a : never;
+   182→export type GuardValue<fn> = fn extends (value: any) => value is infer b
+   183→  ? b
+   184→  : fn extends (value: infer a) => unknown
+   185→  ? a
+   186→  : never;

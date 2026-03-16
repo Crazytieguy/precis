@@ -2,7 +2,9 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1993 tokens)
+budget: 4000 (3983 tokens)
+
+CHANGELOG.md
 
 Cargo.toml
      1→[package]
@@ -22,13 +24,32 @@ rfcs/0296-structured-logging.md
      5→# Summary
     16→# Contents
     43→# Motivation
+    46→## What is structured logging?
+    86→## Why do we need structured logging in `log`?
     98→# Guide-level explanation
+   103→## Logging structured key-value pairs
+   255→## Supporting key-value pairs in `Log` implementations
+   401→## Integrating log frameworks with `log`
+   489→## How producers and consumers of structured values interact
    495→# Reference-level explanation
+   500→## Design considerations
+   522→## Cargo features
+   541→## A complete key-values API
+  1460→## A minimal key-values API
+  1569→## The `log!` macros
   1575→# Drawbacks, rationale, and alternatives
+  1578→## Supporting structured logging at all
+  1582→## Internalizing `sval` and `serde`
   1629→# Prior art
+  1634→## Rust
+  1640→## Go
+  1644→## .NET
   1650→# Unresolved questions
 
 src/__private_api.rs
+     3→use self::sealed::KVs;
+     4→use crate::{logger, Level, Log, Metadata, Record};
+     7→pub use std::{format_args, module_path, stringify};
     10→pub type Value<'a> = &'a str;
     12→mod sealed {
     14→    pub trait KVs<'a> {
@@ -36,15 +57,17 @@ src/__private_api.rs
     39→pub struct GlobalLogger;
     84→pub fn log …
    103→pub fn enabled …
-   108→pub fn loc …
+   108→pub fn loc() -> &'static Location<'static> {
    113→mod kv_support {
+   114→    use crate::kv;
    116→    pub type Value<'a> = kv::Value<'a>;
    122→    pub fn capture_to_value …
    126→    pub fn capture_debug …
    130→    pub fn capture_display …
-   135→    pub fn capture_error …
-   140→    pub fn capture_sval …
-   145→    pub fn capture_serde …
+   135→    pub fn capture_error<'a>(v: &'a (dyn std::error::Error + 'static)) -> Value<'a> {
+   140→    pub fn capture_sval<'a, V: sval::Value + ?Sized>(v: &'a &'a V) -> Value<'a> {
+   145→    pub fn capture_serde<'a, V: serde_core::Serialize + ?Sized>(v: &'a &'a V) -> Value<'a> {
+   151→pub use self::kv_support::*;
 
 src/kv/error.rs
      5→pub struct Error {
@@ -58,14 +81,14 @@ src/kv/error.rs
 
 src/kv/key.rs
      7→pub trait ToKey {
-     9→    fn to_key(&self) -> Key<'_>;
+     9→    fn to_key …
     37→pub struct Key<'k> {
     38→    // NOTE: This may become `Cow<'k, str>`
     39→    key: &'k str,
     40→}
-    45→    pub fn from_str(key: &'k str) -> Self {
-    53→    pub fn as_str(&self) -> &str {
-    61→    pub fn to_borrowed_str(&self) -> Option<&'k str> {
+    45→    pub fn from_str …
+    53→    pub fn as_str …
+    61→    pub fn to_borrowed_str …
     94→mod std_support {
     95→    use super::*;
    113→mod sval_support {
@@ -78,35 +101,67 @@ src/kv/mod.rs
    247→mod key;
    250→mod source;
    252→mod value;
+   259→#[cfg(feature = "kv_unstable")]
    260→pub mod source;
+   261→#[cfg(feature = "kv_unstable")]
    262→pub mod value;
+   265→pub use self::source::Visitor;
 
 src/kv/source.rs
+     6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
     51→pub trait Source {
     62→    fn visit …
     73→    fn get …
     85→    fn count …
-    91→fn get_default …
-   114→fn count_default …
    235→pub trait VisitSource<'kvs> {
    237→    fn visit_pair …
    280→mod std_support {
+   281→    use super::*;
    462→pub use VisitSource as Visitor;
 
 src/kv/value.rs
      8→pub use crate::kv::Error;
     11→pub trait ToValue {
+    13→    fn to_value …
    119→pub struct Value<'v> {
    120→    inner: inner::Inner<'v>,
    121→}
-   204→    fn from_inner …
+   125→    pub fn from_any …
+   133→    pub fn from_debug …
+   143→    pub fn from_display …
+   154→    pub fn from_serde …
+   165→    pub fn from_sval …
+   175→    pub fn from_dyn_debug …
+   182→    pub fn from_dyn_display …
+   190→    pub fn from_dyn_error …
+   197→    pub fn null …
+   217→    pub fn visit …
+   379→    pub fn to_borrowed_error …
+   384→    pub fn to_borrowed_str …
    390→mod std_support {
    395→    use super::*;
+   438→        pub fn to_cow_str …
    462→pub trait VisitValue<'v> {
+   469→    fn visit_any …
+   472→    fn visit_null …
+   477→    fn visit_u64 …
+   482→    fn visit_i64 …
+   487→    fn visit_u128 …
+   492→    fn visit_i128 …
+   497→    fn visit_f64 …
+   502→    fn visit_bool …
+   507→    fn visit_str …
+   512→    fn visit_borrowed_str …
+   517→    fn visit_char …
+   524→    fn visit_error …
+   530→    fn visit_borrowed_error …
+   588→    fn visit_error …
+   593→    fn visit_borrowed_error …
    602→pub(in crate::kv) mod inner {
    610→    use super::*;
    612→    pub use value_bag::ValueBag as Inner;
    614→    pub use value_bag::Error;
+   619→    pub fn visit …
    721→pub(in crate::kv) mod inner {
    735→    use super::*;
    737→    #[derive(Clone)]
@@ -123,6 +178,27 @@ src/kv/value.rs
    748→        Debug(&'v dyn fmt::Debug),
    749→        Display(&'v dyn fmt::Display),
    750→    }
+   897→        pub fn from_debug …
+   901→        pub fn from_display …
+   905→        pub fn from_dyn_debug …
+   909→        pub fn from_dyn_display …
+   913→        pub fn empty …
+   917→        pub fn to_bool …
+   924→        pub fn to_char …
+   931→        pub fn to_f64 …
+   954→        pub fn to_i64 …
+   964→        pub fn to_u64 …
+   974→        pub fn to_u128 …
+   984→        pub fn to_i128 …
+   994→        pub fn to_borrowed_str …
+  1031→    pub fn visit …
+  1055→    pub fn capture_debug …
+  1065→    pub fn capture_display …
+  1075→    pub fn capture_error …
+  1085→    pub fn capture_serde …
+  1095→    pub fn capture_sval …
+  1107→    pub fn is …
+  1116→    pub fn downcast_ref …
   1123→pub use VisitValue as Visit;
   1129→macro_rules! as_debug {
   1139→macro_rules! as_display {
@@ -161,6 +237,12 @@ src/lib.rs
    497→    /// Designates very low priority, often extremely verbose, information.
    498→    Trace,
    499→}
+   548→    pub fn max() -> Level {
+   554→    pub fn to_level_filter(&self) -> LevelFilter {
+   561→    pub fn as_str(&self) -> &'static str {
+   579→    pub fn iter() -> impl Iterator<Item = Self> {
+   599→    pub fn increment_severity(&self) -> Self {
+   620→    pub fn decrement_severity(&self) -> Self {
    636→pub enum LevelFilter {
    637→    /// A level lower than all log levels.
    638→    Off,
@@ -175,7 +257,14 @@ src/lib.rs
    647→    /// Corresponds to the `Trace` log level.
    648→    Trace,
    649→}
+   699→    pub fn max() -> LevelFilter {
+   707→    pub fn to_level(&self) -> Option<Level> {
+   714→    pub fn as_str(&self) -> &'static str {
+   732→    pub fn iter() -> impl Iterator<Item = Self> {
+   752→    pub fn increment_severity(&self) -> Self {
+   774→    pub fn decrement_severity(&self) -> Self {
    781→enum MaybeStaticStr<'a> {
+   788→    fn get …
    842→pub struct Record<'a> {
    843→    metadata: Metadata<'a>,
    844→    args: fmt::Arguments<'a>,
@@ -186,20 +275,62 @@ src/lib.rs
    849→    key_values: KeyValues<'a>,
    850→}
    858→struct KeyValues<'a>(&'a dyn kv::Source);
+   872→    pub fn builder() -> RecordBuilder<'a> {
+   878→    pub fn args(&self) -> &fmt::Arguments<'a> {
+   884→    pub fn metadata(&self) -> &Metadata<'a> {
+   890→    pub fn level(&self) -> Level {
+   896→    pub fn target(&self) -> &'a str {
+   902→    pub fn module_path(&self) -> Option<&'a str> {
+   908→    pub fn module_path_static(&self) -> Option<&'static str> {
+   917→    pub fn file(&self) -> Option<&'a str> {
+   923→    pub fn file_static(&self) -> Option<&'static str> {
+   932→    pub fn line(&self) -> Option<u32> {
+   939→    pub fn key_values(&self) -> &dyn kv::Source {
+   946→    pub fn to_builder(&self) -> RecordBuilder<'_> {
   1003→pub struct RecordBuilder<'a> {
   1004→    record: Record<'a>,
   1005→}
+  1021→    pub fn new() -> RecordBuilder<'a> {
+  1037→    pub fn args(&mut self, args: fmt::Arguments<'a>) -> &mut RecordBuilder<'a> {
+  1044→    pub fn metadata(&mut self, metadata: Metadata<'a>) -> &mut RecordBuilder<'a> {
+  1051→    pub fn level(&mut self, level: Level) -> &mut RecordBuilder<'a> {
+  1058→    pub fn target(&mut self, target: &'a str) -> &mut RecordBuilder<'a> {
+  1065→    pub fn module_path(&mut self, path: Option<&'a str>) -> &mut RecordBuilder<'a> {
+  1072→    pub fn module_path_static(&mut self, path: Option<&'static str>) -> &mut RecordBuilder<'a> {
+  1079→    pub fn file(&mut self, file: Option<&'a str>) -> &mut RecordBuilder<'a> {
+  1086→    pub fn file_static(&mut self, file: Option<&'static str>) -> &mut RecordBuilder<'a> {
+  1093→    pub fn line(&mut self, line: Option<u32>) -> &mut RecordBuilder<'a> {
+  1101→    pub fn key_values(&mut self, kvs: &'a dyn kv::Source) -> &mut RecordBuilder<'a> {
+  1108→    pub fn build(&self) -> Record<'a> {
   1158→pub struct Metadata<'a> {
   1159→    level: Level,
   1160→    target: &'a str,
   1161→}
+  1166→    pub fn builder() -> MetadataBuilder<'a> {
+  1172→    pub fn level(&self) -> Level {
+  1178→    pub fn target(&self) -> &'a str {
   1200→pub struct MetadataBuilder<'a> {
   1201→    metadata: Metadata<'a>,
   1202→}
+  1212→    pub fn new() -> MetadataBuilder<'a> {
+  1223→    pub fn level(&mut self, arg: Level) -> &mut MetadataBuilder<'a> {
+  1230→    pub fn target(&mut self, target: &'a str) -> &mut MetadataBuilder<'a> {
+  1237→    pub fn build(&self) -> Metadata<'a> {
   1249→pub trait Log: Sync + Send {
+  1262→    fn enabled(&self, metadata: &Metadata) -> bool;
+  1271→    fn log(&self, record: &Record);
+  1279→    fn flush(&self);
   1283→struct NopLogger;
+  1351→pub fn set_max_level(level: LevelFilter) {
+  1375→pub unsafe fn set_max_level_racy(level: LevelFilter) {
+  1396→pub fn max_level() -> LevelFilter {
+  1420→pub fn set_boxed_logger(logger: Box<dyn Log>) -> Result<(), SetLoggerError> {
+  1478→pub fn set_logger(logger: &'static dyn Log) -> Result<(), SetLoggerError> {
+  1483→fn set_logger_inner …
+  1529→pub unsafe fn set_logger_racy(logger: &'static dyn Log) -> Result<(), SetLoggerError> {
   1549→pub struct SetLoggerError(());
   1566→pub struct ParseLevelError(());
+  1581→pub fn logger() -> &'static dyn Log {
   1600→pub mod __private_api;
   1602→/// The statically resolved maximum log level.
   1603→///
@@ -214,3 +345,6 @@ src/macros.rs
    292→macro_rules! debug {
    336→macro_rules! trace {
    391→macro_rules! log_enabled {
+
+src/serde.rs
+     9→use crate::{Level, LevelFilter, LOG_LEVEL_NAMES};
