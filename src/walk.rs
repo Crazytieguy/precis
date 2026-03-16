@@ -86,84 +86,80 @@ fn is_vendored_or_fixture(path: &Path) -> bool {
     })
 }
 
-/// Check if a file is test/benchmark/example/docs-site/CI infrastructure.
-/// These files are included in output but deprioritized by the scheduler.
-/// Matches test directories, benchmark directories, example directories,
-/// documentation site directories, CI/CD configuration, and test file naming conventions.
-pub fn is_test_file(path: &Path) -> bool {
-    // Check for deprioritized directories anywhere in the path:
-    // __tests__/ (Jest), tests/ (Rust/Python/JS), test/ (JS/TS), testing/ (Python),
-    // benches/ (Rust), benchmark/ and benchmarks/ (cross-language),
-    // examples/ and example/ (usage demonstrations, not core API: Rust, Go, JS),
-    // experiments/ and experiment/ (ML training scripts, research exploration),
-    // fixtures/ and fixture/ (test fixture code, support files),
-    // website/ and site/ (documentation sites: Docusaurus, Next.js, etc.),
-    // docs/ and doc/ (supplementary documentation, Sphinx configs, GitHub Pages),
-    // mocks/ and __mocks__/ (auto-generated test mocks: Go mockery, Jest, etc.),
-    // .github/ and .circleci/ (CI/CD workflows, issue templates, repo config)
-    if path.components().any(|c| {
-        let s = c.as_os_str();
-        s == "__tests__"
-            || s == "tests"
-            || s == "test"
-            || s == "testing"
-            || s == "benches"
-            || s == "benchmark"
-            || s == "benchmarks"
-            || s == "examples"
-            || s == "example"
-            || s == "experiments"
-            || s == "experiment"
-            || s == "fixtures"
-            || s == "fixture"
-            || s == "website"
-            || s == "site"
-            || s == "docs"
-            || s == "doc"
-            || s == "mocks"
-            || s == "__mocks__"
-            || s == ".github"
-            || s == ".circleci"
-    }) {
-        return true;
+/// Classify a file's role relative to core library/app code.
+/// Used by the scheduler to apply different value factors per category.
+pub fn classify_file(path: &Path) -> crate::schedule::FileCategory {
+    use crate::schedule::FileCategory;
+
+    // Check directory components for category signals.
+    for component in path.components() {
+        let s = component.as_os_str();
+
+        // Examples and experiments — demonstrate usage, moderately valuable
+        if s == "examples" || s == "example" || s == "experiments" || s == "experiment" {
+            return FileCategory::Example;
+        }
+
+        // Documentation sites — Docusaurus, Sphinx, GitHub Pages source
+        if s == "website" || s == "site" || s == "docs" || s == "doc" {
+            return FileCategory::DocsSite;
+        }
+
+        // CI/CD configuration
+        if s == ".github" || s == ".circleci" {
+            return FileCategory::CiConfig;
+        }
+
+        // Test infrastructure — tests, benchmarks, fixtures, mocks
+        if s == "__tests__" || s == "tests" || s == "test" || s == "testing"
+            || s == "benches" || s == "benchmark" || s == "benchmarks"
+            || s == "fixtures" || s == "fixture"
+            || s == "mocks" || s == "__mocks__"
+        {
+            return FileCategory::Test;
+        }
     }
 
     // Check for test-related segments in compound directory names.
-    // Catches workspace crate names like "foo-test-utils", "my-integration-suite",
-    // "toasty-driver-integration-suite-macros" that wouldn't match exact names above.
-    if path.components().any(|c| {
-        c.as_os_str().to_str().is_some_and(|name| {
-            (name.contains('-') || name.contains('_'))
-                && name
-                    .split(['-', '_'])
-                    .any(|seg| {
-                        matches!(
-                            seg,
-                            "test" | "tests" | "testing" | "bench" | "benches"
-                            | "benchmark" | "benchmarks" | "mock" | "mocks"
-                            | "fixture" | "fixtures" | "integration"
-                        )
-                    })
-        })
-    }) {
-        return true;
+    // Catches workspace crate names like "foo-test-utils", "my-integration-suite".
+    for component in path.components() {
+        if let Some(name) = component.as_os_str().to_str() {
+            if (name.contains('-') || name.contains('_'))
+                && name.split(['-', '_']).any(|seg| {
+                    matches!(
+                        seg,
+                        "test" | "tests" | "testing" | "bench" | "benches"
+                        | "benchmark" | "benchmarks" | "mock" | "mocks"
+                        | "fixture" | "fixtures" | "integration"
+                    )
+                })
+            {
+                return FileCategory::Test;
+            }
+        }
     }
 
-    let stem = match path.file_stem().and_then(|s| s.to_str()) {
-        Some(s) => s,
-        None => return false,
-    };
+    // Check filename conventions for test files
+    if let Some(stem) = path.file_stem().and_then(|s| s.to_str()) {
+        if stem.ends_with(".test")
+            || stem.ends_with(".test-d")
+            || stem.ends_with(".spec")
+            || stem.starts_with("test_")
+            || stem.ends_with("_test")
+            || stem == "conftest"
+        {
+            return FileCategory::Test;
+        }
+    }
 
-    // Match *.test.* and *.spec.* (e.g. foo.test.ts, bar.spec.tsx)
-    // Match *.test-d.ts (TypeScript type test definitions, used by tsd)
-    // Match test_*.py and *_test.py (Python pytest conventions)
-    // Match conftest.py (pytest configuration/fixtures)
-    stem.ends_with(".test")
-        || stem.ends_with(".test-d")
-        || stem.ends_with(".spec")
-        || stem.starts_with("test_")
-        || stem.ends_with("_test")
-        || stem == "conftest"
+    FileCategory::Source
+}
+
+/// Check if a file is test/benchmark/example/docs-site/CI infrastructure.
+/// Convenience wrapper around `classify_file` for contexts that just need
+/// a boolean (e.g., file discovery filtering).
+pub fn is_test_file(path: &Path) -> bool {
+    !matches!(classify_file(path), crate::schedule::FileCategory::Source)
 }
 
 /// Check if a file is a TypeScript declaration file (.d.ts, .d.mts, .d.cts).

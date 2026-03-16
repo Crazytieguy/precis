@@ -386,6 +386,24 @@ fn is_config_file(relative_path: &Path, filename: &str) -> bool {
     false
 }
 
+/// Role of a file relative to the core library/app code.
+/// Files in different categories get different value factors — examples
+/// demonstrate library usage (moderately valuable), while test infrastructure
+/// and CI config are low-signal.
+#[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, Ord, PartialOrd)]
+pub enum FileCategory {
+    /// Core library/application source code.
+    Source,
+    /// Example/demo code showing how to use the library.
+    Example,
+    /// Test files, benchmarks, fixtures, mocks.
+    Test,
+    /// Documentation site source (Docusaurus, Sphinx, etc.).
+    DocsSite,
+    /// CI/CD configuration (.github/, .circleci/).
+    CiConfig,
+}
+
 /// Grouping dimensions. All symbols sharing a GroupKey are treated identically.
 /// Symbols from different files in the same directory with matching properties
 /// are pooled together. This ensures similar symbols are shown or hidden as a
@@ -400,7 +418,7 @@ pub struct GroupKey {
     pub parent_dir: PathBuf,
     pub is_documented: bool,
     pub file_role: FileRole,
-    pub is_test: bool,
+    pub file_category: FileCategory,
     pub is_type_declaration: bool,
     pub is_autogen_api_doc: bool,
     /// Whether this group is build/tool config. Per-symbol because TOML
@@ -534,7 +552,7 @@ pub fn build_groups(
         let is_file_config = relative.file_name()
             .and_then(|n| n.to_str())
             .is_some_and(|name| is_config_file(relative, name));
-        let is_test = walk::is_test_file(relative);
+        let file_category = walk::classify_file(relative);
         let is_type_declaration = walk::is_type_declaration_file(relative);
         let is_autogen = is_autogen_api_doc(source, file_role);
 
@@ -580,7 +598,7 @@ pub fn build_groups(
                 parent_dir: parent_dir.clone(),
                 is_documented,
                 file_role,
-                is_test,
+                file_category,
                 is_type_declaration,
                 is_autogen_api_doc: is_autogen,
                 is_config,
@@ -788,8 +806,15 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     // not core library logic. Show them only when there's plenty of budget.
     let config_factor = if key.is_config { 0.1 } else { 1.0 };
 
-    // Test/benchmark/example files are infrastructure, not core API.
-    let test_factor = if key.is_test { 0.15 } else { 1.0 };
+    // File category: examples show how to use the library (moderately valuable),
+    // docs site source is supplementary, test/CI infrastructure is low-signal.
+    let file_category_factor = match key.file_category {
+        FileCategory::Source => 1.0,
+        FileCategory::Example => 0.5,
+        FileCategory::DocsSite => 0.2,
+        FileCategory::Test => 0.15,
+        FileCategory::CiConfig => 0.1,
+    };
 
     // TypeScript declaration files (.d.ts) duplicate API signatures already
     // shown from .js/.ts source files. Deprioritize so source files win.
@@ -834,7 +859,7 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     let reexport_factor = if key.is_reexport { 0.1 } else { 1.0 };
 
     let base_value = visibility * documented * depth_factor
-        * file_role_factor * config_factor * test_factor * type_declaration_factor
+        * file_role_factor * config_factor * file_category_factor * type_declaration_factor
         * heading_depth_factor * first_party_factor * trait_impl_factor
         * boilerplate_factor * autogen_api_doc_factor * reexport_factor;
 
