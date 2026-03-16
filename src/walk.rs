@@ -61,8 +61,8 @@ fn is_unsupported_code_extension(ext: &str) -> bool {
         | "hs" | "ml" | "mli" | "fs" | "fsi" | "ex" | "exs" | "erl" | "elm" | "purs"
         // Modern languages
         | "dart" | "zig" | "nim" | "r" | "jl"
-        // GPU languages
-        | "cu" | "cuh"
+        // GPU/shader languages
+        | "cu" | "cuh" | "wgsl"
         // Web component languages (contain logic + template)
         | "vue" | "svelte"
         // Query/schema languages
