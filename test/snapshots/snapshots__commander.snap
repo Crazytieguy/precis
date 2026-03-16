@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (4004 tokens)
 
 Readme.md
      1→# Commander.js
@@ -46,8 +46,6 @@ Readme.md
     45→    - [.parse() and .parseAsync()](#parse-and-parseasync)
     46→    - [Parsing Configuration](#parsing-configuration)
     47→    - [Legacy options as properties](#legacy-options-as-properties)
-    48→    - [TypeScript](#typescript)
-    49→    - [createCommand()](#createcommand)
       →    …
     61→## Installation
     67→## Quick Start
@@ -95,11 +93,25 @@ Readme.md
   1164→## Support
   1172→### Commander for enterprise
 
-CHANGELOG.md
+package.json
+     2→  "name": "commander",
+     3→  "version": "14.0.3",
+     4→  "description": "the complete solution for node.js command-line programs",
+     5→  "keywords": [
+    15→  "author": "TJ Holowaychuk <tj@vision-media.ca>",
+    16→  "license": "MIT",
+    17→  "repository": {
+    21→  "scripts": {
+    35→  "files": [
+    43→  "type": "commonjs",
+    44→  "main": "./index.js",
+    45→  "exports": {
+    62→  "devDependencies": {
+    77→  "types": "typings/index.d.ts",
+    78→  "engines": {
+    81→  "support": true
 
-CONTRIBUTING.md
-     3→## Issues
-    13→## Pull Requests
+CHANGELOG.md
 
 Readme_zh-CN.md
      1→# Commander.js
@@ -120,9 +132,6 @@ docs/help-in-depth.md
 docs/options-in-depth.md
      2→# Options in Depth
     15→## Options taking varying numbers of option-arguments
-    79→#### Alternative: Make `--` part of your syntax
-   104→#### Alternative: Put options last
-   126→#### Alternative: Use options instead of command-arguments
    148→## Combining short options, and options taking arguments
 
 docs/parsing-and-hooks.md
@@ -361,32 +370,27 @@ lib/suggestSimilar.js
 
 package-support.json
      2→  "versions": [
-     3→    {
-     4→      "version": "*",
-     5→      "target": {
-     6→        "node": "supported"
-     7→      },
-     8→      "response": {
-     9→        "type": "time-permitting"
-    10→      },
-    11→      "backing": {
-    12→        "donations": [
-    13→          "https://github.com/sponsors/abetomo",
-    14→          "https://github.com/sponsors/shadowspawn"
 
-tests/command.createArgument.test.js
-     4→  constructor(name, description) {
-    11→  createArgument(name, description) {
-    16→  createCommand(name) {
+tests/
+      →…
 
-tests/command.createOption.test.js
-     4→  constructor(flags, description) {
-    11→  createOption(flags, description) {
+tsconfig.js.json
+     7→  "extends": "./tsconfig.json",
+     8→  "include": [
+
+tsconfig.json
+    12→  "compilerOptions": {
+    33→  "include": [
+    43→  "exclude": ["node_modules"],
+
+tsconfig.ts.json
+     8→  "extends": "./tsconfig.json",
+     9→  "compilerOptions": {
+    15→  "include": [
 
 typings/index.d.ts
   1113→export const program: Command;
 
 typings/index.test-d.ts
-     1→import * as commander from './index';
    510→  createCommand(name?: string): MyCommand {
    514→  myFunction(): void {

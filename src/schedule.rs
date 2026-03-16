@@ -396,7 +396,7 @@ fn is_config_file(relative_path: &Path, filename: &str) -> bool {
     // Specific well-known repo management config files that don't match
     // the patterns above (not TOML, not dotfiles, no *-config pattern).
     match lower.as_str() {
-        "codecov.yml" | "codecov.yaml" | "renovate.json" => return true,
+        "codecov.yml" | "codecov.yaml" | "renovate.json" | "package-support.json" => return true,
         _ => {}
     }
 
