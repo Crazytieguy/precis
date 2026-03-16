@@ -763,6 +763,31 @@ fn readme_renders_first() {
     );
 }
 
+// Directory omission markers: invisible directories should get a marker.
+#[test]
+fn invisible_directory_markers() {
+    let files = vec![
+        std::path::PathBuf::from("README.md"),
+        std::path::PathBuf::from("src/lib.rs"),
+        std::path::PathBuf::from("hidden_dir/foo.rs"),
+    ];
+    let sources = vec![
+        Some("# Project\nA description.".to_string()),
+        Some("pub fn main() {}".to_string()),
+        Some("fn internal() {}".to_string()),
+    ];
+    // Very small budget: hidden_dir/ file won't fit, should get a marker
+    let output = format::render_with_budget(30, Path::new(""), &files, &sources);
+    // If hidden_dir/foo.rs is not shown, we should see "hidden_dir/" marker
+    if !output.contains("hidden_dir/foo.rs") {
+        assert!(
+            output.contains("hidden_dir/"),
+            "invisible directory should get an omission marker. Output:\n{}",
+            output,
+        );
+    }
+}
+
 // Budget-based fixture snapshot tests.
 
 /// Helper: render a fixture with a token budget and return output with metadata header.
