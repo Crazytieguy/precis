@@ -363,6 +363,16 @@ mod tests {
     }
 
     #[test]
+    fn case_insensitive_extensions() {
+        // Uppercase extensions should be discovered
+        assert!(is_source_file(Path::new("analysis.R")));
+        assert!(is_source_file(Path::new("header.H")));
+        assert!(is_source_file(Path::new("MODULE.PY"))); // unusual but valid
+        // Mixed case
+        assert!(is_source_file(Path::new("Component.Tsx")));
+    }
+
+    #[test]
     fn classify_file_detection() {
         use crate::schedule::FileCategory::*;
 
