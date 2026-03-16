@@ -14,8 +14,7 @@ Cargo.toml
      7→authors = ["fioncat"]
      8→categories = ["command-line-utilities"]
      9→readme = "README.md"
-    10→repository = "https://github.com/fioncat/otree"
-    11→description = "A command line tool to view objects (json/yaml/toml) in TUI tree widget"
+      →…
     13→[dependencies]
     14→anyhow = "^1"
     15→clap = { version = "^4", features = ["derive"] }
@@ -25,17 +24,7 @@ Cargo.toml
     19→hcl-rs = "^0"
     20→humansize = "^2"
     21→notify = "^8"
-    22→paste = "^1"
-    23→quick-xml = { version = "^0", features = ["serialize"] }
-    24→ratatui = "^0"
-    25→regex = "^1"
-    26→serde = { version = "^1", features = ["derive"] }
-    27→serde_json = { version = "^1", features = ["preserve_order"] }
-    28→serde_yml = "^0"
-    29→strum = { version = "^0", features = ["derive"] }
-    30→toml = { version = "^0", features = ["preserve_order"] }
-    31→tui-textarea = "^0"
-    32→tui-tree-widget = "^0"
+      →…
     34→[build-dependencies]
     35→simple-error = "^0"
     36→vergen = { version = "^9", features = ["build", "rustc", "cargo", "si"] }
@@ -54,6 +43,16 @@ README.md
     82→## Thanks
 
 config/default.toml
+     1→[tree]
+     5→[editor]
+    10→[layout]
+    14→[header]
+    18→[footer]
+    21→[data]
+    25→[filter]
+    30→[keys]
+    62→[colors]
+   103→[types]
 
 docs/actions.md
      1→# All Available Actions
@@ -150,12 +149,21 @@ src/cmd.rs
     91→    #[clap(long)]
     92→    pub build_info: bool,
     93→
+    94→    /// Limit data size to read. In MiB
+    95→    #[clap(long)]
+    96→    pub max_data_size: Option<usize>,
+    97→
+    98→    /// Watch file changes, reload tui if updates
+    99→    #[clap(long, short = 'R')]
+   100→    pub live_reload: bool,
+   101→
       →…
    112→    pub fn parse …
    149→    pub fn update_config …
    202→    pub fn get_content_type …
 
 src/config/colors.rs
+     7→use super::Config;
     21→pub struct Colors {
     56→    pub fn default() -> Self {
     78→pub struct DataColors {
@@ -193,6 +201,9 @@ src/config/mod.rs
      1→pub mod colors;
      2→pub mod keys;
      3→pub mod types;
+    12→use self::colors::Colors;
+    13→use self::keys::Keys;
+    14→use self::types::Types;
     17→pub struct Config {
     53→pub struct Tree {
     62→pub struct Editor {

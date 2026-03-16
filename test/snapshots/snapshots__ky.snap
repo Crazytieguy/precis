@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (3998 tokens)
 
 readme.md
     20→## Benefits over plain `fetch`
@@ -22,7 +22,6 @@ readme.md
     36→npm install ky
     37→```
     38→
-    39→###### CDN
     45→## Usage
     47→```js
     48→import ky from 'ky';
@@ -56,17 +55,8 @@ readme.md
     76→//=> {data: '🦄'}
     77→```
     78→
-    79→If you are using [Deno](https://github.com/denoland/deno), import Ky from a URL. For example, using a CDN:
-    80→
-    81→```js
-    82→import ky from 'https://esm.sh/ky';
-    83→```
-    84→
+      →…
     85→## API
-   342→###### hooks.beforeRequest
-   373→###### hooks.beforeRetry
-   446→###### hooks.beforeError
-   485→###### hooks.afterResponse
   1050→## Tips
   1292→## FAQ
   1339→## Browser support
@@ -79,7 +69,6 @@ readme.md
   1349→- [fetch-extras](https://github.com/sindresorhus/fetch-extras) - Useful utilities for working with Fetch
   1350→- [ky-hooks-change-case](https://github.com/alice-health/ky-hooks-change-case) - Ky hooks to modify cases on requests and responses of objects
   1351→
-  1352→## Maintainers
 
 source/core/Ky.ts
     33→export class Ky {
@@ -87,16 +76,16 @@ source/core/Ky.ts
    200→	constructor(input: Input, options: Options = {}) {
 
 source/core/constants.ts
-     4→export const supportsRequestStreams = (() => {
-    34→export const supportsAbortController = typeof globalThis.AbortController === 'function';
-    35→export const supportsAbortSignal = typeof globalThis.AbortSignal === 'function' && typeof globalThis.AbortSignal.any === 'function';
-    36→export const supportsResponseStreams = typeof globalThis.ReadableStream === 'function';
-    37→export const supportsFormData = typeof globalThis.FormData === 'function';
-    39→export const requestMethods = ['get', 'post', 'put', 'patch', 'head', 'delete'] as const;
-    46→export const responseTypes = {
-    58→export const maxSafeTimeout = 2_147_483_647;
-    61→export const usualFormBoundarySize = new TextEncoder().encode('------WebKitFormBoundaryaxpyiPgbbPti10Rw').length;
-    63→export const stop = Symbol('stop');
+     4→export const supportsRequestStreams …
+    34→export const supportsAbortController …
+    35→export const supportsAbortSignal …
+    36→export const supportsResponseStreams …
+    37→export const supportsFormData …
+    39→export const requestMethods …
+    46→export const responseTypes …
+    58→export const maxSafeTimeout …
+    61→export const usualFormBoundarySize …
+    63→export const stop …
     68→export type ForceRetryOptions = {
     69→	/**
     70→	Custom delay in milliseconds before retrying.
@@ -143,16 +132,45 @@ source/core/constants.ts
    111→	/**
    112→	Custom request to use for the retry.
    113→
-      →…
+   114→	This allows you to modify or completely replace the request during a forced retry. The custom request becomes the starting point for the retry - `beforeRetry` hooks can still further modify it if needed.
+   115→
+   116→	**Note:** The custom request's `signal` will be replaced with Ky's managed signal to handle timeouts and user-provided abort signals correctly. If the original request body has been consumed, you must provide a new body or clone the request before consuming.
+   117→
+   118→	@example
+   119→	```
+   120→	// Fallback to a different endpoint
+   121→	return ky.retry({
+   122→		request: new Request('https://backup-api.com/endpoint', {
+   123→			method: request.method,
+   124→			headers: request.headers,
+   125→		}),
+   126→		code: 'BACKUP_ENDPOINT'
+   127→	});
+   128→
+   129→	// Retry with refreshed authentication token
+   130→	const data = await response.clone().json();
+   131→	return ky.retry({
+   132→		request: new Request(request, {
+   133→			headers: {
+   134→				...Object.fromEntries(request.headers),
+   135→				'Authorization': `Bearer ${data.newToken}`
+   136→			}
+   137→		}),
+   138→		code: 'TOKEN_REFRESHED'
+   139→	});
+   140→	```
+   141→	*/
+   142→	request?: Request;
+   143→};
    148→export class RetryMarker {
    149→	constructor(public options?: ForceRetryOptions) {}
    153→Force a retry from an `afterResponse` hook.
    154→
       →…
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
-   237→export const kyOptionKeys: KyOptionsRegistry = {
-   256→export const vendorSpecificOptions = {
-   265→export const requestOptionsRegistry = {
+   237→export const kyOptionKeys …
+   256→export const vendorSpecificOptions …
+   265→export const requestOptionsRegistry …
 
 source/errors/ForceRetryError.ts
      8→export class ForceRetryError extends Error {
@@ -274,9 +292,7 @@ source/types/options.ts
     86→	stringifyJson?: (data: unknown) => string;
     87→
     88→	/**
-    89→	Search parameters to include in the request URL. Setting this will override all existing search parameters in the input URL.
-    90→
-      →…
+      →	…
    307→export type KyOptionsRegistry = {[K in keyof KyOptions]-?: true};
    312→export interface Options extends KyOptions, Omit<RequestInit, 'headers'> { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
    313→	/**
@@ -349,7 +365,6 @@ source/types/retry.ts
 
 source/utils/body.ts
      5→export const getBodySize …
-    57→const withProgress …
     90→export const streamResponse …
    119→export const streamRequest …
 
@@ -365,18 +380,11 @@ source/utils/is.ts
 source/utils/merge.ts
      6→export const validateAndMerge …
     16→export const mergeHeaders …
-    32→function newHookValue …
     38→export const mergeHooks …
-    47→const appendSearchParameters …
     86→export const deepMerge …
 
 source/utils/normalize.ts
      5→export const normalizeRequestMethod …
-     8→const retryMethods …
-    10→const retryStatusCodes …
-    12→const retryAfterStatusCodes …
-    14→type InternalRetryOptions …
-    16→const defaultRetryOptions …
     28→export const normalizeRetryOptions …
 
 source/utils/options.ts
@@ -403,5 +411,3 @@ source/utils/types.ts
      5→export type ObjectEntries<T> = T extends ArrayLike<infer U>
      6→	? Array<[string, U]>
      7→	: Array<{[K in keyof T]: [K, T[K]]}[keyof T]>;
-
-test/helpers/create-http-test-server.ts

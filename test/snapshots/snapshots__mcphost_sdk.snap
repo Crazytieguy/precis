@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1993 tokens)
+budget: 2000 (2000 tokens)
 
 README.md
      1→# MCPHost SDK
@@ -59,13 +59,7 @@ README.md
     57→host, err := sdk.New(ctx, &sdk.Options{
     58→    Model:        "ollama:llama3",           // Override model
     59→    SystemPrompt: "You are a helpful bot",   // Override system prompt
-    60→    ConfigFile:   "/path/to/config.yml",     // Use specific config file
-    61→    MaxSteps:     10,                        // Override max steps
-    62→    Streaming:    true,                      // Enable streaming
-    63→    Quiet:        true,                      // Suppress debug output
-    64→})
-    65→```
-      →…
+      →    …
     67→## Advanced Usage
     69→### With Tool Callbacks
     71→Monitor tool execution in real-time:
@@ -74,13 +68,7 @@ README.md
     74→response, err := host.PromptWithCallbacks(
     75→    ctx,
     76→    "List files in the current directory",
-    77→    func(name, args string) {
-    78→        fmt.Printf("Calling tool: %s\n", name)
-    79→    },
-    80→    func(name, args, result string, isError bool) {
-    81→        if isError {
-    82→            fmt.Printf("Tool %s failed: %s\n", name, result)
-      →            …
+      →    …
     93→### Session Management
     95→Maintain conversation context:
     96→
@@ -88,12 +76,6 @@ README.md
     98→// First message
     99→host.Prompt(ctx, "My name is Alice")
    100→
-   101→// Second message (remembers context)
-   102→response, _ := host.Prompt(ctx, "What's my name?")
-   103→// Response: "Your name is Alice"
-   104→
-   105→// Save session
-   106→host.SaveSession("./session.json")
       →…
    115→## API Reference
    117→### Types
@@ -109,10 +91,7 @@ README.md
    129→- `LoadSession(path)` - Load session from file
    130→- `SaveSession(path)` - Save session to file
    131→- `ClearSession()` - Clear conversation history
-   132→- `GetSessionManager()` - Get session manager for advanced usage
-   133→- `GetModelString()` - Get current model string
-   134→- `Close()` - Clean up resources
-   135→
+      →…
    136→## Environment Variables
    138→All CLI environment variables work with the SDK:
    139→
@@ -128,10 +107,17 @@ README.md
 examples/basic/main.go
      3→import …
     11→func main() {
+    12→	ctx := context.Background()
+    13→
+      →…
 
 examples/scripting/main.go
      3→import …
     12→func main() {
+    13→	ctx := context.Background()
+    14→
+    15→	// Create MCPHost with environment variable for API key
+      →	…
 
 mcphost.go
      3→import …
@@ -154,8 +140,14 @@ mcphost.go
     33→	Streaming    bool   // Enable streaming (default from config)
     34→	Quiet        bool   // Suppress debug output
     35→}
+    37→// New creates an MCPHost instance using the same initialization as the CLI.
+      →…
     40→func New(ctx context.Context, opts *Options) (*MCPHost, error) {
+   127→// Prompt sends a message to the agent and returns the response. The agent may
+      →…
    130→func (m *MCPHost) Prompt(ctx context.Context, message string) (string, error) {
+   160→// PromptWithCallbacks sends a message with callbacks for monitoring tool execution
+      →…
    163→func (m *MCPHost) PromptWithCallbacks(
    164→	ctx context.Context,
    165→	message string,
@@ -163,11 +155,23 @@ mcphost.go
    167→	onToolResult func(name, args, result string, isError bool),
    168→	onStreaming func(chunk string),
    169→) (string, error) {
+   199→// GetSessionManager returns the current session manager for direct access
+      →…
    201→func (m *MCPHost) GetSessionManager() *session.Manager {
+   205→// LoadSession loads a previously saved session from a file, restoring the
+      →…
    207→func (m *MCPHost) LoadSession(path string) error {
+   216→// SaveSession saves the current session to a file for later restoration.
+      →…
    218→func (m *MCPHost) SaveSession(path string) error {
+   222→// ClearSession clears the current session history, starting a new conversation
+      →…
    224→func (m *MCPHost) ClearSession() {
+   228→// GetModelString returns the current model string identifier (e.g.,
+      →…
    230→func (m *MCPHost) GetModelString() string {
+   234→// Close cleans up resources including MCP server connections and model resources.
+      →…
    237→func (m *MCPHost) Close() error {
 
 mcphost_test.go
@@ -184,5 +188,9 @@ types.go
     12→// ToolCall is an alias for session.ToolCall representing a tool invocation
     13→// with its name, arguments, and result within a conversation.
     14→type ToolCall = session.ToolCall
+    16→// ConvertToSchemaMessage converts an SDK message to the underlying schema message
+      →…
     18→func ConvertToSchemaMessage(msg *Message) *schema.Message {
+    22→// ConvertFromSchemaMessage converts a schema message from the agent to an SDK
+      →…
     24→func ConvertFromSchemaMessage(msg *schema.Message) Message {

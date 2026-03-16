@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3996 tokens)
+budget: 4000 (4000 tokens)
 
 README.md
      9→# Nano-vLLM
@@ -190,9 +190,11 @@ nanovllm/layers/activation.py
      6→class SiluAndMul(nn.Module):
      7→
      8→    def __init__ …
+    11→    @torch.compile
     12→    def forward(self, x: torch.Tensor) -> torch.Tensor:
 
 nanovllm/layers/attention.py
+    10→@triton.jit
     11→def store_kvcache_kernel(
     12→    key_ptr,
     13→    key_stride,
@@ -224,10 +226,12 @@ nanovllm/layers/layernorm.py
      5→class RMSNorm(nn.Module):
      6→
      7→    def __init__ …
+    16→    @torch.compile
     17→    def rms_forward(
     18→        self,
     19→        x: torch.Tensor,
     20→    ) -> torch.Tensor:
+    28→    @torch.compile
     29→    def add_rms_forward(
     30→        self,
     31→        x: torch.Tensor,
@@ -270,12 +274,14 @@ nanovllm/layers/rotary_embedding.py
     17→class RotaryEmbedding(nn.Module):
     18→
     19→    def __init__ …
+    37→    @torch.compile
     38→    def forward(
     39→        self,
     40→        positions: torch.Tensor,
     41→        query: torch.Tensor,
     42→        key: torch.Tensor,
     43→    ) -> tuple[torch.Tensor, torch.Tensor]:
+    51→@lru_cache(1)
     52→def get_rope(
     53→    head_size: int,
     54→    rotary_dim: int,
@@ -288,6 +294,7 @@ nanovllm/layers/sampler.py
      5→class Sampler(nn.Module):
      6→
      7→    def __init__ …
+    10→    @torch.compile
     11→    def forward(self, logits: torch.Tensor, temperatures: torch.Tensor):
 
 nanovllm/llm.py
@@ -336,8 +343,8 @@ nanovllm/sampling_params.py
     10→    def __post_init__(self):
 
 nanovllm/utils/context.py
-     1→from dataclasses …
-     2→import torch …
+     1→from dataclasses import dataclass
+     2→import torch
      5→@dataclass
      6→class Context:
      7→    is_prefill: bool = False
@@ -354,10 +361,10 @@ nanovllm/utils/context.py
     25→def reset_context():
 
 nanovllm/utils/loader.py
-     1→import os …
-     2→from glob …
-     4→from torch …
-     5→from safetensors …
+     1→import os
+     2→from glob import glob
+     4→from torch import nn
+     5→from safetensors import safe_open
      8→def default_weight_loader(param: nn.Parameter, loaded_weight: torch.Tensor):
     12→def load_model(model: nn.Module, path: str):
 
@@ -375,10 +382,5 @@ pyproject.toml
     12→description = "a lightweight vLLM implementation built from scratch"
     13→requires-python = ">=3.10,<3.13"
     14→dependencies = [
-    15→    "torch>=2.4.0",
-    16→    "triton>=3.0.0",
-    17→    "transformers>=4.51.0",
-    18→    "flash-attn",
-    19→    "xxhash",
+      →…
     22→[project.urls]
-    25→[tool.setuptools.packages.find]

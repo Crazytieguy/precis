@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3997 tokens)
+budget: 4000 (4000 tokens)
 
 CONTRIBUTING.md
      1→# Contributing to peepDB
@@ -106,11 +106,7 @@ docs/README.md
    127→        with:
    128→          ruby-version: '3.1'
    129→          bundler-cache: true
-   130→          cache-version: 0
-   131→          working-directory: '${{ github.workspace }}/docs'
-   132→    ```
-   133→
-      →…
+      →          …
    154→## Licensing and Attribution
 
 docs/_config.yml
@@ -130,6 +126,8 @@ docs/index.md
      9→
     10→## 🚀 Features
     20→## Getting Started
+    28→## 🔒 Security
+    40→## 📜 License
 
 docs/installation.md
      6→# 📦 Installation
@@ -322,6 +320,9 @@ peepdb/db/sqlite.py
 peepdb/exceptions.py
      1→class InvalidPassword(Exception):
      2→    pass
+
+peepdb/tests/test_sqlite.py
+     6→class TestSQLiteDatabase(unittest.TestCase):
 
 project.toml
      1→[build-system]

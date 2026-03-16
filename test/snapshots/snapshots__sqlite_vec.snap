@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3975 tokens)
+budget: 4000 (3972 tokens)
 
 ARCHITECTURE.md
      1→# `sqlite-vec` Architecture
@@ -57,8 +57,6 @@ README.md
     30→<p align="center">
     31→<i>
     32→<code>sqlite-vec</code> is a
-    33→<a href="https://hacks.mozilla.org/2024/06/sponsoring-sqlite-vec-to-enable-more-powerful-local-ai-applications/">Mozilla Builders project</a>,
-    34→with additional sponsorship from
       →…
     43→## Installing
     61→## Sample usage
@@ -74,8 +72,14 @@ bindings/python/extra_init.py
     11→def serialize_int8(vector: List[int]) -> bytes:
     44→    def register_numpy(db: Connection, name: str, array):
 
+bindings/rust/build.rs
+     1→fn main() {
+
 bindings/rust/src/lib.rs
      3→    pub fn sqlite3_vec_init();
+
+examples/simple-c/demo.c
+     7→int main(int argc, char *argv[]) {
 
 examples/simple-go-cgo/go.mod
      1→module github.com/asg017/sqlite-vec/examples/go
@@ -89,6 +93,9 @@ examples/simple-go-ncruces/go.mod
      4→
      5→require (
       →…
+
+examples/simple-python/demo.py
+     8→def serialize_f32 …
 
 examples/simple-ruby/demo.rb
      1→require 'sqlite3'
@@ -121,15 +128,14 @@ examples/sqlite3-cli/README.md
      8→The `core_init.c` file here demonstrates auto-loading the `sqlite-vec`
      9→entrypoints at startup.
 
+examples/sqlite3-cli/core_init.c
+     4→int core_init(const char *dummy) {
+
 examples/wasm/README.md
      1→# `sqlite-vec` statically compiled into WASM builds
      3→You can compile your own version of SQLite's WASM build with `sqlite-vec`
      4→builtin. Dynamically loading SQLite extensions is not supported in the official
      5→WASM build yet, but you can statically compile extensions in. It's not well
-     6→documented, but the `sqlite3_wasm_extra_init` option in the SQLite `ext/wasm`
-     7→Makefile allows you to inject your own code at initialization time. See the
-     8→`Makefile` at the room of the project for more info.
-     9→
       →…
 
 reference.yaml
@@ -161,6 +167,7 @@ sqlite-vec.c
    121→};
    169→static f32 l2_sqr_float_neon …
    527→static unsigned int __builtin_popcountl …
+   536→#define __builtin_popcountl …
    556→static f32 distance_hamming …
    585→typedef void (*vector_cleanup)(void *p);
    598→struct Array {
@@ -331,6 +338,12 @@ sqlite-vec.c
 
 test.sql
      1→
+
+tests/Cargo.toml
+     1→[package]
+     6→[dependencies]
+     8→[build-dependencies]
+    11→[[bin]]
 
 tests/afbd/README.md
      2→# hnm

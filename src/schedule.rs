@@ -995,7 +995,7 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
             1.0 + 0.07 * (n as f64 - 1.0)
         }
         (KindCategory::Section, StageKind::Body) => {
-            1.0 + 0.1 * (n as f64 - 1.0)
+            1.0 + 0.15 * (n as f64 - 1.0)
         }
         _ => n as f64,
     };

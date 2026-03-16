@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3999 tokens)
+budget: 4000 (4000 tokens)
 
 README.md
     10→# `htmy`
@@ -12,6 +12,7 @@ README.md
     15→
     16→## Key features
     33→## Testimonials
+    47→## Support
     51→## Installation
     63→## Concepts
     69→### Components
@@ -29,6 +30,8 @@ README.md
    341→## Why
    353→## Dependencies
    361→## Development
+   367→## Contributing
+   377→## License - MIT
 
 docs/api/core.md
      1→# ::: htmy.core
@@ -78,6 +81,11 @@ docs/components-guide.md
      3→## What is a component?
    142→## What is a component factory?
    184→## When to use components, when to use component factories?
+
+docs/examples/markdown.md
+     9→## Essentials
+    61→## Customization
+   167→## Custom components in markdown
 
 docs/function-components.md
      1→# Function components
@@ -129,6 +137,9 @@ examples/markdown_customization/post.md
     15→## Ordered
     21→## Unordered
 
+examples/markdown_essentials/app.py
+     6→async def render_post() -> None:
+
 examples/markdown_essentials/post.md
      1→# Essential reading
      3→```python
@@ -145,6 +156,8 @@ examples/snippet-slots-fastapi/app.py
     20→
     28→class RequestHeaders:
     30→
+    69→@app.get("/")
+      →…
     71→async def index() -> None:
 
 htmy/__init__.py
@@ -201,10 +214,13 @@ htmy/etree.py
 
 htmy/function_component.py
     13→_SyncFunctionComponent …
+    18→_AsyncFunctionComponent …
     25→_ContextOnlySyncFunctionComponent …
     37→    def __call__ …
+    40→_ContextOnlyAsyncFunctionComponent …
     52→    def __call__ …
     57→_SyncMethodComponent …
+    62→_AsyncMethodComponent …
     71→class ComponentDecorators:
     75→
     76→    __slots__ = ()
@@ -297,7 +313,9 @@ htmy/renderer/context.py
     11→    @classmethod
     12→    def from_context(cls, context: Context) -> RendererType:
     13→        """
-      →        …
+    14→        Returns the renderer instance from the given context.
+    15→
+      →…
 
 htmy/renderer/default.py
     20→class _Node:
@@ -408,12 +426,6 @@ mkdocs.yaml
     15→    - media: "(prefers-color-scheme: light)"
     16→      scheme: default
     17→      toggle:
-    18→        icon: lucide/sun
-    19→        name: Switch to dark mode
-    20→    # Palette toggle for dark mode
-    21→    - media: "(prefers-color-scheme: dark)"
-    22→      scheme: slate
-    23→      toggle:
       →      …
     33→plugins:
     34→  - search:
@@ -443,13 +455,7 @@ mkdocs.yaml
     60→  - API reference:
     61→      - api/core.md
     62→      - api/html.md
-    63→      - api/snippet.md
-    64→      - api/md.md
-    65→      - api/function_component.md
-    66→      - api/i18n.md
-    67→      - renderer:
-    68→          - api/renderer/default.md
-      →          …
+      →      …
 
 pyproject.toml
      1→[project]

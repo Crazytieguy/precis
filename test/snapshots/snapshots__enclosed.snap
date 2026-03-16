@@ -149,6 +149,8 @@ packages/app-client/src/modules/i18n/i18n.provider.tsx
     16→type RawDictionary …
     17→type Dictionary …
     19→const I18nContext …
+    26→function useI18n …
+    36→async function fetchDictionary …
     44→export const I18nProvider: ParentComponent = (props) => {
 
 packages/app-client/src/modules/notes/components/file-uploader.tsx
@@ -171,9 +173,11 @@ packages/app-client/src/modules/notes/notes.models.ts
     16→export function buildViewNotePagePath({ prefix }: { prefix?: string | null }): string {
 
 packages/app-client/src/modules/notes/pages/create-note.page.tsx
+    28→const QrCodeCard …
    109→export const CreateNotePage: Component = () => {
 
 packages/app-client/src/modules/notes/pages/view-note.page.tsx
+    18→const RequestPasswordForm …
     65→export const ViewNotePage: Component = () => {
 
 packages/app-client/src/modules/shared/style/cn.ts
@@ -345,17 +349,24 @@ packages/app-server/src/modules/notes/tasks/delete-expired-notes.tasks.ts
      5→export const deleteExpiredNotesTask = defineTask({
 
 packages/app-server/src/modules/shared/errors/errors.ts
-     6→type ErrorOptions …
-    14→class CustomError …
+     6→type ErrorOptions = {
+    14→class CustomError extends Error {
     21→  constructor({ message, code, cause, statusCode, isInternal }: ErrorOptions) {
+    31→function createError …
+    35→function createErrorFactory …
+    41→function isCustomError …
 
 packages/app-server/src/modules/shared/logger/logger.test-utils.ts
+     1→import type { Logger } from './logger.types';
      3→export function createTestLogger() {
 
 packages/app-server/src/modules/shared/logger/logger.types.ts
+     1→import type { createLogger } from './logger';
      3→export type Logger = ReturnType<typeof createLogger>;
 
 packages/app-server/src/modules/shared/validation/validation.ts
+     5→function formatValidationError …
+    16→function buildValidator …
     43→export const validateJsonBody …
     44→export const validateQuery …
     45→export const validateParams …
@@ -414,6 +425,7 @@ packages/cli/src/config/config.constants.ts
      3→export const configDefinition = {
 
 packages/cli/src/create-note/create-note.command.ts
+    11→const ONE_HOUR_IN_SECONDS …
     13→export const createNoteCommand = defineCommand({
 
 packages/cli/src/create-note/create-note.usecases.ts
@@ -473,6 +485,8 @@ packages/deploy-cloudflare/_routes.json
      4→    "/api/*"
      6→  "exclude": []
 
+packages/deploy-cloudflare/package.json
+
 packages/docs/package.json
 
 packages/docs/src/components/credential-inputs.vue
@@ -487,9 +501,7 @@ packages/docs/src/components/credential-inputs.vue
      9→});
     10→
     11→function addCredential() {
-    12→  credentials.value = [
-    13→    ...credentials.value,
-      →    …
+      →…
 
 packages/docs/src/components/toggle.vue
      1→<script setup>
@@ -503,14 +515,15 @@ packages/docs/src/components/toggle.vue
      9→</script>
     10→
     11→<template>
-    12→  <div class="switch-wrapper">
-    13→    <div class="switch">
-      →    …
+      →…
 
 packages/docs/src/data/configuration.data.ts
+    10→function walk …
+    24→function formatDoc …
     57→  async load() {
 
 packages/docs/src/data/i18n.data.ts
+     9→function countKeysDeep …
     61→  async load() {
 
 packages/docs/src/how-it-works.md
@@ -543,8 +556,6 @@ packages/docs/src/index.md
 
 packages/docs/src/integrations/cli.md
      1→# CLI Guide
-     3→The Enclosed Command-Line Interface (CLI) allows you to create and manage secure notes directly from your terminal. This guide will walk you through installing the CLI, creating and viewing notes, and configuring the CLI for different use cases.
-     4→
      5→## Installation
     29→## Creating a Note
     77→## Viewing a Note
@@ -556,19 +567,10 @@ packages/docs/src/integrations/cli.md
 
 packages/docs/src/integrations/npm-package.md
      1→# NPM Package
-     3→::: warning
-     4→This page is a work in progress.
-     5→:::
-     6→
-     7→The Enclosed lib is available as an npm package. You can use it to create and manage Enclosed notes.
-     8→
      9→## Installation
 
 packages/docs/src/integrations/versioning.md
      1→# Versioning
-     3→The Enclosed project follows the [Semantic Versioning (SemVer)](https://semver.org/) specification. This means that the version number is incremented following the following format: `MAJOR.MINOR.PATCH`.
-     4→
-     5→Starting from version `1.5.0`, all the packages of the Enclosed project are aligned to the same version number. So if you are self-hosting an Enclosed instance, you can use the same version number for all the packages.
 
 packages/docs/src/resources/brand-kit.md
      1→# Enclosed Brand Kit
@@ -654,11 +656,12 @@ packages/docs/src/self-hosting/users-authentication-key-generator.md
     61→
     62→---
     63→
-    64→> [!INFO] Escaping in Docker Run
       →…
 
 packages/lib/README.md
      1→### Enclosed lib
+     3→This package contains the core functionalities of [Enclosed](https://enclosed.cc/), an open-source project that aims to provide a simple and secure way to share e2e encrypted notes.
+     4→
      5→## Installation
      7→```bash
      8→# with npm
@@ -688,6 +691,9 @@ packages/lib/README.md
     33→## License
     37→## Credits and Acknowledgements
 
+packages/lib/src/api/api.client.ts
+     2→import { DEFAULT_API_BASE_URL } from './api.constants';
+
 packages/lib/src/api/api.constants.ts
      1→export const DEFAULT_API_BASE_URL = 'https://enclosed.cc';
 
@@ -712,6 +718,8 @@ packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.types.ts
      3→export type EncryptionMethodsDefinition = ReturnType<typeof defineEncryptionMethods>;
 
 packages/lib/src/crypto/serialization/cbor-array/cbor-array.serialization.ts
+     1→import type { Note } from '../../../notes/notes.types';
+     3→import { defineSerializationMethods } from '../serialization.models';
      5→export const cborArraySerializationDefinition = defineSerializationMethods({
 
 packages/lib/src/crypto/serialization/serialization.registry.ts
@@ -722,6 +730,9 @@ packages/lib/src/crypto/serialization/serialization.registry.ts
 packages/lib/src/crypto/serialization/serialization.types.ts
      4→export type SerializationMethodsDefinition = ReturnType<typeof defineSerializationMethods>;
      5→export type SerializationFormat = typeof serializationMethodDefinitions[number]['name'];
+
+packages/lib/src/files/files.models.ts
+     1→import type { NoteAsset } from '../notes/notes.types';
 
 packages/lib/src/index.ts
 

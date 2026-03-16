@@ -159,6 +159,7 @@ sps/src/pipeline/downloader.rs
 
 sps/src/pipeline/planner.rs
     28→struct IntermediatePlan {
+    37→pub(crate) async fn fetch_target_definitions …
    192→    pub fn new …
    526→    pub async fn plan_operations …
 
@@ -310,6 +311,9 @@ sps-common/src/error.rs
     37→    #[error("Resource Not Found: {0}")]
     38→    NotFound(String),
     39→
+    40→    #[error("Installation Error: {0}")]
+    41→    InstallError(String),
+    42→
       →…
    119→pub type Result<T> = std::result::Result<T, SpsError>;
 
@@ -408,6 +412,7 @@ sps-common/src/model/cask.rs
    166→    String(String),
    167→    Vec(Vec<String>),
    168→}
+   170→    pub fn into_vec …
    181→pub enum ZapActionDetail {
    182→    Trash(Vec<String>),
    183→    Delete(Vec<String>),
@@ -433,7 +438,22 @@ sps-common/src/model/formula.rs
     39→pub struct BottleStableSpec {
     47→pub struct FormulaVersions {
     57→pub struct Formula {
+   319→    pub fn dependencies …
+   322→    pub fn requirements …
+   327→    pub fn resources …
+   332→    pub fn set_keg_path …
+   335→    pub fn version_str_full …
+   342→    pub fn name …
+   345→    pub fn version …
+   348→    pub fn source_url …
+   351→    pub fn source_sha256 …
+   354→    pub fn get_bottle_spec …
    360→pub trait FormulaDependencies {
+   361→    fn name …
+   362→    fn install_prefix …
+   363→    fn resolved_runtime_dependency_paths …
+   364→    fn resolved_build_dependency_paths …
+   365→    fn all_resolved_dependency_paths …
 
 sps-common/src/model/mod.rs
      5→pub mod artifact;
@@ -456,6 +476,7 @@ sps-common/src/model/tap.rs
 
 sps-common/src/model/version.rs
     11→pub struct Version(semver::Version);
+    14→    pub fn parse …
 
 sps-common/src/pipeline.rs
     14→pub enum PipelinePackageType {
@@ -509,7 +530,10 @@ sps-common/src/pipeline.rs
     81→    },
     82→    DownloadCached {
     83→        target_id: String,
-      →        …
+    84→        size_bytes: u64,
+    85→    },
+    86→    DownloadFailed {
+      →    …
    163→pub enum JobProcessingState {
    164→    /// Waiting for download to be initiated.
    165→    PendingDownload,
@@ -536,25 +560,11 @@ sps-core/Cargo.toml
      2→name = "sps-core"
      3→version = "0.1.56"
      4→edition = "2021"
-     5→authors = ["Alexander Knott <alexander.knott@posteo.de>", "sps contributors"]
-     6→description = "Core library for the sps package manager"
-     7→repository = "https://github.com/alexykn/sps"
-     8→license = "BSD-3-Clause"
+      →…
     10→[dependencies]
     11→sps-net = "0.1.56"
     12→sps-common = "0.1.56"
     13→
-    14→anyhow = "1.0.99"
-    15→uuid = { version = "1.18.0", features = ["v4"] }
-    16→plist = "1.7.4"                                                                  # For reading Info.plist to get bundle ID
-    17→thiserror = "2.0.16"
-    18→serde = { version = "1.0.219", features = ["derive"] }
-    19→serde_json = "1.0.143"
-    20→env_logger = "0.11.8"
-    21→semver = "1.0.26"
-    22→dirs = "6.0.0"
-    23→xattr = "1.5.1"
-    24→walkdir = "2.5.0"
       →…
 
 sps-core/src/build/env.rs
@@ -634,6 +644,31 @@ sps-core/src/install/bottle/mod.rs
     15→pub mod macho;
     18→pub async fn download_formula …
     34→pub fn has_bottle_for_current_platform …
+
+sps-core/src/install/cask/artifacts/mod.rs
+     1→pub mod app;
+     2→pub mod audio_unit_plugin;
+     3→pub mod binary;
+     4→pub mod colorpicker;
+     5→pub mod dictionary;
+     6→pub mod font;
+     7→pub mod input_method;
+     8→pub mod installer;
+     9→pub mod internet_plugin;
+    10→pub mod keyboard_layout;
+    11→pub mod manpage;
+    12→pub mod mdimporter;
+    13→pub mod pkg;
+    14→pub mod preflight;
+    15→pub mod prefpane;
+    16→pub mod qlplugin;
+    17→pub mod screen_saver;
+    18→pub mod service;
+    19→pub mod suite;
+    20→pub mod uninstall;
+    21→pub mod vst3_plugin;
+    22→pub mod vst_plugin;
+    23→pub mod zap;
 
 sps-core/src/install/cask/mod.rs
      1→pub mod artifacts;
@@ -736,31 +771,18 @@ sps-net/Cargo.toml
      2→name = "sps-net"
      3→version = "0.1.56"
      4→edition = "2021"
-     5→authors = ["Alexander Knott <alexander.knott@posteo.de>", "sps contributors"]
-     6→description = "Networking library for the sps package manager"
-     7→repository = "https://github.com/alexykn/sps"
-     8→license = "BSD-3-Clause"
+      →…
     10→[dependencies]
     11→sps-common = "0.1.56"
     12→
     13→tokio = { version = "1.47.1", features = ["full"] }
-    14→futures = "0.3.31"
-    15→reqwest = { version = "0.12.23", features = ["json", "stream", "blocking"] }
-    16→serde = { version = "1.0.219", features = ["derive"] }
-    17→serde_json = "1.0.143"
-    18→rand = "0.9.2"
-    19→url = "2.5.4"
-    20→sha2 = "0.10.9"
-    21→hex = "0.4.3"
-    22→infer = "0.19.0"
-    23→tracing = "0.1.41"
-    24→
       →…
 
 sps-net/src/api.rs
+   160→async fn fetch_github_repo_info …
 
 sps-net/src/http.rs
-    18→pub type ProgressCallback …
+    18→pub type ProgressCallback = Arc<dyn Fn(u64, Option<u64>) + Send + Sync>;
 
 sps-net/src/lib.rs
      2→pub mod api;

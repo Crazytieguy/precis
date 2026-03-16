@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7998 tokens)
+budget: 8000 (7999 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -384,8 +384,20 @@ crates/mdbook-preprocessor/src/lib.rs
 
 crates/mdbook-renderer/Cargo.toml
      1→[package]
+     2→name = "mdbook-renderer"
+     3→version = "0.5.2"
+     4→description = "Library to assist implementing an mdBook renderer"
+     5→edition.workspace = true
+     6→license.workspace = true
+     7→repository.workspace = true
+     8→rust-version.workspace = true
     10→[dependencies]
+    11→anyhow.workspace = true
+    12→mdbook-core.workspace = true
+    13→serde.workspace = true
+    14→serde_json.workspace = true
     16→[lints]
+    17→workspace = true
 
 crates/mdbook-renderer/README.md
      1→# mdbook-renderer
@@ -492,6 +504,11 @@ examples/nop-preprocessor.rs
     79→    pub struct Nop;
     82→        pub fn new() -> Nop {
 
+guide/book.toml
+     1→[book]
+     7→[rust]
+    40→[build]
+
 guide/guide-helper/Cargo.toml
      1→[package]
      2→name = "guide-helper"
@@ -533,12 +550,6 @@ guide/src/README.md
     17→Version: {{ mdbook-version }}
     18→</div>
     19→
-    20→**mdBook** is a command line tool to create books with Markdown.
-    21→It is ideal for creating product or API documentation, tutorials, course materials or anything that requires a clean,
-    22→easily navigable and customizable presentation.
-    23→
-    24→* Lightweight [Markdown] syntax helps you focus more on your content
-    25→* Integrated [search] support
       →…
 
 guide/src/SUMMARY.md
@@ -555,11 +566,7 @@ guide/src/cli/README.md
      7→
      8→* [`mdbook init <directory>`](init.md) --- Creates a new book with minimal boilerplate to start with.
      9→* [`mdbook build`](build.md) --- Renders the book.
-    10→* [`mdbook watch`](watch.md) --- Rebuilds the book any time a source file changes.
-    11→* [`mdbook serve`](serve.md) --- Runs a web server to view the book, and rebuilds on changes.
-    12→* [`mdbook test`](test.md) --- Tests Rust code samples.
-    13→* [`mdbook clean`](clean.md) --- Deletes the rendered output.
-    14→* [`mdbook completions`](completions.md) --- Support for shell auto-completion.
+      →…
 
 guide/src/cli/build.md
      1→# The build command
@@ -656,12 +663,28 @@ guide/src/format/configuration/README.md
 
 guide/src/format/markdown.md
      1→# Markdown
+     9→## Text and paragraphs
+    25→## Headings
+    47→## Lists
+    69→## Links
+   108→## Images
+   127→## Extensions
 
 guide/src/format/mathjax.md
      1→# MathJax support
 
 guide/src/format/mdbook.md
      1→# mdBook-specific features
+     3→## Hiding code lines
+    74→## Rust playground
+   102→## Rust code block attributes
+   133→## Including files
+   154→## Including portions of a file
+   215→## Including a file but initially hiding all except specified lines
+   279→## Inserting runnable Rust files
+   310→## Controlling page \<title\>
+   319→## HTML classes provided by mdBook
+   341→## Font-Awesome icons
 
 guide/src/format/summary.md
      1→# SUMMARY.md
@@ -672,13 +695,6 @@ guide/src/format/theme/README.md
      4→render your markdown files and comes with a default theme included in the mdBook
      5→binary.
      6→
-     7→The theme is totally customizable, you can selectively replace every file from
-     8→the theme by your own by adding a `theme` directory next to `src` folder in your
-     9→project root. Create a new file with the name of the file you want to override
-    10→and now that file will be used instead of the default file.
-    11→
-    12→Here are the files you can override:
-    13→
       →…
 
 guide/src/guide/README.md
@@ -779,4 +795,4 @@ src/cmd/watch.rs
 src/main.rs
     14→mod cmd;
     16→const VERSION …
-    58→fn create_clap_command …
+    58→fn create_clap_command() -> Command {

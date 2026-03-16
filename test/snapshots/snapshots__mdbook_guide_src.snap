@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3998 tokens)
+budget: 4000 (4000 tokens)
 
 404.md
      1→# Document not found (404)
@@ -51,6 +51,8 @@ README.md
     43→[trpl]: https://doc.rust-lang.org/book/
     44→[Rust code samples]: cli/test.md
     45→
+    46→## Contributing
+    55→## License
 
 SUMMARY.md
      1→# Summary
@@ -97,8 +99,11 @@ cli/watch.md
 continuous-integration.md
      1→# Running `mdbook` in continuous integration
     12→## Installing mdBook
+    17→### Pre-compiled binaries
+    39→### Building from source
     67→## Running tests
     83→## Deploying
+   100→### 404 handling
 
 for_developers/README.md
      1→# For developers
@@ -173,8 +178,10 @@ for_developers/mdbook-wordcount/Cargo.toml
      9→serde_derive = "1.0"
 
 for_developers/mdbook-wordcount/src/main.rs
+    12→fn main …
+    40→fn count_words …
     44→#[derive(Debug, Default, Serialize, Deserialize)]
-      →…
+    45→#[serde(default, rename_all = "kebab-case")]
     46→pub struct WordcountConfig {
     47→    pub ignores: Vec<String>,
     48→    pub deny_odds: bool,
@@ -245,7 +252,6 @@ format/markdown.md
      1→# Markdown
      9→## Text and paragraphs
     25→## Headings
-    43→#### A smaller heading 
     47→## Lists
     69→## Links
    108→## Images
@@ -301,11 +307,6 @@ format/theme/README.md
     29→- **fonts/fonts.css** contains the definition of which fonts to load.
     30→  Custom fonts can be included in the `fonts` directory.
     31→
-    32→Generally, when you want to tweak the theme, you don't need to override all the
-    33→files. If you only need changes in the stylesheet, there is no point in
-    34→overriding all the other files. Because custom files take precedence over
-    35→built-in ones, they will not get updated with new fixes / features.
-    36→
       →…
 
 format/theme/editor.md
@@ -316,6 +317,9 @@ format/theme/index-hbs.md
      1→# index.hbs
      9→## Data
     41→## Handlebars helpers
+    46→### toc
+    80→### resource
+    90→### fa
 
 format/theme/syntax-highlighting.md
      1→# Syntax highlighting
@@ -365,3 +369,5 @@ guide/reading.md
     26→## Top menu bar
     42→## Search
     54→## Code blocks
+
+misc/contributors.md

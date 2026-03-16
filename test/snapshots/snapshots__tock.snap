@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7982 tokens)
+budget: 8000 (7981 tokens)
 
 README.md
      1→# Tock
@@ -240,13 +240,7 @@ go.mod
     43→	github.com/sourcegraph/conc v0.3.1-0.20240121214520-5f936abd7ae8 // indirect
     44→	github.com/spf13/afero v1.15.0 // indirect
     45→	github.com/spf13/cast v1.10.0 // indirect
-    46→	github.com/stretchr/objx v0.5.2 // indirect
-    47→	github.com/subosito/gotenv v1.6.0 // indirect
-    48→	github.com/xo/terminfo v0.0.0-20220910002029-abceb7e1c41e // indirect
-    49→	go.yaml.in/yaml/v3 v3.0.4 // indirect
-    50→	golang.org/x/sys v0.39.0 // indirect
-    51→	golang.org/x/text v0.32.0 // indirect
-    52→)
+      →	…
 
 internal/adapters/cli/add.go
      3→import …
@@ -431,6 +425,7 @@ internal/adapters/repositories/file/parser.go
     16→	timeLayoutMin …
     17→	timeLayoutSec …
     20→func ParseActivity(line string) (*models.Activity, error) {
+    64→func parseTime …
     72→func FormatActivity(a models.Activity) string {
 
 internal/adapters/repositories/file/repository.go
@@ -441,6 +436,8 @@ internal/adapters/repositories/file/repository.go
     93→func (r *repository) FindLast(_ context.Context) (*models.Activity, error) {
    130→func (r *repository) Save(_ context.Context, activity models.Activity) error {
    168→func (r *repository) Remove(_ context.Context, activity models.Activity) error {
+   229→func (r *repository) readLines …
+   250→func (r *repository) writeLines …
 
 internal/adapters/repositories/notes/repository.go
      3→import …
@@ -516,6 +513,12 @@ internal/config/config.go
     74→func WithConfigFile(file string) Option {
     80→func Load(opts ...Option) (*Config, *viper.Viper, error) {
 
+internal/config/config_test.go
+    12→func TestLoadDefaults(t *testing.T) {
+    25→func TestLoadFromFile(t *testing.T) {
+    64→func TestEnvironmentOverrides(t *testing.T) {
+    95→func TestInitialCreationFromEnv(t *testing.T) {
+
 internal/core/dto/activity_dto.go
      3→import …
      9→type StartActivityRequest struct {
@@ -582,7 +585,6 @@ internal/core/models/activity.go
     32→	d := a.Duration().Round(time.Second)
     33→	h := d / time.Hour
     34→	d %= time.Hour
-    35→	m := d / time.Minute
       →	…
     41→func (a Activity) MarshalJSON() ([]byte, error) {
 
@@ -632,6 +634,11 @@ internal/services/activity/service.go
    214→func (s *service) Remove(ctx context.Context, activity models.Activity) error {
    218→func (s *service) enrichActivities …
 
+internal/services/activity/service_test.go
+    20→func TestService_Stop(t *testing.T) {
+   148→func TestService_Start(t *testing.T) {
+   307→func TestService_Remove(t *testing.T) {
+
 internal/services/ics/generator.go
      3→import …
     11→// Generate returns a full iCalendar string for a single activity.
@@ -640,7 +647,7 @@ internal/services/ics/generator.go
     18→func WrapCalendar(eventsBody string) string {
     28→// GenerateEvent returns the VEVENT block for a single activity.
     29→func GenerateEvent(act models.Activity, uidKey string) string {
-    71→func escapeProperty(s string) string {
+    71→func escapeProperty …
 
 internal/timeutil/timeutil.go
      3→import …

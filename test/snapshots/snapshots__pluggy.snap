@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (3998 tokens)
 
 CHANGELOG.rst
      1→=========
@@ -81,15 +81,6 @@ README.rst
     67→
     68→.. badges
     69→
-    70→.. |pypi| image:: https://img.shields.io/pypi/v/pluggy.svg
-    71→    :target: https://pypi.org/pypi/pluggy
-    72→
-    73→.. |versions| image:: https://img.shields.io/pypi/pyversions/pluggy.svg
-    74→    :target: https://pypi.org/pypi/pluggy
-    75→
-    76→.. |github-actions| image:: https://github.com/pytest-dev/pluggy/workflows/main/badge.svg
-    77→    :target: https://github.com/pytest-dev/pluggy/actions
-    78→
       →…
 
 changelog/README.rst
@@ -132,16 +123,23 @@ docs/api_reference.rst
     21→
     22→    .. data:: <hook name>
     23→
-    24→        :type: HookCaller
-    25→
       →…
 
-docs/changelog.rst
-
 docs/conf.py
+     1→from importlib …
+     2→from typing …
+     6→    import sphinx.application …
    106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
    107→    """Configure Sphinx's WarningHandler to handle (expected) missing include."""
    130→def setup(app: "sphinx.application.Sphinx") -> None:
+
+docs/examples/eggsample/eggsample/hookspecs.py
+     8→def eggsample_add_ingredients(ingredients: tuple):
+    17→def eggsample_prep_condiments(condiments: dict):
+
+docs/examples/eggsample/eggsample/lib.py
+     5→def eggsample_add_ingredients():
+    13→def eggsample_prep_condiments(condiments):
 
 docs/examples/eggsample-spam/eggsample_spam.py
      5→def eggsample_add_ingredients(ingredients):
@@ -181,14 +179,17 @@ docs/index.rst
     20→
     21→Why is it useful?
     22→*****************
-    23→There are some established mechanisms for modifying the behavior of other
-    24→programs/libraries in Python like
       →…
 
 pyproject.toml
      1→[build-system]
      8→[project]
     38→[dependency-groups]
+    43→[tool.setuptools]
+    69→[tool.setuptools_scm]
+    71→[tool.uv]
+    74→[tool.towncrier]
+   112→[tool.mypy]
 
 src/pluggy/__init__.py
      1→__all__ = [
@@ -246,12 +247,14 @@ src/pluggy/_hooks.py
     72→    trylast: bool
     73→    #: The name of the hook specification to match, see :ref:`specname`.
     74→    specname: str | None
+    77→@final
     78→class HookspecMarker:
     85→
     86→    __slots__ = ("project_name",)
     87→
     88→    def __init__ …
    111→    def __call__ …
+   164→@final
    165→class HookimplMarker:
    172→
    173→    __slots__ = ("project_name",)
@@ -261,6 +264,7 @@ src/pluggy/_hooks.py
    281→def normalize_hookimpl_opts …
    290→_PYPY …
    293→def varnames …
+   358→@final
    359→class HookRelay:
    362→
    363→    __slots__ = ("__dict__",)
@@ -298,6 +302,7 @@ src/pluggy/_hooks.py
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
    631→    def _call_history …
    634→    def __repr__ …
+   638→@final
    639→class HookImpl:
    641→
    642→    __slots__ = (
@@ -316,6 +321,7 @@ src/pluggy/_hooks.py
    655→
    656→    def __init__ …
    692→    def __repr__ …
+   696→@final
    697→class HookSpec:
    698→    __slots__ = (
    699→        "namespace",
@@ -375,6 +381,7 @@ src/pluggy/_manager.py
 src/pluggy/_result.py
     16→_ExcInfo …
     20→class HookCallError(Exception):
+    24→@final
     25→class Result(Generic[ResultType]):
     28→
     29→    __slots__ = ("_result", "_exception", "_traceback")
@@ -402,6 +409,7 @@ src/pluggy/_warnings.py
      4→class PluggyWarning(UserWarning):
      6→
      7→    __module__ = "pluggy"
+    10→@final
     11→class PluggyTeardownRaisedWarning(PluggyWarning):
     26→
     27→    __module__ = "pluggy"

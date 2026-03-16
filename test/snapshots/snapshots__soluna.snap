@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3992 tokens)
+budget: 4000 (3994 tokens)
 
 README.md
      7→# Soluna
@@ -20,7 +20,6 @@ README.md
     25→## Precompiled Binaries
     29→## Building from Source
     53→## Projects made with Soluna
-    57→## License
 
 clibs/datalist/make.lua
      1→local lm = require "luamake"
@@ -31,9 +30,7 @@ clibs/datalist/make.lua
      7→    "datalist.c",
      8→  },
      9→  includes = {
-    10→    lm.basedir .. "/3rd/lua",
-    11→  },
-    12→}
+      →  …
 
 clibs/ltask/make.lua
      1→local lm = require "luamake"
@@ -44,12 +41,7 @@ clibs/ltask/make.lua
      7→    "src/*.c",
      8→  },
      9→  includes = {
-    10→    lm.basedir .. "/3rd/lua",
-    11→  },
-    12→  defines = {
-    13→    "LTASK_EXTERNAL_OPENLIBS=soluna_openlibs",
-    14→  },
-    15→}
+      →  …
 
 clibs/lua/make.lua
      1→local lm = require "luamake"
@@ -71,15 +63,7 @@ clibs/yoga/make.lua
      3→
      4→lm.rootdir = lm.basedir .. "/3rd/yoga"
      5→
-     6→lm:source_set "yoga_src" {
-     7→  sources = {
-     8→    "yoga/*.cpp",
-     9→    "yoga/*/*.cpp",
-    10→  },
-    11→  includes = {
-    12→    lm.rootdir,
-    13→  }
-    14→}
+      →…
 
 clibs/zip/make.lua
      1→local lm = require "luamake"
@@ -89,6 +73,66 @@ clibs/zip/make.lua
      6→  sources = {
       →  …
 
+docs/app.lua
+     1→---@meta soluna.app
+
+docs/args.lua
+     1→---@meta
+
+docs/callback.lua
+     1→---@meta
+
+docs/coroutine.lua
+     1→---@meta soluna.coroutine
+
+docs/crypt.lua
+     1→---@meta soluna.crypt
+
+docs/datalist.lua
+     1→---@meta soluna.datalist
+
+docs/file.lua
+     1→---@meta soluna.file
+
+docs/font.lua
+     1→---@meta soluna.font
+
+docs/font_system.lua
+     1→---@meta soluna.font.system
+
+docs/image.lua
+     1→---@meta soluna.image
+
+docs/layout.lua
+     1→---@meta soluna.layout
+
+docs/lfs.lua
+     1→---@meta soluna.lfs
+
+docs/material_mask.lua
+     1→---@meta soluna.material.mask
+
+docs/material_perspective_quad.lua
+     1→---@meta soluna.material.perspective_quad
+
+docs/material_quad.lua
+     1→---@meta soluna.material.quad
+
+docs/material_text.lua
+     1→---@meta soluna.material.text
+
+docs/soluna.lua
+     1→---@meta
+
+docs/text.lua
+     1→---@meta soluna.text
+
+docs/url.lua
+     1→---@meta soluna.url
+
+docs/zip.lua
+     1→---@meta soluna.zip
+
 make.lua
      1→local lm = require "luamake"
      2→local fs = require "bee.filesystem"
@@ -97,14 +141,7 @@ make.lua
      5→  if lm.compiler == "emcc" then
      6→    return true
      7→  end
-     8→  if type(lm.cc) == "string" and lm.cc:find("emcc", 1, true) then
-     9→    return true
-    10→  end
-    11→  return false
-    12→end
-    13→
-    14→local osplat = (function()
-      →…
+      →  …
 
 src/appevent.h
      2→#define soluna_app_event_h
@@ -250,8 +287,6 @@ src/platform/macos/soluna_macos_ime.m
       →…
 
 src/platform/wasm/soluna_wasm_ime.h
-    19→#include "ime_state.h"
-    20→#include "ime_char_filter.h"
     22→void soluna_emit_char(uint32_t codepoint, uint32_t modifiers, bool repeat);
     23→extern void soluna_wasm_setup_ime(void);
     24→extern void soluna_wasm_dom_show(float x, float y, float w, float h);
@@ -270,9 +305,6 @@ src/platform/wasm/soluna_wasm_ime.h
    227→soluna_wasm_set_composing(int active) {
    231→EMSCRIPTEN_KEEPALIVE void
    232→soluna_wasm_block_next_keypair(void) {
-
-src/platform/windows/soluna_windows_ime.c
-     1→#define WIN32_LEAN_AND_MEAN
 
 src/platform/windows/soluna_windows_ime.h
      4→void soluna_win32_install_wndproc(void);
@@ -369,5 +401,4 @@ src/yogaone.cpp
      6→#include "yoga/YGPixelGrid.cpp"
      7→#include "yoga/YGValue.cpp"
      8→
-     9→#include "yoga/algorithm/AbsoluteLayout.cpp"
       →…

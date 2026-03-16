@@ -11,7 +11,6 @@ Cargo.toml
       →…
     37→[workspace.dependencies]
     38→# Toasty crates
-    39→toasty = { path = "crates/toasty" }
       →…
 
 README.md
@@ -83,13 +82,16 @@ crates/toasty/Cargo.toml
 
 crates/toasty/src/apply_update.rs
      9→pub trait ApplyUpdate {
-    14→    fn apply_result …
+    14→    fn apply_result(self, values: Vec<Value>) -> Result<()>;
     19→pub struct Query;
 
 crates/toasty/src/cursor.rs
      6→pub struct Cursor<M> {
     12→pub trait FromCursor<A>: Extend<A> + Default {}
-    36→    pub async fn collect …
+    36→    pub async fn collect<B>(mut self) -> Result<B, Error>
+    37→    where
+    38→        B: FromCursor<M>,
+    39→    {
 
 crates/toasty/src/db/builder.rs
     17→pub struct Builder {
@@ -111,10 +113,10 @@ crates/toasty/src/db/pool.rs
 
 crates/toasty/src/db.rs
     18→pub struct Db {
-    37→    pub async fn all …
-    69→    pub async fn exec …
-   114→    pub async fn push_schema …
-   124→    pub async fn reset_db …
+    37→    pub async fn all<M: Model>(&self, query: stmt::Select<M>) -> Result<Cursor<M>> {
+    69→    pub async fn exec<M: Model>(&self, statement: Statement<M>) -> Result<ValueStream> {
+   114→    pub async fn push_schema(&self) -> Result<()> {
+   124→    pub async fn reset_db(&self) -> Result<()> {
 
 crates/toasty/src/engine/lower/relation.rs
     35→    fn selection …
@@ -131,20 +133,20 @@ crates/toasty/src/lib.rs
     57→pub mod driver {
 
 crates/toasty/src/model.rs
-    12→pub fn generate_unique_id …
+    12→pub fn generate_unique_id() -> ModelId {
     26→pub trait Register {
-    30→    fn id …
-    33→    fn schema …
+    30→    fn id() -> ModelId;
+    33→    fn schema() -> app::Model;
     41→pub trait Model: Register + Sized {
-    57→    fn load …
+    57→    fn load(value: stmt::Value) -> Result<Self, Error>;
     65→pub trait Embed: Register {
 
 crates/toasty/src/page.rs
     10→pub struct Page<M> {
-    40→    pub fn has_next …
-    45→    pub fn has_prev …
-    65→    pub async fn next …
-    93→    pub async fn prev …
+    40→    pub fn has_next(&self) -> bool {
+    45→    pub fn has_prev(&self) -> bool {
+    65→    pub async fn next(&self, db: &Db) -> Result<Option<Page<M>>> {
+    93→    pub async fn prev(&self, db: &Db) -> Result<Option<Page<M>>> {
 
 crates/toasty/src/relation/belongs_to.rs
      8→pub struct BelongsTo<T> {
@@ -266,9 +268,9 @@ crates/toasty-core/src/driver/capability.rs
      4→pub struct Capability {
     61→pub struct StorageTypes {
    103→pub struct SchemaMutations {
-   120→    pub fn validate(&self) -> crate::Result<()> {
-   141→    pub fn default_string_max_length(&self) -> Option<u64> {
-   156→    pub fn native_type_for(&self, ty: &stmt::Type) -> stmt::Type {
+   120→    pub fn validate …
+   141→    pub fn default_string_max_length …
+   156→    pub fn native_type_for …
    164→    pub const SQLITE: Self = Self {
    189→    pub const POSTGRESQL: Self = Self {
    211→    pub const MYSQL: Self = Self {
@@ -326,7 +328,7 @@ crates/toasty-core/src/driver/response.rs
     16→    /// Operation result, as a stream of rows
     17→    Stream(stmt::ValueStream),
     18→}
-    66→    pub fn into_count(self) -> u64 {
+    66→    pub fn into_count …
 
 crates/toasty-core/src/driver.rs
      7→pub mod operation;
@@ -358,6 +360,7 @@ crates/toasty-core/src/lib.rs
     10→pub mod schema;
     13→pub mod stmt;
     16→pub type Result<T, E = Error> = core::result::Result<T, E>;
+    18→pub use async_trait::async_trait;
 
 crates/toasty-core/src/macros.rs
      1→#[macro_export]
@@ -570,18 +573,7 @@ crates/toasty-core/src/stmt.rs
 
 crates/toasty-driver-dynamodb/Cargo.toml
      1→[package]
-     2→name = "toasty-driver-dynamodb"
-     3→version = "0.1.0"
-     4→edition = "2021"
-     5→publish = false
      7→[dependencies]
-     8→toasty-core.workspace = true
-     9→aws-config.workspace = true
-    10→aws-sdk-dynamodb.workspace = true
-    11→serde.workspace = true
-    12→serde_json.workspace = true
-    13→url.workspace = true
-    14→uuid.workspace = true
 
 crates/toasty-driver-dynamodb/src/lib.rs
     30→pub struct DynamoDb {

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (3997 tokens)
 
 .eslintrc.js
      7→const localConfigs …
@@ -49,6 +49,54 @@ budget: 4000 (4000 tokens)
      3→repository:
     13→branches:
 
+.github/workflows/audit.yml
+     3→name: Audit
+     5→on:
+    11→permissions:
+    14→jobs:
+
+.github/workflows/ci-release.yml
+     3→name: CI - Release
+     5→on:
+    21→permissions:
+    25→jobs:
+
+.github/workflows/ci.yml
+     3→name: CI
+     5→on:
+    16→permissions:
+    19→jobs:
+
+.github/workflows/codeql-analysis.yml
+     3→name: CodeQL
+     5→on:
+    18→permissions:
+    21→jobs:
+
+.github/workflows/post-dependabot.yml
+     3→name: Post Dependabot
+     5→on: pull_request
+     7→permissions:
+    10→jobs:
+
+.github/workflows/pull-request.yml
+     3→name: Pull Request
+     5→on:
+    13→permissions:
+    16→jobs:
+
+.github/workflows/release-integration.yml
+     3→name: Release Integration
+     5→on:
+    22→permissions:
+    26→jobs:
+
+.github/workflows/release.yml
+     3→name: Release
+     5→on:
+    11→permissions:
+    16→jobs:
+
 .release-please-manifest.json
      2→  ".": "7.7.4"
 
@@ -89,11 +137,6 @@ README.md
     31→```js
     32→// load the whole API at once in a single object
     33→const semver = require('semver')
-    34→
-    35→// or just load the bits you need
-    36→// all of them listed here, just pick and choose what you want
-    37→
-    38→// classes
       →…
    139→## Versions
    141→A "version" is described by the `v2.0.0` specification found at
@@ -126,11 +169,6 @@ README.md
    169→Comparators can be joined by whitespace to form a `comparator set`,
    170→which is satisfied by the **intersection** of all of the comparators
    171→it includes.
-   172→
-   173→A range is composed of one or more comparator sets, joined by `||`.  A
-   174→version matches a range if and only if every comparator in at least
-   175→one of the `||`-separated comparator sets is satisfied by the version.
-   176→
       →…
    184→### Prerelease Tags
    219→#### Prerelease Identifiers
@@ -164,12 +202,7 @@ README.md
    429→  Return the version incremented by the release
    430→  type (`major`, `premajor`, `minor`, `preminor`, `patch`,
    431→  `prepatch`, `prerelease`, or `release`), or null if it's not valid
-   432→  * `premajor` in one call will bump the version up to the next major
-   433→    version and down to a prerelease of that major version.
-   434→    `preminor`, and `prepatch` work the same way.
-   435→  * If called from a non-prerelease version, `prerelease` will work the
-   436→    same as `prepatch`. It increments the patch version and then makes a
-      →    …
+      →  …
    453→### Comparison
    478→### Sorting
    485→### Comparators
@@ -204,11 +237,6 @@ README.md
    632→* `require('semver/functions/coerce')`
    633→* `require('semver/functions/compare')`
    634→* `require('semver/functions/compare-build')`
-   635→* `require('semver/functions/compare-loose')`
-   636→* `require('semver/functions/diff')`
-   637→* `require('semver/functions/eq')`
-   638→* `require('semver/functions/gt')`
-   639→* `require('semver/functions/gte')`
       →…
 
 bin/semver.js
@@ -220,7 +248,7 @@ bin/semver.js
    139→const help = () => console.log(
 
 classes/comparator.js
-     3→const ANY …
+     3→const ANY = Symbol('SemVer ANY')
      5→class Comparator {
      6→  static get ANY () {
     10→  constructor (comp, options) {
@@ -230,7 +258,7 @@ classes/comparator.js
     79→  intersects (comp, options) {
 
 classes/range.js
-     3→const SPACE_CHARACTERS …
+     3→const SPACE_CHARACTERS = /\s+/g
      6→class Range {
      7→  constructor (range, options) {
     73→  get range () {
@@ -239,7 +267,7 @@ classes/range.js
    100→  parseRange (range) {
    170→  intersects (range, options) {
    193→  test (version) {
-   218→const cache …
+   218→const cache = new LRU()
    233→const isNullSet …
    234→const isAny …
    238→const isSatisfiable …
@@ -435,3 +463,5 @@ release-please-config.json
      4→  "changelog-sections": [
     31→  "packages": {
     36→  "prerelease-type": "pre.0"
+
+test/map.js

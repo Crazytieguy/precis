@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7999 tokens)
+budget: 8000 (7998 tokens)
 
 README.md
      1→# MCPHost 🤖
@@ -30,6 +30,9 @@ README.md
    488→## Usage 🚀
    492→### Interactive Mode (Default)
    500→### Script Mode
+   562→##### Variable Syntax
+   594→##### Usage Examples
+   615→##### Default Value Features
    648→### Hooks System
    714→### Non-Interactive Mode
    729→### Model Generation Parameters
@@ -149,12 +152,6 @@ contribute/contribute.md
     16→      ./build.sh
     17→   ```
     18→
-    19→4. open `boost.sh` file and fill your model info in.
-    20→   ```bash
-    21→      cat boost.sh
-    22→      vi boost.sh
-    23→   ```
-    24→
       →…
     30→## Contribute your code
     31→just write your code and push it.
@@ -357,6 +354,7 @@ internal/hooks/executor.go
     48→func (e *Executor) SetInteractive(interactive bool) {
     57→func (e *Executor) PopulateCommonFields(event HookEvent) CommonInput {
     77→func (e *Executor) ExecuteHooks(ctx context.Context, event HookEvent, input interface{}) (*HookOutput, error) {
+   201→type hookResult struct {
 
 internal/hooks/schemas.go
     10→type CommonInput struct {
@@ -592,6 +590,7 @@ internal/ui/progress/ollama.go
    151→}
    156→func NewProgressReader(reader io.Reader) *ProgressReader {
    184→func (pr *ProgressReader) Read(p []byte) (n int, err error) {
+   216→func (pr *ProgressReader) parseProgressLine …
    261→func (pr *ProgressReader) Close() error {
 
 internal/ui/slash_command_input.go
@@ -628,6 +627,7 @@ internal/ui/usage_tracker.go
     42→type UsageTracker struct {
 
 main.go
+     3→import …
     12→var version …
     14→func main() {
 
