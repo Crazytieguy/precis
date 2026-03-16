@@ -174,6 +174,7 @@ pub fn classify_file(path: &Path) -> crate::schedule::FileCategory {
         && (stem.ends_with(".test")
             || stem.ends_with(".test-d")
             || stem.ends_with(".spec")
+            || stem.ends_with(".stories")
             || stem.starts_with("test_")
             || stem.ends_with("_test")
             || stem == "conftest")
