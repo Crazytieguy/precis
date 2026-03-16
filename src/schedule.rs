@@ -104,7 +104,7 @@ pub enum FileRole {
     CommunityHealth,
     /// AI coding assistant config files: CLAUDE.md, AGENTS.md, COPILOT.md, etc.
     AiConfig,
-    /// Architecture/design documentation: ARCHITECTURE.md, DESIGN.md, CONTEXT.md.
+    /// Architecture/design documentation: ARCHITECTURE.md, DESIGN.md.
     /// Body content of these files is the most valuable information in a repo
     /// (design philosophy, discarded approaches, code patterns).
     Architecture,
