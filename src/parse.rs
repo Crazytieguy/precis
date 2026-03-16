@@ -39,7 +39,7 @@ pub struct Symbol {
     pub is_reexport: bool,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum SymbolKind {
     Function,
     Struct,
@@ -689,23 +689,31 @@ fn mark_reexports(symbols: &mut [Symbol]) {
     }
 }
 
-/// Collapse consecutive symbols with the same name and kind, keeping only the last in each run.
-/// Handles two patterns:
-///   1. TypeScript/C++ function overloads (multiple signatures, one implementation)
-///   2. C/C++ #ifdef branches (same struct defined for different platforms)
+/// Collapse duplicate symbols with the same name and kind, keeping only the first occurrence.
+/// Handles three patterns:
+///   1. TypeScript/C++ function overloads (consecutive, same name)
+///   2. C/C++ #ifdef branches (same struct defined for different platforms, may be non-consecutive)
+///   3. C amalgamation files where embedded deps define the same struct as the main code
 /// Go is excluded because it allows multiple `init()` functions in one file.
 fn dedup_overloads(symbols: Vec<Symbol>, lang: Lang) -> Vec<Symbol> {
     if lang == Lang::Go {
         return symbols;
     }
+    let mut seen = std::collections::HashSet::new();
     let mut result: Vec<Symbol> = Vec::with_capacity(symbols.len());
     for sym in symbols {
+        // For consecutive duplicates of the same kind, replace with the later one
+        // (handles TypeScript overloads where the last is the implementation)
         if let Some(last) = result.last()
             && last.name == sym.name
             && last.kind == sym.kind
         {
-            // Replace the previous entry with this one (the later version)
             *result.last_mut().unwrap() = sym;
+            continue;
+        }
+        // For non-consecutive duplicates (C #ifdef branches), keep only the first
+        let key = (sym.name.clone(), sym.kind);
+        if !seen.insert(key) {
             continue;
         }
         result.push(sym);

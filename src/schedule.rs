@@ -827,9 +827,11 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     // shown from .js/.ts source files. Deprioritize so source files win.
     let type_declaration_factor = if key.is_type_declaration { 0.15 } else { 1.0 };
 
-    // C/C++ header files define the public API. Boost them so headers
-    // win over implementation files when both exist in the same directory.
-    let header_factor = if key.is_header { 1.5 } else { 1.0 };
+    // C/C++ header files define the public API. In C, there's no `pub`
+    // keyword — the convention is that .h files ARE the public interface.
+    // Boost headers significantly so they win over implementation structs
+    // from .c files (which can be enormous in amalgamation patterns).
+    let header_factor = if key.is_header { 2.5 } else { 1.0 };
 
     // Heading depth: top-level headings (h1, h2) are more important than
     // subsections (h3+). This lets the scheduler show body content for
@@ -904,16 +906,14 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
             _ => 0.1,
         },
         // Imports: supplementary context for understanding file dependencies.
-        // Lower base value since they're not API surface, but still useful.
-        // 1st-party imports (local modules) are higher value at Signatures
-        // stage because they reveal internal module structure. 3rd-party
-        // imports (stdlib, external packages) are low value at Signatures —
-        // knowing a file uses `from typing import Any` adds no insight;
-        // the Names stage (`from typing …`) is sufficient.
+        // Names stage shows only `from module …` (truncated) — for 1st-party
+        // imports, the full import line (Signatures) reveals what symbols are
+        // exported/used, which is high-value. For 3rd-party imports, Names
+        // is sufficient (knowing `from typing` is enough without seeing `Any`).
         KindCategory::Import => match stage {
             StageKind::FilePath => 0.3,
-            StageKind::Names => 1.0,
-            StageKind::Signatures => if key.is_first_party { 0.5 } else { 0.1 },
+            StageKind::Names => 0.6,
+            StageKind::Signatures => if key.is_first_party { 1.0 } else { 0.1 },
             _ => 0.1,
         },
         // Constants: signature captures the value for short constants;
