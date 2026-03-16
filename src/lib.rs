@@ -36,7 +36,7 @@ impl Lang {
             "go" => Some(Lang::Go),
             "c" | "h" => Some(Lang::C),
             "lua" => Some(Lang::Lua),
-            "md" => Some(Lang::Markdown),
+            "md" | "mdx" => Some(Lang::Markdown),
             "ts" | "tsx" | "js" | "jsx" | "mts" | "cts" | "mjs" | "cjs" => Some(Lang::JsTs),
             "json" => Some(Lang::Json),
             "toml" => Some(Lang::Toml),
