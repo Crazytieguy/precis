@@ -92,56 +92,40 @@ fn render_scheduled(
     sched: &schedule::Schedule,
 ) -> String {
     let mut out = String::new();
-    let mut first_file = true;
 
-    // Build render order: README first, then project manifests, then everything
-    // else in alphabetical order. Matches how a human presents a project overview.
-    let render_order: Vec<usize> = {
-        let mut readme_indices = Vec::new();
-        let mut manifest_indices = Vec::new();
-        let mut other_indices = Vec::new();
+    // Render order: README first, then project manifests, then alphabetical.
+    let mut render_order: Vec<usize> = (0..files.len()).collect();
+    render_order.sort_by_key(|&i| {
+        let relative = files[i].strip_prefix(root).unwrap_or(&files[i]);
+        let is_root = relative.parent().is_none_or(|p| p.as_os_str().is_empty());
+        let role = schedule::FileRole::from_path(relative);
+        let filename = relative.file_name().and_then(|n| n.to_str()).unwrap_or("");
+        if is_root && matches!(role, schedule::FileRole::Readme | schedule::FileRole::Architecture) {
+            0
+        } else if is_root && matches!(filename, "Cargo.toml" | "package.json" | "go.mod" | "pyproject.toml" | "setup.cfg") {
+            1
+        } else {
+            2
+        }
+    });
+
+    // Find top-level directories that are completely invisible (no visible files).
+    let invisible_dirs: std::collections::BTreeSet<PathBuf> = {
+        let mut all_dirs = std::collections::HashSet::new();
+        let mut visible_dirs = std::collections::HashSet::new();
         for (i, file) in files.iter().enumerate() {
             let relative = file.strip_prefix(root).unwrap_or(file);
-            let is_root = relative.parent().is_none_or(|p| p.as_os_str().is_empty());
-            let role = schedule::FileRole::from_path(relative);
-            let filename = relative.file_name().and_then(|n| n.to_str()).unwrap_or("");
-            if is_root && matches!(role, schedule::FileRole::Readme | schedule::FileRole::Architecture) {
-                readme_indices.push(i);
-            } else if is_root && matches!(filename, "Cargo.toml" | "package.json" | "go.mod" | "pyproject.toml" | "setup.cfg") {
-                manifest_indices.push(i);
-            } else {
-                other_indices.push(i);
-            }
-        }
-        readme_indices.extend(manifest_indices);
-        readme_indices.extend(other_indices);
-        readme_indices
-    };
-
-    // Compute top-level directories that are completely invisible (no visible files).
-    // Only mark these to avoid cluttering with subdirectory markers.
-    let mut dirs_with_files: std::collections::HashMap<PathBuf, bool> = std::collections::HashMap::new();
-    for (file_idx, file) in files.iter().enumerate() {
-        let relative = file.strip_prefix(root).unwrap_or(file);
-        // Get the first path component (top-level directory)
-        let top_dir = relative.components().next()
-            .map(|c| PathBuf::from(c.as_os_str()));
-        if let Some(dir) = top_dir {
-            // Only track directories, not root-level files
             if relative.components().count() > 1 {
-                let entry = dirs_with_files.entry(dir).or_insert(false);
-                if sched.visible_files.contains(&file_idx) {
-                    *entry = true; // directory has at least one visible file
+                let top = PathBuf::from(relative.components().next().unwrap().as_os_str());
+                all_dirs.insert(top.clone());
+                if sched.visible_files.contains(&i) {
+                    visible_dirs.insert(top);
                 }
             }
         }
-    }
-    let invisible_dirs: std::collections::BTreeSet<PathBuf> = dirs_with_files
-        .into_iter()
-        .filter(|(_, has_visible)| !has_visible)
-        .map(|(dir, _)| dir)
-        .collect();
-    let mut dirs_emitted: std::collections::HashSet<PathBuf> = std::collections::HashSet::new();
+        all_dirs.difference(&visible_dirs).cloned().collect()
+    };
+    let mut dirs_emitted = std::collections::HashSet::new();
 
     for &file_idx in &render_order {
         if !sched.visible_files.contains(&file_idx) {
@@ -151,22 +135,17 @@ fn render_scheduled(
         let source = &sources[file_idx];
         let relative = file.strip_prefix(root).unwrap_or(file);
 
-        // Before showing this file, emit omission markers for invisible
-        // top-level directories that sort before this file's directory.
-        let file_top_dir = relative.components().next()
-            .map(|c| PathBuf::from(c.as_os_str()));
-        if let Some(ref ftd) = file_top_dir {
+        // Emit omission markers for invisible dirs that sort before this file.
+        if let Some(ftd) = relative.components().next().map(|c| PathBuf::from(c.as_os_str())) {
             for dir in &invisible_dirs {
-                if dir < ftd && dirs_emitted.insert(dir.clone()) {
-                    if !first_file { out.push('\n'); }
-                    first_file = false;
+                if dir < &ftd && dirs_emitted.insert(dir.clone()) {
+                    if !out.is_empty() { out.push('\n'); }
                     out.push_str(&format!("{}/\n      →…\n", dir.display()));
                 }
             }
         }
 
-        if !first_file { out.push('\n'); }
-        first_file = false;
+        if !out.is_empty() { out.push('\n'); }
         out.push_str(&format!("{}\n", relative.display()));
 
         let source = match source {
@@ -211,10 +190,7 @@ fn render_scheduled(
     // Emit any remaining invisible top-level directories
     for dir in &invisible_dirs {
         if dirs_emitted.insert(dir.clone()) {
-            if !first_file {
-                out.push('\n');
-            }
-            first_file = false;
+            if !out.is_empty() { out.push('\n'); }
             out.push_str(&format!("{}/\n      →…\n", dir.display()));
         }
     }
