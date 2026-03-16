@@ -61,6 +61,8 @@ fn is_unsupported_code_extension(ext: &str) -> bool {
         | "rst"
         // Go module file (go.mod lists dependencies and Go version)
         | "mod"
+        // Config files with informative metadata (setup.cfg, .ini)
+        | "cfg" | "ini"
     )
 }
 

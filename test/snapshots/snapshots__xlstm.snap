@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4007 tokens)
+budget: 4000 (4004 tokens)
 
 README.md
      3→# xLSTM: Extended Long Short-Term Memory
@@ -33,13 +33,23 @@ README.md
    140→This section explains how to use the models from the xLSTM paper.
    141→
    142→## How to use the xLSTM architecture from our NeurIPS paper
+   146→### Using the sLSTM CUDA kernels
+   168→### xLSTM Block Stack
+   255→### xLSTM Language Model
    297→## Experiments
    312→## Citation
 
+experiments/data/formal_language/formal_language_dataset.py
+    42→class FormLangDatasetConfig(FormLangDatasetConfigBase):
+    43→    shift: int = 1
+    44→    enable_mask: bool = False
+    45→    additional_prefix_tokens: int = (
+      →    …
+
 experiments/lr_scheduler.py
-    14→    def get_lr …
-    19→    def reinitialize …
-    34→    def compute_lr …
+    14→    def get_lr(self) -> list[float]:
+    19→    def reinitialize(self, **kwargs) -> None:
+    34→    def compute_lr(step, warmup_steps, decay_until_step, max_lr, min_lr):
 
 experiments/parity_xlstm01.yaml
      1→training:
@@ -56,11 +66,24 @@ experiments/parity_xlstm11.yaml
     16→model:
     29→dataset:
 
+pytest.ini
+     1→[pytest]
+     2→pythonpath = .
+     3→log_cli = true
+     4→log_cli_level = INFO
+     5→log_format = %(asctime)s %(levelname)s %(message)s
+     6→log_date_format = %Y-%m-%d %H:%M:%S
+
 
 tests/
       →…
 xlstm/__init__.py
      1→__version__ = "2.0.5"
+
+xlstm/blocks/mlstm/backends.py
+     9→def parallel_stabilized_simple …
+    93→def recurrent_step_stabilized_simple …
+   149→def chunkwise_simple …
 
 xlstm/blocks/mlstm/block.py
     10→class mLSTMBlockConfig:
@@ -70,7 +93,9 @@ xlstm/blocks/mlstm/block.py
     14→    _num_blocks: int = None
     15→    _block_idx: int = None
     16→
+    17→    def __post_init__ …
     22→class mLSTMBlock(xLSTMBlock):
+    25→    def __init__ …
 
 xlstm/blocks/mlstm/cell.py
     14→class mLSTMCellConfig:
@@ -78,6 +103,10 @@ xlstm/blocks/mlstm/cell.py
     16→    embedding_dim: int = -1
     17→    num_heads: int = -1
     20→class mLSTMCell(nn.Module):
+    23→    def __init__ …
+    43→    def forward …
+    75→    def step …
+   133→    def reset_parameters …
 
 xlstm/blocks/mlstm/layer.py
     19→class mLSTMLayerConfig(UpProjConfigMixin):
@@ -95,17 +124,15 @@ xlstm/blocks/mlstm/layer.py
     31→    _num_blocks: int = 1
     32→    _inner_embedding_dim: int = None
     33→
+    34→    def __post_init__ …
     39→class mLSTMLayer(nn.Module):
+    42→    def __init__ …
+   101→    def forward …
+   127→    def step …
+   158→    def reset_parameters …
 
 xlstm/blocks/slstm/block.py
     13→class sLSTMBlockConfig:
-    14→    slstm: sLSTMLayerConfig = field(default_factory=sLSTMLayerConfig)
-    15→    feedforward: Optional[FeedForwardConfig] = field(default_factory=FeedForwardConfig)
-    16→
-    17→    # we initialize these with None to catch the case where they are not set
-    18→    _num_blocks: int = None
-    19→    _block_idx: int = None
-    20→
     29→class sLSTMBlock(xLSTMBlock):
 
 xlstm/blocks/slstm/cell.py
@@ -113,23 +140,6 @@ xlstm/blocks/slstm/cell.py
     30→DTYPE_DICT = {
     35→DTYPES = Literal["bfloat16", "float16", "float32"]
     62→class sLSTMCellConfig:
-    63→    hidden_size: int = -1
-    64→    num_heads: int = (
-    65→        4  # this must divide the hidden size, is not yet supported by all versions in this directory
-    66→    )
-    67→    num_states: int = 4  # this is for the sLSTM, a standard LSTM  has 2
-    68→    backend: Literal["vanilla", "cuda"] = "cuda"
-    69→    # the type of function a cell computes
-    70→    function: str = "slstm"
-    71→    bias_init: Literal["powerlaw_blockdependent", "small_init", "standard"] = (
-    72→        "powerlaw_blockdependent"
-    73→    )
-    74→    recurrent_weight_init: Literal["zeros", "standard"] = "zeros"
-    75→
-    76→    _block_idx: int = (
-    77→        0  # index in the block sequence for a residual stacked model, needed for forget gate init
-    78→    )
-    79→    _num_blocks: int = (
    122→    def head_dim(self):
    126→    def input_dim(self):
    130→    def torch_dtype(self) -> torch.dtype:
@@ -139,6 +149,8 @@ xlstm/blocks/slstm/cell.py
    146→    def torch_dtype_s(self) -> torch.dtype:
    173→    def defines(self):
    214→class sLSTMCellBase(nn.Module):
+   277→    def _recurrent_kernel(self):
+   281→    def _bias(self):
    324→    def head_dim(self):
    509→class sLSTMCellCUDA(object):
    513→    def instance(cls, config: sLSTMCellConfig):
@@ -148,17 +160,10 @@ xlstm/blocks/slstm/cell.py
 
 xlstm/blocks/slstm/layer.py
     19→class sLSTMLayerConfig(sLSTMCellConfig):
-    20→    embedding_dim: int = -1
-    21→    num_heads: int = (
-    22→        4  # this must divide the hidden size, is not yet supported by all versions in this directory
-    23→    )
-    24→    conv1d_kernel_size: int = 4  # 0 means no convolution included
-    25→    group_norm_weight: bool = True
-    26→    dropout: float = 0.0
-    27→
     33→class sLSTMLayer(nn.Module):
 
 xlstm/blocks/slstm/src/cuda/slstm.h
+    24→#include "../util/util.h"
     28→#define SLSTM_NUM_HEADS 1
     29→#define SLSTM_HIDDEN_SIZE 512
     30→#define SLSTM_BATCH_SIZE 8
@@ -173,6 +178,7 @@ xlstm/blocks/slstm/src/cuda/slstm.h
     41→#define SLSTM_SIMPLE_AGG true
 
 xlstm/blocks/slstm/src/util/device_assert.h
+    23→__assertfail …
     27→#define device_assert_fail(msg)                                                \
 
 xlstm/blocks/slstm/src/util/support.h
@@ -325,6 +331,9 @@ xlstm/xlstm_large/model.py
     37→    """Number of blocks."""
     38→    vocab_size: int
     39→    """Vocabulary size."""
+    40→    use_bias: bool = False
+    41→    """Whether to use bias in linear layers."""
+    42→    norm_eps: float = 1e-6
       →    …
    112→class xLSTMLarge(nn.Module):
    187→class xLSTMLargeBlockStack(nn.Module):
@@ -338,7 +347,10 @@ xlstm/xlstm_large/model.py
    287→    """Whether to use bias in linear layers."""
    288→    norm_eps: float = 1e-6
    289→    """Epsilon value for numerical stability in the normalization layers."""
-      →    …
+   290→    norm_reduction_force_float32: bool = True
+   291→    """Whether to force float32 reductions in the normalization layers."""
+   292→
+      →…
    310→class mLSTMLayer(nn.Module):
    455→class mLSTMBlock(nn.Module):
 
