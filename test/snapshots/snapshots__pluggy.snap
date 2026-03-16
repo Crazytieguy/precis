@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4009 tokens)
+budget: 4000 (4008 tokens)
 
 CHANGELOG.rst
      1→=========
@@ -164,17 +164,17 @@ docs/index.rst
     22→*****************
       →…
 
-
 downstream/
       →…
+
 pyproject.toml
      1→[build-system]
      8→[project]
     38→[dependency-groups]
 
-
 scripts/
       →…
+
 src/pluggy/__init__.py
      1→__all__ = [
     23→from ._hooks …

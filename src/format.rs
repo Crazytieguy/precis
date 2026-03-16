@@ -123,11 +123,6 @@ fn render_scheduled(
         if !sched.visible_files.contains(&file_idx) {
             continue;
         }
-        if first_file {
-            first_file = false;
-        } else {
-            out.push('\n');
-        }
         let relative = file.strip_prefix(root).unwrap_or(file);
 
         // Before showing this file, emit omission markers for invisible
@@ -137,15 +132,15 @@ fn render_scheduled(
         if let Some(ref ftd) = file_top_dir {
             for dir in &invisible_dirs {
                 if dir < ftd && dirs_emitted.insert(dir.clone()) {
-                    if !first_file {
-                        out.push('\n');
-                    }
+                    if !first_file { out.push('\n'); }
                     first_file = false;
                     out.push_str(&format!("{}/\n      →…\n", dir.display()));
                 }
             }
         }
 
+        if !first_file { out.push('\n'); }
+        first_file = false;
         out.push_str(&format!("{}\n", relative.display()));
 
         let source = match source {
