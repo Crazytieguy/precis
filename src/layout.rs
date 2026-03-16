@@ -720,6 +720,20 @@ mod tests {
     }
 
     #[test]
+    fn leading_noise_badge_vs_screenshot() {
+        // Short alt text = badge (noise)
+        assert!(is_markdown_leading_noise("![build](https://img.shields.io/badge.svg)"));
+        assert!(is_markdown_leading_noise("![npm](https://badge.fury.io/js/pkg.svg)"));
+        // Linked badge
+        assert!(is_markdown_leading_noise("[![CI](url)](link)"));
+        // Long alt text = screenshot (not noise)
+        assert!(!is_markdown_leading_noise("![Screenshot showing the dashboard with live metrics](screenshot.png)"));
+        // TOC links
+        assert!(is_markdown_leading_noise("- [Installation](#installation)"));
+        assert!(is_markdown_leading_noise("-   [Usage](#usage)"));
+    }
+
+    #[test]
     fn strip_heading_badges_removes_trailing_badges() {
         // Linked images (badges) after heading text
         assert_eq!(
