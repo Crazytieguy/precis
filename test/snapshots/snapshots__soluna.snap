@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4012 tokens)
+budget: 4000 (4008 tokens)
 
 README.md
      7→# Soluna
@@ -30,20 +30,95 @@ Makefile
      7→# msvc support
      8→#CC=cl
      9→LD=$(CC)
-    10→LUA_EXE=$(BUILD)/lua.exe
-    11→SHDC=$(BIN)/sokol-tools-bin/bin/win32/sokol-shdc.exe
-    12→VERSION=$(shell git rev-parse HEAD)
-    13→
-    14→#for msvc
-    15→ifeq ($(CC),cl)
-    16→ CCPP=cl
-      → …
+      →…
 
 clibs/
       →…
 
-docs/
-      →…
+docs/app.lua
+    15→function app.quit() end
+    24→function app.set_ime_font(font_name, font_size) end
+    35→function app.set_ime_rect(rect) end
+
+docs/callback.lua
+    11→function callback.frame(count) end
+    18→function callback.key(keycode, state) end
+    24→function callback.char(char) end
+    31→function callback.mouse_button(button, state) end
+    38→function callback.mouse_move(x, y) end
+    45→function callback.mouse_scroll(dx, dy) end
+    52→function callback.window_resize(width, height) end
+
+docs/coroutine.lua
+    18→function coroutine.create(f) end
+    30→function coroutine.resume(co, ...) end
+    40→function coroutine.yield(...) end
+
+docs/crypt.lua
+    17→function crypt.hexencode(data) end
+    26→function crypt.sha1(data) end
+
+docs/datalist.lua
+    15→function datalist.parse(data) end
+    22→function datalist.quote(str) end
+
+docs/file.lua
+    15→function file.load(filename) end
+    22→function file.attributes(filename) end
+    29→function file.exist(filename) end
+    36→function file.local_exist(filename) end
+    43→function file.local_load(filename) end
+    50→function file.dir(path) end
+
+docs/font.lua
+    14→function font.import(data) end
+    21→function font.name(name) end
+    27→function font.cobj() end
+
+docs/font_system.lua
+    15→function font_system.ttfdata(name) end
+
+docs/image.lua
+    17→function image.load(data) end
+    33→function image.resize(data, width, height, scale_x, scale_y) end
+
+docs/layout.lua
+    22→function layout.load(filename_or_list, scripts) end
+    32→function layout.calc(document) end
+
+docs/lfs.lua
+    15→function lfs.attributes(filename) end
+    22→function lfs.dir(path) end
+
+docs/material_mask.lua
+    19→function matmask.mask(sprite, color) end
+
+docs/material_perspective_quad.lua
+    29→function matproj.sprite(sprite, options) end
+
+docs/material_quad.lua
+    20→function matquad.quad(width, height, color) end
+
+docs/material_text.lua
+    31→function mattext.block(fontcobj, fontid, size, color, alignment) end
+
+docs/soluna.lua
+    40→function soluna.settings() end
+    46→function soluna.set_window_title(text) end
+    52→function soluna.set_icon(data) end
+    59→function soluna.gamedir(name) end
+    66→function soluna.load_sprites(filename) end
+
+docs/text.lua
+    17→function text.init(bundle_file) end
+
+docs/url.lua
+    14→function url.open(link) end
+
+docs/zip.lua
+    19→function zip.open(filename, mode) end
+
+make.lua
 
 script/
       →…
@@ -52,24 +127,12 @@ src/appevent.h
      2→#define soluna_app_event_h
      4→struct event_message {
 
-src/batch.c
-     8→struct draw_batch {
-
 src/batch.h
      6→struct draw_primitive {
     13→struct draw_primitive_external {
     19→struct draw_batch * batch_new(int size);
     20→struct draw_primitive * batch_reserve(struct draw_batch *, int size);
     21→void batch_delete(struct draw_batch *);
-
-src/drawmgr.c
-     8→struct draw_element {
-    15→struct drawmgr {
-
-src/entry.c
-    89→struct app_context {
-   103→struct soluna_message {
-   216→struct icon_pixels {
 
 src/font_define.h
      4→#define FONT_MANAGER_TEXSIZE 2048
@@ -91,8 +154,6 @@ src/font_manager.c
     54→	uint16_t w;
     55→	uint16_t h;
     56→};
-    58→struct priority_list {
-    66→struct font_manager {
     94→#define COLLISION_STEP 7
    361→int
    362→font_manager_pixelsize(struct font_manager *F, int fontid, int pointsize) {
@@ -119,15 +180,6 @@ src/font_manager.h
     30→// for debug
     31→const void * font_manager_texture(struct font_manager *F, int *sz);
 
-src/gamepad.c
-    29→struct gamepad_state {
-   267→static struct gamepad_global {
-   274→struct gamepad_local {
-
-src/image.c
-   128→struct rect {
-   321→struct canvas {
-
 src/ime_char_filter.h
      8→struct soluna_ime_char_filter_state {
 
@@ -139,77 +191,24 @@ src/lcrypt.c
    205→#define DES_IP(X,Y)											 \
    218→#define DES_FP(X,Y)											 \
    231→#define DES_ROUND(X,Y)						  \
-   373→typedef void (*padding_add)(uint8_t buf[8], int offset);
-   374→typedef int (*padding_remove)(const uint8_t *last);
    623→#define LEFTROTATE(x, c) (((x) << (c)) | ((x) >> (32 - (c))))
    790→#define P 0xffffffffffffffc5ull
   1031→int lsha1(lua_State *L);
-
-src/lfs.c
-    54→struct dir_data {
 
 src/loginfo.h
      6→struct log_info {
 
 src/lsha1.c
-    89→typedef struct {
-    90→	uint32_t state[5];
-    91→	uint32_t count[2];
-    92→	uint8_t  buffer[64];
-    93→} SHA1_CTX;
    114→#define	R0(v,w,x,y,z,i)	z+=((w&(x^y))^y)+blk0(i)+0x5A827999+rol(v,5);w=rol(w,30);
 
-src/luabuffer.h
-
-src/luayoga.c
-    18→struct enum_string {
-    23→struct set_number {
-    32→struct set_edge_number {
-    38→struct set_two_number {
-    69→struct pos {
-   104→typedef void (*setfunc)(lua_State *L, YGNodeRef node);
-
-src/luazip.c
-    79→struct filename_convert {
-   151→struct ziphandle {
-   155→struct zipraw {
-   284→struct unzhandle {
-
-src/material_blit.c
-     9→struct material_blit {
-
-src/material_default.c
-    15→struct inst_object {
-    23→struct material_default {
-
-src/material_mask.c
-    15→struct color {
-    19→struct inst_object {
-    28→struct mask {
-    33→struct material_mask {
-   166→struct mask_primitive {
-
-src/material_perspective_quad.c
-    23→struct color {
-    27→struct pquad_meta {
-    34→struct corner_primitive {
-    42→struct inst_object {
-    51→struct material_perspective_quad {
-    62→struct sprite_rect_basis {
-    71→struct sprite_rect_data {
-
-src/material_quad.c
-    15→struct color {
-    19→struct quad {
-    26→struct inst_object {
-    33→struct material_quad {
-   153→struct quad_primitive {
+src/lualib/coroutine.lua
+    15→	-- true : coroutine
+    16→	-- false : suspend
+    17→	-- nil : exit
+    19→	function coroutine.create(f)
+    20→		local co = coroutine_create(f)
 
 src/material_text.c
-    20→struct text {
-    28→struct inst_object {
-    36→struct material_text {
-   225→struct text_primitive {
    242→#define iscont(c)	(((c) & 0xC0) == 0x80)
    330→struct block_context {
    331→	int width;
@@ -224,7 +223,6 @@ src/material_text.c
    340→	uint32_t default_color;
    341→	uint32_t color;
    342→};
-   352→struct position {
 
 src/material_util.h
      5→#include "sokol/sokol_gfx.h"
@@ -273,9 +271,6 @@ src/platform/macos/soluna_macos_ime.m
      4→#include <stdint.h>
      5→
      6→#include "ime_state.h"
-     7→#include "soluna_macos_ime.h"
-     8→#include "sokol/sokol_app.h"
-     9→
       →…
 
 src/platform/wasm/soluna_wasm_ime.h
@@ -310,19 +305,10 @@ src/platform/windows/soluna_windows_ime.h
      7→void soluna_win32_reset_ime_font(void);
 
 src/render.c
-    18→struct buffer {
-    23→struct image {
-    28→struct sampler {
    223→struct pass {
    224→	sg_pass pass;
    225→	int swapchain;
    226→};
-   482→struct enum_string {
-   615→struct inst_object {
-   620→struct sprite_object {
-
-src/render_bindings.c
-    61→struct view {
 
 src/render_bindings.h
      4→#include "sokol/sokol_gfx.h"
@@ -331,15 +317,17 @@ src/render_bindings.h
 
 src/sdfimage.c
     23→#define IMAGE_SIZE 64
-    77→struct sdf_context {
+
+src/service/loader.lua
+    10→local filecache …
+
+src/service/start.lua
+    58→-- external message from soluna host
+    59→function S.external(p)
+    60→	local what, arg1, arg2 = message_unpack(p)
 
 src/sprite_submit.h
      4→#include "batch.h"
-
-src/spritemgr.c
-    95→struct tmp_context {
-   190→struct layer {
-   197→struct batch {
 
 src/spritemgr.h
      7→#define INVALID_TEXTUREID 0xffff

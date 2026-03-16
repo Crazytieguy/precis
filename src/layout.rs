@@ -362,11 +362,15 @@ pub(crate) fn doc_comment_start(lines: &[&str], symbol_line_0: usize, lang: Opti
     }
 
     // Go and C doc comments (plain // preceding a declaration)
-    if matches!(lang, Some(Lang::Go | Lang::C)) && prev_trimmed.starts_with("//") {
+    // Lua doc comments (-- preceding a declaration)
+    let is_line_comment = matches!(lang, Some(Lang::Go | Lang::C)) && prev_trimmed.starts_with("//")
+        || matches!(lang, Some(Lang::Lua)) && prev_trimmed.starts_with("--");
+    if is_line_comment {
+        let comment_prefix = if matches!(lang, Some(Lang::Lua)) { "--" } else { "//" };
         peek -= 1;
         while peek > 0 {
             let above = lines[peek - 1].trim();
-            if above.starts_with("//") {
+            if above.starts_with(comment_prefix) {
                 peek -= 1;
             } else {
                 break;
