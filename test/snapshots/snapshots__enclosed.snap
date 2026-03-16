@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (8000 tokens)
+budget: 8000 (7998 tokens)
 
 README.md
     26→## Introduction
@@ -30,6 +30,43 @@ package.json
 
 CONTRIBUTING.md
      1→# Contributing to Enclosed
+
+Dockerfile
+     1→# Base image is node:22-slim, we cannot use node:22-alpine because of
+     2→# a known issue for arm/v7 architecture (hangs on dependency installation)
+     3→# see https://github.com/nodejs/docker-node/issues/2077
+     4→FROM node:22-slim AS builder
+     5→
+     6→# Set the working directory for the app
+     7→WORKDIR /app
+     8→
+     9→# Copy package.json and pnpm-lock.yaml to install dependencies
+    10→COPY pnpm-lock.yaml ./
+    11→COPY pnpm-workspace.yaml ./
+    12→COPY packages/crypto/package.json packages/crypto/package.json
+    13→COPY packages/lib/package.json packages/lib/package.json
+    14→COPY packages/app-client/package.json packages/app-client/package.json
+    15→COPY packages/app-server/package.json packages/app-server/package.json
+    16→
+    17→# Install pnpm
+    18→RUN npm install -g pnpm --ignore-scripts && pnpm install --frozen-lockfile --ignore-scripts
+    19→
+    20→# Copy the entire app
+    21→COPY . .
+    22→
+    23→# Build the apps
+    24→RUN pnpm --filter @enclosed/crypto run build && \
+    25→    pnpm --filter @enclosed/lib run build && \
+    26→    pnpm --filter @enclosed/app-client run build && \
+    27→    pnpm --filter @enclosed/app-server run build:node
+    28→
+    29→# Production image 
+    30→FROM node:22-alpine
+    31→
+    32→WORKDIR /app
+    33→
+    34→# Copy the built apps
+      →…
 
 docker-compose.yml
      1→services:
@@ -168,67 +205,24 @@ packages/app-client/src/modules/theme/theme.store.ts
 
 packages/app-client/src/modules/ui/components/alert.tsx
     10→export const alertVariants = cva(
-    30→export function Alert …
-    46→export function AlertTitle …
-    57→export function AlertDescription …
 
 packages/app-client/src/modules/ui/components/button.tsx
     10→export const buttonVariants = cva(
-    41→export function Button …
-
-packages/app-client/src/modules/ui/components/card.tsx
-     5→export function Card …
-    19→export function CardHeader …
-    27→export const CardTitle …
-    38→export const CardDescription …
-    48→export function CardContent …
-    54→export function CardFooter …
 
 packages/app-client/src/modules/ui/components/dropdown-menu.tsx
     18→export const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
     19→export const DropdownMenuGroup = DropdownMenuPrimitive.Group;
     20→export const DropdownMenuSub = DropdownMenuPrimitive.Sub;
     21→export const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup;
-    23→export function DropdownMenu …
-    34→export function DropdownMenuContent …
-    58→export function DropdownMenuItem …
-    81→export function DropdownMenuGroupLabel …
-   100→export function DropdownMenuItemLabel …
-   119→export function DropdownMenuSeparator …
-   132→export function DropdownMenuShortcut …
-   145→export function DropdownMenuSubTrigger …
-   186→export function DropdownMenuSubContent …
-   206→export function DropdownMenuCheckboxItem …
-   248→export function DropdownMenuRadioItem …
-
-packages/app-client/src/modules/ui/components/sonner.tsx
-     5→export function Toaster …
 
 packages/app-client/src/modules/ui/components/switch.tsx
     11→export const SwitchLabel = SwitchPrimitive.Label;
     12→export const Switch = SwitchPrimitive;
     13→export const SwitchErrorMessage = SwitchPrimitive.ErrorMessage;
     14→export const SwitchDescription = SwitchPrimitive.Description;
-    18→export function SwitchControl …
-    42→export function SwitchThumb …
-
-packages/app-client/src/modules/ui/components/tabs.tsx
-    20→export function Tabs …
-    35→export function TabsList …
-    54→export function TabsContent …
-    73→export function TabsTrigger …
-   109→export function TabsIndicator …
-
-packages/app-client/src/modules/ui/components/textarea.tsx
-    14→export function TextArea …
 
 packages/app-client/src/modules/ui/components/textfield.tsx
-    20→export function TextFieldRoot …
     26→export const textfieldLabel = cva(
-    51→export function TextFieldLabel …
-    67→export function TextFieldErrorMessage …
-    85→export function TextFieldDescription …
-   104→export function TextField …
 
 packages/app-client/src/modules/ui/layouts/app.layout.tsx
     72→export const Navbar: Component = () => {
@@ -490,9 +484,7 @@ packages/docs/src/components/credential-inputs.vue
      9→});
     10→
     11→function addCredential() {
-    12→  credentials.value = [
-    13→    ...credentials.value,
-      →    …
+      →…
 
 packages/docs/src/components/toggle.vue
      1→<script setup>
@@ -506,9 +498,7 @@ packages/docs/src/components/toggle.vue
      9→</script>
     10→
     11→<template>
-    12→  <div class="switch-wrapper">
-    13→    <div class="switch">
-      →    …
+      →…
 
 packages/docs/src/data/configuration.data.ts
      5→import { configDefinition } from '../../../app-server/src/modules/app/config/config';

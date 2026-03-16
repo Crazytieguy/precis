@@ -18,6 +18,12 @@ README.md
     29→## Building from Source
     53→## Projects made with Soluna
 
+Makefile
+     1→.PHONY : all clean shader
+     3→BUILD=build
+     4→BIN=bin
+      →…
+
 clibs/datalist/make.lua
      1→local lm = require "luamake"
      3→lm.rootdir = lm.basedir .. "/3rd/datalist"
@@ -136,11 +142,7 @@ make.lua
      1→local lm = require "luamake"
      2→local fs = require "bee.filesystem"
      3→
-     4→local function detect_emcc()
-     5→  if lm.compiler == "emcc" then
-     6→    return true
-     7→  end
-      →  …
+      →…
 
 script/
       →…
@@ -222,6 +224,8 @@ src/loginfo.h
 
 src/lsha1.c
    114→#define	R0(v,w,x,y,z,i)	z+=((w&(x^y))^y)+blk0(i)+0x5A827999+rol(v,5);w=rol(w,30);
+
+src/luabuffer.h
 
 src/material_text.c
    242→#define iscont(c)	(((c) & 0xC0) == 0x80)

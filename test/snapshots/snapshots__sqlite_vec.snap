@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (3995 tokens)
 
 ARCHITECTURE.md
      1→# `sqlite-vec` Architecture
@@ -41,6 +41,9 @@ README.md
     61→## Sample usage
    152→## See Also
 
+Makefile
+     1→
+
 benchmarks/
       →…
 
@@ -49,34 +52,33 @@ bindings/python/extra_init.py
     11→def serialize_int8(vector: List[int]) -> bytes:
     44→    def register_numpy(db: Connection, name: str, array):
 
+bindings/rust/Makefile
+     1→VERSION=$(shell cat ../../VERSION)
+     3→deps: Cargo.toml sqlite-vec.c sqlite-vec.h sqlite3ext.h sqlite3.h
+     4→
+     5→Cargo.toml: ../../VERSION Cargo.toml.tmpl
+     6→		VERSION=$(VERSION) envsubst < Cargo.toml.tmpl > $@
+     7→
+     8→sqlite-vec.c: ../../sqlite-vec.c
+     9→		cp $< $@
+    10→
+    11→sqlite-vec.h: ../../sqlite-vec.h
+    12→		cp $< $@
+    13→
+      →…
+
 bindings/rust/src/lib.rs
      3→    pub fn sqlite3_vec_init();
 
-examples/simple-go-ncruces/go.mod
-     1→module asg017.com/ex1
-     3→go 1.22.5
-     4→
-     5→require (
-      →…
-
-examples/simple-ruby/demo.rb
-     1→require 'sqlite3'
-     2→require 'sqlite_vec'
-     3→
-     4→
-      →…
+examples/simple-c/Makefile
+     1→demo: demo.c
+     2→	gcc \
+      →	…
 
 examples/simple-rust/Cargo.toml
      1→[package]
      5→[dependencies]
     10→[[bin]]
-
-examples/simple-sqlite/demo.sql
-     1→.load ../../dist/vec0
-     2→.mode table
-     3→.header on
-     4→
-      →…
 
 examples/sqlite3-cli/README.md
      1→# `sqlite-vec` statically compiled in the SQLite CLI
@@ -96,8 +98,7 @@ reference.yaml
 scripts/
       →…
 
-site/
-      →…
+site/package.json
 
 sqlite-dist.toml
      1→[package]
@@ -122,9 +123,6 @@ sqlite-vec.c
    125→#define PORTABLE_ALIGN32 __attribute__((aligned(32)))
    126→#define PORTABLE_ALIGN64 __attribute__((aligned(64)))
    166→#define PORTABLE_ALIGN32 __attribute__((aligned(32)))
-   169→static f32 l2_sqr_float_neon …
-   527→static unsigned int __builtin_popcountl …
-   556→static f32 distance_hamming …
    583→#define vecJsonIsspace(x) (vecJsonIsSpaceX[(unsigned char)x])
    585→typedef void (*vector_cleanup)(void *p);
    589→#define JSON_SUBTYPE 74
@@ -282,7 +280,6 @@ sqlite-vec.c
   5348→} vec0_partition_operator;
   5349→typedef enum  {
   5360→typedef enum {
-  5769→static int vec0Next …
   5867→int min_idx …
   5948→int vec0_chunks_iter …
   6033→struct Vec0MetadataIn{
@@ -300,7 +297,6 @@ sqlite-vec.c
   6368→int vec0_set_metadata_filter_bitmap …
   7708→int vec0Update_InsertRowidStep …
   7778→int vec0Update_InsertNextAvailableStep …
-  7931→vec0_write_vector_to_vector_blob …
   7969→int vec0Update_InsertWriteFinalStep …
   8248→int vec0Update_Insert …
   9085→struct static_blob_definition {

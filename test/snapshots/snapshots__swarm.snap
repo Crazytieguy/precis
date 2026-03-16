@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4003 tokens)
+budget: 4000 (4005 tokens)
 
 README.md
      3→# Swarm (experimental, educational)
@@ -22,7 +22,8 @@ README.md
     78→These primitives are powerful enough to express rich dynamics between tools and networks of agents, allowing you to build scalable, real-world solutions while avoiding a steep learning curve.
     79→
     80→> [!NOTE]
-      →…
+    81→> Swarm Agents are not related to Assistants in the Assistants API. They are named similarly for convenience, but are otherwise completely unrelated. Swarm is entirely powered by the Chat Completions API and is hence stateless between calls.
+    82→
     83→## Why Swarm
     89→# Examples
     91→Check out `/examples` for inspiration! Learn more about each one in its README.
@@ -32,7 +33,8 @@ README.md
     95→- [`weather_agent`](examples/weather_agent): Simple example of function calling
     96→- [`airline`](examples/airline): A multi-agent setup for handling different customer service requests in an airline context.
     97→- [`support_bot`](examples/support_bot): A customer service bot which includes a user interface agent and a help center agent with several tools
-      →…
+    98→- [`personal_shopper`](examples/personal_shopper): A personal shopping agent that can help with making sales and refunding orders
+    99→
    100→# Documentation
    104→## Running Swarm
    114→### `client.run()`
@@ -56,7 +58,7 @@ README.md
    346→...
    347→run_demo_loop(agent, stream=True)
    348→```
-      →…
+   349→
    350→# Core Contributors
    352→- Ilan Bigio - [ibigio](https://github.com/ibigio)
    353→- James Hills - [jhills20](https://github.com/jhills20)
@@ -190,9 +192,6 @@ examples/customer_service_streaming/src/evals/eval_function.py
 
 examples/customer_service_streaming/src/runs/run.py
      5→class Run:
-     6→    def __init__(self,assistant,request,client):
-    14→    def initiate(self, planner):
-    20→    def generate_plan(self,task=None):
 
 examples/customer_service_streaming/src/swarm/engines/engine.py
      1→# engine.py
@@ -243,6 +242,9 @@ examples/personal_shopper/main.py
     32→def notify_customer(user_id, method):
     58→def order_item(user_id, product_id):
 
+examples/support_bot/Makefile
+     1→install:
+
 examples/support_bot/README.md
      1→# Support bot
      3→This example is a customer service bot which includes a user interface agent and a help center agent with several tools.
@@ -270,11 +272,6 @@ examples/support_bot/customer_service.py
 examples/support_bot/docker-compose.yaml
      1→version: '3.4'
      2→services:
-     3→  qdrant:
-     4→    image: qdrant/qdrant:v1.3.0
-     5→    restart: on-failure
-     6→    ports:
-     7→      - "6335:6335"
 
 examples/support_bot/main.py
     13→# Set embedding model

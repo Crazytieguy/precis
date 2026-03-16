@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3998 tokens)
+budget: 4000 (3999 tokens)
 
 README.md
      1→# peepDB
@@ -49,12 +49,14 @@ README.md
 
 CONTRIBUTING.md
      1→# Contributing to peepDB
-     9→## Getting Started
-    28→## Setting Up Development Environment
-    41→## Running Tests
-    51→## Coding Standards
-    59→## Pull Request Process
-    79→## Suggesting Enhancements
+
+docs/Gemfile
+     1→source 'https://rubygems.org'
+     3→gem "jekyll", "~> 4.3.3" # installed by `gem jekyll`
+     4→# gem "webrick"        # required when using Ruby >= 3 and Jekyll <= 4.2.2
+     5→
+     6→gem "just-the-docs", "0.9.0" # pinned to the current release
+     7→# gem "just-the-docs"        # always download the latest release
 
 docs/README.md
      1→# just-the-docs-template
@@ -100,11 +102,6 @@ docs/_config.yml
 
 docs/contributing.md
      6→# 🤝 Contributing to peepDB
-    10→## Steps to Contribute
-    28→## Setting Up Development Environment
-    47→## Code Style
-    54→## Testing
-    63→## Documentation
 
 docs/index.md
      6→# peepDB
@@ -348,8 +345,6 @@ project.toml
     11→]
     12→readme = "README.md"
     13→requires-python = ">=3.9"
-    14→license = {text = "GNU General Public License v3 (GPLv3)"}
-    15→classifiers = [
       →…
     35→[project.optional-dependencies]
     42→[project.urls]

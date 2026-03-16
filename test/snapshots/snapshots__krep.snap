@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1999 tokens)
+budget: 2000 (2000 tokens)
 
 README.md
      1→# k(r)ep - A high-performance string search utility
@@ -16,11 +16,15 @@ README.md
    155→## Performance Benchmarks
    180→## How Krep Works
 
+Makefile
+     1→# krep - A high-performance string search utility
+     2→# Author: Davide Santangelo
+     3→# Version: 2.2.0
+     4→
+     5→PREFIX ?= /usr/local
+      →…
+
 aho_corasick.c
-    17→typedef struct ac_node
-    18→{
-    26→struct ac_trie
-    27→{
 
 aho_corasick.h
     15→typedef struct search_params search_params_t …
@@ -32,9 +36,7 @@ aho_corasick.h
     39→uint64_t aho_corasick_search(const search_params_t *params, const char *text_start, size_t text_len, match_result_t *result);
 
 krep.c
-    76→// Constants
     77→#define MAX_PATTERN_LENGTH 1024
-    92→// Compiler hints for better optimization
     93→#define LIKELY(x)   __builtin_expect(!!(x), 1)
   3146→typedef struct
   3147→{
@@ -163,7 +165,5 @@ krep.h
    298→static inline bool is_word_char …
    312→static inline bool is_whole_word_match …
 
-test/test_compat.h
-
-test/test_krep.h
-    16→#define TESTING
+test/
+      →…

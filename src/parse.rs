@@ -270,7 +270,8 @@ fn language_for_extension(ext: &str) -> Option<(Language, &'static str)> {
 pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
     let ext = match path.extension().and_then(|e| e.to_str()) {
         Some(ext) => ext,
-        None => return vec![],
+        // Extensionless files (Makefile, Dockerfile, etc.) — use plain text fallback
+        None => return plain_text_symbol(source),
     };
 
     let lang = match Lang::from_extension(ext) {
