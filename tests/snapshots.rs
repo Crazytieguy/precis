@@ -777,6 +777,30 @@ fn readme_renders_first() {
     );
 }
 
+// Manifest files render after README but before source.
+#[test]
+fn manifest_renders_after_readme() {
+    let output = format::render_with_budget(
+        500,
+        Path::new(""),
+        &[
+            std::path::PathBuf::from("src/lib.rs"),
+            std::path::PathBuf::from("Cargo.toml"),
+            std::path::PathBuf::from("README.md"),
+        ],
+        &[
+            Some("pub fn foo() {}".to_string()),
+            Some("[package]\nname = \"test\"".to_string()),
+            Some("# Project\nA description.".to_string()),
+        ],
+    );
+    let readme_pos = output.find("README.md").unwrap_or(usize::MAX);
+    let cargo_pos = output.find("Cargo.toml").unwrap_or(usize::MAX);
+    let src_pos = output.find("src/lib.rs").unwrap_or(usize::MAX);
+    assert!(readme_pos < cargo_pos, "README should come before Cargo.toml");
+    assert!(cargo_pos < src_pos, "Cargo.toml should come before src/lib.rs");
+}
+
 // Directory omission markers: invisible directories should get a marker.
 #[test]
 fn invisible_directory_markers() {
