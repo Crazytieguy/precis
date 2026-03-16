@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3997 tokens)
+budget: 4000 (3998 tokens)
 
 Cargo.toml
      1→[package]
@@ -58,7 +58,6 @@ src/build/compile/python.rs
     13→pub fn python_build …
 
 src/build/env.rs
-    12→use crate::install::devtools;
     15→const ENV_VARS_TO_REMOVE …
    123→const ENV_VARS_TO_KEEP …
    139→/// Represents the sanitized build environment, mimicking Homebrew's "superenv".
@@ -92,6 +91,8 @@ src/build/env.rs
    169→        cellar_path: &Path,
    170→        all_installed_opt_paths: &[PathBuf],
    171→    ) -> Result<Self> {
+   403→    fn is_controlled_homebrew_var …
+   424→    fn set_path_list_var …
    463→    pub fn apply_to_command(&self, command: &mut std::process::Command) {
    476→    pub fn get_path_string(&self) -> Option<&str> {
    482→    pub fn get_vars(&self) -> &HashMap<String, String> {
@@ -124,7 +125,6 @@ src/check/mod.rs
      2→pub mod update;
 
 src/check/update.rs
-    20→use crate::check::installed::{InstalledPackageInfo, PackageType};
     22→#[derive(Debug, Clone)]
     23→pub struct UpdateInfo {
     24→    pub name: String,
@@ -144,7 +144,6 @@ src/install/bottle/exec.rs
    331→pub fn install_bottle …
 
 src/install/bottle/link.rs
-    15→const STANDARD_KEG_DIRS …
     19→pub fn link_formula_artifacts …
    476→pub fn unlink_formula_artifacts …
 
@@ -292,7 +291,6 @@ src/install/cask/mod.rs
      1→pub mod artifacts;
      2→pub mod dmg;
      3→pub mod helpers;
-    22→use crate::install::extract;
     24→#[derive(Debug, Clone, Serialize, Deserialize)]
     25→pub struct CaskInstallManifest {
     26→    pub manifest_format_version: String,
@@ -325,7 +323,6 @@ src/install/devtools.rs
    160→pub fn get_arch_flag() -> String {
 
 src/install/extract.rs
-    16→use crate::utils::xattr;
    204→#[cfg(target_os = "macos")]
    205→pub fn quarantine_extracted_apps_in_stage(stage_dir: &Path, agent_name: &str) -> Result<()> {
    206→    use std::fs;
@@ -410,6 +407,8 @@ src/upgrade/source.rs
     19→pub async fn upgrade_source_formula …
 
 src/utils/applescript.rs
+    10→fn get_bundle_identifier_from_app_path …
+    40→fn is_app_running_by_bundle_id …
     75→pub fn quit_app_gracefully(app_path: &Path) -> Result<()> {
 
 src/utils/mod.rs
@@ -419,6 +418,8 @@ src/utils/mod.rs
      4→pub mod xattr;
 
 src/utils/xattr.rs
+    11→fn get_timestamp_hex …
+    20→fn get_uuid_hex …
     26→pub fn has_quarantine_attribute(path: &Path) -> anyhow::Result<bool> {
     41→pub fn ensure_quarantine_attribute(path: &Path, agent: &str) -> anyhow::Result<()> {
     53→pub fn set_quarantine_attribute(path: &Path, agent_name: &str) -> Result<()> {

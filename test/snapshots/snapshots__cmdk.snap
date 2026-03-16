@@ -307,6 +307,8 @@ cmdk/src/index.tsx
   1071→function SlottableWithNestedChildren …
   1081→const srOnlyStyles …
 
+cmdk/tsup.config.ts
+
 playwright.config.ts
      3→const config …
 
@@ -317,11 +319,7 @@ pnpm-workspace.yaml
      4→  - 'cmdk'
 
 test/pages/_app.tsx
-     1→import '../style.css'
      3→export default function App({ Component, pageProps }) {
-
-test/pages/huge.tsx
-     4→const items …
 
 tsconfig.json
      2→  "compilerOptions": {
@@ -366,6 +364,9 @@ website/components/icons/index.tsx
    165→export function FramerIcon() {
 
 website/pages/_app.tsx
+    13→const title …
+    14→const description …
+    15→const siteUrl …
     17→export default function App({ Component, pageProps }: AppProps) {
 
 website/pages/_document.tsx
@@ -373,9 +374,9 @@ website/pages/_document.tsx
      6→  render() {
 
 website/pages/index.tsx
-    18→import packageJSON from '../../cmdk/package.json'
     20→type TTheme …
     25→type Themes …
+    27→const ThemeContext …
     29→export default function Index() {
    101→function InstallButton() {
    139→const themes = [

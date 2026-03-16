@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7997 tokens)
+budget: 8000 (7999 tokens)
 
 README.md
     26→## Introduction
@@ -99,21 +99,10 @@ packages/app-client/components.json
     14→    "ui": "@/modules/ui/components",
     15→    "cn": "@/modules/shared/style/cn"
 
-packages/app-client/src/index.tsx
-
 packages/app-client/src/locales/locales.ts
      2→export const locales = [
 
-packages/app-client/src/modules/auth/auth.models.ts
-     5→function isAccessTokenExpired …
-
-packages/app-client/src/modules/auth/auth.services.ts
-     1→import { apiClient } from '../shared/http/http-client';
-     5→async function login …
-
 packages/app-client/src/modules/auth/auth.store.ts
-     3→import { createHook } from '../shared/hooks/hooks';
-     4→import { isAccessTokenExpired } from './auth.models';
      6→export const authStore = createRoot(() => {
 
 packages/app-client/src/modules/auth/pages/login.page.tsx
@@ -121,13 +110,7 @@ packages/app-client/src/modules/auth/pages/login.page.tsx
     41→export const LoginPage: Component = () => {
 
 packages/app-client/src/modules/config/config.constants.ts
-     1→import type { Config } from './config.types';
      3→export const buildTimeConfig: Config = {
-
-packages/app-client/src/modules/config/config.provider.tsx
-     1→import type { Config } from './config.types';
-     3→import { buildTimeConfig } from './config.constants';
-     9→function getConfig(): Config {
 
 packages/app-client/src/modules/config/config.types.ts
      1→export type Config = {
@@ -142,27 +125,19 @@ packages/app-client/src/modules/config/config.types.ts
     10→  viewNotePathPrefix: string;
     11→};
 
-packages/app-client/src/modules/docs/docs.models.ts
-     1→import { buildTimeConfig } from '../config/config.constants';
-     2→import { joinUrlParts } from '../shared/http/http-client.models';
-     6→function buildDocUrl …
-
 packages/app-client/src/modules/files/files.models.ts
      6→export const iconByFileType = {
     33→type FileTypes …
     35→function getFileIcon …
 
 packages/app-client/src/modules/i18n/i18n.models.ts
-     1→import type { Locale } from './i18n.provider';
      8→export function findMatchingLocale({ preferredLocales, supportedLocales }: { preferredLocales: Intl.Locale[]; supportedLocales: Intl.Locale[] }) {
 
 packages/app-client/src/modules/i18n/i18n.provider.tsx
-     7→import defaultDict from '../../locales/en.json';
-     8→import { findMatchingLocale } from './i18n.models';
     15→type Locale …
     16→type RawDictionary …
     17→type Dictionary …
-    19→const I18nContext = createContext<{
+    19→const I18nContext …
     26→function useI18n …
     36→async function fetchDictionary …
     44→export const I18nProvider: ParentComponent = (props) => {
@@ -203,24 +178,67 @@ packages/app-client/src/modules/theme/theme.store.ts
 
 packages/app-client/src/modules/ui/components/alert.tsx
     10→export const alertVariants = cva(
+    30→export function Alert …
+    46→export function AlertTitle …
+    57→export function AlertDescription …
 
 packages/app-client/src/modules/ui/components/button.tsx
     10→export const buttonVariants = cva(
+    41→export function Button …
+
+packages/app-client/src/modules/ui/components/card.tsx
+     5→export function Card …
+    19→export function CardHeader …
+    27→export const CardTitle …
+    38→export const CardDescription …
+    48→export function CardContent …
+    54→export function CardFooter …
 
 packages/app-client/src/modules/ui/components/dropdown-menu.tsx
     18→export const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
     19→export const DropdownMenuGroup = DropdownMenuPrimitive.Group;
     20→export const DropdownMenuSub = DropdownMenuPrimitive.Sub;
     21→export const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup;
+    23→export function DropdownMenu …
+    34→export function DropdownMenuContent …
+    58→export function DropdownMenuItem …
+    81→export function DropdownMenuGroupLabel …
+   100→export function DropdownMenuItemLabel …
+   119→export function DropdownMenuSeparator …
+   132→export function DropdownMenuShortcut …
+   145→export function DropdownMenuSubTrigger …
+   186→export function DropdownMenuSubContent …
+   206→export function DropdownMenuCheckboxItem …
+   248→export function DropdownMenuRadioItem …
+
+packages/app-client/src/modules/ui/components/sonner.tsx
+     5→export function Toaster …
 
 packages/app-client/src/modules/ui/components/switch.tsx
     11→export const SwitchLabel = SwitchPrimitive.Label;
     12→export const Switch = SwitchPrimitive;
     13→export const SwitchErrorMessage = SwitchPrimitive.ErrorMessage;
     14→export const SwitchDescription = SwitchPrimitive.Description;
+    18→export function SwitchControl …
+    42→export function SwitchThumb …
+
+packages/app-client/src/modules/ui/components/tabs.tsx
+    20→export function Tabs …
+    35→export function TabsList …
+    54→export function TabsContent …
+    73→export function TabsTrigger …
+   109→export function TabsIndicator …
+
+packages/app-client/src/modules/ui/components/textarea.tsx
+    14→export function TextArea …
 
 packages/app-client/src/modules/ui/components/textfield.tsx
+    20→export function TextFieldRoot …
     26→export const textfieldLabel = cva(
+    51→export function TextFieldLabel …
+    67→export function TextFieldErrorMessage …
+    85→export function TextFieldDescription …
+   104→export function TextField …
 
 packages/app-client/src/modules/ui/layouts/app.layout.tsx
     72→export const Navbar: Component = () => {
@@ -229,8 +247,6 @@ packages/app-client/src/modules/ui/layouts/app.layout.tsx
 
 packages/app-client/src/routes.tsx
     11→export function getRoutes(): RouteDefinition[] {
-
-packages/app-server/src/index.cloudflare.ts
 
 packages/app-server/src/index.node.ts
     16→const logger …
@@ -376,14 +392,8 @@ packages/cli/README.md
     79→## Credits and Acknowledgements
     81→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
 
-packages/cli/bin/enclosed.mjs
-     4→import '../dist/cli.mjs';
-
 packages/cli/src/cli.ts
-     2→import { configCommand } from './config/config.command';
-     3→import { createNoteCommand } from './create-note/create-note.command';
-     4→import { viewNoteCommand } from './view-note/view-note.command';
-     6→const main = defineCommand({
+     6→const main …
 
 packages/cli/src/config/config.command.ts
      6→const keysList …
@@ -414,8 +424,6 @@ packages/cli/src/files/files.services.ts
     26→export async function buildFileAssets({ filePaths }: { filePaths: string[] }) {
 
 packages/cli/src/view-note/view-note.command.ts
-     4→import { getInstanceUrl } from '../config/config.usecases';
-     5→import { promptForPassword } from './view-note.models';
      7→export const viewNoteCommand = defineCommand({
 
 packages/crypto/README.md
@@ -511,14 +519,23 @@ packages/docs/src/components/toggle.vue
       →…
 
 packages/docs/src/data/configuration.data.ts
-     5→import { configDefinition } from '../../../app-server/src/modules/app/config/config';
+     7→const config …
+     8→const md …
     10→function walk …
+    22→const configDetails …
     24→function formatDoc …
+    34→const rows …
+    47→const mdRows …
+    49→const mdTable …
     57→  async load() {
 
 packages/docs/src/data/i18n.data.ts
-     4→import { locales } from '../../../app-client/src/locales/locales';
+     6→const config …
+     7→const md …
      9→function countKeysDeep …
+    23→const defaultLocaleKeyCount …
+    25→const localeConfigs …
+    47→const mdTable …
     61→  async load() {
 
 packages/docs/src/how-it-works.md
@@ -692,9 +709,6 @@ packages/lib/README.md
     37→## Credits and Acknowledgements
     39→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
 
-packages/lib/src/api/api.client.ts
-     2→import { DEFAULT_API_BASE_URL } from './api.constants';
-
 packages/lib/src/api/api.constants.ts
      1→export const DEFAULT_API_BASE_URL = 'https://enclosed.cc';
 
@@ -729,9 +743,6 @@ packages/lib/src/crypto/serialization/serialization.registry.ts
 packages/lib/src/crypto/serialization/serialization.types.ts
      4→export type SerializationMethodsDefinition = ReturnType<typeof defineSerializationMethods>;
      5→export type SerializationFormat = typeof serializationMethodDefinitions[number]['name'];
-
-packages/lib/src/files/files.models.ts
-     1→import type { NoteAsset } from '../notes/notes.types';
 
 packages/lib/src/index.ts
 

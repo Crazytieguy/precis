@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4006 tokens)
+budget: 4000 (4016 tokens)
 
 README.md
      1→log
@@ -54,7 +54,6 @@ src/__private_api.rs
    135→    pub fn capture_error<'a>(v: &'a (dyn std::error::Error + 'static)) -> Value<'a> {
    140→    pub fn capture_sval<'a, V: sval::Value + ?Sized>(v: &'a &'a V) -> Value<'a> {
    145→    pub fn capture_serde<'a, V: serde_core::Serialize + ?Sized>(v: &'a &'a V) -> Value<'a> {
-   151→pub use self::kv_support::*;
 
 src/kv/error.rs
      5→pub struct Error {
@@ -65,7 +64,6 @@ src/kv/error.rs
     29→    pub(super) fn from_value …
     37→    pub(super) fn into_value …
     69→mod std_support {
-    70→    use super::*;
     77→        pub fn boxed …
 
 src/kv/key.rs
@@ -79,11 +77,8 @@ src/kv/key.rs
     53→    pub fn as_str …
     61→    pub fn to_borrowed_str …
     94→mod std_support {
-    95→    use super::*;
    113→mod sval_support {
-   114→    use super::*;
    136→mod serde_support {
-   137→    use super::*;
 
 src/kv/mod.rs
    246→mod error;
@@ -96,7 +91,6 @@ src/kv/mod.rs
    262→pub mod value;
 
 src/kv/source.rs
-     6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
     51→pub trait Source {
     62→    fn visit …
     73→    fn get …
@@ -106,7 +100,6 @@ src/kv/source.rs
    235→pub trait VisitSource<'kvs> {
    237→    fn visit_pair …
    280→mod std_support {
-   281→    use super::*;
    462→pub use VisitSource as Visitor;
 
 src/kv/value.rs
@@ -130,7 +123,6 @@ src/kv/value.rs
    379→    pub fn to_borrowed_error …
    384→    pub fn to_borrowed_str …
    390→mod std_support {
-   395→    use super::*;
    438→        pub fn to_cow_str …
    462→pub trait VisitValue<'v> {
    469→    fn visit_any …
@@ -149,12 +141,10 @@ src/kv/value.rs
    588→    fn visit_error …
    593→    fn visit_borrowed_error …
    602→pub(in crate::kv) mod inner {
-   610→    use super::*;
    612→    pub use value_bag::ValueBag as Inner;
    614→    pub use value_bag::Error;
    619→    pub fn visit …
    721→pub(in crate::kv) mod inner {
-   735→    use super::*;
    737→    #[derive(Clone)]
    738→    pub enum Inner<'v> {
    739→        None,
@@ -203,6 +193,8 @@ src/lib.rs
    409→#[cfg(feature = "kv")]
    410→pub mod kv;
    421→struct AtomicUsize …
+   426→impl AtomicUsize …
+   443→unsafe impl Sync for AtomicUsize …
    467→/// An enum representing the available verbosity levels of the logger.
    468→///
       →…
@@ -277,6 +269,7 @@ src/lib.rs
    849→    key_values: KeyValues<'a>,
    850→}
    858→struct KeyValues …
+   861→impl<'a> fmt::Debug for KeyValues<'a> …
    872→    pub fn builder() -> RecordBuilder<'a> {
    878→    pub fn args(&self) -> &fmt::Arguments<'a> {
    884→    pub fn metadata(&self) -> &Metadata<'a> {
@@ -323,6 +316,8 @@ src/lib.rs
   1271→    fn log(&self, record: &Record);
   1279→    fn flush(&self);
   1283→struct NopLogger …
+  1311→impl<T> Log for std::boxed::Box<T> …
+  1328→impl<T> Log for std::sync::Arc<T> …
   1351→pub fn set_max_level(level: LevelFilter) {
   1375→pub unsafe fn set_max_level_racy(level: LevelFilter) {
   1396→pub fn max_level() -> LevelFilter {
@@ -331,7 +326,9 @@ src/lib.rs
   1483→fn set_logger_inner …
   1529→pub unsafe fn set_logger_racy(logger: &'static dyn Log) -> Result<(), SetLoggerError> {
   1549→pub struct SetLoggerError(());
+  1559→impl error::Error for SetLoggerError …
   1566→pub struct ParseLevelError(());
+  1576→impl error::Error for ParseLevelError …
   1581→pub fn logger() -> &'static dyn Log {
   1600→pub mod __private_api;
   1602→/// The statically resolved maximum log level.
@@ -356,11 +353,10 @@ src/macros.rs
    553→macro_rules! __log_value_serde {
    573→macro_rules! __log_value_error {
 
-src/serde.rs
-
 test_max_level_features/Cargo.toml
      1→[package]
      7→[[bin]]
+    11→[dependencies.log]
 
 tests/
       →…

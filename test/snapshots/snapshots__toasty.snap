@@ -23,6 +23,8 @@ Cargo.toml
      5→    "crates/toasty-cli",
       →    …
     37→[workspace.dependencies]
+    38→# Toasty crates
+      →…
 
 benches/
       →…
@@ -38,7 +40,6 @@ crates/std-util/src/lib.rs
      4→pub mod slice;
      5→pub mod str;
      7→pub mod prelude {
-     8→    pub use crate::{ …
 
 crates/std-util/src/num.rs
      1→pub trait NumUtil: PartialOrd + Ord + Eq {
@@ -108,7 +109,6 @@ crates/toasty/src/lib.rs
     21→pub mod relation;
     24→pub mod schema;
     26→pub mod stmt;
-    35→    pub use crate::{ …
     57→pub mod driver {
 
 crates/toasty/src/model.rs
@@ -232,10 +232,6 @@ crates/toasty-cli/src/theme.rs
 crates/toasty-codegen/Cargo.toml
      1→[package]
      8→[dependencies]
-
-crates/toasty-codegen/src/lib.rs
-     6→pub fn generate_model …
-    13→pub fn generate_embed …
 
 crates/toasty-codegen/src/schema/auto.rs
      2→pub enum AutoStrategy {
@@ -498,6 +494,17 @@ crates/toasty-core/src/schema/db/ty.rs
     79→    /// 128-bit universally unique identifier (UUID)
     80→    Uuid,
     81→
+    82→    /// Decimal number with optional precision and scale.
+    83→    /// - `None`: Arbitrary-precision decimal
+    84→    /// - `Some((precision, scale))`: Fixed precision and scale
+    85→    Numeric(Option<(u32, u32)>),
+    86→
+    87→    /// Unconstrained binary type
+    88→    Blob,
+    89→
+    90→    /// Fixed-size binary type of `n` bytes
+    91→    Binary(u8),
+    92→
       →…
    111→    pub fn from_app …
    159→    pub fn bridge_type …
@@ -763,7 +770,7 @@ crates/toasty-driver-postgresql/src/statement_cache.rs
     10→    inner: LruCache<Key<'static>, Statement>,
     11→}
     15→    pub fn new …
-    49→struct Key<'a> {
+    49→struct Key …
     56→    pub fn new …
 
 crates/toasty-driver-postgresql/src/type.rs
@@ -830,9 +837,6 @@ crates/toasty-sql/src/migration.rs
     13→    statement: Statement,
     14→    schema: Cow<'a, Schema>,
     15→}
-    22→    pub fn from_diff …
-   252→    pub fn statement …
-   256→    pub fn schema …
 
 crates/toasty-sql/src/serializer/params.rs
      7→pub trait Params {
@@ -858,7 +862,6 @@ crates/toasty-sql/src/serializer.rs
     49→    flavor: Flavor,
     50→}
     73→pub type ExprContext<'a> = toasty_core::stmt::ExprContext<'a, db::Schema>;
-    76→    pub fn serialize …
 
 crates/toasty-sql/src/stmt/alter_table.rs
     17→pub enum AlterTableAction {
@@ -898,7 +901,6 @@ crates/toasty-sql/src/stmt.rs
     59→    Query(Query),
     60→    Update(Update),
     61→}
-    64→    pub fn is_update …
     69→    pub fn returning_len(&self) -> Option<usize> {
 
 docs/ARCHITECTURE.md
@@ -926,12 +928,6 @@ docs/architecture/query-engine.md
 
 docs/architecture/type-system.md
      1→# Toasty Type System Architecture
-
-docs/design/enums-and-embedded-structs.md
-     1→# Enum and Embedded Struct Support
-
-docs/design/pagination.md
-     1→# Engine-Level Pagination Design
 
 docs/guide/jiff.md
      1→# Date and Time Types with Jiff

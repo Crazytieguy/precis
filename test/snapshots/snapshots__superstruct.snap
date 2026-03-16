@@ -84,6 +84,8 @@ docs/resources/links.md
      3→A few resources that are helpful for building with Superstruct.
      4→
      5→## Libraries
+     7→- [`bumpover`](https://github.com/doodlewind/bumpover) helps you transform data asynchronously with simple rules, whose validation API is built with Superstruct.
+      →…
 
 docs/summary.md
      3→## Guides
@@ -146,8 +148,6 @@ src/error.ts
     35→  constructor …
 
 src/struct.ts
-     1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
-     2→import { StructError, Failure } from './error.js'
     10→export class Struct<T = unknown, S = unknown> {
     11→  readonly TYPE!: T
     12→  type: string
@@ -270,8 +270,6 @@ src/structs/utilities.ts
    247→export function struct …
 
 src/utils.ts
-     1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
-     2→import { Failure } from './error.js'
      8→function isIterable …
     16→export function isObject(x: unknown): x is object {
     24→export function isNonArrayObject(x: unknown): x is object {
@@ -393,6 +391,10 @@ src/utils.ts
    402→type _InferTuple …
 
 test/index.ts
+     2→ * A helper for testing type signatures.
      5→export function test<T>(fn: (x: unknown) => T) {}
+
+test/validation/function/valid.ts
+     5→export const data = function () {}
 
 tsconfig.json

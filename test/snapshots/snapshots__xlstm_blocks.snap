@@ -116,7 +116,6 @@ slstm/layer.py
     33→class sLSTMLayer(nn.Module):
 
 slstm/src/cuda/slstm.h
-    24→#include "../util/util.h"
     27→// all needed definitions from external
     28→#define SLSTM_NUM_HEADS 1
     29→#define SLSTM_HIDDEN_SIZE 512
@@ -151,6 +150,7 @@ slstm/src/util/support.h
     40→#define AT_DISPATCH_FLOATING_TYPES_AND_HALF2(TYPE, NAME, ...)                  \
 
 slstm/src/vanilla/__init__.py
+    11→slstm_pointwise_function_registry …
 
 xlstm_block.py
     16→@dataclass

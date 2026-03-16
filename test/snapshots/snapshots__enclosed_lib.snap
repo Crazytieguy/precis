@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2000 tokens)
+budget: 2000 (1997 tokens)
 
 README.md
      1→### Enclosed lib
@@ -81,7 +81,6 @@ src/crypto/crypto.constants.ts
      9→export const COMPRESSION_ALGORITHMS = [COMPRESSION_ALGORITHM_BROTLI, COMPRESSION_ALGORITHM_NONE] as const;
 
 src/crypto/crypto.types.ts
-     1→import type { COMPRESSION_ALGORITHMS, ENCRYPTION_ALGORITHMS, KEY_DERIVATION_ALGORITHMS } from './crypto.constants';
      3→export type EncryptionAlgorithm = typeof ENCRYPTION_ALGORITHMS[number];
      4→export type KeyDerivationAlgorithm = typeof KEY_DERIVATION_ALGORITHMS[number];
      5→export type CompressionAlgorithm = typeof COMPRESSION_ALGORITHMS[number];
@@ -90,30 +89,37 @@ src/crypto/crypto.types.ts
      9→};
 
 src/crypto/crypto.usecases.ts
-     1→import type { NoteAsset } from '../notes/notes.types';
-     2→import type { EncryptionAlgorithm } from './crypto.types';
-     3→import type { SerializationFormat } from './serialization/serialization.types';
-     5→import { getParsingMethod, getSerializationMethod } from './serialization/serialization.registry';
      9→async function encryptNote …
     38→async function decryptNote …
 
+src/crypto/encryption-algorithms/encryption-algorithms.models.ts
+     3→function defineEncryptionMethods …
+
 src/crypto/encryption-algorithms/encryption-algorithms.registry.ts
-     1→import type { EncryptionMethodsDefinition } from './encryption-algorithms.types';
      2→import { keyBy } from 'lodash-es';
+     6→function createEncryptionAlgorithmsRegistry …
 
 src/crypto/encryption-algorithms/encryption-algorithms.types.ts
-     1→import type { defineEncryptionMethods } from './encryption-algorithms.models';
      3→export type EncryptionMethodsDefinition = ReturnType<typeof defineEncryptionMethods>;
 
 src/crypto/serialization/cbor-array/cbor-array.serialization.ts
      1→import type { Note } from '../../../notes/notes.types';
+     2→import { decode, encode } from 'cbor-x';
      3→import { defineSerializationMethods } from '../serialization.models';
      5→export const cborArraySerializationDefinition = defineSerializationMethods({
+
+src/crypto/serialization/serialization.models.ts
+     5→function defineSerializationMethods …
 
 src/crypto/serialization/serialization.registry.ts
      7→export const serializationMethodDefinitions = [
     11→export const serializationMethodDefinitionsByName: Record<string, SerializationMethodsDefinition> = keyBy(serializationMethodDefinitions, 'name');
     12→export const serializationFormats = map(serializationMethodDefinitions, 'name');
+    14→function getSerializationMethod …
+    26→function getParsingMethod …
+
+src/crypto/serialization/serialization.test-utils.ts
+     6→function runCommonSerializationTests …
 
 src/crypto/serialization/serialization.types.ts
      4→export type SerializationMethodsDefinition = ReturnType<typeof defineSerializationMethods>;
@@ -131,6 +137,8 @@ src/index.ts
      1→import { encryptionAlgorithms } from '@enclosed/crypto';
 
 src/notes/notes.models.ts
+     1→import { buildUrl } from '@corentinth/chisels';
+     2→import { isEmpty } from 'lodash-es';
      6→const PASSWORD_PROTECTED_HASH_FRAGMENT …
      7→const DELETED_AFTER_READING_HASH_FRAGMENT …
      9→function createNoteUrlHashFragment …

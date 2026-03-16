@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4005 tokens)
+budget: 4000 (4004 tokens)
 
 README.md
      3→# Swarm (experimental, educational)
@@ -73,11 +73,13 @@ logs/
 pyproject.toml
      1→[build-system]
      2→requires = ["setuptools"]
-      →…
+     3→build-backend = "setuptools.build_meta"
 
 setup.cfg
      1→[metadata]
      2→name = swarm
+     3→version = 0.1.0
+     4→author = OpenAI Solutions
       →…
 
 SECURITY.md
@@ -123,6 +125,7 @@ examples/airline/evals/eval_utils.py
 
 examples/basic/README.md
      1→# Swarm basic
+     5→### Examples
     31→## Running the Examples
     33→To run any of the examples, use the following command:
     34→
@@ -210,9 +213,7 @@ examples/customer_service_streaming/src/swarm/swarm.py
 
 examples/customer_service_streaming/src/tasks/task.py
      3→class Task:
-     4→    def __init__ …
     12→class EvaluationTask(Task):
-    13→    def __init__ …
 
 examples/customer_service_streaming/src/utils.py
      1→def get_completion …
@@ -348,9 +349,6 @@ swarm/core.py
     89→    def handle_tool_calls …
    139→    def run_and_stream …
    231→    def run …
-
-swarm/repl/__init__.py
-     1→from .repl import run_demo_loop
 
 swarm/repl/repl.py
      1→import json …

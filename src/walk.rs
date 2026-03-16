@@ -35,7 +35,7 @@ fn is_source_file(path: &Path) -> bool {
     // Well-known extensionless files (Makefile, Dockerfile, etc.)
     path.file_name()
         .and_then(|n| n.to_str())
-        .is_some_and(|name| matches!(name, "Makefile" | "Dockerfile" | "Vagrantfile" | "Rakefile" | "Gemfile" | "Brewfile" | "Procfile" | "Justfile" | "Earthfile" | "Containerfile" | "Tiltfile" | "Snakefile"))
+        .is_some_and(|name| matches!(name, "Makefile" | "Dockerfile" | "Containerfile" | "Justfile" | "Gemfile" | "Rakefile"))
 }
 
 /// Common programming language extensions without tree-sitter support.
@@ -52,23 +52,22 @@ fn is_unsupported_code_extension(ext: &str) -> bool {
     matches!(
         ext,
         // Systems languages
-        "cpp" | "cc" | "cxx" | "hpp" | "hh" | "hxx" | "cs" | "m" | "mm" | "swift"
+        "cpp" | "cc" | "cxx" | "hpp" | "cs" | "m" | "mm" | "swift"
         // JVM languages
-        | "java" | "kt" | "kts" | "scala" | "groovy" | "clj" | "cljs"
+        | "java" | "kt" | "kts" | "scala" | "groovy"
         // Scripting languages
-        | "rb" | "pl" | "pm" | "php"
-        // ML/functional languages
-        | "hs" | "ml" | "mli" | "fs" | "fsi" | "ex" | "exs" | "erl" | "elm" | "purs" | "gleam"
-        | "lean"
+        | "rb" | "php"
+        // Functional languages
+        | "hs" | "ex" | "exs" | "erl" | "elm"
         // Modern languages
-        | "dart" | "zig" | "nim" | "r" | "jl" | "mojo"
-        // GPU/shader languages
-        | "cu" | "cuh" | "wgsl"
+        | "dart" | "zig" | "r" | "jl"
+        // GPU languages
+        | "cu"
         // Web component languages (contain logic + template)
         | "vue" | "svelte" | "astro"
         // Query/schema languages
         | "sql" | "graphql" | "gql" | "proto" | "prisma"
-        // Infrastructure/config/build languages
+        // Infrastructure/build languages
         | "tf" | "hcl" | "nix" | "gradle" | "cmake"
         // Documentation markup (README.rst etc. are valuable as plain text)
         | "rst"
@@ -124,10 +123,10 @@ pub fn classify_file(path: &Path) -> crate::schedule::FileCategory {
             return FileCategory::Example;
         }
 
-        // Documentation sites and supplementary design docs.
-        // docs/ and doc/ are ambiguous (often contain valuable API reference),
-        // so only website/, site/, and rfcs/ are classified as doc-site source.
-        if s == "website" || s == "site" || s == "rfcs" || s == "rfc" {
+        // Documentation sites, supplementary docs, and changelog fragments.
+        if s == "website" || s == "site" || s == "rfcs" || s == "rfc"
+            || s == "changelog" || s == "changelogs"
+        {
             return FileCategory::DocsSite;
         }
 
@@ -141,7 +140,6 @@ pub fn classify_file(path: &Path) -> crate::schedule::FileCategory {
             || s == "benches" || s == "benchmark" || s == "benchmarks"
             || s == "fixtures" || s == "fixture"
             || s == "mocks" || s == "__mocks__"
-            || s == "changelog" || s == "changelogs"
             || s == "stories" || s == "__stories__" || s == ".storybook"
         {
             return FileCategory::Test;
@@ -410,8 +408,8 @@ mod tests {
         assert_eq!(classify_file(Path::new("crates/integration-test-utils/src/lib.rs")), Test);
         assert_eq!(classify_file(Path::new("crates/my-mock-server/src/lib.rs")), Test);
         // Changelog directories
-        assert_eq!(classify_file(Path::new("changelog/README.rst")), Test);
-        assert_eq!(classify_file(Path::new("changelogs/1234.md")), Test);
+        assert_eq!(classify_file(Path::new("changelog/README.rst")), DocsSite);
+        assert_eq!(classify_file(Path::new("changelogs/1234.md")), DocsSite);
         // Storybook directories
         assert_eq!(classify_file(Path::new("stories/Button.stories.tsx")), Test);
         assert_eq!(classify_file(Path::new(".storybook/config.js")), Test);

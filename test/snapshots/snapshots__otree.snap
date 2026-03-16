@@ -2,13 +2,15 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4003 tokens)
+budget: 4000 (4004 tokens)
 
 README.md
      1→# OTree - Object Tree TUI Viewer
      5→A command line tool to view objects (JSON/YAML/TOML/XML) in TUI tree widget.
      6→
      7→## Install
+    17→### Arch Linux (AUR)
+    25→### macOS and Linux (Homebrew)
     33→## Usage
     52→## Roadmap
     82→## Thanks
@@ -144,7 +146,6 @@ src/cmd.rs
    202→    pub fn get_content_type …
 
 src/config/colors.rs
-     7→use super::Config;
     21→pub struct Colors {
     56→    pub fn default() -> Self {
     78→pub struct DataColors {
@@ -182,9 +183,6 @@ src/config/mod.rs
      1→pub mod colors;
      2→pub mod keys;
      3→pub mod types;
-    12→use self::colors::Colors;
-    13→use self::keys::Keys;
-    14→use self::types::Types;
     17→pub struct Config {
     53→pub struct Tree {
     62→pub struct Editor {
@@ -388,6 +386,9 @@ src/ui/app.rs
     89→}
    101→    #[expect(clippy::needless_pass_by_value)]
    102→    pub fn new(cfg: Rc<Config>, tree: Tree, fw: Option<FileWatcher>) -> Self {
+   103→        let footer = if cfg.footer.disable {
+   104→            None
+      →            …
    133→    pub fn set_header …
    137→    pub fn show …
    279→    fn popup_error …
@@ -474,5 +475,3 @@ src/ui/tree_overview.rs
    319→    pub fn begin_filter …
    325→    pub fn end_filter …
    335→    pub fn filter …
-
-typos.toml

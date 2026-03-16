@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4007 tokens)
+budget: 4000 (4011 tokens)
 
 README.md
      3→# Chronos: Pretrained Models for Time Series Forecasting
@@ -21,7 +21,13 @@ ci/
 
 pyproject.toml
      1→[project]
+     2→name = "chronos-forecasting"
+     3→dynamic = ["version"]
+     4→authors = [
+      →…
     31→[build-system]
+    32→requires = ["hatchling"]
+    33→build-backend = "hatchling.build"
     41→[project.optional-dependencies]
     68→[project.urls]
     74→[tool.mypy]
@@ -34,6 +40,9 @@ scripts/README.md
      1→# Usage Examples
      3→> [!NOTE]  
       →…
+     6→## Generating Synthetic Time Series (KernelSynth)
+    24→## Pretraining (and fine-tuning) Chronos models
+   113→## Evaluating Chronos models
 
 scripts/evaluation/agg-relative-score.py
      7→DEFAULT_RESULTS_DIR …
@@ -55,26 +64,17 @@ scripts/kernel-synth.py
 
 scripts/training/train.py
    219→class PseudoShuffledIterableDataset(IterableDataset):
-   231→
    254→class ShuffleMixin:
-   259→
    264→class ChronosDataset(IterableDataset, ShuffleMixin):
-   297→
    504→def main …
 
 src/chronos/__about__.py
      1→__version__ = "2.2.2"
 
 src/chronos/__init__.py
-     4→from .__about__ …
-     5→from .base …
-     6→from .chronos …
-    13→from .chronos2 …
-    14→from .chronos_bolt …
     16→__all__ = [
 
 src/chronos/base.py
-    24→from .utils …
     27→class ForecastType(Enum):
     28→    SAMPLES = "samples"
     29→    QUANTILES = "quantiles"
@@ -169,15 +169,12 @@ src/chronos/chronos.py
    536→    def from_pretrained(cls, pretrained_model_name_or_path, *args, **kwargs):
 
 src/chronos/chronos2/__init__.py
-     6→from .config …
-     7→from .model …
-     8→from .pipeline …
-     9→from .dataset …
     11→__all__ = ["Chronos2CoreConfig", "Chronos2ForecastingConfig", "Chronos2Model", "Chronos2Pipeline", "Chronos2Dataset"]
 
 src/chronos/chronos2/config.py
     12→class Chronos2CoreConfig(PretrainedConfig):
     54→    def __init__ …
+   102→@dataclass
    103→class Chronos2ForecastingConfig:
    104→    context_length: int
    105→    output_patch_size: int
@@ -207,7 +204,6 @@ src/chronos/chronos2/dataset.py
    666→    def __iter__ …
 
 src/chronos/chronos2/layers.py
-    15→from .config …
     18→class RoPE(nn.Module):
     25→    def __init__ …
     35→    def forward(self, x: torch.Tensor, position_ids: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
@@ -224,6 +220,7 @@ src/chronos/chronos2/layers.py
    126→class FeedForward(nn.Module):
    127→    def __init__ …
    135→    def forward …
+   142→@dataclass
    143→class AttentionOutput(ModelOutput):
    144→    hidden_states: torch.Tensor | None = None
    145→    attn_weights: torch.Tensor | None = None
@@ -244,8 +241,7 @@ src/chronos/chronos2/layers.py
    393→    def forward …
 
 src/chronos/chronos2/model.py
-    18→from .config …
-    19→from .layers …
+    31→@dataclass
     32→class Chronos2EncoderBlockOutput(ModelOutput):
     33→    hidden_states: torch.Tensor | None = None
     34→    time_self_attn_weights: torch.Tensor | None = None
@@ -253,6 +249,7 @@ src/chronos/chronos2/model.py
     38→class Chronos2EncoderBlock(nn.Module):
     39→    def __init__ …
     48→    def forward …
+    82→@dataclass
     83→class Chronos2EncoderOutput(ModelOutput):
     84→    last_hidden_state: torch.Tensor | None = None
     85→    all_time_self_attn_weights: tuple[torch.Tensor, ...] | None = None
@@ -262,6 +259,7 @@ src/chronos/chronos2/model.py
     99→    def _expand_and_invert_time_attention_mask …
    113→    def _construct_and_invert_group_time_mask …
    134→    def forward …
+   190→@dataclass
    191→class Chronos2Output(ModelOutput):
    192→    loss: torch.Tensor | None = None
    193→    quantile_preds: torch.Tensor | None = None
@@ -313,7 +311,6 @@ src/chronos/chronos2/trainer.py
     77→    def get_eval_dataloader …
 
 src/chronos/chronos_bolt.py
-    26→from .base …
     32→@dataclass
     33→class ChronosBoltConfig:
     34→    context_length: int

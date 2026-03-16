@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4010 tokens)
+budget: 4000 (4011 tokens)
 
 README.rst
      1→====================================================
@@ -96,13 +96,11 @@ CHANGELOG.rst
      4→
       →…
 
-RELEASING.rst
-     1→Release Procedure
-
-TIDELIFT.rst
-     1→========
-
 changelog/README.rst
+     1→This directory contains "newsfragments" which are short files that contain a small **ReST**-formatted
+     2→text that will be added to the next ``CHANGELOG``.
+     3→
+      →…
 
 codecov.yml
      1→coverage:
@@ -123,9 +121,6 @@ docs/api_reference.rst
     13→    :members:
     14→
       →…
-
-docs/changelog.rst
-     1→.. include:: ../CHANGELOG.rst
 
 docs/conf.py
      1→from importlib …
@@ -310,7 +305,6 @@ src/pluggy/_hooks.py
    516→    def call_historic …
    543→    def call_extra …
    593→class _SubsetHookCaller(HookCaller):
-   596→
    612→    def __init__ …
    619→    def _hookimpls …
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
