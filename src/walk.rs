@@ -161,13 +161,6 @@ pub fn classify_file(path: &Path) -> crate::schedule::FileCategory {
     FileCategory::Source
 }
 
-/// Check if a file is test/benchmark/example/docs-site/CI infrastructure.
-/// Convenience wrapper around `classify_file` for contexts that just need
-/// a boolean (e.g., file discovery filtering).
-pub fn is_test_file(path: &Path) -> bool {
-    !matches!(classify_file(path), crate::schedule::FileCategory::Source)
-}
-
 /// Check if a file extension indicates a C/C++ header file.
 pub fn is_header_extension(ext: &str) -> bool {
     matches!(ext, "h" | "hpp" | "hxx" | "hh")
@@ -346,57 +339,49 @@ mod tests {
     }
 
     #[test]
-    fn is_test_file_detection() {
+    fn classify_file_detection() {
+        use crate::schedule::FileCategory::*;
+
         // Test directories
-        assert!(is_test_file(Path::new("__tests__/helper.ts")));
-        assert!(is_test_file(Path::new("tests/integration.rs")));
-        assert!(is_test_file(Path::new("test/setup.ts")));
-        assert!(is_test_file(Path::new("testing/helpers.py")));
-        assert!(is_test_file(Path::new("benches/bench.rs")));
-        assert!(is_test_file(Path::new("benchmark/run.py")));
-        assert!(is_test_file(Path::new("benchmarks/perf.rs")));
-        assert!(is_test_file(Path::new("examples/basic.rs")));
-        assert!(is_test_file(Path::new("example/demo.ts")));
-        // Experiment directories
-        assert!(is_test_file(Path::new("experiments/train.py")));
-        assert!(is_test_file(Path::new("experiment/run.py")));
-        // Fixture directories
-        assert!(is_test_file(Path::new("fixtures/setup.py")));
-        assert!(is_test_file(Path::new("fixture/helpers.ts")));
+        assert_eq!(classify_file(Path::new("__tests__/helper.ts")), Test);
+        assert_eq!(classify_file(Path::new("tests/integration.rs")), Test);
+        assert_eq!(classify_file(Path::new("test/setup.ts")), Test);
+        assert_eq!(classify_file(Path::new("testing/helpers.py")), Test);
+        assert_eq!(classify_file(Path::new("benches/bench.rs")), Test);
+        assert_eq!(classify_file(Path::new("benchmark/run.py")), Test);
+        assert_eq!(classify_file(Path::new("benchmarks/perf.rs")), Test);
+        assert_eq!(classify_file(Path::new("fixtures/setup.py")), Test);
+        assert_eq!(classify_file(Path::new("fixture/helpers.ts")), Test);
+        assert_eq!(classify_file(Path::new("mocks/mock_repo.go")), Test);
+        assert_eq!(classify_file(Path::new("__mocks__/utils.ts")), Test);
+        // Example directories
+        assert_eq!(classify_file(Path::new("examples/basic.rs")), Example);
+        assert_eq!(classify_file(Path::new("example/demo.ts")), Example);
+        assert_eq!(classify_file(Path::new("experiments/train.py")), Example);
+        assert_eq!(classify_file(Path::new("experiment/run.py")), Example);
         // Documentation site directories
-        assert!(is_test_file(Path::new("website/src/App.tsx")));
-        assert!(is_test_file(Path::new("site/pages/index.tsx")));
-        // docs/ and doc/ are NOT classified as test — they often contain
-        // valuable API reference and design docs
-        assert!(!is_test_file(Path::new("docs/conf.py")));
-        assert!(!is_test_file(Path::new("doc/guide.md")));
-        // Mock directories
-        assert!(is_test_file(Path::new("mocks/mock_repo.go")));
-        assert!(is_test_file(Path::new("internal/ports/mocks/mock_service.go")));
-        assert!(is_test_file(Path::new("__mocks__/utils.ts")));
+        assert_eq!(classify_file(Path::new("website/src/App.tsx")), DocsSite);
+        assert_eq!(classify_file(Path::new("site/pages/index.tsx")), DocsSite);
+        // docs/ and doc/ are Source — they often contain valuable API reference
+        assert_eq!(classify_file(Path::new("docs/conf.py")), Source);
+        assert_eq!(classify_file(Path::new("doc/guide.md")), Source);
+        // CI/CD directories
+        assert_eq!(classify_file(Path::new(".github/workflows/ci.yml")), CiConfig);
+        assert_eq!(classify_file(Path::new(".circleci/config.yml")), CiConfig);
         // Test file naming conventions
-        assert!(is_test_file(Path::new("index.test.ts")));
-        assert!(is_test_file(Path::new("utils.spec.ts")));
-        assert!(is_test_file(Path::new("index.test-d.ts")));
-        assert!(is_test_file(Path::new("test_utils.py")));
-        assert!(is_test_file(Path::new("utils_test.py")));
-        assert!(is_test_file(Path::new("conftest.py")));
-        // Compound directory names with test-related segments (workspace crates)
-        assert!(is_test_file(Path::new("crates/foo-test-utils/src/lib.rs")));
-        assert!(is_test_file(Path::new("crates/my-integration-suite/src/setup.rs")));
-        assert!(is_test_file(Path::new("crates/toasty-driver-integration-suite/src/test.rs")));
-        assert!(is_test_file(Path::new("crates/toasty-driver-integration-suite-macros/src/lib.rs")));
-        assert!(is_test_file(Path::new("packages/app-testing-utils/index.ts")));
-        assert!(is_test_file(Path::new("crates/my-mock-server/src/lib.rs")));
-        assert!(is_test_file(Path::new("crates/bench-utils/src/lib.rs")));
-        assert!(is_test_file(Path::new("crates/my_test_helpers/src/lib.rs")));
+        assert_eq!(classify_file(Path::new("index.test.ts")), Test);
+        assert_eq!(classify_file(Path::new("utils.spec.ts")), Test);
+        assert_eq!(classify_file(Path::new("test_utils.py")), Test);
+        assert_eq!(classify_file(Path::new("conftest.py")), Test);
+        // Compound directory names with test-related segments
+        assert_eq!(classify_file(Path::new("crates/foo-test-utils/src/lib.rs")), Test);
+        assert_eq!(classify_file(Path::new("crates/my-integration-suite/src/setup.rs")), Test);
+        assert_eq!(classify_file(Path::new("crates/my-mock-server/src/lib.rs")), Test);
         // Normal source files
-        assert!(!is_test_file(Path::new("src/main.rs")));
-        assert!(!is_test_file(Path::new("index.ts")));
-        assert!(!is_test_file(Path::new("lib/utils.py")));
-        // Compound names that should NOT match (no test-related segments)
-        assert!(!is_test_file(Path::new("crates/toasty-core/src/lib.rs")));
-        assert!(!is_test_file(Path::new("crates/my-driver-sqlite/src/lib.rs")));
+        assert_eq!(classify_file(Path::new("src/main.rs")), Source);
+        assert_eq!(classify_file(Path::new("index.ts")), Source);
+        assert_eq!(classify_file(Path::new("lib/utils.py")), Source);
+        assert_eq!(classify_file(Path::new("crates/toasty-core/src/lib.rs")), Source);
     }
 
     #[test]

@@ -995,7 +995,7 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     // show 5-10 useful lines instead of truncating after 1-2.
     let n_decay = match (key.kind_category, stage) {
         (KindCategory::Enum | KindCategory::Type, StageKind::Body) => {
-            1.0 + 0.05 * (n as f64 - 1.0)
+            1.0 + 0.07 * (n as f64 - 1.0)
         }
         (KindCategory::Section, StageKind::Body) => {
             1.0 + 0.1 * (n as f64 - 1.0)

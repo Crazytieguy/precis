@@ -2,7 +2,9 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7999 tokens)
+budget: 8000 (7996 tokens)
+
+CONTRIBUTING.md
 
 Cargo.toml
      1→[workspace]
@@ -305,24 +307,6 @@ sps-common/src/error.rs
     28→    #[error("API Request Error: {0}")]
     29→    ApiRequestError(String),
     30→
-    31→    #[error("DownloadError: Failed to download '{0}' from '{1}': {2}")]
-    32→    DownloadError(String, String, String),
-    33→
-    34→    #[error("Cache Error: {0}")]
-    35→    Cache(String),
-    36→
-    37→    #[error("Resource Not Found: {0}")]
-    38→    NotFound(String),
-    39→
-    40→    #[error("Installation Error: {0}")]
-    41→    InstallError(String),
-    42→
-    43→    #[error("Generic Error: {0}")]
-    44→    Generic(String),
-    45→
-    46→    #[error("HttpError: {0}")]
-    47→    HttpError(String),
-    48→
       →…
    119→pub type Result<T> = std::result::Result<T, SpsError>;
 
@@ -513,24 +497,6 @@ sps-common/src/pipeline.rs
     72→    DownloadFinished {
     73→        target_id: String,
     74→        path: PathBuf,
-    75→        size_bytes: u64,
-    76→    },
-    77→    DownloadProgressUpdate {
-    78→        target_id: String,
-    79→        bytes_so_far: u64,
-    80→        total_size: Option<u64>,
-    81→    },
-    82→    DownloadCached {
-    83→        target_id: String,
-    84→        size_bytes: u64,
-    85→    },
-    86→    DownloadFailed {
-    87→        target_id: String,
-    88→        url: String,
-    89→        error: String, // Keep as String for simplicity in events
-    90→    },
-    91→    JobProcessingStarted {
-    92→        // From core worker
       →        …
    163→pub enum JobProcessingState {
    164→    /// Waiting for download to be initiated.
@@ -558,11 +524,25 @@ sps-core/Cargo.toml
      2→name = "sps-core"
      3→version = "0.1.56"
      4→edition = "2021"
-      →…
+     5→authors = ["Alexander Knott <alexander.knott@posteo.de>", "sps contributors"]
+     6→description = "Core library for the sps package manager"
+     7→repository = "https://github.com/alexykn/sps"
+     8→license = "BSD-3-Clause"
     10→[dependencies]
     11→sps-net = "0.1.56"
     12→sps-common = "0.1.56"
     13→
+    14→anyhow = "1.0.99"
+    15→uuid = { version = "1.18.0", features = ["v4"] }
+    16→plist = "1.7.4"                                                                  # For reading Info.plist to get bundle ID
+    17→thiserror = "2.0.16"
+    18→serde = { version = "1.0.219", features = ["derive"] }
+    19→serde_json = "1.0.143"
+    20→env_logger = "0.11.8"
+    21→semver = "1.0.26"
+    22→dirs = "6.0.0"
+    23→xattr = "1.5.1"
+    24→walkdir = "2.5.0"
       →…
 
 sps-core/src/build/env.rs
@@ -620,6 +600,7 @@ sps-core/src/check/mod.rs
      2→pub mod update;
 
 sps-core/src/check/update.rs
+    20→use crate::check::installed::{InstalledPackageInfo, PackageType};
     23→pub struct UpdateInfo {
     24→    pub name: String,
     25→    pub installed_version: String,
@@ -767,10 +748,11 @@ sps-net/Cargo.toml
     22→infer = "0.19.0"
     23→tracing = "0.1.41"
     24→
-      →…
+    25→oci-distribution = { version = "0.11.0", optional = true }
 
 sps-net/src/http.rs
-    18→pub type ProgressCallback …
+    16→use crate::validation::{validate_url, verify_checksum};
+    18→pub type ProgressCallback = Arc<dyn Fn(u64, Option<u64>) + Send + Sync>;
 
 sps-net/src/lib.rs
      2→pub mod api;
@@ -781,6 +763,8 @@ sps-net/src/lib.rs
     29→pub use crate::validation::{validate_url, verify_checksum, verify_content_type /* ... */};
 
 sps-net/src/oci.rs
+    18→use crate::http::ProgressCallback;
+    19→use crate::validation::{validate_url, verify_checksum};
     24→pub const DEFAULT_GHCR_DOMAIN: &str = "ghcr.io";
     31→struct OciTokenResponse {
     37→pub struct OciManifestIndex {

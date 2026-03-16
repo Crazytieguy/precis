@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3996 tokens)
+budget: 4000 (3994 tokens)
 
 Cargo.toml
      1→[package]
@@ -50,6 +50,7 @@ src/driver/operation/query_sql.rs
      6→pub struct QuerySql {
 
 src/driver/operation/transaction.rs
+     3→#[derive(Debug, Clone)]
      4→pub enum Transaction {
      5→    /// Start a transaction
      6→    Start,
@@ -144,6 +145,7 @@ src/lib.rs
     10→pub mod schema;
     13→pub mod stmt;
     16→pub type Result<T, E = Error> = core::result::Result<T, E>;
+    18→pub use async_trait::async_trait;
 
 src/macros.rs
      1→#[macro_export]
@@ -157,6 +159,9 @@ src/schema/app/auto.rs
      9→pub enum UuidVersion {
 
 src/schema/app/constraint/length.rs
+     1→use super::Constraint;
+     3→use crate::{stmt, Result};
+     5→#[derive(Debug, Clone)]
      6→pub struct ConstraintLength {
      7→    /// The minimum length of the field.
      8→    pub min: Option<u64>,
@@ -172,6 +177,8 @@ src/schema/app/embedded.rs
      7→pub struct Embedded {
 
 src/schema/app/field/primitive.rs
+     1→use crate::{schema::db, stmt};
+     3→#[derive(Debug, Clone)]
      4→pub struct FieldPrimitive {
      5→    /// The field's primitive type
      6→    pub ty: stmt::Type,
@@ -316,15 +323,7 @@ src/schema/db/ty.rs
     96→    /// A representation of a civil date in the Gregorian calendar.
     97→    Date,
     98→
-    99→    /// A representation of civil "wall clock" time with fractional seconds precision (0-9 digits).
-   100→    Time(u8),
-   101→
-   102→    /// A representation of a civil datetime in the Gregorian calendar with fractional seconds precision (0-9 digits).
-   103→    DateTime(u8),
-   104→
-   105→    /// User-specified unrecognized type
-   106→    Custom(String),
-   107→}
+      →…
    111→    pub fn from_app …
    159→    pub fn bridge_type …
 
@@ -405,9 +404,9 @@ src/stmt/entry_mut.rs
 
 src/stmt/expr.rs
     13→pub enum Expr {
-    96→    pub const TRUE …
-    97→    pub const FALSE …
-    98→    pub const DEFAULT …
+    96→    pub const TRUE: Expr = Expr::Value(Value::Bool(true));
+    97→    pub const FALSE: Expr = Expr::Value(Value::Bool(false));
+    98→    pub const DEFAULT: Expr = Expr::Default;
 
 src/stmt/expr_func.rs
     15→pub enum ExprFunc {

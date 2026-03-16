@@ -25,6 +25,7 @@ README.md
    336→## Bugs and Feature Requests
 
 demo.py
+    63→from py3xui import Inbound
     65→XUI_EXTERNAL_IP = "**********"  # ⬅️ Your external IP here or domain name.
     66→MAIN_REMARK = "gmfvbot"  # ⬅️ It can be any string.
     67→SERVER_PORT = 443  # ⬅️ Your server port here.
@@ -33,6 +34,8 @@ demo.py
     72→
     73→    Arguments:
       →    …
+    98→import os
+   100→import qrcode
 
 py3xui/api/api.py
     13→class Api:
@@ -128,6 +131,10 @@ py3xui/async_api/async_api.py
 py3xui/async_api/async_api_base.py
     15→# pylint: disable=R0902
     16→class AsyncBaseApi:
+    17→    """Base class for the XUI API. Contains async common methods for making requests.
+    18→
+    19→    Arguments:
+      →    …
     48→
     49→    def __init__ …
     69→    def host(self) -> str:
@@ -180,10 +187,13 @@ py3xui/async_api/async_api_server.py
 
 py3xui/client/README.md
      3→# client.client
+     9→## ClientFields Objects
+    19→## Client Objects
 
 py3xui/client/client.py
      6→# pylint: disable=too-few-public-methods
      7→class ClientFields:
+     8→    """Stores the fields returned by the XUI API for parsing."""
      9→
     10→    EMAIL = "email"
     11→    ENABLE = "enable"
@@ -228,16 +238,7 @@ py3xui/client/client.py
     73→
     74→    flow: str = ""
     75→    method: str = ""
-    76→    limit_ip: int = Field(default=0, alias=ClientFields.LIMIT_IP)  # type: ignore
-    77→    sub_id: str = Field(default="", alias=ClientFields.SUB_ID)  # type: ignore
-    78→    comment: str = Field(default="", alias=ClientFields.COMMENT)  # type: ignore
-    79→    tg_id: int | str | None = Field(default="", alias=ClientFields.TG_ID)  # type: ignore
-    80→    total_gb: int = Field(default=0, alias=ClientFields.TOTAL_GB)  # type: ignore
-    81→    uuid: str | None = Field(default=None, alias=ClientFields.UUID)  # type: ignore
-    82→
-    83→    model_config = ConfigDict(
-    84→        populate_by_name=True,
-    85→    )
+      →    …
 
 py3xui/inbound/README.md
      3→# inbound.settings
@@ -249,6 +250,7 @@ py3xui/inbound/README.md
 py3xui/inbound/bases.py
      9→class JsonStringModel(BaseModel):
     11→
+    12→    @model_validator(mode="before")
     13→    def model_validate(
     14→        cls,
     15→        values,
@@ -279,9 +281,11 @@ py3xui/inbound/inbound.py
     58→
     59→    enable: bool
     60→    port: int
+    88→    @field_validator("stream_settings")
     89→    def validate_stream_settings(  # pylint: disable=no-self-argument
     90→        cls, value: StreamSettings | str
     91→    ) -> StreamSettings | str:
+   113→    # pylint: disable=no-member, no-self-argument
    114→    def to_json(self) -> dict[str, Any]:
 
 py3xui/inbound/settings.py
@@ -337,6 +341,7 @@ py3xui/server/README.md
 py3xui/server/server.py
      6→# pylint: disable=too-few-public-methods
      7→class ServerFields:
+     8→    """Stores fields returned by XUI API for parsing."""
      9→
     10→    CPU = "cpu"
     11→    CPU_CORES = "cpuCores"
@@ -380,6 +385,10 @@ py3xui/server/server.py
 
 py3xui/utils/README.md
      3→# utils.env
+     5→This module contains utility functions for parsing environment variables.
+     6→
+     7→<a id="utils.env.parse_env"></a>
+     8→
 
 py3xui/utils/__init__.py
      4→COOKIE_NAMES = ["3x-ui", "session"]

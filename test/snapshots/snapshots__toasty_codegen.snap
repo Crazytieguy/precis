@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3954 tokens)
+budget: 4000 (3955 tokens)
 
 CONTEXT.md
      1→# toasty-codegen Component Context
@@ -210,7 +210,17 @@ src/lib.rs
      2→mod schema;
      4→use proc_macro2::TokenStream;
      6→pub fn generate_model(input: TokenStream) -> syn::Result<TokenStream> {
+     7→    let item: syn::ItemStruct = syn::parse2(input)?;
+     8→    let model = schema::Model::from_ast(&item, false)?;
+     9→
+    10→    Ok(expand::root_model(&model))
+    11→}
     13→pub fn generate_embed(input: TokenStream) -> syn::Result<TokenStream> {
+    14→    let item: syn::ItemStruct = syn::parse2(input)?;
+    15→    let model = schema::Model::from_ast(&item, true)?;
+    16→
+    17→    Ok(expand::embedded_model(&model))
+    18→}
 
 src/schema/auto.rs
      1→#[derive(Debug)]
@@ -285,11 +295,6 @@ src/schema/field.rs
      8→pub(crate) struct Field {
     29→pub(crate) struct FieldAttr {
     47→pub(crate) enum FieldTy {
-    48→    Primitive(syn::Type),
-    49→    BelongsTo(BelongsTo),
-    50→    HasMany(HasMany),
-    51→    HasOne(HasOne),
-    52→}
     54→impl FieldTy {
     55→    pub(crate) fn is_relation …
     63→impl Field {
@@ -314,12 +319,6 @@ src/schema/index.rs
      2→pub(crate) struct Index {
     14→pub(crate) struct IndexField {
     23→pub(crate) enum IndexScope {
-    24→    /// The index column is used to partition rows across nodes of a distributed database.
-    25→    Partition,
-    26→
-    27→    /// The index column is scoped to a physical node.
-    28→    Local,
-    29→}
 
 src/schema/key_attr.rs
      2→pub(crate) struct KeyAttr {
@@ -329,11 +328,6 @@ src/schema/key_attr.rs
 src/schema/model.rs
      1→use super::{ErrorSet, Field, Index, IndexField, IndexScope, ModelAttr, Name, PrimaryKey};
      4→pub(crate) enum ModelKind {
-     5→    /// Root model with table, primary key, and query builders
-     6→    Root(ModelRoot),
-     7→    /// Embedded model that is flattened into parent
-     8→    Embedded(ModelEmbedded),
-     9→}
     11→impl ModelKind {
     12→    pub(crate) fn expect_root …
     19→    pub(crate) fn expect_embedded …
@@ -348,7 +342,11 @@ src/schema/model.rs
    238→                root.primary_key
    239→                    .fields
    240→                    .iter()
-      →                    …
+   241→                    .map(|index| &self.fields[*index]),
+   242→            ),
+   243→            ModelKind::Embedded(_) => None,
+   244→        }
+   245→    }
    247→    pub(crate) fn has_associations …
    252→fn struct_ident …
 

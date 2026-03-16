@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3998 tokens)
+budget: 4000 (3995 tokens)
 
 Cargo.toml
      1→[package]
@@ -22,6 +22,8 @@ README.md
     52→## Roadmap
     82→## Thanks
 
+build.rs
+
 config/default.toml
 
 docs/actions.md
@@ -36,6 +38,8 @@ src/clipboard.rs
     28→pub fn write_clipboard …
 
 src/cmd.rs
+     7→use crate::config::{Config, LayoutDirection};
+     8→use crate::parse::ContentType;
     13→pub struct CommandArgs {
     14→    /// The file to read data. If this is empty, read from stdin.
     15→    pub path: Option<String>,
@@ -117,22 +121,7 @@ src/cmd.rs
     91→    #[clap(long)]
     92→    pub build_info: bool,
     93→
-    94→    /// Limit data size to read. In MiB
-    95→    #[clap(long)]
-    96→    pub max_data_size: Option<usize>,
-    97→
-    98→    /// Watch file changes, reload tui if updates
-    99→    #[clap(long, short = 'R')]
-   100→    pub live_reload: bool,
-   101→
-   102→    /// Write debug logs into this file. The file will be created if not exists.
-   103→    #[clap(long)]
-   104→    pub debug: Option<String>,
-   105→
-   106→    /// Print version.
-   107→    #[clap(short, long)]
-   108→    pub version: bool,
-   109→}
+      →…
    111→impl CommandArgs {
    112→    pub fn parse …
    149→    pub fn update_config …
@@ -212,12 +201,17 @@ src/debug.rs
     23→pub fn write_logs …
 
 src/edit.rs
+     8→use crate::config::Config;
     10→pub struct Edit {
     16→impl Edit {
     17→    pub fn new …
     40→    pub fn run …
 
 src/live_reload.rs
+    11→use crate::config::Config;
+    12→use crate::debug;
+    13→use crate::parse::ContentType;
+    14→use crate::tree::Tree;
     16→pub struct FileWatcher {
     27→impl FileWatcher {
     28→    pub fn new …
@@ -238,6 +232,11 @@ src/main.rs
      7→mod parse;
      8→mod tree;
      9→mod ui;
+    21→use crate::cmd::CommandArgs;
+    22→use crate::config::Config;
+    23→use crate::parse::{ContentType, SyntaxToken};
+    24→use crate::tree::Tree;
+    25→use crate::ui::{App, HeaderContext};
 
 src/parse/any.rs
      9→pub struct AnyParser {
@@ -335,6 +334,8 @@ src/parse/yaml.rs
      8→pub struct YamlParser {}
 
 src/tree.rs
+    11→use crate::config::Config;
+    12→use crate::parse::{ContentType, Parser, SyntaxToken};
     14→pub struct Tree {
     25→pub struct ItemValue {
     36→pub struct HighlightKeyword<'a> {
@@ -468,5 +469,3 @@ src/ui/tree_overview.rs
    319→    pub fn begin_filter …
    325→    pub fn end_filter …
    335→    pub fn filter …
-
-typos.toml
