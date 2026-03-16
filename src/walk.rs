@@ -66,7 +66,7 @@ fn is_unsupported_code_extension(ext: &str) -> bool {
         // Web component languages (contain logic + template)
         | "vue" | "svelte"
         // Query/schema languages
-        | "sql" | "graphql" | "gql" | "proto"
+        | "sql" | "graphql" | "gql" | "proto" | "prisma"
         // Infrastructure/config/build languages
         | "tf" | "hcl" | "nix" | "gradle" | "cmake"
         // Documentation markup (README.rst etc. are valuable as plain text)
