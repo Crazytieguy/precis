@@ -76,6 +76,19 @@ README.rst
     69→
       →…
 
+downstream/
+      →…
+
+pyproject.toml
+     1→[build-system]
+     8→[project]
+    38→[dependency-groups]
+    43→[tool.setuptools]
+    69→[tool.setuptools_scm]
+    71→[tool.uv]
+    74→[tool.towncrier]
+   112→[tool.mypy]
+
 CHANGELOG.rst
      1→=========
      2→Changelog
@@ -155,19 +168,6 @@ docs/index.rst
     12→
     13→It gives users the ability to extend or modify the behaviour of a
       →…
-
-downstream/
-      →…
-
-pyproject.toml
-     1→[build-system]
-     8→[project]
-    38→[dependency-groups]
-    43→[tool.setuptools]
-    69→[tool.setuptools_scm]
-    71→[tool.uv]
-    74→[tool.towncrier]
-   112→[tool.mypy]
 
 scripts/
       →…

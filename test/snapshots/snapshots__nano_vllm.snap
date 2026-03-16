@@ -56,6 +56,23 @@ README.md
     63→
     64→## Star History
 
+pyproject.toml
+     1→[build-system]
+     2→requires = ["setuptools>=61"]
+     3→build-backend = "setuptools.build_meta"
+     5→[project]
+     6→name = "nano-vllm"
+     7→version = "0.2.0"
+     8→authors = [{ name = "Xingkai Yu" }]
+     9→license = "MIT"
+    10→license-files = ["LICENSE"]
+    11→readme = "README.md"
+    12→description = "a lightweight vLLM implementation built from scratch"
+    13→requires-python = ">=3.10,<3.13"
+    14→dependencies = [
+      →…
+    22→[project.urls]
+
 bench.py
      1→import os …
      2→import time …
@@ -367,20 +384,3 @@ nanovllm/utils/loader.py
      5→from safetensors import safe_open
      8→def default_weight_loader(param: nn.Parameter, loaded_weight: torch.Tensor):
     12→def load_model(model: nn.Module, path: str):
-
-pyproject.toml
-     1→[build-system]
-     2→requires = ["setuptools>=61"]
-     3→build-backend = "setuptools.build_meta"
-     5→[project]
-     6→name = "nano-vllm"
-     7→version = "0.2.0"
-     8→authors = [{ name = "Xingkai Yu" }]
-     9→license = "MIT"
-    10→license-files = ["LICENSE"]
-    11→readme = "README.md"
-    12→description = "a lightweight vLLM implementation built from scratch"
-    13→requires-python = ">=3.10,<3.13"
-    14→dependencies = [
-      →…
-    22→[project.urls]

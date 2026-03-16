@@ -61,6 +61,14 @@ README.md
    205→Below are the results for commit [064e492](https://github.com/hukkin/tomli/tree/064e492919b2338def788753b8c981c9131334c0).
    206→
 
+pyproject.toml
+     1→[build-system]
+     5→[project]
+    28→[project.urls]
+    33→[tool.isort]
+    46→[tool.tox]
+   145→[tool.mypy]
+
 CHANGELOG.md
      1→# Changelog
 
@@ -88,14 +96,6 @@ fuzzer/fuzz.py
 profiler/profiler_script.py
      8→from pathlib import Path
     10→import tomli
-
-pyproject.toml
-     1→[build-system]
-     5→[project]
-    28→[project.urls]
-    33→[tool.isort]
-    46→[tool.tox]
-   145→[tool.mypy]
 
 scripts/use_setuptools.py
     12→def use_setuptools() -> None:

@@ -55,6 +55,17 @@ README.rst
     48→
       →…
 
+pyproject.toml
+     1→[build-system]
+     8→[project]
+    33→[project.urls]
+    39→[project.entry-points]
+    42→[dependency-groups]
+    58→[tool.setuptools_scm]
+    78→[tool.ruff]
+    99→[tool.mypy]
+   105→[tool.tox]
+
 docs/api.rst
      1→API reference
      2→=============
@@ -102,17 +113,6 @@ docs/versionhistory.rst
      2→===============
      3→
       →…
-
-pyproject.toml
-     1→[build-system]
-     8→[project]
-    33→[project.urls]
-    39→[project.entry-points]
-    42→[dependency-groups]
-    58→[tool.setuptools_scm]
-    78→[tool.ruff]
-    99→[tool.mypy]
-   105→[tool.tox]
 
 src/typeguard/__init__.py
      8→from ._checkers …

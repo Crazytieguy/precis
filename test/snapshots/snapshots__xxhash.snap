@@ -73,6 +73,10 @@ README.md
     73→- [Ristretto](https://github.com/dgraph-io/ristretto)
     74→- [Badger](https://github.com/dgraph-io/badger)
 
+go.mod
+     1→module github.com/cespare/xxhash/v2
+     3→go 1.11
+
 bench_test.go
      3→import …
      8→var benchmarks = []struct {
@@ -123,10 +127,6 @@ dynamic/plugin.go
     35→				}
     36→				n, err := d.WriteString(chunk)
       →				…
-
-go.mod
-     1→module github.com/cespare/xxhash/v2
-     3→go 1.11
 
 xxhash.go
      5→import …

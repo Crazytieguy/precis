@@ -188,6 +188,10 @@ README.md
    206→Some errors are returned as exact errors such as the [`ErrNotExist`](https://golang.org/pkg/os/#pkg-variables)
       →…
 
+go.mod
+     1→module github.com/hashicorp/go-multierror
+     3→go 1.13
+
 CHANGELOG.md
      1→## Unreleased
      3→### Improvements
@@ -239,10 +243,6 @@ format_test.go
      6→import …
     11→func TestListFormatFuncSingle(t *testing.T) {
     27→func TestListFormatFuncMultiple(t *testing.T) {
-
-go.mod
-     1→module github.com/hashicorp/go-multierror
-     3→go 1.13
 
 group.go
      6→import "sync …

@@ -25,6 +25,21 @@ README.md
    981→## License 📄
    985→## Acknowledgments 🙏
 
+contribute/
+      →…
+
+examples/
+      →…
+
+go.mod
+     1→module github.com/mark3labs/mcphost
+     3→go 1.24.0
+     4→
+     5→toolchain go1.24.5
+     6→
+     7→require (
+      →…
+
 cmd/root.go
     67→type agentUIAdapter struct {
     71→func (a *agentUIAdapter) GetLoadingMessage() string {
@@ -57,21 +72,6 @@ cmd/script.go
    425→	DefaultValue string // The default value if specified using ${variable:-default} syntax
    426→	HasDefault   bool   // Whether this variable has a default value
    427→}
-
-contribute/
-      →…
-
-examples/
-      →…
-
-go.mod
-     1→module github.com/mark3labs/mcphost
-     3→go 1.24.0
-     4→
-     5→toolchain go1.24.5
-     6→
-     7→require (
-      →…
 
 internal/agent/agent.go
     22→type AgentConfig struct {

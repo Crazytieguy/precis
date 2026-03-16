@@ -65,6 +65,15 @@ README.md
    356→- Colin Jarvis - [colin-openai](https://github.com/colin-openai)
    357→- Katia Gil Guzman - [katia-openai](https://github.com/katia-openai)
 
+logs/
+      →…
+
+pyproject.toml
+     1→[build-system]
+
+setup.cfg
+     1→[metadata]
+
 SECURITY.md
      1→# Security Policy
 
@@ -323,15 +332,6 @@ examples/weather_agent/evals.py
      8→def run_and_get_tool_calls(agent, query):
     26→def test_calls_weather_when_asked(query):
     41→def test_does_not_call_weather_when_not_asked(query):
-
-logs/
-      →…
-
-pyproject.toml
-     1→[build-system]
-
-setup.cfg
-     1→[metadata]
 
 swarm/__init__.py
      1→from .core …

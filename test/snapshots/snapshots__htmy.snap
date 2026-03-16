@@ -30,6 +30,11 @@ README.md
    353→## Dependencies
    361→## Development
 
+pyproject.toml
+     1→[project]
+    18→[dependency-groups]
+    35→[build-system]
+
 docs/api/core.md
      1→# ::: htmy.core
 
@@ -460,11 +465,6 @@ mkdocs.yaml
     53→  - function-components.md
     54→  - Examples:
       →  …
-
-pyproject.toml
-     1→[project]
-    18→[dependency-groups]
-    35→[build-system]
 
 tests/data/blog-post.md
      5→# Essential reading

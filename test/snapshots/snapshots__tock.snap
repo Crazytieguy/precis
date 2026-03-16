@@ -154,6 +154,39 @@ README.md
    713→## License
    715→GPL-3.0-or-later
 
+go.mod
+     1→module github.com/kriuchkov/tock
+     3→go 1.25.6
+     4→
+     5→require (
+     6→	github.com/charmbracelet/bubbles v1.0.0
+     7→	github.com/charmbracelet/bubbletea v1.3.10
+     8→	github.com/charmbracelet/lipgloss v1.1.1-0.20250404203927-76690c660834
+     9→	github.com/go-faster/errors v0.7.1
+    10→	github.com/muesli/termenv v0.16.0
+    11→	github.com/samber/lo v1.52.0
+    12→	github.com/spf13/cobra v1.10.2
+    13→	github.com/spf13/pflag v1.0.10
+    14→	github.com/spf13/viper v1.21.0
+    15→	github.com/stretchr/testify v1.11.1
+    16→	gopkg.in/yaml.v3 v3.0.1
+    17→)
+    18→
+    19→require (
+    20→	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
+    21→	github.com/charmbracelet/colorprofile v0.4.1 // indirect
+    22→	github.com/charmbracelet/x/ansi v0.11.6 // indirect
+    23→	github.com/charmbracelet/x/cellbuf v0.0.15 // indirect
+    24→	github.com/charmbracelet/x/term v0.2.2 // indirect
+    25→	github.com/clipperhouse/displaywidth v0.9.0 // indirect
+    26→	github.com/clipperhouse/stringish v0.1.1 // indirect
+    27→	github.com/clipperhouse/uax29/v2 v2.5.0 // indirect
+    28→	github.com/davecgh/go-spew v1.1.1 // indirect
+    29→	github.com/erikgeiser/coninput v0.0.0-20211004153227-1c3628e74d0f // indirect
+    30→	github.com/fsnotify/fsnotify v1.9.0 // indirect
+    31→	github.com/go-viper/mapstructure/v2 v2.4.0 // indirect
+      →	…
+
 cmd/tock/main.go
      3→import …
      7→func main() {
@@ -194,39 +227,6 @@ docs/commands.md
    283→### `report`
    307→### `analyze`
    330→### `ical`
-
-go.mod
-     1→module github.com/kriuchkov/tock
-     3→go 1.25.6
-     4→
-     5→require (
-     6→	github.com/charmbracelet/bubbles v1.0.0
-     7→	github.com/charmbracelet/bubbletea v1.3.10
-     8→	github.com/charmbracelet/lipgloss v1.1.1-0.20250404203927-76690c660834
-     9→	github.com/go-faster/errors v0.7.1
-    10→	github.com/muesli/termenv v0.16.0
-    11→	github.com/samber/lo v1.52.0
-    12→	github.com/spf13/cobra v1.10.2
-    13→	github.com/spf13/pflag v1.0.10
-    14→	github.com/spf13/viper v1.21.0
-    15→	github.com/stretchr/testify v1.11.1
-    16→	gopkg.in/yaml.v3 v3.0.1
-    17→)
-    18→
-    19→require (
-    20→	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
-    21→	github.com/charmbracelet/colorprofile v0.4.1 // indirect
-    22→	github.com/charmbracelet/x/ansi v0.11.6 // indirect
-    23→	github.com/charmbracelet/x/cellbuf v0.0.15 // indirect
-    24→	github.com/charmbracelet/x/term v0.2.2 // indirect
-    25→	github.com/clipperhouse/displaywidth v0.9.0 // indirect
-    26→	github.com/clipperhouse/stringish v0.1.1 // indirect
-    27→	github.com/clipperhouse/uax29/v2 v2.5.0 // indirect
-    28→	github.com/davecgh/go-spew v1.1.1 // indirect
-    29→	github.com/erikgeiser/coninput v0.0.0-20211004153227-1c3628e74d0f // indirect
-    30→	github.com/fsnotify/fsnotify v1.9.0 // indirect
-    31→	github.com/go-viper/mapstructure/v2 v2.4.0 // indirect
-      →	…
 
 internal/adapters/cli/add.go
      3→import …

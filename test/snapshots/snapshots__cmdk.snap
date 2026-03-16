@@ -239,6 +239,14 @@ README.md
    480→pnpm test
    481→```
 
+package.json
+     2→  "name": "cmdk-root",
+     3→  "private": true,
+     4→  "scripts": {
+    14→  "devDependencies": {
+    22→  "packageManager": "pnpm@8.8.0",
+    23→  "lint-staged": {
+
 cmdk/package.json
      2→  "name": "cmdk",
      3→  "version": "1.1.1",
@@ -317,14 +325,6 @@ cmdk/src/index.tsx
   1061→function renderChildren …
   1071→function SlottableWithNestedChildren …
   1081→const srOnlyStyles …
-
-package.json
-     2→  "name": "cmdk-root",
-     3→  "private": true,
-     4→  "scripts": {
-    14→  "devDependencies": {
-    22→  "packageManager": "pnpm@8.8.0",
-    23→  "lint-staged": {
 
 playwright.config.ts
      3→const config …

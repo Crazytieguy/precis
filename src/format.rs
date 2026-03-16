@@ -97,19 +97,26 @@ fn render_scheduled(
     // Build render order: README/ARCHITECTURE files first (at root level only),
     // then everything else in alphabetical order. This matches how a human would
     // present a project overview — project description before source files.
+    // Build render order: README first, then project manifests, then everything else.
+    // This matches how a human would present a project overview.
     let render_order: Vec<usize> = {
         let mut readme_indices = Vec::new();
+        let mut manifest_indices = Vec::new();
         let mut other_indices = Vec::new();
         for (i, file) in files.iter().enumerate() {
             let relative = file.strip_prefix(root).unwrap_or(file);
             let is_root = relative.parent().is_none_or(|p| p.as_os_str().is_empty());
             let role = schedule::FileRole::from_path(relative);
+            let filename = relative.file_name().and_then(|n| n.to_str()).unwrap_or("");
             if is_root && matches!(role, schedule::FileRole::Readme | schedule::FileRole::Architecture) {
                 readme_indices.push(i);
+            } else if is_root && matches!(filename, "Cargo.toml" | "package.json" | "go.mod" | "pyproject.toml" | "setup.cfg") {
+                manifest_indices.push(i);
             } else {
                 other_indices.push(i);
             }
         }
+        readme_indices.extend(manifest_indices);
         readme_indices.extend(other_indices);
         readme_indices
     };

@@ -4,18 +4,6 @@ expression: output
 ---
 budget: 4000 (3962 tokens)
 
-CONTEXT.md
-     1→# toasty-codegen Component Context
-     3→## Purpose
-     6→## Key Responsibilities
-    25→## Common Change Patterns
-    45→## Generated Code Structure
-    70→## Complete Attribute Support
-    88→## Important Files
-    96→## Code Generation Principles
-   103→## Key Patterns
-   128→## Recent Changes Analysis
-
 Cargo.toml
      1→[package]
      2→name = "toasty-codegen"
@@ -28,6 +16,18 @@ Cargo.toml
     10→quote.workspace = true
     11→std-util.workspace = true
     12→syn.workspace = true
+
+CONTEXT.md
+     1→# toasty-codegen Component Context
+     3→## Purpose
+     6→## Key Responsibilities
+    25→## Common Change Patterns
+    45→## Generated Code Structure
+    70→## Complete Attribute Support
+    88→## Important Files
+    96→## Code Generation Principles
+   103→## Key Patterns
+   128→## Recent Changes Analysis
 
 src/expand/create.rs
      1→use super::{util, Expand};

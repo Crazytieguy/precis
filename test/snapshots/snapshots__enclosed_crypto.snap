@@ -26,10 +26,6 @@ README.md
     22→## Credits and Acknowledgements
     24→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
 
-build.config.ts
-
-eslint.config.js
-
 package.json
      2→  "name": "@enclosed/crypto",
      3→  "type": "module",
@@ -69,6 +65,10 @@ package.json
     85→    "@types/node": "catalog:",
     86→    "@vitest/coverage-v8": "catalog:",
       →    …
+
+build.config.ts
+
+eslint.config.js
 
 src/api-definition.ts
      1→import type { EncryptionAlgorithmDefinitions } from './encryption-algorithms/encryption-algorithms.types';

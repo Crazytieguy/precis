@@ -21,6 +21,11 @@ README.md
    323→### Add a new client
    336→## Bugs and Feature Requests
 
+pyproject.toml
+     1→[build-system]
+     5→[project]
+    25→[project.urls]
+
 demo.py
     65→XUI_EXTERNAL_IP = "**********"  # ⬅️ Your external IP here or domain name.
     66→MAIN_REMARK = "gmfvbot"  # ⬅️ It can be any string.
@@ -390,11 +395,6 @@ py3xui/utils/env.py
     65→def xui_password() -> str:
     81→def tls_verify() -> bool | None:
     95→def tls_cert_path() -> str | None:
-
-pyproject.toml
-     1→[build-system]
-     5→[project]
-    25→[project.urls]
 
 tests/
       →…
