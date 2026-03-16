@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2001 tokens)
+budget: 2000 (2000 tokens)
 
 README.md
     18→## Features
@@ -142,12 +142,12 @@ neco.h
    448→void __neco_exit_prog(int);
    453→#define EAI_SYSTEM 11
 
-tests/README.md
-
 tests/panic.h
      8→#define pwhere(str) \
     14→#define unreachable() \
     21→#define must(cond) \
+
+tests/run.sh
 
 tests/tests.h
     24→#define IS_FAIL_TARGET

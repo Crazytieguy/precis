@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3997 tokens)
+budget: 4000 (3998 tokens)
 
 README.md
     74→## Installation
@@ -21,19 +21,6 @@ Justfile
      5→    uv sync --all-extras --frozen
      6→
      7→lint:
-     8→    uv run ruff format
-     9→    uv run ruff check --fix
-    10→    uv run mypy .
-    11→
-    12→lint-ci:
-    13→    uv run ruff format --check
-    14→    uv run ruff check --no-fix
-    15→    uv run mypy .
-    16→
-    17→test *args:
-    18→    uv run --no-sync pytest {{ args }}
-    19→
-    20→publish:
       →…
 
 examples/fastapi_app.py
@@ -50,6 +37,15 @@ examples/litestar_app.py
     17→@litestar.get("/")
     18→async def hello_world() -> dict[str, str]:
     22→def create_app() -> litestar.Litestar:
+
+logo.svg
+     1→<svg width="600.000000" height="600.000000" viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+     2→	<desc>
+     3→			Created with Pixso.
+     4→	</desc>
+     5→	<defs>
+     6→		<clipPath id="clip26_1">
+      →		…
 
 microbootstrap/__init__.py
     26→__all__ = (

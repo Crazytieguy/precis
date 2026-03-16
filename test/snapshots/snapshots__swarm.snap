@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4004 tokens)
+budget: 4000 (4010 tokens)
 
 README.md
      3→# Swarm (experimental, educational)
@@ -67,20 +67,17 @@ README.md
    356→- Colin Jarvis - [colin-openai](https://github.com/colin-openai)
    357→- Katia Gil Guzman - [katia-openai](https://github.com/katia-openai)
 
+assets/
+      →…
+
 logs/
       →…
 
 pyproject.toml
      1→[build-system]
-     2→requires = ["setuptools"]
-     3→build-backend = "setuptools.build_meta"
 
 setup.cfg
      1→[metadata]
-     2→name = swarm
-     3→version = 0.1.0
-     4→author = OpenAI Solutions
-      →…
 
 SECURITY.md
      1→# Security Policy
@@ -125,7 +122,6 @@ examples/airline/evals/eval_utils.py
 
 examples/basic/README.md
      1→# Swarm basic
-     5→### Examples
     31→## Running the Examples
     33→To run any of the examples, use the following command:
     34→
@@ -224,6 +220,11 @@ examples/customer_service_streaming/src/validator.py
     12→def validate_all_tools …
     51→    # Function to validate all assistants
     52→def validate_all_assistants():
+
+examples/customer_service_streaming/tests/test_prompts.jsonl
+     1→{"text": "Explain the DALL-E editor interface?", "expected_assistant": "user_interface"}
+     2→{"text": "How does the OpenAI moderation API work?", "expected_assistant": "user_interface"}
+      →…
 
 examples/personal_shopper/README.md
      1→# Personal shopper

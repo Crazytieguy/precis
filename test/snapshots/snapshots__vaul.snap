@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3998 tokens)
+budget: 4000 (4001 tokens)
 
 package.json
      2→  "name": "vaul",
@@ -322,19 +322,23 @@ test/README.md
     21→## Learn More
     30→## Deploy on Vercel
 
-test/src/app/layout.tsx
-     7→export const metadata: Metadata = {
-    12→export default function RootLayout({ children }: { children: React.ReactNode }) {
+test/src/app/globals.css
+     1→@tailwind base;
+     2→@tailwind components;
+     3→@tailwind utilities;
+     4→
+     5→body,
+     6→main {
+      →…
 
-test/src/app/page.tsx
-     5→export default function Page() {
+test/src/app/layout.tsx
+     5→const inter …
+     7→export const metadata: Metadata = {
 
 test/tests/constants.ts
      1→export const ANIMATION_DURATION = 500;
 
 test/tests/helpers.ts
-     4→export async function openDrawer …
-    11→export async function dragWithSpeed …
 
 tsconfig.json
      2→  "compilerOptions": {

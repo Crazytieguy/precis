@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4014 tokens)
+budget: 4000 (4015 tokens)
 
 README.md
      7→# Soluna
@@ -10,8 +10,6 @@ README.md
     10→
     11→[Live Examples](https://cloudwu.github.io/soluna/)
     12→
-    13→A framework you can use to make 2D games in Lua with multithreading, living on Windows, Linux, macOS and modern Browsers (via WebAssembly).
-    14→
       →…
     19→## Documentation
     25→## Precompiled Binaries
@@ -27,8 +25,22 @@ Makefile
      7→# msvc support
      8→#CC=cl
      9→LD=$(CC)
-    10→LUA_EXE=$(BUILD)/lua.exe
       →…
+
+asset/sprites.dl
+     1→--
+     2→name : avatar
+     3→filename : avatar.png
+     4→x : -0.5
+     5→y : -1
+     6→
+     7→--
+     8→name : avatar2
+     9→filename : avatar.png
+      →…
+
+bin/readme.txt
+     1→The compiled binary go here.
 
 clibs/
       →…
@@ -124,8 +136,6 @@ docs/url.lua
 docs/zip.lua
     19→function zip.open(filename, mode) end
 
-make.lua
-
 script/
       →…
 
@@ -136,9 +146,28 @@ src/appevent.h
 src/batch.h
      6→struct draw_primitive {
     13→struct draw_primitive_external {
-    19→struct draw_batch * batch_new(int size);
-    20→struct draw_primitive * batch_reserve(struct draw_batch *, int size);
-    21→void batch_delete(struct draw_batch *);
+    19→struct draw_batch * batch_new …
+    20→struct draw_primitive * batch_reserve …
+    21→void batch_delete …
+
+src/blit.glsl
+     1→@vs vs
+
+src/colorquad.glsl
+     1→@vs vs
+
+src/data/settingdefault.dl
+     1→sprite_max : 0x40000
+     2→texture_size : 2048
+     3→srbuffer_size : 0x10000
+     4→batch_size : 65536
+     5→draw_instance : 65536
+     6→entry : main.lua
+     7→project : soluna
+     8→service_path : "./?.lua"
+     9→width : 1024
+    10→height : 768
+      →…
 
 src/font_define.h
      4→#define FONT_MANAGER_TEXSIZE 2048
@@ -165,23 +194,23 @@ src/font_manager.c
    362→font_manager_pixelsize(struct font_manager *F, int fontid, int pointsize) {
 
 src/font_manager.h
-    11→size_t font_manager_sizeof();
-    12→void font_manager_init(struct font_manager *, void *L);
-    13→void* font_manager_shutdown(struct font_manager *);
-    14→void font_manager_import(struct font_manager *F, void* fontdata, size_t sz);
-    16→int font_manager_addfont_with_family(struct font_manager *F, const char* family);
-    17→void font_manager_fontheight(struct font_manager *F, int fontid, int size, int *ascent, int *descent, int *lineGap);
-    18→int font_manager_pixelsize(struct font_manager *F, int fontid, int pointsize);
-    19→const char* font_manager_glyph(struct font_manager *F, int fontid, int codepoint, int size, struct font_glyph *g, struct font_glyph *og);
+    11→size_t font_manager_sizeof …
+    12→void font_manager_init …
+    13→void* font_manager_shutdown …
+    14→void font_manager_import …
+    16→int font_manager_addfont_with_family …
+    17→void font_manager_fontheight …
+    18→int font_manager_pixelsize …
+    19→const char* font_manager_glyph …
     20→//int font_manager_touch(struct font_manager *, int font, int codepoint, struct font_glyph *glyph);
       →…
     22→int font_manager_flush(struct font_manager *);
-    23→void font_manager_scale(struct font_manager *F, struct font_glyph *glyph, int size);
-    24→int font_manager_underline(struct font_manager *F, int fontid, int size, float *underline_position, float *thickness);
-    25→float font_manager_sdf_mask(struct font_manager *F);
-    26→float font_manager_sdf_distance(struct font_manager *F, uint8_t numpixel);
-    27→void font_manager_icon_init(struct font_manager *F, int n, void *data);
-    28→int font_manager_enum_fontname(struct font_manager *F, int idx, char buffer[], int buf_sz);
+    23→void font_manager_scale …
+    24→int font_manager_underline …
+    25→float font_manager_sdf_mask …
+    26→float font_manager_sdf_distance …
+    27→void font_manager_icon_init …
+    28→int font_manager_enum_fontname …
     30→// for debug
     31→const void * font_manager_texture(struct font_manager *F, int *sz);
 
@@ -207,16 +236,15 @@ src/lsha1.c
    114→#define	R0(v,w,x,y,z,i)	z+=((w&(x^y))^y)+blk0(i)+0x5A827999+rol(v,5);w=rol(w,30);
 
 src/lualib/coroutine.lua
-    15→	-- true : coroutine
-    16→	-- false : suspend
-    17→	-- nil : exit
     19→	function coroutine.create(f)
     20→		local co = coroutine_create(f)
 
 src/lualib/layout.lua
-    46→-- update attr
     47→function element:update(attr)
     48→	local _yoga = self._document._yoga
+
+src/maskquad.glsl
+     1→@vs vs
 
 src/material_text.c
    242→#define iscont(c)	(((c) & 0xC0) == 0x80)
@@ -239,11 +267,11 @@ src/material_util.h
      9→#define MATERIAL_QUAD 2
     10→#define MATERIAL_MASK 3
     11→#define MATERIAL_PERSPECTIVE_QUAD 4
-    13→void util_ref_object(lua_State *L, void *ptr, int uv_index, const char *key, const char *luatype, int direct);
+    13→void util_ref_object …
     15→typedef void (*util_submit_func)(lua_State *L, void *m_, struct draw_primitive *prim, int n);
-    16→void util_submit_material(lua_State *L, int batch_n, void *mat, util_submit_func submit);
+    16→void util_submit_material …
     18→typedef const sg_shader_desc* (*util_shader_desc_func)(sg_backend backend);
-    19→sg_pipeline util_make_pipeline(sg_pipeline_desc *desc, util_shader_desc_func func, const char *what, int blend);
+    19→sg_pipeline util_make_pipeline …
 
 src/mutex.h
      6→    #define mutex_t SRWLOCK
@@ -254,6 +282,9 @@ src/mutex.h
     13→    #define mutex_init(m) pthread_mutex_init(&m, NULL)
     14→    #define mutex_acquire(m) pthread_mutex_lock(&m)
     15→    #define mutex_release(m) pthread_mutex_unlock(&m)
+
+src/perspective_quad.glsl
+     1→@vs vs
 
 src/platform/linux/soluna_linux_ime.h
      6→bool soluna_linux_ensure_im(void);
@@ -278,7 +309,6 @@ src/platform/macos/soluna_macos_ime.m
      3→
      4→#include <stdint.h>
      5→
-     6→#include "ime_state.h"
       →…
 
 src/platform/wasm/soluna_wasm_ime.h
@@ -301,9 +331,6 @@ src/platform/wasm/soluna_wasm_ime.h
    231→EMSCRIPTEN_KEEPALIVE void
    232→soluna_wasm_block_next_keypair(void) {
 
-src/platform/windows/soluna_windows_ime.c
-     1→#define WIN32_LEAN_AND_MEAN
-
 src/platform/windows/soluna_windows_ime.h
      4→void soluna_win32_install_wndproc(void);
      5→void soluna_win32_apply_ime_rect(void);
@@ -323,6 +350,9 @@ src/render_bindings.h
 src/sdfimage.c
     23→#define IMAGE_SIZE 64
 
+src/sdftext.glsl
+     1→@vs vs
+
 src/service/loader.lua
     10→local filecache …
 
@@ -336,6 +366,8 @@ src/service/start.lua
     59→function S.external(p)
     60→	local what, arg1, arg2 = message_unpack(p)
 
+src/sprite_submit.h
+
 src/spritemgr.h
      7→#define INVALID_TEXTUREID 0xffff
      9→struct sprite_rect {
@@ -344,10 +376,13 @@ src/spritemgr.h
 src/srbuffer.h
      7→struct sr_mat {
     11→struct sr_buffer {
-    23→size_t srbuffer_size(int n);
-    24→void srbuffer_init(struct sr_buffer *SR, int n);
-    25→int srbuffer_add(struct sr_buffer *SR, uint32_t sr);
-    26→void * srbuffer_commit(struct sr_buffer *SR, int *sz);
+    23→size_t srbuffer_size …
+    24→void srbuffer_init …
+    25→int srbuffer_add …
+    26→void * srbuffer_commit …
+
+src/texquad.glsl
+     1→@vs vs
 
 src/tmpbuffer.h
      2→#define soluna_tmp_buffer_h
@@ -361,10 +396,10 @@ src/transform.c
 
 src/transform.h
      6→struct transform {
-    24→void sprite_transform_init();
-    25→void sprite_transform_set(struct transform *t, float s, float r, float x, float y);
-    26→void sprite_transform_apply(struct draw_primitive *p, struct transform * t);
-    27→void sprite_transform_point(const struct transform *t, int *x, int *y);
+    24→void sprite_transform_init …
+    25→void sprite_transform_set …
+    26→void sprite_transform_apply …
+    27→void sprite_transform_point …
 
 src/truetype.h
     11→#define TRUETYPE_ID "TRUETYPE_ID"
@@ -383,18 +418,48 @@ src/version.h
 
 src/yogaone.cpp
      1→#include "yoga/YGConfig.cpp"
-     2→#include "yoga/YGEnums.cpp"
-     3→#include "yoga/YGNode.cpp"
-     4→#include "yoga/YGNodeLayout.cpp"
-     5→#include "yoga/YGNodeStyle.cpp"
-     6→#include "yoga/YGPixelGrid.cpp"
-     7→#include "yoga/YGValue.cpp"
-     8→
-      →…
 
 test/
       →…
 
-web/config.toml
-     7→[pagination]
-    10→[params]
+web/assets/site.css
+     1→@font-face {
+     2→  font-family: "Soluna Sans";
+      →  …
+
+web/layouts/_default/baseof.html
+     1→<!DOCTYPE html>
+
+web/layouts/_default/single.html
+     1→{{ define "main" }}
+
+web/layouts/_default/term.html
+     1→{{ define "main" }}
+
+web/layouts/_default/terms.html
+     1→{{ define "main" }}
+
+web/layouts/docs/list.html
+     1→{{ define "main" }}
+     2→{{ .Content }}
+     3→{{ end }}
+
+web/layouts/index.html
+     1→{{ define "main" }}
+     2→{{ .Content }}
+     3→{{ end }}
+
+web/layouts/partials/footer.html
+     1→<footer class="footer">
+
+web/layouts/partials/nav.html
+     1→<header class="nav">
+     3→    <a class="brand"
+     4→      href="{{ "/" | relURL }}">
+      →      …
+
+web/layouts/playframe/single.html
+     1→<!DOCTYPE html>
+     2→<html lang="en">
+     3→  <head>
+      →  …

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3945 tokens)
+budget: 4000 (3998 tokens)
 
 README.md
     29→## Overview
@@ -10,10 +10,7 @@ README.md
     48→### Installation
     53→### Create a new instance of the API
     89→### Using TLS and custom certificates
-    92→#### Case 1: Disabling TLS verification
-    99→#### Case 2: Using сustom сertificates
    111→### Login
-   123→#### Using two-factor authentication
    140→## Examples
    149→### Set the traffic limit for the client
    199→### Generate Reality keys
@@ -30,8 +27,6 @@ pyproject.toml
     25→[project.urls]
 
 demo.py
-     1→from py3xui …
-    63→from py3xui …
     65→XUI_EXTERNAL_IP = "**********"  # ⬅️ Your external IP here or domain name.
     66→MAIN_REMARK = "gmfvbot"  # ⬅️ It can be any string.
     67→SERVER_PORT = 443  # ⬅️ Your server port here.
@@ -40,8 +35,53 @@ demo.py
     72→
     73→    Arguments:
       →    …
-    98→import os …
-   100→import qrcode …
+
+dev/clean_trash.sh
+     2→
+     3→# Directories to be removed
+     4→dirs=".mypy_cache .pytest_cache htmlcov dist pyx3ui.egg-info"
+     5→
+     6→# Files to be removed
+     7→files=".coverage"
+     8→
+      →…
+
+dev/create_venv.sh
+     2→
+     3→# Checking if .venv dir already exists.
+     4→if [ -d ".venv" ]; then
+     5→    echo "VENV dir (.venv) already exists, it will be removed."
+     6→    rm -rf .venv
+     7→fi
+     8→
+      →…
+
+dev/push.sh
+     2→
+     3→# Check if commit message was supplied
+     4→if [ -z "$1" ]
+     5→then
+     6→  echo "Error: No commit message provided."
+     7→  exit 1
+     8→fi
+      →…
+
+dev/pydoc.sh
+     2→
+     3→# The directory containing the Python files
+     4→src_dir="py3xui"
+     5→
+     6→echo "Starting pydoc generation for $src_dir"
+     7→
+     8→# Check if source directory exists
+      →…
+
+dev/requirements.txt
+     1→# Only for development:
+     2→mypy
+     3→pytest
+     4→pytest-cov
+      →…
 
 py3xui/api/api.py
     13→class Api:
@@ -60,7 +100,6 @@ py3xui/api/api.py
    189→    def login …
 
 py3xui/api/api_base.py
-    14→# pylint: disable=too-few-public-methods
     15→class ApiFields:
     17→
     18→    SUCCESS = "success"
@@ -70,7 +109,6 @@ py3xui/api/api_base.py
     22→    NO_IP_RECORD = "No IP Record"
     23→    GET = "GET"
     24→    POST = "POST"
-    27→# pylint: disable=R0902
     28→class BaseApi:
     60→
     61→    def __init__ …
@@ -144,10 +182,6 @@ py3xui/async_api/async_api.py
 py3xui/async_api/async_api_base.py
     15→# pylint: disable=R0902
     16→class AsyncBaseApi:
-    17→    """Base class for the XUI API. Contains async common methods for making requests.
-    18→
-    19→    Arguments:
-      →    …
     48→
     49→    def __init__ …
     69→    def host(self) -> str:
@@ -204,7 +238,6 @@ py3xui/async_api/async_api_server.py
 py3xui/client/client.py
      6→# pylint: disable=too-few-public-methods
      7→class ClientFields:
-     8→    """Stores the fields returned by the XUI API for parsing."""
      9→
     10→    EMAIL = "email"
     11→    ENABLE = "enable"
@@ -254,7 +287,6 @@ py3xui/client/client.py
 py3xui/inbound/bases.py
      9→class JsonStringModel(BaseModel):
     11→
-    12→    @model_validator(mode="before")
     13→    def model_validate(
     14→        cls,
     15→        values,
@@ -283,13 +315,9 @@ py3xui/inbound/inbound.py
     35→    TAG = "tag"
     38→class Inbound(BaseModel):
     58→
-    59→    enable: bool
-    60→    port: int
-    88→    @field_validator("stream_settings")
     89→    def validate_stream_settings(  # pylint: disable=no-self-argument
     90→        cls, value: StreamSettings | str
     91→    ) -> StreamSettings | str:
-   113→    # pylint: disable=no-member, no-self-argument
    114→    def to_json(self) -> dict[str, Any]:
 
 py3xui/inbound/settings.py
@@ -300,9 +328,7 @@ py3xui/inbound/settings.py
     14→    FALLBACKS = "fallbacks"
     17→class Settings(JsonStringModel):
     25→
-    26→    clients: list[Client] = []
-    27→    decryption: str = ""
-      →    …
+      →…
 
 py3xui/inbound/sniffing.py
      9→class SniffingFields:
@@ -315,8 +341,6 @@ py3xui/inbound/sniffing.py
     17→    ROUTE_ONLY = "routeOnly"
     20→class Sniffing(JsonStringModel):
     30→
-    31→    enabled: bool
-    32→
       →…
 
 py3xui/inbound/stream_settings.py
@@ -335,14 +359,11 @@ py3xui/inbound/stream_settings.py
     22→    XHTTP_SETTINGS = "xhttpSettings"
     25→class StreamSettings(JsonStringModel):
     38→
-    39→    security: str
-    40→    network: str
-      →    …
+      →…
 
 py3xui/server/server.py
      6→# pylint: disable=too-few-public-methods
      7→class ServerFields:
-     8→    """Stores fields returned by XUI API for parsing."""
      9→
     10→    CPU = "cpu"
     11→    CPU_CORES = "cpuCores"
@@ -396,7 +417,5 @@ py3xui/utils/env.py
     65→def xui_password() -> str:
     81→def tls_verify() -> bool | None:
     95→def tls_cert_path() -> str | None:
-
-tests/test_api.py
 
 tests/test_async_api.py

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4011 tokens)
+budget: 4000 (4008 tokens)
 
 README.md
      3→# Chronos: Pretrained Models for Time Series Forecasting
@@ -13,59 +13,77 @@ README.md
     65→### Forecasting
    117→## Example Notebooks
    130→## 📝 Citation
-   153→## 🛡️ Security
-   157→## 📃 License
 
 ci/
       →…
 
 pyproject.toml
      1→[project]
-     2→name = "chronos-forecasting"
-     3→dynamic = ["version"]
-     4→authors = [
-      →…
     31→[build-system]
-    32→requires = ["hatchling"]
-    33→build-backend = "hatchling.build"
-    41→[project.optional-dependencies]
-    68→[project.urls]
-    74→[tool.mypy]
-    77→[tool.ruff]
 
-CONTRIBUTING.md
-     1→# Contributing Guidelines
+CITATION.cff
+     1→cff-version: 1.2.0
+     2→title: "Chronos: Learning the Language of Time Series"
+     3→message: "If you find Chronos models useful for your research, please consider citing the associated paper."
+     4→authors:
+     5→  - family-names: Ansari
+     6→    given-names: Abdul Fatir
+     7→  - family-names: Stella
+     8→    given-names: Lorenzo
+     9→  - family-names: Turkmen
+    10→    given-names: Caner
+    11→  - family-names: Zhang
+    12→    given-names: Xiyuan
+    13→  - family-names: Mercado
+    14→    given-names: Pedro
+    15→  - family-names: Shen
+    16→    given-names: Huibin
+    17→  - family-names: Shchur
+    18→    given-names: Oleksandr
+    19→  - family-names: Rangapuram
+    20→    given-names: Syama Syndar
+    21→  - family-names: Arango
+    22→    given-names: Sebastian Pineda
+    23→  - family-names: Kapoor
+    24→    given-names: Shubham
+    25→  - family-names: Zschiegner
+    26→    given-names: Jasper
+      →    …
+
+notebooks/chronos-2-quickstart.ipynb
+     1→{
+     2→ "cells": [
+     3→  {
+     4→   "cell_type": "markdown",
+     5→   "id": "cf4c3cba",
+     6→   "metadata": {},
+     7→   "source": [
+     8→    "# Getting Started with Chronos-2\n",
+     9→    "\n",
+      →    …
+
+notebooks/deploy-chronos-to-amazon-sagemaker.ipynb
+     1→{
+     2→ "cells": [
+     3→  {
+     4→   "cell_type": "markdown",
+     5→   "id": "0c7f9134",
+     6→   "metadata": {},
+     7→   "source": [
+     8→    "# Deploy Chronos-2 to AWS with Amazon SageMaker"
+     9→   ]
+      →   …
 
 scripts/README.md
      1→# Usage Examples
      3→> [!NOTE]  
       →…
-     6→## Generating Synthetic Time Series (KernelSynth)
-    24→## Pretraining (and fine-tuning) Chronos models
-   113→## Evaluating Chronos models
-
-scripts/evaluation/agg-relative-score.py
-     7→DEFAULT_RESULTS_DIR …
-    20→def main …
-
-scripts/evaluation/evaluate.py
-    22→QUANTILES …
-   174→def chronos …
-   241→def chronos_bolt …
-   291→def chronos_2 …
 
 scripts/kernel-synth.py
     24→LENGTH = 1024
     25→KERNEL_BANK = [
-    62→def random_binary_map …
-    82→def sample_from_gp_prior …
-   111→def sample_from_gp_prior_efficient …
-   151→def generate_time_series …
 
 scripts/training/train.py
-   219→class PseudoShuffledIterableDataset(IterableDataset):
-   254→class ShuffleMixin:
-   264→class ChronosDataset(IterableDataset, ShuffleMixin):
    504→def main …
 
 src/chronos/__about__.py
@@ -89,7 +107,6 @@ src/chronos/base.py
     48→    def __init__ …
     59→    def model_context_length(self) -> int:
     63→    def model_prediction_length(self) -> int:
-    66→    def _prepare_and_validate_context …
     76→    def predict …
    100→    def predict_quantiles …
    135→    def predict_df …
@@ -114,9 +131,7 @@ src/chronos/chronos.py
     27→@dataclass
     28→class ChronosConfig:
     29→    """
-    30→    This class holds all the configuration parameters to be used
-    31→    by ``ChronosTokenizer`` and ``ChronosModel``.
-    32→    """
+      →    …
     33→
     34→    tokenizer_class: str
     35→    tokenizer_kwargs: Dict[str, Any]
@@ -142,8 +157,6 @@ src/chronos/chronos.py
    131→    def output_transform …
    154→class MeanScaleUniformBins(ChronosTokenizer):
    155→    def __init__ …
-   170→    def _input_transform …
-   198→    def _append_eos_token …
    209→    def context_input_transform …
    222→    def label_input_transform …
    233→    def output_transform …
@@ -162,19 +175,17 @@ src/chronos/chronos.py
    375→    def __init__ …
    381→    def model_context_length(self) -> int:
    385→    def model_prediction_length(self) -> int:
-   388→    def _prepare_and_validate_context …
    399→    def embed(self, context: Union[torch.Tensor, List[torch.Tensor]]) -> Tuple[torch.Tensor, Any]:
    430→    def predict …
    513→    def predict_quantiles …
    536→    def from_pretrained(cls, pretrained_model_name_or_path, *args, **kwargs):
 
 src/chronos/chronos2/__init__.py
-    11→__all__ = ["Chronos2CoreConfig", "Chronos2ForecastingConfig", "Chronos2Model", "Chronos2Pipeline", "Chronos2Dataset"]
+    11→__all__ …
 
 src/chronos/chronos2/config.py
     12→class Chronos2CoreConfig(PretrainedConfig):
     54→    def __init__ …
-   102→@dataclass
    103→class Chronos2ForecastingConfig:
    104→    context_length: int
    105→    output_patch_size: int
@@ -189,7 +200,7 @@ src/chronos/chronos2/config.py
    115→    def editable_fields(cls) -> list[str]:
 
 src/chronos/chronos2/dataset.py
-    20→TensorOrArray: TypeAlias = torch.Tensor | np.ndarray
+    20→TensorOrArray …
     23→class PreparedInput(TypedDict):
     33→def left_pad_and_cat_2D …
     50→def validate_and_prepare_single_dict_input …
@@ -220,7 +231,6 @@ src/chronos/chronos2/layers.py
    126→class FeedForward(nn.Module):
    127→    def __init__ …
    135→    def forward …
-   142→@dataclass
    143→class AttentionOutput(ModelOutput):
    144→    hidden_states: torch.Tensor | None = None
    145→    attn_weights: torch.Tensor | None = None
@@ -241,7 +251,6 @@ src/chronos/chronos2/layers.py
    393→    def forward …
 
 src/chronos/chronos2/model.py
-    31→@dataclass
     32→class Chronos2EncoderBlockOutput(ModelOutput):
     33→    hidden_states: torch.Tensor | None = None
     34→    time_self_attn_weights: torch.Tensor | None = None
@@ -249,17 +258,13 @@ src/chronos/chronos2/model.py
     38→class Chronos2EncoderBlock(nn.Module):
     39→    def __init__ …
     48→    def forward …
-    82→@dataclass
     83→class Chronos2EncoderOutput(ModelOutput):
     84→    last_hidden_state: torch.Tensor | None = None
     85→    all_time_self_attn_weights: tuple[torch.Tensor, ...] | None = None
     86→    all_group_self_attn_weights: tuple[torch.Tensor, ...] | None = None
     89→class Chronos2Encoder(nn.Module):
     90→    def __init__ …
-    99→    def _expand_and_invert_time_attention_mask …
-   113→    def _construct_and_invert_group_time_mask …
    134→    def forward …
-   190→@dataclass
    191→class Chronos2Output(ModelOutput):
    192→    loss: torch.Tensor | None = None
    193→    quantile_preds: torch.Tensor | None = None
@@ -273,7 +278,6 @@ src/chronos/chronos2/model.py
 src/chronos/chronos2/pipeline.py
     39→class Chronos2Pipeline(BaseChronosPipeline):
     43→    def __init__ …
-    48→    def _get_prob_mass_per_quantile_level …
     77→    def model_context_length(self) -> int:
     81→    def model_output_patch_size(self) -> int:
     85→    def model_prediction_length(self) -> int:
@@ -292,7 +296,6 @@ src/chronos/chronos2/pipeline.py
    465→        limit_prediction_length: bool = False,
    466→        **kwargs,
    467→    ) -> list[torch.Tensor]:
-   750→    def _slide_context_and_future_covariates …
    763→    def predict_quantiles …
    821→    def predict_df …
   1027→    def predict_fev …
@@ -343,10 +346,8 @@ src/chronos/chronos_bolt.py
    151→    ]
    152→    _keys_to_ignore_on_load_unexpected = [r"lm_head.weight"]  # type: ignore
    155→    def __init__(self, config: T5Config):
-   215→    def _init_weights …
    240→    def encode …
    294→    def forward …
-   358→    def _init_decoder …
    364→    def decode …
    403→class ChronosBoltPipeline(BaseChronosPipeline):
    404→    forecast_type: ForecastType = ForecastType.QUANTILES
@@ -364,7 +365,6 @@ src/chronos/chronos_bolt.py
    610→    def from_pretrained(cls, pretrained_model_name_or_path, *args, **kwargs):
 
 src/chronos/df_utils.py
-    16→def _validate_df_types_and_cast …
     59→def validate_df_inputs …
    199→def convert_df_input_to_list_of_dicts_input …
 

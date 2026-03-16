@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (8004 tokens)
+budget: 8000 (8006 tokens)
 
 README.md
      1→# MCPHost 🤖
@@ -29,12 +29,6 @@ examples/
 
 go.mod
      1→module github.com/mark3labs/mcphost
-     3→go 1.24.0
-     4→
-     5→toolchain go1.24.5
-     6→
-     7→require (
-      →…
 
 cmd/root.go
     67→type agentUIAdapter struct {
@@ -69,6 +63,12 @@ cmd/script.go
    426→	HasDefault   bool   // Whether this variable has a default value
    427→}
 
+contribute/boost.sh
+     1→./output/mcphost --model openai:<your-model-name> \
+
+contribute/build.sh
+     2→
+
 contribute/conf/demo.json
      2→    "mcpServers": {
 
@@ -77,9 +77,11 @@ contribute/conf/demo.yml
 
 contribute/contribute.md
      1→# Contribute README
-     2→Thanks for your contribution, you can follow these step to run this repo and debug it.
      3→## Run demo
     30→## Contribute your code
+
+go.sum
+     1→cloud.google.com/go v0.121.6 h1:waZiuajrI28iAf40cWgycWNgaXPO06dupuS+sgibK6c=
 
 internal/agent/agent.go
     22→type AgentConfig struct {
@@ -380,8 +382,6 @@ internal/models/openai/openai.go
    247→func (c *CustomChatModel) IsCallbacksEnabled …
 
 internal/models/providers.go
-    29→	// ClaudeCodePrompt is the required system prompt for OAuth authentication.
-      →	…
     32→	ClaudeCodePrompt = "You are Claude Code, Anthropic's official CLI for Claude."
     70→type ProviderConfig struct {
    124→type ProviderResult struct {
@@ -429,7 +429,7 @@ internal/session/session.go
    137→func LoadFromFile(filePath string) (*Session, error) {
    157→func ConvertFromSchemaMessage(msg *schema.Message) Message {
    190→func (m *Message) ConvertToSchemaMessage() *schema.Message {
-   230→func generateMessageID …
+   230→func generateMessageID() string {
 
 internal/tokens/counter.go
     21→func EstimateTokens(text string) int {
@@ -659,6 +659,8 @@ internal/ui/usage_tracker.go
    233→func (ut *UsageTracker) GetLastRequestStats …
    246→func (ut *UsageTracker) Reset …
    256→func (ut *UsageTracker) SetWidth …
+
+main.go
 
 sdk/README.md
      1→# MCPHost SDK

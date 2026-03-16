@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7983 tokens)
+budget: 8000 (7989 tokens)
 
 README.md
      1→# Tock
@@ -154,54 +154,77 @@ README.md
    713→## License
    715→GPL-3.0-or-later
 
+assets/
+      →…
+
 go.mod
      1→module github.com/kriuchkov/tock
      3→go 1.25.6
      4→
-     5→require (
-     6→	github.com/charmbracelet/bubbles v1.0.0
-     7→	github.com/charmbracelet/bubbletea v1.3.10
-     8→	github.com/charmbracelet/lipgloss v1.1.1-0.20250404203927-76690c660834
-     9→	github.com/go-faster/errors v0.7.1
-    10→	github.com/muesli/termenv v0.16.0
-    11→	github.com/samber/lo v1.52.0
-    12→	github.com/spf13/cobra v1.10.2
-    13→	github.com/spf13/pflag v1.0.10
-    14→	github.com/spf13/viper v1.21.0
-    15→	github.com/stretchr/testify v1.11.1
-    16→	gopkg.in/yaml.v3 v3.0.1
-    17→)
-    18→
-    19→require (
-    20→	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
-    21→	github.com/charmbracelet/colorprofile v0.4.1 // indirect
-    22→	github.com/charmbracelet/x/ansi v0.11.6 // indirect
-    23→	github.com/charmbracelet/x/cellbuf v0.0.15 // indirect
-    24→	github.com/charmbracelet/x/term v0.2.2 // indirect
-    25→	github.com/clipperhouse/displaywidth v0.9.0 // indirect
-    26→	github.com/clipperhouse/stringish v0.1.1 // indirect
-    27→	github.com/clipperhouse/uax29/v2 v2.5.0 // indirect
-    28→	github.com/davecgh/go-spew v1.1.1 // indirect
-      →	…
+      →…
 
 Makefile
      1→
      2→linter:
      3→	docker run -t --rm -v $$(pwd):/app -w /app \
-     4→	-v $$(go env GOCACHE):/.cache/go-build -e GOCACHE=/.cache/go-build \
-     5→	-v $$(go env GOMODCACHE):/.cache/mod -e GOMODCACHE=/.cache/mod \
-     6→	-v ~/.cache/golangci-lint:/.cache/golangci-lint -e GOLANGCI_LINT_CACHE=/.cache/golangci-lint \
-     7→	golangci/golangci-lint:v2.6.2-alpine golangci-lint run --fix --config .golangci.yaml --timeout 5m --concurrency 4
-     8→
-     9→test:
-    10→	docker run -t --rm -v $$(pwd):/app -w /app \
-    11→	-v $$(go env GOCACHE):/.cache/go-build -e GOCACHE=/.cache/go-build \
-    12→	-v $$(go env GOMODCACHE):/.cache/mod -e GOMODCACHE=/.cache/mod \
-    13→	--entrypoint "" golang:1.25.6-alpine sh -c "go test -v -count=1 -p 4 -coverprofile=coverage.out ./... && go tool cover -func=coverage.out && go tool cover -html=coverage.out -o coverage.html"
+      →	…
 
 cmd/tock/main.go
      3→import …
      7→func main() {
+
+demo/demo_script.sh
+     2→
+     3→# Auto-start asciinema recording if not already running
+     4→if [ -z "$ASCIINEMA_REC" ]; then
+     5→    OUTPUT_FILE="./demo/demo.cast"
+     6→    
+     7→    # Remove existing recording file
+     8→    rm -f "$OUTPUT_FILE"
+     9→    echo "Starting asciinema recording to $OUTPUT_FILE..."
+    10→
+    11→    # Re-run this script inside asciinema, setting the flag to prevent infinite loop
+    12→    asciinema rec -c "env ASCIINEMA_REC=1 $0" "$OUTPUT_FILE"
+    13→    echo "Recording finished. Saved to $OUTPUT_FILE"
+    14→    exit 0
+    15→fi
+    16→
+    17→# Configuration
+    18→# Run from the root of the repository
+    19→BINARY="./bin/tock"
+    20→DATA_FILE="./demo/demo_data.txt"
+    21→export TOCK_FILE="$DATA_FILE"
+    22→
+    23→# Colors
+    24→GREEN='\033[0;32m'
+    25→BLUE='\033[0;34m'
+    26→NC='\033[0m' # No Color
+    27→YELLOW='\033[0;33m'
+    28→WHITE='\033[1;37m'
+    29→
+    30→# Helper function to print command and wait for enter
+    31→p() {
+    32→    echo -e "${GREEN}$ $1${NC}"
+    33→    read -r
+    34→}
+    35→
+    36→# Wait for enter then clear
+    37→c() {
+    38→    read -r
+    39→    clear
+    40→}
+    41→
+    42→run() {
+    43→    p "$1"
+    44→    eval "$1"
+    45→    echo ""
+    46→}
+    47→
+    48→# Setup
+    49→mkdir -p demo
+    50→rm -f "$DATA_FILE"
+    51→
+      →…
 
 docs/commands.md
      1→# Commands Reference
@@ -239,6 +262,18 @@ docs/commands.md
    283→### `report`
    307→### `analyze`
    330→### `ical`
+
+go.sum
+     1→github.com/aymanbagabas/go-osc52/v2 v2.0.1 h1:HwpRHbFMcZLEVr42D4p7XBqjyuxQH5SMiErDT4WkJ2k=
+     2→github.com/aymanbagabas/go-osc52/v2 v2.0.1/go.mod h1:uYgXzlJ7ZpABp8OJ+exZzJJhRNQ2ASbcXHWsFqH8hp8=
+     3→github.com/aymanbagabas/go-udiff v0.3.1 h1:LV+qyBQ2pqe0u42ZsUEtPiCaUoqgA9gYRDs3vj1nolY=
+      →…
+
+install.sh
+     2→set -e
+     4→# Tock Installer Script
+     5→#
+      →…
 
 internal/adapters/cli/add.go
      3→import …
@@ -521,7 +556,6 @@ internal/config/config.go
     80→func Load(opts ...Option) (*Config, *viper.Viper, error) {
 
 internal/config/config_test.go
-     3→import …
     12→func TestLoadDefaults(t *testing.T) {
     25→func TestLoadFromFile(t *testing.T) {
     64→func TestEnvironmentOverrides(t *testing.T) {
@@ -643,9 +677,9 @@ internal/services/activity/service.go
    218→func (s *service) enrichActivities …
 
 internal/services/activity/service_test.go
-    20→func TestService_Stop …
-   148→func TestService_Start …
-   307→func TestService_Remove …
+    20→func TestService_Stop(t *testing.T) {
+   148→func TestService_Start(t *testing.T) {
+   307→func TestService_Remove(t *testing.T) {
 
 internal/services/ics/generator.go
      3→import …
@@ -655,7 +689,7 @@ internal/services/ics/generator.go
     18→func WrapCalendar(eventsBody string) string {
     28→// GenerateEvent returns the VEVENT block for a single activity.
     29→func GenerateEvent(act models.Activity, uidKey string) string {
-    71→func escapeProperty(s string) string {
+    71→func escapeProperty …
 
 internal/timeutil/timeutil.go
      3→import …
@@ -675,3 +709,9 @@ internal/timeutil/timeutil.go
     56→func (f *Formatter) ParseTime(input string) (time.Time, error) {
    103→func (f *Formatter) ParseTimeWithDate(input string) (time.Time, error) {
    158→func FormatDuration(d time.Duration, format string) string {
+
+tock.yaml.example
+     1→# Tock Configuration File
+     2→# Default location: ~/.config/tock/tock.yaml
+     3→#
+      →…

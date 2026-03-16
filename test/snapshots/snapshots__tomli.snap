@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (3999 tokens)
 
 README.md
      5→# Tomli
@@ -63,13 +63,30 @@ README.md
 
 pyproject.toml
      1→[build-system]
+     2→requires = ["flit_core>=3.12,<4"]
+     3→build-backend = "flit_core.buildapi"
      5→[project]
+     6→name = "tomli"
+     7→version = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
+     8→description = "A lil' TOML parser"
+     9→authors = [
+    10→    { name = "Taneli Hukkinen", email = "hukkin@users.noreply.github.com" },
+    11→]
+    12→license = "MIT"
+    13→license-files = ["LICENSE"]
+    14→requires-python = ">=3.8"
+    15→readme = "README.md"
+    16→classifiers = [
+      →…
     28→[project.urls]
     33→[tool.isort]
     46→[tool.tox]
    145→[tool.mypy]
 
 CHANGELOG.md
+
+MANIFEST.in
+     1→prune tests/
 
 benchmark/README.md
      1→# Benchmark
@@ -80,24 +97,38 @@ benchmark/run.py
     37→def run …
 
 fuzzer/fuzz.py
-     1→import atheris …
-     4→    from math …
-     5→    import sys …
-     6→    import warnings …
-     8→    import tomli_w …
-    10→    import tomli …
+     1→import atheris
+     4→    from math import isnan
+     5→    import sys
+     6→    import warnings
+     8→    import tomli_w
+    10→    import tomli
     20→def test_one_input(input_bytes: bytes) -> None:
     53→def print_err(data):
     59→def normalize_toml_obj(toml_obj: dict) -> None:
     60→    """Make NaNs equal when compared (without using recursion)."""
     71→def main():
 
+fuzzer/requirements.txt
+     1→# sudo apt-get install clang
+     2→wheel
+     3→atheris==2.0.7
+     4→tomli_w>=0.2.2
+
 profiler/profiler_script.py
      8→from pathlib …
     10→import tomli …
 
+profiler/requirements.txt
+     1→gprof2dot
+
+scripts/requirements.txt
+     1→tomli-w
+
 scripts/use_setuptools.py
     12→def use_setuptools() -> None:
+
+setup.py
 
 src/tomli/__init__.py
      1→# SPDX-License-Identifier: MIT
@@ -146,9 +177,7 @@ src/tomli/_parser.py
     92→        *args: Any,
     93→    ):
    137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
-   138→    """Parse TOML from a binary file object."""
    149→def loads(__s: str, *, parse_float: ParseFloat = float) -> dict[str, Any]:
-   150→    """Parse TOML from a string."""
    220→class Flags:
    222→
    223→    # Marks an immutable namespace (inline array or inline table).
@@ -215,9 +244,6 @@ src/tomli/_parser.py
    686→) -> tuple[Pos, Any]:
    760→def is_unicode_scalar_value(codepoint: int) -> bool:
    764→def make_safe_parse_float(parse_float: ParseFloat) -> ParseFloat:
-   765→    """A decorator to make `parse_float` safe.
-   766→
-      →…
 
 src/tomli/_re.py
      7→from datetime …
@@ -235,9 +261,6 @@ src/tomli/_re.py
     47→    rf"""
       →    …
     59→def match_to_datetime(match: re.Match[str]) -> datetime | date:
-    60→    """Convert a `RE_DATETIME` match to `datetime.datetime` or `datetime.date`.
-    61→
-      →…
     95→# No need to limit cache size. This is only ever called on input
     96→# that matched RE_DATETIME, so there is an implicit bound of
     97→# 24 (hours) * 60 (minutes) * 2 (offset direction) = 2880.
@@ -254,14 +277,13 @@ src/tomli/_re.py
 src/tomli/_types.py
      5→from typing …
 
+src/tomli/py.typed
+     1→# Marker file for PEP 561
+
 tests/__init__.py
      1→# SPDX-License-Identifier: MIT
       →…
      5→__all__ = ("tomllib",)
-
-tests/burntsushi.py
-    11→def convert(obj):
-    42→def normalize(obj: Any) -> Any:
 
 tests/test_data.py
     11→DATA_DIR …
@@ -269,28 +291,12 @@ tests/test_data.py
     21→VALID_FILES_EXPECTED …
     23→INVALID_FILES …
     27→class TestData(unittest.TestCase):
-    28→    def test_invalid(self):
-    40→    def test_valid(self):
 
 tests/test_error.py
     13→class TestError(unittest.TestCase):
-    14→    def test_line_and_col(self):
-    35→    def test_missing_value(self):
-    40→    def test_invalid_char_quotes(self):
-    45→    def test_type_error(self):
-    62→    def test_invalid_parse_float(self):
-    76→    def test_deprecated_tomldecodeerror(self):
-    92→    def test_tomldecodeerror(self):
 
 tests/test_misc.py
     17→class TestMiscellaneous(unittest.TestCase):
-    18→    def test_load(self):
-    29→    def test_incorrect_load(self):
-    47→    def test_parse_float(self):
-    75→    def test_deepcopy(self):
-   103→    def test_inline_array_recursion_limit(self):
-   118→    def test_inline_table_recursion_limit(self):
-   133→    def test_types_import(self):
 
 tomllib.md
      1→# `tomllib` – Tomli in the standard library

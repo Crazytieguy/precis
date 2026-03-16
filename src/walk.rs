@@ -1,4 +1,3 @@
-use crate::parse;
 use ignore::Walk;
 use std::path::{Path, PathBuf};
 
@@ -21,61 +20,17 @@ pub fn discover_source_files(root: &Path) -> Vec<PathBuf> {
     files
 }
 
+/// Any file with a text-readable extension is a source file. Binary files
+/// are excluded naturally: `read_to_string` returns `None` for non-UTF-8.
+/// Lockfiles and minified bundles are excluded explicitly.
 fn is_source_file(path: &Path) -> bool {
-    // Check extension-based matching first (covers most files).
-    // Lowercase for case-insensitive matching (e.g., .R vs .r, .C vs .c).
-    let ext_lower: Option<String> = path.extension()
-        .and_then(|ext| ext.to_str())
-        .map(|ext| ext.to_ascii_lowercase());
-    let ext_match = ext_lower.as_deref()
-        .is_some_and(|ext| parse::is_supported_extension(ext) || is_unsupported_code_extension(ext));
-    if ext_match {
+    if path.extension().is_some() {
         return !is_lockfile(path);
     }
     // Well-known extensionless files (Makefile, Dockerfile, etc.)
     path.file_name()
         .and_then(|n| n.to_str())
         .is_some_and(|name| matches!(name, "Makefile" | "Dockerfile" | "Containerfile" | "Justfile" | "Gemfile" | "Rakefile"))
-}
-
-/// Common programming language extensions without tree-sitter support.
-/// Files with these extensions are included in discovery and rendered as
-/// plain text (first line + body), giving visibility into multi-language
-/// codebases where only some languages have full parser support.
-///
-/// Deliberately excludes non-code text files that cause noise:
-/// shell scripts (.sh), stylesheets (.css/.scss), HTML templates,
-/// LaTeX (.tex), and shader code (.glsl).
-/// RST is included because README.rst and other project docs are
-/// valuable even without tree-sitter parsing (rendered as plain text).
-fn is_unsupported_code_extension(ext: &str) -> bool {
-    matches!(
-        ext,
-        // Systems languages
-        "cpp" | "cc" | "cxx" | "hpp" | "cs" | "m" | "mm" | "swift"
-        // JVM languages
-        | "java" | "kt" | "kts" | "scala" | "groovy"
-        // Scripting languages
-        | "rb" | "php"
-        // Functional languages
-        | "hs" | "ex" | "exs" | "erl" | "elm"
-        // Modern languages
-        | "dart" | "zig" | "r" | "jl"
-        // GPU languages
-        | "cu"
-        // Web component languages (contain logic + template)
-        | "vue" | "svelte" | "astro"
-        // Query/schema languages
-        | "sql" | "graphql" | "gql" | "proto" | "prisma"
-        // Infrastructure/build languages
-        | "tf" | "hcl" | "nix" | "gradle" | "cmake"
-        // Documentation markup (README.rst etc. are valuable as plain text)
-        | "rst"
-        // Module files (.mod — primarily go.mod, also Fortran/Modula-2)
-        | "mod"
-        // Config files with informative metadata (setup.cfg, .ini)
-        | "cfg" | "ini"
-    )
 }
 
 /// Check if a file is an auto-generated lockfile that should be excluded.
@@ -220,15 +175,15 @@ mod tests {
     }
 
     #[test]
-    fn filters_non_source_files() {
+    fn discovers_all_text_files() {
         let dir = tempfile::tempdir().unwrap();
         fs::write(dir.path().join("lib.rs"), "fn main() {}").unwrap();
         fs::write(dir.path().join("readme.txt"), "hi").unwrap();
         fs::write(dir.path().join("data.csv"), "a,b,c").unwrap();
 
         let files = discover_source_files(dir.path());
-        assert_eq!(files.len(), 1);
-        assert!(files[0].ends_with("lib.rs"));
+        // All text files with extensions are discovered (plain text fallback)
+        assert_eq!(files.len(), 3);
     }
 
     #[test]
@@ -356,13 +311,17 @@ mod tests {
     }
 
     #[test]
-    fn case_insensitive_extensions() {
-        // Uppercase extensions should be discovered
+    fn accepts_any_extension() {
+        assert!(is_source_file(Path::new("lib.rs")));
+        assert!(is_source_file(Path::new("styles.css")));
         assert!(is_source_file(Path::new("analysis.R")));
-        assert!(is_source_file(Path::new("header.H")));
-        assert!(is_source_file(Path::new("MODULE.PY"))); // unusual but valid
-        // Mixed case
-        assert!(is_source_file(Path::new("Component.Tsx")));
+        assert!(is_source_file(Path::new("data.csv")));
+        // Extensionless files without known names are NOT accepted
+        assert!(!is_source_file(Path::new("LICENSE")));
+        assert!(!is_source_file(Path::new(".gitignore")));
+        // Known extensionless files ARE accepted
+        assert!(is_source_file(Path::new("Makefile")));
+        assert!(is_source_file(Path::new("Dockerfile")));
     }
 
     #[test]

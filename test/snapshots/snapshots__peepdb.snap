@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3998 tokens)
+budget: 4000 (4005 tokens)
 
 README.md
      1→# peepDB
@@ -50,6 +50,11 @@ README.md
 CONTRIBUTING.md
      1→# Contributing to peepDB
 
+MANIFEST.in
+     1→include README.md
+     2→include LICENSE
+     3→include requirements.txt
+
 docs/Gemfile
      1→source 'https://rubygems.org'
      3→gem "jekyll", "~> 4.3.3" # installed by `gem jekyll`
@@ -57,6 +62,41 @@ docs/Gemfile
      5→
      6→gem "just-the-docs", "0.9.0" # pinned to the current release
      7→# gem "just-the-docs"        # always download the latest release
+
+docs/Gemfile.lock
+     1→GEM
+     2→  remote: https://rubygems.org/
+     3→  specs:
+     4→    addressable (2.8.7)
+     5→      public_suffix (>= 2.0.2, < 7.0)
+     6→    bigdecimal (3.1.8)
+     7→    colorator (1.1.0)
+     8→    concurrent-ruby (1.3.4)
+     9→    em-websocket (0.5.3)
+    10→      eventmachine (>= 0.12.9)
+    11→      http_parser.rb (~> 0)
+    12→    eventmachine (1.2.7)
+    13→    ffi (1.17.0-arm64-darwin)
+    14→    ffi (1.17.0-x86_64-linux-gnu)
+    15→    forwardable-extended (2.6.0)
+    16→    google-protobuf (4.27.3-arm64-darwin)
+    17→      bigdecimal
+    18→      rake (>= 13)
+    19→    google-protobuf (4.27.3-x86_64-linux)
+    20→      bigdecimal
+    21→      rake (>= 13)
+    22→    http_parser.rb (0.8.0)
+    23→    i18n (1.14.5)
+    24→      concurrent-ruby (~> 1.0)
+    25→    jekyll (4.3.3)
+    26→      addressable (~> 2.4)
+    27→      colorator (~> 1.0)
+    28→      em-websocket (~> 0.5)
+    29→      i18n (~> 1.0)
+    30→      jekyll-sass-converter (>= 2.0, < 4.0)
+    31→      jekyll-watch (~> 2.0)
+    32→      kramdown (~> 2.3, >= 2.3.1)
+      →      …
 
 docs/README.md
      1→# just-the-docs-template
@@ -102,12 +142,6 @@ docs/_config.yml
 
 docs/contributing.md
      6→# 🤝 Contributing to peepDB
-    10→## Steps to Contribute
-    28→## Setting Up Development Environment
-    47→## Code Style
-    54→## Testing
-    63→## Documentation
-    68→## Reporting Issues
 
 docs/index.md
      6→# peepDB
@@ -146,51 +180,27 @@ docs/usage.md
     74→## Help
     82→## Examples
 
+images/
+      →…
+
 peepdb/__main__.py
      1→from .cli …
 
 peepdb/cli.py
-     1→import click …
-     2→import json …
      3→from .core …
      4→from .config …
     11→from .exceptions …
-    12→from decimal …
-    13→from datetime …
-    14→import logging …
     16→class CustomEncoder(json.JSONEncoder):
     17→    def default(self, obj):
-    25→@click.group()
-      →…
     27→def cli():
-    59→@click.option('--host', required=True, help='Database host or file path for SQLite')
-      →…
     65→def save(connection_name, db_type, host, port, user, password, database, trusted):
-    86→@cli.command()
     87→def list():
-    97→@cli.command()
-      →…
    100→def remove(connection_name):
-   113→@cli.command()
-      →…
    115→def remove_all():
-   126→@cli.command()
-      →…
    133→def view(connection_name, table, format, page, page_size, scientific):
    181→def main():
 
 peepdb/config.py
-     1→import base64 …
-     2→import json …
-     3→import os …
-     4→from dataclasses …
-     5→import logging …
-     7→import click …
-     8→import keyring …
-     9→from cachetools …
-    10→from cryptography.fernet …
-    11→from cryptography.hazmat.primitives …
-    12→from cryptography.hazmat.primitives.kdf.pbkdf2 …
     13→from .exceptions …
     15→@dataclass
     16→class KeySecurity:
@@ -201,9 +211,7 @@ peepdb/config.py
     22→SECURITY_CONFIG_FILE = os.path.join(CONFIG_DIR, "security_config.json")
     23→KEYRING_USERNAME = "PEEP_DB_KEY"
     24→KEYRING_SERVICE_NAME = "PEEP_DB"
-    29→@cached(cache=TTLCache(maxsize=1024, ttl=600))
     30→def generate_key_from_password(salt):
-    41→@cached(cache=TTLCache(maxsize=1024, ttl=600))
     42→def fetch_key_from_keyring():
     49→def get_key_security_config():
     60→def get_key():
@@ -217,11 +225,6 @@ peepdb/config.py
    196→def add_key_security():
 
 peepdb/core.py
-     1→from tabulate …
-     2→import logging …
-     3→from typing …
-     4→from datetime …
-     5→from decimal …
      7→from .db …
     27→def connect_to_database(db_type: str, host: str, user: str, password: str, database: str, **kwargs):
     56→def peep_db(db_type: str,
@@ -246,16 +249,12 @@ peepdb/db/base.py
      6→    def __init__(self, host: str, user: str, password: str, database: str, port: int = None, **kwargs):
     17→    @abstractmethod
     18→    def connect(self) -> None:
-    19→        pass
     21→    @abstractmethod
     22→    def disconnect(self) -> None:
-    23→        pass
     25→    @abstractmethod
     26→    def fetch_tables(self) -> List[str]:
-    27→        pass
     29→    @abstractmethod
     30→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
-    31→        pass
     33→    def __enter__(self):
     37→    def __exit__(self, exc_type, exc_val, exc_tb):
 
@@ -336,20 +335,10 @@ peepdb/tests/test_sqlite.py
 
 project.toml
      1→[build-system]
-     2→requires = ["setuptools>=45", "wheel"]
-     3→build-backend = "setuptools.build_meta"
      5→[project]
-     6→name = "peepdb"
-     7→version = "0.1.4"
-     8→description = "CLI tool to view database tables fast"
-     9→authors = [
-    10→    {name = "Evangelos Meklis", email = "vmeklis@hotmail.com"},
-    11→]
-    12→readme = "README.md"
-    13→requires-python = ">=3.9"
-    14→license = {text = "GNU General Public License v3 (GPLv3)"}
-    15→classifiers = [
-      →…
     35→[project.optional-dependencies]
     42→[project.urls]
     46→[project.scripts]
+
+requirements.txt
+     1→async-timeout==4.0.3

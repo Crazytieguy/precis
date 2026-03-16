@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4008 tokens)
+budget: 4000 (4010 tokens)
 
 README.md
     40→## About
@@ -41,8 +41,19 @@ docs/v4-to-v5-migration-guide.md
    156→## Variadic tuple patterns
    214→## `.returnType`
 
-examples/gif-fetcher/src/constants.ts
-     1→export const API_KEY …
+examples/gif-fetcher/public/index.html
+     1→<!DOCTYPE html>
+     2→<html lang="en">
+     3→  <head>
+      →  …
+
+examples/gif-fetcher/src/styles.css
+     1→body {
+     2→  margin: 0;
+     3→}
+     4→
+     5→* {
+      →…
 
 jsr.json
      2→  "name": "@gabriel/ts-pattern",
@@ -52,11 +63,12 @@ jsr.json
      6→    "./types": "./src/index.ts",
      7→    "./package.json": "./package.json"
 
+scripts/generate-cts.sh
+     2→
+
 src/errors.ts
      5→export class NonExhaustiveError extends Error {
      6→  constructor …
-
-src/index.ts
 
 src/internals/helpers.ts
     12→export const isObject …
@@ -189,9 +201,7 @@ src/types/DistributeUnions.ts
    116→        readonly [infer p1, infer p2, infer p3, infer p4]
    117→      ]
    118→    ? [
-   119→        ...FindUnions<a1, p1, [...path, 0]>,
-   120→        ...FindUnions<a2, p2, [...path, 1]>,
-      →        …
+      →    …
    174→export type ArrayToVariadicUnion …
    183→export type Distribute …
 
@@ -256,8 +266,6 @@ src/types/Match.ts
     51→      selections: FindSelected<value, p>,
     52→      value: value
     53→    ) => PickReturnValue<o, c>
-    54→  ): InvertPatternForExclude<p, value> extends infer excluded
-    55→    ? Match<
    132→  with …
    159→  when …
    180→  otherwise …

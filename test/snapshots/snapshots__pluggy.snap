@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4011 tokens)
+budget: 4000 (4003 tokens)
 
 README.rst
      1→====================================================
@@ -76,9 +76,6 @@ README.rst
     69→
       →…
 
-downstream/
-      →…
-
 pyproject.toml
      1→[build-system]
      8→[project]
@@ -96,10 +93,38 @@ CHANGELOG.rst
      4→
       →…
 
+MANIFEST.in
+     1→include CHANGELOG
+     2→include README.rst
+     3→include setup.py
+     4→include tox.ini
+     5→include LICENSE
+     6→graft testing
+     7→recursive-exclude * *.pyc *.pyo
+
+RELEASING.rst
+     1→Release Procedure
+
+TIDELIFT.rst
+     1→========
+
+changelog/590.trivial.rst
+     1→The ``pluggy.__version__`` variable is now dynamically provided via a module-level ``__getattr__`` implementation, using ``importlib`` to obtain the installed version.
+
 changelog/README.rst
      1→This directory contains "newsfragments" which are short files that contain a small **ReST**-formatted
      2→text that will be added to the next ``CHANGELOG``.
      3→
+      →…
+
+changelog/_template.rst
+     1→{% for section in sections %}
+     2→{% set underline = "-" %}
+     3→{% if section %}
+     4→{{section}}
+     5→{{ underline * section|length }}{% set underline = "~" %}
+     6→
+     7→{% endif %}
       →…
 
 codecov.yml
@@ -169,6 +194,33 @@ docs/index.rst
     13→It gives users the ability to extend or modify the behaviour of a
       →…
 
+docs/requirements.txt
+     1→# Higher bound for safety, can bump it if builds fine with new major versions.
+     2→sphinx>=6,<8
+     3→pygments
+     4→towncrier
+
+downstream/conda.sh
+     2→set -eux -o pipefail
+
+downstream/datasette.sh
+     2→set -eux -o pipefail
+
+downstream/devpi.sh
+     2→set -eux -o pipefail
+
+downstream/hatch.sh
+     2→set -eux -o pipefail
+
+downstream/pytest.sh
+     2→set -eux -o pipefail
+
+downstream/python-lsp-server.sh
+     1→set -eux -o pipefail
+
+downstream/tox.sh
+     2→set -eux -o pipefail
+
 scripts/
       →…
 
@@ -226,22 +278,8 @@ src/pluggy/_hooks.py
     86→    __slots__ = ("project_name",)
     87→
     88→    def __init__ …
-    92→    def __call__(
-    93→        self,
-    94→        function: _F,
-    95→        firstresult: bool = False,
-    96→        historic: bool = False,
-    97→        warn_on_impl: Warning | None = None,
-    98→        warn_on_impl_args: Mapping[str, Warning] | None = None,
-    99→    ) -> _F: ...
-   102→    def __call__(  # noqa: F811
-   103→        self,
-   104→        function: None = ...,
-   105→        firstresult: bool = ...,
-   106→        historic: bool = ...,
-   107→        warn_on_impl: Warning | None = ...,
-   108→        warn_on_impl_args: Mapping[str, Warning] | None = ...,
-   109→    ) -> Callable[[_F], _F]: ...
+    92→    def __call__ …
+   102→    def __call__ …
    111→    def __call__ …
    164→@final
    165→class HookimplMarker:
@@ -249,26 +287,8 @@ src/pluggy/_hooks.py
    173→    __slots__ = ("project_name",)
    174→
    175→    def __init__ …
-   179→    def __call__(
-   180→        self,
-   181→        function: _F,
-   182→        hookwrapper: bool = ...,
-   183→        optionalhook: bool = ...,
-   184→        tryfirst: bool = ...,
-   185→        trylast: bool = ...,
-   186→        specname: str | None = ...,
-   187→        wrapper: bool = ...,
-   188→    ) -> _F: ...
-   191→    def __call__(  # noqa: F811
-   192→        self,
-   193→        function: None = ...,
-   194→        hookwrapper: bool = ...,
-   195→        optionalhook: bool = ...,
-   196→        tryfirst: bool = ...,
-   197→        trylast: bool = ...,
-   198→        specname: str | None = ...,
-   199→        wrapper: bool = ...,
-   200→    ) -> Callable[[_F], _F]: ...
+   179→    def __call__ …
+   191→    def __call__ …
    202→    def __call__ …
    281→def normalize_hookimpl_opts …
    290→_PYPY …
@@ -292,22 +312,18 @@ src/pluggy/_hooks.py
    391→    )
    392→
    393→    def __init__ …
-   420→    def has_spec(self) -> bool:
-   424→    def set_specification(
-   425→        self,
-   426→        specmodule_or_class: _Namespace,
-   427→        spec_opts: HookspecOpts,
-   428→    ) -> None:
+   420→    def has_spec …
+   424→    def set_specification …
    438→    def is_historic …
    449→    def get_hookimpls …
    477→    def __repr__ …
    499→    def __call__ …
    516→    def call_historic …
    543→    def call_extra …
-   593→class _SubsetHookCaller(HookCaller):
+   593→class _SubsetHookCaller …
    612→    def __init__ …
    619→    def _hookimpls …
-   627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
+   627→    def spec …
    631→    def _call_history …
    634→    def __repr__ …
    638→@final
@@ -353,7 +369,7 @@ src/pluggy/_manager.py
     65→class DistFacade:
     67→
     68→    def __init__ …
-    72→    def project_name(self) -> str:
+    72→    def project_name …
     76→    def __getattr__ …
     79→    def __dir__ …
     83→class PluginManager:
@@ -391,9 +407,9 @@ src/pluggy/_result.py
     29→    __slots__ = ("_result", "_exception", "_traceback")
     30→
     31→    def __init__ …
-    43→    def excinfo(self) -> _ExcInfo | None:
-    52→    def exception(self) -> BaseException | None:
-    57→    def from_call(cls, func: Callable[[], ResultType]) -> Result[ResultType]:
+    43→    def excinfo …
+    52→    def exception …
+    57→    def from_call …
     67→    def force_result …
     80→    def force_exception …
     91→    def get_result …
@@ -423,3 +439,14 @@ testing/test_hookcaller.py
 
 tox.ini
      1→[tox]
+
+uv.lock
+     1→version = 1
+     2→revision = 3
+     3→requires-python = ">=3.10"
+     4→
+     5→[[package]]
+     6→name = "cachetools"
+     7→version = "6.1.0"
+     8→source = { registry = "https://pypi.org/simple" }
+      →…

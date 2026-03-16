@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4005 tokens)
+budget: 4000 (4004 tokens)
 
 README.md
      1→# Introduction
@@ -266,10 +266,13 @@ format/configuration/renderers.md
      1→# Configuring Renderers
     20→## Output tables
     84→## HTML renderer options
+   286→#### `[output.html.search.chapter]`
    325→## Markdown renderer
 
 format/example.rs
      1→fn main() {
+
+format/images/rust-logo-blk.svg
 
 format/markdown.md
      1→# Markdown
@@ -316,7 +319,6 @@ format/theme/README.md
     12→Here are the files you can override:
     13→
     14→- **_index.hbs_** is the handlebars template.
-    15→- **_head.hbs_** is appended to the HTML `<head>` section.
       →…
 
 format/theme/editor.md

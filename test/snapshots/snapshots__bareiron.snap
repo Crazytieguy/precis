@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3974 tokens)
+budget: 4000 (3983 tokens)
 
 README.md
      1→# bareiron
@@ -22,20 +22,38 @@ README.md
     39→## Non-volatile storage (optional)
     48→## Contribution
 
+build.sh
+     2→
+     3→# Check for registries before attempting to compile, prevents confusion
+     4→if [ ! -f "include/registries.h" ]; then
+     5→  echo "Error: 'include/registries.h' is missing."
+     6→  echo "Please follow the 'Compilation' section of the README to generate it."
+     7→  exit 1
+     8→fi
+     9→
+    10→# Figure out executable suffix (for MSYS compilation)
+    11→case "$OSTYPE" in
+      →…
+
 build_registries.js
      5→const blockToItemOverrides = {
     20→const blockBlacklist = [
     40→const blockWhitelist = [
     67→const biomes = [
-    76→async function extractItemsAndBlocks () {
-   174→function writeVarInt (value) {
-   187→async function scanDirectory (basePath, currentPath = "") {
-   212→function serializeRegistry (name, entries) {
-   244→function serializeTags (tags) {
-   288→function toVarIntBuffer (array) {
-   297→function toCArray (buffer) {
    306→const requiredRegistries = [
-   318→async function convert () {
+
+extract_registries.sh
+     2→set -euo pipefail
+     4→REQUIRED_MAJOR=21
+     5→SERVER_JAR="${SERVER_JAR:-server.jar}"
+     6→NOTCHIAN_DIR="notchian"
+     7→JS_RUNTIME=""
+     8→
+     9→get_java_version() {
+    10→  java -version 2>&1 | awk -F[\".] '/version/ {print $2}'
+    11→}
+    12→
+      →…
 
 include/crafting.h
      4→#include "globals.h"
@@ -214,12 +232,8 @@ include/structures.h
 include/tools.h
      4→#include <unistd.h>
      6→#include "globals.h"
-     8→static inline int mod_abs (int a, int b) {
-     9→  return ((a % b) + b) % b;
-    10→}
-    11→static inline int div_floor (int a, int b) {
-    12→  return a % b < 0 ? (a - b) / b : a / b;
-    13→}
+     8→static inline int mod_abs …
+    11→static inline int div_floor …
     16→ssize_t recv_all …
     17→ssize_t send_all …
     18→void discard_all …
@@ -267,9 +281,10 @@ include/worldgen.h
     25→uint8_t getBlockAt …
     28→uint8_t buildChunkSection …
 
+src/CMakeLists.txt
+
 src/crafting.c
    349→#define registerSmeltingRecipe(a, b) \
-   350→  if (*material == a && (*output_item == b || *output_item == 0)) *output_item = b
 
 src/globals.c
     17→  // Time between vTaskDelay calls in microseconds
@@ -280,7 +295,6 @@ src/globals.c
 src/main.c
      8→#define CLOCK_REALTIME 0
     68→void handlePacket …
-   739→static void wifi_event_handler (void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data) {
 
 src/packets.c
     28→int sc_statusResponse …
@@ -382,7 +396,6 @@ src/structures.c
 
 src/tools.c
     20→    #define CLOCK_MONOTONIC 1
-    30→  static uint64_t htonll (uint64_t value) {
    232→ssize_t readLengthPrefixedData …
    244→void readString …
    249→void readStringN …

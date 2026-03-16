@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4004 tokens)
+budget: 4000 (4005 tokens)
 
 readme.md
     20→## Benefits over plain `fetch`
@@ -40,6 +40,8 @@ readme.md
   1343→## Node.js support
   1345→Node.js 18 and later.
   1346→
+
+media/logo.svg
 
 source/core/Ky.ts
     33→export class Ky {
@@ -175,7 +177,7 @@ source/errors/TimeoutError.ts
 
 source/index.ts
     10→const createInstance …
-    34→const ky = createInstance();
+    34→const ky …
 
 source/types/ResponsePromise.ts
      6→export type ResponsePromise …

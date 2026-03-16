@@ -26,9 +26,6 @@ README.md
    188→### Inspiration
    194→## Contact Information
 
-CONTRIBUTING.md
-     1→# Contributing to Enclosed
-
 Dockerfile
      1→# Base image is node:22-slim, we cannot use node:22-alpine because of
      2→# a known issue for arm/v7 architecture (hangs on dependency installation)
@@ -38,33 +35,22 @@ Dockerfile
      6→# Set the working directory for the app
      7→WORKDIR /app
      8→
-     9→# Copy package.json and pnpm-lock.yaml to install dependencies
-    10→COPY pnpm-lock.yaml ./
-    11→COPY pnpm-workspace.yaml ./
-    12→COPY packages/crypto/package.json packages/crypto/package.json
-    13→COPY packages/lib/package.json packages/lib/package.json
-    14→COPY packages/app-client/package.json packages/app-client/package.json
-    15→COPY packages/app-server/package.json packages/app-server/package.json
-    16→
-    17→# Install pnpm
-    18→RUN npm install -g pnpm --ignore-scripts && pnpm install --frozen-lockfile --ignore-scripts
-    19→
-    20→# Copy the entire app
-    21→COPY . .
-    22→
-    23→# Build the apps
-    24→RUN pnpm --filter @enclosed/crypto run build && \
-    25→    pnpm --filter @enclosed/lib run build && \
-    26→    pnpm --filter @enclosed/app-client run build && \
-    27→    pnpm --filter @enclosed/app-server run build:node
-    28→
-    29→# Production image 
-    30→FROM node:22-alpine
-    31→
-    32→WORKDIR /app
-    33→
-    34→# Copy the built apps
       →…
+
+Dockerfile.rootless
+     1→# Base image is node:22-slim, we cannot use node:22-alpine because of
+     2→# a known issue for arm/v7 architecture (hangs on dependency installation)
+     3→# see https://github.com/nodejs/docker-node/issues/2077
+     4→FROM node:22-slim AS builder
+     5→
+     6→# Set the working directory for the app
+     7→WORKDIR /app
+     8→
+      →…
+
+packages/app-client/.env.example
+     1→VITE_BASE_API_URL=http://localhost:8787
+     2→VITE_FALLBACK_DOCUMENTATION_URL=http://localhost:3001
 
 packages/app-client/README.md
      1→## Usage
@@ -98,6 +84,71 @@ packages/app-client/components.json
     13→    "component": "@/modules/ui/components",
     14→    "ui": "@/modules/ui/components",
     15→    "cn": "@/modules/shared/style/cn"
+
+packages/app-client/index.html
+     1→<!DOCTYPE html>
+     2→<html lang="en">
+     3→  <head>
+     4→    <meta charset="utf-8" />
+     5→    <meta name="viewport" content="width=device-width, initial-scale=1" />
+     6→    <meta name="theme-color" content="#000000" />
+     7→    <title>Enclosed - Send private and secure notes</title>
+     8→
+     9→    <meta name="title" content="Enclosed - Send private and secure notes">
+    10→    <meta name="description" content="Enclosed is a secure, end-to-end encrypted platform for sending private notes. Set expiration, passwords, and self-destruct options to keep your notes confidential.">
+    11→ 
+    12→    <link rel="author" href="humans.txt" />
+    13→    <link rel="canonical" href="https://enclosed.cc/" />
+    14→    
+    15→    <!-- Open Graph / Facebook -->
+    16→    <meta property="og:type" content="website">
+      →    …
+
+packages/app-client/public/humans.txt
+     1→/* TEAM */
+     2→Developer: Corentin Thomasset
+     3→Site: https://corentin.tech
+     4→Twitter: @cthmsst
+
+packages/app-client/public/robots.txt
+     1→User-agent: *
+     2→Disallow: /
+     3→Allow: /$
+     4→Allow: /og-image.png
+
+packages/app-client/public/site.webmanifest
+     1→{"name":"","short_name":"","icons":[{"src":"/android-chrome-192x192.png","sizes":"192x192","type":"image/png"},{"src":"/android-chrome-512x512.png","sizes":"512x512","type":"image/png"}],"theme_color":"#ffffff","background_color":"#ffffff","display":"standalone"}
+
+packages/app-client/src/app.css
+     1→:root {
+     2→  --background: 0 0% 100%;
+     3→  --foreground: 0 0% 3.9%;
+     4→
+     5→  --card: 0 0% 100%;
+     6→  --card-foreground: 0 0% 3.9%;
+     7→
+     8→  --popover: 0 0% 100%;
+     9→  --popover-foreground: 0 0% 3.9%;
+    10→
+    11→  --primary: 0 0% 9%;
+    12→  --primary-foreground: 0 0% 98%;
+    13→
+    14→  --secondary: 0 0% 96.1%;
+    15→  --secondary-foreground: 0 0% 9%;
+    16→
+    17→  --muted: 0 0% 96.1%;
+    18→  --muted-foreground: 0 0% 45.1%;
+    19→
+    20→  --accent: 0 0% 96.1%;
+    21→  --accent-foreground: 0 0% 9%;
+    22→
+    23→  --destructive: 0 84.2% 60.2%;
+    24→  --destructive-foreground: 0 0% 98%;
+    25→
+    26→  --warning: 31 98% 50%;
+    27→  --warning-foreground: 0 0% 98%;
+    28→
+      →…
 
 packages/app-client/src/locales/locales.ts
      2→export const locales = [
@@ -142,13 +193,6 @@ packages/app-client/src/modules/i18n/i18n.provider.tsx
     36→async function fetchDictionary …
     44→export const I18nProvider: ParentComponent = (props) => {
 
-packages/app-client/src/modules/notes/components/file-uploader.tsx
-     6→const DropArea …
-    62→export const FileUploaderButton …
-
-packages/app-client/src/modules/notes/components/note-password-field.tsx
-     7→export const NotePasswordField …
-
 packages/app-client/src/modules/notes/notes.constants.ts
      1→export const NOTE_ID_REGEX = /[0-7][0-9A-HJKMNP-TV-Z]{25}/i;
 
@@ -170,75 +214,32 @@ packages/app-client/src/modules/shared/style/cn.ts
      5→export const cn = (...classLists: ClassValue[]) => twMerge(clsx(classLists));
 
 packages/app-client/src/modules/shared/utils/copy.tsx
-     6→export function useCopy() {
-    19→export const CopyButton: ParentComponent<{ text: string; label?: string; copiedLabel?: string } & ComponentProps<typeof Button>> = (props) => {
+     6→export function useCopy …
+    19→export const CopyButton …
 
 packages/app-client/src/modules/theme/theme.store.ts
      4→export function useThemeStore() {
 
 packages/app-client/src/modules/ui/components/alert.tsx
     10→export const alertVariants = cva(
-    30→export function Alert …
-    46→export function AlertTitle …
-    57→export function AlertDescription …
 
 packages/app-client/src/modules/ui/components/button.tsx
     10→export const buttonVariants = cva(
-    41→export function Button …
-
-packages/app-client/src/modules/ui/components/card.tsx
-     5→export function Card …
-    19→export function CardHeader …
-    27→export const CardTitle …
-    38→export const CardDescription …
-    48→export function CardContent …
-    54→export function CardFooter …
 
 packages/app-client/src/modules/ui/components/dropdown-menu.tsx
     18→export const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
     19→export const DropdownMenuGroup = DropdownMenuPrimitive.Group;
     20→export const DropdownMenuSub = DropdownMenuPrimitive.Sub;
     21→export const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup;
-    23→export function DropdownMenu …
-    34→export function DropdownMenuContent …
-    58→export function DropdownMenuItem …
-    81→export function DropdownMenuGroupLabel …
-   100→export function DropdownMenuItemLabel …
-   119→export function DropdownMenuSeparator …
-   132→export function DropdownMenuShortcut …
-   145→export function DropdownMenuSubTrigger …
-   186→export function DropdownMenuSubContent …
-   206→export function DropdownMenuCheckboxItem …
-   248→export function DropdownMenuRadioItem …
-
-packages/app-client/src/modules/ui/components/sonner.tsx
-     5→export function Toaster …
 
 packages/app-client/src/modules/ui/components/switch.tsx
     11→export const SwitchLabel = SwitchPrimitive.Label;
     12→export const Switch = SwitchPrimitive;
     13→export const SwitchErrorMessage = SwitchPrimitive.ErrorMessage;
     14→export const SwitchDescription = SwitchPrimitive.Description;
-    18→export function SwitchControl …
-    42→export function SwitchThumb …
-
-packages/app-client/src/modules/ui/components/tabs.tsx
-    20→export function Tabs …
-    35→export function TabsList …
-    54→export function TabsContent …
-    73→export function TabsTrigger …
-   109→export function TabsIndicator …
-
-packages/app-client/src/modules/ui/components/textarea.tsx
-    14→export function TextArea …
 
 packages/app-client/src/modules/ui/components/textfield.tsx
-    20→export function TextFieldRoot …
     26→export const textfieldLabel = cva(
-    51→export function TextFieldLabel …
-    67→export function TextFieldErrorMessage …
-    85→export function TextFieldDescription …
-   104→export function TextField …
 
 packages/app-client/src/modules/ui/layouts/app.layout.tsx
     72→export const Navbar: Component = () => {
@@ -267,29 +268,6 @@ packages/app-server/src/modules/app/config/config.ts
 
 packages/app-server/src/modules/app/config/config.types.ts
      3→export type Config = ReturnType<typeof getConfig>;
-
-packages/app-server/src/modules/app/middlewares/config.middleware.ts
-     6→export function createConfigMiddleware({ config: initialConfig }: { config?: Config } = {}) {
-
-packages/app-server/src/modules/app/middlewares/cors.middleware.ts
-     5→export const corsMiddleware = createMiddleware(async (context: Context, next) => {
-
-packages/app-server/src/modules/app/middlewares/errors.middleware.ts
-     5→const logger …
-     7→export function registerErrorMiddleware({ app }: { app: ServerInstance }) {
-
-packages/app-server/src/modules/app/middlewares/logger.middleware.ts
-     4→const logger …
-     6→export const loggerMiddleware = createMiddleware(async (c, next) => {
-
-packages/app-server/src/modules/app/middlewares/storage.middleware.ts
-     4→export function createStorageMiddleware({ storageFactory }: { storageFactory: BindableStorageFactory }) {
-
-packages/app-server/src/modules/app/middlewares/timeout.middleware.ts
-     5→export const timeoutMiddleware = createMiddleware(async (context: Context, next) => {
-
-packages/app-server/src/modules/app/server.ts
-    19→function createServer …
 
 packages/app-server/src/modules/app/server.types.ts
      5→export type ServerInstanceGenerics = {
@@ -346,27 +324,10 @@ packages/app-server/src/modules/shared/validation/validation.ts
     44→export const validateQuery …
     45→export const validateParams …
 
-packages/app-server/src/modules/storage/factories/cloudflare-kv.storage.ts
-     9→export const KV_VALUE_LENGTH_EXCEEDED_ERROR_CODE = 'storage.kv.value_length_exceeds_limit';
-    11→export const createCloudflareKVStorageFactory = defineBindableStorageFactory(() => {
-
-packages/app-server/src/modules/storage/factories/fs-lite.storage.ts
-     6→export const createFsLiteStorage = defineStorage(({ config }: { config: Config }) => {
-
-packages/app-server/src/modules/storage/factories/memory.storage.ts
-     5→export const createMemoryStorage = defineStorage(() => {
-
 packages/app-server/src/modules/storage/storage.types.ts
      7→export type BindableStorageFactoryArgs = { config: Config; context: Context };
      8→export type BindableStorageFactory = (args: BindableStorageFactoryArgs) => { storage: Storage };
      9→export type StorageFactory = () => { storage: Storage };
-
-packages/app-server/src/modules/tasks/task-scheduler.ts
-     9→const logger …
-    11→function createTaskScheduler …
-
-packages/app-server/src/modules/tasks/tasks.models.ts
-     9→function defineTask …
 
 packages/app-server/src/modules/tasks/tasks.types.ts
      3→export type TaskDefinition = ReturnType<typeof defineTask>;
@@ -393,7 +354,7 @@ packages/cli/README.md
     81→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
 
 packages/cli/src/cli.ts
-     6→const main …
+     6→const main = defineCommand({
 
 packages/cli/src/config/config.command.ts
      6→const keysList …
@@ -405,11 +366,6 @@ packages/cli/src/config/config.constants.ts
 packages/cli/src/config/config.models.ts
      7→type ConfigKey …
      8→const config …
-    10→function setConfig …
-    31→function getConfig …
-    57→function deleteConfig …
-    61→function resetConfig …
-    65→function createConfigBindings …
 
 packages/cli/src/create-note/create-note.command.ts
     11→const ONE_HOUR_IN_SECONDS …
@@ -473,22 +429,39 @@ packages/deploy-cloudflare/_routes.json
      4→    "/api/*"
      6→  "exclude": []
 
-packages/deploy-cloudflare/package.json
+packages/deploy-cloudflare/build.sh
+     2→
+     3→# Exit script on any error, use unset variables as error, and catch failures in pipelines
+     4→set -euo pipefail
+     5→
+     6→log() {
+     7→    local TIMESTAMP
+     8→    TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
+     9→    echo "[$TIMESTAMP] [INFO] $1"
+    10→}
+    11→
+    12→log "Building the server"
+    13→pnpm --filter @enclosed/app-server --fail-if-no-match build:cloudflare
+    14→
+    15→log "Building the client"
+    16→pnpm --filter @enclosed/app-client --fail-if-no-match build
+    17→
+    18→log "Resetting the dist folder"
+    19→rm -rf dist
+    20→mkdir -p dist
+    21→
+    22→log "Copying the app server files to the dist folder"
+    23→cp -r ../app-server/dist-cloudflare/* dist/
+    24→
+    25→log "Copying the app client files to the dist folder"
+    26→cp -r ../app-client/dist/* dist/
+    27→
+    28→log "Copying routes.json to the dist folder"
+    29→cp _routes.json dist/
+    30→
+    31→log "Build complete"
 
 packages/docs/package.json
-     2→  "name": "@enclosed/docs",
-     3→  "type": "module",
-     4→  "version": "1.16.0",
-     5→  "packageManager": "pnpm@9.15.0",
-     6→  "description": "Documentation website for Enclosed.",
-     7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
-     8→  "license": "Apache-2.0",
-     9→  "repository": {
-    13→  "keywords": [],
-    14→  "main": "index.js",
-    15→  "scripts": {
-    22→  "dependencies": {
-    25→  "devDependencies": {
 
 packages/docs/src/components/credential-inputs.vue
      1→<script setup>
@@ -519,23 +492,12 @@ packages/docs/src/components/toggle.vue
       →…
 
 packages/docs/src/data/configuration.data.ts
-     7→const config …
-     8→const md …
     10→function walk …
-    22→const configDetails …
     24→function formatDoc …
-    34→const rows …
-    47→const mdRows …
-    49→const mdTable …
     57→  async load() {
 
 packages/docs/src/data/i18n.data.ts
-     6→const config …
-     7→const md …
      9→function countKeysDeep …
-    23→const defaultLocaleKeyCount …
-    25→const localeConfigs …
-    47→const mdTable …
     61→  async load() {
 
 packages/docs/src/how-it-works.md
@@ -594,6 +556,18 @@ packages/docs/src/integrations/versioning.md
      3→The Enclosed project follows the [Semantic Versioning (SemVer)](https://semver.org/) specification. This means that the version number is incremented following the following format: `MAJOR.MINOR.PATCH`.
      4→
      5→Starting from version `1.5.0`, all the packages of the Enclosed project are aligned to the same version number. So if you are self-hosting an Enclosed instance, you can use the same version number for all the packages.
+
+packages/docs/src/public/logos/logo-dark-bg.svg
+     1→<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+packages/docs/src/public/logos/logo-dark.svg
+     1→<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+packages/docs/src/public/logos/logo-light-bg.svg
+     1→<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+packages/docs/src/public/logos/logo-light.svg
+     1→<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
 
 packages/docs/src/resources/brand-kit.md
      1→# Enclosed Brand Kit
@@ -705,7 +679,6 @@ packages/lib/README.md
     30→console.log(noteUrl);
     31→```
     32→
-    33→## License
     37→## Credits and Acknowledgements
     39→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
 
@@ -744,8 +717,6 @@ packages/lib/src/crypto/serialization/serialization.types.ts
      4→export type SerializationMethodsDefinition = ReturnType<typeof defineSerializationMethods>;
      5→export type SerializationFormat = typeof serializationMethodDefinitions[number]['name'];
 
-packages/lib/src/index.ts
-
 packages/lib/src/notes/notes.types.ts
      4→export type NoteAsset = {
      5→  metadata: {
@@ -780,4 +751,4 @@ pnpm-workspace.yaml
      9→  typescript: ^5.6.2
     10→  vitest: ^3.0.9
     11→  "@vitest/coverage-v8": ^3.0.9
-    12→  "@corentinth/chisels": ^1.2.1
+      →  …
