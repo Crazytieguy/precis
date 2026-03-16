@@ -4,111 +4,6 @@ expression: output
 ---
 budget: 4000 (4014 tokens)
 
-.eslintrc.js
-     7→const localConfigs …
-
-.github/ISSUE_TEMPLATE/bug.yml
-     3→name: Bug
-     4→description: File a bug/issue
-     5→title: "[BUG] <title>"
-     6→labels: [ Bug, Needs Triage ]
-     8→body:
-     9→  - type: checkboxes
-    10→    attributes:
-    11→      label: Is there an existing issue for this?
-      →      …
-
-.github/ISSUE_TEMPLATE/config.yml
-     3→blank_issues_enabled: true
-
-.github/actions/create-check/action.yml
-     3→name: 'Create Check'
-     4→inputs:
-    13→outputs:
-    16→runs:
-
-.github/actions/install-latest-npm/action.yml
-     3→name: 'Install Latest npm'
-     4→description: 'Install the latest version of npm compatible with the Node version'
-     5→inputs:
-     9→runs:
-
-.github/dependabot.yml
-     3→version: 2
-     5→updates:
-
-.github/matchers/tap.json
-     2→  "//@npmcli/template-oss": "This file is automatically added by @npmcli/template-oss. Do not edit.",
-     3→  "problemMatcher": [
-     4→    {
-     5→      "owner": "tap",
-     6→      "pattern": [
-     7→        {
-      →        …
-
-.github/settings.yml
-     3→repository:
-    13→branches:
-
-.github/workflows/audit.yml
-     3→name: Audit
-     5→on:
-    11→permissions:
-    14→jobs:
-
-.github/workflows/ci-release.yml
-     3→name: CI - Release
-     5→on:
-    21→permissions:
-    25→jobs:
-
-.github/workflows/ci.yml
-     3→name: CI
-     5→on:
-    16→permissions:
-    19→jobs:
-
-.github/workflows/codeql-analysis.yml
-     3→name: CodeQL
-     5→on:
-    18→permissions:
-    21→jobs:
-
-.github/workflows/post-dependabot.yml
-     3→name: Post Dependabot
-     5→on: pull_request
-     7→permissions:
-    10→jobs:
-
-.github/workflows/pull-request.yml
-     3→name: Pull Request
-     5→on:
-    13→permissions:
-    16→jobs:
-
-.github/workflows/release-integration.yml
-     3→name: Release Integration
-     5→on:
-    22→permissions:
-    26→jobs:
-
-.github/workflows/release.yml
-     3→name: Release
-     5→on:
-    11→permissions:
-    16→jobs:
-
-.release-please-manifest.json
-     2→  ".": "7.7.4"
-
-CHANGELOG.md
-     1→# Changelog
-
-CONTRIBUTING.md
-     3→# Contributing
-    17→## Pull Request Conventions
-    42→## What _not_ to contribute?
-
 README.md
      1→semver(1) -- The semantic versioner for npm
      4→## Install
@@ -232,6 +127,111 @@ README.md
    631→* `require('semver/functions/cmp')`
    632→* `require('semver/functions/coerce')`
       →…
+
+.eslintrc.js
+     7→const localConfigs …
+
+.github/ISSUE_TEMPLATE/bug.yml
+     3→name: Bug
+     4→description: File a bug/issue
+     5→title: "[BUG] <title>"
+     6→labels: [ Bug, Needs Triage ]
+     8→body:
+     9→  - type: checkboxes
+    10→    attributes:
+    11→      label: Is there an existing issue for this?
+      →      …
+
+.github/ISSUE_TEMPLATE/config.yml
+     3→blank_issues_enabled: true
+
+.github/actions/create-check/action.yml
+     3→name: 'Create Check'
+     4→inputs:
+    13→outputs:
+    16→runs:
+
+.github/actions/install-latest-npm/action.yml
+     3→name: 'Install Latest npm'
+     4→description: 'Install the latest version of npm compatible with the Node version'
+     5→inputs:
+     9→runs:
+
+.github/dependabot.yml
+     3→version: 2
+     5→updates:
+
+.github/matchers/tap.json
+     2→  "//@npmcli/template-oss": "This file is automatically added by @npmcli/template-oss. Do not edit.",
+     3→  "problemMatcher": [
+     4→    {
+     5→      "owner": "tap",
+     6→      "pattern": [
+     7→        {
+      →        …
+
+.github/settings.yml
+     3→repository:
+    13→branches:
+
+.github/workflows/audit.yml
+     3→name: Audit
+     5→on:
+    11→permissions:
+    14→jobs:
+
+.github/workflows/ci-release.yml
+     3→name: CI - Release
+     5→on:
+    21→permissions:
+    25→jobs:
+
+.github/workflows/ci.yml
+     3→name: CI
+     5→on:
+    16→permissions:
+    19→jobs:
+
+.github/workflows/codeql-analysis.yml
+     3→name: CodeQL
+     5→on:
+    18→permissions:
+    21→jobs:
+
+.github/workflows/post-dependabot.yml
+     3→name: Post Dependabot
+     5→on: pull_request
+     7→permissions:
+    10→jobs:
+
+.github/workflows/pull-request.yml
+     3→name: Pull Request
+     5→on:
+    13→permissions:
+    16→jobs:
+
+.github/workflows/release-integration.yml
+     3→name: Release Integration
+     5→on:
+    22→permissions:
+    26→jobs:
+
+.github/workflows/release.yml
+     3→name: Release
+     5→on:
+    11→permissions:
+    16→jobs:
+
+.release-please-manifest.json
+     2→  ".": "7.7.4"
+
+CHANGELOG.md
+     1→# Changelog
+
+CONTRIBUTING.md
+     3→# Contributing
+    17→## Pull Request Conventions
+    42→## What _not_ to contribute?
 
 benchmarks/
       →…

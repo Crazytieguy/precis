@@ -4,15 +4,6 @@ expression: output
 ---
 budget: 8000 (8011 tokens)
 
-Cargo.toml
-     1→[workspace]
-     2→resolver = "2"
-     3→members = [
-      →…
-    37→[workspace.dependencies]
-    38→# Toasty crates
-      →…
-
 README.md
      1→# Toasty
      3→**Current status: Incubating - Toasty is not ready for production usage. The API
@@ -28,6 +19,15 @@ README.md
     91→## Application data model vs. database schema
     98→## Current status and roadmap
    117→### Contribution
+
+Cargo.toml
+     1→[workspace]
+     2→resolver = "2"
+     3→members = [
+      →…
+    37→[workspace.dependencies]
+    38→# Toasty crates
+      →…
 
 benches/
       →…

@@ -4,14 +4,6 @@ expression: output
 ---
 budget: 4000 (4006 tokens)
 
-CHANGELOG.md
-
-Cargo.toml
-     1→[package]
-    22→[features]
-    56→[dependencies]
-    62→[dev-dependencies]
-
 README.md
      1→log
      4→A Rust library providing a lightweight logging *facade*.
@@ -28,6 +20,14 @@ README.md
    108→If you enable the `kv` feature, you can associate structured data with your log records:
    109→
       →…
+
+CHANGELOG.md
+
+Cargo.toml
+     1→[package]
+    22→[features]
+    56→[dependencies]
+    62→[dev-dependencies]
 
 benches/
       →…

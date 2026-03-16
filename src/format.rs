@@ -94,6 +94,26 @@ fn render_scheduled(
     let mut out = String::new();
     let mut first_file = true;
 
+    // Build render order: README/ARCHITECTURE files first (at root level only),
+    // then everything else in alphabetical order. This matches how a human would
+    // present a project overview — project description before source files.
+    let render_order: Vec<usize> = {
+        let mut readme_indices = Vec::new();
+        let mut other_indices = Vec::new();
+        for (i, file) in files.iter().enumerate() {
+            let relative = file.strip_prefix(root).unwrap_or(file);
+            let is_root = relative.parent().is_none_or(|p| p.as_os_str().is_empty());
+            let role = schedule::FileRole::from_path(relative);
+            if is_root && matches!(role, schedule::FileRole::Readme | schedule::FileRole::Architecture) {
+                readme_indices.push(i);
+            } else {
+                other_indices.push(i);
+            }
+        }
+        readme_indices.extend(other_indices);
+        readme_indices
+    };
+
     // Compute top-level directories that are completely invisible (no visible files).
     // Only mark these to avoid cluttering with subdirectory markers.
     let mut dirs_with_files: std::collections::HashMap<PathBuf, bool> = std::collections::HashMap::new();
@@ -119,10 +139,12 @@ fn render_scheduled(
         .collect();
     let mut dirs_emitted: std::collections::HashSet<PathBuf> = std::collections::HashSet::new();
 
-    for (file_idx, (file, source)) in files.iter().zip(sources.iter()).enumerate() {
+    for &file_idx in &render_order {
         if !sched.visible_files.contains(&file_idx) {
             continue;
         }
+        let file = &files[file_idx];
+        let source = &sources[file_idx];
         let relative = file.strip_prefix(root).unwrap_or(file);
 
         // Before showing this file, emit omission markers for invisible

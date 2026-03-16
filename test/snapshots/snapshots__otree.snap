@@ -4,6 +4,15 @@ expression: output
 ---
 budget: 4000 (4003 tokens)
 
+README.md
+     1→# OTree - Object Tree TUI Viewer
+     5→A command line tool to view objects (JSON/YAML/TOML/XML) in TUI tree widget.
+     6→
+     7→## Install
+    33→## Usage
+    52→## Roadmap
+    82→## Thanks
+
 Cargo.toml
      1→[package]
      2→name = "otree"
@@ -16,15 +25,6 @@ Cargo.toml
       →…
     38→[profile.release]
     43→[lints.clippy]
-
-README.md
-     1→# OTree - Object Tree TUI Viewer
-     5→A command line tool to view objects (JSON/YAML/TOML/XML) in TUI tree widget.
-     6→
-     7→## Install
-    33→## Usage
-    52→## Roadmap
-    82→## Thanks
 
 config/default.toml
      1→[tree]

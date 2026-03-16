@@ -4,6 +4,12 @@ expression: output
 ---
 budget: 4000 (3996 tokens)
 
+README.md
+     1→derive(Error)
+    21→## Example
+    44→## Details
+   211→## Comparison to anyhow
+
 Cargo.toml
      1→[package]
      2→name = "thiserror"
@@ -42,12 +48,6 @@ Cargo.toml
     39→[workspace]
     40→members = ["impl", "tests/no-std"]
     42→[package.metadata.docs.rs]
-
-README.md
-     1→derive(Error)
-    21→## Example
-    44→## Details
-   211→## Comparison to anyhow
 
 build/probe.rs
     11→struct MyError(Thing);

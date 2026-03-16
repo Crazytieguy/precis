@@ -550,7 +550,7 @@ pub(crate) fn is_markdown_leading_noise(line: &str) -> bool {
     // Table of contents links: `- [Title](#anchor)` or `* [Title](#anchor)`
     // These are navigational, not content — they duplicate the heading structure.
     // Handles variable whitespace after the list marker (e.g., `-   [Title](#anchor)`).
-    if (trimmed.starts_with("- ") || trimmed.starts_with("* ") || trimmed.starts_with("+ ")) {
+    if trimmed.starts_with("- ") || trimmed.starts_with("* ") || trimmed.starts_with("+ ") {
         let rest = trimmed[2..].trim_start();
         if rest.starts_with('[') && rest.contains("](#") && rest.ends_with(')') {
             return true;

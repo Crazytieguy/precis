@@ -4,22 +4,6 @@ expression: output
 ---
 budget: 8000 (7998 tokens)
 
-Cargo.toml
-     1→[workspace]
-     2→resolver = "3"
-     3→members = [
-     4→    "sps",          # was "sps-cli"
-     5→    "sps-common",
-     6→    "sps-core",
-     7→    "sps-net",
-    10→[patch.crates-io]
-    16→[workspace.dependencies]
-    43→[profile.release]
-
-NOTICE.md
-     1→## Homebrew
-     3→### Sources
-
 README.md
      1→# sps
      3→> [!WARNING]
@@ -46,6 +30,22 @@ README.md
     77→## 📦 Usage
    123→## 🏗️ Building from Source
    138→## 📥 Using the Latest Nightly Build
+
+Cargo.toml
+     1→[workspace]
+     2→resolver = "3"
+     3→members = [
+     4→    "sps",          # was "sps-cli"
+     5→    "sps-common",
+     6→    "sps-core",
+     7→    "sps-net",
+    10→[patch.crates-io]
+    16→[workspace.dependencies]
+    43→[profile.release]
+
+NOTICE.md
+     1→## Homebrew
+     3→### Sources
 
 sps/Cargo.toml
      1→[package]

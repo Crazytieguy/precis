@@ -4,6 +4,16 @@ expression: output
 ---
 budget: 8000 (8003 tokens)
 
+README.md
+     1→# mdBook
+     7→mdBook is a utility to create modern online books from Markdown files.
+     8→
+     9→Check out the **[User Guide]** for a list of features and installation and usage information.
+    10→The User Guide also serves as a demonstration to showcase what a book looks like.
+    11→
+    12→If you are interested in contributing to the development of mdBook, check out the [Contribution Guide].
+    13→
+
 Cargo.toml
      1→[workspace]
     21→[workspace.package]
@@ -16,16 +26,6 @@ Cargo.toml
    143→[[example]]
    149→[[test]]
    156→[lints]
-
-README.md
-     1→# mdBook
-     7→mdBook is a utility to create modern online books from Markdown files.
-     8→
-     9→Check out the **[User Guide]** for a list of features and installation and usage information.
-    10→The User Guide also serves as a demonstration to showcase what a book looks like.
-    11→
-    12→If you are interested in contributing to the development of mdBook, check out the [Contribution Guide].
-    13→
 
 crates/mdbook-compare/Cargo.toml
      1→[package]

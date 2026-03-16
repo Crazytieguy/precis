@@ -4,13 +4,6 @@ expression: output
 ---
 budget: 4000 (4000 tokens)
 
-CHANGELOG.md
-     1→## Unreleased
-     3→### Improvements
-     5→### Changes
-     7→### Fixed
-     9→### Security
-
 README.md
      1→# go-multierror
     10→> **Note**: As of Go 1.20, the standard library provides [`errors.Join`](https://pkg.go.dev/errors#Join) which offers similar functionality for combining multiple errors. **For new projects, we recommend using `errors.Join` from the standard library.** This package provides additional features like custom formatting, the `Group` pattern for concurrent error collection, and utility functions (`Append`, `Flatten`, `Prefix`).
@@ -194,6 +187,13 @@ README.md
    205→
    206→Some errors are returned as exact errors such as the [`ErrNotExist`](https://golang.org/pkg/os/#pkg-variables)
       →…
+
+CHANGELOG.md
+     1→## Unreleased
+     3→### Improvements
+     5→### Changes
+     7→### Fixed
+     9→### Security
 
 append.go
      6→// Append is a helper function that will append more errors
