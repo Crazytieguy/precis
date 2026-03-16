@@ -22,9 +22,12 @@ pub fn discover_source_files(root: &Path) -> Vec<PathBuf> {
 }
 
 fn is_source_file(path: &Path) -> bool {
-    // Check extension-based matching first (covers most files)
-    let ext_match = path.extension()
+    // Check extension-based matching first (covers most files).
+    // Lowercase for case-insensitive matching (e.g., .R vs .r, .C vs .c).
+    let ext_lower: Option<String> = path.extension()
         .and_then(|ext| ext.to_str())
+        .map(|ext| ext.to_ascii_lowercase());
+    let ext_match = ext_lower.as_deref()
         .is_some_and(|ext| parse::is_supported_extension(ext) || is_unsupported_code_extension(ext));
     if ext_match {
         return !is_lockfile(path);

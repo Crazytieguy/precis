@@ -279,11 +279,12 @@ fn language_for_extension(ext: &str) -> Option<(Language, &'static str)> {
 
 /// Extract symbols from a source file.
 pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
-    let ext = match path.extension().and_then(|e| e.to_str()) {
-        Some(ext) => ext,
+    let ext_owned = match path.extension().and_then(|e| e.to_str()) {
+        Some(ext) => ext.to_ascii_lowercase(),
         // Extensionless files (Makefile, Dockerfile, etc.) — use plain text fallback
         None => return plain_text_symbol(source),
     };
+    let ext = ext_owned.as_str();
 
     let lang = match Lang::from_extension(ext) {
         Some(l) => l,
