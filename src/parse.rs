@@ -1531,6 +1531,40 @@ export class Example {
     }
 
     #[test]
+    fn deduplicates_non_consecutive_c_structs() {
+        // Simulates C #ifdef branches where the same struct appears
+        // under different platform conditions, with other symbols between them.
+        let source = r#"
+struct asmctx {
+    int x;
+};
+
+struct other {
+    int y;
+};
+
+struct asmctx {
+    long x;
+};
+"#;
+        let symbols = extract_symbols(Path::new("test.c"), source);
+        let struct_names: Vec<_> = symbols
+            .iter()
+            .filter(|s| s.kind == SymbolKind::Struct)
+            .map(|s| s.name.as_str())
+            .collect();
+
+        // asmctx should appear only once (first occurrence kept)
+        assert_eq!(
+            struct_names.iter().filter(|&&n| n == "asmctx").count(),
+            1,
+            "non-consecutive struct duplicates should be deduped"
+        );
+        // other should still be present
+        assert!(struct_names.contains(&"other"));
+    }
+
+    #[test]
     fn filters_nested_functions() {
         let source = r#"
 pub fn outer() {
