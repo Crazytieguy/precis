@@ -733,6 +733,28 @@ fn single_file_budget_rust() {
     }
 }
 
+// Budget monotonicity for multi-file fixtures: more budget ≥ more tokens.
+#[test]
+fn budget_monotonicity_fixture() {
+    let Some(root) = fixture_path("pluggy/src/pluggy") else {
+        eprintln!("skipping budget_monotonicity_fixture: clone pluggy fixture");
+        return;
+    };
+    let files = walk::discover_source_files(&root);
+    let sources = format::read_sources(&files);
+    let budgets = [0, 50, 200, 500, 1000, 2000, 4000, 10000];
+    let mut prev_tokens = 0;
+    for &budget in &budgets {
+        let (_, tokens) = format::render_with_budget_stats(budget, &root, &files, &sources);
+        assert!(
+            tokens >= prev_tokens,
+            "Multi-file budget monotonicity: budget {} ({} tokens) < previous ({} tokens)",
+            budget, tokens, prev_tokens,
+        );
+        prev_tokens = tokens;
+    }
+}
+
 // Render order: README should appear before other files.
 #[test]
 fn readme_renders_first() {
