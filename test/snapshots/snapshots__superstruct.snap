@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3998 tokens)
+budget: 4000 (4000 tokens)
 
 Readme.md
     42→### Usage
@@ -13,9 +13,6 @@ Readme.md
    205→### Documentation
 
 package.json
-
-Changelog.md
-     1→# Changelog
 
 docs/guides/01-getting-started.md
      1→# Getting Started
@@ -55,11 +52,7 @@ docs/readme.md
      9→Superstruct allows you to define the shape of data you want to validate:
     10→
     11→```js
-    12→import { assert, object, number, string, array } from 'superstruct'
-    13→
-    14→const Article = object({
-    15→  id: number(),
-      →  …
+      →…
 
 docs/reference/coercions.md
      1→# Coercions
@@ -85,8 +78,6 @@ docs/reference/utilities.md
 
 docs/resources/faq.md
      1→# FAQ
-     3→Some common questions you might have when first learning Superstruct.
-     4→
 
 docs/resources/links.md
      1→# Resources
@@ -99,19 +90,25 @@ docs/summary.md
      5→- [Getting Started](./guides/01-getting-started.md)
      6→- [Validating Data](./guides/02-validating-data.md)
      7→- [Coercing Data](./guides/03-coercing-data.md)
-      →…
+     8→- [Refining Validation](./guides/04-refining-validation.md)
+     9→- [Handling Errors](./guides/05-handling-errors.md)
+    10→- [Using TypeScript](./guides/06-using-typescript.md)
+    11→
     12→## API Reference
     14→- [Core](./reference/core.md)
     15→- [Types](./reference/types.md)
     16→- [Refinements](./reference/refinements.md)
-      →…
+    17→- [Coercions](./reference/coercions.md)
+    18→- [Utilities](./reference/utilities.md)
+    19→- [Errors](./reference/errors.md)
+    20→- [TypeScript](./reference/typescript.md)
+    21→
     22→## Resources
     24→- [FAQ](./resources/faq.md)
     25→- [Links](./resources/links.md)
 
 examples/README.md
      1→# Examples
-     3→To run the examples locally, first run `npm install` in this directory. Then use node to run any of the examples like so: `node basic-validation.js`, `node composing-structs.js`, etc.
 
 examples/package.json
 
@@ -122,6 +119,8 @@ jsr.json
      5→  "exports": "./src/index.ts",
      6→  "publish": {
      7→    "include": ["Readme.md", "License.md", "src", "docs"]
+
+rollup.config.js
 
 src/error.ts
      5→export type Failure = {

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4003 tokens)
+budget: 4000 (4004 tokens)
 
 readme.md
     20→## Benefits over plain `fetch`
@@ -15,8 +15,7 @@ readme.md
     28→- URL prefix option
     29→- Instances with custom defaults
     30→- Hooks
-    31→- TypeScript niceties (e.g. `.json()` supports generics and defaults to `unknown`, not `any`)
-    32→
+      →…
     33→## Install
     35→```sh
     36→npm install ky
@@ -32,28 +31,15 @@ readme.md
     53→//=> {data: '🦄'}
     54→```
     55→
-    56→With plain `fetch`, it would be:
-    57→
-    58→```js
-    59→class HTTPError extends Error {}
-    60→
-    61→const response = await fetch('https://example.com', {
-    62→	method: 'POST',
-      →	…
+      →…
     85→## API
   1050→## Tips
-  1292→## FAQ
   1339→## Browser support
   1341→The latest version of Chrome, Firefox, and Safari.
   1342→
   1343→## Node.js support
   1345→Node.js 18 and later.
   1346→
-  1347→## Related
-  1349→- [fetch-extras](https://github.com/sindresorhus/fetch-extras) - Useful utilities for working with Fetch
-  1350→- [ky-hooks-change-case](https://github.com/alice-health/ky-hooks-change-case) - Ky hooks to modify cases on requests and responses of objects
-  1351→
-  1352→## Maintainers
 
 source/core/Ky.ts
     33→export class Ky {
@@ -189,7 +175,7 @@ source/errors/TimeoutError.ts
 
 source/index.ts
     10→const createInstance …
-    34→const ky …
+    34→const ky = createInstance();
 
 source/types/ResponsePromise.ts
      6→export type ResponsePromise …
@@ -277,6 +263,15 @@ source/types/options.ts
     86→	stringifyJson?: (data: unknown) => string;
     87→
     88→	/**
+    89→	Search parameters to include in the request URL. Setting this will override all existing search parameters in the input URL.
+    90→
+    91→	Accepts any value supported by [`URLSearchParams()`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/URLSearchParams).
+    92→
+    93→	When passing an object, `undefined` values are automatically filtered out, while `null` values are preserved and converted to the string `'null'`.
+    94→	*/
+    95→	searchParams?: SearchParamsOption;
+    96→
+    97→	/**
       →	…
    307→export type KyOptionsRegistry = {[K in keyof KyOptions]-?: true};
    312→export interface Options extends KyOptions, Omit<RequestInit, 'headers'> { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
@@ -350,6 +345,7 @@ source/types/retry.ts
 
 source/utils/body.ts
      5→export const getBodySize …
+    57→const withProgress …
     90→export const streamResponse …
    119→export const streamRequest …
 
@@ -365,12 +361,18 @@ source/utils/is.ts
 source/utils/merge.ts
      6→export const validateAndMerge …
     16→export const mergeHeaders …
+    32→function newHookValue …
     38→export const mergeHooks …
+    47→const appendSearchParameters …
     86→export const deepMerge …
 
 source/utils/normalize.ts
      5→export const normalizeRequestMethod …
+     8→const retryMethods …
+    10→const retryStatusCodes …
+    12→const retryAfterStatusCodes …
     14→type InternalRetryOptions …
+    16→const defaultRetryOptions …
     28→export const normalizeRetryOptions …
 
 source/utils/options.ts

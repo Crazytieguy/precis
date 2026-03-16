@@ -70,7 +70,6 @@ pyproject.toml
    145→[tool.mypy]
 
 CHANGELOG.md
-     1→# Changelog
 
 benchmark/README.md
      1→# Benchmark
@@ -81,12 +80,12 @@ benchmark/run.py
     37→def run …
 
 fuzzer/fuzz.py
-     1→import atheris
-     4→    from math import isnan
-     5→    import sys
-     6→    import warnings
-     8→    import tomli_w
-    10→    import tomli
+     1→import atheris …
+     4→    from math …
+     5→    import sys …
+     6→    import warnings …
+     8→    import tomli_w …
+    10→    import tomli …
     20→def test_one_input(input_bytes: bytes) -> None:
     53→def print_err(data):
     59→def normalize_toml_obj(toml_obj: dict) -> None:
@@ -94,8 +93,8 @@ fuzzer/fuzz.py
     71→def main():
 
 profiler/profiler_script.py
-     8→from pathlib import Path
-    10→import tomli
+     8→from pathlib …
+    10→import tomli …
 
 scripts/use_setuptools.py
     12→def use_setuptools() -> None:
@@ -247,7 +246,8 @@ src/tomli/_re.py
    100→    sign = 1 if sign_str == "+" else -1
    101→    return timezone(
    102→        timedelta(
-      →        …
+   103→            hours=sign * int(hour_str),
+      →            …
    109→def match_to_localtime(match: re.Match[str]) -> time:
    116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
 

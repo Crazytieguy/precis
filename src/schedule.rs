@@ -276,6 +276,10 @@ fn is_boilerplate_heading(name: &str) -> bool {
             | "credits" | "credits and acknowledgements" | "credits and acknowledgments"
             | "author" | "authors" | "maintainers"
             | "support" | "governance" | "security"
+            | "sponsors" | "backers" | "funding"
+            | "changelog" | "release notes" | "releases" | "history"
+            | "related" | "related projects" | "alternatives"
+            | "faq" | "frequently asked questions"
     )
 }
 
@@ -772,7 +776,7 @@ fn effective_depth(parent_dir: &Path) -> usize {
         return 0;
     }
     let first = components.next().and_then(|c| c.as_os_str().to_str());
-    if matches!(first, Some("src" | "lib" | "pkg" | "cmd" | "internal" | "app" | "packages" | "crates")) {
+    if matches!(first, Some("src" | "source" | "lib" | "pkg" | "cmd" | "internal" | "app" | "packages" | "crates")) {
         total - 1
     } else {
         total

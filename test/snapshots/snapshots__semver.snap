@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4014 tokens)
+budget: 4000 (4012 tokens)
 
 README.md
      1→semver(1) -- The semantic versioner for npm
@@ -245,10 +245,8 @@ package.json
      2→  ".": "7.7.4"
 
 CHANGELOG.md
-     1→# Changelog
 
 CONTRIBUTING.md
-     3→# Contributing
     17→## Pull Request Conventions
     42→## What _not_ to contribute?
 
@@ -465,9 +463,11 @@ tap-snapshots/
       →…
 
 test/internal/debug.js
-     3→const main = () => {
 
 test/map.js
+     9→const ROOT …
+    10→const TEST …
+    11→const IGNORE_DIRS …
     13→const getFile …
     23→const walk …
     28→const walkAll …
