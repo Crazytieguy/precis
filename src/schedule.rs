@@ -132,7 +132,7 @@ impl FileRole {
             | "tidelift" | "sponsors" | "funding"
             | "notice" | "citation" => FileRole::CommunityHealth,
             "claude" | "agents" | "copilot" | "copilot-instructions"
-            | "cursor" | "windsurf" | "context" => FileRole::AiConfig,
+            | "cursor" | "windsurf" => FileRole::AiConfig,
             "architecture" | "design" => FileRole::Architecture,
             _ if is_doc && has_locale_suffix(stem) => FileRole::Translated,
             _ => FileRole::Normal,
@@ -1601,9 +1601,10 @@ mod tests {
         assert_eq!(FileRole::from_filename("architecture.md"), FileRole::Architecture);
         assert_eq!(FileRole::from_filename("DESIGN.md"), FileRole::Architecture);
         assert_eq!(FileRole::from_filename("design.md"), FileRole::Architecture);
-        // CONTEXT.md is AI agent context, not architecture docs
-        assert_eq!(FileRole::from_filename("CONTEXT.md"), FileRole::AiConfig);
-        assert_eq!(FileRole::from_filename("context.md"), FileRole::AiConfig);
+        // CONTEXT.md is ambiguous — could be AI context or project docs.
+        // Classified as Normal (not AiConfig) to avoid hiding genuine documentation.
+        assert_eq!(FileRole::from_filename("CONTEXT.md"), FileRole::Normal);
+        assert_eq!(FileRole::from_filename("context.md"), FileRole::Normal);
         // Non-doc extensions should not match
         assert_eq!(FileRole::from_filename("architecture.rs"), FileRole::Normal);
         assert_eq!(FileRole::from_filename("context.py"), FileRole::Normal);

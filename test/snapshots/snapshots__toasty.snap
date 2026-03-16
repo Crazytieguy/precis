@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (8014 tokens)
+budget: 8000 (8015 tokens)
 
 README.md
      1→# Toasty
@@ -23,8 +23,6 @@ Cargo.toml
      5→    "crates/toasty-cli",
       →    …
     37→[workspace.dependencies]
-    38→# Toasty crates
-      →…
 
 benches/
       →…
@@ -58,6 +56,18 @@ crates/std-util/src/slice.rs
     26→macro_rules! assert_unique {
     40→macro_rules! assert_empty {
 
+crates/toasty/CONTEXT.md
+     1→# toasty Component Context  
+     3→## Purpose
+     6→## Architecture Overview
+    15→## Key Components
+    82→## Common Change Patterns
+   103→## Execution Flow Examples
+   134→## Important Files
+   142→## Design Principles
+   150→## Performance Considerations
+   158→## Recent Changes Analysis
+
 crates/toasty/Cargo.toml
      1→[package]
      6→[features]
@@ -89,6 +99,7 @@ crates/toasty/src/db/pool.rs
     74→    pub async fn get …
     84→    pub fn driver …
     89→    pub fn capability …
+    95→struct Manager {
    119→pub struct PoolConnection {
 
 crates/toasty/src/db.rs
@@ -145,17 +156,9 @@ crates/toasty/src/relation.rs
 
 crates/toasty/src/stmt/expr.rs
      7→pub struct Expr<T: ?Sized> {
-     8→    /// The un-typed expression
-     9→    pub(crate) untyped: stmt::Expr,
-    10→
-      →…
 
 crates/toasty/src/stmt/paginate.rs
      8→pub struct Paginate<M> {
-     9→    /// How to query the data
-    10→    query: Select<M>,
-    11→
-      →…
 
 crates/toasty/src/stmt.rs
     51→pub struct Statement<M> {
@@ -184,13 +187,8 @@ crates/toasty-cli/src/lib.rs
     38→    pub async fn parse_and_run …
     44→    pub async fn parse_from …
     64→struct Cli {
-    70→enum Command {
-
-crates/toasty-cli/src/migration/apply.rs
-    12→pub struct ApplyCommand {}
 
 crates/toasty-cli/src/migration/config.rs
-     6→pub struct MigrationConfig {
     27→pub enum MigrationPrefixStyle {
     28→    /// Sequential numbering (e.g., 0001_, 0002_, 0003_)
     29→    Sequential,
@@ -199,35 +197,26 @@ crates/toasty-cli/src/migration/config.rs
     32→    Timestamp,
     33→}
 
-crates/toasty-cli/src/migration/drop.rs
-    11→pub struct DropCommand {
-
-crates/toasty-cli/src/migration/generate.rs
-    19→pub struct GenerateCommand {
-
-crates/toasty-cli/src/migration/history_file.rs
-    11→pub struct HistoryFile {
-    20→pub struct HistoryFileMigration {
-    64→    pub fn migrations …
-
-crates/toasty-cli/src/migration/reset.rs
-    11→pub struct ResetCommand {
-
-crates/toasty-cli/src/migration/snapshot.rs
-     9→pub struct SnapshotCommand {
-
-crates/toasty-cli/src/migration/snapshot_file.rs
-    13→pub struct SnapshotFile {
-
 crates/toasty-cli/src/migration.rs
     25→pub struct MigrationCommand {
     26→    #[command(subcommand)]
     27→    subcommand: MigrationSubcommand,
     28→}
-    31→enum MigrationSubcommand {
 
 crates/toasty-cli/src/theme.rs
      5→pub fn dialoguer_theme …
+
+crates/toasty-codegen/CONTEXT.md
+     1→# toasty-codegen Component Context
+     3→## Purpose
+     6→## Key Responsibilities
+    25→## Common Change Patterns
+    45→## Generated Code Structure
+    70→## Complete Attribute Support
+    88→## Important Files
+    96→## Code Generation Principles
+   103→## Key Patterns
+   128→## Recent Changes Analysis
 
 crates/toasty-codegen/Cargo.toml
      1→[package]
@@ -260,6 +249,15 @@ crates/toasty-codegen/src/schema/column.rs
    101→    DateTime(u8),
    102→    Custom(syn::LitStr),
    103→}
+
+crates/toasty-core/CONTEXT.md
+     1→# toasty-core Component Context
+     3→## Purpose
+     6→## Key Responsibilities
+    60→## Common Change Patterns
+    80→## Important Files
+    89→## Design Principles
+    96→## Recent Changes Analysis
 
 crates/toasty-core/Cargo.toml
      1→[package]
@@ -494,17 +492,6 @@ crates/toasty-core/src/schema/db/ty.rs
     79→    /// 128-bit universally unique identifier (UUID)
     80→    Uuid,
     81→
-    82→    /// Decimal number with optional precision and scale.
-    83→    /// - `None`: Arbitrary-precision decimal
-    84→    /// - `Some((precision, scale))`: Fixed precision and scale
-    85→    Numeric(Option<(u32, u32)>),
-    86→
-    87→    /// Unconstrained binary type
-    88→    Blob,
-    89→
-    90→    /// Fixed-size binary type of `n` bytes
-    91→    Binary(u8),
-    92→
       →…
    111→    pub fn from_app …
    159→    pub fn bridge_type …
@@ -770,7 +757,7 @@ crates/toasty-driver-postgresql/src/statement_cache.rs
     10→    inner: LruCache<Key<'static>, Statement>,
     11→}
     15→    pub fn new …
-    49→struct Key …
+    49→struct Key<'a> {
     56→    pub fn new …
 
 crates/toasty-driver-postgresql/src/type.rs
@@ -781,6 +768,20 @@ crates/toasty-driver-postgresql/src/value.rs
      8→pub struct Value(pub(crate) CoreValue);
     18→    pub fn into_inner …
     23→    pub fn from_sql …
+
+crates/toasty-driver-sqlite/CONTEXT.md
+     1→# toasty-driver-sqlite Component Context
+     3→## Purpose
+     6→## Architecture
+    23→## SQLite-Specific Features
+    43→## Operations Implementation
+    80→## Value Conversion
+    99→## Capabilities
+   113→## Limitations
+   128→## Testing
+   146→## Common Change Patterns
+   167→## Recent Changes
+   176→## Related Components
 
 crates/toasty-driver-sqlite/Cargo.toml
      1→[package]
@@ -817,6 +818,19 @@ crates/toasty-macros/src/lib.rs
     26→pub fn include_schema(_input: TokenStream) -> TokenStream {
     31→pub fn query(_input: TokenStream) -> TokenStream {
     36→pub fn create(_input: TokenStream) -> TokenStream {
+
+crates/toasty-sql/CONTEXT.md
+     1→# toasty-sql Component Context
+     3→## Purpose
+     6→## Architecture
+    44→## SQL Dialects (Flavors)
+    67→## Parameter Binding
+    76→## Common Change Patterns
+    96→## Serialization Flow
+   104→## Important Patterns
+   132→## Testing Approach
+   139→## Performance Considerations
+   146→## Recent Changes Analysis
 
 crates/toasty-sql/Cargo.toml
      1→[package]
@@ -911,17 +925,9 @@ docs/ARCHITECTURE.md
 
 docs/CHANGE_GUIDE.md
      1→# Toasty Change Guide
-     3→This guide explains how to make common changes to the Toasty codebase based on patterns observed in recent development.
-     4→
-     5→## Quick Reference: Where Changes Go
-    28→## Crate-Specific Patterns
-    63→## Common Change Patterns
-   189→## Architecture Rules
-   244→## Recent Refactoring Trends
-   258→## Performance Patterns
-   275→## Debugging Tips
-   287→## Common Pitfalls
-   301→## Commit Message Conventions
+
+docs/CONTEXT.md
+     1→# Documentation Context
 
 docs/architecture/query-engine.md
      1→# Toasty Query Engine
