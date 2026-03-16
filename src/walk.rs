@@ -32,7 +32,7 @@ fn is_source_file(path: &Path) -> bool {
     // Well-known extensionless files (Makefile, Dockerfile, etc.)
     path.file_name()
         .and_then(|n| n.to_str())
-        .is_some_and(|name| matches!(name, "Makefile" | "Dockerfile" | "Vagrantfile" | "Rakefile" | "Gemfile" | "Brewfile" | "Procfile" | "Justfile" | "Earthfile" | "Containerfile"))
+        .is_some_and(|name| matches!(name, "Makefile" | "Dockerfile" | "Vagrantfile" | "Rakefile" | "Gemfile" | "Brewfile" | "Procfile" | "Justfile" | "Earthfile" | "Containerfile" | "Tiltfile" | "Snakefile"))
 }
 
 /// Common programming language extensions without tree-sitter support.
