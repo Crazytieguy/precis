@@ -2,36 +2,102 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3996 tokens)
+budget: 4000 (3999 tokens)
+
+README.rst
+     1→.. image:: https://github.com/agronholm/typeguard/actions/workflows/test.yml/badge.svg
+     2→  :target: https://github.com/agronholm/typeguard/actions/workflows/test.yml
+     3→  :alt: Build Status
+     4→.. image:: https://coveralls.io/repos/agronholm/typeguard/badge.svg?branch=master&service=github
+     5→  :target: https://coveralls.io/github/agronholm/typeguard?branch=master
+     6→  :alt: Code Coverage
+     7→.. image:: https://readthedocs.org/projects/typeguard/badge/?version=latest
+     8→  :target: https://typeguard.readthedocs.io/en/latest/?badge=latest
+     9→  :alt: Documentation
+    10→.. image:: https://tidelift.com/badges/package/pypi/typeguard
+    11→  :target: https://tidelift.com/subscription/pkg/pypi-typeguard
+    12→  :alt: Tidelift
+    13→
+    14→This library provides run-time type checking for functions defined with
+    15→`PEP 484 <https://www.python.org/dev/peps/pep-0484/>`_ argument (and return) type
+    16→annotations, and any arbitrary objects. It can be used together with static type
+    17→checkers as an additional layer of type safety, to catch type violations that could only
+    18→be detected at run time.
+    19→
+    20→Two principal ways to do type checking are provided:
+    21→
+    22→#. The ``check_type`` function:
+    23→
+    24→   * like ``isinstance()``, but supports arbitrary type annotations (within limits)
+    25→   * can be used as a ``cast()`` replacement, but with actual checking of the value
+    26→#. Code instrumentation:
+    27→
+    28→   * entire modules, or individual functions (via ``@typechecked``) are recompiled, with
+    29→     type checking code injected into them
+    30→   * automatically checks function arguments, return values and assignments to annotated
+    31→     local variables
+    32→   * for generator functions (regular and async), checks yield and send values
+    33→   * requires the original source code of the instrumented module(s) to be accessible
+    34→
+    35→Two options are provided for code instrumentation:
+    36→
+    37→#. the ``@typechecked`` function:
+    38→
+    39→   * can be applied to functions individually
+    40→#. the import hook (``typeguard.install_import_hook()``):
+    41→
+    42→   * automatically instruments targeted modules on import
+    43→   * no manual code changes required in the target modules
+    44→   * requires the import hook to be installed before the targeted modules are imported
+    45→   * may clash with other import hooks
+    46→
+    47→See the documentation_ for further information.
+    48→
+      →…
+
+docs/api.rst
+     1→API reference
+     2→=============
+     3→
+      →…
 
 docs/conf.py
-     2→from importlib.metadata import version as get_version
-     4→from packaging.version import parse
+     2→from importlib.metadata …
+
+docs/extending.rst
+     1→Extending Typeguard
+     2→===================
+     3→
+      →…
+
+docs/features.rst
+     1→Features
+     2→=========
+     3→
+      →…
+
+docs/index.rst
+     1→Typeguard
+     2→=========
+     3→
+      →…
+
+docs/userguide.rst
+     1→User guide
+     2→==========
+     3→
+      →…
+
+docs/versionhistory.rst
+     1→Version history
+     2→===============
+     3→
+      →…
 
 pyproject.toml
      1→[build-system]
-     2→requires = [
-      →…
      8→[project]
-     9→name = "typeguard"
-      →…
-    33→[project.urls]
-    39→[project.entry-points]
     42→[dependency-groups]
-    43→test = [
-      →…
-    55→[tool.setuptools.package-data]
-    58→[tool.setuptools_scm]
-    62→[tool.pytest.ini_options]
-    68→[tool.coverage.run]
-    71→[tool.coverage.report]
-    78→[tool.ruff]
-    81→[tool.ruff.per-file-target-version]
-    84→[tool.ruff.lint]
-    99→[tool.mypy]
-   105→[tool.tox]
-   110→[tool.tox.env_run_base]
-   115→[tool.tox.env.docs]
 
 src/typeguard/__init__.py
      8→from ._checkers import load_plugins as load_plugins
@@ -47,7 +113,7 @@ src/typeguard/__init__.py
     37→def __getattr__ …
 
 src/typeguard/_checkers.py
-    42→from typing_extensions import is_typeddict
+    42→from typing_extensions …
     44→from ._config import ForwardRefPolicy
     45→from ._exceptions import TypeCheckError, TypeHintWarning
     46→from ._memo import TypeCheckMemo
@@ -71,7 +137,7 @@ src/typeguard/_checkers.py
    536→def check_newtype …
    545→def check_instance …
    555→def check_typevar …
-   586→def _is_literal_type(typ: object) -> bool:
+   586→def _is_literal_type …
    590→def check_literal …
    623→def check_literal_string …
    632→def check_typeguard …
@@ -108,11 +174,6 @@ src/typeguard/_config.py
     64→    """
     65→     You can change Typeguard's behavior with these settings.
     66→
-    67→    .. attribute:: typecheck_fail_callback
-    68→       :type: Callable[[TypeCheckError, TypeCheckMemo], Any]
-    69→
-    70→         Callable that is called when type checking fails.
-    71→
       →…
     97→
     98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
@@ -174,9 +235,7 @@ src/typeguard/_importhook.py
     18→from ._transformer import TypeguardTransformer
     40→P = ParamSpec("P")
     41→T = TypeVar("T")
-    45→def _call_with_frames_removed(
-    46→    f: Callable[P, T], *args: P.args, **kwargs: P.kwargs
-    47→) -> T:
+    45→def _call_with_frames_removed …
     51→def optimized_cache_from_source …
     55→class TypeguardLoader(SourceFileLoader):
     56→    @staticmethod
@@ -186,12 +245,6 @@ src/typeguard/_importhook.py
     60→        *,
     61→        _optimize: int = -1,
     62→    ) -> CodeType:
-    63→        if isinstance(path, (str, PathLike)):
-    64→            filename = path
-    65→        else:
-    66→            filename = os.fsdecode(bytes(path))
-    67→
-      →…
     99→    def exec_module …
    109→class TypeguardFinder(MetaPathFinder):
    119→
@@ -295,11 +348,9 @@ src/typeguard/_transformer.py
    488→class TypeguardTransformer(NodeTransformer):
    489→    def __init__ …
    498→    def generic_visit …
-   517→    def _use_memo(
-   518→        self, node: ClassDef | FunctionDef | AsyncFunctionDef
-   519→    ) -> Generator[None, Any, None]:
-   570→    def _get_import(self, module: str, name: str) -> Name:
-   580→    def _convert_annotation(self, annotation: expr | None) -> expr | None:
+   517→    def _use_memo …
+   570→    def _get_import …
+   580→    def _convert_annotation …
    596→    def visit_Name …
    600→    def visit_Module …
    608→    def visit_Import …
@@ -331,8 +382,6 @@ src/typeguard/_utils.py
    176→    def __repr__ …
 
 tests/dummymodule.py
-    40→T = TypeVar("T", bound="DummyClass")
-    41→P = ParamSpec("P")
     77→class DummyClass(metaclass=Metaclass):
     78→    bar: str
     79→    baz: int
@@ -343,52 +392,3 @@ tests/dummymodule.py
 
 tests/dummymodule_py312.py
     17→class ParametrizedClass[T]:
-
-tests/mypy/negative.py
-     5→def foo(x: int) -> int:
-    10→def bar(x: int) -> int:
-    15→def non_typeguard_checked_func(x: int) -> int:
-    20→def returns_str() -> str:
-    25→def arg_type(x: int) -> str:
-    30→def ret_type() -> str:
-    38→@typechecked
-    39→class MyClass:
-    40→    def __init__ …
-    43→    def add …
-    47→def get_value …
-    51→def create_myclass …
-
-tests/mypy/positive.py
-     7→def foo(x: str) -> str:
-    11→def takes_callable …
-    19→def has_valid_arguments(x: int, y: str) -> None:
-    23→def has_valid_return_type …
-    27→@typechecked
-    28→class MyClass:
-    29→    def __init__ …
-    32→    def add …
-    36→def get_value …
-    41→def get_value_checked(c: MyClass) -> int:
-    45→def create_myclass …
-    50→def create_myclass_checked(x: int) -> MyClass:
-
-tests/mypy/test_type_annotations.py
-     8→POSITIVE_FILE = "positive.py"
-     9→NEGATIVE_FILE = "negative.py"
-    19→def get_mypy_cmd …
-    23→def get_negative_mypy_output …
-    35→def get_expected_errors …
-    54→def get_mypy_errors …
-    69→def chdir_local() -> None:
-    79→def test_positive() -> None:
-    87→def test_negative() -> None:
-
-tests/test_checkers.py
-    56→from . …
-    79→P = ParamSpec("P")
-
-tests/test_instrumentation.py
-    40→def _fixture_module(name: str, method: str):
-
-tests/test_utils.py
-     5→from . …

@@ -35,7 +35,9 @@ fn is_source_file(path: &Path) -> bool {
 ///
 /// Deliberately excludes non-code text files that cause noise:
 /// shell scripts (.sh), stylesheets (.css/.scss), HTML templates,
-/// documentation markup (.rst/.tex), and shader code (.glsl).
+/// LaTeX (.tex), and shader code (.glsl).
+/// RST is included because README.rst and other project docs are
+/// valuable even without tree-sitter parsing (rendered as plain text).
 fn is_unsupported_code_extension(ext: &str) -> bool {
     matches!(
         ext,
@@ -55,6 +57,8 @@ fn is_unsupported_code_extension(ext: &str) -> bool {
         | "vue" | "svelte"
         // Query/schema languages
         | "sql" | "graphql" | "gql" | "proto"
+        // Documentation markup (README.rst etc. are valuable as plain text)
+        | "rst"
     )
 }
 
