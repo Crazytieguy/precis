@@ -353,21 +353,22 @@ pub fn to_json(output: &str, budget: usize, tokens: usize) -> String {
     let mut current_path: Option<&str> = None;
     let mut current_content = String::new();
 
+    let flush = |path: &str, content: &mut String, files: &mut Vec<serde_json::Value>| {
+        if path.ends_with('/') {
+            files.push(serde_json::json!({"path": path, "omitted": true}));
+        } else {
+            let c = content.trim_end_matches('\n');
+            files.push(serde_json::json!({"path": path, "content": c}));
+        }
+        content.clear();
+    };
     for line in output.lines() {
         if line.is_empty() {
-            // Blank separator between file sections — skip
             continue;
         }
         if !line.contains('→') {
             if let Some(path) = current_path.take() {
-                let content = current_content.trim_end_matches('\n');
-                // Directory omission markers: paths ending with /
-                if path.ends_with('/') {
-                    files.push(serde_json::json!({"path": path, "omitted": true}));
-                } else {
-                    files.push(serde_json::json!({"path": path, "content": content}));
-                }
-                current_content.clear();
+                flush(path, &mut current_content, &mut files);
             }
             current_path = Some(line);
         } else {
@@ -378,12 +379,7 @@ pub fn to_json(output: &str, budget: usize, tokens: usize) -> String {
         }
     }
     if let Some(path) = current_path {
-        if path.ends_with('/') {
-            files.push(serde_json::json!({"path": path, "omitted": true}));
-        } else {
-            let content = current_content.trim_end_matches('\n');
-            files.push(serde_json::json!({"path": path, "content": content}));
-        }
+        flush(path, &mut current_content, &mut files);
     }
 
     let n_files = files.iter().filter(|f| f.get("omitted").is_none_or(|v| v.as_bool() != Some(true))).count();

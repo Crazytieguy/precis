@@ -829,33 +829,28 @@ fn compute_symbol_costs(
 // Value computation
 // ---------------------------------------------------------------------------
 
-/// Compute the effective depth of a path, skipping the first component if it's
-/// a conventional source root directory. These directories are language-mandated
-/// or conventional organizational roots that don't represent meaningful project
-/// hierarchy: `src` (Rust/Python/TS), `lib` (Ruby/JS), `pkg`/`cmd` (Go),
-/// `internal` (Go), `app` (web frameworks), `packages`/`crates` (monorepos).
+/// Compute the effective depth of a path, skipping conventional source root
+/// directories (`src`, `lib`, `packages`, `crates`, etc.) that don't represent
+/// meaningful hierarchy. For monorepos, also skips an inner root after the
+/// package name (e.g., `packages/foo/src/` → effective depth 1, not 3).
 fn effective_depth(parent_dir: &Path) -> usize {
-    let mut components = parent_dir.components();
-    let total = components.clone().count();
-    if total == 0 {
-        return 0;
-    }
-    let is_conventional = |s: &str| matches!(s, "src" | "source" | "lib" | "pkg" | "cmd" | "internal" | "app" | "packages" | "crates");
-    let first = components.next().and_then(|c| c.as_os_str().to_str());
-    let mut skipped = 0;
-    if first.is_some_and(is_conventional) {
-        skipped += 1;
-        // Monorepo double-root: packages/foo/src/ has two conventional roots.
-        // Skip the inner src/lib after the package name (but not the name itself).
-        if total >= 3 {
-            let _pkg_name = components.next(); // skip past package name
-            let inner = components.next().and_then(|c| c.as_os_str().to_str());
-            if inner.is_some_and(is_conventional) {
-                skipped += 1; // skip inner conventional root only
+    let is_root = |s: &str| matches!(s, "src" | "source" | "lib" | "pkg" | "cmd" | "internal" | "app" | "packages" | "crates");
+    let components: Vec<_> = parent_dir.components()
+        .filter_map(|c| c.as_os_str().to_str())
+        .collect();
+    match components.as_slice() {
+        [] => 0,
+        [first, ..] if is_root(first) => {
+            let rest = &components[1..];
+            // Monorepo: packages/foo/src/bar → skip packages + src, keep foo + bar
+            if rest.len() >= 2 && is_root(rest[1]) {
+                rest.len() - 1 // skip the inner root
+            } else {
+                rest.len()
             }
         }
+        _ => components.len(),
     }
-    total - skipped
 }
 
 /// Compute the value of showing a particular stage for a group.
