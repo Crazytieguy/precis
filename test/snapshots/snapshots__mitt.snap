@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2001 tokens)
+budget: 2000 (2000 tokens)
 
 README.md
      9→# Mitt
@@ -17,13 +17,6 @@ README.md
     19→Mitt was made for the browser, but works in any JavaScript runtime. It has no dependencies and supports IE9+.
     20→
     21→## Table of Contents
-    23→-   [Install](#install)
-    24→-   [Usage](#usage)
-    25→-   [Examples & Demos](#examples--demos)
-    26→-   [API](#api)
-    27→-   [Contribute](#contribute)
-    28→-   [License](#license)
-    29→
     30→## Install
     32→This project uses [node](http://nodejs.org) and [npm](https://npmjs.com). Go check them out if you don't have them locally installed.
     33→
@@ -88,6 +81,12 @@ README.md
     94→
     95→emitter.on('foo', (e) => {}); // 'e' has inferred type 'string'
     96→
+    97→emitter.emit('foo', 42); // Error: Argument of type 'number' is not assignable to parameter of type 'string'. (2345)
+    98→```
+    99→
+   100→Alternatively, you can use the provided `Emitter` type:
+   101→
+   102→```ts
       →…
    113→## Examples & Demos
    123→## API
@@ -177,7 +176,8 @@ src/index.ts
     52→	all = all || new Map();
     53→
     54→	return {
-      →	…
+    55→		/**
+      →		…
 
 test/
       →…
