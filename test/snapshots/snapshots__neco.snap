@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2000 tokens)
+budget: 2000 (1999 tokens)
 
 README.md
     18→## Features
@@ -21,12 +21,6 @@ README.md
    473→## Platform notes
    498→## The scheduler
 
-docs/API.md
-     3→# Neco C API
-     5→C API for the Neco coroutine library.
-     6→
-      →…
-
 docs/README.md
      1→# Neco Documentation
      3→## [API.md](API.md)
@@ -37,6 +31,8 @@ docs/TECHNICAL.md
      1→# Neco Technical Details
      3→Technical details of the Neco coroutine library.
      4→
+     5→_Work in progress_
+     6→
       →…
 
 docs/assets/API_head.md
@@ -46,6 +42,9 @@ docs/assets/API_head.md
       →…
     12→## Table of contents
     34→## Programming notes
+
+docs/tools/README.md
+     1→# Tools
 
 examples/README.md
      1→# Neco examples 
@@ -146,6 +145,7 @@ neco.h
    453→#define EAI_SYSTEM 11
 
 tests/README.md
+     1→# Testing
 
 tests/panic.h
      8→#define pwhere(str) \

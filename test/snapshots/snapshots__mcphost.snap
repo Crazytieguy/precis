@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (8011 tokens)
+budget: 8000 (8010 tokens)
 
 README.md
      1→# MCPHost 🤖
@@ -328,7 +328,10 @@ internal/models/gemini/gemini.go
     61→	Client *genai.Client
     62→
     63→	// Model specifies which Gemini model to use
-      →	…
+    64→	// Examples: "gemini-pro", "gemini-pro-vision", "gemini-1.5-flash"
+    65→	Model string
+    66→
+      →…
    103→type options struct {
    113→type ChatModel struct {
    114→	// cli is the Gemini API client instance
@@ -336,6 +339,9 @@ internal/models/gemini/gemini.go
    116→
    117→	// model specifies which Gemini model to use
    118→	model string
+   119→	// maxTokens limits the response length
+   120→	maxTokens *int
+   121→	// topP controls nucleus sampling
       →	…
    152→func (cm *ChatModel) Generate …
    205→func (cm *ChatModel) Stream …
@@ -351,13 +357,6 @@ internal/models/generate_models.go
     37→type Cost struct {
     50→type Limit struct {
     60→type ProviderInfo struct {
-
-internal/models/models_data.go
-     7→type ModelInfo struct {
-    18→type Cost struct {
-    26→type Limit struct {
-    32→type ProviderInfo struct {
-    41→func GetModelsData() map[string]ProviderInfo {
 
 internal/models/openai/openai.go
     21→type CustomChatModel struct {
@@ -514,7 +513,7 @@ internal/ui/debug_logger.go
     84→func (l *CLIDebugLogger) IsDebugEnabled …
 
 internal/ui/enhanced_styles.go
-    12→var currentTheme = DefaultTheme()
+    12→var currentTheme …
     16→func GetTheme …
     22→func SetTheme …
     29→type Theme struct {
@@ -658,10 +657,6 @@ internal/ui/usage_tracker.go
    233→func (ut *UsageTracker) GetLastRequestStats …
    246→func (ut *UsageTracker) Reset …
    256→func (ut *UsageTracker) SetWidth …
-
-main.go
-    12→var version …
-    14→func main() {
 
 sdk/README.md
      1→# MCPHost SDK
