@@ -23,8 +23,9 @@ curl --proto '=https' --tlsv1.2 -LsSf https://github.com/Crazytieguy/precis/rele
 ## Usage
 
 ```
-precis .                   # summarize the current directory
-precis ./src --budget 4000 # with a larger token budget
+precis .                    # summarize the current directory
+precis ./src                # zoom into a subdirectory
+precis . --budget 8000      # with a larger token budget
 ```
 
 The default budget is 4000 BPE tokens (o200k_base tokenizer). Output is plain text with line numbers preserving source indentation.
