@@ -2,10 +2,14 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1999 tokens)
+budget: 2000 (2000 tokens)
 
 README.md
      1→# k(r)ep - A high-performance string search utility
+     6→`krep` is an optimized string search utility designed for maximum throughput and efficiency when processing large files and directories. It is built with performance in mind, offering multiple search algorithms and SIMD acceleration when available.
+     7→
+     8→> **Note:**  
+      →…
     13→## The Story Behind the Name
     19→## Key Features
     36→## What's New in v2.2.0
@@ -17,10 +21,6 @@ README.md
    180→## How Krep Works
 
 aho_corasick.c
-    17→typedef struct ac_node
-    18→{
-    26→struct ac_trie
-    27→{
 
 aho_corasick.h
     15→typedef struct search_params search_params_t …
@@ -32,7 +32,6 @@ aho_corasick.h
     39→uint64_t aho_corasick_search(const search_params_t *params, const char *text_start, size_t text_len, match_result_t *result);
 
 krep.c
-    10→#define _GNU_SOURCE
     77→#define MAX_PATTERN_LENGTH 1024
     93→#define LIKELY(x)   __builtin_expect(!!(x), 1)
   3146→typedef struct
@@ -159,7 +158,7 @@ krep.h
    234→const char *get_algorithm_name …
    278→size_t find_line_start(const char *text, size_t max_len, size_t pos);
    288→size_t find_line_end(const char *text, size_t text_len, size_t pos);
-   298→static inline bool is_word_char(char c)
-   299→{
-   312→static inline bool is_whole_word_match(const char *text, size_t text_len, size_t start, size_t end)
-   313→{
+   298→static inline bool is_word_char …
+   312→static inline bool is_whole_word_match …
+
+test/test_krep.h

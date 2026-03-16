@@ -36,7 +36,8 @@ pyproject.toml
 scripts/README.md
      1→# Usage Examples
      3→> [!NOTE]  
-      →…
+     4→> The following documentation was originally written for the Chronos models released in Mar 2024 and may be outdated. If something does not work, please open an issue or a pull request.
+     5→
      6→## Generating Synthetic Time Series (KernelSynth)
     24→## Pretraining (and fine-tuning) Chronos models
    113→## Evaluating Chronos models
@@ -109,6 +110,7 @@ src/chronos/chronos.py
     27→@dataclass
     28→class ChronosConfig:
     29→    """
+    30→    This class holds all the configuration parameters to be used
       →    …
     33→
     34→    tokenizer_class: str
@@ -253,8 +255,6 @@ src/chronos/chronos2/model.py
     86→    all_group_self_attn_weights: tuple[torch.Tensor, ...] | None = None
     89→class Chronos2Encoder(nn.Module):
     90→    def __init__ …
-    99→    def _expand_and_invert_time_attention_mask …
-   113→    def _construct_and_invert_group_time_mask …
    134→    def forward …
    191→class Chronos2Output(ModelOutput):
    192→    loss: torch.Tensor | None = None
@@ -270,7 +270,6 @@ src/chronos/chronos2/pipeline.py
      6→import logging
     39→class Chronos2Pipeline(BaseChronosPipeline):
     43→    def __init__ …
-    48→    def _get_prob_mass_per_quantile_level …
     77→    def model_context_length(self) -> int:
     81→    def model_output_patch_size(self) -> int:
     85→    def model_prediction_length(self) -> int:
@@ -289,7 +288,6 @@ src/chronos/chronos2/pipeline.py
    465→        limit_prediction_length: bool = False,
    466→        **kwargs,
    467→    ) -> list[torch.Tensor]:
-   750→    def _slide_context_and_future_covariates …
    763→    def predict_quantiles …
    821→    def predict_df …
   1027→    def predict_fev …

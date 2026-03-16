@@ -2,12 +2,14 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (3998 tokens)
 
 CHANGELOG.md
      1→# Changelog
 
 CONTRIBUTING.md
+     3→## Issues
+    13→## Pull Requests
 
 Readme.md
      1→# Commander.js
@@ -57,7 +59,13 @@ Readme.md
     51→    - [Debugging stand-alone executable subcommands](#debugging-stand-alone-executable-subcommands)
     52→    - [npm run-script](#npm-run-script)
     53→    - [Display error](#display-error)
-      →    …
+    54→    - [Override exit and output handling](#override-exit-and-output-handling)
+    55→    - [Additional documentation](#additional-documentation)
+    56→  - [Support](#support)
+    57→    - [Commander for enterprise](#commander-for-enterprise)
+    58→
+    59→For information about terms used in this document see: [terminology](./docs/terminology.md)
+    60→
     61→## Installation
     67→## Quick Start
    147→## Declaring _program_ variable
@@ -104,25 +112,15 @@ Readme.md
   1164→## Support
   1172→### Commander for enterprise
 
+Readme_zh-CN.md
+     1→# Commander.js
+
 SECURITY.md
      1→# Security Policy
 
 docs/deprecated.md
      1→# Deprecated
-    22→### RegExp .option() parameter
-    34→### noHelp
-    44→### Callback to .help() and .outputHelp()
-    62→### .on('--help')
-    87→### .on('command:*')
-    98→### .command('*')
-   118→### cmd.description(cmdDescription, argDescriptions)
-   141→### InvalidOptionArgumentError
-   171→### Import from `commander/esm.mjs`
-   187→### cmd._args
-   203→### .addHelpCommand(string|boolean|undefined)
    227→## Removed
-   229→### Short option flag longer than a single character
-   238→### Default import of global Command object
 
 docs/help-in-depth.md
      1→# Help in Depth
@@ -133,9 +131,10 @@ docs/help-in-depth.md
 docs/options-in-depth.md
      2→# Options in Depth
     15→## Options taking varying numbers of option-arguments
-    30→### Parsing ambiguity
+    79→#### Alternative: Make `--` part of your syntax
+   104→#### Alternative: Put options last
+   126→#### Alternative: Use options instead of command-arguments
    148→## Combining short options, and options taking arguments
-   191→### Combining short options as if boolean
 
 docs/parsing-and-hooks.md
      1→# Parsing life cycle and hooks

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (3996 tokens)
 
 README.md
     26→# D2TS - Differential Dataflow in TypeScript <!-- omit in toc -->
@@ -52,6 +52,8 @@ README.md
 
 examples/d2ql/README.md
      1→# D2QL Examples
+     3→This directory contains examples that demonstrate the capabilities of D2QL, a SQL-like query language for D2TS.
+     4→
      5→## Examples
     29→## Running the Examples
     43→## Current D2QL Features
@@ -87,17 +89,9 @@ packages/d2mini/README.md
       →…
 
 packages/d2mini/src/d2.ts
-    10→export class D2 implements ID2 {
-    11→  #streams: DifferenceStreamReader<any>[] = []
-    12→  #operators: (UnaryOperator<any> | BinaryOperator<any>)[] = []
-    13→  #nextOperatorId = 0
-    14→  #finalized = false
-    15→
-    73→export class StreamBuilder<T> implements IStreamBuilder<T> {
-    74→  #graph: ID2
-    75→  #writer: DifferenceStreamWriter<T>
-    76→
-   146→export class RootStreamBuilder<T> extends StreamBuilder<T> {
+    10→export class D2 …
+    73→export class StreamBuilder …
+   146→export class RootStreamBuilder …
 
 packages/d2mini/src/graph.ts
     11→export class DifferenceStreamReader<T> implements IDifferenceStreamReader<T> {
@@ -113,8 +107,8 @@ packages/d2mini/src/indexes.ts
      9→export class Index<K, V> {
 
 packages/d2mini/src/multiset.ts
-     8→export type MultiSetArray<T> = [T, number][]
-     9→export type KeyedData<T> = [key: string, value: T]
+     8→export type MultiSetArray …
+     9→export type KeyedData …
     14→export class MultiSet<T> {
     36→  map<U>(f: (data: T) => U): MultiSet<U> {
     45→  filter(f: (data: T) => boolean): MultiSet<T> {
@@ -126,16 +120,13 @@ packages/d2mini/src/operators/groupBy.ts
    346→export const groupByOperators = {
 
 packages/d2mini/src/types.ts
-     4→export type KeyValue<K, V> = [K, V]
-     6→export interface IOperator<_T> {
-    11→export interface IDifferenceStreamReader<T> {
-    16→export interface IDifferenceStreamWriter<T> {
-    21→export interface ID2 {
-    30→export interface IStreamBuilder<T> {
-    31→  writer: DifferenceStreamWriter<T>
-    83→export type PipedOperator<I, O> = (
-    84→  stream: IStreamBuilder<I>,
-    85→) => IStreamBuilder<O>
+     4→export type KeyValue …
+     6→export interface IOperator …
+    11→export interface IDifferenceStreamReader …
+    16→export interface IDifferenceStreamWriter …
+    21→export interface ID2 …
+    30→export interface IStreamBuilder …
+    83→export type PipedOperator …
 
 packages/d2mini/src/utils.ts
      6→export class DefaultMap<K, V> extends Map<K, V> {
@@ -284,7 +275,12 @@ packages/d2ts/README.md
     26→# D2TS - Differential Dataflow in TypeScript <!-- omit in toc -->
     28→D2TS is a TypeScript implementation of [differential dataflow](https://github.com/MaterializeInc/differential) - a powerful data-parallel programming framework that enables incremental computations over changing input data.
     29→
-      →…
+    30→You can use D2TS to build data pipelines that can be executed incrementally, meaning you can process data as it comes in, and only recompute the parts that have changed. This could be as simple as remapping data, or as complex as performing a full join combining two datasources where one is a computed aggregate.
+    31→
+    32→D2TS can be used in conjunction with [ElectricSQL](https://electric-sql.com) to build data pipelines on top of [ShapeStreams](https://electric-sql.com/docs/api/clients/typescript#shapestream) that can be executed incrementally.
+    33→
+    34→A D2TS pipeline is also fully type safe, inferring the types at each step of the pipeline, and supports auto-complete in your IDE.
+    35→
     36→## Table of Contents
     51→## Key Features
     88→## Quick Start
@@ -303,7 +299,6 @@ packages/d2ts/README.md
   1076→## References
 
 packages/d2ts/src/electric/index.ts
-    40→export interface ElectricStreamToD2InputOptions<T extends Row<unknown> = Row> {
    103→export function electricStreamToD2Input …
    222→export class OutputElectricMessagesOperator<K, V> extends UnaryOperator<
    223→  [K, V]

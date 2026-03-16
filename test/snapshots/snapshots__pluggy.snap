@@ -5,7 +5,6 @@ expression: output
 budget: 4000 (4001 tokens)
 
 CHANGELOG.rst
-     1→=========
 
 README.rst
      1→====================================================
@@ -79,6 +78,8 @@ README.rst
     69→
       →…
 
+SECURITY.md
+
 TIDELIFT.rst
      1→========
      2→Tidelift
@@ -100,6 +101,15 @@ TIDELIFT.rst
     18→Funds
     19→=====
     20→
+    21→It was decided in the `mailing list`_ that the Tidelift contribution will be split evenly between
+    22→members of the `contributors team`_ interested in receiving funding.
+    23→
+    24→The current list of contributors receiving funding are:
+    25→
+    26→* `@nicoddemus`_
+    27→* `@The-Compiler`_
+    28→* `@RonnyPfannschmidt`_
+    29→
       →…
 
 changelog/590.trivial.rst
@@ -134,7 +144,10 @@ changelog/README.rst
     26→
     27→If you are not sure what issue type to use, don't hesitate to ask in your PR.
     28→
-      →…
+    29→``towncrier`` preserves multiple paragraphs and formatting (code blocks, lists, and so on), but for entries
+    30→other than ``features`` it is usually better to stick to a single paragraph to keep it concise. You can install
+    31→``towncrier`` and then run ``towncrier --draft``
+    32→if you want to get a preview of how your change will look in the final release notes.
 
 changelog/_template.rst
      1→{% for section in sections %}
@@ -189,11 +202,11 @@ docs/api_reference.rst
      5→API Reference
      6→=============
      7→
+     8→.. autoclass:: pluggy.PluginManager
       →…
 
 docs/conf.py
    106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
-   107→    """Configure Sphinx's WarningHandler to handle (expected) missing include."""
    130→def setup(app: "sphinx.application.Sphinx") -> None:
 
 docs/examples/eggsample-spam/eggsample_spam.py
@@ -202,13 +215,10 @@ docs/examples/eggsample-spam/eggsample_spam.py
 
 docs/examples/toy-example.py
      8→class MySpec:
-    10→
     12→    def myhook(self, arg1, arg2):
     16→class Plugin_1:
-    18→
     20→    def myhook(self, arg1, arg2):
     25→class Plugin_2:
-    27→
     29→    def myhook(self, arg1, arg2):
 
 docs/index.rst
@@ -218,6 +228,7 @@ docs/index.rst
      4→
      5→What is it?
      6→***********
+     7→``pluggy`` is the crystallized core of :ref:`plugin management and hook
       →…
 
 pyproject.toml
@@ -238,7 +249,7 @@ src/pluggy/_callers.py
     18→from ._result import Result
     19→from ._warnings import PluggyTeardownRaisedWarning
     22→# Need to distinguish between old- and new-style hook wrappers.
-    23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
+      →…
     24→Teardown: TypeAlias = Generator[None, object, object]
     27→def run_old_style_hookwrapper …
 
@@ -246,18 +257,10 @@ src/pluggy/_hooks.py
     25→from ._result import Result
     40→class HookspecOpts(TypedDict):
     42→
-    43→    #: Whether the hook is :ref:`first result only <firstresult>`.
-    44→    firstresult: bool
-    45→    #: Whether the hook is :ref:`historic <historic>`.
-    46→    historic: bool
-      →    …
+      →…
     56→class HookimplOpts(TypedDict):
     58→
-    59→    #: Whether the hook implementation is a :ref:`wrapper <hookwrapper>`.
-    60→    wrapper: bool
-    61→    #: Whether the hook implementation is an :ref:`old-style wrapper
-    62→    #: <old_style_hookwrappers>`.
-      →    …
+      →…
     78→class HookspecMarker:
     85→
     86→    __slots__ = ("project_name",)
@@ -280,10 +283,6 @@ src/pluggy/_hooks.py
    370→        def __getattr__ …
    382→class HookCaller:
    384→
-   385→    __slots__ = (
-   386→        "name",
-   387→        "spec",
-   388→        "_hookexec",
    393→    def __init__ …
    420→    def has_spec(self) -> bool:
    424→    def set_specification(
@@ -298,7 +297,6 @@ src/pluggy/_hooks.py
    516→    def call_historic …
    543→    def call_extra …
    593→class _SubsetHookCaller(HookCaller):
-   596→
    612→    def __init__ …
    619→    def _hookimpls(self) -> list[HookImpl]:
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
@@ -405,10 +403,7 @@ src/pluggy/_tracing.py
 src/pluggy/_warnings.py
      4→class PluggyWarning(UserWarning):
      6→
-     7→    __module__ = "pluggy"
+      →…
     11→class PluggyTeardownRaisedWarning(PluggyWarning):
     26→
     27→    __module__ = "pluggy"
-
-testing/test_hookcaller.py
-    34→class AddMeth:

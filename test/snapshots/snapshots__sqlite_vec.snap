@@ -16,12 +16,6 @@ ARCHITECTURE.md
     10→
     11→## `vec0`
     13→### Shadow Tables
-    15→#### `xyz_chunks`
-    22→#### `xyz_rowids`
-    29→#### `xyz_vector_chunksNN`
-    34→#### `xyz_auxiliary`
-    39→#### `xyz_metadatachunksNN`
-    44→#### `xyz_metadatatextNN`
     49→### idxStr
     51→The `vec0` idxStr is a string composed of single "header" character and 0 or
     52→more "blocks" of 4 characters each.
@@ -32,12 +26,6 @@ ARCHITECTURE.md
     57→| Name                       | Value | Description                                                            |
     58→| -------------------------- | ----- | ---------------------------------------------------------------------- |
       →…
-    69→#### `VEC0_IDXSTR_KIND_KNN_MATCH` (`'{'`)
-    75→#### `VEC0_IDXSTR_KIND_KNN_K` (`'}'`)
-    81→#### `VEC0_IDXSTR_KIND_KNN_ROWID_IN` (`'['`)
-    88→#### `VEC0_IDXSTR_KIND_KNN_PARTITON_CONSTRAINT` (`']'`)
-   102→#### `VEC0_IDXSTR_KIND_POINT_ID` (`'!'`)
-   108→#### `VEC0_IDXSTR_KIND_METADATA_CONSTRAINT` (`'&'`)
 
 README.md
      1→# `sqlite-vec`
@@ -71,13 +59,25 @@ README.md
     32→<code>sqlite-vec</code> is a
       →…
     43→## Installing
+    45→See [Installing `sqlite-vec`](https://alexgarcia.xyz/sqlite-vec/installation.html)
+    46→for more details.
+    47→
+      →…
     61→## Sample usage
+    63→```sql
+    64→.load ./vec0
+    65→
+      →…
     97→## Sponsors
+    99→Development of `sqlite-vec` is supported by multiple generous sponsors! Mozilla
+   100→is the main sponsor through the new Builders project.
+   101→<p align="center">
+      →…
    152→## See Also
-
-benchmarks/exhaustive-memory/bench.py
-    13→class BenchResult:
-   571→class Config:
+   154→- [**`sqlite-ecosystem`**](https://github.com/asg017/sqlite-ecosystem), Maybe
+   155→  more 3rd party SQLite extensions I've developed
+   156→- [**`sqlite-rembed`**](https://github.com/asg017/sqlite-rembed), Generate text
+      →…
 
 bindings/python/extra_init.py
      6→def serialize_float32(vector: List[float]) -> bytes:
@@ -90,14 +90,7 @@ bindings/rust/build.rs
 bindings/rust/src/lib.rs
      3→    pub fn sqlite3_vec_init();
 
-examples/simple-c/demo.c
-     7→int main(int argc, char *argv[]) {
-
 examples/simple-go-cgo/go.mod
-     1→module github.com/asg017/sqlite-vec/examples/go
-     3→go 1.22.5
-     4→
-      →…
 
 examples/simple-go-ncruces/go.mod
      1→module asg017.com/ex1
@@ -105,8 +98,6 @@ examples/simple-go-ncruces/go.mod
      4→
      5→require (
       →…
-
-examples/simple-python/demo.py
 
 examples/simple-ruby/demo.rb
      1→require 'sqlite3'
@@ -131,12 +122,19 @@ examples/simple-sqlite/demo.sql
 
 examples/sqlite3-cli/README.md
      1→# `sqlite-vec` statically compiled in the SQLite CLI
-
-examples/sqlite3-cli/core_init.c
-     4→int core_init(const char *dummy) {
+     3→You can compile your own version of the `sqlite3` CLI with `sqlite-vec` builtin.
+     4→The process is not well documented, but the special `SQLITE_EXTRA_INIT` compile
+     5→option can be used to "inject" code at initialization time. See the `Makefile`
+     6→at the root of this project for some more info.
+     7→
+     8→The `core_init.c` file here demonstrates auto-loading the `sqlite-vec`
+     9→entrypoints at startup.
 
 examples/wasm/README.md
      1→# `sqlite-vec` statically compiled into WASM builds
+     3→You can compile your own version of SQLite's WASM build with `sqlite-vec`
+     4→builtin. Dynamically loading SQLite extensions is not supported in the official
+      →…
 
 reference.yaml
      1→sections:
@@ -339,18 +337,9 @@ sqlite-vec.c
 test.sql
      1→
 
-tests/Cargo.toml
-     1→[package]
-     6→[dependencies]
-     8→[build-dependencies]
-    11→[[bin]]
-
 tests/afbd/README.md
      2→# hnm
      4→```
       →…
-
-tests/sqlite-vec-internal.h
-     3→int min_idx …
 
 tmp-static.py

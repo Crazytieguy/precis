@@ -904,10 +904,13 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
             StageKind::Body => 1.5,
             StageKind::Doc => 0.4,
         },
+        // Section body is the actual content — README prose, architecture
+        // descriptions, heading text. Higher than default Body because section
+        // content IS the documentation (vs code body which is implementation).
         KindCategory::Section => match stage {
             StageKind::FilePath => 0.3,
             StageKind::Names => 1.0,
-            StageKind::Body => 0.5,
+            StageKind::Body => 0.7,
             _ => 0.1,
         },
         // Imports: supplementary context for understanding file dependencies.

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1997 tokens)
+budget: 2000 (1990 tokens)
 
 README.md
      1→# MCPHost SDK
@@ -86,7 +86,10 @@ README.md
     86→    },
     87→    func(chunk string) {
     88→        fmt.Print(chunk) // Stream output
-      →        …
+    89→    },
+    90→)
+    91→```
+    92→
     93→### Session Management
     95→Maintain conversation context:
     96→
@@ -106,7 +109,8 @@ README.md
    110→
    111→// Clear session
    112→host.ClearSession()
-      →…
+   113→```
+   114→
    115→## API Reference
    117→### Types
    119→- `MCPHost` - Main SDK type
@@ -138,22 +142,26 @@ README.md
    148→Same as MCPHost CLI
 
 examples/basic/main.go
+     3→import …
     11→func main() {
+    12→	ctx := context.Background()
+    13→
+      →…
 
 examples/scripting/main.go
+     3→import …
     12→func main() {
+    13→	ctx := context.Background()
+    14→
+      →…
 
 mcphost.go
      3→import …
-    16→// MCPHost provides programmatic access to mcphost functionality, allowing
-      →…
     19→type MCPHost struct {
     20→	agent       *agent.Agent
     21→	sessionMgr  *session.Manager
     22→	modelString string
     23→}
-    25→// Options configures MCPHost creation with optional overrides for model,
-      →…
     28→type Options struct {
     29→	Model        string // Override model (e.g., "anthropic:claude-3-sonnet")
     30→	SystemPrompt string // Override system prompt
@@ -179,17 +187,14 @@ mcphost.go
    237→func (m *MCPHost) Close() error {
 
 mcphost_test.go
+     3→import …
     11→func TestNew(t *testing.T) {
     30→func TestNewWithOptions(t *testing.T) {
     54→func TestSessionManagement(t *testing.T) {
 
 types.go
      3→import …
-     8→// Message is an alias for session.Message providing SDK users with access
-      →…
     10→type Message = session.Message
-    12→// ToolCall is an alias for session.ToolCall representing a tool invocation
-      →…
     14→type ToolCall = session.ToolCall
     18→func ConvertToSchemaMessage(msg *Message) *schema.Message {
     24→func ConvertFromSchemaMessage(msg *schema.Message) Message {

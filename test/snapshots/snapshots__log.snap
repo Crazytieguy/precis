@@ -2,21 +2,33 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3988 tokens)
+budget: 4000 (3986 tokens)
+
+CHANGELOG.md
 
 Cargo.toml
      1→[package]
+    19→[package.metadata.docs.rs]
     22→[features]
     56→[dependencies]
     62→[dev-dependencies]
 
 README.md
      1→log
+     4→A Rust library providing a lightweight logging *facade*.
+     5→
+      →…
     19→## Minimum supported `rustc`
+    21→`1.68.0+`
+    22→
+      →…
     25→## Usage
     27→### In libraries
     58→### In executables
    106→## Structured logging
+   108→If you enable the `kv` feature, you can associate structured data with your log records:
+   109→
+      →…
 
 rfcs/0296-structured-logging.md
      5→# Summary
@@ -47,10 +59,13 @@ rfcs/0296-structured-logging.md
 src/__private_api.rs
      3→use self::sealed::KVs;
      4→use crate::{logger, Level, Log, Metadata, Record};
+     7→pub use std::{format_args, module_path, stringify};
     10→pub type Value<'a> = &'a str;
     12→mod sealed {
     14→    pub trait KVs<'a> {
     15→        fn into_kvs …
+    23→    fn into_kvs …
+    30→    fn into_kvs …
     39→pub struct GlobalLogger;
     84→pub fn log …
    103→pub fn enabled …
@@ -153,7 +168,6 @@ src/kv/value.rs
    593→    fn visit_borrowed_error …
    602→pub(in crate::kv) mod inner {
    610→    use super::*;
-   619→    pub fn visit …
    721→pub(in crate::kv) mod inner {
    735→    use super::*;
    737→    #[derive(Clone)]
@@ -170,27 +184,11 @@ src/kv/value.rs
    748→        Debug(&'v dyn fmt::Debug),
    749→        Display(&'v dyn fmt::Display),
    750→    }
-   897→        pub fn from_debug …
-   901→        pub fn from_display …
-   905→        pub fn from_dyn_debug …
-   909→        pub fn from_dyn_display …
-   913→        pub fn empty …
-   917→        pub fn to_bool …
-   924→        pub fn to_char …
-   931→        pub fn to_f64 …
-   954→        pub fn to_i64 …
-   964→        pub fn to_u64 …
-   974→        pub fn to_u128 …
-   984→        pub fn to_i128 …
-   994→        pub fn to_borrowed_str …
-  1031→    pub fn visit …
   1055→    pub fn capture_debug …
   1065→    pub fn capture_display …
   1075→    pub fn capture_error …
   1085→    pub fn capture_serde …
   1095→    pub fn capture_sval …
-  1107→    pub fn is …
-  1116→    pub fn downcast_ref …
   1123→pub use VisitValue as Visit;
   1129→macro_rules! as_debug {
   1139→macro_rules! as_display {
@@ -229,6 +227,9 @@ src/lib.rs
    497→    /// Designates very low priority, often extremely verbose, information.
    498→    Trace,
    499→}
+   503→    fn eq …
+   510→    fn partial_cmp …
+   516→    type Err = ParseLevelError;
    548→    pub fn max() -> Level {
    554→    pub fn to_level_filter(&self) -> LevelFilter {
    561→    pub fn as_str(&self) -> &'static str {
@@ -249,6 +250,8 @@ src/lib.rs
    647→    /// Corresponds to the `Trace` log level.
    648→    Trace,
    649→}
+   653→    fn eq …
+   660→    fn partial_cmp …
    699→    pub fn max() -> LevelFilter {
    707→    pub fn to_level(&self) -> Option<Level> {
    714→    pub fn as_str(&self) -> &'static str {
@@ -350,3 +353,4 @@ src/serde.rs
      9→use crate::{Level, LevelFilter, LOG_LEVEL_NAMES};
 
 triagebot.toml
+     1→[assign]

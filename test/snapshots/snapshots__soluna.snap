@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3991 tokens)
+budget: 4000 (3989 tokens)
 
 README.md
      7→# Soluna
@@ -21,9 +21,10 @@ README.md
     29→## Building from Source
     33→### Integration with the Actions of your projects
     35→```yaml
-      →…
+    36→- uses: actions/checkout@v5
+    37→  with:
+      →  …
     53→## Projects made with Soluna
-    57→## License
 
 clibs/datalist/make.lua
      1→local lm = require "luamake"
@@ -51,75 +52,41 @@ clibs/ltask/make.lua
 
 clibs/lua/make.lua
      1→local lm = require "luamake"
+     3→lm.rootdir = lm.basedir .. "/3rd/lua"
+     4→
+     5→if lm.os == "windows" then
+     6→  lm:source_set "winfile" {
+     7→    sources = {
+     8→      lm.basedir .. "/src/winfile.c",
+     9→    },
+    10→  }
+    11→end
+    12→
+      →…
 
 clibs/yoga/make.lua
      1→local lm = require "luamake"
      2→local fs = require "bee.filesystem"
      3→
-      →…
+     4→lm.rootdir = lm.basedir .. "/3rd/yoga"
+     5→
+     6→lm:source_set "yoga_src" {
+     7→  sources = {
+     8→    "yoga/*.cpp",
+     9→    "yoga/*/*.cpp",
+    10→  },
+    11→  includes = {
+    12→    lm.rootdir,
+    13→  }
+    14→}
 
 clibs/zip/make.lua
      1→local lm = require "luamake"
-
-docs/app.lua
-     1→---@meta soluna.app
-
-docs/args.lua
-     1→---@meta
-
-docs/callback.lua
-     1→---@meta
-
-docs/coroutine.lua
-     1→---@meta soluna.coroutine
-
-docs/crypt.lua
-     1→---@meta soluna.crypt
-
-docs/datalist.lua
-     1→---@meta soluna.datalist
-
-docs/file.lua
-     1→---@meta soluna.file
-
-docs/font.lua
-     1→---@meta soluna.font
-
-docs/font_system.lua
-     1→---@meta soluna.font.system
-
-docs/image.lua
-     1→---@meta soluna.image
-
-docs/layout.lua
-     1→---@meta soluna.layout
-
-docs/lfs.lua
-     1→---@meta soluna.lfs
-
-docs/material_mask.lua
-     1→---@meta soluna.material.mask
-
-docs/material_perspective_quad.lua
-     1→---@meta soluna.material.perspective_quad
-
-docs/material_quad.lua
-     1→---@meta soluna.material.quad
-
-docs/material_text.lua
-     1→---@meta soluna.material.text
-
-docs/soluna.lua
-     1→---@meta
-
-docs/text.lua
-     1→---@meta soluna.text
-
-docs/url.lua
-     1→---@meta soluna.url
-
-docs/zip.lua
-     1→---@meta soluna.zip
+     3→lm.rootdir = lm.basedir .. "/3rd/zlib"
+     4→
+     5→lm:source_set "minizip" {
+     6→  sources = {
+      →  …
 
 make.lua
      1→local lm = require "luamake"
@@ -135,6 +102,7 @@ make.lua
     11→  return false
     12→end
     13→
+    14→local osplat = (function()
       →…
 
 src/appevent.h
@@ -277,6 +245,7 @@ src/platform/macos/soluna_macos_ime.m
      3→
      4→#include <stdint.h>
      5→
+     6→#include "ime_state.h"
       →…
 
 src/platform/wasm/soluna_wasm_ime.h
@@ -400,6 +369,5 @@ src/yogaone.cpp
      6→#include "yoga/YGPixelGrid.cpp"
      7→#include "yoga/YGValue.cpp"
      8→
+     9→#include "yoga/algorithm/AbsoluteLayout.cpp"
       →…
-
-web/config.toml

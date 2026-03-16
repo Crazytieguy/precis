@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7996 tokens)
+budget: 8000 (7995 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -191,9 +191,13 @@ sps/src/pipeline.rs
 sps-common/Cargo.toml
      1→[package]
      2→name = "sps-common"
+     3→version = "0.1.56"
+     4→edition = "2021"
       →…
     10→[dependencies]
     11→# Inherited from workspace
+    12→serde_json = "1.0.143"
+    13→directories = "6.0.0"                                                            # For user/system directories
       →…
 
 sps-common/src/cache.rs
@@ -318,12 +322,6 @@ sps-common/src/error.rs
     43→    #[error("Generic Error: {0}")]
     44→    Generic(String),
     45→
-    46→    #[error("HttpError: {0}")]
-    47→    HttpError(String),
-    48→
-    49→    #[error("Checksum Mismatch: {0}")]
-    50→    ChecksumMismatch(String),
-    51→
       →…
    119→pub type Result<T> = std::result::Result<T, SpsError>;
 
@@ -422,7 +420,6 @@ sps-common/src/model/cask.rs
    166→    String(String),
    167→    Vec(Vec<String>),
    168→}
-   170→    pub fn into_vec …
    181→pub enum ZapActionDetail {
    182→    Trash(Vec<String>),
    183→    Delete(Vec<String>),
@@ -448,22 +445,7 @@ sps-common/src/model/formula.rs
     39→pub struct BottleStableSpec {
     47→pub struct FormulaVersions {
     57→pub struct Formula {
-   319→    pub fn dependencies …
-   322→    pub fn requirements …
-   327→    pub fn resources …
-   332→    pub fn set_keg_path …
-   335→    pub fn version_str_full …
-   342→    pub fn name …
-   345→    pub fn version …
-   348→    pub fn source_url …
-   351→    pub fn source_sha256 …
-   354→    pub fn get_bottle_spec …
    360→pub trait FormulaDependencies {
-   361→    fn name …
-   362→    fn install_prefix …
-   363→    fn resolved_runtime_dependency_paths …
-   364→    fn resolved_build_dependency_paths …
-   365→    fn all_resolved_dependency_paths …
 
 sps-common/src/model/mod.rs
      5→pub mod artifact;
@@ -486,7 +468,6 @@ sps-common/src/model/tap.rs
 
 sps-common/src/model/version.rs
     11→pub struct Version(semver::Version);
-    14→    pub fn parse …
 
 sps-common/src/pipeline.rs
     14→pub enum PipelinePackageType {
@@ -546,13 +527,7 @@ sps-common/src/pipeline.rs
     87→        target_id: String,
     88→        url: String,
     89→        error: String, // Keep as String for simplicity in events
-    90→    },
-    91→    JobProcessingStarted {
-    92→        // From core worker
-    93→        target_id: String,
-    94→    },
-    95→    JobDispatchedToCore {
-      →    …
+      →        …
    163→pub enum JobProcessingState {
    164→    /// Waiting for download to be initiated.
    165→    PendingDownload,
@@ -770,14 +745,29 @@ sps-net/Cargo.toml
      1→[package]
      2→name = "sps-net"
      3→version = "0.1.56"
-      →…
+     4→edition = "2021"
+     5→authors = ["Alexander Knott <alexander.knott@posteo.de>", "sps contributors"]
+     6→description = "Networking library for the sps package manager"
+     7→repository = "https://github.com/alexykn/sps"
+     8→license = "BSD-3-Clause"
     10→[dependencies]
     11→sps-common = "0.1.56"
     12→
+    13→tokio = { version = "1.47.1", features = ["full"] }
+    14→futures = "0.3.31"
+    15→reqwest = { version = "0.12.23", features = ["json", "stream", "blocking"] }
+    16→serde = { version = "1.0.219", features = ["derive"] }
+    17→serde_json = "1.0.143"
+    18→rand = "0.9.2"
+    19→url = "2.5.4"
+    20→sha2 = "0.10.9"
+    21→hex = "0.4.3"
+    22→infer = "0.19.0"
+    23→tracing = "0.1.41"
+    24→
       →…
 
 sps-net/src/http.rs
-    16→use crate::validation::{validate_url, verify_checksum};
     18→pub type ProgressCallback …
 
 sps-net/src/lib.rs
@@ -789,8 +779,6 @@ sps-net/src/lib.rs
     29→pub use crate::validation::{validate_url, verify_checksum, verify_content_type /* ... */};
 
 sps-net/src/oci.rs
-    18→use crate::http::ProgressCallback;
-    19→use crate::validation::{validate_url, verify_checksum};
     24→pub const DEFAULT_GHCR_DOMAIN: &str = "ghcr.io";
     31→struct OciTokenResponse {
     37→pub struct OciManifestIndex {

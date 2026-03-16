@@ -2,35 +2,38 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3990 tokens)
+budget: 4000 (3992 tokens)
 
 Cargo.toml
      1→[package]
      2→name = "sps-core"
      3→version = "0.1.56"
      4→edition = "2021"
-      →…
+     5→authors = ["Alexander Knott <alexander.knott@posteo.de>", "sps contributors"]
+     6→description = "Core library for the sps package manager"
+     7→repository = "https://github.com/alexykn/sps"
+     8→license = "BSD-3-Clause"
     10→[dependencies]
     11→sps-net = "0.1.56"
     12→sps-common = "0.1.56"
     13→
+    14→anyhow = "1.0.99"
+    15→uuid = { version = "1.18.0", features = ["v4"] }
+    16→plist = "1.7.4"                                                                  # For reading Info.plist to get bundle ID
+    17→thiserror = "2.0.16"
+    18→serde = { version = "1.0.219", features = ["derive"] }
+    19→serde_json = "1.0.143"
+    20→env_logger = "0.11.8"
+    21→semver = "1.0.26"
+    22→dirs = "6.0.0"
+    23→xattr = "1.5.1"
+    24→walkdir = "2.5.0"
+    25→reqwest = { version = "0.12.23", features = ["json", "stream", "blocking"] }
+    26→url = "2.5.4"
+    27→sha2 = "0.10.9"
+    28→indicatif = "0.17.11"
+    29→hex = "0.4.3"
       →…
-
-src/build/compile/cargo.rs
-    12→pub fn cargo_build …
-
-src/build/compile/cmake.rs
-    13→pub fn cmake_build …
-
-src/build/compile/go.rs
-    13→pub fn go_build …
-
-src/build/compile/make.rs
-    53→pub fn configure_and_make …
-   110→pub fn simple_make …
-
-src/build/compile/meson.rs
-    12→pub fn meson_build …
 
 src/build/compile/mod.rs
     20→mod cargo;
@@ -40,15 +43,6 @@ src/build/compile/mod.rs
     24→mod meson;
     25→mod perl;
     26→mod python;
-    40→pub async fn download_source …
-    44→pub async fn download_source_with_progress …
-   293→pub async fn build_from_source …
-
-src/build/compile/perl.rs
-    12→pub fn perl_build …
-
-src/build/compile/python.rs
-    13→pub fn python_build …
 
 src/build/env.rs
     12→use crate::install::devtools;
@@ -265,6 +259,7 @@ src/install/cask/artifacts/zap.rs
 src/install/cask/dmg.rs
     12→pub fn mount_dmg …
     43→pub fn unmount_dmg …
+    88→fn parse_mount_point …
    153→pub fn extract_dmg_to_stage(dmg_path: &Path, stage_dir: &Path) -> Result<()> {
 
 src/install/cask/helpers.rs
@@ -351,17 +346,9 @@ src/pipeline/mod.rs
 src/pipeline/worker.rs
     18→use crate::check::installed::{InstalledPackageInfo, PackageType as CorePackageType};
     19→use crate::{build, install, uninstall, upgrade};
-    21→pub(super) fn execute_sync_job …
     37→fn do_execute_sync_steps …
 
 src/uninstall/cask.rs
-    17→use super::common::{expand_tilde, is_safe_path, remove_filesystem_artifact};
-    18→use crate::check::installed::InstalledPackageInfo;
-    20→use crate::install::cask::helpers::{
-    21→    cleanup_empty_parent_dirs_in_private_store,
-    22→    remove_path_robustly as remove_path_robustly_from_install_helpers,
-    23→};
-    24→use crate::install::cask::CaskInstallManifest;
     26→use crate::utils::applescript;
     41→pub fn uninstall_cask_artifacts(info: &InstalledPackageInfo, config: &Config) -> Result<()> {
    134→pub async fn zap_cask_artifacts(
@@ -382,9 +369,6 @@ src/uninstall/common.rs
    119→pub(crate) fn is_safe_path …
 
 src/uninstall/formula.rs
-     6→use crate::check::installed::InstalledPackageInfo;
-     7→use crate::install; // For install::bottle::link
-     8→use crate::uninstall::common::{remove_filesystem_artifact, UninstallOptions};
     10→pub fn uninstall_formula_artifacts …
 
 src/uninstall/mod.rs

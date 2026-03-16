@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7988 tokens)
+budget: 8000 (7999 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -99,8 +99,6 @@ crates/mdbook-core/src/book.rs
    269→pub struct BookItems<'a> {
 
 crates/mdbook-core/src/config.rs
-    46→use crate::static_regex;
-    47→use crate::utils::{TomlExt, fs, log_backtrace};
     63→pub struct Config {
     94→    fn from_str …
    113→    pub fn from_disk …
@@ -172,6 +170,10 @@ crates/mdbook-driver/Cargo.toml
 
 crates/mdbook-driver/README.md
      1→# mdbook-driver
+     7→This is the high-level Rust library for running [mdBook](https://rust-lang.github.io/mdBook/). New books can be created using [`BookBuilder`](https://docs.rs/mdbook-driver/latest/mdbook_driver/init/struct.BookBuilder.html). The primary type [`MDBook`](https://docs.rs/mdbook-driver/latest/mdbook_driver/struct.MDBook.html) can be used to manage and render books.
+     8→
+     9→> This crate is maintained by the mdBook team for use by the wider ecosystem. This crate follows [semver compatibility](https://doc.rust-lang.org/cargo/reference/semver.html) for its APIs.
+    10→
 
 crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
     14→pub struct CmdPreprocessor {
@@ -192,7 +194,6 @@ crates/mdbook-driver/src/builtin_preprocessors/links.rs
     32→pub struct LinkPreprocessor;
     36→    pub const NAME: &'static str = "links";
     39→    pub fn new() -> Self {
-   275→struct Link<'a> {
 
 crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs
     10→pub struct MarkdownRenderer;
@@ -223,8 +224,6 @@ crates/mdbook-driver/src/lib.rs
     67→pub mod builtin_preprocessors;
     68→pub mod builtin_renderers;
     69→pub mod init;
-    70→mod load;
-    71→mod mdbook;
 
 crates/mdbook-driver/src/mdbook.rs
     29→pub struct MDBook {
@@ -276,9 +275,7 @@ crates/mdbook-html/README.md
     10→
 
 crates/mdbook-html/src/html/tree.rs
-    33→pub(crate) enum Node {
    131→    fn into_tendril(self) -> StrTendril;
-   150→enum TableState {
 
 crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
     22→pub struct HtmlHandlebars;
@@ -298,18 +295,7 @@ crates/mdbook-html/src/theme/mod.rs
     47→    pub(crate) chrome_css: Vec<u8>,
     48→    pub(crate) general_css: Vec<u8>,
     49→    pub(crate) print_css: Vec<u8>,
-    50→    pub(crate) variables_css: Vec<u8>,
-    51→    pub(crate) fonts_css: Option<Vec<u8>>,
-    52→    pub(crate) font_files: Vec<PathBuf>,
-    53→    pub(crate) favicon_png: Option<Vec<u8>>,
-    54→    pub(crate) favicon_svg: Option<Vec<u8>>,
-    55→    pub(crate) js: Vec<u8>,
-    56→    pub(crate) highlight_css: Vec<u8>,
-    57→    pub(crate) tomorrow_night_css: Vec<u8>,
-    58→    pub(crate) ayu_highlight_css: Vec<u8>,
-    59→    pub(crate) highlight_js: Vec<u8>,
-    60→    pub(crate) clipboard_js: Vec<u8>,
-    61→}
+      →    …
     66→    pub fn new …
    166→    pub fn copy_theme …
 
@@ -319,8 +305,19 @@ crates/mdbook-html/src/utils.rs
 
 crates/mdbook-markdown/Cargo.toml
      1→[package]
+     2→name = "mdbook-markdown"
+     3→version = "0.5.2"
+     4→description = "Markdown processing used in mdBook"
+     5→edition.workspace = true
+     6→license.workspace = true
+     7→repository.workspace = true
+     8→rust-version.workspace = true
     10→[dependencies]
+    11→pulldown-cmark.workspace = true
+    12→regex.workspace = true
+    13→tracing.workspace = true
     15→[lints]
+    16→workspace = true
 
 crates/mdbook-markdown/README.md
      1→# mdbook-markdown
@@ -331,8 +328,6 @@ crates/mdbook-markdown/README.md
 
 crates/mdbook-markdown/src/lib.rs
     11→pub use pulldown_cmark;
-    13→/// Options for parsing markdown.
-    14→#[non_exhaustive]
     15→pub struct MarkdownOptions {
     16→    /// Enables smart punctuation.
     17→    ///
@@ -385,7 +380,6 @@ crates/mdbook-preprocessor/src/lib.rs
     64→    #[serde(skip)]
     65→    pub chapter_titles: RefCell<HashMap<PathBuf, String>>,
     66→}
-    68→impl PreprocessorContext {
     70→    pub fn new(root: PathBuf, config: Config, renderer: String) -> Self {
     82→pub fn parse_input<R: Read>(reader: R) -> Result<(PreprocessorContext, Book)> {
 
@@ -496,18 +490,12 @@ crates/xtask/README.md
      3→This is a CLI utility for running development commands for mdbook.
      4→See [CONTRIBUTING.md](../../CONTRIBUTING.md) for how to use this.
 
-crates/xtask/src/changelog.rs
-     3→use super::Result;
-
 examples/nop-preprocessor.rs
     75→mod nop_lib {
     79→    pub struct Nop;
     82→        pub fn new() -> Nop {
 
 guide/book.toml
-     1→[book]
-     7→[rust]
-    40→[build]
 
 guide/guide-helper/Cargo.toml
      1→[package]
@@ -540,6 +528,10 @@ guide/src/README.md
     17→Version: {{ mdbook-version }}
     18→</div>
     19→
+    20→**mdBook** is a command line tool to create books with Markdown.
+    21→It is ideal for creating product or API documentation, tutorials, course materials or anything that requires a clean,
+    22→easily navigable and customizable presentation.
+    23→
       →…
 
 guide/src/SUMMARY.md
@@ -554,7 +546,13 @@ guide/src/cli/README.md
      5→
      6→This following sections provide in-depth information on the different commands available.
      7→
-      →…
+     8→* [`mdbook init <directory>`](init.md) --- Creates a new book with minimal boilerplate to start with.
+     9→* [`mdbook build`](build.md) --- Renders the book.
+    10→* [`mdbook watch`](watch.md) --- Rebuilds the book any time a source file changes.
+    11→* [`mdbook serve`](serve.md) --- Runs a web server to view the book, and rebuilds on changes.
+    12→* [`mdbook test`](test.md) --- Tests Rust code samples.
+    13→* [`mdbook clean`](clean.md) --- Deletes the rendered output.
+    14→* [`mdbook completions`](completions.md) --- Support for shell auto-completion.
 
 guide/src/cli/build.md
      1→# The build command
@@ -639,6 +637,16 @@ guide/src/format/README.md
 
 guide/src/format/configuration/README.md
      1→# Configuration
+     3→This section details the configuration options available in the ***book.toml***:
+     4→- **[General]** configuration including the `book`, `rust`, `build` sections
+     5→- **[Preprocessor]** configuration for default and custom book preprocessors
+     6→- **[Renderer]** configuration for the HTML, Markdown and custom renderers
+     7→- **[Environment Variable]** configuration for overriding configuration options in your environment
+     8→
+     9→[General]: general.md
+    10→[Preprocessor]: preprocessors.md
+    11→[Renderer]: renderers.md
+    12→[Environment Variable]: environment-variables.md
 
 guide/src/format/markdown.md
      1→# Markdown
@@ -676,21 +684,6 @@ guide/src/format/theme/README.md
      6→
       →…
 
-guide/src/format/theme/editor.md
-     1→# Editor
-    35→## Customizing the editor
-
-guide/src/format/theme/index-hbs.md
-     1→# index.hbs
-     9→## Data
-    41→## Handlebars helpers
-
-guide/src/format/theme/syntax-highlighting.md
-     1→# Syntax highlighting
-    17→## Supported languages
-    68→## Custom theme
-    82→## Improve default theme
-
 guide/src/guide/README.md
      1→# User guide
      3→This user guide provides an introduction to basic concepts of using mdBook.
@@ -718,14 +711,10 @@ guide/src/guide/reading.md
     54→## Code blocks
 
 src/cmd/build.rs
-     1→use super::command_prelude::*;
-     2→use crate::{get_book_dir, open};
      8→pub fn make_subcommand …
     17→pub fn execute …
 
 src/cmd/clean.rs
-     1→use super::command_prelude::*;
-     2→use crate::get_book_dir;
     11→pub fn make_subcommand …
     19→pub fn execute …
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
@@ -735,22 +724,17 @@ src/cmd/clean.rs
     48→    num_dirs_removed: u64,
     49→    total_bytes_removed: u64,
     50→}
-    52→impl Clean {
-    91→impl fmt::Display for Clean {
 
 src/cmd/command_prelude.rs
-     3→pub use clap::{Arg, ArgMatches, Command, arg};
      7→pub trait CommandExt: Sized {
      8→    fn _arg …
     10→    fn arg_dest_dir …
     26→    fn arg_root_dir …
     37→    fn arg_open …
     42→    fn arg_watcher(self) -> Self {
-    56→impl CommandExt for Command {
     62→pub fn set_dest_dir …
 
 src/cmd/init.rs
-     1→use crate::get_book_dir;
     12→pub fn make_subcommand …
     32→pub fn execute …
     88→fn get_author_name …
@@ -768,17 +752,13 @@ src/cmd/mod.rs
     11→pub mod watch;
 
 src/cmd/serve.rs
-     1→use super::command_prelude::*;
      3→use super::watch;
-     4→use crate::{get_book_dir, open};
     20→const LIVE_RELOAD_ENDPOINT: &str = "__livereload";
     23→pub fn make_subcommand …
     51→pub fn execute …
    109→async fn serve …
 
 src/cmd/test.rs
-     1→use super::command_prelude::*;
-     2→use crate::get_book_dir;
      9→pub fn make_subcommand …
     35→pub fn execute …
 
@@ -790,12 +770,8 @@ src/cmd/watch/poller.rs
     78→struct PathData {
     86→struct Watcher {
     95→impl Watcher {
-   124→    fn set_roots …
-   153→    fn scan …
 
 src/cmd/watch.rs
-     1→use super::command_prelude::*;
-     2→use crate::{get_book_dir, open};
      8→mod native;
      9→mod poller;
     12→pub fn make_subcommand …
@@ -803,12 +779,10 @@ src/cmd/watch.rs
     22→    Poll,
     23→    Native,
     24→}
-    26→impl WatcherKind {
     27→    pub fn from_str …
     37→pub fn execute …
     62→pub fn rebuild_on_change …
 
 src/main.rs
     14→mod cmd;
-    16→const VERSION …
     58→fn create_clap_command() -> Command {

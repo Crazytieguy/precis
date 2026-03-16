@@ -32,7 +32,20 @@ README.md
    111→    - [`P.set`](#pset-patterns)
    112→    - [`P.map`](#pmap-patterns)
    113→    - [`P.when` patterns](#pwhen-patterns)
-      →    …
+   114→    - [`P.not` patterns](#pnot-patterns)
+   115→    - [`P.select` patterns](#pselect-patterns)
+   116→    - [`P.optional` patterns](#poptional-patterns)
+   117→    - [`P.instanceOf` patterns](#pinstanceof-patterns)
+   118→    - [`P.union` patterns](#punion-patterns)
+   119→    - [`P.intersection` patterns](#pintersection-patterns)
+   120→    - [`P.string` predicates](#pstring-predicates)
+   121→    - [`P.number` and `P.bigint` predicates](#pnumber-and-pbigint-predicates)
+   122→  - [Types](#types)
+   123→    - [`P.infer`](#pinfer)
+   124→    - [`P.Pattern`](#pPattern)
+   125→    - [Type inference](#type-inference)
+   126→- [Inspirations](#inspirations)
+   127→
    128→## Sandbox examples
    139→## Getting Started
    143→### Example: a state reducer with ts-pattern
@@ -97,7 +110,7 @@ README.md
   1679→### Type inference
   1766→## Inspirations
 
-benchmarks/package.json
+docs/roadmap.md
 
 docs/v3-to-v4-migration-guide.md
      1→# TS-Pattern v3 to v4 Migration Guide
@@ -124,6 +137,8 @@ jsr.json
      5→    ".": "./src/index.ts",
      6→    "./types": "./src/index.ts",
      7→    "./package.json": "./package.json"
+
+package.json
 
 src/errors.ts
      5→export class NonExhaustiveError …
@@ -163,7 +178,7 @@ src/is-matching.ts
     53→export function isMatching …
 
 src/match.ts
-    11→const unmatched …
+    11→const unmatched: MatchState<never> = {
     32→export function match …
     47→class MatchExpression …
     48→  constructor …
@@ -247,16 +262,6 @@ src/types/DistributeUnions.ts
    116→        readonly [infer p1, infer p2, infer p3, infer p4]
    117→      ]
    118→    ? [
-   119→        ...FindUnions<a1, p1, [...path, 0]>,
-   120→        ...FindUnions<a2, p2, [...path, 1]>,
-   121→        ...FindUnions<a3, p3, [...path, 2]>,
-   122→        ...FindUnions<a4, p4, [...path, 3]>
-   123→      ]
-   124→    : [a, p] extends [
-   125→        readonly [infer a1, infer a2, infer a3],
-   126→        readonly [infer p1, infer p2, infer p3]
-   127→      ]
-   128→    ? [
       →    …
 
 src/types/InvertPattern.ts
@@ -300,16 +305,6 @@ src/types/Match.ts
     51→      selections: FindSelected<value, p>,
     52→      value: value
     53→    ) => PickReturnValue<o, c>
-    54→  ): InvertPatternForExclude<p, value> extends infer excluded
-    55→    ? Match<
-    56→        Exclude<i, excluded>,
-    57→        o,
-    58→        [...handledCases, excluded],
-    59→        Union<inferredOutput, c>
-    60→      >
-    61→    : never;
-    62→
-    63→  with<
    132→  with …
    159→  when …
    180→  otherwise …
@@ -379,3 +374,7 @@ src/types/helpers.ts
    184→  : fn extends (value: infer a) => unknown
    185→  ? a
    186→  : never;
+
+tests/types-catalog/utils.ts
+
+tsconfig.json

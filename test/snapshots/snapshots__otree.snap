@@ -9,7 +9,11 @@ Cargo.toml
     13→[dependencies]
     34→[build-dependencies]
     38→[profile.release]
+    39→lto = true
+      →…
     43→[lints.clippy]
+    44→pedantic = { level = "warn", priority = -1 }
+      →…
 
 README.md
      1→# OTree - Object Tree TUI Viewer
@@ -24,12 +28,12 @@ README.md
 
 build.rs
 
-config/default.toml
-
 docs/actions.md
      1→# All Available Actions
      3→| Action                    | Default Keys              | Description                                                  |
      4→| ------------------------- | ------------------------- | ------------------------------------------------------------ |
+     5→| move_up                   | `k`, `<up>`               | Move cursor up                                               |
+     6→| move_down                 | `j`, `<down>`             | Move cursor down                                             |
       →…
 
 src/clipboard.rs
@@ -372,7 +376,6 @@ src/ui/app.rs
     87→    Edit(Box<Edit>),
     88→    Quit,
     89→}
-    91→impl App {
    101→    #[expect(clippy::needless_pass_by_value)]
    102→    pub fn new(cfg: Rc<Config>, tree: Tree, fw: Option<FileWatcher>) -> Self {
    133→    pub fn set_header …
@@ -381,7 +384,6 @@ src/ui/app.rs
 
 src/ui/data_block.rs
     16→pub struct DataBlock {
-    32→impl DataBlock {
     35→    pub fn new …
     50→    pub fn on_key …
     62→    pub fn on_scroll …
@@ -407,14 +409,12 @@ src/ui/filter.rs
     36→    Value,
     37→    All,
     38→}
-    40→impl Filter {
     41→    pub fn new …
     52→    pub fn on_key …
     94→    pub fn get_options …
    102→    pub fn set_target …
    106→    pub fn switch_ignore_case …
    119→    pub fn draw …
-   152→impl FilterOptions {
    153→    pub fn filter …
 
 src/ui/footer.rs
@@ -424,16 +424,13 @@ src/ui/footer.rs
     13→    None,
     14→}
     16→pub struct Footer {
-    20→impl Footer {
     21→    pub fn new …
     25→    pub fn draw …
 
 src/ui/header.rs
     11→pub struct HeaderContext {
-    18→impl HeaderContext {
     19→    pub fn new …
     41→pub struct Header {
-    46→impl Header {
     47→    pub fn new …
     55→    pub fn draw …
 
@@ -450,7 +447,6 @@ src/ui/mod.rs
 src/ui/popup.rs
     13→pub struct PopupData {
     18→pub struct Popup {
-    26→impl Popup {
     27→    pub fn new …
     35→    pub fn set_data …
     39→    pub fn on_key …
@@ -462,7 +458,6 @@ src/ui/popup.rs
 
 src/ui/tree_overview.rs
     19→pub struct TreeOverview {
-    32→impl TreeOverview {
     36→    pub fn new …
     51→    pub fn get_selected …
     59→    pub fn get_root_identifies …
@@ -475,5 +470,3 @@ src/ui/tree_overview.rs
    319→    pub fn begin_filter …
    325→    pub fn end_filter …
    335→    pub fn filter …
-
-typos.toml
