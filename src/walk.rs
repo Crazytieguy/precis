@@ -139,33 +139,31 @@ pub fn classify_file(path: &Path) -> crate::schedule::FileCategory {
 
         // Compound directory names with test-related segments
         // (workspace crates like "foo-test-utils", "my-integration-suite")
-        if let Some(name) = s.to_str() {
-            if (name.contains('-') || name.contains('_'))
-                && name.split(['-', '_']).any(|seg| {
-                    matches!(
-                        seg,
-                        "test" | "tests" | "testing" | "bench" | "benches"
-                        | "benchmark" | "benchmarks" | "mock" | "mocks"
-                        | "fixture" | "fixtures" | "integration"
-                    )
-                })
-            {
-                return FileCategory::Test;
-            }
+        if let Some(name) = s.to_str()
+            && (name.contains('-') || name.contains('_'))
+            && name.split(['-', '_']).any(|seg| {
+                matches!(
+                    seg,
+                    "test" | "tests" | "testing" | "bench" | "benches"
+                    | "benchmark" | "benchmarks" | "mock" | "mocks"
+                    | "fixture" | "fixtures" | "integration"
+                )
+            })
+        {
+            return FileCategory::Test;
         }
     }
 
     // Check filename conventions for test files
-    if let Some(stem) = path.file_stem().and_then(|s| s.to_str()) {
-        if stem.ends_with(".test")
+    if let Some(stem) = path.file_stem().and_then(|s| s.to_str())
+        && (stem.ends_with(".test")
             || stem.ends_with(".test-d")
             || stem.ends_with(".spec")
             || stem.starts_with("test_")
             || stem.ends_with("_test")
-            || stem == "conftest"
-        {
-            return FileCategory::Test;
-        }
+            || stem == "conftest")
+    {
+        return FileCategory::Test;
     }
 
     FileCategory::Source

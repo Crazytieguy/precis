@@ -691,9 +691,11 @@ fn mark_reexports(symbols: &mut [Symbol]) {
 
 /// Collapse duplicate symbols with the same name and kind, keeping only the first occurrence.
 /// Handles three patterns:
+///
 ///   1. TypeScript/C++ function overloads (consecutive, same name)
 ///   2. C/C++ #ifdef branches (same struct defined for different platforms, may be non-consecutive)
 ///   3. C amalgamation files where embedded deps define the same struct as the main code
+///
 /// Go is excluded because it allows multiple `init()` functions in one file.
 fn dedup_overloads(symbols: Vec<Symbol>, lang: Lang) -> Vec<Symbol> {
     if lang == Lang::Go {
