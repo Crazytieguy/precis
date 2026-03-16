@@ -891,26 +891,16 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
         * boilerplate_factor * autogen_api_doc_factor * reexport_factor;
 
     let stage_value = match key.kind_category {
-        // Type bodies (struct fields, interface props, dataclass fields)
-        // define data schemas — the most architecturally important content
-        // for understanding a type system. High Body value + gentle n-decay
-        // (below) ensures field lists compete with cheap function signatures.
-        KindCategory::Type => match stage {
+        // Type/Enum bodies (struct fields, enum variants, interface props)
+        // define data schemas — architecturally important content. High Body
+        // value + gentle n-decay (below) ensures fields/variants compete
+        // with cheap function signatures. Enum variants get slightly higher
+        // Body value because they define type taxonomies.
+        KindCategory::Type | KindCategory::Enum => match stage {
             StageKind::FilePath => 0.3,
             StageKind::Names => 1.0,
             StageKind::Signatures => 0.7,
-            StageKind::Body => 1.2,
-            StageKind::Doc => 0.4,
-        },
-        // Enum variant lists define type taxonomies — the most
-        // architecturally important content for understanding a type system.
-        // High Body value + gentle n-decay (below) ensures variants
-        // compete with cheap struct signature items.
-        KindCategory::Enum => match stage {
-            StageKind::FilePath => 0.3,
-            StageKind::Names => 1.0,
-            StageKind::Signatures => 0.7,
-            StageKind::Body => 1.5,
+            StageKind::Body => if key.kind_category == KindCategory::Enum { 1.5 } else { 1.2 },
             StageKind::Doc => 0.4,
         },
         // Section body is the actual content — README prose, architecture
