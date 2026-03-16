@@ -388,6 +388,18 @@ mod tests {
         assert_eq!(classify_file(Path::new("crates/foo-test-utils/src/lib.rs")), Test);
         assert_eq!(classify_file(Path::new("crates/my-integration-suite/src/setup.rs")), Test);
         assert_eq!(classify_file(Path::new("crates/my-mock-server/src/lib.rs")), Test);
+        // Changelog directories
+        assert_eq!(classify_file(Path::new("changelog/README.rst")), Test);
+        assert_eq!(classify_file(Path::new("changelogs/1234.md")), Test);
+        // Storybook directories
+        assert_eq!(classify_file(Path::new("stories/Button.stories.tsx")), Test);
+        assert_eq!(classify_file(Path::new(".storybook/config.js")), Test);
+        // Contribute directories
+        assert_eq!(classify_file(Path::new("contribute/demo.py")), Test);
+        // RFC directories
+        assert_eq!(classify_file(Path::new("rfcs/0001-design.md")), DocsSite);
+        // GitLab CI
+        assert_eq!(classify_file(Path::new(".gitlab/ci.yml")), CiConfig);
         // Normal source files
         assert_eq!(classify_file(Path::new("src/main.rs")), Source);
         assert_eq!(classify_file(Path::new("index.ts")), Source);
