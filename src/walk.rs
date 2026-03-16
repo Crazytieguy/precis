@@ -60,7 +60,7 @@ fn is_unsupported_code_extension(ext: &str) -> bool {
         // ML/functional languages
         | "hs" | "ml" | "mli" | "fs" | "fsi" | "ex" | "exs" | "erl" | "elm" | "purs" | "gleam"
         // Modern languages
-        | "dart" | "zig" | "nim" | "r" | "jl"
+        | "dart" | "zig" | "nim" | "r" | "jl" | "mojo"
         // GPU/shader languages
         | "cu" | "cuh" | "wgsl"
         // Web component languages (contain logic + template)
