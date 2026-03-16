@@ -9,9 +9,9 @@
 // like separate crates in a workspace or packages in a monorepo.
 //
 // Budget guidelines:
-//   1000 — small focused submodules (a few files)
-//   2000 — typical libraries and most entries (the CLI default)
-//   4000 — large multi-crate workspaces and monorepos
+//   2000 — small focused submodules (a few files)
+//   4000 — typical libraries and most entries (the CLI default)
+//   8000 — large multi-crate workspaces and monorepos
 
 with_fixtures! {
     // Rust
@@ -63,78 +63,78 @@ with_fixtures! {
 
 with_entries! {
     // ── Rust ────────────────────────────────────────────────────────────
-    (anyhow,                  "anyhow",                         2000), // inspected: exceeds explore
-    (thiserror,               "thiserror",                      2000), // inspected: exceeds explore
-    (thiserror_impl_src,      "thiserror/impl/src",             1000), // inspected: exceeds explore
-    (log,                     "log",                            2000), // inspected: logged observation
-    (log_src_kv,              "log/src/kv",                     1000), // inspected: logged observation
-    (mdbook,                  "mdbook",                         4000), // inspected: logged observation
-    (mdbook_guide_src,        "mdbook/guide/src",               2000), // inspected: logged observation
-    (toasty,                  "toasty",                         4000), // inspected: logged observation
-    (toasty_core,             "toasty/crates/toasty-core",      2000), // inspected: logged observation
-    (toasty_codegen,          "toasty/crates/toasty-codegen",   2000), // inspected: logged observation
-    (sps,                     "sps",                            4000), // inspected: logged observation
-    (sps_core,                "sps/sps-core",                   2000), // inspected: logged observation
-    (otree,                   "otree",                          2000), // inspected: logged observation
+    (anyhow,                  "anyhow",                         4000),
+    (thiserror,               "thiserror",                      4000),
+    (thiserror_impl_src,      "thiserror/impl/src",             2000),
+    (log,                     "log",                            4000),
+    (log_src_kv,              "log/src/kv",                     2000),
+    (mdbook,                  "mdbook",                         8000),
+    (mdbook_guide_src,        "mdbook/guide/src",               4000),
+    (toasty,                  "toasty",                         8000),
+    (toasty_core,             "toasty/crates/toasty-core",      4000),
+    (toasty_codegen,          "toasty/crates/toasty-codegen",   4000),
+    (sps,                     "sps",                            8000),
+    (sps_core,                "sps/sps-core",                   4000),
+    (otree,                   "otree",                          4000),
 
     // ── Go ──────────────────────────────────────────────────────────────
-    (go_multierror,           "go-multierror",                  2000), // inspected: exceeds explore
-    (xxhash,                  "xxhash",                         2000), // inspected: exceeds explore
-    (xxhash_xxhsum,           "xxhash/xxhsum",                  1000), // inspected: exceeds explore
-    (mcphost,                 "mcphost",                        4000), // inspected: logged observation
-    (mcphost_sdk,             "mcphost/sdk",                    1000), // inspected: exceeds explore
-    (tock,                    "tock",                            4000), // inspected: deprioritize mocks/
-    (tock_internal_core,      "tock/internal/core",             1000), // inspected: deprioritize mocks/
+    (go_multierror,           "go-multierror",                  4000),
+    (xxhash,                  "xxhash",                         4000),
+    (xxhash_xxhsum,           "xxhash/xxhsum",                  2000),
+    (mcphost,                 "mcphost",                        8000),
+    (mcphost_sdk,             "mcphost/sdk",                    2000),
+    (tock,                    "tock",                            8000),
+    (tock_internal_core,      "tock/internal/core",             2000),
 
     // ── TypeScript ──────────────────────────────────────────────────────
-    (cmdk,                    "cmdk",                           2000), // inspected: logged observation
-    (cmdk_cmdk_src,           "cmdk/cmdk/src",                  1000), // inspected: logged observation
-    (vaul,                    "vaul",                            2000), // inspected: logged observation
-    (ts_pattern,              "ts-pattern",                     2000), // inspected: logged observation
-    (ts_pattern_src_types,    "ts-pattern/src/types",           1000), // inspected: logged observation
-    (ky,                      "ky",                              2000), // inspected: logged observation
-    (ky_source_errors,        "ky/source/errors",               1000), // inspected: exceeds explore
-    (superstruct,             "superstruct",                    2000), // inspected: logged observation
-    (superstruct_src_structs, "superstruct/src/structs",        1000), // inspected: logged observation
-    (mitt,                    "mitt",                            1000), // inspected: logged observation
-    (enclosed,                "enclosed",                        4000), // inspected: deprioritize locale data files
-    (enclosed_crypto,         "enclosed/packages/crypto",       1000), // inspected: logged observation
-    (enclosed_lib,            "enclosed/packages/lib",          1000), // inspected: logged observation
-    (d2ts,                    "d2ts",                            2000), // inspected: logged observation
-    (d2ts_d2ts,               "d2ts/packages/d2ts",             2000), // inspected: logged observation
+    (cmdk,                    "cmdk",                           4000),
+    (cmdk_cmdk_src,           "cmdk/cmdk/src",                  2000),
+    (vaul,                    "vaul",                            4000),
+    (ts_pattern,              "ts-pattern",                     4000),
+    (ts_pattern_src_types,    "ts-pattern/src/types",           2000),
+    (ky,                      "ky",                              4000),
+    (ky_source_errors,        "ky/source/errors",               2000),
+    (superstruct,             "superstruct",                    4000),
+    (superstruct_src_structs, "superstruct/src/structs",        2000),
+    (mitt,                    "mitt",                            2000),
+    (enclosed,                "enclosed",                        8000),
+    (enclosed_crypto,         "enclosed/packages/crypto",       2000),
+    (enclosed_lib,            "enclosed/packages/lib",          2000),
+    (d2ts,                    "d2ts",                            4000),
+    (d2ts_d2ts,               "d2ts/packages/d2ts",             4000),
 
     // ── JavaScript ──────────────────────────────────────────────────────
-    (commander,               "commander",                      2000), // inspected: logged observation
-    (semver,                  "semver",                          2000), // inspected: deprioritize .github/
-    (semver_classes,          "semver/classes",                  1000), // inspected: exceeds explore
-    (semver_internal,         "semver/internal",                 1000), // inspected: exceeds explore
+    (commander,               "commander",                      4000),
+    (semver,                  "semver",                          4000),
+    (semver_classes,          "semver/classes",                  2000),
+    (semver_internal,         "semver/internal",                 2000),
 
     // ── Python ──────────────────────────────────────────────────────────
-    (pluggy,                  "pluggy",                          2000), // inspected: logged observation
-    (typeguard,               "typeguard",                      2000), // inspected: logged observation
-    (tomli,                   "tomli",                           2000), // inspected: logged observation
-    (peepdb,                  "peepdb",                          2000), // inspected: logged observation
-    (peepdb_db,               "peepdb/peepdb/db",               1000), // inspected: logged observation
-    (swarm,                   "swarm",                           2000), // inspected: logged observation
-    (htmy,                    "htmy",                            2000), // inspected: logged observation
-    (htmy_renderer,           "htmy/htmy/renderer",             1000), // inspected: exceeds explore
-    (microbootstrap,          "microbootstrap",                 2000), // inspected: logged observation
-    (microbootstrap_instruments, "microbootstrap/microbootstrap/instruments", 1000), // inspected: logged observation
-    (py3xui,                  "py3xui",                          2000), // inspected: logged observation
-    (py3xui_api,              "py3xui/py3xui/api",              1000), // inspected: logged observation
+    (pluggy,                  "pluggy",                          4000),
+    (typeguard,               "typeguard",                      4000),
+    (tomli,                   "tomli",                           4000),
+    (peepdb,                  "peepdb",                          4000),
+    (peepdb_db,               "peepdb/peepdb/db",               2000),
+    (swarm,                   "swarm",                           4000),
+    (htmy,                    "htmy",                            4000),
+    (htmy_renderer,           "htmy/htmy/renderer",             2000),
+    (microbootstrap,          "microbootstrap",                 4000),
+    (microbootstrap_instruments, "microbootstrap/microbootstrap/instruments", 2000),
+    (py3xui,                  "py3xui",                          4000),
+    (py3xui_api,              "py3xui/py3xui/api",              2000),
 
     // ── Python (ML) ─────────────────────────────────────────────────────
-    (xlstm,                   "xlstm",                           2000), // inspected: logged observation
-    (xlstm_blocks,            "xlstm/xlstm/blocks",             1000), // inspected: logged observation
-    (nano_vllm,               "nano-vllm",                      2000), // inspected: logged observation
-    (nano_vllm_engine,        "nano-vllm/nanovllm/engine",      1000), // inspected: logged observation
-    (chronos,                 "chronos-forecasting",             2000), // inspected: exceeds explore
+    (xlstm,                   "xlstm",                           4000),
+    (xlstm_blocks,            "xlstm/xlstm/blocks",             2000),
+    (nano_vllm,               "nano-vllm",                      4000),
+    (nano_vllm_engine,        "nano-vllm/nanovllm/engine",      2000),
+    (chronos,                 "chronos-forecasting",             4000),
 
     // ── C ───────────────────────────────────────────────────────────────
-    (sds,                     "sds",                             1000), // inspected: logged observation
-    (neco,                    "neco",                            1000), // inspected: logged observation
-    (bareiron,                "bareiron",                        2000), // inspected: logged observation
-    (krep,                    "krep",                            1000), // inspected: logged observation
-    (sqlite_vec,              "sqlite-vec",                     2000), // inspected: logged observation
-    (soluna,                  "soluna",                          2000), // inspected: logged observation
+    (sds,                     "sds",                             2000),
+    (neco,                    "neco",                            2000),
+    (bareiron,                "bareiron",                        4000),
+    (krep,                    "krep",                            2000),
+    (sqlite_vec,              "sqlite-vec",                     4000),
+    (soluna,                  "soluna",                          4000),
 }

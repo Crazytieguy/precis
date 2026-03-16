@@ -387,22 +387,22 @@ fn is_config_file(relative_path: &Path, filename: &str) -> bool {
 }
 
 /// Grouping dimensions. All symbols sharing a GroupKey are treated identically.
-/// Groups are per-file: symbols from different files are never pooled together,
-/// even if they share the same directory, kind, and visibility. This prevents
-/// large directories (many files with many methods) from creating oversized
-/// groups whose Names cost outweighs their per-token priority.
-///
-/// Only includes dimensions that can differ between symbols in the same file.
-/// File-level properties (file_role, is_test, etc.) are stored on [`Group`]
-/// since `file_path` already ensures per-file separation.
+/// Symbols from different files in the same directory with matching properties
+/// are pooled together. This ensures similar symbols are shown or hidden as a
+/// unit — if we can't distinguish their value, showing an arbitrary subset is
+/// more confusing than showing all or none.
 #[derive(Debug, Clone, Hash, Eq, PartialEq, Ord, PartialOrd)]
 pub struct GroupKey {
     pub is_public: bool,
     pub kind_category: KindCategory,
-    /// Relative file path (from project root). Per-file grouping ensures
-    /// each file's symbols compete independently in the scheduler.
-    pub file_path: PathBuf,
+    /// Parent directory (relative to project root). Symbols from different
+    /// files in the same directory are grouped together.
+    pub parent_dir: PathBuf,
     pub is_documented: bool,
+    pub file_role: FileRole,
+    pub is_test: bool,
+    pub is_type_declaration: bool,
+    pub is_autogen_api_doc: bool,
     /// Whether this group is build/tool config. Per-symbol because TOML
     /// `[tool.*]` sections are config while `[package]` is not.
     pub is_config: bool,
@@ -458,29 +458,6 @@ pub struct Group {
     pub max_doc_n: usize,
     /// Cached: max body lines across all symbols in this group.
     pub max_body_n: usize,
-
-    // --- File-level properties (same for all groups sharing a file_path) ---
-
-    pub file_role: FileRole,
-    /// Whether the file is test/benchmark/example infrastructure.
-    pub is_test: bool,
-    /// Whether the file is a TypeScript declaration file (.d.ts).
-    pub is_type_declaration: bool,
-    /// Whether the file is an auto-generated API doc README.
-    pub is_autogen_api_doc: bool,
-
-    // --- Cross-group statistics (computed after initial grouping) ---
-
-    /// Position within a split group (0 = first chunk). `None` if the group
-    /// was never split.
-    pub split_position: Option<usize>,
-    /// Number of unique files in the same parent directory that have groups
-    /// of the same kind_category. Used to deprioritize repetitive sibling files.
-    pub dir_cohort_files: usize,
-    /// Average symbols per file in this directory cohort.
-    pub dir_cohort_avg_symbols: f64,
-    /// Size of the largest set of symbols sharing a long common name prefix.
-    pub name_prefix_cohort_max: usize,
 }
 
 impl Group {
@@ -535,30 +512,6 @@ impl IncludedStage {
 // Group construction
 // ---------------------------------------------------------------------------
 
-/// Find the longest "run" of consecutive sorted names where each adjacent pair
-/// shares ≥50% of the shorter name as a common prefix. Returns the run length.
-/// Requires `names` to be sorted.
-fn longest_prefix_run(names: &[&str]) -> usize {
-    if names.len() < 2 {
-        return names.len();
-    }
-    let mut max_run = 1;
-    let mut run = 1;
-    for pair in names.windows(2) {
-        let lcp = pair[0].bytes().zip(pair[1].bytes())
-            .take_while(|(a, b)| a == b)
-            .count();
-        let shorter = pair[0].len().min(pair[1].len());
-        if shorter > 0 && lcp * 2 >= shorter {
-            run += 1;
-        } else {
-            max_run = max_run.max(run);
-            run = 1;
-        }
-    }
-    max_run.max(run)
-}
-
 /// Build groups from extracted symbols, computing per-symbol costs.
 pub fn build_groups(
     root: &Path,
@@ -575,7 +528,7 @@ pub fn build_groups(
             None => continue,
         };
         let relative = file.strip_prefix(root).unwrap_or(file);
-        let file_path = relative.to_path_buf();
+        let parent_dir = relative.parent().unwrap_or(Path::new("")).to_path_buf();
         let lines: Vec<&str> = source.lines().collect();
         let file_role = FileRole::from_path(relative);
         let is_file_config = relative.file_name()
@@ -624,8 +577,12 @@ pub fn build_groups(
             let key = GroupKey {
                 is_public: sym.is_public,
                 kind_category,
-                file_path: file_path.clone(),
+                parent_dir: parent_dir.clone(),
                 is_documented,
+                file_role,
+                is_test,
+                is_type_declaration,
+                is_autogen_api_doc: is_autogen,
                 is_config,
                 heading_depth,
                 is_first_party: sym.is_first_party,
@@ -649,14 +606,6 @@ pub fn build_groups(
                 file_indices: HashSet::new(),
                 max_doc_n: 0,
                 max_body_n: 0,
-                file_role,
-                is_test,
-                is_type_declaration,
-                is_autogen_api_doc: is_autogen,
-                split_position: None,
-                dir_cohort_files: 1,
-                dir_cohort_avg_symbols: 1.0,
-                name_prefix_cohort_max: 0,
             });
             group.max_doc_n = group.max_doc_n.max(costs.doc_line_tokens.len());
             group.max_body_n = group.max_body_n.max(costs.body_line_tokens.len());
@@ -667,103 +616,8 @@ pub fn build_groups(
 
     let mut groups: Vec<Group> = group_map.into_values().collect();
 
-    // Compute directory cohort stats: for each (parent_dir, kind_category),
-    // count unique files and total symbols. Directories with many files
-    // following the same pattern (e.g., 20 adapter files each implementing
-    // the same interface) get a diminishing-returns penalty, modulated by
-    // how uniform the files are (low avg symbols → repetitive, high → diverse).
-    let mut dir_cohorts: HashMap<(PathBuf, KindCategory), (usize, HashSet<PathBuf>)> = HashMap::new();
-    for group in &groups {
-        let parent = group.key.file_path.parent()
-            .unwrap_or(Path::new(""))
-            .to_path_buf();
-        let entry = dir_cohorts
-            .entry((parent, group.key.kind_category))
-            .or_default();
-        entry.0 += group.symbols.len();
-        entry.1.insert(group.key.file_path.clone());
-    }
-    for group in &mut groups {
-        let parent = group.key.file_path.parent()
-            .unwrap_or(Path::new(""))
-            .to_path_buf();
-        if let Some((total_symbols, files)) = dir_cohorts.get(&(parent, group.key.kind_category)) {
-            group.dir_cohort_files = files.len();
-            group.dir_cohort_avg_symbols = *total_symbols as f64 / files.len() as f64;
-        }
-    }
-
-    groups = split_large_groups(groups);
-
-    // Compute name prefix cohort: for each group, find the largest set of
-    // symbols sharing a long common name prefix. When many symbols follow a
-    // naming pattern (e.g., vec0_column_idx_is_*, vec0_column_idx_to_*),
-    // additional names beyond a few are predictable.
-    for group in &mut groups {
-        if group.symbols.len() < 5 {
-            continue;
-        }
-        let mut names: Vec<&str> = group.symbols.iter()
-            .map(|sc| all_symbols[sc.file_idx][sc.symbol_idx].name.as_str())
-            .collect();
-        names.sort_unstable();
-        group.name_prefix_cohort_max = longest_prefix_run(&names);
-    }
-
     groups.sort_by(|a, b| a.key.cmp(&b.key));
     groups
-}
-
-/// Maximum number of symbols per group. Groups exceeding this threshold
-/// are split into roughly equal sub-groups. This prevents the "Names-stage
-/// cliff" where a group with 60+ symbols has an all-or-nothing cost at
-/// the Names stage — the entire lump sum must fit within the remaining
-/// budget, or the group stays at FilePath showing no symbols at all.
-/// Splitting into sub-groups of ≤20 symbols keeps the per-group Names
-/// cost manageable (~100–200 tokens), allowing partial inclusion when
-/// the full set wouldn't fit.
-const MAX_GROUP_SIZE: usize = 20;
-
-fn split_large_groups(groups: Vec<Group>) -> Vec<Group> {
-    let mut result = Vec::with_capacity(groups.len());
-    for group in groups {
-        let count = group.symbols.len();
-        if count <= MAX_GROUP_SIZE {
-            result.push(group);
-            continue;
-        }
-        // Split into roughly equal sub-groups.
-        // ceiling division: number of sub-groups needed
-        let n_subgroups = count.div_ceil(MAX_GROUP_SIZE);
-        let base_size = count / n_subgroups;
-        let remainder = count % n_subgroups;
-        let mut offset = 0;
-        for i in 0..n_subgroups {
-            // Distribute remainder across the first `remainder` sub-groups
-            let chunk_size = base_size + if i < remainder { 1 } else { 0 };
-            let chunk: Vec<SymbolCosts> = group.symbols[offset..offset + chunk_size].to_vec();
-            let file_indices: HashSet<usize> = chunk.iter().map(|s| s.file_idx).collect();
-            let max_doc_n = chunk.iter().map(|s| s.doc_line_tokens.len()).max().unwrap_or(0);
-            let max_body_n = chunk.iter().map(|s| s.body_line_tokens.len()).max().unwrap_or(0);
-            result.push(Group {
-                key: group.key.clone(),
-                symbols: chunk,
-                file_indices,
-                max_doc_n,
-                max_body_n,
-                file_role: group.file_role,
-                is_test: group.is_test,
-                is_type_declaration: group.is_type_declaration,
-                is_autogen_api_doc: group.is_autogen_api_doc,
-                split_position: Some(i),
-                dir_cohort_files: group.dir_cohort_files,
-                dir_cohort_avg_symbols: group.dir_cohort_avg_symbols,
-                name_prefix_cohort_max: 0,
-            });
-            offset += chunk_size;
-        }
-    }
-    result
 }
 
 /// Token cost of the truncation marker that would appear after a given source line.
@@ -909,21 +763,18 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     // meaningful hierarchy. Without this, `src/pluggy/_manager.py` (depth 2, factor
     // 0.7) would be penalized relative to `docs/conf.py` (depth 1, factor 1.0),
     // even though the source code is more valuable than build configuration.
-    let parent_dir = key.file_path.parent().unwrap_or(Path::new(""));
-    let depth = effective_depth(parent_dir);
+    let depth = effective_depth(&key.parent_dir);
     let depth_factor = match depth {
         0..=1 => 1.0,
         2..=3 => 0.7,
         _ => 0.4,
     };
 
-    // Groups with many symbols: each individual symbol is less important.
-    // Gentle log decay: 1 sym → 1.0, 2 → 0.94, 5 → 0.86, 10 → 0.81, 50 → 0.72.
-    let sibling_count = group.symbols.len().max(1) as f64;
-    let sibling_factor = 1.0 / (1.0 + sibling_count.ln() * 0.1);
+    // No sibling_factor here — group size is handled by count_factor
+    // in the Names/Signatures stages via sqrt scaling.
 
     // File role: README files are high-signal, changelogs/translations/metadata are low-signal.
-    let file_role_factor = match group.file_role {
+    let file_role_factor = match key.file_role {
         FileRole::Architecture => 3.0,
         FileRole::Readme => 1.5,
         FileRole::Normal => 1.0,
@@ -938,11 +789,11 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     let config_factor = if key.is_config { 0.1 } else { 1.0 };
 
     // Test/benchmark/example files are infrastructure, not core API.
-    let test_factor = if group.is_test { 0.15 } else { 1.0 };
+    let test_factor = if key.is_test { 0.15 } else { 1.0 };
 
     // TypeScript declaration files (.d.ts) duplicate API signatures already
     // shown from .js/.ts source files. Deprioritize so source files win.
-    let type_declaration_factor = if group.is_type_declaration { 0.15 } else { 1.0 };
+    let type_declaration_factor = if key.is_type_declaration { 0.15 } else { 1.0 };
 
     // Heading depth: top-level headings (h1, h2) are more important than
     // subsections (h3+). This lets the scheduler show body content for
@@ -975,56 +826,17 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
 
     // Auto-generated API doc READMEs (pdoc, sphinx, etc.) contain class/method
     // listings that are 100% redundant with source code signatures.
-    let autogen_api_doc_factor = if group.is_autogen_api_doc { 0.1 } else { 1.0 };
+    let autogen_api_doc_factor = if key.is_autogen_api_doc { 0.1 } else { 1.0 };
 
     // Rust `pub use` re-exports from child modules (e.g. `pub use self::foo::*`,
     // `pub use bar::Baz` where `mod bar` is declared). These are redundant when
     // precis also shows the submodule's own symbols.
     let reexport_factor = if key.is_reexport { 0.1 } else { 1.0 };
 
-    // Directory cohort penalty: when many files in the same directory have
-    // groups of the same kind_category, they likely follow the same structural
-    // pattern (e.g., 20 operator files each with class + factory function,
-    // 8 database adapters each implementing the same interface). After a few
-    // examples the pattern is clear; additional files add diminishing info.
-    //
-    // The penalty is modulated by how uniform the files are. When average
-    // symbols per file is low (1-2), files are likely copies of the same
-    // template (e.g., each exports one install_* function). When average is
-    // high (5+), files are diverse and shouldn't be penalized — a directory
-    // with 10 files of 20 functions each is a normal codebase, not a pattern.
-    let dir_cohort_factor = {
-        let n = group.dir_cohort_files as f64;
-        if n <= 5.0 {
-            1.0
-        } else {
-            let base = 5.0 / n;
-            // uniformity: 1.0 when avg=1 (all files have 1 symbol), 0.0 when avg>=5
-            let uniformity = ((5.0 - group.dir_cohort_avg_symbols) / 4.0).clamp(0.0, 1.0);
-            // Blend: full penalty when files are uniform, no penalty when diverse
-            1.0 - (1.0 - base) * uniformity
-        }
-    };
-
-    // Name prefix cohort: when many symbols in a group share a long common
-    // name prefix (e.g., vec0_column_idx_is_*, vec0_column_idx_to_*), the
-    // naming pattern is obvious after a few examples. Additional names are
-    // predictable and add diminishing information compared to diverse names.
-    let name_prefix_cohort_factor = {
-        let cohort = group.name_prefix_cohort_max as f64;
-        if cohort >= 5.0 {
-            // 5 → 1.0, 8 → 0.63, 10 → 0.50, 15 → 0.33, 20 → 0.25
-            5.0 / cohort
-        } else {
-            1.0
-        }
-    };
-
-    let base_value = visibility * documented * depth_factor * sibling_factor
+    let base_value = visibility * documented * depth_factor
         * file_role_factor * config_factor * test_factor * type_declaration_factor
         * heading_depth_factor * first_party_factor * trait_impl_factor
-        * boilerplate_factor * autogen_api_doc_factor * reexport_factor
-        * dir_cohort_factor * name_prefix_cohort_factor;
+        * boilerplate_factor * autogen_api_doc_factor * reexport_factor;
 
     let stage_value = match key.kind_category {
         // Type bodies (struct fields, interface props, dataclass fields)
@@ -1107,48 +919,18 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     // priority because priority = value / cost, and cost grows with N
     // while value was constant. Scale value by N so all groups have the
     // same per-token priority at Names/Signatures regardless of size.
-    // This ensures breadth-first scheduling: all groups reach Names before
-    // any group reaches Doc/Body. The sibling_factor still provides a mild
-    // log-based penalty (28% at N=50) so larger groups don't dominate over
-    // smaller groups with higher base value.
     //
-    // Both Names and Signatures use diminishing returns so that larger
-    // groups have progressively lower per-token priority. After a few
-    // symbols, the pattern is usually clear and additional entries provide
-    // diminishing information.
+    // Scale Names/Signatures value by symbol_count^0.75. Each symbol
+    // name revealed has value, so larger groups should have higher total
+    // value — but sub-linear scaling provides a moderate penalty for
+    // large homogeneous groups, reflecting diminishing information as
+    // the pattern becomes clear.
     //
-    // Names: first 5 at full value, excess at 25%. More generous than
-    // Signatures since names are cheaper tokens and provide structural
-    // overview. Impact: 5 → 5 (100%), 8 → 5.75 (72%), 13 → 7 (54%),
-    // 20 → 8.75 (44%).
-    //
-    // Signatures: first 3 at full value, excess at 15%. More aggressive
-    // since full type annotations are expensive and highly repetitive.
-    // Impact: 3 → 3 (100%), 8 → 3.75 (47%), 12 → 4.35 (36%),
-    // 20 → 5.55 (28%).
+    // Impact: 1 → 1.0, 4 → 2.8, 10 → 5.6, 25 → 11.2, 50 → 18.8, 100 → 31.6
     let sym_count = group.symbols.len().max(1) as f64;
     let count_factor = match stage {
-        StageKind::Names => {
-            let full = sym_count.min(5.0);
-            let excess = (sym_count - 5.0).max(0.0);
-            full + excess * 0.25
-        }
-        StageKind::Signatures => {
-            let full = sym_count.min(3.0);
-            let excess = (sym_count - 3.0).max(0.0);
-            full + excess * 0.15
-        }
+        StageKind::Names | StageKind::Signatures => sym_count.powf(0.75),
         _ => 1.0,
-    };
-
-    // When a large group is split into sub-groups, prefer earlier chunks.
-    // In most code, the most important API methods appear first (constructor,
-    // core operations), while later methods are utilities or edge cases.
-    // Without this, the scheduler may show a later chunk (e.g. helper methods
-    // at line 983) while skipping the first chunk (constructor, parse, action).
-    let split_position_factor = match group.split_position {
-        None | Some(0) => 1.0,
-        Some(pos) => 1.0 / (1.0 + 0.1 * pos as f64),
     };
 
     // Enum variant lists and type field definitions: each line is
@@ -1171,8 +953,7 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
         _ => n as f64,
     };
 
-    base_value * stage_value * private_detail_penalty * count_factor * split_position_factor
-        / n_decay
+    base_value * stage_value * private_detail_penalty * count_factor / n_decay
 }
 
 // ---------------------------------------------------------------------------

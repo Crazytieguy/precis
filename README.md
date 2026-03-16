@@ -27,7 +27,7 @@ precis .                   # summarize the current directory
 precis ./src --budget 4000 # with a larger token budget
 ```
 
-The default budget is 2000 BPE tokens (o200k_base tokenizer). Output is plain text with line numbers preserving source indentation.
+The default budget is 4000 BPE tokens (o200k_base tokenizer). Output is plain text with line numbers preserving source indentation.
 
 ### Give your AI agent codebase context
 

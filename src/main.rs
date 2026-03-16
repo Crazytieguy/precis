@@ -10,7 +10,7 @@ struct Cli {
     path: PathBuf,
 
     /// Token budget for output
-    #[arg(long, default_value = "2000")]
+    #[arg(long, default_value = "4000")]
     budget: usize,
 
     /// Output as JSON
