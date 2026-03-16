@@ -2,7 +2,9 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7998 tokens)
+budget: 8000 (7999 tokens)
+
+AGENTS.md
 
 README.md
      1→# MCPHost 🤖
@@ -17,36 +19,9 @@ README.md
     85→## Environment Setup 🔧
    124→## Installation 📦
    130→## SDK Usage 🛠️
-   134→### Quick Example
-   165→### SDK Features
    176→## Configuration ⚙️
-   178→### MCP Servers
-   189→### Environment Variable Substitution
-   225→### Simplified Configuration Schema
-   361→### Tool Filtering
-   387→### Legacy Configuration Support
-   449→### Transport Types
-   462→### System Prompt
    488→## Usage 🚀
-   492→### Interactive Mode (Default)
-   500→### Script Mode
-   562→##### Variable Syntax
-   594→##### Usage Examples
-   615→##### Default Value Features
-   648→### Hooks System
-   714→### Non-Interactive Mode
-   729→### Model Generation Parameters
-   752→### Available Models
-   760→### Examples
-   795→### Flags
-   809→### Authentication Subcommands
-   823→### Configuration File Support
-   872→### Interactive Commands
-   882→### Authentication Commands
-   889→### Global Flags
    892→## Automation & Scripting 🤖
-   896→### Use Cases
-   938→### Tips for Scripting
    967→## MCP Server Compatibility 🔌
    971→## Contributing 🤝
    981→## License 📄
@@ -142,12 +117,6 @@ contribute/contribute.md
     16→      ./build.sh
     17→   ```
     18→
-    19→4. open `boost.sh` file and fill your model info in.
-    20→   ```bash
-    21→      cat boost.sh
-    22→      vi boost.sh
-    23→   ```
-    24→
       →…
     30→## Contribute your code
     31→just write your code and push it.
@@ -365,11 +334,11 @@ internal/models/anthropic/anthropic.go
     32→	// wrapped is the underlying HTTP transport to use for actual requests
     33→	wrapped http.RoundTripper
     34→}
-    52→func NewCustomChatModel(ctx context.Context, config *einoclaude.Config) (*CustomChatModel, error) {
-    92→func (rt *CustomRoundTripper) RoundTrip(req *http.Request) (*http.Response, error) {
-   244→func (m *CustomChatModel) Generate(ctx context.Context, input []*schema.Message, opts ...model.Option) (*schema.Message, error) {
-   260→func (m *CustomChatModel) Stream(ctx context.Context, input []*schema.Message, opts ...model.Option) (*schema.StreamReader[*schema.Message], error) {
-   274→func (m *CustomChatModel) WithTools(tools []*schema.ToolInfo) (model.ToolCallingChatModel, error) {
+    52→func NewCustomChatModel …
+    92→func (rt *CustomRoundTripper) RoundTrip …
+   244→func (m *CustomChatModel) Generate …
+   260→func (m *CustomChatModel) Stream …
+   274→func (m *CustomChatModel) WithTools …
 
 internal/models/gemini/gemini.go
     43→func NewChatModel(_ context.Context, cfg *Config) (*ChatModel, error) {
@@ -387,7 +356,33 @@ internal/models/gemini/gemini.go
     69→	MaxTokens *int
     70→
     71→	// Temperature controls randomness in responses
-      →	…
+    72→	// Range: [0.0, 1.0], where 0.0 is more focused and 1.0 is more creative
+    73→	// Optional. Example: temperature := float32(0.7)
+    74→	Temperature *float32
+    75→
+    76→	// TopP controls diversity via nucleus sampling
+    77→	// Range: [0.0, 1.0], where 1.0 disables nucleus sampling
+    78→	// Optional. Example: topP := float32(0.95)
+    79→	TopP *float32
+    80→
+    81→	// TopK controls diversity by limiting the top K tokens to sample from
+    82→	// Optional. Example: topK := int32(40)
+    83→	TopK *int32
+    84→
+    85→	// ResponseSchema defines the structure for JSON responses
+    86→	// Optional. Used when you want structured output in JSON format
+    87→	ResponseSchema *jsonschema.Schema
+    88→
+    89→	// EnableCodeExecution allows the model to execute code
+    90→	// Warning: Be cautious with code execution in production
+    91→	// Optional. Default: false
+    92→	EnableCodeExecution bool
+    93→
+    94→	// SafetySettings configures content filtering for different harm categories
+    95→	// Controls the model's filtering behavior for potentially harmful content
+    96→	// Optional.
+    97→	SafetySettings []*genai.SafetySetting
+    98→}
    103→type options struct {
    113→type ChatModel struct {
    114→	// cli is the Gemini API client instance
@@ -403,14 +398,25 @@ internal/models/gemini/gemini.go
    124→	temperature *float32
    125→	// topK limits token sampling
    126→	topK *int32
-      →	…
+   127→	// responseSchema for structured JSON output
+   128→	responseSchema *jsonschema.Schema
+   129→	// tools converted to Gemini format
+   130→	tools []*genai.Tool
+   131→	// origTools stores the original tool definitions
+   132→	origTools []*schema.ToolInfo
+   133→	// toolChoice controls how tools are used
+   134→	toolChoice *schema.ToolChoice
+   135→	// enableCodeExecution allows code execution (use with caution)
+   136→	enableCodeExecution bool
+   137→	// safetySettings for content filtering
+   138→	safetySettings []*genai.SafetySetting
+   139→}
    152→func (cm *ChatModel) Generate(ctx context.Context, input []*schema.Message, opts ...model.Option) (message *schema.Message, err error) {
    205→func (cm *ChatModel) Stream(ctx context.Context, input []*schema.Message, opts ...model.Option) (result *schema.StreamReader[*schema.Message], err error) {
    279→func (cm *ChatModel) WithTools(tools []*schema.ToolInfo) (model.ToolCallingChatModel, error) {
    305→func (cm *ChatModel) BindTools(tools []*schema.ToolInfo) error {
    330→func (cm *ChatModel) BindForcedTools(tools []*schema.ToolInfo) error {
    761→func (cm *ChatModel) IsCallbacksEnabled() bool {
-   765→const typ = "Gemini"
    773→func (cm *ChatModel) GetType() string {
    777→type panicErr struct {
    782→func (p *panicErr) Error() string {
@@ -587,9 +593,6 @@ internal/ui/slash_command_input.go
 internal/ui/spinner.go
     16→type Spinner struct {
     25→type spinnerModel struct {
-    31→func (m spinnerModel) Init() tea.Cmd {
-    35→func (m spinnerModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-    52→func (m spinnerModel) View() string {
     75→type quitMsg struct{}
 
 internal/ui/styles.go
@@ -604,10 +607,6 @@ internal/ui/tool_approval_input.go
     18→	approved bool
     19→	done     bool
     20→}
-    22→func NewToolApprovalInput(toolName, toolArgs string, width int) *ToolApprovalInput {
-    48→func (t *ToolApprovalInput) Init() tea.Cmd {
-    52→func (t *ToolApprovalInput) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-    83→func (t *ToolApprovalInput) View() string {
 
 internal/ui/usage_tracker.go
     15→type UsageStats struct {

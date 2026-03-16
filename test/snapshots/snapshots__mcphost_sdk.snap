@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1990 tokens)
+budget: 2000 (1993 tokens)
 
 README.md
      1→# MCPHost SDK
@@ -65,7 +65,7 @@ README.md
     63→    Quiet:        true,                      // Suppress debug output
     64→})
     65→```
-    66→
+      →…
     67→## Advanced Usage
     69→### With Tool Callbacks
     71→Monitor tool execution in real-time:
@@ -80,16 +80,7 @@ README.md
     80→    func(name, args, result string, isError bool) {
     81→        if isError {
     82→            fmt.Printf("Tool %s failed: %s\n", name, result)
-    83→        } else {
-    84→            fmt.Printf("Tool %s succeeded\n", name)
-    85→        }
-    86→    },
-    87→    func(chunk string) {
-    88→        fmt.Print(chunk) // Stream output
-    89→    },
-    90→)
-    91→```
-    92→
+      →            …
     93→### Session Management
     95→Maintain conversation context:
     96→
@@ -103,14 +94,7 @@ README.md
    104→
    105→// Save session
    106→host.SaveSession("./session.json")
-   107→
-   108→// Load session later
-   109→host.LoadSession("./session.json")
-   110→
-   111→// Clear session
-   112→host.ClearSession()
-   113→```
-   114→
+      →…
    115→## API Reference
    117→### Types
    119→- `MCPHost` - Main SDK type
@@ -144,24 +128,24 @@ README.md
 examples/basic/main.go
      3→import …
     11→func main() {
-    12→	ctx := context.Background()
-    13→
-      →…
 
 examples/scripting/main.go
      3→import …
     12→func main() {
-    13→	ctx := context.Background()
-    14→
-      →…
 
 mcphost.go
      3→import …
+    16→// MCPHost provides programmatic access to mcphost functionality, allowing
+    17→// integration of MCP tools and LLM interactions into Go applications. It manages
+    18→// agents, sessions, and model configurations.
     19→type MCPHost struct {
     20→	agent       *agent.Agent
     21→	sessionMgr  *session.Manager
     22→	modelString string
     23→}
+    25→// Options configures MCPHost creation with optional overrides for model,
+    26→// prompts, configuration, and behavior settings. All fields are optional
+    27→// and will use CLI defaults if not specified.
     28→type Options struct {
     29→	Model        string // Override model (e.g., "anthropic:claude-3-sonnet")
     30→	SystemPrompt string // Override system prompt
@@ -194,7 +178,11 @@ mcphost_test.go
 
 types.go
      3→import …
+     8→// Message is an alias for session.Message providing SDK users with access
+     9→// to message structures for conversation history and tool interactions.
     10→type Message = session.Message
+    12→// ToolCall is an alias for session.ToolCall representing a tool invocation
+    13→// with its name, arguments, and result within a conversation.
     14→type ToolCall = session.ToolCall
     18→func ConvertToSchemaMessage(msg *Message) *schema.Message {
     24→func ConvertFromSchemaMessage(msg *schema.Message) Message {

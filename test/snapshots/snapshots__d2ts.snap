@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3996 tokens)
+budget: 4000 (4000 tokens)
 
 README.md
     26→# D2TS - Differential Dataflow in TypeScript <!-- omit in toc -->
@@ -25,27 +25,8 @@ README.md
    198→### D2 graph construction
    214→### Input Streams
    221→### Versions and Frontiers
-   227→#### Version
-   247→#### Antichain (frontier)
    261→### MultiSet as a changeset
    306→### Operators
-   308→#### buffer
-   318→#### concat
-   328→#### consolidate
-   338→#### count
-   351→#### debug
-   361→#### distinct
-   371→#### filter
-   381→#### iterate
-   424→#### join
-   488→#### map
-   498→#### output
-   545→#### pipe
-   579→#### reduce
-   611→#### Keying Operators
-   615→##### `keyBy`
-   623→##### `unkey`
-   631→##### `rekey`
    653→### Using SQLite Backend
    678→## Implementation Details
    699→## References
@@ -71,11 +52,6 @@ examples/electric/README.md
     94→## Key Concepts
    100→## Resources
 
-examples/electric/docker-compose.yml
-     1→version: "3.3"
-     2→name: "electric_d2_example"
-     4→services:
-
 packages/d2mini/README.md
      1→# D2Mini is a minimal IVM implementation based on Differential Dataflow
      3→D2Mini is a minimal implementation of the D2TS dataflow graph library but simplified and without the complexities of multi-dimensional versioning.
@@ -83,15 +59,19 @@ packages/d2mini/README.md
      5→The API is almost identical to D2TS, but without the need to specify a version when sending data, or to send a frontier to mark the end of a version.
      6→
      7→### Basic Usage
-     9→Here's a simple example that demonstrates the core concepts:
-    10→
-    11→```typescript
-      →…
 
 packages/d2mini/src/d2.ts
-    10→export class D2 …
-    73→export class StreamBuilder …
-   146→export class RootStreamBuilder …
+    10→export class D2 implements ID2 {
+    11→  #streams: DifferenceStreamReader<any>[] = []
+    12→  #operators: (UnaryOperator<any> | BinaryOperator<any>)[] = []
+    13→  #nextOperatorId = 0
+    14→  #finalized = false
+    15→
+    73→export class StreamBuilder<T> implements IStreamBuilder<T> {
+    74→  #graph: ID2
+    75→  #writer: DifferenceStreamWriter<T>
+    76→
+   146→export class RootStreamBuilder<T> extends StreamBuilder<T> {
 
 packages/d2mini/src/graph.ts
     11→export class DifferenceStreamReader<T> implements IDifferenceStreamReader<T> {
@@ -107,8 +87,8 @@ packages/d2mini/src/indexes.ts
      9→export class Index<K, V> {
 
 packages/d2mini/src/multiset.ts
-     8→export type MultiSetArray …
-     9→export type KeyedData …
+     8→export type MultiSetArray<T> = [T, number][]
+     9→export type KeyedData<T> = [key: string, value: T]
     14→export class MultiSet<T> {
     36→  map<U>(f: (data: T) => U): MultiSet<U> {
     45→  filter(f: (data: T) => boolean): MultiSet<T> {
@@ -120,13 +100,16 @@ packages/d2mini/src/operators/groupBy.ts
    346→export const groupByOperators = {
 
 packages/d2mini/src/types.ts
-     4→export type KeyValue …
-     6→export interface IOperator …
-    11→export interface IDifferenceStreamReader …
-    16→export interface IDifferenceStreamWriter …
-    21→export interface ID2 …
-    30→export interface IStreamBuilder …
-    83→export type PipedOperator …
+     4→export type KeyValue<K, V> = [K, V]
+     6→export interface IOperator<_T> {
+    11→export interface IDifferenceStreamReader<T> {
+    16→export interface IDifferenceStreamWriter<T> {
+    21→export interface ID2 {
+    30→export interface IStreamBuilder<T> {
+    31→  writer: DifferenceStreamWriter<T>
+    83→export type PipedOperator<I, O> = (
+    84→  stream: IStreamBuilder<I>,
+    85→) => IStreamBuilder<O>
 
 packages/d2mini/src/utils.ts
      6→export class DefaultMap<K, V> extends Map<K, V> {
@@ -149,35 +132,14 @@ packages/d2ql/README.md
      9→## Basic Usage
     60→## Current Features
     79→## Common Table Expressions (CTEs)
-    83→### Basic CTE Example
-   101→### Multiple CTEs Example
-   134→### CTE Requirements
    140→## Planned Features
    144→## ORDER BY, LIMIT, and OFFSET
-   148→### Basic ORDER BY Example
-   167→### Multiple Columns and Direction in ORDER BY
-   182→### Using Function Calls in ORDER BY
-   199→### Including the Row Index in Results
-   220→### LIMIT and OFFSET Requirements
    244→## GROUP BY and Aggregation
-   248→### Basic GROUP BY Example
-   264→### Multiple Columns in GROUP BY
-   283→### Using HAVING to Filter Groups
-   303→### Supported Aggregate Functions
-   342→### Combining WHERE and GROUP BY
    366→## Wildcard Selects
    403→## Keyed Streams with keyBy
    423→## Kitchen Sink Example
    624→## Query Schema
    646→## Query Builder
-   650→### Basic Usage
-   687→### Table Aliases
-   699→### Joins
-   717→### Complex Where Conditions
-   731→### GROUP BY and HAVING
-   754→### ORDER BY, LIMIT, and OFFSET
-   768→### Common Table Expressions (WITH)
-   796→### Keyed Streams with keyBy
 
 packages/d2ql/src/compiler.ts
     16→export function compileQuery …
@@ -212,6 +174,7 @@ packages/d2ql/src/order-by.ts
     16→export function processOrderBy …
 
 packages/d2ql/src/query-builder/query-builder.ts
+    30→class BaseQueryBuilder …
     36→  constructor …
     80→  from …
    116→  select …
@@ -284,19 +247,16 @@ packages/d2ts/README.md
     36→## Table of Contents
     51→## Key Features
     88→## Quick Start
-    90→### Installation
-    96→### Basic Usage
-   156→### Using with ElectricSQL
    200→## Examples
    210→## API
-   212→### D2 graph construction
-   228→### Input Streams
-   235→### Versions and Frontiers
-   275→### MultiSet as a changeset
-   320→### Operators
-   987→### Using SQLite Backend
   1055→## Implementation Details
   1076→## References
+
+packages/d2ts/src/d2.ts
+    11→export type D2Options = {
+    15→export class D2 implements ID2 {
+    93→export class StreamBuilder<T> implements IStreamBuilder<T> {
+   166→export class RootStreamBuilder<T> extends StreamBuilder<T> {
 
 packages/d2ts/src/electric/index.ts
    103→export function electricStreamToD2Input …
@@ -318,6 +278,8 @@ packages/d2ts/src/graph.ts
    171→export abstract class BinaryOperator<T> extends Operator<T> {
 
 packages/d2ts/src/multiset.ts
+     3→export type MultiSetArray<T> = [T, number][]
+     4→export type KeyedData<T> = [key: string, value: T]
      9→export class MultiSet<T> {
     31→  map<U>(f: (data: T) => U): MultiSet<U> {
     40→  filter(f: (data: T) => boolean): MultiSet<T> {
@@ -340,6 +302,7 @@ packages/d2ts/src/order.ts
     10→export function v(version: number | number[]): Version {
     29→export class Version {
    138→export class Antichain {
+   277→export class Frontier extends Antichain {
 
 packages/d2ts/src/sqlite/context.ts
      8→class SQLiteContext {
@@ -367,17 +330,32 @@ packages/d2ts/src/sqlite/version-index.ts
     63→  #isTemp: boolean
 
 packages/d2ts/src/types.ts
+     5→export type KeyValue<K, V> = [K, V]
      7→export const MessageType = {
+    12→export type MessageType = (typeof MessageType)[keyof typeof MessageType]
+    14→export type Message<T> =
+    15→  | {
+    24→export type DataMessage<T> = {
+    29→export type FrontierMessage = Version | Antichain
+    31→export interface IOperator<_T> {
+    37→export interface IDifferenceStreamReader<T> {
+    43→export interface IDifferenceStreamWriter<T> {
+    52→export interface ID2 {
+    64→export interface IStreamBuilder<T> {
+   117→export type PipedOperator<I, O> = (
+   118→  stream: IStreamBuilder<I>,
+   119→) => IStreamBuilder<O>
 
 packages/d2ts/src/utils.ts
      7→export class WeakRefMap<K, V extends object> {
     31→export class DefaultMap<K, V> extends Map<K, V> {
     49→  update(key: K, updater: (value: V) => V): V {
-    78→function hashReplacer …
+    78→function hashReplacer(_key: string, value: any): any {
     98→export function hash(data: any): string | number {
    126→export class WeakRefBasedFinalizationRegistry {
 
 packages/d2ts/src/version-index.ts
+     8→export interface IndexType<K, V> {
     28→export class Index<K, V> implements IndexType<K, V> {
 
 pnpm-workspace.yaml

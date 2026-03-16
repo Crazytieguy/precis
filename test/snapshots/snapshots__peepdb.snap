@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3996 tokens)
+budget: 4000 (4000 tokens)
 
 CONTRIBUTING.md
      1→# Contributing to peepDB
@@ -110,15 +110,6 @@ docs/README.md
    131→          working-directory: '${{ github.workspace }}/docs'
    132→    ```
    133→
-   134→3.  Set the path param for the Upload artifact step:
-   135→
-   136→    ```yaml
-   137→    - name: Upload artifact
-   138→        uses: actions/upload-pages-artifact@v1
-   139→        with:
-   140→          path: "docs/_site/"
-   141→    ```
-   142→
       →…
    154→## Licensing and Attribution
 
@@ -128,14 +119,10 @@ docs/_config.yml
      3→theme: just-the-docs
      5→url: https://just-the-docs.github.io
      7→aux_links:
+     8→  Template Repository: https://github.com/just-the-docs/just-the-docs-template
 
 docs/contributing.md
      6→# 🤝 Contributing to peepDB
-    10→## Steps to Contribute
-    28→## Setting Up Development Environment
-    47→## Code Style
-    54→## Testing
-    63→## Documentation
 
 docs/index.md
      6→# peepDB
@@ -143,8 +130,6 @@ docs/index.md
      9→
     10→## 🚀 Features
     20→## Getting Started
-    28→## 🔒 Security
-    40→## 📜 License
 
 docs/installation.md
      6→# 📦 Installation
@@ -175,12 +160,18 @@ docs/usage.md
     82→## Examples
 
 peepdb/__main__.py
-     1→from .cli …
+     1→from .cli import main
 
 peepdb/cli.py
-     3→from .core …
-     4→from .config …
-    11→from .exceptions …
+     3→from .core import peep_db
+     4→from .config import (
+     5→    get_connection,
+     6→    save_connection,
+     7→    list_connections,
+     8→    remove_connection,
+     9→    remove_all_connections
+    10→)
+    11→from .exceptions import InvalidPassword
     16→class CustomEncoder(json.JSONEncoder):
     17→    def default(self, obj):
     27→def cli():
@@ -192,7 +183,7 @@ peepdb/cli.py
    181→def main():
 
 peepdb/config.py
-    13→from .exceptions …
+    13→from .exceptions import InvalidPassword
     15→@dataclass
     16→class KeySecurity:
     17→    KEYRING = "os-keyring"
@@ -216,7 +207,16 @@ peepdb/config.py
    196→def add_key_security():
 
 peepdb/core.py
-     7→from .db …
+     7→from .db import (
+     8→    MySQLDatabase,
+     9→    PostgreSQLDatabase,
+    10→    MariaDBDatabase,
+    11→    MongoDBDatabase,
+    12→    SQLiteDatabase,
+    13→    FirebaseDatabase,
+    14→    MSSQLDatabase,
+    15→    OracleDatabase
+    16→)
     27→def connect_to_database(db_type: str, host: str, user: str, password: str, database: str, **kwargs):
     56→def peep_db(db_type: str,
     57→            host: str,
@@ -346,4 +346,3 @@ project.toml
     46→[project.scripts]
 
 setup.py
-     1→from setuptools …

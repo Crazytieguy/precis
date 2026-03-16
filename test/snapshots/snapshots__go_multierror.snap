@@ -2,14 +2,13 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3989 tokens)
+budget: 4000 (3998 tokens)
 
 CHANGELOG.md
      1→## Unreleased
      3→### Improvements
      5→### Changes
      7→### Fixed
-     9→### Security
 
 README.md
      1→# go-multierror
@@ -251,6 +250,8 @@ flatten.go
       →…
      8→func Flatten(err error) error {
     20→func flatten(err error, flatErr *Error) {
+    21→	switch err := err.(type) {
+      →	…
 
 flatten_test.go
      6→import …

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3998 tokens)
+budget: 4000 (4000 tokens)
 
 readme.md
     20→## Benefits over plain `fetch`
@@ -63,49 +63,11 @@ readme.md
     83→```
     84→
     85→## API
-    87→### ky(input, options?)
-   122→### ky.get(input, options?)
-   123→### ky.post(input, options?)
-   124→### ky.put(input, options?)
-   125→### ky.patch(input, options?)
-   126→### ky.head(input, options?)
-   127→### ky.delete(input, options?)
-   147→##### method
-   156→##### json
-   162→##### searchParams
-   173→##### prefixUrl
-   197→##### retry
-   327→##### timeout
-   335→##### hooks
    342→###### hooks.beforeRequest
    373→###### hooks.beforeRetry
    446→###### hooks.beforeError
    485→###### hooks.afterResponse
-   553→##### throwHttpErrors
-   566→##### onDownloadProgress
-   592→##### onUploadProgress
-   619→##### parseJson
-   639→##### stringifyJson
-   664→##### fetch
-   683→##### context
-   745→### ky.extend(defaultOptions)
-   811→### ky.create(defaultOptions)
-   833→### ky.stop
-   864→### ky.retry(options?)
-   874→##### delay
-   882→##### code
-   895→##### cause
-   913→##### request
-  1000→### HTTPError
-  1046→### TimeoutError
   1050→## Tips
-  1052→### Sending form data
-  1109→### Setting a custom `Content-Type`
-  1129→### Cancellation
-  1156→### Proxy support (Node.js)
-  1209→### HTTP/2 support (Node.js)
-  1249→### Consuming Server-Sent Events (SSE)
-  1264→### Extending types
   1292→## FAQ
   1339→## Browser support
   1341→The latest version of Chrome, Firefox, and Safari.
@@ -205,7 +167,12 @@ source/core/constants.ts
    135→				'Authorization': `Bearer ${data.newToken}`
    136→			}
    137→		}),
-      →		…
+   138→		code: 'TOKEN_REFRESHED'
+   139→	});
+   140→	```
+   141→	*/
+   142→	request?: Request;
+   143→};
    148→export class RetryMarker {
    149→	constructor(public options?: ForceRetryOptions) {}
    153→Force a retry from an `afterResponse` hook.
@@ -316,7 +283,9 @@ source/types/options.ts
     86→	stringifyJson?: (data: unknown) => string;
     87→
     88→	/**
-      →	…
+    89→	Search parameters to include in the request URL. Setting this will override all existing search parameters in the input URL.
+    90→
+      →…
    307→export type KyOptionsRegistry = {[K in keyof KyOptions]-?: true};
    312→export interface Options extends KyOptions, Omit<RequestInit, 'headers'> { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
    313→	/**
@@ -376,11 +345,40 @@ source/types/options.ts
    383→	context: Record<string, unknown>;
    384→}
 
+source/utils/body.ts
+     5→export const getBodySize …
+    90→export const streamResponse …
+   119→export const streamRequest …
+
 source/utils/delay.ts
-     5→export type DelayOptions …
+     5→export type DelayOptions = {
+     6→	signal?: InternalOptions['signal'];
+     7→};
+     9→export default async function delay …
+
+source/utils/is.ts
+     2→export const isObject …
+
+source/utils/merge.ts
+     6→export const validateAndMerge …
+    16→export const mergeHeaders …
+    38→export const mergeHooks …
+    86→export const deepMerge …
+
+source/utils/normalize.ts
+     5→export const normalizeRequestMethod …
+    28→export const normalizeRetryOptions …
+
+source/utils/options.ts
+     4→export const findUnknownOptions …
+    30→export const hasSearchParameters …
 
 source/utils/timeout.ts
-     3→export type TimeoutOptions …
+     3→export type TimeoutOptions = {
+     4→	timeout: number;
+     5→	fetch: typeof fetch;
+     6→};
+     9→export default async function timeout …
 
 source/utils/type-guards.ts
     27→export function isKyError(error: unknown): error is HTTPError | TimeoutError | ForceRetryError {
@@ -389,5 +387,11 @@ source/utils/type-guards.ts
     98→export function isForceRetryError(error: unknown): error is ForceRetryError {
 
 source/utils/types.ts
-     1→export type Mutable …
-     5→export type ObjectEntries …
+     1→export type Mutable<T> = {
+     2→	-readonly[P in keyof T]: T[P]
+     3→};
+     5→export type ObjectEntries<T> = T extends ArrayLike<infer U>
+     6→	? Array<[string, U]>
+     7→	: Array<{[K in keyof T]: [K, T[K]]}[keyof T]>;
+
+test/helpers/create-http-test-server.ts

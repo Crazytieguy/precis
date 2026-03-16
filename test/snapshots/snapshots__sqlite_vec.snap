@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3973 tokens)
+budget: 4000 (3975 tokens)
 
 ARCHITECTURE.md
      1→# `sqlite-vec` Architecture
@@ -57,27 +57,17 @@ README.md
     30→<p align="center">
     31→<i>
     32→<code>sqlite-vec</code> is a
+    33→<a href="https://hacks.mozilla.org/2024/06/sponsoring-sqlite-vec-to-enable-more-powerful-local-ai-applications/">Mozilla Builders project</a>,
+    34→with additional sponsorship from
       →…
     43→## Installing
-    45→See [Installing `sqlite-vec`](https://alexgarcia.xyz/sqlite-vec/installation.html)
-    46→for more details.
-    47→
-      →…
     61→## Sample usage
-    63→```sql
-    64→.load ./vec0
-    65→
-      →…
     97→## Sponsors
-    99→Development of `sqlite-vec` is supported by multiple generous sponsors! Mozilla
-   100→is the main sponsor through the new Builders project.
-   101→<p align="center">
-      →…
    152→## See Also
-   154→- [**`sqlite-ecosystem`**](https://github.com/asg017/sqlite-ecosystem), Maybe
-   155→  more 3rd party SQLite extensions I've developed
-   156→- [**`sqlite-rembed`**](https://github.com/asg017/sqlite-rembed), Generate text
-      →…
+
+benchmarks/exhaustive-memory/bench.py
+    13→class BenchResult:
+   571→class Config:
 
 bindings/python/extra_init.py
      6→def serialize_float32(vector: List[float]) -> bytes:
@@ -91,6 +81,10 @@ bindings/rust/src/lib.rs
      3→    pub fn sqlite3_vec_init();
 
 examples/simple-go-cgo/go.mod
+     1→module github.com/asg017/sqlite-vec/examples/go
+     3→go 1.22.5
+     4→
+      →…
 
 examples/simple-go-ncruces/go.mod
      1→module asg017.com/ex1
@@ -134,6 +128,7 @@ examples/wasm/README.md
      1→# `sqlite-vec` statically compiled into WASM builds
      3→You can compile your own version of SQLite's WASM build with `sqlite-vec`
      4→builtin. Dynamically loading SQLite extensions is not supported in the official
+     5→WASM build yet, but you can statically compile extensions in. It's not well
       →…
 
 reference.yaml
@@ -144,6 +139,8 @@ reference.yaml
    258→distance:
    308→quantization:
    328→vec0:
+
+site/package.json
 
 site/project.data.ts
     13→  load() {
@@ -337,9 +334,18 @@ sqlite-vec.c
 test.sql
      1→
 
+tests/Cargo.toml
+     1→[package]
+     6→[dependencies]
+     8→[build-dependencies]
+    11→[[bin]]
+
 tests/afbd/README.md
      2→# hnm
      4→```
       →…
+
+tests/sqlite-vec-internal.h
+     3→int min_idx …
 
 tmp-static.py

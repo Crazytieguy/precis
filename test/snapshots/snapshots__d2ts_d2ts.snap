@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3999 tokens)
+budget: 4000 (3997 tokens)
 
 README.md
     26→# D2TS - Differential Dataflow in TypeScript <!-- omit in toc -->
@@ -27,18 +27,6 @@ README.md
    235→### Versions and Frontiers
    275→### MultiSet as a changeset
    320→### Operators
-   656→##### `keyBy`
-   664→##### `unkey`
-   672→##### `rekey`
-   730→##### Aggregate Functions
-   734→###### `sum`
-   747→###### `count`
-   760→###### `avg`
-   773→###### `min`
-   786→###### `max`
-   799→###### `median`
-   812→###### `mode`
-   825→##### Combining Multiple Aggregates
    987→### Using SQLite Backend
   1055→## Implementation Details
   1076→## References
@@ -50,6 +38,7 @@ src/d2.ts
    166→export class RootStreamBuilder<T> extends StreamBuilder<T> {
 
 src/electric/index.ts
+    17→import { …
     40→export interface ElectricStreamToD2InputOptions<T extends Row<unknown> = Row> {
     41→  /** D2 Graph to send messages to */
     42→  graph: D2
@@ -269,12 +258,14 @@ src/sqlite/database.ts
 
 src/sqlite/operators/buffer.ts
     32→export class BufferOperatorSQLite<T> extends UnaryOperator<T> {
+    33→  #preparedStatements: {
     41→  constructor …
     82→  run …
    149→export function buffer …
 
 src/sqlite/operators/consolidate.ts
     31→export class ConsolidateOperatorSQLite<T> extends UnaryOperator<T> {
+    32→  #preparedStatements: {
     40→  constructor …
     81→  run …
    148→export function consolidate …
@@ -317,6 +308,7 @@ src/sqlite/operators/reduce.ts
     27→export class ReduceOperatorSQLite<K, V1, V2> extends UnaryOperator<
     28→  [K, V1 | V2]
     29→> {
+    30→  #index: SQLIndex<K, V1>
     41→  constructor …
     97→  run …
    197→  destroy …
@@ -330,6 +322,7 @@ src/sqlite/operators/topKWithFractionalIndex.ts
     37→export class TopKWithFractionalIndexOperator<K, V1> extends UnaryOperator<
     38→  [K, V1 | [V1, string]]
     39→> {
+    40→  #index: SQLIndex<K, V1>
     53→  constructor …
    112→  run …
    454→  destroy …
@@ -340,6 +333,12 @@ src/sqlite/version-index.ts
      2→import { MultiSet } from '../multiset.js'
      3→import { SQLiteDb, SQLiteStatement } from './database.js'
      4→import { DefaultMap } from '../utils.js'
+     6→type VersionMap<T> = DefaultMap<Version, T[]>
+     8→interface IndexRow {
+    15→interface InsertParams {
+    22→interface GetParams {
+    27→interface JoinResult {
+    37→interface PreparedStatements {
     60→export class SQLIndex<K, V> {
     61→  #db: SQLiteDb
     62→  #tableName: string
@@ -394,7 +393,5 @@ src/utils.ts
    126→export class WeakRefBasedFinalizationRegistry {
 
 src/version-index.ts
-     5→type VersionMap …
-     6→type IndexMap …
      8→export interface IndexType<K, V> {
     28→export class Index<K, V> implements IndexType<K, V> {

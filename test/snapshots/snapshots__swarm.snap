@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3996 tokens)
+budget: 4000 (3999 tokens)
 
 README.md
      3→# Swarm (experimental, educational)
@@ -96,14 +96,20 @@ examples/airline/configs/tools.py
     23→def case_resolved():
     27→def initiate_baggage_search():
 
+examples/airline/data/routines/flight_modification/policies.py
+     2→STARTER_PROMPT = """You are an intelligent and empathetic customer support representative for Fly Airlines customers .
+    20→FLIGHT_CANCELLATION_POLICY = f"""
+    33→FLIGHT_CHANGE_POLICY = f"""
+
+examples/airline/evals/eval_utils.py
+     8→def run_function_evals(agent, test_cases, n=1, eval_path=None):
+    98→def extract_response_info(response):
+
 examples/basic/README.md
      1→# Swarm basic
      3→This folder contains basic examples demonstrating core Swarm capabilities. These examples show the simplest implementations of Swarm, with one input message, and a corresponding output. The `simple_loop_no_helpers` has a while loop to demonstrate how to create an interactive Swarm session.
      4→
      5→### Examples
-     7→1. **agent_handoff.py**
-     8→
-      →…
     31→## Running the Examples
     33→To run any of the examples, use the following command:
     34→
@@ -111,14 +117,33 @@ examples/basic/README.md
     36→python3 <example_name>.py
     37→```
 
+examples/basic/agent_handoff.py
+    16→def transfer_to_spanish_agent():
+
+examples/basic/context_variables.py
+     6→def instructions(context_variables):
+    11→def print_account_details(context_variables: dict):
+
+examples/basic/function_calling.py
+     6→def get_weather(location) -> str:
+
+examples/basic/simple_loop_no_helpers.py
+    11→def pretty_print_messages(messages):
+
 examples/customer_service_streaming/configs/general.py
      1→class Colors:
      2→    HEADER = '\033[95m'
      3→    OKBLUE = '\033[94m'
      4→    OKCYAN = '\033[96m'
+     5→    OKGREEN = '\033[92m'
+     6→    WARNING = '\033[93m'
+     7→    RED = '\033[91m'
+     8→    ENDC = '\033[0m'
       →    …
 
 examples/customer_service_streaming/configs/prompts.py
+    15→# IMPORTANT: If you are missing
+      →…
     19→LOCAL_PLANNER_PROMPT = """
 
 examples/customer_service_streaming/docker-compose.yaml
@@ -138,8 +163,11 @@ examples/customer_service_streaming/prep_data.py
      6→GPT_MODEL = 'gpt-4'
      7→EMBEDDING_MODEL = "text-embedding-3-large"
 
+examples/customer_service_streaming/src/evals/eval_function.py
+     8→class EvalFunction:
+     9→
+
 examples/customer_service_streaming/src/swarm/engines/engine.py
-     1→# engine.py
      2→class Engine:
 
 examples/customer_service_streaming/src/swarm/engines/local_engine.py
@@ -147,6 +175,10 @@ examples/customer_service_streaming/src/swarm/engines/local_engine.py
 
 examples/customer_service_streaming/src/swarm/swarm.py
     11→class Swarm:
+
+examples/customer_service_streaming/src/tasks/task.py
+     3→class Task:
+    12→class EvaluationTask(Task):
 
 examples/customer_service_streaming/src/validator.py
     51→    # Function to validate all assistants
@@ -159,17 +191,23 @@ examples/personal_shopper/README.md
      5→In this example, we also use a Sqlite3 database with customer information and transaction data.
      6→
      7→## Overview
-     9→The personal shopper example includes three main agents to handle various customer service requests:
-    10→
-      →…
     15→## Setup
-    17→Once you have installed dependencies and Swarm, run the example using:
-    18→
-      →…
 
 examples/personal_shopper/database.py
+     7→def get_connection():
+    14→def create_database():
+    61→def add_user(user_id, first_name, last_name, email, phone):
+    84→def add_purchase(user_id, date_of_purchase, item_id, amount):
+   114→def add_product(product_id, product_name, price):
+   132→def close_connection():
+   139→def preview_table(table_name):
    153→# Initialize and load database
    154→def initialize_database():
+
+examples/personal_shopper/main.py
+    10→def refund_item(user_id, item_id):
+    32→def notify_customer(user_id, method):
+    58→def order_item(user_id, product_id):
 
 examples/support_bot/README.md
      1→# Support bot
@@ -246,27 +284,7 @@ examples/triage_agent/README.md
      4→to a sales or refunds agent.
      5→
      6→## Setup
-     8→To run the triage agent Swarm:
-     9→
-    10→1. Run
-    11→
-    12→```shell
-    13→python3 run.py
-    14→```
-    15→
     16→## Evals
-    18→> [!NOTE]
-    19→> These evals are intended to be examples to demonstrate functionality, but will have to be updated and catered to your particular use case.
-    20→
-    21→This example uses `Pytest` to run eval unit tests. We have two tests in the `evals.py` file, one which
-    22→tests if we call the correct triage function when expected, and one which assesses if a conversation
-    23→is 'successful', as defined in our prompt in `evals.py`.
-    24→
-    25→To run the evals, run
-    26→
-    27→```shell
-    28→pytest evals.py
-    29→```
 
 examples/triage_agent/evals.py
      9→CONVERSATIONAL_EVAL_SYSTEM_PROMPT = """
@@ -281,27 +299,16 @@ examples/weather_agent/README.md
      3→This example is a weather agent demonstrating function calling with a single agent. The agent has tools to get the weather of a particular city, and send an email.
      4→
      5→## Setup
-     7→To run the weather agent Swarm:
-     8→
-     9→1. Run
-    10→
-    11→```shell
-    12→python3 run.py
-    13→```
-    14→
     15→## Evals
-    17→> [!NOTE]
-    18→> These evals are intended to be examples to demonstrate functionality, but will have to be updated and catered to your particular use case.
-    19→
-    20→This example uses `Pytest` to run eval unit tests. We have two tests in the `evals.py` file, one which
-    21→tests if we call the `get_weather` function when expected, and one which assesses if we properly do NOT call the
-    22→`get_weather` function when we shouldn't have a tool call.
-    23→
-    24→To run the evals, run
-    25→
-    26→```shell
-    27→pytest evals.py
-    28→```
+
+examples/weather_agent/agents.py
+     6→def get_weather(location, time="now"):
+    11→def send_email(recipient, subject, body):
+
+examples/weather_agent/evals.py
+     8→def run_and_get_tool_calls(agent, query):
+    26→def test_calls_weather_when_asked(query):
+    41→def test_does_not_call_weather_when_not_asked(query):
 
 pyproject.toml
      1→[build-system]

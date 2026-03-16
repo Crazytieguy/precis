@@ -2,12 +2,10 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7999 tokens)
+budget: 8000 (7998 tokens)
 
 Cargo.toml
      1→[workspace]
-     8→[workspace.lints.clippy]
-    16→[workspace.lints.rust]
     21→[workspace.package]
     27→[workspace.dependencies]
     72→[package]
@@ -28,7 +26,6 @@ README.md
     11→
     12→If you are interested in contributing to the development of mdBook, check out the [Contribution Guide].
     13→
-    14→## License
 
 crates/mdbook-compare/Cargo.toml
      1→[package]
@@ -495,12 +492,21 @@ examples/nop-preprocessor.rs
     79→    pub struct Nop;
     82→        pub fn new() -> Nop {
 
-guide/book.toml
-
 guide/guide-helper/Cargo.toml
      1→[package]
+     2→name = "guide-helper"
+     3→publish = false
+     4→edition.workspace = true
+     5→license.workspace = true
+     6→repository.workspace = true
+     7→rust-version.workspace = true
      9→[dependencies]
+    10→mdbook-preprocessor.workspace = true
+    11→semver.workspace = true
+    12→serde_json.workspace = true
+    13→toml.workspace = true
     15→[lints]
+    16→workspace = true
 
 guide/guide-helper/src/lib.rs
      9→/// Preprocessing entry point.
@@ -552,7 +558,7 @@ guide/src/cli/README.md
     11→* [`mdbook serve`](serve.md) --- Runs a web server to view the book, and rebuilds on changes.
     12→* [`mdbook test`](test.md) --- Tests Rust code samples.
     13→* [`mdbook clean`](clean.md) --- Deletes the rendered output.
-    14→* [`mdbook completions`](completions.md) --- Support for shell auto-completion.
+      →…
 
 guide/src/cli/build.md
      1→# The build command
@@ -568,7 +574,6 @@ guide/src/cli/init.md
 
 guide/src/cli/serve.md
      1→# The serve command
-    27→### Server options
 
 guide/src/cli/test.md
      1→# The test command
@@ -650,28 +655,12 @@ guide/src/format/configuration/README.md
 
 guide/src/format/markdown.md
      1→# Markdown
-     9→## Text and paragraphs
-    25→## Headings
-    47→## Lists
-    69→## Links
-   108→## Images
-   127→## Extensions
 
 guide/src/format/mathjax.md
      1→# MathJax support
 
 guide/src/format/mdbook.md
      1→# mdBook-specific features
-     3→## Hiding code lines
-    74→## Rust playground
-   102→## Rust code block attributes
-   133→## Including files
-   154→## Including portions of a file
-   215→## Including a file but initially hiding all except specified lines
-   279→## Inserting runnable Rust files
-   310→## Controlling page \<title\>
-   319→## HTML classes provided by mdBook
-   341→## Font-Awesome icons
 
 guide/src/format/summary.md
      1→# SUMMARY.md
@@ -682,6 +671,13 @@ guide/src/format/theme/README.md
      4→render your markdown files and comes with a default theme included in the mdBook
      5→binary.
      6→
+     7→The theme is totally customizable, you can selectively replace every file from
+     8→the theme by your own by adding a `theme` directory next to `src` folder in your
+     9→project root. Create a new file with the name of the file you want to override
+    10→and now that file will be used instead of the default file.
+    11→
+    12→Here are the files you can override:
+    13→
       →…
 
 guide/src/guide/README.md
@@ -785,4 +781,5 @@ src/cmd/watch.rs
 
 src/main.rs
     14→mod cmd;
+    16→const VERSION …
     58→fn create_clap_command() -> Command {

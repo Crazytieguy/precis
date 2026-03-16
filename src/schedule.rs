@@ -838,14 +838,15 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     // from .c files (which can be enormous in amalgamation patterns).
     let header_factor = if key.is_header { 2.5 } else { 1.0 };
 
-    // Heading depth: top-level headings (h1, h2) are more important than
-    // subsections (h3+). This lets the scheduler show body content for
-    // h1/h2 headings before filling in h3/h4 detail sections.
+    // Heading depth: top-level headings (h1, h2) carry structural value,
+    // deeper headings are increasingly detail. Aggressive reduction at h3+
+    // prevents large READMEs (with detailed API reference sections) from
+    // consuming the entire budget with heading structure.
     let heading_depth_factor = match key.heading_depth {
         Some(1) => 1.0,
-        Some(2) => 0.8,
-        Some(3) => 0.3,
-        Some(_) => 0.15, // h4, h5, h6
+        Some(2) => 0.6,
+        Some(3) => 0.15,
+        Some(_) => 0.08, // h4, h5, h6
         None => 1.0,     // non-section symbols
     };
 

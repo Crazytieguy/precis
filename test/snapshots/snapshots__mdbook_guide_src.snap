@@ -51,8 +51,6 @@ README.md
     43→[trpl]: https://doc.rust-lang.org/book/
     44→[Rust code samples]: cli/test.md
     45→
-    46→## Contributing
-    55→## License
 
 SUMMARY.md
      1→# Summary
@@ -73,8 +71,6 @@ cli/README.md
     12→* [`mdbook test`](test.md) --- Tests Rust code samples.
     13→* [`mdbook clean`](clean.md) --- Deletes the rendered output.
     14→* [`mdbook completions`](completions.md) --- Support for shell auto-completion.
-
-cli/arg-watcher.md
 
 cli/build.md
      1→# The build command
@@ -101,11 +97,8 @@ cli/watch.md
 continuous-integration.md
      1→# Running `mdbook` in continuous integration
     12→## Installing mdBook
-    17→### Pre-compiled binaries
-    39→### Building from source
     67→## Running tests
     83→## Deploying
-   100→### 404 handling
 
 for_developers/README.md
      1→# For developers
@@ -157,7 +150,11 @@ for_developers/backends.md
      5→configuration information via `stdin`. Once the backend receives this
      6→information it is free to do whatever it wants.
      7→
-      →…
+     8→See [Configuring Renderers](../format/configuration/renderers.md) for more information about using backends.
+     9→
+    10→The community has developed several backends.
+    11→See the [Third Party Plugins] wiki page for a list of available backends.
+    12→
     13→## Setting up
     53→## Inspecting the book
     82→## Enabling the backend
@@ -169,11 +166,11 @@ for_developers/mdbook-wordcount/Cargo.toml
      1→[package]
      2→name = "mdbook-wordcount"
      3→version = "0.1.0"
-      →…
+     4→authors = ["Michael Bryan <michaelfbryan@gmail.com>"]
      6→[dependencies]
      7→mdbook = { path = "../../../..", version = "*" }
      8→serde = "1.0"
-      →…
+     9→serde_derive = "1.0"
 
 for_developers/mdbook-wordcount/src/main.rs
     44→#[derive(Debug, Default, Serialize, Deserialize)]
@@ -190,7 +187,11 @@ for_developers/preprocessors.md
      5→the book. Possible use cases are:
      6→
      7→- Creating custom helpers like `\{{#include /path/to/file.md}}`
-      →…
+     8→- Substituting in latex-style expressions (`$$ \frac{1}{3} $$`) with their
+     9→  mathjax equivalents
+    10→
+    11→See [Configuring Preprocessors](../format/configuration/preprocessors.md) for more information about using preprocessors.
+    12→
     13→## Hooking into MDBook
     46→## Hints for implementing a preprocessor
     74→## Implementing a preprocessor with a different language
@@ -244,27 +245,14 @@ format/markdown.md
      1→# Markdown
      9→## Text and paragraphs
     25→## Headings
-    39→### A heading 
     43→#### A smaller heading 
-    45→More text.
-    46→
     47→## Lists
     69→## Links
    108→## Images
    127→## Extensions
-   131→### Strikethrough
-   146→### Footnotes
-   171→### Tables
-   191→### Task lists
-   208→### Smart punctuation
-   231→### Heading attributes
-   244→### Definition lists
-   279→### Admonitions
 
 format/mathjax.md
      1→# MathJax support
-    24→### Inline equations
-    32→### Block equations
 
 format/mdbook.md
      1→# mdBook-specific features
@@ -277,14 +265,10 @@ format/mdbook.md
    279→## Inserting runnable Rust files
    310→## Controlling page \<title\>
    319→## HTML classes provided by mdBook
-   323→### `class="left"` and `"right"`
-   331→### `class="hidden"`
    341→## Font-Awesome icons
 
 format/summary.md
      1→# SUMMARY.md
-    12→### Structure
-    93→### Example
 
 format/theme/README.md
      1→# Theme
@@ -317,6 +301,11 @@ format/theme/README.md
     29→- **fonts/fonts.css** contains the definition of which fonts to load.
     30→  Custom fonts can be included in the `fonts` directory.
     31→
+    32→Generally, when you want to tweak the theme, you don't need to override all the
+    33→files. If you only need changes in the stylesheet, there is no point in
+    34→overriding all the other files. Because custom files take precedence over
+    35→built-in ones, they will not get updated with new fixes / features.
+    36→
       →…
 
 format/theme/editor.md
@@ -327,9 +316,6 @@ format/theme/index-hbs.md
      1→# index.hbs
      9→## Data
     41→## Handlebars helpers
-    46→### toc
-    80→### resource
-    90→### fa
 
 format/theme/syntax-highlighting.md
      1→# Syntax highlighting
@@ -351,9 +337,6 @@ guide/creating.md
      4→
      5→## Initializing a book
     32→## Anatomy of a book
-    36→### `book.toml`
-    50→### `SUMMARY.md`
-    73→### Source files
     96→## Publishing a book
 
 guide/installation.md
@@ -366,7 +349,6 @@ guide/installation.md
      8→
      9→## Pre-compiled binaries
     19→## Build from source using Rust
-    41→### Installing the latest master version
 
 guide/reading.md
      1→# Reading books

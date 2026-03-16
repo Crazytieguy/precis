@@ -12,14 +12,8 @@ README.md
     17→## 🚀 News
     24→## ✨ Introduction
     32→### Available Models
-    36→| Model ID                                                               | Parameters |
-    37→| ---------------------------------------------------------------------- | ---------- |
-      →…
     53→## 📈 Usage
     65→### Forecasting
-    67→A minimal example showing how to perform forecasting using Chronos-2:
-    68→
-      →…
    117→## Example Notebooks
    130→## 📝 Citation
    153→## 🛡️ Security
@@ -28,10 +22,6 @@ README.md
 pyproject.toml
      1→[project]
     31→[build-system]
-    41→[project.optional-dependencies]
-    68→[project.urls]
-    74→[tool.mypy]
-    77→[tool.ruff]
 
 scripts/README.md
      1→# Usage Examples
@@ -110,7 +100,6 @@ src/chronos/chronos.py
     27→@dataclass
     28→class ChronosConfig:
     29→    """
-    30→    This class holds all the configuration parameters to be used
       →    …
     33→
     34→    tokenizer_class: str
@@ -165,7 +154,7 @@ src/chronos/chronos2/__init__.py
      7→from .model …
      8→from .pipeline …
      9→from .dataset …
-    11→__all__ …
+    11→__all__ = ["Chronos2CoreConfig", "Chronos2ForecastingConfig", "Chronos2Model", "Chronos2Pipeline", "Chronos2Dataset"]
 
 src/chronos/chronos2/config.py
      6→from dataclasses import dataclass
@@ -186,7 +175,7 @@ src/chronos/chronos2/config.py
 
 src/chronos/chronos2/dataset.py
      6→import math
-    20→TensorOrArray …
+    20→TensorOrArray: TypeAlias = torch.Tensor | np.ndarray
     23→class PreparedInput(TypedDict):
     33→def left_pad_and_cat_2D …
     50→def validate_and_prepare_single_dict_input …
@@ -255,6 +244,8 @@ src/chronos/chronos2/model.py
     86→    all_group_self_attn_weights: tuple[torch.Tensor, ...] | None = None
     89→class Chronos2Encoder(nn.Module):
     90→    def __init__ …
+    99→    def _expand_and_invert_time_attention_mask …
+   113→    def _construct_and_invert_group_time_mask …
    134→    def forward …
    191→class Chronos2Output(ModelOutput):
    192→    loss: torch.Tensor | None = None
@@ -270,6 +261,7 @@ src/chronos/chronos2/pipeline.py
      6→import logging
     39→class Chronos2Pipeline(BaseChronosPipeline):
     43→    def __init__ …
+    48→    def _get_prob_mass_per_quantile_level …
     77→    def model_context_length(self) -> int:
     81→    def model_output_patch_size(self) -> int:
     85→    def model_prediction_length(self) -> int:
@@ -288,6 +280,7 @@ src/chronos/chronos2/pipeline.py
    465→        limit_prediction_length: bool = False,
    466→        **kwargs,
    467→    ) -> list[torch.Tensor]:
+   750→    def _slide_context_and_future_covariates …
    763→    def predict_quantiles …
    821→    def predict_df …
   1027→    def predict_fev …

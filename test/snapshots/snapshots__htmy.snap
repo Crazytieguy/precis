@@ -12,7 +12,6 @@ README.md
     15→
     16→## Key features
     33→## Testimonials
-    47→## Support
     51→## Installation
     63→## Concepts
     69→### Components
@@ -30,8 +29,6 @@ README.md
    341→## Why
    353→## Dependencies
    361→## Development
-   367→## Contributing
-   377→## License - MIT
 
 docs/api/core.md
      1→# ::: htmy.core
@@ -83,9 +80,6 @@ docs/components-guide.md
    184→## When to use components, when to use component factories?
 
 docs/examples/markdown.md
-     9→## Essentials
-    61→## Customization
-   167→## Custom components in markdown
 
 docs/function-components.md
      1→# Function components
@@ -95,8 +89,6 @@ docs/function-components.md
      9→## Function component types
     26→## Creating function components
     41→## Examples
-    80→### Functions
-   150→### Methods
 
 docs/index.md
     10→# `htmy`
@@ -107,13 +99,6 @@ docs/index.md
     33→## Testimonials
     51→## Installation
     63→## Concepts
-    69→### Components
-   167→### Built-in components
-   179→### Rendering
-   211→### Context
-   279→### Formatter
-   291→### Error boundary
-   299→### Sync or async?
    307→## XSS prevention
    316→## AI assistance
    324→## Compatibility and performance
@@ -220,11 +205,11 @@ htmy/etree.py
     63→    def convert_element …
 
 htmy/function_component.py
-    13→_SyncFunctionComponent: TypeAlias = Callable[[TProps, Context], Component]
-    25→_ContextOnlySyncFunctionComponent: TypeAlias = Callable[[Context], Component]
+    13→_SyncFunctionComponent …
+    25→_ContextOnlySyncFunctionComponent …
     37→    def __call__ …
     52→    def __call__ …
-    57→_SyncMethodComponent: TypeAlias = Callable[[TSelf, TProps, Context], Component]
+    57→_SyncMethodComponent …
     71→class ComponentDecorators:
     75→
     76→    __slots__ = ()
@@ -385,10 +370,8 @@ htmy/tag.py
 htmy/typing.py
      4→T = TypeVar("T")
      5→U = TypeVar("U")
-     7→# -- Properties
      9→PropertyValue: TypeAlias = Any | None
     12→Properties: TypeAlias = Mapping[str, PropertyValue]
-    15→# -- Context
     17→ContextKey: TypeAlias = Any
     20→ContextValue: TypeAlias = Any
     23→Context: TypeAlias = Mapping[ContextKey, ContextValue]
@@ -401,7 +384,6 @@ htmy/typing.py
     53→HTMYComponentType: TypeAlias = SyncComponent | AsyncComponent
     56→StrictComponentType: TypeAlias = HTMYComponentType | str
     59→ComponentType: TypeAlias = StrictComponentType | None
-    62→# Omit strings from this type to simplify checks.
     63→ComponentSequence: TypeAlias = list[ComponentType] | tuple[ComponentType, ...]
     66→Component: TypeAlias = ComponentType | ComponentSequence
     73→class SyncContextProvider(Protocol):
@@ -410,7 +392,6 @@ htmy/typing.py
     81→class AsyncContextProvider(Protocol):
     84→    async def htmy_context …
     89→ContextProvider: TypeAlias = SyncContextProvider | AsyncContextProvider
-    97→# -- Text processors
     99→TextProcessor: TypeAlias = Callable[[str, Context], str | Coroutine[Any, Any, str]]
    103→class TextResolver(Protocol):
    108→    def resolve_text …
@@ -433,38 +414,51 @@ mkdocs.yaml
      7→  palette:
      8→    # Palette toggle for automatic mode
      9→    - media: "(prefers-color-scheme)"
-      →    …
+    10→      scheme: slate
+    11→      toggle:
+    12→        icon: lucide/sun-moon
+    13→        name: Switch to light mode
+    14→    # Palette toggle for light mode
+    15→    - media: "(prefers-color-scheme: light)"
+    16→      scheme: default
+    17→      toggle:
+    18→        icon: lucide/sun
+      →        …
     33→plugins:
     34→  - search:
     35→      lang: en
     36→  - mkdocstrings:
     37→      handlers:
-      →      …
+    38→        python:
+    39→          paths: [.]
     41→markdown_extensions:
     42→  - pymdownx.highlight:
     43→      anchor_linenums: true
     44→      line_spans: __span
     45→      pygments_lang_class: true
-      →      …
+    46→  - pymdownx.inlinehilite
+    47→  - pymdownx.snippets
+    48→  - pymdownx.superfences
     50→nav:
     51→  - index.md
     52→  - components-guide.md
     53→  - function-components.md
     54→  - Examples:
-      →  …
+    55→      - Examples: examples/index.md
+    56→      - examples/snippet-slots-fastapi.md
+    57→      - examples/fastapi-htmx-tailwind-daisyui.md
+    58→      - examples/markdown.md
+    59→      - examples/internationalization.md
+    60→  - API reference:
+    61→      - api/core.md
+    62→      - api/html.md
+    63→      - api/snippet.md
+      →      …
 
 pyproject.toml
      1→[project]
-    15→[project.optional-dependencies]
     18→[dependency-groups]
     35→[build-system]
-    39→[tool.mypy]
-    50→[tool.pyright]
-    57→[tool.ruff]
-
-tests/renderer/test_renderer_comparison.py
-    61→class WrapAsync:
-    92→class SyncError:
 
 tests/test_function_component.py
     69→class Data:

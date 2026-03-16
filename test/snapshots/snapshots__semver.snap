@@ -4,14 +4,17 @@ expression: output
 ---
 budget: 4000 (3999 tokens)
 
-.eslintrc.js
-     7→const localConfigs …
-
 .github/actions/create-check/action.yml
      3→name: 'Create Check'
      4→inputs:
     13→outputs:
     16→runs:
+
+.github/actions/install-latest-npm/action.yml
+     3→name: 'Install Latest npm'
+     4→description: 'Install the latest version of npm compatible with the Node version'
+     5→inputs:
+     9→runs:
 
 .github/dependabot.yml
      3→version: 2
@@ -62,9 +65,6 @@ README.md
     32→// load the whole API at once in a single object
     33→const semver = require('semver')
     34→
-    35→// or just load the bits you need
-    36→// all of them listed here, just pick and choose what you want
-    37→
       →…
    139→## Versions
    141→A "version" is described by the `v2.0.0` specification found at
@@ -98,9 +98,6 @@ README.md
    170→which is satisfied by the **intersection** of all of the comparators
    171→it includes.
    172→
-   173→A range is composed of one or more comparator sets, joined by `||`.  A
-   174→version matches a range if and only if every comparator in at least
-   175→one of the `||`-separated comparator sets is satisfied by the version.
       →…
    184→### Prerelease Tags
    219→#### Prerelease Identifiers
@@ -135,9 +132,6 @@ README.md
    430→  type (`major`, `premajor`, `minor`, `preminor`, `patch`,
    431→  `prepatch`, `prerelease`, or `release`), or null if it's not valid
    432→  * `premajor` in one call will bump the version up to the next major
-   433→    version and down to a prerelease of that major version.
-   434→    `preminor`, and `prepatch` work the same way.
-   435→  * If called from a non-prerelease version, `prerelease` will work the
       →  …
    453→### Comparison
    478→### Sorting
@@ -174,9 +168,6 @@ README.md
    633→* `require('semver/functions/compare')`
    634→* `require('semver/functions/compare-build')`
    635→* `require('semver/functions/compare-loose')`
-   636→* `require('semver/functions/diff')`
-   637→* `require('semver/functions/eq')`
-   638→* `require('semver/functions/gt')`
       →…
 
 bin/semver.js
@@ -208,21 +199,23 @@ classes/range.js
    170→  intersects (range, options) {
    193→  test (version) {
    218→const cache = new LRU()
-   233→const isNullSet …
-   234→const isAny …
-   238→const isSatisfiable …
-   257→const parseComparator …
-   271→const isX …
-   280→const replaceTildes …
-   288→const replaceTilde …
-   324→const replaceCarets …
-   332→const replaceCaret …
-   385→const replaceXRanges …
-   393→const replaceXRange …
-   470→const replaceStars …
-   478→const replaceGTE0 …
-   491→const hyphenReplace …
-   523→const testSet …
+   233→const isNullSet = c => c.value === '<0.0.0-0'
+   234→const isAny = c => c.value === ''
+   238→const isSatisfiable = (comparators, options) => {
+   257→const parseComparator = (comp, options) => {
+   271→const isX = id => !id || id.toLowerCase() === 'x' || id === '*'
+   280→const replaceTildes = (comp, options) => {
+   288→const replaceTilde = (comp, options) => {
+   324→const replaceCarets = (comp, options) => {
+   332→const replaceCaret = (comp, options) => {
+   385→const replaceXRanges = (comp, options) => {
+   393→const replaceXRange = (comp, options) => {
+   470→const replaceStars = (comp, options) => {
+   478→const replaceGTE0 = (comp, options) => {
+   491→const hyphenReplace = incPr => ($0,
+   492→  from, fM, fm, fp, fpr, fb,
+   493→  to, tM, tm, tp, tpr) => {
+   523→const testSet = (set, version, options) => {
 
 classes/semver.js
      9→class SemVer {
@@ -403,3 +396,5 @@ release-please-config.json
      4→  "changelog-sections": [
     31→  "packages": {
     36→  "prerelease-type": "pre.0"
+
+test/map.js

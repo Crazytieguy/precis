@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3998 tokens)
+budget: 4000 (3999 tokens)
 
 CHANGELOG.md
      1→# Changelog
@@ -131,9 +131,6 @@ docs/help-in-depth.md
 docs/options-in-depth.md
      2→# Options in Depth
     15→## Options taking varying numbers of option-arguments
-    79→#### Alternative: Make `--` part of your syntax
-   104→#### Alternative: Put options last
-   126→#### Alternative: Use options instead of command-arguments
    148→## Combining short options, and options taking arguments
 
 docs/parsing-and-hooks.md
@@ -361,3 +358,8 @@ package-support.json
 
 typings/index.d.ts
   1113→export const program: Command;
+
+typings/index.test-d.ts
+     1→import * as commander from './index';
+   510→  createCommand(name?: string): MyCommand {
+   514→  myFunction(): void {

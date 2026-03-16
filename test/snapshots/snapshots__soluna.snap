@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3989 tokens)
+budget: 4000 (3990 tokens)
 
 README.md
      7→# Soluna
@@ -19,12 +19,8 @@ README.md
     19→## Documentation
     25→## Precompiled Binaries
     29→## Building from Source
-    33→### Integration with the Actions of your projects
-    35→```yaml
-    36→- uses: actions/checkout@v5
-    37→  with:
-      →  …
     53→## Projects made with Soluna
+    57→## License
 
 clibs/datalist/make.lua
      1→local lm = require "luamake"
@@ -48,7 +44,12 @@ clibs/ltask/make.lua
      7→    "src/*.c",
      8→  },
      9→  includes = {
-      →  …
+    10→    lm.basedir .. "/3rd/lua",
+    11→  },
+    12→  defines = {
+    13→    "LTASK_EXTERNAL_OPENLIBS=soluna_openlibs",
+    14→  },
+    15→}
 
 clibs/lua/make.lua
      1→local lm = require "luamake"
@@ -369,5 +370,4 @@ src/yogaone.cpp
      6→#include "yoga/YGPixelGrid.cpp"
      7→#include "yoga/YGValue.cpp"
      8→
-     9→#include "yoga/algorithm/AbsoluteLayout.cpp"
       →…
