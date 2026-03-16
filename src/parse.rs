@@ -1554,12 +1554,14 @@ export class Example {
         let source = r#"
 local M = {}
 
+M.CONSTANT = 42
+
 function M.init()
     -- Initialize
 end
 
-function M.update(dt)
-    -- Update
+function M:method(arg)
+    return self.value + arg
 end
 
 local function helper()
@@ -1568,12 +1570,15 @@ end
 "#;
         let symbols = extract_symbols(Path::new("test.lua"), source);
         let names: Vec<_> = symbols.iter().map(|s| (s.name.as_str(), s.kind)).collect();
-        // Module functions should be found
+        // Module functions (dot syntax)
         assert!(names.iter().any(|(n, k)| *n == "M.init" && *k == SymbolKind::Function));
-        assert!(names.iter().any(|(n, k)| *n == "M.update" && *k == SymbolKind::Function));
-        // Local function should be found
+        // Module methods (colon syntax)
+        assert!(names.iter().any(|(n, k)| *n == "M:method" && *k == SymbolKind::Function));
+        // Module property assignments
+        assert!(names.iter().any(|(n, _)| *n == "M.CONSTANT"));
+        // Local function
         assert!(names.iter().any(|(n, k)| *n == "helper" && *k == SymbolKind::Function));
-        // Variable declaration should be found
+        // Variable declaration
         assert!(names.iter().any(|(n, _)| *n == "M"));
     }
 
