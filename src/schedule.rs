@@ -142,7 +142,9 @@ impl FileRole {
     /// Locale directories override filename-based detection (a translated README
     /// is low value, not high value).
     pub fn from_path(path: &Path) -> Self {
-        let ext = path.extension().and_then(|e| e.to_str()).unwrap_or("");
+        let ext_owned = path.extension().and_then(|e| e.to_str())
+            .map(|e| e.to_ascii_lowercase());
+        let ext = ext_owned.as_deref().unwrap_or("");
         let is_doc = matches!(ext, "md" | "markdown" | "rst" | "txt");
         let is_data = matches!(ext, "json" | "yaml" | "yml" | "toml" | "properties" | "strings" | "xlf" | "po" | "pot");
         // For doc and data files, check if any parent directory is a locale directory
@@ -611,7 +613,7 @@ pub fn build_groups(
         let is_type_declaration = walk::is_type_declaration_file(relative);
         let is_header = relative.extension()
             .and_then(|e| e.to_str())
-            .is_some_and(walk::is_header_extension);
+            .is_some_and(|ext| walk::is_header_extension(&ext.to_ascii_lowercase()));
         let is_autogen = is_autogen_api_doc(source, file_role);
         let is_generated = is_generated_file(source) || is_generated_filename(relative);
 
