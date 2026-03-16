@@ -85,10 +85,17 @@ fn is_lockfile(path: &Path) -> bool {
         Some(n) => n,
         None => return false,
     };
-    matches!(
+    let lower = name.to_ascii_lowercase();
+    // Machine-generated lockfiles
+    if matches!(
         name,
         "package-lock.json" | "npm-shrinkwrap.json" | "pnpm-lock.yaml" | "composer.lock"
-    )
+    ) {
+        return true;
+    }
+    // Minified/bundled files — machine-generated, unreadable
+    lower.ends_with(".min.js") || lower.ends_with(".min.css")
+        || lower.ends_with(".bundle.js") || lower.ends_with(".chunk.js")
 }
 
 /// Check if a file is vendored third-party code or test fixture data that should
