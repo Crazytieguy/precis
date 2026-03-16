@@ -1579,10 +1579,16 @@ mod tests {
         assert!(is_generated_filename(Path::new("mock_repository.go")));
         assert!(is_generated_filename(Path::new("types.generated.ts")));
         assert!(is_generated_filename(Path::new("model.g.dart")));
+        // gRPC generated files
+        assert!(is_generated_filename(Path::new("api_pb2_grpc.py")));
+        assert!(is_generated_filename(Path::new("service.pb.cc")));
+        assert!(is_generated_filename(Path::new("types.pb.h")));
         // Normal files should not match
         assert!(!is_generated_filename(Path::new("main.go")));
         assert!(!is_generated_filename(Path::new("utils.py")));
         assert!(!is_generated_filename(Path::new("mock.ts"))); // no underscore
+        assert!(!is_generated_filename(Path::new("mockup.go"))); // no underscore after mock
+        assert!(!is_generated_filename(Path::new("generator.ts"))); // "generated" not in stem
     }
 
     #[test]
