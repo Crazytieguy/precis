@@ -64,7 +64,7 @@ fn is_unsupported_code_extension(ext: &str) -> bool {
         // GPU/shader languages
         | "cu" | "cuh" | "wgsl"
         // Web component languages (contain logic + template)
-        | "vue" | "svelte"
+        | "vue" | "svelte" | "astro"
         // Query/schema languages
         | "sql" | "graphql" | "gql" | "proto" | "prisma"
         // Infrastructure/config/build languages
