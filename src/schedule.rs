@@ -124,7 +124,8 @@ impl FileRole {
         match stem {
             "readme" => FileRole::Readme,
             "changelog" | "changes" | "history" | "news" | "releases"
-            | "breaking_changes" | "breaking-changes" | "migration" | "upgrading" => FileRole::Changelog,
+            | "breaking_changes" | "breaking-changes" | "migration" | "upgrading"
+            | "release_notes" | "release-notes" => FileRole::Changelog,
             "contributing" | "contributors" | "security" | "license" | "licence"
             | "code_of_conduct" | "codeowners" | "releasing" | "support"
             | "governance" | "authors" | "maintainers"
