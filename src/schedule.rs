@@ -417,7 +417,8 @@ fn is_config_file(relative_path: &Path, filename: &str) -> bool {
     // the patterns above (not TOML, not dotfiles, no *-config pattern).
     match lower.as_str() {
         "codecov.yml" | "codecov.yaml" | "renovate.json" | "package-support.json"
-        | "biome.json" | "biome.jsonc" | "deno.json" | "deno.jsonc" => return true,
+        | "biome.json" | "biome.jsonc" | "deno.json" | "deno.jsonc"
+        | "taskfile.yml" | "taskfile.yaml" => return true,
         _ => {}
     }
 
