@@ -319,7 +319,7 @@ fn is_config_file(relative_path: &Path, filename: &str) -> bool {
     // (e.g., src/cmd/build.rs implements a "build" CLI subcommand).
     if is_root {
         match lower.as_str() {
-            "build.rs" | "setup.py" | "setup.cfg" => return true,
+            "build.rs" | "setup.py" | "setup.cfg" | "tox.ini" | "pytest.ini" => return true,
             _ => {}
         }
     }
