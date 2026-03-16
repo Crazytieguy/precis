@@ -48,6 +48,6 @@ impl Lang {
     pub fn from_path(path: &std::path::Path) -> Option<Lang> {
         path.extension()
             .and_then(|e| e.to_str())
-            .and_then(Lang::from_extension)
+            .and_then(|ext| Lang::from_extension(&ext.to_ascii_lowercase()))
     }
 }
