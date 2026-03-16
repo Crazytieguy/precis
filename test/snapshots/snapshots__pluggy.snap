@@ -96,6 +96,12 @@ CHANGELOG.rst
      4→
       →…
 
+RELEASING.rst
+     1→Release Procedure
+
+TIDELIFT.rst
+     1→========
+
 changelog/README.rst
      1→This directory contains "newsfragments" which are short files that contain a small **ReST**-formatted
      2→text that will be added to the next ``CHANGELOG``.
@@ -120,6 +126,15 @@ docs/api_reference.rst
     12→    :show-inheritance:
     13→    :members:
     14→
+    15→.. autodecorator:: pluggy.HookspecMarker
+    16→
+    17→.. autodecorator:: pluggy.HookimplMarker
+    18→
+    19→.. autoclass:: pluggy.HookRelay()
+    20→    :members:
+    21→
+    22→    .. data:: <hook name>
+    23→
       →…
 
 docs/conf.py
@@ -167,6 +182,15 @@ docs/index.rst
     11→which are invoked in sequence according to a well defined set of protocols.
     12→
     13→It gives users the ability to extend or modify the behaviour of a
+    14→``host program`` by installing a ``plugin`` for that program.
+    15→The plugin code will run as part of normal program execution, changing or
+    16→enhancing certain aspects of it.
+    17→
+    18→In essence, ``pluggy`` enables function `hooking`_ so you can build
+    19→"pluggable" systems.
+    20→
+    21→Why is it useful?
+    22→*****************
       →…
 
 scripts/
@@ -264,7 +288,9 @@ src/pluggy/_hooks.py
    391→    )
    392→
    393→    def __init__ …
+   419→    # TODO: Document, or make private.
    420→    def has_spec(self) -> bool:
+   423→    # TODO: Document, or make private.
    424→    def set_specification(
    425→        self,
    426→        specmodule_or_class: _Namespace,
@@ -276,9 +302,10 @@ src/pluggy/_hooks.py
    499→    def __call__ …
    516→    def call_historic …
    543→    def call_extra …
-   593→class _SubsetHookCaller(HookCaller):
+   593→class _SubsetHookCaller …
    612→    def __init__ …
    619→    def _hookimpls …
+   626→    @property
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
    631→    def _call_history …
    634→    def __repr__ …
@@ -329,6 +356,7 @@ src/pluggy/_manager.py
     65→class DistFacade:
     67→
     68→    def __init__ …
+    71→    @property
     72→    def project_name(self) -> str:
     76→    def __getattr__ …
     79→    def __dir__ …
@@ -367,8 +395,11 @@ src/pluggy/_result.py
     29→    __slots__ = ("_result", "_exception", "_traceback")
     30→
     31→    def __init__ …
+    42→    @property
     43→    def excinfo(self) -> _ExcInfo | None:
+    51→    @property
     52→    def exception(self) -> BaseException | None:
+    56→    @classmethod
     57→    def from_call(cls, func: Callable[[], ResultType]) -> Result[ResultType]:
     67→    def force_result …
     80→    def force_exception …
@@ -399,29 +430,3 @@ testing/test_hookcaller.py
 
 tox.ini
      1→[tox]
-     2→envlist=docs,py{310,311,312,313,314,py3},py{310}-pytestmain
-     3→
-     4→[testenv]
-     5→commands=
-     6→  {env:_PLUGGY_TOX_CMD:pytest} {posargs}
-     7→  coverage: coverage report -m
-     8→  coverage: coverage xml
-     9→setenv=
-    10→  _PYTEST_SETUP_SKIP_PLUGGY_DEP=1
-    11→  coverage: _PLUGGY_TOX_CMD=coverage run -m pytest
-    12→dependency_groups=testing
-    13→deps=
-    14→  coverage: coverage
-    15→  pytestmain: git+https://github.com/pytest-dev/pytest.git@main
-    16→
-    17→[testenv:benchmark]
-    18→commands=pytest {posargs:testing/benchmark.py}
-    19→deps=
-    20→  pytest
-    21→  pytest-benchmark
-    22→
-    23→[testenv:docs]
-    24→deps =
-    25→    -r{toxinidir}/docs/requirements.txt
-    26→commands =
-      →…
