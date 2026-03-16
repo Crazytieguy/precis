@@ -118,11 +118,12 @@ pub fn classify_file(path: &Path) -> crate::schedule::FileCategory {
             return FileCategory::CiConfig;
         }
 
-        // Test infrastructure — tests, benchmarks, fixtures, mocks
+        // Test/build infrastructure — tests, benchmarks, fixtures, mocks, changelogs
         if s == "__tests__" || s == "tests" || s == "test" || s == "testing"
             || s == "benches" || s == "benchmark" || s == "benchmarks"
             || s == "fixtures" || s == "fixture"
             || s == "mocks" || s == "__mocks__"
+            || s == "changelog" || s == "changelogs"
         {
             return FileCategory::Test;
         }

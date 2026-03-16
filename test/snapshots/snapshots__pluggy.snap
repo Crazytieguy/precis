@@ -2,7 +2,10 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3999 tokens)
+budget: 4000 (4000 tokens)
+
+CHANGELOG.rst
+     1→=========
 
 README.rst
      1→====================================================
@@ -74,42 +77,18 @@ README.rst
     67→
     68→.. badges
     69→
+    70→.. |pypi| image:: https://img.shields.io/pypi/v/pluggy.svg
+    71→    :target: https://pypi.org/pypi/pluggy
+    72→
+    73→.. |versions| image:: https://img.shields.io/pypi/pyversions/pluggy.svg
+    74→    :target: https://pypi.org/pypi/pluggy
+    75→
+    76→.. |github-actions| image:: https://github.com/pytest-dev/pluggy/workflows/main/badge.svg
+    77→    :target: https://github.com/pytest-dev/pluggy/actions
+    78→
       →…
 
-TIDELIFT.rst
-     1→========
-     2→Tidelift
-     3→========
-     4→
-     5→pluggy is a member of `Tidelift`_. This document describes how the core team manages
-     6→Tidelift-related activities.
-     7→
-     8→What is it
-     9→==========
-    10→
-    11→Tidelift aims to make Open Source sustainable by offering subscriptions to companies which rely
-    12→on Open Source packages. This subscription allows it to pay maintainers of those Open Source
-    13→packages to aid sustainability of the work.
-    14→
-    15→It is the perfect platform for companies that want to support Open Source packages and at the same
-    16→time obtain assurances regarding maintenance, quality and security.
-    17→
-    18→Funds
-    19→=====
-    20→
-    21→It was decided in the `mailing list`_ that the Tidelift contribution will be split evenly between
-    22→members of the `contributors team`_ interested in receiving funding.
-    23→
-    24→The current list of contributors receiving funding are:
-    25→
-    26→* `@nicoddemus`_
-    27→* `@The-Compiler`_
-    28→* `@RonnyPfannschmidt`_
-    29→
-      →…
-
-changelog/590.trivial.rst
-     1→The ``pluggy.__version__`` variable is now dynamically provided via a module-level ``__getattr__`` implementation, using ``importlib`` to obtain the installed version.
+SECURITY.md
 
 changelog/README.rst
      1→This directory contains "newsfragments" which are short files that contain a small **ReST**-formatted
@@ -122,70 +101,7 @@ changelog/README.rst
      8→
      9→    Fix issue with non-ascii messages from the ``warnings`` module.
     10→
-    11→Each file should be named like ``<ISSUE>.<TYPE>.rst``, where
-    12→``<ISSUE>`` is an issue number, and ``<TYPE>`` is one of:
-    13→
-    14→* ``feature``: new user facing features, like new command-line options and new behavior.
-    15→* ``bugfix``: fixes a reported bug.
-    16→* ``doc``: documentation improvement, like rewording an entire session or adding missing docs.
-    17→* ``removal``: feature deprecation or removal.
-    18→* ``vendor``: changes in packages vendored in pytest.
-    19→* ``trivial``: fixing a small typo or internal change that might be noteworthy.
-    20→
-    21→So for example: ``123.feature.rst``, ``456.bugfix.rst``.
-    22→
-    23→If your PR fixes an issue, use that number here. If there is no issue,
-    24→then after you submit the PR and get the PR number you can add a
-    25→changelog using that instead.
-    26→
-    27→If you are not sure what issue type to use, don't hesitate to ask in your PR.
-    28→
-    29→``towncrier`` preserves multiple paragraphs and formatting (code blocks, lists, and so on), but for entries
-    30→other than ``features`` it is usually better to stick to a single paragraph to keep it concise. You can install
-    31→``towncrier`` and then run ``towncrier --draft``
-    32→if you want to get a preview of how your change will look in the final release notes.
-
-changelog/_template.rst
-     1→{% for section in sections %}
-     2→{% set underline = "-" %}
-     3→{% if section %}
-     4→{{section}}
-     5→{{ underline * section|length }}{% set underline = "~" %}
-     6→
-     7→{% endif %}
-     8→{% if sections[section] %}
-     9→{% for category, val in definitions.items() if category in sections[section] %}
-    10→
-    11→{{ definitions[category]['name'] }}
-    12→{{ underline * definitions[category]['name']|length }}
-    13→
-    14→{% if definitions[category]['showcontent'] %}
-    15→{% for text, values in sections[section][category]|dictsort(by='value') %}
-    16→{% set issue_joiner = joiner(', ') %}
-    17→- {% for value in values|sort %}{{ issue_joiner() }}`{{ value }} <https://github.com/pytest-dev/pluggy/issues/{{ value[1:] }}>`_{% endfor %}: {{ text }}
-    18→
-    19→
-    20→{% endfor %}
-    21→{% else %}
-    22→- {{ sections[section][category]['']|sort|join(', ') }}
-    23→
-    24→
-    25→{% endif %}
-    26→{% if sections[section][category]|length == 0 %}
-    27→
-    28→No significant changes.
-    29→
-    30→
-    31→{% else %}
-    32→{% endif %}
-    33→{% endfor %}
-    34→{% else %}
-    35→
-    36→No significant changes.
-    37→
-    38→
-    39→{% endif %}
-    40→{% endfor %}
+      →…
 
 codecov.yml
      1→coverage:
@@ -201,10 +117,26 @@ docs/api_reference.rst
      8→.. autoclass:: pluggy.PluginManager
      9→    :members:
     10→
+    11→.. autoclass:: pluggy.PluginValidationError
+    12→    :show-inheritance:
+    13→    :members:
+    14→
+    15→.. autodecorator:: pluggy.HookspecMarker
+    16→
+    17→.. autodecorator:: pluggy.HookimplMarker
+    18→
+    19→.. autoclass:: pluggy.HookRelay()
+    20→    :members:
+    21→
+    22→    .. data:: <hook name>
+    23→
+    24→        :type: HookCaller
+    25→
       →…
 
 docs/conf.py
    106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
+   107→    """Configure Sphinx's WarningHandler to handle (expected) missing include."""
    130→def setup(app: "sphinx.application.Sphinx") -> None:
 
 docs/examples/eggsample-spam/eggsample_spam.py
@@ -213,10 +145,13 @@ docs/examples/eggsample-spam/eggsample_spam.py
 
 docs/examples/toy-example.py
      8→class MySpec:
+    10→
     12→    def myhook(self, arg1, arg2):
     16→class Plugin_1:
+    18→
     20→    def myhook(self, arg1, arg2):
     25→class Plugin_2:
+    27→
     29→    def myhook(self, arg1, arg2):
 
 docs/index.rst
@@ -229,6 +164,21 @@ docs/index.rst
      7→``pluggy`` is the crystallized core of :ref:`plugin management and hook
      8→calling <pytest:writing-plugins>` for :std:doc:`pytest <pytest:index>`.
      9→It enables `1400+ plugins`_ to extend and customize ``pytest``'s default
+    10→behaviour. Even ``pytest`` itself is composed as a set of ``pluggy`` plugins
+    11→which are invoked in sequence according to a well defined set of protocols.
+    12→
+    13→It gives users the ability to extend or modify the behaviour of a
+    14→``host program`` by installing a ``plugin`` for that program.
+    15→The plugin code will run as part of normal program execution, changing or
+    16→enhancing certain aspects of it.
+    17→
+    18→In essence, ``pluggy`` enables function `hooking`_ so you can build
+    19→"pluggable" systems.
+    20→
+    21→Why is it useful?
+    22→*****************
+    23→There are some established mechanisms for modifying the behavior of other
+    24→programs/libraries in Python like
       →…
 
 pyproject.toml
@@ -249,14 +199,49 @@ src/pluggy/_callers.py
     18→from ._result import Result
     19→from ._warnings import PluggyTeardownRaisedWarning
     22→# Need to distinguish between old- and new-style hook wrappers.
-      →…
+    23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
     24→Teardown: TypeAlias = Generator[None, object, object]
     27→def run_old_style_hookwrapper …
 
 src/pluggy/_hooks.py
     25→from ._result import Result
+    28→_T …
+    29→_F …
+    31→_Namespace …
+    32→_Plugin …
+    33→_HookExec …
+    37→_HookImplFunction …
     40→class HookspecOpts(TypedDict):
+    42→
+    43→    #: Whether the hook is :ref:`first result only <firstresult>`.
+    44→    firstresult: bool
+    45→    #: Whether the hook is :ref:`historic <historic>`.
+    46→    historic: bool
+    47→    #: Whether the hook :ref:`warns when implemented <warn_on_impl>`.
+    48→    warn_on_impl: Warning | None
+    49→    #: Whether the hook warns when :ref:`certain arguments are requested
+    50→    #: <warn_on_impl>`.
+    51→    #:
+    52→    #: .. versionadded:: 1.5
+    53→    warn_on_impl_args: Mapping[str, Warning] | None
     56→class HookimplOpts(TypedDict):
+    58→
+    59→    #: Whether the hook implementation is a :ref:`wrapper <hookwrapper>`.
+    60→    wrapper: bool
+    61→    #: Whether the hook implementation is an :ref:`old-style wrapper
+    62→    #: <old_style_hookwrappers>`.
+    63→    hookwrapper: bool
+    64→    #: Whether validation against a hook specification is :ref:`optional
+    65→    #: <optionalhook>`.
+    66→    optionalhook: bool
+    67→    #: Whether to try to order this hook implementation :ref:`first
+    68→    #: <callorder>`.
+    69→    tryfirst: bool
+    70→    #: Whether to try to order this hook implementation :ref:`last
+    71→    #: <callorder>`.
+    72→    trylast: bool
+    73→    #: The name of the hook specification to match, see :ref:`specname`.
+    74→    specname: str | None
     78→class HookspecMarker:
     85→
     86→    __slots__ = ("project_name",)
@@ -270,6 +255,7 @@ src/pluggy/_hooks.py
    175→    def __init__ …
    202→    def __call__ …
    281→def normalize_hookimpl_opts …
+   290→_PYPY …
    293→def varnames …
    359→class HookRelay:
    362→
@@ -277,7 +263,17 @@ src/pluggy/_hooks.py
    364→
    365→    def __init__ …
    370→        def __getattr__ …
+   377→_CallHistory …
    382→class HookCaller:
+   384→
+   385→    __slots__ = (
+   386→        "name",
+   387→        "spec",
+   388→        "_hookexec",
+   389→        "_hookimpls",
+   390→        "_call_history",
+   391→    )
+   392→
    393→    def __init__ …
    420→    def has_spec(self) -> bool:
    424→    def set_specification(
@@ -292,6 +288,7 @@ src/pluggy/_hooks.py
    516→    def call_historic …
    543→    def call_extra …
    593→class _SubsetHookCaller(HookCaller):
+   596→
    612→    def __init__ …
    619→    def _hookimpls(self) -> list[HookImpl]:
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
@@ -334,14 +331,19 @@ src/pluggy/_manager.py
     17→from ._callers import _multicall
     27→from ._hooks import normalize_hookimpl_opts
     28→from ._result import Result
+    36→_BeforeTrace …
+    37→_AfterTrace …
     52→class PluginValidationError(Exception):
+    58→
     59→    def __init__ …
     65→class DistFacade:
+    67→
     68→    def __init__ …
     72→    def project_name(self) -> str:
     76→    def __getattr__ …
     79→    def __dir__ …
     83→class PluginManager:
+    99→
    100→    def __init__ …
    125→    def register …
    176→    def parse_hookimpl_opts …
@@ -367,6 +369,7 @@ src/pluggy/_manager.py
    512→    def subset_hook_caller …
 
 src/pluggy/_result.py
+    16→_ExcInfo …
     20→class HookCallError(Exception):
     25→class Result(Generic[ResultType]):
     28→
@@ -393,6 +396,11 @@ src/pluggy/_tracing.py
 
 src/pluggy/_warnings.py
      4→class PluggyWarning(UserWarning):
+     6→
+     7→    __module__ = "pluggy"
     11→class PluggyTeardownRaisedWarning(PluggyWarning):
     26→
     27→    __module__ = "pluggy"
+
+testing/test_hookcaller.py
+    34→class AddMeth:

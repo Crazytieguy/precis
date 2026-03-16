@@ -126,7 +126,8 @@ impl FileRole {
             "changelog" | "changes" | "history" | "news" | "releases" => FileRole::Changelog,
             "contributing" | "contributors" | "security" | "license" | "licence"
             | "code_of_conduct" | "codeowners" | "releasing" | "support"
-            | "governance" | "authors" | "maintainers" => FileRole::CommunityHealth,
+            | "governance" | "authors" | "maintainers"
+            | "tidelift" | "sponsors" | "funding" => FileRole::CommunityHealth,
             "claude" | "agents" | "copilot" | "copilot-instructions"
             | "context" => FileRole::AiConfig,
             "architecture" | "design" => FileRole::Architecture,
