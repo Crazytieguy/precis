@@ -808,8 +808,8 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
         _ => 0.4,
     };
 
-    // File role: README files are high-signal (project description, usage examples),
-    // architecture docs are the most valuable. Changelogs/translations are low-signal.
+    // File role: README and architecture docs are high-signal (project description,
+    // design philosophy). Changelogs/translations/community files are low-signal.
     let file_role_factor = match key.file_role {
         FileRole::Architecture => 1.5,
         FileRole::Readme => 1.5,
