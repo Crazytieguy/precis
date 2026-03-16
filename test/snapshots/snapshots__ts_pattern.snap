@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (4011 tokens)
 
 README.md
     40→## About
@@ -55,6 +55,9 @@ README.md
   1621→## Types
   1766→## Inspirations
 
+
+benchmarks/
+      →…
 docs/roadmap.md
 
 docs/v3-to-v4-migration-guide.md
@@ -375,3 +378,6 @@ src/types/helpers.ts
    184→  : fn extends (value: infer a) => unknown
    185→  ? a
    186→  : never;
+
+tests/
+      →…

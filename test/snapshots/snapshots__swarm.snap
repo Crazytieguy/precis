@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3998 tokens)
+budget: 4000 (4004 tokens)
 
 README.md
      3→# Swarm (experimental, educational)
@@ -317,6 +317,9 @@ examples/weather_agent/evals.py
     26→def test_calls_weather_when_asked(query):
     41→def test_does_not_call_weather_when_not_asked(query):
 
+
+logs/
+      →…
 pyproject.toml
      1→[build-system]
      2→requires = ["setuptools"]

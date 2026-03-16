@@ -94,6 +94,31 @@ fn render_scheduled(
     let mut out = String::new();
     let mut first_file = true;
 
+    // Compute top-level directories that are completely invisible (no visible files).
+    // Only mark these to avoid cluttering with subdirectory markers.
+    let mut dirs_with_files: std::collections::HashMap<PathBuf, bool> = std::collections::HashMap::new();
+    for (file_idx, file) in files.iter().enumerate() {
+        let relative = file.strip_prefix(root).unwrap_or(file);
+        // Get the first path component (top-level directory)
+        let top_dir = relative.components().next()
+            .map(|c| PathBuf::from(c.as_os_str()));
+        if let Some(dir) = top_dir {
+            // Only track directories, not root-level files
+            if relative.components().count() > 1 {
+                let entry = dirs_with_files.entry(dir).or_insert(false);
+                if sched.visible_files.contains(&file_idx) {
+                    *entry = true; // directory has at least one visible file
+                }
+            }
+        }
+    }
+    let invisible_dirs: std::collections::BTreeSet<PathBuf> = dirs_with_files
+        .into_iter()
+        .filter(|(_, has_visible)| !has_visible)
+        .map(|(dir, _)| dir)
+        .collect();
+    let mut dirs_emitted: std::collections::HashSet<PathBuf> = std::collections::HashSet::new();
+
     for (file_idx, (file, source)) in files.iter().zip(sources.iter()).enumerate() {
         if !sched.visible_files.contains(&file_idx) {
             continue;
@@ -104,6 +129,23 @@ fn render_scheduled(
             out.push('\n');
         }
         let relative = file.strip_prefix(root).unwrap_or(file);
+
+        // Before showing this file, emit omission markers for invisible
+        // top-level directories that sort before this file's directory.
+        let file_top_dir = relative.components().next()
+            .map(|c| PathBuf::from(c.as_os_str()));
+        if let Some(ref ftd) = file_top_dir {
+            for dir in &invisible_dirs {
+                if dir < ftd && dirs_emitted.insert(dir.clone()) {
+                    if !first_file {
+                        out.push('\n');
+                    }
+                    first_file = false;
+                    out.push_str(&format!("{}/\n      →…\n", dir.display()));
+                }
+            }
+        }
+
         out.push_str(&format!("{}\n", relative.display()));
 
         let source = match source {
@@ -142,6 +184,17 @@ fn render_scheduled(
                 &groups[group_idx],
                 &mut emitted_up_to,
             );
+        }
+    }
+
+    // Emit any remaining invisible top-level directories
+    for dir in &invisible_dirs {
+        if dirs_emitted.insert(dir.clone()) {
+            if !first_file {
+                out.push('\n');
+            }
+            first_file = false;
+            out.push_str(&format!("{}/\n      →…\n", dir.display()));
         }
     }
 

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3989 tokens)
+budget: 4000 (4008 tokens)
 
 CHANGELOG.md
 
@@ -29,6 +29,12 @@ README.md
    109→
       →…
 
+
+benches/
+      →…
+
+rfcs/
+      →…
 src/__private_api.rs
      7→pub use std::{format_args, module_path, stringify};
     10→pub type Value<'a> = &'a str;
@@ -356,5 +362,8 @@ test_max_level_features/Cargo.toml
      1→[package]
      7→[[bin]]
 
+
+tests/
+      →…
 triagebot.toml
      1→[assign]

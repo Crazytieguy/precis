@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7999 tokens)
+budget: 8000 (8004 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -796,3 +796,6 @@ src/main.rs
     14→mod cmd;
     16→const VERSION …
     58→fn create_clap_command() -> Command {
+
+tests/
+      →…

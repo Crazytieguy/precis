@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3999 tokens)
+budget: 4000 (4004 tokens)
 
 Cargo.toml
      1→[package]
@@ -560,3 +560,6 @@ src/stmt.rs
    290→    pub fn as_update …
    302→    pub fn into_update …
    314→    pub fn unwrap_update …
+
+tests/
+      →…

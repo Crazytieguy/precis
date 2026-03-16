@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3994 tokens)
+budget: 4000 (4010 tokens)
 
 README.md
      7→# Soluna
@@ -143,6 +143,9 @@ make.lua
      7→  end
       →  …
 
+
+script/
+      →…
 src/appevent.h
      2→#define soluna_app_event_h
      4→struct event_message {
@@ -401,4 +404,10 @@ src/yogaone.cpp
      6→#include "yoga/YGPixelGrid.cpp"
      7→#include "yoga/YGValue.cpp"
      8→
+      →…
+
+test/
+      →…
+
+web/
       →…

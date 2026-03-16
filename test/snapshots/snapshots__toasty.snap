@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (8000 tokens)
+budget: 8000 (8011 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -29,6 +29,9 @@ README.md
     98→## Current status and roadmap
    117→### Contribution
 
+
+benches/
+      →…
 compose.yaml
     19→name: toasty
     20→version: "3.8"
@@ -904,3 +907,6 @@ examples/todo-with-cli/src/lib.rs
      2→pub struct User {
     17→pub struct Todo {
     35→pub async fn create_db …
+
+tests/
+      →…

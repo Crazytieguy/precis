@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (4005 tokens)
 
 CHANGELOG.md
 
@@ -403,4 +403,7 @@ src/version-index.ts
      8→export interface IndexType<K, V> {
     28→export class Index<K, V> implements IndexType<K, V> {
 
+
+tests/
+      →…
 tsconfig.json
