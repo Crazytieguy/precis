@@ -71,8 +71,8 @@ bindings/rust/src/lib.rs
 
 examples/simple-c/Makefile
      1→demo: demo.c
-     2→	gcc \
-      →	…
+
+examples/simple-c/demo.c
 
 examples/simple-rust/Cargo.toml
      1→[package]
@@ -86,9 +86,6 @@ examples/simple-sqlite/demo.sql
      4→
       →…
 
-examples/simple-wasm/index.html
-     1→<html>
-
 reference.yaml
      1→sections:
     31→meta:
@@ -98,10 +95,14 @@ reference.yaml
    308→quantization:
    328→vec0:
 
-scripts/
-      →…
+scripts/publish-release.sh
+     2→
 
-site/project.data.ts
+scripts/vendor.sh
+     2→mkdir -p vendor
+
+site/
+      →…
 
 sqlite-dist.toml
      1→[package]

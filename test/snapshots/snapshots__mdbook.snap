@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (8003 tokens)
+budget: 8000 (8005 tokens)
 
 README.md
      1→# mdBook
@@ -176,12 +176,11 @@ crates/mdbook-core/src/utils/html.rs
 
 crates/mdbook-core/src/utils/mod.rs
      7→pub mod fs;
-    15→/// Defines a `static` with a [`regex::Regex`].
-    16→#[macro_export]
     17→macro_rules! static_regex {
     29→pub fn log_backtrace …
 
 crates/mdbook-core/src/utils/toml_ext.rs
+     6→pub(crate) trait TomlExt {
      8→    fn read …
     10→    fn insert …
 
@@ -244,7 +243,6 @@ crates/mdbook-driver/src/lib.rs
     67→pub mod builtin_preprocessors;
     68→pub mod builtin_renderers;
     69→pub mod init;
-    75→pub use mdbook_core::{book, config, errors};
 
 crates/mdbook-driver/src/mdbook.rs
     29→pub struct MDBook {
@@ -295,14 +293,23 @@ crates/mdbook-html/Cargo.toml
 crates/mdbook-html/README.md
      1→# mdbook-html
 
-crates/mdbook-html/front-end/images/favicon.svg
-     1→<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 199.7 184.2">
-     2→  <style>
-     3→    @media (prefers-color-scheme: dark) {
-     4→      svg { fill: white; }
-     5→    }
-     6→  </style>
-      →  …
+crates/mdbook-html/front-end/templates/head.hbs
+     1→{{!-- Put your head HTML text here --}}
+
+crates/mdbook-html/front-end/templates/header.hbs
+     1→{{!-- Put your header HTML text here --}}
+
+crates/mdbook-html/front-end/templates/index.hbs
+     1→<!DOCTYPE HTML>
+
+crates/mdbook-html/front-end/templates/redirect.hbs
+     1→<!DOCTYPE html>
+
+crates/mdbook-html/front-end/templates/toc.html.hbs
+     1→<!DOCTYPE HTML>
+
+crates/mdbook-html/front-end/templates/toc.js.hbs
+     1→// Populate the sidebar
 
 crates/mdbook-html/src/html/tree.rs
     33→pub(crate) enum Node {
@@ -562,7 +569,7 @@ crates/mdbook-summary/src/lib.rs
    127→    /// A part title.
    128→    PartTitle(String),
    129→}
-   173→struct SummaryParser<'a> {
+   173→struct SummaryParser …
    190→macro_rules! collect_events {
 
 crates/xtask/Cargo.toml
@@ -816,7 +823,7 @@ src/cmd/watch.rs
 src/main.rs
     14→mod cmd;
     16→const VERSION …
-    58→fn create_clap_command() -> Command {
+    58→fn create_clap_command …
 
 tests/
       →…

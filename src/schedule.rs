@@ -423,8 +423,8 @@ fn is_config_file(relative_path: &Path, filename: &str) -> bool {
         _ => {}
     }
 
-    // Stylesheets are styling, not architecture. Deprioritize so source code wins.
-    if matches!(ext, Some("css" | "scss" | "sass" | "less")) {
+    // Stylesheets, HTML templates, and SVG assets are not source code architecture.
+    if matches!(ext, Some("css" | "scss" | "sass" | "less" | "html" | "htm" | "svg")) {
         return true;
     }
 

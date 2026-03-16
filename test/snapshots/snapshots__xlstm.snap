@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4005 tokens)
+budget: 4000 (4010 tokens)
 
 README.md
      3→# xLSTM: Extended Long Short-Term Memory
@@ -25,7 +25,8 @@ README.md
     75→We have optimized the xLSTM architecture in terms of training throughput and stability. 
     76→The code for the updated architecture is located in `xlstm/xlstm_large`.
     77→
-      →…
+    78→The model weights are available on Huggingface at https://huggingface.co/NX-AI/xLSTM-7b. 
+    79→
     80→## How to use the xLSTM Large 7B and its architecture
    115→## Recommendation for other hardware
    138→# Models from the xLSTM NeurIPS Paper
@@ -41,8 +42,6 @@ experiments/data/formal_language/formal_language_dataset.py
     44→    enable_mask: bool = False
     45→    additional_prefix_tokens: int = (
       →    …
-
-experiments/data/utils.py
 
 experiments/lr_scheduler.py
     14→    def get_lr(self) -> list[float]:
@@ -89,14 +88,7 @@ notebooks/xlstm_large/load_from_pretrained.ipynb
      3→  {
       →  …
 
-res/desc_xlstm_overview.svg
-     1→<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="540.2389pt" height="246.00223pt" viewBox="0 0 540.2389 246.00223">
-     2→<defs>
-      →…
-
-res/xlstm_7b_poster.svg
-     1→<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-     4→<svg
+res/
       →…
 
 tests/
@@ -158,6 +150,8 @@ xlstm/blocks/slstm/cell.py
    146→    def torch_dtype_s(self) -> torch.dtype:
    173→    def defines(self):
    214→class sLSTMCellBase(nn.Module):
+   277→    def _recurrent_kernel(self):
+   281→    def _bias(self):
    324→    def head_dim(self):
    509→class sLSTMCellCUDA(object):
    513→    def instance(cls, config: sLSTMCellConfig):
@@ -170,6 +164,7 @@ xlstm/blocks/slstm/layer.py
     33→class sLSTMLayer(nn.Module):
 
 xlstm/blocks/slstm/src/cuda/slstm.h
+    27→// all needed definitions from external
     28→#define SLSTM_NUM_HEADS 1
     29→#define SLSTM_HIDDEN_SIZE 512
     30→#define SLSTM_BATCH_SIZE 8
@@ -181,7 +176,15 @@ xlstm/blocks/slstm/src/cuda/slstm.h
     36→#define SLSTM_DTYPE_G float
     37→#define SLSTM_DTYPE_S float
     38→#define SLSTM_DTYPE_A float
+    39→// defines whether g = Wx + Ry + b for every gate, enables half the cache for
+    40→// backward
     41→#define SLSTM_SIMPLE_AGG true
+
+xlstm/blocks/slstm/src/cuda_init.py
+    14→LOGGER = logging.getLogger(__name__)
+    17→def defines_to_cflags …
+    42→EXTRA_INCLUDE_PATHS = (
+    60→def load …
 
 xlstm/blocks/slstm/src/util/device_assert.h
     23→__assertfail …
@@ -238,8 +241,6 @@ xlstm/components/feedforward.py
     40→    _num_blocks: int = 1
     41→
     49→class GatedFeedForward(nn.Module):
-
-xlstm/components/init.py
 
 xlstm/components/linear_headwise.py
     13→class LinearHeadwiseExpandConfig:
