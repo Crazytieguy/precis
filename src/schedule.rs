@@ -118,6 +118,7 @@ impl FileRole {
         // Strip document extension for matching
         let (stem, is_doc) = lower.strip_suffix(".md").map(|s| (s, true))
             .or_else(|| lower.strip_suffix(".markdown").map(|s| (s, true)))
+            .or_else(|| lower.strip_suffix(".rst").map(|s| (s, true)))
             .or_else(|| lower.strip_suffix(".txt").map(|s| (s, true)))
             .unwrap_or((&lower, false));
         match stem {
@@ -126,8 +127,9 @@ impl FileRole {
             "contributing" | "contributors" | "security" | "license" | "licence"
             | "code_of_conduct" | "codeowners" | "releasing" | "support"
             | "governance" | "authors" | "maintainers" => FileRole::CommunityHealth,
-            "claude" | "agents" | "copilot" | "copilot-instructions" => FileRole::AiConfig,
-            "architecture" | "design" | "context" => FileRole::Architecture,
+            "claude" | "agents" | "copilot" | "copilot-instructions"
+            | "context" => FileRole::AiConfig,
+            "architecture" | "design" => FileRole::Architecture,
             _ if is_doc && has_locale_suffix(stem) => FileRole::Translated,
             _ => FileRole::Normal,
         }
@@ -139,7 +141,7 @@ impl FileRole {
     /// is low value, not high value).
     pub fn from_path(path: &Path) -> Self {
         let ext = path.extension().and_then(|e| e.to_str()).unwrap_or("");
-        let is_doc = matches!(ext, "md" | "markdown" | "txt");
+        let is_doc = matches!(ext, "md" | "markdown" | "rst" | "txt");
         let is_data = matches!(ext, "json" | "yaml" | "yml" | "toml" | "properties" | "strings" | "xlf" | "po" | "pot");
         // For doc and data files, check if any parent directory is a locale directory
         // (e.g., docs/zh-CN/guide.md, i18n/es/readme.md, locales/ar.json).
@@ -809,9 +811,10 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
         FileRole::AiConfig => 0.1,
     };
 
-    // Config files (eslint.config.js, jest.config.ts, etc.) are build/tool setup,
-    // not core library logic. Show them only when there's plenty of budget.
-    let config_factor = if key.is_config { 0.1 } else { 1.0 };
+    // Config files (eslint.config.js, pyproject.toml, etc.) are build/tool setup,
+    // not core library logic. 0.2 allows section names to appear (project name,
+    // dependencies) while keeping body content (classifiers, URLs) deprioritized.
+    let config_factor = if key.is_config { 0.2 } else { 1.0 };
 
     // File category: examples show how to use the library (moderately valuable
     // but shouldn't dominate over core library code), docs site source is
@@ -1493,11 +1496,15 @@ mod tests {
         assert_eq!(FileRole::from_filename("architecture.md"), FileRole::Architecture);
         assert_eq!(FileRole::from_filename("DESIGN.md"), FileRole::Architecture);
         assert_eq!(FileRole::from_filename("design.md"), FileRole::Architecture);
-        assert_eq!(FileRole::from_filename("CONTEXT.md"), FileRole::Architecture);
-        assert_eq!(FileRole::from_filename("context.md"), FileRole::Architecture);
+        // CONTEXT.md is AI agent context, not architecture docs
+        assert_eq!(FileRole::from_filename("CONTEXT.md"), FileRole::AiConfig);
+        assert_eq!(FileRole::from_filename("context.md"), FileRole::AiConfig);
         // Non-doc extensions should not match
         assert_eq!(FileRole::from_filename("architecture.rs"), FileRole::Normal);
         assert_eq!(FileRole::from_filename("context.py"), FileRole::Normal);
+        // RST extension should be recognized
+        assert_eq!(FileRole::from_filename("README.rst"), FileRole::Readme);
+        assert_eq!(FileRole::from_filename("CHANGELOG.rst"), FileRole::Changelog);
     }
 
     #[test]

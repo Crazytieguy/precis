@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2000 tokens)
+budget: 2000 (1996 tokens)
 
 README.md
      1→# Enclosed crypto library
@@ -27,8 +27,10 @@ README.md
     24→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
 
 build.config.ts
+     1→import { defineBuildConfig } from 'unbuild';
 
 eslint.config.js
+     1→import antfu from '@antfu/eslint-config';
 
 package.json
      2→  "name": "@enclosed/crypto",
@@ -104,7 +106,6 @@ src/index.web.ts
      4→import { aes256GcmEncryptionAlgorithmDefinition } from './web/encryption-algorithms/crypto.web.aes-256-gcm';
 
 src/node/crypto.node.usecases.test.ts
-     1→import { describe, expect, test } from 'vitest';
      2→import { base64UrlToBuffer, bufferToBase64Url } from './crypto.node.usecases';
 
 src/node/crypto.node.usecases.ts
@@ -131,7 +132,6 @@ src/node/encryption-algorithms/crypto.node.aes-256-gcm.ts
       →…
 
 src/web/crypto.web.usecases.test.ts
-     1→import { describe, expect, test } from 'vitest';
      2→import { base64UrlToBuffer, bufferToBase64Url } from './crypto.web.usecases';
 
 src/web/crypto.web.usecases.ts

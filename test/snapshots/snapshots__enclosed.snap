@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7998 tokens)
+budget: 8000 (7995 tokens)
 
 CONTRIBUTING.md
      1→# Contributing to Enclosed
@@ -41,6 +41,8 @@ docker-compose.yml
     10→volumes:
     11→  enclosed-data:
     12→    driver: local
+
+package.json
 
 packages/app-client/README.md
      1→## Usage
@@ -505,6 +507,8 @@ packages/deploy-cloudflare/_routes.json
      4→    "/api/*"
      6→  "exclude": []
 
+packages/docs/package.json
+
 packages/docs/src/components/credential-inputs.vue
      1→<script setup>
      2→const credentials = defineModel({
@@ -516,7 +520,6 @@ packages/docs/src/components/credential-inputs.vue
      8→  ],
      9→});
     10→
-    11→function addCredential() {
       →…
 
 packages/docs/src/components/toggle.vue
@@ -530,7 +533,6 @@ packages/docs/src/components/toggle.vue
      8→}
      9→</script>
     10→
-    11→<template>
       →…
 
 packages/docs/src/data/configuration.data.ts
@@ -766,3 +768,5 @@ pnpm-workspace.yaml
     10→  vitest: ^3.0.9
     11→  "@vitest/coverage-v8": ^3.0.9
     12→  "@corentinth/chisels": ^1.2.1
+
+renovate.json

@@ -2,72 +2,19 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3973 tokens)
+budget: 4000 (3954 tokens)
 
 CONTEXT.md
      1→# toasty-codegen Component Context
      3→## Purpose
-     4→Generates Rust code from the `#[derive(Model)]` procedural macro. This crate transforms user-defined structs into full-featured ORM models with query builders, CRUD operations, and relationship handling.
-     5→
      6→## Key Responsibilities
-     8→### Schema Parsing (`src/schema/`)
-    15→### Code Expansion (`src/expand/`)
     25→## Common Change Patterns
-    27→### Adding a New Model Attribute
-    33→### Adding Query Methods
-    39→### Supporting New Field Types
     45→## Generated Code Structure
-    47→For a model `User`, codegen creates:
-    48→```rust
-    49→// Core implementations
-    50→impl User { /* CRUD methods */ }
-    51→impl Model for User { /* trait implementation */ }
-    52→impl Relation for User { /* relationship support */ }
-    53→impl IntoExpr<User> for User { /* expression conversion */ }
-    54→impl IntoSelect for User { /* query conversion */ }
-    55→
-    56→// Builder structs
-    57→struct UserQuery { /* query builder */ }
-    58→struct UserCreate { /* insert builder */ }
-    59→struct UserUpdate<'a> { /* update builder */ }
-    60→struct UserUpdateQuery { /* update query builder */ }
-    61→
-    62→// Field accessors
-    63→struct UserFields;
-    64→impl UserFields { /* field path methods */ }
-    65→
-    66→// Relationship types
-    67→struct Many, One, OptionOne, ManyField, OneField;
-    68→```
-    69→
     70→## Complete Attribute Support
-    72→### Model-Level Attributes
-    76→### Field-Level Attributes  
-    83→### Relationship Attributes
     88→## Important Files
-    90→- `lib.rs`: Macro entry point
-    91→- `schema/model.rs`: Model parsing logic
-    92→- `expand/model.rs`: Main expansion logic
-    93→- `expand/util.rs`: Helper functions for code generation
-    94→- `schema/ty.rs`: Type system mapping
-    95→
     96→## Code Generation Principles
-    98→1. **Fully Qualified Paths**: Always use `#toasty::Type` to avoid conflicts
-    99→2. **Type Safety**: Generate strongly-typed builders and queries
-   100→3. **Zero-Cost**: Generated code should have no runtime overhead
-   101→4. **Discoverable API**: Methods should be intuitive and IDE-friendly
-   102→
    103→## Key Patterns
-   105→### Dynamic Model IDs
-   114→### Query Builder Pattern
-   123→### Relationship Expansion
    128→## Recent Changes Analysis
-   130→From recent commits:
-   131→- Switched from const Model::ID to method-based IDs
-   132→- Reduced glob imports for clarity
-   133→- Removed schema query generation (moved to runtime)
-   134→- Simplified field accessor generation
-   135→- Added support for more primitive types
 
 Cargo.toml
      1→[package]
@@ -122,8 +69,21 @@ src/expand/filters.rs
     21→    get_method_ident: syn::Ident,
     22→
     23→    /// Filter method identifer
-      →    …
+    24→    pub(super) filter_method_ident: syn::Ident,
+    25→
+    26→    /// Filter method batch identifier
+    27→    filter_method_batch_ident: syn::Ident,
+    28→
+    29→    /// Update method identifier
+    30→    update_method_ident: syn::Ident,
+    31→
+    32→    /// Delete method identifier
+    33→    delete_method_ident: syn::Ident,
+    34→}
     36→struct BuildModelFilters<'a> {
+    37→    model: &'a Model,
+    38→    filters: HashMap<Vec<usize>, Filter>,
+    39→}
     41→impl Expand<'_> {
     42→    pub(super) fn expand_model_filter_methods …
     65→    fn expand_model_get_method …
@@ -225,8 +185,20 @@ src/expand.rs
      7→mod schema;
      8→mod update;
      9→mod util;
+    11→use filters::Filter;
     13→use crate::schema::Model;
+    15→use proc_macro2::TokenStream;
+    16→use quote::quote;
     18→struct Expand<'a> {
+    19→    /// The model being expanded
+    20→    model: &'a Model,
+    21→
+    22→    /// Model filter methods
+    23→    filters: Vec<Filter>,
+    24→
+    25→    /// Path prefix for toasty types
+    26→    toasty: TokenStream,
+    27→}
     29→impl Expand<'_> {
     30→    fn expand(&self) -> TokenStream {
     49→pub(super) fn root_model(model: &Model) -> TokenStream {
@@ -236,6 +208,7 @@ src/expand.rs
 src/lib.rs
      1→mod expand;
      2→mod schema;
+     4→use proc_macro2::TokenStream;
      6→pub fn generate_model(input: TokenStream) -> syn::Result<TokenStream> {
     13→pub fn generate_embed(input: TokenStream) -> syn::Result<TokenStream> {
 
@@ -312,6 +285,11 @@ src/schema/field.rs
      8→pub(crate) struct Field {
     29→pub(crate) struct FieldAttr {
     47→pub(crate) enum FieldTy {
+    48→    Primitive(syn::Type),
+    49→    BelongsTo(BelongsTo),
+    50→    HasMany(HasMany),
+    51→    HasOne(HasOne),
+    52→}
     54→impl FieldTy {
     55→    pub(crate) fn is_relation …
     63→impl Field {
@@ -336,6 +314,12 @@ src/schema/index.rs
      2→pub(crate) struct Index {
     14→pub(crate) struct IndexField {
     23→pub(crate) enum IndexScope {
+    24→    /// The index column is used to partition rows across nodes of a distributed database.
+    25→    Partition,
+    26→
+    27→    /// The index column is scoped to a physical node.
+    28→    Local,
+    29→}
 
 src/schema/key_attr.rs
      2→pub(crate) struct KeyAttr {
@@ -345,6 +329,11 @@ src/schema/key_attr.rs
 src/schema/model.rs
      1→use super::{ErrorSet, Field, Index, IndexField, IndexScope, ModelAttr, Name, PrimaryKey};
      4→pub(crate) enum ModelKind {
+     5→    /// Root model with table, primary key, and query builders
+     6→    Root(ModelRoot),
+     7→    /// Embedded model that is flattened into parent
+     8→    Embedded(ModelEmbedded),
+     9→}
     11→impl ModelKind {
     12→    pub(crate) fn expect_root …
     19→    pub(crate) fn expect_embedded …
@@ -382,16 +371,30 @@ src/schema/pk.rs
 
 src/schema.rs
      1→mod auto;
+     2→pub(crate) use auto::{AutoStrategy, UuidVersion};
      4→mod belongs_to;
+     5→pub(crate) use belongs_to::BelongsTo;
      7→mod error;
+     8→pub(crate) use error::ErrorSet;
     10→mod field;
+    11→pub(crate) use field::{Field, FieldTy};
     13→mod fk;
+    14→pub(crate) use fk::ForeignKeyField;
     16→mod has_many;
+    17→pub(crate) use has_many::HasMany;
     19→mod has_one;
+    20→pub(crate) use has_one::HasOne;
     22→mod index;
+    23→pub(crate) use index::{Index, IndexField, IndexScope};
     25→mod key_attr;
+    26→pub(crate) use key_attr::KeyAttr;
     28→mod model;
+    29→pub(crate) use model::{Model, ModelKind};
     31→mod model_attr;
+    32→pub(crate) use model_attr::ModelAttr;
     34→mod name;
+    35→pub(crate) use name::Name;
     37→mod pk;
+    38→pub(crate) use pk::PrimaryKey;
     40→mod column;
+    41→pub(crate) use column::Column;

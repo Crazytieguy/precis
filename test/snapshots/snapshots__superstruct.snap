@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (3999 tokens)
 
 Changelog.md
      1→# Changelog
@@ -120,6 +120,8 @@ docs/summary.md
 examples/README.md
      1→# Examples
 
+examples/package.json
+
 jsr.json
      2→  "$schema": "https://jsr.io/schema/config-file.v1.json",
      3→  "name": "@superstruct/core",
@@ -127,6 +129,8 @@ jsr.json
      5→  "exports": "./src/index.ts",
      6→  "publish": {
      7→    "include": ["Readme.md", "License.md", "src", "docs"]
+
+package.json
 
 src/error.ts
      5→export type Failure = {
@@ -399,5 +403,6 @@ src/utils.ts
    402→type _InferTuple …
 
 test/index.ts
-     2→ * A helper for testing type signatures.
      5→export function test<T>(fn: (x: unknown) => T) {}
+
+tsconfig.json

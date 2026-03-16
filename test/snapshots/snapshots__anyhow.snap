@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3988 tokens)
+budget: 4000 (3987 tokens)
 
 Cargo.toml
      1→[package]
@@ -43,6 +43,7 @@ README.md
 
 rust-toolchain.toml
      1→[toolchain]
+     2→components = ["rust-src"]
 
 src/backtrace.rs
      8→pub(crate) enum Backtrace {}
@@ -65,8 +66,6 @@ src/chain.rs
      2→use crate::StdError;
     11→pub(crate) struct Chain<'a> {
     16→pub(crate) enum ChainState<'a> {
-    17→    Linked {
-      →    …
     28→    pub fn new(head: &'a (dyn StdError + 'static)) -> Self {
     36→    type Item = &'a (dyn StdError + 'static);
     57→impl DoubleEndedIterator for Chain<'_> {

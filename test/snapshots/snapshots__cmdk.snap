@@ -244,13 +244,28 @@ README.md
    481→```
 
 cmdk/package.json
+     2→  "name": "cmdk",
+     3→  "version": "1.1.1",
+     4→  "license": "MIT",
+     5→  "main": "./dist/index.js",
+     6→  "module": "./dist/index.mjs",
+     7→  "types": "./dist/index.d.ts",
+     8→  "files": [
+    11→  "exports": {
+    18→  "scripts": {
+    24→  "peerDependencies": {
+    28→  "dependencies": {
+    34→  "devDependencies": {
+    37→  "sideEffects": false,
+    38→  "repository": {
+    43→  "bugs": {
+    46→  "homepage": "https://github.com/pacocoursey/cmdk#readme",
+    47→  "author": {
 
 cmdk/src/command-score.ts
     54→function commandScoreInner …
    150→function formatInput …
    155→export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
-   156→  /* NOTE:
-      →  …
 
 cmdk/src/index.tsx
      5→import { commandScore } from './command-score'
@@ -284,14 +299,14 @@ cmdk/src/index.tsx
    166→const useStore …
    167→const GroupContext …
    169→const Command …
-   664→const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
-   729→const Group = React.forwardRef<HTMLDivElement, GroupProps>((props, forwardedRef) => {
-   774→const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>((props, forwardedRef) => {
-   787→const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
-   833→const List = React.forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) => {
-   882→const Dialog = React.forwardRef<HTMLDivElement, DialogProps>((props, forwardedRef) => {
-   899→const Empty = React.forwardRef<HTMLDivElement, EmptyProps>((props, forwardedRef) => {
-   909→const Loading = React.forwardRef<HTMLDivElement, LoadingProps>((props, forwardedRef) => {
+   664→const Item …
+   729→const Group …
+   774→const Separator …
+   787→const Input …
+   833→const List …
+   882→const Dialog …
+   899→const Empty …
+   909→const Loading …
    930→const pkg …
    963→function findNextSibling(el: Element, selector: string) {
    972→function findPreviousSibling …
@@ -306,6 +321,12 @@ cmdk/src/index.tsx
   1081→const srOnlyStyles …
 
 package.json
+     2→  "name": "cmdk-root",
+     3→  "private": true,
+     4→  "scripts": {
+    14→  "devDependencies": {
+    22→  "packageManager": "pnpm@8.8.0",
+    23→  "lint-staged": {
 
 pnpm-workspace.yaml
      1→packages:
@@ -313,11 +334,10 @@ pnpm-workspace.yaml
      3→  - 'test'
      4→  - 'cmdk'
 
-test/pages/_app.tsx
-     1→import '../style.css'
-     3→export default function App({ Component, pageProps }) {
-
 tsconfig.json
+     2→  "compilerOptions": {
+    17→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
+    18→  "exclude": ["node_modules", "build", "dist", ".next"]
 
 website/README.md
      3→## Getting Started
@@ -325,26 +345,9 @@ website/README.md
     28→## Deploy on Vercel
 
 website/components/code/index.tsx
-     4→import styles from './code.module.scss'
-     7→const theme = {
-    41→export function Code({ children }: { children: string }) {
-
-website/components/icons/index.tsx
-
-website/pages/_app.tsx
-    17→export default function App({ Component, pageProps }: AppProps) {
 
 website/pages/_document.tsx
      5→export default class Document extends NextDocument {
-     6→  render() {
-
-website/pages/index.tsx
-    18→import packageJSON from '../../cmdk/package.json'
-    29→export default function Index() {
-   101→function InstallButton() {
-   139→const themes = [
-   262→function Codeblock() {
-   296→function VersionBadge() {
 
 website/vercel.json
      2→  "headers": [
@@ -352,5 +355,4 @@ website/vercel.json
      4→      "source": "/inter-var-latin.woff2",
      5→      "headers": [
      6→        {
-     7→          "key": "Cache-Control",
-      →          …
+      →        …

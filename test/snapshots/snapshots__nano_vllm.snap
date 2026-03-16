@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3991 tokens)
+budget: 4000 (3997 tokens)
 
 README.md
      9→# Nano-vLLM
@@ -75,8 +75,6 @@ example.py
      2→from nanovllm …
      3→from transformers …
      6→def main():
-     7→    path = os.path.expanduser("~/huggingface/Qwen3-0.6B/")
-      →    …
 
 nanovllm/__init__.py
      1→from nanovllm.llm …
@@ -111,7 +109,6 @@ nanovllm/engine/block_manager.py
     26→class BlockManager:
     27→
     28→    def __init__(self, num_blocks: int, block_size: int):
-    35→    @classmethod
     36→    def compute_hash(cls, token_ids: list[int], prefix: int = -1):
     43→    def _allocate_block(self, block_id: int) -> Block:
     51→    def _deallocate_block(self, block_id: int) -> Block:
@@ -151,10 +148,8 @@ nanovllm/engine/model_runner.py
    126→    def prepare_prefill(self, seqs: list[Sequence]):
    164→    def prepare_decode(self, seqs: list[Sequence]):
    182→    def prepare_sample(self, seqs: list[Sequence]):
-   189→    @torch.inference_mode()
    190→    def run_model(self, input_ids: torch.Tensor, positions: torch.Tensor, is_prefill: bool):
    208→    def run(self, seqs: list[Sequence], is_prefill: bool) -> list[int]:
-   216→    @torch.inference_mode()
    217→    def capture_cudagraph(self):
 
 nanovllm/engine/scheduler.py
@@ -179,19 +174,12 @@ nanovllm/engine/sequence.py
     18→    def __init__(self, token_ids: list[int], sampling_params = SamplingParams()):
     31→    def __len__(self):
     34→    def __getitem__(self, key):
-    37→    @property
     38→    def is_finished(self):
-    41→    @property
     42→    def num_completion_tokens(self):
-    45→    @property
     46→    def prompt_token_ids(self):
-    49→    @property
     50→    def completion_token_ids(self):
-    53→    @property
     54→    def num_cached_blocks(self):
-    57→    @property
     58→    def num_blocks(self):
-    61→    @property
     62→    def last_block_num_tokens(self):
     65→    def block(self, i):
     69→    def append_token(self, token_id: int):
@@ -382,5 +370,15 @@ nanovllm/utils/loader.py
 
 pyproject.toml
      1→[build-system]
+     2→requires = ["setuptools>=61"]
+     3→build-backend = "setuptools.build_meta"
      5→[project]
+     6→name = "nano-vllm"
+     7→version = "0.2.0"
+     8→authors = [{ name = "Xingkai Yu" }]
+     9→license = "MIT"
+    10→license-files = ["LICENSE"]
+    11→readme = "README.md"
+      →…
     22→[project.urls]
+    23→Homepage="https://github.com/GeeeekExplorer/nano-vllm"

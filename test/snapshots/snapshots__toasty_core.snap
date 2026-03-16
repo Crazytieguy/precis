@@ -2,24 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3994 tokens)
-
-CONTEXT.md
-     1→# toasty-core Component Context
-     3→## Purpose
-     6→## Key Responsibilities
-     8→### Schema Definition (`src/schema/`)
-    26→### Statement AST (`src/stmt/`)
-    38→### Advanced Visitor Pattern (`src/stmt/visit*.rs`)
-    46→### Expression Substitution System (`src/stmt/substitute.rs`)
-    53→### Driver Interface (`src/driver/`)
-    60→## Common Change Patterns
-    62→### Adding a New Primitive Type
-    68→### Adding a Statement Node
-    74→### Schema Evolution
-    80→## Important Files
-    89→## Design Principles
-    96→## Recent Changes Analysis
+budget: 4000 (3996 tokens)
 
 Cargo.toml
      1→[package]
@@ -161,7 +144,6 @@ src/lib.rs
     10→pub mod schema;
     13→pub mod stmt;
     16→pub type Result<T, E = Error> = core::result::Result<T, E>;
-    18→pub use async_trait::async_trait;
 
 src/macros.rs
      1→#[macro_export]
@@ -334,7 +316,15 @@ src/schema/db/ty.rs
     96→    /// A representation of a civil date in the Gregorian calendar.
     97→    Date,
     98→
-      →…
+    99→    /// A representation of civil "wall clock" time with fractional seconds precision (0-9 digits).
+   100→    Time(u8),
+   101→
+   102→    /// A representation of a civil datetime in the Gregorian calendar with fractional seconds precision (0-9 digits).
+   103→    DateTime(u8),
+   104→
+   105→    /// User-specified unrecognized type
+   106→    Custom(String),
+   107→}
    111→    pub fn from_app …
    159→    pub fn bridge_type …
 
@@ -391,6 +381,10 @@ src/schema.rs
     29→    /// Maps the app-level schema to the db-level schema
     30→    pub mapping: Mapping,
     31→}
+    34→    pub fn builder …
+    38→    pub fn mapping_for …
+    42→    pub fn table_for …
+    46→    pub fn table_id_for …
 
 src/stmt/assignments.rs
     27→pub enum AssignmentOp {
@@ -428,6 +422,7 @@ src/stmt/expr_set.rs
     18→pub enum ExprSet {
 
 src/stmt/filter.rs
+     9→    /// Default filters selects everything (i.e. no filter)
     10→    pub const ALL: Filter = Filter { expr: None };
 
 src/stmt/insert_target.rs
@@ -497,6 +492,8 @@ src/stmt.rs
    263→    /// Update one or more existing records
    264→    Update(Update),
    265→}
+   268→    pub fn substitute …
+   272→    pub fn is_const …
    290→    pub fn as_update …
    302→    pub fn into_update …
    314→    pub fn unwrap_update …

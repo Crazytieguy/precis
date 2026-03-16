@@ -2,7 +2,10 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (3997 tokens)
+
+.eslintrc.js
+     7→const localConfigs = readdir(__dirname)
 
 .github/ISSUE_TEMPLATE/bug.yml
      3→name: Bug
@@ -10,9 +13,6 @@ budget: 4000 (4000 tokens)
      5→title: "[BUG] <title>"
      6→labels: [ Bug, Needs Triage ]
      8→body:
-     9→  - type: checkboxes
-    10→    attributes:
-      →    …
 
 .github/ISSUE_TEMPLATE/config.yml
      3→blank_issues_enabled: true

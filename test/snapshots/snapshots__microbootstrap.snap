@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4001 tokens)
+budget: 4000 (3999 tokens)
 
 README.md
     55→## Table of Contents
@@ -99,7 +99,6 @@ microbootstrap/bootstrappers/litestar.py
    223→class LitestarHealthChecksInstrument(HealthChecksInstrument):
 
 microbootstrap/config/fastapi.py
-    20→@dataclasses.dataclass
     21→class FastApiConfig:
     22→    debug: bool = False
     23→    routes: list[BaseRoute] | None = None
@@ -146,7 +145,6 @@ microbootstrap/config/fastapi.py
     64→    separate_input_output_schemas: bool = True
 
 microbootstrap/config/faststream.py
-    20→@dataclasses.dataclass
     21→class FastStreamConfig:
     22→    broker: BrokerUsecase[typing.Any, typing.Any] | None = None
     23→    asgi_routes: typing.Sequence[tuple[str, ASGIApp]] = ()
@@ -162,7 +160,6 @@ microbootstrap/config/faststream.py
     33→    specification: SpecificationFactory | None = None
 
 microbootstrap/config/litestar.py
-    13→@dataclasses.dataclass
     14→class LitestarConfig(AppConfig):
     15→    on_app_init: typing.Sequence[OnAppInitHandler] | None = None
     16→    logging_config: LoggingConfig = dataclasses.field(
@@ -336,6 +333,9 @@ microbootstrap/settings.py
 package.json
 
 pyproject.toml
+    62→[project.optional-dependencies]
+   101→[tool.mypy]
+   109→[tool.ruff]
 
 tests/test_helpers.py
     54→class InnerDataclass:

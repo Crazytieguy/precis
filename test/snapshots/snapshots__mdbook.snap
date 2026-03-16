@@ -2,7 +2,9 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7987 tokens)
+budget: 8000 (7989 tokens)
+
+CHANGELOG.md
 
 Cargo.toml
      1→[workspace]
@@ -522,6 +524,11 @@ examples/remove-emphasis/mdbook-remove-emphasis/Cargo.toml
      7→[dependencies]
     13→[[bin]]
 
+guide/book.toml
+     1→[book]
+     7→[rust]
+    40→[build]
+
 guide/guide-helper/Cargo.toml
      1→[package]
      9→[dependencies]
@@ -594,11 +601,8 @@ guide/src/cli/watch.md
 guide/src/continuous-integration.md
      1→# Running `mdbook` in continuous integration
     12→## Installing mdBook
-    17→### Pre-compiled binaries
-    39→### Building from source
     67→## Running tests
     83→## Deploying
-   100→### 404 handling
 
 guide/src/for_developers/README.md
      1→# For developers

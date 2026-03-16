@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3998 tokens)
+budget: 4000 (3994 tokens)
 
 CONTRIBUTING.md
      1→# Contributing to peepDB
@@ -110,21 +110,18 @@ docs/README.md
    131→          working-directory: '${{ github.workspace }}/docs'
    132→    ```
    133→
-   134→3.  Set the path param for the Upload artifact step:
-   135→
-   136→    ```yaml
-      →    …
+      →…
    154→## Licensing and Attribution
 
 docs/_config.yml
+     1→title: peepDB
+     2→description: A starter template for a Jeykll site using the Just the Docs theme!
+     3→theme: just-the-docs
+     5→url: https://just-the-docs.github.io
+     7→aux_links:
 
 docs/contributing.md
      6→# 🤝 Contributing to peepDB
-    10→## Steps to Contribute
-    28→## Setting Up Development Environment
-    47→## Code Style
-    54→## Testing
-    63→## Documentation
 
 docs/index.md
      6→# peepDB
@@ -348,3 +345,5 @@ project.toml
     35→[project.optional-dependencies]
     42→[project.urls]
     46→[project.scripts]
+
+setup.py

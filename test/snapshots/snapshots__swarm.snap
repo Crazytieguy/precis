@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3997 tokens)
+budget: 4000 (3999 tokens)
 
 README.md
      3→# Swarm (experimental, educational)
@@ -77,6 +77,9 @@ examples/basic/README.md
      3→This folder contains basic examples demonstrating core Swarm capabilities. These examples show the simplest implementations of Swarm, with one input message, and a corresponding output. The `simple_loop_no_helpers` has a while loop to demonstrate how to create an interactive Swarm session.
      4→
      5→### Examples
+     7→1. **agent_handoff.py**
+     8→
+      →…
     31→## Running the Examples
     33→To run any of the examples, use the following command:
     34→
@@ -157,12 +160,6 @@ examples/customer_service_streaming/src/runs/run.py
     14→    def initiate(self, planner):
     20→    def generate_plan(self,task=None):
 
-examples/customer_service_streaming/src/swarm/assistants.py
-    10→class Assistant(BaseModel):
-
-examples/customer_service_streaming/src/swarm/conversation.py
-     1→class Conversation:
-
 examples/customer_service_streaming/src/swarm/engines/assistants_engine.py
     13→class AssistantsEngine:
 
@@ -177,12 +174,6 @@ examples/customer_service_streaming/src/swarm/engines/local_engine.py
 
 examples/customer_service_streaming/src/swarm/swarm.py
     11→class Swarm:
-
-examples/customer_service_streaming/src/swarm/tool.py
-     5→class Parameter(BaseModel):
-    11→class FunctionParameters(BaseModel):
-    17→class FunctionTool(BaseModel):
-    23→class Tool(BaseModel):
 
 examples/customer_service_streaming/src/tasks/task.py
      3→class Task:
@@ -207,7 +198,13 @@ examples/personal_shopper/README.md
      5→In this example, we also use a Sqlite3 database with customer information and transaction data.
      6→
      7→## Overview
+     9→The personal shopper example includes three main agents to handle various customer service requests:
+    10→
+      →…
     15→## Setup
+    17→Once you have installed dependencies and Swarm, run the example using:
+    18→
+      →…
 
 examples/personal_shopper/database.py
      7→def get_connection():
@@ -346,6 +343,8 @@ examples/weather_agent/evals.py
 
 pyproject.toml
      1→[build-system]
+     2→requires = ["setuptools"]
+     3→build-backend = "setuptools.build_meta"
 
 swarm/__init__.py
      1→from .core import Swarm
@@ -431,5 +430,3 @@ tests/test_core.py
      7→DEFAULT_RESPONSE_CONTENT = "sample response content"
     10→@pytest.fixture
     11→def mock_openai_client():
-
-tests/test_util.py

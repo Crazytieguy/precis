@@ -24,6 +24,8 @@ README.md
 
 build.rs
 
+config/default.toml
+
 docs/actions.md
      1→# All Available Actions
      3→| Action                    | Default Keys              | Description                                                  |
@@ -205,7 +207,7 @@ src/config/types.rs
 src/debug.rs
      7→#[macro_export]
      8→macro_rules! debug {
-    17→static FILE: OnceLock<String> = OnceLock::new();
+    17→static FILE …
     19→pub fn set_file …
     23→pub fn write_logs …
 
@@ -473,3 +475,5 @@ src/ui/tree_overview.rs
    319→    pub fn begin_filter …
    325→    pub fn end_filter …
    335→    pub fn filter …
+
+typos.toml
