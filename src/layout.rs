@@ -669,6 +669,22 @@ mod tests {
     use super::*;
 
     #[test]
+    fn strip_python_comment_respects_strings() {
+        assert_eq!(strip_python_line_comment("x = 1  # comment"), "x = 1");
+        assert_eq!(strip_python_line_comment("no comment"), "no comment");
+        // # inside double-quoted strings should not be stripped
+        assert_eq!(
+            strip_python_line_comment("color = \"#FF0000\"  # hex color"),
+            "color = \"#FF0000\"",
+        );
+        // # inside single-quoted strings should not be stripped
+        assert_eq!(
+            strip_python_line_comment("x = '#tag'"),
+            "x = '#tag'",
+        );
+    }
+
+    #[test]
     fn strip_c_line_comment_skips_urls() {
         assert_eq!(strip_c_line_comment("code // comment"), "code");
         assert_eq!(strip_c_line_comment("no comment"), "no comment");
