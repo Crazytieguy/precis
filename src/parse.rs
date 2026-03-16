@@ -1549,6 +1549,34 @@ export class Example {
     }
 
     #[test]
+    fn extracts_lua_symbols() {
+        let source = r#"
+local M = {}
+
+function M.init()
+    -- Initialize
+end
+
+function M.update(dt)
+    -- Update
+end
+
+local function helper()
+    -- Private
+end
+"#;
+        let symbols = extract_symbols(Path::new("test.lua"), source);
+        let names: Vec<_> = symbols.iter().map(|s| (s.name.as_str(), s.kind)).collect();
+        // Module functions should be found
+        assert!(names.iter().any(|(n, k)| *n == "M.init" && *k == SymbolKind::Function));
+        assert!(names.iter().any(|(n, k)| *n == "M.update" && *k == SymbolKind::Function));
+        // Local function should be found
+        assert!(names.iter().any(|(n, k)| *n == "helper" && *k == SymbolKind::Function));
+        // Variable declaration should be found
+        assert!(names.iter().any(|(n, _)| *n == "M"));
+    }
+
+    #[test]
     fn deduplicates_non_consecutive_c_structs() {
         // Simulates C #ifdef branches where the same struct appears
         // under different platform conditions, with other symbols between them.
