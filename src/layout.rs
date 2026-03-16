@@ -547,6 +547,13 @@ pub(crate) fn is_markdown_leading_noise(line: &str) -> bool {
             return true;
         }
     }
+    // Table of contents links: `- [Title](#anchor)` or `* [Title](#anchor)`
+    // These are navigational, not content — they duplicate the heading structure.
+    if let Some(rest) = trimmed.strip_prefix("- ").or_else(|| trimmed.strip_prefix("* ")) {
+        if rest.starts_with('[') && rest.contains("](#") && rest.ends_with(')') {
+            return true;
+        }
+    }
     // HTML tags: <div>, </div>, <p align=...>, <img .../>, <br>, <br/>, etc.
     // Also matches HTML comments: <!-- ... -->
     if let Some(rest) = trimmed.strip_prefix('<')

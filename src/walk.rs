@@ -133,6 +133,7 @@ pub fn classify_file(path: &Path) -> crate::schedule::FileCategory {
             || s == "fixtures" || s == "fixture"
             || s == "mocks" || s == "__mocks__"
             || s == "changelog" || s == "changelogs"
+            || s == "contribute"
         {
             return FileCategory::Test;
         }
