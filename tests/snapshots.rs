@@ -733,6 +733,36 @@ fn single_file_budget_rust() {
     }
 }
 
+// Render order: README should appear before other files.
+#[test]
+fn readme_renders_first() {
+    let output = format::render_file_with_budget(
+        200,
+        Path::new("other.rs"),
+        Path::new(""),
+        "pub fn foo() {}\npub fn bar() {}",
+    );
+    // Single-file rendering doesn't have render order to test.
+    // Test with the markdown sample which includes a README.
+    let output = format::render_with_budget(
+        500,
+        Path::new(""),
+        &[std::path::PathBuf::from("src/lib.rs"), std::path::PathBuf::from("README.md")],
+        &[
+            Some("pub fn foo() {}\npub fn bar() {}".to_string()),
+            Some("# Project\nA description.".to_string()),
+        ],
+    );
+    // README.md should come before src/lib.rs in the output
+    let readme_pos = output.find("README.md").unwrap_or(usize::MAX);
+    let src_pos = output.find("src/lib.rs").unwrap_or(usize::MAX);
+    assert!(
+        readme_pos < src_pos,
+        "README.md should render before src/lib.rs, but README at {} vs src at {}",
+        readme_pos, src_pos,
+    );
+}
+
 // Budget-based fixture snapshot tests.
 
 /// Helper: render a fixture with a token budget and return output with metadata header.
