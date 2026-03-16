@@ -2,39 +2,25 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7998 tokens)
+budget: 8000 (8000 tokens)
 
 CONTRIBUTING.md
      1→# Contributing to Enclosed
 
 README.md
     26→## Introduction
-    28→**Enclosed** is a minimalistic web application designed for sending private and secure notes.
-    29→
-      →…
     36→## Features
-    38→- **End-to-End Encryption**: Your notes are encrypted on the client side, using AES-GCM with a 256-bit key derived using PBKDF2.
-    39→- **File Attachments**: Share files securely with your notes.
-      →…
     52→## Self host
     54→### Try it with Docker
     62→### To go further
     71→### Configuration
     75→## How It Works
-    77→1. **Note Creation**: A user creates a note with some content and optionally sets a password.
-    78→2. **Key Generation**: A **base key** is generated on the client side to ensure encryption, even if no password is set.
-      →…
     93→## CLI
-    95→The Enclosed CLI allows you to create notes from the terminal. You can install it globally using npm, yarn, or pnpm.
-    96→
     97→### Installation
    110→### Create a note
    123→### View a note
    133→### Configure the enclosed instance to use
    140→## Project Structure
-   142→This project is organized as a monorepo using `pnpm` workspaces. The structure is as follows:
-   143→
-      →…
    150→## Contributing
    155→## License
    159→## Credits and Acknowledgements
@@ -42,7 +28,6 @@ README.md
    184→### Hosting
    188→### Inspiration
    194→## Contact Information
-   196→Please use the issue tracker on GitHub for any questions or feedback.
 
 docker-compose.yml
      1→services:
@@ -58,17 +43,6 @@ docker-compose.yml
     12→    driver: local
 
 package.json
-     2→  "name": "@enclosed/root",
-     3→  "version": "1.16.0",
-     4→  "description": "Send private and secure note",
-     5→  "packageManager": "pnpm@9.15.0",
-     6→  "license": "Apache-2.0",
-     7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
-     8→  "repository": {
-    12→  "engines": {
-    15→  "scripts": {
-    20→  "keywords": [
-    30→  "devDependencies": {
 
 packages/app-client/README.md
      1→## Usage
@@ -115,8 +89,6 @@ packages/app-client/src/modules/auth/auth.store.ts
      6→export const authStore = createRoot(() => {
 
 packages/app-client/src/modules/auth/pages/login.page.tsx
-    11→import { login } from '../auth.services';
-    12→import { authStore } from '../auth.store';
     14→const quotations = [
     41→export const LoginPage: Component = () => {
 
@@ -139,30 +111,22 @@ packages/app-client/src/modules/config/config.types.ts
 packages/app-client/src/modules/files/files.models.ts
      6→export const iconByFileType = {
     33→type FileTypes …
-    35→function getFileIcon …
 
 packages/app-client/src/modules/i18n/i18n.models.ts
      8→export function findMatchingLocale({ preferredLocales, supportedLocales }: { preferredLocales: Intl.Locale[]; supportedLocales: Intl.Locale[] }) {
 
 packages/app-client/src/modules/i18n/i18n.provider.tsx
-    15→type Locale …
-    16→type RawDictionary …
-    17→type Dictionary …
-    19→const I18nContext …
-    26→function useI18n …
-    36→async function fetchDictionary …
     44→export const I18nProvider: ParentComponent = (props) => {
 
 packages/app-client/src/modules/notes/components/file-uploader.tsx
      6→const DropArea …
-    62→export const FileUploaderButton: ParentComponent<{
+    62→export const FileUploaderButton …
 
 packages/app-client/src/modules/notes/components/note-password-field.tsx
-     5→import { createRandomPassword } from '../notes.models';
-     7→export const NotePasswordField: Component<{ getPassword: () => string; setPassword: (value: string) => void; dataTestId?: string } > = (props) => {
+     7→export const NotePasswordField …
 
 packages/app-client/src/modules/notes/notes.constants.ts
-     1→export const NOTE_ID_REGEX = /[0-7][0-9A-HJKMNP-TV-Z]{25}/i;
+     1→export const NOTE_ID_REGEX …
 
 packages/app-client/src/modules/notes/notes.context.tsx
      5→const noteContext …
@@ -173,11 +137,9 @@ packages/app-client/src/modules/notes/notes.models.ts
     16→export function buildViewNotePagePath({ prefix }: { prefix?: string | null }): string {
 
 packages/app-client/src/modules/notes/pages/create-note.page.tsx
-    28→const QrCodeCard …
    109→export const CreateNotePage: Component = () => {
 
 packages/app-client/src/modules/notes/pages/view-note.page.tsx
-    18→const RequestPasswordForm …
     65→export const ViewNotePage: Component = () => {
 
 packages/app-client/src/modules/shared/style/cn.ts
@@ -241,7 +203,6 @@ packages/app-client/src/modules/ui/components/tabs.tsx
     35→export function TabsList …
     54→export function TabsContent …
     73→export function TabsTrigger …
-    87→const tabsIndicatorVariants …
    109→export function TabsIndicator …
 
 packages/app-client/src/modules/ui/components/textarea.tsx
@@ -256,8 +217,6 @@ packages/app-client/src/modules/ui/components/textfield.tsx
    104→export function TextField …
 
 packages/app-client/src/modules/ui/layouts/app.layout.tsx
-    16→const ThemeSwitcher …
-    38→const LanguageSwitcher …
     72→export const Navbar: Component = () => {
    209→export const Footer: Component = () => {
    240→export const AppLayout: ParentComponent = (props) => {
@@ -349,24 +308,15 @@ packages/app-server/src/modules/notes/tasks/delete-expired-notes.tasks.ts
      5→export const deleteExpiredNotesTask = defineTask({
 
 packages/app-server/src/modules/shared/errors/errors.ts
-     6→type ErrorOptions = {
-    14→class CustomError extends Error {
     21→  constructor({ message, code, cause, statusCode, isInternal }: ErrorOptions) {
-    31→function createError …
-    35→function createErrorFactory …
-    41→function isCustomError …
 
 packages/app-server/src/modules/shared/logger/logger.test-utils.ts
-     1→import type { Logger } from './logger.types';
      3→export function createTestLogger() {
 
 packages/app-server/src/modules/shared/logger/logger.types.ts
-     1→import type { createLogger } from './logger';
      3→export type Logger = ReturnType<typeof createLogger>;
 
 packages/app-server/src/modules/shared/validation/validation.ts
-     5→function formatValidationError …
-    16→function buildValidator …
     43→export const validateJsonBody …
     44→export const validateQuery …
     45→export const validateParams …
@@ -419,10 +369,20 @@ packages/cli/src/cli.ts
      6→const main = defineCommand({
 
 packages/cli/src/config/config.command.ts
+     6→const keysList …
      8→export const configCommand = defineCommand({
 
 packages/cli/src/config/config.constants.ts
      3→export const configDefinition = {
+
+packages/cli/src/config/config.models.ts
+     7→type ConfigKey …
+     8→const config …
+    10→function setConfig …
+    31→function getConfig …
+    57→function deleteConfig …
+    61→function resetConfig …
+    65→function createConfigBindings …
 
 packages/cli/src/create-note/create-note.command.ts
     11→const ONE_HOUR_IN_SECONDS …
@@ -437,6 +397,8 @@ packages/cli/src/files/files.services.ts
     26→export async function buildFileAssets({ filePaths }: { filePaths: string[] }) {
 
 packages/cli/src/view-note/view-note.command.ts
+     4→import { getInstanceUrl } from '../config/config.usecases';
+     5→import { promptForPassword } from './view-note.models';
      7→export const viewNoteCommand = defineCommand({
 
 packages/crypto/README.md
@@ -457,9 +419,6 @@ packages/crypto/README.md
     17→
     18→## License
     22→## Credits and Acknowledgements
-
-packages/crypto/src/api-definition.ts
-     6→function createEnclosedCryptoApi …
 
 packages/crypto/src/encryption-algorithms/encryption-algorithms.constants.ts
      1→export const AES_256_GCM = 'aes-256-gcm';
@@ -488,6 +447,19 @@ packages/deploy-cloudflare/_routes.json
 packages/deploy-cloudflare/package.json
 
 packages/docs/package.json
+     2→  "name": "@enclosed/docs",
+     3→  "type": "module",
+     4→  "version": "1.16.0",
+     5→  "packageManager": "pnpm@9.15.0",
+     6→  "description": "Documentation website for Enclosed.",
+     7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
+     8→  "license": "Apache-2.0",
+     9→  "repository": {
+    13→  "keywords": [],
+    14→  "main": "index.js",
+    15→  "scripts": {
+    22→  "dependencies": {
+    25→  "devDependencies": {
 
 packages/docs/src/components/credential-inputs.vue
      1→<script setup>
@@ -501,6 +473,15 @@ packages/docs/src/components/credential-inputs.vue
      9→});
     10→
     11→function addCredential() {
+    12→  credentials.value = [
+    13→    ...credentials.value,
+    14→    {
+    15→      email: '',
+    16→      password: '',
+    17→    },
+    18→  ];
+    19→}
+    20→
       →…
 
 packages/docs/src/components/toggle.vue
@@ -515,14 +496,25 @@ packages/docs/src/components/toggle.vue
      9→</script>
     10→
     11→<template>
-      →…
+    12→  <div class="switch-wrapper">
+    13→    <div class="switch">
+    14→      <input :id="$.uid" v-model="checked" type="checkbox" class="checkbox">
+    15→      <div class="slider" @click="toggle" />
+    16→    </div>
+    17→
+    18→    <label :id="$.uid" class="label" @click="toggle">
+    19→      <slot />
+    20→    </label>
+      →    …
 
 packages/docs/src/data/configuration.data.ts
+     5→import { configDefinition } from '../../../app-server/src/modules/app/config/config';
     10→function walk …
     24→function formatDoc …
     57→  async load() {
 
 packages/docs/src/data/i18n.data.ts
+     4→import { locales } from '../../../app-client/src/locales/locales';
      9→function countKeysDeep …
     61→  async load() {
 
@@ -556,6 +548,8 @@ packages/docs/src/index.md
 
 packages/docs/src/integrations/cli.md
      1→# CLI Guide
+     3→The Enclosed Command-Line Interface (CLI) allows you to create and manage secure notes directly from your terminal. This guide will walk you through installing the CLI, creating and viewing notes, and configuring the CLI for different use cases.
+     4→
      5→## Installation
     29→## Creating a Note
     77→## Viewing a Note
@@ -567,18 +561,31 @@ packages/docs/src/integrations/cli.md
 
 packages/docs/src/integrations/npm-package.md
      1→# NPM Package
+     3→::: warning
+     4→This page is a work in progress.
+     5→:::
+     6→
+     7→The Enclosed lib is available as an npm package. You can use it to create and manage Enclosed notes.
+     8→
      9→## Installation
 
 packages/docs/src/integrations/versioning.md
      1→# Versioning
+     3→The Enclosed project follows the [Semantic Versioning (SemVer)](https://semver.org/) specification. This means that the version number is incremented following the following format: `MAJOR.MINOR.PATCH`.
+     4→
+     5→Starting from version `1.5.0`, all the packages of the Enclosed project are aligned to the same version number. So if you are self-hosting an Enclosed instance, you can use the same version number for all the packages.
 
 packages/docs/src/resources/brand-kit.md
      1→# Enclosed Brand Kit
      3→Welcome to the Enclosed Brand Kit. Here, you'll find resources to help you represent Enclosed accurately in media and press coverage. Enclosed is an open-source web application designed for private, end-to-end encrypted note and file sharing.
      4→
      5→## Project Overview
+     9→### Quick Links
     16→## Logo Assets
+    20→### Logo Usage Guidelines
+    26→### Download Logo Assets
     35→## Visual Assets
+    37→### Social Banner
     45→## Key Features
     61→## Media Contact
 
@@ -656,6 +663,7 @@ packages/docs/src/self-hosting/users-authentication-key-generator.md
     61→
     62→---
     63→
+    64→> [!INFO] Escaping in Docker Run
       →…
 
 packages/lib/README.md
@@ -718,8 +726,6 @@ packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.types.ts
      3→export type EncryptionMethodsDefinition = ReturnType<typeof defineEncryptionMethods>;
 
 packages/lib/src/crypto/serialization/cbor-array/cbor-array.serialization.ts
-     1→import type { Note } from '../../../notes/notes.types';
-     3→import { defineSerializationMethods } from '../serialization.models';
      5→export const cborArraySerializationDefinition = defineSerializationMethods({
 
 packages/lib/src/crypto/serialization/serialization.registry.ts
@@ -773,5 +779,3 @@ pnpm-workspace.yaml
     12→  "@corentinth/chisels": ^1.2.1
 
 renovate.json
-     2→  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-     3→  "extends": [

@@ -761,9 +761,10 @@ fn compute_symbol_costs(
 // ---------------------------------------------------------------------------
 
 /// Compute the effective depth of a path, skipping the first component if it's
-/// a conventional source root directory (`src`, `lib`, `pkg`, `cmd`). These
-/// directories are language-mandated or conventional organizational roots that
-/// don't represent meaningful project hierarchy.
+/// a conventional source root directory. These directories are language-mandated
+/// or conventional organizational roots that don't represent meaningful project
+/// hierarchy: `src` (Rust/Python/TS), `lib` (Ruby/JS), `pkg`/`cmd` (Go),
+/// `internal` (Go), `app` (web frameworks), `packages`/`crates` (monorepos).
 fn effective_depth(parent_dir: &Path) -> usize {
     let mut components = parent_dir.components();
     let total = components.clone().count();
@@ -771,7 +772,7 @@ fn effective_depth(parent_dir: &Path) -> usize {
         return 0;
     }
     let first = components.next().and_then(|c| c.as_os_str().to_str());
-    if matches!(first, Some("src" | "lib" | "pkg" | "cmd")) {
+    if matches!(first, Some("src" | "lib" | "pkg" | "cmd" | "internal" | "app" | "packages" | "crates")) {
         total - 1
     } else {
         total
@@ -1524,13 +1525,16 @@ mod tests {
         assert_eq!(effective_depth(Path::new("src/pluggy")), 1);
         assert_eq!(effective_depth(Path::new("lib/internal")), 1);
         assert_eq!(effective_depth(Path::new("src/a/b")), 2);
+        // Additional conventional roots
+        assert_eq!(effective_depth(Path::new("internal")), 0);
+        assert_eq!(effective_depth(Path::new("internal/pkg")), 1);
+        assert_eq!(effective_depth(Path::new("packages")), 0);
+        assert_eq!(effective_depth(Path::new("packages/foo/src")), 2);
+        assert_eq!(effective_depth(Path::new("crates/core")), 1);
         // Non-source-root first components are not skipped
         assert_eq!(effective_depth(Path::new("docs")), 1);
         assert_eq!(effective_depth(Path::new("scripts")), 1);
         assert_eq!(effective_depth(Path::new("docs/conf")), 2);
-        assert_eq!(effective_depth(Path::new("internal/pkg")), 2);
-        // Source root deeper in path is not skipped
-        assert_eq!(effective_depth(Path::new("packages/foo/src")), 3);
     }
 
     #[test]

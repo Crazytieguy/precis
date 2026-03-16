@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (8004 tokens)
+budget: 8000 (8005 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -155,9 +155,27 @@ crates/mdbook-core/src/lib.rs
     13→/// The error types used in mdbook.
     14→pub mod errors {
 
+crates/mdbook-core/src/utils/fs.rs
+    11→pub fn read_to_string …
+    20→pub fn write …
+    31→pub fn create_dir_all …
+    55→pub fn path_to_root …
+    74→pub fn remove_dir_content …
+    93→pub fn copy_files_except_ext …
+   155→fn copy …
+
+crates/mdbook-core/src/utils/html.rs
+     6→pub fn escape_html_attribute …
+    32→pub fn escape_html …
+
 crates/mdbook-core/src/utils/mod.rs
      7→pub mod fs;
     17→macro_rules! static_regex {
+    29→pub fn log_backtrace …
+
+crates/mdbook-core/src/utils/toml_ext.rs
+     8→    fn read …
+    10→    fn insert …
 
 crates/mdbook-driver/Cargo.toml
      1→[package]
@@ -191,6 +209,7 @@ crates/mdbook-driver/src/builtin_preprocessors/links.rs
     32→pub struct LinkPreprocessor;
     36→    pub const NAME: &'static str = "links";
     39→    pub fn new() -> Self {
+   275→struct Link …
 
 crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs
     10→pub struct MarkdownRenderer;
@@ -292,12 +311,23 @@ crates/mdbook-html/src/theme/mod.rs
     47→    pub(crate) chrome_css: Vec<u8>,
     48→    pub(crate) general_css: Vec<u8>,
     49→    pub(crate) print_css: Vec<u8>,
-      →    …
-    66→    pub fn new …
-   166→    pub fn copy_theme …
+    50→    pub(crate) variables_css: Vec<u8>,
+    51→    pub(crate) fonts_css: Option<Vec<u8>>,
+    52→    pub(crate) font_files: Vec<PathBuf>,
+    53→    pub(crate) favicon_png: Option<Vec<u8>>,
+    54→    pub(crate) favicon_svg: Option<Vec<u8>>,
+    55→    pub(crate) js: Vec<u8>,
+    56→    pub(crate) highlight_css: Vec<u8>,
+    57→    pub(crate) tomorrow_night_css: Vec<u8>,
+    58→    pub(crate) ayu_highlight_css: Vec<u8>,
+    59→    pub(crate) highlight_js: Vec<u8>,
+    60→    pub(crate) clipboard_js: Vec<u8>,
+    61→}
+    66→    pub fn new<P: AsRef<Path>>(theme_dir: P) -> Self {
+   166→    pub fn copy_theme(html_config: &HtmlConfig, root: &Path) -> Result<()> {
+   229→fn load_file_contents …
 
 crates/mdbook-html/src/utils.rs
-    42→pub(crate) trait ToUrlPath {
     43→    fn to_url_path(&self) -> String;
 
 crates/mdbook-markdown/Cargo.toml
@@ -324,9 +354,6 @@ crates/mdbook-markdown/README.md
     10→
 
 crates/mdbook-markdown/src/lib.rs
-    11→pub use pulldown_cmark;
-    13→/// Options for parsing markdown.
-    14→#[non_exhaustive]
     15→pub struct MarkdownOptions {
     16→    /// Enables smart punctuation.
     17→    ///
@@ -348,8 +375,20 @@ crates/mdbook-markdown/src/lib.rs
 
 crates/mdbook-preprocessor/Cargo.toml
      1→[package]
+     2→name = "mdbook-preprocessor"
+     3→version = "0.5.2"
+     4→description = "Library to assist implementing an mdBook preprocessor"
+     5→edition.workspace = true
+     6→license.workspace = true
+     7→repository.workspace = true
+     8→rust-version.workspace = true
     10→[dependencies]
+    11→anyhow.workspace = true
+    12→mdbook-core.workspace = true
+    13→serde.workspace = true
+    14→serde_json.workspace = true
     16→[lints]
+    17→workspace = true
 
 crates/mdbook-preprocessor/README.md
      1→# mdbook-preprocessor
@@ -438,8 +477,22 @@ crates/mdbook-renderer/src/lib.rs
 
 crates/mdbook-summary/Cargo.toml
      1→[package]
+     2→name = "mdbook-summary"
+     3→version = "0.5.2"
+     4→description = "Summary parser for mdBook"
+     5→edition.workspace = true
+     6→license.workspace = true
+     7→repository.workspace = true
+     8→rust-version.workspace = true
     10→[dependencies]
+    11→anyhow.workspace = true
+    12→mdbook-core.workspace = true
+    13→memchr.workspace = true
+    14→pulldown-cmark.workspace = true
+    15→serde.workspace = true
+    16→tracing.workspace = true
     18→[lints]
+    19→workspace = true
 
 crates/mdbook-summary/README.md
      1→# mdbook-summary
@@ -453,24 +506,11 @@ crates/mdbook-summary/src/lib.rs
     67→pub struct Summary {
     68→    /// An optional title for the `SUMMARY.md`, currently just ignored.
     69→    pub title: Option<String>,
-    70→    /// Chapters before the main text (e.g. an introduction).
-    71→    pub prefix_chapters: Vec<SummaryItem>,
-    72→    /// The main numbered chapters of the book, broken into one or more possibly named parts.
-    73→    pub numbered_chapters: Vec<SummaryItem>,
-    74→    /// Items which come after the main document (e.g. a conclusion).
-    75→    pub suffix_chapters: Vec<SummaryItem>,
-    76→}
+      →    …
     84→pub struct Link {
     85→    /// The name of the chapter.
     86→    pub name: String,
-    87→    /// The location of the chapter's source file, taking the book's `src`
-    88→    /// directory as the root.
-    89→    pub location: Option<PathBuf>,
-    90→    /// The section number, if this chapter is in the numbered section.
-    91→    pub number: Option<SectionNumber>,
-    92→    /// Any nested items this chapter may contain.
-    93→    pub nested_items: Vec<SummaryItem>,
-    94→}
+      →    …
     98→    pub fn new<S: Into<String>, P: AsRef<Path>>(name: S, location: P) -> Link {
    122→pub enum SummaryItem {
    123→    /// A link to a chapter.
@@ -504,26 +544,10 @@ examples/nop-preprocessor.rs
     79→    pub struct Nop;
     82→        pub fn new() -> Nop {
 
-guide/book.toml
-     1→[book]
-     7→[rust]
-    40→[build]
-
 guide/guide-helper/Cargo.toml
      1→[package]
-     2→name = "guide-helper"
-     3→publish = false
-     4→edition.workspace = true
-     5→license.workspace = true
-     6→repository.workspace = true
-     7→rust-version.workspace = true
      9→[dependencies]
-    10→mdbook-preprocessor.workspace = true
-    11→semver.workspace = true
-    12→serde_json.workspace = true
-    13→toml.workspace = true
     15→[lints]
-    16→workspace = true
 
 guide/guide-helper/src/lib.rs
      9→/// Preprocessing entry point.
@@ -564,8 +588,6 @@ guide/src/cli/README.md
      5→
      6→This following sections provide in-depth information on the different commands available.
      7→
-     8→* [`mdbook init <directory>`](init.md) --- Creates a new book with minimal boilerplate to start with.
-     9→* [`mdbook build`](build.md) --- Renders the book.
       →…
 
 guide/src/cli/build.md
@@ -659,32 +681,16 @@ guide/src/format/configuration/README.md
      9→[General]: general.md
     10→[Preprocessor]: preprocessors.md
     11→[Renderer]: renderers.md
-    12→[Environment Variable]: environment-variables.md
+      →…
 
 guide/src/format/markdown.md
      1→# Markdown
-     9→## Text and paragraphs
-    25→## Headings
-    47→## Lists
-    69→## Links
-   108→## Images
-   127→## Extensions
 
 guide/src/format/mathjax.md
      1→# MathJax support
 
 guide/src/format/mdbook.md
      1→# mdBook-specific features
-     3→## Hiding code lines
-    74→## Rust playground
-   102→## Rust code block attributes
-   133→## Including files
-   154→## Including portions of a file
-   215→## Including a file but initially hiding all except specified lines
-   279→## Inserting runnable Rust files
-   310→## Controlling page \<title\>
-   319→## HTML classes provided by mdBook
-   341→## Font-Awesome icons
 
 guide/src/format/summary.md
      1→# SUMMARY.md
@@ -758,10 +764,8 @@ src/cmd/mod.rs
      4→pub mod clean;
      5→pub mod command_prelude;
      6→pub mod init;
-     7→#[cfg(feature = "serve")]
      8→pub mod serve;
      9→pub mod test;
-    10→#[cfg(feature = "watch")]
     11→pub mod watch;
 
 src/cmd/serve.rs
@@ -794,8 +798,7 @@ src/cmd/watch.rs
 
 src/main.rs
     14→mod cmd;
-    16→const VERSION …
-    58→fn create_clap_command() -> Command {
+    58→fn create_clap_command …
 
 tests/
       →…
