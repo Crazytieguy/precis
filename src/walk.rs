@@ -85,7 +85,7 @@ fn is_lockfile(path: &Path) -> bool {
     };
     matches!(
         name,
-        "package-lock.json" | "npm-shrinkwrap.json" | "pnpm-lock.yaml"
+        "package-lock.json" | "npm-shrinkwrap.json" | "pnpm-lock.yaml" | "composer.lock"
     )
 }
 
