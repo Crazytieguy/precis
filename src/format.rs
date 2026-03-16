@@ -410,9 +410,11 @@ pub fn to_json(output: &str, budget: usize, tokens: usize) -> String {
         }
     }
 
+    let n_files = files.iter().filter(|f| !f.get("omitted").is_some_and(|v| v.as_bool() == Some(true))).count();
     let json = serde_json::json!({
         "budget": budget,
         "tokens": tokens,
+        "n_files": n_files,
         "files": files,
     });
     serde_json::to_string_pretty(&json).unwrap()
