@@ -127,7 +127,8 @@ impl FileRole {
             "contributing" | "contributors" | "security" | "license" | "licence"
             | "code_of_conduct" | "codeowners" | "releasing" | "support"
             | "governance" | "authors" | "maintainers"
-            | "tidelift" | "sponsors" | "funding" => FileRole::CommunityHealth,
+            | "tidelift" | "sponsors" | "funding"
+            | "notice" | "citation" => FileRole::CommunityHealth,
             "claude" | "agents" | "copilot" | "copilot-instructions"
             | "context" => FileRole::AiConfig,
             "architecture" | "design" => FileRole::Architecture,
