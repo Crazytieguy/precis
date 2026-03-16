@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (8011 tokens)
+budget: 8000 (8012 tokens)
 
 README.md
      1→# Toasty
@@ -24,6 +24,13 @@ Cargo.toml
      1→[workspace]
      2→resolver = "2"
      3→members = [
+     4→    "crates/toasty",
+     5→    "crates/toasty-cli",
+     6→    "crates/toasty-codegen",
+     7→    "crates/toasty-core",
+     8→    "crates/toasty-macros",
+     9→    "crates/toasty-sql",
+    10→
       →…
     37→[workspace.dependencies]
     38→# Toasty crates
@@ -31,14 +38,6 @@ Cargo.toml
 
 benches/
       →…
-
-compose.yaml
-    19→name: toasty
-    20→version: "3.8"
-    22→services:
-    23→  dynamodb:
-    24→    image: amazon/dynamodb-local:latest
-      →    …
 
 crates/std-util/Cargo.toml
      1→[package]
@@ -222,11 +221,7 @@ crates/toasty/src/stmt.rs
 
 crates/toasty-cli/Cargo.toml
      1→[package]
-     2→name = "toasty-cli"
-      →…
      7→[dependencies]
-     8→toasty.workspace = true
-      →…
 
 crates/toasty-cli/src/config.rs
      9→pub struct Config {
@@ -471,7 +466,7 @@ crates/toasty-core/src/schema/builder.rs
     12→    /// If set, prefix all table names with this string
     13→    table_name_prefix: Option<String>,
     14→}
-    17→struct BuildSchema …
+    17→struct BuildSchema<'a> {
 
 crates/toasty-core/src/schema/db/index.rs
     54→pub enum IndexOp {

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4004 tokens)
+budget: 4000 (4005 tokens)
 
 README.md
      3→# Swarm (experimental, educational)
@@ -72,9 +72,13 @@ logs/
 
 pyproject.toml
      1→[build-system]
+     2→requires = ["setuptools"]
+      →…
 
 setup.cfg
      1→[metadata]
+     2→name = swarm
+      →…
 
 SECURITY.md
      1→# Security Policy
@@ -104,7 +108,7 @@ examples/airline/configs/tools.py
 
 examples/airline/data/routines/baggage/policies.py
      1→# Atlas
-      →…
+     2→# Refund cancellation request
      3→STARTER_PROMPT = """You are an intelligent and empathetic customer support representative for Fly Airlines customers .
     21→LOST_BAGGAGE_POLICY = """
 
@@ -164,16 +168,6 @@ examples/customer_service_streaming/configs/prompts.py
       →…
     19→LOCAL_PLANNER_PROMPT = """
 
-examples/customer_service_streaming/docker-compose.yaml
-     1→version: '3.4'
-     2→services:
-     3→  qdrant:
-     4→    image: qdrant/qdrant:v1.3.0
-     5→    restart: on-failure
-     6→    ports:
-     7→      - "6333:6333"
-     8→      - "6334:6334"
-
 examples/customer_service_streaming/main.py
     10→def main():
 
@@ -208,6 +202,7 @@ examples/customer_service_streaming/src/swarm/engines/engine.py
 
 examples/customer_service_streaming/src/swarm/engines/local_engine.py
     14→class LocalEngine:
+   379→             #assistant.print_conversation()
    381→    def load_test_tasks(self, test_file_paths):
 
 examples/customer_service_streaming/src/swarm/swarm.py
@@ -215,7 +210,9 @@ examples/customer_service_streaming/src/swarm/swarm.py
 
 examples/customer_service_streaming/src/tasks/task.py
      3→class Task:
+     4→    def __init__ …
     12→class EvaluationTask(Task):
+    13→    def __init__ …
 
 examples/customer_service_streaming/src/utils.py
      1→def get_completion …
@@ -254,6 +251,11 @@ examples/personal_shopper/main.py
 
 examples/support_bot/Makefile
      1→install:
+     2→	 pip3 install -r requirements.txt
+     3→prep:
+     4→	 python3 prep_data.py
+     5→run:
+     6→	 PYTHONPATH=../.. python3 -m main
 
 examples/support_bot/README.md
      1→# Support bot
@@ -272,10 +274,6 @@ examples/support_bot/customer_service.py
     68→def send_email(email_address, message):
     73→def submit_ticket(description):
     90→def transfer_to_help_center():
-
-examples/support_bot/docker-compose.yaml
-     1→version: '3.4'
-     2→services:
 
 examples/support_bot/main.py
     13→# Set embedding model
@@ -355,8 +353,8 @@ swarm/repl/__init__.py
      1→from .repl import run_demo_loop
 
 swarm/repl/repl.py
-     1→import json
-     3→from swarm import Swarm
+     1→import json …
+     3→from swarm …
      6→def process_and_print_streaming_response(response):
     37→def pretty_print_messages(messages) -> None:
     60→def run_demo_loop(
@@ -379,7 +377,8 @@ swarm/types.py
     30→    """
     31→    Encapsulates the possible return values for an agent function.
     32→
-      →…
+    33→    Attributes:
+      →    …
     38→
     39→    value: str = ""
     40→    agent: Optional[Agent] = None
@@ -398,3 +397,5 @@ tests/test_core.py
      7→DEFAULT_RESPONSE_CONTENT = "sample response content"
     10→@pytest.fixture
     11→def mock_openai_client():
+
+tests/test_util.py

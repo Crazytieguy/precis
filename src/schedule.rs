@@ -388,6 +388,11 @@ fn is_config_file(relative_path: &Path, filename: &str) -> bool {
         }
     }
 
+    // Container orchestration and CI service config files.
+    if lower.starts_with("docker-compose") || lower.starts_with("compose.") {
+        return true;
+    }
+
     // Specific well-known repo management config files that don't match
     // the patterns above (not TOML, not dotfiles, no *-config pattern).
     match lower.as_str() {
@@ -1743,7 +1748,7 @@ mod tests {
         assert!(!at_root("README.md"));
         assert!(!at_root("build.go")); // build.rs is Rust-specific
         assert!(!at_root("setup.rs")); // setup.py is Python-specific
-        assert!(!at_root("compose.yaml")); // container orchestration
+        assert!(at_root("compose.yaml")); // container orchestration = config
         assert!(!at_root("pnpm-workspace.yaml")); // monorepo structure
         assert!(!at_root("reference.yaml")); // data file
         // Files in scripts/ and tools/ directories
