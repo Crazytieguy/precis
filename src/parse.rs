@@ -197,19 +197,26 @@ pub fn is_supported_extension(ext: &str) -> bool {
 }
 
 /// Create a single Section symbol for files in unsupported languages.
-/// The section spans just line 1 (the "heading"), with body content extending
-/// to EOF via the layout system's next-heading detection.
+/// The section spans just the first meaningful line (the "heading"), with body
+/// content extending to EOF via the layout system's next-heading detection.
+/// Skips shebang lines (`#!`) since they convey no structural information.
 fn plain_text_symbol(source: &str) -> Vec<Symbol> {
-    if source.lines().next().is_none() {
-        return vec![];
-    }
+    let mut lines = source.lines().enumerate();
+    // Skip shebang line if present
+    let first = loop {
+        match lines.next() {
+            Some((_, line)) if line.starts_with("#!") => continue,
+            Some((i, _)) => break i + 1, // 1-indexed line number
+            None => return vec![],
+        }
+    };
     vec![Symbol {
         kind: SymbolKind::Section,
         name: String::new(),
         is_public: true,
         is_first_party: false,
-        line: 1,
-        end_line: 1,
+        line: first,
+        end_line: first,
         sig_end_line: None,
         doc_start_line: None,
         is_trait_impl: false,
