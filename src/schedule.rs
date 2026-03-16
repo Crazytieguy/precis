@@ -420,6 +420,9 @@ pub struct GroupKey {
     pub file_role: FileRole,
     pub file_category: FileCategory,
     pub is_type_declaration: bool,
+    /// Whether the file is a C/C++ header (.h, .hpp, etc.). Headers define
+    /// public API and should be prioritized over implementation files.
+    pub is_header: bool,
     pub is_autogen_api_doc: bool,
     /// Whether this group is build/tool config. Per-symbol because TOML
     /// `[tool.*]` sections are config while `[package]` is not.
@@ -554,6 +557,9 @@ pub fn build_groups(
             .is_some_and(|name| is_config_file(relative, name));
         let file_category = walk::classify_file(relative);
         let is_type_declaration = walk::is_type_declaration_file(relative);
+        let is_header = relative.extension()
+            .and_then(|e| e.to_str())
+            .is_some_and(|ext| matches!(ext, "h" | "hpp" | "hxx" | "hh"));
         let is_autogen = is_autogen_api_doc(source, file_role);
 
         for (symbol_idx, sym) in symbols.iter().enumerate() {
@@ -600,6 +606,7 @@ pub fn build_groups(
                 file_role,
                 file_category,
                 is_type_declaration,
+                is_header,
                 is_autogen_api_doc: is_autogen,
                 is_config,
                 heading_depth,
@@ -820,6 +827,10 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     // shown from .js/.ts source files. Deprioritize so source files win.
     let type_declaration_factor = if key.is_type_declaration { 0.15 } else { 1.0 };
 
+    // C/C++ header files define the public API. Boost them so headers
+    // win over implementation files when both exist in the same directory.
+    let header_factor = if key.is_header { 1.5 } else { 1.0 };
+
     // Heading depth: top-level headings (h1, h2) are more important than
     // subsections (h3+). This lets the scheduler show body content for
     // h1/h2 headings before filling in h3/h4 detail sections.
@@ -859,7 +870,7 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     let reexport_factor = if key.is_reexport { 0.1 } else { 1.0 };
 
     let base_value = visibility * documented * depth_factor
-        * file_role_factor * config_factor * file_category_factor * type_declaration_factor
+        * file_role_factor * config_factor * file_category_factor * type_declaration_factor * header_factor
         * heading_depth_factor * first_party_factor * trait_impl_factor
         * boilerplate_factor * autogen_api_doc_factor * reexport_factor;
 

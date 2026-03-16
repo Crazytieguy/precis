@@ -100,8 +100,12 @@ pub fn classify_file(path: &Path) -> crate::schedule::FileCategory {
             return FileCategory::Example;
         }
 
-        // Documentation sites — Docusaurus, Sphinx, GitHub Pages source
-        if s == "website" || s == "site" || s == "docs" || s == "doc" {
+        // Documentation sites — Docusaurus, Hugo, etc.
+        // Only website/ and site/ are unambiguously doc-site source.
+        // docs/ and doc/ are ambiguous — they often contain valuable API
+        // reference, design docs, or RST files. Let file_role (Readme,
+        // Architecture, etc.) handle content-level differentiation instead.
+        if s == "website" || s == "site" {
             return FileCategory::DocsSite;
         }
 

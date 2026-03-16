@@ -689,7 +689,10 @@ fn mark_reexports(symbols: &mut [Symbol]) {
     }
 }
 
-/// Collapse consecutive function symbols with the same name, keeping only the last in each run.
+/// Collapse consecutive symbols with the same name and kind, keeping only the last in each run.
+/// Handles two patterns:
+///   1. TypeScript/C++ function overloads (multiple signatures, one implementation)
+///   2. C/C++ #ifdef branches (same struct defined for different platforms)
 /// Go is excluded because it allows multiple `init()` functions in one file.
 fn dedup_overloads(symbols: Vec<Symbol>, lang: Lang) -> Vec<Symbol> {
     if lang == Lang::Go {
@@ -699,10 +702,9 @@ fn dedup_overloads(symbols: Vec<Symbol>, lang: Lang) -> Vec<Symbol> {
     for sym in symbols {
         if let Some(last) = result.last()
             && last.name == sym.name
-            && last.kind == SymbolKind::Function
-            && sym.kind == SymbolKind::Function
+            && last.kind == sym.kind
         {
-            // Replace the previous entry with this one (the later/implementation version)
+            // Replace the previous entry with this one (the later version)
             *result.last_mut().unwrap() = sym;
             continue;
         }
