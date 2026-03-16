@@ -106,10 +106,10 @@ pub fn classify_file(path: &Path) -> crate::schedule::FileCategory {
             return FileCategory::Example;
         }
 
-        // Documentation sites — Docusaurus, Hugo, etc.
+        // Documentation sites and supplementary design docs.
         // docs/ and doc/ are ambiguous (often contain valuable API reference),
-        // so only website/ and site/ are classified as doc-site source.
-        if s == "website" || s == "site" {
+        // so only website/, site/, and rfcs/ are classified as doc-site source.
+        if s == "website" || s == "site" || s == "rfcs" || s == "rfc" {
             return FileCategory::DocsSite;
         }
 

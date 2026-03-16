@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3996 tokens)
+budget: 4000 (3989 tokens)
 
 CHANGELOG.md
 
@@ -29,32 +29,6 @@ README.md
    109→
       →…
 
-rfcs/0296-structured-logging.md
-     5→# Summary
-    16→# Contents
-    43→# Motivation
-    46→## What is structured logging?
-    86→## Why do we need structured logging in `log`?
-    98→# Guide-level explanation
-   103→## Logging structured key-value pairs
-   255→## Supporting key-value pairs in `Log` implementations
-   401→## Integrating log frameworks with `log`
-   489→## How producers and consumers of structured values interact
-   495→# Reference-level explanation
-   500→## Design considerations
-   522→## Cargo features
-   541→## A complete key-values API
-  1460→## A minimal key-values API
-  1569→## The `log!` macros
-  1575→# Drawbacks, rationale, and alternatives
-  1578→## Supporting structured logging at all
-  1582→## Internalizing `sval` and `serde`
-  1629→# Prior art
-  1634→## Rust
-  1640→## Go
-  1644→## .NET
-  1650→# Unresolved questions
-
 src/__private_api.rs
      7→pub use std::{format_args, module_path, stringify};
     10→pub type Value<'a> = &'a str;
@@ -74,6 +48,7 @@ src/__private_api.rs
    135→    pub fn capture_error<'a>(v: &'a (dyn std::error::Error + 'static)) -> Value<'a> {
    140→    pub fn capture_sval<'a, V: sval::Value + ?Sized>(v: &'a &'a V) -> Value<'a> {
    145→    pub fn capture_serde<'a, V: serde_core::Serialize + ?Sized>(v: &'a &'a V) -> Value<'a> {
+   151→pub use self::kv_support::*;
 
 src/kv/error.rs
      5→pub struct Error {
@@ -84,6 +59,7 @@ src/kv/error.rs
     29→    pub(super) fn from_value …
     37→    pub(super) fn into_value …
     69→mod std_support {
+    70→    use super::*;
     77→        pub fn boxed …
 
 src/kv/key.rs
@@ -97,8 +73,11 @@ src/kv/key.rs
     53→    pub fn as_str …
     61→    pub fn to_borrowed_str …
     94→mod std_support {
+    95→    use super::*;
    113→mod sval_support {
+   114→    use super::*;
    136→mod serde_support {
+   137→    use super::*;
 
 src/kv/mod.rs
    246→mod error;
@@ -111,6 +90,7 @@ src/kv/mod.rs
    262→pub mod value;
 
 src/kv/source.rs
+     6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
     51→pub trait Source {
     62→    fn visit …
     73→    fn get …
@@ -120,6 +100,7 @@ src/kv/source.rs
    235→pub trait VisitSource<'kvs> {
    237→    fn visit_pair …
    280→mod std_support {
+   281→    use super::*;
    462→pub use VisitSource as Visitor;
 
 src/kv/value.rs
@@ -143,6 +124,7 @@ src/kv/value.rs
    379→    pub fn to_borrowed_error …
    384→    pub fn to_borrowed_str …
    390→mod std_support {
+   395→    use super::*;
    438→        pub fn to_cow_str …
    462→pub trait VisitValue<'v> {
    469→    fn visit_any …
@@ -161,10 +143,12 @@ src/kv/value.rs
    588→    fn visit_error …
    593→    fn visit_borrowed_error …
    602→pub(in crate::kv) mod inner {
+   610→    use super::*;
    612→    pub use value_bag::ValueBag as Inner;
    614→    pub use value_bag::Error;
    619→    pub fn visit …
    721→pub(in crate::kv) mod inner {
+   735→    use super::*;
    737→    #[derive(Clone)]
    738→    pub enum Inner<'v> {
    739→        None,
@@ -213,6 +197,9 @@ src/lib.rs
    409→#[cfg(feature = "kv")]
    410→pub mod kv;
    421→struct AtomicUsize …
+   467→/// An enum representing the available verbosity levels of the logger.
+   468→///
+      →…
    475→pub enum Level {
    476→    /// The "error" level.
    477→    ///
@@ -247,6 +234,9 @@ src/lib.rs
    579→    pub fn iter() -> impl Iterator<Item = Self> {
    599→    pub fn increment_severity(&self) -> Self {
    620→    pub fn decrement_severity(&self) -> Self {
+   626→/// An enum representing the available verbosity level filters of the logger.
+   627→///
+      →…
    636→pub enum LevelFilter {
    637→    /// A level lower than all log levels.
    638→    Off,
@@ -345,14 +335,26 @@ src/lib.rs
 
 src/macros.rs
     75→macro_rules! log {
+   119→macro_rules! __log {
    165→macro_rules! error {
    204→macro_rules! warn {
    252→macro_rules! info {
    292→macro_rules! debug {
    336→macro_rules! trace {
    391→macro_rules! log_enabled {
+   415→macro_rules! __log_enabled {
+   429→macro_rules! __log_logger {
+   459→macro_rules! __log_key {
+   517→macro_rules! __log_value {
+   535→macro_rules! __log_value_sval {
+   553→macro_rules! __log_value_serde {
+   573→macro_rules! __log_value_error {
 
 src/serde.rs
+
+test_max_level_features/Cargo.toml
+     1→[package]
+     7→[[bin]]
 
 triagebot.toml
      1→[assign]
