@@ -807,7 +807,7 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     // File role: README files are high-signal (project description, usage examples),
     // architecture docs are the most valuable. Changelogs/translations are low-signal.
     let file_role_factor = match key.file_role {
-        FileRole::Architecture => 3.0,
+        FileRole::Architecture => 2.0,
         FileRole::Readme => 2.0,
         FileRole::Normal => 1.0,
         FileRole::Translated => 0.1,
@@ -996,7 +996,7 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
             1.0 + 0.07 * (n as f64 - 1.0)
         }
         (KindCategory::Section, StageKind::Body) => {
-            1.0 + 0.15 * (n as f64 - 1.0)
+            1.0 + 0.2 * (n as f64 - 1.0)
         }
         _ => n as f64,
     };

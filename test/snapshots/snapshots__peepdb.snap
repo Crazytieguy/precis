@@ -101,12 +101,7 @@ docs/README.md
    122→2.  Set the `working-directory` param for the Setup Ruby step.
    123→
    124→    ```yaml
-   125→    - name: Setup Ruby
-   126→        uses: ruby/setup-ruby@v1
-   127→        with:
-   128→          ruby-version: '3.1'
-   129→          bundler-cache: true
-      →          …
+      →    …
    154→## Licensing and Attribution
 
 docs/_config.yml
@@ -119,6 +114,11 @@ docs/_config.yml
 
 docs/contributing.md
      6→# 🤝 Contributing to peepDB
+    10→## Steps to Contribute
+    28→## Setting Up Development Environment
+    47→## Code Style
+    54→## Testing
+    63→## Documentation
 
 docs/index.md
      6→# peepDB
@@ -232,12 +232,16 @@ peepdb/db/base.py
      6→    def __init__(self, host: str, user: str, password: str, database: str, port: int = None, **kwargs):
     17→    @abstractmethod
     18→    def connect(self) -> None:
+    19→        pass
     21→    @abstractmethod
     22→    def disconnect(self) -> None:
+    23→        pass
     25→    @abstractmethod
     26→    def fetch_tables(self) -> List[str]:
+    27→        pass
     29→    @abstractmethod
     30→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
+    31→        pass
     33→    def __enter__(self):
     37→    def __exit__(self, exc_type, exc_val, exc_tb):
 
@@ -336,7 +340,6 @@ project.toml
     10→    {name = "Evangelos Meklis", email = "vmeklis@hotmail.com"},
     11→]
     12→readme = "README.md"
-    13→requires-python = ">=3.9"
       →…
     35→[project.optional-dependencies]
     42→[project.urls]

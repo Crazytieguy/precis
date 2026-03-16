@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3996 tokens)
+budget: 4000 (3997 tokens)
 
 Cargo.toml
      1→[package]
@@ -28,11 +28,6 @@ Cargo.toml
     22→dirs = "6.0.0"
     23→xattr = "1.5.1"
     24→walkdir = "2.5.0"
-    25→reqwest = { version = "0.12.23", features = ["json", "stream", "blocking"] }
-    26→url = "2.5.4"
-    27→sha2 = "0.10.9"
-    28→indicatif = "0.17.11"
-    29→hex = "0.4.3"
       →…
 
 src/build/compile/cargo.rs
@@ -97,8 +92,6 @@ src/build/env.rs
    169→        cellar_path: &Path,
    170→        all_installed_opt_paths: &[PathBuf],
    171→    ) -> Result<Self> {
-   403→    fn is_controlled_homebrew_var …
-   424→    fn set_path_list_var …
    463→    pub fn apply_to_command(&self, command: &mut std::process::Command) {
    476→    pub fn get_path_string(&self) -> Option<&str> {
    482→    pub fn get_vars(&self) -> &HashMap<String, String> {
@@ -151,6 +144,7 @@ src/install/bottle/exec.rs
    331→pub fn install_bottle …
 
 src/install/bottle/link.rs
+    15→const STANDARD_KEG_DIRS …
     19→pub fn link_formula_artifacts …
    476→pub fn unlink_formula_artifacts …
 
@@ -167,15 +161,22 @@ src/install/bottle/macho.rs
     56→    pub old_path: String,
     57→    pub new_path: String,
     58→}
-    81→pub fn patch_macho_file …
+    81→pub fn patch_macho_file(
+    82→    _path: &Path,
+    83→    _replacements: &HashMap<String, String>,
+    84→) -> Result<(bool, Vec<SkippedPath>)> {
    162→const AR_MAGIC …
 
 src/install/bottle/mod.rs
     13→pub mod exec;
     14→pub mod link;
     15→pub mod macho;
-    18→pub async fn download_formula …
-    34→pub fn has_bottle_for_current_platform …
+    18→pub async fn download_formula(
+    19→    formula: &Formula,
+    20→    config: &Config,
+    21→    client: &reqwest::Client,
+    22→) -> Result<PathBuf> {
+    34→pub fn has_bottle_for_current_platform(formula: &Formula) -> bool {
    159→pub fn get_formula_cellar_path …
    165→pub fn write_receipt …
 

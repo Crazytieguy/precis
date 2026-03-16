@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (8010 tokens)
+budget: 8000 (8011 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -94,6 +94,9 @@ crates/toasty/src/batch/create.rs
      5→    /// records for the same model.
      6→    stmts: Vec<stmt::Insert<M>>,
      7→}
+    10→    pub fn new …
+    14→    pub fn item …
+    24→    pub async fn exec …
 
 crates/toasty/src/cursor.rs
      6→pub struct Cursor<M> {
@@ -117,6 +120,7 @@ crates/toasty/src/db/connect.rs
     14→pub struct Connect {
     15→    driver: Box<dyn Driver>,
     16→}
+    89→impl Driver for Connect {
 
 crates/toasty/src/db/pool.rs
     18→pub struct PoolConfig {
@@ -219,20 +223,9 @@ crates/toasty/src/stmt.rs
 crates/toasty-cli/Cargo.toml
      1→[package]
      2→name = "toasty-cli"
-     3→version = "0.1.0"
-     4→edition = "2024"
-     5→publish = false
+      →…
      7→[dependencies]
      8→toasty.workspace = true
-     9→toasty-core = { workspace = true, features = ["serde"] }
-    10→toasty-sql.workspace = true
-    11→
-    12→anyhow = "1.0.100"
-    13→clap.workspace = true
-    14→console.workspace = true
-    15→dialoguer.workspace = true
-    16→rand.workspace = true
-    17→serde.workspace = true
       →…
 
 crates/toasty-cli/src/config.rs
@@ -288,7 +281,7 @@ crates/toasty-cli/src/migration/history_file.rs
     45→    pub fn load(path: impl AsRef<Path>) -> Result<Self> {
     51→    pub fn save(&self, path: impl AsRef<Path>) -> Result<()> {
     57→    pub fn load_or_default(path: impl AsRef<Path>) -> Result<Self> {
-    64→    pub fn migrations …
+    64→    pub fn migrations(&self) -> &[HistoryFileMigration] {
     69→    pub fn next_migration_number(&self) -> u32 {
     81→    pub fn add_migration(&mut self, migration: HistoryFileMigration) {
     86→    pub fn remove_migration(&mut self, index: usize) {
@@ -475,6 +468,10 @@ crates/toasty-core/src/schema/app/field/primitive.rs
 
 crates/toasty-core/src/schema/builder.rs
     11→pub struct Builder {
+    12→    /// If set, prefix all table names with this string
+    13→    table_name_prefix: Option<String>,
+    14→}
+    17→struct BuildSchema …
 
 crates/toasty-core/src/schema/db/index.rs
     54→pub enum IndexOp {
@@ -507,11 +504,16 @@ crates/toasty-core/src/schema/mapping/model.rs
 
 crates/toasty-core/src/schema/mapping.rs
     18→pub struct Mapping {
+    19→    /// Per-model mappings indexed by model identifier.
+    20→    pub models: IndexMap<ModelId, Model>,
+    21→}
     29→    pub fn model(&self, id: impl Into<ModelId>) -> &Model {
     38→    pub fn model_mut(&mut self, id: impl Into<ModelId>) -> &mut Model {
 
 crates/toasty-core/src/schema/name.rs
      4→pub struct Name {
+     5→    pub parts: Vec<String>,
+     6→}
 
 crates/toasty-core/src/schema.rs
      1→pub mod app;
@@ -534,6 +536,7 @@ crates/toasty-core/src/stmt/filter.rs
 crates/toasty-core/src/stmt.rs
    235→pub mod visit_mut;
    243→pub mod visit;
+   252→#[derive(Clone, PartialEq)]
    253→pub enum Statement {
    254→    /// Delete one or more existing records
    255→    Delete(Delete),
@@ -596,14 +599,17 @@ crates/toasty-driver-mysql/src/lib.rs
     23→    url: String,
     24→    pool: Pool,
     25→}
+    28→    pub fn new …
    133→pub struct Connection {
    134→    conn: Conn,
    135→}
+   138→    pub fn new …
+   142→    pub async fn create_table …
 
 crates/toasty-driver-mysql/src/value.rs
      5→pub struct Value(CoreValue);
-    15→    pub fn into_inner …
-    20→    pub fn from_sql …
+    15→    pub fn into_inner(self) -> CoreValue {
+    20→    pub fn from_sql(i: usize, row: &mut Row, column: &Column, ty: &stmt::Type) -> Self {
 
 crates/toasty-driver-postgresql/Cargo.toml
      1→[package]
@@ -829,12 +835,8 @@ crates/toasty-sql/src/stmt.rs
 docs/ARCHITECTURE.md
      1→# Toasty Architecture Overview
      3→## Project Structure
-     5→Toasty is an ORM for Rust that supports SQL and NoSQL databases. The codebase is a Cargo workspace with separate crates for each layer.
-     6→
      7→## Crates
     74→## Further Reading
-    76→- [Query Engine Architecture](architecture/query-engine.md) - Query compilation and execution pipeline
-    77→- [Type System](architecture/type-system.md) - Type system design and conversions
 
 docs/CHANGE_GUIDE.md
      1→# Toasty Change Guide

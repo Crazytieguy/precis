@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (8000 tokens)
+budget: 8000 (7999 tokens)
 
 CONTRIBUTING.md
      1→# Contributing to Enclosed
@@ -80,6 +80,20 @@ packages/app-client/components.json
     14→    "ui": "@/modules/ui/components",
     15→    "cn": "@/modules/shared/style/cn"
 
+packages/app-client/package.json
+     2→  "name": "@enclosed/app-client",
+     3→  "type": "module",
+     4→  "version": "1.16.0",
+     5→  "packageManager": "pnpm@9.15.0",
+     6→  "description": "Enclosed frontend client",
+     7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
+     8→  "license": "Apache-2.0",
+     9→  "repository": {
+    13→  "engines": {
+    16→  "scripts": {
+    30→  "dependencies": {
+    48→  "devDependencies": {
+
 packages/app-client/src/index.tsx
 
 packages/app-client/src/locales/locales.ts
@@ -111,6 +125,7 @@ packages/app-client/src/modules/config/config.types.ts
 packages/app-client/src/modules/files/files.models.ts
      6→export const iconByFileType = {
     33→type FileTypes …
+    35→function getFileIcon …
 
 packages/app-client/src/modules/i18n/i18n.models.ts
      8→export function findMatchingLocale({ preferredLocales, supportedLocales }: { preferredLocales: Intl.Locale[]; supportedLocales: Intl.Locale[] }) {
@@ -223,6 +238,9 @@ packages/app-client/src/modules/ui/layouts/app.layout.tsx
 
 packages/app-client/src/routes.tsx
     11→export function getRoutes(): RouteDefinition[] {
+
+packages/app-client/tsconfig.json
+     2→  "compilerOptions": {
 
 packages/app-server/src/index.cloudflare.ts
 
@@ -366,7 +384,7 @@ packages/cli/src/cli.ts
      2→import { configCommand } from './config/config.command';
      3→import { createNoteCommand } from './create-note/create-note.command';
      4→import { viewNoteCommand } from './view-note/view-note.command';
-     6→const main = defineCommand({
+     6→const main …
 
 packages/cli/src/config/config.command.ts
      6→const keysList …
@@ -473,15 +491,6 @@ packages/docs/src/components/credential-inputs.vue
      9→});
     10→
     11→function addCredential() {
-    12→  credentials.value = [
-    13→    ...credentials.value,
-    14→    {
-    15→      email: '',
-    16→      password: '',
-    17→    },
-    18→  ];
-    19→}
-    20→
       →…
 
 packages/docs/src/components/toggle.vue
@@ -496,16 +505,7 @@ packages/docs/src/components/toggle.vue
      9→</script>
     10→
     11→<template>
-    12→  <div class="switch-wrapper">
-    13→    <div class="switch">
-    14→      <input :id="$.uid" v-model="checked" type="checkbox" class="checkbox">
-    15→      <div class="slider" @click="toggle" />
-    16→    </div>
-    17→
-    18→    <label :id="$.uid" class="label" @click="toggle">
-    19→      <slot />
-    20→    </label>
-      →    …
+      →…
 
 packages/docs/src/data/configuration.data.ts
      5→import { configDefinition } from '../../../app-server/src/modules/app/config/config';
@@ -663,7 +663,6 @@ packages/docs/src/self-hosting/users-authentication-key-generator.md
     61→
     62→---
     63→
-    64→> [!INFO] Escaping in Docker Run
       →…
 
 packages/lib/README.md

@@ -96,6 +96,10 @@ examples/airline/configs/tools.py
     23→def case_resolved():
     27→def initiate_baggage_search():
 
+examples/airline/data/routines/baggage/policies.py
+     3→STARTER_PROMPT …
+    21→LOST_BAGGAGE_POLICY = """
+
 examples/airline/data/routines/flight_modification/policies.py
      2→STARTER_PROMPT = """You are an intelligent and empathetic customer support representative for Fly Airlines customers .
     20→FLIGHT_CANCELLATION_POLICY = f"""
@@ -138,7 +142,10 @@ examples/customer_service_streaming/configs/general.py
      5→    OKGREEN = '\033[92m'
      6→    WARNING = '\033[93m'
      7→    RED = '\033[91m'
-      →    …
+     8→    ENDC = '\033[0m'
+     9→    BOLD = '\033[1m'
+    10→    UNDERLINE = '\033[4m'
+    11→    GREY = '\033[90m'
 
 examples/customer_service_streaming/configs/prompts.py
     15→# IMPORTANT: If you are missing
@@ -165,6 +172,14 @@ examples/customer_service_streaming/prep_data.py
 examples/customer_service_streaming/src/evals/eval_function.py
      8→class EvalFunction:
      9→
+    10→  def __init__(self, client, plan, task):
+    17→  def default(self):
+    23→  def numeric(self):
+    42→  def name(self):
+    67→  def evaluate(self):
+
+examples/customer_service_streaming/src/runs/run.py
+     5→class Run:
 
 examples/customer_service_streaming/src/swarm/engines/engine.py
      1→# engine.py
@@ -217,31 +232,10 @@ examples/support_bot/README.md
      6→## Overview
      8→The support bot consists of two main agents:
      9→
-    10→1. **User Interface Agent**: Handles initial user interactions and directs them to the help center agent based on their needs.
-    11→2. **Help Center Agent**: Provides detailed help and support using various tools and integrated with a Qdrant VectorDB for documentation retrieval.
-    12→
+      →…
     13→## Setup
     15→To start the support bot:
     16→
-    17→1. Ensure Docker is installed and running on your system.
-    18→2. Install the necessary additional libraries:
-    19→
-    20→```shell
-    21→make install
-    22→```
-    23→
-    24→3. Initialize docker
-    25→
-    26→```shell
-    27→docker-compose up -d
-    28→```
-    29→
-    30→4. Prepare the vector DB:
-    31→
-    32→```shell
-    33→make prep
-    34→```
-    35→
       →…
 
 examples/support_bot/customer_service.py
@@ -307,7 +301,11 @@ examples/weather_agent/README.md
      3→This example is a weather agent demonstrating function calling with a single agent. The agent has tools to get the weather of a particular city, and send an email.
      4→
      5→## Setup
+     7→To run the weather agent Swarm:
+      →…
     15→## Evals
+    17→> [!NOTE]
+      →…
 
 examples/weather_agent/agents.py
      6→def get_weather(location, time="now"):
@@ -348,6 +346,8 @@ swarm/repl/__init__.py
      1→from .repl import run_demo_loop
 
 swarm/repl/repl.py
+     1→import json …
+     3→from swarm …
      6→def process_and_print_streaming_response(response):
     37→def pretty_print_messages(messages) -> None:
     60→def run_demo_loop(
@@ -389,3 +389,5 @@ tests/test_core.py
      7→DEFAULT_RESPONSE_CONTENT = "sample response content"
     10→@pytest.fixture
     11→def mock_openai_client():
+
+tests/test_util.py

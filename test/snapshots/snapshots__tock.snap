@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7983 tokens)
+budget: 8000 (7982 tokens)
 
 README.md
      1→# Tock
@@ -226,18 +226,15 @@ go.mod
     29→	github.com/erikgeiser/coninput v0.0.0-20211004153227-1c3628e74d0f // indirect
     30→	github.com/fsnotify/fsnotify v1.9.0 // indirect
     31→	github.com/go-viper/mapstructure/v2 v2.4.0 // indirect
-    32→	github.com/inconshreveable/mousetrap v1.1.0 // indirect
-    33→	github.com/lucasb-eyer/go-colorful v1.3.0 // indirect
-    34→	github.com/mattn/go-isatty v0.0.20 // indirect
-    35→	github.com/mattn/go-localereader v0.0.1 // indirect
-    36→	github.com/mattn/go-runewidth v0.0.19 // indirect
       →	…
 
 internal/adapters/cli/add.go
+     3→import …
     16→type addOptions struct {
     26→func NewAddCmd() *cobra.Command {
 
 internal/adapters/cli/analyze.go
+     3→import …
     20→func NewAnalyzeCmd() *cobra.Command {
     70→type AnalysisStats struct {
     71→	TotalDuration      time.Duration
@@ -255,6 +252,7 @@ internal/adapters/cli/analyze.go
    206→func renderAnalysis …
 
 internal/adapters/cli/calendar.go
+     3→import …
     25→func NewCalendarCmd() *cobra.Command {
     48→type reportModel struct {
     79→func (m *reportModel) Init() tea.Cmd {
@@ -268,24 +266,29 @@ internal/adapters/cli/calendar.go
    488→func (m *reportModel) getWeeklyDuration …
 
 internal/adapters/cli/calendar_sidebar.go
+     3→import …
     12→const barChar …
     15→func formatDurationCompact …
 
 internal/adapters/cli/continue.go
+     3→import …
     15→const …
     16→	defaultRecentActivitiesForContinuation …
     20→func NewContinueCmd() *cobra.Command {
 
 internal/adapters/cli/current.go
+     3→import …
     19→type currentCmdActivity struct {
     23→func (a currentCmdActivity) Duration() time.Duration {
     27→func (a currentCmdActivity) DurationHMS() string {
     35→func NewCurrentCmd() *cobra.Command {
 
 internal/adapters/cli/ical.go
+     3→import …
     23→func NewICalCmd() *cobra.Command {
 
 internal/adapters/cli/interactive.go
+     3→import …
     17→func SelectActivityMetadata(activities []models.Activity, project, description string, theme Theme) (string, string, error) {
     98→func RunInteractiveInput(header, placeholder string, theme Theme) (string, error) {
    123→type simpleInputModel struct {
@@ -299,10 +302,12 @@ internal/adapters/cli/interactive.go
    263→func (m *simpleListModel) View() string {
 
 internal/adapters/cli/last.go
+     3→import …
     16→type lastOptions struct {
     21→func NewLastCmd() *cobra.Command {
 
 internal/adapters/cli/list_gui.go
+     3→import …
     22→func NewListCmd() *cobra.Command {
     45→type model struct {
    200→func (m *model) Init() tea.Cmd {
@@ -310,14 +315,17 @@ internal/adapters/cli/list_gui.go
    230→func (m *model) View() string {
 
 internal/adapters/cli/remove.go
+     3→import …
     22→func NewRemoveCmd() *cobra.Command {
 
 internal/adapters/cli/report.go
+     3→import …
     20→type reportOptions struct {
     31→func NewReportCmd() *cobra.Command {
     61→func runReportCmd …
 
 internal/adapters/cli/root.go
+     3→import …
     21→const …
     22→	defaultRecentActivitiesForCompletion …
     23→	backendTimewarrior …
@@ -329,12 +337,15 @@ internal/adapters/cli/root.go
    107→func Execute() {
 
 internal/adapters/cli/start.go
+     3→import …
     17→func NewStartCmd() *cobra.Command {
 
 internal/adapters/cli/stop.go
+     3→import …
     14→func NewStopCmd() *cobra.Command {
 
 internal/adapters/cli/theme.go
+     3→import …
     10→// Theme defines the color palette for the application.
     11→type Theme struct {
     12→	Primary   lipgloss.Color
@@ -371,9 +382,11 @@ internal/adapters/cli/theme.go
    167→func InitStyles(t Theme) Styles {
 
 internal/adapters/cli/update.go
+     3→import …
     17→type githubRelease struct {
 
 internal/adapters/cli/version.go
+     3→import …
     10→var …
     11→	version …
     12→	commit …
@@ -381,6 +394,7 @@ internal/adapters/cli/version.go
     16→func NewVersionCmd() *cobra.Command {
 
 internal/adapters/cli/watch.go
+     3→import …
     19→func NewWatchCmd() *cobra.Command {
     75→type tickMsg time.Time
     77→type watchModel struct {
@@ -652,7 +666,7 @@ internal/services/ics/generator.go
     18→func WrapCalendar(eventsBody string) string {
     28→// GenerateEvent returns the VEVENT block for a single activity.
     29→func GenerateEvent(act models.Activity, uidKey string) string {
-    71→func escapeProperty …
+    71→func escapeProperty(s string) string {
 
 internal/timeutil/timeutil.go
      3→import …

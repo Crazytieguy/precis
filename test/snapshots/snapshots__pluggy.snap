@@ -2,10 +2,14 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4008 tokens)
+budget: 4000 (4011 tokens)
 
 CHANGELOG.rst
      1→=========
+     2→Changelog
+     3→=========
+     4→
+      →…
 
 README.rst
      1→====================================================
@@ -79,6 +83,12 @@ README.rst
     69→
       →…
 
+RELEASING.rst
+     1→Release Procedure
+
+TIDELIFT.rst
+     1→========
+
 changelog/README.rst
      1→This directory contains "newsfragments" which are short files that contain a small **ReST**-formatted
      2→text that will be added to the next ``CHANGELOG``.
@@ -108,21 +118,23 @@ docs/api_reference.rst
     12→    :show-inheritance:
     13→    :members:
     14→
-    15→.. autodecorator:: pluggy.HookspecMarker
-    16→
-    17→.. autodecorator:: pluggy.HookimplMarker
-    18→
-    19→.. autoclass:: pluggy.HookRelay()
-    20→    :members:
-    21→
-    22→    .. data:: <hook name>
-    23→
       →…
 
 docs/conf.py
+     1→from importlib …
+     2→from typing …
+     6→    import sphinx.application …
    106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
    107→    """Configure Sphinx's WarningHandler to handle (expected) missing include."""
    130→def setup(app: "sphinx.application.Sphinx") -> None:
+
+docs/examples/eggsample/eggsample/hookspecs.py
+     8→def eggsample_add_ingredients(ingredients: tuple):
+    17→def eggsample_prep_condiments(condiments: dict):
+
+docs/examples/eggsample/eggsample/lib.py
+     5→def eggsample_add_ingredients():
+    13→def eggsample_prep_condiments(condiments):
 
 docs/examples/eggsample-spam/eggsample_spam.py
      5→def eggsample_add_ingredients(ingredients):
@@ -153,15 +165,6 @@ docs/index.rst
     11→which are invoked in sequence according to a well defined set of protocols.
     12→
     13→It gives users the ability to extend or modify the behaviour of a
-    14→``host program`` by installing a ``plugin`` for that program.
-    15→The plugin code will run as part of normal program execution, changing or
-    16→enhancing certain aspects of it.
-    17→
-    18→In essence, ``pluggy`` enables function `hooking`_ so you can build
-    19→"pluggable" systems.
-    20→
-    21→Why is it useful?
-    22→*****************
       →…
 
 downstream/
@@ -177,23 +180,23 @@ scripts/
 
 src/pluggy/__init__.py
      1→__all__ = [
-    23→from ._hooks …
-    25→from ._manager …
-    27→from ._result …
-    29→from ._warnings …
+    23→from ._hooks import HookspecOpts
+    25→from ._manager import PluginValidationError
+    27→from ._result import Result
+    29→from ._warnings import PluggyWarning
     32→def __getattr__ …
 
 src/pluggy/_callers.py
-    16→from ._hooks …
-    18→from ._result …
-    19→from ._warnings …
+    16→from ._hooks import HookImpl
+    18→from ._result import Result
+    19→from ._warnings import PluggyTeardownRaisedWarning
     22→# Need to distinguish between old- and new-style hook wrappers.
     23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
     24→Teardown: TypeAlias = Generator[None, object, object]
     27→def run_old_style_hookwrapper …
 
 src/pluggy/_hooks.py
-    25→from ._result …
+    25→from ._result import Result
     28→_T …
     29→_F …
     31→_Namespace …
@@ -277,7 +280,6 @@ src/pluggy/_hooks.py
    516→    def call_historic …
    543→    def call_extra …
    593→class _SubsetHookCaller(HookCaller):
-   596→
    612→    def __init__ …
    619→    def _hookimpls …
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
@@ -316,10 +318,10 @@ src/pluggy/_hooks.py
    709→    def __init__ …
 
 src/pluggy/_manager.py
-    16→from . …
-    17→from ._callers …
-    27→from ._hooks …
-    28→from ._result …
+    16→from . import _tracing
+    17→from ._callers import _multicall
+    27→from ._hooks import normalize_hookimpl_opts
+    28→from ._result import Result
     36→_BeforeTrace …
     37→_AfterTrace …
     52→class PluginValidationError(Exception):
