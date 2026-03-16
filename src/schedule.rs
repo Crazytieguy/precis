@@ -802,9 +802,6 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
         _ => 0.4,
     };
 
-    // No sibling_factor here — group size is handled by count_factor
-    // in the Names/Signatures stages via sqrt scaling.
-
     // File role: README files are high-signal (project description, usage examples),
     // architecture docs are the most valuable. Changelogs/translations are low-signal.
     let file_role_factor = match key.file_role {
