@@ -1530,6 +1530,25 @@ mod tests {
     }
 
     #[test]
+    fn boilerplate_heading_detection() {
+        assert!(is_boilerplate_heading("License"));
+        assert!(is_boilerplate_heading("## License"));
+        assert!(is_boilerplate_heading("License - MIT"));
+        assert!(is_boilerplate_heading("📃 License"));
+        assert!(is_boilerplate_heading("Contributing"));
+        assert!(is_boilerplate_heading("Acknowledgements"));
+        assert!(is_boilerplate_heading("FAQ"));
+        assert!(is_boilerplate_heading("Changelog"));
+        assert!(is_boilerplate_heading("Related Projects"));
+        // Non-boilerplate headings
+        assert!(!is_boilerplate_heading("Installation"));
+        assert!(!is_boilerplate_heading("Usage"));
+        assert!(!is_boilerplate_heading("API"));
+        assert!(!is_boilerplate_heading("Architecture"));
+        assert!(!is_boilerplate_heading("Features"));
+    }
+
+    #[test]
     fn file_role_architecture() {
         assert_eq!(FileRole::from_filename("ARCHITECTURE.md"), FileRole::Architecture);
         assert_eq!(FileRole::from_filename("architecture.md"), FileRole::Architecture);
