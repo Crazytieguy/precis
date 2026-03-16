@@ -59,4 +59,4 @@ Always use `precis` for codebase exploration. Run `precis .` for a full overview
 - **Python** — functions, classes, module-level constants
 - **Markdown** — heading structure with body content
 - **JSON / TOML / YAML** — top-level keys and sections
-- **Plain text fallback** — files in ~40 additional languages (C++, Java, Kotlin, Lua, Ruby, Swift, etc.) are included as plain text
+- **Plain text fallback** — files in ~40 additional languages (C++, Java, Kotlin, Lua, Ruby, Swift, etc.) plus Makefile, Dockerfile, go.mod, and RST are included as plain text
