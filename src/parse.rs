@@ -161,7 +161,7 @@ fn import_name(node: tree_sitter::Node, source: &str, lang: Lang) -> String {
                 .map(|s| s.trim().to_string())
                 .unwrap_or_else(|| text.to_string())
         }
-        Lang::Markdown | Lang::Json | Lang::Toml | Lang::Yaml => "?".to_string(),
+        Lang::Lua | Lang::Markdown | Lang::Json | Lang::Toml | Lang::Yaml => "?".to_string(),
     }
 }
 
@@ -187,7 +187,7 @@ fn is_first_party_import(name: &str, lang: Lang) -> bool {
         Lang::Python => name.starts_with('.'),
         // C: `#include "header.h"` (quoted) is local, `#include <header.h>` (angle) is system.
         Lang::C => name.starts_with('"'),
-        Lang::Markdown | Lang::Json | Lang::Toml | Lang::Yaml => false,
+        Lang::Lua | Lang::Markdown | Lang::Json | Lang::Toml | Lang::Yaml => false,
     }
 }
 
@@ -249,6 +249,10 @@ fn language_for_extension(ext: &str) -> Option<(Language, &'static str)> {
         (Lang::C, _) => (
             tree_sitter_c::LANGUAGE.into(),
             include_str!("../queries/c.scm"),
+        ),
+        (Lang::Lua, _) => (
+            tree_sitter_lua::LANGUAGE.into(),
+            include_str!("../queries/lua.scm"),
         ),
         (Lang::Python, _) => (
             tree_sitter_python::LANGUAGE.into(),
@@ -518,6 +522,8 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
                 }
                 SymbolKind::Const
             }
+            // Lua variable/assignment declarations (module-level locals, M.foo = function)
+            "variable_declaration" | "assignment_statement" if lang == Lang::Lua => SymbolKind::Const,
             _ => continue,
         };
 
@@ -588,6 +594,11 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
                 Lang::Markdown | Lang::Json | Lang::Toml | Lang::Yaml => true,
                 // C: non-static symbols are public; underscore-prefixed names are conventionally private
                 Lang::C => !is_c_static(symbol_node, source) && !name.starts_with('_'),
+                // Lua: local declarations are private; module-level M.foo assignments are public
+                Lang::Lua => {
+                    let text = symbol_node.utf8_text(source.as_bytes()).unwrap_or("");
+                    !text.starts_with("local") || name.contains('.')
+                },
                 _ => is_public_symbol(symbol_node, source),
             }
         };
@@ -1002,7 +1013,7 @@ fn is_inside_function(node: tree_sitter::Node) -> bool {
             | "generator_function" | "generator_function_declaration" |
             // Go
             "method_declaration" | "func_literal" |
-            // Python
+            // Python / Lua
             "function_definition" => {
                 return true;
             }

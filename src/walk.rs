@@ -53,7 +53,7 @@ fn is_unsupported_code_extension(ext: &str) -> bool {
         // JVM languages
         | "java" | "kt" | "kts" | "scala" | "groovy" | "clj" | "cljs"
         // Scripting languages
-        | "lua" | "rb" | "pl" | "pm" | "php"
+        | "rb" | "pl" | "pm" | "php"
         // ML/functional languages
         | "hs" | "ml" | "mli" | "fs" | "fsi" | "ex" | "exs" | "erl"
         // Modern languages
