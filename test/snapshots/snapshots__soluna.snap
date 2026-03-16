@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4006 tokens)
+budget: 4000 (4002 tokens)
 
 README.md
      7→# Soluna
@@ -12,7 +12,10 @@ README.md
     12→
     13→A framework you can use to make 2D games in Lua with multithreading, living on Windows, Linux, macOS and modern Browsers (via WebAssembly).
     14→
-      →…
+    15→It is built on top of [sokol](https://github.com/floooh/sokol) and leverages the power of ltask for multithreading.
+    16→
+    17→[![Nightly](/../../actions/workflows/nightly.yml/badge.svg)](/../../actions/workflows/nightyly.yml)
+    18→
     19→## Documentation
     25→## Precompiled Binaries
     29→## Building from Source
@@ -22,61 +25,25 @@ Makefile
      1→.PHONY : all clean shader
      3→BUILD=build
      4→BIN=bin
+     5→APPNAME=soluna.exe
+     6→CC?=gcc
+     7→# msvc support
+     8→#CC=cl
+     9→LD=$(CC)
+    10→LUA_EXE=$(BUILD)/lua.exe
       →…
 
-clibs/datalist/make.lua
+clibs/soluna/compile_lua.lua
      1→local lm = require "luamake"
-     3→lm.rootdir = lm.basedir .. "/3rd/datalist"
-     4→
-     5→lm:source_set "datalist_src" {
-     6→  sources = {
-     7→    "datalist.c",
-     8→  },
-     9→  includes = {
-    10→    lm.basedir .. "/3rd/lua",
-    11→  },
-    12→}
 
-clibs/ltask/make.lua
+clibs/soluna/compile_shader.lua
      1→local lm = require "luamake"
-     3→lm.rootdir = lm.basedir .. "/3rd/ltask"
-     4→
-     5→lm:source_set "ltask_src" {
-     6→  sources = {
-     7→    "src/*.c",
-     8→  },
-     9→  includes = {
-      →  …
 
-clibs/lua/make.lua
-     1→local lm = require "luamake"
-     3→lm.rootdir = lm.basedir .. "/3rd/lua"
-     4→
-     5→if lm.os == "windows" then
-     6→  lm:source_set "winfile" {
-     7→    sources = {
-     8→      lm.basedir .. "/src/winfile.c",
-     9→    },
-    10→  }
-    11→end
-    12→
-      →…
+clibs/soluna/runlua.lua
+     1→local subprocess = require "bee.subprocess"
 
-clibs/yoga/make.lua
-     1→local lm = require "luamake"
-     2→local fs = require "bee.filesystem"
-     3→
-     4→lm.rootdir = lm.basedir .. "/3rd/yoga"
-     5→
-      →…
-
-clibs/zip/make.lua
-     1→local lm = require "luamake"
-     3→lm.rootdir = lm.basedir .. "/3rd/zlib"
-     4→
-     5→lm:source_set "minizip" {
-     6→  sources = {
-      →  …
+clibs/soluna/shader2c.lua
+     1→local subprocess = require "bee.subprocess"
 
 docs/app.lua
      1→---@meta soluna.app
@@ -139,10 +106,6 @@ docs/zip.lua
      1→---@meta soluna.zip
 
 make.lua
-     1→local lm = require "luamake"
-     2→local fs = require "bee.filesystem"
-     3→
-      →…
 
 script/
       →…
@@ -225,7 +188,41 @@ src/loginfo.h
 src/lsha1.c
    114→#define	R0(v,w,x,y,z,i)	z+=((w&(x^y))^y)+blk0(i)+0x5A827999+rol(v,5);w=rol(w,30);
 
-src/luabuffer.h
+src/lualib/coroutine.lua
+     1→local co = require "coroutine"
+
+src/lualib/fontmgr.lua
+     1→local ttf = require "soluna.font.truetype"
+
+src/lualib/icon.lua
+     1→local sdf = require "soluna.image.sdf"
+
+src/lualib/initsetting.lua
+     1→local datalist = require "soluna.datalist"
+
+src/lualib/layout.lua
+     1→local yoga = require "soluna.layout.yoga"
+
+src/lualib/main.lua
+     1→local package = package
+
+src/lualib/packageloader.lua
+     1→local file = require "soluna.file"
+
+src/lualib/print_r.lua
+     1→local ltask = require "ltask"
+
+src/lualib/soluna.lua
+     1→local ltask = require "ltask"
+
+src/lualib/spritebundle.lua
+     1→local image = require "soluna.image"
+
+src/lualib/text.lua
+     1→local font = require "soluna.font"
+
+src/lualib/util.lua
+     1→local table = table
 
 src/material_text.c
    242→#define iscont(c)	(((c) & 0xC0) == 0x80)
@@ -412,10 +409,12 @@ src/yogaone.cpp
      6→#include "yoga/YGPixelGrid.cpp"
      7→#include "yoga/YGValue.cpp"
      8→
+     9→#include "yoga/algorithm/AbsoluteLayout.cpp"
       →…
 
 test/
       →…
 
-web/
-      →…
+web/config.toml
+     7→[pagination]
+    10→[params]

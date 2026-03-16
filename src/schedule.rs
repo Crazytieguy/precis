@@ -345,9 +345,10 @@ fn is_config_file(relative_path: &Path, filename: &str) -> bool {
         return true;
     }
 
-    // JS task runners — matched by filename anywhere (these names are unambiguous).
+    // Build/task runners — matched by filename anywhere (unambiguous names).
     match lower.as_str() {
-        "gulpfile.js" | "gruntfile.js" | "jakefile.js" => return true,
+        "gulpfile.js" | "gruntfile.js" | "jakefile.js"
+        | "make.lua" | "premake5.lua" | "cmake.lua" => return true,
         _ => {}
     }
 
