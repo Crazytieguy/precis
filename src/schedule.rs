@@ -123,7 +123,8 @@ impl FileRole {
             .unwrap_or((&lower, false));
         match stem {
             "readme" => FileRole::Readme,
-            "changelog" | "changes" | "history" | "news" | "releases" => FileRole::Changelog,
+            "changelog" | "changes" | "history" | "news" | "releases"
+            | "breaking_changes" | "breaking-changes" | "migration" | "upgrading" => FileRole::Changelog,
             "contributing" | "contributors" | "security" | "license" | "licence"
             | "code_of_conduct" | "codeowners" | "releasing" | "support"
             | "governance" | "authors" | "maintainers"
