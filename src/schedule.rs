@@ -131,7 +131,7 @@ impl FileRole {
             | "tidelift" | "sponsors" | "funding"
             | "notice" | "citation" => FileRole::CommunityHealth,
             "claude" | "agents" | "copilot" | "copilot-instructions"
-            | "context" => FileRole::AiConfig,
+            | "cursor" | "windsurf" | "context" => FileRole::AiConfig,
             "architecture" | "design" => FileRole::Architecture,
             _ if is_doc && has_locale_suffix(stem) => FileRole::Translated,
             _ => FileRole::Normal,
