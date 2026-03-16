@@ -555,13 +555,11 @@ pub(crate) fn is_markdown_leading_noise(line: &str) -> bool {
     }
     // Standalone images: ![alt](url) — only skip if alt text is short (badges).
     // Long alt text indicates a screenshot or diagram that has real content value.
-    if trimmed.starts_with("![") && trimmed.ends_with(')') {
-        if let Some(alt_end) = trimmed.find("](") {
-            let alt_text = &trimmed[2..alt_end];
-            if alt_text.len() <= 30 {
-                return true;
-            }
-        }
+    if trimmed.starts_with("![") && trimmed.ends_with(')')
+        && let Some(alt_end) = trimmed.find("](")
+        && trimmed[2..alt_end].len() <= 30
+    {
+        return true;
     }
     // Link reference definitions: [label]: URL
     if trimmed.starts_with('[')
