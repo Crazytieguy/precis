@@ -95,9 +95,10 @@ fn is_vendored_or_fixture(path: &Path) -> bool {
     path.components().any(|c| {
         let s = c.as_os_str();
         // vendor/ (vendored third-party dependencies: Go, PHP, Ruby)
+        // node_modules/ (npm dependencies, usually gitignored but just in case)
         // deps/ (vendored C/C++ dependencies, e.g. amalgamated single-file libs)
         // testdata/ (Go convention for test fixture data, excluded by go build)
-        s == "vendor" || s == "deps" || s == "testdata"
+        s == "vendor" || s == "node_modules" || s == "deps" || s == "testdata"
     })
 }
 
