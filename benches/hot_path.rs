@@ -30,9 +30,26 @@ impl Fixture {
     }
 }
 
+fn bench_extract_symbols(c: &mut Criterion) {
+    let fixtures: &[(&str, &str)] = &[
+        ("pluggy/src/pluggy", "extract_symbols/pluggy_src"),
+        ("commander/lib", "extract_symbols/commander_lib"),
+    ];
+
+    for &(subpath, bench_name) in fixtures {
+        let Some(f) = Fixture::load(subpath) else {
+            continue;
+        };
+        c.bench_function(bench_name, |b| {
+            b.iter(|| {
+                format::extract_all_symbols(&f.files, &f.sources);
+            });
+        });
+    }
+}
+
 fn bench_build_groups(c: &mut Criterion) {
     let fixtures: &[(&str, &str)] = &[
-        ("either/src", "build_groups/either_src"),
         ("pluggy/src/pluggy", "build_groups/pluggy_src"),
         ("commander/lib", "build_groups/commander_lib"),
     ];
@@ -52,7 +69,6 @@ fn bench_build_groups(c: &mut Criterion) {
 
 fn bench_schedule(c: &mut Criterion) {
     let fixtures: &[(&str, &str)] = &[
-        ("either/src", "schedule/either_src"),
         ("pluggy/src/pluggy", "schedule/pluggy_src"),
         ("commander/lib", "schedule/commander_lib"),
     ];
@@ -65,7 +81,7 @@ fn bench_schedule(c: &mut Criterion) {
         let groups = schedule::build_groups(&f.root, &f.files, &f.sources, &f.all_symbols, &layouts);
         c.bench_function(bench_name, |b| {
             b.iter(|| {
-                schedule::schedule(&groups, 1000, &f.root, &f.files);
+                schedule::schedule(&groups, 4000, &f.root, &f.files);
             });
         });
     }
@@ -73,10 +89,8 @@ fn bench_schedule(c: &mut Criterion) {
 
 fn bench_render_with_budget(c: &mut Criterion) {
     let configs: &[(&str, usize, &str)] = &[
-        ("either/src", 500, "render/either_src_500"),
-        ("either/src", 2000, "render/either_src_2000"),
-        ("pluggy/src/pluggy", 1000, "render/pluggy_src_1000"),
-        ("commander/lib", 1000, "render/commander_lib_1000"),
+        ("pluggy/src/pluggy", 4000, "render/pluggy_src_4000"),
+        ("commander/lib", 4000, "render/commander_lib_4000"),
     ];
 
     for &(subpath, budget, bench_name) in configs {
@@ -86,25 +100,6 @@ fn bench_render_with_budget(c: &mut Criterion) {
         c.bench_function(bench_name, |b| {
             b.iter(|| {
                 format::render_with_budget(budget, &f.root, &f.files, &f.sources);
-            });
-        });
-    }
-}
-
-fn bench_extract_symbols(c: &mut Criterion) {
-    let fixtures: &[(&str, &str)] = &[
-        ("either/src", "extract_symbols/either_src"),
-        ("pluggy/src/pluggy", "extract_symbols/pluggy_src"),
-        ("commander/lib", "extract_symbols/commander_lib"),
-    ];
-
-    for &(subpath, bench_name) in fixtures {
-        let Some(f) = Fixture::load(subpath) else {
-            continue;
-        };
-        c.bench_function(bench_name, |b| {
-            b.iter(|| {
-                format::extract_all_symbols(&f.files, &f.sources);
             });
         });
     }
