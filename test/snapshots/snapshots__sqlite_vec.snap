@@ -80,11 +80,12 @@ examples/simple-rust/Cargo.toml
      5→[dependencies]
     10→[[bin]]
 
-examples/sqlite3-cli/README.md
-     1→# `sqlite-vec` statically compiled in the SQLite CLI
-
-examples/wasm/README.md
-     1→# `sqlite-vec` statically compiled into WASM builds
+examples/simple-sqlite/demo.sql
+     1→.load ../../dist/vec0
+     2→.mode table
+     3→.header on
+     4→
+      →…
 
 reference.yaml
      1→sections:
@@ -98,7 +99,8 @@ reference.yaml
 scripts/
       →…
 
-site/package.json
+site/project.data.ts
+    13→  load() {
 
 sqlite-dist.toml
      1→[package]

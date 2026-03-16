@@ -830,11 +830,14 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
         _ => 0.4,
     };
 
-    // File role: README and architecture docs are high-signal (project description,
-    // design philosophy). Changelogs/translations/community files are low-signal.
+    // File role: README and architecture docs are high-signal at the project root.
+    // Non-root READMEs (docs/README.md, examples/README.md) are typically
+    // setup instructions or theme templates, not the project description.
+    let is_root_dir = key.parent_dir.as_os_str().is_empty();
     let file_role_factor = match key.file_role {
-        FileRole::Architecture => 1.5,
-        FileRole::Readme => 1.5,
+        FileRole::Architecture if is_root_dir => 1.5,
+        FileRole::Readme if is_root_dir => 1.5,
+        FileRole::Architecture | FileRole::Readme => 1.0,
         FileRole::Normal => 1.0,
         FileRole::Translated => 0.1,
         FileRole::Changelog => 0.1,

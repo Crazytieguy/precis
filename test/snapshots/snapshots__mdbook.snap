@@ -46,25 +46,34 @@ crates/mdbook-compare/README.md
      5→To use this:
      6→
      7→1. Install [`tidy`](https://www.html-tidy.org/).
-     8→2. Install or build the initial version of mdbook that you want to compare.
-     9→3. Install or build the new version of mdbook that you want to compare.
-    10→4. Run `mdbook-compare` with the arguments to the mdbook executables and the books to build.
-    11→
-    12→```sh
       →…
 
 crates/mdbook-core/Cargo.toml
      1→[package]
+     2→name = "mdbook-core"
+     3→version = "0.5.2"
+     4→description = "The base support library for mdbook, intended for internal use only"
+     5→edition.workspace = true
+     6→license.workspace = true
+     7→repository.workspace = true
+     8→rust-version.workspace = true
     10→[dependencies]
+    11→anyhow.workspace = true
+    12→regex.workspace = true
+    13→serde.workspace = true
+    14→serde_json.workspace = true
+    15→toml.workspace = true
+    16→tracing.workspace = true
     18→[dev-dependencies]
+    19→tempfile.workspace = true
     21→[lints]
+    22→workspace = true
 
 crates/mdbook-core/README.md
      1→# mdbook-core
      7→This is the base support library for [mdBook](https://rust-lang.github.io/mdBook/). It is intended for internal use only. Other mdBook crates depend on this for any types that are shared across the crates.
      8→
-     9→> This crate is maintained by the mdBook team, primarily for use by mdBook and not intended for external use (except as a transitive dependency). This crate may make major changes to its APIs or be deprecated without warning.
-    10→
+      →…
 
 crates/mdbook-core/src/book.rs
     26→pub struct Book {
@@ -166,25 +175,49 @@ crates/mdbook-core/src/utils/html.rs
 
 crates/mdbook-core/src/utils/mod.rs
      7→pub mod fs;
+    15→/// Defines a `static` with a [`regex::Regex`].
+    16→#[macro_export]
     17→macro_rules! static_regex {
     29→pub fn log_backtrace …
 
 crates/mdbook-core/src/utils/toml_ext.rs
+     6→pub(crate) trait TomlExt {
      8→    fn read …
     10→    fn insert …
 
 crates/mdbook-driver/Cargo.toml
      1→[package]
+     2→name = "mdbook-driver"
+     3→version = "0.5.2"
+     4→description = "High-level library for running mdBook"
+     5→edition.workspace = true
+     6→license.workspace = true
+     7→repository.workspace = true
+     8→rust-version.workspace = true
     10→[dependencies]
+    11→anyhow.workspace = true
+    12→indexmap.workspace = true
+    13→mdbook-core.workspace = true
+    14→mdbook-html.workspace = true
+    15→mdbook-markdown.workspace = true
+    16→mdbook-preprocessor.workspace = true
+    17→mdbook-renderer.workspace = true
+    18→mdbook-summary.workspace = true
+    19→regex.workspace = true
+    20→serde.workspace = true
+    21→serde_json.workspace = true
+    22→shlex.workspace = true
+    23→tempfile.workspace = true
+    24→toml.workspace = true
+    25→topological-sort.workspace = true
+    26→tracing.workspace = true
     28→[lints]
+    29→workspace = true
     31→[features]
+    32→search = ["mdbook-html/search"]
 
 crates/mdbook-driver/README.md
      1→# mdbook-driver
-     7→This is the high-level Rust library for running [mdBook](https://rust-lang.github.io/mdBook/). New books can be created using [`BookBuilder`](https://docs.rs/mdbook-driver/latest/mdbook_driver/init/struct.BookBuilder.html). The primary type [`MDBook`](https://docs.rs/mdbook-driver/latest/mdbook_driver/struct.MDBook.html) can be used to manage and render books.
-     8→
-     9→> This crate is maintained by the mdBook team for use by the wider ecosystem. This crate follows [semver compatibility](https://doc.rust-lang.org/cargo/reference/semver.html) for its APIs.
-    10→
 
 crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
     14→pub struct CmdPreprocessor {
@@ -205,6 +238,9 @@ crates/mdbook-driver/src/builtin_preprocessors/links.rs
     32→pub struct LinkPreprocessor;
     36→    pub const NAME: &'static str = "links";
     39→    pub fn new() -> Self {
+   139→enum LinkType<'a> {
+   148→enum RangeOrAnchor {
+   155→enum LineRange {
    275→struct Link …
 
 crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs
@@ -281,18 +317,17 @@ crates/mdbook-html/Cargo.toml
 
 crates/mdbook-html/README.md
      1→# mdbook-html
-     7→This is the HTML renderer for [mdBook](https://rust-lang.github.io/mdBook/). This is intended for internal use only. It is automatically included by [`mdbook-driver`](https://crates.io/crates/mdbook-driver) to render books to HTML.
-     8→
-     9→> This crate is maintained by the mdBook team, primarily for use by mdBook and not intended for external use (except as a transitive dependency). This crate may make major changes to its APIs or be deprecated without warning.
-    10→
 
 crates/mdbook-html/src/html/tree.rs
+    25→macro_rules! attr_qual_name {
     33→pub(crate) enum Node {
+   130→    /// Converts self to a [`StrTendril`].
    131→    fn into_tendril(self) -> StrTendril;
    150→enum TableState {
 
 crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
     22→pub struct HtmlHandlebars;
+    25→    /// Returns a new instance of [`HtmlHandlebars`].
     26→    pub fn new() -> Self {
 
 crates/mdbook-html/src/lib.rs
@@ -327,6 +362,7 @@ crates/mdbook-html/src/theme/mod.rs
    229→fn load_file_contents …
 
 crates/mdbook-html/src/utils.rs
+    42→pub(crate) trait ToUrlPath {
     43→    fn to_url_path(&self) -> String;
 
 crates/mdbook-markdown/Cargo.toml
@@ -349,10 +385,12 @@ crates/mdbook-markdown/README.md
      1→# mdbook-markdown
      7→This is the Markdown support library for [mdBook](https://rust-lang.github.io/mdBook/). Rust crates (such as preprocessors) can use this library to process Markdown in the same way as mdBook.
      8→
-     9→> This crate is maintained by the mdBook team for use by the wider ecosystem. This crate follows [semver compatibility](https://doc.rust-lang.org/cargo/reference/semver.html) for its APIs.
-    10→
+      →…
 
 crates/mdbook-markdown/src/lib.rs
+    11→pub use pulldown_cmark;
+    13→/// Options for parsing markdown.
+    14→#[non_exhaustive]
     15→pub struct MarkdownOptions {
     16→    /// Enables smart punctuation.
     17→    ///
@@ -393,8 +431,7 @@ crates/mdbook-preprocessor/README.md
      1→# mdbook-preprocessor
      7→This is the Rust library to implement a [preprocessor](https://rust-lang.github.io/mdBook/for_developers/preprocessors.html) for [mdBook](https://rust-lang.github.io/mdBook/).
      8→
-     9→> This crate is maintained by the mdBook team for use by the wider ecosystem. This crate follows [semver compatibility](https://doc.rust-lang.org/cargo/reference/semver.html) for its APIs.
-    10→
+      →…
 
 crates/mdbook-preprocessor/src/lib.rs
     30→pub trait Preprocessor {
@@ -441,8 +478,7 @@ crates/mdbook-renderer/README.md
      1→# mdbook-renderer
      7→This is the Rust library to implement a [renderer](https://rust-lang.github.io/mdBook/for_developers/backends.html) for [mdBook](https://rust-lang.github.io/mdBook/).
      8→
-     9→> This crate is maintained by the mdBook team for use by the wider ecosystem. This crate follows [semver compatibility](https://doc.rust-lang.org/cargo/reference/semver.html) for its APIs.
-    10→
+      →…
 
 crates/mdbook-renderer/src/lib.rs
     28→pub trait Renderer {
@@ -497,8 +533,7 @@ crates/mdbook-summary/README.md
      1→# mdbook-summary
      7→This is the Rust library used to parse the [`SUMMARY.md`](https://rust-lang.github.io/mdBook/format/summary.html) file structure for [mdBook](https://rust-lang.github.io/mdBook/).
      8→
-     9→> This crate is maintained by the mdBook team for use by the wider ecosystem. This crate follows [semver compatibility](https://doc.rust-lang.org/cargo/reference/semver.html) for its APIs.
-    10→
+      →…
 
 crates/mdbook-summary/src/lib.rs
     59→pub fn parse_summary(summary: &str) -> Result<Summary> {
@@ -556,10 +591,26 @@ examples/nop-preprocessor.rs
     79→    pub struct Nop;
     82→        pub fn new() -> Nop {
 
+guide/book.toml
+     1→[book]
+     7→[rust]
+    40→[build]
+
 guide/guide-helper/Cargo.toml
      1→[package]
+     2→name = "guide-helper"
+     3→publish = false
+     4→edition.workspace = true
+     5→license.workspace = true
+     6→repository.workspace = true
+     7→rust-version.workspace = true
      9→[dependencies]
+    10→mdbook-preprocessor.workspace = true
+    11→semver.workspace = true
+    12→serde_json.workspace = true
+    13→toml.workspace = true
     15→[lints]
+    16→workspace = true
 
 guide/guide-helper/src/lib.rs
      9→/// Preprocessing entry point.
@@ -576,17 +627,7 @@ guide/src/README.md
      7→        top: 60px;
      8→        background-color: var(--theme-popup-bg);
      9→        border-radius: 8px;
-    10→        padding: 2px 5px 2px 5px;
-    11→        border: 1px solid var(--theme-popup-border);
-    12→        font-size: 0.9em;
-    13→    }
-    14→</style>
-    15→
-    16→<div class="mdbook-version">
-    17→Version: {{ mdbook-version }}
-    18→</div>
-    19→
-      →…
+      →        …
 
 guide/src/SUMMARY.md
      1→# Summary
@@ -631,16 +672,6 @@ guide/src/continuous-integration.md
 
 guide/src/for_developers/README.md
      1→# For developers
-     3→While `mdbook` is mainly used as a command line tool, you can also import the
-     4→underlying libraries directly and use those to manage a book. It also has a fairly
-     5→flexible plugin mechanism, allowing you to create your own custom tooling and
-     6→consumers (often referred to as *backends*) if you need to do some analysis of
-     7→the book or render it in a different format.
-     8→
-     9→The *For Developers* chapters are here to show you the more advanced usage of
-    10→`mdbook`.
-    11→
-      →…
     17→## The build process
     30→## Using `mdbook` as a library
 
@@ -683,23 +714,34 @@ guide/src/format/configuration/README.md
 
 guide/src/format/markdown.md
      1→# Markdown
+     9→## Text and paragraphs
+    25→## Headings
+    47→## Lists
+    69→## Links
+   108→## Images
+   127→## Extensions
 
 guide/src/format/mathjax.md
      1→# MathJax support
 
 guide/src/format/mdbook.md
      1→# mdBook-specific features
+     3→## Hiding code lines
+    74→## Rust playground
+   102→## Rust code block attributes
+   133→## Including files
+   154→## Including portions of a file
+   215→## Including a file but initially hiding all except specified lines
+   279→## Inserting runnable Rust files
+   310→## Controlling page \<title\>
+   319→## HTML classes provided by mdBook
+   341→## Font-Awesome icons
 
 guide/src/format/summary.md
      1→# SUMMARY.md
 
 guide/src/format/theme/README.md
      1→# Theme
-     3→The default renderer uses a [handlebars](https://handlebarsjs.com) template to
-     4→render your markdown files and comes with a default theme included in the mdBook
-     5→binary.
-     6→
-      →…
 
 guide/src/guide/README.md
      1→# User guide
@@ -743,6 +785,7 @@ src/cmd/clean.rs
     50→}
 
 src/cmd/command_prelude.rs
+     3→pub use clap::{Arg, ArgMatches, Command, arg};
      7→pub trait CommandExt: Sized {
      8→    fn _arg …
     10→    fn arg_dest_dir …
@@ -785,6 +828,8 @@ src/cmd/watch/poller.rs
     18→pub fn rebuild_on_change …
     78→struct PathData {
     86→struct Watcher {
+   124→    fn set_roots …
+   153→    fn scan …
 
 src/cmd/watch.rs
     12→pub fn make_subcommand …
@@ -798,6 +843,7 @@ src/cmd/watch.rs
 
 src/main.rs
     14→mod cmd;
+    16→const VERSION …
     58→fn create_clap_command …
 
 tests/

@@ -75,7 +75,16 @@ SUMMARY.md
     31→        - [Syntax highlighting](format/theme/syntax-highlighting.md)
     32→        - [Editor](format/theme/editor.md)
     33→    - [MathJax support](format/mathjax.md)
-      →    …
+    34→    - [mdBook-specific features](format/mdbook.md)
+    35→    - [Markdown](format/markdown.md)
+    36→- [Continuous integration](continuous-integration.md)
+    37→- [For developers](for_developers/README.md)
+    38→    - [Preprocessors](for_developers/preprocessors.md)
+    39→    - [Alternative backends](for_developers/backends.md)
+    40→
+    41→-----------
+    42→
+    43→[Contributors](misc/contributors.md)
 
 cli/README.md
      1→# Command-line tool
@@ -268,8 +277,6 @@ format/markdown.md
      9→## Text and paragraphs
     25→## Headings
     43→#### A smaller heading 
-    45→More text.
-    46→
     47→## Lists
     69→## Links
    108→## Images
@@ -308,12 +315,7 @@ format/theme/README.md
     12→Here are the files you can override:
     13→
     14→- **_index.hbs_** is the handlebars template.
-    15→- **_head.hbs_** is appended to the HTML `<head>` section.
-    16→- **_header.hbs_** content is appended on top of every book page.
-    17→- **_css/_** contains the CSS files for styling the book.
-    18→    - **_css/chrome.css_** is for UI elements.
-    19→    - **_css/general.css_** is the base styles.
-      →    …
+      →…
 
 format/theme/editor.md
      1→# Editor
@@ -363,7 +365,6 @@ guide/installation.md
      9→## Pre-compiled binaries
     19→## Build from source using Rust
     41→### Installing the latest master version
-    53→## Modifying and contributing
 
 guide/reading.md
      1→# Reading books

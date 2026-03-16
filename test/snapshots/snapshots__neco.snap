@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1999 tokens)
+budget: 2000 (2001 tokens)
 
 README.md
     18→## Features
@@ -21,11 +21,11 @@ README.md
    473→## Platform notes
    498→## The scheduler
 
+docs/API.md
+
 docs/README.md
      1→# Neco Documentation
      3→## [API.md](API.md)
-     5→The Neco library API reference. This document includes information about each
-      →…
 
 docs/TECHNICAL.md
      1→# Neco Technical Details
@@ -33,6 +33,12 @@ docs/TECHNICAL.md
      4→
      5→_Work in progress_
      6→
+     7→This is a list topics that may be of interest to the community. 
+     8→I look forward to providing more information when time permits.
+     9→
+    10→- The runtime and scheduler
+    11→- Coroutine context switching
+    12→- Signal handling
       →…
 
 docs/assets/API_head.md
@@ -43,14 +49,8 @@ docs/assets/API_head.md
     12→## Table of contents
     34→## Programming notes
 
-docs/tools/README.md
-     1→# Tools
-
 examples/README.md
      1→# Neco examples 
-     3→This directory contains various example of using Neco.
-     4→
-      →…
 
 neco.c
    294→#define LLCO_NOASM
@@ -143,9 +143,6 @@ neco.h
    447→void __neco_c1(int);
    448→void __neco_exit_prog(int);
    453→#define EAI_SYSTEM 11
-
-tests/README.md
-     1→# Testing
 
 tests/panic.h
      8→#define pwhere(str) \

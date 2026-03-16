@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4005 tokens)
+budget: 4000 (4007 tokens)
 
 README.md
      3→# Chronos: Pretrained Models for Time Series Forecasting
@@ -33,11 +33,7 @@ CONTRIBUTING.md
 scripts/README.md
      1→# Usage Examples
      3→> [!NOTE]  
-     4→> The following documentation was originally written for the Chronos models released in Mar 2024 and may be outdated. If something does not work, please open an issue or a pull request.
-     5→
-     6→## Generating Synthetic Time Series (KernelSynth)
-    24→## Pretraining (and fine-tuning) Chronos models
-   113→## Evaluating Chronos models
+      →…
 
 scripts/evaluation/agg-relative-score.py
      7→DEFAULT_RESULTS_DIR …
@@ -52,8 +48,18 @@ scripts/evaluation/evaluate.py
 scripts/kernel-synth.py
     24→LENGTH = 1024
     25→KERNEL_BANK = [
+    62→def random_binary_map …
+    82→def sample_from_gp_prior …
+   111→def sample_from_gp_prior_efficient …
+   151→def generate_time_series …
 
 scripts/training/train.py
+   219→class PseudoShuffledIterableDataset(IterableDataset):
+   231→
+   254→class ShuffleMixin:
+   259→
+   264→class ChronosDataset(IterableDataset, ShuffleMixin):
+   297→
    504→def main …
 
 src/chronos/__about__.py
@@ -370,4 +376,5 @@ src/chronos/utils.py
     22→def interpolate_quantiles …
    135→def weighted_quantile …
 
-test/dummy-chronos-model/config.json
+test/
+      →…
