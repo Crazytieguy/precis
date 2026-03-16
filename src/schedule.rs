@@ -365,7 +365,8 @@ fn is_config_file(relative_path: &Path, filename: &str) -> bool {
     // Build/task runners — matched by filename anywhere (unambiguous names).
     match lower.as_str() {
         "gulpfile.js" | "gruntfile.js" | "jakefile.js"
-        | "make.lua" | "premake5.lua" | "cmake.lua" => return true,
+        | "make.lua" | "premake5.lua" | "cmake.lua"
+        | "cmakelists.txt" => return true,
         _ => {}
     }
 
