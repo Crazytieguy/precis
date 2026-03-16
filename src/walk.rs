@@ -55,7 +55,7 @@ fn is_unsupported_code_extension(ext: &str) -> bool {
         // Scripting languages
         | "rb" | "pl" | "pm" | "php"
         // ML/functional languages
-        | "hs" | "ml" | "mli" | "fs" | "fsi" | "ex" | "exs" | "erl"
+        | "hs" | "ml" | "mli" | "fs" | "fsi" | "ex" | "exs" | "erl" | "elm" | "purs"
         // Modern languages
         | "dart" | "zig" | "nim" | "r" | "jl"
         // GPU languages
