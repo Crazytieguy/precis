@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3999 tokens)
+budget: 4000 (4001 tokens)
 
 README.md
     55→## Table of Contents
@@ -237,7 +237,6 @@ microbootstrap/instruments/logging_instrument.py
    213→    def get_config_type(cls) -> type[LoggingConfig]:
 
 microbootstrap/instruments/opentelemetry_instrument.py
-    13→from opentelemetry.sdk …
     24→LOGGER_OBJ: typing.Final = structlog.get_logger(__name__)
     43→class OpenTelemetryInstrumentor:
     44→    instrumentor: BaseInstrumentor
@@ -268,7 +267,6 @@ microbootstrap/instruments/pyroscope_instrument.py
     53→    def get_config_type(cls) -> type[PyroscopeConfig]:
 
 microbootstrap/instruments/sentry_instrument.py
-    12→from microbootstrap.instruments.base …
     15→class SentryConfig(BaseInstrumentConfig):
     31→IGNORED_STRUCTLOG_ATTRIBUTES: typing.Final = frozenset({"event", "level", "logger", "tracing", "timestamp"})
     63→SENTRY_EXTRA_OTEL_TRACE_ID_KEY: typing.Final = "otelTraceID"
@@ -339,4 +337,7 @@ pyproject.toml
 
 tests/test_helpers.py
     54→class InnerDataclass:
+    55→    string_field: str
    109→class DataclassConfig:
+   110→    string_field: str
+      →    …

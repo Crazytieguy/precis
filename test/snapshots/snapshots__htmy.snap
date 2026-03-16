@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (3999 tokens)
 
 README.md
     10→# `htmy`
@@ -147,8 +147,6 @@ examples/snippet-slots-fastapi/app.py
     20→
     28→class RequestHeaders:
     30→
-    69→@app.get("/")
-      →…
     71→async def index() -> None:
 
 htmy/__init__.py
@@ -198,7 +196,6 @@ htmy/error_boundary.py
     45→    async def htmy …
 
 htmy/etree.py
-    13→    from xml.etree.ElementTree …
     23→class ETreeConverter:
     46→    def __init__ …
     55→    def convert …
@@ -423,6 +420,7 @@ mkdocs.yaml
     16→      scheme: default
     17→      toggle:
     18→        icon: lucide/sun
+    19→        name: Switch to dark mode
       →        …
     33→plugins:
     34→  - search:
@@ -453,6 +451,7 @@ mkdocs.yaml
     61→      - api/core.md
     62→      - api/html.md
     63→      - api/snippet.md
+    64→      - api/md.md
       →      …
 
 pyproject.toml

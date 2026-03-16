@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1986 tokens)
+budget: 2000 (2000 tokens)
 
 README.md
      3→# api.api\_database
@@ -20,7 +20,7 @@ README.md
   1058→## BaseApi Objects
 
 __init__.py
-     2→from py3xui.api.api_client import ClientApi
+     2→from py3xui.api.api_client …
      3→from py3xui.api.api_database …
      4→from py3xui.api.api_inbound …
      5→from py3xui.api.api_server …
@@ -55,7 +55,7 @@ api.py
    189→    def login(self, two_factor_code: str | int | None = None) -> None:
 
 api_base.py
-     5→import logging
+     5→import logging …
      6→from time …
      7→from typing …
      9→import requests …
@@ -85,6 +85,7 @@ api_base.py
     38→
     39→    Attributes and Properties:
     40→        host (str): The host of the XUI API.
+    41→        username (str): The username for the XUI API.
       →        …
     60→
     61→    def __init__(
@@ -131,7 +132,7 @@ api_base.py
    333→    def _get(self, url: str, headers: dict[str, str], **kwargs) -> requests.Response:
 
 api_client.py
-     6→import json
+     6→import json …
      7→from typing …
      9→from py3xui.api.api_base …
     10→from py3xui.client …

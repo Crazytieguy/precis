@@ -150,8 +150,9 @@ slstm/src/util/support.h
     34→#define AT_DISPATCH_CASE_FLOATING_TYPES_AND_HALF2(...)                         \
     40→#define AT_DISPATCH_FLOATING_TYPES_AND_HALF2(TYPE, NAME, ...)                  \
 
+slstm/src/vanilla/__init__.py
+
 xlstm_block.py
-     3→from dataclasses import dataclass
     16→@dataclass
     17→class xLSTMBlockConfig:
     18→    mlstm: Optional[mLSTMLayerConfig] = None

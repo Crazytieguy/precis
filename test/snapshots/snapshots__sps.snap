@@ -4,8 +4,6 @@ expression: output
 ---
 budget: 8000 (7999 tokens)
 
-CONTRIBUTING.md
-
 Cargo.toml
      1→[workspace]
      2→resolver = "3"
@@ -629,7 +627,7 @@ sps-core/src/check/update.rs
     27→    pub pkg_type: PackageType,
     28→    pub target_definition: InstallTargetIdentifier,
     29→}
-    33→async fn ensure_api_data_cached …
+    33→async fn ensure_api_data_cached(cache: &Cache) -> Result<()> {
     89→pub async fn check_for_updates …
 
 sps-core/src/install/bottle/macho.rs
@@ -651,6 +649,7 @@ sps-core/src/install/cask/mod.rs
      1→pub mod artifacts;
      2→pub mod dmg;
      3→pub mod helpers;
+    22→use crate::install::extract;
     25→pub struct CaskInstallManifest {
     26→    pub manifest_format_version: String,
     27→    pub token: String,
@@ -701,7 +700,6 @@ sps-core/src/pipeline/mod.rs
      2→pub mod worker;
 
 sps-core/src/uninstall/cask.rs
-    26→use crate::utils::applescript;
     41→pub fn uninstall_cask_artifacts …
    134→pub async fn zap_cask_artifacts …
 

@@ -569,8 +569,13 @@ pub fn build_groups(
             let kind_category = KindCategory::from_symbol_kind(sym.kind);
             let layout = &layouts[file_idx][symbol_idx];
 
-            // Detect documentation from layout (uses trimmed range)
-            let is_documented = layout.doc_start < layout.doc_end;
+            // Detect documentation from layout (uses trimmed range).
+            // For imports, doc comments don't change value — the import line
+            // itself is what matters. Force is_documented=false to keep all
+            // imports in one group (avoids splitting __init__.py re-exports
+            // into documented/undocumented subsets).
+            let is_documented = kind_category != KindCategory::Import
+                && layout.doc_start < layout.doc_end;
 
             let lang = crate::Lang::from_path(relative);
             let heading_depth = if kind_category == KindCategory::Section {

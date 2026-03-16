@@ -324,7 +324,6 @@ crates/mdbook-markdown/README.md
     10→
 
 crates/mdbook-markdown/src/lib.rs
-    11→pub use pulldown_cmark;
     15→pub struct MarkdownOptions {
     16→    /// Enables smart punctuation.
     17→    ///
@@ -558,7 +557,7 @@ guide/src/cli/README.md
     11→* [`mdbook serve`](serve.md) --- Runs a web server to view the book, and rebuilds on changes.
     12→* [`mdbook test`](test.md) --- Tests Rust code samples.
     13→* [`mdbook clean`](clean.md) --- Deletes the rendered output.
-      →…
+    14→* [`mdbook completions`](completions.md) --- Support for shell auto-completion.
 
 guide/src/cli/build.md
      1→# The build command
@@ -748,7 +747,6 @@ src/cmd/mod.rs
     11→pub mod watch;
 
 src/cmd/serve.rs
-     3→use super::watch;
     20→const LIVE_RELOAD_ENDPOINT: &str = "__livereload";
     23→pub fn make_subcommand …
     51→pub fn execute …

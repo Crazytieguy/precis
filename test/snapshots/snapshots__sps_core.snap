@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3992 tokens)
+budget: 4000 (3991 tokens)
 
 Cargo.toml
      1→[package]
@@ -346,10 +346,10 @@ src/pipeline/mod.rs
 src/pipeline/worker.rs
     18→use crate::check::installed::{InstalledPackageInfo, PackageType as CorePackageType};
     19→use crate::{build, install, uninstall, upgrade};
+    21→pub(super) fn execute_sync_job …
     37→fn do_execute_sync_steps …
 
 src/uninstall/cask.rs
-    26→use crate::utils::applescript;
     41→pub fn uninstall_cask_artifacts(info: &InstalledPackageInfo, config: &Config) -> Result<()> {
    134→pub async fn zap_cask_artifacts(
    135→    info: &InstalledPackageInfo,

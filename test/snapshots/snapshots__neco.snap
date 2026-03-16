@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1999 tokens)
+budget: 2000 (2001 tokens)
 
 README.md
     18→## Features
@@ -20,6 +20,7 @@ README.md
    431→## Example 10 (Suspending and resuming a coroutine)
    473→## Platform notes
    498→## The scheduler
+   579→## License
 
 docs/API.md
      3→# Neco C API
@@ -136,7 +137,6 @@ neco.h
    377→#define NECO_NOTGENERATOR  -17  ///< Coroutine is not a generator (neco_gen_yield)
    378→#define NECO_NOTSUSPENDED  -18  ///< Coroutine is not suspended (neco_resume)
    396→typedef struct neco_stream neco_stream;
-   424→#include <stdio.h>
    427→#define neco_main \
    446→void __neco_c0(void*,void(*)(void*),void*); 
    447→void __neco_c1(int);
@@ -150,6 +150,8 @@ tests/panic.h
      8→#define pwhere(str) \
     14→#define unreachable() \
     21→#define must(cond) \
+
+tests/signals.h
 
 tests/tests.h
     24→#define IS_FAIL_TARGET

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3998 tokens)
+budget: 4000 (4001 tokens)
 
 CONTRIBUTING.md
      1→# Contributing Guidelines
@@ -12,8 +12,14 @@ README.md
     17→## 🚀 News
     24→## ✨ Introduction
     32→### Available Models
+    36→| Model ID                                                               | Parameters |
+    37→| ---------------------------------------------------------------------- | ---------- |
+      →…
     53→## 📈 Usage
     65→### Forecasting
+    67→A minimal example showing how to perform forecasting using Chronos-2:
+    68→
+      →…
    117→## Example Notebooks
    130→## 📝 Citation
    153→## 🛡️ Security
@@ -22,6 +28,10 @@ README.md
 pyproject.toml
      1→[project]
     31→[build-system]
+    41→[project.optional-dependencies]
+    68→[project.urls]
+    74→[tool.mypy]
+    77→[tool.ruff]
 
 scripts/README.md
      1→# Usage Examples
@@ -57,7 +67,6 @@ src/chronos/__init__.py
     16→__all__ = [
 
 src/chronos/base.py
-     9→import time
     24→from .utils import left_pad_and_stack_1D
     27→class ForecastType(Enum):
     28→    SAMPLES = "samples"
@@ -86,8 +95,6 @@ src/chronos/base.py
    343→    ):
 
 src/chronos/boto_utils.py
-     6→import logging
-    14→from botocore import UNSIGNED
     20→MODEL_FILENAMES = ["config.json", "model.safetensors", "LICENSE.txt"]
     21→CLOUDFRONT_MAPPING = {"s3://autogluon/chronos-2": "https://d7057vjasule5.cloudfront.net"}
     22→CHUNK_SIZE = 1024 * 1024  # 1MB
@@ -96,11 +103,12 @@ src/chronos/boto_utils.py
     98→def cache_model_from_s3 …
 
 src/chronos/chronos.py
-     6→import logging
     27→@dataclass
     28→class ChronosConfig:
     29→    """
-      →    …
+    30→    This class holds all the configuration parameters to be used
+    31→    by ``ChronosTokenizer`` and ``ChronosModel``.
+    32→    """
     33→
     34→    tokenizer_class: str
     35→    tokenizer_kwargs: Dict[str, Any]
@@ -150,14 +158,13 @@ src/chronos/chronos.py
    536→    def from_pretrained(cls, pretrained_model_name_or_path, *args, **kwargs):
 
 src/chronos/chronos2/__init__.py
-     6→from .config import Chronos2CoreConfig, Chronos2ForecastingConfig
+     6→from .config …
      7→from .model …
      8→from .pipeline …
      9→from .dataset …
     11→__all__ = ["Chronos2CoreConfig", "Chronos2ForecastingConfig", "Chronos2Model", "Chronos2Pipeline", "Chronos2Dataset"]
 
 src/chronos/chronos2/config.py
-     6→from dataclasses import dataclass
     12→class Chronos2CoreConfig(PretrainedConfig):
     54→    def __init__ …
    103→class Chronos2ForecastingConfig:
@@ -174,7 +181,6 @@ src/chronos/chronos2/config.py
    115→    def editable_fields(cls) -> list[str]:
 
 src/chronos/chronos2/dataset.py
-     6→import math
     20→TensorOrArray: TypeAlias = torch.Tensor | np.ndarray
     23→class PreparedInput(TypedDict):
     33→def left_pad_and_cat_2D …
@@ -190,7 +196,6 @@ src/chronos/chronos2/dataset.py
    666→    def __iter__ …
 
 src/chronos/chronos2/layers.py
-     6→from dataclasses import dataclass
     15→from .config …
     18→class RoPE(nn.Module):
     25→    def __init__ …
@@ -228,7 +233,6 @@ src/chronos/chronos2/layers.py
    393→    def forward …
 
 src/chronos/chronos2/model.py
-     6→import copy
     18→from .config …
     19→from .layers …
     32→class Chronos2EncoderBlockOutput(ModelOutput):
@@ -258,7 +262,6 @@ src/chronos/chronos2/model.py
    618→    def forward …
 
 src/chronos/chronos2/pipeline.py
-     6→import logging
     39→class Chronos2Pipeline(BaseChronosPipeline):
     43→    def __init__ …
     48→    def _get_prob_mass_per_quantile_level …
@@ -291,7 +294,6 @@ src/chronos/chronos2/pipeline.py
   1224→    def save_pretrained …
 
 src/chronos/chronos2/trainer.py
-     6→import warnings
     17→def seed_worker …
     30→class EvaluateAndSaveFinalStepCallback(TrainerCallback):
     33→    def on_step_end …
@@ -300,7 +302,6 @@ src/chronos/chronos2/trainer.py
     77→    def get_eval_dataloader …
 
 src/chronos/chronos_bolt.py
-     8→import copy
     26→from .base import BaseChronosPipeline, ForecastType
     32→@dataclass
     33→class ChronosBoltConfig:
@@ -353,12 +354,10 @@ src/chronos/chronos_bolt.py
    610→    def from_pretrained(cls, pretrained_model_name_or_path, *args, **kwargs):
 
 src/chronos/df_utils.py
-     7→import warnings
     59→def validate_df_inputs …
    199→def convert_df_input_to_list_of_dicts_input …
 
 src/chronos/utils.py
-     5→from typing import List
     11→def left_pad_and_stack_1D …
     22→def interpolate_quantiles …
    135→def weighted_quantile …

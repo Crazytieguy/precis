@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3996 tokens)
+budget: 4000 (3997 tokens)
 
 README.md
     40→## About
@@ -74,7 +74,7 @@ docs/v4-to-v5-migration-guide.md
    214→## `.returnType`
 
 examples/gif-fetcher/src/constants.ts
-     1→export const API_KEY = 'xxxxxxxxxxxxxxxx';
+     1→export const API_KEY …
 
 jsr.json
      2→  "name": "@gabriel/ts-pattern",
@@ -83,8 +83,6 @@ jsr.json
      5→    ".": "./src/index.ts",
      6→    "./types": "./src/index.ts",
      7→    "./package.json": "./package.json"
-
-package.json
 
 src/errors.ts
      5→export class NonExhaustiveError extends Error {
@@ -137,7 +135,6 @@ src/match.ts
    128→  narrow …
 
 src/patterns.ts
-     8→import { matchPattern, getSelectionKeys, flatMap } from './internals/helpers';
     81→export type unstable_Matchable<
     82→  narrowedOrFn,
     83→  input = unknown,
@@ -252,7 +249,8 @@ src/types/DistributeUnions.ts
    126→        readonly [infer p1, infer p2, infer p3]
    127→      ]
    128→    ? [
-      →    …
+   129→        ...FindUnions<a1, p1, [...path, 0]>,
+      →        …
 
 src/types/InvertPattern.ts
    106→export type InvertPattern<p, input> = Equal<Pattern<input>, p> extends true
@@ -305,6 +303,7 @@ src/types/Match.ts
     61→    : never;
     62→
     63→  with<
+    64→    const p1 extends Pattern<i>,
    132→  with …
    159→  when …
    180→  otherwise …
@@ -374,5 +373,3 @@ src/types/helpers.ts
    184→  : fn extends (value: infer a) => unknown
    185→  ? a
    186→  : never;
-
-tsconfig.json

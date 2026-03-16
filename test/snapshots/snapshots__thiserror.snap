@@ -47,19 +47,81 @@ README.md
      1→derive(Error)
      4→[<img alt="github" src="https://img.shields.io/badge/github-dtolnay/thiserror-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/dtolnay/thiserror)
      5→[<img alt="crates.io" src="https://img.shields.io/crates/v/thiserror.svg?style=for-the-badge&color=fc8d62&logo=rust" height="20">](https://crates.io/crates/thiserror)
-      →…
+     6→[<img alt="docs.rs" src="https://img.shields.io/badge/docs.rs-thiserror-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs" height="20">](https://docs.rs/thiserror)
+     7→[<img alt="build status" src="https://img.shields.io/github/actions/workflow/status/dtolnay/thiserror/ci.yml?branch=master&style=for-the-badge" height="20">](https://github.com/dtolnay/thiserror/actions?query=branch%3Amaster)
+     8→
+     9→This library provides a convenient derive macro for the standard library's
+    10→[`std::error::Error`] trait.
+    11→
+    12→[`std::error::Error`]: https://doc.rust-lang.org/std/error/trait.Error.html
+    13→
+    14→```toml
+    15→[dependencies]
+    16→thiserror = "2"
+    17→```
+    18→
+    19→<br>
+    20→
     21→## Example
     23→```rust
     24→use thiserror::Error;
-      →…
+    25→
+    26→#[derive(Error, Debug)]
+    27→pub enum DataStoreError {
+    28→    #[error("data store disconnected")]
+    29→    Disconnect(#[from] io::Error),
+    30→    #[error("the data for key `{0}` is not available")]
+    31→    Redaction(String),
+    32→    #[error("invalid header (expected {expected:?}, found {found:?})")]
+    33→    InvalidHeader {
+    34→        expected: String,
+    35→        found: String,
+    36→    },
+    37→    #[error("unknown data store error")]
+    38→    Unknown,
+    39→}
+    40→```
+    41→
+    42→<br>
+    43→
     44→## Details
     46→- Thiserror deliberately does not appear in your public API. You get the same
     47→  thing as if you had written an implementation of `std::error::Error` by hand,
+    48→  and switching from handwritten impls to thiserror or vice versa is not a
+    49→  breaking change.
+    50→
+    51→- Errors may be enums, structs with named fields, tuple structs, or unit
+    52→  structs.
+    53→
+    54→- A `Display` impl is generated for your error if you provide `#[error("...")]`
+    55→  messages on the struct or each variant of your enum, as shown above in the
+    56→  example.
+    57→
+    58→  The messages support a shorthand for interpolating fields from the error.
+    59→
+    60→    - `#[error("{var}")]`&ensp;⟶&ensp;`write!("{}", self.var)`
+    61→    - `#[error("{0}")]`&ensp;⟶&ensp;`write!("{}", self.0)`
+    62→    - `#[error("{var:?}")]`&ensp;⟶&ensp;`write!("{:?}", self.var)`
+    63→    - `#[error("{0:?}")]`&ensp;⟶&ensp;`write!("{:?}", self.0)`
+    64→
+    65→  These shorthands can be used together with any additional format args, which
+    66→  may be arbitrary expressions. For example:
+    67→
+    68→  ```rust
+    69→  #[derive(Error, Debug)]
+    70→  pub enum Error {
       →  …
    211→## Comparison to anyhow
    213→Use thiserror if you care about designing your own dedicated error type(s) so
    214→that the caller receives exactly the information that you choose in the event of
-      →…
+   215→failure. This most often applies to library-like code. Use [Anyhow] if you don't
+   216→care what error type your functions return, you just want it to be easy. This is
+   217→common in application-like code.
+   218→
+   219→[Anyhow]: https://github.com/dtolnay/anyhow
+   220→
+   221→<br>
+   222→
 
 build/probe.rs
     11→struct MyError(Thing);
@@ -87,7 +149,6 @@ impl/Cargo.toml
     15→proc-macro2 = "1.0.74"
     16→quote = "1.0.35"
     17→syn = "2.0.87"
-    19→[package.metadata.docs.rs]
 
 impl/src/ast.rs
      1→use crate::attr::{self, Attrs};
@@ -101,7 +162,6 @@ impl/src/ast.rs
     22→pub struct Enum<'a> {
     29→pub struct Variant<'a> {
     36→pub struct Field<'a> {
-    44→#[derive(Copy, Clone)]
     45→pub enum ContainerKind {
     46→    Struct,
     47→    TupleStruct,
@@ -140,7 +200,6 @@ impl/src/attr.rs
     52→    pub original: &'a Attribute,
     53→    pub path: ExprPath,
     54→}
-    56→#[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Debug)]
     57→pub enum Trait {
     58→    Debug,
     59→    Display,
@@ -199,9 +258,6 @@ impl/src/lib.rs
     32→mod valid;
     39→#[proc_macro_derive(Error, attributes(backtrace, error, from, source))]
     40→pub fn derive_error(input: TokenStream) -> TokenStream {
-    41→    let input = parse_macro_input!(input as DeriveInput);
-    42→    expand::derive(&input).into()
-    43→}
     46→struct private;
 
 impl/src/prop.rs
@@ -218,7 +274,6 @@ impl/src/unraw.rs
     15→    pub fn new(ident: Ident) -> Self {
     19→    pub fn to_local(&self) -> Ident {
     32→    pub fn set_span(&mut self, span: Span) {
-    81→#[derive(Clone)]
     82→pub enum MemberUnraw {
     83→    Named(IdentUnraw),
     84→    Unnamed(Index),
@@ -244,7 +299,6 @@ src/aserror.rs
     45→pub trait Sealed {}
 
 src/display.rs
-     3→use std::path::{self, Path, PathBuf};
      6→pub trait AsDisplay<'a>: Sealed {
     11→    fn as_display(&'a self) -> Self::Target;
     18→    type Target = &'a T;
@@ -276,8 +330,6 @@ src/private.rs
      4→pub use crate::display::AsDisplay;
      7→pub use crate::provide::ThiserrorProvide;
      9→pub use crate::var::Var;
-    11→pub use core::error::Error;
-    14→pub use std::backtrace::Backtrace;
 
 src/provide.rs
      4→pub trait ThiserrorProvide: Sealed {
@@ -289,11 +341,6 @@ src/var.rs
      3→pub struct Var<'a, T: ?Sized>(pub &'a T);
      6→    fn fmt …
 
-tests/no-std/Cargo.toml
-     1→[package]
-     8→[lib]
-    11→[dependencies]
-
 tests/no-std/test.rs
      6→pub enum Error {
      7→    #[error("Error::E")]
@@ -304,86 +351,15 @@ tests/no-std/test.rs
     15→}
 
 tests/test_backtrace.rs
-     8→pub struct Inner;
-    13→pub struct InnerBacktrace {
     18→pub mod structs {
-    27→        pub struct Backtrace;
-    32→    pub struct PlainBacktrace {
-    38→    pub struct ExplicitBacktrace {
-    45→    pub struct NotBacktrace {
-    51→    pub struct OptBacktrace {
-    58→    pub struct ArcBacktrace {
-    65→    pub struct BacktraceFrom {
-    74→    pub struct CombinedBacktraceFrom {
-    82→    pub struct OptBacktraceFrom {
-    91→    pub struct ArcBacktraceFrom {
-   100→    pub struct AnyhowBacktrace {
-   107→    pub struct BoxDynErrorBacktrace {
    163→pub mod enums {
-   171→    pub enum PlainBacktrace {
-   177→    pub enum ExplicitBacktrace {
-   186→    pub enum OptBacktrace {
-   195→    pub enum ArcBacktrace {
-   204→    pub enum BacktraceFrom {
-   215→    pub enum CombinedBacktraceFrom {
-   225→    pub enum OptBacktraceFrom {
-   236→    pub enum ArcBacktraceFrom {
 
 tests/test_display.rs
-   417→    pub fn octal …
-
-tests/test_error.rs
-    42→enum EnumError {
-
-tests/test_expr.rs
-    11→pub enum CompilerError {
-    41→pub enum RustupError {
-
-tests/test_from.rs
-     8→pub struct ErrorStruct {
-    15→pub struct ErrorStructOptional {
-    22→pub struct ErrorTuple(#[from] io::Error);
-    26→pub struct ErrorTupleOptional(#[from] Option<io::Error>);
-    30→pub enum ErrorEnum {
-    39→pub enum ErrorEnumOptional {
-    48→pub enum Many {
 
 tests/test_generics.rs
      7→pub struct NoFormat;
-    10→pub struct DebugOnly;
     12→pub struct DisplayOnly;
-    21→pub struct DebugAndDisplay;
-    40→pub enum EnumDebugGeneric<E> {
-    55→pub enum EnumFromGeneric<E> {
-    74→pub enum EnumCompound<HasDisplay, HasDebug, HasNeither> {
-   115→pub enum EnumTransparentGeneric<E> {
-   132→pub struct StructDebugGeneric<E> {
-   144→pub struct StructFromGeneric<E> {
-   162→pub struct StructTransparentGeneric<E>(pub E);
-   175→pub enum AssociatedTypeError<T: FromStr> {
-
-tests/test_lints.rs
 
 tests/test_option.rs
      5→pub mod structs {
-    11→    pub struct OptSourceNoBacktrace {
-    18→    pub struct OptSourceAlwaysBacktrace {
-    26→    pub struct NoSourceOptBacktrace {
-    33→    pub struct AlwaysSourceOptBacktrace {
-    41→    pub struct OptSourceOptBacktrace {
     50→pub mod enums {
-    55→    pub enum OptSourceNoBacktrace {
-    64→    pub enum OptSourceAlwaysBacktrace {
-    74→    pub enum NoSourceOptBacktrace {
-    83→    pub enum AlwaysSourceOptBacktrace {
-    93→    pub enum OptSourceOptBacktrace {
-
-tests/test_path.rs
-    22→enum EnumPathBuf {
-    29→pub struct UnsizedError {
-    35→pub enum BothError {
-
-tests/test_source.rs
-     7→pub struct ImplicitSource {
-    13→pub struct ExplicitSource {
-    21→pub struct BoxedSource {

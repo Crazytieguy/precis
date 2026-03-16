@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3999 tokens)
+budget: 4000 (4000 tokens)
 
 README.md
      3→# Swarm (experimental, educational)
@@ -139,11 +139,11 @@ examples/customer_service_streaming/configs/general.py
      6→    WARNING = '\033[93m'
      7→    RED = '\033[91m'
      8→    ENDC = '\033[0m'
-      →    …
+     9→    BOLD = '\033[1m'
+    10→    UNDERLINE = '\033[4m'
+    11→    GREY = '\033[90m'
 
 examples/customer_service_streaming/configs/prompts.py
-    15→# IMPORTANT: If you are missing
-      →…
     19→LOCAL_PLANNER_PROMPT = """
 
 examples/customer_service_streaming/docker-compose.yaml
@@ -168,6 +168,7 @@ examples/customer_service_streaming/src/evals/eval_function.py
      9→
 
 examples/customer_service_streaming/src/swarm/engines/engine.py
+     1→# engine.py
      2→class Engine:
 
 examples/customer_service_streaming/src/swarm/engines/local_engine.py
@@ -321,8 +322,6 @@ swarm/__init__.py
      4→__all__ = ["Swarm", "Agent", "Response"]
 
 swarm/core.py
-     2→import copy
-     8→from openai import OpenAI
     12→from .util import function_to_json, debug_print, merge_chunk
     13→from .types import (
     14→    Agent,
@@ -353,7 +352,6 @@ swarm/repl/repl.py
     62→) -> None:
 
 swarm/types.py
-     9→from pydantic import BaseModel
     14→class Agent(BaseModel):
     15→    name: str = "Agent"
     16→    model: str = "gpt-4o"

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (3998 tokens)
 
 readme.md
     20→## Benefits over plain `fetch`
@@ -220,11 +220,8 @@ source/index.ts
      6→import type {Input, Options} from './types/options.js';
      7→import {validateAndMerge} from './utils/merge.js';
      8→import {type Mutable} from './utils/types.js';
-    10→const createInstance …
+    10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
     34→const ky = createInstance();
-
-source/types/ResponsePromise.ts
-     4→import {type KyResponse} from './response.js';
 
 source/types/options.ts
     33→export type KyOptions = {
@@ -367,6 +364,7 @@ source/utils/merge.ts
 
 source/utils/normalize.ts
      5→export const normalizeRequestMethod …
+    14→type InternalRetryOptions …
     28→export const normalizeRetryOptions …
 
 source/utils/options.ts

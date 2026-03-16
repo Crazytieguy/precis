@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3990 tokens)
+budget: 4000 (3992 tokens)
 
 README.md
      7→# Soluna
@@ -292,7 +292,6 @@ src/render_bindings.h
     11→#define DRAWFUNC(name) (sg_query_features().draw_base_instance ? name##_ex : name)
 
 src/sdfimage.c
-     9→#include "stb/stb_image.h"
     23→#define IMAGE_SIZE 64
 
 src/service/gamepad.lua
@@ -370,4 +369,5 @@ src/yogaone.cpp
      6→#include "yoga/YGPixelGrid.cpp"
      7→#include "yoga/YGValue.cpp"
      8→
+     9→#include "yoga/algorithm/AbsoluteLayout.cpp"
       →…

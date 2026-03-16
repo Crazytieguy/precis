@@ -2,9 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4001 tokens)
-
-CHANGELOG.rst
+budget: 4000 (3999 tokens)
 
 README.rst
      1→====================================================
@@ -77,8 +75,6 @@ README.rst
     68→.. badges
     69→
       →…
-
-SECURITY.md
 
 TIDELIFT.rst
      1→========
@@ -203,6 +199,8 @@ docs/api_reference.rst
      6→=============
      7→
      8→.. autoclass:: pluggy.PluginManager
+     9→    :members:
+    10→
       →…
 
 docs/conf.py
@@ -229,6 +227,8 @@ docs/index.rst
      5→What is it?
      6→***********
      7→``pluggy`` is the crystallized core of :ref:`plugin management and hook
+     8→calling <pytest:writing-plugins>` for :std:doc:`pytest <pytest:index>`.
+     9→It enables `1400+ plugins`_ to extend and customize ``pytest``'s default
       →…
 
 pyproject.toml
@@ -256,11 +256,7 @@ src/pluggy/_callers.py
 src/pluggy/_hooks.py
     25→from ._result import Result
     40→class HookspecOpts(TypedDict):
-    42→
-      →…
     56→class HookimplOpts(TypedDict):
-    58→
-      →…
     78→class HookspecMarker:
     85→
     86→    __slots__ = ("project_name",)
@@ -282,7 +278,6 @@ src/pluggy/_hooks.py
    365→    def __init__ …
    370→        def __getattr__ …
    382→class HookCaller:
-   384→
    393→    def __init__ …
    420→    def has_spec(self) -> bool:
    424→    def set_specification(
@@ -339,18 +334,14 @@ src/pluggy/_manager.py
     17→from ._callers import _multicall
     27→from ._hooks import normalize_hookimpl_opts
     28→from ._result import Result
-    33→    import importlib.metadata
     52→class PluginValidationError(Exception):
-    58→
     59→    def __init__ …
     65→class DistFacade:
-    67→
     68→    def __init__ …
     72→    def project_name(self) -> str:
     76→    def __getattr__ …
     79→    def __dir__ …
     83→class PluginManager:
-    99→
    100→    def __init__ …
    125→    def register …
    176→    def parse_hookimpl_opts …
@@ -402,8 +393,6 @@ src/pluggy/_tracing.py
 
 src/pluggy/_warnings.py
      4→class PluggyWarning(UserWarning):
-     6→
-      →…
     11→class PluggyTeardownRaisedWarning(PluggyWarning):
     26→
     27→    __module__ = "pluggy"

@@ -253,19 +253,18 @@ src/tomli/_re.py
    100→    sign = 1 if sign_str == "+" else -1
    101→    return timezone(
    102→        timedelta(
-      →        …
+   103→            hours=sign * int(hour_str),
+      →            …
    109→def match_to_localtime(match: re.Match[str]) -> time:
    116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
 
 src/tomli/_types.py
-     5→from typing import Any, Callable, Tuple
+     5→from typing …
 
 tests/__init__.py
      1→# SPDX-License-Identifier: MIT
       →…
      5→__all__ = ("tomllib",)
-
-tests/burntsushi.py
 
 tests/test_data.py
      9→from . import burntsushi, tomllib

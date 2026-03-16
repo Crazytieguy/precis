@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1992 tokens)
+budget: 2000 (1998 tokens)
 
 base.py
     19→class BaseInstrumentConfig(pydantic.BaseModel):
@@ -62,8 +62,12 @@ logging_instrument.py
     36→def fill_log_message …
     62→def tracer_injection …
     76→STRUCTLOG_PRE_CHAIN_PROCESSORS: typing.Final[list[typing.Any]] = [
+    77→    structlog.stdlib.add_log_level,
+      →    …
     88→def _serialize_log_with_orjson_to_string(value: typing.Any, **kwargs: typing.Any) -> str:  # noqa: ANN401
     92→STRUCTLOG_FORMATTER_PROCESSOR: typing.Final = structlog.processors.JSONRenderer(
+    93→    serializer=_serialize_log_with_orjson_to_string
+      →    …
     97→class MemoryLoggerFactory(structlog.stdlib.LoggerFactory):
     98→    def __init__ …
    113→    def __call__ …
@@ -86,7 +90,6 @@ logging_instrument.py
    214→        return LoggingConfig
 
 opentelemetry_instrument.py
-    13→from opentelemetry.sdk import resources
     24→LOGGER_OBJ: typing.Final = structlog.get_logger(__name__)
     42→@dataclasses.dataclass()
     43→class OpenTelemetryInstrumentor:
@@ -146,7 +149,6 @@ pyroscope_instrument.py
     54→        return PyroscopeConfig
 
 sentry_instrument.py
-    12→from microbootstrap.instruments.base import BaseInstrumentConfig, Instrument
     15→class SentryConfig(BaseInstrumentConfig):
     31→IGNORED_STRUCTLOG_ATTRIBUTES: typing.Final = frozenset({"event", "level", "logger", "tracing", "timestamp"})
     34→def enrich_sentry_event_from_structlog_log …
