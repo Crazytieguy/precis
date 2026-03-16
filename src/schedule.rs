@@ -917,9 +917,6 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
         None => 1.0,     // non-section symbols
     };
 
-    // 1st-party import priority is handled by the Import stage_value split
-    // (Signatures: 1.0 for first-party, 0.1 for third-party).
-
     // Trait implementation methods (Rust `impl Trait for Type { fn fmt ... }`)
     // implement an interface defined elsewhere. They're lower signal than
     // inherent methods — the trait definition already documents the API, and
