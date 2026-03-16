@@ -294,7 +294,7 @@ fn is_config_file(relative_path: &Path, filename: &str) -> bool {
     // (e.g., src/cmd/build.rs implements a "build" CLI subcommand).
     if is_root {
         match lower.as_str() {
-            "build.rs" | "setup.py" => return true,
+            "build.rs" | "setup.py" | "setup.cfg" => return true,
             _ => {}
         }
     }
@@ -326,11 +326,11 @@ fn is_config_file(relative_path: &Path, filename: &str) -> bool {
         _ => {}
     }
 
-    // TOML files that aren't project manifests are tool/service configuration
-    // (e.g., triagebot.toml, rust-toolchain.toml, netlify.toml, book.toml).
-    // TOML is a configuration format by design; the only TOML files that
-    // define project structure are Cargo.toml and pyproject.toml.
-    if ext == Some("toml") && !matches!(lower.as_str(), "cargo.toml" | "pyproject.toml") {
+    // TOML files that aren't Cargo.toml are tool/service configuration.
+    // pyproject.toml: section names are useful but body content (classifiers,
+    // dependency-groups, URLs, build-system) wastes budget vs source code.
+    // Cargo.toml is the exception — [dependencies] body reveals the tech stack.
+    if ext == Some("toml") && lower != "cargo.toml" {
         return true;
     }
 
@@ -813,11 +813,12 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     // not core library logic. Show them only when there's plenty of budget.
     let config_factor = if key.is_config { 0.1 } else { 1.0 };
 
-    // File category: examples show how to use the library (moderately valuable),
-    // docs site source is supplementary, test/CI infrastructure is low-signal.
+    // File category: examples show how to use the library (moderately valuable
+    // but shouldn't dominate over core library code), docs site source is
+    // supplementary, test/CI infrastructure is low-signal.
     let file_category_factor = match key.file_category {
         FileCategory::Source => 1.0,
-        FileCategory::Example => 0.5,
+        FileCategory::Example => 0.35,
         FileCategory::DocsSite => 0.2,
         FileCategory::Test => 0.15,
         FileCategory::CiConfig => 0.1,
