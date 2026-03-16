@@ -2,12 +2,11 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1998 tokens)
+budget: 2000 (1999 tokens)
 
 __init__.py
      1→from .baseline import Renderer as _BaselineRenderer
      2→from .default import Renderer as _DefaultRenderer
-     3→from .typing import is_renderer as is_renderer
      4→from .typing import is_streaming_renderer as is_streaming_renderer
 
 baseline.py
@@ -110,7 +109,8 @@ default.py
     50→_NodeAndChildContext: TypeAlias = tuple[_Node, Context]
     53→class _ComponentRenderer:
     54→    """
-      →    …
+    55→    `ComponentType` renderer that converts a component tree into a linked list of resolved (`str`) nodes.
+    56→    """
     57→
     58→    __slots__ = ("_async_todos", "_sync_todos", "_root", "_string_formatter")
     59→
@@ -165,7 +165,6 @@ default.py
 
 typing.py
      3→from collections.abc import AsyncIterator
-     4→from typing import TYPE_CHECKING, Protocol
      7→    from typing import Any, TypeGuard
      9→    from htmy.typing import Component, Context
     12→class RendererType(Protocol):

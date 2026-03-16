@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7998 tokens)
+budget: 8000 (7997 tokens)
 
 CONTRIBUTING.md
      1→# Contributing to Enclosed
@@ -124,10 +124,13 @@ packages/app-client/src/modules/config/config.types.ts
     10→  viewNotePathPrefix: string;
     11→};
 
+packages/app-client/src/modules/docs/docs.models.ts
+     1→import { buildTimeConfig } from '../config/config.constants';
+     2→import { joinUrlParts } from '../shared/http/http-client.models';
+
 packages/app-client/src/modules/files/files.models.ts
      6→export const iconByFileType = {
     33→type FileTypes …
-    35→function getFileIcon …
 
 packages/app-client/src/modules/i18n/i18n.models.ts
      1→import type { Locale } from './i18n.provider';
@@ -136,25 +139,21 @@ packages/app-client/src/modules/i18n/i18n.models.ts
 packages/app-client/src/modules/i18n/i18n.provider.tsx
      7→import defaultDict from '../../locales/en.json';
      8→import { findMatchingLocale } from './i18n.models';
-    15→type Locale …
-    16→type RawDictionary …
-    17→type Dictionary …
     19→const I18nContext = createContext<{
     44→export const I18nProvider: ParentComponent = (props) => {
 
 packages/app-client/src/modules/notes/components/file-uploader.tsx
      6→const DropArea …
-    62→export const FileUploaderButton: ParentComponent<{
+    62→export const FileUploaderButton …
 
 packages/app-client/src/modules/notes/components/note-password-field.tsx
      5→import { createRandomPassword } from '../notes.models';
-     7→export const NotePasswordField: Component<{ getPassword: () => string; setPassword: (value: string) => void; dataTestId?: string } > = (props) => {
+     7→export const NotePasswordField …
 
 packages/app-client/src/modules/notes/notes.constants.ts
-     1→export const NOTE_ID_REGEX = /[0-7][0-9A-HJKMNP-TV-Z]{25}/i;
+     1→export const NOTE_ID_REGEX …
 
 packages/app-client/src/modules/notes/notes.context.tsx
-     3→import { createHook } from '../shared/hooks/hooks';
      5→const noteContext = createContext<{
     11→export const NoteContextProvider: ParentComponent = (props) => {
     27→export function useNoteContext() {
@@ -162,21 +161,10 @@ packages/app-client/src/modules/notes/notes.context.tsx
 packages/app-client/src/modules/notes/notes.models.ts
     16→export function buildViewNotePagePath({ prefix }: { prefix?: string | null }): string {
 
-packages/app-client/src/modules/notes/notes.services.ts
-     1→import { apiClient } from '../shared/http/http-client';
-
-packages/app-client/src/modules/notes/notes.usecases.ts
-     2→import { storeNote } from './notes.services';
-
 packages/app-client/src/modules/notes/pages/create-note.page.tsx
-    23→import { FileUploaderButton } from '../components/file-uploader';
-    24→import { NotePasswordField } from '../components/note-password-field';
-    25→import { useNoteContext } from '../notes.context';
-    26→import { encryptAndCreateNote } from '../notes.usecases';
    109→export const CreateNotePage: Component = () => {
 
 packages/app-client/src/modules/notes/pages/view-note.page.tsx
-    16→import { fetchNoteById, fetchNoteExists } from '../notes.services';
     65→export const ViewNotePage: Component = () => {
 
 packages/app-client/src/modules/shared/http/http-client.ts
@@ -258,8 +246,6 @@ packages/app-client/src/modules/ui/components/textfield.tsx
    104→export function TextField …
 
 packages/app-client/src/modules/ui/layouts/app.layout.tsx
-    16→const ThemeSwitcher: Component = () => {
-    38→const LanguageSwitcher: Component = () => {
     72→export const Navbar: Component = () => {
    209→export const Footer: Component = () => {
    240→export const AppLayout: ParentComponent = (props) => {
@@ -293,70 +279,37 @@ packages/app-server/src/index.node.ts
     69→const server = serve(
 
 packages/app-server/src/modules/app/auth/auth.errors.ts
-     1→import { createErrorFactory } from '../../shared/errors/errors';
      3→export const createUnauthorizedError = createErrorFactory({
 
 packages/app-server/src/modules/app/auth/auth.middleware.ts
-     1→import type { Context } from '../server.types';
-     3→import { createUnauthorizedError } from './auth.errors';
-     4→import { extractAccessToken } from './auth.models';
-     5→import { isJwtValid } from './auth.services';
      7→export const authenticationMiddleware = createMiddleware(async (context: Context, next) => {
     31→export const protectedRouteMiddleware = createMiddleware(async (context: Context, next) => {
-
-packages/app-server/src/modules/app/auth/auth.routes.ts
-     1→import type { ServerInstance } from '../server.types';
-     3→import { validateJsonBody } from '../../shared/validation/validation';
-     4→import { createUserRepository } from '../users/users.repository';
-     5→import { createUnauthorizedError } from './auth.errors';
-     6→import { arePasswordsMatching, createJwtToken } from './auth.services';
-
-packages/app-server/src/modules/app/config/config.models.ts
-     1→import type { Config } from './config.types';
-
-packages/app-server/src/modules/app/config/config.routes.ts
-     1→import type { ServerInstance } from '../server.types';
-
-packages/app-server/src/modules/app/config/config.test-utils.ts
-     2→import type { Config } from './config.types';
-     4→import { getConfig } from './config';
 
 packages/app-server/src/modules/app/config/config.ts
      5→export const configDefinition = {
    258→export function getConfig({ env }: { env?: Record<string, string | undefined> } = {}) {
 
 packages/app-server/src/modules/app/config/config.types.ts
-     1→import type { getConfig } from './config';
      3→export type Config = ReturnType<typeof getConfig>;
 
 packages/app-server/src/modules/app/middlewares/config.middleware.ts
-     1→import type { Config } from '../config/config.types';
-     4→import { getConfig } from '../config/config';
      6→export function createConfigMiddleware({ config: initialConfig }: { config?: Config } = {}) {
 
 packages/app-server/src/modules/app/middlewares/cors.middleware.ts
-     1→import type { Context } from '../server.types';
      5→export const corsMiddleware = createMiddleware(async (context: Context, next) => {
 
 packages/app-server/src/modules/app/middlewares/errors.middleware.ts
-     1→import type { ServerInstance } from '../server.types';
-     2→import { isCustomError } from '../../shared/errors/errors';
-     3→import { createLogger } from '../../shared/logger/logger';
      5→const logger …
      7→export function registerErrorMiddleware({ app }: { app: ServerInstance }) {
 
 packages/app-server/src/modules/app/middlewares/logger.middleware.ts
-     2→import { createLogger } from '../../shared/logger/logger';
      4→const logger …
      6→export const loggerMiddleware = createMiddleware(async (c, next) => {
 
 packages/app-server/src/modules/app/middlewares/storage.middleware.ts
-     1→import type { BindableStorageFactory } from '../../storage/storage.types';
      4→export function createStorageMiddleware({ storageFactory }: { storageFactory: BindableStorageFactory }) {
 
 packages/app-server/src/modules/app/middlewares/timeout.middleware.ts
-     1→import type { Context } from '../server.types';
-     3→import { createError } from '../../shared/errors/errors';
      5→export const timeoutMiddleware = createMiddleware(async (context: Context, next) => {
 
 packages/app-server/src/modules/app/server.types.ts
@@ -418,10 +371,6 @@ packages/app-server/src/modules/shared/logger/logger.test-utils.ts
 packages/app-server/src/modules/shared/logger/logger.types.ts
      1→import type { createLogger } from './logger';
      3→export type Logger = ReturnType<typeof createLogger>;
-
-packages/app-server/src/modules/shared/utils/random.ts
-     5→const createUlid = ulidFactory();
-     7→function generateId() {
 
 packages/app-server/src/modules/shared/validation/validation.ts
     43→export const validateJsonBody …
@@ -488,32 +437,15 @@ packages/cli/src/cli.ts
      6→const main = defineCommand({
 
 packages/cli/src/config/config.command.ts
-     3→import { configDefinition } from './config.constants';
-     4→import { deleteConfig, getConfig, resetConfig, setConfig } from './config.models';
-     6→const keysList …
      8→export const configCommand = defineCommand({
 
 packages/cli/src/config/config.constants.ts
      3→export const configDefinition = {
 
-packages/cli/src/config/config.models.ts
-     3→import { configDefinition } from './config.constants';
-     7→type ConfigKey …
-     8→const config …
-
-packages/cli/src/config/config.usecases.ts
-     1→import { createConfigBindings } from './config.models';
-
 packages/cli/src/create-note/create-note.command.ts
-     6→import { getInstanceUrl } from '../config/config.usecases';
-     7→import { buildFileAssets, checkFilesExist } from '../files/files.services';
-     8→import { looksLikeRateLimitError } from '../shared/http.models';
-     9→import { getNoteContent } from './create-note.usecases';
-    11→const ONE_HOUR_IN_SECONDS = 60 * 60;
     13→export const createNoteCommand = defineCommand({
 
 packages/cli/src/create-note/create-note.usecases.ts
-     1→import { readFromStdin as readFromStdinImpl } from '../shared/cli.models';
      3→export async function getNoteContent …
 
 packages/cli/src/files/files.services.ts
@@ -546,8 +478,6 @@ packages/crypto/README.md
     22→## Credits and Acknowledgements
 
 packages/crypto/src/api-definition.ts
-     1→import type { EncryptionAlgorithmDefinitions } from './encryption-algorithms/encryption-algorithms.types';
-     2→import { createEncryptionAlgorithmsRegistry } from './encryption-algorithms/encryption-algorithms.registry';
      6→function createEnclosedCryptoApi …
 
 packages/crypto/src/encryption-algorithms/encryption-algorithms.constants.ts
@@ -562,18 +492,6 @@ packages/crypto/src/encryption-algorithms/encryption-algorithms.types.ts
      8→export type EncryptionAlgorithm = typeof ENCRYPTION_ALGORITHMS[number];
     10→export type EncryptionAlgorithmDefinitions = Record<EncryptionAlgorithm, EncryptionMethodsDefinition>;
 
-packages/crypto/src/index.node.ts
-     1→import { createEnclosedCryptoApi } from './api-definition';
-     2→import { AES_256_GCM } from './encryption-algorithms/encryption-algorithms.constants';
-     3→import * as webCryptoApi from './node/crypto.node.usecases';
-     4→import { aes256GcmEncryptionAlgorithmDefinition } from './node/encryption-algorithms/crypto.node.aes-256-gcm';
-
-packages/crypto/src/index.web.ts
-     1→import { createEnclosedCryptoApi } from './api-definition';
-     2→import { AES_256_GCM } from './encryption-algorithms/encryption-algorithms.constants';
-     3→import * as webCryptoApi from './web/crypto.web.usecases';
-     4→import { aes256GcmEncryptionAlgorithmDefinition } from './web/encryption-algorithms/crypto.web.aes-256-gcm';
-
 packages/crypto/src/node/encryption-algorithms/crypto.node.aes-256-gcm.ts
      5→export const aes256GcmEncryptionAlgorithmDefinition = defineEncryptionMethods({
 
@@ -586,16 +504,149 @@ packages/deploy-cloudflare/_routes.json
      4→    "/api/*"
      6→  "exclude": []
 
+packages/docs/src/components/credential-inputs.vue
+     1→<script setup>
+     2→const credentials = defineModel({
+     3→  default: () => [
+     4→    {
+     5→      email: '',
+     6→      password: '',
+     7→    },
+     8→  ],
+     9→});
+    10→
+      →…
+
+packages/docs/src/components/toggle.vue
+     1→<script setup>
+     2→const checked = defineModel({
+     3→  default: false,
+     4→});
+     5→
+     6→function toggle() {
+     7→  checked.value = !checked.value;
+     8→}
+     9→</script>
+    10→
+      →…
+
+packages/docs/src/data/configuration.data.ts
+     5→import { configDefinition } from '../../../app-server/src/modules/app/config/config';
+    57→  async load() {
+
+packages/docs/src/data/i18n.data.ts
+     4→import { locales } from '../../../app-client/src/locales/locales';
+    61→  async load() {
+
 packages/docs/src/how-it-works.md
      5→# How It Works
+     7→Enclosed is designed with a focus on security and privacy, ensuring that your notes remain confidential from creation to retrieval. This section explains the entire process, from creating a note to decrypting it, highlighting the end-to-end encryption that makes Enclosed a secure platform.
+     8→
+     9→## 1. Note Creation
+    13→## 2. Key Generation
+    17→## 3. Master Key Derivation
+    21→## 4. Note Encryption
+    25→## 5. Sending to Server
+    29→## 6. Storage and ID Assignment
+    33→## 7. Link Generation
+    37→## 8. Link Sharing
+    41→## 9. Note Retrieval
+    45→## 10. Key Extraction
+    49→## 11. Password Prompt (If Applicable)
+    53→## 12. Master Key Derivation
+    57→## 13. Note Decryption
 
 packages/docs/src/index.md
      5→# Enclosed
+     7→**Enclosed** is a minimalistic web application designed for sending private and secure notes. Whether you need to share sensitive information or just want a simple way to send encrypted messages, Enclosed provides a user-friendly interface with strong security features to ensure your data remains confidential.
+     8→
+     9→The name **Enclosed** is inspired by the idea of keeping your notes safe and secure, like a sealed envelope.
+    10→
+    11→## Key Features
+    27→## Why Enclosed?
+    33→## Get Started
+
+packages/docs/src/integrations/cli.md
+     1→# CLI Guide
+     5→## Installation
+    29→## Creating a Note
+    77→## Viewing a Note
+    99→## Configuring the Enclosed Instance
+   113→## Updating the CLI
+   137→## Uninstalling the CLI
+   159→## Advanced Usage
+   169→## Next Steps
+
+packages/docs/src/integrations/npm-package.md
+     1→# NPM Package
+     9→## Installation
+
+packages/docs/src/integrations/versioning.md
+     1→# Versioning
+
+packages/docs/src/resources/brand-kit.md
+     1→# Enclosed Brand Kit
+     5→## Project Overview
+     9→### Quick Links
+    16→## Logo Assets
+    20→### Logo Usage Guidelines
+    26→### Download Logo Assets
+    35→## Visual Assets
+    37→### Social Banner
+    45→## Key Features
+    61→## Media Contact
+
+packages/docs/src/resources/i18n.md
+     5→# Language and i18n
+     9→## Supported languages
+    15→## Contributing to translations
+
+packages/docs/src/self-hosting/configuration.md
+     5→# Self-Host Configuration
+     9→## Environment Variables
+    15→## Optional: Native HTTPS Configuration
+    33→## Applying Configuration Changes
+    49→## Next Steps
+
+packages/docs/src/self-hosting/docker-compose.md
+     1→# Docker Compose Installation
+     5→## Prerequisites
+     9→## Docker Compose Configuration
+    35→## Running Enclosed with Docker Compose
+    88→## Updating Enclosed
+    97→## Advanced Configuration
+   101→## Next Steps
+
+packages/docs/src/self-hosting/docker.md
+     5→# Docker Installation
+     9→## Prerequisites
+    13→## Rootless and Non-rootless Docker Images
+    19→## Image Sources
+    23→## Basic Docker Run
+    48→## Docker with Volume Persistence
+    79→## Managing the Docker Container
+   108→## Updating Enclosed
+   128→## Next Steps
+
+packages/docs/src/self-hosting/other-platforms.md
+     1→# Deploy on other platforms
+     3→## Railway
+     9→## Umbrel
+    14→## Cloudron
+    19→## RunTipi
+    24→## Unraid
+    29→## CasaOS
+    34→## Another platform?
+
+packages/docs/src/self-hosting/troubleshooting.md
+     1→# Troubleshooting
+     3→## Why do I see a warning about insecure connection?
+
+packages/docs/src/self-hosting/users-authentication-key-generator.md
+    44→# User Authentication Key Generator
 
 packages/lib/README.md
      1→### Enclosed lib
-     3→This package contains the core functionalities of [Enclosed](https://enclosed.cc/), an open-source project that aims to provide a simple and secure way to share e2e encrypted notes.
-     4→
      5→## Installation
      7→```bash
      8→# with npm

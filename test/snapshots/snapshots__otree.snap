@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (3999 tokens)
 
 Cargo.toml
      1→[package]
@@ -22,8 +22,13 @@ README.md
     52→## Roadmap
     82→## Thanks
 
+build.rs
+
 docs/actions.md
      1→# All Available Actions
+     3→| Action                    | Default Keys              | Description                                                  |
+     4→| ------------------------- | ------------------------- | ------------------------------------------------------------ |
+      →…
 
 examples/edge.json
      2→  "empty_object": {},
@@ -255,7 +260,7 @@ src/config/types.rs
 src/debug.rs
      7→#[macro_export]
      8→macro_rules! debug {
-    17→static FILE …
+    17→static FILE: OnceLock<String> = OnceLock::new();
     19→pub fn set_file …
     23→pub fn write_logs …
 
@@ -366,14 +371,12 @@ src/parse/syntax.rs
    154→}
    157→    pub fn new …
    201→pub fn is_value_complex …
-   216→struct TextWrapper<'a, 'this> {
 
 src/parse/toml.rs
      9→pub struct TomlParser {}
 
 src/parse/xml.rs
     12→pub struct XmlParser {}
-    37→trait AttrMap {
     38→    fn insert_text …
     39→    fn insert_text_node …
     61→struct NodeValues {
@@ -411,7 +414,6 @@ src/tree.rs
 src/ui/app.rs
     27→enum Refresh {
     39→enum ElementInFocus {
-    47→#[derive(Debug, Clone, Copy)]
     48→pub enum ScrollDirection {
     49→    Up,
     50→    Down,
@@ -439,7 +441,6 @@ src/ui/filter.rs
     24→    Quit,
     25→}
     27→pub struct FilterOptions {
-    33→#[derive(Debug, Clone, Copy)]
     34→pub enum FilterTarget {
     35→    Key,
     36→    Value,

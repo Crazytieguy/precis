@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3999 tokens)
+budget: 4000 (4000 tokens)
 
 AGENTS.md
      1→# AGENTS.md
@@ -15,26 +15,60 @@ CLAUDE.md
     32→## Core Architecture
     48→## Configuration Files
 
-SECURITY.md
-
 codecov.yml
      1→coverage:
      7→comment: off
 
 docs/conf.py
-   106→def configure_logging …
-   130→def setup …
+     1→from importlib …
+     2→from typing …
+     6→    import sphinx.application …
+   106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
+   107→    """Configure Sphinx's WarningHandler to handle (expected) missing include."""
+   108→    import logging
+   109→
+      →…
+   130→def setup(app: "sphinx.application.Sphinx") -> None:
+   131→    configure_logging(app)
+
+docs/examples/eggsample/eggsample/hookspecs.py
+     8→def eggsample_add_ingredients(ingredients: tuple):
+    17→def eggsample_prep_condiments(condiments: dict):
+
+docs/examples/eggsample/eggsample/host.py
+    13→def main():
+    21→def get_plugin_manager():
+    29→class EggsellentCook:
+    30→    FAVORITE_INGREDIENTS = ("egg", "egg", "egg")
+    31→
+    32→    def __init__(self, hook):
+    36→    def add_ingredients(self):
+    45→    def prepare_the_food(self):
+    48→    def serve_the_food(self):
+
+docs/examples/eggsample/eggsample/lib.py
+     5→def eggsample_add_ingredients():
+    13→def eggsample_prep_condiments(condiments):
 
 docs/examples/eggsample-spam/eggsample_spam.py
+     4→@eggsample.hookimpl
      5→def eggsample_add_ingredients(ingredients):
+    14→@eggsample.hookimpl
     15→def eggsample_prep_condiments(condiments):
 
 docs/examples/toy-example.py
+     1→import pluggy
      8→class MySpec:
+    10→
+    11→    @hookspec
     12→    def myhook(self, arg1, arg2):
     16→class Plugin_1:
+    18→
+    19→    @hookimpl
     20→    def myhook(self, arg1, arg2):
     25→class Plugin_2:
+    27→
+    28→    @hookimpl
     29→    def myhook(self, arg1, arg2):
 
 pyproject.toml
@@ -80,32 +114,17 @@ pyproject.toml
 
 src/pluggy/__init__.py
      1→__all__ = [
-    17→from ._hooks import HookCaller
-    18→from ._hooks import HookImpl
-    19→from ._hooks import HookimplMarker
-    20→from ._hooks import HookimplOpts
-    21→from ._hooks import HookRelay
-    22→from ._hooks import HookspecMarker
     23→from ._hooks import HookspecOpts
-    24→from ._manager import PluginManager
     25→from ._manager import PluginValidationError
-    26→from ._result import HookCallError
     27→from ._result import Result
-    28→from ._warnings import PluggyTeardownRaisedWarning
     29→from ._warnings import PluggyWarning
     32→def __getattr__ …
 
 src/pluggy/_callers.py
-     7→from collections.abc …
-     8→from collections.abc …
      9→from collections.abc …
-    10→from typing …
-    11→from typing …
-    12→from typing …
     13→from typing …
     14→import warnings …
     16→from ._hooks import HookImpl
-    17→from ._result import HookCallError
     18→from ._result import Result
     19→from ._warnings import PluggyTeardownRaisedWarning
     22→# Need to distinguish between old- and new-style hook wrappers.
@@ -117,30 +136,19 @@ src/pluggy/_callers.py
     82→def _multicall …
 
 src/pluggy/_hooks.py
-     7→from collections.abc …
-     8→from collections.abc …
-     9→from collections.abc …
-    10→from collections.abc …
     11→from collections.abc …
     12→import inspect …
     13→import sys …
     14→from types …
-    15→from typing …
-    16→from typing …
-    17→from typing …
-    18→from typing …
-    19→from typing …
-    20→from typing …
-    21→from typing …
     22→from typing …
     23→import warnings …
     25→from ._result import Result
-    28→_T …
-    29→_F …
-    31→_Namespace …
-    32→_Plugin …
-    33→_HookExec …
-    37→_HookImplFunction …
+    28→_T = TypeVar("_T")
+    29→_F = TypeVar("_F", bound=Callable[..., object])
+    31→_Namespace: TypeAlias = ModuleType | type
+    32→_Plugin: TypeAlias = object
+    33→_HookExec: TypeAlias = Callable[
+    37→_HookImplFunction: TypeAlias = Callable[..., _T | Generator[None, Result[_T], None]]
     40→class HookspecOpts(TypedDict):
     42→
     43→    #: Whether the hook is :ref:`first result only <firstresult>`.
@@ -187,7 +195,7 @@ src/pluggy/_hooks.py
    175→    def __init__ …
    202→    def __call__ …
    281→def normalize_hookimpl_opts …
-   290→_PYPY …
+   290→_PYPY = hasattr(sys, "pypy_version_info")
    293→def varnames …
    358→@final
    359→class HookRelay:
@@ -196,7 +204,7 @@ src/pluggy/_hooks.py
    364→
    365→    def __init__ …
    370→        def __getattr__ …
-   377→_CallHistory …
+   377→_CallHistory: TypeAlias = list[
    382→class HookCaller:
    384→
    385→    __slots__ = (
@@ -227,7 +235,6 @@ src/pluggy/_hooks.py
    543→    def call_extra …
    577→    def _maybe_apply_history …
    593→class _SubsetHookCaller(HookCaller):
-   596→
    612→    def __init__ …
    619→    def _hookimpls(self) -> list[HookImpl]:
    626→    @property
@@ -269,34 +276,18 @@ src/pluggy/_hooks.py
    709→    def __init__ …
 
 src/pluggy/_manager.py
-     3→from collections.abc …
-     4→from collections.abc …
-     5→from collections.abc …
      6→from collections.abc …
      7→import inspect …
      8→import types …
-     9→from typing …
-    10→from typing …
-    11→from typing …
-    12→from typing …
     13→from typing …
     14→import warnings …
     16→from . import _tracing
     17→from ._callers import _multicall
-    18→from ._hooks import _HookImplFunction
-    19→from ._hooks import _Namespace
-    20→from ._hooks import _Plugin
-    21→from ._hooks import _SubsetHookCaller
-    22→from ._hooks import HookCaller
-    23→from ._hooks import HookImpl
-    24→from ._hooks import HookimplOpts
-    25→from ._hooks import HookRelay
-    26→from ._hooks import HookspecOpts
     27→from ._hooks import normalize_hookimpl_opts
     28→from ._result import Result
     33→    import importlib.metadata
-    36→_BeforeTrace …
-    37→_AfterTrace …
+    36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
+    37→_AfterTrace: TypeAlias = Callable[
     42→def _warn_for_function …
     52→class PluginValidationError(Exception):
     58→
@@ -340,12 +331,8 @@ src/pluggy/_manager.py
 src/pluggy/_result.py
      7→from collections.abc …
      8→from types …
-     9→from typing …
-    10→from typing …
-    11→from typing …
-    12→from typing …
     13→from typing …
-    16→_ExcInfo …
+    16→_ExcInfo: TypeAlias = tuple[type[BaseException], BaseException, TracebackType | None]
     20→class HookCallError(Exception):
     24→@final
     25→class Result(Generic[ResultType]):
@@ -367,7 +354,6 @@ src/pluggy/_result.py
     91→    def get_result …
 
 src/pluggy/_tracing.py
-     7→from collections.abc …
      8→from collections.abc …
      9→from typing …
     16→class TagTracer:

@@ -2,17 +2,10 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1990 tokens)
+budget: 2000 (1996 tokens)
 
 README.md
      1→# k(r)ep - A high-performance string search utility
-     6→`krep` is an optimized string search utility designed for maximum throughput and efficiency when processing large files and directories. It is built with performance in mind, offering multiple search algorithms and SIMD acceleration when available.
-     7→
-     8→> **Note:**  
-     9→> Krep is not intended to be a full replacement or direct competitor to feature-rich tools like `grep` or `ripgrep`. Instead, it aims to be a minimal, efficient, and pragmatic tool focused on speed and simplicity.
-    10→>
-    11→> Krep provides the essential features needed for fast searching, without the extensive options and complexity of more comprehensive search utilities. Its design philosophy is to deliver the fastest possible search for the most common use cases, with a clean and minimal interface.
-    12→
     13→## The Story Behind the Name
     19→## Key Features
     36→## What's New in v2.2.0
@@ -22,50 +15,29 @@ README.md
    134→## Command Line Options
    155→## Performance Benchmarks
    180→## How Krep Works
-   231→## Contributing
-   235→## Author
-   239→## License
 
 aho_corasick.c
      7→#include <stdio.h>
-    17→ac_node_t …
-    26→struct ac_trie …
-   111→ac_trie_t *ac_trie_build …
-   274→void ac_trie_free …
-   287→bool ac_trie_root_has_outputs …
-   293→extern size_t find_line_start …
-   299→uint64_t aho_corasick_search …
+    17→typedef struct ac_node
+    18→{
+    26→struct ac_trie
+    27→{
+   294→extern bool is_whole_word_match …
 
 aho_corasick.h
     15→typedef struct search_params search_params_t …
     20→typedef struct match_result_t …
     27→typedef struct ac_trie ac_trie_t …
-    30→ac_trie_t *ac_trie_build …
-    33→void ac_trie_free …
-    36→bool ac_trie_root_has_outputs …
-    39→uint64_t aho_corasick_search …
+    30→ac_trie_t *ac_trie_build(const search_params_t *params);
+    33→void ac_trie_free(ac_trie_t *trie);
+    36→bool ac_trie_root_has_outputs(const ac_trie_t *trie);
+    39→uint64_t aho_corasick_search(const search_params_t *params, const char *text_start, size_t text_len, match_result_t *result);
 
 krep.c
-    10→#define _GNU_SOURCE
     77→#define MAX_PATTERN_LENGTH 1024
     93→#define LIKELY(x)   __builtin_expect(!!(x), 1)
-   139→match_result_t *match_result_init …
-   175→inline bool match_result_add …
-   244→void match_result_free …
-   256→bool match_result_merge …
-   363→size_t find_line_start …
-   401→size_t find_line_end …
-  1125→double get_time …
-  1137→void print_usage …
-  1198→inline bool memory_equals_case_insensitive …
-  1213→void prepare_bad_char_table …
-  1259→boyer_moore_search …
-  1389→uint64_t regex_search …
-  1628→uint64_t kmp_search …
-  1771→search_func_t select_search_algorithm …
-  1919→void *search_chunk_thread …
-  1964→const char *get_algorithm_name …
-  1999→int search_string …
+   461→size_t print_matching_items …
+  2274→int search_file …
   3146→typedef struct
   3147→{
   3148→    char *pattern;
@@ -79,21 +51,25 @@ krep.c
   3158→    size_t capacity;
   3159→    struct gitignore *parent; // Parent directory's gitignore context
   3160→} gitignore_t;
-  3442→int search_directory_recursive …
-  3891→uint64_t memchr_search …
-  4104→thread_pool_t *thread_pool_init …
-  4209→bool thread_pool_submit …
-  4313→void thread_pool_wait_all …
-  4332→void thread_pool_destroy …
-  4371→uint64_t memchr_short_search …
-  4702→uint64_t simd_sse42_search …
-  4877→uint64_t simd_avx2_search …
-  5107→simd_avx512_search …
+  3451→int main …
+  4506→uint64_t neon_search …
 
 krep.h
     23→typedef struct ac_trie ac_trie_t …
+    27→#define KREP_UNUSED …
+    32→/* --- ANSI Color Codes --- */
+    33→// Define colors consistently
     34→#define KREP_COLOR_RESET "\033[0m"
+    35→#define KREP_COLOR_FILENAME …
+    36→#define KREP_COLOR_SEPARATOR …
+    37→#define KREP_COLOR_LINE_NUMBER …
+    38→#define KREP_COLOR_MATCH …
+    39→#define KREP_COLOR_TEXT …
+    41→/* --- Help UI Colors --- */
     42→#define KREP_COLOR_HELP_TITLE "\033[1;38;5;81m"
+    43→#define KREP_COLOR_HELP_SECTION …
+    44→#define KREP_COLOR_HELP_OPTION …
+    45→#define KREP_COLOR_HELP_MUTED …
     49→typedef struct
     50→{
     51→   size_t start_offset; // Starting position of the match
@@ -160,14 +136,31 @@ krep.h
    129→   struct task *next;     // Next task in queue
    130→} task_t;
    132→thread_pool_t …
-   146→thread_pool_t *thread_pool_init …
-   161→int search_file …
-   170→int search_string …
-   180→int search_directory_recursive …
-   183→match_result_t *match_result_init …
-   200→size_t print_matching_items …
-   203→void print_usage …
-   207→uint64_t boyer_moore_search …
-   231→bool memory_equals_case_insensitive …
-   278→size_t find_line_start …
-   288→size_t find_line_end …
+   146→thread_pool_t *thread_pool_init(int num_threads);
+   147→bool thread_pool_submit …
+   148→void thread_pool_wait_all …
+   149→void thread_pool_destroy …
+   161→int search_file(const search_params_t *params, const char *filename, int requested_thread_count);
+   170→int search_string(const search_params_t *params, const char *text);
+   180→int search_directory_recursive(const char *base_dir, const search_params_t *params, int thread_count);
+   183→match_result_t *match_result_init(uint64_t initial_capacity);
+   184→bool match_result_add …
+   185→void match_result_free …
+   186→bool match_result_merge …
+   200→size_t print_matching_items(const char *filename, const char *text, size_t text_len, const match_result_t *result, const search_params_t *params);
+   203→void print_usage(const char *program_name);
+   207→uint64_t boyer_moore_search(const search_params_t *params, const char *text_start, size_t text_len, match_result_t *result);
+   208→uint64_t kmp_search …
+   209→uint64_t regex_search …
+   210→uint64_t memchr_search …
+   211→uint64_t memchr_short_search …
+   215→uint64_t simd_sse42_search …
+   219→uint64_t simd_avx2_search …
+   223→uint64_t simd_avx512_search …
+   227→uint64_t neon_search …
+   231→bool memory_equals_case_insensitive(const unsigned char *s1, const unsigned char *s2, size_t n);
+   232→void prepare_bad_char_table …
+   233→search_func_t select_search_algorithm …
+   234→const char *get_algorithm_name …
+   278→size_t find_line_start(const char *text, size_t max_len, size_t pos);
+   288→size_t find_line_end(const char *text, size_t text_len, size_t pos);

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1994 tokens)
+budget: 2000 (1987 tokens)
 
 README.md
      1→Simple Dynamic Strings
@@ -54,10 +54,8 @@ sds.c
    421→sds sdscatsds(sds s, const sds t) {
    427→sds sdscpylen(sds s, const char *t, size_t len) {
    440→sds sdscpy(sds s, const char *t) {
-   444→/* Helper for sdscatlonglong() doing the actual number -> string
-      →…
    450→#define SDS_LLSTR_SIZE 21
-   451→int sdsll2str …
+   451→int sdsll2str(char *s, long long value) {
    494→int sdsull2str(char *s, unsigned long long v) {
    526→sds sdsfromlonglong(long long value) {
    534→sds sdscatvprintf(sds s, const char *fmt, va_list ap) {
@@ -78,19 +76,17 @@ sds.c
   1108→sds sdsjoin(char **argv, int argc, char *sep) {
   1120→sds sdsjoinsds(sds *argv, int argc, const char *sep, size_t seplen) {
   1136→void *sds_malloc(size_t size) { return s_malloc(size); }
-  1137→void *sds_realloc …
-  1138→void sds_free …
+  1137→void *sds_realloc(void *ptr, size_t size) { return s_realloc(ptr,size); }
+  1138→void sds_free(void *ptr) { s_free(ptr); }
   1142→#include "testhelp.h"
   1143→#include "limits.h"
   1145→#define UNUSED(x) (void)(x)
-  1146→int sdsTest …
-  1325→int main …
+  1146→int sdsTest(void) {
+  1325→int main(void) {
 
 sds.h
     36→#define SDS_MAX_PREALLOC (1024*1024)
     43→typedef char *sds;
-    45→/* Note: sdshdr5 is never used, we just access the flags byte directly.
-      →…
     47→struct __attribute__ ((__packed__)) sdshdr5 {
     48→    unsigned char flags; /* 3 lsb of type, and 5 msb of string length */
     49→    char buf[];
@@ -151,7 +147,8 @@ sds.h
 
 sdsalloc.h
     33→/* SDS allocator selection.
-      →…
+    34→ *
+      → …
     40→#define s_malloc malloc
     41→#define s_realloc realloc
     42→#define s_free free

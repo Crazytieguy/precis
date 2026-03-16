@@ -32,11 +32,6 @@ README.md
    111→    - [`P.set`](#pset-patterns)
    112→    - [`P.map`](#pmap-patterns)
    113→    - [`P.when` patterns](#pwhen-patterns)
-   114→    - [`P.not` patterns](#pnot-patterns)
-   115→    - [`P.select` patterns](#pselect-patterns)
-   116→    - [`P.optional` patterns](#poptional-patterns)
-   117→    - [`P.instanceOf` patterns](#pinstanceof-patterns)
-   118→    - [`P.union` patterns](#punion-patterns)
       →    …
    128→## Sandbox examples
    139→## Getting Started
@@ -47,23 +42,41 @@ README.md
   1621→## Types
   1766→## Inspirations
 
-examples/gif-fetcher/src/App.tsx
-    11→type State …
-    24→type Event …
-    33→const initState: State = {
-    42→const reducer …
-    75→export default function App() {
+docs/roadmap.md
+     1→### Roadmap
+
+docs/v3-to-v4-migration-guide.md
+     1→# TS-Pattern v3 to v4 Migration Guide
+     3→## Breaking changes
+     5→### Imports
+    91→### list patterns
+   111→### NaN
+   122→## New features
+   126→### Arrays and unary tuples
+   157→### Optional object properties
+   197→### Union & intersection patterns
+   265→### Select with sub pattern
+   296→### Infer the matching types from a pattern
+   334→### New type specific wildcards
+
+docs/v4-to-v5-migration-guide.md
+     1→# TS-Pattern v4 to v5 Migration Guide
+     3→This file contains all breaking changes and new features between the version 4 and 5 of TS-Pattern.
+     4→
+     5→# Breaking changes
+     7→## TypeScript v5
+    11→## `.with` is now evaluated eagerly
+    42→## Matching on Map and Sets
+    63→# New features
+    65→## chainable methods
+    71→### P.number methods
+   100→### P.string methods
+   122→### Global methods
+   156→## Variadic tuple patterns
+   214→## `.returnType`
 
 examples/gif-fetcher/src/constants.ts
      1→export const API_KEY = 'xxxxxxxxxxxxxxxx';
-
-examples/gif-fetcher/src/searchGif.ts
-     4→const delay …
-     6→export function searchGif(query: string) {
-
-examples/one-file-demo/one-file-demo.ts
-    79→const example3 …
-   102→const User = {
 
 jsr.json
      2→  "name": "@gabriel/ts-pattern",
@@ -243,10 +256,6 @@ src/types/DistributeUnions.ts
    130→        ...FindUnions<a2, p2, [...path, 1]>,
    131→        ...FindUnions<a3, p3, [...path, 2]>
    132→      ]
-   133→    : [a, p] extends [
-   134→        readonly [infer a1, infer a2],
-   135→        readonly [infer p1, infer p2]
-   136→      ]
       →      …
 
 src/types/InvertPattern.ts
@@ -304,10 +313,6 @@ src/types/Match.ts
     65→    const p2 extends Pattern<i>,
     66→    c,
     67→    p extends p1 | p2,
-    68→    value extends p extends any ? MatchedValue<i, InvertPattern<p, i>> : never
-    69→  >(
-    70→    p1: p1,
-    71→    p2: p2,
    132→  with …
    159→  when …
    180→  otherwise …

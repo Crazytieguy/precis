@@ -2,16 +2,10 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3997 tokens)
+budget: 4000 (3999 tokens)
 
 CONTRIBUTING.md
      1→# Contributing to peepDB
-     9→## Getting Started
-    28→## Setting Up Development Environment
-    41→## Running Tests
-    51→## Coding Standards
-    59→## Pull Request Process
-    79→## Suggesting Enhancements
 
 README.md
      1→# peepDB
@@ -74,7 +68,10 @@ docs/README.md
     16→1. click "[use this template]" to create a GitHub repository
     17→2. go to Settings > Pages > Build and deployment > Source, and select GitHub Actions
     18→
-      →…
+    19→If you want to maintain your docs in the `docs` directory of an existing project repo, see [Hosting your docs from an existing project repo](#hosting-your-docs-from-an-existing-project-repo).
+    20→
+    21→After completing the creation of your new site on GitHub, update it as needed:
+    22→
     23→## Replace the content of the template pages
     30→## Changing the version of the theme and/or Jekyll
     34→## Adding a plugin
@@ -84,18 +81,65 @@ docs/README.md
     92→## Customization
     98→## Hosting your docs from an existing project repo
    102→### Copy the template files
+   104→1.  Create a `.github/workflows` directory at your project root if your repo doesn't already have one. Copy the `pages.yml` file into this directory. GitHub Actions searches this directory for workflow files.
+   105→
+   106→2.  Create a `docs` directory at your project root and copy all remaining template files into this directory.
+   107→
    108→### Modify the GitHub Actions workflow
+   110→The GitHub Actions workflow that builds and deploys your site to Github Pages is defined by the `pages.yml` file. You'll need to edit this file to that so that your build and deploy steps look to your `docs` directory, rather than the project root.
+   111→
+   112→1.  Set the default `working-directory` param for the build job.
+   113→
+   114→    ```yaml
+   115→    build:
+   116→      runs-on: ubuntu-latest
+   117→      defaults:
+   118→        run:
+   119→          working-directory: docs
+   120→    ```
+   121→
+   122→2.  Set the `working-directory` param for the Setup Ruby step.
+   123→
+   124→    ```yaml
+   125→    - name: Setup Ruby
+   126→        uses: ruby/setup-ruby@v1
+   127→        with:
+   128→          ruby-version: '3.1'
+   129→          bundler-cache: true
+   130→          cache-version: 0
+   131→          working-directory: '${{ github.workspace }}/docs'
+   132→    ```
+   133→
+   134→3.  Set the path param for the Upload artifact step:
+   135→
+   136→    ```yaml
+      →    …
    154→## Licensing and Attribution
 
+docs/_config.yml
+
 docs/contributing.md
+     6→# 🤝 Contributing to peepDB
 
 docs/index.md
      6→# peepDB
+     8→**peepDB** is an open-source command-line tool and Python library designed for developers and database administrators who need a fast and efficient way to inspect their database tables without writing SQL queries. With support for MySQL, PostgreSQL, and MariaDB, peepDB is lightweight, secure, and incredibly easy to use.
+     9→
     10→## 🚀 Features
     20→## Getting Started
+    28→## 🔒 Security
+    40→## 📜 License
 
 docs/installation.md
      6→# 📦 Installation
+     8→You can install peepDB directly from PyPI using pip:
+     9→
+    10→```bash
+    11→pip install peepdb
+    12→```
+    13→
+    14→This will install the latest version of peepDB along with all its dependencies.
+    15→
     16→## Requirements
     21→## System Dependencies
     30→## Verifying the Installation
@@ -103,6 +147,8 @@ docs/installation.md
 
 docs/usage.md
      6→# 🛠️ Usage
+     8→peepDB provides a user-friendly command-line interface for interacting with your databases. Here are the main commands and their usage:
+     9→
     10→## Saving Database Connection Details
     20→## Listing Saved Connections
     28→## Viewing Tables
@@ -116,14 +162,14 @@ peepdb/__main__.py
      1→from .cli …
 
 peepdb/cli.py
-     1→import click
-     2→import json
+     1→import click …
+     2→import json …
      3→from .core …
      4→from .config …
     11→from .exceptions …
-    12→from decimal import Decimal
-    13→from datetime import date
-    14→import logging
+    12→from decimal …
+    13→from datetime …
+    14→import logging …
     16→class CustomEncoder(json.JSONEncoder):
     17→    def default(self, obj):
     27→def cli():
@@ -135,17 +181,17 @@ peepdb/cli.py
    181→def main():
 
 peepdb/config.py
-     1→import base64
-     2→import json
-     3→import os
-     4→from dataclasses import dataclass
-     5→import logging
-     7→import click
-     8→import keyring
-     9→from cachetools import TTLCache, cached
-    10→from cryptography.fernet import Fernet, InvalidToken
-    11→from cryptography.hazmat.primitives import hashes
-    12→from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+     1→import base64 …
+     2→import json …
+     3→import os …
+     4→from dataclasses …
+     5→import logging …
+     7→import click …
+     8→import keyring …
+     9→from cachetools …
+    10→from cryptography.fernet …
+    11→from cryptography.hazmat.primitives …
+    12→from cryptography.hazmat.primitives.kdf.pbkdf2 …
     13→from .exceptions …
     15→@dataclass
     16→class KeySecurity:
@@ -170,11 +216,11 @@ peepdb/config.py
    196→def add_key_security():
 
 peepdb/core.py
-     1→from tabulate import tabulate
-     2→import logging
-     3→from typing import Dict, Any
-     4→from datetime import date, time, datetime
-     5→from decimal import Decimal
+     1→from tabulate …
+     2→import logging …
+     3→from typing …
+     4→from datetime …
+     5→from decimal …
      7→from .db …
     27→def connect_to_database(db_type: str, host: str, user: str, password: str, database: str, **kwargs):
     56→def peep_db(db_type: str,
@@ -204,32 +250,21 @@ peepdb/db/__init__.py
     11→__all__ = [
 
 peepdb/db/base.py
-     1→from abc …
-     2→from typing …
-     3→import logging …
      5→class BaseDatabase(ABC):
      6→    def __init__(self, host: str, user: str, password: str, database: str, port: int = None, **kwargs):
     17→    @abstractmethod
     18→    def connect(self) -> None:
-    19→        pass
     21→    @abstractmethod
     22→    def disconnect(self) -> None:
-    23→        pass
     25→    @abstractmethod
     26→    def fetch_tables(self) -> List[str]:
-    27→        pass
     29→    @abstractmethod
     30→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
-    31→        pass
     33→    def __enter__(self):
     37→    def __exit__(self, exc_type, exc_val, exc_tb):
 
 peepdb/db/firebase.py
-     1→import firebase_admin …
-     2→from firebase_admin …
-     3→from typing …
      4→from .base import BaseDatabase
-     5→import logging …
      9→class FirebaseDatabase(BaseDatabase):
     10→    def __init__(self, service_account_path: str, **kwargs):
     15→    def connect(self):
@@ -238,9 +273,7 @@ peepdb/db/firebase.py
     39→    def fetch_data(self, table_name: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 peepdb/db/mariadb.py
-     1→import pymysql …
      2→from .base import BaseDatabase
-     3→from typing …
      5→class MariaDBDatabase(BaseDatabase):
      6→    def connect(self) -> None:
     23→    def disconnect(self) -> None:
@@ -248,11 +281,7 @@ peepdb/db/mariadb.py
     34→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 peepdb/db/mongodb.py
-     1→import pymongo …
-     2→import pymongo.errors …
      3→from .base import BaseDatabase
-     4→import typing …
-     5→from urllib.parse …
      8→class MongoDBDatabase(BaseDatabase):
      9→    def connect(self) -> None:
     32→    def disconnect(self) -> None:
@@ -268,10 +297,7 @@ peepdb/db/mongodb.py
     50→        """
 
 peepdb/db/mssql.py
-     1→import pyodbc …
      2→from .base import BaseDatabase
-     3→from typing …
-     4→import logging …
      6→class MSSQLDatabase(BaseDatabase):
      7→    def __init__(self, host: str, user: str, password: str, database: str, port: int = 1433, trusted: bool = False, **kwargs):
     12→    def connect(self) -> None:
@@ -280,9 +306,7 @@ peepdb/db/mssql.py
     45→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 peepdb/db/mysql.py
-     1→import mysql.connector …
      2→from .base import BaseDatabase
-     3→from typing …
      5→class MySQLDatabase(BaseDatabase):
      6→    def connect(self) -> None:
     22→    def disconnect(self) -> None:
@@ -290,10 +314,7 @@ peepdb/db/mysql.py
     33→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 peepdb/db/oracle.py
-     1→import oracledb …
-     2→from typing …
      3→from .base import BaseDatabase
-     4→import logging …
      7→class OracleDatabase(BaseDatabase):
      8→    def connect(self) -> None:
     25→    def disconnect(self) -> None:
@@ -303,10 +324,7 @@ peepdb/db/oracle.py
     38→    ) -> Dict[str, Any]:
 
 peepdb/db/postgresql.py
-     1→import psycopg2 …
-     2→from psycopg2.extras …
      3→from .base import BaseDatabase
-     4→from typing …
      6→class PostgreSQLDatabase(BaseDatabase):
      7→    def connect(self) -> None:
     23→    def disconnect(self) -> None:
@@ -314,10 +332,7 @@ peepdb/db/postgresql.py
     34→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 peepdb/db/sqlite.py
-     1→import os …
-     2→import sqlite3 …
      3→from .base import BaseDatabase
-     4→from typing …
      6→class SQLiteDatabase(BaseDatabase):
      7→    def connect(self) -> None:
     22→    def disconnect(self) -> None:
@@ -328,32 +343,6 @@ peepdb/exceptions.py
      1→class InvalidPassword(Exception):
      2→    pass
 
-peepdb/tests/test_cli.py
-     8→def runner():
-    12→def mock_db():
-    29→def test_view_command_with_pagination(mock_mysql_db, mock_get_connection, runner, mock_db):
-    54→def test_view_command_with_json_format(mock_mysql_db, mock_get_connection, runner, mock_db):
-    70→def test_view_command_with_scientific(mock_mysql_db, mock_get_connection, runner, mock_db):
-    94→def test_view_command_invalid_connection(mock_get_connection, runner):
-   104→def test_view_command_invalid_password(mock_get_connection, runner):
-   114→def test_save_command(mock_save_connection, runner):
-   147→def test_list_command(mock_list_connections, runner):
-   157→def test_remove_command(mock_remove_connection, runner):
-   168→def test_remove_all_command(mock_remove_all_connections, runner):
-
-peepdb/tests/test_data_types.py
-    10→def mock_db():
-    43→def test_peep_db_with_data_types(mock_mysql_db):
-    92→def test_peep_db_with_large_numbers(mock_mysql_db):
-   130→def test_peep_db_with_scientific(mock_mysql_db):
-
-peepdb/tests/test_peepdb.py
-    15→def test_peep_db(mock_mariadb, mock_postgresql, mock_mysql, mock_mongodb, mock_firebase_db, mock_oracle_db):
-   140→def test_config_functions(mock_decrypt, mock_encrypt, mock_json_dump, mock_json_load, mock_open, mock_exists):
-
-peepdb/tests/test_sqlite.py
-     6→class TestSQLiteDatabase(unittest.TestCase):
-
 project.toml
      1→[build-system]
      5→[project]
@@ -362,4 +351,3 @@ project.toml
     46→[project.scripts]
 
 setup.py
-     1→from setuptools …

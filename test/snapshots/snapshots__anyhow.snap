@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3983 tokens)
+budget: 4000 (3981 tokens)
 
 Cargo.toml
      1→[package]
@@ -25,12 +25,8 @@ src/backtrace.rs
      2→pub(crate) use std::backtrace::{Backtrace, BacktraceStatus};
      5→pub(crate) use self::capture::{Backtrace, BacktraceStatus};
      8→pub(crate) enum Backtrace {}
-    11→macro_rules! impl_backtrace {
     18→macro_rules! impl_backtrace {
-    25→macro_rules! backtrace {
     32→macro_rules! backtrace {
-    39→macro_rules! backtrace_if_absent {
-    53→macro_rules! backtrace_if_absent {
     64→macro_rules! backtrace_if_absent {
     71→mod capture {
     82→    pub(crate) struct Backtrace {
@@ -346,7 +342,14 @@ tests/drop/mod.rs
     27→    has_dropped: Flag,
     28→}
 
+tests/test_ensure.rs
+    52→    fn t(self, i: i32) -> i32 {
+    78→fn assert_err …
+
 tests/test_ffi.rs
      7→pub extern "C" fn anyhow1(err: anyhow::Error) {
     12→pub extern "C" fn anyhow2(err: &mut Option<anyhow::Error>) {
     17→pub extern "C" fn anyhow3() -> Option<anyhow::Error> {
+
+tests/test_source.rs
+     7→enum TestError {

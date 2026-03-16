@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (3999 tokens)
 
 README.md
     29→## Overview
@@ -25,7 +25,6 @@ README.md
    336→## Bugs and Feature Requests
 
 demo.py
-     1→from py3xui import Api
     63→from py3xui import Inbound
     65→XUI_EXTERNAL_IP = "**********"  # ⬅️ Your external IP here or domain name.
     66→MAIN_REMARK = "gmfvbot"  # ⬅️ It can be any string.
@@ -188,10 +187,9 @@ py3xui/async_api/async_api_server.py
    105→    async def generate_reality_keys …
 
 py3xui/client/__init__.py
-     2→from py3xui.client.client import Client
+     2→from py3xui.client.client …
 
 py3xui/client/client.py
-     3→from pydantic …
      6→# pylint: disable=too-few-public-methods
      7→class ClientFields:
      9→
@@ -316,6 +314,9 @@ py3xui/inbound/stream_settings.py
     25→class StreamSettings(JsonStringModel):
     38→
       →…
+
+py3xui/server/__init__.py
+     2→from py3xui.server.server …
 
 py3xui/server/server.py
      6→# pylint: disable=too-few-public-methods

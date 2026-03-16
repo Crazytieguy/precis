@@ -5,7 +5,6 @@ expression: output
 budget: 4000 (3997 tokens)
 
 Changelog.md
-     1→# Changelog
 
 Readme.md
     42→### Usage
@@ -14,10 +13,57 @@ Readme.md
    181→### Demo
    189→### Examples
    205→### Documentation
-   231→### License
+
+docs/guides/01-getting-started.md
+     1→# Getting Started
+     3→## Installing Superstruct
+    41→## Defining Structs
+
+docs/guides/02-validating-data.md
+     1→# Validating Data
+     5→## Primitive Values
+    37→## Composed Values
+   114→## Optional Values
+   157→## Custom Values
+
+docs/guides/03-coercing-data.md
+     1→# Coercing Data
+     7→## Default Values
+    49→## Custom Coercions
+
+docs/guides/04-refining-validation.md
+     1→# Refining Validation
+     7→## Built-in Refinements
+    47→## Custom Refinements
+
+docs/guides/05-handling-errors.md
+     1→# Handling Errors
+    53→## Customizing Errors
+   102→## Multiple Failures
+
+docs/guides/06-using-typescript.md
+     1→# Using TypeScript
+     7→## Narrowing Types
+    37→## Describing Types
+    55→## Inferring Types
 
 docs/readme.md
      7→### Usage
+     9→Superstruct allows you to define the shape of data you want to validate:
+    10→
+    11→```js
+    12→import { assert, object, number, string, array } from 'superstruct'
+    13→
+    14→const Article = object({
+    15→  id: number(),
+    16→  title: string(),
+    17→  tags: array(string()),
+    18→  author: object({
+    19→    id: number(),
+    20→  }),
+    21→})
+    22→
+      →…
 
 docs/reference/coercions.md
      1→# Coercions
@@ -43,9 +89,13 @@ docs/reference/utilities.md
 
 docs/resources/faq.md
      1→# FAQ
+     3→Some common questions you might have when first learning Superstruct.
+     4→
 
 docs/resources/links.md
      1→# Resources
+     3→A few resources that are helpful for building with Superstruct.
+     4→
      5→## Libraries
 
 docs/summary.md
@@ -55,7 +105,6 @@ docs/summary.md
 
 examples/README.md
      1→# Examples
-     3→To run the examples locally, first run `npm install` in this directory. Then use node to run any of the examples like so: `node basic-validation.js`, `node composing-structs.js`, etc.
 
 jsr.json
      2→  "$schema": "https://jsr.io/schema/config-file.v1.json",
@@ -86,7 +135,7 @@ src/error.ts
     32→  failures: () => Array<Failure>;
     33→  [x: string]: any
     34→
-    35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
+    35→  constructor …
 
 src/struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
@@ -103,14 +152,7 @@ src/struct.ts
     19→    context: Context
     20→  ) => Iterable<[string | number, unknown, Struct<any> | Struct<never>]>
     21→
-    22→  constructor(props: {
-    23→    type: string
-    24→    schema: S
-    25→    coercer?: Coercer
-    26→    validator?: Validator
-    27→    refiner?: Refiner<T>
-    28→    entries?: Struct<T, S>['entries']
-    29→  }) {
+    22→  constructor …
     67→  assert(value: unknown, message?: string): asserts value is T {
     75→  create(value: unknown, message?: string): T {
     83→  is(value: unknown): value is T {
@@ -165,18 +207,18 @@ src/struct.ts
    266→export type Refiner<T> = (value: T, context: Context) => Result
 
 src/structs/coercions.ts
-     1→import { Struct, is, Coercer } from '../struct.js'
-     2→import { isPlainObject } from '../utils.js'
-     3→import { string, unknown } from './types.js'
+     1→import { Struct, is, Coercer } from '../struct.js …
+     2→import { isPlainObject } from '../utils.js …
+     3→import { string, unknown } from './types.js …
     16→export function coerce …
     38→export function defaulted …
     79→export function trimmed …
 
 src/structs/refinements.ts
-     1→import { Struct, Refiner } from '../struct.js'
-     2→import { toFailures } from '../utils.js'
+     1→import { Struct, Refiner } from '../struct.js …
+     2→import { toFailures } from '../utils.js …
      8→export function empty …
-    21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
+    21→function getSize …
     33→export function max …
     55→export function min …
     77→export function nonempty …
@@ -185,19 +227,9 @@ src/structs/refinements.ts
    146→export function refine …
 
 src/structs/types.ts
-     1→import { Infer, Struct } from '../struct.js'
-     2→import { define } from './utilities.js'
-     3→import {
-     4→  ObjectSchema,
-     5→  ObjectType,
-     6→  print,
-     7→  run,
-     8→  isObject,
-     9→  isNonArrayObject,
-    10→  AnyStruct,
-    11→  InferStructTuple,
-    12→  UnionToIntersection,
-    13→} from '../utils.js'
+     1→import { Infer, Struct } from '../struct.js …
+     2→import { define } from './utilities.js …
+     3→import { …
     19→export function any …
     33→export function array<T extends Struct<any>>(Element?: T): any {
     60→export function bigint …
@@ -227,14 +259,9 @@ src/structs/types.ts
    574→export function unknown …
 
 src/structs/utilities.ts
-     1→import { Context, Struct, Validator } from '../struct.js'
-     2→import {
-     3→  Assign,
-     4→  ObjectSchema,
-     5→  ObjectType,
-     6→  PartialObjectSchema,
-     7→} from '../utils.js'
-     8→import { object, optional, type } from './types.js'
+     1→import { Context, Struct, Validator } from '../struct.js …
+     2→import { …
+     8→import { object, optional, type } from './types.js …
     60→export function assign(...Structs: Struct<any>[]): any {
     71→export function define …
     80→export function deprecated …
@@ -369,20 +396,4 @@ src/utils.ts
    402→type _InferTuple …
 
 test/index.ts
-     2→ * A helper for testing type signatures.
-     5→export function test<T>(fn: (x: unknown) => T) {}
-
-test/validation/function/invalid.ts
-     3→export const Struct = func()
-     5→export const data = false
-     7→export const failures = [
-
-test/validation/function/valid.ts
-     3→export const Struct = func()
-     5→export const data = function () {}
-     7→export const output = data
-
-test/validation/never/invalid.ts
-     3→export const Struct = never()
-     5→export const data = true
-     7→export const failures = [
+     5→export function test …

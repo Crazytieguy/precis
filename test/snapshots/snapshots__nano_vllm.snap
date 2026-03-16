@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3997 tokens)
+budget: 4000 (4000 tokens)
 
 README.md
      9→# Nano-vLLM
@@ -333,8 +333,8 @@ nanovllm/sampling_params.py
     10→    def __post_init__(self):
 
 nanovllm/utils/context.py
-     1→from dataclasses …
-     2→import torch …
+     1→from dataclasses import dataclass
+     2→import torch
      5→@dataclass
      6→class Context:
      7→    is_prefill: bool = False
@@ -351,11 +351,10 @@ nanovllm/utils/context.py
     25→def reset_context():
 
 nanovllm/utils/loader.py
-     1→import os …
-     2→from glob …
-     3→import torch …
-     4→from torch …
-     5→from safetensors …
+     1→import os
+     2→from glob import glob
+     4→from torch import nn
+     5→from safetensors import safe_open
      8→def default_weight_loader(param: nn.Parameter, loaded_weight: torch.Tensor):
     12→def load_model(model: nn.Module, path: str):
 

@@ -359,8 +359,10 @@ mod tests {
         // Documentation site directories
         assert!(is_test_file(Path::new("website/src/App.tsx")));
         assert!(is_test_file(Path::new("site/pages/index.tsx")));
-        assert!(is_test_file(Path::new("docs/conf.py")));
-        assert!(is_test_file(Path::new("doc/guide.md")));
+        // docs/ and doc/ are NOT classified as test — they often contain
+        // valuable API reference and design docs
+        assert!(!is_test_file(Path::new("docs/conf.py")));
+        assert!(!is_test_file(Path::new("doc/guide.md")));
         // Mock directories
         assert!(is_test_file(Path::new("mocks/mock_repo.go")));
         assert!(is_test_file(Path::new("internal/ports/mocks/mock_service.go")));

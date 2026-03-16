@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1992 tokens)
+budget: 2000 (1998 tokens)
 
 mlstm/backends.py
 
@@ -42,7 +42,6 @@ mlstm/layer.py
     39→class mLSTMLayer(nn.Module):
 
 slstm/block.py
-     4→from dataclasses …
     13→class sLSTMBlockConfig:
     14→    slstm: sLSTMLayerConfig = field(default_factory=sLSTMLayerConfig)
     15→    feedforward: Optional[FeedForwardConfig] = field(default_factory=FeedForwardConfig)
@@ -54,7 +53,6 @@ slstm/block.py
     29→class sLSTMBlock(xLSTMBlock):
 
 slstm/cell.py
-     3→import logging …
     28→LOGGER = logging.getLogger(__name__)
     30→DTYPE_DICT = {
     35→DTYPES = Literal["bfloat16", "float16", "float32"]
@@ -90,21 +88,6 @@ slstm/cell.py
     91→    # this can be ignored internally, but may be used to optimize kernels
     92→    batch_size: int = 8
     93→    # input shape from external, definitions see output_shape
-    94→    input_shape: Literal["BSGNH", "SBGNH"] = "BSGNH"
-    95→    # internal input shape, may be redefined by backend
-    96→    internal_input_shape: Literal["SBNGH", "SBGNH", "SBNHG"] = "SBNGH"
-    97→    # B = batch, S sequence dim, N num heads,
-    98→    # H head dim or hidden dim (= fused dim [num_heads, head_dim]) without num_heads
-    99→    output_shape: Literal[
-   100→        "BNSH",
-   101→        "SBH",
-   102→        "BSH",
-   103→        "SBNH",
-   104→    ] = "BNSH"
-   105→
-   106→    # additional compiler constants
-   107→    constants: dict = field(default_factory=dict)
-   108→    # dtypes
    122→    def head_dim(self):
    126→    def input_dim(self):
    130→    def torch_dtype(self) -> torch.dtype:
@@ -124,7 +107,6 @@ slstm/cell.py
    777→class sLSTMCell(sLSTMCellBase):
 
 slstm/layer.py
-     3→from dataclasses …
     19→class sLSTMLayerConfig(sLSTMCellConfig):
     20→    embedding_dim: int = -1
     21→    num_heads: int = (
@@ -139,6 +121,16 @@ slstm/layer.py
 slstm/src/cuda/slstm.h
     24→#include "../util/util.h"
     28→#define SLSTM_NUM_HEADS 1
+    29→#define SLSTM_HIDDEN_SIZE 512
+    30→#define SLSTM_BATCH_SIZE 8
+    31→#define SLSTM_NUM_GATES 4
+    32→#define SLSTM_NUM_STATES 4
+    33→#define SLSTM_DTYPE_R float
+    34→#define SLSTM_DTYPE_B float
+    35→#define SLSTM_DTYPE_W float
+    36→#define SLSTM_DTYPE_G float
+    37→#define SLSTM_DTYPE_S float
+    38→#define SLSTM_DTYPE_A float
     41→#define SLSTM_SIMPLE_AGG true
 
 slstm/src/cuda_init.py
@@ -146,6 +138,16 @@ slstm/src/cuda_init.py
     17→def defines_to_cflags …
     42→EXTRA_INCLUDE_PATHS = (
     60→def load …
+
+slstm/src/util/device_assert.h
+    27→#define device_assert_fail(msg)                                                \
+
+slstm/src/util/support.h
+    26→#define CHECK_CUDA(x)                                                          \
+    28→#define CHECK_CONTIGUOUS(x)                                                    \
+    30→#define CHECK_INPUT(x)                                                         \
+    34→#define AT_DISPATCH_CASE_FLOATING_TYPES_AND_HALF2(...)                         \
+    40→#define AT_DISPATCH_FLOATING_TYPES_AND_HALF2(TYPE, NAME, ...)                  \
 
 xlstm_block.py
      3→from dataclasses import dataclass

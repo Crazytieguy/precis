@@ -95,30 +95,18 @@ crates/toasty/src/apply_update.rs
 
 crates/toasty/src/cursor.rs
      6→pub struct Cursor<M> {
-     7→    schema: Arc<Schema>,
-     8→    values: stmt::ValueStream,
-     9→    _p: std::marker::PhantomData<M>,
-    10→}
     12→pub trait FromCursor<A>: Extend<A> + Default {}
     36→    pub async fn collect …
 
 crates/toasty/src/db/builder.rs
     17→pub struct Builder {
-    35→    pub fn table_name_prefix …
 
 crates/toasty/src/db/connect.rs
     14→pub struct Connect {
-    89→impl Driver for Connect {
 
 crates/toasty/src/db/pool.rs
     18→pub struct PoolConfig {
-    25→    pub fn new …
     41→pub struct Pool {
-    48→    pub fn new …
-    69→    pub fn connect …
-    74→    pub async fn get …
-    84→    pub fn driver …
-    89→    pub fn capability …
     95→struct Manager {
    119→pub struct PoolConnection {
 
@@ -158,26 +146,6 @@ crates/toasty/src/page.rs
 crates/toasty/src/relation.rs
     10→pub mod option;
     16→pub trait Relation {
-    17→    /// The target model
-    18→    type Model: Model;
-    19→
-    20→    /// The target expression (e.g. `Option<Model>`)
-    21→    type Expr;
-    22→
-    23→    type Query;
-    24→
-    25→    /// HasMany relation type
-    26→    type Many;
-    27→
-    28→    type ManyField;
-    29→
-    30→    type One;
-    31→
-    32→    type OneField;
-    33→
-    34→    /// Option fields
-    35→    type OptionOne;
-    36→
 
 crates/toasty/src/stmt/expr.rs
      7→pub struct Expr<T: ?Sized> {
@@ -188,16 +156,12 @@ crates/toasty/src/stmt/paginate.rs
 crates/toasty/src/stmt.rs
     32→mod primitive_jiff;
     51→pub struct Statement<M> {
-    52→    pub(crate) untyped: stmt::Statement,
-    53→    _p: PhantomData<M>,
-    54→}
 
 crates/toasty-cli/Cargo.toml
      1→[package]
      7→[dependencies]
 
 crates/toasty-cli/src/config.rs
-     1→use crate::migration::MigrationConfig;
      9→pub struct Config {
     10→    /// Migration-related configuration
     11→    pub migration: MigrationConfig,
@@ -229,7 +193,6 @@ crates/toasty-cli/src/migration/config.rs
     33→}
 
 crates/toasty-cli/src/migration.rs
-    19→use crate::Config;
     25→pub struct MigrationCommand {
     26→    #[command(subcommand)]
     27→    subcommand: MigrationSubcommand,
@@ -265,10 +228,6 @@ crates/toasty-codegen/CONTEXT.md
 crates/toasty-codegen/Cargo.toml
      1→[package]
      8→[dependencies]
-
-crates/toasty-codegen/src/lib.rs
-     6→pub fn generate_model …
-    13→pub fn generate_embed …
 
 crates/toasty-codegen/src/schema/auto.rs
      2→pub enum AutoStrategy {
@@ -424,13 +383,6 @@ crates/toasty-core/src/macros.rs
      1→#[macro_export]
      2→macro_rules! path {
 
-crates/toasty-core/src/schema/app/arg.rs
-     4→pub struct Arg {
-
-crates/toasty-core/src/schema/app/auto.rs
-     3→pub enum AutoStrategy {
-     9→pub enum UuidVersion {
-
 crates/toasty-core/src/schema/app/constraint/length.rs
      6→pub struct ConstraintLength {
      7→    /// The minimum length of the field.
@@ -439,12 +391,6 @@ crates/toasty-core/src/schema/app/constraint/length.rs
     10→    /// The maximum length of the field.
     11→    pub max: Option<u64>,
     12→}
-
-crates/toasty-core/src/schema/app/constraint.rs
-     7→pub enum Constraint {
-
-crates/toasty-core/src/schema/app/embedded.rs
-     7→pub struct Embedded {
 
 crates/toasty-core/src/schema/app/field/primitive.rs
      4→pub struct FieldPrimitive {
@@ -456,34 +402,6 @@ crates/toasty-core/src/schema/app/field/primitive.rs
     10→    /// This is specified as a hint.
     11→    pub storage_ty: Option<db::Type>,
     12→}
-
-crates/toasty-core/src/schema/app/field.rs
-    11→pub struct Field {
-    36→pub struct FieldId {
-    42→pub struct FieldName {
-    54→pub enum FieldTy {
-
-crates/toasty-core/src/schema/app/fk.rs
-     4→pub struct ForeignKey {
-     9→pub struct ForeignKeyField {
-
-crates/toasty-core/src/schema/app/index.rs
-     5→pub struct Index {
-    20→pub struct IndexId {
-    26→pub struct IndexField {
-
-crates/toasty-core/src/schema/app/model.rs
-     6→pub struct Model {
-    23→pub enum ModelKind {
-    31→pub struct ModelRoot {
-    41→pub struct ModelId(pub usize);
-
-crates/toasty-core/src/schema/app/pk.rs
-     4→pub struct PrimaryKey {
-
-crates/toasty-core/src/schema/app/schema.rs
-     7→pub struct Schema {
-    12→struct Builder {
 
 crates/toasty-core/src/schema/builder.rs
     11→pub struct Builder {
@@ -547,17 +465,6 @@ crates/toasty-core/src/schema/db/ty.rs
     79→    /// 128-bit universally unique identifier (UUID)
     80→    Uuid,
     81→
-    82→    /// Decimal number with optional precision and scale.
-    83→    /// - `None`: Arbitrary-precision decimal
-    84→    /// - `Some((precision, scale))`: Fixed precision and scale
-    85→    Numeric(Option<(u32, u32)>),
-    86→
-    87→    /// Unconstrained binary type
-    88→    Blob,
-    89→
-    90→    /// Fixed-size binary type of `n` bytes
-    91→    Binary(u8),
-    92→
       →…
 
 crates/toasty-core/src/schema/mapping/field.rs
@@ -637,14 +544,10 @@ crates/toasty-driver-dynamodb/src/lib.rs
     30→pub struct DynamoDb {
     31→    url: String,
     32→}
-    35→    pub fn new(url: String) -> Self {
     96→pub struct Connection {
     97→    /// Handle to the AWS SDK client
     98→    client: Client,
     99→}
-   102→    pub fn new(client: Client) -> Self {
-   106→    pub async fn connect(url: &str) -> Result<Self> {
-   139→    pub async fn from_env() -> Result<Self> {
    345→struct ExprAttrs {
 
 crates/toasty-driver-dynamodb/src/type.rs
@@ -704,12 +607,8 @@ crates/toasty-driver-postgresql/src/statement_cache.rs
     10→    inner: LruCache<Key<'static>, Statement>,
     11→}
     15→    pub fn new …
-    21→    pub fn get …
-    27→    pub fn insert …
-    32→    pub async fn prepare_typed …
     49→struct Key<'a> {
     56→    pub fn new …
-    63→    pub fn into_owned …
 
 crates/toasty-driver-postgresql/src/type.rs
      4→pub trait TypeExt {
@@ -770,8 +669,8 @@ crates/toasty-driver-sqlite/src/lib.rs
    123→pub struct Connection {
    124→    connection: RusqliteConnection,
    125→}
-   128→    pub fn in_memory() -> Self {
-   134→    pub fn open<P: AsRef<Path>>(path: P) -> Result<Self> {
+   128→    pub fn in_memory …
+   134→    pub fn open …
 
 crates/toasty-driver-sqlite/src/value.rs
      8→pub struct Value(CoreValue);
@@ -827,9 +726,6 @@ crates/toasty-sql/src/migration.rs
     13→    statement: Statement,
     14→    schema: Cow<'a, Schema>,
     15→}
-    22→    pub fn from_diff …
-   252→    pub fn statement …
-   256→    pub fn schema …
 
 crates/toasty-sql/src/serializer/params.rs
      7→pub trait Params {
@@ -855,7 +751,6 @@ crates/toasty-sql/src/serializer.rs
     49→    flavor: Flavor,
     50→}
     73→pub type ExprContext<'a> = toasty_core::stmt::ExprContext<'a, db::Schema>;
-    76→    pub fn serialize …
 
 crates/toasty-sql/src/stmt/alter_table.rs
     17→pub enum AlterTableAction {
@@ -896,21 +791,135 @@ crates/toasty-sql/src/stmt.rs
     59→    Query(Query),
     60→    Update(Update),
     61→}
-    64→    pub fn is_update …
     69→    pub fn returning_len(&self) -> Option<usize> {
 
 docs/ARCHITECTURE.md
      1→# Toasty Architecture Overview
      3→## Project Structure
      7→## Crates
+     9→### 1. toasty
+    26→### 2. toasty-core
+    39→### 3. toasty-codegen
+    54→### 4. toasty-driver-*
+    63→### 5. toasty-sql
     74→## Further Reading
+
+docs/CHANGE_GUIDE.md
+     1→# Toasty Change Guide
+     3→This guide explains how to make common changes to the Toasty codebase based on patterns observed in recent development.
+     4→
+     5→## Quick Reference: Where Changes Go
+    28→## Crate-Specific Patterns
+    63→## Common Change Patterns
+   189→## Architecture Rules
+   244→## Recent Refactoring Trends
+   258→## Performance Patterns
+   275→## Debugging Tips
+   287→## Common Pitfalls
+   301→## Commit Message Conventions
 
 docs/CONTEXT.md
      1→# Documentation Context
      3→Load this file when editing anything in the `docs/` directory.
      4→
      5→## Writing Style
+    18→### Examples
     28→## Document Structure
+
+docs/architecture/query-engine.md
+     1→# Toasty Query Engine
+     7→## Overview
+    61→## Phase 1: Simplification
+    96→## Phase 2: Lowering
+   178→## Phase 3: Planning
+   203→## Phase 4: Execution Planning
+   234→## Phase 5: Execution
+
+docs/architecture/type-system.md
+     1→# Toasty Type System Architecture
+     3→## Overview
+     7→## Type System Boundaries
+    65→## Type Flow Through the System
+    77→## Detailed Architecture
+
+docs/design/enums-and-embedded-structs.md
+     1→# Enum and Embedded Struct Support
+     5→## Scope
+    13→## Storage Strategy
+    25→## Column Naming
+   188→## Discriminator Types
+   223→## NULL Handling
+   235→## Usage
+   266→## Examples
+   386→## Querying
+   631→## Updating
+
+docs/design/pagination.md
+     1→# Engine-Level Pagination Design
+     3→## Overview
+     7→## Architecture Context
+    26→## Design
+    76→## Implementation Plan
+   316→## Key Design Decisions
+   328→## Testing Strategy
+   335→## Future Enhancements
+
+docs/guide/jiff.md
+     1→# Date and Time Types with Jiff
+     5→## Enabling Jiff Support
+    17→## Supported Types
+   126→## Precision Limitations
+   183→## Database-Specific Behavior
+   201→## Best Practices
+   209→## Example: Complete Model
+
+docs/guide/pagination.md
+     1→# Pagination
+     5→## Basic Pagination
+    54→## Navigation Patterns
+   112→## Web API Integration
+   166→## Ordering Requirements
+   217→## Performance Characteristics
+   243→## Database-Specific Behavior
+   265→## Advanced Patterns
+   312→## Current Limitations
+   322→## Best Practices
+
+docs/roadmap/README.md
+     1→# Toasty ORM - Development Roadmap
+     3→This roadmap outlines potential enhancements and missing features for the Toasty ORM.
+     4→
+     5→## Overview
+    11→## Feature Areas
+   126→## Notes
+
+docs/roadmap/composite-keys.md
+     1→# Composite Key Support
+     3→## Overview
+     9→## Current State
+    97→## How Other ORMs Handle Composite Keys
+   157→## Common SQL Patterns Requiring Composite Keys
+   273→## Implementation Plan
+   340→## Design Decisions
+   392→## Testing Strategy
+
+docs/roadmap/order_limit_pagination.md
+     1→# Query Ordering, Limits & Pagination
+     5→## Overview
+     9→## Potential Future Work
+    78→## Testing
+   103→## Database-Specific Considerations
+   121→## How Keyset Pagination Works
+   142→## Notes
+
+docs/roadmap/query-constraints.md
+     1→# Query Constraints & Filtering
+     3→## Overview
+    15→## Core AST Support Without User API
+    28→## ORM Comparison
+    66→## Potential Future Work
+   210→## Implementation Considerations
+   245→## Reference Implementation Goals
 
 examples/composite-key/Cargo.toml
      1→[package]
@@ -926,15 +935,16 @@ examples/todo-with-cli/Cargo.toml
      1→[package]
      8→[features]
     15→[dependencies]
-    22→[[bin]]
     26→[[bin]]
 
 examples/todo-with-cli/src/lib.rs
      2→pub struct User {
     17→pub struct Todo {
-    35→pub async fn create_db() -> toasty::Result<toasty::Db> {
+    35→pub async fn create_db …
 
 examples/user-has-one-profile/Cargo.toml
      1→[package]
      7→[features]
     14→[dependencies]
+
+tests/Cargo.toml
