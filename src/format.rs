@@ -385,7 +385,12 @@ pub fn to_json(output: &str, budget: usize, tokens: usize) -> String {
         if !line.contains('→') {
             if let Some(path) = current_path.take() {
                 let content = current_content.trim_end_matches('\n');
-                files.push(serde_json::json!({"path": path, "content": content}));
+                // Directory omission markers: paths ending with /
+                if path.ends_with('/') {
+                    files.push(serde_json::json!({"path": path, "omitted": true}));
+                } else {
+                    files.push(serde_json::json!({"path": path, "content": content}));
+                }
                 current_content.clear();
             }
             current_path = Some(line);
@@ -397,8 +402,12 @@ pub fn to_json(output: &str, budget: usize, tokens: usize) -> String {
         }
     }
     if let Some(path) = current_path {
-        let content = current_content.trim_end_matches('\n');
-        files.push(serde_json::json!({"path": path, "content": content}));
+        if path.ends_with('/') {
+            files.push(serde_json::json!({"path": path, "omitted": true}));
+        } else {
+            let content = current_content.trim_end_matches('\n');
+            files.push(serde_json::json!({"path": path, "content": content}));
+        }
     }
 
     let json = serde_json::json!({

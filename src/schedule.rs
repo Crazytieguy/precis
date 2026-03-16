@@ -821,12 +821,22 @@ fn effective_depth(parent_dir: &Path) -> usize {
     if total == 0 {
         return 0;
     }
+    let is_conventional = |s: &str| matches!(s, "src" | "source" | "lib" | "pkg" | "cmd" | "internal" | "app" | "packages" | "crates");
     let first = components.next().and_then(|c| c.as_os_str().to_str());
-    if matches!(first, Some("src" | "source" | "lib" | "pkg" | "cmd" | "internal" | "app" | "packages" | "crates")) {
-        total - 1
-    } else {
-        total
+    let mut skipped = 0;
+    if first.is_some_and(is_conventional) {
+        skipped += 1;
+        // Monorepo double-root: packages/foo/src/ has two conventional roots.
+        // Skip the inner src/lib after the package name (but not the name itself).
+        if total >= 3 {
+            let _pkg_name = components.next(); // skip past package name
+            let inner = components.next().and_then(|c| c.as_os_str().to_str());
+            if inner.is_some_and(is_conventional) {
+                skipped += 1; // skip inner conventional root only
+            }
+        }
     }
+    total - skipped
 }
 
 /// Compute the value of showing a particular stage for a group.
@@ -1619,7 +1629,9 @@ mod tests {
         assert_eq!(effective_depth(Path::new("internal")), 0);
         assert_eq!(effective_depth(Path::new("internal/pkg")), 1);
         assert_eq!(effective_depth(Path::new("packages")), 0);
-        assert_eq!(effective_depth(Path::new("packages/foo/src")), 2);
+        // Monorepo double-root: packages/ + src/ both skipped
+        assert_eq!(effective_depth(Path::new("packages/foo/src")), 1);
+        assert_eq!(effective_depth(Path::new("crates/my-crate/src/utils")), 2);
         assert_eq!(effective_depth(Path::new("crates/core")), 1);
         // Non-source-root first components are not skipped
         assert_eq!(effective_depth(Path::new("docs")), 1);

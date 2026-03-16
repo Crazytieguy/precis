@@ -300,11 +300,22 @@ fn strip_c_line_comment(s: &str) -> &str {
 }
 
 /// Strip a trailing `#` comment from a Python line, returning the code portion.
+/// Strip trailing `# comment` from a Python line, respecting strings.
+/// Skips `#` characters inside single- or double-quoted strings to avoid
+/// incorrectly stripping hex colors like `"#FF0000"` or format strings.
 fn strip_python_line_comment(s: &str) -> &str {
-    match s.find('#') {
-        Some(pos) => s[..pos].trim_end(),
-        None => s,
+    let bytes = s.as_bytes();
+    let mut in_single = false;
+    let mut in_double = false;
+    for (i, &b) in bytes.iter().enumerate() {
+        match b {
+            b'\'' if !in_double => in_single = !in_single,
+            b'"' if !in_single => in_double = !in_double,
+            b'#' if !in_single && !in_double => return s[..i].trim_end(),
+            _ => {}
+        }
     }
+    s
 }
 
 // ---------------------------------------------------------------------------
@@ -538,9 +549,19 @@ pub(crate) fn is_markdown_leading_noise(line: &str) -> bool {
     if trimmed.is_empty() {
         return true;
     }
-    // Markdown images (badges): ![alt](url) or [![alt](url)](url)
-    if (trimmed.starts_with("![") || trimmed.starts_with("[![")) && trimmed.ends_with(')') {
+    // Markdown badge images: [![alt](url)](url) (linked images are always badges)
+    if trimmed.starts_with("[![") && trimmed.ends_with(')') {
         return true;
+    }
+    // Standalone images: ![alt](url) — only skip if alt text is short (badges).
+    // Long alt text indicates a screenshot or diagram that has real content value.
+    if trimmed.starts_with("![") && trimmed.ends_with(')') {
+        if let Some(alt_end) = trimmed.find("](") {
+            let alt_text = &trimmed[2..alt_end];
+            if alt_text.len() <= 30 {
+                return true;
+            }
+        }
     }
     // Link reference definitions: [label]: URL
     if trimmed.starts_with('[')

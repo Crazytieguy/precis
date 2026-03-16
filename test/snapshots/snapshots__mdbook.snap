@@ -45,7 +45,6 @@ crates/mdbook-compare/README.md
      4→
      5→To use this:
      6→
-     7→1. Install [`tidy`](https://www.html-tidy.org/).
       →…
 
 crates/mdbook-core/Cargo.toml
@@ -102,15 +101,19 @@ crates/mdbook-core/src/book.rs
 
 crates/mdbook-core/src/config.rs
     63→pub struct Config {
-    94→    fn from_str …
+    81→fn is_default …
+    86→fn toml_is_empty …
+    94→    fn from_str(src: &str) -> Result<Self> {
    113→    pub fn from_disk …
    150→    pub fn update_from_env …
    189→    pub fn get …
    216→    pub fn contains_key …
    228→    pub fn preprocessors …
    236→    pub fn outputs …
+   250→    pub fn html_config …
    274→    pub fn set …
    318→pub struct BookConfig {
+   336→fn is_default_src …
    356→    pub fn realized_text_direction …
    368→pub enum TextDirection {
    369→    /// Left to right.
@@ -159,6 +162,7 @@ crates/mdbook-core/src/lib.rs
     11→pub mod utils;
     13→/// The error types used in mdbook.
     14→pub mod errors {
+    15→    pub use anyhow::{Error, Result};
 
 crates/mdbook-core/src/utils/fs.rs
     11→pub fn read_to_string …
@@ -175,46 +179,18 @@ crates/mdbook-core/src/utils/html.rs
 
 crates/mdbook-core/src/utils/mod.rs
      7→pub mod fs;
-    15→/// Defines a `static` with a [`regex::Regex`].
-    16→#[macro_export]
     17→macro_rules! static_regex {
     29→pub fn log_backtrace …
 
 crates/mdbook-core/src/utils/toml_ext.rs
-     6→pub(crate) trait TomlExt {
      8→    fn read …
     10→    fn insert …
 
 crates/mdbook-driver/Cargo.toml
      1→[package]
-     2→name = "mdbook-driver"
-     3→version = "0.5.2"
-     4→description = "High-level library for running mdBook"
-     5→edition.workspace = true
-     6→license.workspace = true
-     7→repository.workspace = true
-     8→rust-version.workspace = true
     10→[dependencies]
-    11→anyhow.workspace = true
-    12→indexmap.workspace = true
-    13→mdbook-core.workspace = true
-    14→mdbook-html.workspace = true
-    15→mdbook-markdown.workspace = true
-    16→mdbook-preprocessor.workspace = true
-    17→mdbook-renderer.workspace = true
-    18→mdbook-summary.workspace = true
-    19→regex.workspace = true
-    20→serde.workspace = true
-    21→serde_json.workspace = true
-    22→shlex.workspace = true
-    23→tempfile.workspace = true
-    24→toml.workspace = true
-    25→topological-sort.workspace = true
-    26→tracing.workspace = true
     28→[lints]
-    29→workspace = true
     31→[features]
-    32→search = ["mdbook-html/search"]
 
 crates/mdbook-driver/README.md
      1→# mdbook-driver
@@ -238,9 +214,6 @@ crates/mdbook-driver/src/builtin_preprocessors/links.rs
     32→pub struct LinkPreprocessor;
     36→    pub const NAME: &'static str = "links";
     39→    pub fn new() -> Self {
-   139→enum LinkType<'a> {
-   148→enum RangeOrAnchor {
-   155→enum LineRange {
    275→struct Link …
 
 crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs
@@ -261,17 +234,18 @@ crates/mdbook-driver/src/init.rs
     16→    config: Config,
     17→    copy_theme: bool,
     18→}
-    23→    pub fn new …
-    33→    pub fn with_config …
-    39→    pub fn config …
-    45→    pub fn copy_theme …
-    51→    pub fn create_gitignore …
-    64→    pub fn build …
+    23→    pub fn new<P: Into<PathBuf>>(root: P) -> BookBuilder {
+    33→    pub fn with_config(&mut self, cfg: Config) -> &mut BookBuilder {
+    39→    pub fn config(&self) -> &Config {
+    45→    pub fn copy_theme(&mut self, copy: bool) -> &mut BookBuilder {
+    51→    pub fn create_gitignore(&mut self, create: bool) -> &mut BookBuilder {
+    64→    pub fn build(&self) -> Result<MDBook> {
 
 crates/mdbook-driver/src/lib.rs
     67→pub mod builtin_preprocessors;
     68→pub mod builtin_renderers;
     69→pub mod init;
+    75→pub use mdbook_core::{book, config, errors};
 
 crates/mdbook-driver/src/mdbook.rs
     29→pub struct MDBook {
@@ -290,21 +264,25 @@ crates/mdbook-driver/src/mdbook.rs
     42→    /// Pre-processors to be run on the book.
     43→    preprocessors: IndexMap<String, Box<dyn Preprocessor>>,
     44→}
-    48→    pub fn load …
-    71→    pub fn load_with_config …
-    90→    pub fn load_with_config_and_summary …
-   135→    pub fn iter …
-   156→    pub fn init …
-   161→    pub fn build …
-   172→    pub fn preprocess_book …
-   189→    pub fn execute_build_process …
-   214→    pub fn with_renderer …
-   221→    pub fn with_preprocessor …
-   228→    pub fn test …
-   235→    pub fn test_chapter …
-   371→    pub fn build_dir_for …
-   382→    pub fn source_dir …
-   387→    pub fn theme_dir …
+    48→    pub fn load<P: Into<PathBuf>>(book_root: P) -> Result<MDBook> {
+    71→    pub fn load_with_config<P: Into<PathBuf>>(book_root: P, config: Config) -> Result<MDBook> {
+    90→    pub fn load_with_config_and_summary<P: Into<PathBuf>>(
+    91→        book_root: P,
+    92→        config: Config,
+    93→        summary: Summary,
+    94→    ) -> Result<MDBook> {
+   135→    pub fn iter(&self) -> BookItems<'_> {
+   156→    pub fn init<P: Into<PathBuf>>(book_root: P) -> BookBuilder {
+   161→    pub fn build(&self) -> Result<()> {
+   172→    pub fn preprocess_book(&self, renderer: &dyn Renderer) -> Result<(Book, PreprocessorContext)> {
+   189→    pub fn execute_build_process(&self, renderer: &dyn Renderer) -> Result<()> {
+   214→    pub fn with_renderer<R: Renderer + 'static>(&mut self, renderer: R) -> &mut Self {
+   221→    pub fn with_preprocessor<P: Preprocessor + 'static>(&mut self, preprocessor: P) -> &mut Self {
+   228→    pub fn test(&mut self, library_paths: Vec<&str>) -> Result<()> {
+   235→    pub fn test_chapter(&mut self, library_paths: Vec<&str>, chapter: Option<&str>) -> Result<()> {
+   371→    pub fn build_dir_for(&self, backend_name: &str) -> PathBuf {
+   382→    pub fn source_dir(&self) -> PathBuf {
+   387→    pub fn theme_dir(&self) -> PathBuf {
    397→struct OutputConfig {
    435→struct PreprocessorConfig {
 
@@ -319,7 +297,6 @@ crates/mdbook-html/README.md
      1→# mdbook-html
 
 crates/mdbook-html/src/html/tree.rs
-    25→macro_rules! attr_qual_name {
     33→pub(crate) enum Node {
    130→    /// Converts self to a [`StrTendril`].
    131→    fn into_tendril(self) -> StrTendril;
@@ -408,6 +385,8 @@ crates/mdbook-markdown/src/lib.rs
     29→    /// This is `true` by default.
     30→    pub admonitions: bool,
     31→}
+    34→    fn default() -> MarkdownOptions {
+    43→/// Creates a new pulldown-cmark parser of the given text.
     44→pub fn new_cmark_parser<'text>(text: &'text str, options: &MarkdownOptions) -> Parser<'text> {
 
 crates/mdbook-preprocessor/Cargo.toml
@@ -482,8 +461,8 @@ crates/mdbook-renderer/README.md
 
 crates/mdbook-renderer/src/lib.rs
     28→pub trait Renderer {
-    30→    fn name …
-    34→    fn render …
+    30→    fn name(&self) -> &str;
+    34→    fn render(&self, ctx: &RenderContext) -> Result<()>;
     40→pub struct RenderContext {
     41→    /// Which version of `mdbook` did this come from (as written in `mdbook`'s
     42→    /// `Cargo.toml`). Useful if you know the renderer is only compatible with
@@ -506,9 +485,14 @@ crates/mdbook-renderer/src/lib.rs
     59→    #[serde(skip)]
     60→    pub chapter_titles: HashMap<PathBuf, String>,
     61→}
-    65→    pub fn new …
-    81→    pub fn source_dir …
-    86→    pub fn from_json …
+    63→impl RenderContext {
+    65→    pub fn new<P, Q>(root: P, book: Book, config: Config, destination: Q) -> RenderContext
+    66→    where
+    67→        P: Into<PathBuf>,
+    68→        Q: Into<PathBuf>,
+    69→    {
+    81→    pub fn source_dir(&self) -> PathBuf {
+    86→    pub fn from_json<R: Read>(reader: R) -> Result<RenderContext> {
 
 crates/mdbook-summary/Cargo.toml
      1→[package]
@@ -536,6 +520,7 @@ crates/mdbook-summary/README.md
       →…
 
 crates/mdbook-summary/src/lib.rs
+     8→pub use mdbook_core::book::SectionNumber;
     59→pub fn parse_summary(summary: &str) -> Result<Summary> {
     67→pub struct Summary {
     68→    /// An optional title for the `SUMMARY.md`, currently just ignored.
@@ -559,6 +544,8 @@ crates/mdbook-summary/src/lib.rs
     93→    pub nested_items: Vec<SummaryItem>,
     94→}
     98→    pub fn new<S: Into<String>, P: AsRef<Path>>(name: S, location: P) -> Link {
+   119→/// An item in `SUMMARY.md`.
+      →…
    122→pub enum SummaryItem {
    123→    /// A link to a chapter.
    124→    Link(Link),
@@ -567,7 +554,7 @@ crates/mdbook-summary/src/lib.rs
    127→    /// A part title.
    128→    PartTitle(String),
    129→}
-   173→struct SummaryParser …
+   173→struct SummaryParser<'a> {
    190→macro_rules! collect_events {
 
 crates/xtask/Cargo.toml
@@ -591,26 +578,10 @@ examples/nop-preprocessor.rs
     79→    pub struct Nop;
     82→        pub fn new() -> Nop {
 
-guide/book.toml
-     1→[book]
-     7→[rust]
-    40→[build]
-
 guide/guide-helper/Cargo.toml
      1→[package]
-     2→name = "guide-helper"
-     3→publish = false
-     4→edition.workspace = true
-     5→license.workspace = true
-     6→repository.workspace = true
-     7→rust-version.workspace = true
      9→[dependencies]
-    10→mdbook-preprocessor.workspace = true
-    11→semver.workspace = true
-    12→serde_json.workspace = true
-    13→toml.workspace = true
     15→[lints]
-    16→workspace = true
 
 guide/guide-helper/src/lib.rs
      9→/// Preprocessing entry point.
@@ -625,8 +596,6 @@ guide/src/README.md
      5→        position: absolute;
      6→        right: 20px;
      7→        top: 60px;
-     8→        background-color: var(--theme-popup-bg);
-     9→        border-radius: 8px;
       →        …
 
 guide/src/SUMMARY.md
@@ -785,7 +754,6 @@ src/cmd/clean.rs
     50→}
 
 src/cmd/command_prelude.rs
-     3→pub use clap::{Arg, ArgMatches, Command, arg};
      7→pub trait CommandExt: Sized {
      8→    fn _arg …
     10→    fn arg_dest_dir …
@@ -828,8 +796,6 @@ src/cmd/watch/poller.rs
     18→pub fn rebuild_on_change …
     78→struct PathData {
     86→struct Watcher {
-   124→    fn set_roots …
-   153→    fn scan …
 
 src/cmd/watch.rs
     12→pub fn make_subcommand …
@@ -844,7 +810,7 @@ src/cmd/watch.rs
 src/main.rs
     14→mod cmd;
     16→const VERSION …
-    58→fn create_clap_command …
+    58→fn create_clap_command() -> Command {
 
 tests/
       →…

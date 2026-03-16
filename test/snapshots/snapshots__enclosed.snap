@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7997 tokens)
+budget: 8000 (8000 tokens)
 
 README.md
     26→## Introduction
@@ -118,7 +118,12 @@ packages/app-client/src/index.tsx
 packages/app-client/src/locales/locales.ts
      2→export const locales = [
 
+packages/app-client/src/modules/auth/auth.services.ts
+     1→import { apiClient } from '../shared/http/http-client';
+
 packages/app-client/src/modules/auth/auth.store.ts
+     3→import { createHook } from '../shared/hooks/hooks';
+     4→import { isAccessTokenExpired } from './auth.models';
      6→export const authStore = createRoot(() => {
 
 packages/app-client/src/modules/auth/pages/login.page.tsx
@@ -126,7 +131,13 @@ packages/app-client/src/modules/auth/pages/login.page.tsx
     41→export const LoginPage: Component = () => {
 
 packages/app-client/src/modules/config/config.constants.ts
+     1→import type { Config } from './config.types';
      3→export const buildTimeConfig: Config = {
+
+packages/app-client/src/modules/config/config.provider.tsx
+     1→import type { Config } from './config.types';
+     3→import { buildTimeConfig } from './config.constants';
+     9→function getConfig(): Config {
 
 packages/app-client/src/modules/config/config.types.ts
      1→export type Config = {
@@ -141,27 +152,42 @@ packages/app-client/src/modules/config/config.types.ts
     10→  viewNotePathPrefix: string;
     11→};
 
+packages/app-client/src/modules/docs/docs.models.ts
+     1→import { buildTimeConfig } from '../config/config.constants';
+     2→import { joinUrlParts } from '../shared/http/http-client.models';
+     6→function buildDocUrl …
+
 packages/app-client/src/modules/files/files.models.ts
      6→export const iconByFileType = {
     33→type FileTypes …
+    35→function getFileIcon …
 
 packages/app-client/src/modules/i18n/i18n.models.ts
+     1→import type { Locale } from './i18n.provider';
      8→export function findMatchingLocale({ preferredLocales, supportedLocales }: { preferredLocales: Intl.Locale[]; supportedLocales: Intl.Locale[] }) {
 
 packages/app-client/src/modules/i18n/i18n.provider.tsx
+     7→import defaultDict from '../../locales/en.json';
+     8→import { findMatchingLocale } from './i18n.models';
+    15→type Locale …
+    16→type RawDictionary …
+    17→type Dictionary …
+    19→const I18nContext …
+    26→function useI18n …
+    36→async function fetchDictionary …
     44→export const I18nProvider: ParentComponent = (props) => {
 
 packages/app-client/src/modules/notes/components/file-uploader.tsx
-     6→const DropArea …
     62→export const FileUploaderButton …
 
 packages/app-client/src/modules/notes/components/note-password-field.tsx
      7→export const NotePasswordField …
 
 packages/app-client/src/modules/notes/notes.constants.ts
-     1→export const NOTE_ID_REGEX …
+     1→export const NOTE_ID_REGEX = /[0-7][0-9A-HJKMNP-TV-Z]{25}/i;
 
 packages/app-client/src/modules/notes/notes.context.tsx
+     5→const noteContext …
     11→export const NoteContextProvider: ParentComponent = (props) => {
     27→export function useNoteContext() {
 
@@ -186,67 +212,24 @@ packages/app-client/src/modules/theme/theme.store.ts
 
 packages/app-client/src/modules/ui/components/alert.tsx
     10→export const alertVariants = cva(
-    30→export function Alert …
-    46→export function AlertTitle …
-    57→export function AlertDescription …
 
 packages/app-client/src/modules/ui/components/button.tsx
     10→export const buttonVariants = cva(
-    41→export function Button …
-
-packages/app-client/src/modules/ui/components/card.tsx
-     5→export function Card …
-    19→export function CardHeader …
-    27→export const CardTitle …
-    38→export const CardDescription …
-    48→export function CardContent …
-    54→export function CardFooter …
 
 packages/app-client/src/modules/ui/components/dropdown-menu.tsx
     18→export const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
     19→export const DropdownMenuGroup = DropdownMenuPrimitive.Group;
     20→export const DropdownMenuSub = DropdownMenuPrimitive.Sub;
     21→export const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup;
-    23→export function DropdownMenu …
-    34→export function DropdownMenuContent …
-    58→export function DropdownMenuItem …
-    81→export function DropdownMenuGroupLabel …
-   100→export function DropdownMenuItemLabel …
-   119→export function DropdownMenuSeparator …
-   132→export function DropdownMenuShortcut …
-   145→export function DropdownMenuSubTrigger …
-   186→export function DropdownMenuSubContent …
-   206→export function DropdownMenuCheckboxItem …
-   248→export function DropdownMenuRadioItem …
-
-packages/app-client/src/modules/ui/components/sonner.tsx
-     5→export function Toaster …
 
 packages/app-client/src/modules/ui/components/switch.tsx
     11→export const SwitchLabel = SwitchPrimitive.Label;
     12→export const Switch = SwitchPrimitive;
     13→export const SwitchErrorMessage = SwitchPrimitive.ErrorMessage;
     14→export const SwitchDescription = SwitchPrimitive.Description;
-    18→export function SwitchControl …
-    42→export function SwitchThumb …
-
-packages/app-client/src/modules/ui/components/tabs.tsx
-    20→export function Tabs …
-    35→export function TabsList …
-    54→export function TabsContent …
-    73→export function TabsTrigger …
-   109→export function TabsIndicator …
-
-packages/app-client/src/modules/ui/components/textarea.tsx
-    14→export function TextArea …
 
 packages/app-client/src/modules/ui/components/textfield.tsx
-    20→export function TextFieldRoot …
     26→export const textfieldLabel = cva(
-    51→export function TextFieldLabel …
-    67→export function TextFieldErrorMessage …
-    85→export function TextFieldDescription …
-   104→export function TextField …
 
 packages/app-client/src/modules/ui/layouts/app.layout.tsx
     72→export const Navbar: Component = () => {
@@ -298,6 +281,9 @@ packages/app-server/src/modules/app/middlewares/storage.middleware.ts
 
 packages/app-server/src/modules/app/middlewares/timeout.middleware.ts
      5→export const timeoutMiddleware = createMiddleware(async (context: Context, next) => {
+
+packages/app-server/src/modules/app/server.ts
+    19→function createServer …
 
 packages/app-server/src/modules/app/server.types.ts
      5→export type ServerInstanceGenerics = {
@@ -368,6 +354,13 @@ packages/app-server/src/modules/storage/storage.types.ts
      7→export type BindableStorageFactoryArgs = { config: Config; context: Context };
      8→export type BindableStorageFactory = (args: BindableStorageFactoryArgs) => { storage: Storage };
      9→export type StorageFactory = () => { storage: Storage };
+
+packages/app-server/src/modules/tasks/task-scheduler.ts
+     9→const logger …
+    11→function createTaskScheduler …
+
+packages/app-server/src/modules/tasks/tasks.models.ts
+     9→function defineTask …
 
 packages/app-server/src/modules/tasks/tasks.types.ts
      3→export type TaskDefinition = ReturnType<typeof defineTask>;
@@ -448,6 +441,9 @@ packages/crypto/README.md
     15→pnpm add @enclosed/crypto
     16→```
     17→
+
+packages/crypto/src/api-definition.ts
+     6→function createEnclosedCryptoApi …
 
 packages/crypto/src/encryption-algorithms/encryption-algorithms.constants.ts
      1→export const AES_256_GCM = 'aes-256-gcm';

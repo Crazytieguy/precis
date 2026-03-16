@@ -89,7 +89,7 @@ fn is_lockfile(path: &Path) -> bool {
     // Machine-generated lockfiles
     if matches!(
         name,
-        "package-lock.json" | "npm-shrinkwrap.json" | "pnpm-lock.yaml" | "composer.lock"
+        "package-lock.json" | "npm-shrinkwrap.json" | "pnpm-lock.yaml"
     ) {
         return true;
     }

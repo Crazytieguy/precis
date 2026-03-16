@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4004 tokens)
+budget: 4000 (4005 tokens)
 
 Cargo.toml
      1→[package]
@@ -23,6 +23,24 @@ src/driver/capability.rs
    233→    pub const DYNAMODB: Self = Self {
    259→    pub const SQLITE: StorageTypes = StorageTypes {
 
+src/driver/operation/delete_by_key.rs
+     5→pub struct DeleteByKey {
+
+src/driver/operation/find_pk_by_index.rs
+     8→pub struct FindPkByIndex {
+
+src/driver/operation/get_by_key.rs
+     9→pub struct GetByKey {
+
+src/driver/operation/insert.rs
+     6→pub struct Insert {
+
+src/driver/operation/query_pk.rs
+     8→pub struct QueryPk {
+
+src/driver/operation/query_sql.rs
+     6→pub struct QuerySql {
+
 src/driver/operation/transaction.rs
      4→pub enum Transaction {
      5→    /// Start a transaction
@@ -34,6 +52,9 @@ src/driver/operation/transaction.rs
     11→    /// Rollback a transaction
     12→    Rollback,
     13→}
+
+src/driver/operation/update_by_key.rs
+     6→pub struct UpdateByKey {
 
 src/driver/operation.rs
     26→pub enum Operation {
@@ -91,6 +112,10 @@ src/driver.rs
     54→    async fn applied_migrations …
     57→    async fn apply_migration …
 
+src/error/invalid_connection_url.rs
+     9→    pub fn invalid_connection_url(message: impl Into<String>) -> Error {
+    17→    pub fn is_invalid_connection_url(&self) -> bool {
+
 src/error.rs
     36→pub struct Error {
     37→    inner: Arc<ErrorInner>,
@@ -106,6 +131,7 @@ src/lib.rs
     10→pub mod schema;
     13→pub mod stmt;
     16→pub type Result<T, E = Error> = core::result::Result<T, E>;
+    18→pub use async_trait::async_trait;
 
 src/macros.rs
      1→#[macro_export]
@@ -116,7 +142,14 @@ src/schema/app/arg.rs
 
 src/schema/app/auto.rs
      3→pub enum AutoStrategy {
+     4→    Uuid(UuidVersion),
+     5→    Increment,
+     6→}
      9→pub enum UuidVersion {
+    10→    V4,
+    11→    V7,
+    12→}
+    19→    pub fn is_increment …
 
 src/schema/app/constraint/length.rs
      6→pub struct ConstraintLength {
@@ -129,6 +162,8 @@ src/schema/app/constraint/length.rs
 
 src/schema/app/constraint.rs
      7→pub enum Constraint {
+     8→    Length(ConstraintLength),
+     9→}
 
 src/schema/app/embedded.rs
      7→pub struct Embedded {
@@ -149,6 +184,32 @@ src/schema/app/field.rs
     36→pub struct FieldId {
     42→pub struct FieldName {
     54→pub enum FieldTy {
+    55→    Primitive(FieldPrimitive),
+    56→    Embedded(Embedded),
+    57→    BelongsTo(BelongsTo),
+    58→    HasMany(HasMany),
+    59→    HasOne(HasOne),
+    60→}
+    64→    pub fn id …
+    69→    pub fn name …
+    74→    pub fn ty …
+    79→    pub fn nullable …
+    84→    pub fn primary_key …
+    89→    pub fn auto …
+   102→    pub fn full_name …
+   108→    pub fn relation_target_id …
+   117→    pub fn relation_target …
+   122→    pub fn expr_ty …
+   166→    pub fn expect_primitive …
+   174→    pub fn expect_primitive_mut …
+   193→    pub fn expect_embedded …
+   201→    pub fn expect_embedded_mut …
+   231→    pub fn expect_has_many …
+   239→    pub fn expect_has_many_mut …
+   258→    pub fn expect_has_one …
+   266→    pub fn expect_has_one_mut …
+   285→    pub fn expect_belongs_to …
+   293→    pub fn expect_belongs_to_mut …
 
 src/schema/app/fk.rs
      4→pub struct ForeignKey {
@@ -162,8 +223,19 @@ src/schema/app/index.rs
 src/schema/app/model.rs
      6→pub struct Model {
     23→pub enum ModelKind {
+    24→    /// Root model that maps to a database table and can be queried directly
+    25→    Root(ModelRoot),
+    26→    /// Embedded model that is flattened into its parent model's table
+    27→    Embedded,
+    28→}
     31→pub struct ModelRoot {
     41→pub struct ModelId(pub usize);
+    45→    pub fn is_root …
+    50→    pub fn is_embedded …
+    55→    pub fn primary_key …
+    63→    pub fn can_be_relation_target …
+   126→    pub fn primary_key_fields …
+   146→    pub const fn field …
 
 src/schema/app/pk.rs
      4→pub struct PrimaryKey {
@@ -179,16 +251,23 @@ src/schema/app/relation/has_one.rs
 
 src/schema/app/schema.rs
      7→pub struct Schema {
+    12→struct Builder {
+    22→    pub fn field …
+    34→    pub fn model …
+    47→    pub fn resolve_field …
+   109→    fn link_relations …
 
 src/schema/builder.rs
     11→pub struct Builder {
     12→    /// If set, prefix all table names with this string
     13→    table_name_prefix: Option<String>,
     14→}
+    17→struct BuildSchema …
 
 src/schema/db/column.rs
     12→pub struct Column {
     39→pub struct ColumnId {
+   122→pub enum ColumnsDiffItem<'a> {
 
 src/schema/db/diff.rs
      6→pub struct RenameHints {
@@ -208,6 +287,7 @@ src/schema/db/index.rs
     65→    /// The index column is scoped to a physical node.
     66→    Local,
     67→}
+   186→pub enum IndicesDiffItem<'a> {
 
 src/schema/db/migration.rs
      2→pub enum Migration {
@@ -230,6 +310,7 @@ src/schema/db/table.rs
     16→pub struct Table {
     34→pub struct TableId(pub usize);
     53→    pub fn resolve …
+   144→pub enum TablesDiffItem<'a> {
 
 src/schema/db/ty.rs
     63→pub enum Type {
@@ -251,6 +332,17 @@ src/schema/db/ty.rs
     79→    /// 128-bit universally unique identifier (UUID)
     80→    Uuid,
     81→
+    82→    /// Decimal number with optional precision and scale.
+    83→    /// - `None`: Arbitrary-precision decimal
+    84→    /// - `Some((precision, scale))`: Fixed precision and scale
+    85→    Numeric(Option<(u32, u32)>),
+    86→
+    87→    /// Unconstrained binary type
+    88→    Blob,
+    89→
+    90→    /// Fixed-size binary type of `n` bytes
+    91→    Binary(u8),
+    92→
       →…
    111→    pub fn from_app …
    159→    pub fn bridge_type …
@@ -310,26 +402,11 @@ src/schema.rs
     31→}
 
 src/stmt/assignments.rs
-     9→pub struct Assignments {
-    18→pub struct Assignment {
     27→pub enum AssignmentOp {
 
-src/stmt/association.rs
-     4→pub struct Association {
-
-src/stmt/condition.rs
-     4→pub struct Condition {
-
-src/stmt/cte.rs
-     4→pub struct Cte {
-
 src/stmt/cx.rs
-    16→pub struct ExprContext<'a, T = Schema> {
     34→pub enum ResolvedRef<'a> {
     82→pub enum ExprTarget<'a> {
-
-src/stmt/delete.rs
-     5→pub struct Delete {
 
 src/stmt/direction.rs
      3→pub enum Direction {
@@ -342,120 +419,30 @@ src/stmt/entry_mut.rs
 
 src/stmt/expr.rs
     13→pub enum Expr {
-    96→    pub const TRUE …
-    97→    pub const FALSE …
-    98→    pub const DEFAULT …
-
-src/stmt/expr_and.rs
-    17→pub struct ExprAnd {
-
-src/stmt/expr_any.rs
-    16→pub struct ExprAny {
-
-src/stmt/expr_arg.rs
-    15→pub struct ExprArg {
-
-src/stmt/expr_begins_with.rs
-    13→pub struct ExprBeginsWith {
-
-src/stmt/expr_binary_op.rs
-    17→pub struct ExprBinaryOp {
-
-src/stmt/expr_cast.rs
-    14→pub struct ExprCast {
-
-src/stmt/expr_concat.rs
-    15→pub struct ExprConcat {
-
-src/stmt/expr_concat_str.rs
-    14→pub struct ExprConcatStr {
-
-src/stmt/expr_exists.rs
-    14→pub struct ExprExists {
+    96→    pub const TRUE: Expr = Expr::Value(Value::Bool(true));
+    97→    pub const FALSE: Expr = Expr::Value(Value::Bool(false));
+    98→    pub const DEFAULT: Expr = Expr::Default;
 
 src/stmt/expr_func.rs
     15→pub enum ExprFunc {
 
-src/stmt/expr_in_list.rs
-    15→pub struct ExprInList {
-
-src/stmt/expr_in_subquery.rs
-    15→pub struct ExprInSubquery {
-
-src/stmt/expr_is_null.rs
-    14→pub struct ExprIsNull {
-
-src/stmt/expr_key.rs
-    15→pub struct ExprKey {
-
-src/stmt/expr_like.rs
-    16→pub struct ExprLike {
-
-src/stmt/expr_list.rs
-    14→pub struct ExprList {
-
-src/stmt/expr_map.rs
-    31→pub struct ExprMap {
-
-src/stmt/expr_not.rs
-    16→pub struct ExprNot {
-
-src/stmt/expr_or.rs
-    16→pub struct ExprOr {
-
 src/stmt/expr_pattern.rs
      7→pub enum ExprPattern {
 
-src/stmt/expr_project.rs
-    19→pub struct ExprProject {
-
-src/stmt/expr_record.rs
-    18→pub struct ExprRecord {
-
 src/stmt/expr_reference.rs
     20→pub enum ExprReference {
-    50→pub struct ExprColumn {
 
 src/stmt/expr_set.rs
     18→pub enum ExprSet {
 
-src/stmt/expr_set_op.rs
-    16→pub struct ExprSetOp {
-
-src/stmt/expr_stmt.rs
-    14→pub struct ExprStmt {
-
-src/stmt/expr_ty.rs
-    14→pub struct ExprTy {
-
 src/stmt/filter.rs
-     4→pub struct Filter {
     10→    pub const ALL: Filter = Filter { expr: None };
-
-src/stmt/func_count.rs
-     4→pub struct FuncCount {
-
-src/stmt/func_last_insert_id.rs
-    20→pub struct FuncLastInsertId;
-
-src/stmt/input.rs
-    23→pub struct ConstInput {}
-
-src/stmt/insert.rs
-     5→pub struct Insert {
-
-src/stmt/insert_table.rs
-     5→pub struct InsertTable {
 
 src/stmt/insert_target.rs
      9→pub enum InsertTarget {
 
 src/stmt/join.rs
-     4→pub struct Join {
     13→pub enum JoinOp {
-
-src/stmt/limit.rs
-     4→pub struct Limit {
 
 src/stmt/offset.rs
      4→pub enum Offset {
@@ -466,47 +453,14 @@ src/stmt/op_binary.rs
 src/stmt/op_set.rs
      4→pub enum SetOp {
 
-src/stmt/order_by.rs
-     4→pub struct OrderBy {
-
-src/stmt/order_by_expr.rs
-     4→pub struct OrderByExpr {
-
-src/stmt/path.rs
-     8→pub struct Path {
-
-src/stmt/path_field_set.rs
-     6→pub struct PathFieldSet {
-
-src/stmt/projection.rs
-    17→pub struct Projection {
-
 src/stmt/query.rs
-     8→pub struct Query {
     32→pub enum Lock {
-    38→pub struct QueryBuilder {
 
 src/stmt/returning.rs
      6→pub enum Returning {
 
-src/stmt/select.rs
-     8→pub struct Select {
-
 src/stmt/source.rs
     11→pub enum Source {
-    20→pub struct SourceModel {
-
-src/stmt/source_table.rs
-     6→pub struct SourceTable {
-
-src/stmt/source_table_id.rs
-     2→pub struct SourceTableId(pub usize);
-
-src/stmt/sparse_record.rs
-     7→pub struct SparseRecord {
-
-src/stmt/table_derived.rs
-     4→pub struct TableDerived {
 
 src/stmt/table_factor.rs
      4→pub enum TableFactor {
@@ -514,36 +468,20 @@ src/stmt/table_factor.rs
 src/stmt/table_ref.rs
      6→pub enum TableRef {
 
-src/stmt/table_with_joins.rs
-     4→pub struct TableWithJoins {
-
 src/stmt/ty.rs
     70→pub enum Type {
 
 src/stmt/update.rs
-     8→pub struct Update {
     32→pub enum UpdateTarget {
 
 src/stmt/value.rs
      6→pub enum Value {
-
-src/stmt/value_list.rs
-
-src/stmt/value_record.rs
-     6→pub struct ValueRecord {
-
-src/stmt/value_stream.rs
-    15→pub struct ValueStream {
-
-src/stmt/values.rs
-     5→pub struct Values {
-
-src/stmt/with.rs
-     4→pub struct With {
+   282→    fn partial_cmp …
 
 src/stmt.rs
    235→pub mod visit_mut;
    243→pub mod visit;
+   252→#[derive(Clone, PartialEq)]
    253→pub enum Statement {
    254→    /// Delete one or more existing records
    255→    Delete(Delete),
