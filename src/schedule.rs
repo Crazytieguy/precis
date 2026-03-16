@@ -298,6 +298,9 @@ fn is_boilerplate_heading(name: &str) -> bool {
             | "changelog" | "release notes" | "releases" | "history"
             | "related" | "related projects" | "alternatives"
             | "faq" | "frequently asked questions"
+            | "table of contents" | "contents"
+            | "star history" | "stargazers" | "star gazers"
+            | "development" | "developing" | "local development"
     )
 }
 

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4005 tokens)
+budget: 4000 (4004 tokens)
 
 README.md
     26→# D2TS - Differential Dataflow in TypeScript <!-- omit in toc -->
@@ -14,7 +14,6 @@ README.md
     33→
     34→A D2TS pipeline is also fully type safe, inferring the types at each step of the pipeline, and supports auto-complete in your IDE.
     35→
-    36→## Table of Contents
     51→## Key Features
     88→## Quick Start
    200→## Examples
@@ -24,22 +23,12 @@ README.md
 
 src/d2.ts
     11→export type D2Options = {
-    12→  initialFrontier: Antichain | Version | number | number[]
-    13→}
     15→export class D2 implements ID2 {
-    16→  #streams: DifferenceStreamReader<any>[] = []
-    17→  #operators: (UnaryOperator<any> | BinaryOperator<any>)[] = []
-    18→  #frontierStack: Antichain[] = []
-    19→  #nextOperatorId = 0
-    20→  #finalized = false
-    21→
     93→export class StreamBuilder<T> implements IStreamBuilder<T> {
-    94→  #graph: ID2
-    95→  #writer: DifferenceStreamWriter<T>
-    96→
    166→export class RootStreamBuilder<T> extends StreamBuilder<T> {
 
 src/electric/index.ts
+    17→import { …
     40→export interface ElectricStreamToD2InputOptions<T extends Row<unknown> = Row> {
     41→  /** D2 Graph to send messages to */
     42→  graph: D2
@@ -250,10 +239,12 @@ src/sqlite/database.ts
     49→export class BetterSQLite3Wrapper implements SQLiteDb {
     50→  #db: import('better-sqlite3').Database
     51→
-    52→  constructor …
-    56→  exec …
-    60→  prepare …
-    74→  close …
+    52→  constructor(db: import('better-sqlite3').Database) {
+    56→  exec(sql: string): void {
+    60→  prepare<Params = unknown, Result = unknown>(
+    61→    sql: string,
+    62→  ): SQLiteStatement<Params, Result> {
+    74→  close(): void {
 
 src/sqlite/operators/buffer.ts
     32→export class BufferOperatorSQLite<T> extends UnaryOperator<T> {
@@ -336,25 +327,25 @@ src/sqlite/version-index.ts
     65→  #statementCache = new Map<string, SQLiteStatement>()
     66→  #preparedStatements: PreparedStatements
     67→
-    68→  constructor …
-   237→  get isTemp …
-   241→  get tableName …
-   245→  getCompactionFrontier …
-   259→  setCompactionFrontier …
+    68→  constructor(db: SQLiteDb, name: string, isTemp = false) {
+   237→  get isTemp(): boolean {
+   241→  get tableName(): string {
+   245→  getCompactionFrontier(): Antichain | null {
+   259→  setCompactionFrontier(frontier: Antichain): void {
    265→  #validate …
-   281→  reconstructAt …
-   294→  get …
-   308→  entries …
-   316→  versions …
-   322→  addValue …
-   337→  addValues …
-   378→  addModifiedKeys …
-   396→  append …
-   433→  join …
-   502→  compact …
-   578→  showAll …
-   590→  truncate …
-   597→  destroy …
+   281→  reconstructAt(key: K, requestedVersion: Version): [V, number][] {
+   294→  get(key: K): VersionMap<[V, number]> {
+   308→  entries(): [K, VersionMap<[V, number]>][] {
+   316→  versions(key: K): Version[] {
+   322→  addValue(key: K, version: Version, value: [V, number]): void {
+   337→  addValues(items: [K, Version, [V, number]][]): void {
+   378→  addModifiedKeys(keys: K[]): void {
+   396→  append(other: SQLIndex<K, V>): void {
+   433→  join<V2>(other: SQLIndex<K, V2>): [Version, MultiSet<[K, [V, V2]]>][] {
+   502→  compact(compactionFrontier: Antichain, keys: K[] = []): void {
+   578→  showAll(): { key: K; version: Version; value: V; multiplicity: number }[] {
+   590→  truncate(): void {
+   597→  destroy(): void {
 
 src/types.ts
      5→export type KeyValue<K, V> = [K, V]
@@ -362,24 +353,13 @@ src/types.ts
     12→export type MessageType = (typeof MessageType)[keyof typeof MessageType]
     14→export type Message<T> =
     15→  | {
-    16→      type: typeof MessageType.DATA
-    17→      data: DataMessage<T>
-    18→    }
-    19→  | {
-    20→      type: typeof MessageType.FRONTIER
-    21→      data: FrontierMessage
-    22→    }
     24→export type DataMessage<T> = {
-    25→  version: Version
-    26→  collection: MultiSet<T>
-    27→}
     29→export type FrontierMessage = Version | Antichain
     31→export interface IOperator<_T> {
     37→export interface IDifferenceStreamReader<T> {
     43→export interface IDifferenceStreamWriter<T> {
     52→export interface ID2 {
     64→export interface IStreamBuilder<T> {
-    65→  writer: DifferenceStreamWriter<T>
    117→export type PipedOperator<I, O> = (
    118→  stream: IStreamBuilder<I>,
    119→) => IStreamBuilder<O>

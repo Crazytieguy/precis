@@ -9,7 +9,6 @@ README.md
     28→D2TS is a TypeScript implementation of [differential dataflow](https://github.com/TimelyDataflow/differential-dataflow) - a powerful data-parallel programming framework that enables incremental computations over changing input data.
     29→
       →…
-    36→## Table of Contents
     51→## Key Features
     73→## Quick Start
    185→## Examples
@@ -158,6 +157,7 @@ packages/d2mini/src/utils.ts
    119→export class ObjectIdGenerator {
    128→  getId(value: any): number {
    151→  getStringId(value: any): string {
+   161→ * Global instance for cases where a shared object ID space is needed.
    163→export const globalObjectIdGenerator = new ObjectIdGenerator()
 
 packages/d2ql/README.md
@@ -250,7 +250,6 @@ packages/d2ts/README.md
     28→D2TS is a TypeScript implementation of [differential dataflow](https://github.com/MaterializeInc/differential) - a powerful data-parallel programming framework that enables incremental computations over changing input data.
     29→
       →…
-    36→## Table of Contents
     51→## Key Features
     88→## Quick Start
    200→## Examples

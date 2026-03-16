@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3998 tokens)
+budget: 4000 (3997 tokens)
 
 README.md
     10→# `htmy`
@@ -28,7 +28,6 @@ README.md
    337→## External examples
    341→## Why
    353→## Dependencies
-   361→## Development
 
 pyproject.toml
      1→[project]
@@ -122,7 +121,6 @@ docs/index.md
    330→## Framework integrations
    337→## Why
    349→## Dependencies
-   357→## Development
 
 examples/internationalization/app.py
      8→class TranslatedComponent:
@@ -305,7 +303,6 @@ htmy/md/core.py
     37→        """
     43→    def __init__ …
     53→    def parse …
-    64→    def _default_md …
     81→class MD(Snippet):
     97→
     98→    __slots__ = (
@@ -314,7 +311,6 @@ htmy/md/core.py
    101→    )
    102→
    103→    def __init__ …
-   131→    def _render_text …
 
 htmy/md/typing.py
     11→MarkdownMetadataDict: TypeAlias = dict[str, Any]
@@ -446,25 +442,29 @@ mkdocs.yaml
      7→  palette:
      8→    # Palette toggle for automatic mode
      9→    - media: "(prefers-color-scheme)"
-      →    …
+    10→      scheme: slate
+      →      …
     33→plugins:
     34→  - search:
     35→      lang: en
     36→  - mkdocstrings:
     37→      handlers:
-      →      …
+    38→        python:
+      →        …
     41→markdown_extensions:
     42→  - pymdownx.highlight:
     43→      anchor_linenums: true
     44→      line_spans: __span
     45→      pygments_lang_class: true
-      →      …
+    46→  - pymdownx.inlinehilite
+      →  …
     50→nav:
     51→  - index.md
     52→  - components-guide.md
     53→  - function-components.md
     54→  - Examples:
-      →  …
+    55→      - Examples: examples/index.md
+      →      …
 
 tests/data/blog-post.md
      5→# Essential reading
@@ -477,7 +477,6 @@ tests/renderer/test_renderer_comparison.py
     97→class AsyncError:
 
 tests/test_function_component.py
-    12→rendering_context …
     69→class Data:
     70→    goodbye: str
     71→

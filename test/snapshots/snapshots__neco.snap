@@ -21,8 +21,6 @@ README.md
    473→## Platform notes
    498→## The scheduler
 
-docs/API.md
-
 docs/README.md
      1→# Neco Documentation
      3→## [API.md](API.md)
@@ -39,6 +37,7 @@ docs/TECHNICAL.md
     10→- The runtime and scheduler
     11→- Coroutine context switching
     12→- Signal handling
+    13→- Deadlines
       →…
 
 docs/assets/API_head.md
@@ -46,7 +45,6 @@ docs/assets/API_head.md
      3→C API for the Neco coroutine library.
      4→
       →…
-    12→## Table of contents
     34→## Programming notes
 
 examples/README.md
@@ -143,6 +141,8 @@ neco.h
    447→void __neco_c1(int);
    448→void __neco_exit_prog(int);
    453→#define EAI_SYSTEM 11
+
+tests/README.md
 
 tests/panic.h
      8→#define pwhere(str) \
