@@ -96,9 +96,6 @@ examples/airline/configs/tools.py
     23→def case_resolved():
     27→def initiate_baggage_search():
 
-examples/airline/data/routines/baggage/policies.py
-     3→STARTER_PROMPT …
-
 examples/airline/data/routines/flight_modification/policies.py
      2→STARTER_PROMPT = """You are an intelligent and empathetic customer support representative for Fly Airlines customers .
     20→FLIGHT_CANCELLATION_POLICY = f"""
@@ -140,12 +137,9 @@ examples/customer_service_streaming/configs/general.py
      4→    OKCYAN = '\033[96m'
      5→    OKGREEN = '\033[92m'
      6→    WARNING = '\033[93m'
-     7→    RED = '\033[91m'
       →    …
 
 examples/customer_service_streaming/configs/prompts.py
-    15→# IMPORTANT: If you are missing
-      →…
     19→LOCAL_PLANNER_PROMPT = """
 
 examples/customer_service_streaming/docker-compose.yaml
@@ -170,6 +164,7 @@ examples/customer_service_streaming/src/evals/eval_function.py
      9→
 
 examples/customer_service_streaming/src/swarm/engines/engine.py
+     1→# engine.py
      2→class Engine:
 
 examples/customer_service_streaming/src/swarm/engines/local_engine.py
@@ -288,13 +283,25 @@ examples/triage_agent/README.md
      6→## Setup
     16→## Evals
 
+examples/triage_agent/agents.py
+     4→def process_refund(item_id, reason="NOT SPECIFIED"):
+    10→def apply_discount():
+    31→def transfer_back_to_triage():
+    36→def transfer_to_sales():
+    40→def transfer_to_refunds():
+
 examples/triage_agent/evals.py
      9→CONVERSATIONAL_EVAL_SYSTEM_PROMPT = """
+    19→def conversation_was_successful(messages) -> bool:
+    27→def run_and_get_tool_calls(agent, query):
+    44→def test_triage_agent_calls_correct_function(query, function_name):
+    68→def test_conversation_is_successful(messages):
 
 examples/triage_agent/evals_util.py
      9→class BoolEvalResult(BaseModel):
     10→    value: bool
     11→    reason: Optional[str]
+    14→def evaluate_with_llm_bool(instruction, data) -> BoolEvalResult:
 
 examples/weather_agent/README.md
      1→# Weather agent
@@ -318,21 +325,13 @@ pyproject.toml
      3→build-backend = "setuptools.build_meta"
 
 swarm/__init__.py
-     1→from .core import Swarm
-     2→from .types import Agent, Response
+     1→from .core …
+     2→from .types …
      4→__all__ = ["Swarm", "Agent", "Response"]
 
 swarm/core.py
-    12→from .util import function_to_json, debug_print, merge_chunk
-    13→from .types import (
-    14→    Agent,
-    15→    AgentFunction,
-    16→    ChatCompletionMessage,
-    17→    ChatCompletionMessageToolCall,
-    18→    Function,
-    19→    Response,
-    20→    Result,
-    21→)
+    12→from .util …
+    13→from .types …
     23→__CTX_VARS_NAME__ = "context_variables"
     26→class Swarm:
     27→    def __init__ …
@@ -366,9 +365,7 @@ swarm/types.py
     26→    context_variables: dict = {}
     29→class Result(BaseModel):
     30→    """
-    31→    Encapsulates the possible return values for an agent function.
-    32→
-      →…
+      →    …
     38→
     39→    value: str = ""
     40→    agent: Optional[Agent] = None

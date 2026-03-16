@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3997 tokens)
+budget: 4000 (4001 tokens)
 
 FUNDING.yml
      1→github: emilkowalski
@@ -27,6 +27,8 @@ package.json
     61→  "peerDependencies": {
     65→  "packageManager": "pnpm@8.8.0",
     66→  "dependencies": {
+
+playwright.config.ts
 
 pnpm-workspace.yaml
      1→packages:
@@ -55,13 +57,13 @@ src/constants.ts
 src/context.ts
      1→import React from 'react';
      2→import { DrawerDirection } from './types';
-     4→interface DrawerContextValue {
+     4→interface DrawerContextValue …
     37→export const DrawerContext = React.createContext<DrawerContextValue>({
     69→export const useDrawerContext …
 
 src/helpers.ts
      1→import { AnyFunction, DrawerDirection } from './types';
-     3→interface Style {
+     3→interface Style …
      7→const cache = new WeakMap();
      9→export function isInView …
     23→export function set …
@@ -217,7 +219,7 @@ src/index.tsx
    994→const DOUBLE_TAP_TIMEOUT = 120;
    996→export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(function (
   1098→export function NestedRoot …
-  1128→type PortalProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Portal>;
+  1128→type PortalProps …
   1130→export function Portal …
   1137→export const Drawer = {
 
@@ -231,15 +233,15 @@ src/types.ts
 
 src/use-composed-refs.ts
      3→import * as React from 'react';
-     5→type PossibleRef<T> = React.Ref<T> | undefined;
+     5→type PossibleRef …
     11→function setRef<T>(ref: PossibleRef<T>, value: T) {
     23→function composeRefs<T>(...refs: PossibleRef<T>[]) {
     31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
 
 src/use-controllable-state.ts
      3→import React from 'react';
-     5→type UseControllableStateParams<T> = {
-    11→type SetStateFn<T> = (prevState?: T) => T;
+     5→type UseControllableStateParams …
+    11→type SetStateFn …
     13→function useCallbackRef …
     24→function useUncontrolledState …
     39→export function useControllableState …
@@ -274,7 +276,7 @@ src/use-prevent-scroll.ts
      4→import { isIOS } from './browser';
      6→const KEYBOARD_BUFFER = 24;
      8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
-    10→interface PreventScrollOptions {
+    10→interface PreventScrollOptions …
     16→function chain …
     27→const visualViewport = typeof document !== 'undefined' && window.visualViewport;
     29→export function isScrollable …
@@ -317,8 +319,13 @@ test/src/app/controlled/page.tsx
 test/src/app/default-open/page.tsx
      6→export default function Page() {
 
+test/src/app/different-directions/page.tsx
+   118→export default function Page() {
+
+test/src/app/initial-snap/page.tsx
+     9→export default function Page() {
+
 test/src/app/layout.tsx
-     1→import './globals.css';
      7→export const metadata: Metadata = {
     12→export default function RootLayout({ children }: { children: React.ReactNode }) {
 

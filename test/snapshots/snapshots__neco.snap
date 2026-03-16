@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2001 tokens)
+budget: 2000 (2000 tokens)
 
 README.md
     18→## Features
@@ -20,7 +20,6 @@ README.md
    431→## Example 10 (Suspending and resuming a coroutine)
    473→## Platform notes
    498→## The scheduler
-   579→## License
 
 docs/API.md
      3→# Neco C API
@@ -29,6 +28,9 @@ docs/README.md
      1→# Neco Documentation
      3→## [API.md](API.md)
      5→The Neco library API reference. This document includes information about each
+     6→type and function and is generated from the [neco.h](../neco.h) and [neco.c](../neco.c)
+     7→source files using a [doxygen](https://www.doxygen.nl) syntax.
+     8→
       →…
 
 docs/TECHNICAL.md
@@ -41,9 +43,6 @@ docs/assets/API_head.md
       →…
     12→## Table of contents
     34→## Programming notes
-
-docs/tools/README.md
-     1→# Tools
 
 examples/README.md
      1→# Neco examples 
@@ -138,9 +137,7 @@ neco.h
    378→#define NECO_NOTSUSPENDED  -18  ///< Coroutine is not suspended (neco_resume)
    396→typedef struct neco_stream neco_stream;
    427→#define neco_main \
-   446→void __neco_c0(void*,void(*)(void*),void*); 
-   447→void __neco_c1(int);
-   448→void __neco_exit_prog(int);
+   446→void __neco_c0 …
    453→#define EAI_SYSTEM 11
 
 tests/README.md
@@ -150,8 +147,6 @@ tests/panic.h
      8→#define pwhere(str) \
     14→#define unreachable() \
     21→#define must(cond) \
-
-tests/signals.h
 
 tests/tests.h
     24→#define IS_FAIL_TARGET

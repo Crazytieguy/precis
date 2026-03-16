@@ -74,9 +74,6 @@ bindings/python/extra_init.py
     11→def serialize_int8(vector: List[int]) -> bytes:
     44→    def register_numpy(db: Connection, name: str, array):
 
-bindings/rust/build.rs
-     1→fn main() {
-
 bindings/rust/src/lib.rs
      3→    pub fn sqlite3_vec_init();
 
@@ -129,6 +126,10 @@ examples/wasm/README.md
      3→You can compile your own version of SQLite's WASM build with `sqlite-vec`
      4→builtin. Dynamically loading SQLite extensions is not supported in the official
      5→WASM build yet, but you can statically compile extensions in. It's not well
+     6→documented, but the `sqlite3_wasm_extra_init` option in the SQLite `ext/wasm`
+     7→Makefile allows you to inject your own code at initialization time. See the
+     8→`Makefile` at the room of the project for more info.
+     9→
       →…
 
 reference.yaml
@@ -139,8 +140,6 @@ reference.yaml
    258→distance:
    308→quantization:
    328→vec0:
-
-site/package.json
 
 site/project.data.ts
     13→  load() {
@@ -162,7 +161,6 @@ sqlite-vec.c
    121→};
    169→static f32 l2_sqr_float_neon …
    527→static unsigned int __builtin_popcountl …
-   536→#define __builtin_popcountl __popcnt64
    556→static f32 distance_hamming …
    585→typedef void (*vector_cleanup)(void *p);
    598→struct Array {
@@ -333,12 +331,6 @@ sqlite-vec.c
 
 test.sql
      1→
-
-tests/Cargo.toml
-     1→[package]
-     6→[dependencies]
-     8→[build-dependencies]
-    11→[[bin]]
 
 tests/afbd/README.md
      2→# hnm

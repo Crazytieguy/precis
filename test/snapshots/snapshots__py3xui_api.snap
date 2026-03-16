@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2000 tokens)
+budget: 2000 (1984 tokens)
 
 README.md
      3→# api.api\_database
@@ -31,6 +31,9 @@ api.py
      9→from py3xui.api …
     10→from py3xui.utils …
     13→class Api:
+    14→    """This class provides a high-level interface to interact with the XUI API.
+    15→    Access to the client, inbound, and database APIs is provided through this class.
+      →    …
     66→
     67→    def __init__(
     68→        self,
@@ -84,9 +87,7 @@ api_base.py
     37→        logger (Any | None): The logger, if not set, a dummy logger is used.
     38→
     39→    Attributes and Properties:
-    40→        host (str): The host of the XUI API.
-    41→        username (str): The username for the XUI API.
-      →        …
+      →    …
     60→
     61→    def __init__(
     62→        self,
@@ -114,22 +115,14 @@ api_base.py
    160→    @cookie_name.setter
    161→    def cookie_name(self, value: str | None) -> None:
    168→    def login(self, two_factor_code: str | int | None = None) -> None:
-   194→    def _get_cookie(self, response: requests.Response) -> str | None:
+   194→    def _get_cookie …
    210→    @property
    211→    def cookies(self) -> dict[str, str]:
-   220→    def _check_response(self, response: requests.Response) -> None:
-   236→    def _url(self, endpoint: str) -> str:
-   246→    def _request_with_retry(
-   247→        self,
-   248→        method: Callable[..., requests.Response],
-   249→        url: str,
-   250→        headers: dict[str, str],
-   251→        **kwargs: Any,
-   252→    ) -> requests.Response:
-   313→    def _post(
-   314→        self, url: str, headers: dict[str, str], data: dict[str, Any], **kwargs
-   315→    ) -> requests.Response:
-   333→    def _get(self, url: str, headers: dict[str, str], **kwargs) -> requests.Response:
+   220→    def _check_response …
+   236→    def _url …
+   246→    def _request_with_retry …
+   313→    def _post …
+   333→    def _get …
 
 api_client.py
      6→import json …
@@ -137,6 +130,9 @@ api_client.py
      9→from py3xui.api.api_base …
     10→from py3xui.client …
     13→class ClientApi(BaseApi):
+    14→    """This class provides methods to interact with the clients in the XUI API.
+    15→
+      →…
     51→
     52→    def get_by_email(self, email: str) -> Client | None:
     89→    def get_ips(self, email: str) -> list[str]:
@@ -152,6 +148,9 @@ api_client.py
 api_database.py
      4→from py3xui.api.api_base …
      7→class DatabaseApi(BaseApi):
+     8→    """This class provides methods to interact with the database in the XUI API.
+     9→
+      →…
     31→
     32→    def export(self) -> None:
 
@@ -160,6 +159,9 @@ api_inbound.py
      5→from py3xui.api.api_base …
      6→from py3xui.inbound …
      9→class InboundApi(BaseApi):
+    10→    """This class provides methods to interact with the inbounds in the XUI API.
+    11→
+      →…
     39→
     40→    def get_list(self) -> list[Inbound]:
     71→    def get_by_id(self, inbound_id: int) -> Inbound:
@@ -173,6 +175,9 @@ api_server.py
      3→from py3xui.api.api_base …
      4→from py3xui.server.server …
      7→class ServerApi(BaseApi):
+     8→    """This class provides methods to interact with the server in the XUI API.
+     9→
+      →…
     34→
     35→    def get_db(self, save_path: str) -> None:
     67→    def get_status(self) -> Server:

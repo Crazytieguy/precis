@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3998 tokens)
+budget: 4000 (3996 tokens)
 
 Changelog.md
      1→# Changelog
@@ -73,6 +73,7 @@ docs/readme.md
     29→  },
     30→}
     31→
+    32→assert(data, Article)
       →…
 
 docs/reference/coercions.md
@@ -279,7 +280,7 @@ src/structs/utilities.ts
 src/utils.ts
      1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
      2→import { Failure } from './error.js'
-     8→function isIterable<T>(x: unknown): x is Iterable<T> {
+     8→function isIterable …
     16→export function isObject(x: unknown): x is object {
     24→export function isNonArrayObject(x: unknown): x is object {
     32→export function isPlainObject(x: unknown): x is { [key: string]: any } {

@@ -2,12 +2,9 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1983 tokens)
+budget: 2000 (1997 tokens)
 
 ast.rs
-     1→use crate::attr::{self, Attrs};
-     2→use crate::generics::ParamsInScope;
-     3→use crate::unraw::{IdentUnraw, MemberUnraw};
     10→pub enum Input<'a> {
     11→    Struct(Struct<'a>),
     12→    Enum(Enum<'a>),
@@ -106,27 +103,16 @@ attr.rs
    343→    fn to_tokens …
 
 expand.rs
-     1→use crate::ast::{Enum, Field, Input, Struct};
-     2→use crate::attr::Trait;
-     3→use crate::fallback;
-     4→use crate::generics::InferredBounds;
-     5→use crate::private;
-     6→use crate::unraw::MemberUnraw;
     12→pub fn derive(input: &DeriveInput) -> TokenStream {
 
 fallback.rs
-     1→use crate::expand::call_site_ident;
-     2→use crate::private;
 
 fmt.rs
-     1→use crate::ast::{ContainerKind, Field};
-     2→use crate::attr::{Display, Trait};
-     3→use crate::private;
-     4→use crate::scan_expr::scan_expr;
-     5→use crate::unraw::{IdentUnraw, MemberUnraw};
     16→    pub fn expand_shorthand(&mut self, fields: &[Field], container: ContainerKind) -> Result<()> {
    166→struct FmtArguments {
-   171→#[allow(clippy::unnecessary_wraps)]
+   167→    named: BTreeSet<IdentUnraw>,
+   168→    first_unnamed: Option<TokenStream>,
+   169→}
    172→fn explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
 
 generics.rs
@@ -163,13 +149,44 @@ lib.rs
     49→    fn to_tokens …
 
 prop.rs
-     1→use crate::ast::{Enum, Field, Struct, Variant};
-     2→use crate::unraw::MemberUnraw;
 
 scan_expr.rs
-     1→use self::{Action::*, Input::*};
      6→enum Input {
+     7→    Keyword(&'static str),
+     8→    Punct(&'static str),
+     9→    ConsumeAny,
+    10→    ConsumeBinOp,
+    11→    ConsumeBrace,
+    12→    ConsumeDelimiter,
+      →    …
     25→enum Action {
+    26→    SetState(&'static [(Input, Action)]),
+    27→    IncDepth,
+    28→    DecDepth,
+    29→    Finish,
+    30→}
+    32→static INIT …
+    63→static POSTFIX …
+    76→static ASYNC …
+    82→static BLOCK …
+    84→static BREAK_LABEL …
+    89→static BREAK_VALUE …
+    95→static CLOSURE …
+   104→static CLOSURE_ARGS …
+   109→static CLOSURE_RET …
+   114→static CONST …
+   119→static CONTINUE …
+   124→static DOT …
+   130→static FOR …
+   135→static IF_ELSE …
+   136→static IF_THEN …
+   139→static METHOD …
+   141→static PATH …
+   148→static PATTERN …
+   166→static RANGE …
+   175→static RAW …
+   181→static REFERENCE …
+   187→static RETURN …
 
 unraw.rs
     10→#[derive(Clone)]
@@ -198,5 +215,3 @@ unraw.rs
    136→    fn to_tokens …
 
 valid.rs
-     1→use crate::ast::{Enum, Field, Input, Struct, Variant};
-     2→use crate::attr::Attrs;

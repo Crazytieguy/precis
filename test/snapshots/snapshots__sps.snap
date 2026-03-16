@@ -2,9 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7996 tokens)
-
-CONTRIBUTING.md
+budget: 8000 (7999 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -102,8 +100,6 @@ sps/src/cli/search.rs
 
 sps/src/cli/status.rs
     13→enum JobStatus {
-    69→struct JobInfo {
-    94→struct StatusDisplay {
    399→pub async fn handle_events …
 
 sps/src/cli/uninstall.rs
@@ -155,9 +151,7 @@ sps/src/cli.rs
     57→    pub async fn run …
 
 sps/src/main.rs
-    17→mod cli;
-    18→mod pipeline;
-    57→async fn main() -> spResult<()> {
+    57→async fn main …
 
 sps/src/pipeline/downloader.rs
     29→    pub fn new …
@@ -307,6 +301,15 @@ sps-common/src/error.rs
     28→    #[error("API Request Error: {0}")]
     29→    ApiRequestError(String),
     30→
+    31→    #[error("DownloadError: Failed to download '{0}' from '{1}': {2}")]
+    32→    DownloadError(String, String, String),
+    33→
+    34→    #[error("Cache Error: {0}")]
+    35→    Cache(String),
+    36→
+    37→    #[error("Resource Not Found: {0}")]
+    38→    NotFound(String),
+    39→
       →…
    119→pub type Result<T> = std::result::Result<T, SpsError>;
 
@@ -497,6 +500,15 @@ sps-common/src/pipeline.rs
     72→    DownloadFinished {
     73→        target_id: String,
     74→        path: PathBuf,
+    75→        size_bytes: u64,
+    76→    },
+    77→    DownloadProgressUpdate {
+    78→        target_id: String,
+    79→        bytes_so_far: u64,
+    80→        total_size: Option<u64>,
+    81→    },
+    82→    DownloadCached {
+    83→        target_id: String,
       →        …
    163→pub enum JobProcessingState {
    164→    /// Waiting for download to be initiated.
@@ -546,7 +558,6 @@ sps-core/Cargo.toml
       →…
 
 sps-core/src/build/env.rs
-    12→use crate::install::devtools;
    141→pub struct BuildEnvironment {
    142→    /// The final map of environment variables to be used for build commands.
    143→    vars: HashMap<String, String>,
@@ -569,7 +580,6 @@ sps-core/src/build/env.rs
    160→    #[allow(dead_code)]
    161→    sdk_path: PathBuf,
    162→}
-   164→impl BuildEnvironment {
    166→    pub fn new …
    463→    pub fn apply_to_command …
    476→    pub fn get_path_string …
@@ -600,7 +610,6 @@ sps-core/src/check/mod.rs
      2→pub mod update;
 
 sps-core/src/check/update.rs
-    20→use crate::check::installed::{InstalledPackageInfo, PackageType};
     23→pub struct UpdateInfo {
     24→    pub name: String,
     25→    pub installed_version: String,
@@ -608,7 +617,7 @@ sps-core/src/check/update.rs
     27→    pub pkg_type: PackageType,
     28→    pub target_definition: InstallTargetIdentifier,
     29→}
-    33→async fn ensure_api_data_cached(cache: &Cache) -> Result<()> {
+    33→async fn ensure_api_data_cached …
     89→pub async fn check_for_updates …
 
 sps-core/src/install/bottle/macho.rs
@@ -630,7 +639,6 @@ sps-core/src/install/cask/mod.rs
      1→pub mod artifacts;
      2→pub mod dmg;
      3→pub mod helpers;
-    22→use crate::install::extract;
     25→pub struct CaskInstallManifest {
     26→    pub manifest_format_version: String,
     27→    pub token: String,
@@ -649,7 +657,6 @@ sps-core/src/install/devtools.rs
    160→pub fn get_arch_flag …
 
 sps-core/src/install/extract.rs
-    16→use crate::utils::xattr;
    204→#[cfg(target_os = "macos")]
    205→pub fn quarantine_extracted_apps_in_stage(stage_dir: &Path, agent_name: &str) -> Result<()> {
    235→pub fn extract_archive …
@@ -748,11 +755,12 @@ sps-net/Cargo.toml
     22→infer = "0.19.0"
     23→tracing = "0.1.41"
     24→
-    25→oci-distribution = { version = "0.11.0", optional = true }
+      →…
+
+sps-net/src/api.rs
 
 sps-net/src/http.rs
-    16→use crate::validation::{validate_url, verify_checksum};
-    18→pub type ProgressCallback = Arc<dyn Fn(u64, Option<u64>) + Send + Sync>;
+    18→pub type ProgressCallback …
 
 sps-net/src/lib.rs
      2→pub mod api;
@@ -763,8 +771,6 @@ sps-net/src/lib.rs
     29→pub use crate::validation::{validate_url, verify_checksum, verify_content_type /* ... */};
 
 sps-net/src/oci.rs
-    18→use crate::http::ProgressCallback;
-    19→use crate::validation::{validate_url, verify_checksum};
     24→pub const DEFAULT_GHCR_DOMAIN: &str = "ghcr.io";
     31→struct OciTokenResponse {
     37→pub struct OciManifestIndex {

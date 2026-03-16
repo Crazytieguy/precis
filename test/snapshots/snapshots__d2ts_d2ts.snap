@@ -2,7 +2,9 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3997 tokens)
+budget: 4000 (4000 tokens)
+
+CHANGELOG.md
 
 README.md
     26→# D2TS - Differential Dataflow in TypeScript <!-- omit in toc -->
@@ -30,6 +32,10 @@ README.md
    987→### Using SQLite Backend
   1055→## Implementation Details
   1076→## References
+
+eslint.config.mjs
+
+package.json
 
 src/d2.ts
     11→export type D2Options = {
@@ -142,6 +148,7 @@ src/operators/filterBy.ts
     14→export function filterBy …
 
 src/operators/groupBy.ts
+    28→function isPipedAggregateFunction …
     39→export function groupBy …
    139→export function sum …
    157→export function count …
@@ -160,6 +167,8 @@ src/operators/iterate.ts
     80→export class FeedbackOperator<T> extends UnaryOperator<T> {
     89→  constructor …
    100→  run …
+   186→function ingress …
+   204→function egress …
    225→export function iterate …
 
 src/operators/join.ts
@@ -232,8 +241,6 @@ src/order.ts
    277→export class Frontier extends Antichain {
 
 src/sqlite/context.ts
-     1→import { SQLiteDb } from './database.js'
-     2→import { PipedOperator } from '../types.js'
      8→class SQLiteContext {
     15→  static setDb(db: SQLiteDb): void {
     23→  static getDb(): SQLiteDb | null {
@@ -259,6 +266,8 @@ src/sqlite/database.ts
 src/sqlite/operators/buffer.ts
     32→export class BufferOperatorSQLite<T> extends UnaryOperator<T> {
     33→  #preparedStatements: {
+    34→    insert: SQLiteStatement<CollectionParams>
+    35→    update: SQLiteStatement<CollectionParams>
     41→  constructor …
     82→  run …
    149→export function buffer …
@@ -266,6 +275,8 @@ src/sqlite/operators/buffer.ts
 src/sqlite/operators/consolidate.ts
     31→export class ConsolidateOperatorSQLite<T> extends UnaryOperator<T> {
     32→  #preparedStatements: {
+    33→    insert: SQLiteStatement<CollectionParams>
+    34→    update: SQLiteStatement<CollectionParams>
     40→  constructor …
     81→  run …
    148→export function consolidate …
@@ -309,6 +320,8 @@ src/sqlite/operators/reduce.ts
     28→  [K, V1 | V2]
     29→> {
     30→  #index: SQLIndex<K, V1>
+    31→  #indexOut: SQLIndex<K, V2>
+    32→  #preparedStatements: {
     41→  constructor …
     97→  run …
    197→  destroy …
@@ -323,22 +336,14 @@ src/sqlite/operators/topKWithFractionalIndex.ts
     38→  [K, V1 | [V1, string]]
     39→> {
     40→  #index: SQLIndex<K, V1>
+    41→  #indexOut: SQLIndex<K, [V1, string]>
+    42→  #preparedStatements: {
     53→  constructor …
    112→  run …
    454→  destroy …
    475→export function topKWithFractionalIndex …
 
 src/sqlite/version-index.ts
-     1→import { Version, Antichain, v } from '../order.js'
-     2→import { MultiSet } from '../multiset.js'
-     3→import { SQLiteDb, SQLiteStatement } from './database.js'
-     4→import { DefaultMap } from '../utils.js'
-     6→type VersionMap<T> = DefaultMap<Version, T[]>
-     8→interface IndexRow {
-    15→interface InsertParams {
-    22→interface GetParams {
-    27→interface JoinResult {
-    37→interface PreparedStatements {
     60→export class SQLIndex<K, V> {
     61→  #db: SQLiteDb
     62→  #tableName: string
@@ -388,10 +393,14 @@ src/utils.ts
      7→export class WeakRefMap<K, V extends object> {
     31→export class DefaultMap<K, V> extends Map<K, V> {
     49→  update(key: K, updater: (value: V) => V): V {
-    78→function hashReplacer(_key: string, value: any): any {
+    78→function hashReplacer …
     98→export function hash(data: any): string | number {
    126→export class WeakRefBasedFinalizationRegistry {
 
 src/version-index.ts
+     5→type VersionMap …
+     6→type IndexMap …
      8→export interface IndexType<K, V> {
     28→export class Index<K, V> implements IndexType<K, V> {
+
+tsconfig.json

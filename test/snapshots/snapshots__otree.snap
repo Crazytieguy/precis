@@ -2,12 +2,43 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3995 tokens)
+budget: 4000 (4000 tokens)
 
 Cargo.toml
      1→[package]
+     2→name = "otree"
+     3→version = "0.6.4"
+     4→edition = "2021"
+     5→build = "build.rs"
+     6→license = "MIT"
+     7→authors = ["fioncat"]
+     8→categories = ["command-line-utilities"]
+     9→readme = "README.md"
+    10→repository = "https://github.com/fioncat/otree"
+    11→description = "A command line tool to view objects (json/yaml/toml) in TUI tree widget"
     13→[dependencies]
+    14→anyhow = "^1"
+    15→clap = { version = "^4", features = ["derive"] }
+    16→console = "^0"
+    17→crossterm = { version = "^0", features = ["use-dev-tty"] }
+    18→dirs = "^6"
+    19→hcl-rs = "^0"
+    20→humansize = "^2"
+    21→notify = "^8"
+    22→paste = "^1"
+    23→quick-xml = { version = "^0", features = ["serialize"] }
+    24→ratatui = "^0"
+    25→regex = "^1"
+    26→serde = { version = "^1", features = ["derive"] }
+    27→serde_json = { version = "^1", features = ["preserve_order"] }
+    28→serde_yml = "^0"
+    29→strum = { version = "^0", features = ["derive"] }
+    30→toml = { version = "^0", features = ["preserve_order"] }
+    31→tui-textarea = "^0"
+    32→tui-tree-widget = "^0"
     34→[build-dependencies]
+    35→simple-error = "^0"
+    36→vergen = { version = "^9", features = ["build", "rustc", "cargo", "si"] }
     38→[profile.release]
     43→[lints.clippy]
 
@@ -22,8 +53,6 @@ README.md
     52→## Roadmap
     82→## Thanks
 
-build.rs
-
 config/default.toml
 
 docs/actions.md
@@ -34,12 +63,12 @@ docs/actions.md
      6→| move_down                 | `j`, `<down>`             | Move cursor down                                             |
       →…
 
+examples/example.toml
+
 src/clipboard.rs
     28→pub fn write_clipboard …
 
 src/cmd.rs
-     7→use crate::config::{Config, LayoutDirection};
-     8→use crate::parse::ContentType;
     13→pub struct CommandArgs {
     14→    /// The file to read data. If this is empty, read from stdin.
     15→    pub path: Option<String>,
@@ -122,13 +151,11 @@ src/cmd.rs
     92→    pub build_info: bool,
     93→
       →…
-   111→impl CommandArgs {
    112→    pub fn parse …
    149→    pub fn update_config …
    202→    pub fn get_content_type …
 
 src/config/colors.rs
-     7→use super::Config;
     21→pub struct Colors {
     56→    pub fn default() -> Self {
     78→pub struct DataColors {
@@ -166,9 +193,6 @@ src/config/mod.rs
      1→pub mod colors;
      2→pub mod keys;
      3→pub mod types;
-    12→use self::colors::Colors;
-    13→use self::keys::Keys;
-    14→use self::types::Types;
     17→pub struct Config {
     53→pub struct Tree {
     62→pub struct Editor {
@@ -201,42 +225,20 @@ src/debug.rs
     23→pub fn write_logs …
 
 src/edit.rs
-     8→use crate::config::Config;
     10→pub struct Edit {
-    16→impl Edit {
     17→    pub fn new …
     40→    pub fn run …
 
 src/live_reload.rs
-    11→use crate::config::Config;
-    12→use crate::debug;
-    13→use crate::parse::ContentType;
-    14→use crate::tree::Tree;
     16→pub struct FileWatcher {
-    27→impl FileWatcher {
     28→    pub fn new …
     64→    pub fn get_err …
     71→    pub fn parse_tree …
     93→struct Data {
-    98→impl Data {
    112→    fn set_err …
    118→fn watch_file …
 
 src/main.rs
-     1→mod clipboard;
-     2→mod cmd;
-     3→mod config;
-     4→mod debug;
-     5→mod edit;
-     6→mod live_reload;
-     7→mod parse;
-     8→mod tree;
-     9→mod ui;
-    21→use crate::cmd::CommandArgs;
-    22→use crate::config::Config;
-    23→use crate::parse::{ContentType, SyntaxToken};
-    24→use crate::tree::Tree;
-    25→use crate::ui::{App, HeaderContext};
 
 src/parse/any.rs
      9→pub struct AnyParser {
@@ -256,14 +258,6 @@ src/parse/jsonl.rs
      7→pub struct JsonlParser;
 
 src/parse/mod.rs
-     1→mod any;
-     2→mod hcl;
-     3→mod json;
-     4→mod jsonl;
-     5→mod syntax;
-     6→mod toml;
-     7→mod xml;
-     8→mod yaml;
     17→#[derive(Debug, Clone, Copy, ValueEnum, EnumIter)]
     18→pub enum ContentType {
     19→    Json,
@@ -317,14 +311,14 @@ src/parse/syntax.rs
    154→}
    157→    pub fn new …
    201→pub fn is_value_complex …
-   216→struct TextWrapper<'a, 'this> {
+   216→struct TextWrapper …
 
 src/parse/toml.rs
      9→pub struct TomlParser {}
 
 src/parse/xml.rs
     12→pub struct XmlParser {}
-    37→trait AttrMap {
+    37→trait AttrMap …
     38→    fn insert_text …
     39→    fn insert_text_node …
     61→struct NodeValues {
@@ -334,8 +328,6 @@ src/parse/yaml.rs
      8→pub struct YamlParser {}
 
 src/tree.rs
-    11→use crate::config::Config;
-    12→use crate::parse::{ContentType, Parser, SyntaxToken};
     14→pub struct Tree {
     25→pub struct ItemValue {
     36→pub struct HighlightKeyword<'a> {
@@ -351,12 +343,10 @@ src/tree.rs
     47→    Obj,
     48→    Arr,
     49→}
-    51→impl Tree {
     52→    pub fn parse …
     58→    pub fn from_value …
     94→    pub fn get_value …
     98→    pub fn get_parser …
-   385→impl ItemValue {
    386→    pub fn plain_text …
    390→    pub fn render …
    394→    pub fn build_highlighted_text …
@@ -434,13 +424,6 @@ src/ui/header.rs
     55→    pub fn draw …
 
 src/ui/mod.rs
-     1→mod app;
-     2→mod data_block;
-     3→mod filter;
-     4→mod footer;
-     5→mod header;
-     6→mod popup;
-     7→mod tree_overview;
     35→pub fn start …
 
 src/ui/popup.rs
@@ -469,3 +452,5 @@ src/ui/tree_overview.rs
    319→    pub fn begin_filter …
    325→    pub fn end_filter …
    335→    pub fn filter …
+
+typos.toml

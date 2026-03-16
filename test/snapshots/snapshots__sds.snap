@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2000 tokens)
+budget: 2000 (1998 tokens)
 
 README.md
      1→Simple Dynamic Strings
@@ -51,6 +51,8 @@ sds.c
    421→sds sdscatsds …
    427→sds sdscpylen …
    440→sds sdscpy …
+   444→/* Helper for sdscatlonglong() doing the actual number -> string
+      →…
    450→#define SDS_LLSTR_SIZE 21
    451→int sdsll2str(char *s, long long value) {
    494→int sdsull2str …
@@ -102,7 +104,7 @@ sds.h
     83→#define SDS_HDR_VAR(T,s) struct sdshdr##T *sh = (void*)((s)-(sizeof(struct sdshdr##T)));
     84→#define SDS_HDR(T,s) ((struct sdshdr##T *)((s)-(sizeof(struct sdshdr##T))))
     85→#define SDS_TYPE_5_LEN(f) ((f)>>SDS_TYPE_BITS)
-   180→static inline size_t sdsalloc(const sds s) {
+   180→static inline size_t sdsalloc …
    218→sds sdsnewlen(const void *init, size_t initlen);
    219→sds sdsnew(const char *init);
    220→sds sdsempty(void);
@@ -140,7 +142,6 @@ sds.h
    260→void *sdsAllocPtr(sds s);
    262→/* Export the allocator used by SDS to the program using SDS.
    263→ * Sometimes the program SDS is linked to, may use a different set of
-   264→ * allocators, but may want to allocate or free things that SDS will
       → …
    266→void *sds_malloc(size_t size);
    267→void *sds_realloc(void *ptr, size_t size);

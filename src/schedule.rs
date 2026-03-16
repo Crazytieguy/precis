@@ -947,16 +947,15 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
         },
     };
 
-    // Non-public symbols: deprioritize body/doc content beyond signatures.
-    // At tight budgets, private/internal symbol names and signatures are shown
-    // (cheap, useful for understanding structure), but budget is reserved for
-    // public symbol bodies and documentation. Without this, small groups of
-    // private symbols reach Body stage before large groups of public symbols
-    // reach Names — showing private implementation detail before API surface.
+    // Non-public symbols: deprioritize detail beyond names. At tight budgets,
+    // private/internal symbol names are shown (cheap, useful for understanding
+    // structure), but budget is reserved for public symbol signatures, bodies,
+    // and documentation. Without this, small groups of private symbols reach
+    // Signatures/Body before large groups of public symbols reach Names.
     let private_detail_penalty = if !key.is_public
-        && matches!(stage, StageKind::Doc | StageKind::Body)
+        && matches!(stage, StageKind::Signatures | StageKind::Doc | StageKind::Body)
     {
-        0.15
+        0.2
     } else {
         1.0
     };

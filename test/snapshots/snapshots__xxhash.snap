@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3998 tokens)
+budget: 4000 (3999 tokens)
 
 README.md
      1→# xxhash
@@ -88,12 +88,17 @@ dynamic/dynamic_test.go
     18→	cmd := exec.Command(
     19→		"go", "build",
     20→		"-buildmode", "plugin",
-      →		…
+    21→		"-o", "plugin.so",
+    22→		"plugin.go",
+    23→	)
+    24→	var out bytes.Buffer
+      →	…
     33→func TestDynamic(t *testing.T) {
     34→	plug, err := plugin.Open("plugin.so")
     35→	if err != nil {
     36→		t.Fatal(err)
-      →		…
+    37→	}
+      →	…
 
 dynamic/plugin.go
      6→import …
@@ -116,6 +121,7 @@ dynamic/plugin.go
     33→				if len(chunk) > chunkSize {
     34→					chunk = chunk[:chunkSize]
     35→				}
+    36→				n, err := d.WriteString(chunk)
       →				…
 
 go.mod
@@ -251,14 +257,14 @@ xxhash_safe.go
 xxhash_test.go
      3→import …
     12→func TestAll(t *testing.T) {
-    58→func testDigest(t *testing.T, input string, seed uint64, chunkSize int, want uint64) {
-    88→func testSum(t *testing.T, input string, want uint64) {
+    58→func testDigest …
+    88→func testSum …
     97→func TestReset(t *testing.T) {
    114→func TestResetWithSeed(t *testing.T) {
    131→func TestBinaryMarshaling(t *testing.T) {
    168→var sink uint64
    170→func TestAllocs(t *testing.T) {
-   193→func testAllocs(t *testing.T, fn func()) {
+   193→func testAllocs …
 
 xxhash_unsafe.go
      9→import …
@@ -276,7 +282,7 @@ xxhash_unsafe.go
     48→	// Ignoring the return output and returning these fixed values buys a
       →	…
     53→// sliceHeader is similar to reflect.SliceHeader, but it assumes that the layout
-      →…
+    54→// of the first two words is the same as the layout of a string.
     55→type sliceHeader struct {
     56→	s   string
     57→	cap int
@@ -314,8 +320,8 @@ xxhashbench/xxhashbench_test.go
    108→func BenchmarkHashes(b *testing.B) {
    109→	for _, bb := range benchmarks {
       →	…
-   152→func benchmarkHashBytes(b *testing.B, input []byte, fn func([]byte) uint64) {
-   159→func benchmarkHashString(b *testing.B, input string, fn func(string) uint64) {
+   152→func benchmarkHashBytes …
+   159→func benchmarkHashString …
 
 xxhsum/xxhsum.go
      3→import …

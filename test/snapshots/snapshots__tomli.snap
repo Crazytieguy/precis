@@ -84,12 +84,12 @@ benchmark/run.py
     37→def run …
 
 fuzzer/fuzz.py
-     1→import atheris
-     4→    from math import isnan
-     5→    import sys
-     6→    import warnings
-     8→    import tomli_w
-    10→    import tomli
+     1→import atheris …
+     4→    from math …
+     5→    import sys …
+     6→    import warnings …
+     8→    import tomli_w …
+    10→    import tomli …
     20→def test_one_input(input_bytes: bytes) -> None:
     53→def print_err(data):
     59→def normalize_toml_obj(toml_obj: dict) -> None:
@@ -102,7 +102,17 @@ profiler/profiler_script.py
 
 pyproject.toml
      1→[build-system]
+     2→requires = ["flit_core>=3.12,<4"]
+     3→build-backend = "flit_core.buildapi"
      5→[project]
+     6→name = "tomli"
+     7→version = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
+     8→description = "A lil' TOML parser"
+     9→authors = [
+    10→    { name = "Taneli Hukkinen", email = "hukkin@users.noreply.github.com" },
+    11→]
+    12→license = "MIT"
+      →…
     28→[project.urls]
     33→[tool.isort]
     46→[tool.tox]
@@ -116,23 +126,16 @@ src/tomli/__init__.py
       →…
      5→__all__ = ("loads", "load", "TOMLDecodeError")
      6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
-     8→from ._parser import TOMLDecodeError, load, loads
+     8→from ._parser …
 
 src/tomli/_parser.py
      7→import sys …
      8→from types …
-    10→from ._re import (
-    11→    RE_DATETIME,
-    12→    RE_LOCALTIME,
-    13→    RE_NUMBER,
-    14→    match_to_datetime,
-    15→    match_to_localtime,
-    16→    match_to_number,
-    17→)
+    10→from ._re …
     19→TYPE_CHECKING = False
     21→    from collections.abc …
     22→    from typing …
-    24→    from ._types import Key, ParseFloat, Pos
+    24→    from ._types …
     26→# Inline tables/arrays are implemented using recursion. Pathologically
       →…
     35→MAX_INLINE_NESTING: Final = sys.getrecursionlimit()
@@ -235,7 +238,7 @@ src/tomli/_re.py
      9→import re …
     11→TYPE_CHECKING = False
     13→    from typing …
-    15→    from ._types import ParseFloat
+    15→    from ._types …
     17→_TIME_RE_STR: Final = r"""
     26→RE_NUMBER: Final = re.compile(
     27→    r"""
@@ -253,8 +256,7 @@ src/tomli/_re.py
    100→    sign = 1 if sign_str == "+" else -1
    101→    return timezone(
    102→        timedelta(
-   103→            hours=sign * int(hour_str),
-      →            …
+      →        …
    109→def match_to_localtime(match: re.Match[str]) -> time:
    116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
 
@@ -262,12 +264,9 @@ src/tomli/_types.py
      5→from typing …
 
 tests/__init__.py
-     1→# SPDX-License-Identifier: MIT
-      →…
      5→__all__ = ("tomllib",)
 
 tests/test_data.py
-     9→from . import burntsushi, tomllib
     11→DATA_DIR …
     13→VALID_FILES …
     21→VALID_FILES_EXPECTED …
@@ -275,11 +274,9 @@ tests/test_data.py
     27→class TestData(unittest.TestCase):
 
 tests/test_error.py
-    10→from . import tomllib
     13→class TestError(unittest.TestCase):
 
 tests/test_misc.py
-    14→from . import tomllib
     17→class TestMiscellaneous(unittest.TestCase):
 
 tomllib.md

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3993 tokens)
+budget: 4000 (3996 tokens)
 
 README.md
      9→# Nano-vLLM
@@ -66,7 +66,9 @@ bench.py
      9→    seed(0)
     10→    num_seqs = 256
     11→    max_input_len = 1024
-      →    …
+    12→    max_ouput_len = 1024
+    13→
+      →…
 
 example.py
      1→import os …
@@ -108,8 +110,8 @@ nanovllm/engine/block_manager.py
     27→
     28→    def __init__(self, num_blocks: int, block_size: int):
     36→    def compute_hash(cls, token_ids: list[int], prefix: int = -1):
-    43→    def _allocate_block(self, block_id: int) -> Block:
-    51→    def _deallocate_block(self, block_id: int) -> Block:
+    43→    def _allocate_block …
+    51→    def _deallocate_block …
     56→    def can_allocate(self, seq: Sequence) -> bool:
     59→    def allocate(self, seq: Sequence):
     84→    def deallocate(self, seq: Sequence):
@@ -334,8 +336,8 @@ nanovllm/sampling_params.py
     10→    def __post_init__(self):
 
 nanovllm/utils/context.py
-     1→from dataclasses import dataclass
-     2→import torch
+     1→from dataclasses …
+     2→import torch …
      5→@dataclass
      6→class Context:
      7→    is_prefill: bool = False
@@ -352,10 +354,10 @@ nanovllm/utils/context.py
     25→def reset_context():
 
 nanovllm/utils/loader.py
-     1→import os
-     2→from glob import glob
-     4→from torch import nn
-     5→from safetensors import safe_open
+     1→import os …
+     2→from glob …
+     4→from torch …
+     5→from safetensors …
      8→def default_weight_loader(param: nn.Parameter, loaded_weight: torch.Tensor):
     12→def load_model(model: nn.Module, path: str):
 
@@ -379,3 +381,4 @@ pyproject.toml
     18→    "flash-attn",
     19→    "xxhash",
     22→[project.urls]
+    25→[tool.setuptools.packages.find]

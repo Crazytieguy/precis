@@ -11,6 +11,7 @@ Cargo.toml
       →…
     37→[workspace.dependencies]
     38→# Toasty crates
+    39→toasty = { path = "crates/toasty" }
       →…
 
 README.md
@@ -106,7 +107,6 @@ crates/toasty/src/db/pool.rs
     74→    pub async fn get …
     84→    pub fn driver …
     89→    pub fn capability …
-    95→struct Manager {
    119→pub struct PoolConnection {
 
 crates/toasty/src/db.rs
@@ -127,7 +127,6 @@ crates/toasty/src/lib.rs
     21→pub mod relation;
     24→pub mod schema;
     26→pub mod stmt;
-    34→pub mod codegen_support {
     35→    pub use crate::{ …
     57→pub mod driver {
 
@@ -170,7 +169,6 @@ crates/toasty/src/stmt/paginate.rs
      8→pub struct Paginate<M> {
 
 crates/toasty/src/stmt.rs
-    32→mod primitive_jiff;
     51→pub struct Statement<M> {
 
 crates/toasty-cli/Cargo.toml
@@ -178,25 +176,28 @@ crates/toasty-cli/Cargo.toml
      7→[dependencies]
 
 crates/toasty-cli/src/config.rs
-     1→use crate::migration::MigrationConfig;
      9→pub struct Config {
     10→    /// Migration-related configuration
     11→    pub migration: MigrationConfig,
     12→}
-    16→    pub fn new …
-    21→    pub fn load …
-    29→    pub fn migration …
+    16→    pub fn new() -> Self {
+    21→    pub fn load() -> Result<Self> {
+    29→    pub fn migration(mut self, migration: MigrationConfig) -> Self {
 
 crates/toasty-cli/src/lib.rs
     13→pub struct ToastyCli {
     14→    db: Db,
     15→    config: Config,
     16→}
-    20→    pub fn new …
-    28→    pub fn with_config …
-    33→    pub fn config …
-    38→    pub async fn parse_and_run …
-    44→    pub async fn parse_from …
+    20→    pub fn new(db: Db) -> Self {
+    28→    pub fn with_config(db: Db, config: Config) -> Self {
+    33→    pub fn config(&self) -> &Config {
+    38→    pub async fn parse_and_run(&self) -> Result<()> {
+    44→    pub async fn parse_from<I, T>(&self, args: I) -> Result<()>
+    45→    where
+    46→        I: IntoIterator<Item = T>,
+    47→        T: Into<std::ffi::OsString> + Clone,
+    48→    {
     64→struct Cli {
     70→enum Command {
 
@@ -210,7 +211,6 @@ crates/toasty-cli/src/migration/config.rs
     33→}
 
 crates/toasty-cli/src/migration.rs
-    19→use crate::Config;
     25→pub struct MigrationCommand {
     26→    #[command(subcommand)]
     27→    subcommand: MigrationSubcommand,
@@ -218,7 +218,7 @@ crates/toasty-cli/src/migration.rs
     31→enum MigrationSubcommand {
 
 crates/toasty-cli/src/theme.rs
-     5→pub fn dialoguer_theme …
+     5→pub fn dialoguer_theme() -> ColorfulTheme {
 
 crates/toasty-codegen/Cargo.toml
      1→[package]
@@ -266,9 +266,9 @@ crates/toasty-core/src/driver/capability.rs
      4→pub struct Capability {
     61→pub struct StorageTypes {
    103→pub struct SchemaMutations {
-   120→    pub fn validate …
-   141→    pub fn default_string_max_length …
-   156→    pub fn native_type_for …
+   120→    pub fn validate(&self) -> crate::Result<()> {
+   141→    pub fn default_string_max_length(&self) -> Option<u64> {
+   156→    pub fn native_type_for(&self, ty: &stmt::Type) -> stmt::Type {
    164→    pub const SQLITE: Self = Self {
    189→    pub const POSTGRESQL: Self = Self {
    211→    pub const MYSQL: Self = Self {
@@ -326,7 +326,7 @@ crates/toasty-core/src/driver/response.rs
     16→    /// Operation result, as a stream of rows
     17→    Stream(stmt::ValueStream),
     18→}
-    66→    pub fn into_count …
+    66→    pub fn into_count(self) -> u64 {
 
 crates/toasty-core/src/driver.rs
      7→pub mod operation;
@@ -354,7 +354,6 @@ crates/toasty-core/src/error.rs
     76→    pub fn context …
 
 crates/toasty-core/src/lib.rs
-     2→mod macros;
      4→pub mod driver;
     10→pub mod schema;
     13→pub mod stmt;
@@ -423,7 +422,6 @@ crates/toasty-core/src/schema/app/pk.rs
 
 crates/toasty-core/src/schema/app/schema.rs
      7→pub struct Schema {
-    12→struct Builder {
 
 crates/toasty-core/src/schema/builder.rs
     11→pub struct Builder {
@@ -545,18 +543,11 @@ crates/toasty-core/src/schema.rs
     29→    /// Maps the app-level schema to the db-level schema
     30→    pub mapping: Mapping,
     31→}
-    34→    pub fn builder …
-    38→    pub fn mapping_for …
-    42→    pub fn table_for …
-    46→    pub fn table_id_for …
 
 crates/toasty-core/src/stmt/filter.rs
     10→    pub const ALL: Filter = Filter { expr: None };
 
 crates/toasty-core/src/stmt.rs
-   145→mod like;
-   216→mod ty_jiff;
-   230→mod value_jiff;
    235→pub mod visit_mut;
    243→pub mod visit;
    252→#[derive(Clone, PartialEq)]
@@ -573,8 +564,6 @@ crates/toasty-core/src/stmt.rs
    263→    /// Update one or more existing records
    264→    Update(Update),
    265→}
-   268→    pub fn substitute …
-   272→    pub fn is_const …
    290→    pub fn as_update …
    302→    pub fn into_update …
    314→    pub fn unwrap_update …
@@ -599,7 +588,6 @@ crates/toasty-driver-dynamodb/src/lib.rs
     31→    url: String,
     32→}
     35→    pub fn new(url: String) -> Self {
-    41→impl Driver for DynamoDb {
     96→pub struct Connection {
     97→    /// Handle to the AWS SDK client
     98→    client: Client,
@@ -607,7 +595,6 @@ crates/toasty-driver-dynamodb/src/lib.rs
    102→    pub fn new(client: Client) -> Self {
    106→    pub async fn connect(url: &str) -> Result<Self> {
    139→    pub async fn from_env() -> Result<Self> {
-   157→impl toasty_core::driver::Connection for Connection {
    345→struct ExprAttrs {
 
 crates/toasty-driver-dynamodb/src/type.rs
@@ -626,19 +613,16 @@ crates/toasty-driver-mysql/Cargo.toml
     11→[dependencies]
 
 crates/toasty-driver-mysql/src/lib.rs
-     3→mod value;
     22→pub struct MySQL {
     23→    url: String,
     24→    pool: Pool,
     25→}
     28→    pub fn new …
-    63→impl Driver for MySQL {
    133→pub struct Connection {
    134→    conn: Conn,
    135→}
    138→    pub fn new …
    142→    pub async fn create_table …
-   191→impl toasty_core::driver::Connection for Connection {
 
 crates/toasty-driver-mysql/src/value.rs
      5→pub struct Value(CoreValue);
@@ -656,7 +640,6 @@ crates/toasty-driver-postgresql/src/lib.rs
     26→    config: Config,
     27→}
     31→    pub fn new …
-    80→impl Driver for PostgreSQL {
    178→pub struct Connection {
    179→    client: Client,
    180→    statement_cache: StatementCache,
@@ -664,7 +647,6 @@ crates/toasty-driver-postgresql/src/lib.rs
    185→    pub fn new …
    195→    pub async fn connect …
    215→    pub async fn create_table …
-   268→impl toasty_core::driver::Connection for Connection {
 
 crates/toasty-driver-postgresql/src/statement_cache.rs
      9→pub struct StatementCache {
@@ -674,7 +656,7 @@ crates/toasty-driver-postgresql/src/statement_cache.rs
     21→    pub fn get …
     27→    pub fn insert …
     32→    pub async fn prepare_typed …
-    49→struct Key<'a> {
+    49→struct Key …
     56→    pub fn new …
     63→    pub fn into_owned …
 
@@ -692,7 +674,6 @@ crates/toasty-driver-sqlite/Cargo.toml
      7→[dependencies]
 
 crates/toasty-driver-sqlite/src/lib.rs
-     1→mod value;
     22→#[derive(Debug)]
     23→pub enum Sqlite {
     24→    File(PathBuf),
@@ -701,13 +682,11 @@ crates/toasty-driver-sqlite/src/lib.rs
     30→    pub fn new(url: impl Into<String>) -> Result<Self> {
     49→    pub fn in_memory() -> Self {
     54→    pub fn open<P: AsRef<Path>>(path: P) -> Self {
-    60→impl Driver for Sqlite {
    123→pub struct Connection {
    124→    connection: RusqliteConnection,
    125→}
    128→    pub fn in_memory() -> Self {
    134→    pub fn open<P: AsRef<Path>>(path: P) -> Result<Self> {
-   143→impl toasty_core::driver::Connection for Connection {
 
 crates/toasty-driver-sqlite/src/value.rs
      8→pub struct Value(CoreValue);
@@ -851,9 +830,19 @@ docs/architecture/query-engine.md
      4→engine for developers working on engine internals. It describes the multi-phase
      5→pipeline that transforms user queries into database operations.
      6→
+     7→## Overview
+    61→## Phase 1: Simplification
+    96→## Phase 2: Lowering
+   178→## Phase 3: Planning
+   203→## Phase 4: Execution Planning
+   234→## Phase 5: Execution
 
 docs/architecture/type-system.md
      1→# Toasty Type System Architecture
+     3→## Overview
+     7→## Type System Boundaries
+    65→## Type Flow Through the System
+    77→## Detailed Architecture
 
 docs/design/enums-and-embedded-structs.md
      1→# Enum and Embedded Struct Support

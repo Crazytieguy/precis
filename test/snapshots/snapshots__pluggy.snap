@@ -6,6 +6,10 @@ budget: 4000 (4000 tokens)
 
 CHANGELOG.rst
      1→=========
+     2→Changelog
+     3→=========
+     4→
+      →…
 
 README.rst
      1→====================================================
@@ -88,8 +92,6 @@ README.rst
     78→
       →…
 
-SECURITY.md
-
 changelog/README.rst
      1→This directory contains "newsfragments" which are short files that contain a small **ReST**-formatted
      2→text that will be added to the next ``CHANGELOG``.
@@ -133,6 +135,8 @@ docs/api_reference.rst
     24→        :type: HookCaller
     25→
       →…
+
+docs/changelog.rst
 
 docs/conf.py
    106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
@@ -290,9 +294,9 @@ src/pluggy/_hooks.py
    593→class _SubsetHookCaller(HookCaller):
    596→
    612→    def __init__ …
-   619→    def _hookimpls(self) -> list[HookImpl]:
+   619→    def _hookimpls …
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
-   631→    def _call_history(self) -> _CallHistory | None:  # type: ignore[override]
+   631→    def _call_history …
    634→    def __repr__ …
    639→class HookImpl:
    641→

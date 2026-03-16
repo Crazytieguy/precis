@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7997 tokens)
+budget: 8000 (7998 tokens)
 
 Cargo.toml
      1→[workspace]
@@ -290,6 +290,8 @@ crates/mdbook-html/src/theme/mod.rs
     45→    pub(crate) toc_js: Vec<u8>,
     46→    pub(crate) toc_html: Vec<u8>,
     47→    pub(crate) chrome_css: Vec<u8>,
+    48→    pub(crate) general_css: Vec<u8>,
+    49→    pub(crate) print_css: Vec<u8>,
       →    …
     66→    pub fn new …
    166→    pub fn copy_theme …
@@ -322,6 +324,9 @@ crates/mdbook-markdown/README.md
     10→
 
 crates/mdbook-markdown/src/lib.rs
+    11→pub use pulldown_cmark;
+    13→/// Options for parsing markdown.
+    14→#[non_exhaustive]
     15→pub struct MarkdownOptions {
     16→    /// Enables smart punctuation.
     17→    ///
@@ -415,7 +420,6 @@ crates/mdbook-renderer/src/lib.rs
     59→    #[serde(skip)]
     60→    pub chapter_titles: HashMap<PathBuf, String>,
     61→}
-    63→impl RenderContext {
     65→    pub fn new …
     81→    pub fn source_dir …
     86→    pub fn from_json …
@@ -464,7 +468,7 @@ crates/mdbook-summary/src/lib.rs
    127→    /// A part title.
    128→    PartTitle(String),
    129→}
-   173→struct SummaryParser<'a> {
+   173→struct SummaryParser …
    190→macro_rules! collect_events {
 
 crates/xtask/Cargo.toml
@@ -485,7 +489,6 @@ crates/xtask/README.md
      4→See [CONTRIBUTING.md](../../CONTRIBUTING.md) for how to use this.
 
 examples/nop-preprocessor.rs
-    75→mod nop_lib {
     79→    pub struct Nop;
     82→        pub fn new() -> Nop {
 
@@ -508,7 +511,6 @@ guide/guide-helper/Cargo.toml
 guide/guide-helper/src/lib.rs
      9→/// Preprocessing entry point.
     10→pub fn handle_preprocessing() -> Result<()> {
-    33→struct GuideHelper;
 
 guide/src/404.md
      1→# Document not found (404)
@@ -747,7 +749,7 @@ src/cmd/mod.rs
     11→pub mod watch;
 
 src/cmd/serve.rs
-    20→const LIVE_RELOAD_ENDPOINT: &str = "__livereload";
+    20→const LIVE_RELOAD_ENDPOINT …
     23→pub fn make_subcommand …
     51→pub fn execute …
    109→async fn serve …
@@ -763,11 +765,8 @@ src/cmd/watch/poller.rs
     18→pub fn rebuild_on_change …
     78→struct PathData {
     86→struct Watcher {
-    95→impl Watcher {
 
 src/cmd/watch.rs
-     8→mod native;
-     9→mod poller;
     12→pub fn make_subcommand …
     21→pub enum WatcherKind {
     22→    Poll,
@@ -780,4 +779,4 @@ src/cmd/watch.rs
 src/main.rs
     14→mod cmd;
     16→const VERSION …
-    58→fn create_clap_command() -> Command {
+    58→fn create_clap_command …

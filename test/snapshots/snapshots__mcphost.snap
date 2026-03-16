@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7997 tokens)
+budget: 8000 (7999 tokens)
 
 README.md
      1→# MCPHost 🤖
@@ -17,43 +17,64 @@ README.md
     85→## Environment Setup 🔧
    124→## Installation 📦
    130→## SDK Usage 🛠️
+   134→### Quick Example
+   165→### SDK Features
    176→## Configuration ⚙️
+   178→### MCP Servers
+   189→### Environment Variable Substitution
+   225→### Simplified Configuration Schema
+   361→### Tool Filtering
+   387→### Legacy Configuration Support
+   449→### Transport Types
+   462→### System Prompt
    488→## Usage 🚀
-   562→##### Variable Syntax
-   594→##### Usage Examples
-   615→##### Default Value Features
+   492→### Interactive Mode (Default)
+   500→### Script Mode
+   648→### Hooks System
+   714→### Non-Interactive Mode
+   729→### Model Generation Parameters
+   752→### Available Models
+   760→### Examples
+   795→### Flags
+   809→### Authentication Subcommands
+   823→### Configuration File Support
+   872→### Interactive Commands
+   882→### Authentication Commands
+   889→### Global Flags
    892→## Automation & Scripting 🤖
+   896→### Use Cases
+   938→### Tips for Scripting
    967→## MCP Server Compatibility 🔌
    971→## Contributing 🤝
    981→## License 📄
    985→## Acknowledgments 🙏
 
 cmd/auth.go
-    17→var authCmd = &cobra.Command{
-    37→var authLoginCmd = &cobra.Command{
-    58→var authLogoutCmd = &cobra.Command{
-    78→var authStatusCmd = &cobra.Command{
+    17→var authCmd …
+    37→var authLoginCmd …
+    58→var authLogoutCmd …
+    78→var authStatusCmd …
 
 cmd/hooks.go
-    16→var hooksCmd = &cobra.Command{
-    25→var hooksListCmd = &cobra.Command{
-    57→var hooksValidateCmd = &cobra.Command{
-    79→var hooksInitCmd = &cobra.Command{
+    16→var hooksCmd …
+    25→var hooksListCmd …
+    57→var hooksValidateCmd …
+    79→var hooksInitCmd …
 
 cmd/root.go
-    39→	compactMode      bool           // Enable compact output mode
-    40→	scriptMCPConfig  *config.Config // Used to override config in script mode
-    41→	approveToolRun   bool
-    44→	saveSessionPath string
-    49→	maxTokens     int
-    56→	numGPU  int32
-    60→	noHooks bool
-    63→	tlsSkipVerify bool
+    39→	compactMode …
+    40→	scriptMCPConfig …
+    41→	approveToolRun …
+    44→	saveSessionPath …
+    49→	maxTokens …
+    56→	numGPU …
+    60→	noHooks …
+    63→	tlsSkipVerify …
     67→type agentUIAdapter struct {
     71→func (a *agentUIAdapter) GetLoadingMessage() string {
     75→func (a *agentUIAdapter) GetTools() []any {
     84→func (a *agentUIAdapter) GetLoadedServerNames() []string {
-    92→var rootCmd = &cobra.Command{
+    92→var rootCmd …
    131→func GetRootCommand(v string) *cobra.Command {
    143→func InitConfig() {
    225→func LoadConfigWithEnvSubstitution(configPath string) error {
@@ -76,7 +97,7 @@ cmd/root.go
    774→}
 
 cmd/script.go
-    28→var scriptCmd = &cobra.Command{
+    28→var scriptCmd …
    423→type Variable struct {
    424→	Name         string // The name of the variable as it appears in the script
    425→	DefaultValue string // The default value if specified using ${variable:-default} syntax
@@ -249,12 +270,12 @@ internal/builtin/bash.go
     44→func NewBashServer() (*server.MCPServer, error) {
 
 internal/builtin/fetch.go
-    20→	defaultFetchTimeout = 30 * time.Second
+    20→	defaultFetchTimeout …
     27→func NewFetchServer() (*server.MCPServer, error) {
 
 internal/builtin/http.go
-    24→	httpDefaultFetchTimeout = 30 * time.Second
-    29→var httpServerModel model.ToolCallingChatModel
+    24→	httpDefaultFetchTimeout …
+    29→var httpServerModel …
     36→func NewHTTPServer(llmModel model.ToolCallingChatModel) (*server.MCPServer, error) {
 
 internal/builtin/registry.go
@@ -336,8 +357,6 @@ internal/hooks/executor.go
     48→func (e *Executor) SetInteractive(interactive bool) {
     57→func (e *Executor) PopulateCommonFields(event HookEvent) CommonInput {
     77→func (e *Executor) ExecuteHooks(ctx context.Context, event HookEvent, input interface{}) (*HookOutput, error) {
-   201→type hookResult struct {
-   259→func getCurrentWorkingDir() string {
 
 internal/hooks/schemas.go
     10→type CommonInput struct {
@@ -405,9 +424,8 @@ internal/models/gemini/gemini.go
    305→func (cm *ChatModel) BindTools(tools []*schema.ToolInfo) error {
    330→func (cm *ChatModel) BindForcedTools(tools []*schema.ToolInfo) error {
    761→func (cm *ChatModel) IsCallbacksEnabled() bool {
-   765→const typ = "Gemini"
+   765→const typ …
    773→func (cm *ChatModel) GetType() string {
-   777→type panicErr struct {
    782→func (p *panicErr) Error() string {
 
 internal/models/generate_models.go
@@ -450,7 +468,6 @@ internal/models/providers.go
    124→type ProviderResult struct {
    153→func CreateProvider(ctx context.Context, config *ProviderConfig) (*ProviderResult, error) {
    539→type OllamaLoadingResult struct {
-   712→type bearerTransport struct {
    717→func (t *bearerTransport) RoundTrip(req *http.Request) (*http.Response, error) {
    857→type oauthTransport struct {
    862→func (t *oauthTransport) RoundTrip(req *http.Request) (*http.Response, error) {
@@ -464,7 +481,7 @@ internal/models/registry.go
    143→func (r *ModelsRegistry) SuggestModels(provider, invalidModel string) []string {
    179→func (r *ModelsRegistry) GetSupportedProviders() []string {
    197→func (r *ModelsRegistry) GetModelsForProvider(provider string) (map[string]ModelInfo, error) {
-   207→var globalRegistry = NewModelsRegistry()
+   207→var globalRegistry …
    216→func GetGlobalRegistry() *ModelsRegistry {
 
 internal/session/manager.go
@@ -503,8 +520,8 @@ internal/tokens/init.go
     50→func InitializeTokenCountersWithKeys() {
 
 internal/ui/block_renderer.go
-     8→type blockRenderer struct {
-    22→type renderingOption func(*blockRenderer)
+     8→type blockRenderer …
+    22→type renderingOption …
 
 internal/ui/callbacks.go
 
@@ -523,7 +540,7 @@ internal/ui/debug_logger.go
     13→type CLIDebugLogger struct {
 
 internal/ui/enhanced_styles.go
-    12→var currentTheme = DefaultTheme()
+    12→var currentTheme …
     29→type Theme struct {
 
 internal/ui/factory.go
@@ -552,9 +569,9 @@ internal/ui/progress/ollama.go
     30→	Total     int64  `json:"total,omitempty"`
     31→	Completed int64  `json:"completed,omitempty"`
     32→}
-    35→type progressMsg struct {
-    41→type progressErrMsg struct{ err error }
-    44→type progressCompleteMsg struct{}
+    35→type progressMsg …
+    41→type progressErrMsg …
+    44→type progressCompleteMsg …
     49→type ProgressModel struct {
     50→	progress progress.Model
     51→	status   string
@@ -575,7 +592,6 @@ internal/ui/progress/ollama.go
    151→}
    156→func NewProgressReader(reader io.Reader) *ProgressReader {
    184→func (pr *ProgressReader) Read(p []byte) (n int, err error) {
-   216→func (pr *ProgressReader) parseProgressLine(line string) {
    261→func (pr *ProgressReader) Close() error {
 
 internal/ui/slash_command_input.go
@@ -583,11 +599,11 @@ internal/ui/slash_command_input.go
 
 internal/ui/spinner.go
     16→type Spinner struct {
-    25→type spinnerModel struct {
+    25→type spinnerModel …
     31→func (m spinnerModel) Init() tea.Cmd {
     35→func (m spinnerModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
     52→func (m spinnerModel) View() string {
-    75→type quitMsg struct{}
+    75→type quitMsg …
 
 internal/ui/styles.go
 
@@ -612,8 +628,7 @@ internal/ui/usage_tracker.go
     42→type UsageTracker struct {
 
 main.go
-     3→import …
-    12→var version = "dev"
+    12→var version …
     14→func main() {
 
 sdk/README.md

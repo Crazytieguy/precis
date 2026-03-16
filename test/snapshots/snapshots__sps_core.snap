@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3991 tokens)
+budget: 4000 (3996 tokens)
 
 Cargo.toml
      1→[package]
@@ -35,17 +35,37 @@ Cargo.toml
     29→hex = "0.4.3"
       →…
 
+src/build/compile/cargo.rs
+    12→pub fn cargo_build …
+
+src/build/compile/cmake.rs
+    13→pub fn cmake_build …
+
+src/build/compile/go.rs
+    13→pub fn go_build …
+
+src/build/compile/make.rs
+    53→pub fn configure_and_make …
+   110→pub fn simple_make …
+
+src/build/compile/meson.rs
+    12→pub fn meson_build …
+
 src/build/compile/mod.rs
-    20→mod cargo;
-    21→mod cmake;
-    22→mod go;
-    23→mod make;
-    24→mod meson;
-    25→mod perl;
-    26→mod python;
+    40→pub async fn download_source …
+    44→pub async fn download_source_with_progress …
+   293→pub async fn build_from_source …
+
+src/build/compile/perl.rs
+    12→pub fn perl_build …
+
+src/build/compile/python.rs
+    13→pub fn python_build …
 
 src/build/env.rs
     12→use crate::install::devtools;
+    15→const ENV_VARS_TO_REMOVE …
+   123→const ENV_VARS_TO_KEEP …
    139→/// Represents the sanitized build environment, mimicking Homebrew's "superenv".
    140→#[derive(Debug, Clone)]
    141→pub struct BuildEnvironment {
@@ -77,11 +97,13 @@ src/build/env.rs
    169→        cellar_path: &Path,
    170→        all_installed_opt_paths: &[PathBuf],
    171→    ) -> Result<Self> {
+   403→    fn is_controlled_homebrew_var …
+   424→    fn set_path_list_var …
    463→    pub fn apply_to_command(&self, command: &mut std::process::Command) {
    476→    pub fn get_path_string(&self) -> Option<&str> {
    482→    pub fn get_vars(&self) -> &HashMap<String, String> {
    488→    pub fn get_var(&self, key: &str) -> Option<&str> {
-   495→fn filter_initial_environment(vars: &mut HashMap<String, String>) {
+   495→fn filter_initial_environment …
 
 src/build/mod.rs
      1→pub mod compile;
@@ -118,13 +140,10 @@ src/check/update.rs
     27→    pub pkg_type: PackageType,
     28→    pub target_definition: InstallTargetIdentifier,
     29→}
-    33→async fn ensure_api_data_cached(cache: &Cache) -> Result<()> {
+    33→async fn ensure_api_data_cached …
     89→pub async fn check_for_updates …
 
 src/install/bottle/exec.rs
-    21→use super::macho;
-    22→use crate::install::bottle::get_current_platform;
-    23→use crate::install::extract::extract_archive;
     25→pub async fn download_bottle …
     33→pub async fn download_bottle_with_progress …
     44→pub async fn download_bottle_with_progress_and_cache_info …
@@ -142,7 +161,8 @@ src/install/bottle/macho.rs
     41→const MACHO_HEADER64_SIZE …
     46→struct PatchInfo {
     52→/// Container for paths that couldn't be patched due to length constraints
-      →…
+    53→#[cfg(target_os = "macos")]
+    54→#[derive(Debug, Clone)]
     55→pub struct SkippedPath {
     56→    pub old_path: String,
     57→    pub new_path: String,
@@ -192,6 +212,7 @@ src/install/cask/artifacts/keyboard_layout.rs
     17→pub fn install_keyboard_layout …
 
 src/install/cask/artifacts/manpage.rs
+    18→static MANPAGE_RE …
     24→pub fn install_manpage …
 
 src/install/cask/artifacts/mdimporter.rs
@@ -336,7 +357,6 @@ src/lib.rs
     11→pub mod utils; // New
 
 src/pipeline/engine.rs
-    13→use super::worker;
     16→pub fn start_worker_pool_manager …
 
 src/pipeline/mod.rs
@@ -344,8 +364,6 @@ src/pipeline/mod.rs
      2→pub mod worker;
 
 src/pipeline/worker.rs
-    18→use crate::check::installed::{InstalledPackageInfo, PackageType as CorePackageType};
-    19→use crate::{build, install, uninstall, upgrade};
     21→pub(super) fn execute_sync_job …
     37→fn do_execute_sync_steps …
 
@@ -377,13 +395,9 @@ src/uninstall/mod.rs
      5→pub mod formula;
 
 src/upgrade/bottle.rs
-    11→use crate::check::installed::InstalledPackageInfo;
-    12→use crate::{install, uninstall};
     20→pub async fn upgrade_bottle_formula …
 
 src/upgrade/cask.rs
-    11→use crate::check::installed::InstalledPackageInfo;
-    12→use crate::{install, uninstall};
     15→pub async fn upgrade_cask_package …
 
 src/upgrade/mod.rs
@@ -392,8 +406,6 @@ src/upgrade/mod.rs
      5→pub mod source;
 
 src/upgrade/source.rs
-    10→use crate::check::installed::InstalledPackageInfo;
-    11→use crate::{build, uninstall};
     19→pub async fn upgrade_source_formula …
 
 src/utils/applescript.rs

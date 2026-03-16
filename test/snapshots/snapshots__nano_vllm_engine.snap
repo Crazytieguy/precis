@@ -2,13 +2,13 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1979 tokens)
+budget: 2000 (1963 tokens)
 
 block_manager.py
-     1→from collections import deque
-     2→import xxhash
-     3→import numpy as np
-     5→from nanovllm.engine.sequence import Sequence
+     1→from collections …
+     2→import xxhash …
+     3→import numpy …
+     5→from nanovllm.engine.sequence …
      8→class Block:
      9→
     10→    def __init__(self, block_id):
@@ -33,17 +33,17 @@ block_manager.py
     96→    def may_append(self, seq: Sequence):
 
 llm_engine.py
-     1→import atexit
-     2→from dataclasses import fields
-     3→from time import perf_counter
-     4→from tqdm.auto import tqdm
-     5→from transformers import AutoTokenizer
-     6→import torch.multiprocessing as mp
-     8→from nanovllm.config import Config
-     9→from nanovllm.sampling_params import SamplingParams
-    10→from nanovllm.engine.sequence import Sequence
-    11→from nanovllm.engine.scheduler import Scheduler
-    12→from nanovllm.engine.model_runner import ModelRunner
+     1→import atexit …
+     2→from dataclasses …
+     3→from time …
+     4→from tqdm.auto …
+     5→from transformers …
+     6→import torch.multiprocessing …
+     8→from nanovllm.config …
+     9→from nanovllm.sampling_params …
+    10→from nanovllm.engine.sequence …
+    11→from nanovllm.engine.scheduler …
+    12→from nanovllm.engine.model_runner …
     15→class LLMEngine:
     16→
     17→    def __init__(self, model, **kwargs):
@@ -59,17 +59,17 @@ llm_engine.py
     64→    ) -> list[str]:
 
 model_runner.py
-     1→import pickle
-     2→import torch
-     3→import torch.distributed as dist
-     4→from multiprocessing.synchronize import Event
-     5→from multiprocessing.shared_memory import SharedMemory
-     7→from nanovllm.config import Config
-     8→from nanovllm.engine.sequence import Sequence
-     9→from nanovllm.models.qwen3 import Qwen3ForCausalLM
-    10→from nanovllm.layers.sampler import Sampler
-    11→from nanovllm.utils.context import set_context, get_context, reset_context
-    12→from nanovllm.utils.loader import load_model
+     1→import pickle …
+     2→import torch …
+     3→import torch.distributed …
+     4→from multiprocessing.synchronize …
+     5→from multiprocessing.shared_memory …
+     7→from nanovllm.config …
+     8→from nanovllm.engine.sequence …
+     9→from nanovllm.models.qwen3 …
+    10→from nanovllm.layers.sampler …
+    11→from nanovllm.utils.context …
+    12→from nanovllm.utils.loader …
     15→class ModelRunner:
     16→
     17→    def __init__(self, config: Config, rank: int, event: Event | list[Event]):
@@ -94,6 +94,8 @@ model_runner.py
    196→            graph = self.graphs[next(x for x in self.graph_bs if x >= bs)]
    197→            graph_vars = self.graph_vars
    198→            graph_vars["input_ids"][:bs] = input_ids
+   199→            graph_vars["positions"][:bs] = positions
+   200→            graph_vars["slot_mapping"].fill_(-1)
       →            …
    208→    def run(self, seqs: list[Sequence], is_prefill: bool) -> list[int]:
    216→    @torch.inference_mode()
@@ -106,13 +108,15 @@ model_runner.py
    223→        positions = torch.zeros(max_bs, dtype=torch.int64)
    224→        slot_mapping = torch.zeros(max_bs, dtype=torch.int32)
    225→        context_lens = torch.zeros(max_bs, dtype=torch.int32)
+   226→        block_tables = torch.zeros(max_bs, max_num_blocks, dtype=torch.int32)
+   227→        outputs = torch.zeros(max_bs, hf_config.hidden_size)
       →        …
 
 scheduler.py
-     1→from collections import deque
-     3→from nanovllm.config import Config
-     4→from nanovllm.engine.sequence import Sequence, SequenceStatus
-     5→from nanovllm.engine.block_manager import BlockManager
+     1→from collections …
+     3→from nanovllm.config …
+     4→from nanovllm.engine.sequence …
+     5→from nanovllm.engine.block_manager …
      8→class Scheduler:
      9→
     10→    def __init__(self, config: Config):
@@ -123,10 +127,10 @@ scheduler.py
     65→    def postprocess(self, seqs: list[Sequence], token_ids: list[int]) -> list[bool]:
 
 sequence.py
-     1→from copy import copy
-     2→from enum import Enum, auto
-     3→from itertools import count
-     5→from nanovllm.sampling_params import SamplingParams
+     1→from copy …
+     2→from enum …
+     3→from itertools …
+     5→from nanovllm.sampling_params …
      8→class SequenceStatus(Enum):
      9→    WAITING = auto()
     10→    RUNNING = auto()

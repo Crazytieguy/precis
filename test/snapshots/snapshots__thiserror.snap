@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3988 tokens)
+budget: 4000 (3996 tokens)
 
 Cargo.toml
      1→[package]
@@ -110,7 +110,40 @@ README.md
     68→  ```rust
     69→  #[derive(Error, Debug)]
     70→  pub enum Error {
-      →  …
+    71→      #[error("invalid rdo_lookahead_frames {0} (expected < {max})", max = i32::MAX)]
+    72→      InvalidLookahead(u32),
+    73→  }
+    74→  ```
+    75→
+    76→  If one of the additional expression arguments needs to refer to a field of the
+    77→  struct or enum, then refer to named fields as `.var` and tuple fields as `.0`.
+    78→
+    79→  ```rust
+    80→  #[derive(Error, Debug)]
+    81→  pub enum Error {
+    82→      #[error("first letter must be lowercase but was {:?}", first_char(.0))]
+    83→      WrongCase(String),
+    84→      #[error("invalid index {idx}, expected at least {} and at most {}", .limits.lo, .limits.hi)]
+    85→      OutOfBounds { idx: usize, limits: Limits },
+    86→  }
+    87→  ```
+    88→
+    89→- A `From` impl is generated for each variant that contains a `#[from]`
+    90→  attribute.
+    91→
+    92→  The variant using `#[from]` must not contain any other fields beyond the
+    93→  source error (and possibly a backtrace &mdash; see below). Usually `#[from]`
+    94→  fields are unnamed, but `#[from]` is allowed on a named field too.
+    95→
+    96→  ```rust
+    97→  #[derive(Error, Debug)]
+    98→  pub enum MyError {
+    99→      Io(#[from] io::Error),
+   100→      Glob(#[from] globset::Error),
+   101→  }
+   102→  ```
+   103→
+      →…
    211→## Comparison to anyhow
    213→Use thiserror if you care about designing your own dedicated error type(s) so
    214→that the caller receives exactly the information that you choose in the event of
@@ -151,9 +184,6 @@ impl/Cargo.toml
     17→syn = "2.0.87"
 
 impl/src/ast.rs
-     1→use crate::attr::{self, Attrs};
-     2→use crate::generics::ParamsInScope;
-     3→use crate::unraw::{IdentUnraw, MemberUnraw};
     10→pub enum Input<'a> {
     11→    Struct(Struct<'a>),
     12→    Enum(Enum<'a>),
@@ -214,27 +244,12 @@ impl/src/attr.rs
     69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
 
 impl/src/expand.rs
-     1→use crate::ast::{Enum, Field, Input, Struct};
-     2→use crate::attr::Trait;
-     3→use crate::fallback;
-     4→use crate::generics::InferredBounds;
-     5→use crate::private;
-     6→use crate::unraw::MemberUnraw;
     12→pub fn derive(input: &DeriveInput) -> TokenStream {
 
-impl/src/fallback.rs
-     1→use crate::expand::call_site_ident;
-     2→use crate::private;
-
 impl/src/fmt.rs
-     1→use crate::ast::{ContainerKind, Field};
-     2→use crate::attr::{Display, Trait};
-     3→use crate::private;
-     4→use crate::scan_expr::scan_expr;
-     5→use crate::unraw::{IdentUnraw, MemberUnraw};
     16→    pub fn expand_shorthand(&mut self, fields: &[Field], container: ContainerKind) -> Result<()> {
    166→struct FmtArguments {
-   172→fn explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
+   172→fn explicit_named_args …
 
 impl/src/generics.rs
      8→pub struct ParamsInScope<'a> {
@@ -246,26 +261,11 @@ impl/src/generics.rs
     74→    pub fn augment_where_clause(&self, generics: &Generics) -> WhereClause {
 
 impl/src/lib.rs
-    23→mod ast;
-    24→mod attr;
-    25→mod expand;
-    26→mod fallback;
-    27→mod fmt;
-    28→mod generics;
-    29→mod prop;
-    30→mod scan_expr;
-    31→mod unraw;
-    32→mod valid;
     39→#[proc_macro_derive(Error, attributes(backtrace, error, from, source))]
     40→pub fn derive_error(input: TokenStream) -> TokenStream {
     46→struct private;
 
-impl/src/prop.rs
-     1→use crate::ast::{Enum, Field, Struct, Variant};
-     2→use crate::unraw::MemberUnraw;
-
 impl/src/scan_expr.rs
-     1→use self::{Action::*, Input::*};
      6→enum Input {
     25→enum Action {
 
@@ -279,10 +279,6 @@ impl/src/unraw.rs
     84→    Unnamed(Index),
     85→}
     88→    pub fn span(&self) -> Span {
-
-impl/src/valid.rs
-     1→use crate::ast::{Enum, Field, Input, Struct, Variant};
-     2→use crate::attr::Attrs;
 
 rust-toolchain.toml
      1→[toolchain]
@@ -355,10 +351,6 @@ tests/test_backtrace.rs
    163→pub mod enums {
 
 tests/test_display.rs
-
-tests/test_generics.rs
-     7→pub struct NoFormat;
-    12→pub struct DisplayOnly;
 
 tests/test_option.rs
      5→pub mod structs {

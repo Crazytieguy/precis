@@ -79,8 +79,6 @@ docs/components-guide.md
    142→## What is a component factory?
    184→## When to use components, when to use component factories?
 
-docs/examples/markdown.md
-
 docs/function-components.md
      1→# Function components
      3→The default and most flexible way to define an `htmy` component is to add a sync or async `htmy(self, context: Context) -> Component` method to a class, often to enhance a pre-existing business object with `htmy` rendering capabilities.
@@ -251,12 +249,7 @@ htmy/i18n.py
 htmy/io.py
     11→async def load_text_file …
 
-htmy/md/__init__.py
-     2→from .core import MarkdownParser as MarkdownParser
-     6→from .typing import ParsedMarkdown as ParsedMarkdown
-
 htmy/md/core.py
-    17→    from .typing import MarkdownParserFunction, MarkdownRenderFunction, ParsedMarkdown
     20→class MarkdownParser(ContextAware):
     27→
     28→    __slots__ = ("_md",)
@@ -289,13 +282,7 @@ htmy/md/typing.py
     21→MarkdownParserFunction: TypeAlias = Callable[[str], ParsedMarkdown]
     24→MarkdownRenderFunction: TypeAlias = Callable[[Component, MarkdownMetadataDict | None], Component]
 
-htmy/renderer/__init__.py
-     1→from .baseline import Renderer as _BaselineRenderer
-     2→from .default import Renderer as _DefaultRenderer
-     4→from .typing import is_streaming_renderer as is_streaming_renderer
-
 htmy/renderer/baseline.py
-    10→from .context import RendererContext
     18→class Renderer:
     27→
     28→    __slots__ = ("_default_context", "_string_formatter")
@@ -305,7 +292,6 @@ htmy/renderer/baseline.py
     67→    async def stream …
 
 htmy/renderer/context.py
-     3→from .typing import RendererType, is_renderer
      6→class RendererContext:
     10→
     11→    @classmethod
@@ -314,7 +300,6 @@ htmy/renderer/context.py
       →        …
 
 htmy/renderer/default.py
-    12→from .context import RendererContext
     20→class _Node:
     25→    def __init__ …
     36→    def iter_nodes …
@@ -367,8 +352,10 @@ htmy/tag.py
 htmy/typing.py
      4→T = TypeVar("T")
      5→U = TypeVar("U")
+     7→# -- Properties
      9→PropertyValue: TypeAlias = Any | None
     12→Properties: TypeAlias = Mapping[str, PropertyValue]
+    15→# -- Context
     17→ContextKey: TypeAlias = Any
     20→ContextValue: TypeAlias = Any
     23→Context: TypeAlias = Mapping[ContextKey, ContextValue]
@@ -381,6 +368,7 @@ htmy/typing.py
     53→HTMYComponentType: TypeAlias = SyncComponent | AsyncComponent
     56→StrictComponentType: TypeAlias = HTMYComponentType | str
     59→ComponentType: TypeAlias = StrictComponentType | None
+    62→# Omit strings from this type to simplify checks.
     63→ComponentSequence: TypeAlias = list[ComponentType] | tuple[ComponentType, ...]
     66→Component: TypeAlias = ComponentType | ComponentSequence
     73→class SyncContextProvider(Protocol):
@@ -389,6 +377,7 @@ htmy/typing.py
     81→class AsyncContextProvider(Protocol):
     84→    async def htmy_context …
     89→ContextProvider: TypeAlias = SyncContextProvider | AsyncContextProvider
+    97→# -- Text processors
     99→TextProcessor: TypeAlias = Callable[[str, Context], str | Coroutine[Any, Any, str]]
    103→class TextResolver(Protocol):
    108→    def resolve_text …
@@ -421,7 +410,11 @@ mkdocs.yaml
     17→      toggle:
     18→        icon: lucide/sun
     19→        name: Switch to dark mode
-      →        …
+    20→    # Palette toggle for dark mode
+    21→    - media: "(prefers-color-scheme: dark)"
+    22→      scheme: slate
+    23→      toggle:
+      →      …
     33→plugins:
     34→  - search:
     35→      lang: en
@@ -452,12 +445,20 @@ mkdocs.yaml
     62→      - api/html.md
     63→      - api/snippet.md
     64→      - api/md.md
-      →      …
+    65→      - api/function_component.md
+    66→      - api/i18n.md
+    67→      - renderer:
+    68→          - api/renderer/default.md
+      →          …
 
 pyproject.toml
      1→[project]
     18→[dependency-groups]
     35→[build-system]
+
+tests/renderer/test_renderer_comparison.py
+    61→class WrapAsync:
+    92→class SyncError:
 
 tests/test_function_component.py
     69→class Data:
