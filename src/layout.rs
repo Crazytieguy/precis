@@ -580,15 +580,16 @@ pub(crate) fn is_markdown_leading_noise(line: &str) -> bool {
     // table, etc.) — NOT inline tags like <em>, <strong>, <b>, <a> which wrap content.
     if let Some(rest) = trimmed.strip_prefix('<') {
         let tag_start = rest.strip_prefix('/').unwrap_or(rest);
-        let tag_name: String = tag_start.chars()
-            .take_while(|c| c.is_ascii_alphabetic())
-            .collect::<String>()
-            .to_ascii_lowercase();
+        let tag_end = tag_start.find(|c: char| !c.is_ascii_alphabetic()).unwrap_or(tag_start.len());
+        let tag = &tag_start[..tag_end];
         if rest.starts_with('!')  // HTML comments: <!-- ... -->
-            || matches!(tag_name.as_str(),
-                "div" | "p" | "img" | "br" | "hr" | "table" | "tr" | "td" | "th"
-                | "details" | "summary" | "picture" | "source" | "figure"
-                | "center" | "align" | "section" | "header" | "footer" | "nav")
+            || tag.eq_ignore_ascii_case("div") || tag.eq_ignore_ascii_case("p")
+            || tag.eq_ignore_ascii_case("img") || tag.eq_ignore_ascii_case("br")
+            || tag.eq_ignore_ascii_case("hr") || tag.eq_ignore_ascii_case("table")
+            || tag.eq_ignore_ascii_case("tr") || tag.eq_ignore_ascii_case("td")
+            || tag.eq_ignore_ascii_case("details") || tag.eq_ignore_ascii_case("summary")
+            || tag.eq_ignore_ascii_case("picture") || tag.eq_ignore_ascii_case("figure")
+            || tag.eq_ignore_ascii_case("center") || tag.eq_ignore_ascii_case("section")
         {
             return true;
         }
