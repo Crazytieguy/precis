@@ -586,10 +586,9 @@ pub(crate) fn is_markdown_leading_noise(line: &str) -> bool {
             || tag.eq_ignore_ascii_case("div") || tag.eq_ignore_ascii_case("p")
             || tag.eq_ignore_ascii_case("img") || tag.eq_ignore_ascii_case("br")
             || tag.eq_ignore_ascii_case("hr") || tag.eq_ignore_ascii_case("table")
-            || tag.eq_ignore_ascii_case("tr") || tag.eq_ignore_ascii_case("td")
             || tag.eq_ignore_ascii_case("details") || tag.eq_ignore_ascii_case("summary")
             || tag.eq_ignore_ascii_case("picture") || tag.eq_ignore_ascii_case("figure")
-            || tag.eq_ignore_ascii_case("center") || tag.eq_ignore_ascii_case("section")
+            || tag.eq_ignore_ascii_case("center")
         {
             return true;
         }

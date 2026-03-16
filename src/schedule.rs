@@ -318,12 +318,10 @@ fn is_boilerplate_heading(name: &str) -> bool {
     )
 }
 
-/// Detect build/tool configuration files by filename and path convention.
-/// These are files like `eslint.config.js`, `jest.config.ts`, `.eslintrc.js`, etc.
-/// that configure development tools rather than implementing library/app logic.
-/// Also detects data-format config files (`triagebot.toml`, `codecov.yml`, etc.)
-/// and files in conventional tooling directories (`scripts/`, `tools/`).
-/// `relative_path` is the path relative to the project root.
+/// Detect files that are not core library/application source code.
+/// Includes build/tool configuration, stylesheets, HTML templates, web assets,
+/// and files in conventional tooling directories. These get a reduced value
+/// factor (0.2) so they appear when budget allows but don't displace source code.
 fn is_config_file(relative_path: &Path, filename: &str) -> bool {
     let lower = filename.to_ascii_lowercase();
     let is_root = relative_path.parent().is_none_or(|p| p.as_os_str().is_empty());
