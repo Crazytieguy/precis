@@ -273,6 +273,19 @@ fn is_generated_file(source: &str) -> bool {
         })
 }
 
+/// Detect generated files by filename patterns (protobuf, codegen, etc.).
+fn is_generated_filename(path: &Path) -> bool {
+    let stem = path.file_stem().and_then(|s| s.to_str()).unwrap_or("");
+    let name = path.file_name().and_then(|n| n.to_str()).unwrap_or("");
+    // Protobuf: *_pb2.py, *.pb.go, *_grpc.py
+    stem.ends_with("_pb2") || stem.ends_with("_pb2_grpc")
+        || name.ends_with(".pb.go") || name.ends_with(".pb.cc") || name.ends_with(".pb.h")
+        // Codegen: *.generated.ts, *.g.dart
+        || stem.ends_with(".generated") || stem.ends_with(".g")
+        // Mock generators: mock_*.go (mockery)
+        || (stem.starts_with("mock_") && name.ends_with(".go"))
+}
+
 /// Detect boilerplate markdown section headings that convey no architectural value.
 /// These are headings like "## License", "## Contributing", "## Acknowledgements"
 /// that appear in READMEs across many repos with identical content.
@@ -598,7 +611,7 @@ pub fn build_groups(
             .and_then(|e| e.to_str())
             .is_some_and(walk::is_header_extension);
         let is_autogen = is_autogen_api_doc(source, file_role);
-        let is_generated = is_generated_file(source);
+        let is_generated = is_generated_file(source) || is_generated_filename(relative);
 
         for (symbol_idx, sym) in symbols.iter().enumerate() {
             let sym_line_0 = sym.line - 1;
@@ -1540,6 +1553,19 @@ mod tests {
         assert_eq!(FileRole::from_filename("AUTHORS"), FileRole::CommunityHealth);
         assert_eq!(FileRole::from_filename("AUTHORS.md"), FileRole::CommunityHealth);
         assert_eq!(FileRole::from_filename("MAINTAINERS.md"), FileRole::CommunityHealth);
+    }
+
+    #[test]
+    fn generated_filename_detection() {
+        assert!(is_generated_filename(Path::new("service_pb2.py")));
+        assert!(is_generated_filename(Path::new("api.pb.go")));
+        assert!(is_generated_filename(Path::new("mock_repository.go")));
+        assert!(is_generated_filename(Path::new("types.generated.ts")));
+        assert!(is_generated_filename(Path::new("model.g.dart")));
+        // Normal files should not match
+        assert!(!is_generated_filename(Path::new("main.go")));
+        assert!(!is_generated_filename(Path::new("utils.py")));
+        assert!(!is_generated_filename(Path::new("mock.ts"))); // no underscore
     }
 
     #[test]
