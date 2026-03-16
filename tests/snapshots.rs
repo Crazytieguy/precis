@@ -826,6 +826,16 @@ fn invisible_directory_markers() {
     }
 }
 
+// Empty directory should produce no output.
+#[test]
+fn empty_directory() {
+    let dir = tempfile::tempdir().unwrap();
+    let files = walk::discover_source_files(dir.path());
+    let sources = format::read_sources(&files);
+    let output = format::render_with_budget(4000, dir.path(), &files, &sources);
+    assert!(output.is_empty(), "empty directory should produce no output");
+}
+
 // Budget-based fixture snapshot tests.
 
 /// Helper: render a fixture with a token budget and return output with metadata header.
