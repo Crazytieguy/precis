@@ -314,6 +314,7 @@ fn is_boilerplate_heading(name: &str) -> bool {
             | "table of contents" | "contents"
             | "star history" | "stargazers" | "star gazers"
             | "development" | "developing" | "local development"
+            | "donate" | "donations" | "community"
     )
 }
 
