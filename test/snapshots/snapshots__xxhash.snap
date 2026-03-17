@@ -83,6 +83,7 @@ LICENSE.txt
      4→
      5→Permission is hereby granted, free of charge, to any person obtaining
      6→a copy of this software and associated documentation files (the
+     7→"Software"), to deal in the Software without restriction, including
       →…
 
 bench_test.go
@@ -93,13 +94,13 @@ bench_test.go
     63→func BenchmarkDigestString(b *testing.B) {
 
 dynamic/dynamic_test.go
-     6→import …
     15→// This is a cursory test that checks whether things work under dynamic linking.
     17→func TestMain(m *testing.M) {
+    18→	cmd := exec.Command(
+      →	…
     33→func TestDynamic(t *testing.T) {
 
 dynamic/plugin.go
-     6→import …
     14→const …
     15→	in …
     16→	want …
@@ -121,7 +122,6 @@ testall.sh
     10→GOARCH=arm64 go test -tags purego
 
 xxhash.go
-     5→import …
     11→const …
     12→	prime1 …
     13→	prime2 …
@@ -297,7 +297,6 @@ xxhash_test.go
    170→func TestAllocs(t *testing.T) {
 
 xxhash_unsafe.go
-     9→import …
     38→func Sum64String(s string) uint64 {
     45→func (d *Digest) WriteString(s string) (n int, err error) {
     55→type sliceHeader struct {
@@ -337,7 +336,6 @@ xxhashbench/xxhashbench_test.go
    108→func BenchmarkHashes(b *testing.B) {
 
 xxhsum/xxhsum.go
-     3→import …
     11→func main() {
     34→func contains(ss []string, s string) bool {
     43→func printHash(r io.Reader, name string) {

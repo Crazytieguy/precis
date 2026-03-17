@@ -28,5 +28,6 @@
 (var_spec
   name: (identifier) @name) @symbol
 
-; Import declarations
-(import_declaration) @symbol
+; Import declarations — omitted intentionally. Go grouped imports
+; show as bare `import …` at Names stage which conveys no information.
+; The imported packages are visible from the source context.

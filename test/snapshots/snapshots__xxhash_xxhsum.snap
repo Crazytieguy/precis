@@ -2,16 +2,9 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (470 tokens)
+budget: 2000 (417 tokens)
 
 xxhsum.go
-     3→import (
-     4→	"fmt"
-     5→	"io"
-     6→	"os"
-     7→
-     8→	"github.com/cespare/xxhash/v2"
-     9→)
     11→func main() {
     12→	if contains(os.Args[1:], "-h") {
     13→		fmt.Fprintf(os.Stderr, `Usage:

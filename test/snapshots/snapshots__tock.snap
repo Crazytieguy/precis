@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7989 tokens)
+budget: 8000 (7982 tokens)
 
 README.md
      1→# Tock
@@ -161,16 +161,17 @@ go.mod
      1→module github.com/kriuchkov/tock
      3→go 1.25.6
      4→
+     5→require (
       →…
 
 Makefile
      1→
      2→linter:
      3→	docker run -t --rm -v $$(pwd):/app -w /app \
+     4→	-v $$(go env GOCACHE):/.cache/go-build -e GOCACHE=/.cache/go-build \
       →	…
 
 cmd/tock/main.go
-     3→import …
      7→func main() {
 
 demo/demo_script.sh
@@ -224,6 +225,7 @@ demo/demo_script.sh
     49→mkdir -p demo
     50→rm -f "$DATA_FILE"
     51→
+    52→# Calculate dates for sample data (macOS compatible)
       →…
 
 docs/commands.md
@@ -267,21 +269,21 @@ go.sum
      1→github.com/aymanbagabas/go-osc52/v2 v2.0.1 h1:HwpRHbFMcZLEVr42D4p7XBqjyuxQH5SMiErDT4WkJ2k=
      2→github.com/aymanbagabas/go-osc52/v2 v2.0.1/go.mod h1:uYgXzlJ7ZpABp8OJ+exZzJJhRNQ2ASbcXHWsFqH8hp8=
      3→github.com/aymanbagabas/go-udiff v0.3.1 h1:LV+qyBQ2pqe0u42ZsUEtPiCaUoqgA9gYRDs3vj1nolY=
+     4→github.com/aymanbagabas/go-udiff v0.3.1/go.mod h1:G0fsKmG+P6ylD0r6N/KgQD/nWzgfnl8ZBcNLgcbrw8E=
       →…
 
 install.sh
      2→set -e
      4→# Tock Installer Script
      5→#
+     6→# Usage:
       →…
 
 internal/adapters/cli/add.go
-     3→import …
     16→type addOptions struct {
     26→func NewAddCmd() *cobra.Command {
 
 internal/adapters/cli/analyze.go
-     3→import …
     20→func NewAnalyzeCmd() *cobra.Command {
     70→type AnalysisStats struct {
     71→	TotalDuration      time.Duration
@@ -299,7 +301,6 @@ internal/adapters/cli/analyze.go
    206→func renderAnalysis …
 
 internal/adapters/cli/calendar.go
-     3→import …
     25→func NewCalendarCmd() *cobra.Command {
     48→type reportModel struct {
     79→func (m *reportModel) Init() tea.Cmd {
@@ -313,29 +314,24 @@ internal/adapters/cli/calendar.go
    488→func (m *reportModel) getWeeklyDuration …
 
 internal/adapters/cli/calendar_sidebar.go
-     3→import …
     12→const barChar …
     15→func formatDurationCompact …
 
 internal/adapters/cli/continue.go
-     3→import …
     15→const …
     16→	defaultRecentActivitiesForContinuation …
     20→func NewContinueCmd() *cobra.Command {
 
 internal/adapters/cli/current.go
-     3→import …
     19→type currentCmdActivity struct {
     23→func (a currentCmdActivity) Duration() time.Duration {
     27→func (a currentCmdActivity) DurationHMS() string {
     35→func NewCurrentCmd() *cobra.Command {
 
 internal/adapters/cli/ical.go
-     3→import …
     23→func NewICalCmd() *cobra.Command {
 
 internal/adapters/cli/interactive.go
-     3→import …
     17→func SelectActivityMetadata(activities []models.Activity, project, description string, theme Theme) (string, string, error) {
     98→func RunInteractiveInput(header, placeholder string, theme Theme) (string, error) {
    123→type simpleInputModel struct {
@@ -349,12 +345,10 @@ internal/adapters/cli/interactive.go
    263→func (m *simpleListModel) View() string {
 
 internal/adapters/cli/last.go
-     3→import …
     16→type lastOptions struct {
     21→func NewLastCmd() *cobra.Command {
 
 internal/adapters/cli/list_gui.go
-     3→import …
     22→func NewListCmd() *cobra.Command {
     45→type model struct {
    200→func (m *model) Init() tea.Cmd {
@@ -362,17 +356,14 @@ internal/adapters/cli/list_gui.go
    230→func (m *model) View() string {
 
 internal/adapters/cli/remove.go
-     3→import …
     22→func NewRemoveCmd() *cobra.Command {
 
 internal/adapters/cli/report.go
-     3→import …
     20→type reportOptions struct {
     31→func NewReportCmd() *cobra.Command {
     61→func runReportCmd …
 
 internal/adapters/cli/root.go
-     3→import …
     21→const …
     22→	defaultRecentActivitiesForCompletion …
     23→	backendTimewarrior …
@@ -384,15 +375,12 @@ internal/adapters/cli/root.go
    107→func Execute() {
 
 internal/adapters/cli/start.go
-     3→import …
     17→func NewStartCmd() *cobra.Command {
 
 internal/adapters/cli/stop.go
-     3→import …
     14→func NewStopCmd() *cobra.Command {
 
 internal/adapters/cli/theme.go
-     3→import …
     10→// Theme defines the color palette for the application.
     11→type Theme struct {
     12→	Primary   lipgloss.Color
@@ -429,11 +417,9 @@ internal/adapters/cli/theme.go
    167→func InitStyles(t Theme) Styles {
 
 internal/adapters/cli/update.go
-     3→import …
     17→type githubRelease struct {
 
 internal/adapters/cli/version.go
-     3→import …
     10→var …
     11→	version …
     12→	commit …
@@ -441,7 +427,6 @@ internal/adapters/cli/version.go
     16→func NewVersionCmd() *cobra.Command {
 
 internal/adapters/cli/watch.go
-     3→import …
     19→func NewWatchCmd() *cobra.Command {
     75→type tickMsg time.Time
     77→type watchModel struct {
@@ -452,7 +437,6 @@ internal/adapters/cli/watch.go
    248→var font …
 
 internal/adapters/repositories/file/parser.go
-     3→import …
     13→var ErrSkip = errors.New("skip line")
     15→const …
     16→	timeLayoutMin …
@@ -462,8 +446,9 @@ internal/adapters/repositories/file/parser.go
     72→func FormatActivity(a models.Activity) string {
 
 internal/adapters/repositories/file/repository.go
-     3→import …
     19→type repository struct {
+    20→	filePath string
+    21→}
     23→func NewRepository(filePath string) ports.ActivityRepository {
     27→func (r *repository) Find(_ context.Context, filter dto.ActivityFilter) ([]models.Activity, error) {
     93→func (r *repository) FindLast(_ context.Context) (*models.Activity, error) {
@@ -473,11 +458,10 @@ internal/adapters/repositories/file/repository.go
    250→func (r *repository) writeLines …
 
 internal/adapters/repositories/notes/repository.go
-     3→import …
-    18→const …
-    19→	fileExtension …
-    20→	directoryMode …
-    21→	fileMode …
+    18→const (
+    19→	fileExtension = ".txt"
+    20→	directoryMode = 0750
+    21→	fileMode      = 0644
     24→type repository struct {
     28→func NewRepository(basePath string) ports.NotesRepository {
     32→type noteData struct {
@@ -485,7 +469,6 @@ internal/adapters/repositories/notes/repository.go
     73→func (r *repository) Get(_ context.Context, activityID string, date time.Time) (string, []string, error) {
 
 internal/adapters/repositories/timewarrior/repository.go
-     3→import …
     24→const …
     25→	timeLayout …
     28→type twInterval struct {
@@ -503,11 +486,10 @@ internal/adapters/repositories/timewarrior/repository.go
    283→func (r *repository) writeIntervalsToFile …
    306→func toTWInterval …
    320→func fromTWInterval …
-   352→func parseIncLine …
+   352→func parseIncLine(line string) (twInterval, error) {
    393→func tokenize …
 
 internal/config/config.go
-     3→import …
     12→type Config struct {
     13→	Backend         string            `mapstructure:"backend"`
     14→	File            FileConfig        `mapstructure:"file"`
@@ -562,7 +544,6 @@ internal/config/config_test.go
     95→func TestInitialCreationFromEnv(t *testing.T) {
 
 internal/core/dto/activity_dto.go
-     3→import …
      9→type StartActivityRequest struct {
     10→	Description string
     11→	Project     string
@@ -602,7 +583,6 @@ internal/core/dto/activity_dto.go
     50→}
 
 internal/core/errors/errors.go
-     3→import "errors"
      5→var (
      6→	ErrActivityNotFound       = errors.New("activity not found")
      7→	ErrNoActiveActivity       = errors.New("no active activity found")
@@ -610,7 +590,6 @@ internal/core/errors/errors.go
      9→	ErrCancelled              = errors.New("operation cancelled")
 
 internal/core/models/activity.go
-     3→import …
      9→// Activity represents a time tracking entry.
     10→type Activity struct {
     11→	Description string     `json:"description"`
@@ -627,11 +606,11 @@ internal/core/models/activity.go
     32→	d := a.Duration().Round(time.Second)
     33→	h := d / time.Hour
     34→	d %= time.Hour
+    35→	m := d / time.Minute
       →	…
     41→func (a Activity) MarshalJSON() ([]byte, error) {
 
 internal/core/ports/ports.go
-     3→import …
     11→type ActivityResolver interface {
     12→	Start(ctx context.Context, req dto.StartActivityRequest) (*models.Activity, error)
     13→	Stop(ctx context.Context, req dto.StopActivityRequest) (*models.Activity, error)
@@ -654,7 +633,6 @@ internal/core/ports/ports.go
     32→}
 
 internal/extra/extra.go
-     3→import …
     11→func CalculateEndTime(tf *timeutil.Formatter, startTime time.Time, endStr, durationStr string) (time.Time, error) {
     12→	if endStr != "" {
       →	…
@@ -663,7 +641,6 @@ internal/extra/extra_test.go
     12→func TestCalculateEndTime(t *testing.T) {
 
 internal/services/activity/service.go
-     3→import …
     15→type service struct {
     20→func NewService(repo ports.ActivityRepository, notesRepo ports.NotesRepository) ports.ActivityResolver {
     24→func (s *service) Start(ctx context.Context, req dto.StartActivityRequest) (*models.Activity, error) {
@@ -682,17 +659,15 @@ internal/services/activity/service_test.go
    307→func TestService_Remove(t *testing.T) {
 
 internal/services/ics/generator.go
-     3→import …
     11→// Generate returns a full iCalendar string for a single activity.
     12→func Generate(act models.Activity, uidKey string) string {
     17→// WrapCalendar wraps the given event(s) string in a VCALENDAR block.
     18→func WrapCalendar(eventsBody string) string {
     28→// GenerateEvent returns the VEVENT block for a single activity.
     29→func GenerateEvent(act models.Activity, uidKey string) string {
-    71→func escapeProperty …
+    71→func escapeProperty(s string) string {
 
 internal/timeutil/timeutil.go
-     3→import …
     10→// TimeFormat represents the configured time display format.
     11→type TimeFormat int
     13→const (
@@ -710,8 +685,12 @@ internal/timeutil/timeutil.go
    103→func (f *Formatter) ParseTimeWithDate(input string) (time.Time, error) {
    158→func FormatDuration(d time.Duration, format string) string {
 
+internal/timeutil/timeutil_test.go
+   198→func checkDate …
+
 tock.yaml.example
      1→# Tock Configuration File
      2→# Default location: ~/.config/tock/tock.yaml
      3→#
+     4→# You can override any setting using environment variables:
       →…

@@ -92,15 +92,17 @@ README.md
    148→Same as MCPHost CLI
 
 examples/basic/main.go
-     3→import …
     11→func main() {
+    12→	ctx := context.Background()
+    13→
+      →…
 
 examples/scripting/main.go
-     3→import …
     12→func main() {
+    13→	ctx := context.Background()
+      →	…
 
 mcphost.go
-     3→import …
     16→// MCPHost provides programmatic access to mcphost functionality, allowing
     17→// integration of MCP tools and LLM interactions into Go applications. It manages
     18→// agents, sessions, and model configurations.
@@ -159,13 +161,11 @@ mcphost.go
    237→func (m *MCPHost) Close() error {
 
 mcphost_test.go
-     3→import …
     11→func TestNew(t *testing.T) {
     30→func TestNewWithOptions(t *testing.T) {
     54→func TestSessionManagement(t *testing.T) {
 
 types.go
-     3→import …
      8→// Message is an alias for session.Message providing SDK users with access
      9→// to message structures for conversation history and tool interactions.
     10→type Message = session.Message

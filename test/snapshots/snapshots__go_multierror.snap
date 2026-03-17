@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3996 tokens)
+budget: 4000 (4000 tokens)
 
 README.md
      1→# go-multierror
@@ -195,6 +195,7 @@ CHANGELOG.md
      3→### Improvements
      5→### Changes
      7→### Fixed
+     9→### Security
 
 Makefile
      1→TEST?=./...
@@ -254,7 +255,6 @@ flatten_test.go
     43→func TestFlatten_nonError(t *testing.T) {
 
 format.go
-     6→import …
     11→// ErrorFormatFunc is a function callback that is called by Error to
     12→// turn the list of errors into a string.
     13→type ErrorFormatFunc func([]error) string
@@ -267,7 +267,6 @@ format_test.go
     27→func TestListFormatFuncMultiple(t *testing.T) {
 
 group.go
-     6→import "sync …
      8→// Group is a collection of goroutines which return errors that need to be
      9→// coalesced.
     10→type Group struct {
@@ -288,7 +287,6 @@ group_test.go
     12→func TestGroup(t *testing.T) {
 
 multierror.go
-     6→import …
     11→// Error is an error type to track multiple errors. This is used to
     12→// accumulate errors in cases and return them as a single "error".
     13→type Error struct {
@@ -321,6 +319,8 @@ multierror.go
     62→// etc. The order will match the order of Errors in the multierror.Error
       →…
     71→func (e *Error) Unwrap() error {
+    88→// chain implements the interfaces necessary for errors.Is/As/Unwrap to
+      →…
     99→type chain []error
    101→// Error implements the error interface
    102→func (e chain) Error() string {
@@ -345,7 +345,6 @@ multierror_test.go
    211→func (*nestedError) Error() string { return "" }
 
 prefix.go
-     6→import …
     10→// Prefix is a helper function that will prefix some text
     11→// to the given error. If the error is a multierror.Error, then
     12→// it will be prefixed to each wrapped error.
