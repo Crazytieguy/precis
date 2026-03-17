@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3997 tokens)
+budget: 4000 (3998 tokens)
 
 README.md
      1→derive(Error)
@@ -58,8 +58,6 @@ build/probe.rs
     21→    fn fmt …
     26→impl Error for MyError {
     27→    fn provide …
-
-build.rs
 
 impl/Cargo.toml
      1→[package]
@@ -265,9 +263,6 @@ src/aserror.rs
 src/display.rs
      6→pub trait AsDisplay<'a>: Sealed {
      7→    // TODO: convert to generic associated type.
-     8→    // https://github.com/dtolnay/thiserror/pull/253
-     9→    type Target: Display;
-    10→
     11→    fn as_display(&'a self) -> Self::Target;
     18→    type Target = &'a T;
     20→    fn as_display(&'a self) -> Self::Target {
@@ -303,6 +298,13 @@ src/provide.rs
 src/var.rs
      3→pub struct Var<'a, T: ?Sized>(pub &'a T);
      6→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+
+tests/compiletest.rs
+     1→#[rustversion::attr(not(nightly), ignore = "requires nightly")]
+     2→#[cfg_attr(miri, ignore = "incompatible with miri")]
+     3→#[test]
+     4→fn ui() {
+      →…
 
 tests/no-std/Cargo.toml
      1→[package]
@@ -347,9 +349,6 @@ tests/test_backtrace.rs
 tests/test_display.rs
    417→    pub fn octal …
 
-tests/test_error.rs
-    42→enum EnumError {
-
 tests/test_expr.rs
     11→pub enum CompilerError {
     41→pub enum RustupError {
@@ -393,7 +392,6 @@ tests/test_option.rs
     93→    pub enum OptSourceOptBacktrace {
 
 tests/test_path.rs
-    22→enum EnumPathBuf {
     29→pub struct UnsizedError {
     35→pub enum BothError {
 

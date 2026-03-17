@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1989 tokens)
+budget: 2000 (1876 tokens)
 
 comparator.js
      3→const ANY = Symbol('SemVer ANY')
@@ -17,8 +17,7 @@ comparator.js
     14→      if (comp.loose === !!options.loose) {
     15→        return comp
     16→      } else {
-    17→        comp = comp.value
-      →        …
+      →      …
     36→  parse (comp) {
     37→    const r = this.options.loose ? re[t.COMPARATORLOOSE] : re[t.COMPARATOR]
     38→    const m = comp.match(r)
@@ -26,8 +25,7 @@ comparator.js
     40→    if (!m) {
     41→      throw new TypeError(`Invalid comparator: ${comp}`)
     42→    }
-    43→
-      →…
+      →    …
     57→  toString () {
     58→    return this.value
     59→  }
@@ -38,8 +36,7 @@ comparator.js
     65→      return true
     66→    }
     67→
-    68→    if (typeof version === 'string') {
-      →    …
+      →…
     79→  intersects (comp, options) {
     80→    if (!(comp instanceof Comparator)) {
     81→      throw new TypeError('a Comparator is required')
@@ -47,8 +44,15 @@ comparator.js
     83→
     84→    if (this.operator === '') {
     85→      if (this.value === '') {
-    86→        return true
-      →        …
+      →      …
+
+index.js
+     1→'use strict'
+     3→module.exports = {
+     4→  SemVer: require('./semver.js'),
+     5→  Range: require('./range.js'),
+     6→  Comparator: require('./comparator.js'),
+     7→}
 
 range.js
      3→const SPACE_CHARACTERS = /\s+/g
@@ -60,8 +64,7 @@ range.js
     11→      if (
     12→        range.loose === !!options.loose &&
     13→        range.includePrerelease === !!options.includePrerelease
-    14→      ) {
-      →      …
+      →        …
     73→  get range () {
     74→    if (this.formatted === undefined) {
     75→      this.formatted = ''
@@ -69,7 +72,6 @@ range.js
     77→        if (i > 0) {
     78→          this.formatted += '||'
     79→        }
-    80→        const comps = this.set[i]
       →        …
     92→  format () {
     93→    return this.range
@@ -84,7 +86,6 @@ range.js
    104→      (this.options.includePrerelease && FLAG_INCLUDE_PRERELEASE) |
    105→      (this.options.loose && FLAG_LOOSE)
    106→    const memoKey = memoOpts + ':' + range
-   107→    const cached = cache.get(memoKey)
       →    …
    170→  intersects (range, options) {
    171→    if (!(range instanceof Range)) {
@@ -93,8 +94,7 @@ range.js
    174→
    175→    return this.set.some((thisComparators) => {
    176→      return (
-   177→        isSatisfiable(thisComparators, options) &&
-      →        …
+      →      …
    193→  test (version) {
    194→    if (!version) {
    195→      return false
@@ -102,8 +102,7 @@ range.js
    197→
    198→    if (typeof version === 'string') {
    199→      try {
-   200→        version = new SemVer(version, this.options)
-      →        …
+      →      …
    218→const cache = new LRU()
    233→const isNullSet = c => c.value === '<0.0.0-0'
    234→const isAny = c => c.value === ''
@@ -132,8 +131,7 @@ semver.js
     14→      if (version.loose === !!options.loose &&
     15→        version.includePrerelease === !!options.includePrerelease) {
     16→        return version
-    17→      } else {
-      →      …
+      →        …
     81→  format () {
     82→    this.version = `${this.major}.${this.minor}.${this.patch}`
     83→    if (this.prerelease.length) {
@@ -151,8 +149,7 @@ semver.js
     97→        return 0
     98→      }
     99→      other = new SemVer(other, this.options)
-   100→    }
-      →    …
+      →      …
    109→  compareMain (other) {
    110→    if (!(other instanceof SemVer)) {
    111→      other = new SemVer(other, this.options)
@@ -160,8 +157,7 @@ semver.js
    113→
    114→    if (this.major < other.major) {
    115→      return -1
-   116→    }
-      →    …
+      →      …
    135→  comparePre (other) {
    136→    if (!(other instanceof SemVer)) {
    137→      other = new SemVer(other, this.options)
@@ -169,8 +165,7 @@ semver.js
    139→
    140→    // NOT having a prerelease is > having one
    141→    if (this.prerelease.length && !other.prerelease.length) {
-   142→      return -1
-      →      …
+      →    …
    168→  compareBuild (other) {
    169→    if (!(other instanceof SemVer)) {
    170→      other = new SemVer(other, this.options)
@@ -178,8 +173,7 @@ semver.js
    172→
    173→    let i = 0
    174→    do {
-   175→      const a = this.build[i]
-      →      …
+      →    …
    194→  inc (release, identifier, identifierBase) {
    195→    if (release.startsWith('pre')) {
    196→      if (!identifier && identifierBase === false) {
@@ -187,5 +181,4 @@ semver.js
    198→      }
    199→      // Avoid an invalid semver results
    200→      if (identifier) {
-   201→        const match = `-${identifier}`.match(this.options.loose ? re[t.PRERELEASELOOSE] : re[t.PRERELEASE])
-      →        …
+      →      …

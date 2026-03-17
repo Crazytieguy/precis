@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (4001 tokens)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
@@ -75,8 +75,6 @@ src/chain.rs
     11→pub(crate) struct Chain<'a> {
     16→pub(crate) enum ChainState<'a> {
     17→    Linked {
-    18→        next: Option<&'a (dyn StdError + 'static)>,
-    19→    },
       →    …
     28→    pub fn new(head: &'a (dyn StdError + 'static)) -> Self {
     36→    type Item = &'a (dyn StdError + 'static);
@@ -331,6 +329,9 @@ src/wrapper.rs
     75→impl StdError for BoxedError …
     81→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
 
+tests/compiletest.rs
+     1→#[rustversion::attr(not(nightly), ignore = "requires nightly")]
+
 tests/crate/Cargo.toml
      1→[package]
      8→[lib]
@@ -345,8 +346,11 @@ tests/drop/mod.rs
     27→    has_dropped: Flag,
     28→}
 
+tests/test_backtrace.rs
+     2→
+
 tests/test_ensure.rs
-    52→    fn t(self, i: i32) -> i32 {
+    52→    fn t …
     78→fn assert_err …
 
 tests/test_ffi.rs

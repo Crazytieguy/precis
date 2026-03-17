@@ -676,7 +676,14 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
         mark_reexports(&mut symbols);
     }
 
-    dedup_overloads(symbols, lang)
+    let symbols = dedup_overloads(symbols, lang);
+    // If tree-sitter found no symbols (e.g., a markdown file with no headings,
+    // or a code file with only comments), fall back to plain text so the file
+    // isn't completely invisible.
+    if symbols.is_empty() {
+        return plain_text_symbol(source);
+    }
+    symbols
 }
 
 /// Mark `pub use` imports as re-exports when they reference a child module
@@ -2327,12 +2334,15 @@ func Process() {}
 
     #[test]
     fn json_empty_and_array_roots() {
-        // Empty object
-        assert!(extract_symbols(Path::new("empty.json"), "{}").is_empty());
-        // Array root — no top-level keys
-        assert!(extract_symbols(Path::new("arr.json"), "[1, 2, 3]").is_empty());
         // Empty source
         assert!(extract_symbols(Path::new("empty.json"), "").is_empty());
+        // Empty object — falls back to plain text
+        let syms = extract_symbols(Path::new("empty.json"), "{}");
+        assert_eq!(syms.len(), 1);
+        assert_eq!(syms[0].kind, SymbolKind::Section);
+        // Array root — no top-level keys, falls back to plain text
+        let syms = extract_symbols(Path::new("arr.json"), "[1, 2, 3]");
+        assert_eq!(syms.len(), 1);
     }
 
     #[test]
@@ -2395,7 +2405,9 @@ version: 1.0
     #[test]
     fn toml_empty_file() {
         assert!(extract_symbols(Path::new("empty.toml"), "").is_empty());
-        // Comments only
-        assert!(extract_symbols(Path::new("comments.toml"), "# just a comment\n").is_empty());
+        // Comments only — falls back to plain text (one Section symbol)
+        let syms = extract_symbols(Path::new("comments.toml"), "# just a comment\n");
+        assert_eq!(syms.len(), 1);
+        assert_eq!(syms[0].kind, SymbolKind::Section);
     }
 }

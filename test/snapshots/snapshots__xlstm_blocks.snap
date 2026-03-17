@@ -2,9 +2,10 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1999 tokens)
+budget: 2000 (2000 tokens)
 
-mlstm/backends.py
+mlstm/__init__.py
+     1→
 
 mlstm/block.py
     10→class mLSTMBlockConfig:
@@ -94,8 +95,6 @@ slstm/cell.py
    146→    def torch_dtype_s(self) -> torch.dtype:
    173→    def defines(self):
    214→class sLSTMCellBase(nn.Module):
-   277→    def _recurrent_kernel(self):
-   281→    def _bias(self):
    324→    def head_dim(self):
    509→class sLSTMCellCUDA(object):
    513→    def instance(cls, config: sLSTMCellConfig):
@@ -149,8 +148,11 @@ slstm/src/util/support.h
     34→#define AT_DISPATCH_CASE_FLOATING_TYPES_AND_HALF2(...)                         \
     40→#define AT_DISPATCH_FLOATING_TYPES_AND_HALF2(TYPE, NAME, ...)                  \
 
-slstm/src/vanilla/__init__.py
-    11→slstm_pointwise_function_registry …
+slstm/src/util/util.h
+     1→#pragma once
+     3→#ifndef uint
+     4→typedef unsigned int uint;
+     5→#endif
 
 xlstm_block.py
     16→@dataclass

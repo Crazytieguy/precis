@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (8006 tokens)
+budget: 8000 (8003 tokens)
 
 README.md
      1→# mdBook
@@ -181,7 +181,6 @@ crates/mdbook-core/src/utils/mod.rs
     29→pub fn log_backtrace …
 
 crates/mdbook-core/src/utils/toml_ext.rs
-     6→pub(crate) trait TomlExt {
      8→    fn read …
     10→    fn insert …
 
@@ -294,26 +293,25 @@ crates/mdbook-html/Cargo.toml
 crates/mdbook-html/README.md
      1→# mdbook-html
 
-crates/mdbook-html/front-end/templates/head.hbs
-     1→{{!-- Put your head HTML text here --}}
+crates/mdbook-html/front-end/js/highlight.js
+     1→/*
+     2→  Highlight.js 10.1.1 (93fd0d73)
+     3→  License: BSD-3-Clause
+     4→  Copyright (c) 2006-2020, Ivan Sagalaev
+     5→*/
+      →…
 
-crates/mdbook-html/front-end/templates/header.hbs
-     1→{{!-- Put your header HTML text here --}}
-
-crates/mdbook-html/front-end/templates/index.hbs
-     1→<!DOCTYPE HTML>
-
-crates/mdbook-html/front-end/templates/redirect.hbs
-     1→<!DOCTYPE html>
-
-crates/mdbook-html/front-end/templates/toc.html.hbs
-     1→<!DOCTYPE HTML>
-
-crates/mdbook-html/front-end/templates/toc.js.hbs
-     1→// Populate the sidebar
+crates/mdbook-html/front-end/searcher/searcher.js
+     1→'use strict';
+     3→/* global Mark, elasticlunr, path_to_root */
+     4→
+     5→window.search = window.search || {};
+     6→(function search() {
+     7→    // Search functionality
+     8→    //
+      →    …
 
 crates/mdbook-html/src/html/tree.rs
-    25→macro_rules! attr_qual_name {
     33→pub(crate) enum Node {
    130→    /// Converts self to a [`StrTendril`].
    131→    fn into_tendril(self) -> StrTendril;

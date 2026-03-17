@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4014 tokens)
+budget: 4000 (4009 tokens)
 
 README.md
     40→## About
@@ -23,11 +23,6 @@ README.md
 benchmarks/
       →…
 
-examples/
-      →…
-
-package.json
-
 docs/v3-to-v4-migration-guide.md
      1→# TS-Pattern v3 to v4 Migration Guide
      3→## Breaking changes
@@ -45,6 +40,9 @@ docs/v4-to-v5-migration-guide.md
     65→## chainable methods
    156→## Variadic tuple patterns
    214→## `.returnType`
+
+examples/gif-fetcher/src/constants.ts
+     1→export const API_KEY = 'xxxxxxxxxxxxxxxx';
 
 jsr.json
      2→  "name": "@gabriel/ts-pattern",
@@ -195,7 +193,6 @@ src/types/DistributeUnions.ts
    117→      ]
    118→    ? [
    119→        ...FindUnions<a1, p1, [...path, 0]>,
-   120→        ...FindUnions<a2, p2, [...path, 1]>,
       →        …
    174→export type ArrayToVariadicUnion …
    183→export type Distribute …
@@ -262,7 +259,6 @@ src/types/Match.ts
     52→      value: value
     53→    ) => PickReturnValue<o, c>
     54→  ): InvertPatternForExclude<p, value> extends infer excluded
-    55→    ? Match<
    132→  with …
    159→  when …
    180→  otherwise …
@@ -418,7 +414,8 @@ src/types/helpers.ts
    271→export type Call …
    275→export type IsOptionalKeysOf …
 
+src/types/index.ts
+     1→export * from './Pattern';
+
 tests/
       →…
-
-tsconfig.json

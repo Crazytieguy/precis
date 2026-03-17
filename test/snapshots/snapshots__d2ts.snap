@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4003 tokens)
+budget: 4000 (4005 tokens)
 
 README.md
     26→# D2TS - Differential Dataflow in TypeScript <!-- omit in toc -->
@@ -41,32 +41,27 @@ packages/d2mini/src/d2.ts
 
 packages/d2mini/src/graph.ts
     11→export class DifferenceStreamReader<T> implements IDifferenceStreamReader<T> {
-    12→  #queue: MultiSet<T>[]
-    13→
     32→export class DifferenceStreamWriter<T> implements IDifferenceStreamWriter<T> {
-    33→  #queues: MultiSet<T>[][] = []
-    34→
     56→export abstract class Operator<T> implements IOperator<T> {
-    57→  protected inputs: DifferenceStreamReader<T>[]
-    58→  protected output: DifferenceStreamWriter<T>
-    59→
     80→export abstract class UnaryOperator<Tin, Tout = Tin> extends Operator<
     81→  Tin | Tout
     82→> {
    100→export abstract class BinaryOperator<T> extends Operator<T> {
    122→export abstract class LinearUnaryOperator<T, U> extends UnaryOperator<T | U> {
 
+packages/d2mini/src/index.ts
+     1→export * from './d2.js'
+     2→export * from './multiset.js'
+     3→export * from './operators/index.js'
+     4→export * from './types.js'
+
 packages/d2mini/src/indexes.ts
      9→export class Index<K, V> {
-    10→  #inner: DefaultMap<K, Map<V, number>>
-    11→
 
 packages/d2mini/src/multiset.ts
      8→export type MultiSetArray<T> = [T, number][]
      9→export type KeyedData<T> = [key: string, value: T]
     14→export class MultiSet<T> {
-    15→  #inner: MultiSetArray<T>
-    16→
     36→  map<U>(f: (data: T) => U): MultiSet<U> {
     45→  filter(f: (data: T) => boolean): MultiSet<T> {
     52→  negate(): MultiSet<T> {
@@ -76,16 +71,14 @@ packages/d2mini/src/multiset.ts
 packages/d2mini/src/operators/groupBy.ts
    346→export const groupByOperators = {
 
-packages/d2mini/src/operators/orderBy.ts
-     9→export interface OrderByOptions<Ve> {
-
-packages/d2mini/src/operators/topKWithFractionalIndex.ts
-    14→export interface TopKWithFractionalIndexOptions {
-    19→export type TopKChanges<V> = {
-   319→export type FractionalIndex = string
-   320→export type IndexedValue<V> = [V, FractionalIndex]
-   344→export type Tag = number
-   345→export type TaggedValue<V> = [V, Tag]
+packages/d2mini/src/operators/index.ts
+     1→export * from './pipe.js'
+     2→export * from './map.js'
+     3→export * from './filter.js'
+     4→export * from './negate.js'
+     5→export * from './concat.js'
+     6→export * from './debug.js'
+      →…
 
 packages/d2mini/src/types.ts
      4→export type KeyValue<K, V> = [K, V]
@@ -104,9 +97,6 @@ packages/d2mini/src/utils.ts
     24→  update(key: K, updater: (value: V) => V): V {
     73→export function hash(data: any): string {
    119→export class ObjectIdGenerator {
-   120→  private objectIds = new WeakMap<object, number>()
-   121→  private nextId = 0
-   122→
    128→  getId(value: any): number {
    151→  getStringId(value: any): string {
    161→ * Global instance for cases where a shared object ID space is needed.
@@ -151,6 +141,9 @@ packages/d2ql/src/group-by.ts
     20→export function processGroupBy …
     98→export function getAggregateFunction …
 
+packages/d2ql/src/index.ts
+     1→/**
+
 packages/d2ql/src/joins.ts
     16→export function processJoinClause …
    124→export function processJoinResults …
@@ -160,6 +153,9 @@ packages/d2ql/src/key-by.ts
 
 packages/d2ql/src/order-by.ts
     16→export function processOrderBy …
+
+packages/d2ql/src/query-builder/index.ts
+     1→export { queryBuilder, type ResultFromQueryBuilder } from './query-builder.js'
 
 packages/d2ql/src/query-builder/query-builder.ts
     30→class BaseQueryBuilder …
@@ -185,13 +181,9 @@ packages/d2ql/src/schema.json
      4→  "description": "A SQL-like DSL supporting select, join (with optional where clauses), where, groupBy, having, orderBy, limit, offset, and keyBy. In string values, those starting with '@' denote column references unless wrapped explicitly as a literal. Literal arbitrary JSON (including dates in ISO 8601 format) must be wrapped as {\"value\": ...}. Function calls are represented as objects with a single key (one of the allowed SQL functions) and its argument(s) as the value.",
      5→  "type": "object",
      6→  "properties": {
-     7→    "select": {
-      →    …
    146→  "required": ["select", "from"],
    147→  "additionalProperties": false,
    148→  "definitions": {
-   149→    "JSONLike": {
-      →    …
 
 packages/d2ql/src/schema.ts
     94→export type ConditionOperand …
@@ -236,9 +228,6 @@ packages/d2ql/src/utils.ts
 
 packages/d2ts/README.md
     26→# D2TS - Differential Dataflow in TypeScript <!-- omit in toc -->
-    28→D2TS is a TypeScript implementation of [differential dataflow](https://github.com/MaterializeInc/differential) - a powerful data-parallel programming framework that enables incremental computations over changing input data.
-    29→
-      →…
     51→## Key Features
     88→## Quick Start
    200→## Examples
@@ -258,7 +247,6 @@ packages/d2ts/src/electric/index.ts
     42→  graph: D2
     43→  /** The Electric ShapeStream to consume */
     44→  stream: ShapeStreamInterface<T>
-    45→  /** The D2 input stream to send messages to */
       →  …
    103→export function electricStreamToD2Input …
    222→export class OutputElectricMessagesOperator<K, V> extends UnaryOperator<
@@ -277,6 +265,14 @@ packages/d2ts/src/graph.ts
    111→export abstract class Operator<T> implements IOperator<T> {
    144→export abstract class UnaryOperator<T> extends Operator<T> {
    171→export abstract class BinaryOperator<T> extends Operator<T> {
+
+packages/d2ts/src/index.ts
+     1→export * from './d2.js'
+     2→export * from './order.js'
+     3→export * from './multiset.js'
+     4→export * from './version-index.js'
+     5→export * from './operators/index.js'
+     6→export * from './types.js'
 
 packages/d2ts/src/multiset.ts
      3→export type MultiSetArray<T> = [T, number][]
@@ -298,6 +294,15 @@ packages/d2ts/src/multiset.ts
 
 packages/d2ts/src/operators/groupBy.ts
    335→export const groupByOperators = {
+
+packages/d2ts/src/operators/index.ts
+     1→export * from './pipe.js'
+     2→export * from './map.js'
+     3→export * from './filter.js'
+     4→export * from './negate.js'
+     5→export * from './concat.js'
+     6→export * from './debug.js'
+      →…
 
 packages/d2ts/src/order.ts
     10→export function v(version: number | number[]): Version {
@@ -324,17 +329,19 @@ packages/d2ts/src/sqlite/database.ts
     50→  #db: import('better-sqlite3').Database
     51→
 
-packages/d2ts/src/sqlite/operators/buffer.ts
-    32→export class BufferOperatorSQLite …
+packages/d2ts/src/sqlite/index.ts
+     1→export * from './version-index.js'
+     2→export * from './operators/index.js'
+     3→export * from './database.js'
 
-packages/d2ts/src/sqlite/operators/consolidate.ts
-    31→export class ConsolidateOperatorSQLite …
-
-packages/d2ts/src/sqlite/operators/reduce.ts
-    27→export class ReduceOperatorSQLite …
-
-packages/d2ts/src/sqlite/operators/topKWithFractionalIndex.ts
-    37→export class TopKWithFractionalIndexOperator …
+packages/d2ts/src/sqlite/operators/index.ts
+     1→export * from './consolidate.js'
+     2→export * from './count.js'
+     3→export * from './distinct.js'
+     4→export * from './join.js'
+     5→export * from './reduce.js'
+     6→export * from './buffer.js'
+      →…
 
 packages/d2ts/src/sqlite/version-index.ts
     60→export class SQLIndex<K, V> {

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4004 tokens)
+budget: 4000 (4003 tokens)
 
 README.md
     26→# D2TS - Differential Dataflow in TypeScript <!-- omit in toc -->
@@ -21,7 +21,7 @@ README.md
   1055→## Implementation Details
   1076→## References
 
-package.json
+CHANGELOG.md
 
 src/d2.ts
     11→export type D2Options = {
@@ -68,6 +68,14 @@ src/graph.ts
    111→export abstract class Operator<T> implements IOperator<T> {
    144→export abstract class UnaryOperator<T> extends Operator<T> {
    171→export abstract class BinaryOperator<T> extends Operator<T> {
+
+src/index.ts
+     1→export * from './d2.js'
+     2→export * from './order.js'
+     3→export * from './multiset.js'
+     4→export * from './version-index.js'
+     5→export * from './operators/index.js'
+     6→export * from './types.js'
 
 src/multiset.ts
      3→export type MultiSetArray<T> = [T, number][]
@@ -142,6 +150,24 @@ src/operators/groupBy.ts
    246→export function median …
    294→export function mode …
    335→export const groupByOperators = {
+
+src/operators/index.ts
+     1→export * from './pipe.js'
+     2→export * from './map.js'
+     3→export * from './filter.js'
+     4→export * from './negate.js'
+     5→export * from './concat.js'
+     6→export * from './debug.js'
+     7→export * from './output.js'
+     8→export * from './consolidate.js'
+     9→export * from './buffer.js'
+    10→export * from './join.js'
+    11→export * from './reduce.js'
+    12→export * from './count.js'
+    13→export * from './distinct.js'
+    14→export * from './iterate.js'
+    15→export * from './keying.js'
+      →…
 
 src/operators/iterate.ts
     15→export class IngressOperator<T> extends UnaryOperator<T> {
@@ -240,23 +266,24 @@ src/sqlite/database.ts
     49→export class BetterSQLite3Wrapper implements SQLiteDb {
     50→  #db: import('better-sqlite3').Database
     51→
-    52→  constructor(db: import('better-sqlite3').Database) {
-    56→  exec(sql: string): void {
-    60→  prepare<Params = unknown, Result = unknown>(
-    61→    sql: string,
-    62→  ): SQLiteStatement<Params, Result> {
-    74→  close(): void {
+    52→  constructor …
+    56→  exec …
+    60→  prepare …
+    74→  close …
+
+src/sqlite/index.ts
+     1→export * from './version-index.js'
+     2→export * from './operators/index.js'
+     3→export * from './database.js'
 
 src/sqlite/operators/buffer.ts
-    32→export class BufferOperatorSQLite<T> extends UnaryOperator<T> {
-    33→  #preparedStatements: {
+    32→export class BufferOperatorSQLite …
     41→  constructor …
     82→  run …
    149→export function buffer …
 
 src/sqlite/operators/consolidate.ts
-    31→export class ConsolidateOperatorSQLite<T> extends UnaryOperator<T> {
-    32→  #preparedStatements: {
+    31→export class ConsolidateOperatorSQLite …
     40→  constructor …
     81→  run …
    148→export function consolidate …
@@ -279,6 +306,16 @@ src/sqlite/operators/groupBy.ts
     49→export function mode …
    101→export function groupBy …
 
+src/sqlite/operators/index.ts
+     1→export * from './consolidate.js'
+     2→export * from './count.js'
+     3→export * from './distinct.js'
+     4→export * from './join.js'
+     5→export * from './reduce.js'
+     6→export * from './buffer.js'
+     7→export * from './filterBy.js'
+      →…
+
 src/sqlite/operators/join.ts
     22→export class JoinOperatorSQLite …
     30→  constructor …
@@ -296,10 +333,7 @@ src/sqlite/operators/orderBy.ts
    168→export function orderByWithFractionalIndex …
 
 src/sqlite/operators/reduce.ts
-    27→export class ReduceOperatorSQLite<K, V1, V2> extends UnaryOperator<
-    28→  [K, V1 | V2]
-    29→> {
-    30→  #index: SQLIndex<K, V1>
+    27→export class ReduceOperatorSQLite …
     41→  constructor …
     97→  run …
    197→  destroy …
@@ -310,10 +344,7 @@ src/sqlite/operators/topK.ts
     75→export function topKWithIndex …
 
 src/sqlite/operators/topKWithFractionalIndex.ts
-    37→export class TopKWithFractionalIndexOperator<K, V1> extends UnaryOperator<
-    38→  [K, V1 | [V1, string]]
-    39→> {
-    40→  #index: SQLIndex<K, V1>
+    37→export class TopKWithFractionalIndexOperator …
     53→  constructor …
    112→  run …
    454→  destroy …
@@ -328,25 +359,25 @@ src/sqlite/version-index.ts
     65→  #statementCache = new Map<string, SQLiteStatement>()
     66→  #preparedStatements: PreparedStatements
     67→
-    68→  constructor(db: SQLiteDb, name: string, isTemp = false) {
-   237→  get isTemp(): boolean {
-   241→  get tableName(): string {
-   245→  getCompactionFrontier(): Antichain | null {
-   259→  setCompactionFrontier(frontier: Antichain): void {
+    68→  constructor …
+   237→  get isTemp …
+   241→  get tableName …
+   245→  getCompactionFrontier …
+   259→  setCompactionFrontier …
    265→  #validate …
-   281→  reconstructAt(key: K, requestedVersion: Version): [V, number][] {
-   294→  get(key: K): VersionMap<[V, number]> {
-   308→  entries(): [K, VersionMap<[V, number]>][] {
-   316→  versions(key: K): Version[] {
-   322→  addValue(key: K, version: Version, value: [V, number]): void {
-   337→  addValues(items: [K, Version, [V, number]][]): void {
-   378→  addModifiedKeys(keys: K[]): void {
-   396→  append(other: SQLIndex<K, V>): void {
-   433→  join<V2>(other: SQLIndex<K, V2>): [Version, MultiSet<[K, [V, V2]]>][] {
-   502→  compact(compactionFrontier: Antichain, keys: K[] = []): void {
-   578→  showAll(): { key: K; version: Version; value: V; multiplicity: number }[] {
-   590→  truncate(): void {
-   597→  destroy(): void {
+   281→  reconstructAt …
+   294→  get …
+   308→  entries …
+   316→  versions …
+   322→  addValue …
+   337→  addValues …
+   378→  addModifiedKeys …
+   396→  append …
+   433→  join …
+   502→  compact …
+   578→  showAll …
+   590→  truncate …
+   597→  destroy …
 
 src/types.ts
      5→export type KeyValue<K, V> = [K, V]
@@ -374,12 +405,8 @@ src/utils.ts
    126→export class WeakRefBasedFinalizationRegistry {
 
 src/version-index.ts
-     5→type VersionMap …
-     6→type IndexMap …
      8→export interface IndexType<K, V> {
     28→export class Index<K, V> implements IndexType<K, V> {
 
 tests/
       →…
-
-tsconfig.json

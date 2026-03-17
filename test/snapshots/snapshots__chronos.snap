@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4008 tokens)
+budget: 4000 (4001 tokens)
 
 README.md
      3→# Chronos: Pretrained Models for Time Series Forecasting
@@ -13,9 +13,6 @@ README.md
     65→### Forecasting
    117→## Example Notebooks
    130→## 📝 Citation
-
-ci/
-      →…
 
 pyproject.toml
      1→[project]
@@ -46,9 +43,12 @@ CITATION.cff
     22→    given-names: Sebastian Pineda
     23→  - family-names: Kapoor
     24→    given-names: Shubham
-    25→  - family-names: Zschiegner
-    26→    given-names: Jasper
       →    …
+
+CONTRIBUTING.md
+
+ci/evaluate/backtest_config.yaml
+     1→# From In-domain
 
 notebooks/chronos-2-quickstart.ipynb
      1→{
@@ -373,5 +373,4 @@ src/chronos/utils.py
     22→def interpolate_quantiles …
    135→def weighted_quantile …
 
-test/
-      →…
+test/__init__.py

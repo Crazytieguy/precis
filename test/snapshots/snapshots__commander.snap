@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4006 tokens)
+budget: 4000 (4000 tokens)
 
 Readme.md
      1→# Commander.js
@@ -46,7 +46,6 @@ Readme.md
     45→    - [.parse() and .parseAsync()](#parse-and-parseasync)
     46→    - [Parsing Configuration](#parsing-configuration)
     47→    - [Legacy options as properties](#legacy-options-as-properties)
-    48→    - [TypeScript](#typescript)
       →    …
     61→## Installation
     67→## Quick Start
@@ -93,24 +92,6 @@ Readme.md
   1154→### Additional documentation
   1164→## Support
   1172→### Commander for enterprise
-
-package.json
-     2→  "name": "commander",
-     3→  "version": "14.0.3",
-     4→  "description": "the complete solution for node.js command-line programs",
-     5→  "keywords": [
-    15→  "author": "TJ Holowaychuk <tj@vision-media.ca>",
-    16→  "license": "MIT",
-    17→  "repository": {
-    21→  "scripts": {
-    35→  "files": [
-    43→  "type": "commonjs",
-    44→  "main": "./index.js",
-    45→  "exports": {
-    62→  "devDependencies": {
-    77→  "types": "typings/index.d.ts",
-    78→  "engines": {
-    81→  "support": true
 
 CHANGELOG.md
 
@@ -171,6 +152,36 @@ examples/help-centered.mjs
      7→  formatItem(term, termWidth, description, helper) {
     18→  createCommand(name) {
     21→  createHelp() {
+
+examples/pm-list.js
+     2→
+     3→console.log('list');
+
+index.js
+     1→const { Argument } = require('./lib/argument.js');
+     2→const { Command } = require('./lib/command.js');
+     3→const { CommanderError, InvalidArgumentError } = require('./lib/error.js');
+     4→const { Help } = require('./lib/help.js');
+     5→const { Option } = require('./lib/option.js');
+     6→
+     7→exports.program = new Command();
+     8→
+     9→exports.createCommand = (name) => new Command(name);
+    10→exports.createOption = (flags, description) => new Option(flags, description);
+    11→exports.createArgument = (name, description) => new Argument(name, description);
+    12→
+    13→/**
+    14→ * Expose classes
+    15→ */
+    16→
+    17→exports.Command = Command;
+    18→exports.Option = Option;
+    19→exports.Argument = Argument;
+    20→exports.Help = Help;
+    21→
+    22→exports.CommanderError = CommanderError;
+    23→exports.InvalidArgumentError = InvalidArgumentError;
+    24→exports.InvalidOptionArgumentError = InvalidArgumentError; // Deprecated
 
 lib/argument.js
      3→class Argument {
@@ -368,25 +379,11 @@ lib/suggestSimilar.js
      3→function editDistance(a, b) {
     56→function suggestSimilar …
 
-package-support.json
-     2→  "versions": [
-
 tests/
       →…
 
-tsconfig.js.json
-     7→  "extends": "./tsconfig.json",
-     8→  "include": [
-
-tsconfig.json
-    12→  "compilerOptions": {
-    33→  "include": [
-    43→  "exclude": ["node_modules"],
-
-tsconfig.ts.json
-     8→  "extends": "./tsconfig.json",
-     9→  "compilerOptions": {
-    15→  "include": [
+typings/esm.d.mts
+     1→// Just reexport the types from cjs
 
 typings/index.d.ts
   1113→export const program: Command;

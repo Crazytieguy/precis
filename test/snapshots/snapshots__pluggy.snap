@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4005 tokens)
+budget: 4000 (4002 tokens)
 
 README.rst
      1→====================================================
@@ -102,12 +102,6 @@ MANIFEST.in
      6→graft testing
      7→recursive-exclude * *.pyc *.pyo
 
-RELEASING.rst
-     1→Release Procedure
-
-TIDELIFT.rst
-     1→========
-
 changelog/590.trivial.rst
      1→The ``pluggy.__version__`` variable is now dynamically provided via a module-level ``__getattr__`` implementation, using ``importlib`` to obtain the installed version.
 
@@ -125,6 +119,7 @@ changelog/_template.rst
      5→{{ underline * section|length }}{% set underline = "~" %}
      6→
      7→{% endif %}
+     8→{% if sections[section] %}
       →…
 
 codecov.yml
@@ -146,9 +141,6 @@ docs/api_reference.rst
     13→    :members:
     14→
       →…
-
-docs/changelog.rst
-     1→.. include:: ../CHANGELOG.rst
 
 docs/conf.py
    106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
@@ -199,6 +191,10 @@ docs/requirements.txt
      2→sphinx>=6,<8
      3→pygments
      4→towncrier
+
+downstream/README.md
+     1→This directory contains scripts for testing some downstream projects
+     2→against your current pluggy worktree.
 
 downstream/conda.sh
      2→set -eux -o pipefail

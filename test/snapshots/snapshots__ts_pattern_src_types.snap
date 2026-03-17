@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1995 tokens)
+budget: 2000 (1989 tokens)
 
 DistributeUnions.ts
     41→export type DistributeMatchingUnions<a, p> = IsAny<a> extends true
@@ -60,8 +60,7 @@ DistributeUnions.ts
    129→        ...FindUnions<a1, p1, [...path, 0]>,
    130→        ...FindUnions<a2, p2, [...path, 1]>,
    131→        ...FindUnions<a3, p3, [...path, 2]>
-   132→      ]
-      →      …
+      →        …
 
 InvertPattern.ts
    106→export type InvertPattern<p, input> = Equal<Pattern<input>, p> extends true
@@ -117,7 +116,6 @@ Match.ts
     64→    const p1 extends Pattern<i>,
     65→    const p2 extends Pattern<i>,
     66→    c,
-    67→    p extends p1 | p2,
    132→  with …
    159→  when …
    180→  otherwise …
@@ -187,3 +185,6 @@ helpers.ts
    184→  : fn extends (value: infer a) => unknown
    185→  ? a
    186→  : never;
+
+index.ts
+     1→export * from './Pattern';

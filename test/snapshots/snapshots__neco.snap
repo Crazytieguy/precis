@@ -37,8 +37,10 @@ docs/TECHNICAL.md
     10→- The runtime and scheduler
     11→- Coroutine context switching
     12→- Signal handling
-    13→- Deadlines
       →…
+
+docs/assets/API_foot.md
+     1→***
 
 docs/assets/API_head.md
      1→# Neco C API
@@ -146,8 +148,6 @@ tests/panic.h
      8→#define pwhere(str) \
     14→#define unreachable() \
     21→#define must(cond) \
-
-tests/run.sh
 
 tests/tests.h
     24→#define IS_FAIL_TARGET

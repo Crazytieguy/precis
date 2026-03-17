@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (3999 tokens)
 
 ARCHITECTURE.md
      1→# Architecture
@@ -223,6 +223,12 @@ package.json
     22→  "packageManager": "pnpm@8.8.0",
     23→  "lint-staged": {
 
+LICENSE.md
+     1→MIT License
+     3→Copyright (c) 2022 Paco Coursey
+     4→
+      →…
+
 cmdk/package.json
      2→  "name": "cmdk",
      3→  "version": "1.1.1",
@@ -345,9 +351,6 @@ website/components/code/index.tsx
 
 website/components/icons/icons.module.scss
      1→.blurLogo {
-     2→  display: flex;
-     3→  align-items: center;
-      →  …
 
 website/components/icons/index.tsx
      3→export function FigmaIcon() {
@@ -362,10 +365,18 @@ website/components/icons/index.tsx
    154→export function GitHubIcon() {
    165→export function FramerIcon() {
 
+website/components/index.ts
+     1→export * from './cmdk/framer'
+     2→export * from './cmdk/linear'
+     3→export * from './cmdk/vercel'
+     4→export * from './cmdk/raycast'
+     5→export * from './icons'
+     6→export * from './code'
+
+website/next-env.d.ts
+     1→/// <reference types="next" />
+
 website/pages/_app.tsx
-    13→const title …
-    14→const description …
-    15→const siteUrl …
     17→export default function App({ Component, pageProps }: AppProps) {
 
 website/pages/_document.tsx
@@ -375,24 +386,11 @@ website/pages/_document.tsx
 website/pages/index.tsx
     20→type TTheme …
     25→type Themes …
-    27→const ThemeContext …
     29→export default function Index() {
-    84→function CMDKWrapper …
    101→function InstallButton() {
-   123→function GitHubButton …
    139→const themes = [
-   158→function ThemeSwitcher …
    262→function Codeblock() {
    296→function VersionBadge() {
-   300→function Footer …
-   326→function RaunoSignature …
-   350→function PacoSignature …
-
-website/styles/globals.scss
-     1→@font-face {
-
-website/styles/index.module.scss
-     1→.main {
 
 website/vercel.json
      2→  "headers": [

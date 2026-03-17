@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4003 tokens)
+budget: 4000 (3997 tokens)
 
 README.md
      1→# peepDB
@@ -98,8 +98,6 @@ docs/Gemfile.lock
     32→      kramdown (~> 2.3, >= 2.3.1)
     33→      kramdown-parser-gfm (~> 1.0)
     34→      liquid (~> 4.0)
-    35→      mercenary (>= 0.3.6, < 0.5)
-    36→      pathutil (~> 0.9)
       →      …
 
 docs/README.md
@@ -186,6 +184,9 @@ docs/usage.md
 
 images/
       →…
+
+peepdb/__init__.py
+     1→
 
 peepdb/__main__.py
 
@@ -328,6 +329,9 @@ peepdb/exceptions.py
      1→class InvalidPassword(Exception):
      2→    pass
 
+peepdb/tests/__init__.py
+     1→
+
 project.toml
      1→[build-system]
      5→[project]
@@ -337,3 +341,5 @@ project.toml
 
 requirements.txt
      1→async-timeout==4.0.3
+
+setup.py

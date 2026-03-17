@@ -14,6 +14,9 @@ Readme.md
 
 package.json
 
+License.md
+     1→The MIT License
+
 docs/guides/01-getting-started.md
      1→# Getting Started
      3→## Installing Superstruct
@@ -76,16 +79,11 @@ docs/reference/typescript.md
 docs/reference/utilities.md
      1→# Utilities
 
-docs/resources/faq.md
-     1→# FAQ
-
 docs/resources/links.md
      1→# Resources
      3→A few resources that are helpful for building with Superstruct.
      4→
      5→## Libraries
-     7→- [`bumpover`](https://github.com/doodlewind/bumpover) helps you transform data asynchronously with simple rules, whose validation API is built with Superstruct.
-      →…
 
 docs/summary.md
      3→## Guides
@@ -112,8 +110,6 @@ docs/summary.md
 examples/README.md
      1→# Examples
 
-examples/package.json
-
 jsr.json
      2→  "$schema": "https://jsr.io/schema/config-file.v1.json",
      3→  "name": "@superstruct/core",
@@ -121,8 +117,6 @@ jsr.json
      5→  "exports": "./src/index.ts",
      6→  "publish": {
      7→    "include": ["Readme.md", "License.md", "src", "docs"]
-
-rollup.config.js
 
 src/error.ts
      5→export type Failure = {
@@ -146,6 +140,14 @@ src/error.ts
     33→  [x: string]: any
     34→
     35→  constructor …
+
+src/index.ts
+     1→export * from './error.js'
+     2→export * from './struct.js'
+     3→export * from './structs/coercions.js'
+     4→export * from './structs/refinements.js'
+     5→export * from './structs/types.js'
+     6→export * from './structs/utilities.js'
 
 src/struct.ts
     10→export class Struct<T = unknown, S = unknown> {
@@ -391,10 +393,6 @@ src/utils.ts
    402→type _InferTuple …
 
 test/index.ts
-     2→ * A helper for testing type signatures.
      5→export function test<T>(fn: (x: unknown) => T) {}
-
-test/validation/function/valid.ts
-     5→export const data = function () {}
 
 tsconfig.json
