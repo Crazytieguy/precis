@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3996 tokens)
+budget: 4000 (3997 tokens)
 
 README.md
      1→derive(Error)
@@ -58,6 +58,8 @@ build/probe.rs
     21→    fn fmt …
     26→impl Error for MyError {
     27→    fn provide …
+
+build.rs
 
 impl/Cargo.toml
      1→[package]
@@ -262,6 +264,10 @@ src/aserror.rs
 
 src/display.rs
      6→pub trait AsDisplay<'a>: Sealed {
+     7→    // TODO: convert to generic associated type.
+     8→    // https://github.com/dtolnay/thiserror/pull/253
+     9→    type Target: Display;
+    10→
     11→    fn as_display(&'a self) -> Self::Target;
     18→    type Target = &'a T;
     20→    fn as_display(&'a self) -> Self::Target {
@@ -273,7 +279,6 @@ src/display.rs
     49→impl Sealed for Path {}
     51→impl Sealed for PathBuf {}
     59→mod placeholder {
-    60→    use super::{AsDisplay, Sealed};
     63→    #[allow(dead_code)]
     64→    pub struct Placeholder;
     70→        fn as_display(&'a self) -> Self::Target {
@@ -288,10 +293,6 @@ src/lib.rs
    289→mod private;
 
 src/private.rs
-     2→pub use crate::aserror::AsDynError;
-     4→pub use crate::display::AsDisplay;
-     7→pub use crate::provide::ThiserrorProvide;
-     9→pub use crate::var::Var;
 
 src/provide.rs
      4→pub trait ThiserrorProvide: Sealed {
@@ -346,6 +347,9 @@ tests/test_backtrace.rs
 tests/test_display.rs
    417→    pub fn octal …
 
+tests/test_error.rs
+    42→enum EnumError {
+
 tests/test_expr.rs
     11→pub enum CompilerError {
     41→pub enum RustupError {
@@ -374,8 +378,6 @@ tests/test_generics.rs
    162→pub struct StructTransparentGeneric<E>(pub E);
    175→pub enum AssociatedTypeError<T: FromStr> {
 
-tests/test_lints.rs
-
 tests/test_option.rs
      5→pub mod structs {
     11→    pub struct OptSourceNoBacktrace {
@@ -391,6 +393,7 @@ tests/test_option.rs
     93→    pub enum OptSourceOptBacktrace {
 
 tests/test_path.rs
+    22→enum EnumPathBuf {
     29→pub struct UnsizedError {
     35→pub enum BothError {
 

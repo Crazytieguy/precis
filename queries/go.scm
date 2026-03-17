@@ -28,6 +28,10 @@
 (var_spec
   name: (identifier) @name) @symbol
 
-; Import declarations — omitted intentionally. Go grouped imports
-; show as bare `import …` at Names stage which conveys no information.
-; The imported packages are visible from the source context.
+; Import declarations (grouped `import (...)` blocks)
+; Note: the Names/Signatures stage model is a poor fit for imports —
+; the "name" of a grouped import is just the keyword "import", which
+; is useless. The full import list only appears at Signatures stage.
+; This is an architectural limitation: the stage progression assumes
+; every symbol has a meaningful name, which imports don't.
+(import_declaration) @symbol

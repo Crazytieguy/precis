@@ -133,6 +133,8 @@ sps/src/cli.rs
     57→    pub async fn run …
 
 sps/src/main.rs
+    17→mod cli;
+    18→mod pipeline;
     57→async fn main …
 
 sps/src/pipeline/downloader.rs
@@ -459,6 +461,7 @@ sps-common/src/model/tap.rs
 sps-common/src/model/version.rs
     11→pub struct Version(semver::Version);
     14→    pub fn parse …
+    37→    type Err = SpsError;
 
 sps-common/src/pipeline.rs
     14→pub enum PipelinePackageType {
@@ -572,6 +575,7 @@ sps-core/src/build/env.rs
    160→    #[allow(dead_code)]
    161→    sdk_path: PathBuf,
    162→}
+   164→impl BuildEnvironment {
    166→    pub fn new<F: FormulaDependencies>(
    167→        formula: &F,
    168→        sps_prefix: &Path,
@@ -788,8 +792,6 @@ sps-net/src/lib.rs
      3→pub mod http;
      4→pub mod oci;
      5→pub mod validation;
-    16→pub use sps_common::{ …
-    29→pub use crate::validation::{validate_url, verify_checksum, verify_content_type /* ... */};
 
 sps-net/src/oci.rs
     24→pub const DEFAULT_GHCR_DOMAIN: &str = "ghcr.io";

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4010 tokens)
+budget: 4000 (4008 tokens)
 
 README.md
      3→# Swarm (experimental, educational)
@@ -75,9 +75,15 @@ logs/
 
 pyproject.toml
      1→[build-system]
+     2→requires = ["setuptools"]
+     3→build-backend = "setuptools.build_meta"
 
 setup.cfg
      1→[metadata]
+     2→name = swarm
+     3→version = 0.1.0
+     4→author = OpenAI Solutions
+      →…
 
 SECURITY.md
      1→# Security Policy
@@ -209,7 +215,9 @@ examples/customer_service_streaming/src/swarm/swarm.py
 
 examples/customer_service_streaming/src/tasks/task.py
      3→class Task:
+     4→    def __init__ …
     12→class EvaluationTask(Task):
+    13→    def __init__ …
 
 examples/customer_service_streaming/src/utils.py
      1→def get_completion …
@@ -223,8 +231,6 @@ examples/customer_service_streaming/src/validator.py
 
 examples/customer_service_streaming/tests/test_prompts.jsonl
      1→{"text": "Explain the DALL-E editor interface?", "expected_assistant": "user_interface"}
-     2→{"text": "How does the OpenAI moderation API work?", "expected_assistant": "user_interface"}
-      →…
 
 examples/personal_shopper/README.md
      1→# Personal shopper
@@ -335,13 +341,9 @@ examples/weather_agent/evals.py
     41→def test_does_not_call_weather_when_not_asked(query):
 
 swarm/__init__.py
-     1→from .core …
-     2→from .types …
      4→__all__ = ["Swarm", "Agent", "Response"]
 
 swarm/core.py
-    12→from .util …
-    13→from .types …
     23→__CTX_VARS_NAME__ = "context_variables"
     26→class Swarm:
     27→    def __init__ …
@@ -352,8 +354,6 @@ swarm/core.py
    231→    def run …
 
 swarm/repl/repl.py
-     1→import json …
-     3→from swarm …
      6→def process_and_print_streaming_response(response):
     37→def pretty_print_messages(messages) -> None:
     60→def run_demo_loop(
@@ -396,5 +396,3 @@ tests/test_core.py
      7→DEFAULT_RESPONSE_CONTENT = "sample response content"
     10→@pytest.fixture
     11→def mock_openai_client():
-
-tests/test_util.py

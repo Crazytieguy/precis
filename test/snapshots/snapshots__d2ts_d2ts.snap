@@ -21,6 +21,8 @@ README.md
   1055→## Implementation Details
   1076→## References
 
+package.json
+
 src/d2.ts
     11→export type D2Options = {
     15→export class D2 implements ID2 {
@@ -28,7 +30,6 @@ src/d2.ts
    166→export class RootStreamBuilder<T> extends StreamBuilder<T> {
 
 src/electric/index.ts
-    17→import { …
     40→export interface ElectricStreamToD2InputOptions<T extends Row<unknown> = Row> {
     41→  /** D2 Graph to send messages to */
     42→  graph: D2
@@ -380,3 +381,5 @@ src/version-index.ts
 
 tests/
       →…
+
+tsconfig.json

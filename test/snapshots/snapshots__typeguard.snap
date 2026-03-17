@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3995 tokens)
+budget: 4000 (4000 tokens)
 
 README.rst
      1→.. image:: https://github.com/agronholm/typeguard/actions/workflows/test.yml/badge.svg
@@ -53,95 +53,49 @@ README.rst
     46→
     47→See the documentation_ for further information.
     48→
-    49→.. _documentation: https://typeguard.readthedocs.io/en/latest/
+      →…
 
 pyproject.toml
      1→[build-system]
      8→[project]
-    33→[project.urls]
-    39→[project.entry-points]
     42→[dependency-groups]
-    58→[tool.setuptools_scm]
-    78→[tool.ruff]
-    99→[tool.mypy]
-   105→[tool.tox]
 
 docs/api.rst
      1→API reference
      2→=============
      3→
-     4→.. module:: typeguard
-     5→
-     6→Type checking
-     7→-------------
-     8→
       →…
 
 docs/conf.py
-     2→from importlib.metadata …
-     4→from packaging.version …
-
-docs/contributing.rst
-     1→Contributing to Typeguard
-     2→=========================
-     3→
-     4→.. highlight:: bash
-     5→
-      →…
 
 docs/extending.rst
      1→Extending Typeguard
      2→===================
      3→
-     4→.. py:currentmodule:: typeguard
-     5→
-     6→Adding new type checkers
-     7→------------------------
-     8→
       →…
 
 docs/features.rst
      1→Features
      2→=========
      3→
-     4→.. py:currentmodule:: typeguard
-     5→
-     6→What does Typeguard check?
-     7→--------------------------
-     8→
       →…
 
 docs/index.rst
      1→Typeguard
      2→=========
      3→
-     4→.. include:: ../README.rst
-     5→   :end-before: See the
-     6→
-     7→Quick links
-     8→-----------
       →…
 
 docs/userguide.rst
      1→User guide
      2→==========
      3→
-     4→.. py:currentmodule:: typeguard
-     5→
-     6→Checking types directly
-     7→-----------------------
-     8→
       →…
 
 docs/versionhistory.rst
      1→Version history
      2→===============
      3→
-     4→This library adheres to
-     5→`Semantic Versioning 2.0 <https://semver.org/#semantic-versioning-200>`_.
-     6→
-     7→**UNRELEASED**
-     8→
       →…
 
 src/typeguard/__init__.py
@@ -204,8 +158,7 @@ src/typeguard/_config.py
     64→    """
     65→     You can change Typeguard's behavior with these settings.
     66→
-    67→    .. attribute:: typecheck_fail_callback
-      →    …
+      →…
     97→
     98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
     99→    typecheck_fail_callback: TypeCheckFailCallback | None = None
@@ -219,8 +172,16 @@ src/typeguard/_decorators.py
     32→def make_cell …
     36→def find_target_function …
     56→def instrument …
-   137→def typechecked …
-   147→def typechecked …
+   136→@overload
+   137→def typechecked(
+   138→    *,
+   139→    forward_ref_policy: ForwardRefPolicy | Unset = unset,
+   140→    typecheck_fail_callback: TypeCheckFailCallback | Unset = unset,
+   141→    collection_check_strategy: CollectionCheckStrategy | Unset = unset,
+   142→    debug_instrumentation: bool | Unset = unset,
+   143→) -> Callable[[T_CallableOrType], T_CallableOrType]: ...
+   146→@overload
+   147→def typechecked(target: T_CallableOrType) -> T_CallableOrType: ...
    150→def typechecked …
 
 src/typeguard/_exceptions.py
@@ -240,8 +201,24 @@ src/typeguard/_exceptions.py
 src/typeguard/_functions.py
     24→T = TypeVar("T")
     25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
-    29→def check_type …
-    40→def check_type …
+    28→@overload
+    29→def check_type(
+    30→    value: object,
+    31→    expected_type: type[T],
+    32→    *,
+    33→    forward_ref_policy: ForwardRefPolicy = ...,
+    34→    typecheck_fail_callback: TypeCheckFailCallback | None = ...,
+    35→    collection_check_strategy: CollectionCheckStrategy = ...,
+    36→) -> T: ...
+    39→@overload
+    40→def check_type(
+    41→    value: object,
+    42→    expected_type: Any,
+    43→    *,
+    44→    forward_ref_policy: ForwardRefPolicy = ...,
+    45→    typecheck_fail_callback: TypeCheckFailCallback | None = ...,
+    46→    collection_check_strategy: CollectionCheckStrategy = ...,
+    47→) -> Any: ...
     50→def check_type …
    118→def check_argument_types …
    149→def check_return_type …
@@ -256,7 +233,16 @@ src/typeguard/_importhook.py
     45→def _call_with_frames_removed …
     51→def optimized_cache_from_source …
     55→class TypeguardLoader(SourceFileLoader):
-    57→    def source_to_code …
+    56→    @staticmethod
+    57→    def source_to_code(
+    58→        data: Buffer | str | ast.Module | ast.Expression | ast.Interactive,
+    59→        path: Buffer | str | PathLike[str] = "<string>",
+    60→        *,
+    61→        _optimize: int = -1,
+    62→    ) -> CodeType:
+    63→        if isinstance(path, (str, PathLike)):
+    64→            filename = path
+      →            …
     99→    def exec_module …
    109→class TypeguardFinder(MetaPathFinder):
    119→
@@ -285,8 +271,10 @@ src/typeguard/_pytest_plugin.py
 src/typeguard/_suppression.py
     15→P = ParamSpec("P")
     16→T = TypeVar("T")
-    23→def suppress_type_checks …
-    27→def suppress_type_checks …
+    22→@overload
+    23→def suppress_type_checks(func: Callable[P, T]) -> Callable[P, T]: ...
+    26→@overload
+    27→def suppress_type_checks() -> ContextManager[None]: ...
     30→def suppress_type_checks …
 
 src/typeguard/_transformer.py
@@ -399,8 +387,6 @@ src/typeguard/_utils.py
    176→    def __repr__ …
 
 tests/dummymodule.py
-    40→T = TypeVar("T", bound="DummyClass")
-    41→P = ParamSpec("P")
     77→class DummyClass(metaclass=Metaclass):
     78→    bar: str
     79→    baz: int
@@ -417,10 +403,3 @@ tests/mypy/negative.py
 
 tests/mypy/positive.py
     28→class MyClass:
-
-tests/mypy/test_type_annotations.py
-
-tests/test_checkers.py
-    79→P = ParamSpec("P")
-
-tests/test_utils.py

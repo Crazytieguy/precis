@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4016 tokens)
+budget: 4000 (4017 tokens)
 
 README.md
      1→log
@@ -27,8 +27,6 @@ Cargo.toml
     56→[dependencies]
     62→[dev-dependencies]
 
-CHANGELOG.md
-
 benches/
       →…
 
@@ -36,7 +34,6 @@ rfcs/
       →…
 
 src/__private_api.rs
-     7→pub use std::{format_args, module_path, stringify};
     10→pub type Value<'a> = &'a str;
     12→mod sealed {
     14→    pub trait KVs<'a> {
@@ -100,7 +97,6 @@ src/kv/source.rs
    235→pub trait VisitSource<'kvs> {
    237→    fn visit_pair …
    280→mod std_support {
-   462→pub use VisitSource as Visitor;
 
 src/kv/value.rs
      8→pub use crate::kv::Error;
@@ -141,9 +137,10 @@ src/kv/value.rs
    588→    fn visit_error …
    593→    fn visit_borrowed_error …
    602→pub(in crate::kv) mod inner {
-   612→    pub use value_bag::ValueBag as Inner;
-   614→    pub use value_bag::Error;
-   619→    pub fn visit …
+   619→    pub fn visit<'v>(
+   620→        inner: &Inner<'v>,
+   621→        visitor: impl VisitValue<'v>,
+   622→    ) -> Result<(), crate::kv::Error> {
    721→pub(in crate::kv) mod inner {
    737→    #[derive(Clone)]
    738→    pub enum Inner<'v> {
@@ -159,28 +156,30 @@ src/kv/value.rs
    748→        Debug(&'v dyn fmt::Debug),
    749→        Display(&'v dyn fmt::Display),
    750→    }
-   897→        pub fn from_debug …
-   901→        pub fn from_display …
-   905→        pub fn from_dyn_debug …
-   909→        pub fn from_dyn_display …
-   913→        pub fn empty …
-   917→        pub fn to_bool …
-   924→        pub fn to_char …
-   931→        pub fn to_f64 …
-   954→        pub fn to_i64 …
-   964→        pub fn to_u64 …
-   974→        pub fn to_u128 …
-   984→        pub fn to_i128 …
-   994→        pub fn to_borrowed_str …
-  1031→    pub fn visit …
+   897→        pub fn from_debug<T: fmt::Debug>(value: &'v T) -> Self {
+   901→        pub fn from_display<T: fmt::Display>(value: &'v T) -> Self {
+   905→        pub fn from_dyn_debug(value: &'v dyn fmt::Debug) -> Self {
+   909→        pub fn from_dyn_display(value: &'v dyn fmt::Display) -> Self {
+   913→        pub fn empty() -> Self {
+   917→        pub fn to_bool(&self) -> Option<bool> {
+   924→        pub fn to_char(&self) -> Option<char> {
+   931→        pub fn to_f64(&self) -> Option<f64> {
+   954→        pub fn to_i64(&self) -> Option<i64> {
+   964→        pub fn to_u64(&self) -> Option<u64> {
+   974→        pub fn to_u128(&self) -> Option<u128> {
+   984→        pub fn to_i128(&self) -> Option<i128> {
+   994→        pub fn to_borrowed_str(&self) -> Option<&'v str> {
+  1031→    pub fn visit<'v>(
+  1032→        inner: &Inner<'v>,
+  1033→        mut visitor: impl VisitValue<'v>,
+  1034→    ) -> Result<(), crate::kv::Error> {
   1055→    pub fn capture_debug …
   1065→    pub fn capture_display …
   1075→    pub fn capture_error …
   1085→    pub fn capture_serde …
   1095→    pub fn capture_sval …
-  1107→    pub fn is …
-  1116→    pub fn downcast_ref …
-  1123→pub use VisitValue as Visit;
+  1107→    pub fn is<T: 'static>(&self) -> bool {
+  1116→    pub fn downcast_ref<T: 'static>(&self) -> Option<&T> {
   1129→macro_rules! as_debug {
   1139→macro_rules! as_display {
   1149→macro_rules! as_error {
@@ -193,11 +192,6 @@ src/lib.rs
    409→#[cfg(feature = "kv")]
    410→pub mod kv;
    421→struct AtomicUsize …
-   426→impl AtomicUsize …
-   443→unsafe impl Sync for AtomicUsize …
-   467→/// An enum representing the available verbosity levels of the logger.
-   468→///
-      →…
    475→pub enum Level {
    476→    /// The "error" level.
    477→    ///
@@ -232,9 +226,6 @@ src/lib.rs
    579→    pub fn iter() -> impl Iterator<Item = Self> {
    599→    pub fn increment_severity(&self) -> Self {
    620→    pub fn decrement_severity(&self) -> Self {
-   626→/// An enum representing the available verbosity level filters of the logger.
-   627→///
-      →…
    636→pub enum LevelFilter {
    637→    /// A level lower than all log levels.
    638→    Off,
@@ -269,7 +260,6 @@ src/lib.rs
    849→    key_values: KeyValues<'a>,
    850→}
    858→struct KeyValues …
-   861→impl<'a> fmt::Debug for KeyValues<'a> …
    872→    pub fn builder() -> RecordBuilder<'a> {
    878→    pub fn args(&self) -> &fmt::Arguments<'a> {
    884→    pub fn metadata(&self) -> &Metadata<'a> {
@@ -316,8 +306,6 @@ src/lib.rs
   1271→    fn log(&self, record: &Record);
   1279→    fn flush(&self);
   1283→struct NopLogger …
-  1311→impl<T> Log for std::boxed::Box<T> …
-  1328→impl<T> Log for std::sync::Arc<T> …
   1351→pub fn set_max_level(level: LevelFilter) {
   1375→pub unsafe fn set_max_level_racy(level: LevelFilter) {
   1396→pub fn max_level() -> LevelFilter {
@@ -326,9 +314,7 @@ src/lib.rs
   1483→fn set_logger_inner …
   1529→pub unsafe fn set_logger_racy(logger: &'static dyn Log) -> Result<(), SetLoggerError> {
   1549→pub struct SetLoggerError(());
-  1559→impl error::Error for SetLoggerError …
   1566→pub struct ParseLevelError(());
-  1576→impl error::Error for ParseLevelError …
   1581→pub fn logger() -> &'static dyn Log {
   1600→pub mod __private_api;
   1602→/// The statically resolved maximum log level.
@@ -353,10 +339,11 @@ src/macros.rs
    553→macro_rules! __log_value_serde {
    573→macro_rules! __log_value_error {
 
+src/serde.rs
+
 test_max_level_features/Cargo.toml
      1→[package]
      7→[[bin]]
-    11→[dependencies.log]
 
 tests/
       →…

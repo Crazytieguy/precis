@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (8005 tokens)
+budget: 8000 (8006 tokens)
 
 README.md
      1→# mdBook
@@ -159,7 +159,6 @@ crates/mdbook-core/src/lib.rs
     11→pub mod utils;
     13→/// The error types used in mdbook.
     14→pub mod errors {
-    15→    pub use anyhow::{Error, Result};
 
 crates/mdbook-core/src/utils/fs.rs
     11→pub fn read_to_string …
@@ -176,6 +175,8 @@ crates/mdbook-core/src/utils/html.rs
 
 crates/mdbook-core/src/utils/mod.rs
      7→pub mod fs;
+    15→/// Defines a `static` with a [`regex::Regex`].
+    16→#[macro_export]
     17→macro_rules! static_regex {
     29→pub fn log_backtrace …
 
@@ -312,6 +313,7 @@ crates/mdbook-html/front-end/templates/toc.js.hbs
      1→// Populate the sidebar
 
 crates/mdbook-html/src/html/tree.rs
+    25→macro_rules! attr_qual_name {
     33→pub(crate) enum Node {
    130→    /// Converts self to a [`StrTendril`].
    131→    fn into_tendril(self) -> StrTendril;
@@ -380,7 +382,6 @@ crates/mdbook-markdown/README.md
       →…
 
 crates/mdbook-markdown/src/lib.rs
-    11→pub use pulldown_cmark;
     13→/// Options for parsing markdown.
     14→#[non_exhaustive]
     15→pub struct MarkdownOptions {
@@ -535,7 +536,6 @@ crates/mdbook-summary/README.md
       →…
 
 crates/mdbook-summary/src/lib.rs
-     8→pub use mdbook_core::book::SectionNumber;
     59→pub fn parse_summary(summary: &str) -> Result<Summary> {
     67→pub struct Summary {
     68→    /// An optional title for the `SUMMARY.md`, currently just ignored.
@@ -823,7 +823,7 @@ src/cmd/watch.rs
 src/main.rs
     14→mod cmd;
     16→const VERSION …
-    58→fn create_clap_command …
+    58→fn create_clap_command() -> Command {
 
 tests/
       →…

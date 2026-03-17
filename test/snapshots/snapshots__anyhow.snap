@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3999 tokens)
+budget: 4000 (4000 tokens)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
@@ -41,6 +41,8 @@ Cargo.toml
     30→trybuild = { version = "1.0.108", features = ["diff"] }
     32→[package.metadata.docs.rs]
 
+build.rs
+
 rust-toolchain.toml
      1→[toolchain]
      2→components = ["rust-src"]
@@ -73,6 +75,8 @@ src/chain.rs
     11→pub(crate) struct Chain<'a> {
     16→pub(crate) enum ChainState<'a> {
     17→    Linked {
+    18→        next: Option<&'a (dyn StdError + 'static)>,
+    19→    },
       →    …
     28→    pub fn new(head: &'a (dyn StdError + 'static)) -> Self {
     36→    type Item = &'a (dyn StdError + 'static);
@@ -229,7 +233,6 @@ src/lib.rs
    263→mod wrapper;
    279→trait StdError: Debug + Display {
    280→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
-   286→pub use anyhow as format_err;
    390→pub struct Error {
    391→    inner: Own<ErrorImpl>,
    392→}
@@ -272,7 +275,6 @@ src/macros.rs
    230→macro_rules! __anyhow {
 
 src/nightly.rs
-    10→pub use core::error::Request;
     41→pub fn request_ref_backtrace(err: &dyn Error) -> Option<&Backtrace> {
     45→fn request_ref …
     52→pub fn provide_ref_backtrace<'a>(request: &mut Request<'a>, backtrace: &'a Backtrace) {
@@ -328,8 +330,6 @@ src/wrapper.rs
     68→impl Display for BoxedError …
     75→impl StdError for BoxedError …
     81→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
-
-tests/common/mod.rs
 
 tests/crate/Cargo.toml
      1→[package]

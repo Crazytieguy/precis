@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4002 tokens)
+budget: 4000 (4004 tokens)
 
 README.md
      9→# Nano-vLLM
@@ -73,14 +73,16 @@ pyproject.toml
     12→description = "a lightweight vLLM implementation built from scratch"
     13→requires-python = ">=3.10,<3.13"
     14→dependencies = [
-      →…
+    15→    "torch>=2.4.0",
+    16→    "triton>=3.0.0",
+    17→    "transformers>=4.51.0",
+    18→    "flash-attn",
+    19→    "xxhash",
     22→[project.urls]
+    23→Homepage="https://github.com/GeeeekExplorer/nano-vllm"
+    25→[tool.setuptools.packages.find]
 
 bench.py
-     1→import os …
-     2→import time …
-     3→from random …
-     4→from nanovllm …
      5→# from vllm import LLM, SamplingParams
      8→def main():
      9→    seed(0)
@@ -91,19 +93,11 @@ bench.py
       →…
 
 example.py
-     1→import os …
-     2→from nanovllm …
-     3→from transformers …
      6→def main():
 
 nanovllm/__init__.py
-     1→from nanovllm.llm …
-     2→from nanovllm.sampling_params …
 
 nanovllm/config.py
-     1→import os …
-     2→from dataclasses …
-     3→from transformers …
      6→@dataclass
      7→class Config:
      8→    model: str
@@ -129,6 +123,7 @@ nanovllm/engine/block_manager.py
     26→class BlockManager:
     27→
     28→    def __init__(self, num_blocks: int, block_size: int):
+    35→    @classmethod
     36→    def compute_hash(cls, token_ids: list[int], prefix: int = -1):
     43→    def _allocate_block …
     51→    def _deallocate_block …
@@ -168,8 +163,10 @@ nanovllm/engine/model_runner.py
    126→    def prepare_prefill(self, seqs: list[Sequence]):
    164→    def prepare_decode(self, seqs: list[Sequence]):
    182→    def prepare_sample(self, seqs: list[Sequence]):
+   189→    @torch.inference_mode()
    190→    def run_model(self, input_ids: torch.Tensor, positions: torch.Tensor, is_prefill: bool):
    208→    def run(self, seqs: list[Sequence], is_prefill: bool) -> list[int]:
+   216→    @torch.inference_mode()
    217→    def capture_cudagraph(self):
 
 nanovllm/engine/scheduler.py
@@ -194,12 +191,19 @@ nanovllm/engine/sequence.py
     18→    def __init__(self, token_ids: list[int], sampling_params = SamplingParams()):
     31→    def __len__(self):
     34→    def __getitem__(self, key):
+    37→    @property
     38→    def is_finished(self):
+    41→    @property
     42→    def num_completion_tokens(self):
+    45→    @property
     46→    def prompt_token_ids(self):
+    49→    @property
     50→    def completion_token_ids(self):
+    53→    @property
     54→    def num_cached_blocks(self):
+    57→    @property
     58→    def num_blocks(self):
+    61→    @property
     62→    def last_block_num_tokens(self):
     65→    def block(self, i):
     69→    def append_token(self, token_id: int):
@@ -318,7 +322,6 @@ nanovllm/layers/sampler.py
     11→    def forward(self, logits: torch.Tensor, temperatures: torch.Tensor):
 
 nanovllm/llm.py
-     1→from nanovllm.engine.llm_engine …
      4→class LLM(LLMEngine):
      5→    pass
 
@@ -353,7 +356,6 @@ nanovllm/models/qwen3.py
    211→    def compute_logits …
 
 nanovllm/sampling_params.py
-     1→from dataclasses …
      4→@dataclass
      5→class SamplingParams:
      6→    temperature: float = 1.0
@@ -363,8 +365,6 @@ nanovllm/sampling_params.py
     10→    def __post_init__(self):
 
 nanovllm/utils/context.py
-     1→from dataclasses …
-     2→import torch …
      5→@dataclass
      6→class Context:
      7→    is_prefill: bool = False
@@ -381,10 +381,5 @@ nanovllm/utils/context.py
     25→def reset_context():
 
 nanovllm/utils/loader.py
-     1→import os …
-     2→from glob …
-     3→import torch …
-     4→from torch …
-     5→from safetensors …
      8→def default_weight_loader(param: nn.Parameter, loaded_weight: torch.Tensor):
     12→def load_model(model: nn.Module, path: str):

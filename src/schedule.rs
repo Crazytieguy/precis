@@ -973,14 +973,14 @@ fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
             StageKind::Body => 0.7,
             _ => 0.1,
         },
-        // Imports: supplementary context for understanding file dependencies.
-        // Names stage shows only `from module …` (truncated) — for 1st-party
-        // imports, the full import line (Signatures) reveals what symbols are
-        // exported/used, which is high-value. For 3rd-party imports, Names
-        // is sufficient (knowing `from typing` is enough without seeing `Any`).
+        // Imports: the Names/Signatures model is a poor fit here (see go.scm).
+        // Import "names" are often just keywords (`import`) or truncated module
+        // paths (`from ._checkers …`) — not meaningful on their own. Set Names
+        // to 0 so imports only appear when Signatures is reached (full line).
+        // For 1st-party imports, the full line reveals exported symbols.
         KindCategory::Import => match stage {
             StageKind::FilePath => 0.3,
-            StageKind::Names => 0.6,
+            StageKind::Names => 0.0,
             StageKind::Signatures => if key.is_first_party { 1.0 } else { 0.1 },
             _ => 0.1,
         },

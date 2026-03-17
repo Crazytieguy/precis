@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4005 tokens)
+budget: 4000 (4003 tokens)
 
 README.md
      1→# peepDB
@@ -96,6 +96,10 @@ docs/Gemfile.lock
     30→      jekyll-sass-converter (>= 2.0, < 4.0)
     31→      jekyll-watch (~> 2.0)
     32→      kramdown (~> 2.3, >= 2.3.1)
+    33→      kramdown-parser-gfm (~> 1.0)
+    34→      liquid (~> 4.0)
+    35→      mercenary (>= 0.3.6, < 0.5)
+    36→      pathutil (~> 0.9)
       →      …
 
 docs/README.md
@@ -184,12 +188,8 @@ images/
       →…
 
 peepdb/__main__.py
-     1→from .cli …
 
 peepdb/cli.py
-     3→from .core …
-     4→from .config …
-    11→from .exceptions …
     16→class CustomEncoder(json.JSONEncoder):
     17→    def default(self, obj):
     27→def cli():
@@ -201,7 +201,6 @@ peepdb/cli.py
    181→def main():
 
 peepdb/config.py
-    13→from .exceptions …
     15→@dataclass
     16→class KeySecurity:
     17→    KEYRING = "os-keyring"
@@ -225,7 +224,6 @@ peepdb/config.py
    196→def add_key_security():
 
 peepdb/core.py
-     7→from .db …
     27→def connect_to_database(db_type: str, host: str, user: str, password: str, database: str, **kwargs):
     56→def peep_db(db_type: str,
     57→            host: str,
@@ -329,9 +327,6 @@ peepdb/db/sqlite.py
 peepdb/exceptions.py
      1→class InvalidPassword(Exception):
      2→    pass
-
-peepdb/tests/test_sqlite.py
-     6→class TestSQLiteDatabase(unittest.TestCase):
 
 project.toml
      1→[build-system]

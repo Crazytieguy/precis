@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1984 tokens)
+budget: 2000 (1994 tokens)
 
 README.md
      3→# api.api\_database
@@ -20,17 +20,13 @@ README.md
   1058→## BaseApi Objects
 
 __init__.py
-     2→from py3xui.api.api_client …
-     3→from py3xui.api.api_database …
-     4→from py3xui.api.api_inbound …
-     5→from py3xui.api.api_server …
 
 api.py
-     6→import logging …
-     7→from typing …
-     9→from py3xui.api …
-    10→from py3xui.utils …
     13→class Api:
+    14→    """This class provides a high-level interface to interact with the XUI API.
+    15→    Access to the client, inbound, and database APIs is provided through this class.
+    16→
+      →…
     66→
     67→    def __init__(
     68→        self,
@@ -59,11 +55,6 @@ api.py
    189→    def login(self, two_factor_code: str | int | None = None) -> None:
 
 api_base.py
-     5→import logging …
-     6→from time …
-     7→from typing …
-     9→import requests …
-    11→from py3xui.utils …
     14→# pylint: disable=too-few-public-methods
     15→class ApiFields:
     16→    """Stores the fields returned by the XUI API for parsing."""
@@ -91,6 +82,8 @@ api_base.py
     40→        host (str): The host of the XUI API.
     41→        username (str): The username for the XUI API.
     42→        password (str): The password for the XUI API.
+    43→        use_tls_verify (bool): Whether to verify the server TLS certificate.
+    44→        custom_certificate_path (str | None): Path to a custom certificate file.
       →        …
     60→
     61→    def __init__(
@@ -135,11 +128,11 @@ api_base.py
    333→    def _get …
 
 api_client.py
-     6→import json …
-     7→from typing …
-     9→from py3xui.api.api_base …
-    10→from py3xui.client …
     13→class ClientApi(BaseApi):
+    14→    """This class provides methods to interact with the clients in the XUI API.
+    15→
+    16→    Attributes and Properties:
+      →    …
     51→
     52→    def get_by_email(self, email: str) -> Client | None:
     89→    def get_ips(self, email: str) -> list[str]:
@@ -153,16 +146,20 @@ api_client.py
    342→    def get_traffic_by_id(self, client_uuid: int) -> list[Client]:
 
 api_database.py
-     4→from py3xui.api.api_base …
      7→class DatabaseApi(BaseApi):
+     8→    """This class provides methods to interact with the database in the XUI API.
+     9→
+    10→    Attributes and Properties:
+      →    …
     31→
     32→    def export(self) -> None:
 
 api_inbound.py
-     3→from typing …
-     5→from py3xui.api.api_base …
-     6→from py3xui.inbound …
      9→class InboundApi(BaseApi):
+    10→    """This class provides methods to interact with the inbounds in the XUI API.
+    11→
+    12→    Attributes and Properties:
+      →    …
     39→
     40→    def get_list(self) -> list[Inbound]:
     71→    def get_by_id(self, inbound_id: int) -> Inbound:
@@ -173,9 +170,11 @@ api_inbound.py
    247→    def reset_client_stats(self, inbound_id: int) -> None:
 
 api_server.py
-     3→from py3xui.api.api_base …
-     4→from py3xui.server.server …
      7→class ServerApi(BaseApi):
+     8→    """This class provides methods to interact with the server in the XUI API.
+     9→
+    10→    Attributes and Properties:
+      →    …
     34→
     35→    def get_db(self, save_path: str) -> None:
     67→    def get_status(self) -> Server:
