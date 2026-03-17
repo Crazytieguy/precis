@@ -1306,6 +1306,11 @@ pub fn schedule(
             _ => continue,
         }
 
+        // Skip zero-value items — these shouldn't consume budget.
+        if item.total_value() <= 0.0 {
+            continue;
+        }
+
         // Skip if this item's stage is already covered by the group's current
         // included stage. This prevents double-deduction when a high-level item
         // (e.g. Doc(3)) is included before a lower-level item (e.g. Names):
