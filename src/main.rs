@@ -45,19 +45,6 @@ fn main() {
         eprintln!("Error: {:?} is not a file or directory", path);
         std::process::exit(1);
     };
-    eprintln!(
-        "({} {}, budget {}, {} tokens, {:.0}% utilization)",
-        n_files,
-        if n_files == 1 { "file" } else { "files" },
-        budget,
-        tokens,
-        if budget > 0 {
-            (tokens as f64 / budget as f64) * 100.0
-        } else {
-            0.0
-        },
-    );
-
     if cli.json {
         print!("{}", format::to_json(&output, budget, tokens));
     } else {
