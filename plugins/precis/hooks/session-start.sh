@@ -42,6 +42,23 @@ if [ -n "${CLAUDE_ENV_FILE:-}" ]; then
   echo "export PATH=\"$PLUGIN_DATA:\$PATH\"" >> "$CLAUDE_ENV_FILE"
 fi
 
+# Bootstrap binaries synchronously on first install.
+# ensure-precis.sh requires --install to run when the binary is missing
+# (without it, the async hook skips first-time install to avoid racing).
+if { [ -z "$JQ" ] || [ ! -x "$PRECIS_BIN" ]; } && [ -n "${CLAUDE_PLUGIN_ROOT:-}" ]; then
+  if [ -z "$JQ" ]; then
+    bash "$CLAUDE_PLUGIN_ROOT/scripts/ensure-jq.sh" 2>>"$LOG_FILE"
+    if command -v jq >/dev/null 2>&1; then
+      JQ="jq"
+    elif [ -x "$PLUGIN_DATA/jq" ]; then
+      JQ="$PLUGIN_DATA/jq"
+    fi
+  fi
+  if [ ! -x "$PRECIS_BIN" ]; then
+    bash "$CLAUDE_PLUGIN_ROOT/scripts/ensure-precis.sh" --install 2>>"$LOG_FILE"
+  fi
+fi
+
 # If both precis and jq are available, run precis and emit additionalContext
 if [ -x "$PRECIS_BIN" ] && [ -n "$JQ" ]; then
   HELP_OUTPUT=$("$PRECIS_BIN" --help 2>/dev/null) || HELP_OUTPUT=""
@@ -59,5 +76,5 @@ if [ -x "$PRECIS_BIN" ] && [ -n "$JQ" ]; then
     echo '{"systemMessage":"\u001b[1;32mprecis:\u001b[0m available"}'
   fi
 else
-  echo '{"systemMessage":"\u001b[1;32mprecis:\u001b[0m available next session"}'
+  echo '{"systemMessage":"\u001b[1;32mprecis:\u001b[0m error, see '"$LOG_FILE"'"}'
 fi

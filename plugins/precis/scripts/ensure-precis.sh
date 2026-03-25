@@ -9,6 +9,12 @@ exec 2>>"$LOG_FILE"
 
 PRECIS_BIN="$PLUGIN_DATA/precis"
 
+# Binary missing: only install when called with --install (synchronously
+# from session-start.sh). The async hook skips first-time install.
+if [ ! -x "$PRECIS_BIN" ] && [ "${1:-}" != "--install" ]; then
+  exit 0
+fi
+
 # Find jq (prefer global, fall back to bootstrapped)
 if command -v jq >/dev/null 2>&1; then
   JQ="jq"
