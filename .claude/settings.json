@@ -1,4 +1,15 @@
 {
+  "enabledPlugins": {
+    "autopilot@alignment-hive": true
+  },
+  "extraKnownMarketplaces": {
+    "alignment-hive": {
+      "source": {
+        "source": "github",
+        "repo": "Crazytieguy/alignment-hive"
+      }
+    }
+  },
   "permissions": {
     "allow": [
       "Bash(ls)",
@@ -82,7 +93,6 @@
       "Bash(git rev-parse *)",
       "Bash(git ls-files)",
       "Bash(git ls-files *)",
-      "Bash(git:*)",
       "Bash(xargs cat)",
       "Bash(xargs cat *)",
       "Bash(xargs file)",
@@ -158,6 +168,10 @@
       "Bash(git commit:*)",
       "Bash(git checkout:*)"
     ],
+    "ask": [
+      "Bash(find * -exec *)",
+      "Bash(find * -execdir *)"
+    ],
     "deny": [
       "Bash(rustc *)",
       "Bash(for *)",
@@ -168,8 +182,6 @@
       "Bash(bash -c *)",
       "Bash(sh -c *)",
       "Bash(zsh -c *)",
-      "Bash(find * -exec *)",
-      "Bash(find * -execdir *)",
       "Bash(awk *system\\(*)",
       "Bash(xargs awk *system\\(*)",
       "Bash(xargs -I{} awk *system\\(*)",
