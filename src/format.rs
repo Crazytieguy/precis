@@ -347,51 +347,6 @@ pub fn count_tokens(text: &str) -> usize {
     BPE.encode_with_special_tokens(text).len()
 }
 
-/// Convert rendered output to JSON, splitting into per-file entries.
-pub fn to_json(output: &str, budget: usize, tokens: usize) -> String {
-    let mut files: Vec<serde_json::Value> = Vec::new();
-    let mut current_path: Option<&str> = None;
-    let mut current_content = String::new();
-
-    let flush = |path: &str, content: &mut String, files: &mut Vec<serde_json::Value>| {
-        if path.ends_with('/') {
-            files.push(serde_json::json!({"path": path, "omitted": true}));
-        } else {
-            let c = content.trim_end_matches('\n');
-            files.push(serde_json::json!({"path": path, "content": c}));
-        }
-        content.clear();
-    };
-    for line in output.lines() {
-        if line.is_empty() {
-            continue;
-        }
-        if !line.contains('→') {
-            if let Some(path) = current_path.take() {
-                flush(path, &mut current_content, &mut files);
-            }
-            current_path = Some(line);
-        } else {
-            if !current_content.is_empty() {
-                current_content.push('\n');
-            }
-            current_content.push_str(line);
-        }
-    }
-    if let Some(path) = current_path {
-        flush(path, &mut current_content, &mut files);
-    }
-
-    let n_files = files.iter().filter(|f| f.get("omitted").is_none_or(|v| v.as_bool() != Some(true))).count();
-    let json = serde_json::json!({
-        "budget": budget,
-        "tokens": tokens,
-        "n_files": n_files,
-        "files": files,
-    });
-    serde_json::to_string_pretty(&json).unwrap()
-}
-
 // ---------------------------------------------------------------------------
 // Symbol content helpers (used by both schedule and render)
 // ---------------------------------------------------------------------------
@@ -456,34 +411,6 @@ fn find_word(needle: &str, haystack: &str) -> Option<usize> {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn to_json_splits_files() {
-        let output = "src/main.rs\n     1→fn main() {\nsrc/lib.rs\n     1→pub mod foo\n";
-        let json_str = to_json(output, 1000, 5);
-        let json: serde_json::Value = serde_json::from_str(&json_str).unwrap();
-
-        assert_eq!(json["budget"], 1000);
-        assert_eq!(json["tokens"], 5);
-        let files = json["files"].as_array().unwrap();
-        assert_eq!(files.len(), 2);
-        assert_eq!(files[0]["path"], "src/main.rs");
-        assert_eq!(files[0]["content"], "     1→fn main() {");
-        assert_eq!(files[1]["path"], "src/lib.rs");
-        assert_eq!(files[1]["content"], "     1→pub mod foo");
-    }
-
-    #[test]
-    fn to_json_empty_content() {
-        let output = "src/main.rs\nsrc/lib.rs\n";
-        let json_str = to_json(output, 100, 2);
-        let json: serde_json::Value = serde_json::from_str(&json_str).unwrap();
-
-        let files = json["files"].as_array().unwrap();
-        assert_eq!(files.len(), 2);
-        assert_eq!(files[0]["content"], "");
-        assert_eq!(files[1]["content"], "");
-    }
 
     #[test]
     fn budget_monotonicity() {
