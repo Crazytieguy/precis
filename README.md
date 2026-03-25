@@ -1,8 +1,39 @@
 # precis
 
-A CLI tool that extracts a token-efficient summary of a codebase, designed to give AI coding agents fast structural context without reading every file.
+A CLI tool that extracts a token-efficient summary of a path, designed to give AI coding agents fast structural context without reading every file.
 
 ## Install
+
+### Claude Code plugin (recommended)
+
+The precis plugin automatically injects a structural overview of your project into Claude's context at the start of every session. This eliminates the need for long, manually-maintained `CLAUDE.md` files describing your codebase, and removes the overhead of Explore agents. The plugin also gives Claude the `precis` CLI so it can zoom into specific directories on demand.
+
+```
+claude plugin marketplace add Crazytieguy/precis
+claude plugin install precis
+```
+
+Or add to your `.claude/settings.json` manually:
+
+```json
+{
+  "enabledPlugins": {
+    "precis@precis": true
+  },
+  "extraKnownMarketplaces": {
+    "precis": {
+      "source": {
+        "source": "github",
+        "repo": "Crazytieguy/precis"
+      }
+    }
+  }
+}
+```
+
+The plugin automatically downloads and updates the binary — no manual install needed.
+
+### Standalone
 
 ```
 cargo install precis
