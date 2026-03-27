@@ -1,6 +1,6 @@
 # Precis
 
-A CLI tool that extracts a token-efficient summary of a codebase. See @README.md for design principles.
+See @README.md
 
 ## Codebase Exploration
 
