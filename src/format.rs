@@ -82,7 +82,7 @@ pub fn extract_all_symbols(
 // ---------------------------------------------------------------------------
 
 /// Render output from a computed schedule.
-fn render_scheduled(
+pub fn render_scheduled(
     root: &Path,
     files: &[PathBuf],
     sources: &[Option<String>],
