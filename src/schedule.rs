@@ -543,10 +543,18 @@ pub struct Group {
     pub key: GroupKey,
     pub symbols: Vec<SymbolCosts>,
     pub file_indices: HashSet<usize>,
-    /// Cached: max doc lines across all symbols in this group.
+    /// Cached: max doc lines the scheduler should consider. Capped by budget-aware
+    /// truncation — may be less than the true max doc lines across symbols.
     pub max_doc_n: usize,
-    /// Cached: max body lines across all symbols in this group.
+    /// Cached: max body lines the scheduler should consider. Same capping applies.
     pub max_body_n: usize,
+}
+
+/// Groups with their build-time budget. The budget determines how many doc/body
+/// layers were tokenized; scheduling with a larger budget would give wrong results.
+pub struct BuiltGroups {
+    pub groups: Vec<Group>,
+    pub budget: usize,
 }
 
 impl Group {
@@ -602,23 +610,38 @@ impl IncludedStage {
 // ---------------------------------------------------------------------------
 
 /// Build groups from extracted symbols, computing per-symbol costs.
+///
+/// Doc/body line costs are computed with budget-aware truncation: layers whose
+/// cumulative cost exceeds `budget` are skipped (they can never be scheduled).
+/// The returned `BuiltGroups` carries the budget so `schedule()` can enforce it.
 pub fn build_groups(
     root: &Path,
     files: &[PathBuf],
     sources: &[Option<String>],
     all_symbols: &[Vec<parse::Symbol>],
     layouts: &[Vec<layout::SymbolLayout>],
-) -> Vec<Group> {
+    budget: usize,
+) -> BuiltGroups {
+    // Pre-compute lines for all files (needed for deferred doc/body tokenization).
+    let all_lines: Vec<Vec<&str>> = sources
+        .iter()
+        .map(|s| {
+            s.as_ref()
+                .map(|s| s.lines().collect())
+                .unwrap_or_default()
+        })
+        .collect();
+
     let mut group_map: HashMap<GroupKey, Group> = HashMap::new();
 
     for (file_idx, (file, symbols)) in files.iter().zip(all_symbols.iter()).enumerate() {
-        let source = match &sources[file_idx] {
-            Some(s) => s,
-            None => continue,
-        };
+        if sources[file_idx].is_none() {
+            continue;
+        }
         let relative = file.strip_prefix(root).unwrap_or(file);
         let parent_dir = relative.parent().unwrap_or(Path::new("")).to_path_buf();
-        let lines: Vec<&str> = source.lines().collect();
+        let lines = &all_lines[file_idx];
+        let source = sources[file_idx].as_ref().unwrap();
         let file_role = FileRole::from_path(relative);
         let is_file_config = relative.file_name()
             .and_then(|n| n.to_str())
@@ -652,7 +675,7 @@ pub fn build_groups(
                     let depth = sym.name.chars().filter(|&c| c == '.').count() as u8 + 1;
                     Some(depth)
                 } else if matches!(lang, Some(crate::Lang::Markdown)) {
-                    Some(detect_heading_depth(&lines, sym_line_0, sym.end_line))
+                    Some(detect_heading_depth(lines, sym_line_0, sym.end_line))
                 } else {
                     Some(1) // JSON/YAML/unsupported: all top-level
                 }
@@ -691,12 +714,12 @@ pub fn build_groups(
                 is_reexport: sym.is_reexport,
             };
 
-            // Compute costs
-            let costs = compute_symbol_costs(
+            // Phase 1: compute name + signature costs only.
+            let costs = compute_name_sig_costs(
                 file_idx,
                 symbol_idx,
                 sym,
-                &lines,
+                lines,
                 layout,
             );
 
@@ -707,44 +730,30 @@ pub fn build_groups(
                 max_doc_n: 0,
                 max_body_n: 0,
             });
-            group.max_doc_n = group.max_doc_n.max(costs.doc_line_tokens.len());
-            group.max_body_n = group.max_body_n.max(costs.body_line_tokens.len());
             group.symbols.push(costs);
             group.file_indices.insert(file_idx);
         }
     }
 
     let mut groups: Vec<Group> = group_map.into_values().collect();
-
     groups.sort_by(|a, b| a.key.cmp(&b.key));
-    groups
+
+    // Phase 2: compute doc/body line costs per group with budget-aware truncation.
+    for group in &mut groups {
+        fill_doc_body_costs(group, &all_lines, layouts, all_symbols, budget);
+    }
+
+    BuiltGroups { groups, budget }
 }
 
 /// Token cost of the truncation marker that would appear after a given source line.
-/// Matches the renderer's `truncation_marker()` format: `"      →{indent}…\n"`.
 fn truncation_marker_cost(source_line: &str) -> usize {
-    let indent_len = source_line.len() - source_line.trim_start().len();
-    let indent = &source_line[..indent_len];
-    format::count_tokens(&format!("      →{}…\n", indent))
+    format::count_tokens(&format::truncation_marker(source_line))
 }
 
-/// Count token costs and truncation marker costs for a range of source lines.
-fn count_line_range(
-    lines: &[&str],
-    start: usize,
-    end: usize,
-    line_tokens: &mut Vec<usize>,
-    marker_tokens: &mut Vec<usize>,
-) {
-    for (i, line) in lines.iter().enumerate().take(end).skip(start) {
-        line_tokens.push(format::count_tokens(&format::fmt_line(i, line)));
-        marker_tokens.push(truncation_marker_cost(line));
-    }
-}
-
-/// Compute token costs for each rendering stage of a single symbol.
-/// Reads all line ranges from the pre-computed layout.
-fn compute_symbol_costs(
+/// Compute name + signature token costs for a symbol. Doc/body vectors are
+/// left empty (filled per-group by `fill_doc_body_costs`).
+fn compute_name_sig_costs(
     file_idx: usize,
     symbol_idx: usize,
     sym: &parse::Symbol,
@@ -752,33 +761,19 @@ fn compute_symbol_costs(
     layout: &layout::SymbolLayout,
 ) -> SymbolCosts {
     let sym_line_0 = layout.sym_line_0;
-
     let sig_end = layout.sig_end;
     let is_section = sym.kind == parse::SymbolKind::Section;
 
     let name_tokens = if is_section {
-        // Sections show the full heading/section line at Names stage (no
-        // truncation marker). Cost matches the signature line since headings
-        // are single-line.
         let line = layout::strip_heading_badges(lines.get(layout.sym_line_0).copied().unwrap_or(""));
         format::count_tokens(&format::fmt_line(layout.sym_line_0, line))
     } else {
-        // Token count of the formatted name line including the " …\n" suffix
-        // that the renderer appends to names-only entries. Including the
-        // ellipsis cost keeps Names-only rendering in sync with the budget.
-        // When Signatures are also included (no ellipsis rendered), the
-        // ellipsis cost is offset by a corresponding negative delta in
-        // signature_tokens (sig_total - name_tokens), so the total
-        // Names+Signatures cost remains exact.
         let name_line = format::format_symbol_name(sym, lines);
         format::count_tokens(&format!("{} …\n", name_line))
     };
 
-    // Signature: additional tokens from showing full signature lines (with line numbers)
-    // beyond what the name-only line shows.
     let mut sig_formatted_tokens = 0;
     for (i, line) in lines.iter().enumerate().take(sig_end + 1).skip(sym_line_0) {
-        // Strip trailing badges from markdown heading lines (matches renderer)
         let line = if is_section && i == sym_line_0 {
             layout::strip_heading_badges(line)
         } else {
@@ -788,39 +783,169 @@ fn compute_symbol_costs(
     }
     let signature_tokens = sig_formatted_tokens.saturating_sub(name_tokens);
 
-    // Doc comment lines (pre-symbol comments + Python docstrings)
-    let mut doc_line_tokens = Vec::new();
-    let mut doc_marker_tokens = Vec::new();
-    if layout.doc_start < layout.doc_end {
-        count_line_range(lines, layout.doc_start, layout.doc_end, &mut doc_line_tokens, &mut doc_marker_tokens);
-    }
-    let pre_doc_count = doc_line_tokens.len();
-    if layout.ds_end > layout.ds_start {
-        count_line_range(lines, layout.ds_start, layout.ds_end, &mut doc_line_tokens, &mut doc_marker_tokens);
-    }
-
-    // Body lines — ranges come from layout (already truncated at first child)
-    let mut body_line_tokens = Vec::new();
-    let mut body_marker_tokens = Vec::new();
-    let (body_start, body_end) = if is_section {
-        (layout.md_content_start, layout.md_section_end)
-    } else {
-        (layout.body_start, layout.body_end)
-    };
-    count_line_range(lines, body_start, body_end, &mut body_line_tokens, &mut body_marker_tokens);
+    let pre_doc_count = layout.doc_end.saturating_sub(layout.doc_start);
 
     SymbolCosts {
         file_idx,
         symbol_idx,
         name_tokens,
         signature_tokens,
-        doc_line_tokens,
-        doc_marker_tokens,
+        doc_line_tokens: Vec::new(),
+        doc_marker_tokens: Vec::new(),
         pre_doc_count,
-        body_line_tokens,
-        body_marker_tokens,
+        body_line_tokens: Vec::new(),
+        body_marker_tokens: Vec::new(),
         body_has_nested: layout.has_children,
     }
+}
+
+/// Phase 2: compute doc/body line token costs per group with budget-aware
+/// truncation. Layers whose cumulative cost exceeds the budget are skipped
+/// (their vector entries remain 0). `max_doc_n`/`max_body_n` are capped to
+/// the last computed layer.
+fn fill_doc_body_costs(
+    group: &mut Group,
+    all_lines: &[Vec<&str>],
+    layouts: &[Vec<layout::SymbolLayout>],
+    all_symbols: &[Vec<parse::Symbol>],
+    budget: usize,
+) {
+    // Pre-allocate vectors to true lengths (0-filled). True `.len()` is needed
+    // for truncation marker detection in `line_stage_cost`.
+    let mut true_max_doc = 0usize;
+    let mut true_max_body = 0usize;
+    for sc in &mut group.symbols {
+        let layout = &layouts[sc.file_idx][sc.symbol_idx];
+        let sym = &all_symbols[sc.file_idx][sc.symbol_idx];
+        let doc_count = layout.doc_end.saturating_sub(layout.doc_start)
+            + layout.ds_end.saturating_sub(layout.ds_start);
+        let (body_start, body_end) = if sym.kind == parse::SymbolKind::Section {
+            (layout.md_content_start, layout.md_section_end)
+        } else {
+            (layout.body_start, layout.body_end)
+        };
+        let body_count = body_end.saturating_sub(body_start);
+        sc.doc_line_tokens = vec![0; doc_count];
+        sc.doc_marker_tokens = vec![0; doc_count];
+        sc.body_line_tokens = vec![0; body_count];
+        sc.body_marker_tokens = vec![0; body_count];
+        true_max_doc = true_max_doc.max(doc_count);
+        true_max_body = true_max_body.max(body_count);
+    }
+
+    // Base cost: names + signatures (already computed in phase 1).
+    let base_cost: usize = group
+        .symbols
+        .iter()
+        .map(|s| s.name_tokens + s.signature_tokens)
+        .sum();
+    let mut cumulative = base_cost;
+    let mut computed_doc_n = 0usize;
+    let mut computed_body_n = 0usize;
+
+    let stages = group.key.kind_category.stage_sequence();
+    for &stage_kind in stages {
+        match stage_kind {
+            StageKind::FilePath | StageKind::Names | StageKind::Signatures => continue,
+            StageKind::Doc | StageKind::Body => {}
+        }
+
+        if cumulative > budget {
+            break;
+        }
+
+        let true_max = match stage_kind {
+            StageKind::Doc => true_max_doc,
+            StageKind::Body => true_max_body,
+            _ => unreachable!(),
+        };
+
+        let is_doc = stage_kind == StageKind::Doc;
+        let mut prev_markers = 0usize;
+
+        for n in 1..=true_max {
+            let mut line_cost = 0usize;
+            let mut markers_at_n = 0usize;
+
+            for sc in group.symbols.iter_mut() {
+                let layout = &layouts[sc.file_idx][sc.symbol_idx];
+
+                // Map layer index (n-1) to source line index and true line count.
+                let (src_line_idx, true_len) = if is_doc {
+                    let pre = layout.doc_end.saturating_sub(layout.doc_start);
+                    let total = pre + layout.ds_end.saturating_sub(layout.ds_start);
+                    if n - 1 < pre {
+                        (layout.doc_start + (n - 1), total)
+                    } else if n - 1 < total {
+                        (layout.ds_start + (n - 1 - pre), total)
+                    } else {
+                        continue;
+                    }
+                } else {
+                    let sym = &all_symbols[sc.file_idx][sc.symbol_idx];
+                    let (start, end) = if sym.kind == parse::SymbolKind::Section {
+                        (layout.md_content_start, layout.md_section_end)
+                    } else {
+                        (layout.body_start, layout.body_end)
+                    };
+                    let count = end.saturating_sub(start);
+                    if n - 1 < count {
+                        (start + (n - 1), count)
+                    } else {
+                        continue;
+                    }
+                };
+
+                let file_lines = &all_lines[sc.file_idx];
+                let line = file_lines.get(src_line_idx).copied().unwrap_or("");
+
+                let lt = format::count_tokens(&format::fmt_line(src_line_idx, line));
+                let mt = truncation_marker_cost(line);
+
+                if is_doc {
+                    sc.doc_line_tokens[n - 1] = lt;
+                    sc.doc_marker_tokens[n - 1] = mt;
+                } else {
+                    sc.body_line_tokens[n - 1] = lt;
+                    sc.body_marker_tokens[n - 1] = mt;
+                }
+
+                line_cost += lt;
+
+                // Truncation marker: shown when there are more lines beyond n.
+                let show_marker = if is_doc {
+                    // Suppress marker at the pre-comment/docstring split point.
+                    !(true_len > sc.pre_doc_count && n == sc.pre_doc_count)
+                } else {
+                    // Suppress marker for symbols with nested children.
+                    !sc.body_has_nested
+                };
+                if true_len > n && show_marker {
+                    markers_at_n += mt;
+                }
+            }
+
+            let incremental = (line_cost + markers_at_n).saturating_sub(prev_markers);
+            cumulative += incremental;
+            prev_markers = markers_at_n;
+
+            if is_doc {
+                computed_doc_n = n;
+            } else {
+                computed_body_n = n;
+            }
+
+            if cumulative > budget {
+                break;
+            }
+        }
+    }
+
+    // Cap max_doc_n/max_body_n to the last computed layer. The scheduler uses
+    // these to bound iteration; true vector lengths are preserved for marker
+    // detection in line_stage_cost.
+    group.max_doc_n = computed_doc_n;
+    group.max_body_n = computed_body_n;
 }
 
 // ---------------------------------------------------------------------------
@@ -1243,11 +1368,12 @@ fn enqueue_group_items(
 
 /// Run the greedy scheduling algorithm.
 pub fn schedule(
-    groups: &[Group],
-    budget: usize,
+    built: &BuiltGroups,
     root: &Path,
     files: &[PathBuf],
 ) -> Schedule {
+    let groups = &built.groups;
+    let budget = built.budget;
     // Build reverse lookup: (file_idx, symbol_idx) → group_idx
     let mut symbol_to_group: HashMap<(usize, usize), usize> = HashMap::new();
     for (group_idx, group) in groups.iter().enumerate() {

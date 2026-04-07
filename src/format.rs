@@ -34,9 +34,9 @@ pub fn render_with_budget_stats(
 ) -> (String, usize) {
     let all_symbols = extract_all_symbols(files, sources);
     let layouts = layout::compute_all_layouts(files, sources, &all_symbols);
-    let groups = schedule::build_groups(root, files, sources, &all_symbols, &layouts);
-    let sched = schedule::schedule(&groups, budget, root, files);
-    let output = render_scheduled(root, files, sources, &all_symbols, &layouts, &groups, &sched);
+    let built = schedule::build_groups(root, files, sources, &all_symbols, &layouts, budget);
+    let sched = schedule::schedule(&built, root, files);
+    let output = render_scheduled(root, files, sources, &all_symbols, &layouts, &built.groups, &sched);
     let actual = count_tokens(&output);
     (output, actual)
 }
@@ -336,7 +336,7 @@ pub(crate) fn fmt_line(line_idx_0: usize, line: &str) -> String {
 /// `last_line` is the source line just before the truncation point —
 /// the marker inherits its leading whitespace so nested content reads
 /// naturally (e.g. struct fields get an indented `…`).
-fn truncation_marker(last_line: &str) -> String {
+pub(crate) fn truncation_marker(last_line: &str) -> String {
     let indent_len = last_line.len() - last_line.trim_start().len();
     let indent = &last_line[..indent_len];
     format!("      →{}…\n", indent)

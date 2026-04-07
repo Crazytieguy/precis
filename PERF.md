@@ -6,7 +6,7 @@ Profiling binary: `cargo run --release --bin profile -- <path> [--budget N]`
 
 Perf fixtures cloned via `cargo run --bin clone_fixtures -- --perf`. Shallow tag clones stored in `test/perf-fixtures/`.
 
-## Results
+## Results (before optimization)
 
 | Repo | Files | Symbols | Total | parse | groups | schedule | other |
 |------|------:|--------:|------:|------:|-------:|---------:|------:|
@@ -17,6 +17,15 @@ Perf fixtures cloned via `cargo run --bin clone_fixtures -- --perf`. Shallow tag
 | typescript | 72,621 files | — | crash | — | — | — | — |
 
 Walk, read, layout, render, and final token count are all negligible (<2% combined).
+
+## Results (after budget-aware truncation)
+
+| Repo | Total | parse | groups | schedule | other |
+|------|------:|------:|-------:|---------:|------:|
+| django | 21s | 9s (43%) | 5.5s (26%) | 5.6s (26%) | <5% |
+| deno | 42s | 37s (88%) | 3.5s (8%) | 0.4s (1%) | <3% |
+| cpython | 37s | 30s (82%) | 5.3s (14%) | 0.4s (1%) | <3% |
+| vscode | 122s | 85s (70%) | 33s (27%) | 2s (2%) | <1% |
 
 ## Bottleneck 1: parse (tree-sitter)
 
@@ -43,6 +52,10 @@ The priority queue algorithm in `schedule::schedule` is relatively cheap even at
 
 ## Optimization attempt: cost estimation (2026-04-06)
 
-We tried replacing exact BPE token counting in `build_groups` with calibrated linear models (`tokens ≈ a * bytes + b` per language). This eliminated the tokenization bottleneck but introduced ~7-13% output divergence from token-based scheduling, because bytes-to-tokens ratios vary by content type and the estimation errors compound at budget boundaries. Various approaches (per-language-kind calibration, cached markers, exact names/sigs with estimated doc/body) reduced but couldn't eliminate the divergence.
+We tried replacing exact BPE token counting in `build_groups` with calibrated linear models (`tokens ≈ a * bytes + b` per language). This eliminated the tokenization bottleneck but introduced ~7-13% output divergence from token-based scheduling, because bytes-to-tokens ratios vary by content type and the estimation errors compound at budget boundaries.
 
-**Promising direction not yet implemented:** compute exact token costs in `build_groups` but stop per-group once cumulative cost exceeds the budget. Analysis shows this would skip 60-94% of tokenization work (lines beyond the budget can never be shown) while producing exact output.
+## Budget-aware truncation (2026-04-06)
+
+Compute exact token costs in `build_groups` but stop per-group once cumulative cost exceeds the budget. Doc/body lines are computed layer-by-layer; layers whose prerequisites already exceed the budget are skipped. Output is exact (all snapshot tests unchanged). Groups stage speedup: 6-21x across repos.
+
+Parse is now the dominant bottleneck (43-88%). Both parse and groups are embarrassingly parallel.

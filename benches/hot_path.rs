@@ -61,7 +61,7 @@ fn bench_build_groups(c: &mut Criterion) {
         let layouts = layout::compute_all_layouts(&f.files, &f.sources, &f.all_symbols);
         c.bench_function(bench_name, |b| {
             b.iter(|| {
-                schedule::build_groups(&f.root, &f.files, &f.sources, &f.all_symbols, &layouts);
+                schedule::build_groups(&f.root, &f.files, &f.sources, &f.all_symbols, &layouts, 4000);
             });
         });
     }
@@ -78,10 +78,10 @@ fn bench_schedule(c: &mut Criterion) {
             continue;
         };
         let layouts = layout::compute_all_layouts(&f.files, &f.sources, &f.all_symbols);
-        let groups = schedule::build_groups(&f.root, &f.files, &f.sources, &f.all_symbols, &layouts);
+        let built = schedule::build_groups(&f.root, &f.files, &f.sources, &f.all_symbols, &layouts, 4000);
         c.bench_function(bench_name, |b| {
             b.iter(|| {
-                schedule::schedule(&groups, 4000, &f.root, &f.files);
+                schedule::schedule(&built, &f.root, &f.files);
             });
         });
     }
