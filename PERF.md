@@ -40,3 +40,9 @@ tiktoken-rs panics with `StackOverflow` during the groups stage on the TypeScrip
 ## Schedule stage
 
 The priority queue algorithm in `schedule::schedule` is relatively cheap even at 150k+ symbols (1-9s). Django is the outlier at 9s with 3,924 groups; the others are ~1s. Not a priority for optimization.
+
+## Optimization attempt: cost estimation (2026-04-06)
+
+We tried replacing exact BPE token counting in `build_groups` with calibrated linear models (`tokens ≈ a * bytes + b` per language). This eliminated the tokenization bottleneck but introduced ~7-13% output divergence from token-based scheduling, because bytes-to-tokens ratios vary by content type and the estimation errors compound at budget boundaries. Various approaches (per-language-kind calibration, cached markers, exact names/sigs with estimated doc/body) reduced but couldn't eliminate the divergence.
+
+**Promising direction not yet implemented:** compute exact token costs in `build_groups` but stop per-group once cumulative cost exceeds the budget. Analysis shows this would skip 60-94% of tokenization work (lines beyond the budget can never be shown) while producing exact output.
