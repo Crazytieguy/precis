@@ -6,7 +6,7 @@
 use std::path::Path;
 use std::time::Instant;
 
-use precis::{format, layout, schedule, walk};
+use precis::{format, layout, parse, schedule, walk};
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
@@ -40,9 +40,13 @@ fn main() {
     let sources = format::read_sources(&files);
     stages.push(("read", t.elapsed()));
 
-    // 3. Extract symbols
+    // 3. Extract symbols (split: query compilation vs parsing+extraction)
     let t = Instant::now();
-    let all_symbols = format::extract_all_symbols(&files, &sources);
+    let configs = parse::build_language_configs(&files);
+    stages.push(("parse:init", t.elapsed()));
+
+    let t = Instant::now();
+    let all_symbols = parse::extract_all_symbols_cached(&files, &sources, &configs);
     stages.push(("parse", t.elapsed()));
 
     // 4. Compute layouts

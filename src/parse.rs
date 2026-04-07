@@ -1,8 +1,25 @@
-use std::path::Path;
+use std::collections::HashMap;
+use std::path::{Path, PathBuf};
+
 use streaming_iterator::StreamingIterator;
 use tree_sitter::{Language, Parser, Query, QueryCursor};
 
 use crate::Lang;
+
+/// Pre-compiled tree-sitter configuration for a language.
+pub struct LanguageConfig {
+    lang: Lang,
+    ts_language: Language,
+    query: Query,
+    symbol_idx: u32,
+    name_idx: Option<u32>,
+}
+
+fn normalized_ext(path: &Path) -> Option<String> {
+    path.extension()
+        .and_then(|e| e.to_str())
+        .map(|e| e.to_ascii_lowercase())
+}
 
 /// A symbol extracted from a source file.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -200,7 +217,7 @@ pub fn is_supported_extension(ext: &str) -> bool {
 /// The section spans just the first meaningful line (the "heading"), with body
 /// content extending to EOF via the layout system's next-heading detection.
 /// Skips shebang lines (`#!`) since they convey no structural information.
-fn plain_text_symbol(source: &str) -> Vec<Symbol> {
+pub(crate) fn plain_text_symbol(source: &str) -> Vec<Symbol> {
     let mut lines = source.lines().enumerate();
     // Skip shebang line if present
     let first = loop {
@@ -277,28 +294,77 @@ fn language_for_extension(ext: &str) -> Option<(Language, &'static str)> {
     })
 }
 
-/// Extract symbols from a source file.
-pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
-    let ext_owned = match path.extension().and_then(|e| e.to_str()) {
-        Some(ext) => ext.to_ascii_lowercase(),
-        // Extensionless files (Makefile, Dockerfile, etc.) — use plain text fallback
-        None => return plain_text_symbol(source),
-    };
-    let ext = ext_owned.as_str();
+/// Build pre-compiled language configs from the extensions present in `files`.
+/// One config per unique extension (~20 total), each with a pre-compiled `Query`.
+pub fn build_language_configs(files: &[PathBuf]) -> HashMap<String, LanguageConfig> {
+    let mut configs: HashMap<String, LanguageConfig> = HashMap::new();
 
-    let lang = match Lang::from_extension(ext) {
-        Some(l) => l,
-        None => return plain_text_symbol(source),
-    };
+    for file in files {
+        let ext_owned = match normalized_ext(file) {
+            Some(ext) => ext,
+            None => continue,
+        };
+        if configs.contains_key(&ext_owned) {
+            continue;
+        }
+        let lang = match Lang::from_extension(&ext_owned) {
+            Some(l) => l,
+            None => continue,
+        };
+        let (ts_language, query_src) = match language_for_extension(&ext_owned) {
+            Some(pair) => pair,
+            None => continue,
+        };
 
-    let (language, query_src) = match language_for_extension(ext) {
-        Some(pair) => pair,
-        None => return vec![],
-    };
+        let query = Query::new(&ts_language, query_src).expect("invalid query");
+        let symbol_idx = query
+            .capture_index_for_name("symbol")
+            .expect("missing @symbol capture");
+        let name_idx = query.capture_index_for_name("name");
+        configs.insert(ext_owned, LanguageConfig {
+            lang,
+            ts_language,
+            query,
+            symbol_idx,
+            name_idx,
+        });
+    }
+    configs
+}
+
+/// Extract symbols from all files using pre-compiled language configs.
+pub fn extract_all_symbols_cached(
+    files: &[PathBuf],
+    sources: &[Option<String>],
+    configs: &HashMap<String, LanguageConfig>,
+) -> Vec<Vec<Symbol>> {
+    files
+        .iter()
+        .zip(sources.iter())
+        .map(|(f, s)| {
+            let source = match s.as_ref() {
+                Some(s) => s,
+                None => return vec![],
+            };
+            match normalized_ext(f).as_deref().and_then(|e| configs.get(e)) {
+                Some(config) => extract_symbols_with_config(f, source, config),
+                None => plain_text_symbol(source),
+            }
+        })
+        .collect()
+}
+
+/// Extract symbols from a source file using a pre-compiled language config.
+pub fn extract_symbols_with_config(
+    path: &Path,
+    source: &str,
+    config: &LanguageConfig,
+) -> Vec<Symbol> {
+    let lang = config.lang;
 
     let mut parser = Parser::new();
     parser
-        .set_language(&language)
+        .set_language(&config.ts_language)
         .expect("language version mismatch");
 
     let tree = match parser.parse(source, None) {
@@ -306,14 +372,11 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
         None => return vec![],
     };
 
-    let query = Query::new(&language, query_src).expect("invalid query");
     let mut cursor = QueryCursor::new();
-    let mut matches = cursor.matches(&query, tree.root_node(), source.as_bytes());
+    let mut matches = cursor.matches(&config.query, tree.root_node(), source.as_bytes());
 
-    let symbol_idx = query
-        .capture_index_for_name("symbol")
-        .expect("missing @symbol capture");
-    let name_idx = query.capture_index_for_name("name");
+    let symbol_idx = config.symbol_idx;
+    let name_idx = config.name_idx;
 
     let mut symbols = Vec::new();
 
@@ -684,6 +747,16 @@ pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
         return plain_text_symbol(source);
     }
     symbols
+}
+
+/// Extract symbols from a source file.
+pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
+    let files = [path.to_path_buf()];
+    let configs = build_language_configs(&files);
+    match normalized_ext(path).as_deref().and_then(|e| configs.get(e)) {
+        Some(config) => extract_symbols_with_config(path, source, config),
+        None => plain_text_symbol(source),
+    }
 }
 
 /// Mark `pub use` imports as re-exports when they reference a child module

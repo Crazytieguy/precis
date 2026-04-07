@@ -66,15 +66,8 @@ pub fn extract_all_symbols(
     files: &[PathBuf],
     sources: &[Option<String>],
 ) -> Vec<Vec<parse::Symbol>> {
-    files
-        .iter()
-        .zip(sources.iter())
-        .map(|(f, s)| {
-            s.as_ref()
-                .map(|s| parse::extract_symbols(f, s))
-                .unwrap_or_default()
-        })
-        .collect()
+    let configs = parse::build_language_configs(files);
+    parse::extract_all_symbols_cached(files, sources, &configs)
 }
 
 // ---------------------------------------------------------------------------

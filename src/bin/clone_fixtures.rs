@@ -85,10 +85,10 @@ fn clone_perf(filter: Option<&str>) {
     let mut failed = 0;
 
     for &(dir, url, tag) in PERF_FIXTURES {
-        if let Some(name) = filter {
-            if dir != name {
-                continue;
-            }
+        if let Some(name) = filter
+            && dir != name
+        {
+            continue;
         }
         let target = fixtures_dir.join(dir);
         if target.exists() {

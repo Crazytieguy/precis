@@ -59,3 +59,18 @@ We tried replacing exact BPE token counting in `build_groups` with calibrated li
 Compute exact token costs in `build_groups` but stop per-group once cumulative cost exceeds the budget. Doc/body lines are computed layer-by-layer; layers whose prerequisites already exceed the budget are skipped. Output is exact (all snapshot tests unchanged). Groups stage speedup: 6-21x across repos.
 
 Parse is now the dominant bottleneck (43-88%). Both parse and groups are embarrassingly parallel.
+
+## Query caching (2026-04-06)
+
+`extract_symbols` was compiling the same tree-sitter `Query` from `.scm` text for every file. With ~7,000 files across ~12 distinct language/query pairs, that's thousands of redundant compilations. Fix: `build_language_configs` compiles each `Query` once per unique extension, and `extract_all_symbols_cached` reuses the pre-compiled configs.
+
+| Repo | Total | parse:init | parse | groups | schedule | other |
+|------|------:|----------:|------:|-------:|---------:|------:|
+| django | 17s | 63ms | 3.3s (19%) | 7.5s (43%) | 5.0s (29%) | <9% |
+| deno | 13s | 214ms | 6.5s (50%) | 4.5s (35%) | 0.4s (3%) | <12% |
+| cpython | 20s | 40ms | 12.5s (63%) | 5.7s (29%) | 0.7s (4%) | <4% |
+| vscode | 46s | 86ms | 12.7s (28%) | 30.4s (66%) | 1.7s (4%) | <2% |
+
+Parse speedup: 2.4-6.6x. Query compilation (parse:init) is now negligible (<0.5%).
+
+Parse and groups remain the dominant bottlenecks. Both are embarrassingly parallel.
