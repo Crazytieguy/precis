@@ -74,3 +74,23 @@ Parse is now the dominant bottleneck (43-88%). Both parse and groups are embarra
 Parse speedup: 2.4-6.6x. Query compilation (parse:init) is now negligible (<0.5%).
 
 Parse and groups remain the dominant bottlenecks. Both are embarrassingly parallel.
+
+## Rayon parallelism (2026-04-06)
+
+Added `rayon` for data-parallel iteration across files and groups. Thread safety: tree-sitter `Query`/`Language` are `Send + Sync`; `CoreBPE` is `Sync` via `LazyLock`.
+
+Changes:
+- `extract_all_symbols_cached`: `par_iter` over files (each creates its own `Parser`)
+- `build_groups` Phase 1: parallel map-reduce — compute `GroupKey` + name/sig costs per file in parallel, merge into group map sequentially
+- `build_groups` Phase 2: `par_iter_mut` over groups for `fill_doc_body_costs`
+- `compute_all_layouts`: `par_iter` over files
+- `read_sources`: `par_iter` over file I/O
+
+| Repo | Total | parse | groups | schedule | other |
+|------|------:|------:|-------:|---------:|------:|
+| django | 7.6s | 0.4s (6%) | 1.7s (22%) | 5.0s (66%) | <6% |
+| deno | 4.2s | 2.0s (48%) | 1.2s (29%) | 0.5s (11%) | <12% |
+| cpython | 5.1s | 3.2s (62%) | 1.4s (27%) | 0.3s (6%) | <5% |
+| vscode | 27.1s | 4.2s (15%) | 20.7s (76%) | 1.7s (6%) | <3% |
+
+Overall speedup: 1.7-3.9x. Parse speedup: 3-8x. Groups speedup: 1.5-5.3x. vscode groups remain the bottleneck — likely dominated by a few large groups with many doc/body lines to tokenize.

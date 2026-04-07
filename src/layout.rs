@@ -1,5 +1,7 @@
 use std::path::PathBuf;
 
+use rayon::prelude::*;
+
 use crate::parse;
 use crate::Lang;
 
@@ -183,9 +185,9 @@ pub fn compute_all_layouts(
     all_symbols: &[Vec<parse::Symbol>],
 ) -> Vec<Vec<SymbolLayout>> {
     files
-        .iter()
-        .zip(sources.iter())
-        .zip(all_symbols.iter())
+        .par_iter()
+        .zip(sources.par_iter())
+        .zip(all_symbols.par_iter())
         .map(|((file, source), symbols)| {
             let source = match source {
                 Some(s) => s,

@@ -1,6 +1,7 @@
 use std::path::{Path, PathBuf};
 use std::sync::LazyLock;
 
+use rayon::prelude::*;
 use tiktoken_rs::CoreBPE;
 
 use crate::layout::{self, SymbolLayout};
@@ -56,7 +57,7 @@ pub fn render_file_with_budget(
 /// Pre-read source files to avoid repeated disk I/O.
 pub fn read_sources(files: &[PathBuf]) -> Vec<Option<String>> {
     files
-        .iter()
+        .par_iter()
         .map(|f| std::fs::read_to_string(f).ok())
         .collect()
 }

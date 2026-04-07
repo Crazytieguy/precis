@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
+use rayon::prelude::*;
 use streaming_iterator::StreamingIterator;
 use tree_sitter::{Language, Parser, Query, QueryCursor};
 
@@ -339,8 +340,8 @@ pub fn extract_all_symbols_cached(
     configs: &HashMap<String, LanguageConfig>,
 ) -> Vec<Vec<Symbol>> {
     files
-        .iter()
-        .zip(sources.iter())
+        .par_iter()
+        .zip(sources.par_iter())
         .map(|(f, s)| {
             let source = match s.as_ref() {
                 Some(s) => s,
