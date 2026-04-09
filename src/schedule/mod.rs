@@ -200,51 +200,35 @@ impl std::iter::Sum for Cost {
     }
 }
 
-/// A symbol's precomputed content costs per rendering stage.
-#[derive(Clone)]
-pub struct SymbolCosts {
+/// Reference to a symbol within the corpus, used by groups to track membership
+/// without carrying per-symbol cost data.
+#[derive(Clone, Copy)]
+pub struct SymbolRef {
     pub file_idx: usize,
     pub symbol_idx: usize,
-    pub name: Cost,
-    /// Additional cost for full signature beyond the name line.
-    pub signature: Cost,
-    /// Cost per doc comment line (ordered). For Python symbols with both
-    /// pre-symbol `#` comments and post-signature docstrings, this is the
-    /// concatenation of both sections (pre-comments first, then docstring lines).
-    pub doc_lines: Vec<Cost>,
-    /// Cost of the truncation marker after each doc line. Parallel to
-    /// `doc_lines` — `doc_markers[i]` is the cost of `"      →{indent}…\n"`
-    /// where indent matches `doc_lines[i]`'s source line.
-    pub doc_markers: Vec<Cost>,
-    /// Number of pre-symbol comment lines in `doc_lines`. The renderer
-    /// emits pre-comments and docstrings as separate sections with a signature
-    /// in between, so truncation markers must account for this split point.
-    pub pre_doc_count: usize,
-    /// Cost per body line (ordered).
-    pub body_lines: Vec<Cost>,
-    /// Cost of the truncation marker after each body line. Parallel to
-    /// `body_lines`.
-    pub body_markers: Vec<Cost>,
-    /// Whether the symbol's body contains nested symbols (e.g., class methods).
-    /// When true, body truncation markers are suppressed by the renderer.
-    pub body_has_nested: bool,
 }
 
 /// A group of similarly-valued symbols that always receive the same treatment.
 pub struct Group {
     pub key: GroupKey,
-    pub(super) symbols: Vec<SymbolCosts>,
+    pub(super) symbols: Vec<SymbolRef>,
     pub(super) file_indices: HashSet<usize>,
     /// Pre-computed product of all static value factors (file role, depth,
     /// visibility, documented, etc.) — everything that depends only on
     /// `GroupKey` properties, not on stage or line number. Computed once
     /// in `build_groups`, read by `compute_value` on every call.
     pub(super) base_importance: f64,
-    /// Cached: max doc lines the scheduler should consider. Capped by budget-aware
-    /// truncation — may be less than the true max doc lines across symbols.
-    pub(super) max_doc_n: usize,
-    /// Cached: max body lines the scheduler should consider. Same capping applies.
-    pub(super) max_body_n: usize,
+    /// Pre-aggregated cost of the Names stage (sum of all symbol name costs).
+    pub(super) names_cost: Cost,
+    /// Pre-aggregated cost of the Signatures stage (sum of all symbol
+    /// signature-beyond-name costs).
+    pub(super) signatures_cost: Cost,
+    /// Pre-aggregated net cost per doc layer. `doc_layer_costs[n-1]` is the
+    /// incremental cost of showing doc layer n (content + truncation marker
+    /// delta). Computed during group construction with budget-aware truncation.
+    pub(super) doc_layer_costs: Vec<Cost>,
+    /// Pre-aggregated net cost per body layer (same structure as doc).
+    pub(super) body_layer_costs: Vec<Cost>,
 }
 
 /// Groups with their build-time budget. The budget determines how many doc/body
@@ -256,11 +240,28 @@ pub struct BuiltGroups {
 
 impl Group {
     /// Max line count for a Doc/Body stage. Returns 1 for Names/Signatures/FilePath.
+    /// For Doc/Body, this is the number of pre-aggregated layer costs computed
+    /// during group construction (capped by budget-aware truncation).
     pub(super) fn max_n(&self, stage: StageKind) -> usize {
         match stage {
             StageKind::FilePath | StageKind::Names | StageKind::Signatures => 1,
-            StageKind::Doc => self.max_doc_n,
-            StageKind::Body => self.max_body_n,
+            StageKind::Doc => self.doc_layer_costs.len(),
+            StageKind::Body => self.body_layer_costs.len(),
+        }
+    }
+
+    /// Pre-aggregated cost of a stage at level n. O(1) lookup into costs
+    /// computed during group construction — the solver never iterates
+    /// per-symbol cost arrays.
+    pub(super) fn stage_cost(&self, stage: StageKind, n: usize) -> Cost {
+        match stage {
+            // FilePath has zero own_cost — its cost is handled via file_path_costs
+            // on the QueueItem, which correctly accounts for cross-group sharing.
+            StageKind::FilePath => Cost::default(),
+            StageKind::Names => self.names_cost,
+            StageKind::Signatures => self.signatures_cost,
+            StageKind::Doc => self.doc_layer_costs.get(n - 1).copied().unwrap_or_default(),
+            StageKind::Body => self.body_layer_costs.get(n - 1).copied().unwrap_or_default(),
         }
     }
 }

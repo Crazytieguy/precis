@@ -2,7 +2,7 @@ use crate::layout;
 use crate::parse;
 use crate::render;
 
-use super::{Cost, Group, StageKind, SymbolCosts};
+use super::{Cost, Group, StageKind, SymbolRef};
 
 // ---------------------------------------------------------------------------
 // Source-line mapping
@@ -46,14 +46,14 @@ fn truncation_marker_cost(source_line: &str) -> Cost {
     Cost::of(&text)
 }
 
-/// Compute name + signature token costs for a symbol. Doc/body vectors are
-/// left empty (filled per-group by `fill_doc_body_costs`).
+/// Compute name + signature token costs for a symbol. Returns a `SymbolRef`
+/// plus the name and signature costs as separate `Cost` values.
 pub(super) fn compute_name_sig_costs(
     file_idx: usize,
     symbol_idx: usize,
     sym: &parse::Symbol,
     lines: &[&str],
-) -> SymbolCosts {
+) -> (SymbolRef, Cost, Cost) {
     let layout = &sym.layout;
     let sym_line_0 = layout.sym_line_0;
     let is_section = sym.kind.is_section_like();
@@ -68,21 +68,11 @@ pub(super) fn compute_name_sig_costs(
         } else {
             render::fmt_line(sym_line_0, &line[..prefix_len])
         };
-        let pre_doc_count = layout.doc_end.saturating_sub(layout.doc_start);
-        return SymbolCosts {
-            file_idx,
-            symbol_idx,
-            name: Cost::of(&name_text),
-            signature: Cost::default(),
-            doc_lines: Vec::new(),
-            doc_markers: Vec::new(),
-            pre_doc_count,
-            body_lines: Vec::new(),
-            body_markers: Vec::new(),
-            // Suppress separate truncation markers — composite " …" is inline
-            // and already accounted for in name cost.
-            body_has_nested: true,
-        };
+        return (
+            SymbolRef { file_idx, symbol_idx },
+            Cost::of(&name_text),
+            Cost::default(),
+        );
     }
 
     let sig_end = layout.sig_end;
@@ -109,42 +99,31 @@ pub(super) fn compute_name_sig_costs(
     }
     let signature = sig_formatted - name;
 
-    let pre_doc_count = layout.doc_end.saturating_sub(layout.doc_start);
-
-    SymbolCosts {
-        file_idx,
-        symbol_idx,
-        name,
-        signature,
-        doc_lines: Vec::new(),
-        doc_markers: Vec::new(),
-        pre_doc_count,
-        body_lines: Vec::new(),
-        body_markers: Vec::new(),
-        body_has_nested: layout.has_children,
-    }
+    (SymbolRef { file_idx, symbol_idx }, name, signature)
 }
 
 // ---------------------------------------------------------------------------
-// Phase 2: doc/body line costs (budget-aware)
+// Phase 2: aggregate layer costs (budget-aware)
 // ---------------------------------------------------------------------------
 
-/// Compute doc/body line token costs per group with budget-aware truncation.
-/// Layers whose cumulative cost exceeds the budget are skipped (their vector
-/// entries remain 0). `max_doc_n`/`max_body_n` are capped to the last computed
-/// layer.
-pub(super) fn fill_doc_body_costs(
+/// Compute pre-aggregated doc/body layer costs for a group.
+///
+/// For each layer n, computes the net incremental cost of showing that layer
+/// across all symbols in the group, including truncation marker deltas. The
+/// result is stored directly in `group.doc_layer_costs` and
+/// `group.body_layer_costs`. Layers whose cumulative cost exceeds `budget`
+/// are skipped (budget-aware truncation).
+pub(super) fn fill_layer_costs(
     group: &mut Group,
     all_lines: &[Vec<&str>],
     all_symbols: &[Vec<parse::Symbol>],
     budget: usize,
 ) {
-    // Pre-allocate vectors to true lengths (0-filled). True `.len()` is needed
-    // for truncation marker detection in `line_stage_cost`.
+    // Determine true max doc/body line counts across symbols.
     let mut true_max_doc = 0usize;
     let mut true_max_body = 0usize;
-    for sc in &mut group.symbols {
-        let sym = &all_symbols[sc.file_idx][sc.symbol_idx];
+    for sref in &group.symbols {
+        let sym = &all_symbols[sref.file_idx][sref.symbol_idx];
 
         // Composite symbols: body lines = additional symbols on the shared line.
         let (doc_count, body_count) = if !sym.composed_prefix_lens.is_empty() {
@@ -156,23 +135,13 @@ pub(super) fn fill_doc_body_costs(
             (doc, layout.body_end.saturating_sub(layout.body_start))
         };
 
-        sc.doc_lines = vec![Cost::default(); doc_count];
-        sc.doc_markers = vec![Cost::default(); doc_count];
-        sc.body_lines = vec![Cost::default(); body_count];
-        sc.body_markers = vec![Cost::default(); body_count];
         true_max_doc = true_max_doc.max(doc_count);
         true_max_body = true_max_body.max(body_count);
     }
 
-    // Base cost: names + signatures (already computed in phase 1).
-    let base_cost: usize = group
-        .symbols
-        .iter()
-        .map(|s| s.name.tokens + s.signature.tokens)
-        .sum();
+    // Base cost: names + signatures (already pre-aggregated in phase 1).
+    let base_cost: usize = group.names_cost.tokens + group.signatures_cost.tokens;
     let mut cumulative = base_cost;
-    let mut computed_doc_n = 0usize;
-    let mut computed_body_n = 0usize;
 
     let stages = group.key.kind_category.stage_sequence();
     for &stage_kind in stages {
@@ -192,7 +161,7 @@ pub(super) fn fill_doc_body_costs(
         };
 
         let is_doc = stage_kind == StageKind::Doc;
-        let mut prev_markers = 0usize;
+        let mut prev_markers = Cost::default();
 
         // Byte-count threshold for skipping BPE: bytes/8 underestimates
         // tokens by ~2-4x (real ratio is ~3-4 bytes/token for o200k_base on
@@ -202,13 +171,13 @@ pub(super) fn fill_doc_body_costs(
 
         for n in 1..=true_max {
             let remaining = budget.saturating_sub(cumulative);
-            let mut layer_token_cost = 0usize;
-            let mut markers_at_n = 0usize;
+            let mut layer_content = Cost::default();
+            let mut markers_at_n = Cost::default();
             let mut layer_bytes = 0usize;
             let mut byte_estimate_exceeded = false;
 
-            for sc in group.symbols.iter_mut() {
-                let sym = &all_symbols[sc.file_idx][sc.symbol_idx];
+            for sref in &group.symbols {
+                let sym = &all_symbols[sref.file_idx][sref.symbol_idx];
 
                 // Composite symbols: no doc, body lines extend the prefix to
                 // include one more original symbol on the shared source line.
@@ -219,7 +188,7 @@ pub(super) fn fill_doc_body_costs(
                     if n > body_count {
                         continue;
                     }
-                    let file_lines = &all_lines[sc.file_idx];
+                    let file_lines = &all_lines[sref.file_idx];
                     let line = file_lines.get(sym.line - 1).copied().unwrap_or("");
 
                     // Boundary-window correction for accurate incremental cost.
@@ -241,21 +210,23 @@ pub(super) fn fill_doc_body_costs(
 
                     let lt = slice_tokens.saturating_sub(correction);
 
-                    sc.body_lines[n - 1] = Cost::new(lt, curr_end - prev_end);
-                    // body_markers stays default: the inline " …" is already
-                    // counted in name cost, and body_has_nested=true suppresses
-                    // marker handling in line_stage_cost.
-
-                    layer_token_cost += lt;
+                    layer_content += Cost::new(lt, curr_end - prev_end);
+                    // body_has_nested is effectively true for composites,
+                    // so no truncation marker is added.
                     continue;
                 }
+
+                // Derive per-symbol metadata from layout (not stored in Group).
+                let layout = &sym.layout;
+                let pre_doc_count = layout.doc_end.saturating_sub(layout.doc_start);
+                let body_has_nested = layout.has_children;
 
                 let (src_line_idx, true_len) = match layer_source_line(sym, is_doc, n) {
                     Some(result) => result,
                     None => continue,
                 };
 
-                let file_lines = &all_lines[sc.file_idx];
+                let file_lines = &all_lines[sref.file_idx];
                 let line = file_lines.get(src_line_idx).copied().unwrap_or("");
 
                 // fmt_line overhead: 6-char line number + 3-byte → + newline
@@ -269,26 +240,18 @@ pub(super) fn fill_doc_body_costs(
                 let line_cost = Cost::of(&fmt);
                 let marker_cost = truncation_marker_cost(line);
 
-                if is_doc {
-                    sc.doc_lines[n - 1] = line_cost;
-                    sc.doc_markers[n - 1] = marker_cost;
-                } else {
-                    sc.body_lines[n - 1] = line_cost;
-                    sc.body_markers[n - 1] = marker_cost;
-                }
-
-                layer_token_cost += line_cost.tokens;
+                layer_content += line_cost;
 
                 // Truncation marker: shown when there are more lines beyond n.
                 let show_marker = if is_doc {
                     // Suppress marker at the pre-comment/docstring split point.
-                    !(true_len > sc.pre_doc_count && n == sc.pre_doc_count)
+                    !(true_len > pre_doc_count && n == pre_doc_count)
                 } else {
                     // Suppress marker for symbols with nested children.
-                    !sc.body_has_nested
+                    !body_has_nested
                 };
                 if true_len > n && show_marker {
-                    markers_at_n += marker_cost.tokens;
+                    markers_at_n += marker_cost;
                 }
             }
 
@@ -296,25 +259,20 @@ pub(super) fn fill_doc_body_costs(
                 break;
             }
 
-            let incremental = (layer_token_cost + markers_at_n).saturating_sub(prev_markers);
-            cumulative += incremental;
+            let net_cost = (layer_content + markers_at_n) - prev_markers;
             prev_markers = markers_at_n;
 
             if is_doc {
-                computed_doc_n = n;
+                group.doc_layer_costs.push(net_cost);
             } else {
-                computed_body_n = n;
+                group.body_layer_costs.push(net_cost);
             }
 
+            cumulative += net_cost.tokens;
             if cumulative > budget {
                 break;
             }
         }
     }
 
-    // Cap max_doc_n/max_body_n to the last computed layer. The scheduler uses
-    // these to bound iteration; true vector lengths are preserved for marker
-    // detection in line_stage_cost.
-    group.max_doc_n = computed_doc_n;
-    group.max_body_n = computed_body_n;
 }

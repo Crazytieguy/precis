@@ -7,7 +7,6 @@ use super::plan::{directory_marker_text, top_level_dir};
 use super::value::compute_value;
 use super::{
     BuiltGroups, Cost, Group, IncludedStage, SolverResult, StageKind,
-    SymbolCosts,
 };
 
 // ---------------------------------------------------------------------------
@@ -109,80 +108,6 @@ fn file_path_costs(relative_path: &Path) -> Cost {
     Cost::of(&text)
 }
 
-/// Compute the token cost of a single stage for a group.
-///
-/// For Doc and Body stages, includes the cost delta of standalone truncation
-/// markers (`→…`, 1 token each). At Doc/Body(n), symbols with more than n lines
-/// get a truncation marker. Advancing from n-1 to n removes markers for symbols
-/// that had exactly n-1 remaining lines, so the delta is:
-///   markers_at(n) - markers_at(n-1)
-/// which is non-positive for n >= 2. The telescoping sum across prerequisites
-/// ensures the total cost correctly reflects markers at the final included level.
-fn stage_cost(group: &Group, stage: StageKind, n: usize) -> Cost {
-    match stage {
-        // FilePath has zero own_cost — its cost is handled via file_path_costs
-        // on the QueueItem, which correctly accounts for cross-group sharing.
-        StageKind::FilePath => Cost::default(),
-        StageKind::Names => group.symbols.iter().map(|s| s.name).sum(),
-        StageKind::Signatures => group.symbols.iter().map(|s| s.signature).sum(),
-        StageKind::Doc => {
-            // Suppress truncation marker at the pre-comment/docstring split
-            // point. The renderer emits these as two sections separated by
-            // the signature; at n == pre_doc_count the pre-comments are fully
-            // shown (no marker) and the docstring hasn't started (no marker).
-            line_stage_cost(group, n, |s| &s.doc_lines, |s| &s.doc_markers, |s, n| {
-                let total = s.doc_lines.len();
-                !(total > s.pre_doc_count && n == s.pre_doc_count)
-            })
-        }
-        // Body truncation markers are suppressed for symbols with nested
-        // children (e.g., class bodies containing individually-rendered
-        // methods). Only count markers for symbols without nested children.
-        StageKind::Body => {
-            line_stage_cost(group, n, |s| &s.body_lines, |s| &s.body_markers, |s, _n| !s.body_has_nested)
-        }
-    }
-}
-
-/// Shared cost computation for line-based stages (Doc/Body).
-///
-/// `get_lines` selects which line-cost vector to read from each symbol.
-/// `get_markers` selects the parallel marker-cost vector.
-/// `show_marker` determines whether a symbol shows a truncation marker at
-/// a given line index `n`. For Body, this suppresses markers for symbols
-/// with nested children. For Doc, this suppresses the marker at the
-/// pre-comment/docstring boundary (see `pre_doc_count`).
-fn line_stage_cost(
-    group: &Group,
-    n: usize,
-    get_lines: fn(&SymbolCosts) -> &[Cost],
-    get_markers: fn(&SymbolCosts) -> &[Cost],
-    show_marker: fn(&SymbolCosts, usize) -> bool,
-) -> Cost {
-    let line_cost: Cost = group
-        .symbols
-        .iter()
-        .filter_map(|s| get_lines(s).get(n - 1).copied())
-        .sum();
-    let markers_at_n: Cost = group
-        .symbols
-        .iter()
-        .filter(|s| get_lines(s).len() > n && show_marker(s, n))
-        .filter_map(|s| get_markers(s).get(n - 1).copied())
-        .sum();
-    let markers_at_prev: Cost = if n >= 2 {
-        group
-            .symbols
-            .iter()
-            .filter(|s| get_lines(s).len() > (n - 1) && show_marker(s, n - 1))
-            .filter_map(|s| get_markers(s).get(n - 2).copied())
-            .sum()
-    } else {
-        Cost::default()
-    };
-    (line_cost + markers_at_n) - markers_at_prev
-}
-
 /// Compute prerequisite costs for an item, accounting for already-included stages.
 /// Pass `None` for `included` at initial queue construction (no stages included yet).
 fn compute_prereq_costs(
@@ -213,7 +138,7 @@ fn compute_prereq_costs(
             };
             for earlier_n in (already_included_n + 1)..n {
                 prereq_value += compute_value(group, sk, earlier_n);
-                prereq_cost += stage_cost(group, sk, earlier_n);
+                prereq_cost += group.stage_cost(sk, earlier_n);
             }
             break;
         }
@@ -232,7 +157,7 @@ fn compute_prereq_costs(
 
         for line_n in start_n..=group.max_n(sk) {
             prereq_value += compute_value(group, sk, line_n);
-            prereq_cost += stage_cost(group, sk, line_n);
+            prereq_cost += group.stage_cost(sk, line_n);
         }
     }
 
@@ -281,7 +206,7 @@ fn enqueue_group_items(
                 }
 
                 let own_value = compute_value(group, stage_kind, n);
-                let own_cost = stage_cost(group, stage_kind, n);
+                let own_cost = group.stage_cost(stage_kind, n);
                 let (prereq_value, prereq_cost) = compute_prereq_costs(
                     group,
                     stages,

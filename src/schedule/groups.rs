@@ -12,7 +12,7 @@ use super::classify::{
 use super::cost;
 use super::value;
 use super::{
-    BuiltGroups, Group, GroupKey, KindCategory, SymbolCosts,
+    BuiltGroups, Cost, Group, GroupKey, KindCategory, SymbolRef,
 };
 
 /// Build groups from extracted symbols, computing per-symbol costs.
@@ -37,7 +37,7 @@ pub fn build_groups(
         .collect();
 
     // Phase 1 (parallel): compute GroupKey + name/signature costs per file.
-    let file_results: Vec<Vec<(GroupKey, SymbolCosts)>> = (0..files.len())
+    let file_results: Vec<Vec<(GroupKey, SymbolRef, Cost, Cost)>> = (0..files.len())
         .into_par_iter()
         .map(|file_idx| {
             let source = match sources[file_idx].as_ref() {
@@ -119,22 +119,22 @@ pub fn build_groups(
                     is_reexport: sym.is_reexport,
                 };
 
-                let costs = cost::compute_name_sig_costs(
+                let (sref, name_cost, sig_cost) = cost::compute_name_sig_costs(
                     file_idx,
                     symbol_idx,
                     sym,
                     lines,
                 );
 
-                (key, costs)
+                (key, sref, name_cost, sig_cost)
             }).collect()
         })
         .collect();
 
-    // Sequential reduce: merge into group map.
+    // Sequential reduce: merge into group map, accumulating name/sig costs.
     let mut group_map: HashMap<GroupKey, Group> = HashMap::new();
     for file_result in file_results {
-        for (key, costs) in file_result {
+        for (key, sref, name_cost, sig_cost) in file_result {
             let group = group_map.entry(key.clone()).or_insert_with(|| {
                 let base_importance = value::compute_base_importance(&key);
                 Group {
@@ -142,21 +142,25 @@ pub fn build_groups(
                     symbols: Vec::new(),
                     file_indices: HashSet::new(),
                     base_importance,
-                    max_doc_n: 0,
-                    max_body_n: 0,
+                    names_cost: Cost::default(),
+                    signatures_cost: Cost::default(),
+                    doc_layer_costs: Vec::new(),
+                    body_layer_costs: Vec::new(),
                 }
             });
-            group.file_indices.insert(costs.file_idx);
-            group.symbols.push(costs);
+            group.file_indices.insert(sref.file_idx);
+            group.names_cost += name_cost;
+            group.signatures_cost += sig_cost;
+            group.symbols.push(sref);
         }
     }
 
     let mut groups: Vec<Group> = group_map.into_values().collect();
     groups.sort_by(|a, b| a.key.cmp(&b.key));
 
-    // Phase 2 (parallel): compute doc/body line costs per group with budget-aware truncation.
+    // Phase 2 (parallel): compute doc/body layer costs per group with budget-aware truncation.
     groups.par_iter_mut().for_each(|group| {
-        cost::fill_doc_body_costs(group, &all_lines, all_symbols, budget);
+        cost::fill_layer_costs(group, &all_lines, all_symbols, budget);
     });
 
     BuiltGroups { groups, budget }
