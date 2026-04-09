@@ -6,7 +6,7 @@
 use std::path::Path;
 use std::time::Instant;
 
-use precis::{format, layout, parse, schedule, walk};
+use precis::{format, layout, parse, render, schedule, walk};
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
@@ -71,7 +71,7 @@ fn main() {
 
     // 8. Count tokens
     let t = Instant::now();
-    let tokens = format::count_tokens(&output);
+    let tokens = render::count_tokens(&output);
     stages.push(("tokens", t.elapsed()));
 
     // Summary

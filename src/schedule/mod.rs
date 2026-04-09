@@ -6,8 +6,8 @@ mod value;
 use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;
 
-use crate::format;
 use crate::parse;
+use crate::render;
 
 pub use classify::{FileCategory, FileRole};
 pub use groups::build_groups;
@@ -149,7 +149,7 @@ impl Cost {
 
     /// Compute token and character cost of a rendered text string.
     pub(super) fn of(text: &str) -> Self {
-        Self { tokens: format::count_tokens(text), chars: text.len() }
+        Self { tokens: render::count_tokens(text), chars: text.len() }
     }
 }
 
@@ -277,5 +277,36 @@ impl IncludedStage {
             return false;
         };
         this_pos < inc_pos || (this_pos == inc_pos && n <= self.n_lines)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// Validate that Import is the only KindCategory without Body in its
+    /// stage sequence. parse::merge_shared_line_symbols relies on this
+    /// invariant via an inline `sym.kind != SymbolKind::Import` check.
+    #[test]
+    fn import_is_only_kind_without_body() {
+        let all_kinds = [
+            KindCategory::Function,
+            KindCategory::Type,
+            KindCategory::Enum,
+            KindCategory::Constant,
+            KindCategory::Module,
+            KindCategory::Section,
+            KindCategory::Macro,
+            KindCategory::Impl,
+            KindCategory::Import,
+        ];
+        for &kind in &all_kinds {
+            let has_body = kind.stage_sequence().contains(&StageKind::Body);
+            if kind == KindCategory::Import {
+                assert!(!has_body, "Import should NOT have Body stage");
+            } else {
+                assert!(has_body, "{kind:?} should have Body stage");
+            }
+        }
     }
 }

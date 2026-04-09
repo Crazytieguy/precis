@@ -1,6 +1,7 @@
 pub mod format;
 pub mod layout;
 pub mod parse;
+pub mod render;
 pub mod schedule;
 pub mod walk;
 
@@ -50,4 +51,9 @@ impl Lang {
             .and_then(|e| e.to_str())
             .and_then(|ext| Lang::from_extension(&ext.to_ascii_lowercase()))
     }
+}
+
+/// Check if a file extension indicates a C/C++ header file.
+pub fn is_header_extension(ext: &str) -> bool {
+    matches!(ext, "h" | "hpp" | "hxx" | "hh")
 }

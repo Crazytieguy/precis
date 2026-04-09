@@ -1031,7 +1031,7 @@ fn is_c_static(node: tree_sitter::Node, source: &str) -> bool {
 /// where the name contains the uppercased filename stem).
 fn is_c_header_guard(node: tree_sitter::Node, source: &str, path: &Path) -> bool {
     let ext = path.extension().and_then(|e| e.to_str()).unwrap_or("");
-    if !crate::walk::is_header_extension(ext) {
+    if !crate::is_header_extension(ext) {
         return false;
     }
     // Must have no value (just `#define NAME`, not `#define NAME value`)
@@ -1368,18 +1368,16 @@ fn is_rust_test_code(node: tree_sitter::Node, source: &str) -> bool {
 /// lines" — the output is always a valid prefix of the source line, extended
 /// one symbol at a time as budget allows.
 ///
-/// Only merges symbols whose `KindCategory` has `Body` in its stage sequence
-/// (Import and Module don't, so their shared-line cases are left as-is).
+/// Only merges symbols whose rendering progression includes a Body stage.
+/// Import is the only kind without Body — its stage sequence is
+/// `[FilePath, Names, Signatures]`.
 fn merge_shared_line_symbols(symbols: &mut Vec<Symbol>, source: &str) {
     use std::collections::HashMap;
-    use crate::schedule::KindCategory;
 
     // Group symbol indices by (line, kind) — only kinds with Body stage
     let mut groups: HashMap<(usize, SymbolKind), Vec<usize>> = HashMap::new();
     for (i, sym) in symbols.iter().enumerate() {
-        let kc = KindCategory::from_symbol_kind(sym.kind);
-        let has_body = kc.stage_sequence().contains(&crate::schedule::StageKind::Body);
-        if has_body {
+        if sym.kind != SymbolKind::Import {
             groups.entry((sym.line, sym.kind)).or_default().push(i);
         }
     }

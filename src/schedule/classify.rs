@@ -392,6 +392,84 @@ pub enum FileCategory {
     CiConfig,
 }
 
+/// Classify a file's role relative to core library/app code.
+/// Used by the scheduler to apply different value factors per category.
+pub fn classify_file(path: &Path) -> FileCategory {
+    // Check directory components for category signals (single pass).
+    for component in path.components() {
+        let s = component.as_os_str();
+
+        // Examples and experiments — demonstrate usage, moderately valuable
+        if s == "examples" || s == "example" || s == "experiments" || s == "experiment" {
+            return FileCategory::Example;
+        }
+
+        // Documentation sites, supplementary docs, and changelog fragments.
+        if s == "website" || s == "site" || s == "rfcs" || s == "rfc"
+            || s == "changelog" || s == "changelogs"
+        {
+            return FileCategory::DocsSite;
+        }
+
+        // CI/CD configuration
+        if s == ".github" || s == ".circleci" || s == ".gitlab" {
+            return FileCategory::CiConfig;
+        }
+
+        // Test/build infrastructure — tests, benchmarks, fixtures, mocks, changelogs
+        if s == "__tests__" || s == "tests" || s == "test" || s == "testing"
+            || s == "benches" || s == "benchmark" || s == "benchmarks"
+            || s == "fixtures" || s == "fixture"
+            || s == "mocks" || s == "__mocks__"
+            || s == "stories" || s == "__stories__" || s == ".storybook"
+        {
+            return FileCategory::Test;
+        }
+
+        // Compound directory names with test-related segments
+        // (workspace crates like "foo-test-utils", "bench-helpers")
+        if let Some(name) = s.to_str()
+            && (name.contains('-') || name.contains('_'))
+            && name.split(['-', '_']).any(|seg| {
+                matches!(
+                    seg,
+                    "test" | "tests" | "testing" | "bench" | "benches"
+                    | "benchmark" | "benchmarks" | "mock" | "mocks"
+                    | "fixture" | "fixtures"
+                )
+            })
+        {
+            return FileCategory::Test;
+        }
+    }
+
+    // Check filename conventions for test files
+    if let Some(stem) = path.file_stem().and_then(|s| s.to_str())
+        && (stem.ends_with(".test")
+            || stem.ends_with(".test-d")
+            || stem.ends_with(".spec")
+            || stem.ends_with(".stories")
+            || stem.starts_with("test_")
+            || stem.ends_with("_test")
+            || stem == "conftest")
+    {
+        return FileCategory::Test;
+    }
+
+    FileCategory::Source
+}
+
+/// Check if a file is a TypeScript declaration file (.d.ts, .d.mts, .d.cts).
+/// These contain type signatures that duplicate the API already shown from
+/// .js/.ts source files, so they are deprioritized by the scheduler.
+pub fn is_type_declaration_file(path: &Path) -> bool {
+    let name = match path.file_name().and_then(|n| n.to_str()) {
+        Some(n) => n,
+        None => return false,
+    };
+    name.ends_with(".d.ts") || name.ends_with(".d.mts") || name.ends_with(".d.cts")
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -651,5 +729,78 @@ mod tests {
         assert!(!at_path("src/main.rs"));
         assert!(!at_path("lib/index.js"));
         assert!(!at_path("pkg/server.go"));
+    }
+
+    #[test]
+    fn classify_file_detection() {
+        // Test directories
+        assert_eq!(classify_file(Path::new("__tests__/helper.ts")), FileCategory::Test);
+        assert_eq!(classify_file(Path::new("tests/integration.rs")), FileCategory::Test);
+        assert_eq!(classify_file(Path::new("test/setup.ts")), FileCategory::Test);
+        assert_eq!(classify_file(Path::new("testing/helpers.py")), FileCategory::Test);
+        assert_eq!(classify_file(Path::new("benches/bench.rs")), FileCategory::Test);
+        assert_eq!(classify_file(Path::new("benchmark/run.py")), FileCategory::Test);
+        assert_eq!(classify_file(Path::new("benchmarks/perf.rs")), FileCategory::Test);
+        assert_eq!(classify_file(Path::new("fixtures/setup.py")), FileCategory::Test);
+        assert_eq!(classify_file(Path::new("fixture/helpers.ts")), FileCategory::Test);
+        assert_eq!(classify_file(Path::new("mocks/mock_repo.go")), FileCategory::Test);
+        assert_eq!(classify_file(Path::new("__mocks__/utils.ts")), FileCategory::Test);
+        // Example directories
+        assert_eq!(classify_file(Path::new("examples/basic.rs")), FileCategory::Example);
+        assert_eq!(classify_file(Path::new("example/demo.ts")), FileCategory::Example);
+        assert_eq!(classify_file(Path::new("experiments/train.py")), FileCategory::Example);
+        assert_eq!(classify_file(Path::new("experiment/run.py")), FileCategory::Example);
+        // Documentation site directories
+        assert_eq!(classify_file(Path::new("website/src/App.tsx")), FileCategory::DocsSite);
+        assert_eq!(classify_file(Path::new("site/pages/index.tsx")), FileCategory::DocsSite);
+        // docs/ and doc/ are Source — they often contain valuable API reference
+        assert_eq!(classify_file(Path::new("docs/conf.py")), FileCategory::Source);
+        assert_eq!(classify_file(Path::new("doc/guide.md")), FileCategory::Source);
+        // CI/CD directories
+        assert_eq!(classify_file(Path::new(".github/workflows/ci.yml")), FileCategory::CiConfig);
+        assert_eq!(classify_file(Path::new(".circleci/config.yml")), FileCategory::CiConfig);
+        // Test file naming conventions
+        assert_eq!(classify_file(Path::new("index.test.ts")), FileCategory::Test);
+        assert_eq!(classify_file(Path::new("utils.spec.ts")), FileCategory::Test);
+        assert_eq!(classify_file(Path::new("test_utils.py")), FileCategory::Test);
+        assert_eq!(classify_file(Path::new("conftest.py")), FileCategory::Test);
+        // Compound directory names with test-related segments
+        assert_eq!(classify_file(Path::new("crates/foo-test-utils/src/lib.rs")), FileCategory::Test);
+        // "integration" alone is not a test signal (could be "api-integration" source)
+        assert_eq!(classify_file(Path::new("crates/my-integration-suite/src/setup.rs")), FileCategory::Source);
+        // But "integration-test" IS a test signal
+        assert_eq!(classify_file(Path::new("crates/integration-test-utils/src/lib.rs")), FileCategory::Test);
+        assert_eq!(classify_file(Path::new("crates/my-mock-server/src/lib.rs")), FileCategory::Test);
+        // Changelog directories
+        assert_eq!(classify_file(Path::new("changelog/README.rst")), FileCategory::DocsSite);
+        assert_eq!(classify_file(Path::new("changelogs/1234.md")), FileCategory::DocsSite);
+        // Storybook directories
+        assert_eq!(classify_file(Path::new("stories/Button.stories.tsx")), FileCategory::Test);
+        assert_eq!(classify_file(Path::new(".storybook/config.js")), FileCategory::Test);
+        // contribute/ is NOT deprioritized (too generic a name)
+        assert_eq!(classify_file(Path::new("contribute/demo.py")), FileCategory::Source);
+        // RFC directories
+        assert_eq!(classify_file(Path::new("rfcs/0001-design.md")), FileCategory::DocsSite);
+        // GitLab CI
+        assert_eq!(classify_file(Path::new(".gitlab/ci.yml")), FileCategory::CiConfig);
+        // Normal source files
+        assert_eq!(classify_file(Path::new("src/main.rs")), FileCategory::Source);
+        assert_eq!(classify_file(Path::new("index.ts")), FileCategory::Source);
+        assert_eq!(classify_file(Path::new("lib/utils.py")), FileCategory::Source);
+        assert_eq!(classify_file(Path::new("crates/toasty-core/src/lib.rs")), FileCategory::Source);
+    }
+
+    #[test]
+    fn type_declaration_file_detection() {
+        // TypeScript declaration files
+        assert!(is_type_declaration_file(Path::new("index.d.ts")));
+        assert!(is_type_declaration_file(Path::new("typings/index.d.ts")));
+        assert!(is_type_declaration_file(Path::new("lib/types.d.mts")));
+        assert!(is_type_declaration_file(Path::new("utils.d.cts")));
+        // Normal source files (not declarations)
+        assert!(!is_type_declaration_file(Path::new("index.ts")));
+        assert!(!is_type_declaration_file(Path::new("index.js")));
+        assert!(!is_type_declaration_file(Path::new("test.d.py"))); // wrong extension
+        assert!(!is_type_declaration_file(Path::new("src/main.rs")));
     }
 }

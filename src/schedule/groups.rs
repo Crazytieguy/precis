@@ -3,10 +3,9 @@ use std::path::Path;
 
 use rayon::prelude::*;
 
-use crate::format;
 use crate::layout;
 use crate::parse;
-use crate::walk;
+use crate::render;
 
 use super::classify::{
     detect_heading_depth, is_autogen_api_doc, is_boilerplate_heading, is_config_file,
@@ -58,11 +57,11 @@ pub fn build_groups(
             let is_file_config = relative.file_name()
                 .and_then(|n| n.to_str())
                 .is_some_and(|name| is_config_file(relative, name));
-            let file_category = walk::classify_file(relative);
-            let is_type_declaration = walk::is_type_declaration_file(relative);
+            let file_category = super::classify::classify_file(relative);
+            let is_type_declaration = super::classify::is_type_declaration_file(relative);
             let is_header = relative.extension()
                 .and_then(|e| e.to_str())
-                .is_some_and(|ext| walk::is_header_extension(&ext.to_ascii_lowercase()));
+                .is_some_and(|ext| crate::is_header_extension(&ext.to_ascii_lowercase()));
             let is_generated = is_autogen_api_doc(source, file_role)
                 || is_generated_file(source)
                 || is_generated_filename(relative);
@@ -199,7 +198,7 @@ fn layer_source_line(
 
 /// Token cost of the truncation marker that would appear after a given source line.
 fn truncation_marker_cost(source_line: &str) -> Cost {
-    let text = format::truncation_marker(source_line);
+    let text = render::truncation_marker(source_line);
     Cost::of(&text)
 }
 
@@ -221,9 +220,9 @@ fn compute_name_sig_costs(
         let prefix_len = sym.composed_prefix_lens[0].min(line.len());
         let has_more = sym.composed_prefix_lens.len() > 1;
         let name_text = if has_more {
-            format!("{} …\n", format::fmt_line(sym_line_0, &line[..prefix_len]).trim_end())
+            format!("{} …\n", render::fmt_line(sym_line_0, &line[..prefix_len]).trim_end())
         } else {
-            format::fmt_line(sym_line_0, &line[..prefix_len])
+            render::fmt_line(sym_line_0, &line[..prefix_len])
         };
         let pre_doc_count = layout.doc_end.saturating_sub(layout.doc_start);
         return SymbolCosts {
@@ -246,10 +245,10 @@ fn compute_name_sig_costs(
 
     let name = if is_section {
         let line = layout::strip_heading_badges(lines.get(layout.sym_line_0).copied().unwrap_or(""));
-        let text = format::fmt_line(layout.sym_line_0, line);
+        let text = render::fmt_line(layout.sym_line_0, line);
         Cost::of(&text)
     } else {
-        let name_line = format::format_symbol_name(sym, lines);
+        let name_line = render::format_symbol_name(sym, lines);
         let text = format!("{} …\n", name_line);
         Cost::of(&text)
     };
@@ -261,7 +260,7 @@ fn compute_name_sig_costs(
         } else {
             line
         };
-        let text = format::fmt_line(i, line);
+        let text = render::fmt_line(i, line);
         sig_formatted += Cost::of(&text);
     }
     let signature = sig_formatted - name;
@@ -388,15 +387,15 @@ fn fill_doc_body_costs(
                     let prev_end = pl[n - 1].min(line.len());
                     let curr_end = pl[n].min(line.len());
                     let slice = &line[prev_end..curr_end];
-                    let slice_tokens = format::count_tokens(slice);
+                    let slice_tokens = render::count_tokens(slice);
 
                     let left_start = line.floor_char_boundary(prev_end.saturating_sub(BPE_WINDOW));
                     let right_end = line.ceil_char_boundary((prev_end + BPE_WINDOW).min(curr_end));
                     let left = &line[left_start..prev_end];
                     let right = &line[prev_end..right_end];
                     let joint = [left, right].concat();
-                    let correction = (format::count_tokens(left) + format::count_tokens(right))
-                        .saturating_sub(format::count_tokens(&joint));
+                    let correction = (render::count_tokens(left) + render::count_tokens(right))
+                        .saturating_sub(render::count_tokens(&joint));
 
                     let lt = slice_tokens.saturating_sub(correction);
 
@@ -425,7 +424,7 @@ fn fill_doc_body_costs(
                     break;
                 }
 
-                let fmt = format::fmt_line(src_line_idx, line);
+                let fmt = render::fmt_line(src_line_idx, line);
                 let line_cost = Cost::of(&fmt);
                 let marker_cost = truncation_marker_cost(line);
 

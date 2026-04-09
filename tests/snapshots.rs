@@ -1,4 +1,4 @@
-use precis::{format, walk};
+use precis::{format, render, walk};
 use std::path::Path;
 
 /// Helper to get the path to a test fixture.
@@ -700,7 +700,7 @@ fn budget_monotonicity_inline() {
                 Path::new(""),
                 source,
             );
-            let tokens = format::count_tokens(&output);
+            let tokens = render::count_tokens(&output);
             assert!(
                 tokens >= prev_tokens,
                 "Budget monotonicity violation in {}: budget {} ({} tokens) < previous ({} tokens)",
@@ -726,7 +726,7 @@ fn single_file_budget_rust() {
     let mut prev_tokens = 0;
     for budget in [0, 50, 100, 200, 500, 1000, 10000] {
         let output = format::render_file_with_budget(budget, None, &file, &root, &source);
-        let tokens = format::count_tokens(&output);
+        let tokens = render::count_tokens(&output);
         assert!(
             tokens >= prev_tokens,
             "Single file budget {} ({} tokens) < previous ({} tokens)",
@@ -894,7 +894,7 @@ fn render_fixture_with_char_budget(subpath: &str, budget: usize, char_budget: us
 /// Asserts that the output respects the token budget.
 fn render_with_budget(subpath: &str, budget: usize) -> Option<String> {
     let output = render_fixture(subpath, budget)?;
-    let tokens = format::count_tokens(&output);
+    let tokens = render::count_tokens(&output);
     assert!(
         tokens <= budget,
         "{subpath}@{budget}: token count {tokens} exceeds budget",
@@ -908,7 +908,7 @@ fn render_with_budget(subpath: &str, budget: usize) -> Option<String> {
 /// Helper: render a fixture with char budget, prepend metadata, and assert both budgets.
 fn render_with_char_budget(subpath: &str, budget: usize, char_budget: usize) -> Option<String> {
     let output = render_fixture_with_char_budget(subpath, budget, char_budget)?;
-    let tokens = format::count_tokens(&output);
+    let tokens = render::count_tokens(&output);
     let chars = output.len();
     assert!(
         chars <= char_budget,
