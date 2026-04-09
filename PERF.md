@@ -94,3 +94,18 @@ Changes:
 | vscode | 27.1s | 4.2s (15%) | 20.7s (76%) | 1.7s (6%) | <3% |
 
 Overall speedup: 1.7-3.9x. Parse speedup: 3-8x. Groups speedup: 1.5-5.3x. vscode groups remain the bottleneck — likely dominated by a few large groups with many doc/body lines to tokenize.
+
+## Composite symbols (2026-04-08)
+
+Root cause: `extensions/git/resources/emojis.json` is a single 40KB line with 1,837 JSON key-value pairs. All symbols share `sym_line_0 = 0`, so `compute_name_sig_costs` calls `count_tokens(fmt_line(0, full_40KB_line))` 3,674 times on the identical 40KB string. Each BPE call takes ~5ms → 18.2s total (79.5% of Phase 1).
+
+Fix: detect symbols sharing a source line and merge them into a composite symbol. The original symbols become progressive "body lines" — the output is always a valid prefix of the source line, extended one symbol at a time as budget allows. Tokenization uses O(M) boundary-window correction for exact incremental costs.
+
+| Repo | Total | parse | groups | schedule | other |
+|------|------:|------:|-------:|---------:|------:|
+| django | 8.7s | 0.5s (5%) | 2.2s (26%) | 5.0s (57%) | <12% |
+| deno | 4.0s | 2.0s (50%) | 1.3s (32%) | 0.5s (12%) | <6% |
+| cpython | 4.8s | 3.0s (62%) | 1.3s (28%) | 0.3s (6%) | <4% |
+| vscode | 10.3s | 5.0s (49%) | 3.0s (29%) | 1.9s (18%) | <4% |
+
+vscode groups speedup: 6.8x. Overall vscode speedup: 2.6x.

@@ -223,6 +223,27 @@ fn render_symbol(
         return;
     }
 
+    // Composite symbols: render as a single line prefix, progressively extended.
+    if !sym.composed_prefix_lens.is_empty() {
+        if sym_line_0 < *emitted_up_to {
+            return;
+        }
+        let line = lines.get(sym_line_0).copied().unwrap_or("");
+        let pl = &sym.composed_prefix_lens;
+        // Names shows prefix[0], body line n extends to prefix[n]
+        let depth = body_n.saturating_add(1).min(pl.len());
+        let prefix_len = pl[depth - 1].min(line.len());
+        let is_complete = depth >= pl.len();
+        out.push_str(&fmt_line(sym_line_0, &line[..prefix_len]));
+        if !is_complete {
+            // Replace trailing newline with inline truncation marker
+            out.pop(); // remove '\n' from fmt_line
+            out.push_str(" …\n");
+        }
+        *emitted_up_to = sym_line_0 + 1;
+        return;
+    }
+
     // Names only
     if !show_sigs && doc_n == 0 && body_n == 0 {
         if sym_line_0 >= *emitted_up_to {

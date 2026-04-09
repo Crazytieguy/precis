@@ -726,6 +726,9 @@ mod tests {
             doc_start_line: None,
             is_trait_impl: false,
             is_reexport: false,
+            start_byte: 0,
+            end_byte: 0,
+            composed_prefix_lens: Vec::new(),
         };
         assert_eq!(signature_end_line(&lines, &sym, Some(Lang::JsTs)), 0);
     }

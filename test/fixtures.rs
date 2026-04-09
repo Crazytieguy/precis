@@ -116,6 +116,13 @@ with_entries! {
     (peepdb,                  "peepdb",                          4000),
     (peepdb_db,               "peepdb/peepdb/db",               2000),
     (swarm,                   "swarm",                           4000),
+
+    // ── Composite symbols (single-line JSON) ──────────────────────────────
+    // vscode's emojis.json: 1,837 key-value pairs on a single 40KB line.
+    // Progressive disclosure at two budgets shows the composite rendering.
+    // Requires perf fixtures: `cargo run --bin clone_fixtures -- --perf`
+    (vscode_emojis_small,     "../perf-fixtures/vscode/extensions/git/resources", 100),
+    (vscode_emojis_medium,    "../perf-fixtures/vscode/extensions/git/resources", 200),
     (htmy,                    "htmy",                            4000),
     (htmy_renderer,           "htmy/htmy/renderer",             2000),
     (microbootstrap,          "microbootstrap",                 4000),

@@ -55,6 +55,16 @@ pub struct Symbol {
     /// first segment matches a `mod` declaration in the same file. These are
     /// redundant when the submodule's own symbols are already in the output.
     pub is_reexport: bool,
+    /// Byte offset of the symbol's start in the source string.
+    pub start_byte: usize,
+    /// Byte offset of the symbol's end (exclusive) in the source string.
+    pub end_byte: usize,
+    /// For composite symbols (multiple symbols sharing a source line): the
+    /// prefix length from the line start to each original symbol's end_byte,
+    /// in source order. Slicing `lines[sym_line_0][..prefix_lens[n]]` gives a
+    /// valid prefix of the source line including the first n+1 original symbols.
+    /// Empty for non-composite symbols.
+    pub composed_prefix_lens: Vec<usize>,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -239,6 +249,9 @@ pub(crate) fn plain_text_symbol(source: &str) -> Vec<Symbol> {
         doc_start_line: None,
         is_trait_impl: false,
         is_reexport: false,
+        start_byte: 0,
+        end_byte: 0,
+        composed_prefix_lens: Vec::new(),
     }]
 }
 
@@ -732,6 +745,9 @@ pub fn extract_symbols_with_config(
             doc_start_line: compute_doc_start_line(symbol_node, source, lang),
             is_trait_impl,
             is_reexport: false,
+            start_byte: symbol_node.start_byte(),
+            end_byte: symbol_node.end_byte(),
+            composed_prefix_lens: Vec::new(),
         });
     }
 
@@ -740,13 +756,14 @@ pub fn extract_symbols_with_config(
         mark_reexports(&mut symbols);
     }
 
-    let symbols = dedup_overloads(symbols, lang);
+    let mut symbols = dedup_overloads(symbols, lang);
     // If tree-sitter found no symbols (e.g., a markdown file with no headings,
     // or a code file with only comments), fall back to plain text so the file
     // isn't completely invisible.
     if symbols.is_empty() {
         return plain_text_symbol(source);
     }
+    merge_shared_line_symbols(&mut symbols, source);
     symbols
 }
 
@@ -1341,6 +1358,106 @@ fn is_rust_test_code(node: tree_sitter::Node, source: &str) -> bool {
         current = parent.parent();
     }
     false
+}
+
+/// Merge symbols that share a source line into composite symbols.
+///
+/// When multiple symbols of the same kind occupy the same line (e.g., 1,837
+/// JSON key-value pairs on a single line in `emojis.json`), collapse them into
+/// a single composite symbol. The original symbols become progressive "body
+/// lines" — the output is always a valid prefix of the source line, extended
+/// one symbol at a time as budget allows.
+///
+/// Only merges symbols whose `KindCategory` has `Body` in its stage sequence
+/// (Import and Module don't, so their shared-line cases are left as-is).
+fn merge_shared_line_symbols(symbols: &mut Vec<Symbol>, source: &str) {
+    use std::collections::HashMap;
+    use crate::schedule::KindCategory;
+
+    // Group symbol indices by (line, kind) — only kinds with Body stage
+    let mut groups: HashMap<(usize, SymbolKind), Vec<usize>> = HashMap::new();
+    for (i, sym) in symbols.iter().enumerate() {
+        let kc = KindCategory::from_symbol_kind(sym.kind);
+        let has_body = kc.stage_sequence().contains(&crate::schedule::StageKind::Body);
+        if has_body {
+            groups.entry((sym.line, sym.kind)).or_default().push(i);
+        }
+    }
+
+    // Pre-compute line start bytes (dense Vec indexed by 0-based line number)
+    let line_starts: Vec<usize> = {
+        let mut starts = Vec::new();
+        let mut byte_pos = 0;
+        for line_text in source.split('\n') {
+            starts.push(byte_pos);
+            byte_pos += line_text.len() + 1; // +1 for the \n
+        }
+        starts
+    };
+
+    // Find groups with 2+ symbols on the same line
+    let mut to_remove: Vec<usize> = Vec::new();
+    for ((line, _kind), indices) in &groups {
+        if indices.len() < 2 {
+            continue;
+        }
+
+        let line_0 = line - 1;
+        let line_start_byte = line_starts.get(line_0).copied().unwrap_or(0);
+
+        // Sort by start_byte, then filter to non-overlapping symbols only.
+        // Nested symbols (end_byte inside a previous symbol's span) are excluded
+        // to ensure monotonically increasing prefix_lens.
+        let mut sorted_indices = indices.clone();
+        sorted_indices.sort_by_key(|&i| symbols[i].start_byte);
+
+        let mut non_overlapping: Vec<usize> = Vec::new();
+        let mut max_end = 0usize;
+        for &idx in &sorted_indices {
+            let sym = &symbols[idx];
+            if sym.start_byte >= max_end {
+                non_overlapping.push(idx);
+                max_end = sym.end_byte;
+            }
+        }
+
+        if non_overlapping.len() < 2 {
+            continue;
+        }
+
+        // Build composed_prefix_lens as char-boundary-safe prefix lengths.
+        // Use the line text to find the nearest char boundary at or after each end_byte.
+        let line_text_bytes = source.get(line_start_byte..).unwrap_or("");
+        let prefix_lens: Vec<usize> = non_overlapping.iter()
+            .map(|&i| {
+                let raw = symbols[i].end_byte.saturating_sub(line_start_byte);
+                // Ensure we're at a char boundary within the line
+                let clamped = raw.min(line_text_bytes.len());
+                // Find the next char boundary at or after clamped
+                let mut pos = clamped;
+                while pos < line_text_bytes.len() && !line_text_bytes.is_char_boundary(pos) {
+                    pos += 1;
+                }
+                pos
+            })
+            .collect();
+
+        // Transform the first symbol into the composite
+        let first_idx = non_overlapping[0];
+        symbols[first_idx].composed_prefix_lens = prefix_lens;
+
+        // Mark the rest for removal
+        for &idx in &non_overlapping[1..] {
+            to_remove.push(idx);
+        }
+    }
+
+    // Remove merged symbols (in reverse order to preserve indices)
+    to_remove.sort_unstable();
+    to_remove.dedup();
+    for idx in to_remove.into_iter().rev() {
+        symbols.remove(idx);
+    }
 }
 
 #[cfg(test)]

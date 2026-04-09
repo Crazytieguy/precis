@@ -774,8 +774,36 @@ fn compute_name_sig_costs(
     layout: &layout::SymbolLayout,
 ) -> SymbolCosts {
     let sym_line_0 = layout.sym_line_0;
-    let sig_end = layout.sig_end;
     let is_section = sym.kind == parse::SymbolKind::Section;
+
+    // Composite symbols: name cost is the first prefix + " …", no signature.
+    if !sym.composed_prefix_lens.is_empty() {
+        let line = lines.get(sym_line_0).copied().unwrap_or("");
+        let prefix_len = sym.composed_prefix_lens[0].min(line.len());
+        let has_more = sym.composed_prefix_lens.len() > 1;
+        let name_text = if has_more {
+            format!("{} …\n", format::fmt_line(sym_line_0, &line[..prefix_len]).trim_end())
+        } else {
+            format::fmt_line(sym_line_0, &line[..prefix_len])
+        };
+        let pre_doc_count = layout.doc_end.saturating_sub(layout.doc_start);
+        return SymbolCosts {
+            file_idx,
+            symbol_idx,
+            name_tokens: format::count_tokens(&name_text),
+            signature_tokens: 0,
+            doc_line_tokens: Vec::new(),
+            doc_marker_tokens: Vec::new(),
+            pre_doc_count,
+            body_line_tokens: Vec::new(),
+            body_marker_tokens: Vec::new(),
+            // Suppress separate truncation markers — composite " …" is inline
+            // and already accounted for in name_tokens.
+            body_has_nested: true,
+        };
+    }
+
+    let sig_end = layout.sig_end;
 
     let name_tokens = if is_section {
         let line = layout::strip_heading_badges(lines.get(layout.sym_line_0).copied().unwrap_or(""));
@@ -828,16 +856,23 @@ fn fill_doc_body_costs(
     let mut true_max_doc = 0usize;
     let mut true_max_body = 0usize;
     for sc in &mut group.symbols {
-        let layout = &layouts[sc.file_idx][sc.symbol_idx];
         let sym = &all_symbols[sc.file_idx][sc.symbol_idx];
-        let doc_count = layout.doc_end.saturating_sub(layout.doc_start)
-            + layout.ds_end.saturating_sub(layout.ds_start);
-        let (body_start, body_end) = if sym.kind == parse::SymbolKind::Section {
-            (layout.md_content_start, layout.md_section_end)
+
+        // Composite symbols: body lines = additional symbols on the shared line.
+        let (doc_count, body_count) = if !sym.composed_prefix_lens.is_empty() {
+            (0, sym.composed_prefix_lens.len().saturating_sub(1))
         } else {
-            (layout.body_start, layout.body_end)
+            let layout = &layouts[sc.file_idx][sc.symbol_idx];
+            let doc = layout.doc_end.saturating_sub(layout.doc_start)
+                + layout.ds_end.saturating_sub(layout.ds_start);
+            let (body_start, body_end) = if sym.kind == parse::SymbolKind::Section {
+                (layout.md_content_start, layout.md_section_end)
+            } else {
+                (layout.body_start, layout.body_end)
+            };
+            (doc, body_end.saturating_sub(body_start))
         };
-        let body_count = body_end.saturating_sub(body_start);
+
         sc.doc_line_tokens = vec![0; doc_count];
         sc.doc_marker_tokens = vec![0; doc_count];
         sc.body_line_tokens = vec![0; body_count];
@@ -881,6 +916,48 @@ fn fill_doc_body_costs(
             let mut markers_at_n = 0usize;
 
             for sc in group.symbols.iter_mut() {
+                let sym = &all_symbols[sc.file_idx][sc.symbol_idx];
+
+                // Composite symbols: no doc, body lines extend the prefix to
+                // include one more original symbol on the shared source line.
+                if !sym.composed_prefix_lens.is_empty() {
+                    if is_doc { continue; }
+                    let pl = &sym.composed_prefix_lens;
+                    let body_count = pl.len() - 1;
+                    if n - 1 >= body_count {
+                        continue;
+                    }
+                    let file_lines = &all_lines[sc.file_idx];
+                    let line = file_lines.get(sym.line - 1).copied().unwrap_or("");
+
+                    // Boundary-window correction for accurate incremental cost.
+                    // Window covers the longest possible BPE token merge span.
+                    const BPE_WINDOW: usize = 40;
+
+                    let prev_end = pl[n - 1].min(line.len());
+                    let curr_end = pl[n].min(line.len());
+                    let slice = &line[prev_end..curr_end];
+                    let slice_tokens = format::count_tokens(slice);
+
+                    let left_start = line.floor_char_boundary(prev_end.saturating_sub(BPE_WINDOW));
+                    let right_end = line.ceil_char_boundary((prev_end + BPE_WINDOW).min(curr_end));
+                    let left = &line[left_start..prev_end];
+                    let right = &line[prev_end..right_end];
+                    let joint = [left, right].concat();
+                    let correction = (format::count_tokens(left) + format::count_tokens(right))
+                        .saturating_sub(format::count_tokens(&joint));
+
+                    let lt = slice_tokens.saturating_sub(correction);
+
+                    sc.body_line_tokens[n - 1] = lt;
+                    // body_marker_tokens stays 0: the inline " …" is already
+                    // counted in name_tokens, and body_has_nested=true suppresses
+                    // marker handling in line_stage_cost.
+
+                    line_cost += lt;
+                    continue;
+                }
+
                 let layout = &layouts[sc.file_idx][sc.symbol_idx];
 
                 // Map layer index (n-1) to source line index and true line count.
@@ -895,7 +972,6 @@ fn fill_doc_body_costs(
                         continue;
                     }
                 } else {
-                    let sym = &all_symbols[sc.file_idx][sc.symbol_idx];
                     let (start, end) = if sym.kind == parse::SymbolKind::Section {
                         (layout.md_content_start, layout.md_section_end)
                     } else {
