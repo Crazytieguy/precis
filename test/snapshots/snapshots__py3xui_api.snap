@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1994 tokens)
+budget: 2000 (1974 tokens)
 
 README.md
      3→# api.api\_database
@@ -83,7 +83,6 @@ api_base.py
     41→        username (str): The username for the XUI API.
     42→        password (str): The password for the XUI API.
     43→        use_tls_verify (bool): Whether to verify the server TLS certificate.
-    44→        custom_certificate_path (str | None): Path to a custom certificate file.
       →        …
     60→
     61→    def __init__(

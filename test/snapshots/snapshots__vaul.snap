@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4001 tokens)
+budget: 4000 (3954 tokens)
 
 README.md
      1→> **Note**  
@@ -304,8 +304,6 @@ test/src/app/default-open/page.tsx
 test/src/app/different-directions/page.tsx
    118→export default function Page() {
 
-test/src/app/globals.css
-
 test/src/app/initial-snap/page.tsx
      9→export default function Page() {
 
@@ -319,11 +317,6 @@ test/src/app/nested-drawers/page.tsx
 
 test/src/app/non-dismissible/page.tsx
      6→export default function Page() {
-
-test/src/app/open-another-drawer/page.tsx
-     6→export function MyDrawer …
-    96→export function MyDrawer2 …
-   195→export default function Home …
 
 test/src/app/page.tsx
      5→export default function Page() {

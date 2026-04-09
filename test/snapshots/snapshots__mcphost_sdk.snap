@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2000 tokens)
+budget: 2000 (1987 tokens)
 
 README.md
      1→# MCPHost SDK
@@ -99,8 +99,6 @@ examples/basic/main.go
 
 examples/scripting/main.go
     12→func main() {
-    13→	ctx := context.Background()
-      →	…
 
 mcphost.go
     16→// MCPHost provides programmatic access to mcphost functionality, allowing

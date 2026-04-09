@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1997 tokens)
+budget: 2000 (1968 tokens)
 
 README.md
      1→### Enclosed lib
@@ -49,31 +49,15 @@ package.json
      7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
      8→  "license": "Apache-2.0",
      9→  "repository": {
-    10→    "type": "git",
-    11→    "url": "https://github.com/CorentinTh/enclosed"
     13→  "exports": {
-    14→    ".": {
-    15→      "import": "./dist/index.mjs",
-      →      …
     19→  "main": "./dist/index.cjs",
     20→  "types": "./dist/index.d.ts",
     21→  "files": [
-    22→    "dist"
     24→  "engines": {
-    25→    "node": ">=22.0.0"
     27→  "react-native": "./dist/index.web.mjs",
     28→  "scripts": {
-    29→    "prepare": "pnpm run build",
-    30→    "build": "unbuild",
-      →    …
     39→  "dependencies": {
-    40→    "@corentinth/chisels": "catalog:",
-    41→    "@enclosed/crypto": "workspace:*",
-      →    …
     47→  "devDependencies": {
-    48→    "@antfu/eslint-config": "catalog:",
-    49→    "@types/lodash-es": "^4.17.12",
-      →    …
 
 src/api/api.client.ts
      2→import { DEFAULT_API_BASE_URL } from './api.constants';
@@ -97,6 +81,7 @@ src/crypto/crypto.constants.ts
      9→export const COMPRESSION_ALGORITHMS = [COMPRESSION_ALGORITHM_BROTLI, COMPRESSION_ALGORITHM_NONE] as const;
 
 src/crypto/crypto.types.ts
+     1→import type { COMPRESSION_ALGORITHMS, ENCRYPTION_ALGORITHMS, KEY_DERIVATION_ALGORITHMS } from './crypto.constants';
      3→export type EncryptionAlgorithm = typeof ENCRYPTION_ALGORITHMS[number];
      4→export type KeyDerivationAlgorithm = typeof KEY_DERIVATION_ALGORITHMS[number];
      5→export type CompressionAlgorithm = typeof COMPRESSION_ALGORITHMS[number];
@@ -105,6 +90,10 @@ src/crypto/crypto.types.ts
      9→};
 
 src/crypto/crypto.usecases.ts
+     1→import type { NoteAsset } from '../notes/notes.types';
+     2→import type { EncryptionAlgorithm } from './crypto.types';
+     3→import type { SerializationFormat } from './serialization/serialization.types';
+     5→import { getParsingMethod, getSerializationMethod } from './serialization/serialization.registry';
      9→async function encryptNote …
     38→async function decryptNote …
 
@@ -118,6 +107,8 @@ src/crypto/encryption-algorithms/encryption-algorithms.types.ts
      3→export type EncryptionMethodsDefinition = ReturnType<typeof defineEncryptionMethods>;
 
 src/crypto/serialization/cbor-array/cbor-array.serialization.ts
+     1→import type { Note } from '../../../notes/notes.types';
+     3→import { defineSerializationMethods } from '../serialization.models';
      5→export const cborArraySerializationDefinition = defineSerializationMethods({
      6→  name: 'cbor-array',
      7→
@@ -144,10 +135,10 @@ src/crypto/serialization/serialization.types.ts
 
 src/files/files.models.ts
      1→import type { NoteAsset } from '../notes/notes.types';
-     6→async function fileToNoteAsset …
-    20→async function filesToNoteAssets …
-    24→async function noteAssetToFile …
-    34→async function noteAssetsToFiles …
+     6→async function fileToNoteAsset({ file }: { file: File }): Promise<NoteAsset> {
+    20→async function filesToNoteAssets({ files }: { files: File[] }): Promise<NoteAsset[]> {
+    24→async function noteAssetToFile({ noteAsset }: { noteAsset: NoteAsset }): Promise<File> {
+    34→async function noteAssetsToFiles({ noteAssets }: { noteAssets: NoteAsset[] }): Promise<File[]> {
 
 src/index.ts
 
@@ -192,8 +183,4 @@ src/notes/notes.usecases.ts
 
 tsconfig.json
      2→  "compilerOptions": {
-     3→    "target": "ESNext",
-     4→    "module": "ESNext",
-      →    …
      9→  "include": [
-    10→    "src"

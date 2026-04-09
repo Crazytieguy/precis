@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3998 tokens)
+budget: 4000 (3958 tokens)
 
 README.md
     29→## Overview
@@ -41,9 +41,6 @@ dev/clean_trash.sh
      3→# Directories to be removed
      4→dirs=".mypy_cache .pytest_cache htmlcov dist pyx3ui.egg-info"
      5→
-     6→# Files to be removed
-     7→files=".coverage"
-     8→
       →…
 
 dev/create_venv.sh
@@ -51,19 +48,13 @@ dev/create_venv.sh
      3→# Checking if .venv dir already exists.
      4→if [ -d ".venv" ]; then
      5→    echo "VENV dir (.venv) already exists, it will be removed."
-     6→    rm -rf .venv
-     7→fi
-     8→
-      →…
+      →    …
 
 dev/push.sh
      2→
      3→# Check if commit message was supplied
      4→if [ -z "$1" ]
      5→then
-     6→  echo "Error: No commit message provided."
-     7→  exit 1
-     8→fi
       →…
 
 dev/pydoc.sh
@@ -71,9 +62,6 @@ dev/pydoc.sh
      3→# The directory containing the Python files
      4→src_dir="py3xui"
      5→
-     6→echo "Starting pydoc generation for $src_dir"
-     7→
-     8→# Check if source directory exists
       →…
 
 dev/requirements.txt
@@ -81,6 +69,9 @@ dev/requirements.txt
      2→mypy
      3→pytest
      4→pytest-cov
+     5→pytest-asyncio
+     6→pytest-httpx
+     7→python-dotenv
       →…
 
 py3xui/api/api.py
@@ -100,6 +91,7 @@ py3xui/api/api.py
    189→    def login …
 
 py3xui/api/api_base.py
+    14→# pylint: disable=too-few-public-methods
     15→class ApiFields:
     17→
     18→    SUCCESS = "success"
@@ -109,6 +101,7 @@ py3xui/api/api_base.py
     22→    NO_IP_RECORD = "No IP Record"
     23→    GET = "GET"
     24→    POST = "POST"
+    27→# pylint: disable=R0902
     28→class BaseApi:
     60→
     61→    def __init__ …
@@ -364,6 +357,7 @@ py3xui/inbound/stream_settings.py
 py3xui/server/server.py
      6→# pylint: disable=too-few-public-methods
      7→class ServerFields:
+     8→    """Stores fields returned by XUI API for parsing."""
      9→
     10→    CPU = "cpu"
     11→    CPU_CORES = "cpuCores"
@@ -418,4 +412,4 @@ py3xui/utils/env.py
     81→def tls_verify() -> bool | None:
     95→def tls_cert_path() -> str | None:
 
-tests/test_async_api.py
+tests/

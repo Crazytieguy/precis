@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4000 tokens)
+budget: 4000 (3977 tokens)
 
 README.md
      1→# go-multierror
@@ -319,8 +319,6 @@ multierror.go
     62→// etc. The order will match the order of Errors in the multierror.Error
       →…
     71→func (e *Error) Unwrap() error {
-    88→// chain implements the interfaces necessary for errors.Is/As/Unwrap to
-      →…
     99→type chain []error
    101→// Error implements the error interface
    102→func (e chain) Error() string {

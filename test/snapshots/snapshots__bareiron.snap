@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3997 tokens)
+budget: 4000 (3966 tokens)
 
 README.md
      1→# bareiron
@@ -34,7 +34,6 @@ build.sh
     10→# Figure out executable suffix (for MSYS compilation)
     11→case "$OSTYPE" in
     12→  msys*|cygwin*|win32*) exe=".exe" ;;
-    13→  *) exe="" ;;
       →  …
 
 build_registries.js
@@ -56,8 +55,7 @@ extract_registries.sh
     11→}
     12→
     13→check_java() {
-    14→  if ! command -v java >/dev/null 2>&1; then
-      →  …
+      →…
 
 include/crafting.h
      6→void getCraftingOutput …

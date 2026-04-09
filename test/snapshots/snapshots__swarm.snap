@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4012 tokens)
+budget: 4000 (3932 tokens)
 
 README.md
      3→# Swarm (experimental, educational)
@@ -68,10 +68,8 @@ README.md
    357→- Katia Gil Guzman - [katia-openai](https://github.com/katia-openai)
 
 assets/
-      →…
 
 logs/
-      →…
 
 pyproject.toml
      1→[build-system]
@@ -106,21 +104,13 @@ examples/airline/configs/tools.py
     27→def initiate_baggage_search():
 
 examples/airline/data/routines/baggage/policies.py
-     1→# Atlas
-      →…
-     3→STARTER_PROMPT = """You are an intelligent and empathetic customer support representative for Fly Airlines customers .
+     3→STARTER_PROMPT …
     21→LOST_BAGGAGE_POLICY = """
 
 examples/airline/data/routines/flight_modification/policies.py
      2→STARTER_PROMPT = """You are an intelligent and empathetic customer support representative for Fly Airlines customers .
     20→FLIGHT_CANCELLATION_POLICY = f"""
     33→FLIGHT_CHANGE_POLICY = f"""
-
-examples/airline/evals/eval_cases/flight_modification_cases.json
-     1→[
-
-examples/airline/evals/eval_cases/triage_cases.json
-     1→[
 
 examples/airline/evals/eval_utils.py
      8→def run_function_evals(agent, test_cases, n=1, eval_path=None):
@@ -402,5 +392,3 @@ tests/test_core.py
      7→DEFAULT_RESPONSE_CONTENT = "sample response content"
     10→@pytest.fixture
     11→def mock_openai_client():
-
-tests/test_util.py

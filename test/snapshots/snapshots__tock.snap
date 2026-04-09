@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7982 tokens)
+budget: 8000 (7927 tokens)
 
 README.md
      1→# Tock
@@ -155,7 +155,6 @@ README.md
    715→GPL-3.0-or-later
 
 assets/
-      →…
 
 go.mod
      1→module github.com/kriuchkov/tock
@@ -458,10 +457,10 @@ internal/adapters/repositories/file/repository.go
    250→func (r *repository) writeLines …
 
 internal/adapters/repositories/notes/repository.go
-    18→const (
-    19→	fileExtension = ".txt"
-    20→	directoryMode = 0750
-    21→	fileMode      = 0644
+    18→const …
+    19→	fileExtension …
+    20→	directoryMode …
+    21→	fileMode …
     24→type repository struct {
     28→func NewRepository(basePath string) ports.NotesRepository {
     32→type noteData struct {
@@ -486,7 +485,7 @@ internal/adapters/repositories/timewarrior/repository.go
    283→func (r *repository) writeIntervalsToFile …
    306→func toTWInterval …
    320→func fromTWInterval …
-   352→func parseIncLine(line string) (twInterval, error) {
+   352→func parseIncLine …
    393→func tokenize …
 
 internal/config/config.go
@@ -606,7 +605,6 @@ internal/core/models/activity.go
     32→	d := a.Duration().Round(time.Second)
     33→	h := d / time.Hour
     34→	d %= time.Hour
-    35→	m := d / time.Minute
       →	…
     41→func (a Activity) MarshalJSON() ([]byte, error) {
 
@@ -665,7 +663,7 @@ internal/services/ics/generator.go
     18→func WrapCalendar(eventsBody string) string {
     28→// GenerateEvent returns the VEVENT block for a single activity.
     29→func GenerateEvent(act models.Activity, uidKey string) string {
-    71→func escapeProperty(s string) string {
+    71→func escapeProperty …
 
 internal/timeutil/timeutil.go
     10→// TimeFormat represents the configured time display format.
@@ -684,9 +682,6 @@ internal/timeutil/timeutil.go
     56→func (f *Formatter) ParseTime(input string) (time.Time, error) {
    103→func (f *Formatter) ParseTimeWithDate(input string) (time.Time, error) {
    158→func FormatDuration(d time.Duration, format string) string {
-
-internal/timeutil/timeutil_test.go
-   198→func checkDate …
 
 tock.yaml.example
      1→# Tock Configuration File

@@ -81,7 +81,7 @@ fn bench_schedule(c: &mut Criterion) {
         let built = schedule::build_groups(&f.root, &f.files, &f.sources, &f.all_symbols, &layouts, 4000);
         c.bench_function(bench_name, |b| {
             b.iter(|| {
-                schedule::schedule(&built, &f.root, &f.files);
+                schedule::schedule(&built, &f.root, &f.files, None);
             });
         });
     }
@@ -99,7 +99,7 @@ fn bench_render_with_budget(c: &mut Criterion) {
         };
         c.bench_function(bench_name, |b| {
             b.iter(|| {
-                format::render_with_budget(budget, &f.root, &f.files, &f.sources);
+                format::render_with_budget(budget, None, &f.root, &f.files, &f.sources);
             });
         });
     }

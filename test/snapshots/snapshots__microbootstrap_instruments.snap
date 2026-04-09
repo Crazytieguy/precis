@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1998 tokens)
+budget: 2000 (1962 tokens)
 
 base.py
     19→class BaseInstrumentConfig(pydantic.BaseModel):
@@ -62,12 +62,8 @@ logging_instrument.py
     36→def fill_log_message …
     62→def tracer_injection …
     76→STRUCTLOG_PRE_CHAIN_PROCESSORS: typing.Final[list[typing.Any]] = [
-    77→    structlog.stdlib.add_log_level,
-      →    …
     88→def _serialize_log_with_orjson_to_string(value: typing.Any, **kwargs: typing.Any) -> str:  # noqa: ANN401
     92→STRUCTLOG_FORMATTER_PROCESSOR: typing.Final = structlog.processors.JSONRenderer(
-    93→    serializer=_serialize_log_with_orjson_to_string
-      →    …
     97→class MemoryLoggerFactory(structlog.stdlib.LoggerFactory):
     98→    def __init__ …
    113→    def __call__ …

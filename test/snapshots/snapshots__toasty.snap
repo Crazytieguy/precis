@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (8020 tokens)
+budget: 8000 (7866 tokens)
 
 README.md
      1→# Toasty
@@ -25,7 +25,6 @@ Cargo.toml
     37→[workspace.dependencies]
 
 benches/
-      →…
 
 crates/std-util/Cargo.toml
      1→[package]
@@ -99,7 +98,6 @@ crates/toasty/src/db/pool.rs
     74→    pub async fn get …
     84→    pub fn driver …
     89→    pub fn capability …
-    95→struct Manager {
    119→pub struct PoolConnection {
 
 crates/toasty/src/db.rs
@@ -393,9 +391,7 @@ crates/toasty-core/src/schema/app/field/primitive.rs
      5→    /// The field's primitive type
      6→    pub ty: stmt::Type,
      7→
-     8→    /// The database storage type of the field.
-     9→    ///
-      →    …
+      →…
 
 crates/toasty-core/src/schema/app/field.rs
     11→pub struct Field {
@@ -551,7 +547,6 @@ crates/toasty-core/src/stmt/filter.rs
 crates/toasty-core/src/stmt.rs
    235→pub mod visit_mut;
    243→pub mod visit;
-   252→#[derive(Clone, PartialEq)]
    253→pub enum Statement {
    254→    /// Delete one or more existing records
    255→    Delete(Delete),
@@ -577,14 +572,10 @@ crates/toasty-driver-dynamodb/src/lib.rs
     30→pub struct DynamoDb {
     31→    url: String,
     32→}
-    35→    pub fn new(url: String) -> Self {
     96→pub struct Connection {
     97→    /// Handle to the AWS SDK client
     98→    client: Client,
     99→}
-   102→    pub fn new(client: Client) -> Self {
-   106→    pub async fn connect(url: &str) -> Result<Self> {
-   139→    pub async fn from_env() -> Result<Self> {
    345→struct ExprAttrs {
 
 crates/toasty-driver-dynamodb/src/type.rs
@@ -757,7 +748,7 @@ crates/toasty-driver-postgresql/src/statement_cache.rs
     10→    inner: LruCache<Key<'static>, Statement>,
     11→}
     15→    pub fn new …
-    49→struct Key<'a> {
+    49→struct Key …
     56→    pub fn new …
 
 crates/toasty-driver-postgresql/src/type.rs
@@ -929,12 +920,6 @@ docs/CHANGE_GUIDE.md
 docs/CONTEXT.md
      1→# Documentation Context
 
-docs/architecture/query-engine.md
-     1→# Toasty Query Engine
-
-docs/architecture/type-system.md
-     1→# Toasty Type System Architecture
-
 docs/guide/jiff.md
      1→# Date and Time Types with Jiff
 
@@ -950,10 +935,7 @@ docs/roadmap/README.md
    126→## Notes
 
 examples/
-      →…
 
 scripts/
-      →…
 
 tests/
-      →…

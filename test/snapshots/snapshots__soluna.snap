@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4014 tokens)
+budget: 4000 (3910 tokens)
 
 README.md
      7→# Soluna
@@ -10,8 +10,6 @@ README.md
     10→
     11→[Live Examples](https://cloudwu.github.io/soluna/)
     12→
-    13→A framework you can use to make 2D games in Lua with multithreading, living on Windows, Linux, macOS and modern Browsers (via WebAssembly).
-    14→
       →…
     19→## Documentation
     25→## Precompiled Binaries
@@ -46,7 +44,6 @@ bin/readme.txt
      1→The compiled binary go here.
 
 clibs/
-      →…
 
 docs/app.lua
     15→function app.quit() end
@@ -139,8 +136,9 @@ docs/url.lua
 docs/zip.lua
     19→function zip.open(filename, mode) end
 
+make.lua
+
 script/
-      →…
 
 src/appevent.h
      2→#define soluna_app_event_h
@@ -171,7 +169,6 @@ src/data/settingdefault.dl
      9→width : 1024
     10→height : 768
     11→high_dpi : false
-    12→window_title : soluna
       →…
 
 src/font_define.h
@@ -241,14 +238,10 @@ src/lsha1.c
    114→#define	R0(v,w,x,y,z,i)	z+=((w&(x^y))^y)+blk0(i)+0x5A827999+rol(v,5);w=rol(w,30);
 
 src/lualib/coroutine.lua
-    15→	-- true : coroutine
-    16→	-- false : suspend
-    17→	-- nil : exit
     19→	function coroutine.create(f)
     20→		local co = coroutine_create(f)
 
 src/lualib/layout.lua
-    46→-- update attr
     47→function element:update(attr)
     48→	local _yoga = self._document._yoga
 
@@ -385,8 +378,6 @@ src/service/start.lua
     59→function S.external(p)
     60→	local what, arg1, arg2 = message_unpack(p)
 
-src/sprite_submit.h
-
 src/spritemgr.h
      7→#define INVALID_TEXTUREID 0xffff
      9→struct sprite_rect {
@@ -439,7 +430,6 @@ src/yogaone.cpp
      1→#include "yoga/YGConfig.cpp"
 
 test/
-      →…
 
 web/content/_index.md
      1→---

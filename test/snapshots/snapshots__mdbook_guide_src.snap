@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4005 tokens)
+budget: 4000 (3944 tokens)
 
 README.md
      1→# Introduction
@@ -101,8 +101,6 @@ cli/README.md
     12→* [`mdbook test`](test.md) --- Tests Rust code samples.
     13→* [`mdbook clean`](clean.md) --- Deletes the rendered output.
     14→* [`mdbook completions`](completions.md) --- Support for shell auto-completion.
-
-cli/arg-watcher.md
 
 cli/build.md
      1→# The build command
@@ -276,8 +274,6 @@ format/markdown.md
      9→## Text and paragraphs
     25→## Headings
     43→#### A smaller heading 
-    45→More text.
-    46→
     47→## Lists
     69→## Links
    108→## Images
@@ -315,8 +311,6 @@ format/theme/README.md
     11→
     12→Here are the files you can override:
     13→
-    14→- **_index.hbs_** is the handlebars template.
-    15→- **_head.hbs_** is appended to the HTML `<head>` section.
       →…
 
 format/theme/editor.md
@@ -386,4 +380,3 @@ guide/reading.md
     54→## Code blocks
 
 misc/
-      →…

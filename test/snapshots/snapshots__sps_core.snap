@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3998 tokens)
+budget: 4000 (3932 tokens)
 
 Cargo.toml
      1→[package]
@@ -91,8 +91,6 @@ src/build/env.rs
    169→        cellar_path: &Path,
    170→        all_installed_opt_paths: &[PathBuf],
    171→    ) -> Result<Self> {
-   403→    fn is_controlled_homebrew_var …
-   424→    fn set_path_list_var …
    463→    pub fn apply_to_command(&self, command: &mut std::process::Command) {
    476→    pub fn get_path_string(&self) -> Option<&str> {
    482→    pub fn get_vars(&self) -> &HashMap<String, String> {
@@ -407,8 +405,6 @@ src/upgrade/source.rs
     19→pub async fn upgrade_source_formula …
 
 src/utils/applescript.rs
-    10→fn get_bundle_identifier_from_app_path …
-    40→fn is_app_running_by_bundle_id …
     75→pub fn quit_app_gracefully(app_path: &Path) -> Result<()> {
 
 src/utils/mod.rs
@@ -418,8 +414,6 @@ src/utils/mod.rs
      4→pub mod xattr;
 
 src/utils/xattr.rs
-    11→fn get_timestamp_hex …
-    20→fn get_uuid_hex …
     26→pub fn has_quarantine_attribute(path: &Path) -> anyhow::Result<bool> {
     41→pub fn ensure_quarantine_attribute(path: &Path, agent: &str) -> anyhow::Result<()> {
     53→pub fn set_quarantine_attribute(path: &Path, agent_name: &str) -> Result<()> {

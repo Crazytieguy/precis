@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7999 tokens)
+budget: 8000 (7890 tokens)
 
 README.md
     26→## Introduction
@@ -25,9 +25,6 @@ README.md
    184→### Hosting
    188→### Inspiration
    194→## Contact Information
-
-CONTRIBUTING.md
-     1→# Contributing to Enclosed
 
 packages/app-client/.env.example
      1→VITE_BASE_API_URL=http://localhost:8787
@@ -111,7 +108,7 @@ packages/app-client/src/modules/i18n/i18n.provider.tsx
     15→type Locale …
     16→type RawDictionary …
     17→type Dictionary …
-    19→const I18nContext …
+    19→const I18nContext = createContext<{
     26→function useI18n …
     36→async function fetchDictionary …
     44→export const I18nProvider: ParentComponent = (props) => {
@@ -201,7 +198,6 @@ packages/app-client/src/modules/ui/components/tabs.tsx
     35→export function TabsList …
     54→export function TabsContent …
     73→export function TabsTrigger …
-    87→const tabsIndicatorVariants …
    109→export function TabsIndicator …
 
 packages/app-client/src/modules/ui/components/textarea.tsx
@@ -329,21 +325,10 @@ packages/app-server/src/modules/storage/factories/fs-lite.storage.ts
 packages/app-server/src/modules/storage/factories/memory.storage.ts
      5→export const createMemoryStorage = defineStorage(() => {
 
-packages/app-server/src/modules/storage/storage.models.ts
-     5→function defineStorage …
-     9→function defineBindableStorageFactory …
-
 packages/app-server/src/modules/storage/storage.types.ts
      7→export type BindableStorageFactoryArgs = { config: Config; context: Context };
      8→export type BindableStorageFactory = (args: BindableStorageFactoryArgs) => { storage: Storage };
      9→export type StorageFactory = () => { storage: Storage };
-
-packages/app-server/src/modules/tasks/task-scheduler.ts
-     9→const logger …
-    11→function createTaskScheduler …
-
-packages/app-server/src/modules/tasks/tasks.models.ts
-     9→function defineTask …
 
 packages/app-server/src/modules/tasks/tasks.types.ts
      3→export type TaskDefinition = ReturnType<typeof defineTask>;
@@ -481,8 +466,6 @@ packages/deploy-cloudflare/build.sh
     29→cp _routes.json dist/
     30→
     31→log "Build complete"
-
-packages/deploy-cloudflare/package.json
 
 packages/docs/package.json
      2→  "name": "@enclosed/docs",
@@ -745,8 +728,6 @@ packages/lib/src/crypto/serialization/serialization.registry.ts
 packages/lib/src/crypto/serialization/serialization.types.ts
      4→export type SerializationMethodsDefinition = ReturnType<typeof defineSerializationMethods>;
      5→export type SerializationFormat = typeof serializationMethodDefinitions[number]['name'];
-
-packages/lib/src/index.ts
 
 packages/lib/src/notes/notes.types.ts
      4→export type NoteAsset = {

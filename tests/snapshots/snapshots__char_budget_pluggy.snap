@@ -1,8 +1,8 @@
 ---
-source: test/fixtures.rs
+source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (3946 tokens)
+budget: 4000 (2906 tokens, 9428 chars)
 
 README.rst
      1→====================================================
@@ -43,55 +43,14 @@ README.rst
     36→
     37→
     38→    class Plugin_2:
-    39→        """A 2nd hook implementation namespace."""
-    40→
-    41→        @hookimpl
-    42→        def myhook(self, arg1, arg2):
-    43→            print("inside Plugin_2.myhook()")
-    44→            return arg1 - arg2
-    45→
-    46→
-    47→    # create a manager and add the spec
-    48→    pm = pluggy.PluginManager("myproject")
-    49→    pm.add_hookspecs(MySpec)
-    50→
-    51→    # register plugins
-    52→    pm.register(Plugin_1())
-    53→    pm.register(Plugin_2())
-    54→
-    55→    # call our ``myhook`` hook
-    56→    results = pm.hook.myhook(arg1=1, arg2=2)
-    57→    print(results)
-    58→
-    59→
-    60→Running this directly gets us::
-    61→
-    62→    $ python docs/examples/toy-example.py
-    63→    inside Plugin_2.myhook()
-    64→    inside Plugin_1.myhook()
-    65→    [-1, 3]
-    66→
-    67→
-    68→.. badges
-    69→
-      →…
+      →    …
+
+changelog/
 
 pyproject.toml
      1→[build-system]
      8→[project]
     38→[dependency-groups]
-    43→[tool.setuptools]
-    69→[tool.setuptools_scm]
-    71→[tool.uv]
-    74→[tool.towncrier]
-   112→[tool.mypy]
-
-CHANGELOG.rst
-     1→=========
-     2→Changelog
-     3→=========
-     4→
-      →…
 
 MANIFEST.in
      1→include CHANGELOG
@@ -101,21 +60,6 @@ MANIFEST.in
      5→include LICENSE
      6→graft testing
      7→recursive-exclude * *.pyc *.pyo
-
-changelog/590.trivial.rst
-     1→The ``pluggy.__version__`` variable is now dynamically provided via a module-level ``__getattr__`` implementation, using ``importlib`` to obtain the installed version.
-
-changelog/README.rst
-     1→This directory contains "newsfragments" which are short files that contain a small **ReST**-formatted
-     2→text that will be added to the next ``CHANGELOG``.
-     3→
-      →…
-
-changelog/_template.rst
-     1→{% for section in sections %}
-     2→{% set underline = "-" %}
-     3→{% if section %}
-      →…
 
 codecov.yml
      1→coverage:
@@ -128,27 +72,11 @@ docs/api_reference.rst
      5→API Reference
      6→=============
      7→
-     8→.. autoclass:: pluggy.PluginManager
-     9→    :members:
-    10→
-    11→.. autoclass:: pluggy.PluginValidationError
-    12→    :show-inheritance:
-    13→    :members:
-    14→
       →…
 
 docs/conf.py
    106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
-   107→    """Configure Sphinx's WarningHandler to handle (expected) missing include."""
    130→def setup(app: "sphinx.application.Sphinx") -> None:
-
-docs/examples/eggsample/eggsample/hookspecs.py
-     8→def eggsample_add_ingredients(ingredients: tuple):
-    17→def eggsample_prep_condiments(condiments: dict):
-
-docs/examples/eggsample/eggsample/lib.py
-     5→def eggsample_add_ingredients():
-    13→def eggsample_prep_condiments(condiments):
 
 docs/examples/eggsample-spam/eggsample_spam.py
      5→def eggsample_add_ingredients(ingredients):
@@ -156,13 +84,10 @@ docs/examples/eggsample-spam/eggsample_spam.py
 
 docs/examples/toy-example.py
      8→class MySpec:
-    10→
     12→    def myhook(self, arg1, arg2):
     16→class Plugin_1:
-    18→
     20→    def myhook(self, arg1, arg2):
     25→class Plugin_2:
-    27→
     29→    def myhook(self, arg1, arg2):
 
 docs/index.rst
@@ -172,20 +97,7 @@ docs/index.rst
      4→
      5→What is it?
      6→***********
-     7→``pluggy`` is the crystallized core of :ref:`plugin management and hook
-     8→calling <pytest:writing-plugins>` for :std:doc:`pytest <pytest:index>`.
-     9→It enables `1400+ plugins`_ to extend and customize ``pytest``'s default
-    10→behaviour. Even ``pytest`` itself is composed as a set of ``pluggy`` plugins
-    11→which are invoked in sequence according to a well defined set of protocols.
-    12→
-    13→It gives users the ability to extend or modify the behaviour of a
       →…
-
-docs/requirements.txt
-     1→# Higher bound for safety, can bump it if builds fine with new major versions.
-     2→sphinx>=6,<8
-     3→pygments
-     4→towncrier
 
 downstream/README.md
      1→This directory contains scripts for testing some downstream projects
@@ -225,12 +137,6 @@ src/pluggy/_callers.py
     27→def run_old_style_hookwrapper …
 
 src/pluggy/_hooks.py
-    28→_T …
-    29→_F …
-    31→_Namespace …
-    32→_Plugin …
-    33→_HookExec …
-    37→_HookImplFunction …
     40→class HookspecOpts(TypedDict):
     42→
     43→    #: Whether the hook is :ref:`first result only <firstresult>`.
@@ -262,7 +168,6 @@ src/pluggy/_hooks.py
     72→    trylast: bool
     73→    #: The name of the hook specification to match, see :ref:`specname`.
     74→    specname: str | None
-    77→@final
     78→class HookspecMarker:
     85→
     86→    __slots__ = ("project_name",)
@@ -271,7 +176,6 @@ src/pluggy/_hooks.py
     92→    def __call__ …
    102→    def __call__ …
    111→    def __call__ …
-   164→@final
    165→class HookimplMarker:
    172→
    173→    __slots__ = ("project_name",)
@@ -281,16 +185,13 @@ src/pluggy/_hooks.py
    191→    def __call__ …
    202→    def __call__ …
    281→def normalize_hookimpl_opts …
-   290→_PYPY …
    293→def varnames …
-   358→@final
    359→class HookRelay:
    362→
    363→    __slots__ = ("__dict__",)
    364→
    365→    def __init__ …
    370→        def __getattr__ …
-   377→_CallHistory …
    382→class HookCaller:
    384→
    385→    __slots__ = (
@@ -311,12 +212,12 @@ src/pluggy/_hooks.py
    516→    def call_historic …
    543→    def call_extra …
    593→class _SubsetHookCaller(HookCaller):
+   596→
    612→    def __init__ …
    619→    def _hookimpls …
    627→    def spec …
    631→    def _call_history …
    634→    def __repr__ …
-   638→@final
    639→class HookImpl:
    641→
    642→    __slots__ = (
@@ -335,7 +236,6 @@ src/pluggy/_hooks.py
    655→
    656→    def __init__ …
    692→    def __repr__ …
-   696→@final
    697→class HookSpec:
    698→    __slots__ = (
    699→        "namespace",
@@ -351,8 +251,6 @@ src/pluggy/_hooks.py
    709→    def __init__ …
 
 src/pluggy/_manager.py
-    36→_BeforeTrace …
-    37→_AfterTrace …
     52→class PluginValidationError(Exception):
     58→
     59→    def __init__ …
@@ -389,9 +287,7 @@ src/pluggy/_manager.py
    512→    def subset_hook_caller …
 
 src/pluggy/_result.py
-    16→_ExcInfo …
     20→class HookCallError(Exception):
-    24→@final
     25→class Result(Generic[ResultType]):
     28→
     29→    __slots__ = ("_result", "_exception", "_traceback")
@@ -419,13 +315,11 @@ src/pluggy/_warnings.py
      4→class PluggyWarning(UserWarning):
      6→
      7→    __module__ = "pluggy"
-    10→@final
     11→class PluggyTeardownRaisedWarning(PluggyWarning):
     26→
     27→    __module__ = "pluggy"
 
-testing/test_hookcaller.py
-    34→class AddMeth:
+testing/
 
 tox.ini
      1→[tox]

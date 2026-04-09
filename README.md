@@ -25,8 +25,6 @@ README.md
    113→## Examples & Demos
    123→## API
 
-package.json
-
 src/index.ts
      1→export type EventType …
      5→export type Handler …
@@ -46,13 +44,10 @@ src/index.ts
     48→): Emitter<Events> {
 
 test/
-      →…
-
-tsconfig.json
 ```
 <!-- precis-example-end -->
 
-The README's h1 section includes body text because top-level headings have the highest priority; at this budget, deeper headings appear without body. The six type aliases are truncated because expanding all six signatures would be expensive relative to the single `mitt` function. Config files and test directories are deprioritized, appearing as file paths only or collapsing to a single line.
+The README's h1 section includes body text because top-level headings have the highest priority; at this budget, deeper headings appear without body. The six type aliases are truncated because expanding all six signatures would be expensive relative to the single `mitt` function. The test directory is deprioritized, appearing as a path only.
 
 ## Installation
 

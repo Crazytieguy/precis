@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4009 tokens)
+budget: 4000 (3955 tokens)
 
 README.md
      1→# OTree - Object Tree TUI Viewer
@@ -29,19 +29,8 @@ Cargo.toml
     43→[lints.clippy]
 
 assets/
-      →…
 
 config/default.toml
-     1→[tree]
-     5→[editor]
-    10→[layout]
-    14→[header]
-    18→[footer]
-    21→[data]
-    25→[filter]
-    30→[keys]
-    62→[colors]
-   103→[types]
 
 docs/actions.md
      1→# All Available Actions
@@ -52,7 +41,6 @@ docs/actions.md
       →…
 
 examples/
-      →…
 
 src/clipboard.rs
     28→pub fn write_clipboard …
@@ -143,6 +131,10 @@ src/cmd.rs
     95→    #[clap(long)]
     96→    pub max_data_size: Option<usize>,
     97→
+    98→    /// Watch file changes, reload tui if updates
+    99→    #[clap(long, short = 'R')]
+   100→    pub live_reload: bool,
+   101→
       →…
    112→    pub fn parse …
    149→    pub fn update_config …
@@ -389,9 +381,6 @@ src/ui/app.rs
     89→}
    101→    #[expect(clippy::needless_pass_by_value)]
    102→    pub fn new(cfg: Rc<Config>, tree: Tree, fw: Option<FileWatcher>) -> Self {
-   103→        let footer = if cfg.footer.disable {
-   104→            None
-      →            …
    133→    pub fn set_header …
    137→    pub fn show …
    279→    fn popup_error …

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (8005 tokens)
+budget: 8000 (7926 tokens)
 
 README.md
      1→# MCPHost 🤖
@@ -25,7 +25,6 @@ README.md
    985→## Acknowledgments 🙏
 
 examples/
-      →…
 
 go.mod
      1→module github.com/mark3labs/mcphost
@@ -264,6 +263,7 @@ internal/hooks/executor.go
     48→func (e *Executor) SetInteractive(interactive bool) {
     57→func (e *Executor) PopulateCommonFields(event HookEvent) CommonInput {
     77→func (e *Executor) ExecuteHooks(ctx context.Context, event HookEvent, input interface{}) (*HookOutput, error) {
+   201→type hookResult struct {
 
 internal/hooks/schemas.go
     10→type CommonInput struct {
@@ -303,10 +303,7 @@ internal/models/gemini/gemini.go
     64→	// Examples: "gemini-pro", "gemini-pro-vision", "gemini-1.5-flash"
     65→	Model string
     66→
-    67→	// MaxTokens limits the maximum number of tokens in the response
-    68→	// Optional. Example: maxTokens := 100
-    69→	MaxTokens *int
-      →	…
+      →…
    103→type options struct {
    113→type ChatModel struct {
    114→	// cli is the Gemini API client instance
@@ -317,9 +314,6 @@ internal/models/gemini/gemini.go
    119→	// maxTokens limits the response length
    120→	maxTokens *int
    121→	// topP controls nucleus sampling
-   122→	topP *float32
-   123→	// temperature controls randomness
-   124→	temperature *float32
       →	…
    152→func (cm *ChatModel) Generate(ctx context.Context, input []*schema.Message, opts ...model.Option) (message *schema.Message, err error) {
    205→func (cm *ChatModel) Stream(ctx context.Context, input []*schema.Message, opts ...model.Option) (result *schema.StreamReader[*schema.Message], err error) {
@@ -649,9 +643,6 @@ internal/ui/usage_tracker.go
    233→func (ut *UsageTracker) GetLastRequestStats …
    246→func (ut *UsageTracker) Reset …
    256→func (ut *UsageTracker) SetWidth …
-
-main.go
-    14→func main() {
 
 sdk/README.md
      1→# MCPHost SDK

@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3999 tokens)
+budget: 4000 (3939 tokens)
 
 README.md
     10→# `htmy`
@@ -108,9 +108,6 @@ docs/index.md
    337→## Why
    349→## Dependencies
 
-examples/internationalization/__init__.py
-     1→# Here only to silence mypy's "duplicate module" complaints.
-
 examples/internationalization/app.py
      8→class TranslatedComponent:
     10→
@@ -143,9 +140,6 @@ examples/markdown_customization/post.md
 examples/markdown_essentials/__init__.py
      1→# Here only to silence mypy's "duplicate module" complaints.
 
-examples/markdown_essentials/app.py
-     6→async def render_post() -> None:
-
 examples/markdown_essentials/post.md
      1→# Essential reading
      3→```python
@@ -162,6 +156,8 @@ examples/snippet-slots-fastapi/app.py
     20→
     28→class RequestHeaders:
     30→
+    69→@app.get("/")
+      →…
     71→async def index() -> None:
 
 htmy/__init__.py
@@ -333,10 +329,8 @@ htmy/renderer/context.py
       →        …
 
 htmy/renderer/default.py
-    20→class _Node:
     25→    def __init__ …
     36→    def iter_nodes …
-    53→class _ComponentRenderer:
     60→    def __init__ …
    174→    async def run …
    228→class Renderer:
@@ -444,8 +438,6 @@ mkdocs.yaml
     51→  - index.md
     52→  - components-guide.md
       →  …
-
-tests/data/blog-post.md
 
 tests/renderer/test_renderer_comparison.py
     61→class WrapAsync:

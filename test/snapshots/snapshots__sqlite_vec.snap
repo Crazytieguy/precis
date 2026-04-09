@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3995 tokens)
+budget: 4000 (3947 tokens)
 
 ARCHITECTURE.md
      1→# `sqlite-vec` Architecture
@@ -45,7 +45,6 @@ Makefile
      1→
 
 benchmarks/
-      →…
 
 bindings/go/ncruces/go-sqlite3.patch
      1→diff --git a/embed/build.sh b/embed/build.sh
@@ -71,20 +70,13 @@ bindings/rust/src/lib.rs
 
 examples/simple-c/Makefile
      1→demo: demo.c
-
-examples/simple-c/demo.c
+     2→	gcc \
+      →	…
 
 examples/simple-rust/Cargo.toml
      1→[package]
      5→[dependencies]
     10→[[bin]]
-
-examples/simple-sqlite/demo.sql
-     1→.load ../../dist/vec0
-     2→.mode table
-     3→.header on
-     4→
-      →…
 
 reference.yaml
      1→sections:
@@ -102,7 +94,6 @@ scripts/vendor.sh
      2→mkdir -p vendor
 
 site/
-      →…
 
 sqlite-dist.toml
      1→[package]
@@ -331,6 +322,5 @@ test.sql
      1→
 
 tests/
-      →…
 
 tmp-static.py

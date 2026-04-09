@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4009 tokens)
+budget: 4000 (3962 tokens)
 
 README.md
     40→## About
@@ -21,7 +21,6 @@ README.md
   1766→## Inspirations
 
 benchmarks/
-      →…
 
 docs/v3-to-v4-migration-guide.md
      1→# TS-Pattern v3 to v4 Migration Guide
@@ -192,8 +191,7 @@ src/types/DistributeUnions.ts
    116→        readonly [infer p1, infer p2, infer p3, infer p4]
    117→      ]
    118→    ? [
-   119→        ...FindUnions<a1, p1, [...path, 0]>,
-      →        …
+      →    …
    174→export type ArrayToVariadicUnion …
    183→export type Distribute …
 
@@ -258,7 +256,6 @@ src/types/Match.ts
     51→      selections: FindSelected<value, p>,
     52→      value: value
     53→    ) => PickReturnValue<o, c>
-    54→  ): InvertPatternForExclude<p, value> extends infer excluded
    132→  with …
    159→  when …
    180→  otherwise …
@@ -418,4 +415,3 @@ src/types/index.ts
      1→export * from './Pattern';
 
 tests/
-      →…

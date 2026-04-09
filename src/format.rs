@@ -15,20 +15,22 @@ static BPE: LazyLock<CoreBPE> = LazyLock::new(|| tiktoken_rs::o200k_base().unwra
 // Public entry points
 // ---------------------------------------------------------------------------
 
-/// Render files within a token budget using group-based scheduling.
+/// Render files within token and optional character budgets.
 pub fn render_with_budget(
     budget: usize,
+    char_budget: Option<usize>,
     root: &Path,
     files: &[PathBuf],
     sources: &[Option<String>],
 ) -> String {
-    let (output, _) = render_with_budget_stats(budget, root, files, sources);
+    let (output, _) = render_with_budget_stats(budget, char_budget, root, files, sources);
     output
 }
 
 /// Render files within a token budget, returning output and actual token count.
 pub fn render_with_budget_stats(
     budget: usize,
+    char_budget: Option<usize>,
     root: &Path,
     files: &[PathBuf],
     sources: &[Option<String>],
@@ -36,22 +38,23 @@ pub fn render_with_budget_stats(
     let all_symbols = extract_all_symbols(files, sources);
     let layouts = layout::compute_all_layouts(files, sources, &all_symbols);
     let built = schedule::build_groups(root, files, sources, &all_symbols, &layouts, budget);
-    let sched = schedule::schedule(&built, root, files);
+    let sched = schedule::schedule(&built, root, files, char_budget);
     let output = render_scheduled(root, files, sources, &all_symbols, &layouts, &built.groups, &sched);
     let actual = count_tokens(&output);
     (output, actual)
 }
 
-/// Render a single file within a token budget.
+/// Render a single file within token and optional character budgets.
 pub fn render_file_with_budget(
     budget: usize,
+    char_budget: Option<usize>,
     path: &Path,
     root: &Path,
     source: &str,
 ) -> String {
     let files = vec![path.to_path_buf()];
     let sources = vec![Some(source.to_string())];
-    render_with_budget(budget, root, &files, &sources)
+    render_with_budget(budget, char_budget, root, &files, &sources)
 }
 
 /// Pre-read source files to avoid repeated disk I/O.
@@ -134,7 +137,7 @@ pub fn render_scheduled(
             for dir in &invisible_dirs {
                 if dir < &ftd && dirs_emitted.insert(dir.clone()) {
                     if !out.is_empty() { out.push('\n'); }
-                    out.push_str(&format!("{}/\n      →…\n", dir.display()));
+                    out.push_str(&format!("{}/\n", dir.display()));
                 }
             }
         }
@@ -185,7 +188,7 @@ pub fn render_scheduled(
     for dir in &invisible_dirs {
         if dirs_emitted.insert(dir.clone()) {
             if !out.is_empty() { out.push('\n'); }
-            out.push_str(&format!("{}/\n      →…\n", dir.display()));
+            out.push_str(&format!("{}/\n", dir.display()));
         }
     }
 
@@ -438,7 +441,7 @@ mod tests {
 
         let mut prev_tokens = 0;
         for budget in [10, 50, 100, 200, 500, 1000, 5000] {
-            let output = render_with_budget(budget, root, &files, &sources);
+            let output = render_with_budget(budget, None, root, &files, &sources);
             let tokens = count_tokens(&output);
             assert!(
                 tokens >= prev_tokens,

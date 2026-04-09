@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (2000 tokens)
+budget: 2000 (1990 tokens)
 
 README.md
      1→# k(r)ep - A high-performance string search utility
@@ -21,7 +21,6 @@ Makefile
      2→# Author: Davide Santangelo
      3→# Version: 2.2.0
      4→
-     5→PREFIX ?= /usr/local
       →…
 
 aho_corasick.c
@@ -165,5 +164,4 @@ krep.h
    298→static inline bool is_word_char …
    312→static inline bool is_whole_word_match …
 
-test/
-      →…
+test/test_krep.h

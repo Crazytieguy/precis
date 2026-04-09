@@ -607,6 +607,7 @@ macro_rules! sample_test {
         fn $name() {
             let output = format::render_file_with_budget(
                 $budget,
+                None,
                 Path::new($filename),
                 Path::new(""),
                 $sample_fn(),
@@ -694,6 +695,7 @@ fn budget_monotonicity_inline() {
         for &budget in &budgets {
             let output = format::render_file_with_budget(
                 budget,
+                None,
                 Path::new(filename),
                 Path::new(""),
                 source,
@@ -723,7 +725,7 @@ fn single_file_budget_rust() {
     // Budget monotonicity across a range
     let mut prev_tokens = 0;
     for budget in [0, 50, 100, 200, 500, 1000, 10000] {
-        let output = format::render_file_with_budget(budget, &file, &root, &source);
+        let output = format::render_file_with_budget(budget, None, &file, &root, &source);
         let tokens = format::count_tokens(&output);
         assert!(
             tokens >= prev_tokens,
@@ -745,7 +747,7 @@ fn budget_monotonicity_fixture() {
     let budgets = [0, 50, 200, 500, 1000, 2000, 4000, 10000];
     let mut prev_tokens = 0;
     for &budget in &budgets {
-        let (_, tokens) = format::render_with_budget_stats(budget, &root, &files, &sources);
+        let (_, tokens) = format::render_with_budget_stats(budget, None, &root, &files, &sources);
         assert!(
             tokens >= prev_tokens,
             "Multi-file budget monotonicity: budget {} ({} tokens) < previous ({} tokens)",
@@ -760,6 +762,7 @@ fn budget_monotonicity_fixture() {
 fn readme_renders_first() {
     let output = format::render_with_budget(
         500,
+        None,
         Path::new(""),
         &[std::path::PathBuf::from("src/lib.rs"), std::path::PathBuf::from("README.md")],
         &[
@@ -782,6 +785,7 @@ fn readme_renders_first() {
 fn manifest_renders_after_readme() {
     let output = format::render_with_budget(
         500,
+        None,
         Path::new(""),
         &[
             std::path::PathBuf::from("src/lib.rs"),
@@ -815,7 +819,7 @@ fn invisible_directory_markers() {
         Some("fn internal() {}".to_string()),
     ];
     // Very small budget: hidden_dir/ file won't fit, should get a marker
-    let output = format::render_with_budget(30, Path::new(""), &files, &sources);
+    let output = format::render_with_budget(30, None, Path::new(""), &files, &sources);
     // If hidden_dir/foo.rs is not shown, we should see "hidden_dir/" marker
     if !output.contains("hidden_dir/foo.rs") {
         assert!(
@@ -832,7 +836,7 @@ fn empty_directory() {
     let dir = tempfile::tempdir().unwrap();
     let files = walk::discover_source_files(dir.path());
     let sources = format::read_sources(&files);
-    let output = format::render_with_budget(4000, dir.path(), &files, &sources);
+    let output = format::render_with_budget(4000, None, dir.path(), &files, &sources);
     assert!(output.is_empty(), "empty directory should produce no output");
 }
 
@@ -875,17 +879,98 @@ fn render_fixture(subpath: &str, budget: usize) -> Option<String> {
     let root = fixture_path(subpath)?;
     let files = walk::discover_source_files(&root);
     let sources = format::read_sources(&files);
-    Some(format::render_with_budget(budget, &root, &files, &sources))
+    Some(format::render_with_budget(budget, None, &root, &files, &sources))
+}
+
+/// Render a fixture with token and character budgets, returning raw output.
+fn render_fixture_with_char_budget(subpath: &str, budget: usize, char_budget: usize) -> Option<String> {
+    let root = fixture_path(subpath)?;
+    let files = walk::discover_source_files(&root);
+    let sources = format::read_sources(&files);
+    Some(format::render_with_budget(budget, Some(char_budget), &root, &files, &sources))
 }
 
 /// Helper: render a fixture and prepend a metadata header for snapshot tests.
+/// Asserts that the output respects the token budget.
 fn render_with_budget(subpath: &str, budget: usize) -> Option<String> {
     let output = render_fixture(subpath, budget)?;
     let tokens = format::count_tokens(&output);
+    assert!(
+        tokens <= budget,
+        "{subpath}@{budget}: token count {tokens} exceeds budget",
+    );
     Some(format!(
         "budget: {} ({} tokens)\n\n{}",
         budget, tokens, output
     ))
+}
+
+/// Helper: render a fixture with char budget, prepend metadata, and assert both budgets.
+fn render_with_char_budget(subpath: &str, budget: usize, char_budget: usize) -> Option<String> {
+    let output = render_fixture_with_char_budget(subpath, budget, char_budget)?;
+    let tokens = format::count_tokens(&output);
+    let chars = output.len();
+    assert!(
+        chars <= char_budget,
+        "{subpath}@{budget}/char{char_budget}: char count {chars} exceeds char budget",
+    );
+    assert!(
+        tokens <= budget,
+        "{subpath}@{budget}/char{char_budget}: token count {tokens} exceeds token budget",
+    );
+    Some(format!(
+        "budget: {} ({} tokens, {} chars)\n\n{}",
+        budget, tokens, chars, output
+    ))
+}
+
+// Character budget snapshot tests — diverse fixtures at the plugin default (9500).
+// These verify that char-budgeted output fits within the limit and degrades gracefully.
+
+#[test]
+fn char_budget_sps() {
+    // Large multi-crate Rust workspace (budget 8000) — exercises directory markers
+    let output = render_with_char_budget("sps", 8000, 9500).unwrap();
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn char_budget_pluggy() {
+    // Medium Python project (budget 4000) — typical plugin use case
+    let output = render_with_char_budget("pluggy", 4000, 9500).unwrap();
+    insta::assert_snapshot!(output);
+}
+
+#[test]
+fn char_budget_mitt() {
+    // Small TypeScript lib (budget 2000) — output fits easily, char budget is not binding
+    let output = render_with_char_budget("mitt", 2000, 9500).unwrap();
+    insta::assert_snapshot!(output);
+}
+
+// Char budget monotonicity: more char budget should never produce fewer characters.
+#[test]
+fn char_budget_monotonicity() {
+    let root = fixture_path("pluggy").unwrap();
+    let files = walk::discover_source_files(&root);
+    let sources = format::read_sources(&files);
+    let char_budgets = [500, 1000, 2000, 4000, 6000, 8000, 10000, 20000];
+    let mut prev_chars = 0;
+    for &cb in &char_budgets {
+        let output = format::render_with_budget(4000, Some(cb), &root, &files, &sources);
+        let chars = output.len();
+        assert!(
+            chars >= prev_chars,
+            "Char budget monotonicity: char_budget {} ({} chars) < previous ({} chars)",
+            cb, chars, prev_chars,
+        );
+        assert!(
+            chars <= cb,
+            "Char budget monotonicity: char_budget {} produced {} chars",
+            cb, chars,
+        );
+        prev_chars = chars;
+    }
 }
 
 // Snapshot tests are generated from entries in test/fixtures.rs via the

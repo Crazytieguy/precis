@@ -61,7 +61,7 @@ fn main() {
 
     // 6. Schedule
     let t = Instant::now();
-    let sched = schedule::schedule(&built, &root, &files);
+    let sched = schedule::schedule(&built, &root, &files, None);
     stages.push(("schedule", t.elapsed()));
 
     // 7. Render

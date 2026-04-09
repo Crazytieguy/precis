@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3998 tokens)
+budget: 4000 (3958 tokens)
 
 README.md
      1→derive(Error)
@@ -265,7 +265,7 @@ src/display.rs
      7→    // TODO: convert to generic associated type.
     11→    fn as_display(&'a self) -> Self::Target;
     18→    type Target = &'a T;
-    20→    fn as_display(&'a self) -> Self::Target {
+    20→    fn as_display …
     26→impl<'a> AsDisplay<'a> for Path {
     30→    fn as_display(&'a self) -> Self::Target {
     36→impl<'a> AsDisplay<'a> for PathBuf {
@@ -277,14 +277,13 @@ src/display.rs
     63→    #[allow(dead_code)]
     64→    pub struct Placeholder;
     70→        fn as_display(&'a self) -> Self::Target {
-    76→        fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
+    76→        fn fmt …
 
 src/lib.rs
    281→mod aserror;
    282→mod display;
    284→mod provide;
    285→mod var;
-   287→pub use thiserror_impl::*;
    289→mod private;
 
 src/private.rs
@@ -297,7 +296,7 @@ src/provide.rs
 
 src/var.rs
      3→pub struct Var<'a, T: ?Sized>(pub &'a T);
-     6→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+     6→    fn fmt …
 
 tests/compiletest.rs
      1→#[rustversion::attr(not(nightly), ignore = "requires nightly")]
@@ -312,6 +311,7 @@ tests/no-std/Cargo.toml
     11→[dependencies]
 
 tests/no-std/test.rs
+     5→#[derive(Error, Debug)]
      6→pub enum Error {
      7→    #[error("Error::E")]
      8→    E(#[from] SourceError),

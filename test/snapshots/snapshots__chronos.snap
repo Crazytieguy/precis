@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4001 tokens)
+budget: 4000 (3963 tokens)
 
 README.md
      3→# Chronos: Pretrained Models for Time Series Forecasting
@@ -17,6 +17,10 @@ README.md
 pyproject.toml
      1→[project]
     31→[build-system]
+    41→[project.optional-dependencies]
+    68→[project.urls]
+    74→[tool.mypy]
+    77→[tool.ruff]
 
 CITATION.cff
      1→cff-version: 1.2.0
@@ -43,9 +47,12 @@ CITATION.cff
     22→    given-names: Sebastian Pineda
     23→  - family-names: Kapoor
     24→    given-names: Shubham
-      →    …
-
-CONTRIBUTING.md
+    25→  - family-names: Zschiegner
+    26→    given-names: Jasper
+    27→  - family-names: Maddix
+    28→    given-names: Danielle C.
+    29→  - family-names: Mahoney
+      →  …
 
 ci/evaluate/backtest_config.yaml
      1→# From In-domain
@@ -94,16 +101,9 @@ src/chronos/__init__.py
 
 src/chronos/base.py
     27→class ForecastType(Enum):
-    28→    SAMPLES = "samples"
-    29→    QUANTILES = "quantiles"
     32→class PipelineRegistry(type):
-    33→    REGISTRY: Dict[str, "PipelineRegistry"] = {}
-    34→
     35→    def __new__ …
     44→class BaseChronosPipeline(metaclass=PipelineRegistry):
-    45→    forecast_type: ForecastType
-    46→    dtypes = {"bfloat16": torch.bfloat16, "float32": torch.float32}
-    47→
     48→    def __init__ …
     59→    def model_context_length(self) -> int:
     63→    def model_prediction_length(self) -> int:
@@ -131,7 +131,9 @@ src/chronos/chronos.py
     27→@dataclass
     28→class ChronosConfig:
     29→    """
-      →    …
+    30→    This class holds all the configuration parameters to be used
+    31→    by ``ChronosTokenizer`` and ``ChronosModel``.
+    32→    """
     33→
     34→    tokenizer_class: str
     35→    tokenizer_kwargs: Dict[str, Any]
@@ -151,7 +153,6 @@ src/chronos/chronos.py
     49→    def __post_init__ …
     54→    def create_tokenizer …
     59→class ChronosTokenizer:
-    67→
     68→    def context_input_transform …
    100→    def label_input_transform …
    131→    def output_transform …
@@ -161,17 +162,11 @@ src/chronos/chronos.py
    222→    def label_input_transform …
    233→    def output_transform …
    243→class ChronosModel(nn.Module):
-   255→
    256→    def __init__ …
    262→    def device(self):
    265→    def encode …
    292→    def forward …
    355→class ChronosPipeline(BaseChronosPipeline):
-   370→
-   371→    tokenizer: ChronosTokenizer
-   372→    model: ChronosModel
-   373→    forecast_type: ForecastType = ForecastType.SAMPLES
-   374→
    375→    def __init__ …
    381→    def model_context_length(self) -> int:
    385→    def model_prediction_length(self) -> int:
@@ -181,7 +176,7 @@ src/chronos/chronos.py
    536→    def from_pretrained(cls, pretrained_model_name_or_path, *args, **kwargs):
 
 src/chronos/chronos2/__init__.py
-    11→__all__ …
+    11→__all__ = ["Chronos2CoreConfig", "Chronos2ForecastingConfig", "Chronos2Model", "Chronos2Pipeline", "Chronos2Dataset"]
 
 src/chronos/chronos2/config.py
     12→class Chronos2CoreConfig(PretrainedConfig):
@@ -200,7 +195,7 @@ src/chronos/chronos2/config.py
    115→    def editable_fields(cls) -> list[str]:
 
 src/chronos/chronos2/dataset.py
-    20→TensorOrArray …
+    20→TensorOrArray: TypeAlias = torch.Tensor | np.ndarray
     23→class PreparedInput(TypedDict):
     33→def left_pad_and_cat_2D …
     50→def validate_and_prepare_single_dict_input …
@@ -264,6 +259,8 @@ src/chronos/chronos2/model.py
     86→    all_group_self_attn_weights: tuple[torch.Tensor, ...] | None = None
     89→class Chronos2Encoder(nn.Module):
     90→    def __init__ …
+    99→    def _expand_and_invert_time_attention_mask …
+   113→    def _construct_and_invert_group_time_mask …
    134→    def forward …
    191→class Chronos2Output(ModelOutput):
    192→    loss: torch.Tensor | None = None
@@ -278,6 +275,7 @@ src/chronos/chronos2/model.py
 src/chronos/chronos2/pipeline.py
     39→class Chronos2Pipeline(BaseChronosPipeline):
     43→    def __init__ …
+    48→    def _get_prob_mass_per_quantile_level …
     77→    def model_context_length(self) -> int:
     81→    def model_output_patch_size(self) -> int:
     85→    def model_prediction_length(self) -> int:
@@ -296,6 +294,7 @@ src/chronos/chronos2/pipeline.py
    465→        limit_prediction_length: bool = False,
    466→        **kwargs,
    467→    ) -> list[torch.Tensor]:
+   750→    def _slide_context_and_future_covariates …
    763→    def predict_quantiles …
    821→    def predict_df …
   1027→    def predict_fev …
@@ -332,7 +331,6 @@ src/chronos/chronos_bolt.py
     51→    def __init__ …
     56→    def forward …
     71→class InstanceNorm(nn.Module):
-    75→
     76→    def __init__ …
     81→    def forward …
    100→    def inverse …
@@ -340,19 +338,11 @@ src/chronos/chronos_bolt.py
    114→    def __init__ …
    135→    def forward …
    147→class ChronosBoltModelForForecasting(T5PreTrainedModel):
-   148→    _keys_to_ignore_on_load_missing = [  # type: ignore
-   149→        r"input_patch_embedding\.",
-   150→        r"output_patch_embedding\.",
-   151→    ]
-   152→    _keys_to_ignore_on_load_unexpected = [r"lm_head.weight"]  # type: ignore
    155→    def __init__(self, config: T5Config):
    240→    def encode …
    294→    def forward …
    364→    def decode …
    403→class ChronosBoltPipeline(BaseChronosPipeline):
-   404→    forecast_type: ForecastType = ForecastType.QUANTILES
-   405→    default_context_length: int = 2048
-   406→
    407→    def __init__ …
    412→    def model_context_length(self) -> int:
    416→    def model_prediction_length(self) -> int:
@@ -373,4 +363,4 @@ src/chronos/utils.py
     22→def interpolate_quantiles …
    135→def weighted_quantile …
 
-test/__init__.py
+test/

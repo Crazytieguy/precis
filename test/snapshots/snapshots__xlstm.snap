@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4011 tokens)
+budget: 4000 (3953 tokens)
 
 README.md
      3→# xLSTM: Extended Long Short-Term Memory
@@ -25,8 +25,7 @@ README.md
     75→We have optimized the xLSTM architecture in terms of training throughput and stability. 
     76→The code for the updated architecture is located in `xlstm/xlstm_large`.
     77→
-    78→The model weights are available on Huggingface at https://huggingface.co/NX-AI/xLSTM-7b. 
-    79→
+      →…
     80→## How to use the xLSTM Large 7B and its architecture
    115→## Recommendation for other hardware
    138→# Models from the xLSTM NeurIPS Paper
@@ -45,8 +44,6 @@ experiments/data/formal_language/formal_language_dataset.py
     44→    enable_mask: bool = False
     45→    additional_prefix_tokens: int = (
       →    …
-
-experiments/data/utils.py
 
 experiments/lr_scheduler.py
     14→    def get_lr(self) -> list[float]:
@@ -79,8 +76,7 @@ notebooks/xlstm/xLSTM_readme_example.ipynb
      8→   },
      9→   "outputs": [],
     10→   "source": [
-    11→    "%load_ext autoreload\n",
-      →    …
+      →   …
 
 notebooks/xlstm_large/demo.ipynb
      1→{
@@ -95,10 +91,8 @@ notebooks/xlstm_large/load_from_pretrained.ipynb
       →  …
 
 res/
-      →…
 
 tests/
-      →…
 
 xlstm/__init__.py
      1→__version__ = "2.0.5"

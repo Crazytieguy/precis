@@ -510,31 +510,81 @@ pub struct GroupKey {
     pub is_reexport: bool,
 }
 
-/// A symbol's precomputed content costs (token counts per rendering stage).
+/// Token and character cost of a rendered element.
+#[derive(Clone, Copy, Debug, Default)]
+pub struct Cost {
+    pub tokens: usize,
+    pub chars: usize,
+}
+
+impl Cost {
+    fn new(tokens: usize, chars: usize) -> Self {
+        Self { tokens, chars }
+    }
+}
+
+impl std::ops::Add for Cost {
+    type Output = Self;
+    fn add(self, rhs: Self) -> Self {
+        Self { tokens: self.tokens + rhs.tokens, chars: self.chars + rhs.chars }
+    }
+}
+
+impl std::ops::AddAssign for Cost {
+    fn add_assign(&mut self, rhs: Self) {
+        self.tokens += rhs.tokens;
+        self.chars += rhs.chars;
+    }
+}
+
+impl std::ops::Sub for Cost {
+    type Output = Self;
+    fn sub(self, rhs: Self) -> Self {
+        Self {
+            tokens: self.tokens.saturating_sub(rhs.tokens),
+            chars: self.chars.saturating_sub(rhs.chars),
+        }
+    }
+}
+
+impl std::iter::Sum for Cost {
+    fn sum<I: Iterator<Item = Self>>(iter: I) -> Self {
+        iter.fold(Self::default(), |a, b| a + b)
+    }
+}
+
+impl Cost {
+    /// Compute token and character cost of a rendered text string.
+    fn of(text: &str) -> Self {
+        Self { tokens: format::count_tokens(text), chars: text.len() }
+    }
+}
+
+/// A symbol's precomputed content costs per rendering stage.
 #[derive(Clone)]
 pub struct SymbolCosts {
     pub file_idx: usize,
     pub symbol_idx: usize,
-    pub name_tokens: usize,
-    /// Additional tokens for full signature beyond the name line.
-    pub signature_tokens: usize,
-    /// Tokens per doc comment line (ordered). For Python symbols with both
+    pub name: Cost,
+    /// Additional cost for full signature beyond the name line.
+    pub signature: Cost,
+    /// Cost per doc comment line (ordered). For Python symbols with both
     /// pre-symbol `#` comments and post-signature docstrings, this is the
     /// concatenation of both sections (pre-comments first, then docstring lines).
-    pub doc_line_tokens: Vec<usize>,
-    /// Token cost of the truncation marker after each doc line. Parallel to
-    /// `doc_line_tokens` — `doc_marker_tokens[i]` is the cost of `"      →{indent}…\n"`
-    /// where indent matches `doc_line_tokens[i]`'s source line.
-    pub doc_marker_tokens: Vec<usize>,
-    /// Number of pre-symbol comment lines in `doc_line_tokens`. The renderer
+    pub doc_lines: Vec<Cost>,
+    /// Cost of the truncation marker after each doc line. Parallel to
+    /// `doc_lines` — `doc_markers[i]` is the cost of `"      →{indent}…\n"`
+    /// where indent matches `doc_lines[i]`'s source line.
+    pub doc_markers: Vec<Cost>,
+    /// Number of pre-symbol comment lines in `doc_lines`. The renderer
     /// emits pre-comments and docstrings as separate sections with a signature
     /// in between, so truncation markers must account for this split point.
     pub pre_doc_count: usize,
-    /// Tokens per body line (ordered).
-    pub body_line_tokens: Vec<usize>,
-    /// Token cost of the truncation marker after each body line. Parallel to
-    /// `body_line_tokens`.
-    pub body_marker_tokens: Vec<usize>,
+    /// Cost per body line (ordered).
+    pub body_lines: Vec<Cost>,
+    /// Cost of the truncation marker after each body line. Parallel to
+    /// `body_lines`.
+    pub body_markers: Vec<Cost>,
     /// Whether the symbol's body contains nested symbols (e.g., class methods).
     /// When true, body truncation markers are suppressed by the renderer.
     pub body_has_nested: bool,
@@ -793,8 +843,9 @@ fn layer_source_line(
 }
 
 /// Token cost of the truncation marker that would appear after a given source line.
-fn truncation_marker_cost(source_line: &str) -> usize {
-    format::count_tokens(&format::truncation_marker(source_line))
+fn truncation_marker_cost(source_line: &str) -> Cost {
+    let text = format::truncation_marker(source_line);
+    Cost::of(&text)
 }
 
 /// Compute name + signature token costs for a symbol. Doc/body vectors are
@@ -823,52 +874,55 @@ fn compute_name_sig_costs(
         return SymbolCosts {
             file_idx,
             symbol_idx,
-            name_tokens: format::count_tokens(&name_text),
-            signature_tokens: 0,
-            doc_line_tokens: Vec::new(),
-            doc_marker_tokens: Vec::new(),
+            name: Cost::of(&name_text),
+            signature: Cost::default(),
+            doc_lines: Vec::new(),
+            doc_markers: Vec::new(),
             pre_doc_count,
-            body_line_tokens: Vec::new(),
-            body_marker_tokens: Vec::new(),
+            body_lines: Vec::new(),
+            body_markers: Vec::new(),
             // Suppress separate truncation markers — composite " …" is inline
-            // and already accounted for in name_tokens.
+            // and already accounted for in name cost.
             body_has_nested: true,
         };
     }
 
     let sig_end = layout.sig_end;
 
-    let name_tokens = if is_section {
+    let name = if is_section {
         let line = layout::strip_heading_badges(lines.get(layout.sym_line_0).copied().unwrap_or(""));
-        format::count_tokens(&format::fmt_line(layout.sym_line_0, line))
+        let text = format::fmt_line(layout.sym_line_0, line);
+        Cost::of(&text)
     } else {
         let name_line = format::format_symbol_name(sym, lines);
-        format::count_tokens(&format!("{} …\n", name_line))
+        let text = format!("{} …\n", name_line);
+        Cost::of(&text)
     };
 
-    let mut sig_formatted_tokens = 0;
+    let mut sig_formatted = Cost::default();
     for (i, line) in lines.iter().enumerate().take(sig_end + 1).skip(sym_line_0) {
         let line = if is_section && i == sym_line_0 {
             layout::strip_heading_badges(line)
         } else {
             line
         };
-        sig_formatted_tokens += format::count_tokens(&format::fmt_line(i, line));
+        let text = format::fmt_line(i, line);
+        sig_formatted += Cost::of(&text);
     }
-    let signature_tokens = sig_formatted_tokens.saturating_sub(name_tokens);
+    let signature = sig_formatted - name;
 
     let pre_doc_count = layout.doc_end.saturating_sub(layout.doc_start);
 
     SymbolCosts {
         file_idx,
         symbol_idx,
-        name_tokens,
-        signature_tokens,
-        doc_line_tokens: Vec::new(),
-        doc_marker_tokens: Vec::new(),
+        name,
+        signature,
+        doc_lines: Vec::new(),
+        doc_markers: Vec::new(),
         pre_doc_count,
-        body_line_tokens: Vec::new(),
-        body_marker_tokens: Vec::new(),
+        body_lines: Vec::new(),
+        body_markers: Vec::new(),
         body_has_nested: layout.has_children,
     }
 }
@@ -906,10 +960,10 @@ fn fill_doc_body_costs(
             (doc, body_end.saturating_sub(body_start))
         };
 
-        sc.doc_line_tokens = vec![0; doc_count];
-        sc.doc_marker_tokens = vec![0; doc_count];
-        sc.body_line_tokens = vec![0; body_count];
-        sc.body_marker_tokens = vec![0; body_count];
+        sc.doc_lines = vec![Cost::default(); doc_count];
+        sc.doc_markers = vec![Cost::default(); doc_count];
+        sc.body_lines = vec![Cost::default(); body_count];
+        sc.body_markers = vec![Cost::default(); body_count];
         true_max_doc = true_max_doc.max(doc_count);
         true_max_body = true_max_body.max(body_count);
     }
@@ -918,7 +972,7 @@ fn fill_doc_body_costs(
     let base_cost: usize = group
         .symbols
         .iter()
-        .map(|s| s.name_tokens + s.signature_tokens)
+        .map(|s| s.name.tokens + s.signature.tokens)
         .sum();
     let mut cumulative = base_cost;
     let mut computed_doc_n = 0usize;
@@ -952,7 +1006,7 @@ fn fill_doc_body_costs(
 
         for n in 1..=true_max {
             let remaining = budget.saturating_sub(cumulative);
-            let mut line_cost = 0usize;
+            let mut layer_token_cost = 0usize;
             let mut markers_at_n = 0usize;
             let mut layer_bytes = 0usize;
             let mut byte_estimate_exceeded = false;
@@ -966,7 +1020,7 @@ fn fill_doc_body_costs(
                     if is_doc { continue; }
                     let pl = &sym.composed_prefix_lens;
                     let body_count = pl.len() - 1;
-                    if n - 1 >= body_count {
+                    if n > body_count {
                         continue;
                     }
                     let file_lines = &all_lines[sc.file_idx];
@@ -991,12 +1045,12 @@ fn fill_doc_body_costs(
 
                     let lt = slice_tokens.saturating_sub(correction);
 
-                    sc.body_line_tokens[n - 1] = lt;
-                    // body_marker_tokens stays 0: the inline " …" is already
-                    // counted in name_tokens, and body_has_nested=true suppresses
+                    sc.body_lines[n - 1] = Cost::new(lt, curr_end - prev_end);
+                    // body_markers stays default: the inline " …" is already
+                    // counted in name cost, and body_has_nested=true suppresses
                     // marker handling in line_stage_cost.
 
-                    line_cost += lt;
+                    layer_token_cost += lt;
                     continue;
                 }
 
@@ -1016,18 +1070,19 @@ fn fill_doc_body_costs(
                     break;
                 }
 
-                let lt = format::count_tokens(&format::fmt_line(src_line_idx, line));
-                let mt = truncation_marker_cost(line);
+                let fmt = format::fmt_line(src_line_idx, line);
+                let line_cost = Cost::of(&fmt);
+                let marker_cost = truncation_marker_cost(line);
 
                 if is_doc {
-                    sc.doc_line_tokens[n - 1] = lt;
-                    sc.doc_marker_tokens[n - 1] = mt;
+                    sc.doc_lines[n - 1] = line_cost;
+                    sc.doc_markers[n - 1] = marker_cost;
                 } else {
-                    sc.body_line_tokens[n - 1] = lt;
-                    sc.body_marker_tokens[n - 1] = mt;
+                    sc.body_lines[n - 1] = line_cost;
+                    sc.body_markers[n - 1] = marker_cost;
                 }
 
-                line_cost += lt;
+                layer_token_cost += line_cost.tokens;
 
                 // Truncation marker: shown when there are more lines beyond n.
                 let show_marker = if is_doc {
@@ -1038,7 +1093,7 @@ fn fill_doc_body_costs(
                     !sc.body_has_nested
                 };
                 if true_len > n && show_marker {
-                    markers_at_n += mt;
+                    markers_at_n += marker_cost.tokens;
                 }
             }
 
@@ -1046,7 +1101,7 @@ fn fill_doc_body_costs(
                 break;
             }
 
-            let incremental = (line_cost + markers_at_n).saturating_sub(prev_markers);
+            let incremental = (layer_token_cost + markers_at_n).saturating_sub(prev_markers);
             cumulative += incremental;
             prev_markers = markers_at_n;
 
@@ -1344,13 +1399,12 @@ struct QueueItem {
     /// For Names/Signatures: always 1.
     n: usize,
     own_value: f64,
-    own_cost: usize,
+    own_cost: Cost,
     /// Sum of values from unmet prerequisite stages.
     prereq_value: f64,
-    /// Sum of costs from unmet prerequisite stages.
-    prereq_cost: usize,
+    prereq_cost: Cost,
     /// Cost of file paths not yet shown (for files this group touches).
-    file_path_cost: usize,
+    file_path_cost: Cost,
     /// Generation counter for lazy deletion.
     generation: u64,
 }
@@ -1360,7 +1414,7 @@ impl QueueItem {
         self.own_value + self.prereq_value
     }
 
-    fn total_cost(&self) -> usize {
+    fn total_cost(&self) -> Cost {
         self.own_cost + self.prereq_cost + self.file_path_cost
     }
 }
@@ -1383,8 +1437,8 @@ impl Ord for QueueItem {
         // Cross-multiplication avoids float division precision loss:
         // self_value / self_cost vs other_value / other_cost
         // becomes self_value * other_cost vs other_value * self_cost
-        let lhs = self.total_value() * other.total_cost() as f64;
-        let rhs = other.total_value() * self.total_cost() as f64;
+        let lhs = self.total_value() * other.total_cost().tokens as f64;
+        let rhs = other.total_value() * self.total_cost().tokens as f64;
         lhs.partial_cmp(&rhs)
             .unwrap_or(std::cmp::Ordering::Equal)
             // Deterministic tiebreaker: lower group_idx, then stage_kind, then n
@@ -1394,10 +1448,11 @@ impl Ord for QueueItem {
     }
 }
 
-/// Compute the token cost of a file path line.
-fn file_path_cost(relative_path: &Path) -> usize {
-    // Path line is just the relative path as text, plus a newline.
-    format::count_tokens(&format!("{}\n", relative_path.display()))
+/// Compute token and character cost of a file path line, including the
+/// separator newline emitted by render_scheduled before each file header.
+fn file_path_costs(relative_path: &Path) -> Cost {
+    let text = format!("\n{}\n", relative_path.display());
+    Cost::of(&text)
 }
 
 /// Enqueue (or re-enqueue) priority queue items for the given groups.
@@ -1409,13 +1464,15 @@ fn file_path_cost(relative_path: &Path) -> usize {
 ///
 /// Used for both initial queue construction (with empty state) and updates
 /// after an item is accepted (with partial state for affected groups only).
+#[allow(clippy::too_many_arguments)]
 fn enqueue_group_items(
     group_indices: &[usize],
     groups: &[Group],
     group_stages: &[Option<IncludedStage>],
-    file_path_costs: &[usize],
+    file_path_costs: &[Cost],
     files_shown: &HashSet<usize>,
     remaining_budget: usize,
+    remaining_char_budget: Option<usize>,
     queue: &mut ScheduleQueue,
 ) {
     for &group_idx in group_indices {
@@ -1445,22 +1502,22 @@ fn enqueue_group_items(
                     n,
                     group_stages[group_idx].as_ref(),
                 );
-                let fp_cost: usize = group
+                let fp_cost: Cost = group
                     .file_indices
                     .iter()
                     .filter(|fi| !files_shown.contains(fi))
                     .map(|&fi| file_path_costs[fi])
                     .sum();
 
-                let total_cost = own_cost + prereq_cost + fp_cost;
+                let total = own_cost + prereq_cost + fp_cost;
 
-                // Budget pruning: skip items that can't fit. Invalidate their
-                // generation so stale heap entries are ignored. For Doc/Body,
-                // total_cost is monotonically non-decreasing with n, so we
-                // can break the inner loop early. Safe: if conditions change
-                // (file paths shown, prereqs included), the group will be in
-                // affected_groups and items will be re-evaluated.
-                if total_cost > remaining_budget {
+                // Budget pruning: skip items that can't fit either budget.
+                // Invalidate their generation so stale heap entries are ignored.
+                // For Doc/Body, total_cost is monotonically non-decreasing with n,
+                // so we can break the inner loop early.
+                let exceeds_budget = total.tokens > remaining_budget
+                    || remaining_char_budget.is_some_and(|rcb| total.chars > rcb);
+                if exceeds_budget {
                     for invalidate_n in n..=max_n {
                         let item_gen = queue.next_generation();
                         queue.current_gen[group_idx].insert((stage_kind, invalidate_n), item_gen);
@@ -1492,6 +1549,7 @@ pub fn schedule(
     built: &BuiltGroups,
     root: &Path,
     files: &[PathBuf],
+    char_budget: Option<usize>,
 ) -> Schedule {
     let groups = &built.groups;
     let budget = built.budget;
@@ -1503,12 +1561,12 @@ pub fn schedule(
         }
     }
 
-    // Precompute file path costs
-    let file_path_costs: Vec<usize> = files
+    // Precompute file path costs (tokens and chars, including separator newline for chars)
+    let fp_costs: Vec<Cost> = files
         .iter()
         .map(|f| {
             let relative = f.strip_prefix(root).unwrap_or(f);
-            file_path_cost(relative)
+            file_path_costs(relative)
         })
         .collect();
 
@@ -1518,6 +1576,29 @@ pub fn schedule(
     for (group_idx, group) in groups.iter().enumerate() {
         for &fi in &group.file_indices {
             file_to_groups[fi].push(group_idx);
+        }
+    }
+
+    // Reserve budget for directory omission markers. Each top-level directory
+    // that ends up with no visible files gets a `dirname/\n` marker in the
+    // output. We conservatively reserve for all possible markers upfront —
+    // directories that become visible won't need markers, but the reserved
+    // budget stays consumed rather than being released (avoids cascading
+    // re-enqueue overhead from budget fluctuations).
+    let mut total_marker_cost = Cost::default();
+    {
+        let mut seen_dirs = HashSet::new();
+        for file in files {
+            let relative = file.strip_prefix(root).unwrap_or(file);
+            let mut components = relative.components();
+            if let Some(first) = components.next()
+                && components.next().is_some()
+            {
+                let top = PathBuf::from(first.as_os_str());
+                if seen_dirs.insert(top) {
+                    total_marker_cost += Cost::of(&format!("\n{}/\n", first.as_os_str().to_string_lossy()));
+                }
+            }
         }
     }
 
@@ -1531,18 +1612,20 @@ pub fn schedule(
     // Build all queue items
     let mut queue = ScheduleQueue::new(groups.len());
 
+    let mut remaining_budget = budget.saturating_sub(total_marker_cost.tokens);
+    let mut remaining_char_budget = char_budget.map(|cb| cb.saturating_sub(total_marker_cost.chars));
+
     let all_indices: Vec<usize> = (0..groups.len()).collect();
     enqueue_group_items(
         &all_indices,
         groups,
         &group_stages,
-        &file_path_costs,
+        &fp_costs,
         &files_shown,
-        budget,
+        remaining_budget,
+        remaining_char_budget,
         &mut queue,
     );
-
-    let mut remaining_budget = budget;
 
     while let Some(item) = queue.heap.pop() {
         // Lazy deletion: skip stale items
@@ -1574,16 +1657,19 @@ pub fn schedule(
             continue;
         }
 
-        let total_cost = item.total_cost();
-        if total_cost > remaining_budget {
+        let total = item.total_cost();
+        let exceeds_budget = total.tokens > remaining_budget
+            || remaining_char_budget.is_some_and(|rcb| total.chars > rcb);
+        if exceeds_budget {
             // This item doesn't fit. Try the next one.
-            // (Items are ordered by priority, not cost, so a cheaper item
-            // might still fit later.)
             continue;
         }
 
         // Include this item and all its prerequisites
-        remaining_budget -= total_cost;
+        remaining_budget -= total.tokens;
+        if let Some(ref mut rcb) = remaining_char_budget {
+            *rcb = rcb.saturating_sub(total.chars);
+        }
 
         // Mark file paths as shown, tracking which are newly shown
         let mut newly_shown_files: Vec<usize> = Vec::new();
@@ -1638,9 +1724,10 @@ pub fn schedule(
             &affected,
             groups,
             &group_stages,
-            &file_path_costs,
+            &fp_costs,
             &files_shown,
             remaining_budget,
+            remaining_char_budget,
             &mut queue,
         );
     }
@@ -1661,20 +1748,20 @@ pub fn schedule(
 ///   markers_at(n) - markers_at(n-1)
 /// which is non-positive for n >= 2. The telescoping sum across prerequisites
 /// ensures the total cost correctly reflects markers at the final included level.
-fn stage_cost(group: &Group, stage: StageKind, n: usize) -> usize {
+fn stage_cost(group: &Group, stage: StageKind, n: usize) -> Cost {
     match stage {
-        // FilePath has zero own_cost — its cost is handled via file_path_cost
+        // FilePath has zero own_cost — its cost is handled via file_path_costs
         // on the QueueItem, which correctly accounts for cross-group sharing.
-        StageKind::FilePath => 0,
-        StageKind::Names => group.symbols.iter().map(|s| s.name_tokens).sum(),
-        StageKind::Signatures => group.symbols.iter().map(|s| s.signature_tokens).sum(),
+        StageKind::FilePath => Cost::default(),
+        StageKind::Names => group.symbols.iter().map(|s| s.name).sum(),
+        StageKind::Signatures => group.symbols.iter().map(|s| s.signature).sum(),
         StageKind::Doc => {
             // Suppress truncation marker at the pre-comment/docstring split
             // point. The renderer emits these as two sections separated by
             // the signature; at n == pre_doc_count the pre-comments are fully
             // shown (no marker) and the docstring hasn't started (no marker).
-            line_stage_cost(group, n, |s| &s.doc_line_tokens, |s| &s.doc_marker_tokens, |s, n| {
-                let total = s.doc_line_tokens.len();
+            line_stage_cost(group, n, |s| &s.doc_lines, |s| &s.doc_markers, |s, n| {
+                let total = s.doc_lines.len();
                 !(total > s.pre_doc_count && n == s.pre_doc_count)
             })
         }
@@ -1682,7 +1769,7 @@ fn stage_cost(group: &Group, stage: StageKind, n: usize) -> usize {
         // children (e.g., class bodies containing individually-rendered
         // methods). Only count markers for symbols without nested children.
         StageKind::Body => {
-            line_stage_cost(group, n, |s| &s.body_line_tokens, |s| &s.body_marker_tokens, |s, _n| !s.body_has_nested)
+            line_stage_cost(group, n, |s| &s.body_lines, |s| &s.body_markers, |s, _n| !s.body_has_nested)
         }
     }
 }
@@ -1698,32 +1785,32 @@ fn stage_cost(group: &Group, stage: StageKind, n: usize) -> usize {
 fn line_stage_cost(
     group: &Group,
     n: usize,
-    get_lines: fn(&SymbolCosts) -> &Vec<usize>,
-    get_markers: fn(&SymbolCosts) -> &Vec<usize>,
+    get_lines: fn(&SymbolCosts) -> &[Cost],
+    get_markers: fn(&SymbolCosts) -> &[Cost],
     show_marker: fn(&SymbolCosts, usize) -> bool,
-) -> usize {
-    let line_cost: usize = group
+) -> Cost {
+    let line_cost: Cost = group
         .symbols
         .iter()
-        .filter_map(|s| get_lines(s).get(n - 1))
+        .filter_map(|s| get_lines(s).get(n - 1).copied())
         .sum();
-    let markers_at_n: usize = group
+    let markers_at_n: Cost = group
         .symbols
         .iter()
         .filter(|s| get_lines(s).len() > n && show_marker(s, n))
-        .map(|s| get_markers(s).get(n - 1).copied().unwrap_or(0))
+        .filter_map(|s| get_markers(s).get(n - 1).copied())
         .sum();
-    let markers_at_prev: usize = if n >= 2 {
+    let markers_at_prev: Cost = if n >= 2 {
         group
             .symbols
             .iter()
             .filter(|s| get_lines(s).len() > (n - 1) && show_marker(s, n - 1))
-            .map(|s| get_markers(s).get(n - 2).copied().unwrap_or(0))
+            .filter_map(|s| get_markers(s).get(n - 2).copied())
             .sum()
     } else {
-        0
+        Cost::default()
     };
-    (line_cost + markers_at_n).saturating_sub(markers_at_prev)
+    (line_cost + markers_at_n) - markers_at_prev
 }
 
 /// Compute prerequisite costs for an item, accounting for already-included stages.
@@ -1735,9 +1822,9 @@ fn compute_prereq_costs(
     stage_kind: StageKind,
     n: usize,
     included: Option<&IncludedStage>,
-) -> (f64, usize) {
+) -> (f64, Cost) {
     let mut prereq_value: f64 = 0.0;
-    let mut prereq_cost = 0usize;
+    let mut prereq_cost = Cost::default();
 
     let included_pos = included
         .and_then(|inc| stages.iter().position(|&s| s == inc.kind));

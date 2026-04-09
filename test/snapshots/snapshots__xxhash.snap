@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3998 tokens)
+budget: 4000 (3964 tokens)
 
 README.md
      1→# xxhash
@@ -87,7 +87,7 @@ LICENSE.txt
       →…
 
 bench_test.go
-     8→var benchmarks …
+     8→var benchmarks = []struct {
     19→func BenchmarkSum64(b *testing.B) {
     34→func BenchmarkSum64String(b *testing.B) {
     46→func BenchmarkDigestBytes(b *testing.B) {
@@ -105,11 +105,7 @@ dynamic/plugin.go
     15→	in …
     16→	want …
     19→func TestSum(t *testing.T) {
-    20→	got := xxhash.Sum64String(in)
-      →	…
     26→func TestDigest(t *testing.T) {
-    27→	for chunkSize := 1; chunkSize <= len(in); chunkSize++ {
-      →	…
 
 testall.sh
      2→set -eu -o pipefail
@@ -293,7 +289,7 @@ xxhash_test.go
     97→func TestReset(t *testing.T) {
    114→func TestResetWithSeed(t *testing.T) {
    131→func TestBinaryMarshaling(t *testing.T) {
-   168→var sink …
+   168→var sink uint64
    170→func TestAllocs(t *testing.T) {
 
 xxhash_unsafe.go
@@ -332,7 +328,7 @@ xxhashbench/go.sum
 
 xxhashbench/xxhashbench_test.go
     18→var sink uint64
-    20→var benchmarks …
+    20→var benchmarks = []struct {
    108→func BenchmarkHashes(b *testing.B) {
 
 xxhsum/xxhsum.go

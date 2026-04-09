@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7999 tokens)
+budget: 8000 (7907 tokens)
 
 README.md
      1→# sps
@@ -133,8 +133,6 @@ sps/src/cli.rs
     57→    pub async fn run …
 
 sps/src/main.rs
-    17→mod cli;
-    18→mod pipeline;
     57→async fn main …
 
 sps/src/pipeline/downloader.rs
@@ -143,7 +141,6 @@ sps/src/pipeline/downloader.rs
 
 sps/src/pipeline/planner.rs
     28→struct IntermediatePlan {
-    37→pub(crate) async fn fetch_target_definitions …
    192→    pub fn new …
    526→    pub async fn plan_operations …
 
@@ -461,7 +458,6 @@ sps-common/src/model/tap.rs
 sps-common/src/model/version.rs
     11→pub struct Version(semver::Version);
     14→    pub fn parse …
-    37→    type Err = SpsError;
 
 sps-common/src/pipeline.rs
     14→pub enum PipelinePackageType {
@@ -773,16 +769,11 @@ sps-net/Cargo.toml
      1→[package]
      2→name = "sps-net"
      3→version = "0.1.56"
-     4→edition = "2021"
       →…
     10→[dependencies]
     11→sps-common = "0.1.56"
     12→
-    13→tokio = { version = "1.47.1", features = ["full"] }
       →…
-
-sps-net/src/api.rs
-   160→async fn fetch_github_repo_info …
 
 sps-net/src/http.rs
     18→pub type ProgressCallback = Arc<dyn Fn(u64, Option<u64>) + Send + Sync>;

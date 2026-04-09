@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3990 tokens)
+budget: 4000 (3963 tokens)
 
 Cargo.toml
      1→[package]
@@ -290,7 +290,6 @@ src/schema/column.rs
    105→impl syn::parse::Parse for ColumnType {
    106→    fn parse(input: syn::parse::ParseStream) -> syn::Result<Self> {
    179→impl ColumnType {
-   180→    /// Expand to a fully qualified `#toasty::schema::db::Type::...` token stream.
    181→    pub(crate) fn expand_with(
    182→        &self,
    183→        toasty: &proc_macro2::TokenStream,

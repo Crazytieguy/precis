@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (4003 tokens)
+budget: 4000 (3947 tokens)
 
 README.md
     26→# D2TS - Differential Dataflow in TypeScript <!-- omit in toc -->
@@ -12,16 +12,13 @@ README.md
     31→
     32→D2TS can be used in conjunction with [ElectricSQL](https://electric-sql.com) to build data pipelines on top of [ShapeStreams](https://electric-sql.com/docs/api/clients/typescript#shapestream) that can be executed incrementally.
     33→
-    34→A D2TS pipeline is also fully type safe, inferring the types at each step of the pipeline, and supports auto-complete in your IDE.
-    35→
+      →…
     51→## Key Features
     88→## Quick Start
    200→## Examples
    210→## API
   1055→## Implementation Details
   1076→## References
-
-CHANGELOG.md
 
 src/d2.ts
     11→export type D2Options = {
@@ -166,7 +163,6 @@ src/operators/index.ts
     12→export * from './count.js'
     13→export * from './distinct.js'
     14→export * from './iterate.js'
-    15→export * from './keying.js'
       →…
 
 src/operators/iterate.ts
@@ -409,4 +405,3 @@ src/version-index.ts
     28→export class Index<K, V> implements IndexType<K, V> {
 
 tests/
-      →…

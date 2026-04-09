@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1997 tokens)
+budget: 2000 (1974 tokens)
 
 ast.rs
     10→pub enum Input<'a> {
@@ -113,6 +113,7 @@ fmt.rs
    167→    named: BTreeSet<IdentUnraw>,
    168→    first_unnamed: Option<TokenStream>,
    169→}
+   171→#[allow(clippy::unnecessary_wraps)]
    172→fn explicit_named_args(input: ParseStream) -> Result<FmtArguments> {
 
 generics.rs
@@ -145,6 +146,7 @@ lib.rs
     41→    let input = parse_macro_input!(input as DeriveInput);
     42→    expand::derive(&input).into()
     43→}
+    45→#[allow(non_camel_case_types)]
     46→struct private;
     49→    fn to_tokens …
 
@@ -154,17 +156,11 @@ scan_expr.rs
      6→enum Input {
      7→    Keyword(&'static str),
      8→    Punct(&'static str),
-     9→    ConsumeAny,
-    10→    ConsumeBinOp,
-    11→    ConsumeBrace,
-    12→    ConsumeDelimiter,
       →    …
     25→enum Action {
     26→    SetState(&'static [(Input, Action)]),
     27→    IncDepth,
-    28→    DecDepth,
-    29→    Finish,
-    30→}
+      →    …
     32→static INIT …
     63→static POSTFIX …
     76→static ASYNC …
