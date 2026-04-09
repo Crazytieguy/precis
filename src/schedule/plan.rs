@@ -3,7 +3,7 @@ use std::path::{Path, PathBuf};
 
 use crate::Corpus;
 
-use super::{BuiltGroups, FileRole, IncludedStage, StageKind};
+use super::{BuiltGroups, FileRole, StageCumulatives, StageKind};
 
 // ---------------------------------------------------------------------------
 // Render plan — pre-resolved output structure for the renderer
@@ -72,7 +72,7 @@ pub(super) fn top_level_dir(relative: &Path) -> Option<PathBuf> {
 
 /// Build a concrete render plan from solver decisions.
 ///
-/// Takes the raw solver output (per-group inclusion state and shown files)
+/// Takes the raw solver output (per-group inclusion positions and shown files)
 /// and converts it into an ordered render plan with per-symbol specs. The
 /// solver knows nothing about file ordering or directory marker placement —
 /// those presentation concerns are handled entirely here.
@@ -84,21 +84,21 @@ pub(super) fn build_render_plan(
     let groups = &built.groups;
     let files = corpus.files;
 
-    // 1. Resolve per-symbol render specs from group stages.
+    // 1. Resolve per-symbol render specs from group positions.
     let mut symbol_specs: Vec<Vec<Option<SymbolRenderSpec>>> = files
         .iter()
         .map(|f| vec![None; f.symbols.len()])
         .collect();
 
     for (group_idx, group) in groups.iter().enumerate() {
-        let included = match &result.group_stages[group_idx] {
-            Some(inc) => inc,
+        let pos = match result.group_positions[group_idx] {
+            Some(p) => p,
             None => continue,
         };
         let stages = group.key.kind_category.stage_sequence();
+        let spec = resolve_render_spec(pos, &group.cumulatives, stages);
         for sc in &group.symbols {
-            symbol_specs[sc.file_idx][sc.symbol_idx] =
-                Some(resolve_render_spec(included, stages));
+            symbol_specs[sc.file_idx][sc.symbol_idx] = Some(spec);
         }
     }
 
@@ -147,8 +147,6 @@ pub(super) fn build_render_plan(
     for &file_idx in &render_order {
         let relative = &files[file_idx].info.relative_path;
         // Emit invisible directory markers that sort before this file's top-level dir.
-        // Uses the first path component (directory name or filename for root files)
-        // as the sort anchor — not top_level_dir, which returns None for root files.
         if let Some(ftd) = relative.components().next().map(|c| PathBuf::from(c.as_os_str())) {
             for dir in &invisible_dirs {
                 if dir < &ftd && dirs_emitted.insert(dir.clone()) {
@@ -171,28 +169,41 @@ pub(super) fn build_render_plan(
     }
 }
 
-/// Resolve an `IncludedStage` into a concrete `SymbolRenderSpec` by checking
-/// what's covered in the kind's stage progression.
-fn resolve_render_spec(included: &IncludedStage, stages: &[StageKind]) -> SymbolRenderSpec {
-    let show_name = included.covers(stages, StageKind::Names, 1);
-    let show_sig = included.covers(stages, StageKind::Signatures, 1);
+/// Resolve a cumulative position into a concrete `SymbolRenderSpec`.
+///
+/// A stage is covered if it appears at or before the final entry's stage
+/// in the kind's stage sequence. For Doc/Body: if the final entry IS that
+/// stage, render at `n` lines; if it's a prerequisite (before the final
+/// stage), render fully (`usize::MAX`); otherwise 0.
+fn resolve_render_spec(
+    pos: usize,
+    cumulatives: &StageCumulatives,
+    stages: &[StageKind],
+) -> SymbolRenderSpec {
+    let entry = &cumulatives.entries[pos];
+    let final_kind = entry.stage;
+    let final_n = entry.n;
+    let final_seq_pos = stages.iter().position(|&s| s == final_kind).unwrap();
 
-    // For Doc/Body: if this is the *current* stage, show exactly n_lines.
-    // If it's covered as a prerequisite of a later stage, it's fully included
-    // (e.g., Doc is fully included when the solver stopped at Body(3)).
-    let show_doc = included.covers(stages, StageKind::Doc, 1);
-    let doc_lines = if included.kind == StageKind::Doc {
-        included.n_lines
-    } else if show_doc {
+    let is_covered = |sk: StageKind| -> bool {
+        stages.iter().position(|&s| s == sk)
+            .is_some_and(|p| p <= final_seq_pos)
+    };
+
+    let show_name = is_covered(StageKind::Names);
+    let show_sig = is_covered(StageKind::Signatures);
+
+    let doc_lines = if final_kind == StageKind::Doc {
+        final_n
+    } else if is_covered(StageKind::Doc) {
         usize::MAX
     } else {
         0
     };
 
-    let show_body = included.covers(stages, StageKind::Body, 1);
-    let body_lines = if included.kind == StageKind::Body {
-        included.n_lines
-    } else if show_body {
+    let body_lines = if final_kind == StageKind::Body {
+        final_n
+    } else if is_covered(StageKind::Body) {
         usize::MAX
     } else {
         0

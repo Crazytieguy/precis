@@ -4,10 +4,7 @@ use std::path::Path;
 use crate::Corpus;
 
 use super::plan::{directory_marker_text, top_level_dir};
-use super::value::compute_value;
-use super::{
-    BuiltGroups, Cost, Group, IncludedStage, SolverResult, StageKind,
-};
+use super::{BuiltGroups, Cost, Group, SolverResult};
 
 // ---------------------------------------------------------------------------
 // Priority queue data structures
@@ -17,9 +14,9 @@ use super::{
 struct ScheduleQueue {
     /// Monotonic counter; each enqueued/invalidated item gets a unique value.
     generation: u64,
-    /// Per-group map from (stage_kind, n) to the latest generation. Heap
+    /// Per-group map from cumulative position to the latest generation. Heap
     /// entries whose generation doesn't match are stale and get skipped.
-    current_gen: Vec<HashMap<(StageKind, usize), u64>>,
+    current_gen: Vec<HashMap<usize, u64>>,
     heap: BinaryHeap<QueueItem>,
 }
 
@@ -43,15 +40,14 @@ impl ScheduleQueue {
 #[derive(Debug)]
 struct QueueItem {
     group_idx: usize,
-    stage_kind: StageKind,
-    /// For Doc/Body: which line number (1-indexed) this item represents.
-    /// For Names/Signatures: always 1.
-    n: usize,
-    own_value: f64,
-    own_cost: Cost,
-    /// Sum of values from unmet prerequisite stages.
-    prereq_value: f64,
-    prereq_cost: Cost,
+    /// Position in the group's cumulative array that this item targets.
+    cumulative_pos: usize,
+    /// Incremental value from the group's current position to this target
+    /// (precomputed from cumulative prefix sums, excludes file path value).
+    value: f64,
+    /// Incremental cost from the group's current position to this target
+    /// (precomputed from cumulative prefix sums, excludes file path cost).
+    cost: Cost,
     /// Cost of file paths not yet shown (for files this group touches).
     file_path_cost: Cost,
     /// Generation counter for lazy deletion.
@@ -59,12 +55,8 @@ struct QueueItem {
 }
 
 impl QueueItem {
-    fn total_value(&self) -> f64 {
-        self.own_value + self.prereq_value
-    }
-
     fn total_cost(&self) -> Cost {
-        self.own_cost + self.prereq_cost + self.file_path_cost
+        self.cost + self.file_path_cost
     }
 }
 
@@ -86,14 +78,14 @@ impl Ord for QueueItem {
         // Cross-multiplication avoids float division precision loss:
         // self_value / self_cost vs other_value / other_cost
         // becomes self_value * other_cost vs other_value * self_cost
-        let lhs = self.total_value() * other.total_cost().tokens as f64;
-        let rhs = other.total_value() * self.total_cost().tokens as f64;
+        let lhs = self.value * other.total_cost().tokens as f64;
+        let rhs = other.value * self.total_cost().tokens as f64;
         lhs.partial_cmp(&rhs)
             .unwrap_or(std::cmp::Ordering::Equal)
-            // Deterministic tiebreaker: lower group_idx, then stage_kind, then n
+            // Deterministic tiebreaker: lower group_idx, then higher
+            // cumulative_pos (prefer more content when ratios are equal).
             .then_with(|| other.group_idx.cmp(&self.group_idx))
-            .then_with(|| other.stage_kind.cmp(&self.stage_kind))
-            .then_with(|| other.n.cmp(&self.n))
+            .then_with(|| self.cumulative_pos.cmp(&other.cumulative_pos))
     }
 }
 
@@ -108,80 +100,24 @@ fn file_path_costs(relative_path: &Path) -> Cost {
     Cost::of(&text)
 }
 
-/// Compute prerequisite costs for an item, accounting for already-included stages.
-/// Pass `None` for `included` at initial queue construction (no stages included yet).
-fn compute_prereq_costs(
-    group: &Group,
-    stages: &[StageKind],
-    stage_pos: usize,
-    stage_kind: StageKind,
-    n: usize,
-    included: Option<&IncludedStage>,
-) -> (f64, Cost) {
-    let mut prereq_value: f64 = 0.0;
-    let mut prereq_cost = Cost::default();
-
-    let included_pos = included
-        .and_then(|inc| stages.iter().position(|&s| s == inc.kind));
-    let included_n = included.map(|inc| inc.n_lines).unwrap_or(0);
-
-    for (pos, &sk) in stages.iter().enumerate() {
-        if pos >= stage_pos && sk == stage_kind {
-            // Include earlier lines of the same stage that aren't yet included
-            let already_included_n = if included_pos == Some(pos) {
-                included_n
-            } else if included_pos.is_some_and(|ip| ip > pos) {
-                // This entire stage was included as a prereq of a later stage
-                group.max_n(sk)
-            } else {
-                0
-            };
-            for earlier_n in (already_included_n + 1)..n {
-                prereq_value += compute_value(group, sk, earlier_n);
-                prereq_cost += group.stage_cost(sk, earlier_n);
-            }
-            break;
-        }
-
-        if included_pos.is_some_and(|ip| ip > pos) {
-            continue; // Fully included as a prereq of a later stage
-        }
-
-        // If this stage is the current included stage, only pay for
-        // lines beyond what's already included
-        let start_n = if included_pos == Some(pos) {
-            included_n + 1
-        } else {
-            1
-        };
-
-        for line_n in start_n..=group.max_n(sk) {
-            prereq_value += compute_value(group, sk, line_n);
-            prereq_cost += group.stage_cost(sk, line_n);
-        }
-    }
-
-    (prereq_value, prereq_cost)
-}
-
 // ---------------------------------------------------------------------------
 // Queue population
 // ---------------------------------------------------------------------------
 
 /// Enqueue (or re-enqueue) priority queue items for the given groups.
 ///
-/// Computes values, costs, and prerequisite state for each (group, stage, n)
-/// triple. Skips items already included (based on `group_stages`) and items
-/// that exceed `remaining_budget`. For over-budget items, invalidates their
-/// generation entries so stale heap entries are ignored.
+/// For each group, iterates cumulative positions beyond the current inclusion
+/// state, computing incremental cost/value via O(1) prefix-sum subtraction.
+/// File path costs are still computed dynamically from `files_shown`.
 ///
-/// Used for both initial queue construction (with empty state) and updates
-/// after an item is accepted (with partial state for affected groups only).
+/// Skips items that exceed `remaining_budget` (with early break since costs
+/// are monotonically non-decreasing with position). Invalidates over-budget
+/// items' generation entries so stale heap entries are ignored.
 #[allow(clippy::too_many_arguments)]
 fn enqueue_group_items(
     group_indices: &[usize],
     groups: &[Group],
-    group_stages: &[Option<IncludedStage>],
+    group_positions: &[Option<usize>],
     fp_costs: &[Cost],
     files_shown: &HashSet<usize>,
     remaining_budget: usize,
@@ -190,69 +126,56 @@ fn enqueue_group_items(
 ) {
     for &group_idx in group_indices {
         let group = &groups[group_idx];
-        let stages = group.key.kind_category.stage_sequence();
-        for (stage_pos, &stage_kind) in stages.iter().enumerate() {
-            let max_n = group.max_n(stage_kind);
-            if max_n == 0 {
+        let cumulatives = &group.cumulatives;
+        let current_pos = group_positions[group_idx];
+
+        let start = current_pos.map(|p| p + 1).unwrap_or(0);
+
+        // File path cost is the same for all positions within this group.
+        let fp_cost: Cost = group
+            .file_indices
+            .iter()
+            .filter(|fi| !files_shown.contains(fi))
+            .map(|&fi| fp_costs[fi])
+            .sum();
+
+        for pos in start..cumulatives.len() {
+            let incr_cost = cumulatives.incremental_cost(current_pos, pos);
+            let incr_value = cumulatives.incremental_value(current_pos, pos);
+
+            let total = incr_cost + fp_cost;
+
+            // Budget pruning: skip items that can't fit either budget.
+            // Costs are monotonically non-decreasing with position, so
+            // we can break the loop early.
+            let exceeds_budget = total.tokens > remaining_budget
+                || remaining_char_budget.is_some_and(|rcb| total.chars > rcb);
+            if exceeds_budget {
+                for invalidate_pos in pos..cumulatives.len() {
+                    let item_gen = queue.next_generation();
+                    queue.current_gen[group_idx].insert(invalidate_pos, item_gen);
+                }
+                break;
+            }
+
+            // Skip zero-value items (e.g. Import Names with value 0).
+            if incr_value <= 0.0 {
+                let item_gen = queue.next_generation();
+                queue.current_gen[group_idx].insert(pos, item_gen);
                 continue;
             }
-            for n in 1..=max_n {
-                // Skip items already included
-                if group_stages[group_idx]
-                    .as_ref()
-                    .is_some_and(|inc| inc.covers(stages, stage_kind, n))
-                {
-                    continue;
-                }
 
-                let own_value = compute_value(group, stage_kind, n);
-                let own_cost = group.stage_cost(stage_kind, n);
-                let (prereq_value, prereq_cost) = compute_prereq_costs(
-                    group,
-                    stages,
-                    stage_pos,
-                    stage_kind,
-                    n,
-                    group_stages[group_idx].as_ref(),
-                );
-                let fp_cost: Cost = group
-                    .file_indices
-                    .iter()
-                    .filter(|fi| !files_shown.contains(fi))
-                    .map(|&fi| fp_costs[fi])
-                    .sum();
+            let item_gen = queue.next_generation();
+            queue.current_gen[group_idx].insert(pos, item_gen);
 
-                let total = own_cost + prereq_cost + fp_cost;
-
-                // Budget pruning: skip items that can't fit either budget.
-                // Invalidate their generation so stale heap entries are ignored.
-                // For Doc/Body, total_cost is monotonically non-decreasing with n,
-                // so we can break the inner loop early.
-                let exceeds_budget = total.tokens > remaining_budget
-                    || remaining_char_budget.is_some_and(|rcb| total.chars > rcb);
-                if exceeds_budget {
-                    for invalidate_n in n..=max_n {
-                        let item_gen = queue.next_generation();
-                        queue.current_gen[group_idx].insert((stage_kind, invalidate_n), item_gen);
-                    }
-                    break;
-                }
-
-                let item_gen = queue.next_generation();
-                queue.current_gen[group_idx].insert((stage_kind, n), item_gen);
-
-                queue.heap.push(QueueItem {
-                    group_idx,
-                    stage_kind,
-                    n,
-                    own_value,
-                    own_cost,
-                    prereq_value,
-                    prereq_cost,
-                    file_path_cost: fp_cost,
-                    generation: item_gen,
-                });
-            }
+            queue.heap.push(QueueItem {
+                group_idx,
+                cumulative_pos: pos,
+                value: incr_value,
+                cost: incr_cost,
+                file_path_cost: fp_cost,
+                generation: item_gen,
+            });
         }
     }
 }
@@ -263,7 +186,7 @@ fn enqueue_group_items(
 
 /// Run the greedy scheduling algorithm.
 ///
-/// Returns raw solver decisions (per-group inclusion state and shown files).
+/// Returns raw solver decisions (per-group inclusion position and shown files).
 /// The caller passes these to [`super::plan::build_render_plan`] to construct
 /// the concrete render plan with file ordering and directory markers.
 pub(super) fn solve(
@@ -290,12 +213,7 @@ pub(super) fn solve(
         }
     }
 
-    // Reserve budget for directory omission markers. Each top-level directory
-    // that ends up with no visible files gets a `dirname/\n` marker in the
-    // output. We conservatively reserve for all possible markers upfront —
-    // directories that become visible won't need markers, but the reserved
-    // budget stays consumed rather than being released (avoids cascading
-    // re-enqueue overhead from budget fluctuations).
+    // Reserve budget for directory omission markers.
     let mut total_marker_cost = Cost::default();
     {
         let mut seen_dirs = HashSet::new();
@@ -311,9 +229,8 @@ pub(super) fn solve(
     // Track which files have been "shown" (path cost already paid)
     let mut files_shown: HashSet<usize> = HashSet::new();
 
-    // Track which (group, stage, n) items have been included
-    // For each group: the highest included stage and line count
-    let mut group_stages: Vec<Option<IncludedStage>> = vec![None; groups.len()];
+    // Track per-group inclusion position in the cumulative array.
+    let mut group_positions: Vec<Option<usize>> = vec![None; groups.len()];
 
     // Build all queue items
     let mut queue = ScheduleQueue::new(groups.len());
@@ -325,7 +242,7 @@ pub(super) fn solve(
     enqueue_group_items(
         &all_indices,
         groups,
-        &group_stages,
+        &group_positions,
         &fp_costs,
         &files_shown,
         remaining_budget,
@@ -336,29 +253,20 @@ pub(super) fn solve(
     while let Some(item) = queue.heap.pop() {
         // Lazy deletion: skip stale items
         let current = queue.current_gen[item.group_idx]
-            .get(&(item.stage_kind, item.n));
+            .get(&item.cumulative_pos);
         match current {
             Some(&g) if g == item.generation => {}
             _ => continue,
         }
 
         // Skip zero-value items — these shouldn't consume budget.
-        if item.total_value() <= 0.0 {
+        if item.value <= 0.0 {
             continue;
         }
 
-        // Skip if this item's stage is already covered by the group's current
-        // included stage. This prevents double-deduction when a high-level item
-        // (e.g. Doc(3)) is included before a lower-level item (e.g. Names):
-        // the high-level item pays for Names as a prerequisite, but the original
-        // Names heap entry still has a valid generation number. Without this
-        // check, popping that stale Names entry would deduct its cost again.
-        if group_stages[item.group_idx]
-            .as_ref()
-            .is_some_and(|inc| {
-                let stages = groups[item.group_idx].key.kind_category.stage_sequence();
-                inc.covers(stages, item.stage_kind, item.n)
-            })
+        // Skip if this position is already covered by the group's current state.
+        if group_positions[item.group_idx]
+            .is_some_and(|pos| item.cumulative_pos <= pos)
         {
             continue;
         }
@@ -367,7 +275,6 @@ pub(super) fn solve(
         let exceeds_budget = total.tokens > remaining_budget
             || remaining_char_budget.is_some_and(|rcb| total.chars > rcb);
         if exceeds_budget {
-            // This item doesn't fit. Try the next one.
             continue;
         }
 
@@ -385,38 +292,12 @@ pub(super) fn solve(
             }
         }
 
-        // Update group stage: include all prerequisites up to this item
-        let group = &groups[item.group_idx];
-        let stages = group.key.kind_category.stage_sequence();
-        // Find the position of this stage in the progression
-        let stage_pos = stages.iter().position(|&s| s == item.stage_kind).unwrap();
-        for (pos, &sk) in stages.iter().enumerate() {
-            let target_n = if sk == item.stage_kind {
-                item.n
-            } else if pos < stage_pos {
-                // Prerequisite stage: include all its lines
-                group.max_n(sk)
-            } else {
-                continue;
-            };
-            if target_n == 0 {
-                continue;
-            }
-            let should_update = group_stages[item.group_idx]
-                .as_ref()
-                .is_none_or(|cs| !cs.covers(stages, sk, target_n));
-            if should_update {
-                group_stages[item.group_idx] = Some(IncludedStage {
-                    kind: sk,
-                    n_lines: target_n,
-                });
-            }
-        }
+        // Update group state: advance to the accepted position
+        group_positions[item.group_idx] = Some(item.cumulative_pos);
 
-        // Update affected items in the queue. Only two kinds of groups need updates:
-        // 1. The same group (prerequisite costs changed)
-        // 2. Groups sharing *newly shown* files (file path costs just decreased)
-        // We use file_to_groups to find case 2 efficiently instead of scanning all groups.
+        // Re-enqueue affected items. Two kinds of groups need updates:
+        // 1. The same group (current position changed → new incremental costs)
+        // 2. Groups sharing *newly shown* files (file path costs decreased)
         let mut affected_groups: HashSet<usize> = HashSet::new();
         affected_groups.insert(item.group_idx);
         for &fi in &newly_shown_files {
@@ -429,7 +310,7 @@ pub(super) fn solve(
         enqueue_group_items(
             &affected,
             groups,
-            &group_stages,
+            &group_positions,
             &fp_costs,
             &files_shown,
             remaining_budget,
@@ -439,7 +320,7 @@ pub(super) fn solve(
     }
 
     SolverResult {
-        group_stages,
+        group_positions,
         files_shown,
     }
 }

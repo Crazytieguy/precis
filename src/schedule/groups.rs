@@ -127,8 +127,7 @@ pub fn build_groups(
                     base_importance,
                     names_cost: Cost::default(),
                     signatures_cost: Cost::default(),
-                    doc_layer_costs: Vec::new(),
-                    body_layer_costs: Vec::new(),
+                    cumulatives: Default::default(),
                 }
             });
             group.file_indices.insert(sref.file_idx);
@@ -141,9 +140,9 @@ pub fn build_groups(
     let mut groups: Vec<Group> = group_map.into_values().collect();
     groups.sort_by(|a, b| a.key.cmp(&b.key));
 
-    // Phase 2 (parallel): compute doc/body layer costs per group with budget-aware truncation.
+    // Phase 2 (parallel): build cumulative prefix sums per group with budget-aware truncation.
     groups.par_iter_mut().for_each(|group| {
-        cost::fill_layer_costs(group, &all_lines, files, budget);
+        cost::build_cumulatives(group, &all_lines, files, budget);
     });
 
     BuiltGroups { groups, budget }

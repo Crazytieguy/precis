@@ -211,6 +211,30 @@ pub struct SymbolRef {
     pub symbol_idx: usize,
 }
 
+/// One position in a group's cumulative prefix-sum array.
+#[derive(Clone, Copy)]
+pub(super) struct CumulativeEntry {
+    /// What (stage, n) this position represents.
+    pub stage: StageKind,
+    pub n: usize,
+    /// Prefix sum of cost up to and including this entry.
+    pub cost: Cost,
+    /// Prefix sum of value up to and including this entry.
+    pub value: f64,
+}
+
+/// Precomputed cumulative cost/value prefix sums for a group's linear stage
+/// progression. Each position represents one schedulable item (e.g. Names(1),
+/// Signatures(1), Doc(1), Doc(2), Body(1), etc.).
+///
+/// The solver uses these to compute incremental cost/value from the current
+/// inclusion state to any target position in O(1) via subtraction, eliminating
+/// the need for on-the-fly prerequisite cost computation.
+#[derive(Default)]
+pub(super) struct StageCumulatives {
+    pub entries: Vec<CumulativeEntry>,
+}
+
 /// A group of similarly-valued symbols that always receive the same treatment.
 pub struct Group {
     pub key: GroupKey,
@@ -222,16 +246,15 @@ pub struct Group {
     /// in `build_groups`, read by `compute_value` on every call.
     pub(super) base_importance: f64,
     /// Pre-aggregated cost of the Names stage (sum of all symbol name costs).
+    /// Accumulated during phase 1 (parallel), consumed by `build_cumulatives`.
     pub(super) names_cost: Cost,
     /// Pre-aggregated cost of the Signatures stage (sum of all symbol
     /// signature-beyond-name costs).
+    /// Accumulated during phase 1 (parallel), consumed by `build_cumulatives`.
     pub(super) signatures_cost: Cost,
-    /// Pre-aggregated net cost per doc layer. `doc_layer_costs[n-1]` is the
-    /// incremental cost of showing doc layer n (content + truncation marker
-    /// delta). Computed during group construction with budget-aware truncation.
-    pub(super) doc_layer_costs: Vec<Cost>,
-    /// Pre-aggregated net cost per body layer (same structure as doc).
-    pub(super) body_layer_costs: Vec<Cost>,
+    /// Cumulative prefix sums for the group's linear stage progression.
+    /// Built during phase 2 by `cost::build_cumulatives`.
+    pub(super) cumulatives: StageCumulatives,
 }
 
 /// Groups with their build-time budget. The budget determines how many doc/body
@@ -241,30 +264,28 @@ pub struct BuiltGroups {
     pub budget: usize,
 }
 
-impl Group {
-    /// Max line count for a Doc/Body stage. Returns 1 for Names/Signatures/FilePath.
-    /// For Doc/Body, this is the number of pre-aggregated layer costs computed
-    /// during group construction (capped by budget-aware truncation).
-    pub(super) fn max_n(&self, stage: StageKind) -> usize {
-        match stage {
-            StageKind::FilePath | StageKind::Names | StageKind::Signatures => 1,
-            StageKind::Doc => self.doc_layer_costs.len(),
-            StageKind::Body => self.body_layer_costs.len(),
+impl StageCumulatives {
+    /// Number of schedulable positions in this group's progression.
+    pub fn len(&self) -> usize {
+        self.entries.len()
+    }
+
+    /// Incremental cost from the current inclusion position to a target position.
+    /// `current` is `None` (nothing included) or `Some(pos)`.
+    pub fn incremental_cost(&self, current: Option<usize>, target: usize) -> Cost {
+        let target_cost = self.entries[target].cost;
+        match current {
+            Some(c) => target_cost - self.entries[c].cost,
+            None => target_cost,
         }
     }
 
-    /// Pre-aggregated cost of a stage at level n. O(1) lookup into costs
-    /// computed during group construction — the solver never iterates
-    /// per-symbol cost arrays.
-    pub(super) fn stage_cost(&self, stage: StageKind, n: usize) -> Cost {
-        match stage {
-            // FilePath has zero own_cost — its cost is handled via file_path_costs
-            // on the QueueItem, which correctly accounts for cross-group sharing.
-            StageKind::FilePath => Cost::default(),
-            StageKind::Names => self.names_cost,
-            StageKind::Signatures => self.signatures_cost,
-            StageKind::Doc => self.doc_layer_costs.get(n - 1).copied().unwrap_or_default(),
-            StageKind::Body => self.body_layer_costs.get(n - 1).copied().unwrap_or_default(),
+    /// Incremental value from the current inclusion position to a target position.
+    pub fn incremental_value(&self, current: Option<usize>, target: usize) -> f64 {
+        let target_value = self.entries[target].value;
+        match current {
+            Some(c) => target_value - self.entries[c].value,
+            None => target_value,
         }
     }
 }
@@ -272,36 +293,11 @@ impl Group {
 /// Raw output from the greedy solver, before render plan construction.
 /// Contains per-group inclusion decisions and which files have content.
 pub(super) struct SolverResult {
-    /// Per-group inclusion state. `None` = group not included.
-    pub group_stages: Vec<Option<IncludedStage>>,
+    /// Per-group inclusion position in the cumulative array.
+    /// `None` = group not included.
+    pub group_positions: Vec<Option<usize>>,
     /// Files that have at least one included symbol (path cost already paid).
     pub files_shown: HashSet<usize>,
-}
-
-/// What stage a group has been included up to. Used by the solver to track
-/// inclusion state and by the plan builder to resolve [`SymbolRenderSpec`]s.
-#[derive(Debug, Clone, Copy)]
-pub(super) struct IncludedStage {
-    pub(super) kind: StageKind,
-    /// For Doc/Body stages: how many lines to show. Ignored for Names/Signatures.
-    pub(super) n_lines: usize,
-}
-
-impl IncludedStage {
-    /// Check if a given (stage_kind, n) is fully covered by this inclusion.
-    ///
-    /// A stage item is covered if it's earlier in the progression than the
-    /// included stage, or if it's the same stage with n <= the included n_lines.
-    /// Use `n = 1` to test whether a stage is included at all.
-    pub(super) fn covers(&self, stages: &[StageKind], stage_kind: StageKind, n: usize) -> bool {
-        let Some(inc_pos) = stages.iter().position(|&s| s == self.kind) else {
-            return false;
-        };
-        let Some(this_pos) = stages.iter().position(|&s| s == stage_kind) else {
-            return false;
-        };
-        this_pos < inc_pos || (this_pos == inc_pos && n <= self.n_lines)
-    }
 }
 
 #[cfg(test)]
