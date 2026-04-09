@@ -1,6 +1,6 @@
+use crate::format;
 use crate::layout;
 use crate::parse;
-use crate::render;
 
 use super::value::compute_value;
 use super::{Cost, CumulativeEntry, Group, StageCumulatives, StageKind, SymbolRef};
@@ -43,7 +43,7 @@ fn layer_source_line(
 
 /// Token cost of the truncation marker that would appear after a given source line.
 fn truncation_marker_cost(source_line: &str) -> Cost {
-    let text = render::truncation_marker(source_line);
+    let text = format::truncation_marker(source_line);
     Cost::of(&text)
 }
 
@@ -65,9 +65,9 @@ pub(super) fn compute_name_sig_costs(
         let prefix_len = sym.composed_prefix_lens[0].min(line.len());
         let has_more = sym.composed_prefix_lens.len() > 1;
         let name_text = if has_more {
-            format!("{} …\n", render::fmt_line(sym_line_0, &line[..prefix_len]).trim_end())
+            format!("{} …\n", format::fmt_line(sym_line_0, &line[..prefix_len]).trim_end())
         } else {
-            render::fmt_line(sym_line_0, &line[..prefix_len])
+            format::fmt_line(sym_line_0, &line[..prefix_len])
         };
         return (
             SymbolRef { file_idx, symbol_idx },
@@ -80,10 +80,10 @@ pub(super) fn compute_name_sig_costs(
 
     let name = if is_section {
         let line = layout::strip_heading_badges(lines.get(layout.sym_line_0).copied().unwrap_or(""));
-        let text = render::fmt_line(layout.sym_line_0, line);
+        let text = format::fmt_line(layout.sym_line_0, line);
         Cost::of(&text)
     } else {
-        let name_line = render::format_symbol_name(sym, lines);
+        let name_line = format::format_symbol_name(sym, lines);
         let text = format!("{} …\n", name_line);
         Cost::of(&text)
     };
@@ -95,7 +95,7 @@ pub(super) fn compute_name_sig_costs(
         } else {
             line
         };
-        let text = render::fmt_line(i, line);
+        let text = format::fmt_line(i, line);
         sig_formatted += Cost::of(&text);
     }
     let signature = sig_formatted - name;
@@ -207,15 +207,15 @@ pub(super) fn build_cumulatives(
                             let prev_end = pl[n - 1].min(line.len());
                             let curr_end = pl[n].min(line.len());
                             let slice = &line[prev_end..curr_end];
-                            let slice_tokens = render::count_tokens(slice);
+                            let slice_tokens = format::count_tokens(slice);
 
                             let left_start = line.floor_char_boundary(prev_end.saturating_sub(BPE_WINDOW));
                             let right_end = line.ceil_char_boundary((prev_end + BPE_WINDOW).min(curr_end));
                             let left = &line[left_start..prev_end];
                             let right = &line[prev_end..right_end];
                             let joint = [left, right].concat();
-                            let correction = (render::count_tokens(left) + render::count_tokens(right))
-                                .saturating_sub(render::count_tokens(&joint));
+                            let correction = (format::count_tokens(left) + format::count_tokens(right))
+                                .saturating_sub(format::count_tokens(&joint));
                             let lt = slice_tokens.saturating_sub(correction);
 
                             layer_content += Cost::new(lt, curr_end - prev_end);
@@ -240,7 +240,7 @@ pub(super) fn build_cumulatives(
                             break;
                         }
 
-                        let fmt = render::fmt_line(src_line_idx, line);
+                        let fmt = format::fmt_line(src_line_idx, line);
                         let line_cost = Cost::of(&fmt);
                         let marker_cost = truncation_marker_cost(line);
 

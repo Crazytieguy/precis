@@ -10,8 +10,8 @@ mod file_info;
 use std::collections::HashSet;
 use std::path::PathBuf;
 
+use crate::format;
 use crate::parse;
-use crate::render;
 use crate::Corpus;
 
 pub use classify::{FileCategory, FileRole};
@@ -169,7 +169,7 @@ impl Cost {
 
     /// Compute token and character cost of a rendered text string.
     pub(super) fn of(text: &str) -> Self {
-        Self { tokens: render::count_tokens(text), chars: text.len() }
+        Self { tokens: format::count_tokens(text), chars: text.len() }
     }
 }
 

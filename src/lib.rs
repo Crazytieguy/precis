@@ -1,3 +1,4 @@
+pub mod format;
 pub mod layout;
 pub mod parse;
 pub mod render;
@@ -100,7 +101,7 @@ impl<'a> Corpus<'a> {
         let built = schedule::build_groups(self, budget);
         let sched = schedule::schedule(&built, self, char_budget);
         let output = render::render_scheduled(self, &sched);
-        let actual = render::count_tokens(&output);
+        let actual = format::count_tokens(&output);
         (output, actual)
     }
 }
@@ -200,7 +201,7 @@ mod tests {
         let mut prev_tokens = 0;
         for budget in [10, 50, 100, 200, 500, 1000, 5000] {
             let output = corpus.render(budget, None);
-            let tokens = render::count_tokens(&output);
+            let tokens = format::count_tokens(&output);
             assert!(
                 tokens >= prev_tokens,
                 "Budget monotonicity violated at budget {}: {} < {}",
