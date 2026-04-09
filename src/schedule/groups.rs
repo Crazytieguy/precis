@@ -6,6 +6,7 @@ use rayon::prelude::*;
 use crate::layout;
 use crate::parse;
 use crate::render;
+use crate::Corpus;
 
 use super::classify::{
     detect_heading_depth, is_autogen_api_doc, is_boilerplate_heading, is_config_file,
@@ -21,13 +22,11 @@ use super::{
 /// cumulative cost exceeds `budget` are skipped (they can never be scheduled).
 /// The returned `BuiltGroups` carries the budget so `schedule()` can enforce it.
 pub fn build_groups(
-    root: &Path,
-    files: &[std::path::PathBuf],
-    sources: &[Option<String>],
-    all_symbols: &[Vec<parse::Symbol>],
-    layouts: &[Vec<layout::SymbolLayout>],
+    corpus: &Corpus<'_>,
     budget: usize,
 ) -> BuiltGroups {
+    let &Corpus { root, files, sources, all_symbols, layouts } = corpus;
+
     // Pre-compute lines for all files (needed for deferred doc/body tokenization).
     let all_lines: Vec<Vec<&str>> = sources
         .iter()

@@ -1,5 +1,5 @@
 use std::collections::{BTreeSet, HashSet};
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 use std::sync::LazyLock;
 
 use tiktoken_rs::CoreBPE;
@@ -7,6 +7,7 @@ use tiktoken_rs::CoreBPE;
 use crate::layout::{self, SymbolLayout};
 use crate::parse;
 use crate::schedule::{FileRole, Group, IncludedStage, Schedule, StageKind};
+use crate::Corpus;
 
 /// Shared BPE tokenizer instance (o200k_base, used by GPT-4o / Claude-class models).
 static BPE: LazyLock<CoreBPE> = LazyLock::new(|| tiktoken_rs::o200k_base().unwrap());
@@ -103,14 +104,12 @@ fn find_word(needle: &str, haystack: &str) -> Option<usize> {
 
 /// Render output from a computed schedule.
 pub fn render_scheduled(
-    root: &Path,
-    files: &[PathBuf],
-    sources: &[Option<String>],
-    all_symbols: &[Vec<parse::Symbol>],
-    layouts: &[Vec<SymbolLayout>],
+    corpus: &Corpus<'_>,
     groups: &[Group],
     sched: &Schedule,
 ) -> String {
+    let &Corpus { root, files, sources, all_symbols, layouts } = corpus;
+
     let mut out = String::new();
 
     // Render order: README first, then project manifests, then alphabetical.

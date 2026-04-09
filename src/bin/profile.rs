@@ -6,7 +6,7 @@
 use std::path::Path;
 use std::time::Instant;
 
-use precis::{layout, parse, render, schedule, walk};
+use precis::{layout, parse, render, schedule, walk, Corpus};
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
@@ -54,19 +54,22 @@ fn main() {
     let layouts = layout::compute_all_layouts(&files, &sources, &all_symbols);
     stages.push(("layout", t.elapsed()));
 
+    // Build corpus for remaining stages
+    let corpus = Corpus { root: &root, files: &files, sources: &sources, all_symbols: &all_symbols, layouts: &layouts };
+
     // 5. Build groups
     let t = Instant::now();
-    let built = schedule::build_groups(&root, &files, &sources, &all_symbols, &layouts, budget);
+    let built = schedule::build_groups(&corpus, budget);
     stages.push(("groups", t.elapsed()));
 
     // 6. Schedule
     let t = Instant::now();
-    let sched = schedule::schedule(&built, &root, &files, None);
+    let sched = schedule::schedule(&built, &corpus, None);
     stages.push(("schedule", t.elapsed()));
 
     // 7. Render
     let t = Instant::now();
-    let output = render::render_scheduled(&root, &files, &sources, &all_symbols, &layouts, &built.groups, &sched);
+    let output = render::render_scheduled(&corpus, &built.groups, &sched);
     stages.push(("render", t.elapsed()));
 
     // 8. Count tokens

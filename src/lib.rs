@@ -8,6 +8,24 @@ use std::path::{Path, PathBuf};
 
 use rayon::prelude::*;
 
+// ---------------------------------------------------------------------------
+// Corpus — bundled per-file data for the schedule/render pipeline
+// ---------------------------------------------------------------------------
+
+/// Borrowed view of all per-file data, passed through the schedule/render pipeline.
+///
+/// Bundles the parallel arrays (`files`, `sources`, `symbols`, `layouts`) that
+/// every pipeline stage needs, eliminating 5-7 parameter function signatures.
+/// Constructed cheaply (zero-copy) from the owning data in `render_with_budget_stats`
+/// or directly by benchmarks/profiling tools.
+pub struct Corpus<'a> {
+    pub root: &'a Path,
+    pub files: &'a [PathBuf],
+    pub sources: &'a [Option<String>],
+    pub all_symbols: &'a [Vec<parse::Symbol>],
+    pub layouts: &'a [Vec<layout::SymbolLayout>],
+}
+
 /// Language family for rendering and parsing heuristics (comment styles, delimiters).
 ///
 /// This is the single source of truth for which file extensions map to which
@@ -62,6 +80,27 @@ pub fn is_header_extension(ext: &str) -> bool {
 }
 
 // ---------------------------------------------------------------------------
+// Corpus methods
+// ---------------------------------------------------------------------------
+
+impl<'a> Corpus<'a> {
+    /// Render the corpus within token and optional character budgets.
+    pub fn render(&self, budget: usize, char_budget: Option<usize>) -> String {
+        let (output, _) = self.render_stats(budget, char_budget);
+        output
+    }
+
+    /// Render the corpus, returning output and actual token count.
+    pub fn render_stats(&self, budget: usize, char_budget: Option<usize>) -> (String, usize) {
+        let built = schedule::build_groups(self, budget);
+        let sched = schedule::schedule(&built, self, char_budget);
+        let output = render::render_scheduled(self, &built.groups, &sched);
+        let actual = render::count_tokens(&output);
+        (output, actual)
+    }
+}
+
+// ---------------------------------------------------------------------------
 // Public entry points
 // ---------------------------------------------------------------------------
 
@@ -87,11 +126,8 @@ pub fn render_with_budget_stats(
 ) -> (String, usize) {
     let all_symbols = extract_all_symbols(files, sources);
     let layouts = layout::compute_all_layouts(files, sources, &all_symbols);
-    let built = schedule::build_groups(root, files, sources, &all_symbols, &layouts, budget);
-    let sched = schedule::schedule(&built, root, files, char_budget);
-    let output = render::render_scheduled(root, files, sources, &all_symbols, &layouts, &built.groups, &sched);
-    let actual = render::count_tokens(&output);
-    (output, actual)
+    let corpus = Corpus { root, files, sources, all_symbols: &all_symbols, layouts: &layouts };
+    corpus.render_stats(budget, char_budget)
 }
 
 /// Render a single file within token and optional character budgets.

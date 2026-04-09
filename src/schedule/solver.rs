@@ -1,6 +1,8 @@
 use std::collections::{BinaryHeap, HashMap, HashSet};
 use std::path::{Path, PathBuf};
 
+use crate::Corpus;
+
 use super::value::compute_value;
 use super::{
     BuiltGroups, Cost, Group, IncludedStage, Schedule, StageKind, SymbolCosts,
@@ -335,12 +337,13 @@ fn enqueue_group_items(
 /// Run the greedy scheduling algorithm.
 pub fn schedule(
     built: &BuiltGroups,
-    root: &Path,
-    files: &[PathBuf],
+    corpus: &Corpus<'_>,
     char_budget: Option<usize>,
 ) -> Schedule {
     let groups = &built.groups;
     let budget = built.budget;
+    let &Corpus { root, files, .. } = corpus;
+
     // Build reverse lookup: (file_idx, symbol_idx) → group_idx
     let mut symbol_to_group: HashMap<(usize, usize), usize> = HashMap::new();
     for (group_idx, group) in groups.iter().enumerate() {
