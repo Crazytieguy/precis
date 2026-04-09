@@ -31,18 +31,15 @@ pub struct SymbolLayout {
     pub ds_start: usize,
     /// Python docstring end (exclusive). Equal to `ds_start` when no docstring.
     pub ds_end: usize,
-    /// First body line (after signature and any Python docstring).
+    /// First body line. For code symbols: after signature and any Python
+    /// docstring. For markdown sections: first content line after leading
+    /// noise (badges, blank lines, link refs).
     pub body_start: usize,
     /// Exclusive end of body. For code symbols with nested children, this is
-    /// truncated to the first child symbol's line. For symbols without children
+    /// truncated to the first child symbol's line. For markdown sections, this
+    /// is the line of the next heading (or EOF). For symbols without children
     /// this is `sym.end_line.min(lines.len())`.
     pub body_end: usize,
-    /// For markdown sections: first content line after leading noise (badges,
-    /// blank lines, link refs). Zero for non-section symbols.
-    pub md_content_start: usize,
-    /// For markdown sections: the line of the next heading (or EOF). Zero for
-    /// non-section symbols.
-    pub md_section_end: usize,
     /// Whether this symbol's body region contains nested child symbols
     /// (e.g. methods inside a class or impl block).
     pub has_children: bool,
@@ -80,8 +77,8 @@ pub(crate) fn compute_layout(
         (sig_end + 1, sig_end + 1)
     };
 
-    // Markdown section body range
-    let (md_content_start, md_section_end) = if sym.kind == parse::SymbolKind::Section {
+    // Body range: section content for markdown, code body for everything else.
+    let (raw_body_start, raw_body_end) = if sym.kind == parse::SymbolKind::Section {
         let next_heading_line = all_symbols
             .iter()
             .skip(sym_idx + 1)
@@ -112,27 +109,18 @@ pub(crate) fn compute_layout(
         }
         (content_start, section_end)
     } else {
-        (0, 0)
-    };
-
-    // Code body range
-    let raw_body_start = if sym.kind == parse::SymbolKind::Section {
-        // For markdown, body_start/body_end aren't used (md_content_start/md_section_end are)
-        0
-    } else if ds_end > ds_start {
-        ds_end // skip past Python docstring
-    } else {
-        sig_end + 1
-    };
-    let raw_body_end = if sym.kind == parse::SymbolKind::Section {
-        0
-    } else {
-        sym.end_line.min(lines.len())
+        let start = if ds_end > ds_start {
+            ds_end // skip past Python docstring
+        } else {
+            sig_end + 1
+        };
+        (start, sym.end_line.min(lines.len()))
     };
 
     // Find first child symbol within body (for nesting detection and body truncation).
     // Truncate at the child's doc_start (not sym.line) so the parent doesn't claim
-    // the child's doc comment lines.
+    // the child's doc comment lines. Sections never have children (their sub-headings
+    // are sibling symbols, not nested children).
     let (has_children, first_child_start) = if sym.kind == parse::SymbolKind::Section {
         (false, None)
     } else {
@@ -172,8 +160,6 @@ pub(crate) fn compute_layout(
         ds_end,
         body_start,
         body_end,
-        md_content_start,
-        md_section_end,
         has_children,
     }
 }

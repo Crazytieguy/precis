@@ -319,15 +319,9 @@ fn render_symbol(
     let doc_n_remaining = doc_n.saturating_sub(doc_lines_shown);
     render_line_range(out, lines, layout.ds_start, layout.ds_end, doc_n_remaining, true, emitted_up_to);
 
-    // Body lines — all ranges from layout
+    // Body lines from layout (section content for markdown, code body otherwise).
     if body_n > 0 {
-        if is_section {
-            // Markdown: body is content text between headings
-            render_line_range(out, lines, layout.md_content_start, layout.md_section_end, body_n, true, emitted_up_to);
-        } else {
-            // Code: body lines from layout (already truncated at first child)
-            render_line_range(out, lines, layout.body_start, layout.body_end, body_n, !layout.has_children, emitted_up_to);
-        }
+        render_line_range(out, lines, layout.body_start, layout.body_end, body_n, !layout.has_children, emitted_up_to);
     }
 }
 

@@ -166,7 +166,6 @@ pub fn build_groups(
 /// for a symbol at that layer. Returns `None` if the symbol has no content at layer `n`.
 fn layer_source_line(
     layout: &layout::SymbolLayout,
-    sym_kind: parse::SymbolKind,
     is_doc: bool,
     n: usize,
 ) -> Option<(usize, usize)> {
@@ -181,14 +180,9 @@ fn layer_source_line(
             None
         }
     } else {
-        let (start, end) = if sym_kind == parse::SymbolKind::Section {
-            (layout.md_content_start, layout.md_section_end)
-        } else {
-            (layout.body_start, layout.body_end)
-        };
-        let count = end.saturating_sub(start);
+        let count = layout.body_end.saturating_sub(layout.body_start);
         if n - 1 < count {
-            Some((start + (n - 1), count))
+            Some((layout.body_start + (n - 1), count))
         } else {
             None
         }
@@ -305,12 +299,7 @@ fn fill_doc_body_costs(
             let layout = &layouts[sc.file_idx][sc.symbol_idx];
             let doc = layout.doc_end.saturating_sub(layout.doc_start)
                 + layout.ds_end.saturating_sub(layout.ds_start);
-            let (body_start, body_end) = if sym.kind == parse::SymbolKind::Section {
-                (layout.md_content_start, layout.md_section_end)
-            } else {
-                (layout.body_start, layout.body_end)
-            };
-            (doc, body_end.saturating_sub(body_start))
+            (doc, layout.body_end.saturating_sub(layout.body_start))
         };
 
         sc.doc_lines = vec![Cost::default(); doc_count];
@@ -408,7 +397,7 @@ fn fill_doc_body_costs(
                 }
 
                 let layout = &layouts[sc.file_idx][sc.symbol_idx];
-                let (src_line_idx, true_len) = match layer_source_line(layout, sym.kind, is_doc, n) {
+                let (src_line_idx, true_len) = match layer_source_line(layout, is_doc, n) {
                     Some(result) => result,
                     None => continue,
                 };
