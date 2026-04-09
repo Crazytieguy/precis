@@ -836,14 +836,56 @@ fn empty_directory() {
     assert!(output.is_empty(), "empty directory should produce no output");
 }
 
+// README example sync test.
+
+const README_EXAMPLE_FIXTURE: &str = "mitt";
+const README_EXAMPLE_BUDGET: usize = 400;
+
+#[test]
+fn readme_example_matches_output() {
+    let Some(output) = render_fixture(README_EXAMPLE_FIXTURE, README_EXAMPLE_BUDGET) else {
+        eprintln!(
+            "skipping readme_example_matches_output: {} fixture not present",
+            README_EXAMPLE_FIXTURE
+        );
+        return;
+    };
+    let readme = std::fs::read_to_string(
+        Path::new(env!("CARGO_MANIFEST_DIR")).join("README.md"),
+    )
+    .expect("failed to read README.md");
+    let start_marker = "<!-- precis-example-start -->";
+    let end_marker = "<!-- precis-example-end -->";
+    let start = readme.find(start_marker).expect("missing precis-example-start marker")
+        + start_marker.len();
+    let end = readme[start..].find(end_marker).expect("missing precis-example-end marker") + start;
+    let block = readme[start..end].trim();
+    let lines: Vec<&str> = block.lines().collect();
+    assert!(lines.len() >= 3, "README example block too short");
+    let from_readme = lines[1..lines.len() - 1].join("\n");
+    assert_eq!(
+        output.trim(),
+        from_readme.trim(),
+        "precis output for {fixture}@{budget} doesn't match README example — \
+         regenerate with: cargo run --release -- test/fixtures/{fixture} --budget {budget}",
+        fixture = README_EXAMPLE_FIXTURE,
+        budget = README_EXAMPLE_BUDGET,
+    );
+}
+
 // Budget-based fixture snapshot tests.
 
-/// Helper: render a fixture with a token budget and return output with metadata header.
-fn render_with_budget(subpath: &str, budget: usize) -> Option<String> {
+/// Render a fixture with a token budget, returning raw output.
+fn render_fixture(subpath: &str, budget: usize) -> Option<String> {
     let root = fixture_path(subpath)?;
     let files = walk::discover_source_files(&root);
     let sources = format::read_sources(&files);
-    let output = format::render_with_budget(budget, &root, &files, &sources);
+    Some(format::render_with_budget(budget, &root, &files, &sources))
+}
+
+/// Helper: render a fixture and prepend a metadata header for snapshot tests.
+fn render_with_budget(subpath: &str, budget: usize) -> Option<String> {
+    let output = render_fixture(subpath, budget)?;
     let tokens = format::count_tokens(&output);
     Some(format!(
         "budget: {} ({} tokens)\n\n{}",
