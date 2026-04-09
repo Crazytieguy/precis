@@ -49,8 +49,13 @@ fn main() {
     let all_symbols = parse::extract_all_symbols_cached(&files, &sources, &configs);
     stages.push(("parse", t.elapsed()));
 
+    // File-level metadata (relative paths, roles, categories, etc.)
+    let t = Instant::now();
+    let file_info = schedule::compute_file_info(&root, &files, &sources);
+    stages.push(("file_info", t.elapsed()));
+
     // Build corpus for remaining stages (layouts are embedded in symbols)
-    let corpus = Corpus { root: &root, files: &files, sources: &sources, all_symbols: &all_symbols };
+    let corpus = Corpus { sources: &sources, all_symbols: &all_symbols, file_info: &file_info };
 
     // 5. Build groups
     let t = Instant::now();

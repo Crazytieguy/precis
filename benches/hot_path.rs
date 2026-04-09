@@ -8,6 +8,7 @@ struct Fixture {
     files: Vec<PathBuf>,
     sources: Vec<Option<String>>,
     all_symbols: Vec<Vec<precis::parse::Symbol>>,
+    file_info: Vec<schedule::FileInfo>,
 }
 
 impl Fixture {
@@ -21,20 +22,21 @@ impl Fixture {
         let files = walk::discover_source_files(&root);
         let sources = precis::read_sources(&files);
         let all_symbols = precis::extract_all_symbols(&files, &sources);
+        let file_info = schedule::compute_file_info(&root, &files, &sources);
         Some(Fixture {
             root,
             files,
             sources,
             all_symbols,
+            file_info,
         })
     }
 
     fn corpus(&self) -> Corpus<'_> {
         Corpus {
-            root: &self.root,
-            files: &self.files,
             sources: &self.sources,
             all_symbols: &self.all_symbols,
+            file_info: &self.file_info,
         }
     }
 }

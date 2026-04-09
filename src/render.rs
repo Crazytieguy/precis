@@ -107,7 +107,7 @@ fn find_word(needle: &str, haystack: &str) -> Option<usize> {
 /// renderer has no knowledge of stages, groups, or the scheduling model — it
 /// just assembles text from the decisions the scheduler already made.
 pub fn render_scheduled(corpus: &Corpus<'_>, sched: &Schedule) -> String {
-    let &Corpus { root, files, sources, all_symbols } = corpus;
+    let &Corpus { sources, all_symbols, file_info, .. } = corpus;
 
     let mut out = String::new();
 
@@ -119,11 +119,9 @@ pub fn render_scheduled(corpus: &Corpus<'_>, sched: &Schedule) -> String {
             }
             RenderPlanItem::File(file_idx) => {
                 let file_idx = *file_idx;
-                let file = &files[file_idx];
-                let relative = file.strip_prefix(root).unwrap_or(file);
 
                 if !out.is_empty() { out.push('\n'); }
-                out.push_str(&format!("{}\n", relative.display()));
+                out.push_str(&format!("{}\n", file_info[file_idx].relative_path.display()));
 
                 let source = match &sources[file_idx] {
                     Some(s) => s,

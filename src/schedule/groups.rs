@@ -5,10 +5,7 @@ use rayon::prelude::*;
 
 use crate::Corpus;
 
-use super::classify::{
-    detect_heading_depth, is_autogen_api_doc, is_boilerplate_heading, is_config_file,
-    is_generated_file, is_generated_filename, FileRole,
-};
+use super::classify::{detect_heading_depth, is_boilerplate_heading};
 use super::cost;
 use super::value;
 use super::{
@@ -24,7 +21,7 @@ pub fn build_groups(
     corpus: &Corpus<'_>,
     budget: usize,
 ) -> BuiltGroups {
-    let &Corpus { root, files, sources, all_symbols } = corpus;
+    let &Corpus { sources, all_symbols, file_info, .. } = corpus;
 
     // Pre-compute lines for all files (needed for deferred doc/body tokenization).
     let all_lines: Vec<Vec<&str>> = sources
@@ -37,31 +34,15 @@ pub fn build_groups(
         .collect();
 
     // Phase 1 (parallel): compute GroupKey + name/signature costs per file.
-    let file_results: Vec<Vec<(GroupKey, SymbolRef, Cost, Cost)>> = (0..files.len())
+    let file_results: Vec<Vec<(GroupKey, SymbolRef, Cost, Cost)>> = (0..file_info.len())
         .into_par_iter()
         .map(|file_idx| {
-            let source = match sources[file_idx].as_ref() {
-                Some(s) => s,
-                None => return vec![],
-            };
-            let file = &files[file_idx];
+            if sources[file_idx].is_none() {
+                return vec![];
+            }
             let symbols = &all_symbols[file_idx];
             let lines = &all_lines[file_idx];
-            let relative = file.strip_prefix(root).unwrap_or(file);
-            let parent_dir = relative.parent().unwrap_or(Path::new("")).to_path_buf();
-            let lang = crate::Lang::from_path(relative);
-            let file_role = FileRole::from_path(relative);
-            let is_file_config = relative.file_name()
-                .and_then(|n| n.to_str())
-                .is_some_and(|name| is_config_file(relative, name));
-            let file_category = super::classify::classify_file(relative);
-            let is_type_declaration = super::classify::is_type_declaration_file(relative);
-            let is_header = relative.extension()
-                .and_then(|e| e.to_str())
-                .is_some_and(|ext| crate::is_header_extension(&ext.to_ascii_lowercase()));
-            let is_generated = is_autogen_api_doc(source, file_role)
-                || is_generated_file(source)
-                || is_generated_filename(relative);
+            let fi = &file_info[file_idx];
 
             symbols.iter().enumerate().map(|(symbol_idx, sym)| {
                 let sym_line_0 = sym.line - 1;
@@ -75,11 +56,11 @@ pub fn build_groups(
                     && sym.layout.doc_start < sym.layout.doc_end;
 
                 let heading_depth = if kind_category == KindCategory::Section {
-                    if matches!(lang, Some(crate::Lang::Toml)) {
+                    if matches!(fi.lang, Some(crate::Lang::Toml)) {
                         // Count dot-separated segments: [project] → 1, [tool.ruff] → 2
                         let depth = sym.name.chars().filter(|&c| c == '.').count() as u8 + 1;
                         Some(depth)
-                    } else if matches!(lang, Some(crate::Lang::Markdown)) {
+                    } else if matches!(fi.lang, Some(crate::Lang::Markdown)) {
                         Some(detect_heading_depth(lines, sym_line_0, sym.end_line))
                     } else {
                         Some(1) // JSON/YAML/unsupported: all top-level
@@ -89,28 +70,28 @@ pub fn build_groups(
                 };
 
                 let is_boilerplate_section = kind_category == KindCategory::Section
-                    && matches!(lang, Some(crate::Lang::Markdown))
+                    && matches!(fi.lang, Some(crate::Lang::Markdown))
                     && is_boilerplate_heading(&sym.name);
 
                 // TOML [tool.*] sections are tool configuration (linters, formatters,
                 // type checkers, test runners) embedded in project manifests. They're
                 // equivalent to dedicated config files like eslint.config.js, and should
                 // be deprioritized similarly.
-                let is_config = is_file_config
+                let is_config = fi.is_config
                     || (kind_category == KindCategory::Section
-                        && matches!(lang, Some(crate::Lang::Toml))
+                        && matches!(fi.lang, Some(crate::Lang::Toml))
                         && sym.name.starts_with("tool."));
 
                 let key = GroupKey {
                     is_public: sym.is_public,
                     kind_category,
-                    parent_dir: parent_dir.clone(),
+                    parent_dir: fi.relative_path.parent().unwrap_or(Path::new("")).to_path_buf(),
                     is_documented,
-                    file_role,
-                    file_category,
-                    is_type_declaration,
-                    is_header,
-                    is_generated,
+                    file_role: fi.file_role,
+                    file_category: fi.file_category,
+                    is_type_declaration: fi.is_type_declaration,
+                    is_header: fi.is_header,
+                    is_generated: fi.is_generated,
                     is_config,
                     heading_depth,
                     is_first_party: sym.is_first_party,

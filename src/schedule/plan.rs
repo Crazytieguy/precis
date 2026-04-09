@@ -3,8 +3,7 @@ use std::path::{Path, PathBuf};
 
 use crate::Corpus;
 
-use super::classify::FileRole;
-use super::{BuiltGroups, IncludedStage, StageKind};
+use super::{BuiltGroups, FileRole, IncludedStage, StageKind};
 
 // ---------------------------------------------------------------------------
 // Render plan — pre-resolved output structure for the renderer
@@ -83,7 +82,7 @@ pub(super) fn build_render_plan(
     corpus: &Corpus<'_>,
 ) -> Schedule {
     let groups = &built.groups;
-    let &Corpus { root, files, all_symbols, .. } = corpus;
+    let &Corpus { all_symbols, .. } = corpus;
 
     // 1. Resolve per-symbol render specs from group stages.
     let mut symbol_specs: Vec<Vec<Option<SymbolRenderSpec>>> = all_symbols
@@ -104,13 +103,13 @@ pub(super) fn build_render_plan(
     }
 
     // 2. Compute file render order: README first, manifests second, alphabetical.
+    let file_info = corpus.file_info;
     let mut render_order: Vec<usize> = result.files_shown.iter().copied().collect();
     render_order.sort_by_key(|&i| {
-        let relative = files[i].strip_prefix(root).unwrap_or(&files[i]);
-        let is_root = relative.parent().is_none_or(|p| p.as_os_str().is_empty());
-        let role = FileRole::from_path(relative);
-        let filename = relative.file_name().and_then(|n| n.to_str()).unwrap_or("");
-        let priority = if is_root && matches!(role, FileRole::Readme | FileRole::Architecture) {
+        let fi = &file_info[i];
+        let is_root = fi.relative_path.parent().is_none_or(|p| p.as_os_str().is_empty());
+        let filename = fi.relative_path.file_name().and_then(|n| n.to_str()).unwrap_or("");
+        let priority = if is_root && matches!(fi.file_role, FileRole::Readme | FileRole::Architecture) {
             0
         } else if is_root
             && matches!(
@@ -124,16 +123,15 @@ pub(super) fn build_render_plan(
         };
         // Within each priority tier, sort alphabetically by relative path
         // for deterministic output.
-        (priority, relative.to_path_buf())
+        (priority, &fi.relative_path)
     });
 
     // 3. Compute invisible directory markers (two-set approach).
     let invisible_dirs: BTreeSet<PathBuf> = {
         let mut all_dirs = HashSet::new();
         let mut visible_dirs = HashSet::new();
-        for (i, file) in files.iter().enumerate() {
-            let relative = file.strip_prefix(root).unwrap_or(file);
-            if let Some(top) = top_level_dir(relative) {
+        for (i, fi) in file_info.iter().enumerate() {
+            if let Some(top) = top_level_dir(&fi.relative_path) {
                 all_dirs.insert(top.clone());
                 if result.files_shown.contains(&i) {
                     visible_dirs.insert(top);
@@ -148,7 +146,7 @@ pub(super) fn build_render_plan(
     let mut dirs_emitted: HashSet<PathBuf> = HashSet::new();
 
     for &file_idx in &render_order {
-        let relative = files[file_idx].strip_prefix(root).unwrap_or(&files[file_idx]);
+        let relative = &file_info[file_idx].relative_path;
         // Emit invisible directory markers that sort before this file's top-level dir.
         // Uses the first path component (directory name or filename for root files)
         // as the sort anchor — not top_level_dir, which returns None for root files.

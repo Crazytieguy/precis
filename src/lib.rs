@@ -14,16 +14,17 @@ use rayon::prelude::*;
 
 /// Borrowed view of all per-file data, passed through the schedule/render pipeline.
 ///
-/// Bundles the parallel arrays (`files`, `sources`, `symbols`) that every
+/// Bundles the parallel arrays (`sources`, `symbols`, `file_info`) that every
 /// pipeline stage needs, eliminating long parameter lists. Layout data is
 /// embedded in each [`parse::Symbol`] (see [`layout::SymbolLayout`]).
 /// Constructed cheaply (zero-copy) from the owning data in `render_with_budget_stats`
 /// or directly by benchmarks/profiling tools.
 pub struct Corpus<'a> {
-    pub root: &'a Path,
-    pub files: &'a [PathBuf],
     pub sources: &'a [Option<String>],
     pub all_symbols: &'a [Vec<parse::Symbol>],
+    /// Pre-computed per-file metadata (relative path, language, role, category, etc.).
+    /// Indexed in parallel with `sources`/`all_symbols`.
+    pub file_info: &'a [schedule::FileInfo],
 }
 
 /// Language family for rendering and parsing heuristics (comment styles, delimiters).
@@ -126,7 +127,8 @@ pub fn render_with_budget_stats(
     sources: &[Option<String>],
 ) -> (String, usize) {
     let all_symbols = extract_all_symbols(files, sources);
-    let corpus = Corpus { root, files, sources, all_symbols: &all_symbols };
+    let file_info = schedule::compute_file_info(root, files, sources);
+    let corpus = Corpus { sources, all_symbols: &all_symbols, file_info: &file_info };
     corpus.render_stats(budget, char_budget)
 }
 

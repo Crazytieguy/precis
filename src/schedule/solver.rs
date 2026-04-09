@@ -273,20 +273,17 @@ pub(super) fn solve(
 ) -> SolverResult {
     let groups = &built.groups;
     let budget = built.budget;
-    let &Corpus { root, files, .. } = corpus;
+    let file_info = corpus.file_info;
 
     // Precompute file path costs (tokens and chars, including separator newline for chars)
-    let fp_costs: Vec<Cost> = files
+    let fp_costs: Vec<Cost> = file_info
         .iter()
-        .map(|f| {
-            let relative = f.strip_prefix(root).unwrap_or(f);
-            file_path_costs(relative)
-        })
+        .map(|fi| file_path_costs(&fi.relative_path))
         .collect();
 
     // Reverse index: file_idx → set of group indices that reference this file.
     // Used to efficiently find groups affected when a file's path cost is paid.
-    let mut file_to_groups: Vec<Vec<usize>> = vec![Vec::new(); files.len()];
+    let mut file_to_groups: Vec<Vec<usize>> = vec![Vec::new(); file_info.len()];
     for (group_idx, group) in groups.iter().enumerate() {
         for &fi in &group.file_indices {
             file_to_groups[fi].push(group_idx);
@@ -302,9 +299,8 @@ pub(super) fn solve(
     let mut total_marker_cost = Cost::default();
     {
         let mut seen_dirs = HashSet::new();
-        for file in files {
-            let relative = file.strip_prefix(root).unwrap_or(file);
-            if let Some(top) = top_level_dir(relative)
+        for fi in file_info {
+            if let Some(top) = top_level_dir(&fi.relative_path)
                 && seen_dirs.insert(top.clone())
             {
                 total_marker_cost += Cost::of(&format!("\n{}", directory_marker_text(&top)));
