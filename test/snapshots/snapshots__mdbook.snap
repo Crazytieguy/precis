@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7885 tokens)
+budget: 8000 (7887 tokens)
 
 README.md
      1→# mdBook
@@ -12,7 +12,6 @@ README.md
     10→The User Guide also serves as a demonstration to showcase what a book looks like.
     11→
     12→If you are interested in contributing to the development of mdBook, check out the [Contribution Guide].
-    13→
 
 Cargo.toml
      1→[workspace]
@@ -622,6 +621,7 @@ crates/xtask/src/changelog.rs
 
 crates/xtask/src/main.rs
      1→//! Helper for local development.
+    11→type Result …
 
 examples/nop-preprocessor.rs
     79→    pub struct Nop;

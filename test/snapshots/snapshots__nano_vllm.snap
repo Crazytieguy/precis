@@ -2,22 +2,19 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3969 tokens)
+budget: 4000 (3966 tokens)
 
 README.md
      9→# Nano-vLLM
     11→A lightweight vLLM implementation built from scratch.
-    12→
     13→## Key Features
     15→* 🚀 **Fast offline inference** - Comparable inference speeds to vLLM
     16→* 📖 **Readable codebase** - Clean implementation in ~ 1,200 lines of Python code
     17→* ⚡ **Optimization Suite** - Prefix caching, Tensor Parallelism, Torch compilation, CUDA graph, etc.
-    18→
     19→## Installation
     21→```bash
     22→pip install git+https://github.com/GeeeekExplorer/nano-vllm.git
     23→```
-    24→
     25→## Model Download
     27→To download the model weights manually, use the following command:
     28→```bash
@@ -25,7 +22,6 @@ README.md
     30→  --local-dir ~/huggingface/Qwen3-0.6B/ \
     31→  --local-dir-use-symlinks False
     32→```
-    33→
     34→## Quick Start
     36→See `example.py` for usage. The API mirrors vLLM's interface with minor differences in the `LLM.generate` method:
     37→```python
@@ -36,7 +32,6 @@ README.md
     42→outputs = llm.generate(prompts, sampling_params)
     43→outputs[0]["text"]
     44→```
-    45→
     46→## Benchmark
     48→See `bench.py` for benchmark.
     49→
@@ -52,8 +47,6 @@ README.md
     59→|----------------|-------------|----------|-----------------------|
     60→| vLLM           | 133,966     | 98.37    | 1361.84               |
     61→| Nano-vLLM      | 133,966     | 93.41    | 1434.13               |
-    62→
-    63→
     64→## Star History
 
 assets/
@@ -72,7 +65,11 @@ pyproject.toml
     12→description = "a lightweight vLLM implementation built from scratch"
     13→requires-python = ">=3.10,<3.13"
     14→dependencies = [
-      →…
+    15→    "torch>=2.4.0",
+    16→    "triton>=3.0.0",
+    17→    "transformers>=4.51.0",
+    18→    "flash-attn",
+    19→    "xxhash",
     22→[project.urls]
     23→Homepage="https://github.com/GeeeekExplorer/nano-vllm"
     25→[tool.setuptools.packages.find]
@@ -89,8 +86,6 @@ bench.py
 
 example.py
      6→def main():
-     7→    path = os.path.expanduser("~/huggingface/Qwen3-0.6B/")
-      →    …
 
 nanovllm/__init__.py
 

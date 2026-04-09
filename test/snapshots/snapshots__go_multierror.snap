@@ -2,12 +2,11 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3977 tokens)
+budget: 4000 (3978 tokens)
 
 README.md
      1→# go-multierror
     10→> **Note**: As of Go 1.20, the standard library provides [`errors.Join`](https://pkg.go.dev/errors#Join) which offers similar functionality for combining multiple errors. **For new projects, we recommend using `errors.Join` from the standard library.** This package provides additional features like custom formatting, the `Group` pattern for concurrent error collection, and utility functions (`Append`, `Flatten`, `Prefix`).
-    11→
     12→## Migrating to `errors.Join`
     14→**Basic error aggregation:**
     15→```go
@@ -90,7 +89,6 @@ README.md
    107→
    108→Full documentation is available at
    109→https://pkg.go.dev/github.com/hashicorp/go-multierror
-   110→
    111→### Requires go version 1.13 or newer
    113→`go-multierror` requires go version 1.13 or newer. Go 1.13 introduced
    114→[error wrapping](https://golang.org/doc/go1.13#error_wrapping), which
@@ -107,7 +105,6 @@ README.md
    125→/go/src/github.com/hashicorp/go-multierror/multierror.go:112:9: undefined: errors.As
    126→/go/src/github.com/hashicorp/go-multierror/multierror.go:117:9: undefined: errors.Is
    127→```
-   128→
    129→## Usage
    131→go-multierror is easy to use and purposely built to be unobtrusive in
    132→existing Go applications/libraries that may not be aware of it.
@@ -195,7 +192,6 @@ CHANGELOG.md
      3→### Improvements
      5→### Changes
      7→### Fixed
-     9→### Security
 
 Makefile
      1→TEST?=./...
@@ -319,6 +315,8 @@ multierror.go
     62→// etc. The order will match the order of Errors in the multierror.Error
       →…
     71→func (e *Error) Unwrap() error {
+    88→// chain implements the interfaces necessary for errors.Is/As/Unwrap to
+      →…
     99→type chain []error
    101→// Error implements the error interface
    102→func (e chain) Error() string {

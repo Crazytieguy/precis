@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3957 tokens)
+budget: 4000 (3954 tokens)
 
 README.md
      5→# Tomli
@@ -30,7 +30,6 @@ README.md
     28→  - [Pure Python](#pure-python)
     29→
     30→<!-- mdformat-toc end -->
-    31→
     32→## Intro<a name="intro"></a>
     34→Tomli is a Python library for parsing [TOML](https://toml.io).
     35→Version 2.4.0 and later are compatible with [TOML v1.1.0](https://toml.io/en/v1.1.0).
@@ -47,19 +46,16 @@ README.md
     46→to generate binary wheels for most of the widely used platforms,
     47→so Python 3.11+ users may prefer it over `tomllib` for improved performance.
     48→Pure Python wheels are available on any platform and should perform the same as `tomllib`.
-    49→
     50→## Installation<a name="installation"></a>
     52→```bash
     53→pip install tomli
     54→```
-    55→
     56→## Usage<a name="usage"></a>
    152→## FAQ<a name="faq"></a>
    201→## Performance<a name="performance"></a>
    203→The `benchmark/` folder in this repository contains a performance benchmark for comparing the various Python TOML parsers.
    204→
    205→Below are the results for commit [064e492](https://github.com/hukkin/tomli/tree/064e492919b2338def788753b8c981c9131334c0).
-   206→
 
 pyproject.toml
      1→[build-system]
@@ -240,7 +236,9 @@ src/tomli/_re.py
    101→    return timezone(
    102→        timedelta(
    103→            hours=sign * int(hour_str),
-      →            …
+   104→            minutes=sign * int(minute_str),
+   105→        )
+   106→    )
    109→def match_to_localtime(match: re.Match[str]) -> time:
    116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
 
@@ -299,7 +297,6 @@ tomllib.md
      9→- Discussion on PyPA "blessing" a TOML parser and/or including one in the standard library: https://discuss.python.org/t/adopting-recommending-a-toml-parser/4068
     10→- Python Enhancement Proposal: https://peps.python.org/pep-0680
     11→- CPython pull request: https://github.com/python/cpython/pull/31498
-    12→
     13→## Converting Tomli to tomllib
     15→### Sync status
     20→### Steps to convert

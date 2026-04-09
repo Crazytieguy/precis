@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3966 tokens)
+budget: 4000 (3963 tokens)
 
 readme.md
     20→## Benefits over plain `fetch`
@@ -20,7 +20,6 @@ readme.md
     35→```sh
     36→npm install ky
     37→```
-    38→
     45→## Usage
     47→```js
     48→import ky from 'ky';
@@ -36,10 +35,8 @@ readme.md
   1050→## Tips
   1339→## Browser support
   1341→The latest version of Chrome, Firefox, and Safari.
-  1342→
   1343→## Node.js support
   1345→Node.js 18 and later.
-  1346→
 
 media/logo.svg
 
@@ -177,7 +174,7 @@ source/errors/TimeoutError.ts
 
 source/index.ts
     10→const createInstance …
-    34→const ky …
+    34→const ky = createInstance();
 
 source/types/ResponsePromise.ts
      6→export type ResponsePromise …
@@ -398,4 +395,6 @@ source/utils/types.ts
      6→	? Array<[string, U]>
      7→	: Array<{[K in keyof T]: [K, T[K]]}[keyof T]>;
 
-test/
+test/helpers/create-http-test-server.ts
+
+test/helpers/index.ts

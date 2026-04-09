@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7890 tokens)
+budget: 8000 (7888 tokens)
 
 README.md
     26→## Introduction
@@ -26,6 +26,9 @@ README.md
    188→### Inspiration
    194→## Contact Information
 
+CONTRIBUTING.md
+     1→# Contributing to Enclosed
+
 packages/app-client/.env.example
      1→VITE_BASE_API_URL=http://localhost:8787
      2→VITE_FALLBACK_DOCUMENTATION_URL=http://localhost:3001
@@ -39,13 +42,10 @@ packages/app-client/README.md
      7→```bash
      8→$ npm install # or pnpm install or yarn install
      9→```
-    10→
     13→## Available Scripts
     15→In the project directory, you can run:
-    16→
     32→## Deployment
     34→You can deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)
-    35→
     36→## This project was created with the [Solid CLI](https://solid-cli.netlify.app)
 
 packages/app-client/components.json
@@ -246,9 +246,11 @@ packages/app-server/src/modules/app/middlewares/cors.middleware.ts
      5→export const corsMiddleware = createMiddleware(async (context: Context, next) => {
 
 packages/app-server/src/modules/app/middlewares/errors.middleware.ts
+     5→const logger …
      7→export function registerErrorMiddleware({ app }: { app: ServerInstance }) {
 
 packages/app-server/src/modules/app/middlewares/logger.middleware.ts
+     4→const logger …
      6→export const loggerMiddleware = createMiddleware(async (c, next) => {
 
 packages/app-server/src/modules/app/middlewares/storage.middleware.ts
@@ -330,23 +332,27 @@ packages/app-server/src/modules/storage/storage.types.ts
      8→export type BindableStorageFactory = (args: BindableStorageFactoryArgs) => { storage: Storage };
      9→export type StorageFactory = () => { storage: Storage };
 
+packages/app-server/src/modules/tasks/task-scheduler.ts
+     9→const logger …
+    11→function createTaskScheduler …
+
+packages/app-server/src/modules/tasks/tasks.models.ts
+     9→function defineTask …
+
 packages/app-server/src/modules/tasks/tasks.types.ts
      3→export type TaskDefinition = ReturnType<typeof defineTask>;
 
 packages/cli/README.md
      1→# Enclosed CLI
      3→This package contains the CLI for [Enclosed](https://enclosed.cc), an open-source project that aims to provide a simple and secure way to share e2e encrypted notes.
-     4→
      5→## Getting Started
      7→To install the CLI, run the following command:
-     8→
      9→### Create a note
     22→### Configure the enclosed instance to use
     29→## Usage
     31→```bash
     32→enclosed <command> [options]
     33→```
-    34→
     35→### Create a note
     58→### View a note
     68→### Configure the enclosed instance to use
@@ -391,7 +397,6 @@ packages/cli/src/view-note/view-note.command.ts
 packages/crypto/README.md
      1→# Enclosed crypto library
      3→This package contains the natives crypto primitives used by the [Enclosed lib and project](https://enclosed.cc). It is a standalone package built to provide compatibility between different environments by exposing the same API for node:crypto and web SubtleCrypto.
-     4→
      5→## Installation
      7→```bash
      8→# with npm
@@ -403,7 +408,6 @@ packages/crypto/README.md
     14→# with pnpm
     15→pnpm add @enclosed/crypto
     16→```
-    17→
     18→## License
     22→## Credits and Acknowledgements
     24→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
@@ -515,18 +519,28 @@ packages/docs/src/components/toggle.vue
       →    …
 
 packages/docs/src/data/configuration.data.ts
+     7→const config …
+     8→const md …
     10→function walk …
+    22→const configDetails …
     24→function formatDoc …
+    34→const rows …
+    47→const mdRows …
+    49→const mdTable …
     57→  async load() {
 
 packages/docs/src/data/i18n.data.ts
+     6→const config …
+     7→const md …
      9→function countKeysDeep …
+    23→const defaultLocaleKeyCount …
+    25→const localeConfigs …
+    47→const mdTable …
     61→  async load() {
 
 packages/docs/src/how-it-works.md
      5→# How It Works
      7→Enclosed is designed with a focus on security and privacy, ensuring that your notes remain confidential from creation to retrieval. This section explains the entire process, from creating a note to decrypting it, highlighting the end-to-end encryption that makes Enclosed a secure platform.
-     8→
      9→## 1. Note Creation
     13→## 2. Key Generation
     17→## 3. Master Key Derivation
@@ -546,7 +560,6 @@ packages/docs/src/index.md
      7→**Enclosed** is a minimalistic web application designed for sending private and secure notes. Whether you need to share sensitive information or just want a simple way to send encrypted messages, Enclosed provides a user-friendly interface with strong security features to ensure your data remains confidential.
      8→
      9→The name **Enclosed** is inspired by the idea of keeping your notes safe and secure, like a sealed envelope.
-    10→
     11→## Key Features
     27→## Why Enclosed?
     33→## Get Started
@@ -554,7 +567,6 @@ packages/docs/src/index.md
 packages/docs/src/integrations/cli.md
      1→# CLI Guide
      3→The Enclosed Command-Line Interface (CLI) allows you to create and manage secure notes directly from your terminal. This guide will walk you through installing the CLI, creating and viewing notes, and configuring the CLI for different use cases.
-     4→
      5→## Installation
     29→## Creating a Note
     77→## Viewing a Note
@@ -571,7 +583,6 @@ packages/docs/src/integrations/npm-package.md
      5→:::
      6→
      7→The Enclosed lib is available as an npm package. You can use it to create and manage Enclosed notes.
-     8→
      9→## Installation
 
 packages/docs/src/integrations/versioning.md
@@ -582,8 +593,6 @@ packages/docs/src/integrations/versioning.md
 
 packages/docs/src/resources/brand-kit.md
      1→# Enclosed Brand Kit
-     3→Welcome to the Enclosed Brand Kit. Here, you'll find resources to help you represent Enclosed accurately in media and press coverage. Enclosed is an open-source web application designed for private, end-to-end encrypted note and file sharing.
-     4→
      5→## Project Overview
      9→### Quick Links
     16→## Logo Assets
@@ -596,15 +605,12 @@ packages/docs/src/resources/brand-kit.md
 
 packages/docs/src/resources/i18n.md
      5→# Language and i18n
-     7→Enclosed supports internationalization (i18n) to make it accessible in multiple languages.
-     8→
      9→## Supported languages
     15→## Contributing to translations
 
 packages/docs/src/self-hosting/configuration.md
      5→# Self-Host Configuration
      7→Configuring your self-hosted instance of Enclosed allows you to customize the application to better suit your environment and requirements. This guide covers the key environment variables you can set to control various aspects of the application, including port settings, security options, and storage configurations.
-     8→
      9→## Environment Variables
     15→## Optional: Native HTTPS Configuration
     33→## Applying Configuration Changes
@@ -616,7 +622,6 @@ packages/docs/src/self-hosting/docker-compose.md
 packages/docs/src/self-hosting/docker.md
      5→# Docker Installation
      7→Enclosed can be easily installed and run using Docker. This method is recommended for users who want a quick and straightforward way to deploy their own instance of Enclosed with minimal setup.
-     8→
      9→## Prerequisites
     13→## Rootless and Non-rootless Docker Images
     19→## Image Sources
@@ -675,7 +680,6 @@ packages/lib/README.md
     14→# with pnpm
     15→pnpm add @enclosed/lib
     16→```
-    17→
     18→## Usage
     20→```javascript
     21→import { createNote } from '@enclosed/lib';
@@ -689,7 +693,6 @@ packages/lib/README.md
     29→
     30→console.log(noteUrl);
     31→```
-    32→
     33→## License
     37→## Credits and Acknowledgements
     39→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).

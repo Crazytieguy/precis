@@ -20,6 +20,7 @@ Cargo.toml
      2→resolver = "2"
      3→members = [
      4→    "crates/toasty",
+     5→    "crates/toasty-cli",
       →    …
     37→[workspace.dependencies]
 
@@ -639,6 +640,7 @@ crates/toasty-driver-integration-suite/src/suite.rs
     10→    pub fn new …
 
 crates/toasty-driver-integration-suite/src/test.rs
+    14→static TEST_LOCK …
     19→pub struct Test {
     39→    pub fn new …
     56→    pub async fn try_setup_db …
@@ -746,7 +748,7 @@ crates/toasty-driver-postgresql/src/statement_cache.rs
     10→    inner: LruCache<Key<'static>, Statement>,
     11→}
     15→    pub fn new …
-    49→struct Key …
+    49→struct Key<'a> {
     56→    pub fn new …
 
 crates/toasty-driver-postgresql/src/type.rs
@@ -926,8 +928,6 @@ docs/guide/pagination.md
 
 docs/roadmap/README.md
      1→# Toasty ORM - Development Roadmap
-     3→This roadmap outlines potential enhancements and missing features for the Toasty ORM.
-     4→
      5→## Overview
     11→## Feature Areas
    126→## Notes

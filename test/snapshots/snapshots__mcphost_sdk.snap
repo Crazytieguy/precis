@@ -2,17 +2,15 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1987 tokens)
+budget: 2000 (1979 tokens)
 
 README.md
      1→# MCPHost SDK
      3→The MCPHost SDK allows you to use MCPHost programmatically from Go applications without spawning OS processes.
-     4→
      5→## Installation
      7→```bash
      8→go get github.com/mark3labs/mcphost
      9→```
-    10→
     11→## Basic Usage
     13→```go
     14→package main
@@ -44,14 +42,12 @@ README.md
     40→    fmt.Println(response)
     41→}
     42→```
-    43→
     44→## Configuration
     46→The SDK behaves identically to the CLI:
     47→- Loads configuration from `~/.mcphost.yml` by default
     48→- Creates default configuration if none exists
     49→- Respects all environment variables (`MCPHOST_*`)
     50→- Uses the same defaults as the CLI
-    51→
     52→### Options
     54→You can override specific settings:
     55→
@@ -87,7 +83,6 @@ README.md
    142→- `OPENAI_API_KEY` - OpenAI API key
    143→- `GEMINI_API_KEY` - Google API key
    144→- etc.
-   145→
    146→## License
    148→Same as MCPHost CLI
 
@@ -99,6 +94,9 @@ examples/basic/main.go
 
 examples/scripting/main.go
     12→func main() {
+    13→	ctx := context.Background()
+    14→
+      →…
 
 mcphost.go
     16→// MCPHost provides programmatic access to mcphost functionality, allowing

@@ -9,7 +9,6 @@ README.md
      3→A CLI host application that enables Large Language Models (LLMs) to interact with external tools through the Model Context Protocol (MCP). Currently supports Claude, OpenAI, Google Gemini, and Ollama models.
      4→
      5→Discuss the Project on [Discord](https://discord.gg/RqSS2NQVsY)
-     6→
     41→## Overview 🌟
     60→## Features ✨
     77→## Requirements 📋
@@ -267,7 +266,7 @@ internal/hooks/executor.go
     48→func (e *Executor) SetInteractive(interactive bool) {
     57→func (e *Executor) PopulateCommonFields(event HookEvent) CommonInput {
     77→func (e *Executor) ExecuteHooks(ctx context.Context, event HookEvent, input interface{}) (*HookOutput, error) {
-   201→type hookResult …
+   201→type hookResult struct {
 
 internal/hooks/schemas.go
     10→type CommonInput struct {
@@ -369,6 +368,7 @@ internal/models/providers.go
    124→type ProviderResult struct {
    153→func CreateProvider(ctx context.Context, config *ProviderConfig) (*ProviderResult, error) {
    539→type OllamaLoadingResult struct {
+   712→type bearerTransport struct {
    717→func (t *bearerTransport) RoundTrip(req *http.Request) (*http.Response, error) {
    857→type oauthTransport struct {
    862→func (t *oauthTransport) RoundTrip(req *http.Request) (*http.Response, error) {
@@ -649,7 +649,6 @@ internal/ui/usage_tracker.go
 sdk/README.md
      1→# MCPHost SDK
      3→The MCPHost SDK allows you to use MCPHost programmatically from Go applications without spawning OS processes.
-     4→
      5→## Installation
     11→## Basic Usage
     44→## Configuration

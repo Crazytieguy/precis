@@ -19,11 +19,12 @@ README.md
     17→-   **Great Name:** somehow [mitt](https://npm.im/mitt) wasn't taken
     18→
     19→Mitt was made for the browser, but works in any JavaScript runtime. It has no dependencies and supports IE9+.
-    20→
     30→## Install
     56→## Usage
    113→## Examples & Demos
    123→## API
+
+package.json
 
 src/index.ts
      1→export type EventType …
@@ -44,10 +45,12 @@ src/index.ts
     48→): Emitter<Events> {
 
 test/
+
+tsconfig.json
 ```
 <!-- precis-example-end -->
 
-The README's h1 section includes body text because top-level headings have the highest priority; at this budget, deeper headings appear without body. The six type aliases are truncated because expanding all six signatures would be expensive relative to the single `mitt` function. The test directory is deprioritized, appearing as a path only.
+The README's h1 section includes body text because top-level headings have the highest priority; at this budget, deeper headings appear without body. The six type aliases are truncated because expanding all six signatures would be expensive relative to the single `mitt` function. Config files and the test directory are deprioritized, appearing as paths only.
 
 ## Installation
 

@@ -2,12 +2,11 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1968 tokens)
+budget: 2000 (1963 tokens)
 
 README.md
      1→### Enclosed lib
      3→This package contains the core functionalities of [Enclosed](https://enclosed.cc/), an open-source project that aims to provide a simple and secure way to share e2e encrypted notes.
-     4→
      5→## Installation
      7→```bash
      8→# with npm
@@ -19,7 +18,6 @@ README.md
     14→# with pnpm
     15→pnpm add @enclosed/lib
     16→```
-    17→
     18→## Usage
     20→```javascript
     21→import { createNote } from '@enclosed/lib';
@@ -33,10 +31,8 @@ README.md
     29→
     30→console.log(noteUrl);
     31→```
-    32→
     33→## License
     35→This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more information.
-    36→
     37→## Credits and Acknowledgements
     39→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
 
@@ -59,6 +55,10 @@ package.json
     39→  "dependencies": {
     47→  "devDependencies": {
 
+build.config.ts
+
+eslint.config.js
+
 src/api/api.client.ts
      2→import { DEFAULT_API_BASE_URL } from './api.constants';
      6→async function tryToGetBody …
@@ -66,6 +66,8 @@ src/api/api.client.ts
 
 src/api/api.constants.ts
      1→export const DEFAULT_API_BASE_URL = 'https://enclosed.cc';
+
+src/api/api.models.test.ts
 
 src/api/api.models.ts
      5→function isApiClientErrorWithStatusCode …

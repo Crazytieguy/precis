@@ -48,12 +48,10 @@ README.md
 SUMMARY.md
      1→# Summary
      3→[Introduction](README.md)
-     4→
      5→# User guide
      7→- [Installation](guide/installation.md)
      8→- [Reading books](guide/reading.md)
      9→- [Creating a book](guide/creating.md)
-    10→
     11→# Reference guide
     13→- [Command-line tool](cli/README.md)
     14→    - [init](cli/init.md)
@@ -72,20 +70,7 @@ SUMMARY.md
     27→        - [Renderers](format/configuration/renderers.md)
     28→        - [Environment variables](format/configuration/environment-variables.md)
     29→    - [Theme](format/theme/README.md)
-    30→        - [index.hbs](format/theme/index-hbs.md)
-    31→        - [Syntax highlighting](format/theme/syntax-highlighting.md)
-    32→        - [Editor](format/theme/editor.md)
-    33→    - [MathJax support](format/mathjax.md)
-    34→    - [mdBook-specific features](format/mdbook.md)
-    35→    - [Markdown](format/markdown.md)
-    36→- [Continuous integration](continuous-integration.md)
-    37→- [For developers](for_developers/README.md)
-    38→    - [Preprocessors](for_developers/preprocessors.md)
-    39→    - [Alternative backends](for_developers/backends.md)
-    40→
-    41→-----------
-    42→
-    43→[Contributors](misc/contributors.md)
+      →    …
 
 cli/README.md
      1→# Command-line tool
@@ -134,7 +119,6 @@ continuous-integration.md
      8→[GitHub Actions]: https://docs.github.com/en/actions
      9→[GitLab CI/CD]: https://docs.gitlab.com/ee/ci/
     10→[Automated Deployment]: https://github.com/rust-lang/mdBook/wiki/Automated-Deployment
-    11→
     12→## Installing mdBook
     17→### Pre-compiled binaries
     39→### Building from source
@@ -157,7 +141,6 @@ for_developers/README.md
     13→
     14→- [Preprocessors](preprocessors.md)
     15→- [Alternative Backends](backends.md)
-    16→
     17→## The build process
     19→The process of rendering a book project goes through several steps.
     20→
@@ -179,8 +162,7 @@ for_developers/backends.md
      8→See [Configuring Renderers](../format/configuration/renderers.md) for more information about using backends.
      9→
     10→The community has developed several backends.
-    11→See the [Third Party Plugins] wiki page for a list of available backends.
-    12→
+      →…
     13→## Setting up
     53→## Inspecting the book
     82→## Enabling the backend
@@ -218,8 +200,7 @@ for_developers/preprocessors.md
      8→- Substituting in latex-style expressions (`$$ \frac{1}{3} $$`) with their
      9→  mathjax equivalents
     10→
-    11→See [Configuring Preprocessors](../format/configuration/preprocessors.md) for more information about using preprocessors.
-    12→
+      →…
     13→## Hooking into MDBook
     46→## Hints for implementing a preprocessor
     74→## Implementing a preprocessor with a different language
@@ -273,7 +254,6 @@ format/markdown.md
      1→# Markdown
      9→## Text and paragraphs
     25→## Headings
-    43→#### A smaller heading 
     47→## Lists
     69→## Links
    108→## Images
@@ -315,10 +295,25 @@ format/theme/README.md
 
 format/theme/editor.md
      1→# Editor
+     3→In addition to providing runnable code playgrounds, mdBook optionally allows them
+     4→to be editable. In order to enable editable code blocks, the following needs to
+     5→be added to the ***book.toml***:
+     6→
+     7→```toml
+     8→[output.html.playground]
+     9→editable = true
+    10→```
+    11→
+      →…
     35→## Customizing the editor
 
 format/theme/index-hbs.md
      1→# index.hbs
+     3→`index.hbs` is the handlebars template that is used to render the book. The
+     4→markdown files are processed to html and then injected in that template.
+     5→
+     6→If you want to change the layout or style of your book, chances are that you
+     7→will have to modify this template a little bit. Here is what you need to know.
      9→## Data
     41→## Handlebars helpers
     46→### toc
@@ -327,6 +322,16 @@ format/theme/index-hbs.md
 
 format/theme/syntax-highlighting.md
      1→# Syntax highlighting
+     3→mdBook uses [Highlight.js](https://highlightjs.org) with a custom theme
+     4→for syntax highlighting.
+     5→
+     6→Automatic language detection has been turned off, so you will probably want to
+     7→specify the programming language you use like this:
+     8→
+     9→~~~markdown
+    10→```rust
+    11→fn main() {
+      →…
     17→## Supported languages
     68→## Custom theme
     82→## Improve default theme
@@ -342,7 +347,6 @@ guide/README.md
 guide/creating.md
      1→# Creating a book
      3→Once you have the `mdbook` CLI tool installed, you can use it to create and render a book.
-     4→
      5→## Initializing a book
     32→## Anatomy of a book
     36→### `book.toml`
@@ -357,7 +361,6 @@ guide/installation.md
      5→If you are installing mdBook for automatic deployment, check out the [continuous integration] chapter for more examples on how to install.
      6→
      7→[continuous integration]: ../continuous-integration.md
-     8→
      9→## Pre-compiled binaries
     19→## Build from source using Rust
     41→### Installing the latest master version
@@ -373,7 +376,6 @@ guide/reading.md
      8→Each chapter is a separate page.
      9→Chapters can be nested into a hierarchy of sub-chapters.
     10→Typically, each chapter will be organized into a series of *headings* to subdivide a chapter.
-    11→
     12→## Navigation
     26→## Top menu bar
     42→## Search

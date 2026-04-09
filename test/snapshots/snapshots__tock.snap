@@ -2,13 +2,12 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7927 tokens)
+budget: 8000 (7926 tokens)
 
 README.md
      1→# Tock
      5→[Features](#features) • [Quick Start](#quick-start) • [Commands](#commands) •
      6→[Configuration](#configuration) • [Theme](#theme) • [File Format](#file-format) • [Shell](#shell-completion) • [Inspiration](#inspiration) • [License](#license)
-     7→
      8→## Features
     12→**Tock** is a powerful time tracking tool for the command line. It saves activity logs as plaintext files and provides an interactive terminal UI for viewing your time.
     13→
@@ -23,7 +22,6 @@ README.md
     22→- 📅 **iCal Export** - Generate .ics files for calendar integration, or sync with system calendars (macOS only)
     23→
     24→<hr clear="right"/>
-    25→
     26→## Quick Start
     28→### Installation
     30→#### Homebrew (macOS)
@@ -41,7 +39,6 @@ README.md
    123→2. Environment variables
    124→3. Configuration file (`~/.config/tock/tock.yaml` or `./tock.yaml`)
    125→4. Default values
-   126→
    127→### Configuration File
    165→### Environment Variables
    179→### Storage Backends
@@ -60,7 +57,6 @@ README.md
    248→```
    249→
    250→Or use environment variables:
-   251→
    252→### Theme Name
    262→### Auto-detection
    270→### Custom Colors
@@ -104,7 +100,6 @@ README.md
    377→```
    378→
    379→[**→ Commands Reference**](docs/commands.md)
-   380→
    381→### Start tracking
    401→### Stop tracking
    418→### Add past activity
@@ -121,7 +116,6 @@ README.md
    604→Tock automatically checks for updates once a week. When a new version is available, you will see a notification after running commands like `start` or `stop`.
    605→
    606→You can disable this check by setting `check_updates: false` in your configuration file or using the environment variable `TOCK_CHECK_UPDATES=false`.
-   607→
    608→## File Format
    610→Activities are stored in plaintext format (compatible with Bartib):
    611→
@@ -131,7 +125,6 @@ README.md
    615→```
    616→
    617→You can edit this file manually with any text editor.
-   618→
    619→## Shell Completion
    621→Tock supports shell completion for Bash, Zsh, Fish, and PowerShell. This includes basic command completion and **intelligent suggestions** for:
    622→
@@ -139,18 +132,15 @@ README.md
    624→- **Descriptions**: Suggests recent activity descriptions when using `-d` / `--description`.
    625→  - Suggestions are context-aware: if a project is selected, it only suggests descriptions previously used for that project.
    626→- **Continue IDs**: Suggests valid activity IDs (with details) for the `tock continue` command.
-   627→
    628→### Installation
    656→## Shell Integration
    658→You can display the current tracked activity directly in your shell prompt.
-   659→
    660→### Zsh / Oh My Zsh
    679→### Starship
    692→### Technology Stack
    698→### Project Structure
    709→## Inspiration
    711→Tock is inspired by and compatible with [Bartib](https://github.com/nikolassv/bartib) - an excellent time tracking tool written in Rust by Nikolas Schmidt-Voigt. It's saved me countless hours and helped me stay organized, so I wanted to create a similar tool in Go with a clean architecture approach and an interactive terminal UI.
-   712→
    713→## License
    715→GPL-3.0-or-later
 
@@ -230,25 +220,6 @@ demo/demo_script.sh
 docs/commands.md
      1→# Commands Reference
      3→This document provides a comprehensive reference for all Tock commands, flags, and usage patterns.
-     4→
-     5→- [Core Commands](#core-commands)
-     6→  - [`start`](#start)
-     7→  - [`stop`](#stop-alias-s)
-     8→  - [`add`](#add)
-     9→  - [`remove`](#remove-alias-rm)
-    10→  - [`continue`](#continue-alias-c)
-    11→  - [`watch`](#watch)
-    12→- [Viewing & Reporting](#viewing--reporting)
-    13→  - [`calendar`](#calendar)
-    14→  - [`list`](#list-alias-ls)
-    15→  - [`current`](#current)
-    16→  - [`last`](#last-alias-lt)
-    17→  - [`report`](#report)
-    18→- [Data & Analysis](#data--analysis)
-    19→  - [`analyze`](#analyze)
-    20→  - [`ical`](#ical)
-    21→- [Global Flags](#global-flags)
-    22→
     23→## Core Commands
     25→### `start`
     57→### `stop` (alias: `s`)
@@ -457,10 +428,10 @@ internal/adapters/repositories/file/repository.go
    250→func (r *repository) writeLines …
 
 internal/adapters/repositories/notes/repository.go
-    18→const …
-    19→	fileExtension …
-    20→	directoryMode …
-    21→	fileMode …
+    18→const (
+    19→	fileExtension = ".txt"
+    20→	directoryMode = 0750
+    21→	fileMode      = 0644
     24→type repository struct {
     28→func NewRepository(basePath string) ports.NotesRepository {
     32→type noteData struct {
@@ -485,7 +456,7 @@ internal/adapters/repositories/timewarrior/repository.go
    283→func (r *repository) writeIntervalsToFile …
    306→func toTWInterval …
    320→func fromTWInterval …
-   352→func parseIncLine …
+   352→func parseIncLine(line string) (twInterval, error) {
    393→func tokenize …
 
 internal/config/config.go
@@ -663,7 +634,7 @@ internal/services/ics/generator.go
     18→func WrapCalendar(eventsBody string) string {
     28→// GenerateEvent returns the VEVENT block for a single activity.
     29→func GenerateEvent(act models.Activity, uidKey string) string {
-    71→func escapeProperty …
+    71→func escapeProperty(s string) string {
 
 internal/timeutil/timeutil.go
     10→// TimeFormat represents the configured time display format.
@@ -675,13 +646,34 @@ internal/timeutil/timeutil.go
     19→type Formatter struct {
     20→	format TimeFormat
     21→}
+    23→// NewFormatter creates a new Formatter with the given format string.
+      →…
     25→func NewFormatter(formatStr string) *Formatter {
+    33→// Format returns the TimeFormat configured for this Formatter.
     34→func (f *Formatter) Format() TimeFormat {
+    38→// GetDisplayFormat returns the Go time format string for display.
     39→func (f *Formatter) GetDisplayFormat() string {
+    46→// GetDisplayFormatWithDate returns format string with date.
     47→func (f *Formatter) GetDisplayFormatWithDate() string {
+    54→// ParseTime parses user input supporting both 12hr and 24hr formats
+      →…
     56→func (f *Formatter) ParseTime(input string) (time.Time, error) {
+   101→// ParseTimeWithDate parses time that may include a date
+      →…
    103→func (f *Formatter) ParseTimeWithDate(input string) (time.Time, error) {
+   154→// FormatDuration formats a duration using Go's time layout constants.
+      →…
    158→func FormatDuration(d time.Duration, format string) string {
+
+internal/timeutil/timeutil_test.go
+     8→func TestNewFormatter(t *testing.T) {
+    30→func TestGetDisplayFormat(t *testing.T) {
+    51→func TestGetDisplayFormatWithDate(t *testing.T) {
+    72→func TestParseTime_24HourMode(t *testing.T) {
+   120→func TestParseTime_12HourMode(t *testing.T) {
+   198→func checkDate …
+   219→func TestParseTimeWithDate_24HourMode(t *testing.T) {
+   265→func TestParseTimeWithDate_12HourMode(t *testing.T) {
 
 tock.yaml.example
      1→# Tock Configuration File

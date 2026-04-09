@@ -2,14 +2,13 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3955 tokens)
+budget: 4000 (3952 tokens)
 
 README.md
      3→# xLSTM: Extended Long Short-Term Memory
     15→> **Paper:** https://arxiv.org/abs/2405.04517
     16→>
     17→> **Authors:** Maximilian Beck, Korbinian Pöppel, Markus Spanring, Andreas Auer, Oleksandra Prudnikova, Michael Kopp, Günter Klambauer, Johannes Brandstetter, Sepp Hochreiter
-    18→
     19→## About
     29→## Minimal Installation
     49→## Requirements
@@ -30,17 +29,16 @@ README.md
    115→## Recommendation for other hardware
    138→# Models from the xLSTM NeurIPS Paper
    140→This section explains how to use the models from the xLSTM paper.
-   141→
    142→## How to use the xLSTM architecture from our NeurIPS paper
    297→## Experiments
    312→## Citation
+
+experiments/data/utils.py
 
 experiments/lr_scheduler.py
     14→    def get_lr(self) -> list[float]:
     19→    def reinitialize(self, **kwargs) -> None:
     34→    def compute_lr(step, warmup_steps, decay_until_step, max_lr, min_lr):
-
-experiments/main.py
 
 notebooks/xlstm/xLSTM_readme_example.ipynb
      1→{
@@ -247,6 +245,8 @@ xlstm/components/feedforward.py
     40→    _num_blocks: int = 1
     41→
     49→class GatedFeedForward(nn.Module):
+
+xlstm/components/init.py
 
 xlstm/components/linear_headwise.py
     13→class LinearHeadwiseExpandConfig:

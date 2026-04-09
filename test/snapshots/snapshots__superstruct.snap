@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3955 tokens)
+budget: 4000 (3956 tokens)
 
 Readme.md
     42→### Usage
@@ -13,6 +13,9 @@ Readme.md
    205→### Documentation
 
 package.json
+
+License.md
+     1→The MIT License
 
 docs/guides/01-getting-started.md
      1→# Getting Started
@@ -49,6 +52,10 @@ docs/guides/06-using-typescript.md
 
 docs/readme.md
      7→### Usage
+     9→Superstruct allows you to define the shape of data you want to validate:
+    10→
+    11→```js
+      →…
 
 docs/reference/coercions.md
      1→# Coercions
@@ -72,11 +79,14 @@ docs/reference/typescript.md
 docs/reference/utilities.md
      1→# Utilities
 
+docs/resources/faq.md
+
 docs/resources/links.md
      1→# Resources
      3→A few resources that are helpful for building with Superstruct.
-     4→
      5→## Libraries
+     7→- [`bumpover`](https://github.com/doodlewind/bumpover) helps you transform data asynchronously with simple rules, whose validation API is built with Superstruct.
+      →…
 
 docs/summary.md
      3→## Guides
@@ -84,18 +94,13 @@ docs/summary.md
      6→- [Validating Data](./guides/02-validating-data.md)
      7→- [Coercing Data](./guides/03-coercing-data.md)
      8→- [Refining Validation](./guides/04-refining-validation.md)
-     9→- [Handling Errors](./guides/05-handling-errors.md)
-    10→- [Using TypeScript](./guides/06-using-typescript.md)
-    11→
+      →…
     12→## API Reference
     14→- [Core](./reference/core.md)
     15→- [Types](./reference/types.md)
     16→- [Refinements](./reference/refinements.md)
     17→- [Coercions](./reference/coercions.md)
-    18→- [Utilities](./reference/utilities.md)
-    19→- [Errors](./reference/errors.md)
-    20→- [TypeScript](./reference/typescript.md)
-    21→
+      →…
     22→## Resources
     24→- [FAQ](./resources/faq.md)
     25→- [Links](./resources/links.md)

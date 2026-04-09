@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3963 tokens)
+budget: 4000 (3967 tokens)
 
 Cargo.toml
      1→[package]
@@ -21,7 +21,6 @@ CONTEXT.md
      1→# toasty-codegen Component Context
      3→## Purpose
      4→Generates Rust code from the `#[derive(Model)]` procedural macro. This crate transforms user-defined structs into full-featured ORM models with query builders, CRUD operations, and relationship handling.
-     5→
      6→## Key Responsibilities
      8→### Schema Parsing (`src/schema/`)
     15→### Code Expansion (`src/expand/`)
@@ -52,7 +51,6 @@ CONTEXT.md
     66→// Relationship types
     67→struct Many, One, OptionOne, ManyField, OneField;
     68→```
-    69→
     70→## Complete Attribute Support
     72→### Model-Level Attributes
     76→### Field-Level Attributes  
@@ -63,13 +61,11 @@ CONTEXT.md
     92→- `expand/model.rs`: Main expansion logic
     93→- `expand/util.rs`: Helper functions for code generation
     94→- `schema/ty.rs`: Type system mapping
-    95→
     96→## Code Generation Principles
     98→1. **Fully Qualified Paths**: Always use `#toasty::Type` to avoid conflicts
     99→2. **Type Safety**: Generate strongly-typed builders and queries
    100→3. **Zero-Cost**: Generated code should have no runtime overhead
    101→4. **Discoverable API**: Methods should be intuitive and IDE-friendly
-   102→
    103→## Key Patterns
    105→### Dynamic Model IDs
    114→### Query Builder Pattern
@@ -305,6 +301,7 @@ src/schema/error.rs
 src/schema/field.rs
      8→pub(crate) struct Field {
     29→pub(crate) struct FieldAttr {
+    46→#[derive(Debug)]
     47→pub(crate) enum FieldTy {
     48→    Primitive(syn::Type),
     49→    BelongsTo(BelongsTo),
@@ -333,6 +330,7 @@ src/schema/has_one.rs
 src/schema/index.rs
      2→pub(crate) struct Index {
     14→pub(crate) struct IndexField {
+    22→#[derive(Debug)]
     23→pub(crate) enum IndexScope {
     24→    /// The index column is used to partition rows across nodes of a distributed database.
     25→    Partition,
@@ -347,6 +345,7 @@ src/schema/key_attr.rs
      8→    pub(super) fn from_ast …
 
 src/schema/model.rs
+     3→#[derive(Debug)]
      4→pub(crate) enum ModelKind {
      5→    /// Root model with table, primary key, and query builders
      6→    Root(ModelRoot),

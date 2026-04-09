@@ -111,13 +111,28 @@ pub(crate) fn compute_layout(
         {
             content_start += 1;
         }
-        // Trim trailing noise from config section bodies (closing delimiters, blank lines)
+        // Trim trailing noise from section bodies
         let mut section_end = next_heading_line;
         if is_config {
+            // Config: closing delimiters, blank lines
             while section_end > content_start
                 && is_config_trailing_noise(lines[section_end - 1])
             {
                 section_end -= 1;
+            }
+        } else {
+            section_end = trim_trailing_blank_lines(lines, content_start, section_end);
+            // Large trailing ToC blocks (5+ consecutive `- [Text](#anchor)` lines)
+            // duplicate the heading structure precis already shows. Short navigation
+            // lists (< 5 items) are preserved.
+            let mut toc_start = section_end;
+            while toc_start > content_start
+                && is_toc_link(lines[toc_start - 1].trim())
+            {
+                toc_start -= 1;
+            }
+            if section_end - toc_start >= 5 && toc_start > content_start {
+                section_end = trim_trailing_blank_lines(lines, content_start, toc_start);
             }
         }
         (content_start, section_end)
@@ -595,6 +610,15 @@ fn is_toc_link(trimmed: &str) -> bool {
     false
 }
 
+/// Trim trailing blank lines from a line range, returning the new exclusive end.
+fn trim_trailing_blank_lines(lines: &[&str], start: usize, end: usize) -> usize {
+    let mut e = end;
+    while e > start && lines[e - 1].trim().is_empty() {
+        e -= 1;
+    }
+    e
+}
+
 /// Check if a line is trailing noise in config format section bodies.
 /// Matches blank lines and lines that are purely closing delimiters
 /// (`}`, `]`, with optional trailing commas and whitespace).
@@ -901,5 +925,144 @@ mod tests {
         // Rust actual content: NOT noise
         let content = strip_doc_line_prefix("//! This library provides error handling.", Some(Lang::Rust));
         assert!(!is_markdown_leading_noise(content));
+    }
+
+    /// Helper to compute body range for a markdown section with the given body lines.
+    /// Returns (body_start, body_end) as 0-indexed line numbers.
+    fn section_body_range(body_lines: &[&str]) -> (usize, usize) {
+        // Build a minimal markdown file: heading + body lines + next heading
+        let mut source = String::from("# Heading\n");
+        for line in body_lines {
+            source.push_str(line);
+            source.push('\n');
+        }
+        source.push_str("## Next\n");
+        let lines: Vec<&str> = source.lines().collect();
+
+        let sym = parse::Symbol {
+            kind: parse::SymbolKind::Section,
+            name: "Heading".to_string(),
+            is_public: true,
+            is_first_party: false,
+            line: 1,
+            end_line: 1,
+            sig_end_line: None,
+            doc_start_line: None,
+            is_trait_impl: false,
+            is_reexport: false,
+            start_byte: 0,
+            end_byte: 0,
+            composed_prefix_lens: Vec::new(),
+            layout: Default::default(),
+        };
+        let next_sym = parse::Symbol {
+            kind: parse::SymbolKind::Section,
+            name: "Next".to_string(),
+            is_public: true,
+            is_first_party: false,
+            line: lines.len(),
+            end_line: lines.len(),
+            sig_end_line: None,
+            doc_start_line: None,
+            is_trait_impl: false,
+            is_reexport: false,
+            start_byte: 0,
+            end_byte: 0,
+            composed_prefix_lens: Vec::new(),
+            layout: Default::default(),
+        };
+        let all_symbols = [sym.clone(), next_sym];
+        let layout = compute_layout(&all_symbols[0], 0, &all_symbols, &lines, Some(Lang::Markdown));
+        (layout.body_start, layout.body_end)
+    }
+
+    #[test]
+    fn section_body_trims_trailing_blank_lines() {
+        let (start, end) = section_body_range(&[
+            "Content here.",
+            "",
+            "",
+        ]);
+        // body_start = 1 (content), body_end = 2 (trailing blanks trimmed)
+        assert_eq!(start, 1);
+        assert_eq!(end, 2);
+    }
+
+    #[test]
+    fn section_body_trims_large_trailing_toc() {
+        let (start, end) = section_body_range(&[
+            "A brief introduction.",
+            "",
+            "- [Section A](#section-a)",
+            "- [Section B](#section-b)",
+            "- [Section C](#section-c)",
+            "- [Section D](#section-d)",
+            "- [Section E](#section-e)",
+            "",
+        ]);
+        // body_start = 1 (intro), body_end = 2 (ToC + blanks trimmed)
+        assert_eq!(start, 1);
+        assert_eq!(end, 2);
+    }
+
+    #[test]
+    fn section_body_preserves_short_link_list() {
+        let (start, end) = section_body_range(&[
+            "Content here.",
+            "- [Link A](#a)",
+            "- [Link B](#b)",
+            "- [Link C](#c)",
+        ]);
+        // Short list (3 items < 5 threshold) preserved
+        assert_eq!(start, 1);
+        assert_eq!(end, 5); // all 4 content lines
+    }
+
+    #[test]
+    fn section_body_preserves_link_reference_definitions() {
+        let (start, end) = section_body_range(&[
+            "Read the [docs][docs-link].",
+            "",
+            "[docs-link]: https://example.com/docs",
+        ]);
+        // Link references are NOT trimmed (they don't match is_toc_link)
+        assert_eq!(start, 1);
+        assert_eq!(end, 4);
+    }
+
+    #[test]
+    fn section_body_toc_only_already_empty_from_leading_skip() {
+        // A section whose ONLY content is ToC links: leading noise skip
+        // already removes all lines, so the body is empty before trailing
+        // trim even runs. This is pre-existing behavior.
+        let (start, end) = section_body_range(&[
+            "- [Section A](#section-a)",
+            "- [Section B](#section-b)",
+            "- [Section C](#section-c)",
+            "- [Section D](#section-d)",
+            "- [Section E](#section-e)",
+            "- [Section F](#section-f)",
+        ]);
+        // Leading noise skip advances past all ToC lines → empty body
+        assert_eq!(start, end);
+    }
+
+    #[test]
+    fn section_body_toc_after_content_trims_only_toc() {
+        // Content followed by a large ToC block: the content is preserved,
+        // the ToC is trimmed, and the guard `toc_start > content_start`
+        // ensures we don't collapse the body entirely.
+        let (start, end) = section_body_range(&[
+            "Introduction text.",
+            "More details here.",
+            "",
+            "- [A](#a)",
+            "- [B](#b)",
+            "- [C](#c)",
+            "- [D](#d)",
+            "- [E](#e)",
+        ]);
+        assert_eq!(start, 1);
+        assert_eq!(end, 3); // two content lines, ToC + blank trimmed
     }
 }

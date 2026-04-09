@@ -2,14 +2,13 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3939 tokens)
+budget: 4000 (3940 tokens)
 
 README.md
     10→# `htmy`
     12→**Async**, **pure-Python** server-side rendering engine.
     13→
     14→Unleash your creativity with the full power and Python, without the hassle of learning a new templating language or dealing with its limitations!
-    15→
     16→## Key features
     33→## Testimonials
     51→## Installation
@@ -156,8 +155,6 @@ examples/snippet-slots-fastapi/app.py
     20→
     28→class RequestHeaders:
     30→
-    69→@app.get("/")
-      →…
     71→async def index() -> None:
 
 htmy/__init__.py
@@ -329,8 +326,10 @@ htmy/renderer/context.py
       →        …
 
 htmy/renderer/default.py
+    20→class _Node:
     25→    def __init__ …
     36→    def iter_nodes …
+    53→class _ComponentRenderer:
     60→    def __init__ …
    174→    async def run …
    228→class Renderer:

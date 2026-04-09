@@ -10,7 +10,6 @@ README.md
      6→> Swarm is now replaced by the [OpenAI Agents SDK](https://github.com/openai/openai-agents-python), which is a production-ready evolution of Swarm. The Agents SDK features key improvements and will be actively maintained by the OpenAI team.
      7→>
      8→> We recommend migrating to the Agents SDK for all production use cases.
-     9→
     10→## Install
     24→## Usage
     60→## Table of Contents
@@ -22,8 +21,7 @@ README.md
     78→These primitives are powerful enough to express rich dynamics between tools and networks of agents, allowing you to build scalable, real-world solutions while avoiding a steep learning curve.
     79→
     80→> [!NOTE]
-    81→> Swarm Agents are not related to Assistants in the Assistants API. They are named similarly for convenience, but are otherwise completely unrelated. Swarm is entirely powered by the Chat Completions API and is hence stateless between calls.
-    82→
+      →…
     83→## Why Swarm
     89→# Examples
     91→Check out `/examples` for inspiration! Learn more about each one in its README.
@@ -33,8 +31,7 @@ README.md
     95→- [`weather_agent`](examples/weather_agent): Simple example of function calling
     96→- [`airline`](examples/airline): A multi-agent setup for handling different customer service requests in an airline context.
     97→- [`support_bot`](examples/support_bot): A customer service bot which includes a user interface agent and a help center agent with several tools
-    98→- [`personal_shopper`](examples/personal_shopper): A personal shopping agent that can help with making sales and refunding orders
-    99→
+      →…
    100→# Documentation
    104→## Running Swarm
    114→### `client.run()`
@@ -49,7 +46,6 @@ README.md
    321→## Streaming
    336→# Evaluations
    338→Evaluations are crucial to any project, and we encourage developers to bring their own eval suites to test the performance of their swarms. For reference, we have some examples for how to eval swarm in the `airline`, `weather_agent` and `triage_agent` quickstart examples. See the READMEs for more details.
-   339→
    340→# Utils
    342→Use the `run_demo_loop` to test out your swarm! This will run a REPL on your command line. Supports streaming.
    343→
@@ -58,7 +54,6 @@ README.md
    346→...
    347→run_demo_loop(agent, stream=True)
    348→```
-   349→
    350→# Core Contributors
    352→- Ilan Bigio - [ibigio](https://github.com/ibigio)
    353→- James Hills - [jhills20](https://github.com/jhills20)
@@ -73,9 +68,22 @@ logs/
 
 pyproject.toml
      1→[build-system]
+     2→requires = ["setuptools"]
+     3→build-backend = "setuptools.build_meta"
 
 setup.cfg
      1→[metadata]
+     2→name = swarm
+     3→version = 0.1.0
+     4→author = OpenAI Solutions
+     5→description = A lightweight, stateless multi-agent orchestration framework.
+     6→long_description = file: README.md
+     7→long_description_content_type = text/markdown
+     8→license = MIT
+     9→
+    10→[options]
+    11→packages = find:
+      →…
 
 SECURITY.md
      1→# Security Policy
@@ -104,13 +112,21 @@ examples/airline/configs/tools.py
     27→def initiate_baggage_search():
 
 examples/airline/data/routines/baggage/policies.py
-     3→STARTER_PROMPT …
+     1→# Atlas
+      →…
+     3→STARTER_PROMPT = """You are an intelligent and empathetic customer support representative for Fly Airlines customers .
     21→LOST_BAGGAGE_POLICY = """
 
 examples/airline/data/routines/flight_modification/policies.py
      2→STARTER_PROMPT = """You are an intelligent and empathetic customer support representative for Fly Airlines customers .
     20→FLIGHT_CANCELLATION_POLICY = f"""
     33→FLIGHT_CHANGE_POLICY = f"""
+
+examples/airline/evals/eval_cases/flight_modification_cases.json
+     1→[
+
+examples/airline/evals/eval_cases/triage_cases.json
+     1→[
 
 examples/airline/evals/eval_utils.py
      8→def run_function_evals(agent, test_cases, n=1, eval_path=None):
@@ -201,12 +217,16 @@ examples/customer_service_streaming/src/evals/eval_function.py
 
 examples/customer_service_streaming/src/runs/run.py
      5→class Run:
+     6→    def __init__(self,assistant,request,client):
+    14→    def initiate(self, planner):
+    20→    def generate_plan(self,task=None):
 
 examples/customer_service_streaming/src/swarm/engines/engine.py
      1→# engine.py
      2→class Engine:
 
 examples/customer_service_streaming/src/swarm/engines/local_engine.py
+   379→             #assistant.print_conversation()
    381→    def load_test_tasks(self, test_file_paths):
 
 examples/customer_service_streaming/src/swarm/swarm.py
@@ -232,9 +252,7 @@ examples/customer_service_streaming/tests/test_prompts.jsonl
 examples/personal_shopper/README.md
      1→# Personal shopper
      3→This Swarm is a personal shopping agent that can help with making sales and refunding orders.
-     4→This example uses the helper function `run_demo_loop`, which allows us to create an interactive Swarm session.
-     5→In this example, we also use a Sqlite3 database with customer information and transaction data.
-     6→
+      →…
      7→## Overview
     15→## Setup
 
@@ -264,9 +282,6 @@ examples/support_bot/Makefile
 
 examples/support_bot/README.md
      1→# Support bot
-     3→This example is a customer service bot which includes a user interface agent and a help center agent with several tools.
-     4→This example uses the helper function `run_demo_loop`, which allows us to create an interactive Swarm session.
-     5→
      6→## Overview
     13→## Setup
 
@@ -297,7 +312,6 @@ examples/triage_agent/README.md
      1→# Triage agent
      3→This example is a Swarm containing a triage agent, which takes in user inputs and chooses whether to respond directly, or triage the request
      4→to a sales or refunds agent.
-     5→
      6→## Setup
     16→## Evals
 
@@ -323,8 +337,6 @@ examples/triage_agent/evals_util.py
 
 examples/weather_agent/README.md
      1→# Weather agent
-     3→This example is a weather agent demonstrating function calling with a single agent. The agent has tools to get the weather of a particular city, and send an email.
-     4→
      5→## Setup
     15→## Evals
 
@@ -373,7 +385,8 @@ swarm/types.py
     30→    """
     31→    Encapsulates the possible return values for an agent function.
     32→
-      →…
+    33→    Attributes:
+      →    …
     38→
     39→    value: str = ""
     40→    agent: Optional[Agent] = None
