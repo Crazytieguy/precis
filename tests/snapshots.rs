@@ -1,12 +1,21 @@
 use precis::{format, walk};
 use std::path::Path;
 
-/// Helper to get the path to a test fixture. Returns None if the fixture isn't cloned.
+/// Helper to get the path to a test fixture.
+/// Panics if a regular fixture is missing. Returns None only for optional perf fixtures.
 fn fixture_path(name: &str) -> Option<std::path::PathBuf> {
     let path = Path::new(env!("CARGO_MANIFEST_DIR"))
         .join("test/fixtures")
         .join(name);
-    if path.exists() { Some(path) } else { None }
+    if path.exists() {
+        Some(path)
+    } else if name.starts_with("../perf-fixtures") {
+        None // perf fixtures are optional
+    } else {
+        panic!(
+            "fixture not present at {path:?} — run `cargo run --bin clone_fixtures`"
+        );
+    }
 }
 
 /// Generate a snapshot test that renders a fixture with a word budget.
@@ -15,11 +24,8 @@ macro_rules! budget_test {
         #[test]
         fn $name() {
             let Some(output) = render_with_budget($path, $budget) else {
-                eprintln!(
-                    "skipping {}: fixture not present at {}",
-                    stringify!($name),
-                    $path
-                );
+                // Only perf fixtures can reach here — regular fixtures panic in fixture_path()
+                eprintln!("skipping {} (optional perf fixture)", stringify!($name));
                 return;
             };
             insta::assert_snapshot!(output);
@@ -710,10 +716,7 @@ fn budget_monotonicity_inline() {
 
 #[test]
 fn single_file_budget_rust() {
-    let Some(root) = fixture_path("anyhow/src") else {
-        eprintln!("skipping single_file_budget_rust: clone anyhow fixture");
-        return;
-    };
+    let root = fixture_path("anyhow/src").unwrap();
     let file = root.join("lib.rs");
     let source = std::fs::read_to_string(&file).unwrap();
 
@@ -736,10 +739,7 @@ fn single_file_budget_rust() {
 // Budget monotonicity for multi-file fixtures: more budget ≥ more tokens.
 #[test]
 fn budget_monotonicity_fixture() {
-    let Some(root) = fixture_path("pluggy/src/pluggy") else {
-        eprintln!("skipping budget_monotonicity_fixture: clone pluggy fixture");
-        return;
-    };
+    let root = fixture_path("pluggy/src/pluggy").unwrap();
     let files = walk::discover_source_files(&root);
     let sources = format::read_sources(&files);
     let budgets = [0, 50, 200, 500, 1000, 2000, 4000, 10000];
@@ -843,13 +843,8 @@ const README_EXAMPLE_BUDGET: usize = 400;
 
 #[test]
 fn readme_example_matches_output() {
-    let Some(output) = render_fixture(README_EXAMPLE_FIXTURE, README_EXAMPLE_BUDGET) else {
-        eprintln!(
-            "skipping readme_example_matches_output: {} fixture not present",
-            README_EXAMPLE_FIXTURE
-        );
-        return;
-    };
+    let output = render_fixture(README_EXAMPLE_FIXTURE, README_EXAMPLE_BUDGET)
+        .expect("fixture should be present");
     let readme = std::fs::read_to_string(
         Path::new(env!("CARGO_MANIFEST_DIR")).join("README.md"),
     )
