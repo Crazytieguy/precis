@@ -1,6 +1,6 @@
 # precis
 
-A CLI tool that extracts a token-efficient summary of a path, designed to give AI coding agents fast structural context without reading every file. It uses tree-sitter to parse source files, extracts structural symbols (functions, types, interfaces, headings), and ranks them by importance to fit within a token budget. The goal is to replace most Explore agent use with a single fast command.
+A CLI tool that extracts a token-efficient summary of a path, designed to replace most Explore agent use with a single fast command. It uses tree-sitter to parse source files, extracts structural symbols (functions, types, interfaces, headings), and ranks them by importance to fit within a token budget.
 
 ## Example
 
