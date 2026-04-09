@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (2879 tokens, 9430 chars)
+budget: 4000 (2881 tokens, 9417 chars)
 
 README.rst
      1→====================================================
@@ -42,11 +42,7 @@ README.rst
     35→            return arg1 + arg2
     36→
     37→
-    38→    class Plugin_2:
-    39→        """A 2nd hook implementation namespace."""
-    40→
-    41→        @hookimpl
-      →        …
+      →…
 
 changelog/
 
@@ -54,9 +50,6 @@ pyproject.toml
      1→[build-system]
      8→[project]
     38→[dependency-groups]
-
-CHANGELOG.rst
-     1→=========
 
 MANIFEST.in
      1→include CHANGELOG
@@ -82,7 +75,6 @@ docs/api_reference.rst
 
 docs/conf.py
    106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
-   107→    """Configure Sphinx's WarningHandler to handle (expected) missing include."""
    130→def setup(app: "sphinx.application.Sphinx") -> None:
 
 docs/examples/eggsample-spam/eggsample_spam.py
@@ -133,19 +125,28 @@ downstream/python-lsp-server.sh
 downstream/tox.sh
      2→set -eux -o pipefail
 
-scripts/
+scripts/release.py
+     1→"""
+     2→Release script.
+     3→"""
 
 src/pluggy/__init__.py
      1→__all__ = [
     32→def __getattr__ …
 
 src/pluggy/_callers.py
+     1→"""
+     2→Call loop machinery
+     3→"""
     22→# Need to distinguish between old- and new-style hook wrappers.
-    23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
+      →…
     24→Teardown: TypeAlias = Generator[None, object, object]
     27→def run_old_style_hookwrapper …
 
 src/pluggy/_hooks.py
+     1→"""
+     2→Internal hook annotation, representation and calling machinery.
+     3→"""
     40→class HookspecOpts(TypedDict):
     42→
     43→    #: Whether the hook is :ref:`first result only <firstresult>`.
@@ -220,8 +221,7 @@ src/pluggy/_hooks.py
    499→    def __call__ …
    516→    def call_historic …
    543→    def call_extra …
-   593→class _SubsetHookCaller(HookCaller):
-   596→
+   593→class _SubsetHookCaller …
    612→    def __init__ …
    619→    def _hookimpls …
    627→    def spec …
@@ -296,6 +296,9 @@ src/pluggy/_manager.py
    512→    def subset_hook_caller …
 
 src/pluggy/_result.py
+     1→"""
+     2→Hook wrapper "result" utilities.
+     3→"""
     20→class HookCallError(Exception):
     25→class Result(Generic[ResultType]):
     28→
@@ -310,6 +313,9 @@ src/pluggy/_result.py
     91→    def get_result …
 
 src/pluggy/_tracing.py
+     1→"""
+     2→Tracing utils
+     3→"""
     16→class TagTracer:
     17→    def __init__ …
     22→    def get …

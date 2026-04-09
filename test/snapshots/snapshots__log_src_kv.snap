@@ -2,21 +2,13 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1989 tokens)
+budget: 2000 (1995 tokens)
 
 error.rs
      5→pub struct Error {
      6→    inner: Inner,
      7→}
-     9→#[derive(Debug)]
     10→enum Inner {
-    11→    #[cfg(feature = "std")]
-    12→    Boxed(std_support::BoxedError),
-    13→    Msg(&'static str),
-    14→    #[cfg(feature = "value-bag")]
-    15→    Value(crate::kv::value::inner::Error),
-    16→    Fmt,
-    17→}
     21→    pub fn msg …
     29→    pub(super) fn from_value …
     37→    pub(super) fn into_value …
@@ -25,6 +17,7 @@ error.rs
     77→        pub fn boxed …
 
 key.rs
+     1→//! Structured keys.
      7→pub trait ToKey {
      9→    fn to_key …
     37→pub struct Key<'k> {
@@ -39,6 +32,46 @@ key.rs
    136→mod serde_support {
 
 mod.rs
+     1→//! Structured logging.
+     2→//!
+     3→//! Add the `kv` feature to your `Cargo.toml` to enable
+     4→//! this module:
+     5→//!
+     6→//! ```toml
+     7→//! [dependencies.log]
+     8→//! features = ["kv"]
+     9→//! ```
+    10→//!
+    11→//! # Structured logging in `log`
+    12→//!
+    13→//! Structured logging enhances traditional text-based log records with user-defined
+    14→//! attributes. Structured logs can be analyzed using a variety of data processing
+    15→//! techniques, without needing to find and parse attributes from unstructured text first.
+    16→//!
+    17→//! In `log`, user-defined attributes are part of a [`Source`] on the log record.
+    18→//! Each attribute is a key-value; a pair of [`Key`] and [`Value`]. Keys are strings
+    19→//! and values are a datum of any type that can be formatted or serialized. Simple types
+    20→//! like strings, booleans, and numbers are supported, as well as arbitrarily complex
+    21→//! structures involving nested objects and sequences.
+    22→//!
+    23→//! ## Adding key-values to log records
+    24→//!
+    25→//! Key-values appear before the message format in the `log!` macros:
+    26→//!
+    27→//! ```
+    28→//! # use log::info;
+    29→//! info!(a = 1; "Something of interest");
+    30→//! ```
+    31→//!
+    32→//! Key-values support the same shorthand identifier syntax as `format_args`:
+    33→//!
+    34→//! ```
+    35→//! # use log::info;
+    36→//! let a = 1;
+    37→//!
+    38→//! info!(a; "Something of interest");
+    39→//! ```
+      →…
    246→mod error;
    247→mod key;
    250→mod source;
@@ -49,6 +82,10 @@ mod.rs
    262→pub mod value;
 
 source.rs
+     1→//! Sources for key-values.
+     2→//!
+     3→//! This module defines the [`Source`] type and supporting APIs for
+     4→//! working with collections of key-values.
     51→pub trait Source {
     62→    fn visit …
     73→    fn get …
@@ -57,13 +94,13 @@ source.rs
    114→fn count_default …
    235→pub trait VisitSource<'kvs> {
    237→    fn visit_pair …
-   241→impl<'a, 'kvs, T> VisitSource<'kvs> for &'a mut T
-   242→where
-   243→    T: VisitSource<'kvs> + ?Sized,
-   244→{
    280→mod std_support {
 
 value.rs
+     1→//! Structured values.
+     2→//!
+     3→//! This module defines the [`Value`] type and supporting APIs for
+     4→//! capturing and serializing them.
      8→pub use crate::kv::Error;
     11→pub trait ToValue {
     13→    fn to_value …
@@ -81,12 +118,6 @@ value.rs
    197→    pub fn null …
    204→    fn from_inner …
    217→    pub fn visit …
-   235→impl<'v> serde_core::Serialize for Value<'v> {
-   245→impl<'v> sval::Value for Value<'v> {
-   252→impl<'v> sval_ref::ValueRef<'v> for Value<'v> {
-   288→macro_rules! impl_to_value_primitive {
-   312→macro_rules! impl_to_value_nonzero_primitive {
-   336→macro_rules! impl_value_to_primitive {
    379→    pub fn to_borrowed_error …
    384→    pub fn to_borrowed_str …
    390→mod std_support {
@@ -105,17 +136,8 @@ value.rs
    517→    fn visit_char …
    524→    fn visit_error …
    530→    fn visit_borrowed_error …
-   539→impl<'a, 'v, T: ?Sized> VisitValue<'v> for &'a mut T
-   540→where
-   541→    T: VisitValue<'v>,
-   542→{
-   587→    #[cfg(feature = "kv_std")]
-   588→    fn visit_error(&mut self, err: &(dyn std::error::Error + 'static)) -> Result<(), Error> {
-   592→    #[cfg(feature = "kv_std")]
-   593→    fn visit_borrowed_error(
-   594→        &mut self,
-   595→        err: &'v (dyn std::error::Error + 'static),
-   596→    ) -> Result<(), Error> {
+   588→    fn visit_error …
+   593→    fn visit_borrowed_error …
    602→pub(in crate::kv) mod inner {
    619→    pub fn visit<'v>(
    620→        inner: &Inner<'v>,
@@ -160,22 +182,8 @@ value.rs
   1095→    pub fn capture_sval …
   1107→    pub fn is<T: 'static>(&self) -> bool {
   1116→    pub fn downcast_ref<T: 'static>(&self) -> Option<&T> {
-  1125→/// Get a value from a type implementing `std::fmt::Debug`.
-  1126→#[cfg(feature = "kv_unstable")]
-      →…
   1129→macro_rules! as_debug {
-  1135→/// Get a value from a type implementing `std::fmt::Display`.
-  1136→#[cfg(feature = "kv_unstable")]
-      →…
   1139→macro_rules! as_display {
-  1145→/// Get a value from an error.
-  1146→#[cfg(feature = "kv_unstable_std")]
-      →…
   1149→macro_rules! as_error {
-  1157→/// Get a value from a type implementing `serde::Serialize`.
-  1158→#[macro_export]
   1159→macro_rules! as_serde {
-  1165→/// Get a value from a type implementing `sval::Value`.
-  1166→#[cfg(feature = "kv_unstable_sval")]
-      →…
   1169→macro_rules! as_sval {

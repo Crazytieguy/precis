@@ -1,5 +1,6 @@
 mod ast;
 mod classify;
+mod module_doc;
 mod name;
 mod postprocess;
 mod visibility;
@@ -89,6 +90,9 @@ pub enum SymbolKind {
     Interface,
     Section,
     Import,
+    /// Module-level documentation (Rust `//!`, Python module docstrings, Go package comments).
+    /// Rendered like a section heading: the first line is the "name", remaining lines are "body".
+    ModuleDoc,
 }
 
 impl std::fmt::Display for SymbolKind {
@@ -108,7 +112,18 @@ impl std::fmt::Display for SymbolKind {
             SymbolKind::Interface => write!(f, "interface"),
             SymbolKind::Section => write!(f, "section"),
             SymbolKind::Import => write!(f, "import"),
+            SymbolKind::ModuleDoc => write!(f, "module_doc"),
         }
+    }
+}
+
+impl SymbolKind {
+    /// Whether this kind renders as a section-like symbol (full source line as
+    /// the "name", body content below, no truncation marker on the name line).
+    /// Used by the renderer, cost computation, and layout to share behavior
+    /// between markdown sections and module-level documentation.
+    pub fn is_section_like(self) -> bool {
+        matches!(self, SymbolKind::Section | SymbolKind::ModuleDoc)
     }
 }
 
@@ -314,6 +329,13 @@ pub fn extract_symbols_with_config(
     let name_idx = config.name_idx;
 
     let mut symbols = Vec::new();
+
+    // Detect module-level documentation first so it's at the start of the
+    // symbol list. Tree-sitter query matches arrive in document order, and
+    // the renderer assumes symbols are sorted by line number.
+    if let Some(module_doc) = module_doc::detect_module_doc(tree.root_node(), source, lang) {
+        symbols.push(module_doc);
+    }
 
     while let Some(m) = matches.next() {
         let symbol_node = match m.captures.iter().find(|c| c.index == symbol_idx) {

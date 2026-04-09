@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7890 tokens)
+budget: 8000 (7886 tokens)
 
 README.md
      1→# mdBook
@@ -59,6 +59,9 @@ crates/mdbook-compare/README.md
      6→
       →…
 
+crates/mdbook-compare/src/main.rs
+     1→//! Utility to compare the output of two different versions of mdbook.
+
 crates/mdbook-core/Cargo.toml
      1→[package]
     10→[dependencies]
@@ -67,11 +70,9 @@ crates/mdbook-core/Cargo.toml
 
 crates/mdbook-core/README.md
      1→# mdbook-core
-     7→This is the base support library for [mdBook](https://rust-lang.github.io/mdBook/). It is intended for internal use only. Other mdBook crates depend on this for any types that are shared across the crates.
-     8→
-      →…
 
 crates/mdbook-core/src/book.rs
+     1→//! A tree structure representing a book.
     26→pub struct Book {
     33→    pub fn new …
     38→    pub fn new_with_items …
@@ -97,6 +98,18 @@ crates/mdbook-core/src/book.rs
    269→pub struct BookItems<'a> {
 
 crates/mdbook-core/src/config.rs
+     1→//! Mdbook's configuration system.
+     2→//!
+     3→//! The main entrypoint of the `config` module is the `Config` struct. This acts
+     4→//! essentially as a bag of configuration information, with a couple
+     5→//! pre-determined tables ([`BookConfig`] and [`BuildConfig`]) as well as support
+     6→//! for arbitrary data which is exposed to plugins and alternative backends.
+     7→//!
+     8→//!
+     9→//! # Examples
+    10→//!
+    11→//! ```rust
+      →…
     63→pub struct Config {
     81→fn is_default …
     86→fn toml_is_empty …
@@ -150,6 +163,7 @@ crates/mdbook-core/src/config.rs
    719→    fn update_value …
 
 crates/mdbook-core/src/lib.rs
+     1→//! The base support library for mdbook, intended for internal use only.
      3→/// The current version of `mdbook`.
      4→///
       →…
@@ -161,6 +175,7 @@ crates/mdbook-core/src/lib.rs
     14→pub mod errors {
 
 crates/mdbook-core/src/utils/fs.rs
+     1→//! Filesystem utilities and helpers.
     11→pub fn read_to_string …
     20→pub fn write …
     31→pub fn create_dir_all …
@@ -170,15 +185,18 @@ crates/mdbook-core/src/utils/fs.rs
    155→fn copy …
 
 crates/mdbook-core/src/utils/html.rs
+     1→//! Utilities for dealing with HTML.
      6→pub fn escape_html_attribute …
     32→pub fn escape_html …
 
 crates/mdbook-core/src/utils/mod.rs
+     1→//! Various helpers and utilities.
      7→pub mod fs;
     17→macro_rules! static_regex {
     29→pub fn log_backtrace …
 
 crates/mdbook-core/src/utils/toml_ext.rs
+     1→//! Helper for working with toml types.
      8→    fn read …
     10→    fn insert …
 
@@ -212,11 +230,17 @@ crates/mdbook-driver/src/builtin_preprocessors/links.rs
     39→    pub fn new() -> Self {
    275→struct Link …
 
+crates/mdbook-driver/src/builtin_preprocessors/mod.rs
+     1→//! Built-in preprocessors.
+
 crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs
     10→pub struct MarkdownRenderer;
     14→    pub fn new() -> Self {
 
 crates/mdbook-driver/src/builtin_renderers/mod.rs
+     1→//! Built-in renderers.
+     2→//!
+     3→//! The HTML renderer can be found in the [`mdbook_html`] crate.
     20→pub struct CmdRenderer {
     21→    name: String,
     22→    cmd: String,
@@ -224,25 +248,41 @@ crates/mdbook-driver/src/builtin_renderers/mod.rs
     27→    pub fn new(name: String, cmd: String) -> CmdRenderer {
 
 crates/mdbook-driver/src/init.rs
+     1→//! Support for initializing a new book.
     13→pub struct BookBuilder {
     14→    root: PathBuf,
     15→    create_gitignore: bool,
     16→    config: Config,
     17→    copy_theme: bool,
     18→}
-    23→    pub fn new<P: Into<PathBuf>>(root: P) -> BookBuilder {
-    33→    pub fn with_config(&mut self, cfg: Config) -> &mut BookBuilder {
-    39→    pub fn config(&self) -> &Config {
-    45→    pub fn copy_theme(&mut self, copy: bool) -> &mut BookBuilder {
-    51→    pub fn create_gitignore(&mut self, create: bool) -> &mut BookBuilder {
-    64→    pub fn build(&self) -> Result<MDBook> {
+    23→    pub fn new …
+    33→    pub fn with_config …
+    39→    pub fn config …
+    45→    pub fn copy_theme …
+    51→    pub fn create_gitignore …
+    64→    pub fn build …
 
 crates/mdbook-driver/src/lib.rs
+     1→//! High-level library for running mdBook.
+     2→//!
+     3→//! This is the high-level library for running
+     4→//! [mdBook](https://rust-lang.github.io/mdBook/). There are several
+     5→//! reasons for using the programmatic API (over the CLI):
+     6→//!
+     7→//! - Integrate mdBook in a current project.
+     8→//! - Extend the capabilities of mdBook.
+     9→//! - Do some processing or test before building your book.
+    10→//! - Accessing the public API to help create a new Renderer.
+    11→//!
+    12→//! ## Additional crates
+    13→//!
+      →…
     67→pub mod builtin_preprocessors;
     68→pub mod builtin_renderers;
     69→pub mod init;
 
 crates/mdbook-driver/src/mdbook.rs
+     1→//! The high-level interface for loading and rendering books.
     29→pub struct MDBook {
     30→    /// The book's root directory.
     31→    pub root: PathBuf,
@@ -259,25 +299,21 @@ crates/mdbook-driver/src/mdbook.rs
     42→    /// Pre-processors to be run on the book.
     43→    preprocessors: IndexMap<String, Box<dyn Preprocessor>>,
     44→}
-    48→    pub fn load<P: Into<PathBuf>>(book_root: P) -> Result<MDBook> {
-    71→    pub fn load_with_config<P: Into<PathBuf>>(book_root: P, config: Config) -> Result<MDBook> {
-    90→    pub fn load_with_config_and_summary<P: Into<PathBuf>>(
-    91→        book_root: P,
-    92→        config: Config,
-    93→        summary: Summary,
-    94→    ) -> Result<MDBook> {
-   135→    pub fn iter(&self) -> BookItems<'_> {
-   156→    pub fn init<P: Into<PathBuf>>(book_root: P) -> BookBuilder {
-   161→    pub fn build(&self) -> Result<()> {
-   172→    pub fn preprocess_book(&self, renderer: &dyn Renderer) -> Result<(Book, PreprocessorContext)> {
-   189→    pub fn execute_build_process(&self, renderer: &dyn Renderer) -> Result<()> {
-   214→    pub fn with_renderer<R: Renderer + 'static>(&mut self, renderer: R) -> &mut Self {
-   221→    pub fn with_preprocessor<P: Preprocessor + 'static>(&mut self, preprocessor: P) -> &mut Self {
-   228→    pub fn test(&mut self, library_paths: Vec<&str>) -> Result<()> {
-   235→    pub fn test_chapter(&mut self, library_paths: Vec<&str>, chapter: Option<&str>) -> Result<()> {
-   371→    pub fn build_dir_for(&self, backend_name: &str) -> PathBuf {
-   382→    pub fn source_dir(&self) -> PathBuf {
-   387→    pub fn theme_dir(&self) -> PathBuf {
+    48→    pub fn load …
+    71→    pub fn load_with_config …
+    90→    pub fn load_with_config_and_summary …
+   135→    pub fn iter …
+   156→    pub fn init …
+   161→    pub fn build …
+   172→    pub fn preprocess_book …
+   189→    pub fn execute_build_process …
+   214→    pub fn with_renderer …
+   221→    pub fn with_preprocessor …
+   228→    pub fn test …
+   235→    pub fn test_chapter …
+   371→    pub fn build_dir_for …
+   382→    pub fn source_dir …
+   387→    pub fn theme_dir …
    397→struct OutputConfig {
    435→struct PreprocessorConfig {
 
@@ -310,19 +346,21 @@ crates/mdbook-html/front-end/searcher/searcher.js
       →    …
 
 crates/mdbook-html/src/html/tree.rs
-    33→pub(crate) enum Node {
    131→    fn into_tendril(self) -> StrTendril;
-   150→enum TableState {
 
 crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
     22→pub struct HtmlHandlebars;
     26→    pub fn new() -> Self {
 
+crates/mdbook-html/src/html_handlebars/static_files.rs
+     1→//! Support for writing static files.
+
 crates/mdbook-html/src/lib.rs
+     1→//! mdBook HTML renderer.
      5→pub mod theme;
 
 crates/mdbook-html/src/theme/mod.rs
-    12→pub(crate) mod searcher;
+     1→//! Support for theme files.
     40→pub struct Theme {
     41→    pub(crate) index: Vec<u8>,
     42→    pub(crate) head: Vec<u8>,
@@ -349,7 +387,15 @@ crates/mdbook-html/src/theme/mod.rs
    166→    pub fn copy_theme(html_config: &HtmlConfig, root: &Path) -> Result<()> {
    229→fn load_file_contents …
 
+crates/mdbook-html/src/theme/playground_editor.rs
+     1→//! Theme dependencies for the playground editor.
+
+crates/mdbook-html/src/theme/searcher.rs
+     1→//! Theme dependencies for in-browser search. Not included in mdbook when
+     2→//! the "search" cargo feature is disabled.
+
 crates/mdbook-html/src/utils.rs
+     1→//! Utilities for processing HTML.
     42→pub(crate) trait ToUrlPath {
     43→    fn to_url_path(&self) -> String;
 
@@ -376,6 +422,10 @@ crates/mdbook-markdown/README.md
       →…
 
 crates/mdbook-markdown/src/lib.rs
+     1→//! Markdown processing used in mdBook.
+     2→//!
+     3→//! This crate provides functions for processing Markdown in the same way as
+      →…
     13→/// Options for parsing markdown.
     14→#[non_exhaustive]
     15→pub struct MarkdownOptions {
@@ -422,6 +472,10 @@ crates/mdbook-preprocessor/README.md
       →…
 
 crates/mdbook-preprocessor/src/lib.rs
+     1→//! Library to assist implementing an mdbook preprocessor.
+     2→//!
+     3→//! This library is used to implement a
+      →…
     30→pub trait Preprocessor {
     32→    fn name(&self) -> &str;
     36→    fn run(&self, ctx: &PreprocessorContext, book: Book) -> Result<Book>;
@@ -469,6 +523,10 @@ crates/mdbook-renderer/README.md
       →…
 
 crates/mdbook-renderer/src/lib.rs
+     1→//! Library to assist implementing an mdbook renderer.
+     2→//!
+     3→//! This library is used to implement a
+      →…
     28→pub trait Renderer {
     30→    fn name(&self) -> &str;
     34→    fn render(&self, ctx: &RenderContext) -> Result<()>;
@@ -504,22 +562,8 @@ crates/mdbook-renderer/src/lib.rs
 
 crates/mdbook-summary/Cargo.toml
      1→[package]
-     2→name = "mdbook-summary"
-     3→version = "0.5.2"
-     4→description = "Summary parser for mdBook"
-     5→edition.workspace = true
-     6→license.workspace = true
-     7→repository.workspace = true
-     8→rust-version.workspace = true
     10→[dependencies]
-    11→anyhow.workspace = true
-    12→mdbook-core.workspace = true
-    13→memchr.workspace = true
-    14→pulldown-cmark.workspace = true
-    15→serde.workspace = true
-    16→tracing.workspace = true
     18→[lints]
-    19→workspace = true
 
 crates/mdbook-summary/README.md
      1→# mdbook-summary
@@ -528,6 +572,10 @@ crates/mdbook-summary/README.md
       →…
 
 crates/mdbook-summary/src/lib.rs
+     1→//! Summary parser for mdBook.
+     2→//!
+     3→//! This is used to parse the
+      →…
     59→pub fn parse_summary(summary: &str) -> Result<Summary> {
     67→pub struct Summary {
     68→    /// An optional title for the `SUMMARY.md`, currently just ignored.
@@ -581,9 +629,15 @@ crates/xtask/README.md
      3→This is a CLI utility for running development commands for mdbook.
      4→See [CONTRIBUTING.md](../../CONTRIBUTING.md) for how to use this.
 
+crates/xtask/src/changelog.rs
+     1→//! Helper to generate a changelog for a new release.
+
+crates/xtask/src/main.rs
+     1→//! Helper for local development.
+    11→type Result …
+
 examples/nop-preprocessor.rs
     79→    pub struct Nop;
-    82→        pub fn new() -> Nop {
 
 guide/guide-helper/Cargo.toml
      1→[package]
@@ -591,8 +645,12 @@ guide/guide-helper/Cargo.toml
     15→[lints]
 
 guide/guide-helper/src/lib.rs
+     1→//! Preprocessor for the mdBook guide.
      9→/// Preprocessing entry point.
     10→pub fn handle_preprocessing() -> Result<()> {
+
+guide/guide-helper/src/main.rs
+     1→//! Preprocessor for the mdBook guide.
 
 guide/src/404.md
      1→# Document not found (404)
@@ -685,28 +743,12 @@ guide/src/format/configuration/README.md
 
 guide/src/format/markdown.md
      1→# Markdown
-     9→## Text and paragraphs
-    25→## Headings
-    47→## Lists
-    69→## Links
-   108→## Images
-   127→## Extensions
 
 guide/src/format/mathjax.md
      1→# MathJax support
 
 guide/src/format/mdbook.md
      1→# mdBook-specific features
-     3→## Hiding code lines
-    74→## Rust playground
-   102→## Rust code block attributes
-   133→## Including files
-   154→## Including portions of a file
-   215→## Including a file but initially hiding all except specified lines
-   279→## Inserting runnable Rust files
-   310→## Controlling page \<title\>
-   319→## HTML classes provided by mdBook
-   341→## Font-Awesome icons
 
 guide/src/format/summary.md
      1→# SUMMARY.md
@@ -741,13 +783,7 @@ guide/src/guide/reading.md
     42→## Search
     54→## Code blocks
 
-src/cmd/build.rs
-     8→pub fn make_subcommand …
-    17→pub fn execute …
-
 src/cmd/clean.rs
-    11→pub fn make_subcommand …
-    19→pub fn execute …
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
     45→#[derive(Debug)]
     46→pub struct Clean {
@@ -757,61 +793,43 @@ src/cmd/clean.rs
     50→}
 
 src/cmd/command_prelude.rs
+     1→//! Helpers for building the command-line arguments for commands.
      7→pub trait CommandExt: Sized {
-     8→    fn _arg …
-    10→    fn arg_dest_dir …
-    26→    fn arg_root_dir …
-    37→    fn arg_open …
     42→    fn arg_watcher(self) -> Self {
-    62→pub fn set_dest_dir …
-
-src/cmd/init.rs
-    12→pub fn make_subcommand …
-    32→pub fn execute …
-    88→fn get_author_name …
-   102→fn request_book_title …
 
 src/cmd/mod.rs
+     1→//! Subcommand modules for the `mdbook` binary.
      3→pub mod build;
      4→pub mod clean;
      5→pub mod command_prelude;
      6→pub mod init;
-     7→#[cfg(feature = "serve")]
      8→pub mod serve;
      9→pub mod test;
-    10→#[cfg(feature = "watch")]
     11→pub mod watch;
 
-src/cmd/serve.rs
-    20→const LIVE_RELOAD_ENDPOINT …
-    23→pub fn make_subcommand …
-    51→pub fn execute …
-   109→async fn serve …
-
-src/cmd/test.rs
-     9→pub fn make_subcommand …
-    35→pub fn execute …
-
 src/cmd/watch/native.rs
+     1→//! A filesystem watcher using native operating system facilities.
     11→pub fn rebuild_on_change …
 
 src/cmd/watch/poller.rs
+     1→//! A simple poll-based filesystem watcher.
+     2→//!
+     3→//! This exists because the native change notifications have historically had
+     4→//! lots of problems. Various operating systems and different filesystems have
+     5→//! had problems correctly reporting changes.
     18→pub fn rebuild_on_change …
     78→struct PathData {
     86→struct Watcher {
 
 src/cmd/watch.rs
-    12→pub fn make_subcommand …
     21→pub enum WatcherKind {
     22→    Poll,
     23→    Native,
     24→}
-    27→    pub fn from_str …
-    37→pub fn execute …
-    62→pub fn rebuild_on_change …
 
 src/main.rs
+     1→//! The mdbook CLI.
     14→mod cmd;
-    58→fn create_clap_command() -> Command {
+    58→fn create_clap_command …
 
 tests/

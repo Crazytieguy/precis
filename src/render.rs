@@ -204,10 +204,9 @@ fn render_symbol(
     // Names only
     if !spec.show_sig && doc_n == 0 && body_n == 0 {
         if sym_line_0 >= *emitted_up_to {
-            if sym.kind == parse::SymbolKind::Section {
-                // Sections: show the full heading/section line without truncation
-                // marker. The heading text IS the name — truncating it looks broken
-                // (e.g. `[package …` instead of `[package]`).
+            if sym.kind.is_section_like() {
+                // Sections/module docs: show the full line without truncation
+                // marker. The text IS the name — truncating it looks broken.
                 let line = lines.get(sym_line_0).copied().unwrap_or("");
                 out.push_str(&fmt_line(sym_line_0, layout::strip_heading_badges(line)));
             } else {
@@ -230,7 +229,7 @@ fn render_symbol(
     let doc_lines_shown = render_line_range(out, lines, layout.doc_start, layout.doc_end, doc_n, true, emitted_up_to);
 
     // Signature lines (strip trailing badges from markdown heading lines)
-    let is_section = sym.kind == parse::SymbolKind::Section;
+    let is_section = sym.kind.is_section_like();
     for (i, line) in lines.iter().enumerate().take(sig_end + 1).skip(sym_line_0) {
         if i < *emitted_up_to {
             continue;

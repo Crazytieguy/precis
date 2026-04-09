@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3958 tokens)
+budget: 4000 (3956 tokens)
 
 README.md
      1→derive(Error)
@@ -83,30 +83,9 @@ impl/src/ast.rs
     12→    Enum(Enum<'a>),
     13→}
     15→pub struct Struct<'a> {
-    16→    pub attrs: Attrs<'a>,
-    17→    pub ident: Ident,
-    18→    pub generics: &'a Generics,
-    19→    pub fields: Vec<Field<'a>>,
-    20→}
     22→pub struct Enum<'a> {
-    23→    pub attrs: Attrs<'a>,
-    24→    pub ident: Ident,
-    25→    pub generics: &'a Generics,
-    26→    pub variants: Vec<Variant<'a>>,
-    27→}
     29→pub struct Variant<'a> {
-    30→    pub original: &'a syn::Variant,
-    31→    pub attrs: Attrs<'a>,
-    32→    pub ident: Ident,
-    33→    pub fields: Vec<Field<'a>>,
-    34→}
     36→pub struct Field<'a> {
-    37→    pub original: &'a syn::Field,
-    38→    pub attrs: Attrs<'a>,
-    39→    pub member: MemberUnraw,
-    40→    pub ty: &'a Type,
-    41→    pub contains_generic: bool,
-    42→}
     44→#[derive(Copy, Clone)]
     45→pub enum ContainerKind {
     46→    Struct,
@@ -117,17 +96,9 @@ impl/src/ast.rs
     51→    UnitVariant,
     52→}
     55→    pub fn from_syn(node: &'a DeriveInput) -> Result<Self> {
-   175→    fn fmt …
 
 impl/src/attr.rs
     11→pub struct Attrs<'a> {
-    12→    pub display: Option<Display<'a>>,
-    13→    pub source: Option<Source<'a>>,
-    14→    pub backtrace: Option<&'a Attribute>,
-    15→    pub from: Option<From<'a>>,
-    16→    pub transparent: Option<Transparent<'a>>,
-    17→    pub fmt: Option<Fmt<'a>>,
-    18→}
     20→#[derive(Clone)]
     21→pub struct Display<'a> {
     22→    pub original: &'a Attribute,
@@ -172,8 +143,6 @@ impl/src/attr.rs
     66→    UpperExp,
     67→}
     69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
-   303→    fn to_tokens …
-   343→    fn to_tokens …
 
 impl/src/expand.rs
     12→pub fn derive(input: &DeriveInput) -> TokenStream {
@@ -185,14 +154,9 @@ impl/src/fmt.rs
 
 impl/src/generics.rs
      8→pub struct ParamsInScope<'a> {
-     9→    names: Set<&'a Ident>,
-    10→}
     13→    pub fn new(generics: &'a Generics) -> Self {
     19→    pub fn intersects(&self, ty: &Type) -> bool {
     48→pub struct InferredBounds {
-    49→    bounds: Map<String, (Set<String>, Punctuated<TokenStream, Token![+]>)>,
-    50→    order: Vec<TokenStream>,
-    51→}
     54→    pub fn new() -> Self {
     61→    pub fn insert(&mut self, ty: impl ToTokens, bound: impl ToTokens) {
     74→    pub fn augment_where_clause(&self, generics: &Generics) -> WhereClause {
@@ -214,7 +178,6 @@ impl/src/lib.rs
     42→    expand::derive(&input).into()
     43→}
     46→struct private;
-    49→    fn to_tokens …
 
 impl/src/scan_expr.rs
      6→enum Input {
@@ -227,24 +190,12 @@ impl/src/unraw.rs
     15→    pub fn new(ident: Ident) -> Self {
     19→    pub fn to_local(&self) -> Ident {
     32→    pub fn set_span(&mut self, span: Span) {
-    38→    fn fmt …
-    46→    fn eq …
-    52→    fn eq …
-    58→    fn cmp …
-    64→    fn partial_cmp …
-    70→    fn parse …
-    76→    fn to_tokens …
     81→#[derive(Clone)]
     82→pub enum MemberUnraw {
     83→    Named(IdentUnraw),
     84→    Unnamed(Index),
     85→}
     88→    pub fn span(&self) -> Span {
-    97→    fn fmt …
-   108→    fn eq …
-   118→    fn eq …
-   127→    fn hash …
-   136→    fn to_tokens …
 
 rust-toolchain.toml
      1→[toolchain]
@@ -265,7 +216,7 @@ src/display.rs
      7→    // TODO: convert to generic associated type.
     11→    fn as_display(&'a self) -> Self::Target;
     18→    type Target = &'a T;
-    20→    fn as_display …
+    20→    fn as_display(&'a self) -> Self::Target {
     26→impl<'a> AsDisplay<'a> for Path {
     30→    fn as_display(&'a self) -> Self::Target {
     36→impl<'a> AsDisplay<'a> for PathBuf {
@@ -277,13 +228,54 @@ src/display.rs
     63→    #[allow(dead_code)]
     64→    pub struct Placeholder;
     70→        fn as_display(&'a self) -> Self::Target {
-    76→        fn fmt …
+    76→        fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
 
 src/lib.rs
+     1→//!
+     2→//!
+     3→//! [github]: https://img.shields.io/badge/github-8da0cb?style=for-the-badge&labelColor=555555&logo=github
+     4→//! [crates-io]: https://img.shields.io/badge/crates.io-fc8d62?style=for-the-badge&labelColor=555555&logo=rust
+     5→//! [docs-rs]: https://img.shields.io/badge/docs.rs-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs
+     6→//!
+     7→//! <br>
+     8→//!
+     9→//! This library provides a convenient derive macro for the standard library's
+    10→//! [`std::error::Error`] trait.
+    11→//!
+    12→//! <br>
+    13→//!
+    14→//! # Example
+    15→//!
+    16→//! ```rust
+    17→//! # use std::io;
+    18→//! use thiserror::Error;
+    19→//!
+    20→//! #[derive(Error, Debug)]
+    21→//! pub enum DataStoreError {
+    22→//!     #[error("data store disconnected")]
+    23→//!     Disconnect(#[from] io::Error),
+    24→//!     #[error("the data for key `{0}` is not available")]
+    25→//!     Redaction(String),
+    26→//!     #[error("invalid header (expected {expected:?}, found {found:?})")]
+    27→//!     InvalidHeader {
+    28→//!         expected: String,
+    29→//!         found: String,
+    30→//!     },
+    31→//!     #[error("unknown data store error")]
+    32→//!     Unknown,
+    33→//! }
+    34→//! ```
+    35→//!
+    36→//! <br>
+    37→//!
+    38→//! # Details
+    39→//!
+      →…
    281→mod aserror;
    282→mod display;
    284→mod provide;
    285→mod var;
+   287→pub use thiserror_impl::*;
    289→mod private;
 
 src/private.rs
@@ -296,7 +288,7 @@ src/provide.rs
 
 src/var.rs
      3→pub struct Var<'a, T: ?Sized>(pub &'a T);
-     6→    fn fmt …
+     6→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
 
 tests/compiletest.rs
      1→#[rustversion::attr(not(nightly), ignore = "requires nightly")]
@@ -311,7 +303,6 @@ tests/no-std/Cargo.toml
     11→[dependencies]
 
 tests/no-std/test.rs
-     5→#[derive(Error, Debug)]
      6→pub enum Error {
      7→    #[error("Error::E")]
      8→    E(#[from] SourceError),

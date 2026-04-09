@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3954 tokens)
+budget: 4000 (3956 tokens)
 
 README.md
      5→# Tomli
@@ -63,14 +63,7 @@ README.md
 
 pyproject.toml
      1→[build-system]
-     2→requires = ["flit_core>=3.12,<4"]
-     3→build-backend = "flit_core.buildapi"
      5→[project]
-     6→name = "tomli"
-     7→version = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
-     8→description = "A lil' TOML parser"
-     9→authors = [
-      →…
     28→[project.urls]
     33→[tool.isort]
     46→[tool.tox]
@@ -103,6 +96,12 @@ fuzzer/requirements.txt
      4→tomli_w>=0.2.2
 
 profiler/profiler_script.py
+     1→"""A script for profiling.
+     2→
+     3→To generate and read results:
+     4→  - `tox -e profile`
+     5→  - `firefox .tox/prof/output.svg`
+     6→"""
 
 profiler/requirements.txt
      1→gprof2dot
@@ -111,6 +110,10 @@ scripts/requirements.txt
      1→tomli-w
 
 scripts/use_setuptools.py
+     1→"""Script that switches build backend to setuptools with mypyc support.
+     2→
+     3→Overwrites pyproject.toml. Does not create a backup.
+     4→"""
     12→def use_setuptools() -> None:
 
 src/tomli/__init__.py
@@ -240,12 +243,9 @@ src/tomli/_re.py
    100→    sign = 1 if sign_str == "+" else -1
    101→    return timezone(
    102→        timedelta(
-   103→            hours=sign * int(hour_str),
-      →            …
+      →        …
    109→def match_to_localtime(match: re.Match[str]) -> time:
    116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
-
-src/tomli/_types.py
 
 src/tomli/py.typed
      1→# Marker file for PEP 561
@@ -256,6 +256,7 @@ tests/__init__.py
      5→__all__ = ("tomllib",)
 
 tests/burntsushi.py
+     5→"""Utilities for tests that are in the "burntsushi" format."""
     11→def convert(obj):
     42→def normalize(obj: Any) -> Any:
 

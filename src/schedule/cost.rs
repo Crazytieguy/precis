@@ -55,7 +55,7 @@ pub(super) fn compute_name_sig_costs(
     layout: &layout::SymbolLayout,
 ) -> SymbolCosts {
     let sym_line_0 = layout.sym_line_0;
-    let is_section = sym.kind == parse::SymbolKind::Section;
+    let is_section = sym.kind.is_section_like();
 
     // Composite symbols: name cost is the first prefix + " …", no signature.
     if !sym.composed_prefix_lens.is_empty() {

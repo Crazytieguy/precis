@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 8000 (2737 tokens, 9146 chars)
+budget: 8000 (2717 tokens, 9147 chars)
 
 README.md
      1→# sps
@@ -20,13 +20,12 @@ Cargo.toml
      1→[workspace]
      2→resolver = "3"
      3→members = [
-     4→    "sps",          # was "sps-cli"
-     5→    "sps-common",
-     6→    "sps-core",
-     7→    "sps-net",
+      →…
     10→[patch.crates-io]
     16→[workspace.dependencies]
     43→[profile.release]
+
+rustfmt.toml
 
 sps/Cargo.toml
      1→[package]
@@ -35,6 +34,7 @@ sps/Cargo.toml
     54→[build-dependencies]
 
 sps/src/cli/info.rs
+     1→//! Contains the logic for the `info` command.
     14→pub struct Info {
     25→    pub async fn run …
 
@@ -63,12 +63,14 @@ sps/src/cli/uninstall.rs
     17→pub struct Uninstall {
 
 sps/src/cli/update.rs
+     1→//! Contains the logic for the `update` command.
     11→pub struct Update;
 
 sps/src/cli/upgrade.rs
     12→pub struct UpgradeArgs {
 
 sps/src/cli.rs
+     2→//! Defines the command-line argument structure using clap.
     35→pub struct CliArgs {
     36→    #[arg(short, long, action = ArgAction::Count, global = true)]
     37→    pub verbose: u8,
@@ -87,6 +89,7 @@ sps/src/cli.rs
     52→    Reinstall(ReinstallArgs),
     53→    Upgrade(UpgradeArgs),
     54→}
+    57→    pub async fn run …
 
 sps/src/pipeline/runner.rs
     31→pub enum CommandType {
@@ -307,10 +310,6 @@ sps-core/src/pipeline/engine.rs
 sps-core/src/pipeline/mod.rs
      1→pub mod engine;
      2→pub mod worker;
-
-sps-core/src/uninstall/cask.rs
-    41→pub fn uninstall_cask_artifacts …
-   134→pub async fn zap_cask_artifacts …
 
 sps-core/src/uninstall/common.rs
     11→pub struct UninstallOptions {

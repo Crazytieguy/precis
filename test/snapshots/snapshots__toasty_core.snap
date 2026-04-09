@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3925 tokens)
+budget: 4000 (3921 tokens)
 
 Cargo.toml
      1→[package]
@@ -120,6 +120,10 @@ src/driver.rs
     51→    async fn push_schema …
     54→    async fn applied_migrations …
     57→    async fn apply_migration …
+
+src/error/invalid_connection_url.rs
+     9→    pub fn invalid_connection_url(message: impl Into<String>) -> Error {
+    17→    pub fn is_invalid_connection_url(&self) -> bool {
 
 src/error.rs
     36→pub struct Error {
@@ -260,6 +264,9 @@ src/schema/app/schema.rs
     34→    pub fn model …
     47→    pub fn resolve_field …
 
+src/schema/app.rs
+     1→//! Application-level schema
+
 src/schema/builder.rs
     11→pub struct Builder {
     12→    /// If set, prefix all table names with this string
@@ -332,17 +339,6 @@ src/schema/db/ty.rs
     79→    /// 128-bit universally unique identifier (UUID)
     80→    Uuid,
     81→
-    82→    /// Decimal number with optional precision and scale.
-    83→    /// - `None`: Arbitrary-precision decimal
-    84→    /// - `Some((precision, scale))`: Fixed precision and scale
-    85→    Numeric(Option<(u32, u32)>),
-    86→
-    87→    /// Unconstrained binary type
-    88→    Blob,
-    89→
-    90→    /// Fixed-size binary type of `n` bytes
-    91→    Binary(u8),
-    92→
       →…
    111→    pub fn from_app …
    159→    pub fn bridge_type …
@@ -444,6 +440,11 @@ src/stmt/insert_target.rs
 src/stmt/join.rs
     13→pub enum JoinOp {
 
+src/stmt/like.rs
+     1→//! Like trait implementations for semantic pattern matching with assert_struct!
+     2→//!
+      →…
+
 src/stmt/offset.rs
      4→pub enum Offset {
 
@@ -476,6 +477,11 @@ src/stmt/update.rs
 
 src/stmt/value.rs
      6→pub enum Value {
+
+src/stmt/value_cmp.rs
+     1→//! PartialEq implementations for Value with Rust primitive types
+     2→//!
+      →…
 
 src/stmt.rs
    235→pub mod visit_mut;

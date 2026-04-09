@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3947 tokens)
+budget: 4000 (3939 tokens)
 
 README.rst
      1→====================================================
@@ -102,19 +102,16 @@ MANIFEST.in
      6→graft testing
      7→recursive-exclude * *.pyc *.pyo
 
-changelog/590.trivial.rst
-     1→The ``pluggy.__version__`` variable is now dynamically provided via a module-level ``__getattr__`` implementation, using ``importlib`` to obtain the installed version.
+RELEASING.rst
+     1→Release Procedure
+
+TIDELIFT.rst
+     1→========
 
 changelog/README.rst
      1→This directory contains "newsfragments" which are short files that contain a small **ReST**-formatted
      2→text that will be added to the next ``CHANGELOG``.
      3→
-      →…
-
-changelog/_template.rst
-     1→{% for section in sections %}
-     2→{% set underline = "-" %}
-     3→{% if section %}
       →…
 
 codecov.yml
@@ -135,11 +132,10 @@ docs/api_reference.rst
     12→    :show-inheritance:
     13→    :members:
     14→
-    15→.. autodecorator:: pluggy.HookspecMarker
-    16→
-    17→.. autodecorator:: pluggy.HookimplMarker
-    18→
       →…
+
+docs/changelog.rst
+     1→.. include:: ../CHANGELOG.rst
 
 docs/conf.py
    106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
@@ -183,10 +179,6 @@ docs/index.rst
     11→which are invoked in sequence according to a well defined set of protocols.
     12→
     13→It gives users the ability to extend or modify the behaviour of a
-    14→``host program`` by installing a ``plugin`` for that program.
-    15→The plugin code will run as part of normal program execution, changing or
-    16→enhancing certain aspects of it.
-    17→
       →…
 
 docs/requirements.txt
@@ -220,19 +212,28 @@ downstream/python-lsp-server.sh
 downstream/tox.sh
      2→set -eux -o pipefail
 
-scripts/
+scripts/release.py
+     1→"""
+     2→Release script.
+     3→"""
 
 src/pluggy/__init__.py
      1→__all__ = [
     32→def __getattr__ …
 
 src/pluggy/_callers.py
+     1→"""
+     2→Call loop machinery
+     3→"""
     22→# Need to distinguish between old- and new-style hook wrappers.
     23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
     24→Teardown: TypeAlias = Generator[None, object, object]
     27→def run_old_style_hookwrapper …
 
 src/pluggy/_hooks.py
+     1→"""
+     2→Internal hook annotation, representation and calling machinery.
+     3→"""
     28→_T …
     29→_F …
     31→_Namespace …
@@ -318,7 +319,8 @@ src/pluggy/_hooks.py
    499→    def __call__ …
    516→    def call_historic …
    543→    def call_extra …
-   593→class _SubsetHookCaller …
+   593→class _SubsetHookCaller(HookCaller):
+   596→
    612→    def __init__ …
    619→    def _hookimpls …
    627→    def spec …
@@ -397,6 +399,9 @@ src/pluggy/_manager.py
    512→    def subset_hook_caller …
 
 src/pluggy/_result.py
+     1→"""
+     2→Hook wrapper "result" utilities.
+     3→"""
     16→_ExcInfo …
     20→class HookCallError(Exception):
     24→@final
@@ -413,6 +418,9 @@ src/pluggy/_result.py
     91→    def get_result …
 
 src/pluggy/_tracing.py
+     1→"""
+     2→Tracing utils
+     3→"""
     16→class TagTracer:
     17→    def __init__ …
     22→    def get …
@@ -432,8 +440,14 @@ src/pluggy/_warnings.py
     26→
     27→    __module__ = "pluggy"
 
+testing/benchmark.py
+     1→"""
+
 testing/test_hookcaller.py
     34→class AddMeth:
+
+testing/test_pluginmanager.py
+     1→"""
 
 tox.ini
      1→[tox]

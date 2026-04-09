@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7926 tokens)
+budget: 8000 (7928 tokens)
 
 README.md
      1→# MCPHost 🤖
@@ -70,9 +70,13 @@ contribute/build.sh
 
 contribute/conf/demo.json
      2→    "mcpServers": {
+     3→        "filesystem": {
+      →        …
 
 contribute/conf/demo.yml
      1→mcpServers:
+     2→  filesystem:
+      →  …
 
 contribute/contribute.md
      1→# Contribute README
@@ -263,7 +267,7 @@ internal/hooks/executor.go
     48→func (e *Executor) SetInteractive(interactive bool) {
     57→func (e *Executor) PopulateCommonFields(event HookEvent) CommonInput {
     77→func (e *Executor) ExecuteHooks(ctx context.Context, event HookEvent, input interface{}) (*HookOutput, error) {
-   201→type hookResult struct {
+   201→type hookResult …
 
 internal/hooks/schemas.go
     10→type CommonInput struct {
@@ -303,6 +307,10 @@ internal/models/gemini/gemini.go
     64→	// Examples: "gemini-pro", "gemini-pro-vision", "gemini-1.5-flash"
     65→	Model string
     66→
+    67→	// MaxTokens limits the maximum number of tokens in the response
+    68→	// Optional. Example: maxTokens := 100
+    69→	MaxTokens *int
+    70→
       →…
    103→type options struct {
    113→type ChatModel struct {
@@ -314,6 +322,10 @@ internal/models/gemini/gemini.go
    119→	// maxTokens limits the response length
    120→	maxTokens *int
    121→	// topP controls nucleus sampling
+   122→	topP *float32
+   123→	// temperature controls randomness
+   124→	temperature *float32
+   125→	// topK limits token sampling
       →	…
    152→func (cm *ChatModel) Generate(ctx context.Context, input []*schema.Message, opts ...model.Option) (message *schema.Message, err error) {
    205→func (cm *ChatModel) Stream(ctx context.Context, input []*schema.Message, opts ...model.Option) (result *schema.StreamReader[*schema.Message], err error) {
@@ -402,18 +414,8 @@ internal/session/session.go
    230→func generateMessageID() string {
 
 internal/tokens/anthropic.go
-     1→// Package tokens provides token counting and estimation functionality for
-     2→// various language model providers. It includes utilities for estimating
-     3→// token counts in text, as well as provider-specific implementations for
-     4→// more accurate token counting.
-     5→//
-     6→// The package supports multiple approaches to token counting:
-     7→//   - Quick estimation using character-based heuristics
-     8→//   - Provider-specific tokenizers for accurate counts
-     9→//   - Initialization functions for setting up token counters
-    10→//
-    11→// Token counting is essential for:
-      →…
+    14→//   - Ensuring prompts fit within model context windows
+    15→//   - Optimizing prompt engineering and response handling
 
 internal/tokens/counter.go
     21→func EstimateTokens(text string) int {

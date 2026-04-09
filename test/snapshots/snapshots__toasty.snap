@@ -20,7 +20,6 @@ Cargo.toml
      2→resolver = "2"
      3→members = [
      4→    "crates/toasty",
-     5→    "crates/toasty-cli",
       →    …
     37→[workspace.dependencies]
 
@@ -90,6 +89,7 @@ crates/toasty/src/db/connect.rs
     14→pub struct Connect {
 
 crates/toasty/src/db/pool.rs
+     1→//! Connection pooling for database connections.
     18→pub struct PoolConfig {
     25→    pub fn new …
     41→pub struct Pool {
@@ -386,13 +386,6 @@ crates/toasty-core/src/schema/app/constraint.rs
 crates/toasty-core/src/schema/app/embedded.rs
      7→pub struct Embedded {
 
-crates/toasty-core/src/schema/app/field/primitive.rs
-     4→pub struct FieldPrimitive {
-     5→    /// The field's primitive type
-     6→    pub ty: stmt::Type,
-     7→
-      →…
-
 crates/toasty-core/src/schema/app/field.rs
     11→pub struct Field {
     36→pub struct FieldId {
@@ -419,6 +412,9 @@ crates/toasty-core/src/schema/app/pk.rs
 
 crates/toasty-core/src/schema/app/schema.rs
      7→pub struct Schema {
+
+crates/toasty-core/src/schema/app.rs
+     1→//! Application-level schema
 
 crates/toasty-core/src/schema/builder.rs
     11→pub struct Builder {
@@ -631,6 +627,10 @@ crates/toasty-driver-integration-suite/src/setup.rs
     10→    async fn delete_table …
 
 crates/toasty-driver-integration-suite/src/stmt.rs
+     1→//! Expression utilities for testing with assert_struct!
+     2→//!
+     3→//! This module provides test utilities like the Any wildcard
+      →…
     11→pub struct Any;
     28→pub trait ValueStreamExt {
     34→    fn buffered …

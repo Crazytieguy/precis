@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7907 tokens)
+budget: 8000 (7909 tokens)
 
 README.md
      1→# sps
@@ -50,6 +50,7 @@ sps/Cargo.toml
     54→[build-dependencies]
 
 sps/src/cli/info.rs
+     1→//! Contains the logic for the `info` command.
     14→pub struct Info {
     25→    pub async fn run(&self, _config: &Config, cache: Arc<Cache>) -> Result<()> {
 
@@ -89,6 +90,7 @@ sps/src/cli/uninstall.rs
     31→    pub async fn run …
 
 sps/src/cli/update.rs
+     1→//! Contains the logic for the `update` command.
     11→pub struct Update;
     14→    pub async fn run …
 
@@ -97,6 +99,7 @@ sps/src/cli/upgrade.rs
     24→    pub async fn run …
 
 sps/src/cli.rs
+     2→//! Defines the command-line argument structure using clap.
     10→pub mod info;
     11→pub mod init;
     12→pub mod install;
@@ -141,6 +144,7 @@ sps/src/pipeline/downloader.rs
 
 sps/src/pipeline/planner.rs
     28→struct IntermediatePlan {
+    37→pub(crate) async fn fetch_target_definitions …
    192→    pub fn new …
    526→    pub async fn plan_operations …
 
@@ -458,6 +462,7 @@ sps-common/src/model/tap.rs
 sps-common/src/model/version.rs
     11→pub struct Version(semver::Version);
     14→    pub fn parse …
+    37→    type Err = SpsError;
 
 sps-common/src/pipeline.rs
     14→pub enum PipelinePackageType {
@@ -572,16 +577,11 @@ sps-core/src/build/env.rs
    161→    sdk_path: PathBuf,
    162→}
    164→impl BuildEnvironment {
-   166→    pub fn new<F: FormulaDependencies>(
-   167→        formula: &F,
-   168→        sps_prefix: &Path,
-   169→        cellar_path: &Path,
-   170→        all_installed_opt_paths: &[PathBuf],
-   171→    ) -> Result<Self> {
-   463→    pub fn apply_to_command(&self, command: &mut std::process::Command) {
-   476→    pub fn get_path_string(&self) -> Option<&str> {
-   482→    pub fn get_vars(&self) -> &HashMap<String, String> {
-   488→    pub fn get_var(&self, key: &str) -> Option<&str> {
+   166→    pub fn new …
+   463→    pub fn apply_to_command …
+   476→    pub fn get_path_string …
+   482→    pub fn get_vars …
+   488→    pub fn get_var …
    495→fn filter_initial_environment …
 
 sps-core/src/build/mod.rs
@@ -769,11 +769,15 @@ sps-net/Cargo.toml
      1→[package]
      2→name = "sps-net"
      3→version = "0.1.56"
+     4→edition = "2021"
       →…
     10→[dependencies]
     11→sps-common = "0.1.56"
     12→
+    13→tokio = { version = "1.47.1", features = ["full"] }
       →…
+
+sps-net/src/api.rs
 
 sps-net/src/http.rs
     18→pub type ProgressCallback = Arc<dyn Fn(u64, Option<u64>) + Send + Sync>;

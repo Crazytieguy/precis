@@ -46,9 +46,11 @@ fn effective_depth(parent_dir: &Path) -> usize {
 pub(super) fn compute_base_importance(key: &GroupKey) -> f64 {
     let visibility = if key.is_public { 1.0 } else { 0.3 };
 
-    // Sections (markdown headings, TOML/JSON/YAML sections) ARE documentation —
-    // they don't have doc comments but that doesn't make them less important.
-    let documented = if key.is_documented || key.kind_category == KindCategory::Section {
+    // Sections and module docs ARE documentation — they don't have doc comments
+    // but that doesn't make them less important.
+    let documented = if key.is_documented
+        || matches!(key.kind_category, KindCategory::Section | KindCategory::ModuleDoc)
+    {
         1.0
     } else {
         0.5
@@ -169,10 +171,10 @@ pub(super) fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
             StageKind::Body => if key.kind_category == KindCategory::Enum { 1.5 } else { 1.2 },
             StageKind::Doc => 0.4,
         },
-        // Section body is the actual content — README prose, architecture
-        // descriptions, heading text. Higher than default Body because section
-        // content IS the documentation (vs code body which is implementation).
-        KindCategory::Section => match stage {
+        // Sections and module docs: body is the actual content — README prose,
+        // architecture descriptions, module-level documentation. Higher than
+        // default Body because the content IS documentation.
+        KindCategory::Section | KindCategory::ModuleDoc => match stage {
             StageKind::FilePath => 0.3,
             StageKind::Names => 1.0,
             StageKind::Body => 0.7,
@@ -255,7 +257,7 @@ pub(super) fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
         (KindCategory::Enum | KindCategory::Type, StageKind::Body) => {
             1.0 + 0.07 * (n as f64 - 1.0)
         }
-        (KindCategory::Section, StageKind::Body) => {
+        (KindCategory::Section | KindCategory::ModuleDoc, StageKind::Body) => {
             1.0 + 0.2 * (n as f64 - 1.0)
         }
         _ => n as f64,

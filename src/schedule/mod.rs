@@ -43,7 +43,8 @@ pub enum KindCategory {
     Section,  // Markdown headings
     Macro,
     Impl,
-    Import, // use/import statements
+    Import,    // use/import statements
+    ModuleDoc, // Module-level documentation (//!, docstrings, package comments)
 }
 
 impl KindCategory {
@@ -62,6 +63,7 @@ impl KindCategory {
             parse::SymbolKind::Macro => KindCategory::Macro,
             parse::SymbolKind::Impl => KindCategory::Impl,
             parse::SymbolKind::Import => KindCategory::Import,
+            parse::SymbolKind::ModuleDoc => KindCategory::ModuleDoc,
         }
     }
 
@@ -85,8 +87,8 @@ impl KindCategory {
                 StageKind::Body,
                 StageKind::Doc,
             ],
-            // Markdown: just names (headings) and body text
-            KindCategory::Section => &[StageKind::FilePath, StageKind::Names, StageKind::Body],
+            // Sections and module docs: names (headings/first line) and body text
+            KindCategory::Section | KindCategory::ModuleDoc => &[StageKind::FilePath, StageKind::Names, StageKind::Body],
             // Imports: names (truncated) → full signature line(s)
             KindCategory::Import => &[StageKind::FilePath, StageKind::Names, StageKind::Signatures],
             // Everything else: names → signatures → doc → body
@@ -317,6 +319,7 @@ mod tests {
             KindCategory::Macro,
             KindCategory::Impl,
             KindCategory::Import,
+            KindCategory::ModuleDoc,
         ];
         for &kind in &all_kinds {
             let has_body = kind.stage_sequence().contains(&StageKind::Body);
