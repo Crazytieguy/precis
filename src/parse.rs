@@ -37,12 +37,12 @@ pub struct Symbol {
     /// AST by locating the body/block child. For C-like languages this is the
     /// line containing `{`; for Python it's the line containing `:`.
     /// `None` when tree-sitter couldn't determine the boundary (fallback to
-    /// text heuristics in `format::signature_end_line`).
+    /// text heuristics in `layout::signature_end_line`).
     pub sig_end_line: Option<usize>,
     /// First line of the doc comment block preceding the symbol (1-indexed),
     /// computed from tree-sitter AST by walking previous sibling comment nodes.
     /// `None` when tree-sitter couldn't find a doc comment (fallback to
-    /// text heuristics in `format::doc_comment_start`).
+    /// text heuristics in `layout::doc_comment_start`).
     pub doc_start_line: Option<usize>,
     /// Whether this symbol is a method inside a trait implementation block
     /// (Rust `impl Trait for Type { ... }`). Trait impl methods implement
@@ -1261,7 +1261,7 @@ fn compute_sig_end_line(node: tree_sitter::Node, lang: Lang) -> Option<usize> {
 
 /// Compute the first line (1-indexed) of the doc comment block preceding a symbol,
 /// using tree-sitter AST sibling navigation. Returns `None` when no doc comment is
-/// found (fallback to text heuristics in `format::doc_comment_start`).
+/// found (fallback to text heuristics in `layout::doc_comment_start`).
 ///
 /// Walks backwards through previous named siblings looking for comment nodes that
 /// qualify as doc comments for the given language. For symbols wrapped in

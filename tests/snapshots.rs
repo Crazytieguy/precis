@@ -1,4 +1,4 @@
-use precis::{format, render, walk};
+use precis::{render, walk};
 use std::path::Path;
 
 /// Helper to get the path to a test fixture.
@@ -605,7 +605,7 @@ macro_rules! sample_test {
     ($name:ident, $filename:expr, $sample_fn:expr, $budget:expr) => {
         #[test]
         fn $name() {
-            let output = format::render_file_with_budget(
+            let output = precis::render_file_with_budget(
                 $budget,
                 None,
                 Path::new($filename),
@@ -693,7 +693,7 @@ fn budget_monotonicity_inline() {
     for (filename, source) in samples {
         let mut prev_tokens = 0;
         for &budget in &budgets {
-            let output = format::render_file_with_budget(
+            let output = precis::render_file_with_budget(
                 budget,
                 None,
                 Path::new(filename),
@@ -725,7 +725,7 @@ fn single_file_budget_rust() {
     // Budget monotonicity across a range
     let mut prev_tokens = 0;
     for budget in [0, 50, 100, 200, 500, 1000, 10000] {
-        let output = format::render_file_with_budget(budget, None, &file, &root, &source);
+        let output = precis::render_file_with_budget(budget, None, &file, &root, &source);
         let tokens = render::count_tokens(&output);
         assert!(
             tokens >= prev_tokens,
@@ -743,11 +743,11 @@ fn single_file_budget_rust() {
 fn budget_monotonicity_fixture() {
     let root = fixture_path("pluggy/src/pluggy").unwrap();
     let files = walk::discover_source_files(&root);
-    let sources = format::read_sources(&files);
+    let sources = precis::read_sources(&files);
     let budgets = [0, 50, 200, 500, 1000, 2000, 4000, 10000];
     let mut prev_tokens = 0;
     for &budget in &budgets {
-        let (_, tokens) = format::render_with_budget_stats(budget, None, &root, &files, &sources);
+        let (_, tokens) = precis::render_with_budget_stats(budget, None, &root, &files, &sources);
         assert!(
             tokens >= prev_tokens,
             "Multi-file budget monotonicity: budget {} ({} tokens) < previous ({} tokens)",
@@ -760,7 +760,7 @@ fn budget_monotonicity_fixture() {
 // Render order: README should appear before other files.
 #[test]
 fn readme_renders_first() {
-    let output = format::render_with_budget(
+    let output = precis::render_with_budget(
         500,
         None,
         Path::new(""),
@@ -783,7 +783,7 @@ fn readme_renders_first() {
 // Manifest files render after README but before source.
 #[test]
 fn manifest_renders_after_readme() {
-    let output = format::render_with_budget(
+    let output = precis::render_with_budget(
         500,
         None,
         Path::new(""),
@@ -819,7 +819,7 @@ fn invisible_directory_markers() {
         Some("fn internal() {}".to_string()),
     ];
     // Very small budget: hidden_dir/ file won't fit, should get a marker
-    let output = format::render_with_budget(30, None, Path::new(""), &files, &sources);
+    let output = precis::render_with_budget(30, None, Path::new(""), &files, &sources);
     // If hidden_dir/foo.rs is not shown, we should see "hidden_dir/" marker
     if !output.contains("hidden_dir/foo.rs") {
         assert!(
@@ -835,8 +835,8 @@ fn invisible_directory_markers() {
 fn empty_directory() {
     let dir = tempfile::tempdir().unwrap();
     let files = walk::discover_source_files(dir.path());
-    let sources = format::read_sources(&files);
-    let output = format::render_with_budget(4000, None, dir.path(), &files, &sources);
+    let sources = precis::read_sources(&files);
+    let output = precis::render_with_budget(4000, None, dir.path(), &files, &sources);
     assert!(output.is_empty(), "empty directory should produce no output");
 }
 
@@ -878,16 +878,16 @@ fn readme_example_matches_output() {
 fn render_fixture(subpath: &str, budget: usize) -> Option<String> {
     let root = fixture_path(subpath)?;
     let files = walk::discover_source_files(&root);
-    let sources = format::read_sources(&files);
-    Some(format::render_with_budget(budget, None, &root, &files, &sources))
+    let sources = precis::read_sources(&files);
+    Some(precis::render_with_budget(budget, None, &root, &files, &sources))
 }
 
 /// Render a fixture with token and character budgets, returning raw output.
 fn render_fixture_with_char_budget(subpath: &str, budget: usize, char_budget: usize) -> Option<String> {
     let root = fixture_path(subpath)?;
     let files = walk::discover_source_files(&root);
-    let sources = format::read_sources(&files);
-    Some(format::render_with_budget(budget, Some(char_budget), &root, &files, &sources))
+    let sources = precis::read_sources(&files);
+    Some(precis::render_with_budget(budget, Some(char_budget), &root, &files, &sources))
 }
 
 /// Helper: render a fixture and prepend a metadata header for snapshot tests.
@@ -953,11 +953,11 @@ fn char_budget_mitt() {
 fn char_budget_monotonicity() {
     let root = fixture_path("pluggy").unwrap();
     let files = walk::discover_source_files(&root);
-    let sources = format::read_sources(&files);
+    let sources = precis::read_sources(&files);
     let char_budgets = [500, 1000, 2000, 4000, 6000, 8000, 10000, 20000];
     let mut prev_chars = 0;
     for &cb in &char_budgets {
-        let output = format::render_with_budget(4000, Some(cb), &root, &files, &sources);
+        let output = precis::render_with_budget(4000, Some(cb), &root, &files, &sources);
         let chars = output.len();
         assert!(
             chars >= prev_chars,

@@ -1,5 +1,5 @@
 use criterion::{criterion_group, criterion_main, Criterion};
-use precis::{format, layout, schedule, walk};
+use precis::{layout, schedule, walk};
 use std::path::{Path, PathBuf};
 
 /// Pre-loaded fixture data to avoid I/O in benchmark loops.
@@ -19,8 +19,8 @@ impl Fixture {
             return None;
         }
         let files = walk::discover_source_files(&root);
-        let sources = format::read_sources(&files);
-        let all_symbols = format::extract_all_symbols(&files, &sources);
+        let sources = precis::read_sources(&files);
+        let all_symbols = precis::extract_all_symbols(&files, &sources);
         Some(Fixture {
             root,
             files,
@@ -42,7 +42,7 @@ fn bench_extract_symbols(c: &mut Criterion) {
         };
         c.bench_function(bench_name, |b| {
             b.iter(|| {
-                format::extract_all_symbols(&f.files, &f.sources);
+                precis::extract_all_symbols(&f.files, &f.sources);
             });
         });
     }
@@ -99,7 +99,7 @@ fn bench_render_with_budget(c: &mut Criterion) {
         };
         c.bench_function(bench_name, |b| {
             b.iter(|| {
-                format::render_with_budget(budget, None, &f.root, &f.files, &f.sources);
+                precis::render_with_budget(budget, None, &f.root, &f.files, &f.sources);
             });
         });
     }

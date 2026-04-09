@@ -6,7 +6,7 @@
 use std::path::Path;
 use std::time::Instant;
 
-use precis::{format, layout, parse, render, schedule, walk};
+use precis::{layout, parse, render, schedule, walk};
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
@@ -37,7 +37,7 @@ fn main() {
 
     // 2. Read
     let t = Instant::now();
-    let sources = format::read_sources(&files);
+    let sources = precis::read_sources(&files);
     stages.push(("read", t.elapsed()));
 
     // 3. Extract symbols (split: query compilation vs parsing+extraction)
@@ -66,7 +66,7 @@ fn main() {
 
     // 7. Render
     let t = Instant::now();
-    let output = format::render_scheduled(&root, &files, &sources, &all_symbols, &layouts, &built.groups, &sched);
+    let output = render::render_scheduled(&root, &files, &sources, &all_symbols, &layouts, &built.groups, &sched);
     stages.push(("render", t.elapsed()));
 
     // 8. Count tokens

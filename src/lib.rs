@@ -1,9 +1,12 @@
-pub mod format;
 pub mod layout;
 pub mod parse;
 pub mod render;
 pub mod schedule;
 pub mod walk;
+
+use std::path::{Path, PathBuf};
+
+use rayon::prelude::*;
 
 /// Language family for rendering and parsing heuristics (comment styles, delimiters).
 ///
@@ -56,4 +59,96 @@ impl Lang {
 /// Check if a file extension indicates a C/C++ header file.
 pub fn is_header_extension(ext: &str) -> bool {
     matches!(ext, "h" | "hpp" | "hxx" | "hh")
+}
+
+// ---------------------------------------------------------------------------
+// Public entry points
+// ---------------------------------------------------------------------------
+
+/// Render files within token and optional character budgets.
+pub fn render_with_budget(
+    budget: usize,
+    char_budget: Option<usize>,
+    root: &Path,
+    files: &[PathBuf],
+    sources: &[Option<String>],
+) -> String {
+    let (output, _) = render_with_budget_stats(budget, char_budget, root, files, sources);
+    output
+}
+
+/// Render files within a token budget, returning output and actual token count.
+pub fn render_with_budget_stats(
+    budget: usize,
+    char_budget: Option<usize>,
+    root: &Path,
+    files: &[PathBuf],
+    sources: &[Option<String>],
+) -> (String, usize) {
+    let all_symbols = extract_all_symbols(files, sources);
+    let layouts = layout::compute_all_layouts(files, sources, &all_symbols);
+    let built = schedule::build_groups(root, files, sources, &all_symbols, &layouts, budget);
+    let sched = schedule::schedule(&built, root, files, char_budget);
+    let output = render::render_scheduled(root, files, sources, &all_symbols, &layouts, &built.groups, &sched);
+    let actual = render::count_tokens(&output);
+    (output, actual)
+}
+
+/// Render a single file within token and optional character budgets.
+pub fn render_file_with_budget(
+    budget: usize,
+    char_budget: Option<usize>,
+    path: &Path,
+    root: &Path,
+    source: &str,
+) -> String {
+    let files = vec![path.to_path_buf()];
+    let sources = vec![Some(source.to_string())];
+    render_with_budget(budget, char_budget, root, &files, &sources)
+}
+
+/// Pre-read source files to avoid repeated disk I/O.
+pub fn read_sources(files: &[PathBuf]) -> Vec<Option<String>> {
+    files
+        .par_iter()
+        .map(|f| std::fs::read_to_string(f).ok())
+        .collect()
+}
+
+/// Pre-extract symbols from all source files.
+pub fn extract_all_symbols(
+    files: &[PathBuf],
+    sources: &[Option<String>],
+) -> Vec<Vec<parse::Symbol>> {
+    let configs = parse::build_language_configs(files);
+    parse::extract_all_symbols_cached(files, sources, &configs)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn budget_monotonicity() {
+        // More budget should never produce fewer tokens.
+        let source = "/// Doc comment\npub fn hello() {}\npub struct Foo { x: i32 }\nfn private() {}\n";
+        let root = Path::new("");
+        let path = Path::new("test.rs");
+        let files = vec![path.to_path_buf()];
+        let sources = vec![Some(source.to_string())];
+
+        let mut prev_tokens = 0;
+        for budget in [10, 50, 100, 200, 500, 1000, 5000] {
+            let output = render_with_budget(budget, None, root, &files, &sources);
+            let tokens = render::count_tokens(&output);
+            assert!(
+                tokens >= prev_tokens,
+                "Budget monotonicity violated at budget {}: {} < {}",
+                budget,
+                tokens,
+                prev_tokens,
+            );
+            prev_tokens = tokens;
+        }
+    }
 }

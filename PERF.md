@@ -29,11 +29,11 @@ Walk, read, layout, render, and final token count are all negligible (<2% combin
 
 ## Bottleneck 1: parse (tree-sitter)
 
-`format::extract_all_symbols` calls `parse::extract_symbols` per file. Each call initializes a tree-sitter parser, parses the source into an AST, and runs a query. This is pure CPU work, embarrassingly parallel across files.
+`extract_all_symbols` calls `parse::extract_symbols` per file. Each call initializes a tree-sitter parser, parses the source into an AST, and runs a query. This is pure CPU work, embarrassingly parallel across files.
 
 ## Bottleneck 2: groups (BPE tokenization)
 
-`schedule::build_groups` calls `compute_symbol_costs` per symbol. That function calls `format::count_tokens` (tiktoken-rs BPE encoding) for:
+`schedule::build_groups` calls `compute_symbol_costs` per symbol. That function calls `render::count_tokens` (tiktoken-rs BPE encoding) for:
 - The name line (1 call)
 - Each signature line (1 call per line)
 - Each doc line (1 call per line, via `count_line_range`)

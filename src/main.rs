@@ -1,5 +1,5 @@
 use clap::Parser;
-use precis::{format, walk};
+use precis::walk;
 use std::path::PathBuf;
 
 /// Claude Code hook `additionalContext` is capped at 10,000 characters.
@@ -39,11 +39,11 @@ fn main() {
             }
         };
         let root = path.parent().unwrap_or(path);
-        format::render_file_with_budget(budget, char_budget, path, root, &source)
+        precis::render_file_with_budget(budget, char_budget, path, root, &source)
     } else if path.is_dir() {
         let files = walk::discover_source_files(path);
-        let sources = format::read_sources(&files);
-        format::render_with_budget(budget, char_budget, path, &files, &sources)
+        let sources = precis::read_sources(&files);
+        precis::render_with_budget(budget, char_budget, path, &files, &sources)
     } else {
         eprintln!("Error: {:?} is not a file or directory", path);
         std::process::exit(1);
