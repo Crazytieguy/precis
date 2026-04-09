@@ -1,4 +1,5 @@
 mod classify;
+mod cost;
 mod groups;
 mod solver;
 mod value;
