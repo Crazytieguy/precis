@@ -69,7 +69,7 @@ fn main() {
 
     // 7. Render
     let t = Instant::now();
-    let output = render::render_scheduled(&corpus, &built.groups, &sched);
+    let output = render::render_scheduled(&corpus, &sched);
     stages.push(("render", t.elapsed()));
 
     // 8. Count tokens

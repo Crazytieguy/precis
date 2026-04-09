@@ -4,7 +4,7 @@ mod groups;
 mod solver;
 mod value;
 
-use std::collections::{HashMap, HashSet};
+use std::collections::HashSet;
 use std::path::PathBuf;
 
 use crate::parse;
@@ -13,6 +13,35 @@ use crate::render;
 pub use classify::{FileCategory, FileRole};
 pub use groups::build_groups;
 pub use solver::schedule;
+
+// ---------------------------------------------------------------------------
+// Render plan — pre-resolved output structure for the renderer
+// ---------------------------------------------------------------------------
+
+/// Pre-resolved rendering parameters for a single symbol.
+/// Computed by the scheduler, consumed by the renderer. The renderer doesn't
+/// need to know about stages, groups, or kind categories — just these four
+/// concrete decisions about what to show for each symbol.
+#[derive(Debug, Clone, Copy)]
+pub struct SymbolRenderSpec {
+    /// Show the symbol name (false only for FilePath-only groups).
+    pub show_name: bool,
+    /// Show full signature beyond the name line.
+    pub show_sig: bool,
+    /// Number of doc comment lines to show. 0=none, usize::MAX=all.
+    pub doc_lines: usize,
+    /// Number of body lines to show. 0=none, usize::MAX=all.
+    pub body_lines: usize,
+}
+
+/// An item in the render plan — the ordered sequence of things to output.
+#[derive(Debug)]
+pub enum RenderPlanItem {
+    /// Omission marker for an invisible top-level directory.
+    DirectoryMarker(PathBuf),
+    /// A visible file (header line + its symbols).
+    File(usize),
+}
 
 // ---------------------------------------------------------------------------
 // Data model
@@ -244,24 +273,23 @@ impl Group {
     }
 }
 
-/// The result of scheduling: for each group, the highest included stage
-/// and the number of Doc/Body lines to show.
+/// The result of scheduling: a render plan (ordered output structure) and
+/// per-symbol render specs (concrete rendering decisions).
 pub struct Schedule {
-    /// For each group index: (stage_kind, n_lines) where n_lines applies to Doc/Body.
-    /// None means the group is hidden.
-    pub group_stages: Vec<Option<IncludedStage>>,
-    /// Files whose paths should be shown (indices into the files array).
-    pub visible_files: HashSet<usize>,
-    /// Reverse lookup: for a (file_idx, symbol_idx) pair, which group index it belongs to.
-    pub symbol_to_group: HashMap<(usize, usize), usize>,
+    /// Ordered list of files and directory markers to render.
+    pub render_plan: Vec<RenderPlanItem>,
+    /// Per-symbol render specs, indexed as `[file_idx][sym_idx]`.
+    /// `None` means the symbol is not rendered.
+    pub symbol_specs: Vec<Vec<Option<SymbolRenderSpec>>>,
 }
 
-/// What stage a group has been included up to.
+/// What stage a group has been included up to. Internal to the scheduler;
+/// the renderer receives pre-resolved [`SymbolRenderSpec`]s instead.
 #[derive(Debug, Clone, Copy)]
-pub struct IncludedStage {
-    pub kind: StageKind,
+pub(super) struct IncludedStage {
+    pub(super) kind: StageKind,
     /// For Doc/Body stages: how many lines to show. Ignored for Names/Signatures.
-    pub n_lines: usize,
+    pub(super) n_lines: usize,
 }
 
 impl IncludedStage {
@@ -270,7 +298,7 @@ impl IncludedStage {
     /// A stage item is covered if it's earlier in the progression than the
     /// included stage, or if it's the same stage with n <= the included n_lines.
     /// Use `n = 1` to test whether a stage is included at all.
-    pub fn covers(&self, stages: &[StageKind], stage_kind: StageKind, n: usize) -> bool {
+    pub(super) fn covers(&self, stages: &[StageKind], stage_kind: StageKind, n: usize) -> bool {
         let Some(inc_pos) = stages.iter().position(|&s| s == self.kind) else {
             return false;
         };

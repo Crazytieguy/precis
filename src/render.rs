@@ -1,12 +1,10 @@
-use std::collections::{BTreeSet, HashSet};
-use std::path::PathBuf;
 use std::sync::LazyLock;
 
 use tiktoken_rs::CoreBPE;
 
 use crate::layout::{self, SymbolLayout};
 use crate::parse;
-use crate::schedule::{FileRole, Group, IncludedStage, Schedule, StageKind};
+use crate::schedule::{RenderPlanItem, Schedule, SymbolRenderSpec};
 use crate::Corpus;
 
 /// Shared BPE tokenizer instance (o200k_base, used by GPT-4o / Claude-class models).
@@ -103,123 +101,65 @@ fn find_word(needle: &str, haystack: &str) -> Option<usize> {
 // ---------------------------------------------------------------------------
 
 /// Render output from a computed schedule.
-pub fn render_scheduled(
-    corpus: &Corpus<'_>,
-    groups: &[Group],
-    sched: &Schedule,
-) -> String {
+///
+/// Iterates the schedule's render plan (ordered files and directory markers)
+/// and renders each symbol according to its pre-resolved render spec. The
+/// renderer has no knowledge of stages, groups, or the scheduling model — it
+/// just assembles text from the decisions the scheduler already made.
+pub fn render_scheduled(corpus: &Corpus<'_>, sched: &Schedule) -> String {
     let &Corpus { root, files, sources, all_symbols, layouts } = corpus;
 
     let mut out = String::new();
 
-    // Render order: README first, then project manifests, then alphabetical.
-    let mut render_order: Vec<usize> = (0..files.len()).collect();
-    render_order.sort_by_key(|&i| {
-        let relative = files[i].strip_prefix(root).unwrap_or(&files[i]);
-        let is_root = relative.parent().is_none_or(|p| p.as_os_str().is_empty());
-        let role = FileRole::from_path(relative);
-        let filename = relative.file_name().and_then(|n| n.to_str()).unwrap_or("");
-        if is_root && matches!(role, FileRole::Readme | FileRole::Architecture) {
-            0
-        } else if is_root && matches!(filename, "Cargo.toml" | "package.json" | "go.mod" | "pyproject.toml" | "setup.cfg") {
-            1
-        } else {
-            2
-        }
-    });
+    for item in &sched.render_plan {
+        match item {
+            RenderPlanItem::DirectoryMarker(dir) => {
+                if !out.is_empty() { out.push('\n'); }
+                out.push_str(&format!("{}/\n", dir.display()));
+            }
+            RenderPlanItem::File(file_idx) => {
+                let file_idx = *file_idx;
+                let file = &files[file_idx];
+                let relative = file.strip_prefix(root).unwrap_or(file);
 
-    // Find top-level directories that are completely invisible (no visible files).
-    let invisible_dirs: BTreeSet<PathBuf> = {
-        let mut all_dirs = HashSet::new();
-        let mut visible_dirs = HashSet::new();
-        for (i, file) in files.iter().enumerate() {
-            let relative = file.strip_prefix(root).unwrap_or(file);
-            if let Some(top) = relative.components().next()
-                && relative.parent().is_some_and(|p| !p.as_os_str().is_empty())
-            {
-                let top = PathBuf::from(top.as_os_str());
-                all_dirs.insert(top.clone());
-                if sched.visible_files.contains(&i) {
-                    visible_dirs.insert(top);
+                if !out.is_empty() { out.push('\n'); }
+                out.push_str(&format!("{}\n", relative.display()));
+
+                let source = match &sources[file_idx] {
+                    Some(s) => s,
+                    None => continue,
+                };
+                let lines: Vec<&str> = source.lines().collect();
+                let symbols = &all_symbols[file_idx];
+
+                // Track the highest source line emitted so far (exclusive) to
+                // deduplicate overlapping ranges (e.g. Go grouped const block +
+                // individual const_spec symbols sharing the same first line).
+                let mut emitted_up_to: usize = 0;
+
+                for (sym_idx, sym) in symbols.iter().enumerate() {
+                    let spec = match &sched.symbol_specs[file_idx][sym_idx] {
+                        Some(s) => s,
+                        None => continue,
+                    };
+
+                    render_symbol(
+                        &mut out,
+                        &lines,
+                        sym,
+                        &layouts[file_idx][sym_idx],
+                        spec,
+                        &mut emitted_up_to,
+                    );
                 }
             }
-        }
-        all_dirs.difference(&visible_dirs).cloned().collect()
-    };
-    let mut dirs_emitted = HashSet::new();
-
-    for &file_idx in &render_order {
-        if !sched.visible_files.contains(&file_idx) {
-            continue;
-        }
-        let file = &files[file_idx];
-        let source = &sources[file_idx];
-        let relative = file.strip_prefix(root).unwrap_or(file);
-
-        // Emit omission markers for invisible dirs that sort before this file.
-        if let Some(ftd) = relative.components().next().map(|c| PathBuf::from(c.as_os_str())) {
-            for dir in &invisible_dirs {
-                if dir < &ftd && dirs_emitted.insert(dir.clone()) {
-                    if !out.is_empty() { out.push('\n'); }
-                    out.push_str(&format!("{}/\n", dir.display()));
-                }
-            }
-        }
-
-        if !out.is_empty() { out.push('\n'); }
-        out.push_str(&format!("{}\n", relative.display()));
-
-        let source = match source {
-            Some(s) => s,
-            None => continue,
-        };
-        let lines: Vec<&str> = source.lines().collect();
-        let symbols = &all_symbols[file_idx];
-
-        // Track the highest source line emitted so far (exclusive) to
-        // deduplicate overlapping ranges (e.g. Go grouped const block +
-        // individual const_spec symbols sharing the same first line).
-        let mut emitted_up_to: usize = 0;
-
-        for (sym_idx, sym) in symbols.iter().enumerate() {
-            let group_idx = match sched.symbol_to_group.get(&(file_idx, sym_idx)) {
-                Some(&gi) => gi,
-                None => continue,
-            };
-            let included = match &sched.group_stages[group_idx] {
-                Some(stage) => stage,
-                None => continue, // group is hidden
-            };
-
-            // FilePath stage: file path is shown but no symbol content
-            if included.kind == StageKind::FilePath {
-                continue;
-            }
-
-            render_symbol(
-                &mut out,
-                &lines,
-                sym,
-                &layouts[file_idx][sym_idx],
-                included,
-                &groups[group_idx],
-                &mut emitted_up_to,
-            );
-        }
-    }
-
-    // Emit any remaining invisible top-level directories
-    for dir in &invisible_dirs {
-        if dirs_emitted.insert(dir.clone()) {
-            if !out.is_empty() { out.push('\n'); }
-            out.push_str(&format!("{}/\n", dir.display()));
         }
     }
 
     out
 }
 
-/// Render a single symbol at the given included stage.
+/// Render a single symbol according to its pre-resolved render spec.
 /// Parent body ranges are truncated at the first child's doc_start, but
 /// overlaps can still occur (e.g. Go grouped const blocks). The
 /// `emitted_up_to` high-water mark deduplicates within a file.
@@ -228,25 +168,15 @@ fn render_symbol(
     lines: &[&str],
     sym: &parse::Symbol,
     layout: &SymbolLayout,
-    included: &IncludedStage,
-    group: &Group,
+    spec: &SymbolRenderSpec,
     emitted_up_to: &mut usize,
 ) {
     let sym_line_0 = layout.sym_line_0;
-    let stages = group.key.kind_category.stage_sequence();
 
-    // Determine what to show based on the group's included stage.
-    // The included stage is the HIGHEST stage reached. All earlier stages
-    // in the progression are implicitly included.
-    let show_names = included.covers(stages, StageKind::Names, 1);
-    let show_sigs = included.covers(stages, StageKind::Signatures, 1);
-    let show_doc = included.covers(stages, StageKind::Doc, 1);
-    let show_body = included.covers(stages, StageKind::Body, 1);
+    let doc_n = spec.doc_lines;
+    let body_n = spec.body_lines;
 
-    let doc_n = if included.kind == StageKind::Doc { included.n_lines } else if show_doc { usize::MAX } else { 0 };
-    let body_n = if included.kind == StageKind::Body { included.n_lines } else if show_body { usize::MAX } else { 0 };
-
-    if !show_names {
+    if !spec.show_name {
         return;
     }
 
@@ -272,7 +202,7 @@ fn render_symbol(
     }
 
     // Names only
-    if !show_sigs && doc_n == 0 && body_n == 0 {
+    if !spec.show_sig && doc_n == 0 && body_n == 0 {
         if sym_line_0 >= *emitted_up_to {
             if sym.kind == parse::SymbolKind::Section {
                 // Sections: show the full heading/section line without truncation
@@ -290,7 +220,7 @@ fn render_symbol(
     }
 
     // Signature range from layout
-    let sig_end = if show_sigs {
+    let sig_end = if spec.show_sig {
         layout.sig_end
     } else {
         sym_line_0 // just the first line

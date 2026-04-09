@@ -1,11 +1,13 @@
-use std::collections::{BinaryHeap, HashMap, HashSet};
+use std::collections::{BTreeSet, BinaryHeap, HashMap, HashSet};
 use std::path::{Path, PathBuf};
 
 use crate::Corpus;
 
+use super::classify::FileRole;
 use super::value::compute_value;
 use super::{
-    BuiltGroups, Cost, Group, IncludedStage, Schedule, StageKind, SymbolCosts,
+    BuiltGroups, Cost, Group, IncludedStage, RenderPlanItem, Schedule, StageKind,
+    SymbolCosts, SymbolRenderSpec,
 };
 
 // ---------------------------------------------------------------------------
@@ -523,9 +525,121 @@ pub fn schedule(
         );
     }
 
-    Schedule {
-        group_stages,
-        visible_files: files_shown,
-        symbol_to_group,
+    // -----------------------------------------------------------------------
+    // Build render plan and per-symbol render specs
+    // -----------------------------------------------------------------------
+
+    // 1. Resolve per-symbol render specs from group stages.
+    let mut symbol_specs: Vec<Vec<Option<SymbolRenderSpec>>> = corpus
+        .all_symbols
+        .iter()
+        .map(|syms| vec![None; syms.len()])
+        .collect();
+
+    for (&(file_idx, sym_idx), &group_idx) in &symbol_to_group {
+        let included = match &group_stages[group_idx] {
+            Some(inc) => inc,
+            None => continue,
+        };
+        let stages = groups[group_idx].key.kind_category.stage_sequence();
+        symbol_specs[file_idx][sym_idx] = Some(resolve_render_spec(included, stages));
     }
+
+    // 2. Compute file render order: README first, manifests second, alphabetical.
+    let mut render_order: Vec<usize> = files_shown.iter().copied().collect();
+    render_order.sort_by_key(|&i| {
+        let relative = files[i].strip_prefix(root).unwrap_or(&files[i]);
+        let is_root = relative.parent().is_none_or(|p| p.as_os_str().is_empty());
+        let role = FileRole::from_path(relative);
+        let filename = relative.file_name().and_then(|n| n.to_str()).unwrap_or("");
+        let priority = if is_root && matches!(role, FileRole::Readme | FileRole::Architecture) {
+            0
+        } else if is_root
+            && matches!(
+                filename,
+                "Cargo.toml" | "package.json" | "go.mod" | "pyproject.toml" | "setup.cfg"
+            )
+        {
+            1
+        } else {
+            2
+        };
+        // Within each priority tier, sort alphabetically by relative path
+        // for deterministic output.
+        (priority, relative.to_path_buf())
+    });
+
+    // 3. Compute invisible directory markers (two-set approach).
+    let invisible_dirs: BTreeSet<PathBuf> = {
+        let mut all_dirs = HashSet::new();
+        let mut visible_dirs = HashSet::new();
+        for (i, file) in files.iter().enumerate() {
+            let relative = file.strip_prefix(root).unwrap_or(file);
+            if let Some(top) = relative.components().next()
+                && relative.parent().is_some_and(|p| !p.as_os_str().is_empty())
+            {
+                let top = PathBuf::from(top.as_os_str());
+                all_dirs.insert(top.clone());
+                if files_shown.contains(&i) {
+                    visible_dirs.insert(top);
+                }
+            }
+        }
+        all_dirs.difference(&visible_dirs).cloned().collect()
+    };
+
+    // 4. Merge file order and directory markers into render plan.
+    let mut render_plan: Vec<RenderPlanItem> = Vec::new();
+    let mut dirs_emitted: HashSet<PathBuf> = HashSet::new();
+
+    for &file_idx in &render_order {
+        let relative = files[file_idx].strip_prefix(root).unwrap_or(&files[file_idx]);
+        // Emit invisible directory markers that sort before this file's top-level dir.
+        if let Some(ftd) = relative.components().next().map(|c| PathBuf::from(c.as_os_str())) {
+            for dir in &invisible_dirs {
+                if dir < &ftd && dirs_emitted.insert(dir.clone()) {
+                    render_plan.push(RenderPlanItem::DirectoryMarker(dir.clone()));
+                }
+            }
+        }
+        render_plan.push(RenderPlanItem::File(file_idx));
+    }
+    // Emit any remaining invisible directories after the last file.
+    for dir in &invisible_dirs {
+        if dirs_emitted.insert(dir.clone()) {
+            render_plan.push(RenderPlanItem::DirectoryMarker(dir.clone()));
+        }
+    }
+
+    Schedule {
+        render_plan,
+        symbol_specs,
+    }
+}
+
+/// Resolve an `IncludedStage` into a concrete `SymbolRenderSpec` by checking
+/// what's covered in the kind's stage progression.
+fn resolve_render_spec(included: &IncludedStage, stages: &[StageKind]) -> SymbolRenderSpec {
+    let show_name = included.covers(stages, StageKind::Names, 1);
+    let show_sig = included.covers(stages, StageKind::Signatures, 1);
+
+    let show_doc = included.covers(stages, StageKind::Doc, 1);
+    let doc_lines = if included.kind == StageKind::Doc {
+        included.n_lines
+    } else if show_doc {
+        usize::MAX
+    } else {
+        0
+    };
+
+    let show_body = included.covers(stages, StageKind::Body, 1);
+    let body_lines = if included.kind == StageKind::Body {
+        included.n_lines
+    } else if show_body {
+        usize::MAX
+    } else {
+        0
+    };
+
+    SymbolRenderSpec { show_name, show_sig, doc_lines, body_lines }
 }

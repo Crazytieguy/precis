@@ -95,7 +95,7 @@ impl<'a> Corpus<'a> {
     pub fn render_stats(&self, budget: usize, char_budget: Option<usize>) -> (String, usize) {
         let built = schedule::build_groups(self, budget);
         let sched = schedule::schedule(&built, self, char_budget);
-        let output = render::render_scheduled(self, &built.groups, &sched);
+        let output = render::render_scheduled(self, &sched);
         let actual = render::count_tokens(&output);
         (output, actual)
     }
