@@ -147,6 +147,8 @@ pub(super) fn is_inside_function(node: tree_sitter::Node) -> bool {
             | "generator_function" | "generator_function_declaration" |
             // Go
             "method_declaration" | "func_literal" |
+            // Java
+            "constructor_declaration" | "lambda_expression" |
             // Python / Lua
             "function_definition" => {
                 return true;

@@ -552,6 +552,74 @@ void *alloc_node(size_t size);
 "#
 }
 
+fn java_sample() -> &'static str {
+    r#"
+package com.example;
+
+import java.util.List;
+import java.util.Map;
+import static java.lang.Math.PI;
+
+/**
+ * A sample class demonstrating Java features.
+ * Includes methods, fields, and constructors.
+ */
+public class Token {
+    public static final int MAX_TOKENS = 1024;
+    private String value;
+
+    public Token(String value) {
+        this.value = value;
+    }
+
+    public Token() {
+        this("default");
+    }
+
+    /**
+     * Get the value.
+     * @return the token value
+     */
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    private void helper() {}
+}
+
+/**
+ * Visitor interface for processing tokens.
+ */
+public interface Visitor {
+    int TIMEOUT = 1000;
+    void visit(Token token);
+    default void visitAll(List<Token> tokens) {
+        tokens.forEach(this::visit);
+    }
+}
+
+public enum TokenKind {
+    IDENT,
+    NUMBER,
+    SYMBOL;
+
+    public String display() {
+        return name().toLowerCase();
+    }
+}
+
+public record Span(int start, int end) {}
+
+@interface Generated {
+    String value();
+}
+"#
+}
+
 fn toml_sample() -> &'static str {
     r#"[package]
 name = "example"
@@ -716,6 +784,11 @@ sample_test!(cpp_sample_budget_50, "sample.cpp", cpp_sample, 50);
 sample_test!(cpp_sample_budget_200, "sample.cpp", cpp_sample, 200);
 sample_test!(cpp_sample_budget_10000, "sample.cpp", cpp_sample, 10000);
 
+sample_test!(java_sample_budget_20, "Token.java", java_sample, 20);
+sample_test!(java_sample_budget_50, "Token.java", java_sample, 50);
+sample_test!(java_sample_budget_200, "Token.java", java_sample, 200);
+sample_test!(java_sample_budget_10000, "Token.java", java_sample, 10000);
+
 sample_test!(c_sample_budget_20, "sample.c", c_sample, 20);
 sample_test!(c_sample_budget_50, "sample.c", c_sample, 50);
 sample_test!(c_sample_budget_200, "sample.c", c_sample, 200);
@@ -753,6 +826,7 @@ fn budget_monotonicity_inline() {
         ("sample.go", go_sample()),
         ("sample.cpp", cpp_sample()),
         ("sample.c", c_sample()),
+        ("Token.java", java_sample()),
         ("README.md", markdown_sample()),
         ("Cargo.toml", toml_sample()),
         ("ci.yml", yaml_sample()),

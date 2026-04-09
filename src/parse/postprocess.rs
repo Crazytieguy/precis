@@ -57,7 +57,7 @@ fn mark_reexports(symbols: &mut [Symbol]) {
 /// Go is excluded because it allows multiple `init()` functions in one file.
 /// Python is excluded because @property getter/setter pairs share a name.
 fn dedup_overloads(symbols: Vec<Symbol>, lang: Lang) -> Vec<Symbol> {
-    if matches!(lang, Lang::Go | Lang::Python) {
+    if matches!(lang, Lang::Go | Lang::Python | Lang::Java) {
         return symbols;
     }
     let mut seen = std::collections::HashSet::new();

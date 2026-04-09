@@ -26,6 +26,10 @@ pub(super) fn extract_name(
     } else if node.kind() == "declaration" && lang == Lang::C {
         // C/C++ declaration: extract name from the declarator
         c_declaration_name(node, source)
+    } else if lang == Lang::Java && matches!(node.kind(), "field_declaration" | "constant_declaration") {
+        java_field_name(node, source)
+    } else if node.kind() == "module_declaration" {
+        java_module_name(node, source)
     } else {
         name_node
             .and_then(|n| n.utf8_text(source.as_bytes()).ok())
@@ -57,7 +61,7 @@ pub(super) fn is_first_party_import(name: &str, lang: Lang) -> bool {
         Lang::Go => false,
         Lang::Python => name.starts_with('.'),
         Lang::C => name.starts_with('"'),
-        Lang::Lua | Lang::Markdown | Lang::Json | Lang::Toml | Lang::Yaml => false,
+        Lang::Java | Lang::Lua | Lang::Markdown | Lang::Json | Lang::Toml | Lang::Yaml => false,
     }
 }
 
@@ -132,6 +136,15 @@ fn import_name(node: tree_sitter::Node, source: &str, lang: Lang) -> String {
                 .map(|s| s.trim().to_string())
                 .unwrap_or_else(|| text.to_string())
         }
+        Lang::Java => {
+            // `import java.util.List;` → `java.util.List`
+            // `import static java.lang.Math.PI;` → `static java.lang.Math.PI`
+            let rest = text
+                .strip_prefix("import")
+                .map(|s| s.trim_start())
+                .unwrap_or(text);
+            rest.trim_end_matches(';').trim().to_string()
+        }
         Lang::Lua | Lang::Markdown | Lang::Json | Lang::Toml | Lang::Yaml => "?".to_string(),
     }
 }
@@ -169,6 +182,32 @@ fn c_declaration_name(node: tree_sitter::Node, source: &str) -> String {
         && let Ok(name) = found.utf8_text(source.as_bytes())
     {
         return name.to_string();
+    }
+    "?".to_string()
+}
+
+/// Extract the name from a Java field_declaration or constant_declaration.
+/// Finds the first variable_declarator's name child.
+fn java_field_name(node: tree_sitter::Node, source: &str) -> String {
+    if let Some(decl) = super::ast::find_descendant_of_kind(node, "variable_declarator")
+        && let Some(name) = decl.child_by_field_name("name")
+        && let Ok(text) = name.utf8_text(source.as_bytes())
+    {
+        return text.to_string();
+    }
+    "?".to_string()
+}
+
+/// Extract the name from a Java module_declaration.
+fn java_module_name(node: tree_sitter::Node, source: &str) -> String {
+    // The module name is the scoped_identifier or identifier child after "module" keyword
+    let mut cursor = node.walk();
+    for child in node.children(&mut cursor) {
+        if matches!(child.kind(), "scoped_identifier" | "identifier")
+            && let Ok(text) = child.utf8_text(source.as_bytes())
+        {
+            return text.to_string();
+        }
     }
     "?".to_string()
 }

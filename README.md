@@ -124,6 +124,7 @@ The default budget is 4000 BPE tokens (o200k_base tokenizer). Output is plain te
 - **TypeScript / JavaScript / TSX** — functions, classes, interfaces, enums, type aliases, consts, namespaces
 - **Go** — functions, methods, structs, interfaces, type aliases, consts, vars
 - **C / C++** — functions, classes, structs, unions, enums, namespaces, typedefs, type aliases, macros, includes
+- **Java** — classes, interfaces, enums, records, annotations, methods, constructors, constants, modules
 - **Python** — functions, classes, module-level constants
 - **Markdown** — heading structure with body content
 - **JSON / TOML / YAML** — top-level keys and sections

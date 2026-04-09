@@ -95,6 +95,14 @@ pub(super) fn classify_node<'a>(
         // C++ specific
         "namespace_definition" => Some(SymbolKind::Module),
         "alias_declaration" => Some(SymbolKind::TypeAlias),
+        // Java
+        "record_declaration" => Some(SymbolKind::Struct),
+        "annotation_type_declaration" => Some(SymbolKind::Interface),
+        "constructor_declaration" => Some(SymbolKind::Function),
+        "annotation_type_element_declaration" => Some(SymbolKind::Function),
+        "module_declaration" => Some(SymbolKind::Module),
+        "field_declaration" if lang == Lang::Java => classify_java_field(node, source),
+        "constant_declaration" if lang == Lang::Java => Some(SymbolKind::Const),
         // Python
         "function_definition" => Some(SymbolKind::Function),
         "class_definition" => Some(SymbolKind::Class),
@@ -260,6 +268,32 @@ fn is_require_call(declarator: Option<tree_sitter::Node>, source: &str) -> bool 
         }
         _ => false,
     }
+}
+
+/// Classify a Java field_declaration. Only `static final` fields (constants) in
+/// classes/enums are kept; instance fields are implementation details. Interface
+/// fields are handled separately via `constant_declaration`.
+fn classify_java_field(node: tree_sitter::Node, source: &str) -> Option<SymbolKind> {
+    let modifiers = node
+        .children(&mut node.walk())
+        .find(|c| c.kind() == "modifiers")?;
+    let has_static = has_modifier_keyword(modifiers, source, "static");
+    let has_final = has_modifier_keyword(modifiers, source, "final");
+    if has_static && has_final {
+        Some(SymbolKind::Const)
+    } else {
+        None
+    }
+}
+
+/// Check if a Java `modifiers` node contains a specific keyword child.
+/// Walks AST children instead of string-matching the full text to avoid
+/// false positives from annotation content (e.g. `@SuppressWarnings("static")`).
+fn has_modifier_keyword(modifiers: tree_sitter::Node, source: &str, keyword: &str) -> bool {
+    let mut cursor = modifiers.walk();
+    modifiers.children(&mut cursor).any(|child| {
+        child.utf8_text(source.as_bytes()).ok() == Some(keyword)
+    })
 }
 
 /// Check if a `type_definition` is a simple typedef alias (`typedef T name;`) where

@@ -20,6 +20,7 @@ pub(super) fn determine_visibility(
     } else {
         match lang {
             Lang::Go => name.starts_with(|c: char| c.is_ascii_uppercase()),
+            Lang::Java => is_java_public(node, source),
             Lang::Python => !name.starts_with('_') || (name.starts_with("__") && name.ends_with("__")),
             Lang::Markdown | Lang::Json | Lang::Toml | Lang::Yaml => true,
             Lang::C => !is_c_static(node, source) && !name.starts_with('_'),
@@ -128,6 +129,33 @@ fn is_public_symbol(node: tree_sitter::Node, source: &str) -> bool {
         });
     }
     false
+}
+
+/// Check if a Java symbol is public.
+///
+/// Checks for explicit `public` or `protected` modifier keywords by walking
+/// AST children (not string matching, to avoid false positives from annotations).
+/// Interface and annotation type members are implicitly public.
+fn is_java_public(node: tree_sitter::Node, source: &str) -> bool {
+    // Check for explicit modifier keywords
+    if let Some(mods) = node.children(&mut node.walk()).find(|c| c.kind() == "modifiers") {
+        let mut cursor = mods.walk();
+        for child in mods.children(&mut cursor) {
+            match child.utf8_text(source.as_bytes()).ok() {
+                Some("public" | "protected") => return true,
+                Some("private") => return false,
+                _ => {}
+            }
+        }
+    }
+    // Interface and annotation type members are implicitly public
+    if let Some(parent) = node.parent()
+        && matches!(parent.kind(), "interface_body" | "annotation_type_body")
+    {
+        return true;
+    }
+    // Module declarations are public
+    node.kind() == "module_declaration"
 }
 
 /// Check if a C symbol has `static` storage class (file-scoped, not public).

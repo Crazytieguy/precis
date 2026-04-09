@@ -20,6 +20,7 @@ pub(super) fn detect_module_doc(
         Lang::Rust => detect_rust(root, source)?,
         Lang::Python => detect_python(root, source)?,
         Lang::Go => detect_go(root, source)?,
+        Lang::Java => detect_java(root, source)?,
         _ => return None,
     };
 
@@ -215,6 +216,43 @@ fn detect_go(
         end_row,
         first.start_byte(),
         last.end_byte(),
+    ))
+}
+
+/// Detect Java Javadoc at the top of a file (before any declarations).
+/// A leading `block_comment` starting with `/**` is treated as module-level
+/// documentation. This covers package-info.java and any file with a top-level
+/// Javadoc block preceding the first class/interface/enum declaration.
+fn detect_java(
+    root: tree_sitter::Node,
+    source: &str,
+) -> Option<(usize, usize, usize, usize)> {
+    let mut cursor = root.walk();
+    // Find the first block_comment that starts with /**
+    let mut doc_node = None;
+    for child in root.children(&mut cursor) {
+        match child.kind() {
+            "block_comment" => {
+                let text = child.utf8_text(source.as_bytes()).ok()?;
+                if text.starts_with("/**") {
+                    doc_node = Some(child);
+                    break;
+                }
+            }
+            // Skip line comments at the top of the file
+            "line_comment" => continue,
+            // If we hit a non-comment, non-package node, no module doc
+            "package_declaration" => break,
+            _ => break,
+        }
+    }
+
+    let node = doc_node?;
+    Some((
+        node.start_position().row,
+        node.end_position().row,
+        node.start_byte(),
+        node.end_byte(),
     ))
 }
 

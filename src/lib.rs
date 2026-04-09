@@ -40,6 +40,7 @@ pub enum Lang {
     Go,
     /// C and C++ source and header files
     C,
+    Java,
     Lua,
     Markdown,
     /// TypeScript, JavaScript, TSX, JSX
@@ -60,6 +61,7 @@ impl Lang {
             "py" => Some(Lang::Python),
             "go" => Some(Lang::Go),
             "c" | "h" | "cpp" | "cc" | "cxx" | "hpp" | "hxx" | "hh" => Some(Lang::C),
+            "java" => Some(Lang::Java),
             "lua" => Some(Lang::Lua),
             "md" | "mdx" => Some(Lang::Markdown),
             "ts" | "tsx" | "js" | "jsx" | "mts" | "cts" | "mjs" | "cjs" => Some(Lang::JsTs),

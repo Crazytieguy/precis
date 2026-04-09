@@ -216,6 +216,10 @@ fn language_for_extension(ext: &str) -> Option<(Language, &'static str)> {
             tree_sitter_cpp::LANGUAGE.into(),
             include_str!("../../queries/cpp.scm"),
         ),
+        (Lang::Java, _) => (
+            tree_sitter_java::LANGUAGE.into(),
+            include_str!("../../queries/java.scm"),
+        ),
         (Lang::Lua, _) => (
             tree_sitter_lua::LANGUAGE.into(),
             include_str!("../../queries/lua.scm"),
