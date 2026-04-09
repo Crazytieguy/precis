@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3978 tokens)
+budget: 4000 (3976 tokens)
 
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
@@ -193,14 +193,6 @@ src/kind.rs
    117→    pub fn new(self, error: Box<dyn StdError + Send + Sync>) -> Error {
 
 src/lib.rs
-     1→//!
-     2→//!
-     3→//! [github]: https://img.shields.io/badge/github-8da0cb?style=for-the-badge&labelColor=555555&logo=github
-     4→//! [crates-io]: https://img.shields.io/badge/crates.io-fc8d62?style=for-the-badge&labelColor=555555&logo=rust
-     5→//! [docs-rs]: https://img.shields.io/badge/docs.rs-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs
-     6→//!
-     7→//! <br>
-     8→//!
      9→//! This library provides [`anyhow::Error`][Error], a trait object based error
     10→//! type for easy idiomatic error handling in Rust applications.
     11→//!
@@ -221,6 +213,17 @@ src/lib.rs
     26→//!   #     use super::Deserialize;
     27→//!   #     use std::io;
     28→//!   #
+    29→//!   #     pub fn from_str<T: Deserialize>(json: &str) -> io::Result<T> {
+    30→//!   #         unimplemented!()
+    31→//!   #     }
+    32→//!   # }
+    33→//!   #
+    34→//!   # struct ClusterMap;
+    35→//!   #
+    36→//!   # impl Deserialize for ClusterMap {}
+    37→//!   #
+    38→//!   use anyhow::Result;
+    39→//!
       →…
    252→mod backtrace;
    253→mod chain;
@@ -331,6 +334,14 @@ src/wrapper.rs
     68→impl Display for BoxedError …
     75→impl StdError for BoxedError …
     81→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
+
+tests/common/mod.rs
+
+tests/crate/Cargo.toml
+     1→[package]
+     8→[lib]
+    11→[dependencies]
+    14→[features]
 
 tests/drop/mod.rs
      9→pub struct Flag {

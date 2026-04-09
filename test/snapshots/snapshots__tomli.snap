@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3956 tokens)
+budget: 4000 (3957 tokens)
 
 README.md
      5→# Tomli
@@ -97,11 +97,9 @@ fuzzer/requirements.txt
 
 profiler/profiler_script.py
      1→"""A script for profiling.
-     2→
      3→To generate and read results:
      4→  - `tox -e profile`
      5→  - `firefox .tox/prof/output.svg`
-     6→"""
 
 profiler/requirements.txt
      1→gprof2dot
@@ -111,9 +109,7 @@ scripts/requirements.txt
 
 scripts/use_setuptools.py
      1→"""Script that switches build backend to setuptools with mypyc support.
-     2→
      3→Overwrites pyproject.toml. Does not create a backup.
-     4→"""
     12→def use_setuptools() -> None:
 
 src/tomli/__init__.py
@@ -243,9 +239,12 @@ src/tomli/_re.py
    100→    sign = 1 if sign_str == "+" else -1
    101→    return timezone(
    102→        timedelta(
-      →        …
+   103→            hours=sign * int(hour_str),
+      →            …
    109→def match_to_localtime(match: re.Match[str]) -> time:
    116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
+
+src/tomli/_types.py
 
 src/tomli/py.typed
      1→# Marker file for PEP 561

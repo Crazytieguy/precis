@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7886 tokens)
+budget: 8000 (7885 tokens)
 
 README.md
      1→# mdBook
@@ -99,7 +99,6 @@ crates/mdbook-core/src/book.rs
 
 crates/mdbook-core/src/config.rs
      1→//! Mdbook's configuration system.
-     2→//!
      3→//! The main entrypoint of the `config` module is the `Config` struct. This acts
      4→//! essentially as a bag of configuration information, with a couple
      5→//! pre-determined tables ([`BookConfig`] and [`BuildConfig`]) as well as support
@@ -109,10 +108,9 @@ crates/mdbook-core/src/config.rs
      9→//! # Examples
     10→//!
     11→//! ```rust
+    12→//! # use anyhow::Result;
       →…
     63→pub struct Config {
-    81→fn is_default …
-    86→fn toml_is_empty …
     94→    fn from_str(src: &str) -> Result<Self> {
    113→    pub fn from_disk …
    150→    pub fn update_from_env …
@@ -120,10 +118,8 @@ crates/mdbook-core/src/config.rs
    216→    pub fn contains_key …
    228→    pub fn preprocessors …
    236→    pub fn outputs …
-   250→    pub fn html_config …
    274→    pub fn set …
    318→pub struct BookConfig {
-   336→fn is_default_src …
    356→    pub fn realized_text_direction …
    368→pub enum TextDirection {
    369→    /// Left to right.
@@ -239,7 +235,6 @@ crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs
 
 crates/mdbook-driver/src/builtin_renderers/mod.rs
      1→//! Built-in renderers.
-     2→//!
      3→//! The HTML renderer can be found in the [`mdbook_html`] crate.
     20→pub struct CmdRenderer {
     21→    name: String,
@@ -264,7 +259,6 @@ crates/mdbook-driver/src/init.rs
 
 crates/mdbook-driver/src/lib.rs
      1→//! High-level library for running mdBook.
-     2→//!
      3→//! This is the high-level library for running
      4→//! [mdBook](https://rust-lang.github.io/mdBook/). There are several
      5→//! reasons for using the programmatic API (over the CLI):
@@ -417,15 +411,13 @@ crates/mdbook-markdown/Cargo.toml
 
 crates/mdbook-markdown/README.md
      1→# mdbook-markdown
-     7→This is the Markdown support library for [mdBook](https://rust-lang.github.io/mdBook/). Rust crates (such as preprocessors) can use this library to process Markdown in the same way as mdBook.
-     8→
-      →…
 
 crates/mdbook-markdown/src/lib.rs
      1→//! Markdown processing used in mdBook.
-     2→//!
      3→//! This crate provides functions for processing Markdown in the same way as
-      →…
+     4→//! [mdBook](https://rust-lang.github.io/mdBook/). The [`pulldown_cmark`]
+     5→//! crate is used as the underlying parser. This crate re-exports
+     6→//! [`pulldown_cmark`] so that you can access its types.
     13→/// Options for parsing markdown.
     14→#[non_exhaustive]
     15→pub struct MarkdownOptions {
@@ -467,15 +459,13 @@ crates/mdbook-preprocessor/Cargo.toml
 
 crates/mdbook-preprocessor/README.md
      1→# mdbook-preprocessor
-     7→This is the Rust library to implement a [preprocessor](https://rust-lang.github.io/mdBook/for_developers/preprocessors.html) for [mdBook](https://rust-lang.github.io/mdBook/).
-     8→
-      →…
 
 crates/mdbook-preprocessor/src/lib.rs
      1→//! Library to assist implementing an mdbook preprocessor.
-     2→//!
      3→//! This library is used to implement a
-      →…
+     4→//! [preprocessor](https://rust-lang.github.io/mdBook/for_developers/preprocessors.html)
+     5→//! for [mdBook](https://rust-lang.github.io/mdBook/). See the linked chapter
+     6→//! for more information on how to implement a preprocessor.
     30→pub trait Preprocessor {
     32→    fn name(&self) -> &str;
     36→    fn run(&self, ctx: &PreprocessorContext, book: Book) -> Result<Book>;
@@ -524,9 +514,10 @@ crates/mdbook-renderer/README.md
 
 crates/mdbook-renderer/src/lib.rs
      1→//! Library to assist implementing an mdbook renderer.
-     2→//!
      3→//! This library is used to implement a
-      →…
+     4→//! [renderer](https://rust-lang.github.io/mdBook/for_developers/backends.html)
+     5→//! for [mdBook](https://rust-lang.github.io/mdBook/). See the linked chapter
+     6→//! for more information on how to implement a renderer.
     28→pub trait Renderer {
     30→    fn name(&self) -> &str;
     34→    fn render(&self, ctx: &RenderContext) -> Result<()>;
@@ -567,15 +558,12 @@ crates/mdbook-summary/Cargo.toml
 
 crates/mdbook-summary/README.md
      1→# mdbook-summary
-     7→This is the Rust library used to parse the [`SUMMARY.md`](https://rust-lang.github.io/mdBook/format/summary.html) file structure for [mdBook](https://rust-lang.github.io/mdBook/).
-     8→
-      →…
 
 crates/mdbook-summary/src/lib.rs
      1→//! Summary parser for mdBook.
-     2→//!
      3→//! This is used to parse the
-      →…
+     4→//! [`SUMMARY.md`](https://rust-lang.github.io/mdBook/format/summary.html)
+     5→//! file structure for [mdBook](https://rust-lang.github.io/mdBook/).
     59→pub fn parse_summary(summary: &str) -> Result<Summary> {
     67→pub struct Summary {
     68→    /// An optional title for the `SUMMARY.md`, currently just ignored.
@@ -634,10 +622,10 @@ crates/xtask/src/changelog.rs
 
 crates/xtask/src/main.rs
      1→//! Helper for local development.
-    11→type Result …
 
 examples/nop-preprocessor.rs
     79→    pub struct Nop;
+    82→        pub fn new() -> Nop {
 
 guide/guide-helper/Cargo.toml
      1→[package]
@@ -813,7 +801,6 @@ src/cmd/watch/native.rs
 
 src/cmd/watch/poller.rs
      1→//! A simple poll-based filesystem watcher.
-     2→//!
      3→//! This exists because the native change notifications have historically had
      4→//! lots of problems. Various operating systems and different filesystems have
      5→//! had problems correctly reporting changes.
@@ -830,6 +817,6 @@ src/cmd/watch.rs
 src/main.rs
      1→//! The mdbook CLI.
     14→mod cmd;
-    58→fn create_clap_command …
+    58→fn create_clap_command() -> Command {
 
 tests/

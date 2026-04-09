@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3980 tokens)
+budget: 4000 (3981 tokens)
 
 README.md
      1→log
@@ -70,7 +70,6 @@ src/kv/key.rs
 
 src/kv/mod.rs
      1→//! Structured logging.
-     2→//!
      3→//! Add the `kv` feature to your `Cargo.toml` to enable
      4→//! this module:
      5→//!
@@ -81,6 +80,7 @@ src/kv/mod.rs
     10→//!
     11→//! # Structured logging in `log`
     12→//!
+    13→//! Structured logging enhances traditional text-based log records with user-defined
       →…
    246→mod error;
    247→mod key;
@@ -93,7 +93,6 @@ src/kv/mod.rs
 
 src/kv/source.rs
      1→//! Sources for key-values.
-     2→//!
      3→//! This module defines the [`Source`] type and supporting APIs for
      4→//! working with collections of key-values.
     51→pub trait Source {
@@ -108,7 +107,6 @@ src/kv/source.rs
 
 src/kv/value.rs
      1→//! Structured values.
-     2→//!
      3→//! This module defines the [`Value`] type and supporting APIs for
      4→//! capturing and serializing them.
      8→pub use crate::kv::Error;
@@ -194,7 +192,6 @@ src/kv/value.rs
 
 src/lib.rs
     11→//! A lightweight logging facade.
-    12→//!
     13→//! The `log` crate provides a single logging API that abstracts over the
     14→//! actual logging implementation. Libraries can use the logging API provided
     15→//! by this crate, and the consumer of those libraries can choose the logging
@@ -266,7 +263,7 @@ src/lib.rs
    732→    pub fn iter() -> impl Iterator<Item = Self> {
    752→    pub fn increment_severity(&self) -> Self {
    774→    pub fn decrement_severity(&self) -> Self {
-   781→enum MaybeStaticStr …
+   781→enum MaybeStaticStr<'a> {
    788→    fn get …
    842→pub struct Record<'a> {
    843→    metadata: Metadata<'a>,
@@ -348,6 +345,8 @@ src/macros.rs
    292→macro_rules! debug {
    336→macro_rules! trace {
    391→macro_rules! log_enabled {
+
+src/serde.rs
 
 test_max_level_features/
 

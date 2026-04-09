@@ -96,6 +96,7 @@ impl/src/ast.rs
     51→    UnitVariant,
     52→}
     55→    pub fn from_syn(node: &'a DeriveInput) -> Result<Self> {
+   175→    fn fmt …
 
 impl/src/attr.rs
     11→pub struct Attrs<'a> {
@@ -143,6 +144,8 @@ impl/src/attr.rs
     66→    UpperExp,
     67→}
     69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
+   303→    fn to_tokens …
+   343→    fn to_tokens …
 
 impl/src/expand.rs
     12→pub fn derive(input: &DeriveInput) -> TokenStream {
@@ -178,6 +181,7 @@ impl/src/lib.rs
     42→    expand::derive(&input).into()
     43→}
     46→struct private;
+    49→    fn to_tokens …
 
 impl/src/scan_expr.rs
      6→enum Input {
@@ -190,12 +194,24 @@ impl/src/unraw.rs
     15→    pub fn new(ident: Ident) -> Self {
     19→    pub fn to_local(&self) -> Ident {
     32→    pub fn set_span(&mut self, span: Span) {
+    38→    fn fmt …
+    46→    fn eq …
+    52→    fn eq …
+    58→    fn cmp …
+    64→    fn partial_cmp …
+    70→    fn parse …
+    76→    fn to_tokens …
     81→#[derive(Clone)]
     82→pub enum MemberUnraw {
     83→    Named(IdentUnraw),
     84→    Unnamed(Index),
     85→}
     88→    pub fn span(&self) -> Span {
+    97→    fn fmt …
+   108→    fn eq …
+   118→    fn eq …
+   127→    fn hash …
+   136→    fn to_tokens …
 
 rust-toolchain.toml
      1→[toolchain]
@@ -231,14 +247,6 @@ src/display.rs
     76→        fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
 
 src/lib.rs
-     1→//!
-     2→//!
-     3→//! [github]: https://img.shields.io/badge/github-8da0cb?style=for-the-badge&labelColor=555555&logo=github
-     4→//! [crates-io]: https://img.shields.io/badge/crates.io-fc8d62?style=for-the-badge&labelColor=555555&logo=rust
-     5→//! [docs-rs]: https://img.shields.io/badge/docs.rs-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs
-     6→//!
-     7→//! <br>
-     8→//!
      9→//! This library provides a convenient derive macro for the standard library's
     10→//! [`std::error::Error`] trait.
     11→//!
@@ -275,7 +283,6 @@ src/lib.rs
    282→mod display;
    284→mod provide;
    285→mod var;
-   287→pub use thiserror_impl::*;
    289→mod private;
 
 src/private.rs
@@ -295,7 +302,9 @@ tests/compiletest.rs
      2→#[cfg_attr(miri, ignore = "incompatible with miri")]
      3→#[test]
      4→fn ui() {
-      →…
+     5→    let t = trybuild::TestCases::new();
+     6→    t.compile_fail("tests/ui/*.rs");
+     7→}
 
 tests/no-std/Cargo.toml
      1→[package]
@@ -367,6 +376,8 @@ tests/test_generics.rs
    144→pub struct StructFromGeneric<E> {
    162→pub struct StructTransparentGeneric<E>(pub E);
    175→pub enum AssociatedTypeError<T: FromStr> {
+
+tests/test_lints.rs
 
 tests/test_option.rs
      5→pub mod structs {

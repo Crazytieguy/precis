@@ -50,17 +50,33 @@ pub(crate) fn compute_layout(
     lines: &[&str],
     lang: Option<Lang>,
 ) -> SymbolLayout {
-    let sym_line_0 = sym.line - 1;
+    let raw_sym_line_0 = sym.line - 1;
     let raw_doc_start = sym
         .doc_start_line
         .map(|l| l - 1)
-        .unwrap_or_else(|| doc_comment_start(lines, sym_line_0, lang));
+        .unwrap_or_else(|| doc_comment_start(lines, raw_sym_line_0, lang));
 
     // Trim pure block-comment delimiters from doc range so Doc(1) shows
     // actual content instead of a bare `/**` or `/*`.
-    let (doc_start, doc_end) = trim_doc_delimiters(lines, raw_doc_start, sym_line_0);
+    let (doc_start, doc_end) = trim_doc_delimiters(lines, raw_doc_start, raw_sym_line_0);
 
-    let sig_end = signature_end_line(lines, sym, lang);
+    // For ModuleDoc: advance past leading noise (badges, blank doc lines, HTML,
+    // link reference definitions) to find the first meaningful line, which
+    // becomes the "name" shown at the Names stage.
+    let sym_line_0 = if sym.kind == parse::SymbolKind::ModuleDoc {
+        let end = sym.end_line.min(lines.len());
+        // Fallback: if all lines are noise, keep the original line so the
+        // symbol still renders something rather than vanishing.
+        skip_doc_leading_noise(lines, raw_sym_line_0, end, lang).unwrap_or(raw_sym_line_0)
+    } else {
+        raw_sym_line_0
+    };
+
+    let sig_end = if sym.kind == parse::SymbolKind::ModuleDoc {
+        sym_line_0
+    } else {
+        signature_end_line(lines, sym, lang)
+    };
 
     // Python docstring range
     let (ds_start, ds_end) = if lang == Some(Lang::Python) {
@@ -74,7 +90,7 @@ pub(crate) fn compute_layout(
         (sig_end + 1, sig_end + 1)
     };
 
-    // Body range: section content for markdown, code body for everything else.
+    // Body range: section content for markdown/module docs, code body otherwise.
     let (raw_body_start, raw_body_end) = if sym.kind == parse::SymbolKind::Section {
         let next_heading_line = all_symbols
             .iter()
@@ -105,6 +121,19 @@ pub(crate) fn compute_layout(
             }
         }
         (content_start, section_end)
+    } else if sym.kind == parse::SymbolKind::ModuleDoc {
+        let mut body_end = sym.end_line.min(lines.len());
+        let content_start = skip_doc_leading_noise(lines, sym_line_0 + 1, body_end, lang)
+            .unwrap_or(body_end);
+        // Trim trailing delimiter-only lines and blank padding (`*/`, `"""`)
+        while body_end > content_start {
+            let content = strip_doc_line_prefix(lines[body_end - 1], lang);
+            if !content.trim().is_empty() {
+                break;
+            }
+            body_end -= 1;
+        }
+        (content_start, body_end)
     } else {
         let start = if ds_end > ds_start {
             ds_end // skip past Python docstring
@@ -116,9 +145,9 @@ pub(crate) fn compute_layout(
 
     // Find first child symbol within body (for nesting detection and body truncation).
     // Truncate at the child's doc_start (not sym.line) so the parent doesn't claim
-    // the child's doc comment lines. Sections never have children (their sub-headings
-    // are sibling symbols, not nested children).
-    let (has_children, first_child_start) = if sym.kind == parse::SymbolKind::Section {
+    // the child's doc comment lines. Section-like symbols never have children (their
+    // sub-headings are sibling symbols, not nested children).
+    let (has_children, first_child_start) = if sym.kind.is_section_like() {
         (false, None)
     } else {
         let first = all_symbols
@@ -460,25 +489,7 @@ pub(crate) fn docstring_end(lines: &[&str], sym_line_0: usize) -> usize {
     }
     let trimmed = lines[idx].trim();
     // Detect triple-quote opener (""" or '''), with optional Python string prefix
-    // Valid prefixes: r, u, f, b, rb, br, rf, fr (case-insensitive)
-    let prefix_len = {
-        let lower: String = trimmed.chars().take(3).flat_map(|c| c.to_lowercase()).collect();
-        if lower.starts_with("rb")
-            || lower.starts_with("br")
-            || lower.starts_with("rf")
-            || lower.starts_with("fr")
-        {
-            2
-        } else if lower.starts_with('r')
-            || lower.starts_with('u')
-            || lower.starts_with('f')
-            || lower.starts_with('b')
-        {
-            1
-        } else {
-            0
-        }
-    };
+    let prefix_len = python_string_prefix_len(trimmed);
     let after_prefix = &trimmed[prefix_len..];
     let (quote, open_len) = if after_prefix.starts_with("\"\"\"") {
         ("\"\"\"", prefix_len + 3)
@@ -648,6 +659,82 @@ pub(crate) fn strip_heading_badges(line: &str) -> &str {
     line
 }
 
+/// Length of the optional Python string prefix before triple quotes.
+/// Valid prefixes (case-insensitive): r, u, f, b, rb, br, rf, fr.
+fn python_string_prefix_len(trimmed: &str) -> usize {
+    let bytes = trimmed.as_bytes();
+    match bytes {
+        [b'r' | b'R', b'b' | b'B', ..] | [b'b' | b'B', b'r' | b'R', ..]
+        | [b'r' | b'R', b'f' | b'F', ..] | [b'f' | b'F', b'r' | b'R', ..] => 2,
+        [b'r' | b'R', ..] | [b'u' | b'U', ..] | [b'f' | b'F', ..] | [b'b' | b'B', ..] => 1,
+        _ => 0,
+    }
+}
+
+/// Find the first non-noise line in a doc comment range.
+/// Returns `None` if all lines in `start..end` are noise.
+fn skip_doc_leading_noise(lines: &[&str], start: usize, end: usize, lang: Option<Lang>) -> Option<usize> {
+    (start..end).find(|&i| !is_markdown_leading_noise(strip_doc_line_prefix(lines[i], lang)))
+}
+
+/// Strip doc comment line prefixes so the underlying content can be checked
+/// for leading noise (badges, link references, HTML, etc.).
+///
+/// Handles per-line prefixes for all languages that support ModuleDoc:
+/// - Rust: `//!`, `///`, `/*!`, block comment continuation `* `
+/// - Go: `//`, block comment continuation `* `
+/// - Java: `/**`, block comment continuation `* `
+/// - Python: `"""` / `'''` (with optional string prefix: r, u, f, b, rb, br, rf, fr)
+///
+/// Lines that are purely delimiters (`/*`, `*/`, `/**`, `/*!`, bare `*`) return
+/// empty — these are always noise. For Python, a bare `"""` or `'''` (with optional
+/// prefix) returns empty; `"""content` returns `content`.
+fn strip_doc_line_prefix(line: &str, lang: Option<Lang>) -> &str {
+    let trimmed = line.trim_start();
+
+    // Block comment delimiters: always noise (any language)
+    if matches!(trimmed, "/*" | "/**" | "/*!" | "*/" | "*") {
+        return "";
+    }
+
+    match lang {
+        Some(Lang::Rust) => {
+            trimmed
+                .strip_prefix("//!")
+                .or_else(|| trimmed.strip_prefix("///"))
+                .or_else(|| trimmed.strip_prefix("/*!"))
+                .or_else(|| trimmed.strip_prefix("* "))
+                .map(|s| s.strip_prefix(' ').unwrap_or(s))
+                .unwrap_or(trimmed)
+        }
+        Some(Lang::Go) => {
+            trimmed
+                .strip_prefix("//")
+                .or_else(|| trimmed.strip_prefix("* "))
+                .map(|s| s.strip_prefix(' ').unwrap_or(s))
+                .unwrap_or(trimmed)
+        }
+        Some(Lang::Java) => {
+            trimmed
+                .strip_prefix("/**")
+                .or_else(|| trimmed.strip_prefix("* "))
+                .map(|s| s.strip_prefix(' ').unwrap_or(s))
+                .unwrap_or(trimmed)
+        }
+        Some(Lang::Python) => {
+            let after_prefix = &trimmed[python_string_prefix_len(trimmed)..];
+            if let Some(rest) = after_prefix.strip_prefix("\"\"\"") {
+                rest
+            } else if let Some(rest) = after_prefix.strip_prefix("'''") {
+                rest
+            } else {
+                trimmed
+            }
+        }
+        _ => trimmed,
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -750,5 +837,69 @@ mod tests {
             strip_heading_badges("# Project ![icon](url)"),
             "# Project ![icon](url)",
         );
+    }
+
+    #[test]
+    fn strip_doc_prefix_rust() {
+        // Inner doc comments
+        assert_eq!(strip_doc_line_prefix("//! content", Some(Lang::Rust)), "content");
+        assert_eq!(strip_doc_line_prefix("//!  extra space", Some(Lang::Rust)), " extra space");
+        assert_eq!(strip_doc_line_prefix("//!", Some(Lang::Rust)), "");
+        // Block inner doc opener
+        assert_eq!(strip_doc_line_prefix("/*!", Some(Lang::Rust)), "");
+        assert_eq!(strip_doc_line_prefix("/*! content", Some(Lang::Rust)), "content");
+        // Block comment continuation
+        assert_eq!(strip_doc_line_prefix(" * content", Some(Lang::Rust)), "content");
+        assert_eq!(strip_doc_line_prefix(" */", Some(Lang::Rust)), "");
+        assert_eq!(strip_doc_line_prefix(" *", Some(Lang::Rust)), "");
+    }
+
+    #[test]
+    fn strip_doc_prefix_go() {
+        assert_eq!(strip_doc_line_prefix("// content", Some(Lang::Go)), "content");
+        assert_eq!(strip_doc_line_prefix("//", Some(Lang::Go)), "");
+        // Block comment
+        assert_eq!(strip_doc_line_prefix("/*", Some(Lang::Go)), "");
+        assert_eq!(strip_doc_line_prefix(" * content", Some(Lang::Go)), "content");
+        assert_eq!(strip_doc_line_prefix(" */", Some(Lang::Go)), "");
+    }
+
+    #[test]
+    fn strip_doc_prefix_java() {
+        assert_eq!(strip_doc_line_prefix("/** content", Some(Lang::Java)), "content");
+        assert_eq!(strip_doc_line_prefix("/**", Some(Lang::Java)), "");
+        assert_eq!(strip_doc_line_prefix(" * content", Some(Lang::Java)), "content");
+        assert_eq!(strip_doc_line_prefix(" */", Some(Lang::Java)), "");
+    }
+
+    #[test]
+    fn strip_doc_prefix_python() {
+        // Bare triple quotes (delimiter-only)
+        assert_eq!(strip_doc_line_prefix("\"\"\"", Some(Lang::Python)), "");
+        assert_eq!(strip_doc_line_prefix("'''", Some(Lang::Python)), "");
+        // Triple quotes with content (content preserved)
+        assert_eq!(strip_doc_line_prefix("\"\"\"Module docs.", Some(Lang::Python)), "Module docs.");
+        // With string prefix
+        assert_eq!(strip_doc_line_prefix("r\"\"\"", Some(Lang::Python)), "");
+        assert_eq!(strip_doc_line_prefix("r\"\"\"Raw docs.", Some(Lang::Python)), "Raw docs.");
+        assert_eq!(strip_doc_line_prefix("rb\"\"\"", Some(Lang::Python)), "");
+        // Regular content lines (no prefix to strip)
+        assert_eq!(strip_doc_line_prefix("Regular content.", Some(Lang::Python)), "Regular content.");
+    }
+
+    #[test]
+    fn strip_doc_prefix_noise_integration() {
+        // Rust badge link ref: after stripping //!, is_markdown_leading_noise should detect it
+        let content = strip_doc_line_prefix("//! [github]: https://img.shields.io/badge", Some(Lang::Rust));
+        assert!(is_markdown_leading_noise(content));
+        // Rust HTML: after stripping //!, is_markdown_leading_noise should detect it
+        let content = strip_doc_line_prefix("//! <br>", Some(Lang::Rust));
+        assert!(is_markdown_leading_noise(content));
+        // Rust empty line
+        let content = strip_doc_line_prefix("//!", Some(Lang::Rust));
+        assert!(is_markdown_leading_noise(content));
+        // Rust actual content: NOT noise
+        let content = strip_doc_line_prefix("//! This library provides error handling.", Some(Lang::Rust));
+        assert!(!is_markdown_leading_noise(content));
     }
 }
