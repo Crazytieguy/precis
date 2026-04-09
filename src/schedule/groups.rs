@@ -24,7 +24,7 @@ pub fn build_groups(
     corpus: &Corpus<'_>,
     budget: usize,
 ) -> BuiltGroups {
-    let &Corpus { root, files, sources, all_symbols, layouts } = corpus;
+    let &Corpus { root, files, sources, all_symbols } = corpus;
 
     // Pre-compute lines for all files (needed for deferred doc/body tokenization).
     let all_lines: Vec<Vec<&str>> = sources
@@ -47,7 +47,6 @@ pub fn build_groups(
             let file = &files[file_idx];
             let symbols = &all_symbols[file_idx];
             let lines = &all_lines[file_idx];
-            let file_layouts = &layouts[file_idx];
             let relative = file.strip_prefix(root).unwrap_or(file);
             let parent_dir = relative.parent().unwrap_or(Path::new("")).to_path_buf();
             let lang = crate::Lang::from_path(relative);
@@ -67,14 +66,13 @@ pub fn build_groups(
             symbols.iter().enumerate().map(|(symbol_idx, sym)| {
                 let sym_line_0 = sym.line - 1;
                 let kind_category = KindCategory::from_symbol_kind(sym.kind);
-                let layout = &file_layouts[symbol_idx];
 
                 // For imports, doc comments don't change value — the import line
                 // itself is what matters. Force is_documented=false to keep all
                 // imports in one group (avoids splitting __init__.py re-exports
                 // into documented/undocumented subsets).
                 let is_documented = kind_category != KindCategory::Import
-                    && layout.doc_start < layout.doc_end;
+                    && sym.layout.doc_start < sym.layout.doc_end;
 
                 let heading_depth = if kind_category == KindCategory::Section {
                     if matches!(lang, Some(crate::Lang::Toml)) {
@@ -126,7 +124,6 @@ pub fn build_groups(
                     symbol_idx,
                     sym,
                     lines,
-                    layout,
                 );
 
                 (key, costs)
@@ -159,7 +156,7 @@ pub fn build_groups(
 
     // Phase 2 (parallel): compute doc/body line costs per group with budget-aware truncation.
     groups.par_iter_mut().for_each(|group| {
-        cost::fill_doc_body_costs(group, &all_lines, layouts, all_symbols, budget);
+        cost::fill_doc_body_costs(group, &all_lines, all_symbols, budget);
     });
 
     BuiltGroups { groups, budget }

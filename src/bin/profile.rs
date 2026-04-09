@@ -6,7 +6,7 @@
 use std::path::Path;
 use std::time::Instant;
 
-use precis::{layout, parse, render, schedule, walk, Corpus};
+use precis::{parse, render, schedule, walk, Corpus};
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
@@ -49,13 +49,8 @@ fn main() {
     let all_symbols = parse::extract_all_symbols_cached(&files, &sources, &configs);
     stages.push(("parse", t.elapsed()));
 
-    // 4. Compute layouts
-    let t = Instant::now();
-    let layouts = layout::compute_all_layouts(&files, &sources, &all_symbols);
-    stages.push(("layout", t.elapsed()));
-
-    // Build corpus for remaining stages
-    let corpus = Corpus { root: &root, files: &files, sources: &sources, all_symbols: &all_symbols, layouts: &layouts };
+    // Build corpus for remaining stages (layouts are embedded in symbols)
+    let corpus = Corpus { root: &root, files: &files, sources: &sources, all_symbols: &all_symbols };
 
     // 5. Build groups
     let t = Instant::now();

@@ -11,10 +11,11 @@ use super::{Cost, Group, StageKind, SymbolCosts};
 /// Map a layer index `n` (1-based) to the source line index and total line count
 /// for a symbol at that layer. Returns `None` if the symbol has no content at layer `n`.
 fn layer_source_line(
-    layout: &layout::SymbolLayout,
+    sym: &parse::Symbol,
     is_doc: bool,
     n: usize,
 ) -> Option<(usize, usize)> {
+    let layout = &sym.layout;
     if is_doc {
         let pre = layout.doc_end.saturating_sub(layout.doc_start);
         let total = pre + layout.ds_end.saturating_sub(layout.ds_start);
@@ -52,8 +53,8 @@ pub(super) fn compute_name_sig_costs(
     symbol_idx: usize,
     sym: &parse::Symbol,
     lines: &[&str],
-    layout: &layout::SymbolLayout,
 ) -> SymbolCosts {
+    let layout = &sym.layout;
     let sym_line_0 = layout.sym_line_0;
     let is_section = sym.kind.is_section_like();
 
@@ -135,7 +136,6 @@ pub(super) fn compute_name_sig_costs(
 pub(super) fn fill_doc_body_costs(
     group: &mut Group,
     all_lines: &[Vec<&str>],
-    layouts: &[Vec<layout::SymbolLayout>],
     all_symbols: &[Vec<parse::Symbol>],
     budget: usize,
 ) {
@@ -150,7 +150,7 @@ pub(super) fn fill_doc_body_costs(
         let (doc_count, body_count) = if !sym.composed_prefix_lens.is_empty() {
             (0, sym.composed_prefix_lens.len().saturating_sub(1))
         } else {
-            let layout = &layouts[sc.file_idx][sc.symbol_idx];
+            let layout = &sym.layout;
             let doc = layout.doc_end.saturating_sub(layout.doc_start)
                 + layout.ds_end.saturating_sub(layout.ds_start);
             (doc, layout.body_end.saturating_sub(layout.body_start))
@@ -250,8 +250,7 @@ pub(super) fn fill_doc_body_costs(
                     continue;
                 }
 
-                let layout = &layouts[sc.file_idx][sc.symbol_idx];
-                let (src_line_idx, true_len) = match layer_source_line(layout, is_doc, n) {
+                let (src_line_idx, true_len) = match layer_source_line(sym, is_doc, n) {
                     Some(result) => result,
                     None => continue,
                 };

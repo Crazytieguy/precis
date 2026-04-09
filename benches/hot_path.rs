@@ -1,5 +1,5 @@
 use criterion::{criterion_group, criterion_main, Criterion};
-use precis::{layout, schedule, walk, Corpus};
+use precis::{schedule, walk, Corpus};
 use std::path::{Path, PathBuf};
 
 /// Pre-loaded fixture data to avoid I/O in benchmark loops.
@@ -29,13 +29,12 @@ impl Fixture {
         })
     }
 
-    fn corpus<'a>(&'a self, layouts: &'a [Vec<precis::layout::SymbolLayout>]) -> Corpus<'a> {
+    fn corpus(&self) -> Corpus<'_> {
         Corpus {
             root: &self.root,
             files: &self.files,
             sources: &self.sources,
             all_symbols: &self.all_symbols,
-            layouts,
         }
     }
 }
@@ -68,8 +67,7 @@ fn bench_build_groups(c: &mut Criterion) {
         let Some(f) = Fixture::load(subpath) else {
             continue;
         };
-        let layouts = layout::compute_all_layouts(&f.files, &f.sources, &f.all_symbols);
-        let corpus = f.corpus(&layouts);
+        let corpus = f.corpus();
         c.bench_function(bench_name, |b| {
             b.iter(|| {
                 schedule::build_groups(&corpus, 4000);
@@ -88,8 +86,7 @@ fn bench_schedule(c: &mut Criterion) {
         let Some(f) = Fixture::load(subpath) else {
             continue;
         };
-        let layouts = layout::compute_all_layouts(&f.files, &f.sources, &f.all_symbols);
-        let corpus = f.corpus(&layouts);
+        let corpus = f.corpus();
         let built = schedule::build_groups(&corpus, 4000);
         c.bench_function(bench_name, |b| {
             b.iter(|| {

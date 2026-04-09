@@ -1,7 +1,3 @@
-use std::path::PathBuf;
-
-use rayon::prelude::*;
-
 use crate::parse;
 use crate::Lang;
 
@@ -12,6 +8,7 @@ use crate::Lang;
 /// Pre-computed line ranges for a single symbol. Computed once per symbol,
 /// then read by both the scheduler (for token-cost counting) and the renderer
 /// (for line emission). All line numbers are 0-indexed.
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct SymbolLayout {
     /// First content line of the doc comment block preceding the symbol.
     /// Skips pure block-comment delimiters (`/**`, `/*`) that carry no
@@ -164,30 +161,20 @@ pub(crate) fn compute_layout(
     }
 }
 
-/// Compute layouts for all symbols across all files.
-pub fn compute_all_layouts(
-    files: &[PathBuf],
-    sources: &[Option<String>],
-    all_symbols: &[Vec<parse::Symbol>],
-) -> Vec<Vec<SymbolLayout>> {
-    files
-        .par_iter()
-        .zip(sources.par_iter())
-        .zip(all_symbols.par_iter())
-        .map(|((file, source), symbols)| {
-            let source = match source {
-                Some(s) => s,
-                None => return Vec::new(),
-            };
-            let lines: Vec<&str> = source.lines().collect();
-            let lang = Lang::from_path(file);
-            symbols
-                .iter()
-                .enumerate()
-                .map(|(sym_idx, sym)| compute_layout(sym, sym_idx, symbols, &lines, lang))
-                .collect()
-        })
-        .collect()
+/// Compute and assign layouts for all symbols in a single file.
+///
+/// Uses a two-pass approach: first computes all layouts into a temporary Vec
+/// (because computing layout for symbol N reads other symbols for inter-symbol
+/// dependencies, requiring shared borrows), then assigns them back to each symbol.
+pub fn fill_layouts(symbols: &mut [parse::Symbol], lines: &[&str], lang: Option<Lang>) {
+    let layouts: Vec<SymbolLayout> = symbols
+        .iter()
+        .enumerate()
+        .map(|(sym_idx, sym)| compute_layout(sym, sym_idx, symbols, lines, lang))
+        .collect();
+    for (sym, layout) in symbols.iter_mut().zip(layouts) {
+        sym.layout = layout;
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -715,6 +702,7 @@ mod tests {
             start_byte: 0,
             end_byte: 0,
             composed_prefix_lens: Vec::new(),
+            layout: Default::default(),
         };
         assert_eq!(signature_end_line(&lines, &sym, Some(Lang::JsTs)), 0);
     }

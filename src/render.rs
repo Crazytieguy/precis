@@ -2,7 +2,7 @@ use std::sync::LazyLock;
 
 use tiktoken_rs::CoreBPE;
 
-use crate::layout::{self, SymbolLayout};
+use crate::layout;
 use crate::parse;
 use crate::schedule::{self, RenderPlanItem, Schedule, SymbolRenderSpec};
 use crate::Corpus;
@@ -107,7 +107,7 @@ fn find_word(needle: &str, haystack: &str) -> Option<usize> {
 /// renderer has no knowledge of stages, groups, or the scheduling model — it
 /// just assembles text from the decisions the scheduler already made.
 pub fn render_scheduled(corpus: &Corpus<'_>, sched: &Schedule) -> String {
-    let &Corpus { root, files, sources, all_symbols, layouts } = corpus;
+    let &Corpus { root, files, sources, all_symbols } = corpus;
 
     let mut out = String::new();
 
@@ -147,7 +147,6 @@ pub fn render_scheduled(corpus: &Corpus<'_>, sched: &Schedule) -> String {
                         &mut out,
                         &lines,
                         sym,
-                        &layouts[file_idx][sym_idx],
                         spec,
                         &mut emitted_up_to,
                     );
@@ -167,10 +166,10 @@ fn render_symbol(
     out: &mut String,
     lines: &[&str],
     sym: &parse::Symbol,
-    layout: &SymbolLayout,
     spec: &SymbolRenderSpec,
     emitted_up_to: &mut usize,
 ) {
+    let layout = &sym.layout;
     let sym_line_0 = layout.sym_line_0;
 
     let doc_n = spec.doc_lines;

@@ -45,6 +45,7 @@ pub(super) fn detect_module_doc(
         start_byte,
         end_byte,
         composed_prefix_lens: vec![],
+        layout: Default::default(),
     })
 }
 

@@ -12,7 +12,7 @@ use rayon::prelude::*;
 use streaming_iterator::StreamingIterator;
 use tree_sitter::{Language, Parser, Query, QueryCursor};
 
-use crate::Lang;
+use crate::{Lang, layout};
 
 /// Pre-compiled tree-sitter configuration for a language.
 pub struct LanguageConfig {
@@ -45,12 +45,14 @@ pub struct Symbol {
     /// line containing `{`; for Python it's the line containing `:`.
     /// `None` when tree-sitter couldn't determine the boundary (fallback to
     /// text heuristics in `layout::signature_end_line`).
-    pub sig_end_line: Option<usize>,
+    /// Intermediate parse data — consumed by layout computation, not public API.
+    pub(crate) sig_end_line: Option<usize>,
     /// First line of the doc comment block preceding the symbol (1-indexed),
     /// computed from tree-sitter AST by walking previous sibling comment nodes.
     /// `None` when tree-sitter couldn't find a doc comment (fallback to
     /// text heuristics in `layout::doc_comment_start`).
-    pub doc_start_line: Option<usize>,
+    /// Intermediate parse data — consumed by layout computation, not public API.
+    pub(crate) doc_start_line: Option<usize>,
     /// Whether this symbol is a method inside a trait implementation block
     /// (Rust `impl Trait for Type { ... }`). Trait impl methods implement
     /// an interface defined elsewhere and are typically boilerplate (fmt,
@@ -72,6 +74,9 @@ pub struct Symbol {
     /// valid prefix of the source line including the first n+1 original symbols.
     /// Empty for non-composite symbols.
     pub composed_prefix_lens: Vec<usize>,
+    /// Pre-computed line ranges for rendering. Populated by `layout::fill_layouts`
+    /// after symbol extraction; all fields are 0-indexed.
+    pub layout: layout::SymbolLayout,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -140,10 +145,14 @@ pub fn is_supported_extension(ext: &str) -> bool {
 /// The section spans just the first meaningful line (the "heading"), with body
 /// content extending to EOF via the layout system's next-heading detection.
 /// Skips shebang lines (`#!`) since they convey no structural information.
-pub(crate) fn plain_text_symbol(source: &str) -> Vec<Symbol> {
-    let mut lines = source.lines().enumerate();
+///
+/// Returns raw symbols without layouts. Called from `postprocess::finalize`
+/// (which is followed by `fill_layouts` in the caller) and from
+/// `plain_text_symbols` (which fills layouts itself).
+pub(super) fn plain_text_symbol(source: &str) -> Vec<Symbol> {
+    let mut line_iter = source.lines().enumerate();
     let first = loop {
-        match lines.next() {
+        match line_iter.next() {
             Some((_, line)) if line.starts_with("#!") => continue,
             Some((i, _)) => break i + 1,
             None => return vec![],
@@ -163,7 +172,18 @@ pub(crate) fn plain_text_symbol(source: &str) -> Vec<Symbol> {
         start_byte: 0,
         end_byte: 0,
         composed_prefix_lens: Vec::new(),
+        layout: Default::default(),
     }]
+}
+
+/// Create plain-text symbols with fully-resolved layouts.
+/// Used for files in unsupported languages at public entry points.
+fn plain_text_symbols(source: &str, path: &Path) -> Vec<Symbol> {
+    let mut symbols = plain_text_symbol(source);
+    let lines: Vec<&str> = source.lines().collect();
+    let lang = Lang::from_path(path);
+    layout::fill_layouts(&mut symbols, &lines, lang);
+    symbols
 }
 
 /// Returns the tree-sitter language and query for a file extension, if supported.
@@ -262,6 +282,7 @@ pub fn build_language_configs(files: &[PathBuf]) -> HashMap<String, LanguageConf
 }
 
 /// Extract symbols from all files using pre-compiled language configs.
+/// Returns symbols with fully-resolved layouts (see [`layout::fill_layouts`]).
 pub fn extract_all_symbols_cached(
     files: &[PathBuf],
     sources: &[Option<String>],
@@ -277,19 +298,20 @@ pub fn extract_all_symbols_cached(
             };
             match normalized_ext(f).as_deref().and_then(|e| configs.get(e)) {
                 Some(config) => extract_symbols_with_config(f, source, config),
-                None => plain_text_symbol(source),
+                None => plain_text_symbols(source, f),
             }
         })
         .collect()
 }
 
 /// Extract symbols from a source file.
+/// Returns symbols with fully-resolved layouts (see [`layout::fill_layouts`]).
 pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
     let files = [path.to_path_buf()];
     let configs = build_language_configs(&files);
     match normalized_ext(path).as_deref().and_then(|e| configs.get(e)) {
         Some(config) => extract_symbols_with_config(path, source, config),
-        None => plain_text_symbol(source),
+        None => plain_text_symbols(source, path),
     }
 }
 
@@ -421,10 +443,14 @@ pub fn extract_symbols_with_config(
             start_byte: effective_node.start_byte(),
             end_byte: effective_node.end_byte(),
             composed_prefix_lens: Vec::new(),
+            layout: Default::default(),
         });
     }
 
-    postprocess::finalize(symbols, lang, source)
+    let mut symbols = postprocess::finalize(symbols, lang, source);
+    let lines: Vec<&str> = source.lines().collect();
+    layout::fill_layouts(&mut symbols, &lines, Some(lang));
+    symbols
 }
 
 #[cfg(test)]
