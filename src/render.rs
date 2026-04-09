@@ -107,8 +107,6 @@ fn find_word(needle: &str, haystack: &str) -> Option<usize> {
 /// renderer has no knowledge of stages, groups, or the scheduling model — it
 /// just assembles text from the decisions the scheduler already made.
 pub fn render_scheduled(corpus: &Corpus<'_>, sched: &Schedule) -> String {
-    let &Corpus { sources, all_symbols, file_info, .. } = corpus;
-
     let mut out = String::new();
 
     for item in &sched.render_plan {
@@ -119,16 +117,17 @@ pub fn render_scheduled(corpus: &Corpus<'_>, sched: &Schedule) -> String {
             }
             RenderPlanItem::File(file_idx) => {
                 let file_idx = *file_idx;
+                let fd = &corpus.files[file_idx];
 
                 if !out.is_empty() { out.push('\n'); }
-                out.push_str(&format!("{}\n", file_info[file_idx].relative_path.display()));
+                out.push_str(&format!("{}\n", fd.info.relative_path.display()));
 
-                let source = match &sources[file_idx] {
+                let source = match &fd.source {
                     Some(s) => s,
                     None => continue,
                 };
                 let lines: Vec<&str> = source.lines().collect();
-                let symbols = &all_symbols[file_idx];
+                let symbols = &fd.symbols;
 
                 // Track the highest source line emitted so far (exclusive) to
                 // deduplicate overlapping ranges (e.g. Go grouped const block +

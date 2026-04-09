@@ -43,7 +43,7 @@ fn main() {
     } else if path.is_dir() {
         let files = walk::discover_source_files(path);
         let sources = precis::read_sources(&files);
-        precis::render_with_budget(budget, char_budget, path, &files, &sources)
+        precis::render_with_budget(budget, char_budget, path, &files, sources)
     } else {
         eprintln!("Error: {:?} is not a file or directory", path);
         std::process::exit(1);

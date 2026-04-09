@@ -21,28 +21,30 @@ pub fn build_groups(
     corpus: &Corpus<'_>,
     budget: usize,
 ) -> BuiltGroups {
-    let &Corpus { sources, all_symbols, file_info, .. } = corpus;
+    let files = corpus.files;
 
     // Pre-compute lines for all files (needed for deferred doc/body tokenization).
-    let all_lines: Vec<Vec<&str>> = sources
+    let all_lines: Vec<Vec<&str>> = files
         .iter()
-        .map(|s| {
-            s.as_ref()
+        .map(|f| {
+            f.source
+                .as_ref()
                 .map(|s| s.lines().collect())
                 .unwrap_or_default()
         })
         .collect();
 
     // Phase 1 (parallel): compute GroupKey + name/signature costs per file.
-    let file_results: Vec<Vec<(GroupKey, SymbolRef, Cost, Cost)>> = (0..file_info.len())
+    let file_results: Vec<Vec<(GroupKey, SymbolRef, Cost, Cost)>> = (0..files.len())
         .into_par_iter()
         .map(|file_idx| {
-            if sources[file_idx].is_none() {
+            let fd = &files[file_idx];
+            if fd.source.is_none() {
                 return vec![];
             }
-            let symbols = &all_symbols[file_idx];
+            let symbols = &fd.symbols;
             let lines = &all_lines[file_idx];
-            let fi = &file_info[file_idx];
+            let fi = &fd.info;
 
             symbols.iter().enumerate().map(|(symbol_idx, sym)| {
                 let sym_line_0 = sym.line - 1;
@@ -141,7 +143,7 @@ pub fn build_groups(
 
     // Phase 2 (parallel): compute doc/body layer costs per group with budget-aware truncation.
     groups.par_iter_mut().for_each(|group| {
-        cost::fill_layer_costs(group, &all_lines, all_symbols, budget);
+        cost::fill_layer_costs(group, &all_lines, files, budget);
     });
 
     BuiltGroups { groups, budget }

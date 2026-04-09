@@ -1,14 +1,12 @@
 use criterion::{criterion_group, criterion_main, Criterion};
-use precis::{schedule, walk, Corpus};
+use precis::{parse, schedule, walk, Corpus, FileData};
 use std::path::{Path, PathBuf};
 
 /// Pre-loaded fixture data to avoid I/O in benchmark loops.
 struct Fixture {
     root: PathBuf,
     files: Vec<PathBuf>,
-    sources: Vec<Option<String>>,
-    all_symbols: Vec<Vec<precis::parse::Symbol>>,
-    file_info: Vec<schedule::FileInfo>,
+    file_data: Vec<FileData>,
 }
 
 impl Fixture {
@@ -21,23 +19,12 @@ impl Fixture {
         }
         let files = walk::discover_source_files(&root);
         let sources = precis::read_sources(&files);
-        let all_symbols = precis::extract_all_symbols(&files, &sources);
-        let file_info = schedule::compute_file_info(&root, &files, &sources);
-        Some(Fixture {
-            root,
-            files,
-            sources,
-            all_symbols,
-            file_info,
-        })
+        let file_data = precis::build_file_data(&root, &files, sources);
+        Some(Fixture { root, files, file_data })
     }
 
     fn corpus(&self) -> Corpus<'_> {
-        Corpus {
-            sources: &self.sources,
-            all_symbols: &self.all_symbols,
-            file_info: &self.file_info,
-        }
+        Corpus { files: &self.file_data }
     }
 }
 
@@ -51,9 +38,36 @@ fn bench_extract_symbols(c: &mut Criterion) {
         let Some(f) = Fixture::load(subpath) else {
             continue;
         };
+        let configs = parse::build_language_configs(&f.files);
         c.bench_function(bench_name, |b| {
             b.iter(|| {
-                precis::extract_all_symbols(&f.files, &f.sources);
+                for fd in &f.file_data {
+                    if let Some(ref s) = fd.source {
+                        parse::extract_file_symbols(&fd.info.relative_path, s, &configs);
+                    }
+                }
+            });
+        });
+    }
+}
+
+fn bench_build_file_data(c: &mut Criterion) {
+    let fixtures: &[(&str, &str)] = &[
+        ("pluggy/src/pluggy", "build_file_data/pluggy_src"),
+        ("commander/lib", "build_file_data/commander_lib"),
+    ];
+
+    for &(subpath, bench_name) in fixtures {
+        let Some(f) = Fixture::load(subpath) else {
+            continue;
+        };
+        c.bench_function(bench_name, |b| {
+            b.iter(|| {
+                // Clone sources to simulate fresh owned data each iteration
+                let sources: Vec<Option<String>> = f.file_data.iter()
+                    .map(|fd| fd.source.clone())
+                    .collect();
+                precis::build_file_data(&f.root, &f.files, sources);
             });
         });
     }
@@ -110,7 +124,11 @@ fn bench_render_with_budget(c: &mut Criterion) {
         };
         c.bench_function(bench_name, |b| {
             b.iter(|| {
-                precis::render_with_budget(budget, None, &f.root, &f.files, &f.sources);
+                // Clone sources to exercise the full pipeline each iteration
+                let sources: Vec<Option<String>> = f.file_data.iter()
+                    .map(|fd| fd.source.clone())
+                    .collect();
+                precis::render_with_budget(budget, None, &f.root, &f.files, sources);
             });
         });
     }
@@ -119,6 +137,7 @@ fn bench_render_with_budget(c: &mut Criterion) {
 criterion_group!(
     benches,
     bench_extract_symbols,
+    bench_build_file_data,
     bench_build_groups,
     bench_schedule,
     bench_render_with_budget,

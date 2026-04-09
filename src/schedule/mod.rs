@@ -15,7 +15,7 @@ use crate::render;
 use crate::Corpus;
 
 pub use classify::{FileCategory, FileRole};
-pub use file_info::{FileInfo, compute_file_info};
+pub use file_info::{FileInfo, compute_single_file_info};
 pub use groups::build_groups;
 pub(crate) use plan::directory_marker_text;
 pub use plan::{RenderPlanItem, Schedule, SymbolRenderSpec};

@@ -1,7 +1,5 @@
 use std::path::{Path, PathBuf};
 
-use rayon::prelude::*;
-
 use crate::Lang;
 
 use super::classify::{
@@ -11,7 +9,7 @@ use super::classify::{
 
 /// Pre-computed per-file metadata derived from the file path and source content.
 ///
-/// Computed once per file by [`compute_file_info`] and stored in [`crate::Corpus`].
+/// Computed once per file by [`compute_single_file_info`] and stored in [`crate::FileData`].
 /// Downstream consumers (groups, solver, plan, render) read from this instead of
 /// recomputing path-derived properties independently.
 pub struct FileInfo {
@@ -34,48 +32,38 @@ pub struct FileInfo {
     pub is_generated: bool,
 }
 
-/// Compute per-file metadata for all files in parallel.
-///
-/// This is a pipeline stage between symbol extraction and group construction.
-/// Each file's derived properties (relative path, language, role, category, etc.)
-/// are computed once here and shared across all downstream consumers.
-pub fn compute_file_info(
+/// Compute metadata for a single file.  Used by [`crate::build_file_data`] in
+/// its per-file parallel loop.
+pub fn compute_single_file_info(
     root: &Path,
-    files: &[PathBuf],
-    sources: &[Option<String>],
-) -> Vec<FileInfo> {
-    files
-        .par_iter()
-        .zip(sources.par_iter())
-        .map(|(file, source)| {
-            let relative = file.strip_prefix(root).unwrap_or(file).to_path_buf();
-            let lang = Lang::from_path(&relative);
-            let file_role = FileRole::from_path(&relative);
-            let file_category = classify::classify_file(&relative);
-            let is_config = relative
-                .file_name()
-                .and_then(|n| n.to_str())
-                .is_some_and(|name| is_config_file(&relative, name));
-            let is_type_declaration = is_type_declaration_file(&relative);
-            let is_header = relative
-                .extension()
-                .and_then(|e| e.to_str())
-                .is_some_and(|ext| crate::is_header_extension(&ext.to_ascii_lowercase()));
-            let is_generated = source.as_ref().is_some_and(|src| {
-                is_autogen_api_doc(src, file_role)
-                    || is_generated_file(src)
-            }) || is_generated_filename(&relative);
+    file: &Path,
+    source: Option<&str>,
+) -> FileInfo {
+    let relative = file.strip_prefix(root).unwrap_or(file).to_path_buf();
+    let lang = Lang::from_path(&relative);
+    let file_role = FileRole::from_path(&relative);
+    let file_category = classify::classify_file(&relative);
+    let is_config = relative
+        .file_name()
+        .and_then(|n| n.to_str())
+        .is_some_and(|name| is_config_file(&relative, name));
+    let is_type_declaration = is_type_declaration_file(&relative);
+    let is_header = relative
+        .extension()
+        .and_then(|e| e.to_str())
+        .is_some_and(|ext| crate::is_header_extension(&ext.to_ascii_lowercase()));
+    let is_generated = source.is_some_and(|src| {
+        is_autogen_api_doc(src, file_role) || is_generated_file(src)
+    }) || is_generated_filename(&relative);
 
-            FileInfo {
-                relative_path: relative,
-                lang,
-                file_role,
-                file_category,
-                is_config,
-                is_type_declaration,
-                is_header,
-                is_generated,
-            }
-        })
-        .collect()
+    FileInfo {
+        relative_path: relative,
+        lang,
+        file_role,
+        file_category,
+        is_config,
+        is_type_declaration,
+        is_header,
+        is_generated,
+    }
 }

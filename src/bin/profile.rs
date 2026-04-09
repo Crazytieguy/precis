@@ -6,7 +6,7 @@
 use std::path::Path;
 use std::time::Instant;
 
-use precis::{parse, render, schedule, walk, Corpus};
+use precis::{render, schedule, walk, Corpus};
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
@@ -40,58 +40,49 @@ fn main() {
     let sources = precis::read_sources(&files);
     stages.push(("read", t.elapsed()));
 
-    // 3. Extract symbols (split: query compilation vs parsing+extraction)
+    // 3. Build file data (fused: parse + layout + classify)
     let t = Instant::now();
-    let configs = parse::build_language_configs(&files);
-    stages.push(("parse:init", t.elapsed()));
+    let file_data = precis::build_file_data(&root, &files, sources);
+    stages.push(("build_file_data", t.elapsed()));
 
-    let t = Instant::now();
-    let all_symbols = parse::extract_all_symbols_cached(&files, &sources, &configs);
-    stages.push(("parse", t.elapsed()));
+    let corpus = Corpus { files: &file_data };
 
-    // File-level metadata (relative paths, roles, categories, etc.)
-    let t = Instant::now();
-    let file_info = schedule::compute_file_info(&root, &files, &sources);
-    stages.push(("file_info", t.elapsed()));
-
-    // Build corpus for remaining stages (layouts are embedded in symbols)
-    let corpus = Corpus { sources: &sources, all_symbols: &all_symbols, file_info: &file_info };
-
-    // 5. Build groups
+    // 4. Build groups
     let t = Instant::now();
     let built = schedule::build_groups(&corpus, budget);
     stages.push(("groups", t.elapsed()));
 
-    // 6. Schedule
+    // 5. Schedule
     let t = Instant::now();
     let sched = schedule::schedule(&built, &corpus, None);
     stages.push(("schedule", t.elapsed()));
 
-    // 7. Render
+    // 6. Render
     let t = Instant::now();
     let output = render::render_scheduled(&corpus, &sched);
     stages.push(("render", t.elapsed()));
 
-    // 8. Count tokens
+    // 7. Count tokens
     let t = Instant::now();
     let tokens = render::count_tokens(&output);
     stages.push(("tokens", t.elapsed()));
 
     // Summary
     let total: std::time::Duration = stages.iter().map(|(_, d)| *d).sum();
-    let symbol_count: usize = all_symbols.iter().map(|s| s.len()).sum();
+    let symbol_count: usize = file_data.iter().map(|f| f.symbols.len()).sum();
 
-    eprintln!("{:<10} {:>10} {:>6}", "stage", "time", "%");
-    eprintln!("{}", "-".repeat(28));
+    eprintln!("{:<16} {:>10} {:>6}", "stage", "time", "%");
+    eprintln!("{}", "-".repeat(34));
     for (name, dur) in &stages {
         let pct = dur.as_secs_f64() / total.as_secs_f64() * 100.0;
-        eprintln!("{:<10} {:>10.1?} {:>5.1}%", name, dur, pct);
+        eprintln!("{:<16} {:>10.1?} {:>5.1}%", name, dur, pct);
     }
-    eprintln!("{}", "-".repeat(28));
-    eprintln!("{:<10} {:>10.1?}", "total", total);
+    eprintln!("{}", "-".repeat(34));
+    eprintln!("{:<16} {:>10.1?}", "total", total);
     eprintln!();
-    eprintln!("files:   {}", files.len());
+    eprintln!("files:   {}", file_data.len());
     eprintln!("symbols: {}", symbol_count);
     eprintln!("groups:  {}", built.groups.len());
     eprintln!("tokens:  {}", tokens);
+
 }

@@ -8,7 +8,7 @@ mod visibility;
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
-use rayon::prelude::*;
+
 use streaming_iterator::StreamingIterator;
 use tree_sitter::{Language, Parser, Query, QueryCursor};
 
@@ -281,38 +281,26 @@ pub fn build_language_configs(files: &[PathBuf]) -> HashMap<String, LanguageConf
     configs
 }
 
-/// Extract symbols from all files using pre-compiled language configs.
-/// Returns symbols with fully-resolved layouts (see [`layout::fill_layouts`]).
-pub fn extract_all_symbols_cached(
-    files: &[PathBuf],
-    sources: &[Option<String>],
+/// Extract symbols and compute layouts for a single file using pre-compiled
+/// language configs.  Falls back to plain-text extraction when no config matches
+/// the file extension.
+pub fn extract_file_symbols(
+    path: &Path,
+    source: &str,
     configs: &HashMap<String, LanguageConfig>,
-) -> Vec<Vec<Symbol>> {
-    files
-        .par_iter()
-        .zip(sources.par_iter())
-        .map(|(f, s)| {
-            let source = match s.as_ref() {
-                Some(s) => s,
-                None => return vec![],
-            };
-            match normalized_ext(f).as_deref().and_then(|e| configs.get(e)) {
-                Some(config) => extract_symbols_with_config(f, source, config),
-                None => plain_text_symbols(source, f),
-            }
-        })
-        .collect()
-}
-
-/// Extract symbols from a source file.
-/// Returns symbols with fully-resolved layouts (see [`layout::fill_layouts`]).
-pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
-    let files = [path.to_path_buf()];
-    let configs = build_language_configs(&files);
+) -> Vec<Symbol> {
     match normalized_ext(path).as_deref().and_then(|e| configs.get(e)) {
         Some(config) => extract_symbols_with_config(path, source, config),
         None => plain_text_symbols(source, path),
     }
+}
+
+/// Extract symbols from a source file (builds its own language config).
+/// Returns symbols with fully-resolved layouts (see [`layout::fill_layouts`]).
+pub fn extract_symbols(path: &Path, source: &str) -> Vec<Symbol> {
+    let files = [path.to_path_buf()];
+    let configs = build_language_configs(&files);
+    extract_file_symbols(path, source, &configs)
 }
 
 // ---------------------------------------------------------------------------

@@ -814,10 +814,12 @@ fn budget_monotonicity_fixture() {
     let root = fixture_path("pluggy/src/pluggy").unwrap();
     let files = walk::discover_source_files(&root);
     let sources = precis::read_sources(&files);
+    let file_data = precis::build_file_data(&root, &files, sources);
+    let corpus = precis::Corpus { files: &file_data };
     let budgets = [0, 50, 200, 500, 1000, 2000, 4000, 10000];
     let mut prev_tokens = 0;
     for &budget in &budgets {
-        let (_, tokens) = precis::render_with_budget_stats(budget, None, &root, &files, &sources);
+        let (_, tokens) = corpus.render_stats(budget, None);
         assert!(
             tokens >= prev_tokens,
             "Multi-file budget monotonicity: budget {} ({} tokens) < previous ({} tokens)",
@@ -835,7 +837,7 @@ fn readme_renders_first() {
         None,
         Path::new(""),
         &[std::path::PathBuf::from("src/lib.rs"), std::path::PathBuf::from("README.md")],
-        &[
+        vec![
             Some("pub fn foo() {}\npub fn bar() {}".to_string()),
             Some("# Project\nA description.".to_string()),
         ],
@@ -862,7 +864,7 @@ fn manifest_renders_after_readme() {
             std::path::PathBuf::from("Cargo.toml"),
             std::path::PathBuf::from("README.md"),
         ],
-        &[
+        vec![
             Some("pub fn foo() {}".to_string()),
             Some("[package]\nname = \"test\"".to_string()),
             Some("# Project\nA description.".to_string()),
@@ -889,7 +891,7 @@ fn invisible_directory_markers() {
         Some("fn internal() {}".to_string()),
     ];
     // Very small budget: hidden_dir/ file won't fit, should get a marker
-    let output = precis::render_with_budget(30, None, Path::new(""), &files, &sources);
+    let output = precis::render_with_budget(30, None, Path::new(""), &files, sources);
     // If hidden_dir/foo.rs is not shown, we should see "hidden_dir/" marker
     if !output.contains("hidden_dir/foo.rs") {
         assert!(
@@ -906,7 +908,7 @@ fn empty_directory() {
     let dir = tempfile::tempdir().unwrap();
     let files = walk::discover_source_files(dir.path());
     let sources = precis::read_sources(&files);
-    let output = precis::render_with_budget(4000, None, dir.path(), &files, &sources);
+    let output = precis::render_with_budget(4000, None, dir.path(), &files, sources);
     assert!(output.is_empty(), "empty directory should produce no output");
 }
 
@@ -949,7 +951,7 @@ fn render_fixture(subpath: &str, budget: usize) -> Option<String> {
     let root = fixture_path(subpath)?;
     let files = walk::discover_source_files(&root);
     let sources = precis::read_sources(&files);
-    Some(precis::render_with_budget(budget, None, &root, &files, &sources))
+    Some(precis::render_with_budget(budget, None, &root, &files, sources))
 }
 
 /// Render a fixture with token and character budgets, returning raw output.
@@ -957,7 +959,7 @@ fn render_fixture_with_char_budget(subpath: &str, budget: usize, char_budget: us
     let root = fixture_path(subpath)?;
     let files = walk::discover_source_files(&root);
     let sources = precis::read_sources(&files);
-    Some(precis::render_with_budget(budget, Some(char_budget), &root, &files, &sources))
+    Some(precis::render_with_budget(budget, Some(char_budget), &root, &files, sources))
 }
 
 /// Helper: render a fixture and prepend a metadata header for snapshot tests.
@@ -1024,10 +1026,12 @@ fn char_budget_monotonicity() {
     let root = fixture_path("pluggy").unwrap();
     let files = walk::discover_source_files(&root);
     let sources = precis::read_sources(&files);
+    let file_data = precis::build_file_data(&root, &files, sources);
+    let corpus = precis::Corpus { files: &file_data };
     let char_budgets = [500, 1000, 2000, 4000, 6000, 8000, 10000, 20000];
     let mut prev_chars = 0;
     for &cb in &char_budgets {
-        let output = precis::render_with_budget(4000, Some(cb), &root, &files, &sources);
+        let output = corpus.render(4000, Some(cb));
         let chars = output.len();
         assert!(
             chars >= prev_chars,

@@ -116,14 +116,14 @@ pub(super) fn compute_name_sig_costs(
 pub(super) fn fill_layer_costs(
     group: &mut Group,
     all_lines: &[Vec<&str>],
-    all_symbols: &[Vec<parse::Symbol>],
+    files: &[crate::FileData],
     budget: usize,
 ) {
     // Determine true max doc/body line counts across symbols.
     let mut true_max_doc = 0usize;
     let mut true_max_body = 0usize;
     for sref in &group.symbols {
-        let sym = &all_symbols[sref.file_idx][sref.symbol_idx];
+        let sym = &files[sref.file_idx].symbols[sref.symbol_idx];
 
         // Composite symbols: body lines = additional symbols on the shared line.
         let (doc_count, body_count) = if !sym.composed_prefix_lens.is_empty() {
@@ -177,7 +177,7 @@ pub(super) fn fill_layer_costs(
             let mut byte_estimate_exceeded = false;
 
             for sref in &group.symbols {
-                let sym = &all_symbols[sref.file_idx][sref.symbol_idx];
+                let sym = &files[sref.file_idx].symbols[sref.symbol_idx];
 
                 // Composite symbols: no doc, body lines extend the prefix to
                 // include one more original symbol on the shared source line.

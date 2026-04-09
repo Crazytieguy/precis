@@ -82,12 +82,12 @@ pub(super) fn build_render_plan(
     corpus: &Corpus<'_>,
 ) -> Schedule {
     let groups = &built.groups;
-    let &Corpus { all_symbols, .. } = corpus;
+    let files = corpus.files;
 
     // 1. Resolve per-symbol render specs from group stages.
-    let mut symbol_specs: Vec<Vec<Option<SymbolRenderSpec>>> = all_symbols
+    let mut symbol_specs: Vec<Vec<Option<SymbolRenderSpec>>> = files
         .iter()
-        .map(|syms| vec![None; syms.len()])
+        .map(|f| vec![None; f.symbols.len()])
         .collect();
 
     for (group_idx, group) in groups.iter().enumerate() {
@@ -103,10 +103,9 @@ pub(super) fn build_render_plan(
     }
 
     // 2. Compute file render order: README first, manifests second, alphabetical.
-    let file_info = corpus.file_info;
     let mut render_order: Vec<usize> = result.files_shown.iter().copied().collect();
     render_order.sort_by_key(|&i| {
-        let fi = &file_info[i];
+        let fi = &files[i].info;
         let is_root = fi.relative_path.parent().is_none_or(|p| p.as_os_str().is_empty());
         let filename = fi.relative_path.file_name().and_then(|n| n.to_str()).unwrap_or("");
         let priority = if is_root && matches!(fi.file_role, FileRole::Readme | FileRole::Architecture) {
@@ -130,8 +129,8 @@ pub(super) fn build_render_plan(
     let invisible_dirs: BTreeSet<PathBuf> = {
         let mut all_dirs = HashSet::new();
         let mut visible_dirs = HashSet::new();
-        for (i, fi) in file_info.iter().enumerate() {
-            if let Some(top) = top_level_dir(&fi.relative_path) {
+        for (i, f) in files.iter().enumerate() {
+            if let Some(top) = top_level_dir(&f.info.relative_path) {
                 all_dirs.insert(top.clone());
                 if result.files_shown.contains(&i) {
                     visible_dirs.insert(top);
@@ -146,7 +145,7 @@ pub(super) fn build_render_plan(
     let mut dirs_emitted: HashSet<PathBuf> = HashSet::new();
 
     for &file_idx in &render_order {
-        let relative = &file_info[file_idx].relative_path;
+        let relative = &files[file_idx].info.relative_path;
         // Emit invisible directory markers that sort before this file's top-level dir.
         // Uses the first path component (directory name or filename for root files)
         // as the sort anchor — not top_level_dir, which returns None for root files.

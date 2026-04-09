@@ -9,22 +9,23 @@ use std::path::{Path, PathBuf};
 use rayon::prelude::*;
 
 // ---------------------------------------------------------------------------
-// Corpus — bundled per-file data for the schedule/render pipeline
+// FileData / Corpus — per-file pipeline data
 // ---------------------------------------------------------------------------
 
-/// Borrowed view of all per-file data, passed through the schedule/render pipeline.
-///
-/// Bundles the parallel arrays (`sources`, `symbols`, `file_info`) that every
-/// pipeline stage needs, eliminating long parameter lists. Layout data is
-/// embedded in each [`parse::Symbol`] (see [`layout::SymbolLayout`]).
-/// Constructed cheaply (zero-copy) from the owning data in `render_with_budget_stats`
-/// or directly by benchmarks/profiling tools.
+/// All per-file data bundled together: source text, extracted symbols (with
+/// layouts), and file-level metadata.  Constructed by [`build_file_data`] which
+/// fuses symbol extraction, layout computation, and file classification into a
+/// single parallel pass per file.
+pub struct FileData {
+    pub source: Option<String>,
+    pub symbols: Vec<parse::Symbol>,
+    pub info: schedule::FileInfo,
+}
+
+/// Borrowed view of a project's file data, passed through the schedule/render
+/// pipeline.  Constructed cheaply from `&[FileData]`.
 pub struct Corpus<'a> {
-    pub sources: &'a [Option<String>],
-    pub all_symbols: &'a [Vec<parse::Symbol>],
-    /// Pre-computed per-file metadata (relative path, language, role, category, etc.).
-    /// Indexed in parallel with `sources`/`all_symbols`.
-    pub file_info: &'a [schedule::FileInfo],
+    pub files: &'a [FileData],
 }
 
 /// Language family for rendering and parsing heuristics (comment styles, delimiters).
@@ -103,6 +104,33 @@ impl<'a> Corpus<'a> {
 }
 
 // ---------------------------------------------------------------------------
+// Pipeline: build FileData from files + sources
+// ---------------------------------------------------------------------------
+
+/// Fused pipeline: extract symbols, compute layouts, and classify each file in
+/// parallel.  Consumes owned sources (moved into [`FileData`], no cloning).
+pub fn build_file_data(
+    root: &Path,
+    files: &[PathBuf],
+    sources: Vec<Option<String>>,
+) -> Vec<FileData> {
+    let configs = parse::build_language_configs(files);
+    files
+        .par_iter()
+        .zip(sources.into_par_iter())
+        .map(|(path, source)| {
+            let symbols = match &source {
+                Some(s) => parse::extract_file_symbols(path, s, &configs),
+                None => vec![],
+            };
+            let info =
+                schedule::compute_single_file_info(root, path, source.as_deref());
+            FileData { source, symbols, info }
+        })
+        .collect()
+}
+
+// ---------------------------------------------------------------------------
 // Public entry points
 // ---------------------------------------------------------------------------
 
@@ -112,7 +140,7 @@ pub fn render_with_budget(
     char_budget: Option<usize>,
     root: &Path,
     files: &[PathBuf],
-    sources: &[Option<String>],
+    sources: Vec<Option<String>>,
 ) -> String {
     let (output, _) = render_with_budget_stats(budget, char_budget, root, files, sources);
     output
@@ -124,11 +152,10 @@ pub fn render_with_budget_stats(
     char_budget: Option<usize>,
     root: &Path,
     files: &[PathBuf],
-    sources: &[Option<String>],
+    sources: Vec<Option<String>>,
 ) -> (String, usize) {
-    let all_symbols = extract_all_symbols(files, sources);
-    let file_info = schedule::compute_file_info(root, files, sources);
-    let corpus = Corpus { sources, all_symbols: &all_symbols, file_info: &file_info };
+    let file_data = build_file_data(root, files, sources);
+    let corpus = Corpus { files: &file_data };
     corpus.render_stats(budget, char_budget)
 }
 
@@ -142,7 +169,7 @@ pub fn render_file_with_budget(
 ) -> String {
     let files = vec![path.to_path_buf()];
     let sources = vec![Some(source.to_string())];
-    render_with_budget(budget, char_budget, root, &files, &sources)
+    render_with_budget(budget, char_budget, root, &files, sources)
 }
 
 /// Pre-read source files to avoid repeated disk I/O.
@@ -151,15 +178,6 @@ pub fn read_sources(files: &[PathBuf]) -> Vec<Option<String>> {
         .par_iter()
         .map(|f| std::fs::read_to_string(f).ok())
         .collect()
-}
-
-/// Pre-extract symbols from all source files.
-pub fn extract_all_symbols(
-    files: &[PathBuf],
-    sources: &[Option<String>],
-) -> Vec<Vec<parse::Symbol>> {
-    let configs = parse::build_language_configs(files);
-    parse::extract_all_symbols_cached(files, sources, &configs)
 }
 
 #[cfg(test)]
@@ -174,10 +192,12 @@ mod tests {
         let path = Path::new("test.rs");
         let files = vec![path.to_path_buf()];
         let sources = vec![Some(source.to_string())];
+        let file_data = build_file_data(root, &files, sources);
+        let corpus = Corpus { files: &file_data };
 
         let mut prev_tokens = 0;
         for budget in [10, 50, 100, 200, 500, 1000, 5000] {
-            let output = render_with_budget(budget, None, root, &files, &sources);
+            let output = corpus.render(budget, None);
             let tokens = render::count_tokens(&output);
             assert!(
                 tokens >= prev_tokens,
