@@ -4,7 +4,7 @@ use tiktoken_rs::CoreBPE;
 
 use crate::layout::{self, SymbolLayout};
 use crate::parse;
-use crate::schedule::{RenderPlanItem, Schedule, SymbolRenderSpec};
+use crate::schedule::{self, RenderPlanItem, Schedule, SymbolRenderSpec};
 use crate::Corpus;
 
 /// Shared BPE tokenizer instance (o200k_base, used by GPT-4o / Claude-class models).
@@ -115,7 +115,7 @@ pub fn render_scheduled(corpus: &Corpus<'_>, sched: &Schedule) -> String {
         match item {
             RenderPlanItem::DirectoryMarker(dir) => {
                 if !out.is_empty() { out.push('\n'); }
-                out.push_str(&format!("{}/\n", dir.display()));
+                out.push_str(&schedule::directory_marker_text(dir));
             }
             RenderPlanItem::File(file_idx) => {
                 let file_idx = *file_idx;

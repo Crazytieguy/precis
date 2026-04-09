@@ -1,6 +1,7 @@
 mod classify;
 mod cost;
 mod groups;
+mod plan;
 mod solver;
 mod value;
 
@@ -9,38 +10,22 @@ use std::path::PathBuf;
 
 use crate::parse;
 use crate::render;
+use crate::Corpus;
 
 pub use classify::{FileCategory, FileRole};
 pub use groups::build_groups;
-pub use solver::schedule;
+pub(crate) use plan::directory_marker_text;
+pub use plan::{RenderPlanItem, Schedule, SymbolRenderSpec};
 
 // ---------------------------------------------------------------------------
-// Render plan — pre-resolved output structure for the renderer
+// Public scheduling entry point
 // ---------------------------------------------------------------------------
 
-/// Pre-resolved rendering parameters for a single symbol.
-/// Computed by the scheduler, consumed by the renderer. The renderer doesn't
-/// need to know about stages, groups, or kind categories — just these four
-/// concrete decisions about what to show for each symbol.
-#[derive(Debug, Clone, Copy)]
-pub struct SymbolRenderSpec {
-    /// Show the symbol name (false only for FilePath-only groups).
-    pub show_name: bool,
-    /// Show full signature beyond the name line.
-    pub show_sig: bool,
-    /// Number of doc comment lines to show. 0=none, usize::MAX=all.
-    pub doc_lines: usize,
-    /// Number of body lines to show. 0=none, usize::MAX=all.
-    pub body_lines: usize,
-}
-
-/// An item in the render plan — the ordered sequence of things to output.
-#[derive(Debug)]
-pub enum RenderPlanItem {
-    /// Omission marker for an invisible top-level directory.
-    DirectoryMarker(PathBuf),
-    /// A visible file (header line + its symbols).
-    File(usize),
+/// Run the full scheduling pipeline: greedy optimization followed by render
+/// plan construction. Returns an ordered render plan with per-symbol specs.
+pub fn schedule(built: &BuiltGroups, corpus: &Corpus<'_>, char_budget: Option<usize>) -> Schedule {
+    let result = solver::solve(built, corpus, char_budget);
+    plan::build_render_plan(&result, built, corpus)
 }
 
 // ---------------------------------------------------------------------------
@@ -278,18 +263,17 @@ impl Group {
     }
 }
 
-/// The result of scheduling: a render plan (ordered output structure) and
-/// per-symbol render specs (concrete rendering decisions).
-pub struct Schedule {
-    /// Ordered list of files and directory markers to render.
-    pub render_plan: Vec<RenderPlanItem>,
-    /// Per-symbol render specs, indexed as `[file_idx][sym_idx]`.
-    /// `None` means the symbol is not rendered.
-    pub symbol_specs: Vec<Vec<Option<SymbolRenderSpec>>>,
+/// Raw output from the greedy solver, before render plan construction.
+/// Contains per-group inclusion decisions and which files have content.
+pub(super) struct SolverResult {
+    /// Per-group inclusion state. `None` = group not included.
+    pub group_stages: Vec<Option<IncludedStage>>,
+    /// Files that have at least one included symbol (path cost already paid).
+    pub files_shown: HashSet<usize>,
 }
 
-/// What stage a group has been included up to. Internal to the scheduler;
-/// the renderer receives pre-resolved [`SymbolRenderSpec`]s instead.
+/// What stage a group has been included up to. Used by the solver to track
+/// inclusion state and by the plan builder to resolve [`SymbolRenderSpec`]s.
 #[derive(Debug, Clone, Copy)]
 pub(super) struct IncludedStage {
     pub(super) kind: StageKind,
