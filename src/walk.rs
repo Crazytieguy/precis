@@ -22,9 +22,14 @@ pub fn discover_source_files(root: &Path) -> Vec<PathBuf> {
 
 /// Any file with a text-readable extension is a source file. Binary files
 /// are excluded naturally: `read_to_string` returns `None` for non-UTF-8.
-/// Lockfiles and minified bundles are excluded explicitly.
+/// Lockfiles, lockfile extensions, and minified bundles are excluded explicitly.
 fn is_source_file(path: &Path) -> bool {
-    if path.extension().is_some() {
+    if let Some(ext) = path.extension().and_then(|e| e.to_str()) {
+        // .lock/.lockb files are machine-generated lockfiles across ecosystems
+        // (Cargo.lock, yarn.lock, uv.lock, poetry.lock, Gemfile.lock, bun.lockb, etc.)
+        if matches!(ext, "lock" | "lockb") {
+            return false;
+        }
         return !is_lockfile(path);
     }
     // Well-known extensionless files (Makefile, Dockerfile, etc.)
@@ -35,9 +40,9 @@ fn is_source_file(path: &Path) -> bool {
 
 /// Check if a file is an auto-generated lockfile that should be excluded.
 /// Lockfiles are machine-generated, often huge, and contain no human-authored
-/// information. Only lists lockfiles whose extensions are in the supported set
-/// (json, yaml); other lockfiles use `.lock`/`.lockb` extensions that are
-/// already filtered out by `is_source_file`.
+/// information. Files with `.lock`/`.lockb` extensions are already excluded by
+/// `is_source_file`; this function handles lockfiles with other extensions
+/// (json, yaml) that would otherwise be accepted.
 fn is_lockfile(path: &Path) -> bool {
     let name = match path.file_name().and_then(|n| n.to_str()) {
         Some(n) => n,
@@ -117,9 +122,15 @@ mod tests {
     fn excludes_lockfiles() {
         let dir = tempfile::tempdir().unwrap();
         fs::write(dir.path().join("package.json"), r#"{"name": "test"}"#).unwrap();
+        // JSON/YAML lockfiles (handled by is_lockfile)
         fs::write(dir.path().join("package-lock.json"), "{}").unwrap();
         fs::write(dir.path().join("npm-shrinkwrap.json"), "{}").unwrap();
         fs::write(dir.path().join("pnpm-lock.yaml"), "lockfileVersion: 6").unwrap();
+        // .lock/.lockb extension lockfiles (handled by is_source_file)
+        fs::write(dir.path().join("Cargo.lock"), "[[package]]").unwrap();
+        fs::write(dir.path().join("yarn.lock"), "# yarn lockfile v1").unwrap();
+        fs::write(dir.path().join("uv.lock"), "version = 1").unwrap();
+        fs::write(dir.path().join("poetry.lock"), "[[package]]").unwrap();
 
         let files = discover_source_files(dir.path());
         let names: Vec<_> = files
@@ -131,6 +142,10 @@ mod tests {
         assert!(!names.contains(&"package-lock.json".to_string()));
         assert!(!names.contains(&"npm-shrinkwrap.json".to_string()));
         assert!(!names.contains(&"pnpm-lock.yaml".to_string()));
+        assert!(!names.contains(&"Cargo.lock".to_string()));
+        assert!(!names.contains(&"yarn.lock".to_string()));
+        assert!(!names.contains(&"uv.lock".to_string()));
+        assert!(!names.contains(&"poetry.lock".to_string()));
     }
 
     #[test]

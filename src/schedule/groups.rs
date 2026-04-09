@@ -10,6 +10,7 @@ use super::classify::{
     is_generated_file, is_generated_filename, FileRole,
 };
 use super::cost;
+use super::value;
 use super::{
     BuiltGroups, Group, GroupKey, KindCategory, SymbolCosts,
 };
@@ -137,12 +138,16 @@ pub fn build_groups(
     let mut group_map: HashMap<GroupKey, Group> = HashMap::new();
     for file_result in file_results {
         for (key, costs) in file_result {
-            let group = group_map.entry(key.clone()).or_insert_with(|| Group {
-                key,
-                symbols: Vec::new(),
-                file_indices: HashSet::new(),
-                max_doc_n: 0,
-                max_body_n: 0,
+            let group = group_map.entry(key.clone()).or_insert_with(|| {
+                let base_importance = value::compute_base_importance(&key);
+                Group {
+                    key,
+                    symbols: Vec::new(),
+                    file_indices: HashSet::new(),
+                    base_importance,
+                    max_doc_n: 0,
+                    max_body_n: 0,
+                }
             });
             group.file_indices.insert(costs.file_idx);
             group.symbols.push(costs);

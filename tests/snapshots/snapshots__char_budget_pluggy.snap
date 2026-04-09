@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (2906 tokens, 9428 chars)
+budget: 4000 (2879 tokens, 9430 chars)
 
 README.rst
      1→====================================================
@@ -43,7 +43,10 @@ README.rst
     36→
     37→
     38→    class Plugin_2:
-      →    …
+    39→        """A 2nd hook implementation namespace."""
+    40→
+    41→        @hookimpl
+      →        …
 
 changelog/
 
@@ -51,6 +54,9 @@ pyproject.toml
      1→[build-system]
      8→[project]
     38→[dependency-groups]
+
+CHANGELOG.rst
+     1→=========
 
 MANIFEST.in
      1→include CHANGELOG
@@ -76,6 +82,7 @@ docs/api_reference.rst
 
 docs/conf.py
    106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
+   107→    """Configure Sphinx's WarningHandler to handle (expected) missing include."""
    130→def setup(app: "sphinx.application.Sphinx") -> None:
 
 docs/examples/eggsample-spam/eggsample_spam.py
@@ -98,6 +105,8 @@ docs/index.rst
      5→What is it?
      6→***********
       →…
+
+docs/requirements.txt
 
 downstream/README.md
      1→This directory contains scripts for testing some downstream projects
@@ -323,14 +332,3 @@ testing/
 
 tox.ini
      1→[tox]
-
-uv.lock
-     1→version = 1
-     2→revision = 3
-     3→requires-python = ">=3.10"
-     4→
-     5→[[package]]
-     6→name = "cachetools"
-     7→version = "6.1.0"
-     8→source = { registry = "https://pypi.org/simple" }
-      →…

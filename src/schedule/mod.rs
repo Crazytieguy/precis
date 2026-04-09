@@ -248,6 +248,11 @@ pub struct Group {
     pub key: GroupKey,
     pub(super) symbols: Vec<SymbolCosts>,
     pub(super) file_indices: HashSet<usize>,
+    /// Pre-computed product of all static value factors (file role, depth,
+    /// visibility, documented, etc.) — everything that depends only on
+    /// `GroupKey` properties, not on stage or line number. Computed once
+    /// in `build_groups`, read by `compute_value` on every call.
+    pub(super) base_importance: f64,
     /// Cached: max doc lines the scheduler should consider. Capped by budget-aware
     /// truncation — may be less than the true max doc lines across symbols.
     pub(super) max_doc_n: usize,

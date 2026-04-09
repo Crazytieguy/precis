@@ -1,7 +1,7 @@
 use std::path::Path;
 
 use super::{
-    FileCategory, FileRole, Group, KindCategory, StageKind,
+    FileCategory, FileRole, Group, GroupKey, KindCategory, StageKind,
 };
 
 /// Compute the effective depth of a path, skipping conventional source root
@@ -28,11 +28,24 @@ fn effective_depth(parent_dir: &Path) -> usize {
     }
 }
 
-/// Compute the value of showing a particular stage for a group.
-pub(super) fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
-    let key = &group.key;
+// ---------------------------------------------------------------------------
+// Base importance — static factors computed once per group
+// ---------------------------------------------------------------------------
 
+/// Compute the base importance of a group from its key properties.
+///
+/// This is the product of all value factors that depend only on the `GroupKey`
+/// (file role, depth, visibility, documented, etc.). Called once per group
+/// during `build_groups`, then read by `compute_value` on every call in the
+/// solver hot loop. Separating these from stage-dependent factors (stage_value,
+/// n_decay, count_factor, private_detail_penalty) makes the value model
+/// two-layered:
+///
+/// - **Base importance**: "how important is this group" (file × symbol properties)
+/// - **Stage dynamics**: "how important is this level of detail" (per-call)
+pub(super) fn compute_base_importance(key: &GroupKey) -> f64 {
     let visibility = if key.is_public { 1.0 } else { 0.3 };
+
     // Sections (markdown headings, TOML/JSON/YAML sections) ARE documentation —
     // they don't have doc comments but that doesn't make them less important.
     let documented = if key.is_documented || key.kind_category == KindCategory::Section {
@@ -123,10 +136,25 @@ pub(super) fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
     // precis also shows the submodule's own symbols.
     let reexport_factor = if key.is_reexport { 0.1 } else { 1.0 };
 
-    let base_value = visibility * documented * depth_factor
+    visibility * documented * depth_factor
         * file_role_factor * config_factor * file_category_factor * type_declaration_factor * header_factor
         * heading_depth_factor * trait_impl_factor
-        * boilerplate_factor * generated_factor * reexport_factor;
+        * boilerplate_factor * generated_factor * reexport_factor
+}
+
+// ---------------------------------------------------------------------------
+// Stage-dependent value — computed per (group, stage, n) in the solver
+// ---------------------------------------------------------------------------
+
+/// Compute the value of showing a particular stage for a group.
+///
+/// Uses the pre-computed `base_importance` for static factors, then applies
+/// stage-dependent dynamics: what content is being revealed (stage_value),
+/// whether private symbols deserve detail (private_detail_penalty), how group
+/// size affects total value (count_factor), and diminishing returns per line
+/// (n_decay).
+pub(super) fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
+    let key = &group.key;
 
     let stage_value = match key.kind_category {
         // Type/Enum bodies (struct fields, enum variants, interface props)
@@ -233,7 +261,7 @@ pub(super) fn compute_value(group: &Group, stage: StageKind, n: usize) -> f64 {
         _ => n as f64,
     };
 
-    base_value * stage_value * private_detail_penalty * count_factor / n_decay
+    group.base_importance * stage_value * private_detail_penalty * count_factor / n_decay
 }
 
 #[cfg(test)]

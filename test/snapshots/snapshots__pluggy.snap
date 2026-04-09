@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3946 tokens)
+budget: 4000 (3947 tokens)
 
 README.rst
      1→====================================================
@@ -135,6 +135,10 @@ docs/api_reference.rst
     12→    :show-inheritance:
     13→    :members:
     14→
+    15→.. autodecorator:: pluggy.HookspecMarker
+    16→
+    17→.. autodecorator:: pluggy.HookimplMarker
+    18→
       →…
 
 docs/conf.py
@@ -179,6 +183,10 @@ docs/index.rst
     11→which are invoked in sequence according to a well defined set of protocols.
     12→
     13→It gives users the ability to extend or modify the behaviour of a
+    14→``host program`` by installing a ``plugin`` for that program.
+    15→The plugin code will run as part of normal program execution, changing or
+    16→enhancing certain aspects of it.
+    17→
       →…
 
 docs/requirements.txt
@@ -310,7 +318,7 @@ src/pluggy/_hooks.py
    499→    def __call__ …
    516→    def call_historic …
    543→    def call_extra …
-   593→class _SubsetHookCaller(HookCaller):
+   593→class _SubsetHookCaller …
    612→    def __init__ …
    619→    def _hookimpls …
    627→    def spec …
@@ -429,14 +437,3 @@ testing/test_hookcaller.py
 
 tox.ini
      1→[tox]
-
-uv.lock
-     1→version = 1
-     2→revision = 3
-     3→requires-python = ">=3.10"
-     4→
-     5→[[package]]
-     6→name = "cachetools"
-     7→version = "6.1.0"
-     8→source = { registry = "https://pypi.org/simple" }
-      →…
