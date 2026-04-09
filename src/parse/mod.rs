@@ -171,9 +171,15 @@ fn language_for_extension(ext: &str) -> Option<(Language, &'static str)> {
             tree_sitter_go::LANGUAGE.into(),
             include_str!("../../queries/go.scm"),
         ),
-        (Lang::C, _) => (
+        // Pure .c files use the C grammar; everything else (including .h)
+        // uses the C++ grammar which is a superset and handles both C and C++.
+        (Lang::C, "c") => (
             tree_sitter_c::LANGUAGE.into(),
             include_str!("../../queries/c.scm"),
+        ),
+        (Lang::C, _) => (
+            tree_sitter_cpp::LANGUAGE.into(),
+            include_str!("../../queries/cpp.scm"),
         ),
         (Lang::Lua, _) => (
             tree_sitter_lua::LANGUAGE.into(),
@@ -357,17 +363,26 @@ pub fn extract_symbols_with_config(
             && ast::is_in_trait_impl(symbol_node);
 
         // 7. AST metadata
-        // C preprocessor directives include trailing newlines, so their
-        // end_position is at column 0 of the next line. Adjust to avoid
-        // claiming an extra line that causes overlapping output.
-        let end_line = if lang == Lang::C
-            && matches!(symbol_node.kind(), "preproc_include" | "preproc_def" | "preproc_function_def")
-            && symbol_node.end_position().column == 0
-            && symbol_node.end_position().row > symbol_node.start_position().row
+        // C++ template handling: when a symbol is a direct child of
+        // template_declaration, use the template node for line range,
+        // signature, and doc detection so `template<...>` is included.
+        let effective_node = if lang == Lang::C
+            && symbol_node.parent().is_some_and(|p| p.kind() == "template_declaration")
         {
-            symbol_node.end_position().row
+            symbol_node.parent().unwrap()
         } else {
-            symbol_node.end_position().row + 1
+            symbol_node
+        };
+
+        let line = effective_node.start_position().row + 1;
+        let end_line = if lang == Lang::C
+            && matches!(effective_node.kind(), "preproc_include" | "preproc_def" | "preproc_function_def")
+            && effective_node.end_position().column == 0
+            && effective_node.end_position().row > effective_node.start_position().row
+        {
+            effective_node.end_position().row
+        } else {
+            effective_node.end_position().row + 1
         };
 
         symbols.push(Symbol {
@@ -375,14 +390,14 @@ pub fn extract_symbols_with_config(
             name,
             is_public,
             is_first_party,
-            line: symbol_node.start_position().row + 1,
+            line,
             end_line,
-            sig_end_line: ast::compute_sig_end_line(symbol_node, lang),
-            doc_start_line: ast::compute_doc_start_line(symbol_node, source, lang),
+            sig_end_line: ast::compute_sig_end_line(effective_node, lang),
+            doc_start_line: ast::compute_doc_start_line(effective_node, source, lang),
             is_trait_impl,
             is_reexport: false,
-            start_byte: symbol_node.start_byte(),
-            end_byte: symbol_node.end_byte(),
+            start_byte: effective_node.start_byte(),
+            end_byte: effective_node.end_byte(),
             composed_prefix_lens: Vec::new(),
         });
     }

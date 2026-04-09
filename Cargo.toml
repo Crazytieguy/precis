@@ -21,6 +21,7 @@ streaming-iterator = "0.1.9"
 tiktoken-rs = "0.9.1"
 tree-sitter = { version = "0.25", features = ["std"] }
 tree-sitter-c = "0.24.1"
+tree-sitter-cpp = "0.23.4"
 tree-sitter-go = "0.25.0"
 tree-sitter-json = "0.24.8"
 tree-sitter-lua = "0.2.0"
@@ -50,6 +51,8 @@ opt-level = 3
 [profile.dev.package.tree-sitter-typescript]
 opt-level = 3
 [profile.dev.package.tree-sitter-c]
+opt-level = 3
+[profile.dev.package.tree-sitter-cpp]
 opt-level = 3
 [profile.dev.package.tree-sitter-go]
 opt-level = 3

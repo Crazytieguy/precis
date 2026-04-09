@@ -387,7 +387,7 @@ pub(crate) fn doc_comment_start(lines: &[&str], symbol_line_0: usize, lang: Opti
                 return scan;
             }
             if line.starts_with("/*") {
-                // In C, plain /* ... */ comments are the standard doc comment style.
+                // In C/C++, plain /* ... */ comments are the standard doc comment style.
                 // In other languages, only /** ... */ counts as a doc comment.
                 if lang == Some(Lang::C) {
                     return scan;

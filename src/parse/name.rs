@@ -24,7 +24,7 @@ pub(super) fn extract_name(
         // C typedef: extract the declarator name
         typedef_name(node, source)
     } else if node.kind() == "declaration" && lang == Lang::C {
-        // C declaration: extract name from the declarator
+        // C/C++ declaration: extract name from the declarator
         c_declaration_name(node, source)
     } else {
         name_node

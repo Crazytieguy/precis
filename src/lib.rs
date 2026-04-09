@@ -36,6 +36,7 @@ pub enum Lang {
     Rust,
     Python,
     Go,
+    /// C and C++ source and header files
     C,
     Lua,
     Markdown,
@@ -56,7 +57,7 @@ impl Lang {
             "rs" => Some(Lang::Rust),
             "py" => Some(Lang::Python),
             "go" => Some(Lang::Go),
-            "c" | "h" => Some(Lang::C),
+            "c" | "h" | "cpp" | "cc" | "cxx" | "hpp" | "hxx" | "hh" => Some(Lang::C),
             "lua" => Some(Lang::Lua),
             "md" | "mdx" => Some(Lang::Markdown),
             "ts" | "tsx" | "js" | "jsx" | "mts" | "cts" | "mjs" | "cjs" => Some(Lang::JsTs),

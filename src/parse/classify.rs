@@ -69,9 +69,9 @@ pub(super) fn classify_node<'a>(
         }
         "const_spec" => Some(SymbolKind::Const),
         "var_spec" => Some(SymbolKind::Static),
-        // C
+        // C / C++
         "function_definition" if lang == Lang::C => Some(SymbolKind::Function),
-        "struct_specifier" | "union_specifier" | "enum_specifier" => {
+        "class_specifier" | "struct_specifier" | "union_specifier" | "enum_specifier" => {
             classify_c_type_specifier(node)
         }
         "type_definition" => {
@@ -92,6 +92,9 @@ pub(super) fn classify_node<'a>(
                 Some(SymbolKind::Static)
             }
         }
+        // C++ specific
+        "namespace_definition" => Some(SymbolKind::Module),
+        "alias_declaration" => Some(SymbolKind::TypeAlias),
         // Python
         "function_definition" => Some(SymbolKind::Function),
         "class_definition" => Some(SymbolKind::Class),
@@ -166,7 +169,7 @@ fn classify_go_grouped_declaration(node: tree_sitter::Node) -> Option<SymbolKind
     }
 }
 
-/// Classify C struct/union/enum specifiers.
+/// Classify C/C++ class/struct/union/enum specifiers.
 fn classify_c_type_specifier(node: tree_sitter::Node) -> Option<SymbolKind> {
     // Only capture definitions (with body), not forward declarations.
     // Skip specifiers inside typedef — the typedef node captures the whole thing.
@@ -177,10 +180,10 @@ fn classify_c_type_specifier(node: tree_sitter::Node) -> Option<SymbolKind> {
     {
         return None;
     }
-    if node.kind() == "enum_specifier" {
-        Some(SymbolKind::Enum)
-    } else {
-        Some(SymbolKind::Struct)
+    match node.kind() {
+        "enum_specifier" => Some(SymbolKind::Enum),
+        "class_specifier" => Some(SymbolKind::Class),
+        _ => Some(SymbolKind::Struct),
     }
 }
 

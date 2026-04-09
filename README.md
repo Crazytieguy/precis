@@ -123,7 +123,7 @@ The default budget is 4000 BPE tokens (o200k_base tokenizer). Output is plain te
 - **Rust** — functions, structs, enums, traits, impls, type aliases, consts, statics, macros, modules
 - **TypeScript / JavaScript / TSX** — functions, classes, interfaces, enums, type aliases, consts, namespaces
 - **Go** — functions, methods, structs, interfaces, type aliases, consts, vars
-- **C** — functions, structs, unions, enums, typedefs, macros, includes
+- **C / C++** — functions, classes, structs, unions, enums, namespaces, typedefs, type aliases, macros, includes
 - **Python** — functions, classes, module-level constants
 - **Markdown** — heading structure with body content
 - **JSON / TOML / YAML** — top-level keys and sections

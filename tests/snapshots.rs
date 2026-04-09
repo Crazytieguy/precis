@@ -428,6 +428,70 @@ MIT
 "#
 }
 
+fn cpp_sample() -> &'static str {
+    r#"
+#include <iostream>
+#include <vector>
+#include <memory>
+#include "token.h"
+
+#define MAX_TOKENS 1024
+
+namespace token {
+
+/// A lexical token with its kind and source span.
+class Token {
+public:
+    enum class Kind { Ident, Number, Symbol };
+
+    Token(Kind kind, int start, int end);
+    Kind kind() const { return kind_; }
+    int start() const { return start_; }
+    int end() const { return end_; }
+
+private:
+    Kind kind_;
+    int start_;
+    int end_;
+};
+
+/// Interface for visiting tokens in a stream.
+class Visitor {
+public:
+    virtual ~Visitor() = default;
+    virtual void visit_token(const Token& token) = 0;
+    virtual void visit_all(const std::vector<Token>& tokens);
+};
+
+/// A generic token parser that tokenizes source text.
+template<typename Alloc = std::allocator<Token>>
+class TokenParser {
+public:
+    explicit TokenParser(const std::string& source);
+    std::vector<Token, Alloc> parse();
+
+private:
+    std::string source_;
+    void advance();
+};
+
+/// Process input and return extracted tokens.
+std::vector<Token> process(const std::string& input);
+
+static void helper() {}
+
+using TokenPtr = std::unique_ptr<Token>;
+using TokenList = std::vector<Token>;
+
+struct Span {
+    int start;
+    int end;
+};
+
+} // namespace token
+"#
+}
+
 fn c_sample() -> &'static str {
     r#"
 #include <stdio.h>
@@ -647,6 +711,11 @@ sample_test!(go_sample_budget_50, "sample.go", go_sample, 50);
 sample_test!(go_sample_budget_200, "sample.go", go_sample, 200);
 sample_test!(go_sample_budget_10000, "sample.go", go_sample, 10000);
 
+sample_test!(cpp_sample_budget_20, "sample.cpp", cpp_sample, 20);
+sample_test!(cpp_sample_budget_50, "sample.cpp", cpp_sample, 50);
+sample_test!(cpp_sample_budget_200, "sample.cpp", cpp_sample, 200);
+sample_test!(cpp_sample_budget_10000, "sample.cpp", cpp_sample, 10000);
+
 sample_test!(c_sample_budget_20, "sample.c", c_sample, 20);
 sample_test!(c_sample_budget_50, "sample.c", c_sample, 50);
 sample_test!(c_sample_budget_200, "sample.c", c_sample, 200);
@@ -682,6 +751,7 @@ fn budget_monotonicity_inline() {
         ("sample.tsx", tsx_sample()),
         ("sample.py", python_sample()),
         ("sample.go", go_sample()),
+        ("sample.cpp", cpp_sample()),
         ("sample.c", c_sample()),
         ("README.md", markdown_sample()),
         ("Cargo.toml", toml_sample()),

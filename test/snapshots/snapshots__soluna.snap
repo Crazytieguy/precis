@@ -10,6 +10,8 @@ README.md
     10→
     11→[Live Examples](https://cloudwu.github.io/soluna/)
     12→
+    13→A framework you can use to make 2D games in Lua with multithreading, living on Windows, Linux, macOS and modern Browsers (via WebAssembly).
+    14→
       →…
     19→## Documentation
     25→## Precompiled Binaries
@@ -136,8 +138,6 @@ docs/url.lua
 docs/zip.lua
     19→function zip.open(filename, mode) end
 
-make.lua
-
 script/
 
 src/appevent.h
@@ -168,7 +168,6 @@ src/data/settingdefault.dl
      8→service_path : "./?.lua"
      9→width : 1024
     10→height : 768
-    11→high_dpi : false
       →…
 
 src/font_define.h
@@ -311,7 +310,6 @@ src/platform/macos/soluna_macos_ime.m
      3→
      4→#include <stdint.h>
      5→
-     6→#include "ime_state.h"
       →…
 
 src/platform/wasm/soluna_ime.js
@@ -425,9 +423,6 @@ src/truetype.h
 src/version.h
      4→#define SOLUNA_API_VERSION 3
      6→#define SOLUNA_HASH_VERSION "dev"
-
-src/yogaone.cpp
-     1→#include "yoga/YGConfig.cpp"
 
 test/
 

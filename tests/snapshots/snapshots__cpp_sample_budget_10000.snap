@@ -1,0 +1,38 @@
+---
+source: tests/snapshots.rs
+expression: output
+---
+sample.cpp
+     2→#include <iostream>
+     3→#include <vector>
+     4→#include <memory>
+     5→#include "token.h"
+     7→#define MAX_TOKENS 1024
+     9→namespace token {
+    10→
+    11→/// A lexical token with its kind and source span.
+    12→class Token {
+    13→public:
+    14→    enum class Kind { Ident, Number, Symbol };
+    16→    Token(Kind kind, int start, int end);
+    27→/// Interface for visiting tokens in a stream.
+    28→class Visitor {
+    29→public:
+    30→    virtual ~Visitor() = default;
+    31→    virtual void visit_token(const Token& token) = 0;
+    32→    virtual void visit_all(const std::vector<Token>& tokens);
+    33→};
+    35→/// A generic token parser that tokenizes source text.
+    36→template<typename Alloc = std::allocator<Token>>
+    37→class TokenParser {
+    38→public:
+    39→    explicit TokenParser(const std::string& source);
+    47→/// Process input and return extracted tokens.
+    48→std::vector<Token> process(const std::string& input);
+    50→static void helper() {}
+    52→using TokenPtr = std::unique_ptr<Token>;
+    53→using TokenList = std::vector<Token>;
+    55→struct Span {
+    56→    int start;
+    57→    int end;
+    58→};

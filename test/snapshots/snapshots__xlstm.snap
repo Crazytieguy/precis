@@ -2,7 +2,7 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3953 tokens)
+budget: 4000 (3955 tokens)
 
 README.md
      3→# xLSTM: Extended Long Short-Term Memory
@@ -35,35 +35,12 @@ README.md
    297→## Experiments
    312→## Citation
 
-experiments/__init__.py
-     1→
-
-experiments/data/formal_language/formal_language_dataset.py
-    42→class FormLangDatasetConfig(FormLangDatasetConfigBase):
-    43→    shift: int = 1
-    44→    enable_mask: bool = False
-    45→    additional_prefix_tokens: int = (
-      →    …
-
 experiments/lr_scheduler.py
     14→    def get_lr(self) -> list[float]:
     19→    def reinitialize(self, **kwargs) -> None:
     34→    def compute_lr(step, warmup_steps, decay_until_step, max_lr, min_lr):
 
-experiments/parity_xlstm01.yaml
-     1→training:
-    16→model:
-    29→dataset:
-
-experiments/parity_xlstm10.yaml
-     1→training:
-    16→model:
-    27→dataset:
-
-experiments/parity_xlstm11.yaml
-     1→training:
-    16→model:
-    29→dataset:
+experiments/main.py
 
 notebooks/xlstm/xLSTM_readme_example.ipynb
      1→{
@@ -153,8 +130,6 @@ xlstm/blocks/slstm/cell.py
    146→    def torch_dtype_s(self) -> torch.dtype:
    173→    def defines(self):
    214→class sLSTMCellBase(nn.Module):
-   277→    def _recurrent_kernel(self):
-   281→    def _bias(self):
    324→    def head_dim(self):
    509→class sLSTMCellCUDA(object):
    513→    def instance(cls, config: sLSTMCellConfig):
@@ -165,6 +140,17 @@ xlstm/blocks/slstm/cell.py
 xlstm/blocks/slstm/layer.py
     19→class sLSTMLayerConfig(sLSTMCellConfig):
     33→class sLSTMLayer(nn.Module):
+
+xlstm/blocks/slstm/src/cuda/slstm.cc
+    40→class sLSTMFunc {
+    41→private:
+    42→  ForwardPass fw;
+    43→  BackwardPass bw;
+    44→  BackwardPassCut bwc;
+    45→
+    46→public:
+    47→  sLSTMFunc …
+   306→PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
 
 xlstm/blocks/slstm/src/cuda/slstm.h
     28→#define SLSTM_NUM_HEADS 1
@@ -179,6 +165,22 @@ xlstm/blocks/slstm/src/cuda/slstm.h
     37→#define SLSTM_DTYPE_S float
     38→#define SLSTM_DTYPE_A float
     41→#define SLSTM_SIMPLE_AGG true
+    44→namespace slstm {
+    45→
+    46→class ForwardPass {
+    47→public:
+    53→  ForwardPass …
+   144→class BackwardPass {
+   145→public:
+   150→  BackwardPass …
+   254→class BackwardPassCut {
+   255→public:
+   260→  BackwardPassCut …
+
+xlstm/blocks/slstm/src/util/blas.h
+    27→template <typename T> struct blas {
+    28→  struct set_pointer_mode {
+    39→  struct enable_tensor_cores {
 
 xlstm/blocks/slstm/src/util/device_assert.h
     23→__assertfail …
@@ -190,6 +192,10 @@ xlstm/blocks/slstm/src/util/support.h
     30→#define CHECK_INPUT(x)                                                         \
     34→#define AT_DISPATCH_CASE_FLOATING_TYPES_AND_HALF2(...)                         \
     40→#define AT_DISPATCH_FLOATING_TYPES_AND_HALF2(TYPE, NAME, ...)                  \
+    44→template <typename U> struct native_type {
+    45→  using T = U;
+    46→};
+    49→  using T = __half;
 
 xlstm/blocks/slstm/src/util/util.h
      1→#pragma once
@@ -241,8 +247,6 @@ xlstm/components/feedforward.py
     40→    _num_blocks: int = 1
     41→
     49→class GatedFeedForward(nn.Module):
-
-xlstm/components/init.py
 
 xlstm/components/linear_headwise.py
     13→class LinearHeadwiseExpandConfig:
@@ -342,9 +346,6 @@ xlstm/xlstm_large/model.py
     37→    """Number of blocks."""
     38→    vocab_size: int
     39→    """Vocabulary size."""
-    40→    use_bias: bool = False
-    41→    """Whether to use bias in linear layers."""
-    42→    norm_eps: float = 1e-6
       →    …
    112→class xLSTMLarge(nn.Module):
    187→class xLSTMLargeBlockStack(nn.Module):
@@ -358,10 +359,7 @@ xlstm/xlstm_large/model.py
    287→    """Whether to use bias in linear layers."""
    288→    norm_eps: float = 1e-6
    289→    """Epsilon value for numerical stability in the normalization layers."""
-   290→    norm_reduction_force_float32: bool = True
-   291→    """Whether to force float32 reductions in the normalization layers."""
-   292→
-      →…
+      →    …
    310→class mLSTMLayer(nn.Module):
    455→class mLSTMBlock(nn.Module):
 
