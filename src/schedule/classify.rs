@@ -1,4 +1,5 @@
-use std::path::Path;
+use std::collections::HashSet;
+use std::path::{Path, PathBuf};
 
 // ---------------------------------------------------------------------------
 // File role classification
@@ -236,6 +237,55 @@ pub(super) fn is_boilerplate_heading(name: &str) -> bool {
     )
 }
 
+/// Whether a directory name is a conventional documentation root (`docs`, `doc`).
+fn is_docs_dir_name(name: &str) -> bool {
+    matches!(name.to_ascii_lowercase().as_str(), "docs" | "doc")
+}
+
+/// Detect directories that are documentation site roots (Sphinx, MkDocs,
+/// Docusaurus) by scanning for doc generator config files. Returns a set of
+/// relative directory paths whose contents should be classified as `DocsSite`.
+///
+/// Inferred directories (e.g. `docs/` from a root `mkdocs.yml`) may not
+/// actually exist in the file list — callers use `starts_with` matching,
+/// so phantom entries are harmless.
+pub(crate) fn detect_doc_site_dirs<'a>(
+    relative_paths: impl Iterator<Item = &'a Path>,
+) -> HashSet<PathBuf> {
+    let mut dirs = HashSet::new();
+    for relative in relative_paths {
+        let filename = match relative.file_name().and_then(|n| n.to_str()) {
+            Some(n) => n,
+            None => continue,
+        };
+        let parent = relative.parent().unwrap_or(Path::new(""));
+
+        // Sphinx: conf.py inside a docs/ or doc/ directory
+        if filename == "conf.py"
+            && let Some(parent_name) = parent.file_name().and_then(|n| n.to_str())
+            && is_docs_dir_name(parent_name)
+        {
+            dirs.insert(parent.to_path_buf());
+        }
+
+        // MkDocs: mkdocs.yml/yaml at root infers docs/ as the default content
+        // dir. Non-root mkdocs.yml (monorepo sub-packages) is still classified
+        // as config by is_config_file, but we don't infer a sibling docs/ dir
+        // since the content directory may be configured differently.
+        if matches!(filename, "mkdocs.yml" | "mkdocs.yaml")
+            && parent.as_os_str().is_empty()
+        {
+            dirs.insert(PathBuf::from("docs"));
+        }
+
+        // Docusaurus: docusaurus.config.{js,ts,mjs} → sibling docs/
+        if filename.starts_with("docusaurus.config.") {
+            dirs.insert(parent.join("docs"));
+        }
+    }
+    dirs
+}
+
 /// Detect files that are not core library/application source code.
 /// Includes build/tool configuration, stylesheets, HTML templates, web assets,
 /// and files in conventional tooling directories. These get a reduced value
@@ -283,6 +333,20 @@ pub(super) fn is_config_file(relative_path: &Path, filename: &str) -> bool {
         "gulpfile.js" | "gruntfile.js" | "jakefile.js"
         | "make.lua" | "premake5.lua" | "cmake.lua"
         | "cmakelists.txt" => return true,
+        _ => {}
+    }
+
+    // Doc generator configs contain theme settings, plugin lists, and build
+    // options — tooling setup with no architectural signal. Without this,
+    // mkdocs.yml body text about theme palettes wastes budget.
+    match lower.as_str() {
+        "mkdocs.yml" | "mkdocs.yaml" => return true,
+        "conf.py" if relative_path.parent()
+            .and_then(|p| p.file_name())
+            .and_then(|n| n.to_str())
+            .is_some_and(is_docs_dir_name)
+        => return true,
+        _ if lower.starts_with("docusaurus.config.") => return true,
         _ => {}
     }
 
@@ -802,5 +866,60 @@ mod tests {
         assert!(!is_type_declaration_file(Path::new("index.js")));
         assert!(!is_type_declaration_file(Path::new("test.d.py"))); // wrong extension
         assert!(!is_type_declaration_file(Path::new("src/main.rs")));
+    }
+
+    #[test]
+    fn doc_site_dir_detection() {
+        let detect = |paths: &[&str]| -> HashSet<PathBuf> {
+            let owned: Vec<PathBuf> = paths.iter().map(PathBuf::from).collect();
+            detect_doc_site_dirs(owned.iter().map(|p| p.as_path()))
+        };
+
+        // Sphinx: conf.py in docs/ or doc/
+        let dirs = detect(&["docs/conf.py", "docs/api_reference.rst", "src/main.py"]);
+        assert!(dirs.contains(Path::new("docs")));
+        assert!(!dirs.contains(Path::new("src")));
+
+        // conf.py NOT in a docs-like directory → no detection
+        assert!(detect(&["src/conf.py"]).is_empty());
+
+        // MkDocs: mkdocs.yml at root → docs/ is detected
+        assert!(detect(&["mkdocs.yml", "docs/guide.md"]).contains(Path::new("docs")));
+
+        // Docusaurus: docusaurus.config.js → sibling docs/
+        assert!(detect(&["docusaurus.config.js"]).contains(Path::new("docs")));
+
+        // Docusaurus in a subdirectory → docs/ sibling
+        assert!(detect(&["website/docusaurus.config.ts"]).contains(Path::new("website/docs")));
+
+        // No doc generator config → empty
+        assert!(detect(&["docs/guide.md", "src/main.rs"]).is_empty());
+    }
+
+    #[test]
+    fn config_file_doc_generators() {
+        fn at_root(name: &str) -> bool {
+            is_config_file(Path::new(name), name)
+        }
+        fn at_path(path: &str) -> bool {
+            let p = Path::new(path);
+            let name = p.file_name().unwrap().to_str().unwrap();
+            is_config_file(p, name)
+        }
+
+        // MkDocs config
+        assert!(at_root("mkdocs.yml"));
+        assert!(at_root("mkdocs.yaml"));
+        assert!(at_path("packages/site/mkdocs.yml"));
+        // Docusaurus config
+        assert!(at_root("docusaurus.config.js"));
+        assert!(at_root("docusaurus.config.ts"));
+        assert!(at_root("docusaurus.config.mjs"));
+        // Sphinx conf.py in docs/ directories
+        assert!(at_path("docs/conf.py"));
+        assert!(at_path("doc/conf.py"));
+        // conf.py NOT in docs/ is NOT config (could be regular Python module)
+        assert!(!at_path("src/conf.py"));
+        assert!(!at_root("conf.py"));
     }
 }

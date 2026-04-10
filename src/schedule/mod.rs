@@ -15,6 +15,7 @@ use crate::parse;
 use crate::Corpus;
 
 pub use classify::{FileCategory, FileRole};
+pub(crate) use classify::detect_doc_site_dirs;
 pub use file_info::{FileInfo, compute_single_file_info};
 pub use groups::build_groups;
 pub(crate) use plan::directory_marker_text;

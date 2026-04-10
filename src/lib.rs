@@ -118,7 +118,7 @@ pub fn build_file_data(
     sources: Vec<Option<String>>,
 ) -> Vec<FileData> {
     let configs = parse::build_language_configs(files);
-    files
+    let mut file_data: Vec<FileData> = files
         .par_iter()
         .zip(sources.into_par_iter())
         .map(|(path, source)| {
@@ -130,7 +130,27 @@ pub fn build_file_data(
                 schedule::compute_single_file_info(root, path, source.as_deref());
             FileData { source, symbols, info }
         })
-        .collect()
+        .collect();
+
+    // Detect doc site directories (Sphinx, MkDocs, Docusaurus) and reclassify
+    // their contents as DocsSite so auto-generated API refs and build config
+    // don't compete with core source code for budget.
+    let doc_site_dirs = schedule::detect_doc_site_dirs(
+        file_data.iter().map(|fd| fd.info.relative_path.as_path()),
+    );
+    for fd in &mut file_data {
+        if fd.info.file_category != schedule::FileCategory::Source {
+            continue;
+        }
+        if fd.info.file_role == schedule::FileRole::Architecture {
+            continue;
+        }
+        if doc_site_dirs.iter().any(|d| fd.info.relative_path.starts_with(d)) {
+            fd.info.file_category = schedule::FileCategory::DocsSite;
+        }
+    }
+
+    file_data
 }
 
 // ---------------------------------------------------------------------------
