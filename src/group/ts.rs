@@ -384,11 +384,10 @@ fn spawn_type_children<'s>(
 
 fn clone_ts_item<'s>(item: &TsItem<'s>) -> TsItem<'s> {
     TsItem {
-        path: item.path.clone(),
+        path: item.path,
         source: item.source,
         node: item.node,
         name: item.name.clone(),
-        start_line: item.start_line,
         end_line: item.end_line,
     }
 }
@@ -408,7 +407,7 @@ fn spawn_method_children<'s>(
     let Some(first_item) = parent.items.first() else {
         return;
     };
-    let lang = Lang::from_path(&first_item.path);
+    let lang = Lang::from_path(first_item.path);
 
     let mut buckets: HashMap<(bool, bool), Vec<TsItem<'s>>> = HashMap::new();
 
@@ -433,11 +432,10 @@ fn spawn_method_children<'s>(
             .is_some();
 
             let ts_item = TsItem {
-                path: item.path.clone(),
+                path: item.path,
                 source: item.source,
                 node: method_node,
                 name,
-                start_line: method_node.start_position().row,
                 end_line: method_node.end_position().row + 1,
             };
 
@@ -582,14 +580,17 @@ fn extract_method_name(node: tree_sitter::Node, source: &str, lang: Option<Lang>
 // ---------------------------------------------------------------------------
 
 pub fn render_entries<'s>(g: &TsGroup<'s>, _ctx: &ScheduleCtx<'s>) -> Vec<(PathBuf, Vec<LineEntry<'s>>)> {
-    let mut per_file: HashMap<PathBuf, Vec<LineEntry<'s>>> = HashMap::new();
+    let mut per_file: HashMap<&'s std::path::Path, Vec<LineEntry<'s>>> = HashMap::new();
 
     for item in &g.items {
         let entries = render_item(&g.key, item);
-        per_file.entry(item.path.to_path_buf()).or_default().extend(entries);
+        per_file.entry(item.path).or_default().extend(entries);
     }
 
-    let mut result: Vec<(PathBuf, Vec<LineEntry<'s>>)> = per_file.into_iter().collect();
+    let mut result: Vec<(PathBuf, Vec<LineEntry<'s>>)> = per_file
+        .into_iter()
+        .map(|(p, entries)| (p.to_path_buf(), entries))
+        .collect();
     result.sort_by(|a, b| a.0.cmp(&b.0));
     result
 }
@@ -598,12 +599,13 @@ pub fn render_entries<'s>(g: &TsGroup<'s>, _ctx: &ScheduleCtx<'s>) -> Vec<(PathB
 fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
     use TsGroupKey::*;
     let lines: Vec<&str> = item.source.lines().collect();
+    let start_line = item.start_line();
 
     match key {
         FunctionName { .. } | StructName { .. } | EnumName { .. } | ClassName { .. }
         | InterfaceName { .. } | TraitName { .. } | TypeAliasName { .. } | ConstName { .. }
         | MacroName { .. } | ImplBlock { .. } => {
-            let line_idx = item.start_line;
+            let line_idx = start_line;
             let line = lines.get(line_idx).copied().unwrap_or("");
             let prefix = find_name_prefix(line, &item.name);
             // prefix is a subslice of line, which is a subslice of source (R1)
@@ -616,7 +618,7 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
         FunctionSig => {
             let body_start = compute_body_start_line(item);
             let mut entries = Vec::new();
-            for line_idx in item.start_line..body_start.min(lines.len()) {
+            for line_idx in start_line..body_start.min(lines.len()) {
                 let content = lines.get(line_idx).copied().unwrap_or("");
                 entries.push(LineEntry::Complete {
                     line: line_idx as u32,
@@ -687,7 +689,7 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
         }
 
         Import { .. } => {
-            let line_idx = item.start_line;
+            let line_idx = start_line;
             let line = lines.get(line_idx).copied().unwrap_or("");
             let prefix = find_import_prefix(line);
             vec![LineEntry::Truncated {
@@ -698,7 +700,7 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
 
         ImportedItems { .. } => {
             let mut entries = Vec::new();
-            for line_idx in item.start_line..item.end_line {
+            for line_idx in start_line..item.end_line {
                 if line_idx >= lines.len() {
                     break;
                 }
@@ -712,8 +714,8 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
         }
 
         ModuleDocFirst => {
-            let lang = Lang::from_path(&item.path);
-            let first_line = skip_doc_leading_noise(&lines, item.start_line, item.end_line, lang);
+            let lang = Lang::from_path(item.path);
+            let first_line = skip_doc_leading_noise(&lines, start_line, item.end_line, lang);
             if let Some(line_idx) = first_line {
                 let content = lines.get(line_idx).copied().unwrap_or("");
                 vec![LineEntry::Complete {
@@ -721,18 +723,18 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
                     content,
                 }]
             } else {
-                let content = lines.get(item.start_line).copied().unwrap_or("");
+                let content = lines.get(start_line).copied().unwrap_or("");
                 vec![LineEntry::Complete {
-                    line: item.start_line as u32,
+                    line: start_line as u32,
                     content,
                 }]
             }
         }
 
         ModuleDocRest => {
-            let lang = Lang::from_path(&item.path);
-            let first_line = skip_doc_leading_noise(&lines, item.start_line, item.end_line, lang)
-                .unwrap_or(item.start_line);
+            let lang = Lang::from_path(item.path);
+            let first_line = skip_doc_leading_noise(&lines, start_line, item.end_line, lang)
+                .unwrap_or(start_line);
             let mut entries = Vec::new();
             for line_idx in (first_line + 1)..item.end_line {
                 if line_idx >= lines.len() {
@@ -748,7 +750,7 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
         }
 
         Heading { .. } => {
-            let line_idx = item.start_line;
+            let line_idx = start_line;
             let line = lines.get(line_idx).copied().unwrap_or("");
             let stripped = strip_heading_badges(line);
             // stripped is a subslice of line, which is a subslice of source
@@ -759,7 +761,7 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
         }
 
         HeadingBody => {
-            let body_start = item.start_line + 1;
+            let body_start = start_line + 1;
             let body_end = item.end_line;
             let content_start = skip_markdown_noise(&lines, body_start, body_end);
             let mut entries = Vec::new();
@@ -777,7 +779,7 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
         }
 
         DataSection => {
-            let line_idx = item.start_line;
+            let line_idx = start_line;
             let content = lines.get(line_idx).copied().unwrap_or("");
             vec![LineEntry::Complete {
                 line: line_idx as u32,
@@ -786,7 +788,7 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
         }
 
         DataSectionBody => {
-            let body_start = item.start_line + 1;
+            let body_start = start_line + 1;
             let body_end = item.end_line;
             let mut entries = Vec::new();
             for line_idx in body_start..body_end {
@@ -811,9 +813,7 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
 /// Find a prefix of the source line up to and including the symbol name.
 fn find_name_prefix<'a>(line: &'a str, name: &str) -> &'a str {
     let trimmed = line.trim_start();
-    let _indent = &line[..line.len() - trimmed.len()];
 
-    // Try to find the name as a word in the trimmed line
     if let Some(pos) = find_word(name, trimmed) {
         let end = pos + name.len();
         let prefix_end = (line.len() - trimmed.len()) + end;
@@ -865,19 +865,18 @@ fn find_word(needle: &str, haystack: &str) -> Option<usize> {
 
 /// Returns the 0-indexed line where body content begins (after `{` or `:` for Python).
 fn compute_body_start_line(item: &TsItem<'_>) -> usize {
-    let lang = Lang::from_path(&item.path);
+    let lang = Lang::from_path(item.path);
     if let Some(body_start) = crate::parse::ast::compute_body_start_line(item.node, lang.unwrap_or(Lang::Rust)) {
         return body_start.min(item.end_line);
     }
-    // Fallback: body starts after the declaration line
-    item.start_line + 1
+    item.start_line() + 1
 }
 
 fn compute_doc_range(item: &TsItem<'_>, lines: &[&str]) -> Option<(usize, usize)> {
-    let lang = Lang::from_path(&item.path);
+    let lang = Lang::from_path(item.path);
     let doc_start_1 = crate::parse::ast::compute_doc_start_line(item.node, item.source, lang.unwrap_or(Lang::Rust))?;
     let doc_start = doc_start_1 - 1;
-    let sym_line = item.start_line;
+    let sym_line = item.start_line();
     if doc_start >= sym_line {
         return None;
     }

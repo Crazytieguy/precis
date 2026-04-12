@@ -63,7 +63,7 @@ pub fn children<'s>(g: &mut FilesGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s>>
     for fi in &all_items {
         let lines: Vec<&str> = fi.source.lines().collect();
         let lang = crate::Lang::from_path(fi.path.as_path());
-        let display_path = ctx.rel_path(&fi.path).to_path_buf();
+        let display_path = ctx.store.intern_path(ctx.rel_path(&fi.path).to_path_buf());
         let is_generated = generated_files.contains(fi.path.as_path());
 
         for item in &fi.items {
@@ -71,11 +71,10 @@ pub fn children<'s>(g: &mut FilesGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s>>
 
             for key in keys {
                 let ts_item = TsItem {
-                    path: display_path.clone(),
+                    path: display_path,
                     source: fi.source,
                     node: item.node,
                     name: item.name.clone(),
-                    start_line: item.start_line,
                     end_line: item.end_line,
                 };
                 buckets.entry((key, is_generated)).or_default().push(ts_item);
@@ -151,7 +150,7 @@ fn nest_heading_groups(groups: &mut Vec<(Group<'_>, bool)>) {
     let is_markdown = groups.iter().any(|(g, _)| {
         matches!(g, Group::Ts(ts) if matches!(&ts.key, TsGroupKey::Heading { .. })
             && ts.items.first().is_some_and(|item|
-                crate::Lang::from_path(&item.path) == Some(crate::Lang::Markdown)))
+                crate::Lang::from_path(item.path) == Some(crate::Lang::Markdown)))
     });
     if !is_markdown {
         return;

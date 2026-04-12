@@ -78,12 +78,17 @@ pub struct TsGroup<'s> {
 
 /// A single item in a tree-sitter group.
 pub struct TsItem<'s> {
-    pub path: PathBuf,
+    pub path: &'s Path,
     pub source: &'s str,
     pub node: tree_sitter::Node<'s>,
     pub name: String,
-    pub start_line: usize,
     pub end_line: usize,
+}
+
+impl TsItem<'_> {
+    pub fn start_line(&self) -> usize {
+        self.node.start_position().row
+    }
 }
 
 impl<'s> Group<'s> {
@@ -109,7 +114,7 @@ impl<'s> Group<'s> {
             Group::Ts(g) => g
                 .items
                 .first()
-                .map(|i| i.path.as_path())
+                .map(|i| i.path)
                 .unwrap_or(Path::new("")),
         }
     }
@@ -118,7 +123,7 @@ impl<'s> Group<'s> {
     pub fn first_line(&self) -> usize {
         match self {
             Group::Folders(_) | Group::Files(_) => 0,
-            Group::Ts(g) => g.items.first().map(|i| i.start_line).unwrap_or(0),
+            Group::Ts(g) => g.items.first().map(|i| i.start_line()).unwrap_or(0),
         }
     }
 

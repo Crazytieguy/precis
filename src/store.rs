@@ -21,6 +21,9 @@ pub struct ParseStore {
     trees: FrozenMap<PathBuf, Box<Tree>>,
     /// Lazily-built configs keyed by file extension (lowercase).
     configs: FrozenMap<String, Box<LanguageConfig>>,
+    /// Interned display paths, deduplicated. Returns `&Path` references
+    /// that live as long as the store, eliminating per-item PathBuf clones.
+    paths: FrozenMap<PathBuf, Box<PathBuf>>,
 }
 
 impl Default for ParseStore {
@@ -35,6 +38,7 @@ impl ParseStore {
             sources: FrozenMap::new(),
             trees: FrozenMap::new(),
             configs: FrozenMap::new(),
+            paths: FrozenMap::new(),
         }
     }
 
@@ -115,6 +119,16 @@ impl ParseStore {
     /// Get the language config for a path's extension.
     pub fn config_for(&self, path: &Path) -> Option<&LanguageConfig> {
         self.config_for_path(path)
+    }
+
+    /// Intern a display path, returning a stable `&Path` reference that lives
+    /// as long as the store. Repeated calls with equal paths return the same
+    /// reference without allocating.
+    pub fn intern_path(&self, path: PathBuf) -> &Path {
+        if let Some(p) = self.paths.get(&path) {
+            return p.as_path();
+        }
+        self.paths.insert(path.clone(), Box::new(path)).as_path()
     }
 }
 

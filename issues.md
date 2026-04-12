@@ -25,23 +25,4 @@ using `name` as a proxy (reexport detection, dedup), operate on
 the node or source text directly. Don't leave a vestigial "name"
 concept encoded where it doesn't belong.
 
-### Slim TsItem to `{ path: &'s Path, node: Node<'s> }`
-
-Currently `TsItem` carries `path: PathBuf`, `source: &str`, `name:
-String`, `start_line: usize`, `end_line: usize`. Most are redundant:
-
-- `path` should be `&'s Path` borrowed from the store via
-  `FrozenMap::get_key_value`. Eliminates PathBuf cloning.
-- `source` can be derived from path via the store when needed.
-- `name` is only used by Name-level groups for `find_name_prefix`. Could
-  be computed from the node and source on demand. Evaluate whether the
-  `@name` query capture is still needed at all.
-- `start_line`/`end_line` are available from `node.start_position().row`
-  and `node.end_position().row`.
-
-### clone_ts_item clones per item per child group
-
-Every `children()` call clones `PathBuf` + `String` for each item.
-Slimming TsItem (above) eliminates this since `&Path` and `Node` are
-Copy.
 
