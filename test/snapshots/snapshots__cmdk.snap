@@ -321,7 +321,6 @@ website/pages/_document.tsx
      5→export default class Document …
 
 website/pages/index.tsx
-    18→import packageJSON from '../../cmdk/package.json'
     20→type TTheme …
     25→type Themes …
     27→const ThemeContext …
@@ -390,14 +389,20 @@ website/styles/globals.scss
 
 website/styles/index.module.scss
 
-website/components/code/code.module.scss
+website/public/favicon.svg
 
-website/components/code/index.tsx
+website/public/grid.svg
+
+website/public/line.svg
+
+website/public/robots.txt
+
+website/public/vercel.svg
 
 website/components/cmdk/
 
-website/components/icons/
+website/components/code/
 
-website/public/
+website/components/icons/
 
 website/styles/cmdk/

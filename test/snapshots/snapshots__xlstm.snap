@@ -87,12 +87,6 @@ xlstm/blocks/xlstm_block.py
     17→class xLSTMBlockConfig …
     43→class xLSTMBlock …
 
-res/desc_xlstm_overview.pdf
-
-res/desc_xlstm_overview.svg
-
-res/xlstm_7b_poster.svg
-
 notebooks/xlstm_large/demo.ipynb
 
 notebooks/xlstm_large/load_from_pretrained.ipynb
@@ -308,6 +302,10 @@ xlstm/blocks/slstm/src/cuda_init.py
     17→def defines_to_cflags(defines=Union[dict[str, Union[int, str]], Sequence[tuple[str, Union[str, int]]]]):
     42→EXTRA_INCLUDE_PATHS …
     60→def load(*, name, sources, extra_cflags=(), extra_cuda_cflags=(), **kwargs):
+
+res/desc_xlstm_overview.svg
+
+res/xlstm_7b_poster.svg
 
 experiments/data/__init__.py
 

@@ -434,13 +434,14 @@ pub fn is_header_extension(ext: &str) -> bool {
 // File discovery helpers (migrated from walk.rs)
 // ---------------------------------------------------------------------------
 
-/// Any file with a text-readable extension is a source file.
+/// Returns true for files likely to be text-readable source, excluding
+/// known binary formats and generated/minified artifacts.
 pub fn is_source_file(path: &Path) -> bool {
+    if is_lockfile(path) {
+        return false;
+    }
     if let Some(ext) = path.extension().and_then(|e| e.to_str()) {
-        if matches!(ext, "lock" | "lockb") {
-            return false;
-        }
-        return !is_lockfile(path);
+        return !is_binary_extension(&ext.to_ascii_lowercase());
     }
     path.file_name()
         .and_then(|n| n.to_str())
@@ -457,7 +458,38 @@ pub fn is_source_file(path: &Path) -> bool {
         })
 }
 
-pub fn is_lockfile(path: &Path) -> bool {
+fn is_binary_extension(ext: &str) -> bool {
+    matches!(
+        ext,
+        // Images
+        "png" | "jpg" | "jpeg" | "gif" | "bmp" | "ico" | "webp" | "tiff" | "tif"
+        | "psd" | "ai" | "eps" | "raw" | "cr2" | "nef" | "heic" | "avif"
+        // Fonts
+        | "ttf" | "otf" | "woff" | "woff2" | "eot"
+        // Audio / video
+        | "mp3" | "wav" | "ogg" | "flac" | "aac" | "wma" | "m4a"
+        | "mp4" | "avi" | "mkv" | "mov" | "wmv" | "flv" | "webm"
+        // Archives / compressed
+        | "zip" | "tar" | "gz" | "bz2" | "xz" | "7z" | "rar" | "zst"
+        // Executables / libraries
+        | "exe" | "dll" | "so" | "dylib" | "a" | "o" | "obj" | "lib"
+        | "wasm" | "class" | "pyc" | "pyo"
+        // Documents (binary)
+        | "pdf" | "doc" | "docx" | "xls" | "xlsx" | "ppt" | "pptx" | "odt"
+        // Data / ML (binary)
+        | "db" | "sqlite" | "sqlite3"
+        | "bin" | "dat" | "npy" | "npz" | "h5" | "hdf5" | "parquet"
+        | "safetensors" | "onnx" | "pt" | "pth" | "pkl" | "pickle"
+        // Design / 3D
+        | "sketch" | "fig" | "blend" | "fbx" | "stl" | "gltf" | "glb"
+        // Disk images / packages
+        | "iso" | "dmg" | "deb" | "rpm" | "msi" | "apk" | "ipa"
+        // Generated (lockfiles, etc.)
+        | "lock" | "lockb"
+    )
+}
+
+fn is_lockfile(path: &Path) -> bool {
     let name = match path.file_name().and_then(|n| n.to_str()) {
         Some(n) => n,
         None => return false,

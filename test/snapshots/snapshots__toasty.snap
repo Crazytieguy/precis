@@ -113,8 +113,6 @@ compose.yaml
 rust-toolchain.toml
      1→[toolchain]
 
-test.db
-
 crates/toasty/src/engine/eval/as_expr.rs
      3→pub(crate) trait AsExpr …
      7→impl AsExpr for stmt::Expr …
@@ -409,6 +407,7 @@ crates/toasty-driver-dynamodb/src/lib.rs
    351→impl ExprAttrs …
 
 crates/toasty-driver-dynamodb/src/op.rs
+     9→use super:: …
 
 crates/toasty-driver-dynamodb/src/type.rs
      4→pub trait TypeExt …
@@ -862,8 +861,6 @@ crates/toasty-driver-integration-suite/src/test.rs
 
 crates/toasty-driver-integration-suite/src/tests.rs
 
-tests/Cargo.toml
-
 benches/
 
 crates/
@@ -941,6 +938,8 @@ examples/user-has-one-profile/
 examples/user-has-one-profile/src/
 
 scripts/
+
+tests/
 
 tests/src/
 

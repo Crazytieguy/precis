@@ -78,6 +78,7 @@ packages/lib/src/files/files.models.ts
     34→async function noteAssetsToFiles …
 
 packages/cli/bin/enclosed.mjs
+     4→import '../dist/cli.mjs';
 
 packages/docs/src/how-it-works.md
      5→# How It Works
@@ -379,11 +380,11 @@ packages/cli/src/config/config.models.ts
      3→import { configDefinition } from './config.constants';
      7→type ConfigKey …
      8→const config …
-    10→function setConfig …
-    31→function getConfig …
-    57→function deleteConfig …
-    61→function resetConfig …
-    65→function createConfigBindings …
+    10→function setConfig({ key, value }: { key: ConfigKey ; value: string }) {
+    31→function getConfig({ key }: { key: ConfigKey }) {
+    57→function deleteConfig({ key }: { key: ConfigKey }) {
+    61→function resetConfig() {
+    65→function createConfigBindings({ key }: { key: ConfigKey }) {
 
 packages/cli/src/config/config.usecases.ts
      1→import { createConfigBindings } from './config.models';
@@ -454,8 +455,6 @@ packages/app-client/src/modules/shared/style/cn.ts
 
 packages/app-server/src/modules/app/users/users.repository.ts
 
-packages/app-client/src/assets/favicon.ico
-
 packages/lib/src/notes/notes.models.test.ts
      2→import { createNoteUrl, createNoteUrlHashFragment, parseNoteUrl, parseNoteUrlHashFragment } from './notes.models';
 
@@ -488,24 +487,6 @@ packages/lib/src/notes/notes.usecases.ts
      6→import { storeNote as storeNoteImpl } from './notes.services';
     10→const BASE_URL …
     12→async function createNote …
-
-packages/docs/src/public/apple-touch-icon.png
-
-packages/docs/src/public/favicon-16x16.png
-
-packages/docs/src/public/favicon-32x32.png
-
-packages/docs/src/public/favicon.ico
-
-packages/docs/src/public/humans.txt
-
-packages/docs/src/public/logo-dark.svg
-
-packages/docs/src/public/logo-light.svg
-
-packages/docs/src/public/og-image.png
-
-packages/docs/src/public/robots.txt
 
 packages/app-client/src/modules/auth/auth.models.ts
      5→function isAccessTokenExpired …
@@ -595,26 +576,6 @@ packages/app-client/src/modules/ui/layouts/app.layout.tsx
    209→export const Footer: Component = () => {
    240→export const AppLayout: ParentComponent = (props) => {
 
-packages/app-client/public/android-chrome-192x192.png
-
-packages/app-client/public/android-chrome-512x512.png
-
-packages/app-client/public/apple-touch-icon.png
-
-packages/app-client/public/favicon-16x16.png
-
-packages/app-client/public/favicon-32x32.png
-
-packages/app-client/public/favicon.ico
-
-packages/app-client/public/humans.txt
-
-packages/app-client/public/og-image.png
-
-packages/app-client/public/robots.txt
-
-packages/app-client/public/site.webmanifest
-
 packages/app-server/src/modules/tasks/task-scheduler.ts
      9→const logger …
     11→function createTaskScheduler …
@@ -672,22 +633,6 @@ packages/app-client/src/modules/i18n/i18n.provider.tsx
     36→async function fetchDictionary(locale: Locale): Promise<Dictionary> {
     44→export const I18nProvider: ParentComponent = (props) => {
 
-packages/docs/src/public/logos/logo-dark-bg.png
-
-packages/docs/src/public/logos/logo-dark-bg.svg
-
-packages/docs/src/public/logos/logo-dark.png
-
-packages/docs/src/public/logos/logo-dark.svg
-
-packages/docs/src/public/logos/logo-light-bg.png
-
-packages/docs/src/public/logos/logo-light-bg.svg
-
-packages/docs/src/public/logos/logo-light.png
-
-packages/docs/src/public/logos/logo-light.svg
-
 packages/crypto/src/encryption-algorithms/encryption-algorithms.constants.ts
      1→export const AES_256_GCM …
      3→export const ENCRYPTION_ALGORITHMS …
@@ -717,22 +662,22 @@ packages/app-client/src/modules/notes/notes.constants.ts
      1→export const NOTE_ID_REGEX …
 
 packages/app-client/src/modules/notes/notes.context.tsx
-     3→import …
+     3→import { createHook } from '../shared/hooks/hooks';
      5→const noteContext …
     11→export const NoteContextProvider: ParentComponent = (props) => {
     27→export function useNoteContext() {
 
 packages/app-client/src/modules/notes/notes.models.test.ts
-     2→import …
+     2→import { buildViewNotePagePath } from './notes.models';
 
 packages/app-client/src/modules/notes/notes.models.ts
     16→export function buildViewNotePagePath({ prefix }: { prefix?: string | null }): string {
 
 packages/app-client/src/modules/notes/notes.services.ts
-     1→import …
+     1→import { apiClient } from '../shared/http/http-client';
 
 packages/app-client/src/modules/notes/notes.usecases.ts
-     2→import …
+     2→import { storeNote } from './notes.services';
 
 packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.models.ts
      3→function defineEncryptionMethods …
@@ -746,17 +691,21 @@ packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.types.ts
      3→export type EncryptionMethodsDefinition …
 
 packages/crypto/src/node/encryption-algorithms/crypto.node.aes-256-gcm.test.ts
-     2→import …
-     3→import …
+     2→import { runCommonEncryptionAlgorithmTest } from '../../encryption-algorithms/encryption-algorithms.test-utils';
+     3→import { aes256GcmEncryptionAlgorithmDefinition } from './crypto.node.aes-256-gcm';
 
 packages/crypto/src/node/encryption-algorithms/crypto.node.aes-256-gcm.ts
-     2→import …
-     3→import …
+     2→import { defineEncryptionMethods } from '../../encryption-algorithms/encryption-algorithms.models';
+     3→import { base64UrlToBuffer, bufferToBase64Url, createRandomBuffer } from '../crypto.node.usecases';
      5→export const aes256GcmEncryptionAlgorithmDefinition …
 
 packages/crypto/src/web/encryption-algorithms/crypto.node.aes-256-gcm.test.ts
+     2→import { runCommonEncryptionAlgorithmTest } from '../../encryption-algorithms/encryption-algorithms.test-utils';
+     3→import { aes256GcmEncryptionAlgorithmDefinition } from './crypto.web.aes-256-gcm';
 
 packages/crypto/src/web/encryption-algorithms/crypto.web.aes-256-gcm.ts
+     1→import { defineEncryptionMethods } from '../../encryption-algorithms/encryption-algorithms.models';
+     2→import { base64UrlToBuffer, bufferToBase64Url, createRandomBuffer } from '../crypto.web.usecases';
      4→export const aes256GcmEncryptionAlgorithmDefinition …
 
 Dockerfile
@@ -864,6 +813,10 @@ packages/
 
 packages/app-client/e2e-tests/
 
+packages/app-client/public/
+
+packages/app-client/src/assets/
+
 packages/app-client/src/modules/
 
 packages/app-client/src/modules/notes/components/
@@ -905,5 +858,9 @@ packages/app-server/src/modules/shared/validation/
 packages/app-server/src/modules/storage/factories/
 
 packages/app-server/src/scripts/
+
+packages/docs/src/public/
+
+packages/docs/src/public/logos/
 
 packages/lib/src/crypto/serialization/cbor-array/

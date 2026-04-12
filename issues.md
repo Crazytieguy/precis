@@ -116,13 +116,6 @@ constructing relative paths at discovery time would clean this up.
 header was already computed in `header_cost_for`. Cache the formatted
 string alongside the cost.
 
-### `is_source_file` accepts binary files
-
-`is_source_file` returns `true` for any file with an extension that
-isn't a lockfile. This means `.png`, `.jpg`, `.wasm`, `.exe`, `.zip`
-etc. all pass the filter. It should use an allowlist of text/source
-extensions or at minimum a denylist of known binary extensions.
-
 ### `classify_file` called on directories
 
 `folders.rs:59` calls `classify_file(&rel_dir)` on directory paths to

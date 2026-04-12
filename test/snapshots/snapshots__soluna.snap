@@ -7,7 +7,6 @@ README.md
     19→## Documentation
     25→## Precompiled Binaries
     29→## Building from Source
-    33→### Integration with the Actions of your projects
     53→## Projects made with Soluna
 
 bin/readme.txt
@@ -19,6 +18,8 @@ make.lua
     35→lm.basedir …
     36→lm.bindir …
     37→lm.osbindir …
+
+asset/sprites.dl
 
 src/data/settingdefault.dl
 
@@ -477,12 +478,6 @@ src/writelog.c
 
 src/yogaone.cpp
 
-asset/avatar.png
-
-asset/lua-logo.png
-
-asset/sprites.dl
-
 src/platform/macos/soluna_macos_ime.h
      6→void soluna_macos_install_ime(void);
      7→void soluna_macos_hide_ime_label(void);
@@ -512,6 +507,14 @@ src/service/start.lua
 web/content/_index.md
 
 web/content/playframe.md
+
+web/assets/htmx.js
+
+web/assets/play.js
+
+web/assets/playframe.js
+
+web/assets/site.css
 
 web/config.toml
 
@@ -562,8 +565,6 @@ src/platform/wasm/
 src/platform/windows/
 
 test/
-
-web/assets/
 
 web/content/examples/
 

@@ -83,12 +83,6 @@ source/index.ts
     10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
     34→const ky …
 
-media/logo.ai
-
-media/logo.png
-
-media/logo.svg
-
 source/core/Ky.ts
      1→import {HTTPError} from '../errors/HTTPError.js';
      2→import {NonError} from '../errors/NonError.js';
@@ -320,6 +314,8 @@ source/utils/type-guards.ts
 source/utils/types.ts
      1→export type Mutable …
      5→export type ObjectEntries …
+
+media/logo.svg
 
 package.json
      2→	"name": "ky",

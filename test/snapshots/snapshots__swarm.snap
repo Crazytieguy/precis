@@ -26,12 +26,6 @@ README.md
    340→# Utils
    350→# Core Contributors
 
-assets/diagram.png
-
-assets/logo.png
-
-assets/swarm_diagram.png
-
 swarm/__init__.py
      1→from .core import Swarm
      2→from .types import Agent, Response
@@ -453,18 +447,22 @@ examples/customer_service_streaming/configs/prompts.py
 examples/customer_service_streaming/configs/swarm_tasks.json
 
 examples/customer_service_streaming/src/runs/run.py
-     5→class Run …
 
 examples/customer_service_streaming/src/tasks/task.py
-     3→class Task …
-    12→class EvaluationTask …
+
+examples/customer_service/logs/session_20240422-134602.json
+
+examples/customer_service/logs/session_20240422-135231.json
+
+examples/customer_service/logs/session_20240422-135321.json
+
+examples/customer_service/logs/session_20240422-140035.json
+
+examples/customer_service/logs/session_20240422-141344.json
 
 examples/airline/data/routines/prompts.py
-     1→STARTER_PROMPT …
-    18→TRIAGE_SYSTEM_PROMPT …
 
-examples/customer_service_streaming/src/evals/eval_function.py
-     8→class EvalFunction …
+assets/
 
 examples/airline/data/
 
@@ -477,8 +475,6 @@ examples/airline/evals/eval_cases/
 examples/airline/evals/eval_results/
 
 examples/customer_service/
-
-examples/customer_service/logs/
 
 examples/customer_service_lite/
 
@@ -499,6 +495,8 @@ examples/customer_service_streaming/configs/tools/submit_ticket/
 examples/customer_service_streaming/data/
 
 examples/customer_service_streaming/logs/
+
+examples/customer_service_streaming/src/evals/
 
 examples/customer_service_streaming/src/swarm/
 

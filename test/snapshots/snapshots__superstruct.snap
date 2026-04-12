@@ -23,7 +23,11 @@ src/error.ts
      2→ * A `StructFailure` represents a single specific failure in validation.
      5→export type Failure …
     17→ * `StructError` objects are thrown (or returned) when validation fails.
-      →…
+    18→ *
+    19→ * Validation logic is design to exit early for maximum performance. The error
+    20→ * represents the first error encountered during validation. For more detail,
+    21→ * the `error.failures` property is a generator function that can be run to
+    22→ * continue validation and receive all the failures in the data.
     25→export class StructError …
 
 src/index.ts
@@ -32,7 +36,8 @@ src/struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
      2→import { StructError, Failure } from './error.js'
      5→ * `Struct` objects encapsulate the validation logic for a specific type of
-      →…
+     6→ * values. Once constructed, you use the `assert`, `is` or `validate` helpers to
+     7→ * validate unknown input data against the struct.
     10→export class Struct …
    120→ * Assert that a value passes a struct, throwing if it doesn't.
    123→export function assert<T, S>(
@@ -90,8 +95,6 @@ src/utils.ts
      2→import { Failure } from './error.js'
      5→ * Check if a value is an iterator.
      8→function isIterable<T>(x: unknown): x is Iterable<T> {
-     9→  return isObject(x) && typeof x[Symbol.iterator] === 'function'
-    10→}
     13→ * Check if a value is a plain object.
     16→export function isObject(x: unknown): x is object {
     21→ * Check if a value is a non-array object.
@@ -279,18 +282,6 @@ src/structs/utilities.ts
    221→export function pick …
    247→export function struct …
 
-docs/images/banner.png
-
-docs/images/demo-screenshot.png
-
-docs/images/docs-screenshot.png
-
-docs/images/icon.png
-
-docs/images/logo.png
-
-docs/images/logo.sketch
-
 docs/reference/coercions.md
      1→# Coercions
 
@@ -385,10 +376,8 @@ Changelog.md
     28→#### New Maintainers & Next Steps
 
 test/deprecated.test.ts
-     2→import …
 
 test/index.test.ts
-     5→import …
 
 test/index.ts
      2→ * A helper for testing type signatures.
@@ -401,18 +390,11 @@ test/tsconfig.json
      5→    "skipLibCheck": true
      6→  }
 
-test/api/assert.test.ts
-
-test/api/create.test.ts
-
-test/api/is.test.ts
-
-test/api/mask.test.ts
-
-test/api/validate.test.ts
-
 test/validation/never/invalid.ts
-     1→import …
+
+docs/images/
+
+test/api/
 
 test/typings/
 
