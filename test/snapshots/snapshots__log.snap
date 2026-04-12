@@ -232,7 +232,6 @@ src/kv/source.rs
 
 src/kv/value.rs
      1→//! Structured values.
-     8→pub use crate::kv::Error;
     10→/// A type that can be converted into a [`Value`](struct.Value.html).
     11→pub trait ToValue …
     16→impl<T> ToValue for &T …
@@ -331,3 +330,4 @@ CHANGELOG.md
 test_max_level_features/Cargo.toml
 
 test_max_level_features/main.rs
+    17→impl Log for Logger …

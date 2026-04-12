@@ -1,5 +1,6 @@
 use crate::Lang;
 
+use super::name::is_first_party_import;
 use super::{ExtractedItem, ItemKind};
 
 /// Run all post-extraction processing on the item list.
@@ -21,7 +22,7 @@ fn mark_reexports(items: &mut [ExtractedItem<'_>]) {
         if item.kind != ItemKind::Import || !item.is_public {
             continue;
         }
-        if item.name.starts_with("self::") {
+        if is_first_party_import(&item.name, Lang::Rust) {
             item.is_reexport = true;
             continue;
         }

@@ -114,7 +114,6 @@ source.rs
 
 value.rs
      1→//! Structured values.
-     8→pub use crate::kv::Error;
     10→/// A type that can be converted into a [`Value`](struct.Value.html).
     11→pub trait ToValue …
     16→impl<T> ToValue for &T …

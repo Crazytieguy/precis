@@ -196,15 +196,6 @@ These aren't config files — they're low-priority source or assets. The
 function name doesn't match what it actually tests (more like
 "is_deprioritized_file"). Either rename or split the concerns.
 
-### `mark_reexports` misses `crate::` and `super::` paths
-
-`postprocess.rs:24` checks `self::` but not `crate::` or `super::`.
-A `pub use crate::foo::Bar` is a reexport of an item from the same
-crate, as is `pub use super::Bar`. Both should set `is_reexport = true`.
-
-Fix: add `item.name.starts_with("crate::")` and
-`item.name.starts_with("super::")` checks alongside the `self::` one.
-
 ### `is_generated` detection never affects scheduling
 
 `files_contribution()` in `heuristics.rs:122` accepts `is_generated`
