@@ -3,7 +3,7 @@ use crate::Lang;
 use super::ItemKind;
 use super::ast::has_preceding_attribute;
 
-pub(super) fn determine_visibility(
+pub(crate) fn determine_visibility(
     node: tree_sitter::Node,
     kind: ItemKind,
     name: &str,

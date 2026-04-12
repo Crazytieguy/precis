@@ -1,5 +1,6 @@
 //! Tree-sitter group: key enum, children(), render(), and text helpers.
 
+use std::collections::HashMap;
 use std::path::PathBuf;
 
 use crate::render::LineEntry;
@@ -252,12 +253,15 @@ pub fn children<'s>(g: &mut TsGroup<'s>, _ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
         }
         ClassName { documented, .. } => {
             spawn_type_children(&mut result, g, ClassDocFirst, None, *documented);
+            spawn_method_children(&mut result, g, 1.0);
         }
         InterfaceName { documented, .. } => {
             spawn_type_children(&mut result, g, InterfaceDocFirst, None, *documented);
+            spawn_method_children(&mut result, g, 1.0);
         }
         TraitName { documented, .. } => {
             spawn_type_children(&mut result, g, TraitDocFirst, None, *documented);
+            spawn_method_children(&mut result, g, 1.0);
         }
         TypeAliasName { documented, .. } => {
             if *documented && !g.items.is_empty() {
@@ -291,6 +295,11 @@ pub fn children<'s>(g: &mut TsGroup<'s>, _ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
                     cached_render: None,
                 }));
             }
+        }
+        ImplBlock { is_trait_impl } => {
+            // Design §4: trait impl methods are boilerplate.
+            let factor = if *is_trait_impl { 0.5 } else { 1.0 };
+            spawn_method_children(&mut result, g, factor);
         }
         Import { first_party, reexport } => {
             if !g.items.is_empty() {
@@ -384,12 +393,196 @@ fn clone_ts_item<'s>(item: &TsItem<'s>) -> TsItem<'s> {
     }
 }
 
+/// Spawn FunctionName child groups for methods within a container type
+/// (class, interface, trait, or impl block). Design §4: methods are
+/// represented by ordinary FunctionName groups whose inherited_modifier
+/// comes from the parent chain.
+///
+/// `modifier_factor` is an additional multiplier (e.g. 0.5 for trait impl
+/// methods per design §4).
+fn spawn_method_children<'s>(
+    result: &mut Vec<Group<'s>>,
+    parent: &TsGroup<'s>,
+    modifier_factor: f64,
+) {
+    let Some(first_item) = parent.items.first() else {
+        return;
+    };
+    let lang = Lang::from_path(&first_item.path);
+
+    let mut buckets: HashMap<(bool, bool), Vec<TsItem<'s>>> = HashMap::new();
+
+    for item in &parent.items {
+        let method_nodes = find_method_nodes(item.node, lang);
+
+        for method_node in method_nodes {
+            let name = extract_method_name(method_node, item.source, lang);
+
+            let is_public = crate::parse::visibility::determine_visibility(
+                method_node,
+                crate::parse::ItemKind::Function,
+                &name,
+                item.source,
+                lang.unwrap_or(Lang::Rust),
+            );
+            let is_documented = crate::parse::ast::compute_doc_start_line(
+                method_node,
+                item.source,
+                lang.unwrap_or(Lang::Rust),
+            )
+            .is_some();
+
+            let ts_item = TsItem {
+                path: item.path.clone(),
+                source: item.source,
+                node: method_node,
+                name,
+                start_line: method_node.start_position().row,
+                end_line: method_node.end_position().row + 1,
+            };
+
+            buckets
+                .entry((is_documented, is_public))
+                .or_default()
+                .push(ts_item);
+        }
+    }
+
+    if buckets.is_empty() {
+        return;
+    }
+
+    let base_modifier = parent.inherited_modifier * modifier_factor;
+
+    let mut direct: Vec<Group<'s>> = Vec::new();
+    let mut gated: Vec<Group<'s>> = Vec::new();
+
+    let mut sorted_buckets: Vec<_> = buckets.into_iter().collect();
+    sorted_buckets.sort_by_key(|&(k, _)| k);
+
+    for ((documented, public), items) in sorted_buckets {
+        let key = TsGroupKey::FunctionName { documented, public };
+        let modifier =
+            super::files::compute_item_modifier(&key, base_modifier, false);
+
+        let group = Group::Ts(TsGroup {
+            key,
+            items,
+            inherited_modifier: modifier,
+            dependent_siblings: vec![],
+            cached_render: None,
+        });
+
+        if public {
+            direct.push(group);
+        } else {
+            gated.push(group);
+        }
+    }
+
+    // Attach private method groups as dependent_siblings of public groups.
+    // If no public methods exist, promote private groups directly (design §4).
+    if !direct.is_empty() {
+        for gated_group in gated {
+            if let Group::Ts(ref mut parent_group) = direct[0] {
+                parent_group.dependent_siblings.push(gated_group);
+            }
+        }
+        result.extend(direct);
+    } else {
+        result.extend(gated);
+    }
+}
+
+/// Find method/function child nodes within a container type's AST node.
+fn find_method_nodes<'a>(
+    container_node: tree_sitter::Node<'a>,
+    lang: Option<Lang>,
+) -> Vec<tree_sitter::Node<'a>> {
+    let Some(body) = container_node.child_by_field_name("body") else {
+        return vec![];
+    };
+
+    let mut methods = vec![];
+    let mut cursor = body.walk();
+
+    for child in body.children(&mut cursor) {
+        if is_method_node(child, lang) {
+            methods.push(child);
+        } else if lang == Some(Lang::Python) && child.kind() == "decorated_definition" {
+            // Python decorated methods: unwrap to the function_definition inside.
+            let mut inner_cursor = child.walk();
+            for inner in child.children(&mut inner_cursor) {
+                if inner.kind() == "function_definition" {
+                    methods.push(inner);
+                    break;
+                }
+            }
+        }
+    }
+
+    methods
+}
+
+/// Check whether a tree-sitter node represents a method/function declaration.
+fn is_method_node(node: tree_sitter::Node, lang: Option<Lang>) -> bool {
+    match lang {
+        Some(Lang::Rust) => {
+            matches!(node.kind(), "function_item" | "function_signature_item")
+        }
+        Some(Lang::JsTs) => match node.kind() {
+            "method_definition" | "method_signature" | "abstract_method_signature" => true,
+            "public_field_definition" => node
+                .child_by_field_name("value")
+                .is_some_and(|v| {
+                    matches!(
+                        v.kind(),
+                        "arrow_function" | "function_expression" | "generator_function"
+                    )
+                }),
+            _ => false,
+        },
+        Some(Lang::Java) => {
+            matches!(
+                node.kind(),
+                "method_declaration" | "constructor_declaration"
+            )
+        }
+        Some(Lang::Python) => node.kind() == "function_definition",
+        Some(Lang::C) => node.kind() == "function_definition",
+        _ => false,
+    }
+}
+
+/// Extract a method's name from its tree-sitter node.
+fn extract_method_name(node: tree_sitter::Node, source: &str, lang: Option<Lang>) -> String {
+    // Most languages use a "name" field on the method node.
+    if let Some(name) = node
+        .child_by_field_name("name")
+        .and_then(|n| n.utf8_text(source.as_bytes()).ok())
+    {
+        return name.trim().to_string();
+    }
+
+    // C/C++: name is nested inside the declarator chain.
+    if matches!(lang, Some(Lang::C))
+        && let Some(decl) = node.child_by_field_name("declarator")
+        && let Some(id) = crate::parse::ast::find_descendant_of_kind(decl, "identifier")
+            .or_else(|| crate::parse::ast::find_descendant_of_kind(decl, "field_identifier"))
+        && let Ok(name) = id.utf8_text(source.as_bytes())
+    {
+        return name.trim().to_string();
+    }
+
+    "?".to_string()
+}
+
 // ---------------------------------------------------------------------------
 // render() — produce LineEntry values for this group (R3: context-free)
 // ---------------------------------------------------------------------------
 
 pub fn render_entries<'s>(g: &TsGroup<'s>, _ctx: &ScheduleCtx<'s>) -> Vec<(PathBuf, Vec<LineEntry<'s>>)> {
-    let mut per_file: std::collections::HashMap<PathBuf, Vec<LineEntry<'s>>> = std::collections::HashMap::new();
+    let mut per_file: HashMap<PathBuf, Vec<LineEntry<'s>>> = HashMap::new();
 
     for item in &g.items {
         let entries = render_item(&g.key, item);

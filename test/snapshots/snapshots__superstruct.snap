@@ -9,7 +9,6 @@ Readme.md
    181→### Demo
    189→### Examples
    205→### Documentation
-   231→### License
 
 docs/readme.md
      7→### Usage
@@ -32,12 +31,9 @@ src/error.ts
      2→ * A `StructFailure` represents a single specific failure in validation.
      5→export type Failure …
     17→ * `StructError` objects are thrown (or returned) when validation fails.
-    18→ *
-    19→ * Validation logic is design to exit early for maximum performance. The error
-    20→ * represents the first error encountered during validation. For more detail,
-    21→ * the `error.failures` property is a generator function that can be run to
-    22→ * continue validation and receive all the failures in the data.
+      →…
     25→export class StructError …
+    35→  constructor …
 
 src/index.ts
 
@@ -45,9 +41,34 @@ src/struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
      2→import { StructError, Failure } from './error.js'
      5→ * `Struct` objects encapsulate the validation logic for a specific type of
-     6→ * values. Once constructed, you use the `assert`, `is` or `validate` helpers to
-     7→ * validate unknown input data against the struct.
+      →…
     10→export class Struct …
+    22→  constructor …
+    64→   * Assert that a value passes the struct's validation, throwing if it doesn't.
+    67→  assert(value: unknown, message?: string): asserts value is T {
+    72→   * Create a value with the struct's coercion logic, then validate it.
+    75→  create(value: unknown, message?: string): T {
+    80→   * Check if a value passes the struct's validation.
+    83→  is(value: unknown): value is T {
+    88→   * Mask a value, coercing and validating it, but returning only the subset of
+    89→   * properties defined by the struct's schema. Masking applies recursively to
+    90→   * props of `object` structs only.
+    93→  mask(value: unknown, message?: string): T {
+    98→   * Validate a value with the struct's validation logic, returning a tuple
+    99→   * representing the result.
+   100→   *
+   101→   * You may optionally pass `true` for the `coerce` argument to coerce
+   102→   * the value before attempting to validate it. If you do, the result will
+   103→   * contain the coerced result when successful. Also, `mask` will turn on
+   104→   * masking of the unknown `object` props recursively if passed.
+   107→  validate(
+   108→    value: unknown,
+   109→    options: {
+   110→      coerce?: boolean
+   111→      mask?: boolean
+   112→      message?: string
+   113→    } = {}
+   114→  ): [StructError, undefined] | [undefined, T] {
    120→ * Assert that a value passes a struct, throwing if it doesn't.
    123→export function assert<T, S>(
    124→  value: unknown,
@@ -104,8 +125,6 @@ src/utils.ts
      2→import { Failure } from './error.js'
      5→ * Check if a value is an iterator.
      8→function isIterable<T>(x: unknown): x is Iterable<T> {
-     9→  return isObject(x) && typeof x[Symbol.iterator] === 'function'
-    10→}
     13→ * Check if a value is a plain object.
     16→export function isObject(x: unknown): x is object {
     21→ * Check if a value is a non-array object.
@@ -174,8 +193,6 @@ examples/README.md
 
 docs/resources/faq.md
      1→# FAQ
-     5→### How can I allow unknown keys with `object` structs?
-    11→### Why not have a built-in `json` struct?
 
 docs/resources/links.md
      1→# Resources
@@ -193,7 +210,7 @@ src/structs/refinements.ts
      1→import { Struct, Refiner } from '../struct.js'
      2→import { toFailures } from '../utils.js'
      8→export function empty …
-    21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
+    21→function getSize …
     33→export function max …
     55→export function min …
     77→export function nonempty …
@@ -362,33 +379,12 @@ examples/throwing-errors.js
 License.md
 
 test/deprecated.test.ts
-     2→import { any, assert, deprecated } from '../src'
 
 test/index.test.ts
-     5→import {
-     6→  assert as assertValue,
-     7→  create as createValue,
-     8→  StructError,
-     9→} from '../src'
 
 test/index.ts
-     2→ * A helper for testing type signatures.
-     5→export function test<T>(fn: (x: unknown) => T) {}
 
-Changelog.md
-     1→# Changelog
-
-examples/package.json
-     2→  "type": "module",
-     3→  "license": "MIT",
-     4→  "dependencies": {
-
-test/tsconfig.json
-     2→  "extends": "../tsconfig.json",
-     3→  "include": ["./**/*.ts"],
-     4→  "compilerOptions": {
-     5→    "skipLibCheck": true
-     6→  }
+test/validation/never/invalid.ts
 
 docs/images/
 
@@ -439,8 +435,6 @@ test/validation/map/
 test/validation/max/
 
 test/validation/min/
-
-test/validation/never/
 
 test/validation/nullable/
 

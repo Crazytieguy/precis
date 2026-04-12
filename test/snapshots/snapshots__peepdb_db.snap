@@ -16,35 +16,83 @@ __init__.py
 
 base.py
      5→class BaseDatabase …
+     6→    def __init__(self, host: str, user: str, password: str, database: str, port: int = None, **kwargs):
+    18→    def connect(self) -> None:
+    22→    def disconnect(self) -> None:
+    26→    def fetch_tables(self) -> List[str]:
+    30→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
+    33→    def __enter__(self):
+    37→    def __exit__(self, exc_type, exc_val, exc_tb):
 
 firebase.py
      4→from .base import BaseDatabase
      9→class FirebaseDatabase …
+    10→    def __init__(self, service_account_path: str, **kwargs):
+    15→    def connect(self):
+    26→    def disconnect(self):
+    30→    def fetch_tables(self) -> List[str]:
+    39→    def fetch_data(self, table_name: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 mariadb.py
      2→from .base import BaseDatabase
      5→class MariaDBDatabase …
+     6→    def connect(self) -> None:
+    23→    def disconnect(self) -> None:
+    30→    def fetch_tables(self) -> List[str]:
+    34→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 mongodb.py
      3→from .base import BaseDatabase
      8→class MongoDBDatabase …
+     9→    def connect(self) -> None:
+    32→    def disconnect(self) -> None:
+    39→    def fetch_tables(self) -> t.List[str]:
+    42→    def fetch_data(
+    43→        self,
+    44→        table: str,
+    45→        page: int = 1,
+    46→        page_size: int = 100
+    47→    ) -> t.Dict[str, t.Any]:
 
 mssql.py
      2→from .base import BaseDatabase
      6→class MSSQLDatabase …
+     7→    def __init__(self, host: str, user: str, password: str, database: str, port: int = 1433, trusted: bool = False, **kwargs):
+    12→    def connect(self) -> None:
+    28→    def disconnect(self) -> None:
+    35→    def fetch_tables(self) -> List[str]:
+    45→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 mysql.py
      2→from .base import BaseDatabase
      5→class MySQLDatabase …
+     6→    def connect(self) -> None:
+    22→    def disconnect(self) -> None:
+    29→    def fetch_tables(self) -> List[str]:
+    33→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 oracle.py
      3→from .base import BaseDatabase
      7→class OracleDatabase …
+     8→    def connect(self) -> None:
+    25→    def disconnect(self) -> None:
+    32→    def fetch_tables(self) -> List[str]:
+    36→    def fetch_data(
+    37→        self, table: str, page: int = 1, page_size: int = 100
+    38→    ) -> Dict[str, Any]:
 
 postgresql.py
      3→from .base import BaseDatabase
      6→class PostgreSQLDatabase …
+     7→    def connect(self) -> None:
+    23→    def disconnect(self) -> None:
+    30→    def fetch_tables(self) -> List[str]:
+    34→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 sqlite.py
      3→from .base import BaseDatabase
      6→class SQLiteDatabase …
+     7→    def connect(self) -> None:
+    22→    def disconnect(self) -> None:
+    29→    def fetch_tables(self) -> List[str]:
+    43→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:

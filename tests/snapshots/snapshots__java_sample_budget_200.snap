@@ -6,16 +6,17 @@ Token.java
      9→ * A sample class demonstrating Java features.
     10→ * Includes methods, fields, and constructors.
     12→public class Token …
+    16→    public Token(String value) {
+    20→    public Token() {
+    25→     * Get the value.
+    26→     * @return the token value
+    28→    public String getValue() {
+    32→    public void setValue(String value) {
+    36→    private void helper() {}
     40→ * Visitor interface for processing tokens.
     42→public interface Visitor …
+    44→    void visit(Token token);
+    45→    default void visitAll(List<Token> tokens) {
     50→public enum TokenKind …
-    51→    IDENT,
-    52→    NUMBER,
-    53→    SYMBOL;
-    54→
-    55→    public String display() {
-    56→        return name().toLowerCase();
-    57→    }
-    58→}
     60→public record Span …
     62→@interface Generated …

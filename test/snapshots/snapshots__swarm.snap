@@ -44,6 +44,45 @@ swarm/core.py
     21→)
     23→__CTX_VARS_NAME__ …
     26→class Swarm …
+    27→    def __init__(self, client=None):
+    32→    def get_chat_completion(
+    33→        self,
+    34→        agent: Agent,
+    35→        history: List,
+    36→        context_variables: dict,
+    37→        model_override: str,
+    38→        stream: bool,
+    39→        debug: bool,
+    40→    ) -> ChatCompletionMessage:
+    71→    def handle_function_result(self, result, debug) -> Result:
+    89→    def handle_tool_calls(
+    90→        self,
+    91→        tool_calls: List[ChatCompletionMessageToolCall],
+    92→        functions: List[AgentFunction],
+    93→        context_variables: dict,
+    94→        debug: bool,
+    95→    ) -> Response:
+   139→    def run_and_stream(
+   140→        self,
+   141→        agent: Agent,
+   142→        messages: List,
+   143→        context_variables: dict = {},
+   144→        model_override: str = None,
+   145→        debug: bool = False,
+   146→        max_turns: int = float("inf"),
+   147→        execute_tools: bool = True,
+   148→    ):
+   231→    def run(
+   232→        self,
+   233→        agent: Agent,
+   234→        messages: List,
+   235→        context_variables: dict = {},
+   236→        model_override: str = None,
+   237→        stream: bool = False,
+   238→        debug: bool = False,
+   239→        max_turns: int = float("inf"),
+   240→        execute_tools: bool = True,
+   241→    ) -> Response:
 
 swarm/types.py
     14→class Agent …
@@ -52,82 +91,9 @@ swarm/types.py
 
 swarm/util.py
      5→def debug_print(debug: bool, *args: str) -> None:
-     6→    if not debug:
-     7→        return
-     8→    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-     9→    message = " ".join(map(str, args))
-    10→    print(f"\033[97m[\033[90m{timestamp}\033[97m]\033[90m {message}\033[0m")
     13→def merge_fields(target, source):
-    14→    for key, value in source.items():
-    15→        if isinstance(value, str):
-    16→            target[key] += value
-    17→        elif value is not None and isinstance(value, dict):
-    18→            merge_fields(target[key], value)
     21→def merge_chunk(final_response: dict, delta: dict) -> None:
-    22→    delta.pop("role", None)
-    23→    merge_fields(final_response, delta)
-    24→
-    25→    tool_calls = delta.get("tool_calls")
-    26→    if tool_calls and len(tool_calls) > 0:
-    27→        index = tool_calls[0].pop("index")
-    28→        merge_fields(final_response["tool_calls"][index], tool_calls[0])
     31→def function_to_json(func) -> dict:
-    32→    """
-    33→    Converts a Python function into a JSON-serializable dictionary
-    34→    that describes the function's signature, including its name,
-    35→    description, and parameters.
-    36→
-    37→    Args:
-    38→        func: The function to be converted.
-    39→
-    40→    Returns:
-    41→        A dictionary representing the function's signature in JSON format.
-    42→    """
-    43→    type_map = {
-    44→        str: "string",
-    45→        int: "integer",
-    46→        float: "number",
-    47→        bool: "boolean",
-    48→        list: "array",
-    49→        dict: "object",
-    50→        type(None): "null",
-    51→    }
-    52→
-    53→    try:
-    54→        signature = inspect.signature(func)
-    55→    except ValueError as e:
-    56→        raise ValueError(
-    57→            f"Failed to get signature for function {func.__name__}: {str(e)}"
-    58→        )
-    59→
-    60→    parameters = {}
-    61→    for param in signature.parameters.values():
-    62→        try:
-    63→            param_type = type_map.get(param.annotation, "string")
-    64→        except KeyError as e:
-    65→            raise KeyError(
-    66→                f"Unknown type annotation {param.annotation} for parameter {param.name}: {str(e)}"
-    67→            )
-    68→        parameters[param.name] = {"type": param_type}
-    69→
-    70→    required = [
-    71→        param.name
-    72→        for param in signature.parameters.values()
-    73→        if param.default == inspect._empty
-    74→    ]
-    75→
-    76→    return {
-    77→        "type": "function",
-    78→        "function": {
-    79→            "name": func.__name__,
-    80→            "description": func.__doc__ or "",
-    81→            "parameters": {
-    82→                "type": "object",
-    83→                "properties": parameters,
-    84→                "required": required,
-    85→            },
-    86→        },
-    87→    }
 
 swarm/repl/__init__.py
      1→from .repl import run_demo_loop
@@ -249,6 +215,23 @@ tests/__init__.py
 tests/mock_client.py
      8→def create_mock_response(message, function_calls=[], model="gpt-4o"):
     44→class MockOpenAIClient …
+    45→    def __init__(self):
+    46→        self.chat = MagicMock()
+    47→        self.chat.completions = MagicMock()
+    49→    def set_response(self, response: ChatCompletion):
+    50→        """
+    51→        Set the mock to return a specific response.
+    52→        :param response: A ChatCompletion response to return.
+    53→        """
+    54→        self.chat.completions.create.return_value = response
+    56→    def set_sequential_responses(self, responses: list[ChatCompletion]):
+    57→        """
+    58→        Set the mock to return different responses sequentially.
+    59→        :param responses: A list of ChatCompletion responses to return in order.
+    60→        """
+    61→        self.chat.completions.create.side_effect = responses
+    63→    def assert_create_called_with(self, **kwargs):
+    64→        self.chat.completions.create.assert_called_with(**kwargs)
 
 tests/test_core.py
      7→DEFAULT_RESPONSE_CONTENT …
@@ -404,6 +387,12 @@ examples/support_bot/requirements.txt
 examples/customer_service_streaming/docker-compose.yaml
      1→version: '3.4'
      2→services:
+     3→  qdrant:
+     4→    image: qdrant/qdrant:v1.3.0
+     5→    restart: on-failure
+     6→    ports:
+     7→      - "6333:6333"
+     8→      - "6334:6334"
 
 tests/test_runs/test_20240402-113647.json
 
@@ -447,8 +436,11 @@ examples/customer_service_streaming/configs/prompts.py
 examples/customer_service_streaming/configs/swarm_tasks.json
 
 examples/customer_service_streaming/src/runs/run.py
+     5→class Run …
 
 examples/customer_service_streaming/src/tasks/task.py
+     3→class Task …
+    12→class EvaluationTask …
 
 examples/customer_service/logs/session_20240422-134602.json
 
@@ -460,7 +452,18 @@ examples/customer_service/logs/session_20240422-140035.json
 
 examples/customer_service/logs/session_20240422-141344.json
 
+examples/customer_service_lite/logs/session_20240425-175026.json
+
+examples/customer_service_lite/logs/session_20240425-175112.json
+
+examples/customer_service_lite/logs/session_20240425-175154.json
+
+examples/customer_service_lite/logs/session_20240425-175210.json
+
 examples/airline/data/routines/prompts.py
+
+examples/customer_service_streaming/src/evals/eval_function.py
+     8→class EvalFunction …
 
 assets/
 
@@ -478,8 +481,6 @@ examples/customer_service/
 
 examples/customer_service_lite/
 
-examples/customer_service_lite/logs/
-
 examples/customer_service_streaming/configs/assistants/
 
 examples/customer_service_streaming/configs/assistants/user_interface/
@@ -495,8 +496,6 @@ examples/customer_service_streaming/configs/tools/submit_ticket/
 examples/customer_service_streaming/data/
 
 examples/customer_service_streaming/logs/
-
-examples/customer_service_streaming/src/evals/
 
 examples/customer_service_streaming/src/swarm/
 

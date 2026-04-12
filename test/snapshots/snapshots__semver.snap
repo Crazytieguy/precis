@@ -52,12 +52,25 @@ range.bnf
 classes/comparator.js
      3→const ANY …
      5→class Comparator …
+     6→  static get ANY () {
+    10→  constructor (comp, options) {
+    36→  parse (comp) {
+    57→  toString () {
+    61→  test (version) {
+    79→  intersects (comp, options) {
 
 classes/index.js
 
 classes/range.js
      3→const SPACE_CHARACTERS …
      6→class Range …
+     7→  constructor (range, options) {
+    73→  get range () {
+    92→  format () {
+    96→  toString () {
+   100→  parseRange (range) {
+   170→  intersects (range, options) {
+   193→  test (version) {
    218→const cache …
    233→const isNullSet = c => c.value === '<0.0.0-0'
    234→const isAny = c => c.value === ''
@@ -77,6 +90,14 @@ classes/range.js
 
 classes/semver.js
      9→class SemVer …
+    10→  constructor (version, options) {
+    81→  format () {
+    89→  toString () {
+    93→  compare (other) {
+   109→  compareMain (other) {
+   135→  comparePre (other) {
+   168→  compareBuild (other) {
+   194→  inc (release, identifier, identifierBase) {
 
 internal/constants.js
      5→const SEMVER_SPEC_VERSION …
@@ -96,6 +117,10 @@ internal/identifiers.js
 
 internal/lrucache.js
      3→class LRUCache …
+     4→  constructor () {
+     9→  get (key) {
+    21→  delete (key) {
+    25→  set (key, value) {
 
 internal/parse-options.js
      4→const looseOption …
@@ -151,83 +176,86 @@ ranges/valid.js
      4→const validRange = (range, options) => {
 
 functions/clean.js
-     4→const clean = (version, options) => {
+     4→const clean …
 
 functions/cmp.js
-    10→const cmp = (a, op, b, loose) => {
+    10→const cmp …
 
 functions/coerce.js
-     7→const coerce = (version, options) => {
+     7→const coerce …
 
 functions/compare-build.js
-     4→const compareBuild = (a, b, loose) => {
+     4→const compareBuild …
 
 functions/compare-loose.js
-     4→const compareLoose = (a, b) => compare(a, b, true)
+     4→const compareLoose …
 
 functions/compare.js
-     4→const compare = (a, b, loose) =>
+     4→const compare …
 
 functions/diff.js
-     5→const diff = (version1, version2) => {
+     5→const diff …
 
 functions/eq.js
-     4→const eq = (a, b, loose) => compare(a, b, loose) === 0
+     4→const eq …
 
 functions/gt.js
-     4→const gt = (a, b, loose) => compare(a, b, loose) > 0
+     4→const gt …
 
 functions/gte.js
-     4→const gte = (a, b, loose) => compare(a, b, loose) >= 0
+     4→const gte …
 
 functions/inc.js
-     5→const inc = (version, release, options, identifier, identifierBase) => {
+     5→const inc …
 
 functions/lt.js
-     4→const lt = (a, b, loose) => compare(a, b, loose) < 0
+     4→const lt …
 
 functions/lte.js
-     4→const lte = (a, b, loose) => compare(a, b, loose) <= 0
+     4→const lte …
 
 functions/major.js
-     4→const major = (a, loose) => new SemVer(a, loose).major
+     4→const major …
 
 functions/minor.js
-     4→const minor = (a, loose) => new SemVer(a, loose).minor
+     4→const minor …
 
 functions/neq.js
-     4→const neq = (a, b, loose) => compare(a, b, loose) !== 0
+     4→const neq …
 
 functions/parse.js
-     4→const parse = (version, options, throwErrors = false) => {
+     4→const parse …
 
 functions/patch.js
-     4→const patch = (a, loose) => new SemVer(a, loose).patch
+     4→const patch …
 
 functions/prerelease.js
-     4→const prerelease = (version, options) => {
+     4→const prerelease …
 
 functions/rcompare.js
-     4→const rcompare = (a, b, loose) => compare(b, a, loose)
+     4→const rcompare …
 
 functions/rsort.js
-     4→const rsort = (list, loose) => list.sort((a, b) => compareBuild(b, a, loose))
+     4→const rsort …
 
 functions/satisfies.js
-     4→const satisfies = (version, range, options) => {
+     4→const satisfies …
 
 functions/sort.js
-     4→const sort = (list, loose) => list.sort((a, b) => compareBuild(a, b, loose))
+     4→const sort …
 
 functions/valid.js
-     4→const valid = (version, options) => {
+     4→const valid …
 
 test/index.js
 
 test/map.js
-    13→const getFile …
-    23→const walk …
-    28→const walkAll …
+     9→const ROOT …
+    10→const TEST …
+    11→const IGNORE_DIRS …
+    13→const getFile = (f) => {
+    23→const walk = (item, res = []) => getFile(item) || readdirSync(item)
+    28→const walkAll = (items, relativeTo) => items
 
 test/preload.js
 
@@ -380,10 +408,13 @@ benchmarks/bench-satisfies.js
 benchmarks/bench-subset.js
 
 test/bin/semver.js
+     9→const bin …
 
 test/integration/whitespace.js
 
 .github/matchers/tap.json
+
+tap-snapshots/test/bin/semver.js.test.cjs
 
 .github/actions/create-check/action.yml
 
@@ -398,8 +429,6 @@ test/integration/whitespace.js
 tap-snapshots/
 
 tap-snapshots/test/
-
-tap-snapshots/test/bin/
 
 test/classes/
 

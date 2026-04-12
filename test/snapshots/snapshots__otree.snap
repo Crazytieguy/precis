@@ -32,10 +32,9 @@ Cargo.toml
     47→too_many_lines = "allow" # necessary evil for now
 
 src/config/colors.rs
-     7→use super::Config;
-     9→macro_rules! generate_colors_parse …
     21→pub struct Colors …
     55→impl Colors …
+    56→    pub fn default() -> Self {
     78→pub struct DataColors …
    112→impl DataColors …
    162→pub struct TreeColors …
@@ -50,51 +49,28 @@ src/config/colors.rs
    355→impl Color …
 
 src/config/keys.rs
-     7→macro_rules! generate_keys_default …
-    32→macro_rules! generate_actions …
     54→pub enum Key …
-    55→    Char(char),
-    56→
-    57→    Ctrl(char),
-    58→    Alt(char),
-    59→
-    60→    F(u8),
-    61→
-    62→    Backspace,
-    63→    Enter,
-    64→    Left,
-    65→    Right,
-    66→    Up,
-    67→    Down,
-    68→    PageUp,
-    69→    PageDown,
-    70→    Tab,
-    71→    Esc,
-    72→}
     74→impl Key …
    195→pub struct Keys …
    351→pub struct KeyAction …
    356→impl Keys …
+   357→    pub fn get_key_action(&self, event: KeyEvent) -> Option<KeyAction> {
 
 src/config/mod.rs
-    12→use self::colors::Colors;
-    13→use self::keys::Keys;
-    14→use self::types::Types;
     17→pub struct Config …
     53→pub struct Tree …
     62→pub struct Editor …
     74→pub struct Layout …
     83→pub enum LayoutDirection …
-    84→    #[serde(rename = "vertical")]
-    85→    Vertical,
-    86→    #[serde(rename = "horizontal")]
-    87→    Horizontal,
-    88→}
     91→pub struct Header …
    100→pub struct Footer …
    106→pub struct Filter …
    118→pub struct Data …
    127→impl Config …
+   131→    pub fn load(path: Option<String>) -> Result<Self> {
+   144→    pub fn parse(&mut self) -> Result<()> {
+   196→    pub fn default() -> Self {
+   212→    pub fn show(&self) -> Result<()> {
    231→impl Tree …
    240→impl Editor …
    265→impl Layout …
@@ -104,7 +80,6 @@ src/config/mod.rs
    321→impl Data …
 
 src/config/types.rs
-     3→macro_rules! generate_types_default …
     28→pub struct Types …
 
 src/clipboard.rs
@@ -112,10 +87,11 @@ src/clipboard.rs
     28→pub fn write_clipboard(text: &str) -> Result<()> {
 
 src/cmd.rs
-     7→use crate::config::{Config, LayoutDirection};
-     8→use crate::parse::ContentType;
     13→pub struct CommandArgs …
    111→impl CommandArgs …
+   112→    pub fn parse() -> Result<Option<Self>> {
+   149→    pub fn update_config(&self, cfg: &mut Config) {
+   202→    pub fn get_content_type(&self) -> ContentType {
 
 src/debug.rs
      8→macro_rules! debug …
@@ -124,36 +100,31 @@ src/debug.rs
     23→pub fn write_logs(mut msg: String) -> Result<()> {
 
 src/edit.rs
-     8→use crate::config::Config;
     10→pub struct Edit …
     16→impl Edit …
+    17→    pub fn new(cfg: &Config, identify: &str, data: String, extension: &'static str) -> Self {
+    40→    pub fn run(mut self) {
 
 src/live_reload.rs
-    11→use crate::config::Config;
-    12→use crate::debug;
-    13→use crate::parse::ContentType;
-    14→use crate::tree::Tree;
     16→pub struct FileWatcher …
     27→impl FileWatcher …
+    28→    pub fn new(
+    29→        path: PathBuf,
+    30→        cfg: Rc<Config>,
+    31→        content_type: ContentType,
+    32→        max_data_size: usize,
+    33→    ) -> Self {
+    64→    pub fn get_err(&self) -> Option<String> {
+    71→    pub fn parse_tree(&self) -> Option<Tree> {
     93→struct Data …
-    94→    data: RefCell<Option<Vec<u8>>>,
-    95→    err: RefCell<Option<String>>,
-    96→}
     98→impl Data …
    118→fn watch_file(path: &Path, data: Arc<Mutex<Data>>) -> Result<()> {
 
 src/main.rs
-    21→use crate::cmd::CommandArgs;
-    22→use crate::config::Config;
-    23→use crate::parse::{ContentType, SyntaxToken};
-    24→use crate::tree::Tree;
-    25→use crate::ui::{App, HeaderContext};
     27→fn run() -> Result<()> {
    111→fn main() {
 
 src/tree.rs
-    11→use crate::config::Config;
-    12→use crate::parse::{ContentType, Parser, SyntaxToken};
     14→pub struct Tree …
     25→pub struct ItemValue …
     36→pub struct HighlightKeyword …
@@ -166,26 +137,23 @@ src/tree.rs
     48→    Arr,
     49→}
     51→impl Tree …
+    52→    pub fn parse(cfg: Rc<Config>, data: &[u8], content_type: ContentType) -> Result<Self> {
+    58→    pub fn from_value(cfg: Rc<Config>, value: Value, parser: Rc<Box<dyn Parser>>) -> Self {
+    94→    pub fn get_value(&self, path: &str) -> Option<&ItemValue> {
+    98→    pub fn get_parser(&self) -> Rc<Box<dyn Parser>> {
    385→impl ItemValue …
+   386→    pub fn plain_text(&self) -> String {
+   390→    pub fn render(&self, cfg: &Config, width: usize) -> (Text<'_>, usize, usize) {
+   394→    pub fn build_highlighted_text(
+   395→        &self,
+   396→        cfg: &Config,
+   397→        keyword: &str,
+   398→        ignore_case: bool,
+   399→    ) -> Text<'static> {
 
 src/ui/app.rs
     27→enum Refresh …
-    28→    /// Update the TUI
-    29→    Update,
-    30→    /// Skip the update of the TUI
-    31→    Skip,
-    32→    /// Quit the TUI and return to the shell
-    33→    Quit,
-    34→    /// Quit the TUI and edit text
-    35→    Edit(Box<Edit>),
-    36→}
     39→enum ElementInFocus …
-    40→    TreeOverview,
-    41→    DataBlock,
-    42→    Popup,
-    43→    Filter,
-    44→    None,
-    45→}
     48→pub enum ScrollDirection …
     49→    Up,
     50→    Down,
@@ -196,10 +164,23 @@ src/ui/app.rs
     88→    Quit,
     89→}
     91→impl App …
+   102→    pub fn new …
+   133→    pub fn set_header …
+   137→    pub fn show …
 
 src/ui/data_block.rs
     16→pub struct DataBlock …
     32→impl DataBlock …
+    35→    pub fn new …
+    50→    pub fn on_key …
+    62→    pub fn on_scroll …
+    69→    pub fn scroll_first …
+    86→    pub fn scroll_last …
+    99→    pub fn scroll_down …
+   112→    pub fn scroll_up …
+   122→    pub fn scroll_right …
+   136→    pub fn scroll_left …
+   147→    pub fn draw …
 
 src/ui/filter.rs
     13→pub struct Filter …
@@ -216,7 +197,14 @@ src/ui/filter.rs
     37→    All,
     38→}
     40→impl Filter …
+    41→    pub fn new …
+    52→    pub fn on_key …
+    94→    pub fn get_options …
+   102→    pub fn set_target …
+   106→    pub fn switch_ignore_case …
+   119→    pub fn draw …
    152→impl FilterOptions …
+   153→    pub fn filter …
 
 src/ui/footer.rs
     10→pub enum FooterText …
@@ -226,140 +214,157 @@ src/ui/footer.rs
     14→}
     16→pub struct Footer …
     20→impl Footer …
+    21→    pub fn new …
+    25→    pub fn draw …
 
 src/ui/header.rs
     11→pub struct HeaderContext …
     18→impl HeaderContext …
+    19→    pub fn new …
     41→pub struct Header …
     46→impl Header …
+    47→    pub fn new …
+    55→    pub fn draw …
 
 src/ui/mod.rs
-    24→fn get_border_style(focus_color: &Color, normal_color: &Color, focus: bool) -> (Style, BorderType) {
+    24→fn get_border_style …
     35→pub fn start(mut app: App) -> Result<()> {
-    63→fn new_terminal() -> Result<Terminal<CrosstermBackend<Stdout>>> {
-    77→fn restore(terminal: &mut Terminal<CrosstermBackend<Stdout>>) -> Result<()> {
+    63→fn new_terminal …
+    77→fn restore …
 
 src/ui/popup.rs
     13→pub struct PopupData …
     18→pub struct Popup …
     26→impl Popup …
+    27→    pub fn new …
+    35→    pub fn set_data …
+    39→    pub fn on_key …
+    48→    pub fn on_scroll …
+    77→    pub fn disable …
+    87→    pub fn is_disabled …
+    91→    pub fn draw …
+   118→    fn centered_rect(percent_x: u16, percent_y: u16, r: Rect) -> Rect {
 
 src/ui/tree_overview.rs
     19→pub struct TreeOverview …
     32→impl TreeOverview …
+    36→    pub fn new …
+    51→    pub fn get_selected …
+    59→    pub fn get_root_identifies …
+    63→    pub fn get_value …
+    67→    pub fn get_parser …
+    71→    pub fn on_key …
+   240→    pub fn on_click …
+   247→    pub fn on_scroll …
+   254→    pub fn draw …
+   319→    pub fn begin_filter …
+   325→    pub fn end_filter …
+   335→    pub fn filter …
 
 src/parse/any.rs
-     7→use super::{ContentType, Parser, SyntaxToken};
      9→pub struct AnyParser …
     10→    inner: RefCell<Option<Box<dyn Parser>>>,
     11→}
     13→impl AnyParser …
+    14→    pub fn new() -> Self {
+    20→    pub fn set_parser(&self, parser: Box<dyn Parser>) {
     25→impl Parser for AnyParser …
+    26→    fn extension(&self) -> &'static str {
+    30→    fn allow_array_root(&self) -> bool {
+    34→    fn parse(&self, data: &str) -> Result<Value> {
+    38→    fn syntax_highlight(&self, name: &str, value: &Value) -> Vec<SyntaxToken> {
+    46→    fn parse_root(&self, validator: Option<&dyn Parser>, data: &[u8]) -> Result<Value> {
 
 src/parse/hcl.rs
-     4→use super::json::highlight as json_highlight;
-     5→use super::syntax;
-     6→use super::{Parser, SyntaxToken};
      8→pub struct HclParser …
     10→impl Parser for HclParser …
-    28→fn highlight(name: &str, value: Value, indent: usize) -> Vec<SyntaxToken> {
+    11→    fn extension(&self) -> &'static str {
+    15→    fn allow_array_root(&self) -> bool {
+    19→    fn parse(&self, data: &str) -> Result<Value> {
+    23→    fn syntax_highlight(&self, name: &str, value: &Value) -> Vec<SyntaxToken> {
+    28→fn highlight …
 
 src/parse/json.rs
-     4→use super::{Parser, SyntaxToken};
      6→pub struct JsonParser …
      8→impl Parser for JsonParser …
+     9→    fn extension(&self) -> &'static str {
+    13→    fn allow_array_root(&self) -> bool {
+    17→    fn parse(&self, data: &str) -> Result<Value> {
+    21→    fn syntax_highlight(&self, _name: &str, value: &Value) -> Vec<SyntaxToken> {
     26→pub fn highlight(value: &Value, indent: usize, has_next: bool) -> Vec<SyntaxToken> {
 
 src/parse/jsonl.rs
-     4→use super::json;
-     5→use super::{Parser, SyntaxToken};
      7→pub struct JsonlParser …
      9→impl Parser for JsonlParser …
+    10→    fn extension(&self) -> &'static str {
+    14→    fn allow_array_root(&self) -> bool {
+    18→    fn parse(&self, data: &str) -> Result<Value> {
+    35→    fn syntax_highlight(&self, _name: &str, value: &Value) -> Vec<SyntaxToken> {
 
 src/parse/mod.rs
     18→pub enum ContentType …
-    19→    Json,
-    20→    Yaml,
-    21→    Toml,
-    22→    Xml,
-    23→
-    24→    /// See: <https://github.com/hashicorp/hcl>
-    25→    Hcl,
-    26→
-    27→    /// Useful for some logs file: <https://jsonlines.org/>
-    28→    // TODO: check out json-seq as specified in RFC7464 (https://datatracker.ietf.org/doc/html/rfc7464)?
-    29→    // basically jsonl but every json object is prefixed with 0x1e
-    30→    Jsonl,
-    31→
-    32→    #[clap(skip)]
-    33→    Any,
-    34→}
     36→pub trait Parser …
+    37→    fn extension …
+    39→    fn allow_array_root …
+    41→    fn parse …
+    43→    fn syntax_highlight …
+    45→    fn parse_root …
     66→impl ContentType …
+    67→    pub fn new_parser(self) -> Box<dyn Parser> {
 
 src/parse/syntax.rs
-     9→use crate::config::Config;
     11→pub enum SyntaxToken …
-    12→    Symbol(&'static str),
-    13→
-    14→    Name(String),
-    15→
-    16→    Tag(String),
-    17→
-    18→    String(String),
-    19→    Number(String),
-    20→    Null(&'static str),
-    21→    Bool(&'static str),
-    22→
-    23→    Section(String),
-    24→
-    25→    Break,
-    26→    Indent(usize),
-    27→}
     29→impl SyntaxToken …
+    32→    pub fn render<'a>(
+    33→        cfg: &Config,
+    34→        tokens: &'a [SyntaxToken],
+    35→        width: usize,
+    36→    ) -> (Text<'a>, usize, usize) {
+   110→    pub fn pure_text(tokens: &[SyntaxToken]) -> String {
    136→static STANDARD_FIELD_NAME_RE …
    139→pub fn quote_field_name(name: &str) -> String {
    151→pub enum StringValue …
-   152→    String(String),
-   153→    MultiLines(Vec<String>),
-   154→}
    156→impl StringValue …
+   157→    pub fn new(s: &str, must_quote: bool) -> Self {
    201→pub fn is_value_complex(value: &Value) -> bool {
    216→struct TextWrapper …
    228→impl TextWrapper<'_, '_> …
-   310→fn find_split_position(text: &str, max_width: usize) -> usize {
+   310→fn find_split_position …
 
 src/parse/toml.rs
-     5→use super::json::highlight as json_highlight;
-     6→use super::syntax::{self, StringValue};
-     7→use super::{Parser, SyntaxToken};
      9→pub struct TomlParser …
     11→impl Parser for TomlParser …
-    62→fn toml_value_to_json(toml_value: TomlValue) -> Value {
-    88→fn highlight(
-    89→    value: &Value,
-    90→    section: Option<&str>,
-    91→    from_arr: bool,
-    92→    arr_complex: bool,
-    93→) -> Vec<SyntaxToken> {
+    12→    fn extension(&self) -> &'static str {
+    16→    fn allow_array_root(&self) -> bool {
+    20→    fn parse(&self, data: &str) -> Result<Value> {
+    25→    fn syntax_highlight(&self, name: &str, value: &Value) -> Vec<SyntaxToken> {
+    62→fn toml_value_to_json …
+    88→fn highlight …
 
 src/parse/xml.rs
-    10→use super::{Parser, SyntaxToken};
     12→pub struct XmlParser …
     14→impl Parser for XmlParser …
+    15→    fn extension(&self) -> &'static str {
+    19→    fn allow_array_root(&self) -> bool {
+    23→    fn parse(&self, data: &str) -> Result<Value> {
+    32→    fn syntax_highlight(&self, name: &str, value: &Value) -> Vec<SyntaxToken> {
     37→trait AttrMap …
     42→impl AttrMap for Map<String, Value> …
+    43→    fn insert_text(&mut self, value: &Value) -> Option<Value> {
+    55→    fn insert_text_node(&mut self, value: Value) {
     61→struct NodeValues …
     68→impl NodeValues …
-   176→fn read<R: BufRead>(reader: &mut Reader<R>, depth: u64) -> Result<Value> {
-   258→fn highlight(name: &str, value: Value, indent: usize) -> Vec<SyntaxToken> {
+   176→fn read …
+   258→fn highlight …
 
 src/parse/yaml.rs
-     5→use super::syntax::{self, StringValue};
-     6→use super::{Parser, SyntaxToken};
      8→pub struct YamlParser …
     10→impl Parser for YamlParser …
-    72→fn highlight(value: &Value, indent: usize, from_arr: bool) -> Vec<SyntaxToken> {
+    11→    fn extension(&self) -> &'static str {
+    15→    fn allow_array_root(&self) -> bool {
+    19→    fn parse(&self, data: &str) -> Result<Value> {
+    37→    fn syntax_highlight(&self, _name: &str, value: &Value) -> Vec<SyntaxToken> {
+    72→fn highlight …
 
 config/default.toml
      1→[tree]
@@ -383,19 +388,12 @@ examples/edge.json
      3→  "empty_list": [],
      4→  "null": null,
      5→  "nested_array": [
-     6→    {},
-     7→    null,
-     8→    []
-     9→  ]
 
 examples/edge.yaml
      1→empty_object: {}
      2→empty_list: []
      3→null_value: null
      4→nested_array:
-     5→  - {}
-     6→  - []
-     7→  - null
 
 examples/example.hcl
 
@@ -407,32 +405,8 @@ examples/example.json
      6→  "null": null,
      7→  "array": [1, "two", 3.0, false, null],
      8→  "object": {
-     9→    "nested_string": "Nested Hello",
-    10→    "nested_number": 6789,
-    11→    "nested_array": [10, "twenty", 30.0],
-    12→    "nested_object": {
-    13→      "deep_string": "Deep Hello",
-    14→      "deep_number": 1111
-    15→    }
-    16→  },
     17→  "complex_array": [
-    18→    {"id": 1, "value": "one"},
-    19→    {"id": 2, "value": "two", "extra": {"sub_value": "extra"}},
-    20→    {"id": 3, "value": "three"}
-    21→  ],
     22→  "complex_object": {
-    23→    "name": "Test Object",
-    24→    "attributes": {
-    25→      "height": 180,
-    26→      "weight": 75.5,
-    27→      "tags": ["sample", "json", "test"]
-    28→    },
-    29→    "active": true,
-    30→    "metrics": [
-    31→      {"type": "speed", "value": 7.5},
-    32→      {"type": "strength", "value": 8.2}
-    33→    ]
-    34→  }
 
 examples/example.jsonl
 
@@ -444,24 +418,8 @@ build.rs
 
 typos.toml
      1→[default.extend-words]
-     2→ratatui = "ratatui"
-     3→donot = "don't"
-     4→caf = "caf"
 
 config/themes/catppuccin.toml
-     1→[palette]
-    33→[colors]
-    37→[colors.data]
-    49→[colors.tree]
-    61→[colors.footer]
-    66→[colors.popup]
-    71→[colors.filter]
-
-examples/edge.toml
-
-examples/example.toml
-
-docs/changelog.md
 
 assets/
 

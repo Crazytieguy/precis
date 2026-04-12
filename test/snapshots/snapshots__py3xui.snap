@@ -42,32 +42,13 @@ README.md
 
 py3xui/api/README.md
      3→# api.api\_database
-    10→## DatabaseApi Objects
     67→# api.api\_inbound
-    73→## InboundApi Objects
    345→# api.api
-   351→## Api Objects
    549→# api.api\_server
-   555→## ServerApi Objects
    674→# api.api\_client
-   681→## ClientApi Objects
   1042→# api.api\_base
-  1048→## ApiFields Objects
-  1058→## BaseApi Objects
 
 py3xui/async_api/README.md
-     3→# async\_api.async\_api\_inbound
-    10→## AsyncInboundApi Objects
-   279→# async\_api.async\_api
-   285→## AsyncApi Objects
-   482→# async\_api.async\_api\_database
-   489→## AsyncDatabaseApi Objects
-   546→# async\_api.async\_api\_server
-   552→## AsyncServerApi Objects
-   678→# async\_api.async\_api\_base
-   684→## AsyncBaseApi Objects
-   922→# async\_api.async\_api\_client
-   929→## AsyncClientApi Objects
 
 py3xui/client/README.md
      3→# client.client
@@ -83,15 +64,6 @@ py3xui/inbound/README.md
 
 py3xui/server/README.md
      3→# server.server
-     9→## ServerFields Objects
-    19→## MemoryInfo Objects
-    34→## XRayInfo Objects
-    56→## NetworkIO Objects
-    71→## NetworkTraffic Objects
-    86→## PublicIP Objects
-   101→## AppStats Objects
-   117→## RealityKeyPair Objects
-   132→## Server Objects
 
 py3xui/utils/README.md
      3→# utils.env
@@ -154,6 +126,13 @@ py3xui/api/__init__.py
 py3xui/api/api.py
      1→"""This module provides classes to interact with the XUI API."""
     13→class Api …
+    67→    def __init__ …
+    94→    def session …
+   103→    def session …
+   116→    def cookie_name …
+   125→    def cookie_name …
+   140→    def from_env …
+   189→    def login …
 
 py3xui/api/api_base.py
      1→"""This module contains the base class for the XUI API."""
@@ -161,24 +140,73 @@ py3xui/api/api_base.py
     15→class ApiFields …
     27→# pylint: disable=R0902
     28→class BaseApi …
+    61→    def __init__(
+    62→        self,
+    63→        host: str,
+    64→        username: str,
+    65→        password: str,
+    66→        use_tls_verify: bool = True,
+    67→        custom_certificate_path: str | None = None,
+    68→        logger: Any | None = None,
+    69→    ):  # pylint: disable=R0913, R0917
+    81→    def host(self) -> str:
+    89→    def username(self) -> str:
+    97→    def password(self) -> str:
+   105→    def use_tls_verify(self) -> bool:
+   113→    def custom_certificate_path(self) -> str | None:
+   121→    def max_retries(self) -> int:
+   129→    def max_retries(self, value: int) -> None:
+   137→    def session(self) -> str | None:
+   145→    def session(self, value: str | None) -> None:
+   153→    def cookie_name(self) -> str | None:
+   161→    def cookie_name(self, value: str | None) -> None:
+   168→    def login(self, two_factor_code: str | int | None = None) -> None:
+   194→    def _get_cookie …
+   211→    def cookies(self) -> dict[str, str]:
+   220→    def _check_response …
+   236→    def _url …
+   246→    def _request_with_retry …
+   313→    def _post …
+   333→    def _get …
 
 py3xui/api/api_client.py
      1→"""This module contains the ClientApi class which provides methods to interact with the
      2→clients in the XUI API."""
     13→class ClientApi …
+    52→    def get_by_email …
+    89→    def get_ips …
+   121→    def add …
+   157→    def update …
+   189→    def reset_ips …
+   217→    def reset_stats …
+   248→    def delete …
+   280→    def delete_depleted …
+   312→    def online …
+   342→    def get_traffic_by_id …
 
 py3xui/api/api_database.py
      1→"""This module contains the DatabaseApi class, which is responsible handling database operations
      2→in the XUI API."""
      7→class DatabaseApi …
+    32→    def export …
 
 py3xui/api/api_inbound.py
      1→"""This module contains the InboundApi class for handling inbounds in the XUI API."""
      9→class InboundApi …
+    40→    def get_list …
+    71→    def get_by_id …
+   111→    def add …
+   159→    def delete …
+   190→    def update …
+   223→    def reset_stats …
+   247→    def reset_client_stats …
 
 py3xui/api/api_server.py
      1→"""This module contains the ServerApi class for handling server in the XUI API."""
      7→class ServerApi …
+    35→    def get_db …
+    67→    def get_status …
+    97→    def generate_reality_keys …
 
 py3xui/inbound/__init__.py
 
@@ -186,12 +214,19 @@ py3xui/inbound/bases.py
      1→"""This module contains the base classes for the inbound models."""
      8→# pylint: disable=too-few-public-methods
      9→class JsonStringModel …
+    13→    def model_validate(
+    14→        cls,
+    15→        values,
+    16→    ):  # pylint: disable=no-self-argument, arguments-differ
 
 py3xui/inbound/inbound.py
      1→"""This module contains the Inbound class, which represents an inbound connection in the XUI API."""
     14→# pylint: disable=too-few-public-methods
     15→class InboundFields …
     38→class Inbound …
+    89→    def validate_stream_settings …
+   113→    # pylint: disable=no-member, no-self-argument
+   114→    def to_json(self) -> dict[str, Any]:
 
 py3xui/inbound/settings.py
      1→"""This module contains the Settings class, which is used to parse the JSON response
@@ -218,37 +253,93 @@ pyproject.toml
      1→[build-system]
      5→[project]
     25→[project.urls]
-    29→[tool.setuptools.packages.find]
 
 py3xui/async_api/__init__.py
 
 py3xui/async_api/async_api.py
      1→"""This module provides classes to interact with the XUI API in an asynchronous manner."""
     18→class AsyncApi …
+    72→    def __init__ …
+    99→    def session …
+   108→    def session …
+   121→    def cookie_name …
+   130→    def cookie_name …
+   145→    def from_env …
+   194→    async def login …
 
 py3xui/async_api/async_api_base.py
      1→"""This module contains the async base class for the XUI API."""
     15→# pylint: disable=R0902
     16→class AsyncBaseApi …
+    49→    def __init__(
+    50→        self,
+    51→        host: str,
+    52→        username: str,
+    53→        password: str,
+    54→        use_tls_verify: bool = True,
+    55→        custom_certificate_path: str | None = None,
+    56→        logger: Any | None = None,
+    57→    ):  # pylint: disable=R0913, R0917
+    69→    def host(self) -> str:
+    77→    def username(self) -> str:
+    85→    def password(self) -> str:
+    93→    def use_tls_verify(self) -> bool:
+   101→    def custom_certificate_path(self) -> str | None:
+   109→    def max_retries(self) -> int:
+   117→    def max_retries(self, value: int) -> None:
+   125→    def session(self) -> str | None:
+   133→    def session(self, value: str | None) -> None:
+   141→    def cookie_name(self) -> str | None:
+   149→    def cookie_name(self, value: str | None) -> None:
+   156→    def _url …
+   166→    async def _request_with_retry …
+   239→    async def login(self, two_factor_code: str | int | None = None) -> None:
+   265→    async def _get_cookie …
+   282→    def cookies(self) -> dict[str, str]:
+   292→    async def _check_response …
+   308→    async def _post …
+   328→    async def _get …
 
 py3xui/async_api/async_api_client.py
      1→"""This module contains the ClientApi class which provides methods to interact with the
      2→clients in the XUI API."""
     12→class AsyncClientApi …
+    52→    async def get_by_email …
+    89→    async def get_ips …
+   121→    async def add …
+   158→    async def update …
+   190→    async def reset_ips …
+   219→    async def reset_stats …
+   250→    async def delete …
+   282→    async def delete_depleted …
+   315→    async def online …
+   345→    async def get_traffic_by_id …
 
 py3xui/async_api/async_api_database.py
      1→"""This module contains the DatabaseApi class which provides methods to interact with the
      2→database in the XUI API asynchronously."""
      7→class AsyncDatabaseApi …
+    32→    async def export …
 
 py3xui/async_api/async_api_inbound.py
      1→"""This module contains the InboundApi class which provides methods to interact with the
      2→clients in the XUI API asynchronously."""
     11→class AsyncInboundApi …
+    42→    async def get_list …
+    72→    async def get_by_id …
+   112→    async def add …
+   158→    async def delete …
+   189→    async def update …
+   222→    async def reset_stats …
+   246→    async def reset_client_stats …
 
 py3xui/async_api/async_api_server.py
      1→"""This module contains the ServerApi class for handling server in the XUI API."""
      8→class AsyncServerApi …
+    43→    # pylint: disable=R0801
+    44→    async def get_db(self, save_path: str) -> None:
+    76→    async def get_status …
+   105→    async def generate_reality_keys …
 
 tests/__init__.py
 
@@ -260,31 +351,6 @@ tests/test_api.py
     16→SESSION …
     17→EMAIL …
     18→SESSION …
-    21→def test_login_success():
-    29→def test_login_failed():
-    37→def test_from_env():
-    48→def test_get_inbounds():
-    95→def test_add_inbound():
-   103→def test_delete_inbound_success_():
-   111→def test_delete_inbound_failed():
-   123→def test_update_inbound():
-   131→def test_get_client():
-   146→def test_get_client_ips():
-   158→def test_add_clients():
-   167→def test_update_client():
-   178→def test_reset_client_ips():
-   186→def test_reset_inbounds_stats():
-   194→def test_reset_inbound_client_stats():
-   204→def test_reset_client_stats():
-   215→def test_delete_client():
-   223→def test_delete_depleted_clients():
-   231→def test_client_online():
-   239→def test_get_client_traffic_by_id():
-   260→def test_database_export():
-   268→def test_get_status():
-   288→def test_get_db():
-   317→def test_get_db_failed():
-   331→def test_generate_reality_keys():
 
 tests/test_async_api.py
     12→RESPONSES_DIR …
@@ -298,72 +364,19 @@ tests/test_async_api.py
     20→USERNAME …
     21→PASSWORD …
     22→SESSION …
-    26→async def test_from_env():
-    38→async def test_login_failed(httpx_mock: HTTPXMock):
-    52→async def test_login_success(httpx_mock: HTTPXMock):
-    67→async def test_get_client(httpx_mock: HTTPXMock):
-    88→async def test_get_ips(httpx_mock: HTTPXMock):
-   110→async def test_add_clients(httpx_mock: HTTPXMock):
-   129→async def test_update_client(httpx_mock: HTTPXMock):
-   148→async def test_reset_client_ips(httpx_mock: HTTPXMock):
-   166→async def test_reset_client_stats(httpx_mock: HTTPXMock):
-   184→async def test_delete_client(httpx_mock: HTTPXMock):
-   202→async def test_delete_depleted_clients(httpx_mock: HTTPXMock):
-   220→async def test_client_online(httpx_mock: HTTPXMock):
-   238→async def test_get_client_traffic_by_id(httpx_mock: HTTPXMock):
-   286→async def test_get_inbounds(httpx_mock: HTTPXMock):
-   319→async def test_add_inbound(httpx_mock: HTTPXMock):
-   337→async def test_delete_inbound_success(httpx_mock: HTTPXMock):
-   355→async def test_delete_inbound_failed(httpx_mock: HTTPXMock):
-   374→async def test_update_inbound(httpx_mock: HTTPXMock):
-   392→async def test_database_export(httpx_mock: HTTPXMock):
-   410→async def test_get_server_status(httpx_mock: HTTPXMock):
-   436→async def test_generate_reality_keys(httpx_mock: HTTPXMock):
-   464→async def test_get_db(httpx_mock: HTTPXMock, tmp_path):
-   488→async def test_get_db_failed(httpx_mock: HTTPXMock, tmp_path):
-   512→async def test_get_inbound_by_id(httpx_mock: HTTPXMock):
-   539→async def test_reset_inbounds_stats(httpx_mock: HTTPXMock):
-   557→async def test_reset_inbound_client_stats(httpx_mock: HTTPXMock):
 
 tests/test_env.py
-     8→def test_envs_success():
-    18→def test_envs_failed():
 
 CODE_OF_CONDUCT.md
      1→# Contributor Covenant Code of Conduct
-     3→## Our Pledge
-     9→## Our Standards
-    27→## Enforcement Responsibilities
-    33→## Scope
-    37→## Enforcement
-    43→## Enforcement Guidelines
-    47→### 1. Correction
-    53→### 2. Warning
-    59→### 3. Temporary Ban
-    65→### 4. Permanent Ban
-    71→## Attribution
 
 CONTRIBUTING.md
      1→# Contributing to py3xui
-    13→## Reporting Issues
-    14→If you encounter any issues while using py3xui, please follow these steps to report them:
-    31→## How to Contribute
-    95→## Code style
-    96→The py3xui project follows the [PEP 8](https://www.python.org/dev/peps/pep-0008/) style guide for Python code.  
-   102→## Submitting a Pull Request
-   103→Once you have made your changes and tested them, you can submit a [pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) to the repository.
-   105→## Code of Conduct
 
 LICENSE.md
      1→# MIT License
 
 SECURITY.md
      1→# Security Policy
-     3→## Supported Versions
-    14→## Reporting a Vulnerability
-    18→### How to Report
-    29→### What to Expect
-    36→### Responsible Disclosure
-    44→### Recognition
 
 tests/responses/

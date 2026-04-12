@@ -38,6 +38,39 @@ identifiers.js
 
 lrucache.js
      3→class LRUCache …
+     4→  constructor () {
+     5→    this.max = 1000
+     6→    this.map = new Map()
+     7→  }
+     9→  get (key) {
+    10→    const value = this.map.get(key)
+    11→    if (value === undefined) {
+    12→      return undefined
+    13→    } else {
+    14→      // Remove the key from the map and add it to the end
+    15→      this.map.delete(key)
+    16→      this.map.set(key, value)
+    17→      return value
+    18→    }
+    19→  }
+    21→  delete (key) {
+    22→    return this.map.delete(key)
+    23→  }
+    25→  set (key, value) {
+    26→    const deleted = this.delete(key)
+    27→
+    28→    if (!deleted && value !== undefined) {
+    29→      // If cache is full, delete the least recently used item
+    30→      if (this.map.size >= this.max) {
+    31→        const firstKey = this.map.keys().next().value
+    32→        this.delete(firstKey)
+    33→      }
+    34→
+    35→      this.map.set(key, value)
+    36→    }
+    37→
+    38→    return this
+    39→  }
 
 parse-options.js
      4→const looseOption …

@@ -54,26 +54,11 @@ Cargo.toml
 src/expand.rs
     13→use crate::schema::Model;
     18→struct Expand …
-    19→    /// The model being expanded
-    20→    model: &'a Model,
-    21→
-    22→    /// Model filter methods
-    23→    filters: Vec<Filter>,
-    24→
-    25→    /// Path prefix for toasty types
-    26→    toasty: TokenStream,
-    27→}
     29→impl Expand<'_> …
+    30→    fn expand(&self) -> TokenStream {
     49→pub(super) fn root_model(model: &Model) -> TokenStream {
     60→pub(super) fn embedded_model(model: &Model) -> TokenStream {
    151→fn wrap_in_const(code: TokenStream) -> TokenStream {
-   152→    quote! {
-   153→        const _: () = {
-   154→            use toasty as _toasty;
-   155→            #code
-   156→        };
-   157→    }
-   158→}
 
 src/lib.rs
      6→pub fn generate_model(input: TokenStream) -> syn::Result<TokenStream> {
@@ -82,52 +67,108 @@ src/lib.rs
 src/schema.rs
 
 src/expand/create.rs
-     1→use super::{util, Expand};
-     2→use crate::schema::FieldTy;
      7→impl Expand<'_> …
+     8→    pub(super) fn expand_create_builder(&self) -> TokenStream {
+    76→    fn expand_create_methods …
 
 src/expand/fields.rs
-     1→use super::{util, Expand};
-     2→use crate::schema::FieldTy::{BelongsTo, HasMany, HasOne, Primitive};
      6→impl Expand<'_> …
+     7→    pub(super) fn expand_field_struct(&self) -> TokenStream {
+    88→    pub(super) fn expand_model_field_struct_init(&self) -> TokenStream {
+   104→    fn field_struct_ident …
+   113→    pub(super) fn expand_field_name_to_id(&self) -> TokenStream {
 
 src/expand/filters.rs
-     1→use super::Expand;
-     2→use crate::schema::{FieldTy, Index, Model};
     10→pub(super) struct Filter …
     36→struct BuildModelFilters …
     37→    model: &'a Model,
     38→    filters: HashMap<Vec<usize>, Filter>,
     39→}
     41→impl Expand<'_> …
+    42→    pub(super) fn expand_model_filter_methods(&self) -> TokenStream {
+    65→    fn expand_model_get_method …
+   107→    fn expand_model_filter_method …
+   140→    fn expand_model_filter_batch_method …
+   169→    pub(super) fn expand_query_filter_methods(&self) -> TokenStream {
+   191→    pub(super) fn expand_relation_filter_methods(&self) -> TokenStream {
+   213→    fn expand_query_filter_method …
+   227→    fn expand_query_filter_expr …
+   244→    fn expand_query_filter_batch_method …
+   271→    fn expand_filter_args …
+   289→    fn expand_filter_batch_arg_bound …
+   307→    pub(super) fn expand_filter_arg_idents<'b>(
+   308→        &'b self,
+   309→        filter: &'b Filter,
+   310→    ) -> impl Iterator<Item = TokenStream> + 'b {
+   317→    pub(super) fn primary_key_filter(&self) -> &Filter {
    329→impl Filter …
+   330→    pub(super) fn build_model_filters(model: &Model) -> Vec<Self> {
    339→impl<'a> BuildModelFilters<'a> …
+   340→    fn build …
+   345→    fn recurse …
+   414→    fn find_index …
+   432→    fn method_ident …
 
 src/expand/model.rs
-     1→use super::{util, Expand};
-     2→use crate::schema::{FieldTy, ModelKind};
      7→impl Expand<'_> …
+     8→    pub(super) fn expand_model_impls(&self) -> TokenStream {
+   155→    pub(super) fn expand_embedded_model_impls(&self) -> TokenStream {
+   166→    pub(super) fn expand_model_into_select_body(&self, by_ref: bool) -> TokenStream {
+   180→    pub(super) fn expand_model_into_expr_body(&self, by_ref: bool) -> TokenStream {
+   236→    pub(super) fn expand_embedded_into_expr_body(&self, by_ref: bool) -> TokenStream {
+   275→    /// Generates the body for loading a model or embedded type from a Value.
+   276→    ///
+   277→    /// This method is used by both:
+   278→    /// - Root models (in `Model::load`) - supports all field types
+   279→    /// - Embedded types (in `Primitive::load`) - only primitive fields
+   280→    ///
+   281→    /// The generated code pattern matches on `Value::Record`, extracts fields,
+   282→    /// and constructs the struct.
+   283→    pub(super) fn expand_load_body(&self) -> TokenStream {
+   320→    /// Generate the body of the `reload` method for an embedded model's `Primitive` impl.
+   321→    ///
+   322→    /// Handles `SparseRecord` values (partial updates) by reloading only the specified
+   323→    /// sub-fields, and falls back to full `load` for complete record values.
+   324→    pub(super) fn expand_embedded_reload_body(&self) -> TokenStream {
 
 src/expand/query.rs
-     1→use super::{util, Expand};
-     2→use crate::schema::{BelongsTo, Field, FieldTy, HasMany, HasOne};
      7→impl Expand<'_> …
+     8→    pub(super) fn expand_query_struct(&self) -> TokenStream {
+   103→    fn expand_relation_methods …
+   116→    fn expand_belongs_to_method …
+   135→    fn expand_has_many_method …
+   154→    fn expand_has_one_method …
+   173→    fn expand_include_method …
 
 src/expand/relation.rs
-     1→use super::{util, Expand};
-     2→use crate::schema::{BelongsTo, Field, FieldTy, HasMany, HasOne};
      7→impl Expand<'_> …
+     8→    pub(super) fn expand_relation_structs(&self) -> TokenStream {
+   186→    pub(super) fn expand_model_relation_methods(&self) -> TokenStream {
+   203→    fn expand_model_relation_belongs_to_method …
+   267→    fn expand_model_relation_has_many_method …
+   341→    fn expand_model_relation_has_one_method …
 
 src/expand/schema.rs
-     1→use super::{util, Expand};
-     2→use crate::schema::{AutoStrategy, Column, FieldTy, ModelKind, Name, UuidVersion};
      7→impl Expand<'_> …
+     8→    pub(super) fn expand_model_schema(&self) -> TokenStream {
+    50→    fn expand_model_fields …
+   189→    fn expand_primary_key …
+   222→    fn expand_model_indices …
+   274→    fn expand_table_name …
    284→fn expand_name(toasty: &TokenStream, name: &Name) -> TokenStream {
 
 src/expand/update.rs
-     1→use super::{util, Expand};
-     2→use crate::schema::FieldTy;
      7→impl Expand<'_> …
+     8→    /// Generate update builder for embedded structs
+     9→    pub(super) fn expand_embedded_update_builder(&self) -> TokenStream {
+    27→    /// Expand all update methods for all fields.
+      →…
+    31→    fn expand_update_field_methods(&self, is_embedded: bool) -> TokenStream {
+   144→    pub(super) fn expand_update_builder(&self) -> TokenStream {
+   203→    /// Generate match arms for reloading each model field from a sparse record value.
+   204→    fn expand_reload_match_arms(&self) -> TokenStream {
+   225→    /// Generate the body of the `reload` method for a root model.
+   226→    pub(super) fn expand_reload_method(&self) -> TokenStream {
 
 src/expand/util.rs
      3→pub(crate) fn int(v: usize) -> TokenStream {
@@ -151,27 +192,28 @@ src/schema/auto.rs
     11→    V7,
     12→}
     14→impl AutoStrategy …
+    15→    pub(super) fn from_ast(attr: &syn::Attribute) -> syn::Result<Self> {
     31→impl syn::parse::Parse for AutoStrategy …
+    32→    fn parse(input: syn::parse::ParseStream) -> syn::Result<Self> {
     48→impl syn::parse::Parse for UuidVersion …
+    49→    fn parse(input: syn::parse::ParseStream) -> syn::Result<Self> {
 
 src/schema/belongs_to.rs
      1→use super::ForeignKeyField;
      4→pub(crate) struct BelongsTo …
-     5→    /// Target type
-     6→    pub(crate) ty: syn::Type,
-     7→
-     8→    /// Foreign key
-     9→    pub(crate) foreign_key: Vec<ForeignKeyField>,
-    10→}
     12→impl BelongsTo …
+    13→    pub(super) fn from_ast(
+    14→        attr: &syn::Attribute,
+    15→        ty: &syn::Type,
+    16→        names: &[syn::Ident],
+    17→    ) -> syn::Result<Self> {
 
 src/schema/column.rs
      5→pub(crate) struct Column …
-     6→    pub(crate) name: Option<syn::LitStr>,
-     7→    pub(crate) ty: Option<ColumnType>,
-     8→}
     10→impl Column …
+    11→    pub(super) fn from_ast(attr: &syn::Attribute) -> syn::Result<Column> {
     16→impl syn::parse::Parse for Column …
+    17→    fn parse(input: syn::parse::ParseStream) -> syn::Result<Self> {
     89→pub enum ColumnType …
     90→    Boolean,
     91→    Integer(u8),
@@ -188,52 +230,26 @@ src/schema/column.rs
    102→    Custom(syn::LitStr),
    103→}
    105→impl syn::parse::Parse for ColumnType …
+   106→    fn parse(input: syn::parse::ParseStream) -> syn::Result<Self> {
    179→impl ColumnType …
+   180→    /// Expand to a fully qualified `#toasty::schema::db::Type::...` token stream.
+   181→    pub(crate) fn expand_with(
+   182→        &self,
+   183→        toasty: &proc_macro2::TokenStream,
+   184→    ) -> proc_macro2::TokenStream {
 
 src/schema/error.rs
      2→pub(crate) struct ErrorSet …
-     3→    errors: Vec<syn::Error>,
-     4→}
      6→impl ErrorSet …
+     7→    pub(crate) fn new() -> Self {
+    11→    pub(crate) fn push(&mut self, err: syn::Error) {
+    15→    pub(crate) fn collect(self) -> Option<syn::Error> {
 
 src/schema/field.rs
      1→use crate::schema::AutoStrategy;
      3→use super::{BelongsTo, Column, ErrorSet, HasMany, HasOne, Name};
      8→pub(crate) struct Field …
-     9→    /// Index of field in the containing model
-    10→    pub(crate) id: usize,
-    11→
-    12→    /// Field attributes
-    13→    pub(crate) attrs: FieldAttr,
-    14→
-    15→    /// Field name
-    16→    pub(crate) name: Name,
-    17→
-    18→    /// Field type
-    19→    pub(crate) ty: FieldTy,
-    20→
-    21→    /// Identifier for setter method on update builder
-    22→    pub(crate) set_ident: syn::Ident,
-    23→
-    24→    /// Identifier for the `with_field` builder method on update builder
-    25→    pub(crate) with_ident: syn::Ident,
-    26→}
     29→pub(crate) struct FieldAttr …
-    30→    /// True if the field is annotated with `#[key]`
-    31→    pub(crate) key: Option<syn::Attribute>,
-    32→
-    33→    /// True if the field is annotated with `#[unique]`
-    34→    pub(crate) unique: bool,
-    35→
-    36→    /// Specifies if and how Toasty should automatically set values of newly created rows
-    37→    pub(crate) auto: Option<AutoStrategy>,
-    38→
-    39→    /// True if the field is indexed
-    40→    pub(crate) index: bool,
-    41→
-    42→    /// Optional database column name and / or type
-    43→    pub(crate) column: Option<Column>,
-    44→}
     47→pub(crate) enum FieldTy …
     48→    Primitive(syn::Type),
     49→    BelongsTo(BelongsTo),
@@ -241,64 +257,38 @@ src/schema/field.rs
     51→    HasOne(HasOne),
     52→}
     54→impl FieldTy …
+    55→    pub(crate) fn is_relation(&self) -> bool {
     63→impl Field …
+    64→    pub(super) fn from_ast(
+    65→        field: &syn::Field,
+    66→        model_ident: &syn::Ident,
+    67→        id: usize,
+    68→        names: &[syn::Ident],
+    69→    ) -> syn::Result<Self> {
    207→fn rewrite_self(ty: &mut syn::Type, model: &syn::Ident) {
 
 src/schema/fk.rs
      2→pub(crate) struct ForeignKeyField …
-     3→    /// The field on the source struct
-     4→    pub(crate) source: usize,
-     5→
-     6→    /// The identifier on the target struct being referenced
-     7→    pub(crate) target: syn::Ident,
-     8→}
 
 src/schema/has_many.rs
      1→use super::Name;
      4→pub(crate) struct HasMany …
-     5→    /// Target type
-     6→    pub(crate) ty: syn::Type,
-     7→
-     8→    /// Singular field name
-     9→    pub(crate) singular: Name,
-    10→
-    11→    /// Insert method ident
-    12→    pub(crate) insert_ident: syn::Ident,
-    13→
-    14→    /// Field on target that the relation references
-    15→    pub(crate) pair: Option<syn::Ident>,
-    16→
-    17→    pub(crate) span: proc_macro2::Span,
-    18→}
     20→impl HasMany …
+    21→    pub(super) fn from_ast(
+    22→        attr: &syn::Attribute,
+    23→        name: &syn::Ident,
+    24→        ty: &syn::Type,
+    25→        span: proc_macro2::Span,
+    26→    ) -> syn::Result<Self> {
 
 src/schema/has_one.rs
      2→pub(crate) struct HasOne …
-     3→    /// Target type
-     4→    pub(crate) ty: syn::Type,
-     5→
-     6→    pub(crate) span: proc_macro2::Span,
-     7→}
      9→impl HasOne …
+    10→    pub(super) fn from_ast(ty: &syn::Type, span: proc_macro2::Span) -> syn::Result<Self> {
 
 src/schema/index.rs
      2→pub(crate) struct Index …
-     3→    /// Fields included in the index.
-     4→    pub(crate) fields: Vec<IndexField>,
-     5→
-     6→    /// When `true`, indexed entries are unique
-     7→    pub(crate) unique: bool,
-     8→
-     9→    /// True when the index is the primary key
-    10→    pub(crate) primary_key: bool,
-    11→}
     14→pub(crate) struct IndexField …
-    15→    /// The field being indexed
-    16→    pub(crate) field: usize,
-    17→
-    18→    /// The scope of the index
-    19→    pub(crate) scope: IndexScope,
-    20→}
     23→pub(crate) enum IndexScope …
     24→    /// The index column is used to partition rows across nodes of a distributed database.
     25→    Partition,
@@ -309,10 +299,8 @@ src/schema/index.rs
 
 src/schema/key_attr.rs
      2→pub(crate) struct KeyAttr …
-     3→    pub(crate) partition: Vec<syn::Ident>,
-     4→    pub(crate) local: Vec<syn::Ident>,
-     5→}
      7→impl KeyAttr …
+     8→    pub(super) fn from_ast(attr: &syn::Attribute, names: &[syn::Ident]) -> syn::Result<Self> {
 
 src/schema/model.rs
      1→use super::{ErrorSet, Field, Index, IndexField, IndexScope, ModelAttr, Name, PrimaryKey};
@@ -323,77 +311,32 @@ src/schema/model.rs
      8→    Embedded(ModelEmbedded),
      9→}
     11→impl ModelKind …
+    12→    pub(crate) fn expect_root(&self) -> &ModelRoot {
+    19→    pub(crate) fn expect_embedded(&self) -> &ModelEmbedded {
     28→pub(crate) struct ModelRoot …
-    29→    /// Tracks fields in the primary key
-    30→    pub(crate) primary_key: PrimaryKey,
-    31→
-    32→    /// The field struct identifier
-    33→    pub(crate) field_struct_ident: syn::Ident,
-    34→
-    35→    /// The query struct identifier
-    36→    pub(crate) query_struct_ident: syn::Ident,
-    37→
-    38→    /// Create builder struct identifier
-    39→    pub(crate) create_struct_ident: syn::Ident,
-    40→
-    41→    /// Update builder struct identifier
-    42→    pub(crate) update_struct_ident: syn::Ident,
-    43→}
     46→pub(crate) struct ModelEmbedded …
-    47→    /// The field struct identifier
-    48→    pub(crate) field_struct_ident: syn::Ident,
-    49→
-    50→    /// Update builder struct identifier
-    51→    pub(crate) update_struct_ident: syn::Ident,
-    52→}
     55→pub(crate) struct Model …
-    56→    /// Model name
-    57→    pub(crate) name: Name,
-    58→
-    59→    /// Model visibility
-    60→    pub(crate) vis: syn::Visibility,
-    61→
-    62→    /// Type identifier
-    63→    pub(crate) ident: syn::Ident,
-    64→
-    65→    /// Model fields
-    66→    pub(crate) fields: Vec<Field>,
-    67→
-    68→    /// Distinguishes root models from embedded models
-    69→    pub(crate) kind: ModelKind,
-    70→
-    71→    /// Model indices
-    72→    pub(crate) indices: Vec<Index>,
-    73→
-    74→    /// Optional table to map the model to
-    75→    pub(crate) table: Option<syn::LitStr>,
-    76→}
     78→impl Model …
+    79→    pub(crate) fn from_ast(ast: &syn::ItemStruct, is_embedded: bool) -> syn::Result<Self> {
+   235→    pub fn primary_key_fields(&self) -> Option<impl ExactSizeIterator<Item = &'_ Field>> {
+   247→    pub(crate) fn has_associations(&self) -> bool {
    252→fn struct_ident(suffix: &str, model: &syn::ItemStruct) -> syn::Ident {
 
 src/schema/model_attr.rs
      1→use super::{ErrorSet, KeyAttr};
      4→pub(crate) struct ModelAttr …
-     5→    /// Primary key definition
-     6→    pub(crate) key: Option<KeyAttr>,
-     7→
-     8→    /// Optional database table name to map the model to
-     9→    pub(crate) table: Option<syn::LitStr>,
-    10→}
     12→impl ModelAttr …
+    13→    pub(super) fn populate_from_ast(
+    14→        &mut self,
+    15→        attrs: &Vec<syn::Attribute>,
+    16→        names: &[syn::Ident],
+    17→    ) -> syn::Result<()> {
 
 src/schema/name.rs
      5→pub(crate) struct Name …
-     6→    /// Name parts
-     7→    pub(crate) parts: Vec<String>,
-     8→
-     9→    /// field/var identifier
-    10→    pub(crate) ident: syn::Ident,
-    11→}
     13→impl Name …
+    14→    pub(crate) fn from_ident(ident: &syn::Ident) -> Self {
+    18→    pub(crate) fn from_str(src: &str, span: Span) -> Self {
 
 src/schema/pk.rs
      2→pub(crate) struct PrimaryKey …
-     3→    /// Index of fields in the primary key
-     4→    pub(crate) fields: Vec<usize>,
-     5→}

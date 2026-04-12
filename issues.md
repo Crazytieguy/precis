@@ -5,17 +5,6 @@ before calibration.
 
 ## Must fix (design violations)
 
-### Class/Impl method spawning not implemented
-
-The design says methods inside classes, interfaces, traits, and impl
-blocks should be spawned as `FunctionName` children of the enclosing
-type. Currently `ClassName::children()` only spawns doc/body groups,
-not method children.
-
-Wiring site: `TsGroup::children()` for `ClassName`, `InterfaceName`,
-`TraitName`, `ImplBlock` keys. Walk each item's tree-sitter node to
-find method/function child nodes and produce `FunctionName` groups.
-
 ### FoldersGroup doesn't carry items
 
 The design §3.2 specifies `Folders { parent_dir, items: Vec<PathBuf> }`

@@ -54,23 +54,17 @@ typings/index.test-d.ts
      1→import * as commander from './index';
      6→const program …
    168→function myParseInt(value: string): number {
-   169→  return parseInt(value);
-   170→}
    172→function increaseVerbosity(dummyValue: string, previous: number): number {
-   173→  return previous + 1;
-   174→}
    176→function collect(value: string, previous: string[]): string[] {
-   177→  return previous.concat([value]);
-   178→}
    180→function commaSeparatedList(value: string): string[] {
-   181→  return value.split(',');
-   182→}
    378→const opts …
    384→interface MyCheeseOption …
    387→const myCheeseOption …
    393→const optsWithGlobals …
    399→const myCheeseOptionWithGlobals …
    509→class MyCommand …
+   510→  createCommand(name?: string): MyCommand {
+   514→  myFunction(): void {
    518→const myProgram …
    571→const helper …
    572→const helperCommand …
@@ -80,11 +74,9 @@ typings/index.test-d.ts
    623→  const unsortedOptions …
    624→  const sortedOptions …
    625→  const groupsItemsOptionHeading = (option: commander.Option) =>
-   626→    option.helpGroupHeading ?? 'Options:';
    633→  const unsortedCommands …
    634→  const sortedCommands …
    635→  const groupsItemsCommandHeading = (cmd: commander.Command) =>
-   636→    cmd.helpGroup() ?? 'Commands:';
    668→const baseOption …
    747→const baseArgument …
 
@@ -95,67 +87,174 @@ index.js
 
 lib/argument.js
      3→class Argument …
-   136→ * Takes an argument and returns its human readable equivalent for help usage.
-   137→ *
-   138→ * @param {Argument} arg
-   139→ * @return {string}
-   140→ * @private
+    13→  constructor(name, description) {
+    48→  name() {
+    73→  default(value, description) {
+    86→  argParser(fn) {
+    98→  choices(values) {
+   119→  argRequired() {
+   129→  argOptional() {
    143→function humanReadableArgName(arg) {
 
 lib/command.js
     13→class Command …
-  2698→ * Scan arguments and increment port number for inspect calls (to avoid conflicts when spawning new command).
-  2699→ *
-  2700→ * @param {string[]} args - array of arguments from node.execArgv
-  2701→ * @returns {string[]}
-  2702→ * @private
+    20→  constructor(name) {
+    99→  copyInheritedSettings(sourceCommand) {
+   155→  command(nameAndArgs, actionOptsOrExecDesc, execOpts) {
+   192→  createCommand(name) {
+   203→  createHelp() {
+   215→  configureHelp(configuration) {
+   245→  configureOutput(configuration) {
+   261→  showHelpAfterError(displayHelp = true) {
+   273→  showSuggestionAfterError(displaySuggestion = true) {
+   288→  addCommand(cmd, opts) {
+   316→  createArgument(name, description) {
+   336→  argument(name, description, parseArg, defaultValue) {
+   359→  arguments(names) {
+   375→  addArgument(argument) {
+   409→  helpCommand(enableOrNameAndArgs, description) {
+   443→  addHelpCommand(helpCommand, deprecatedDescription) {
+   487→  hook(event, listener) {
+   508→  exitOverride(fn) {
+   556→  action(fn) {
+   585→  createOption(flags, description) {
+   670→  addOption(option) {
+   788→  option(flags, description, parseArg, defaultValue) {
+   805→  requiredOption(flags, description, parseArg, defaultValue) {
+   826→  combineFlagAndOptionalValue(combine = true) {
+   837→  allowUnknownOption(allowUnknown = true) {
+   848→  allowExcessArguments(allowExcess = true) {
+   861→  enablePositionalOptions(positional = true) {
+   875→  passThroughOptions(passThrough = true) {
+   905→  storeOptionsAsProperties(storeAsProperties = true) {
+   925→  getOptionValue(key) {
+   940→  setOptionValue(key, value) {
+   953→  setOptionValueWithSource(key, value, source) {
+   971→  getOptionValueSource(key) {
+   983→  getOptionValueSourceWithGlobals(key) {
+  1090→  parse(argv, parseOptions) {
+  1119→  async parseAsync(argv, parseOptions) {
+  1127→  _prepareForParse() {
+  1141→  saveStateBeforeParse() {
+  1158→  restoreStateBeforeParse() {
+  1748→  parseOptions(args) {
+  1902→  opts() {
+  1924→  optsWithGlobals() {
+  1940→  error(message, errorOptions) {
+  2034→  missingArgument(name) {
+  2046→  optionMissingArgument(option) {
+  2058→  missingMandatoryOptionValue(option) {
+  2114→  unknownOption(flag) {
+  2162→  unknownCommand() {
+  2195→  version(str, flags, description) {
+  2218→  description(str, argsDescription) {
+  2234→  summary(str) {
+  2249→  alias(alias) {
+  2289→  aliases(aliases) {
+  2304→  usage(str) {
+  2331→  name(str) {
+  2344→  helpGroup(heading) {
+  2363→  commandsGroup(heading) {
+  2382→  optionsGroup(heading) {
+  2419→  nameFromFilename(filename) {
+  2437→  executableDir(path) {
+  2450→  helpInformation(contextOptions) {
+  2505→  outputHelp(contextOptions) {
+  2559→  helpOption(flags, description) {
+  2607→  addHelpOption(option) {
+  2621→  help(contextOptions) {
+  2656→  addHelpText(position, text) {
   2705→function incrementNodeInspectorPort(args) {
-  2749→ * @returns {boolean | undefined}
-  2750→ * @package
   2752→function useColor() {
 
 lib/error.js
      2→ * CommanderError class
      4→class CommanderError …
+     6→   * Constructs the CommanderError class
+      →…
+    11→  constructor(exitCode, code, message) {
     23→ * InvalidArgumentError class
     25→class InvalidArgumentError …
+    27→   * Constructs the InvalidArgumentError class
+      →…
+    30→  constructor(message) {
 
 lib/help.js
     12→class Help …
-   733→ * Strip style ANSI escape sequences from the string. In particular, SGR (Select Graphic Rendition) codes.
-   734→ *
-   735→ * @param {string} str
-   736→ * @returns {string}
-   737→ * @package
+    13→  constructor() {
+    29→  prepareContext(contextOptions) {
+    40→  visibleCommands(cmd) {
+    62→  compareOptions(a, b) {
+    79→  visibleOptions(cmd) {
+   112→  visibleGlobalOptions(cmd) {
+   139→  visibleArguments(cmd) {
+   162→  subcommandTerm(cmd) {
+   182→  optionTerm(option) {
+   193→  argumentTerm(argument) {
+   205→  longestSubcommandTermLength(cmd, helper) {
+   224→  longestOptionTermLength(cmd, helper) {
+   241→  longestGlobalOptionTermLength(cmd, helper) {
+   258→  longestArgumentTermLength(cmd, helper) {
+   276→  commandUsage(cmd) {
+   300→  commandDescription(cmd) {
+   313→  subcommandDescription(cmd) {
+   325→  optionDescription(option) {
+   372→  argumentDescription(argument) {
+   403→  formatItemList(heading, items, helper) {
+   417→  groupItems(unsortedItems, visibleItems, getGroup) {
+   443→  formatHelp(cmd, helper) {
+   535→  displayWidth(str) {
+   545→  styleTitle(str) {
+   549→  styleUsage(str) {
+   563→  styleCommandDescription(str) {
+   566→  styleOptionDescription(str) {
+   569→  styleSubcommandDescription(str) {
+   572→  styleArgumentDescription(str) {
+   575→  styleDescriptionText(str) {
+   578→  styleOptionTerm(str) {
+   581→  styleSubcommandTerm(str) {
+   594→  styleArgumentTerm(str) {
+   597→  styleOptionText(str) {
+   600→  styleArgumentText(str) {
+   603→  styleSubcommandText(str) {
+   606→  styleCommandText(str) {
+   618→  padWidth(cmd, helper) {
+   633→  preformatted(str) {
+   650→  formatItem(term, termWidth, description, helper) {
+   695→  boxWrap(str, width) {
    740→function stripColor(str) {
 
 lib/option.js
      3→class Option …
+    11→  constructor(flags, description) {
+    47→  default(value, description) {
+    65→  preset(arg) {
+    82→  conflicts(names) {
+   100→  implies(impliedOptionValues) {
+   120→  env(name) {
+   132→  argParser(fn) {
+   144→  makeOptionMandatory(mandatory = true) {
+   156→  hideHelp(hide = true) {
+   181→  choices(values) {
+   203→  name() {
+   217→  attributeName() {
+   230→  helpGroup(heading) {
+   243→  is(arg) {
+   256→  isBoolean() {
    262→ * This class is to make it easier to work with dual options, without changing the existing
-   263→ * implementation. We support separate dual options for separate positive and negative options,
-   264→ * like `--build` and `--no-build`, which share a single option value. This works nicely for some
-   265→ * use cases, but is tricky for others where we want separate behaviours despite
-   266→ * the single shared option value.
+      →…
    268→class DualOptions …
-   309→ * Convert string from kebab-case to camelCase.
-   310→ *
-   311→ * @param {string} str
-   312→ * @return {string}
-   313→ * @private
+   270→   * @param {Option[]} options
+   272→  constructor(options) {
+   291→   * Did the value come from the option, and not from possible matching dual option?
+      →…
+   297→  valueFromOption(value, option) {
    316→function camelcase(str) {
-   323→ * Split the short and long flag out of something like '-m,--mixed <value>'
-   324→ *
-   325→ * @private
    328→function splitOptionFlags(flags) {
 
 lib/suggestSimilar.js
      1→const maxDistance …
      3→function editDistance(a, b) {
-    49→ * Find close matches, restricted to same number of edits.
-    50→ *
-    51→ * @param {string} word
-    52→ * @param {string[]} candidates
-    53→ * @returns {string}
     56→function suggestSimilar(word, candidates) {
 
 docs/deprecated.md
@@ -243,143 +342,84 @@ tsconfig.ts.json
     15→  "include": [
 
 examples/action-this.js
-     6→const program …
 
 examples/alias.js
-     6→const program …
 
 examples/argument.js
-     6→const program …
 
 examples/arguments-custom-processing.js
-     8→const program …
-    10→function myParseInt(value) {
-    20→function mySum(value, total) {
 
 examples/arguments-extra.js
-     6→const program …
 
 examples/color-help-replacement.mjs
     20→class MyHelp …
     64→class MyCommand …
-    73→const program …
 
 examples/color-help.mjs
-     6→const program …
 
 examples/configure-help.js
-     2→const program …
 
 examples/configure-output.js
-     2→const program …
-     4→function errorColor(str) {
 
 examples/custom-command-class.js
      6→class CommandWithTrace …
-    15→function inspectCommand(command) {
-    22→const program …
 
 examples/custom-help-text.js
-     6→const program …
 
 examples/defaultCommand.js
-     4→const program …
 
 examples/global-options-added.js
     16→class MyRootCommand …
-    24→const program …
 
 examples/global-options-nested.js
-    10→const program …
 
 examples/help-centered.mjs
      6→class MyHelp …
     17→class MyCommand …
-    26→const program …
 
 examples/help-groups.js
-     5→const program …
-     6→const devOptionsHeading …
-     7→const managementCommandsHeading …
-    10→const docker1 …
-    29→const docker2 …
 
 examples/help-subcommands-usage.js
-     9→const program …
 
 examples/hook.js
-     4→const program …
-     8→const timeLabel …
 
 examples/man-style-help.mjs
-     5→function formatItem(term, termWidth, description, helper) {
-    25→const program …
 
 examples/nestedCommands.js
-     4→const program …
-    11→const brew …
-    21→function makeHeatCommand() {
 
 examples/options-boolean-or-value.js
-     8→const program …
-    14→const options …
 
 examples/options-common.js
-     7→const program …
-    16→const options …
 
 examples/options-conflicts.js
-     3→const program …
 
 examples/options-custom-processing.js
-     8→const program …
-    10→function myParseInt(value) {
-    19→function increaseVerbosity(dummyValue, previous) {
-    23→function collect(value, previous) {
-    27→function commaSeparatedList(value) {
-    45→const options …
 
 examples/options-defaults.js
-     7→const program …
 
 examples/options-env.js
-     3→const program …
 
 examples/options-extra.js
-     8→const program …
 
 examples/options-implies.js
-     3→const program …
 
 examples/options-negatable.js
-     8→const program …
-    17→const options …
-    18→const sauceStr …
-    19→const cheeseStr …
 
 examples/options-required.js
-     9→const program …
 
 examples/options-variadic.js
-     6→const program …
 
 examples/pass-through-options.js
-     4→const program …
 
 examples/pm-list.js
 
 examples/positional-options.js
-     4→const program …
 
 examples/split.js
-     9→const options …
-    10→const limit …
 
 examples/string-util.js
-     2→const program …
 
 examples/thank.js
-     6→const program …
 
 CHANGELOG.md
      1→# Changelog
@@ -419,87 +459,15 @@ SECURITY.md
 
 Readme_zh-CN.md
      1→# Commander.js
-    59→## 安装
-    65→## 快速开始
-   144→## 声明 program 变量
-   173→## 选项
-   200→### 常用选项类型，boolean 型选项和带参数选项
-   242→### 选项的默认值
-   264→### 其他的选项类型，取反选项，以及可选参数的选项
-   325→### 必填选项
-   343→### 变长参数选项
-   374→### 版本选项
-   393→### 其他选项配置
-   433→### 自定义选项处理
-   496→## 命令
-   530→### 命令参数
-   570→#### 其他参数配置
-   582→#### 自定义参数处理
-   603→### 处理函数
-   653→### 独立的可执行（子）命令
-   678→### 生命周期钩子
-   705→## 自动化帮助信息
-   734→### 自定义帮助
-   777→### 在出错后展示帮助信息
-   805→### 使用代码展示帮助信息
-   813→### .name
-   826→### .usage
-   842→### .description 和 .summary
-   855→### .helpOption(flags, description)
-   864→### .addHelpCommand()
-   874→### 其他帮助配置
-   895→## 自定义事件监听
-   905→## 零碎知识
-   907→### .parse() 和 .parseAsync()
-   925→### 解析配置
-   956→### 作为属性的遗留选项
-   972→### TypeScript
-   980→### createCommand()
-   991→### Node 选项，如 --harmony
-   998→### 调试子命令
-  1006→### 显示错误
-  1017→### 重写退出和输出
-  1054→### 其他文档
-  1061→## 支持
-  1068→### 企业使用 Commander
 
-tests/fixtures/inspect-sub.js
-
-tests/fixtures/inspect.js
-
-tests/fixtures/pm-cache-clear.js
-
-tests/fixtures/pm-cache-validate.js
-
-tests/fixtures/pm-cache.js
-
-tests/fixtures/pm-echo.js
-
-tests/fixtures/pm-fail.js
-
-tests/fixtures/pm-publish.js
-
-tests/fixtures/pm-terminate.js
-
-tests/fixtures-extensions/pm-try-cjs.cjs
-
-tests/fixtures-extensions/pm-try-mjs.mjs
-
-tests/fixtures-extensions/pm-try-ts.ts
-
-tests/fixtures-extensions/pm.js
-
-docs/zh-CN/不再推荐使用的功能.md
-     1→# 不再推荐使用的功能
-
-docs/zh-CN/可变参数的选项.md
-     1→# 可变参数的选项
-
-docs/zh-CN/术语表.md
-     1→# 术语表
+docs/zh-CN/
 
 tests/
+
+tests/fixtures/
 
 tests/fixtures/another-dir/
 
 tests/fixtures/other-dir/
+
+tests/fixtures-extensions/

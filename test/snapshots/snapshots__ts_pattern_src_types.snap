@@ -113,6 +113,13 @@ Pattern.ts
     47→ * the input value and returning whether the pattern matches
     48→ * or not, along with optional selections.
     50→export interface Matcher …
+    60→  [matcher](): MatcherProtocol<
+    61→    input,
+    62→    narrowed,
+    63→    matcherType,
+    64→    selections,
+    65→    excluded
+    66→  >;
     71→type PatternMatcher …
     74→export type MatchedValue …
     79→export type AnyMatcher …

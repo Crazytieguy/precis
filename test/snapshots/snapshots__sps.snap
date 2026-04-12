@@ -69,21 +69,35 @@ sps/src/cli.rs
     53→    Upgrade(UpgradeArgs),
     54→}
     56→impl Command …
+    57→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
 
 sps/src/main.rs
-    23→async fn run_init_command(init_args: &InitArgs, verbose_level: u8) -> spResult<()> {
-    57→async fn main() -> spResult<()> {
-   193→async fn check_and_run_auto_update(config: &Config, cache: Arc<Cache>) -> spResult<()> {
+    23→async fn run_init_command …
+    57→async fn main …
+   193→async fn check_and_run_auto_update …
 
 sps/src/pipeline.rs
 
 sps-core/src/build/env.rs
-    12→use crate::install::devtools;
     15→const ENV_VARS_TO_REMOVE …
    123→const ENV_VARS_TO_KEEP …
    141→pub struct BuildEnvironment …
    164→impl BuildEnvironment …
-   494→/// Filters the initial environment, keeping only specified safe variables.
+   165→    /// Creates a new sanitized build environment for a given formula.
+   166→    pub fn new<F: FormulaDependencies>(
+   167→        formula: &F,
+   168→        sps_prefix: &Path,
+   169→        cellar_path: &Path,
+   170→        all_installed_opt_paths: &[PathBuf],
+   171→    ) -> Result<Self> {
+   462→    /// Applies the sanitized environment to a `std::process::Command`.
+   463→    pub fn apply_to_command(&self, command: &mut std::process::Command) {
+   475→    /// Gets the configured PATH string.
+   476→    pub fn get_path_string(&self) -> Option<&str> {
+   481→    /// Gets the full map of environment variables.
+   482→    pub fn get_vars(&self) -> &HashMap<String, String> {
+   487→    /// Gets a specific variable from the sanitized environment.
+   488→    pub fn get_var(&self, key: &str) -> Option<&str> {
    495→fn filter_initial_environment(vars: &mut HashMap<String, String>) {
 
 sps-core/src/build/mod.rs
@@ -93,58 +107,34 @@ sps-net/src/api.rs
     13→const GITHUB_API_BASE_URL …
     14→const USER_AGENT_STRING …
     16→fn build_api_client …
-    36→pub async fn fetch_raw_formulae_json(endpoint: &str) -> Result<String> {
-    69→pub async fn fetch_all_formulas() -> Result<String> {
-    73→pub async fn fetch_all_casks() -> Result<String> {
-    77→pub async fn fetch_formula(name: &str) -> Result<serde_json::Value> {
-   104→pub async fn fetch_cask(token: &str) -> Result<serde_json::Value> {
+    36→pub async fn fetch_raw_formulae_json …
+    69→pub async fn fetch_all_formulas …
+    73→pub async fn fetch_all_casks …
+    77→pub async fn fetch_formula …
+   104→pub async fn fetch_cask …
    128→async fn fetch_github_api_json …
    160→async fn fetch_github_repo_info …
-   165→pub async fn get_formula(name: &str) -> Result<Formula> {
-   220→pub async fn get_all_formulas() -> Result<Vec<Formula>> {
-   228→pub async fn get_cask(name: &str) -> Result<Cask> {
-   259→pub async fn get_all_casks() -> Result<CaskList> {
+   165→pub async fn get_formula …
+   220→pub async fn get_all_formulas …
+   228→pub async fn get_cask …
+   259→pub async fn get_all_casks …
 
 sps-net/src/http.rs
-    16→use crate::validation::{validate_url, verify_checksum};
     18→pub type ProgressCallback …
     20→const DOWNLOAD_TIMEOUT_SECS …
     21→const CONNECT_TIMEOUT_SECS …
     22→const USER_AGENT_STRING …
-    24→pub async fn fetch_formula_source_or_bottle(
-    25→    formula_name: &str,
-    26→    url: &str,
-    27→    sha256_expected: &str,
-    28→    mirrors: &[String],
-    29→    config: &Config,
-    30→) -> Result<PathBuf> {
-    42→pub async fn fetch_formula_source_or_bottle_with_progress(
-    43→    formula_name: &str,
-    44→    url: &str,
-    45→    sha256_expected: &str,
-    46→    mirrors: &[String],
-    47→    config: &Config,
-    48→    progress_callback: Option<ProgressCallback>,
-    49→) -> Result<PathBuf> {
-   147→pub async fn fetch_resource(
-   148→    formula_name: &str,
-   149→    resource: &ResourceSpec,
-   150→    config: &Config,
-   151→) -> Result<PathBuf> {
-   155→pub async fn fetch_resource_with_progress(
-   156→    formula_name: &str,
-   157→    resource: &ResourceSpec,
-   158→    config: &Config,
-   159→    progress_callback: Option<ProgressCallback>,
-   160→) -> Result<PathBuf> {
+    24→pub async fn fetch_formula_source_or_bottle …
+    42→pub async fn fetch_formula_source_or_bottle_with_progress …
+   147→pub async fn fetch_resource …
+   155→pub async fn fetch_resource_with_progress …
    245→fn build_http_client …
    258→async fn download_and_verify …
 
 sps-net/src/lib.rs
+    29→pub use crate::validation:: …
 
 sps-net/src/oci.rs
-    18→use crate::http::ProgressCallback;
-    19→use crate::validation::{validate_url, verify_checksum};
     21→const OCI_MANIFEST_V1_TYPE …
     22→const OCI_LAYER_V1_TYPE …
     23→const DEFAULT_GHCR_TOKEN_ENDPOINT …
@@ -156,61 +146,21 @@ sps-net/src/oci.rs
     32→    token: String,
     33→}
     37→pub struct OciManifestIndex …
-    38→    pub schema_version: u32,
-    39→    pub media_type: Option<String>,
-    40→    pub manifests: Vec<OciManifestDescriptor>,
-    41→}
     45→pub struct OciManifestDescriptor …
-    46→    pub media_type: String,
-    47→    pub digest: String,
-    48→    pub size: u64,
-    49→    pub platform: Option<OciPlatform>,
-    50→    pub annotations: Option<HashMap<String, String>>,
-    51→}
     55→pub struct OciPlatform …
-    56→    pub architecture: String,
-    57→    pub os: String,
-    58→    #[serde(rename = "os.version")]
-    59→    pub os_version: Option<String>,
-    60→    #[serde(default)]
-    61→    pub features: Vec<String>,
-    62→    pub variant: Option<String>,
-    63→}
     66→enum OciAuth …
-    67→    None,
-    68→    AnonymousBearer { token: String },
-    69→    ExplicitBearer { token: String },
-    70→    Basic { encoded: String },
-    71→}
     73→async fn fetch_oci_resource …
-    96→pub async fn download_oci_blob(
-    97→    blob_url: &str,
-    98→    destination_path: &Path,
-    99→    config: &Config,
-   100→    client: &Client,
-   101→    expected_digest: &str,
-   102→) -> Result<()> {
-   114→pub async fn download_oci_blob_with_progress(
-   115→    blob_url: &str,
-   116→    destination_path: &Path,
-   117→    config: &Config,
-   118→    client: &Client,
-   119→    expected_digest: &str,
-   120→    progress_callback: Option<ProgressCallback>,
-   121→) -> Result<()> {
-   182→pub async fn fetch_oci_manifest_index(
-   183→    manifest_url: &str,
-   184→    config: &Config,
-   185→    client: &Client,
-   186→) -> Result<OciManifestIndex> {
-   190→pub fn build_oci_client() -> Result<Client> {
+    96→pub async fn download_oci_blob …
+   114→pub async fn download_oci_blob_with_progress …
+   182→pub async fn fetch_oci_manifest_index …
+   190→pub fn build_oci_client …
    200→fn extract_repo_path_from_url …
    210→async fn determine_auth …
    242→async fn fetch_anonymous_token …
    304→async fn execute_oci_request …
 
 sps-net/src/validation.rs
-    67→pub fn verify_checksum(path: &Path, expected: &str) -> Result<()> {
+    67→pub fn verify_checksum …
     92→/// Verifies that the detected content type of the file matches the expected extension.
     93→pub fn verify_content_type(path: &Path, expected_ext: &str) -> Result<()> {
    120→/// Validates a URL, ensuring it uses the HTTPS scheme.
@@ -225,50 +175,94 @@ sps-common/src/cache.rs
     17→    _config: Config, // Keep a reference to config if needed for other paths or future use
     18→}
     20→impl Cache …
+    21→    /// Create a new Cache using the config's cache_dir
+    22→    pub fn new(config: &Config) -> Result<Self> {
+    34→    /// Gets the cache directory path
+    35→    pub fn get_dir(&self) -> &Path {
+    39→    /// Stores raw string data in the cache
+    40→    pub fn store_raw(&self, filename: &str, data: &str) -> Result<()> {
+    47→    /// Loads raw string data from the cache
+    48→    pub fn load_raw(&self, filename: &str) -> Result<String> {
+    61→    /// Checks if a cache file exists and is valid (within TTL)
+    62→    pub fn is_cache_valid(&self, filename: &str) -> Result<bool> {
+    77→    /// Clears a specific cache file
+    78→    pub fn clear_file(&self, filename: &str) -> Result<()> {
+    86→    /// Clears all cache files
+    87→    pub fn clear_all(&self) -> Result<()> {
+    95→    /// Gets a reference to the config
+    96→    pub fn config(&self) -> &Config {
 
 sps-common/src/config.rs
     11→const DEFAULT_FALLBACK_SPS_ROOT …
     12→const SPS_ROOT_MARKER_FILENAME …
     15→pub struct Config …
-    16→    pub sps_root: PathBuf, // Public for direct construction in main for init if needed
-    17→    pub api_base_url: String,
-    18→    pub artifact_domain: Option<String>,
-    19→    pub docker_registry_token: Option<String>,
-    20→    pub docker_registry_basic_auth: Option<String>,
-    21→    pub github_api_token: Option<String>,
-    22→}
     24→impl Config …
+    25→    pub fn load() -> Result<Self> {
+    60→    pub fn sps_root(&self) -> &Path {
+    64→    pub fn bin_dir(&self) -> PathBuf {
+    68→    pub fn cellar_dir(&self) -> PathBuf {
+    72→    pub fn cask_room_dir(&self) -> PathBuf {
+    76→    pub fn cask_store_dir(&self) -> PathBuf {
+    80→    pub fn opt_dir(&self) -> PathBuf {
+    84→    pub fn taps_dir(&self) -> PathBuf {
+    88→    pub fn cache_dir(&self) -> PathBuf {
+    92→    pub fn logs_dir(&self) -> PathBuf {
+    96→    pub fn tmp_dir(&self) -> PathBuf {
+   100→    pub fn state_dir(&self) -> PathBuf {
+   104→    pub fn man_base_dir(&self) -> PathBuf {
+   108→    pub fn sps_root_marker_path(&self) -> PathBuf {
+   112→    pub fn applications_dir(&self) -> PathBuf {
+   120→    pub fn formula_cellar_dir(&self, formula_name: &str) -> PathBuf {
+   124→    pub fn formula_keg_path(&self, formula_name: &str, version_str: &str) -> PathBuf {
+   128→    pub fn formula_opt_path(&self, formula_name: &str) -> PathBuf {
+   132→    pub fn cask_room_token_path(&self, cask_token: &str) -> PathBuf {
+   136→    pub fn cask_store_token_path(&self, cask_token: &str) -> PathBuf {
+   140→    pub fn cask_store_version_path(&self, cask_token: &str, version_str: &str) -> PathBuf {
+   144→    pub fn cask_store_app_path(
+   145→        &self,
+   146→        cask_token: &str,
+   147→        version_str: &str,
+   148→        app_name: &str,
+   149→    ) -> PathBuf {
+   154→    pub fn cask_room_version_path(&self, cask_token: &str, version_str: &str) -> PathBuf {
+   158→    pub fn home_dir(&self) -> PathBuf {
+   162→    pub fn get_tap_path(&self, name: &str) -> Option<PathBuf> {
+   175→    pub fn get_formula_path_from_tap(&self, tap_name: &str, formula_name: &str) -> Option<PathBuf> {
    193→impl Default for Config …
+   194→    fn default() -> Self {
    199→pub fn load_config() -> Result<Config> {
-   200→    Config::load()
-   201→}
 
 sps-common/src/error.rs
      6→pub enum SpsError …
     89→impl From<std::io::Error> for SpsError …
+    90→    fn from(err: std::io::Error) -> Self {
     95→impl From<reqwest::Error> for SpsError …
+    96→    fn from(err: reqwest::Error) -> Self {
    101→impl From<serde_json::Error> for SpsError …
+   102→    fn from(err: serde_json::Error) -> Self {
    107→impl From<semver::Error> for SpsError …
+   108→    fn from(err: semver::Error) -> Self {
    113→impl From<object::read::Error> for SpsError …
+   114→    fn from(err: object::read::Error) -> Self {
    119→pub type Result …
 
 sps-common/src/formulary.rs
     12→pub struct Formulary …
-    13→    cache: Cache,
-    14→    parsed_cache: std::sync::Mutex<HashMap<String, std::sync::Arc<Formula>>>,
-    15→}
     17→impl Formulary …
+    18→    pub fn new(config: Config) -> Self {
+    28→    pub fn load_formula(&self, name: &str) -> Result<Formula> {
 
 sps-common/src/keg.rs
     13→pub struct InstalledKeg …
-    14→    pub name: String,
-    15→    pub version_str: String,
-    16→    pub path: PathBuf,
-    17→}
     21→pub struct KegRegistry …
-    22→    config: Config,
-    23→}
     25→impl KegRegistry …
+    26→    pub fn new(config: Config) -> Self {
+    30→    fn formula_cellar_path(&self, name: &str) -> PathBuf {
+    34→    pub fn get_opt_path(&self, name: &str) -> PathBuf {
+    38→    pub fn get_installed_keg(&self, name: &str) -> Result<Option<InstalledKeg>> {
+   128→    pub fn list_installed_kegs(&self) -> Result<Vec<InstalledKeg>> {
+   213→    pub fn cellar_path(&self) -> PathBuf {
+   217→    pub fn get_keg_path(&self, name: &str, version_str_raw: &str) -> PathBuf {
 
 sps-common/src/lib.rs
 
@@ -276,31 +270,14 @@ sps-common/src/pipeline.rs
     14→pub enum PipelinePackageType …
     20→pub enum JobAction …
     33→pub struct PlannedJob …
-    34→    pub target_id: String,
-    35→    pub target_definition: InstallTargetIdentifier,
-    36→    pub action: JobAction,
-    37→    pub is_source_build: bool,
-    38→    pub use_private_store_source: Option<PathBuf>,
-    39→}
     42→pub struct WorkerJob …
-    43→    pub request: PlannedJob,
-    44→    pub download_path: PathBuf,
-    45→    pub download_size_bytes: u64,
-    46→    pub is_source_from_private_store: bool,
-    47→}
     50→pub enum PipelineEvent …
    141→impl PipelineEvent …
+   143→    pub fn job_failed(target_id: String, action: JobAction, error: &SpsError) -> Self {
+   150→    pub fn download_failed(target_id: String, url: String, error: &SpsError) -> Self {
    163→pub enum JobProcessingState …
    184→pub struct DownloadOutcome …
-   185→    pub planned_job: PlannedJob,           // The job this download was for
-   186→    pub result: Result<PathBuf, SpsError>, // Path to downloaded file or error
-   187→}
    191→pub struct PlannedOperations …
-   192→    pub jobs: Vec<PlannedJob>,           // Topologically sorted for formulae
-   193→    pub errors: Vec<(String, SpsError)>, // Errors from planning phase
-   194→    pub already_installed_or_up_to_date: std::collections::HashSet<String>,
-   195→    pub resolved_graph: Option<Arc<ResolvedGraph>>, // Graph for dependency checking in runner
-   196→}
 
 sps-core/src/check/installed.rs
     14→pub enum PackageType …
@@ -308,37 +285,16 @@ sps-core/src/check/installed.rs
     16→    Cask,
     17→}
     20→pub struct InstalledPackageInfo …
-    21→    pub name: String,
-    22→    pub version: String, // This will now store keg.version_str
-    23→    pub pkg_type: PackageType,
-    24→    pub path: PathBuf,
-    25→}
     29→fn handle_dir_entry …
-    39→pub async fn get_installed_packages(config: &Config) -> Result<Vec<InstalledPackageInfo>> {
-   140→pub async fn get_installed_package(
-   141→    name: &str,
-   142→    config: &Config,
-   143→) -> Result<Option<InstalledPackageInfo>> {
+    39→pub async fn get_installed_packages …
+   140→pub async fn get_installed_package …
 
 sps-core/src/check/mod.rs
 
 sps-core/src/check/update.rs
-    20→use crate::check::installed::{InstalledPackageInfo, PackageType};
     23→pub struct UpdateInfo …
-    24→    pub name: String,
-    25→    pub installed_version: String,
-    26→    pub available_version: String,
-    27→    pub pkg_type: PackageType,
-    28→    pub target_definition: InstallTargetIdentifier,
-    29→}
-    31→/// Ensures that the raw JSON data for formulas and casks exists in the main disk cache,
-      →…
     33→async fn ensure_api_data_cached(cache: &Cache) -> Result<()> {
-    89→pub async fn check_for_updates(
-    90→    installed_packages: &[InstalledPackageInfo],
-    91→    cache: &Cache,
-    92→    config: &Config,
-    93→) -> Result<Vec<UpdateInfo>> {
+    89→pub async fn check_for_updates …
 
 sps-core/src/install/devtools.rs
      9→pub fn find_compiler(name: &str) -> Result<PathBuf> {
@@ -347,7 +303,6 @@ sps-core/src/install/devtools.rs
    160→pub fn get_arch_flag() -> String {
 
 sps-core/src/install/extract.rs
-    16→use crate::utils::xattr;
     18→pub(crate) fn infer_archive_root_dir(
     19→    archive_path: &Path,
     20→    archive_type: &str,
@@ -362,7 +317,6 @@ sps-core/src/install/extract.rs
    238→    strip_components: usize,
    239→    archive_type: &str,
    240→) -> Result<()> {
-   301→/// Represents a hardlink operation that was deferred.
    302→fn extract_xz_tar_archive …
    343→struct DeferredHardLink …
    348→fn extract_tar_archive …
@@ -373,28 +327,18 @@ sps-core/src/install/mod.rs
 
 sps/src/pipeline/downloader.rs
     21→pub(crate) struct DownloadCoordinator …
-    22→    config: Config,
-    23→    cache: Arc<Cache>,
-    24→    http_client: Arc<HttpClient>,
-    25→    event_tx: Option<broadcast::Sender<PipelineEvent>>,
-    26→}
     28→impl DownloadCoordinator …
+    29→    pub fn new …
+    43→    pub async fn coordinate_downloads …
 
 sps/src/pipeline/planner.rs
     25→pub(crate) type PlanResult …
     28→struct IntermediatePlan …
     37→pub(crate) async fn fetch_target_definitions …
-   132→async fn load_or_fetch_formulae_map …
-   158→async fn load_or_fetch_casks_map …
    184→pub(crate) struct OperationPlanner …
-   185→    config: &'a Config,
-   186→    cache: Arc<Cache>,
-   187→    flags: &'a PipelineFlags,
-   188→    event_tx: broadcast::Sender<PipelineEvent>,
-   189→}
    191→impl<'a> OperationPlanner<'a> …
-  1050→fn determine_build_strategy_for_job …
-  1089→fn sort_planned_jobs …
+   192→    pub fn new …
+   526→    pub async fn plan_operations …
 
 sps/src/pipeline/runner.rs
     26→const WORKER_JOB_CHANNEL_SIZE …
@@ -406,23 +350,11 @@ sps/src/pipeline/runner.rs
     34→    Upgrade { all: bool },
     35→}
     38→pub struct PipelineFlags …
-    39→    pub build_from_source: bool,
-    40→    pub include_optional: bool,
-    41→    pub skip_recommended: bool,
-    42→}
     44→struct PropagationContext …
-    52→fn err_to_string …
     56→pub(crate) fn get_panic_message …
     67→pub async fn run_pipeline …
-   603→fn process_download_outcome …
-   669→fn process_core_worker_feedback …
-   721→fn check_and_dispatch …
-   860→fn are_dependencies_succeeded …
-   980→fn propagate_failure …
 
 sps-core/src/utils/applescript.rs
-    10→fn get_bundle_identifier_from_app_path(app_path: &Path) -> Option<String> {
-    40→fn is_app_running_by_bundle_id(bundle_id: &str) -> Result<bool> {
     72→/// Attempts to gracefully quit an application using its bundle identifier (preferred) or name via
       →…
     75→pub fn quit_app_gracefully(app_path: &Path) -> Result<()> {
@@ -430,8 +362,6 @@ sps-core/src/utils/applescript.rs
 sps-core/src/utils/mod.rs
 
 sps-core/src/utils/xattr.rs
-    11→fn get_timestamp_hex() -> String {
-    20→fn get_uuid_hex() -> String {
     24→/// true  → file **has** a com.apple.quarantine attribute  
       →…
     26→pub fn has_quarantine_attribute(path: &Path) -> anyhow::Result<bool> {
@@ -443,14 +373,11 @@ sps-core/src/utils/xattr.rs
     53→pub fn set_quarantine_attribute(path: &Path, agent_name: &str) -> Result<()> {
 
 sps-core/src/pipeline/engine.rs
-    13→use super::worker;
     16→pub fn start_worker_pool_manager …
 
 sps-core/src/pipeline/mod.rs
 
 sps-core/src/pipeline/worker.rs
-    18→use crate::check::installed::{InstalledPackageInfo, PackageType as CorePackageType};
-    19→use crate::{build, install, uninstall, upgrade};
     21→pub(super) fn execute_sync_job …
     37→fn do_execute_sync_steps …
 
@@ -465,15 +392,8 @@ sps-core/src/uninstall/cask.rs
    136→    cask_def: &Cask,
    137→    config: &Config,
    138→) -> Result<()> {
-   497→fn process_artifact_uninstall_core …
-   576→fn forget_pkgutil_receipt …
-   610→fn unload_and_remove_launchd …
-   678→fn trash_path …
-   695→/// Helper for zap scripts.
    696→fn run_zap_script …
-   729→/// Logs the output of a command and adds to error list if it failed.
    730→fn log_command_output …
-   763→fn cleanup_private_store …
 
 sps-core/src/uninstall/common.rs
     11→pub struct UninstallOptions …
@@ -511,11 +431,21 @@ sps-core/src/upgrade/source.rs
 
 sps-common/src/dependency/definition.rs
     18→impl Default for DependencyTag …
+    19→    fn default() -> Self {
     24→impl fmt::Display for DependencyTag …
+    25→    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
     31→pub struct Dependency …
     37→impl Dependency …
+    38→    pub fn new_runtime(name: impl Into<String>) -> Self {
+    45→    pub fn new_with_tags(name: impl Into<String>, tags: DependencyTag) -> Self {
     53→pub trait DependencyExt …
+    54→    fn filter_by_tags(&self, include: DependencyTag, exclude: DependencyTag) -> Vec<&Dependency>;
+    55→    fn runtime(&self) -> Vec<&Dependency>;
+    56→    fn build_time(&self) -> Vec<&Dependency>;
     59→impl DependencyExt for Vec<Dependency> …
+    60→    fn filter_by_tags(&self, include: DependencyTag, exclude: DependencyTag) -> Vec<&Dependency> {
+    66→    fn runtime(&self) -> Vec<&Dependency> {
+    79→    fn build_time(&self) -> Vec<&Dependency> {
 
 sps-common/src/dependency/mod.rs
 
@@ -526,6 +456,7 @@ sps-common/src/dependency/requirement.rs
     10→    Other(String),
     11→}
     13→impl fmt::Display for Requirement …
+    14→    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 
 sps-common/src/dependency/resolver.rs
     15→pub enum NodeInstallStrategy …
@@ -546,10 +477,20 @@ sps-common/src/dependency/resolver.rs
     60→}
     63→pub struct ResolvedGraph …
     71→impl ResolvedGraph …
+    72→    pub fn empty() -> Self {
     77→pub struct DependencyResolver …
     85→impl<'a> DependencyResolver<'a> …
+    86→    pub fn new(context: ResolutionContext<'a>) -> Self {
+   156→    pub fn resolve_targets(&mut self, targets: &[String]) -> Result<ResolvedGraph> {
    757→impl Formula …
    778→impl<'a> ResolutionContext<'a> …
+   779→    pub fn should_process_dependency_edge(
+   780→        &self,
+   781→        parent_formula_for_logging: &Arc<Formula>,
+   782→        edge_tags: DependencyTag,
+   783→        parent_node_determined_strategy: NodeInstallStrategy,
+   784→    ) -> bool {
+   819→    pub fn should_consider_edge_globally(&self, edge_tags: DependencyTag) -> bool {
 
 sps-common/src/model/artifact.rs
      9→pub enum InstalledArtifact …
@@ -565,14 +506,25 @@ sps-common/src/model/cask.rs
     75→pub enum MacOSReq …
     85→pub enum StringList …
     90→impl From<StringList> for Vec<String> …
+    91→    fn from(item: StringList) -> Self {
    101→pub struct DependsOn …
    116→pub struct Cask …
    156→pub struct CaskList …
    165→pub enum StringOrVec …
    169→impl StringOrVec …
+   170→    pub fn into_vec(self) -> Vec<String> {
    181→pub enum ZapActionDetail …
    197→pub struct ZapStanza …
    201→impl Cask …
+   202→    /// Check if this cask is installed by looking for a manifest file
+   203→    /// in any versioned directory within the Caskroom.
+   204→    pub fn is_installed(&self, config: &Config) -> bool {
+   258→    /// Get the installed version of this cask by reading the directory names
+   259→    /// in the Caskroom. Returns the first version found (use cautiously if multiple
+   260→    /// versions could exist, though current install logic prevents this).
+   261→    pub fn installed_version(&self, config: &Config) -> Option<String> {
+   288→    /// Get a friendly name for display purposes
+   289→    pub fn display_name(&self) -> String {
 
 sps-common/src/model/formula.rs
     19→pub struct ResourceSpec …
@@ -582,11 +534,39 @@ sps-common/src/model/formula.rs
     47→pub struct FormulaVersions …
     57→pub struct Formula …
     87→impl<'de> Deserialize<'de> for Formula …
+    88→    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    89→    where
+    90→        D: Deserializer<'de>,
+    91→    {
    317→impl Formula …
+   319→    pub fn dependencies(&self) -> Result<Vec<Dependency>> {
+   322→    pub fn requirements(&self) -> Result<Vec<Requirement>> {
+   327→    pub fn resources(&self) -> Result<Vec<ResourceSpec>> {
+   332→    pub fn set_keg_path(&mut self, path: PathBuf) {
+   335→    pub fn version_str_full(&self) -> String {
+   342→    pub fn name(&self) -> &str {
+   345→    pub fn version(&self) -> &Version {
+   348→    pub fn source_url(&self) -> &str {
+   351→    pub fn source_sha256(&self) -> &str {
+   354→    pub fn get_bottle_spec(&self, bottle_tag: &str) -> Option<&BottleFileSpec> {
    360→pub trait FormulaDependencies …
+   361→    fn name(&self) -> &str;
+   362→    fn install_prefix(&self, cellar_path: &Path) -> Result<PathBuf>;
+   363→    fn resolved_runtime_dependency_paths(&self) -> Result<Vec<PathBuf>>;
+   364→    fn resolved_build_dependency_paths(&self) -> Result<Vec<PathBuf>>;
+   365→    fn all_resolved_dependency_paths(&self) -> Result<Vec<PathBuf>>;
    367→impl FormulaDependencies for Formula …
+   368→    fn name(&self) -> &str {
+   371→    fn install_prefix(&self, cellar_path: &Path) -> Result<PathBuf> {
+   375→    fn resolved_runtime_dependency_paths(&self) -> Result<Vec<PathBuf>> {
+   378→    fn resolved_build_dependency_paths(&self) -> Result<Vec<PathBuf>> {
+   381→    fn all_resolved_dependency_paths(&self) -> Result<Vec<PathBuf>> {
    388→fn deserialize_requirements …
    455→impl<'de> Deserialize<'de> for ResourceSpec …
+   456→    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+   457→    where
+   458→        D: Deserializer<'de>,
+   459→    {
 
 sps-common/src/model/mod.rs
     17→pub enum InstallTargetIdentifier …
@@ -604,16 +584,39 @@ sps-common/src/model/tap.rs
     18→    pub path: PathBuf,
     19→}
     21→impl Tap …
+    22→    /// Create a new tap from user/repo format
+    23→    pub fn new(name: &str) -> Result<Self> {
+    42→    /// Update this tap by pulling latest changes
+    43→    pub fn update(&self) -> Result<()> {
+   101→    /// Remove this tap by deleting its local repository
+   102→    pub fn remove(&self) -> Result<()> {
+   115→    /// Get the full name of the tap (user/repo)
+   116→    pub fn full_name(&self) -> String {
+   120→    /// Check if this tap is installed locally
+   121→    pub fn is_installed(&self) -> bool {
 
 sps-common/src/model/version.rs
     11→pub struct Version …
     13→impl Version …
+    14→    pub fn parse(s: &str) -> Result<Self> {
     36→impl FromStr for Version …
+    38→    fn from_str(s: &str) -> std::result::Result<Self, Self::Err> {
     43→impl fmt::Display for Version …
+    44→    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
     52→impl Serialize for Version …
+    53→    fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
+    54→    where
+    55→        S: Serializer,
+    56→    {
     61→impl AsRef<Self> for Version …
+    62→    fn as_ref(&self) -> &Self {
     69→impl From<Version> for semver::Version …
+    70→    fn from(version: Version) -> Self {
     75→impl<'de> Deserialize<'de> for Version …
+    76→    fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
+    77→    where
+    78→        D: Deserializer<'de>,
+    79→    {
 
 rustfmt.toml
 
@@ -621,6 +624,8 @@ sps/src/cli/info.rs
      1→//! Contains the logic for the `info` command.
     14→pub struct Info …
     23→impl Info …
+    24→    /// Displays detailed information about a formula or cask.
+    25→    pub async fn run(&self, _config: &Config, cache: Arc<Cache>) -> Result<()> {
     72→async fn get_formula_info_raw(cache: Arc<Cache>, name: &str) -> Result<Value> {
    112→async fn get_cask_info(cache: Arc<Cache>, name: &str) -> Result<Value> {
    150→fn print_formula_info(_name: &str, formula: &Value) {
@@ -629,24 +634,22 @@ sps/src/cli/info.rs
 sps/src/cli/init.rs
     16→pub struct InitArgs …
     22→impl InitArgs …
-   306→fn run_sudo_command …
-   337→fn configure_shell_path …
-   494→fn print_manual_path_instructions …
-   514→fn line_exists_in_file …
-   546→fn update_shell_config …
-   643→fn ensure_profile_sources_rc …
+    23→    pub async fn run(&self, config: &Config) -> SpsResult<()> {
 
 sps/src/cli/install.rs
     16→pub struct InstallArgs …
     43→impl InstallArgs …
+    45→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
 
 sps/src/cli/list.rs
     16→pub struct List …
     28→impl List …
+    29→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
 
 sps/src/cli/reinstall.rs
     12→pub struct ReinstallArgs …
     23→impl ReinstallArgs …
+    24→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
 
 sps/src/cli/search.rs
     15→pub struct Search …
@@ -656,20 +659,9 @@ sps/src/cli/search.rs
     26→    Cask,
     27→}
     29→impl Search …
-    42→pub async fn run_search(
-    43→    query: &str,
-    44→    search_type: SearchType,
-    45→    _config: &Config,
-    46→    cache: Arc<Cache>,
-    47→) -> Result<()> {
-    88→async fn search_formulas …
-   128→async fn search_casks …
-   162→fn is_formula_match …
-   194→fn is_cask_match …
-   220→fn truncate_vis …
-   240→pub fn print_search_results(query: &str, formula_matches: &[Value], cask_matches: &[Value]) {
-   320→fn get_version …
-   328→fn get_cask_version …
+    30→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
+    42→pub async fn run_search …
+   240→pub fn print_search_results …
 
 sps/src/cli/status.rs
     13→enum JobStatus …
@@ -678,117 +670,40 @@ sps/src/cli/status.rs
     78→impl JobInfo …
     94→struct StatusDisplay …
    111→impl StatusDisplay …
-   365→fn format_bytes …
-   382→fn format_speed …
-   399→pub async fn handle_events(_config: Config, mut event_rx: broadcast::Receiver<PipelineEvent>) {
+   399→pub async fn handle_events …
 
 sps/src/cli/uninstall.rs
     17→pub struct Uninstall …
     30→impl Uninstall …
-   181→fn count_files_and_size …
-   213→fn format_size …
+    31→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
 
 sps/src/cli/update.rs
      1→//! Contains the logic for the `update` command.
     11→pub struct Update …
     13→impl Update …
+    14→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
 
 sps/src/cli/upgrade.rs
     12→pub struct UpgradeArgs …
     23→impl UpgradeArgs …
+    24→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
 
 sps-core/src/install/cask/dmg.rs
-    12→pub fn mount_dmg …
-    43→pub fn unmount_dmg …
-    88→fn parse_mount_point …
-   153→pub fn extract_dmg_to_stage(dmg_path: &Path, stage_dir: &Path) -> Result<()> {
+   153→pub fn extract_dmg_to_stage …
 
 sps-core/src/install/cask/helpers.rs
-     9→pub fn remove_path_robustly(path: &Path, _config: &Config, use_sudo_if_needed: bool) -> bool {
-    75→pub fn cleanup_empty_parent_dirs_in_private_store(start_path: &Path, stop_at: &Path) {
+     9→pub fn remove_path_robustly …
+    75→pub fn cleanup_empty_parent_dirs_in_private_store …
 
 sps-core/src/install/cask/mod.rs
     25→pub struct CaskInstallManifest …
-    37→pub fn sps_private_cask_version_dir(cask: &Cask, config: &Config) -> PathBuf {
-    43→pub fn sps_private_cask_token_dir(cask: &Cask, config: &Config) -> PathBuf {
-    49→pub fn sps_private_cask_app_path(cask: &Cask, config: &Config) -> Option<PathBuf> {
-    73→pub async fn download_cask …
-    77→pub async fn download_cask_with_progress …
-   232→pub fn install_cask …
-   580→pub fn write_receipt …
-   612→pub fn write_cask_manifest …
-   686→pub fn cleanup_empty_parent_dirs_in_private_store(start_path: &Path, stop_at: &Path) {
-
-CONTRIBUTING.md
-     1→# Contributing to sps
-     7→## ⏩ Quick‑Start
-     9→### 1. Fork, clone & branch
-    10→```bash
-    16→### 2. Install Nightly Toolchain (for formatting)
-    17→```bash
-    21→### 3. Compile fast (uses stable toolchain from rust-toolchain.toml)
-    22→```bash
-    26→### 4. Format (uses nightly toolchain)
-    27→```bash
-    31→### 5. Lint (uses stable toolchain)
-    32→```bash
-    36→### 6. Test (uses stable toolchain)
-    37→```bash
-    41→### 7. Commit (Conventional + DCO)
-    42→```bash
-    46→### 8. Push & open a Merge Request against `main`
-    47→```bash
-    54→## Project Layout
-    65→## Dev Environment
-    76→## Coding Style
-    90→## Testing
-    98→## Git & Commits
-   108→## Merge‑Request Flow
-   119→## Reporting Issues
-   127→## License & DCO
-   133→## Code of Conduct
-
-LICENSE.md
-
-NOTICE.md
-     1→## Homebrew
-     3→### Sources
-     4→https://github.com/Homebrew/brew
-
-sps-core/src/install/bottle/exec.rs
-    25→pub async fn download_bottle …
-    33→pub async fn download_bottle_with_progress …
-    44→pub async fn download_bottle_with_progress_and_cache_info …
-   210→pub fn get_bottle_for_platform …
-   331→pub fn install_bottle …
-  1293→fn apply_install_name_tool_change …
-
-sps-core/src/install/bottle/link.rs
-    19→pub fn link_formula_artifacts …
-   476→pub fn unlink_formula_artifacts …
-
-sps-core/src/install/bottle/macho.rs
-    46→struct PatchInfo …
-    55→pub struct SkippedPath …
-    56→    pub old_path: String,
-    57→    pub new_path: String,
-    58→}
-    64→pub fn patch_macho_file …
-    81→pub fn patch_macho_file …
-   370→fn find_and_replace_placeholders …
-
-sps-core/src/install/bottle/mod.rs
-    17→/// Download formula resources from the internet asynchronously.
-    18→pub async fn download_formula(
-    19→    formula: &Formula,
-    20→    config: &Config,
-    21→    client: &reqwest::Client,
-    22→) -> Result<PathBuf> {
-    33→/// Checks if a suitable bottle exists for the current platform, considering fallbacks.
-    34→pub fn has_bottle_for_current_platform(formula: &Formula) -> bool {
-   159→pub fn get_formula_cellar_path …
-   165→pub fn write_receipt …
+    37→pub fn sps_private_cask_version_dir …
+    43→pub fn sps_private_cask_token_dir …
+    49→pub fn sps_private_cask_app_path …
+   686→pub fn cleanup_empty_parent_dirs_in_private_store …
 
 sps-core/src/build/compile/
+
+sps-core/src/install/bottle/
 
 sps-core/src/install/cask/artifacts/

@@ -88,11 +88,33 @@ src/tomli/_parser.py
     57→BASIC_STR_ESCAPE_REPLACEMENTS …
     71→class DEPRECATED_DEFAULT …
     76→class TOMLDecodeError …
+    87→    def __init__(
+    88→        self,
+    89→        msg: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
+    90→        doc: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
+    91→        pos: Pos | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
+    92→        *args: Any,
+    93→    ):
    137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
    149→def loads(__s: str, *, parse_float: ParseFloat = float) -> dict[str, Any]:
    220→class Flags …
+   229→    def __init__(self) -> None:
+   233→    def add_pending(self, key: Key, flag: int) -> None:
+   236→    def finalize_pending(self) -> None:
+   241→    def unset_all(self, key: Key) -> None:
+   249→    def set(self, key: Key, flag: int, *, recursive: bool) -> None:  # noqa: A003
+   260→    def is_(self, key: Key, flag: int) -> bool:
    278→class NestedDict …
+   279→    def __init__(self) -> None:
+   283→    def get_or_create_nest(
+   284→        self,
+   285→        key: Key,
+   286→        *,
+   287→        access_lists: bool = True,
+   288→    ) -> dict[str, Any]:
+   300→    def append_nest_to_list(self, key: Key) -> None:
    312→class Output …
+   313→    def __init__(self) -> None:
    318→def skip_chars(src: str, pos: Pos, chars: Iterable[str]) -> Pos:
    327→def skip_until(
    328→    src: str,
@@ -166,6 +188,8 @@ benchmark/README.md
      1→# Benchmark
      3→## Acknowledgments
     10→## Running
+    12→### Against the local Tomli state
+    18→### Against the latest Tomli PyPI release
 
 pyproject.toml
      1→[build-system]
@@ -174,44 +198,12 @@ pyproject.toml
     33→[tool.isort]
     46→[tool.tox]
     51→[tool.tox.env_run_base]
-    52→description = "run tests against a built package under {base_python}"
-    53→pass_env = ["TOMLI_USE_MYPYC"]
-    54→commands = [
-    55→    ["python", "-m", "unittest", { replace = "posargs", extend = true }],
-    56→]
-    57→
-    58→[tool.tox.env."profile"]
    129→[tool.coverage.run]
-   130→branch = true
-   131→source = ['tomli']
-   132→
    133→[tool.coverage.report]
-   134→# Regexes for lines to exclude from consideration
-   135→exclude_lines = [
-   136→    # Re-enable the standard pragma (with extra strictness)
-   137→    '# pragma: no cover\b',
-   138→    # Code for static type checkers
-   139→    'if TYPE_CHECKING:',
-   140→    # Scripts
-   141→    'if __name__ == .__main__.:',
-   142→]
-   143→
-   144→
    145→[tool.mypy]
    157→[[tool.mypy.overrides]]
-   158→module = "tests.*"
-   159→disallow_untyped_defs = false
-   160→
    161→[[tool.mypy.overrides]]
-   162→# This matches `benchmark/run.py`. Since benchmark/ is
-   163→# not a package, we use the module name here.
-   164→module = "run"
-   165→ignore_errors = true
-   166→
    167→[[tool.mypy.overrides]]
-   168→# This matches `fuzzer/fuzz.py`.
-   169→module = "fuzz"
-   170→ignore_errors = true
 
 setup.py
 

@@ -15,7 +15,16 @@ sample.ts
     17→    return fetch(url);
     18→}
     20→export class TokenParser …
+    23→    constructor(input: string) {
+    24→        this.tokens = [];
+    25→    }
+    27→    public parse(): Token[] {
+    28→        return this.tokens;
+    29→    }
+    31→    private advance(): void {}
     34→export interface Visitor …
+    35→    visitToken(token: Token): void;
+    36→    visitAll(tokens: Token[]): void;
     39→export enum TokenKind …
     40→    Ident = "ident",
     41→    Number = "number",

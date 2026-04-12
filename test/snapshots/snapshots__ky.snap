@@ -5,7 +5,6 @@ expression: output
 readme.md
     20→## Benefits over plain `fetch`
     33→## Install
-    39→###### CDN
     45→## Usage
     85→## API
     87→### ky(input, options?)
@@ -24,10 +23,6 @@ readme.md
    197→##### retry
    327→##### timeout
    335→##### hooks
-   342→###### hooks.beforeRequest
-   373→###### hooks.beforeRetry
-   446→###### hooks.beforeError
-   485→###### hooks.afterResponse
    553→##### throwHttpErrors
    566→##### onDownloadProgress
    592→##### onUploadProgress
@@ -116,6 +111,19 @@ source/core/Ky.ts
     30→	supportsRequestStreams,
     31→} from './constants.js';
     33→export class Ky …
+    34→	static create(input: Input, options: Options): ResponsePromise {
+   178→	static #normalizeSearchParams …
+   200→	constructor(input: Input, options: Options = {}) {
+   297→	#calculateDelay …
+   316→	async #calculateRetryDelay …
+   390→	#decorateResponse …
+   398→	#cancelBody …
+   407→	#cancelResponseBody …
+   412→	async #retry …
+   463→	async #fetch …
+   503→	#getNormalizedOptions …
+   512→	#assignRequest …
+   517→	#wrapRequestWithUploadProgress …
 
 source/core/constants.ts
      2→import {type KyOptionsRegistry, type RequestHttpMethod} from '../types/options.js';
@@ -134,6 +142,7 @@ source/core/constants.ts
     68→export type ForceRetryOptions …
    146→Marker returned by ky.retry() to signal a forced retry from afterResponse hooks.
    148→export class RetryMarker …
+   149→	constructor(public options?: ForceRetryOptions) {}
    153→Force a retry from an `afterResponse` hook.
       →…
    235→export const retry = (options?: ForceRetryOptions) => new RetryMarker(options);
@@ -210,28 +219,32 @@ source/errors/ForceRetryError.ts
      5→Internal error used to signal a forced retry from afterResponse hooks.
      6→This is thrown when a user returns ky.retry() from an afterResponse hook.
      8→export class ForceRetryError …
+    14→	constructor(options?: ForceRetryOptions) {
 
 source/errors/HTTPError.ts
      1→import type {NormalizedOptions} from '../types/options.js';
      2→import type {KyRequest} from '../types/request.js';
      3→import type {KyResponse} from '../types/response.js';
      5→export class HTTPError …
+    10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
 
 source/errors/NonError.ts
      2→Wrapper for non-Error values that were thrown.
      3→
      4→In JavaScript, any value can be thrown (not just Error instances). This class wraps such values to ensure consistent error handling.
      6→export class NonError …
+    10→	constructor(value: unknown) {
 
 source/errors/TimeoutError.ts
      1→import type {KyRequest} from '../types/request.js';
      3→export class TimeoutError …
+     6→	constructor(request: Request) {
 
 source/utils/body.ts
      1→import type {Options} from '../types/options.js';
      2→import {usualFormBoundarySize} from '../core/constants.js';
      5→export const getBodySize = (body?: BodyInit | null): number => {
-    57→const withProgress = (stream: ReadableStream<Uint8Array>, totalBytes: number, onProgress: Options['onDownloadProgress'] | Options['onUploadProgress']): ReadableStream<Uint8Array> => {
+    57→const withProgress …
     90→export const streamResponse = (response: Response, onDownloadProgress: Options['onDownloadProgress']) => {
    119→export const streamRequest = (request: Request, onUploadProgress: Options['onUploadProgress'], originalBody?: BodyInit | null) => {
 
@@ -253,9 +266,9 @@ source/utils/merge.ts
      4→import {isObject} from './is.js';
      6→export const validateAndMerge = (...sources: Array<Partial<Options> | undefined>): Partial<Options> => {
     16→export const mergeHeaders = (source1: KyHeadersInit = {}, source2: KyHeadersInit = {}) => {
-    32→function newHookValue<K extends keyof Hooks>(original: Hooks, incoming: Hooks, property: K): Required<Hooks>[K] {
+    32→function newHookValue …
     38→export const mergeHooks = (original: Hooks = {}, incoming: Hooks = {}): Required<Hooks> => (
-    47→const appendSearchParameters = (target: any, source: any): URLSearchParams => {
+    47→const appendSearchParameters …
     86→export const deepMerge = <T>(...sources: Array<Partial<T> | undefined>): T => {
 
 source/utils/normalize.ts
@@ -349,33 +362,6 @@ tsconfig.json
      3→	"compilerOptions": {
      6→	"include": [
 
-test/browser.ts
-    13→	interface Window …
-
-test/bytes.ts
-
-test/context.ts
-
-test/fetch.ts
-
-test/formdata-searchparams.ts
-
-test/headers.ts
-
-test/hooks.ts
-
-test/http-error.ts
-
-test/main.ts
-
-test/memory-leak.ts
-
-test/methods.ts
-
-test/prefix-url.ts
-
-test/retry.ts
-
-test/stream.ts
+test/
 
 test/helpers/

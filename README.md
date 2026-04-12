@@ -10,13 +10,11 @@ Here's what `precis` shows for [developit/mitt](https://github.com/developit/mit
 ```
 README.md
      9→# Mitt
-    21→## Table of Contents
     30→## Install
     56→## Usage
     81→### Typescript
    113→## Examples & Demos
    123→## API
-   127→#### Table of Contents
    138→### mitt
    144→### all
    148→### on
@@ -25,10 +23,8 @@ README.md
    162→#### Parameters
    167→### emit
    174→#### Parameters
-   179→## Contribute
    184→### Reporting Issues
    189→### Submitting pull requests
-   203→## License
 
 src/index.ts
      1→export type EventType …
@@ -38,6 +34,12 @@ src/index.ts
     13→export type WildCardEventHandlerList …
     18→export type EventHandlerMap …
     23→export interface Emitter …
+    26→	on<Key extends keyof Events>(type: Key, handler: Handler<Events[Key]>): void;
+    27→	on(type: '*', handler: WildcardHandler<Events>): void;
+    29→	off<Key extends keyof Events>(
+    33→	off(type: '*', handler: WildcardHandler<Events>): void;
+    35→	emit<Key extends keyof Events>(type: Key, event: Events[Key]): void;
+    36→	emit<Key extends keyof Events>(
     42→ * Mitt: Tiny (~200b) functional event emitter / pubsub.
     43→ * @name mitt
     44→ * @returns {Mitt}
@@ -49,18 +51,11 @@ package.json
 
 tsconfig.json
 
-test/index_test.ts
-
-test/test-types-compilation.ts
-     5→interface SomeEventData …
-     9→const emitter …
-    15→const barHandler = (x?: number) => {};
-    16→const fooHandler = (x: string) => {};
-    17→const wildcardHandler = (
+test/
 ```
 <!-- precis-example-end -->
 
-The README headings give the document structure. The source file shows type aliases (truncated), the interface, doc comments, and the main function signature. Config files and test files appear as path-only entries or with limited content, deprioritized relative to core source.
+The README headings give the document structure. The source file shows type aliases (truncated), the `Emitter` interface with its method signatures (`on`, `off`, `emit`), doc comments, and the main function signature. Config files and test directories appear as path-only entries, deprioritized relative to core source.
 
 ## Installation
 
