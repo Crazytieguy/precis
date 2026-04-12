@@ -331,3 +331,30 @@ Fix: track generated status per-file rather than per-group. When
 constructing child TsGroups, split items from generated files into
 separate groups with a lower inherited modifier (or apply the factor
 per-item during `compute_item_modifier`).
+
+### TsGroup cached marginal_cost goes stale
+
+`ensure_cached` (`schedule.rs:293`) computes a TsGroup's
+`CachedGroupRender.marginal_cost` once against the current `FileCache`
+state, then reuses it on every subsequent probe (line 295 returns
+early if already cached). If the cache state changes between probes —
+other groups committing entries to overlapping files or lines — the
+cached cost becomes stale.
+
+The effect is always overestimation: the cached cost may include
+header costs for files that have since been registered, or count
+override lines at full cost when a cheaper entry now exists. The
+scheduler sees the group as more expensive than it really is,
+potentially skipping it when it would fit. This violates the spirit
+of V3 (cost via rendering against current state).
+
+Practical impact is limited for sibling TsGroups from the same Files
+parent (files are already registered by the time they're probed), but
+real for TsGroups whose files overlap with independently-scheduled
+content.
+
+Fix: separate the cached rendered entries from the marginal cost.
+Keep `CachedGroupRender.per_file` (the expensive rendering), but
+recompute `marginal_cost` on every probe by calling
+`cache.marginal_cost(&cached.per_file)` in `probe_cost` instead of
+reading the stale cached value.
