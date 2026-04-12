@@ -97,13 +97,6 @@ Every `children()` call clones `PathBuf` + `String` for each item.
 Slimming TsItem (above) eliminates this since `&Path` and `Node` are
 Copy.
 
-### Unnecessary comments
-
-Several comments explain what the code does rather than why:
-- "Drain dependent siblings" (self-evident from `std::mem::take`)
-- "Spawn FunctionSig children" (restates the next line)
-- Most `render_item` match arm comments
-
 ### `classify_file` called on directories
 
 `folders.rs:59` calls `classify_file(&rel_dir)` on directory paths to

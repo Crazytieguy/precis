@@ -200,15 +200,12 @@ impl TsGroupKey {
 pub fn children<'s>(g: &mut TsGroup<'s>, _ctx: &ScheduleCtx<'s>) -> Vec<Group<'s>> {
     let mut result: Vec<Group<'s>> = Vec::new();
 
-    // Drain dependent siblings
     result.extend(std::mem::take(&mut g.dependent_siblings));
 
     use TsGroupKey::*;
 
     match &g.key {
-        // Name groups spawn sig, body, and doc children
         FunctionName { documented, .. } => {
-            // Spawn FunctionSig children
             if !g.items.is_empty() {
                 result.push(Group::Ts(TsGroup {
                     key: FunctionSig,
@@ -218,7 +215,6 @@ pub fn children<'s>(g: &mut TsGroup<'s>, _ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
                     cached_render: None,
                 }));
             }
-            // Spawn FunctionDocFirst if documented
             if *documented && !g.items.is_empty() {
                 result.push(Group::Ts(TsGroup {
                     key: FunctionDocFirst,
@@ -230,7 +226,6 @@ pub fn children<'s>(g: &mut TsGroup<'s>, _ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
             }
         }
         FunctionSig => {
-            // Spawn FunctionBody
             if !g.items.is_empty() {
                 result.push(Group::Ts(TsGroup {
                     key: FunctionBody,
@@ -241,7 +236,6 @@ pub fn children<'s>(g: &mut TsGroup<'s>, _ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
                 }));
             }
         }
-        // Struct/Enum/Class/Interface/Trait name groups
         StructName { documented, .. } => {
             spawn_type_children(&mut result, g, StructDocFirst, Some(StructBody), *documented);
         }
@@ -290,7 +284,6 @@ pub fn children<'s>(g: &mut TsGroup<'s>, _ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
                 }));
             }
         }
-        // Import → ImportedItems
         Import { first_party, reexport } => {
             if !g.items.is_empty() {
                 result.push(Group::Ts(TsGroup {
@@ -302,7 +295,6 @@ pub fn children<'s>(g: &mut TsGroup<'s>, _ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
                 }));
             }
         }
-        // Heading → HeadingBody + nested sub-headings
         Heading { level: _, .. } => {
             if !g.items.is_empty() {
                 result.push(Group::Ts(TsGroup {
@@ -325,7 +317,6 @@ pub fn children<'s>(g: &mut TsGroup<'s>, _ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
                 }));
             }
         }
-        // DocFirst → DocRest (all 10 type variants)
         key if key.doc_rest_key().is_some() => {
             if !g.items.is_empty() {
                 result.push(Group::Ts(TsGroup {
@@ -408,7 +399,6 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
     let lines: Vec<&str> = item.source.lines().collect();
 
     match key {
-        // Name groups: emit a Truncated entry on the declaration line
         FunctionName { .. } | StructName { .. } | EnumName { .. } | ClassName { .. }
         | InterfaceName { .. } | TraitName { .. } | TypeAliasName { .. } | ConstName { .. }
         | MacroName { .. } | ImplBlock { .. } => {
@@ -422,7 +412,6 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
             }]
         }
 
-        // Sig: emit Full entries for the signature lines (up to but not including body)
         FunctionSig => {
             let body_start = compute_body_start_line(item);
             let mut entries = Vec::new();
@@ -436,7 +425,6 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
             entries
         }
 
-        // Body: emit Full entries for body lines
         FunctionBody | StructBody | EnumBody => {
             let body_start = compute_body_start_line(item);
             let body_end = item.end_line;
@@ -454,7 +442,6 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
             entries
         }
 
-        // Doc first line
         FunctionDocFirst | StructDocFirst | EnumDocFirst | ClassDocFirst
         | InterfaceDocFirst | TraitDocFirst | TypeAliasDocFirst | ConstDocFirst
         | MacroDocFirst => {
@@ -479,7 +466,6 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
             }
         }
 
-        // Doc rest: emit all doc lines after the first
         FunctionDocRest | StructDocRest | EnumDocRest | ClassDocRest
         | InterfaceDocRest | TraitDocRest | TypeAliasDocRest | ConstDocRest
         | MacroDocRest => {
@@ -499,7 +485,6 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
             }
         }
 
-        // Import: Truncated with module path
         Import { .. } => {
             let line_idx = item.start_line;
             let line = lines.get(line_idx).copied().unwrap_or("");
@@ -510,7 +495,6 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
             }]
         }
 
-        // ImportedItems: Full lines for the entire import statement
         ImportedItems { .. } => {
             let mut entries = Vec::new();
             for line_idx in item.start_line..item.end_line {
@@ -526,7 +510,6 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
             entries
         }
 
-        // ModuleDocFirst: first meaningful line
         ModuleDocFirst => {
             let lang = Lang::from_path(&item.path);
             let first_line = skip_doc_leading_noise(&lines, item.start_line, item.end_line, lang);
@@ -545,7 +528,6 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
             }
         }
 
-        // ModuleDocRest: remaining lines after first meaningful
         ModuleDocRest => {
             let lang = Lang::from_path(&item.path);
             let first_line = skip_doc_leading_noise(&lines, item.start_line, item.end_line, lang)
@@ -564,7 +546,6 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
             entries
         }
 
-        // Heading: full heading line (with badge stripping)
         Heading { .. } => {
             let line_idx = item.start_line;
             let line = lines.get(line_idx).copied().unwrap_or("");
@@ -576,7 +557,6 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
             }]
         }
 
-        // HeadingBody: content lines after the heading, skipping noise
         HeadingBody => {
             let body_start = item.start_line + 1;
             let body_end = item.end_line;
@@ -595,7 +575,6 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
             entries
         }
 
-        // DataSection: key line
         DataSection => {
             let line_idx = item.start_line;
             let content = lines.get(line_idx).copied().unwrap_or("");
@@ -605,7 +584,6 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
             }]
         }
 
-        // DataSectionBody: value lines after key
         DataSectionBody => {
             let body_start = item.start_line + 1;
             let body_end = item.end_line;
