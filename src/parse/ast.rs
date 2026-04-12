@@ -1,6 +1,8 @@
 use crate::Lang;
 
-pub(crate) fn compute_sig_end_line(node: tree_sitter::Node, lang: Lang) -> Option<usize> {
+/// Returns the 0-indexed line where the body content begins (the line after
+/// the opening `{` or `:` for Python).
+pub(crate) fn compute_body_start_line(node: tree_sitter::Node, lang: Lang) -> Option<usize> {
     if lang == Lang::Python {
         let body = node.child_by_field_name("body")?;
         let body_id = body.id();

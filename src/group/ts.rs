@@ -379,11 +379,11 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
             }]
         }
 
-        // Sig: emit Full entries for the signature lines
+        // Sig: emit Full entries for the signature lines (up to but not including body)
         FunctionSig => {
-            let sig_end = compute_sig_end(item);
+            let body_start = compute_body_start_line(item);
             let mut entries = Vec::new();
-            for line_idx in item.start_line..=sig_end.min(lines.len().saturating_sub(1)) {
+            for line_idx in item.start_line..body_start.min(lines.len()) {
                 let content = lines.get(line_idx).copied().unwrap_or("");
                 entries.push(LineEntry::Complete {
                     line: line_idx as u32,
@@ -395,8 +395,7 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
 
         // Body: emit Full entries for body lines
         FunctionBody | StructBody | EnumBody => {
-            let sig_end = compute_sig_end(item);
-            let body_start = sig_end + 1;
+            let body_start = compute_body_start_line(item);
             let body_end = item.end_line;
             let mut entries = Vec::new();
             for line_idx in body_start..body_end {
@@ -642,14 +641,14 @@ fn find_word(needle: &str, haystack: &str) -> Option<usize> {
     first_match
 }
 
-fn compute_sig_end(item: &TsItem<'_>) -> usize {
+/// Returns the 0-indexed line where body content begins (after `{` or `:` for Python).
+fn compute_body_start_line(item: &TsItem<'_>) -> usize {
     let lang = Lang::from_path(&item.path);
-    // Use tree-sitter sig_end if available
-    if let Some(sig_end) = crate::parse::ast::compute_sig_end_line(item.node, lang.unwrap_or(Lang::Rust)) {
-        return (sig_end - 1).min(item.end_line.saturating_sub(1));
+    if let Some(body_start) = crate::parse::ast::compute_body_start_line(item.node, lang.unwrap_or(Lang::Rust)) {
+        return body_start.min(item.end_line);
     }
-    // Fallback: just the start line
-    item.start_line
+    // Fallback: body starts after the declaration line
+    item.start_line + 1
 }
 
 fn compute_doc_range(item: &TsItem<'_>, lines: &[&str]) -> Option<(usize, usize)> {
