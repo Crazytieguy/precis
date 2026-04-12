@@ -178,6 +178,20 @@ These aren't config files — they're low-priority source or assets. The
 function name doesn't match what it actually tests (more like
 "is_deprioritized_file"). Either rename or split the concerns.
 
+### Lua function assignments classified as Const
+
+`classify_node` at `src/parse/classify.rs:114` classifies all Lua
+`variable_declaration` and `assignment_statement` nodes as `Const`
+without inspecting the value. The Lua query captures both
+`M.foo = function(...)` (assignment\_statement) and
+`local foo = function() end` (variable\_declaration) — these should be
+`Function`, not `Const`. Compare with `classify_lexical_declaration`
+and the `public_field_definition` arm, which both check whether the
+assigned value is a function expression.
+
+Fix: check whether the value child is a `function_definition` node and
+return `ItemKind::Function` in that case, `ItemKind::Const` otherwise.
+
 ### Per-file properties computed from first file only
 
 `folders.rs:80-84` computes `is_config`, `is_type_declaration`, and
