@@ -350,3 +350,28 @@ Fix: construct a synthetic `FilesGroup` for the single file and call
 `files::children()` on it with an appropriate `ScheduleCtx`. This
 eliminates the duplication and ensures single-file mode stays in sync
 with directory mode automatically.
+
+### `render_with_budget` is dead code in tests
+
+`tests/snapshots.rs:921` defines `render_with_budget` but it's never
+called. The `budget_test!` macro uses `render_fixture` directly. The
+two functions do essentially the same thing (render + assert budget)
+except `render_with_budget` prepends metadata to the output string.
+
+Remove the dead function.
+
+### No Lua inline sample tests
+
+Every supported language has an inline sample test (`rust_sample`,
+`python_sample`, `go_sample`, etc.) except Lua. Since Lua has known
+issues (function assignments classified as Const, doc comments not
+detected), having sample tests would help catch regressions during
+fixes.
+
+### `readme_example_matches_output` silently passes when markers missing
+
+`tests/snapshots.rs:1011` uses `if let` to find the README markers.
+If someone removes or renames the `<!-- precis-example-start -->` /
+`<!-- precis-example-end -->` markers, the test body never executes
+and the test passes silently. This should be a hard failure — the
+markers are expected to exist.
