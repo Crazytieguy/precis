@@ -3,7 +3,6 @@ use std::path::PathBuf;
 
 use crate::classify::{self, FileRole};
 use crate::heuristics;
-use crate::render::LineEntry;
 use crate::schedule::ScheduleCtx;
 
 use super::{FilesGroup, FoldersGroup, Group};
@@ -118,11 +117,4 @@ pub fn children<'s>(g: &mut FoldersGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
     );
 
     result
-}
-
-/// Render a FoldersGroup — just the folder path with trailing slash.
-pub fn render(_g: &FoldersGroup) -> Vec<(PathBuf, Vec<LineEntry<'static>>)> {
-    // Folders render as path strings, not LineEntry values (design §6.2).
-    // The actual rendering happens in the final assembly step.
-    vec![]
 }

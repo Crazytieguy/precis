@@ -235,16 +235,6 @@ using `g.is_generated` when constructing child TsGroups, or (b) defer
 the full modifier computation for the FilesGroup itself until
 `children()` time, when the source has been read.
 
-### `Group::render_entries` is dead code
-
-`Group::render_entries` at `group/mod.rs:123` is never called anywhere.
-The scheduler calls `ts::render_entries` directly in `ensure_cached`
-(`schedule.rs:299`), and Folders/Files rendering is handled entirely by
-`commit_group`. The two stub functions `folders::render` and
-`files::render` (which just return `vec![]`) are also dead.
-
-Remove the method from the `Group` enum and the two stub functions.
-
 ### Per-file properties computed from first file only
 
 `folders.rs:80-84` computes `is_config`, `is_type_declaration`, and

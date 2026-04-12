@@ -4,7 +4,6 @@ use std::path::PathBuf;
 use crate::classify;
 use crate::heuristics;
 use crate::parse::{self, ExtractedItem, ItemKind};
-use crate::render::LineEntry;
 use crate::schedule::ScheduleCtx;
 
 use super::{FilesGroup, Group, TsGroup, TsItem};
@@ -233,9 +232,4 @@ pub(crate) fn compute_item_modifier(key: &TsGroupKey, parent_modifier: f64) -> f
     };
 
     parent_modifier * vis_factor * doc_factor * boilerplate_factor * reexport_factor
-}
-
-/// Render a FilesGroup — produces no LineEntries (file headers are handled by assembly).
-pub fn render(_g: &FilesGroup) -> Vec<(PathBuf, Vec<LineEntry<'static>>)> {
-    vec![]
 }

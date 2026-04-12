@@ -10,7 +10,7 @@ pub mod ts;
 use std::path::{Path, PathBuf};
 
 use crate::classify::{FileCategory, FileRole};
-use crate::render::{CachedGroupRender, LineEntry};
+use crate::render::CachedGroupRender;
 use crate::schedule::ScheduleCtx;
 
 pub use ts::TsGroupKey;
@@ -115,16 +115,6 @@ impl<'s> Group<'s> {
             Group::Folders(g) => folders::children(g, ctx),
             Group::Files(g) => files::children(g, ctx),
             Group::Ts(g) => ts::children(g, ctx),
-        }
-    }
-
-    /// Render this group's contribution as LineEntries.
-    /// For TsGroups, this is called once and cached.
-    pub fn render_entries(&mut self, ctx: &ScheduleCtx<'s>) -> Vec<(PathBuf, Vec<LineEntry<'s>>)> {
-        match self {
-            Group::Folders(g) => folders::render(g),
-            Group::Files(g) => files::render(g),
-            Group::Ts(g) => ts::render_entries(g, ctx),
         }
     }
 }
