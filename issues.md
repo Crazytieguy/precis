@@ -302,3 +302,32 @@ Remove the method from the `Group` enum and the two stub functions.
 `FilesGroup`. If a role group mixes files with different properties
 (e.g. one `.h` and one `.c` file both classified as `Normal`), the
 contribution is wrong for all but the first.
+
+### `Module` items mapped to `ConstName`
+
+`item_to_group_keys` at `files.rs:167` maps `ItemKind::Module` (Rust
+`mod` declarations, C++ namespaces, Java modules) to `ConstName`.
+These aren't constants — they're namespace/module declarations. The
+design taxonomy doesn't have a `ModuleName` variant, but silently
+misclassifying them as constants is semantically dishonest and gives
+them `ConstName` value heuristics (which are tuned for actual
+constants).
+
+Fix: either add a dedicated group key (e.g. `ModuleName`) with
+appropriate heuristics, or if module declarations don't carry enough
+information to warrant their own group, filter them out at extraction
+time (they're already low-signal — just `mod foo;` one-liners).
+
+### `is_generated` taints entire FilesGroup from a single file
+
+`files.rs:49-56` sets `g.is_generated = true` as soon as any file in
+the group is detected as generated. Since `is_generated` is a
+group-level flag, one generated file deprioritizes all files in the
+group. This is incorrect when a `FilesGroup` contains a mix of
+generated and hand-written files (e.g. a directory with both
+`schema.generated.ts` and `schema.ts`).
+
+Fix: track generated status per-file rather than per-group. When
+constructing child TsGroups, split items from generated files into
+separate groups with a lower inherited modifier (or apply the factor
+per-item during `compute_item_modifier`).
