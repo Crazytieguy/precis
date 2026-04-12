@@ -6,7 +6,6 @@ use super::ast::has_preceding_attribute;
 pub(crate) fn determine_visibility(
     node: tree_sitter::Node,
     kind: ItemKind,
-    name: &str,
     source: &str,
     lang: Lang,
 ) -> bool {
@@ -14,16 +13,38 @@ pub(crate) fn determine_visibility(
         lang == Lang::Rust && is_public_symbol(node, source)
     } else {
         match lang {
-            Lang::Go => name.starts_with(|c: char| c.is_ascii_uppercase()),
+            Lang::Go => {
+                let ident = node
+                    .child_by_field_name("name")
+                    .and_then(|n| n.utf8_text(source.as_bytes()).ok())
+                    .unwrap_or("");
+                ident.starts_with(|c: char| c.is_ascii_uppercase())
+            }
             Lang::Java => is_java_public(node, source),
             Lang::Python => {
-                !name.starts_with('_') || (name.starts_with("__") && name.ends_with("__"))
+                let name_node = node.child_by_field_name("name").or_else(|| {
+                    let mut cursor = node.walk();
+                    node.children(&mut cursor)
+                        .find(|c| c.kind() == "assignment")
+                        .and_then(|a| a.child_by_field_name("left"))
+                });
+                let ident = name_node
+                    .and_then(|n| n.utf8_text(source.as_bytes()).ok())
+                    .unwrap_or("");
+                !ident.starts_with('_') || (ident.starts_with("__") && ident.ends_with("__"))
             }
             Lang::Markdown | Lang::Json | Lang::Toml | Lang::Yaml => true,
-            Lang::C => !is_c_static(node, source) && !name.starts_with('_'),
+            Lang::C => {
+                let ident = c_identifier_text(node, source);
+                !is_c_static(node, source) && !ident.starts_with('_')
+            }
             Lang::Lua => {
                 let text = node.utf8_text(source.as_bytes()).unwrap_or("");
-                !text.starts_with("local") || name.contains('.')
+                let ident = node
+                    .child_by_field_name("name")
+                    .and_then(|n| n.utf8_text(source.as_bytes()).ok())
+                    .unwrap_or("");
+                !text.starts_with("local") || ident.contains('.')
             }
             _ => is_public_symbol(node, source),
         }
@@ -48,6 +69,22 @@ pub(crate) fn determine_visibility(
     }
 
     is_public
+}
+
+fn c_identifier_text<'a>(node: tree_sitter::Node, source: &'a str) -> &'a str {
+    if let Some(name_node) = node.child_by_field_name("name")
+        && let Ok(text) = name_node.utf8_text(source.as_bytes())
+    {
+        return text.trim();
+    }
+    if let Some(decl) = node.child_by_field_name("declarator")
+        && let Some(found) = super::ast::find_descendant_of_kind(decl, "identifier")
+            .or_else(|| super::ast::find_descendant_of_kind(decl, "type_identifier"))
+        && let Ok(text) = found.utf8_text(source.as_bytes())
+    {
+        return text.trim();
+    }
+    ""
 }
 
 fn is_public_symbol(node: tree_sitter::Node, source: &str) -> bool {

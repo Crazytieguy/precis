@@ -81,7 +81,6 @@ pub struct TsItem<'s> {
     pub path: &'s Path,
     pub source: &'s str,
     pub node: tree_sitter::Node<'s>,
-    pub name: String,
     pub end_line: usize,
 }
 

@@ -74,7 +74,6 @@ pub fn children<'s>(g: &mut FilesGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s>>
                     path: display_path,
                     source: fi.source,
                     node: item.node,
-                    name: item.name.clone(),
                     end_line: item.end_line,
                 };
                 buckets.entry((key, is_generated)).or_default().push(ts_item);
@@ -287,15 +286,23 @@ pub(crate) fn item_to_group_keys(
         }
         Section => {
             let level = if let Some(crate::Lang::Toml) = lang {
-                
-                item.name.chars().filter(|&c| c == '.').count() as u8 + 1
+                let line = lines.get(item.start_line).copied().unwrap_or("");
+                let key = line
+                    .trim()
+                    .trim_start_matches('[')
+                    .trim_end_matches(']')
+                    .trim();
+                key.chars().filter(|&c| c == '.').count() as u8 + 1
             } else if let Some(crate::Lang::Markdown) = lang {
                 classify::detect_heading_depth(lines, item.start_line, item.end_line)
             } else {
                 1 // JSON/YAML: all top-level
             };
-            let boilerplate = matches!(lang, Some(crate::Lang::Markdown))
-                && classify::is_boilerplate_heading(&item.name);
+            let boilerplate = matches!(lang, Some(crate::Lang::Markdown)) && {
+                let heading_line = lines.get(item.start_line).copied().unwrap_or("");
+                let stripped = classify::strip_heading_badges(heading_line);
+                classify::is_boilerplate_heading(stripped)
+            };
             vec![Heading {
                 level,
                 boilerplate,

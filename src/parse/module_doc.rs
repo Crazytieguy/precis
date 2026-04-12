@@ -15,17 +15,9 @@ pub(super) fn detect_module_doc<'t>(
         _ => return None,
     };
 
-    let name = source
-        .lines()
-        .nth(start_row)
-        .unwrap_or("")
-        .trim()
-        .to_string();
-
     Some(ExtractedItem {
         node,
         kind: ItemKind::ModuleDoc,
-        name,
         is_public: true,
         is_first_party: false,
         is_trait_impl: false,

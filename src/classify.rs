@@ -516,6 +516,16 @@ fn is_lockfile(path: &Path) -> bool {
         || lower.ends_with(".chunk.js")
 }
 
+pub fn strip_heading_badges(line: &str) -> &str {
+    if let Some(pos) = line.find(" [![") {
+        let before = line[..pos].trim();
+        if !before.is_empty() && before != "#" {
+            return line[..pos].trim_end();
+        }
+    }
+    line
+}
+
 pub fn is_vendored_or_fixture(path: &Path) -> bool {
     path.components().any(|c| {
         let s = c.as_os_str();

@@ -387,7 +387,6 @@ fn clone_ts_item<'s>(item: &TsItem<'s>) -> TsItem<'s> {
         path: item.path,
         source: item.source,
         node: item.node,
-        name: item.name.clone(),
         end_line: item.end_line,
     }
 }
@@ -415,12 +414,9 @@ fn spawn_method_children<'s>(
         let method_nodes = find_method_nodes(item.node, lang);
 
         for method_node in method_nodes {
-            let name = extract_method_name(method_node, item.source, lang);
-
             let is_public = crate::parse::visibility::determine_visibility(
                 method_node,
                 crate::parse::ItemKind::Function,
-                &name,
                 item.source,
                 lang.unwrap_or(Lang::Rust),
             );
@@ -435,7 +431,6 @@ fn spawn_method_children<'s>(
                 path: item.path,
                 source: item.source,
                 node: method_node,
-                name,
                 end_line: method_node.end_position().row + 1,
             };
 
@@ -552,29 +547,6 @@ fn is_method_node(node: tree_sitter::Node, lang: Option<Lang>) -> bool {
     }
 }
 
-/// Extract a method's name from its tree-sitter node.
-fn extract_method_name(node: tree_sitter::Node, source: &str, lang: Option<Lang>) -> String {
-    // Most languages use a "name" field on the method node.
-    if let Some(name) = node
-        .child_by_field_name("name")
-        .and_then(|n| n.utf8_text(source.as_bytes()).ok())
-    {
-        return name.trim().to_string();
-    }
-
-    // C/C++: name is nested inside the declarator chain.
-    if matches!(lang, Some(Lang::C))
-        && let Some(decl) = node.child_by_field_name("declarator")
-        && let Some(id) = crate::parse::ast::find_descendant_of_kind(decl, "identifier")
-            .or_else(|| crate::parse::ast::find_descendant_of_kind(decl, "field_identifier"))
-        && let Ok(name) = id.utf8_text(source.as_bytes())
-    {
-        return name.trim().to_string();
-    }
-
-    "?".to_string()
-}
-
 // ---------------------------------------------------------------------------
 // render() — produce LineEntry values for this group (R3: context-free)
 // ---------------------------------------------------------------------------
@@ -604,11 +576,25 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
     match key {
         FunctionName { .. } | StructName { .. } | EnumName { .. } | ClassName { .. }
         | InterfaceName { .. } | TraitName { .. } | TypeAliasName { .. } | ConstName { .. }
-        | MacroName { .. } | ImplBlock { .. } => {
+        | MacroName { .. } => {
             let line_idx = start_line;
             let line = lines.get(line_idx).copied().unwrap_or("");
-            let prefix = find_name_prefix(line, &item.name);
-            // prefix is a subslice of line, which is a subslice of source (R1)
+            let prefix = find_name_end_prefix(line, item.node, start_line);
+            vec![LineEntry::Truncated {
+                line: line_idx as u32,
+                content: prefix,
+            }]
+        }
+
+        ImplBlock { .. } => {
+            let line_idx = start_line;
+            let line = lines.get(line_idx).copied().unwrap_or("");
+            let prefix = item
+                .node
+                .child_by_field_name("type")
+                .filter(|n| n.end_position().row == start_line)
+                .map(|n| &line[..n.end_position().column.min(line.len())])
+                .unwrap_or(line);
             vec![LineEntry::Truncated {
                 line: line_idx as u32,
                 content: prefix,
@@ -807,60 +793,102 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
 }
 
 // ---------------------------------------------------------------------------
-// Text helpers (migrated from layout/)
+// Text helpers
 // ---------------------------------------------------------------------------
 
-/// Find a prefix of the source line up to and including the symbol name.
-fn find_name_prefix<'a>(line: &'a str, name: &str) -> &'a str {
-    let trimmed = line.trim_start();
-
-    if let Some(pos) = find_word(name, trimmed) {
-        let end = pos + name.len();
-        let prefix_end = (line.len() - trimmed.len()) + end;
-        return &line[..prefix_end.min(line.len())];
+/// Find a prefix of the source line up to and including the item's name,
+/// using the tree-sitter AST node to locate the identifier end position.
+fn find_name_end_prefix<'a>(
+    line: &'a str,
+    node: tree_sitter::Node,
+    line_row: usize,
+) -> &'a str {
+    if let Some(col) = find_name_end_col(node, line_row)
+        && col <= line.len()
+    {
+        return &line[..col];
     }
-
-    // Fallback: return the whole trimmed line
     line
+}
+
+fn find_name_end_col(node: tree_sitter::Node, line_row: usize) -> Option<usize> {
+    if let Some(name_node) = node.child_by_field_name("name")
+        && name_node.end_position().row == line_row
+    {
+        return Some(name_node.end_position().column);
+    }
+    if let Some(decl) = node.child_by_field_name("declarator") {
+        let found = crate::parse::ast::find_descendant_of_kind(decl, "identifier")
+            .or_else(|| crate::parse::ast::find_descendant_of_kind(decl, "type_identifier"))
+            .or_else(|| crate::parse::ast::find_descendant_of_kind(decl, "field_identifier"));
+        if let Some(id) = found
+            && id.end_position().row == line_row
+        {
+            return Some(id.end_position().column);
+        }
+    }
+    if node.kind() == "type_definition"
+        && let Some(type_child) = node.child_by_field_name("type")
+        && let Some(inner_name) = type_child.child_by_field_name("name")
+        && inner_name.end_position().row == line_row
+    {
+        return Some(inner_name.end_position().column);
+    }
+    if node.kind() == "lexical_declaration" {
+        let mut cursor = node.walk();
+        if let Some(vd) = node.children(&mut cursor).find(|c| c.kind() == "variable_declarator")
+            && let Some(name_node) = vd.child_by_field_name("name")
+            && name_node.end_position().row == line_row
+        {
+            return Some(name_node.end_position().column);
+        }
+    }
+    if matches!(node.kind(), "field_declaration" | "constant_declaration")
+        && let Some(vd) = crate::parse::ast::find_descendant_of_kind(node, "variable_declarator")
+        && let Some(name_node) = vd.child_by_field_name("name")
+        && name_node.end_position().row == line_row
+    {
+        return Some(name_node.end_position().column);
+    }
+    if node.kind() == "expression_statement" {
+        let mut cursor = node.walk();
+        if let Some(assignment) = node.children(&mut cursor).find(|c| c.kind() == "assignment")
+            && let Some(left) = assignment.child_by_field_name("left")
+            && left.end_position().row == line_row
+        {
+            return Some(left.end_position().column);
+        }
+    }
+    if matches!(node.kind(), "variable_declaration" | "assignment_statement") {
+        let target = if node.kind() == "variable_declaration" {
+            let mut cursor = node.walk();
+            node.children(&mut cursor).find(|c| c.kind() == "assignment_statement")
+        } else {
+            Some(node)
+        };
+        if let Some(assign) = target {
+            let mut cursor = assign.walk();
+            if let Some(vl) = assign.children(&mut cursor).find(|c| c.kind() == "variable_list")
+                && let Some(name_node) = vl.child_by_field_name("name")
+                && name_node.end_position().row == line_row
+            {
+                return Some(name_node.end_position().column);
+            }
+        }
+    }
+    if matches!(node.kind(), "const_declaration" | "var_declaration") {
+        let kw_len = if node.kind() == "const_declaration" { 5 } else { 3 };
+        return Some(node.start_position().column + kw_len);
+    }
+    None
 }
 
 /// Find a prefix for an import line (module path before items).
 fn find_import_prefix(line: &str) -> &str {
-    // For most imports, the first line up to any `{` or end of line
     if let Some(pos) = line.find('{') {
         return line[..pos].trim_end();
     }
     line.trim_end()
-}
-
-fn find_word(needle: &str, haystack: &str) -> Option<usize> {
-    let mut start = 0;
-    let mut first_match = None;
-    while let Some(pos) = haystack[start..].find(needle) {
-        let abs = start + pos;
-        let before_ok = abs == 0
-            || (!haystack.as_bytes()[abs - 1].is_ascii_alphanumeric()
-                && haystack.as_bytes()[abs - 1] != b'_');
-        let end = abs + needle.len();
-        let after_ok = end == haystack.len()
-            || (!haystack.as_bytes()[end].is_ascii_alphanumeric()
-                && haystack.as_bytes()[end] != b'_');
-        if before_ok && after_ok {
-            if first_match.is_none() {
-                first_match = Some(abs);
-            }
-            let depth: i32 = haystack[..abs].bytes().fold(0, |d, b| match b {
-                b'(' => d + 1,
-                b')' => d - 1,
-                _ => d,
-            });
-            if depth == 0 {
-                return Some(abs);
-            }
-        }
-        start = abs + 1;
-    }
-    first_match
 }
 
 /// Returns the 0-indexed line where body content begins (after `{` or `:` for Python).
@@ -1001,7 +1029,7 @@ fn is_horizontal_rule(trimmed: &str) -> bool {
     count >= 3
 }
 
-pub(crate) use crate::parse::name::strip_heading_badges;
+use crate::classify::strip_heading_badges;
 
 fn skip_doc_leading_noise(lines: &[&str], start: usize, end: usize, lang: Option<Lang>) -> Option<usize> {
     (start..end).find(|&i| !is_markdown_leading_noise(strip_doc_line_prefix(lines[i], lang)))

@@ -3,7 +3,6 @@
 pub(crate) mod ast;
 pub(crate) mod classify;
 pub(crate) mod module_doc;
-pub(crate) mod name;
 pub(crate) mod postprocess;
 pub(crate) mod visibility;
 
@@ -19,7 +18,6 @@ use crate::Lang;
 pub struct ExtractedItem<'t> {
     pub node: Node<'t>,
     pub kind: ItemKind,
-    pub name: String,
     pub is_public: bool,
     pub is_first_party: bool,
     pub is_trait_impl: bool,
@@ -110,16 +108,41 @@ pub fn extract_items<'t>(
         let name_capture = name_idx
             .and_then(|idx| m.captures.iter().find(|c| c.index == idx))
             .map(|c| c.node);
-        let item_name = match name::extract_name(symbol_node, kind, name_capture, source, lang) {
-            Some(n) => n,
-            None => continue,
-        };
+
+        // Filter Go/Rust items with blank identifier "_"
+        if matches!(lang, Lang::Go | Lang::Rust) {
+            let ident = name_capture
+                .and_then(|n| n.utf8_text(source.as_bytes()).ok())
+                .map(|s| s.trim());
+            if ident == Some("_") {
+                continue;
+            }
+        }
+
+        // Items without a name capture must be handled by kind-specific logic
+        // (Import, Impl, Go grouped const/var, C typedef, Java fields, etc.)
+        // Only skip items that have no name capture AND no kind-specific handler.
+        if name_capture.is_none()
+            && !matches!(
+                kind,
+                ItemKind::Import
+                    | ItemKind::Impl
+                    | ItemKind::Const
+                    | ItemKind::Static
+                    | ItemKind::TypeAlias
+                    | ItemKind::Module
+                    | ItemKind::Section
+                    | ItemKind::ModuleDoc
+            )
+        {
+            continue;
+        }
 
         let is_public =
-            visibility::determine_visibility(symbol_node, kind, &item_name, source, lang);
+            visibility::determine_visibility(symbol_node, kind, source, lang);
 
         let is_first_party = if kind == ItemKind::Import {
-            name::is_first_party_import(&item_name, lang)
+            is_first_party_import(symbol_node, source, lang)
         } else {
             false
         };
@@ -153,7 +176,6 @@ pub fn extract_items<'t>(
         items.push(ExtractedItem {
             node: effective_node,
             kind,
-            name: item_name,
             is_public,
             is_first_party,
             is_trait_impl,
@@ -183,6 +205,53 @@ pub fn extract_items<'t>(
     );
 
     items
+}
+
+fn is_first_party_import(node: tree_sitter::Node, source: &str, lang: Lang) -> bool {
+    let text = node.utf8_text(source.as_bytes()).unwrap_or("");
+    match lang {
+        Lang::Rust => {
+            let path = text
+                .trim()
+                .strip_prefix("pub")
+                .unwrap_or(text.trim())
+                .trim_start();
+            let path = path
+                .strip_prefix("use")
+                .unwrap_or(path)
+                .trim_start();
+            path.starts_with("crate::")
+                || path.starts_with("self::")
+                || path.starts_with("super::")
+        }
+        Lang::JsTs => {
+            if let Some(from_pos) = text.rfind(" from ") {
+                let after = text[from_pos + 6..].trim();
+                after.starts_with("'./")
+                    || after.starts_with("\"./")
+                    || after.starts_with("'../")
+                    || after.starts_with("\"../")
+            } else {
+                let rest = text
+                    .trim()
+                    .strip_prefix("import")
+                    .unwrap_or("")
+                    .trim();
+                rest.starts_with("'./")
+                    || rest.starts_with("\"./")
+                    || rest.starts_with("'../")
+                    || rest.starts_with("\"../")
+            }
+        }
+        Lang::Python => text.trim().starts_with("from ."),
+        Lang::C => text
+            .trim()
+            .strip_prefix("#include")
+            .unwrap_or("")
+            .trim_start()
+            .starts_with('"'),
+        _ => false,
+    }
 }
 
 /// Cross-kind nesting filter: drop any item whose node byte range is fully
