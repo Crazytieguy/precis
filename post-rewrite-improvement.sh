@@ -1,16 +1,22 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Usage: post-rewrite-improvement.sh [START_PHASE]
+#   START_PHASE: 1-4 (default 1). Skips to the given phase.
+START_PHASE="${1:-1}"
+
 echo "=== Precis post-rewrite improvement pipeline ==="
-echo "Started at $(date)"
+echo "Started at $(date) (starting at phase $START_PHASE)"
 
 # ── Phase 1: Source file review ───────────────────────────────────────
+if [ "$START_PHASE" -le 1 ]; then
 echo ""
 echo "=== Phase 1: Source file review ==="
 
 # Structural order: leaf modules first, orchestrators last.
 # Each session benefits from issues already recorded by earlier sessions.
 SOURCE_FILES=(
+    src/format.rs
     src/classify.rs
     src/parse/ast.rs
     src/parse/classify.rs
@@ -58,8 +64,10 @@ done
 
 echo ""
 echo "Phase 1 complete."
+fi
 
 # ── Phase 2: Fix issues ──────────────────────────────────────────────
+if [ "$START_PHASE" -le 2 ]; then
 echo ""
 echo "=== Phase 2: Fix issues ==="
 
@@ -85,8 +93,10 @@ Iff issues.md has no actionable issues remaining (empty sections, or only items 
 
 echo ""
 echo "Phase 2 complete."
+fi
 
 # ── Phase 3: Snapshot review ─────────────────────────────────────────
+if [ "$START_PHASE" -le 3 ]; then
 echo ""
 echo "=== Phase 3: Snapshot review ==="
 
@@ -114,8 +124,10 @@ done
 
 echo ""
 echo "Phase 3 complete."
+fi
 
 # ── Phase 4: Fix output issues ───────────────────────────────────────
+if [ "$START_PHASE" -le 4 ]; then
 echo ""
 echo "=== Phase 4: Fix output issues ==="
 
@@ -141,6 +153,7 @@ Iff output-issues.md has no actionable issues remaining (empty, or only items ma
 
 echo ""
 echo "Phase 4 complete."
+fi
 
 echo ""
 echo "=== All phases complete ==="
