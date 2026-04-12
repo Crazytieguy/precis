@@ -1,6 +1,6 @@
 # Precis
 
-See @README.md
+See @design.md for the architecture.
 
 ## Design Principles
 
