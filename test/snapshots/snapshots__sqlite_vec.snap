@@ -11,6 +11,14 @@ README.md
 
 ARCHITECTURE.md
      1→# `sqlite-vec` Architecture
+     3→Internal documentation for how `sqlite-vec` works under-the-hood. Not meant for
+     4→users of the `sqlite-vec` project, consult
+     5→[the official `sqlite-vec` documentation](https://alexgarcia.xyz/sqlite-vec) for
+     6→how-to-guides. Rather, this is for people interested in how `sqlite-vec` works
+     7→and some guidelines to any future contributors.
+     8→
+     9→Very much a WIP.
+    10→
     11→## `vec0`
     13→### Shadow Tables
     49→### idxStr
@@ -48,12 +56,6 @@ sqlite-vec.c
    112→#define countof …
    113→#define min …
    115→enum VectorElementType …
-   116→  // clang-format off
-   117→  SQLITE_VEC_ELEMENT_TYPE_FLOAT32 = 223 + 0,
-   118→  SQLITE_VEC_ELEMENT_TYPE_BIT     = 223 + 1,
-   119→  SQLITE_VEC_ELEMENT_TYPE_INT8    = 223 + 2,
-   120→  // clang-format on
-   121→};
    125→#define PORTABLE_ALIGN32 …
    126→#define PORTABLE_ALIGN64 …
    166→#define PORTABLE_ALIGN32 …
@@ -81,13 +83,6 @@ sqlite-vec.c
   1054→#define SQLITE_VEC_NPY_FILE_NAME …
   1317→char *vec_type_name …
   1798→enum Vec0TokenType …
-  1799→  TOKEN_TYPE_IDENTIFIER,
-  1800→  TOKEN_TYPE_DIGIT,
-  1801→  TOKEN_TYPE_LBRACKET,
-  1802→  TOKEN_TYPE_RBRACKET,
-  1803→  TOKEN_TYPE_PLUS,
-  1804→  TOKEN_TYPE_EQ,
-  1805→};
   1806→struct Vec0Token …
   1812→int is_alpha …
   1815→int is_digit …
@@ -106,10 +101,6 @@ sqlite-vec.c
   2111→int vec0_parse_metadata_column_definition …
   2171→int vec0_parse_primary_key_definition …
   2236→enum Vec0DistanceMetrics …
-  2237→  VEC0_DISTANCE_METRIC_L2 = 1,
-  2238→  VEC0_DISTANCE_METRIC_COSINE = 2,
-  2239→  VEC0_DISTANCE_METRIC_L1 = 3,
-  2240→};
   2242→struct VectorColumnDefinition …
   2250→struct Vec0PartitionColumnDefinition …
   2256→struct Vec0AuxiliaryColumnDefinition …
@@ -122,17 +113,6 @@ sqlite-vec.c
   2434→typedef struct vec_each_cursor …
   2435→struct vec_each_cursor …
   2622→enum NpyTokenType …
-  2623→  NPY_TOKEN_TYPE_IDENTIFIER,
-  2624→  NPY_TOKEN_TYPE_NUMBER,
-  2625→  NPY_TOKEN_TYPE_LPAREN,
-  2626→  NPY_TOKEN_TYPE_RPAREN,
-  2627→  NPY_TOKEN_TYPE_LBRACE,
-  2628→  NPY_TOKEN_TYPE_RBRACE,
-  2629→  NPY_TOKEN_TYPE_COLON,
-  2630→  NPY_TOKEN_TYPE_COMMA,
-  2631→  NPY_TOKEN_TYPE_STRING,
-  2632→  NPY_TOKEN_TYPE_FALSE,
-  2633→};
   2635→struct NpyToken …
   2641→int npy_token_next …
   2718→struct NpyScanner …
@@ -330,6 +310,7 @@ sqlite-dist.toml
 examples/nbc-headlines/README.md
 
 examples/sqlite3-cli/README.md
+     1→# `sqlite-vec` statically compiled in the SQLite CLI
 
 examples/wasm/README.md
 
@@ -338,6 +319,7 @@ examples/simple-bun/demo.ts
 examples/simple-deno/demo.ts
 
 examples/simple-python/demo.py
+     8→def serialize_f32 …
 
 examples/simple-sqlite/demo.sql
 
@@ -352,10 +334,12 @@ examples/simple-node/demo.mjs
 SECURITY.md
 
 site/api-reference.md
+     5→# API Reference
 
 site/build-ref.mjs
 
 site/compiling.md
+     5→# Compiling `sqlite-vec`
 
 site/index.md
 
@@ -363,16 +347,33 @@ site/project.data.ts
     13→  load() {
 
 site/sqlite.tmlanguage.json
+     2→  "information_for_contributors": [
+     7→  "version": "https://github.com/microsoft/vscode-mssql/commit/3929516cce0a570e91ee1be74b09ed886cb360f4",
+     8→  "name": "sqlite",
+     9→  "scopeName": "source.sqlite",
+    10→  "patterns": [
+   392→  "repository": {
 
 site/versioning.md
+     1→# Semantic Versioning for `sqlite-vec`
+
+examples/python-recipes/openai-sample.py
+
+site/package.json
+
+benchmarks/exhaustive-memory/
+
+benchmarks/micro/
+
+benchmarks/profiling/
+
+benchmarks/self-params/
 
 bindings/
 
 bindings/go/
 
 examples/
-
-examples/python-recipes/
 
 examples/simple-c/
 
@@ -397,3 +398,15 @@ site/guides/
 site/public/
 
 site/using/
+
+tests/__snapshots__/
+
+tests/afbd/
+
+tests/correctness/
+
+tests/fuzz/
+
+tests/leak-fixtures/
+
+tests/minimum/

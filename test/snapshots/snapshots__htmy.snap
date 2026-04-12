@@ -4,6 +4,10 @@ expression: output
 ---
 README.md
     10→# `htmy`
+    12→**Async**, **pure-Python** server-side rendering engine.
+    13→
+    14→Unleash your creativity with the full power and Python, without the hassle of learning a new templating language or dealing with its limitations!
+    15→
     16→## Key features
     33→## Testimonials
     47→## Support
@@ -35,6 +39,12 @@ docs/components-guide.md
 
 docs/function-components.md
      1→# Function components
+     3→The default and most flexible way to define an `htmy` component is to add a sync or async `htmy(self, context: Context) -> Component` method to a class, often to enhance a pre-existing business object with `htmy` rendering capabilities.
+     4→
+     5→However, in many cases, especially when you're not enhancing an existing class, this ends up being very verbose and requires a lot of boilerplate: you need to define a class, add the necessary properties, and finally implement the `htmy()` method. This is especially impractical when the component has no properties.
+     6→
+     7→Function components address these issues by allowing you to fully skip class creation and define the component simply as a function (well, or method, as we'll see later). This removes the need for any boilerplate, while also making the code more concise and easier to read.
+     8→
      9→## Function component types
     26→## Creating function components
     41→## Examples
@@ -43,6 +53,10 @@ docs/function-components.md
 
 docs/index.md
     10→# `htmy`
+    12→**Async**, **pure-Python** server-side rendering engine.
+    13→
+    14→Unleash your creativity with the full power and Python, without the hassle of learning a new templating language or dealing with its limitations!
+    15→
     16→## Key features
     33→## Testimonials
     47→## Support
@@ -72,10 +86,10 @@ htmy/md/core.py
     34→    def default …
     43→    def __init__ …
     53→    def parse …
-    64→    def _default_md(self) -> MarkdownParserFunction:
+    64→    def _default_md …
     81→class MD …
    103→    def __init__ …
-   131→    def _render_text(self, text: str, context: Context) -> Component:
+   131→    def _render_text …
 
 htmy/md/typing.py
     11→MarkdownMetadataDict …
@@ -287,40 +301,56 @@ htmy/utils.py
 
 docs/api/core.md
      1→# ::: htmy.core
+     3→    options:
+     4→        show_root_heading: true
 
 docs/api/etree.md
      1→# ::: htmy.etree
+     3→    options:
+     4→        show_root_heading: true
 
 docs/api/function_component.md
      1→# ::: htmy.function_component
+     3→    options:
+     4→        show_root_heading: true
 
 docs/api/html.md
      1→# ::: htmy.html
+     3→    options:
+     4→        show_root_heading: true
 
 docs/api/i18n.md
      1→# ::: htmy.i18n
+     3→    options:
+     4→        show_root_heading: true
 
 docs/api/md.md
      1→# ::: htmy.md.core
+     3→    options:
+     4→        show_root_heading: true
+     5→
      6→# ::: htmy.md.typing
+     8→    options:
+     9→        show_root_heading: true
 
 docs/api/snippet.md
      1→# ::: htmy.snippet
+     3→    options:
+     4→        show_root_heading: true
 
 docs/api/typing.md
      1→# ::: htmy.typing
+     3→    options:
+     4→        show_root_heading: true
 
 docs/api/utils.md
      1→# ::: htmy.utils
+     3→    options:
+     4→        show_root_heading: true
 
 htmy/renderer/__init__.py
-     1→from .baseline import Renderer as _BaselineRenderer
-     2→from .default import Renderer as _DefaultRenderer
-     3→from .typing import is_renderer as is_renderer
-     4→from .typing import is_streaming_renderer as is_streaming_renderer
 
 htmy/renderer/baseline.py
-    10→from .context import RendererContext
     18→class Renderer …
     30→    def __init__ …
     48→    async def render …
@@ -329,12 +359,10 @@ htmy/renderer/baseline.py
    117→    async def _stream_one …
 
 htmy/renderer/context.py
-     3→from .typing import RendererType, is_renderer
      6→class RendererContext …
     12→    def from_context …
 
 htmy/renderer/default.py
-    12→from .context import RendererContext
     20→class _Node …
     25→    def __init__ …
     36→    def iter_nodes …
@@ -357,12 +385,18 @@ htmy/renderer/typing.py
 
 docs/api/renderer/baseline.md
      1→# ::: htmy.renderer.baseline
+     3→    options:
+     4→        show_root_heading: true
 
 docs/api/renderer/default.md
      1→# ::: htmy.renderer.default
+     3→    options:
+     4→        show_root_heading: true
 
 docs/api/renderer/typing.md
      1→# ::: htmy.renderer.typing
+     3→    options:
+     4→        show_root_heading: true
 
 mkdocs.yaml
      1→site_name: htmy
@@ -409,82 +443,34 @@ docs/examples/snippet-slots-fastapi.md
 tests/__init__.py
 
 tests/conftest.py
-     7→def default_renderer …
-    12→def baseline_renderer …
-    17→def streaming_renderer …
 
 tests/test_formatter.py
-     9→def formatter …
-    29→def test_complex_value_formatting …
-    49→def test_complex_property_formatting …
 
 tests/test_function_component.py
     12→rendering_context …
-    21→def sync_function_component …
-    27→async def async_function_component …
-    37→def sync_function_component_with_function_alias …
-    43→async def async_function_component_with_function_alias …
-    53→def sync_context_only_function_component …
-    59→async def async_context_only_function_component …
     69→class Data …
-   101→def renderer …
-   106→def baseline_renderer …
-   185→async def test_function_component …
 
 tests/test_i18n.py
     10→class TranslationFile …
-    64→async def test_i18n_with_fallback …
-    83→async def test_i18n_missing_resource …
 
 tests/test_main_components.py
     22→class Page …
-   153→async def test_complex_page_rendering …
 
 tests/test_md.py
     81→class ConverterRules …
-   136→def _md_renderer …
-   145→async def test_md_with_slot …
-   174→async def test_parsing …
-   233→async def test_parsing_and_conversion …
 
 tests/test_snippet.py
-    28→def message_to_slot_text_processor …
-    41→def sync_text_processor …
-    46→async def async_text_processor …
-    70→async def test_snippet …
-   125→def test_slots_re …
-   134→def test_default_slot_re …
-   194→def test_slots …
-   205→async def test_snippet_with_text_processor_and_slots …
 
 tests/utils.py
 
-examples/internationalization/__init__.py
-
-examples/internationalization/app.py
-     8→class TranslatedComponent …
-    34→async def render_hello() -> None:
-
-examples/markdown_customization/__init__.py
-
-examples/markdown_customization/app.py
-     6→class Page …
-    36→class PostInfo …
-    47→class ConversionRules …
-    88→async def render_post() -> None:
-
-examples/markdown_customization/post.md
-     1→# Essential reading
-    13→# Lists
-    15→## Ordered
-    21→## Unordered
-
-tests/data/blog-post.md
-
 examples/
 
-examples/internationalization/locale/
+examples/internationalization/
+
+examples/markdown_customization/
 
 examples/markdown_essentials/
+
+tests/data/
 
 tests/renderer/

@@ -206,7 +206,7 @@ impl FileCache {
                 if let Some(map) = file_map
                     && let Some(existing) = map.get(&line) {
                         // Override: subtract old cost, add new cost
-                        debug_assert!(
+                        assert!(
                             re.entry.content_rank() > existing.content_rank
                                 || (re.entry.content_rank() == existing.content_rank
                                     && re.entry.content_rank() == 2

@@ -26,34 +26,96 @@ README.md
 
 packages/app-client/README.md
      1→## Usage
+     3→Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
+     4→
+     5→This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
+     6→
+     7→```bash
+     8→$ npm install # or pnpm install or yarn install
+     9→```
+    10→
     13→## Available Scripts
+    15→In the project directory, you can run:
+    16→
     32→## Deployment
+    34→You can deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)
+    35→
     36→## This project was created with the [Solid CLI](https://solid-cli.netlify.app)
 
 packages/cli/README.md
      1→# Enclosed CLI
+     3→This package contains the CLI for [Enclosed](https://enclosed.cc), an open-source project that aims to provide a simple and secure way to share e2e encrypted notes.
+     4→
      5→## Getting Started
+     7→To install the CLI, run the following command:
+     8→
      9→### Create a note
     22→### Configure the enclosed instance to use
     29→## Usage
+    31→```bash
+    32→enclosed <command> [options]
+    33→```
+    34→
     35→### Create a note
     58→### View a note
     68→### Configure the enclosed instance to use
     75→## License
     79→## Credits and Acknowledgements
+    81→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
 
 packages/crypto/README.md
      1→# Enclosed crypto library
+     3→This package contains the natives crypto primitives used by the [Enclosed lib and project](https://enclosed.cc). It is a standalone package built to provide compatibility between different environments by exposing the same API for node:crypto and web SubtleCrypto.
+     4→
      5→## Installation
+     7→```bash
+     8→# with npm
+     9→npm install @enclosed/crypto
+    10→
+    11→# with yarn
+    12→yarn add @enclosed/crypto
+    13→
+    14→# with pnpm
+    15→pnpm add @enclosed/crypto
+    16→```
+    17→
     18→## License
     22→## Credits and Acknowledgements
+    24→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
 
 packages/lib/README.md
      1→### Enclosed lib
+     3→This package contains the core functionalities of [Enclosed](https://enclosed.cc/), an open-source project that aims to provide a simple and secure way to share e2e encrypted notes.
+     4→
      5→## Installation
+     7→```bash
+     8→# with npm
+     9→npm install @enclosed/lib
+    10→
+    11→# with yarn
+    12→yarn add @enclosed/lib
+    13→
+    14→# with pnpm
+    15→pnpm add @enclosed/lib
+    16→```
+    17→
     18→## Usage
+    20→```javascript
+    21→import { createNote } from '@enclosed/lib';
+    22→
+    23→const { noteUrl } = await createNote({
+    24→  content: 'Hello, World!',
+    25→  password: 'password',
+    26→  ttlInSeconds: 3600,
+    27→  deleteAfterReading: true,
+    28→});
+    29→
+    30→console.log(noteUrl);
+    31→```
+    32→
     33→## License
     37→## Credits and Acknowledgements
+    39→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
 
 packages/lib/src/index.ts
      2→import { isApiClientErrorWithCode, isApiClientErrorWithStatusCode } from './api/api.models';
@@ -73,6 +135,7 @@ packages/cli/src/cli.ts
 pnpm-workspace.yaml
      1→packages:
      2→  - 'packages/*'
+     3→
      4→catalog:
      5→  "@antfu/eslint-config": ^3.6.2
      6→  "@types/node": ^22.5.4
@@ -84,7 +147,6 @@ pnpm-workspace.yaml
     12→  "@corentinth/chisels": ^1.2.1
 
 packages/cli/bin/enclosed.mjs
-     4→import '../dist/cli.mjs';
 
 packages/app-server/src/index.cloudflare.ts
      1→import { createServer } from './modules/app/server';
@@ -109,11 +171,14 @@ packages/deploy-cloudflare/_routes.json
      4→    "/api/*"
      5→  ],
      6→  "exclude": []
+     7→}
 
 packages/deploy-cloudflare/build.sh
 
 packages/docs/src/how-it-works.md
      5→# How It Works
+     7→Enclosed is designed with a focus on security and privacy, ensuring that your notes remain confidential from creation to retrieval. This section explains the entire process, from creating a note to decrypting it, highlighting the end-to-end encryption that makes Enclosed a secure platform.
+     8→
      9→## 1. Note Creation
     13→## 2. Key Generation
     17→## 3. Master Key Derivation
@@ -130,6 +195,10 @@ packages/docs/src/how-it-works.md
 
 packages/docs/src/index.md
      5→# Enclosed
+     7→**Enclosed** is a minimalistic web application designed for sending private and secure notes. Whether you need to share sensitive information or just want a simple way to send encrypted messages, Enclosed provides a user-friendly interface with strong security features to ensure your data remains confidential.
+     8→
+     9→The name **Enclosed** is inspired by the idea of keeping your notes safe and secure, like a sealed envelope.
+    10→
     11→## Key Features
     27→## Why Enclosed?
     33→## Get Started
@@ -177,6 +246,7 @@ packages/app-client/components.json
     14→    "ui": "@/modules/ui/components",
     15→    "cn": "@/modules/shared/style/cn"
     16→  }
+    17→}
 
 packages/crypto/src/api-definition.ts
      6→function createEnclosedCryptoApi …
@@ -208,6 +278,8 @@ packages/docs/src/components/toggle.vue
 
 packages/docs/src/resources/brand-kit.md
      1→# Enclosed Brand Kit
+     3→Welcome to the Enclosed Brand Kit. Here, you'll find resources to help you represent Enclosed accurately in media and press coverage. Enclosed is an open-source web application designed for private, end-to-end encrypted note and file sharing.
+     4→
      5→## Project Overview
      9→### Quick Links
     16→## Logo Assets
@@ -220,12 +292,12 @@ packages/docs/src/resources/brand-kit.md
 
 packages/docs/src/resources/i18n.md
      5→# Language and i18n
+     7→Enclosed supports internationalization (i18n) to make it accessible in multiple languages.
+     8→
      9→## Supported languages
     15→## Contributing to translations
 
 packages/app-client/src/locales/locales.test.ts
-     5→import defaultLocale from './en.json';
-     6→import { locales } from './locales';
      8→function fileExists(relativePath: string) {
     14→const localesFiles …
     15→const localesKeys …
@@ -282,37 +354,40 @@ packages/lib/src/api/api.models.ts
 packages/docs/src/integrations/cli.md
      1→# CLI Guide
      5→## Installation
-     9→### Using npm
-    15→### Using yarn
-    21→### Using pnpm
+     7→You can install the Enclosed CLI globally using npm, yarn, or pnpm.
+     8→
     29→## Creating a Note
-    33→### Basic Usage
-    43→### Using stdin
-    55→### Adding Attachments
-    63→### With Full Options
-    71→### Options Summary
+    31→The primary function of the Enclosed CLI is to create secure notes. You can create a note with a simple command.
+    32→
     77→## Viewing a Note
-    81→### Basic Usage
-    91→### Providing the Password Directly
+    79→The Enclosed CLI can also be used to view notes directly from the terminal.
+    80→
     99→## Configuring the Enclosed Instance
-   103→### Set the Instance URL
+   101→By default, the CLI uses the public instance at [enclosed.cc](https://enclosed.cc). If you are running your own instance of Enclosed, you can configure the CLI to use your server.
+   102→
    113→## Updating the CLI
-   117→### Using npm
-   123→### Using yarn
-   129→### Using pnpm
+   115→To update the Enclosed CLI to the latest version, simply re-run the installation command:
+   116→
    137→## Uninstalling the CLI
-   141→### Using npm
-   147→### Using yarn
-   153→### Using pnpm
+   139→If you need to remove the Enclosed CLI, you can uninstall it with the following commands:
+   140→
    159→## Advanced Usage
+   161→For more advanced usage, you can refer to the CLI's help command, which provides detailed information on all available commands and options:
+   162→
+   163→```bash
+   164→enclosed --help
+   165→```
+   166→
+   167→This will display the complete list of commands and options available in the Enclosed CLI.
+   168→
    169→## Next Steps
+   171→Now that you're familiar with the basic and advanced features of the Enclosed CLI, you can start integrating it into your workflows. Whether you're automating note creation or managing secure communication from the terminal, the Enclosed CLI is a powerful tool for ensuring your messages remain private and secure.
 
 packages/docs/src/integrations/npm-package.md
      1→# NPM Package
      9→## Installation
-    13→### Using npm
-    19→### Using yarn
-    25→### Using pnpm
+    11→You can install the Enclosed Lib using npm, yarn, or pnpm.
+    12→
 
 packages/docs/src/integrations/versioning.md
      1→# Versioning
@@ -362,11 +437,11 @@ packages/cli/src/config/config.models.ts
      3→import { configDefinition } from './config.constants';
      7→type ConfigKey …
      8→const config …
-    10→function setConfig({ key, value }: { key: ConfigKey ; value: string }) {
-    31→function getConfig({ key }: { key: ConfigKey }) {
-    57→function deleteConfig({ key }: { key: ConfigKey }) {
-    61→function resetConfig() {
-    65→function createConfigBindings({ key }: { key: ConfigKey }) {
+    10→function setConfig …
+    31→function getConfig …
+    57→function deleteConfig …
+    61→function resetConfig …
+    65→function createConfigBindings …
 
 packages/cli/src/config/config.usecases.ts
      1→import { createConfigBindings } from './config.models';
@@ -396,23 +471,17 @@ packages/app-client/src/modules/theme/theme.store.ts
      4→export function useThemeStore() {
 
 packages/app-server/src/modules/storage/storage.models.ts
-     1→import type …
      5→function defineStorage …
      9→function defineBindableStorageFactory …
 
 packages/app-server/src/modules/storage/storage.types.ts
-     2→import type …
-     3→import type …
      7→export type BindableStorageFactoryArgs …
      8→export type BindableStorageFactory …
      9→export type StorageFactory …
 
 packages/app-client/src/modules/docs/docs.models.test.ts
-     2→import { buildDocUrl } from './docs.models';
 
 packages/app-client/src/modules/docs/docs.models.ts
-     1→import { buildTimeConfig } from '../config/config.constants';
-     2→import { joinUrlParts } from '../shared/http/http-client.models';
      6→function buildDocUrl …
 
 packages/app-client/src/modules/files/files.models.test.ts
@@ -439,7 +508,6 @@ packages/cli/src/create-note/create-note.usecases.ts
      3→export async function getNoteContent …
 
 packages/lib/src/notes/notes.models.test.ts
-     2→import { createNoteUrl, createNoteUrlHashFragment, parseNoteUrl, parseNoteUrlHashFragment } from './notes.models';
 
 packages/lib/src/notes/notes.models.ts
      6→const PASSWORD_PROTECTED_HASH_FRAGMENT …
@@ -450,24 +518,15 @@ packages/lib/src/notes/notes.models.ts
     68→function parseNoteUrl …
 
 packages/lib/src/notes/notes.services.ts
-     1→import { apiClient } from '../api/api.client';
      5→async function storeNote …
     39→async function fetchNote …
 
 packages/lib/src/notes/notes.types.ts
-     1→import type { CompressionAlgorithm, EncryptionAlgorithm, KeyDerivationAlgorithm } from '../crypto/crypto.types';
-     2→import type { SerializationFormat } from '../crypto/serialization/serialization.types';
      4→export type NoteAsset …
     12→export type Note …
     17→export type EncryptedNote …
 
 packages/lib/src/notes/notes.usecases.ts
-     1→import type { EncryptionAlgorithm } from '../crypto/crypto.types';
-     2→import type { SerializationFormat } from '../crypto/serialization/serialization.types';
-     3→import type { NoteAsset } from './notes.types';
-     4→import { encryptNote } from '../crypto/crypto.usecases';
-     5→import { createNoteUrl } from './notes.models';
-     6→import { storeNote as storeNoteImpl } from './notes.services';
     10→const BASE_URL …
     12→async function createNote …
 
@@ -515,23 +574,17 @@ packages/app-client/src/modules/auth/auth.models.ts
      5→function isAccessTokenExpired …
 
 packages/app-client/src/modules/auth/auth.services.ts
-     1→import { apiClient } from '../shared/http/http-client';
      5→async function login …
 
 packages/app-client/src/modules/auth/auth.store.ts
-     3→import { createHook } from '../shared/hooks/hooks';
-     4→import { isAccessTokenExpired } from './auth.models';
      6→export const authStore …
 
 packages/app-server/src/modules/shared/utils/random.ts
 
 packages/app-client/src/modules/config/config.constants.ts
-     1→import type { Config } from './config.types';
      3→export const buildTimeConfig …
 
 packages/app-client/src/modules/config/config.provider.tsx
-     1→import type { Config } from './config.types';
-     3→import { buildTimeConfig } from './config.constants';
      9→function getConfig(): Config {
 
 packages/app-client/src/modules/config/config.types.ts
@@ -570,17 +623,13 @@ packages/app-server/src/modules/tasks/tasks.types.ts
      3→export type TaskDefinition …
 
 packages/lib/src/crypto/serialization/serialization.models.ts
-     5→function defineSerializationMethods …
 
 packages/lib/src/crypto/serialization/serialization.registry.ts
      7→export const serializationMethodDefinitions …
     11→export const serializationMethodDefinitionsByName …
     12→export const serializationFormats …
-    14→function getSerializationMethod …
-    26→function getParsingMethod …
 
 packages/lib/src/crypto/serialization/serialization.test-utils.ts
-     6→function runCommonSerializationTests …
 
 packages/lib/src/crypto/serialization/serialization.types.ts
      4→export type SerializationMethodsDefinition …
@@ -613,8 +662,6 @@ packages/app-client/src/modules/i18n/i18n.provider.tsx
     16→type RawDictionary …
     17→type Dictionary …
     19→const I18nContext …
-    26→function useI18n() {
-    36→async function fetchDictionary(locale: Locale): Promise<Dictionary> {
     44→export const I18nProvider: ParentComponent = (props) => {
 
 packages/crypto/src/encryption-algorithms/encryption-algorithms.constants.ts
@@ -671,52 +718,38 @@ packages/app-client/src/modules/notes/notes.constants.ts
      1→export const NOTE_ID_REGEX …
 
 packages/app-client/src/modules/notes/notes.context.tsx
-     3→import { createHook } from '../shared/hooks/hooks';
      5→const noteContext …
     11→export const NoteContextProvider: ParentComponent = (props) => {
     27→export function useNoteContext() {
 
 packages/app-client/src/modules/notes/notes.models.test.ts
-     2→import { buildViewNotePagePath } from './notes.models';
 
 packages/app-client/src/modules/notes/notes.models.ts
     16→export function buildViewNotePagePath({ prefix }: { prefix?: string | null }): string {
 
 packages/app-client/src/modules/notes/notes.services.ts
-     1→import { apiClient } from '../shared/http/http-client';
 
 packages/app-client/src/modules/notes/notes.usecases.ts
-     2→import { storeNote } from './notes.services';
 
 packages/app-client/src/app.css
 
 packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.models.ts
-     3→function defineEncryptionMethods …
 
 packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.registry.ts
-     1→import type { EncryptionMethodsDefinition } from './encryption-algorithms.types';
-     6→function createEncryptionAlgorithmsRegistry …
+     1→import type …
 
 packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.types.ts
-     1→import type { defineEncryptionMethods } from './encryption-algorithms.models';
+     1→import type …
      3→export type EncryptionMethodsDefinition …
 
 packages/crypto/src/node/encryption-algorithms/crypto.node.aes-256-gcm.test.ts
-     2→import { runCommonEncryptionAlgorithmTest } from '../../encryption-algorithms/encryption-algorithms.test-utils';
-     3→import { aes256GcmEncryptionAlgorithmDefinition } from './crypto.node.aes-256-gcm';
 
 packages/crypto/src/node/encryption-algorithms/crypto.node.aes-256-gcm.ts
-     2→import { defineEncryptionMethods } from '../../encryption-algorithms/encryption-algorithms.models';
-     3→import { base64UrlToBuffer, bufferToBase64Url, createRandomBuffer } from '../crypto.node.usecases';
      5→export const aes256GcmEncryptionAlgorithmDefinition …
 
 packages/crypto/src/web/encryption-algorithms/crypto.node.aes-256-gcm.test.ts
-     2→import { runCommonEncryptionAlgorithmTest } from '../../encryption-algorithms/encryption-algorithms.test-utils';
-     3→import { aes256GcmEncryptionAlgorithmDefinition } from './crypto.web.aes-256-gcm';
 
 packages/crypto/src/web/encryption-algorithms/crypto.web.aes-256-gcm.ts
-     1→import { defineEncryptionMethods } from '../../encryption-algorithms/encryption-algorithms.models';
-     2→import { base64UrlToBuffer, bufferToBase64Url, createRandomBuffer } from '../crypto.web.usecases';
      4→export const aes256GcmEncryptionAlgorithmDefinition …
 
 packages/app-client/src/modules/shared/files/convert.ts
@@ -757,48 +790,6 @@ packages/app-server/src/modules/notes/notes.usecases.test.ts
 
 packages/app-server/src/modules/notes/notes.usecases.ts
 
-packages/lib/build.config.ts
-
-packages/lib/eslint.config.js
-
-packages/lib/package.json
-     2→  "name": "@enclosed/lib",
-     3→  "type": "module",
-     4→  "version": "1.16.0",
-     5→  "packageManager": "pnpm@9.15.0",
-     6→  "description": "Enclosed lib to create secure notes.",
-     7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
-     8→  "license": "Apache-2.0",
-     9→  "repository": {
-    13→  "exports": {
-    19→  "main": "./dist/index.cjs",
-    20→  "types": "./dist/index.d.ts",
-    21→  "files": [
-    24→  "engines": {
-    27→  "react-native": "./dist/index.web.mjs",
-    28→  "scripts": {
-    39→  "dependencies": {
-    47→  "devDependencies": {
-
-packages/lib/tsconfig.json
-     2→  "compilerOptions": {
-     9→  "include": [
-
-packages/app-server/src/modules/shared/validation/validation.test.ts
-
-packages/app-server/src/modules/shared/validation/validation.ts
-    43→export const validateJsonBody …
-    44→export const validateQuery …
-    45→export const validateParams …
-
-packages/app-server/eslint.config.js
-
-packages/app-server/package.json
-
-packages/app-server/tsconfig.json
-
-packages/app-server/wrangler.toml
-
 packages/
 
 packages/app-client/e2e-tests/
@@ -823,11 +814,11 @@ packages/app-client/src/modules/ui/components/
 
 packages/app-client/src/scripts/
 
+packages/app-server/
+
 packages/app-server/src/modules/
 
 packages/app-server/src/modules/app/auth/
-
-packages/app-server/src/modules/app/auth/e2e/
 
 packages/app-server/src/modules/app/config/
 
@@ -840,6 +831,8 @@ packages/app-server/src/modules/notes/tasks/
 packages/app-server/src/modules/shared/
 
 packages/app-server/src/modules/shared/logger/
+
+packages/app-server/src/modules/shared/validation/
 
 packages/app-server/src/modules/storage/factories/
 

@@ -23,6 +23,7 @@ turbo.json
      9→      "cache": false
     10→    }
     11→  }
+    12→}
 
 src/browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -324,6 +325,7 @@ package.json
     66→  "dependencies": {
     67→    "@radix-ui/react-dialog": "^1.1.1"
     68→  }
+    69→}
 
 playwright.config.ts
 
@@ -337,6 +339,7 @@ tsconfig.json
      8→    "strict": true
      9→  },
     10→  "include": ["src"],
+    11→}
 
 LICENSE.md
 
@@ -353,11 +356,9 @@ test/tailwind.config.ts
 
 test/tsconfig.json
 
-test/public/next.svg
-
-test/public/vercel.svg
-
 test/src/app/globals.css
+
+test/public/
 
 test/src/
 

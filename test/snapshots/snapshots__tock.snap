@@ -4,16 +4,65 @@ expression: output
 ---
 README.md
      1→# Tock
+     5→[Features](#features) • [Quick Start](#quick-start) • [Commands](#commands) •
+     6→[Configuration](#configuration) • [Theme](#theme) • [File Format](#file-format) • [Shell](#shell-completion) • [Inspiration](#inspiration) • [License](#license)
+     7→
      8→## Features
+    12→**Tock** is a powerful time tracking tool for the command line. It saves activity logs as plaintext files and provides an interactive terminal UI for viewing your time.
+    13→
+    14→Features include:
+    15→
+    16→- 📝 **Simple plaintext format** - Activities stored in human-readable files
+    17→- 📅 **Notes & Tags** - Attach detailed notes and tags to activities
+    18→- 🎨 **Interactive TUI** - Beautiful terminal calendar view using Bubble Tea
+    19→- ⚡ **Fast & Lightweight** - Single binary, no dependencies
+    20→- 🔄 **Compatible** - Reads/writes Bartib file format and TimeWarrior data files
+    21→- 🎨 **Customizable Themes** - Multiple color themes and custom color support
+    22→- 📅 **iCal Export** - Generate .ics files for calendar integration, or sync with system calendars (macOS only)
+    23→
+    24→<hr clear="right"/>
+    25→
     26→## Quick Start
     28→### Installation
     30→#### Homebrew (macOS)
+    32→```bash
+    33→# https://formulae.brew.sh/formula/tock
+    34→# Install from official repository (build from source)
+    35→brew install tock
+    36→
+    37→# Install pre-built binary via latest release (Goreleaser)
+    38→brew install kriuchkov/tap/tock
+    39→```
+    40→
     41→#### Go Install
+    43→```bash
+    44→go install github.com/kriuchkov/tock/cmd/tock@latest
+    45→```
+    46→
     47→#### Build from source
+    49→```bash
+    50→go build -o tock ./cmd/tock
+    51→```
+    52→
     53→#### Install Script (Linux & macOS)
+    55→```bash
+    56→curl -sS https://raw.githubusercontent.com/kriuchkov/tock/master/install.sh | sh
+    57→```
+    58→
     59→#### Download Binary
+    61→Download the latest release from the [Releases](https://github.com/kriuchkov/tock/releases) page.
+    62→
     63→### Basic Usage
    116→## Configuration
+   118→Tock supports a flexible configuration system using YAML files and environment variables.
+   119→
+   120→**Priority Order:**
+   121→
+   122→1. Command-line flags
+   123→2. Environment variables
+   124→3. Configuration file (`~/.config/tock/tock.yaml` or `./tock.yaml`)
+   125→4. Default values
+   126→
    127→### Configuration File
    165→### Environment Variables
    179→### Storage Backends
@@ -21,14 +70,85 @@ README.md
    191→### 2. TimeWarrior
    209→### Calendar View
    238→## Theming
+   240→Tock supports customizable color themes for the calendar view.
+   241→
+   242→You can configure the theme in `tock.yaml`:
+   243→
+   244→```yaml
+   245→theme:
+   246→  name: custom
+   247→  primary: "#ff0000"
+   248→```
+   249→
+   250→Or use environment variables:
+   251→
    252→### Theme Name
    262→### Auto-detection
    270→### Custom Colors
    283→### Example: Cyberpunk / Fuchsia Theme
    300→### Time Format
    316→#### 12-Hour Format Examples
+   318→```bash
+   319→tock start -p Project -d Task -t "3:04 PM"   # or "03:04 PM"
+   320→tock start -p Project -d Task -t "3PM"       # Minutes optional
+   321→tock add -s "9:00 AM" -e "5:00 PM"
+   322→tock stop -t "4:45pm"                        # Case insensitive
+   323→
+   324→# Times display as: "03:04 PM" instead of "15:04"
+   325→# Input accepts both "3:04 PM" and "03:04 PM" formats
+   326→```
+   327→
    328→#### 24-Hour Format (Default)
+   330→```bash
+   331→tock start -p Project -d Task -t 15:04
+   332→tock stop -t 17:30
+   333→
+   334→# Times display as: "15:04"
+   335→```
+   336→
+   337→Notes:
+   338→
+   339→- Times display with zero-padded hours (e.g., "08:12 AM") for better alignment
+   340→- Input accepts both zero-padded ("03:04 PM") and non-padded ("3:04 PM") formats
+   341→- 24-hour input (e.g., "15:04") is still accepted in 12-hour mode as a fallback
+   342→
    343→## Commands
+   345→```bash
+   346→
+   347→A simple timetracker for the command line
+   348→
+   349→Usage:
+   350→  tock [command]
+   351→
+   352→Available Commands:
+   353→  add         Add a completed activity
+   354→  analyze     Analyze your productivity patterns
+   355→  calendar    Show interactive calendar view
+   356→  completion  Generate the autocompletion script for the specified shell
+   357→  continue    Continues a previous activity
+   358→  current     Lists all currently running activities
+   359→  help        Help about any command
+   360→  ical        Generate iCal (.ics) file for a specific task, all tasks in a day, or all tasks
+   361→  last        List recent unique activities
+   362→  list        List activities (Calendar View)
+   363→  remove      Remove an activity
+   364→  report      Generate time tracking report
+   365→  start       Start a new activity
+   366→  stop        Stop the current activity
+   367→  version     Print the version info
+   368→  watch       Display a full-screen stopwatch for the current activity
+   369→
+   370→Flags:
+   371→  -b, --backend string   Storage backend: 'file' (default) or 'timewarrior'
+   372→      --config string    Config file directory (default is $HOME/.config/tock/tock.yaml)
+   373→  -f, --file string      Path to the activity log file (or data directory for timewarrior)
+   374→  -h, --help             help for tock
+   375→  -v, --version          version for tock
+   376→Use "tock [command] --help" for more information about a command.
+   377→```
+   378→
+   379→[**→ Commands Reference**](docs/commands.md)
+   380→
    381→### Start tracking
    401→### Stop tracking
    418→### Add past activity
@@ -42,16 +162,41 @@ README.md
    551→### Calendar Integration (iCal)
    578→### Productivity Analysis
    602→## Update Check
+   604→Tock automatically checks for updates once a week. When a new version is available, you will see a notification after running commands like `start` or `stop`.
+   605→
+   606→You can disable this check by setting `check_updates: false` in your configuration file or using the environment variable `TOCK_CHECK_UPDATES=false`.
+   607→
    608→## File Format
+   610→Activities are stored in plaintext format (compatible with Bartib):
+   611→
+   612→```
+   613→  2025-12-10 09:00 - 2025-12-10 11:30 | Project Name | Task description
+   614→  2025-12-10 13:00 | Another Project | Ongoing task
+   615→```
+   616→
+   617→You can edit this file manually with any text editor.
+   618→
    619→## Shell Completion
+   621→Tock supports shell completion for Bash, Zsh, Fish, and PowerShell. This includes basic command completion and **intelligent suggestions** for:
+   622→
+   623→- **Projects**: Suggests existing project names when using `-p` / `--project`.
+   624→- **Descriptions**: Suggests recent activity descriptions when using `-d` / `--description`.
+   625→  - Suggestions are context-aware: if a project is selected, it only suggests descriptions previously used for that project.
+   626→- **Continue IDs**: Suggests valid activity IDs (with details) for the `tock continue` command.
+   627→
    628→### Installation
    656→## Shell Integration
+   658→You can display the current tracked activity directly in your shell prompt.
+   659→
    660→### Zsh / Oh My Zsh
    679→### Starship
    692→### Technology Stack
    698→### Project Structure
    709→## Inspiration
+   711→Tock is inspired by and compatible with [Bartib](https://github.com/nikolassv/bartib) - an excellent time tracking tool written in Rust by Nikolas Schmidt-Voigt. It's saved me countless hours and helped me stay organized, so I wanted to create a similar tool in Go with a clean architecture approach and an interactive terminal UI.
+   712→
    713→## License
+   715→GPL-3.0-or-later
 
 cmd/tock/main.go
      7→func main() {
@@ -156,14 +301,6 @@ internal/core/models/activity.go
     23→func (a Activity) Duration() time.Duration {
     30→// DurationString returns the duration formatted as "HH:MM:SS".
     31→func (a Activity) DurationString() string {
-    32→	d := a.Duration().Round(time.Second)
-    33→	h := d / time.Hour
-    34→	d %= time.Hour
-    35→	m := d / time.Minute
-    36→	d %= time.Minute
-    37→	s := d / time.Second
-    38→	return fmt.Sprintf("%02d:%02d:%02d", h, m, s)
-    39→}
     41→func (a Activity) MarshalJSON() ([]byte, error) {
 
 internal/core/ports/ports.go
@@ -306,31 +443,24 @@ internal/adapters/repositories/notes/repository_test.go
 internal/adapters/repositories/timewarrior/repository.go
     24→const …
     28→type twInterval …
-    29→	Start      string   `json:"start"`
-    30→	End        string   `json:"end,omitempty"`
-    31→	Tags       []string `json:"tags,omitempty"`
-    32→	Annotation string   `json:"annotation,omitempty"`
-    33→}
     35→type repository …
-    36→	dataDir string
-    37→}
     39→func NewRepository(dataDir string) ports.ActivityRepository {
     43→func (r *repository) Find(_ context.Context, filter dto.ActivityFilter) ([]models.Activity, error) {
-    67→func determineDateRange(filter dto.ActivityFilter) (time.Time, time.Time) {
-    79→func matchesFilter(act models.Activity, filter dto.ActivityFilter) bool {
+    67→func determineDateRange …
+    79→func matchesFilter …
    112→func (r *repository) FindLast(_ context.Context) (*models.Activity, error) {
    148→func (r *repository) Save(_ context.Context, activity models.Activity) error {
    182→func (r *repository) Remove(_ context.Context, activity models.Activity) error {
-   212→func (r *repository) getMonthFilePath(t time.Time) string {
-   217→func (r *repository) readActivitiesFromFile(path string) ([]models.Activity, error) {
-   235→func (r *repository) readIntervalsFromFile(path string) ([]twInterval, error) {
-   283→func (r *repository) writeIntervalsToFile(path string, intervals []twInterval) error {
-   306→func toTWInterval(a models.Activity) twInterval {
-   320→func fromTWInterval(iv twInterval) (models.Activity, error) {
+   212→func (r *repository) getMonthFilePath …
+   217→func (r *repository) readActivitiesFromFile …
+   235→func (r *repository) readIntervalsFromFile …
+   283→func (r *repository) writeIntervalsToFile …
+   306→func toTWInterval …
+   320→func fromTWInterval …
    349→// parseIncLine parses a line in TimeWarrior's internal serialization format.
       →…
    352→func parseIncLine(line string) (twInterval, error) {
-   393→func tokenize(line string) []string {
+   393→func tokenize …
 
 internal/adapters/repositories/timewarrior/repository_test.go
     17→func TestRepository_Save(t *testing.T) {
@@ -338,7 +468,7 @@ internal/adapters/repositories/timewarrior/repository_test.go
    177→func TestRepository_FindLast(t *testing.T) {
    213→func TestRepository_FindLast_WithAddedHistoricalActivity(t *testing.T) {
    260→func TestRepository_Find_IsRunning_WithHistoricalData(t *testing.T) {
-   298→func ptr[T any](v T) *T {
+   298→func ptr …
    302→func TestRepository_ReadIncFormat(t *testing.T) {
    339→func TestRepository_Find_CrossMonth(t *testing.T) {
    372→func TestRepository_Remove(t *testing.T) {
@@ -378,82 +508,41 @@ internal/adapters/repositories/file/repository_test.go
 
 internal/adapters/cli/add.go
     16→type addOptions …
-    17→	Description string
-    18→	Project     string
-    19→	StartStr    string
-    20→	EndStr      string
-    21→	DurationStr string
-    22→	Notes       string
-    23→	Tags        []string
-    24→}
     26→func NewAddCmd() *cobra.Command {
-    64→func runAdd(cmd *cobra.Command, opts *addOptions) error {
-   124→func resolveStartTime(startStr string, theme Theme) (string, error) {
-   163→func resolveEndTimeOrDuration(endStr, durationStr string, theme Theme) (string, string, error) {
+    64→func runAdd …
+   124→func resolveStartTime …
+   163→func resolveEndTimeOrDuration …
 
 internal/adapters/cli/analyze.go
     20→func NewAnalyzeCmd() *cobra.Command {
     70→type AnalysisStats …
-    71→	TotalDuration      time.Duration
-    72→	DeepWorkDuration   time.Duration
-    73→	DeepWorkScore      float64 // 0-100
-    74→	ContextSwitches    int
-    75→	AvgSwitchesPerDay  float64
-    76→	Chronotype         string // "Morning Lark", "Night Owl", etc.
-    77→	PeakHour           int
-    78→	FocusDistribution  map[string]int // "Short (<15m)", "Medium (15-60m)", "Long (>60m)"
-    79→	MostProductiveDay  string
-    80→	AvgSessionDuration time.Duration
-    81→}
-    83→//nolint:funlen // analysis function is inherently long
     84→func analyzeData(activities []models.Activity) AnalysisStats {
-   205→//nolint:funlen // render function is inherently long for output formatting
    206→func renderAnalysis(stats AnalysisStats, cfg *config.Config, tf *timeutil.Formatter) {
 
 internal/adapters/cli/calendar.go
     25→func NewCalendarCmd() *cobra.Command {
     48→type reportModel …
-    49→	service      ports.ActivityResolver
-    50→	config       *config.Config
-    51→	timeFormat   *timeutil.Formatter // time display format (12/24 hour)
-    52→	currentDate  time.Time           // The date currently selected
-    53→	viewDate     time.Time           // The month currently being viewed
-    54→	monthReports map[int]*dto.Report // Cache for daily reports in the month (day -> report)
-    55→	viewport     viewport.Model
-    56→	ready        bool
-    57→	width        int
-    58→	height       int
-    59→	err          error
-    60→	styles       Styles
-    61→	theme        Theme
-    62→}
-    64→func initialReportModel(service ports.ActivityResolver, cfg *config.Config, tf *timeutil.Formatter) reportModel {
+    64→func initialReportModel …
     79→func (m *reportModel) Init() tea.Cmd {
     83→func (m *reportModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
    134→func (m *reportModel) View() string {
-   156→func (m *reportModel) renderCalendar() string {
-   234→func (m *reportModel) renderDetails() string {
-   255→//nolint:funlen //it's more readable to keep the content generation in one place for now
+   156→func (m *reportModel) renderCalendar …
+   234→func (m *reportModel) renderDetails …
    256→func (m *reportModel) updateViewportContent() {
-   402→func (m *reportModel) formatProjectStat(name string, duration time.Duration) string {
+   402→func (m *reportModel) formatProjectStat …
    418→type monthDataMsg …
-   419→	reports map[int]*dto.Report
-   420→}
    422→type errMsg …
-   424→func (m *reportModel) fetchMonthData() tea.Msg {
-   486→// getWeeklyDuration calculates the total duration for the current week (Monday to Sunday)
-   487→// based on the selected date. Fetches directly from service to handle cross-month weeks.
+   424→func (m *reportModel) fetchMonthData …
    488→func (m *reportModel) getWeeklyDuration() (time.Duration, error) {
-   520→func (m *reportModel) handleKeyMsg(msg tea.KeyMsg) (tea.Cmd, bool) {
+   520→func (m *reportModel) handleKeyMsg …
 
 internal/adapters/cli/calendar_sidebar.go
     12→const barChar …
-    14→// formatDurationCompact formats a duration as "Xh Ym" for compact display.
     15→func formatDurationCompact(d time.Duration) string {
-    27→func (m *reportModel) renderSidebar() string {
-    51→func (m *reportModel) renderProductivityStats() string {
-   128→func (m *reportModel) renderWeeklyActivity() string {
-   211→func (m *reportModel) renderTopProjects(maxHeight int) string {
+    27→func (m *reportModel) renderSidebar …
+    51→func (m *reportModel) renderProductivityStats …
+   128→func (m *reportModel) renderWeeklyActivity …
+   211→func (m *reportModel) renderTopProjects …
 
 internal/adapters/cli/continue.go
     15→const …
@@ -462,105 +551,65 @@ internal/adapters/cli/continue.go
 
 internal/adapters/cli/current.go
     19→type currentCmdActivity …
-    20→	models.Activity
-    21→}
     23→func (a currentCmdActivity) Duration() time.Duration {
     27→func (a currentCmdActivity) DurationHMS() string {
     35→func NewCurrentCmd() *cobra.Command {
 
 internal/adapters/cli/ical.go
     23→func NewICalCmd() *cobra.Command {
-    78→func handleFullExport(cmd *cobra.Command, outputDir string, openApp bool) error {
-   155→func parseKeyOrDate(keyOrDate string) (time.Time, int, bool, error) {
-   185→func getActivitiesForDate(cmd *cobra.Command, date time.Time) ([]models.Activity, error) {
-   210→func handleSingleExport(activity models.Activity, key string, outputDir string, openApp bool) error {
-   250→func handleBulkExport(activities []models.Activity, dateKey string, outputDir string, openApp bool) error {
-   302→func openFileInCalendar(path string) error {
+    78→func handleFullExport …
+   155→func parseKeyOrDate …
+   185→func getActivitiesForDate …
+   210→func handleSingleExport …
+   250→func handleBulkExport …
+   302→func openFileInCalendar …
 
 internal/adapters/cli/interactive.go
     17→func SelectActivityMetadata(activities []models.Activity, project, description string, theme Theme) (string, string, error) {
-    36→func selectProject(activities []models.Activity, theme Theme) (string, error) {
-    57→func selectTask(activities []models.Activity, project string, theme Theme) (string, error) {
-    80→func getUniqueProjects(activities []models.Activity) []string {
-    89→func getDescriptionsForProject(activities []models.Activity, project string) []string {
+    36→func selectProject …
+    57→func selectTask …
+    80→func getUniqueProjects …
+    89→func getDescriptionsForProject …
     98→func RunInteractiveInput(header, placeholder string, theme Theme) (string, error) {
    123→type simpleInputModel …
-   124→	prompt      string
-   125→	placeholder string
-   126→	value       string
-   127→	canceled    bool
-   128→	theme       Theme
-   129→}
    131→func (m simpleInputModel) Init() tea.Cmd { return nil }
    133→func (m simpleInputModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
    155→func (m simpleInputModel) View() string {
    176→func RunInteractiveList(items []string, title string, theme Theme) (string, error) {
    201→type simpleListModel …
-   202→	title    string
-   203→	all      []string
-   204→	filtered []string
-   205→	filter   string
-   206→	cursor   int
-   207→	selected string
-   208→	canceled bool
-   209→	theme    Theme
-   210→}
    212→func (m *simpleListModel) Init() tea.Cmd { return nil }
    214→func (m *simpleListModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-   251→func (m *simpleListModel) applyFilter() {
+   251→func (m *simpleListModel) applyFilter …
    263→func (m *simpleListModel) View() string {
-   301→func (m *simpleListModel) calculateWindow(height, end int) (int, int) {
+   301→func (m *simpleListModel) calculateWindow …
 
 internal/adapters/cli/last.go
     16→type lastOptions …
-    17→	Limit      int
-    18→	JSONOutput bool
-    19→}
     21→func NewLastCmd() *cobra.Command {
-    42→func runLastCmd(cmd *cobra.Command, opt *lastOptions) error {
+    42→func runLastCmd …
 
 internal/adapters/cli/list_gui.go
     22→func NewListCmd() *cobra.Command {
     45→type model …
-    46→	service      ports.ActivityResolver
-    47→	timeFormat   *timeutil.Formatter // time display format (12/24 hour)
-    48→	currentDate  time.Time
-    49→	selectedDate time.Time
-    50→	activities   []models.Activity
-    51→	table        table.Model
-    52→	err          error
-    53→	width        int
-    54→	height       int
-    55→}
-    57→func initialModel(service ports.ActivityResolver, tf *timeutil.Formatter) model {
-    70→func (m *model) initTable() {
-   101→func (m *model) updateActivities() {
-   111→func (m *model) navigate(dir int) {
-   128→func (m *model) findTargetDate(activities []models.Activity, current time.Time, dir int) *time.Time {
-   154→func (m *model) renderTable(activities []models.Activity) {
+    57→func initialModel …
+    70→func (m *model) initTable …
+   101→func (m *model) updateActivities …
+   111→func (m *model) navigate …
+   128→func (m *model) findTargetDate …
+   154→func (m *model) renderTable …
    200→func (m *model) Init() tea.Cmd {
    204→func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
    230→func (m *model) View() string {
 
 internal/adapters/cli/remove.go
     22→func NewRemoveCmd() *cobra.Command {
-    95→func parseRemoveIndex(s string) (time.Time, int, error) {
-   116→func findLastActivity(ctx context.Context, svc ports.ActivityResolver) (models.Activity, error) {
-   127→func findActivityByIndex(ctx context.Context, svc ports.ActivityResolver, index string) (models.Activity, error) {
+    95→func parseRemoveIndex …
+   116→func findLastActivity …
+   127→func findActivityByIndex …
 
 internal/adapters/cli/report.go
     20→type reportOptions …
-    21→	Today       bool
-    22→	Yesterday   bool
-    23→	Date        string
-    24→	Summary     bool
-    25→	Project     string
-    26→	Description string
-    27→	TotalOnly   bool
-    28→	JSONOutput  bool
-    29→}
     31→func NewReportCmd() *cobra.Command {
-    60→//nolint:funlen // Report command is long but straightforward.
     61→func runReportCmd(cmd *cobra.Command, opt *reportOptions) error {
 
 internal/adapters/cli/root.go
@@ -571,13 +620,13 @@ internal/adapters/cli/root.go
     29→type timeFormatterKey …
     31→func NewRootCmd() *cobra.Command {
    107→func Execute() {
-   115→func getService(cmd *cobra.Command) ports.ActivityResolver {
-   119→func getConfig(cmd *cobra.Command) *config.Config {
-   123→func getTimeFormatter(cmd *cobra.Command) *timeutil.Formatter {
-   127→func initRepository(backend, filePath string) ports.ActivityRepository {
-   134→func getServiceForCompletion(cmd *cobra.Command) (ports.ActivityResolver, error) {
-   173→func projectRegisterFlagCompletion(cmd *cobra.Command, _ []string, _ string) ([]string, cobra.ShellCompDirective) {
-   195→func descriptionRegisterFlagCompletion(cmd *cobra.Command, _ []string, _ string) ([]string, cobra.ShellCompDirective) {
+   115→func getService …
+   119→func getConfig …
+   123→func getTimeFormatter …
+   127→func initRepository …
+   134→func getServiceForCompletion …
+   173→func projectRegisterFlagCompletion …
+   195→func descriptionRegisterFlagCompletion …
 
 internal/adapters/cli/start.go
     16→//nolint:gocognit,funlen // Include all logic in one function
@@ -588,30 +637,7 @@ internal/adapters/cli/stop.go
 
 internal/adapters/cli/theme.go
     11→type Theme …
-    12→	Primary   lipgloss.Color
-    13→	Secondary lipgloss.Color
-    14→	Text      lipgloss.Color
-    15→	SubText   lipgloss.Color
-    16→	Faint     lipgloss.Color
-    17→	Highlight lipgloss.Color
-    18→	Tag       lipgloss.Color
-    19→}
     22→type Styles …
-    23→	Wrapper       lipgloss.Style
-    24→	Header        lipgloss.Style
-    25→	Weekday       lipgloss.Style
-    26→	Day           lipgloss.Style
-    27→	Today         lipgloss.Style
-    28→	Selected      lipgloss.Style
-    29→	DetailsHeader lipgloss.Style
-    30→	Time          lipgloss.Style
-    31→	Project       lipgloss.Style
-    32→	Desc          lipgloss.Style
-    33→	Duration      lipgloss.Style
-    34→	Sidebar       lipgloss.Style
-    35→	Dot           lipgloss.Style
-    36→	Line          lipgloss.Style
-    37→}
     39→// DarkTheme returns the standard 256-color theme for dark backgrounds.
     40→func DarkTheme() Theme {
     52→// LightTheme returns the standard 256-color theme for light backgrounds.
@@ -630,11 +656,8 @@ internal/adapters/cli/theme.go
 
 internal/adapters/cli/update.go
     17→type githubRelease …
-    18→	TagName string `json:"tag_name"`
-    19→	HTMLURL string `json:"html_url"`
-    20→}
-    22→func checkUpdate() (githubRelease, error) {
-    45→func runUpdateCheck(cmd *cobra.Command) {
+    22→func checkUpdate …
+    45→func runUpdateCheck …
 
 internal/adapters/cli/version.go
     10→var …
@@ -644,33 +667,13 @@ internal/adapters/cli/watch.go
     19→func NewWatchCmd() *cobra.Command {
     75→type tickMsg …
     77→type watchModel …
-    78→	activity models.Activity
-    79→	err      error
-    80→	now      time.Time
-    81→	service  ports.ActivityResolver
-    82→	help     help.Model
-    83→	keys     keyMap
-    84→	width    int
-    85→	height   int
-    86→	theme    Theme
-    87→	paused   bool
-    88→}
     90→type keyMap …
-    91→	Quit  key.Binding
-    92→	Pause key.Binding
-    93→}
-    95→func initialWatchModel(activity models.Activity, service ports.ActivityResolver, theme Theme) watchModel {
+    95→func initialWatchModel …
    115→func (m watchModel) Init() tea.Cmd {
    121→func (m watchModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
    175→func (m watchModel) View() string {
    248→var font …
-   262→func renderBigText(text string, color string) string {
-
-internal/core/ports/mocks/mock_activityrepository.go
-
-internal/core/ports/mocks/mock_activityresolver.go
-
-internal/core/ports/mocks/mock_notesrepository.go
+   262→func renderBigText …
 
 assets/
 
@@ -683,5 +686,7 @@ internal/adapters/
 internal/adapters/repositories/
 
 internal/core/
+
+internal/core/ports/mocks/
 
 internal/services/

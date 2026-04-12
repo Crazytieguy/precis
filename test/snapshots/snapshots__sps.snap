@@ -132,7 +132,6 @@ sps-net/src/http.rs
    258→async fn download_and_verify …
 
 sps-net/src/lib.rs
-    29→pub use crate::validation:: …
 
 sps-net/src/oci.rs
     21→const OCI_MANIFEST_V1_TYPE …
@@ -231,6 +230,8 @@ sps-common/src/config.rs
    193→impl Default for Config …
    194→    fn default() -> Self {
    199→pub fn load_config() -> Result<Config> {
+   200→    Config::load()
+   201→}
 
 sps-common/src/error.rs
      6→pub enum SpsError …

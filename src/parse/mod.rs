@@ -140,12 +140,7 @@ pub fn extract_items<'t>(
         };
 
         let start_line = effective_node.start_position().row;
-        let end_line = if lang == Lang::C
-            && matches!(
-                effective_node.kind(),
-                "preproc_include" | "preproc_def" | "preproc_function_def"
-            )
-            && effective_node.end_position().column == 0
+        let end_line = if effective_node.end_position().column == 0
             && effective_node.end_position().row > effective_node.start_position().row
         {
             effective_node.end_position().row
@@ -178,14 +173,13 @@ pub fn extract_items<'t>(
     items.retain(|i| i.kind != ItemKind::Module);
 
     filter_nested_items(&mut items);
+    dedup_line_overlaps(&mut items);
+    extend_section_ranges(&mut items, source);
 
-    debug_assert!(
-        {
-            let mut sorted: Vec<_> = items.iter().map(|i| (i.start_line, i.end_line)).collect();
-            sorted.sort();
-            sorted.windows(2).all(|w| w[0].1 <= w[1].0)
-        },
-        "D4 violation: top-level items overlap after nesting filter"
+    assert!(
+        items.windows(2).all(|w| w[0].end_line <= w[1].start_line),
+        "D4 violation: top-level items overlap after nesting filter in {}",
+        path.display()
     );
 
     items
@@ -241,4 +235,51 @@ fn filter_nested_items(items: &mut Vec<ExtractedItem<'_>>) {
     items.truncate(write);
 
     items.sort_by_key(|i| i.start_line);
+}
+
+/// Handles cases like Lua's `local x = {} ; x.foo = bar` where
+/// two independent items share a source line.
+fn dedup_line_overlaps(items: &mut Vec<ExtractedItem<'_>>) {
+    if items.len() <= 1 {
+        return;
+    }
+    items.sort_by_key(|i| (i.start_line, i.node.start_byte()));
+    let mut max_end: usize = 0;
+    let mut first = true;
+    items.retain(|item| {
+        if first || item.start_line >= max_end {
+            max_end = item.end_line;
+            first = false;
+            true
+        } else {
+            // A dropped item may extend further than the kept one.
+            max_end = max_end.max(item.end_line);
+            false
+        }
+    });
+}
+
+/// Some tree-sitter grammars (e.g., Markdown) capture only the heading line,
+/// not the body content between headings. Extend each Section's end_line to
+/// the next Section's start (or EOF).
+fn extend_section_ranges(items: &mut [ExtractedItem<'_>], source: &str) {
+    if !items.iter().any(|i| i.kind == ItemKind::Section) {
+        return;
+    }
+    let total_lines = source.lines().count();
+    let section_indices: Vec<usize> = items
+        .iter()
+        .enumerate()
+        .filter(|(_, i)| i.kind == ItemKind::Section)
+        .map(|(idx, _)| idx)
+        .collect();
+
+    for (pos, &idx) in section_indices.iter().enumerate() {
+        let next_start = if pos + 1 < section_indices.len() {
+            items[section_indices[pos + 1]].start_line
+        } else {
+            total_lines
+        };
+        items[idx].end_line = items[idx].end_line.max(next_start);
+    }
 }

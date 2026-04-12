@@ -4,58 +4,44 @@ expression: output
 ---
 README.md
      3→# api.api\_database
+     5→This module contains the DatabaseApi class, which is responsible handling database operations
+     6→in the XUI API.
+     7→
+     8→<a id="api.api_database.DatabaseApi"></a>
+     9→
     10→## DatabaseApi Objects
-    42→#### export
     67→# api.api\_inbound
+    69→This module contains the InboundApi class for handling inbounds in the XUI API.
+    70→
+    71→<a id="api.api_inbound.InboundApi"></a>
+    72→
     73→## InboundApi Objects
-   111→#### get\_list
-   140→#### get\_by\_id
-   180→#### add
-   228→#### delete
-   259→#### update
-   292→#### reset\_stats
-   314→#### reset\_client\_stats
    345→# api.api
+   347→This module provides classes to interact with the XUI API.
+   348→
+   349→<a id="api.api.Api"></a>
+   350→
    351→## Api Objects
-   414→#### session
-   429→#### session
-   444→#### cookie\_name
-   459→#### cookie\_name
-   476→#### from\_env
-   522→#### login
    549→# api.api\_server
+   551→This module contains the ServerApi class for handling server in the XUI API.
+   552→
+   553→<a id="api.api_server.ServerApi"></a>
+   554→
    555→## ServerApi Objects
-   591→#### get\_db
-   618→#### get\_status
-   646→#### generate\_reality\_keys
    674→# api.api\_client
+   676→This module contains the ClientApi class which provides methods to interact with the
+   677→clients in the XUI API.
+   678→
+   679→<a id="api.api_client.ClientApi"></a>
+   680→
    681→## ClientApi Objects
-   727→#### get\_by\_email
-   761→#### get\_ips
-   794→#### add
-   825→#### update
-   856→#### reset\_ips
-   884→#### reset\_stats
-   915→#### delete
-   947→#### delete\_depleted
-   979→#### online
-  1007→#### get\_traffic\_by\_id
   1042→# api.api\_base
+  1044→This module contains the base class for the XUI API.
+  1045→
+  1046→<a id="api.api_base.ApiFields"></a>
+  1047→
   1048→## ApiFields Objects
   1058→## BaseApi Objects
-  1097→#### host
-  1112→#### username
-  1127→#### password
-  1142→#### use\_tls\_verify
-  1157→#### custom\_certificate\_path
-  1172→#### max\_retries
-  1187→#### max\_retries
-  1202→#### session
-  1217→#### session
-  1232→#### cookie\_name
-  1247→#### cookie\_name
-  1262→#### login
-  1281→#### cookies
 
 __init__.py
 

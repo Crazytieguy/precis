@@ -5,7 +5,6 @@ expression: output
 CONTEXT.md
      1→# toasty-core Component Context
      3→## Purpose
-     4→The foundation layer that defines all core abstractions, data structures, and interfaces used throughout Toasty. This crate has zero dependencies on other Toasty crates and serves as the contract between all components.
      6→## Key Responsibilities
     60→## Common Change Patterns
     80→## Important Files
@@ -31,12 +30,11 @@ src/schema/builder/table.rs
 src/schema/app/constraint/length.rs
      6→pub struct ConstraintLength …
     13→impl ConstraintLength …
-    14→    pub(crate) fn check …
+    14→    pub(crate) fn check(&self, expr: &crate::stmt::Entry<'_>) -> Result<()> {
     41→impl From<ConstraintLength> for Constraint …
-    42→    fn from …
+    42→    fn from(length: ConstraintLength) -> Self {
 
 src/schema/app/field/primitive.rs
-     1→use crate:: …
      4→pub struct FieldPrimitive …
 
 src/driver.rs
@@ -394,9 +392,13 @@ src/error/validation.rs
     83→    pub fn validation_length …
     94→    pub fn is_validation …
 
-src/driver/operation/
+src/schema/app/relation/belongs_to.rs
 
-src/schema/app/relation/
+src/schema/app/relation/has_many.rs
+
+src/schema/app/relation/has_one.rs
+
+src/driver/operation/
 
 src/schema/db/
 

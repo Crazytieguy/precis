@@ -4,17 +4,9 @@ expression: output
 ---
 README.md
      1→Simple Dynamic Strings
-     2→===
-     3→
     18→How SDS strings work
-    19→===
-    20→
     55→Advantages and disadvantages of SDS
-    56→===
-    57→
    119→SDS basics
-   120→===
-   121→
    143→Creating SDS strings
    195→Obtaining the string length
    224→Destroying strings
@@ -29,22 +21,14 @@ README.md
    658→String joining
    686→Error handling
    696→SDS internals and advanced usage
-   697→===
-   698→
    761→Shrinking strings
    796→Manual modifications of SDS strings
    820→Sharing SDS strings
    851→Interactions with heap checkers
    860→Zero copy append from syscalls
    882→Embedding SDS into your project
-   883→===
-   884→
    895→Using a different allocator for SDS
-   896→===
-   897→
    911→Credits and license
-   912→===
-   913→
 
 sds.h
     36→#define SDS_MAX_PREALLOC …
@@ -69,7 +53,12 @@ sds.h
     83→#define SDS_HDR_VAR …
     84→#define SDS_HDR …
     85→#define SDS_TYPE_5_LEN …
+    87→static inline size_t sdslen …
+   104→static inline size_t sdsavail …
+   130→static inline void sdssetlen …
+   154→static inline void sdsinclen …
    180→static inline size_t sdsalloc(const sds s) {
+   197→static inline void sdssetalloc …
    218→sds sdsnewlen(const void *init, size_t initlen);
    219→sds sdsnew(const char *init);
    220→sds sdsempty(void);
@@ -146,6 +135,8 @@ sds.c
    421→sds sdscatsds …
    427→sds sdscpylen …
    440→sds sdscpy …
+   444→/* Helper for sdscatlonglong() doing the actual number -> string
+      →…
    450→#define SDS_LLSTR_SIZE …
    451→int sdsll2str(char *s, long long value) {
    494→int sdsull2str …

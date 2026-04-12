@@ -84,6 +84,8 @@ crates/mdbook-summary/README.md
 
 crates/xtask/README.md
      1→# xtask
+     3→This is a CLI utility for running development commands for mdbook.
+     4→See [CONTRIBUTING.md](../../CONTRIBUTING.md) for how to use this.
 
 crates/mdbook-summary/src/lib.rs
      1→//! Summary parser for mdBook.
@@ -726,16 +728,15 @@ crates/mdbook-html/src/html_handlebars/static_files.rs
    138→    pub(super) fn hash_files(&mut self) -> Result<()> {
    193→    pub(super) fn write_files …
 
-crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
+guide/src/guide/creating.md
 
-crates/mdbook-driver/src/builtin_preprocessors/index.rs
+guide/src/guide/installation.md
 
-crates/mdbook-driver/src/builtin_preprocessors/links.rs
-
-crates/mdbook-driver/src/builtin_preprocessors/mod.rs
-     1→//! Built-in preprocessors.
+guide/src/guide/reading.md
 
 crates/
+
+crates/mdbook-driver/src/builtin_preprocessors/
 
 crates/mdbook-html/front-end/
 
@@ -754,8 +755,6 @@ crates/mdbook-html/src/html/
 crates/mdbook-html/src/html_handlebars/helpers/
 
 examples/remove-emphasis/
-
-guide/src/for_developers/mdbook-wordcount/
 
 guide/src/format/images/
 

@@ -4,7 +4,6 @@ expression: output
 ---
 README.md
      1→# bareiron
-     2→Minimalist Minecraft server for memory-restrictive embedded systems.
     12→## Quick start
     17→## Compilation
     28→## Configuration
@@ -283,6 +282,11 @@ include/worldgen.h
 build.sh
 
 build_registries.js
+     5→const blockToItemOverrides …
+    20→const blockBlacklist …
+    40→const blockWhitelist …
+    67→const biomes …
+   306→const requiredRegistries …
 
 extract_registries.sh
 

@@ -4,8 +4,6 @@ expression: output
 ---
 README.md
      1→derive(Error)
-     2→=============
-     3→
     21→## Example
     44→## Details
    211→## Comparison to anyhow
@@ -16,23 +14,53 @@ build/probe.rs
     12→struct Thing …
     14→impl Debug for MyError …
     15→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
-    16→        unimplemented!()
-    17→    }
     20→impl Display for MyError …
     21→    fn fmt(&self, _formatter: &mut fmt::Formatter) -> fmt::Result {
-    22→        unimplemented!()
-    23→    }
     26→impl Error for MyError …
     27→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
-    28→        request.provide_ref(&self.0);
-    29→    }
 
 Cargo.toml
      1→[package]
+     2→name = "thiserror"
+     3→version = "2.0.18"
+     4→authors = ["David Tolnay <dtolnay@gmail.com>"]
+     5→categories = ["rust-patterns", "no-std"]
+     6→description = "derive(Error)"
+     7→documentation = "https://docs.rs/thiserror"
+     8→edition = "2021"
+     9→keywords = ["error", "error-handling", "derive"]
+    10→license = "MIT OR Apache-2.0"
+    11→repository = "https://github.com/dtolnay/thiserror"
+    12→rust-version = "1.71"
+    13→
     14→[features]
+    15→default = ["std"]
+    16→
+    17→# Std feature enables support for formatting std::path::{Path, PathBuf}
+    18→# conveniently in an error message.
+    19→#
+    20→#     #[derive(Error, Debug)]
+    21→#     #[error("failed to create configuration file {path}")]
+    22→#     pub struct MyError {
+    23→#         pub path: PathBuf,
+    24→#         pub source: std::io::Error,
+    25→#     }
+    26→#
+    27→# Without std, this would need to be written #[error("... {}", path.display())].
+    28→std = []
+    29→
     30→[dependencies]
+    31→thiserror-impl = { version = "=2.0.18", path = "impl" }
+    32→
     33→[dev-dependencies]
+    34→anyhow = "1.0.73"
+    35→ref-cast = "1.0.18"
+    36→rustversion = "1.0.13"
+    37→trybuild = { version = "1.0.108", features = ["diff"] }
+    38→
     39→[workspace]
+    40→members = ["impl", "tests/no-std"]
+    41→
     42→[package.metadata.docs.rs]
     43→targets = ["x86_64-unknown-linux-gnu"]
     44→rustdoc-args = [
@@ -63,15 +91,6 @@ impl/Cargo.toml
     17→syn = "2.0.87"
     18→
     19→[package.metadata.docs.rs]
-    20→targets = ["x86_64-unknown-linux-gnu"]
-    21→rustdoc-args = [
-    22→    "--generate-link-to-definition",
-    23→    "--generate-macro-expansion",
-    24→    "--extern-html-root-url=core=https://doc.rust-lang.org",
-    25→    "--extern-html-root-url=alloc=https://doc.rust-lang.org",
-    26→    "--extern-html-root-url=std=https://doc.rust-lang.org",
-    27→    "--extern-html-root-url=proc_macro=https://doc.rust-lang.org",
-    28→]
 
 src/aserror.rs
      5→pub trait AsDynError …
@@ -189,8 +208,6 @@ impl/src/attr.rs
     66→    UpperExp,
     67→}
     69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
-   124→fn parse_error_attribute …
-   196→fn parse_token_expr …
    302→impl ToTokens for Display<'_> …
    303→    fn to_tokens(&self, tokens: &mut TokenStream) {
    342→impl ToTokens for Trait …
@@ -198,16 +215,7 @@ impl/src/attr.rs
 
 impl/src/expand.rs
     12→pub fn derive(input: &DeriveInput) -> TokenStream {
-    22→fn try_expand …
-    31→fn impl_struct …
-   221→fn impl_enum …
    505→pub(crate) fn call_site_ident(ident: &Ident) -> Ident {
-   511→fn fields_pat …
-   526→fn use_as_display …
-   536→fn from_initializer …
-   565→fn type_is_option …
-   569→fn unoptional_type …
-   574→fn type_parameter_of_option …
 
 impl/src/fallback.rs
      7→pub(crate) fn expand(input: &DeriveInput, error: syn::Error) -> TokenStream {
@@ -219,20 +227,12 @@ impl/src/fmt.rs
    167→    named: BTreeSet<IdentUnraw>,
    168→    first_unnamed: Option<TokenStream>,
    169→}
-   172→fn explicit_named_args …
-   192→fn try_explicit_named_args …
-   231→fn fallback_explicit_named_args …
-   255→fn is_syn_full …
-   273→fn take_int …
-   286→fn take_ident …
-   299→fn between …
 
 impl/src/generics.rs
      8→pub struct ParamsInScope …
     12→impl<'a> ParamsInScope<'a> …
     13→    pub fn new(generics: &'a Generics) -> Self {
     19→    pub fn intersects(&self, ty: &Type) -> bool {
-    26→fn crawl …
     48→pub struct InferredBounds …
     53→impl InferredBounds …
     54→    pub fn new() -> Self {
@@ -263,11 +263,6 @@ impl/src/prop.rs
     72→impl Field<'_> …
     73→    pub(crate) fn is_backtrace(&self) -> bool {
     77→    pub(crate) fn source_span(&self) -> Span {
-    88→fn from_field …
-    97→fn source_field …
-   112→fn backtrace_field …
-   127→fn distinct_backtrace_field …
-   138→fn type_is_backtrace …
 
 impl/src/scan_expr.rs
      6→enum Input …
@@ -346,9 +341,6 @@ impl/src/valid.rs
     67→    fn validate …
     91→impl Field<'_> …
     92→    fn validate …
-   109→fn check_non_field_attrs …
-   151→fn check_field_attrs …
-   224→fn contains_non_static_lifetime …
 
 build.rs
     10→const PRIVATE …
@@ -360,6 +352,7 @@ rust-toolchain.toml
 tests/no-std/Cargo.toml
 
 tests/no-std/test.rs
+     6→pub enum Error …
 
 tests/
 

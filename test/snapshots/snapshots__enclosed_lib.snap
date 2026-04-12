@@ -4,10 +4,37 @@ expression: output
 ---
 README.md
      1→### Enclosed lib
+     3→This package contains the core functionalities of [Enclosed](https://enclosed.cc/), an open-source project that aims to provide a simple and secure way to share e2e encrypted notes.
+     4→
      5→## Installation
+     7→```bash
+     8→# with npm
+     9→npm install @enclosed/lib
+    10→
+    11→# with yarn
+    12→yarn add @enclosed/lib
+    13→
+    14→# with pnpm
+    15→pnpm add @enclosed/lib
+    16→```
+    17→
     18→## Usage
+    20→```javascript
+    21→import { createNote } from '@enclosed/lib';
+    22→
+    23→const { noteUrl } = await createNote({
+    24→  content: 'Hello, World!',
+    25→  password: 'password',
+    26→  ttlInSeconds: 3600,
+    27→  deleteAfterReading: true,
+    28→});
+    29→
+    30→console.log(noteUrl);
+    31→```
+    32→
     33→## License
     37→## Credits and Acknowledgements
+    39→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
 
 src/index.ts
      2→import { isApiClientErrorWithCode, isApiClientErrorWithStatusCode } from './api/api.models';
@@ -20,25 +47,15 @@ src/index.ts
 
 src/files/files.models.ts
      1→import type { NoteAsset } from '../notes/notes.types';
-     6→async function fileToNoteAsset({ file }: { file: File }): Promise<NoteAsset> {
-    20→async function filesToNoteAssets({ files }: { files: File[] }): Promise<NoteAsset[]> {
-    24→async function noteAssetToFile({ noteAsset }: { noteAsset: NoteAsset }): Promise<File> {
-    34→async function noteAssetsToFiles({ noteAssets }: { noteAssets: NoteAsset[] }): Promise<File[]> {
+     6→async function fileToNoteAsset …
+    20→async function filesToNoteAssets …
+    24→async function noteAssetToFile …
+    34→async function noteAssetsToFiles …
 
 src/api/api.client.ts
      2→import { DEFAULT_API_BASE_URL } from './api.constants';
-     6→async function tryToGetBody({ response }: { response: Response }): Promise<unknown> {
-    20→async function apiClient<T>({
-    21→  path,
-    22→  method,
-    23→  body,
-    24→  baseUrl = DEFAULT_API_BASE_URL,
-    25→}: {
-    26→  path: string;
-    27→  method: string;
-    28→  body?: Record<string, unknown>;
-    29→  baseUrl?: string;
-    30→}): Promise<T> {
+     6→async function tryToGetBody …
+    20→async function apiClient …
 
 src/api/api.constants.ts
      1→export const DEFAULT_API_BASE_URL …
@@ -47,8 +64,8 @@ src/api/api.models.test.ts
      2→import { isApiClientErrorWithCode, isApiClientErrorWithStatusCode } from './api.models';
 
 src/api/api.models.ts
-     5→function isApiClientErrorWithStatusCode({ error, statusCode }: { error: unknown; statusCode: number }): boolean {
-    13→function isApiClientErrorWithCode({ error, code }: { error: unknown; code: string }): boolean {
+     5→function isApiClientErrorWithStatusCode …
+    13→function isApiClientErrorWithCode …
 
 src/crypto/crypto.constants.ts
      1→export const ENCRYPTION_ALGORITHM_AES_256_GCM …
@@ -108,12 +125,12 @@ src/notes/notes.usecases.ts
     12→async function createNote …
 
 src/crypto/serialization/serialization.models.ts
-     1→import type { Note } from '../../notes/notes.types';
+     1→import type …
      5→function defineSerializationMethods …
 
 src/crypto/serialization/serialization.registry.ts
-     1→import type { SerializationFormat, SerializationMethodsDefinition } from './serialization.types';
-     3→import { cborArraySerializationDefinition } from './cbor-array/cbor-array.serialization';
+     1→import type …
+     3→import …
      7→export const serializationMethodDefinitions …
     11→export const serializationMethodDefinitionsByName …
     12→export const serializationFormats …
@@ -121,12 +138,12 @@ src/crypto/serialization/serialization.registry.ts
     26→function getParsingMethod …
 
 src/crypto/serialization/serialization.test-utils.ts
-     1→import type { Note } from '../../notes/notes.types';
+     1→import type …
      6→function runCommonSerializationTests …
 
 src/crypto/serialization/serialization.types.ts
-     1→import type { defineSerializationMethods } from './serialization.models';
-     2→import type { serializationMethodDefinitions } from './serialization.registry';
+     1→import type …
+     2→import type …
      4→export type SerializationMethodsDefinition …
      5→export type SerializationFormat …
 
@@ -142,12 +159,12 @@ src/crypto/encryption-algorithms/encryption-algorithms.types.ts
      3→export type EncryptionMethodsDefinition …
 
 src/crypto/serialization/cbor-array/cbor-array.serialization.test.ts
-     2→import { runCommonSerializationTests } from '../serialization.test-utils';
-     3→import { cborArraySerializationDefinition } from './cbor-array.serialization';
+     2→import …
+     3→import …
 
 src/crypto/serialization/cbor-array/cbor-array.serialization.ts
-     1→import type { Note } from '../../../notes/notes.types';
-     3→import { defineSerializationMethods } from '../serialization.models';
+     1→import type …
+     3→import …
      5→export const cborArraySerializationDefinition …
 
 build.config.ts

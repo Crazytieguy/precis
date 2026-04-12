@@ -21,6 +21,7 @@ jsr.json
      6→  "publish": {
      7→    "include": ["Readme.md", "License.md", "src", "docs"]
      8→  }
+     9→}
 
 docs/summary.md
      3→## Guides
@@ -213,6 +214,8 @@ docs/resources/faq.md
 
 docs/resources/links.md
      1→# Resources
+     3→A few resources that are helpful for building with Superstruct.
+     4→
      5→## Libraries
 
 src/structs/coercions.ts
@@ -227,7 +230,7 @@ src/structs/refinements.ts
      1→import { Struct, Refiner } from '../struct.js'
      2→import { toFailures } from '../utils.js'
      8→export function empty …
-    21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
+    21→function getSize …
     33→export function max …
     55→export function min …
     77→export function nonempty …
@@ -298,25 +301,37 @@ src/structs/utilities.ts
 
 docs/reference/coercions.md
      1→# Coercions
+     3→Superstruct allows structs to be augmented with coercion logic, letting you to transform input data before validating it. This is most commonly used to apply default values to an input, but it can be used for more complex cases like pre-trimming strings, or pre-parsing inputs.
+     4→
 
 docs/reference/core.md
      1→# Core
 
 docs/reference/errors.md
      1→# Errors
+     3→Superstruct throws detailed errors when data is invalid, so that you can build extremely precise errors of your own to give your end users the best possible experience.
+     4→
 
 docs/reference/refinements.md
      1→# Refinements
+     3→Superstruct allows you to constrain existing structs with further validation. This doesn't change the type of the struct, but simply introduces extra validation logic. This can be useful for example when ensuring that a string matches a specific `RegExp`.
+     4→
 
 docs/reference/types.md
      1→# Types
+     3→Superstruct exposes factory functions for a variety of common JavaScript (and TypeScript) types. You can also define your own custom validation functions using the `struct` factory.
+     4→
 
 docs/reference/typescript.md
      1→# TypeScript
+     3→Superstruct is designed with TypeScript in mind, so that you don't need to duplicate type definitions.
+     4→
      5→## Utilities
 
 docs/reference/utilities.md
      1→# Utilities
+     3→Superstruct also ships with a handful of utility type factories, which allow you to easily manipulate and transforms existing structs.
+     4→
 
 docs/guides/01-getting-started.md
      1→# Getting Started
@@ -352,28 +367,10 @@ docs/guides/06-using-typescript.md
     55→## Inferring Types
 
 package.json
-     2→  "name": "superstruct",
-     3→  "description": "A simple and composable way to validate data in JavaScript (and TypeScript).",
-     4→  "version": "2.0.2",
-     5→  "license": "MIT",
-     6→  "repository": "git://github.com/ianstormtaylor/superstruct.git",
-     7→  "type": "module",
-     8→  "main": "./dist/index.cjs",
-     9→  "module": "./dist/index.mjs",
-    10→  "types": "./dist/index.d.ts",
-    11→  "sideEffects": false,
-    12→  "files": [
-    15→  "publishConfig": {
-    18→  "engines": {
-    21→  "devDependencies": {
-    38→  "scripts": {
-    54→  "keywords": [
 
 rollup.config.js
 
 tsconfig.json
-     2→  "include": ["./src/**/*.ts"],
-     3→  "compilerOptions": {
 
 examples/basic-validation.js
 
@@ -400,11 +397,8 @@ test/deprecated.test.ts
 test/index.test.ts
 
 test/index.ts
-     2→ * A helper for testing type signatures.
-     5→export function test<T>(fn: (x: unknown) => T) {}
 
 Changelog.md
-     1→# Changelog
 
 docs/images/
 

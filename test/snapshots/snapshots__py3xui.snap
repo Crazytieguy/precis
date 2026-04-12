@@ -5,40 +5,49 @@ expression: output
 README.md
     29→## Overview
     30→This SDK is designed to interact with the [3x-ui](https://github.com/MHSanaei/3x-ui) app in a more object-oriented way. It provides both synchronous and asynchronous methods to interact with the app. The SDK is designed to be as simple as possible to use, while still providing a lot of flexibility and uses `Pydantic` models to validate the data.<br>
+    31→Used dependencies:
+    32→- `requests` for synchronous API
+    33→- `httpx` for asynchronous API
+    34→- `pydantic` for models
+    35→
+    36→Supported Python versions:
+    37→- 3.11
+    38→- 3.12
+    39→
+    40→Since the 3x-ui app is under development, the SDK may not be compatible with all versions of the app. The developer of SDK is not related to the 3x-ui app, therefore the latest versions of the software are not guaranteed to be compatible with the SDK. <br>
+    41→The SDK does not support versions of the 3x-ui older than `2.3.7`.
+    42→
     43→## Quick Start
     44→You can use both synchronous and asynchronous methods to interact with the 3x-ui app. Both APIs have the same methods and return the same data, so it's up to you to choose which one to use.<br>
+    45→After installing the SDK, you can create a new instance of the API. When creating a new instance, you can either use environment variables or pass the credentials directly. It's strongly recommended to use environment variables to store the API credentials.<br>
+    46→On creation, the Api won't connect to the 3x-ui app, so you can spawn new instances without spending resources. But after creating an instance, you'll need to call the `login` method to authenticate the user and save the cookie for future requests.
+    47→
     48→### Installation
-    49→```bash
     53→### Create a new instance of the API
-    54→It's recommended to use an environment variable to store the API credentials:
     89→### Using TLS and custom certificates
-    90→Interacting with server over HTTPS requires careful management of TLS verification to ensure secure communications. This SDK provides options for setting TLS configurations, which include specifying custom certificates for increased trust or disabling TLS verification when necessary.
     92→#### Case 1: Disabling TLS verification
-    93→For development, you can disable TLS verification. This is not recommended for production due to the increased risk of security threats like man-in-the-middle attacks.
     99→#### Case 2: Using сustom сertificates
-   100→If you are interacting with a server that uses a self-signed certificate or one not recognized by the standard CA bundle, you can specify a custom certificate path:
    111→### Login
-   112→No matter which API you're using or if was it created using environment variables or credentials, you'll need to call the `login` method to authenticate the user and save the cookie for future requests.
    123→#### Using two-factor authentication
-   124→If you enabled two-factor authentication in the 3x-ui app, you'll need to pass the two-factor code to the `login` method. The code can be either a string or an integer.
    140→## Examples
    141→You'll find detailed docs with usage examples for both APIs and for used models in the corresponding package directories:
+   142→- [Synchronous API](py3xui/api/README.md)
+   143→- [Asynchronous API](py3xui/async_api/README.md)
+   144→- [Client](py3xui/client/README.md)
+   145→- [Inbound](py3xui/inbound/README.md)
+   146→
+   147→In this section, you'll find some examples of how to use the SDK. In the examples, we'll use the synchronous API, but you can use the asynchronous API in the same way, just remember to use `await` before calling the methods.<br>
+   148→
    149→### Set the traffic limit for the client
-   150→ℹ️ You'll also find this example in the [demo.py](demo.py) file.
    199→### Generate Reality keys
-   200→When you need a fresh Reality (X25519) key pair for configuring inbounds, ask the server to generate it:
    213→### Create a connection string and QR code
-   214→When you need to provide the user with a connection string that can be used in a software to create a new connection profile and/or a QR code, you can use the following example.
    274→### Get inbounds list
-   275→```python
    283→### Add a new inbound
-   284→```python
    313→### Get a client by email
-   314→```python
    323→### Add a new client
-   324→```python
    336→## Bugs and Feature Requests
    337→If you find a bug or have a feature request, please open an issue on the GitHub repository.<br>
+   338→You're also welcome to contribute to the project by opening a pull request.
 
 demo.py
     65→XUI_EXTERNAL_IP = "**********"  # ⬅️ Your external IP here or domain name.
@@ -57,12 +66,6 @@ dev/push.sh
 dev/pydoc.sh
 
 py3xui/api/README.md
-     3→# api.api\_database
-    67→# api.api\_inbound
-   345→# api.api
-   549→# api.api\_server
-   674→# api.api\_client
-  1042→# api.api\_base
 
 py3xui/async_api/README.md
 
@@ -368,15 +371,11 @@ tests/test_async_api.py
 tests/test_env.py
 
 CODE_OF_CONDUCT.md
-     1→# Contributor Covenant Code of Conduct
 
 CONTRIBUTING.md
-     1→# Contributing to py3xui
 
 LICENSE.md
-     1→# MIT License
 
 SECURITY.md
-     1→# Security Policy
 
 tests/responses/

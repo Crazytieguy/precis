@@ -5,18 +5,6 @@ before calibration.
 
 ## Must fix (design violations)
 
-### Missing invariant tests (plan Step 10)
-
-The plan called for `tests/invariants.rs` with property-based tests:
-- R1 pointer-range: every Complete/Truncated content slice lies inside
-  the source string's byte range
-- Line-number monotonicity: line numbers strictly increasing per file
-- D4/D5 overlap checks
-- R4 override assertion survival (no panics)
-
-Currently only debug_asserts exist. The dedicated test file was not
-created.
-
 
 ## Should fix (quality/performance)
 

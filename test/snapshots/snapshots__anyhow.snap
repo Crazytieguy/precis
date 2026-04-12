@@ -4,8 +4,6 @@ expression: output
 ---
 README.md
      1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
-     2→==========================
-     3→
     21→## Details
    126→## No-std support
    144→## Comparison to failure
@@ -90,6 +88,8 @@ src/chain.rs
 src/context.rs
     12→    pub trait StdError …
     13→        fn ext_context<C>(self, context: C) -> Error
+    14→        where
+    15→            C: Display + Send + Sync + 'static;
     19→    impl<E> StdError for E …
     23→        fn ext_context …
     32→    impl StdError for Error …
@@ -384,12 +384,12 @@ rust-toolchain.toml
      1→[toolchain]
      2→components = ["rust-src"]
 
-tests/common/mod.rs
-
-tests/drop/mod.rs
-
 tests/
 
+tests/common/
+
 tests/crate/
+
+tests/drop/
 
 tests/ui/

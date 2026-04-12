@@ -4,20 +4,12 @@ expression: output
 ---
 README.md
      1→semver(1) -- The semantic versioner for npm
-     2→===========================================
-     3→
      4→## Install
     10→## Usage
    139→## Versions
    148→## Ranges
    184→### Prerelease Tags
-   219→#### Prerelease Identifiers
-   250→#### Prerelease Identifier Base
    279→### Advanced Range Syntax
-   287→#### Hyphen Ranges `X.Y.Z - A.B.C`
-   306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*`
-   324→#### Tilde Ranges `~1.2.3` `~1.2` `~1`
-   341→#### Caret Ranges `^1.2.3` `^0.2.5` `^0.0.4`
    384→### Range Grammar
    408→## Functions
    453→### Comparison
@@ -52,25 +44,12 @@ range.bnf
 classes/comparator.js
      3→const ANY …
      5→class Comparator …
-     6→  static get ANY () {
-    10→  constructor (comp, options) {
-    36→  parse (comp) {
-    57→  toString () {
-    61→  test (version) {
-    79→  intersects (comp, options) {
 
 classes/index.js
 
 classes/range.js
      3→const SPACE_CHARACTERS …
      6→class Range …
-     7→  constructor (range, options) {
-    73→  get range () {
-    92→  format () {
-    96→  toString () {
-   100→  parseRange (range) {
-   170→  intersects (range, options) {
-   193→  test (version) {
    218→const cache …
    233→const isNullSet = c => c.value === '<0.0.0-0'
    234→const isAny = c => c.value === ''
@@ -90,14 +69,6 @@ classes/range.js
 
 classes/semver.js
      9→class SemVer …
-    10→  constructor (version, options) {
-    81→  format () {
-    89→  toString () {
-    93→  compare (other) {
-   109→  compareMain (other) {
-   135→  comparePre (other) {
-   168→  compareBuild (other) {
-   194→  inc (release, identifier, identifierBase) {
 
 internal/constants.js
      5→const SEMVER_SPEC_VERSION …
@@ -139,41 +110,41 @@ internal/re.js
     42→const createToken = (name, value, isGlobal) => {
 
 ranges/gtr.js
-     5→const gtr = (version, range, options) => outside(version, range, '>', options)
+     5→const gtr …
 
 ranges/intersects.js
-     4→const intersects = (r1, r2, options) => {
+     4→const intersects …
 
 ranges/ltr.js
-     5→const ltr = (version, range, options) => outside(version, range, '<', options)
+     5→const ltr …
 
 ranges/max-satisfying.js
-     6→const maxSatisfying = (versions, range, options) => {
+     6→const maxSatisfying …
 
 ranges/min-satisfying.js
-     5→const minSatisfying = (versions, range, options) => {
+     5→const minSatisfying …
 
 ranges/min-version.js
-     7→const minVersion = (range, loose) => {
+     7→const minVersion …
 
 ranges/outside.js
-    13→const outside = (version, range, hilo, options) => {
+    13→const outside …
 
 ranges/simplify.js
 
 ranges/subset.js
-    45→const subset = (sub, dom, options = {}) => {
+    45→const subset …
     73→const minimumVersionWithPreRelease …
     74→const minimumVersion …
-    76→const simpleSubset = (sub, dom, options) => {
-   226→const higherGT = (a, b, options) => {
-   238→const lowerLT = (a, b, options) => {
+    76→const simpleSubset …
+   226→const higherGT …
+   238→const lowerLT …
 
 ranges/to-comparators.js
-     6→const toComparators = (range, options) =>
+     6→const toComparators …
 
 ranges/valid.js
-     4→const validRange = (range, options) => {
+     4→const validRange …
 
 functions/clean.js
      4→const clean …
@@ -250,12 +221,6 @@ functions/valid.js
 test/index.js
 
 test/map.js
-     9→const ROOT …
-    10→const TEST …
-    11→const IGNORE_DIRS …
-    13→const getFile = (f) => {
-    23→const walk = (item, res = []) => getFile(item) || readdirSync(item)
-    28→const walkAll = (items, relativeTo) => items
 
 test/preload.js
 
@@ -349,27 +314,92 @@ CHANGELOG.md
    208→### Documentation
    213→### Dependencies
    218→## 7.3.0
+   220→* Add `subset(r1, r2)` method to determine if `r1` range is entirely
+   221→  contained by `r2` range.
+   222→
    223→## 7.2.3
+   225→* Fix handling of `includePrelease` mode where version ranges like `1.0.0 -
+   226→  2.0.0` would include `3.0.0-pre` and not `1.0.0-pre`.
+   227→
    228→## 7.2.2
+   230→* Fix bug where `2.0.0-pre` would be included in `^1.0.0` if
+   231→  `includePrerelease` was set to true.
+   232→
    233→## 7.2.0
+   235→* Add `simplifyRange` method to attempt to generate a more human-readable
+   236→  range expression that is equivalent to a supplied range, for a given set
+   237→  of versions.
+   238→
    239→## 7.1.2
+   241→* Remove fancy lazy-loading logic, as it was causing problems for webpack
+   242→  users.
+   243→
    244→## 7.1.0
+   246→* Add `require('semver/preload')` to load the entire module without using
+   247→  lazy getter methods.
+   248→
    249→## 7.0.0
+   251→* Refactor module into separate files for better tree-shaking
+   252→* Drop support for very old node versions, use const/let, `=>` functions,
+   253→  and classes.
+   254→
    255→## 6.3.0
+   257→* Expose the token enum on the exports
+   258→
    259→## 6.2.0
+   261→* Coerce numbers to strings when passed to semver.coerce()
+   262→* Add `rtl` option to coerce from right to left
+   263→
    264→## 6.1.3
+   266→* Handle X-ranges properly in includePrerelease mode
+   267→
    268→## 6.1.2
+   270→* Do not throw when testing invalid version strings
+   271→
    272→## 6.1.1
+   274→* Add options support for semver.coerce()
+   275→* Handle undefined version passed to Range.test
+   276→
    277→## 6.1.0
+   279→* Add semver.compareBuild function
+   280→* Support `*` in semver.intersects
+   281→
    282→## 6.0
+   284→* Fix `intersects` logic.
+   285→
+   286→    This is technically a bug fix, but since it is also a change to behavior
+   287→    that may require users updating their code, it is marked as a major
+   288→    version increment.
+   289→
    290→## 5.7
+   292→* Add `minVersion` method
+   293→
    294→## 5.6
+   296→* Move boolean `loose` param to an options object, with
+   297→  backwards-compatibility protection.
+   298→* Add ability to opt out of special prerelease version handling with
+   299→  the `includePrerelease` option flag.
+   300→
    301→## 5.5
+   303→* Add version coercion capabilities
+   304→
    305→## 5.4
+   307→* Add intersection checking
+   308→
    309→## 5.3
+   311→* Add `minSatisfying` method
+   312→
    313→## 5.2
+   315→* Add `prerelease(v)` that returns prerelease components
+   316→
    317→## 5.1
+   319→* Add Backus-Naur for ranges
+   320→* Remove excessively cute inspection methods
+   321→
    322→## 5.0
+   324→* Remove AMD/Browserified build artifacts
+   325→* Fix ltr and gtr when using the `*` range
+   326→* Fix for range `*` with a prerelease identifier
 
 .github/dependabot.yml
      3→version: 2
@@ -379,45 +409,9 @@ CHANGELOG.md
      3→repository:
     13→branches:
 
-CODE_OF_CONDUCT.md
-
-CONTRIBUTING.md
-     3→# Contributing
-     5→## Code of Conduct
-     9→## Reporting Bugs
-    17→## Pull Request Conventions
-    19→### Commits
-    30→### Test Coverage
-    36→### Linting
-    42→## What _not_ to contribute?
-    44→### Dependencies
-    48→### Tools/Automation
-
-SECURITY.md
-
-benchmarks/bench-compare.js
-
-benchmarks/bench-diff.js
-
-benchmarks/bench-parse-options.js
-
-benchmarks/bench-parse.js
-
-benchmarks/bench-satisfies.js
-
-benchmarks/bench-subset.js
-
 test/bin/semver.js
 
 test/integration/whitespace.js
-
-test/classes/comparator.js
-
-test/classes/index.js
-
-test/classes/range.js
-
-test/classes/semver.js
 
 .github/matchers/tap.json
 
@@ -427,11 +421,15 @@ test/classes/semver.js
 
 .github/workflows/
 
+benchmarks/
+
 tap-snapshots/
 
 tap-snapshots/test/
 
 tap-snapshots/test/bin/
+
+test/classes/
 
 test/fixtures/
 

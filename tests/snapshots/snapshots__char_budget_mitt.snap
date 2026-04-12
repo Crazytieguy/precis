@@ -2,28 +2,107 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1854 tokens, 5384 chars)
+budget: 2000 (1994 tokens, 6712 chars)
 
 README.md
      9→# Mitt
+    11→> Tiny 200b functional event emitter / pubsub.
+    12→
+    13→-   **Microscopic:** weighs less than 200 bytes gzipped
+    14→-   **Useful:** a wildcard `"*"` event type listens to all events
+    15→-   **Familiar:** same names & ideas as [Node's EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter)
+    16→-   **Functional:** methods don't rely on `this`
+    17→-   **Great Name:** somehow [mitt](https://npm.im/mitt) wasn't taken
+    18→
+    19→Mitt was made for the browser, but works in any JavaScript runtime. It has no dependencies and supports IE9+.
+    20→
     21→## Table of Contents
     30→## Install
     56→## Usage
     81→### Typescript
+    83→Set `"strict": true` in your tsconfig.json to get improved type inference for `mitt` instance methods.
+    84→
+    85→```ts
+    86→import mitt from 'mitt';
+    87→
+    88→type Events = {
+    89→  foo: string;
+    90→  bar?: number;
+    91→};
+    92→
+    93→const emitter = mitt<Events>(); // inferred as Emitter<Events>
+    94→
+    95→emitter.on('foo', (e) => {}); // 'e' has inferred type 'string'
+    96→
+    97→emitter.emit('foo', 42); // Error: Argument of type 'number' is not assignable to parameter of type 'string'. (2345)
+    98→```
+    99→
+   100→Alternatively, you can use the provided `Emitter` type:
+   101→
+   102→```ts
+   103→import mitt, { Emitter } from 'mitt';
+   104→
+   105→type Events = {
+   106→  foo: string;
+   107→  bar?: number;
+   108→};
+   109→
+   110→const emitter: Emitter<Events> = mitt<Events>();
+   111→```
+   112→
    113→## Examples & Demos
    123→## API
-   127→#### Table of Contents
    138→### mitt
+   140→Mitt: Tiny (~200b) functional event emitter / pubsub.
+   141→
+   142→Returns **Mitt** 
+   143→
    144→### all
+   146→A Map of event names to registered handler functions.
+   147→
    148→### on
+   150→Register an event handler for the given type.
+   151→
    152→#### Parameters
+   154→-   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol))** Type of event to listen for, or `'*'` for all events
+   155→-   `handler` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Function to call in response to given event
+   156→
    157→### off
+   159→Remove an event handler for the given type.
+   160→If `handler` is omitted, all handlers of the given type are removed.
+   161→
    162→#### Parameters
+   164→-   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol))** Type of event to unregister `handler` from, or `'*'`
+   165→-   `handler` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)?** Handler function to remove
+   166→
    167→### emit
+   169→Invoke all handlers for the given type.
+   170→If present, `'*'` handlers are invoked after type-matched handlers.
+   171→
+   172→Note: Manually firing '\*' handlers is not supported.
+   173→
    174→#### Parameters
+   176→-   `type` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [symbol](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Symbol))** The event type to invoke
+   177→-   `evt` **Any?** Any value (object is recommended and powerful), passed to each handler
+   178→
    179→## Contribute
    184→### Reporting Issues
+   186→Found a problem? Want a new feature? First of all see if your issue or idea has [already been reported](../../issues).
+   187→If don't, just open a [new clear and descriptive issue](../../issues/new).
+   188→
    189→### Submitting pull requests
+   191→Pull requests are the greatest contributions, so be sure they are focused in scope, and do avoid unrelated commits.
+   192→
+   193→-   Fork it!
+   194→-   Clone your fork: `git clone https://github.com/<your-username>/mitt`
+   195→-   Navigate to the newly cloned directory: `cd mitt`
+   196→-   Create a new branch for the new feature: `git checkout -b my-new-feature`
+   197→-   Install the tools necessary for development: `npm install`
+   198→-   Make your changes.
+   199→-   Commit your changes: `git commit -am 'Add some feature'`
+   200→-   Push to the branch: `git push origin my-new-feature`
+   201→-   Submit a pull request with full remarks documenting your changes.
+   202→
    203→## License
 
 src/index.ts
@@ -37,14 +116,9 @@ src/index.ts
     26→	on<Key extends keyof Events>(type: Key, handler: Handler<Events[Key]>): void;
     27→	on(type: '*', handler: WildcardHandler<Events>): void;
     29→	off<Key extends keyof Events>(
-    30→		type: Key,
-    31→		handler?: Handler<Events[Key]>
-    32→	): void;
     33→	off(type: '*', handler: WildcardHandler<Events>): void;
     35→	emit<Key extends keyof Events>(type: Key, event: Events[Key]): void;
     36→	emit<Key extends keyof Events>(
-    37→		type: undefined extends Events[Key] ? Key : never
-    38→	): void;
     42→ * Mitt: Tiny (~200b) functional event emitter / pubsub.
     43→ * @name mitt
     44→ * @returns {Mitt}
@@ -63,94 +137,21 @@ package.json
      9→  "source": "src/index.ts",
     10→  "typings": "index.d.ts",
     11→  "exports": {
-    12→    "types": "./index.d.ts",
-    13→    "module": "./dist/mitt.mjs",
-    14→    "import": "./dist/mitt.mjs",
-    15→    "require": "./dist/mitt.js",
-    16→    "default": "./dist/mitt.mjs"
-    17→  },
     18→  "scripts": {
-    19→    "test": "npm-run-all --silent typecheck lint mocha test-types",
-    20→    "mocha": "mocha test",
-    21→    "test-types": "tsc test/test-types-compilation.ts --noEmit --strict",
-    22→    "lint": "eslint src test --ext ts --ext js",
-    23→    "typecheck": "tsc --noEmit",
-    24→    "bundle": "microbundle -f es,cjs,umd",
-    25→    "build": "npm-run-all --silent clean -p bundle -s docs",
-    26→    "clean": "rimraf dist",
-    27→    "docs": "documentation readme src/index.ts --section API -q --parse-extension ts",
-    28→    "release": "npm run -s build -s && npm t && git commit -am $npm_package_version && git tag $npm_package_version && git push && git push --tags && npm publish"
-    29→  },
     30→  "repository": "developit/mitt",
     31→  "keywords": [
-    32→    "events",
-    33→    "eventemitter",
-    34→    "emitter",
-    35→    "pubsub"
-    36→  ],
     37→  "homepage": "https://github.com/developit/mitt",
     38→  "authors": [
-    39→    "Jason Miller <jason@developit.ca>"
-    40→  ],
     41→  "license": "MIT",
     42→  "files": [
-    43→    "dist",
-    44→    "index.d.ts"
-    45→  ],
     46→  "mocha": {
-    47→    "extension": [
-    48→      "ts"
-    49→    ],
-    50→    "require": [
-    51→      "ts-node/register",
-    52→      "esm"
-    53→    ],
-    54→    "spec": [
-    55→      "test/*_test.ts"
-    56→    ]
-    57→  },
     58→  "prettier": {
-    59→    "singleQuote": true,
-    60→    "trailingComma": "none"
-    61→  },
     62→  "devDependencies": {
-    63→    "@types/chai": "^4.2.11",
-    64→    "@types/mocha": "^7.0.2",
-    65→    "@types/sinon": "^9.0.4",
-    66→    "@types/sinon-chai": "^3.2.4",
-    67→    "@typescript-eslint/eslint-plugin": "^5.61.0",
-    68→    "@typescript-eslint/parser": "^5.61.0",
-    69→    "chai": "^4.2.0",
-    70→    "documentation": "^14.0.2",
-    71→    "eslint": "^7.32.0",
-    72→    "eslint-config-developit": "^1.2.0",
-    73→    "eslint-plugin-compat": "^4.1.4",
-    74→    "esm": "^3.2.25",
-    75→    "microbundle": "^0.12.3",
-    76→    "mocha": "^8.0.1",
-    77→    "npm-run-all": "^4.1.5",
-    78→    "prettier": "^2.8.8",
-    79→    "rimraf": "^3.0.2",
-    80→    "sinon": "^9.0.2",
-    81→    "sinon-chai": "^3.5.0",
-    82→    "ts-node": "^10.9.1",
-    83→    "typescript": "^4.9.5"
-    84→  }
 
 tsconfig.json
      2→	"compileOnSave": false,
      3→	"compilerOptions": {
-     4→		"strict": true,
-     5→		"noEmit": true,
-     6→		"declaration": true,
-     7→		"moduleResolution": "node",
-     8→		"skipLibCheck": true,
-     9→		"esModuleInterop": true,
-    10→	},
     11→	"include": [
-    12→		"src/*.ts",
-    13→		"test/*.ts"
-    14→	]
 
 test/index_test.ts
 
@@ -160,6 +161,3 @@ test/test-types-compilation.ts
     15→const barHandler = (x?: number) => {};
     16→const fooHandler = (x: string) => {};
     17→const wildcardHandler = (
-    18→	_type: 'foo' | 'bar' | 'someEvent',
-    19→	_event: string | SomeEventData | number | undefined
-    20→) => {};

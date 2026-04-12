@@ -4,9 +4,52 @@ expression: output
 ---
 README.md
      1→# MCPHost SDK
+     3→The MCPHost SDK allows you to use MCPHost programmatically from Go applications without spawning OS processes.
+     4→
      5→## Installation
+     7→```bash
+     8→go get github.com/mark3labs/mcphost
+     9→```
+    10→
     11→## Basic Usage
+    13→```go
+    14→package main
+    15→
+    16→import (
+    17→    "context"
+    18→    "fmt"
+    19→    "log"
+    20→    
+    21→    "github.com/mark3labs/mcphost/sdk"
+    22→)
+    23→
+    24→func main() {
+    25→    ctx := context.Background()
+    26→    
+    27→    // Create MCPHost instance with default configuration
+    28→    host, err := sdk.New(ctx, nil)
+    29→    if err != nil {
+    30→        log.Fatal(err)
+    31→    }
+    32→    defer host.Close()
+    33→    
+    34→    // Send a prompt
+    35→    response, err := host.Prompt(ctx, "What is 2+2?")
+    36→    if err != nil {
+    37→        log.Fatal(err)
+    38→    }
+    39→    
+    40→    fmt.Println(response)
+    41→}
+    42→```
+    43→
     44→## Configuration
+    46→The SDK behaves identically to the CLI:
+    47→- Loads configuration from `~/.mcphost.yml` by default
+    48→- Creates default configuration if none exists
+    49→- Respects all environment variables (`MCPHOST_*`)
+    50→- Uses the same defaults as the CLI
+    51→
     52→### Options
     67→## Advanced Usage
     69→### With Tool Callbacks
@@ -15,7 +58,16 @@ README.md
    117→### Types
    124→### Methods
    136→## Environment Variables
+   138→All CLI environment variables work with the SDK:
+   139→
+   140→- `MCPHOST_MODEL` - Override model
+   141→- `ANTHROPIC_API_KEY` - Anthropic API key
+   142→- `OPENAI_API_KEY` - OpenAI API key
+   143→- `GEMINI_API_KEY` - Google API key
+   144→- etc.
+   145→
    146→## License
+   148→Same as MCPHost CLI
 
 mcphost.go
     19→type MCPHost …
@@ -71,83 +123,8 @@ mcphost.go
 
 mcphost_test.go
     11→func TestNew(t *testing.T) {
-    12→	if os.Getenv("ANTHROPIC_API_KEY") == "" {
-    13→		t.Skip("Skipping test: ANTHROPIC_API_KEY not set")
-    14→	}
-    15→
-    16→	ctx := context.Background()
-    17→
-    18→	// Test default initialization
-    19→	host, err := sdk.New(ctx, nil)
-    20→	if err != nil {
-    21→		t.Fatalf("Failed to create MCPHost with defaults: %v", err)
-    22→	}
-    23→	defer host.Close()
-    24→
-    25→	if host.GetModelString() == "" {
-    26→		t.Error("Model string should not be empty")
-    27→	}
-    28→}
     30→func TestNewWithOptions(t *testing.T) {
-    31→	if os.Getenv("ANTHROPIC_API_KEY") == "" {
-    32→		t.Skip("Skipping test: ANTHROPIC_API_KEY not set")
-    33→	}
-    34→
-    35→	ctx := context.Background()
-    36→
-    37→	opts := &sdk.Options{
-    38→		Model:    "anthropic:claude-3-haiku-20240307",
-    39→		MaxSteps: 5,
-    40→		Quiet:    true,
-    41→	}
-    42→
-    43→	host, err := sdk.New(ctx, opts)
-    44→	if err != nil {
-    45→		t.Fatalf("Failed to create MCPHost with options: %v", err)
-    46→	}
-    47→	defer host.Close()
-    48→
-    49→	if host.GetModelString() != opts.Model {
-    50→		t.Errorf("Expected model %s, got %s", opts.Model, host.GetModelString())
-    51→	}
-    52→}
     54→func TestSessionManagement(t *testing.T) {
-    55→	if os.Getenv("ANTHROPIC_API_KEY") == "" {
-    56→		t.Skip("Skipping test: ANTHROPIC_API_KEY not set")
-    57→	}
-    58→
-    59→	ctx := context.Background()
-    60→
-    61→	host, err := sdk.New(ctx, &sdk.Options{Quiet: true})
-    62→	if err != nil {
-    63→		t.Fatalf("Failed to create MCPHost: %v", err)
-    64→	}
-    65→	defer host.Close()
-    66→
-    67→	// Test clear session
-    68→	host.ClearSession()
-    69→	mgr := host.GetSessionManager()
-    70→	if mgr.MessageCount() != 0 {
-    71→		t.Error("Session should be empty after clear")
-    72→	}
-    73→
-    74→	// Test save/load session (would need actual implementation)
-    75→	tempFile := t.TempDir() + "/session.json"
-    76→
-    77→	// Add a message first
-    78→	_, err = host.Prompt(ctx, "test message")
-    79→	if err == nil { // Only if we have a working model
-    80→		if err := host.SaveSession(tempFile); err != nil {
-    81→			t.Errorf("Failed to save session: %v", err)
-    82→		}
-    83→
-    84→		// Clear and reload
-    85→		host.ClearSession()
-    86→		if err := host.LoadSession(tempFile); err != nil {
-    87→			t.Errorf("Failed to load session: %v", err)
-    88→		}
-    89→	}
-    90→}
 
 types.go
     10→type Message …
@@ -164,5 +141,34 @@ examples/basic/main.go
 
 examples/scripting/main.go
     12→func main() {
+    13→	ctx := context.Background()
+    14→
+    15→	// Create MCPHost with environment variable for API key
+    16→	// Expects ANTHROPIC_API_KEY or appropriate provider key to be set
+    17→	host, err := sdk.New(ctx, &sdk.Options{
+    18→		Quiet: true, // Suppress debug output for scripting
+    19→	})
+    20→	if err != nil {
+    21→		log.Fatal(err)
+    22→	}
+    23→	defer host.Close()
+    24→
+    25→	// Process command line arguments
+    26→	if len(os.Args) < 2 {
+    27→		fmt.Println("Usage: go run main.go \"your prompt here\"")
+    28→		os.Exit(1)
+    29→	}
+    30→
+    31→	prompt := os.Args[1]
+    32→
+    33→	// Send prompt and get response
+    34→	response, err := host.Prompt(ctx, prompt)
+    35→	if err != nil {
+    36→		log.Fatal(err)
+    37→	}
+    38→
+    39→	// Output only the response (useful for piping)
+    40→	fmt.Println(response)
+    41→}
 
 examples/

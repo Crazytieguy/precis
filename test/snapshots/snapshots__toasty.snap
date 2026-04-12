@@ -9,12 +9,19 @@ README.md
     91→## Application data model vs. database schema
     98→## Current status and roadmap
    117→### Contribution
+   119→Unless you explicitly state otherwise, any contribution intentionally submitted
+   120→for inclusion in Toasty by you, shall be licensed as MIT, without any additional
+   121→terms or conditions.
 
 docs/ARCHITECTURE.md
      1→# Toasty Architecture Overview
      3→## Project Structure
+     5→Toasty is an ORM for Rust that supports SQL and NoSQL databases. The codebase is a Cargo workspace with separate crates for each layer.
+     6→
      7→## Crates
     74→## Further Reading
+    76→- [Query Engine Architecture](architecture/query-engine.md) - Query compilation and execution pipeline
+    77→- [Type System](architecture/type-system.md) - Type system design and conversions
 
 Cargo.toml
      1→[workspace]
@@ -22,12 +29,16 @@ Cargo.toml
 
 docs/roadmap/README.md
      1→# Toasty ORM - Development Roadmap
+     3→This roadmap outlines potential enhancements and missing features for the Toasty ORM.
+     4→
      5→## Overview
     11→## Feature Areas
    126→## Notes
 
 docs/CHANGE_GUIDE.md
      1→# Toasty Change Guide
+     3→This guide explains how to make common changes to the Toasty codebase based on patterns observed in recent development.
+     4→
      5→## Quick Reference: Where Changes Go
     28→## Crate-Specific Patterns
     63→## Common Change Patterns
@@ -40,6 +51,8 @@ docs/CHANGE_GUIDE.md
 
 docs/CONTEXT.md
      1→# Documentation Context
+     3→Load this file when editing anything in the `docs/` directory.
+     4→
      5→## Writing Style
     28→## Document Structure
 
@@ -119,7 +132,6 @@ crates/toasty-macros/Cargo.toml
 crates/toasty/CONTEXT.md
      1→# toasty Component Context  
      3→## Purpose
-     4→The main runtime library providing the user-facing API, query engine, execution pipeline, and coordination between all components. This is where statements become database operations.
      6→## Architecture Overview
     15→## Key Components
     82→## Common Change Patterns
@@ -183,7 +195,6 @@ crates/toasty-macros/src/lib.rs
 crates/toasty-core/CONTEXT.md
      1→# toasty-core Component Context
      3→## Purpose
-     4→The foundation layer that defines all core abstractions, data structures, and interfaces used throughout Toasty. This crate has zero dependencies on other Toasty crates and serves as the contract between all components.
      6→## Key Responsibilities
     60→## Common Change Patterns
     80→## Important Files
@@ -244,7 +255,6 @@ crates/toasty-driver-sqlite/src/value.rs
 crates/toasty-codegen/CONTEXT.md
      1→# toasty-codegen Component Context
      3→## Purpose
-     4→Generates Rust code from the `#[derive(Model)]` procedural macro. This crate transforms user-defined structs into full-featured ORM models with query builders, CRUD operations, and relationship handling.
      6→## Key Responsibilities
     25→## Common Change Patterns
     45→## Generated Code Structure
@@ -261,7 +271,6 @@ crates/toasty-codegen/Cargo.toml
 crates/toasty-sql/CONTEXT.md
      1→# toasty-sql Component Context
      3→## Purpose
-     4→Serializes Toasty's statement AST into SQL strings for execution by SQL database drivers. Handles database-specific SQL dialects and parameter binding strategies.
      6→## Architecture
     44→## SQL Dialects (Flavors)
     67→## Parameter Binding
@@ -285,7 +294,6 @@ crates/toasty-sql/Cargo.toml
 crates/toasty-driver-sqlite/CONTEXT.md
      1→# toasty-driver-sqlite Component Context
      3→## Purpose
-     4→SQLite-specific driver implementation that translates abstract Toasty operations into SQLite commands. Implements the common `Driver` trait while handling SQLite-specific features and limitations.
      6→## Architecture
     23→## SQLite-Specific Features
     43→## Operations Implementation
@@ -476,6 +484,8 @@ crates/toasty-sql/src/stmt.rs
 
 docs/design/enums-and-embedded-structs.md
      1→# Enum and Embedded Struct Support
+     3→Addresses [Issue #280](https://github.com/tokio-rs/toasty/issues/280).
+     4→
      5→## Scope
     13→## Storage Strategy
     25→## Column Naming
@@ -780,16 +790,6 @@ crates/toasty/src/stmt.rs
     92→impl<M> fmt::Debug for Statement<M> …
     93→    fn fmt …
 
-crates/toasty-core/src/driver/capability.rs
-
-crates/toasty-core/src/driver/operation.rs
-    26→pub enum Operation …
-
-crates/toasty-core/src/driver/response.rs
-     9→pub enum Rows …
-
-tests/Cargo.toml
-
 benches/
 
 crates/
@@ -807,6 +807,8 @@ crates/toasty-cli/src/migration/
 crates/toasty-codegen/src/expand/
 
 crates/toasty-codegen/src/schema/
+
+crates/toasty-core/src/driver/
 
 crates/toasty-core/src/driver/operation/
 
@@ -835,3 +837,5 @@ crates/toasty-sql/tests/
 examples/
 
 scripts/
+
+tests/

@@ -20,6 +20,8 @@ README.md
 
 sdk/README.md
      1→# MCPHost SDK
+     3→The MCPHost SDK allows you to use MCPHost programmatically from Go applications without spawning OS processes.
+     4→
      5→## Installation
     11→## Basic Usage
     44→## Configuration
@@ -83,9 +85,7 @@ contribute/contribute.md
      1→# Contribute README
      2→Thanks for your contribution, you can follow these step to run this repo and debug it.
      3→## Run demo
-     4→1. clone this repo to your work dir.
     30→## Contribute your code
-    31→just write your code and push it.
 
 internal/models/openai/openai.go
     21→type CustomChatModel …
@@ -119,6 +119,7 @@ internal/models/gemini/gemini.go
    305→func (cm *ChatModel) BindTools(tools []*schema.ToolInfo) error {
    330→func (cm *ChatModel) BindForcedTools(tools []*schema.ToolInfo) error {
    761→func (cm *ChatModel) IsCallbacksEnabled() bool {
+   765→const typ …
    773→func (cm *ChatModel) GetType() string {
    782→func (p *panicErr) Error() string {
 
@@ -264,9 +265,7 @@ internal/models/providers.go
    124→type ProviderResult …
    153→func CreateProvider(ctx context.Context, config *ProviderConfig) (*ProviderResult, error) {
    539→type OllamaLoadingResult …
-   712→type bearerTransport …
    717→func (t *bearerTransport) RoundTrip(req *http.Request) (*http.Response, error) {
-   857→type oauthTransport …
    862→func (t *oauthTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 
 internal/models/providers_test.go
@@ -638,6 +637,8 @@ internal/ui/usage_tracker_render_test.go
 internal/ui/usage_tracker_test.go
      9→func TestUsageTracker_OAuthCosts(t *testing.T) {
     73→func TestUsageTracker_OAuthSessionStats(t *testing.T) {
+
+AGENTS.md
 
 examples/
 

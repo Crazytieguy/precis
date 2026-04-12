@@ -6,36 +6,66 @@ CONTEXT.md
      1→# toasty-codegen Component Context
      3→## Purpose
      4→Generates Rust code from the `#[derive(Model)]` procedural macro. This crate transforms user-defined structs into full-featured ORM models with query builders, CRUD operations, and relationship handling.
+     5→
      6→## Key Responsibilities
      8→### Schema Parsing (`src/schema/`)
-     9→Parses attributes and builds internal schema representation:
     15→### Code Expansion (`src/expand/`)
-    16→Generates implementations for parsed models:
     25→## Common Change Patterns
     27→### Adding a New Model Attribute
-    28→1. Define attribute structure in `schema/model_attr.rs`
     33→### Adding Query Methods
-    34→1. Define method signature in `expand/query.rs`
     39→### Supporting New Field Types
-    40→1. Map Rust type in `schema/ty.rs`
     45→## Generated Code Structure
+    47→For a model `User`, codegen creates:
+    48→```rust
+    49→// Core implementations
+    50→impl User { /* CRUD methods */ }
+    51→impl Model for User { /* trait implementation */ }
+    52→impl Relation for User { /* relationship support */ }
+    53→impl IntoExpr<User> for User { /* expression conversion */ }
+    54→impl IntoSelect for User { /* query conversion */ }
+    55→
+    56→// Builder structs
+    57→struct UserQuery { /* query builder */ }
+    58→struct UserCreate { /* insert builder */ }
+    59→struct UserUpdate<'a> { /* update builder */ }
+    60→struct UserUpdateQuery { /* update query builder */ }
+    61→
+    62→// Field accessors
+    63→struct UserFields;
+    64→impl UserFields { /* field path methods */ }
+    65→
+    66→// Relationship types
+    67→struct Many, One, OptionOne, ManyField, OneField;
+    68→```
+    69→
     70→## Complete Attribute Support
     72→### Model-Level Attributes
-    73→- `#[key(partition = field1, local = field2)]` - Composite keys with distributed DB support
     76→### Field-Level Attributes  
-    77→- `#[key]` - Primary key field
     83→### Relationship Attributes
-    84→- `#[belongs_to(key = source, references = target)]` - Foreign key (supports composite)
     88→## Important Files
+    90→- `lib.rs`: Macro entry point
+    91→- `schema/model.rs`: Model parsing logic
+    92→- `expand/model.rs`: Main expansion logic
+    93→- `expand/util.rs`: Helper functions for code generation
+    94→- `schema/ty.rs`: Type system mapping
+    95→
     96→## Code Generation Principles
+    98→1. **Fully Qualified Paths**: Always use `#toasty::Type` to avoid conflicts
+    99→2. **Type Safety**: Generate strongly-typed builders and queries
+   100→3. **Zero-Cost**: Generated code should have no runtime overhead
+   101→4. **Discoverable API**: Methods should be intuitive and IDE-friendly
+   102→
    103→## Key Patterns
    105→### Dynamic Model IDs
-   106→Models now use runtime ID generation via `OnceLock`:
    114→### Query Builder Pattern
-   115→All query methods return builders that chain:
    123→### Relationship Expansion
-   124→Relations generate both accessor and mutation methods:
    128→## Recent Changes Analysis
+   130→From recent commits:
+   131→- Switched from const Model::ID to method-based IDs
+   132→- Reduced glob imports for clarity
+   133→- Removed schema query generation (moved to runtime)
+   134→- Simplified field accessor generation
+   135→- Added support for more primitive types
 
 Cargo.toml
      1→[package]
@@ -69,13 +99,11 @@ src/schema.rs
 src/expand/create.rs
      7→impl Expand<'_> …
      8→    pub(super) fn expand_create_builder(&self) -> TokenStream {
-    76→    fn expand_create_methods …
 
 src/expand/fields.rs
      6→impl Expand<'_> …
      7→    pub(super) fn expand_field_struct(&self) -> TokenStream {
     88→    pub(super) fn expand_model_field_struct_init(&self) -> TokenStream {
-   104→    fn field_struct_ident …
    113→    pub(super) fn expand_field_name_to_id(&self) -> TokenStream {
 
 src/expand/filters.rs
@@ -86,16 +114,8 @@ src/expand/filters.rs
     39→}
     41→impl Expand<'_> …
     42→    pub(super) fn expand_model_filter_methods(&self) -> TokenStream {
-    65→    fn expand_model_get_method …
-   107→    fn expand_model_filter_method …
-   140→    fn expand_model_filter_batch_method …
    169→    pub(super) fn expand_query_filter_methods(&self) -> TokenStream {
    191→    pub(super) fn expand_relation_filter_methods(&self) -> TokenStream {
-   213→    fn expand_query_filter_method …
-   227→    fn expand_query_filter_expr …
-   244→    fn expand_query_filter_batch_method …
-   271→    fn expand_filter_args …
-   289→    fn expand_filter_batch_arg_bound …
    307→    pub(super) fn expand_filter_arg_idents<'b>(
    308→        &'b self,
    309→        filter: &'b Filter,
@@ -104,10 +124,6 @@ src/expand/filters.rs
    329→impl Filter …
    330→    pub(super) fn build_model_filters(model: &Model) -> Vec<Self> {
    339→impl<'a> BuildModelFilters<'a> …
-   340→    fn build …
-   345→    fn recurse …
-   414→    fn find_index …
-   432→    fn method_ident …
 
 src/expand/model.rs
      7→impl Expand<'_> …
@@ -134,27 +150,15 @@ src/expand/model.rs
 src/expand/query.rs
      7→impl Expand<'_> …
      8→    pub(super) fn expand_query_struct(&self) -> TokenStream {
-   103→    fn expand_relation_methods …
-   116→    fn expand_belongs_to_method …
-   135→    fn expand_has_many_method …
-   154→    fn expand_has_one_method …
-   173→    fn expand_include_method …
 
 src/expand/relation.rs
      7→impl Expand<'_> …
      8→    pub(super) fn expand_relation_structs(&self) -> TokenStream {
    186→    pub(super) fn expand_model_relation_methods(&self) -> TokenStream {
-   203→    fn expand_model_relation_belongs_to_method …
-   267→    fn expand_model_relation_has_many_method …
-   341→    fn expand_model_relation_has_one_method …
 
 src/expand/schema.rs
      7→impl Expand<'_> …
      8→    pub(super) fn expand_model_schema(&self) -> TokenStream {
-    50→    fn expand_model_fields …
-   189→    fn expand_primary_key …
-   222→    fn expand_model_indices …
-   274→    fn expand_table_name …
    284→fn expand_name(toasty: &TokenStream, name: &Name) -> TokenStream {
 
 src/expand/update.rs
@@ -172,9 +176,6 @@ src/expand/update.rs
 
 src/expand/util.rs
      3→pub(crate) fn int(v: usize) -> TokenStream {
-     4→    use std::str::FromStr;
-     5→    TokenStream::from_str(&v.to_string()).expect("failed to parse int")
-     6→}
      8→/// Creates a new identifier prefixed with `__toasty_` to avoid name collisions
      9→/// with user-defined types in generated code (e.g., generic type parameters).
     10→pub(crate) fn ident(name: &str) -> syn::Ident {

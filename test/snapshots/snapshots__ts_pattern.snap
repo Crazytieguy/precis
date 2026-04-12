@@ -26,6 +26,7 @@ jsr.json
      6→    "./types": "./src/index.ts",
      7→    "./package.json": "./package.json"
      8→  }
+     9→}
 
 src/internals/helpers.ts
      7→import * as symbols from './symbols';
@@ -61,8 +62,6 @@ src/errors.ts
 src/index.ts
 
 src/is-matching.ts
-     7→ * This constraint allows using additional properties
-      →…
     11→type PatternConstraint …
     53→export function isMatching …
 
@@ -74,8 +73,6 @@ src/match.ts
     32→export function match<const input, output = symbols.unset>(
     33→  value: input
     34→): Match<input, output> {
-    39→ * This class represents a match expression. It follows the
-      →…
     47→class MatchExpression …
     48→  constructor …
     50→  with …
@@ -237,6 +234,8 @@ docs/v3-to-v4-migration-guide.md
 
 docs/v4-to-v5-migration-guide.md
      1→# TS-Pattern v4 to v5 Migration Guide
+     3→This file contains all breaking changes and new features between the version 4 and 5 of TS-Pattern.
+     4→
      5→# Breaking changes
      7→## TypeScript v5
     11→## `.with` is now evaluated eagerly
@@ -414,13 +413,13 @@ package.json
 
 tsconfig.json
 
-examples/one-file-demo/one-file-demo.ts
-
-benchmarks/
+benchmarks/package.json
 
 examples/
 
 examples/gif-fetcher/
+
+examples/one-file-demo/
 
 tests/
 
