@@ -112,7 +112,7 @@ pub(super) fn classify_node<'a>(
         }
         // Lua
         "variable_declaration" | "assignment_statement" if lang == Lang::Lua => {
-            Some(ItemKind::Const)
+            Some(classify_lua_assignment(node))
         }
         _ => None,
     }
@@ -152,6 +152,27 @@ fn classify_go_grouped_declaration(node: tree_sitter::Node) -> Option<ItemKind> 
         Some(ItemKind::Const)
     } else {
         Some(ItemKind::Static)
+    }
+}
+
+fn classify_lua_assignment(node: tree_sitter::Node) -> ItemKind {
+    let assign = if node.kind() == "variable_declaration" {
+        node.named_children(&mut node.walk())
+            .find(|c| c.kind() == "assignment_statement")
+    } else {
+        Some(node)
+    };
+    let value_kind = assign
+        .and_then(|a| {
+            a.named_children(&mut a.walk())
+                .find(|c| c.kind() == "expression_list")
+        })
+        .and_then(|el| el.named_child(0))
+        .map(|v| v.kind());
+    if value_kind == Some("function_definition") {
+        ItemKind::Function
+    } else {
+        ItemKind::Const
     }
 }
 
