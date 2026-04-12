@@ -242,6 +242,21 @@ crate, as is `pub use super::Bar`. Both should set `is_reexport = true`.
 Fix: add `item.name.starts_with("crate::")` and
 `item.name.starts_with("super::")` checks alongside the `self::` one.
 
+### `is_generated` detection never affects scheduling
+
+`files_contribution()` in `heuristics.rs:122` accepts `is_generated`
+and applies a 0.1x factor — but the callsite in `folders.rs:96` always
+passes `false` because detection requires reading file content, which
+only happens later in `FilesGroup::children()`. After detection, the
+flag is stored on `FilesGroup` (`files.rs:55`) but never propagated
+to child TsGroup modifiers — `compute_item_modifier` doesn't read it.
+Generated files get the same priority as non-generated ones.
+
+Fix: either (a) apply the generated factor in `compute_item_modifier`
+using `g.is_generated` when constructing child TsGroups, or (b) defer
+the full modifier computation for the FilesGroup itself until
+`children()` time, when the source has been read.
+
 ### Per-file properties computed from first file only
 
 `folders.rs:80-84` computes `is_config`, `is_type_declaration`, and
