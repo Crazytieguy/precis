@@ -2,178 +2,177 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3954 tokens)
-
 README.md
      5→# Tomli
-     7→> A lil' TOML parser
-     8→
-     9→**Table of Contents** *generated with [mdformat-toc](https://github.com/hukkin/mdformat-toc)*
-    10→
-    11→<!-- mdformat-toc start --slug=github --maxlevel=6 --minlevel=2 -->
-    12→
-    13→- [Intro](#intro)
-    14→- [Installation](#installation)
-    15→- [Usage](#usage)
-    16→  - [Parse a TOML string](#parse-a-toml-string)
-    17→  - [Parse a TOML file](#parse-a-toml-file)
-    18→  - [Handle invalid TOML](#handle-invalid-toml)
-    19→  - [Construct `decimal.Decimal`s from TOML floats](#construct-decimaldecimals-from-toml-floats)
-    20→  - [Building a `tomli`/`tomllib` compatibility layer](#building-a-tomlitomllib-compatibility-layer)
-    21→- [FAQ](#faq)
-    22→  - [Why this parser?](#why-this-parser)
-    23→  - [Is comment preserving round-trip parsing supported?](#is-comment-preserving-round-trip-parsing-supported)
-    24→  - [Is there a `dumps`, `write` or `encode` function?](#is-there-a-dumps-write-or-encode-function)
-    25→  - [How do TOML types map into Python types?](#how-do-toml-types-map-into-python-types)
-    26→- [Performance](#performance)
-    27→  - [Mypyc generated wheel](#mypyc-generated-wheel)
-    28→  - [Pure Python](#pure-python)
-    29→
-    30→<!-- mdformat-toc end -->
     32→## Intro<a name="intro"></a>
-    34→Tomli is a Python library for parsing [TOML](https://toml.io).
-    35→Version 2.4.0 and later are compatible with [TOML v1.1.0](https://toml.io/en/v1.1.0).
-    36→Older versions are [TOML v1.0.0](https://toml.io/en/v1.0.0) compatible.
-    37→
-    38→A version of Tomli, the `tomllib` module,
-    39→was added to the standard library in Python 3.11
-    40→via [PEP 680](https://www.python.org/dev/peps/pep-0680/).
-    41→Tomli continues to provide a backport on PyPI for Python versions
-    42→where the standard library module is not available
-    43→and that have not yet reached their end-of-life.
-    44→
-    45→Tomli uses [mypyc](https://github.com/mypyc/mypyc)
-    46→to generate binary wheels for most of the widely used platforms,
-    47→so Python 3.11+ users may prefer it over `tomllib` for improved performance.
-    48→Pure Python wheels are available on any platform and should perform the same as `tomllib`.
     50→## Installation<a name="installation"></a>
-    52→```bash
-    53→pip install tomli
-    54→```
     56→## Usage<a name="usage"></a>
    152→## FAQ<a name="faq"></a>
    201→## Performance<a name="performance"></a>
-   203→The `benchmark/` folder in this repository contains a performance benchmark for comparing the various Python TOML parsers.
-   204→
-   205→Below are the results for commit [064e492](https://github.com/hukkin/tomli/tree/064e492919b2338def788753b8c981c9131334c0).
-
-pyproject.toml
-     1→[build-system]
-     5→[project]
-    28→[project.urls]
-    33→[tool.isort]
-    46→[tool.tox]
-   145→[tool.mypy]
-
-CHANGELOG.md
-
-MANIFEST.in
-     1→prune tests/
-
-benchmark/README.md
-     1→# Benchmark
-    10→## Running
-
-benchmark/run.py
-    15→def benchmark …
-    37→def run …
 
 fuzzer/fuzz.py
     20→def test_one_input(input_bytes: bytes) -> None:
     53→def print_err(data):
     59→def normalize_toml_obj(toml_obj: dict) -> None:
-    60→    """Make NaNs equal when compared (without using recursion)."""
     71→def main():
 
 fuzzer/requirements.txt
-     1→# sudo apt-get install clang
-     2→wheel
-     3→atheris==2.0.7
-     4→tomli_w>=0.2.2
+
+MANIFEST.in
+
+pyproject.toml
+     1→[build-system]
+     2→requires = ["flit_core>=3.12,<4"]
+     3→build-backend = "flit_core.buildapi"
+     4→
+     5→[project]
+     6→name = "tomli"
+     7→version = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
+     8→description = "A lil' TOML parser"
+     9→authors = [
+    10→    { name = "Taneli Hukkinen", email = "hukkin@users.noreply.github.com" },
+    11→]
+    12→license = "MIT"
+    13→license-files = ["LICENSE"]
+    14→requires-python = ">=3.8"
+    15→readme = "README.md"
+    16→classifiers = [
+    17→    "Operating System :: MacOS",
+    18→    "Operating System :: Microsoft :: Windows",
+    19→    "Operating System :: POSIX :: Linux",
+    20→    "Programming Language :: Python :: 3 :: Only",
+    21→    "Programming Language :: Python :: Implementation :: CPython",
+    22→    "Programming Language :: Python :: Implementation :: PyPy",
+    23→    "Topic :: Software Development :: Libraries :: Python Modules",
+    24→    "Typing :: Typed",
+    25→]
+    26→keywords = ["toml"]
+    27→
+    28→[project.urls]
+    29→"Homepage" = "https://github.com/hukkin/tomli"
+    30→"Changelog" = "https://github.com/hukkin/tomli/blob/master/CHANGELOG.md"
+    31→
+    32→
+    33→[tool.isort]
+    34→# Force imports to be sorted by module, independent of import type
+    35→force_sort_within_sections = true
+    36→# Group first party and local folder imports together
+    37→no_lines_before = ["LOCALFOLDER"]
+    38→
+    39→# Configure isort to work without access to site-packages
+    40→known_first_party = ["tomli", "tests"]
+    41→
+    42→# Settings for Black compatibility
+    43→profile = "black"
+    44→
+    45→
+    46→[tool.tox]
+    47→requires = ["tox>=4.21.1"]
+    48→# Only run unittest envs when no args given to tox
+    49→env_list = ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
+    50→
+    51→[tool.tox.env_run_base]
+    52→description = "run tests against a built package under {base_python}"
+    53→pass_env = ["TOMLI_USE_MYPYC"]
+    54→commands = [
+    55→    ["python", "-m", "unittest", { replace = "posargs", extend = true }],
+    56→]
+    57→
+    58→[tool.tox.env."profile"]
+   129→[tool.coverage.run]
+   130→branch = true
+   131→source = ['tomli']
+   132→
+   133→[tool.coverage.report]
+   134→# Regexes for lines to exclude from consideration
+   135→exclude_lines = [
+   136→    # Re-enable the standard pragma (with extra strictness)
+   137→    '# pragma: no cover\b',
+   138→    # Code for static type checkers
+   139→    'if TYPE_CHECKING:',
+   140→    # Scripts
+   141→    'if __name__ == .__main__.:',
+   142→]
+   143→
+   144→
+   145→[tool.mypy]
+   146→show_error_codes = true
+   147→warn_unreachable = true
+   148→strict = true
+   149→strict_bytes = true
+   150→local_partial_types = true
+   151→# Disabling incremental mode is required for `warn_unused_configs = true`
+   152→# (implied by `strict = true`) to work
+   153→incremental = false
+   154→
+   155→enable_error_code = ["ignore-without-code"]
+   156→
+   157→[[tool.mypy.overrides]]
+   167→[[tool.mypy.overrides]]
+   168→# This matches `fuzzer/fuzz.py`.
+   169→module = "fuzz"
+   170→ignore_errors = true
+
+setup.py
+
+tomllib.md
+     1→# `tomllib` – Tomli in the standard library
+    13→## Converting Tomli to tomllib
+    15→### Sync status
+    20→### Steps to convert
 
 profiler/profiler_script.py
      1→"""A script for profiling.
+     2→
      3→To generate and read results:
      4→  - `tox -e profile`
      5→  - `firefox .tox/prof/output.svg`
+     6→"""
 
 profiler/requirements.txt
-     1→gprof2dot
-
-scripts/requirements.txt
-     1→tomli-w
-
-scripts/use_setuptools.py
-     1→"""Script that switches build backend to setuptools with mypyc support.
-     3→Overwrites pyproject.toml. Does not create a backup.
-    12→def use_setuptools() -> None:
 
 src/tomli/__init__.py
      1→# SPDX-License-Identifier: MIT
-     2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
-     3→# Licensed to PSF under a Contributor Agreement.
-     5→__all__ = ("loads", "load", "TOMLDecodeError")
-     6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
+      →…
+     5→__all__ …
+     6→__version__ …
+     8→from ._parser import TOMLDecodeError, load, loads
 
 src/tomli/_parser.py
-    19→TYPE_CHECKING = False
+    10→from ._re import (
+    11→    RE_DATETIME,
+    12→    RE_LOCALTIME,
+    13→    RE_NUMBER,
+    14→    match_to_datetime,
+    15→    match_to_localtime,
+    16→    match_to_number,
+    17→)
+    19→TYPE_CHECKING …
+    24→    from ._types import Key, ParseFloat, Pos
     26→# Inline tables/arrays are implemented using recursion. Pathologically
-    27→# nested documents cause pure Python to raise RecursionError (which is OK),
-    28→# but mypyc binary wheels will crash unrecoverably (not OK). According to
-    29→# mypyc docs this will be fixed in the future:
       →…
-    35→MAX_INLINE_NESTING: Final = sys.getrecursionlimit()
-    37→ASCII_CTRL: Final = frozenset(chr(i) for i in range(32)) | frozenset(chr(127))
+    35→MAX_INLINE_NESTING …
+    37→ASCII_CTRL …
     39→# Neither of these sets include quotation mark or backslash. They are
-    40→# currently handled as separate cases in the parser functions.
-    41→ILLEGAL_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t")
-    42→ILLEGAL_MULTILINE_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t\n")
-    44→ILLEGAL_LITERAL_STR_CHARS: Final = ILLEGAL_BASIC_STR_CHARS
-    45→ILLEGAL_MULTILINE_LITERAL_STR_CHARS: Final = ILLEGAL_MULTILINE_BASIC_STR_CHARS
-    47→ILLEGAL_COMMENT_CHARS: Final = ILLEGAL_BASIC_STR_CHARS
-    49→TOML_WS: Final = frozenset(" \t")
-    50→TOML_WS_AND_NEWLINE: Final = TOML_WS | frozenset("\n")
-    51→BARE_KEY_CHARS: Final = frozenset(
-    54→KEY_INITIAL_CHARS: Final = BARE_KEY_CHARS | frozenset("\"'")
-    55→HEXDIGIT_CHARS: Final = frozenset("abcdef" "ABCDEF" "0123456789")
-    57→BASIC_STR_ESCAPE_REPLACEMENTS: Final = MappingProxyType(
-    71→class DEPRECATED_DEFAULT:
-    76→class TOMLDecodeError(ValueError):
-    86→
-    87→    def __init__(
-    88→        self,
-    89→        msg: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
-    90→        doc: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
-    91→        pos: Pos | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
-    92→        *args: Any,
-    93→    ):
+      →…
+    41→ILLEGAL_BASIC_STR_CHARS …
+    42→ILLEGAL_MULTILINE_BASIC_STR_CHARS …
+    44→ILLEGAL_LITERAL_STR_CHARS …
+    45→ILLEGAL_MULTILINE_LITERAL_STR_CHARS …
+    47→ILLEGAL_COMMENT_CHARS …
+    49→TOML_WS …
+    50→TOML_WS_AND_NEWLINE …
+    51→BARE_KEY_CHARS …
+    54→KEY_INITIAL_CHARS …
+    55→HEXDIGIT_CHARS …
+    57→BASIC_STR_ESCAPE_REPLACEMENTS …
+    71→class DEPRECATED_DEFAULT …
+    76→class TOMLDecodeError …
    137→def load(__fp: IO[bytes], *, parse_float: ParseFloat = float) -> dict[str, Any]:
    149→def loads(__s: str, *, parse_float: ParseFloat = float) -> dict[str, Any]:
-   220→class Flags:
-   222→
-   223→    # Marks an immutable namespace (inline array or inline table).
-   224→    FROZEN: Final = 0
-   225→    # Marks a nest that has been explicitly created and can no longer
-   226→    # be opened using the "[table]" syntax.
-   227→    EXPLICIT_NEST: Final = 1
-   228→
-   229→    def __init__(self) -> None:
-   233→    def add_pending(self, key: Key, flag: int) -> None:
-   236→    def finalize_pending(self) -> None:
-   241→    def unset_all(self, key: Key) -> None:
-   249→    def set(self, key: Key, flag: int, *, recursive: bool) -> None:  # noqa: A003
-   260→    def is_(self, key: Key, flag: int) -> bool:
-   278→class NestedDict:
-   279→    def __init__(self) -> None:
-   283→    def get_or_create_nest(
-   284→        self,
-   285→        key: Key,
-   286→        *,
-   287→        access_lists: bool = True,
-   288→    ) -> dict[str, Any]:
-   300→    def append_nest_to_list(self, key: Key) -> None:
-   312→class Output:
-   313→    def __init__(self) -> None:
+   220→class Flags …
+   278→class NestedDict …
+   312→class Output …
    318→def skip_chars(src: str, pos: Pos, chars: Iterable[str]) -> Pos:
    327→def skip_until(
    328→    src: str,
@@ -217,86 +216,195 @@ src/tomli/_parser.py
    764→def make_safe_parse_float(parse_float: ParseFloat) -> ParseFloat:
 
 src/tomli/_re.py
-    11→TYPE_CHECKING = False
-    17→_TIME_RE_STR: Final = r"""
-    26→RE_NUMBER: Final = re.compile(
-    27→    r"""
-      →    …
-    45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)
-    46→RE_DATETIME: Final = re.compile(
-    47→    rf"""
-      →    …
+    11→TYPE_CHECKING …
+    15→    from ._types import ParseFloat
+    17→_TIME_RE_STR …
+    26→RE_NUMBER …
+    45→RE_LOCALTIME …
+    46→RE_DATETIME …
     59→def match_to_datetime(match: re.Match[str]) -> datetime | date:
     95→# No need to limit cache size. This is only ever called on input
     96→# that matched RE_DATETIME, so there is an implicit bound of
     97→# 24 (hours) * 60 (minutes) * 2 (offset direction) = 2880.
     98→@lru_cache(maxsize=None)
     99→def cached_tz(hour_str: str, minute_str: str, sign_str: str) -> timezone:
-   100→    sign = 1 if sign_str == "+" else -1
-   101→    return timezone(
-   102→        timedelta(
-   103→            hours=sign * int(hour_str),
-   104→            minutes=sign * int(minute_str),
-   105→        )
-   106→    )
    109→def match_to_localtime(match: re.Match[str]) -> time:
    116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
 
 src/tomli/_types.py
 
 src/tomli/py.typed
-     1→# Marker file for PEP 561
+
+benchmark/README.md
+     1→# Benchmark
+    10→## Running
+
+scripts/requirements.txt
+
+scripts/use_setuptools.py
+     1→"""Script that switches build backend to setuptools with mypyc support.
+     2→
+     3→Overwrites pyproject.toml. Does not create a backup.
+     4→"""
+    12→def use_setuptools() -> None:
+
+CHANGELOG.md
+     1→# Changelog
+     3→## 2.4.0
+     9→## 2.3.0
+    16→## 2.2.1
+    21→## 2.2.0
+    26→## 2.1.0
+    34→## 2.0.2
+    44→## 2.0.1
+    56→## 1.2.3
+    61→## 2.0.0
+    75→## 1.2.2
+    84→## 1.2.1
+    94→## 1.2.0
+   100→## 1.1.0
+   105→## 1.0.4
+   110→## 1.0.3
+   117→## 1.0.2
+   122→## 1.0.1
+   127→## 1.0.0
+   132→## 0.2.10
+   140→## 0.2.9
+   147→## 0.2.8
+   152→## 0.2.7
+   158→## 0.2.6
+   163→## 0.2.5
+   168→## 0.2.4
+   173→## 0.2.3
+   178→## 0.2.2
+   185→## 0.2.1
+   191→## 0.2.0
+   198→## 0.1.0
 
 tests/__init__.py
      1→# SPDX-License-Identifier: MIT
       →…
-     5→__all__ = ("tomllib",)
+     5→__all__ …
 
 tests/burntsushi.py
      5→"""Utilities for tests that are in the "burntsushi" format."""
     11→def convert(obj):
     42→def normalize(obj: Any) -> Any:
+    68→def _normalize_datetime_str …
+    92→def _normalize_localtime_str …
+    96→def _normalize_float_str …
 
 tests/test_data.py
     11→DATA_DIR …
     13→VALID_FILES …
     21→VALID_FILES_EXPECTED …
     23→INVALID_FILES …
-    27→class TestData(unittest.TestCase):
-    28→    def test_invalid(self):
-    40→    def test_valid(self):
+    27→class TestData …
 
 tests/test_error.py
-    13→class TestError(unittest.TestCase):
-    14→    def test_line_and_col(self):
-    35→    def test_missing_value(self):
-    40→    def test_invalid_char_quotes(self):
-    45→    def test_type_error(self):
-    62→    def test_invalid_parse_float(self):
-    76→    def test_deprecated_tomldecodeerror(self):
-    92→    def test_tomldecodeerror(self):
+    13→class TestError …
 
 tests/test_misc.py
-    17→class TestMiscellaneous(unittest.TestCase):
-    18→    def test_load(self):
-    29→    def test_incorrect_load(self):
-    47→    def test_parse_float(self):
-    75→    def test_deepcopy(self):
-   103→    def test_inline_array_recursion_limit(self):
-   118→    def test_inline_table_recursion_limit(self):
-   133→    def test_types_import(self):
+    17→class TestMiscellaneous …
 
-tomllib.md
-     1→# `tomllib` – Tomli in the standard library
-     3→Tomli was added to the Python standard library in Python 3.11.
-     4→
-     5→Relevant links:
-     6→
-     7→- Python Issue Tracker: https://bugs.python.org/issue40059
-     8→- Tomli issue tracker: https://github.com/hukkin/tomli/issues/141
-     9→- Discussion on PyPA "blessing" a TOML parser and/or including one in the standard library: https://discuss.python.org/t/adopting-recommending-a-toml-parser/4068
-    10→- Python Enhancement Proposal: https://peps.python.org/pep-0680
-    11→- CPython pull request: https://github.com/python/cpython/pull/31498
-    13→## Converting Tomli to tomllib
-    15→### Sync status
-    20→### Steps to convert
+src/
+
+tests/data/
+
+tests/data/invalid/
+
+tests/data/invalid/_external/
+
+tests/data/invalid/_external/toml-test/
+
+tests/data/invalid/_external/toml-test/invalid/
+
+tests/data/invalid/_external/toml-test/invalid/array/
+
+tests/data/invalid/_external/toml-test/invalid/bool/
+
+tests/data/invalid/_external/toml-test/invalid/control/
+
+tests/data/invalid/_external/toml-test/invalid/datetime/
+
+tests/data/invalid/_external/toml-test/invalid/encoding/
+
+tests/data/invalid/_external/toml-test/invalid/float/
+
+tests/data/invalid/_external/toml-test/invalid/inline-table/
+
+tests/data/invalid/_external/toml-test/invalid/integer/
+
+tests/data/invalid/_external/toml-test/invalid/key/
+
+tests/data/invalid/_external/toml-test/invalid/local-date/
+
+tests/data/invalid/_external/toml-test/invalid/local-datetime/
+
+tests/data/invalid/_external/toml-test/invalid/local-time/
+
+tests/data/invalid/_external/toml-test/invalid/spec-1.1.0/
+
+tests/data/invalid/_external/toml-test/invalid/string/
+
+tests/data/invalid/_external/toml-test/invalid/table/
+
+tests/data/invalid/array/
+
+tests/data/invalid/array-of-tables/
+
+tests/data/invalid/boolean/
+
+tests/data/invalid/dates-and-times/
+
+tests/data/invalid/dotted-keys/
+
+tests/data/invalid/inline-table/
+
+tests/data/invalid/keys-and-vals/
+
+tests/data/invalid/literal-str/
+
+tests/data/invalid/multiline-basic-str/
+
+tests/data/invalid/multiline-literal-str/
+
+tests/data/invalid/table/
+
+tests/data/valid/
+
+tests/data/valid/_external/
+
+tests/data/valid/_external/toml-test/
+
+tests/data/valid/_external/toml-test/valid/
+
+tests/data/valid/_external/toml-test/valid/array/
+
+tests/data/valid/_external/toml-test/valid/bool/
+
+tests/data/valid/_external/toml-test/valid/comment/
+
+tests/data/valid/_external/toml-test/valid/datetime/
+
+tests/data/valid/_external/toml-test/valid/float/
+
+tests/data/valid/_external/toml-test/valid/inline-table/
+
+tests/data/valid/_external/toml-test/valid/integer/
+
+tests/data/valid/_external/toml-test/valid/key/
+
+tests/data/valid/_external/toml-test/valid/spec-1.1.0/
+
+tests/data/valid/_external/toml-test/valid/string/
+
+tests/data/valid/_external/toml-test/valid/table/
+
+tests/data/valid/array/
+
+tests/data/valid/dates-and-times/
+
+tests/data/valid/inline-table/
+
+tests/data/valid/multiline-basic-str/

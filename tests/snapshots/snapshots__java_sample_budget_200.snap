@@ -3,22 +3,16 @@ source: tests/snapshots.rs
 expression: output
 ---
 Token.java
-    12→public class Token {
-    13→    public static final int MAX_TOKENS = 1024;
-    16→    public Token(String value) {
-    20→    public Token() {
-    28→    public String getValue() {
-    32→    public void setValue(String value) {
-    42→public interface Visitor {
-    43→    int TIMEOUT = 1000;
-    44→    void visit(Token token);
-    45→    default void visitAll(List<Token> tokens) {
-    50→public enum TokenKind {
+    12→public class Token …
+    42→public interface Visitor …
+    50→public enum TokenKind …
     51→    IDENT,
     52→    NUMBER,
     53→    SYMBOL;
     54→
     55→    public String display() {
-    60→public record Span(int start, int end) {}
-    62→@interface Generated {
-    63→    String value();
+    56→        return name().toLowerCase();
+    57→    }
+    58→}
+    60→public record Span …
+    62→@interface Generated …

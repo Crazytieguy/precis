@@ -1,32 +1,32 @@
 use crate::Lang;
 
-use super::SymbolKind;
+use super::ItemKind;
 
-/// Extract the display name for a symbol.
-///
-/// Returns `None` when no name can be determined (caller should skip the symbol).
-/// Takes the resolved name capture node from the tree-sitter query, if available.
 pub(super) fn extract_name(
     node: tree_sitter::Node,
-    kind: SymbolKind,
+    kind: ItemKind,
     name_node: Option<tree_sitter::Node>,
     source: &str,
     lang: Lang,
 ) -> Option<String> {
-    let name = if kind == SymbolKind::Impl {
+    let name = if kind == ItemKind::Impl {
         impl_name(node, source)
-    } else if kind == SymbolKind::Import {
+    } else if kind == ItemKind::Import {
         import_name(node, source, lang)
     } else if matches!(node.kind(), "const_declaration" | "var_declaration") {
-        // Go grouped const/var block: use keyword as display name
-        (if node.kind() == "const_declaration" { "const" } else { "var" }).to_string()
+        (if node.kind() == "const_declaration" {
+            "const"
+        } else {
+            "var"
+        })
+        .to_string()
     } else if node.kind() == "type_definition" {
-        // C typedef: extract the declarator name
         typedef_name(node, source)
     } else if node.kind() == "declaration" && lang == Lang::C {
-        // C/C++ declaration: extract name from the declarator
         c_declaration_name(node, source)
-    } else if lang == Lang::Java && matches!(node.kind(), "field_declaration" | "constant_declaration") {
+    } else if lang == Lang::Java
+        && matches!(node.kind(), "field_declaration" | "constant_declaration")
+    {
         java_field_name(node, source)
     } else if node.kind() == "module_declaration" {
         java_module_name(node, source)
@@ -37,13 +37,12 @@ pub(super) fn extract_name(
     };
 
     // Strip trailing badge markdown from section heading names.
-    let name = if kind == SymbolKind::Section {
-        crate::layout::strip_heading_badges(&name).to_string()
+    let name = if kind == ItemKind::Section {
+        strip_heading_badges(&name).to_string()
     } else {
         name
     };
 
-    // Filter out blank identifier `_` in Go and Rust.
     if matches!(lang, Lang::Go | Lang::Rust) && name == "_" {
         return None;
     }
@@ -51,11 +50,12 @@ pub(super) fn extract_name(
     Some(name)
 }
 
-/// Determine if an import is 1st-party (local/relative) based on its name.
 pub(super) fn is_first_party_import(name: &str, lang: Lang) -> bool {
     match lang {
         Lang::Rust => {
-            name.starts_with("crate::") || name.starts_with("self::") || name.starts_with("super::")
+            name.starts_with("crate::")
+                || name.starts_with("self::")
+                || name.starts_with("super::")
         }
         Lang::JsTs => name.starts_with("./") || name.starts_with("../"),
         Lang::Go => false,
@@ -65,7 +65,6 @@ pub(super) fn is_first_party_import(name: &str, lang: Lang) -> bool {
     }
 }
 
-/// Build a display name for an import statement.
 fn import_name(node: tree_sitter::Node, source: &str, lang: Lang) -> String {
     let text = node.utf8_text(source.as_bytes()).unwrap_or("?").trim();
     match lang {
@@ -92,8 +91,10 @@ fn import_name(node: tree_sitter::Node, source: &str, lang: Lang) -> String {
                     .strip_prefix("import")
                     .map(|s| s.trim_start())
                     .unwrap_or(text);
-                rest.trim_matches(|c: char| c == '\'' || c == '"' || c == ';' || c.is_whitespace())
-                    .to_string()
+                rest.trim_matches(|c: char| {
+                    c == '\'' || c == '"' || c == ';' || c.is_whitespace()
+                })
+                .to_string()
             }
         }
         Lang::Go => {
@@ -131,14 +132,11 @@ fn import_name(node: tree_sitter::Node, source: &str, lang: Lang) -> String {
                     .to_string()
             }
         }
-        Lang::C => {
-            text.strip_prefix("#include")
-                .map(|s| s.trim().to_string())
-                .unwrap_or_else(|| text.to_string())
-        }
+        Lang::C => text
+            .strip_prefix("#include")
+            .map(|s| s.trim().to_string())
+            .unwrap_or_else(|| text.to_string()),
         Lang::Java => {
-            // `import java.util.List;` → `java.util.List`
-            // `import static java.lang.Math.PI;` → `static java.lang.Math.PI`
             let rest = text
                 .strip_prefix("import")
                 .map(|s| s.trim_start())
@@ -149,22 +147,18 @@ fn import_name(node: tree_sitter::Node, source: &str, lang: Lang) -> String {
     }
 }
 
-/// Build a display name for an impl block, e.g. "Display for Foo" or "Foo".
 fn impl_name(node: tree_sitter::Node, source: &str) -> String {
     let type_node = node.child_by_field_name("type");
     let trait_node = node.child_by_field_name("trait");
-
     let type_name = type_node
         .and_then(|n| n.utf8_text(source.as_bytes()).ok())
         .unwrap_or("?");
-
     match trait_node.and_then(|n| n.utf8_text(source.as_bytes()).ok()) {
         Some(trait_name) => format!("{trait_name} for {type_name}"),
         None => type_name.to_string(),
     }
 }
 
-/// Extract the typedef name from a C `type_definition` node.
 fn typedef_name(node: tree_sitter::Node, source: &str) -> String {
     if let Some(decl) = node.child_by_field_name("declarator")
         && let Some(found) = super::ast::find_descendant_of_kind(decl, "type_identifier")
@@ -175,7 +169,6 @@ fn typedef_name(node: tree_sitter::Node, source: &str) -> String {
     "?".to_string()
 }
 
-/// Extract the name from a C `declaration` node (global variable or function prototype).
 fn c_declaration_name(node: tree_sitter::Node, source: &str) -> String {
     if let Some(decl) = node.child_by_field_name("declarator")
         && let Some(found) = super::ast::find_descendant_of_kind(decl, "identifier")
@@ -186,8 +179,6 @@ fn c_declaration_name(node: tree_sitter::Node, source: &str) -> String {
     "?".to_string()
 }
 
-/// Extract the name from a Java field_declaration or constant_declaration.
-/// Finds the first variable_declarator's name child.
 fn java_field_name(node: tree_sitter::Node, source: &str) -> String {
     if let Some(decl) = super::ast::find_descendant_of_kind(node, "variable_declarator")
         && let Some(name) = decl.child_by_field_name("name")
@@ -198,9 +189,7 @@ fn java_field_name(node: tree_sitter::Node, source: &str) -> String {
     "?".to_string()
 }
 
-/// Extract the name from a Java module_declaration.
 fn java_module_name(node: tree_sitter::Node, source: &str) -> String {
-    // The module name is the scoped_identifier or identifier child after "module" keyword
     let mut cursor = node.walk();
     for child in node.children(&mut cursor) {
         if matches!(child.kind(), "scoped_identifier" | "identifier")
@@ -210,4 +199,15 @@ fn java_module_name(node: tree_sitter::Node, source: &str) -> String {
         }
     }
     "?".to_string()
+}
+
+/// Strip trailing badge/image markdown from a heading line.
+pub(crate) fn strip_heading_badges(line: &str) -> &str {
+    if let Some(pos) = line.find(" [![") {
+        let before = line[..pos].trim();
+        if !before.is_empty() && before != "#" {
+            return line[..pos].trim_end();
+        }
+    }
+    line
 }

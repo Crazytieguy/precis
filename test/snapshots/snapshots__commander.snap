@@ -2,49 +2,8 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3959 tokens)
-
 Readme.md
      1→# Commander.js
-     8→The complete solution for [node.js](http://nodejs.org) command-line interfaces.
-     9→
-    10→Read this in other languages: English | [简体中文](./Readme_zh-CN.md)
-    11→
-    12→- [Commander.js](#commanderjs)
-    13→  - [Installation](#installation)
-    14→  - [Quick Start](#quick-start)
-    15→  - [Declaring _program_ variable](#declaring-program-variable)
-    16→  - [Options](#options)
-    17→    - [Common option types, boolean and value](#common-option-types-boolean-and-value)
-    18→    - [Default option value](#default-option-value)
-    19→    - [Other option types, negatable boolean and boolean|value](#other-option-types-negatable-boolean-and-booleanvalue)
-    20→    - [Required option](#required-option)
-    21→    - [Variadic option](#variadic-option)
-    22→    - [Version option](#version-option)
-    23→    - [More configuration](#more-configuration)
-    24→    - [Custom option processing](#custom-option-processing)
-    25→  - [Commands](#commands)
-    26→    - [Command-arguments](#command-arguments)
-    27→      - [More configuration](#more-configuration-1)
-    28→      - [Custom argument processing](#custom-argument-processing)
-    29→    - [Action handler](#action-handler)
-    30→    - [Stand-alone executable (sub)commands](#stand-alone-executable-subcommands)
-    31→    - [Life cycle hooks](#life-cycle-hooks)
-    32→  - [Automated help](#automated-help)
-    33→    - [Custom help](#custom-help)
-    34→    - [Display help after errors](#display-help-after-errors)
-    35→    - [Display help from code](#display-help-from-code)
-    36→    - [.name](#name)
-    37→    - [.usage](#usage)
-    38→    - [.description and .summary](#description-and-summary)
-    39→    - [.helpOption(flags, description)](#helpoptionflags-description)
-    40→    - [.helpCommand()](#helpcommand)
-    41→    - [Help Groups](#help-groups)
-    42→    - [More configuration](#more-configuration-2)
-    43→  - [Custom event listeners](#custom-event-listeners)
-    44→  - [Bits and pieces](#bits-and-pieces)
-    45→    - [.parse() and .parseAsync()](#parse-and-parseasync)
-      →    …
     61→## Installation
     67→## Quick Start
    147→## Declaring _program_ variable
@@ -91,15 +50,54 @@ Readme.md
   1164→## Support
   1172→### Commander for enterprise
 
-Readme_zh-CN.md
-     1→# Commander.js
+lib/argument.js
+     3→class Argument …
+   143→function humanReadableArgName(arg) {
 
-SECURITY.md
-     1→# Security Policy
+lib/command.js
+    13→class Command …
+  2705→function incrementNodeInspectorPort(args) {
+  2752→function useColor() {
+
+lib/error.js
+     2→ * CommanderError class
+     4→class CommanderError …
+    23→ * InvalidArgumentError class
+    25→class InvalidArgumentError …
+
+lib/help.js
+    12→class Help …
+   740→function stripColor(str) {
+
+lib/option.js
+     3→class Option …
+   262→ * This class is to make it easier to work with dual options, without changing the existing
+      →…
+   268→class DualOptions …
+   316→function camelcase(str) {
+   328→function splitOptionFlags(flags) {
+
+lib/suggestSimilar.js
+     1→const maxDistance …
+     3→function editDistance(a, b) {
+    56→function suggestSimilar(word, candidates) {
 
 docs/deprecated.md
      1→# Deprecated
+    22→### RegExp .option() parameter
+    34→### noHelp
+    44→### Callback to .help() and .outputHelp()
+    62→### .on('--help')
+    87→### .on('command:*')
+    98→### .command('*')
+   118→### cmd.description(cmdDescription, argDescriptions)
+   141→### InvalidOptionArgumentError
+   171→### Import from `commander/esm.mjs`
+   187→### cmd._args
+   203→### .addHelpCommand(string|boolean|undefined)
    227→## Removed
+   229→### Short option flag longer than a single character
+   238→### Default import of global Command object
 
 docs/help-in-depth.md
      1→# Help in Depth
@@ -110,7 +108,9 @@ docs/help-in-depth.md
 docs/options-in-depth.md
      2→# Options in Depth
     15→## Options taking varying numbers of option-arguments
+    30→### Parsing ambiguity
    148→## Combining short options, and options taking arguments
+   191→### Combining short options as if boolean
 
 docs/parsing-and-hooks.md
      1→# Parsing life cycle and hooks
@@ -121,268 +121,256 @@ docs/release-policy.md
 docs/terminology.md
      1→# Terminology
 
+eslint.config.js
+
 esm.mjs
 
+index.js
+
+jest.config.js
+
+package-support.json
+     2→  "versions": [
+
+package.json
+     2→  "name": "commander",
+     3→  "version": "14.0.3",
+     4→  "description": "the complete solution for node.js command-line programs",
+     5→  "keywords": [
+    15→  "author": "TJ Holowaychuk <tj@vision-media.ca>",
+    16→  "license": "MIT",
+    17→  "repository": {
+    21→  "scripts": {
+    35→  "files": [
+    43→  "type": "commonjs",
+    44→  "main": "./index.js",
+    45→  "exports": {
+    62→  "devDependencies": {
+    77→  "types": "typings/index.d.ts",
+    78→  "engines": {
+    81→  "support": true
+
+tsconfig.js.json
+     7→  "extends": "./tsconfig.json",
+     8→  "include": [
+
+tsconfig.json
+    12→  "compilerOptions": {
+    33→  "include": [
+    43→  "exclude": ["node_modules"],
+
+tsconfig.ts.json
+     8→  "extends": "./tsconfig.json",
+     9→  "compilerOptions": {
+    15→  "include": [
+
+examples/action-this.js
+
+examples/alias.js
+
+examples/argument.js
+
+examples/arguments-custom-processing.js
+
+examples/arguments-extra.js
+
 examples/color-help-replacement.mjs
-    21→  constructor() {
-    26→  prepareContext(contextOptions) {
-    33→  displayWidth(str) {
-    37→  boxWrap(str, width) {
-    41→  styleTitle(str) {
-    44→  styleCommandText(str) {
-    47→  styleCommandDescription(str) {
-    50→  styleDescriptionText(str) {
-    53→  styleOptionText(str) {
-    56→  styleArgumentText(str) {
-    59→  styleSubcommandText(str) {
-    65→  createCommand(name) {
-    68→  createHelp() {
+
+examples/color-help.mjs
+
+examples/configure-help.js
+
+examples/configure-output.js
 
 examples/custom-command-class.js
-     7→  createCommand(name) {
+
+examples/custom-help-text.js
+
+examples/defaultCommand.js
 
 examples/global-options-added.js
-    17→  createCommand(name) {
+
+examples/global-options-nested.js
 
 examples/help-centered.mjs
-     7→  formatItem(term, termWidth, description, helper) {
-    18→  createCommand(name) {
-    21→  createHelp() {
+
+examples/help-groups.js
+
+examples/help-subcommands-usage.js
+
+examples/hook.js
+
+examples/man-style-help.mjs
+
+examples/nestedCommands.js
+
+examples/options-boolean-or-value.js
+
+examples/options-common.js
+
+examples/options-conflicts.js
+
+examples/options-custom-processing.js
+
+examples/options-defaults.js
+
+examples/options-env.js
+
+examples/options-extra.js
+
+examples/options-implies.js
+
+examples/options-negatable.js
+
+examples/options-required.js
+
+examples/options-variadic.js
+
+examples/pass-through-options.js
 
 examples/pm-list.js
-     2→
-     3→console.log('list');
 
-index.js
-     1→const { Argument } = require('./lib/argument.js');
-     2→const { Command } = require('./lib/command.js');
-     3→const { CommanderError, InvalidArgumentError } = require('./lib/error.js');
-     4→const { Help } = require('./lib/help.js');
-     5→const { Option } = require('./lib/option.js');
-     6→
-     7→exports.program = new Command();
-     8→
-     9→exports.createCommand = (name) => new Command(name);
-    10→exports.createOption = (flags, description) => new Option(flags, description);
-    11→exports.createArgument = (name, description) => new Argument(name, description);
-    12→
-    13→/**
-    14→ * Expose classes
-    15→ */
-    16→
-    17→exports.Command = Command;
-    18→exports.Option = Option;
-    19→exports.Argument = Argument;
-    20→exports.Help = Help;
-    21→
-    22→exports.CommanderError = CommanderError;
-    23→exports.InvalidArgumentError = InvalidArgumentError;
-    24→exports.InvalidOptionArgumentError = InvalidArgumentError; // Deprecated
+examples/positional-options.js
 
-lib/argument.js
-     3→class Argument {
-    13→  constructor(name, description) {
-    48→  name() {
-    56→  _collectValue …
-    73→  default(value, description) {
-    86→  argParser(fn) {
-    98→  choices(values) {
-   119→  argRequired() {
-   129→  argOptional() {
-   143→function humanReadableArgName …
+examples/split.js
 
-lib/command.js
-    13→class Command extends EventEmitter {
-    20→  constructor(name) {
-    99→  copyInheritedSettings(sourceCommand) {
-   121→  _getCommandAndAncestors …
-   155→  command(nameAndArgs, actionOptsOrExecDesc, execOpts) {
-   192→  createCommand(name) {
-   203→  createHelp() {
-   215→  configureHelp(configuration) {
-   245→  configureOutput(configuration) {
-   261→  showHelpAfterError(displayHelp = true) {
-   273→  showSuggestionAfterError(displaySuggestion = true) {
-   288→  addCommand(cmd, opts) {
-   316→  createArgument(name, description) {
-   336→  argument(name, description, parseArg, defaultValue) {
-   359→  arguments(names) {
-   375→  addArgument(argument) {
-   409→  helpCommand(enableOrNameAndArgs, description) {
-   443→  addHelpCommand(helpCommand, deprecatedDescription) {
-   463→  _getHelpCommand …
-   487→  hook(event, listener) {
-   508→  exitOverride(fn) {
-   533→  _exit …
-   556→  action(fn) {
-   585→  createOption(flags, description) {
-   599→  _callParseArg …
-   619→  _registerOption …
-   644→  _registerCommand …
-   670→  addOption(option) {
-   741→  _optionEx …
-   788→  option(flags, description, parseArg, defaultValue) {
-   805→  requiredOption(flags, description, parseArg, defaultValue) {
-   826→  combineFlagAndOptionalValue(combine = true) {
-   837→  allowUnknownOption(allowUnknown = true) {
-   848→  allowExcessArguments(allowExcess = true) {
-   861→  enablePositionalOptions(positional = true) {
-   875→  passThroughOptions(passThrough = true) {
-   885→  _checkForBrokenPassThrough …
-   905→  storeOptionsAsProperties(storeAsProperties = true) {
-   925→  getOptionValue(key) {
-   940→  setOptionValue(key, value) {
-   953→  setOptionValueWithSource(key, value, source) {
-   971→  getOptionValueSource(key) {
-   983→  getOptionValueSourceWithGlobals(key) {
-  1001→  _prepareUserArgs …
-  1090→  parse(argv, parseOptions) {
-  1119→  async parseAsync(argv, parseOptions) {
-  1127→  _prepareForParse() {
-  1141→  saveStateBeforeParse() {
-  1158→  restoreStateBeforeParse() {
-  1183→  _checkForMissingExecutable …
-  1202→  _executeSubCommand …
-  1352→  _dispatchSubcommand …
-  1380→  _dispatchHelpCommand …
-  1403→  _checkNumberOfArguments …
-  1428→  _processArguments …
-  1481→  _chainOrCall …
-  1499→  _chainOrCallHooks …
-  1531→  _chainOrCallSubCommandHook …
-  1550→  _parseCommand …
-  1649→  _findCommand …
-  1664→  _findOption …
-  1675→  _checkForMissingMandatoryOptions …
-  1694→  _checkForConflictingLocalOptions …
-  1723→  _checkForConflictingOptions …
-  1748→  parseOptions(args) {
-  1902→  opts() {
-  1924→  optsWithGlobals() {
-  1940→  error(message, errorOptions) {
-  1966→  _parseOptionsEnv …
-  1996→  _parseOptionsImplied …
-  2034→  missingArgument(name) {
-  2046→  optionMissingArgument(option) {
-  2058→  missingMandatoryOptionValue(option) {
-  2070→  _conflictingOption …
-  2114→  unknownOption(flag) {
-  2146→  _excessArguments …
-  2162→  unknownCommand() {
-  2195→  version(str, flags, description) {
-  2218→  description(str, argsDescription) {
-  2234→  summary(str) {
-  2249→  alias(alias) {
-  2289→  aliases(aliases) {
-  2304→  usage(str) {
-  2331→  name(str) {
-  2344→  helpGroup(heading) {
-  2363→  commandsGroup(heading) {
-  2382→  optionsGroup(heading) {
-  2392→  _initOptionGroup …
-  2401→  _initCommandGroup …
-  2419→  nameFromFilename(filename) {
-  2437→  executableDir(path) {
-  2450→  helpInformation(contextOptions) {
-  2475→  _getOutputContext …
-  2505→  outputHelp(contextOptions) {
-  2559→  helpOption(flags, description) {
-  2592→  _getHelpOption …
-  2607→  addHelpOption(option) {
-  2621→  help(contextOptions) {
-  2656→  addHelpText(position, text) {
-  2686→  _outputHelpIfRequested …
-  2705→function incrementNodeInspectorPort …
-  2752→function useColor …
+examples/string-util.js
 
-lib/error.js
-     4→class CommanderError extends Error {
-    11→  constructor(exitCode, code, message) {
-    25→class InvalidArgumentError extends CommanderError {
-    30→  constructor(message) {
+examples/thank.js
 
-lib/help.js
-    12→class Help {
-    13→  constructor() {
-    29→  prepareContext(contextOptions) {
-    40→  visibleCommands(cmd) {
-    62→  compareOptions(a, b) {
-    79→  visibleOptions(cmd) {
-   112→  visibleGlobalOptions(cmd) {
-   139→  visibleArguments(cmd) {
-   162→  subcommandTerm(cmd) {
-   182→  optionTerm(option) {
-   193→  argumentTerm(argument) {
-   205→  longestSubcommandTermLength(cmd, helper) {
-   224→  longestOptionTermLength(cmd, helper) {
-   241→  longestGlobalOptionTermLength(cmd, helper) {
-   258→  longestArgumentTermLength(cmd, helper) {
-   276→  commandUsage(cmd) {
-   300→  commandDescription(cmd) {
-   313→  subcommandDescription(cmd) {
-   325→  optionDescription(option) {
-   372→  argumentDescription(argument) {
-   403→  formatItemList(heading, items, helper) {
-   417→  groupItems(unsortedItems, visibleItems, getGroup) {
-   443→  formatHelp(cmd, helper) {
-   535→  displayWidth(str) {
-   545→  styleTitle(str) {
-   549→  styleUsage(str) {
-   563→  styleCommandDescription(str) {
-   566→  styleOptionDescription(str) {
-   569→  styleSubcommandDescription(str) {
-   572→  styleArgumentDescription(str) {
-   575→  styleDescriptionText(str) {
-   578→  styleOptionTerm(str) {
-   581→  styleSubcommandTerm(str) {
-   594→  styleArgumentTerm(str) {
-   597→  styleOptionText(str) {
-   600→  styleArgumentText(str) {
-   603→  styleSubcommandText(str) {
-   606→  styleCommandText(str) {
-   618→  padWidth(cmd, helper) {
-   633→  preformatted(str) {
-   650→  formatItem(term, termWidth, description, helper) {
-   695→  boxWrap(str, width) {
-   740→function stripColor …
+CHANGELOG.md
+     1→# Changelog
+    11→## [14.0.3] (2026-01-31)
+    23→## [14.0.2] (2025-10-25)
+    30→## [14.0.1] (2025-09-12)
+    45→## [14.0.0] (2025-05-18)
+    63→## [13.1.0] (2025-01-21)
+    69→## [13.0.0] (2024-12-30)
+   156→## [13.0.0-0] (2024-12-07)
+   160→## [12.1.0] (2024-05-18)
+   177→## [12.0.0] (2024-02-03)
+   226→## [12.0.0-1] (2024-01-20)
+   230→## [12.0.0-0] (2023-11-11)
+   234→## [11.1.0] (2023-10-13)
+   258→## [11.0.0] (2023-06-16)
+   270→## [10.0.1] (2023-04-15)
+   284→## [10.0.0] (2023-01-13)
+   294→## [9.5.0] (2023-01-07)
+   301→## [9.4.1] (2022-09-30)
+   313→## [9.4.0] (2022-07-15)
+   327→## [9.3.0] (2022-05-28)
+   343→## [9.2.0] (2022-04-15)
+   358→## [9.1.0] (2022-03-19)
+   365→## [9.0.0] (2022-01-28)
+   397→## [9.0.0-1] (2022-01-15)
+   401→## [9.0.0-0] (2021-12-22)
+   405→## [8.3.0] (2021-10-22)
+   416→## [8.2.0] (2021-09-10)
+   431→## [8.1.0] (2021-07-27)
+   439→## [8.0.0] (2021-06-25)
+   510→## [8.0.0-2] (2021-06-06)
+   514→## [8.0.0-1] (2021-05-30)
+   518→## [8.0.0-0] (2021-05-23)
+   522→## [7.2.0] (2021-03-22)
+   535→## [7.1.0] (2021-02-15)
+   555→## [7.0.0] (2021-01-15)
+   669→## [7.0.0-2] (2020-12-14)
+   673→## [7.0.0-1] (2020-11-21)
+   677→## [7.0.0-0] (2020-10-25)
+   681→## [6.2.1] (2020-12-13)
+   687→## [6.2.0] (2020-10-25)
+   705→## [6.1.0] (2020-08-28)
+   722→## [6.0.0] (2020-07-21)
+   735→## [6.0.0-0] (2020-06-20)
+   739→## [5.1.0] (2020-04-25)
+   760→## [5.0.0] (2020-03-14)
+   831→## [5.0.0-4] (2020-03-03)
+   835→## [5.0.0-3] (2020-02-20)
+   839→## [5.0.0-2] (2020-02-10)
+   843→## [5.0.0-1] (2020-02-08)
+   847→## [5.0.0-0] (2020-02-02)
+   851→## [4.1.1] (2020-02-02)
+   857→## [4.1.0] (2020-01-06)
+   878→## [4.0.1] (2019-11-12)
+   884→## [4.0.0] (2019-11-02)
+   911→#### Testing for no arguments
+   925→## [4.0.0-1] Prerelease (2019-10-08)
+   929→## [4.0.0-0] Prerelease (2019-10-01)
+   933→## [3.0.2] (2019-09-27)
+   945→## [3.0.1] (2019-08-30)
+   961→## [3.0.0] / 2019-08-08
+  1008→## 3.0.0-0 Prerelease / 2019-07-28
+  1012→## [2.20.1] (2019-09-29)
+  1022→## 2.20.0 / 2019-04-02
+  1033→## 2.19.0 / 2018-10-02
+  1039→## 2.18.0 / 2018-09-07
+  1045→## 2.17.1 / 2018-08-07
+  1049→## 2.17.0 / 2018-08-03
+  1055→## 2.16.0 / 2018-06-29
+  1068→## 2.15.0 / 2018-03-07
+  1073→## 2.14.1 / 2018-02-07
+  1077→## 2.14.0 / 2018-02-05
+  1087→## 2.13.0 / 2018-01-09
+  1094→## 2.12.2 / 2017-11-28
+  1098→## 2.12.1 / 2017-11-23
+  1102→## 2.12.0 / 2017-11-22
+  1119→## 2.11.0 / 2017-07-03
+  1134→## 2.10.0 / 2017-06-19
+  1154→## 2.9.0 / 2015-10-13
+  1160→## 2.8.1 / 2015-04-22
+  1164→## 2.8.0 / 2015-04-07
+  1173→## 2.7.1 / 2015-03-11
+  1177→## 2.7.0 / 2015-03-09
+  1187→## 2.6.0 / 2014-12-30
+  1192→## 2.5.1 / 2014-12-15
+  1196→## 2.5.0 / 2014-10-24
+  1200→## 2.4.0 / 2014-10-17
+  1208→## 2.3.0 / 2014-07-16
+  1214→## 2.2.0 / 2014-03-29
+  1220→## 2.1.0 / 2013-11-21
+  1224→## 2.0.0 / 2013-07-18
+  1228→## 0.6.1 / 2012-06-01
+  1233→## 0.6.0 / 2012-04-10
+  1239→## 0.5.1 / 2011-12-20
+  1243→## 0.5.0 / 2011-12-04
+  1247→## 0.4.3 / 2011-12-04
+  1251→## 0.4.2 / 2011-11-24
+  1256→## 0.4.1 / 2011-11-18
+  1260→## 0.4.0 / 2011-11-15
+  1264→## 0.3.3 / 2011-11-14
+  1268→## 0.3.2 / 2011-11-01
+  1272→## 0.3.1 / 2011-10-31
+  1277→## 0.3.0 / 2011-10-31
+  1281→## 0.2.1 / 2011-10-24
+  1285→## 0.2.0 / 2011-09-26
+  1289→## 0.1.0 / 2011-08-24
+  1293→## 0.0.5 / 2011-08-18
+  1298→## 0.0.4 / 2011-08-15
+  1302→## 0.0.3 / 2011-08-15
+  1306→## 0.0.2 / 2011-08-15
+  1311→## 0.0.1 / 2010-01-03
 
-lib/option.js
-     3→class Option {
-    11→  constructor(flags, description) {
-    47→  default(value, description) {
-    65→  preset(arg) {
-    82→  conflicts(names) {
-   100→  implies(impliedOptionValues) {
-   120→  env(name) {
-   132→  argParser(fn) {
-   144→  makeOptionMandatory(mandatory = true) {
-   156→  hideHelp(hide = true) {
-   165→  _collectValue …
-   181→  choices(values) {
-   203→  name() {
-   217→  attributeName() {
-   230→  helpGroup(heading) {
-   243→  is(arg) {
-   256→  isBoolean() {
-   268→class DualOptions {
-   272→  constructor(options) {
-   297→  valueFromOption(value, option) {
-   316→function camelcase …
-   328→function splitOptionFlags …
+typings/esm.d.mts
 
-lib/suggestSimilar.js
-     1→const maxDistance = 3;
-     3→function editDistance(a, b) {
-    56→function suggestSimilar …
+typings/index.d.ts
+    16→export class CommanderError …
+    31→export class InvalidArgumentError …
+    48→export class Argument …
+    95→export class Option …
+   210→export class Help …
+   376→export class Command …
+  1113→export const program …
+
+typings/index.test-d.ts
+
+docs/zh-CN/
 
 tests/
 
-typings/esm.d.mts
-     1→// Just reexport the types from cjs
+tests/fixtures/
 
-typings/index.d.ts
-  1113→export const program: Command;
+tests/fixtures/another-dir/
 
-typings/index.test-d.ts
-   510→  createCommand(name?: string): MyCommand {
-   514→  myFunction(): void {
+tests/fixtures/other-dir/
+
+tests/fixtures-extensions/

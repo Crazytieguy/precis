@@ -2,158 +2,201 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3966 tokens)
-
 README.rst
-     1→.. image:: https://github.com/agronholm/typeguard/actions/workflows/test.yml/badge.svg
-     2→  :target: https://github.com/agronholm/typeguard/actions/workflows/test.yml
-     3→  :alt: Build Status
-     4→.. image:: https://coveralls.io/repos/agronholm/typeguard/badge.svg?branch=master&service=github
-     5→  :target: https://coveralls.io/github/agronholm/typeguard?branch=master
-     6→  :alt: Code Coverage
-     7→.. image:: https://readthedocs.org/projects/typeguard/badge/?version=latest
-     8→  :target: https://typeguard.readthedocs.io/en/latest/?badge=latest
-     9→  :alt: Documentation
-    10→.. image:: https://tidelift.com/badges/package/pypi/typeguard
-    11→  :target: https://tidelift.com/subscription/pkg/pypi-typeguard
-    12→  :alt: Tidelift
-    13→
-    14→This library provides run-time type checking for functions defined with
-    15→`PEP 484 <https://www.python.org/dev/peps/pep-0484/>`_ argument (and return) type
-    16→annotations, and any arbitrary objects. It can be used together with static type
-    17→checkers as an additional layer of type safety, to catch type violations that could only
-    18→be detected at run time.
-    19→
-    20→Two principal ways to do type checking are provided:
-    21→
-    22→#. The ``check_type`` function:
-    23→
-    24→   * like ``isinstance()``, but supports arbitrary type annotations (within limits)
-    25→   * can be used as a ``cast()`` replacement, but with actual checking of the value
-    26→#. Code instrumentation:
-    27→
-    28→   * entire modules, or individual functions (via ``@typechecked``) are recompiled, with
-    29→     type checking code injected into them
-    30→   * automatically checks function arguments, return values and assignments to annotated
-    31→     local variables
-    32→   * for generator functions (regular and async), checks yield and send values
-    33→   * requires the original source code of the instrumented module(s) to be accessible
-    34→
-    35→Two options are provided for code instrumentation:
-    36→
-    37→#. the ``@typechecked`` function:
-    38→
-    39→   * can be applied to functions individually
-    40→#. the import hook (``typeguard.install_import_hook()``):
-    41→
-    42→   * automatically instruments targeted modules on import
-    43→   * no manual code changes required in the target modules
-    44→   * requires the import hook to be installed before the targeted modules are imported
-    45→   * may clash with other import hooks
-    46→
-    47→See the documentation_ for further information.
-    48→
-      →…
-
-pyproject.toml
-     1→[build-system]
-     8→[project]
-    42→[dependency-groups]
 
 docs/api.rst
-     1→API reference
+
+docs/conf.py
 
 docs/extending.rst
-     1→Extending Typeguard
 
 docs/features.rst
-     1→Features
 
 docs/index.rst
-     1→Typeguard
 
 docs/userguide.rst
-     1→User guide
 
 docs/versionhistory.rst
-     1→Version history
 
 src/typeguard/__init__.py
-    34→config: TypeCheckConfiguration
-    37→def __getattr__ …
+    34→config …
+    37→def __getattr__(name: str) -> Any:
 
 src/typeguard/_checkers.py
-    81→TypeCheckerCallable: TypeAlias = Callable[
-    84→TypeCheckLookupCallback: TypeAlias = Callable[
-    88→checker_lookup_functions: list[TypeCheckLookupCallback] = []
-    89→generic_alias_types: tuple[type, ...] = (
+    81→TypeCheckerCallable …
+    84→TypeCheckLookupCallback …
+    88→checker_lookup_functions …
+    89→generic_alias_types …
     98→# Lifted from mypy.sharedparse
-    99→BINARY_MAGIC_METHODS = {
-   153→def check_callable …
-   212→def check_mapping …
-   247→def check_typed_dict …
-   305→def check_list …
-   324→def check_sequence …
-   343→def check_set …
-   365→def check_tuple …
-   423→def check_union …
-   447→def check_uniontype …
-   474→def check_class …
-   536→def check_newtype …
-   545→def check_instance …
-   555→def check_typevar …
-   586→def _is_literal_type …
-   590→def check_literal …
-   623→def check_literal_string …
-   632→def check_typeguard …
-   641→def check_none …
-   651→def check_number …
-   663→def check_io …
-   679→def check_signature_compatible …
-   834→def check_protocol …
-   885→def check_byteslike …
-   895→def check_self …
-   915→def check_paramspec …
-   924→def check_type_internal …
+    99→BINARY_MAGIC_METHODS …
+   153→def check_callable(
+   154→    value: Any,
+   155→    origin_type: Any,
+   156→    args: tuple[Any, ...],
+   157→    memo: TypeCheckMemo,
+   158→) -> None:
+   212→def check_mapping(
+   213→    value: Any,
+   214→    origin_type: Any,
+   215→    args: tuple[Any, ...],
+   216→    memo: TypeCheckMemo,
+   217→) -> None:
+   247→def check_typed_dict(
+   248→    value: Any,
+   249→    origin_type: Any,
+   250→    args: tuple[Any, ...],
+   251→    memo: TypeCheckMemo,
+   252→) -> None:
+   305→def check_list(
+   306→    value: Any,
+   307→    origin_type: Any,
+   308→    args: tuple[Any, ...],
+   309→    memo: TypeCheckMemo,
+   310→) -> None:
+   324→def check_sequence(
+   325→    value: Any,
+   326→    origin_type: Any,
+   327→    args: tuple[Any, ...],
+   328→    memo: TypeCheckMemo,
+   329→) -> None:
+   343→def check_set(
+   344→    value: Any,
+   345→    origin_type: Any,
+   346→    args: tuple[Any, ...],
+   347→    memo: TypeCheckMemo,
+   348→) -> None:
+   365→def check_tuple(
+   366→    value: Any,
+   367→    origin_type: Any,
+   368→    args: tuple[Any, ...],
+   369→    memo: TypeCheckMemo,
+   370→) -> None:
+   423→def check_union(
+   424→    value: Any,
+   425→    origin_type: Any,
+   426→    args: tuple[Any, ...],
+   427→    memo: TypeCheckMemo,
+   428→) -> None:
+   447→def check_uniontype(
+   448→    value: Any,
+   449→    origin_type: Any,
+   450→    args: tuple[Any, ...],
+   451→    memo: TypeCheckMemo,
+   452→) -> None:
+   474→def check_class(
+   475→    value: Any,
+   476→    origin_type: Any,
+   477→    args: tuple[Any, ...],
+   478→    memo: TypeCheckMemo,
+   479→) -> None:
+   536→def check_newtype(
+   537→    value: Any,
+   538→    origin_type: Any,
+   539→    args: tuple[Any, ...],
+   540→    memo: TypeCheckMemo,
+   541→) -> None:
+   545→def check_instance(
+   546→    value: Any,
+   547→    origin_type: Any,
+   548→    args: tuple[Any, ...],
+   549→    memo: TypeCheckMemo,
+   550→) -> None:
+   555→def check_typevar(
+   556→    value: Any,
+   557→    origin_type: TypeVar,
+   558→    args: tuple[Any, ...],
+   559→    memo: TypeCheckMemo,
+   560→    *,
+   561→    subclass_check: bool = False,
+   562→) -> None:
+   586→def _is_literal_type(typ: object) -> bool:
+   587→    return typ is typing.Literal or typ is typing_extensions.Literal
+   590→def check_literal(
+   591→    value: Any,
+   592→    origin_type: Any,
+   593→    args: tuple[Any, ...],
+   594→    memo: TypeCheckMemo,
+   595→) -> None:
+   623→def check_literal_string(
+   624→    value: Any,
+   625→    origin_type: Any,
+   626→    args: tuple[Any, ...],
+   627→    memo: TypeCheckMemo,
+   628→) -> None:
+   632→def check_typeguard(
+   633→    value: Any,
+   634→    origin_type: Any,
+   635→    args: tuple[Any, ...],
+   636→    memo: TypeCheckMemo,
+   637→) -> None:
+   641→def check_none(
+   642→    value: Any,
+   643→    origin_type: Any,
+   644→    args: tuple[Any, ...],
+   645→    memo: TypeCheckMemo,
+   646→) -> None:
+   651→def check_number(
+   652→    value: Any,
+   653→    origin_type: Any,
+   654→    args: tuple[Any, ...],
+   655→    memo: TypeCheckMemo,
+   656→) -> None:
+   663→def check_io(
+   664→    value: Any,
+   665→    origin_type: Any,
+   666→    args: tuple[Any, ...],
+   667→    memo: TypeCheckMemo,
+   668→) -> None:
+   679→def check_signature_compatible(subject: type, protocol: type, attrname: str) -> None:
+   834→def check_protocol(
+   835→    value: Any,
+   836→    origin_type: Any,
+   837→    args: tuple[Any, ...],
+   838→    memo: TypeCheckMemo,
+   839→) -> None:
+   885→def check_byteslike(
+   886→    value: Any,
+   887→    origin_type: Any,
+   888→    args: tuple[Any, ...],
+   889→    memo: TypeCheckMemo,
+   890→) -> None:
+   895→def check_self(
+   896→    value: Any,
+   897→    origin_type: Any,
+   898→    args: tuple[Any, ...],
+   899→    memo: TypeCheckMemo,
+   900→) -> None:
+   915→def check_paramspec(
+   916→    value: Any,
+   917→    origin_type: Any,
+   918→    args: tuple[Any, ...],
+   919→    memo: TypeCheckMemo,
+   920→) -> None:
+   924→def check_type_internal(
+   925→    value: Any,
+   926→    annotation: Any,
+   927→    memo: TypeCheckMemo,
+   928→) -> None:
   1004→# Equality checks are applied to these
-  1005→origin_type_checkers: dict[
-  1061→def builtin_checker_lookup …
-  1099→def load_plugins …
+  1005→origin_type_checkers …
+  1061→def builtin_checker_lookup(
+  1062→    origin_type: Any, args: tuple[Any, ...], extras: tuple[Any, ...]
+  1063→) -> TypeCheckerCallable | None:
+  1099→def load_plugins() -> None:
 
 src/typeguard/_config.py
-    11→T = TypeVar("T")
-    14→class ForwardRefPolicy(Enum):
-    24→
-    25→    ERROR = auto()
-    26→    WARN = auto()
-    27→    IGNORE = auto()
-    30→class CollectionCheckStrategy(Enum):
-    48→
-    49→    FIRST_ITEM = auto()
-    50→    ALL_ITEMS = auto()
-    51→
-    52→    def iterate_samples …
-    62→@dataclass
-    63→class TypeCheckConfiguration:
-    64→    """
-    65→     You can change Typeguard's behavior with these settings.
-    66→
-    67→    .. attribute:: typecheck_fail_callback
-      →    …
-    97→
-    98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
-    99→    typecheck_fail_callback: TypeCheckFailCallback | None = None
-   100→    collection_check_strategy: CollectionCheckStrategy = (
-   101→        CollectionCheckStrategy.FIRST_ITEM
-   102→    )
-   103→    debug_instrumentation: bool = False
+    11→T …
+    14→class ForwardRefPolicy …
+    30→class CollectionCheckStrategy …
+    63→class TypeCheckConfiguration …
 
 src/typeguard/_decorators.py
-    24→    def typeguard_ignore …
-    32→def make_cell …
-    36→def find_target_function …
-    56→def instrument …
-   136→@overload
+    24→    def typeguard_ignore(arg: T_CallableOrType) -> T_CallableOrType:
+    32→def make_cell(value: object) -> _Cell:
+    36→def find_target_function(
+    37→    new_code: CodeType, target_path: Sequence[str], firstlineno: int
+    38→) -> CodeType | None:
+    56→def instrument(f: T_CallableOrType) -> FunctionType | str:
    137→def typechecked(
    138→    *,
    139→    forward_ref_policy: ForwardRefPolicy | Unset = unset,
@@ -161,28 +204,25 @@ src/typeguard/_decorators.py
    141→    collection_check_strategy: CollectionCheckStrategy | Unset = unset,
    142→    debug_instrumentation: bool | Unset = unset,
    143→) -> Callable[[T_CallableOrType], T_CallableOrType]: ...
-   146→@overload
    147→def typechecked(target: T_CallableOrType) -> T_CallableOrType: ...
-   150→def typechecked …
+   150→def typechecked(
+   151→    target: T_CallableOrType | None = None,
+   152→    *,
+   153→    forward_ref_policy: ForwardRefPolicy | Unset = unset,
+   154→    typecheck_fail_callback: TypeCheckFailCallback | Unset = unset,
+   155→    collection_check_strategy: CollectionCheckStrategy | Unset = unset,
+   156→    debug_instrumentation: bool | Unset = unset,
+   157→) -> Any:
 
 src/typeguard/_exceptions.py
-     5→class TypeHintWarning(UserWarning):
-    12→class TypeCheckWarning(UserWarning):
-    14→
-    15→    def __init__ …
-    19→class InstrumentationWarning(UserWarning):
-    21→
-    22→    def __init__ …
-    26→class TypeCheckError(Exception):
-    30→
-    31→    def __init__ …
-    35→    def append_path_element …
-    38→    def __str__ …
+     5→class TypeHintWarning …
+    12→class TypeCheckWarning …
+    19→class InstrumentationWarning …
+    26→class TypeCheckError …
 
 src/typeguard/_functions.py
-    24→T = TypeVar("T")
-    25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
-    28→@overload
+    24→T …
+    25→TypeCheckFailCallback …
     29→def check_type(
     30→    value: object,
     31→    expected_type: type[T],
@@ -191,7 +231,6 @@ src/typeguard/_functions.py
     34→    typecheck_fail_callback: TypeCheckFailCallback | None = ...,
     35→    collection_check_strategy: CollectionCheckStrategy = ...,
     36→) -> T: ...
-    39→@overload
     40→def check_type(
     41→    value: object,
     42→    expected_type: Any,
@@ -200,194 +239,180 @@ src/typeguard/_functions.py
     45→    typecheck_fail_callback: TypeCheckFailCallback | None = ...,
     46→    collection_check_strategy: CollectionCheckStrategy = ...,
     47→) -> Any: ...
-    50→def check_type …
-   118→def check_argument_types …
-   149→def check_return_type …
-   185→def check_send_type …
-   216→def check_yield_type …
-   245→def check_variable_assignment …
-   291→def warn_on_error …
+    50→def check_type(
+    51→    value: object,
+    52→    expected_type: Any,
+    53→    *,
+    54→    forward_ref_policy: ForwardRefPolicy = TypeCheckConfiguration().forward_ref_policy,
+    55→    typecheck_fail_callback: TypeCheckFailCallback | None = (
+    56→        TypeCheckConfiguration().typecheck_fail_callback
+    57→    ),
+    58→    collection_check_strategy: CollectionCheckStrategy = (
+    59→        TypeCheckConfiguration().collection_check_strategy
+    60→    ),
+    61→) -> Any:
+   118→def check_argument_types(
+   119→    func_name: str,
+   120→    arguments: dict[str, tuple[Any, Any]],
+   121→    memo: TypeCheckMemo,
+   122→) -> Literal[True]:
+   149→def check_return_type(
+   150→    func_name: str,
+   151→    retval: T,
+   152→    annotation: Any,
+   153→    memo: TypeCheckMemo,
+   154→) -> T:
+   185→def check_send_type(
+   186→    func_name: str,
+   187→    sendval: T,
+   188→    annotation: Any,
+   189→    memo: TypeCheckMemo,
+   190→) -> T:
+   216→def check_yield_type(
+   217→    func_name: str,
+   218→    yieldval: T,
+   219→    annotation: Any,
+   220→    memo: TypeCheckMemo,
+   221→) -> T:
+   245→def check_variable_assignment(
+   246→    value: Any,
+   247→    groups: Sequence[list[tuple[str, Any]] | tuple[str, Any]],
+   248→    memo: TypeCheckMemo,
+   249→) -> Any:
+   291→def warn_on_error(exc: TypeCheckError, memo: TypeCheckMemo) -> None:
 
 src/typeguard/_importhook.py
-    40→P = ParamSpec("P")
-    41→T = TypeVar("T")
-    45→def _call_with_frames_removed …
-    51→def optimized_cache_from_source …
-    55→class TypeguardLoader(SourceFileLoader):
-    56→    @staticmethod
-    57→    def source_to_code(
-    58→        data: Buffer | str | ast.Module | ast.Expression | ast.Interactive,
-    59→        path: Buffer | str | PathLike[str] = "<string>",
-    60→        *,
-    61→        _optimize: int = -1,
-    62→    ) -> CodeType:
-    63→        if isinstance(path, (str, PathLike)):
-    64→            filename = path
-    65→        else:
-      →        …
-    99→    def exec_module …
-   109→class TypeguardFinder(MetaPathFinder):
-   119→
-   120→    def __init__ …
-   124→    def find_spec …
-   138→    def should_instrument …
-   156→class ImportHookManager:
-   160→
-   161→    def __init__ …
-   164→    def __enter__ …
-   167→    def __exit__ …
-   175→    def uninstall …
-   183→def install_import_hook …
+    40→P …
+    41→T …
+    44→# The name of this function is magical
+    45→def _call_with_frames_removed(
+    46→    f: Callable[P, T], *args: P.args, **kwargs: P.kwargs
+    47→) -> T:
+    48→    return f(*args, **kwargs)
+    51→def optimized_cache_from_source(path: str, debug_override: bool | None = None) -> str:
+    55→class TypeguardLoader …
+   109→class TypeguardFinder …
+   156→class ImportHookManager …
+   183→def install_import_hook(
+   184→    packages: Iterable[str] | None = None,
+   185→    *,
+   186→    cls: type[TypeguardFinder] = TypeguardFinder,
+   187→) -> ImportHookManager:
 
 src/typeguard/_memo.py
-     8→class TypeCheckMemo:
-    34→
-    35→    __slots__ = "globals", "locals", "self_type", "config"
-    36→
-    37→    def __init__ …
+     8→class TypeCheckMemo …
 
 src/typeguard/_pytest_plugin.py
-    16→def pytest_addoption …
-    75→def pytest_configure …
+    16→def pytest_addoption(parser: Parser) -> None:
+    75→def pytest_configure(config: Config) -> None:
 
 src/typeguard/_suppression.py
-    15→P = ParamSpec("P")
-    16→T = TypeVar("T")
-    22→@overload
+    15→P …
+    16→T …
     23→def suppress_type_checks(func: Callable[P, T]) -> Callable[P, T]: ...
-    26→@overload
     27→def suppress_type_checks() -> ContextManager[None]: ...
-    30→def suppress_type_checks …
+    30→def suppress_type_checks(
+    31→    func: Callable[P, T] | None = None,
+    32→) -> Callable[P, T] | ContextManager[None]:
 
 src/typeguard/_transformer.py
-    67→PreliminaryNameTypePair: typing.TypeAlias = tuple[Constant, "expr | None"]
-    68→NameTypePair: typing.TypeAlias = tuple[Constant, expr]
-   117→@dataclass
-   118→class TransformMemo:
-   119→    node: Module | ClassDef | FunctionDef | AsyncFunctionDef | None
-   120→    parent: TransformMemo | None
-   121→    path: tuple[str, ...]
-   122→    joined_path: Constant = field(init=False)
-   123→    return_annotation: expr | None = None
-   124→    yield_annotation: expr | None = None
-   125→    send_annotation: expr | None = None
-   126→    is_async: bool = False
-   127→    local_names: set[str] = field(init=False, default_factory=set)
-   128→    imported_names: dict[str, str] = field(init=False, default_factory=dict)
-   129→    ignored_names: set[str] = field(init=False, default_factory=set)
-   130→    load_names: defaultdict[str, dict[str, Name]] = field(
-   131→        init=False, default_factory=lambda: defaultdict(dict)
-   132→    )
-   133→    has_yield_expressions: bool = field(init=False, default=False)
-   134→    has_return_expressions: bool = field(init=False, default=False)
-   135→    memo_var_name: Name | None = field(init=False, default=None)
-   136→    should_instrument: bool = field(init=False, default=True)
-   137→    variable_annotations: dict[str, expr] = field(init=False, default_factory=dict)
-   138→    configuration_overrides: dict[str, Any] = field(init=False, default_factory=dict)
-   139→    code_inject_index: int = field(init=False, default=0)
-   140→
-   141→    def __post_init__ …
-   171→    def get_unused_name …
-   183→    def is_ignored_name …
-   206→    def get_memo_name …
-   212→    def get_import …
-   225→    def insert_imports …
-   238→    def name_matches …
-   275→    def get_config_keywords …
-   285→class NameCollector(NodeVisitor):
-   286→    def __init__ …
-   289→    def visit_Import …
-   293→    def visit_ImportFrom …
-   297→    def visit_Assign …
-   302→    def visit_NamedExpr …
-   306→    def visit_FunctionDef …
-   309→    def visit_ClassDef …
-   313→class GeneratorDetector(NodeVisitor):
-   315→
-   316→    contains_yields: bool = False
-   317→    in_root_function: bool = False
-   318→
-   319→    def visit_Yield …
-   322→    def visit_YieldFrom …
-   325→    def visit_ClassDef …
-   328→    def visit_FunctionDef …
-   334→    def visit_AsyncFunctionDef …
-   338→class AnnotationTransformer(NodeTransformer):
-   339→    type_substitutions: ClassVar[dict[str, tuple[str, str]]] = {
-   340→        "builtins.dict": ("typing", "Dict"),
-   341→        "builtins.list": ("typing", "List"),
-   342→        "builtins.tuple": ("typing", "Tuple"),
-   343→        "builtins.set": ("typing", "Set"),
-   344→        "builtins.frozenset": ("typing", "FrozenSet"),
-   345→    }
-   346→
-   347→    def __init__ …
-   352→    def visit …
-   374→    def visit_BinOp …
-   401→    def visit_Attribute …
-   407→    def visit_Subscript …
-   466→    def visit_Name …
-   472→    def visit_Call …
-   476→    def visit_Constant …
-   488→class TypeguardTransformer(NodeTransformer):
-   489→    def __init__ …
-   498→    def generic_visit …
-   517→    def _use_memo …
-   570→    def _get_import …
-   575→    def _convert_annotation …
-   578→    def _convert_annotation …
-   580→    def _convert_annotation …
-   596→    def visit_Name …
-   600→    def visit_Module …
-   608→    def visit_Import …
-   615→    def visit_ImportFrom …
-   624→    def visit_ClassDef …
-   650→    def visit_FunctionDef …
-   913→    def visit_AsyncFunctionDef …
-   918→    def visit_Return …
-   945→    def visit_Yield …
-   994→    def visit_AnnAssign …
-  1036→    def visit_Assign …
-  1138→    def visit_NamedExpr …
-  1181→    def visit_AugAssign …
-  1224→    def visit_If …
+    67→PreliminaryNameTypePair …
+    68→NameTypePair …
+   118→class TransformMemo …
+   285→class NameCollector …
+   313→class GeneratorDetector …
+   338→class AnnotationTransformer …
+   488→class TypeguardTransformer …
 
 src/typeguard/_utils.py
-    25→    def evaluate_forwardref …
-    42→    def evaluate_forwardref …
-    48→    def evaluate_forwardref …
-    66→def get_type_name …
-   104→def qualified_name …
-   127→def function_name …
-   142→def resolve_reference …
-   154→def is_method_of …
-   162→def get_stacklevel …
-   172→@final
-   173→class Unset:
-   174→    __slots__ = ()
-   175→
-   176→    def __repr__ …
+    25→    def evaluate_forwardref(forwardref: ForwardRef, memo: TypeCheckMemo) -> Any:
+    42→    def evaluate_forwardref(forwardref: ForwardRef, memo: TypeCheckMemo) -> Any:
+    48→    def evaluate_forwardref(forwardref: ForwardRef, memo: TypeCheckMemo) -> Any:
+    66→def get_type_name(type_: Any) -> str:
+   104→def qualified_name(obj: Any, *, add_class_prefix: bool = False) -> str:
+   127→def function_name(func: Callable[..., Any]) -> str:
+   142→def resolve_reference(reference: str) -> Any:
+   154→def is_method_of(obj: object, cls: type) -> bool:
+   162→def get_stacklevel() -> int:
+   173→class Unset …
+
+src/typeguard/py.typed
+
+pyproject.toml
+     1→[build-system]
+     8→[project]
+    33→[project.urls]
+    34→Documentation = "https://typeguard.readthedocs.io/en/latest/"
+    35→"Change log" = "https://typeguard.readthedocs.io/en/latest/versionhistory.html"
+    36→"Source code" = "https://github.com/agronholm/typeguard"
+    37→"Issue tracker" = "https://github.com/agronholm/typeguard/issues"
+    38→
+    39→[project.entry-points]
+    40→pytest11 = {typeguard = "typeguard._pytest_plugin"}
+    41→
+    42→[dependency-groups]
+    58→[tool.setuptools_scm]
+    59→version_scheme = "post-release"
+    60→local_scheme = "dirty-tag"
+    61→
+    62→[tool.pytest.ini_options]
+    78→[tool.ruff]
+    79→src = ["src"]
+    80→
+    81→[tool.ruff.per-file-target-version]
+    99→[tool.mypy]
+   100→python_version = "3.11"
+   101→strict = true
+   102→pretty = true
+   103→files = ["src"]
+   104→
+   105→[tool.tox]
+   106→env_list = ["py39", "py310", "py311", "py312", "py313", "py314"]
+   107→skip_missing_interpreters = true
+   108→requires = ["tox >= 4.22"]
+   109→
+   110→[tool.tox.env_run_base]
+   115→[tool.tox.env.docs]
+
+tests/__init__.py
+
+tests/conftest.py
+
+tests/deferredannos.py
 
 tests/dummymodule.py
      1→"""Module docstring."""
     40→T …
     41→P …
-    77→class DummyClass(metaclass=Metaclass):
-    78→    bar: str
-    79→    baz: int
-    80→
-   118→class Outer:
-   305→class OverrideClass:
-   365→class ModuleLocalClass:
+   364→# Regression test for #536 - forward reference evaluation on Python 3.14
+   365→class ModuleLocalClass …
 
 tests/dummymodule_py312.py
-    17→class ParametrizedClass[T]:
-
-tests/mypy/negative.py
-    39→class MyClass:
-
-tests/mypy/positive.py
-    28→class MyClass:
 
 tests/test_checkers.py
     79→P …
+
+tests/test_importhook.py
+
+tests/test_instrumentation.py
+    40→def _fixture_module(name: str, method: str):
+
+tests/test_plugins.py
+
+tests/test_pytest_plugin.py
+
+tests/test_suppression.py
+
+tests/test_transformer.py
+
+tests/test_typechecked.py
+
+tests/test_utils.py
+
+tests/test_warn_on_error.py
+
+docs/contributing.rst
+
+src/
+
+tests/mypy/

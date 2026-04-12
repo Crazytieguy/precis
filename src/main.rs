@@ -1,5 +1,4 @@
 use clap::Parser;
-use precis::walk;
 use std::path::PathBuf;
 
 /// Claude Code hook `additionalContext` is capped at 10,000 characters.
@@ -30,23 +29,11 @@ fn main() {
         .char_budget
         .or_else(|| std::env::var("CLAUDE_PLUGIN_ROOT").ok().map(|_| PLUGIN_CHAR_BUDGET));
 
-    let output = if path.is_file() {
-        let source = match std::fs::read_to_string(path) {
-            Ok(s) => s,
-            Err(e) => {
-                eprintln!("Error reading {:?}: {}", path, e);
-                std::process::exit(1);
-            }
-        };
-        let root = path.parent().unwrap_or(path);
-        precis::render_file_with_budget(budget, char_budget, path, root, &source)
-    } else if path.is_dir() {
-        let files = walk::discover_source_files(path);
-        let sources = precis::read_sources(&files);
-        precis::render_with_budget(budget, char_budget, path, &files, sources)
-    } else {
-        eprintln!("Error: {:?} is not a file or directory", path);
+    if !path.exists() {
+        eprintln!("Error: {:?} does not exist", path);
         std::process::exit(1);
-    };
+    }
+
+    let output = precis::render(path, budget, char_budget);
     print!("{}", output);
 }

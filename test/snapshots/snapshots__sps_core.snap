@@ -2,33 +2,307 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 4000 (3932 tokens)
+src/lib.rs
+     4→pub mod build …
+     5→pub mod check …
+     6→pub mod install …
+     7→pub mod pipeline …
+     8→pub mod uninstall …
+     9→pub mod upgrade …
+    11→pub mod utils …
 
 Cargo.toml
      1→[package]
-     2→name = "sps-core"
-     3→version = "0.1.56"
-     4→edition = "2021"
-     5→authors = ["Alexander Knott <alexander.knott@posteo.de>", "sps contributors"]
-     6→description = "Core library for the sps package manager"
-     7→repository = "https://github.com/alexykn/sps"
-     8→license = "BSD-3-Clause"
     10→[dependencies]
-    11→sps-net = "0.1.56"
-    12→sps-common = "0.1.56"
-    13→
-    14→anyhow = "1.0.99"
-    15→uuid = { version = "1.18.0", features = ["v4"] }
-    16→plist = "1.7.4"                                                                  # For reading Info.plist to get bundle ID
-    17→thiserror = "2.0.16"
-    18→serde = { version = "1.0.219", features = ["derive"] }
-    19→serde_json = "1.0.143"
-    20→env_logger = "0.11.8"
-    21→semver = "1.0.26"
-    22→dirs = "6.0.0"
-    23→xattr = "1.5.1"
-    24→walkdir = "2.5.0"
-      →…
+
+src/build/env.rs
+    12→use crate::install::devtools;
+    15→const ENV_VARS_TO_REMOVE …
+   123→const ENV_VARS_TO_KEEP …
+   141→pub struct BuildEnvironment …
+   164→impl BuildEnvironment …
+   494→/// Filters the initial environment, keeping only specified safe variables.
+   495→fn filter_initial_environment(vars: &mut HashMap<String, String>) {
+
+src/build/mod.rs
+     1→pub mod compile …
+     2→pub mod env …
+
+src/check/installed.rs
+    14→pub enum PackageType …
+    15→    Formula,
+    16→    Cask,
+    17→}
+    20→pub struct InstalledPackageInfo …
+    21→    pub name: String,
+    22→    pub version: String, // This will now store keg.version_str
+    23→    pub pkg_type: PackageType,
+    24→    pub path: PathBuf,
+    25→}
+    29→fn handle_dir_entry …
+    39→pub async fn get_installed_packages(config: &Config) -> Result<Vec<InstalledPackageInfo>> {
+   140→pub async fn get_installed_package(
+   141→    name: &str,
+   142→    config: &Config,
+   143→) -> Result<Option<InstalledPackageInfo>> {
+
+src/check/mod.rs
+     1→pub mod installed …
+     2→pub mod update …
+
+src/check/update.rs
+    20→use crate::check::installed::{InstalledPackageInfo, PackageType};
+    23→pub struct UpdateInfo …
+    24→    pub name: String,
+    25→    pub installed_version: String,
+    26→    pub available_version: String,
+    27→    pub pkg_type: PackageType,
+    28→    pub target_definition: InstallTargetIdentifier,
+    29→}
+    33→async fn ensure_api_data_cached(cache: &Cache) -> Result<()> {
+    89→pub async fn check_for_updates(
+    90→    installed_packages: &[InstalledPackageInfo],
+    91→    cache: &Cache,
+    92→    config: &Config,
+    93→) -> Result<Vec<UpdateInfo>> {
+
+src/install/devtools.rs
+     9→pub fn find_compiler(name: &str) -> Result<PathBuf> {
+    78→pub fn find_sdk_path() -> Result<PathBuf> {
+   123→pub fn get_macos_version() -> Result<String> {
+   160→pub fn get_arch_flag() -> String {
+
+src/install/extract.rs
+    16→use crate::utils::xattr;
+    18→pub(crate) fn infer_archive_root_dir …
+    56→fn infer_tar_root …
+   142→fn infer_xz_tar_root …
+   173→fn infer_zip_root …
+   205→pub fn quarantine_extracted_apps_in_stage(stage_dir: &Path, agent_name: &str) -> Result<()> {
+   235→pub fn extract_archive(
+   236→    archive_path: &Path,
+   237→    target_dir: &Path,
+   238→    strip_components: usize,
+   239→    archive_type: &str,
+   240→) -> Result<()> {
+   301→/// Represents a hardlink operation that was deferred.
+   302→fn extract_xz_tar_archive …
+   343→struct DeferredHardLink …
+   348→fn extract_tar_archive …
+   619→fn extract_zip_archive …
+
+src/install/mod.rs
+    11→pub mod bottle …
+    12→pub mod cask …
+    13→pub mod devtools …
+    14→pub mod extract …
+    17→pub fn get_formula_opt_path(formula: &Formula, config: &Config) -> PathBuf {
+
+src/utils/applescript.rs
+    10→fn get_bundle_identifier_from_app_path(app_path: &Path) -> Option<String> {
+    40→fn is_app_running_by_bundle_id(bundle_id: &str) -> Result<bool> {
+    72→/// Attempts to gracefully quit an application using its bundle identifier (preferred) or name via
+    73→/// AppleScript. Retries several times, checking if the app is still running between attempts.
+    74→/// Returns Ok even if the app could not be quit, as uninstall should proceed.
+    75→pub fn quit_app_gracefully(app_path: &Path) -> Result<()> {
+
+src/utils/mod.rs
+     2→pub mod applescript …
+     4→pub mod xattr …
+
+src/utils/xattr.rs
+    11→fn get_timestamp_hex() -> String {
+    20→fn get_uuid_hex() -> String {
+    24→/// true  → file **has** a com.apple.quarantine attribute  
+    25→/// false → attribute missing
+    26→pub fn has_quarantine_attribute(path: &Path) -> anyhow::Result<bool> {
+    37→/// Apply our standard quarantine only *if* none exists already.
+    38→///
+    39→/// `agent` should be the same string you currently pass to
+    40→/// `set_quarantine_attribute()` – usually the cask token.
+    41→pub fn ensure_quarantine_attribute(path: &Path, agent: &str) -> anyhow::Result<()> {
+    50→/// Sets the 'com.apple.quarantine' extended attribute on a file or directory.
+    51→/// Uses flags commonly seen for user-initiated downloads (0081).
+    52→/// Logs errors assertively, as failure is critical for correct behavior.
+    53→pub fn set_quarantine_attribute(path: &Path, agent_name: &str) -> Result<()> {
+
+src/pipeline/engine.rs
+    13→use super::worker;
+    16→pub fn start_worker_pool_manager …
+
+src/pipeline/mod.rs
+     1→pub mod engine …
+     2→pub mod worker …
+
+src/pipeline/worker.rs
+    18→use crate::check::installed::{InstalledPackageInfo, PackageType as CorePackageType};
+    19→use crate::{build, install, uninstall, upgrade};
+    21→pub(super) fn execute_sync_job …
+    37→fn do_execute_sync_steps …
+
+src/uninstall/cask.rs
+    37→/// Performs a "soft" uninstall for a Cask.
+    38→/// It processes the `CASK_INSTALL_MANIFEST.json` to remove linked artifacts
+    39→/// and then updates the manifest to mark the cask as not currently installed.
+    40→/// The Cask's versioned directory in the Caskroom is NOT removed.
+    41→pub fn uninstall_cask_artifacts(info: &InstalledPackageInfo, config: &Config) -> Result<()> {
+   132→/// Performs a "zap" uninstall for a Cask, removing files defined in `zap` stanzas
+   133→/// and cleaning up the private store. Also marks the cask as uninstalled in its manifest.
+   134→pub async fn zap_cask_artifacts(
+   135→    info: &InstalledPackageInfo,
+   136→    cask_def: &Cask,
+   137→    config: &Config,
+   138→) -> Result<()> {
+   497→fn process_artifact_uninstall_core …
+   576→fn forget_pkgutil_receipt …
+   610→fn unload_and_remove_launchd …
+   678→fn trash_path …
+   696→fn run_zap_script …
+   730→fn log_command_output …
+   763→fn cleanup_private_store …
+
+src/uninstall/common.rs
+    11→pub struct UninstallOptions …
+    12→    pub skip_zap: bool,
+    13→}
+    22→pub(crate) fn remove_filesystem_artifact …
+   108→pub(crate) fn expand_tilde …
+   119→pub(crate) fn is_safe_path …
+
+src/uninstall/formula.rs
+    10→pub fn uninstall_formula_artifacts …
+
+src/uninstall/mod.rs
+     3→pub mod cask …
+     4→pub mod common …
+     5→pub mod formula …
+
+src/upgrade/bottle.rs
+    14→/// Upgrades a formula that is installed from a bottle.
+    15→///
+    16→/// This involves:
+    17→/// 1. Uninstalling the old version of the formula.
+    18→/// 2. Installing the new bottle.
+    19→/// 3. Linking the new version.
+    20→pub async fn upgrade_bottle_formula(
+    21→    formula: &Formula,
+    22→    new_bottle_download_path: &Path,
+    23→    old_install_info: &InstalledPackageInfo,
+    24→    config: &Config,
+    25→    http_client: Arc<reqwest::Client>, /* Added for download_bottle if needed, though path is
+    26→                                        * pre-downloaded */
+    27→) -> SpsResult<PathBuf> {
+
+src/upgrade/cask.rs
+    14→/// Upgrades a cask package using Homebrew's proven strategy.
+    15→pub async fn upgrade_cask_package(
+    16→    cask: &Cask,
+    17→    new_cask_download_path: &Path,
+    18→    old_install_info: &InstalledPackageInfo,
+    19→    config: &Config,
+    20→) -> SpsResult<()> {
+
+src/upgrade/mod.rs
+     3→pub mod bottle …
+     4→pub mod cask …
+     5→pub mod source …
+
+src/upgrade/source.rs
+    13→/// Upgrades a formula that was/will be installed from source.
+    14→///
+    15→/// This involves:
+    16→/// 1. Uninstalling the old version of the formula.
+    17→/// 2. Building and installing the new version from source.
+    18→/// 3. Linking the new version.
+    19→pub async fn upgrade_source_formula(
+    20→    formula: &Formula,
+    21→    new_source_download_path: &Path,
+    22→    old_install_info: &InstalledPackageInfo,
+    23→    config: &Config,
+    24→    all_installed_dependency_paths: &[PathBuf], // For build environment
+    25→) -> SpsResult<PathBuf> {
+
+src/install/cask/dmg.rs
+    12→pub fn mount_dmg …
+    43→pub fn unmount_dmg …
+    88→fn parse_mount_point(output: &[u8]) -> Result<PathBuf> {
+   152→/// Extracts the contents of a mounted DMG to a staging directory using `ditto`.
+   153→pub fn extract_dmg_to_stage(dmg_path: &Path, stage_dir: &Path) -> Result<()> {
+
+src/install/cask/helpers.rs
+     7→/// Robustly removes a file or directory, handling symlinks and permissions.
+     8→/// If `use_sudo_if_needed` is true, will attempt `sudo rm -rf` on permission errors.
+     9→pub fn remove_path_robustly(path: &Path, _config: &Config, use_sudo_if_needed: bool) -> bool {
+    72→/// Recursively cleans up empty parent directories in the private cask store.
+    73→/// Starts from the given path and walks up, removing empty directories until a non-empty or root is
+    74→/// found.
+    75→pub fn cleanup_empty_parent_dirs_in_private_store(start_path: &Path, stop_at: &Path) {
+
+src/install/cask/mod.rs
+     1→pub mod artifacts …
+     2→pub mod dmg …
+     3→pub mod helpers …
+    22→use crate::install::extract;
+    25→pub struct CaskInstallManifest …
+    36→/// Returns the path to the cask's version directory in the private store.
+    37→pub fn sps_private_cask_version_dir(cask: &Cask, config: &Config) -> PathBuf {
+    42→/// Returns the path to the cask's token directory in the private store.
+    43→pub fn sps_private_cask_token_dir(cask: &Cask, config: &Config) -> PathBuf {
+    47→/// Returns the path to the main app bundle for a cask in the private store.
+    48→/// This assumes the primary app bundle is named as specified in the cask's artifacts.
+    49→pub fn sps_private_cask_app_path(cask: &Cask, config: &Config) -> Option<PathBuf> {
+    73→pub async fn download_cask …
+    77→pub async fn download_cask_with_progress …
+   232→pub fn install_cask …
+   580→pub fn write_receipt …
+   612→pub fn write_cask_manifest …
+   683→/// Recursively cleans up empty parent directories in the private cask store.
+   684→/// Starts from the given path and walks up, removing empty directories until a non-empty or root is
+   685→/// found.
+   686→pub fn cleanup_empty_parent_dirs_in_private_store(start_path: &Path, stop_at: &Path) {
+
+src/install/bottle/exec.rs
+    25→pub async fn download_bottle …
+    33→pub async fn download_bottle_with_progress …
+    44→pub async fn download_bottle_with_progress_and_cache_info …
+   210→pub fn get_bottle_for_platform …
+   331→pub fn install_bottle …
+  1293→fn apply_install_name_tool_change …
+
+src/install/bottle/link.rs
+    15→const STANDARD_KEG_DIRS …
+    19→pub fn link_formula_artifacts …
+   476→pub fn unlink_formula_artifacts …
+
+src/install/bottle/macho.rs
+    35→const MH_MAGIC …
+    37→const MH_MAGIC_64 …
+    39→const MACHO_HEADER32_SIZE …
+    41→const MACHO_HEADER64_SIZE …
+    46→struct PatchInfo …
+    55→pub struct SkippedPath …
+    56→    pub old_path: String,
+    57→    pub new_path: String,
+    58→}
+    64→pub fn patch_macho_file …
+    81→pub fn patch_macho_file …
+   162→const AR_MAGIC …
+   370→fn find_and_replace_placeholders …
+
+src/install/bottle/mod.rs
+    13→pub mod exec …
+    14→pub mod link …
+    15→pub mod macho …
+    17→/// Download formula resources from the internet asynchronously.
+    18→pub async fn download_formula(
+    19→    formula: &Formula,
+    20→    config: &Config,
+    21→    client: &reqwest::Client,
+    22→) -> Result<PathBuf> {
+    33→/// Checks if a suitable bottle exists for the current platform, considering fallbacks.
+    34→pub fn has_bottle_for_current_platform(formula: &Formula) -> bool {
+   159→pub fn get_formula_cellar_path …
+   165→pub fn write_receipt …
 
 src/build/compile/cargo.rs
     12→pub fn cargo_build …
@@ -47,6 +321,15 @@ src/build/compile/meson.rs
     12→pub fn meson_build …
 
 src/build/compile/mod.rs
+    20→mod cargo …
+    21→mod cmake …
+    22→mod go …
+    23→mod make …
+    24→mod meson …
+    25→mod perl …
+    26→mod python …
+    36→const SUPPORTED_ARCHIVE_EXTENSIONS …
+    37→pub(crate) const RECOGNISED_SINGLE_FILE_EXTENSIONS …
     40→pub async fn download_source …
     44→pub async fn download_source_with_progress …
    293→pub async fn build_from_source …
@@ -57,363 +340,54 @@ src/build/compile/perl.rs
 src/build/compile/python.rs
     13→pub fn python_build …
 
-src/build/env.rs
-    15→const ENV_VARS_TO_REMOVE …
-   123→const ENV_VARS_TO_KEEP …
-   139→/// Represents the sanitized build environment, mimicking Homebrew's "superenv".
-   140→#[derive(Debug, Clone)]
-   141→pub struct BuildEnvironment {
-   142→    /// The final map of environment variables to be used for build commands.
-   143→    vars: HashMap<String, String>,
-   144→    /// The ordered list of directories constituting the final PATH.
-   145→    #[allow(dead_code)]
-   146→    path_dirs: Vec<PathBuf>,
-   147→    /// The root installation directory forsps(e.g., /opt/homebrew or /usr/local).
-   148→    #[allow(dead_code)]
-   149→    sps_prefix: PathBuf,
-   150→    /// The specific installation prefix for the formula being built.
-   151→    #[allow(dead_code)]
-   152→    formula_install_prefix: PathBuf,
-   153→    /// Resolved path to the C compiler.
-   154→    #[allow(dead_code)]
-   155→    cc: PathBuf,
-   156→    /// Resolved path to the C++ compiler.
-   157→    #[allow(dead_code)]
-   158→    cxx: PathBuf,
-   159→    /// Resolved path to the macOS SDK (or "/" if not applicable).
-   160→    #[allow(dead_code)]
-   161→    sdk_path: PathBuf,
-   162→}
-   164→impl BuildEnvironment {
-   166→    pub fn new<F: FormulaDependencies>(
-   167→        formula: &F,
-   168→        sps_prefix: &Path,
-   169→        cellar_path: &Path,
-   170→        all_installed_opt_paths: &[PathBuf],
-   171→    ) -> Result<Self> {
-   463→    pub fn apply_to_command(&self, command: &mut std::process::Command) {
-   476→    pub fn get_path_string(&self) -> Option<&str> {
-   482→    pub fn get_vars(&self) -> &HashMap<String, String> {
-   488→    pub fn get_var(&self, key: &str) -> Option<&str> {
-   495→fn filter_initial_environment …
-
-src/build/mod.rs
-     1→pub mod compile;
-     2→pub mod env;
-
-src/check/installed.rs
-    13→#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-    14→pub enum PackageType {
-    15→    Formula,
-    16→    Cask,
-    17→}
-    19→#[derive(Debug, Clone, Serialize, Deserialize)]
-    20→pub struct InstalledPackageInfo {
-    21→    pub name: String,
-    22→    pub version: String, // This will now store keg.version_str
-    23→    pub pkg_type: PackageType,
-    24→    pub path: PathBuf,
-    25→}
-    29→fn handle_dir_entry …
-    39→pub async fn get_installed_packages …
-   140→pub async fn get_installed_package …
-
-src/check/mod.rs
-     1→pub mod installed;
-     2→pub mod update;
-
-src/check/update.rs
-    22→#[derive(Debug, Clone)]
-    23→pub struct UpdateInfo {
-    24→    pub name: String,
-    25→    pub installed_version: String,
-    26→    pub available_version: String,
-    27→    pub pkg_type: PackageType,
-    28→    pub target_definition: InstallTargetIdentifier,
-    29→}
-    33→async fn ensure_api_data_cached …
-    89→pub async fn check_for_updates …
-
-src/install/bottle/exec.rs
-    25→pub async fn download_bottle …
-    33→pub async fn download_bottle_with_progress …
-    44→pub async fn download_bottle_with_progress_and_cache_info …
-   210→pub fn get_bottle_for_platform …
-   331→pub fn install_bottle …
-
-src/install/bottle/link.rs
-    19→pub fn link_formula_artifacts …
-   476→pub fn unlink_formula_artifacts …
-
-src/install/bottle/macho.rs
-    35→const MH_MAGIC …
-    37→const MH_MAGIC_64 …
-    39→const MACHO_HEADER32_SIZE …
-    41→const MACHO_HEADER64_SIZE …
-    46→struct PatchInfo {
-    52→/// Container for paths that couldn't be patched due to length constraints
-    53→#[cfg(target_os = "macos")]
-    54→#[derive(Debug, Clone)]
-    55→pub struct SkippedPath {
-    56→    pub old_path: String,
-    57→    pub new_path: String,
-    58→}
-    81→pub fn patch_macho_file(
-    82→    _path: &Path,
-    83→    _replacements: &HashMap<String, String>,
-    84→) -> Result<(bool, Vec<SkippedPath>)> {
-   162→const AR_MAGIC …
-
-src/install/bottle/mod.rs
-    13→pub mod exec;
-    14→pub mod link;
-    15→pub mod macho;
-    18→pub async fn download_formula(
-    19→    formula: &Formula,
-    20→    config: &Config,
-    21→    client: &reqwest::Client,
-    22→) -> Result<PathBuf> {
-    34→pub fn has_bottle_for_current_platform(formula: &Formula) -> bool {
-   159→pub fn get_formula_cellar_path …
-   165→pub fn write_receipt …
-
 src/install/cask/artifacts/app.rs
-    16→pub fn find_primary_app_bundle_in_dir …
     49→pub fn install_app_from_staged …
    550→fn remove_path_robustly …
 
 src/install/cask/artifacts/audio_unit_plugin.rs
-    20→pub fn install_audio_unit_plugin …
 
 src/install/cask/artifacts/binary.rs
-    23→pub fn install_binary …
 
 src/install/cask/artifacts/colorpicker.rs
-    20→pub fn install_colorpicker …
 
 src/install/cask/artifacts/dictionary.rs
-    25→pub fn install_dictionary …
 
 src/install/cask/artifacts/font.rs
-    21→pub fn install_font …
 
 src/install/cask/artifacts/input_method.rs
-    17→pub fn install_input_method …
 
 src/install/cask/artifacts/installer.rs
-    47→pub fn run_installer …
 
 src/install/cask/artifacts/internet_plugin.rs
-    21→pub fn install_internet_plugin …
 
 src/install/cask/artifacts/keyboard_layout.rs
-    17→pub fn install_keyboard_layout …
 
 src/install/cask/artifacts/manpage.rs
     18→static MANPAGE_RE …
-    24→pub fn install_manpage …
 
 src/install/cask/artifacts/mdimporter.rs
-    21→pub fn install_mdimporter …
 
 src/install/cask/artifacts/mod.rs
-     1→pub mod app;
-     2→pub mod audio_unit_plugin;
-     3→pub mod binary;
-     4→pub mod colorpicker;
-     5→pub mod dictionary;
-     6→pub mod font;
-     7→pub mod input_method;
-     8→pub mod installer;
-     9→pub mod internet_plugin;
-    10→pub mod keyboard_layout;
-    11→pub mod manpage;
-    12→pub mod mdimporter;
-    13→pub mod pkg;
-    14→pub mod preflight;
-    15→pub mod prefpane;
-    16→pub mod qlplugin;
-    17→pub mod screen_saver;
-    18→pub mod service;
-    19→pub mod suite;
-    20→pub mod uninstall;
-    21→pub mod vst3_plugin;
-    22→pub mod vst_plugin;
-    23→pub mod zap;
 
 src/install/cask/artifacts/pkg.rs
-    13→pub fn install_pkg_from_path …
 
 src/install/cask/artifacts/preflight.rs
-    13→pub fn run_preflight …
 
 src/install/cask/artifacts/prefpane.rs
-    21→pub fn install_prefpane …
 
 src/install/cask/artifacts/qlplugin.rs
-    20→pub fn install_qlplugin …
 
 src/install/cask/artifacts/screen_saver.rs
-    20→pub fn install_screen_saver …
 
 src/install/cask/artifacts/service.rs
-    21→pub fn install_service …
 
 src/install/cask/artifacts/suite.rs
-    20→pub fn install_suite …
 
 src/install/cask/artifacts/uninstall.rs
-     9→pub fn record_uninstall …
 
 src/install/cask/artifacts/vst3_plugin.rs
-    20→pub fn install_vst3_plugin …
 
 src/install/cask/artifacts/vst_plugin.rs
-    20→pub fn install_vst_plugin …
 
 src/install/cask/artifacts/zap.rs
-    18→pub fn install_zap …
    254→fn expand_tilde …
-
-src/install/cask/dmg.rs
-    12→pub fn mount_dmg …
-    43→pub fn unmount_dmg …
-    88→fn parse_mount_point …
-   153→pub fn extract_dmg_to_stage(dmg_path: &Path, stage_dir: &Path) -> Result<()> {
-
-src/install/cask/helpers.rs
-     9→pub fn remove_path_robustly(path: &Path, _config: &Config, use_sudo_if_needed: bool) -> bool {
-    75→pub fn cleanup_empty_parent_dirs_in_private_store(start_path: &Path, stop_at: &Path) {
-
-src/install/cask/mod.rs
-     1→pub mod artifacts;
-     2→pub mod dmg;
-     3→pub mod helpers;
-    24→#[derive(Debug, Clone, Serialize, Deserialize)]
-    25→pub struct CaskInstallManifest {
-    26→    pub manifest_format_version: String,
-    27→    pub token: String,
-    28→    pub version: String,
-    29→    pub installed_at: u64,
-    30→    pub artifacts: Vec<InstalledArtifact>,
-    31→    pub primary_app_file_name: Option<String>,
-    32→    pub is_installed: bool,              // New flag for soft uninstall
-    33→    pub cask_store_path: Option<String>, // Path to private store app, if available
-    34→}
-    37→pub fn sps_private_cask_version_dir(cask: &Cask, config: &Config) -> PathBuf {
-    43→pub fn sps_private_cask_token_dir(cask: &Cask, config: &Config) -> PathBuf {
-    49→pub fn sps_private_cask_app_path(cask: &Cask, config: &Config) -> Option<PathBuf> {
-    73→pub async fn download_cask …
-    77→pub async fn download_cask_with_progress …
-   232→pub fn install_cask …
-   580→pub fn write_receipt(
-   581→    cask: &Cask,
-   582→    cask_version_install_path: &Path,
-   583→    artifacts: Vec<String>,
-   584→) -> Result<()> {
-   612→pub fn write_cask_manifest …
-   686→pub fn cleanup_empty_parent_dirs_in_private_store(start_path: &Path, stop_at: &Path) {
-
-src/install/devtools.rs
-     9→pub fn find_compiler(name: &str) -> Result<PathBuf> {
-    78→pub fn find_sdk_path() -> Result<PathBuf> {
-   123→pub fn get_macos_version() -> Result<String> {
-   160→pub fn get_arch_flag() -> String {
-
-src/install/extract.rs
-   204→#[cfg(target_os = "macos")]
-   205→pub fn quarantine_extracted_apps_in_stage(stage_dir: &Path, agent_name: &str) -> Result<()> {
-   206→    use std::fs;
-   207→
-      →…
-   235→pub fn extract_archive(
-   236→    archive_path: &Path,
-   237→    target_dir: &Path,
-   238→    strip_components: usize,
-   239→    archive_type: &str,
-   240→) -> Result<()> {
-   302→fn extract_xz_tar_archive …
-   343→struct DeferredHardLink {
-
-src/install/mod.rs
-    11→pub mod bottle;
-    12→pub mod cask;
-    13→pub mod devtools;
-    14→pub mod extract;
-    17→pub fn get_formula_opt_path(formula: &Formula, config: &Config) -> PathBuf {
-
-src/lib.rs
-     4→pub mod build;
-     5→pub mod check;
-     6→pub mod install;
-     7→pub mod pipeline;
-     8→pub mod uninstall;
-     9→pub mod upgrade; // New
-    10→#[cfg(target_os = "macos")]
-    11→pub mod utils; // New
-
-src/pipeline/engine.rs
-    16→pub fn start_worker_pool_manager …
-
-src/pipeline/mod.rs
-     1→pub mod engine;
-     2→pub mod worker;
-
-src/pipeline/worker.rs
-    21→pub(super) fn execute_sync_job …
-    37→fn do_execute_sync_steps …
-
-src/uninstall/cask.rs
-    41→pub fn uninstall_cask_artifacts(info: &InstalledPackageInfo, config: &Config) -> Result<()> {
-   134→pub async fn zap_cask_artifacts(
-   135→    info: &InstalledPackageInfo,
-   136→    cask_def: &Cask,
-   137→    config: &Config,
-   138→) -> Result<()> {
-   696→fn run_zap_script …
-   730→fn log_command_output …
-
-src/uninstall/common.rs
-    10→#[derive(Debug, Clone, Default)]
-    11→pub struct UninstallOptions {
-    12→    pub skip_zap: bool,
-    13→}
-    22→pub(crate) fn remove_filesystem_artifact …
-   108→pub(crate) fn expand_tilde …
-   119→pub(crate) fn is_safe_path …
-
-src/uninstall/formula.rs
-    10→pub fn uninstall_formula_artifacts …
-
-src/uninstall/mod.rs
-     3→pub mod cask;
-     4→pub mod common;
-     5→pub mod formula;
-
-src/upgrade/bottle.rs
-    20→pub async fn upgrade_bottle_formula …
-
-src/upgrade/cask.rs
-    15→pub async fn upgrade_cask_package …
-
-src/upgrade/mod.rs
-     3→pub mod bottle;
-     4→pub mod cask;
-     5→pub mod source;
-
-src/upgrade/source.rs
-    19→pub async fn upgrade_source_formula …
-
-src/utils/applescript.rs
-    75→pub fn quit_app_gracefully(app_path: &Path) -> Result<()> {
-
-src/utils/mod.rs
-     1→#[cfg(target_os = "macos")]
-     2→pub mod applescript;
-     3→#[cfg(target_os = "macos")]
-     4→pub mod xattr;
-
-src/utils/xattr.rs
-    26→pub fn has_quarantine_attribute(path: &Path) -> anyhow::Result<bool> {
-    41→pub fn ensure_quarantine_attribute(path: &Path, agent: &str) -> anyhow::Result<()> {
-    53→pub fn set_quarantine_attribute(path: &Path, agent_name: &str) -> Result<()> {

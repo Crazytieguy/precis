@@ -2,16 +2,8 @@ use std::path::Path;
 
 use crate::Lang;
 
-use super::SymbolKind;
+use super::ItemKind;
 
-/// Classify a tree-sitter node into a `SymbolKind`, or return `None` to skip it.
-///
-/// This encapsulates the massive node-kind match plus inline filtering logic
-/// (require calls, header guards, simple typedefs, etc.). The caller should
-/// treat `None` as "this node is not a symbol" and `continue`.
-///
-/// Takes a reference to the `QueryMatch` because Python `expression_statement`
-/// classification needs to inspect the name capture text (uppercase/dunder check).
 pub(super) fn classify_node<'a>(
     node: tree_sitter::Node<'a>,
     captures: &[tree_sitter::QueryCapture<'a>],
@@ -19,58 +11,54 @@ pub(super) fn classify_node<'a>(
     source: &str,
     lang: Lang,
     path: &Path,
-) -> Option<SymbolKind> {
+) -> Option<ItemKind> {
     match node.kind() {
         // Rust
-        "function_item" | "function_signature_item" => Some(SymbolKind::Function),
-        "struct_item" => Some(SymbolKind::Struct),
-        "enum_item" => Some(SymbolKind::Enum),
-        "trait_item" => Some(SymbolKind::Trait),
-        "impl_item" => Some(SymbolKind::Impl),
-        "type_item" => Some(SymbolKind::TypeAlias),
-        "const_item" => Some(SymbolKind::Const),
-        "static_item" => Some(SymbolKind::Static),
-        "macro_definition" => Some(SymbolKind::Macro),
-        "mod_item" => Some(SymbolKind::Module),
+        "function_item" | "function_signature_item" => Some(ItemKind::Function),
+        "struct_item" => Some(ItemKind::Struct),
+        "enum_item" => Some(ItemKind::Enum),
+        "trait_item" => Some(ItemKind::Trait),
+        "impl_item" => Some(ItemKind::Impl),
+        "type_item" => Some(ItemKind::TypeAlias),
+        "const_item" => Some(ItemKind::Const),
+        "static_item" => Some(ItemKind::Static),
+        "macro_definition" => Some(ItemKind::Macro),
+        "mod_item" => Some(ItemKind::Module),
         // TypeScript / Go
         "function_declaration" | "method_definition" | "method_signature"
-        | "abstract_method_signature" | "method_declaration" => Some(SymbolKind::Function),
-        "class_declaration" | "abstract_class_declaration" => Some(SymbolKind::Class),
-        "interface_declaration" => Some(SymbolKind::Interface),
-        "enum_declaration" => Some(SymbolKind::Enum),
-        "type_alias_declaration" => Some(SymbolKind::TypeAlias),
-        "lexical_declaration" => {
-            classify_lexical_declaration(node, source)
-        }
+        | "abstract_method_signature" | "method_declaration" => Some(ItemKind::Function),
+        "class_declaration" | "abstract_class_declaration" => Some(ItemKind::Class),
+        "interface_declaration" => Some(ItemKind::Interface),
+        "enum_declaration" => Some(ItemKind::Enum),
+        "type_alias_declaration" => Some(ItemKind::TypeAlias),
+        "lexical_declaration" => classify_lexical_declaration(node, source),
         "public_field_definition" => {
             let value_kind = node.child_by_field_name("value").map(|v| v.kind());
             if matches!(
                 value_kind,
                 Some("arrow_function" | "function_expression" | "generator_function")
             ) {
-                Some(SymbolKind::Function)
+                Some(ItemKind::Function)
             } else {
-                None // Skip plain data fields
+                None
             }
         }
-        "internal_module" => Some(SymbolKind::Module),
+        "internal_module" => Some(ItemKind::Module),
         // Go
         "type_spec" => {
             let type_child = node.child_by_field_name("type").map(|t| t.kind());
             match type_child {
-                Some("struct_type") => Some(SymbolKind::Struct),
-                Some("interface_type") => Some(SymbolKind::Interface),
-                _ => Some(SymbolKind::TypeAlias),
+                Some("struct_type") => Some(ItemKind::Struct),
+                Some("interface_type") => Some(ItemKind::Interface),
+                _ => Some(ItemKind::TypeAlias),
             }
         }
-        "type_alias" => Some(SymbolKind::TypeAlias),
-        "const_declaration" | "var_declaration" => {
-            classify_go_grouped_declaration(node)
-        }
-        "const_spec" => Some(SymbolKind::Const),
-        "var_spec" => Some(SymbolKind::Static),
+        "type_alias" => Some(ItemKind::TypeAlias),
+        "const_declaration" | "var_declaration" => classify_go_grouped_declaration(node),
+        "const_spec" => Some(ItemKind::Const),
+        "var_spec" => Some(ItemKind::Static),
         // C / C++
-        "function_definition" if lang == Lang::C => Some(SymbolKind::Function),
+        "function_definition" if lang == Lang::C => Some(ItemKind::Function),
         "class_specifier" | "struct_specifier" | "union_specifier" | "enum_specifier" => {
             classify_c_type_specifier(node)
         }
@@ -78,92 +66,82 @@ pub(super) fn classify_node<'a>(
             if is_simple_typedef_alias(node) {
                 None
             } else {
-                Some(SymbolKind::TypeAlias)
+                Some(ItemKind::TypeAlias)
             }
         }
-        "preproc_def" | "preproc_function_def" => {
-            classify_c_preproc(node, source, path)
-        }
-        "preproc_include" => Some(SymbolKind::Import),
+        "preproc_def" | "preproc_function_def" => classify_c_preproc(node, source, path),
+        "preproc_include" => Some(ItemKind::Import),
         "declaration" if lang == Lang::C => {
             if super::ast::find_descendant_of_kind(node, "function_declarator").is_some() {
-                Some(SymbolKind::Function)
+                Some(ItemKind::Function)
             } else {
-                Some(SymbolKind::Static)
+                Some(ItemKind::Static)
             }
         }
         // C++ specific
-        "namespace_definition" => Some(SymbolKind::Module),
-        "alias_declaration" => Some(SymbolKind::TypeAlias),
+        "namespace_definition" => Some(ItemKind::Module),
+        "alias_declaration" => Some(ItemKind::TypeAlias),
         // Java
-        "record_declaration" => Some(SymbolKind::Struct),
-        "annotation_type_declaration" => Some(SymbolKind::Interface),
-        "constructor_declaration" => Some(SymbolKind::Function),
-        "annotation_type_element_declaration" => Some(SymbolKind::Function),
-        "module_declaration" => Some(SymbolKind::Module),
+        "record_declaration" => Some(ItemKind::Struct),
+        "annotation_type_declaration" => Some(ItemKind::Interface),
+        "constructor_declaration" => Some(ItemKind::Function),
+        "annotation_type_element_declaration" => Some(ItemKind::Function),
+        "module_declaration" => Some(ItemKind::Module),
         "field_declaration" if lang == Lang::Java => classify_java_field(node, source),
-        "constant_declaration" if lang == Lang::Java => Some(SymbolKind::Const),
+        "constant_declaration" if lang == Lang::Java => Some(ItemKind::Const),
         // Python
-        "function_definition" => Some(SymbolKind::Function),
-        "class_definition" => Some(SymbolKind::Class),
+        "function_definition" => Some(ItemKind::Function),
+        "class_definition" => Some(ItemKind::Class),
         // Markdown / JSON / TOML / YAML
         "atx_heading" | "setext_heading" | "pair" | "table" | "table_array_element"
-        | "block_mapping_pair" => Some(SymbolKind::Section),
+        | "block_mapping_pair" => Some(ItemKind::Section),
         // Imports
-        "use_declaration" => Some(SymbolKind::Import),
+        "use_declaration" => Some(ItemKind::Import),
         "import_statement" => {
             if lang == Lang::Python || lang == Lang::JsTs {
-                Some(SymbolKind::Import)
+                Some(ItemKind::Import)
             } else {
                 None
             }
         }
-        "import_from_statement" => Some(SymbolKind::Import),
-        "import_declaration" => Some(SymbolKind::Import),
+        "import_from_statement" => Some(ItemKind::Import),
+        "import_declaration" => Some(ItemKind::Import),
         // Python module-level assignments
         "expression_statement" if lang == Lang::Python => {
             classify_python_expression(node, captures, name_idx, source)
         }
         // Lua
-        "variable_declaration" | "assignment_statement" if lang == Lang::Lua => Some(SymbolKind::Const),
+        "variable_declaration" | "assignment_statement" if lang == Lang::Lua => {
+            Some(ItemKind::Const)
+        }
         _ => None,
     }
 }
 
-/// Classify a TypeScript/JavaScript `lexical_declaration` node.
-fn classify_lexical_declaration(node: tree_sitter::Node, source: &str) -> Option<SymbolKind> {
-    // Filter out `let` and `var` — only `const` declarations are symbols.
+fn classify_lexical_declaration(node: tree_sitter::Node, source: &str) -> Option<ItemKind> {
     let keyword = node.child(0).map(|c| c.kind());
     if keyword != Some("const") {
         return None;
     }
-
     let declarator = node
         .named_children(&mut node.walk())
         .find(|c| c.kind() == "variable_declarator");
     let value_kind = declarator
         .and_then(|d| d.child_by_field_name("value"))
         .map(|v| v.kind());
-
-    // Arrow functions / function expressions assigned to const → Function
     if matches!(
         value_kind,
         Some("arrow_function" | "function_expression" | "generator_function")
     ) {
-        Some(SymbolKind::Function)
-    }
-    // CommonJS require() calls are imports, not definitions
-    else if is_require_call(declarator, source) {
+        Some(ItemKind::Function)
+    } else if is_require_call(declarator, source) {
         None
     } else {
-        Some(SymbolKind::Const)
+        Some(ItemKind::Const)
     }
 }
 
-/// Classify a Go grouped const/var declaration.
-fn classify_go_grouped_declaration(node: tree_sitter::Node) -> Option<SymbolKind> {
-    // Only capture grouped declarations (const (...) / var (...)).
-    // Standalone declarations are captured via inner const_spec/var_spec.
+fn classify_go_grouped_declaration(node: tree_sitter::Node) -> Option<ItemKind> {
     let is_grouped = (0..node.child_count())
         .filter_map(|i| node.child(i))
         .any(|c| c.kind() == "(" || c.kind() == "var_spec_list");
@@ -171,16 +149,13 @@ fn classify_go_grouped_declaration(node: tree_sitter::Node) -> Option<SymbolKind
         return None;
     }
     if node.kind() == "const_declaration" {
-        Some(SymbolKind::Const)
+        Some(ItemKind::Const)
     } else {
-        Some(SymbolKind::Static)
+        Some(ItemKind::Static)
     }
 }
 
-/// Classify C/C++ class/struct/union/enum specifiers.
-fn classify_c_type_specifier(node: tree_sitter::Node) -> Option<SymbolKind> {
-    // Only capture definitions (with body), not forward declarations.
-    // Skip specifiers inside typedef — the typedef node captures the whole thing.
+fn classify_c_type_specifier(node: tree_sitter::Node) -> Option<ItemKind> {
     node.child_by_field_name("body")?;
     if node
         .parent()
@@ -189,14 +164,17 @@ fn classify_c_type_specifier(node: tree_sitter::Node) -> Option<SymbolKind> {
         return None;
     }
     match node.kind() {
-        "enum_specifier" => Some(SymbolKind::Enum),
-        "class_specifier" => Some(SymbolKind::Class),
-        _ => Some(SymbolKind::Struct),
+        "enum_specifier" => Some(ItemKind::Enum),
+        "class_specifier" => Some(ItemKind::Class),
+        _ => Some(ItemKind::Struct),
     }
 }
 
-/// Classify C preprocessor definitions, filtering header guards and platform type defines.
-fn classify_c_preproc(node: tree_sitter::Node, source: &str, path: &Path) -> Option<SymbolKind> {
+fn classify_c_preproc(
+    node: tree_sitter::Node,
+    source: &str,
+    path: &Path,
+) -> Option<ItemKind> {
     if node.kind() == "preproc_def" {
         if is_c_header_guard(node, source, path) {
             return None;
@@ -205,21 +183,18 @@ fn classify_c_preproc(node: tree_sitter::Node, source: &str, path: &Path) -> Opt
             return None;
         }
     }
-    Some(SymbolKind::Macro)
+    Some(ItemKind::Macro)
 }
 
-/// Classify a Python `expression_statement` (module-level assignment).
 fn classify_python_expression<'a>(
     node: tree_sitter::Node<'a>,
     captures: &[tree_sitter::QueryCapture<'a>],
     name_idx: Option<u32>,
     source: &str,
-) -> Option<SymbolKind> {
-    // Must be at module level (direct child of module node)
+) -> Option<ItemKind> {
     if node.parent().map(|p| p.kind()) != Some("module") {
         return None;
     }
-    // Check if the assignment has a type annotation
     let assignment = node
         .named_children(&mut node.walk())
         .find(|c| c.kind() == "assignment");
@@ -230,33 +205,30 @@ fn classify_python_expression<'a>(
         })
         .unwrap_or(false);
     if !has_type_annotation {
-        // No type annotation — only keep UPPER_CASE or dunder names
         let name_text = name_idx
             .and_then(|idx| captures.iter().find(|c| c.index == idx))
             .and_then(|c| c.node.utf8_text(source.as_bytes()).ok())
             .unwrap_or("");
         let is_upper = !name_text.is_empty()
-            && name_text.bytes().all(|b| b.is_ascii_uppercase() || b == b'_')
+            && name_text
+                .bytes()
+                .all(|b| b.is_ascii_uppercase() || b == b'_')
             && name_text.bytes().any(|b| b.is_ascii_uppercase());
-        let is_dunder =
-            name_text.starts_with("__") && name_text.ends_with("__");
+        let is_dunder = name_text.starts_with("__") && name_text.ends_with("__");
         if !is_upper && !is_dunder {
             return None;
         }
     }
-    Some(SymbolKind::Const)
+    Some(ItemKind::Const)
 }
 
-/// Check if a variable_declarator's value is a `require()` call (CommonJS import).
-/// Handles both `const x = require('...')` and `const x = require('...').member`.
 fn is_require_call(declarator: Option<tree_sitter::Node>, source: &str) -> bool {
     let value = declarator.and_then(|d| d.child_by_field_name("value"));
     match value {
-        Some(v) if v.kind() == "call_expression" => {
-            v.child_by_field_name("function")
-                .and_then(|f| f.utf8_text(source.as_bytes()).ok())
-                == Some("require")
-        }
+        Some(v) if v.kind() == "call_expression" => v
+            .child_by_field_name("function")
+            .and_then(|f| f.utf8_text(source.as_bytes()).ok())
+            == Some("require"),
         Some(v) if v.kind() == "member_expression" => {
             v.child_by_field_name("object").is_some_and(|obj| {
                 obj.kind() == "call_expression"
@@ -270,36 +242,26 @@ fn is_require_call(declarator: Option<tree_sitter::Node>, source: &str) -> bool 
     }
 }
 
-/// Classify a Java field_declaration. Only `static final` fields (constants) in
-/// classes/enums are kept; instance fields are implementation details. Interface
-/// fields are handled separately via `constant_declaration`.
-fn classify_java_field(node: tree_sitter::Node, source: &str) -> Option<SymbolKind> {
+fn classify_java_field(node: tree_sitter::Node, source: &str) -> Option<ItemKind> {
     let modifiers = node
         .children(&mut node.walk())
         .find(|c| c.kind() == "modifiers")?;
     let has_static = has_modifier_keyword(modifiers, source, "static");
     let has_final = has_modifier_keyword(modifiers, source, "final");
     if has_static && has_final {
-        Some(SymbolKind::Const)
+        Some(ItemKind::Const)
     } else {
         None
     }
 }
 
-/// Check if a Java `modifiers` node contains a specific keyword child.
-/// Walks AST children instead of string-matching the full text to avoid
-/// false positives from annotation content (e.g. `@SuppressWarnings("static")`).
 fn has_modifier_keyword(modifiers: tree_sitter::Node, source: &str, keyword: &str) -> bool {
     let mut cursor = modifiers.walk();
-    modifiers.children(&mut cursor).any(|child| {
-        child.utf8_text(source.as_bytes()).ok() == Some(keyword)
-    })
+    modifiers
+        .children(&mut cursor)
+        .any(|child| child.utf8_text(source.as_bytes()).ok() == Some(keyword))
 }
 
-/// Check if a `type_definition` is a simple typedef alias (`typedef T name;`) where
-/// both the source type and target are plain identifiers. These are type portability
-/// boilerplate (e.g. `typedef int8_t i8;`, `typedef uint8_t u8;`) with zero architectural
-/// value.
 fn is_simple_typedef_alias(node: tree_sitter::Node) -> bool {
     let type_child = match node.child_by_field_name("type") {
         Some(t) => t,
@@ -318,11 +280,9 @@ fn is_simple_typedef_alias(node: tree_sitter::Node) -> bool {
     matches!(declarator.kind(), "type_identifier" | "primitive_type")
 }
 
-/// Check if a `preproc_def` is a C/C++ header include guard (`#define FOO_H` with no value,
-/// where the name contains the uppercased filename stem).
 fn is_c_header_guard(node: tree_sitter::Node, source: &str, path: &Path) -> bool {
     let ext = path.extension().and_then(|e| e.to_str()).unwrap_or("");
-    if !crate::is_header_extension(ext) {
+    if !crate::classify::is_header_extension(ext) {
         return false;
     }
     if node.child_by_field_name("value").is_some() {
@@ -333,14 +293,15 @@ fn is_c_header_guard(node: tree_sitter::Node, source: &str, path: &Path) -> bool
         _ => return false,
     };
     let name = match node.child_by_field_name("name") {
-        Some(n) => n.utf8_text(source.as_bytes()).unwrap_or("").to_ascii_uppercase(),
+        Some(n) => n
+            .utf8_text(source.as_bytes())
+            .unwrap_or("")
+            .to_ascii_uppercase(),
         None => return false,
     };
     name.contains(&stem)
 }
 
-/// Check if a `preproc_def` is a platform-compatibility type define
-/// (`#define UINT32_TYPE uint32_t`, `#define INT8_TYPE signed char`, etc.)
 fn is_platform_type_define(node: tree_sitter::Node, source: &str) -> bool {
     let name = match node.child_by_field_name("name") {
         Some(n) => n.utf8_text(source.as_bytes()).unwrap_or(""),
@@ -357,6 +318,8 @@ fn is_platform_type_define(node: tree_sitter::Node, source: &str) -> bool {
     !value.is_empty()
         && value.split_whitespace().all(|token| {
             token.starts_with(|c: char| c.is_ascii_alphabetic() || c == '_')
-                && token.chars().all(|c| c.is_ascii_alphanumeric() || c == '_')
+                && token
+                    .chars()
+                    .all(|c| c.is_ascii_alphanumeric() || c == '_')
         })
 }

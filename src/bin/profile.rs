@@ -3,15 +3,13 @@
 //! Usage:
 //!   cargo run --release --bin profile -- <path> [--budget N]
 
-use std::path::Path;
+use std::path::PathBuf;
 use std::time::Instant;
-
-use precis::{format, render, schedule, walk, Corpus};
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
-    let path = args.get(1).unwrap_or_else(|| {
-        eprintln!("usage: profile <path> [--budget N]");
+    let path = args.get(1).map(PathBuf::from).unwrap_or_else(|| {
+        eprintln!("Usage: profile <path> [--budget N]");
         std::process::exit(1);
     });
     let budget = args
@@ -19,70 +17,16 @@ fn main() {
         .position(|a| a == "--budget")
         .and_then(|i| args.get(i + 1))
         .and_then(|s| s.parse().ok())
-        .unwrap_or(4000usize);
+        .unwrap_or(4000);
 
-    let root = Path::new(path).canonicalize().unwrap_or_else(|e| {
-        eprintln!("error: {}: {}", path, e);
-        std::process::exit(1);
-    });
+    let start = Instant::now();
+    let output = precis::render(&path, budget, None);
+    let elapsed = start.elapsed();
 
-    eprintln!("profiling {} (budget {})\n", root.display(), budget);
-
-    let mut stages: Vec<(&str, std::time::Duration)> = Vec::new();
-
-    // 1. Walk
-    let t = Instant::now();
-    let files = walk::discover_source_files(&root);
-    stages.push(("walk", t.elapsed()));
-
-    // 2. Read
-    let t = Instant::now();
-    let sources = precis::read_sources(&files);
-    stages.push(("read", t.elapsed()));
-
-    // 3. Build file data (fused: parse + layout + classify)
-    let t = Instant::now();
-    let file_data = precis::build_file_data(&root, &files, sources);
-    stages.push(("build_file_data", t.elapsed()));
-
-    let corpus = Corpus { files: &file_data };
-
-    // 4. Build groups
-    let t = Instant::now();
-    let built = schedule::build_groups(&corpus, budget);
-    stages.push(("groups", t.elapsed()));
-
-    // 5. Schedule
-    let t = Instant::now();
-    let sched = schedule::schedule(&built, &corpus, None);
-    stages.push(("schedule", t.elapsed()));
-
-    // 6. Render
-    let t = Instant::now();
-    let output = render::render_scheduled(&corpus, &sched);
-    stages.push(("render", t.elapsed()));
-
-    // 7. Count tokens
-    let t = Instant::now();
-    let tokens = format::count_tokens(&output);
-    stages.push(("tokens", t.elapsed()));
-
-    // Summary
-    let total: std::time::Duration = stages.iter().map(|(_, d)| *d).sum();
-    let symbol_count: usize = file_data.iter().map(|f| f.symbols.len()).sum();
-
-    eprintln!("{:<16} {:>10} {:>6}", "stage", "time", "%");
-    eprintln!("{}", "-".repeat(34));
-    for (name, dur) in &stages {
-        let pct = dur.as_secs_f64() / total.as_secs_f64() * 100.0;
-        eprintln!("{:<16} {:>10.1?} {:>5.1}%", name, dur, pct);
-    }
-    eprintln!("{}", "-".repeat(34));
-    eprintln!("{:<16} {:>10.1?}", "total", total);
-    eprintln!();
-    eprintln!("files:   {}", file_data.len());
-    eprintln!("symbols: {}", symbol_count);
-    eprintln!("groups:  {}", built.groups.len());
+    let tokens = precis::format::count_tokens(&output);
+    eprintln!("path:    {}", path.display());
+    eprintln!("budget:  {}", budget);
     eprintln!("tokens:  {}", tokens);
-
+    eprintln!("chars:   {}", output.len());
+    eprintln!("time:    {:.1?}", elapsed);
 }

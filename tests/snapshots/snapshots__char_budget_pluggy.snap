@@ -2,331 +2,340 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (2879 tokens, 9404 chars)
+budget: 4000 (2882 tokens, 9383 chars)
 
 README.rst
-     1→====================================================
-     2→pluggy - A minimalist production ready plugin system
-     3→====================================================
-     4→
-     5→|pypi| |conda-forge| |versions| |github-actions| |gitter| |black| |codecov|
-     6→
-     7→This is the core framework used by the `pytest`_, `tox`_, and `devpi`_ projects.
-     8→
-     9→Please `read the docs`_ to learn more!
-    10→
-    11→A definitive example
-    12→====================
-    13→.. code-block:: python
-    14→
-    15→    import pluggy
-    16→
-    17→    hookspec = pluggy.HookspecMarker("myproject")
-    18→    hookimpl = pluggy.HookimplMarker("myproject")
-    19→
-    20→
-    21→    class MySpec:
-    22→        """A hook specification namespace."""
-    23→
-    24→        @hookspec
-    25→        def myhook(self, arg1, arg2):
-    26→            """My special little hook that you can customize."""
-    27→
-    28→
-    29→    class Plugin_1:
-    30→        """A hook implementation namespace."""
-    31→
-    32→        @hookimpl
-    33→        def myhook(self, arg1, arg2):
-    34→            print("inside Plugin_1.myhook()")
-    35→            return arg1 + arg2
-    36→
-    37→
-    38→    class Plugin_2:
-    39→        """A 2nd hook implementation namespace."""
-    40→
-    41→        @hookimpl
-    42→        def myhook(self, arg1, arg2):
-    43→            print("inside Plugin_2.myhook()")
-    44→            return arg1 - arg2
-    45→
-    46→
-      →…
 
-changelog/
-
-pyproject.toml
-     1→[build-system]
-     8→[project]
-    38→[dependency-groups]
-
-CHANGELOG.rst
-     1→=========
-     2→Changelog
-     3→=========
-     4→
-      →…
+downstream/README.md
 
 MANIFEST.in
-     1→include CHANGELOG
-     2→include README.rst
-     3→include setup.py
-     4→include tox.ini
-     5→include LICENSE
-     6→graft testing
-     7→recursive-exclude * *.pyc *.pyo
 
 codecov.yml
      1→coverage:
+     2→  status:
+     3→    project: true
+     4→    patch: true
+     5→    changes: true
      7→comment: off
 
+pyproject.toml
+     1→[build-system]
+     2→requires = [
+     3→  "setuptools>=65.0",
+     4→  "setuptools-scm[toml]>=8.0",
+     5→]
+     6→build-backend = "setuptools.build_meta"
+     7→
+     8→[project]
+     9→name = "pluggy"
+    10→license = {text = "MIT"}
+    11→authors = [{name = "Holger Krekel"}]
+    12→maintainers = [{name="pytest core team", email="core@pytest.org"}]
+    13→classifiers = [
+    14→  "Development Status :: 6 - Mature",
+    15→  "Intended Audience :: Developers",
+    16→  "License :: OSI Approved :: MIT License",
+    17→  "Operating System :: POSIX",
+    18→  "Operating System :: Microsoft :: Windows",
+    19→  "Operating System :: MacOS :: MacOS X",
+    20→  "Topic :: Software Development :: Testing",
+    21→  "Topic :: Software Development :: Libraries",
+    22→  "Topic :: Utilities",
+    23→  "Programming Language :: Python :: Implementation :: CPython",
+    24→  "Programming Language :: Python :: Implementation :: PyPy",
+    25→  "Programming Language :: Python :: 3",
+    26→  "Programming Language :: Python :: 3 :: Only",
+    27→  "Programming Language :: Python :: 3.10",
+    28→  "Programming Language :: Python :: 3.11",
+    29→  "Programming Language :: Python :: 3.12",
+    30→  "Programming Language :: Python :: 3.13",
+    31→  "Programming Language :: Python :: 3.14",
+    32→]
+    33→description = "plugin and hook calling mechanisms for python"
+    34→readme = {file = "README.rst", content-type = "text/x-rst"}
+    35→requires-python = ">=3.10"
+    36→
+    37→dynamic = ["version"]
+    38→[dependency-groups]
+    39→dev = ["pre-commit", "tox"]
+    40→testing = ["pytest", "pytest-benchmark", "coverage"]
+    41→
+    42→
+    43→[tool.setuptools]
+    44→packages = ["pluggy"]
+    45→package-dir =  {""="src"}
+    46→package-data = {"pluggy" = ["py.typed"]}
+    47→
+    48→
+    49→[tool.ruff.lint]
+    50→extend-select = [
+    51→  "I",  # isort
+    52→  "F","E", "W",
+    53→  "UP", "ANN",
+    54→]
+    55→extend-ignore = ["ANN401"]
+    56→
+    57→[tool.ruff.lint.extend-per-file-ignores]
+    58→"testing/*.py" = ["ANN001", "ANN002", "ANN003",  "ANN201", "ANN202","ANN204" ,]
+    59→"docs/*.py" = ["ANN001", "ANN002", "ANN003",  "ANN201", "ANN202","ANN204" ,]
+    60→
+    61→[tool.ruff.lint.isort]
+    62→force-single-line = true
+    63→combine-as-imports = true
+    64→force-sort-within-sections = true
+    65→order-by-type = false
+    66→known-local-folder = ["pluggy"]
+    67→lines-after-imports = 2
+    68→
+    69→[tool.setuptools_scm]
+    71→[tool.uv]
+    72→default-groups = ["dev", "testing"]
+    73→
+    74→[tool.towncrier]
+    75→package = "pluggy"
+    76→package_dir = "src/pluggy"
+    77→filename = "CHANGELOG.rst"
+    78→directory = "changelog/"
+    79→title_format = "pluggy {version} ({project_date})"
+    80→template = "changelog/_template.rst"
+    81→
+    82→  [[tool.towncrier.type]]
+   107→  [[tool.towncrier.type]]
+   108→  directory = "trivial"
+   109→  name = "Trivial/Internal Changes"
+   110→  showcontent = true
+   111→
+   112→[tool.mypy]
+   113→mypy_path = "src"
+   114→check_untyped_defs = true
+   115→# Hopefully we can set this someday!
+   116→# disallow_any_expr = true
+   117→disallow_any_generics = true
+   118→disallow_any_unimported = true
+   119→disallow_subclassing_any = true
+   120→disallow_untyped_calls = true
+   121→disallow_untyped_decorators = true
+   122→ignore_missing_imports = true
+   123→implicit_reexport = false
+   124→no_implicit_optional = true
+   125→show_error_codes = true
+   126→strict_equality = true
+   127→strict_optional = true
+   128→warn_redundant_casts = true
+   129→warn_return_any = true
+   130→warn_unreachable = true
+   131→warn_unused_configs = true
+   132→warn_unused_ignores = true
+
+tox.ini
+
 docs/api_reference.rst
-     1→:orphan:
+
+docs/conf.py
+   106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
+   130→def setup(app: "sphinx.application.Sphinx") -> None:
+
+docs/index.rst
+
+docs/requirements.txt
+
+docs/_static/img/plug.png
+
+downstream/conda.sh
+
+downstream/datasette.sh
+
+downstream/devpi.sh
+
+downstream/hatch.sh
+
+downstream/pytest.sh
+
+downstream/python-lsp-server.sh
+
+downstream/tox.sh
+
+src/pluggy/__init__.py
+     1→__all__ …
+    32→def __getattr__(name: str) -> str:
+
+src/pluggy/_callers.py
+     2→Call loop machinery
+     3→"""
+    22→# Need to distinguish between old- and new-style hook wrappers.
+    23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
+    24→Teardown …
+    27→def run_old_style_hookwrapper(
+    28→    hook_impl: HookImpl, hook_name: str, args: Sequence[object]
+    29→) -> Teardown:
+    60→def _raise_wrapfail(
+    61→    wrap_controller: Generator[None, object, object],
+    62→    msg: str,
+    63→) -> NoReturn:
+    70→def _warn_teardown_exception(
+    71→    hook_name: str, hook_impl: HookImpl, e: BaseException
+    72→) -> None:
+    82→def _multicall(
+    83→    hook_name: str,
+    84→    hook_impls: Sequence[HookImpl],
+    85→    caller_kwargs: Mapping[str, object],
+    86→    firstresult: bool,
+    87→) -> object | list[object]:
+
+src/pluggy/_hooks.py
+     2→Internal hook annotation, representation and calling machinery.
+     3→"""
+    28→_T …
+    29→_F …
+    31→_Namespace …
+    32→_Plugin …
+    33→_HookExec …
+    37→_HookImplFunction …
+    40→class HookspecOpts …
+    56→class HookimplOpts …
+    78→class HookspecMarker …
+   165→class HookimplMarker …
+   281→def normalize_hookimpl_opts(opts: HookimplOpts) -> None:
+   290→_PYPY …
+   293→def varnames(func: object) -> tuple[tuple[str, ...], tuple[str, ...]]:
+   359→class HookRelay …
+   377→_CallHistory …
+   382→class HookCaller …
+   593→class _SubsetHookCaller …
+   639→class HookImpl …
+   697→class HookSpec …
+
+src/pluggy/_manager.py
+    36→_BeforeTrace …
+    37→_AfterTrace …
+    42→def _warn_for_function(warning: Warning, function: Callable[..., object]) -> None:
+    52→class PluginValidationError …
+    65→class DistFacade …
+    83→class PluginManager …
+   525→def _formatdef(func: Callable[..., object]) -> str:
+
+src/pluggy/_result.py
+     2→Hook wrapper "result" utilities.
+     3→"""
+    16→_ExcInfo …
+    20→class HookCallError …
+    25→class Result …
+
+src/pluggy/_tracing.py
+     2→Tracing utils
+     3→"""
+    16→class TagTracer …
+    59→class TagTracerSub …
+
+src/pluggy/_warnings.py
+     4→class PluggyWarning …
+    11→class PluggyTeardownRaisedWarning …
+
+src/pluggy/py.typed
+
+changelog/README.rst
+
+docs/examples/toy-example.py
+     8→class MySpec …
+    16→class Plugin_1 …
+    25→class Plugin_2 …
+
+scripts/release.py
+     2→Release script.
+     3→"""
+    15→def create_branch(version: str) -> Repo:
+    30→def get_upstream(repo: Repo) -> Remote:
+    39→def pre_release(version: str) -> None:
+    50→def changelog(version: str, write_out: bool = False) -> None:
+    59→def main() -> int:
+
+scripts/towncrier-draft-to-file.py
+     5→def main() -> int:
+
+docs/examples/eggsample/setup.py
+
+changelog/590.trivial.rst
+
+changelog/_template.rst
+
+CHANGELOG.rst
+
+AGENTS.md
+     1→# AGENTS.md
+
+CLAUDE.md
+     1→# CLAUDE.md
+     5→## Project Overview
+    10→## Development Commands
+    14→### Testing
+    15→- `uv run pytest` - Run all tests (prefer running all tests for quick feedback)
+    18→### Code Quality
+    19→- `uv run pre-commit run -a` - Run all pre-commit hooks (linting, formatting, type checking)
+    22→## Development Process
+    32→## Core Architecture
+    34→### Main Components
+    42→### Package Structure
+    43→- `src/pluggy/` - Main package source
+    48→## Configuration Files
+    49→- `pyproject.toml` - Project metadata, build system, tool configuration (ruff, mypy, setuptools-scm)
+
+testing/benchmark.py
+     2→Benchmarking and performance tests.
+     3→"""
+
+testing/conftest.py
+
+testing/test_details.py
+
+testing/test_helpers.py
+
+testing/test_hookcaller.py
+    34→class AddMeth …
+
+testing/test_invocations.py
+
+testing/test_multicall.py
+
+testing/test_pluginmanager.py
+     2→``PluginManager`` unit and public API testing.
+     3→"""
+
+testing/test_result.py
+
+testing/test_tracer.py
+
+testing/test_warnings.py
+
+RELEASING.rst
+
+SECURITY.md
+     1→# Security
+
+TIDELIFT.rst
 
 docs/examples/eggsample-spam/eggsample_spam.py
      5→def eggsample_add_ingredients(ingredients):
     15→def eggsample_prep_condiments(condiments):
 
-docs/examples/toy-example.py
-     8→class MySpec:
-    10→
-    12→    def myhook(self, arg1, arg2):
-    16→class Plugin_1:
-    18→
-    20→    def myhook(self, arg1, arg2):
-    25→class Plugin_2:
-    27→
-    29→    def myhook(self, arg1, arg2):
+docs/examples/eggsample-spam/setup.py
 
-docs/index.rst
-     1→``pluggy``
+docs/changelog.rst
 
-downstream/README.md
-     1→This directory contains scripts for testing some downstream projects
-     2→against your current pluggy worktree.
+docs/examples/eggsample/eggsample/__init__.py
 
-downstream/conda.sh
-     2→set -eux -o pipefail
+docs/examples/eggsample/eggsample/hookspecs.py
+     8→def eggsample_add_ingredients …
+    17→def eggsample_prep_condiments …
 
-downstream/datasette.sh
-     2→set -eux -o pipefail
+docs/examples/eggsample/eggsample/host.py
+    13→def main …
+    21→def get_plugin_manager …
+    29→class EggsellentCook …
 
-downstream/devpi.sh
-     2→set -eux -o pipefail
+docs/examples/eggsample/eggsample/lib.py
+     5→def eggsample_add_ingredients …
+    13→def eggsample_prep_condiments …
 
-downstream/hatch.sh
-     2→set -eux -o pipefail
+docs/_static/
 
-downstream/pytest.sh
-     2→set -eux -o pipefail
-
-downstream/python-lsp-server.sh
-     1→set -eux -o pipefail
-
-downstream/tox.sh
-     2→set -eux -o pipefail
-
-scripts/release.py
-     2→Release script.
-
-src/pluggy/__init__.py
-     1→__all__ = [
-    32→def __getattr__ …
-
-src/pluggy/_callers.py
-     2→Call loop machinery
-    22→# Need to distinguish between old- and new-style hook wrappers.
-    23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
-    24→Teardown: TypeAlias = Generator[None, object, object]
-    27→def run_old_style_hookwrapper …
-
-src/pluggy/_hooks.py
-     2→Internal hook annotation, representation and calling machinery.
-    40→class HookspecOpts(TypedDict):
-    42→
-    43→    #: Whether the hook is :ref:`first result only <firstresult>`.
-    44→    firstresult: bool
-    45→    #: Whether the hook is :ref:`historic <historic>`.
-    46→    historic: bool
-    47→    #: Whether the hook :ref:`warns when implemented <warn_on_impl>`.
-    48→    warn_on_impl: Warning | None
-    49→    #: Whether the hook warns when :ref:`certain arguments are requested
-    50→    #: <warn_on_impl>`.
-    51→    #:
-    52→    #: .. versionadded:: 1.5
-    53→    warn_on_impl_args: Mapping[str, Warning] | None
-    56→class HookimplOpts(TypedDict):
-    58→
-    59→    #: Whether the hook implementation is a :ref:`wrapper <hookwrapper>`.
-    60→    wrapper: bool
-    61→    #: Whether the hook implementation is an :ref:`old-style wrapper
-    62→    #: <old_style_hookwrappers>`.
-    63→    hookwrapper: bool
-    64→    #: Whether validation against a hook specification is :ref:`optional
-    65→    #: <optionalhook>`.
-    66→    optionalhook: bool
-    67→    #: Whether to try to order this hook implementation :ref:`first
-    68→    #: <callorder>`.
-    69→    tryfirst: bool
-    70→    #: Whether to try to order this hook implementation :ref:`last
-    71→    #: <callorder>`.
-    72→    trylast: bool
-    73→    #: The name of the hook specification to match, see :ref:`specname`.
-    74→    specname: str | None
-    78→class HookspecMarker:
-    85→
-    86→    __slots__ = ("project_name",)
-    87→
-    88→    def __init__ …
-    92→    def __call__ …
-   102→    def __call__ …
-   111→    def __call__ …
-   165→class HookimplMarker:
-   172→
-   173→    __slots__ = ("project_name",)
-   174→
-   175→    def __init__ …
-   179→    def __call__ …
-   191→    def __call__ …
-   202→    def __call__ …
-   281→def normalize_hookimpl_opts …
-   293→def varnames …
-   359→class HookRelay:
-   362→
-   363→    __slots__ = ("__dict__",)
-   364→
-   365→    def __init__ …
-   370→        def __getattr__ …
-   382→class HookCaller:
-   384→
-   385→    __slots__ = (
-   386→        "name",
-   387→        "spec",
-   388→        "_hookexec",
-   389→        "_hookimpls",
-   390→        "_call_history",
-   391→    )
-   392→
-   393→    def __init__ …
-   420→    def has_spec …
-   424→    def set_specification …
-   438→    def is_historic …
-   449→    def get_hookimpls …
-   477→    def __repr__ …
-   499→    def __call__ …
-   516→    def call_historic …
-   543→    def call_extra …
-   593→class _SubsetHookCaller …
-   612→    def __init__ …
-   619→    def _hookimpls …
-   627→    def spec …
-   631→    def _call_history …
-   634→    def __repr__ …
-   639→class HookImpl:
-   641→
-   642→    __slots__ = (
-   643→        "function",
-   644→        "argnames",
-   645→        "kwargnames",
-   646→        "plugin",
-   647→        "opts",
-   648→        "plugin_name",
-   649→        "wrapper",
-   650→        "hookwrapper",
-   651→        "optionalhook",
-   652→        "tryfirst",
-   653→        "trylast",
-   654→    )
-   655→
-   656→    def __init__ …
-   692→    def __repr__ …
-   697→class HookSpec:
-   698→    __slots__ = (
-   699→        "namespace",
-   700→        "function",
-   701→        "name",
-   702→        "argnames",
-   703→        "kwargnames",
-   704→        "opts",
-   705→        "warn_on_impl",
-   706→        "warn_on_impl_args",
-   707→    )
-   708→
-   709→    def __init__ …
-
-src/pluggy/_manager.py
-    52→class PluginValidationError(Exception):
-    58→
-    59→    def __init__ …
-    65→class DistFacade:
-    67→
-    68→    def __init__ …
-    72→    def project_name …
-    76→    def __getattr__ …
-    79→    def __dir__ …
-    83→class PluginManager:
-    99→
-   100→    def __init__ …
-   125→    def register …
-   176→    def parse_hookimpl_opts …
-   201→    def unregister …
-   233→    def set_blocked …
-   238→    def is_blocked …
-   242→    def unblock …
-   252→    def add_hookspecs …
-   278→    def parse_hookspec_opts …
-   296→    def get_plugins …
-   300→    def is_registered …
-   304→    def get_canonical_name …
-   315→    def get_plugin …
-   319→    def has_plugin …
-   323→    def get_name …
-   379→    def check_pending …
-   395→    def load_setuptools_entrypoints …
-   425→    def list_plugin_distinfo …
-   430→    def list_name_plugin …
-   434→    def get_hookcallers …
-   450→    def add_hookcall_monitoring …
-   487→    def enable_tracing …
-   512→    def subset_hook_caller …
-
-src/pluggy/_result.py
-     2→Hook wrapper "result" utilities.
-    20→class HookCallError(Exception):
-    25→class Result(Generic[ResultType]):
-    28→
-    29→    __slots__ = ("_result", "_exception", "_traceback")
-    30→
-    31→    def __init__ …
-    43→    def excinfo …
-    52→    def exception …
-    57→    def from_call …
-    67→    def force_result …
-    80→    def force_exception …
-    91→    def get_result …
-
-src/pluggy/_tracing.py
-     2→Tracing utils
-    16→class TagTracer:
-    17→    def __init__ …
-    22→    def get …
-    48→    def setwriter …
-    51→    def setprocessor …
-    59→class TagTracerSub:
-    60→    def __init__ …
-    64→    def __call__ …
-    67→    def get …
-
-src/pluggy/_warnings.py
-     4→class PluggyWarning(UserWarning):
-     6→
-     7→    __module__ = "pluggy"
-    11→class PluggyTeardownRaisedWarning(PluggyWarning):
-    26→
-    27→    __module__ = "pluggy"
-
-testing/test_hookcaller.py
-    34→class AddMeth:
-
-tox.ini
-     1→[tox]
+src/

@@ -10,21 +10,25 @@ Here's what `precis` shows for [developit/mitt](https://github.com/developit/mit
 ```
 README.md
      9→# Mitt
-    11→> Tiny 200b functional event emitter / pubsub.
-    12→
-    13→-   **Microscopic:** weighs less than 200 bytes gzipped
-    14→-   **Useful:** a wildcard `"*"` event type listens to all events
-    15→-   **Familiar:** same names & ideas as [Node's EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter)
-    16→-   **Functional:** methods don't rely on `this`
-    17→-   **Great Name:** somehow [mitt](https://npm.im/mitt) wasn't taken
-    18→
-    19→Mitt was made for the browser, but works in any JavaScript runtime. It has no dependencies and supports IE9+.
+    21→## Table of Contents
     30→## Install
     56→## Usage
+    81→### Typescript
    113→## Examples & Demos
    123→## API
-
-package.json
+   127→#### Table of Contents
+   138→### mitt
+   144→### all
+   148→### on
+   152→#### Parameters
+   157→### off
+   162→#### Parameters
+   167→### emit
+   174→#### Parameters
+   179→## Contribute
+   184→### Reporting Issues
+   189→### Submitting pull requests
+   203→## License
 
 src/index.ts
      1→export type EventType …
@@ -34,9 +38,6 @@ src/index.ts
     13→export type WildCardEventHandlerList …
     18→export type EventHandlerMap …
     23→export interface Emitter …
-    27→	on …
-    33→	off …
-    36→	emit …
     42→ * Mitt: Tiny (~200b) functional event emitter / pubsub.
     43→ * @name mitt
     44→ * @returns {Mitt}
@@ -44,13 +45,22 @@ src/index.ts
     47→	all?: EventHandlerMap<Events>
     48→): Emitter<Events> {
 
-test/
+package.json
 
 tsconfig.json
+
+test/index_test.ts
+
+test/test-types-compilation.ts
+     5→interface SomeEventData …
+     9→const emitter …
+    15→const barHandler = (x?: number) => {};
+    16→const fooHandler = (x: string) => {};
+    17→const wildcardHandler = (
 ```
 <!-- precis-example-end -->
 
-The README's h1 section includes body text because top-level headings have the highest priority; at this budget, deeper headings appear without body. The six type aliases are truncated because expanding all six signatures would be expensive relative to the single `mitt` function. Config files and the test directory are deprioritized, appearing as paths only.
+The README headings give the document structure. The source file shows type aliases (truncated), the interface, doc comments, and the main function signature. Config files and test files appear as path-only entries or with limited content, deprioritized relative to core source.
 
 ## Installation
 

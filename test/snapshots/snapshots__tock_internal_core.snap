@@ -2,68 +2,11 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1955 tokens)
-
-dto/activity_dto.go
-     3→import (
-     4→	"time"
-     5→
-     6→	"github.com/kriuchkov/tock/internal/core/models"
-     7→)
-     9→type StartActivityRequest struct {
-    10→	Description string
-    11→	Project     string
-    12→	StartTime   time.Time
-    13→	Notes       string
-    14→	Tags        []string
-    15→}
-    17→type StopActivityRequest struct {
-    18→	EndTime time.Time
-    19→	Notes   string
-    20→	Tags    []string
-    21→}
-    23→type AddActivityRequest struct {
-    24→	Description string
-    25→	Project     string
-    26→	StartTime   time.Time
-    27→	EndTime     time.Time
-    28→	Notes       string
-    29→	Tags        []string
-    30→}
-    32→type ActivityFilter struct {
-    33→	FromDate    *time.Time
-    34→	ToDate      *time.Time
-    35→	Project     *string
-    36→	Description *string
-    37→	IsRunning   *bool
-    38→}
-    40→type Report struct {
-    41→	Activities    []models.Activity
-    42→	TotalDuration time.Duration
-    43→	ByProject     map[string]ProjectReport
-    44→}
-    46→type ProjectReport struct {
-    47→	ProjectName string
-    48→	Duration    time.Duration
-    49→	Activities  []models.Activity
-    50→}
-
 errors/errors.go
-     3→import "errors"
-     5→var (
-     6→	ErrActivityNotFound       = errors.New("activity not found")
-     7→	ErrNoActiveActivity       = errors.New("no active activity found")
-     8→	ErrActivityAlreadyStarted = errors.New("activity already started")
-     9→	ErrCancelled              = errors.New("operation cancelled")
+     5→var …
 
 models/activity.go
-     3→import (
-     4→	"encoding/json"
-     5→	"fmt"
-     6→	"time"
-     7→)
-     9→// Activity represents a time tracking entry.
-    10→type Activity struct {
+    10→type Activity …
     11→	Description string     `json:"description"`
     12→	Project     string     `json:"project"`
     13→	StartTime   time.Time  `json:"start_time"`
@@ -72,14 +15,7 @@ models/activity.go
     16→	Tags        []string   `json:"tags,omitempty"`
     17→}
     19→func (a Activity) ID() string {
-    20→	return a.StartTime.Format("150405")
-    21→}
     23→func (a Activity) Duration() time.Duration {
-    24→	if a.EndTime != nil {
-    25→		return a.EndTime.Sub(a.StartTime)
-    26→	}
-    27→	return time.Since(a.StartTime)
-    28→}
     30→// DurationString returns the duration formatted as "HH:MM:SS".
     31→func (a Activity) DurationString() string {
     32→	d := a.Duration().Round(time.Second)
@@ -91,92 +27,143 @@ models/activity.go
     38→	return fmt.Sprintf("%02d:%02d:%02d", h, m, s)
     39→}
     41→func (a Activity) MarshalJSON() ([]byte, error) {
-    42→	type Alias Activity
-    43→	return json.Marshal(&struct {
-    44→		Alias
-    45→
-    46→		Duration string `json:"duration"`
-    47→	}{
-    48→		Alias:    (Alias)(a),
-    49→		Duration: a.DurationString(),
-    50→	})
-    51→}
-
-ports/mocks/mock_activityrepository.go
-    17→func NewMockActivityRepository …
-    30→type MockActivityRepository struct {
-    34→type MockActivityRepository_Expecter struct {
-    35→	mock *mock.Mock
-    36→}
-    43→func (_mock *MockActivityRepository) Find …
-    71→type MockActivityRepository_Find_Call struct {
-    78→func (_e *MockActivityRepository_Expecter) Find …
-   111→func (_mock *MockActivityRepository) FindLast …
-   139→type MockActivityRepository_FindLast_Call struct {
-   145→func (_e *MockActivityRepository_Expecter) FindLast …
-   173→func (_mock *MockActivityRepository) Save …
-   190→type MockActivityRepository_Save_Call struct {
-   197→func (_e *MockActivityRepository_Expecter) Save …
-   230→func (_mock *MockActivityRepository) Remove …
-   247→type MockActivityRepository_Remove_Call struct {
-   254→func (_e *MockActivityRepository_Expecter) Remove …
-
-ports/mocks/mock_activityresolver.go
-    17→func NewMockActivityResolver …
-    30→type MockActivityResolver struct {
-    34→type MockActivityResolver_Expecter struct {
-    35→	mock *mock.Mock
-    36→}
-    43→func (_mock *MockActivityResolver) Add …
-    71→type MockActivityResolver_Add_Call struct {
-    78→func (_e *MockActivityResolver_Expecter) Add …
-   111→func (_mock *MockActivityResolver) GetRecent …
-   139→type MockActivityResolver_GetRecent_Call struct {
-   146→func (_e *MockActivityResolver_Expecter) GetRecent …
-   179→func (_mock *MockActivityResolver) GetReport …
-   207→type MockActivityResolver_GetReport_Call struct {
-   214→func (_e *MockActivityResolver_Expecter) GetReport …
-   247→func (_mock *MockActivityResolver) List …
-   275→type MockActivityResolver_List_Call struct {
-   282→func (_e *MockActivityResolver_Expecter) List …
-   315→func (_mock *MockActivityResolver) Start …
-   343→type MockActivityResolver_Start_Call struct {
-   350→func (_e *MockActivityResolver_Expecter) Start …
-   383→func (_mock *MockActivityResolver) Stop …
-   411→type MockActivityResolver_Stop_Call struct {
-   418→func (_e *MockActivityResolver_Expecter) Stop …
-
-ports/mocks/mock_notesrepository.go
-    16→func NewMockNotesRepository …
-    29→type MockNotesRepository struct {
-    33→type MockNotesRepository_Expecter struct {
-    34→	mock *mock.Mock
-    35→}
-    42→func (_mock *MockNotesRepository) Get …
-    76→type MockNotesRepository_Get_Call struct {
-    84→func (_e *MockNotesRepository_Expecter) Get …
-   122→func (_mock *MockNotesRepository) Save …
-   139→type MockNotesRepository_Save_Call struct {
-   149→func (_e *MockNotesRepository_Expecter) Save …
 
 ports/ports.go
-    11→type ActivityResolver interface {
-    12→	Start(ctx context.Context, req dto.StartActivityRequest) (*models.Activity, error)
-    13→	Stop(ctx context.Context, req dto.StopActivityRequest) (*models.Activity, error)
-    14→	Add(ctx context.Context, req dto.AddActivityRequest) (*models.Activity, error)
-    15→	List(ctx context.Context, filter dto.ActivityFilter) ([]models.Activity, error)
-    16→	GetReport(ctx context.Context, filter dto.ActivityFilter) (*dto.Report, error)
-    17→	GetRecent(ctx context.Context, limit int) ([]models.Activity, error)
-    18→	GetLast(ctx context.Context) (*models.Activity, error)
-    19→	Remove(ctx context.Context, activity models.Activity) error
-    20→}
-    22→type ActivityRepository interface {
-    23→	Save(ctx context.Context, activity models.Activity) error
-    24→	FindLast(ctx context.Context) (*models.Activity, error)
-    25→	Find(ctx context.Context, filter dto.ActivityFilter) ([]models.Activity, error)
-    26→	Remove(ctx context.Context, activity models.Activity) error
-    27→}
-    29→type NotesRepository interface {
-    30→	Save(ctx context.Context, activityID string, date time.Time, notes string, tags []string) error
-    31→	Get(ctx context.Context, activityID string, date time.Time) (string, []string, error)
+    11→type ActivityResolver …
+    22→type ActivityRepository …
+    29→type NotesRepository …
+
+dto/activity_dto.go
+     9→type StartActivityRequest …
+    10→	Description string
+    11→	Project     string
+    12→	StartTime   time.Time
+    13→	Notes       string
+    14→	Tags        []string
+    15→}
+    17→type StopActivityRequest …
+    18→	EndTime time.Time
+    19→	Notes   string
+    20→	Tags    []string
+    21→}
+    23→type AddActivityRequest …
+    24→	Description string
+    25→	Project     string
+    26→	StartTime   time.Time
+    27→	EndTime     time.Time
+    28→	Notes       string
+    29→	Tags        []string
+    30→}
+    32→type ActivityFilter …
+    33→	FromDate    *time.Time
+    34→	ToDate      *time.Time
+    35→	Project     *string
+    36→	Description *string
+    37→	IsRunning   *bool
+    38→}
+    40→type Report …
+    41→	Activities    []models.Activity
+    42→	TotalDuration time.Duration
+    43→	ByProject     map[string]ProjectReport
+    44→}
+    46→type ProjectReport …
+    47→	ProjectName string
+    48→	Duration    time.Duration
+    49→	Activities  []models.Activity
+    50→}
+
+ports/mocks/mock_activityrepository.go
+    17→func NewMockActivityRepository(t interface {
+    18→	mock.TestingT
+    19→	Cleanup(func())
+    20→}) *MockActivityRepository {
+    30→type MockActivityRepository …
+    31→	mock.Mock
     32→}
+    34→type MockActivityRepository_Expecter …
+    35→	mock *mock.Mock
+    36→}
+    43→func (_mock *MockActivityRepository) Find(ctx context.Context, filter dto.ActivityFilter) ([]models.Activity, error) {
+    71→type MockActivityRepository_Find_Call …
+    72→	*mock.Call
+    73→}
+    78→func (_e *MockActivityRepository_Expecter) Find(ctx interface{}, filter interface{}) *MockActivityRepository_Find_Call {
+   111→func (_mock *MockActivityRepository) FindLast(ctx context.Context) (*models.Activity, error) {
+   139→type MockActivityRepository_FindLast_Call …
+   140→	*mock.Call
+   141→}
+   145→func (_e *MockActivityRepository_Expecter) FindLast(ctx interface{}) *MockActivityRepository_FindLast_Call {
+   173→func (_mock *MockActivityRepository) Save(ctx context.Context, activity models.Activity) error {
+   190→type MockActivityRepository_Save_Call …
+   191→	*mock.Call
+   192→}
+   197→func (_e *MockActivityRepository_Expecter) Save(ctx interface{}, activity interface{}) *MockActivityRepository_Save_Call {
+   230→func (_mock *MockActivityRepository) Remove(ctx context.Context, activity models.Activity) error {
+   247→type MockActivityRepository_Remove_Call …
+   248→	*mock.Call
+   249→}
+   254→func (_e *MockActivityRepository_Expecter) Remove(ctx interface{}, activity interface{}) *MockActivityRepository_Remove_Call {
+
+ports/mocks/mock_activityresolver.go
+    17→func NewMockActivityResolver(t interface {
+    18→	mock.TestingT
+    19→	Cleanup(func())
+    20→}) *MockActivityResolver {
+    30→type MockActivityResolver …
+    31→	mock.Mock
+    32→}
+    34→type MockActivityResolver_Expecter …
+    35→	mock *mock.Mock
+    36→}
+    43→func (_mock *MockActivityResolver) Add(ctx context.Context, req dto.AddActivityRequest) (*models.Activity, error) {
+    71→type MockActivityResolver_Add_Call …
+    72→	*mock.Call
+    73→}
+    78→func (_e *MockActivityResolver_Expecter) Add(ctx interface{}, req interface{}) *MockActivityResolver_Add_Call {
+   111→func (_mock *MockActivityResolver) GetRecent(ctx context.Context, limit int) ([]models.Activity, error) {
+   139→type MockActivityResolver_GetRecent_Call …
+   140→	*mock.Call
+   141→}
+   146→func (_e *MockActivityResolver_Expecter) GetRecent(ctx interface{}, limit interface{}) *MockActivityResolver_GetRecent_Call {
+   179→func (_mock *MockActivityResolver) GetReport(ctx context.Context, filter dto.ActivityFilter) (*dto.Report, error) {
+   207→type MockActivityResolver_GetReport_Call …
+   208→	*mock.Call
+   209→}
+   214→func (_e *MockActivityResolver_Expecter) GetReport(ctx interface{}, filter interface{}) *MockActivityResolver_GetReport_Call {
+   247→func (_mock *MockActivityResolver) List(ctx context.Context, filter dto.ActivityFilter) ([]models.Activity, error) {
+   275→type MockActivityResolver_List_Call …
+   276→	*mock.Call
+   277→}
+   282→func (_e *MockActivityResolver_Expecter) List(ctx interface{}, filter interface{}) *MockActivityResolver_List_Call {
+   315→func (_mock *MockActivityResolver) Start(ctx context.Context, req dto.StartActivityRequest) (*models.Activity, error) {
+   343→type MockActivityResolver_Start_Call …
+   344→	*mock.Call
+   345→}
+   350→func (_e *MockActivityResolver_Expecter) Start(ctx interface{}, req interface{}) *MockActivityResolver_Start_Call {
+   383→func (_mock *MockActivityResolver) Stop(ctx context.Context, req dto.StopActivityRequest) (*models.Activity, error) {
+   411→type MockActivityResolver_Stop_Call …
+   412→	*mock.Call
+   413→}
+   418→func (_e *MockActivityResolver_Expecter) Stop(ctx interface{}, req interface{}) *MockActivityResolver_Stop_Call {
+
+ports/mocks/mock_notesrepository.go
+    16→func NewMockNotesRepository(t interface {
+    17→	mock.TestingT
+    18→	Cleanup(func())
+    19→}) *MockNotesRepository {
+    29→type MockNotesRepository …
+    30→	mock.Mock
+    31→}
+    33→type MockNotesRepository_Expecter …
+    34→	mock *mock.Mock
+    35→}
+    42→func (_mock *MockNotesRepository) Get(ctx context.Context, activityID string, date time.Time) (string, []string, error) {
+    76→type MockNotesRepository_Get_Call …
+    77→	*mock.Call
+    78→}
+    84→func (_e *MockNotesRepository_Expecter) Get(ctx interface{}, activityID interface{}, date interface{}) *MockNotesRepository_Get_Call {
+   122→func (_mock *MockNotesRepository) Save(ctx context.Context, activityID string, date time.Time, notes string, tags []string) error {
+   139→type MockNotesRepository_Save_Call …
+   140→	*mock.Call
+   141→}
+   149→func (_e *MockNotesRepository_Expecter) Save(ctx interface{}, activityID interface{}, date interface{}, notes interface{}, tags interface{}) *MockNotesRepository_Save_Call {

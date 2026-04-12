@@ -1,20 +1,6 @@
 use crate::Lang;
 
-/// Compute the signature end line (1-indexed) from the tree-sitter AST.
-///
-/// For C-like languages (Rust, TS/JS, Go, C), the body child (block,
-/// field_declaration_list, etc.) starts at `{`, so `sig_end = body.start.row + 1`.
-///
-/// For Python, the body (block) starts at the first statement after `:`.
-/// We find the `:` token that's a direct child of the function/class definition
-/// and use its row.
-///
-/// For Go `type_spec`, the body braces are inside the `type` child (struct_type,
-/// interface_type), so we look for `{` there.
-///
-/// Returns `None` for nodes without a detectable body (type aliases, constants,
-/// method signatures, etc.) — the caller should fall back to text heuristics.
-pub(super) fn compute_sig_end_line(node: tree_sitter::Node, lang: Lang) -> Option<usize> {
+pub(crate) fn compute_sig_end_line(node: tree_sitter::Node, lang: Lang) -> Option<usize> {
     if lang == Lang::Python {
         let body = node.child_by_field_name("body")?;
         let body_id = body.id();
@@ -37,12 +23,10 @@ pub(super) fn compute_sig_end_line(node: tree_sitter::Node, lang: Lang) -> Optio
         return None;
     }
 
-    // C-like languages: body field starts at '{'
     if let Some(body) = node.child_by_field_name("body") {
         return Some(body.start_position().row + 1);
     }
 
-    // Go type_spec: the type child (struct_type, interface_type) contains the body.
     if node.kind() == "type_spec"
         && let Some(type_child) = node.child_by_field_name("type")
     {
@@ -55,8 +39,6 @@ pub(super) fn compute_sig_end_line(node: tree_sitter::Node, lang: Lang) -> Optio
         }
     }
 
-    // C anonymous typedef struct/union: `typedef struct { ... } Name;`
-    // Treat the entire definition as the signature so the name is always visible.
     if node.kind() == "type_definition"
         && let Some(type_child) = node.child_by_field_name("type")
         && matches!(type_child.kind(), "struct_specifier" | "union_specifier")
@@ -70,10 +52,11 @@ pub(super) fn compute_sig_end_line(node: tree_sitter::Node, lang: Lang) -> Optio
     None
 }
 
-/// Compute the first line (1-indexed) of the doc comment block preceding a symbol,
-/// using tree-sitter AST sibling navigation. Returns `None` when no doc comment is
-/// found (fallback to text heuristics in `layout::doc_comment_start`).
-pub(super) fn compute_doc_start_line(symbol_node: tree_sitter::Node, source: &str, lang: Lang) -> Option<usize> {
+pub(crate) fn compute_doc_start_line(
+    symbol_node: tree_sitter::Node,
+    source: &str,
+    lang: Lang,
+) -> Option<usize> {
     if matches!(lang, Lang::Markdown | Lang::Json | Lang::Toml | Lang::Yaml) {
         return None;
     }
@@ -84,14 +67,21 @@ pub(super) fn compute_doc_start_line(symbol_node: tree_sitter::Node, source: &st
         .prev_named_sibling()
         .filter(|n| {
             is_doc_comment_node(*n, source, lang)
-                && symbol_node.start_position().row.saturating_sub(n.end_position().row) <= max_gap
+                && symbol_node
+                    .start_position()
+                    .row
+                    .saturating_sub(n.end_position().row)
+                    <= max_gap
         })
         .or_else(|| {
             let parent = symbol_node.parent()?;
             if matches!(parent.kind(), "export_statement" | "decorated_definition") {
                 parent.prev_named_sibling().filter(|n| {
                     is_doc_comment_node(*n, source, lang)
-                        && parent.start_position().row.saturating_sub(n.end_position().row)
+                        && parent
+                            .start_position()
+                            .row
+                            .saturating_sub(n.end_position().row)
                             <= max_gap
                 })
             } else {
@@ -99,7 +89,6 @@ pub(super) fn compute_doc_start_line(symbol_node: tree_sitter::Node, source: &st
             }
         })?;
 
-    // Walk backwards through contiguous doc comment siblings to find the block start
     let mut doc_start_row = first_doc.start_position().row;
     let mut current = first_doc;
 
@@ -107,17 +96,21 @@ pub(super) fn compute_doc_start_line(symbol_node: tree_sitter::Node, source: &st
         if !is_doc_comment_node(prev, source, lang) {
             break;
         }
-        if current.start_position().row.saturating_sub(prev.end_position().row) > 1 {
+        if current
+            .start_position()
+            .row
+            .saturating_sub(prev.end_position().row)
+            > 1
+        {
             break;
         }
         doc_start_row = prev.start_position().row;
         current = prev;
     }
 
-    Some(doc_start_row + 1) // 1-indexed
+    Some(doc_start_row + 1)
 }
 
-/// Check whether a tree-sitter node is a doc comment for the given language.
 fn is_doc_comment_node(node: tree_sitter::Node, source: &str, lang: Lang) -> bool {
     if !matches!(node.kind(), "comment" | "line_comment" | "block_comment") {
         return false;
@@ -135,22 +128,14 @@ fn is_doc_comment_node(node: tree_sitter::Node, source: &str, lang: Lang) -> boo
     }
 }
 
-/// Check if a node is inside a function body (local declaration, not module-level).
 pub(super) fn is_inside_function(node: tree_sitter::Node) -> bool {
     let mut current = node.parent();
     while let Some(parent) = current {
         match parent.kind() {
-            // Rust
-            "function_item" |
-            // TypeScript / JavaScript
-            "function_declaration" | "function_expression" | "method_definition" | "arrow_function"
-            | "generator_function" | "generator_function_declaration" |
-            // Go
-            "method_declaration" | "func_literal" |
-            // Java
-            "constructor_declaration" | "lambda_expression" |
-            // Python / Lua
-            "function_definition" => {
+            "function_item" | "function_declaration" | "function_expression"
+            | "method_definition" | "arrow_function" | "generator_function"
+            | "generator_function_declaration" | "method_declaration" | "func_literal"
+            | "constructor_declaration" | "lambda_expression" | "function_definition" => {
                 return true;
             }
             _ => {}
@@ -160,7 +145,6 @@ pub(super) fn is_inside_function(node: tree_sitter::Node) -> bool {
     false
 }
 
-/// Check if a node is inside a Rust trait implementation block (`impl Trait for Type`).
 pub(super) fn is_in_trait_impl(node: tree_sitter::Node) -> bool {
     if let Some(parent) = node.parent()
         && parent.kind() == "declaration_list"
@@ -173,7 +157,6 @@ pub(super) fn is_in_trait_impl(node: tree_sitter::Node) -> bool {
     false
 }
 
-/// Check if a node is inside a Rust `const _: T = { ... }` block.
 pub(super) fn is_inside_rust_anon_const(node: tree_sitter::Node, source: &str) -> bool {
     let mut current = node.parent();
     while let Some(parent) = current {
@@ -192,8 +175,6 @@ pub(super) fn is_inside_rust_anon_const(node: tree_sitter::Node, source: &str) -
     false
 }
 
-/// Check if a Rust node is test code that should be filtered from output.
-/// Returns true for `#[test]` functions, `#[cfg(test)]` modules, and anything nested inside them.
 pub(super) fn is_rust_test_code(node: tree_sitter::Node, source: &str) -> bool {
     if has_preceding_attribute(node, source, "#[test]")
         || has_preceding_attribute(node, source, "#[cfg(test)]")
@@ -213,8 +194,11 @@ pub(super) fn is_rust_test_code(node: tree_sitter::Node, source: &str) -> bool {
     false
 }
 
-/// Check if a node's preceding attribute siblings include a specific attribute.
-pub(super) fn has_preceding_attribute(node: tree_sitter::Node, source: &str, needle: &str) -> bool {
+pub(crate) fn has_preceding_attribute(
+    node: tree_sitter::Node,
+    source: &str,
+    needle: &str,
+) -> bool {
     let mut sibling = node.prev_sibling();
     while let Some(sib) = sibling {
         if sib.kind() == "attribute_item" {
@@ -230,8 +214,7 @@ pub(super) fn has_preceding_attribute(node: tree_sitter::Node, source: &str, nee
     false
 }
 
-/// Recursively find the first descendant of the given kind in a subtree.
-pub(super) fn find_descendant_of_kind<'a>(
+pub(crate) fn find_descendant_of_kind<'a>(
     node: tree_sitter::Node<'a>,
     target_kind: &str,
 ) -> Option<tree_sitter::Node<'a>> {

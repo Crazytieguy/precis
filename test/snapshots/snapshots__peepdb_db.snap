@@ -2,8 +2,6 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1938 tokens)
-
 __init__.py
      1→from .base import BaseDatabase
      2→from .mysql import MySQLDatabase
@@ -14,180 +12,39 @@ __init__.py
      7→from .firebase import FirebaseDatabase
      8→from .mssql import MSSQLDatabase
      9→from .oracle import OracleDatabase
-    11→__all__ = [
-    12→    'BaseDatabase',
-    13→    'MySQLDatabase',
-    14→    'PostgreSQLDatabase',
-    15→    'MariaDBDatabase',
-    16→    'MongoDBDatabase',
-    17→    'SQLiteDatabase',
-    18→    'FirebaseDatabase',
-    19→    'MSSQLDatabase',
-    20→    'OracleDatabase'
-    21→]
+    11→__all__ …
 
 base.py
-     5→class BaseDatabase(ABC):
-     6→    def __init__(self, host: str, user: str, password: str, database: str, port: int = None, **kwargs):
-     7→        self.host = host
-      →        …
-    17→    @abstractmethod
-    18→    def connect(self) -> None:
-    19→        pass
-    21→    @abstractmethod
-    22→    def disconnect(self) -> None:
-    23→        pass
-    25→    @abstractmethod
-    26→    def fetch_tables(self) -> List[str]:
-    27→        pass
-    29→    @abstractmethod
-    30→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
-    31→        pass
-    33→    def __enter__(self):
-    34→        self.connect()
-      →        …
-    37→    def __exit__(self, exc_type, exc_val, exc_tb):
-    38→        self.disconnect()
+     5→class BaseDatabase …
 
 firebase.py
      4→from .base import BaseDatabase
-     9→class FirebaseDatabase(BaseDatabase):
-    10→    def __init__(self, service_account_path: str, **kwargs):
-    11→        self.service_account_path = service_account_path
-      →        …
-    15→    def connect(self):
-    16→        try:
-      →        …
-    26→    def disconnect(self):
-    27→        # Firebase Admin SDK does not provide a disconnect method
-      →        …
-    30→    def fetch_tables(self) -> List[str]:
-    31→        try:
-      →        …
-    39→    def fetch_data(self, table_name: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
-    40→        try:
-      →        …
+     9→class FirebaseDatabase …
 
 mariadb.py
      2→from .base import BaseDatabase
-     5→class MariaDBDatabase(BaseDatabase):
-     6→    def connect(self) -> None:
-     7→        try:
-      →        …
-    23→    def disconnect(self) -> None:
-    24→        if self.cursor:
-      →        …
-    30→    def fetch_tables(self) -> List[str]:
-    31→        self.cursor.execute("SHOW TABLES")
-      →        …
-    34→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
-    35→        offset = (page - 1) * page_size
-      →        …
+     5→class MariaDBDatabase …
 
 mongodb.py
      3→from .base import BaseDatabase
-     8→class MongoDBDatabase(BaseDatabase):
-     9→    def connect(self) -> None:
-    10→        try:
-      →        …
-    32→    def disconnect(self) -> None:
-    33→        if self.connection:
-      →        …
-    39→    def fetch_tables(self) -> t.List[str]:
-    40→        return self.db.list_collection_names()
-    42→    def fetch_data(
-    43→        self,
-    44→        table: str,
-    45→        page: int = 1,
-    46→        page_size: int = 100
-    47→    ) -> t.Dict[str, t.Any]:
-    48→        """
-    49→        Fetches data from the MongoDB database.
-    50→        """
-    51→        offset = (page -1) * page_size
-      →        …
+     8→class MongoDBDatabase …
 
 mssql.py
      2→from .base import BaseDatabase
-     6→class MSSQLDatabase(BaseDatabase):
-     7→    def __init__(self, host: str, user: str, password: str, database: str, port: int = 1433, trusted: bool = False, **kwargs):
-     8→        super().__init__(host, user, password, database, port, **kwargs)
-      →        …
-    12→    def connect(self) -> None:
-    13→        driver = '{ODBC Driver 17 for SQL Server}'
-      →        …
-    28→    def disconnect(self) -> None:
-    29→        if self.cursor:
-      →        …
-    35→    def fetch_tables(self) -> List[str]:
-    36→        # Get both schema and table name
-      →        …
-    45→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
-    46→        offset = (page - 1) * page_size
-      →        …
+     6→class MSSQLDatabase …
 
 mysql.py
      2→from .base import BaseDatabase
-     5→class MySQLDatabase(BaseDatabase):
-     6→    def connect(self) -> None:
-     7→        try:
-      →        …
-    22→    def disconnect(self) -> None:
-    23→        if self.cursor:
-      →        …
-    29→    def fetch_tables(self) -> List[str]:
-    30→        self.cursor.execute("SHOW TABLES")
-      →        …
-    33→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
-    34→        offset = (page - 1) * page_size
-      →        …
+     5→class MySQLDatabase …
 
 oracle.py
      3→from .base import BaseDatabase
-     7→class OracleDatabase(BaseDatabase):
-     8→    def connect(self) -> None:
-     9→        try:
-      →        …
-    25→    def disconnect(self) -> None:
-    26→        if self.cursor:
-      →        …
-    32→    def fetch_tables(self) -> List[str]:
-    33→        self.cursor.execute("SELECT table_name FROM user_tables")
-      →        …
-    36→    def fetch_data(
-    37→        self, table: str, page: int = 1, page_size: int = 100
-    38→    ) -> Dict[str, Any]:
-    39→        offset = (page - 1) * page_size
-      →        …
+     7→class OracleDatabase …
 
 postgresql.py
      3→from .base import BaseDatabase
-     6→class PostgreSQLDatabase(BaseDatabase):
-     7→    def connect(self) -> None:
-     8→        try:
-      →        …
-    23→    def disconnect(self) -> None:
-    24→        if self.cursor:
-      →        …
-    30→    def fetch_tables(self) -> List[str]:
-    31→        self.cursor.execute("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'")
-      →        …
-    34→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
-    35→        offset = (page - 1) * page_size
-      →        …
+     6→class PostgreSQLDatabase …
 
 sqlite.py
      3→from .base import BaseDatabase
-     6→class SQLiteDatabase(BaseDatabase):
-     7→    def connect(self) -> None:
-     8→        try:
-      →        …
-    22→    def disconnect(self) -> None:
-    23→        if self.cursor:
-      →        …
-    29→    def fetch_tables(self) -> List[str]:
-    30→        print("Fetching tables from SQLite database")
-      →        …
-    43→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
-    44→        print(f"Fetching data from table '{table}' (page: {page}, page_size: {page_size})")
-      →        …
+     6→class SQLiteDatabase …

@@ -756,7 +756,12 @@ compromising around it.
 - **V3 — Cost via rendering.** Candidate cost is measured by actually
   rendering the scheduled set plus the candidate and counting tokens. The
   per-file render cache avoids redundant work. There is no parallel
-  precomputed cost model.
+  precomputed cost model. **Approved deviation:** the rewrite tokenizes
+  each `RenderedEntry` individually (once, cached) and sums their costs,
+  rather than tokenizing the full assembled file. This is near-exact
+  (<1 token BPE boundary effect empirically) and avoids re-tokenizing
+  unchanged files on every iteration. The spirit of V3 is preserved:
+  cost derives from real rendered output, not a parallel estimate.
 - **V4 — Budget gates.** Token budget is authoritative and used for
   prioritization. Byte budget is a fast pre-check. When `--char-budget` is
   set (including by the plugin), it is a second acceptance gate but does not

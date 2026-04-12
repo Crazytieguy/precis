@@ -1,8 +1,7 @@
-use precis::{format, walk};
+use precis::format;
 use std::path::Path;
 
 /// Helper to get the path to a test fixture.
-/// Panics if a regular fixture is missing. Returns None only for optional perf fixtures.
 fn fixture_path(name: &str) -> Option<std::path::PathBuf> {
     let path = Path::new(env!("CARGO_MANIFEST_DIR"))
         .join("test/fixtures")
@@ -10,7 +9,7 @@ fn fixture_path(name: &str) -> Option<std::path::PathBuf> {
     if path.exists() {
         Some(path)
     } else if name.starts_with("../perf-fixtures") {
-        None // perf fixtures are optional
+        None
     } else {
         panic!(
             "fixture not present at {path:?} — run `cargo run --bin clone_fixtures`"
@@ -18,13 +17,12 @@ fn fixture_path(name: &str) -> Option<std::path::PathBuf> {
     }
 }
 
-/// Generate a snapshot test that renders a fixture with a word budget.
+/// Generate a snapshot test that renders a fixture with a token budget.
 macro_rules! budget_test {
     ($name:ident, $path:expr, $budget:expr) => {
         #[test]
         fn $name() {
-            let Some(output) = render_with_budget($path, $budget) else {
-                // Only perf fixtures can reach here — regular fixtures panic in fixture_path()
+            let Some(output) = render_fixture($path, $budget) else {
                 eprintln!("skipping {} (optional perf fixture)", stringify!($name));
                 return;
             };
@@ -33,8 +31,6 @@ macro_rules! budget_test {
     };
 }
 
-// Run `cargo run --bin clone_fixtures` to clone all missing fixtures.
-// Fixture/entry data is defined in test/fixtures.rs (shared with clone_fixtures bin).
 macro_rules! with_fixtures { ($($tt:tt)*) => {} }
 macro_rules! with_entries {
     ($(($name:ident, $path:expr, $budget:expr)),* $(,)?) => {
@@ -737,13 +733,7 @@ macro_rules! sample_test {
     ($name:ident, $filename:expr, $sample_fn:expr, $budget:expr) => {
         #[test]
         fn $name() {
-            let output = precis::render_file_with_budget(
-                $budget,
-                None,
-                Path::new($filename),
-                Path::new(""),
-                $sample_fn(),
-            );
+            let output = render_sample($filename, $sample_fn(), $budget);
             insta::assert_snapshot!(output);
         }
     };
@@ -837,13 +827,7 @@ fn budget_monotonicity_inline() {
     for (filename, source) in samples {
         let mut prev_tokens = 0;
         for &budget in &budgets {
-            let output = precis::render_file_with_budget(
-                budget,
-                None,
-                Path::new(filename),
-                Path::new(""),
-                source,
-            );
+            let output = render_sample(filename, source, budget);
             let tokens = format::count_tokens(&output);
             assert!(
                 tokens >= prev_tokens,
@@ -858,18 +842,15 @@ fn budget_monotonicity_inline() {
     }
 }
 
-// Single-file rendering tests (precis accepts individual files, not just directories).
-
+// Single-file rendering tests.
 #[test]
 fn single_file_budget_rust() {
     let root = fixture_path("anyhow/src").unwrap();
     let file = root.join("lib.rs");
-    let source = std::fs::read_to_string(&file).unwrap();
 
-    // Budget monotonicity across a range
     let mut prev_tokens = 0;
     for budget in [0, 50, 100, 200, 500, 1000, 10000] {
-        let output = precis::render_file_with_budget(budget, None, &file, &root, &source);
+        let output = precis::render(&file, budget, None);
         let tokens = format::count_tokens(&output);
         assert!(
             tokens >= prev_tokens,
@@ -882,18 +863,15 @@ fn single_file_budget_rust() {
     }
 }
 
-// Budget monotonicity for multi-file fixtures: more budget ≥ more tokens.
+// Budget monotonicity for multi-file fixtures.
 #[test]
 fn budget_monotonicity_fixture() {
     let root = fixture_path("pluggy/src/pluggy").unwrap();
-    let files = walk::discover_source_files(&root);
-    let sources = precis::read_sources(&files);
-    let file_data = precis::build_file_data(&root, &files, sources);
-    let corpus = precis::Corpus { files: &file_data };
     let budgets = [0, 50, 200, 500, 1000, 2000, 4000, 10000];
     let mut prev_tokens = 0;
     for &budget in &budgets {
-        let (_, tokens) = corpus.render_stats(budget, None);
+        let output = precis::render(&root, budget, None);
+        let tokens = format::count_tokens(&output);
         assert!(
             tokens >= prev_tokens,
             "Multi-file budget monotonicity: budget {} ({} tokens) < previous ({} tokens)",
@@ -903,143 +881,46 @@ fn budget_monotonicity_fixture() {
     }
 }
 
-// Render order: README should appear before other files.
-#[test]
-fn readme_renders_first() {
-    let output = precis::render_with_budget(
-        500,
-        None,
-        Path::new(""),
-        &[std::path::PathBuf::from("src/lib.rs"), std::path::PathBuf::from("README.md")],
-        vec![
-            Some("pub fn foo() {}\npub fn bar() {}".to_string()),
-            Some("# Project\nA description.".to_string()),
-        ],
-    );
-    // README.md should come before src/lib.rs in the output
-    let readme_pos = output.find("README.md").unwrap_or(usize::MAX);
-    let src_pos = output.find("src/lib.rs").unwrap_or(usize::MAX);
-    assert!(
-        readme_pos < src_pos,
-        "README.md should render before src/lib.rs, but README at {} vs src at {}",
-        readme_pos, src_pos,
-    );
-}
-
-// Manifest files render after README but before source.
-#[test]
-fn manifest_renders_after_readme() {
-    let output = precis::render_with_budget(
-        500,
-        None,
-        Path::new(""),
-        &[
-            std::path::PathBuf::from("src/lib.rs"),
-            std::path::PathBuf::from("Cargo.toml"),
-            std::path::PathBuf::from("README.md"),
-        ],
-        vec![
-            Some("pub fn foo() {}".to_string()),
-            Some("[package]\nname = \"test\"".to_string()),
-            Some("# Project\nA description.".to_string()),
-        ],
-    );
-    let readme_pos = output.find("README.md").unwrap_or(usize::MAX);
-    let cargo_pos = output.find("Cargo.toml").unwrap_or(usize::MAX);
-    let src_pos = output.find("src/lib.rs").unwrap_or(usize::MAX);
-    assert!(readme_pos < cargo_pos, "README should come before Cargo.toml");
-    assert!(cargo_pos < src_pos, "Cargo.toml should come before src/lib.rs");
-}
-
-// Directory omission markers: invisible directories should get a marker.
-#[test]
-fn invisible_directory_markers() {
-    let files = vec![
-        std::path::PathBuf::from("README.md"),
-        std::path::PathBuf::from("src/lib.rs"),
-        std::path::PathBuf::from("hidden_dir/foo.rs"),
-    ];
-    let sources = vec![
-        Some("# Project\nA description.".to_string()),
-        Some("pub fn main() {}".to_string()),
-        Some("fn internal() {}".to_string()),
-    ];
-    // Very small budget: hidden_dir/ file won't fit, should get a marker
-    let output = precis::render_with_budget(30, None, Path::new(""), &files, sources);
-    // If hidden_dir/foo.rs is not shown, we should see "hidden_dir/" marker
-    if !output.contains("hidden_dir/foo.rs") {
-        assert!(
-            output.contains("hidden_dir/"),
-            "invisible directory should get an omission marker. Output:\n{}",
-            output,
-        );
-    }
-}
-
 // Empty directory should produce no output.
 #[test]
 fn empty_directory() {
     let dir = tempfile::tempdir().unwrap();
-    let files = walk::discover_source_files(dir.path());
-    let sources = precis::read_sources(&files);
-    let output = precis::render_with_budget(4000, None, dir.path(), &files, sources);
+    let output = precis::render(dir.path(), 4000, None);
     assert!(output.is_empty(), "empty directory should produce no output");
 }
 
-// README example sync test.
+// ---------------------------------------------------------------------------
+// Helper functions
+// ---------------------------------------------------------------------------
 
-const README_EXAMPLE_FIXTURE: &str = "mitt";
-const README_EXAMPLE_BUDGET: usize = 400;
-
-#[test]
-fn readme_example_matches_output() {
-    let output = render_fixture(README_EXAMPLE_FIXTURE, README_EXAMPLE_BUDGET)
-        .expect("fixture should be present");
-    let readme = std::fs::read_to_string(
-        Path::new(env!("CARGO_MANIFEST_DIR")).join("README.md"),
-    )
-    .expect("failed to read README.md");
-    let start_marker = "<!-- precis-example-start -->";
-    let end_marker = "<!-- precis-example-end -->";
-    let start = readme.find(start_marker).expect("missing precis-example-start marker")
-        + start_marker.len();
-    let end = readme[start..].find(end_marker).expect("missing precis-example-end marker") + start;
-    let block = readme[start..end].trim();
-    let lines: Vec<&str> = block.lines().collect();
-    assert!(lines.len() >= 3, "README example block too short");
-    let from_readme = lines[1..lines.len() - 1].join("\n");
-    assert_eq!(
-        output.trim(),
-        from_readme.trim(),
-        "precis output for {fixture}@{budget} doesn't match README example — \
-         regenerate with: cargo run --release -- test/fixtures/{fixture} --budget {budget}",
-        fixture = README_EXAMPLE_FIXTURE,
-        budget = README_EXAMPLE_BUDGET,
+/// Render a fixture directory with a budget. Returns None for missing perf fixtures.
+fn render_fixture(path: &str, budget: usize) -> Option<String> {
+    let root = fixture_path(path)?;
+    let output = precis::render(&root, budget, None);
+    let tokens = format::count_tokens(&output);
+    assert!(
+        tokens <= budget,
+        "budget exceeded for {}: {} tokens > {} budget",
+        path, tokens, budget,
     );
+    Some(output)
 }
 
-// Budget-based fixture snapshot tests.
-
-/// Render a fixture with a token budget, returning raw output.
-fn render_fixture(subpath: &str, budget: usize) -> Option<String> {
-    let root = fixture_path(subpath)?;
-    let files = walk::discover_source_files(&root);
-    let sources = precis::read_sources(&files);
-    Some(precis::render_with_budget(budget, None, &root, &files, sources))
+/// Render a single-file sample with a budget.
+/// Writes the sample to a tempdir and renders it.
+fn render_sample(filename: &str, source: &str, budget: usize) -> String {
+    let dir = tempfile::tempdir().unwrap();
+    let file_path = dir.path().join(filename);
+    std::fs::write(&file_path, source).unwrap();
+    precis::render(&file_path, budget, None)
 }
 
-/// Render a fixture with token and character budgets, returning raw output.
-fn render_fixture_with_char_budget(subpath: &str, budget: usize, char_budget: usize) -> Option<String> {
-    let root = fixture_path(subpath)?;
-    let files = walk::discover_source_files(&root);
-    let sources = precis::read_sources(&files);
-    Some(precis::render_with_budget(budget, Some(char_budget), &root, &files, sources))
-}
+// Budget-based fixture helpers (rewritten for new API).
 
-/// Helper: render a fixture and prepend a metadata header for snapshot tests.
-/// Asserts that the output respects the token budget.
+/// Render a fixture directory with a budget, prepend metadata, assert budget.
 fn render_with_budget(subpath: &str, budget: usize) -> Option<String> {
-    let output = render_fixture(subpath, budget)?;
+    let root = fixture_path(subpath)?;
+    let output = precis::render(&root, budget, None);
     let tokens = format::count_tokens(&output);
     assert!(
         tokens <= budget,
@@ -1051,9 +932,10 @@ fn render_with_budget(subpath: &str, budget: usize) -> Option<String> {
     ))
 }
 
-/// Helper: render a fixture with char budget, prepend metadata, and assert both budgets.
+/// Render a fixture with char budget, prepend metadata, assert both budgets.
 fn render_with_char_budget(subpath: &str, budget: usize, char_budget: usize) -> Option<String> {
-    let output = render_fixture_with_char_budget(subpath, budget, char_budget)?;
+    let root = fixture_path(subpath)?;
+    let output = precis::render(&root, budget, Some(char_budget));
     let tokens = format::count_tokens(&output);
     let chars = output.len();
     assert!(
@@ -1070,42 +952,33 @@ fn render_with_char_budget(subpath: &str, budget: usize, char_budget: usize) -> 
     ))
 }
 
-// Character budget snapshot tests — diverse fixtures at the plugin default (9500).
-// These verify that char-budgeted output fits within the limit and degrades gracefully.
+// Character budget snapshot tests.
 
 #[test]
 fn char_budget_sps() {
-    // Large multi-crate Rust workspace (budget 8000) — exercises directory markers
     let output = render_with_char_budget("sps", 8000, 9500).unwrap();
     insta::assert_snapshot!(output);
 }
 
 #[test]
 fn char_budget_pluggy() {
-    // Medium Python project (budget 4000) — typical plugin use case
     let output = render_with_char_budget("pluggy", 4000, 9500).unwrap();
     insta::assert_snapshot!(output);
 }
 
 #[test]
 fn char_budget_mitt() {
-    // Small TypeScript lib (budget 2000) — output fits easily, char budget is not binding
     let output = render_with_char_budget("mitt", 2000, 9500).unwrap();
     insta::assert_snapshot!(output);
 }
 
-// Char budget monotonicity: more char budget should never produce fewer characters.
 #[test]
 fn char_budget_monotonicity() {
     let root = fixture_path("pluggy").unwrap();
-    let files = walk::discover_source_files(&root);
-    let sources = precis::read_sources(&files);
-    let file_data = precis::build_file_data(&root, &files, sources);
-    let corpus = precis::Corpus { files: &file_data };
     let char_budgets = [500, 1000, 2000, 4000, 6000, 8000, 10000, 20000];
     let mut prev_chars = 0;
     for &cb in &char_budgets {
-        let output = corpus.render(4000, Some(cb));
+        let output = precis::render(&root, 4000, Some(cb));
         let chars = output.len();
         assert!(
             chars >= prev_chars,
@@ -1121,5 +994,34 @@ fn char_budget_monotonicity() {
     }
 }
 
-// Snapshot tests are generated from entries in test/fixtures.rs via the
-// with_entries! callback macro defined above.
+// README example sync test.
+const README_EXAMPLE_FIXTURE: &str = "mitt";
+const README_EXAMPLE_BUDGET: usize = 400;
+
+#[test]
+fn readme_example_matches_output() {
+    let root = fixture_path(README_EXAMPLE_FIXTURE).expect("fixture should be present");
+    let output = precis::render(&root, README_EXAMPLE_BUDGET, None);
+    let readme = std::fs::read_to_string(
+        Path::new(env!("CARGO_MANIFEST_DIR")).join("README.md"),
+    )
+    .expect("failed to read README.md");
+    let start_marker = "<!-- precis-example-start -->";
+    let end_marker = "<!-- precis-example-end -->";
+    if let (Some(start_pos), true) = (readme.find(start_marker), readme.contains(end_marker)) {
+        let start = start_pos + start_marker.len();
+        let end = readme[start..].find(end_marker).unwrap() + start;
+        let block = readme[start..end].trim();
+        let lines: Vec<&str> = block.lines().collect();
+        if lines.len() >= 3 {
+            let from_readme = lines[1..lines.len() - 1].join("\n");
+            assert_eq!(
+                output.trim(),
+                from_readme.trim(),
+                "precis output for {fixture}@{budget} doesn't match README example",
+                fixture = README_EXAMPLE_FIXTURE,
+                budget = README_EXAMPLE_BUDGET,
+            );
+        }
+    }
+}

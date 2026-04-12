@@ -2,156 +2,19 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1993 tokens)
-
 block_manager.py
-     8→class Block:
-     9→
-    10→    def __init__(self, block_id):
-    16→    def update(self, hash: int, token_ids: list[int]):
-    20→    def reset(self):
-    26→class BlockManager:
-    27→
-    28→    def __init__(self, num_blocks: int, block_size: int):
-    35→    @classmethod
-    36→    def compute_hash(cls, token_ids: list[int], prefix: int = -1):
-    37→        h = xxhash.xxh64()
-    38→        if prefix != -1:
-    39→            h.update(prefix.to_bytes(8, "little"))
-    40→        h.update(np.array(token_ids).tobytes())
-    41→        return h.intdigest()
-    43→    def _allocate_block(self, block_id: int) -> Block:
-    51→    def _deallocate_block(self, block_id: int) -> Block:
-    56→    def can_allocate(self, seq: Sequence) -> bool:
-    59→    def allocate(self, seq: Sequence):
-    84→    def deallocate(self, seq: Sequence):
-    93→    def can_append(self, seq: Sequence) -> bool:
-    96→    def may_append(self, seq: Sequence):
+     8→class Block …
+    26→class BlockManager …
 
 llm_engine.py
-    15→class LLMEngine:
-    16→
-    17→    def __init__(self, model, **kwargs):
-    36→    def exit(self):
-    42→    def add_request(self, prompt: str | list[int], sampling_params: SamplingParams):
-    48→    def step(self):
-    56→    def is_finished(self):
-    59→    def generate(
-    60→        self,
-    61→        prompts: list[str] | list[list[int]],
-    62→        sampling_params: SamplingParams | list[SamplingParams],
-    63→        use_tqdm: bool = True,
-    64→    ) -> list[str]:
+    15→class LLMEngine …
 
 model_runner.py
-    15→class ModelRunner:
-    16→
-    17→    def __init__(self, config: Config, rank: int, event: Event | list[Event]):
-    50→    def exit(self):
-    61→    def loop(self):
-    68→    def read_shm(self):
-    76→    def write_shm(self, method_name, *args):
-    85→    def call(self, method_name, *args):
-    91→    def warmup_model(self):
-   100→    def allocate_kv_cache(self):
-   120→    def prepare_block_tables(self, seqs: list[Sequence]):
-   126→    def prepare_prefill(self, seqs: list[Sequence]):
-   164→    def prepare_decode(self, seqs: list[Sequence]):
-   182→    def prepare_sample(self, seqs: list[Sequence]):
-   189→    @torch.inference_mode()
-   190→    def run_model(self, input_ids: torch.Tensor, positions: torch.Tensor, is_prefill: bool):
-   191→        if is_prefill or self.enforce_eager or input_ids.size(0) > 512:
-   192→            return self.model.compute_logits(self.model(input_ids, positions))
-   193→        else:
-   194→            bs = input_ids.size(0)
-   195→            context = get_context()
-   196→            graph = self.graphs[next(x for x in self.graph_bs if x >= bs)]
-   197→            graph_vars = self.graph_vars
-   198→            graph_vars["input_ids"][:bs] = input_ids
-   199→            graph_vars["positions"][:bs] = positions
-   200→            graph_vars["slot_mapping"].fill_(-1)
-   201→            graph_vars["slot_mapping"][:bs] = context.slot_mapping
-   202→            graph_vars["context_lens"].zero_()
-   203→            graph_vars["context_lens"][:bs] = context.context_lens
-   204→            graph_vars["block_tables"][:bs, :context.block_tables.size(1)] = context.block_tables
-   205→            graph.replay()
-   206→            return self.model.compute_logits(graph_vars["outputs"][:bs])
-   208→    def run(self, seqs: list[Sequence], is_prefill: bool) -> list[int]:
-   216→    @torch.inference_mode()
-   217→    def capture_cudagraph(self):
-   218→        config = self.config
-   219→        hf_config = config.hf_config
-   220→        max_bs = min(self.config.max_num_seqs, 512)
-   221→        max_num_blocks = (config.max_model_len + self.block_size - 1) // self.block_size
-   222→        input_ids = torch.zeros(max_bs, dtype=torch.int64)
-   223→        positions = torch.zeros(max_bs, dtype=torch.int64)
-   224→        slot_mapping = torch.zeros(max_bs, dtype=torch.int32)
-   225→        context_lens = torch.zeros(max_bs, dtype=torch.int32)
-   226→        block_tables = torch.zeros(max_bs, max_num_blocks, dtype=torch.int32)
-   227→        outputs = torch.zeros(max_bs, hf_config.hidden_size)
-   228→        self.graph_bs = [1, 2, 4, 8] + list(range(16, max_bs + 1, 16))
-   229→        self.graphs = {}
-   230→        self.graph_pool = None
-   231→
-   232→        for bs in reversed(self.graph_bs):
-   233→            graph = torch.cuda.CUDAGraph()
-   234→            set_context(False, slot_mapping=slot_mapping[:bs], context_lens=context_lens[:bs], block_tables=block_tables[:bs])
-   235→            outputs[:bs] = self.model(input_ids[:bs], positions[:bs])    # warmup
-   236→            with torch.cuda.graph(graph, self.graph_pool):
-   237→                outputs[:bs] = self.model(input_ids[:bs], positions[:bs])    # capture
-   238→            if self.graph_pool is None:
-   239→                self.graph_pool = graph.pool()
-   240→            self.graphs[bs] = graph
-   241→            torch.cuda.synchronize()
-   242→            reset_context()
-   243→
-   244→        self.graph_vars = dict(
-      →        …
+    15→class ModelRunner …
 
 scheduler.py
-     8→class Scheduler:
-     9→
-    10→    def __init__(self, config: Config):
-    18→    def is_finished(self):
-    21→    def add(self, seq: Sequence):
-    24→    def schedule(self) -> tuple[list[Sequence], bool]:
-    60→    def preempt(self, seq: Sequence):
-    65→    def postprocess(self, seqs: list[Sequence], token_ids: list[int]) -> list[bool]:
+     8→class Scheduler …
 
 sequence.py
-     8→class SequenceStatus(Enum):
-     9→    WAITING = auto()
-    10→    RUNNING = auto()
-    11→    FINISHED = auto()
-    14→class Sequence:
-    15→    block_size = 256
-    16→    counter = count()
-    17→
-    18→    def __init__(self, token_ids: list[int], sampling_params = SamplingParams()):
-    31→    def __len__(self):
-    34→    def __getitem__(self, key):
-    37→    @property
-    38→    def is_finished(self):
-    39→        return self.status == SequenceStatus.FINISHED
-    41→    @property
-    42→    def num_completion_tokens(self):
-    43→        return self.num_tokens - self.num_prompt_tokens
-    45→    @property
-    46→    def prompt_token_ids(self):
-    47→        return self.token_ids[:self.num_prompt_tokens]
-    49→    @property
-    50→    def completion_token_ids(self):
-    51→        return self.token_ids[self.num_prompt_tokens:]
-    53→    @property
-    54→    def num_cached_blocks(self):
-    55→        return self.num_cached_tokens // self.block_size
-    57→    @property
-    58→    def num_blocks(self):
-    59→        return (self.num_tokens + self.block_size - 1) // self.block_size
-    61→    @property
-    62→    def last_block_num_tokens(self):
-    63→        return self.num_tokens - (self.num_blocks - 1) * self.block_size
-    65→    def block(self, i):
-    69→    def append_token(self, token_id: int):
-    74→    def __getstate__(self):
-    78→    def __setstate__(self, state):
+     8→class SequenceStatus …
+    14→class Sequence …

@@ -1,192 +1,284 @@
-use crate::format::{fmt_line, format_symbol_name, truncation_marker};
-use crate::layout;
-use crate::parse;
-use crate::schedule::{self, RenderPlanItem, Schedule, SymbolRenderSpec};
-use crate::Corpus;
+//! LineEntry types, RenderedEntry, per-file cache, assembly, and override resolution.
+
+use std::collections::{BTreeMap, HashMap};
+use std::path::{Path, PathBuf};
+
+use crate::format;
 
 // ---------------------------------------------------------------------------
-// Output assembly — turning a schedule into text
+// LineEntry (design §3.4)
 // ---------------------------------------------------------------------------
 
-/// Render output from a computed schedule.
-///
-/// Iterates the schedule's render plan (ordered files and directory markers)
-/// and renders each symbol according to its pre-resolved render spec. The
-/// renderer has no knowledge of stages, groups, or the scheduling model — it
-/// just assembles text from the decisions the scheduler already made.
-pub fn render_scheduled(corpus: &Corpus<'_>, sched: &Schedule) -> String {
-    let mut out = String::new();
-
-    for item in &sched.render_plan {
-        match item {
-            RenderPlanItem::DirectoryMarker(dir) => {
-                if !out.is_empty() { out.push('\n'); }
-                out.push_str(&schedule::directory_marker_text(dir));
-            }
-            RenderPlanItem::File(file_idx) => {
-                let file_idx = *file_idx;
-                let fd = &corpus.files[file_idx];
-
-                if !out.is_empty() { out.push('\n'); }
-                out.push_str(&format!("{}\n", fd.info.relative_path.display()));
-
-                let source = match &fd.source {
-                    Some(s) => s,
-                    None => continue,
-                };
-                let lines: Vec<&str> = source.lines().collect();
-                let symbols = &fd.symbols;
-
-                // Track the highest source line emitted so far (exclusive) to
-                // deduplicate overlapping ranges (e.g. Go grouped const block +
-                // individual const_spec symbols sharing the same first line).
-                let mut emitted_up_to: usize = 0;
-
-                for (sym_idx, sym) in symbols.iter().enumerate() {
-                    let spec = match &sched.symbol_specs[file_idx][sym_idx] {
-                        Some(s) => s,
-                        None => continue,
-                    };
-
-                    render_symbol(
-                        &mut out,
-                        &lines,
-                        sym,
-                        spec,
-                        &mut emitted_up_to,
-                    );
-                }
-            }
-        }
-    }
-
-    out
+#[derive(Debug, Clone)]
+pub enum LineEntry<'src> {
+    /// Full source line.
+    Complete { line: u32, content: &'src str },
+    /// Prefix of a source line, the rest omitted.
+    Truncated { line: u32, content: &'src str },
+    /// Ellipsis placeholder at a specific source line.
+    Ellipsis { line: u32 },
 }
 
-/// Render a single symbol according to its pre-resolved render spec.
-/// Parent body ranges are truncated at the first child's doc_start, but
-/// overlaps can still occur (e.g. Go grouped const blocks). The
-/// `emitted_up_to` high-water mark deduplicates within a file.
-fn render_symbol(
-    out: &mut String,
-    lines: &[&str],
-    sym: &parse::Symbol,
-    spec: &SymbolRenderSpec,
-    emitted_up_to: &mut usize,
-) {
-    let layout = &sym.layout;
-    let sym_line_0 = layout.sym_line_0;
-
-    let doc_n = spec.doc_lines;
-    let body_n = spec.body_lines;
-
-    if !spec.show_name {
-        return;
+impl<'src> LineEntry<'src> {
+    pub fn line(&self) -> u32 {
+        match self {
+            LineEntry::Complete { line, .. }
+            | LineEntry::Truncated { line, .. }
+            | LineEntry::Ellipsis { line } => *line,
+        }
     }
 
-    // Composite symbols: render as a single line prefix, progressively extended.
-    if !sym.composed_prefix_lens.is_empty() {
-        if sym_line_0 < *emitted_up_to {
-            return;
+    /// Content rank for override resolution (R4).
+    pub fn content_rank(&self) -> u8 {
+        match self {
+            LineEntry::Ellipsis { .. } => 0,
+            LineEntry::Truncated { .. } => 1,
+            LineEntry::Complete { .. } => 2,
         }
-        let line = lines.get(sym_line_0).copied().unwrap_or("");
-        let pl = &sym.composed_prefix_lens;
-        // Names shows prefix[0], body line n extends to prefix[n]
-        let depth = body_n.saturating_add(1).min(pl.len());
-        let prefix_len = pl[depth - 1].min(line.len());
-        let is_complete = depth >= pl.len();
-        out.push_str(&fmt_line(sym_line_0, &line[..prefix_len]));
-        if !is_complete {
-            // Replace trailing newline with inline truncation marker
-            out.pop(); // remove '\n' from fmt_line
-            out.push_str(" …\n");
-        }
-        *emitted_up_to = sym_line_0 + 1;
-        return;
     }
 
-    // Names only
-    if !spec.show_sig && doc_n == 0 && body_n == 0 {
-        if sym_line_0 >= *emitted_up_to {
-            if sym.kind.is_section_like() {
-                // Sections/module docs: show the full line without truncation
-                // marker. The text IS the name — truncating it looks broken.
-                let line = lines.get(sym_line_0).copied().unwrap_or("");
-                out.push_str(&fmt_line(sym_line_0, layout::strip_heading_badges(line)));
-            } else {
-                out.push_str(&format_symbol_name(sym, lines));
-                out.push_str(" …\n");
+    pub fn content_len(&self) -> usize {
+        match self {
+            LineEntry::Complete { content, .. } | LineEntry::Truncated { content, .. } => {
+                content.len()
             }
-            *emitted_up_to = sym_line_0 + 1;
+            LineEntry::Ellipsis { .. } => 0,
         }
-        return;
     }
+}
 
-    // Signature range from layout
-    let sig_end = if spec.show_sig {
-        layout.sig_end
-    } else {
-        sym_line_0 // just the first line
+// ---------------------------------------------------------------------------
+// RenderedEntry — a LineEntry with its pre-computed formatted string and costs
+// ---------------------------------------------------------------------------
+
+#[derive(Debug, Clone)]
+pub struct RenderedEntry<'src> {
+    pub entry: LineEntry<'src>,
+    pub formatted: String,
+    pub tokens: usize,
+    pub chars: usize,
+}
+
+/// Format a LineEntry and compute its token/char cost. Called once per entry.
+pub fn render_entry<'s>(entry: &LineEntry<'s>) -> RenderedEntry<'s> {
+    let formatted = match entry {
+        LineEntry::Complete { line, content } => format::fmt_line(*line as usize, content),
+        LineEntry::Truncated { line, content } => {
+            let base = format::fmt_line(*line as usize, content);
+            format!("{} …\n", base.trim_end())
+        }
+        LineEntry::Ellipsis { .. } => format::truncation_marker_plain(),
     };
-
-    // Doc comment lines (before symbol for most languages)
-    let doc_lines_shown = render_line_range(out, lines, layout.doc_start, layout.doc_end, doc_n, true, emitted_up_to);
-
-    // Signature lines (strip trailing badges from markdown heading lines)
-    let is_section = sym.kind.is_section_like();
-    for (i, line) in lines.iter().enumerate().take(sig_end + 1).skip(sym_line_0) {
-        if i < *emitted_up_to {
-            continue;
-        }
-        if is_section && i == sym_line_0 {
-            out.push_str(&fmt_line(i, layout::strip_heading_badges(line)));
-        } else {
-            out.push_str(&fmt_line(i, line));
-        }
-        *emitted_up_to = i + 1;
-    }
-
-    // Python docstrings (after signature)
-    // doc_n is a cumulative limit across pre-symbol comments and docstrings,
-    // matching the scheduler's flat doc_line_tokens vector.
-    let doc_n_remaining = doc_n.saturating_sub(doc_lines_shown);
-    render_line_range(out, lines, layout.ds_start, layout.ds_end, doc_n_remaining, true, emitted_up_to);
-
-    // Body lines from layout (section content for markdown, code body otherwise).
-    if body_n > 0 {
-        render_line_range(out, lines, layout.body_start, layout.body_end, body_n, !layout.has_children, emitted_up_to);
+    let tokens = format::count_tokens(&formatted);
+    let chars = formatted.len();
+    RenderedEntry {
+        entry: entry.clone(),
+        formatted,
+        tokens,
+        chars,
     }
 }
 
-/// Render up to `max_lines` from a line range, with an optional truncation marker.
-/// Skips lines already emitted (index < `*emitted_up_to`).
-/// Returns the number of lines actually rendered.
-fn render_line_range(
-    out: &mut String,
-    lines: &[&str],
-    start: usize,
-    end: usize,
-    max_lines: usize,
-    show_truncation: bool,
-    emitted_up_to: &mut usize,
-) -> usize {
-    if max_lines == 0 || start >= end {
-        return 0;
+// ---------------------------------------------------------------------------
+// CachedGroupRender — stored on the group after first probe
+// ---------------------------------------------------------------------------
+
+/// The result of rendering a group: per-file rendered entries and the total
+/// marginal cost. Computed once on first probe, reused on every subsequent
+/// probe and at commit time.
+#[derive(Debug, Clone)]
+pub struct CachedGroupRender<'s> {
+    pub per_file: Vec<(PathBuf, Vec<RenderedEntry<'s>>)>,
+    pub marginal_cost: FileCost,
+}
+
+// ---------------------------------------------------------------------------
+// Per-file cache
+// ---------------------------------------------------------------------------
+
+/// Tracks committed entries per file, keyed by line number for O(1) override.
+pub struct FileCache {
+    /// Per-file: line → committed RenderedEntry.
+    files: HashMap<PathBuf, BTreeMap<u32, CommittedEntry>>,
+    /// Per-file header cost, computed once on first appearance.
+    header_costs: HashMap<PathBuf, FileCost>,
+    /// Insertion-ordered paths for deterministic final assembly.
+    path_order: Vec<PathBuf>,
+    /// Running totals across all committed files.
+    pub total_tokens: usize,
+    pub total_chars: usize,
+}
+
+/// An entry committed to a file's line map.
+struct CommittedEntry {
+    formatted: String,
+    tokens: usize,
+    chars: usize,
+    content_rank: u8,
+    content_len: usize,
+}
+
+#[derive(Copy, Clone, Default, Debug)]
+pub struct FileCost {
+    pub tokens: usize,
+    pub chars: usize,
+}
+
+impl Default for FileCache {
+    fn default() -> Self {
+        Self::new()
     }
-    // Skip lines already emitted by a previous symbol
-    let effective_start = start.max(*emitted_up_to);
-    if effective_start >= end {
-        return 0;
+}
+
+impl FileCache {
+    pub fn new() -> Self {
+        Self {
+            files: HashMap::new(),
+            header_costs: HashMap::new(),
+            path_order: Vec::new(),
+            total_tokens: 0,
+            total_chars: 0,
+        }
     }
-    let available = end - effective_start;
-    let to_show = available.min(max_lines);
-    let render_end = effective_start + to_show;
-    for (i, line) in lines.iter().enumerate().take(render_end).skip(effective_start) {
-        out.push_str(&fmt_line(i, line));
+
+    /// Get or compute the header cost for a path. Tokenized once.
+    /// Includes the `\n` separator that precedes each file in the assembled output.
+    pub fn header_cost_for(&mut self, path: &Path) -> FileCost {
+        if let Some(&cost) = self.header_costs.get(path) {
+            return cost;
+        }
+        // Include the separator newline in the cost — it's always emitted
+        // before a file header in the assembled output (except the first file,
+        // but overcounting by 1 token is safer than undercounting).
+        let header = format!("\n{}", format::header_line(path));
+        let tokens = format::count_tokens(&header);
+        let chars = header.len();
+        let cost = FileCost { tokens, chars };
+        self.header_costs.insert(path.to_path_buf(), cost);
+        cost
     }
-    *emitted_up_to = render_end;
-    if show_truncation && to_show < available {
-        out.push_str(&truncation_marker(lines[render_end - 1]));
+
+    /// Whether a path already has committed entries (or a header reservation).
+    pub fn has_file(&self, path: &Path) -> bool {
+        self.files.contains_key(path)
     }
-    to_show
+
+    /// Register a file in the path order without any entries (for file headers).
+    pub fn register_file(&mut self, path: &Path) {
+        if !self.files.contains_key(path) {
+            self.files.insert(path.to_path_buf(), BTreeMap::new());
+            self.path_order.push(path.to_path_buf());
+            let hcost = self.header_cost_for(path);
+            self.total_tokens += hcost.tokens;
+            self.total_chars += hcost.chars;
+        }
+    }
+
+    /// Compute the marginal cost of committing a set of rendered entries,
+    /// accounting for descendant overrides of already-committed lines.
+    /// Does NOT mutate the cache — this is a read-only probe.
+    pub fn marginal_cost(
+        &mut self,
+        per_file: &[(PathBuf, Vec<RenderedEntry<'_>>)],
+    ) -> FileCost {
+        // Pre-compute header costs for new files to avoid borrow conflict
+        for (path, _) in per_file {
+            if !self.files.contains_key(path) {
+                self.header_cost_for(path);
+            }
+        }
+
+        let mut total = FileCost::default();
+
+        for (path, entries) in per_file {
+            let file_map = self.files.get(path);
+            let is_new_file = file_map.is_none();
+
+            if is_new_file {
+                let hcost = self.header_costs.get(path).copied().unwrap_or_default();
+                total.tokens += hcost.tokens;
+                total.chars += hcost.chars;
+            }
+
+            for re in entries {
+                let line = re.entry.line();
+                if let Some(map) = file_map
+                    && let Some(existing) = map.get(&line) {
+                        // Override: subtract old cost, add new cost
+                        debug_assert!(
+                            re.entry.content_rank() > existing.content_rank
+                                || (re.entry.content_rank() == existing.content_rank
+                                    && re.entry.content_rank() == 2
+                                    && re.entry.content_len() == existing.content_len)
+                                || (re.entry.content_rank() == existing.content_rank
+                                    && re.entry.content_rank() == 1
+                                    && re.entry.content_len() >= existing.content_len),
+                            "R4 violation: descendant entry has less content at line {}",
+                            line,
+                        );
+                        total.tokens += re.tokens;
+                        total.tokens = total.tokens.saturating_sub(existing.tokens);
+                        total.chars += re.chars;
+                        total.chars = total.chars.saturating_sub(existing.chars);
+                        continue;
+                    }
+                // New line: full cost
+                total.tokens += re.tokens;
+                total.chars += re.chars;
+            }
+        }
+
+        total
+    }
+
+    /// Commit rendered entries to the cache. Updates running totals.
+    pub fn commit(
+        &mut self,
+        per_file: Vec<(PathBuf, Vec<RenderedEntry<'_>>)>,
+        marginal_cost: FileCost,
+    ) {
+        for (path, entries) in per_file {
+            let map = self.files.entry(path.to_path_buf()).or_insert_with(|| {
+                self.path_order.push(path.to_path_buf());
+                BTreeMap::new()
+            });
+            for re in entries {
+                let line = re.entry.line();
+                map.insert(
+                    line,
+                    CommittedEntry {
+                        formatted: re.formatted,
+                        tokens: re.tokens,
+                        chars: re.chars,
+                        content_rank: re.entry.content_rank(),
+                        content_len: re.entry.content_len(),
+                    },
+                );
+            }
+        }
+        self.total_tokens += marginal_cost.tokens;
+        self.total_chars += marginal_cost.chars;
+    }
+
+    /// Assemble the final output string from all committed files.
+    pub fn assemble(&self) -> String {
+        let mut output = String::new();
+        for path in &self.path_order {
+            let map = match self.files.get(path) {
+                Some(m) => m,
+                None => continue,
+            };
+
+            if !output.is_empty() {
+                output.push('\n');
+            }
+            output.push_str(&format::header_line(path));
+
+            // Entries are in a BTreeMap keyed by line number — already sorted.
+            for entry in map.values() {
+                output.push_str(&entry.formatted);
+            }
+        }
+        output
+    }
 }

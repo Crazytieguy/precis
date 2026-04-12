@@ -2,191 +2,183 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 2000 (1972 tokens)
+__init__.py
 
-mlstm/__init__.py
-     1→
+xlstm_block.py
+     9→from ..components.feedforward import FeedForwardConfig, create_feedforward
+    10→from ..components.ln import LayerNorm
+    11→from .mlstm.layer import mLSTMLayer, mLSTMLayerConfig
+    12→from .slstm.layer import sLSTMLayer, sLSTMLayerConfig
+    17→class xLSTMBlockConfig …
+    43→class xLSTMBlock …
 
-mlstm/block.py
-    10→class mLSTMBlockConfig:
-    11→    mlstm: mLSTMLayerConfig = field(default_factory=mLSTMLayerConfig)
-    12→
-    13→    # we initialize these with None to catch the case where they are not set
-    14→    _num_blocks: int = None
-    15→    _block_idx: int = None
-    16→
-    22→class mLSTMBlock(xLSTMBlock):
-
-mlstm/cell.py
-    14→class mLSTMCellConfig:
-    15→    context_length: int = -1
-    16→    embedding_dim: int = -1
-    17→    num_heads: int = -1
-    20→class mLSTMCell(nn.Module):
-
-mlstm/layer.py
-    19→class mLSTMLayerConfig(UpProjConfigMixin):
-    20→    conv1d_kernel_size: int = 4
-    21→    qkv_proj_blocksize: int = 4
-    22→    num_heads: int = 4
-    23→    proj_factor: float = 2.0
-    24→
-    25→    # will be set toplevel config
-    26→    embedding_dim: int = -1
-    27→    bias: bool = False
-    28→    dropout: float = 0.0
-    29→    context_length: int = -1
-    30→
-    31→    _num_blocks: int = 1
-    32→    _inner_embedding_dim: int = None
-    33→
-    39→class mLSTMLayer(nn.Module):
+slstm/__init__.py
 
 slstm/block.py
-    13→class sLSTMBlockConfig:
-    29→class sLSTMBlock(xLSTMBlock):
+     7→from ...components.feedforward import FeedForwardConfig
+     8→from ..xlstm_block import xLSTMBlock, xLSTMBlockConfig
+     9→from .layer import sLSTMLayerConfig
+    13→class sLSTMBlockConfig …
+    29→class sLSTMBlock …
 
 slstm/cell.py
-    28→LOGGER = logging.getLogger(__name__)
-    30→DTYPE_DICT = {
-    35→DTYPES = Literal["bfloat16", "float16", "float32"]
-    62→class sLSTMCellConfig:
-   122→    def head_dim(self):
-   126→    def input_dim(self):
-   130→    def torch_dtype(self) -> torch.dtype:
-   134→    def torch_dtype_b(self) -> torch.dtype:
-   138→    def torch_dtype_r(self) -> torch.dtype:
-   142→    def torch_dtype_w(self) -> torch.dtype:
-   146→    def torch_dtype_s(self) -> torch.dtype:
-   173→    def defines(self):
-   214→class sLSTMCellBase(nn.Module):
-   277→    def _recurrent_kernel(self):
-   281→    def _bias(self):
-   324→    def head_dim(self):
-   509→class sLSTMCellCUDA(object):
-   513→    def instance(cls, config: sLSTMCellConfig):
-   591→class sLSTMCell_vanilla(sLSTMCellBase):
-   681→class sLSTMCell_cuda(sLSTMCellBase):
-   777→class sLSTMCell(sLSTMCellBase):
+    12→from .src.cuda_init import load
+    13→from .src.vanilla import (
+    14→    slstm_forward,
+    15→    slstm_forward_step,
+    16→    slstm_pointwise_function_registry,
+    17→)
+    18→from ...components.util import conditional_decorator, round_to_multiple, ParameterProxy
+    19→from ...components.init import bias_linspace_init_
+    28→LOGGER …
+    30→DTYPE_DICT …
+    35→DTYPES …
+    62→class sLSTMCellConfig …
+   214→class sLSTMCellBase …
+   509→class sLSTMCellCUDA …
+   537→def sLSTMCellFuncGenerator(training, config: sLSTMCellConfig):
+   591→class sLSTMCell_vanilla …
+   681→class sLSTMCell_cuda …
+   777→class sLSTMCell …
 
 slstm/layer.py
-    19→class sLSTMLayerConfig(sLSTMCellConfig):
-    33→class sLSTMLayer(nn.Module):
+     6→from ...components.ln import MultiHeadLayerNorm
+     7→from ...components.linear_headwise import (
+     8→    LinearHeadwiseExpand,
+     9→    LinearHeadwiseExpandConfig,
+    10→)
+    11→from ...components.conv import CausalConv1d, CausalConv1dConfig
+    12→from ...components.init import small_init_init_
+    15→from .cell import sLSTMCell, sLSTMCellConfig
+    19→class sLSTMLayerConfig …
+    33→class sLSTMLayer …
+
+mlstm/__init__.py
+
+mlstm/backends.py
+     9→def parallel_stabilized_simple …
+    93→def recurrent_step_stabilized_simple …
+   149→def chunkwise_simple …
+
+mlstm/block.py
+    10→class mLSTMBlockConfig …
+    22→class mLSTMBlock …
+
+mlstm/cell.py
+    14→class mLSTMCellConfig …
+    20→class mLSTMCell …
+
+mlstm/layer.py
+    19→class mLSTMLayerConfig …
+    39→class mLSTMLayer …
+
+slstm/src/__init__.py
+
+slstm/src/cuda_init.py
+    14→LOGGER …
+    17→def defines_to_cflags(defines=Union[dict[str, Union[int, str]], Sequence[tuple[str, Union[str, int]]]]):
+    42→EXTRA_INCLUDE_PATHS …
+    60→def load(*, name, sources, extra_cflags=(), extra_cuda_cflags=(), **kwargs):
+
+slstm/src/vanilla/__init__.py
+    11→slstm_pointwise_function_registry …
+    17→def slstm_forward …
+    77→def slstm_forward_step …
+
+slstm/src/vanilla/lstm.py
+     7→def slstm_forward_pointwise …
+
+slstm/src/vanilla/slstm.py
+     8→def slstm_forward_pointwise …
+
+slstm/src/cuda/lstm_pointwise.cu
 
 slstm/src/cuda/slstm.cc
-    40→class sLSTMFunc {
-    41→private:
-    42→  ForwardPass fw;
-    43→  BackwardPass bw;
-    44→  BackwardPassCut bwc;
-    45→
-    46→public:
-    47→  sLSTMFunc …
+    29→#include "../util/support.h"
+    30→#include "slstm.h"
+    40→class sLSTMFunc …
+   305→// PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) { PARAMETRIC_DEFINITIONS }
    306→PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
 
 slstm/src/cuda/slstm.h
+    24→#include "../util/util.h"
     27→// all needed definitions from external
-    28→#define SLSTM_NUM_HEADS 1
-    29→#define SLSTM_HIDDEN_SIZE 512
-    30→#define SLSTM_BATCH_SIZE 8
-    31→#define SLSTM_NUM_GATES 4
-    32→#define SLSTM_NUM_STATES 4
-    33→#define SLSTM_DTYPE_R float
-    34→#define SLSTM_DTYPE_B float
-    35→#define SLSTM_DTYPE_W float
-    36→#define SLSTM_DTYPE_G float
-    37→#define SLSTM_DTYPE_S float
-    38→#define SLSTM_DTYPE_A float
+    28→#define SLSTM_NUM_HEADS …
+    29→#define SLSTM_HIDDEN_SIZE …
+    30→#define SLSTM_BATCH_SIZE …
+    31→#define SLSTM_NUM_GATES …
+    32→#define SLSTM_NUM_STATES …
+    33→#define SLSTM_DTYPE_R …
+    34→#define SLSTM_DTYPE_B …
+    35→#define SLSTM_DTYPE_W …
+    36→#define SLSTM_DTYPE_G …
+    37→#define SLSTM_DTYPE_S …
+    38→#define SLSTM_DTYPE_A …
     39→// defines whether g = Wx + Ry + b for every gate, enables half the cache for
     40→// backward
-    41→#define SLSTM_SIMPLE_AGG true
-    44→namespace slstm {
-    45→
-    46→class ForwardPass {
-    47→public:
-    53→  ForwardPass …
-   144→class BackwardPass {
-   145→public:
-   150→  BackwardPass …
-   254→class BackwardPassCut {
-   255→public:
-   260→  BackwardPassCut …
+    41→#define SLSTM_SIMPLE_AGG …
+    44→namespace slstm …
 
-slstm/src/cuda_init.py
-    14→LOGGER = logging.getLogger(__name__)
-    17→def defines_to_cflags …
-    42→EXTRA_INCLUDE_PATHS = (
-    60→def load …
+slstm/src/cuda/slstm_backward.cu
+
+slstm/src/cuda/slstm_backward_cut.cu
+
+slstm/src/cuda/slstm_forward.cu
+
+slstm/src/cuda/slstm_pointwise.cu
+
+slstm/src/cuda/slstm_pointwise.cuh
+
+slstm/src/util/blas.cu
 
 slstm/src/util/blas.h
-    27→template <typename T> struct blas {
-    28→  struct set_pointer_mode {
-    29→    set_pointer_mode …
-    39→  struct enable_tensor_cores {
-    40→    enable_tensor_cores …
-    52→cublasStatus_t cublasHgemmsb …
-    60→cublasStatus_t cublasSgemmsb …
-    67→cublasStatus_t cublasDgemmsb …
-    75→cublasStatus_t cublasHgemv2 …
-    80→cublasStatus_t cublasHgemv3 …
-    85→cublasStatus_t cublasHgemv …
-    90→cublasStatus_t cublasHgemm2 …
-    97→cublasStatus_t cublasHgemm3 …
-   104→void initVector_d …
-   105→void initVector_f …
-   106→void initVector_h …
-   132→cublasStatus_t cublasBgemv …
-   139→cublasBgemm …
-   147→cublasStatus_t cublasBgemmsb …
-   156→void initVector_b …
+    27→template <typename T> struct blas …
+    52→cublasStatus_t cublasHgemmsb(cublasHandle_t handle, cublasOperation_t transa,
+    60→cublasStatus_t cublasSgemmsb(cublasHandle_t handle, cublasOperation_t transa,
+    67→cublasStatus_t cublasDgemmsb(cublasHandle_t handle, cublasOperation_t transa,
+    75→cublasStatus_t cublasHgemv2(cublasHandle_t handle, cublasOperation_t trans,
+    80→cublasStatus_t cublasHgemv3(cublasHandle_t handle, cublasOperation_t trans,
+    85→cublasStatus_t cublasHgemv(cublasHandle_t handle, cublasOperation_t trans,
+    90→cublasStatus_t cublasHgemm2(cublasHandle_t handle, cublasOperation_t transa,
+    97→cublasStatus_t cublasHgemm3(cublasHandle_t handle, cublasOperation_t transa,
+   104→void initVector_d(cudaStream_t stream, double *data, int size, double value);
+   105→void initVector_f(cudaStream_t stream, float *data, int size, float value);
+   106→void initVector_h(cudaStream_t stream, __half *data, int size, __half value);
+   132→cublasStatus_t cublasBgemv(cublasHandle_t handle, cublasOperation_t trans,
+   139→cublasStatus_t
+   147→cublasStatus_t cublasBgemmsb(cublasHandle_t handle, cublasOperation_t transa,
+   156→void initVector_b(cudaStream_t stream, __nv_bfloat16 *data, int size,
+
+slstm/src/util/cuda_error.cu
 
 slstm/src/util/cuda_error.h
-     9→void cudaOccupancyMaxActiveBlocksPerMultiprocessor2 …
+     9→void cudaOccupancyMaxActiveBlocksPerMultiprocessor2(dim3 blockSize,
 
 slstm/src/util/device_assert.h
-    23→__assertfail …
-    27→#define device_assert_fail(msg)                                                \
+    23→extern "C" __host__ __device__ void
+    27→#define device_assert_fail …
+
+slstm/src/util/inline_ops.cuh
+
+slstm/src/util/inline_ops_2bf16.cuh
+
+slstm/src/util/inline_ops_2fp16.cuh
+
+slstm/src/util/inline_ops_bf16.cuh
+
+slstm/src/util/inline_ops_fp16.cuh
+
+slstm/src/util/inline_print.cuh
 
 slstm/src/util/support.h
-    26→#define CHECK_CUDA(x)                                                          \
-    28→#define CHECK_CONTIGUOUS(x)                                                    \
-    30→#define CHECK_INPUT(x)                                                         \
-    34→#define AT_DISPATCH_CASE_FLOATING_TYPES_AND_HALF2(...)                         \
-    40→#define AT_DISPATCH_FLOATING_TYPES_AND_HALF2(TYPE, NAME, ...)                  \
-    44→template <typename U> struct native_type {
-    45→  using T = U;
-    46→};
-    49→  using T = __half;
-    52→template <typename U> typename native_type<U>::T *ptr …
-    56→template <typename T> torch::Dtype typeToTorchDtype …
+    26→#define CHECK_CUDA …
+    28→#define CHECK_CONTIGUOUS …
+    30→#define CHECK_INPUT …
+    34→#define AT_DISPATCH_CASE_FLOATING_TYPES_AND_HALF2 …
+    40→#define AT_DISPATCH_FLOATING_TYPES_AND_HALF2 …
+    44→template <typename U> struct native_type …
+    49→  using T …
+    52→template <typename U> typename native_type<U>::T *ptr(torch::Tensor t) {
+    56→template <typename T> torch::Dtype typeToTorchDtype();
 
 slstm/src/util/util.h
-     1→#pragma once
-     3→#ifndef uint
-     4→typedef unsigned int uint;
-     5→#endif
-
-slstm/src/vanilla/__init__.py
-    11→slstm_pointwise_function_registry: dict[str, Callable] = {
-
-xlstm_block.py
-    16→@dataclass
-    17→class xLSTMBlockConfig:
-    18→    mlstm: Optional[mLSTMLayerConfig] = None
-    19→    slstm: Optional[sLSTMLayerConfig] = None
-    20→
-    21→    feedforward: Optional[FeedForwardConfig] = None
-    22→    
-    23→    # we initialize these with None to catch the case where they are not set
-    24→    _num_blocks: int = None
-    25→    _block_idx: int = None
-    26→
-    27→    def __post_init__ …
-    43→class xLSTMBlock(nn.Module):
-    48→
-    49→    config_class = xLSTMBlockConfig
-    50→
-    51→    def __init__ …
-    76→    def forward …
-    82→    def step …
-    89→    def reset_parameters …

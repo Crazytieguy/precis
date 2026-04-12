@@ -3,23 +3,17 @@ source: tests/snapshots.rs
 expression: output
 ---
 sample.c
-     2→#include <stdio.h>
-     3→#include <stdlib.h>
      4→#include "token.h"
-     6→#define MAX_TOKENS 1024
-     7→#define MIN(a, b) ((a) < (b) ? (a) : (b))
-     9→typedef struct Token {
-    10→    int kind;
-    11→    int start;
-    12→    int end;
-    13→} Token;
+     6→#define MAX_TOKENS …
+     7→#define MIN …
+     9→typedef struct Token …
     15→/* The kind of a lexical token. */
-    16→enum TokenKind {
+    16→enum TokenKind …
     17→    TOKEN_IDENT,
     18→    TOKEN_NUMBER,
     19→    TOKEN_SYMBOL,
     20→};
-    22→typedef int (*Comparator)(const void *, const void *);
+    22→typedef int (*Comparator …
     25→ * Process the input and return a list of tokens.
     26→ * @param input The source text to tokenize.
     27→ * @param len Length of the input.

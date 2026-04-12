@@ -3,36 +3,9 @@ source: tests/snapshots.rs
 expression: output
 ---
 Token.java
-     4→import java.util.List;
-     5→import java.util.Map;
-     6→import static java.lang.Math.PI;
-     9→ * A sample class demonstrating Java features.
-    10→ * Includes methods, fields, and constructors.
-    12→public class Token {
-    13→    public static final int MAX_TOKENS = 1024;
-    16→    public Token(String value) {
-    17→        this.value = value;
-    18→    }
-    20→    public Token() {
-    21→        this("default");
-    22→    }
-    25→     * Get the value.
-    26→     * @return the token value
-    28→    public String getValue() {
-    29→        return value;
-    30→    }
-    32→    public void setValue(String value) {
-    33→        this.value = value;
-    34→    }
-    36→    private void helper() {}
-    40→ * Visitor interface for processing tokens.
-    42→public interface Visitor {
-    43→    int TIMEOUT = 1000;
-    44→    void visit(Token token);
-    45→    default void visitAll(List<Token> tokens) {
-    46→        tokens.forEach(this::visit);
-    47→    }
-    50→public enum TokenKind {
+    12→public class Token …
+    42→public interface Visitor …
+    50→public enum TokenKind …
     51→    IDENT,
     52→    NUMBER,
     53→    SYMBOL;
@@ -40,6 +13,6 @@ Token.java
     55→    public String display() {
     56→        return name().toLowerCase();
     57→    }
-    60→public record Span(int start, int end) {}
-    62→@interface Generated {
-    63→    String value();
+    58→}
+    60→public record Span …
+    62→@interface Generated …

@@ -2,62 +2,129 @@
 source: test/fixtures.rs
 expression: output
 ---
-budget: 8000 (7866 tokens)
-
 README.md
      1→# Toasty
-     3→**Current status: Incubating - Toasty is not ready for production usage. The API
-     4→is still evolving and documentation is lacking.**
-     5→
-      →…
     11→## Using Toasty
     76→## SQL and NoSQL
     91→## Application data model vs. database schema
     98→## Current status and roadmap
+   111→## License
+   117→### Contribution
 
-Cargo.toml
-     1→[workspace]
-     2→resolver = "2"
-     3→members = [
-     4→    "crates/toasty",
-     5→    "crates/toasty-cli",
-      →    …
-    37→[workspace.dependencies]
+crates/toasty-macros/src/lib.rs
+    10→pub fn derive_model(input: TokenStream) -> TokenStream {
+    18→pub fn derive_embed(input: TokenStream) -> TokenStream {
+    26→pub fn include_schema(_input: TokenStream) -> TokenStream {
+    31→pub fn query(_input: TokenStream) -> TokenStream {
+    36→pub fn create(_input: TokenStream) -> TokenStream {
 
-benches/
+docs/roadmap/README.md
+     1→# Toasty ORM - Development Roadmap
+     5→## Overview
+    11→## Feature Areas
+   126→## Notes
+
+crates/toasty/src/batch/create.rs
+     3→pub struct CreateMany …
+     9→impl<M: Model> CreateMany<M> …
+    46→impl<M: Model> Default for CreateMany<M> …
+
+docs/ARCHITECTURE.md
+     1→# Toasty Architecture Overview
+     3→## Project Structure
+     7→## Crates
+    74→## Further Reading
 
 crates/std-util/Cargo.toml
      1→[package]
      8→[dependencies]
 
-crates/std-util/src/lib.rs
-     1→pub mod num;
-     2→pub mod option;
-     3→pub mod result;
-     4→pub mod slice;
-     5→pub mod str;
-     7→pub mod prelude {
+crates/toasty-cli/Cargo.toml
+     1→[package]
+     7→[dependencies]
 
-crates/std-util/src/num.rs
-     1→pub trait NumUtil: PartialOrd + Ord + Eq {
+crates/toasty-driver-dynamodb/Cargo.toml
+     1→[package]
+     7→[dependencies]
 
-crates/std-util/src/option.rs
-     2→macro_rules! assert_none {
+crates/toasty-driver-integration-suite/Cargo.toml
+     1→[package]
+     7→[dependencies]
 
-crates/std-util/src/result.rs
-     2→macro_rules! assert_err {
-    22→macro_rules! assert_ok {
+crates/toasty-driver-integration-suite-macros/Cargo.toml
+     1→[package]
+     2→name = "toasty-driver-integration-suite-macros"
+     3→version = "0.1.0"
+     4→edition = "2021"
+     5→publish = false
+     6→
+     7→[lib]
+     8→proc-macro = true
+     9→
+    10→[dependencies]
+    11→proc-macro2.workspace = true
+    12→quote.workspace = true
+    13→syn = { workspace = true, features = ["visit", "visit-mut"] }
 
-crates/std-util/src/slice.rs
-     4→pub trait SliceUtil {
-     6→    fn is_unique …
-    15→    fn shuffle …
-    26→macro_rules! assert_unique {
-    40→macro_rules! assert_empty {
+crates/toasty-driver-mysql/Cargo.toml
+     1→[package]
+     6→[features]
+    11→[dependencies]
+
+crates/toasty-driver-postgresql/Cargo.toml
+     1→[package]
+     6→[features]
+    11→[dependencies]
+
+crates/toasty-macros/Cargo.toml
+     1→[package]
+     2→name = "toasty-macros"
+     3→version = "0.1.0"
+     4→edition = "2021"
+     5→publish = false
+     6→
+     7→[lib]
+     8→proc-macro = true
+     9→
+    10→[dependencies]
+    11→toasty-core.workspace = true
+    12→toasty-codegen.workspace = true
+    13→
+    14→proc-macro2.workspace = true
+    15→quote.workspace = true
+    16→syn.workspace = true
+
+crates/toasty-core/src/schema/builder/table.rs
+    32→struct BuildMapping …
+    42→impl BuildSchema<'_> …
+   114→impl BuildTableFromModels<'_> …
+   261→impl BuildMapping<'_> …
+   611→fn format_column_name …
+
+Cargo.toml
+     1→[workspace]
+    37→[workspace.dependencies]
+
+compose.yaml
+    19→name: toasty
+    20→version: "3.8"
+    22→services:
+
+rust-toolchain.toml
+     1→[toolchain]
+
+test.db
+
+crates/toasty/src/engine/eval/as_expr.rs
+     7→impl AsExpr for stmt::Expr …
+    13→impl AsExpr for &stmt::Expr …
+    19→impl AsExpr for stmt::Filter …
+    25→impl AsExpr for &stmt::Filter …
 
 crates/toasty/CONTEXT.md
      1→# toasty Component Context  
      3→## Purpose
+     4→The main runtime library providing the user-facing API, query engine, execution pipeline, and coordination between all components. This is where statements become database operations.
      6→## Architecture Overview
     15→## Key Components
     82→## Common Change Patterns
@@ -72,186 +139,48 @@ crates/toasty/Cargo.toml
      6→[features]
     33→[dependencies]
 
-crates/toasty/src/apply_update.rs
-     9→pub trait ApplyUpdate {
-    14→    fn apply_result …
-    19→pub struct Query;
+crates/toasty-driver-mysql/src/lib.rs
+     3→mod value …
+    22→pub struct MySQL …
+    23→    url: String,
+    24→    pool: Pool,
+    25→}
+    27→impl MySQL …
+    63→impl Driver for MySQL …
+   133→pub struct Connection …
+   134→    conn: Conn,
+   135→}
+   137→impl Connection …
+   184→impl From<Conn> for Connection …
+   191→impl toasty_core::driver::Connection for Connection …
 
-crates/toasty/src/cursor.rs
-     6→pub struct Cursor<M> {
-    12→pub trait FromCursor<A>: Extend<A> + Default {}
-    36→    pub async fn collect …
+crates/toasty-driver-mysql/src/value.rs
+     5→pub struct Value …
+     7→impl From<CoreValue> for Value …
+    13→impl Value …
+   163→impl ToValue for Value …
 
-crates/toasty/src/db/builder.rs
-    17→pub struct Builder {
-    35→    pub fn table_name_prefix …
+docs/CHANGE_GUIDE.md
+     1→# Toasty Change Guide
+     5→## Quick Reference: Where Changes Go
+    28→## Crate-Specific Patterns
+    63→## Common Change Patterns
+   189→## Architecture Rules
+   244→## Recent Refactoring Trends
+   258→## Performance Patterns
+   275→## Debugging Tips
+   287→## Common Pitfalls
+   301→## Commit Message Conventions
 
-crates/toasty/src/db/connect.rs
-    14→pub struct Connect {
-
-crates/toasty/src/db/pool.rs
-     1→//! Connection pooling for database connections.
-    18→pub struct PoolConfig {
-    25→    pub fn new …
-    41→pub struct Pool {
-    48→    pub fn new …
-    69→    pub fn connect …
-    74→    pub async fn get …
-    84→    pub fn driver …
-    89→    pub fn capability …
-   119→pub struct PoolConnection {
-
-crates/toasty/src/db.rs
-    18→pub struct Db {
-    37→    pub async fn all …
-    69→    pub async fn exec …
-   114→    pub async fn push_schema …
-   124→    pub async fn reset_db …
-
-crates/toasty/src/engine/lower/relation.rs
-    35→    fn selection …
-    38→    fn set_source_field …
-    41→    fn set_returning_field …
-
-crates/toasty/src/lib.rs
-     7→pub mod cursor;
-    10→pub mod db;
-    21→pub mod relation;
-    24→pub mod schema;
-    26→pub mod stmt;
-    57→pub mod driver {
-
-crates/toasty/src/model.rs
-    12→pub fn generate_unique_id …
-    26→pub trait Register {
-    30→    fn id …
-    33→    fn schema …
-    41→pub trait Model: Register + Sized {
-    57→    fn load …
-    65→pub trait Embed: Register {
-
-crates/toasty/src/page.rs
-    10→pub struct Page<M> {
-    40→    pub fn has_next …
-    45→    pub fn has_prev …
-    65→    pub async fn next …
-    93→    pub async fn prev …
-
-crates/toasty/src/relation/belongs_to.rs
-     8→pub struct BelongsTo<T> {
-    23→    pub fn get(&self) -> &T {
-
-crates/toasty/src/relation/has_many.rs
-     8→pub struct HasMany<T> {
-    32→    pub fn get(&self) -> &[T] {
-
-crates/toasty/src/relation/has_one.rs
-     8→pub struct HasOne<T> {
-    23→    pub fn get(&self) -> &T {
-
-crates/toasty/src/relation.rs
-    10→pub mod option;
-    16→pub trait Relation {
-
-crates/toasty/src/stmt/expr.rs
-     7→pub struct Expr<T: ?Sized> {
-
-crates/toasty/src/stmt/paginate.rs
-     8→pub struct Paginate<M> {
-
-crates/toasty/src/stmt.rs
-    51→pub struct Statement<M> {
-
-crates/toasty-cli/Cargo.toml
-     1→[package]
-     7→[dependencies]
-
-crates/toasty-cli/src/config.rs
-     9→pub struct Config {
-    10→    /// Migration-related configuration
-    11→    pub migration: MigrationConfig,
-    12→}
-    16→    pub fn new …
-    21→    pub fn load …
-    29→    pub fn migration …
-
-crates/toasty-cli/src/lib.rs
-    13→pub struct ToastyCli {
-    14→    db: Db,
-    15→    config: Config,
-    16→}
-    20→    pub fn new …
-    28→    pub fn with_config …
-    33→    pub fn config …
-    38→    pub async fn parse_and_run …
-    44→    pub async fn parse_from …
-    64→struct Cli {
-
-crates/toasty-cli/src/migration/config.rs
-    27→pub enum MigrationPrefixStyle {
-    28→    /// Sequential numbering (e.g., 0001_, 0002_, 0003_)
-    29→    Sequential,
-    30→
-    31→    /// Timestamp-based (e.g., 20240112_153045_)
-    32→    Timestamp,
-    33→}
-
-crates/toasty-cli/src/migration.rs
-    25→pub struct MigrationCommand {
-    26→    #[command(subcommand)]
-    27→    subcommand: MigrationSubcommand,
-    28→}
-
-crates/toasty-cli/src/theme.rs
-     5→pub fn dialoguer_theme …
-
-crates/toasty-codegen/CONTEXT.md
-     1→# toasty-codegen Component Context
-     3→## Purpose
-     6→## Key Responsibilities
-    25→## Common Change Patterns
-    45→## Generated Code Structure
-    70→## Complete Attribute Support
-    88→## Important Files
-    96→## Code Generation Principles
-   103→## Key Patterns
-   128→## Recent Changes Analysis
-
-crates/toasty-codegen/Cargo.toml
-     1→[package]
-     8→[dependencies]
-
-crates/toasty-codegen/src/schema/auto.rs
-     2→pub enum AutoStrategy {
-     3→    Unspecified,
-     4→    Uuid(UuidVersion),
-     5→    Increment,
-     6→}
-     9→pub enum UuidVersion {
-    10→    V4,
-    11→    V7,
-    12→}
-
-crates/toasty-codegen/src/schema/column.rs
-    89→pub enum ColumnType {
-    90→    Boolean,
-    91→    Integer(u8),
-    92→    UnsignedInteger(u8),
-    93→    Text,
-    94→    VarChar(u64),
-    95→    Numeric(Option<(u32, u32)>),
-    96→    Binary(u64),
-    97→    Blob,
-    98→    Timestamp(u8),
-    99→    Date,
-   100→    Time(u8),
-   101→    DateTime(u8),
-   102→    Custom(syn::LitStr),
-   103→}
+docs/CONTEXT.md
+     1→# Documentation Context
+     5→## Writing Style
+    28→## Document Structure
 
 crates/toasty-core/CONTEXT.md
      1→# toasty-core Component Context
      3→## Purpose
+     4→The foundation layer that defines all core abstractions, data structures, and interfaces used throughout Toasty. This crate has zero dependencies on other Toasty crates and serves as the contract between all components.
      6→## Key Responsibilities
     60→## Common Change Patterns
     80→## Important Files
@@ -264,555 +193,58 @@ crates/toasty-core/Cargo.toml
     20→[features]
     28→[dev-dependencies]
 
-crates/toasty-core/src/driver/capability.rs
-     4→pub struct Capability {
-    61→pub struct StorageTypes {
-   103→pub struct SchemaMutations {
-   120→    pub fn validate(&self) -> crate::Result<()> {
-   141→    pub fn default_string_max_length(&self) -> Option<u64> {
-   156→    pub fn native_type_for(&self, ty: &stmt::Type) -> stmt::Type {
-   164→    pub const SQLITE: Self = Self {
-   189→    pub const POSTGRESQL: Self = Self {
-   211→    pub const MYSQL: Self = Self {
-   233→    pub const DYNAMODB: Self = Self {
-   259→    pub const SQLITE: StorageTypes = StorageTypes {
-
-crates/toasty-core/src/driver/operation/transaction.rs
-     4→pub enum Transaction {
-     5→    /// Start a transaction
-     6→    Start,
-     7→
-     8→    /// Commit a transaction
-     9→    Commit,
-    10→
-    11→    /// Rollback a transaction
-    12→    Rollback,
-    13→}
-
-crates/toasty-core/src/driver/operation.rs
-    26→pub enum Operation {
-    27→    /// Create a new record. This will always be a lowered `stmt::Insert`
-    28→    Insert(Insert),
-    29→
-    30→    /// Delete records identified by the given keys.
-    31→    DeleteByKey(DeleteByKey),
-    32→
-    33→    /// Find by index
-    34→    FindPkByIndex(FindPkByIndex),
-    35→
-    36→    /// Get one or more records by the primary key
-    37→    GetByKey(GetByKey),
-    38→
-    39→    /// Query the table, filtering by the primary key
-    40→    QueryPk(QueryPk),
-    41→
-    42→    /// Execute a SQL query
-    43→    QuerySql(QuerySql),
-    44→
-    45→    /// Execute a transaction lifecycle op
-    46→    Transaction(Transaction),
-    47→
-    48→    /// Update a record by the primary key
-    49→    UpdateByKey(UpdateByKey),
-    50→}
-
-crates/toasty-core/src/driver/response.rs
-     4→pub struct Response {
-     9→pub enum Rows {
-    10→    /// Number of rows impacted by the operation
-    11→    Count(u64),
-    12→
-    13→    /// A single value
-    14→    Value(stmt::Value),
-    15→
-    16→    /// Operation result, as a stream of rows
-    17→    Stream(stmt::ValueStream),
-    18→}
-    66→    pub fn into_count(self) -> u64 {
-
-crates/toasty-core/src/driver.rs
-     7→pub mod operation;
-    18→pub trait Driver: Debug + Send + Sync + 'static {
-    20→    fn url …
-    23→    fn capability …
-    29→    async fn connect …
-    33→    fn max_connections …
-    38→    fn generate_migration …
-    41→    async fn reset_db …
-    45→pub trait Connection: Debug + Send + 'static {
-    47→    async fn exec …
-    51→    async fn push_schema …
-    54→    async fn applied_migrations …
-    57→    async fn apply_migration …
-
-crates/toasty-core/src/error.rs
-    36→pub struct Error {
-    37→    inner: Arc<ErrorInner>,
-    38→}
-    41→pub trait IntoError {
-    43→    fn into_error …
-    47→struct ErrorInner {
-    53→enum ErrorKind {
-    76→    pub fn context …
-
-crates/toasty-core/src/lib.rs
-     4→pub mod driver;
-    10→pub mod schema;
-    13→pub mod stmt;
-    16→pub type Result<T, E = Error> = core::result::Result<T, E>;
-
-crates/toasty-core/src/macros.rs
-     1→#[macro_export]
-     2→macro_rules! path {
-
-crates/toasty-core/src/schema/app/arg.rs
-     4→pub struct Arg {
-
-crates/toasty-core/src/schema/app/auto.rs
-     3→pub enum AutoStrategy {
-     9→pub enum UuidVersion {
-
-crates/toasty-core/src/schema/app/constraint/length.rs
-     6→pub struct ConstraintLength {
-     7→    /// The minimum length of the field.
-     8→    pub min: Option<u64>,
-     9→
-    10→    /// The maximum length of the field.
-    11→    pub max: Option<u64>,
-    12→}
-
-crates/toasty-core/src/schema/app/constraint.rs
-     7→pub enum Constraint {
-
-crates/toasty-core/src/schema/app/embedded.rs
-     7→pub struct Embedded {
-
-crates/toasty-core/src/schema/app/field.rs
-    11→pub struct Field {
-    36→pub struct FieldId {
-    42→pub struct FieldName {
-    54→pub enum FieldTy {
-
-crates/toasty-core/src/schema/app/fk.rs
-     4→pub struct ForeignKey {
-     9→pub struct ForeignKeyField {
-
-crates/toasty-core/src/schema/app/index.rs
-     5→pub struct Index {
-    20→pub struct IndexId {
-    26→pub struct IndexField {
-
-crates/toasty-core/src/schema/app/model.rs
-     6→pub struct Model {
-    23→pub enum ModelKind {
-    31→pub struct ModelRoot {
-    41→pub struct ModelId(pub usize);
-
-crates/toasty-core/src/schema/app/pk.rs
-     4→pub struct PrimaryKey {
-
-crates/toasty-core/src/schema/app/schema.rs
-     7→pub struct Schema {
-
-crates/toasty-core/src/schema/app.rs
-     1→//! Application-level schema
-
-crates/toasty-core/src/schema/builder.rs
-    11→pub struct Builder {
-
-crates/toasty-core/src/schema/db/column.rs
-    12→pub struct Column {
-    39→pub struct ColumnId {
-
-crates/toasty-core/src/schema/db/diff.rs
-     6→pub struct RenameHints {
-
-crates/toasty-core/src/schema/db/index.rs
-    12→pub struct Index {
-    34→pub struct IndexId {
-    41→pub struct IndexColumn {
-    54→pub enum IndexOp {
-    55→    Eq,
-    56→    Sort(stmt::Direction),
-    57→}
-    61→pub enum IndexScope {
-    62→    /// The index column is used to partition rows across nodes of a distributed database.
-    63→    Partition,
-    64→
-    65→    /// The index column is scoped to a physical node.
-    66→    Local,
-    67→}
-
-crates/toasty-core/src/schema/db/migration.rs
-     2→pub enum Migration {
-     3→    Sql(String),
-     4→}
-     8→    pub fn new_sql …
-    14→    pub fn new_sql_with_breakpoints …
-    24→    pub fn statements …
-    32→pub struct AppliedMigration {
-
-crates/toasty-core/src/schema/db/pk.rs
-     5→pub struct PrimaryKey {
-
-crates/toasty-core/src/schema/db/schema.rs
-     7→pub struct Schema {
-    30→    pub fn index …
-    39→    pub fn index_mut …
-
-crates/toasty-core/src/schema/db/table.rs
-    16→pub struct Table {
-    34→pub struct TableId(pub usize);
-    53→    pub fn resolve …
-
-crates/toasty-core/src/schema/db/ty.rs
-    63→pub enum Type {
-    64→    /// A boolean value
-    65→    Boolean,
-    66→
-    67→    /// A signed integer of `n` bytes
-    68→    Integer(u8),
-    69→
-    70→    /// An unsigned integer of `n` bytes
-    71→    UnsignedInteger(u8),
-    72→
-    73→    /// Unconstrained text type
-    74→    Text,
-    75→
-    76→    /// Text type with an explicit maximum length
-    77→    VarChar(u64),
-    78→
-    79→    /// 128-bit universally unique identifier (UUID)
-    80→    Uuid,
-    81→
-      →…
-   111→    pub fn from_app …
-   159→    pub fn bridge_type …
-
-crates/toasty-core/src/schema/mapping/field.rs
-    14→pub enum Field {
-    15→    /// A primitive field stored in a single column.
-    16→    Primitive(FieldPrimitive),
-    17→
-    18→    /// An embedded struct field flattened into multiple columns.
-    19→    Embedded(FieldEmbedded),
-    20→
-    21→    /// A relation field that doesn't map to columns in this table.
-    22→    Relation(FieldRelation),
-    23→}
-    41→    pub fn field_mask …
-    51→    pub fn sub_projection …
-    90→    pub fn columns …
-   105→pub struct FieldPrimitive {
-   140→pub struct FieldEmbedded {
-   180→pub struct FieldRelation {
-
-crates/toasty-core/src/schema/mapping/model.rs
-    19→pub struct Model {
-    74→pub struct TableToModel {
-    81→    pub fn new …
-    86→    pub fn lower_returning_model …
-    97→    pub fn lower_expr_reference …
-   132→    pub fn resolve_field_mapping …
-
-crates/toasty-core/src/schema/mapping.rs
-    18→pub struct Mapping {
-    29→    pub fn model …
-    38→    pub fn model_mut …
-
-crates/toasty-core/src/schema/name.rs
-     4→pub struct Name {
-
-crates/toasty-core/src/schema.rs
-     1→pub mod app;
-     6→pub mod db;
-     8→pub mod mapping;
-    22→pub struct Schema {
-    23→    /// Application-level schema
-    24→    pub app: app::Schema,
-    25→
-    26→    /// Database-level schema
-    27→    pub db: Arc<db::Schema>,
-    28→
-    29→    /// Maps the app-level schema to the db-level schema
-    30→    pub mapping: Mapping,
-    31→}
-
-crates/toasty-core/src/stmt/filter.rs
-    10→    pub const ALL: Filter = Filter { expr: None };
-
-crates/toasty-core/src/stmt.rs
-   235→pub mod visit_mut;
-   243→pub mod visit;
-   253→pub enum Statement {
-   254→    /// Delete one or more existing records
-   255→    Delete(Delete),
-   256→
-   257→    /// Create one or more instances of a model
-   258→    Insert(Insert),
-   259→
-   260→    /// Query the database
-   261→    Query(Query),
-   262→
-   263→    /// Update one or more existing records
-   264→    Update(Update),
-   265→}
-   290→    pub fn as_update …
-   302→    pub fn into_update …
-   314→    pub fn unwrap_update …
-
-crates/toasty-driver-dynamodb/Cargo.toml
-     1→[package]
-     7→[dependencies]
-
-crates/toasty-driver-dynamodb/src/lib.rs
-    30→pub struct DynamoDb {
-    31→    url: String,
-    32→}
-    96→pub struct Connection {
-    97→    /// Handle to the AWS SDK client
-    98→    client: Client,
-    99→}
-   345→struct ExprAttrs {
-
-crates/toasty-driver-dynamodb/src/type.rs
-     4→pub trait TypeExt {
-     6→    fn to_ddb_type(&self) -> ScalarAttributeType;
-
-crates/toasty-driver-dynamodb/src/value.rs
-     5→pub struct Value(CoreValue);
-    15→    pub fn into_inner(self) -> CoreValue {
-    20→    pub fn from_ddb(ty: &stmt::Type, val: &AttributeValue) -> Self {
-    44→    pub fn to_ddb(&self) -> AttributeValue {
-
-crates/toasty-driver-integration-suite/Cargo.toml
-     1→[package]
-     7→[dependencies]
-
-crates/toasty-driver-integration-suite/src/exec_log.rs
-     9→pub struct ExecLog {
-    19→    pub fn len …
-    24→    pub fn is_empty …
-    29→    pub fn clear …
-    36→    pub fn pop …
-
-crates/toasty-driver-integration-suite/src/helpers.rs
-     2→pub fn table_id …
-    29→pub fn column …
-    38→pub fn columns …
-
-crates/toasty-driver-integration-suite/src/isolate.rs
-     9→pub struct Isolate {
-    19→    pub fn new …
-    27→    pub fn table_prefix …
-
-crates/toasty-driver-integration-suite/src/lib.rs
-     2→mod macros;
-    24→/// Test implementations
-    25→pub mod tests;
-
-crates/toasty-driver-integration-suite/src/logging_driver.rs
-    14→pub struct LoggingDriver {
-    23→    pub fn new …
-    31→    pub fn ops_log_handle …
-    63→pub struct DriverOp {
-    70→pub struct LoggingConnection {
-
-crates/toasty-driver-integration-suite/src/macros.rs
-     1→#[macro_export]
-     2→macro_rules! assert_eq_unordered {
-
-crates/toasty-driver-integration-suite/src/setup.rs
-     4→pub trait Setup: Send + Sync + 'static {
-     6→    fn driver …
-    10→    async fn delete_table …
-
-crates/toasty-driver-integration-suite/src/stmt.rs
-     1→//! Expression utilities for testing with assert_struct!
-     3→//! This module provides test utilities like the Any wildcard
-     4→//! for use with the Like trait in assert_struct! macros.
-    11→pub struct Any;
-    28→pub trait ValueStreamExt {
-    34→    fn buffered …
-
-crates/toasty-driver-integration-suite/src/suite.rs
-     5→pub struct IntegrationSuite {
-    10→    pub fn new …
-
-crates/toasty-driver-integration-suite/src/test.rs
-    14→static TEST_LOCK …
-    19→pub struct Test {
-    39→    pub fn new …
-    56→    pub async fn try_setup_db …
-    77→    pub async fn setup_db …
-    82→    pub fn capability …
-    87→    pub fn log …
-    92→    pub fn set_serial …
-    97→    pub fn run …
-   127→pub struct TestResult {
-
-crates/toasty-driver-integration-suite-macros/Cargo.toml
-     1→[package]
-     7→[lib]
-    10→[dependencies]
-
-crates/toasty-driver-integration-suite-macros/src/lib.rs
-    11→pub fn driver_test …
-    16→pub fn generate_test_registry …
-    21→pub fn generate_driver_test_variants …
-    28→pub fn driver_test_cfg …
-
-crates/toasty-driver-integration-suite-macros/src/parse.rs
-     4→pub trait ExpansionList {
-     7→    fn needs_module_wrapper …
-    18→pub struct DriverTest {
-    40→pub enum ThreeValuedBool {
-    41→    True,
-    42→    False,
-    43→    Unknown,
-    44→}
-    48→    pub fn or …
-    57→    pub fn and …
-    66→    pub fn not …
-    77→pub struct Expansion {
-    93→    pub fn name …
-   114→    pub fn is_ident_true …
-   140→    pub fn should_include …
-   203→    pub fn has_expansion …
-   208→    pub fn to_ident …
-   220→pub enum BoolExpr {
-   221→    /// A single identifier (e.g., "single", "auto_increment")
-   222→    Ident(String),
-   223→    /// Logical OR of sub-expressions
-   224→    Or(Vec<BoolExpr>),
-   225→    /// Logical AND of sub-expressions
-   226→    And(Vec<BoolExpr>),
-   227→    /// Logical NOT of a sub-expression
-   228→    Not(Box<BoolExpr>),
-   229→}
-   233→pub enum KindVariant {
-   234→    /// u64 ID type variant
-   235→    IdU64,
-   236→    /// UUID ID type variant
-   237→    IdUuid,
-   238→}
-   242→    pub fn name …
-   252→pub struct DriverTestAttr {
-   263→    pub fn from_attribute …
-   380→    pub fn parse …
-   430→    pub fn from_item_fn …
-
-crates/toasty-driver-mysql/Cargo.toml
-     1→[package]
-     6→[features]
-    11→[dependencies]
-
-crates/toasty-driver-mysql/src/lib.rs
-    22→pub struct MySQL {
-    23→    url: String,
-    24→    pool: Pool,
-    25→}
-    28→    pub fn new …
-   133→pub struct Connection {
-   134→    conn: Conn,
-   135→}
-   138→    pub fn new …
-   142→    pub async fn create_table …
-
-crates/toasty-driver-mysql/src/value.rs
-     5→pub struct Value(CoreValue);
-    15→    pub fn into_inner(self) -> CoreValue {
-    20→    pub fn from_sql(i: usize, row: &mut Row, column: &Column, ty: &stmt::Type) -> Self {
-
-crates/toasty-driver-postgresql/Cargo.toml
-     1→[package]
-     6→[features]
-    11→[dependencies]
-
-crates/toasty-driver-postgresql/src/lib.rs
-    24→pub struct PostgreSQL {
-    25→    url: String,
-    26→    config: Config,
-    27→}
-    31→    pub fn new …
-   178→pub struct Connection {
-   179→    client: Client,
-   180→    statement_cache: StatementCache,
-   181→}
-   185→    pub fn new …
-   195→    pub async fn connect …
-   215→    pub async fn create_table …
-
-crates/toasty-driver-postgresql/src/statement_cache.rs
-     9→pub struct StatementCache {
-    10→    inner: LruCache<Key<'static>, Statement>,
-    11→}
-    15→    pub fn new …
-    49→struct Key<'a> {
-    56→    pub fn new …
-
-crates/toasty-driver-postgresql/src/type.rs
-     4→pub trait TypeExt {
-     6→    fn to_postgres_type …
-
-crates/toasty-driver-postgresql/src/value.rs
-     8→pub struct Value(pub(crate) CoreValue);
-    18→    pub fn into_inner …
-    23→    pub fn from_sql …
-
-crates/toasty-driver-sqlite/CONTEXT.md
-     1→# toasty-driver-sqlite Component Context
-     3→## Purpose
-     6→## Architecture
-    23→## SQLite-Specific Features
-    43→## Operations Implementation
-    80→## Value Conversion
-    99→## Capabilities
-   113→## Limitations
-   128→## Testing
-   146→## Common Change Patterns
-   167→## Recent Changes
-   176→## Related Components
-
-crates/toasty-driver-sqlite/Cargo.toml
-     1→[package]
-     7→[dependencies]
-
 crates/toasty-driver-sqlite/src/lib.rs
-    22→#[derive(Debug)]
-    23→pub enum Sqlite {
+     1→mod value …
+    23→pub enum Sqlite …
     24→    File(PathBuf),
     25→    InMemory,
     26→}
-    30→    pub fn new(url: impl Into<String>) -> Result<Self> {
-    49→    pub fn in_memory() -> Self {
-    54→    pub fn open<P: AsRef<Path>>(path: P) -> Self {
-   123→pub struct Connection {
+    28→impl Sqlite …
+    60→impl Driver for Sqlite …
+   123→pub struct Connection …
    124→    connection: RusqliteConnection,
    125→}
-   128→    pub fn in_memory …
-   134→    pub fn open …
+   127→impl Connection …
+   143→impl toasty_core::driver::Connection for Connection …
+   342→impl Connection …
 
 crates/toasty-driver-sqlite/src/value.rs
-     8→pub struct Value(CoreValue);
-    18→    pub fn into_inner(self) -> CoreValue {
-    23→    pub fn from_sql(row: &Row, index: usize, ty: &stmt::Type) -> Self {
+     8→pub struct Value …
+    10→impl From<CoreValue> for Value …
+    16→impl Value …
+    56→impl ToSql for Value …
 
-crates/toasty-macros/Cargo.toml
+crates/toasty-codegen/CONTEXT.md
+     1→# toasty-codegen Component Context
+     3→## Purpose
+     4→Generates Rust code from the `#[derive(Model)]` procedural macro. This crate transforms user-defined structs into full-featured ORM models with query builders, CRUD operations, and relationship handling.
+     6→## Key Responsibilities
+    25→## Common Change Patterns
+    45→## Generated Code Structure
+    70→## Complete Attribute Support
+    88→## Important Files
+    96→## Code Generation Principles
+   103→## Key Patterns
+   128→## Recent Changes Analysis
+
+crates/toasty-codegen/Cargo.toml
      1→[package]
-     7→[lib]
-    10→[dependencies]
-
-crates/toasty-macros/src/lib.rs
-    10→pub fn derive_model(input: TokenStream) -> TokenStream {
-    18→pub fn derive_embed(input: TokenStream) -> TokenStream {
-    26→pub fn include_schema(_input: TokenStream) -> TokenStream {
-    31→pub fn query(_input: TokenStream) -> TokenStream {
-    36→pub fn create(_input: TokenStream) -> TokenStream {
+     2→name = "toasty-codegen"
+     3→version = "0.1.0"
+     4→edition = "2021"
+     5→
+     6→# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+     7→
+     8→[dependencies]
+     9→proc-macro2.workspace = true
+    10→quote.workspace = true
+    11→std-util.workspace = true
+    12→syn.workspace = true
 
 crates/toasty-sql/CONTEXT.md
      1→# toasty-sql Component Context
      3→## Purpose
+     4→Serializes Toasty's statement AST into SQL strings for execution by SQL database drivers. Handles database-specific SQL dialects and parameter binding strategies.
      6→## Architecture
     44→## SQL Dialects (Flavors)
     67→## Parameter Binding
@@ -829,111 +261,703 @@ crates/toasty-sql/Cargo.toml
      3→version = "0.1.0"
      4→edition = "2021"
      5→publish = false
+     6→
      7→[dependencies]
      8→toasty-core.workspace = true
 
-crates/toasty-sql/src/lib.rs
-     1→pub mod migration;
-     4→pub mod serializer;
-     7→pub mod stmt;
+docs/architecture/query-engine.md
+     1→# Toasty Query Engine
+     7→## Overview
+    61→## Phase 1: Simplification
+    96→## Phase 2: Lowering
+   178→## Phase 3: Planning
+   203→## Phase 4: Execution Planning
+   234→## Phase 5: Execution
 
-crates/toasty-sql/src/migration.rs
-    12→pub struct MigrationStatement<'a> {
-    13→    statement: Statement,
-    14→    schema: Cow<'a, Schema>,
-    15→}
-
-crates/toasty-sql/src/serializer/params.rs
-     7→pub trait Params {
-    11→pub struct Placeholder(pub usize);
-    14→pub struct TypedValue {
-    15→    pub value: stmt::Value,
-    16→    pub type_hint: Option<stmt::Type>,
-    17→}
-    21→    pub fn infer_ty(&self) -> stmt::Type {
-
-crates/toasty-sql/src/serializer.rs
-     2→mod fmt;
-    36→pub struct InsertContext {
-    37→    pub table_id: db::TableId,
-    38→    pub columns: Vec<db::ColumnId>,
-    39→}
-    43→pub struct Serializer<'a> {
-    44→    /// Schema against which the statement is to be serialized
-    45→    schema: &'a db::Schema,
-    46→
-    47→    /// The database flavor handles the differences between SQL dialects and
-    48→    /// supported features.
-    49→    flavor: Flavor,
-    50→}
-    73→pub type ExprContext<'a> = toasty_core::stmt::ExprContext<'a, db::Schema>;
-
-crates/toasty-sql/src/stmt/alter_table.rs
-    17→pub enum AlterTableAction {
-    18→    /// Rename the table to a new name.
-    19→    RenameTo(Name),
-    20→}
-
-crates/toasty-sql/src/stmt/table_name.rs
-     5→pub enum TableName {
-     6→    TableId(TableId),
-     7→    Ident(Ident),
-     8→}
-
-crates/toasty-sql/src/stmt/ty.rs
-     6→pub enum ColumnType {
-     7→    Boolean,
-     8→    Integer,
-     9→    Text,
-    10→    VarChar(usize),
-    11→}
-
-crates/toasty-sql/src/stmt.rs
-    45→#[derive(Debug, Clone)]
-    46→pub enum Statement {
-    47→    AddColumn(AddColumn),
-    48→    AlterColumn(AlterColumn),
-    49→    AlterTable(AlterTable),
-    50→    CopyTable(CopyTable),
-    51→    CreateIndex(CreateIndex),
-    52→    CreateTable(CreateTable),
-    53→    DropColumn(DropColumn),
-    54→    DropTable(DropTable),
-    55→    DropIndex(DropIndex),
-    56→    Pragma(Pragma),
-    57→    Delete(Delete),
-    58→    Insert(Insert),
-    59→    Query(Query),
-    60→    Update(Update),
-    61→}
-    69→    pub fn returning_len(&self) -> Option<usize> {
-
-docs/ARCHITECTURE.md
-     1→# Toasty Architecture Overview
-     3→## Project Structure
-     7→## Crates
-    74→## Further Reading
-
-docs/CHANGE_GUIDE.md
-     1→# Toasty Change Guide
-
-docs/CONTEXT.md
-     1→# Documentation Context
+docs/architecture/type-system.md
+     1→# Toasty Type System Architecture
+     3→## Overview
+     7→## Type System Boundaries
+    65→## Type Flow Through the System
+    77→## Detailed Architecture
 
 docs/guide/jiff.md
      1→# Date and Time Types with Jiff
+     5→## Enabling Jiff Support
+    17→## Supported Types
+   126→## Precision Limitations
+   183→## Database-Specific Behavior
+   201→## Best Practices
+   209→## Example: Complete Model
 
 docs/guide/pagination.md
      1→# Pagination
+     5→## Basic Pagination
+    54→## Navigation Patterns
+   112→## Web API Integration
+   166→## Ordering Requirements
+   217→## Performance Characteristics
+   243→## Database-Specific Behavior
+   265→## Advanced Patterns
+   312→## Current Limitations
+   322→## Best Practices
 
-docs/roadmap/README.md
-     1→# Toasty ORM - Development Roadmap
+crates/toasty-driver-sqlite/CONTEXT.md
+     1→# toasty-driver-sqlite Component Context
+     3→## Purpose
+     4→SQLite-specific driver implementation that translates abstract Toasty operations into SQLite commands. Implements the common `Driver` trait while handling SQLite-specific features and limitations.
+     6→## Architecture
+    23→## SQLite-Specific Features
+    43→## Operations Implementation
+    80→## Value Conversion
+    99→## Capabilities
+   113→## Limitations
+   128→## Testing
+   146→## Common Change Patterns
+   167→## Recent Changes
+   176→## Related Components
+
+crates/toasty-driver-sqlite/Cargo.toml
+     1→[package]
+     7→[dependencies]
+
+crates/toasty-codegen/src/expand.rs
+    18→struct Expand …
+    29→impl Expand<'_> …
+
+crates/toasty-codegen/src/lib.rs
+     6→pub fn generate_model(input: TokenStream) -> syn::Result<TokenStream> {
+    13→pub fn generate_embed(input: TokenStream) -> syn::Result<TokenStream> {
+
+crates/toasty-codegen/src/schema.rs
+
+crates/toasty-cli/src/config.rs
+     9→pub struct Config …
+    10→    /// Migration-related configuration
+    11→    pub migration: MigrationConfig,
+    12→}
+    14→impl Config …
+
+crates/toasty-cli/src/lib.rs
+    12→/// Toasty CLI library for building custom command-line tools
+    13→pub struct ToastyCli …
+    14→    db: Db,
+    15→    config: Config,
+    16→}
+    18→impl ToastyCli …
+    64→struct Cli …
+    70→enum Command …
+
+crates/toasty-cli/src/migration.rs
+    25→pub struct MigrationCommand …
+    26→    #[command(subcommand)]
+    27→    subcommand: MigrationSubcommand,
+    28→}
+    31→enum MigrationSubcommand …
+    48→impl MigrationCommand …
+    54→impl MigrationSubcommand …
+
+crates/toasty-cli/src/theme.rs
+     4→/// Returns the standard theme used for interactive prompts
+     5→pub fn dialoguer_theme() -> ColorfulTheme {
+
+crates/std-util/src/lib.rs
+     1→pub mod num …
+     2→pub mod option …
+     3→pub mod result …
+     4→pub mod slice …
+     5→pub mod str …
+     7→pub mod prelude …
+
+crates/std-util/src/num.rs
+     1→pub trait NumUtil …
+     9→macro_rules! impl_num_util …
+
+crates/std-util/src/option.rs
+     2→macro_rules! assert_none …
+
+crates/std-util/src/result.rs
+     2→macro_rules! assert_err …
+    22→macro_rules! assert_ok …
+
+crates/std-util/src/slice.rs
+     4→pub trait SliceUtil …
+    23→impl<T> SliceUtil for [T] …
+    26→macro_rules! assert_unique …
+    40→macro_rules! assert_empty …
+    49→pub fn is_unique<T: Eq + Hash>(slice: &[T]) -> bool {
+    61→pub fn shuffle<T>(slice: &mut [T]) {
+
+crates/std-util/src/str.rs
+     1→pub fn snake_case(string: &str) -> String {
+     6→pub fn upper_snake_case(string: &str) -> String {
+    11→pub fn camel_case(string: &str) -> String {
+    16→pub fn upper_camel_case(string: &str) -> String {
+    21→pub fn pluralize(word: &str) -> String {
+    25→pub fn singularize(word: &str) -> String {
+
+crates/toasty-driver-dynamodb/src/lib.rs
+    30→pub struct DynamoDb …
+    31→    url: String,
+    32→}
+    34→impl DynamoDb …
+    41→impl Driver for DynamoDb …
+    96→pub struct Connection …
+    97→    /// Handle to the AWS SDK client
+    98→    client: Client,
+    99→}
+   101→impl Connection …
+   157→impl toasty_core::driver::Connection for Connection …
+   185→impl Connection …
+   345→struct ExprAttrs …
+   351→impl ExprAttrs …
+
+crates/toasty-driver-dynamodb/src/op.rs
+
+crates/toasty-driver-dynamodb/src/type.rs
+     4→pub trait TypeExt …
+     9→impl TypeExt for stmt::Type …
+
+crates/toasty-driver-dynamodb/src/value.rs
+     5→pub struct Value …
+     7→impl From<CoreValue> for Value …
+    13→impl Value …
+
+crates/toasty-sql/src/lib.rs
+     1→pub mod migration …
+     4→pub mod serializer …
+     7→pub mod stmt …
+
+crates/toasty-sql/src/migration.rs
+    12→pub struct MigrationStatement …
+    17→impl<'a> MigrationStatement<'a> …
+
+crates/toasty-sql/src/serializer.rs
+    36→pub struct InsertContext …
+    43→pub struct Serializer …
+    52→struct Formatter …
+    73→pub type ExprContext …
+    75→impl<'a> Serializer<'a> …
+
+crates/toasty-sql/src/stmt.rs
+    46→pub enum Statement …
+    63→impl Statement …
+    94→impl From<toasty_core::stmt::Statement> for Statement …
+
+crates/toasty-core/src/schema/verify/relations_are_indexed.rs
+     4→impl Verify<'_> …
+
+docs/design/enums-and-embedded-structs.md
+     1→# Enum and Embedded Struct Support
+     5→## Scope
+    13→## Storage Strategy
+    25→## Column Naming
+   188→## Discriminator Types
+   223→## NULL Handling
+   235→## Usage
+   266→## Examples
+   386→## Querying
+   631→## Updating
+
+docs/design/pagination.md
+     1→# Engine-Level Pagination Design
+     3→## Overview
+     7→## Architecture Context
+    26→## Design
+    76→## Implementation Plan
+   316→## Key Design Decisions
+   328→## Testing Strategy
+   335→## Future Enhancements
+
+crates/toasty-driver-postgresql/src/lib.rs
+     1→mod statement_cache …
+     2→mod r#type …
+     3→mod value …
+    24→pub struct PostgreSQL …
+    25→    url: String,
+    26→    config: Config,
+    27→}
+    29→impl PostgreSQL …
+    80→impl Driver for PostgreSQL …
+   178→pub struct Connection …
+   179→    client: Client,
+   180→    statement_cache: StatementCache,
+   181→}
+   183→impl Connection …
+   258→impl From<Client> for Connection …
+   268→impl toasty_core::driver::Connection for Connection …
+
+crates/toasty-driver-postgresql/src/statement_cache.rs
+     9→pub struct StatementCache …
+    10→    inner: LruCache<Key<'static>, Statement>,
+    11→}
+    13→impl StatementCache …
+    49→struct Key …
+    54→impl<'a> Key<'a> …
+
+crates/toasty-driver-postgresql/src/type.rs
+     4→pub trait TypeExt …
+     9→impl TypeExt for stmt::Type …
+
+crates/toasty-driver-postgresql/src/value.rs
+     8→pub struct Value …
+    10→impl From<CoreValue> for Value …
+    16→impl Value …
+   155→impl ToSql for Value …
+
+crates/toasty-core/src/driver.rs
+     7→pub mod operation …
+    18→pub trait Driver …
+    45→pub trait Connection …
+
+crates/toasty-core/src/error.rs
+    36→pub struct Error …
+    40→/// Trait for types that can be converted into an Error.
+    41→pub trait IntoError …
+    47→struct ErrorInner …
+    53→enum ErrorKind …
+    71→impl Error …
+   104→impl std::error::Error for Error …
+   114→impl core::fmt::Display for Error …
+   127→impl core::fmt::Debug for Error …
+   140→impl core::fmt::Display for ErrorKind …
+   164→impl From<ErrorKind> for Error …
+   172→impl IntoError for Error …
+
+crates/toasty-core/src/lib.rs
+     4→pub mod driver …
+    10→pub mod schema …
+    13→pub mod stmt …
+    15→/// A Result type alias that uses Toasty's [`Error`] type.
+    16→pub type Result …
+
+crates/toasty-core/src/macros.rs
+     2→macro_rules! path …
+
+crates/toasty-core/src/schema.rs
+     1→pub mod app …
+     6→pub mod db …
+     8→pub mod mapping …
+    22→pub struct Schema …
+    33→impl Schema …
+
+crates/toasty-core/src/stmt.rs
+   235→pub mod visit_mut …
+   243→pub mod visit …
+   253→pub enum Statement …
+   267→impl Statement …
+   322→impl Node for Statement …
+   332→impl fmt::Debug for Statement …
+
+crates/toasty/src/db/builder.rs
+    17→pub struct Builder …
+    28→impl Builder …
+
+crates/toasty/src/db/connect.rs
+    13→/// A connection to a database, wrapping the specific driver implementation.
+    14→pub struct Connect …
+    15→    driver: Box<dyn Driver>,
+    16→}
+    18→impl std::fmt::Debug for Connect …
+    26→impl Connect …
+    89→impl Driver for Connect …
+
+crates/toasty/src/db/pool.rs
+     1→//! Connection pooling for database connections.
+    12→fn get_default_pool_max_size() -> usize {
+    18→pub struct PoolConfig …
+    23→impl PoolConfig …
+    33→impl Default for PoolConfig …
+    41→pub struct Pool …
+    46→impl Pool …
+    95→struct Manager …
+    99→impl deadpool::managed::Manager for Manager …
+   116→/// A connection retrieved from a pool.
+      →…
+   119→pub struct PoolConnection …
+   120→    inner: deadpool::managed::Object<Manager>,
+   121→}
+   123→impl Deref for PoolConnection …
+   131→impl DerefMut for PoolConnection …
+
+crates/toasty/src/apply_update.rs
+     4→/// Trait for types that can handle the result of an update operation.
+      →…
+     9→pub trait ApplyUpdate …
+    19→pub struct Query …
+    21→impl ApplyUpdate for Query …
+
+crates/toasty/src/batch.rs
+
+crates/toasty/src/cursor.rs
+     6→pub struct Cursor …
+    12→pub trait FromCursor …
+    14→impl<A, T: Extend<A> + Default> FromCursor<A> for T …
+    16→impl<M: Model> Cursor<M> …
+
+crates/toasty/src/db.rs
+    18→pub struct Db …
+    31→impl Db …
+   141→impl Drop for Db …
+
+crates/toasty/src/engine.rs
+    38→pub(crate) struct Engine …
+    46→impl Engine …
+
+crates/toasty/src/lib.rs
+     7→pub mod cursor …
+    10→pub mod db …
+    21→pub mod relation …
+    24→pub mod schema …
+    26→pub mod stmt …
+    57→pub mod driver …
+
+crates/toasty/src/model.rs
+     7→/// Generate a unique model ID at runtime.
+      →…
+    12→pub fn generate_unique_id() -> ModelId {
+    21→/// Base trait for types that can be registered with the database schema.
+      →…
+    26→pub trait Register …
+    36→/// Trait for root models that map to database tables and can be queried.
+      →…
+    41→pub trait Model …
+    60→/// Trait for embedded types that are flattened into their parent model's table.
+      →…
+    65→pub trait Embed …
+    72→impl<T: Model> Register for Option<T> …
+    82→impl<T: Model> Model for Option<T> …
+
+crates/toasty/src/page.rs
+    10→pub struct Page …
+    24→impl<M: Model> Page<M> …
+   107→impl<M> Deref for Page<M> …
+
+crates/toasty/src/relation.rs
+    10→pub mod option …
+    16→pub trait Relation …
+
+crates/toasty/src/schema.rs
+     5→pub fn from_macro(models: &[app::Model]) -> Result<app::Schema> {
+
+crates/toasty/src/stmt.rs
+    51→pub struct Statement …
+    56→impl<M: Model> Statement<M> …
+    65→impl<M> From<Select<M>> for Statement<M> …
+    74→impl<M> From<Insert<M>> for Statement<M> …
+    83→impl<M> From<Update<M>> for Statement<M> …
+    92→impl<M> fmt::Debug for Statement<M> …
+
+crates/toasty-core/src/driver/capability.rs
+     4→pub struct Capability …
+    61→pub struct StorageTypes …
+   103→pub struct SchemaMutations …
+   112→impl Capability …
+   257→impl StorageTypes …
+   386→impl SchemaMutations …
+
+crates/toasty-core/src/driver/operation.rs
+    26→pub enum Operation …
+
+crates/toasty-core/src/driver/response.rs
+     4→pub struct Response …
+     9→pub enum Rows …
+    20→impl Response …
+    40→impl Rows …
+
+docs/roadmap/composite-keys.md
+     1→# Composite Key Support
+     3→## Overview
+     9→## Current State
+    97→## How Other ORMs Handle Composite Keys
+   157→## Common SQL Patterns Requiring Composite Keys
+   273→## Implementation Plan
+   340→## Design Decisions
+   392→## Testing Strategy
+
+docs/roadmap/order_limit_pagination.md
+     1→# Query Ordering, Limits & Pagination
      5→## Overview
-    11→## Feature Areas
-   126→## Notes
+     9→## Potential Future Work
+    78→## Testing
+   103→## Database-Specific Considerations
+   121→## How Keyset Pagination Works
+   142→## Notes
+
+docs/roadmap/query-constraints.md
+     1→# Query Constraints & Filtering
+     3→## Overview
+    15→## Core AST Support Without User API
+    28→## ORM Comparison
+    66→## Potential Future Work
+   210→## Implementation Considerations
+   245→## Reference Implementation Goals
+
+crates/toasty-core/src/schema/app/constraint/length.rs
+
+crates/toasty-core/src/schema/app/field/primitive.rs
+
+crates/toasty/src/engine/index/index_match.rs
+    29→impl<'stmt> IndexMatch<'stmt> …
+
+crates/toasty/src/engine/index/index_plan.rs
+    21→impl IndexPlan<'_> …
+
+crates/toasty-core/src/schema/mapping/field.rs
+    14→pub enum Field …
+    25→impl Field …
+   105→pub struct FieldPrimitive …
+   140→pub struct FieldEmbedded …
+   180→pub struct FieldRelation …
+
+crates/toasty-core/src/schema/mapping/model.rs
+    19→pub struct Model …
+    74→pub struct TableToModel …
+    79→impl TableToModel …
+   113→impl Model …
+
+crates/toasty/src/relation/belongs_to.rs
+     8→pub struct BelongsTo …
+     9→    value: Option<Box<T>>,
+    10→}
+    12→impl<T: Model> BelongsTo<T> …
+    36→impl<T: Relation> Relation for BelongsTo<T> …
+    55→impl<T> Default for BelongsTo<T> …
+    61→impl<T: fmt::Debug> fmt::Debug for BelongsTo<T> …
+    74→impl<T: serde_core::Serialize> serde_core::Serialize for BelongsTo<T> …
+
+crates/toasty/src/relation/has_many.rs
+     8→pub struct HasMany …
+     9→    values: Option<Vec<T>>,
+    10→}
+    12→impl<T: Model> HasMany<T> …
+    48→impl<T: Relation> Relation for HasMany<T> …
+    67→impl<T> Default for HasMany<T> …
+    73→impl<T: fmt::Debug> fmt::Debug for HasMany<T> …
+    86→impl<T: serde_core::Serialize> serde_core::Serialize for HasMany<T> …
+
+crates/toasty/src/relation/has_one.rs
+     8→pub struct HasOne …
+     9→    value: Option<Box<T>>,
+    10→}
+    12→impl<T: Model> HasOne<T> …
+    36→impl<T: Relation> Relation for HasOne<T> …
+    55→impl<T> Default for HasOne<T> …
+    61→impl<T: fmt::Debug> fmt::Debug for HasOne<T> …
+    74→impl<T: serde_core::Serialize> serde_core::Serialize for HasOne<T> …
+
+crates/toasty/src/relation/option.rs
+     4→impl<T: Relation> Relation for Option<T> …
+
+crates/toasty-driver-integration-suite-macros/src/driver_test.rs
+     7→pub fn expand(attr: TokenStream, item: TokenStream) -> TokenStream {
+    58→fn generate_variant …
+   105→fn process_driver_test_cfg_attrs …
+   128→fn process_attrs …
+   167→fn add_capability_checks_from_expr …
+   237→fn extract_db_capabilities …
+   276→fn rewrite_driver_test_cfg_macros …
+   334→struct IdRewriter …
+   341→impl IdRewriter …
+   350→impl VisitMut for IdRewriter …
+
+crates/toasty-driver-integration-suite-macros/src/lib.rs
+     3→mod driver_test …
+     4→mod parse …
+     5→mod test_registry …
+     6→mod test_variants …
+    11→pub fn driver_test(attr: TokenStream, item: TokenStream) -> TokenStream {
+    16→pub fn generate_test_registry(input: TokenStream) -> TokenStream {
+    21→pub fn generate_driver_test_variants(input: TokenStream) -> TokenStream {
+    28→pub fn driver_test_cfg(_input: TokenStream) -> TokenStream {
+
+crates/toasty-driver-integration-suite-macros/src/parse.rs
+     3→/// Helper trait for working with collections of expansions
+     4→pub trait ExpansionList …
+    10→impl ExpansionList for [Expansion] …
+    18→pub struct DriverTest …
+    40→pub enum ThreeValuedBool …
+    46→impl ThreeValuedBool …
+    77→pub struct Expansion …
+    91→impl Expansion …
+   220→pub enum BoolExpr …
+   233→pub enum KindVariant …
+   240→impl KindVariant …
+   252→pub struct DriverTestAttr …
+   261→impl DriverTestAttr …
+   282→impl Parse for DriverTestAttr …
+   327→enum DriverTestAttrItem …
+   338→impl Parse for DriverTestAttrItem …
+   378→impl BoolExpr …
+   428→impl DriverTest …
+
+crates/toasty-driver-integration-suite-macros/src/test_registry.rs
+    11→pub fn expand(input: TokenStream) -> TokenStream {
+    34→struct TestStructure …
+   103→fn extract_capability_names …
+   136→struct TestVisitor …
+   140→impl<'ast> Visit<'ast> for TestVisitor …
+   240→fn generate_capability_runtime_test …
+
+crates/toasty-driver-integration-suite-macros/src/test_variants.rs
+    12→struct Input …
+    32→impl syn::parse::Parse for Input …
+   100→impl Input …
+   148→pub fn expand(input: TokenStream) -> TokenStream {
+
+crates/toasty-core/src/schema/app.rs
+     1→//! Application-level schema
+
+crates/toasty-core/src/schema/builder.rs
+    11→pub struct Builder …
+    17→struct BuildSchema …
+    34→impl Builder …
+   110→impl Default for Builder …
+   116→impl BuildSchema<'_> …
+
+crates/toasty-core/src/schema/db.rs
+
+crates/toasty-core/src/schema/mapping.rs
+    18→pub struct Mapping …
+    23→impl Mapping …
+
+crates/toasty-core/src/schema/name.rs
+     4→pub struct Name …
+     8→impl Name …
+
+crates/toasty-core/src/schema/verify.rs
+    12→struct Verify …
+    16→impl Schema …
+    22→impl Verify<'_> …
+
+crates/toasty-driver-integration-suite/src/exec_log.rs
+     9→pub struct ExecLog …
+
+crates/toasty-driver-integration-suite/src/helpers.rs
+     2→pub fn table_id …
+    29→pub fn column …
+    38→pub fn columns …
+
+crates/toasty-driver-integration-suite/src/isolate.rs
+     9→pub struct Isolate …
+
+crates/toasty-driver-integration-suite/src/lib.rs
+    24→/// Test implementations
+    25→pub mod tests …
+
+crates/toasty-driver-integration-suite/src/logging_driver.rs
+    14→pub struct LoggingDriver …
+    63→pub struct DriverOp …
+    70→pub struct LoggingConnection …
+   125→async fn duplicate_response_mut(response: &mut Response) -> Result<Response> {
+
+crates/toasty-driver-integration-suite/src/macros.rs
+     2→macro_rules! assert_eq_unordered …
+    18→macro_rules! models …
+
+crates/toasty-driver-integration-suite/src/setup.rs
+     4→pub trait Setup …
+
+crates/toasty-driver-integration-suite/src/stmt.rs
+     1→//! Expression utilities for testing with assert_struct!
+    11→pub struct Any …
+    27→/// Extension trait for ValueStream providing convenient testing methods
+    28→pub trait ValueStreamExt …
+
+crates/toasty-driver-integration-suite/src/suite.rs
+     5→pub struct IntegrationSuite …
+
+crates/toasty-driver-integration-suite/src/test.rs
+    14→static TEST_LOCK …
+    19→pub struct Test …
+   127→pub struct TestResult …
+
+crates/toasty-driver-integration-suite/src/tests.rs
+
+tests/Cargo.toml
+
+benches/
+
+crates/
+
+crates/toasty/src/engine/
+
+crates/toasty/src/engine/exec/
+
+crates/toasty/src/engine/lower/
+
+crates/toasty/src/engine/mir/
+
+crates/toasty/src/engine/plan/
+
+crates/toasty/src/engine/simplify/
+
+crates/toasty/src/stmt/
+
+crates/toasty/tests/
+
+crates/toasty-cli/src/migration/
+
+crates/toasty-codegen/src/expand/
+
+crates/toasty-codegen/src/schema/
+
+crates/toasty-core/src/driver/operation/
+
+crates/toasty-core/src/error/
+
+crates/toasty-core/src/schema/app/
+
+crates/toasty-core/src/schema/app/relation/
+
+crates/toasty-core/src/schema/db/
+
+crates/toasty-core/src/stmt/
+
+crates/toasty-core/tests/
+
+crates/toasty-driver-dynamodb/src/op/
+
+crates/toasty-driver-integration-suite/src/tests/
+
+crates/toasty-sql/src/serializer/
+
+crates/toasty-sql/src/stmt/
+
+crates/toasty-sql/tests/
 
 examples/
 
+examples/composite-key/
+
+examples/composite-key/src/
+
+examples/hello-toasty/
+
+examples/hello-toasty/src/
+
+examples/todo-with-cli/
+
+examples/todo-with-cli/src/
+
+examples/todo-with-cli/src/bin/
+
+examples/todo-with-cli/toasty/
+
+examples/todo-with-cli/toasty/migrations/
+
+examples/todo-with-cli/toasty/snapshots/
+
+examples/user-has-one-profile/
+
+examples/user-has-one-profile/src/
+
 scripts/
 
-tests/
+tests/src/
+
+tests/src/db/
+
+tests/tests/
+
+tests/tests/ui/
