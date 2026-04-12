@@ -17,9 +17,6 @@ README.md
    221→### Versions and Frontiers
    261→### MultiSet as a changeset
    306→### Operators
-   615→##### `keyBy`
-   623→##### `unkey`
-   631→##### `rekey`
    653→### Using SQLite Backend
    678→## Implementation Details
    699→## References
@@ -44,6 +41,7 @@ packages/d2ql/README.md
 
 packages/d2ts/README.md
     26→# D2TS - Differential Dataflow in TypeScript <!-- omit in toc -->
+    36→## Table of Contents
     51→## Key Features
     88→## Quick Start
     90→### Installation
@@ -152,6 +150,7 @@ packages/d2mini/src/utils.ts
     36→const chunkSize …
     37→export function chunkedArrayPush(array: unknown[], other: unknown[]) {
     48→const hashCache …
+    51→ * Replacer function for JSON.stringify that converts unsupported types to strings
     53→function hashReplacer(_key: string, value: any): any {
     71→ * A hash method that caches the hash of a value in a week map
     73→export function hash(data: any): string {

@@ -5,19 +5,6 @@ before calibration.
 
 ## Must fix (design violations)
 
-### Heading nesting not implemented
-
-Headings of all levels enter the frontier simultaneously. The design
-says sub-headings should be gated behind their parent heading:
-
-- `FilesGroup::children()` should only produce Heading groups at the
-  shallowest level present (usually h1).
-- `TsGroup::children()` for `Heading(level=N)` should spawn
-  `Heading(level=N+1)` by walking each item's tree-sitter node
-  siblings, stopping at same-or-lower level.
-- May also want a `MarkdownBody` group for content before the first
-  heading.
-
 ### Class/Impl method spawning not implemented
 
 The design says methods inside classes, interfaces, traits, and impl

@@ -135,7 +135,98 @@ pub fn children<'s>(g: &mut FilesGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s>>
         }
     }
 
+    // Heading nesting: only the shallowest-level headings are direct children.
+    // Deeper headings become dependent_siblings, gated behind shallower levels.
+    nest_heading_groups(&mut direct);
+
     direct.into_iter().map(|(g, _)| g).collect()
+}
+
+/// Nest heading groups by level: deeper headings become `dependent_siblings`
+/// of the closest shallower heading group so they're gated behind it (A2).
+/// Only applies to Markdown headings — TOML/YAML levels are a flat namespace,
+/// not structural nesting (design §4 shows nesting for headings as markdown-only).
+fn nest_heading_groups(groups: &mut Vec<(Group<'_>, bool)>) {
+    // Check if these heading groups come from Markdown files.
+    let is_markdown = groups.iter().any(|(g, _)| {
+        matches!(g, Group::Ts(ts) if matches!(&ts.key, TsGroupKey::Heading { .. })
+            && ts.items.first().is_some_and(|item|
+                crate::Lang::from_path(&item.path) == Some(crate::Lang::Markdown)))
+    });
+    if !is_markdown {
+        return;
+    }
+
+    let group_heading_level = |g: &Group<'_>| -> Option<u8> {
+        match g {
+            Group::Ts(ts) => ts.key.heading_level(),
+            _ => None,
+        }
+    };
+
+    let min_level = groups.iter().filter_map(|(g, _)| group_heading_level(g)).min();
+    let max_level = groups.iter().filter_map(|(g, _)| group_heading_level(g)).max();
+
+    let (Some(min_level), Some(max_level)) = (min_level, max_level) else {
+        return;
+    };
+    if min_level == max_level {
+        return;
+    }
+
+    // Process from deepest to shallowest. Each level's heading groups
+    // are extracted and attached as dependent_siblings of the closest
+    // shallower heading group. Since we go deep-to-shallow, a level-3
+    // group is first attached to a level-2 group, then when level-2
+    // is processed it (with its level-3 siblings) attaches to level-1.
+    for level in (min_level + 1..=max_level).rev() {
+        let mut at_level = Vec::new();
+        let mut rest = Vec::new();
+        for entry in groups.drain(..) {
+            if group_heading_level(&entry.0) == Some(level) {
+                at_level.push(entry);
+            } else {
+                rest.push(entry);
+            }
+        }
+        *groups = rest;
+
+        if at_level.is_empty() {
+            continue;
+        }
+
+        // Find the closest shallower heading group: highest level < current,
+        // preferring non-boilerplate on ties so sub-headings aren't trapped
+        // behind a rarely-scheduled boilerplate parent.
+        let parent_pos = groups
+            .iter()
+            .enumerate()
+            .filter_map(|(i, (g, _))| {
+                if let Group::Ts(ts) = g {
+                    let l = ts.key.heading_level().filter(|&l| l < level)?;
+                    let boilerplate = matches!(&ts.key, TsGroupKey::Heading { boilerplate: true, .. });
+                    Some((i, l, boilerplate))
+                } else {
+                    None
+                }
+            })
+            .max_by_key(|&(_, l, bp)| (l, std::cmp::Reverse(bp)))
+            .map(|(i, _, _)| i);
+
+        match parent_pos {
+            Some(pos) => {
+                if let (Group::Ts(ref mut parent), _) = groups[pos] {
+                    for (child, _) in at_level {
+                        parent.dependent_siblings.push(child);
+                    }
+                }
+            }
+            None => {
+                // No shallower heading found; keep as direct children.
+                groups.extend(at_level);
+            }
+        }
+    }
 }
 
 /// Map an extracted item to its initial TsGroupKey(s).

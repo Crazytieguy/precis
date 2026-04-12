@@ -131,6 +131,14 @@ impl TsGroupKey {
         }
     }
 
+    /// Returns the heading level if this is a `Heading` key, `None` otherwise.
+    pub fn heading_level(&self) -> Option<u8> {
+        match self {
+            TsGroupKey::Heading { level, .. } => Some(*level),
+            _ => None,
+        }
+    }
+
     /// Whether this key should be gated behind a counterpart (dependent_sibling).
     pub fn is_gated(&self) -> bool {
         use TsGroupKey::*;

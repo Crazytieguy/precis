@@ -32,7 +32,11 @@ src/error.ts
      2→ * A `StructFailure` represents a single specific failure in validation.
      5→export type Failure …
     17→ * `StructError` objects are thrown (or returned) when validation fails.
-      →…
+    18→ *
+    19→ * Validation logic is design to exit early for maximum performance. The error
+    20→ * represents the first error encountered during validation. For more detail,
+    21→ * the `error.failures` property is a generator function that can be run to
+    22→ * continue validation and receive all the failures in the data.
     25→export class StructError …
 
 src/index.ts
@@ -41,7 +45,8 @@ src/struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
      2→import { StructError, Failure } from './error.js'
      5→ * `Struct` objects encapsulate the validation logic for a specific type of
-      →…
+     6→ * values. Once constructed, you use the `assert`, `is` or `validate` helpers to
+     7→ * validate unknown input data against the struct.
     10→export class Struct …
    120→ * Assert that a value passes a struct, throwing if it doesn't.
    123→export function assert<T, S>(
@@ -357,10 +362,14 @@ examples/throwing-errors.js
 License.md
 
 test/deprecated.test.ts
-     2→import …
+     2→import { any, assert, deprecated } from '../src'
 
 test/index.test.ts
-     5→import …
+     5→import {
+     6→  assert as assertValue,
+     7→  create as createValue,
+     8→  StructError,
+     9→} from '../src'
 
 test/index.ts
      2→ * A helper for testing type signatures.
@@ -368,41 +377,18 @@ test/index.ts
 
 Changelog.md
      1→# Changelog
-    11→#### Breaking
-    16→#### New
-    20→#### Fixed
-    24→#### Deprecations
-    28→#### New Maintainers & Next Steps
-    40→###### NEW
-    55→###### BREAKING
-    61→###### FIXED
-    69→###### BREAKING
-    77→###### NEW
-    85→###### BREAKING
-    95→###### NEW
-   111→###### BREAKING
-   129→###### NEW
-   176→###### BREAKING
-   248→###### BREAKING
-   394→###### BREAKING
-   434→###### NEW
-   446→###### BREAKING
-   454→###### BREAKING
-   462→###### BREAKING
-   468→###### NEW
-   476→###### BREAKING
-   482→###### NEW
-   490→###### BREAKING
-   500→###### BREAKING
-   504→###### NEW
-   512→###### BREAKING
 
 examples/package.json
      2→  "type": "module",
      3→  "license": "MIT",
      4→  "dependencies": {
 
-test/validation/never/invalid.ts
+test/tsconfig.json
+     2→  "extends": "../tsconfig.json",
+     3→  "include": ["./**/*.ts"],
+     4→  "compilerOptions": {
+     5→    "skipLibCheck": true
+     6→  }
 
 docs/images/
 
@@ -453,6 +439,8 @@ test/validation/map/
 test/validation/max/
 
 test/validation/min/
+
+test/validation/never/
 
 test/validation/nullable/
 
