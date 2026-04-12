@@ -18,8 +18,42 @@ docs/colors.md
 
 Cargo.toml
      1→[package]
+     2→name = "otree"
+     3→version = "0.6.4"
+     4→edition = "2021"
+     5→build = "build.rs"
+     6→license = "MIT"
+     7→authors = ["fioncat"]
+     8→categories = ["command-line-utilities"]
+     9→readme = "README.md"
+    10→repository = "https://github.com/fioncat/otree"
+    11→description = "A command line tool to view objects (json/yaml/toml) in TUI tree widget"
+    12→
     13→[dependencies]
+    14→anyhow = "^1"
+    15→clap = { version = "^4", features = ["derive"] }
+    16→console = "^0"
+    17→crossterm = { version = "^0", features = ["use-dev-tty"] }
+    18→dirs = "^6"
+    19→hcl-rs = "^0"
+    20→humansize = "^2"
+    21→notify = "^8"
+    22→paste = "^1"
+    23→quick-xml = { version = "^0", features = ["serialize"] }
+    24→ratatui = "^0"
+    25→regex = "^1"
+    26→serde = { version = "^1", features = ["derive"] }
+    27→serde_json = { version = "^1", features = ["preserve_order"] }
+    28→serde_yml = "^0"
+    29→strum = { version = "^0", features = ["derive"] }
+    30→toml = { version = "^0", features = ["preserve_order"] }
+    31→tui-textarea = "^0"
+    32→tui-tree-widget = "^0"
+    33→
     34→[build-dependencies]
+    35→simple-error = "^0"
+    36→vergen = { version = "^9", features = ["build", "rustc", "cargo", "si"] }
+    37→
     38→[profile.release]
     39→lto = true
     40→strip = true
@@ -182,7 +216,22 @@ src/tree.rs
 
 src/ui/app.rs
     27→enum Refresh …
+    28→    /// Update the TUI
+    29→    Update,
+    30→    /// Skip the update of the TUI
+    31→    Skip,
+    32→    /// Quit the TUI and return to the shell
+    33→    Quit,
+    34→    /// Quit the TUI and edit text
+    35→    Edit(Box<Edit>),
+    36→}
     39→enum ElementInFocus …
+    40→    TreeOverview,
+    41→    DataBlock,
+    42→    Popup,
+    43→    Filter,
+    44→    None,
+    45→}
     48→pub enum ScrollDirection …
     49→    Up,
     50→    Down,
@@ -259,7 +308,7 @@ src/parse/hcl.rs
      6→use super::{Parser, SyntaxToken};
      8→pub struct HclParser …
     10→impl Parser for HclParser …
-    28→fn highlight …
+    28→fn highlight(name: &str, value: Value, indent: usize) -> Vec<SyntaxToken> {
 
 src/parse/json.rs
      4→use super::{Parser, SyntaxToken};
@@ -324,7 +373,7 @@ src/parse/syntax.rs
    201→pub fn is_value_complex(value: &Value) -> bool {
    216→struct TextWrapper …
    228→impl TextWrapper<'_, '_> …
-   310→fn find_split_position …
+   310→fn find_split_position(text: &str, max_width: usize) -> usize {
 
 src/parse/toml.rs
      5→use super::json::highlight as json_highlight;
@@ -332,8 +381,13 @@ src/parse/toml.rs
      7→use super::{Parser, SyntaxToken};
      9→pub struct TomlParser …
     11→impl Parser for TomlParser …
-    62→fn toml_value_to_json …
-    88→fn highlight …
+    62→fn toml_value_to_json(toml_value: TomlValue) -> Value {
+    88→fn highlight(
+    89→    value: &Value,
+    90→    section: Option<&str>,
+    91→    from_arr: bool,
+    92→    arr_complex: bool,
+    93→) -> Vec<SyntaxToken> {
 
 src/parse/xml.rs
     10→use super::{Parser, SyntaxToken};
@@ -343,15 +397,15 @@ src/parse/xml.rs
     42→impl AttrMap for Map<String, Value> …
     61→struct NodeValues …
     68→impl NodeValues …
-   176→fn read …
-   258→fn highlight …
+   176→fn read<R: BufRead>(reader: &mut Reader<R>, depth: u64) -> Result<Value> {
+   258→fn highlight(name: &str, value: Value, indent: usize) -> Vec<SyntaxToken> {
 
 src/parse/yaml.rs
      5→use super::syntax::{self, StringValue};
      6→use super::{Parser, SyntaxToken};
      8→pub struct YamlParser …
     10→impl Parser for YamlParser …
-    72→fn highlight …
+    72→fn highlight(value: &Value, indent: usize, from_arr: bool) -> Vec<SyntaxToken> {
 
 config/default.toml
      1→[tree]
@@ -371,103 +425,22 @@ config/default.toml
    103→[types]
 
 examples/edge.json
-     2→  "empty_object": {},
-     3→  "empty_list": [],
-     4→  "null": null,
-     5→  "nested_array": [
 
 examples/edge.toml
 
 examples/edge.yaml
-     1→empty_object: {}
-     2→empty_list: []
-     3→null_value: null
-     4→nested_array:
 
 examples/example.hcl
 
 examples/example.json
-     2→  "string": "Hello, World!",
-     3→  "number": 12345,
-     4→  "float": 123.45,
-     5→  "boolean": true,
-     6→  "null": null,
-     7→  "array": [1, "two", 3.0, false, null],
-     8→  "object": {
-    17→  "complex_array": [
-    22→  "complex_object": {
 
 examples/example.jsonl
 
 examples/example.toml
-    17→[owner]
-    22→[database]
-    28→[database.settings]
-    29→pool_size = 10
-    30→timeout = 30
-    31→
-    32→# Array
-    33→hosts = ["alpha", "omega"]
-    34→
-    35→# Array of tables
-    36→[[products]]
-    42→[[products]]
-    48→[[products]]
-    55→[[fruit]]
-    59→[fruit.physical]
-    60→shape = "round"
-    61→mass = 0.1
-    62→
-    63→[[fruit.variety]]
-    64→name = "red delicious"
-    65→
-    66→[[fruit.variety]]
-    67→name = "granny smith"
-    68→
-    69→[[fruit]]
-    73→[fruit.physical]
-    74→shape = "curved"
-    75→mass = 0.2
-    76→
-    77→[[fruit.variety]]
-    78→name = "cavendish"
-    79→
-    80→# Table with arrays
-    81→[servers]
 
 examples/example.xml
 
 examples/example.yaml
-     3→apiVersion: apps/v1
-     4→kind: Deployment
-     5→metadata:
-     9→spec:
-    40→apiVersion: v1
-    41→kind: Service
-    42→metadata:
-    46→spec:
-    55→apiVersion: v1
-    56→kind: ConfigMap
-    57→metadata:
-    61→data:
-    64→apiVersion: v1
-    65→kind: Secret
-    66→metadata:
-    70→type: Opaque
-    71→data:
-    75→apiVersion: v1
-    76→kind: ServiceAccount
-    77→metadata:
-    81→secrets:
-    84→apiVersion: rbac.authorization.k8s.io/v1
-    85→kind: Role
-    86→metadata:
-    89→rules:
-   106→apiVersion: rbac.authorization.k8s.io/v1
-   107→kind: RoleBinding
-   108→metadata:
-   111→subjects:
-   115→roleRef:
 
 config/themes/catppuccin.toml
      1→[palette]

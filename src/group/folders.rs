@@ -93,7 +93,6 @@ pub fn children<'s>(g: &mut FoldersGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
             fg.is_config,
             fg.is_type_declaration,
             fg.is_header,
-            false, // is_generated checked after source read
         );
 
         result.push(Group::Files(FilesGroup {

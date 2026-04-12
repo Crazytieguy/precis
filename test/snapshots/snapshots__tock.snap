@@ -328,8 +328,7 @@ internal/adapters/repositories/timewarrior/repository.go
    306→func toTWInterval(a models.Activity) twInterval {
    320→func fromTWInterval(iv twInterval) (models.Activity, error) {
    349→// parseIncLine parses a line in TimeWarrior's internal serialization format.
-   350→// Format: inc <start> [ - <end> ] [ # <tag1> <tag2> ... ] [ # <annotation> ]
-   351→// Example: inc 20251201T014528Z - 20251201T041127Z # plan "plan_" |8ba7daab|.
+      →…
    352→func parseIncLine(line string) (twInterval, error) {
    393→func tokenize(line string) []string {
 
@@ -379,6 +378,14 @@ internal/adapters/repositories/file/repository_test.go
 
 internal/adapters/cli/add.go
     16→type addOptions …
+    17→	Description string
+    18→	Project     string
+    19→	StartStr    string
+    20→	EndStr      string
+    21→	DurationStr string
+    22→	Notes       string
+    23→	Tags        []string
+    24→}
     26→func NewAddCmd() *cobra.Command {
     64→func runAdd(cmd *cobra.Command, opts *addOptions) error {
    124→func resolveStartTime(startStr string, theme Theme) (string, error) {
@@ -406,6 +413,20 @@ internal/adapters/cli/analyze.go
 internal/adapters/cli/calendar.go
     25→func NewCalendarCmd() *cobra.Command {
     48→type reportModel …
+    49→	service      ports.ActivityResolver
+    50→	config       *config.Config
+    51→	timeFormat   *timeutil.Formatter // time display format (12/24 hour)
+    52→	currentDate  time.Time           // The date currently selected
+    53→	viewDate     time.Time           // The month currently being viewed
+    54→	monthReports map[int]*dto.Report // Cache for daily reports in the month (day -> report)
+    55→	viewport     viewport.Model
+    56→	ready        bool
+    57→	width        int
+    58→	height       int
+    59→	err          error
+    60→	styles       Styles
+    61→	theme        Theme
+    62→}
     64→func initialReportModel(service ports.ActivityResolver, cfg *config.Config, tf *timeutil.Formatter) reportModel {
     79→func (m *reportModel) Init() tea.Cmd {
     83→func (m *reportModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
@@ -416,6 +437,8 @@ internal/adapters/cli/calendar.go
    256→func (m *reportModel) updateViewportContent() {
    402→func (m *reportModel) formatProjectStat(name string, duration time.Duration) string {
    418→type monthDataMsg …
+   419→	reports map[int]*dto.Report
+   420→}
    422→type errMsg …
    424→func (m *reportModel) fetchMonthData() tea.Msg {
    486→// getWeeklyDuration calculates the total duration for the current week (Monday to Sunday)
@@ -439,6 +462,8 @@ internal/adapters/cli/continue.go
 
 internal/adapters/cli/current.go
     19→type currentCmdActivity …
+    20→	models.Activity
+    21→}
     23→func (a currentCmdActivity) Duration() time.Duration {
     27→func (a currentCmdActivity) DurationHMS() string {
     35→func NewCurrentCmd() *cobra.Command {
@@ -460,11 +485,26 @@ internal/adapters/cli/interactive.go
     89→func getDescriptionsForProject(activities []models.Activity, project string) []string {
     98→func RunInteractiveInput(header, placeholder string, theme Theme) (string, error) {
    123→type simpleInputModel …
+   124→	prompt      string
+   125→	placeholder string
+   126→	value       string
+   127→	canceled    bool
+   128→	theme       Theme
+   129→}
    131→func (m simpleInputModel) Init() tea.Cmd { return nil }
    133→func (m simpleInputModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
    155→func (m simpleInputModel) View() string {
    176→func RunInteractiveList(items []string, title string, theme Theme) (string, error) {
    201→type simpleListModel …
+   202→	title    string
+   203→	all      []string
+   204→	filtered []string
+   205→	filter   string
+   206→	cursor   int
+   207→	selected string
+   208→	canceled bool
+   209→	theme    Theme
+   210→}
    212→func (m *simpleListModel) Init() tea.Cmd { return nil }
    214→func (m *simpleListModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
    251→func (m *simpleListModel) applyFilter() {
@@ -473,12 +513,25 @@ internal/adapters/cli/interactive.go
 
 internal/adapters/cli/last.go
     16→type lastOptions …
+    17→	Limit      int
+    18→	JSONOutput bool
+    19→}
     21→func NewLastCmd() *cobra.Command {
     42→func runLastCmd(cmd *cobra.Command, opt *lastOptions) error {
 
 internal/adapters/cli/list_gui.go
     22→func NewListCmd() *cobra.Command {
     45→type model …
+    46→	service      ports.ActivityResolver
+    47→	timeFormat   *timeutil.Formatter // time display format (12/24 hour)
+    48→	currentDate  time.Time
+    49→	selectedDate time.Time
+    50→	activities   []models.Activity
+    51→	table        table.Model
+    52→	err          error
+    53→	width        int
+    54→	height       int
+    55→}
     57→func initialModel(service ports.ActivityResolver, tf *timeutil.Formatter) model {
     70→func (m *model) initTable() {
    101→func (m *model) updateActivities() {
@@ -497,6 +550,15 @@ internal/adapters/cli/remove.go
 
 internal/adapters/cli/report.go
     20→type reportOptions …
+    21→	Today       bool
+    22→	Yesterday   bool
+    23→	Date        string
+    24→	Summary     bool
+    25→	Project     string
+    26→	Description string
+    27→	TotalOnly   bool
+    28→	JSONOutput  bool
+    29→}
     31→func NewReportCmd() *cobra.Command {
     60→//nolint:funlen // Report command is long but straightforward.
     61→func runReportCmd(cmd *cobra.Command, opt *reportOptions) error {
@@ -568,6 +630,9 @@ internal/adapters/cli/theme.go
 
 internal/adapters/cli/update.go
     17→type githubRelease …
+    18→	TagName string `json:"tag_name"`
+    19→	HTMLURL string `json:"html_url"`
+    20→}
     22→func checkUpdate() (githubRelease, error) {
     45→func runUpdateCheck(cmd *cobra.Command) {
 
@@ -579,7 +644,21 @@ internal/adapters/cli/watch.go
     19→func NewWatchCmd() *cobra.Command {
     75→type tickMsg …
     77→type watchModel …
+    78→	activity models.Activity
+    79→	err      error
+    80→	now      time.Time
+    81→	service  ports.ActivityResolver
+    82→	help     help.Model
+    83→	keys     keyMap
+    84→	width    int
+    85→	height   int
+    86→	theme    Theme
+    87→	paused   bool
+    88→}
     90→type keyMap …
+    91→	Quit  key.Binding
+    92→	Pause key.Binding
+    93→}
     95→func initialWatchModel(activity models.Activity, service ports.ActivityResolver, theme Theme) watchModel {
    115→func (m watchModel) Init() tea.Cmd {
    121→func (m watchModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
@@ -588,55 +667,10 @@ internal/adapters/cli/watch.go
    262→func renderBigText(text string, color string) string {
 
 internal/core/ports/mocks/mock_activityrepository.go
-    17→func NewMockActivityRepository …
-    30→type MockActivityRepository …
-    34→type MockActivityRepository_Expecter …
-    43→func (_mock *MockActivityRepository) Find …
-    71→type MockActivityRepository_Find_Call …
-    78→func (_e *MockActivityRepository_Expecter) Find …
-   111→func (_mock *MockActivityRepository) FindLast …
-   139→type MockActivityRepository_FindLast_Call …
-   145→func (_e *MockActivityRepository_Expecter) FindLast …
-   173→func (_mock *MockActivityRepository) Save …
-   190→type MockActivityRepository_Save_Call …
-   197→func (_e *MockActivityRepository_Expecter) Save …
-   230→func (_mock *MockActivityRepository) Remove …
-   247→type MockActivityRepository_Remove_Call …
-   254→func (_e *MockActivityRepository_Expecter) Remove …
 
 internal/core/ports/mocks/mock_activityresolver.go
-    17→func NewMockActivityResolver …
-    30→type MockActivityResolver …
-    34→type MockActivityResolver_Expecter …
-    43→func (_mock *MockActivityResolver) Add …
-    71→type MockActivityResolver_Add_Call …
-    78→func (_e *MockActivityResolver_Expecter) Add …
-   111→func (_mock *MockActivityResolver) GetRecent …
-   139→type MockActivityResolver_GetRecent_Call …
-   146→func (_e *MockActivityResolver_Expecter) GetRecent …
-   179→func (_mock *MockActivityResolver) GetReport …
-   207→type MockActivityResolver_GetReport_Call …
-   214→func (_e *MockActivityResolver_Expecter) GetReport …
-   247→func (_mock *MockActivityResolver) List …
-   275→type MockActivityResolver_List_Call …
-   282→func (_e *MockActivityResolver_Expecter) List …
-   315→func (_mock *MockActivityResolver) Start …
-   343→type MockActivityResolver_Start_Call …
-   350→func (_e *MockActivityResolver_Expecter) Start …
-   383→func (_mock *MockActivityResolver) Stop …
-   411→type MockActivityResolver_Stop_Call …
-   418→func (_e *MockActivityResolver_Expecter) Stop …
 
 internal/core/ports/mocks/mock_notesrepository.go
-    16→func NewMockNotesRepository …
-    29→type MockNotesRepository …
-    33→type MockNotesRepository_Expecter …
-    42→func (_mock *MockNotesRepository) Get …
-    76→type MockNotesRepository_Get_Call …
-    84→func (_e *MockNotesRepository_Expecter) Get …
-   122→func (_mock *MockNotesRepository) Save …
-   139→type MockNotesRepository_Save_Call …
-   149→func (_e *MockNotesRepository_Expecter) Save …
 
 assets/
 

@@ -119,7 +119,6 @@ pub fn files_contribution(
     is_config: bool,
     is_type_declaration: bool,
     is_header: bool,
-    is_generated: bool,
 ) -> f64 {
     let role_factor = if is_root_dir {
         match role {
@@ -136,9 +135,13 @@ pub fn files_contribution(
     let config_factor = if is_config { 0.2 } else { 1.0 };
     let type_declaration_factor = if is_type_declaration { 0.15 } else { 1.0 };
     let header_factor = if is_header { 2.5 } else { 1.0 };
-    let generated_factor = if is_generated { 0.1 } else { 1.0 };
 
-    role_factor * config_factor * type_declaration_factor * header_factor * generated_factor
+    role_factor * config_factor * type_declaration_factor * header_factor
+}
+
+/// Modifier for generated files, applied to child TsGroups after source is read.
+pub fn generated_contribution(is_generated: bool) -> f64 {
+    if is_generated { 0.1 } else { 1.0 }
 }
 
 /// Modifier contribution for visibility (public vs private).

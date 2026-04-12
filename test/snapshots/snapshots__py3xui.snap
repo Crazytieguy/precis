@@ -89,22 +89,14 @@ py3xui/inbound/README.md
     36→# inbound.inbound
     42→## InboundFields Objects
     52→## Inbound Objects
-    80→#### expiry\_time
-    86→#### validate\_stream\_settings
-   110→#### to\_json
    124→# inbound.stream\_settings
    130→## StreamSettingsFields Objects
    140→## StreamSettings Objects
-   161→#### tls\_settings
    167→# inbound.bases
    173→## JsonStringModel Objects
-   183→#### model\_validate
    203→# inbound.sniffing
    209→## SniffingFields Objects
    219→## Sniffing Objects
-   236→#### dest\_override
-   242→#### metadata\_only
-   248→#### route\_only
 
 py3xui/server/README.md
      3→# server.server
@@ -373,4 +365,12 @@ SECURITY.md
     36→### Responsible Disclosure
     44→### Recognition
 
-tests/responses/
+tests/responses/get_client.json
+
+tests/responses/get_client_traffic_by_id.json
+
+tests/responses/get_inbound_by_id.json
+
+tests/responses/get_inbounds.json
+
+tests/responses/get_server_status.json

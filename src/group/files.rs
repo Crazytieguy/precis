@@ -102,7 +102,7 @@ pub fn children<'s>(g: &mut FilesGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s>>
             continue;
         }
 
-        let modifier = compute_item_modifier(&key, g.inherited_modifier);
+        let modifier = compute_item_modifier(&key, g.inherited_modifier, g.is_generated);
         let is_gated = key.is_gated();
 
         let group = Group::Ts(TsGroup {
@@ -224,8 +224,10 @@ pub(crate) fn item_to_group_keys(
 }
 
 /// Compute the inherited modifier for a TsGroup based on its key and parent modifier.
-pub(crate) fn compute_item_modifier(key: &TsGroupKey, parent_modifier: f64) -> f64 {
+pub(crate) fn compute_item_modifier(key: &TsGroupKey, parent_modifier: f64, is_generated: bool) -> f64 {
     use TsGroupKey::*;
+
+    let generated_factor = heuristics::generated_contribution(is_generated);
 
     let vis_factor = match key {
         FunctionName { public, .. } | StructName { public, .. } | EnumName { public, .. }
@@ -257,5 +259,5 @@ pub(crate) fn compute_item_modifier(key: &TsGroupKey, parent_modifier: f64) -> f
         _ => 1.0,
     };
 
-    parent_modifier * vis_factor * doc_factor * boilerplate_factor * reexport_factor
+    parent_modifier * vis_factor * doc_factor * boilerplate_factor * reexport_factor * generated_factor
 }
