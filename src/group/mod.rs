@@ -35,7 +35,7 @@ pub struct FilesGroup {
     pub role: FileRole,
     pub items: Vec<PathBuf>,
     pub inherited_modifier: f64,
-    pub is_config: bool,
+    pub is_deprioritized: bool,
     pub is_type_declaration: bool,
     pub is_header: bool,
 }
@@ -50,14 +50,14 @@ impl FilesGroup {
         inherited_modifier: f64,
         sample_relative: &Path,
     ) -> Self {
-        let (is_config, is_type_declaration, is_header) =
+        let (is_deprioritized, is_type_declaration, is_header) =
             crate::classify::file_modifier_properties(sample_relative);
         Self {
             parent_dir,
             role,
             items,
             inherited_modifier,
-            is_config,
+            is_deprioritized,
             is_type_declaration,
             is_header,
         }

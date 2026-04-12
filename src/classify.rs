@@ -303,7 +303,7 @@ fn is_docs_dir_name(name: &str) -> bool {
     matches!(name.to_ascii_lowercase().as_str(), "docs" | "doc")
 }
 
-pub fn is_config_file(relative_path: &Path, filename: &str) -> bool {
+pub fn is_deprioritized_file(relative_path: &Path, filename: &str) -> bool {
     let lower = filename.to_ascii_lowercase();
     let is_root = relative_path
         .parent()
@@ -437,7 +437,7 @@ pub fn is_header_file(path: &Path) -> bool {
         .is_some_and(|ext| is_header_extension(&ext.to_ascii_lowercase()))
 }
 
-/// Compute the (is_config, is_type_declaration, is_header) properties for a file.
+/// Compute the (is_deprioritized, is_type_declaration, is_header) properties for a file.
 /// Used to partition files into groups with different modifiers.
 pub fn file_modifier_properties(relative_path: &Path) -> (bool, bool, bool) {
     let filename = relative_path
@@ -445,7 +445,7 @@ pub fn file_modifier_properties(relative_path: &Path) -> (bool, bool, bool) {
         .and_then(|n| n.to_str())
         .unwrap_or("");
     (
-        is_config_file(relative_path, filename),
+        is_deprioritized_file(relative_path, filename),
         is_type_declaration_file(relative_path),
         is_header_file(relative_path),
     )

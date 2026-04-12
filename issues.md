@@ -107,14 +107,6 @@ but the intent is unclear and the file-stem checks are wasted work.
 Consider a `classify_dir` variant or documenting that the function
 handles both.
 
-### `is_config_file` scope is too broad
-
-The function classifies CSS/SCSS/HTML/SVG files (line 420) and
-everything under `scripts/`/`tools/` directories (line 434) as config.
-These aren't config files — they're low-priority source or assets. The
-function name doesn't match what it actually tests (more like
-"is_deprioritized_file"). Either rename or split the concerns.
-
 ### No Lua inline sample tests
 
 Every supported language has an inline sample test (`rust_sample`,

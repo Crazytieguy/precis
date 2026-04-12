@@ -62,7 +62,7 @@ pub fn children<'s>(g: &mut FoldersGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
     }
 
     // Create FilesGroups per role, partitioned by per-file properties that
-    // affect the modifier (is_config, is_type_declaration, is_header).
+    // affect the modifier (is_deprioritized, is_type_declaration, is_header).
     // Files with different properties get different modifiers, so they must
     // be in separate groups (D7: split when items would be prioritized differently).
     let mut sorted_roles: Vec<_> = files_by_role.into_iter().collect();
@@ -83,13 +83,13 @@ pub fn children<'s>(g: &mut FoldersGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
         let mut sorted_partitions: Vec<_> = partitions.into_iter().collect();
         sorted_partitions.sort_by_key(|e| e.0);
 
-        for ((is_config, is_type_declaration, is_header), mut part_files) in sorted_partitions {
+        for ((is_deprioritized, is_type_declaration, is_header), mut part_files) in sorted_partitions {
             part_files.sort();
 
             let contribution = heuristics::files_contribution(
                 role,
                 is_root_dir,
-                is_config,
+                is_deprioritized,
                 is_type_declaration,
                 is_header,
             );
@@ -99,7 +99,7 @@ pub fn children<'s>(g: &mut FoldersGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
                 role,
                 items: part_files,
                 inherited_modifier: g.inherited_modifier * contribution,
-                is_config,
+                is_deprioritized,
                 is_type_declaration,
                 is_header,
             }));
