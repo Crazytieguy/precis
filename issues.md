@@ -73,10 +73,3 @@ Every `children()` call clones `PathBuf` + `String` for each item.
 Slimming TsItem (above) eliminates this since `&Path` and `Node` are
 Copy.
 
-### No Lua inline sample tests
-
-Every supported language has an inline sample test (`rust_sample`,
-`python_sample`, `go_sample`, etc.) except Lua. Since Lua has known
-issues (function assignments classified as Const, doc comments not
-detected), having sample tests would help catch regressions during
-fixes.

@@ -727,6 +727,60 @@ fn json_sample() -> &'static str {
 "#
 }
 
+fn lua_sample() -> &'static str {
+    r#"
+local M = {}
+
+--- Process items and return the total count.
+--- @param items table List of items to process.
+--- @return number count The total count.
+function M.process(items)
+    local count = 0
+    for _, item in ipairs(items) do
+        count = count + 1
+    end
+    return count
+end
+
+local function helper()
+    return nil
+end
+
+--- A token with its kind and source span.
+--- @class Token
+--- @field kind string
+--- @field span table
+local Token = {}
+Token.__index = Token
+
+function Token:new(kind, span)
+    return setmetatable({ kind = kind, span = span }, self)
+end
+
+--- Get the display string for this token.
+function Token:display()
+    return string.format("%s:%d-%d", self.kind, self.span[1], self.span[2])
+end
+
+--- Create a parser for the given source text.
+function M.new_parser(source)
+    return {
+        source = source,
+        tokens = {},
+        parse = function(self)
+            return self.tokens
+        end,
+    }
+end
+
+M.MAX_TOKENS = 1024
+
+M.VERSION = "0.1.0"
+
+return M
+"#
+}
+
 // Budget-based inline sample tests: test each language at small and large budgets.
 
 macro_rules! sample_test {
@@ -804,6 +858,11 @@ sample_test!(json_sample_budget_50, "package.json", json_sample, 50);
 sample_test!(json_sample_budget_200, "package.json", json_sample, 200);
 sample_test!(json_sample_budget_10000, "package.json", json_sample, 10000);
 
+sample_test!(lua_sample_budget_20, "init.lua", lua_sample, 20);
+sample_test!(lua_sample_budget_50, "init.lua", lua_sample, 50);
+sample_test!(lua_sample_budget_200, "init.lua", lua_sample, 200);
+sample_test!(lua_sample_budget_10000, "init.lua", lua_sample, 10000);
+
 // Budget monotonicity: more budget should never produce fewer tokens.
 #[test]
 fn budget_monotonicity_inline() {
@@ -821,6 +880,7 @@ fn budget_monotonicity_inline() {
         ("Cargo.toml", toml_sample()),
         ("ci.yml", yaml_sample()),
         ("package.json", json_sample()),
+        ("init.lua", lua_sample()),
     ];
     let budgets = [0, 10, 20, 50, 100, 200, 500, 1000, 10000];
 
