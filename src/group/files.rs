@@ -164,11 +164,9 @@ pub(crate) fn item_to_group_keys(
             public: item.is_public,
         }],
         Module => {
-            // Module declarations just contribute their name
-            vec![ConstName {
-                documented: item.is_documented,
-                public: item.is_public,
-            }]
+            // Module items are filtered out before reaching this point
+            // (see extract_items in parse/mod.rs)
+            unreachable!("Module items should be filtered before grouping")
         }
         Section => {
             let level = if let Some(crate::Lang::Toml) = lang {

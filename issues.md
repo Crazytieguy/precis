@@ -212,20 +212,6 @@ the full modifier computation for the FilesGroup itself until
 (e.g. one `.h` and one `.c` file both classified as `Normal`), the
 contribution is wrong for all but the first.
 
-### `Module` items mapped to `ConstName`
-
-`item_to_group_keys` at `files.rs:167` maps `ItemKind::Module` (Rust
-`mod` declarations, C++ namespaces, Java modules) to `ConstName`.
-These aren't constants — they're namespace/module declarations. The
-design taxonomy doesn't have a `ModuleName` variant, but silently
-misclassifying them as constants is semantically dishonest and gives
-them `ConstName` value heuristics (which are tuned for actual
-constants).
-
-Fix: either add a dedicated group key (e.g. `ModuleName`) with
-appropriate heuristics, or if module declarations don't carry enough
-information to warrant their own group, filter them out at extraction
-time (they're already low-signal — just `mod foo;` one-liners).
 
 ### `is_generated` taints entire FilesGroup from a single file
 

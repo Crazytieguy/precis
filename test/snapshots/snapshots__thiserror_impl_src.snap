@@ -3,17 +3,35 @@ source: test/fixtures.rs
 expression: output
 ---
 ast.rs
-     1→use crate::attr::{self, Attrs};
-     2→use crate::generics::ParamsInScope;
-     3→use crate::unraw::{IdentUnraw, MemberUnraw};
     10→pub enum Input …
     11→    Struct(Struct<'a>),
     12→    Enum(Enum<'a>),
     13→}
     15→pub struct Struct …
+    16→    pub attrs: Attrs<'a>,
+    17→    pub ident: Ident,
+    18→    pub generics: &'a Generics,
+    19→    pub fields: Vec<Field<'a>>,
+    20→}
     22→pub struct Enum …
+    23→    pub attrs: Attrs<'a>,
+    24→    pub ident: Ident,
+    25→    pub generics: &'a Generics,
+    26→    pub variants: Vec<Variant<'a>>,
+    27→}
     29→pub struct Variant …
+    30→    pub original: &'a syn::Variant,
+    31→    pub attrs: Attrs<'a>,
+    32→    pub ident: Ident,
+    33→    pub fields: Vec<Field<'a>>,
+    34→}
     36→pub struct Field …
+    37→    pub original: &'a syn::Field,
+    38→    pub attrs: Attrs<'a>,
+    39→    pub member: MemberUnraw,
+    40→    pub ty: &'a Type,
+    41→    pub contains_generic: bool,
+    42→}
     45→pub enum ContainerKind …
     46→    Struct,
     47→    TupleStruct,
@@ -32,11 +50,39 @@ ast.rs
 
 attr.rs
     11→pub struct Attrs …
+    12→    pub display: Option<Display<'a>>,
+    13→    pub source: Option<Source<'a>>,
+    14→    pub backtrace: Option<&'a Attribute>,
+    15→    pub from: Option<From<'a>>,
+    16→    pub transparent: Option<Transparent<'a>>,
+    17→    pub fmt: Option<Fmt<'a>>,
+    18→}
     21→pub struct Display …
+    22→    pub original: &'a Attribute,
+    23→    pub fmt: LitStr,
+    24→    pub args: TokenStream,
+    25→    pub requires_fmt_machinery: bool,
+    26→    pub has_bonus_display: bool,
+    27→    pub infinite_recursive: bool,
+    28→    pub implied_bounds: Set<(usize, Trait)>,
+    29→    pub bindings: Vec<(Ident, TokenStream)>,
+    30→}
     33→pub struct Source …
+    34→    pub original: &'a Attribute,
+    35→    pub span: Span,
+    36→}
     39→pub struct From …
+    40→    pub original: &'a Attribute,
+    41→    pub span: Span,
+    42→}
     45→pub struct Transparent …
+    46→    pub original: &'a Attribute,
+    47→    pub span: Span,
+    48→}
     51→pub struct Fmt …
+    52→    pub original: &'a Attribute,
+    53→    pub path: ExprPath,
+    54→}
     57→pub enum Trait …
     58→    Debug,
     59→    Display,
@@ -55,12 +101,6 @@ attr.rs
    342→impl ToTokens for Trait …
 
 expand.rs
-     1→use crate::ast::{Enum, Field, Input, Struct};
-     2→use crate::attr::Trait;
-     3→use crate::fallback;
-     4→use crate::generics::InferredBounds;
-     5→use crate::private;
-     6→use crate::unraw::MemberUnraw;
     12→pub fn derive(input: &DeriveInput) -> TokenStream {
     22→fn try_expand …
     31→fn impl_struct …
@@ -74,16 +114,9 @@ expand.rs
    574→fn type_parameter_of_option …
 
 fallback.rs
-     1→use crate::expand::call_site_ident;
-     2→use crate::private;
      7→pub(crate) fn expand(input: &DeriveInput, error: syn::Error) -> TokenStream {
 
 fmt.rs
-     1→use crate::ast::{ContainerKind, Field};
-     2→use crate::attr::{Display, Trait};
-     3→use crate::private;
-     4→use crate::scan_expr::scan_expr;
-     5→use crate::unraw::{IdentUnraw, MemberUnraw};
     15→impl Display<'_> …
    166→struct FmtArguments …
    167→    named: BTreeSet<IdentUnraw>,
@@ -99,29 +132,22 @@ fmt.rs
 
 generics.rs
      8→pub struct ParamsInScope …
+     9→    names: Set<&'a Ident>,
+    10→}
     12→impl<'a> ParamsInScope<'a> …
     26→fn crawl …
     48→pub struct InferredBounds …
+    49→    bounds: Map<String, (Set<String>, Punctuated<TokenStream, Token![+]>)>,
+    50→    order: Vec<TokenStream>,
+    51→}
     53→impl InferredBounds …
 
 lib.rs
-    23→mod ast …
-    24→mod attr …
-    25→mod expand …
-    26→mod fallback …
-    27→mod fmt …
-    28→mod generics …
-    29→mod prop …
-    30→mod scan_expr …
-    31→mod unraw …
-    32→mod valid …
     40→pub fn derive_error(input: TokenStream) -> TokenStream {
     46→struct private …
     48→impl ToTokens for private …
 
 prop.rs
-     1→use crate::ast::{Enum, Field, Struct, Variant};
-     2→use crate::unraw::MemberUnraw;
      6→impl Struct<'_> …
     25→impl Enum<'_> …
     53→impl Variant<'_> …
@@ -133,31 +159,8 @@ prop.rs
    138→fn type_is_backtrace …
 
 scan_expr.rs
-     1→use self::{Action::*, Input::*};
      6→enum Input …
-     7→    Keyword(&'static str),
-     8→    Punct(&'static str),
-     9→    ConsumeAny,
-    10→    ConsumeBinOp,
-    11→    ConsumeBrace,
-    12→    ConsumeDelimiter,
-    13→    ConsumeIdent,
-    14→    ConsumeLifetime,
-    15→    ConsumeLiteral,
-    16→    ConsumeNestedBrace,
-    17→    ExpectPath,
-    18→    ExpectTurbofish,
-    19→    ExpectType,
-    20→    CanBeginExpr,
-    21→    Otherwise,
-    22→    Empty,
-    23→}
     25→enum Action …
-    26→    SetState(&'static [(Input, Action)]),
-    27→    IncDepth,
-    28→    DecDepth,
-    29→    Finish,
-    30→}
     32→static INIT …
     63→static POSTFIX …
     76→static ASYNC …
@@ -206,8 +209,6 @@ unraw.rs
    135→impl ToTokens for MemberUnraw …
 
 valid.rs
-     1→use crate::ast::{Enum, Field, Input, Struct, Variant};
-     2→use crate::attr::Attrs;
      5→impl Input<'_> …
     14→impl Struct<'_> …
     45→impl Enum<'_> …

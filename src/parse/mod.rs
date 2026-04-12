@@ -170,6 +170,13 @@ pub fn extract_items<'t>(
     }
 
     postprocess::finalize(&mut items, lang, source);
+
+    // Remove Module items (Rust `mod foo;`, C++ namespaces, TS namespaces, Java modules).
+    // These are kept through postprocessing so mark_reexports can use module names,
+    // but filtered before the nesting filter so that items *inside* namespaces/modules
+    // survive rather than being dropped as nested.
+    items.retain(|i| i.kind != ItemKind::Module);
+
     filter_nested_items(&mut items);
 
     debug_assert!(
