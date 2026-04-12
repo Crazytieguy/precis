@@ -128,20 +128,6 @@ These aren't config files — they're low-priority source or assets. The
 function name doesn't match what it actually tests (more like
 "is_deprioritized_file"). Either rename or split the concerns.
 
-### `is_generated` taints entire FilesGroup from a single file
-
-`files.rs:49-56` sets `g.is_generated = true` as soon as any file in
-the group is detected as generated. Since `is_generated` is a
-group-level flag, one generated file deprioritizes all files in the
-group. This is incorrect when a `FilesGroup` contains a mix of
-generated and hand-written files (e.g. a directory with both
-`schema.generated.ts` and `schema.ts`).
-
-Fix: track generated status per-file rather than per-group. When
-constructing child TsGroups, split items from generated files into
-separate groups with a lower inherited modifier (or apply the factor
-per-item during `compute_item_modifier`).
-
 ### No Lua inline sample tests
 
 Every supported language has an inline sample test (`rust_sample`,

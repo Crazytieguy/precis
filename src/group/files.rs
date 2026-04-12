@@ -1,5 +1,5 @@
-use std::collections::HashMap;
-use std::path::PathBuf;
+use std::collections::{HashMap, HashSet};
+use std::path::{Path, PathBuf};
 
 use crate::classify;
 use crate::heuristics;
@@ -12,21 +12,19 @@ use super::ts::TsGroupKey;
 /// Produce children when a FilesGroup is scheduled.
 /// Parses every file in the group, extracts items, and aggregates across files (D7).
 pub fn children<'s>(g: &mut FilesGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s>> {
-    // Parse all files and extract items.
-    // We collect (PathBuf, source_ref, items) where source_ref borrows from the store.
     struct FileItems<'s> {
         path: PathBuf,
         source: &'s str,
         items: Vec<ExtractedItem<'s>>,
     }
     let mut all_items: Vec<FileItems<'s>> = Vec::new();
+    let mut generated_files: HashSet<&Path> = HashSet::new();
 
     for file_path in &g.items {
-        // Parse via the store (A5: parsing only happens in Files::children)
+        // A5: parsing only happens in Files::children
         let (source, tree) = match ctx.store.parse(file_path) {
             Some(pair) => pair,
             None => {
-                // Unsupported language or read failure — store source for header
                 ctx.store.store_source(
                     file_path,
                     std::fs::read_to_string(file_path).unwrap_or_default(),
@@ -42,15 +40,12 @@ pub fn children<'s>(g: &mut FilesGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s>>
 
         let items = parse::extract_items(file_path, source, tree, config);
 
-        // Check if this file is generated
-        if !g.is_generated {
-            let relative = file_path.strip_prefix(&g.parent_dir).unwrap_or(file_path);
-            if classify::is_generated_file(source)
-                || classify::is_autogen_api_doc(source, g.role)
-                || classify::is_generated_filename(relative)
-            {
-                g.is_generated = true;
-            }
+        let relative = file_path.strip_prefix(&g.parent_dir).unwrap_or(file_path);
+        if classify::is_generated_file(source)
+            || classify::is_autogen_api_doc(source, g.role)
+            || classify::is_generated_filename(relative)
+        {
+            generated_files.insert(file_path);
         }
 
         all_items.push(FileItems {
@@ -60,15 +55,16 @@ pub fn children<'s>(g: &mut FilesGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s>>
         });
     }
 
-    // Aggregate items across files into TsGroup buckets (D7)
-    // Key: (TsGroupKey, modifier bucket discriminant)
-    let mut buckets: HashMap<TsGroupKey, Vec<TsItem<'s>>> = HashMap::new();
+    // Aggregate items across files into TsGroup buckets (D7).
+    // Bucket key includes generated status so items from generated files get
+    // a separate group with the appropriate modifier (not tainting the rest).
+    let mut buckets: HashMap<(TsGroupKey, bool), Vec<TsItem<'s>>> = HashMap::new();
 
     for fi in &all_items {
         let lines: Vec<&str> = fi.source.lines().collect();
         let lang = crate::Lang::from_path(fi.path.as_path());
-        // Use relative path for display
         let display_path = fi.path.strip_prefix(&ctx.root).unwrap_or(&fi.path).to_path_buf();
+        let is_generated = generated_files.contains(fi.path.as_path());
 
         for item in &fi.items {
             let keys = item_to_group_keys(item, &lines, lang);
@@ -82,27 +78,23 @@ pub fn children<'s>(g: &mut FilesGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s>>
                     start_line: item.start_line,
                     end_line: item.end_line,
                 };
-                buckets.entry(key).or_default().push(ts_item);
+                buckets.entry((key, is_generated)).or_default().push(ts_item);
             }
         }
     }
 
-    // Convert buckets to TsGroups (sorted for determinism)
     let mut sorted_buckets: Vec<_> = buckets.into_iter().collect();
     sorted_buckets.sort_by(|a, b| a.0.cmp(&b.0));
 
-    // Separate groups into direct children and gated dependents (design §4).
-    // Gated groups are placed as dependent_siblings of their gating parent.
-    // If no parent exists, the gated group is promoted to a direct child.
-    let mut direct: Vec<Group<'s>> = Vec::new();
-    let mut gated: Vec<Group<'s>> = Vec::new();
+    let mut direct: Vec<(Group<'s>, bool)> = Vec::new();
+    let mut gated: Vec<(Group<'s>, bool)> = Vec::new();
 
-    for (key, items) in sorted_buckets {
+    for ((key, is_generated), items) in sorted_buckets {
         if items.is_empty() {
             continue;
         }
 
-        let modifier = compute_item_modifier(&key, g.inherited_modifier, g.is_generated);
+        let modifier = compute_item_modifier(&key, g.inherited_modifier, is_generated);
         let is_gated = key.is_gated();
 
         let group = Group::Ts(TsGroup {
@@ -114,29 +106,36 @@ pub fn children<'s>(g: &mut FilesGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s>>
         });
 
         if is_gated {
-            gated.push(group);
+            gated.push((group, is_generated));
         } else {
-            direct.push(group);
+            direct.push((group, is_generated));
         }
     }
 
-    for gated_group in gated {
+    // Attach gated groups to their parent, preferring same generated status
+    // so non-generated items aren't trapped behind a generated parent
+    // (which may never be scheduled due to its 0.1x modifier).
+    for (gated_group, gated_gen) in gated {
         let gated_key = match &gated_group {
             Group::Ts(ts) => &ts.key,
             _ => unreachable!(),
         };
-        let parent = direct
-            .iter_mut()
-            .find(|g| matches!(g, Group::Ts(ts) if gated_key.is_gated_by(&ts.key)));
-        if let Some(Group::Ts(parent)) = parent {
-            parent.dependent_siblings.push(gated_group);
+        let key_matches =
+            |g: &Group<'_>| matches!(g, Group::Ts(ts) if gated_key.is_gated_by(&ts.key));
+        let idx = direct
+            .iter()
+            .position(|entry| entry.1 == gated_gen && key_matches(&entry.0))
+            .or_else(|| direct.iter().position(|entry| key_matches(&entry.0)));
+        if let Some(i) = idx {
+            if let (Group::Ts(ref mut parent), _) = direct[i] {
+                parent.dependent_siblings.push(gated_group);
+            }
         } else {
-            // Private promotion: no public counterpart, enter frontier directly
-            direct.push(gated_group);
+            direct.push((gated_group, gated_gen));
         }
     }
 
-    direct
+    direct.into_iter().map(|(g, _)| g).collect()
 }
 
 /// Map an extracted item to its initial TsGroupKey(s).

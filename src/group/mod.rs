@@ -38,7 +38,6 @@ pub struct FilesGroup {
     pub is_config: bool,
     pub is_type_declaration: bool,
     pub is_header: bool,
-    pub is_generated: bool,
 }
 
 impl FilesGroup {
@@ -61,7 +60,6 @@ impl FilesGroup {
             is_config,
             is_type_declaration,
             is_header,
-            is_generated: false,
         }
     }
 }

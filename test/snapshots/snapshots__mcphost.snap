@@ -26,7 +26,6 @@ sdk/README.md
     67→## Advanced Usage
    115→## API Reference
    136→## Environment Variables
-   146→## License
 
 go.mod
 
@@ -135,6 +134,7 @@ internal/auth/credentials.go
     44→func (c *AnthropicCredentials) NeedsRefresh() bool {
     54→type CredentialManager …
     62→func NewCredentialManager() (*CredentialManager, error) {
+    74→func getCredentialsPath …
     92→func (cm *CredentialManager) LoadCredentials() (*CredentialStore, error) {
    115→func (cm *CredentialManager) SaveCredentials(store *CredentialStore) error {
    139→func (cm *CredentialManager) SetAnthropicCredentials(apiKey string) error {
@@ -142,6 +142,7 @@ internal/auth/credentials.go
    173→func (cm *CredentialManager) RemoveAnthropicCredentials() error {
    195→func (cm *CredentialManager) HasAnthropicCredentials() (bool, error) {
    217→func (cm *CredentialManager) GetCredentialsPath() string {
+   222→func validateAnthropicAPIKey …
    247→func GetAnthropicAPIKey(flagValue string) (string, string, error) {
 
 internal/auth/credentials_test.go
@@ -158,6 +159,8 @@ internal/auth/oauth.go
     78→func (c *OAuthClient) GetAuthorizationURL() (*AuthData, error) {
    107→func (c *OAuthClient) ExchangeCode(code, verifier string) (*AnthropicCredentials, error) {
    133→func (c *OAuthClient) RefreshToken(refreshToken string) (*AnthropicCredentials, error) {
+   144→func (c *OAuthClient) makeTokenRequest …
+   193→func (c *OAuthClient) parseCodeAndState …
    205→func (cm *CredentialManager) SetOAuthCredentials(creds *AnthropicCredentials) error {
    219→func (cm *CredentialManager) GetValidAccessToken() (string, error) {
 
@@ -188,31 +191,27 @@ internal/agent/agent.go
     59→type ToolCallContentHandler …
     63→type ToolApprovalHandler …
     67→type Agent …
-    81→func NewAgent(ctx context.Context, config *AgentConfig) (*Agent, error) {
+    81→func NewAgent …
    125→type GenerateWithLoopResult …
-   135→func (a *Agent) GenerateWithLoop(ctx context.Context, messages []*schema.Message,
-   136→	onToolCall ToolCallHandler, onToolExecution ToolExecutionHandler, onToolResult ToolResultHandler, onResponse ResponseHandler, onToolCallContent ToolCallContentHandler, onToolApproval ToolApprovalHandler,
-   137→) (*GenerateWithLoopResult, error) {
-   144→func (a *Agent) GenerateWithLoopAndStreaming(ctx context.Context, messages []*schema.Message,
-   145→	onToolCall ToolCallHandler, onToolExecution ToolExecutionHandler, onToolResult ToolResultHandler, onResponse ResponseHandler, onToolCallContent ToolCallContentHandler, onStreamingResponse StreamingResponseHandler, onToolApproval ToolApprovalHandler,
-   146→) (*GenerateWithLoopResult, error) {
-   303→func (a *Agent) GetTools() []tool.BaseTool {
-   309→func (a *Agent) GetLoadingMessage() string {
-   315→func (a *Agent) GetLoadedServerNames() []string {
+   135→func (a *Agent) GenerateWithLoop …
+   144→func (a *Agent) GenerateWithLoopAndStreaming …
+   303→func (a *Agent) GetTools …
+   309→func (a *Agent) GetLoadingMessage …
+   315→func (a *Agent) GetLoadedServerNames …
    456→type escListenerModel …
    460→func (m escListenerModel) Init() tea.Cmd {
    464→func (m escListenerModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
    479→func (m escListenerModel) View() string {
-   536→func (a *Agent) Close() error {
+   536→func (a *Agent) Close …
 
 internal/agent/factory.go
     15→type SpinnerFunc …
     19→type AgentCreationOptions …
-    43→func CreateAgent(ctx context.Context, opts *AgentCreationOptions) (*Agent, error) {
-    76→func ParseModelName(modelString string) (provider, model string) {
+    43→func CreateAgent …
+    76→func ParseModelName …
 
 internal/agent/streaming.go
-    19→func StreamWithCallback(ctx context.Context, reader *schema.StreamReader[*schema.Message], callback func(string)) (*schema.Message, error) {
+    19→func StreamWithCallback …
 
 cmd/auth.go
 
@@ -254,14 +253,36 @@ cmd/script_test.go
    380→func TestParseScriptContentMCPServersLegacyFormat(t *testing.T) {
 
 internal/models/generate_models.go
+    18→type ModelInfo …
+    37→type Cost …
+    50→type Limit …
+    60→type ProviderInfo …
 
 internal/models/models_data.go
 
 internal/models/providers.go
+    70→type ProviderConfig …
+   124→type ProviderResult …
+   153→func CreateProvider(ctx context.Context, config *ProviderConfig) (*ProviderResult, error) {
+   539→type OllamaLoadingResult …
+   717→func (t *bearerTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+   862→func (t *oauthTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 
 internal/models/providers_test.go
+     8→func TestCreateHTTPClientWithTLSConfig(t *testing.T) {
+    54→func TestCreateOAuthHTTPClient(t *testing.T) {
+   113→func TestProviderConfigTLSSkipVerify(t *testing.T) {
 
 internal/models/registry.go
+    16→type ModelsRegistry …
+    27→func NewModelsRegistry() *ModelsRegistry {
+    44→func (r *ModelsRegistry) ValidateModel(provider, modelID string) (*ModelInfo, error) {
+    73→func (r *ModelsRegistry) GetRequiredEnvVars(provider string) ([]string, error) {
+    92→func (r *ModelsRegistry) ValidateEnvironment(provider string, apiKey string) error {
+   143→func (r *ModelsRegistry) SuggestModels(provider, invalidModel string) []string {
+   179→func (r *ModelsRegistry) GetSupportedProviders() []string {
+   197→func (r *ModelsRegistry) GetModelsForProvider(provider string) (map[string]ModelInfo, error) {
+   216→func GetGlobalRegistry() *ModelsRegistry {
 
 sdk/mcphost.go
     19→type MCPHost …
@@ -298,8 +319,6 @@ internal/hooks/config.go
     21→type HookMatcher …
     30→type HookEntry …
     41→func LoadHooksConfig(customPaths ...string) (*HookConfig, error) {
-    97→func getConfigDir() string {
-   113→func mergeHookConfigs(dst, src *HookConfig) {
 
 internal/hooks/config_test.go
     11→func TestLoadHooksConfig(t *testing.T) {
@@ -319,12 +338,7 @@ internal/hooks/executor.go
     48→func (e *Executor) SetInteractive(interactive bool) {
     57→func (e *Executor) PopulateCommonFields(event HookEvent) CommonInput {
     77→func (e *Executor) ExecuteHooks(ctx context.Context, event HookEvent, input interface{}) (*HookOutput, error) {
-   122→func (e *Executor) executeHook(ctx context.Context, hook HookEntry, input interface{}) *hookResult {
-   169→func matchesPattern(pattern, toolName string) bool {
-   190→func extractToolName(input interface{}) string {
    201→type hookResult …
-   209→func (e *Executor) processResults(results <-chan *hookResult) (*HookOutput, error) {
-   241→func mergeHookOutputs(dst, src *HookOutput) {
 
 internal/hooks/executor_test.go
     12→func TestExecuteHooks(t *testing.T) {
@@ -340,10 +354,7 @@ internal/hooks/schemas.go
 
 internal/hooks/validator.go
     10→var …
-    17→func validateHookCommand(command string) error {
-    44→func containsDangerousPattern(command string) bool {
     75→func ValidateHookConfig(config *HookConfig) error {
-   110→func validateHookEntry(hook HookEntry) error {
 
 internal/hooks/validator_test.go
      8→func TestValidateHookCommand(t *testing.T) {
@@ -595,8 +606,6 @@ internal/ui/spinner.go
    149→func (s *Spinner) Stop() {
 
 internal/ui/styles.go
-    15→func stringPtr …
-    16→func uintPtr …
     21→func BaseStyle() lipgloss.Style {
     28→func GetMarkdownRenderer(width int) *glamour.TermRenderer {
 

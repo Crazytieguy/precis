@@ -105,7 +105,6 @@ pub fn children<'s>(g: &mut FoldersGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
                 is_config,
                 is_type_declaration,
                 is_header,
-                is_generated: false,
             }));
         }
     }

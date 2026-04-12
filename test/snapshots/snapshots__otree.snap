@@ -170,43 +170,27 @@ src/tree.rs
 
 src/ui/app.rs
     27→enum Refresh …
+    28→    /// Update the TUI
+    29→    Update,
+    30→    /// Skip the update of the TUI
+    31→    Skip,
+    32→    /// Quit the TUI and return to the shell
+    33→    Quit,
+    34→    /// Quit the TUI and edit text
+    35→    Edit(Box<Edit>),
+    36→}
     39→enum ElementInFocus …
+    40→    TreeOverview,
+    41→    DataBlock,
+    42→    Popup,
+    43→    Filter,
+    44→    None,
+    45→}
     48→pub enum ScrollDirection …
     49→    Up,
     50→    Down,
     51→}
     53→pub struct App …
-    54→    cfg: Rc<Config>,
-    55→
-    56→    focus: ElementInFocus,
-    57→    last_focus: Option<ElementInFocus>,
-    58→
-    59→    tree_overview: TreeOverview,
-    60→    tree_overview_area: Rect,
-    61→
-    62→    filter: Option<Filter>,
-    63→    filter_area: Rect,
-    64→
-    65→    data_block: DataBlock,
-    66→    data_block_area: Rect,
-    67→
-    68→    layout_direction: LayoutDirection,
-    69→    layout_tree_size: u16,
-    70→
-    71→    header: Option<Header>,
-    72→    header_area: Rect,
-    73→    skip_header: bool,
-    74→
-    75→    footer: Option<Footer>,
-    76→    footer_area: Rect,
-    77→    skip_footer: bool,
-    78→    foot_message: Option<String>,
-    79→
-    80→    popup: Popup,
-    81→    before_popup_focus: ElementInFocus,
-    82→
-    83→    fw: Option<FileWatcher>,
-    84→}
     86→pub enum ShowResult …
     87→    Edit(Box<Edit>),
     88→    Quit,
@@ -215,29 +199,10 @@ src/ui/app.rs
 
 src/ui/data_block.rs
     16→pub struct DataBlock …
-    17→    cfg: Rc<Config>,
-    18→
-    19→    can_vertical_scroll: bool,
-    20→    vertical_scroll: usize,
-    21→    vertical_scroll_last: usize,
-    22→    vertical_scroll_state: ScrollbarState,
-    23→
-    24→    can_horizontal_scroll: bool,
-    25→    horizontal_scroll: usize,
-    26→    horizontal_scroll_last: usize,
-    27→    horizontal_scroll_state: ScrollbarState,
-    28→
-    29→    identify: String,
-    30→}
     32→impl DataBlock …
 
 src/ui/filter.rs
     13→pub struct Filter …
-    14→    cfg: Rc<Config>,
-    15→    text_area: TextArea<'static>,
-    16→    target: FilterTarget,
-    17→    ignore_case: bool,
-    18→}
     20→pub enum FilterAction …
     21→    Edit,
     22→    Confirm,
@@ -245,10 +210,6 @@ src/ui/filter.rs
     24→    Quit,
     25→}
     27→pub struct FilterOptions …
-    28→    pub text: String,
-    29→    pub target: FilterTarget,
-    30→    pub ignore_case: bool,
-    31→}
     34→pub enum FilterTarget …
     35→    Key,
     36→    Value,
@@ -264,22 +225,12 @@ src/ui/footer.rs
     13→    None,
     14→}
     16→pub struct Footer …
-    17→    cfg: Rc<Config>,
-    18→}
     20→impl Footer …
 
 src/ui/header.rs
     11→pub struct HeaderContext …
-    12→    version: String,
-    13→    data_source: Cow<'static, str>,
-    14→    content_type: &'static str,
-    15→    data_size: String,
-    16→}
     18→impl HeaderContext …
     41→pub struct Header …
-    42→    cfg: Rc<Config>,
-    43→    data: String,
-    44→}
     46→impl Header …
 
 src/ui/mod.rs
@@ -290,31 +241,11 @@ src/ui/mod.rs
 
 src/ui/popup.rs
     13→pub struct PopupData …
-    14→    pub title: Cow<'static, str>,
-    15→    pub text: Text<'static>,
-    16→}
     18→pub struct Popup …
-    19→    data: Option<PopupData>,
-    20→
-    21→    cfg: Rc<Config>,
-    22→
-    23→    scroll: usize,
-    24→}
     26→impl Popup …
 
 src/ui/tree_overview.rs
     19→pub struct TreeOverview …
-    20→    cfg: Rc<Config>,
-    21→    state: Option<TreeState<String>>,
-    22→    tree: Option<Tree>,
-    23→    filter_items: Option<Vec<TreeItem<'static, String>>>,
-    24→    filter_cache: Option<HashMap<String, usize>>,
-    25→    filter_nav_pos: Option<usize>,
-    26→    before_filter_state: Option<TreeState<String>>,
-    27→    last_switches: Vec<(Tree, TreeState<String>)>,
-    28→    root_switch: Option<(Tree, TreeState<String>)>,
-    29→    root_identifies: Vec<String>,
-    30→}
     32→impl TreeOverview …
 
 src/parse/any.rs
@@ -331,7 +262,7 @@ src/parse/hcl.rs
      6→use super::{Parser, SyntaxToken};
      8→pub struct HclParser …
     10→impl Parser for HclParser …
-    28→fn highlight …
+    28→fn highlight(name: &str, value: Value, indent: usize) -> Vec<SyntaxToken> {
 
 src/parse/json.rs
      4→use super::{Parser, SyntaxToken};
@@ -396,7 +327,7 @@ src/parse/syntax.rs
    201→pub fn is_value_complex(value: &Value) -> bool {
    216→struct TextWrapper …
    228→impl TextWrapper<'_, '_> …
-   310→fn find_split_position …
+   310→fn find_split_position(text: &str, max_width: usize) -> usize {
 
 src/parse/toml.rs
      5→use super::json::highlight as json_highlight;
@@ -404,8 +335,13 @@ src/parse/toml.rs
      7→use super::{Parser, SyntaxToken};
      9→pub struct TomlParser …
     11→impl Parser for TomlParser …
-    62→fn toml_value_to_json …
-    88→fn highlight …
+    62→fn toml_value_to_json(toml_value: TomlValue) -> Value {
+    88→fn highlight(
+    89→    value: &Value,
+    90→    section: Option<&str>,
+    91→    from_arr: bool,
+    92→    arr_complex: bool,
+    93→) -> Vec<SyntaxToken> {
 
 src/parse/xml.rs
     10→use super::{Parser, SyntaxToken};
@@ -415,15 +351,15 @@ src/parse/xml.rs
     42→impl AttrMap for Map<String, Value> …
     61→struct NodeValues …
     68→impl NodeValues …
-   176→fn read …
-   258→fn highlight …
+   176→fn read<R: BufRead>(reader: &mut Reader<R>, depth: u64) -> Result<Value> {
+   258→fn highlight(name: &str, value: Value, indent: usize) -> Vec<SyntaxToken> {
 
 src/parse/yaml.rs
      5→use super::syntax::{self, StringValue};
      6→use super::{Parser, SyntaxToken};
      8→pub struct YamlParser …
     10→impl Parser for YamlParser …
-    72→fn highlight …
+    72→fn highlight(value: &Value, indent: usize, from_arr: bool) -> Vec<SyntaxToken> {
 
 config/default.toml
      1→[tree]
@@ -443,12 +379,60 @@ config/default.toml
    103→[types]
 
 examples/edge.json
+     2→  "empty_object": {},
+     3→  "empty_list": [],
+     4→  "null": null,
+     5→  "nested_array": [
+     6→    {},
+     7→    null,
+     8→    []
+     9→  ]
 
 examples/edge.yaml
+     1→empty_object: {}
+     2→empty_list: []
+     3→null_value: null
+     4→nested_array:
+     5→  - {}
+     6→  - []
+     7→  - null
 
 examples/example.hcl
 
 examples/example.json
+     2→  "string": "Hello, World!",
+     3→  "number": 12345,
+     4→  "float": 123.45,
+     5→  "boolean": true,
+     6→  "null": null,
+     7→  "array": [1, "two", 3.0, false, null],
+     8→  "object": {
+     9→    "nested_string": "Nested Hello",
+    10→    "nested_number": 6789,
+    11→    "nested_array": [10, "twenty", 30.0],
+    12→    "nested_object": {
+    13→      "deep_string": "Deep Hello",
+    14→      "deep_number": 1111
+    15→    }
+    16→  },
+    17→  "complex_array": [
+    18→    {"id": 1, "value": "one"},
+    19→    {"id": 2, "value": "two", "extra": {"sub_value": "extra"}},
+    20→    {"id": 3, "value": "three"}
+    21→  ],
+    22→  "complex_object": {
+    23→    "name": "Test Object",
+    24→    "attributes": {
+    25→      "height": 180,
+    26→      "weight": 75.5,
+    27→      "tags": ["sample", "json", "test"]
+    28→    },
+    29→    "active": true,
+    30→    "metrics": [
+    31→      {"type": "speed", "value": 7.5},
+    32→      {"type": "strength", "value": 8.2}
+    33→    ]
+    34→  }
 
 examples/example.jsonl
 
