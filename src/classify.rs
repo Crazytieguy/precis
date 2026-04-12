@@ -133,12 +133,12 @@ pub enum FileCategory {
     CiConfig,
 }
 
-pub fn classify_file(path: &Path) -> FileCategory {
+fn classify_by_components(path: &Path) -> Option<FileCategory> {
     for component in path.components() {
         let s = component.as_os_str();
 
         if s == "examples" || s == "example" || s == "experiments" || s == "experiment" {
-            return FileCategory::Example;
+            return Some(FileCategory::Example);
         }
         if s == "website"
             || s == "site"
@@ -147,10 +147,10 @@ pub fn classify_file(path: &Path) -> FileCategory {
             || s == "changelog"
             || s == "changelogs"
         {
-            return FileCategory::DocsSite;
+            return Some(FileCategory::DocsSite);
         }
         if s == ".github" || s == ".circleci" || s == ".gitlab" {
-            return FileCategory::CiConfig;
+            return Some(FileCategory::CiConfig);
         }
         if s == "__tests__"
             || s == "tests"
@@ -167,7 +167,7 @@ pub fn classify_file(path: &Path) -> FileCategory {
             || s == "__stories__"
             || s == ".storybook"
         {
-            return FileCategory::Test;
+            return Some(FileCategory::Test);
         }
         if let Some(name) = s.to_str()
             && (name.contains('-') || name.contains('_'))
@@ -180,23 +180,14 @@ pub fn classify_file(path: &Path) -> FileCategory {
                 )
             })
         {
-            return FileCategory::Test;
+            return Some(FileCategory::Test);
         }
     }
+    None
+}
 
-    if let Some(stem) = path.file_stem().and_then(|s| s.to_str())
-        && (stem.ends_with(".test")
-            || stem.ends_with(".test-d")
-            || stem.ends_with(".spec")
-            || stem.ends_with(".stories")
-            || stem.starts_with("test_")
-            || stem.ends_with("_test")
-            || stem == "conftest")
-    {
-        return FileCategory::Test;
-    }
-
-    FileCategory::Source
+pub fn classify_dir(path: &Path) -> FileCategory {
+    classify_by_components(path).unwrap_or(FileCategory::Source)
 }
 
 // ---------------------------------------------------------------------------

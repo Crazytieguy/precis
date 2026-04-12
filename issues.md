@@ -73,16 +73,6 @@ Every `children()` call clones `PathBuf` + `String` for each item.
 Slimming TsItem (above) eliminates this since `&Path` and `Node` are
 Copy.
 
-### `classify_file` called on directories
-
-`folders.rs:59` calls `classify_file(&rel_dir)` on directory paths to
-get a `FileCategory` for `FoldersGroup`. The function was designed for
-files (checks file stems for `.test`/`.spec` suffixes, etc.). It happens
-to work for directories because the path-component checks fire first,
-but the intent is unclear and the file-stem checks are wasted work.
-Consider a `classify_dir` variant or documenting that the function
-handles both.
-
 ### No Lua inline sample tests
 
 Every supported language has an inline sample test (`rust_sample`,

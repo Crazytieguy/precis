@@ -52,7 +52,7 @@ pub fn children<'s>(g: &mut FoldersGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
 
     // Create sub-FoldersGroups
     for (abs_dir, rel_dir) in subdirs {
-        let category = classify::classify_file(&rel_dir);
+        let category = classify::classify_dir(&rel_dir);
         let contribution = heuristics::folders_contribution(&rel_dir, category);
         result.push(Group::Folders(FoldersGroup {
             parent_dir: abs_dir,
