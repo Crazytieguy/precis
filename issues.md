@@ -110,12 +110,6 @@ The pattern `.strip_prefix(&ctx.root).unwrap_or(&path).to_path_buf()`
 appears ~8 times. A `ScheduleCtx::relative_path` helper or
 constructing relative paths at discovery time would clean this up.
 
-### `FileCache::assemble` re-formats headers
-
-`format::header_line(path)` is called in `assemble()` even though the
-header was already computed in `header_cost_for`. Cache the formatted
-string alongside the cost.
-
 ### `classify_file` called on directories
 
 `folders.rs:59` calls `classify_file(&rel_dir)` on directory paths to

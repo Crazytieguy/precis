@@ -100,8 +100,8 @@ pub struct CachedGroupRender<'s> {
 pub struct FileCache {
     /// Per-file: line → committed RenderedEntry.
     files: HashMap<PathBuf, BTreeMap<u32, CommittedEntry>>,
-    /// Per-file header cost, computed once on first appearance.
-    header_costs: HashMap<PathBuf, FileCost>,
+    /// Per-file header string and cost, computed once on first appearance.
+    headers: HashMap<PathBuf, (String, FileCost)>,
     /// Insertion-ordered paths for deterministic final assembly.
     path_order: Vec<PathBuf>,
     /// Running totals across all committed files.
@@ -134,7 +134,7 @@ impl FileCache {
     pub fn new() -> Self {
         Self {
             files: HashMap::new(),
-            header_costs: HashMap::new(),
+            headers: HashMap::new(),
             path_order: Vec::new(),
             total_tokens: 0,
             total_chars: 0,
@@ -144,17 +144,18 @@ impl FileCache {
     /// Get or compute the header cost for a path. Tokenized once.
     /// Includes the `\n` separator that precedes each file in the assembled output.
     pub fn header_cost_for(&mut self, path: &Path) -> FileCost {
-        if let Some(&cost) = self.header_costs.get(path) {
-            return cost;
+        if let Some((_, cost)) = self.headers.get(path) {
+            return *cost;
         }
+        let header_line = format::header_line(path);
         // Include the separator newline in the cost — it's always emitted
         // before a file header in the assembled output (except the first file,
         // but overcounting by 1 token is safer than undercounting).
-        let header = format!("\n{}", format::header_line(path));
-        let tokens = format::count_tokens(&header);
-        let chars = header.len();
+        let with_sep = format!("\n{header_line}");
+        let tokens = format::count_tokens(&with_sep);
+        let chars = with_sep.len();
         let cost = FileCost { tokens, chars };
-        self.header_costs.insert(path.to_path_buf(), cost);
+        self.headers.insert(path.to_path_buf(), (header_line, cost));
         cost
     }
 
@@ -195,7 +196,7 @@ impl FileCache {
             let is_new_file = file_map.is_none();
 
             if is_new_file {
-                let hcost = self.header_costs.get(path).copied().unwrap_or_default();
+                let hcost = self.headers.get(path).map_or(FileCost::default(), |(_, c)| *c);
                 total.tokens += hcost.tokens;
                 total.chars += hcost.chars;
             }
@@ -272,7 +273,11 @@ impl FileCache {
             if !output.is_empty() {
                 output.push('\n');
             }
-            output.push_str(&format::header_line(path));
+            let (header_line, _) = self
+                .headers
+                .get(path)
+                .expect("header must be cached before assembly");
+            output.push_str(header_line);
 
             // Entries are in a BTreeMap keyed by line number — already sorted.
             for entry in map.values() {
