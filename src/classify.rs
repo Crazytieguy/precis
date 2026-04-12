@@ -1,5 +1,4 @@
-use std::collections::HashSet;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 
 // ---------------------------------------------------------------------------
@@ -302,33 +301,6 @@ pub fn is_boilerplate_heading(name: &str) -> bool {
 
 fn is_docs_dir_name(name: &str) -> bool {
     matches!(name.to_ascii_lowercase().as_str(), "docs" | "doc")
-}
-
-pub fn detect_doc_site_dirs<'a>(
-    relative_paths: impl Iterator<Item = &'a Path>,
-) -> HashSet<PathBuf> {
-    let mut dirs = HashSet::new();
-    for relative in relative_paths {
-        let filename = match relative.file_name().and_then(|n| n.to_str()) {
-            Some(n) => n,
-            None => continue,
-        };
-        let parent = relative.parent().unwrap_or(Path::new(""));
-
-        if filename == "conf.py"
-            && let Some(parent_name) = parent.file_name().and_then(|n| n.to_str())
-            && is_docs_dir_name(parent_name)
-        {
-            dirs.insert(parent.to_path_buf());
-        }
-        if matches!(filename, "mkdocs.yml" | "mkdocs.yaml") && parent.as_os_str().is_empty() {
-            dirs.insert(PathBuf::from("docs"));
-        }
-        if filename.starts_with("docusaurus.config.") {
-            dirs.insert(parent.join("docs"));
-        }
-    }
-    dirs
 }
 
 pub fn is_config_file(relative_path: &Path, filename: &str) -> bool {

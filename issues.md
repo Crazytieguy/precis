@@ -123,12 +123,6 @@ isn't a lockfile. This means `.png`, `.jpg`, `.wasm`, `.exe`, `.zip`
 etc. all pass the filter. It should use an allowlist of text/source
 extensions or at minimum a denylist of known binary extensions.
 
-### `detect_doc_site_dirs` is dead code
-
-Defined in `classify.rs:307` but never called anywhere in the codebase.
-Remove it (and the helper `is_docs_dir_name` at line 303 which is only
-used by `detect_doc_site_dirs` and `is_config_file`).
-
 ### `classify_file` called on directories
 
 `folders.rs:59` calls `classify_file(&rel_dir)` on directory paths to
