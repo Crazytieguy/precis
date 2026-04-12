@@ -11,7 +11,6 @@ echo "=== Phase 1: Source file review ==="
 # Structural order: leaf modules first, orchestrators last.
 # Each session benefits from issues already recorded by earlier sessions.
 SOURCE_FILES=(
-    src/format.rs
     src/classify.rs
     src/parse/ast.rs
     src/parse/classify.rs
@@ -36,7 +35,7 @@ SOURCE_FILES=(
 for file in "${SOURCE_FILES[@]}"; do
     echo ""
     echo "--- Reviewing: $file ---"
-    coven "CONTEXT: We just finished a rough first pass implementing design.md — a full architecture rewrite of precis. We're now reviewing each source file to find issues before fixing them.
+    coven ralph --iterations 1 --no-break --no-wait "CONTEXT: We just finished a rough first pass implementing design.md — a full architecture rewrite of precis. We're now reviewing each source file to find issues before fixing them.
 
 YOUR TASK: Review the source file '$file' for issues and record any you find in issues.md.
 
@@ -74,8 +73,8 @@ STEPS:
 3. Run 'cargo test --release'. Check any modified snapshots for unintended changes.
 4. Run 'cargo clippy --all-targets -- -D warnings' and fix any warnings, including pre-existing ones.
 5. Run /simplify
-5. Spawn an Agent to independently verify your fix doesn't violate design.md invariants or introduce new bugs. Address any concerns raised.
-6. If the fix looks good: remove the addressed issue from issues.md and commit.
+6. Spawn an Agent to independently verify your fix doesn't violate design.md invariants or introduce new bugs. Address any concerns raised.
+7. If the fix looks good: remove the addressed issue from issues.md and commit.
    If you're not confident (see below): revert and mark it '[needs human review]' instead.
 
 ON REVERTING:
@@ -95,7 +94,7 @@ for snap in test/snapshots/snapshots__*.snap; do
     snap_name=$(basename "$snap" .snap | sed 's/^snapshots__//')
     echo ""
     echo "--- Reviewing snapshot: $snap_name ---"
-    coven "CONTEXT: precis recently had a full architecture rewrite. We're reviewing each fixture snapshot for output quality issues.
+    coven ralph --iterations 1 --no-break --no-wait "CONTEXT: precis recently had a full architecture rewrite. We're reviewing each fixture snapshot for output quality issues.
 
 YOUR TASK: Review the snapshot '$snap_name' for output quality.
 
@@ -130,8 +129,8 @@ STEPS:
 3. Run 'cargo test --release'. The affected snapshots (listed in the issue) should improve — concretely, the output should give a reader a better mental model. Other snapshots should not regress on average.
 4. Run 'cargo clippy --all-targets -- -D warnings' and fix any warnings, including pre-existing ones.
 5. Run /simplify
-5. Spawn an Agent to independently evaluate the snapshot changes. The Agent should read the snapshot diffs and judge whether affected snapshots genuinely improved and whether others regressed. Address any concerns raised.
-6. If the fix looks good: remove the addressed issue from output-issues.md and commit.
+6. Spawn an Agent to independently evaluate the snapshot changes. The Agent should read the snapshot diffs and judge whether affected snapshots genuinely improved and whether others regressed. Address any concerns raised.
+7. If the fix looks good: remove the addressed issue from output-issues.md and commit.
    If you're not confident (see below): revert and mark it '[needs human review]' instead.
 
 ON REVERTING:
