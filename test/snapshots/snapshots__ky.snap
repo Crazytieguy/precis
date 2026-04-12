@@ -214,7 +214,7 @@ source/errors/ForceRetryError.ts
      1→import type {ForceRetryOptions} from '../core/constants.js';
      2→import {NonError} from './NonError.js';
      5→Internal error used to signal a forced retry from afterResponse hooks.
-      →…
+     6→This is thrown when a user returns ky.retry() from an afterResponse hook.
      8→export class ForceRetryError …
 
 source/errors/HTTPError.ts
@@ -225,7 +225,8 @@ source/errors/HTTPError.ts
 
 source/errors/NonError.ts
      2→Wrapper for non-Error values that were thrown.
-      →…
+     3→
+     4→In JavaScript, any value can be thrown (not just Error instances). This class wraps such values to ensure consistent error handling.
      6→export class NonError …
 
 source/errors/TimeoutError.ts
@@ -354,8 +355,6 @@ tsconfig.json
 
 test/browser.ts
     13→	interface Window …
-    19→const createEsmTestServer …
-    36→const addKyScriptToPage …
 
 test/bytes.ts
 
@@ -366,14 +365,10 @@ test/fetch.ts
 test/formdata-searchparams.ts
 
 test/headers.ts
-    11→const echoHeaders …
 
 test/hooks.ts
-     7→const createStreamBody …
-    14→const createStreamFetch …
 
 test/http-error.ts
-     6→function createFakeResponse …
 
 test/main.ts
 

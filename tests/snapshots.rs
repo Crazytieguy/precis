@@ -917,21 +917,6 @@ fn render_sample(filename: &str, source: &str, budget: usize) -> String {
 
 // Budget-based fixture helpers (rewritten for new API).
 
-/// Render a fixture directory with a budget, prepend metadata, assert budget.
-fn render_with_budget(subpath: &str, budget: usize) -> Option<String> {
-    let root = fixture_path(subpath)?;
-    let output = precis::render(&root, budget, None);
-    let tokens = format::count_tokens(&output);
-    assert!(
-        tokens <= budget,
-        "{subpath}@{budget}: token count {tokens} exceeds budget",
-    );
-    Some(format!(
-        "budget: {} ({} tokens)\n\n{}",
-        budget, tokens, output
-    ))
-}
-
 /// Render a fixture with char budget, prepend metadata, assert both budgets.
 fn render_with_char_budget(subpath: &str, budget: usize, char_budget: usize) -> Option<String> {
     let root = fixture_path(subpath)?;

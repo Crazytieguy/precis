@@ -573,7 +573,8 @@ crates/toasty/src/db/pool.rs
     95→struct Manager …
     99→impl deadpool::managed::Manager for Manager …
    116→/// A connection retrieved from a pool.
-      →…
+   117→///
+   118→/// When dropped, the connection is returned to the pool for reuse.
    119→pub struct PoolConnection …
    120→    inner: deadpool::managed::Object<Manager>,
    121→}
@@ -849,11 +850,10 @@ crates/toasty-driver-integration-suite/src/logging_driver.rs
     14→pub struct LoggingDriver …
     63→pub struct DriverOp …
     70→pub struct LoggingConnection …
-   125→async fn duplicate_response_mut(response: &mut Response) -> Result<Response> {
+   125→async fn duplicate_response_mut …
 
 crates/toasty-driver-integration-suite/src/macros.rs
      2→macro_rules! assert_eq_unordered …
-    18→macro_rules! models …
 
 crates/toasty-driver-integration-suite/src/setup.rs
      4→pub trait Setup …
@@ -874,7 +874,7 @@ crates/toasty-driver-integration-suite/src/test.rs
 
 crates/toasty-driver-integration-suite/src/tests.rs
 
-tests/Cargo.toml
+examples/composite-key/src/main.rs
 
 benches/
 
@@ -930,8 +930,6 @@ examples/
 
 examples/composite-key/
 
-examples/composite-key/src/
-
 examples/hello-toasty/
 
 examples/hello-toasty/src/
@@ -953,6 +951,8 @@ examples/user-has-one-profile/
 examples/user-has-one-profile/src/
 
 scripts/
+
+tests/
 
 tests/src/
 

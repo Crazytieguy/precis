@@ -87,7 +87,7 @@ opentelemetry_instrument.py
    191→def _is_root_span(span: ReadableSpan) -> bool:
    192→    return span.parent is None or span.parent.is_remote
    195→# Extended `pyroscope-otel` span processor: https://github.com/grafana/otel-profiling-python/blob/990662d416943e992ab70036b35b27488c98336a/src/pyroscope/otel/__init__.py
-      →…
+   196→# Includes `span_name` to identify if it makes sense to go to profiles from traces.
    197→class PyroscopeSpanProcessor …
 
 prometheus_instrument.py

@@ -45,7 +45,7 @@ src/internals/symbols.ts
 
 src/errors.ts
      2→ * Error when the given input value does not match any included pattern
-      →…
+     3→ * and .exhaustive() was specified
      5→export class NonExhaustiveError …
 
 src/index.ts
@@ -299,11 +299,7 @@ src/types/Match.ts
     19→ * #### Match
       →…
     22→export type Match …
-   229→ * Potential for optimization here:
-      →…
    245→type DeepExcludeAll …
-   256→ * The type of an overloaded function for `.exhaustive`,
-      →…
    261→type Exhaustive …
 
 src/types/Pattern.ts
@@ -418,13 +414,19 @@ package.json
 
 tsconfig.json
 
-examples/gif-fetcher/public/index.html
+benchmarks/always-last-digit.ts
 
-benchmarks/
+benchmarks/nested-objects.ts
+
+benchmarks/package.json
+
+benchmarks/random-digit.ts
 
 examples/
 
 examples/gif-fetcher/
+
+examples/gif-fetcher/public/
 
 examples/gif-fetcher/src/
 

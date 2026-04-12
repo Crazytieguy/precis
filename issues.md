@@ -99,18 +99,6 @@ The plan called for `tests/invariants.rs` with property-based tests:
 Currently only debug_asserts exist. The dedicated test file was not
 created.
 
-### DocRest children never spawned for 5 type DocFirst groups
-
-`ts::children()` handles `FunctionDocFirst` → `FunctionDocRest`,
-`TypeAliasDocFirst` → `TypeAliasDocRest`, `ConstDocFirst` →
-`ConstDocRest`, `MacroDocFirst` → `MacroDocRest`, and
-`ModuleDocFirst` → `ModuleDocRest`. But `StructDocFirst`,
-`EnumDocFirst`, `ClassDocFirst`, `InterfaceDocFirst`, and
-`TraitDocFirst` all fall through to the `_ => {}` wildcard at
-`ts.rs:325`. Their DocRest groups are never created.
-
-Fix: add match arms for these 5 variants, following the same pattern
-as `FunctionDocFirst`.
 
 ## Should fix (quality/performance)
 
@@ -351,14 +339,6 @@ Fix: construct a synthetic `FilesGroup` for the single file and call
 eliminates the duplication and ensures single-file mode stays in sync
 with directory mode automatically.
 
-### `render_with_budget` is dead code in tests
-
-`tests/snapshots.rs:921` defines `render_with_budget` but it's never
-called. The `budget_test!` macro uses `render_fixture` directly. The
-two functions do essentially the same thing (render + assert budget)
-except `render_with_budget` prepends metadata to the output string.
-
-Remove the dead function.
 
 ### No Lua inline sample tests
 

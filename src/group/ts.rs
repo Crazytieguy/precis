@@ -130,6 +130,24 @@ impl TsGroupKey {
             DataSectionBody => 121,
         }
     }
+
+    /// Maps a DocFirst variant to its corresponding DocRest variant.
+    fn doc_rest_key(&self) -> Option<TsGroupKey> {
+        use TsGroupKey::*;
+        match self {
+            FunctionDocFirst => Some(FunctionDocRest),
+            StructDocFirst => Some(StructDocRest),
+            EnumDocFirst => Some(EnumDocRest),
+            ClassDocFirst => Some(ClassDocRest),
+            InterfaceDocFirst => Some(InterfaceDocRest),
+            TraitDocFirst => Some(TraitDocRest),
+            TypeAliasDocFirst => Some(TypeAliasDocRest),
+            ConstDocFirst => Some(ConstDocRest),
+            MacroDocFirst => Some(MacroDocRest),
+            ModuleDocFirst => Some(ModuleDocRest),
+            _ => None,
+        }
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -180,18 +198,6 @@ pub fn children<'s>(g: &mut TsGroup<'s>, _ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
                 }));
             }
         }
-        FunctionDocFirst => {
-            // Spawn FunctionDocRest
-            if !g.items.is_empty() {
-                result.push(Group::Ts(TsGroup {
-                    key: FunctionDocRest,
-                    items: g.items.iter().map(|i| clone_ts_item(i)).collect(),
-                    inherited_modifier: g.inherited_modifier,
-                    dependent_siblings: vec![],
-                    cached_render: None,
-                }));
-            }
-        }
         // Struct/Enum/Class/Interface/Trait name groups
         StructName { documented, .. } => {
             spawn_type_children(&mut result, g, StructDocFirst, Some(StructBody), *documented);
@@ -219,32 +225,10 @@ pub fn children<'s>(g: &mut TsGroup<'s>, _ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
                 }));
             }
         }
-        TypeAliasDocFirst => {
-            if !g.items.is_empty() {
-                result.push(Group::Ts(TsGroup {
-                    key: TypeAliasDocRest,
-                    items: g.items.iter().map(|i| clone_ts_item(i)).collect(),
-                    inherited_modifier: g.inherited_modifier,
-                    dependent_siblings: vec![],
-                    cached_render: None,
-                }));
-            }
-        }
         ConstName { documented, .. } => {
             if *documented && !g.items.is_empty() {
                 result.push(Group::Ts(TsGroup {
                     key: ConstDocFirst,
-                    items: g.items.iter().map(|i| clone_ts_item(i)).collect(),
-                    inherited_modifier: g.inherited_modifier,
-                    dependent_siblings: vec![],
-                    cached_render: None,
-                }));
-            }
-        }
-        ConstDocFirst => {
-            if !g.items.is_empty() {
-                result.push(Group::Ts(TsGroup {
-                    key: ConstDocRest,
                     items: g.items.iter().map(|i| clone_ts_item(i)).collect(),
                     inherited_modifier: g.inherited_modifier,
                     dependent_siblings: vec![],
@@ -263,34 +247,11 @@ pub fn children<'s>(g: &mut TsGroup<'s>, _ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
                 }));
             }
         }
-        MacroDocFirst => {
-            if !g.items.is_empty() {
-                result.push(Group::Ts(TsGroup {
-                    key: MacroDocRest,
-                    items: g.items.iter().map(|i| clone_ts_item(i)).collect(),
-                    inherited_modifier: g.inherited_modifier,
-                    dependent_siblings: vec![],
-                    cached_render: None,
-                }));
-            }
-        }
         // Import → ImportedItems
         Import { first_party, reexport } => {
             if !g.items.is_empty() {
                 result.push(Group::Ts(TsGroup {
                     key: ImportedItems { first_party: *first_party, reexport: *reexport },
-                    items: g.items.iter().map(|i| clone_ts_item(i)).collect(),
-                    inherited_modifier: g.inherited_modifier,
-                    dependent_siblings: vec![],
-                    cached_render: None,
-                }));
-            }
-        }
-        // ModuleDocFirst → ModuleDocRest
-        ModuleDocFirst => {
-            if !g.items.is_empty() {
-                result.push(Group::Ts(TsGroup {
-                    key: ModuleDocRest,
                     items: g.items.iter().map(|i| clone_ts_item(i)).collect(),
                     inherited_modifier: g.inherited_modifier,
                     dependent_siblings: vec![],
@@ -314,6 +275,18 @@ pub fn children<'s>(g: &mut TsGroup<'s>, _ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
             if !g.items.is_empty() {
                 result.push(Group::Ts(TsGroup {
                     key: DataSectionBody,
+                    items: g.items.iter().map(|i| clone_ts_item(i)).collect(),
+                    inherited_modifier: g.inherited_modifier,
+                    dependent_siblings: vec![],
+                    cached_render: None,
+                }));
+            }
+        }
+        // DocFirst → DocRest (all 10 type variants)
+        key if key.doc_rest_key().is_some() => {
+            if !g.items.is_empty() {
+                result.push(Group::Ts(TsGroup {
+                    key: g.key.doc_rest_key().unwrap(),
                     items: g.items.iter().map(|i| clone_ts_item(i)).collect(),
                     inherited_modifier: g.inherited_modifier,
                     dependent_siblings: vec![],
