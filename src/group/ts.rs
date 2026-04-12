@@ -809,6 +809,10 @@ fn strip_doc_line_prefix(line: &str, lang: Option<Lang>) -> &str {
             .or_else(|| trimmed.strip_prefix("* "))
             .map(|s| s.strip_prefix(' ').unwrap_or(s))
             .unwrap_or(trimmed),
+        Some(Lang::Lua) => trimmed
+            .strip_prefix("---")
+            .map(|s| s.strip_prefix(' ').unwrap_or(s))
+            .unwrap_or(trimmed),
         Some(Lang::Python) => {
             let prefix_len = python_string_prefix_len(trimmed);
             let after_prefix = &trimmed[prefix_len..];

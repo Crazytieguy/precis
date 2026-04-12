@@ -62,31 +62,6 @@ alongside it). Rendering a `FoldersGroup` shows all its items as
 path-only lines. The childless-folder map tracks the items of
 committed `FoldersGroup`s.
 
-### is_documented flag broken for Java and Lua, late for others
-
-Two separate gaps in doc-comment detection:
-
-1. **AST detection missing Java and Lua entirely.**
-   `is_doc_comment_node` in `parse/ast.rs:114` has a `_ => false`
-   catch-all. Java (`/** ... */` javadoc) and Lua (`--- ...` LDoc)
-   are never recognized as doc comments at the AST level. Java should
-   match `/**` like JsTs; Lua should match `---`.
-
-2. **Text heuristics run at render time, not extraction time.**
-   Languages where tree-sitter doesn't label doc comments — Lua
-   (`--`), Python (docstrings are strings, not comments) — fall back
-   to text heuristics (`doc_comment_start` in `group/ts.rs`). But
-   those run at render time, not at extraction time. So items may be
-   classified as undocumented and placed in lower-value groups even
-   when they have doc comments.
-
-Note: Go is NOT affected — `is_doc_comment_node` returns `true` for
-all Go comments, which is correct since Go convention treats any
-comment immediately before a declaration as documentation.
-
-Fix: (a) add Java and Lua arms to `is_doc_comment_node`, (b) run the
-text heuristic at extraction time to set `is_documented` correctly.
-
 ### Missing invariant tests (plan Step 10)
 
 The plan called for `tests/invariants.rs` with property-based tests:

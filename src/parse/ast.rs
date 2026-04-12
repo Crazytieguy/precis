@@ -124,8 +124,9 @@ fn is_doc_comment_node(node: tree_sitter::Node, source: &str, lang: Lang) -> boo
     match lang {
         Lang::Rust => text.starts_with("///") || text.starts_with("/**"),
         Lang::Go | Lang::C => true,
-        Lang::JsTs => text.starts_with("/**"),
+        Lang::JsTs | Lang::Java => text.starts_with("/**"),
         Lang::Python => text.starts_with('#'),
+        Lang::Lua => text.starts_with("---"),
         _ => false,
     }
 }

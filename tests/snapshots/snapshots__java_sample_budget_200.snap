@@ -3,7 +3,10 @@ source: tests/snapshots.rs
 expression: output
 ---
 Token.java
+     9→ * A sample class demonstrating Java features.
+    10→ * Includes methods, fields, and constructors.
     12→public class Token …
+    40→ * Visitor interface for processing tokens.
     42→public interface Visitor …
     50→public enum TokenKind …
     51→    IDENT,
