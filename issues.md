@@ -225,18 +225,6 @@ assigned value is a function expression.
 Fix: check whether the value child is a `function_definition` node and
 return `ItemKind::Function` in that case, `ItemKind::Const` otherwise.
 
-### Rust restricted visibility (`pub(crate)`, `pub(super)`) treated as private
-
-`is_public_symbol` in `parse/visibility.rs:60` does a strict equality
-check `vis_text == "pub"`. This means `pub(crate)`, `pub(super)`, and
-`pub(in path)` items are all classified as private. For precis's ranking
-these items are more important than truly private items — especially in
-binary crates where `pub(crate)` is the highest visibility used and the
-public/private distinction becomes meaningless (everything is "private").
-
-Fix: treat any visibility modifier starting with `pub` as public:
-`vis_text.starts_with("pub")` instead of `vis_text == "pub"`.
-
 ### `mark_reexports` misses `crate::` and `super::` paths
 
 `postprocess.rs:24` checks `self::` but not `crate::` or `super::`.

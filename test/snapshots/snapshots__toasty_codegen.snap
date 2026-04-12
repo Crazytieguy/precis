@@ -63,15 +63,6 @@ src/expand.rs
      9→mod util …
     13→use crate::schema::Model;
     18→struct Expand …
-    19→    /// The model being expanded
-    20→    model: &'a Model,
-    21→
-    22→    /// Model filter methods
-    23→    filters: Vec<Filter>,
-    24→
-    25→    /// Path prefix for toasty types
-    26→    toasty: TokenStream,
-    27→}
     29→impl Expand<'_> …
     49→pub(super) fn root_model(model: &Model) -> TokenStream {
     60→pub(super) fn embedded_model(model: &Model) -> TokenStream {
@@ -81,17 +72,7 @@ src/lib.rs
      1→mod expand …
      2→mod schema …
      6→pub fn generate_model(input: TokenStream) -> syn::Result<TokenStream> {
-     7→    let item: syn::ItemStruct = syn::parse2(input)?;
-     8→    let model = schema::Model::from_ast(&item, false)?;
-     9→
-    10→    Ok(expand::root_model(&model))
-    11→}
     13→pub fn generate_embed(input: TokenStream) -> syn::Result<TokenStream> {
-    14→    let item: syn::ItemStruct = syn::parse2(input)?;
-    15→    let model = schema::Model::from_ast(&item, true)?;
-    16→
-    17→    Ok(expand::embedded_model(&model))
-    18→}
 
 src/schema.rs
      1→mod auto …
@@ -123,30 +104,6 @@ src/expand/filters.rs
      1→use super::Expand;
      2→use crate::schema::{FieldTy, Index, Model};
     10→pub(super) struct Filter …
-    11→    /// Fields to filter by
-    12→    fields: Vec<usize>,
-    13→
-    14→    /// When true, include a batch filter method
-    15→    batch: bool,
-    16→
-    17→    /// When true, only include the filter on relation structs
-    18→    only_relation: bool,
-    19→
-    20→    /// Get method identifier
-    21→    get_method_ident: syn::Ident,
-    22→
-    23→    /// Filter method identifer
-    24→    pub(super) filter_method_ident: syn::Ident,
-    25→
-    26→    /// Filter method batch identifier
-    27→    filter_method_batch_ident: syn::Ident,
-    28→
-    29→    /// Update method identifier
-    30→    update_method_ident: syn::Ident,
-    31→
-    32→    /// Delete method identifier
-    33→    delete_method_ident: syn::Ident,
-    34→}
     36→struct BuildModelFilters …
     37→    model: &'a Model,
     38→    filters: HashMap<Vec<usize>, Filter>,
@@ -175,17 +132,6 @@ src/expand/schema.rs
      2→use crate::schema::{AutoStrategy, Column, FieldTy, ModelKind, Name, UuidVersion};
      7→impl Expand<'_> …
    284→fn expand_name(toasty: &TokenStream, name: &Name) -> TokenStream {
-   285→    let parts = name.parts.iter().map(|part| {
-   286→        let part = part.to_string();
-   287→        quote! { #part.to_string() }
-   288→    });
-   289→
-   290→    quote! {
-   291→        #toasty::schema::Name {
-   292→            parts: vec![#( #parts ),*],
-   293→        }
-   294→    }
-   295→}
 
 src/expand/update.rs
      1→use super::{util, Expand};
@@ -194,9 +140,6 @@ src/expand/update.rs
 
 src/expand/util.rs
      3→pub(crate) fn int(v: usize) -> TokenStream {
-     4→    use std::str::FromStr;
-     5→    TokenStream::from_str(&v.to_string()).expect("failed to parse int")
-     6→}
      8→/// Creates a new identifier prefixed with `__toasty_` to avoid name collisions
      9→/// with user-defined types in generated code (e.g., generic type parameters).
     10→pub(crate) fn ident(name: &str) -> syn::Ident {
@@ -221,10 +164,19 @@ src/schema/auto.rs
 src/schema/belongs_to.rs
      1→use super::ForeignKeyField;
      4→pub(crate) struct BelongsTo …
+     5→    /// Target type
+     6→    pub(crate) ty: syn::Type,
+     7→
+     8→    /// Foreign key
+     9→    pub(crate) foreign_key: Vec<ForeignKeyField>,
+    10→}
     12→impl BelongsTo …
 
 src/schema/column.rs
      5→pub(crate) struct Column …
+     6→    pub(crate) name: Option<syn::LitStr>,
+     7→    pub(crate) ty: Option<ColumnType>,
+     8→}
     10→impl Column …
     16→impl syn::parse::Parse for Column …
     60→mod kw …
@@ -248,13 +200,48 @@ src/schema/column.rs
 
 src/schema/error.rs
      2→pub(crate) struct ErrorSet …
+     3→    errors: Vec<syn::Error>,
+     4→}
      6→impl ErrorSet …
 
 src/schema/field.rs
      1→use crate::schema::AutoStrategy;
      3→use super::{BelongsTo, Column, ErrorSet, HasMany, HasOne, Name};
      8→pub(crate) struct Field …
+     9→    /// Index of field in the containing model
+    10→    pub(crate) id: usize,
+    11→
+    12→    /// Field attributes
+    13→    pub(crate) attrs: FieldAttr,
+    14→
+    15→    /// Field name
+    16→    pub(crate) name: Name,
+    17→
+    18→    /// Field type
+    19→    pub(crate) ty: FieldTy,
+    20→
+    21→    /// Identifier for setter method on update builder
+    22→    pub(crate) set_ident: syn::Ident,
+    23→
+    24→    /// Identifier for the `with_field` builder method on update builder
+    25→    pub(crate) with_ident: syn::Ident,
+    26→}
     29→pub(crate) struct FieldAttr …
+    30→    /// True if the field is annotated with `#[key]`
+    31→    pub(crate) key: Option<syn::Attribute>,
+    32→
+    33→    /// True if the field is annotated with `#[unique]`
+    34→    pub(crate) unique: bool,
+    35→
+    36→    /// Specifies if and how Toasty should automatically set values of newly created rows
+    37→    pub(crate) auto: Option<AutoStrategy>,
+    38→
+    39→    /// True if the field is indexed
+    40→    pub(crate) index: bool,
+    41→
+    42→    /// Optional database column name and / or type
+    43→    pub(crate) column: Option<Column>,
+    44→}
     47→pub(crate) enum FieldTy …
     48→    Primitive(syn::Type),
     49→    BelongsTo(BelongsTo),
@@ -264,39 +251,62 @@ src/schema/field.rs
     54→impl FieldTy …
     63→impl Field …
    207→fn rewrite_self(ty: &mut syn::Type, model: &syn::Ident) {
-   208→    use syn::visit_mut::VisitMut;
-   209→
-   210→    struct RewriteSelf<'a>(&'a syn::Ident);
-   211→
-   212→    impl VisitMut for RewriteSelf<'_> {
-   213→        fn visit_path_mut(&mut self, path: &mut syn::Path) {
-   214→            syn::visit_mut::visit_path_mut(self, path);
-   215→
-   216→            if path.is_ident("Self") {
-   217→                // print!("SELF; ident={:#?}", self.0);
-   218→                path.segments[0].ident = self.0.clone();
-   219→            }
-   220→        }
-   221→    }
-   222→
-   223→    RewriteSelf(model).visit_type_mut(ty);
-   224→}
 
 src/schema/fk.rs
      2→pub(crate) struct ForeignKeyField …
+     3→    /// The field on the source struct
+     4→    pub(crate) source: usize,
+     5→
+     6→    /// The identifier on the target struct being referenced
+     7→    pub(crate) target: syn::Ident,
+     8→}
 
 src/schema/has_many.rs
      1→use super::Name;
      4→pub(crate) struct HasMany …
+     5→    /// Target type
+     6→    pub(crate) ty: syn::Type,
+     7→
+     8→    /// Singular field name
+     9→    pub(crate) singular: Name,
+    10→
+    11→    /// Insert method ident
+    12→    pub(crate) insert_ident: syn::Ident,
+    13→
+    14→    /// Field on target that the relation references
+    15→    pub(crate) pair: Option<syn::Ident>,
+    16→
+    17→    pub(crate) span: proc_macro2::Span,
+    18→}
     20→impl HasMany …
 
 src/schema/has_one.rs
      2→pub(crate) struct HasOne …
+     3→    /// Target type
+     4→    pub(crate) ty: syn::Type,
+     5→
+     6→    pub(crate) span: proc_macro2::Span,
+     7→}
      9→impl HasOne …
 
 src/schema/index.rs
      2→pub(crate) struct Index …
+     3→    /// Fields included in the index.
+     4→    pub(crate) fields: Vec<IndexField>,
+     5→
+     6→    /// When `true`, indexed entries are unique
+     7→    pub(crate) unique: bool,
+     8→
+     9→    /// True when the index is the primary key
+    10→    pub(crate) primary_key: bool,
+    11→}
     14→pub(crate) struct IndexField …
+    15→    /// The field being indexed
+    16→    pub(crate) field: usize,
+    17→
+    18→    /// The scope of the index
+    19→    pub(crate) scope: IndexScope,
+    20→}
     23→pub(crate) enum IndexScope …
     24→    /// The index column is used to partition rows across nodes of a distributed database.
     25→    Partition,
@@ -307,6 +317,9 @@ src/schema/index.rs
 
 src/schema/key_attr.rs
      2→pub(crate) struct KeyAttr …
+     3→    pub(crate) partition: Vec<syn::Ident>,
+     4→    pub(crate) local: Vec<syn::Ident>,
+     5→}
      7→impl KeyAttr …
 
 src/schema/model.rs
@@ -319,21 +332,76 @@ src/schema/model.rs
      9→}
     11→impl ModelKind …
     28→pub(crate) struct ModelRoot …
+    29→    /// Tracks fields in the primary key
+    30→    pub(crate) primary_key: PrimaryKey,
+    31→
+    32→    /// The field struct identifier
+    33→    pub(crate) field_struct_ident: syn::Ident,
+    34→
+    35→    /// The query struct identifier
+    36→    pub(crate) query_struct_ident: syn::Ident,
+    37→
+    38→    /// Create builder struct identifier
+    39→    pub(crate) create_struct_ident: syn::Ident,
+    40→
+    41→    /// Update builder struct identifier
+    42→    pub(crate) update_struct_ident: syn::Ident,
+    43→}
     46→pub(crate) struct ModelEmbedded …
+    47→    /// The field struct identifier
+    48→    pub(crate) field_struct_ident: syn::Ident,
+    49→
+    50→    /// Update builder struct identifier
+    51→    pub(crate) update_struct_ident: syn::Ident,
+    52→}
     55→pub(crate) struct Model …
+    56→    /// Model name
+    57→    pub(crate) name: Name,
+    58→
+    59→    /// Model visibility
+    60→    pub(crate) vis: syn::Visibility,
+    61→
+    62→    /// Type identifier
+    63→    pub(crate) ident: syn::Ident,
+    64→
+    65→    /// Model fields
+    66→    pub(crate) fields: Vec<Field>,
+    67→
+    68→    /// Distinguishes root models from embedded models
+    69→    pub(crate) kind: ModelKind,
+    70→
+    71→    /// Model indices
+    72→    pub(crate) indices: Vec<Index>,
+    73→
+    74→    /// Optional table to map the model to
+    75→    pub(crate) table: Option<syn::LitStr>,
+    76→}
     78→impl Model …
    252→fn struct_ident(suffix: &str, model: &syn::ItemStruct) -> syn::Ident {
-   253→    syn::Ident::new(&format!("{}{}", model.ident, suffix), model.ident.span())
-   254→}
 
 src/schema/model_attr.rs
      1→use super::{ErrorSet, KeyAttr};
      4→pub(crate) struct ModelAttr …
+     5→    /// Primary key definition
+     6→    pub(crate) key: Option<KeyAttr>,
+     7→
+     8→    /// Optional database table name to map the model to
+     9→    pub(crate) table: Option<syn::LitStr>,
+    10→}
     12→impl ModelAttr …
 
 src/schema/name.rs
      5→pub(crate) struct Name …
+     6→    /// Name parts
+     7→    pub(crate) parts: Vec<String>,
+     8→
+     9→    /// field/var identifier
+    10→    pub(crate) ident: syn::Ident,
+    11→}
     13→impl Name …
 
 src/schema/pk.rs
      2→pub(crate) struct PrimaryKey …
+     3→    /// Index of fields in the primary key
+     4→    pub(crate) fields: Vec<usize>,
+     5→}
