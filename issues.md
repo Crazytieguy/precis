@@ -99,7 +99,35 @@ The plan called for `tests/invariants.rs` with property-based tests:
 Currently only debug_asserts exist. The dedicated test file was not
 created.
 
+### DocRest children never spawned for 5 type DocFirst groups
+
+`ts::children()` handles `FunctionDocFirst` → `FunctionDocRest`,
+`TypeAliasDocFirst` → `TypeAliasDocRest`, `ConstDocFirst` →
+`ConstDocRest`, `MacroDocFirst` → `MacroDocRest`, and
+`ModuleDocFirst` → `ModuleDocRest`. But `StructDocFirst`,
+`EnumDocFirst`, `ClassDocFirst`, `InterfaceDocFirst`, and
+`TraitDocFirst` all fall through to the `_ => {}` wildcard at
+`ts.rs:325`. Their DocRest groups are never created.
+
+Fix: add match arms for these 5 variants, following the same pattern
+as `FunctionDocFirst`.
+
 ## Should fix (quality/performance)
+
+### `compute_sig_end` used for structs and enums (no signature)
+
+`render_item` at `ts.rs:424` handles `StructBody` and `EnumBody`
+by calling `compute_sig_end(item)` to find where the "body" starts.
+But structs and enums don't have signatures — they have a
+declaration line and then fields/variants. Reusing the
+signature-finding function is semantically dishonest: it happens to
+work because `compute_sig_end_line` finds the `body` field's start
+row, which is the `{` line for both functions and structs. But the
+abstraction is wrong — a struct's `{` is not the end of a signature.
+
+Fix: rename or split the helper. A `compute_body_start_line`
+function that returns the first line of the body block would be
+semantically correct for all three cases (functions, structs, enums).
 
 ### Remove semantically dishonest `name` field and `name.rs`
 
