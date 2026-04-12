@@ -136,3 +136,42 @@ line 16) is dead code — never called anywhere in the codebase. Remove it.
 `format::header_line(path)` is called in `assemble()` even though the
 header was already computed in `header_cost_for`. Cache the formatted
 string alongside the cost.
+
+### `is_source_file` accepts binary files
+
+`is_source_file` returns `true` for any file with an extension that
+isn't a lockfile. This means `.png`, `.jpg`, `.wasm`, `.exe`, `.zip`
+etc. all pass the filter. It should use an allowlist of text/source
+extensions or at minimum a denylist of known binary extensions.
+
+### `detect_doc_site_dirs` is dead code
+
+Defined in `classify.rs:307` but never called anywhere in the codebase.
+Remove it (and the helper `is_docs_dir_name` at line 303 which is only
+used by `detect_doc_site_dirs` and `is_config_file`).
+
+### `classify_file` called on directories
+
+`folders.rs:59` calls `classify_file(&rel_dir)` on directory paths to
+get a `FileCategory` for `FoldersGroup`. The function was designed for
+files (checks file stems for `.test`/`.spec` suffixes, etc.). It happens
+to work for directories because the path-component checks fire first,
+but the intent is unclear and the file-stem checks are wasted work.
+Consider a `classify_dir` variant or documenting that the function
+handles both.
+
+### `is_config_file` scope is too broad
+
+The function classifies CSS/SCSS/HTML/SVG files (line 420) and
+everything under `scripts/`/`tools/` directories (line 434) as config.
+These aren't config files — they're low-priority source or assets. The
+function name doesn't match what it actually tests (more like
+"is_deprioritized_file"). Either rename or split the concerns.
+
+### Per-file properties computed from first file only
+
+`folders.rs:80-84` computes `is_config`, `is_type_declaration`, and
+`is_header` from `files[0]` and applies the result to the entire
+`FilesGroup`. If a role group mixes files with different properties
+(e.g. one `.h` and one `.c` file both classified as `Normal`), the
+contribution is wrong for all but the first.
