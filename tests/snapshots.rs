@@ -993,20 +993,27 @@ fn readme_example_matches_output() {
     .expect("failed to read README.md");
     let start_marker = "<!-- precis-example-start -->";
     let end_marker = "<!-- precis-example-end -->";
-    if let (Some(start_pos), true) = (readme.find(start_marker), readme.contains(end_marker)) {
-        let start = start_pos + start_marker.len();
-        let end = readme[start..].find(end_marker).unwrap() + start;
-        let block = readme[start..end].trim();
-        let lines: Vec<&str> = block.lines().collect();
-        if lines.len() >= 3 {
-            let from_readme = lines[1..lines.len() - 1].join("\n");
-            assert_eq!(
-                output.trim(),
-                from_readme.trim(),
-                "precis output for {fixture}@{budget} doesn't match README example",
-                fixture = README_EXAMPLE_FIXTURE,
-                budget = README_EXAMPLE_BUDGET,
-            );
-        }
-    }
+    let start_pos = readme
+        .find(start_marker)
+        .expect("README.md missing <!-- precis-example-start --> marker");
+    let start = start_pos + start_marker.len();
+    let end = readme[start..]
+        .find(end_marker)
+        .expect("README.md missing <!-- precis-example-end --> marker")
+        + start;
+    let block = readme[start..end].trim();
+    let lines: Vec<&str> = block.lines().collect();
+    assert!(
+        lines.len() >= 3,
+        "README example block too short ({} lines) — expected a fenced code block",
+        lines.len(),
+    );
+    let from_readme = lines[1..lines.len() - 1].join("\n");
+    assert_eq!(
+        output.trim(),
+        from_readme.trim(),
+        "precis output for {fixture}@{budget} doesn't match README example",
+        fixture = README_EXAMPLE_FIXTURE,
+        budget = README_EXAMPLE_BUDGET,
+    );
 }

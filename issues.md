@@ -192,11 +192,3 @@ Every supported language has an inline sample test (`rust_sample`,
 issues (function assignments classified as Const, doc comments not
 detected), having sample tests would help catch regressions during
 fixes.
-
-### `readme_example_matches_output` silently passes when markers missing
-
-`tests/snapshots.rs:1011` uses `if let` to find the README markers.
-If someone removes or renames the `<!-- precis-example-start -->` /
-`<!-- precis-example-end -->` markers, the test body never executes
-and the test passes silently. This should be a hard failure — the
-markers are expected to exist.
