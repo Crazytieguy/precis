@@ -12,17 +12,8 @@ pub fn fmt_line(line_idx_0: usize, line: &str) -> String {
     format!("{:>6}→{}\n", line_idx_0 + 1, line)
 }
 
-/// Truncation marker with indentation matching the content being truncated.
-pub fn truncation_marker(last_line: &str) -> String {
-    let indent_len = last_line.len() - last_line.trim_start().len();
-    let indent = &last_line[..indent_len];
-    format!("      →{}…\n", indent)
-}
-
-/// Plain truncation marker (no indentation context).
-pub fn truncation_marker_plain() -> String {
-    "      →…\n".to_string()
-}
+/// Plain truncation marker.
+pub const TRUNCATION_MARKER: &str = "      →…\n";
 
 /// Count BPE tokens in text using the o200k_base tokenizer.
 pub fn count_tokens(text: &str) -> usize {

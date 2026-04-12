@@ -152,13 +152,6 @@ The pattern `.strip_prefix(&ctx.root).unwrap_or(&path).to_path_buf()`
 appears ~8 times. A `ScheduleCtx::relative_path` helper or
 constructing relative paths at discovery time would clean this up.
 
-### `format::truncation_marker_plain` allocates per call
-
-Returns `"      →…\n".to_string()` — could be `&'static str`.
-
-Additionally, `format::truncation_marker` (the indentation-aware variant at
-line 16) is dead code — never called anywhere in the codebase. Remove it.
-
 ### `FileCache::assemble` re-formats headers
 
 `format::header_line(path)` is called in `assemble()` even though the

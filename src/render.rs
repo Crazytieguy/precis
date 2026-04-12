@@ -67,7 +67,7 @@ pub fn render_entry<'s>(entry: &LineEntry<'s>) -> RenderedEntry<'s> {
             let base = format::fmt_line(*line as usize, content);
             format!("{} …\n", base.trim_end())
         }
-        LineEntry::Ellipsis { .. } => format::truncation_marker_plain(),
+        LineEntry::Ellipsis { .. } => format::TRUNCATION_MARKER.to_string(),
     };
     let tokens = format::count_tokens(&formatted);
     let chars = formatted.len();
