@@ -272,26 +272,6 @@ constructing child TsGroups, split items from generated files into
 separate groups with a lower inherited modifier (or apply the factor
 per-item during `compute_item_modifier`).
 
-### `build_file_seed` duplicates `files::children()` bucketing logic
-
-`lib.rs:120-153` reimplements the item→TsGroup bucketing that
-`files::children()` does at `files.rs:66-112`. The design §5.2 says
-single-file seed "consists of the groups that would be children of a
-`Files` group containing just that file" — it should use the same code
-path, not a copy.
-
-Current divergences from `files::children()`:
-- No `is_generated` detection (acceptable for explicit single-file input,
-  but undocumented design choice)
-- Won't pick up dependent_siblings wiring when that's implemented
-- Won't pick up any future changes to bucketing or modifier logic
-
-Fix: construct a synthetic `FilesGroup` for the single file and call
-`files::children()` on it with an appropriate `ScheduleCtx`. This
-eliminates the duplication and ensures single-file mode stays in sync
-with directory mode automatically.
-
-
 ### No Lua inline sample tests
 
 Every supported language has an inline sample test (`rust_sample`,

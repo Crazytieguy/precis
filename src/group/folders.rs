@@ -74,36 +74,31 @@ pub fn children<'s>(g: &mut FoldersGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
         files.sort();
 
         let is_root_dir = abs_dir == ctx.root;
+        let sample_relative = files[0]
+            .strip_prefix(&ctx.root)
+            .unwrap_or(&files[0])
+            .to_path_buf();
 
-        // Compute per-file properties from first file (relative path for classification)
-        let sample_path = &files[0];
-        let relative = sample_path.strip_prefix(&ctx.root).unwrap_or(sample_path);
-        let filename = relative.file_name().and_then(|n| n.to_str()).unwrap_or("");
-        let is_config = classify::is_config_file(relative, filename);
-        let is_type_declaration = classify::is_type_declaration_file(relative);
-        let is_header = relative
-            .extension()
-            .and_then(|e| e.to_str())
-            .is_some_and(|ext| classify::is_header_extension(&ext.to_ascii_lowercase()));
+        let fg = FilesGroup::new(
+            g.parent_dir.clone(),
+            role,
+            files,
+            1.0, // placeholder — overwritten below
+            &sample_relative,
+        );
 
         let contribution = heuristics::files_contribution(
             role,
             is_root_dir,
-            is_config,
-            is_type_declaration,
-            is_header,
+            fg.is_config,
+            fg.is_type_declaration,
+            fg.is_header,
             false, // is_generated checked after source read
         );
 
         result.push(Group::Files(FilesGroup {
-            parent_dir: g.parent_dir.clone(),
-            role,
-            items: files,
             inherited_modifier: g.inherited_modifier * contribution,
-            is_config,
-            is_type_declaration,
-            is_header,
-            is_generated: false,
+            ..fg
         }));
     }
 
