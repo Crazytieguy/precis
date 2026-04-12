@@ -1,7 +1,7 @@
 //! Greedy frontier scheduler (design §5).
 
 use std::collections::HashMap;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use crate::format;
 use crate::group::Group;
@@ -14,6 +14,12 @@ pub struct ScheduleCtx<'s> {
     pub root: PathBuf,
     pub budget: usize,
     pub char_budget: Option<usize>,
+}
+
+impl ScheduleCtx<'_> {
+    pub fn rel_path<'a>(&self, path: &'a Path) -> &'a Path {
+        path.strip_prefix(&self.root).unwrap_or(path)
+    }
 }
 
 /// Run the greedy scheduler. Returns the final output string.
@@ -179,24 +185,17 @@ fn probe_cost(
         Group::Files(g) => {
             let mut fc = FileCost::default();
             for file_path in &g.items {
-                let rel = file_path
-                    .strip_prefix(&ctx.root)
-                    .unwrap_or(file_path)
-                    .to_path_buf();
-                if !cache.has_file(&rel) {
-                    let hcost = cache.header_cost_for(&rel);
+                let rel = ctx.rel_path(file_path);
+                if !cache.has_file(rel) {
+                    let hcost = cache.header_cost_for(rel);
                     fc.tokens += hcost.tokens;
                     fc.chars += hcost.chars;
                 }
             }
             // Discount: if parent folder is in childless_folders, committing
             // this Files group will remove the parent folder line from output.
-            let parent_rel = g
-                .parent_dir
-                .strip_prefix(&ctx.root)
-                .unwrap_or(&g.parent_dir)
-                .to_path_buf();
-            if let Some(folder_cost) = childless_folders.get(&parent_rel) {
+            let parent_rel = ctx.rel_path(&g.parent_dir);
+            if let Some(folder_cost) = childless_folders.get(parent_rel) {
                 fc.tokens = fc.tokens.saturating_sub(folder_cost.tokens);
                 fc.chars = fc.chars.saturating_sub(folder_cost.chars);
             }
@@ -231,17 +230,13 @@ fn commit_group<'s>(
             // entry, charged to the budget.
             for child in new_children {
                 if let Group::Folders(fg) = child {
-                    let rel = fg
-                        .parent_dir
-                        .strip_prefix(&ctx.root)
-                        .unwrap_or(&fg.parent_dir)
-                        .to_path_buf();
-                    let header = format::folder_line(&rel);
+                    let rel = ctx.rel_path(&fg.parent_dir);
+                    let header = format::folder_line(rel);
                     let cost = FileCost {
                         tokens: format::count_tokens(&header),
                         chars: header.len(),
                     };
-                    childless_folders.insert(rel, cost);
+                    childless_folders.insert(rel.to_path_buf(), cost);
                     *remaining_tokens = remaining_tokens.saturating_sub(cost.tokens);
                     if let Some(rc) = remaining_chars {
                         *rc = rc.saturating_sub(cost.chars);
@@ -253,27 +248,20 @@ fn commit_group<'s>(
             // Register file headers in the cache
             let mut fc = FileCost::default();
             for file_path in &g.items {
-                let rel = file_path
-                    .strip_prefix(&ctx.root)
-                    .unwrap_or(file_path)
-                    .to_path_buf();
-                if !cache.has_file(&rel) {
-                    let hcost = cache.header_cost_for(&rel);
+                let rel = ctx.rel_path(file_path);
+                if !cache.has_file(rel) {
+                    let hcost = cache.header_cost_for(rel);
                     fc.tokens += hcost.tokens;
                     fc.chars += hcost.chars;
-                    cache.register_file(&rel);
+                    cache.register_file(rel);
                 }
             }
 
             // Remove parent from childless_folders and refund its cost.
             // The parent folder line is no longer needed — the child file
             // paths shown in the output already reveal the folder structure.
-            let parent_rel = g
-                .parent_dir
-                .strip_prefix(&ctx.root)
-                .unwrap_or(&g.parent_dir)
-                .to_path_buf();
-            if let Some(folder_cost) = childless_folders.remove(&parent_rel) {
+            let parent_rel = ctx.rel_path(&g.parent_dir);
+            if let Some(folder_cost) = childless_folders.remove(parent_rel) {
                 *remaining_tokens += folder_cost.tokens;
                 if let Some(rc) = remaining_chars {
                     *rc += folder_cost.chars;

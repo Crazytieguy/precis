@@ -104,12 +104,6 @@ Several comments explain what the code does rather than why:
 - "Spawn FunctionSig children" (restates the next line)
 - Most `render_item` match arm comments
 
-### Path relativization helper
-
-The pattern `.strip_prefix(&ctx.root).unwrap_or(&path).to_path_buf()`
-appears ~8 times. A `ScheduleCtx::relative_path` helper or
-constructing relative paths at discovery time would clean this up.
-
 ### `classify_file` called on directories
 
 `folders.rs:59` calls `classify_file(&rel_dir)` on directory paths to

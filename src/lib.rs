@@ -86,7 +86,7 @@ fn build_file_seed<'s>(
     path: &Path,
     ctx: &schedule::ScheduleCtx<'s>,
 ) -> Vec<group::Group<'s>> {
-    let rel = path.strip_prefix(&ctx.root).unwrap_or(path);
+    let rel = ctx.rel_path(path);
     let role = classify::FileRole::from_path(rel);
     let mut fg = group::FilesGroup::new(
         ctx.root.clone(),

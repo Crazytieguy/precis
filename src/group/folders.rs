@@ -33,10 +33,7 @@ pub fn children<'s>(g: &mut FoldersGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
             continue;
         }
 
-        let relative = abs_path
-            .strip_prefix(&ctx.root)
-            .unwrap_or(&abs_path)
-            .to_path_buf();
+        let relative = ctx.rel_path(&abs_path).to_path_buf();
 
         if abs_path.is_dir() {
             if !classify::is_vendored_or_fixture(&relative) {
@@ -78,7 +75,7 @@ pub fn children<'s>(g: &mut FoldersGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
 
         let mut partitions: HashMap<(bool, bool, bool), Vec<PathBuf>> = HashMap::new();
         for file_path in files {
-            let relative = file_path.strip_prefix(&ctx.root).unwrap_or(&file_path);
+            let relative = ctx.rel_path(&file_path);
             let props = classify::file_modifier_properties(relative);
             partitions.entry(props).or_default().push(file_path);
         }

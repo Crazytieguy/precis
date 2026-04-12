@@ -63,7 +63,7 @@ pub fn children<'s>(g: &mut FilesGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s>>
     for fi in &all_items {
         let lines: Vec<&str> = fi.source.lines().collect();
         let lang = crate::Lang::from_path(fi.path.as_path());
-        let display_path = fi.path.strip_prefix(&ctx.root).unwrap_or(&fi.path).to_path_buf();
+        let display_path = ctx.rel_path(&fi.path).to_path_buf();
         let is_generated = generated_files.contains(fi.path.as_path());
 
         for item in &fi.items {
