@@ -12,8 +12,6 @@ use super::ts::TsGroupKey;
 /// Produce children when a FilesGroup is scheduled.
 /// Parses every file in the group, extracts items, and aggregates across files (D7).
 pub fn children<'s>(g: &mut FilesGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s>> {
-    let mut result: Vec<Group<'s>> = Vec::new();
-
     // Parse all files and extract items.
     // We collect (PathBuf, source_ref, items) where source_ref borrows from the store.
     struct FileItems<'s> {
@@ -92,23 +90,53 @@ pub fn children<'s>(g: &mut FilesGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s>>
     // Convert buckets to TsGroups (sorted for determinism)
     let mut sorted_buckets: Vec<_> = buckets.into_iter().collect();
     sorted_buckets.sort_by(|a, b| a.0.cmp(&b.0));
+
+    // Separate groups into direct children and gated dependents (design §4).
+    // Gated groups are placed as dependent_siblings of their gating parent.
+    // If no parent exists, the gated group is promoted to a direct child.
+    let mut direct: Vec<Group<'s>> = Vec::new();
+    let mut gated: Vec<Group<'s>> = Vec::new();
+
     for (key, items) in sorted_buckets {
         if items.is_empty() {
             continue;
         }
 
         let modifier = compute_item_modifier(&key, g.inherited_modifier);
+        let is_gated = key.is_gated();
 
-        result.push(Group::Ts(TsGroup {
+        let group = Group::Ts(TsGroup {
             key,
             items,
             inherited_modifier: modifier,
             dependent_siblings: vec![],
             cached_render: None,
-        }));
+        });
+
+        if is_gated {
+            gated.push(group);
+        } else {
+            direct.push(group);
+        }
     }
 
-    result
+    for gated_group in gated {
+        let gated_key = match &gated_group {
+            Group::Ts(ts) => &ts.key,
+            _ => unreachable!(),
+        };
+        let parent = direct
+            .iter_mut()
+            .find(|g| matches!(g, Group::Ts(ts) if gated_key.is_gated_by(&ts.key)));
+        if let Some(Group::Ts(parent)) = parent {
+            parent.dependent_siblings.push(gated_group);
+        } else {
+            // Private promotion: no public counterpart, enter frontier directly
+            direct.push(gated_group);
+        }
+    }
+
+    direct
 }
 
 /// Map an extracted item to its initial TsGroupKey(s).

@@ -14,9 +14,8 @@ sample.c
     20→};
     22→typedef int (*Comparator …
     30→int process(const char *input, int len) {
+    34→static void helper(void) {}
     37→Token *token_new(int kind, int start, int end) {
     45→void token_free(Token *t) {
-    46→    free(t);
-    47→}
     50→static int _parse_next(const char *input, int pos) {
     56→void *alloc_node(size_t size);

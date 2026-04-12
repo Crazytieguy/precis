@@ -270,7 +270,6 @@ src/globals.c
 
 src/main.c
      8→#define CLOCK_REALTIME …
-   739→static void wifi_event_handler (void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data) {
 
 src/packets.c
 
@@ -284,7 +283,6 @@ src/structures.c
 
 src/tools.c
     20→    #define CLOCK_MONOTONIC …
-    30→  static uint64_t htonll (uint64_t value) {
 
 src/varnum.c
 

@@ -79,11 +79,11 @@ internal/session/session.go
 internal/models/anthropic/anthropic.go
     21→type CustomChatModel …
     31→type CustomRoundTripper …
-    52→func NewCustomChatModel …
-    92→func (rt *CustomRoundTripper) RoundTrip …
-   244→func (m *CustomChatModel) Generate …
-   260→func (m *CustomChatModel) Stream …
-   274→func (m *CustomChatModel) WithTools …
+    52→func NewCustomChatModel(ctx context.Context, config *einoclaude.Config) (*CustomChatModel, error) {
+    92→func (rt *CustomRoundTripper) RoundTrip(req *http.Request) (*http.Response, error) {
+   244→func (m *CustomChatModel) Generate(ctx context.Context, input []*schema.Message, opts ...model.Option) (*schema.Message, error) {
+   260→func (m *CustomChatModel) Stream(ctx context.Context, input []*schema.Message, opts ...model.Option) (*schema.StreamReader[*schema.Message], error) {
+   274→func (m *CustomChatModel) WithTools(tools []*schema.ToolInfo) (model.ToolCallingChatModel, error) {
 
 internal/models/gemini/gemini.go
     43→func NewChatModel(_ context.Context, cfg *Config) (*ChatModel, error) {
@@ -95,6 +95,7 @@ internal/models/gemini/gemini.go
    305→func (cm *ChatModel) BindTools(tools []*schema.ToolInfo) error {
    330→func (cm *ChatModel) BindForcedTools(tools []*schema.ToolInfo) error {
    761→func (cm *ChatModel) IsCallbacksEnabled() bool {
+   765→const typ …
    773→func (cm *ChatModel) GetType() string {
    782→func (p *panicErr) Error() string {
 
@@ -265,9 +266,7 @@ internal/models/providers.go
    124→type ProviderResult …
    153→func CreateProvider(ctx context.Context, config *ProviderConfig) (*ProviderResult, error) {
    539→type OllamaLoadingResult …
-   712→type bearerTransport …
    717→func (t *bearerTransport) RoundTrip(req *http.Request) (*http.Response, error) {
-   857→type oauthTransport …
    862→func (t *oauthTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 
 internal/models/providers_test.go
@@ -375,7 +374,6 @@ internal/config/config.go
    218→func (c *Config) Validate() error {
    249→func LoadSystemPrompt(input string) (string, error) {
    271→func EnsureConfigExists() error {
-   296→func createDefaultConfig(homeDir string) error {
    406→func FilepathOr[T any](key string, value *T) error {
    454→var configPath …
    459→func SetConfigPath(path string) {
@@ -385,16 +383,13 @@ internal/config/config_test.go
 internal/config/environment_flow_test.go
 
 internal/config/integration_test.go
-   204→func loadConfigWithEnvSubstitution(configPath string) error {
 
 internal/config/merger.go
     13→func MergeConfigs(baseConfig *Config, scriptConfig *Config) *Config {
     28→func LoadAndValidateConfig() (*Config, error) {
-    48→func fixEnvironmentCase(config *Config) {
 
 internal/config/substitution.go
     11→var …
-    18→func parseVariableWithDefault(varPart string) (varName, defaultValue string, hasDefault bool) {
     29→type EnvSubstituter …
     34→func (e *EnvSubstituter) SubstituteEnvVars(content string) (string, error) {
     65→type ArgsSubstituter …
@@ -612,8 +607,6 @@ internal/ui/spinner.go
    149→func (s *Spinner) Stop() {
 
 internal/ui/styles.go
-    15→func stringPtr …
-    16→func uintPtr …
     21→func BaseStyle() lipgloss.Style {
     28→func GetMarkdownRenderer(width int) *glamour.TermRenderer {
 
@@ -646,6 +639,10 @@ internal/ui/usage_tracker_test.go
      9→func TestUsageTracker_OAuthCosts(t *testing.T) {
     73→func TestUsageTracker_OAuthSessionStats(t *testing.T) {
 
+sdk/examples/basic/main.go
+
+sdk/examples/scripting/main.go
+
 examples/
 
 examples/hooks/
@@ -657,7 +654,3 @@ internal/
 internal/tools/
 
 sdk/examples/
-
-sdk/examples/basic/
-
-sdk/examples/scripting/

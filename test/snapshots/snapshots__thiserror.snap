@@ -9,7 +9,6 @@ README.md
     21→## Example
     44→## Details
    211→## Comparison to anyhow
-   223→#### License
 
 build/probe.rs
     11→struct MyError …
@@ -384,7 +383,7 @@ tests/test_display.rs
    417→    pub fn octal<T: Octal>(value: &T, formatter: &mut fmt::Formatter) -> fmt::Result {
 
 tests/test_error.rs
-    42→enum EnumError …
+     7→macro_rules! unimplemented_display …
 
 tests/test_expr.rs
     56→fn assert …
@@ -402,10 +401,10 @@ tests/test_lints.rs
 tests/test_option.rs
 
 tests/test_path.rs
-    22→enum EnumPathBuf …
     42→fn assert …
 
 tests/test_source.rs
+    50→macro_rules! error_from_macro …
 
 tests/test_transparent.rs
 

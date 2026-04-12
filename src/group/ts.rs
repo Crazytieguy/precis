@@ -131,6 +131,49 @@ impl TsGroupKey {
         }
     }
 
+    /// Whether this key should be gated behind a counterpart (dependent_sibling).
+    pub fn is_gated(&self) -> bool {
+        use TsGroupKey::*;
+        matches!(
+            self,
+            FunctionName { public: false, .. }
+                | StructName { public: false, .. }
+                | EnumName { public: false, .. }
+                | ClassName { public: false, .. }
+                | InterfaceName { public: false, .. }
+                | TraitName { public: false, .. }
+                | TypeAliasName { public: false, .. }
+                | ConstName { public: false, .. }
+                | MacroName { public: false, .. }
+                | Import { first_party: false, .. }
+                | ImplBlock { is_trait_impl: true }
+        )
+    }
+
+    /// Whether `self` should be gated behind `other` (design §4).
+    /// Ignores the `documented` discriminant — a private undocumented group
+    /// is gated behind a public documented group of the same kind.
+    pub fn is_gated_by(&self, other: &TsGroupKey) -> bool {
+        use TsGroupKey::*;
+        match (self, other) {
+            (FunctionName { public: false, .. }, FunctionName { public: true, .. }) => true,
+            (StructName { public: false, .. }, StructName { public: true, .. }) => true,
+            (EnumName { public: false, .. }, EnumName { public: true, .. }) => true,
+            (ClassName { public: false, .. }, ClassName { public: true, .. }) => true,
+            (InterfaceName { public: false, .. }, InterfaceName { public: true, .. }) => true,
+            (TraitName { public: false, .. }, TraitName { public: true, .. }) => true,
+            (TypeAliasName { public: false, .. }, TypeAliasName { public: true, .. }) => true,
+            (ConstName { public: false, .. }, ConstName { public: true, .. }) => true,
+            (MacroName { public: false, .. }, MacroName { public: true, .. }) => true,
+            (
+                Import { first_party: false, reexport: r1 },
+                Import { first_party: true, reexport: r2 },
+            ) => r1 == r2,
+            (ImplBlock { is_trait_impl: true }, ImplBlock { is_trait_impl: false }) => true,
+            _ => false,
+        }
+    }
+
     /// Maps a DocFirst variant to its corresponding DocRest variant.
     fn doc_rest_key(&self) -> Option<TsGroupKey> {
         use TsGroupKey::*;

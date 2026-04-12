@@ -390,12 +390,12 @@ tests/dummymodule.py
 tests/dummymodule_py312.py
 
 tests/test_checkers.py
+    56→from . import ( …
     79→P …
 
 tests/test_importhook.py
 
 tests/test_instrumentation.py
-    40→def _fixture_module(name: str, method: str):
 
 tests/test_plugins.py
 
@@ -408,6 +408,7 @@ tests/test_transformer.py
 tests/test_typechecked.py
 
 tests/test_utils.py
+     5→from . import Child …
 
 tests/test_warn_on_error.py
 

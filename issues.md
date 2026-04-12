@@ -5,23 +5,6 @@ before calibration.
 
 ## Must fix (design violations)
 
-### dependent_siblings not wired up
-
-The design §4 taxonomy specifies dependent sibling relationships (`⇢`)
-that gate lower-priority groups behind higher-priority ones. None are
-currently wired up — all groups enter the frontier simultaneously when
-their parent commits.
-
-Required gating relationships:
-- `FunctionName(public=true)` ⇢ `FunctionName(public=false)` (same for
-  all Name groups: Struct, Enum, Class, Interface, Trait, TypeAlias,
-  Const, Macro)
-- `Import(first_party=true)` ⇢ `Import(first_party=false)`
-
-Wiring site: `FilesGroup::children()` in `src/group/files.rs`. After
-bucketing items into TsGroups, pair up public/private variants and
-place the private one in `public_group.dependent_siblings`.
-
 ### Heading nesting not implemented
 
 Headings of all levels enter the frontier simultaneously. The design
