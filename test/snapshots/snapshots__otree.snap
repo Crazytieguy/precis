@@ -426,6 +426,7 @@ examples/example.toml
     34→
     35→# Array of tables
     36→[[products]]
+    42→[[products]]
     48→[[products]]
     55→[[fruit]]
     59→[fruit.physical]
@@ -433,6 +434,8 @@ examples/example.toml
     61→mass = 0.1
     62→
     63→[[fruit.variety]]
+    64→name = "red delicious"
+    65→
     66→[[fruit.variety]]
     67→name = "granny smith"
     68→

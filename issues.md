@@ -237,18 +237,6 @@ public/private distinction becomes meaningless (everything is "private").
 Fix: treat any visibility modifier starting with `pub` as public:
 `vis_text.starts_with("pub")` instead of `vis_text == "pub"`.
 
-### `dedup_overloads` runs on languages without overloads
-
-`postprocess.rs:37` skips Go, Python, and Java but runs on Markdown,
-JSON, TOML, YAML, and Lua — none of which have overloads. The
-consecutive-dedup logic (keep last of same-name same-kind) could
-incorrectly merge legitimate same-name items, e.g. two `## Examples`
-markdown headings in different sections, or repeated TOML table names
-at different nesting levels. These all become `ItemKind::Section`.
-
-Fix: invert the skip list to an allowlist — only run on languages that
-actually have overloads (Rust, C, Cpp, JsTs).
-
 ### `mark_reexports` misses `crate::` and `super::` paths
 
 `postprocess.rs:24` checks `self::` but not `crate::` or `super::`.

@@ -98,6 +98,30 @@ pyproject.toml
     80→template = "changelog/_template.rst"
     81→
     82→  [[tool.towncrier.type]]
+    83→  directory = "removal"
+    84→  name = "Deprecations and Removals"
+    85→  showcontent = true
+    86→
+    87→  [[tool.towncrier.type]]
+    88→  directory = "feature"
+    89→  name = "Features"
+    90→  showcontent = true
+    91→
+    92→  [[tool.towncrier.type]]
+    93→  directory = "bugfix"
+    94→  name = "Bug Fixes"
+    95→  showcontent = true
+    96→
+    97→  [[tool.towncrier.type]]
+    98→  directory = "vendor"
+    99→  name = "Vendored Libraries"
+   100→  showcontent = true
+   101→
+   102→  [[tool.towncrier.type]]
+   103→  directory = "doc"
+   104→  name = "Improved Documentation"
+   105→  showcontent = true
+   106→
    107→  [[tool.towncrier.type]]
    108→  directory = "trivial"
    109→  name = "Trivial/Internal Changes"
@@ -366,20 +390,7 @@ TIDELIFT.rst
 
 docs/examples/eggsample-spam/eggsample_spam.py
      5→def eggsample_add_ingredients(ingredients):
-     6→    """Here the caller expects us to return a list."""
-     7→    if "egg" in ingredients:
-     8→        spam = ["lovely spam", "wonderous spam"]
-     9→    else:
-    10→        spam = ["splendiferous spam", "magnificent spam"]
-    11→    return spam
     15→def eggsample_prep_condiments(condiments):
-    16→    """Here the caller passes a mutable object, so we mess with it directly."""
-    17→    try:
-    18→        del condiments["steak sauce"]
-    19→    except KeyError:
-    20→        pass
-    21→    condiments["spam sauce"] = 42
-    22→    return "Now this is what I call a condiments tray!"
 
 docs/examples/eggsample-spam/setup.py
 

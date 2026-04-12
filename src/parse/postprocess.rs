@@ -34,7 +34,7 @@ fn mark_reexports(items: &mut [ExtractedItem<'_>]) {
 }
 
 fn dedup_overloads(items: &mut Vec<ExtractedItem<'_>>, lang: Lang) {
-    if matches!(lang, Lang::Go | Lang::Python | Lang::Java) {
+    if !matches!(lang, Lang::Rust | Lang::C | Lang::JsTs) {
         return;
     }
     let mut seen = std::collections::HashSet::new();

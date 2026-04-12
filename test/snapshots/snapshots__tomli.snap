@@ -108,6 +108,15 @@ pyproject.toml
    155→enable_error_code = ["ignore-without-code"]
    156→
    157→[[tool.mypy.overrides]]
+   158→module = "tests.*"
+   159→disallow_untyped_defs = false
+   160→
+   161→[[tool.mypy.overrides]]
+   162→# This matches `benchmark/run.py`. Since benchmark/ is
+   163→# not a package, we use the module name here.
+   164→module = "run"
+   165→ignore_errors = true
+   166→
    167→[[tool.mypy.overrides]]
    168→# This matches `fuzzer/fuzz.py`.
    169→module = "fuzz"
@@ -136,19 +145,12 @@ src/tomli/__init__.py
       →…
      5→__all__ …
      6→__version__ …
-     8→from ._parser import TOMLDecodeError, load, loads
+     8→from ._parser import TOMLDecodeError, load, loads …
 
 src/tomli/_parser.py
-    10→from ._re import (
-    11→    RE_DATETIME,
-    12→    RE_LOCALTIME,
-    13→    RE_NUMBER,
-    14→    match_to_datetime,
-    15→    match_to_localtime,
-    16→    match_to_number,
-    17→)
+    10→from ._re import ( …
     19→TYPE_CHECKING …
-    24→    from ._types import Key, ParseFloat, Pos
+    24→    from ._types import Key, ParseFloat, Pos …
     26→# Inline tables/arrays are implemented using recursion. Pathologically
       →…
     35→MAX_INLINE_NESTING …
@@ -217,7 +219,7 @@ src/tomli/_parser.py
 
 src/tomli/_re.py
     11→TYPE_CHECKING …
-    15→    from ._types import ParseFloat
+    15→    from ._types import ParseFloat …
     17→_TIME_RE_STR …
     26→RE_NUMBER …
     45→RE_LOCALTIME …
@@ -237,15 +239,13 @@ src/tomli/py.typed
 
 benchmark/README.md
      1→# Benchmark
+     3→## Acknowledgments
     10→## Running
 
 scripts/requirements.txt
 
 scripts/use_setuptools.py
      1→"""Script that switches build backend to setuptools with mypyc support.
-     2→
-     3→Overwrites pyproject.toml. Does not create a backup.
-     4→"""
     12→def use_setuptools() -> None:
 
 CHANGELOG.md
@@ -290,9 +290,6 @@ tests/burntsushi.py
      5→"""Utilities for tests that are in the "burntsushi" format."""
     11→def convert(obj):
     42→def normalize(obj: Any) -> Any:
-    68→def _normalize_datetime_str …
-    92→def _normalize_localtime_str …
-    96→def _normalize_float_str …
 
 tests/test_data.py
     11→DATA_DIR …
