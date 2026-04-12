@@ -74,6 +74,8 @@ src/match.ts
     32→export function match<const input, output = symbols.unset>(
     33→  value: input
     34→): Match<input, output> {
+    39→ * This class represents a match expression. It follows the
+      →…
     47→class MatchExpression …
     48→  constructor …
     50→  with …
@@ -414,15 +416,11 @@ tsconfig.json
 
 examples/one-file-demo/one-file-demo.ts
 
-benchmarks/package.json
-
-examples/gif-fetcher/public/index.html
+benchmarks/
 
 examples/
 
 examples/gif-fetcher/
-
-examples/gif-fetcher/src/
 
 tests/
 

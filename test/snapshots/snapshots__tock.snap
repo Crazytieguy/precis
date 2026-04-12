@@ -77,37 +77,6 @@ docs/commands.md
    307→### `analyze`
    330→### `ical`
 
-internal/core/errors/errors.go
-     5→var …
-
-internal/core/models/activity.go
-    10→type Activity …
-    11→	Description string     `json:"description"`
-    12→	Project     string     `json:"project"`
-    13→	StartTime   time.Time  `json:"start_time"`
-    14→	EndTime     *time.Time `json:"end_time,omitempty"` // nil if active
-    15→	Notes       string     `json:"notes,omitempty"`
-    16→	Tags        []string   `json:"tags,omitempty"`
-    17→}
-    19→func (a Activity) ID() string {
-    23→func (a Activity) Duration() time.Duration {
-    30→// DurationString returns the duration formatted as "HH:MM:SS".
-    31→func (a Activity) DurationString() string {
-    32→	d := a.Duration().Round(time.Second)
-    33→	h := d / time.Hour
-    34→	d %= time.Hour
-    35→	m := d / time.Minute
-    36→	d %= time.Minute
-    37→	s := d / time.Second
-    38→	return fmt.Sprintf("%02d:%02d:%02d", h, m, s)
-    39→}
-    41→func (a Activity) MarshalJSON() ([]byte, error) {
-
-internal/core/ports/ports.go
-    11→type ActivityResolver …
-    22→type ActivityRepository …
-    29→type NotesRepository …
-
 internal/services/ics/generator.go
     11→// Generate returns a full iCalendar string for a single activity.
     12→func Generate(act models.Activity, uidKey string) string {
@@ -170,6 +139,37 @@ internal/config/config_test.go
     25→func TestLoadFromFile(t *testing.T) {
     64→func TestEnvironmentOverrides(t *testing.T) {
     95→func TestInitialCreationFromEnv(t *testing.T) {
+
+internal/core/errors/errors.go
+     5→var …
+
+internal/core/models/activity.go
+    10→type Activity …
+    11→	Description string     `json:"description"`
+    12→	Project     string     `json:"project"`
+    13→	StartTime   time.Time  `json:"start_time"`
+    14→	EndTime     *time.Time `json:"end_time,omitempty"` // nil if active
+    15→	Notes       string     `json:"notes,omitempty"`
+    16→	Tags        []string   `json:"tags,omitempty"`
+    17→}
+    19→func (a Activity) ID() string {
+    23→func (a Activity) Duration() time.Duration {
+    30→// DurationString returns the duration formatted as "HH:MM:SS".
+    31→func (a Activity) DurationString() string {
+    32→	d := a.Duration().Round(time.Second)
+    33→	h := d / time.Hour
+    34→	d %= time.Hour
+    35→	m := d / time.Minute
+    36→	d %= time.Minute
+    37→	s := d / time.Second
+    38→	return fmt.Sprintf("%02d:%02d:%02d", h, m, s)
+    39→}
+    41→func (a Activity) MarshalJSON() ([]byte, error) {
+
+internal/core/ports/ports.go
+    11→type ActivityResolver …
+    22→type ActivityRepository …
+    29→type NotesRepository …
 
 Makefile
 

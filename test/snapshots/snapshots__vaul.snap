@@ -141,12 +141,23 @@ src/use-composed-refs.ts
      8→ * Set a given ref to a given value
      9→ * This utility takes care of different types of refs: callback refs and RefObject(s)
     11→function setRef<T>(ref: PossibleRef<T>, value: T) {
+    12→  if (typeof ref === 'function') {
+    13→    ref(value);
+    14→  } else if (ref !== null && ref !== undefined) {
+    15→    (ref as React.MutableRefObject<T>).current = value;
+    16→  }
+    17→}
     20→ * A utility to compose multiple refs together
     21→ * Accepts callback refs and RefObject(s)
     23→function composeRefs<T>(...refs: PossibleRef<T>[]) {
+    24→  return (node: T) => refs.forEach((ref) => setRef(ref, node));
+    25→}
     28→ * A custom hook that composes multiple refs
     29→ * Accepts callback refs and RefObject(s)
     31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
+    32→  // eslint-disable-next-line react-hooks/exhaustive-deps
+    33→  return React.useCallback(composeRefs(...refs), refs);
+    34→}
 
 src/use-controllable-state.ts
      5→type UseControllableStateParams …
@@ -349,39 +360,5 @@ test/public/vercel.svg
 test/src/app/globals.css
 
 test/src/
-
-test/src/app/controlled/
-
-test/src/app/default-open/
-
-test/src/app/different-directions/
-
-test/src/app/initial-snap/
-
-test/src/app/nested-drawers/
-
-test/src/app/non-dismissible/
-
-test/src/app/open-another-drawer/
-
-test/src/app/parent-container/
-
-test/src/app/scrollable-page/
-
-test/src/app/scrollable-with-inputs/
-
-test/src/app/with-handle/
-
-test/src/app/with-modal-false/
-
-test/src/app/with-redirect/
-
-test/src/app/with-redirect/long-page/
-
-test/src/app/with-scaled-background/
-
-test/src/app/with-snap-points/
-
-test/src/app/without-scaled-background/
 
 test/tests/

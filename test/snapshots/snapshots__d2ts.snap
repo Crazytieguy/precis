@@ -11,6 +11,13 @@ README.md
    678→## Implementation Details
    699→## References
 
+eslint.base.mjs
+
+pnpm-workspace.yaml
+     1→packages:
+     2→  - 'packages/*'
+     3→  - 'examples/*'
+
 packages/d2mini/README.md
      1→# D2Mini is a minimal IVM implementation based on Differential Dataflow
      7→### Basic Usage
@@ -46,13 +53,6 @@ packages/d2ts/src/electric/index.ts
    238→  transformMessages …
    296→  run …
    328→export function outputElectricMessages …
-
-eslint.base.mjs
-
-pnpm-workspace.yaml
-     1→packages:
-     2→  - 'packages/*'
-     3→  - 'examples/*'
 
 packages/d2ql/src/query-builder/index.ts
 
@@ -138,7 +138,9 @@ packages/d2mini/src/utils.ts
      7→  constructor …
     14→  get …
     24→  update(key: K, updater: (value: V) => V): V {
+    36→const chunkSize …
     37→export function chunkedArrayPush …
+    48→const hashCache …
     53→function hashReplacer(_key: string, value: any): any {
     71→ * A hash method that caches the hash of a value in a week map
     73→export function hash(data: any): string {
@@ -212,7 +214,8 @@ packages/d2ts/src/multiset.ts
 
 packages/d2ts/src/order.ts
      6→ * Factory function for creating cached Version objects.
-      →…
+     7→ * Ensures only one object exists for each unique version, these can then safely be
+     8→ * used as keys in maps etc.
     10→export function v(version: number | number[]): Version {
     29→export class Version …
     32→  constructor …
@@ -420,17 +423,15 @@ packages/d2ql/src/utils.ts
    131→export function convertLikeToRegex …
    192→export function isValueInArray …
 
+package.json
+
+tsconfig.json
+
 examples/
 
 examples/d2ql/
 
 examples/electric/
-
-examples/electric/db/
-
-examples/electric/db/migrations/
-
-examples/electric/src/
 
 packages/
 
@@ -438,11 +439,7 @@ packages/d2mini/src/operators/
 
 packages/d2mini/tests/
 
-packages/d2mini/tests/operators/
-
 packages/d2ql/tests/
-
-packages/d2ql/tests/query-builder/
 
 packages/d2ts/src/operators/
 
@@ -452,10 +449,4 @@ packages/d2ts/src/sqlite/operators/
 
 packages/d2ts/tests/
 
-packages/d2ts/tests/operators/
-
-packages/d2ts/tests/operators-sqlite/
-
 packages/d2ts-benchmark/
-
-packages/d2ts-benchmark/src/

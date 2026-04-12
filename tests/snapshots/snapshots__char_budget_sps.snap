@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 8000 (2694 tokens, 9497 chars)
+budget: 8000 (2690 tokens, 9493 chars)
 
 README.md
      1→# sps
@@ -13,8 +13,6 @@ README.md
     77→## 📦 Usage
    123→## 🏗️ Building from Source
    138→## 📥 Using the Latest Nightly Build
-
-sps-core/src/lib.rs
 
 Cargo.toml
      1→[workspace]
@@ -35,6 +33,8 @@ sps-common/Cargo.toml
 sps-core/Cargo.toml
      1→[package]
     10→[dependencies]
+
+sps-core/src/lib.rs
 
 sps-net/Cargo.toml
      1→[package]
@@ -284,10 +284,9 @@ sps-core/src/uninstall/common.rs
    119→pub(crate) fn is_safe_path …
 
 sps-core/src/uninstall/formula.rs
+    10→pub fn uninstall_formula_artifacts …
 
 sps-core/src/uninstall/mod.rs
-
-rustfmt.toml
 
 sps/src/cli/
 
@@ -300,7 +299,5 @@ sps-core/src/build/compile/
 sps-core/src/install/bottle/
 
 sps-core/src/install/cask/
-
-sps-core/src/install/cask/artifacts/
 
 sps-core/src/upgrade/

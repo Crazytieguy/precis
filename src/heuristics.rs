@@ -11,9 +11,9 @@ use std::path::Path;
 // ---------------------------------------------------------------------------
 
 /// Compute the base value of a Folders group.
-/// Folders are cheap structural entries that gate file discovery.
-pub fn folders_base_value() -> f64 {
-    0.3
+/// Sublinear in item count: additional folders add diminishing information.
+pub fn folders_base_value(item_count: usize) -> f64 {
+    (item_count as f64).powf(0.75) * 0.3
 }
 
 /// Compute the base value of a Files group.

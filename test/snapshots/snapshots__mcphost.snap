@@ -35,19 +35,6 @@ main.go
     12→var version …
     14→func main() {
 
-internal/models/openai/openai.go
-    21→type CustomChatModel …
-    31→type CustomRoundTripper …
-    53→func NewCustomChatModel(ctx context.Context, config *einoopenai.ChatModelConfig) (*CustomChatModel, error) {
-    91→func (c *CustomRoundTripper) RoundTrip(req *http.Request) (*http.Response, error) {
-   161→func (c *CustomChatModel) Generate(ctx context.Context, in []*schema.Message, opts ...model.Option) (*schema.Message, error) {
-   177→func (c *CustomChatModel) Stream(ctx context.Context, in []*schema.Message, opts ...model.Option) (*schema.StreamReader[*schema.Message], error) {
-   191→func (c *CustomChatModel) WithTools(tools []*schema.ToolInfo) (model.ToolCallingChatModel, error) {
-   215→func (c *CustomChatModel) BindTools(tools []*schema.ToolInfo) error {
-   228→func (c *CustomChatModel) BindForcedTools(tools []*schema.ToolInfo) error {
-   237→func (c *CustomChatModel) GetType() string {
-   247→func (c *CustomChatModel) IsCallbacksEnabled() bool {
-
 internal/session/manager.go
     15→type Manager …
     25→func NewManager(filePath string) *Manager {
@@ -76,29 +63,6 @@ internal/session/session.go
    190→func (m *Message) ConvertToSchemaMessage() *schema.Message {
    230→func generateMessageID() string {
 
-internal/models/anthropic/anthropic.go
-    21→type CustomChatModel …
-    31→type CustomRoundTripper …
-    52→func NewCustomChatModel(ctx context.Context, config *einoclaude.Config) (*CustomChatModel, error) {
-    92→func (rt *CustomRoundTripper) RoundTrip(req *http.Request) (*http.Response, error) {
-   244→func (m *CustomChatModel) Generate(ctx context.Context, input []*schema.Message, opts ...model.Option) (*schema.Message, error) {
-   260→func (m *CustomChatModel) Stream(ctx context.Context, input []*schema.Message, opts ...model.Option) (*schema.StreamReader[*schema.Message], error) {
-   274→func (m *CustomChatModel) WithTools(tools []*schema.ToolInfo) (model.ToolCallingChatModel, error) {
-
-internal/models/gemini/gemini.go
-    43→func NewChatModel(_ context.Context, cfg *Config) (*ChatModel, error) {
-    58→type Config …
-   113→type ChatModel …
-   152→func (cm *ChatModel) Generate(ctx context.Context, input []*schema.Message, opts ...model.Option) (message *schema.Message, err error) {
-   205→func (cm *ChatModel) Stream(ctx context.Context, input []*schema.Message, opts ...model.Option) (result *schema.StreamReader[*schema.Message], err error) {
-   279→func (cm *ChatModel) WithTools(tools []*schema.ToolInfo) (model.ToolCallingChatModel, error) {
-   305→func (cm *ChatModel) BindTools(tools []*schema.ToolInfo) error {
-   330→func (cm *ChatModel) BindForcedTools(tools []*schema.ToolInfo) error {
-   761→func (cm *ChatModel) IsCallbacksEnabled() bool {
-   765→const typ …
-   773→func (cm *ChatModel) GetType() string {
-   782→func (p *panicErr) Error() string {
-
 internal/ui/progress/ollama.go
     27→type OllamaPullProgress …
     49→type ProgressModel …
@@ -122,6 +86,41 @@ contribute/contribute.md
      4→1. clone this repo to your work dir.
     30→## Contribute your code
     31→just write your code and push it.
+
+internal/models/openai/openai.go
+    21→type CustomChatModel …
+    31→type CustomRoundTripper …
+    53→func NewCustomChatModel(ctx context.Context, config *einoopenai.ChatModelConfig) (*CustomChatModel, error) {
+    91→func (c *CustomRoundTripper) RoundTrip(req *http.Request) (*http.Response, error) {
+   161→func (c *CustomChatModel) Generate(ctx context.Context, in []*schema.Message, opts ...model.Option) (*schema.Message, error) {
+   177→func (c *CustomChatModel) Stream(ctx context.Context, in []*schema.Message, opts ...model.Option) (*schema.StreamReader[*schema.Message], error) {
+   191→func (c *CustomChatModel) WithTools(tools []*schema.ToolInfo) (model.ToolCallingChatModel, error) {
+   215→func (c *CustomChatModel) BindTools(tools []*schema.ToolInfo) error {
+   228→func (c *CustomChatModel) BindForcedTools(tools []*schema.ToolInfo) error {
+   237→func (c *CustomChatModel) GetType() string {
+   247→func (c *CustomChatModel) IsCallbacksEnabled() bool {
+
+internal/models/anthropic/anthropic.go
+    21→type CustomChatModel …
+    31→type CustomRoundTripper …
+    52→func NewCustomChatModel(ctx context.Context, config *einoclaude.Config) (*CustomChatModel, error) {
+    92→func (rt *CustomRoundTripper) RoundTrip(req *http.Request) (*http.Response, error) {
+   244→func (m *CustomChatModel) Generate(ctx context.Context, input []*schema.Message, opts ...model.Option) (*schema.Message, error) {
+   260→func (m *CustomChatModel) Stream(ctx context.Context, input []*schema.Message, opts ...model.Option) (*schema.StreamReader[*schema.Message], error) {
+   274→func (m *CustomChatModel) WithTools(tools []*schema.ToolInfo) (model.ToolCallingChatModel, error) {
+
+internal/models/gemini/gemini.go
+    43→func NewChatModel(_ context.Context, cfg *Config) (*ChatModel, error) {
+    58→type Config …
+   113→type ChatModel …
+   152→func (cm *ChatModel) Generate(ctx context.Context, input []*schema.Message, opts ...model.Option) (message *schema.Message, err error) {
+   205→func (cm *ChatModel) Stream(ctx context.Context, input []*schema.Message, opts ...model.Option) (result *schema.StreamReader[*schema.Message], err error) {
+   279→func (cm *ChatModel) WithTools(tools []*schema.ToolInfo) (model.ToolCallingChatModel, error) {
+   305→func (cm *ChatModel) BindTools(tools []*schema.ToolInfo) error {
+   330→func (cm *ChatModel) BindForcedTools(tools []*schema.ToolInfo) error {
+   761→func (cm *ChatModel) IsCallbacksEnabled() bool {
+   773→func (cm *ChatModel) GetType() string {
+   782→func (p *panicErr) Error() string {
 
 internal/auth/browser.go
     14→func OpenBrowser(url string) error {
@@ -265,7 +264,9 @@ internal/models/providers.go
    124→type ProviderResult …
    153→func CreateProvider(ctx context.Context, config *ProviderConfig) (*ProviderResult, error) {
    539→type OllamaLoadingResult …
+   712→type bearerTransport …
    717→func (t *bearerTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+   857→type oauthTransport …
    862→func (t *oauthTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 
 internal/models/providers_test.go
@@ -649,7 +650,3 @@ internal/
 internal/tools/
 
 sdk/examples/
-
-sdk/examples/basic/
-
-sdk/examples/scripting/

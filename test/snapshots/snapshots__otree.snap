@@ -32,6 +32,7 @@ Cargo.toml
     47→too_many_lines = "allow" # necessary evil for now
 
 src/config/colors.rs
+     9→macro_rules! generate_colors_parse …
     21→pub struct Colors …
     55→impl Colors …
     56→    pub fn default() -> Self {
@@ -49,6 +50,8 @@ src/config/colors.rs
    355→impl Color …
 
 src/config/keys.rs
+     7→macro_rules! generate_keys_default …
+    32→macro_rules! generate_actions …
     54→pub enum Key …
     74→impl Key …
    195→pub struct Keys …
@@ -80,6 +83,7 @@ src/config/mod.rs
    321→impl Data …
 
 src/config/types.rs
+     3→macro_rules! generate_types_default …
     28→pub struct Types …
 
 src/clipboard.rs
@@ -421,18 +425,8 @@ typos.toml
 
 config/themes/catppuccin.toml
 
+docs/changelog.md
+
 assets/
 
 src/parse/test_cases/
-
-src/parse/test_cases/hcl/
-
-src/parse/test_cases/json/
-
-src/parse/test_cases/jsonl/
-
-src/parse/test_cases/toml/
-
-src/parse/test_cases/xml/
-
-src/parse/test_cases/yaml/

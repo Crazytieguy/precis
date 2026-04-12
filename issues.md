@@ -5,22 +5,6 @@ before calibration.
 
 ## Must fix (design violations)
 
-### FoldersGroup doesn't carry items
-
-The design §3.2 specifies `Folders { parent_dir, items: Vec<PathBuf> }`
-where `items` are the child folders of `parent_dir`, scheduled and
-rendered as a unit (D2, A3). The current implementation creates one
-`FoldersGroup` per individual sub-folder with no items — each
-sub-folder is scheduled independently. This breaks atomicity and
-honest semantics: the group doesn't represent what the design says it
-represents.
-
-The fix: `FoldersGroup::children()` should return a single
-`FoldersGroup` with `items = discovered_sub_folders` (and `FilesGroup`s
-alongside it). Rendering a `FoldersGroup` shows all its items as
-path-only lines. The childless-folder map tracks the items of
-committed `FoldersGroup`s.
-
 ### Missing invariant tests (plan Step 10)
 
 The plan called for `tests/invariants.rs` with property-based tests:

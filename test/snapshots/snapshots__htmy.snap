@@ -442,6 +442,7 @@ tests/test_main_components.py
 
 tests/test_md.py
     81→class ConverterRules …
+   136→def _md_renderer …
    145→async def test_md_with_slot …
    174→async def test_parsing …
    233→async def test_parsing_and_conversion …
@@ -467,32 +468,23 @@ examples/internationalization/app.py
 examples/markdown_customization/__init__.py
 
 examples/markdown_customization/app.py
+     6→class Page …
+    36→class PostInfo …
+    47→class ConversionRules …
     88→async def render_post() -> None:
 
 examples/markdown_customization/post.md
      1→# Essential reading
     13→# Lists
+    15→## Ordered
+    21→## Unordered
+
+tests/data/blog-post.md
 
 examples/
 
 examples/internationalization/locale/
 
-examples/internationalization/locale/en/
-
-examples/internationalization/locale/en/page/
-
 examples/markdown_essentials/
-
-tests/data/
-
-tests/data/locale/
-
-tests/data/locale/en/
-
-tests/data/locale/en/page/
-
-tests/data/locale/hu/
-
-tests/data/locale/hu/page/
 
 tests/renderer/

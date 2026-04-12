@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (2795 tokens, 9368 chars)
+budget: 4000 (2793 tokens, 9363 chars)
 
 README.rst
 
@@ -122,7 +122,9 @@ src/pluggy/_hooks.py
    577→    def _maybe_apply_history …
    593→class _SubsetHookCaller …
    612→    def __init__(self, orig: HookCaller, remove_plugins: Set[_Plugin]) -> None:
+   619→    def _hookimpls …
    627→    def spec(self) -> HookSpec | None:  # type: ignore[override]
+   631→    def _call_history …
    634→    def __repr__(self) -> str:
    639→class HookImpl …
    656→    def __init__ …
@@ -324,14 +326,12 @@ SECURITY.md
 
 TIDELIFT.rst
 
-docs/examples/eggsample-spam/eggsample_spam.py
-
-docs/examples/eggsample-spam/setup.py
+docs/changelog.rst
 
 docs/_static/
 
 docs/_static/img/
 
-docs/examples/eggsample/eggsample/
+docs/examples/eggsample-spam/
 
 src/

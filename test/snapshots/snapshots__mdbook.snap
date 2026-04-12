@@ -4,6 +4,59 @@ expression: output
 ---
 README.md
      1→# mdBook
+    14→## License
+
+src/main.rs
+     1→//! The mdbook CLI.
+    16→const VERSION …
+    18→fn main() {
+    58→fn create_clap_command() -> Command {
+    93→fn init_logger() {
+   126→fn get_book_dir(args: &ArgMatches) -> PathBuf {
+   139→fn open<P: AsRef<OsStr>>(path: P) {
+
+guide/src/README.md
+     1→# Introduction
+
+Cargo.toml
+     1→[workspace]
+    21→[workspace.package]
+    27→[workspace.dependencies]
+    72→[package]
+    90→[dependencies]
+   119→[dev-dependencies]
+   129→[features]
+   135→[[bin]]
+   139→[[example]]
+   143→[[example]]
+   149→[[test]]
+   156→[lints]
+
+guide/guide-helper/Cargo.toml
+     1→[package]
+     9→[dependencies]
+    15→[lints]
+
+ci/install-rust.sh
+
+ci/make-release-asset.sh
+
+ci/publish-guide.sh
+
+ci/update-dependencies.sh
+
+src/cmd/watch/native.rs
+     1→//! A filesystem watcher using native operating system facilities.
+    11→pub fn rebuild_on_change …
+
+src/cmd/watch/poller.rs
+     1→//! A simple poll-based filesystem watcher.
+    17→/// Calls the closure when a book source file is changed, blocking indefinitely.
+    18→pub fn rebuild_on_change …
+    95→impl Watcher …
+    96→    fn new …
+   124→    fn set_roots(&mut self, book: &MDBook) {
+   153→    fn scan(&mut self) -> Vec<PathBuf> {
 
 crates/mdbook-compare/README.md
      1→# mdbook-compare
@@ -32,9 +85,47 @@ crates/mdbook-summary/README.md
 crates/xtask/README.md
      1→# xtask
 
+crates/mdbook-summary/src/lib.rs
+     1→//! Summary parser for mdBook.
+    17→/// Parse the text from a `SUMMARY.md` file into a sort of "recipe" to be
+      →…
+    59→pub fn parse_summary(summary: &str) -> Result<Summary> {
+    67→pub struct Summary …
+    84→pub struct Link …
+    96→impl Link …
+    97→    /// Create a new link with no nested items.
+    98→    pub fn new<S: Into<String>, P: AsRef<Path>>(name: S, location: P) -> Link {
+   108→impl Default for Link …
+   109→    fn default() -> Self {
+   122→pub enum SummaryItem …
+   131→impl SummaryItem …
+   140→impl From<Link> for SummaryItem …
+   141→    fn from(other: Link) -> SummaryItem {
+   173→struct SummaryParser …
+   190→macro_rules! collect_events …
+   221→impl<'a> SummaryParser<'a> …
+   235→    fn current_location …
+   245→    fn parse …
+   272→    fn check_for_duplicates …
+   294→    fn parse_affix …
+   381→    fn parse_link …
+   401→    fn parse_numbered …
+   476→    fn back …
+   578→    fn parse_title …
+   604→fn update_section_numbers …
+   618→fn get_last_link(links: &mut [SummaryItem]) -> Result<(usize, &mut Link)> {
+   634→fn stringify_events(events: Vec<Event<'_>>) -> String {
+
 crates/mdbook-compare/src/main.rs
      1→//! Utility to compare the output of two different versions of mdbook.
      6→macro_rules! error …
+    14→fn main …
+    39→fn clean …
+    46→fn build …
+    61→fn process …
+    78→fn process_html …
+    88→fn tidy …
+   105→fn diff …
 
 crates/mdbook-markdown/src/lib.rs
      1→//! Markdown processing used in mdBook.
@@ -49,8 +140,15 @@ crates/mdbook-preprocessor/src/lib.rs
     23→/// An operation which is run immediately after loading a book into memory and
       →…
     30→pub trait Preprocessor …
+    31→    /// Get the `Preprocessor`'s name.
     32→    fn name(&self) -> &str;
+    34→    /// Run this `Preprocessor`, allowing it to update the book before it is
+    35→    /// given to a renderer.
     36→    fn run(&self, ctx: &PreprocessorContext, book: Book) -> Result<Book>;
+    38→    /// A hint to `MDBook` whether this preprocessor is compatible with a
+    39→    /// particular renderer.
+    40→    ///
+    41→    /// By default, always returns `true`.
     42→    fn supports_renderer(&self, _renderer: &str) -> Result<bool> {
     43→        Ok(true)
     44→    }
@@ -84,83 +182,14 @@ crates/mdbook-renderer/src/lib.rs
     85→    /// Load a `RenderContext` from its JSON representation.
     86→    pub fn from_json<R: Read>(reader: R) -> Result<RenderContext> {
 
-crates/mdbook-summary/src/lib.rs
-     1→//! Summary parser for mdBook.
-    59→pub fn parse_summary(summary: &str) -> Result<Summary> {
-    67→pub struct Summary …
-    84→pub struct Link …
-    96→impl Link …
-    97→    /// Create a new link with no nested items.
-    98→    pub fn new<S: Into<String>, P: AsRef<Path>>(name: S, location: P) -> Link {
-   108→impl Default for Link …
-   109→    fn default() -> Self {
-   122→pub enum SummaryItem …
-   131→impl SummaryItem …
-   140→impl From<Link> for SummaryItem …
-   141→    fn from(other: Link) -> SummaryItem {
-   173→struct SummaryParser …
-   190→macro_rules! collect_events …
-   221→impl<'a> SummaryParser<'a> …
-   235→    fn current_location …
-   245→    fn parse …
-   272→    fn check_for_duplicates …
-   294→    fn parse_affix …
-   381→    fn parse_link …
-   401→    fn parse_numbered …
-   476→    fn back …
-   578→    fn parse_title …
-   604→fn update_section_numbers …
-   618→fn get_last_link …
-   634→fn stringify_events …
+crates/xtask/src/changelog.rs
+     1→//! Helper to generate a changelog for a new release.
+     8→const CHANGELOG_PATH …
+    10→pub(crate) fn changelog() -> Result<()> {
 
-src/main.rs
-     1→//! The mdbook CLI.
-    16→const VERSION …
-    58→fn create_clap_command() -> Command {
-
-guide/src/README.md
-     1→# Introduction
-
-crates/mdbook-core/src/book/tests.rs
-
-crates/mdbook-driver/src/mdbook/tests.rs
-   226→impl Preprocessor for BoolPreprocessor …
-   227→    fn name …
-   231→    fn run …
-   235→    fn supports_renderer …
-
-Cargo.toml
-     1→[workspace]
-    21→[workspace.package]
-    27→[workspace.dependencies]
-    72→[package]
-    90→[dependencies]
-   119→[dev-dependencies]
-   129→[features]
-   135→[[bin]]
-   139→[[example]]
-   143→[[example]]
-   149→[[test]]
-   156→[lints]
-
-guide/src/cli/README.md
-     1→# Command-line tool
-
-guide/src/for_developers/README.md
-     1→# For developers
-    17→## The build process
-    30→## Using `mdbook` as a library
-
-guide/src/format/README.md
-     1→# Format
-
-guide/src/guide/README.md
-     1→# User guide
-
-guide/guide-helper/Cargo.toml
-     1→[package]
-     9→[dependencies]
-    15→[lints]
+crates/xtask/src/main.rs
+     1→//! Helper for local development.
+    11→type Result …
 
 crates/mdbook-html/src/lib.rs
      1→//! mdBook HTML renderer.
@@ -175,29 +204,14 @@ crates/mdbook-html/src/utils.rs
     46→impl ToUrlPath for Path …
     47→    fn to_url_path(&self) -> String {
     54→/// Make sure an HTML id is unique.
-      →…
+    55→///
+    56→/// Keeps a set of all previously returned IDs; if the requested id is already
+    57→/// used, numeric suffixes (-1, -2, ...) are tried until an unused one is found.
     58→pub(crate) fn unique_id(id: &str, used: &mut HashSet<String>) -> String {
     75→/// Generates an HTML id from the given text.
     76→pub(crate) fn id_from_content(content: &str) -> String {
 
-crates/mdbook-html/front-end/searcher/searcher.js
-
-crates/xtask/src/changelog.rs
-     1→//! Helper to generate a changelog for a new release.
-     8→const CHANGELOG_PATH …
-    10→pub(crate) fn changelog() -> Result<()> {
-
-crates/xtask/src/main.rs
-     1→//! Helper for local development.
-    11→type Result …
-
-ci/install-rust.sh
-
-ci/make-release-asset.sh
-
-ci/publish-guide.sh
-
-ci/update-dependencies.sh
+crates/mdbook-core/src/book/tests.rs
 
 crates/mdbook-core/src/book.rs
      1→//! A tree structure representing a book.
@@ -216,6 +230,7 @@ crates/mdbook-core/src/book.rs
     76→        F: FnMut(&mut Chapter),
     77→    {
     93→    pub fn push_item<I: Into<BookItem>>(&mut self, item: I) -> &mut Self {
+    99→fn for_each_mut …
    119→pub enum BookItem …
    128→impl From<Chapter> for BookItem …
    129→    fn from(other: Chapter) -> BookItem {
@@ -266,7 +281,9 @@ crates/mdbook-core/src/config.rs
    216→    pub fn contains_key(&self, name: &str) -> bool {
    228→    pub fn preprocessors<'de, T: Deserialize<'de>>(&self) -> Result<BTreeMap<String, T>> {
    236→    pub fn outputs<'de, T: Deserialize<'de>>(&self) -> Result<BTreeMap<String, T>> {
+   250→    pub fn html_config …
    274→    pub fn set<S: Serialize, I: AsRef<str>>(&mut self, index: I, value: S) -> Result<()> {
+   308→fn parse_env …
    318→pub struct BookConfig …
    336→fn is_default_src(src: &PathBuf) -> bool {
    340→impl Default for BookConfig …
@@ -309,24 +326,6 @@ crates/mdbook-core/src/lib.rs
       →…
      7→pub const MDBOOK_VERSION …
 
-src/cmd/watch/native.rs
-     1→//! A filesystem watcher using native operating system facilities.
-    11→pub fn rebuild_on_change …
-
-src/cmd/watch/poller.rs
-     1→//! A simple poll-based filesystem watcher.
-    18→pub fn rebuild_on_change …
-    95→impl Watcher …
-    96→    fn new …
-   124→    fn set_roots …
-   153→    fn scan …
-
-crates/mdbook-driver/src/builtin_preprocessors/links/take_lines.rs
-     6→pub(super) fn take_lines …
-    31→pub(super) fn take_anchored_lines …
-    63→pub(super) fn take_rustdoc_include_lines …
-    81→pub(super) fn take_rustdoc_include_anchored_lines …
-
 crates/mdbook-core/Cargo.toml
      1→[package]
     10→[dependencies]
@@ -364,6 +363,20 @@ crates/xtask/Cargo.toml
     11→[lints]
     12→workspace = true
 
+guide/src/cli/README.md
+     1→# Command-line tool
+
+guide/src/for_developers/README.md
+     1→# For developers
+    17→## The build process
+    30→## Using `mdbook` as a library
+
+guide/src/format/README.md
+     1→# Format
+
+guide/src/guide/README.md
+     1→# User guide
+
 crates/mdbook-compare/Cargo.toml
      1→[package]
      2→name = "mdbook-compare"
@@ -395,6 +408,11 @@ crates/mdbook-renderer/Cargo.toml
 crates/mdbook-driver/src/init.rs
      1→//! Support for initializing a new book.
     13→pub struct BookBuilder …
+    14→    root: PathBuf,
+    15→    create_gitignore: bool,
+    16→    config: Config,
+    17→    copy_theme: bool,
+    18→}
     20→impl BookBuilder …
     23→    pub fn new<P: Into<PathBuf>>(root: P) -> BookBuilder {
     33→    pub fn with_config(&mut self, cfg: Config) -> &mut BookBuilder {
@@ -439,7 +457,10 @@ crates/mdbook-driver/src/mdbook.rs
    371→    pub fn build_dir_for(&self, backend_name: &str) -> PathBuf {
    382→    pub fn source_dir(&self) -> PathBuf {
    387→    pub fn theme_dir(&self) -> PathBuf {
+   397→struct OutputConfig …
    402→fn determine_renderers …
+   426→const DEFAULT_PREPROCESSORS …
+   435→struct PreprocessorConfig …
    446→fn determine_preprocessors …
    549→fn preprocessor_should_run …
 
@@ -454,6 +475,10 @@ src/cmd/clean.rs
     37→/// Returns a tuple of `(quantity, units)`.
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
     46→pub struct Clean …
+    47→    num_files_removed: u64,
+    48→    num_dirs_removed: u64,
+    49→    total_bytes_removed: u64,
+    50→}
     52→impl Clean …
     53→    fn new …
     91→impl fmt::Display for Clean …
@@ -476,6 +501,7 @@ src/cmd/init.rs
     32→pub fn execute(args: &ArgMatches) -> Result<()> {
     88→fn get_author_name() -> Option<String> {
    102→fn request_book_title() -> Option<String> {
+   116→fn confirm …
 
 src/cmd/mod.rs
      1→//! Subcommand modules for the `mdbook` binary.
@@ -484,6 +510,8 @@ src/cmd/serve.rs
     20→const LIVE_RELOAD_ENDPOINT …
     23→pub fn make_subcommand() -> Command {
     51→pub fn execute(args: &ArgMatches) -> Result<()> {
+   109→async fn serve …
+   142→async fn websocket_connection …
 
 src/cmd/test.rs
      9→pub fn make_subcommand() -> Command {
@@ -504,12 +532,13 @@ src/cmd/watch.rs
     65→    update_config: &dyn Fn(&mut MDBook),
     66→    post_build: &dyn Fn(),
     67→) {
+    74→fn find_gitignore …
 
-guide/src/format/configuration/README.md
-     1→# Configuration
-
-guide/src/format/theme/README.md
-     1→# Theme
+crates/mdbook-driver/src/mdbook/tests.rs
+   226→impl Preprocessor for BoolPreprocessor …
+   227→    fn name(&self) -> &str {
+   231→    fn run(&self, _ctx: &PreprocessorContext, _book: Book) -> Result<Book> {
+   235→    fn supports_renderer(&self, _renderer: &str) -> Result<bool> {
 
 guide/guide-helper/src/lib.rs
      1→//! Preprocessor for the mdBook guide.
@@ -556,23 +585,157 @@ crates/mdbook-driver/src/builtin_renderers/mod.rs
     33→    fn name(&self) -> &str {
     37→    fn render(&self, ctx: &RenderContext) -> Result<()> {
 
+guide/src/format/configuration/README.md
+     1→# Configuration
+
+guide/src/format/theme/README.md
+     1→# Theme
+
 examples/nop-preprocessor.rs
      1→//! A basic example of a preprocessor that does nothing.
     79→    pub struct Nop …
     81→    impl Nop …
+    82→        pub fn new …
     87→    impl Preprocessor for Nop …
+    88→        fn name …
+    92→        fn run …
+   108→        fn supports_renderer …
+
+crates/mdbook-driver/src/builtin_preprocessors/links/take_lines.rs
+     6→pub(super) fn take_lines<R: RangeBounds<usize>>(s: &str, range: R) -> String {
+    31→pub(super) fn take_anchored_lines(s: &str, anchor: &str) -> String {
+    63→pub(super) fn take_rustdoc_include_lines<R: RangeBounds<usize>>(s: &str, range: R) -> String {
+    81→pub(super) fn take_rustdoc_include_anchored_lines(s: &str, anchor: &str) -> String {
+
+crates/mdbook-core/src/utils/fs.rs
+     1→//! Filesystem utilities and helpers.
+    11→pub fn read_to_string<P: AsRef<Path>>(path: P) -> Result<String> {
+    20→pub fn write<P: AsRef<Path>, C: AsRef<[u8]>>(path: P, contents: C) -> Result<()> {
+    31→pub fn create_dir_all(p: impl AsRef<Path>) -> Result<()> {
+    55→pub fn path_to_root<P: Into<PathBuf>>(path: P) -> String {
+    74→pub fn remove_dir_content(dir: &Path) -> Result<()> {
+    93→pub fn copy_files_except_ext(
+    94→    from: &Path,
+    95→    to: &Path,
+    96→    recursive: bool,
+    97→    avoid_dir: Option<&PathBuf>,
+    98→    ext_blacklist: &[&str],
+    99→) -> Result<()> {
+   155→fn copy …
+
+crates/mdbook-core/src/utils/html.rs
+     1→//! Utilities for dealing with HTML.
+     6→pub fn escape_html_attribute(text: &str) -> Cow<'_, str> {
+    32→pub fn escape_html(text: &str) -> Cow<'_, str> {
+
+crates/mdbook-core/src/utils/mod.rs
+     1→//! Various helpers and utilities.
+    17→macro_rules! static_regex …
+    29→pub fn log_backtrace(e: &Error) {
+
+crates/mdbook-core/src/utils/toml_ext.rs
+     1→//! Helper for working with toml types.
+     5→/// Helper for working with toml types.
+     6→pub(crate) trait TomlExt …
+     7→    /// Read a dotted key.
+     8→    fn read(&self, key: &str) -> Option<&Value>;
+     9→    /// Insert with a dotted key.
+    10→    fn insert(&mut self, key: &str, value: Value);
+    13→impl TomlExt for Value …
+    14→    fn read(&self, key: &str) -> Option<&Value> {
+    22→    fn insert(&mut self, key: &str, value: Value) {
+    40→fn split …
+
+crates/mdbook-html/src/theme/fonts.rs
+     1→pub(crate) static CSS …
+     3→pub(crate) static LICENSES …
+    14→pub(crate) static OPEN_SANS …
+    58→pub(crate) static SOURCE_CODE_PRO …
+
+crates/mdbook-html/src/theme/mod.rs
+     1→//! Support for theme files.
+    40→pub struct Theme …
+    63→impl Theme …
+    64→    /// Creates a `Theme` from the given `theme_dir`.
+    65→    /// If a file is found in the theme dir, it will override the default version.
+    66→    pub fn new<P: AsRef<Path>>(theme_dir: P) -> Self {
+   165→    /// Copies the default theme files to the theme directory.
+   166→    pub fn copy_theme(html_config: &HtmlConfig, root: &Path) -> Result<()> {
+   200→impl Default for Theme …
+   201→    fn default() -> Theme {
+   229→fn load_file_contents …
+
+crates/mdbook-html/src/theme/playground_editor.rs
+     1→//! Theme dependencies for the playground editor.
+     3→pub(crate) static JS …
+     4→pub(crate) static ACE_JS …
+     5→pub(crate) static MODE_RUST_JS …
+     7→pub(crate) static THEME_DAWN_JS …
+     9→pub(crate) static THEME_TOMORROW_NIGHT_JS …
+
+crates/mdbook-html/src/theme/searcher.rs
+     1→//! Theme dependencies for in-browser search. Not included in mdbook when
+     2→//! the "search" cargo feature is disabled.
+     4→pub(crate) static JS …
+     5→pub(crate) static MARK_JS …
+     6→pub(crate) static ELASTICLUNR_JS …
+
+guide/book.toml
+     1→[book]
+     7→[rust]
+    40→[build]
+
+crates/mdbook-html/front-end/searcher/searcher.js
 
 crates/mdbook-html/front-end/js/book.js
 
 crates/mdbook-html/front-end/js/highlight.js
 
-guide/book.toml
+crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
+    22→pub struct HtmlHandlebars …
+    24→impl HtmlHandlebars …
+    26→    pub fn new() -> Self {
+   303→impl Renderer for HtmlHandlebars …
+   304→    fn name …
+   308→    fn render …
+   649→type CombinedRedirects …
+   674→fn collect_redirects_for_path …
+
+crates/mdbook-html/src/html_handlebars/mod.rs
+
+crates/mdbook-html/src/html_handlebars/search.rs
+    20→fn tokenize …
+    28→/// Creates all files required for search.
+    29→pub(super) fn create_files …
+    82→fn add_doc …
+   103→fn index_chapter …
+   324→fn collapse_whitespace …
+
+crates/mdbook-html/src/html_handlebars/static_files.rs
+     1→//! Support for writing static files.
+    14→/// Map static files to their final names and contents.
+      →…
+    22→pub(super) struct StaticFiles …
+    23→    static_files: Vec<StaticFile>,
+    24→    hash_map: HashMap<String, String>,
+    25→}
+    27→enum StaticFile …
+    38→impl StaticFiles …
+    39→    pub(super) fn new …
+   129→    pub(super) fn add_builtin …
+   138→    pub(super) fn hash_files(&mut self) -> Result<()> {
+   193→    pub(super) fn write_files …
+
+crates/mdbook-driver/src/builtin_preprocessors/cmd.rs
+
+crates/mdbook-driver/src/builtin_preprocessors/index.rs
+
+crates/mdbook-driver/src/builtin_preprocessors/links.rs
+
+crates/mdbook-driver/src/builtin_preprocessors/mod.rs
+     1→//! Built-in preprocessors.
 
 crates/
-
-crates/mdbook-core/src/utils/
-
-crates/mdbook-driver/src/builtin_preprocessors/
 
 crates/mdbook-html/front-end/
 
@@ -588,416 +751,14 @@ crates/mdbook-html/front-end/templates/
 
 crates/mdbook-html/src/html/
 
-crates/mdbook-html/src/html_handlebars/
-
 crates/mdbook-html/src/html_handlebars/helpers/
-
-crates/mdbook-html/src/theme/
 
 examples/remove-emphasis/
 
-examples/remove-emphasis/mdbook-remove-emphasis/
-
-examples/remove-emphasis/mdbook-remove-emphasis/src/
-
-examples/remove-emphasis/src/
-
 guide/src/for_developers/mdbook-wordcount/
-
-guide/src/for_developers/mdbook-wordcount/src/
 
 guide/src/format/images/
 
 guide/src/misc/
 
 tests/
-
-tests/gui/
-
-tests/gui/books/
-
-tests/gui/books/all-summary/
-
-tests/gui/books/all-summary/src/
-
-tests/gui/books/all-summary/src/part-1/
-
-tests/gui/books/all-summary/src/part-2/
-
-tests/gui/books/basic/
-
-tests/gui/books/basic/src/
-
-tests/gui/books/heading-nav/
-
-tests/gui/books/heading-nav/src/
-
-tests/gui/books/heading-nav-folded/
-
-tests/gui/books/heading-nav-folded/src/
-
-tests/gui/books/heading-nav-folded/src/sub/
-
-tests/gui/books/heading-nav-folded/src/sub/inner/
-
-tests/gui/books/highlighting/
-
-tests/gui/books/highlighting/src/
-
-tests/gui/books/redirect/
-
-tests/gui/books/redirect/src/
-
-tests/gui/books/search/
-
-tests/gui/books/search/src/
-
-tests/gui/books/search/src/inner/
-
-tests/gui/books/sidebar-scroll/
-
-tests/gui/books/sidebar-scroll/src/
-
-tests/testsuite/
-
-tests/testsuite/build/
-
-tests/testsuite/build/basic_build/
-
-tests/testsuite/build/basic_build/src/
-
-tests/testsuite/build/create_missing/
-
-tests/testsuite/build/create_missing/src/
-
-tests/testsuite/build/missing_file/
-
-tests/testsuite/build/missing_file/src/
-
-tests/testsuite/build/no_reserved_filename/
-
-tests/testsuite/build/no_reserved_filename/src/
-
-tests/testsuite/cli/
-
-tests/testsuite/config/
-
-tests/testsuite/config/empty/
-
-tests/testsuite/config/empty/src/
-
-tests/testsuite/includes/
-
-tests/testsuite/includes/all_includes/
-
-tests/testsuite/includes/all_includes/src/
-
-tests/testsuite/includes/all_includes/src/relative/
-
-tests/testsuite/index/
-
-tests/testsuite/index/basic_readme/
-
-tests/testsuite/index/basic_readme/src/
-
-tests/testsuite/index/basic_readme/src/first/
-
-tests/testsuite/index/basic_readme/src/second/
-
-tests/testsuite/init/
-
-tests/testsuite/init/init_from_summary/
-
-tests/testsuite/init/init_from_summary/src/
-
-tests/testsuite/markdown/
-
-tests/testsuite/markdown/admonitions/
-
-tests/testsuite/markdown/admonitions/expected/
-
-tests/testsuite/markdown/admonitions/expected_disabled/
-
-tests/testsuite/markdown/admonitions/src/
-
-tests/testsuite/markdown/basic_markdown/
-
-tests/testsuite/markdown/basic_markdown/expected/
-
-tests/testsuite/markdown/basic_markdown/src/
-
-tests/testsuite/markdown/custom_header_attributes/
-
-tests/testsuite/markdown/custom_header_attributes/src/
-
-tests/testsuite/markdown/definition_lists/
-
-tests/testsuite/markdown/definition_lists/expected/
-
-tests/testsuite/markdown/definition_lists/expected_disabled/
-
-tests/testsuite/markdown/definition_lists/src/
-
-tests/testsuite/markdown/footnotes/
-
-tests/testsuite/markdown/footnotes/expected/
-
-tests/testsuite/markdown/footnotes/src/
-
-tests/testsuite/markdown/smart_punctuation/
-
-tests/testsuite/markdown/smart_punctuation/src/
-
-tests/testsuite/markdown/strikethrough/
-
-tests/testsuite/markdown/strikethrough/src/
-
-tests/testsuite/markdown/tables/
-
-tests/testsuite/markdown/tables/src/
-
-tests/testsuite/markdown/tasklists/
-
-tests/testsuite/markdown/tasklists/src/
-
-tests/testsuite/playground/
-
-tests/testsuite/playground/disabled_playground/
-
-tests/testsuite/playground/disabled_playground/src/
-
-tests/testsuite/playground/playground_on_rust_code/
-
-tests/testsuite/playground/playground_on_rust_code/src/
-
-tests/testsuite/preprocessor/
-
-tests/testsuite/preprocessor/extension_compatibility/
-
-tests/testsuite/preprocessor/extension_compatibility/src/
-
-tests/testsuite/preprocessor/extension_compatibility/src/part/
-
-tests/testsuite/preprocessor/failing_preprocessor/
-
-tests/testsuite/preprocessor/failing_preprocessor/src/
-
-tests/testsuite/preprocessor/missing_optional_not_fatal/
-
-tests/testsuite/preprocessor/missing_optional_not_fatal/src/
-
-tests/testsuite/preprocessor/missing_preprocessor/
-
-tests/testsuite/preprocessor/missing_preprocessor/src/
-
-tests/testsuite/preprocessor/nop_preprocessor/
-
-tests/testsuite/preprocessor/nop_preprocessor/src/
-
-tests/testsuite/print/
-
-tests/testsuite/print/chapter_no_h1/
-
-tests/testsuite/print/chapter_no_h1/expected/
-
-tests/testsuite/print/chapter_no_h1/src/
-
-tests/testsuite/print/duplicate_ids/
-
-tests/testsuite/print/duplicate_ids/expected/
-
-tests/testsuite/print/duplicate_ids/src/
-
-tests/testsuite/print/noindex/
-
-tests/testsuite/print/noindex/src/
-
-tests/testsuite/print/relative_links/
-
-tests/testsuite/print/relative_links/expected/
-
-tests/testsuite/print/relative_links/src/
-
-tests/testsuite/print/relative_links/src/first/
-
-tests/testsuite/print/relative_links/src/second/
-
-tests/testsuite/redirects/
-
-tests/testsuite/redirects/redirect_existing_page/
-
-tests/testsuite/redirects/redirect_existing_page/src/
-
-tests/testsuite/redirects/redirect_removed_with_fragments_only/
-
-tests/testsuite/redirects/redirect_removed_with_fragments_only/src/
-
-tests/testsuite/redirects/redirects_are_emitted_correctly/
-
-tests/testsuite/redirects/redirects_are_emitted_correctly/expected/
-
-tests/testsuite/redirects/redirects_are_emitted_correctly/expected/nested/
-
-tests/testsuite/redirects/redirects_are_emitted_correctly/src/
-
-tests/testsuite/renderer/
-
-tests/testsuite/renderer/backends_receive_render_context_via_stdin/
-
-tests/testsuite/renderer/backends_receive_render_context_via_stdin/src/
-
-tests/testsuite/renderer/missing_optional_not_fatal/
-
-tests/testsuite/renderer/missing_optional_not_fatal/src/
-
-tests/testsuite/renderer/missing_renderer/
-
-tests/testsuite/renderer/missing_renderer/src/
-
-tests/testsuite/renderer/renderer_with_arguments/
-
-tests/testsuite/renderer/renderer_with_arguments/src/
-
-tests/testsuite/rendering/
-
-tests/testsuite/rendering/code_blocks_fenced_with_indent/
-
-tests/testsuite/rendering/code_blocks_fenced_with_indent/expected/
-
-tests/testsuite/rendering/code_blocks_fenced_with_indent/src/
-
-tests/testsuite/rendering/default_rust_edition/
-
-tests/testsuite/rendering/default_rust_edition/expected/
-
-tests/testsuite/rendering/default_rust_edition/src/
-
-tests/testsuite/rendering/edit_url_template/
-
-tests/testsuite/rendering/edit_url_template/src/
-
-tests/testsuite/rendering/edit_url_template_explicit_src/
-
-tests/testsuite/rendering/edit_url_template_explicit_src/src2/
-
-tests/testsuite/rendering/editable_rust_block/
-
-tests/testsuite/rendering/editable_rust_block/expected/
-
-tests/testsuite/rendering/editable_rust_block/src/
-
-tests/testsuite/rendering/first_chapter_is_copied_as_index_even_if_not_first_elem/
-
-tests/testsuite/rendering/first_chapter_is_copied_as_index_even_if_not_first_elem/src/
-
-tests/testsuite/rendering/fontawesome/
-
-tests/testsuite/rendering/fontawesome/expected/
-
-tests/testsuite/rendering/fontawesome/src/
-
-tests/testsuite/rendering/header_links/
-
-tests/testsuite/rendering/header_links/expected/
-
-tests/testsuite/rendering/header_links/src/
-
-tests/testsuite/rendering/hidelines/
-
-tests/testsuite/rendering/hidelines/expected/
-
-tests/testsuite/rendering/hidelines/src/
-
-tests/testsuite/rendering/html_blocks/
-
-tests/testsuite/rendering/html_blocks/expected/
-
-tests/testsuite/rendering/html_blocks/src/
-
-tests/testsuite/search/
-
-tests/testsuite/search/chapter_settings_validation_error/
-
-tests/testsuite/search/chapter_settings_validation_error/src/
-
-tests/testsuite/search/disable_search_chapter/
-
-tests/testsuite/search/disable_search_chapter/src/
-
-tests/testsuite/search/disable_search_chapter/src/first/
-
-tests/testsuite/search/disable_search_chapter/src/second/
-
-tests/testsuite/search/reasonable_search_index/
-
-tests/testsuite/search/reasonable_search_index/src/
-
-tests/testsuite/search/reasonable_search_index/src/first/
-
-tests/testsuite/test/
-
-tests/testsuite/test/failing_tests/
-
-tests/testsuite/test/failing_tests/src/
-
-tests/testsuite/test/passing_tests/
-
-tests/testsuite/test/passing_tests/src/
-
-tests/testsuite/theme/
-
-tests/testsuite/theme/custom_fonts_css/
-
-tests/testsuite/theme/custom_fonts_css/src/
-
-tests/testsuite/theme/custom_fonts_css/theme/
-
-tests/testsuite/theme/custom_fonts_css/theme/fonts/
-
-tests/testsuite/theme/empty_fonts_css/
-
-tests/testsuite/theme/empty_fonts_css/src/
-
-tests/testsuite/theme/empty_fonts_css/theme/
-
-tests/testsuite/theme/empty_fonts_css/theme/fonts/
-
-tests/testsuite/theme/empty_theme/
-
-tests/testsuite/theme/empty_theme/src/
-
-tests/testsuite/theme/fonts_css/
-
-tests/testsuite/theme/fonts_css/src/
-
-tests/testsuite/theme/fonts_css/theme/
-
-tests/testsuite/theme/fonts_css/theme/fonts/
-
-tests/testsuite/theme/missing_theme/
-
-tests/testsuite/theme/missing_theme/src/
-
-tests/testsuite/theme/override_index/
-
-tests/testsuite/theme/override_index/src/
-
-tests/testsuite/theme/override_index/theme/
-
-tests/testsuite/toc/
-
-tests/testsuite/toc/basic_toc/
-
-tests/testsuite/toc/basic_toc/src/
-
-tests/testsuite/toc/basic_toc/src/deep/
-
-tests/testsuite/toc/basic_toc/src/deep/a/
-
-tests/testsuite/toc/basic_toc/src/deep/a/b/
-
-tests/testsuite/toc/basic_toc/src/nested/
-
-tests/testsuite/toc/summary_with_markdown_formatting/
-
-tests/testsuite/toc/summary_with_markdown_formatting/src/

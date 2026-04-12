@@ -40,6 +40,22 @@ README.md
    336→## Bugs and Feature Requests
    337→If you find a bug or have a feature request, please open an issue on the GitHub repository.<br>
 
+demo.py
+    65→XUI_EXTERNAL_IP = "**********"  # ⬅️ Your external IP here or domain name.
+    66→MAIN_REMARK = "gmfvbot"  # ⬅️ It can be any string.
+    67→SERVER_PORT …
+    70→def get_connection_string(inbound: Inbound, user_uuid: str, user_email: int) -> str:
+
+py3xui/__init__.py
+
+dev/clean_trash.sh
+
+dev/create_venv.sh
+
+dev/push.sh
+
+dev/pydoc.sh
+
 py3xui/api/README.md
      3→# api.api\_database
     67→# api.api\_inbound
@@ -67,22 +83,6 @@ py3xui/server/README.md
 
 py3xui/utils/README.md
      3→# utils.env
-
-demo.py
-    65→XUI_EXTERNAL_IP = "**********"  # ⬅️ Your external IP here or domain name.
-    66→MAIN_REMARK = "gmfvbot"  # ⬅️ It can be any string.
-    67→SERVER_PORT …
-    70→def get_connection_string(inbound: Inbound, user_uuid: str, user_email: int) -> str:
-
-py3xui/__init__.py
-
-dev/clean_trash.sh
-
-dev/create_venv.sh
-
-dev/push.sh
-
-dev/pydoc.sh
 
 py3xui/client/__init__.py
 

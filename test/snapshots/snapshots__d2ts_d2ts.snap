@@ -4,7 +4,6 @@ expression: output
 ---
 README.md
     26→# D2TS - Differential Dataflow in TypeScript <!-- omit in toc -->
-    36→## Table of Contents
     51→## Key Features
     88→## Quick Start
     90→### Installation
@@ -84,7 +83,6 @@ src/sqlite/version-index.ts
    241→  get tableName …
    245→  getCompactionFrontier …
    259→  setCompactionFrontier …
-   265→  #validate …
    281→  reconstructAt …
    294→  get …
    308→  entries …
@@ -448,8 +446,10 @@ src/sqlite/operators/buffer.ts
 src/sqlite/operators/consolidate.ts
 
 src/sqlite/operators/count.ts
+     9→export class CountOperatorSQLite …
 
 src/sqlite/operators/distinct.ts
+     9→export class DistinctOperatorSQLite …
 
 src/sqlite/operators/filterBy.ts
 
@@ -458,6 +458,7 @@ src/sqlite/operators/groupBy.ts
 src/sqlite/operators/index.ts
 
 src/sqlite/operators/join.ts
+    22→export class JoinOperatorSQLite …
 
 src/sqlite/operators/orderBy.ts
 
@@ -467,10 +468,4 @@ src/sqlite/operators/topK.ts
 
 src/sqlite/operators/topKWithFractionalIndex.ts
 
-CHANGELOG.md
-
 tests/
-
-tests/operators/
-
-tests/operators-sqlite/

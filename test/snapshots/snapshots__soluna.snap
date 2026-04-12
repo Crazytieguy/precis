@@ -13,50 +13,7 @@ bin/readme.txt
 
 Makefile
 
-src/platform/linux/soluna_linux_ime.h
-     6→bool soluna_linux_ensure_im(void);
-     7→void soluna_linux_on_rect_cleared(void);
-     8→void soluna_linux_update_spot(void);
-     9→void soluna_linux_focus_in(void);
-    10→void soluna_linux_focus_out(void);
-    11→void soluna_linux_shutdown_ime(void);
-    12→bool soluna_linux_should_skip_event(const sapp_event *ev);
-    13→void soluna_linux_handle_event(const sapp_event *ev);
-
-src/platform/windows/soluna_windows_ime.h
-     4→void soluna_win32_install_wndproc(void);
-     5→void soluna_win32_apply_ime_rect(void);
-     6→void soluna_win32_set_ime_font(const char *font_name, float height_px);
-     7→void soluna_win32_reset_ime_font(void);
-
 asset/sprites.dl
-
-src/platform/macos/soluna_macos_ime.h
-     6→void soluna_macos_install_ime(void);
-     7→void soluna_macos_hide_ime_label(void);
-     8→void soluna_macos_apply_ime_rect(void);
-     9→void soluna_macos_set_ime_font(const char *font_name, float height_px);
-    10→bool soluna_macos_is_composition_active(void);
-
-src/platform/wasm/soluna_wasm_ime.h
-    22→void soluna_emit_char(uint32_t codepoint, uint32_t modifiers, bool repeat);
-    23→extern void soluna_wasm_setup_ime(void);
-    24→extern void soluna_wasm_dom_show(float x, float y, float w, float h);
-    25→extern void soluna_wasm_dom_hide(void);
-    26→extern void soluna_wasm_dom_set_font(const char *name, float size);
-    27→extern void soluna_wasm_dom_set_color(uint32_t color);
-   109→void
-   110→soluna_wasm_set_font(const char *name, float size) {
-   159→void
-   160→soluna_wasm_hide(void) {
-   166→void
-   167→soluna_wasm_apply_rect(void) {
-   221→EMSCRIPTEN_KEEPALIVE void
-   222→soluna_wasm_ime_commit(const char *text, int modifiers) {
-   226→EMSCRIPTEN_KEEPALIVE void
-   227→soluna_wasm_set_composing(int active) {
-   231→EMSCRIPTEN_KEEPALIVE void
-   232→soluna_wasm_block_next_keypair(void) {
 
 src/appevent.h
      2→#define soluna_app_event_h …
@@ -186,6 +143,49 @@ src/version.h
      6→#define SOLUNA_HASH_VERSION …
 
 src/data/settingdefault.dl
+
+src/platform/linux/soluna_linux_ime.h
+     6→bool soluna_linux_ensure_im(void);
+     7→void soluna_linux_on_rect_cleared(void);
+     8→void soluna_linux_update_spot(void);
+     9→void soluna_linux_focus_in(void);
+    10→void soluna_linux_focus_out(void);
+    11→void soluna_linux_shutdown_ime(void);
+    12→bool soluna_linux_should_skip_event(const sapp_event *ev);
+    13→void soluna_linux_handle_event(const sapp_event *ev);
+
+src/platform/windows/soluna_windows_ime.h
+     4→void soluna_win32_install_wndproc(void);
+     5→void soluna_win32_apply_ime_rect(void);
+     6→void soluna_win32_set_ime_font(const char *font_name, float height_px);
+     7→void soluna_win32_reset_ime_font(void);
+
+src/platform/macos/soluna_macos_ime.h
+     6→void soluna_macos_install_ime(void);
+     7→void soluna_macos_hide_ime_label(void);
+     8→void soluna_macos_apply_ime_rect(void);
+     9→void soluna_macos_set_ime_font(const char *font_name, float height_px);
+    10→bool soluna_macos_is_composition_active(void);
+
+src/platform/wasm/soluna_wasm_ime.h
+    22→void soluna_emit_char(uint32_t codepoint, uint32_t modifiers, bool repeat);
+    23→extern void soluna_wasm_setup_ime(void);
+    24→extern void soluna_wasm_dom_show(float x, float y, float w, float h);
+    25→extern void soluna_wasm_dom_hide(void);
+    26→extern void soluna_wasm_dom_set_font(const char *name, float size);
+    27→extern void soluna_wasm_dom_set_color(uint32_t color);
+   109→void
+   110→soluna_wasm_set_font(const char *name, float size) {
+   159→void
+   160→soluna_wasm_hide(void) {
+   166→void
+   167→soluna_wasm_apply_rect(void) {
+   221→EMSCRIPTEN_KEEPALIVE void
+   222→soluna_wasm_ime_commit(const char *text, int modifiers) {
+   226→EMSCRIPTEN_KEEPALIVE void
+   227→soluna_wasm_set_composing(int active) {
+   231→EMSCRIPTEN_KEEPALIVE void
+   232→soluna_wasm_block_next_keypair(void) {
 
 web/content/docs/_index.md
 

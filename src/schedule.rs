@@ -111,7 +111,6 @@ pub fn schedule<'s>(seed: Vec<Group<'s>>, ctx: &ScheduleCtx<'s>) -> String {
         // Commit: update cache, childless_folders, and remaining budget
         commit_group(
             &mut best_group,
-            &new_children,
             ctx,
             &mut cache,
             &mut childless_folders,
@@ -151,6 +150,26 @@ pub fn schedule<'s>(seed: Vec<Group<'s>>, ctx: &ScheduleCtx<'s>) -> String {
     output
 }
 
+/// Compute per-item folder costs for a FoldersGroup, caching the result.
+fn ensure_folders_cached(g: &mut crate::group::FoldersGroup, ctx: &ScheduleCtx<'_>) {
+    if g.cached_item_costs.is_some() {
+        return;
+    }
+    let costs: Vec<FileCost> = g
+        .items
+        .iter()
+        .map(|item_dir| {
+            let rel = ctx.rel_path(item_dir);
+            let header = format::folder_line(rel);
+            FileCost {
+                tokens: format::count_tokens(&header),
+                chars: header.len(),
+            }
+        })
+        .collect();
+    g.cached_item_costs = Some(costs);
+}
+
 /// Compute the marginal cost of scheduling a candidate group.
 /// For child groups whose parent is in childless_folders, applies the discount.
 fn probe_cost(
@@ -161,26 +180,16 @@ fn probe_cost(
 ) -> FileCost {
     match group {
         Group::Ts(g) => {
-            
-            // TsGroups don't directly trigger folder removal — their parent
-            // FilesGroup does that. No discount here.
             g.cached_render.as_ref().unwrap().marginal_cost
         }
-        Group::Folders(_g) => {
-            // Cost = sum of folder-line costs for each item (sub-folder)
-            // that will be added to childless_folders.
-            // The Folders group itself was already in childless_folders
-            // (charged when its parent committed), so there's no new cost
-            // for the group's own folder line — only for its items.
-            //
-            // But wait: the root FoldersGroup has no parent. Its own folder
-            // line is never shown (the root is implicit from the CLI arg).
-            // So Folders cost = cost of the items that will become childless.
-            
-            // We don't know the items yet (they're discovered in children()),
-            // so the cost of a Folders group is effectively zero at probe time.
-            // The item costs are charged at commit time when items are discovered.
-            FileCost::default()
+        Group::Folders(g) => {
+            let costs = g.cached_item_costs.as_ref().unwrap();
+            let mut fc = FileCost::default();
+            for c in costs {
+                fc.tokens += c.tokens;
+                fc.chars += c.chars;
+            }
+            fc
         }
         Group::Files(g) => {
             let mut fc = FileCost::default();
@@ -207,7 +216,6 @@ fn probe_cost(
 /// Commit a group: update cache, childless_folders, and remaining budget.
 fn commit_group<'s>(
     group: &mut Group<'s>,
-    new_children: &[Group<'s>],
     ctx: &ScheduleCtx<'s>,
     cache: &mut FileCache,
     childless_folders: &mut HashMap<PathBuf, FileCost>,
@@ -224,24 +232,18 @@ fn commit_group<'s>(
                 *rc = rc.saturating_sub(cost.chars);
             }
         }
-        Group::Folders(_g) => {
-            // The Folders group's children() discovered its items (sub-folders
-            // and file groups). Each sub-folder item becomes a childless folder
-            // entry, charged to the budget.
-            for child in new_children {
-                if let Group::Folders(fg) = child {
-                    let rel = ctx.rel_path(&fg.parent_dir);
-                    let header = format::folder_line(rel);
-                    let cost = FileCost {
-                        tokens: format::count_tokens(&header),
-                        chars: header.len(),
-                    };
-                    childless_folders.insert(rel.to_path_buf(), cost);
-                    *remaining_tokens = remaining_tokens.saturating_sub(cost.tokens);
-                    if let Some(rc) = remaining_chars {
-                        *rc = rc.saturating_sub(cost.chars);
-                    }
-                }
+        Group::Folders(g) => {
+            let costs = g.cached_item_costs.take().unwrap();
+            let mut total_cost = FileCost::default();
+            for (item_dir, cost) in g.items.iter().zip(&costs) {
+                let rel = ctx.rel_path(item_dir);
+                childless_folders.insert(rel.to_path_buf(), *cost);
+                total_cost.tokens += cost.tokens;
+                total_cost.chars += cost.chars;
+            }
+            *remaining_tokens = remaining_tokens.saturating_sub(total_cost.tokens);
+            if let Some(rc) = remaining_chars {
+                *rc = rc.saturating_sub(total_cost.chars);
             }
         }
         Group::Files(g) => {
@@ -277,8 +279,12 @@ fn commit_group<'s>(
     }
 }
 
-/// Ensure a TsGroup has its CachedGroupRender computed.
+/// Ensure a group has its cached cost computed.
 fn ensure_cached<'s>(group: &mut Group<'s>, ctx: &ScheduleCtx<'s>, cache: &mut FileCache) {
+    if let Group::Folders(g) = group {
+        ensure_folders_cached(g, ctx);
+        return;
+    }
     let Group::Ts(g) = group else { return };
     if g.cached_render.is_some() {
         return;

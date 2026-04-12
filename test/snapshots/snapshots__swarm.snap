@@ -216,22 +216,9 @@ tests/mock_client.py
      8→def create_mock_response(message, function_calls=[], model="gpt-4o"):
     44→class MockOpenAIClient …
     45→    def __init__(self):
-    46→        self.chat = MagicMock()
-    47→        self.chat.completions = MagicMock()
     49→    def set_response(self, response: ChatCompletion):
-    50→        """
-    51→        Set the mock to return a specific response.
-    52→        :param response: A ChatCompletion response to return.
-    53→        """
-    54→        self.chat.completions.create.return_value = response
     56→    def set_sequential_responses(self, responses: list[ChatCompletion]):
-    57→        """
-    58→        Set the mock to return different responses sequentially.
-    59→        :param responses: A list of ChatCompletion responses to return in order.
-    60→        """
-    61→        self.chat.completions.create.side_effect = responses
     63→    def assert_create_called_with(self, **kwargs):
-    64→        self.chat.completions.create.assert_called_with(**kwargs)
 
 tests/test_core.py
      7→DEFAULT_RESPONSE_CONTENT …
@@ -295,18 +282,31 @@ examples/support_bot/prep_data.py
 
 examples/basic/agent_handoff.py
     16→def transfer_to_spanish_agent():
+    17→    """Transfer spanish speaking users immediately."""
+    18→    return spanish_agent
 
 examples/basic/bare_minimum.py
 
 examples/basic/context_variables.py
      6→def instructions(context_variables):
+     7→    name = context_variables.get("name", "User")
+     8→    return f"You are a helpful agent. Greet the user by name ({name})."
     11→def print_account_details(context_variables: dict):
+    12→    user_id = context_variables.get("user_id", None)
+    13→    name = context_variables.get("name", None)
+    14→    print(f"Account Details: {name} {user_id}")
+    15→    return "Success"
 
 examples/basic/function_calling.py
      6→def get_weather(location) -> str:
+     7→    return "{'temp':67, 'unit':'F'}"
 
 examples/basic/simple_loop_no_helpers.py
     11→def pretty_print_messages(messages):
+    12→    for message in messages:
+    13→        if message["content"] is None:
+    14→            continue
+    15→        print(f"{message['sender']}: {message['content']}")
 
 examples/personal_shopper/__init__.py
 
@@ -461,17 +461,17 @@ examples/customer_service_lite/logs/session_20240425-175154.json
 examples/customer_service_lite/logs/session_20240425-175210.json
 
 examples/airline/data/routines/prompts.py
+     1→STARTER_PROMPT …
+    18→TRIAGE_SYSTEM_PROMPT …
 
 examples/customer_service_streaming/src/evals/eval_function.py
      8→class EvalFunction …
 
+examples/customer_service_streaming/configs/assistants/user_interface/assistant.json
+
 assets/
 
 examples/airline/data/
-
-examples/airline/data/routines/baggage/
-
-examples/airline/data/routines/flight_modification/
 
 examples/airline/evals/eval_cases/
 
@@ -483,15 +483,7 @@ examples/customer_service_lite/
 
 examples/customer_service_streaming/configs/assistants/
 
-examples/customer_service_streaming/configs/assistants/user_interface/
-
 examples/customer_service_streaming/configs/tools/
-
-examples/customer_service_streaming/configs/tools/query_docs/
-
-examples/customer_service_streaming/configs/tools/send_email/
-
-examples/customer_service_streaming/configs/tools/submit_ticket/
 
 examples/customer_service_streaming/data/
 

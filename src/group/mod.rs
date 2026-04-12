@@ -9,7 +9,7 @@ pub mod ts;
 
 use std::path::{Path, PathBuf};
 
-use crate::classify::{FileCategory, FileRole};
+use crate::classify::FileRole;
 use crate::render::CachedGroupRender;
 use crate::schedule::ScheduleCtx;
 
@@ -22,11 +22,13 @@ pub enum Group<'s> {
     Ts(TsGroup<'s>),
 }
 
-/// A folder group — represents sub-directories of a parent.
+/// A folder group — represents sub-directories of a parent, scheduled as a unit (D2, A3).
 pub struct FoldersGroup {
     pub parent_dir: PathBuf,
+    pub items: Vec<PathBuf>,
     pub inherited_modifier: f64,
-    pub category: FileCategory,
+    /// Per-item folder-line costs, computed once on first probe.
+    pub cached_item_costs: Option<Vec<crate::render::FileCost>>,
 }
 
 /// A files group — represents files of a given role in a directory.
@@ -88,7 +90,7 @@ impl<'s> Group<'s> {
     pub fn value(&self) -> f64 {
         match self {
             Group::Folders(g) => {
-                g.inherited_modifier * crate::heuristics::folders_base_value()
+                g.inherited_modifier * crate::heuristics::folders_base_value(g.items.len())
             }
             Group::Files(g) => {
                 g.inherited_modifier * crate::heuristics::files_base_value(g.items.len(), g.role)
@@ -102,7 +104,7 @@ impl<'s> Group<'s> {
     /// First file path for tiebreaking (A1).
     pub fn first_path(&self) -> &Path {
         match self {
-            Group::Folders(g) => &g.parent_dir,
+            Group::Folders(g) => g.items.first().map(|p| p.as_path()).unwrap_or(&g.parent_dir),
             Group::Files(g) => g.items.first().map(|p| p.as_path()).unwrap_or(&g.parent_dir),
             Group::Ts(g) => g
                 .items

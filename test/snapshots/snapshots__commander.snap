@@ -134,7 +134,6 @@ lib/command.js
    983→  getOptionValueSourceWithGlobals(key) {
   1090→  parse(argv, parseOptions) {
   1119→  async parseAsync(argv, parseOptions) {
-  1127→  _prepareForParse() {
   1141→  saveStateBeforeParse() {
   1158→  restoreStateBeforeParse() {
   1748→  parseOptions(args) {
@@ -300,11 +299,8 @@ docs/terminology.md
      1→# Terminology
 
 eslint.config.js
-     8→const tsconfigTsFiles …
-     9→const tsconfigJsFiles …
 
 jest.config.js
-     1→const config …
 
 package-support.json
      2→  "versions": [
@@ -348,6 +344,8 @@ examples/alias.js
 examples/argument.js
 
 examples/arguments-custom-processing.js
+    10→function myParseInt …
+    20→function mySum …
 
 examples/arguments-extra.js
 
@@ -360,9 +358,11 @@ examples/color-help.mjs
 examples/configure-help.js
 
 examples/configure-output.js
+     4→function errorColor …
 
 examples/custom-command-class.js
      6→class CommandWithTrace …
+    15→function inspectCommand …
 
 examples/custom-help-text.js
 
@@ -384,8 +384,10 @@ examples/help-subcommands-usage.js
 examples/hook.js
 
 examples/man-style-help.mjs
+     5→function formatItem …
 
 examples/nestedCommands.js
+    21→function makeHeatCommand …
 
 examples/options-boolean-or-value.js
 
@@ -394,6 +396,10 @@ examples/options-common.js
 examples/options-conflicts.js
 
 examples/options-custom-processing.js
+    10→function myParseInt …
+    19→function increaseVerbosity …
+    23→function collect …
+    27→function commaSeparatedList …
 
 examples/options-defaults.js
 
@@ -427,7 +433,6 @@ CHANGELOG.md
 typings/esm.d.mts
 
 typings/index.d.ts
-    12→type LiteralUnion …
     16→export class CommanderError …
     31→export class InvalidArgumentError …
     40→export interface ErrorOptions …
@@ -457,17 +462,10 @@ CONTRIBUTING.md
 SECURITY.md
      1→# Security Policy
 
-Readme_zh-CN.md
-     1→# Commander.js
-
 docs/zh-CN/
 
 tests/
 
 tests/fixtures/
-
-tests/fixtures/another-dir/
-
-tests/fixtures/other-dir/
 
 tests/fixtures-extensions/

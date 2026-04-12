@@ -2,6 +2,22 @@
 source: test/fixtures.rs
 expression: output
 ---
+CONTEXT.md
+     1→# toasty-core Component Context
+     3→## Purpose
+     4→The foundation layer that defines all core abstractions, data structures, and interfaces used throughout Toasty. This crate has zero dependencies on other Toasty crates and serves as the contract between all components.
+     6→## Key Responsibilities
+    60→## Common Change Patterns
+    80→## Important Files
+    89→## Design Principles
+    96→## Recent Changes Analysis
+
+Cargo.toml
+     1→[package]
+     7→[dependencies]
+    20→[features]
+    28→[dev-dependencies]
+
 src/schema/builder/table.rs
     32→struct BuildMapping …
     42→impl BuildSchema<'_> …
@@ -22,22 +38,6 @@ src/schema/app/constraint/length.rs
 src/schema/app/field/primitive.rs
      1→use crate:: …
      4→pub struct FieldPrimitive …
-
-CONTEXT.md
-     1→# toasty-core Component Context
-     3→## Purpose
-     4→The foundation layer that defines all core abstractions, data structures, and interfaces used throughout Toasty. This crate has zero dependencies on other Toasty crates and serves as the contract between all components.
-     6→## Key Responsibilities
-    60→## Common Change Patterns
-    80→## Important Files
-    89→## Design Principles
-    96→## Recent Changes Analysis
-
-Cargo.toml
-     1→[package]
-     7→[dependencies]
-    20→[features]
-    28→[dev-dependencies]
 
 src/driver.rs
     18→pub trait Driver …

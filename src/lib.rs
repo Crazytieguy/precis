@@ -55,18 +55,16 @@ impl Lang {
 pub fn render(path: &Path, budget: usize, char_budget: Option<usize>) -> String {
     let store = store::ParseStore::new();
 
-    let seed = if path.is_file() {
-        let ctx_temp = schedule::ScheduleCtx {
+    if path.is_file() {
+        let ctx = schedule::ScheduleCtx {
             store: &store,
             root: path.parent().unwrap_or(Path::new("")).to_path_buf(),
             budget,
             char_budget,
         };
-        let seed = build_file_seed(path, &ctx_temp);
-        return schedule::schedule(seed, &ctx_temp);
-    } else {
-        build_dir_seed(path)
-    };
+        let seed = build_file_seed(path, &ctx);
+        return schedule::schedule(seed, &ctx);
+    }
 
     let root = path
         .canonicalize()
@@ -77,6 +75,7 @@ pub fn render(path: &Path, budget: usize, char_budget: Option<usize>) -> String 
         budget,
         char_budget,
     };
+    let seed = build_dir_seed(&root, &ctx);
 
     schedule::schedule(seed, &ctx)
 }
@@ -99,12 +98,29 @@ fn build_file_seed<'s>(
 }
 
 /// Build the seed frontier for a directory input (design §5.2).
-fn build_dir_seed(path: &Path) -> Vec<group::Group<'static>> {
-    let abs_path = path.canonicalize().unwrap_or_else(|_| path.to_path_buf());
-    vec![group::Group::Folders(group::FoldersGroup {
-        parent_dir: abs_path,
-        inherited_modifier: 1.0,
-        category: classify::FileCategory::Source,
-    })]
+/// Walks one level to produce a FoldersGroup (if sub-folders exist) and FilesGroups.
+fn build_dir_seed<'s>(abs_path: &Path, ctx: &schedule::ScheduleCtx<'s>) -> Vec<group::Group<'s>> {
+    let (subdirs, files_by_role) =
+        group::folders::walk_dir_entries(abs_path, &ctx.root);
+
+    let mut seed = Vec::new();
+
+    if !subdirs.is_empty() {
+        seed.push(group::Group::Folders(group::FoldersGroup {
+            parent_dir: abs_path.to_path_buf(),
+            items: subdirs,
+            inherited_modifier: 1.0,
+            cached_item_costs: None,
+        }));
+    }
+
+    seed.extend(group::folders::create_files_groups(
+        abs_path,
+        files_by_role,
+        1.0,
+        &ctx.root,
+    ));
+
+    seed
 }
 

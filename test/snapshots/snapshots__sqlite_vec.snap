@@ -15,14 +15,14 @@ ARCHITECTURE.md
     13→### Shadow Tables
     49→### idxStr
 
-bindings/rust/src/lib.rs
-     3→    pub fn sqlite3_vec_init();
-
 bindings/python/extra_init.py
      6→def serialize_float32(vector: List[float]) -> bytes:
     11→def serialize_int8(vector: List[int]) -> bytes:
     19→    def register_numpy(db: Connection, name: str, array: npt.NDArray):
     44→    def register_numpy(db: Connection, name: str, array):
+
+bindings/rust/src/lib.rs
+     3→    pub fn sqlite3_vec_init();
 
 Makefile
 
@@ -36,6 +36,9 @@ reference.yaml
    328→vec0:
 
 sqlite-vec.c
+     1→#include "sqlite-vec.h"
+    19→#include "sqlite3ext.h"
+    22→#include "sqlite3.h"
     87→#define UNUSED_PARAMETER …
     93→#define COMPILER_SUPPORTS_VTAB_IN …
     97→#define SQLITE_SUBTYPE …
@@ -348,19 +351,20 @@ examples/simple-node/demo.mjs
 
 SECURITY.md
 
-site/package.json
+site/api-reference.md
 
-benchmarks/exhaustive-memory/
+site/build-ref.mjs
 
-benchmarks/micro/
+site/compiling.md
 
-benchmarks/micro/benches/
+site/index.md
 
-benchmarks/micro/src/
+site/project.data.ts
+    13→  load() {
 
-benchmarks/profiling/
+site/sqlite.tmlanguage.json
 
-benchmarks/self-params/
+site/versioning.md
 
 bindings/
 
@@ -392,22 +396,4 @@ site/guides/
 
 site/public/
 
-site/public/fonts/
-
 site/using/
-
-tests/__snapshots__/
-
-tests/afbd/
-
-tests/correctness/
-
-tests/fuzz/
-
-tests/fuzz/corpus/
-
-tests/fuzz/corpus/vec0-create/
-
-tests/leak-fixtures/
-
-tests/minimum/

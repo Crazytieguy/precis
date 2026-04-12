@@ -70,13 +70,6 @@ packages/cli/src/cli.ts
      4→import { viewNoteCommand } from './view-note/view-note.command';
      6→const main …
 
-packages/lib/src/files/files.models.ts
-     1→import type { NoteAsset } from '../notes/notes.types';
-     6→async function fileToNoteAsset …
-    20→async function filesToNoteAssets …
-    24→async function noteAssetToFile …
-    34→async function noteAssetsToFiles …
-
 pnpm-workspace.yaml
      1→packages:
      2→  - 'packages/*'
@@ -92,24 +85,6 @@ pnpm-workspace.yaml
 
 packages/cli/bin/enclosed.mjs
      4→import '../dist/cli.mjs';
-
-packages/app-client/src/index.tsx
-     6→import { I18nProvider } from './modules/i18n/i18n.provider';
-     7→import { NoteContextProvider } from './modules/notes/notes.context';
-     8→import { Toaster } from './modules/ui/components/sonner';
-     9→import { getRoutes } from './routes';
-    12→import './app.css';
-
-packages/app-client/src/routes.tsx
-     2→import { LoginPage } from './modules/auth/pages/login.page';
-     3→import { getConfig } from './modules/config/config.provider';
-     4→import { NOTE_ID_REGEX } from './modules/notes/notes.constants';
-     5→import { buildViewNotePagePath } from './modules/notes/notes.models';
-     6→import { CreateNotePage } from './modules/notes/pages/create-note.page';
-     7→import { ViewNotePage } from './modules/notes/pages/view-note.page';
-     8→import { Button } from './modules/ui/components/button';
-     9→import { AppLayout } from './modules/ui/layouts/app.layout';
-    11→export function getRoutes(): RouteDefinition[] {
 
 packages/app-server/src/index.cloudflare.ts
      1→import { createServer } from './modules/app/server';
@@ -159,8 +134,30 @@ packages/docs/src/index.md
     27→## Why Enclosed?
     33→## Get Started
 
-packages/app-client/src/modules/theme/theme.store.ts
-     4→export function useThemeStore() {
+packages/lib/src/files/files.models.ts
+     1→import type { NoteAsset } from '../notes/notes.types';
+     6→async function fileToNoteAsset …
+    20→async function filesToNoteAssets …
+    24→async function noteAssetToFile …
+    34→async function noteAssetsToFiles …
+
+packages/app-client/src/index.tsx
+     6→import { I18nProvider } from './modules/i18n/i18n.provider';
+     7→import { NoteContextProvider } from './modules/notes/notes.context';
+     8→import { Toaster } from './modules/ui/components/sonner';
+     9→import { getRoutes } from './routes';
+    12→import './app.css';
+
+packages/app-client/src/routes.tsx
+     2→import { LoginPage } from './modules/auth/pages/login.page';
+     3→import { getConfig } from './modules/config/config.provider';
+     4→import { NOTE_ID_REGEX } from './modules/notes/notes.constants';
+     5→import { buildViewNotePagePath } from './modules/notes/notes.models';
+     6→import { CreateNotePage } from './modules/notes/pages/create-note.page';
+     7→import { ViewNotePage } from './modules/notes/pages/view-note.page';
+     8→import { Button } from './modules/ui/components/button';
+     9→import { AppLayout } from './modules/ui/layouts/app.layout';
+    11→export function getRoutes(): RouteDefinition[] {
 
 packages/app-client/.env.example
 
@@ -266,10 +263,6 @@ packages/cli/src/view-note/view-note.command.ts
 
 packages/cli/src/view-note/view-note.models.ts
      5→async function promptForPassword(): Promise<string> {
-
-packages/app-client/src/modules/shared/hooks/hooks.ts
-
-packages/app-server/src/modules/shared/utils/random.ts
 
 packages/lib/src/api/api.client.ts
      2→import { DEFAULT_API_BASE_URL } from './api.constants';
@@ -399,6 +392,9 @@ packages/crypto/src/web/crypto.web.usecases.ts
     38→function generateBaseKey …
     42→async function deriveMasterKey …
 
+packages/app-client/src/modules/theme/theme.store.ts
+     4→export function useThemeStore() {
+
 packages/app-server/src/modules/storage/storage.models.ts
      1→import type …
      5→function defineStorage …
@@ -441,11 +437,6 @@ packages/cli/src/create-note/create-note.usecases.test.ts
 packages/cli/src/create-note/create-note.usecases.ts
      1→import { readFromStdin as readFromStdinImpl } from '../shared/cli.models';
      3→export async function getNoteContent …
-
-packages/app-client/src/modules/shared/style/cn.ts
-     5→export const cn …
-
-packages/app-server/src/modules/app/users/users.repository.ts
 
 packages/lib/src/notes/notes.models.test.ts
      2→import { createNoteUrl, createNoteUrlHashFragment, parseNoteUrl, parseNoteUrlHashFragment } from './notes.models';
@@ -532,6 +523,8 @@ packages/app-client/src/modules/auth/auth.store.ts
      4→import { isAccessTokenExpired } from './auth.models';
      6→export const authStore …
 
+packages/app-server/src/modules/shared/utils/random.ts
+
 packages/app-client/src/modules/config/config.constants.ts
      1→import type { Config } from './config.types';
      3→export const buildTimeConfig …
@@ -543,6 +536,13 @@ packages/app-client/src/modules/config/config.provider.tsx
 
 packages/app-client/src/modules/config/config.types.ts
      1→export type Config …
+
+packages/app-client/src/modules/shared/hooks/hooks.ts
+
+packages/app-client/src/modules/shared/style/cn.ts
+     5→export const cn …
+
+packages/app-server/src/modules/app/users/users.repository.ts
 
 packages/app-client/src/modules/auth/pages/login.page.tsx
     41→export const LoginPage: Component = () => {
