@@ -2,34 +2,40 @@
 source: test/fixtures.rs
 expression: output
 ---
+slstm/src/cuda/slstm.h
+    24→#include "../util/util.h"
+    27→// all needed definitions from external
+    28→#define SLSTM_NUM_HEADS …
+    29→#define SLSTM_HIDDEN_SIZE …
+    30→#define SLSTM_BATCH_SIZE …
+    31→#define SLSTM_NUM_GATES …
+    32→#define SLSTM_NUM_STATES …
+    33→#define SLSTM_DTYPE_R …
+    34→#define SLSTM_DTYPE_B …
+    35→#define SLSTM_DTYPE_W …
+    36→#define SLSTM_DTYPE_G …
+    37→#define SLSTM_DTYPE_S …
+    38→#define SLSTM_DTYPE_A …
+    39→// defines whether g = Wx + Ry + b for every gate, enables half the cache for
+    40→// backward
+    41→#define SLSTM_SIMPLE_AGG …
+    46→class ForwardPass …
+   144→class BackwardPass …
+   254→class BackwardPassCut …
+
 __init__.py
 
 xlstm_block.py
-     9→from ..components.feedforward import FeedForwardConfig, create_feedforward
-    10→from ..components.ln import LayerNorm
-    11→from .mlstm.layer import mLSTMLayer, mLSTMLayerConfig
-    12→from .slstm.layer import sLSTMLayer, sLSTMLayerConfig
     17→class xLSTMBlockConfig …
     43→class xLSTMBlock …
 
 slstm/__init__.py
 
 slstm/block.py
-     7→from ...components.feedforward import FeedForwardConfig
-     8→from ..xlstm_block import xLSTMBlock, xLSTMBlockConfig
-     9→from .layer import sLSTMLayerConfig
     13→class sLSTMBlockConfig …
     29→class sLSTMBlock …
 
 slstm/cell.py
-    12→from .src.cuda_init import load
-    13→from .src.vanilla import (
-    14→    slstm_forward,
-    15→    slstm_forward_step,
-    16→    slstm_pointwise_function_registry,
-    17→)
-    18→from ...components.util import conditional_decorator, round_to_multiple, ParameterProxy
-    19→from ...components.init import bias_linspace_init_
     28→LOGGER …
     30→DTYPE_DICT …
     35→DTYPES …
@@ -42,16 +48,71 @@ slstm/cell.py
    777→class sLSTMCell …
 
 slstm/layer.py
-     6→from ...components.ln import MultiHeadLayerNorm
-     7→from ...components.linear_headwise import (
-     8→    LinearHeadwiseExpand,
-     9→    LinearHeadwiseExpandConfig,
-    10→)
-    11→from ...components.conv import CausalConv1d, CausalConv1dConfig
-    12→from ...components.init import small_init_init_
-    15→from .cell import sLSTMCell, sLSTMCellConfig
     19→class sLSTMLayerConfig …
     33→class sLSTMLayer …
+
+slstm/src/util/blas.h
+    27→template <typename T> struct blas …
+    28→  struct set_pointer_mode {
+    29→    set_pointer_mode(cublasHandle_t handle) : handle_(handle) {
+    30→      cublasGetPointerMode(handle_, &old_mode_);
+    31→      cublasSetPointerMode(handle_, CUBLAS_POINTER_MODE_HOST);
+    32→    }
+    33→    ~set_pointer_mode() { cublasSetPointerMode(handle_, old_mode_); }
+    34→
+    35→  private:
+    36→    cublasHandle_t handle_;
+    37→    cublasPointerMode_t old_mode_;
+    38→  };
+    39→  struct enable_tensor_cores {
+    40→    enable_tensor_cores(cublasHandle_t handle) : handle_(handle) {
+    41→      cublasGetMathMode(handle_, &old_mode_);
+    42→      cublasSetMathMode(handle_, CUBLAS_TENSOR_OP_MATH);
+    43→    }
+    44→    ~enable_tensor_cores() { cublasSetMathMode(handle_, old_mode_); }
+    45→
+    46→  private:
+    47→    cublasHandle_t handle_;
+    48→    cublasMath_t old_mode_;
+    49→  };
+    50→};
+    52→cublasStatus_t cublasHgemmsb(cublasHandle_t handle, cublasOperation_t transa,
+    60→cublasStatus_t cublasSgemmsb(cublasHandle_t handle, cublasOperation_t transa,
+    67→cublasStatus_t cublasDgemmsb(cublasHandle_t handle, cublasOperation_t transa,
+    75→cublasStatus_t cublasHgemv2(cublasHandle_t handle, cublasOperation_t trans,
+    80→cublasStatus_t cublasHgemv3(cublasHandle_t handle, cublasOperation_t trans,
+    85→cublasStatus_t cublasHgemv(cublasHandle_t handle, cublasOperation_t trans,
+    90→cublasStatus_t cublasHgemm2(cublasHandle_t handle, cublasOperation_t transa,
+    97→cublasStatus_t cublasHgemm3(cublasHandle_t handle, cublasOperation_t transa,
+   104→void initVector_d(cudaStream_t stream, double *data, int size, double value);
+   105→void initVector_f(cudaStream_t stream, float *data, int size, float value);
+   106→void initVector_h(cudaStream_t stream, __half *data, int size, __half value);
+   132→cublasStatus_t cublasBgemv(cublasHandle_t handle, cublasOperation_t trans,
+   139→cublasStatus_t
+   147→cublasStatus_t cublasBgemmsb(cublasHandle_t handle, cublasOperation_t transa,
+   156→void initVector_b(cudaStream_t stream, __nv_bfloat16 *data, int size,
+
+slstm/src/util/cuda_error.h
+     9→void cudaOccupancyMaxActiveBlocksPerMultiprocessor2(dim3 blockSize,
+
+slstm/src/util/device_assert.h
+    23→extern "C" __host__ __device__ void
+    27→#define device_assert_fail …
+
+slstm/src/util/support.h
+    26→#define CHECK_CUDA …
+    28→#define CHECK_CONTIGUOUS …
+    30→#define CHECK_INPUT …
+    34→#define AT_DISPATCH_CASE_FLOATING_TYPES_AND_HALF2 …
+    40→#define AT_DISPATCH_FLOATING_TYPES_AND_HALF2 …
+    44→template <typename U> struct native_type …
+    45→  using T = U;
+    46→};
+    49→  using T …
+    52→template <typename U> typename native_type<U>::T *ptr(torch::Tensor t) {
+    56→template <typename T> torch::Dtype typeToTorchDtype();
+
+slstm/src/util/util.h
 
 mlstm/__init__.py
 
@@ -100,27 +161,6 @@ slstm/src/cuda/slstm.cc
    305→// PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) { PARAMETRIC_DEFINITIONS }
    306→PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
 
-slstm/src/cuda/slstm.h
-    24→#include "../util/util.h"
-    27→// all needed definitions from external
-    28→#define SLSTM_NUM_HEADS …
-    29→#define SLSTM_HIDDEN_SIZE …
-    30→#define SLSTM_BATCH_SIZE …
-    31→#define SLSTM_NUM_GATES …
-    32→#define SLSTM_NUM_STATES …
-    33→#define SLSTM_DTYPE_R …
-    34→#define SLSTM_DTYPE_B …
-    35→#define SLSTM_DTYPE_W …
-    36→#define SLSTM_DTYPE_G …
-    37→#define SLSTM_DTYPE_S …
-    38→#define SLSTM_DTYPE_A …
-    39→// defines whether g = Wx + Ry + b for every gate, enables half the cache for
-    40→// backward
-    41→#define SLSTM_SIMPLE_AGG …
-    46→class ForwardPass …
-   144→class BackwardPass …
-   254→class BackwardPassCut …
-
 slstm/src/cuda/slstm_backward.cu
 
 slstm/src/cuda/slstm_backward_cut.cu
@@ -133,32 +173,7 @@ slstm/src/cuda/slstm_pointwise.cuh
 
 slstm/src/util/blas.cu
 
-slstm/src/util/blas.h
-    27→template <typename T> struct blas …
-    52→cublasStatus_t cublasHgemmsb(cublasHandle_t handle, cublasOperation_t transa,
-    60→cublasStatus_t cublasSgemmsb(cublasHandle_t handle, cublasOperation_t transa,
-    67→cublasStatus_t cublasDgemmsb(cublasHandle_t handle, cublasOperation_t transa,
-    75→cublasStatus_t cublasHgemv2(cublasHandle_t handle, cublasOperation_t trans,
-    80→cublasStatus_t cublasHgemv3(cublasHandle_t handle, cublasOperation_t trans,
-    85→cublasStatus_t cublasHgemv(cublasHandle_t handle, cublasOperation_t trans,
-    90→cublasStatus_t cublasHgemm2(cublasHandle_t handle, cublasOperation_t transa,
-    97→cublasStatus_t cublasHgemm3(cublasHandle_t handle, cublasOperation_t transa,
-   104→void initVector_d(cudaStream_t stream, double *data, int size, double value);
-   105→void initVector_f(cudaStream_t stream, float *data, int size, float value);
-   106→void initVector_h(cudaStream_t stream, __half *data, int size, __half value);
-   132→cublasStatus_t cublasBgemv(cublasHandle_t handle, cublasOperation_t trans,
-   139→cublasStatus_t
-   147→cublasStatus_t cublasBgemmsb(cublasHandle_t handle, cublasOperation_t transa,
-   156→void initVector_b(cudaStream_t stream, __nv_bfloat16 *data, int size,
-
 slstm/src/util/cuda_error.cu
-
-slstm/src/util/cuda_error.h
-     9→void cudaOccupancyMaxActiveBlocksPerMultiprocessor2(dim3 blockSize,
-
-slstm/src/util/device_assert.h
-    23→extern "C" __host__ __device__ void
-    27→#define device_assert_fail …
 
 slstm/src/util/inline_ops.cuh
 
@@ -171,16 +186,3 @@ slstm/src/util/inline_ops_bf16.cuh
 slstm/src/util/inline_ops_fp16.cuh
 
 slstm/src/util/inline_print.cuh
-
-slstm/src/util/support.h
-    26→#define CHECK_CUDA …
-    28→#define CHECK_CONTIGUOUS …
-    30→#define CHECK_INPUT …
-    34→#define AT_DISPATCH_CASE_FLOATING_TYPES_AND_HALF2 …
-    40→#define AT_DISPATCH_FLOATING_TYPES_AND_HALF2 …
-    44→template <typename U> struct native_type …
-    49→  using T …
-    52→template <typename U> typename native_type<U>::T *ptr(torch::Tensor t) {
-    56→template <typename T> torch::Dtype typeToTorchDtype();
-
-slstm/src/util/util.h

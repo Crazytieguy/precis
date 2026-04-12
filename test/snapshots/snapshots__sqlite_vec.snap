@@ -35,10 +35,6 @@ reference.yaml
    308→quantization:
    328→vec0:
 
-sqlite-dist.toml
-     1→[package]
-    10→[targets]
-
 sqlite-vec.c
     87→#define UNUSED_PARAMETER …
     93→#define COMPILER_SUPPORTS_VTAB_IN …
@@ -321,14 +317,24 @@ bindings/go/ncruces/go-sqlite3.patch
 
 benchmarks/README.md
 
+tests/sqlite-vec-internal.h
+     3→int min_idx(
+
+sqlite-dist.toml
+     1→[package]
+    10→[targets]
+
 examples/nbc-headlines/README.md
 
 examples/sqlite3-cli/README.md
-     1→# `sqlite-vec` statically compiled in the SQLite CLI
 
 examples/wasm/README.md
 
+examples/simple-bun/demo.ts
+
 examples/simple-deno/demo.ts
+
+examples/simple-python/demo.py
 
 examples/simple-sqlite/demo.sql
 
@@ -338,11 +344,13 @@ scripts/publish-release.sh
 
 scripts/vendor.sh
 
+examples/simple-node/demo.mjs
+
 SECURITY.md
 
-examples/python-recipes/openai-sample.py
+site/package.json
 
-benchmarks/exhaustive-memory/README.md
+benchmarks/exhaustive-memory/
 
 benchmarks/micro/
 
@@ -360,7 +368,7 @@ bindings/go/
 
 examples/
 
-examples/simple-bun/
+examples/python-recipes/
 
 examples/simple-c/
 
@@ -368,19 +376,13 @@ examples/simple-go-cgo/
 
 examples/simple-go-ncruces/
 
-examples/simple-node/
-
 examples/simple-node2/
-
-examples/simple-python/
 
 examples/simple-ruby/
 
 examples/simple-rust/
 
 examples/simple-wasm/
-
-site/
 
 site/features/
 
@@ -393,8 +395,6 @@ site/public/
 site/public/fonts/
 
 site/using/
-
-tests/
 
 tests/__snapshots__/
 

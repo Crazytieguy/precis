@@ -73,30 +73,13 @@ py3xui/client/README.md
      3→# client.client
      9→## ClientFields Objects
     19→## Client Objects
-    49→#### password
-    55→#### inbound\_id
-    61→#### expiry\_time
-    67→#### limit\_ip
-    73→#### sub\_id
-    79→#### comment
-    86→#### tg\_id
-    92→#### total\_gb
 
 py3xui/inbound/README.md
      3→# inbound.settings
-    10→## SettingsFields Objects
-    20→## Settings Objects
     36→# inbound.inbound
-    42→## InboundFields Objects
-    52→## Inbound Objects
    124→# inbound.stream\_settings
-   130→## StreamSettingsFields Objects
-   140→## StreamSettings Objects
    167→# inbound.bases
-   173→## JsonStringModel Objects
    203→# inbound.sniffing
-   209→## SniffingFields Objects
-   219→## Sniffing Objects
 
 py3xui/server/README.md
      3→# server.server
@@ -112,14 +95,6 @@ py3xui/server/README.md
 
 py3xui/utils/README.md
      3→# utils.env
-     9→#### parse\_env
-    39→#### xui\_host
-    59→#### xui\_username
-    79→#### xui\_password
-    99→#### tls\_verify
-   114→#### tls\_cert\_path
-
-py3xui/__init__.py
 
 demo.py
     65→XUI_EXTERNAL_IP = "**********"  # ⬅️ Your external IP here or domain name.
@@ -127,39 +102,7 @@ demo.py
     67→SERVER_PORT …
     70→def get_connection_string(inbound: Inbound, user_uuid: str, user_email: int) -> str:
 
-pyproject.toml
-     1→[build-system]
-     2→requires = ["setuptools>=42", "wheel"]
-     3→build-backend = "setuptools.build_meta"
-     4→
-     5→[project]
-     6→name = "py3xui"
-     7→version = "0.5.0"
-     8→description = "Sync and Async Object-oriented Python SDK for the 3x-ui app."
-     9→authors = [{name = "iwatkot", email = "iwatkot@gmail.com"}]
-    10→license = {text = "MIT License"}
-    11→readme = "README.md"
-    12→keywords = ["vpn", "3x-ui", "sdk", "api"]
-    13→classifiers = [
-    14→    "Programming Language :: Python :: 3.11",
-    15→    "Programming Language :: Python :: 3.12",
-    16→    "License :: OSI Approved :: MIT License",
-    17→    "Operating System :: OS Independent",
-    18→]
-    19→dependencies = [
-    20→    "pydantic>=2.0.0",
-    21→    "requests>=2.0.0",
-    22→    "httpx>=0.20.0",
-    23→]
-    24→
-    25→[project.urls]
-    26→Homepage = "https://github.com/iwatkot/py3xui"
-    27→Repository = "https://github.com/iwatkot/py3xui"
-    28→
-    29→[tool.setuptools.packages.find]
-    30→where = ["."]
-    31→include = ["py3xui*"]
-    32→exclude = ["dev*"]
+py3xui/__init__.py
 
 dev/clean_trash.sh
 
@@ -168,8 +111,6 @@ dev/create_venv.sh
 dev/push.sh
 
 dev/pydoc.sh
-
-dev/requirements.txt
 
 py3xui/client/__init__.py
 
@@ -271,6 +212,14 @@ py3xui/inbound/stream_settings.py
      9→class StreamSettingsFields …
     25→class StreamSettings …
 
+dev/requirements.txt
+
+pyproject.toml
+     1→[build-system]
+     5→[project]
+    25→[project.urls]
+    29→[tool.setuptools.packages.find]
+
 py3xui/async_api/__init__.py
 
 py3xui/async_api/async_api.py
@@ -311,6 +260,31 @@ tests/test_api.py
     16→SESSION …
     17→EMAIL …
     18→SESSION …
+    21→def test_login_success():
+    29→def test_login_failed():
+    37→def test_from_env():
+    48→def test_get_inbounds():
+    95→def test_add_inbound():
+   103→def test_delete_inbound_success_():
+   111→def test_delete_inbound_failed():
+   123→def test_update_inbound():
+   131→def test_get_client():
+   146→def test_get_client_ips():
+   158→def test_add_clients():
+   167→def test_update_client():
+   178→def test_reset_client_ips():
+   186→def test_reset_inbounds_stats():
+   194→def test_reset_inbound_client_stats():
+   204→def test_reset_client_stats():
+   215→def test_delete_client():
+   223→def test_delete_depleted_clients():
+   231→def test_client_online():
+   239→def test_get_client_traffic_by_id():
+   260→def test_database_export():
+   268→def test_get_status():
+   288→def test_get_db():
+   317→def test_get_db_failed():
+   331→def test_generate_reality_keys():
 
 tests/test_async_api.py
     12→RESPONSES_DIR …
@@ -324,8 +298,36 @@ tests/test_async_api.py
     20→USERNAME …
     21→PASSWORD …
     22→SESSION …
+    26→async def test_from_env():
+    38→async def test_login_failed(httpx_mock: HTTPXMock):
+    52→async def test_login_success(httpx_mock: HTTPXMock):
+    67→async def test_get_client(httpx_mock: HTTPXMock):
+    88→async def test_get_ips(httpx_mock: HTTPXMock):
+   110→async def test_add_clients(httpx_mock: HTTPXMock):
+   129→async def test_update_client(httpx_mock: HTTPXMock):
+   148→async def test_reset_client_ips(httpx_mock: HTTPXMock):
+   166→async def test_reset_client_stats(httpx_mock: HTTPXMock):
+   184→async def test_delete_client(httpx_mock: HTTPXMock):
+   202→async def test_delete_depleted_clients(httpx_mock: HTTPXMock):
+   220→async def test_client_online(httpx_mock: HTTPXMock):
+   238→async def test_get_client_traffic_by_id(httpx_mock: HTTPXMock):
+   286→async def test_get_inbounds(httpx_mock: HTTPXMock):
+   319→async def test_add_inbound(httpx_mock: HTTPXMock):
+   337→async def test_delete_inbound_success(httpx_mock: HTTPXMock):
+   355→async def test_delete_inbound_failed(httpx_mock: HTTPXMock):
+   374→async def test_update_inbound(httpx_mock: HTTPXMock):
+   392→async def test_database_export(httpx_mock: HTTPXMock):
+   410→async def test_get_server_status(httpx_mock: HTTPXMock):
+   436→async def test_generate_reality_keys(httpx_mock: HTTPXMock):
+   464→async def test_get_db(httpx_mock: HTTPXMock, tmp_path):
+   488→async def test_get_db_failed(httpx_mock: HTTPXMock, tmp_path):
+   512→async def test_get_inbound_by_id(httpx_mock: HTTPXMock):
+   539→async def test_reset_inbounds_stats(httpx_mock: HTTPXMock):
+   557→async def test_reset_inbound_client_stats(httpx_mock: HTTPXMock):
 
 tests/test_env.py
+     8→def test_envs_success():
+    18→def test_envs_failed():
 
 CODE_OF_CONDUCT.md
      1→# Contributor Covenant Code of Conduct
@@ -351,7 +353,6 @@ CONTRIBUTING.md
    102→## Submitting a Pull Request
    103→Once you have made your changes and tested them, you can submit a [pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) to the repository.
    105→## Code of Conduct
-   106→By participating in this project, you agree to abide by the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 LICENSE.md
      1→# MIT License
@@ -365,12 +366,4 @@ SECURITY.md
     36→### Responsible Disclosure
     44→### Recognition
 
-tests/responses/get_client.json
-
-tests/responses/get_client_traffic_by_id.json
-
-tests/responses/get_inbound_by_id.json
-
-tests/responses/get_inbounds.json
-
-tests/responses/get_server_status.json
+tests/responses/

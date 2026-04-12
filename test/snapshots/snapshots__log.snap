@@ -21,9 +21,6 @@ Cargo.toml
     56→[dependencies]
     62→[dev-dependencies]
 
-triagebot.toml
-     1→[assign]
-
 src/__private_api.rs
      1→//! WARNING: this is not part of the crate's public API and is subject to change at any time
      3→use self::sealed::KVs;
@@ -303,6 +300,9 @@ src/kv/value.rs
   1169→macro_rules! as_sval …
 
 benches/value.rs
+
+triagebot.toml
+     1→[assign]
 
 tests/integration.rs
     13→impl Log for Logger …

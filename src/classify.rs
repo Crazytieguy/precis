@@ -430,6 +430,27 @@ pub fn is_header_extension(ext: &str) -> bool {
     matches!(ext, "h" | "hpp" | "hxx" | "hh")
 }
 
+/// Check if a file path has a C/C++ header extension.
+pub fn is_header_file(path: &Path) -> bool {
+    path.extension()
+        .and_then(|e| e.to_str())
+        .is_some_and(|ext| is_header_extension(&ext.to_ascii_lowercase()))
+}
+
+/// Compute the (is_config, is_type_declaration, is_header) properties for a file.
+/// Used to partition files into groups with different modifiers.
+pub fn file_modifier_properties(relative_path: &Path) -> (bool, bool, bool) {
+    let filename = relative_path
+        .file_name()
+        .and_then(|n| n.to_str())
+        .unwrap_or("");
+    (
+        is_config_file(relative_path, filename),
+        is_type_declaration_file(relative_path),
+        is_header_file(relative_path),
+    )
+}
+
 // ---------------------------------------------------------------------------
 // File discovery helpers (migrated from walk.rs)
 // ---------------------------------------------------------------------------

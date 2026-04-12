@@ -16,6 +16,12 @@ README.md
 
 sps-core/src/lib.rs
 
+Cargo.toml
+     1→[workspace]
+    10→[patch.crates-io]
+    16→[workspace.dependencies]
+    43→[profile.release]
+
 sps/Cargo.toml
      1→[package]
     13→[[bin]]
@@ -33,14 +39,6 @@ sps-core/Cargo.toml
 sps-net/Cargo.toml
      1→[package]
     10→[dependencies]
-
-Cargo.toml
-     1→[workspace]
-    10→[patch.crates-io]
-    16→[workspace.dependencies]
-    43→[profile.release]
-
-rustfmt.toml
 
 sps/src/cli.rs
      2→//! Defines the command-line argument structure using clap.
@@ -308,6 +306,8 @@ sps-common/src/model/version.rs
     61→impl AsRef<Self> for Version …
     69→impl From<Version> for semver::Version …
     75→impl<'de> Deserialize<'de> for Version …
+
+rustfmt.toml
 
 sps/src/cli/
 

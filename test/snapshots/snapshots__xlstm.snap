@@ -20,35 +20,6 @@ README.md
 
 __init__.py
 
-environment_pt220cu121.yaml
-     1→name: xlstm
-     2→channels:
-     7→dependencies:
-
-environment_pt240cu124.yaml
-     1→name: xlstm
-     2→channels:
-     7→dependencies:
-
-environment_pt260cu126.yaml
-     1→name: xlstm
-     2→channels:
-     7→dependencies:
-
-pyproject.toml
-     1→[build-system]
-     5→[project]
-    47→[tool.setuptools.package-data]
-    48→"xlstm" = ["blocks/slstm/src/cuda/*.c", "blocks/slstm/src/cuda/*.cc", "blocks/slstm/src/cuda/*.h", "blocks/slstm/src/cuda/*.cu", "blocks/slstm/src/cuda/*.cuh", "blocks/slstm/src/util/*.c", "blocks/slstm/src/util/*.cc", "blocks/slstm/src/util/*.h", "blocks/slstm/src/util/*.cu", "blocks/slstm/src/util/*.cuh"]
-    49→
-    50→[project.urls]
-    51→Repository = "https://github.com/NX-AI/xlstm"
-    52→Issues = "https://github.com/NX-AI/xlstm/issues"
-
-pytest.ini
-
-setup.cfg
-
 xlstm/__init__.py
      1→__version__ …
      3→from .blocks.mlstm.block import mLSTMBlock, mLSTMBlockConfig
@@ -129,6 +100,27 @@ xlstm/components/util.py
     11→def conditional_decorator(condition, decorator):
     26→class ParameterProxy …
 
+xlstm/blocks/slstm/src/cuda/slstm.h
+    24→#include "../util/util.h"
+    27→// all needed definitions from external
+    28→#define SLSTM_NUM_HEADS …
+    29→#define SLSTM_HIDDEN_SIZE …
+    30→#define SLSTM_BATCH_SIZE …
+    31→#define SLSTM_NUM_GATES …
+    32→#define SLSTM_NUM_STATES …
+    33→#define SLSTM_DTYPE_R …
+    34→#define SLSTM_DTYPE_B …
+    35→#define SLSTM_DTYPE_W …
+    36→#define SLSTM_DTYPE_G …
+    37→#define SLSTM_DTYPE_S …
+    38→#define SLSTM_DTYPE_A …
+    39→// defines whether g = Wx + Ry + b for every gate, enables half the cache for
+    40→// backward
+    41→#define SLSTM_SIMPLE_AGG …
+    46→class ForwardPass …
+   144→class BackwardPass …
+   254→class BackwardPassCut …
+
 xlstm/xlstm_large/__init__.py
      1→from .model import xLSTMLarge, xLSTMLargeConfig
      2→from .model import mLSTMLayer, mLSTMLayerConfig
@@ -195,21 +187,10 @@ notebooks/xlstm/xLSTM_test_notebook.ipynb
 xlstm/blocks/slstm/__init__.py
 
 xlstm/blocks/slstm/block.py
-     7→from ...components.feedforward import FeedForwardConfig
-     8→from ..xlstm_block import xLSTMBlock, xLSTMBlockConfig
-     9→from .layer import sLSTMLayerConfig
     13→class sLSTMBlockConfig …
     29→class sLSTMBlock …
 
 xlstm/blocks/slstm/cell.py
-    12→from .src.cuda_init import load
-    13→from .src.vanilla import (
-    14→    slstm_forward,
-    15→    slstm_forward_step,
-    16→    slstm_pointwise_function_registry,
-    17→)
-    18→from ...components.util import conditional_decorator, round_to_multiple, ParameterProxy
-    19→from ...components.init import bias_linspace_init_
     28→LOGGER …
     30→DTYPE_DICT …
     35→DTYPES …
@@ -222,14 +203,6 @@ xlstm/blocks/slstm/cell.py
    777→class sLSTMCell …
 
 xlstm/blocks/slstm/layer.py
-     6→from ...components.ln import MultiHeadLayerNorm
-     7→from ...components.linear_headwise import (
-     8→    LinearHeadwiseExpand,
-     9→    LinearHeadwiseExpandConfig,
-    10→)
-    11→from ...components.conv import CausalConv1d, CausalConv1dConfig
-    12→from ...components.init import small_init_init_
-    15→from .cell import sLSTMCell, sLSTMCellConfig
     19→class sLSTMLayerConfig …
     33→class sLSTMLayer …
 
@@ -241,27 +214,14 @@ xlstm/blocks/mlstm/backends.py
    149→def chunkwise_simple …
 
 xlstm/blocks/mlstm/block.py
-     5→from ..xlstm_block import xLSTMBlock, xLSTMBlockConfig
-     6→from .layer import mLSTMLayerConfig
     10→class mLSTMBlockConfig …
     22→class mLSTMBlock …
 
 xlstm/blocks/mlstm/cell.py
-     8→from ...components.init import bias_linspace_init_
-     9→from ...components.ln import MultiHeadLayerNorm
-    10→from .backends import parallel_stabilized_simple, recurrent_step_stabilized_simple
     14→class mLSTMCellConfig …
     20→class mLSTMCell …
 
 xlstm/blocks/mlstm/layer.py
-     8→from ...components.conv import CausalConv1d, CausalConv1dConfig
-     9→from ...components.init import small_init_init_, wang_init_
-    10→from ...components.linear_headwise import (
-    11→    LinearHeadwiseExpand,
-    12→    LinearHeadwiseExpandConfig,
-    13→)
-    14→from ...utils import UpProjConfigMixin
-    15→from .cell import mLSTMCell, mLSTMCellConfig
     19→class mLSTMLayerConfig …
     39→class mLSTMLayer …
 
@@ -295,6 +255,33 @@ experiments/parity_xlstm11.yaml
     16→model:
     29→dataset:
 
+environment_pt220cu121.yaml
+     1→name: xlstm
+     2→channels:
+     7→dependencies:
+
+environment_pt240cu124.yaml
+     1→name: xlstm
+     2→channels:
+     7→dependencies:
+
+environment_pt260cu126.yaml
+     1→name: xlstm
+     2→channels:
+     7→dependencies:
+
+pyproject.toml
+     1→[build-system]
+     5→[project]
+    47→[tool.setuptools.package-data]
+    50→[project.urls]
+    51→Repository = "https://github.com/NX-AI/xlstm"
+    52→Issues = "https://github.com/NX-AI/xlstm/issues"
+
+pytest.ini
+
+setup.cfg
+
 xlstm/blocks/slstm/src/__init__.py
 
 xlstm/blocks/slstm/src/cuda_init.py
@@ -314,6 +301,44 @@ experiments/data/utils.py
     39→class SequenceTensorDataset …
     55→class CacheMixin …
     90→def calc_joint_md5sum(dir_path, exclude=[]):
+
+xlstm/blocks/slstm/src/util/blas.h
+    27→template <typename T> struct blas …
+    52→cublasStatus_t cublasHgemmsb(cublasHandle_t handle, cublasOperation_t transa,
+    60→cublasStatus_t cublasSgemmsb(cublasHandle_t handle, cublasOperation_t transa,
+    67→cublasStatus_t cublasDgemmsb(cublasHandle_t handle, cublasOperation_t transa,
+    75→cublasStatus_t cublasHgemv2(cublasHandle_t handle, cublasOperation_t trans,
+    80→cublasStatus_t cublasHgemv3(cublasHandle_t handle, cublasOperation_t trans,
+    85→cublasStatus_t cublasHgemv(cublasHandle_t handle, cublasOperation_t trans,
+    90→cublasStatus_t cublasHgemm2(cublasHandle_t handle, cublasOperation_t transa,
+    97→cublasStatus_t cublasHgemm3(cublasHandle_t handle, cublasOperation_t transa,
+   104→void initVector_d(cudaStream_t stream, double *data, int size, double value);
+   105→void initVector_f(cudaStream_t stream, float *data, int size, float value);
+   106→void initVector_h(cudaStream_t stream, __half *data, int size, __half value);
+   132→cublasStatus_t cublasBgemv(cublasHandle_t handle, cublasOperation_t trans,
+   139→cublasStatus_t
+   147→cublasStatus_t cublasBgemmsb(cublasHandle_t handle, cublasOperation_t transa,
+   156→void initVector_b(cudaStream_t stream, __nv_bfloat16 *data, int size,
+
+xlstm/blocks/slstm/src/util/cuda_error.h
+     9→void cudaOccupancyMaxActiveBlocksPerMultiprocessor2(dim3 blockSize,
+
+xlstm/blocks/slstm/src/util/device_assert.h
+    23→extern "C" __host__ __device__ void
+    27→#define device_assert_fail …
+
+xlstm/blocks/slstm/src/util/support.h
+    26→#define CHECK_CUDA …
+    28→#define CHECK_CONTIGUOUS …
+    30→#define CHECK_INPUT …
+    34→#define AT_DISPATCH_CASE_FLOATING_TYPES_AND_HALF2 …
+    40→#define AT_DISPATCH_FLOATING_TYPES_AND_HALF2 …
+    44→template <typename U> struct native_type …
+    49→  using T …
+    52→template <typename U> typename native_type<U>::T *ptr(torch::Tensor t) {
+    56→template <typename T> torch::Dtype typeToTorchDtype();
+
+xlstm/blocks/slstm/src/util/util.h
 
 tests/__init__.py
 
@@ -353,43 +378,8 @@ xlstm/blocks/slstm/src/vanilla/lstm.py
 xlstm/blocks/slstm/src/vanilla/slstm.py
      8→def slstm_forward_pointwise …
 
-xlstm/blocks/slstm/src/cuda/lstm_pointwise.cu
-
-xlstm/blocks/slstm/src/cuda/slstm.cc
-    40→class sLSTMFunc …
-   306→PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
-
-xlstm/blocks/slstm/src/cuda/slstm.h
-    28→#define SLSTM_NUM_HEADS …
-    29→#define SLSTM_HIDDEN_SIZE …
-    30→#define SLSTM_BATCH_SIZE …
-    31→#define SLSTM_NUM_GATES …
-    32→#define SLSTM_NUM_STATES …
-    33→#define SLSTM_DTYPE_R …
-    34→#define SLSTM_DTYPE_B …
-    35→#define SLSTM_DTYPE_W …
-    36→#define SLSTM_DTYPE_G …
-    37→#define SLSTM_DTYPE_S …
-    38→#define SLSTM_DTYPE_A …
-    41→#define SLSTM_SIMPLE_AGG …
-    46→class ForwardPass …
-   144→class BackwardPass …
-   254→class BackwardPassCut …
-
-xlstm/blocks/slstm/src/cuda/slstm_backward.cu
-
-xlstm/blocks/slstm/src/cuda/slstm_backward_cut.cu
-
-xlstm/blocks/slstm/src/cuda/slstm_forward.cu
-
-xlstm/blocks/slstm/src/cuda/slstm_pointwise.cu
-
-xlstm/blocks/slstm/src/cuda/slstm_pointwise.cuh
-
 experiments/data/formal_language/
 
 experiments/data/formal_language/tasks/
 
 notebooks/
-
-xlstm/blocks/slstm/src/util/

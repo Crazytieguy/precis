@@ -64,41 +64,50 @@ pub fn children<'s>(g: &mut FoldersGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
         }));
     }
 
-    // Create FilesGroups per role (sorted for determinism)
+    // Create FilesGroups per role, partitioned by per-file properties that
+    // affect the modifier (is_config, is_type_declaration, is_header).
+    // Files with different properties get different modifiers, so they must
+    // be in separate groups (D7: split when items would be prioritized differently).
     let mut sorted_roles: Vec<_> = files_by_role.into_iter().collect();
     sorted_roles.sort_by_key(|(role, _)| *role);
-    for (role, mut files) in sorted_roles {
+    let is_root_dir = abs_dir == ctx.root;
+    for (role, files) in sorted_roles {
         if files.is_empty() {
             continue;
         }
-        files.sort();
 
-        let is_root_dir = abs_dir == ctx.root;
-        let sample_relative = files[0]
-            .strip_prefix(&ctx.root)
-            .unwrap_or(&files[0])
-            .to_path_buf();
+        let mut partitions: HashMap<(bool, bool, bool), Vec<PathBuf>> = HashMap::new();
+        for file_path in files {
+            let relative = file_path.strip_prefix(&ctx.root).unwrap_or(&file_path);
+            let props = classify::file_modifier_properties(relative);
+            partitions.entry(props).or_default().push(file_path);
+        }
 
-        let fg = FilesGroup::new(
-            g.parent_dir.clone(),
-            role,
-            files,
-            1.0, // placeholder — overwritten below
-            &sample_relative,
-        );
+        let mut sorted_partitions: Vec<_> = partitions.into_iter().collect();
+        sorted_partitions.sort_by_key(|e| e.0);
 
-        let contribution = heuristics::files_contribution(
-            role,
-            is_root_dir,
-            fg.is_config,
-            fg.is_type_declaration,
-            fg.is_header,
-        );
+        for ((is_config, is_type_declaration, is_header), mut part_files) in sorted_partitions {
+            part_files.sort();
 
-        result.push(Group::Files(FilesGroup {
-            inherited_modifier: g.inherited_modifier * contribution,
-            ..fg
-        }));
+            let contribution = heuristics::files_contribution(
+                role,
+                is_root_dir,
+                is_config,
+                is_type_declaration,
+                is_header,
+            );
+
+            result.push(Group::Files(FilesGroup {
+                parent_dir: g.parent_dir.clone(),
+                role,
+                items: part_files,
+                inherited_modifier: g.inherited_modifier * contribution,
+                is_config,
+                is_type_declaration,
+                is_header,
+                is_generated: false,
+            }));
+        }
     }
 
     debug_assert!(

@@ -14,6 +14,15 @@ Readme.md
 docs/readme.md
      7→### Usage
 
+jsr.json
+     2→  "$schema": "https://jsr.io/schema/config-file.v1.json",
+     3→  "name": "@superstruct/core",
+     4→  "version": "2.0.2",
+     5→  "exports": "./src/index.ts",
+     6→  "publish": {
+     7→    "include": ["Readme.md", "License.md", "src", "docs"]
+     8→  }
+
 docs/summary.md
      3→## Guides
     12→## API Reference
@@ -23,11 +32,7 @@ src/error.ts
      2→ * A `StructFailure` represents a single specific failure in validation.
      5→export type Failure …
     17→ * `StructError` objects are thrown (or returned) when validation fails.
-    18→ *
-    19→ * Validation logic is design to exit early for maximum performance. The error
-    20→ * represents the first error encountered during validation. For more detail,
-    21→ * the `error.failures` property is a generator function that can be run to
-    22→ * continue validation and receive all the failures in the data.
+      →…
     25→export class StructError …
 
 src/index.ts
@@ -36,8 +41,7 @@ src/struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
      2→import { StructError, Failure } from './error.js'
      5→ * `Struct` objects encapsulate the validation logic for a specific type of
-     6→ * values. Once constructed, you use the `assert`, `is` or `validate` helpers to
-     7→ * validate unknown input data against the struct.
+      →…
     10→export class Struct …
    120→ * Assert that a value passes a struct, throwing if it doesn't.
    123→export function assert<T, S>(
@@ -95,6 +99,8 @@ src/utils.ts
      2→import { Failure } from './error.js'
      5→ * Check if a value is an iterator.
      8→function isIterable<T>(x: unknown): x is Iterable<T> {
+     9→  return isObject(x) && typeof x[Symbol.iterator] === 'function'
+    10→}
     13→ * Check if a value is a plain object.
     16→export function isObject(x: unknown): x is object {
     21→ * Check if a value is a non-array object.
@@ -157,37 +163,6 @@ src/utils.ts
    391→ * `tuple` structs.
    394→export type InferStructTuple …
    402→type _InferTuple …
-
-jsr.json
-     2→  "$schema": "https://jsr.io/schema/config-file.v1.json",
-     3→  "name": "@superstruct/core",
-     4→  "version": "2.0.2",
-     5→  "exports": "./src/index.ts",
-     6→  "publish": {
-
-package.json
-     2→  "name": "superstruct",
-     3→  "description": "A simple and composable way to validate data in JavaScript (and TypeScript).",
-     4→  "version": "2.0.2",
-     5→  "license": "MIT",
-     6→  "repository": "git://github.com/ianstormtaylor/superstruct.git",
-     7→  "type": "module",
-     8→  "main": "./dist/index.cjs",
-     9→  "module": "./dist/index.mjs",
-    10→  "types": "./dist/index.d.ts",
-    11→  "sideEffects": false,
-    12→  "files": [
-    15→  "publishConfig": {
-    18→  "engines": {
-    21→  "devDependencies": {
-    38→  "scripts": {
-    54→  "keywords": [
-
-rollup.config.js
-
-tsconfig.json
-     2→  "include": ["./src/**/*.ts"],
-     3→  "compilerOptions": {
 
 examples/README.md
      1→# Examples
@@ -337,6 +312,30 @@ docs/guides/06-using-typescript.md
     37→## Describing Types
     55→## Inferring Types
 
+package.json
+     2→  "name": "superstruct",
+     3→  "description": "A simple and composable way to validate data in JavaScript (and TypeScript).",
+     4→  "version": "2.0.2",
+     5→  "license": "MIT",
+     6→  "repository": "git://github.com/ianstormtaylor/superstruct.git",
+     7→  "type": "module",
+     8→  "main": "./dist/index.cjs",
+     9→  "module": "./dist/index.mjs",
+    10→  "types": "./dist/index.d.ts",
+    11→  "sideEffects": false,
+    12→  "files": [
+    15→  "publishConfig": {
+    18→  "engines": {
+    21→  "devDependencies": {
+    38→  "scripts": {
+    54→  "keywords": [
+
+rollup.config.js
+
+tsconfig.json
+     2→  "include": ["./src/**/*.ts"],
+     3→  "compilerOptions": {
+
 examples/basic-validation.js
 
 examples/composing-structs.js
@@ -349,16 +348,6 @@ examples/default-values.js
 
 examples/optional-values.js
 
-examples/package.json
-     2→  "type": "module",
-     3→  "license": "MIT",
-     4→  "dependencies": {
-     5→    "is-email": "^1.0.2",
-     6→    "is-url": "^1.2.4",
-     7→    "is-uuid": "^1.0.2",
-     8→    "superstruct": "latest"
-     9→  }
-
 examples/returning-errors.js
 
 examples/testing-values.js
@@ -367,6 +356,16 @@ examples/throwing-errors.js
 
 License.md
 
+test/deprecated.test.ts
+     2→import …
+
+test/index.test.ts
+     5→import …
+
+test/index.ts
+     2→ * A helper for testing type signatures.
+     5→export function test<T>(fn: (x: unknown) => T) {}
+
 Changelog.md
      1→# Changelog
     11→#### Breaking
@@ -374,21 +373,34 @@ Changelog.md
     20→#### Fixed
     24→#### Deprecations
     28→#### New Maintainers & Next Steps
+    40→###### NEW
+    55→###### BREAKING
+    61→###### FIXED
+    69→###### BREAKING
+    77→###### NEW
+    85→###### BREAKING
+    95→###### NEW
+   111→###### BREAKING
+   129→###### NEW
+   176→###### BREAKING
+   248→###### BREAKING
+   394→###### BREAKING
+   434→###### NEW
+   446→###### BREAKING
+   454→###### BREAKING
+   462→###### BREAKING
+   468→###### NEW
+   476→###### BREAKING
+   482→###### NEW
+   490→###### BREAKING
+   500→###### BREAKING
+   504→###### NEW
+   512→###### BREAKING
 
-test/deprecated.test.ts
-
-test/index.test.ts
-
-test/index.ts
-     2→ * A helper for testing type signatures.
-     5→export function test<T>(fn: (x: unknown) => T) {}
-
-test/tsconfig.json
-     2→  "extends": "../tsconfig.json",
-     3→  "include": ["./**/*.ts"],
-     4→  "compilerOptions": {
-     5→    "skipLibCheck": true
-     6→  }
+examples/package.json
+     2→  "type": "module",
+     3→  "license": "MIT",
+     4→  "dependencies": {
 
 test/validation/never/invalid.ts
 

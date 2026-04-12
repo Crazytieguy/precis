@@ -77,8 +77,65 @@ packages/lib/src/files/files.models.ts
     24→async function noteAssetToFile …
     34→async function noteAssetsToFiles …
 
+pnpm-workspace.yaml
+     1→packages:
+     2→  - 'packages/*'
+     4→catalog:
+     5→  "@antfu/eslint-config": ^3.6.2
+     6→  "@types/node": ^22.5.4
+     7→  eslint: ^9.10.0
+     8→  tsx: ^4.17.0
+     9→  typescript: ^5.6.2
+    10→  vitest: ^3.0.9
+    11→  "@vitest/coverage-v8": ^3.0.9
+    12→  "@corentinth/chisels": ^1.2.1
+
 packages/cli/bin/enclosed.mjs
      4→import '../dist/cli.mjs';
+
+packages/app-client/src/index.tsx
+     6→import { I18nProvider } from './modules/i18n/i18n.provider';
+     7→import { NoteContextProvider } from './modules/notes/notes.context';
+     8→import { Toaster } from './modules/ui/components/sonner';
+     9→import { getRoutes } from './routes';
+    12→import './app.css';
+
+packages/app-client/src/routes.tsx
+     2→import { LoginPage } from './modules/auth/pages/login.page';
+     3→import { getConfig } from './modules/config/config.provider';
+     4→import { NOTE_ID_REGEX } from './modules/notes/notes.constants';
+     5→import { buildViewNotePagePath } from './modules/notes/notes.models';
+     6→import { CreateNotePage } from './modules/notes/pages/create-note.page';
+     7→import { ViewNotePage } from './modules/notes/pages/view-note.page';
+     8→import { Button } from './modules/ui/components/button';
+     9→import { AppLayout } from './modules/ui/layouts/app.layout';
+    11→export function getRoutes(): RouteDefinition[] {
+
+packages/app-server/src/index.cloudflare.ts
+     1→import { createServer } from './modules/app/server';
+     2→import { createCloudflareKVStorageFactory } from './modules/storage/factories/cloudflare-kv.storage';
+
+packages/app-server/src/index.node.ts
+     8→import { getConfig } from './modules/app/config/config';
+     9→import { injectPublicConfigInIndex } from './modules/app/config/config.models';
+    10→import { createServer } from './modules/app/server';
+    11→import { deleteExpiredNotesTask } from './modules/notes/tasks/delete-expired-notes.tasks';
+    12→import { createLogger } from './modules/shared/logger/logger';
+    13→import { createFsLiteStorage } from './modules/storage/factories/fs-lite.storage';
+    14→import { createTaskScheduler } from './modules/tasks/task-scheduler';
+    16→const logger …
+    29→const getIndexContent …
+    59→const taskScheduler …
+    69→const server …
+
+packages/deploy-cloudflare/_routes.json
+     2→  "version": 1,
+     3→  "include": [
+     4→    "/api/*"
+     5→  ],
+     6→  "exclude": []
+
+packages/deploy-cloudflare/build.sh
 
 packages/docs/src/how-it-works.md
      5→# How It Works
@@ -105,24 +162,24 @@ packages/docs/src/index.md
 packages/app-client/src/modules/theme/theme.store.ts
      4→export function useThemeStore() {
 
-packages/app-server/src/index.cloudflare.ts
-     1→import { createServer } from './modules/app/server';
-     2→import { createCloudflareKVStorageFactory } from './modules/storage/factories/cloudflare-kv.storage';
+packages/app-client/.env.example
 
-packages/app-server/src/index.node.ts
-     8→import { getConfig } from './modules/app/config/config';
-     9→import { injectPublicConfigInIndex } from './modules/app/config/config.models';
-    10→import { createServer } from './modules/app/server';
-    11→import { deleteExpiredNotesTask } from './modules/notes/tasks/delete-expired-notes.tasks';
-    12→import { createLogger } from './modules/shared/logger/logger';
-    13→import { createFsLiteStorage } from './modules/storage/factories/fs-lite.storage';
-    14→import { createTaskScheduler } from './modules/tasks/task-scheduler';
-    16→const logger …
-    29→const getIndexContent …
-    59→const taskScheduler …
-    69→const server …
-
-packages/app-server/src/reset.d.ts
+packages/app-client/components.json
+     2→  "$schema": "https://shadcn-solid.com/schema.json",
+     3→  "uno": {
+     4→    "config": "uno.config.ts",
+     5→    "css": {
+     6→      "path": "src/app.css",
+     7→      "variable": true
+     8→    },
+     9→    "color": "neutral",
+    10→    "prefix": ""
+    11→  },
+    12→  "alias": {
+    13→    "component": "@/modules/ui/components",
+    14→    "ui": "@/modules/ui/components",
+    15→    "cn": "@/modules/shared/style/cn"
+    16→  }
 
 packages/crypto/src/api-definition.ts
      6→function createEnclosedCryptoApi …
@@ -132,35 +189,6 @@ packages/crypto/src/index.node.ts
 packages/crypto/src/index.test.ts
 
 packages/crypto/src/index.web.ts
-
-packages/deploy-cloudflare/_routes.json
-     2→  "version": 1,
-     3→  "include": [
-     4→    "/api/*"
-     5→  ],
-     6→  "exclude": []
-
-packages/deploy-cloudflare/build.sh
-
-packages/deploy-cloudflare/package.json
-     2→  "name": "@enclosed/deploy-cloudflare",
-     3→  "version": "1.16.0",
-     4→  "description": "Deploy scripts for Cloudflare Pages",
-     5→  "packageManager": "pnpm@9.15.0",
-     6→  "license": "Apache-2.0",
-     7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
-     8→  "repository": {
-     9→    "type": "git",
-    10→    "url": "https://github.com/CorentinTh/enclosed"
-    11→  },
-    12→  "scripts": {
-    13→    "build": "./build.sh"
-    14→  }
-
-packages/deploy-cloudflare/wrangler.toml
-     5→[[kv_namespaces]]
-     6→binding = "notes"
-     7→id = "b1329cb8560e49d392bed877c9ac48a2"
 
 packages/cli/src/files/files.services.test.ts
      5→import { checkFileExist, checkFilesExist } from './files.services';
@@ -230,45 +258,6 @@ packages/docs/src/data/i18n.data.ts
     25→const localeConfigs …
     47→const mdTable …
     61→  async load() {
-
-packages/app-client/.env.example
-
-packages/app-client/components.json
-     2→  "$schema": "https://shadcn-solid.com/schema.json",
-     3→  "uno": {
-    12→  "alias": {
-
-packages/app-client/eslint.config.js
-
-packages/app-client/index.html
-
-packages/app-client/package.json
-     2→  "name": "@enclosed/app-client",
-     3→  "type": "module",
-     4→  "version": "1.16.0",
-     5→  "packageManager": "pnpm@9.15.0",
-     6→  "description": "Enclosed frontend client",
-     7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
-     8→  "license": "Apache-2.0",
-     9→  "repository": {
-    13→  "engines": {
-    16→  "scripts": {
-    30→  "dependencies": {
-    48→  "devDependencies": {
-
-packages/app-client/playwright.config.ts
-     4→const port …
-     5→const baseURL …
-     6→const isCI …
-     7→const startPreviewServer …
-
-packages/app-client/tsconfig.json
-     2→  "compilerOptions": {
-
-packages/app-client/uno.config.ts
-    11→import { iconByFileType } from './src/modules/files/files.models';
-
-packages/app-client/vite.config.ts
 
 packages/cli/src/view-note/view-note.command.ts
      4→import { getInstanceUrl } from '../config/config.usecases';
@@ -411,10 +400,13 @@ packages/crypto/src/web/crypto.web.usecases.ts
     42→async function deriveMasterKey …
 
 packages/app-server/src/modules/storage/storage.models.ts
+     1→import type …
      5→function defineStorage …
      9→function defineBindableStorageFactory …
 
 packages/app-server/src/modules/storage/storage.types.ts
+     2→import type …
+     3→import type …
      7→export type BindableStorageFactoryArgs …
      8→export type BindableStorageFactory …
      9→export type StorageFactory …
@@ -488,39 +480,12 @@ packages/lib/src/notes/notes.usecases.ts
     10→const BASE_URL …
     12→async function createNote …
 
-packages/app-client/src/modules/auth/auth.models.ts
-     5→function isAccessTokenExpired …
-
-packages/app-client/src/modules/auth/auth.services.ts
-     1→import { apiClient } from '../shared/http/http-client';
-     5→async function login …
-
-packages/app-client/src/modules/auth/auth.store.ts
-     3→import { createHook } from '../shared/hooks/hooks';
-     4→import { isAccessTokenExpired } from './auth.models';
-     6→export const authStore …
-
 packages/docs/src/self-hosting/configuration.md
      5→# Self-Host Configuration
      9→## Environment Variables
     15→## Optional: Native HTTPS Configuration
     33→## Applying Configuration Changes
     49→## Next Steps
-
-packages/docs/src/self-hosting/docker-compose.md
-     1→# Docker Compose Installation
-     5→## Prerequisites
-     9→## Docker Compose Configuration
-    15→### Explanation of the Configuration
-    27→### Persistent Storage
-    31→### Customizing the Environment
-    35→## Running Enclosed with Docker Compose
-    39→### Download the Docker Compose File
-    47→### Start the Service
-    59→### Managing the Service
-    88→## Updating Enclosed
-    97→## Advanced Configuration
-   101→## Next Steps
 
 packages/docs/src/self-hosting/docker.md
      5→# Docker Installation
@@ -555,10 +520,25 @@ packages/docs/src/self-hosting/troubleshooting.md
 packages/docs/src/self-hosting/users-authentication-key-generator.md
     44→# User Authentication Key Generator
 
+packages/app-client/src/modules/auth/auth.models.ts
+     5→function isAccessTokenExpired …
+
+packages/app-client/src/modules/auth/auth.services.ts
+     1→import { apiClient } from '../shared/http/http-client';
+     5→async function login …
+
+packages/app-client/src/modules/auth/auth.store.ts
+     3→import { createHook } from '../shared/hooks/hooks';
+     4→import { isAccessTokenExpired } from './auth.models';
+     6→export const authStore …
+
 packages/app-client/src/modules/config/config.constants.ts
+     1→import type { Config } from './config.types';
      3→export const buildTimeConfig …
 
 packages/app-client/src/modules/config/config.provider.tsx
+     1→import type { Config } from './config.types';
+     3→import { buildTimeConfig } from './config.constants';
      9→function getConfig(): Config {
 
 packages/app-client/src/modules/config/config.types.ts
@@ -590,13 +570,17 @@ packages/app-server/src/modules/tasks/tasks.types.ts
      3→export type TaskDefinition …
 
 packages/lib/src/crypto/serialization/serialization.models.ts
+     5→function defineSerializationMethods …
 
 packages/lib/src/crypto/serialization/serialization.registry.ts
      7→export const serializationMethodDefinitions …
     11→export const serializationMethodDefinitionsByName …
     12→export const serializationFormats …
+    14→function getSerializationMethod …
+    26→function getParsingMethod …
 
 packages/lib/src/crypto/serialization/serialization.test-utils.ts
+     6→function runCommonSerializationTests …
 
 packages/lib/src/crypto/serialization/serialization.types.ts
      4→export type SerializationMethodsDefinition …
@@ -658,6 +642,31 @@ packages/crypto/src/encryption-algorithms/encryption-algorithms.types.ts
      8→export type EncryptionAlgorithm …
     10→export type EncryptionAlgorithmDefinitions …
 
+Dockerfile
+
+Dockerfile.rootless
+
+docker-compose.yml
+     1→services:
+    10→volumes:
+
+package.json
+     2→  "name": "@enclosed/root",
+     3→  "version": "1.16.0",
+     4→  "description": "Send private and secure note",
+     5→  "packageManager": "pnpm@9.15.0",
+     6→  "license": "Apache-2.0",
+     7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
+     8→  "repository": {
+    12→  "engines": {
+    15→  "scripts": {
+    20→  "keywords": [
+    30→  "devDependencies": {
+
+renovate.json
+     2→  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+     3→  "extends": [
+
 packages/app-client/src/modules/notes/notes.constants.ts
      1→export const NOTE_ID_REGEX …
 
@@ -678,6 +687,8 @@ packages/app-client/src/modules/notes/notes.services.ts
 
 packages/app-client/src/modules/notes/notes.usecases.ts
      2→import { storeNote } from './notes.services';
+
+packages/app-client/src/app.css
 
 packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.models.ts
      3→function defineEncryptionMethods …
@@ -708,35 +719,6 @@ packages/crypto/src/web/encryption-algorithms/crypto.web.aes-256-gcm.ts
      2→import { base64UrlToBuffer, bufferToBase64Url, createRandomBuffer } from '../crypto.web.usecases';
      4→export const aes256GcmEncryptionAlgorithmDefinition …
 
-Dockerfile
-
-Dockerfile.rootless
-
-docker-compose.yml
-     1→services:
-    10→volumes:
-
-package.json
-     2→  "name": "@enclosed/root",
-     3→  "version": "1.16.0",
-     4→  "description": "Send private and secure note",
-     5→  "packageManager": "pnpm@9.15.0",
-     6→  "license": "Apache-2.0",
-     7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
-     8→  "repository": {
-    12→  "engines": {
-    15→  "scripts": {
-    20→  "keywords": [
-    30→  "devDependencies": {
-
-pnpm-workspace.yaml
-     1→packages:
-     4→catalog:
-
-renovate.json
-     2→  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-     3→  "extends": [
-
 packages/app-client/src/modules/shared/files/convert.ts
 
 packages/app-client/src/modules/shared/files/download.ts
@@ -744,13 +726,6 @@ packages/app-client/src/modules/shared/files/download.ts
 packages/app-server/src/modules/shared/errors/errors.test.ts
 
 packages/app-server/src/modules/shared/errors/errors.ts
-
-packages/app-client/src/app.css
-
-packages/app-client/src/index.tsx
-
-packages/app-client/src/routes.tsx
-    11→export function getRoutes(): RouteDefinition[] {
 
 packages/app-server/src/modules/notes/notes.constants.ts
      1→export const TEN_MINUTES_IN_SECONDS …
@@ -809,6 +784,21 @@ packages/lib/tsconfig.json
      2→  "compilerOptions": {
      9→  "include": [
 
+packages/app-server/src/modules/shared/validation/validation.test.ts
+
+packages/app-server/src/modules/shared/validation/validation.ts
+    43→export const validateJsonBody …
+    44→export const validateQuery …
+    45→export const validateParams …
+
+packages/app-server/eslint.config.js
+
+packages/app-server/package.json
+
+packages/app-server/tsconfig.json
+
+packages/app-server/wrangler.toml
+
 packages/
 
 packages/app-client/e2e-tests/
@@ -833,8 +823,6 @@ packages/app-client/src/modules/ui/components/
 
 packages/app-client/src/scripts/
 
-packages/app-server/
-
 packages/app-server/src/modules/
 
 packages/app-server/src/modules/app/auth/
@@ -852,8 +840,6 @@ packages/app-server/src/modules/notes/tasks/
 packages/app-server/src/modules/shared/
 
 packages/app-server/src/modules/shared/logger/
-
-packages/app-server/src/modules/shared/validation/
 
 packages/app-server/src/modules/storage/factories/
 

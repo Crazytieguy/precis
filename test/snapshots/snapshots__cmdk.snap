@@ -35,6 +35,12 @@ ARCHITECTURE.md
     92→## Performance
     96→## Groups
 
+pnpm-workspace.yaml
+     1→packages:
+     2→  - 'website'
+     3→  - 'test'
+     4→  - 'cmdk'
+
 cmdk/src/command-score.ts
     54→function commandScoreInner(
     55→  string,
@@ -116,12 +122,23 @@ cmdk/src/index.tsx
    959→ *
    960→ *
    963→function findNextSibling(el: Element, selector: string) {
+   964→  let sibling = el.nextElementSibling
+   965→
+   966→  while (sibling) {
+   967→    if (sibling.matches(selector)) return sibling
+   968→    sibling = sibling.nextElementSibling
+   969→  }
+   970→}
    972→function findPreviousSibling(el: Element, selector: string) {
    981→function useAsRef<T>(data: T) {
    991→const useLayoutEffect …
    993→function useLazyRef<T>(fn: () => T) {
   1003→/** Run a selector against the store state. */
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
+  1005→  const store = useStore()
+  1006→  const cb = () => selector(store.snapshot())
+  1007→  return React.useSyncExternalStore(store.subscribe, cb, cb)
+  1008→}
   1010→function useValue(
   1011→  id: string,
   1012→  ref: React.RefObject<HTMLElement>,
@@ -130,6 +147,19 @@ cmdk/src/index.tsx
   1015→) {
   1045→/** Imperatively run a function on the next layout effect cycle. */
   1046→const useScheduleLayoutEffect = () => {
+  1047→  const [s, ss] = React.useState<object>()
+  1048→  const fns = useLazyRef(() => new Map<string | number, () => void>())
+  1049→
+  1050→  useLayoutEffect(() => {
+  1051→    fns.current.forEach((f) => f())
+  1052→    fns.current = new Map()
+  1053→  }, [s])
+  1054→
+  1055→  return (id: string | number, cb: () => void) => {
+  1056→    fns.current.set(id, cb)
+  1057→    ss({})
+  1058→  }
+  1059→}
   1061→function renderChildren(children: React.ReactElement) {
   1071→function SlottableWithNestedChildren(
   1072→  { asChild, children }: { asChild?: boolean; children?: React.ReactNode },
@@ -141,6 +171,69 @@ website/README.md
      3→## Getting Started
     19→## Learn More
     28→## Deploy on Vercel
+
+website/vercel.json
+     2→  "headers": [
+     3→    {
+     4→      "source": "/inter-var-latin.woff2",
+     5→      "headers": [
+     6→        {
+     7→          "key": "Cache-Control",
+     8→          "value": "public, max-age=31536000, immutable"
+     9→        }
+    10→      ]
+    11→    }
+    12→  ]
+
+package.json
+     2→  "name": "cmdk-root",
+     3→  "private": true,
+     4→  "scripts": {
+     5→    "build": "pnpm -F cmdk build",
+     6→    "dev": "pnpm -F cmdk build --watch",
+     7→    "website": "pnpm -F cmdk-website dev",
+     8→    "testsite": "pnpm -F cmdk-tests dev",
+     9→    "format": "prettier '**/*.{js,jsx,ts,tsx,json,md,mdx,css,scss,yaml,yml}' --write",
+    10→    "preinstall": "npx only-allow pnpm",
+    11→    "test:format": "prettier '**/*.{js,jsx,ts,tsx,json,md,mdx,css,scss,yaml,yml}' --check",
+    12→    "test": "playwright test"
+    13→  },
+    14→  "devDependencies": {
+    15→    "@playwright/test": "1.51.0",
+    16→    "husky": "^8.0.1",
+    17→    "lint-staged": "15.2.0",
+    18→    "prettier": "2.7.1",
+    19→    "tsup": "8.0.1",
+    20→    "typescript": "4.6.4"
+    21→  },
+    22→  "packageManager": "pnpm@8.8.0",
+    23→  "lint-staged": {
+    24→    "**/*.{js,jsx,ts,tsx,json,md,mdx,css,scss,yaml,yml}": [
+    25→      "prettier --write"
+    26→    ]
+    27→  }
+
+playwright.config.ts
+     3→const config …
+
+tsconfig.json
+     2→  "compilerOptions": {
+     3→    "target": "es2018",
+     4→    "lib": ["dom", "dom.iterable", "esnext"],
+     5→    "allowJs": true,
+     6→    "skipLibCheck": true,
+     7→    "strict": false,
+     8→    "forceConsistentCasingInFileNames": true,
+     9→    "esModuleInterop": true,
+    10→    "module": "esnext",
+    11→    "moduleResolution": "node",
+    12→    "resolveJsonModule": true,
+    13→    "isolatedModules": true,
+    14→    "jsx": "react",
+    15→    "noEmit": true
+    16→  },
+    17→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
+    18→  "exclude": ["node_modules", "build", "dist", ".next"]
 
 cmdk/package.json
      2→  "name": "cmdk",
@@ -195,62 +288,6 @@ cmdk/package.json
 
 cmdk/tsup.config.ts
 
-package.json
-     2→  "name": "cmdk-root",
-     3→  "private": true,
-     4→  "scripts": {
-     5→    "build": "pnpm -F cmdk build",
-     6→    "dev": "pnpm -F cmdk build --watch",
-     7→    "website": "pnpm -F cmdk-website dev",
-     8→    "testsite": "pnpm -F cmdk-tests dev",
-     9→    "format": "prettier '**/*.{js,jsx,ts,tsx,json,md,mdx,css,scss,yaml,yml}' --write",
-    10→    "preinstall": "npx only-allow pnpm",
-    11→    "test:format": "prettier '**/*.{js,jsx,ts,tsx,json,md,mdx,css,scss,yaml,yml}' --check",
-    12→    "test": "playwright test"
-    13→  },
-    14→  "devDependencies": {
-    15→    "@playwright/test": "1.51.0",
-    16→    "husky": "^8.0.1",
-    17→    "lint-staged": "15.2.0",
-    18→    "prettier": "2.7.1",
-    19→    "tsup": "8.0.1",
-    20→    "typescript": "4.6.4"
-    21→  },
-    22→  "packageManager": "pnpm@8.8.0",
-    23→  "lint-staged": {
-    24→    "**/*.{js,jsx,ts,tsx,json,md,mdx,css,scss,yaml,yml}": [
-    25→      "prettier --write"
-    26→    ]
-    27→  }
-
-playwright.config.ts
-     3→const config …
-
-pnpm-workspace.yaml
-     1→packages:
-     2→  - 'website'
-     3→  - 'test'
-     4→  - 'cmdk'
-
-tsconfig.json
-     2→  "compilerOptions": {
-     3→    "target": "es2018",
-     4→    "lib": ["dom", "dom.iterable", "esnext"],
-     5→    "allowJs": true,
-     6→    "skipLibCheck": true,
-     7→    "strict": false,
-     8→    "forceConsistentCasingInFileNames": true,
-     9→    "esModuleInterop": true,
-    10→    "module": "esnext",
-    11→    "moduleResolution": "node",
-    12→    "resolveJsonModule": true,
-    13→    "isolatedModules": true,
-    14→    "jsx": "react",
-    15→    "noEmit": true
-    16→  },
-    17→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
-    18→  "exclude": ["node_modules", "build", "dist", ".next"]
-
 LICENSE.md
 
 test/basic.test.ts
@@ -263,53 +300,45 @@ test/item.test.ts
 
 test/keybind.test.ts
 
-test/next-env.d.ts
-
 test/numeric.test.ts
+
+test/props.test.ts
+
+website/components/index.ts
+
+website/next.config.js
+     1→/** @type {import('next').NextConfig} */
+     2→const nextConfig …
+
+website/package.json
+     2→  "name": "cmdk-website",
+     3→  "version": "0.1.0",
+     4→  "private": true,
+     5→  "scripts": {
+    11→  "dependencies": {
+    24→  "devDependencies": {
+    38→  "lint-staged": {
+    43→  "husky": {
+
+website/tsconfig.json
+     2→  "compilerOptions": {
+    19→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+    20→  "exclude": ["node_modules"]
 
 test/package.json
      2→  "name": "cmdk-tests",
      3→  "version": "0.0.0",
      4→  "scripts": {
-     5→    "dev": "next"
-     6→  },
      7→  "dependencies": {
-     8→    "@radix-ui/react-portal": "^1.0.4",
-     9→    "@types/node": "18.0.4",
-    10→    "@types/react": "18.0.15",
-    11→    "@types/react-dom": "18.0.6",
-    12→    "cmdk": "workspace:*",
-    13→    "next": "13.5.1",
-    14→    "react": "18.2.0",
-    15→    "react-dom": "18.2.0",
-    16→    "typescript": "4.7.4"
-    17→  }
-
-test/props.test.ts
 
 test/style.css
 
 test/tsconfig.json
      2→  "compilerOptions": {
-     3→    "target": "es5",
-     4→    "lib": ["dom", "dom.iterable", "esnext"],
-     5→    "allowJs": true,
-     6→    "skipLibCheck": true,
-     7→    "strict": false,
-     8→    "forceConsistentCasingInFileNames": true,
-     9→    "noEmit": true,
-    10→    "incremental": true,
-    11→    "esModuleInterop": true,
-    12→    "module": "esnext",
-    13→    "moduleResolution": "node",
-    14→    "resolveJsonModule": true,
-    15→    "isolatedModules": true,
-    16→    "jsx": "preserve"
-    17→  },
     18→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "../dialog.test.ts"],
     19→  "exclude": ["node_modules"]
 
-website/components/index.ts
+website/next-env.d.ts
 
 website/pages/_app.tsx
     13→const title …
@@ -336,32 +365,9 @@ website/pages/index.tsx
    326→function RaunoSignature() {
    350→function PacoSignature() {
 
-website/next-env.d.ts
-
-website/next.config.js
-     1→/** @type {import('next').NextConfig} */
-     2→const nextConfig …
-
-website/package.json
-     2→  "name": "cmdk-website",
-     3→  "version": "0.1.0",
-     4→  "private": true,
-     5→  "scripts": {
-    11→  "dependencies": {
-    24→  "devDependencies": {
-    38→  "lint-staged": {
-    43→  "husky": {
-
-website/tsconfig.json
-     2→  "compilerOptions": {
-    19→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-    20→  "exclude": ["node_modules"]
-
-website/vercel.json
-     2→  "headers": [
+test/next-env.d.ts
 
 test/pages/_app.tsx
-     1→import '../style.css'
      3→export default function App({ Component, pageProps }) {
 
 test/pages/dialog.tsx
@@ -385,24 +391,16 @@ test/pages/portal.tsx
 
 test/pages/props.tsx
 
+website/components/code/index.tsx
+
+website/components/icons/index.tsx
+
 website/styles/globals.scss
 
 website/styles/index.module.scss
 
-website/public/favicon.svg
-
-website/public/grid.svg
-
-website/public/line.svg
-
-website/public/robots.txt
-
-website/public/vercel.svg
-
 website/components/cmdk/
 
-website/components/code/
-
-website/components/icons/
+website/public/
 
 website/styles/cmdk/

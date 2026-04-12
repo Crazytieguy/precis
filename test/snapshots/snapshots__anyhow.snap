@@ -54,16 +54,6 @@ Cargo.toml
     39→    "--extern-html-root-url=std=https://doc.rust-lang.org",
     40→]
 
-build.rs
-    17→fn main() {
-    99→fn compile_probe(rustc_bootstrap: bool) -> bool {
-   188→fn rustc_minor_version() -> Option<u32> {
-   199→fn cargo_env_var(key: &str) -> OsString {
-
-rust-toolchain.toml
-     1→[toolchain]
-     2→components = ["rust-src"]
-
 src/backtrace.rs
      8→pub(crate) enum Backtrace …
     18→macro_rules! impl_backtrace …
@@ -327,6 +317,16 @@ src/wrapper.rs
     61→impl Debug for BoxedError …
     68→impl Display for BoxedError …
     75→impl StdError for BoxedError …
+
+build.rs
+    17→fn main() {
+    99→fn compile_probe(rustc_bootstrap: bool) -> bool {
+   188→fn rustc_minor_version() -> Option<u32> {
+   199→fn cargo_env_var(key: &str) -> OsString {
+
+rust-toolchain.toml
+     1→[toolchain]
+     2→components = ["rust-src"]
 
 tests/compiletest.rs
 

@@ -17,91 +17,6 @@ README.md
 
 CITATION.cff
 
-pyproject.toml
-     1→[project]
-     2→name = "chronos-forecasting"
-     3→dynamic = ["version"]
-     4→authors = [
-     5→  { name = "Abdul Fatir Ansari", email = "ansarnd@amazon.com" },
-     6→  { name = "Lorenzo Stella", email = "stellalo@amazon.com" },
-     7→  { name = "Caner Turkmen", email = "atturkm@amazon.com" },
-     8→  { name = "Oleksandr Shchur", email = "shchuro@amazon.com" },
-     9→  { name = "Jaris Küken", email = "kuekenj@amazon.com" },
-    10→  { name = "Andreas Auer", email = "auerand@amazon.com" },
-    11→]
-    12→description = "Chronos: Pretrained models for time series forecasting"
-    13→readme = "README.md"
-    14→license = { file = "LICENSE" }
-    15→requires-python = ">=3.10"
-    16→dependencies = [
-    17→  "torch>=2.2,<3",
-    18→  "transformers>=4.41,<5",
-    19→  "accelerate>=0.34,<2",
-    20→  "numpy>=1.21,<3",
-    21→  "einops>=0.7.0,<1",
-    22→  "scikit-learn>=1.6.0,<2",
-    23→]
-    24→classifiers = [
-    25→  "Programming Language :: Python :: 3",
-    26→  "License :: OSI Approved :: Apache Software License",
-    27→  "Operating System :: OS Independent",
-    28→  "Topic :: Scientific/Engineering :: Artificial Intelligence",
-    29→]
-    30→
-    31→[build-system]
-    32→requires = ["hatchling"]
-    33→build-backend = "hatchling.build"
-    34→
-    35→[tool.hatch.build.targets.wheel]
-    36→packages = ["src/chronos"]
-    37→
-    38→[tool.hatch.version]
-    39→path = "src/chronos/__about__.py"
-    40→
-    41→[project.optional-dependencies]
-    42→extras = [
-    43→  "boto3>=1.10,<2",
-    44→  "peft>=0.13.0,<0.18",
-    45→  "fev>=0.6.1",
-    46→  "pandas[pyarrow]>=2.0,<2.4",
-    47→]
-    48→test = [
-    49→  "pytest~=8.0",
-    50→  "boto3>=1.10,<2",
-    51→  "peft>=0.13.0,<1",
-    52→  "fev>=0.6.1",
-    53→  "pandas[pyarrow]>=2.0,<2.4",
-    54→]
-    55→typecheck = ["mypy~=1.9"]
-    56→dev = [
-    57→  "gluonts[pro]~=0.16",
-    58→  "datasets>=3.0,<4",
-    59→  "typer",
-    60→  "tensorboard",
-    61→  "typer-config",
-    62→  "joblib",
-    63→  "fev>=0.6.1",
-    64→  "rich",
-    65→  "pandas>=2.0,<2.4",
-    66→]
-    67→
-    68→[project.urls]
-    69→Homepage = "https://github.com/amazon-science/chronos-forecasting"
-    70→Issues = "https://github.com/amazon-science/chronos-forecasting/issues"
-    71→Chronos-Paper = "https://arxiv.org/abs/2403.07815"
-    72→Chronos-2-Paper = "https://arxiv.org/abs/2510.15821"
-    73→
-    74→[tool.mypy]
-    75→ignore_missing_imports = true
-    76→
-    77→[tool.ruff]
-    78→line-length = 119
-    79→lint.ignore = [
-    80→  "E501", # Line too long
-    81→  "E731", # Do not assign a `lambda` expression, use a `def`
-    82→  "E722", # Do not use bare `except`
-    83→]
-
 scripts/README.md
      1→# Usage Examples
      6→## Generating Synthetic Time Series (KernelSynth)
@@ -174,7 +89,13 @@ src/chronos/chronos_bolt.py
    403→class ChronosBoltPipeline …
 
 src/chronos/df_utils.py
-    16→def _validate_df_types_and_cast …
+    16→def _validate_df_types_and_cast(
+    17→    df: "pd.DataFrame",
+    18→    future_df: "pd.DataFrame | None",
+    19→    target_columns: list[str],
+    20→    id_column: str = "item_id",
+    21→    timestamp_column: str = "timestamp",
+    22→) -> tuple["pd.DataFrame", "pd.DataFrame | None"]:
     59→def validate_df_inputs(
     60→    df: "pd.DataFrame",
     61→    future_df: "pd.DataFrame | None",
@@ -253,7 +174,13 @@ src/chronos/chronos2/dataset.py
    303→    list_of_tensors: Sequence[TensorOrArray],
    304→) -> list[dict[str, torch.Tensor]]:
    338→def convert_tensor_input_to_list_of_dicts_input(tensor: TensorOrArray) -> list[dict[str, torch.Tensor]]:
-   370→def _cast_fev_features …
+   370→def _cast_fev_features(
+   371→    past_data: "datasets.Dataset",
+   372→    future_data: "datasets.Dataset",
+   373→    target_columns: list[str],
+   374→    past_dynamic_columns: list[str],
+   375→    known_dynamic_columns: list[str],
+   376→) -> tuple["datasets.Dataset", "datasets.Dataset"]:
    406→def convert_fev_window_to_list_of_dicts_input(
    407→    window: "fev.EvaluationWindow", as_univariate: bool
    408→) -> tuple[list[dict[str, np.ndarray | dict[str, np.ndarray]]], list[str], list[str], list[str]]:
@@ -300,13 +227,34 @@ src/chronos/chronos2/trainer.py
     30→class EvaluateAndSaveFinalStepCallback …
     40→class Chronos2Trainer …
 
+pyproject.toml
+     1→[project]
+    31→[build-system]
+    35→[tool.hatch.build.targets.wheel]
+    36→packages = ["src/chronos"]
+    37→
+    38→[tool.hatch.version]
+    39→path = "src/chronos/__about__.py"
+    40→
+    41→[project.optional-dependencies]
+    68→[project.urls]
+    74→[tool.mypy]
+    77→[tool.ruff]
+
 scripts/kernel-synth.py
     24→LENGTH …
     25→KERNEL_BANK …
-    62→def random_binary_map …
-    82→def sample_from_gp_prior …
-   111→def sample_from_gp_prior_efficient …
-   151→def generate_time_series …
+    62→def random_binary_map(a: Kernel, b: Kernel):
+    82→def sample_from_gp_prior(
+    83→    kernel: Kernel, X: np.ndarray, random_seed: Optional[int] = None
+    84→):
+   111→def sample_from_gp_prior_efficient(
+   112→    kernel: Kernel,
+   113→    X: np.ndarray,
+   114→    random_seed: Optional[int] = None,
+   115→    method: str = "eigh",
+   116→):
+   151→def generate_time_series(max_kernels: int = 5):
 
 ci/evaluate/backtest_config.yaml
 
@@ -344,6 +292,7 @@ test/util.py
 
 CODE_OF_CONDUCT.md
      1→## Code of Conduct
+     2→This project has adopted the [Amazon Open Source Code of Conduct](https://aws.github.io/code-of-conduct).
 
 CONTRIBUTING.md
      1→# Contributing Guidelines
@@ -353,6 +302,7 @@ CONTRIBUTING.md
     43→## Finding contributions to work on
     44→Looking at the existing issues is a great way to find something to contribute on. As our projects, by default, use the default GitHub issue labels (enhancement/bug/duplicate/help wanted/invalid/question/wontfix), looking at any 'help wanted' issues is a great place to start.
     47→## Code of Conduct
+    48→This project has adopted the [Amazon Open Source Code of Conduct](https://aws.github.io/code-of-conduct).
     53→## Security issue notifications
     54→If you discover a potential security issue in this project we ask that you notify AWS/Amazon Security via our [vulnerability reporting page](http://aws.amazon.com/security/vulnerability-reporting/). Please do **not** create a public github issue.
     57→## Licensing
@@ -363,18 +313,89 @@ scripts/evaluation/configs/zero-shot.yaml
 
 test/dummy-chronos-bolt-model/config.json
 
-test/dummy-chronos2-model/config.json
-
 test/dummy-chronos-model/config.json
 
+test/dummy-chronos2-model/config.json
+
+scripts/training/configs/chronos-gpt2.yaml
+
+scripts/training/configs/chronos-t5-base.yaml
+
+scripts/training/configs/chronos-t5-large.yaml
+
+scripts/training/configs/chronos-t5-mini.yaml
+
+scripts/training/configs/chronos-t5-small.yaml
+
+scripts/training/configs/chronos-t5-tiny.yaml
+
+scripts/evaluation/results/chronos-bolt-base-agg-rel-scores.csv
+
+scripts/evaluation/results/chronos-bolt-base-in-domain.csv
+
+scripts/evaluation/results/chronos-bolt-base-zero-shot.csv
+
+scripts/evaluation/results/chronos-bolt-mini-agg-rel-scores.csv
+
+scripts/evaluation/results/chronos-bolt-mini-in-domain.csv
+
+scripts/evaluation/results/chronos-bolt-mini-zero-shot.csv
+
+scripts/evaluation/results/chronos-bolt-small-agg-rel-scores.csv
+
+scripts/evaluation/results/chronos-bolt-small-in-domain.csv
+
+scripts/evaluation/results/chronos-bolt-small-zero-shot.csv
+
+scripts/evaluation/results/chronos-bolt-tiny-agg-rel-scores.csv
+
+scripts/evaluation/results/chronos-bolt-tiny-in-domain.csv
+
+scripts/evaluation/results/chronos-bolt-tiny-zero-shot.csv
+
+scripts/evaluation/results/chronos-t5-base-agg-rel-scores.csv
+
+scripts/evaluation/results/chronos-t5-base-in-domain.csv
+
+scripts/evaluation/results/chronos-t5-base-zero-shot.csv
+
+scripts/evaluation/results/chronos-t5-large-agg-rel-scores.csv
+
+scripts/evaluation/results/chronos-t5-large-in-domain.csv
+
+scripts/evaluation/results/chronos-t5-large-zero-shot.csv
+
+scripts/evaluation/results/chronos-t5-mini-agg-rel-scores.csv
+
+scripts/evaluation/results/chronos-t5-mini-in-domain.csv
+
+scripts/evaluation/results/chronos-t5-mini-zero-shot.csv
+
+scripts/evaluation/results/chronos-t5-small-agg-rel-scores.csv
+
+scripts/evaluation/results/chronos-t5-small-in-domain.csv
+
+scripts/evaluation/results/chronos-t5-small-zero-shot.csv
+
+scripts/evaluation/results/chronos-t5-tiny-agg-rel-scores.csv
+
+scripts/evaluation/results/chronos-t5-tiny-in-domain.csv
+
+scripts/evaluation/results/chronos-t5-tiny-zero-shot.csv
+
+scripts/evaluation/results/seasonal-naive-in-domain.csv
+
+scripts/evaluation/results/seasonal-naive-zero-shot.csv
+
+test/dummy-chronos2-lora/adapter_config.json
+
 test/dummy-chronos-model/generation_config.json
+     2→  "_from_model_config": true,
+     3→  "decoder_start_token_id": 0,
+     4→  "eos_token_id": 1,
+     5→  "pad_token_id": 0,
+     6→  "transformers_version": "4.31.0"
 
 ci/
 
-scripts/evaluation/results/
-
-scripts/training/configs/
-
 src/
-
-test/dummy-chronos2-lora/

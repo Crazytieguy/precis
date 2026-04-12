@@ -74,20 +74,10 @@ packages/d2ts/src/electric/index.ts
 
 eslint.base.mjs
 
-package.json
-     2→  "name": "d2ts-monorepo",
-     3→  "private": true,
-     4→  "license": "Apache-2.0",
-     5→  "scripts": {
-    15→  "devDependencies": {
-
 pnpm-workspace.yaml
      1→packages:
-
-tsconfig.json
-     2→  "compilerOptions": {
-    33→  "include": ["packages/d2ts/src/**/*"],
-    34→  "exclude": ["node_modules"]
+     2→  - 'packages/*'
+     3→  - 'examples/*'
 
 packages/d2ql/src/query-builder/index.ts
 
@@ -162,7 +152,6 @@ packages/d2mini/src/utils.ts
     36→const chunkSize …
     37→export function chunkedArrayPush(array: unknown[], other: unknown[]) {
     48→const hashCache …
-    51→ * Replacer function for JSON.stringify that converts unsupported types to strings
     53→function hashReplacer(_key: string, value: any): any {
     71→ * A hash method that caches the hash of a value in a week map
     73→export function hash(data: any): string {
@@ -415,6 +404,18 @@ examples/iterate.ts
 examples/join.ts
 
 examples/min_max.ts
+
+package.json
+     2→  "name": "d2ts-monorepo",
+     3→  "private": true,
+     4→  "license": "Apache-2.0",
+     5→  "scripts": {
+    15→  "devDependencies": {
+
+tsconfig.json
+     2→  "compilerOptions": {
+    33→  "include": ["packages/d2ts/src/**/*"],
+    34→  "exclude": ["node_modules"]
 
 examples/d2ql/README.md
      1→# D2QL Examples

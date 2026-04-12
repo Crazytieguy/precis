@@ -128,15 +128,6 @@ These aren't config files — they're low-priority source or assets. The
 function name doesn't match what it actually tests (more like
 "is_deprioritized_file"). Either rename or split the concerns.
 
-### Per-file properties computed from first file only
-
-`folders.rs:80-84` computes `is_config`, `is_type_declaration`, and
-`is_header` from `files[0]` and applies the result to the entire
-`FilesGroup`. If a role group mixes files with different properties
-(e.g. one `.h` and one `.c` file both classified as `Normal`), the
-contribution is wrong for all but the first.
-
-
 ### `is_generated` taints entire FilesGroup from a single file
 
 `files.rs:49-56` sets `g.is_generated = true` as soon as any file in

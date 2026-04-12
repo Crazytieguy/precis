@@ -35,6 +35,10 @@ docs/ARCHITECTURE.md
      7→## Crates
     74→## Further Reading
 
+Cargo.toml
+     1→[workspace]
+    37→[workspace.dependencies]
+
 crates/std-util/Cargo.toml
      1→[package]
      8→[dependencies]
@@ -100,18 +104,6 @@ crates/toasty-core/src/schema/builder/table.rs
    114→impl BuildTableFromModels<'_> …
    261→impl BuildMapping<'_> …
    611→fn format_column_name …
-
-Cargo.toml
-     1→[workspace]
-    37→[workspace.dependencies]
-
-compose.yaml
-    19→name: toasty
-    20→version: "3.8"
-    22→services:
-
-rust-toolchain.toml
-     1→[toolchain]
 
 crates/toasty/src/engine/eval/as_expr.rs
      3→pub(crate) trait AsExpr …
@@ -407,7 +399,6 @@ crates/toasty-driver-dynamodb/src/lib.rs
    351→impl ExprAttrs …
 
 crates/toasty-driver-dynamodb/src/op.rs
-     9→use super:: …
 
 crates/toasty-driver-dynamodb/src/type.rs
      4→pub trait TypeExt …
@@ -805,6 +796,7 @@ crates/toasty-core/src/schema/verify.rs
     22→impl Verify<'_> …
 
 crates/toasty-driver-integration-suite/src/exec_log.rs
+     8→/// A wrapper around the operations log that provides a clean API for tests
      9→pub struct ExecLog …
     13→impl ExecLog …
     47→impl fmt::Debug for ExecLog …
@@ -853,6 +845,9 @@ crates/toasty-driver-integration-suite/src/suite.rs
 
 crates/toasty-driver-integration-suite/src/test.rs
     14→static TEST_LOCK …
+    16→/// Wraps the Tokio runtime and ensures cleanup happens.
+    17→///
+    18→/// This also passes necessary
     19→pub struct Test …
     38→impl Test …
    127→pub struct TestResult …
@@ -860,6 +855,8 @@ crates/toasty-driver-integration-suite/src/test.rs
    137→impl<O, E> From<Result<O, E>> for TestResult …
 
 crates/toasty-driver-integration-suite/src/tests.rs
+
+tests/Cargo.toml
 
 benches/
 
@@ -938,8 +935,6 @@ examples/user-has-one-profile/
 examples/user-has-one-profile/src/
 
 scripts/
-
-tests/
 
 tests/src/
 

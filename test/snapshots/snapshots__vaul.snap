@@ -7,92 +7,10 @@ README.md
 FUNDING.yml
      1→github: emilkowalski
 
-package.json
-     2→  "name": "vaul",
-     3→  "version": "1.1.2",
-     4→  "description": "Drawer component for React.",
-     5→  "main": "./dist/index.js",
-     6→  "module": "./dist/index.mjs",
-     7→  "types": "./dist/index.d.ts",
-     8→  "files": [
-     9→    "dist",
-    10→    "style.css"
-    11→  ],
-    12→  "exports": {
-    13→    "import": {
-    14→      "types": "./dist/index.d.mts",
-    15→      "default": "./dist/index.mjs"
-    16→    },
-    17→    "require": {
-    18→      "types": "./dist/index.d.ts",
-    19→      "default": "./dist/index.js"
-    20→    }
-    21→  },
-    22→  "scripts": {
-    23→    "type-check": "tsc --noEmit",
-    24→    "build": "pnpm type-check && bunchee && pnpm copy-assets",
-    25→    "copy-assets": "cp -r ./src/style.css ./style.css",
-    26→    "dev": "bunchee --watch",
-    27→    "dev:test": "turbo run dev --filter=test...",
-    28→    "format": "prettier --write .",
-    29→    "test": "playwright test"
-    30→  },
-    31→  "keywords": [
-    32→    "react",
-    33→    "drawer",
-    34→    "dialog",
-    35→    "modal"
-    36→  ],
-    37→  "author": "Emil Kowalski <e@emilkowal.ski>",
-    38→  "license": "MIT",
-    39→  "homepage": "https://vaul.emilkowal.ski/",
-    40→  "repository": {
-    41→    "type": "git",
-    42→    "url": "https://github.com/emilkowalski/vaul.git"
-    43→  },
-    44→  "bugs": {
-    45→    "url": "https://github.com/emilkowalski/vaul/issues"
-    46→  },
-    47→  "devDependencies": {
-    48→    "@playwright/test": "^1.37.1",
-    49→    "@radix-ui/react-dialog": "^1.0.4",
-    50→    "@types/node": "20.5.7",
-    51→    "@types/react": "18.2.55",
-    52→    "@types/react-dom": "18.2.18",
-    53→    "bunchee": "^5.1.5",
-    54→    "eslint": "^7.32.0",
-    55→    "prettier": "^2.5.1",
-    56→    "react": "^18.2.0",
-    57→    "react-dom": "^18.2.0",
-    58→    "turbo": "1.6",
-    59→    "typescript": "5.2.2"
-    60→  },
-    61→  "peerDependencies": {
-    62→    "react": "^16.8 || ^17.0 || ^18.0 || ^19.0.0 || ^19.0.0-rc",
-    63→    "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0.0 || ^19.0.0-rc"
-    64→  },
-    65→  "packageManager": "pnpm@8.8.0",
-    66→  "dependencies": {
-    67→    "@radix-ui/react-dialog": "^1.1.1"
-    68→  }
-
-playwright.config.ts
-
 pnpm-workspace.yaml
      1→packages:
      2→  - '.'
      3→  - 'test'
-
-tsconfig.json
-     2→  "compilerOptions": {
-     3→    "jsx": "react",
-     4→    "target": "es2018",
-     5→    "moduleResolution": "node",
-     6→    "esModuleInterop": true,
-     7→    "lib": ["es2015", "dom"],
-     8→    "strict": true
-     9→  },
-    10→  "include": ["src"],
 
 turbo.json
      2→  "$schema": "https://turbo.build/schema.json",
@@ -327,6 +245,88 @@ test/README.md
     21→## Learn More
     30→## Deploy on Vercel
 
+package.json
+     2→  "name": "vaul",
+     3→  "version": "1.1.2",
+     4→  "description": "Drawer component for React.",
+     5→  "main": "./dist/index.js",
+     6→  "module": "./dist/index.mjs",
+     7→  "types": "./dist/index.d.ts",
+     8→  "files": [
+     9→    "dist",
+    10→    "style.css"
+    11→  ],
+    12→  "exports": {
+    13→    "import": {
+    14→      "types": "./dist/index.d.mts",
+    15→      "default": "./dist/index.mjs"
+    16→    },
+    17→    "require": {
+    18→      "types": "./dist/index.d.ts",
+    19→      "default": "./dist/index.js"
+    20→    }
+    21→  },
+    22→  "scripts": {
+    23→    "type-check": "tsc --noEmit",
+    24→    "build": "pnpm type-check && bunchee && pnpm copy-assets",
+    25→    "copy-assets": "cp -r ./src/style.css ./style.css",
+    26→    "dev": "bunchee --watch",
+    27→    "dev:test": "turbo run dev --filter=test...",
+    28→    "format": "prettier --write .",
+    29→    "test": "playwright test"
+    30→  },
+    31→  "keywords": [
+    32→    "react",
+    33→    "drawer",
+    34→    "dialog",
+    35→    "modal"
+    36→  ],
+    37→  "author": "Emil Kowalski <e@emilkowal.ski>",
+    38→  "license": "MIT",
+    39→  "homepage": "https://vaul.emilkowal.ski/",
+    40→  "repository": {
+    41→    "type": "git",
+    42→    "url": "https://github.com/emilkowalski/vaul.git"
+    43→  },
+    44→  "bugs": {
+    45→    "url": "https://github.com/emilkowalski/vaul/issues"
+    46→  },
+    47→  "devDependencies": {
+    48→    "@playwright/test": "^1.37.1",
+    49→    "@radix-ui/react-dialog": "^1.0.4",
+    50→    "@types/node": "20.5.7",
+    51→    "@types/react": "18.2.55",
+    52→    "@types/react-dom": "18.2.18",
+    53→    "bunchee": "^5.1.5",
+    54→    "eslint": "^7.32.0",
+    55→    "prettier": "^2.5.1",
+    56→    "react": "^18.2.0",
+    57→    "react-dom": "^18.2.0",
+    58→    "turbo": "1.6",
+    59→    "typescript": "5.2.2"
+    60→  },
+    61→  "peerDependencies": {
+    62→    "react": "^16.8 || ^17.0 || ^18.0 || ^19.0.0 || ^19.0.0-rc",
+    63→    "react-dom": "^16.8 || ^17.0 || ^18.0 || ^19.0.0 || ^19.0.0-rc"
+    64→  },
+    65→  "packageManager": "pnpm@8.8.0",
+    66→  "dependencies": {
+    67→    "@radix-ui/react-dialog": "^1.1.1"
+    68→  }
+
+playwright.config.ts
+
+tsconfig.json
+     2→  "compilerOptions": {
+     3→    "jsx": "react",
+     4→    "target": "es2018",
+     5→    "moduleResolution": "node",
+     6→    "esModuleInterop": true,
+     7→    "lib": ["es2015", "dom"],
+     8→    "strict": true
+     9→  },
+    10→  "include": ["src"],
+
 LICENSE.md
 
 test/next.config.js
@@ -346,11 +346,11 @@ test/public/next.svg
 
 test/public/vercel.svg
 
-test/src/app/controlled/page.tsx
+test/src/app/globals.css
 
 test/src/
 
-test/src/app/
+test/src/app/controlled/
 
 test/src/app/default-open/
 

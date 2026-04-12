@@ -262,6 +262,13 @@ tests/test_util.py
      4→def test_basic_function():
     26→def test_complex_function():
 
+examples/customer_service_streaming/main.py
+    10→def main():
+
+examples/customer_service_streaming/prep_data.py
+     6→GPT_MODEL …
+     7→EMBEDDING_MODEL …
+
 examples/weather_agent/agents.py
      6→def get_weather(location, time="now"):
     11→def send_email(recipient, subject, body):
@@ -276,6 +283,32 @@ examples/weather_agent/run.py
 examples/airline/__init__.py
 
 examples/airline/main.py
+
+examples/support_bot/Makefile
+
+examples/support_bot/__init__.py
+
+examples/support_bot/customer_service.py
+    13→# Set embedding model
+    14→EMBEDDING_MODEL …
+    23→def query_qdrant(query, collection_name, vector_name="article", top_k=5):
+    43→def query_docs(query):
+    68→def send_email(email_address, message):
+    73→def submit_ticket(description):
+    90→def transfer_to_help_center():
+
+examples/support_bot/main.py
+    13→# Set embedding model
+    14→EMBEDDING_MODEL …
+    20→def query_qdrant(query, collection_name, vector_name="article", top_k=5):
+    40→def query_docs(query):
+    66→def send_email(email_address, message):
+    72→def submit_ticket(description):
+    77→def transfer_to_help_center():
+
+examples/support_bot/prep_data.py
+    10→GPT_MODEL …
+    11→EMBEDDING_MODEL …
 
 examples/basic/agent_handoff.py
     16→def transfer_to_spanish_agent():
@@ -309,43 +342,6 @@ examples/personal_shopper/main.py
     10→def refund_item(user_id, item_id):
     32→def notify_customer(user_id, method):
     58→def order_item(user_id, product_id):
-
-examples/support_bot/Makefile
-
-examples/support_bot/__init__.py
-
-examples/support_bot/customer_service.py
-    13→# Set embedding model
-    14→EMBEDDING_MODEL …
-    23→def query_qdrant(query, collection_name, vector_name="article", top_k=5):
-    43→def query_docs(query):
-    68→def send_email(email_address, message):
-    73→def submit_ticket(description):
-    90→def transfer_to_help_center():
-
-examples/support_bot/docker-compose.yaml
-     1→version: '3.4'
-     2→services:
-     3→  qdrant:
-     4→    image: qdrant/qdrant:v1.3.0
-     5→    restart: on-failure
-     6→    ports:
-     7→      - "6335:6335"
-
-examples/support_bot/main.py
-    13→# Set embedding model
-    14→EMBEDDING_MODEL …
-    20→def query_qdrant(query, collection_name, vector_name="article", top_k=5):
-    40→def query_docs(query):
-    66→def send_email(email_address, message):
-    72→def submit_ticket(description):
-    77→def transfer_to_help_center():
-
-examples/support_bot/prep_data.py
-    10→GPT_MODEL …
-    11→EMBEDDING_MODEL …
-
-examples/support_bot/requirements.txt
 
 examples/triage_agent/agents.py
      4→def process_refund(item_id, reason="NOT SPECIFIED"):
@@ -394,16 +390,20 @@ examples/airline/configs/tools.py
     23→def case_resolved():
     27→def initiate_baggage_search():
 
+examples/support_bot/docker-compose.yaml
+     1→version: '3.4'
+     2→services:
+     3→  qdrant:
+     4→    image: qdrant/qdrant:v1.3.0
+     5→    restart: on-failure
+     6→    ports:
+     7→      - "6335:6335"
+
+examples/support_bot/requirements.txt
+
 examples/customer_service_streaming/docker-compose.yaml
      1→version: '3.4'
      2→services:
-
-examples/customer_service_streaming/main.py
-    10→def main():
-
-examples/customer_service_streaming/prep_data.py
-     6→GPT_MODEL …
-     7→EMBEDDING_MODEL …
 
 tests/test_runs/test_20240402-113647.json
 

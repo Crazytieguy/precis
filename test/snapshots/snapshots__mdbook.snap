@@ -110,7 +110,24 @@ guide/src/README.md
 crates/mdbook-core/src/book/tests.rs
 
 crates/mdbook-driver/src/mdbook/tests.rs
+   225→struct BoolPreprocessor …
    226→impl Preprocessor for BoolPreprocessor …
+
+Cargo.toml
+     1→[workspace]
+     8→[workspace.lints.clippy]
+    16→[workspace.lints.rust]
+    21→[workspace.package]
+    27→[workspace.dependencies]
+    72→[package]
+    90→[dependencies]
+   119→[dev-dependencies]
+   129→[features]
+   135→[[bin]]
+   139→[[example]]
+   143→[[example]]
+   149→[[test]]
+   156→[lints]
 
 guide/src/cli/README.md
      1→# Command-line tool
@@ -159,36 +176,6 @@ crates/xtask/src/changelog.rs
 crates/xtask/src/main.rs
      1→//! Helper for local development.
     11→type Result …
-
-Cargo.toml
-     1→[workspace]
-    21→[workspace.package]
-    27→[workspace.dependencies]
-    72→[package]
-    90→[dependencies]
-   119→[dev-dependencies]
-   129→[features]
-   135→[[bin]]
-   139→[[example]]
-   143→[[example]]
-   149→[[test]]
-   156→[lints]
-
-eslint.config.mjs
-     4→const handlebarsPreprocessor …
-
-rustfmt.toml
-
-triagebot.toml
-     2→[assign]
-     5→[shortcut]
-     8→[bot-pull-requests]
-    11→[range-diff]
-    13→[relabel]
-    28→[autolabel."S-waiting-on-review"]
-    31→[merge-conflicts]
-    36→[review-submitted]
-    40→[review-requested]
 
 ci/install-rust.sh
 
@@ -373,11 +360,14 @@ crates/mdbook-driver/src/lib.rs
 crates/mdbook-driver/src/load.rs
      9→/// Load a book into memory from its `src/` directory.
     10→pub(crate) fn load_book<P: AsRef<Path>>(src_dir: P, cfg: &BuildConfig) -> Result<Book> {
+    25→fn create_missing …
     56→/// Use the provided `Summary` to load a `Book` from disk.
     57→///
     58→/// You need to pass in the book's source directory because all the links in
     59→/// `SUMMARY.md` give the chapter locations relative to it.
     60→pub(crate) fn load_book_from_disk<P: AsRef<Path>>(summary: &Summary, src_dir: P) -> Result<Book> {
+    80→fn load_summary_item …
+    93→fn load_chapter …
 
 crates/mdbook-driver/src/mdbook.rs
      1→//! The high-level interface for loading and rendering books.
@@ -387,6 +377,7 @@ crates/mdbook-driver/src/mdbook.rs
    397→struct OutputConfig …
    402→fn determine_renderers …
    426→const DEFAULT_PREPROCESSORS …
+   428→fn is_default_preprocessor …
    435→struct PreprocessorConfig …
    446→fn determine_preprocessors …
    549→fn preprocessor_should_run …
@@ -497,6 +488,7 @@ crates/mdbook-driver/src/builtin_renderers/mod.rs
 
 examples/nop-preprocessor.rs
      1→//! A basic example of a preprocessor that does nothing.
+    78→    /// A no-op preprocessor.
     79→    pub struct Nop …
     81→    impl Nop …
     87→    impl Preprocessor for Nop …
@@ -575,6 +567,7 @@ crates/mdbook-html/src/html_handlebars/hbs_renderer.rs
     22→pub struct HtmlHandlebars …
     24→impl HtmlHandlebars …
    303→impl Renderer for HtmlHandlebars …
+   633→struct RenderChapterContext …
    649→type CombinedRedirects …
    674→fn collect_redirects_for_path …
 
@@ -624,7 +617,9 @@ crates/mdbook-driver/src/builtin_preprocessors/links.rs
    194→impl From<RangeTo<usize>> for LineRange …
    200→impl From<RangeFull> for LineRange …
    206→impl<'a> LinkType<'a> …
+   275→struct Link …
    282→impl<'a> Link<'a> …
+   398→struct LinkIter …
    400→impl<'a> Iterator for LinkIter<'a> …
 
 crates/mdbook-driver/src/builtin_preprocessors/mod.rs
@@ -650,8 +645,8 @@ guide/src/guide/reading.md
     54→## Code blocks
 
 guide/src/for_developers/mdbook-wordcount/Cargo.toml
-
-crates/mdbook-html/front-end/images/favicon.svg
+     1→[package]
+     6→[dependencies]
 
 crates/
 
@@ -660,6 +655,8 @@ crates/mdbook-html/front-end/
 crates/mdbook-html/front-end/css/
 
 crates/mdbook-html/front-end/fonts/
+
+crates/mdbook-html/front-end/images/
 
 crates/mdbook-html/front-end/playground_editor/
 

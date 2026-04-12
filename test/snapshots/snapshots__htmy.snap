@@ -348,6 +348,13 @@ pyproject.toml
     50→[tool.pyright]
     57→[tool.ruff]
 
+examples/snippet-slots-fastapi/app.py
+     7→def layout(*children: ComponentType) -> Snippet:
+    18→class Centered …
+    28→class RequestHeaders …
+    47→def index_page(_: None) -> Snippet:
+    71→async def index() -> None:
+
 docs/examples/fastapi-htmx-tailwind-daisyui.md
      1→# FastAPI with HTMX, TailwindCSS, and DaisyUI
 
@@ -439,25 +446,15 @@ examples/markdown_customization/post.md
     15→## Ordered
     21→## Unordered
 
-examples/markdown_essentials/__init__.py
-
-examples/markdown_essentials/app.py
-
-examples/markdown_essentials/post.md
-     1→# Essential reading
-    11→# Lists
-    13→## Ordered
-    19→## Unordered
-
-examples/internationalization/locale/en/page/hello.json
-
 examples/
 
 examples/internationalization/locale/
 
 examples/internationalization/locale/en/
 
-examples/snippet-slots-fastapi/
+examples/internationalization/locale/en/page/
+
+examples/markdown_essentials/
 
 tests/data/
 

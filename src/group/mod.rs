@@ -51,17 +51,8 @@ impl FilesGroup {
         inherited_modifier: f64,
         sample_relative: &Path,
     ) -> Self {
-        use crate::classify;
-        let filename = sample_relative
-            .file_name()
-            .and_then(|n| n.to_str())
-            .unwrap_or("");
-        let is_config = classify::is_config_file(sample_relative, filename);
-        let is_type_declaration = classify::is_type_declaration_file(sample_relative);
-        let is_header = sample_relative
-            .extension()
-            .and_then(|e| e.to_str())
-            .is_some_and(|ext| classify::is_header_extension(&ext.to_ascii_lowercase()));
+        let (is_config, is_type_declaration, is_header) =
+            crate::classify::file_modifier_properties(sample_relative);
         Self {
             parent_dir,
             role,

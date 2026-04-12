@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (2915 tokens, 9361 chars)
+budget: 4000 (2862 tokens, 9210 chars)
 
 README.rst
 
@@ -10,57 +10,154 @@ downstream/README.md
 
 MANIFEST.in
 
+docs/api_reference.rst
+
+docs/index.rst
+
+downstream/conda.sh
+
+downstream/datasette.sh
+
+downstream/devpi.sh
+
+downstream/hatch.sh
+
+downstream/pytest.sh
+
+downstream/python-lsp-server.sh
+
+downstream/tox.sh
+
+src/pluggy/__init__.py
+     1→__all__ …
+    17→from ._hooks import HookCaller
+    18→from ._hooks import HookImpl
+    19→from ._hooks import HookimplMarker
+    20→from ._hooks import HookimplOpts
+    21→from ._hooks import HookRelay
+    22→from ._hooks import HookspecMarker
+    23→from ._hooks import HookspecOpts
+    24→from ._manager import PluginManager
+    25→from ._manager import PluginValidationError
+    26→from ._result import HookCallError
+    27→from ._result import Result
+    28→from ._warnings import PluggyTeardownRaisedWarning
+    29→from ._warnings import PluggyWarning
+    32→def __getattr__(name: str) -> str:
+
+src/pluggy/_callers.py
+     2→Call loop machinery
+     3→"""
+    16→from ._hooks import HookImpl
+    17→from ._result import HookCallError
+    18→from ._result import Result
+    19→from ._warnings import PluggyTeardownRaisedWarning
+    22→# Need to distinguish between old- and new-style hook wrappers.
+    23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
+    24→Teardown …
+    27→def run_old_style_hookwrapper(
+    28→    hook_impl: HookImpl, hook_name: str, args: Sequence[object]
+    29→) -> Teardown:
+    60→def _raise_wrapfail(
+    61→    wrap_controller: Generator[None, object, object],
+    62→    msg: str,
+    63→) -> NoReturn:
+    70→def _warn_teardown_exception(
+    71→    hook_name: str, hook_impl: HookImpl, e: BaseException
+    72→) -> None:
+    82→def _multicall(
+    83→    hook_name: str,
+    84→    hook_impls: Sequence[HookImpl],
+    85→    caller_kwargs: Mapping[str, object],
+    86→    firstresult: bool,
+    87→) -> object | list[object]:
+
+src/pluggy/_hooks.py
+     2→Internal hook annotation, representation and calling machinery.
+     3→"""
+    25→from ._result import Result
+    28→_T …
+    29→_F …
+    31→_Namespace …
+    32→_Plugin …
+    33→_HookExec …
+    37→_HookImplFunction …
+    40→class HookspecOpts …
+    56→class HookimplOpts …
+    78→class HookspecMarker …
+   165→class HookimplMarker …
+   281→def normalize_hookimpl_opts(opts: HookimplOpts) -> None:
+   290→_PYPY …
+   293→def varnames(func: object) -> tuple[tuple[str, ...], tuple[str, ...]]:
+   359→class HookRelay …
+   377→_CallHistory …
+   382→class HookCaller …
+   593→class _SubsetHookCaller …
+   639→class HookImpl …
+   697→class HookSpec …
+
+src/pluggy/_manager.py
+    16→from . import _tracing
+    17→from ._callers import _multicall
+    18→from ._hooks import _HookImplFunction
+    19→from ._hooks import _Namespace
+    20→from ._hooks import _Plugin
+    21→from ._hooks import _SubsetHookCaller
+    22→from ._hooks import HookCaller
+    23→from ._hooks import HookImpl
+    24→from ._hooks import HookimplOpts
+    25→from ._hooks import HookRelay
+    26→from ._hooks import HookspecOpts
+    27→from ._hooks import normalize_hookimpl_opts
+    28→from ._result import Result
+    36→_BeforeTrace …
+    37→_AfterTrace …
+    42→def _warn_for_function(warning: Warning, function: Callable[..., object]) -> None:
+    52→class PluginValidationError …
+    65→class DistFacade …
+    83→class PluginManager …
+   525→def _formatdef(func: Callable[..., object]) -> str:
+
+src/pluggy/_result.py
+     2→Hook wrapper "result" utilities.
+     3→"""
+    16→_ExcInfo …
+    20→class HookCallError …
+    25→class Result …
+
+src/pluggy/_tracing.py
+     2→Tracing utils
+     3→"""
+    16→class TagTracer …
+    59→class TagTracerSub …
+
+src/pluggy/_warnings.py
+     4→class PluggyWarning …
+    11→class PluggyTeardownRaisedWarning …
+
+src/pluggy/py.typed
+
+changelog/README.rst
+
+docs/examples/toy-example.py
+     8→class MySpec …
+    16→class Plugin_1 …
+    25→class Plugin_2 …
+
+docs/conf.py
+   106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
+   130→def setup(app: "sphinx.application.Sphinx") -> None:
+
+docs/requirements.txt
+
 codecov.yml
      1→coverage:
-     2→  status:
-     3→    project: true
-     4→    patch: true
-     5→    changes: true
      7→comment: off
 
 pyproject.toml
      1→[build-system]
-     2→requires = [
-     3→  "setuptools>=65.0",
-     4→  "setuptools-scm[toml]>=8.0",
-     5→]
-     6→build-backend = "setuptools.build_meta"
-     7→
      8→[project]
-     9→name = "pluggy"
-    10→license = {text = "MIT"}
-    11→authors = [{name = "Holger Krekel"}]
-    12→maintainers = [{name="pytest core team", email="core@pytest.org"}]
-    13→classifiers = [
-    14→  "Development Status :: 6 - Mature",
-    15→  "Intended Audience :: Developers",
-    16→  "License :: OSI Approved :: MIT License",
-    17→  "Operating System :: POSIX",
-    18→  "Operating System :: Microsoft :: Windows",
-    19→  "Operating System :: MacOS :: MacOS X",
-    20→  "Topic :: Software Development :: Testing",
-    21→  "Topic :: Software Development :: Libraries",
-    22→  "Topic :: Utilities",
-    23→  "Programming Language :: Python :: Implementation :: CPython",
-    24→  "Programming Language :: Python :: Implementation :: PyPy",
-    25→  "Programming Language :: Python :: 3",
-    26→  "Programming Language :: Python :: 3 :: Only",
-    27→  "Programming Language :: Python :: 3.10",
-    28→  "Programming Language :: Python :: 3.11",
-    29→  "Programming Language :: Python :: 3.12",
-    30→  "Programming Language :: Python :: 3.13",
-    31→  "Programming Language :: Python :: 3.14",
-    32→]
-    33→description = "plugin and hook calling mechanisms for python"
-    34→readme = {file = "README.rst", content-type = "text/x-rst"}
-    35→requires-python = ">=3.10"
-    36→
-    37→dynamic = ["version"]
     38→[dependency-groups]
-    39→dev = ["pre-commit", "tox"]
-    40→testing = ["pytest", "pytest-benchmark", "coverage"]
-    41→
-    42→
     43→[tool.setuptools]
     44→packages = ["pluggy"]
     45→package-dir =  {""="src"}
@@ -153,105 +250,6 @@ pyproject.toml
 
 tox.ini
 
-docs/api_reference.rst
-
-docs/conf.py
-   106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
-   130→def setup(app: "sphinx.application.Sphinx") -> None:
-
-docs/index.rst
-
-docs/requirements.txt
-
-downstream/conda.sh
-
-downstream/datasette.sh
-
-downstream/devpi.sh
-
-downstream/hatch.sh
-
-downstream/pytest.sh
-
-downstream/python-lsp-server.sh
-
-downstream/tox.sh
-
-src/pluggy/__init__.py
-     1→__all__ …
-    32→def __getattr__(name: str) -> str:
-
-src/pluggy/_callers.py
-     2→Call loop machinery
-     3→"""
-    22→# Need to distinguish between old- and new-style hook wrappers.
-    23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
-    24→Teardown …
-    27→def run_old_style_hookwrapper(
-    28→    hook_impl: HookImpl, hook_name: str, args: Sequence[object]
-    29→) -> Teardown:
-    60→def _raise_wrapfail …
-    70→def _warn_teardown_exception …
-    82→def _multicall …
-
-src/pluggy/_hooks.py
-     2→Internal hook annotation, representation and calling machinery.
-     3→"""
-    28→_T …
-    29→_F …
-    31→_Namespace …
-    32→_Plugin …
-    33→_HookExec …
-    37→_HookImplFunction …
-    40→class HookspecOpts …
-    56→class HookimplOpts …
-    78→class HookspecMarker …
-   165→class HookimplMarker …
-   281→def normalize_hookimpl_opts(opts: HookimplOpts) -> None:
-   290→_PYPY …
-   293→def varnames(func: object) -> tuple[tuple[str, ...], tuple[str, ...]]:
-   359→class HookRelay …
-   377→_CallHistory …
-   382→class HookCaller …
-   593→class _SubsetHookCaller …
-   639→class HookImpl …
-   697→class HookSpec …
-
-src/pluggy/_manager.py
-    36→_BeforeTrace …
-    37→_AfterTrace …
-    42→def _warn_for_function …
-    52→class PluginValidationError …
-    65→class DistFacade …
-    83→class PluginManager …
-   525→def _formatdef …
-
-src/pluggy/_result.py
-     2→Hook wrapper "result" utilities.
-     3→"""
-    16→_ExcInfo …
-    20→class HookCallError …
-    25→class Result …
-
-src/pluggy/_tracing.py
-     2→Tracing utils
-     3→"""
-    16→class TagTracer …
-    59→class TagTracerSub …
-
-src/pluggy/_warnings.py
-     4→class PluggyWarning …
-    11→class PluggyTeardownRaisedWarning …
-
-src/pluggy/py.typed
-
-changelog/README.rst
-
-docs/examples/toy-example.py
-     8→class MySpec …
-    16→class Plugin_1 …
-    25→class Plugin_2 …
-
 scripts/release.py
      2→Release script.
      3→"""
@@ -333,17 +331,10 @@ docs/examples/eggsample-spam/setup.py
 
 docs/changelog.rst
 
-docs/examples/eggsample/eggsample/__init__.py
-
-docs/examples/eggsample/eggsample/hookspecs.py
-
-docs/examples/eggsample/eggsample/host.py
-    29→class EggsellentCook …
-
-docs/examples/eggsample/eggsample/lib.py
-
 docs/_static/
 
 docs/_static/img/
+
+docs/examples/eggsample/eggsample/
 
 src/
