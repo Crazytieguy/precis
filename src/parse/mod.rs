@@ -233,6 +233,7 @@ fn classify<'t>(
             }
         }
         "internal_module" => None,
+        "export_statement" if lang == Lang::JsTs => classify_js_export(node, source),
 
         // ---- Go ----
         "type_spec" => {
@@ -493,6 +494,53 @@ fn classify_js_lexical(
             public: visibility::symbol_visibility(node, source, lang),
         })
     }
+}
+
+/// Classify a JS/TS `export_statement`. Returns `None` for declaration
+/// exports (the inner declaration is captured separately); returns an Import
+/// group for re-exports (`export * from`, `export { } from`, `export { }`).
+fn classify_js_export(node: Node, source: &str) -> Option<TsGroupKey> {
+    let mut cursor = node.walk();
+    let has_declaration = node.children(&mut cursor).any(|c| {
+        matches!(
+            c.kind(),
+            "function_declaration"
+                | "class_declaration"
+                | "abstract_class_declaration"
+                | "lexical_declaration"
+                | "type_alias_declaration"
+                | "interface_declaration"
+                | "enum_declaration"
+                | "internal_module"
+        )
+    });
+    if has_declaration {
+        return None;
+    }
+
+    // `export default expr` — not a re-export
+    cursor = node.walk();
+    let has_default = node
+        .children(&mut cursor)
+        .any(|c| c.kind() == "default");
+    if has_default {
+        return None;
+    }
+
+    // Remaining cases: `export * from '...'`, `export { } from '...'`, `export { }`
+    cursor = node.walk();
+    let has_source = node
+        .children(&mut cursor)
+        .any(|c| c.kind() == "string");
+    let first_party = if has_source {
+        is_first_party_import(node, source, Lang::JsTs)
+    } else {
+        true
+    };
+    Some(TsGroupKey::Import {
+        first_party,
+        reexport: true,
+    })
 }
 
 fn is_require_call(declarator: Option<Node>, source: &str) -> bool {

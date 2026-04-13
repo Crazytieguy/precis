@@ -53,3 +53,8 @@
 
 ; Import statements
 (import_statement) @symbol
+
+; Export re-export statements (export * from, export { } from, export { })
+; Declaration exports (export function, export const, etc.) are captured
+; via their inner declaration nodes above.
+(export_statement) @symbol

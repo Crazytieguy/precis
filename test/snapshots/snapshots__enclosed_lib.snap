@@ -82,6 +82,7 @@ src/crypto/crypto.usecases.ts
      2→import type { EncryptionAlgorithm } from './crypto.types';
      3→import type { SerializationFormat } from './serialization/serialization.types';
      5→import { getParsingMethod, getSerializationMethod } from './serialization/serialization.registry';
+     7→export { decryptNote, encryptNote };
      9→async function encryptNote …
     38→async function decryptNote …
 

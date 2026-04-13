@@ -144,32 +144,11 @@ Root cause: the TypeScript tree-sitter query captures `import_statement` (ES6 im
 
 The result is zero extracted items, so the file contributes nothing to the output. This is a significant gap for JavaScript projects that use CommonJS (which is still the majority of npm packages). For entry point files especially, the exports list is often the single most useful piece of information about the library.
 
-## 13. TypeScript `export` statements not captured — barrel files render empty
+## 13. Functions exported via `export { name }` treated as private
 
-**Affected snapshots:** d2ts, d2ts_d2ts, enclosed, enclosed_crypto, enclosed_lib, superstruct, ts_pattern
+**Affected snapshots:** enclosed
 
-The TypeScript query captures `(import_statement) @symbol` but not `(export_statement)`. TypeScript re-exports (`export * from './foo.js'`, `export { bar } from './baz.js'`) parse as `export_statement` nodes, not `import_statement`, so they produce zero items.
-
-This has two effects:
-
-**Effect 1: Barrel files render empty.** In d2ts, several barrel files are the most concise description of a module's API surface:
-
-- `packages/d2ts/src/operators/index.ts` — 20 re-exports listing every operator (pipe, map, filter, join, reduce, count, distinct, etc.). This is the single best summary of d2ts's capabilities.
-- `packages/d2ts/src/sqlite/index.ts` — 3 re-exports showing the sqlite module structure.
-- `packages/d2ts/src/sqlite/operators/index.ts` — 12 re-exports listing sqlite-backed operators.
-- `packages/d2ts/src/index.ts`, `packages/d2mini/src/index.ts` — top-level package entry points.
-- `packages/d2ql/src/query-builder/index.ts` — `export { queryBuilder, type ResultFromQueryBuilder }`.
-- `packages/d2ql/src/index.ts` — has a module-level JSDoc ("D2QL is a SQL-like query language for D2TS") plus 3 exports; both the doc and the exports are lost.
-
-The pre-rewrite output showed these barrel files with content (e.g., `export * from './pipe.js'` through `export * from './orderBy.js'` with ellipsis). The new output shows them as blank file headers or omits them entirely, wasting header cost while conveying zero information.
-
-Downstream effect: budget freed by the missing barrel content goes to lower-value items — private helper function names in `d2ql/src/functions.ts` (8 unexported functions like `upperFunction`, `lowerFunction`) and bulk type alias names in `d2ql/src/schema.ts` (30 type names, up from 1 in the pre-rewrite output) that add noise without the definitions (see issue #9).
-
-In enclosed, barrel files like `packages/crypto/src/index.node.ts` and `index.web.ts` (23 lines each, showing the full crypto API surface via destructured `export const { deriveMasterKey, generateBaseKey, ... }`) render empty. Similarly `packages/lib/src/index.ts` (17 re-exports listing the entire library API) renders as just import lines.
-
-In ts-pattern, `src/index.ts` (6 lines) is the library's entry point defining the entire public API: `export { match }`, `export { isMatching }`, `export { Pattern, Pattern as P }`, `export { NonExhaustiveError }`. It renders completely empty — just the filename with no content. This is the fastest way for a reader to understand what the library exports, and its absence is not compensated by the detailed per-file output (which requires scanning multiple files to reconstruct the API surface).
-
-**Effect 2: Functions exported via `export { name }` treated as private.** Many enclosed files use the declare-then-export pattern:
+Many enclosed files use the declare-then-export pattern:
 
 ```typescript
 export { createNoteRepository };
@@ -182,6 +161,8 @@ The function declaration IS captured (it appears as a `FunctionName` group), but
 - `notes.routes.ts` (139 lines, REST API endpoints with Zod validation) — empty
 - `notes.usecases.ts` (32 lines, core business logic) — empty
 - `notes.models.ts` (4 functions for note expiration/formatting) — empty
+
+Fixing this requires cross-referencing `export { name }` statements with declarations in the same file to detect that the function is public despite lacking an `export` keyword on its declaration.
 
 ## 14. Server architecture lost to broad-but-shallow budget distribution (regression)
 

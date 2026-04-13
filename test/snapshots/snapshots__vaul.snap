@@ -159,6 +159,7 @@ src/use-composed-refs.ts
     32→  // eslint-disable-next-line react-hooks/exhaustive-deps
     33→  return React.useCallback(composeRefs(...refs), refs);
     34→}
+    36→export { composeRefs, useComposedRefs };
 
 src/use-controllable-state.ts
      5→type UseControllableStateParams …
@@ -349,19 +350,17 @@ test/package.json
 test/postcss.config.js
 
 test/tailwind.config.ts
-     3→const config …
 
 test/tsconfig.json
 
 test/tests/constants.ts
-     1→export const ANIMATION_DURATION …
 
 test/tests/helpers.ts
 
 LICENSE.md
 
+test/src/app/globals.css
+
 test/public/
 
 test/src/
-
-test/src/app/

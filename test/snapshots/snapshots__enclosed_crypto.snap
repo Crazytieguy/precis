@@ -1,6 +1,5 @@
 ---
 source: test/fixtures.rs
-assertion_line: 64
 expression: output
 ---
 README.md
@@ -26,6 +25,7 @@ README.md
     24→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
 
 src/node/crypto.node.usecases.ts
+     5→export { base64UrlToBuffer, bufferToBase64Url, createRandomBuffer, deriveMasterKey, generateBaseKey };
      7→const deriveWithPbkdf2 …
      9→function bufferToBase64Url({ buffer }: { buffer: Uint8Array }): string {
     15→function base64UrlToBuffer({ base64Url }: { base64Url: string }): Uint8Array {
@@ -34,6 +34,7 @@ src/node/crypto.node.usecases.ts
     31→async function deriveMasterKey({ baseKey, password = '' }: { baseKey: Uint8Array; password?: string }): Promise<{ masterKey: Uint8Array }> {
 
 src/web/crypto.web.usecases.ts
+     1→export { base64UrlToBuffer, bufferToBase64Url, createRandomBuffer, deriveMasterKey, generateBaseKey };
      3→function bufferToBase64Url({ buffer }: { buffer: Uint8Array }): string {
     20→function base64UrlToBuffer({ base64Url }: { base64Url: string }): Uint8Array {
     31→function createRandomBuffer({ length = 16 }: { length?: number } = {}): Uint8Array {
@@ -72,6 +73,7 @@ src/encryption-algorithms/encryption-algorithms.constants.ts
      3→export const ENCRYPTION_ALGORITHMS …
 
 src/encryption-algorithms/encryption-algorithms.models.ts
+     1→export …
      3→function defineEncryptionMethods(args: {
      4→  encryptBuffer: (args: { buffer: Uint8Array; encryptionKey: Uint8Array }) => Promise<{ encryptedString: string }>;
      5→  decryptString: (args: { encryptedString: string; encryptionKey: Uint8Array }) => Promise<{ decryptedBuffer: Uint8Array }>;
@@ -79,6 +81,7 @@ src/encryption-algorithms/encryption-algorithms.models.ts
 
 src/encryption-algorithms/encryption-algorithms.registry.ts
      1→import type { EncryptionAlgorithm, EncryptionMethodsDefinition } from './encryption-algorithms.types';
+     4→export …
      6→function createEncryptionAlgorithmsRegistry({
      7→  encryptionMethodDefinitions,
      8→}: {
@@ -87,6 +90,7 @@ src/encryption-algorithms/encryption-algorithms.registry.ts
 
 src/encryption-algorithms/encryption-algorithms.test-utils.ts
      1→import type { EncryptionMethodsDefinition } from './encryption-algorithms.types';
+     5→export …
      9→function runCommonEncryptionAlgorithmTest({
     10→  encryptionMethodDefinition,
     11→}: {
@@ -128,8 +132,6 @@ tsconfig.json
     10→  "include": [
 
 src/index.test.ts
-     3→import * as nodeLib from './index.node';
-     4→import * as webLib from './index.web';
 
 src/node/crypto.node.usecases.test.ts
      2→import { base64UrlToBuffer, bufferToBase64Url } from './crypto.node.usecases';

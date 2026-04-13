@@ -213,6 +213,7 @@ source/types/options.ts
    358→export type InternalOptions …
    371→Normalized options passed to the `fetch` call and the `beforeRequest` hooks.
    373→export interface NormalizedOptions …
+   386→export type {RetryOptions, ShouldRetryState} from './retry.js';
 
 source/types/request.ts
      1→export type KyRequest …
@@ -367,8 +368,6 @@ tsconfig.json
      6→	"include": [
 
 test/helpers/create-http-test-server.ts
-     7→export type HttpServerOptions …
-    11→export type ExtendedHttpTestServer …
 
 test/helpers/create-large-file.ts
 
