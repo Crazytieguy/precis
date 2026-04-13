@@ -511,7 +511,7 @@ The `---` line is semantically equivalent to Python's opening `"""` or Rust's `/
 
 ## 25. Bare-filename repetitive files waste budget while structural files are empty
 
-**Affected snapshots:** sps_core, sqlite_vec, swarm, vscode_emojis_small, vscode_emojis_medium
+**Affected snapshots:** sps_core, sqlite_vec, swarm, vscode_emojis_small, vscode_emojis_medium, xlstm_blocks
 
 In `src/install/cask/artifacts/`, 21 of 24 `.rs` files are shown as bare filenames (no content). These files follow a uniform pattern — each contains a single `pub fn install_X` function — so once the pattern is clear from 2-3 examples, additional bare filenames add no understanding. Collectively they consume ~42 tokens for information already implied by the directory structure.
 
@@ -529,6 +529,8 @@ In swarm, 31 `logs/session_*.json` files are shown individually as bare filename
 In vscode_emojis_small, 9 SVG files in `icons/light/` are listed individually plus `icons/dark/` as a folder — but dark's files are omitted, creating an asymmetric presentation that implies the two directories differ when they're identical. The old output showed just `icons/` as a single folder entry. At budget 100, these bare SVG entries consume most of the budget while `emojis.json` renders with no content (see #34).
 
 In vscode_emojis_medium, 18 SVG files are listed individually (`icons/light/status-added.svg` through `icons/dark/status-untracked.svg`) — 9 files in `light/` and 9 identical names in `dark/`. The old output showed a single `icons/` folder entry. The SVG filenames follow a uniform `status-*.svg` pattern across two theme variants; once you've seen `icons/light/` and `icons/dark/`, individual filenames add nothing. At budget 200, these 18 bare entries consume ~36 tokens (~18% of budget) while `emojis.json` (the most important file — a 40KB emoji mapping) renders completely empty (see #34).
+
+In xlstm_blocks, 6 `.cu`/`.cuh` files in `slstm/src/cuda/` (56-424 lines each) render as bare filenames because precis has no CUDA parser. The old output omitted these entirely. These are kernel implementations whose interfaces are already conveyed by the parsed `slstm.h` (which shows `ForwardPass`, `BackwardPass`, `BackwardPassCut` classes) and `slstm.cc` (which shows the pybind module). The bare filenames add only "these CUDA files exist" — already implied by the header.
 
 The root cause is that bare-filename entries have a non-zero rendering cost (~2 tokens each) but zero information value beyond "this file exists." In a directory with 24 similar files, the directory name itself conveys more than 21 individual bare filenames. Budget would be better spent showing lib.rs module declarations (~15 tokens) and mod.rs structures (~5-10 tokens each), which tell the reader how the crate is organized.
 
