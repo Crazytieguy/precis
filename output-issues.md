@@ -141,7 +141,7 @@ The combined effect: CONTRIBUTING.md and CLAUDE.md headings get base_value 1.0 (
 
 ## 9. Type alias and const bodies missing from taxonomy (regression)
 
-**Affected snapshots:** cmdk, cmdk_cmdk_src, enclosed, enclosed_crypto, enclosed_lib, go_multierror, htmy, ky, ky_source_errors, mcphost_sdk, microbootstrap, microbootstrap_instruments, mitt, nano_vllm, nano_vllm_engine, pluggy, py3xui, py3xui_api, semver, semver_internal, superstruct, tock_internal_core
+**Affected snapshots:** cmdk, cmdk_cmdk_src, enclosed, enclosed_crypto, enclosed_lib, go_multierror, htmy, ky, ky_source_errors, mcphost_sdk, microbootstrap, microbootstrap_instruments, mitt, nano_vllm, nano_vllm_engine, pluggy, py3xui, py3xui_api, semver, semver_internal, superstruct, tock, tock_internal_core
 
 The taxonomy has Body groups for functions (`FunctionBody`), structs (`StructBody`), and enums (`EnumBody`), but none for type aliases, const declarations, interfaces, classes, or traits. The `*Name` rendering truncates after the identifier, so the entire definition is lost.
 
@@ -361,7 +361,7 @@ Root cause: the 2.5× `header_factor` doesn't compensate for krep.c's 16:1 line 
 
 ## 18. Struct and enum bodies elided — many small entries beat fewer large ones
 
-**Affected snapshots:** log, mdbook, neco, otree, sps, sqlite_vec, thiserror, thiserror_impl_src, toasty_codegen, toasty_core
+**Affected snapshots:** log, mdbook, neco, otree, sps, sqlite_vec, thiserror, thiserror_impl_src, tock, toasty_codegen, toasty_core
 
 Large body groups (StructBody at base_value 1.2, EnumBody at 1.5) lose budget to many small FunctionName entries (base_value 1.0, ~2 tokens each). The per-token value/cost ratio strongly favors function names, so the scheduler fills the budget with hundreds of cheap name entries before committing to any multi-line body block.
 
@@ -398,6 +398,8 @@ In toasty_codegen's `src/expand/filters.rs`, the `Filter` struct (7 fields with 
 
 In toasty_core, the pre-rewrite showed bodies for `Operation` (8 variants with doc comments: Insert, DeleteByKey, FindPkByIndex, GetByKey, QueryPk, QuerySql, Transaction, UpdateByKey — the complete driver operation set), `Statement` (4 variants: Delete, Insert, Query, Update), `Rows` (Count/Value/Stream — the driver response model), `FieldTy` (Primitive, Embedded, BelongsTo, HasMany, HasOne — the core field type model), `ModelKind` (Root/Embedded), `AutoStrategy`/`UuidVersion`, `IndexScope`, `IndexOp`, and `Migration`. It also showed the `Capability` impl's database-specific constants (SQLITE, POSTGRESQL, MYSQL, DYNAMODB). The new output truncates all of these to just names. For a database ORM core library, these enum bodies define the fundamental abstractions — what operations exist, what field types are supported, what databases work. Budget is instead consumed by 15 error submodule files (see #29).
 
+In tock, `AnalysisStats` in `internal/adapters/cli/analyze.go` (10 fields: TotalDuration, DeepWorkDuration, DeepWorkScore, ContextSwitches, AvgSwitchesPerDay, Chronotype, PeakHour, FocusDistribution, MostProductiveDay, AvgSessionDuration) defines the productivity analysis dimensions — it tells a reader what the `analyze` command measures. The pre-rewrite showed all fields with inline comments (e.g., `DeepWorkScore float64 // 0-100`, `Chronotype string // "Morning Lark", "Night Owl", etc.`). The new output truncates to `type AnalysisStats …`. Meanwhile, other structs in the same output (Config, Activity, DTOs) retain their bodies — the difference is that `internal/adapters/cli/` has 16 files generating ~60 FunctionName entries that outcompete AnalysisStats's body.
+
 In sqlite_vec's `sqlite-vec.c`, the pre-rewrite showed full bodies for `VectorElementType` (3 members: FLOAT32, BIT, INT8), `Vec0TokenType` (6 members), `NpyTokenType` (10 members), `Vec0DistanceMetrics` (3 members: L2, COSINE, L1), and several `typedef enum` blocks with their values. The new output collapses most of these to just names (e.g., `enum VectorElementType …`). For a C project where enums define the API surface (vector element types, distance metrics, query plan types), these bodies are high-value — a reader can't infer the supported element types or distance metrics from the name alone.
 
 ## 19. Go doc comments not detected for type declarations (regression)
@@ -416,11 +418,13 @@ Functions and methods are unaffected — `function_declaration` and `method_decl
 
 ## 20. Go `_test.go` files treated as Source, consuming significant budget
 
-**Affected snapshots:** mcphost (likely all Go fixtures)
+**Affected snapshots:** mcphost, tock (likely all Go fixtures)
 
 Go colocates test files (`*_test.go`) alongside source files in the same directory. `classify_dir()` assigns `FileCategory` at the directory level, so a directory like `internal/auth/` — containing both `credentials.go` and `credentials_test.go` — gets classified as `Source`. There's no file-level test detection for `*_test.go` files, so they receive the full Source modifier (1.0×) instead of the Test modifier (0.15×).
 
 In the mcphost snapshot, ~16 test files contribute ~60 test function name entries plus ~32 lines of file headers — roughly 14% of the output budget. These are function names like `TestCredentialManager`, `TestBashCommandValidation`, `TestFetchHTML` that tell a reader little beyond "tests exist." Meanwhile, the core `internal/tools/` package (see #21) gets zero output.
+
+In tock, 8 test files (`config_test.go`, `extra_test.go`, `timeutil_test.go`, `service_test.go`, `parser_test.go`, `repository_test.go` ×3) contribute 37 test function entries plus file headers — roughly ~80 output lines (~10% of the 8000-token budget). The `timeutil_test.go` alone shows 8 test functions. Budget spent on `TestParseTime_24HourMode`, `TestRepository_Remove_WhitespaceHandling`, etc. could instead show the `AnalysisStats` struct body (see #18) or `ports.go` interface methods (see #9).
 
 This applies to any language with colocated tests (Go, Rust with `#[cfg(test)]` modules, Python files named `test_*.py` alongside source). Go is the most affected because `_test.go` is a universal convention with a trivial filename check.
 
