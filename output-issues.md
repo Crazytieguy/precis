@@ -66,7 +66,7 @@ The new output just shows `macro_rules! bail …` and `macro_rules! anyhow …`.
 
 ## 6. README body content dropped — only headings shown
 
-**Affected snapshots:** bareiron, commander, d2ts, d2ts_d2ts, log, mcphost, mdbook, mdbook_guide_src, pluggy
+**Affected snapshots:** bareiron, commander, d2ts, d2ts_d2ts, log, mcphost, mdbook, mdbook_guide_src, pluggy, semver
 
 The output shows README.md with only headings — zero body content. The pre-rewrite output showed introductory sections that tell the reader what the project is.
 
@@ -107,9 +107,9 @@ In neco's `neco.h`, the 19 error codes and 6 time constants are all truncated:
 
 The pre-rewrite showed complete lines with values and trailing doxygen descriptions: `#define NECO_OK 0 ///< Successful result (no error)`, `#define NECO_SECOND INT64_C(1000000000)`. For a C library, error codes ARE the error model — `NECO_OK 0` tells you success returns zero, `NECO_TIMEDOUT -10` tells you specific failure modes. The time constant values tell you the API uses nanoseconds. Truncating these to just names removes the most informative part of each line.
 
-## 8. CommunityHealth and AiConfig files not deprioritized at root level
+## 8. CommunityHealth, AiConfig, and Changelog files not deprioritized at root level
 
-**Affected snapshots:** chronos, peepdb, pluggy
+**Affected snapshots:** chronos, peepdb, pluggy, semver
 
 CONTRIBUTING.md gets ~53 lines of output — more than any individual source file — for a boilerplate Amazon open source contributing guide ("how to file bugs", "how to send PRs"). The pre-rewrite output didn't show CONTRIBUTING.md content at all.
 
@@ -117,9 +117,11 @@ In peepdb, the regression is even more severe: CONTRIBUTING.md goes from 1 line 
 
 In pluggy, CLAUDE.md (classified as `AiConfig`) gets ~50 lines of output showing development commands, testing instructions, and architecture notes — none of which helps a reader understand what pluggy is or how its plugin system works. The pre-rewrite output didn't show CLAUDE.md at all. This budget directly displaces the README.rst content (see issue #6).
 
+In semver, CHANGELOG.md (326 lines, classified as `Changelog`) gets ~70 lines of version headings spanning the full file — every release from v7.7.4 back to v5.0. The pre-rewrite output didn't show CHANGELOG.md at all. The budget goes to ~40 version headings (h2/h3) that tell a reader nothing about what semver is or how it works, while README body content (see #6), the public API surface in `index.js` (see #11), and class method signatures (see #9) are all lost.
+
 Two root causes:
 
-1. **`files_contribution()` doesn't deprioritize root-level CommunityHealth or AiConfig files.** The `is_root_dir` branch only boosts Readme/Architecture to 1.5 and treats everything else as 1.0. The 0.1 deprioritization for CommunityHealth and AiConfig only applies in the non-root branch. So CONTRIBUTING.md's and CLAUDE.md's child TsGroups compete at full modifier value.
+1. **`files_contribution()` doesn't deprioritize root-level CommunityHealth, AiConfig, or Changelog files.** The `is_root_dir` branch only boosts Readme/Architecture to 1.5 and treats everything else as 1.0. The 0.1 deprioritization for these roles only applies in the non-root branch. So CONTRIBUTING.md's, CLAUDE.md's, and CHANGELOG.md's child TsGroups compete at full modifier value.
 
 2. **`is_boilerplate_heading()` doesn't match multi-word headings.** It splits on dashes (`-`, `—`, `–`) but not spaces, then does exact matches. So "Contributing Guidelines" becomes stem `"contributing guidelines"` which doesn't match `"contributing"`. Only 1 of 7 headings in CONTRIBUTING.md ("Code of Conduct") gets the boilerplate modifier. Similarly, "Security issue notifications" doesn't match `"security"`.
 
@@ -127,7 +129,7 @@ The combined effect: CONTRIBUTING.md and CLAUDE.md headings get base_value 1.0 (
 
 ## 9. Type alias and const bodies missing from taxonomy (regression)
 
-**Affected snapshots:** cmdk, cmdk_cmdk_src, enclosed, enclosed_crypto, enclosed_lib, go_multierror, htmy, ky, ky_source_errors, mcphost_sdk, microbootstrap, microbootstrap_instruments, mitt, nano_vllm, nano_vllm_engine, pluggy, py3xui, py3xui_api, semver_internal
+**Affected snapshots:** cmdk, cmdk_cmdk_src, enclosed, enclosed_crypto, enclosed_lib, go_multierror, htmy, ky, ky_source_errors, mcphost_sdk, microbootstrap, microbootstrap_instruments, mitt, nano_vllm, nano_vllm_engine, pluggy, py3xui, py3xui_api, semver, semver_internal
 
 The taxonomy has Body groups for functions (`FunctionBody`), structs (`StructBody`), and enums (`EnumBody`), but none for type aliases, const declarations, interfaces, classes, or traits. The `*Name` rendering truncates after the identifier, so the entire definition is lost.
 
@@ -165,6 +167,8 @@ In nano_vllm_engine, the missing ClassBody loses Python Enum variant definitions
 
 In semver_internal, `constants.js` is a pure constants file where the values ARE the content. The pre-rewrite output showed `const SEMVER_SPEC_VERSION = '2.0.0'`, `const MAX_LENGTH = 256`, `const MAX_SAFE_COMPONENT_LENGTH = 16`, and the full `RELEASE_TYPES` array with all 7 release type strings. The post-rewrite truncates all of these to just names (`const SEMVER_SPEC_VERSION …`, `const MAX_LENGTH …`, `const RELEASE_TYPES …`). Similarly, `debug.js` (11 lines total) is a single conditional expression — the pre-rewrite showed all 7 lines of the conditional, the post-rewrite shows `const debug …`. In `re.js`, `const LETTERDASHNUMBER …` hides `'[a-zA-Z0-9-]'` and `const safeRegexReplacements …` hides the actual replacement rules. The freed budget isn't even fully used — the new output is 20 lines shorter than the old.
 
+In semver, the missing `ClassBody` group causes all JS class method signatures to be lost. The pre-rewrite output showed `Comparator` with 6 methods (`parse`, `test`, `intersects`, `toString`, etc.), `Range` with 8 methods (`constructor`, `parseRange`, `intersects`, `test`, `format`, `toString`, etc.), and `SemVer` with 7 methods (`compare`, `compareMain`, `comparePre`, `compareBuild`, `inc`, `format`, `toString`). The post-rewrite output truncates all three classes to just `class Comparator …`, `class Range …`, `class SemVer …`. These classes ARE the library — their methods define the complete API surface for version comparison, range parsing, and version manipulation. The freed budget goes instead to CHANGELOG.md headings (see #8) and individual `functions/*.js` one-liner wrappers (20 files showing `const clean …`, `const gt …`, etc.) that merely delegate to these classes.
+
 ## 10. Markdown h1 body omitted while h2 bodies shown (regression)
 
 **Affected snapshots:** cmdk
@@ -177,9 +181,11 @@ The intro is the most valuable content in ARCHITECTURE.md — it's the "why" tha
 
 ## 11. CommonJS entry point rendered empty — require/exports not captured
 
-**Affected snapshots:** commander, semver_classes
+**Affected snapshots:** commander, semver, semver_classes
 
 Commander's `index.js` (24 lines) is the library's entry point. It shows the module structure: which classes are imported from `lib/`, factory functions (`createCommand`, `createOption`, `createArgument`), and all exports. The pre-rewrite output showed the full file. The new output shows only the filename with zero content — the file appears completely empty.
+
+Semver's root `index.js` (91 lines) is the worst case of this issue. The pre-rewrite output showed the complete file: 44 `require()` imports mapping every function and class to its source file, followed by a `module.exports` object listing all 34 public API names. This is the single most valuable file in the repository — it IS the public API surface. The new output shows it as empty. The budget that should go here instead goes to CHANGELOG.md headings (see #8) and 20 individual `functions/*.js` one-liner wrappers that redundantly list the same function names without the module structure context.
 
 Semver's `classes/index.js` (7 lines) is the same pattern — `module.exports = { SemVer: require('./semver.js'), Range: require('./range.js'), Comparator: require('./comparator.js') }`. The pre-rewrite output showed this in full. The new output shows only the filename. This file is the single best summary of the module: three classes, their names, their source files.
 
