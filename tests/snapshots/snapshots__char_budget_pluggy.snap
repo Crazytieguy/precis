@@ -1,8 +1,9 @@
 ---
 source: tests/snapshots.rs
+assertion_line: 1011
 expression: output
 ---
-budget: 4000 (2764 tokens, 9494 chars)
+budget: 4000 (2784 tokens, 9499 chars)
 
 README.rst
 
@@ -208,6 +209,20 @@ pyproject.toml
 
 tox.ini
 
+testing/benchmark.py
+     2→Benchmarking and performance tests.
+     3→"""
+    21→def hook(arg1, arg2, arg3):
+    26→def wrapper(arg1, arg2, arg3):
+    31→def hooks(request: Any) -> list[object]:
+    36→def wrappers(request: Any) -> list[object]:
+    40→def test_hook_and_wrappers_speed(benchmark, hooks, wrappers) -> None:
+    70→def test_call_hook(benchmark, plugins, wrappers, nesting) -> None:
+
+testing/conftest.py
+    11→def he_pm(request, pm: PluginManager) -> PluginManager:
+    24→def pm() -> PluginManager:
+
 scripts/release.py
      2→Release script.
      3→"""
@@ -279,35 +294,6 @@ CLAUDE.md
     50→- `tox.ini` - Multi-environment testing configuration
     51→- `.pre-commit-config.yaml` - Code quality automation (ruff, mypy, flake8, etc.)
 
-testing/benchmark.py
-     2→Benchmarking and performance tests.
-     3→"""
-
-testing/conftest.py
-
-testing/test_details.py
-
-testing/test_helpers.py
-
-testing/test_hookcaller.py
-    34→class AddMeth …
-    35→    def __init__ …
-    38→    def __call__ …
-
-testing/test_invocations.py
-
-testing/test_multicall.py
-
-testing/test_pluginmanager.py
-     2→``PluginManager`` unit and public API testing.
-     3→"""
-
-testing/test_result.py
-
-testing/test_tracer.py
-
-testing/test_warnings.py
-
 RELEASING.rst
 
 SECURITY.md
@@ -319,8 +305,6 @@ TIDELIFT.rst
 docs/_static/
 
 docs/_static/img/
-
-docs/examples/eggsample/eggsample/
 
 docs/examples/eggsample-spam/
 

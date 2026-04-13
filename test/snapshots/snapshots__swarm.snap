@@ -1,5 +1,6 @@
 ---
 source: test/fixtures.rs
+assertion_line: 64
 expression: output
 ---
 README.md
@@ -303,7 +304,6 @@ examples/airline/README.md
 
 examples/basic/README.md
      1→# Swarm basic
-     5→### Examples
     31→## Running the Examples
 
 examples/personal_shopper/README.md
@@ -326,29 +326,21 @@ examples/weather_agent/README.md
      5→## Setup
     15→## Evals
 
-SECURITY.md
-     1→# Security Policy
-     3→For a more in-depth look at our security policy, please check out our [Coordinated Vulnerability Disclosure Policy](https://openai.com/security/disclosure/#:~:text=Disclosure%20Policy,-Security%20is%20essential&text=OpenAI%27s%20coordinated%20vulnerability%20disclosure%20policy,expect%20from%20us%20in%20return.).
-     4→
-     5→Our PGP key can located [at this address.](https://cdn.openai.com/security.txt)
-
 tests/__init__.py
 
 tests/mock_client.py
      8→def create_mock_response(message, function_calls=[], model="gpt-4o"):
     44→class MockOpenAIClient …
+    45→    def __init__(self):
+    49→    def set_response(self, response: ChatCompletion):
+    56→    def set_sequential_responses(self, responses: list[ChatCompletion]):
+    63→    def assert_create_called_with(self, **kwargs):
 
-tests/test_core.py
-     7→DEFAULT_RESPONSE_CONTENT …
-    11→def mock_openai_client():
-    19→def test_run_with_simple_message(mock_openai_client: MockOpenAIClient):
-    31→def test_tool_call(mock_openai_client: MockOpenAIClient):
-    70→def test_execute_tools_false(mock_openai_client: MockOpenAIClient):
-   118→def test_handoff(mock_openai_client: MockOpenAIClient):
-
-tests/test_util.py
-     4→def test_basic_function():
-    26→def test_complex_function():
+SECURITY.md
+     1→# Security Policy
+     3→For a more in-depth look at our security policy, please check out our [Coordinated Vulnerability Disclosure Policy](https://openai.com/security/disclosure/#:~:text=Disclosure%20Policy,-Security%20is%20essential&text=OpenAI%27s%20coordinated%20vulnerability%20disclosure%20policy,expect%20from%20us%20in%20return.).
+     4→
+     5→Our PGP key can located [at this address.](https://cdn.openai.com/security.txt)
 
 examples/customer_service_streaming/main.py
     10→def main():
@@ -358,8 +350,13 @@ examples/customer_service_streaming/prep_data.py
      7→EMBEDDING_MODEL …
 
 examples/weather_agent/agents.py
+     6→def get_weather(location, time="now"):
+    11→def send_email(recipient, subject, body):
 
 examples/weather_agent/evals.py
+     8→def run_and_get_tool_calls(agent, query):
+    26→def test_calls_weather_when_asked(query):
+    41→def test_does_not_call_weather_when_not_asked(query):
 
 examples/weather_agent/run.py
 
@@ -368,8 +365,6 @@ assets/
 examples/airline/configs/
 
 examples/airline/data/
-
-examples/airline/data/routines/
 
 examples/airline/evals/
 

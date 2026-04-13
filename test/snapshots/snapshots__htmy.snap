@@ -1,5 +1,6 @@
 ---
 source: test/fixtures.rs
+assertion_line: 64
 expression: output
 ---
 README.md
@@ -86,10 +87,10 @@ htmy/md/core.py
     34→    def default …
     43→    def __init__ …
     53→    def parse …
-    64→    def _default_md …
+    64→    def _default_md(self) -> MarkdownParserFunction:
     81→class MD …
    103→    def __init__ …
-   131→    def _render_text …
+   131→    def _render_text(self, text: str, context: Context) -> Component:
 
 htmy/md/typing.py
     11→MarkdownMetadataDict …
@@ -423,6 +424,15 @@ examples/snippet-slots-fastapi/app.py
     47→def index_page(_: None) -> Snippet:
     71→async def index() -> None:
 
+tests/__init__.py
+
+tests/conftest.py
+     7→def default_renderer() -> Renderer:
+    12→def baseline_renderer() -> BaselineRenderer:
+    17→def streaming_renderer() -> StreamingRenderer:
+
+tests/utils.py
+
 docs/examples/fastapi-htmx-tailwind-daisyui.md
      1→# FastAPI with HTMX, TailwindCSS, and DaisyUI
 
@@ -440,37 +450,18 @@ docs/examples/markdown.md
 docs/examples/snippet-slots-fastapi.md
      1→# Slot rendering with `Snippet`
 
-tests/__init__.py
+examples/internationalization/__init__.py
 
-tests/conftest.py
+examples/internationalization/app.py
 
-tests/test_formatter.py
-
-tests/test_function_component.py
-    12→rendering_context …
-    69→class Data …
-
-tests/test_i18n.py
-    10→class TranslationFile …
-
-tests/test_main_components.py
-    22→class Page …
-
-tests/test_md.py
-    81→class ConverterRules …
-
-tests/test_snippet.py
-
-tests/utils.py
+tests/data/blog-post.md
 
 examples/
 
-examples/internationalization/
+examples/internationalization/locale/
 
 examples/markdown_customization/
 
 examples/markdown_essentials/
-
-tests/data/
 
 tests/renderer/

@@ -1,5 +1,6 @@
 ---
 source: test/fixtures.rs
+assertion_line: 64
 expression: output
 ---
 README.md
@@ -344,7 +345,6 @@ tsconfig.json
 LICENSE.md
 
 test/next.config.js
-     1→/** @type {import('next').NextConfig} */
      2→const nextConfig …
 
 test/package.json
@@ -356,10 +356,13 @@ test/tailwind.config.ts
 
 test/tsconfig.json
 
-test/src/app/globals.css
+test/tests/constants.ts
+     1→export const ANIMATION_DURATION …
+
+test/tests/helpers.ts
 
 test/public/
 
 test/src/
 
-test/tests/
+test/src/app/

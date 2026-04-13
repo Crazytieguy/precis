@@ -40,6 +40,7 @@ pub struct FilesGroup {
     pub is_deprioritized: bool,
     pub is_type_declaration: bool,
     pub is_header: bool,
+    pub is_test_file: bool,
 }
 
 impl FilesGroup {
@@ -52,7 +53,7 @@ impl FilesGroup {
         inherited_modifier: f64,
         sample_relative: &Path,
     ) -> Self {
-        let (is_deprioritized, is_type_declaration, is_header) =
+        let (is_deprioritized, is_type_declaration, is_header, is_test_file) =
             crate::classify::file_modifier_properties(sample_relative);
         Self {
             parent_dir,
@@ -62,6 +63,7 @@ impl FilesGroup {
             is_deprioritized,
             is_type_declaration,
             is_header,
+            is_test_file,
         }
     }
 }

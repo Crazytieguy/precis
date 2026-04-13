@@ -1,5 +1,6 @@
 ---
 source: test/fixtures.rs
+assertion_line: 64
 expression: output
 ---
 README.md
@@ -154,8 +155,8 @@ microbootstrap/bootstrappers/base.py
 
 microbootstrap/bootstrappers/fastapi.py
     27→class FastApiBootstrapper …
-    34→    async def _lifespan_manager …
-    42→    async def _wrapped_lifespan_manager …
+    34→    async def _lifespan_manager(self, _: fastapi.FastAPI) -> typing.AsyncIterator[None]:
+    42→    async def _wrapped_lifespan_manager(self, app: fastapi.FastAPI) -> typing.AsyncIterator[None]:
     47→    def bootstrap_before …
     58→class FastApiSwaggerInstrument …
     59→    def bootstrap_before …
@@ -387,25 +388,19 @@ pyproject.toml
     62→[project.optional-dependencies]
     77→[dependency-groups]
     93→[build-system]
+    97→[tool.uv.build-backend]
    101→[tool.mypy]
    109→[tool.ruff]
+   113→[tool.ruff.format]
+   116→[tool.ruff.lint]
+   142→[tool.coverage.report]
+   146→[tool.pytest.ini_options]
 
 tests/__init__.py
 
 tests/conftest.py
     46→class MockSentryTransport …
     47→    def capture_envelope(self, envelope: SentryEnvelope) -> None: ...
-
-tests/test_granian_server.py
-
-tests/test_helpers.py
-    47→class PydanticConfig …
-    54→class InnerDataclass …
-   109→class DataclassConfig …
-
-tests/test_instruments_setupper.py
-
-tests/test_settings.py
 
 tests/bootstrappers/
 

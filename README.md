@@ -51,11 +51,11 @@ package.json
 
 tsconfig.json
 
-test/
+test/index_test.ts
 ```
 <!-- precis-example-end -->
 
-The README headings give the document structure. The source file shows type aliases (truncated), the `Emitter` interface with its method signatures (`on`, `off`, `emit`), doc comments, and the main function signature. Config files and test directories appear as path-only entries, deprioritized relative to core source.
+The README headings give the document structure. The source file shows type aliases (truncated), the `Emitter` interface with its method signatures (`on`, `off`, `emit`), doc comments, and the main function signature. Config files and test files appear as path-only entries, deprioritized relative to core source.
 
 ## Installation
 

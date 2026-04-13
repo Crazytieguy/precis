@@ -428,9 +428,8 @@ pub fn is_header_file(path: &Path) -> bool {
         .is_some_and(|ext| is_header_extension(&ext.to_ascii_lowercase()))
 }
 
-/// Compute the (is_deprioritized, is_type_declaration, is_header) properties for a file.
-/// Used to partition files into groups with different modifiers.
-pub fn file_modifier_properties(relative_path: &Path) -> (bool, bool, bool) {
+/// Compute per-file modifier properties used to partition files into groups.
+pub fn file_modifier_properties(relative_path: &Path) -> (bool, bool, bool, bool) {
     let filename = relative_path
         .file_name()
         .and_then(|n| n.to_str())
@@ -439,7 +438,30 @@ pub fn file_modifier_properties(relative_path: &Path) -> (bool, bool, bool) {
         is_deprioritized_file(relative_path, filename),
         is_type_declaration_file(relative_path),
         is_header_file(relative_path),
+        is_colocated_test_file(filename),
     )
+}
+
+pub fn is_colocated_test_file(filename: &str) -> bool {
+    let lower = filename.to_ascii_lowercase();
+    if lower.ends_with("_test.go") {
+        return true;
+    }
+    if lower.starts_with("test_") && lower.ends_with(".py") {
+        return true;
+    }
+    if let Some(stem) = lower.strip_suffix(".py")
+        && stem.ends_with("_test")
+    {
+        return true;
+    }
+    let test_infixes = [".test.", ".spec.", "_test.", "_spec."];
+    for infix in test_infixes {
+        if lower.contains(infix) {
+            return true;
+        }
+    }
+    false
 }
 
 // ---------------------------------------------------------------------------

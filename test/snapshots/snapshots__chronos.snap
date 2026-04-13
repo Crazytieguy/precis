@@ -1,5 +1,6 @@
 ---
 source: test/fixtures.rs
+assertion_line: 64
 expression: output
 ---
 README.md
@@ -21,9 +22,6 @@ CITATION.cff
 
 scripts/README.md
      1→# Usage Examples
-     3→> [!NOTE]  
-     4→> The following documentation was originally written for the Chronos models released in Mar 2024 and may be outdated. If something does not work, please open an issue or a pull request.
-     5→
      6→## Generating Synthetic Time Series (KernelSynth)
     24→## Pretraining (and fine-tuning) Chronos models
    113→## Evaluating Chronos models
@@ -159,10 +157,10 @@ scripts/training/train.py
    504→def main …
 
 src/chronos/chronos2/__init__.py
-     6→from .config import Chronos2CoreConfig, Chronos2ForecastingConfig …
-     7→from .model import Chronos2Model …
-     8→from .pipeline import Chronos2Pipeline …
-     9→from .dataset import Chronos2Dataset …
+     6→from .config import Chronos2CoreConfig, Chronos2ForecastingConfig
+     7→from .model import Chronos2Model
+     8→from .pipeline import Chronos2Pipeline
+     9→from .dataset import Chronos2Dataset
     11→__all__ …
 
 src/chronos/chronos2/config.py
@@ -199,7 +197,7 @@ src/chronos/chronos2/dataset.py
    666→    def __iter__ …
 
 src/chronos/chronos2/layers.py
-    15→from .config import Chronos2CoreConfig …
+    15→from .config import Chronos2CoreConfig
     18→class RoPE …
     25→    def __init__ …
     35→    def forward …
@@ -232,8 +230,17 @@ src/chronos/chronos2/layers.py
    393→    def forward …
 
 src/chronos/chronos2/model.py
-    18→from .config import Chronos2CoreConfig, Chronos2ForecastingConfig …
-    19→from .layers import ( …
+    18→from .config import Chronos2CoreConfig, Chronos2ForecastingConfig
+    19→from .layers import (
+    20→    MHA,
+    21→    MLP,
+    22→    AttentionOutput,
+    23→    Chronos2LayerNorm,
+    24→    FeedForward,
+    25→    GroupSelfAttention,
+    26→    ResidualBlock,
+    27→    TimeSelfAttention,
+    28→)
     32→class Chronos2EncoderBlockOutput …
     38→class Chronos2EncoderBlock …
     39→    def __init__ …
@@ -294,6 +301,15 @@ scripts/kernel-synth.py
 
 ci/evaluate/backtest_config.yaml
 
+test/__init__.py
+
+test/util.py
+     9→def validate_tensor …
+    17→def create_df …
+    31→def create_future_df …
+    43→def get_forecast_start_times …
+    50→def timeout_callback …
+
 scripts/evaluation/agg-relative-score.py
      7→DEFAULT_RESULTS_DIR …
     10→def agg_relative_score …
@@ -308,23 +324,6 @@ scripts/evaluation/evaluate.py
    174→def chronos …
    241→def chronos_bolt …
    291→def chronos_2 …
-
-test/__init__.py
-
-test/test_chronos.py
-    19→DUMMY_MODEL_PATH …
-
-test/test_chronos2.py
-    21→DUMMY_MODEL_PATH …
-
-test/test_chronos_bolt.py
-    17→DUMMY_MODEL_PATH …
-
-test/test_df_utils.py
-
-test/test_utils.py
-
-test/util.py
 
 CODE_OF_CONDUCT.md
      1→## Code of Conduct
@@ -392,6 +391,8 @@ test/dummy-chronos-model/config.json
 
 test/dummy-chronos2-model/config.json
 
+test/dummy-chronos2-lora/adapter_config.json
+
 ci/
 
 scripts/evaluation/results/
@@ -399,5 +400,3 @@ scripts/evaluation/results/
 scripts/training/configs/
 
 src/
-
-test/dummy-chronos2-lora/

@@ -1,5 +1,6 @@
 ---
 source: test/fixtures.rs
+assertion_line: 64
 expression: output
 ---
 README.md
@@ -66,6 +67,12 @@ dev/push.sh
 dev/pydoc.sh
 
 py3xui/api/README.md
+     3→# api.api\_database
+    67→# api.api\_inbound
+   345→# api.api
+   549→# api.api\_server
+   674→# api.api\_client
+  1042→# api.api\_base
 
 py3xui/async_api/README.md
 
@@ -346,36 +353,18 @@ py3xui/async_api/async_api_server.py
 
 tests/__init__.py
 
-tests/test_api.py
-    12→RESPONSES_DIR …
-    13→HOST …
-    14→USERNAME …
-    15→PASSWORD …
-    16→SESSION …
-    17→EMAIL …
-    18→SESSION …
-
-tests/test_async_api.py
-    12→RESPONSES_DIR …
-    13→HOST …
-    14→USERNAME …
-    15→PASSWORD …
-    16→SESSION …
-    17→EMAIL …
-    18→RESPONSES_DIR …
-    19→HOST …
-    20→USERNAME …
-    21→PASSWORD …
-    22→SESSION …
-
-tests/test_env.py
-
 CODE_OF_CONDUCT.md
+     1→# Contributor Covenant Code of Conduct
 
 CONTRIBUTING.md
+     1→# Contributing to py3xui
+   105→## Code of Conduct
+   106→By participating in this project, you agree to abide by the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 LICENSE.md
+     1→# MIT License
 
 SECURITY.md
+     1→# Security Policy
 
 tests/responses/

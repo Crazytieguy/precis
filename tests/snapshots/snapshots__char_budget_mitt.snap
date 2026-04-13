@@ -1,8 +1,9 @@
 ---
 source: tests/snapshots.rs
+assertion_line: 1017
 expression: output
 ---
-budget: 2000 (1994 tokens, 6712 chars)
+budget: 2000 (1990 tokens, 6661 chars)
 
 README.md
      9→# Mitt
@@ -116,9 +117,14 @@ src/index.ts
     26→	on<Key extends keyof Events>(type: Key, handler: Handler<Events[Key]>): void;
     27→	on(type: '*', handler: WildcardHandler<Events>): void;
     29→	off<Key extends keyof Events>(
+    30→		type: Key,
+    31→		handler?: Handler<Events[Key]>
+    32→	): void;
     33→	off(type: '*', handler: WildcardHandler<Events>): void;
     35→	emit<Key extends keyof Events>(type: Key, event: Events[Key]): void;
     36→	emit<Key extends keyof Events>(
+    37→		type: undefined extends Events[Key] ? Key : never
+    38→	): void;
     42→ * Mitt: Tiny (~200b) functional event emitter / pubsub.
     43→ * @name mitt
     44→ * @returns {Mitt}
@@ -153,11 +159,4 @@ tsconfig.json
      3→	"compilerOptions": {
     11→	"include": [
 
-test/index_test.ts
-
 test/test-types-compilation.ts
-     5→interface SomeEventData …
-     9→const emitter …
-    15→const barHandler = (x?: number) => {};
-    16→const fooHandler = (x: string) => {};
-    17→const wildcardHandler = (

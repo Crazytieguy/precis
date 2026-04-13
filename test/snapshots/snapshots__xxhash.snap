@@ -1,5 +1,6 @@
 ---
 source: test/fixtures.rs
+assertion_line: 64
 expression: output
 ---
 README.md
@@ -71,40 +72,6 @@ README.md
     73→- [Ristretto](https://github.com/dgraph-io/ristretto)
     74→- [Badger](https://github.com/dgraph-io/badger)
 
-dynamic/dynamic_test.go
-    15→// This is a cursory test that checks whether things work under dynamic linking.
-    17→func TestMain(m *testing.M) {
-    18→	cmd := exec.Command(
-    19→		"go", "build",
-    20→		"-buildmode", "plugin",
-    21→		"-o", "plugin.so",
-    22→		"plugin.go",
-    23→	)
-    24→	var out bytes.Buffer
-    25→	cmd.Stdout = &out
-    26→	cmd.Stderr = &out
-    27→	if err := cmd.Run(); err != nil {
-    28→		log.Fatalf("Error building plugin: %s\nOutput:\n%s", err, out.String())
-    29→	}
-    30→	os.Exit(m.Run())
-    31→}
-    33→func TestDynamic(t *testing.T) {
-    34→	plug, err := plugin.Open("plugin.so")
-    35→	if err != nil {
-    36→		t.Fatal(err)
-    37→	}
-    38→	for _, test := range []string{
-    39→		"TestSum",
-    40→		"TestDigest",
-    41→	} {
-    42→		f, err := plug.Lookup(test)
-    43→		if err != nil {
-    44→			t.Fatalf("cannot find func %s: %s", test, err)
-    45→		}
-    46→		f.(func(*testing.T))(t)
-    47→	}
-    48→}
-
 dynamic/plugin.go
     14→const …
     19→func TestSum(t *testing.T) {
@@ -136,73 +103,14 @@ dynamic/plugin.go
     46→	}
     47→}
 
-xxhsum/xxhsum.go
-    11→func main() {
-    12→	if contains(os.Args[1:], "-h") {
-    13→		fmt.Fprintf(os.Stderr, `Usage:
-    14→  %s [filenames]
-    15→If no filenames are provided or only - is given, input is read from stdin.
-    16→`, os.Args[0])
-    17→		os.Exit(1)
-    18→	}
-    19→	if len(os.Args) < 2 || len(os.Args) == 2 && os.Args[1] == "-" {
-    20→		printHash(os.Stdin, "-")
-    21→		return
-    22→	}
-    23→	for _, path := range os.Args[1:] {
-    24→		f, err := os.Open(path)
-    25→		if err != nil {
-    26→			fmt.Fprintln(os.Stderr, err)
-    27→			continue
-    28→		}
-    29→		printHash(f, path)
-    30→		f.Close()
-    31→	}
-    32→}
-    34→func contains(ss []string, s string) bool {
-    35→	for _, s1 := range ss {
-    36→		if s1 == s {
-    37→			return true
-    38→		}
-    39→	}
-    40→	return false
-    41→}
-    43→func printHash(r io.Reader, name string) {
-    44→	h := xxhash.New()
-    45→	if _, err := io.Copy(h, r); err != nil {
-    46→		fmt.Fprintln(os.Stderr, err)
-    47→		return
-    48→	}
-    49→	fmt.Printf("%016x  %s\n", h.Sum64(), name)
-    50→}
-
 xxhashbench/go.mod
 
 xxhashbench/go.sum
 
-xxhashbench/xxhashbench_test.go
-    18→var sink …
-    20→var benchmarks …
-   108→func BenchmarkHashes(b *testing.B) {
-   152→func benchmarkHashBytes(b *testing.B, input []byte, fn func([]byte) uint64) {
-   153→	b.SetBytes(int64(len(input)))
-   154→	for i := 0; i < b.N; i++ {
-   155→		sink = fn(input)
-   156→	}
-   157→}
-   159→func benchmarkHashString(b *testing.B, input string, fn func(string) uint64) {
-   160→	b.SetBytes(int64(len(input)))
-   161→	for i := 0; i < b.N; i++ {
-   162→		sink = fn(input)
-   163→	}
-   164→}
-
-bench_test.go
-     8→var benchmarks …
-    19→func BenchmarkSum64(b *testing.B) {
-    34→func BenchmarkSum64String(b *testing.B) {
-    46→func BenchmarkDigestBytes(b *testing.B) {
-    63→func BenchmarkDigestString(b *testing.B) {
+xxhsum/xxhsum.go
+    11→func main() {
+    34→func contains(ss []string, s string) bool {
+    43→func printHash(r io.Reader, name string) {
 
 go.mod
 
@@ -250,11 +158,28 @@ xxhash.go
    189→// UnmarshalBinary implements the encoding.BinaryUnmarshaler interface.
    190→func (d *Digest) UnmarshalBinary(b []byte) error {
    208→func appendUint64(b []byte, x uint64) []byte {
+   209→	var a [8]byte
+   210→	binary.LittleEndian.PutUint64(a[:], x)
+   211→	return append(b, a[:]...)
+   212→}
    214→func consumeUint64(b []byte) ([]byte, uint64) {
+   215→	x := u64(b)
+   216→	return b[8:], x
+   217→}
    219→func u64(b []byte) uint64 { return binary.LittleEndian.Uint64(b) }
    220→func u32(b []byte) uint32 { return binary.LittleEndian.Uint32(b) }
    222→func round(acc, input uint64) uint64 {
+   223→	acc += input * prime2
+   224→	acc = rol31(acc)
+   225→	acc *= prime1
+   226→	return acc
+   227→}
    229→func mergeRound(acc, val uint64) uint64 {
+   230→	val = round(0, val)
+   231→	acc ^= val
+   232→	acc = acc*prime1 + prime4
+   233→	return acc
+   234→}
    236→func rol1(x uint64) uint64  { return bits.RotateLeft64(x, 1) }
    237→func rol7(x uint64) uint64  { return bits.RotateLeft64(x, 7) }
    238→func rol11(x uint64) uint64 { return bits.RotateLeft64(x, 11) }
@@ -280,23 +205,24 @@ xxhash_other.go
      6→// Sum64 computes the 64-bit xxHash digest of b with a zero seed.
      7→func Sum64(b []byte) uint64 {
     64→func writeBlocks(d *Digest, b []byte) int {
+    65→	v1, v2, v3, v4 := d.v1, d.v2, d.v3, d.v4
+    66→	n := len(b)
+    67→	for len(b) >= 32 {
+    68→		v1 = round(v1, u64(b[0:8:len(b)]))
+    69→		v2 = round(v2, u64(b[8:16:len(b)]))
+    70→		v3 = round(v3, u64(b[16:24:len(b)]))
+    71→		v4 = round(v4, u64(b[24:32:len(b)]))
+    72→		b = b[32:len(b):len(b)]
+    73→	}
+    74→	d.v1, d.v2, d.v3, d.v4 = v1, v2, v3, v4
+    75→	return n - len(b)
+    76→}
 
 xxhash_safe.go
      8→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
      9→func Sum64String(s string) uint64 {
     13→// WriteString adds more data to d. It always returns len(s), nil.
     14→func (d *Digest) WriteString(s string) (n int, err error) {
-
-xxhash_test.go
-    12→func TestAll(t *testing.T) {
-    58→func testDigest(t *testing.T, input string, seed uint64, chunkSize int, want uint64) {
-    88→func testSum(t *testing.T, input string, want uint64) {
-    97→func TestReset(t *testing.T) {
-   114→func TestResetWithSeed(t *testing.T) {
-   131→func TestBinaryMarshaling(t *testing.T) {
-   168→var sink …
-   170→func TestAllocs(t *testing.T) {
-   193→func testAllocs(t *testing.T, fn func()) {
 
 xxhash_unsafe.go
     36→// Sum64String computes the 64-bit xxHash digest of s with a zero seed.
@@ -310,10 +236,83 @@ xxhash_unsafe.go
     57→	cap int
     58→}
 
+LICENSE.txt
+
+dynamic/dynamic_test.go
+    15→// This is a cursory test that checks whether things work under dynamic linking.
+    17→func TestMain(m *testing.M) {
+    18→	cmd := exec.Command(
+    19→		"go", "build",
+    20→		"-buildmode", "plugin",
+    21→		"-o", "plugin.so",
+    22→		"plugin.go",
+    23→	)
+    24→	var out bytes.Buffer
+    25→	cmd.Stdout = &out
+    26→	cmd.Stderr = &out
+    27→	if err := cmd.Run(); err != nil {
+    28→		log.Fatalf("Error building plugin: %s\nOutput:\n%s", err, out.String())
+    29→	}
+    30→	os.Exit(m.Run())
+    31→}
+    33→func TestDynamic(t *testing.T) {
+
+bench_test.go
+     8→var benchmarks …
+    19→func BenchmarkSum64(b *testing.B) {
+    34→func BenchmarkSum64String(b *testing.B) {
+    46→func BenchmarkDigestBytes(b *testing.B) {
+    63→func BenchmarkDigestString(b *testing.B) {
+
+xxhash_test.go
+    12→func TestAll(t *testing.T) {
+    58→func testDigest(t *testing.T, input string, seed uint64, chunkSize int, want uint64) {
+    88→func testSum(t *testing.T, input string, want uint64) {
+    97→func TestReset(t *testing.T) {
+   114→func TestResetWithSeed(t *testing.T) {
+   131→func TestBinaryMarshaling(t *testing.T) {
+   168→var sink …
+   170→func TestAllocs(t *testing.T) {
+   193→func testAllocs(t *testing.T, fn func()) {
+
 xxhash_unsafe_test.go
     13→func TestStringAllocs(t *testing.T) {
     29→// This test is inspired by the Go runtime tests in https://go.dev/cl/57410.
     30→// It asserts that certain important functions may be inlined.
     31→func TestInlining(t *testing.T) {
+    32→	funcs := map[string]struct{}{
+    33→		"Sum64String":           {},
+    34→		"(*Digest).WriteString": {},
+    35→	}
+    36→
+    37→	cmd := exec.Command("go", "test", "-gcflags=-m", "-run", "xxxx")
+    38→	out, err := cmd.CombinedOutput()
+    39→	if err != nil {
+    40→		t.Log(string(out))
+    41→		t.Fatal(err)
+    42→	}
+    43→
+    44→	for _, line := range strings.Split(string(out), "\n") {
+    45→		parts := strings.Split(line, ": can inline")
+    46→		if len(parts) < 2 {
+    47→			continue
+    48→		}
+    49→		delete(funcs, strings.TrimSpace(parts[1]))
+    50→	}
+    51→
+    52→	var failed []string
+    53→	for fn := range funcs {
+    54→		failed = append(failed, fn)
+    55→	}
+    56→	sort.Strings(failed)
+    57→	for _, fn := range failed {
+    58→		t.Errorf("function %s not inlined", fn)
+    59→	}
+    60→}
 
-LICENSE.txt
+xxhashbench/xxhashbench_test.go
+    18→var sink …
+    20→var benchmarks …
+   108→func BenchmarkHashes(b *testing.B) {
+   152→func benchmarkHashBytes(b *testing.B, input []byte, fn func([]byte) uint64) {
+   159→func benchmarkHashString(b *testing.B, input string, fn func(string) uint64) {

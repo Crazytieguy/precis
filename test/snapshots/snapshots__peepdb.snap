@@ -1,5 +1,6 @@
 ---
 source: test/fixtures.rs
+assertion_line: 64
 expression: output
 ---
 README.md
@@ -259,6 +260,10 @@ project.toml
     35→[project.optional-dependencies]
     42→[project.urls]
     46→[project.scripts]
+    49→[tool.setuptools.packages.find]
+    50→where = ["."]
+    51→include = ["peepdb*"]
+    52→exclude = ["tests*"]
 
 requirements.txt
 
@@ -271,6 +276,8 @@ docs/_config.yml
      5→url: https://just-the-docs.github.io
      7→aux_links:
      8→  Template Repository: https://github.com/just-the-docs/just-the-docs-template
+
+peepdb/tests/__init__.py
 
 CONTRIBUTING.md
      1→# Contributing to peepDB
@@ -350,19 +357,7 @@ CONTRIBUTING.md
     84→- A detailed description of the proposed enhancement
     85→- Any potential implementation deta
 
-peepdb/tests/__init__.py
-
-peepdb/tests/test_cli.py
-
-peepdb/tests/test_connection.py
-
-peepdb/tests/test_data_types.py
-
-peepdb/tests/test_mongodb_uri.py
-
-peepdb/tests/test_peepdb.py
-
-peepdb/tests/test_sqlite.py
-     6→class TestSQLiteDatabase …
+docs/contributing.md
+     6→# 🤝 Contributing to peepDB
 
 images/

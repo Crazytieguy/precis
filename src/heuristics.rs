@@ -119,6 +119,7 @@ pub fn files_contribution(
     is_deprioritized: bool,
     is_type_declaration: bool,
     is_header: bool,
+    is_test_file: bool,
 ) -> f64 {
     let role_factor = if is_root_dir {
         match role {
@@ -135,8 +136,9 @@ pub fn files_contribution(
     let deprioritized_factor = if is_deprioritized { 0.2 } else { 1.0 };
     let type_declaration_factor = if is_type_declaration { 0.15 } else { 1.0 };
     let header_factor = if is_header { 2.5 } else { 1.0 };
+    let test_file_factor = if is_test_file { 0.15 } else { 1.0 };
 
-    role_factor * deprioritized_factor * type_declaration_factor * header_factor
+    role_factor * deprioritized_factor * type_declaration_factor * header_factor * test_file_factor
 }
 
 /// Modifier for generated files, applied to child TsGroups after source is read.

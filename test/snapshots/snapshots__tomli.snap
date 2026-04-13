@@ -1,5 +1,6 @@
 ---
 source: test/fixtures.rs
+assertion_line: 64
 expression: output
 ---
 README.md
@@ -220,10 +221,16 @@ src/tomli/py.typed
 
 benchmark/README.md
      1→# Benchmark
-     3→## Acknowledgments
     10→## Running
     12→### Against the local Tomli state
+    14→```bash
+    15→tox -e benchmark
+    16→```
+    17→
     18→### Against the latest Tomli PyPI release
+    20→```bash
+    21→tox -e benchmark-pypi
+    22→```
 
 pyproject.toml
      1→[build-system]
@@ -293,7 +300,8 @@ CHANGELOG.md
 
 tests/__init__.py
      1→# SPDX-License-Identifier: MIT
-      →…
+     2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
+     3→# Licensed to PSF under a Contributor Agreement.
      5→__all__ …
 
 tests/burntsushi.py
@@ -303,19 +311,6 @@ tests/burntsushi.py
     68→def _normalize_datetime_str(dt_str: str) -> str:
     92→def _normalize_localtime_str(lt_str: str) -> str:
     96→def _normalize_float_str(float_str: str) -> str:
-
-tests/test_data.py
-    11→DATA_DIR …
-    13→VALID_FILES …
-    21→VALID_FILES_EXPECTED …
-    23→INVALID_FILES …
-    27→class TestData …
-
-tests/test_error.py
-    13→class TestError …
-
-tests/test_misc.py
-    17→class TestMiscellaneous …
 
 benchmark/data.toml
 

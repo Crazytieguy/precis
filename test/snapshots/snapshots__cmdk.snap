@@ -1,5 +1,6 @@
 ---
 source: test/fixtures.rs
+assertion_line: 64
 expression: output
 ---
 README.md
@@ -336,55 +337,31 @@ cmdk/tsup.config.ts
 
 LICENSE.md
 
-test/basic.test.ts
-
-test/dialog.test.ts
-
-test/group.test.ts
-
-test/item.test.ts
-
-test/keybind.test.ts
-
-test/numeric.test.ts
-
-test/props.test.ts
-
 website/components/index.ts
 
 website/next.config.js
-     2→const nextConfig …
 
 website/package.json
+     2→  "name": "cmdk-website",
+     3→  "version": "0.1.0",
+     4→  "private": true,
+     5→  "scripts": {
+    11→  "dependencies": {
+    24→  "devDependencies": {
+    38→  "lint-staged": {
+    43→  "husky": {
 
 website/tsconfig.json
+     2→  "compilerOptions": {
+    19→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+    20→  "exclude": ["node_modules"]
 
-test/package.json
-
-test/style.css
-
-test/tsconfig.json
-
-website/next-env.d.ts
-
-website/pages/_app.tsx
-
-website/pages/_document.tsx
-     5→export default class Document …
-     6→  render() {
-
-website/pages/index.tsx
-
-website/components/code/index.tsx
+test/
 
 test/pages/
 
-website/components/cmdk/
-
-website/components/icons/
+website/pages/
 
 website/public/
 
 website/styles/
-
-website/styles/cmdk/

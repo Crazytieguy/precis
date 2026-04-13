@@ -60,7 +60,7 @@ pub fn create_files_groups<'s>(
     let is_root_dir = dir == root;
 
     for (role, files) in sorted_roles {
-        let mut partitions: HashMap<(bool, bool, bool), Vec<PathBuf>> = HashMap::new();
+        let mut partitions: HashMap<(bool, bool, bool, bool), Vec<PathBuf>> = HashMap::new();
         for file_path in files {
             let relative = file_path.strip_prefix(root).unwrap_or(&file_path);
             let props = classify::file_modifier_properties(relative);
@@ -70,7 +70,7 @@ pub fn create_files_groups<'s>(
         let mut sorted_partitions: Vec<_> = partitions.into_iter().collect();
         sorted_partitions.sort_by_key(|e| e.0);
 
-        for ((is_deprioritized, is_type_declaration, is_header), mut part_files) in
+        for ((is_deprioritized, is_type_declaration, is_header, is_test_file), mut part_files) in
             sorted_partitions
         {
             part_files.sort();
@@ -81,6 +81,7 @@ pub fn create_files_groups<'s>(
                 is_deprioritized,
                 is_type_declaration,
                 is_header,
+                is_test_file,
             );
 
             result.push(Group::Files(FilesGroup {
@@ -91,6 +92,7 @@ pub fn create_files_groups<'s>(
                 is_deprioritized,
                 is_type_declaration,
                 is_header,
+                is_test_file,
             }));
         }
     }

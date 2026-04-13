@@ -1,5 +1,6 @@
 ---
 source: test/fixtures.rs
+assertion_line: 64
 expression: output
 ---
 Readme.md
@@ -34,7 +35,7 @@ src/error.ts
     17→ * `StructError` objects are thrown (or returned) when validation fails.
       →…
     25→export class StructError …
-    35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
+    35→  constructor …
 
 src/index.ts
 
@@ -44,14 +45,7 @@ src/struct.ts
      5→ * `Struct` objects encapsulate the validation logic for a specific type of
       →…
     10→export class Struct …
-    22→  constructor(props: {
-    23→    type: string
-    24→    schema: S
-    25→    coercer?: Coercer
-    26→    validator?: Validator
-    27→    refiner?: Refiner<T>
-    28→    entries?: Struct<T, S>['entries']
-    29→  }) {
+    22→  constructor …
     64→   * Assert that a value passes the struct's validation, throwing if it doesn't.
     67→  assert(value: unknown, message?: string): asserts value is T {
     68→    return assert(value, this, message)
@@ -211,6 +205,8 @@ examples/README.md
 
 docs/resources/faq.md
      1→# FAQ
+     5→### How can I allow unknown keys with `object` structs?
+    11→### Why not have a built-in `json` struct?
 
 docs/resources/links.md
      1→# Resources
@@ -230,7 +226,7 @@ src/structs/refinements.ts
      1→import { Struct, Refiner } from '../struct.js'
      2→import { toFailures } from '../utils.js'
      8→export function empty …
-    21→function getSize …
+    21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
     33→export function max …
     55→export function min …
     77→export function nonempty …
@@ -333,6 +329,10 @@ docs/reference/utilities.md
      3→Superstruct also ships with a handful of utility type factories, which allow you to easily manipulate and transforms existing structs.
      4→
 
+test/index.ts
+     2→ * A helper for testing type signatures.
+     5→export function test<T>(fn: (x: unknown) => T) {}
+
 docs/guides/01-getting-started.md
      1→# Getting Started
      3→## Installing Superstruct
@@ -392,13 +392,10 @@ examples/throwing-errors.js
 
 License.md
 
-test/deprecated.test.ts
-
-test/index.test.ts
-
-test/index.ts
-
 Changelog.md
+     1→# Changelog
+
+examples/package.json
 
 docs/images/
 

@@ -1,5 +1,6 @@
 ---
 source: test/fixtures.rs
+assertion_line: 64
 expression: output
 ---
 README.md
@@ -25,8 +26,13 @@ sdk/README.md
      5→## Installation
     11→## Basic Usage
     44→## Configuration
+    52→### Options
     67→## Advanced Usage
+    69→### With Tool Callbacks
+    93→### Session Management
    115→## API Reference
+   117→### Types
+   124→### Methods
    136→## Environment Variables
 
 go.mod
@@ -65,7 +71,85 @@ internal/session/session.go
    190→func (m *Message) ConvertToSchemaMessage() *schema.Message {
    230→func generateMessageID() string {
 
+cmd/auth.go
+
+cmd/hooks.go
+
+cmd/root.go
+    67→type agentUIAdapter …
+    71→func (a *agentUIAdapter) GetLoadingMessage() string {
+    75→func (a *agentUIAdapter) GetTools() []any {
+    84→func (a *agentUIAdapter) GetLoadedServerNames() []string {
+   128→// GetRootCommand returns the root command with the version set.
+      →…
+   131→func GetRootCommand(v string) *cobra.Command {
+   136→// InitConfig initializes the configuration for MCPHost by loading config files,
+      →…
+   143→func InitConfig() {
+   219→// LoadConfigWithEnvSubstitution loads a config file with environment variable substitution.
+      →…
+   225→func LoadConfigWithEnvSubstitution(configPath string) error {
+   758→type AgenticLoopConfig …
+   777→func addMessagesToHistory …
+   794→func replaceMessagesHistory …
+   811→func runAgenticLoop …
+   879→func runAgenticStep …
+  1195→func executeStopHook …
+  1229→func runInteractiveLoop …
+  1316→func runNonInteractiveMode …
+  1349→func runInteractiveMode …
+
+cmd/script.go
+    84→func overrideConfigWithFrontmatter …
+   148→func parseCustomVariables …
+   255→func parseScriptFile …
+   279→func readRemainingLines …
+   288→func parseScriptContent …
+   423→type Variable …
+   431→func findVariables …
+   442→func findVariablesWithDefaults …
+   480→func validateVariables …
+   499→func substituteVariables …
+   511→func runScriptMode …
+
+internal/auth/browser.go
+    14→func OpenBrowser(url string) error {
+    34→func TryOpenBrowser(url string) {
+
+internal/auth/credentials.go
+    14→type CredentialStore …
+    22→type AnthropicCredentials …
+    33→func (c *AnthropicCredentials) IsExpired() bool {
+    44→func (c *AnthropicCredentials) NeedsRefresh() bool {
+    54→type CredentialManager …
+    62→func NewCredentialManager() (*CredentialManager, error) {
+    74→func getCredentialsPath() (string, error) {
+    92→func (cm *CredentialManager) LoadCredentials() (*CredentialStore, error) {
+   115→func (cm *CredentialManager) SaveCredentials(store *CredentialStore) error {
+   139→func (cm *CredentialManager) SetAnthropicCredentials(apiKey string) error {
+   161→func (cm *CredentialManager) GetAnthropicCredentials() (*AnthropicCredentials, error) {
+   173→func (cm *CredentialManager) RemoveAnthropicCredentials() error {
+   195→func (cm *CredentialManager) HasAnthropicCredentials() (bool, error) {
+   217→func (cm *CredentialManager) GetCredentialsPath() string {
+   222→func validateAnthropicAPIKey(apiKey string) error {
+   247→func GetAnthropicAPIKey(flagValue string) (string, string, error) {
+
+internal/auth/oauth.go
+    19→type OAuthClient …
+    30→type AuthData …
+    39→func NewOAuthClient() *OAuthClient {
+    57→func GeneratePKCE() (verifier, challenge string, err error) {
+    78→func (c *OAuthClient) GetAuthorizationURL() (*AuthData, error) {
+   107→func (c *OAuthClient) ExchangeCode(code, verifier string) (*AnthropicCredentials, error) {
+   133→func (c *OAuthClient) RefreshToken(refreshToken string) (*AnthropicCredentials, error) {
+   144→func (c *OAuthClient) makeTokenRequest(body map[string]interface{}) (*AnthropicCredentials, error) {
+   193→func (c *OAuthClient) parseCodeAndState(code string) (parsedCode, parsedState string) {
+   205→func (cm *CredentialManager) SetOAuthCredentials(creds *AnthropicCredentials) error {
+   219→func (cm *CredentialManager) GetValidAccessToken() (string, error) {
+
 internal/ui/progress/ollama.go
+    17→var helpStyle …
+    19→const …
     27→type OllamaPullProgress …
     49→type ProgressModel …
     58→func NewProgressModel() ProgressModel {
@@ -75,6 +159,7 @@ internal/ui/progress/ollama.go
    144→type ProgressReader …
    156→func NewProgressReader(reader io.Reader) *ProgressReader {
    184→func (pr *ProgressReader) Read(p []byte) (n int, err error) {
+   216→func (pr *ProgressReader) parseProgressLine(line string) {
    261→func (pr *ProgressReader) Close() error {
 
 contribute/boost.sh
@@ -123,167 +208,6 @@ internal/models/gemini/gemini.go
    773→func (cm *ChatModel) GetType() string {
    782→func (p *panicErr) Error() string {
 
-internal/auth/browser.go
-    14→func OpenBrowser(url string) error {
-    34→func TryOpenBrowser(url string) {
-
-internal/auth/credentials.go
-    14→type CredentialStore …
-    22→type AnthropicCredentials …
-    33→func (c *AnthropicCredentials) IsExpired() bool {
-    44→func (c *AnthropicCredentials) NeedsRefresh() bool {
-    54→type CredentialManager …
-    62→func NewCredentialManager() (*CredentialManager, error) {
-    74→func getCredentialsPath …
-    92→func (cm *CredentialManager) LoadCredentials() (*CredentialStore, error) {
-   115→func (cm *CredentialManager) SaveCredentials(store *CredentialStore) error {
-   139→func (cm *CredentialManager) SetAnthropicCredentials(apiKey string) error {
-   161→func (cm *CredentialManager) GetAnthropicCredentials() (*AnthropicCredentials, error) {
-   173→func (cm *CredentialManager) RemoveAnthropicCredentials() error {
-   195→func (cm *CredentialManager) HasAnthropicCredentials() (bool, error) {
-   217→func (cm *CredentialManager) GetCredentialsPath() string {
-   222→func validateAnthropicAPIKey …
-   247→func GetAnthropicAPIKey(flagValue string) (string, string, error) {
-
-internal/auth/credentials_test.go
-     9→func TestCredentialManager(t *testing.T) {
-    83→func TestValidateAnthropicAPIKey(t *testing.T) {
-   126→func TestGetAnthropicAPIKey(t *testing.T) {
-   211→func TestCredentialStorePersistence(t *testing.T) {
-
-internal/auth/oauth.go
-    19→type OAuthClient …
-    30→type AuthData …
-    39→func NewOAuthClient() *OAuthClient {
-    57→func GeneratePKCE() (verifier, challenge string, err error) {
-    78→func (c *OAuthClient) GetAuthorizationURL() (*AuthData, error) {
-   107→func (c *OAuthClient) ExchangeCode(code, verifier string) (*AnthropicCredentials, error) {
-   133→func (c *OAuthClient) RefreshToken(refreshToken string) (*AnthropicCredentials, error) {
-   144→func (c *OAuthClient) makeTokenRequest …
-   193→func (c *OAuthClient) parseCodeAndState …
-   205→func (cm *CredentialManager) SetOAuthCredentials(creds *AnthropicCredentials) error {
-   219→func (cm *CredentialManager) GetValidAccessToken() (string, error) {
-
-contribute/conf/demo.json
-     2→    "mcpServers": {
-
-contribute/conf/demo.yml
-     1→mcpServers:
-
-internal/tokens/anthropic.go
-    14→//   - Ensuring prompts fit within model context windows
-    15→//   - Optimizing prompt engineering and response handling
-
-internal/tokens/counter.go
-    21→func EstimateTokens(text string) int {
-
-internal/tokens/init.go
-    21→func InitializeTokenCounters() {
-    50→func InitializeTokenCountersWithKeys() {
-
-internal/agent/agent.go
-    22→type AgentConfig …
-    39→type ToolCallHandler …
-    43→type ToolExecutionHandler …
-    47→type ToolResultHandler …
-    51→type ResponseHandler …
-    55→type StreamingResponseHandler …
-    59→type ToolCallContentHandler …
-    63→type ToolApprovalHandler …
-    67→type Agent …
-    81→func NewAgent …
-   125→type GenerateWithLoopResult …
-   135→func (a *Agent) GenerateWithLoop …
-   144→func (a *Agent) GenerateWithLoopAndStreaming …
-   303→func (a *Agent) GetTools …
-   309→func (a *Agent) GetLoadingMessage …
-   315→func (a *Agent) GetLoadedServerNames …
-   456→type escListenerModel …
-   460→func (m escListenerModel) Init() tea.Cmd {
-   464→func (m escListenerModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-   479→func (m escListenerModel) View() string {
-   536→func (a *Agent) Close …
-
-internal/agent/factory.go
-    15→type SpinnerFunc …
-    19→type AgentCreationOptions …
-    43→func CreateAgent …
-    76→func ParseModelName …
-
-internal/agent/streaming.go
-    19→func StreamWithCallback …
-
-cmd/auth.go
-
-cmd/hooks.go
-
-cmd/root.go
-    67→type agentUIAdapter …
-    71→func (a *agentUIAdapter) GetLoadingMessage() string {
-    75→func (a *agentUIAdapter) GetTools() []any {
-    84→func (a *agentUIAdapter) GetLoadedServerNames() []string {
-   131→func GetRootCommand(v string) *cobra.Command {
-   143→func InitConfig() {
-   225→func LoadConfigWithEnvSubstitution(configPath string) error {
-   758→type AgenticLoopConfig …
-
-cmd/script.go
-   423→type Variable …
-
-cmd/script_deepseek_test.go
-    16→func TestDeepSeekChatScriptMode(t *testing.T) {
-    87→func TestDeepSeekChatCLIMode(t *testing.T) {
-   113→func TestProviderURLValidationSkip(t *testing.T) {
-
-cmd/script_integration_test.go
-    10→func TestScriptWithEnvAndArgsSubstitution(t *testing.T) {
-   111→func TestScriptWithMissingRequiredEnvVar(t *testing.T) {
-   148→func TestScriptWithMissingRequiredArg(t *testing.T) {
-   182→func TestScriptProcessingOrder(t *testing.T) {
-   239→func TestScriptBackwardCompatibility(t *testing.T) {
-
-cmd/script_test.go
-     8→func TestFindVariablesWithDefaults(t *testing.T) {
-    83→func TestFindVariablesBackwardCompatibility(t *testing.T) {
-   116→func TestValidateVariables(t *testing.T) {
-   171→func TestSubstituteVariables(t *testing.T) {
-   244→func TestBackwardCompatibility(t *testing.T) {
-   274→func TestParseScriptContentWithCompactMode(t *testing.T) {
-   303→func TestParseScriptContentMCPServersNewFormat(t *testing.T) {
-   380→func TestParseScriptContentMCPServersLegacyFormat(t *testing.T) {
-
-internal/models/generate_models.go
-    18→type ModelInfo …
-    37→type Cost …
-    50→type Limit …
-    60→type ProviderInfo …
-
-internal/models/models_data.go
-
-internal/models/providers.go
-    70→type ProviderConfig …
-   124→type ProviderResult …
-   153→func CreateProvider(ctx context.Context, config *ProviderConfig) (*ProviderResult, error) {
-   539→type OllamaLoadingResult …
-   717→func (t *bearerTransport) RoundTrip(req *http.Request) (*http.Response, error) {
-   862→func (t *oauthTransport) RoundTrip(req *http.Request) (*http.Response, error) {
-
-internal/models/providers_test.go
-     8→func TestCreateHTTPClientWithTLSConfig(t *testing.T) {
-    54→func TestCreateOAuthHTTPClient(t *testing.T) {
-   113→func TestProviderConfigTLSSkipVerify(t *testing.T) {
-
-internal/models/registry.go
-    16→type ModelsRegistry …
-    27→func NewModelsRegistry() *ModelsRegistry {
-    44→func (r *ModelsRegistry) ValidateModel(provider, modelID string) (*ModelInfo, error) {
-    73→func (r *ModelsRegistry) GetRequiredEnvVars(provider string) ([]string, error) {
-    92→func (r *ModelsRegistry) ValidateEnvironment(provider string, apiKey string) error {
-   143→func (r *ModelsRegistry) SuggestModels(provider, invalidModel string) []string {
-   179→func (r *ModelsRegistry) GetSupportedProviders() []string {
-   197→func (r *ModelsRegistry) GetModelsForProvider(provider string) (map[string]ModelInfo, error) {
-   216→func GetGlobalRegistry() *ModelsRegistry {
-
 sdk/mcphost.go
     19→type MCPHost …
     28→type Options …
@@ -303,27 +227,119 @@ sdk/mcphost.go
    230→func (m *MCPHost) GetModelString() string {
    237→func (m *MCPHost) Close() error {
 
-sdk/mcphost_test.go
-    11→func TestNew(t *testing.T) {
-    30→func TestNewWithOptions(t *testing.T) {
-    54→func TestSessionManagement(t *testing.T) {
-
 sdk/types.go
     10→type Message …
     14→type ToolCall …
     18→func ConvertToSchemaMessage(msg *Message) *schema.Message {
     24→func ConvertFromSchemaMessage(msg *schema.Message) Message {
 
+internal/config/config.go
+    17→type MCPServerConfig …
+    37→func (s *MCPServerConfig) UnmarshalJSON(data []byte) error {
+   109→type AdaptiveColor …
+   116→type Theme …
+   137→type MarkdownTheme …
+   155→type Config …
+   185→func (s *MCPServerConfig) GetTransportType() string {
+   218→func (c *Config) Validate() error {
+   249→func LoadSystemPrompt(input string) (string, error) {
+   271→func EnsureConfigExists() error {
+   296→func createDefaultConfig(homeDir string) error {
+   406→func FilepathOr[T any](key string, value *T) error {
+   454→var configPath …
+   459→func SetConfigPath(path string) {
+
+internal/config/merger.go
+    13→func MergeConfigs(baseConfig *Config, scriptConfig *Config) *Config {
+    28→func LoadAndValidateConfig() (*Config, error) {
+    48→func fixEnvironmentCase(config *Config) {
+
+internal/config/substitution.go
+    10→// Variable substitution patterns
+    11→var …
+    18→func parseVariableWithDefault(varPart string) (varName, defaultValue string, hasDefault bool) {
+    29→type EnvSubstituter …
+    34→func (e *EnvSubstituter) SubstituteEnvVars(content string) (string, error) {
+    65→type ArgsSubstituter …
+    71→func NewArgsSubstituter(args map[string]string) *ArgsSubstituter {
+    78→func (a *ArgsSubstituter) SubstituteArgs(content string) (string, error) {
+   109→func HasEnvVars(content string) bool {
+   115→func HasScriptArgs(content string) bool {
+
+contribute/conf/demo.json
+     2→    "mcpServers": {
+
+contribute/conf/demo.yml
+     1→mcpServers:
+
+internal/tokens/anthropic.go
+    14→//   - Ensuring prompts fit within model context windows
+    15→//   - Optimizing prompt engineering and response handling
+
+internal/tokens/counter.go
+     3→// EstimateTokens estimates the number of tokens in the given text string.
+      →…
+    21→func EstimateTokens(text string) int {
+
+internal/tokens/init.go
+     3→// InitializeTokenCounters registers all available token counters for various
+      →…
+    21→func InitializeTokenCounters() {
+    25→// InitializeTokenCountersWithKeys registers token counters for various language
+      →…
+    50→func InitializeTokenCountersWithKeys() {
+
+internal/models/generate_models.go
+    18→type ModelInfo …
+    37→type Cost …
+    50→type Limit …
+    60→type ProviderInfo …
+    73→const codeTemplate …
+
+internal/models/models_data.go
+    41→func GetModelsData …
+
+internal/models/providers.go
+    28→const …
+    36→func resolveModelAlias …
+    70→type ProviderConfig …
+   124→type ProviderResult …
+   153→func CreateProvider(ctx context.Context, config *ProviderConfig) (*ProviderResult, error) {
+   232→func validateModelConfig …
+   539→type OllamaLoadingResult …
+   551→func loadOllamaModelWithFallback …
+   590→func checkOllamaModelExists …
+   617→func pullOllamaModel …
+   622→func pullOllamaModelWithProgress …
+   659→func loadOllamaModelWithOptions …
+   704→func isGPUMemoryError …
+   712→type bearerTransport …
+   717→func (t *bearerTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+   821→func createHTTPClientWithTLSConfig …
+   838→func createOAuthHTTPClient …
+   857→type oauthTransport …
+   862→func (t *oauthTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+   891→func (t *oauthTransport) injectClaudeCodePrompt …
+
+internal/models/registry.go
+    16→type ModelsRegistry …
+    27→func NewModelsRegistry() *ModelsRegistry {
+    44→func (r *ModelsRegistry) ValidateModel(provider, modelID string) (*ModelInfo, error) {
+    73→func (r *ModelsRegistry) GetRequiredEnvVars(provider string) ([]string, error) {
+    92→func (r *ModelsRegistry) ValidateEnvironment(provider string, apiKey string) error {
+   143→func (r *ModelsRegistry) SuggestModels(provider, invalidModel string) []string {
+   179→func (r *ModelsRegistry) GetSupportedProviders() []string {
+   197→func (r *ModelsRegistry) GetModelsForProvider(provider string) (map[string]ModelInfo, error) {
+   207→var globalRegistry …
+   216→func GetGlobalRegistry() *ModelsRegistry {
+
 internal/hooks/config.go
     14→type HookConfig …
     21→type HookMatcher …
     30→type HookEntry …
     41→func LoadHooksConfig(customPaths ...string) (*HookConfig, error) {
-
-internal/hooks/config_test.go
-    11→func TestLoadHooksConfig(t *testing.T) {
-   165→func TestMatchesPattern(t *testing.T) {
-   193→func TestNoHooksFlag(t *testing.T) {
+    97→func getConfigDir() string {
+   113→func mergeHookConfigs(dst, src *HookConfig) {
 
 internal/hooks/events.go
      5→type HookEvent …
@@ -338,11 +354,13 @@ internal/hooks/executor.go
     48→func (e *Executor) SetInteractive(interactive bool) {
     57→func (e *Executor) PopulateCommonFields(event HookEvent) CommonInput {
     77→func (e *Executor) ExecuteHooks(ctx context.Context, event HookEvent, input interface{}) (*HookOutput, error) {
+   122→func (e *Executor) executeHook(ctx context.Context, hook HookEntry, input interface{}) *hookResult {
+   169→func matchesPattern(pattern, toolName string) bool {
+   190→func extractToolName(input interface{}) string {
    201→type hookResult …
-
-internal/hooks/executor_test.go
-    12→func TestExecuteHooks(t *testing.T) {
-   195→func TestToolBlocking(t *testing.T) {
+   209→func (e *Executor) processResults(results <-chan *hookResult) (*HookOutput, error) {
+   241→func mergeHookOutputs(dst, src *HookOutput) {
+   259→func getCurrentWorkingDir() string {
 
 internal/hooks/schemas.go
     10→type CommonInput …
@@ -354,84 +372,55 @@ internal/hooks/schemas.go
 
 internal/hooks/validator.go
     10→var …
+    17→func validateHookCommand(command string) error {
+    44→func containsDangerousPattern(command string) bool {
     75→func ValidateHookConfig(config *HookConfig) error {
+   110→func validateHookEntry(hook HookEntry) error {
 
-internal/hooks/validator_test.go
-     8→func TestValidateHookCommand(t *testing.T) {
-    89→func TestValidateHookConfig(t *testing.T) {
+internal/agent/agent.go
+    22→type AgentConfig …
+    39→type ToolCallHandler …
+    43→type ToolExecutionHandler …
+    47→type ToolResultHandler …
+    51→type ResponseHandler …
+    55→type StreamingResponseHandler …
+    59→type ToolCallContentHandler …
+    63→type ToolApprovalHandler …
+    67→type Agent …
+    81→func NewAgent(ctx context.Context, config *AgentConfig) (*Agent, error) {
+   125→type GenerateWithLoopResult …
+   135→func (a *Agent) GenerateWithLoop(ctx context.Context, messages []*schema.Message,
+   136→	onToolCall ToolCallHandler, onToolExecution ToolExecutionHandler, onToolResult ToolResultHandler, onResponse ResponseHandler, onToolCallContent ToolCallContentHandler, onToolApproval ToolApprovalHandler,
+   137→) (*GenerateWithLoopResult, error) {
+   144→func (a *Agent) GenerateWithLoopAndStreaming(ctx context.Context, messages []*schema.Message,
+   145→	onToolCall ToolCallHandler, onToolExecution ToolExecutionHandler, onToolResult ToolResultHandler, onResponse ResponseHandler, onToolCallContent ToolCallContentHandler, onStreamingResponse StreamingResponseHandler, onToolApproval ToolApprovalHandler,
+   146→) (*GenerateWithLoopResult, error) {
+   303→func (a *Agent) GetTools() []tool.BaseTool {
+   309→func (a *Agent) GetLoadingMessage() string {
+   315→func (a *Agent) GetLoadedServerNames() []string {
+   456→type escListenerModel …
+   460→func (m escListenerModel) Init() tea.Cmd {
+   464→func (m escListenerModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+   479→func (m escListenerModel) View() string {
+   536→func (a *Agent) Close() error {
 
-internal/config/case_fix_test.go
+internal/agent/factory.go
+    15→type SpinnerFunc …
+    19→type AgentCreationOptions …
+    43→func CreateAgent(ctx context.Context, opts *AgentCreationOptions) (*Agent, error) {
+    76→func ParseModelName(modelString string) (provider, model string) {
 
-internal/config/config.go
-    17→type MCPServerConfig …
-    37→func (s *MCPServerConfig) UnmarshalJSON(data []byte) error {
-   109→type AdaptiveColor …
-   116→type Theme …
-   137→type MarkdownTheme …
-   155→type Config …
-   185→func (s *MCPServerConfig) GetTransportType() string {
-   218→func (c *Config) Validate() error {
-   249→func LoadSystemPrompt(input string) (string, error) {
-   271→func EnsureConfigExists() error {
-   406→func FilepathOr[T any](key string, value *T) error {
-   454→var configPath …
-   459→func SetConfigPath(path string) {
-
-internal/config/config_test.go
-
-internal/config/environment_flow_test.go
-
-internal/config/integration_test.go
-
-internal/config/merger.go
-    13→func MergeConfigs(baseConfig *Config, scriptConfig *Config) *Config {
-    28→func LoadAndValidateConfig() (*Config, error) {
-
-internal/config/substitution.go
-    11→var …
-    29→type EnvSubstituter …
-    34→func (e *EnvSubstituter) SubstituteEnvVars(content string) (string, error) {
-    65→type ArgsSubstituter …
-    71→func NewArgsSubstituter(args map[string]string) *ArgsSubstituter {
-    78→func (a *ArgsSubstituter) SubstituteArgs(content string) (string, error) {
-   109→func HasEnvVars(content string) bool {
-   115→func HasScriptArgs(content string) bool {
-
-internal/config/substitution_test.go
-
-internal/config/viper_test.go
+internal/agent/streaming.go
+    19→func StreamWithCallback(ctx context.Context, reader *schema.StreamReader[*schema.Message], callback func(string)) (*schema.Message, error) {
 
 internal/builtin/bash.go
     44→func NewBashServer() (*server.MCPServer, error) {
 
-internal/builtin/bash_test.go
-    10→func TestNewBashServer(t *testing.T) {
-    21→func TestBashServerRegistry(t *testing.T) {
-    53→func TestExecuteBash(t *testing.T) {
-    90→func TestBashCommandValidation(t *testing.T) {
-   126→func TestToolNameChange(t *testing.T) {
-
 internal/builtin/fetch.go
     27→func NewFetchServer() (*server.MCPServer, error) {
 
-internal/builtin/fetch_test.go
-    13→func TestNewFetchServer(t *testing.T) {
-    24→func TestFetchServerRegistry(t *testing.T) {
-    56→func TestFetchHTML(t *testing.T) {
-   119→func TestFetchText(t *testing.T) {
-   188→func TestFetchMarkdown(t *testing.T) {
-   252→func TestFetchInvalidURL(t *testing.T) {
-   286→func TestFetchInvalidFormat(t *testing.T) {
-   320→func TestFetchPlainText(t *testing.T) {
-
 internal/builtin/http.go
     36→func NewHTTPServer(llmModel model.ToolCallingChatModel) (*server.MCPServer, error) {
-
-internal/builtin/http_test.go
-    13→func TestNewHTTPServer(t *testing.T) {
-    24→func TestHTTPServerRegistry(t *testing.T) {
-    56→func TestExecuteHTTPFetch(t *testing.T) {
-   266→func TestExtractBodyContent(t *testing.T) {
 
 internal/builtin/registry.go
     14→type BuiltinServerWrapper …
@@ -447,16 +436,8 @@ internal/builtin/todo.go
     27→type TodoServer …
     36→func NewTodoServer() (*server.MCPServer, error) {
 
-internal/builtin/todo_test.go
-    10→func TestNewTodoServer(t *testing.T) {
-    21→func TestTodoServerRegistry(t *testing.T) {
-    53→func TestTodoWrite(t *testing.T) {
-   115→func TestTodoRead(t *testing.T) {
-   159→func TestTodoValidation(t *testing.T) {
-   204→func TestTodoEmptyContent(t *testing.T) {
-   249→func TestTodoActiveCounting(t *testing.T) {
-
 internal/ui/block_renderer.go
+     8→type blockRenderer …
     22→type renderingOption …
     27→func WithFullWidth() renderingOption {
     36→func WithAlign(align lipgloss.Position) renderingOption {
@@ -473,6 +454,7 @@ internal/ui/callbacks.go
     17→func (c *CLI) CreateCallbackHandler() callbacks.Handler {
 
 internal/ui/cli.go
+    16→var promptStyle …
     22→type CLI …
     40→func NewCLI(debug bool, compact bool) (*CLI, error) {
     56→func (c *CLI) SetUsageTracker(tracker *UsageTracker) {
@@ -532,6 +514,7 @@ internal/ui/debug_logger.go
     84→func (l *CLIDebugLogger) IsDebugEnabled() bool {
 
 internal/ui/enhanced_styles.go
+    12→var currentTheme …
     16→func GetTheme() Theme {
     22→func SetTheme(theme Theme) {
     29→type Theme …
@@ -564,6 +547,7 @@ internal/ui/fuzzy.go
 
 internal/ui/messages.go
     15→type MessageType …
+    17→const …
     29→type UIMessage …
     47→type MessageRenderer …
     70→func NewMessageRenderer(width int, debug bool) *MessageRenderer {
@@ -597,15 +581,20 @@ internal/ui/slash_command_input.go
 
 internal/ui/spinner.go
     16→type Spinner …
+    25→type spinnerModel …
     31→func (m spinnerModel) Init() tea.Cmd {
     35→func (m spinnerModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
     52→func (m spinnerModel) View() string {
+    75→type quitMsg …
     80→func NewSpinner(message string) *Spinner {
    107→func NewThemedSpinner(message string, color lipgloss.AdaptiveColor) *Spinner {
    133→func (s *Spinner) Start() {
    149→func (s *Spinner) Stop() {
 
 internal/ui/styles.go
+    11→const defaultMargin …
+    15→func stringPtr …
+    16→func uintPtr …
     21→func BaseStyle() lipgloss.Style {
     28→func GetMarkdownRenderer(width int) *glamour.TermRenderer {
 
@@ -631,14 +620,7 @@ internal/ui/usage_tracker.go
    246→func (ut *UsageTracker) Reset() {
    256→func (ut *UsageTracker) SetWidth(width int) {
 
-internal/ui/usage_tracker_render_test.go
-    10→func TestUsageTracker_RenderUsageInfo_OAuth(t *testing.T) {
-
-internal/ui/usage_tracker_test.go
-     9→func TestUsageTracker_OAuthCosts(t *testing.T) {
-    73→func TestUsageTracker_OAuthSessionStats(t *testing.T) {
-
-AGENTS.md
+sdk/examples/basic/main.go
 
 examples/
 
@@ -651,3 +633,5 @@ internal/
 internal/tools/
 
 sdk/examples/
+
+sdk/examples/scripting/

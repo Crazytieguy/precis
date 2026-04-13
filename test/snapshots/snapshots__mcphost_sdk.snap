@@ -1,5 +1,6 @@
 ---
 source: test/fixtures.rs
+assertion_line: 64
 expression: output
 ---
 README.md
@@ -121,11 +122,6 @@ mcphost.go
    236→// error if cleanup fails.
    237→func (m *MCPHost) Close() error {
 
-mcphost_test.go
-    11→func TestNew(t *testing.T) {
-    30→func TestNewWithOptions(t *testing.T) {
-    54→func TestSessionManagement(t *testing.T) {
-
 types.go
     10→type Message …
     14→type ToolCall …
@@ -170,5 +166,10 @@ examples/scripting/main.go
     39→	// Output only the response (useful for piping)
     40→	fmt.Println(response)
     41→}
+
+mcphost_test.go
+    11→func TestNew(t *testing.T) {
+    30→func TestNewWithOptions(t *testing.T) {
+    54→func TestSessionManagement(t *testing.T) {
 
 examples/
