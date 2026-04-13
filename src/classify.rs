@@ -131,6 +131,7 @@ pub enum FileCategory {
     Test,
     DocsSite,
     CiConfig,
+    Artifact,
 }
 
 fn classify_by_components(path: &Path) -> Option<FileCategory> {
@@ -153,6 +154,9 @@ fn classify_by_components(path: &Path) -> Option<FileCategory> {
         }
         if s == ".github" || s == ".circleci" || s == ".gitlab" {
             return Some(FileCategory::CiConfig);
+        }
+        if s == "logs" {
+            return Some(FileCategory::Artifact);
         }
         if s == "__tests__"
             || s == "tests"

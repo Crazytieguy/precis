@@ -179,7 +179,7 @@ No simple heuristic detects structural mirrors in general, but the pattern is co
 
 ## 25. Bare-filename repetitive files waste budget while structural files are empty
 
-**Affected snapshots:** sps_core, sqlite_vec, swarm, vscode_emojis_small, vscode_emojis_medium, xlstm_blocks
+**Affected snapshots:** sps_core, sqlite_vec, vscode_emojis_small, vscode_emojis_medium, xlstm_blocks
 
 In `src/install/cask/artifacts/`, 21 of 24 `.rs` files are shown as bare filenames (no content). These files follow a uniform pattern — each contains a single `pub fn install_X` function — so once the pattern is clear from 2-3 examples, additional bare filenames add no understanding. Collectively they consume ~42 tokens for information already implied by the directory structure.
 
@@ -192,7 +192,7 @@ The remaining issue is that 21 bare-filename artifact files still consume ~42 to
 
 In sqlite_vec, the problem is even more extreme: ~25 empty file entries (Makefile, sqlite-vec.h.tmpl, test.sql, SECURITY.md, various examples/, scripts/, and site/ files) and ~25 empty folder entries (benchmarks/exhaustive-memory/, benchmarks/micro/, tests/afbd/, tests/correctness/, etc.). That's ~50 empty entries consuming ~100 tokens for near-zero information. The old output was more selective — it collapsed `site/` into a single folder entry rather than listing all its subfiles and subfolders individually. The budget spent on these empty entries could instead show README body content (issue #6) or enum bodies (issue #18).
 
-In swarm, 31 `logs/session_*.json` files are shown individually as bare filenames, consuming ~62 tokens. The old output showed `logs/` as a single folder entry. These session logs follow a uniform naming pattern — once you've seen one filename, the rest add nothing. The budget could instead show example source files (see #27).
+**Partially fixed:** swarm's `logs/` directory (31 session JSON files) is now classified as `FileCategory::Artifact` (0.1× factor), collapsing 31 bare filenames into a single folder entry. The freed ~62 tokens now show function docstrings and signatures from example code.
 
 In vscode_emojis_small, 9 SVG files in `icons/light/` are listed individually plus `icons/dark/` as a folder — but dark's files are omitted, creating an asymmetric presentation that implies the two directories differ when they're identical. The old output showed just `icons/` as a single folder entry. At budget 100, these bare SVG entries consume most of the budget while `emojis.json` renders with no content (see #34).
 
@@ -210,7 +210,7 @@ Swarm is an educational framework — the library itself is tiny (4 files, ~300 
 
 Meanwhile, the README consumes ~173 lines of output with full code examples, the "Core Contributors" list (6 names), install instructions, and documentation tables — content that's less information-dense per token than the example source signatures it displaces. The old output also showed the full README but compensated by showing example source code.
 
-The `FileCategory::Example` factor (0.35×) is appropriate for most projects but harmful here. The regression is compounded by #25 (31 bare-filename log files wasting ~62 tokens that could fund ~30 example function signatures).
+The `FileCategory::Example` factor (0.35×) is appropriate for most projects but harmful here. **Partially fixed:** the log file budget waste from #25 was addressed by classifying `logs/` as `FileCategory::Artifact` — the freed ~62 tokens now show function docstrings and signatures from 6 example directories (support_bot, personal_shopper, triage_agent). The remaining regression: 3 weather_agent files still render empty, README still dominates budget (~173 lines), and customer_service_streaming example content is still absent.
 
 ## 29. Repetitive error submodule files displace higher-value content
 

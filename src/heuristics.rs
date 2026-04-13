@@ -112,6 +112,7 @@ pub fn folders_contribution(
         FileCategory::DocsSite => 0.2,
         FileCategory::Test => 0.15,
         FileCategory::CiConfig => 0.1,
+        FileCategory::Artifact => 0.1,
     };
     // Root-level README/Architecture files get a bonus applied in
     // files_contribution, not here.

@@ -174,68 +174,6 @@ swarm/repl/repl.py
 
 examples/__init__.py
 
-logs/session_20240402-112114.json
-
-logs/session_20240402-112443.json
-
-logs/session_20240402-112456.json
-
-logs/session_20240402-112501.json
-
-logs/session_20240402-113222.json
-
-logs/session_20240402-113415.json
-
-logs/session_20240425-135655.json
-
-logs/session_20240425-135657.json
-
-logs/session_20240425-135728.json
-
-logs/session_20240425-140427.json
-
-logs/session_20240425-140502.json
-
-logs/session_20240425-140516.json
-
-logs/session_20240425-140553.json
-
-logs/session_20240425-141416.json
-
-logs/session_20240425-141509.json
-
-logs/session_20240425-141709.json
-
-logs/session_20240425-145129.json
-
-logs/session_20240425-145324.json
-
-logs/session_20240425-145907.json
-
-logs/session_20240425-145930.json
-
-logs/session_20240425-150004.json
-
-logs/session_20240425-150040.json
-
-logs/session_20240425-155814.json
-
-logs/session_20240425-172809.json
-
-logs/session_20240425-211732.json
-
-logs/session_20240425-211813.json
-
-logs/session_20240425-211942.json
-
-logs/session_20240425-212341.json
-
-logs/session_20240425-212431.json
-
-logs/session_20240425-212748.json
-
-logs/session_20240425-213023.json
-
 pyproject.toml
      1→[build-system]
      2→requires = ["setuptools"]
@@ -295,7 +233,11 @@ tests/mock_client.py
     44→class MockOpenAIClient …
     45→    def __init__(self):
     49→    def set_response(self, response: ChatCompletion):
+    51→        Set the mock to return a specific response.
+    52→        :param response: A ChatCompletion response to return.
     56→    def set_sequential_responses(self, responses: list[ChatCompletion]):
+    58→        Set the mock to return different responses sequentially.
+    59→        :param responses: A list of ChatCompletion responses to return in order.
     63→    def assert_create_called_with(self, **kwargs):
 
 examples/customer_service_streaming/main.py
@@ -333,15 +275,20 @@ examples/support_bot/customer_service.py
     68→def send_email(email_address, message):
     73→def submit_ticket(description):
     90→def transfer_to_help_center():
+    91→    """Transfer the user to the help center agent."""
 
 examples/support_bot/main.py
     13→# Set embedding model
     14→EMBEDDING_MODEL …
     20→def query_qdrant(query, collection_name, vector_name="article", top_k=5):
     40→def query_docs(query):
+    41→    """Query the knowledge base for relevant articles."""
     66→def send_email(email_address, message):
+    67→    """Send an email to the user."""
     72→def submit_ticket(description):
+    73→    """Submit a ticket for the user."""
     77→def transfer_to_help_center():
+    78→    """Transfer the user to the help center agent."""
 
 examples/support_bot/prep_data.py
     10→GPT_MODEL …
@@ -373,29 +320,41 @@ examples/personal_shopper/database.py
    114→def add_product(product_id, product_name, price):
    132→def close_connection():
    139→def preview_table(table_name):
+   153→# Initialize and load database
    154→def initialize_database():
 
 examples/personal_shopper/main.py
     10→def refund_item(user_id, item_id):
+    11→    """Initiate a refund based on the user ID and item ID.
+    12→    Takes as input arguments in the format '{"user_id":"1","item_id":"3"}'
     32→def notify_customer(user_id, method):
+    33→    """Notify a customer by their preferred method of either phone or email.
+    34→    Takes as input arguments in the format '{"user_id":"1","method":"email"}'"""
     58→def order_item(user_id, product_id):
+    59→    """Place an order for a product based on the user ID and product ID.
+    60→    Takes as input arguments in the format '{"user_id":"1","product_id":"2"}'"""
 
 examples/triage_agent/agents.py
      4→def process_refund(item_id, reason="NOT SPECIFIED"):
     10→def apply_discount():
     31→def transfer_back_to_triage():
+    36→def transfer_to_sales():
+    40→def transfer_to_refunds():
 
 examples/triage_agent/evals.py
      9→CONVERSATIONAL_EVAL_SYSTEM_PROMPT …
+    19→def conversation_was_successful(messages) -> bool:
+    27→def run_and_get_tool_calls(agent, query):
+    44→def test_triage_agent_calls_correct_function(query, function_name):
+    68→def test_conversation_is_successful(messages):
 
 examples/triage_agent/evals_util.py
      9→class BoolEvalResult …
     10→    value: bool
     11→    reason: Optional[str]
+    14→def evaluate_with_llm_bool(instruction, data) -> BoolEvalResult:
 
 examples/triage_agent/run.py
-
-examples/customer_service_streaming/tests/test_prompts.jsonl
 
 assets/
 
@@ -421,6 +380,10 @@ examples/customer_service_streaming/logs/
 
 examples/customer_service_streaming/src/
 
+examples/customer_service_streaming/tests/
+
 examples/support_bot/data/
+
+logs/
 
 tests/test_runs/
