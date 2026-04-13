@@ -105,26 +105,6 @@ In tock_internal_core, the missing `InterfaceBody` group causes Go interface met
 
 **Attempted fix:** Tried three approaches: (1) Changing TypeAliasName/ConstName rendering to show full first line instead of truncating at name — individually correct but cascades to 54 snapshots due to changed token costs; ts_pattern regressed (lost API methods, gained README h3 headings); (2) Adding TypeAliasBody/ConstBody groups with base_value 0.3/0.2 — near-zero marginal cost for single-line upgrades makes them competitive everywhere, still 42 snapshots affected; (3) Adding all four body groups (TypeAlias, Const, Interface, Trait) — 75 failures. The fundamental tension: showing type/const values costs more tokens per entry, which shifts budget allocation globally. Any approach that shows more content will cascade. May need a mechanism that allows body content without displacing other entries (e.g., a "free upgrade" path for same-line Truncated→Complete transitions that doesn't count against budget).
 
-## 13. Functions exported via `export { name }` treated as private
-
-**Affected snapshots:** enclosed
-
-Many enclosed files use the declare-then-export pattern:
-
-```typescript
-export { createNoteRepository };
-function createNoteRepository({ storage }: { storage: Storage }) { ... }
-```
-
-The function declaration IS captured (it appears as a `FunctionName` group), but since the `export` keyword is on the `export_statement` rather than on the declaration, the function receives the private visibility modifier (0.3×). Combined with depth modifiers at level 3-4 (0.7-0.4×), effective values drop to ~0.12-0.21. This causes the server's core domain files to render as empty headers despite substantial content:
-
-- `notes.repository.ts` (123 lines, 6 functions including CRUD operations) — empty
-- `notes.routes.ts` (139 lines, REST API endpoints with Zod validation) — empty
-- `notes.usecases.ts` (32 lines, core business logic) — empty
-- `notes.models.ts` (4 functions for note expiration/formatting) — empty
-
-Fixing this requires cross-referencing `export { name }` statements with declarations in the same file to detect that the function is public despite lacking an `export` keyword on its declaration.
-
 ## 14. Server architecture lost to broad-but-shallow budget distribution (regression)
 
 **Affected snapshots:** enclosed

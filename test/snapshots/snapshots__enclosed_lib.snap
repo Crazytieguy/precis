@@ -5,31 +5,7 @@ expression: output
 README.md
      1→### Enclosed lib
      5→## Installation
-     7→```bash
-     8→# with npm
-     9→npm install @enclosed/lib
-    10→
-    11→# with yarn
-    12→yarn add @enclosed/lib
-    13→
-    14→# with pnpm
-    15→pnpm add @enclosed/lib
-    16→```
-    17→
     18→## Usage
-    20→```javascript
-    21→import { createNote } from '@enclosed/lib';
-    22→
-    23→const { noteUrl } = await createNote({
-    24→  content: 'Hello, World!',
-    25→  password: 'password',
-    26→  ttlInSeconds: 3600,
-    27→  deleteAfterReading: true,
-    28→});
-    29→
-    30→console.log(noteUrl);
-    31→```
-    32→
     33→## License
     37→## Credits and Acknowledgements
 
@@ -51,15 +27,25 @@ src/files/files.models.ts
 
 src/api/api.client.ts
      2→import { DEFAULT_API_BASE_URL } from './api.constants';
-     6→async function tryToGetBody …
-    20→async function apiClient …
+     6→async function tryToGetBody({ response }: { response: Response }): Promise<unknown> {
+    20→async function apiClient<T>({
+    21→  path,
+    22→  method,
+    23→  body,
+    24→  baseUrl = DEFAULT_API_BASE_URL,
+    25→}: {
+    26→  path: string;
+    27→  method: string;
+    28→  body?: Record<string, unknown>;
+    29→  baseUrl?: string;
+    30→}): Promise<T> {
 
 src/api/api.constants.ts
      1→export const DEFAULT_API_BASE_URL …
 
 src/api/api.models.ts
-     5→function isApiClientErrorWithStatusCode …
-    13→function isApiClientErrorWithCode …
+     5→function isApiClientErrorWithStatusCode({ error, statusCode }: { error: unknown; statusCode: number }): boolean {
+    13→function isApiClientErrorWithCode({ error, code }: { error: unknown; code: string }): boolean {
 
 src/crypto/crypto.constants.ts
      1→export const ENCRYPTION_ALGORITHM_AES_256_GCM …
@@ -82,7 +68,6 @@ src/crypto/crypto.usecases.ts
      2→import type { EncryptionAlgorithm } from './crypto.types';
      3→import type { SerializationFormat } from './serialization/serialization.types';
      5→import { getParsingMethod, getSerializationMethod } from './serialization/serialization.registry';
-     7→export { decryptNote, encryptNote };
      9→async function encryptNote …
     38→async function decryptNote …
 
@@ -145,11 +130,15 @@ src/crypto/serialization/serialization.types.ts
      5→export type SerializationFormat …
 
 src/crypto/encryption-algorithms/encryption-algorithms.models.ts
-     3→function defineEncryptionMethods …
+     3→function defineEncryptionMethods<Name extends string>(args: {
+     4→  name: Name;
+     5→  encryptBuffer: (args: { buffer: Uint8Array; encryptionKey: Uint8Array }) => Promise<{ encryptedString: string }>;
+     6→  decryptString: (args: { encryptedString: string; encryptionKey: Uint8Array }) => Promise<{ decryptedBuffer: Uint8Array }>;
+     7→}) {
 
 src/crypto/encryption-algorithms/encryption-algorithms.registry.ts
      1→import type { EncryptionMethodsDefinition } from './encryption-algorithms.types';
-     6→function createEncryptionAlgorithmsRegistry …
+     6→function createEncryptionAlgorithmsRegistry({ encryptionMethodDefinitions }: { encryptionMethodDefinitions: EncryptionMethodsDefinition[] }) {
 
 src/crypto/encryption-algorithms/encryption-algorithms.types.ts
      1→import type { defineEncryptionMethods } from './encryption-algorithms.models';
@@ -183,7 +172,6 @@ tsconfig.json
      9→  "include": [
 
 src/api/api.models.test.ts
-     2→import { isApiClientErrorWithCode, isApiClientErrorWithStatusCode } from './api.models';
+     2→import …
 
 src/notes/notes.models.test.ts
-     2→import …

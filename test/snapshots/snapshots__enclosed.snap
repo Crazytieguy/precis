@@ -163,10 +163,10 @@ packages/docs/src/index.md
 
 packages/lib/src/files/files.models.ts
      1→import type { NoteAsset } from '../notes/notes.types';
-     6→async function fileToNoteAsset …
-    20→async function filesToNoteAssets …
-    24→async function noteAssetToFile …
-    34→async function noteAssetsToFiles …
+     6→async function fileToNoteAsset({ file }: { file: File }): Promise<NoteAsset> {
+    20→async function filesToNoteAssets({ files }: { files: File[] }): Promise<NoteAsset[]> {
+    24→async function noteAssetToFile({ noteAsset }: { noteAsset: NoteAsset }): Promise<File> {
+    34→async function noteAssetsToFiles({ noteAssets }: { noteAssets: NoteAsset[] }): Promise<File[]> {
 
 packages/app-client/src/index.tsx
      6→import { I18nProvider } from './modules/i18n/i18n.provider';
@@ -235,18 +235,18 @@ packages/crypto/src/index.web.ts
 
 packages/crypto/src/node/crypto.node.usecases.ts
      7→const deriveWithPbkdf2 …
-     9→function bufferToBase64Url …
-    15→function base64UrlToBuffer …
-    21→function generateBaseKey …
-    25→function createRandomBuffer …
-    31→async function deriveMasterKey …
+     9→function bufferToBase64Url({ buffer }: { buffer: Uint8Array }): string {
+    15→function base64UrlToBuffer({ base64Url }: { base64Url: string }): Uint8Array {
+    21→function generateBaseKey(): { baseKey: Uint8Array } {
+    25→function createRandomBuffer({ length = 16 }: { length?: number } = {}): Uint8Array {
+    31→async function deriveMasterKey({ baseKey, password = '' }: { baseKey: Uint8Array; password?: string }): Promise<{ masterKey: Uint8Array }> {
 
 packages/crypto/src/web/crypto.web.usecases.ts
-     3→function bufferToBase64Url …
-    20→function base64UrlToBuffer …
-    31→function createRandomBuffer …
-    38→function generateBaseKey …
-    42→async function deriveMasterKey …
+     3→function bufferToBase64Url({ buffer }: { buffer: Uint8Array }): string {
+    20→function base64UrlToBuffer({ base64Url }: { base64Url: string }): Uint8Array {
+    31→function createRandomBuffer({ length = 16 }: { length?: number } = {}): Uint8Array {
+    38→function generateBaseKey(): { baseKey: Uint8Array } {
+    42→async function deriveMasterKey({ baseKey, password = '' }: { baseKey: Uint8Array; password?: string }) {
 
 packages/cli/src/shared/cli.models.ts
      5→function readFromStdin(): Promise<string> {
@@ -362,7 +362,7 @@ packages/docs/src/integrations/versioning.md
      5→Starting from version `1.5.0`, all the packages of the Enclosed project are aligned to the same version number. So if you are self-hosting an Enclosed instance, you can use the same version number for all the packages.
 
 packages/app-server/src/modules/app/server.ts
-    19→function createServer …
+    19→function createServer({ config, storageFactory }: { config?: Config; storageFactory: BindableStorageFactory }) {
 
 packages/app-server/src/modules/app/server.types.ts
      5→export type ServerInstanceGenerics …
@@ -406,11 +406,11 @@ packages/cli/src/config/config.models.ts
      3→import { configDefinition } from './config.constants';
      7→type ConfigKey …
      8→const config …
-    10→function setConfig …
-    31→function getConfig …
-    57→function deleteConfig …
-    61→function resetConfig …
-    65→function createConfigBindings …
+    10→function setConfig({ key, value }: { key: ConfigKey ; value: string }) {
+    31→function getConfig({ key }: { key: ConfigKey }) {
+    57→function deleteConfig({ key }: { key: ConfigKey }) {
+    61→function resetConfig() {
+    65→function createConfigBindings({ key }: { key: ConfigKey }) {
 
 packages/cli/src/config/config.usecases.ts
      1→import { createConfigBindings } from './config.models';
@@ -471,8 +471,6 @@ packages/crypto/src/web/encryption-algorithms/crypto.web.aes-256-gcm.ts
 
 packages/docs/src/self-hosting/configuration.md
      5→# Self-Host Configuration
-     7→Configuring your self-hosted instance of Enclosed allows you to customize the application to better suit your environment and requirements. This guide covers the key environment variables you can set to control various aspects of the application, including port settings, security options, and storage configurations.
-     8→
      9→## Environment Variables
     15→## Optional: Native HTTPS Configuration
     33→## Applying Configuration Changes
@@ -480,8 +478,6 @@ packages/docs/src/self-hosting/configuration.md
 
 packages/docs/src/self-hosting/docker.md
      5→# Docker Installation
-     7→Enclosed can be easily installed and run using Docker. This method is recommended for users who want a quick and straightforward way to deploy their own instance of Enclosed with minimal setup.
-     8→
      9→## Prerequisites
     13→## Rootless and Non-rootless Docker Images
     19→## Image Sources
@@ -512,45 +508,26 @@ packages/docs/src/self-hosting/troubleshooting.md
 
 packages/docs/src/self-hosting/users-authentication-key-generator.md
     44→# User Authentication Key Generator
-    46→This tool generates the value for the `AUTHENTICATION_USERS` environment variable. This variable is used to define the users that can authenticate to the application. The value should be a comma-separated list of email and password pairs, where the password is hashed using bcrypt.
-    47→
-    48→<CredentialInputs v-model="credentials" />
-    49→
-    50→```txt-vue
-    51→AUTHENTICATION_USERS={{ envValue }}
-    52→```
-    53→
-    54→<Toggle v-model="shouldEscapeWithDollar">
-    55→    Escape for Docker Compose (use <code>$$</code> instead of <code>$</code>)
-    56→</Toggle>
-    57→
-    58→<Toggle v-model="shouldEscapeWithBackslash">
-    59→    Escape for Docker Run (use <code>\$</code> instead of <code>$</code>)
-    60→</Toggle>
-    61→
-    62→---
-    63→
-    64→> [!INFO] Escaping in Docker Run
-    65→> When using env variables in docker run command with `-e` on bash, the `$` character should be escaped in the password hash. For example, `\$2a\$10\$...`.
-    66→
-    67→> [!INFO] Escaping in Docker Compose
-    68→> When using env variables in docker-compose, the `$` character should be escaped with another `$`. For example, `$$2a$$10$$...`.
 
 packages/app-client/src/modules/auth/auth.models.ts
-     5→function isAccessTokenExpired …
+     5→function isAccessTokenExpired({ accessToken }: { accessToken: string }) {
 
 packages/app-client/src/modules/auth/auth.services.ts
-     1→import { apiClient } from '../shared/http/http-client';
-     5→async function login …
+     1→import …
+     5→async function login({ email, password }: { email: string; password: string }) {
 
 packages/app-client/src/modules/auth/auth.store.ts
-     3→import { createHook } from '../shared/hooks/hooks';
-     4→import { isAccessTokenExpired } from './auth.models';
+     3→import …
+     4→import …
      6→export const authStore …
 
 packages/app-server/src/modules/shared/errors/errors.ts
+    31→function createError(options: ErrorOptions) {
+    35→function createErrorFactory(baseOption: ErrorOptions) {
+    41→function isCustomError(error: unknown): error is CustomError {
 
 packages/app-server/src/modules/shared/utils/random.ts
+     7→function generateId() {
 
 packages/app-server/src/modules/shared/validation/validation.ts
     43→export const validateJsonBody …
@@ -577,11 +554,13 @@ packages/app-server/src/modules/tasks/tasks.types.ts
      3→export type TaskDefinition …
 
 packages/app-client/src/modules/shared/hooks/hooks.ts
+     3→function createHook<T = any>() {
 
 packages/app-client/src/modules/shared/style/cn.ts
      5→export const cn …
 
 packages/app-server/src/modules/app/users/users.repository.ts
+     6→function createUserRepository({ config }: { config: Config }) {
 
 packages/app-client/src/modules/auth/pages/login.page.tsx
     41→export const LoginPage: Component = () => {
@@ -591,6 +570,7 @@ packages/app-client/src/modules/shared/utils/copy.tsx
     19→export const CopyButton …
 
 packages/app-client/src/modules/ui/layouts/app.layout.tsx
+    14→import …
     72→export const Navbar: Component = () => {
    209→export const Footer: Component = () => {
    240→export const AppLayout: ParentComponent = (props) => {
@@ -611,13 +591,17 @@ packages/lib/src/crypto/serialization/cbor-array/cbor-array.serialization.ts
      5→export const cborArraySerializationDefinition …
 
 packages/lib/src/crypto/serialization/serialization.models.ts
+     5→function defineSerializationMethods …
 
 packages/lib/src/crypto/serialization/serialization.registry.ts
      7→export const serializationMethodDefinitions …
     11→export const serializationMethodDefinitionsByName …
     12→export const serializationFormats …
+    14→function getSerializationMethod …
+    26→function getParsingMethod …
 
 packages/lib/src/crypto/serialization/serialization.test-utils.ts
+     6→function runCommonSerializationTests …
 
 packages/lib/src/crypto/serialization/serialization.types.ts
      4→export type SerializationMethodsDefinition …
@@ -665,19 +649,24 @@ packages/app-client/src/modules/notes/notes.constants.ts
      1→export const NOTE_ID_REGEX …
 
 packages/app-client/src/modules/notes/notes.context.tsx
-     3→import { createHook } from '../shared/hooks/hooks';
+     3→import …
      5→const noteContext …
-    11→export const NoteContextProvider: ParentComponent = (props) => {
-    27→export function useNoteContext() {
+    11→export const NoteContextProvider …
+    27→export function useNoteContext …
 
 packages/app-client/src/modules/notes/notes.models.ts
-    16→export function buildViewNotePagePath({ prefix }: { prefix?: string | null }): string {
+     6→function createRandomPassword …
+    16→export function buildViewNotePagePath …
 
 packages/app-client/src/modules/notes/notes.services.ts
-     1→import { apiClient } from '../shared/http/http-client';
+     1→import …
+     5→async function storeNote …
+    36→async function fetchNoteById …
+    51→async function fetchNoteExists …
 
 packages/app-client/src/modules/notes/notes.usecases.ts
-     2→import { storeNote } from './notes.services';
+     2→import …
+     6→async function encryptAndCreateNote …
 
 Dockerfile
 
@@ -716,10 +705,15 @@ packages/app-server/src/modules/notes/notes.errors.ts
     21→export const createExpirationDelayRequiredError …
 
 packages/app-server/src/modules/notes/notes.models.ts
+     7→function isNoteExpired …
+    15→function formatNoteForApi …
+    21→function getNoteExpirationDate …
 
 packages/app-server/src/modules/notes/notes.repository.ts
+    12→function createNoteRepository …
 
 packages/app-server/src/modules/notes/notes.routes.ts
+    16→function registerNotesRoutes …
 
 packages/app-server/src/modules/notes/notes.types.ts
      4→export type NotesRepository …
@@ -727,6 +721,7 @@ packages/app-server/src/modules/notes/notes.types.ts
     19→export type Note …
 
 packages/app-server/src/modules/notes/notes.usecases.ts
+     7→async function getRefreshedNote …
 
 packages/app-client/src/app.css
 
@@ -737,16 +732,18 @@ packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.models.ts
      3→function defineEncryptionMethods …
 
 packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.registry.ts
-     1→import type { EncryptionMethodsDefinition } from './encryption-algorithms.types';
      6→function createEncryptionAlgorithmsRegistry …
 
 packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.types.ts
-     1→import type { defineEncryptionMethods } from './encryption-algorithms.models';
      3→export type EncryptionMethodsDefinition …
 
 packages/app-client/src/modules/shared/files/convert.ts
+     5→function svgToBase64Png …
 
 packages/app-client/src/modules/shared/files/download.ts
+     3→function downloadSvgFile …
+     8→function downloadFile …
+    17→function downloadBase64File …
 
 packages/
 

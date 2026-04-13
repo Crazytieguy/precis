@@ -242,7 +242,7 @@ cmdk/src/index.tsx
    158→const VALID_ITEM_SELECTOR …
    159→const SELECT_EVENT …
    160→const VALUE_ATTR …
-   161→const defaultFilter …
+   161→const defaultFilter: CommandFilter = (value, search, keywords) => commandScore(value, search, keywords)
    163→const CommandContext …
    164→const useCommand …
    165→const StoreContext …
@@ -284,6 +284,10 @@ cmdk/src/index.tsx
    993→function useLazyRef …
   1003→/** Run a selector against the store state. */
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
+  1005→  const store = useStore()
+  1006→  const cb = () => selector(store.snapshot())
+  1007→  return React.useSyncExternalStore(store.subscribe, cb, cb)
+  1008→}
   1010→function useValue …
   1045→/** Imperatively run a function on the next layout effect cycle. */
   1046→const useScheduleLayoutEffect = () => {
@@ -298,17 +302,6 @@ website/README.md
 
 website/vercel.json
      2→  "headers": [
-     3→    {
-     4→      "source": "/inter-var-latin.woff2",
-     5→      "headers": [
-     6→        {
-     7→          "key": "Cache-Control",
-     8→          "value": "public, max-age=31536000, immutable"
-     9→        }
-    10→      ]
-    11→    }
-    12→  ]
-    13→}
 
 package.json
      2→  "name": "cmdk-root",
@@ -381,6 +374,13 @@ cmdk/package.json
 cmdk/tsup.config.ts
 
 website/components/index.ts
+
+website/next.config.js
+     7→module.exports = nextConfig …
+
+website/package.json
+
+website/tsconfig.json
 
 test/
 

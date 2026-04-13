@@ -37,6 +37,7 @@ pub fn extract_items<'t>(
         Vec::new()
     };
     let mod_names = collect_top_level_mod_names(root, source, lang);
+    let export_names = collect_js_export_names(root, source, lang);
 
     let mut items: Vec<(TsGroupKey, TsItem<'t>)> = Vec::new();
 
@@ -105,6 +106,7 @@ pub fn extract_items<'t>(
             display_path,
             &lines,
             &mod_names,
+            &export_names,
             documented,
         ) else {
             continue;
@@ -143,6 +145,7 @@ pub fn extract_items<'t>(
 // Classification: node -> Option<TsGroupKey>
 // ---------------------------------------------------------------------------
 
+#[allow(clippy::too_many_arguments)]
 fn classify<'t>(
     node: Node<'t>,
     source: &str,
@@ -150,11 +153,24 @@ fn classify<'t>(
     path: &Path,
     lines: &[&str],
     mod_names: &[&str],
+    export_names: &HashSet<&str>,
     documented: bool,
 ) -> Option<TsGroupKey> {
     use TsGroupKey::*;
 
-    let public = || visibility::symbol_visibility(node, source, lang);
+    let public = || {
+        if visibility::symbol_visibility(node, source, lang) {
+            return true;
+        }
+        if lang == Lang::JsTs
+            && !export_names.is_empty()
+            && let Some(name_node) = node.child_by_field_name("name")
+            && let Ok(name) = name_node.utf8_text(source.as_bytes())
+        {
+            return export_names.contains(name);
+        }
+        false
+    };
 
     match node.kind() {
         // ---- Rust ----
@@ -221,7 +237,7 @@ fn classify<'t>(
             documented,
             public: public(),
         }),
-        "lexical_declaration" => classify_js_lexical(node, source, lang, documented),
+        "lexical_declaration" => classify_js_lexical(node, source, lang, documented, export_names),
         "public_field_definition" => {
             let value_kind = node.child_by_field_name("value").map(|v| v.kind());
             if matches!(
@@ -475,6 +491,7 @@ fn classify_js_lexical(
     source: &str,
     lang: Lang,
     documented: bool,
+    export_names: &HashSet<&str>,
 ) -> Option<TsGroupKey> {
     use TsGroupKey::*;
 
@@ -493,6 +510,16 @@ fn classify_js_lexical(
     if keyword != Some("const") {
         return None;
     }
+
+    let base_public = visibility::symbol_visibility(node, source, lang);
+    let public = base_public
+        || (lang == Lang::JsTs
+            && !export_names.is_empty()
+            && declarator
+                .and_then(|d| d.child_by_field_name("name"))
+                .and_then(|n| n.utf8_text(source.as_bytes()).ok())
+                .is_some_and(|name| export_names.contains(name)));
+
     let value_kind = declarator
         .and_then(|d| d.child_by_field_name("value"))
         .map(|v| v.kind());
@@ -502,12 +529,12 @@ fn classify_js_lexical(
     ) {
         Some(FunctionName {
             documented,
-            public: visibility::symbol_visibility(node, source, lang),
+            public,
         })
     } else {
         Some(ConstName {
             documented,
-            public: visibility::symbol_visibility(node, source, lang),
+            public,
         })
     }
 }
@@ -813,6 +840,40 @@ fn collect_top_level_mod_names<'t>(root: Node<'t>, source: &'t str, lang: Lang) 
             && let Ok(text) = name.utf8_text(source.as_bytes())
         {
             out.push(text);
+        }
+    }
+    out
+}
+
+fn collect_js_export_names<'t>(root: Node<'t>, source: &'t str, lang: Lang) -> HashSet<&'t str> {
+    if lang != Lang::JsTs {
+        return HashSet::new();
+    }
+    let mut out = HashSet::new();
+    let mut cursor = root.walk();
+    for child in root.children(&mut cursor) {
+        if child.kind() != "export_statement" {
+            continue;
+        }
+        let mut inner = child.walk();
+        let has_source = child.children(&mut inner).any(|c| c.kind() == "string");
+        if has_source {
+            continue;
+        }
+        let mut inner = child.walk();
+        for grandchild in child.children(&mut inner) {
+            if grandchild.kind() != "export_clause" {
+                continue;
+            }
+            let mut clause_cursor = grandchild.walk();
+            for spec in grandchild.children(&mut clause_cursor) {
+                if spec.kind() == "export_specifier"
+                    && let Some(name_node) = spec.child_by_field_name("name")
+                    && let Ok(text) = name_node.utf8_text(source.as_bytes())
+                {
+                    out.insert(text);
+                }
+            }
         }
     }
     out

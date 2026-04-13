@@ -142,23 +142,12 @@ src/use-composed-refs.ts
      8→ * Set a given ref to a given value
      9→ * This utility takes care of different types of refs: callback refs and RefObject(s)
     11→function setRef<T>(ref: PossibleRef<T>, value: T) {
-    12→  if (typeof ref === 'function') {
-    13→    ref(value);
-    14→  } else if (ref !== null && ref !== undefined) {
-    15→    (ref as React.MutableRefObject<T>).current = value;
-    16→  }
-    17→}
     20→ * A utility to compose multiple refs together
     21→ * Accepts callback refs and RefObject(s)
     23→function composeRefs<T>(...refs: PossibleRef<T>[]) {
-    24→  return (node: T) => refs.forEach((ref) => setRef(ref, node));
-    25→}
     28→ * A custom hook that composes multiple refs
     29→ * Accepts callback refs and RefObject(s)
     31→function useComposedRefs<T>(...refs: PossibleRef<T>[]) {
-    32→  // eslint-disable-next-line react-hooks/exhaustive-deps
-    33→  return React.useCallback(composeRefs(...refs), refs);
-    34→}
     36→export { composeRefs, useComposedRefs };
 
 src/use-controllable-state.ts
@@ -343,16 +332,33 @@ tsconfig.json
     11→}
 
 test/next.config.js
+     2→const nextConfig …
      8→module.exports = nextConfig; …
 
 test/package.json
+     2→  "name": "test",
+     3→  "version": "0.1.0",
+     4→  "private": true,
+     5→  "scripts": {
+    11→  "devDependencies": {
+    21→  "dependencies": {
 
 test/postcss.config.js
      1→module.exports = { …
 
 test/tailwind.config.ts
+     3→const config …
 
 test/tsconfig.json
+     2→  "compilerOptions": {
+    32→  "include": [
+    38→  "exclude": [
+
+test/tests/constants.ts
+     1→export const ANIMATION_DURATION …
+
+test/tests/helpers.ts
+     2→import { ANIMATION_DURATION } from './constants';
 
 LICENSE.md
 
@@ -361,5 +367,3 @@ test/public/
 test/src/
 
 test/src/app/
-
-test/tests/
