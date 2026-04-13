@@ -108,7 +108,7 @@ The combined effect: CONTRIBUTING.md headings get base_value 1.0 (h1) / 0.6 (h2)
 
 ## 9. Type alias and const bodies missing from taxonomy (regression)
 
-**Affected snapshots:** cmdk, cmdk_cmdk_src, enclosed_crypto, enclosed_lib
+**Affected snapshots:** cmdk, cmdk_cmdk_src, enclosed, enclosed_crypto, enclosed_lib
 
 The taxonomy has Body groups for functions (`FunctionBody`), structs (`StructBody`), and enums (`EnumBody`), but none for type aliases, const declarations, interfaces, classes, or traits. The `*Name` rendering truncates after the identifier, so the entire definition is lost.
 
@@ -173,11 +173,13 @@ This consumes ~20 lines of budget to convey one fact: "StreamBuilder has a pipe 
 
 ## 13. TypeScript `export` statements not captured — barrel files render empty
 
-**Affected snapshots:** d2ts, d2ts_d2ts
+**Affected snapshots:** d2ts, d2ts_d2ts, enclosed, enclosed_crypto, enclosed_lib
 
 The TypeScript query captures `(import_statement) @symbol` but not `(export_statement)`. TypeScript re-exports (`export * from './foo.js'`, `export { bar } from './baz.js'`) parse as `export_statement` nodes, not `import_statement`, so they produce zero items.
 
-This makes barrel files appear empty in the output. In d2ts, several barrel files are the most concise description of a module's API surface:
+This has two effects:
+
+**Effect 1: Barrel files render empty.** In d2ts, several barrel files are the most concise description of a module's API surface:
 
 - `packages/d2ts/src/operators/index.ts` — 20 re-exports listing every operator (pipe, map, filter, join, reduce, count, distinct, etc.). This is the single best summary of d2ts's capabilities.
 - `packages/d2ts/src/sqlite/index.ts` — 3 re-exports showing the sqlite module structure.
@@ -189,3 +191,33 @@ This makes barrel files appear empty in the output. In d2ts, several barrel file
 The pre-rewrite output showed these barrel files with content (e.g., `export * from './pipe.js'` through `export * from './orderBy.js'` with ellipsis). The new output shows them as blank file headers or omits them entirely, wasting header cost while conveying zero information.
 
 Downstream effect: budget freed by the missing barrel content goes to lower-value items — private helper function names in `d2ql/src/functions.ts` (8 unexported functions like `upperFunction`, `lowerFunction`) and bulk type alias names in `d2ql/src/schema.ts` (30 type names, up from 1 in the pre-rewrite output) that add noise without the definitions (see issue #9).
+
+In enclosed, barrel files like `packages/crypto/src/index.node.ts` and `index.web.ts` (23 lines each, showing the full crypto API surface via destructured `export const { deriveMasterKey, generateBaseKey, ... }`) render empty. Similarly `packages/lib/src/index.ts` (17 re-exports listing the entire library API) renders as just import lines.
+
+**Effect 2: Functions exported via `export { name }` treated as private.** Many enclosed files use the declare-then-export pattern:
+
+```typescript
+export { createNoteRepository };
+function createNoteRepository({ storage }: { storage: Storage }) { ... }
+```
+
+The function declaration IS captured (it appears as a `FunctionName` group), but since the `export` keyword is on the `export_statement` rather than on the declaration, the function receives the private visibility modifier (0.3×). Combined with depth modifiers at level 3-4 (0.7-0.4×), effective values drop to ~0.12-0.21. This causes the server's core domain files to render as empty headers despite substantial content:
+
+- `notes.repository.ts` (123 lines, 6 functions including CRUD operations) — empty
+- `notes.routes.ts` (139 lines, REST API endpoints with Zod validation) — empty
+- `notes.usecases.ts` (32 lines, core business logic) — empty
+- `notes.models.ts` (4 functions for note expiration/formatting) — empty
+
+## 14. Server architecture lost to broad-but-shallow budget distribution (regression)
+
+**Affected snapshots:** enclosed
+
+The pre-rewrite output showed ~170 lines of `packages/app-server/` content: auth middleware (`authenticationMiddleware`, `protectedRouteMiddleware`), config definition, 6 middleware files (cors, errors, logger, storage, timeout, config), 3 storage factories (cloudflare-kv, fs-lite, memory), notes domain types with full bodies, notes tasks, shared errors, and validation utilities. A reader could understand: Hono middleware stack → auth flow → storage abstraction → notes CRUD → task scheduling.
+
+The new output shows ~50 lines of server content: entry points, function/type names for `server.ts`/`server.types.ts`, and constant/type names from the notes domain. The middleware layer, auth system, and storage factories are completely absent — their directories appear only as folder entries (`auth/`, `config/`, `middlewares/`, `storage/factories/`). The notes domain files are present as headers but render empty (see #13 effect 2).
+
+Two contributing causes:
+
+1. **Depth penalty on deep monorepo structures.** The middleware files at `packages/app-server/src/modules/app/middlewares/` have effective_depth 4 (after `packages` and `src` are normalized), yielding depth_factor 0.4. Their public functions get effective value 0.4 — enough in isolation, but uncompetitive against the volume of shallower content across 7 packages.
+
+2. **Budget redistribution without architectural weighting.** The old output over-allocated to `packages/app-client/` (~230 lines, mostly shadcn-solid UI components). The new output correctly reduced that, but the freed budget spread evenly across all packages (more crypto, CLI, and lib internals) rather than flowing to the server. The result: broader coverage with no single package covered deeply enough to convey its architecture. The server — which defines the entire REST API, storage abstraction, and auth flow — is the biggest casualty.
