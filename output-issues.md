@@ -111,7 +111,7 @@ The combined effect: CONTRIBUTING.md headings get base_value 1.0 (h1) / 0.6 (h2)
 
 ## 9. Type alias and const bodies missing from taxonomy (regression)
 
-**Affected snapshots:** cmdk_cmdk_src
+**Affected snapshots:** cmdk, cmdk_cmdk_src
 
 The taxonomy has Body groups for functions (`FunctionBody`), structs (`StructBody`), and enums (`EnumBody`), but none for type aliases, const declarations, interfaces, classes, or traits. The `*Name` rendering truncates after the identifier, so the entire definition is lost.
 
@@ -134,3 +134,13 @@ Post-rewrite output truncates all of these to just the name:
 ```
 
 For cmdk, the 12+ `type` aliases define component props — they ARE the public API surface. `type ItemProps` having `disabled`, `onSelect`, `value`, `keywords`, `forceMount` properties is the most important thing to know about the Item component. The current output hides all of this, spending budget instead on internal helper function bodies (e.g. `findNextSibling` gets 8 lines of full body, `useScheduleLayoutEffect` gets 14 lines).
+
+## 10. Markdown h1 body omitted while h2 bodies shown (regression)
+
+**Affected snapshots:** cmdk
+
+ARCHITECTURE.md's introductory text (lines 3-44, directly under `# Architecture`) explains the core design constraint of the library — wanting compound components, rejecting data arrays and render props, "a terrible, terrible constraint that we've spent 2 years fighting." The new output omits this entirely, jumping from `# Architecture` (line 1) to `## Approach` (line 46).
+
+Meanwhile, h2 section bodies are shown in full: `## Example` gets 28 lines of code, `## Performance` and `## Groups` get their body lines. The pre-rewrite output showed the complete file including the intro.
+
+The intro is the most valuable content in ARCHITECTURE.md — it's the "why" that gives meaning to the "how" in the sections below. `HeadingBody` has a flat base value (0.7) regardless of heading level, so the scheduler sees no reason to prefer the h1 intro body over h2 bodies. Since the h1 body is longer (~43 lines vs 1-28 lines for h2 bodies), its cost/benefit ratio is worse, and it loses the budget competition.
