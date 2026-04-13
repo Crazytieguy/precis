@@ -141,7 +141,7 @@ The combined effect: CONTRIBUTING.md and CLAUDE.md headings get base_value 1.0 (
 
 ## 9. Type alias and const bodies missing from taxonomy (regression)
 
-**Affected snapshots:** cmdk, cmdk_cmdk_src, enclosed, enclosed_crypto, enclosed_lib, go_multierror, htmy, ky, ky_source_errors, mcphost_sdk, microbootstrap, microbootstrap_instruments, mitt, nano_vllm, nano_vllm_engine, pluggy, py3xui, py3xui_api, semver, semver_internal, superstruct
+**Affected snapshots:** cmdk, cmdk_cmdk_src, enclosed, enclosed_crypto, enclosed_lib, go_multierror, htmy, ky, ky_source_errors, mcphost_sdk, microbootstrap, microbootstrap_instruments, mitt, nano_vllm, nano_vllm_engine, pluggy, py3xui, py3xui_api, semver, semver_internal, superstruct, tock_internal_core
 
 The taxonomy has Body groups for functions (`FunctionBody`), structs (`StructBody`), and enums (`EnumBody`), but none for type aliases, const declarations, interfaces, classes, or traits. The `*Name` rendering truncates after the identifier, so the entire definition is lost.
 
@@ -180,6 +180,8 @@ In nano_vllm_engine, the missing ClassBody loses Python Enum variant definitions
 In semver_internal, `constants.js` is a pure constants file where the values ARE the content. The pre-rewrite output showed `const SEMVER_SPEC_VERSION = '2.0.0'`, `const MAX_LENGTH = 256`, `const MAX_SAFE_COMPONENT_LENGTH = 16`, and the full `RELEASE_TYPES` array with all 7 release type strings. The post-rewrite truncates all of these to just names (`const SEMVER_SPEC_VERSION …`, `const MAX_LENGTH …`, `const RELEASE_TYPES …`). Similarly, `debug.js` (11 lines total) is a single conditional expression — the pre-rewrite showed all 7 lines of the conditional, the post-rewrite shows `const debug …`. In `re.js`, `const LETTERDASHNUMBER …` hides `'[a-zA-Z0-9-]'` and `const safeRegexReplacements …` hides the actual replacement rules. The freed budget isn't even fully used — the new output is 20 lines shorter than the old.
 
 In semver, the missing `ClassBody` group causes all JS class method signatures to be lost. The pre-rewrite output showed `Comparator` with 6 methods (`parse`, `test`, `intersects`, `toString`, etc.), `Range` with 8 methods (`constructor`, `parseRange`, `intersects`, `test`, `format`, `toString`, etc.), and `SemVer` with 7 methods (`compare`, `compareMain`, `comparePre`, `compareBuild`, `inc`, `format`, `toString`). The post-rewrite output truncates all three classes to just `class Comparator …`, `class Range …`, `class SemVer …`. These classes ARE the library — their methods define the complete API surface for version comparison, range parsing, and version manipulation. The freed budget goes instead to CHANGELOG.md headings (see #8) and individual `functions/*.js` one-liner wrappers (20 files showing `const clean …`, `const gt …`, etc.) that merely delegate to these classes.
+
+In tock_internal_core, the missing `InterfaceBody` group causes Go interface method signatures to be lost. `ports/ports.go` defines 3 interfaces (`ActivityResolver`, `ActivityRepository`, `NotesRepository`) that are the entire API contract of this hexagonal architecture core package. The pre-rewrite output showed full interface bodies — all method signatures with parameter types and return types (22 lines). The post-rewrite truncates all three to `type ActivityResolver …`, `type ActivityRepository …`, `type NotesRepository …` (3 lines). Similarly, `errors/errors.go` defines 4 sentinel errors (`ErrActivityNotFound`, `ErrNoActiveActivity`, `ErrActivityAlreadyStarted`, `ErrCancelled`) whose values are lost — the pre-rewrite showed the full `var` block with error messages (7 lines), the post-rewrite shows only `var …` (1 line). The freed budget goes to generated mock files (see #32).
 
 ## 10. Markdown h1 body omitted while h2 bodies shown (regression)
 
@@ -608,3 +610,15 @@ The new output shows ~92 lines of docs/ content across 10 files (ARCHITECTURE.md
 These ~53 lines of low-value heading-only docs displace content the pre-rewrite showed: `BelongsTo<T>`, `HasMany<T>`, `HasOne<T>` relation structs with `get()` methods (the core ORM relationship types — 9 lines), `MigrationPrefixStyle` enum body (Sequential/Timestamp — 7 lines), `AutoStrategy`/`UuidVersion`/`ColumnType` enum bodies from codegen (see #18), and `Capability` database-specific constants from toasty-core (see #18).
 
 The pre-rewrite had zero docs/ content for these files — it showed only the crate-level CONTEXT.md files. The docs/ directory is classified as `DocsSite` (category_factor 0.2), but at depth 1-2 the depth_factor is 1.0-0.7, yielding an effective contribution of 0.14-0.2. Since docs files tend to have high heading counts (each at base_value 0.6-1.0), even with the category penalty, the aggregate value of many headings across many docs files exceeds the value of a few struct bodies in deeper source directories.
+
+## 32. Generated mock files consume budget despite test + generated suppression
+
+**Affected snapshots:** tock_internal_core
+
+The 3 auto-generated mock files in `ports/mocks/` consume ~82 lines (~70% of content) while the 4 core domain files get ~34 lines (~30%). The mock files should be heavily suppressed: the `mocks/` directory classifies as `FileCategory::Test` (0.15× factor), `is_generated_filename` matches `mock_*.go`, and `is_generated_file` matches "Code generated by mockery; DO NOT EDIT." in the first line. If both `folders_contribution` (0.15) and `generated_contribution` (0.1) applied multiplicatively, the effective modifier would be ~0.015× — mock content should be nearly invisible.
+
+Yet the output shows all 3 mock files with struct bodies (`mock.Mock`), constructor functions, individual method entries, `_Call` struct types, and `_Expecter` struct types — the full mockery boilerplate scaffold. `MockActivityResolver` alone gets 37 lines showing 6 methods × (method + Call type + Expecter method) pattern. This is auto-generated code that conveys zero information beyond "these interfaces have mocks."
+
+The pre-rewrite output showed the same ~82 lines of mock content, so the mock visibility is not a regression. But combined with the rewrite's regression on core content (interfaces collapsed to names per #9, errors collapsed to `var …`), the ratio has inverted: the old output was 114 core + 82 mock (58/42%), the new output is 34 core + 82 mock (29/71%). A reader of the new output learns more about mock boilerplate structure than about the actual domain model.
+
+Either the test + generated factors are not stacking multiplicatively, or one of the detection mechanisms is not triggering for these files. The expected behavior is that generated test mock files should be suppressed to at most a bare filename mention.
