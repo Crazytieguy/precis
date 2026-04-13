@@ -66,7 +66,7 @@ The new output just shows `macro_rules! bail …` and `macro_rules! anyhow …`.
 
 ## 6. README body content dropped — only headings shown
 
-**Affected snapshots:** bareiron, commander, d2ts, d2ts_d2ts, log, mcphost, mdbook_guide_src
+**Affected snapshots:** bareiron, commander, d2ts, d2ts_d2ts, log, mcphost, mdbook, mdbook_guide_src
 
 The output shows README.md with only headings — zero body content. The pre-rewrite output showed introductory sections that tell the reader what the project is.
 
@@ -77,6 +77,8 @@ In commander, the pre-rewrite showed lines 1-45: the description ("The complete 
 In d2ts_d2ts, the pre-rewrite showed lines 28-32: "D2TS is a TypeScript implementation of differential dataflow," what it does (incremental pipelines), and ElectricSQL integration. The new output shows 16 headings (h1 through h3) but zero body text.
 
 In mdbook_guide_src, the root README is the mdBook project introduction. The pre-rewrite showed lines 1-33: the full description ("**mdBook** is a command line tool to create books with Markdown"), the feature list (search, syntax highlighting, themes, preprocessors, backends), and a guide introduction. The new output shows only `# Introduction`, `## Contributing`, `## License`. Meanwhile, nested READMEs (cli/, for_developers/, format/, guide/) all get their body content, and the budget goes to deep h3/h4 headings across reference pages (format/configuration/renderers.md gets ~12 heading lines, format/markdown.md gets ~10).
+
+In mdbook, the root README loses its one-line description ("mdBook is a utility to create modern online books from Markdown files") and user guide links. More impactfully, 6 of 8 crate READMEs lose their one-sentence descriptions — the pre-rewrite showed "This is the base support library... intended for internal use only" (mdbook-core), "This is the Rust library to implement a preprocessor" (mdbook-preprocessor), etc. In a multi-crate workspace, these descriptions are how a reader understands the crate decomposition: which crates are public API vs internal, and what each provides. The new output shows 8 bare `# crate-name` headings that convey the names but not the purpose or stability guarantees.
 
 This is the highest-value content in a repo for building a mental model. A reader seeing only headings knows the structure but not the purpose.
 
@@ -302,17 +304,30 @@ These are replaced by `@brief` doc comment blocks (~12 lines of doc + ellipsis f
 
 Root cause: the 2.5× `header_factor` doesn't compensate for krep.c's 16:1 line count advantage. krep.c's many ConstName groups (30 `#define` items at base_value 1.0 with sublinear scaling) pull substantial budget. In the old output, krep.c got 15 lines (2 constants + 2 gitignore struct bodies) and krep.h got 111 — this was the right distribution for a C project where the header IS the API.
 
-## 18. Enum bodies elided while repetitive method signatures consume budget
+## 18. Struct and enum bodies elided — many small entries beat fewer large ones
 
-**Affected snapshots:** log
+**Affected snapshots:** log, mdbook
 
-In `src/lib.rs`, the `Level` and `LevelFilter` enums are the core of the library — their variants (Error, Warn, Info, Debug, Trace) are arguably the most important content in the entire crate. The output elides both enum bodies (`pub enum Level …`, `pub enum LevelFilter …`) while spending ~36 lines on individual method signatures for these same types, including low-value methods like `increment_severity`, `decrement_severity`, `from_usize`, and `as_str` — shown for BOTH enums since they have parallel impls.
+Large body groups (StructBody at base_value 1.2, EnumBody at 1.5) lose budget to many small FunctionName entries (base_value 1.0, ~2 tokens each). The per-token value/cost ratio strongly favors function names, so the scheduler fills the budget with hundreds of cheap name entries before committing to any multi-line body block.
+
+In log's `src/lib.rs`, the `Level` and `LevelFilter` enums are the core of the library — their variants (Error, Warn, Info, Debug, Trace) are arguably the most important content in the entire crate. The output elides both enum bodies (`pub enum Level …`, `pub enum LevelFilter …`) while spending ~36 lines on individual method signatures for these same types, including low-value methods like `increment_severity`, `decrement_severity`, `from_usize`, and `as_str` — shown for BOTH enums since they have parallel impls.
 
 The pre-rewrite output showed the full `Level` body with all variants and doc comments (lines 475-499, ~24 lines). The new output drops this and also drops the `LevelFilter` body (lines 636-649).
 
-`EnumBody` has the highest base_value of any TsGroupKey (1.5), but the body is ~24 lines including per-variant doc comments. Many individual `FunctionName` entries (base_value 1.0 each, ~2 tokens each) have competitive or better value/cost ratios, so the scheduler fills the budget with small method entries before committing to the larger enum body block.
+In mdbook, every key struct and enum body is truncated to `…` while the pre-rewrite showed them in full. The losses include:
 
-Additional budget pressure comes from `src/__private_api.rs` (~20 lines), a file whose module doc starts with "WARNING: this is not part of the crate's public API and is subject to change at any time." This file is not flagged by `is_deprioritized_file()` because no rule matches `__`-prefixed source files. The old output also showed this file — it's not a regression, but the 20 lines would be better spent on the missing enum bodies.
+- `MDBook` struct (root, config, book, renderers, preprocessors) — the central type, 16 lines with field docs
+- `Summary` struct (title, prefix_chapters, numbered_chapters, suffix_chapters) — 10 lines defining the book's TOC data model
+- `Link` struct (name, location, number, nested_items) — 11 lines, the chapter reference type
+- `PreprocessorContext` struct (root, config, renderer, mdbook_version) — 16 lines, the preprocessor API surface
+- `RenderContext` struct (version, root, book, config, destination) — 22 lines, the renderer API surface
+- `Theme` struct (21 fields for CSS/JS/font assets) — 22 lines
+- `BookItem` enum (Chapter, Separator, PartTitle) — 8 lines with variant docs
+- `SummaryItem` enum (Link, Separator, PartTitle) — 8 lines with variant docs
+
+These types define mdBook's entire data model and plugin API. A reader seeing `pub struct MDBook …` and `pub struct RenderContext …` learns nothing about what data is available. The pre-rewrite output showed all of these with full field-level documentation — the struct bodies alone were ~113 lines that built a complete mental model of the architecture.
+
+Additional budget pressure in log comes from `src/__private_api.rs` (~20 lines), a file whose module doc starts with "WARNING: this is not part of the crate's public API and is subject to change at any time." This file is not flagged by `is_deprioritized_file()` because no rule matches `__`-prefixed source files. The old output also showed this file — it's not a regression, but the 20 lines would be better spent on the missing enum bodies.
 
 ## 19. Go doc comments not detected for type declarations (regression)
 
