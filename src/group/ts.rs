@@ -827,13 +827,6 @@ fn find_name_end_col(node: tree_sitter::Node, line_row: usize) -> Option<usize> 
             return Some(id.end_position().column);
         }
     }
-    if node.kind() == "type_definition"
-        && let Some(type_child) = node.child_by_field_name("type")
-        && let Some(inner_name) = type_child.child_by_field_name("name")
-        && inner_name.end_position().row == line_row
-    {
-        return Some(inner_name.end_position().column);
-    }
     if node.kind() == "lexical_declaration" {
         let mut cursor = node.walk();
         if let Some(vd) = node.children(&mut cursor).find(|c| c.kind() == "variable_declarator")
