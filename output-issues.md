@@ -66,9 +66,11 @@ The new output just shows `macro_rules! bail …` and `macro_rules! anyhow …`.
 
 ## 6. README body content dropped — only headings shown
 
-**Affected snapshots:** bareiron, commander, d2ts, d2ts_d2ts, log, mcphost, mdbook, mdbook_guide_src
+**Affected snapshots:** bareiron, commander, d2ts, d2ts_d2ts, log, mcphost, mdbook, mdbook_guide_src, pluggy
 
 The output shows README.md with only headings — zero body content. The pre-rewrite output showed introductory sections that tell the reader what the project is.
+
+In pluggy, the README.rst contains a complete working example (69 lines in the pre-rewrite output) demonstrating the entire hook specification and implementation API — `HookspecMarker`, `HookimplMarker`, `PluginManager`, plugin registration, and hook calling. This is the single best introduction to what pluggy is and how to use it. The new output shows zero README content. The budget goes instead to CLAUDE.md (~50 lines of AI config, see issue #8) and pyproject.toml towncrier type definitions (~30 lines of repetitive `[[tool.towncrier.type]]` sections).
 
 In bareiron, the full introductory section (lines 1-11) was shown: project description ("Minimalist Minecraft server for memory-restrictive embedded systems"), design priorities, Minecraft/protocol version numbers, and a compatibility warning.
 
@@ -105,25 +107,27 @@ In neco's `neco.h`, the 19 error codes and 6 time constants are all truncated:
 
 The pre-rewrite showed complete lines with values and trailing doxygen descriptions: `#define NECO_OK 0 ///< Successful result (no error)`, `#define NECO_SECOND INT64_C(1000000000)`. For a C library, error codes ARE the error model — `NECO_OK 0` tells you success returns zero, `NECO_TIMEDOUT -10` tells you specific failure modes. The time constant values tell you the API uses nanoseconds. Truncating these to just names removes the most informative part of each line.
 
-## 8. CommunityHealth files not deprioritized at root level
+## 8. CommunityHealth and AiConfig files not deprioritized at root level
 
-**Affected snapshots:** chronos, peepdb
+**Affected snapshots:** chronos, peepdb, pluggy
 
 CONTRIBUTING.md gets ~53 lines of output — more than any individual source file — for a boilerplate Amazon open source contributing guide ("how to file bugs", "how to send PRs"). The pre-rewrite output didn't show CONTRIBUTING.md content at all.
 
 In peepdb, the regression is even more severe: CONTRIBUTING.md goes from 1 line in the pre-rewrite output (just the `# Contributing to peepDB` heading) to ~84 lines showing the complete file — fork instructions, dev environment setup, pytest commands, PEP 8 guidelines, PR process, bug reporting templates. This is the single largest content block in the output, consuming more budget than any source file. Meanwhile, `peepdb/config.py` const values (`CONFIG_DIR = os.path.expanduser("~/.peepdb")`, `KEYRING_SERVICE_NAME = "PEEP_DB"`) are truncated to just names, and the `KeySecurity` dataclass body (showing the two security modes: `KEYRING = "os-keyring"`, `PASSWORD = "password"`) is elided — both losses that the CONTRIBUTING.md budget could have prevented.
 
+In pluggy, CLAUDE.md (classified as `AiConfig`) gets ~50 lines of output showing development commands, testing instructions, and architecture notes — none of which helps a reader understand what pluggy is or how its plugin system works. The pre-rewrite output didn't show CLAUDE.md at all. This budget directly displaces the README.rst content (see issue #6).
+
 Two root causes:
 
-1. **`files_contribution()` doesn't deprioritize root-level CommunityHealth files.** The `is_root_dir` branch only boosts Readme/Architecture to 1.5 and treats everything else as 1.0. The 0.1 CommunityHealth deprioritization only applies in the non-root branch. So CONTRIBUTING.md's child TsGroups compete at full modifier value.
+1. **`files_contribution()` doesn't deprioritize root-level CommunityHealth or AiConfig files.** The `is_root_dir` branch only boosts Readme/Architecture to 1.5 and treats everything else as 1.0. The 0.1 deprioritization for CommunityHealth and AiConfig only applies in the non-root branch. So CONTRIBUTING.md's and CLAUDE.md's child TsGroups compete at full modifier value.
 
 2. **`is_boilerplate_heading()` doesn't match multi-word headings.** It splits on dashes (`-`, `—`, `–`) but not spaces, then does exact matches. So "Contributing Guidelines" becomes stem `"contributing guidelines"` which doesn't match `"contributing"`. Only 1 of 7 headings in CONTRIBUTING.md ("Code of Conduct") gets the boilerplate modifier. Similarly, "Security issue notifications" doesn't match `"security"`.
 
-The combined effect: CONTRIBUTING.md headings get base_value 1.0 (h1) / 0.6 (h2) with modifier 1.0, competing on near-equal footing with README headings (modifier 1.5). This allocates ~15% of the 4000-token budget to content that builds zero understanding of the codebase.
+The combined effect: CONTRIBUTING.md and CLAUDE.md headings get base_value 1.0 (h1) / 0.6 (h2) with modifier 1.0, competing on near-equal footing with README headings (modifier 1.5). In pluggy, this allocates ~13% of the budget to AI config content that builds zero understanding of the codebase.
 
 ## 9. Type alias and const bodies missing from taxonomy (regression)
 
-**Affected snapshots:** cmdk, cmdk_cmdk_src, enclosed, enclosed_crypto, enclosed_lib, go_multierror, htmy, ky, ky_source_errors, mcphost_sdk, microbootstrap, microbootstrap_instruments, mitt, nano_vllm, nano_vllm_engine
+**Affected snapshots:** cmdk, cmdk_cmdk_src, enclosed, enclosed_crypto, enclosed_lib, go_multierror, htmy, ky, ky_source_errors, mcphost_sdk, microbootstrap, microbootstrap_instruments, mitt, nano_vllm, nano_vllm_engine, pluggy
 
 The taxonomy has Body groups for functions (`FunctionBody`), structs (`StructBody`), and enums (`EnumBody`), but none for type aliases, const declarations, interfaces, classes, or traits. The `*Name` rendering truncates after the identifier, so the entire definition is lost.
 
@@ -146,6 +150,8 @@ Post-rewrite output truncates all of these to just the name:
 ```
 
 For cmdk, the 12+ `type` aliases define component props — they ARE the public API surface. `type ItemProps` having `disabled`, `onSelect`, `value`, `keywords`, `forceMount` properties is the most important thing to know about the Item component. The current output hides all of this, spending budget instead on internal helper function bodies (e.g. `findNextSibling` gets 8 lines of full body, `useScheduleLayoutEffect` gets 14 lines).
+
+In pluggy, `HookspecOpts` and `HookimplOpts` are `TypedDict` classes whose field definitions ARE the API contract for hook specifications and implementations. The pre-rewrite output showed all fields with docstring comments — `firstresult: bool`, `historic: bool`, `warn_on_impl: Warning | None` for HookspecOpts, and `wrapper: bool`, `hookwrapper: bool`, `optionalhook: bool`, `tryfirst: bool`, `trylast: bool`, `specname: str | None` for HookimplOpts. The new output truncates both to `class HookspecOpts …` and `class HookimplOpts …`. A reader can't tell what options are available for hook specs or implementations.
 
 In mitt, the entire library is one 123-line file (`src/index.ts`) whose API surface is defined by 6 type aliases and 1 interface. The pre-rewrite output showed `export type EventType = string | symbol`, `export type Handler<T = unknown> = (event: T) => void`, `export interface Emitter<Events extends Record<EventType, unknown>> { all: EventHandlerMap<Events>; ... }` — the complete type system that IS the library. The post-rewrite output truncates all types to `export type EventType …`, `export type Handler …`, `export interface Emitter …`. The Emitter interface loses both its generic constraint and its `all` property field (only method signatures survive, via the method extraction path). A reader can see there are 6 types and 1 interface but learns nothing about what they contain.
 
