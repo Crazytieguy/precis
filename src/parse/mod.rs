@@ -878,6 +878,7 @@ fn dedup_overloads(items: &mut Vec<(TsGroupKey, TsItem<'_>)>, lang: Lang, source
             TsGroupKey::StructName { .. }
                 | TsGroupKey::EnumName { .. }
                 | TsGroupKey::TypeAliasName { .. }
+                | TsGroupKey::MacroName { .. }
         ) && !seen.insert((ident, tag))
         {
             to_remove.push(i);

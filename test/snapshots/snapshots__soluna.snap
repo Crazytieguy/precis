@@ -75,10 +75,6 @@ src/mutex.h
      7→    #define mutex_init …
      8→    #define mutex_acquire …
      9→    #define mutex_release …
-    12→    #define mutex_t …
-    13→    #define mutex_init …
-    14→    #define mutex_acquire …
-    15→    #define mutex_release …
 
 src/render_bindings.h
      6→struct soluna_render_bindings …
@@ -463,6 +459,16 @@ src/platform/windows/soluna_windows_ime.c
    149→void …
    172→void …
 
+clibs/soluna/compile_lua.lua
+
+clibs/soluna/compile_shader.lua
+
+clibs/soluna/runlua.lua
+
+clibs/soluna/shader2c.lua
+
+web/layouts/index.html
+
 3rd/
 
 3rd/datalist/
@@ -489,8 +495,6 @@ clibs/ltask/
 
 clibs/lua/
 
-clibs/soluna/
-
 clibs/yoga/
 
 clibs/zip/
@@ -504,8 +508,6 @@ test/
 web/
 
 web/content/examples/
-
-web/layouts/
 
 web/layouts/_default/
 

@@ -58,7 +58,6 @@ sqlite-vec.c
    115→enum VectorElementType …
    125→#define PORTABLE_ALIGN32 …
    126→#define PORTABLE_ALIGN64 …
-   166→#define PORTABLE_ALIGN32 …
    169→static f32 l2_sqr_float_neon(const void *pVect1v, const void *pVect2v,
    170→                             const void *qty_ptr) {
    527→static unsigned int __builtin_popcountl(unsigned int x) {
@@ -304,6 +303,7 @@ examples/sqlite3-cli/README.md
      1→# `sqlite-vec` statically compiled in the SQLite CLI
 
 examples/wasm/README.md
+     1→# `sqlite-vec` statically compiled into WASM builds
 
 examples/simple-bun/demo.ts
 
@@ -338,7 +338,6 @@ site/sqlite.tmlanguage.json
 site/versioning.md
 
 examples/python-recipes/openai-sample.py
-    10→def serialize …
 
 examples/simple-node2/package.json
 

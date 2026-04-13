@@ -265,47 +265,6 @@ The old output built a clear mental model: two renderer classes (baseline for de
 
 The heuristic values suggest this shouldn't happen — `ClassDocFirst` (base 0.4, public) should beat private `FunctionBody` (base 0.2 × visibility 0.3 = effective 0.06). Something in the scheduling is causing private function bodies to win budget over public class documentation.
 
-## 16. Duplicated `#define` macros from conditional compilation branches
-
-**Affected snapshots:** krep, soluna, sqlite_vec
-
-In `krep.c`, SIMD feature flag macros are defined in multiple `#ifdef`/`#elif`/`#else` branches:
-
-```c
-#if defined(__AVX512F__) && defined(__AVX512BW__)
-#define KREP_USE_AVX512 1
-#define KREP_USE_AVX2 1
-#define KREP_USE_SSE42 1
-#elif defined(__AVX2__)
-#define KREP_USE_AVX512 0
-#define KREP_USE_AVX2 1
-#define KREP_USE_SSE42 1
-#else
-#define KREP_USE_AVX512 0
-#define KREP_USE_AVX2 0
-#endif
-```
-
-Tree-sitter captures every `preproc_def` node regardless of which preprocessor branch it's in. The output shows the same macro name 2-3 times:
-
-```
-    49→#define KREP_USE_AVX512 …
-    50→#define KREP_USE_AVX2 …
-    51→#define KREP_USE_SSE42 …
-    54→#define KREP_USE_AVX512 …
-    55→#define KREP_USE_AVX2 …
-    56→#define KREP_USE_SSE42 …
-    58→#define KREP_USE_AVX512 …
-    59→#define KREP_USE_AVX2 …
-    66→#define KREP_USE_SSE42 …
-    73→#define KREP_USE_NEON …
-```
-
-10 lines for 4 unique macro names. A reader would be confused about why the same symbol is defined three times. The pre-rewrite output didn't show these at all, instead showing more informative constants (`MAX_PATTERN_LENGTH 1024`, `LIKELY(x)`).
-
-In soluna's `src/mutex.h`, both `#ifdef _MSC_VER` branches are captured — lines 6-9 show `mutex_t SRWLOCK`, `mutex_init(m) InitializeSRWLock(&m)`, etc., and lines 12-15 show `mutex_t pthread_mutex_t`, `mutex_init(m) pthread_mutex_init(&m, NULL)`, etc. 8 lines for 4 unique macros. The old output also showed both branches (with values), so this is pre-existing — but the new output truncates values too (issue #7), making the duplication more wasteful since neither copy is informative.
-
-In sqlite_vec's `sqlite-vec.c`, `PORTABLE_ALIGN32` appears at lines 125 and 166 from different `#ifdef` branches (compiler-specific alignment attributes).
 
 ## 17. C header file budget reduced — key API declarations and struct bodies lost (regression)
 
