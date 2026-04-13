@@ -7,7 +7,16 @@ error.rs
      6→    inner: Inner,
      7→}
     10→enum Inner …
+    19→impl Error …
+    21→    pub fn msg(msg: &'static str) -> Self {
+    29→    pub(super) fn from_value …
+    37→    pub(super) fn into_value …
     73→    pub(super) type BoxedError …
+    75→    impl Error …
+    77→        pub fn boxed<E>(err: E) -> Self
+    78→        where
+    79→            E: Into<BoxedError>,
+    80→        {
 
 key.rs
      1→//! Structured keys.
@@ -19,6 +28,10 @@ key.rs
     38→    // NOTE: This may become `Cow<'k, str>`
     39→    key: &'k str,
     40→}
+    42→impl<'k> Key<'k> …
+    45→    pub fn from_str …
+    53→    pub fn as_str(&self) -> &str {
+    61→    pub fn to_borrowed_str(&self) -> Option<&'k str> {
 
 mod.rs
      1→//! Structured logging.
@@ -29,39 +42,14 @@ source.rs
       →…
     51→pub trait Source …
     52→    /// Visit key-values.
-    53→    ///
-    54→    /// A source doesn't have to guarantee any ordering or uniqueness of key-values.
-    55→    /// If the given visitor returns an error then the source may early-return with it,
-    56→    /// even if there are more key-values.
-    57→    ///
-    58→    /// # Implementation notes
-    59→    ///
-    60→    /// A source should yield the same key-values to a subsequent visitor unless
-    61→    /// that visitor itself fails.
+      →…
     62→    fn visit<'kvs>(&'kvs self, visitor: &mut dyn VisitSource<'kvs>) -> Result<(), Error>;
     64→    /// Get the value for a given key.
-    65→    ///
-    66→    /// If the key appears multiple times in the source then which key is returned
-    67→    /// is implementation specific.
-    68→    ///
-    69→    /// # Implementation notes
-    70→    ///
-    71→    /// A source that can provide a more efficient implementation of this method
-    72→    /// should override it.
+      →…
     73→    fn get(&self, key: Key) -> Option<Value<'_>> {
-    74→        get_default(self, key)
-    75→    }
     77→    /// Count the number of key-values that can be visited.
-    78→    ///
-    79→    /// # Implementation notes
-    80→    ///
-    81→    /// A source that knows the number of key-values upfront may provide a more
-    82→    /// efficient implementation.
-    83→    ///
-    84→    /// A subsequent call to `visit` should yield the same number of key-values.
+      →…
     85→    fn count(&self) -> usize {
-    86→        count_default(self)
-    87→    }
     90→/// The default implementation of `Source::get`
     91→fn get_default<'v>(source: &'v (impl Source + ?Sized), key: Key) -> Option<Value<'v>> {
    113→/// The default implementation of `Source::count`.
@@ -80,86 +68,96 @@ value.rs
    119→pub struct Value …
    120→    inner: inner::Inner<'v>,
    121→}
+   123→impl<'v> Value<'v> …
+   125→    pub fn from_any<T>(value: &'v T) -> Self
+   126→    where
+   127→        T: ToValue,
+   128→    {
+   133→    pub fn from_debug<T>(value: &'v T) -> Self
+   134→    where
+   135→        T: fmt::Debug,
+   136→    {
+   143→    pub fn from_display<T>(value: &'v T) -> Self
+   144→    where
+   145→        T: fmt::Display,
+   146→    {
+   154→    pub fn from_serde …
+   165→    pub fn from_sval …
+   175→    pub fn from_dyn_debug(value: &'v dyn fmt::Debug) -> Self {
+   182→    pub fn from_dyn_display(value: &'v dyn fmt::Display) -> Self {
+   190→    pub fn from_dyn_error …
+   197→    pub fn null() -> Self {
+   203→    /// Get a value from an internal primitive.
+   204→    fn from_inner<T>(value: T) -> Self
+   205→    where
+   206→        T: Into<inner::Inner<'v>>,
+   207→    {
+   217→    pub fn visit(&self, visitor: impl VisitValue<'v>) -> Result<(), Error> {
    288→macro_rules! impl_to_value_primitive …
    312→macro_rules! impl_to_value_nonzero_primitive …
    336→macro_rules! impl_value_to_primitive …
+   376→impl<'v> Value<'v> …
+   379→    pub fn to_borrowed_error …
+   384→    pub fn to_borrowed_str(&self) -> Option<&'v str> {
+   436→    impl<'v> Value<'v> …
+   438→        pub fn to_cow_str(&self) -> Option<Cow<'v, str>> {
    450→/// A visitor for a [`Value`].
       →…
    462→pub trait VisitValue …
    463→    /// Visit a `Value`.
-   464→    ///
-   465→    /// This is the only required method on `VisitValue` and acts as a fallback for any
-   466→    /// more specific methods that aren't overridden.
-   467→    /// The `Value` may be formatted using its `fmt::Debug` or `fmt::Display` implementation,
-   468→    /// or serialized using its `sval::Value` or `serde::Serialize` implementation.
+      →…
    469→    fn visit_any(&mut self, value: Value) -> Result<(), Error>;
    471→    /// Visit an empty value.
    472→    fn visit_null(&mut self) -> Result<(), Error> {
-   473→        self.visit_any(Value::null())
-   474→    }
    476→    /// Visit an unsigned integer.
    477→    fn visit_u64(&mut self, value: u64) -> Result<(), Error> {
-   478→        self.visit_any(value.into())
-   479→    }
    481→    /// Visit a signed integer.
    482→    fn visit_i64(&mut self, value: i64) -> Result<(), Error> {
-   483→        self.visit_any(value.into())
-   484→    }
    486→    /// Visit a big unsigned integer.
    487→    fn visit_u128(&mut self, value: u128) -> Result<(), Error> {
-   488→        self.visit_any((value).into())
-   489→    }
    491→    /// Visit a big signed integer.
    492→    fn visit_i128(&mut self, value: i128) -> Result<(), Error> {
-   493→        self.visit_any((value).into())
-   494→    }
    496→    /// Visit a floating point.
    497→    fn visit_f64(&mut self, value: f64) -> Result<(), Error> {
-   498→        self.visit_any(value.into())
-   499→    }
    501→    /// Visit a boolean.
    502→    fn visit_bool(&mut self, value: bool) -> Result<(), Error> {
-   503→        self.visit_any(value.into())
-   504→    }
    506→    /// Visit a string.
    507→    fn visit_str(&mut self, value: &str) -> Result<(), Error> {
-   508→        self.visit_any(value.into())
-   509→    }
    511→    /// Visit a string.
    512→    fn visit_borrowed_str(&mut self, value: &'v str) -> Result<(), Error> {
-   513→        self.visit_str(value)
-   514→    }
    516→    /// Visit a Unicode character.
    517→    fn visit_char(&mut self, value: char) -> Result<(), Error> {
-   518→        let mut b = [0; 4];
-   519→        self.visit_str(&*value.encode_utf8(&mut b))
-   520→    }
    524→    fn visit_error(&mut self, err: &(dyn std::error::Error + 'static)) -> Result<(), Error> {
    530→    fn visit_borrowed_error(
    531→        &mut self,
    532→        err: &'v (dyn std::error::Error + 'static),
    533→    ) -> Result<(), Error> {
-   619→    pub fn visit<'v>(
-   620→        inner: &Inner<'v>,
-   621→        visitor: impl VisitValue<'v>,
-   622→    ) -> Result<(), crate::kv::Error> {
+   619→    pub fn visit …
    738→    pub enum Inner …
-   739→        None,
-   740→        Bool(bool),
-   741→        Str(&'v str),
-   742→        Char(char),
-   743→        I64(i64),
-   744→        U64(u64),
-   745→        F64(f64),
-   746→        I128(i128),
-   747→        U128(u128),
-   748→        Debug(&'v dyn fmt::Debug),
-   749→        Display(&'v dyn fmt::Display),
-   750→    }
-  1031→    pub fn visit<'v>(
-  1032→        inner: &Inner<'v>,
-  1033→        mut visitor: impl VisitValue<'v>,
-  1034→    ) -> Result<(), crate::kv::Error> {
+   896→    impl<'v> Inner<'v> …
+   897→        pub fn from_debug …
+   901→        pub fn from_display …
+   905→        pub fn from_dyn_debug …
+   909→        pub fn from_dyn_display …
+   913→        pub fn empty …
+   917→        pub fn to_bool …
+   924→        pub fn to_char …
+   931→        pub fn to_f64 …
+   954→        pub fn to_i64 …
+   964→        pub fn to_u64 …
+   974→        pub fn to_u128 …
+   984→        pub fn to_i128 …
+   994→        pub fn to_borrowed_str …
+  1002→        pub fn to_test_token …
+  1031→    pub fn visit …
+  1051→impl<'v> Value<'v> …
+  1055→    pub fn capture_debug …
+  1065→    pub fn capture_display …
+  1075→    pub fn capture_error …
+  1085→    pub fn capture_serde …
+  1095→    pub fn capture_sval …
+  1107→    pub fn is …
+  1116→    pub fn downcast_ref …
   1129→macro_rules! as_debug …
   1139→macro_rules! as_display …
   1149→macro_rules! as_error …

@@ -414,9 +414,8 @@ fn spawn_method_children<'s>(
         let method_nodes = find_method_nodes(item.node, lang);
 
         for method_node in method_nodes {
-            let is_public = crate::parse::visibility::determine_visibility(
+            let is_public = crate::parse::visibility::symbol_visibility(
                 method_node,
-                crate::parse::ItemKind::Function,
                 item.source,
                 lang.unwrap_or(Lang::Rust),
             );
@@ -747,7 +746,22 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
         }
 
         HeadingBody => {
-            let body_start = start_line + 1;
+            // Setext headings span both the title and the `===`/`---`
+            // underline rows; body content starts past the underline.
+            // Other heading-like nodes (ATX, TOML tables, YAML pairs)
+            // span either just the header row or the entire section,
+            // neither of which we want to use to shift `body_start`.
+            let body_start = if item.node.kind() == "setext_heading" {
+                let node_end = item.node.end_position();
+                let node_end_line = if node_end.column == 0 && node_end.row > start_line {
+                    node_end.row
+                } else {
+                    node_end.row + 1
+                };
+                node_end_line.max(start_line + 1)
+            } else {
+                start_line + 1
+            };
             let body_end = item.end_line;
             let content_start = skip_markdown_noise(&lines, body_start, body_end);
             let mut entries = Vec::new();

@@ -1,31 +1,20 @@
 use crate::Lang;
 
-use super::{ExtractedItem, ItemKind};
-
+/// Returns `(representative_node, end_row_inclusive)` for the file's
+/// module-level doc comment, if present.
 pub(super) fn detect_module_doc<'t>(
     root: tree_sitter::Node<'t>,
     source: &str,
     lang: Lang,
-) -> Option<ExtractedItem<'t>> {
-    let (start_row, end_row, node) = match lang {
+) -> Option<(tree_sitter::Node<'t>, usize)> {
+    let (_start_row, end_row, node) = match lang {
         Lang::Rust => detect_rust(root, source)?,
         Lang::Python => detect_python(root, source)?,
         Lang::Go => detect_go(root, source)?,
         Lang::Java => detect_java(root, source)?,
         _ => return None,
     };
-
-    Some(ExtractedItem {
-        node,
-        kind: ItemKind::ModuleDoc,
-        is_public: true,
-        is_first_party: false,
-        is_trait_impl: false,
-        is_reexport: false,
-        is_documented: false,
-        start_line: start_row,
-        end_line: end_row + 1,
-    })
+    Some((node, end_row))
 }
 
 fn detect_rust<'t>(

@@ -149,7 +149,7 @@ fn check_d4(path: &Path, store: &ParseStore) {
     let items = precis::parse::extract_items(path, source, tree, config);
     let mut ranges: Vec<_> = items
         .iter()
-        .map(|i| (i.start_line, i.end_line))
+        .map(|(_, item)| (item.start_line(), item.end_line))
         .collect();
     ranges.sort();
 

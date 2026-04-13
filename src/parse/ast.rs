@@ -148,18 +148,6 @@ pub(super) fn is_inside_function(node: tree_sitter::Node) -> bool {
     false
 }
 
-pub(super) fn is_in_trait_impl(node: tree_sitter::Node) -> bool {
-    if let Some(parent) = node.parent()
-        && parent.kind() == "declaration_list"
-        && let Some(grandparent) = parent.parent()
-        && grandparent.kind() == "impl_item"
-        && grandparent.child_by_field_name("trait").is_some()
-    {
-        return true;
-    }
-    false
-}
-
 pub(super) fn is_inside_rust_anon_const(node: tree_sitter::Node, source: &str) -> bool {
     let mut current = node.parent();
     while let Some(parent) = current {

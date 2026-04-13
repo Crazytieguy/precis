@@ -1,24 +1,17 @@
-use std::collections::{HashMap, HashSet};
-use std::path::{Path, PathBuf};
+use std::collections::HashMap;
 
 use crate::classify;
 use crate::heuristics;
-use crate::parse::{self, ExtractedItem, ItemKind};
+use crate::parse;
 use crate::schedule::ScheduleCtx;
 
-use super::{FilesGroup, Group, TsGroup, TsItem};
 use super::ts::TsGroupKey;
+use super::{FilesGroup, Group, TsGroup, TsItem};
 
 /// Produce children when a FilesGroup is scheduled.
 /// Parses every file in the group, extracts items, and aggregates across files (D7).
 pub fn children<'s>(g: &mut FilesGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s>> {
-    struct FileItems<'s> {
-        path: PathBuf,
-        source: &'s str,
-        items: Vec<ExtractedItem<'s>>,
-    }
-    let mut all_items: Vec<FileItems<'s>> = Vec::new();
-    let mut generated_files: HashSet<&Path> = HashSet::new();
+    let mut buckets: HashMap<(TsGroupKey, bool), Vec<TsItem<'s>>> = HashMap::new();
 
     for file_path in &g.items {
         // A5: parsing only happens in Files::children
@@ -38,46 +31,22 @@ pub fn children<'s>(g: &mut FilesGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s>>
             None => continue,
         };
 
-        let items = parse::extract_items(file_path, source, tree, config);
-
         let relative = file_path.strip_prefix(&g.parent_dir).unwrap_or(file_path);
-        if classify::is_generated_file(source)
+        let is_generated = classify::is_generated_file(source)
             || classify::is_autogen_api_doc(source, g.role)
-            || classify::is_generated_filename(relative)
-        {
-            generated_files.insert(file_path);
-        }
+            || classify::is_generated_filename(relative);
 
-        all_items.push(FileItems {
-            path: file_path.clone(),
-            source,
-            items,
-        });
-    }
+        let display_path = ctx
+            .store
+            .intern_path(ctx.rel_path(file_path).to_path_buf());
 
-    // Aggregate items across files into TsGroup buckets (D7).
-    // Bucket key includes generated status so items from generated files get
-    // a separate group with the appropriate modifier (not tainting the rest).
-    let mut buckets: HashMap<(TsGroupKey, bool), Vec<TsItem<'s>>> = HashMap::new();
+        let items = parse::extract_items(display_path, source, tree, config);
 
-    for fi in &all_items {
-        let lines: Vec<&str> = fi.source.lines().collect();
-        let lang = crate::Lang::from_path(fi.path.as_path());
-        let display_path = ctx.store.intern_path(ctx.rel_path(&fi.path).to_path_buf());
-        let is_generated = generated_files.contains(fi.path.as_path());
-
-        for item in &fi.items {
-            let keys = item_to_group_keys(item, &lines, lang);
-
-            for key in keys {
-                let ts_item = TsItem {
-                    path: display_path,
-                    source: fi.source,
-                    node: item.node,
-                    end_line: item.end_line,
-                };
-                buckets.entry((key, is_generated)).or_default().push(ts_item);
-            }
+        for (key, ts_item) in items {
+            buckets
+                .entry((key, is_generated))
+                .or_default()
+                .push(ts_item);
         }
     }
 
@@ -224,98 +193,6 @@ fn nest_heading_groups(groups: &mut Vec<(Group<'_>, bool)>) {
                 groups.extend(at_level);
             }
         }
-    }
-}
-
-/// Map an extracted item to its initial TsGroupKey(s).
-/// An item may produce multiple keys (e.g., a documented public function
-/// produces FunctionName which will later spawn doc/sig/body children).
-pub(crate) fn item_to_group_keys(
-    item: &ExtractedItem<'_>,
-    lines: &[&str],
-    lang: Option<crate::Lang>,
-) -> Vec<TsGroupKey> {
-    use ItemKind::*;
-    use TsGroupKey::*;
-
-    match item.kind {
-        Function => vec![FunctionName {
-            documented: item.is_documented,
-            public: item.is_public,
-        }],
-        Struct => vec![StructName {
-            documented: item.is_documented,
-            public: item.is_public,
-        }],
-        Enum => vec![EnumName {
-            documented: item.is_documented,
-            public: item.is_public,
-        }],
-        Class => vec![ClassName {
-            documented: item.is_documented,
-            public: item.is_public,
-        }],
-        Interface => vec![InterfaceName {
-            documented: item.is_documented,
-            public: item.is_public,
-        }],
-        Trait => vec![TraitName {
-            documented: item.is_documented,
-            public: item.is_public,
-        }],
-        Impl => {
-            let is_trait_impl = item.is_trait_impl;
-            vec![ImplBlock { is_trait_impl }]
-        }
-        TypeAlias => vec![TypeAliasName {
-            documented: item.is_documented,
-            public: item.is_public,
-        }],
-        Const | Static => vec![ConstName {
-            documented: item.is_documented,
-            public: item.is_public,
-        }],
-        Macro => vec![MacroName {
-            documented: item.is_documented,
-            public: item.is_public,
-        }],
-        Module => {
-            // Module items are filtered out before reaching this point
-            // (see extract_items in parse/mod.rs)
-            unreachable!("Module items should be filtered before grouping")
-        }
-        Section => {
-            let level = if let Some(crate::Lang::Toml) = lang {
-                let line = lines.get(item.start_line).copied().unwrap_or("");
-                let key = line
-                    .trim()
-                    .trim_start_matches('[')
-                    .trim_end_matches(']')
-                    .trim();
-                key.chars().filter(|&c| c == '.').count() as u8 + 1
-            } else if let Some(crate::Lang::Markdown) = lang {
-                classify::detect_heading_depth(lines, item.start_line, item.end_line)
-            } else {
-                1 // JSON/YAML: all top-level
-            };
-            let boilerplate = matches!(lang, Some(crate::Lang::Markdown)) && {
-                let heading_line = lines.get(item.start_line).copied().unwrap_or("");
-                let stripped = classify::strip_heading_badges(heading_line);
-                classify::is_boilerplate_heading(stripped)
-            };
-            vec![Heading {
-                level,
-                boilerplate,
-            }]
-        }
-        Import => {
-            let reexport = item.is_reexport;
-            vec![TsGroupKey::Import {
-                first_party: item.is_first_party,
-                reexport,
-            }]
-        }
-        ModuleDoc => vec![ModuleDocFirst],
     }
 }
 

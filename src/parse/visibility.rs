@@ -1,74 +1,90 @@
 use crate::Lang;
 
-use super::ItemKind;
 use super::ast::has_preceding_attribute;
 
-pub(crate) fn determine_visibility(
+/// Default visibility rule for functions, types, consts, statics, impls,
+/// headings. Language-specific: Go uses identifier case, Python `_` prefix,
+/// C `static` + `_` prefix, Lua `local` keyword, others check for explicit
+/// `pub` / `export`.
+pub(crate) fn symbol_visibility(
     node: tree_sitter::Node,
-    kind: ItemKind,
     source: &str,
     lang: Lang,
 ) -> bool {
-    let base = if kind == ItemKind::Import {
-        lang == Lang::Rust && is_public_symbol(node, source)
-    } else {
-        match lang {
-            Lang::Go => {
-                let ident = node
-                    .child_by_field_name("name")
-                    .and_then(|n| n.utf8_text(source.as_bytes()).ok())
-                    .unwrap_or("");
-                ident.starts_with(|c: char| c.is_ascii_uppercase())
-            }
-            Lang::Java => is_java_public(node, source),
-            Lang::Python => {
-                let name_node = node.child_by_field_name("name").or_else(|| {
-                    let mut cursor = node.walk();
-                    node.children(&mut cursor)
-                        .find(|c| c.kind() == "assignment")
-                        .and_then(|a| a.child_by_field_name("left"))
-                });
-                let ident = name_node
-                    .and_then(|n| n.utf8_text(source.as_bytes()).ok())
-                    .unwrap_or("");
-                !ident.starts_with('_') || (ident.starts_with("__") && ident.ends_with("__"))
-            }
-            Lang::Markdown | Lang::Json | Lang::Toml | Lang::Yaml => true,
-            Lang::C => {
-                let ident = c_identifier_text(node, source);
-                !is_c_static(node, source) && !ident.starts_with('_')
-            }
-            Lang::Lua => {
-                let text = node.utf8_text(source.as_bytes()).unwrap_or("");
-                let ident = node
-                    .child_by_field_name("name")
-                    .and_then(|n| n.utf8_text(source.as_bytes()).ok())
-                    .unwrap_or("");
-                !text.starts_with("local") || ident.contains('.')
-            }
-            _ => is_public_symbol(node, source),
+    let base = match lang {
+        Lang::Go => {
+            let ident = node
+                .child_by_field_name("name")
+                .and_then(|n| n.utf8_text(source.as_bytes()).ok())
+                .unwrap_or("");
+            ident.starts_with(|c: char| c.is_ascii_uppercase())
         }
+        Lang::Java => is_java_public(node, source),
+        Lang::Python => {
+            let ident = node
+                .child_by_field_name("name")
+                .and_then(|n| n.utf8_text(source.as_bytes()).ok())
+                .unwrap_or("");
+            !ident.starts_with('_') || (ident.starts_with("__") && ident.ends_with("__"))
+        }
+        Lang::Markdown | Lang::Json | Lang::Toml | Lang::Yaml => true,
+        Lang::C => {
+            let ident = c_identifier_text(node, source);
+            !is_c_static(node, source) && !ident.starts_with('_')
+        }
+        Lang::Lua => {
+            let text = node.utf8_text(source.as_bytes()).unwrap_or("");
+            let ident = node
+                .child_by_field_name("name")
+                .and_then(|n| n.utf8_text(source.as_bytes()).ok())
+                .unwrap_or("");
+            !text.starts_with("local") || ident.contains('.')
+        }
+        _ => is_public_symbol(node, source),
     };
+    apply_doc_hidden(base, node, source, lang)
+}
 
-    let is_public = if base
-        && lang == Lang::Rust
-        && has_preceding_attribute(node, source, "#[doc(hidden)]")
-    {
-        false
-    } else {
-        base
-    };
+/// Visibility for imports. Non-Rust imports are never public (importing is
+/// not exporting in most languages). Rust `pub use` is public, subject to
+/// `#[doc(hidden)]`.
+pub(crate) fn import_visibility(
+    node: tree_sitter::Node,
+    source: &str,
+    lang: Lang,
+) -> bool {
+    if lang != Lang::Rust {
+        return false;
+    }
+    apply_doc_hidden(is_public_symbol(node, source), node, source, lang)
+}
 
-    if !is_public
+/// Visibility for macros. Same as `symbol_visibility` but with a Rust-only
+/// `#[macro_export]` override that promotes otherwise-private macros to
+/// public. `symbol_visibility` has already filtered `#[doc(hidden)]` out
+/// of `base`, so we only need to handle the promotion direction here.
+pub(crate) fn macro_visibility(
+    node: tree_sitter::Node,
+    source: &str,
+    lang: Lang,
+) -> bool {
+    let base = symbol_visibility(node, source, lang);
+    if !base
         && lang == Lang::Rust
-        && kind == ItemKind::Macro
         && has_preceding_attribute(node, source, "#[macro_export]")
         && !has_preceding_attribute(node, source, "#[doc(hidden)]")
     {
         return true;
     }
+    base
+}
 
-    is_public
+fn apply_doc_hidden(base: bool, node: tree_sitter::Node, source: &str, lang: Lang) -> bool {
+    if base && lang == Lang::Rust && has_preceding_attribute(node, source, "#[doc(hidden)]") {
+        false
+    } else {
+        base
+    }
 }
 
 fn c_identifier_text<'a>(node: tree_sitter::Node, source: &'a str) -> &'a str {

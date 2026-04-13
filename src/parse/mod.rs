@@ -1,97 +1,65 @@
-//! Tree-sitter query execution, symbol classification, and cross-kind nesting filter.
+//! Tree-sitter query execution and classification into (TsGroupKey, TsItem).
 
 pub(crate) mod ast;
-pub(crate) mod classify;
 pub(crate) mod module_doc;
-pub(crate) mod postprocess;
 pub(crate) mod visibility;
 
+use std::collections::HashSet;
+use std::mem::discriminant;
 use std::path::Path;
 
 use streaming_iterator::StreamingIterator;
 use tree_sitter::{Node, QueryCursor};
 
+use crate::group::TsGroupKey;
+use crate::group::TsItem;
 use crate::store::LanguageConfig;
 use crate::Lang;
 
-/// A single extracted top-level item from a source file.
-pub struct ExtractedItem<'t> {
-    pub node: Node<'t>,
-    pub kind: ItemKind,
-    pub is_public: bool,
-    pub is_first_party: bool,
-    pub is_trait_impl: bool,
-    pub is_reexport: bool,
-    pub is_documented: bool,
-    pub start_line: usize,
-    pub end_line: usize,
-}
-
-/// Classification of an extracted item.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-pub enum ItemKind {
-    Function,
-    Struct,
-    Enum,
-    Trait,
-    Impl,
-    TypeAlias,
-    Const,
-    Static,
-    Macro,
-    Module,
-    Class,
-    Interface,
-    Section,
-    Import,
-    ModuleDoc,
-}
-
-impl ItemKind {
-    pub fn is_section_like(self) -> bool {
-        matches!(self, ItemKind::Section | ItemKind::ModuleDoc)
-    }
-}
-
-/// Extract top-level items from a source file using a pre-compiled language config.
-/// Applies the cross-kind nesting filter (D4) to ensure non-overlapping items.
+/// Extract top-level items from a parsed source file, classifying each
+/// directly into a `TsGroupKey` paired with a `TsItem`.
 pub fn extract_items<'t>(
-    path: &Path,
+    display_path: &'t Path,
     source: &'t str,
     tree: &'t tree_sitter::Tree,
     config: &LanguageConfig,
-) -> Vec<ExtractedItem<'t>> {
+) -> Vec<(TsGroupKey, TsItem<'t>)> {
     let lang = config.lang;
     let root = tree.root_node();
+
+    // `lines` is only consulted by Heading arms (markdown/toml/json/yaml).
+    // Skipping the collect() for other languages saves an allocation
+    // proportional to file line count on the hot path.
+    let lines: Vec<&str> = if matches!(lang, Lang::Markdown | Lang::Toml | Lang::Json | Lang::Yaml)
+    {
+        source.lines().collect()
+    } else {
+        Vec::new()
+    };
+    let mod_names = collect_top_level_mod_names(root, source, lang);
+
+    let mut items: Vec<(TsGroupKey, TsItem<'t>)> = Vec::new();
+
+    if let Some((node, end_row)) = module_doc::detect_module_doc(root, source, lang) {
+        items.push((
+            TsGroupKey::ModuleDocFirst,
+            TsItem {
+                path: display_path,
+                source,
+                node,
+                end_line: end_row + 1,
+            },
+        ));
+    }
 
     let mut cursor = QueryCursor::new();
     let mut matches = cursor.matches(&config.query, root, source.as_bytes());
 
     let symbol_idx = config.symbol_idx;
-    let name_idx = config.name_idx;
-
-    let mut items = Vec::new();
-
-    // Detect module-level documentation first
-    if let Some(module_doc) = module_doc::detect_module_doc(root, source, lang) {
-        items.push(module_doc);
-    }
 
     while let Some(m) = matches.next() {
         let symbol_node = match m.captures.iter().find(|c| c.index == symbol_idx) {
             Some(c) => c.node,
-            None => continue,
-        };
-
-        let kind = match classify::classify_node(
-            symbol_node,
-            m.captures,
-            name_idx,
-            source,
-            lang,
-            path,
-        ) {
-            Some(k) => k,
             None => continue,
         };
 
@@ -105,54 +73,20 @@ pub fn extract_items<'t>(
             continue;
         }
 
-        let name_capture = name_idx
-            .and_then(|idx| m.captures.iter().find(|c| c.index == idx))
-            .map(|c| c.node);
-
-        // Filter Go/Rust items with blank identifier "_"
         if matches!(lang, Lang::Go | Lang::Rust) {
-            let ident = name_capture
+            let ident = symbol_node
+                .child_by_field_name("name")
                 .and_then(|n| n.utf8_text(source.as_bytes()).ok())
-                .map(|s| s.trim());
+                .map(str::trim);
             if ident == Some("_") {
                 continue;
             }
         }
 
-        // Items without a name capture must be handled by kind-specific logic
-        // (Import, Impl, Go grouped const/var, C typedef, Java fields, etc.)
-        // Only skip items that have no name capture AND no kind-specific handler.
-        if name_capture.is_none()
-            && !matches!(
-                kind,
-                ItemKind::Import
-                    | ItemKind::Impl
-                    | ItemKind::Const
-                    | ItemKind::Static
-                    | ItemKind::TypeAlias
-                    | ItemKind::Module
-                    | ItemKind::Section
-                    | ItemKind::ModuleDoc
-            )
-        {
-            continue;
-        }
-
-        let is_public =
-            visibility::determine_visibility(symbol_node, kind, source, lang);
-
-        let is_first_party = if kind == ItemKind::Import {
-            is_first_party_import(symbol_node, source, lang)
-        } else {
-            false
-        };
-
-        let is_trait_impl = lang == Lang::Rust
-            && matches!(kind, ItemKind::Function | ItemKind::Const | ItemKind::TypeAlias)
-            && ast::is_in_trait_impl(symbol_node);
-
-        // C++ template handling
-        let effective_node = if lang == Lang::C
+        // C++ template_declaration wraps the inner item; classify the inner
+        // node but use the outer for range + doc detection so the template
+        // parameters are captured in the rendered range.
+        let range_node = if lang == Lang::C
             && symbol_node
                 .parent()
                 .is_some_and(|p| p.kind() == "template_declaration")
@@ -162,64 +96,614 @@ pub fn extract_items<'t>(
             symbol_node
         };
 
-        let start_line = effective_node.start_position().row;
-        let end_line = if effective_node.end_position().column == 0
-            && effective_node.end_position().row > effective_node.start_position().row
-        {
-            effective_node.end_position().row
-        } else {
-            effective_node.end_position().row + 1
+        let documented = ast::compute_doc_start_line(range_node, source, lang).is_some();
+
+        let Some(key) = classify(
+            symbol_node,
+            source,
+            lang,
+            display_path,
+            &lines,
+            &mod_names,
+            documented,
+        ) else {
+            continue;
         };
 
-        let has_doc = ast::compute_doc_start_line(effective_node, source, lang).is_some();
+        let end_line = compute_end_line(range_node);
 
-        items.push(ExtractedItem {
-            node: effective_node,
-            kind,
-            is_public,
-            is_first_party,
-            is_trait_impl,
-            is_reexport: false,
-            is_documented: has_doc,
-            start_line,
-            end_line,
-        });
+        items.push((
+            key,
+            TsItem {
+                path: display_path,
+                source,
+                node: range_node,
+                end_line,
+            },
+        ));
     }
-
-    postprocess::finalize(&mut items, lang, source);
-
-    // Remove Module items (Rust `mod foo;`, C++ namespaces, TS namespaces, Java modules).
-    // These are kept through postprocessing so mark_reexports can use module names,
-    // but filtered before the nesting filter so that items *inside* namespaces/modules
-    // survive rather than being dropped as nested.
-    items.retain(|i| i.kind != ItemKind::Module);
 
     filter_nested_items(&mut items);
     dedup_line_overlaps(&mut items);
     extend_section_ranges(&mut items, source);
+    dedup_overloads(&mut items, lang, source);
 
     assert!(
-        items.windows(2).all(|w| w[0].end_line <= w[1].start_line),
+        items
+            .windows(2)
+            .all(|w| w[0].1.end_line <= w[1].1.start_line()),
         "D4 violation: top-level items overlap after nesting filter in {}",
-        path.display()
+        display_path.display()
     );
 
     items
 }
 
-fn is_first_party_import(node: tree_sitter::Node, source: &str, lang: Lang) -> bool {
+// ---------------------------------------------------------------------------
+// Classification: node -> Option<TsGroupKey>
+// ---------------------------------------------------------------------------
+
+fn classify<'t>(
+    node: Node<'t>,
+    source: &str,
+    lang: Lang,
+    path: &Path,
+    lines: &[&str],
+    mod_names: &[&str],
+    documented: bool,
+) -> Option<TsGroupKey> {
+    use TsGroupKey::*;
+
+    let public = || visibility::symbol_visibility(node, source, lang);
+
+    match node.kind() {
+        // ---- Rust ----
+        "function_item" | "function_signature_item" => Some(FunctionName {
+            documented,
+            public: public(),
+        }),
+        "struct_item" => Some(StructName {
+            documented,
+            public: public(),
+        }),
+        "enum_item" => Some(EnumName {
+            documented,
+            public: public(),
+        }),
+        "trait_item" => Some(TraitName {
+            documented,
+            public: public(),
+        }),
+        "impl_item" => Some(ImplBlock {
+            is_trait_impl: node.child_by_field_name("trait").is_some(),
+        }),
+        "type_item" => Some(TypeAliasName {
+            documented,
+            public: public(),
+        }),
+        "const_item" | "static_item" => Some(ConstName {
+            documented,
+            public: public(),
+        }),
+        "macro_definition" => Some(MacroName {
+            documented,
+            public: visibility::macro_visibility(node, source, lang),
+        }),
+        "mod_item" => None,
+
+        // ---- TypeScript / JavaScript ----
+        "function_declaration"
+        | "method_definition"
+        | "method_signature"
+        | "abstract_method_signature"
+        | "method_declaration" => Some(FunctionName {
+            documented,
+            public: public(),
+        }),
+        "class_declaration" | "abstract_class_declaration" => Some(ClassName {
+            documented,
+            public: public(),
+        }),
+        "interface_declaration" => Some(InterfaceName {
+            documented,
+            public: public(),
+        }),
+        "enum_declaration" => Some(EnumName {
+            documented,
+            public: public(),
+        }),
+        "type_alias_declaration" => Some(TypeAliasName {
+            documented,
+            public: public(),
+        }),
+        "lexical_declaration" => classify_js_lexical(node, source, lang, documented),
+        "public_field_definition" => {
+            let value_kind = node.child_by_field_name("value").map(|v| v.kind());
+            if matches!(
+                value_kind,
+                Some("arrow_function" | "function_expression" | "generator_function")
+            ) {
+                Some(FunctionName {
+                    documented,
+                    public: public(),
+                })
+            } else {
+                None
+            }
+        }
+        "internal_module" => None,
+
+        // ---- Go ----
+        "type_spec" => {
+            let type_child = node.child_by_field_name("type").map(|t| t.kind());
+            match type_child {
+                Some("struct_type") => Some(StructName {
+                    documented,
+                    public: public(),
+                }),
+                Some("interface_type") => Some(InterfaceName {
+                    documented,
+                    public: public(),
+                }),
+                _ => Some(TypeAliasName {
+                    documented,
+                    public: public(),
+                }),
+            }
+        }
+        "type_alias" => Some(TypeAliasName {
+            documented,
+            public: public(),
+        }),
+        "const_declaration" | "var_declaration" => {
+            let is_grouped = (0..node.child_count())
+                .filter_map(|i| node.child(i))
+                .any(|c| c.kind() == "(" || c.kind() == "var_spec_list");
+            if !is_grouped {
+                return None;
+            }
+            Some(ConstName {
+                documented,
+                public: public(),
+            })
+        }
+        "const_spec" | "var_spec" => Some(ConstName {
+            documented,
+            public: public(),
+        }),
+
+        // ---- C / C++ ----
+        "function_definition" => Some(FunctionName {
+            documented,
+            public: public(),
+        }),
+        "class_specifier" | "struct_specifier" | "union_specifier" | "enum_specifier" => {
+            node.child_by_field_name("body")?;
+            if node
+                .parent()
+                .is_some_and(|p| p.kind() == "type_definition")
+            {
+                return None;
+            }
+            match node.kind() {
+                "enum_specifier" => Some(EnumName {
+                    documented,
+                    public: public(),
+                }),
+                "class_specifier" => Some(ClassName {
+                    documented,
+                    public: public(),
+                }),
+                _ => Some(StructName {
+                    documented,
+                    public: public(),
+                }),
+            }
+        }
+        "type_definition" => {
+            if is_simple_typedef_alias(node) {
+                return None;
+            }
+            Some(TypeAliasName {
+                documented,
+                public: public(),
+            })
+        }
+        "preproc_def" => {
+            if is_c_header_guard(node, source, path) {
+                return None;
+            }
+            if is_platform_type_define(node, source) {
+                return None;
+            }
+            Some(MacroName {
+                documented,
+                public: visibility::macro_visibility(node, source, lang),
+            })
+        }
+        "preproc_function_def" => Some(MacroName {
+            documented,
+            public: visibility::macro_visibility(node, source, lang),
+        }),
+        "preproc_include" => Some(Import {
+            first_party: is_first_party_import(node, source, lang),
+            reexport: false,
+        }),
+        "declaration" if lang == Lang::C => {
+            if ast::find_descendant_of_kind(node, "function_declarator").is_some() {
+                Some(FunctionName {
+                    documented,
+                    public: public(),
+                })
+            } else {
+                Some(ConstName {
+                    documented,
+                    public: public(),
+                })
+            }
+        }
+        "namespace_definition" => None,
+        "alias_declaration" => Some(TypeAliasName {
+            documented,
+            public: public(),
+        }),
+
+        // ---- Java ----
+        "record_declaration" => Some(StructName {
+            documented,
+            public: public(),
+        }),
+        "annotation_type_declaration" => Some(InterfaceName {
+            documented,
+            public: public(),
+        }),
+        "constructor_declaration" | "annotation_type_element_declaration" => Some(FunctionName {
+            documented,
+            public: public(),
+        }),
+        "module_declaration" => None,
+        "field_declaration" if lang == Lang::Java => {
+            if !java_field_is_static_final(node, source) {
+                return None;
+            }
+            Some(ConstName {
+                documented,
+                public: public(),
+            })
+        }
+        "constant_declaration" if lang == Lang::Java => Some(ConstName {
+            documented,
+            public: public(),
+        }),
+
+        // ---- Python ----
+        "class_definition" => Some(ClassName {
+            documented,
+            public: public(),
+        }),
+        "expression_statement" if lang == Lang::Python => {
+            let name = python_module_const_name(node, source)?;
+            let public =
+                !name.starts_with('_') || (name.starts_with("__") && name.ends_with("__"));
+            Some(ConstName { documented, public })
+        }
+
+        // ---- Markdown / JSON / TOML / YAML ----
+        "atx_heading" | "setext_heading" => {
+            let start = node.start_position().row;
+            let end = compute_end_line(node);
+            let level = crate::classify::detect_heading_depth(lines, start, end);
+            let heading_line = lines.get(start).copied().unwrap_or("");
+            let stripped = crate::classify::strip_heading_badges(heading_line);
+            let boilerplate = crate::classify::is_boilerplate_heading(stripped);
+            Some(Heading { level, boilerplate })
+        }
+        "table" | "table_array_element" => {
+            // TOML: level from dot count in [a.b.c] header.
+            let start = node.start_position().row;
+            let line = lines.get(start).copied().unwrap_or("");
+            let key = line
+                .trim()
+                .trim_start_matches('[')
+                .trim_end_matches(']')
+                .trim();
+            let level = key.chars().filter(|&c| c == '.').count() as u8 + 1;
+            Some(Heading {
+                level,
+                boilerplate: false,
+            })
+        }
+        "pair" | "block_mapping_pair" => Some(Heading {
+            level: 1,
+            boilerplate: false,
+        }),
+
+        // ---- Imports ----
+        "use_declaration" => Some(Import {
+            first_party: is_first_party_import(node, source, lang),
+            reexport: is_rust_reexport(node, source, mod_names),
+        }),
+        "import_statement" if lang == Lang::Python || lang == Lang::JsTs => Some(Import {
+            first_party: is_first_party_import(node, source, lang),
+            reexport: false,
+        }),
+        "import_from_statement" => Some(Import {
+            first_party: is_first_party_import(node, source, lang),
+            reexport: false,
+        }),
+        "import_declaration" => Some(Import {
+            first_party: is_first_party_import(node, source, lang),
+            reexport: false,
+        }),
+
+        // ---- Lua ----
+        "variable_declaration" | "assignment_statement" if lang == Lang::Lua => {
+            let is_function = lua_rhs_is_function(node);
+            if is_function {
+                Some(FunctionName {
+                    documented,
+                    public: public(),
+                })
+            } else {
+                Some(ConstName {
+                    documented,
+                    public: public(),
+                })
+            }
+        }
+
+        _ => None,
+    }
+}
+
+fn classify_js_lexical(
+    node: Node,
+    source: &str,
+    lang: Lang,
+    documented: bool,
+) -> Option<TsGroupKey> {
+    use TsGroupKey::*;
+
+    let keyword = node.child(0).map(|c| c.kind());
+    if keyword != Some("const") {
+        return None;
+    }
+    let declarator = node
+        .named_children(&mut node.walk())
+        .find(|c| c.kind() == "variable_declarator");
+    let value_kind = declarator
+        .and_then(|d| d.child_by_field_name("value"))
+        .map(|v| v.kind());
+    if matches!(
+        value_kind,
+        Some("arrow_function" | "function_expression" | "generator_function")
+    ) {
+        Some(FunctionName {
+            documented,
+            public: visibility::symbol_visibility(node, source, lang),
+        })
+    } else if is_require_call(declarator, source) {
+        None
+    } else {
+        Some(ConstName {
+            documented,
+            public: visibility::symbol_visibility(node, source, lang),
+        })
+    }
+}
+
+fn is_require_call(declarator: Option<Node>, source: &str) -> bool {
+    let value = declarator.and_then(|d| d.child_by_field_name("value"));
+    match value {
+        Some(v) if v.kind() == "call_expression" => {
+            v.child_by_field_name("function")
+                .and_then(|f| f.utf8_text(source.as_bytes()).ok())
+                == Some("require")
+        }
+        Some(v) if v.kind() == "member_expression" => {
+            v.child_by_field_name("object").is_some_and(|obj| {
+                obj.kind() == "call_expression"
+                    && obj
+                        .child_by_field_name("function")
+                        .and_then(|f| f.utf8_text(source.as_bytes()).ok())
+                        == Some("require")
+            })
+        }
+        _ => false,
+    }
+}
+
+fn java_field_is_static_final(node: Node, source: &str) -> bool {
+    let modifiers = match node.children(&mut node.walk()).find(|c| c.kind() == "modifiers") {
+        Some(m) => m,
+        None => return false,
+    };
+    let mut has_static = false;
+    let mut has_final = false;
+    let mut cursor = modifiers.walk();
+    for child in modifiers.children(&mut cursor) {
+        match child.utf8_text(source.as_bytes()).ok() {
+            Some("static") => has_static = true,
+            Some("final") => has_final = true,
+            _ => {}
+        }
+    }
+    has_static && has_final
+}
+
+/// If `node` is a Python module-level assignment that qualifies as a
+/// constant, return its left-hand identifier text. A type-annotated
+/// assignment always qualifies; otherwise the name must be ALL_CAPS or
+/// `__dunder__`.
+fn python_module_const_name<'a>(node: Node, source: &'a str) -> Option<&'a str> {
+    if node.parent().map(|p| p.kind()) != Some("module") {
+        return None;
+    }
+    let assignment = node
+        .named_children(&mut node.walk())
+        .find(|c| c.kind() == "assignment")?;
+    let name_text = assignment
+        .child_by_field_name("left")
+        .and_then(|n| n.utf8_text(source.as_bytes()).ok())
+        .unwrap_or("");
+
+    let has_type_annotation = {
+        let mut cursor = assignment.walk();
+        assignment.children(&mut cursor).any(|c| c.kind() == "type")
+    };
+    if has_type_annotation {
+        return Some(name_text);
+    }
+
+    let is_upper = !name_text.is_empty()
+        && name_text
+            .bytes()
+            .all(|b| b.is_ascii_uppercase() || b == b'_')
+        && name_text.bytes().any(|b| b.is_ascii_uppercase());
+    let is_dunder = name_text.starts_with("__") && name_text.ends_with("__");
+    (is_upper || is_dunder).then_some(name_text)
+}
+
+fn lua_rhs_is_function(node: Node) -> bool {
+    let assign = if node.kind() == "variable_declaration" {
+        node.named_children(&mut node.walk())
+            .find(|c| c.kind() == "assignment_statement")
+    } else {
+        Some(node)
+    };
+    let value_kind = assign
+        .and_then(|a| {
+            a.named_children(&mut a.walk())
+                .find(|c| c.kind() == "expression_list")
+        })
+        .and_then(|el| el.named_child(0))
+        .map(|v| v.kind());
+    value_kind == Some("function_definition")
+}
+
+fn is_simple_typedef_alias(node: Node) -> bool {
+    let type_child = match node.child_by_field_name("type") {
+        Some(t) => t,
+        None => return false,
+    };
+    if !matches!(
+        type_child.kind(),
+        "type_identifier" | "primitive_type" | "sized_type_specifier"
+    ) {
+        return false;
+    }
+    let declarator = match node.child_by_field_name("declarator") {
+        Some(d) => d,
+        None => return false,
+    };
+    matches!(declarator.kind(), "type_identifier" | "primitive_type")
+}
+
+fn is_c_header_guard(node: Node, source: &str, path: &Path) -> bool {
+    let ext = path.extension().and_then(|e| e.to_str()).unwrap_or("");
+    if !crate::classify::is_header_extension(ext) {
+        return false;
+    }
+    if node.child_by_field_name("value").is_some() {
+        return false;
+    }
+    let stem = match path.file_stem().and_then(|s| s.to_str()) {
+        Some(s) if !s.is_empty() => s.to_ascii_uppercase(),
+        _ => return false,
+    };
+    let name = match node.child_by_field_name("name") {
+        Some(n) => n
+            .utf8_text(source.as_bytes())
+            .unwrap_or("")
+            .to_ascii_uppercase(),
+        None => return false,
+    };
+    name.contains(&stem)
+}
+
+fn is_platform_type_define(node: Node, source: &str) -> bool {
+    let name = match node.child_by_field_name("name") {
+        Some(n) => n.utf8_text(source.as_bytes()).unwrap_or(""),
+        None => return false,
+    };
+    if !name.ends_with("_TYPE") {
+        return false;
+    }
+    let value = match node.child_by_field_name("value") {
+        Some(v) => v.utf8_text(source.as_bytes()).unwrap_or(""),
+        None => return false,
+    };
+    let value = value.trim();
+    !value.is_empty()
+        && value.split_whitespace().all(|token| {
+            token.starts_with(|c: char| c.is_ascii_alphabetic() || c == '_')
+                && token.chars().all(|c| c.is_ascii_alphanumeric() || c == '_')
+        })
+}
+
+// ---------------------------------------------------------------------------
+// Top-level state built once per file
+// ---------------------------------------------------------------------------
+
+/// Collect the names of top-level `mod foo { ... }` / `mod foo;` declarations
+/// at the crate root (Rust only). Used to flag `pub use foo::...` as a
+/// re-export when `foo` is a local submodule.
+fn collect_top_level_mod_names<'t>(root: Node<'t>, source: &'t str, lang: Lang) -> Vec<&'t str> {
+    if lang != Lang::Rust {
+        return Vec::new();
+    }
+    let mut out = Vec::new();
+    let mut cursor = root.walk();
+    for child in root.children(&mut cursor) {
+        if child.kind() == "mod_item"
+            && let Some(name) = child.child_by_field_name("name")
+            && let Ok(text) = name.utf8_text(source.as_bytes())
+        {
+            out.push(text);
+        }
+    }
+    out
+}
+
+/// Strip `pub` (including scoped forms like `pub(crate)` and
+/// `pub(in foo::bar)`), `use`, and trailing `;` from a Rust `use`
+/// declaration's source text, yielding just the module path
+/// (e.g. `crate::foo::Bar`).
+fn rust_use_path(text: &str) -> &str {
+    let trimmed = text.trim();
+    let rest = trimmed.strip_prefix("pub").unwrap_or(trimmed);
+    let rest = if let Some(after_paren) = rest
+        .strip_prefix('(')
+        .and_then(|inner| inner.find(')').map(|end| &inner[end + 1..]))
+    {
+        after_paren
+    } else {
+        rest
+    };
+    let rest = rest.trim_start();
+    let rest = rest.strip_prefix("use").unwrap_or(rest).trim_start();
+    rest.trim_end_matches(';').trim()
+}
+
+fn is_rust_reexport(node: Node, source: &str, mod_names: &[&str]) -> bool {
+    if !visibility::import_visibility(node, source, Lang::Rust) {
+        return false;
+    }
+    let path = rust_use_path(node.utf8_text(source.as_bytes()).unwrap_or(""));
+    if path.starts_with("crate::") || path.starts_with("self::") || path.starts_with("super::") {
+        return true;
+    }
+    if let Some(first_segment) = path.split("::").next() {
+        return mod_names.contains(&first_segment);
+    }
+    false
+}
+
+fn is_first_party_import(node: Node, source: &str, lang: Lang) -> bool {
     let text = node.utf8_text(source.as_bytes()).unwrap_or("");
     match lang {
         Lang::Rust => {
-            let path = text
-                .trim()
-                .strip_prefix("pub")
-                .unwrap_or(text.trim())
-                .trim_start();
-            let path = path
-                .strip_prefix("use")
-                .unwrap_or(path)
-                .trim_start();
+            let path = rust_use_path(text);
             path.starts_with("crate::")
                 || path.starts_with("self::")
                 || path.starts_with("super::")
@@ -232,11 +716,7 @@ fn is_first_party_import(node: tree_sitter::Node, source: &str, lang: Lang) -> b
                     || after.starts_with("'../")
                     || after.starts_with("\"../")
             } else {
-                let rest = text
-                    .trim()
-                    .strip_prefix("import")
-                    .unwrap_or("")
-                    .trim();
+                let rest = text.trim().strip_prefix("import").unwrap_or("").trim();
                 rest.starts_with("'./")
                     || rest.starts_with("\"./")
                     || rest.starts_with("'../")
@@ -254,24 +734,41 @@ fn is_first_party_import(node: tree_sitter::Node, source: &str, lang: Lang) -> b
     }
 }
 
+// ---------------------------------------------------------------------------
+// Range construction
+// ---------------------------------------------------------------------------
+
+fn compute_end_line(node: Node) -> usize {
+    let end = node.end_position();
+    if end.column == 0 && end.row > node.start_position().row {
+        end.row
+    } else {
+        end.row + 1
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Post-extraction filters
+// ---------------------------------------------------------------------------
+
 /// Cross-kind nesting filter: drop any item whose node byte range is fully
-/// contained within another item's node byte range.
-fn filter_nested_items(items: &mut Vec<ExtractedItem<'_>>) {
+/// contained within another item's node byte range (D4).
+fn filter_nested_items(items: &mut Vec<(TsGroupKey, TsItem<'_>)>) {
     if items.len() <= 1 {
         return;
     }
 
     items.sort_by(|a, b| {
-        a.node
+        a.1.node
             .start_byte()
-            .cmp(&b.node.start_byte())
-            .then(b.node.end_byte().cmp(&a.node.end_byte()))
+            .cmp(&b.1.node.start_byte())
+            .then(b.1.node.end_byte().cmp(&a.1.node.end_byte()))
     });
 
     let mut keep = vec![true; items.len()];
     let mut stack: Vec<(usize, usize)> = Vec::new();
 
-    for (i, item) in items.iter().enumerate() {
+    for (i, (_, item)) in items.iter().enumerate() {
         let start = item.node.start_byte();
         let end = item.node.end_byte();
 
@@ -284,10 +781,12 @@ fn filter_nested_items(items: &mut Vec<ExtractedItem<'_>>) {
         }
 
         if let Some(&(parent_start, parent_end)) = stack.last()
-            && start >= parent_start && end <= parent_end {
-                keep[i] = false;
-                continue;
-            }
+            && start >= parent_start
+            && end <= parent_end
+        {
+            keep[i] = false;
+            continue;
+        }
 
         stack.push((start, end));
     }
@@ -303,52 +802,176 @@ fn filter_nested_items(items: &mut Vec<ExtractedItem<'_>>) {
     }
     items.truncate(write);
 
-    items.sort_by_key(|i| i.start_line);
+    items.sort_by_key(|(_, item)| item.start_line());
 }
 
-/// Handles cases like Lua's `local x = {} ; x.foo = bar` where
-/// two independent items share a source line.
-fn dedup_line_overlaps(items: &mut Vec<ExtractedItem<'_>>) {
+/// Drop items whose start line falls inside a previous item's range.
+/// Handles e.g. Lua's `local x = {}; x.foo = bar` (two independent items on one line).
+fn dedup_line_overlaps(items: &mut Vec<(TsGroupKey, TsItem<'_>)>) {
     if items.len() <= 1 {
         return;
     }
-    items.sort_by_key(|i| (i.start_line, i.node.start_byte()));
+    items.sort_by_key(|(_, i)| (i.start_line(), i.node.start_byte()));
     let mut max_end: usize = 0;
     let mut first = true;
-    items.retain(|item| {
-        if first || item.start_line >= max_end {
+    items.retain(|(_, item)| {
+        if first || item.start_line() >= max_end {
             max_end = item.end_line;
             first = false;
             true
         } else {
-            // A dropped item may extend further than the kept one.
             max_end = max_end.max(item.end_line);
             false
         }
     });
 }
 
-/// Some tree-sitter grammars (e.g., Markdown) capture only the heading line,
-/// not the body content between headings. Extend each Section's end_line to
-/// the next Section's start (or EOF).
-fn extend_section_ranges(items: &mut [ExtractedItem<'_>], source: &str) {
-    if !items.iter().any(|i| i.kind == ItemKind::Section) {
+/// Stretch Heading items whose grammar only captures the heading line
+/// forward to the next heading's start (or EOF).
+fn extend_section_ranges(items: &mut [(TsGroupKey, TsItem<'_>)], source: &str) {
+    let is_heading = |k: &TsGroupKey| matches!(k, TsGroupKey::Heading { .. });
+    if !items.iter().any(|(k, _)| is_heading(k)) {
         return;
     }
     let total_lines = source.lines().count();
     let section_indices: Vec<usize> = items
         .iter()
         .enumerate()
-        .filter(|(_, i)| i.kind == ItemKind::Section)
+        .filter(|(_, (k, _))| is_heading(k))
         .map(|(idx, _)| idx)
         .collect();
 
     for (pos, &idx) in section_indices.iter().enumerate() {
         let next_start = if pos + 1 < section_indices.len() {
-            items[section_indices[pos + 1]].start_line
+            items[section_indices[pos + 1]].1.start_line()
         } else {
             total_lines
         };
-        items[idx].end_line = items[idx].end_line.max(next_start);
+        let cur = items[idx].1.end_line;
+        items[idx].1.end_line = cur.max(next_start);
+    }
+}
+
+/// Drop duplicate overloads (C decl+defn, TS overload signatures) and
+/// duplicate type declarations (Rust cfg'd dupes, etc.).
+fn dedup_overloads(items: &mut Vec<(TsGroupKey, TsItem<'_>)>, lang: Lang, source: &str) {
+    if !matches!(lang, Lang::Rust | Lang::C | Lang::JsTs) {
+        return;
+    }
+    let mut seen: HashSet<(&str, std::mem::Discriminant<TsGroupKey>)> = HashSet::new();
+    let mut to_remove = Vec::new();
+    let mut prev: Option<(&str, std::mem::Discriminant<TsGroupKey>)> = None;
+
+    for (i, (key, item)) in items.iter().enumerate() {
+        let ident = item_identifier(item.node, source);
+        let tag = discriminant(key);
+
+        if let Some((pname, ptag)) = prev
+            && pname == ident
+            && ptag == tag
+        {
+            to_remove.push(i - 1);
+            continue;
+        }
+        if matches!(
+            key,
+            TsGroupKey::StructName { .. }
+                | TsGroupKey::EnumName { .. }
+                | TsGroupKey::TypeAliasName { .. }
+        ) && !seen.insert((ident, tag))
+        {
+            to_remove.push(i);
+            continue;
+        }
+        prev = Some((ident, tag));
+    }
+
+    to_remove.sort_unstable();
+    to_remove.dedup();
+    for idx in to_remove.into_iter().rev() {
+        items.remove(idx);
+    }
+}
+
+fn item_identifier<'a>(node: Node, source: &'a str) -> &'a str {
+    if let Some(name_node) = node.child_by_field_name("name")
+        && let Ok(text) = name_node.utf8_text(source.as_bytes())
+    {
+        return text.trim();
+    }
+    if let Some(decl) = node.child_by_field_name("declarator") {
+        let found = ast::find_descendant_of_kind(decl, "type_identifier")
+            .or_else(|| ast::find_descendant_of_kind(decl, "identifier"));
+        if let Some(n) = found
+            && let Ok(text) = n.utf8_text(source.as_bytes())
+        {
+            return text.trim();
+        }
+    }
+    if node.kind() == "lexical_declaration" {
+        let mut cursor = node.walk();
+        if let Some(vd) = node
+            .children(&mut cursor)
+            .find(|c| c.kind() == "variable_declarator")
+            && let Some(name_node) = vd.child_by_field_name("name")
+            && let Ok(text) = name_node.utf8_text(source.as_bytes())
+        {
+            return text.trim();
+        }
+    }
+    if node.kind() == "impl_item"
+        && let Ok(text) = node.utf8_text(source.as_bytes())
+    {
+        return text.lines().next().unwrap_or("").trim();
+    }
+    node.utf8_text(source.as_bytes())
+        .map(|s| s.lines().next().unwrap_or("").trim())
+        .unwrap_or("")
+}
+
+#[cfg(test)]
+mod rust_use_path_tests {
+    use super::rust_use_path;
+
+    #[test]
+    fn plain_use() {
+        assert_eq!(rust_use_path("use crate::foo::Bar;"), "crate::foo::Bar");
+    }
+
+    #[test]
+    fn pub_use() {
+        assert_eq!(rust_use_path("pub use crate::foo::Bar;"), "crate::foo::Bar");
+    }
+
+    #[test]
+    fn pub_crate_use() {
+        assert_eq!(
+            rust_use_path("pub(crate) use crate::foo::Bar;"),
+            "crate::foo::Bar"
+        );
+    }
+
+    #[test]
+    fn pub_super_use() {
+        assert_eq!(
+            rust_use_path("pub(super) use self::impls::Thing;"),
+            "self::impls::Thing"
+        );
+    }
+
+    #[test]
+    fn pub_in_path_use() {
+        assert_eq!(
+            rust_use_path("pub(in crate::api) use self::impls::*;"),
+            "self::impls::*"
+        );
+    }
+
+    #[test]
+    fn use_with_braces() {
+        assert_eq!(
+            rust_use_path("pub(crate) use crate::{a, b};"),
+            "crate::{a, b}"
+        );
     }
 }
