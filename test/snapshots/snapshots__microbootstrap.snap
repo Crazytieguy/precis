@@ -361,8 +361,6 @@ examples/litestar_app.py
     18→async def hello_world() -> dict[str, str]:
     22→def create_app() -> litestar.Litestar:
 
-logo.svg
-
 package.json
      2→  "name": "microbootstrap-docs",
      3→  "version": "1.0.0",
@@ -403,6 +401,6 @@ tests/conftest.py
     46→class MockSentryTransport …
     47→    def capture_envelope …
 
-tests/bootstrappers/
+tests/bootstrappers/__init__.py
 
 tests/instruments/

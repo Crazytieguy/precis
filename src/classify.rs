@@ -397,7 +397,7 @@ pub fn is_deprioritized_file(relative_path: &Path, filename: &str) -> bool {
 
     if matches!(
         ext,
-        Some("css" | "scss" | "sass" | "less" | "html" | "htm" | "svg")
+        Some("css" | "scss" | "sass" | "less" | "html" | "htm")
     ) {
         return true;
     }
@@ -512,7 +512,7 @@ fn is_binary_extension(ext: &str) -> bool {
         ext,
         // Images
         "png" | "jpg" | "jpeg" | "gif" | "bmp" | "ico" | "webp" | "tiff" | "tif"
-        | "psd" | "ai" | "eps" | "raw" | "cr2" | "nef" | "heic" | "avif"
+        | "psd" | "ai" | "eps" | "raw" | "cr2" | "nef" | "heic" | "avif" | "svg"
         // Fonts
         | "ttf" | "otf" | "woff" | "woff2" | "eot"
         // Audio / video
