@@ -221,3 +221,21 @@ Two contributing causes:
 1. **Depth penalty on deep monorepo structures.** The middleware files at `packages/app-server/src/modules/app/middlewares/` have effective_depth 4 (after `packages` and `src` are normalized), yielding depth_factor 0.4. Their public functions get effective value 0.4 — enough in isolation, but uncompetitive against the volume of shallower content across 7 packages.
 
 2. **Budget redistribution without architectural weighting.** The old output over-allocated to `packages/app-client/` (~230 lines, mostly shadcn-solid UI components). The new output correctly reduced that, but the freed budget spread evenly across all packages (more crypto, CLI, and lib internals) rather than flowing to the server. The result: broader coverage with no single package covered deeply enough to convey its architecture. The server — which defines the entire REST API, storage abstraction, and auth flow — is the biggest casualty.
+
+## 15. Private function bodies shown instead of class/method docstrings (regression)
+
+**Affected snapshots:** htmy_renderer
+
+The new output shows full implementation bodies of private methods while omitting class docstrings and public method docstrings that the pre-rewrite output showed. The net effect is ~79 lines of function bodies replacing ~96 lines of docstrings — a strict loss of understanding per token.
+
+**baseline.py** is the clearest example. The old output showed the `Renderer` class docstring (explaining it's the baseline renderer, when to use it, and how it relates to other renderers), plus first-line docstrings for `render()`, `stream()`, and `__init__()`. The new output drops all of these and instead shows the full bodies of `_stream` (23 lines) and `_stream_one` (32 lines) — private methods whose logic is standard recursive rendering dispatch (isinstance checks, iteration).
+
+**default.py** similarly loses the `Renderer` class docstring ("resolves component trees by converting them to a linked list"), the `_ComponentRenderer` docstring, and method docstrings for `__init__`/`render`/`run`. In their place, the full body of the module-level `_render_component` function is shown (15 lines of similar isinstance dispatch logic).
+
+**typing.py** loses the `RendererType` and `StreamingRendererType` protocol class docstrings and method docstrings. Instead shows full bodies of `is_renderer` (3 lines: `getattr(obj, "render", None)`) and `is_streaming_renderer` (6 lines) — trivial type guards.
+
+**context.py** loses the `RendererContext` class docstring and the complete `from_context` method body (which was 16 lines in a 28-line file — the old output reasonably showed the whole thing). The new output shows only 3 lines for this file.
+
+The old output built a clear mental model: two renderer classes (baseline for debugging/benchmarking, default for production), a context utility, protocol types. The new output shows how dispatch loops work but not what the classes are for.
+
+The heuristic values suggest this shouldn't happen — `ClassDocFirst` (base 0.4, public) should beat private `FunctionBody` (base 0.2 × visibility 0.3 = effective 0.06). Something in the scheduling is causing private function bodies to win budget over public class documentation.
