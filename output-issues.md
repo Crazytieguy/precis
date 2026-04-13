@@ -66,7 +66,7 @@ The new output just shows `macro_rules! bail …` and `macro_rules! anyhow …`.
 
 ## 6. README body content dropped — only headings shown
 
-**Affected snapshots:** bareiron, commander, d2ts, d2ts_d2ts, log, mcphost
+**Affected snapshots:** bareiron, commander, d2ts, d2ts_d2ts, log, mcphost, mdbook_guide_src
 
 The output shows README.md with only headings — zero body content. The pre-rewrite output showed introductory sections that tell the reader what the project is.
 
@@ -75,6 +75,8 @@ In bareiron, the full introductory section (lines 1-11) was shown: project descr
 In commander, the pre-rewrite showed lines 1-45: the description ("The complete solution for node.js command-line interfaces"), a language-switch note, and the full table of contents. The new output shows only headings — a reader can see the section structure but not what Commander.js is or does.
 
 In d2ts_d2ts, the pre-rewrite showed lines 28-32: "D2TS is a TypeScript implementation of differential dataflow," what it does (incremental pipelines), and ElectricSQL integration. The new output shows 16 headings (h1 through h3) but zero body text.
+
+In mdbook_guide_src, the root README is the mdBook project introduction. The pre-rewrite showed lines 1-33: the full description ("**mdBook** is a command line tool to create books with Markdown"), the feature list (search, syntax highlighting, themes, preprocessors, backends), and a guide introduction. The new output shows only `# Introduction`, `## Contributing`, `## License`. Meanwhile, nested READMEs (cli/, for_developers/, format/, guide/) all get their body content, and the budget goes to deep h3/h4 headings across reference pages (format/configuration/renderers.md gets ~12 heading lines, format/markdown.md gets ~10).
 
 This is the highest-value content in a repo for building a mental model. A reader seeing only headings knows the structure but not the purpose.
 
