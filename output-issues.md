@@ -239,3 +239,63 @@ The new output shows full implementation bodies of private methods while omittin
 The old output built a clear mental model: two renderer classes (baseline for debugging/benchmarking, default for production), a context utility, protocol types. The new output shows how dispatch loops work but not what the classes are for.
 
 The heuristic values suggest this shouldn't happen — `ClassDocFirst` (base 0.4, public) should beat private `FunctionBody` (base 0.2 × visibility 0.3 = effective 0.06). Something in the scheduling is causing private function bodies to win budget over public class documentation.
+
+## 16. Duplicated `#define` macros from conditional compilation branches
+
+**Affected snapshots:** krep
+
+In `krep.c`, SIMD feature flag macros are defined in multiple `#ifdef`/`#elif`/`#else` branches:
+
+```c
+#if defined(__AVX512F__) && defined(__AVX512BW__)
+#define KREP_USE_AVX512 1
+#define KREP_USE_AVX2 1
+#define KREP_USE_SSE42 1
+#elif defined(__AVX2__)
+#define KREP_USE_AVX512 0
+#define KREP_USE_AVX2 1
+#define KREP_USE_SSE42 1
+#else
+#define KREP_USE_AVX512 0
+#define KREP_USE_AVX2 0
+#endif
+```
+
+Tree-sitter captures every `preproc_def` node regardless of which preprocessor branch it's in. The output shows the same macro name 2-3 times:
+
+```
+    49→#define KREP_USE_AVX512 …
+    50→#define KREP_USE_AVX2 …
+    51→#define KREP_USE_SSE42 …
+    54→#define KREP_USE_AVX512 …
+    55→#define KREP_USE_AVX2 …
+    56→#define KREP_USE_SSE42 …
+    58→#define KREP_USE_AVX512 …
+    59→#define KREP_USE_AVX2 …
+    66→#define KREP_USE_SSE42 …
+    73→#define KREP_USE_NEON …
+```
+
+10 lines for 4 unique macro names. A reader would be confused about why the same symbol is defined three times. The pre-rewrite output didn't show these at all, instead showing more informative constants (`MAX_PATTERN_LENGTH 1024`, `LIKELY(x)`).
+
+## 17. C header file budget reduced — key API declarations and struct bodies lost (regression)
+
+**Affected snapshots:** krep
+
+The rewrite dramatically shifted budget from `krep.h` (321 lines, the API header) to `krep.c` (5287 lines, the implementation). krep.h went from ~111 output lines to ~62, while krep.c went from ~15 to ~54. The result is a strictly worse mental model of the project.
+
+**Struct bodies lost.** The pre-rewrite output showed the complete `search_params_t` struct (30 lines) with all fields — pattern fields, search options (`case_sensitive`, `use_regex`, `whole_word`, etc.), compiled regex pointer, Aho-Corasick trie pointer, max_count. This is the single most important type in the codebase — every search function takes it. Similarly, `thread_data_t` (19 lines) and `match_position_t` (5 lines) were shown with all fields. The new output truncates all of these to just `typedef struct search_params …`.
+
+**15 function declarations lost.** The pre-rewrite output showed all 30 function declarations from krep.h. The new output shows only 15. Missing:
+
+- `search_file`, `search_string` — two of the three public API functions
+- `boyer_moore_search`, `kmp_search`, `regex_search`, `memchr_search`, `memchr_short_search` — the core search algorithm declarations
+- `simd_sse42_search`, `simd_avx2_search`, `simd_avx512_search` — SIMD variants
+- `thread_pool_submit`, `thread_pool_wait_all` — thread pool API
+- `match_result_add`, `match_result_free`, `match_result_merge` — result management
+
+These are replaced by `@brief` doc comment blocks (~12 lines of doc + ellipsis for functions already named) and section header comments (`/* --- Helper Functions --- */`).
+
+**The budget went to redundant krep.c content.** krep.c gained ~39 output lines: 30 `#define` lines (including 10 duplicated SIMD flags from issue #16) and function names that largely duplicate krep.h declarations. A reader seeing `1389→uint64_t regex_search …` in krep.c gains nothing if `regex_search` is already declared in krep.h — and loses information if the header declaration was dropped to make room.
+
+Root cause: the 2.5× `header_factor` doesn't compensate for krep.c's 16:1 line count advantage. krep.c's many ConstName groups (30 `#define` items at base_value 1.0 with sublinear scaling) pull substantial budget. In the old output, krep.c got 15 lines (2 constants + 2 gitignore struct bodies) and krep.h got 111 — this was the right distribution for a C project where the header IS the API.
