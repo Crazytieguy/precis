@@ -31,7 +31,7 @@ README.md
    911→Credits and license
 
 sds.h
-    36→#define SDS_MAX_PREALLOC …
+    36→#define SDS_MAX_PREALLOC (1024*1024)
     43→typedef char *sds …
     45→/* Note: sdshdr5 is never used, we just access the flags byte directly.
     46→ * However is here to document the layout of type 5 SDS strings. */
@@ -63,16 +63,16 @@ sds.h
     72→    unsigned char flags; /* 3 lsb of type, 5 unused bits */
     73→    char buf[];
     74→};
-    76→#define SDS_TYPE_5 …
-    77→#define SDS_TYPE_8 …
-    78→#define SDS_TYPE_16 …
-    79→#define SDS_TYPE_32 …
-    80→#define SDS_TYPE_64 …
-    81→#define SDS_TYPE_MASK …
-    82→#define SDS_TYPE_BITS …
-    83→#define SDS_HDR_VAR …
-    84→#define SDS_HDR …
-    85→#define SDS_TYPE_5_LEN …
+    76→#define SDS_TYPE_5  0
+    77→#define SDS_TYPE_8  1
+    78→#define SDS_TYPE_16 2
+    79→#define SDS_TYPE_32 3
+    80→#define SDS_TYPE_64 4
+    81→#define SDS_TYPE_MASK 7
+    82→#define SDS_TYPE_BITS 3
+    83→#define SDS_HDR_VAR(T,s) struct sdshdr##T *sh = (void*)((s)-(sizeof(struct sdshdr##T)));
+    84→#define SDS_HDR(T,s) ((struct sdshdr##T *)((s)-(sizeof(struct sdshdr##T))))
+    85→#define SDS_TYPE_5_LEN(f) ((f)>>SDS_TYPE_BITS)
    197→static inline void sdssetalloc(sds s, size_t newlen) {
    218→sds sdsnewlen(const void *init, size_t initlen);
    219→sds sdsnew(const char *init);
@@ -102,13 +102,13 @@ sdsalloc.h
     36→ * Just define the following defines to what you want to use. Also add
     37→ * the include of your alternate allocator if needed (not needed in order
     38→ * to use the default libc allocator). */
-    40→#define s_malloc …
-    41→#define s_realloc …
-    42→#define s_free …
+    40→#define s_malloc malloc
+    41→#define s_realloc realloc
+    42→#define s_free free
 
 testhelp.h
-    44→#define test_cond …
-    48→#define test_report …
+    44→#define test_cond(descr,_c) do { \
+    48→#define test_report() do { \
 
 Makefile
 
@@ -122,12 +122,8 @@ sds.c
    154→sds sdsnew(const char *init) {
    440→sds sdscpy(sds s, const char *t) {
    444→/* Helper for sdscatlonglong() doing the actual number -> string
-   445→ * conversion. 's' must point to a string with room for at least
-   446→ * SDS_LLSTR_SIZE bytes.
-   447→ *
-   448→ * The function returns the length of the null-terminated string
-   449→ * representation stored at 's'. */
-   450→#define SDS_LLSTR_SIZE …
+      →…
+   450→#define SDS_LLSTR_SIZE 21
    451→int sdsll2str(char *s, long long value) {
    494→int sdsull2str(char *s, unsigned long long v) {
    526→sds sdsfromlonglong(long long value) {
@@ -145,6 +141,6 @@ sds.c
   1138→void sds_free(void *ptr) { s_free(ptr); }
   1142→#include "testhelp.h"
   1143→#include "limits.h"
-  1145→#define UNUSED …
+  1145→#define UNUSED(x) (void)(x)
   1146→int sdsTest(void) {
   1325→int main(void) {

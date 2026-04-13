@@ -3,7 +3,7 @@ source: tests/snapshots.rs
 expression: output
 ---
 sample.cpp
-     7→#define MAX_TOKENS …
+     7→#define MAX_TOKENS 1024
     12→class Token …
     17→    Kind kind() const { return kind_; }
     18→    int start() const { return start_; }

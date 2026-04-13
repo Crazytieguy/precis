@@ -188,6 +188,7 @@ fn classify<'t>(
         "macro_definition" => Some(MacroName {
             documented,
             public: visibility::macro_visibility(node, source, lang),
+            preproc: false,
         }),
         "mod_item" => None,
 
@@ -319,11 +320,13 @@ fn classify<'t>(
             Some(MacroName {
                 documented,
                 public: visibility::macro_visibility(node, source, lang),
+                preproc: true,
             })
         }
         "preproc_function_def" => Some(MacroName {
             documented,
             public: visibility::macro_visibility(node, source, lang),
+            preproc: true,
         }),
         "preproc_include" => Some(Import {
             first_party: is_first_party_import(node, source, lang),

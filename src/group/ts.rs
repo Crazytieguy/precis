@@ -71,7 +71,7 @@ pub enum TsGroupKey {
     ConstDocRest,
 
     // Macros
-    MacroName { documented: bool, public: bool },
+    MacroName { documented: bool, public: bool, preproc: bool },
     MacroDocFirst,
     MacroDocRest,
 
@@ -621,8 +621,7 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
 
     match key {
         FunctionName { .. } | StructName { .. } | EnumName { .. } | ClassName { .. }
-        | InterfaceName { .. } | TraitName { .. } | TypeAliasName { .. } | ConstName { .. }
-        | MacroName { .. } => {
+        | InterfaceName { .. } | TraitName { .. } | TypeAliasName { .. } | ConstName { .. } => {
             let line_idx = start_line;
             let line = lines.get(line_idx).copied().unwrap_or("");
             let prefix = find_name_end_prefix(line, item.node, start_line);
@@ -630,6 +629,22 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
                 line: line_idx as u32,
                 content: prefix,
             }]
+        }
+
+        MacroName { preproc, .. } => {
+            let line = lines.get(start_line).copied().unwrap_or("");
+            if *preproc {
+                vec![LineEntry::Complete {
+                    line: start_line as u32,
+                    content: line,
+                }]
+            } else {
+                let prefix = find_name_end_prefix(line, item.node, start_line);
+                vec![LineEntry::Truncated {
+                    line: start_line as u32,
+                    content: prefix,
+                }]
+            }
         }
 
         ImplBlock { .. } => {

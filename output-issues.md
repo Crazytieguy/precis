@@ -100,28 +100,6 @@ In vaul, the README is a 3-line deprecation notice (blockquote, no headings): "T
 
 This is the highest-value content in a repo for building a mental model. A reader seeing only headings knows the structure but not the purpose.
 
-## 7. C `#define` values truncated while verbose comments consume budget
-
-**Affected snapshots:** bareiron, neco, soluna, sqlite_vec
-
-In bareiron's `include/globals.h`, the output shows comment lines above each `#define` but truncates the actual values:
-```
-    18→// TCP port, Minecraft's default is 25565
-    19→#define PORT …
-    34→// Max render distance, determines how many chunks to send
-    35→#define VIEW_DISTANCE …
-```
-
-The pre-rewrite showed values directly: `#define PORT 25565`, `#define VIEW_DISTANCE 2`. The pre-rewrite approach is more compact (one line vs two) and often more informative — `VIEW_DISTANCE 2` instantly conveys the server's minimalist constraints, while `#define VIEW_DISTANCE …` tells you nothing beyond the name. globals.h uses ~80 output lines (~¼ of the 4000-token budget), much of it on comments that restate the `#define` name.
-
-In neco's `neco.h`, the 19 error codes and 6 time constants are all truncated:
-```
-   360→#define NECO_OK …
-   361→#define NECO_ERROR …
-   341→#define NECO_NANOSECOND …
-```
-
-The pre-rewrite showed complete lines with values and trailing doxygen descriptions: `#define NECO_OK 0 ///< Successful result (no error)`, `#define NECO_SECOND INT64_C(1000000000)`. For a C library, error codes ARE the error model — `NECO_OK 0` tells you success returns zero, `NECO_TIMEDOUT -10` tells you specific failure modes. The time constant values tell you the API uses nanoseconds. Truncating these to just names removes the most informative part of each line.
 
 ## 9. Type alias and const bodies missing from taxonomy (regression)
 
