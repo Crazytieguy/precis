@@ -175,9 +175,11 @@ The intro is the most valuable content in ARCHITECTURE.md — it's the "why" tha
 
 ## 11. CommonJS entry point rendered empty — require/exports not captured
 
-**Affected snapshots:** commander
+**Affected snapshots:** commander, semver_classes
 
 Commander's `index.js` (24 lines) is the library's entry point. It shows the module structure: which classes are imported from `lib/`, factory functions (`createCommand`, `createOption`, `createArgument`), and all exports. The pre-rewrite output showed the full file. The new output shows only the filename with zero content — the file appears completely empty.
+
+Semver's `classes/index.js` (7 lines) is the same pattern — `module.exports = { SemVer: require('./semver.js'), Range: require('./range.js'), Comparator: require('./comparator.js') }`. The pre-rewrite output showed this in full. The new output shows only the filename. This file is the single best summary of the module: three classes, their names, their source files.
 
 Root cause: the TypeScript tree-sitter query captures `import_statement` (ES6 imports) and `lexical_declaration` with an `identifier` name, but CommonJS patterns don't match:
 
