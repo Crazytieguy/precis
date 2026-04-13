@@ -1,13 +1,5 @@
 # Output quality issues
 
-## 1. Internal-plumbing files consume disproportionate budget
-
-**Affected snapshots:** anyhow
-
-Files like `ptr.rs` (46 lines), `backtrace.rs` (42 lines), and `wrapper.rs` (21 lines) are pure internal implementation with no public API surface, yet together they consume ~109 lines of output. `ptr.rs` shows `Own`, `Ref`, `Mut` raw pointer wrappers with every `Clone`/`Copy`/`Send`/`Sync` impl and every method — none of which a reader needs to understand anyhow. Similarly, `backtrace.rs` shows every `Debug` impl for internal types like `BacktraceFrame`, `BacktraceSymbol`, and `BytesOrWide`.
-
-This budget would be far better spent on public API signatures (see issue 2).
-
 
 ## 6. README body content dropped — only headings shown (partially fixed)
 

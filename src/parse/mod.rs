@@ -190,9 +190,16 @@ fn classify<'t>(
             documented,
             public: public(),
         }),
-        "impl_item" => Some(ImplBlock {
-            is_trait_impl: node.child_by_field_name("trait").is_some(),
-        }),
+        "impl_item" => {
+            let trait_node = node.child_by_field_name("trait");
+            let is_boilerplate = trait_node.is_some_and(|t| {
+                is_boilerplate_trait_impl(t, source)
+            });
+            Some(ImplBlock {
+                is_trait_impl: trait_node.is_some(),
+                is_boilerplate_trait: is_boilerplate,
+            })
+        }
         "type_item" => Some(TypeAliasName {
             documented,
             public: public(),
@@ -1164,6 +1171,43 @@ fn item_identifier<'a>(node: Node, source: &'a str) -> &'a str {
     node.utf8_text(source.as_bytes())
         .map(|s| s.lines().next().unwrap_or("").trim())
         .unwrap_or("")
+}
+
+fn is_boilerplate_trait_impl(trait_node: Node, source: &str) -> bool {
+    let name = trait_type_name(trait_node, source);
+    matches!(
+        name,
+        // Marker traits (no methods)
+        "Send" | "Sync" | "Unpin" | "UnwindSafe" | "RefUnwindSafe" | "Sized"
+        // Derive-like traits (mechanical implementations)
+        | "Copy" | "Clone" | "Debug" | "Display"
+        | "Default" | "Drop"
+        // Comparison traits (usually derived)
+        | "PartialEq" | "Eq" | "Hash" | "PartialOrd" | "Ord"
+        // Sealed trait pattern
+        | "Sealed"
+    )
+}
+
+fn trait_type_name<'a>(node: Node, source: &'a str) -> &'a str {
+    if node.kind() == "type_identifier" {
+        return node.utf8_text(source.as_bytes()).unwrap_or("");
+    }
+    if (node.kind() == "scoped_type_identifier" || node.kind() == "generic_type")
+        && let Some(name_node) = node.child_by_field_name("name")
+            .or_else(|| node.child_by_field_name("type"))
+    {
+        return trait_type_name(name_node, source);
+    }
+    node.utf8_text(source.as_bytes())
+        .unwrap_or("")
+        .split('<')
+        .next()
+        .unwrap_or("")
+        .rsplit("::")
+        .next()
+        .unwrap_or("")
+        .trim()
 }
 
 #[cfg(test)]

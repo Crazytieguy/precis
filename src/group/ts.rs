@@ -59,7 +59,7 @@ pub enum TsGroupKey {
     TraitDocRest,
 
     // Rust impl blocks
-    ImplBlock { is_trait_impl: bool },
+    ImplBlock { is_trait_impl: bool, is_boilerplate_trait: bool },
 
     // Type aliases
     TypeAliasName { documented: bool, public: bool },
@@ -157,7 +157,7 @@ impl TsGroupKey {
                 | ConstName { public: false, .. }
                 | MacroName { public: false, .. }
                 | Import { first_party: false, .. }
-                | ImplBlock { is_trait_impl: true }
+                | ImplBlock { is_trait_impl: true, .. }
         )
     }
 
@@ -180,7 +180,7 @@ impl TsGroupKey {
                 Import { first_party: false, reexport: r1 },
                 Import { first_party: true, reexport: r2 },
             ) => r1 == r2,
-            (ImplBlock { is_trait_impl: true }, ImplBlock { is_trait_impl: false }) => true,
+            (ImplBlock { is_trait_impl: true, .. }, ImplBlock { is_trait_impl: false, .. }) => true,
             _ => false,
         }
     }
@@ -300,9 +300,14 @@ pub fn children<'s>(g: &mut TsGroup<'s>, _ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
                 }));
             }
         }
-        ImplBlock { is_trait_impl } => {
-            // Design §4: trait impl methods are boilerplate.
-            let factor = if *is_trait_impl { 0.5 } else { 1.0 };
+        ImplBlock { is_trait_impl, is_boilerplate_trait } => {
+            let factor = if *is_boilerplate_trait {
+                0.15
+            } else if *is_trait_impl {
+                0.5
+            } else {
+                1.0
+            };
             spawn_method_children(&mut result, g, factor);
         }
         Import { first_party, reexport } => {

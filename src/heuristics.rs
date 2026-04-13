@@ -41,6 +41,7 @@ pub fn ts_base_value(key: &TsGroupKey, item_count: usize) -> f64 {
         TypeAliasName { .. } => 1.0,
         ConstName { .. } => 1.0,
         MacroName { .. } => 1.0,
+        ImplBlock { is_boilerplate_trait: true, .. } => 0.15,
         ImplBlock { .. } => 0.8,
         ModuleDocFirst => 1.0,
 
