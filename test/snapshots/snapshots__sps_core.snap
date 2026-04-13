@@ -3,6 +3,13 @@ source: test/fixtures.rs
 expression: output
 ---
 src/lib.rs
+     4→pub mod build;
+     5→pub mod check;
+     6→pub mod install;
+     7→pub mod pipeline;
+     8→pub mod uninstall;
+     9→pub mod upgrade; // New
+    11→pub mod utils; // New
 
 Cargo.toml
      1→[package]
@@ -44,6 +51,8 @@ src/build/env.rs
    495→fn filter_initial_environment(vars: &mut HashMap<String, String>) {
 
 src/build/mod.rs
+     1→pub mod compile;
+     2→pub mod env;
 
 src/check/installed.rs
     14→pub enum PackageType …
@@ -64,6 +73,8 @@ src/check/installed.rs
    143→) -> Result<Option<InstalledPackageInfo>> {
 
 src/check/mod.rs
+     1→pub mod installed;
+     2→pub mod update;
 
 src/check/update.rs
     20→use crate::check::installed::{InstalledPackageInfo, PackageType};
@@ -113,6 +124,10 @@ src/install/extract.rs
    619→fn extract_zip_archive …
 
 src/install/mod.rs
+    11→pub mod bottle;
+    12→pub mod cask;
+    13→pub mod devtools;
+    14→pub mod extract;
     17→pub fn get_formula_opt_path(formula: &Formula, config: &Config) -> PathBuf {
 
 src/utils/applescript.rs
@@ -124,6 +139,8 @@ src/utils/applescript.rs
     75→pub fn quit_app_gracefully(app_path: &Path) -> Result<()> {
 
 src/utils/mod.rs
+     2→pub mod applescript;
+     4→pub mod xattr;
 
 src/utils/xattr.rs
     11→fn get_timestamp_hex() -> String {
@@ -146,6 +163,8 @@ src/pipeline/engine.rs
     16→pub fn start_worker_pool_manager …
 
 src/pipeline/mod.rs
+     1→pub mod engine;
+     2→pub mod worker;
 
 src/pipeline/worker.rs
     18→use crate::check::installed::{InstalledPackageInfo, PackageType as CorePackageType};
@@ -188,43 +207,30 @@ src/uninstall/common.rs
    119→pub(crate) fn is_safe_path(path: &Path, home: &Path, config: &Config) -> bool {
 
 src/uninstall/formula.rs
-    10→pub fn uninstall_formula_artifacts …
+    10→pub fn uninstall_formula_artifacts(
+    11→    info: &InstalledPackageInfo,
+    12→    config: &Config,
+    13→    _options: &UninstallOptions, /* options currently unused for formula but kept for signature
+    14→                                  * consistency */
+    15→) -> Result<()> {
 
 src/uninstall/mod.rs
 
 src/upgrade/bottle.rs
     14→/// Upgrades a formula that is installed from a bottle.
       →…
-    20→pub async fn upgrade_bottle_formula(
-    21→    formula: &Formula,
-    22→    new_bottle_download_path: &Path,
-    23→    old_install_info: &InstalledPackageInfo,
-    24→    config: &Config,
-    25→    http_client: Arc<reqwest::Client>, /* Added for download_bottle if needed, though path is
-    26→                                        * pre-downloaded */
-    27→) -> SpsResult<PathBuf> {
+    20→pub async fn upgrade_bottle_formula …
 
 src/upgrade/cask.rs
     14→/// Upgrades a cask package using Homebrew's proven strategy.
-    15→pub async fn upgrade_cask_package(
-    16→    cask: &Cask,
-    17→    new_cask_download_path: &Path,
-    18→    old_install_info: &InstalledPackageInfo,
-    19→    config: &Config,
-    20→) -> SpsResult<()> {
+    15→pub async fn upgrade_cask_package …
 
 src/upgrade/mod.rs
 
 src/upgrade/source.rs
     13→/// Upgrades a formula that was/will be installed from source.
       →…
-    19→pub async fn upgrade_source_formula(
-    20→    formula: &Formula,
-    21→    new_source_download_path: &Path,
-    22→    old_install_info: &InstalledPackageInfo,
-    23→    config: &Config,
-    24→    all_installed_dependency_paths: &[PathBuf], // For build environment
-    25→) -> SpsResult<PathBuf> {
+    19→pub async fn upgrade_source_formula …
 
 src/install/cask/dmg.rs
     12→pub fn mount_dmg …
@@ -243,7 +249,6 @@ src/install/cask/helpers.rs
     75→pub fn cleanup_empty_parent_dirs_in_private_store(start_path: &Path, stop_at: &Path) {
 
 src/install/cask/mod.rs
-    22→use crate::install::extract;
     25→pub struct CaskInstallManifest …
     36→/// Returns the path to the cask's version directory in the private store.
     37→pub fn sps_private_cask_version_dir(cask: &Cask, config: &Config) -> PathBuf {

@@ -17,17 +17,17 @@ Cargo.toml
     12→syn.workspace = true
 
 src/expand.rs
+     1→mod create;
+     2→mod fields;
+     3→mod filters;
+     4→mod model;
+     5→mod query;
+     6→mod relation;
+     7→mod schema;
+     8→mod update;
+     9→mod util;
     13→use crate::schema::Model;
     18→struct Expand …
-    19→    /// The model being expanded
-    20→    model: &'a Model,
-    21→
-    22→    /// Model filter methods
-    23→    filters: Vec<Filter>,
-    24→
-    25→    /// Path prefix for toasty types
-    26→    toasty: TokenStream,
-    27→}
     29→impl Expand<'_> …
     30→    fn expand(&self) -> TokenStream {
     49→pub(super) fn root_model(model: &Model) -> TokenStream {
@@ -35,10 +35,26 @@ src/expand.rs
    151→fn wrap_in_const(code: TokenStream) -> TokenStream {
 
 src/lib.rs
+     1→mod expand;
+     2→mod schema;
      6→pub fn generate_model(input: TokenStream) -> syn::Result<TokenStream> {
     13→pub fn generate_embed(input: TokenStream) -> syn::Result<TokenStream> {
 
 src/schema.rs
+     1→mod auto;
+     4→mod belongs_to;
+     7→mod error;
+    10→mod field;
+    13→mod fk;
+    16→mod has_many;
+    19→mod has_one;
+    22→mod index;
+    25→mod key_attr;
+    28→mod model;
+    31→mod model_attr;
+    34→mod name;
+    37→mod pk;
+    40→mod column;
 
 src/expand/create.rs
      1→use super::{util, Expand};
@@ -153,9 +169,7 @@ src/expand/update.rs
      8→    /// Generate update builder for embedded structs
      9→    pub(super) fn expand_embedded_update_builder(&self) -> TokenStream {
     27→    /// Expand all update methods for all fields.
-    28→    /// Generates both the field setter methods and the .with_field() method for each field.
-    29→    /// For embedded builders: uses self.projection.clone().push(index) and self.stmt.assignments
-    30→    /// For root builders: uses Projection::from_index(index) and self.stmt
+      →…
     31→    fn expand_update_field_methods(&self, is_embedded: bool) -> TokenStream {
    144→    pub(super) fn expand_update_builder(&self) -> TokenStream {
    203→    /// Generate match arms for reloading each model field from a sparse record value.
@@ -165,9 +179,6 @@ src/expand/update.rs
 
 src/expand/util.rs
      3→pub(crate) fn int(v: usize) -> TokenStream {
-     4→    use std::str::FromStr;
-     5→    TokenStream::from_str(&v.to_string()).expect("failed to parse int")
-     6→}
      8→/// Creates a new identifier prefixed with `__toasty_` to avoid name collisions
      9→/// with user-defined types in generated code (e.g., generic type parameters).
     10→pub(crate) fn ident(name: &str) -> syn::Ident {
@@ -335,4 +346,3 @@ src/schema/pk.rs
      2→pub(crate) struct PrimaryKey …
 
 CONTEXT.md
-     1→# toasty-codegen Component Context

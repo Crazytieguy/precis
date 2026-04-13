@@ -260,12 +260,12 @@ No simple heuristic detects structural mirrors in general, but the pattern is co
 
 In `src/install/cask/artifacts/`, 21 of 24 `.rs` files are shown as bare filenames (no content). These files follow a uniform pattern — each contains a single `pub fn install_X` function — so once the pattern is clear from 2-3 examples, additional bare filenames add no understanding. Collectively they consume ~42 tokens for information already implied by the directory structure.
 
-Meanwhile, structural files that orient the reader on crate organization are shown empty:
+Meanwhile, structural files that orient the reader on crate organization were shown empty (partially fixed: `mod_item` declarations are now captured as Import items, so lib.rs and mod.rs files show their `pub mod` declarations in sps_core):
 
-- `src/lib.rs` (crate root, 20 lines) — declares all top-level modules (`pub mod build/check/install/pipeline/uninstall/upgrade/utils`) and re-exports `UninstallOptions`. Shown with no content.
-- 6 `mod.rs` files (`build`, `check`, `pipeline`, `uninstall`, `upgrade`, `utils`) — each contains `pub mod` declarations. All shown as bare filenames.
+- `src/lib.rs` (crate root, 20 lines) — now shows all top-level `pub mod` declarations ✓
+- 6 `mod.rs` files (`build`, `check`, `pipeline`, `uninstall`, `upgrade`, `utils`) — now show `pub mod` declarations ✓
 
-The old (pre-rewrite) output showed mod.rs files with their declarations (e.g., `build/mod.rs` → `pub mod compile; pub mod env;`, `check/mod.rs` → `pub mod installed; pub mod update;`, `install/cask/artifacts/mod.rs` → all 23 `pub mod` declarations). It also showed each artifact file's `pub fn install_X` name. The old approach was more informative per token: mod.rs declarations revealed the crate's internal structure, and artifact function names at least confirmed the pattern.
+The remaining issue is that 21 bare-filename artifact files still consume ~42 tokens.
 
 In sqlite_vec, the problem is even more extreme: ~25 empty file entries (Makefile, sqlite-vec.h.tmpl, test.sql, SECURITY.md, various examples/, scripts/, and site/ files) and ~25 empty folder entries (benchmarks/exhaustive-memory/, benchmarks/micro/, tests/afbd/, tests/correctness/, etc.). That's ~50 empty entries consuming ~100 tokens for near-zero information. The old output was more selective — it collapsed `site/` into a single folder entry rather than listing all its subfiles and subfolders individually. The budget spent on these empty entries could instead show README body content (issue #6) or enum bodies (issue #18).
 
@@ -311,29 +311,13 @@ The pre-rewrite output showed none of these submodules — only `src/error.rs` w
 
 The root cause is that each error submodule generates several group entries (StructName, ImplBlock, FunctionName × 2) that individually score well enough to beat the marginal cost of their file header. The `pub(super)` struct gets a 0.3× visibility penalty, but the `pub fn` methods on `impl Error` are fully public. The aggregate effect is that 15 small files with mechanical content outbid the stmt/ directory's content despite being less informative per token.
 
-## 30. Rust lib.rs with `mod` + `pub use` re-exports rendered empty (regression)
+## 30. Rust lib.rs with `pub use` re-exports rendered empty in large workspaces [needs human review]
 
 **Affected snapshots:** toasty
 
-`crates/toasty/src/lib.rs` is the main ORM crate's entry point. Its 60 lines define the entire public API surface via `mod` declarations and `pub use` re-exports:
+`crates/toasty/src/lib.rs` is the main ORM crate's entry point. Its 60 lines define the entire public API surface via `mod` declarations and `pub use` re-exports.
 
-```rust
-mod apply_update;
-pub use apply_update::{ApplyUpdate, Query};
-pub mod cursor;
-pub use cursor::Cursor;
-pub mod db;
-pub use db::Db;
-pub mod relation;
-pub use relation::{BelongsTo, HasMany, HasOne};
-pub mod stmt;
-pub use stmt::Statement;
-pub use toasty_core::{Error, Result};
-```
-
-The pre-rewrite output showed 7 lines: `pub mod cursor`, `pub mod db`, `pub mod relation`, `pub mod schema`, `pub mod stmt`, and `pub mod driver { pub use toasty_core::driver::* }`. A reader immediately understood the module structure and what the crate re-exports.
-
-The new output renders the file completely empty — just the filename with zero content lines. The `mod` declarations and `pub use` re-exports are likely captured as Import groups with base_value 0.1, and re-exports further penalized by `reexport_contribution()` (0.1×). The combined effective value (~0.01-0.1 per item) is too low to justify the file header cost. But these lines ARE the API surface — they tell a reader what types are public, where they come from, and how the crate is organized. They're more valuable than many FunctionName entries that the budget is spent on instead.
+**Partial fix applied:** `mod_item` declarations (e.g. `pub mod cursor;`) are now captured as Import items, and `pub use` re-exports in lib.rs are no longer penalized by `reexport_contribution()`. This fixed module structure visibility in smaller Rust crates (sps_core, thiserror, toasty_codegen), but toasty's lib.rs remains empty because Import base_value (0.1) and ImportedItems base_value (1.0) can't compete on per-token ratio against FunctionName entries (~2 tokens each) in an 8000-token workspace with 8 crates. The `pub use` lines are ~3-4 tokens each, giving them a ratio of ~0.14 vs ~0.28 for function names. Fixing this likely requires either (a) a higher base_value for first-party ImportedItems, which has broad effects, or (b) a mechanism that boosts lib.rs content specifically, which requires threading file identity through the group system.
 
 ## 31. Docs directory heading-only content displaces core source code
 

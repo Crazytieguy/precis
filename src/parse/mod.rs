@@ -190,6 +190,10 @@ fn classify<'t>(
             public: visibility::macro_visibility(node, source, lang),
             preproc: false,
         }),
+        "mod_item" if node.child_by_field_name("body").is_none() => Some(Import {
+            first_party: true,
+            reexport: false,
+        }),
         "mod_item" => None,
 
         // ---- TypeScript / JavaScript ----
@@ -426,10 +430,13 @@ fn classify<'t>(
         }),
 
         // ---- Imports ----
-        "use_declaration" => Some(Import {
-            first_party: is_first_party_import(node, source, lang),
-            reexport: is_rust_reexport(node, source, mod_names),
-        }),
+        "use_declaration" => {
+            let is_crate_root = path.file_name().is_some_and(|f| f == "lib.rs");
+            Some(Import {
+                first_party: is_first_party_import(node, source, lang),
+                reexport: !is_crate_root && is_rust_reexport(node, source, mod_names),
+            })
+        }
         "import_statement" if lang == Lang::Python || lang == Lang::JsTs => Some(Import {
             first_party: is_first_party_import(node, source, lang),
             reexport: false,

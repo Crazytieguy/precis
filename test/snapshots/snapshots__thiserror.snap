@@ -127,6 +127,11 @@ src/display.rs
 
 src/lib.rs
      9→//! This library provides a convenient derive macro for the standard library's
+   281→mod aserror;
+   282→mod display;
+   284→mod provide;
+   285→mod var;
+   289→mod private;
 
 src/private.rs
      2→pub use crate::aserror::AsDynError;
@@ -355,9 +360,6 @@ tests/test_expr.rs
 tests/test_from.rs
 
 tests/test_generics.rs
-    14→impl Display for DisplayOnly …
-    23→impl Display for DebugAndDisplay …
-    83→impl<HasDisplay, HasDebug, HasNeither> Debug for EnumCompound<HasDisplay, HasDebug, HasNeither> …
 
 tests/test_lints.rs
 
