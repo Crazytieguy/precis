@@ -481,7 +481,7 @@ The `---` line is semantically equivalent to Python's opening `"""` or Rust's `/
 
 ## 25. Bare-filename repetitive files waste budget while structural files are empty
 
-**Affected snapshots:** sps_core, sqlite_vec
+**Affected snapshots:** sps_core, sqlite_vec, swarm
 
 In `src/install/cask/artifacts/`, 21 of 24 `.rs` files are shown as bare filenames (no content). These files follow a uniform pattern — each contains a single `pub fn install_X` function — so once the pattern is clear from 2-3 examples, additional bare filenames add no understanding. Collectively they consume ~42 tokens for information already implied by the directory structure.
 
@@ -493,6 +493,8 @@ Meanwhile, structural files that orient the reader on crate organization are sho
 The old (pre-rewrite) output showed mod.rs files with their declarations (e.g., `build/mod.rs` → `pub mod compile; pub mod env;`, `check/mod.rs` → `pub mod installed; pub mod update;`, `install/cask/artifacts/mod.rs` → all 23 `pub mod` declarations). It also showed each artifact file's `pub fn install_X` name. The old approach was more informative per token: mod.rs declarations revealed the crate's internal structure, and artifact function names at least confirmed the pattern.
 
 In sqlite_vec, the problem is even more extreme: ~25 empty file entries (Makefile, sqlite-vec.h.tmpl, test.sql, SECURITY.md, various examples/, scripts/, and site/ files) and ~25 empty folder entries (benchmarks/exhaustive-memory/, benchmarks/micro/, tests/afbd/, tests/correctness/, etc.). That's ~50 empty entries consuming ~100 tokens for near-zero information. The old output was more selective — it collapsed `site/` into a single folder entry rather than listing all its subfiles and subfolders individually. The budget spent on these empty entries could instead show README body content (issue #6) or enum bodies (issue #18).
+
+In swarm, 31 `logs/session_*.json` files are shown individually as bare filenames, consuming ~62 tokens. The old output showed `logs/` as a single folder entry. These session logs follow a uniform naming pattern — once you've seen one filename, the rest add nothing. The budget could instead show example source files (see #27).
 
 The root cause is that bare-filename entries have a non-zero rendering cost (~2 tokens each) but zero information value beyond "this file exists." In a directory with 24 similar files, the directory name itself conveys more than 21 individual bare filenames. Budget would be better spent showing lib.rs module declarations (~15 tokens) and mod.rs structures (~5-10 tokens each), which tell the reader how the crate is organized.
 
@@ -507,3 +509,38 @@ For example, `docs/reference/coercions.md` shows `# Coercions` plus a one-line d
 The ~70 lines of redundant docs/ content displace higher-value source code. The pre-rewrite output showed these same docs pages but compensated by also showing `src/error.ts` with full `Failure` type body (8 fields) and `StructError` class body (8 fields + constructor), plus `src/index.ts` with all 6 re-exports. The new output loses all of these (see #9 and #13) — the Failure type fields (value, key, type, refinement, message, explanation, branch, path) and StructError fields are the error API surface, and the re-exports define the public API.
 
 The DocsSite category factor (0.2×) should suppress this, but with 13 files each generating at least an h1 Heading group (base_value 1.0), the aggregate value still captures significant budget. When a summary/TOC file exists in a docs directory, individual pages' headings are almost entirely redundant.
+
+## 27. Example source files absent while library README dominates budget (regression)
+
+**Affected snapshots:** swarm
+
+Swarm is an educational framework — the library itself is tiny (4 files, ~300 lines), and the examples ARE the core content. The old output showed function signatures from all 10 example directories: airline agent configs and tools, basic examples (handoff, context_variables, function_calling), personal_shopper database functions, support_bot query/email functions, triage_agent routing functions, weather_agent functions, and customer_service_streaming's full engine/task architecture. The new output shows only example README headings and folder entries, with 3 weather_agent `.py` files rendered completely empty (no content despite having functions like `get_weather`, `send_email`, and an Agent instantiation).
+
+Meanwhile, the README consumes ~173 lines of output with full code examples, the "Core Contributors" list (6 names), install instructions, and documentation tables — content that's less information-dense per token than the example source signatures it displaces. The old output also showed the full README but compensated by showing example source code.
+
+The `FileCategory::Example` factor (0.35×) is appropriate for most projects but harmful here. The regression is compounded by #25 (31 bare-filename log files wasting ~62 tokens that could fund ~30 example function signatures).
+
+## 28. Python class bodies never shown — no ClassBody in taxonomy
+
+**Affected snapshots:** swarm (likely all Python fixtures with dataclasses/Pydantic models)
+
+`TsGroupKey` has `StructBody` (base_value 1.2) and `EnumBody` (1.5) but no `ClassBody`. Python class field definitions live in the class body — for Pydantic models and dataclasses, the fields ARE the class API. In swarm's `types.py`, the old output showed:
+
+```
+class Agent(BaseModel):
+    name: str = "Agent"
+    model: str = "gpt-4o"
+    instructions: Union[str, Callable[[], str]] = "You are a helpful agent."
+    functions: List[AgentFunction] = []
+    tool_choice: str = None
+    parallel_tool_calls: bool = True
+
+class Response(BaseModel):
+    messages: List = []
+    agent: Optional[Agent] = None
+    context_variables: dict = {}
+```
+
+The new output shows only `class Agent …`, `class Response …`, `class Result …`. For an agent framework, seeing Agent's 6 fields (name, model, instructions, functions, tool_choice, parallel_tool_calls) is essential to understanding the API — it's the equivalent of a Rust struct's field definitions, which get StructBody at 1.2.
+
+This also interacts with #22 (Python docstrings not detected): classes are both undocumented (0.5× penalty) and bodyless, so the reader gets only a class name with no fields, no docstring, and no type information.
