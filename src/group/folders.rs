@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
 
 use crate::classify::{self, FileRole};
@@ -120,11 +120,33 @@ pub fn create_files_groups<'s>(
 pub fn children<'s>(g: &mut FoldersGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s>> {
     let mut result: Vec<Group<'s>> = Vec::new();
 
+    let sibling_names: HashSet<&str> = g
+        .items
+        .iter()
+        .filter_map(|d| d.file_name().and_then(|n| n.to_str()))
+        .collect();
+    let async_mirrors: HashSet<&Path> = g
+        .items
+        .iter()
+        .filter(|d| {
+            d.file_name()
+                .and_then(|n| n.to_str())
+                .and_then(|name| name.strip_prefix("async_"))
+                .is_some_and(|base| sibling_names.contains(base))
+        })
+        .map(|d| d.as_path())
+        .collect();
+
     for item_dir in &g.items {
         let rel_dir = ctx.rel_path(item_dir);
         let category = classify::classify_dir(rel_dir);
         let contribution = heuristics::folders_contribution(rel_dir, category);
-        let child_modifier = g.inherited_modifier * contribution;
+        let async_mirror_factor = if async_mirrors.contains(item_dir.as_path()) {
+            0.15
+        } else {
+            1.0
+        };
+        let child_modifier = g.inherited_modifier * contribution * async_mirror_factor;
 
         let (subdirs, files_by_role) = walk_dir_entries(item_dir, &ctx.root);
 

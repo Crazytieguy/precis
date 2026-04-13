@@ -140,17 +140,6 @@ The `internal/ui/` content is individually reasonable (function names at base_va
 
 This is a pre-existing issue (the old output also omitted `internal/tools/`) but is more damaging after the rewrite because the old output compensated with richer content in the files it did show (struct field bodies, type definitions, doc comments). The new output's broader-but-shallower coverage makes the absence of core domain code more conspicuous.
 
-## 23. Structurally mirrored packages shown in full — sync/async duplication wastes budget
-
-**Affected snapshots:** py3xui
-
-py3xui provides both synchronous (`py3xui/api/`) and asynchronous (`py3xui/async_api/`) API packages. The two are structural mirrors — identical class hierarchies, identical method names, identical signatures except for `async`/`await`. Both are shown in full: the sync API uses ~48 output lines (6 files), the async API uses ~87 output lines (6 files). Together they consume ~135 lines (~35% of the 4000-token budget) to convey the same API surface twice.
-
-A knowledgeable human would show one package in detail and note the other mirrors it. The second package adds almost zero information — a reader seeing `async def get_by_email …` after already seeing `def get_by_email …` learns only that the async variant exists, which the package name already conveys.
-
-This is a pre-existing issue (the old output also showed both packages fully), but the budget waste is more impactful now because class bodies and docstrings are lost (issues #9, #22), making the remaining content thinner. The ~87 lines spent on the async mirror could instead show Client model fields, Inbound fields, class docstrings, or BaseApi property type annotations — all of which build more understanding than a second listing of the same method names.
-
-No simple heuristic detects structural mirrors in general, but the pattern is common in Python SDKs (sync/async), language bindings (C header + wrapper), and multi-platform code (platform-specific implementations with identical APIs).
 
 
 ## 25. Bare-filename repetitive files waste budget while structural files are empty

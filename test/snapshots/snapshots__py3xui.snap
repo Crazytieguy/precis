@@ -42,8 +42,6 @@ dev/pydoc.sh
 
 py3xui/api/README.md
 
-py3xui/async_api/README.md
-
 py3xui/client/README.md
 
 py3xui/inbound/README.md
@@ -100,33 +98,60 @@ py3xui/utils/env.py
      7→def parse_env(
      8→    keys: list[str], postprocess_fn: Callable[[str], Any], raise_if_not_found: bool = True
      9→) -> Any:
+    10→    """Parse the environment for the first key that is found and return the value after
+      →…
     33→def xui_host() -> str:
+    34→    """Get the XUI host from the environment using the following keys:
+      →…
     49→def xui_username() -> str:
+    50→    """Get the XUI username from the environment using the following keys:
+      →…
     65→def xui_password() -> str:
+    66→    """Get the XUI password from the environment using the following keys:
+      →…
     81→def tls_verify() -> bool | None:
+    82→    """Get the TLS verification setting from the environment using the following keys:
+      →…
     95→def tls_cert_path() -> str | None:
+    96→    """Get the path to the TLS certificate from the environment using the following keys:
+      →…
 
 py3xui/api/__init__.py
 
 py3xui/api/api.py
      1→"""This module provides classes to interact with the XUI API."""
     13→class Api …
+    14→    """This class provides a high-level interface to interact with the XUI API.
+      →…
     66→
     67→    def __init__ …
     94→    def session(self) -> str | None:
+    95→        """The session cookie for the XUI API.
+      →…
    103→    def session(self, value: str) -> None:
+   104→        """Sets the session cookie for the XUI API.
+      →…
    116→    def cookie_name(self) -> str | None:
+   117→        """The cookie name for the XUI API.
+      →…
    125→    def cookie_name(self, value: str | None) -> None:
+   126→        """Sets the cookie name for the XUI API.
+      →…
    140→    def from_env(
    141→        cls,
    142→        use_tls_verify: bool | None = None,
    143→        custom_certificate_path: str | None = None,
    144→        logger: Any | None = None,
    145→    ) -> Api:
+   146→        """Creates an instance of the API from environment variables. Optional parameters
+      →…
    189→    def login(self, two_factor_code: str | int | None = None) -> None:
+   190→        """Logs into the XUI API and sets the session cookie for the client, inbound, and
+      →…
 
 py3xui/api/api_base.py
      1→"""This module contains the base class for the XUI API."""
+    14→# pylint: disable=too-few-public-methods
     15→class ApiFields …
     17→
     18→    SUCCESS = "success"
@@ -136,23 +161,50 @@ py3xui/api/api_base.py
     22→    NO_IP_RECORD = "No IP Record"
     23→    GET = "GET"
     24→    POST = "POST"
+    27→# pylint: disable=R0902
     28→class BaseApi …
     60→
     61→    def __init__ …
     81→    def host(self) -> str:
+    82→        """The host of the XUI API.
+      →…
     89→    def username(self) -> str:
+    90→        """The username for the XUI API.
+      →…
     97→    def password(self) -> str:
+    98→        """The password for the XUI API.
+      →…
    105→    def use_tls_verify(self) -> bool:
+   106→        """Whether to verify the server TLS certificate.
+      →…
    113→    def custom_certificate_path(self) -> str | None:
+   114→        """The path to a custom certificate file.
+      →…
    121→    def max_retries(self) -> int:
+   122→        """The maximum number of retries for a request.
+      →…
    129→    def max_retries(self, value: int) -> None:
+   130→        """Sets the maximum number of retries for a request.
+      →…
    137→    def session(self) -> str | None:
+   138→        """The session cookie for the XUI API.
+      →…
    145→    def session(self, value: str | None) -> None:
+   146→        """Sets the session cookie for the XUI API.
+      →…
    153→    def cookie_name(self) -> str | None:
+   154→        """The name of the cookie for the XUI API.
+      →…
    161→    def cookie_name(self, value: str | None) -> None:
+   162→        """Sets the name of the cookie for the XUI API.
+      →…
    168→    def login(self, two_factor_code: str | int | None = None) -> None:
+   169→        """Logs into the XUI API and sets the session cookie if successful.
+      →…
    194→    def _get_cookie …
    211→    def cookies(self) -> dict[str, str]:
+   212→        """Returns the cookies for the XUI API. If session is not set yet, returns an empty dict.
+      →…
    220→    def _check_response …
    236→    def _url …
    246→    def _request_with_retry …
@@ -163,44 +215,94 @@ py3xui/api/api_client.py
      1→"""This module contains the ClientApi class which provides methods to interact with the
      2→clients in the XUI API."""
     13→class ClientApi …
+    14→    """This class provides methods to interact with the clients in the XUI API.
+      →…
     51→
     52→    def get_by_email(self, email: str) -> Client | None:
+    53→        """This route is used to retrieve information about a specific client based on their email.
+      →…
     89→    def get_ips(self, email: str) -> list[str]:
+    90→        """This route is used to retrieve the IP records associated with a specific client
+      →…
    121→    def add(self, inbound_id: int, clients: list[Client]):
+   122→        """This route is used to add a new clients to a specific inbound identified by its ID.
+      →…
    157→    def update(self, client_uuid: str, client: Client) -> None:
+   158→        """This route is used to update an existing client identified by its UUID within a specific
+      →…
    189→    def reset_ips(self, email: str) -> None:
+   190→        """This route is used to reset or clear the IP records associated with a specific client
+      →…
    217→    def reset_stats(self, inbound_id: int, email: str) -> None:
+   218→        """This route is used to reset the traffic statistics for a specific client identified by
+      →…
    248→    def delete(self, inbound_id: int, client_uuid: str) -> None:
+   249→        """This route is used to delete a client identified by its UUID within a specific inbound
+      →…
    280→    def delete_depleted(self, inbound_id: int) -> None:
+   281→        """This route is used to delete all depleted clients associated with a specific inbound
+      →…
    312→    def online(self) -> list[str]:
+   313→        """Returns a list of email addresses of online clients.
+      →…
    342→    def get_traffic_by_id(self, client_uuid: int) -> list[Client]:
+   343→        """This route is used to retrieve information about a specific client based on their UUID.
+      →…
 
 py3xui/api/api_database.py
      1→"""This module contains the DatabaseApi class, which is responsible handling database operations
      2→in the XUI API."""
      7→class DatabaseApi …
+     8→    """This class provides methods to interact with the database in the XUI API.
+      →…
     31→
     32→    def export(self) -> None:
+    33→        """This endpoint triggers the creation of a system backup and initiates the delivery of
+      →…
 
 py3xui/api/api_inbound.py
      1→"""This module contains the InboundApi class for handling inbounds in the XUI API."""
      9→class InboundApi …
+    10→    """This class provides methods to interact with the inbounds in the XUI API.
+      →…
     39→
     40→    def get_list(self) -> list[Inbound]:
+    41→        """This route is used to retrieve a comprehensive list of all inbounds along with
+      →…
     71→    def get_by_id(self, inbound_id: int) -> Inbound:
+    72→        """This route is used to retrieve statistics and details for a specific inbound connection
+      →…
    111→    def add(self, inbound: Inbound) -> None:
+   112→        """This route is used to add a new inbound configuration.
+      →…
    159→    def delete(self, inbound_id: int) -> None:
+   160→        """This route is used to delete an inbound identified by its ID.
+      →…
    190→    def update(self, inbound_id: int, inbound: Inbound) -> None:
+   191→        """This route is used to update an existing inbound identified by its ID.
+      →…
    223→    def reset_stats(self) -> None:
+   224→        """This route is used to reset the traffic statistics for all inbounds within the system.
+      →…
    247→    def reset_client_stats(self, inbound_id: int) -> None:
+   248→        """This route is used to reset the traffic statistics for all clients associated with a
+      →…
 
 py3xui/api/api_server.py
      1→"""This module contains the ServerApi class for handling server in the XUI API."""
      7→class ServerApi …
+     8→    """This class provides methods to interact with the server in the XUI API.
+      →…
     34→
     35→    def get_db(self, save_path: str) -> None:
+    36→        """This route is used to retrieve a database backup file and save it to a specified path.
+      →…
     67→    def get_status(self) -> Server:
+    68→        """Gets the current server status.
+      →…
     97→    def generate_reality_keys(self) -> RealityKeyPair:
+    98→        """Generates a new Reality (X25519) key pair on the server.
+      →…
 
 py3xui/inbound/__init__.py
 
@@ -255,6 +357,8 @@ py3xui/inbound/stream_settings.py
     26→    """Represents the stream settings for an inbound.
       →…
 
+py3xui/async_api/README.md
+
 dev/requirements.txt
 
 pyproject.toml
@@ -264,103 +368,11 @@ pyproject.toml
      4→
      5→[project]
     25→[project.urls]
+    26→Homepage = "https://github.com/iwatkot/py3xui"
+    27→Repository = "https://github.com/iwatkot/py3xui"
+    28→
     29→[tool.setuptools.packages.find]
 
-py3xui/async_api/__init__.py
-
-py3xui/async_api/async_api.py
-     1→"""This module provides classes to interact with the XUI API in an asynchronous manner."""
-    18→class AsyncApi …
-    71→
-    72→    def __init__ …
-    99→    def session(self) -> str | None:
-   108→    def session(self, value: str) -> None:
-   121→    def cookie_name(self) -> str | None:
-   130→    def cookie_name(self, value: str | None) -> None:
-   145→    def from_env(
-   146→        cls,
-   147→        use_tls_verify: bool | None = None,
-   148→        custom_certificate_path: str | None = None,
-   149→        logger: Any | None = None,
-   150→    ) -> AsyncApi:
-   194→    async def login(self, two_factor_code: str | int | None = None) -> None:
-
-py3xui/async_api/async_api_base.py
-     1→"""This module contains the async base class for the XUI API."""
-    16→class AsyncBaseApi …
-    48→
-    49→    def __init__ …
-    69→    def host(self) -> str:
-    77→    def username(self) -> str:
-    85→    def password(self) -> str:
-    93→    def use_tls_verify(self) -> bool:
-   101→    def custom_certificate_path(self) -> str | None:
-   109→    def max_retries(self) -> int:
-   117→    def max_retries(self, value: int) -> None:
-   125→    def session(self) -> str | None:
-   133→    def session(self, value: str | None) -> None:
-   141→    def cookie_name(self) -> str | None:
-   149→    def cookie_name(self, value: str | None) -> None:
-   156→    def _url …
-   166→    async def _request_with_retry …
-   239→    async def login(self, two_factor_code: str | int | None = None) -> None:
-   265→    async def _get_cookie …
-   282→    def cookies(self) -> dict[str, str]:
-   292→    async def _check_response …
-   308→    async def _post …
-   328→    async def _get …
-
-py3xui/async_api/async_api_client.py
-     1→"""This module contains the ClientApi class which provides methods to interact with the
-     2→clients in the XUI API."""
-    12→class AsyncClientApi …
-    51→
-    52→    async def get_by_email(self, email: str) -> Client | None:
-    89→    async def get_ips(self, email: str) -> list[str]:
-   121→    async def add(self, inbound_id: int, clients: list[Client]):
-   158→    async def update(self, client_uuid: str, client: Client) -> None:
-   190→    async def reset_ips(self, email: str) -> None:
-   219→    async def reset_stats(self, inbound_id: int, email: str) -> None:
-   250→    async def delete(self, inbound_id: int, client_uuid: str) -> None:
-   282→    async def delete_depleted(self, inbound_id: int) -> None:
-   315→    async def online(self) -> list[str]:
-   345→    async def get_traffic_by_id(self, client_uuid: int) -> list[Client]:
-
-py3xui/async_api/async_api_database.py
-     1→"""This module contains the DatabaseApi class which provides methods to interact with the
-     2→database in the XUI API asynchronously."""
-     7→class AsyncDatabaseApi …
-    31→
-    32→    async def export(self) -> None:
-
-py3xui/async_api/async_api_inbound.py
-     1→"""This module contains the InboundApi class which provides methods to interact with the
-     2→clients in the XUI API asynchronously."""
-    11→class AsyncInboundApi …
-    41→
-    42→    async def get_list(self) -> list[Inbound]:
-    72→    async def get_by_id(self, inbound_id: int) -> Inbound:
-   112→    async def add(self, inbound: Inbound) -> None:
-   158→    async def delete(self, inbound_id: int) -> None:
-   189→    async def update(self, inbound_id: int, inbound: Inbound) -> None:
-   222→    async def reset_stats(self) -> None:
-   246→    async def reset_client_stats(self, inbound_id: int) -> None:
-
-py3xui/async_api/async_api_server.py
-     1→"""This module contains the ServerApi class for handling server in the XUI API."""
-     8→class AsyncServerApi …
-    42→
-    43→    # pylint: disable=R0801
-    44→    async def get_db(self, save_path: str) -> None:
-    76→    async def get_status(self) -> Server:
-   105→    async def generate_reality_keys(self) -> RealityKeyPair:
-
 tests/__init__.py
-
-tests/test_api.py
-
-tests/test_async_api.py
-
-tests/test_env.py
 
 tests/responses/
