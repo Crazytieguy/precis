@@ -316,7 +316,10 @@ const AUTO_COMMIT_MIN_VALUE: f64 = 1.0;
 
 fn is_auto_commit_body(group: &Group<'_>, remaining_tokens: usize, total_budget: usize) -> bool {
     let Group::Ts(g) = group else { return false };
-    if !matches!(g.key, crate::group::TsGroupKey::EnumBody) {
+    if !matches!(
+        g.key,
+        crate::group::TsGroupKey::EnumBody | crate::group::TsGroupKey::HeadingBody { level: 1 }
+    ) {
         return false;
     }
     if group.value() < AUTO_COMMIT_MIN_VALUE {
@@ -325,11 +328,23 @@ fn is_auto_commit_body(group: &Group<'_>, remaining_tokens: usize, total_budget:
     if remaining_tokens <= total_budget * (AUTO_COMMIT_BUDGET_FRACTION - 1) / AUTO_COMMIT_BUDGET_FRACTION {
         return false;
     }
-    let limit = crate::heuristics::COMPACT_BODY_LINE_LIMIT;
-    g.items.iter().all(|item| {
-        let body_start = crate::group::ts::compute_body_start_line(item);
-        item.end_line.saturating_sub(body_start) <= limit
-    })
+    match g.key {
+        crate::group::TsGroupKey::EnumBody => {
+            let limit = crate::heuristics::COMPACT_BODY_LINE_LIMIT;
+            g.items.iter().all(|item| {
+                let body_start = crate::group::ts::compute_body_start_line(item);
+                item.end_line.saturating_sub(body_start) <= limit
+            })
+        }
+        crate::group::TsGroupKey::HeadingBody { level: 1 } => {
+            g.items.iter().any(|item| {
+                crate::classify::FileRole::from_path(item.path)
+                    == crate::classify::FileRole::Readme
+                    && item.path.parent().is_some_and(|p| p.as_os_str().is_empty())
+            })
+        }
+        _ => false,
+    }
 }
 
 /// Ensure a group has its cached cost computed.

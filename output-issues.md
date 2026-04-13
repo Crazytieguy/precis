@@ -3,17 +3,11 @@
 
 ## 6. README body content dropped — only headings shown (partially fixed)
 
-**Partially fixed:** A 2× modifier boost for README h1 HeadingBody groups combined with a 12-line cap on markdown h1 body rendering fixed 9 of the 16 affected snapshots: commander, d2ts, d2ts_d2ts, mdbook, mdbook_guide_src, soluna, sps, sqlite_vec, toasty. These now show introductory README body content (project descriptions, status warnings, feature lists).
+**Partially fixed:** A 2× modifier boost for README h1 HeadingBody groups combined with a 12-line cap on markdown h1 body rendering fixed 9 of the 16 affected snapshots: commander, d2ts, d2ts_d2ts, mdbook, mdbook_guide_src, soluna, sps, sqlite_vec, toasty. Auto-commit of root-level README h1 body content (bypassing ratio competition) fixed 4 more: bareiron, log, d2ts (root README body), sds.
 
-**Remaining affected snapshots:** bareiron, log, mcphost, pluggy, semver, typeguard
+**Remaining affected snapshots:** mcphost, semver, pluggy, typeguard
 
-The fix doesn't help these because: (a) their h1 body content is too short for the cap to reduce cost meaningfully (bareiron, log), (b) they use RST instead of markdown with no tree-sitter parser (pluggy, typeguard), or (c) the body content still can't compete on ratio in larger workspaces (mcphost, semver). The vaul case (headingless markdown README) was fixed by treating headingless markdown READMEs as module docs.
-
-In typeguard, the README.rst (49 lines) explains the library's purpose (runtime type checking for PEP 484 annotations), the two principal approaches (check_type function vs code instrumentation), and the two instrumentation options (@typechecked vs import hook). The pre-rewrite showed the entire file. The new output shows just the bare filename with zero content — even worse than heading-only, because RST has no tree-sitter parser. Additionally, 7 docs/*.rst files all render as bare filenames for the same reason.
-
-In pluggy, the README.rst contains a complete working example (69 lines in the pre-rewrite output) demonstrating the entire hook specification and implementation API. This is the single best introduction to what pluggy is and how to use it. The new output shows zero README content.
-
-In bareiron, the full introductory section (lines 1-11) was shown: project description ("Minimalist Minecraft server for memory-restrictive embedded systems"), design priorities, Minecraft/protocol version numbers, and a compatibility warning. The h1 body is ~8 lines — small enough that the 12-line cap doesn't reduce its cost, so the 2× boost alone isn't sufficient for it to win the budget competition.
+pluggy and typeguard use RST instead of markdown with no tree-sitter parser — their README content can't be extracted at all. mcphost already shows some README body content via ratio competition. semver's README has no h1 body content (the setext h1 is immediately followed by `## Install`), so there's nothing to auto-commit.
 
 
 
