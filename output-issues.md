@@ -107,9 +107,11 @@ The pre-rewrite showed complete lines with values and trailing doxygen descripti
 
 ## 8. CommunityHealth files not deprioritized at root level
 
-**Affected snapshots:** chronos
+**Affected snapshots:** chronos, peepdb
 
 CONTRIBUTING.md gets ~53 lines of output — more than any individual source file — for a boilerplate Amazon open source contributing guide ("how to file bugs", "how to send PRs"). The pre-rewrite output didn't show CONTRIBUTING.md content at all.
+
+In peepdb, the regression is even more severe: CONTRIBUTING.md goes from 1 line in the pre-rewrite output (just the `# Contributing to peepDB` heading) to ~84 lines showing the complete file — fork instructions, dev environment setup, pytest commands, PEP 8 guidelines, PR process, bug reporting templates. This is the single largest content block in the output, consuming more budget than any source file. Meanwhile, `peepdb/config.py` const values (`CONFIG_DIR = os.path.expanduser("~/.peepdb")`, `KEYRING_SERVICE_NAME = "PEEP_DB"`) are truncated to just names, and the `KeySecurity` dataclass body (showing the two security modes: `KEYRING = "os-keyring"`, `PASSWORD = "password"`) is elided — both losses that the CONTRIBUTING.md budget could have prevented.
 
 Two root causes:
 
