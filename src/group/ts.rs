@@ -785,11 +785,7 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
             let line_idx = start_line;
             let line = lines.get(line_idx).copied().unwrap_or("");
             let stripped = strip_heading_badges(line);
-            // stripped is a subslice of line, which is a subslice of source
-            vec![LineEntry::Complete {
-                line: line_idx as u32,
-                content: stripped,
-            }]
+            vec![capped_line_entry(line_idx as u32, stripped)]
         }
 
         HeadingBody { .. } => {
@@ -828,10 +824,7 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
         DataSection => {
             let line_idx = start_line;
             let content = lines.get(line_idx).copied().unwrap_or("");
-            vec![LineEntry::Complete {
-                line: line_idx as u32,
-                content,
-            }]
+            vec![capped_line_entry(line_idx as u32, content)]
         }
 
         DataSectionBody => {
@@ -856,6 +849,19 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
 // ---------------------------------------------------------------------------
 // Text helpers
 // ---------------------------------------------------------------------------
+
+const MAX_RENDERED_LINE_BYTES: usize = 200;
+
+fn capped_line_entry(line: u32, content: &str) -> LineEntry<'_> {
+    if content.len() > MAX_RENDERED_LINE_BYTES {
+        LineEntry::Truncated {
+            line,
+            content: &content[..content.floor_char_boundary(MAX_RENDERED_LINE_BYTES)],
+        }
+    } else {
+        LineEntry::Complete { line, content }
+    }
+}
 
 /// Find a prefix of the source line up to and including the item's name,
 /// using the tree-sitter AST node to locate the identifier end position.

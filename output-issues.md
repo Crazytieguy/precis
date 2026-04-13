@@ -489,16 +489,6 @@ The re-exports are valuable in isolation — they tell a reader what `import typ
 
 The `from X import Y as Y` pattern is Python's explicit re-export convention. If precis detects this as `ImportedItems { first_party: true }` (base_value 1.0) without applying the reexport penalty, that explains the over-allocation. With `reexport_contribution()` (0.1×), the effective value should be low enough to suppress most of these. This is the inverse of #30 (Rust re-exports too aggressively suppressed) — Python re-exports not suppressed enough.
 
-## 34. Single-line JSON file renders empty — 1,837 DataSection groups produce no output (regression)
-
-**Affected snapshots:** vscode_emojis_small, vscode_emojis_medium
-
-`emojis.json` is a 40KB single-line JSON file with 1,837 key-value pairs (emoji name → emoji character). The pre-rewrite output showed a truncated first line: `{"100":"💯","1234":"🔢","+1":"👍","-1":"👎",...} …` — immediately telling the reader this is an emoji name→character mapping. The new output shows just the bare filename with zero content.
-
-The JSON query captures each top-level pair as a DataSection (base_value 0.8). With 1,837 entries all on line 1, the scheduler creates many groups but they all reference the same source line. The rendered output should show at least the truncated line 1, but nothing appears. Meanwhile, 18 bare SVG filenames consume ~36 tokens of the 200-token budget (see #25).
-
-This is the most important file in the fixture — a reader seeing only `emojis.json` with no content doesn't know it's an emoji mapping, how many entries it has, or what its structure looks like.
-
 ## 35. Third-party imports dropped in small single-file projects despite ample budget (regression) [needs human review]
 
 **Affected snapshots:** xxhash_xxhsum
