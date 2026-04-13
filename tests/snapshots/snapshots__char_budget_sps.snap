@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 8000 (2717 tokens, 9500 chars)
+budget: 8000 (2735 tokens, 9480 chars)
 
 README.md
      1→# sps
@@ -27,12 +27,19 @@ Cargo.toml
     10→[patch.crates-io]
     16→[workspace.dependencies]
     43→[profile.release]
+    44→lto = true
+    45→codegen-units = 1
+    46→strip = true
 
 sps/Cargo.toml
      1→[package]
     13→[[bin]]
+    14→name = "sps"
+    15→path = "src/main.rs"
+    16→
     17→[dependencies]
     54→[build-dependencies]
+    55→clap_complete = "4.5.57"
 
 sps-common/Cargo.toml
      1→[package]
@@ -93,9 +100,11 @@ sps-net/src/lib.rs
 
 sps-net/src/oci.rs
     24→pub const DEFAULT_GHCR_DOMAIN …
+    31→struct OciTokenResponse …
     37→pub struct OciManifestIndex …
     45→pub struct OciManifestDescriptor …
     55→pub struct OciPlatform …
+    66→enum OciAuth …
     96→pub async fn download_oci_blob …
    114→pub async fn download_oci_blob_with_progress …
    182→pub async fn fetch_oci_manifest_index …
@@ -281,17 +290,7 @@ sps-core/src/pipeline/mod.rs
 sps-core/src/pipeline/worker.rs
     21→pub(super) fn execute_sync_job …
 
-sps-core/src/uninstall/cask.rs
-
-sps-core/src/uninstall/common.rs
-    11→pub struct UninstallOptions …
-    12→    pub skip_zap: bool,
-    13→}
-
-sps-core/src/uninstall/formula.rs
-    10→pub fn uninstall_formula_artifacts …
-
-sps-core/src/uninstall/mod.rs
+rustfmt.toml
 
 sps/src/cli/
 
@@ -305,4 +304,4 @@ sps-core/src/install/bottle/
 
 sps-core/src/install/cask/
 
-sps-core/src/upgrade/
+sps-core/src/uninstall/

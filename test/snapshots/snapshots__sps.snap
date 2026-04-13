@@ -25,14 +25,37 @@ Cargo.toml
      8→]
      9→
     10→[patch.crates-io]
+    11→sps-common  = { path = "sps-common" }
+    12→sps-core    = { path = "sps-core" }
+    13→sps-net     = { path = "sps-net" }
+    14→
+    15→# Shared dependencies defined once
     16→[workspace.dependencies]
     43→[profile.release]
+    44→lto = true
+    45→codegen-units = 1
+    46→strip = true
 
 sps/Cargo.toml
      1→[package]
+     2→name = "sps"
+     3→version = "0.1.56"
+     4→edition = "2021"
+     5→authors = ["Alexander Knott <alexander.knott@posteo.de>", "sps contributors"]
+     6→description = "Package Manager for macOS"
+     7→repository = "https://github.com/alexykn/sps"
+     8→license = "BSD-3-Clause"
+     9→readme = "README.md"
+    10→keywords = ["package-manager", "macos", "homebrew"]
+    11→categories = ["development-tools", "command-line-utilities"]
+    12→
     13→[[bin]]
+    14→name = "sps"
+    15→path = "src/main.rs"
+    16→
     17→[dependencies]
     54→[build-dependencies]
+    55→clap_complete = "4.5.57"
 
 sps-common/Cargo.toml
      1→[package]
@@ -45,21 +68,17 @@ sps-common/Cargo.toml
      8→license = "BSD-3-Clause"
      9→
     10→[dependencies]
-    11→# Inherited from workspace
-    12→serde_json = "1.0.143"
-    13→directories = "6.0.0"                                                            # For user/system directories
-    14→tracing = "0.1.41"
-    15→serde = { version = "1.0.219", features = ["derive"] }
-    16→humantime = "2.2.0"
-    17→bitflags = { version = "2.9.3", features = ["serde"] }
-    18→thiserror = "2.0.16"
-    19→reqwest = { version = "0.12.23", features = ["json", "stream", "blocking"] }
-    20→object = { version = "0.37.3", features = ["read_core", "write_core", "macho"] }
-    21→semver = { version = "1.0.26", features = ["serde"] }
-    22→git2 = "0.20.2"
 
 sps-core/Cargo.toml
      1→[package]
+     2→name = "sps-core"
+     3→version = "0.1.56"
+     4→edition = "2021"
+     5→authors = ["Alexander Knott <alexander.knott@posteo.de>", "sps contributors"]
+     6→description = "Core library for the sps package manager"
+     7→repository = "https://github.com/alexykn/sps"
+     8→license = "BSD-3-Clause"
+     9→
     10→[dependencies]
 
 sps-core/src/lib.rs
@@ -75,21 +94,6 @@ sps-net/Cargo.toml
      8→license = "BSD-3-Clause"
      9→
     10→[dependencies]
-    11→sps-common = "0.1.56"
-    12→
-    13→tokio = { version = "1.47.1", features = ["full"] }
-    14→futures = "0.3.31"
-    15→reqwest = { version = "0.12.23", features = ["json", "stream", "blocking"] }
-    16→serde = { version = "1.0.219", features = ["derive"] }
-    17→serde_json = "1.0.143"
-    18→rand = "0.9.2"
-    19→url = "2.5.4"
-    20→sha2 = "0.10.9"
-    21→hex = "0.4.3"
-    22→infer = "0.19.0"
-    23→tracing = "0.1.41"
-    24→
-    25→oci-distribution = { version = "0.11.0", optional = true }
 
 sps/src/cli.rs
      2→//! Defines the command-line argument structure using clap.
@@ -378,6 +382,9 @@ sps/src/pipeline/planner.rs
    526→    pub async fn plan_operations …
 
 sps/src/pipeline/runner.rs
+    26→const WORKER_JOB_CHANNEL_SIZE …
+    27→const EVENT_CHANNEL_SIZE …
+    28→const DOWNLOAD_OUTCOME_CHANNEL_SIZE …
     31→pub enum CommandType …
     32→    Install,
     33→    Reinstall,
@@ -701,10 +708,15 @@ sps/src/cli/upgrade.rs
     23→impl UpgradeArgs …
     24→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
 
+sps-core/src/install/cask/dmg.rs
+
+sps-core/src/install/cask/helpers.rs
+
+sps-core/src/install/cask/mod.rs
+    25→pub struct CaskInstallManifest …
+
 sps-core/src/build/compile/
 
 sps-core/src/install/bottle/
-
-sps-core/src/install/cask/
 
 sps-core/src/install/cask/artifacts/

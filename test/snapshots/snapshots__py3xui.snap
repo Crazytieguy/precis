@@ -257,11 +257,11 @@ dev/requirements.txt
 
 pyproject.toml
      1→[build-system]
+     2→requires = ["setuptools>=42", "wheel"]
+     3→build-backend = "setuptools.build_meta"
+     4→
      5→[project]
     25→[project.urls]
-    26→Homepage = "https://github.com/iwatkot/py3xui"
-    27→Repository = "https://github.com/iwatkot/py3xui"
-    28→
     29→[tool.setuptools.packages.find]
 
 py3xui/async_api/__init__.py
@@ -347,5 +347,11 @@ py3xui/async_api/async_api_server.py
    105→    async def generate_reality_keys(self) -> RealityKeyPair:
 
 tests/__init__.py
+
+tests/test_api.py
+
+tests/test_async_api.py
+
+tests/test_env.py
 
 tests/responses/

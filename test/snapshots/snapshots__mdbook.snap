@@ -26,6 +26,12 @@ guide/src/README.md
 
 Cargo.toml
      1→[workspace]
+     2→members = [
+     3→    ".",
+     4→    "crates/*",
+     5→    "examples/remove-emphasis/mdbook-remove-emphasis", "guide/guide-helper",
+     6→]
+     7→
     21→[workspace.package]
     27→[workspace.dependencies]
     72→[package]
@@ -33,20 +39,31 @@ Cargo.toml
    119→[dev-dependencies]
    129→[features]
    135→[[bin]]
+   136→doc = false
+   137→name = "mdbook"
+   138→
    139→[[example]]
+   140→name = "nop-preprocessor"
+   141→test = true
+   142→
    143→[[example]]
+   144→name = "remove-emphasis"
+   145→path = "examples/remove-emphasis/test.rs"
+   146→crate-type = ["lib"]
+   147→test = true
+   148→
    149→[[test]]
+   150→harness = false
+   151→test = false
+   152→name = "gui"
+   153→path = "tests/gui/runner.rs"
+   154→crate-type = ["bin"]
+   155→
    156→[lints]
+   157→workspace = true
 
 guide/guide-helper/Cargo.toml
      1→[package]
-     2→name = "guide-helper"
-     3→publish = false
-     4→edition.workspace = true
-     5→license.workspace = true
-     6→repository.workspace = true
-     7→rust-version.workspace = true
-     8→
      9→[dependencies]
     10→mdbook-preprocessor.workspace = true
     11→semver.workspace = true
@@ -154,15 +171,8 @@ crates/mdbook-preprocessor/src/lib.rs
     23→/// An operation which is run immediately after loading a book into memory and
       →…
     30→pub trait Preprocessor …
-    31→    /// Get the `Preprocessor`'s name.
     32→    fn name(&self) -> &str;
-    34→    /// Run this `Preprocessor`, allowing it to update the book before it is
-    35→    /// given to a renderer.
     36→    fn run(&self, ctx: &PreprocessorContext, book: Book) -> Result<Book>;
-    38→    /// A hint to `MDBook` whether this preprocessor is compatible with a
-    39→    /// particular renderer.
-    40→    ///
-    41→    /// By default, always returns `true`.
     42→    fn supports_renderer(&self, _renderer: &str) -> Result<bool> {
     43→        Ok(true)
     44→    }
@@ -218,9 +228,7 @@ crates/mdbook-html/src/utils.rs
     46→impl ToUrlPath for Path …
     47→    fn to_url_path(&self) -> String {
     54→/// Make sure an HTML id is unique.
-    55→///
-    56→/// Keeps a set of all previously returned IDs; if the requested id is already
-    57→/// used, numeric suffixes (-1, -2, ...) are tried until an unused one is found.
+      →…
     58→pub(crate) fn unique_id(id: &str, used: &mut HashSet<String>) -> String {
     75→/// Generates an HTML id from the given text.
     76→pub(crate) fn id_from_content(content: &str) -> String {
@@ -285,7 +293,6 @@ crates/mdbook-core/src/config.rs
     81→fn is_default<T: Default + PartialEq>(t: &T) -> bool {
     86→fn toml_is_empty(table: &Value) -> bool {
     90→impl FromStr for Config …
-    93→    /// Load a `Config` from some string.
     94→    fn from_str(src: &str) -> Result<Self> {
     99→impl Default for Config …
    100→    fn default …
@@ -343,14 +350,6 @@ crates/mdbook-core/src/lib.rs
 
 crates/mdbook-core/Cargo.toml
      1→[package]
-     2→name = "mdbook-core"
-     3→version = "0.5.2"
-     4→description = "The base support library for mdbook, intended for internal use only"
-     5→edition.workspace = true
-     6→license.workspace = true
-     7→repository.workspace = true
-     8→rust-version.workspace = true
-     9→
     10→[dependencies]
     11→anyhow.workspace = true
     12→regex.workspace = true
@@ -367,16 +366,41 @@ crates/mdbook-core/Cargo.toml
 
 crates/mdbook-driver/Cargo.toml
      1→[package]
+     2→name = "mdbook-driver"
+     3→version = "0.5.2"
+     4→description = "High-level library for running mdBook"
+     5→edition.workspace = true
+     6→license.workspace = true
+     7→repository.workspace = true
+     8→rust-version.workspace = true
+     9→
     10→[dependencies]
     28→[lints]
+    29→workspace = true
+    30→
     31→[features]
+    32→search = ["mdbook-html/search"]
 
 crates/mdbook-html/Cargo.toml
      1→[package]
+     2→name = "mdbook-html"
+     3→version = "0.5.2"
+     4→description = "mdBook HTML renderer"
+     5→edition.workspace = true
+     6→license.workspace = true
+     7→repository.workspace = true
+     8→rust-version.workspace = true
+     9→
     10→[dependencies]
     29→[dev-dependencies]
+    30→tempfile.workspace = true
+    31→toml.workspace = true
+    32→
     33→[lints]
+    34→workspace = true
+    35→
     36→[features]
+    37→search = ["dep:elasticlunr-rs"]
 
 crates/mdbook-summary/Cargo.toml
      1→[package]
@@ -459,14 +483,6 @@ crates/mdbook-markdown/Cargo.toml
 
 crates/mdbook-preprocessor/Cargo.toml
      1→[package]
-     2→name = "mdbook-preprocessor"
-     3→version = "0.5.2"
-     4→description = "Library to assist implementing an mdBook preprocessor"
-     5→edition.workspace = true
-     6→license.workspace = true
-     7→repository.workspace = true
-     8→rust-version.workspace = true
-     9→
     10→[dependencies]
     11→anyhow.workspace = true
     12→mdbook-core.workspace = true
@@ -478,14 +494,6 @@ crates/mdbook-preprocessor/Cargo.toml
 
 crates/mdbook-renderer/Cargo.toml
      1→[package]
-     2→name = "mdbook-renderer"
-     3→version = "0.5.2"
-     4→description = "Library to assist implementing an mdBook renderer"
-     5→edition.workspace = true
-     6→license.workspace = true
-     7→repository.workspace = true
-     8→rust-version.workspace = true
-     9→
     10→[dependencies]
     11→anyhow.workspace = true
     12→mdbook-core.workspace = true
@@ -756,7 +764,10 @@ crates/mdbook-html/src/theme/searcher.rs
 guide/book.toml
      1→[book]
      7→[rust]
+     8→edition = "2018"
+     9→
     40→[build]
+    41→extra-watch-dirs = ["guide-helper/src"]
 
 examples/remove-emphasis/test.rs
 

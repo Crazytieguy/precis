@@ -6,6 +6,14 @@ src/lib.rs
 
 Cargo.toml
      1→[package]
+     2→name = "sps-core"
+     3→version = "0.1.56"
+     4→edition = "2021"
+     5→authors = ["Alexander Knott <alexander.knott@posteo.de>", "sps contributors"]
+     6→description = "Core library for the sps package manager"
+     7→repository = "https://github.com/alexykn/sps"
+     8→license = "BSD-3-Clause"
+     9→
     10→[dependencies]
 
 src/build/env.rs
@@ -47,7 +55,7 @@ src/check/installed.rs
     23→    pub pkg_type: PackageType,
     24→    pub path: PathBuf,
     25→}
-    29→fn handle_dir_entry …
+    29→fn handle_dir_entry(res: io::Result<fs::DirEntry>, dir_path_str: &str) -> Option<fs::DirEntry> {
     39→pub async fn get_installed_packages(config: &Config) -> Result<Vec<InstalledPackageInfo>> {
    140→pub async fn get_installed_package(
    141→    name: &str,
@@ -97,6 +105,9 @@ src/install/extract.rs
    301→/// Represents a hardlink operation that was deferred.
    302→fn extract_xz_tar_archive …
    343→struct DeferredHardLink …
+   344→    link_path_in_archive: PathBuf,
+   345→    target_name_in_archive: PathBuf,
+   346→}
    348→fn extract_tar_archive …
    619→fn extract_zip_archive …
 
@@ -239,6 +250,7 @@ src/install/cask/helpers.rs
     75→pub fn cleanup_empty_parent_dirs_in_private_store(start_path: &Path, stop_at: &Path) {
 
 src/install/cask/mod.rs
+    22→use crate::install::extract;
     25→pub struct CaskInstallManifest …
     36→/// Returns the path to the cask's version directory in the private store.
     37→pub fn sps_private_cask_version_dir(cask: &Cask, config: &Config) -> PathBuf {
@@ -307,8 +319,10 @@ src/build/compile/go.rs
     13→pub fn go_build …
 
 src/build/compile/make.rs
+    15→fn is_gnu_autotools_configure …
     53→pub fn configure_and_make …
    110→pub fn simple_make …
+   244→fn extract_output_from_exec_error …
 
 src/build/compile/meson.rs
     12→pub fn meson_build …
@@ -318,7 +332,17 @@ src/build/compile/mod.rs
     37→pub(crate) const RECOGNISED_SINGLE_FILE_EXTENSIONS …
     40→pub async fn download_source …
     44→pub async fn download_source_with_progress …
+    83→fn create_dir_all_with_context …
+    92→fn determine_source_root …
+   136→fn check_and_run_autoreconf …
+   160→fn detect_and_build …
+   219→fn determine_archive_type …
+   263→fn install_resource …
    293→pub async fn build_from_source …
+   473→fn install_perl_resource …
+   535→fn install_python_resource …
+   608→fn install_single_file …
+   640→fn run_command_in_dir …
 
 src/build/compile/perl.rs
     12→pub fn perl_build …
@@ -326,53 +350,4 @@ src/build/compile/perl.rs
 src/build/compile/python.rs
     13→pub fn python_build …
 
-src/install/cask/artifacts/app.rs
-    49→pub fn install_app_from_staged …
-   550→fn remove_path_robustly …
-
-src/install/cask/artifacts/audio_unit_plugin.rs
-
-src/install/cask/artifacts/binary.rs
-
-src/install/cask/artifacts/colorpicker.rs
-
-src/install/cask/artifacts/dictionary.rs
-
-src/install/cask/artifacts/font.rs
-
-src/install/cask/artifacts/input_method.rs
-
-src/install/cask/artifacts/installer.rs
-
-src/install/cask/artifacts/internet_plugin.rs
-
-src/install/cask/artifacts/keyboard_layout.rs
-
-src/install/cask/artifacts/manpage.rs
-
-src/install/cask/artifacts/mdimporter.rs
-
-src/install/cask/artifacts/mod.rs
-
-src/install/cask/artifacts/pkg.rs
-
-src/install/cask/artifacts/preflight.rs
-
-src/install/cask/artifacts/prefpane.rs
-
-src/install/cask/artifacts/qlplugin.rs
-
-src/install/cask/artifacts/screen_saver.rs
-
-src/install/cask/artifacts/service.rs
-
-src/install/cask/artifacts/suite.rs
-
-src/install/cask/artifacts/uninstall.rs
-
-src/install/cask/artifacts/vst3_plugin.rs
-
-src/install/cask/artifacts/vst_plugin.rs
-
-src/install/cask/artifacts/zap.rs
-   254→fn expand_tilde …
+src/install/cask/artifacts/

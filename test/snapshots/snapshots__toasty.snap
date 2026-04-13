@@ -64,8 +64,6 @@ docs/architecture/type-system.md
 
 docs/guide/jiff.md
      1→# Date and Time Types with Jiff
-     3→Toasty supports date and time types through the [`jiff`](https://github.com/BurntSushi/jiff) crate, which provides high-quality temporal types for Rust.
-     4→
      5→## Enabling Jiff Support
     17→## Supported Types
    126→## Precision Limitations
@@ -75,8 +73,6 @@ docs/guide/jiff.md
 
 docs/guide/pagination.md
      1→# Pagination
-     3→Toasty provides efficient cursor-based pagination that works consistently across SQL and NoSQL databases. This approach avoids the performance issues of traditional offset-based pagination while providing a clean, web-friendly API.
-     4→
      5→## Basic Pagination
     54→## Navigation Patterns
    112→## Web API Integration
@@ -102,11 +98,20 @@ crates/std-util/Cargo.toml
 
 crates/toasty/Cargo.toml
      1→[package]
+     2→name = "toasty"
+     3→version = "0.1.0"
+     4→edition = "2021"
+     5→
      6→[features]
     33→[dependencies]
 
 crates/toasty-cli/Cargo.toml
      1→[package]
+     2→name = "toasty-cli"
+     3→version = "0.1.0"
+     4→edition = "2024"
+     5→publish = false
+     6→
      7→[dependencies]
 
 crates/toasty-codegen/Cargo.toml
@@ -125,9 +130,15 @@ crates/toasty-codegen/Cargo.toml
 
 crates/toasty-core/Cargo.toml
      1→[package]
+     2→name = "toasty-core"
+     3→version = "0.1.0"
+     4→edition = "2021"
+     5→publish = false
+     6→
      7→[dependencies]
     20→[features]
     28→[dev-dependencies]
+    29→pretty_assertions.workspace = true
 
 crates/toasty-driver-dynamodb/Cargo.toml
      1→[package]
@@ -147,6 +158,11 @@ crates/toasty-driver-dynamodb/Cargo.toml
 
 crates/toasty-driver-integration-suite/Cargo.toml
      1→[package]
+     2→name = "toasty-driver-integration-suite"
+     3→version = "0.1.0"
+     4→edition = "2021"
+     5→publish = false
+     6→
      7→[dependencies]
 
 crates/toasty-driver-integration-suite-macros/Cargo.toml
@@ -166,11 +182,23 @@ crates/toasty-driver-integration-suite-macros/Cargo.toml
 
 crates/toasty-driver-mysql/Cargo.toml
      1→[package]
+     2→name = "toasty-driver-mysql"
+     3→version = "0.1.0"
+     4→edition = "2021"
+     5→
      6→[features]
+     7→rust_decimal = ["dep:rust_decimal", "toasty-core/rust_decimal"]
+     8→bigdecimal = ["dep:bigdecimal", "toasty-core/bigdecimal"]
+     9→jiff = ["dep:jiff", "toasty-core/jiff"]
+    10→
     11→[dependencies]
 
 crates/toasty-driver-postgresql/Cargo.toml
      1→[package]
+     2→name = "toasty-driver-postgresql"
+     3→version = "0.1.0"
+     4→edition = "2021"
+     5→
      6→[features]
     11→[dependencies]
 
@@ -358,6 +386,7 @@ crates/std-util/src/num.rs
      1→pub trait NumUtil …
      2→    fn is_even(&self) -> bool;
      4→    fn is_odd(&self) -> bool {
+     9→macro_rules! impl_num_util …
 
 crates/std-util/src/option.rs
      2→macro_rules! assert_none …
@@ -733,36 +762,6 @@ crates/toasty/src/stmt.rs
     92→impl<M> fmt::Debug for Statement<M> …
     93→    fn fmt …
 
-crates/toasty-core/src/driver/capability.rs
-     4→pub struct Capability …
-    61→pub struct StorageTypes …
-   103→pub struct SchemaMutations …
-   112→impl Capability …
-   120→    pub fn validate(&self) -> crate::Result<()> {
-   141→    pub fn default_string_max_length(&self) -> Option<u64> {
-   156→    pub fn native_type_for(&self, ty: &stmt::Type) -> stmt::Type {
-   257→impl StorageTypes …
-   386→impl SchemaMutations …
-
-crates/toasty-core/src/driver/operation.rs
-    26→pub enum Operation …
-
-crates/toasty-core/src/driver/response.rs
-     4→pub struct Response …
-     9→pub enum Rows …
-    20→impl Response …
-    40→impl Rows …
-
-crates/toasty-driver-integration-suite-macros/src/lib.rs
-
-crates/toasty-driver-integration-suite-macros/src/parse.rs
-     4→pub trait ExpansionList …
-     7→    fn needs_module_wrapper(&self) -> bool;
-
-crates/toasty-driver-integration-suite-macros/src/test_registry.rs
-
-crates/toasty-driver-integration-suite-macros/src/test_variants.rs
-
 benches/
 
 crates/
@@ -781,6 +780,8 @@ crates/toasty-codegen/src/expand/
 
 crates/toasty-codegen/src/schema/
 
+crates/toasty-core/src/driver/
+
 crates/toasty-core/src/driver/operation/
 
 crates/toasty-core/src/error/
@@ -796,6 +797,8 @@ crates/toasty-driver-dynamodb/src/op/
 crates/toasty-driver-integration-suite/src/
 
 crates/toasty-driver-integration-suite/src/tests/
+
+crates/toasty-driver-integration-suite-macros/src/
 
 crates/toasty-sql/src/serializer/
 

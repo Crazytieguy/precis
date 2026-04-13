@@ -313,10 +313,23 @@ pub fn children<'s>(g: &mut TsGroup<'s>, _ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
             }
         }
         Heading { level, .. } => {
-            if !g.items.is_empty() {
+            let (toml_items, other_items): (Vec<_>, Vec<_>) = g
+                .items
+                .iter()
+                .partition(|i| crate::Lang::from_path(i.path) == Some(crate::Lang::Toml));
+            if !other_items.is_empty() {
                 result.push(Group::Ts(TsGroup {
                     key: HeadingBody { level: *level },
-                    items: g.items.iter().map(|i| clone_ts_item(i)).collect(),
+                    items: other_items.into_iter().map(|i| clone_ts_item(i)).collect(),
+                    inherited_modifier: g.inherited_modifier,
+                    dependent_siblings: vec![],
+                    cached_render: None,
+                }));
+            }
+            for item in &toml_items {
+                result.push(Group::Ts(TsGroup {
+                    key: HeadingBody { level: *level },
+                    items: vec![clone_ts_item(item)],
                     inherited_modifier: g.inherited_modifier,
                     dependent_siblings: vec![],
                     cached_render: None,

@@ -34,26 +34,6 @@ The old (pre-rewrite) output showed full signatures for these key methods. The n
 
 In `error.rs`, five `pub(crate) fn construct_from_*` methods and `unsafe fn construct` are shown alongside the collapsed public API methods. These are internal implementation details that a reader doesn't need. They also give a misleading impression of the module's surface area — 6 internal constructors listed next to 4 collapsed public methods suggests they're similarly important.
 
-## 4. Cargo.toml / pyproject.toml content lines lost vs pre-rewrite
-
-**Affected snapshots:** anyhow, sps, sps_core, toasty, tomli
-
-The pre-rewrite output showed actual package metadata:
-```
-     2→name = "anyhow"
-     3→version = "1.0.101"
-     6→description = "Flexible concrete Error type built on std::error::Error"
-```
-
-The new output shows only section headers (`[package]`, `[features]`, `[dependencies]`). For a library, the description and dependency list provide useful context about what the crate does and what it depends on.
-
-In sps_core, the old output showed 24 lines of Cargo.toml including the full package metadata (name, version, description, authors, license, repository) and all 14 dependencies (sps-net, sps-common, anyhow, tokio, reqwest, serde, etc.). The new output shows only `[package]` (line 1) and `[dependencies]` (line 10).
-
-In sps, the workspace has 3 sub-crate Cargo.toml files (sps-common, sps-core, sps-net). The pre-rewrite showed package name, version, and key dependencies for each (e.g., `sps-common` version 0.1.56, `sps-net` depending on `sps-common`). The new output shows only `[package]` and `[dependencies]` headers. In a multi-crate workspace, the inter-crate dependency lines (`sps-net = "0.1.56"`, `sps-common = "0.1.56"`) tell a reader the dependency graph between crates.
-
-In toasty, the workspace Cargo.toml pre-rewrite showed `resolver = "2"` and the beginning of the `members` list (`"crates/toasty"`, `"crates/toasty-cli"`, ...) — instantly telling a reader this is a multi-crate workspace and which crates exist. The new output shows only `[workspace]` (line 1) and `[workspace.dependencies]` (line 37). Similarly, `toasty-sql/Cargo.toml` pre-rewrite showed the full file (name, version, edition, publish=false, `toasty-core.workspace = true`); the new output shows the same content, which is good — but 6 other crate Cargo.toml files show only header-only `[package]` / `[dependencies]` lines.
-
-In tomli, pyproject.toml pre-rewrite showed `name = "tomli"`, `version = "2.4.0"`, `description = "A lil' TOML parser"`, and the build backend. The new output shows only section headers — and actually more of them (12 headers including `[tool.tox.env_run_base]`, `[tool.coverage.run]`, `[tool.coverage.report]`, three `[[tool.mypy.overrides]]`). The tool configuration sections are less useful than the package identity that was lost.
 
 ## 5. Macro doc summaries lost vs pre-rewrite
 

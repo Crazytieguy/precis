@@ -313,14 +313,11 @@ changelog/README.rst
 
 docs/examples/toy-example.py
      8→class MySpec …
-     9→    """A hook specification namespace."""
     12→    def myhook(self, arg1, arg2):
     13→        """My special little hook that you can customize."""
     16→class Plugin_1 …
-    17→    """A hook implementation namespace."""
     20→    def myhook(self, arg1, arg2):
     25→class Plugin_2 …
-    26→    """A 2nd hook implementation namespace."""
     29→    def myhook(self, arg1, arg2):
 
 docs/conf.py
@@ -331,6 +328,11 @@ docs/requirements.txt
 
 codecov.yml
      1→coverage:
+     2→  status:
+     3→    project: true
+     4→    patch: true
+     5→    changes: true
+     6→
      7→comment: off
 
 pyproject.toml
@@ -368,8 +370,6 @@ docs/examples/eggsample/setup.py
 changelog/590.trivial.rst
 
 changelog/_template.rst
-
-CHANGELOG.rst
 
 docs/_static/
 

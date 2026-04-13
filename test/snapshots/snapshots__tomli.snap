@@ -259,17 +259,14 @@ benchmark/README.md
 
 pyproject.toml
      1→[build-system]
+     2→requires = ["flit_core>=3.12,<4"]
+     3→build-backend = "flit_core.buildapi"
+     4→
      5→[project]
     28→[project.urls]
     33→[tool.isort]
     46→[tool.tox]
-    51→[tool.tox.env_run_base]
-   129→[tool.coverage.run]
-   133→[tool.coverage.report]
    145→[tool.mypy]
-   157→[[tool.mypy.overrides]]
-   161→[[tool.mypy.overrides]]
-   167→[[tool.mypy.overrides]]
 
 setup.py
 
@@ -302,6 +299,9 @@ tests/burntsushi.py
     43→    """Normalize test objects.
     44→
     45→    This normalizes primitive values (e.g. floats)."""
+    68→def _normalize_datetime_str …
+    92→def _normalize_localtime_str …
+    96→def _normalize_float_str …
 
 benchmark/data.toml
 
