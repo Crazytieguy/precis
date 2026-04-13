@@ -66,13 +66,15 @@ The new output just shows `macro_rules! bail …` and `macro_rules! anyhow …`.
 
 ## 6. README body content dropped — only headings shown
 
-**Affected snapshots:** bareiron, commander
+**Affected snapshots:** bareiron, commander, d2ts_d2ts
 
 The output shows README.md with only headings — zero body content. The pre-rewrite output showed introductory sections that tell the reader what the project is.
 
 In bareiron, the full introductory section (lines 1-11) was shown: project description ("Minimalist Minecraft server for memory-restrictive embedded systems"), design priorities, Minecraft/protocol version numbers, and a compatibility warning.
 
 In commander, the pre-rewrite showed lines 1-45: the description ("The complete solution for node.js command-line interfaces"), a language-switch note, and the full table of contents. The new output shows only headings — a reader can see the section structure but not what Commander.js is or does.
+
+In d2ts_d2ts, the pre-rewrite showed lines 28-32: "D2TS is a TypeScript implementation of differential dataflow," what it does (incremental pipelines), and ElectricSQL integration. The new output shows 16 headings (h1 through h3) but zero body text.
 
 This is the highest-value content in a repo for building a mental model. A reader seeing only headings knows the structure but not the purpose.
 
@@ -152,3 +154,19 @@ Root cause: the TypeScript tree-sitter query captures `import_statement` (ES6 im
 2. `exports.program = new Command()` — this is an `expression_statement` with an assignment, not any captured pattern.
 
 The result is zero extracted items, so the file contributes nothing to the output. This is a significant gap for JavaScript projects that use CommonJS (which is still the majority of npm packages). For entry point files especially, the exports list is often the single most useful piece of information about the library.
+
+## 12. TypeScript function overloads shown individually, consuming budget on duplicates
+
+**Affected snapshots:** d2ts_d2ts
+
+`src/d2.ts` has 20 TypeScript overload signatures for `StreamBuilder.pipe()` (lines 119-157) — a common pattern for type inference in pipe-style APIs (rxjs uses the same approach). Each overload differs only in the number of generic type parameters. The output shows all 20 as separate `pipe …` lines:
+
+```
+   119→  pipe …
+   121→  pipe …
+   123→  pipe …
+       ... (20 identical lines)
+   157→  pipe …
+```
+
+This consumes ~20 lines of budget to convey one fact: "StreamBuilder has a pipe method." The pre-rewrite output showed only the class name without expanding methods, so the overloads weren't visible. The new output's per-method expansion causes each overload to appear as a separate FunctionName entry at base value 1.0, and since they're all public, none gets filtered. A reader seeing 20 `pipe …` lines gains nothing over seeing one.
