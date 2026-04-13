@@ -36,7 +36,7 @@ In `error.rs`, five `pub(crate) fn construct_from_*` methods and `unsafe fn cons
 
 ## 4. Cargo.toml content lines lost vs pre-rewrite
 
-**Affected snapshots:** anyhow, sps_core
+**Affected snapshots:** anyhow, sps, sps_core
 
 The pre-rewrite output showed actual package metadata:
 ```
@@ -48,6 +48,8 @@ The pre-rewrite output showed actual package metadata:
 The new output shows only section headers (`[package]`, `[features]`, `[dependencies]`). For a library, the description and dependency list provide useful context about what the crate does and what it depends on.
 
 In sps_core, the old output showed 24 lines of Cargo.toml including the full package metadata (name, version, description, authors, license, repository) and all 14 dependencies (sps-net, sps-common, anyhow, tokio, reqwest, serde, etc.). The new output shows only `[package]` (line 1) and `[dependencies]` (line 10).
+
+In sps, the workspace has 3 sub-crate Cargo.toml files (sps-common, sps-core, sps-net). The pre-rewrite showed package name, version, and key dependencies for each (e.g., `sps-common` version 0.1.56, `sps-net` depending on `sps-common`). The new output shows only `[package]` and `[dependencies]` headers. In a multi-crate workspace, the inter-crate dependency lines (`sps-net = "0.1.56"`, `sps-common = "0.1.56"`) tell a reader the dependency graph between crates.
 
 ## 5. Macro doc summaries lost vs pre-rewrite
 
@@ -68,7 +70,7 @@ The new output just shows `macro_rules! bail …` and `macro_rules! anyhow …`.
 
 ## 6. README body content dropped — only headings shown
 
-**Affected snapshots:** bareiron, commander, d2ts, d2ts_d2ts, log, mcphost, mdbook, mdbook_guide_src, pluggy, semver, soluna
+**Affected snapshots:** bareiron, commander, d2ts, d2ts_d2ts, log, mcphost, mdbook, mdbook_guide_src, pluggy, semver, soluna, sps
 
 The output shows README.md with only headings — zero body content. The pre-rewrite output showed introductory sections that tell the reader what the project is.
 
@@ -83,6 +85,8 @@ In d2ts_d2ts, the pre-rewrite showed lines 28-32: "D2TS is a TypeScript implemen
 In mdbook_guide_src, the root README is the mdBook project introduction. The pre-rewrite showed lines 1-33: the full description ("**mdBook** is a command line tool to create books with Markdown"), the feature list (search, syntax highlighting, themes, preprocessors, backends), and a guide introduction. The new output shows only `# Introduction`, `## Contributing`, `## License`. Meanwhile, nested READMEs (cli/, for_developers/, format/, guide/) all get their body content, and the budget goes to deep h3/h4 headings across reference pages (format/configuration/renderers.md gets ~12 heading lines, format/markdown.md gets ~10).
 
 In mdbook, the root README loses its one-line description ("mdBook is a utility to create modern online books from Markdown files") and user guide links. More impactfully, 6 of 8 crate READMEs lose their one-sentence descriptions — the pre-rewrite showed "This is the base support library... intended for internal use only" (mdbook-core), "This is the Rust library to implement a preprocessor" (mdbook-preprocessor), etc. In a multi-crate workspace, these descriptions are how a reader understands the crate decomposition: which crates are public API vs internal, and what each provides. The new output shows 8 bare `# crate-name` headings that convey the names but not the purpose or stability guarantees.
+
+In sps, the README opens with a `[!WARNING]` blockquote (lines 3-22) announcing the project is being scrapped in favor of sps v2, with architectural rationale and a link to the new repo. This is the single most important piece of information about sps. The pre-rewrite showed all of it; the new output shows only 9 heading lines. The new output also adds boilerplate headings ("Contributing", "License") that the old correctly omitted.
 
 This is the highest-value content in a repo for building a mental model. A reader seeing only headings knows the structure but not the purpose.
 
@@ -347,7 +351,7 @@ Root cause: the 2.5× `header_factor` doesn't compensate for krep.c's 16:1 line 
 
 ## 18. Struct and enum bodies elided — many small entries beat fewer large ones
 
-**Affected snapshots:** log, mdbook, neco, otree
+**Affected snapshots:** log, mdbook, neco, otree, sps
 
 Large body groups (StructBody at base_value 1.2, EnumBody at 1.5) lose budget to many small FunctionName entries (base_value 1.0, ~2 tokens each). The per-token value/cost ratio strongly favors function names, so the scheduler fills the budget with hundreds of cheap name entries before committing to any multi-line body block.
 
@@ -371,6 +375,8 @@ These types define mdBook's entire data model and plugin API. A reader seeing `p
 In neco's `neco.h`, the `neco_stats` typedef struct body is truncated from 12 lines to one: `287→typedef struct neco_stats { …`. The pre-rewrite showed all 11 fields with doxygen comments (`coroutines`, `sleepers`, `evwaiters`, `sigwaiters`, `senders`, `receivers`, `locked`, `waitgroupers`, `condwaiters`, `suspended`, `workers`). This struct tells a reader exactly what runtime telemetry is available — it's the only struct in the API whose fields are user-facing. The budget instead goes to showing all ~90 function declarations in the header, many truncated to just names (e.g., `int neco_yield …`).
 
 In otree, `CommandArgs` (~90 lines of clap-derived CLI flags with doc comments) defines the entire user-facing interface — every command-line option from `--content-type` to `--live-reload` to `--wrap`. The pre-rewrite output showed all fields with documentation. The new output shows `pub struct CommandArgs …`. Similarly, `ContentType` enum variants (Json, Yaml, Toml, Xml, Hcl, Jsonl, Any — with doc comments explaining HCL and JSONL) are truncated to `pub enum ContentType …`, and `SyntaxToken` variants (Symbol, Name, Tag, String, Number, Null, Bool, Section, Break) are truncated to `pub enum SyntaxToken …`. The freed budget goes partly to README install instruction body content (~12 lines showing `paru -S otree` and `brew install otree` commands) that the pre-rewrite output correctly omitted. The old output also showed the `docs/actions.md` keybinding table (first few rows of the action/key/description reference) — for a TUI tool, this is core functionality — while the new output shows only the `# All Available Actions` heading.
+
+In sps, the workspace spans 4 crates with several domain-defining types whose bodies are all lost. `SpsError` (15+ variants with `#[error("...")]` messages) tells a reader every failure mode in the system — the pre-rewrite showed all variants. `PipelineEvent` (~20 variants with struct fields) defines the entire event-driven architecture — download lifecycle, job processing, dependency resolution events. `InstalledArtifact` (9 variants: AppBundle, BinaryLink, ManpageLink, MovedResource, PkgUtilReceipt, Launchd, CaskroomLink, CaskroomReference — each with field docs) defines what a "cask install" means at the filesystem level. `JobProcessingState` (8 states from PendingDownload through Succeeded/Failed, with doc comments) defines the job state machine. `BuildEnvironment` struct fields with doc comments explain the build sandbox. `CaskInstallManifest` and `ResolvedDependency` struct fields were also shown in full. The pre-rewrite output showed all of these; collectively they formed the architectural skeleton of the project. The new output collapses every one to just a name.
 
 Additional budget pressure in log comes from `src/__private_api.rs` (~20 lines), a file whose module doc starts with "WARNING: this is not part of the crate's public API and is subject to change at any time." This file is not flagged by `is_deprioritized_file()` because no rule matches `__`-prefixed source files. The old output also showed this file — it's not a regression, but the 20 lines would be better spent on the missing enum bodies.
 
