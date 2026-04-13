@@ -34,9 +34,9 @@ The old (pre-rewrite) output showed full signatures for these key methods. The n
 
 In `error.rs`, five `pub(crate) fn construct_from_*` methods and `unsafe fn construct` are shown alongside the collapsed public API methods. These are internal implementation details that a reader doesn't need. They also give a misleading impression of the module's surface area — 6 internal constructors listed next to 4 collapsed public methods suggests they're similarly important.
 
-## 4. Cargo.toml content lines lost vs pre-rewrite
+## 4. Cargo.toml / pyproject.toml content lines lost vs pre-rewrite
 
-**Affected snapshots:** anyhow, sps, sps_core, toasty
+**Affected snapshots:** anyhow, sps, sps_core, toasty, tomli
 
 The pre-rewrite output showed actual package metadata:
 ```
@@ -52,6 +52,8 @@ In sps_core, the old output showed 24 lines of Cargo.toml including the full pac
 In sps, the workspace has 3 sub-crate Cargo.toml files (sps-common, sps-core, sps-net). The pre-rewrite showed package name, version, and key dependencies for each (e.g., `sps-common` version 0.1.56, `sps-net` depending on `sps-common`). The new output shows only `[package]` and `[dependencies]` headers. In a multi-crate workspace, the inter-crate dependency lines (`sps-net = "0.1.56"`, `sps-common = "0.1.56"`) tell a reader the dependency graph between crates.
 
 In toasty, the workspace Cargo.toml pre-rewrite showed `resolver = "2"` and the beginning of the `members` list (`"crates/toasty"`, `"crates/toasty-cli"`, ...) — instantly telling a reader this is a multi-crate workspace and which crates exist. The new output shows only `[workspace]` (line 1) and `[workspace.dependencies]` (line 37). Similarly, `toasty-sql/Cargo.toml` pre-rewrite showed the full file (name, version, edition, publish=false, `toasty-core.workspace = true`); the new output shows the same content, which is good — but 6 other crate Cargo.toml files show only header-only `[package]` / `[dependencies]` lines.
+
+In tomli, pyproject.toml pre-rewrite showed `name = "tomli"`, `version = "2.4.0"`, `description = "A lil' TOML parser"`, and the build backend. The new output shows only section headers — and actually more of them (12 headers including `[tool.tox.env_run_base]`, `[tool.coverage.run]`, `[tool.coverage.report]`, three `[[tool.mypy.overrides]]`). The tool configuration sections are less useful than the package identity that was lost.
 
 ## 5. Macro doc summaries lost vs pre-rewrite
 
@@ -119,7 +121,7 @@ The pre-rewrite showed complete lines with values and trailing doxygen descripti
 
 ## 8. CommunityHealth, AiConfig, and Changelog files not deprioritized at root level
 
-**Affected snapshots:** chronos, peepdb, pluggy, semver, toasty
+**Affected snapshots:** chronos, peepdb, pluggy, semver, toasty, tomli
 
 CONTRIBUTING.md gets ~53 lines of output — more than any individual source file — for a boilerplate Amazon open source contributing guide ("how to file bugs", "how to send PRs"). The pre-rewrite output didn't show CONTRIBUTING.md content at all.
 
@@ -128,6 +130,8 @@ In peepdb, the regression is even more severe: CONTRIBUTING.md goes from 1 line 
 In pluggy, CLAUDE.md (classified as `AiConfig`) gets ~50 lines of output showing development commands, testing instructions, and architecture notes — none of which helps a reader understand what pluggy is or how its plugin system works. The pre-rewrite output didn't show CLAUDE.md at all. This budget directly displaces the README.rst content (see issue #6).
 
 In semver, CHANGELOG.md (326 lines, classified as `Changelog`) gets ~70 lines of version headings spanning the full file — every release from v7.7.4 back to v5.0. The pre-rewrite output didn't show CHANGELOG.md at all. The budget goes to ~40 version headings (h2/h3) that tell a reader nothing about what semver is or how it works, while README body content (see #6), the public API surface in `index.js` (see #11), and class method signatures (see #9) are all lost.
+
+In tomli, CHANGELOG.md (202 lines) gets ~30 lines showing every version heading from 0.1.0 through 2.4.0. The pre-rewrite output didn't show CHANGELOG.md content at all (just the header). The version list consumes budget that could go to pyproject.toml metadata (see #4) or test method names.
 
 In toasty, 5 `CONTEXT.md` files (in crates/toasty/, toasty-core/, toasty-codegen/, toasty-sql/, toasty-driver-sqlite/) each show 8-12 heading lines, consuming ~50 lines total. These are AI context documents (same purpose as CLAUDE.md — agent instructions and development workflow) but `CONTEXT.md` isn't in the `AiConfig` stem list, so they're classified as `Normal` and compete at full value. The pre-rewrite also showed these files, so it's not a regression, but the classification gap means they aren't deprioritized even though they should be.
 
