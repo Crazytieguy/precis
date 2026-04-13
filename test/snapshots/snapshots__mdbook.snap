@@ -15,11 +15,7 @@ README.md
 src/main.rs
      1→//! The mdbook CLI.
     16→const VERSION …
-    18→fn main …
     58→fn create_clap_command() -> Command {
-    93→fn init_logger …
-   126→fn get_book_dir …
-   139→fn open …
 
 guide/src/README.md
      1→# Introduction
@@ -64,13 +60,6 @@ Cargo.toml
 
 guide/guide-helper/Cargo.toml
      1→[package]
-     2→name = "guide-helper"
-     3→publish = false
-     4→edition.workspace = true
-     5→license.workspace = true
-     6→repository.workspace = true
-     7→rust-version.workspace = true
-     8→
      9→[dependencies]
     10→mdbook-preprocessor.workspace = true
     11→semver.workspace = true
@@ -94,9 +83,7 @@ src/cmd/watch/native.rs
 
 src/cmd/watch/poller.rs
      1→//! A simple poll-based filesystem watcher.
-    17→/// Calls the closure when a book source file is changed, blocking indefinitely.
     18→pub fn rebuild_on_change …
-    78→struct PathData …
     86→struct Watcher …
     95→impl Watcher …
    124→    fn set_roots …
@@ -107,24 +94,52 @@ crates/mdbook-compare/README.md
 
 crates/mdbook-core/README.md
      1→# mdbook-core
+     7→This is the base support library for [mdBook](https://rust-lang.github.io/mdBook/). It is intended for internal use only. Other mdBook crates depend on this for any types that are shared across the crates.
+     8→
+     9→> This crate is maintained by the mdBook team, primarily for use by mdBook and not intended for external use (except as a transitive dependency). This crate may make major changes to its APIs or be deprecated without warning.
+    10→
 
 crates/mdbook-driver/README.md
      1→# mdbook-driver
+     7→This is the high-level Rust library for running [mdBook](https://rust-lang.github.io/mdBook/). New books can be created using [`BookBuilder`](https://docs.rs/mdbook-driver/latest/mdbook_driver/init/struct.BookBuilder.html). The primary type [`MDBook`](https://docs.rs/mdbook-driver/latest/mdbook_driver/struct.MDBook.html) can be used to manage and render books.
+     8→
+     9→> This crate is maintained by the mdBook team for use by the wider ecosystem. This crate follows [semver compatibility](https://doc.rust-lang.org/cargo/reference/semver.html) for its APIs.
+    10→
 
 crates/mdbook-html/README.md
      1→# mdbook-html
+     7→This is the HTML renderer for [mdBook](https://rust-lang.github.io/mdBook/). This is intended for internal use only. It is automatically included by [`mdbook-driver`](https://crates.io/crates/mdbook-driver) to render books to HTML.
+     8→
+     9→> This crate is maintained by the mdBook team, primarily for use by mdBook and not intended for external use (except as a transitive dependency). This crate may make major changes to its APIs or be deprecated without warning.
+    10→
 
 crates/mdbook-markdown/README.md
      1→# mdbook-markdown
+     7→This is the Markdown support library for [mdBook](https://rust-lang.github.io/mdBook/). Rust crates (such as preprocessors) can use this library to process Markdown in the same way as mdBook.
+     8→
+     9→> This crate is maintained by the mdBook team for use by the wider ecosystem. This crate follows [semver compatibility](https://doc.rust-lang.org/cargo/reference/semver.html) for its APIs.
+    10→
 
 crates/mdbook-preprocessor/README.md
      1→# mdbook-preprocessor
+     7→This is the Rust library to implement a [preprocessor](https://rust-lang.github.io/mdBook/for_developers/preprocessors.html) for [mdBook](https://rust-lang.github.io/mdBook/).
+     8→
+     9→> This crate is maintained by the mdBook team for use by the wider ecosystem. This crate follows [semver compatibility](https://doc.rust-lang.org/cargo/reference/semver.html) for its APIs.
+    10→
 
 crates/mdbook-renderer/README.md
      1→# mdbook-renderer
+     7→This is the Rust library to implement a [renderer](https://rust-lang.github.io/mdBook/for_developers/backends.html) for [mdBook](https://rust-lang.github.io/mdBook/).
+     8→
+     9→> This crate is maintained by the mdBook team for use by the wider ecosystem. This crate follows [semver compatibility](https://doc.rust-lang.org/cargo/reference/semver.html) for its APIs.
+    10→
 
 crates/mdbook-summary/README.md
      1→# mdbook-summary
+     7→This is the Rust library used to parse the [`SUMMARY.md`](https://rust-lang.github.io/mdBook/format/summary.html) file structure for [mdBook](https://rust-lang.github.io/mdBook/).
+     8→
+     9→> This crate is maintained by the mdBook team for use by the wider ecosystem. This crate follows [semver compatibility](https://doc.rust-lang.org/cargo/reference/semver.html) for its APIs.
+    10→
 
 crates/xtask/README.md
      1→# xtask
@@ -133,8 +148,6 @@ crates/xtask/README.md
 
 crates/mdbook-summary/src/lib.rs
      1→//! Summary parser for mdBook.
-    17→/// Parse the text from a `SUMMARY.md` file into a sort of "recipe" to be
-      →…
     59→pub fn parse_summary(summary: &str) -> Result<Summary> {
     64→/// The parsed `SUMMARY.md`, specifying how the book should be laid out.
     67→pub struct Summary …
@@ -246,7 +259,6 @@ crates/mdbook-html/src/utils.rs
      1→//! Utilities for processing HTML.
      7→pub(crate) fn normalize_path(path: &Path) -> PathBuf {
     42→pub(crate) trait ToUrlPath …
-    43→    fn to_url_path(&self) -> String;
     46→impl ToUrlPath for Path …
     47→    fn to_url_path(&self) -> String {
     58→pub(crate) fn unique_id(id: &str, used: &mut HashSet<String>) -> String {
@@ -271,7 +283,6 @@ crates/mdbook-core/src/book.rs
     76→        F: FnMut(&mut Chapter),
     77→    {
     93→    pub fn push_item<I: Into<BookItem>>(&mut self, item: I) -> &mut Self {
-    99→fn for_each_mut …
    119→pub enum BookItem …
    128→impl From<Chapter> for BookItem …
    129→    fn from …
@@ -322,7 +333,6 @@ crates/mdbook-core/src/config.rs
    236→    pub fn outputs<'de, T: Deserialize<'de>>(&self) -> Result<BTreeMap<String, T>> {
    250→    pub fn html_config(&self) -> Option<HtmlConfig> {
    274→    pub fn set<S: Serialize, I: AsRef<str>>(&mut self, index: I, value: S) -> Result<()> {
-   308→fn parse_env …
    318→pub struct BookConfig …
    336→fn is_default_src(src: &PathBuf) -> bool {
    340→impl Default for BookConfig …
@@ -385,14 +395,6 @@ crates/mdbook-core/Cargo.toml
 
 crates/mdbook-driver/Cargo.toml
      1→[package]
-     2→name = "mdbook-driver"
-     3→version = "0.5.2"
-     4→description = "High-level library for running mdBook"
-     5→edition.workspace = true
-     6→license.workspace = true
-     7→repository.workspace = true
-     8→rust-version.workspace = true
-     9→
     10→[dependencies]
     28→[lints]
     29→workspace = true
@@ -423,14 +425,6 @@ crates/mdbook-html/Cargo.toml
 
 crates/mdbook-summary/Cargo.toml
      1→[package]
-     2→name = "mdbook-summary"
-     3→version = "0.5.2"
-     4→description = "Summary parser for mdBook"
-     5→edition.workspace = true
-     6→license.workspace = true
-     7→repository.workspace = true
-     8→rust-version.workspace = true
-     9→
     10→[dependencies]
     11→anyhow.workspace = true
     12→mdbook-core.workspace = true
@@ -465,9 +459,20 @@ guide/src/for_developers/README.md
 
 guide/src/format/README.md
      1→# Format
+     3→In this section you will learn how to:
+     4→
+     5→- Structure your book correctly
+     6→- Format your `SUMMARY.md` file
+     7→- Configure your book using `book.toml`
+     8→- Customize your theme
 
 guide/src/guide/README.md
      1→# User guide
+     3→This user guide provides an introduction to basic concepts of using mdBook.
+     4→
+     5→- [Installation](installation.md)
+     6→- [Reading Books](reading.md)
+     7→- [Creating a Book](creating.md)
 
 crates/mdbook-compare/Cargo.toml
      1→[package]
@@ -484,14 +489,6 @@ crates/mdbook-compare/Cargo.toml
 
 crates/mdbook-markdown/Cargo.toml
      1→[package]
-     2→name = "mdbook-markdown"
-     3→version = "0.5.2"
-     4→description = "Markdown processing used in mdBook"
-     5→edition.workspace = true
-     6→license.workspace = true
-     7→repository.workspace = true
-     8→rust-version.workspace = true
-     9→
     10→[dependencies]
     11→pulldown-cmark.workspace = true
     12→regex.workspace = true
@@ -502,14 +499,6 @@ crates/mdbook-markdown/Cargo.toml
 
 crates/mdbook-preprocessor/Cargo.toml
      1→[package]
-     2→name = "mdbook-preprocessor"
-     3→version = "0.5.2"
-     4→description = "Library to assist implementing an mdBook preprocessor"
-     5→edition.workspace = true
-     6→license.workspace = true
-     7→repository.workspace = true
-     8→rust-version.workspace = true
-     9→
     10→[dependencies]
     11→anyhow.workspace = true
     12→mdbook-core.workspace = true
@@ -521,14 +510,6 @@ crates/mdbook-preprocessor/Cargo.toml
 
 crates/mdbook-renderer/Cargo.toml
      1→[package]
-     2→name = "mdbook-renderer"
-     3→version = "0.5.2"
-     4→description = "Library to assist implementing an mdBook renderer"
-     5→edition.workspace = true
-     6→license.workspace = true
-     7→repository.workspace = true
-     8→rust-version.workspace = true
-     9→
     10→[dependencies]
     11→anyhow.workspace = true
     12→mdbook-core.workspace = true
@@ -585,7 +566,6 @@ crates/mdbook-driver/src/mdbook.rs
    387→    pub fn theme_dir(&self) -> PathBuf {
    397→struct OutputConfig …
    402→fn determine_renderers …
-   426→const DEFAULT_PREPROCESSORS …
    435→struct PreprocessorConfig …
    446→fn determine_preprocessors …
    549→fn preprocessor_should_run …
@@ -601,10 +581,6 @@ src/cmd/clean.rs
     37→/// Returns a tuple of `(quantity, units)`.
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
     46→pub struct Clean …
-    47→    num_files_removed: u64,
-    48→    num_dirs_removed: u64,
-    49→    total_bytes_removed: u64,
-    50→}
     52→impl Clean …
     53→    fn new …
     91→impl fmt::Display for Clean …
@@ -722,30 +698,24 @@ crates/mdbook-driver/src/builtin_preprocessors/links/take_lines.rs
 
 crates/mdbook-core/src/utils/fs.rs
      1→//! Filesystem utilities and helpers.
-    11→pub fn read_to_string<P: AsRef<Path>>(path: P) -> Result<String> {
-    20→pub fn write<P: AsRef<Path>, C: AsRef<[u8]>>(path: P, contents: C) -> Result<()> {
-    31→pub fn create_dir_all(p: impl AsRef<Path>) -> Result<()> {
-    55→pub fn path_to_root<P: Into<PathBuf>>(path: P) -> String {
-    74→pub fn remove_dir_content(dir: &Path) -> Result<()> {
-    93→pub fn copy_files_except_ext(
-    94→    from: &Path,
-    95→    to: &Path,
-    96→    recursive: bool,
-    97→    avoid_dir: Option<&PathBuf>,
-    98→    ext_blacklist: &[&str],
-    99→) -> Result<()> {
+    11→pub fn read_to_string …
+    20→pub fn write …
+    31→pub fn create_dir_all …
+    55→pub fn path_to_root …
+    74→pub fn remove_dir_content …
+    93→pub fn copy_files_except_ext …
    155→fn copy …
 
 crates/mdbook-core/src/utils/html.rs
      1→//! Utilities for dealing with HTML.
-     6→pub fn escape_html_attribute(text: &str) -> Cow<'_, str> {
-    32→pub fn escape_html(text: &str) -> Cow<'_, str> {
+     6→pub fn escape_html_attribute …
+    32→pub fn escape_html …
 
 crates/mdbook-core/src/utils/mod.rs
      1→//! Various helpers and utilities.
     15→/// Defines a `static` with a [`regex::Regex`].
     17→macro_rules! static_regex …
-    29→pub fn log_backtrace(e: &Error) {
+    29→pub fn log_backtrace …
 
 crates/mdbook-core/src/utils/toml_ext.rs
      1→//! Helper for working with toml types.
@@ -755,7 +725,6 @@ crates/mdbook-core/src/utils/toml_ext.rs
     13→impl TomlExt for Value …
     14→    fn read …
     22→    fn insert …
-    40→fn split …
 
 crates/mdbook-html/src/theme/fonts.rs
 
@@ -763,28 +732,17 @@ crates/mdbook-html/src/theme/mod.rs
      1→//! Support for theme files.
     40→pub struct Theme …
     63→impl Theme …
-    66→    pub fn new<P: AsRef<Path>>(theme_dir: P) -> Self {
-   166→    pub fn copy_theme(html_config: &HtmlConfig, root: &Path) -> Result<()> {
+    66→    pub fn new …
+   166→    pub fn copy_theme …
    200→impl Default for Theme …
-   201→    fn default() -> Theme {
-   229→fn load_file_contents …
 
 crates/mdbook-html/src/theme/playground_editor.rs
      1→//! Theme dependencies for the playground editor.
 
 crates/mdbook-html/src/theme/searcher.rs
      1→//! Theme dependencies for in-browser search. Not included in mdbook when
-     2→//! the "search" cargo feature is disabled.
 
 guide/book.toml
-     1→[book]
-     7→[rust]
-     8→edition = "2018"
-     9→
-    40→[build]
-    41→extra-watch-dirs = ["guide-helper/src"]
-
-examples/remove-emphasis/test.rs
 
 crates/
 
@@ -797,6 +755,8 @@ crates/mdbook-html/src/html/
 crates/mdbook-html/src/html_handlebars/
 
 crates/mdbook-html/src/html_handlebars/helpers/
+
+examples/remove-emphasis/
 
 guide/src/format/images/
 

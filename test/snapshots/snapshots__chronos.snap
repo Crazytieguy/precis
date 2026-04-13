@@ -18,6 +18,9 @@ CITATION.cff
 
 scripts/README.md
      1→# Usage Examples
+     3→> [!NOTE]  
+     4→> The following documentation was originally written for the Chronos models released in Mar 2024 and may be outdated. If something does not work, please open an issue or a pull request.
+     5→
 
 src/chronos/__about__.py
      1→__version__ …
@@ -250,9 +253,7 @@ src/chronos/chronos2/dataset.py
    340→    Convert a tensor input format to a list of dictionaries input format.
       →…
    370→def _cast_fev_features …
-   406→def convert_fev_window_to_list_of_dicts_input(
-   407→    window: "fev.EvaluationWindow", as_univariate: bool
-   408→) -> tuple[list[dict[str, np.ndarray | dict[str, np.ndarray]]], list[str], list[str], list[str]]:
+   406→def convert_fev_window_to_list_of_dicts_input …
    466→class DatasetMode …
    472→class Chronos2Dataset …
    474→    A dataset wrapper for Chronos-2 models.
@@ -354,7 +355,7 @@ src/chronos/chronos2/pipeline.py
   1224→    def save_pretrained …
 
 src/chronos/chronos2/trainer.py
-    17→def seed_worker(worker_id: int):
+    17→def seed_worker …
     30→class EvaluateAndSaveFinalStepCallback …
     31→    """Callback to evaluate and save the model at last training step."""
     32→

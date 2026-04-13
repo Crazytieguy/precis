@@ -4,11 +4,35 @@ expression: output
 ---
 README.md
      1→# Introduction
+     3→<style>
+     4→    .mdbook-version {
+     5→        position: absolute;
+     6→        right: 20px;
+     7→        top: 60px;
+     8→        background-color: var(--theme-popup-bg);
+     9→        border-radius: 8px;
+    10→        padding: 2px 5px 2px 5px;
+    11→        border: 1px solid var(--theme-popup-border);
+    12→        font-size: 0.9em;
+    13→    }
+    14→</style>
     46→## Contributing
     55→## License
 
 cli/README.md
      1→# Command-line tool
+     3→The `mdbook` command-line tool is used to create and build books.
+     4→After you have [installed](../guide/installation.md) `mdbook`, you can run the `mdbook help` command in your terminal to view the available commands.
+     5→
+     6→This following sections provide in-depth information on the different commands available.
+     7→
+     8→* [`mdbook init <directory>`](init.md) --- Creates a new book with minimal boilerplate to start with.
+     9→* [`mdbook build`](build.md) --- Renders the book.
+    10→* [`mdbook watch`](watch.md) --- Rebuilds the book any time a source file changes.
+    11→* [`mdbook serve`](serve.md) --- Runs a web server to view the book, and rebuilds on changes.
+    12→* [`mdbook test`](test.md) --- Tests Rust code samples.
+    13→* [`mdbook clean`](clean.md) --- Deletes the rendered output.
+    14→* [`mdbook completions`](completions.md) --- Support for shell auto-completion.
 
 for_developers/README.md
      1→# For developers
@@ -24,8 +48,6 @@ for_developers/README.md
     12→The two main ways a developer can hook into the book's build process is via,
     13→
     14→- [Preprocessors](preprocessors.md)
-    15→- [Alternative Backends](backends.md)
-    16→
     17→## The build process
     30→## Using `mdbook` as a library
 
@@ -61,6 +83,18 @@ format/configuration/README.md
 
 format/theme/README.md
      1→# Theme
+     3→The default renderer uses a [handlebars](https://handlebarsjs.com) template to
+     4→render your markdown files and comes with a default theme included in the mdBook
+     5→binary.
+     6→
+     7→The theme is totally customizable, you can selectively replace every file from
+     8→the theme by your own by adding a `theme` directory next to `src` folder in your
+     9→project root. Create a new file with the name of the file you want to override
+    10→and now that file will be used instead of the default file.
+    11→
+    12→Here are the files you can override:
+    13→
+    14→- **_index.hbs_** is the handlebars template.
 
 404.md
      1→# Document not found (404)
@@ -88,25 +122,6 @@ SUMMARY.md
     22→    - [SUMMARY.md](format/summary.md)
     23→        - [Draft chapter]()
     24→    - [Configuration](format/configuration/README.md)
-    25→        - [General](format/configuration/general.md)
-    26→        - [Preprocessors](format/configuration/preprocessors.md)
-    27→        - [Renderers](format/configuration/renderers.md)
-    28→        - [Environment variables](format/configuration/environment-variables.md)
-    29→    - [Theme](format/theme/README.md)
-    30→        - [index.hbs](format/theme/index-hbs.md)
-    31→        - [Syntax highlighting](format/theme/syntax-highlighting.md)
-    32→        - [Editor](format/theme/editor.md)
-    33→    - [MathJax support](format/mathjax.md)
-    34→    - [mdBook-specific features](format/mdbook.md)
-    35→    - [Markdown](format/markdown.md)
-    36→- [Continuous integration](continuous-integration.md)
-    37→- [For developers](for_developers/README.md)
-    38→    - [Preprocessors](for_developers/preprocessors.md)
-    39→    - [Alternative backends](for_developers/backends.md)
-    40→
-    41→-----------
-    42→
-    43→[Contributors](misc/contributors.md)
 
 continuous-integration.md
      1→# Running `mdbook` in continuous integration
@@ -168,6 +183,11 @@ guide/reading.md
 
 format/example.rs
      1→fn main() {
+     2→    println!("Hello World!");
+     3→#
+     4→#     // You can even hide lines! :D
+     5→#     println!("I am hidden! Expand the code snippet to see me");
+     6→}
 
 format/markdown.md
      1→# Markdown
@@ -210,15 +230,6 @@ format/mathjax.md
     12→```
     13→
     14→>**Note:** The usual delimiters MathJax uses are not yet supported. You can't
-    15→currently use `$$ ... $$` as delimiters and the `\[ ... \]` delimiters need an
-    16→extra backslash to work. Hopefully this limitation will be lifted soon.
-    17→
-    18→>**Note:** When you use double backslashes in MathJax blocks (for example in
-    19→> commands such as `\begin{cases} \frac 1 2 \\ \frac 3 4 \end{cases}`) you need
-    20→> to add _two extra_ backslashes (e.g., `\begin{cases} \frac 1 2 \\\\ \frac 3 4
-    21→> \end{cases}`).
-    22→
-    23→
     24→### Inline equations
     32→### Block equations
 
@@ -353,31 +364,18 @@ format/configuration/environment-variables.md
 format/configuration/general.md
      1→# General configuration
     31→## Supported configuration options
-    37→### General metadata
-    64→### Rust options
-    85→### Build options
 
 format/configuration/preprocessors.md
      1→# Configuring Preprocessors
     26→## Custom preprocessor configuration
     45→## Locking a preprocessor dependency to a renderer
     55→## Provide your own command
-    67→### Optional preprocessors
     79→## Require a certain order
 
 format/configuration/renderers.md
      1→# Configuring Renderers
     20→## Output tables
-    59→### Custom backend commands
-    71→### Optional backends
     84→## HTML renderer options
-   176→### `[output.html.print]`
-   191→### `[output.html.fold]`
-   206→### `[output.html.playground]`
-   230→### `[output.html.code]`
-   244→### `[output.html.search]`
-   286→#### `[output.html.search.chapter]`
-   300→### `[output.html.redirect]`
    325→## Markdown renderer
 
 format/images/rust-logo-blk.svg

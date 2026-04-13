@@ -4,10 +4,19 @@ expression: output
 ---
 README.md
      1→# Toasty
+     3→**Current status: Incubating - Toasty is not ready for production usage. The API
+     4→is still evolving and documentation is lacking.**
+     5→
+     6→Toasty is an ORM for the Rust programming language that prioritizes ease-of-use.
+     7→It supports both SQL databases as well as some NoSQL databases, including DynamoDB
+     8→and Cassandra. Note that Toasty does not hide the database capabilities.
+     9→Instead, Toasty exposes features based on the target database.
+    10→
     11→## Using Toasty
     76→## SQL and NoSQL
     91→## Application data model vs. database schema
     98→## Current status and roadmap
+   111→## License
    117→### Contribution
 
 docs/ARCHITECTURE.md
@@ -116,12 +125,6 @@ crates/toasty-cli/Cargo.toml
 
 crates/toasty-codegen/Cargo.toml
      1→[package]
-     2→name = "toasty-codegen"
-     3→version = "0.1.0"
-     4→edition = "2021"
-     5→
-     6→# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-     7→
      8→[dependencies]
      9→proc-macro2.workspace = true
     10→quote.workspace = true
@@ -349,14 +352,12 @@ crates/toasty-cli/src/lib.rs
     47→        T: Into<std::ffi::OsString> + Clone,
     48→    {
     64→struct Cli …
-    70→enum Command …
 
 crates/toasty-cli/src/migration.rs
     25→pub struct MigrationCommand …
     26→    #[command(subcommand)]
     27→    subcommand: MigrationSubcommand,
     28→}
-    31→enum MigrationSubcommand …
     48→impl MigrationCommand …
     54→impl MigrationSubcommand …
 
@@ -756,13 +757,6 @@ crates/toasty/src/stmt.rs
     92→impl<M> fmt::Debug for Statement<M> …
     93→    fn fmt …
 
-crates/toasty-core/src/driver/capability.rs
-   103→pub struct SchemaMutations …
-
-crates/toasty-core/src/driver/operation.rs
-
-crates/toasty-core/src/driver/response.rs
-
 benches/
 
 crates/
@@ -780,6 +774,8 @@ crates/toasty-cli/src/migration/
 crates/toasty-codegen/src/expand/
 
 crates/toasty-codegen/src/schema/
+
+crates/toasty-core/src/driver/
 
 crates/toasty-core/src/driver/operation/
 

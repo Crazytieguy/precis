@@ -154,8 +154,6 @@ README.md
 
 cmd/tock/main.go
      7→func main() {
-     8→	cli.Execute()
-     9→}
 
 demo/demo_script.sh
 
@@ -173,14 +171,6 @@ docs/commands.md
     12→- [Viewing & Reporting](#viewing--reporting)
     13→  - [`calendar`](#calendar)
     14→  - [`list`](#list-alias-ls)
-    15→  - [`current`](#current)
-    16→  - [`last`](#last-alias-lt)
-    17→  - [`report`](#report)
-    18→- [Data & Analysis](#data--analysis)
-    19→  - [`analyze`](#analyze)
-    20→  - [`ical`](#ical)
-    21→- [Global Flags](#global-flags)
-    22→
     23→## Core Commands
     25→### `start`
     57→### `stop` (alias: `s`)
@@ -430,60 +420,43 @@ internal/adapters/repositories/file/repository.go
 internal/adapters/cli/add.go
     16→type addOptions …
     26→func NewAddCmd() *cobra.Command {
-    64→func runAdd …
-   124→func resolveStartTime …
-   163→func resolveEndTimeOrDuration …
+    64→func runAdd(cmd *cobra.Command, opts *addOptions) error {
+   124→func resolveStartTime(startStr string, theme Theme) (string, error) {
+   163→func resolveEndTimeOrDuration(endStr, durationStr string, theme Theme) (string, string, error) {
 
 internal/adapters/cli/analyze.go
     20→func NewAnalyzeCmd() *cobra.Command {
     70→type AnalysisStats …
-    71→	TotalDuration      time.Duration
-    72→	DeepWorkDuration   time.Duration
-    73→	DeepWorkScore      float64 // 0-100
-    74→	ContextSwitches    int
-    75→	AvgSwitchesPerDay  float64
-    76→	Chronotype         string // "Morning Lark", "Night Owl", etc.
-    77→	PeakHour           int
-    78→	FocusDistribution  map[string]int // "Short (<15m)", "Medium (15-60m)", "Long (>60m)"
-    79→	MostProductiveDay  string
-    80→	AvgSessionDuration time.Duration
-    81→}
-    83→//nolint:funlen // analysis function is inherently long
     84→func analyzeData(activities []models.Activity) AnalysisStats {
-   205→//nolint:funlen // render function is inherently long for output formatting
    206→func renderAnalysis(stats AnalysisStats, cfg *config.Config, tf *timeutil.Formatter) {
 
 internal/adapters/cli/calendar.go
     25→func NewCalendarCmd() *cobra.Command {
     48→type reportModel …
-    64→func initialReportModel …
+    64→func initialReportModel(service ports.ActivityResolver, cfg *config.Config, tf *timeutil.Formatter) reportModel {
     79→func (m *reportModel) Init() tea.Cmd {
     83→func (m *reportModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
    134→func (m *reportModel) View() string {
-   156→func (m *reportModel) renderCalendar …
-   234→func (m *reportModel) renderDetails …
-   255→//nolint:funlen //it's more readable to keep the content generation in one place for now
+   156→func (m *reportModel) renderCalendar() string {
+   234→func (m *reportModel) renderDetails() string {
    256→func (m *reportModel) updateViewportContent() {
-   402→func (m *reportModel) formatProjectStat …
+   402→func (m *reportModel) formatProjectStat(name string, duration time.Duration) string {
    416→// Messages and Commands
    418→type monthDataMsg …
    419→	reports map[int]*dto.Report
    420→}
    422→type errMsg …
-   424→func (m *reportModel) fetchMonthData …
-   486→// getWeeklyDuration calculates the total duration for the current week (Monday to Sunday)
-   487→// based on the selected date. Fetches directly from service to handle cross-month weeks.
+   424→func (m *reportModel) fetchMonthData() tea.Msg {
    488→func (m *reportModel) getWeeklyDuration() (time.Duration, error) {
-   520→func (m *reportModel) handleKeyMsg …
+   520→func (m *reportModel) handleKeyMsg(msg tea.KeyMsg) (tea.Cmd, bool) {
 
 internal/adapters/cli/calendar_sidebar.go
     12→const barChar …
-    14→// formatDurationCompact formats a duration as "Xh Ym" for compact display.
     15→func formatDurationCompact(d time.Duration) string {
-    27→func (m *reportModel) renderSidebar …
-    51→func (m *reportModel) renderProductivityStats …
-   128→func (m *reportModel) renderWeeklyActivity …
-   211→func (m *reportModel) renderTopProjects …
+    27→func (m *reportModel) renderSidebar() string {
+    51→func (m *reportModel) renderProductivityStats() string {
+   128→func (m *reportModel) renderWeeklyActivity() string {
+   211→func (m *reportModel) renderTopProjects(maxHeight int) string {
 
 internal/adapters/cli/continue.go
     15→const …
@@ -498,19 +471,19 @@ internal/adapters/cli/current.go
 
 internal/adapters/cli/ical.go
     23→func NewICalCmd() *cobra.Command {
-    78→func handleFullExport …
-   155→func parseKeyOrDate …
-   185→func getActivitiesForDate …
-   210→func handleSingleExport …
-   250→func handleBulkExport …
-   302→func openFileInCalendar …
+    78→func handleFullExport(cmd *cobra.Command, outputDir string, openApp bool) error {
+   155→func parseKeyOrDate(keyOrDate string) (time.Time, int, bool, error) {
+   185→func getActivitiesForDate(cmd *cobra.Command, date time.Time) ([]models.Activity, error) {
+   210→func handleSingleExport(activity models.Activity, key string, outputDir string, openApp bool) error {
+   250→func handleBulkExport(activities []models.Activity, dateKey string, outputDir string, openApp bool) error {
+   302→func openFileInCalendar(path string) error {
 
 internal/adapters/cli/interactive.go
     17→func SelectActivityMetadata(activities []models.Activity, project, description string, theme Theme) (string, string, error) {
-    36→func selectProject …
-    57→func selectTask …
-    80→func getUniqueProjects …
-    89→func getDescriptionsForProject …
+    36→func selectProject(activities []models.Activity, theme Theme) (string, error) {
+    57→func selectTask(activities []models.Activity, project string, theme Theme) (string, error) {
+    80→func getUniqueProjects(activities []models.Activity) []string {
+    89→func getDescriptionsForProject(activities []models.Activity, project string) []string {
     98→func RunInteractiveInput(header, placeholder string, theme Theme) (string, error) {
    123→type simpleInputModel …
    131→func (m simpleInputModel) Init() tea.Cmd { return nil }
@@ -520,38 +493,37 @@ internal/adapters/cli/interactive.go
    201→type simpleListModel …
    212→func (m *simpleListModel) Init() tea.Cmd { return nil }
    214→func (m *simpleListModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-   251→func (m *simpleListModel) applyFilter …
+   251→func (m *simpleListModel) applyFilter() {
    263→func (m *simpleListModel) View() string {
-   301→func (m *simpleListModel) calculateWindow …
+   301→func (m *simpleListModel) calculateWindow(height, end int) (int, int) {
 
 internal/adapters/cli/last.go
     16→type lastOptions …
     21→func NewLastCmd() *cobra.Command {
-    42→func runLastCmd …
+    42→func runLastCmd(cmd *cobra.Command, opt *lastOptions) error {
 
 internal/adapters/cli/list_gui.go
     22→func NewListCmd() *cobra.Command {
     45→type model …
-    57→func initialModel …
-    70→func (m *model) initTable …
-   101→func (m *model) updateActivities …
-   111→func (m *model) navigate …
-   128→func (m *model) findTargetDate …
-   154→func (m *model) renderTable …
+    57→func initialModel(service ports.ActivityResolver, tf *timeutil.Formatter) model {
+    70→func (m *model) initTable() {
+   101→func (m *model) updateActivities() {
+   111→func (m *model) navigate(dir int) {
+   128→func (m *model) findTargetDate(activities []models.Activity, current time.Time, dir int) *time.Time {
+   154→func (m *model) renderTable(activities []models.Activity) {
    200→func (m *model) Init() tea.Cmd {
    204→func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
    230→func (m *model) View() string {
 
 internal/adapters/cli/remove.go
     22→func NewRemoveCmd() *cobra.Command {
-    95→func parseRemoveIndex …
-   116→func findLastActivity …
-   127→func findActivityByIndex …
+    95→func parseRemoveIndex(s string) (time.Time, int, error) {
+   116→func findLastActivity(ctx context.Context, svc ports.ActivityResolver) (models.Activity, error) {
+   127→func findActivityByIndex(ctx context.Context, svc ports.ActivityResolver, index string) (models.Activity, error) {
 
 internal/adapters/cli/report.go
     20→type reportOptions …
     31→func NewReportCmd() *cobra.Command {
-    60→//nolint:funlen // Report command is long but straightforward.
     61→func runReportCmd(cmd *cobra.Command, opt *reportOptions) error {
 
 internal/adapters/cli/root.go
@@ -562,13 +534,13 @@ internal/adapters/cli/root.go
     29→type timeFormatterKey …
     31→func NewRootCmd() *cobra.Command {
    107→func Execute() {
-   115→func getService …
-   119→func getConfig …
-   123→func getTimeFormatter …
-   127→func initRepository …
-   134→func getServiceForCompletion …
-   173→func projectRegisterFlagCompletion …
-   195→func descriptionRegisterFlagCompletion …
+   115→func getService(cmd *cobra.Command) ports.ActivityResolver {
+   119→func getConfig(cmd *cobra.Command) *config.Config {
+   123→func getTimeFormatter(cmd *cobra.Command) *timeutil.Formatter {
+   127→func initRepository(backend, filePath string) ports.ActivityRepository {
+   134→func getServiceForCompletion(cmd *cobra.Command) (ports.ActivityResolver, error) {
+   173→func projectRegisterFlagCompletion(cmd *cobra.Command, _ []string, _ string) ([]string, cobra.ShellCompDirective) {
+   195→func descriptionRegisterFlagCompletion(cmd *cobra.Command, _ []string, _ string) ([]string, cobra.ShellCompDirective) {
 
 internal/adapters/cli/start.go
     16→//nolint:gocognit,funlen // Include all logic in one function
@@ -623,8 +595,8 @@ internal/adapters/cli/theme.go
 
 internal/adapters/cli/update.go
     17→type githubRelease …
-    22→func checkUpdate …
-    45→func runUpdateCheck …
+    22→func checkUpdate() (githubRelease, error) {
+    45→func runUpdateCheck(cmd *cobra.Command) {
 
 internal/adapters/cli/version.go
     10→var …
@@ -635,12 +607,12 @@ internal/adapters/cli/watch.go
     75→type tickMsg …
     77→type watchModel …
     90→type keyMap …
-    95→func initialWatchModel …
+    95→func initialWatchModel(activity models.Activity, service ports.ActivityResolver, theme Theme) watchModel {
    115→func (m watchModel) Init() tea.Cmd {
    121→func (m watchModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
    175→func (m watchModel) View() string {
    248→var font …
-   262→func renderBigText …
+   262→func renderBigText(text string, color string) string {
 
 internal/config/config_test.go
     12→func TestLoadDefaults(t *testing.T) {
@@ -666,14 +638,6 @@ internal/services/activity/service_test.go
    148→func TestService_Start(t *testing.T) {
    307→func TestService_Remove(t *testing.T) {
 
-internal/core/ports/mocks/mock_activityrepository.go
-
-internal/core/ports/mocks/mock_activityresolver.go
-
-internal/core/ports/mocks/mock_notesrepository.go
-
-internal/adapters/repositories/notes/repository_test.go
-
 assets/
 
 cmd/
@@ -685,5 +649,7 @@ internal/adapters/
 internal/adapters/repositories/
 
 internal/core/
+
+internal/core/ports/mocks/
 
 internal/services/

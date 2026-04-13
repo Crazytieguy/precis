@@ -10,21 +10,20 @@ Here's what `precis` shows for [developit/mitt](https://github.com/developit/mit
 ```
 README.md
      9→# Mitt
+    11→> Tiny 200b functional event emitter / pubsub.
+    12→
+    13→-   **Microscopic:** weighs less than 200 bytes gzipped
+    14→-   **Useful:** a wildcard `"*"` event type listens to all events
+    15→-   **Familiar:** same names & ideas as [Node's EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter)
+    16→-   **Functional:** methods don't rely on `this`
+    17→-   **Great Name:** somehow [mitt](https://npm.im/mitt) wasn't taken
+    18→
+    19→Mitt was made for the browser, but works in any JavaScript runtime. It has no dependencies and supports IE9+.
+    20→
     30→## Install
     56→## Usage
-    81→### Typescript
    113→## Examples & Demos
    123→## API
-   138→### mitt
-   144→### all
-   148→### on
-   152→#### Parameters
-   157→### off
-   162→#### Parameters
-   167→### emit
-   174→#### Parameters
-   184→### Reporting Issues
-   189→### Submitting pull requests
 
 src/index.ts
      1→export type EventType …
@@ -34,28 +33,23 @@ src/index.ts
     13→export type WildCardEventHandlerList …
     18→export type EventHandlerMap …
     23→export interface Emitter …
-    26→	on<Key extends keyof Events>(type: Key, handler: Handler<Events[Key]>): void;
-    27→	on(type: '*', handler: WildcardHandler<Events>): void;
-    29→	off<Key extends keyof Events>(
-    33→	off(type: '*', handler: WildcardHandler<Events>): void;
-    35→	emit<Key extends keyof Events>(type: Key, event: Events[Key]): void;
-    36→	emit<Key extends keyof Events>(
+    26→	on …
+    27→	on …
+    29→	off …
+    33→	off …
+    35→	emit …
+    36→	emit …
     42→ * Mitt: Tiny (~200b) functional event emitter / pubsub.
-    43→ * @name mitt
-    44→ * @returns {Mitt}
+      →…
     46→export default function mitt<Events extends Record<EventType, unknown>>(
     47→	all?: EventHandlerMap<Events>
     48→): Emitter<Events> {
-
-package.json
-
-tsconfig.json
 
 test/index_test.ts
 ```
 <!-- precis-example-end -->
 
-The README headings give the document structure. The source file shows type aliases (truncated), the `Emitter` interface with its method signatures (`on`, `off`, `emit`), doc comments, and the main function signature. Config files and test files appear as path-only entries, deprioritized relative to core source.
+The README body gives the project description and feature list. The source file shows type aliases (truncated), the `Emitter` interface with its methods, the doc comment, and the main function signature. Test files appear as path-only entries, deprioritized relative to core source.
 
 ## Installation
 

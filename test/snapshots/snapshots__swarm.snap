@@ -245,6 +245,9 @@ setup.cfg
 
 examples/airline/README.md
      1→# Airline customer service
+     3→This example demonstrates a multi-agent setup for handling different customer service requests in an airline context using the Swarm framework. The agents can triage requests, handle flight modifications, cancellations, and lost baggage cases.
+     4→This example uses the helper function `run_demo_loop`, which allows us to create an interactive Swarm session.
+     5→
      6→## Agents
     14→## Setup
     22→## Evaluations
@@ -258,11 +261,17 @@ examples/basic/README.md
 
 examples/personal_shopper/README.md
      1→# Personal shopper
+     3→This Swarm is a personal shopping agent that can help with making sales and refunding orders.
+     4→This example uses the helper function `run_demo_loop`, which allows us to create an interactive Swarm session.
+     5→In this example, we also use a Sqlite3 database with customer information and transaction data.
+     6→
      7→## Overview
     15→## Setup
 
 examples/support_bot/README.md
      1→# Support bot
+     6→## Overview
+    13→## Setup
 
 examples/triage_agent/README.md
      1→# Triage agent
@@ -324,20 +333,15 @@ examples/support_bot/customer_service.py
     68→def send_email(email_address, message):
     73→def submit_ticket(description):
     90→def transfer_to_help_center():
-    91→    """Transfer the user to the help center agent."""
 
 examples/support_bot/main.py
     13→# Set embedding model
     14→EMBEDDING_MODEL …
     20→def query_qdrant(query, collection_name, vector_name="article", top_k=5):
     40→def query_docs(query):
-    41→    """Query the knowledge base for relevant articles."""
     66→def send_email(email_address, message):
-    67→    """Send an email to the user."""
     72→def submit_ticket(description):
-    73→    """Submit a ticket for the user."""
     77→def transfer_to_help_center():
-    78→    """Transfer the user to the help center agent."""
 
 examples/support_bot/prep_data.py
     10→GPT_MODEL …
@@ -380,21 +384,14 @@ examples/triage_agent/agents.py
      4→def process_refund(item_id, reason="NOT SPECIFIED"):
     10→def apply_discount():
     31→def transfer_back_to_triage():
-    36→def transfer_to_sales():
-    40→def transfer_to_refunds():
 
 examples/triage_agent/evals.py
      9→CONVERSATIONAL_EVAL_SYSTEM_PROMPT …
-    19→def conversation_was_successful(messages) -> bool:
-    27→def run_and_get_tool_calls(agent, query):
-    44→def test_triage_agent_calls_correct_function(query, function_name):
-    68→def test_conversation_is_successful(messages):
 
 examples/triage_agent/evals_util.py
      9→class BoolEvalResult …
     10→    value: bool
     11→    reason: Optional[str]
-    14→def evaluate_with_llm_bool(instruction, data) -> BoolEvalResult:
 
 examples/triage_agent/run.py
 

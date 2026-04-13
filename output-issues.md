@@ -30,33 +30,21 @@ The old (pre-rewrite) output showed full signatures for these key methods. The n
 
 
 
-## 6. README body content dropped — only headings shown
+## 6. README body content dropped — only headings shown (partially fixed)
 
-**Affected snapshots:** bareiron, commander, d2ts, d2ts_d2ts, log, mcphost, mdbook, mdbook_guide_src, pluggy, semver, soluna, sps, sqlite_vec, toasty, typeguard, vaul
+**Partially fixed:** A 2× modifier boost for README h1 HeadingBody groups combined with a 12-line cap on markdown h1 body rendering fixed 9 of the 16 affected snapshots: commander, d2ts, d2ts_d2ts, mdbook, mdbook_guide_src, soluna, sps, sqlite_vec, toasty. These now show introductory README body content (project descriptions, status warnings, feature lists).
 
-The output shows README.md with only headings — zero body content. The pre-rewrite output showed introductory sections that tell the reader what the project is.
+**Remaining affected snapshots:** bareiron, log, mcphost, pluggy, semver, typeguard, vaul
 
-In typeguard, the README.rst (49 lines) explains the library's purpose (runtime type checking for PEP 484 annotations), the two principal approaches (check_type function vs code instrumentation), and the two instrumentation options (@typechecked vs import hook). The pre-rewrite showed the entire file. The new output shows just the bare filename with zero content — even worse than heading-only, because RST has no tree-sitter parser. Additionally, 7 docs/*.rst files (api.rst, extending.rst, features.rst, index.rst, userguide.rst, versionhistory.rst, contributing.rst) all render as bare filenames for the same reason. The old output showed headings and body for each (e.g., api.rst showed "API reference" + "Type checking" section, userguide showed "User guide" + "Checking types directly" section). That's 8 RST files (README + 7 docs) consuming 8 file headers for zero content.
+The fix doesn't help these because: (a) their h1 body content is too short for the cap to reduce cost meaningfully (bareiron, log), (b) they use RST instead of markdown with no tree-sitter parser (pluggy, typeguard), (c) the body content still can't compete on ratio in larger workspaces (mcphost, semver), or (d) the README has no headings so no HeadingBody groups exist (vaul).
 
-In pluggy, the README.rst contains a complete working example (69 lines in the pre-rewrite output) demonstrating the entire hook specification and implementation API — `HookspecMarker`, `HookimplMarker`, `PluginManager`, plugin registration, and hook calling. This is the single best introduction to what pluggy is and how to use it. The new output shows zero README content. The budget goes instead to CLAUDE.md (~50 lines of AI config, see issue #8) and pyproject.toml towncrier type definitions (~30 lines of repetitive `[[tool.towncrier.type]]` sections).
+In typeguard, the README.rst (49 lines) explains the library's purpose (runtime type checking for PEP 484 annotations), the two principal approaches (check_type function vs code instrumentation), and the two instrumentation options (@typechecked vs import hook). The pre-rewrite showed the entire file. The new output shows just the bare filename with zero content — even worse than heading-only, because RST has no tree-sitter parser. Additionally, 7 docs/*.rst files all render as bare filenames for the same reason.
 
-In bareiron, the full introductory section (lines 1-11) was shown: project description ("Minimalist Minecraft server for memory-restrictive embedded systems"), design priorities, Minecraft/protocol version numbers, and a compatibility warning.
+In pluggy, the README.rst contains a complete working example (69 lines in the pre-rewrite output) demonstrating the entire hook specification and implementation API. This is the single best introduction to what pluggy is and how to use it. The new output shows zero README content.
 
-In commander, the pre-rewrite showed lines 1-45: the description ("The complete solution for node.js command-line interfaces"), a language-switch note, and the full table of contents. The new output shows only headings — a reader can see the section structure but not what Commander.js is or does.
+In bareiron, the full introductory section (lines 1-11) was shown: project description ("Minimalist Minecraft server for memory-restrictive embedded systems"), design priorities, Minecraft/protocol version numbers, and a compatibility warning. The h1 body is ~8 lines — small enough that the 12-line cap doesn't reduce its cost, so the 2× boost alone isn't sufficient for it to win the budget competition.
 
-In d2ts_d2ts, the pre-rewrite showed lines 28-32: "D2TS is a TypeScript implementation of differential dataflow," what it does (incremental pipelines), and ElectricSQL integration. The new output shows 16 headings (h1 through h3) but zero body text.
-
-In mdbook_guide_src, the root README is the mdBook project introduction. The pre-rewrite showed lines 1-33: the full description ("**mdBook** is a command line tool to create books with Markdown"), the feature list (search, syntax highlighting, themes, preprocessors, backends), and a guide introduction. The new output shows only `# Introduction`, `## Contributing`, `## License`. Meanwhile, nested READMEs (cli/, for_developers/, format/, guide/) all get their body content, and the budget goes to deep h3/h4 headings across reference pages (format/configuration/renderers.md gets ~12 heading lines, format/markdown.md gets ~10).
-
-In mdbook, the root README loses its one-line description ("mdBook is a utility to create modern online books from Markdown files") and user guide links. More impactfully, 6 of 8 crate READMEs lose their one-sentence descriptions — the pre-rewrite showed "This is the base support library... intended for internal use only" (mdbook-core), "This is the Rust library to implement a preprocessor" (mdbook-preprocessor), etc. In a multi-crate workspace, these descriptions are how a reader understands the crate decomposition: which crates are public API vs internal, and what each provides. The new output shows 8 bare `# crate-name` headings that convey the names but not the purpose or stability guarantees.
-
-In sps, the README opens with a `[!WARNING]` blockquote (lines 3-22) announcing the project is being scrapped in favor of sps v2, with architectural rationale and a link to the new repo. This is the single most important piece of information about sps. The pre-rewrite showed all of it; the new output shows only 9 heading lines. The new output also adds boilerplate headings ("Contributing", "License") that the old correctly omitted.
-
-In toasty, the README's h1 body (lines 3-5: "**Current status: Incubating - Toasty is not ready for production usage. The API is still evolving and documentation is lacking.**") is the single most important context about the project — it sets expectations for everything else. The pre-rewrite output showed this; the new output drops it and instead shows a `### Contribution` section (lines 117-121) with standard MIT license boilerplate. The boilerplate displaces the status warning because it's under a lower heading whose body is shorter and thus has a better cost/value ratio.
-
-In vaul, the README is a 3-line deprecation notice (blockquote, no headings): "This repo is unmaintained. I might come back to it at some point, but not in the near future." The pre-rewrite showed this content; the new output shows the bare filename. This is a headingless markdown file — with no `Heading` groups, there are no `HeadingBody` groups to carry the text. The deprecation status is the single most important context about the project.
-
-This is the highest-value content in a repo for building a mental model. A reader seeing only headings knows the structure but not the purpose.
+In vaul, the README is a 3-line deprecation notice (blockquote, no headings): "This repo is unmaintained. I might come back to it at some point, but not in the near future." This is a headingless markdown file — with no `Heading` groups, there are no `HeadingBody` groups to carry the text.
 
 
 ## 9. Type alias and const bodies missing from taxonomy (regression) [needs human review]

@@ -322,10 +322,20 @@ pub fn children<'s>(g: &mut TsGroup<'s>, _ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
                 .iter()
                 .partition(|i| crate::Lang::from_path(i.path) == Some(crate::Lang::Toml));
             if !other_items.is_empty() {
+                let is_readme_h1 = *level == 1
+                    && other_items.iter().any(|i| {
+                        crate::classify::FileRole::from_path(i.path)
+                            == crate::classify::FileRole::Readme
+                    });
+                let body_modifier = if is_readme_h1 {
+                    README_H1_BODY_BOOST
+                } else {
+                    1.0
+                };
                 result.push(Group::Ts(TsGroup {
                     key: HeadingBody { level: *level },
                     items: other_items.into_iter().map(|i| clone_ts_item(i)).collect(),
-                    inherited_modifier: g.inherited_modifier,
+                    inherited_modifier: g.inherited_modifier * body_modifier,
                     dependent_siblings: vec![],
                     cached_render: None,
                 }));
@@ -876,7 +886,7 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
             vec![capped_line_entry(line_idx as u32, stripped)]
         }
 
-        HeadingBody { .. } => {
+        HeadingBody { level } => {
             // Setext headings span both the title and the `===`/`---`
             // underline rows; body content starts past the underline.
             // Other heading-like nodes (ATX, TOML tables, YAML pairs)
@@ -895,8 +905,15 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
             };
             let body_end = item.end_line;
             let content_start = skip_markdown_noise(&lines, body_start, body_end);
+            let is_markdown = Lang::from_path(item.path) == Some(Lang::Markdown);
+            let max_body_lines = if is_markdown && *level == 1 {
+                MARKDOWN_H1_BODY_LINE_CAP
+            } else {
+                usize::MAX
+            };
+            let capped_end = body_end.min(content_start.saturating_add(max_body_lines));
             let mut entries = Vec::new();
-            for line_idx in content_start..body_end {
+            for line_idx in content_start..capped_end {
                 if line_idx >= lines.len() {
                     break;
                 }
@@ -939,6 +956,8 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
 // ---------------------------------------------------------------------------
 
 const MAX_RENDERED_LINE_BYTES: usize = 200;
+const MARKDOWN_H1_BODY_LINE_CAP: usize = 12;
+const README_H1_BODY_BOOST: f64 = 2.0;
 
 fn capped_line_entry(line: u32, content: &str) -> LineEntry<'_> {
     if content.len() > MAX_RENDERED_LINE_BYTES {

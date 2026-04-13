@@ -134,37 +134,6 @@ ARCHITECTURE.md
     12→  })}
     13→</>
     14→```
-    15→
-    16→We didn't want to provide a render prop:
-    17→
-    18→```tsx
-    19→// No
-    20→onItemRender={({ item }) => {
-    21→  return <div>{item}</div>
-    22→}}
-    23→```
-    24→
-    25→Instead, we wanted to render components:
-    26→
-    27→```tsx
-    28→// Yes
-    29→<Item>My item</Item>
-    30→```
-    31→
-    32→Especially, we wanted full component composition:
-    33→
-    34→```tsx
-    35→// YES
-    36→<>
-    37→  <BlogItems />
-    38→  {staticItems}
-    39→</>
-    40→```
-    41→
-    42→Compound components are natural and easy to write. A few months after exploring this library, we were pleased to see [Radix UI](https://www.radix-ui.com) released using this exact approach of component structure – setting the standard for ease of use and composability.
-    43→
-    44→However, for a combobox, it is a terrible, terrible constraint that we've spent 2 years fighting.
-    45→
     46→## Approach
     48→⌘K always keeps every item and group rendered in the React tree. Each item and group adds or removes itself from the DOM based on the search input. The DOM is authoritative. Item selection order is based on the DOM order, which is based on the React render order, which the consumer provides.
     49→
@@ -213,8 +182,16 @@ pnpm-workspace.yaml
      4→  - 'cmdk'
 
 cmdk/src/command-score.ts
-    54→function commandScoreInner …
-   150→function formatInput …
+    54→function commandScoreInner(
+    55→  string,
+    56→  abbreviation,
+    57→  lowerString,
+    58→  lowerAbbreviation,
+    59→  stringIndex,
+    60→  abbreviationIndex,
+    61→  memoizedResults,
+    62→) {
+   150→function formatInput(string) {
    155→export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
 
 cmdk/src/index.tsx
@@ -244,9 +221,9 @@ cmdk/src/index.tsx
    160→const VALUE_ATTR …
    161→const defaultFilter: CommandFilter = (value, search, keywords) => commandScore(value, search, keywords)
    163→const CommandContext …
-   164→const useCommand …
+   164→const useCommand = () => React.useContext(CommandContext)
    165→const StoreContext …
-   166→const useStore …
+   166→const useStore = () => React.useContext(StoreContext)
    167→const GroupContext …
    169→const Command …
    660→ * Command menu item. Becomes active on pointer enter or through keyboard navigation.
@@ -278,21 +255,29 @@ cmdk/src/index.tsx
    959→ *
    960→ *
    963→function findNextSibling(el: Element, selector: string) {
-   972→function findPreviousSibling …
-   981→function useAsRef …
+   972→function findPreviousSibling(el: Element, selector: string) {
+   981→function useAsRef<T>(data: T) {
    991→const useLayoutEffect …
-   993→function useLazyRef …
+   993→function useLazyRef<T>(fn: () => T) {
   1003→/** Run a selector against the store state. */
   1004→function useCmdk<T = any>(selector: (state: State) => T): T {
   1005→  const store = useStore()
   1006→  const cb = () => selector(store.snapshot())
   1007→  return React.useSyncExternalStore(store.subscribe, cb, cb)
   1008→}
-  1010→function useValue …
+  1010→function useValue(
+  1011→  id: string,
+  1012→  ref: React.RefObject<HTMLElement>,
+  1013→  deps: (string | React.ReactNode | React.RefObject<HTMLElement>)[],
+  1014→  aliases: string[] = [],
+  1015→) {
   1045→/** Imperatively run a function on the next layout effect cycle. */
   1046→const useScheduleLayoutEffect = () => {
-  1061→function renderChildren …
-  1071→function SlottableWithNestedChildren …
+  1061→function renderChildren(children: React.ReactElement) {
+  1071→function SlottableWithNestedChildren(
+  1072→  { asChild, children }: { asChild?: boolean; children?: React.ReactNode },
+  1073→  render: (child: React.ReactNode) => JSX.Element,
+  1074→) {
   1081→const srOnlyStyles …
 
 website/README.md
@@ -302,6 +287,17 @@ website/README.md
 
 website/vercel.json
      2→  "headers": [
+     3→    {
+     4→      "source": "/inter-var-latin.woff2",
+     5→      "headers": [
+     6→        {
+     7→          "key": "Cache-Control",
+     8→          "value": "public, max-age=31536000, immutable"
+     9→        }
+    10→      ]
+    11→    }
+    12→  ]
+    13→}
 
 package.json
      2→  "name": "cmdk-root",
@@ -375,12 +371,7 @@ cmdk/tsup.config.ts
 
 website/components/index.ts
 
-website/next.config.js
-     7→module.exports = nextConfig …
-
-website/package.json
-
-website/tsconfig.json
+LICENSE.md
 
 test/
 

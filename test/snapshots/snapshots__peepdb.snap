@@ -59,14 +59,6 @@ docs/README.md
     12→- uses the [GitHub Pages / Actions workflow] to build and publish the site on GitHub Pages.
     13→
     14→To get started with creating a site, simply:
-    15→
-    16→1. click "[use this template]" to create a GitHub repository
-    17→2. go to Settings > Pages > Build and deployment > Source, and select GitHub Actions
-    18→
-    19→If you want to maintain your docs in the `docs` directory of an existing project repo, see [Hosting your docs from an existing project repo](#hosting-your-docs-from-an-existing-project-repo).
-    20→
-    21→After completing the creation of your new site on GitHub, update it as needed:
-    22→
     23→## Replace the content of the template pages
     30→## Changing the version of the theme and/or Jekyll
     34→## Adding a plugin
@@ -239,6 +231,15 @@ peepdb/exceptions.py
      2→    pass
 
 peepdb/db/__init__.py
+     1→from .base import BaseDatabase
+     2→from .mysql import MySQLDatabase
+     3→from .postgresql import PostgreSQLDatabase
+     4→from .mariadb import MariaDBDatabase
+     5→from .mongodb import MongoDBDatabase
+     6→from .sqlite import SQLiteDatabase
+     7→from .firebase import FirebaseDatabase
+     8→from .mssql import MSSQLDatabase
+     9→from .oracle import OracleDatabase
     11→__all__ …
 
 peepdb/db/base.py
@@ -252,6 +253,7 @@ peepdb/db/base.py
     37→    def __exit__(self, exc_type, exc_val, exc_tb):
 
 peepdb/db/firebase.py
+     4→from .base import BaseDatabase
      9→class FirebaseDatabase …
     10→    def __init__(self, service_account_path: str, **kwargs):
     15→    def connect(self):
@@ -260,6 +262,7 @@ peepdb/db/firebase.py
     39→    def fetch_data(self, table_name: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 peepdb/db/mariadb.py
+     2→from .base import BaseDatabase
      5→class MariaDBDatabase …
      6→    def connect(self) -> None:
     23→    def disconnect(self) -> None:
@@ -267,6 +270,7 @@ peepdb/db/mariadb.py
     34→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 peepdb/db/mongodb.py
+     3→from .base import BaseDatabase
      8→class MongoDBDatabase …
      9→    def connect(self) -> None:
     32→    def disconnect(self) -> None:
@@ -280,6 +284,7 @@ peepdb/db/mongodb.py
     49→        Fetches data from the MongoDB database.
 
 peepdb/db/mssql.py
+     2→from .base import BaseDatabase
      6→class MSSQLDatabase …
      7→    def __init__(self, host: str, user: str, password: str, database: str, port: int = 1433, trusted: bool = False, **kwargs):
     12→    def connect(self) -> None:
@@ -288,6 +293,7 @@ peepdb/db/mssql.py
     45→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 peepdb/db/mysql.py
+     2→from .base import BaseDatabase
      5→class MySQLDatabase …
      6→    def connect(self) -> None:
     22→    def disconnect(self) -> None:
@@ -295,6 +301,7 @@ peepdb/db/mysql.py
     33→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 peepdb/db/oracle.py
+     3→from .base import BaseDatabase
      7→class OracleDatabase …
      8→    def connect(self) -> None:
     25→    def disconnect(self) -> None:
@@ -304,6 +311,7 @@ peepdb/db/oracle.py
     38→    ) -> Dict[str, Any]:
 
 peepdb/db/postgresql.py
+     3→from .base import BaseDatabase
      6→class PostgreSQLDatabase …
      7→    def connect(self) -> None:
     23→    def disconnect(self) -> None:
@@ -311,6 +319,7 @@ peepdb/db/postgresql.py
     34→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 peepdb/db/sqlite.py
+     3→from .base import BaseDatabase
      6→class SQLiteDatabase …
      7→    def connect(self) -> None:
     22→    def disconnect(self) -> None:
@@ -324,12 +333,6 @@ project.toml
      4→
      5→[project]
     35→[project.optional-dependencies]
-    36→dev = [
-    37→    "coverage>=7.6.1",
-    38→    "pytest>=8.3.2",
-    39→    "pytest-cov>=5.0.0",
-    40→]
-    41→
     42→[project.urls]
     43→Homepage = "https://github.com/PeepDB-dev/peepdb"
     44→"Bug Tracker" = "https://github.com/PeepDB-dev/peepdb/issues"
@@ -337,7 +340,6 @@ project.toml
     46→[project.scripts]
     47→peepdb = "peepdb.cli:main"
     48→
-    49→[tool.setuptools.packages.find]
 
 requirements.txt
 
@@ -352,5 +354,7 @@ docs/_config.yml
      8→  Template Repository: https://github.com/just-the-docs/just-the-docs-template
 
 peepdb/tests/__init__.py
+
+docs/contributing.md
 
 images/

@@ -16,21 +16,6 @@ README.md
     15→type Digest struct{ ... }
     16→    func New() *Digest
     17→```
-    18→
-    19→The `Digest` type implements hash.Hash64. Its key methods are:
-    20→
-    21→```
-    22→func (*Digest) Write([]byte) (int, error)
-    23→func (*Digest) WriteString(string) (int, error)
-    24→func (*Digest) Sum64() uint64
-    25→```
-    26→
-    27→The package is written with optimized pure Go and also contains even faster
-    28→assembly implementations for amd64 and arm64. If desired, the `purego` build tag
-    29→opts into using the Go code even on those architectures.
-    30→
-    31→[xxHash]: https://xxhash.com/
-    32→
     33→## Compatibility
     35→This package is in a module and the latest code is in version 2 of the module.
     36→You need a version of Go with at least "minimal module compatibility" to use
@@ -263,21 +248,6 @@ dynamic/dynamic_test.go
     30→	os.Exit(m.Run())
     31→}
     33→func TestDynamic(t *testing.T) {
-    34→	plug, err := plugin.Open("plugin.so")
-    35→	if err != nil {
-    36→		t.Fatal(err)
-    37→	}
-    38→	for _, test := range []string{
-    39→		"TestSum",
-    40→		"TestDigest",
-    41→	} {
-    42→		f, err := plug.Lookup(test)
-    43→		if err != nil {
-    44→			t.Fatalf("cannot find func %s: %s", test, err)
-    45→		}
-    46→		f.(func(*testing.T))(t)
-    47→	}
-    48→}
 
 bench_test.go
      8→var benchmarks …
@@ -302,6 +272,35 @@ xxhash_unsafe_test.go
     29→// This test is inspired by the Go runtime tests in https://go.dev/cl/57410.
     30→// It asserts that certain important functions may be inlined.
     31→func TestInlining(t *testing.T) {
+    32→	funcs := map[string]struct{}{
+    33→		"Sum64String":           {},
+    34→		"(*Digest).WriteString": {},
+    35→	}
+    36→
+    37→	cmd := exec.Command("go", "test", "-gcflags=-m", "-run", "xxxx")
+    38→	out, err := cmd.CombinedOutput()
+    39→	if err != nil {
+    40→		t.Log(string(out))
+    41→		t.Fatal(err)
+    42→	}
+    43→
+    44→	for _, line := range strings.Split(string(out), "\n") {
+    45→		parts := strings.Split(line, ": can inline")
+    46→		if len(parts) < 2 {
+    47→			continue
+    48→		}
+    49→		delete(funcs, strings.TrimSpace(parts[1]))
+    50→	}
+    51→
+    52→	var failed []string
+    53→	for fn := range funcs {
+    54→		failed = append(failed, fn)
+    55→	}
+    56→	sort.Strings(failed)
+    57→	for _, fn := range failed {
+    58→		t.Errorf("function %s not inlined", fn)
+    59→	}
+    60→}
 
 xxhashbench/xxhashbench_test.go
     14→// TODO: The main benchmarks live in the xxhash package now, so the only purpose
