@@ -251,7 +251,6 @@ src/tomli/_re.py
     95→# No need to limit cache size. This is only ever called on input
     96→# that matched RE_DATETIME, so there is an implicit bound of
     97→# 24 (hours) * 60 (minutes) * 2 (offset direction) = 2880.
-    98→@lru_cache(maxsize=None)
     99→def cached_tz(hour_str: str, minute_str: str, sign_str: str) -> timezone:
    109→def match_to_localtime(match: re.Match[str]) -> time:
    116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
@@ -302,6 +301,10 @@ tests/burntsushi.py
     42→def normalize(obj: Any) -> Any:
     43→    """Normalize test objects.
       →…
+
+benchmark/data.toml
+
+benchmark/requirements.txt
 
 src/
 

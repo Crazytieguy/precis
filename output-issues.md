@@ -35,22 +35,6 @@ The old (pre-rewrite) output showed full signatures for these key methods. The n
 In `error.rs`, five `pub(crate) fn construct_from_*` methods and `unsafe fn construct` are shown alongside the collapsed public API methods. These are internal implementation details that a reader doesn't need. They also give a misleading impression of the module's surface area — 6 internal constructors listed next to 4 collapsed public methods suggests they're similarly important.
 
 
-## 5. Macro doc summaries lost vs pre-rewrite
-
-**Affected snapshots:** anyhow
-
-The pre-rewrite output showed first-line doc comments for `bail!` and `anyhow!`:
-```
-     1→/// Return early with an error.
-      →…
-    58→macro_rules! bail {
-   174→/// Construct an ad-hoc error from a string or existing non-`anyhow` error
-   175→/// value.
-      →…
-   204→macro_rules! anyhow {
-```
-
-The new output just shows `macro_rules! bail …` and `macro_rules! anyhow …`. Without the doc summaries, a reader has no idea what these macros do from the precis output alone.
 
 ## 6. README body content dropped — only headings shown
 

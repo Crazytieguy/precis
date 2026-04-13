@@ -116,12 +116,6 @@ crates/toasty-cli/Cargo.toml
 
 crates/toasty-codegen/Cargo.toml
      1→[package]
-     2→name = "toasty-codegen"
-     3→version = "0.1.0"
-     4→edition = "2021"
-     5→
-     6→# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-     7→
      8→[dependencies]
      9→proc-macro2.workspace = true
     10→quote.workspace = true
@@ -210,14 +204,6 @@ crates/toasty-driver-sqlite/Cargo.toml
      5→publish = false
      6→
      7→[dependencies]
-     8→toasty-core.workspace = true
-     9→toasty-sql.workspace = true
-    10→rusqlite.workspace = true
-    11→serde.workspace = true
-    12→serde_json.workspace = true
-    13→url.workspace = true
-    14→uuid.workspace = true
-    15→
 
 crates/toasty-macros/Cargo.toml
      1→[package]
@@ -287,11 +273,8 @@ crates/toasty-driver-sqlite/src/lib.rs
     25→    InMemory,
     26→}
     28→impl Sqlite …
-    29→    /// Create a new SQLite driver with an arbitrary connection URL
     30→    pub fn new(url: impl Into<String>) -> Result<Self> {
-    48→    /// Create an in-memory SQLite database
     49→    pub fn in_memory() -> Self {
-    53→    /// Open a SQLite database at the specified file path
     54→    pub fn open<P: AsRef<Path>>(path: P) -> Self {
     60→impl Driver for Sqlite …
    123→pub struct Connection …
@@ -302,15 +285,12 @@ crates/toasty-driver-sqlite/src/lib.rs
    134→    pub fn open<P: AsRef<Path>>(path: P) -> Result<Self> {
    143→impl toasty_core::driver::Connection for Connection …
    342→impl Connection …
-   343→    fn create_table …
 
 crates/toasty-driver-sqlite/src/value.rs
      8→pub struct Value …
     10→impl From<CoreValue> for Value …
     16→impl Value …
-    17→    /// Converts this SQLite driver value into the core Toasty value.
     18→    pub fn into_inner(self) -> CoreValue {
-    22→    /// Converts a SQLite value within a row to a Toasty value.
     23→    pub fn from_sql(row: &Row, index: usize, ty: &stmt::Type) -> Self {
     56→impl ToSql for Value …
 
@@ -320,7 +300,6 @@ crates/toasty-codegen/src/expand.rs
     30→    fn expand(&self) -> TokenStream {
     49→pub(super) fn root_model(model: &Model) -> TokenStream {
     60→pub(super) fn embedded_model(model: &Model) -> TokenStream {
-   151→fn wrap_in_const …
 
 crates/toasty-codegen/src/lib.rs
      6→pub fn generate_model(input: TokenStream) -> syn::Result<TokenStream> {
@@ -338,6 +317,7 @@ crates/toasty/src/batch/create.rs
     47→    fn default() -> Self {
 
 crates/toasty-cli/src/config.rs
+     7→/// Configuration for Toasty CLI operations
      9→pub struct Config …
     10→    /// Migration-related configuration
     11→    pub migration: MigrationConfig,
@@ -364,14 +344,12 @@ crates/toasty-cli/src/lib.rs
     47→        T: Into<std::ffi::OsString> + Clone,
     48→    {
     64→struct Cli …
-    70→enum Command …
 
 crates/toasty-cli/src/migration.rs
     25→pub struct MigrationCommand …
     26→    #[command(subcommand)]
     27→    subcommand: MigrationSubcommand,
     28→}
-    31→enum MigrationSubcommand …
     48→impl MigrationCommand …
     49→    pub(crate) async fn run(self, db: &Db, config: &Config) -> Result<()> {
     54→impl MigrationSubcommand …
@@ -386,7 +364,6 @@ crates/std-util/src/num.rs
      1→pub trait NumUtil …
      2→    fn is_even(&self) -> bool;
      4→    fn is_odd(&self) -> bool {
-     9→macro_rules! impl_num_util …
 
 crates/std-util/src/option.rs
      2→macro_rules! assert_none …
@@ -455,14 +432,29 @@ crates/toasty-sql/src/lib.rs
 
 crates/toasty-sql/src/migration.rs
     12→pub struct MigrationStatement …
+    13→    statement: Statement,
+    14→    schema: Cow<'a, Schema>,
+    15→}
     17→impl<'a> MigrationStatement<'a> …
     22→    pub fn from_diff(schema_diff: &'a SchemaDiff<'a>, capability: &Capability) -> Vec<Self> {
    252→    pub fn statement(&self) -> &Statement {
    256→    pub fn schema(&self) -> &Schema {
 
 crates/toasty-sql/src/serializer.rs
+    34→/// Context information when serializing VALUES in an INSERT statement
     36→pub struct InsertContext …
+    37→    pub table_id: db::TableId,
+    38→    pub columns: Vec<db::ColumnId>,
+    39→}
+    41→/// Serialize a statement to a SQL string
     43→pub struct Serializer …
+    44→    /// Schema against which the statement is to be serialized
+    45→    schema: &'a db::Schema,
+    46→
+    47→    /// The database flavor handles the differences between SQL dialects and
+    48→    /// supported features.
+    49→    flavor: Flavor,
+    50→}
     52→struct Formatter …
     73→pub type ExprContext …
     75→impl<'a> Serializer<'a> …
@@ -566,7 +558,10 @@ crates/toasty-core/src/driver.rs
     57→    async fn apply_migration(
 
 crates/toasty-core/src/error.rs
+    34→/// An error that can occur in Toasty.
     36→pub struct Error …
+    37→    inner: Arc<ErrorInner>,
+    38→}
     40→/// Trait for types that can be converted into an Error.
     41→pub trait IntoError …
     42→    /// Converts this type into an Error.
@@ -639,17 +634,22 @@ crates/toasty/src/db/pool.rs
      1→//! Connection pooling for database connections.
     12→fn get_default_pool_max_size() -> usize {
     18→pub struct PoolConfig …
+    19→    pub max_size: usize,
+    20→    pub timeouts: Timeouts,
+    21→}
     23→impl PoolConfig …
     25→    pub fn new() -> Self {
     33→impl Default for PoolConfig …
     41→pub struct Pool …
+    42→    inner: deadpool::managed::Pool<Manager>,
+    43→    capability: &'static Capability,
+    44→}
     46→impl Pool …
     48→    pub fn new(driver: impl Driver) -> crate::Result<Self> {
     69→    pub fn connect(url: &str) -> crate::Result<Self> {
     74→    pub async fn get(&self) -> crate::Result<PoolConnection> {
     84→    pub fn driver(&self) -> &dyn Driver {
     89→    pub fn capability(&self) -> &Capability {
-    95→struct Manager …
     99→impl deadpool::managed::Manager for Manager …
    119→pub struct PoolConnection …
    120→    inner: deadpool::managed::Object<Manager>,
@@ -659,9 +659,8 @@ crates/toasty/src/db/pool.rs
 
 crates/toasty/src/apply_update.rs
      9→pub trait ApplyUpdate …
-    10→    /// Apply the result of an update operation.
-      →…
     14→    fn apply_result(self, values: Vec<Value>) -> Result<()>;
+    17→/// Marker type for query-based updates that don't reload a model instance.
     19→pub struct Query …
     21→impl ApplyUpdate for Query …
     22→    fn apply_result …
@@ -679,6 +678,7 @@ crates/toasty/src/cursor.rs
     37→    where
     38→        B: FromCursor<M>,
     39→    {
+    50→    fn validate_row …
 
 crates/toasty/src/db.rs
     18→pub struct Db …
@@ -689,6 +689,8 @@ crates/toasty/src/db.rs
     51→    pub async fn get …
     63→    pub async fn delete …
     69→    pub async fn exec<M: Model>(&self, statement: Statement<M>) -> Result<ValueStream> {
+    81→    pub async fn exec_one …
+   102→    pub async fn exec_insert_one …
    114→    pub async fn push_schema(&self) -> Result<()> {
    124→    pub async fn reset_db(&self) -> Result<()> {
    128→    pub fn driver …
@@ -698,6 +700,8 @@ crates/toasty/src/db.rs
    142→    fn drop …
 
 crates/toasty/src/engine.rs
+    25→/// The query execution engine.
+      →…
     38→pub(crate) struct Engine …
     46→impl Engine …
     48→    pub(crate) fn new(schema: Arc<Schema>, pool: Arc<Pool>) -> Engine {
@@ -714,14 +718,9 @@ crates/toasty/src/model.rs
       →…
     12→pub fn generate_unique_id() -> ModelId {
     26→pub trait Register …
-    27→    /// Unique identifier for this type within the schema.
-      →…
     30→    fn id() -> ModelId;
-    32→    /// Returns the schema definition for this type.
     33→    fn schema() -> app::Model;
     41→pub trait Model …
-    54→    /// Load an instance of the model from a value.
-      →…
     57→    fn load(value: stmt::Value) -> Result<Self, Error>;
     65→pub trait Embed …
     72→impl<T: Model> Register for Option<T> …
@@ -731,6 +730,7 @@ crates/toasty/src/model.rs
     88→    fn load …
 
 crates/toasty/src/page.rs
+     8→/// A page of results from a paginated query.
     10→pub struct Page …
     24→impl<M: Model> Page<M> …
     25→    pub(crate) fn new …

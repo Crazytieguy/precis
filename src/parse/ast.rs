@@ -54,46 +54,62 @@ pub(crate) fn compute_body_start_line(node: tree_sitter::Node, lang: Lang) -> Op
     None
 }
 
+fn find_doc_before<'a>(
+    node: tree_sitter::Node<'a>,
+    source: &str,
+    lang: Lang,
+    max_gap: usize,
+) -> Option<tree_sitter::Node<'a>> {
+    let mut candidate = node.prev_named_sibling()?;
+    while candidate.kind() == "attribute_item" {
+        candidate = candidate.prev_named_sibling()?;
+    }
+    if is_doc_comment_node(candidate, source, lang)
+        && node.start_position().row.saturating_sub(candidate.end_position().row) <= max_gap
+    {
+        Some(candidate)
+    } else {
+        None
+    }
+}
+
 pub(crate) fn compute_doc_start_line(
     symbol_node: tree_sitter::Node,
     source: &str,
     lang: Lang,
 ) -> Option<usize> {
+    let (start, _end) = compute_doc_line_range(symbol_node, source, lang)?;
+    Some(start)
+}
+
+/// Returns 1-indexed (start_line, end_line_exclusive) of the doc comment block.
+/// The range excludes any non-doc lines (e.g. attributes) between the doc and the symbol.
+pub(crate) fn compute_doc_line_range(
+    symbol_node: tree_sitter::Node,
+    source: &str,
+    lang: Lang,
+) -> Option<(usize, usize)> {
     if matches!(lang, Lang::Markdown | Lang::Json | Lang::Toml | Lang::Yaml) {
         return None;
     }
 
     let max_gap = 2;
 
-    let first_doc = symbol_node
-        .prev_named_sibling()
-        .filter(|n| {
-            is_doc_comment_node(*n, source, lang)
-                && symbol_node
-                    .start_position()
-                    .row
-                    .saturating_sub(n.end_position().row)
-                    <= max_gap
-        })
+    let last_doc = find_doc_before(symbol_node, source, lang, max_gap)
         .or_else(|| {
             let parent = symbol_node.parent()?;
             if matches!(parent.kind(), "export_statement" | "decorated_definition"
                 | "type_declaration" | "const_declaration" | "var_declaration") {
-                parent.prev_named_sibling().filter(|n| {
-                    is_doc_comment_node(*n, source, lang)
-                        && parent
-                            .start_position()
-                            .row
-                            .saturating_sub(n.end_position().row)
-                            <= max_gap
-                })
+                find_doc_before(parent, source, lang, max_gap)
             } else {
                 None
             }
         })?;
 
-    let mut doc_start_row = first_doc.start_position().row;
-    let mut current = first_doc;
+    let end_pos = last_doc.end_position();
+    let doc_end_row_excl = if end_pos.column == 0 { end_pos.row } else { end_pos.row + 1 };
+    let mut doc_start_row = last_doc.start_position().row;
+    let mut current = last_doc;
 
     while let Some(prev) = current.prev_named_sibling() {
         if !is_doc_comment_node(prev, source, lang) {
@@ -111,7 +127,7 @@ pub(crate) fn compute_doc_start_line(
         current = prev;
     }
 
-    Some(doc_start_row + 1)
+    Some((doc_start_row + 1, doc_end_row_excl + 1))
 }
 
 fn is_doc_comment_node(node: tree_sitter::Node, source: &str, lang: Lang) -> bool {

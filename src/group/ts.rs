@@ -1053,11 +1053,11 @@ fn compute_doc_range(item: &TsItem<'_>, lines: &[&str]) -> Option<(usize, usize)
     let actual_lang = lang.unwrap_or(Lang::Rust);
 
     // Try outer doc comments first (preceding siblings)
-    if let Some(doc_start_1) = crate::parse::ast::compute_doc_start_line(item.node, item.source, actual_lang) {
+    if let Some((doc_start_1, doc_end_1)) = crate::parse::ast::compute_doc_line_range(item.node, item.source, actual_lang) {
         let doc_start = doc_start_1 - 1;
-        let sym_line = item.start_line();
-        if doc_start < sym_line {
-            let (trimmed_start, trimmed_end) = trim_doc_delimiters(lines, doc_start, sym_line);
+        let doc_end = (doc_end_1 - 1).min(item.start_line());
+        if doc_start < doc_end {
+            let (trimmed_start, trimmed_end) = trim_doc_delimiters(lines, doc_start, doc_end);
             if trimmed_start < trimmed_end {
                 return Some((trimmed_start, trimmed_end));
             }

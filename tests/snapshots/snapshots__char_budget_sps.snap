@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 8000 (2735 tokens, 9480 chars)
+budget: 8000 (2726 tokens, 9484 chars)
 
 README.md
      1→# sps
@@ -100,7 +100,6 @@ sps-net/src/lib.rs
 
 sps-net/src/oci.rs
     24→pub const DEFAULT_GHCR_DOMAIN …
-    31→struct OciTokenResponse …
     37→pub struct OciManifestIndex …
     45→pub struct OciManifestDescriptor …
     55→pub struct OciPlatform …
@@ -121,25 +120,14 @@ sps-common/src/cache.rs
     12→const CACHE_TTL …
     14→/// Cache struct to manage cache operations
     15→pub struct Cache …
-    16→    cache_dir: PathBuf,
-    17→    _config: Config, // Keep a reference to config if needed for other paths or future use
-    18→}
     20→impl Cache …
-    21→    /// Create a new Cache using the config's cache_dir
     22→    pub fn new(config: &Config) -> Result<Self> {
-    34→    /// Gets the cache directory path
     35→    pub fn get_dir(&self) -> &Path {
-    39→    /// Stores raw string data in the cache
     40→    pub fn store_raw(&self, filename: &str, data: &str) -> Result<()> {
-    47→    /// Loads raw string data from the cache
     48→    pub fn load_raw(&self, filename: &str) -> Result<String> {
-    61→    /// Checks if a cache file exists and is valid (within TTL)
     62→    pub fn is_cache_valid(&self, filename: &str) -> Result<bool> {
-    77→    /// Clears a specific cache file
     78→    pub fn clear_file(&self, filename: &str) -> Result<()> {
-    86→    /// Clears all cache files
     87→    pub fn clear_all(&self) -> Result<()> {
-    95→    /// Gets a reference to the config
     96→    pub fn config(&self) -> &Config {
 
 sps-common/src/config.rs
@@ -196,7 +184,9 @@ sps-common/src/formulary.rs
     28→    pub fn load_formula …
 
 sps-common/src/keg.rs
+    11→/// Represents information about an installed package (Keg).
     13→pub struct InstalledKeg …
+    19→/// Manages querying installed packages in the Cellar.
     21→pub struct KegRegistry …
     25→impl KegRegistry …
     26→    pub fn new …
@@ -217,8 +207,10 @@ sps-common/src/pipeline.rs
    141→impl PipelineEvent …
    143→    pub fn job_failed …
    150→    pub fn download_failed …
+   161→/// Represents the current processing state of a job in the pipeline.
    163→pub enum JobProcessingState …
    184→pub struct DownloadOutcome …
+   189→/// Structure returned by the planner, now including the ResolvedGraph.
    191→pub struct PlannedOperations …
 
 sps-core/src/check/installed.rs
@@ -290,7 +282,18 @@ sps-core/src/pipeline/mod.rs
 sps-core/src/pipeline/worker.rs
     21→pub(super) fn execute_sync_job …
 
-rustfmt.toml
+sps-core/src/uninstall/cask.rs
+    41→pub fn uninstall_cask_artifacts …
+   134→pub async fn zap_cask_artifacts …
+
+sps-core/src/uninstall/common.rs
+    22→pub(crate) fn remove_filesystem_artifact …
+   108→pub(crate) fn expand_tilde …
+   119→pub(crate) fn is_safe_path …
+
+sps-core/src/uninstall/formula.rs
+
+sps-core/src/uninstall/mod.rs
 
 sps/src/cli/
 
@@ -303,5 +306,3 @@ sps-core/src/build/compile/
 sps-core/src/install/bottle/
 
 sps-core/src/install/cask/
-
-sps-core/src/uninstall/

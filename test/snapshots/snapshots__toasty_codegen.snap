@@ -59,6 +59,7 @@ src/expand/fields.rs
 src/expand/filters.rs
      1→use super::Expand;
      2→use crate::schema::{FieldTy, Index, Model};
+     8→/// Combination of fields for which filter a method should be generated.
     10→pub(super) struct Filter …
     36→struct BuildModelFilters …
     37→    model: &'a Model,
