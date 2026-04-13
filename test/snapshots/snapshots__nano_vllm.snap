@@ -154,8 +154,6 @@ nanovllm/utils/loader.py
      8→def default_weight_loader(param: nn.Parameter, loaded_weight: torch.Tensor):
     12→def load_model(model: nn.Module, path: str):
 
-nanovllm/__init__.py
-
 nanovllm/config.py
      7→class Config …
      8→    model: str

@@ -2,8 +2,6 @@
 source: test/fixtures.rs
 expression: output
 ---
-README.rst
-
 src/typeguard/__init__.py
     34→config …
     37→def __getattr__ …
@@ -335,8 +333,6 @@ src/typeguard/_utils.py
    173→class Unset …
    176→    def __repr__(self) -> str:
 
-src/typeguard/py.typed
-
 pyproject.toml
      1→[build-system]
      8→[project]
@@ -352,20 +348,6 @@ pyproject.toml
     99→[tool.mypy]
    105→[tool.tox]
    115→[tool.tox.env.docs]
-
-docs/api.rst
-
-docs/extending.rst
-
-docs/features.rst
-
-docs/index.rst
-
-docs/userguide.rst
-
-docs/versionhistory.rst
-
-docs/conf.py
 
 src/
 

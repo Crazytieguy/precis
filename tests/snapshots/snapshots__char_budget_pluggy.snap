@@ -2,27 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (2767 tokens, 9500 chars)
-
-README.rst
-
-downstream/README.md
-
-MANIFEST.in
-
-downstream/conda.sh
-
-downstream/datasette.sh
-
-downstream/devpi.sh
-
-downstream/hatch.sh
-
-downstream/pytest.sh
-
-downstream/python-lsp-server.sh
-
-downstream/tox.sh
+budget: 4000 (2662 tokens, 9149 chars)
 
 src/pluggy/__init__.py
      1→__all__ …
@@ -250,25 +230,9 @@ src/pluggy/_warnings.py
     12→    """A plugin raised an exception during an :ref:`old-style hookwrapper
       →…
 
-src/pluggy/py.typed
-
-changelog/README.rst
-
-docs/api_reference.rst
-
-docs/index.rst
-
-codecov.yml
-
-pyproject.toml
-
-tox.ini
-
 testing/benchmark.py
      2→Benchmarking and performance tests.
      3→"""
-
-testing/conftest.py
 
 docs/_static/
 

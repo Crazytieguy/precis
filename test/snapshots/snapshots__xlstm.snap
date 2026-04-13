@@ -36,8 +36,6 @@ README.md
    297→## Experiments
    312→## Citation
 
-__init__.py
-
 xlstm/__init__.py
      1→__version__ …
 
@@ -69,8 +67,6 @@ xlstm/xlstm_lm_model.py
     49→    def forward …
     56→    def step …
 
-xlstm/blocks/__init__.py
-
 xlstm/blocks/xlstm_block.py
     17→class xLSTMBlockConfig …
     27→    def __post_init__(self):
@@ -85,12 +81,6 @@ xlstm/blocks/xlstm_block.py
     76→    def forward(self, x: torch.Tensor, **kwargs) -> torch.Tensor:
     82→    def step(self, x: torch.Tensor, **kwargs) -> tuple[torch.Tensor, dict[str, tuple[torch.Tensor, ...]]]:
     89→    def reset_parameters(self) -> None:
-
-notebooks/xlstm_large/demo.ipynb
-
-notebooks/xlstm_large/load_from_pretrained.ipynb
-
-xlstm/components/__init__.py
 
 xlstm/components/conv.py
     13→class CausalConv1dConfig …
@@ -183,8 +173,6 @@ xlstm/components/util.py
     70→    def grad(self):
     73→    def __getattr__(self, name: str):
 
-xlstm/xlstm_large/__init__.py
-
 xlstm/xlstm_large/components.py
      5→def soft_cap …
      7→    Soft caps a tensor to a value.
@@ -262,14 +250,6 @@ xlstm/xlstm_large/utils.py
     11→    single_weight_state_dict: dict[str, torch.Tensor],
     12→) -> dict[str, torch.Tensor]:
 
-notebooks/xlstm/mLSTM_test_notebook.ipynb
-
-notebooks/xlstm/xLSTM_readme_example.ipynb
-
-notebooks/xlstm/xLSTM_test_notebook.ipynb
-
-xlstm/blocks/slstm/__init__.py
-
 xlstm/blocks/slstm/block.py
     13→class sLSTMBlockConfig …
     29→class sLSTMBlock …
@@ -291,8 +271,6 @@ xlstm/blocks/slstm/cell.py
 xlstm/blocks/slstm/layer.py
     19→class sLSTMLayerConfig …
     33→class sLSTMLayer …
-
-xlstm/blocks/mlstm/__init__.py
 
 xlstm/blocks/mlstm/backends.py
      9→def parallel_stabilized_simple …
@@ -325,8 +303,6 @@ xlstm/blocks/mlstm/layer.py
    101→    def forward …
    127→    def step …
    158→    def reset_parameters …
-
-experiments/__init__.py
 
 experiments/lr_scheduler.py
      9→class BaseLRScheduler …
@@ -391,12 +367,6 @@ pyproject.toml
      4→
      5→[project]
     50→[project.urls]
-
-pytest.ini
-
-setup.cfg
-
-xlstm/blocks/slstm/src/__init__.py
 
 xlstm/blocks/slstm/src/cuda_init.py
     14→LOGGER …

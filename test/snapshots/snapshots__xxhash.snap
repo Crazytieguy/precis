@@ -87,20 +87,10 @@ dynamic/plugin.go
     46→	}
     47→}
 
-xxhashbench/go.mod
-
-xxhashbench/go.sum
-
 xxhsum/xxhsum.go
     11→func main() {
     34→func contains(ss []string, s string) bool {
     43→func printHash(r io.Reader, name string) {
-
-go.mod
-
-go.sum
-
-testall.sh
 
 xxhash.go
      1→// Package xxhash implements the 64-bit variant of xxHash (XXH64) as described
@@ -180,10 +170,6 @@ xxhash.go
    241→func rol23(x uint64) uint64 { return bits.RotateLeft64(x, 23) }
    242→func rol27(x uint64) uint64 { return bits.RotateLeft64(x, 27) }
    243→func rol31(x uint64) uint64 { return bits.RotateLeft64(x, 31) }
-
-xxhash_amd64.s
-
-xxhash_arm64.s
 
 xxhash_asm.go
      9→// Sum64 computes the 64-bit xxHash digest of b with a zero seed.
@@ -311,5 +297,3 @@ xxhashbench/xxhashbench_test.go
    108→func BenchmarkHashes(b *testing.B) {
    152→func benchmarkHashBytes(b *testing.B, input []byte, fn func([]byte) uint64) {
    159→func benchmarkHashString(b *testing.B, input string, fn func(string) uint64) {
-
-LICENSE.txt

@@ -30,10 +30,6 @@ sdk/README.md
    115→## API Reference
    136→## Environment Variables
 
-go.mod
-
-go.sum
-
 main.go
     12→var version …
     14→func main() {
@@ -148,12 +144,6 @@ internal/ui/progress/ollama.go
    156→func NewProgressReader(reader io.Reader) *ProgressReader {
    184→func (pr *ProgressReader) Read(p []byte) (n int, err error) {
    261→func (pr *ProgressReader) Close() error {
-
-contribute/boost.sh
-
-contribute/build.sh
-
-contribute/contribute.md
 
 internal/models/openai/openai.go
     21→type CustomChatModel …
@@ -283,8 +273,6 @@ internal/models/generate_models.go
     50→type Limit …
     60→type ProviderInfo …
     73→const codeTemplate …
-
-internal/models/models_data.go
 
 internal/models/providers.go
     28→const …

@@ -27,8 +27,6 @@ README.md
    128→
    129→## Usage
 
-Makefile
-
 append.go
      6→// Append is a helper function that will append more errors
      7→// onto an Error in order to create a larger multi-error.
@@ -117,10 +115,6 @@ format.go
     28→		"%d errors occurred:\n\t%s\n\n",
     29→		len(es), strings.Join(points, "\n\t"))
     30→}
-
-go.mod
-
-go.sum
 
 group.go
      8→// Group is a collection of goroutines which return errors that need to be

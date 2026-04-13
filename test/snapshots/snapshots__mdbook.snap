@@ -69,14 +69,6 @@ guide/guide-helper/Cargo.toml
     15→[lints]
     16→workspace = true
 
-ci/install-rust.sh
-
-ci/make-release-asset.sh
-
-ci/publish-guide.sh
-
-ci/update-dependencies.sh
-
 src/cmd/watch/native.rs
      1→//! A filesystem watcher using native operating system facilities.
     11→pub fn rebuild_on_change …
@@ -260,8 +252,6 @@ crates/mdbook-html/src/utils.rs
     47→    fn to_url_path(&self) -> String {
     58→pub(crate) fn unique_id(id: &str, used: &mut HashSet<String>) -> String {
     76→pub(crate) fn id_from_content(content: &str) -> String {
-
-crates/mdbook-core/src/book/tests.rs
 
 crates/mdbook-core/src/book.rs
      1→//! A tree structure representing a book.
@@ -671,8 +661,6 @@ examples/nop-preprocessor.rs
     82→        pub fn new() -> Nop {
     87→    impl Preprocessor for Nop …
 
-crates/mdbook-driver/src/builtin_preprocessors/links/take_lines.rs
-
 crates/mdbook-core/src/utils/fs.rs
      1→//! Filesystem utilities and helpers.
     11→pub fn read_to_string<P: AsRef<Path>>(path: P) -> Result<String> {
@@ -709,8 +697,6 @@ crates/mdbook-core/src/utils/toml_ext.rs
     14→    fn read …
     22→    fn insert …
 
-crates/mdbook-html/src/theme/fonts.rs
-
 crates/mdbook-html/src/theme/mod.rs
      1→//! Support for theme files.
     40→pub struct Theme …
@@ -725,8 +711,6 @@ crates/mdbook-html/src/theme/playground_editor.rs
 crates/mdbook-html/src/theme/searcher.rs
      1→//! Theme dependencies for in-browser search. Not included in mdbook when
      2→//! the "search" cargo feature is disabled.
-
-examples/remove-emphasis/test.rs
 
 crates/
 

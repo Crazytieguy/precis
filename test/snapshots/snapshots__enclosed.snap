@@ -152,8 +152,6 @@ packages/deploy-cloudflare/_routes.json
      6→  "exclude": []
      7→}
 
-packages/deploy-cloudflare/build.sh
-
 packages/lib/src/files/files.models.ts
      1→import type { NoteAsset } from '../notes/notes.types';
      6→async function fileToNoteAsset({ file }: { file: File }): Promise<NoteAsset> {
@@ -181,8 +179,6 @@ packages/app-client/src/routes.tsx
 
 packages/app-client/src/locales/locales.ts
      2→export const locales …
-
-packages/app-client/.env.example
 
 packages/app-client/components.json
      2→  "$schema": "https://shadcn-solid.com/schema.json",
@@ -539,10 +535,6 @@ packages/app-client/src/modules/notes/notes.usecases.ts
      2→import { storeNote } from './notes.services';
      6→async function encryptAndCreateNote …
 
-Dockerfile
-
-Dockerfile.rootless
-
 docker-compose.yml
      1→services:
      2→  enclosed:
@@ -628,8 +620,6 @@ packages/app-server/src/modules/notes/notes.types.ts
 packages/app-server/src/modules/notes/notes.usecases.ts
      7→async function getRefreshedNote …
 
-packages/app-client/src/app.css
-
 packages/app-client/src/modules/docs/docs.models.ts
      6→function buildDocUrl …
 
@@ -655,10 +645,6 @@ packages/app-client/src/modules/shared/files/download.ts
      8→function downloadFile …
     17→function downloadBase64File …
 
-packages/lib/build.config.ts
-
-packages/lib/eslint.config.js
-
 packages/lib/package.json
      2→  "name": "@enclosed/lib",
      3→  "type": "module",
@@ -682,8 +668,6 @@ packages/lib/tsconfig.json
      2→  "compilerOptions": {
      9→  "include": [
 
-packages/app-server/eslint.config.js
-
 packages/app-server/package.json
      2→  "name": "@enclosed/app-server",
      3→  "type": "module",
@@ -705,30 +689,6 @@ packages/app-server/wrangler.toml
      5→[[kv_namespaces]]
      6→binding = "notes"
      7→id = "b1329cb8560e49d392bed877c9ac48a2"
-
-packages/cli/build.config.ts
-
-packages/cli/eslint.config.js
-
-packages/cli/package.json
-
-packages/cli/tsconfig.json
-
-packages/crypto/build.config.ts
-
-packages/crypto/eslint.config.js
-
-packages/crypto/package.json
-
-packages/crypto/tsconfig.json
-
-packages/app-server/src/reset.d.ts
-
-packages/crypto/src/index.test.ts
-
-packages/deploy-cloudflare/package.json
-
-packages/deploy-cloudflare/wrangler.toml
 
 packages/app-server/src/modules/shared/logger/logger.test-utils.ts
      3→export function createTestLogger() {

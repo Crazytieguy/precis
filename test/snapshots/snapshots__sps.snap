@@ -93,8 +93,6 @@ sps-core/Cargo.toml
      9→
     10→[dependencies]
 
-sps-core/src/lib.rs
-
 sps-net/Cargo.toml
      1→[package]
      2→name = "sps-net"
@@ -125,8 +123,6 @@ sps/src/main.rs
     57→async fn main …
    193→async fn check_and_run_auto_update …
 
-sps/src/pipeline.rs
-
 sps-core/src/build/env.rs
    139→/// Represents the sanitized build environment, mimicking Homebrew's "superenv".
    141→pub struct BuildEnvironment …
@@ -148,8 +144,6 @@ sps-core/src/build/env.rs
    488→    pub fn get_var(&self, key: &str) -> Option<&str> {
    495→fn filter_initial_environment(vars: &mut HashMap<String, String>) {
 
-sps-core/src/build/mod.rs
-
 sps-net/src/api.rs
     36→pub async fn fetch_raw_formulae_json …
     69→pub async fn fetch_all_formulas …
@@ -167,8 +161,6 @@ sps-net/src/http.rs
     42→pub async fn fetch_formula_source_or_bottle_with_progress …
    147→pub async fn fetch_resource …
    155→pub async fn fetch_resource_with_progress …
-
-sps-net/src/lib.rs
 
 sps-net/src/oci.rs
     24→pub const DEFAULT_GHCR_DOMAIN …
@@ -296,8 +288,6 @@ sps-common/src/keg.rs
    213→    pub fn cellar_path(&self) -> PathBuf {
    217→    pub fn get_keg_path(&self, name: &str, version_str_raw: &str) -> PathBuf {
 
-sps-common/src/lib.rs
-
 sps-common/src/pipeline.rs
     14→pub enum PipelinePackageType …
     20→pub enum JobAction …
@@ -327,8 +317,6 @@ sps-core/src/check/installed.rs
     29→fn handle_dir_entry …
     39→pub async fn get_installed_packages …
    140→pub async fn get_installed_package …
-
-sps-core/src/check/mod.rs
 
 sps-core/src/check/update.rs
     23→pub struct UpdateInfo …
@@ -382,8 +370,6 @@ sps/src/pipeline/runner.rs
 sps-core/src/utils/applescript.rs
     75→pub fn quit_app_gracefully(app_path: &Path) -> Result<()> {
 
-sps-core/src/utils/mod.rs
-
 sps-core/src/utils/xattr.rs
     26→pub fn has_quarantine_attribute(path: &Path) -> anyhow::Result<bool> {
     41→pub fn ensure_quarantine_attribute(path: &Path, agent: &str) -> anyhow::Result<()> {
@@ -391,10 +377,6 @@ sps-core/src/utils/xattr.rs
 
 sps-core/src/pipeline/engine.rs
     16→pub fn start_worker_pool_manager …
-
-sps-core/src/pipeline/mod.rs
-
-sps-core/src/pipeline/worker.rs
 
 sps-core/src/uninstall/cask.rs
     37→/// Performs a "soft" uninstall for a Cask.
@@ -421,8 +403,6 @@ sps-core/src/uninstall/common.rs
 sps-core/src/uninstall/formula.rs
     10→pub fn uninstall_formula_artifacts …
 
-sps-core/src/uninstall/mod.rs
-
 sps-core/src/upgrade/bottle.rs
     14→/// Upgrades a formula that is installed from a bottle.
       →…
@@ -431,8 +411,6 @@ sps-core/src/upgrade/bottle.rs
 sps-core/src/upgrade/cask.rs
     14→/// Upgrades a cask package using Homebrew's proven strategy.
     15→pub async fn upgrade_cask_package …
-
-sps-core/src/upgrade/mod.rs
 
 sps-core/src/upgrade/source.rs
     13→/// Upgrades a formula that was/will be installed from source.
@@ -452,8 +430,6 @@ sps-common/src/dependency/definition.rs
     60→    fn filter_by_tags …
     66→    fn runtime …
     79→    fn build_time …
-
-sps-common/src/dependency/mod.rs
 
 sps-common/src/dependency/requirement.rs
      7→pub enum Requirement …
@@ -643,8 +619,6 @@ sps-common/src/model/version.rs
     70→    fn from …
     75→impl<'de> Deserialize<'de> for Version …
     76→    fn deserialize …
-
-rustfmt.toml
 
 sps/src/cli/info.rs
      1→//! Contains the logic for the `info` command.

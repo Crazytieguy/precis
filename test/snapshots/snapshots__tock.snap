@@ -157,8 +157,6 @@ cmd/tock/main.go
      8→	cli.Execute()
      9→}
 
-demo/demo_script.sh
-
 internal/config/config.go
     12→type Config …
     13→	Backend         string            `mapstructure:"backend"`
@@ -287,16 +285,6 @@ internal/core/ports/ports.go
     11→type ActivityResolver …
     22→type ActivityRepository …
     29→type NotesRepository …
-
-Makefile
-
-go.mod
-
-go.sum
-
-install.sh
-
-tock.yaml.example
 
 internal/core/dto/activity_dto.go
      9→type StartActivityRequest …

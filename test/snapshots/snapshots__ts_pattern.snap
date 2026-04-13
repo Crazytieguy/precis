@@ -59,8 +59,6 @@ src/errors.ts
      5→export class NonExhaustiveError …
      6→  constructor(public input: unknown) {
 
-src/index.ts
-
 src/is-matching.ts
      7→ * This constraint allows using additional properties
       →…
@@ -400,24 +398,8 @@ src/types/helpers.ts
    271→export type Call …
    275→export type IsOptionalKeysOf …
 
-src/types/index.ts
-
-scripts/generate-cts.sh
-
 jest.config.cjs
      1→module.exports = { …
-
-package.json
-
-tsconfig.json
-
-docs/roadmap.md
-
-docs/v3-to-v4-migration-guide.md
-
-docs/v4-to-v5-migration-guide.md
-
-benchmarks/package.json
 
 examples/
 

@@ -262,8 +262,6 @@ crates/toasty-codegen/src/lib.rs
      6→pub fn generate_model(input: TokenStream) -> syn::Result<TokenStream> {
     13→pub fn generate_embed(input: TokenStream) -> syn::Result<TokenStream> {
 
-crates/toasty-codegen/src/schema.rs
-
 crates/toasty/src/batch/create.rs
      3→pub struct CreateMany …
      9→impl<M: Model> CreateMany<M> …
@@ -313,8 +311,6 @@ crates/toasty-cli/src/migration.rs
 crates/toasty-cli/src/theme.rs
      4→/// Returns the standard theme used for interactive prompts
      5→pub fn dialoguer_theme() -> ColorfulTheme {
-
-crates/std-util/src/lib.rs
 
 crates/std-util/src/num.rs
      1→pub trait NumUtil …
@@ -366,8 +362,6 @@ crates/toasty-driver-dynamodb/src/lib.rs
    345→struct ExprAttrs …
    351→impl ExprAttrs …
 
-crates/toasty-driver-dynamodb/src/op.rs
-
 crates/toasty-driver-dynamodb/src/type.rs
      4→pub trait TypeExt …
      6→    fn to_ddb_type(&self) -> ScalarAttributeType;
@@ -383,8 +377,6 @@ crates/toasty-driver-dynamodb/src/value.rs
     20→    pub fn from_ddb(ty: &stmt::Type, val: &AttributeValue) -> Self {
     43→    /// Converts this value to a DynamoDB AttributeValue.
     44→    pub fn to_ddb(&self) -> AttributeValue {
-
-crates/toasty-sql/src/lib.rs
 
 crates/toasty-sql/src/migration.rs
     12→pub struct MigrationStatement …
@@ -589,8 +581,6 @@ crates/toasty/src/apply_update.rs
     21→impl ApplyUpdate for Query …
     22→    fn apply_result …
 
-crates/toasty/src/batch.rs
-
 crates/toasty/src/cursor.rs
      6→pub struct Cursor …
     12→pub trait FromCursor …
@@ -628,8 +618,6 @@ crates/toasty/src/engine.rs
     86→    fn expr_cx …
     91→    fn expr_cx_for …
     96→    pub(crate) fn driver …
-
-crates/toasty/src/lib.rs
 
 crates/toasty/src/model.rs
      7→/// Generate a unique model ID at runtime.
@@ -731,8 +719,6 @@ crates/toasty-driver-integration-suite-macros/src/parse.rs
    327→enum DriverTestAttrItem …
    378→impl BoolExpr …
    428→impl DriverTest …
-
-crates/toasty-driver-integration-suite-macros/src/test_registry.rs
 
 crates/toasty-driver-integration-suite-macros/src/test_variants.rs
    100→impl Input …

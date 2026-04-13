@@ -199,8 +199,6 @@ src/uninstall/common.rs
 src/uninstall/formula.rs
     10→pub fn uninstall_formula_artifacts …
 
-src/uninstall/mod.rs
-
 src/upgrade/bottle.rs
     14→/// Upgrades a formula that is installed from a bottle.
       →…
@@ -221,8 +219,6 @@ src/upgrade/cask.rs
     18→    old_install_info: &InstalledPackageInfo,
     19→    config: &Config,
     20→) -> SpsResult<()> {
-
-src/upgrade/mod.rs
 
 src/upgrade/source.rs
     13→/// Upgrades a formula that was/will be installed from source.

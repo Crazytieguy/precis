@@ -20,12 +20,6 @@ README.md
     33→### Integration with the Actions of your projects
     53→## Projects made with Soluna
 
-bin/readme.txt
-
-Makefile
-
-asset/sprites.dl
-
 src/appevent.h
      2→#define soluna_app_event_h
      4→struct event_message …
@@ -220,8 +214,6 @@ src/version.h
      4→#define SOLUNA_API_VERSION 3
      6→#define SOLUNA_HASH_VERSION "dev"
 
-src/data/settingdefault.dl
-
 src/platform/linux/soluna_linux_ime.h
      6→bool soluna_linux_ensure_im(void);
      7→void soluna_linux_on_rect_cleared(void);
@@ -318,16 +310,6 @@ src/service/start.lua
     59→function S.external …
    176→function S.quit …
 
-web/content/_index.md
-
-web/content/playframe.md
-
-web/assets/htmx.js
-
-web/assets/play.js
-
-web/assets/playframe.js
-
 src/lualib/coroutine.lua
     19→	function coroutine.create …
     51→		function coroutine.resume …
@@ -383,8 +365,6 @@ src/lualib/packageloader.lua
    159→	file.local_exist …
    160→	file.searchpath …
 
-src/lualib/print_r.lua
-
 src/lualib/soluna.lua
     11→function soluna.gamepad_init …
     28→function soluna.settings …
@@ -407,18 +387,6 @@ src/lualib/util.lua
      9→function func_chain:add …
     13→function func_chain:__call …
     20→function util.func_chain …
-
-clibs/soluna/compile_lua.lua
-
-clibs/soluna/compile_shader.lua
-
-clibs/soluna/runlua.lua
-
-clibs/soluna/shader2c.lua
-
-make.lua
-
-src/platform/macos/soluna_macos_ime.m
 
 web/config.toml
      7→[pagination]

@@ -2,26 +2,6 @@
 source: test/fixtures.rs
 expression: output
 ---
-README.rst
-
-downstream/README.md
-
-MANIFEST.in
-
-downstream/conda.sh
-
-downstream/datasette.sh
-
-downstream/devpi.sh
-
-downstream/hatch.sh
-
-downstream/pytest.sh
-
-downstream/python-lsp-server.sh
-
-downstream/tox.sh
-
 src/pluggy/__init__.py
      1→__all__ …
     32→def __getattr__(name: str) -> str:
@@ -322,14 +302,6 @@ src/pluggy/_warnings.py
     26→
     27→    __module__ = "pluggy"
 
-src/pluggy/py.typed
-
-changelog/README.rst
-
-docs/api_reference.rst
-
-docs/index.rst
-
 codecov.yml
      1→coverage:
      2→  status:
@@ -353,13 +325,9 @@ pyproject.toml
     74→[tool.towncrier]
    112→[tool.mypy]
 
-tox.ini
-
 testing/benchmark.py
      2→Benchmarking and performance tests.
      3→"""
-
-testing/conftest.py
 
 scripts/release.py
      2→Release script.
@@ -372,14 +340,6 @@ scripts/release.py
 
 scripts/towncrier-draft-to-file.py
      5→def main() -> int:
-
-changelog/590.trivial.rst
-
-changelog/_template.rst
-
-docs/conf.py
-
-docs/requirements.txt
 
 docs/_static/
 

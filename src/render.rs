@@ -266,8 +266,8 @@ impl FileCache {
         let mut output = String::new();
         for path in &self.path_order {
             let map = match self.files.get(path) {
-                Some(m) => m,
-                None => continue,
+                Some(m) if !m.is_empty() => m,
+                _ => continue,
             };
 
             if !output.is_empty() {

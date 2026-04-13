@@ -64,8 +64,6 @@ fuzzer/fuzz.py
     60→    """Make NaNs equal when compared (without using recursion)."""
     71→def main():
 
-MANIFEST.in
-
 tomllib.md
      1→# `tomllib` – Tomli in the standard library
      3→Tomli was added to the Python standard library in Python 3.11.
@@ -250,10 +248,6 @@ src/tomli/_re.py
    109→def match_to_localtime(match: re.Match[str]) -> time:
    116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
 
-src/tomli/_types.py
-
-src/tomli/py.typed
-
 benchmark/README.md
      1→# Benchmark
     10→## Running
@@ -269,10 +263,6 @@ pyproject.toml
     46→[tool.tox]
    145→[tool.mypy]
 
-setup.py
-
-scripts/requirements.txt
-
 scripts/use_setuptools.py
      1→"""Script that switches build backend to setuptools with mypyc support.
      2→
@@ -283,10 +273,6 @@ scripts/use_setuptools.py
 benchmark/run.py
     15→def benchmark …
     37→def run …
-
-fuzzer/requirements.txt
-
-profiler/requirements.txt
 
 tests/__init__.py
      1→# SPDX-License-Identifier: MIT
@@ -300,10 +286,6 @@ tests/burntsushi.py
     43→    """Normalize test objects.
     44→
     45→    This normalizes primitive values (e.g. floats)."""
-
-benchmark/data.toml
-
-benchmark/requirements.txt
 
 src/
 

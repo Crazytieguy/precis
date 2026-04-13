@@ -30,28 +30,6 @@ demo.py
     71→    """Prepare a connection string for the given inbound, user UUID and telegram ID.
       →…
 
-py3xui/__init__.py
-
-dev/clean_trash.sh
-
-dev/create_venv.sh
-
-dev/push.sh
-
-dev/pydoc.sh
-
-py3xui/api/README.md
-
-py3xui/client/README.md
-
-py3xui/inbound/README.md
-
-py3xui/server/README.md
-
-py3xui/utils/README.md
-
-py3xui/client/__init__.py
-
 py3xui/client/client.py
      1→"""This module contains the Client class which represents a client in the XUI API."""
      6→# pylint: disable=too-few-public-methods
@@ -59,8 +37,6 @@ py3xui/client/client.py
     36→class Client …
     37→    """Represents a client in the XUI API.
       →…
-
-py3xui/server/__init__.py
 
 py3xui/server/server.py
      1→"""This module contains the Server class which represents server information in XUI API."""
@@ -115,8 +91,6 @@ py3xui/utils/env.py
     95→def tls_cert_path() -> str | None:
     96→    """Get the path to the TLS certificate from the environment using the following keys:
       →…
-
-py3xui/api/__init__.py
 
 py3xui/api/api.py
      1→"""This module provides classes to interact with the XUI API."""
@@ -304,8 +278,6 @@ py3xui/api/api_server.py
     98→        """Generates a new Reality (X25519) key pair on the server.
       →…
 
-py3xui/inbound/__init__.py
-
 py3xui/inbound/bases.py
      1→"""This module contains the base classes for the inbound models."""
      8→# pylint: disable=too-few-public-methods
@@ -357,10 +329,6 @@ py3xui/inbound/stream_settings.py
     26→    """Represents the stream settings for an inbound.
       →…
 
-py3xui/async_api/README.md
-
-dev/requirements.txt
-
 pyproject.toml
      1→[build-system]
      2→requires = ["setuptools>=42", "wheel"]
@@ -372,7 +340,5 @@ pyproject.toml
     27→Repository = "https://github.com/iwatkot/py3xui"
     28→
     29→[tool.setuptools.packages.find]
-
-tests/__init__.py
 
 tests/responses/

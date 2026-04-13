@@ -112,8 +112,6 @@ krep.h
    312→static inline bool is_whole_word_match(const char *text, size_t text_len, size_t start, size_t end)
    313→{
 
-test/test_compat.h
-
 test/test_krep.h
     16→#define TESTING
     33→uint64_t regex_search_test_positions(const char *text_start, size_t text_len, const regex_t *compiled_regex,
@@ -121,8 +119,6 @@ test/test_krep.h
     62→search_params_t create_literal_params(const char *pattern, bool case_sensitive, bool count_lines, bool only_match);
     75→search_params_t create_regex_params(const char *pattern, bool case_sensitive, bool count_lines, bool only_match);
     84→void cleanup_params(search_params_t *params);
-
-Makefile
 
 aho_corasick.c
     17→typedef struct ac_node …

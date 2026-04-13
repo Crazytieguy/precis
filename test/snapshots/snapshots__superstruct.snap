@@ -28,8 +28,6 @@ src/error.ts
     25→export class StructError …
     35→  constructor …
 
-src/index.ts
-
 src/struct.ts
      1→import { toFailures, shiftIterator, StructSchema, run } from './utils.js'
      2→import { StructError, Failure } from './error.js'
@@ -320,34 +318,6 @@ docs/summary.md
      3→## Guides
     12→## API Reference
     22→## Resources
-
-package.json
-
-rollup.config.js
-
-tsconfig.json
-
-examples/basic-validation.js
-
-examples/composing-structs.js
-
-examples/custom-errors.js
-
-examples/custom-types.js
-
-examples/default-values.js
-
-examples/optional-values.js
-
-examples/returning-errors.js
-
-examples/testing-values.js
-
-examples/throwing-errors.js
-
-examples/package.json
-
-License.md
 
 docs/guides/
 

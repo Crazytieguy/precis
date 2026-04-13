@@ -128,7 +128,7 @@ In tock, `AnalysisStats` in `internal/adapters/cli/analyze.go` (10 fields: Total
 
 In sqlite_vec's `sqlite-vec.c`, the pre-rewrite showed full bodies for `VectorElementType` (3 members: FLOAT32, BIT, INT8), `Vec0TokenType` (6 members), `NpyTokenType` (10 members), `Vec0DistanceMetrics` (3 members: L2, COSINE, L1), and several `typedef enum` blocks with their values. The new output collapses most of these to just names (e.g., `enum VectorElementType …`). For a C project where enums define the API surface (vector element types, distance metrics, query plan types), these bodies are high-value — a reader can't infer the supported element types or distance metrics from the name alone.
 
-## 21. Volume-based budget capture — large support package crowds out small core package
+## 21. Volume-based budget capture — large support package crowds out small core package [needs human review]
 
 **Affected snapshots:** mcphost
 
@@ -140,15 +140,9 @@ The `internal/ui/` content is individually reasonable (function names at base_va
 
 This is a pre-existing issue (the old output also omitted `internal/tools/`) but is more damaging after the rewrite because the old output compensated with richer content in the files it did show (struct field bodies, type definitions, doc comments). The new output's broader-but-shallower coverage makes the absence of core domain code more conspicuous.
 
+**Attempted fix:** Tried per-directory file-count dampening (N^(-alpha) modifier for directories with >K source files). With threshold 4, exponent 0.2: 32 snapshot failures. With threshold 6, exponent 0.4: 31 failures. With threshold 8, exponent 0.3: 20 failures. With threshold 10, exponent 0.35: 0 failures (no effect). The fundamental issue is structural: TsGroups cost ~2 tokens (ratio ~0.5) while FilesGroups for `internal/tools/` cost ~12 tokens (ratio ~0.07). No dampening of UI TsGroups can bridge a 7× ratio gap. Fixing this likely requires scheduler-level changes: either a coverage-aware scheduling phase that ensures small directories get FilesGroups committed before TsGroups consume the budget, or a mechanism that discounts FilesGroup costs for small focused directories.
 
 
-## 25. Bare-filename repetitive files waste budget while structural files are empty
-
-**Affected snapshots:** sqlite_vec
-
-**Partially fixed:** sps_core's `src/install/cask/artifacts/` now shows as a single folder entry (not 21 individual bare filenames). The `mod_item` declarations fix also gave lib.rs and mod.rs files their `pub mod` declarations. swarm's `logs/` directory is now classified as `FileCategory::Artifact`, collapsing 31 bare filenames into a single folder entry. SVG files are now classified as binary. xlstm_blocks' 8 `.cu`/`.cuh` files in `slstm/src/util/` are now deprioritized by the companion-header penalty (`.cu` added to `is_c_implementation_extension`), freeing ~16 tokens that now show full method signatures in `sLSTMCellBase`.
-
-**Remaining:** In sqlite_vec, ~25 empty file entries (Makefile, sqlite-vec.h.tmpl, test.sql, various examples/, scripts/, and site/ files) and ~25 empty folder entries (benchmarks/, tests/ subdirectories, etc.) consume ~100 tokens for near-zero information. The old output was more selective — it collapsed `site/` into a single folder entry rather than listing all its subfiles and subfolders individually. The budget spent on these empty entries could instead show README body content (issue #6) or enum bodies (issue #18). A general mechanism for deprioritizing unparseable bare-filename entries was attempted (0.2× weight for files without a tree-sitter language) but caused 23+ snapshot regressions due to cascading budget redistribution — most directories mix parseable and unparseable files.
 
 ## 27. Example source files absent while library README dominates budget (regression)
 

@@ -272,12 +272,6 @@ include/worldgen.h
     25→uint8_t getBlockAt …
     28→uint8_t buildChunkSection …
 
-build.sh
-
-build_registries.js
-
-extract_registries.sh
-
 src/crafting.c
    349→#define registerSmeltingRecipe(a, b) \
 
@@ -391,11 +385,7 @@ src/tools.c
    249→void readStringN …
    290→int64_t get_program_time …
 
-src/varnum.c
-
 src/worldgen.c
    126→uint8_t getHeightAtFromAnchors …
    160→uint8_t getHeightAt …
    401→uint8_t buildChunkSection …
-
-src/CMakeLists.txt

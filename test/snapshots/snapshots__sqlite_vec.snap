@@ -47,8 +47,6 @@ bindings/python/extra_init.py
 bindings/rust/src/lib.rs
      3→    pub fn sqlite3_vec_init();
 
-Makefile
-
 reference.yaml
      1→sections:
     31→meta:
@@ -263,23 +261,11 @@ sqlite-vec.c
   9745→#define SQLITE_VEC_DEBUG_STRING                                                \
   9853→SQLITE_VEC_API int …
 
-sqlite-vec.h.tmpl
-
-test.sql
-
 tmp-static.py
     25→def register_np …
 
-bindings/rust/Cargo.toml.tmpl
-
-bindings/rust/Makefile
-
 bindings/rust/build.rs
      1→fn main() {
-
-bindings/go/ncruces/go-sqlite3.patch
-
-benchmarks/README.md
 
 tests/sqlite-vec-internal.h
      3→int min_idx(
@@ -288,45 +274,11 @@ sqlite-dist.toml
      1→[package]
     10→[targets]
 
-examples/nbc-headlines/README.md
-
-examples/sqlite3-cli/README.md
-
-examples/wasm/README.md
-
-examples/simple-bun/demo.ts
-
-examples/simple-deno/demo.ts
-
 examples/simple-python/demo.py
      8→def serialize_f32(vector: List[float]) -> bytes:
 
-examples/simple-sqlite/demo.sql
-
-scripts/progress.ts
-
-scripts/publish-release.sh
-
-scripts/vendor.sh
-
-examples/simple-node/demo.mjs
-
-site/api-reference.md
-
-site/build-ref.mjs
-
-site/compiling.md
-
-site/index.md
-
 site/project.data.ts
     13→  load() {
-
-site/sqlite.tmlanguage.json
-
-site/versioning.md
-
-examples/python-recipes/openai-sample.py
 
 bindings/
 

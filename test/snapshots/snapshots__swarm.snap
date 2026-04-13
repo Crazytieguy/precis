@@ -172,14 +172,10 @@ swarm/repl/repl.py
     61→    starting_agent, context_variables=None, stream=False, debug=False
     62→) -> None:
 
-examples/__init__.py
-
 pyproject.toml
      1→[build-system]
      2→requires = ["setuptools"]
      3→build-backend = "setuptools.build_meta"
-
-setup.cfg
 
 examples/airline/README.md
      1→# Airline customer service
@@ -226,8 +222,6 @@ examples/weather_agent/README.md
      5→## Setup
     15→## Evals
 
-tests/__init__.py
-
 tests/mock_client.py
      8→def create_mock_response(message, function_calls=[], model="gpt-4o"):
     44→class MockOpenAIClient …
@@ -256,16 +250,6 @@ examples/weather_agent/evals.py
      8→def run_and_get_tool_calls(agent, query):
     26→def test_calls_weather_when_asked(query):
     41→def test_does_not_call_weather_when_not_asked(query):
-
-examples/weather_agent/run.py
-
-examples/airline/__init__.py
-
-examples/airline/main.py
-
-examples/support_bot/Makefile
-
-examples/support_bot/__init__.py
 
 examples/support_bot/customer_service.py
     13→# Set embedding model
@@ -298,8 +282,6 @@ examples/basic/agent_handoff.py
     16→def transfer_to_spanish_agent():
     17→    """Transfer spanish speaking users immediately."""
 
-examples/basic/bare_minimum.py
-
 examples/basic/context_variables.py
      6→def instructions(context_variables):
     11→def print_account_details(context_variables: dict):
@@ -309,8 +291,6 @@ examples/basic/function_calling.py
 
 examples/basic/simple_loop_no_helpers.py
     11→def pretty_print_messages(messages):
-
-examples/personal_shopper/__init__.py
 
 examples/personal_shopper/database.py
      7→def get_connection():
@@ -353,8 +333,6 @@ examples/triage_agent/evals_util.py
     10→    value: bool
     11→    reason: Optional[str]
     14→def evaluate_with_llm_bool(instruction, data) -> BoolEvalResult:
-
-examples/triage_agent/run.py
 
 assets/
 

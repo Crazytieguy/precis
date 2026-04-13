@@ -44,12 +44,10 @@ src/index.ts
     46→export default function mitt<Events extends Record<EventType, unknown>>(
     47→	all?: EventHandlerMap<Events>
     48→): Emitter<Events> {
-
-test/index_test.ts
 ```
 <!-- precis-example-end -->
 
-The README body gives the project description and feature list. The source file shows type aliases (truncated), the `Emitter` interface with its methods, the doc comment, and the main function signature. Test files appear as path-only entries, deprioritized relative to core source.
+The README body gives the project description and feature list. The source file shows type aliases (truncated), the `Emitter` interface with its methods, the doc comment, and the main function signature.
 
 ## Installation
 

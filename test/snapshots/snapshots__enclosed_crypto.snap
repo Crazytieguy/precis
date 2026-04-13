@@ -111,10 +111,6 @@ src/encryption-algorithms/encryption-algorithms.types.ts
      8→export type EncryptionAlgorithm …
     10→export type EncryptionAlgorithmDefinitions …
 
-build.config.ts
-
-eslint.config.js
-
 package.json
      2→  "name": "@enclosed/crypto",
      3→  "type": "module",
@@ -138,8 +134,6 @@ package.json
 tsconfig.json
      2→  "compilerOptions": {
     10→  "include": [
-
-src/index.test.ts
 
 src/node/crypto.node.usecases.test.ts
      2→import { base64UrlToBuffer, bufferToBase64Url } from './crypto.node.usecases';

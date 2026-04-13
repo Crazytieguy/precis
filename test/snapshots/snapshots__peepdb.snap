@@ -45,10 +45,6 @@ README.md
    170→## 📚 Documentation
    172→For more detailed documentation, please visit our [GitHub Pages](https://peepdb.dev/).
 
-MANIFEST.in
-
-peepdb/__init__.py
-
 peepdb/__main__.py
      1→from .cli import main
 
@@ -303,12 +299,6 @@ project.toml
     48→
     49→[tool.setuptools.packages.find]
 
-requirements.txt
-
-setup.py
-
-docs/Gemfile
-
 docs/index.md
      6→# peepDB
      8→**peepDB** is an open-source command-line tool and Python library designed for developers and database administrators who need a fast and efficient way to inspect their database tables without writing SQL queries. With support for MySQL, PostgreSQL, and MariaDB, peepDB is lightweight, secure, and incredibly easy to use.
@@ -344,8 +334,6 @@ docs/usage.md
     74→## Help
     82→## Examples
 
-peepdb/tests/__init__.py
-
 docs/_config.yml
      1→title: peepDB
      2→description: A starter template for a Jeykll site using the Just the Docs theme!
@@ -353,9 +341,5 @@ docs/_config.yml
      5→url: https://just-the-docs.github.io
      7→aux_links:
      8→  Template Repository: https://github.com/just-the-docs/just-the-docs-template
-
-CONTRIBUTING.md
-
-docs/contributing.md
 
 images/

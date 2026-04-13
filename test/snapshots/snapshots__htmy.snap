@@ -27,8 +27,6 @@ README.md
    341→## Why
    353→## Dependencies
 
-htmy/md/__init__.py
-
 htmy/md/core.py
     20→class MarkdownParser …
     22→    Context-aware markdown parser.
@@ -214,8 +212,6 @@ htmy/i18n.py
 htmy/io.py
     11→async def load_text_file(path: str | Path) -> str:
 
-htmy/py.typed
-
 htmy/snippet.py
     27→class Slots …
     83→    def __init__(
@@ -300,8 +296,6 @@ htmy/utils.py
     67→def as_component_sequence(comp: Component) -> ComponentSequence:
     73→def as_component_type(comp: Component) -> ComponentType:
 
-htmy/renderer/__init__.py
-
 htmy/renderer/baseline.py
     18→class Renderer …
     20→    The baseline renderer that support both async streaming and rendering.
@@ -377,8 +371,6 @@ htmy/renderer/typing.py
       →…
     53→def is_streaming_renderer(obj: Any | None) -> TypeGuard[StreamingRendererType]:
     54→    """Type guard that checks if the given object is a streaming renderer."""
-
-examples/snippet-slots-fastapi/app.py
 
 docs/
 

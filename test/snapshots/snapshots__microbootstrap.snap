@@ -31,8 +31,6 @@ README.md
    710→### Using microbootstrap without a framework
    746→## Advanced
 
-Justfile
-
 microbootstrap/__init__.py
     26→__all__ …
 
@@ -97,8 +95,6 @@ microbootstrap/instruments_setupper.py
     62→    def __enter__ …
     65→    def __exit__ …
 
-microbootstrap/py.typed
-
 microbootstrap/settings.py
     24→ENV_PREFIX_VAR_NAME …
     25→ENV_PREFIX …
@@ -139,8 +135,6 @@ microbootstrap/settings.py
    105→class InstrumentsSetupperSettings …
    112→    """Settings for a vanilla service."""
 
-microbootstrap/config/__init__.py
-
 microbootstrap/config/fastapi.py
     21→class FastApiConfig …
 
@@ -149,8 +143,6 @@ microbootstrap/config/faststream.py
 
 microbootstrap/config/litestar.py
     14→class LitestarConfig …
-
-microbootstrap/middlewares/__init__.py
 
 microbootstrap/middlewares/fastapi.py
     12→def build_fastapi_logging_middleware(
@@ -161,8 +153,6 @@ microbootstrap/middlewares/litestar.py
     14→def build_litestar_logging_middleware(
     15→    exclude_endpoints: typing.Iterable[str],
     16→) -> type[MiddlewareProtocol]:
-
-microbootstrap/bootstrappers/__init__.py
 
 microbootstrap/bootstrappers/base.py
     17→class DataclassInstance …
@@ -222,8 +212,6 @@ microbootstrap/bootstrappers/litestar.py
    191→class LitestarLoggingInstrument …
    200→class LitestarPrometheusInstrument …
    223→class LitestarHealthChecksInstrument …
-
-microbootstrap/instruments/__init__.py
 
 microbootstrap/instruments/base.py
     19→class BaseInstrumentConfig …
@@ -395,12 +383,8 @@ pyproject.toml
    101→[tool.mypy]
    109→[tool.ruff]
 
-tests/__init__.py
-
 tests/conftest.py
     46→class MockSentryTransport …
     47→    def capture_envelope …
-
-tests/bootstrappers/__init__.py
 
 tests/instruments/

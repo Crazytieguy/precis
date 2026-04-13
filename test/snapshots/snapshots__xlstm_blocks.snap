@@ -1,10 +1,7 @@
 ---
 source: test/fixtures.rs
-assertion_line: 64
 expression: output
 ---
-__init__.py
-
 xlstm_block.py
     17→class xLSTMBlockConfig …
     27→    def __post_init__(self):
@@ -19,8 +16,6 @@ xlstm_block.py
     76→    def forward(self, x: torch.Tensor, **kwargs) -> torch.Tensor:
     82→    def step(self, x: torch.Tensor, **kwargs) -> tuple[torch.Tensor, dict[str, tuple[torch.Tensor, ...]]]:
     89→    def reset_parameters(self) -> None:
-
-slstm/__init__.py
 
 slstm/block.py
     13→class sLSTMBlockConfig …
@@ -83,8 +78,6 @@ slstm/layer.py
     84→    def reset_parameters …
     92→    def step …
    123→    def forward …
-
-mlstm/__init__.py
 
 mlstm/backends.py
      9→def parallel_stabilized_simple …
@@ -163,10 +156,6 @@ slstm/src/util/support.h
     49→  using T …
     52→template <typename U> typename native_type<U>::T *ptr(torch::Tensor t) {
     56→template <typename T> torch::Dtype typeToTorchDtype();
-
-slstm/src/util/util.h
-
-slstm/src/__init__.py
 
 slstm/src/cuda_init.py
     14→LOGGER …
