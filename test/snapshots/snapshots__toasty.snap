@@ -1,6 +1,5 @@
 ---
 source: test/fixtures.rs
-assertion_line: 64
 expression: output
 ---
 README.md
@@ -50,13 +49,6 @@ docs/CHANGE_GUIDE.md
    287→## Common Pitfalls
    301→## Commit Message Conventions
 
-docs/CONTEXT.md
-     1→# Documentation Context
-     3→Load this file when editing anything in the `docs/` directory.
-     4→
-     5→## Writing Style
-    28→## Document Structure
-
 docs/architecture/query-engine.md
      1→# Toasty Query Engine
      7→## Overview
@@ -98,9 +90,24 @@ crates/std-util/Cargo.toml
      1→[package]
      8→[dependencies]
 
+crates/toasty/Cargo.toml
+     1→[package]
+     6→[features]
+    33→[dependencies]
+
 crates/toasty-cli/Cargo.toml
      1→[package]
      7→[dependencies]
+
+crates/toasty-codegen/Cargo.toml
+     1→[package]
+     8→[dependencies]
+
+crates/toasty-core/Cargo.toml
+     1→[package]
+     7→[dependencies]
+    20→[features]
+    28→[dev-dependencies]
 
 crates/toasty-driver-dynamodb/Cargo.toml
      1→[package]
@@ -125,27 +132,24 @@ crates/toasty-driver-postgresql/Cargo.toml
      6→[features]
     11→[dependencies]
 
+crates/toasty-driver-sqlite/Cargo.toml
+     1→[package]
+     7→[dependencies]
+
 crates/toasty-macros/Cargo.toml
      1→[package]
      7→[lib]
     10→[dependencies]
 
-crates/toasty/CONTEXT.md
-     1→# toasty Component Context  
-     3→## Purpose
-     6→## Architecture Overview
-    15→## Key Components
-    82→## Common Change Patterns
-   103→## Execution Flow Examples
-   134→## Important Files
-   142→## Design Principles
-   150→## Performance Considerations
-   158→## Recent Changes Analysis
-
-crates/toasty/Cargo.toml
+crates/toasty-sql/Cargo.toml
      1→[package]
-     6→[features]
-    33→[dependencies]
+     2→name = "toasty-sql"
+     3→version = "0.1.0"
+     4→edition = "2021"
+     5→publish = false
+     6→
+     7→[dependencies]
+     8→toasty-core.workspace = true
 
 crates/toasty-driver-mysql/src/lib.rs
     22→pub struct MySQL …
@@ -181,21 +185,6 @@ crates/toasty-macros/src/lib.rs
     31→pub fn query(_input: TokenStream) -> TokenStream {
     36→pub fn create(_input: TokenStream) -> TokenStream {
 
-crates/toasty-core/CONTEXT.md
-     1→# toasty-core Component Context
-     3→## Purpose
-     6→## Key Responsibilities
-    60→## Common Change Patterns
-    80→## Important Files
-    89→## Design Principles
-    96→## Recent Changes Analysis
-
-crates/toasty-core/Cargo.toml
-     1→[package]
-     7→[dependencies]
-    20→[features]
-    28→[dev-dependencies]
-
 crates/toasty-driver-sqlite/src/lib.rs
     23→pub enum Sqlite …
     24→    File(PathBuf),
@@ -228,63 +217,6 @@ crates/toasty-driver-sqlite/src/value.rs
     22→    /// Converts a SQLite value within a row to a Toasty value.
     23→    pub fn from_sql(row: &Row, index: usize, ty: &stmt::Type) -> Self {
     56→impl ToSql for Value …
-
-crates/toasty-codegen/CONTEXT.md
-     1→# toasty-codegen Component Context
-     3→## Purpose
-     6→## Key Responsibilities
-    25→## Common Change Patterns
-    45→## Generated Code Structure
-    70→## Complete Attribute Support
-    88→## Important Files
-    96→## Code Generation Principles
-   103→## Key Patterns
-   128→## Recent Changes Analysis
-
-crates/toasty-codegen/Cargo.toml
-     1→[package]
-     8→[dependencies]
-
-crates/toasty-sql/CONTEXT.md
-     1→# toasty-sql Component Context
-     3→## Purpose
-     6→## Architecture
-    44→## SQL Dialects (Flavors)
-    67→## Parameter Binding
-    76→## Common Change Patterns
-    96→## Serialization Flow
-   104→## Important Patterns
-   132→## Testing Approach
-   139→## Performance Considerations
-   146→## Recent Changes Analysis
-
-crates/toasty-sql/Cargo.toml
-     1→[package]
-     2→name = "toasty-sql"
-     3→version = "0.1.0"
-     4→edition = "2021"
-     5→publish = false
-     6→
-     7→[dependencies]
-     8→toasty-core.workspace = true
-
-crates/toasty-driver-sqlite/CONTEXT.md
-     1→# toasty-driver-sqlite Component Context
-     3→## Purpose
-     6→## Architecture
-    23→## SQLite-Specific Features
-    43→## Operations Implementation
-    80→## Value Conversion
-    99→## Capabilities
-   113→## Limitations
-   128→## Testing
-   146→## Common Change Patterns
-   167→## Recent Changes
-   176→## Related Components
-
-crates/toasty-driver-sqlite/Cargo.toml
-     1→[package]
-     7→[dependencies]
 
 crates/toasty-codegen/src/expand.rs
     18→struct Expand …
@@ -763,13 +695,64 @@ crates/toasty-core/src/driver/response.rs
     81→    pub fn into_value_stream(self) -> stmt::ValueStream {
 
 crates/toasty-driver-integration-suite-macros/src/lib.rs
+    11→pub fn driver_test(attr: TokenStream, item: TokenStream) -> TokenStream {
+    16→pub fn generate_test_registry(input: TokenStream) -> TokenStream {
+    21→pub fn generate_driver_test_variants(input: TokenStream) -> TokenStream {
+    28→pub fn driver_test_cfg(_input: TokenStream) -> TokenStream {
 
 crates/toasty-driver-integration-suite-macros/src/parse.rs
+     3→/// Helper trait for working with collections of expansions
      4→pub trait ExpansionList …
+     5→    /// Check if these expansions require a module wrapper
+      →…
+     7→    fn needs_module_wrapper(&self) -> bool;
+    10→impl ExpansionList for [Expansion] …
+    11→    fn needs_module_wrapper …
+    18→pub struct DriverTest …
+    40→pub enum ThreeValuedBool …
+    46→impl ThreeValuedBool …
+    48→    pub fn or …
+    57→    pub fn and …
+    66→    pub fn not …
+    77→pub struct Expansion …
+    91→impl Expansion …
+    93→    pub fn name …
+   114→    pub fn is_ident_true …
+   140→    pub fn should_include …
+   155→    pub(crate) fn evaluate_predicate …
+   203→    pub fn has_expansion …
+   208→    pub fn to_ident …
+   220→pub enum BoolExpr …
+   233→pub enum KindVariant …
+   240→impl KindVariant …
+   242→    pub fn name …
+   252→pub struct DriverTestAttr …
+   261→impl DriverTestAttr …
+   263→    pub fn from_attribute …
+   282→impl Parse for DriverTestAttr …
+   283→    fn parse …
+   338→impl Parse for DriverTestAttrItem …
+   339→    fn parse …
+   378→impl BoolExpr …
+   380→    pub fn parse …
+   428→impl DriverTest …
+   430→    pub fn from_item_fn …
+   460→    pub(crate) fn generate_expansions …
 
 crates/toasty-driver-integration-suite-macros/src/test_registry.rs
+    11→pub fn expand(input: TokenStream) -> TokenStream {
+   103→fn extract_capability_names …
+   140→impl<'ast> Visit<'ast> for TestVisitor …
+   141→    fn visit_item_fn …
+   240→fn generate_capability_runtime_test …
 
 crates/toasty-driver-integration-suite-macros/src/test_variants.rs
+    32→impl syn::parse::Parse for Input …
+    33→    fn parse …
+   100→impl Input …
+   148→pub fn expand(input: TokenStream) -> TokenStream {
+
+tests/Cargo.toml
 
 benches/
 
@@ -814,5 +797,3 @@ crates/toasty-sql/tests/
 examples/
 
 scripts/
-
-tests/

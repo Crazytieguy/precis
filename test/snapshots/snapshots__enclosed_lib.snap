@@ -1,6 +1,5 @@
 ---
 source: test/fixtures.rs
-assertion_line: 64
 expression: output
 ---
 README.md
@@ -35,7 +34,6 @@ README.md
     32→
     33→## License
     37→## Credits and Acknowledgements
-    39→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
 
 src/index.ts
      2→import { isApiClientErrorWithCode, isApiClientErrorWithStatusCode } from './api/api.models';
@@ -48,10 +46,10 @@ src/index.ts
 
 src/files/files.models.ts
      1→import type { NoteAsset } from '../notes/notes.types';
-     6→async function fileToNoteAsset …
-    20→async function filesToNoteAssets …
-    24→async function noteAssetToFile …
-    34→async function noteAssetsToFiles …
+     6→async function fileToNoteAsset({ file }: { file: File }): Promise<NoteAsset> {
+    20→async function filesToNoteAssets({ files }: { files: File[] }): Promise<NoteAsset[]> {
+    24→async function noteAssetToFile({ noteAsset }: { noteAsset: NoteAsset }): Promise<File> {
+    34→async function noteAssetsToFiles({ noteAssets }: { noteAssets: NoteAsset[] }): Promise<File[]> {
 
 src/api/api.client.ts
      2→import { DEFAULT_API_BASE_URL } from './api.constants';
@@ -186,6 +184,4 @@ tsconfig.json
      9→  "include": [
 
 src/api/api.models.test.ts
-     2→import { isApiClientErrorWithCode, isApiClientErrorWithStatusCode } from './api.models';
-
-src/notes/notes.models.test.ts
+     2→import …

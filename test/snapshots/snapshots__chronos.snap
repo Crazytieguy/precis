@@ -1,6 +1,5 @@
 ---
 source: test/fixtures.rs
-assertion_line: 64
 expression: output
 ---
 README.md
@@ -22,6 +21,9 @@ CITATION.cff
 
 scripts/README.md
      1→# Usage Examples
+     3→> [!NOTE]  
+     4→> The following documentation was originally written for the Chronos models released in Mar 2024 and may be outdated. If something does not work, please open an issue or a pull request.
+     5→
      6→## Generating Synthetic Time Series (KernelSynth)
     24→## Pretraining (and fine-tuning) Chronos models
    113→## Evaluating Chronos models
@@ -63,9 +65,25 @@ src/chronos/boto_utils.py
     20→MODEL_FILENAMES …
     21→CLOUDFRONT_MAPPING …
     22→CHUNK_SIZE …
-    25→def download_model_files_from_cloudfront …
-    53→def download_model_files_from_s3 …
-    98→def cache_model_from_s3 …
+    25→def download_model_files_from_cloudfront(
+    26→    cloudfront_url: str,
+    27→    bucket: str,
+    28→    prefix: str,
+    29→    local_path: Path,
+    30→    force_download: bool = False,
+    31→) -> None:
+    53→def download_model_files_from_s3(
+    54→    bucket: str,
+    55→    prefix: str,
+    56→    local_path: Path,
+    57→    force_download: bool = False,
+    58→    boto3_session: boto3.Session | None = None,
+    59→) -> None:
+    98→def cache_model_from_s3(
+    99→    s3_uri: str,
+   100→    force_download: bool = False,
+   101→    boto3_session: boto3.Session | None = None,
+   102→):
 
 src/chronos/chronos.py
     28→class ChronosConfig …
@@ -131,13 +149,37 @@ src/chronos/chronos_bolt.py
 
 src/chronos/df_utils.py
     16→def _validate_df_types_and_cast …
-    59→def validate_df_inputs …
-   199→def convert_df_input_to_list_of_dicts_input …
+    59→def validate_df_inputs(
+    60→    df: "pd.DataFrame",
+    61→    future_df: "pd.DataFrame | None",
+    62→    target_columns: list[str],
+    63→    prediction_length: int,
+    64→    id_column: str = "item_id",
+    65→    timestamp_column: str = "timestamp",
+    66→) -> tuple["pd.DataFrame", "pd.DataFrame | None", str, list[int], np.ndarray]:
+   199→def convert_df_input_to_list_of_dicts_input(
+   200→    df: "pd.DataFrame",
+   201→    future_df: "pd.DataFrame | None",
+   202→    target_columns: list[str],
+   203→    prediction_length: int,
+   204→    id_column: str = "item_id",
+   205→    timestamp_column: str = "timestamp",
+   206→    validate_inputs: bool = True,
+   207→    freq: str | None = None,
+   208→) -> tuple[list[dict[str, np.ndarray | dict[str, np.ndarray]]], np.ndarray, dict[str, "pd.DatetimeIndex"]]:
 
 src/chronos/utils.py
-    11→def left_pad_and_stack_1D …
-    22→def interpolate_quantiles …
-   135→def weighted_quantile …
+    11→def left_pad_and_stack_1D(tensors: List[torch.Tensor]) -> torch.Tensor:
+    22→def interpolate_quantiles(
+    23→    query_quantile_levels: torch.Tensor | list[float],
+    24→    original_quantile_levels: torch.Tensor | list[float],
+    25→    original_values: torch.Tensor,
+    26→) -> torch.Tensor:
+   135→def weighted_quantile(
+   136→    query_quantile_levels: torch.Tensor | list[float],
+   137→    sample_weights: torch.Tensor | list[float],
+   138→    samples: torch.Tensor,
+   139→):
 
 notebooks/chronos-2-quickstart.ipynb
 
@@ -152,8 +194,19 @@ scripts/training/train.py
    155→def load_model …
    195→def has_enough_observations …
    219→class PseudoShuffledIterableDataset …
+   232→    def __init__ …
+   238→    def __iter__ …
    254→class ShuffleMixin …
+   260→    def shuffle …
    264→class ChronosDataset …
+   298→    def __init__ …
+   330→    def preprocess_entry …
+   351→    def _create_instance_splitter(self, mode: str):
+   376→    def create_training_data …
+   386→    def create_test_data …
+   390→    def create_validation_data …
+   394→    def to_hf_format …
+   450→    def __iter__ …
    504→def main …
 
 src/chronos/chronos2/__init__.py
@@ -283,6 +336,9 @@ src/chronos/chronos2/trainer.py
 pyproject.toml
      1→[project]
     31→[build-system]
+    35→[tool.hatch.build.targets.wheel]
+    36→packages = ["src/chronos"]
+    37→
     38→[tool.hatch.version]
     39→path = "src/chronos/__about__.py"
     40→
@@ -294,10 +350,17 @@ pyproject.toml
 scripts/kernel-synth.py
     24→LENGTH …
     25→KERNEL_BANK …
-    62→def random_binary_map …
-    82→def sample_from_gp_prior …
-   111→def sample_from_gp_prior_efficient …
-   151→def generate_time_series …
+    62→def random_binary_map(a: Kernel, b: Kernel):
+    82→def sample_from_gp_prior(
+    83→    kernel: Kernel, X: np.ndarray, random_seed: Optional[int] = None
+    84→):
+   111→def sample_from_gp_prior_efficient(
+   112→    kernel: Kernel,
+   113→    X: np.ndarray,
+   114→    random_seed: Optional[int] = None,
+   115→    method: str = "eigh",
+   116→):
+   151→def generate_time_series(max_kernels: int = 5):
 
 ci/evaluate/backtest_config.yaml
 
@@ -325,62 +388,6 @@ scripts/evaluation/evaluate.py
    241→def chronos_bolt …
    291→def chronos_2 …
 
-CODE_OF_CONDUCT.md
-     1→## Code of Conduct
-
-CONTRIBUTING.md
-     1→# Contributing Guidelines
-     3→Thank you for your interest in contributing to our project. Whether it's a bug report, new feature, correction, or additional
-     4→documentation, we greatly value feedback and contributions from our community.
-     5→
-     6→Please read through this document before submitting any issues or pull requests to ensure we have all the necessary
-     7→information to effectively respond to your bug report or contribution.
-     8→
-     9→
-    10→## Reporting Bugs/Feature Requests
-    12→We welcome you to use the GitHub issue tracker to report bugs or suggest features.
-    13→
-    14→When filing an issue, please check existing open, or recently closed, issues to make sure somebody else hasn't already
-    15→reported the issue. Please try to include as much information as you can. Details like these are incredibly useful:
-    16→
-    17→* A reproducible test case or series of steps
-    18→* The version of our code being used
-    19→* Any modifications you've made relevant to the bug
-    20→* Anything unusual about your environment or deployment
-    21→
-    22→
-    23→## Contributing via Pull Requests
-    24→Contributions via pull requests are much appreciated. Before sending us a pull request, please ensure that:
-    25→
-    26→1. You are working against the latest source on the *main* branch.
-    27→2. You check existing open, and recently merged, pull requests to make sure someone else hasn't addressed the problem already.
-    28→3. You open an issue to discuss any significant work - we would hate for your time to be wasted.
-    29→
-    30→To send us a pull request, please:
-    31→
-    32→1. Fork the repository.
-    33→2. Modify the source; please focus on the specific change you are contributing. If you also reformat all the code, it will be hard for us to focus on your change.
-    34→3. Ensure local tests pass.
-    35→4. Commit to your fork using clear commit messages.
-    36→5. Send us a pull request, answering any default questions in the pull request interface.
-    37→6. Pay attention to any automated CI failures reported in the pull request, and stay involved in the conversation.
-    38→
-    39→GitHub provides additional document on [forking a repository](https://help.github.com/articles/fork-a-repo/) and
-    40→[creating a pull request](https://help.github.com/articles/creating-a-pull-request/).
-    41→
-    42→
-    43→## Finding contributions to work on
-    44→Looking at the existing issues is a great way to find something to contribute on. As our projects, by default, use the default GitHub issue labels (enhancement/bug/duplicate/help wanted/invalid/question/wontfix), looking at any 'help wanted' issues is a great place to start.
-    45→
-    46→
-    47→## Code of Conduct
-    53→## Security issue notifications
-    54→If you discover a potential security issue in this project we ask that you notify AWS/Amazon Security via our [vulnerability reporting page](http://aws.amazon.com/security/vulnerability-reporting/). Please do **not** create a public github issue.
-    55→
-    56→
-    57→## Licensing
-    59→See the [LICENSE](LICENSE) file for our project's licensing. We will ask you to confirm the licensing of your contribution.
-
 scripts/evaluation/configs/in-domain.yaml
 
 scripts/evaluation/configs/zero-shot.yaml
@@ -390,6 +397,10 @@ test/dummy-chronos-bolt-model/config.json
 test/dummy-chronos-model/config.json
 
 test/dummy-chronos2-model/config.json
+
+CODE_OF_CONDUCT.md
+
+CONTRIBUTING.md
 
 test/dummy-chronos2-lora/adapter_config.json
 

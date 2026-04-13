@@ -123,30 +123,6 @@ In neco's `neco.h`, the 19 error codes and 6 time constants are all truncated:
 
 The pre-rewrite showed complete lines with values and trailing doxygen descriptions: `#define NECO_OK 0 ///< Successful result (no error)`, `#define NECO_SECOND INT64_C(1000000000)`. For a C library, error codes ARE the error model — `NECO_OK 0` tells you success returns zero, `NECO_TIMEDOUT -10` tells you specific failure modes. The time constant values tell you the API uses nanoseconds. Truncating these to just names removes the most informative part of each line.
 
-## 8. CommunityHealth, AiConfig, and Changelog files not deprioritized at root level
-
-**Affected snapshots:** chronos, peepdb, pluggy, semver, toasty, tomli
-
-CONTRIBUTING.md gets ~53 lines of output — more than any individual source file — for a boilerplate Amazon open source contributing guide ("how to file bugs", "how to send PRs"). The pre-rewrite output didn't show CONTRIBUTING.md content at all.
-
-In peepdb, the regression is even more severe: CONTRIBUTING.md goes from 1 line in the pre-rewrite output (just the `# Contributing to peepDB` heading) to ~84 lines showing the complete file — fork instructions, dev environment setup, pytest commands, PEP 8 guidelines, PR process, bug reporting templates. This is the single largest content block in the output, consuming more budget than any source file. Meanwhile, `peepdb/config.py` const values (`CONFIG_DIR = os.path.expanduser("~/.peepdb")`, `KEYRING_SERVICE_NAME = "PEEP_DB"`) are truncated to just names, and the `KeySecurity` dataclass body (showing the two security modes: `KEYRING = "os-keyring"`, `PASSWORD = "password"`) is elided — both losses that the CONTRIBUTING.md budget could have prevented.
-
-In pluggy, CLAUDE.md (classified as `AiConfig`) gets ~50 lines of output showing development commands, testing instructions, and architecture notes — none of which helps a reader understand what pluggy is or how its plugin system works. The pre-rewrite output didn't show CLAUDE.md at all. This budget directly displaces the README.rst content (see issue #6).
-
-In semver, CHANGELOG.md (326 lines, classified as `Changelog`) gets ~70 lines of version headings spanning the full file — every release from v7.7.4 back to v5.0. The pre-rewrite output didn't show CHANGELOG.md at all. The budget goes to ~40 version headings (h2/h3) that tell a reader nothing about what semver is or how it works, while README body content (see #6), the public API surface in `index.js` (see #11), and class method signatures (see #9) are all lost.
-
-In tomli, CHANGELOG.md (202 lines) gets ~30 lines showing every version heading from 0.1.0 through 2.4.0. The pre-rewrite output didn't show CHANGELOG.md content at all (just the header). The version list consumes budget that could go to pyproject.toml metadata (see #4) or test method names.
-
-In toasty, 5 `CONTEXT.md` files (in crates/toasty/, toasty-core/, toasty-codegen/, toasty-sql/, toasty-driver-sqlite/) each show 8-12 heading lines, consuming ~50 lines total. These are AI context documents (same purpose as CLAUDE.md — agent instructions and development workflow) but `CONTEXT.md` isn't in the `AiConfig` stem list, so they're classified as `Normal` and compete at full value. The pre-rewrite also showed these files, so it's not a regression, but the classification gap means they aren't deprioritized even though they should be.
-
-Two root causes:
-
-1. **`files_contribution()` doesn't deprioritize root-level CommunityHealth, AiConfig, or Changelog files.** The `is_root_dir` branch only boosts Readme/Architecture to 1.5 and treats everything else as 1.0. The 0.1 deprioritization for these roles only applies in the non-root branch. So CONTRIBUTING.md's, CLAUDE.md's, and CHANGELOG.md's child TsGroups compete at full modifier value.
-
-2. **`is_boilerplate_heading()` doesn't match multi-word headings.** It splits on dashes (`-`, `—`, `–`) but not spaces, then does exact matches. So "Contributing Guidelines" becomes stem `"contributing guidelines"` which doesn't match `"contributing"`. Only 1 of 7 headings in CONTRIBUTING.md ("Code of Conduct") gets the boilerplate modifier. Similarly, "Security issue notifications" doesn't match `"security"`.
-
-The combined effect: CONTRIBUTING.md and CLAUDE.md headings get base_value 1.0 (h1) / 0.6 (h2) with modifier 1.0, competing on near-equal footing with README headings (modifier 1.5). In pluggy, this allocates ~13% of the budget to AI config content that builds zero understanding of the codebase.
-
 ## 9. Type alias and const bodies missing from taxonomy (regression)
 
 **Affected snapshots:** cmdk, cmdk_cmdk_src, enclosed, enclosed_crypto, enclosed_lib, go_multierror, htmy, ky, ky_source_errors, mcphost_sdk, microbootstrap, microbootstrap_instruments, mitt, nano_vllm, nano_vllm_engine, pluggy, py3xui, py3xui_api, semver, semver_internal, superstruct, tock, tock_internal_core

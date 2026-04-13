@@ -1,6 +1,5 @@
 ---
 source: test/fixtures.rs
-assertion_line: 64
 expression: output
 ---
 README.md
@@ -234,7 +233,9 @@ py3xui/inbound/inbound.py
     14→# pylint: disable=too-few-public-methods
     15→class InboundFields …
     38→class Inbound …
-    89→    def validate_stream_settings …
+    89→    def validate_stream_settings(  # pylint: disable=no-self-argument
+    90→        cls, value: StreamSettings | str
+    91→    ) -> StreamSettings | str:
    113→    # pylint: disable=no-member, no-self-argument
    114→    def to_json(self) -> dict[str, Any]:
 
@@ -263,6 +264,10 @@ pyproject.toml
      1→[build-system]
      5→[project]
     25→[project.urls]
+    26→Homepage = "https://github.com/iwatkot/py3xui"
+    27→Repository = "https://github.com/iwatkot/py3xui"
+    28→
+    29→[tool.setuptools.packages.find]
 
 py3xui/async_api/__init__.py
 
@@ -352,19 +357,5 @@ py3xui/async_api/async_api_server.py
    105→    async def generate_reality_keys …
 
 tests/__init__.py
-
-CODE_OF_CONDUCT.md
-     1→# Contributor Covenant Code of Conduct
-
-CONTRIBUTING.md
-     1→# Contributing to py3xui
-   105→## Code of Conduct
-   106→By participating in this project, you agree to abide by the [Code of Conduct](CODE_OF_CONDUCT.md).
-
-LICENSE.md
-     1→# MIT License
-
-SECURITY.md
-     1→# Security Policy
 
 tests/responses/

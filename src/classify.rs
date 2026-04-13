@@ -39,7 +39,7 @@ impl FileRole {
             | "tidelift" | "sponsors" | "funding"
             | "notice" | "citation" => FileRole::CommunityHealth,
             "claude" | "agents" | "copilot" | "copilot-instructions"
-            | "cursor" | "windsurf" => FileRole::AiConfig,
+            | "cursor" | "windsurf" | "context" => FileRole::AiConfig,
             "architecture" | "design" => FileRole::Architecture,
             _ if is_doc && has_locale_suffix(stem) => FileRole::Translated,
             _ => FileRole::Normal,
@@ -250,44 +250,53 @@ pub fn is_generated_filename(path: &Path) -> bool {
 pub fn is_boilerplate_heading(name: &str) -> bool {
     let stripped = name.trim_start_matches(|c: char| !c.is_ascii_alphanumeric());
     let lower = stripped.trim().to_ascii_lowercase();
+
+    let full_match = |s: &str| {
+        matches!(
+            s,
+            "license"
+                | "licence"
+                | "contribute"
+                | "contributing"
+                | "contributors"
+                | "code of conduct"
+                | "acknowledgments"
+                | "acknowledgements"
+                | "credits"
+                | "author"
+                | "authors"
+                | "maintainers"
+                | "support"
+                | "governance"
+                | "security"
+                | "sponsors"
+                | "backers"
+                | "funding"
+                | "donate"
+                | "donations"
+                | "changelog"
+                | "release notes"
+                | "releases"
+                | "history"
+                | "related"
+                | "alternatives"
+                | "faq"
+                | "table of contents"
+                | "contents"
+                | "star history"
+                | "stargazers"
+                | "development"
+                | "developing"
+                | "community"
+        )
+    };
+
     let stem = lower.split(['-', '—', '–']).next().unwrap_or(&lower).trim();
-    matches!(
-        stem,
-        "license"
-            | "licence"
-            | "contribute"
-            | "contributing"
-            | "contributors"
-            | "code of conduct"
-            | "acknowledgments"
-            | "acknowledgements"
-            | "credits"
-            | "author"
-            | "authors"
-            | "maintainers"
-            | "support"
-            | "governance"
-            | "security"
-            | "sponsors"
-            | "backers"
-            | "funding"
-            | "donate"
-            | "donations"
-            | "changelog"
-            | "release notes"
-            | "releases"
-            | "history"
-            | "related"
-            | "alternatives"
-            | "faq"
-            | "table of contents"
-            | "contents"
-            | "star history"
-            | "stargazers"
-            | "development"
-            | "developing"
-            | "community"
-    )
+    if full_match(stem) {
+        return true;
+    }
+    let first_word = lower.split_whitespace().next().unwrap_or(&lower);
+    full_match(first_word)
 }
 
 fn is_docs_dir_name(name: &str) -> bool {

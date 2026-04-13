@@ -1,6 +1,5 @@
 ---
 source: test/fixtures.rs
-assertion_line: 64
 expression: output
 ---
 README.md
@@ -41,13 +40,43 @@ README.md
    115→### 5. Choose Output Format
    142→### 6. Remove Saved Connections
    154→## 🔒 Security
+   156→peepDB implements several security measures to protect your database connection details:
+   157→
+   158→1. **Local Storage**: All connection details are stored locally on your machine, not on any remote servers.
+   159→2. **Encryption**: Connection details are encrypted before being stored, using the cryptography library.
+   160→3. **Caution with Passwords**: While passwords are accepted as command-line arguments for convenience, users should be cautious about using this method in shared environments or situations where command history might be accessible to others.
+   161→
    162→## 🤝 Contributing
+   164→Contributions to peepDB are welcome! Please refer to our [Contributing Guide](CONTRIBUTING.md) for more information.
+   165→
    166→## 📜 License
+   168→Distributed under the GNU General Public License Version 3. See the [LICENSE](LICENSE) file for more details.
+   169→
    170→## 📚 Documentation
    172→For more detailed documentation, please visit our [GitHub Pages](https://peepdb.dev/).
 
 docs/README.md
      1→# just-the-docs-template
+     3→This is a *bare-minimum* template to create a [Jekyll] site that:
+     4→
+     5→- uses the [Just the Docs] theme;
+     6→- can be built and published on [GitHub Pages];
+     7→- can be built and previewed locally, and published on other platforms.
+     8→
+     9→More specifically, the created site:
+    10→
+    11→- uses a gem-based approach, i.e. uses a `Gemfile` and loads the `just-the-docs` gem;
+    12→- uses the [GitHub Pages / Actions workflow] to build and publish the site on GitHub Pages.
+    13→
+    14→To get started with creating a site, simply:
+    15→
+    16→1. click "[use this template]" to create a GitHub repository
+    17→2. go to Settings > Pages > Build and deployment > Source, and select GitHub Actions
+    18→
+    19→If you want to maintain your docs in the `docs` directory of an existing project repo, see [Hosting your docs from an existing project repo](#hosting-your-docs-from-an-existing-project-repo).
+    20→
+    21→After completing the creation of your new site on GitHub, update it as needed:
+    22→
     23→## Replace the content of the template pages
     30→## Changing the version of the theme and/or Jekyll
     34→## Adding a plugin
@@ -118,6 +147,11 @@ peepdb/cli.py
     11→from .exceptions import InvalidPassword
     16→class CustomEncoder …
     17→    def default(self, obj):
+    18→        if isinstance(obj, Decimal):
+    19→            return float(obj)
+    20→        elif isinstance(obj, date):
+    21→            return obj.isoformat()
+    22→        return super(CustomEncoder, self).default(obj)
     27→def cli():
     65→def save(connection_name, db_type, host, port, user, password, database, trusted):
     87→def list():
@@ -177,6 +211,15 @@ peepdb/exceptions.py
      1→class InvalidPassword …
 
 peepdb/db/__init__.py
+     1→from .base import BaseDatabase
+     2→from .mysql import MySQLDatabase
+     3→from .postgresql import PostgreSQLDatabase
+     4→from .mariadb import MariaDBDatabase
+     5→from .mongodb import MongoDBDatabase
+     6→from .sqlite import SQLiteDatabase
+     7→from .firebase import FirebaseDatabase
+     8→from .mssql import MSSQLDatabase
+     9→from .oracle import OracleDatabase
     11→__all__ …
 
 peepdb/db/base.py
@@ -190,6 +233,7 @@ peepdb/db/base.py
     37→    def __exit__(self, exc_type, exc_val, exc_tb):
 
 peepdb/db/firebase.py
+     4→from .base import BaseDatabase
      9→class FirebaseDatabase …
     10→    def __init__(self, service_account_path: str, **kwargs):
     15→    def connect(self):
@@ -198,6 +242,7 @@ peepdb/db/firebase.py
     39→    def fetch_data(self, table_name: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 peepdb/db/mariadb.py
+     2→from .base import BaseDatabase
      5→class MariaDBDatabase …
      6→    def connect(self) -> None:
     23→    def disconnect(self) -> None:
@@ -205,6 +250,7 @@ peepdb/db/mariadb.py
     34→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 peepdb/db/mongodb.py
+     3→from .base import BaseDatabase
      8→class MongoDBDatabase …
      9→    def connect(self) -> None:
     32→    def disconnect(self) -> None:
@@ -217,6 +263,7 @@ peepdb/db/mongodb.py
     47→    ) -> t.Dict[str, t.Any]:
 
 peepdb/db/mssql.py
+     2→from .base import BaseDatabase
      6→class MSSQLDatabase …
      7→    def __init__(self, host: str, user: str, password: str, database: str, port: int = 1433, trusted: bool = False, **kwargs):
     12→    def connect(self) -> None:
@@ -225,6 +272,7 @@ peepdb/db/mssql.py
     45→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 peepdb/db/mysql.py
+     2→from .base import BaseDatabase
      5→class MySQLDatabase …
      6→    def connect(self) -> None:
     22→    def disconnect(self) -> None:
@@ -232,6 +280,7 @@ peepdb/db/mysql.py
     33→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 peepdb/db/oracle.py
+     3→from .base import BaseDatabase
      7→class OracleDatabase …
      8→    def connect(self) -> None:
     25→    def disconnect(self) -> None:
@@ -241,6 +290,7 @@ peepdb/db/oracle.py
     38→    ) -> Dict[str, Any]:
 
 peepdb/db/postgresql.py
+     3→from .base import BaseDatabase
      6→class PostgreSQLDatabase …
      7→    def connect(self) -> None:
     23→    def disconnect(self) -> None:
@@ -248,6 +298,7 @@ peepdb/db/postgresql.py
     34→    def fetch_data(self, table: str, page: int = 1, page_size: int = 100) -> Dict[str, Any]:
 
 peepdb/db/sqlite.py
+     3→from .base import BaseDatabase
      6→class SQLiteDatabase …
      7→    def connect(self) -> None:
     22→    def disconnect(self) -> None:
@@ -258,8 +309,19 @@ project.toml
      1→[build-system]
      5→[project]
     35→[project.optional-dependencies]
+    36→dev = [
+    37→    "coverage>=7.6.1",
+    38→    "pytest>=8.3.2",
+    39→    "pytest-cov>=5.0.0",
+    40→]
+    41→
     42→[project.urls]
+    43→Homepage = "https://github.com/PeepDB-dev/peepdb"
+    44→"Bug Tracker" = "https://github.com/PeepDB-dev/peepdb/issues"
+    45→
     46→[project.scripts]
+    47→peepdb = "peepdb.cli:main"
+    48→
     49→[tool.setuptools.packages.find]
     50→where = ["."]
     51→include = ["peepdb*"]
@@ -279,85 +341,11 @@ docs/_config.yml
 
 peepdb/tests/__init__.py
 
-CONTRIBUTING.md
-     1→# Contributing to peepDB
-     3→We're thrilled that you're interested in contributing to peepDB! This document provides guidelines for contributing to the project. Please take a moment to review this document to make the contribution process easy and effective for everyone involved.
-     4→
-     5→## Code of Conduct
-     7→By participating in this project, you are expected to uphold our Code of Conduct (to be added).
-     8→
-     9→## Getting Started
-    11→1. Fork the repository on GitHub.
-    12→2. Clone your fork locally:
-    13→   ```
-    14→   git clone https://github.com/evangelosmeklis/peepdb.git
-    15→   cd peepdb
-    16→   ```
-    17→3. Create a branch for your feature or bug fix:
-    18→   ```
-    19→   git checkout -b feature/your-feature-name
-    20→   ```
-    21→4. Make your changes and commit them with a clear commit message.
-    22→5. Push your changes to your fork:
-    23→   ```
-    24→   git push origin feature/your-feature-name
-    25→   ```
-    26→6. Create a pull request from your fork to the main peepDB repository.
-    27→
-    28→## Setting Up Development Environment
-    30→1. Ensure you have Python 3.6 or higher installed.
-    31→2. Create a virtual environment:
-    32→   ```
-    33→   python -m venv venv
-    34→   source venv/bin/activate  # On Windows: venv\Scripts\activate
-    35→   ```
-    36→3. Install the package in editable mode with development dependencies:
-    37→   ```
-    38→   pip install -e .[dev]
-    39→   ```
-    40→
-    41→## Running Tests
-    43→We use pytest for our test suite. To run the tests:
-    44→
-    45→```
-    46→pytest
-    47→```
-    48→
-    49→Please ensure all tests pass before submitting a pull request.
-    50→
-    51→## Coding Standards
-    53→- Follow PEP 8 guidelines for Python code.
-    54→- Use meaningful variable and function names.
-    55→- Write docstrings for all functions, classes, and modules.
-    56→- Keep lines to a maximum of 100 characters.
-    57→- Use type hints where appropriate.
-    58→
-    59→## Pull Request Process
-    61→1. Ensure your code adheres to the coding standards outlined above.
-    62→2. Update the README.md with details of changes to the interface, if applicable.
-    63→3. Add or update tests as necessary.
-    64→4. Update the documentation to reflect any changes.
-    65→5. Ensure all tests are passing.
-    66→6. Your pull request will be reviewed by maintainers, who may request changes or provide feedback.
-    67→
-    68→## Reporting Bugs
-    70→1. Check the GitHub Issues to see if the bug has already been reported.
-    71→2. If not, create a new issue, providing as much detail as possible:
-    72→   - A clear, descriptive title
-    73→   - A detailed description of the issue
-    74→   - Steps to reproduce the problem
-    75→   - Expected behavior
-    76→   - Actual behavior
-    77→   - Your environment (OS, Python version, peepDB version, etc.)
-    78→
-    79→## Suggesting Enhancements
-    81→We welcome suggestions for enhancements! Please create an issue on GitHub with the tag "enhancement" and provide:
-    82→
-    83→- A clear, descriptive title
-    84→- A detailed description of the proposed enhancement
-    85→- Any potential implementation deta
-
 docs/contributing.md
      6→# 🤝 Contributing to peepDB
+
+CONTRIBUTING.md
+     1→# Contributing to peepDB
+     5→## Code of Conduct
 
 images/

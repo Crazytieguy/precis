@@ -121,17 +121,11 @@ pub fn files_contribution(
     is_header: bool,
     is_test_file: bool,
 ) -> f64 {
-    let role_factor = if is_root_dir {
-        match role {
-            FileRole::Architecture | FileRole::Readme => 1.5,
-            _ => 1.0,
-        }
-    } else {
-        match role {
-            FileRole::Translated | FileRole::Changelog | FileRole::CommunityHealth
-            | FileRole::AiConfig => 0.1,
-            _ => 1.0,
-        }
+    let role_factor = match role {
+        FileRole::Architecture | FileRole::Readme if is_root_dir => 1.5,
+        FileRole::Translated | FileRole::Changelog | FileRole::CommunityHealth
+        | FileRole::AiConfig => 0.1,
+        _ => 1.0,
     };
     let deprioritized_factor = if is_deprioritized { 0.2 } else { 1.0 };
     let type_declaration_factor = if is_type_declaration { 0.15 } else { 1.0 };

@@ -1,6 +1,5 @@
 ---
 source: test/fixtures.rs
-assertion_line: 64
 expression: output
 ---
 Readme.md
@@ -345,6 +344,8 @@ examples/alias.js
 examples/argument.js
 
 examples/arguments-custom-processing.js
+    10→function myParseInt(value) {
+    20→function mySum(value, total) {
 
 examples/arguments-extra.js
 
@@ -357,9 +358,11 @@ examples/color-help.mjs
 examples/configure-help.js
 
 examples/configure-output.js
+     4→function errorColor(str) {
 
 examples/custom-command-class.js
      6→class CommandWithTrace …
+    15→function inspectCommand(command) {
 
 examples/custom-help-text.js
 
@@ -381,8 +384,10 @@ examples/help-subcommands-usage.js
 examples/hook.js
 
 examples/man-style-help.mjs
+     5→function formatItem(term, termWidth, description, helper) {
 
 examples/nestedCommands.js
+    21→function makeHeatCommand() {
 
 examples/options-boolean-or-value.js
 
@@ -391,6 +396,10 @@ examples/options-common.js
 examples/options-conflicts.js
 
 examples/options-custom-processing.js
+    10→function myParseInt(value) {
+    19→function increaseVerbosity(dummyValue, previous) {
+    23→function collect(value, previous) {
+    27→function commaSeparatedList(value) {
 
 examples/options-defaults.js
 
@@ -418,14 +427,13 @@ examples/string-util.js
 
 examples/thank.js
 
-CHANGELOG.md
-     1→# Changelog
-
 tests/esm-imports-test.mjs
+     1→import …
 
 typings/esm.d.mts
 
 typings/index.d.ts
+    12→type LiteralUnion …
     16→export class CommanderError …
     31→export class InvalidArgumentError …
     40→export interface ErrorOptions …
@@ -447,20 +455,7 @@ typings/index.d.ts
   1104→export interface ParseOptionsResult …
   1113→export const program …
 
-CONTRIBUTING.md
-     1→# Contributing
-     3→## Issues
-    13→## Pull Requests
-
-SECURITY.md
-     1→# Security Policy
-     3→To report a security vulnerability, please use the
-     4→[Tidelift security contact](https://tidelift.com/security).
-     5→Tidelift will coordinate the fix and disclosure.
-     6→
-     7→Please do not report security vulnerabilities through public GitHub issues or pull requests.
-
-Readme_zh-CN.md
+CHANGELOG.md
 
 docs/zh-CN/
 

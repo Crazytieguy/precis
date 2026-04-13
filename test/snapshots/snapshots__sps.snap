@@ -298,6 +298,7 @@ sps-core/src/check/installed.rs
 sps-core/src/check/mod.rs
 
 sps-core/src/check/update.rs
+    20→use crate::check::installed::{InstalledPackageInfo, PackageType};
     23→pub struct UpdateInfo …
     33→async fn ensure_api_data_cached(cache: &Cache) -> Result<()> {
     89→pub async fn check_for_updates …
@@ -323,6 +324,7 @@ sps-core/src/install/extract.rs
    238→    strip_components: usize,
    239→    archive_type: &str,
    240→) -> Result<()> {
+   301→/// Represents a hardlink operation that was deferred.
    302→fn extract_xz_tar_archive …
    343→struct DeferredHardLink …
    348→fn extract_tar_archive …
@@ -706,13 +708,6 @@ sps-core/src/install/cask/mod.rs
    580→pub fn write_receipt …
    612→pub fn write_cask_manifest …
    686→pub fn cleanup_empty_parent_dirs_in_private_store(start_path: &Path, stop_at: &Path) {
-
-CONTRIBUTING.md
-     1→# Contributing to sps
-
-LICENSE.md
-
-NOTICE.md
 
 sps-core/src/build/compile/
 

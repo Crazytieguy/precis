@@ -1,6 +1,5 @@
 ---
 source: test/fixtures.rs
-assertion_line: 64
 expression: output
 ---
 README.md
@@ -304,6 +303,7 @@ examples/airline/README.md
 
 examples/basic/README.md
      1→# Swarm basic
+     5→### Examples
     31→## Running the Examples
 
 examples/personal_shopper/README.md
@@ -312,9 +312,6 @@ examples/personal_shopper/README.md
     15→## Setup
 
 examples/support_bot/README.md
-     1→# Support bot
-     6→## Overview
-    13→## Setup
 
 examples/triage_agent/README.md
      1→# Triage agent
@@ -336,12 +333,6 @@ tests/mock_client.py
     56→    def set_sequential_responses(self, responses: list[ChatCompletion]):
     63→    def assert_create_called_with(self, **kwargs):
 
-SECURITY.md
-     1→# Security Policy
-     3→For a more in-depth look at our security policy, please check out our [Coordinated Vulnerability Disclosure Policy](https://openai.com/security/disclosure/#:~:text=Disclosure%20Policy,-Security%20is%20essential&text=OpenAI%27s%20coordinated%20vulnerability%20disclosure%20policy,expect%20from%20us%20in%20return.).
-     4→
-     5→Our PGP key can located [at this address.](https://cdn.openai.com/security.txt)
-
 examples/customer_service_streaming/main.py
     10→def main():
 
@@ -360,6 +351,28 @@ examples/weather_agent/evals.py
 
 examples/weather_agent/run.py
 
+examples/airline/__init__.py
+
+examples/airline/main.py
+
+examples/support_bot/Makefile
+
+examples/support_bot/__init__.py
+
+examples/support_bot/customer_service.py
+    13→# Set embedding model
+    14→EMBEDDING_MODEL …
+
+examples/support_bot/main.py
+    13→# Set embedding model
+    14→EMBEDDING_MODEL …
+
+examples/support_bot/prep_data.py
+    10→GPT_MODEL …
+    11→EMBEDDING_MODEL …
+
+examples/customer_service_streaming/tests/test_prompts.jsonl
+
 assets/
 
 examples/airline/configs/
@@ -375,6 +388,14 @@ examples/customer_service/logs/
 examples/customer_service_lite/
 
 examples/customer_service_lite/logs/
+
+examples/customer_service_streaming/configs/
+
+examples/customer_service_streaming/data/
+
+examples/customer_service_streaming/logs/
+
+examples/customer_service_streaming/src/
 
 examples/support_bot/data/
 

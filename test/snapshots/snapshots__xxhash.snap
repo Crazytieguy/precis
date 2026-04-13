@@ -1,6 +1,5 @@
 ---
 source: test/fixtures.rs
-assertion_line: 64
 expression: output
 ---
 README.md
@@ -236,8 +235,6 @@ xxhash_unsafe.go
     57→	cap int
     58→}
 
-LICENSE.txt
-
 dynamic/dynamic_test.go
     15→// This is a cursory test that checks whether things work under dynamic linking.
     17→func TestMain(m *testing.M) {
@@ -316,3 +313,5 @@ xxhashbench/xxhashbench_test.go
    108→func BenchmarkHashes(b *testing.B) {
    152→func benchmarkHashBytes(b *testing.B, input []byte, fn func([]byte) uint64) {
    159→func benchmarkHashString(b *testing.B, input string, fn func(string) uint64) {
+
+LICENSE.txt

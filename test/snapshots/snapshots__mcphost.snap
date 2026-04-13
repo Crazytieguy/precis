@@ -1,6 +1,5 @@
 ---
 source: test/fixtures.rs
-assertion_line: 64
 expression: output
 ---
 README.md
@@ -15,9 +14,6 @@ README.md
    488→## Usage 🚀
    892→## Automation & Scripting 🤖
    967→## MCP Server Compatibility 🔌
-   971→## Contributing 🤝
-   981→## License 📄
-   985→## Acknowledgments 🙏
 
 sdk/README.md
      1→# MCPHost SDK
@@ -26,13 +22,8 @@ sdk/README.md
      5→## Installation
     11→## Basic Usage
     44→## Configuration
-    52→### Options
     67→## Advanced Usage
-    69→### With Tool Callbacks
-    93→### Session Management
    115→## API Reference
-   117→### Types
-   124→### Methods
    136→## Environment Variables
 
 go.mod
@@ -167,10 +158,6 @@ contribute/boost.sh
 contribute/build.sh
 
 contribute/contribute.md
-     1→# Contribute README
-     2→Thanks for your contribution, you can follow these step to run this repo and debug it.
-     3→## Run demo
-    30→## Contribute your code
 
 internal/models/openai/openai.go
     21→type CustomChatModel …
@@ -297,7 +284,6 @@ internal/models/generate_models.go
     73→const codeTemplate …
 
 internal/models/models_data.go
-    41→func GetModelsData …
 
 internal/models/providers.go
     28→const …
@@ -424,16 +410,28 @@ internal/builtin/http.go
 
 internal/builtin/registry.go
     14→type BuiltinServerWrapper …
+    15→	server *server.MCPServer
+    16→}
     21→func (w *BuiltinServerWrapper) Initialize() error {
     28→func (w *BuiltinServerWrapper) GetServer() *server.MCPServer {
     35→type Registry …
+    36→	servers map[string]func(options map[string]any, model model.ToolCallingChatModel) (*BuiltinServerWrapper, error)
+    37→}
     42→func NewRegistry() *Registry {
     61→func (r *Registry) CreateServer(name string, options map[string]any, model model.ToolCallingChatModel) (*BuiltinServerWrapper, error) {
     72→func (r *Registry) ListServers() []string {
 
 internal/builtin/todo.go
     17→type TodoInfo …
+    18→	Content  string `json:"content"`
+    19→	Status   string `json:"status"`
+    20→	Priority string `json:"priority"`
+    21→	ID       string `json:"id"`
+    22→}
     27→type TodoServer …
+    28→	todos []TodoInfo
+    29→	mutex sync.RWMutex
+    30→}
     36→func NewTodoServer() (*server.MCPServer, error) {
 
 internal/ui/block_renderer.go
@@ -620,8 +618,6 @@ internal/ui/usage_tracker.go
    246→func (ut *UsageTracker) Reset() {
    256→func (ut *UsageTracker) SetWidth(width int) {
 
-sdk/examples/basic/main.go
-
 examples/
 
 examples/hooks/
@@ -633,5 +629,7 @@ internal/
 internal/tools/
 
 sdk/examples/
+
+sdk/examples/basic/
 
 sdk/examples/scripting/

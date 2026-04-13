@@ -1,6 +1,5 @@
 ---
 source: test/fixtures.rs
-assertion_line: 64
 expression: output
 ---
 README.md
@@ -294,13 +293,6 @@ sort.go
     22→	return err.Errors[i].Error() < err.Errors[j].Error()
     23→}
 
-CHANGELOG.md
-     1→## Unreleased
-     3→### Improvements
-     5→### Changes
-     7→### Fixed
-     9→### Security
-
 append_test.go
     11→func TestAppend_Error(t *testing.T) {
     45→func TestAppend_NilError(t *testing.T) {
@@ -340,3 +332,10 @@ prefix_test.go
 sort_test.go
     13→func TestSortSingle(t *testing.T) {
     32→func TestSortMultiple(t *testing.T) {
+
+CHANGELOG.md
+     1→## Unreleased
+     3→### Improvements
+     5→### Changes
+     7→### Fixed
+     9→### Security

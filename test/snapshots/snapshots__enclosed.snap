@@ -1,6 +1,5 @@
 ---
 source: test/fixtures.rs
-assertion_line: 64
 expression: output
 ---
 README.md
@@ -60,9 +59,6 @@ packages/cli/README.md
     35→### Create a note
     58→### View a note
     68→### Configure the enclosed instance to use
-    75→## License
-    79→## Credits and Acknowledgements
-    81→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
 
 packages/crypto/README.md
      1→# Enclosed crypto library
@@ -80,43 +76,13 @@ packages/crypto/README.md
     15→pnpm add @enclosed/crypto
     16→```
     17→
-    18→## License
-    22→## Credits and Acknowledgements
-    24→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
 
 packages/lib/README.md
      1→### Enclosed lib
      3→This package contains the core functionalities of [Enclosed](https://enclosed.cc/), an open-source project that aims to provide a simple and secure way to share e2e encrypted notes.
      4→
      5→## Installation
-     7→```bash
-     8→# with npm
-     9→npm install @enclosed/lib
-    10→
-    11→# with yarn
-    12→yarn add @enclosed/lib
-    13→
-    14→# with pnpm
-    15→pnpm add @enclosed/lib
-    16→```
-    17→
     18→## Usage
-    20→```javascript
-    21→import { createNote } from '@enclosed/lib';
-    22→
-    23→const { noteUrl } = await createNote({
-    24→  content: 'Hello, World!',
-    25→  password: 'password',
-    26→  ttlInSeconds: 3600,
-    27→  deleteAfterReading: true,
-    28→});
-    29→
-    30→console.log(noteUrl);
-    31→```
-    32→
-    33→## License
-    37→## Credits and Acknowledgements
-    39→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
 
 packages/lib/src/index.ts
      2→import { isApiClientErrorWithCode, isApiClientErrorWithStatusCode } from './api/api.models';
@@ -148,7 +114,6 @@ pnpm-workspace.yaml
     12→  "@corentinth/chisels": ^1.2.1
 
 packages/cli/bin/enclosed.mjs
-     4→import '../dist/cli.mjs';
 
 packages/app-server/src/index.cloudflare.ts
      1→import { createServer } from './modules/app/server';
@@ -319,7 +284,6 @@ packages/docs/src/resources/i18n.md
      7→Enclosed supports internationalization (i18n) to make it accessible in multiple languages.
      8→
      9→## Supported languages
-    15→## Contributing to translations
 
 packages/docs/src/data/configuration.data.ts
      5→import { configDefinition } from '../../../app-server/src/modules/app/config/config';
@@ -461,11 +425,11 @@ packages/cli/src/config/config.models.ts
      3→import { configDefinition } from './config.constants';
      7→type ConfigKey …
      8→const config …
-    10→function setConfig …
-    31→function getConfig …
-    57→function deleteConfig …
-    61→function resetConfig …
-    65→function createConfigBindings …
+    10→function setConfig({ key, value }: { key: ConfigKey ; value: string }) {
+    31→function getConfig({ key }: { key: ConfigKey }) {
+    57→function deleteConfig({ key }: { key: ConfigKey }) {
+    61→function resetConfig() {
+    65→function createConfigBindings({ key }: { key: ConfigKey }) {
 
 packages/cli/src/config/config.usecases.ts
      1→import { createConfigBindings } from './config.models';
@@ -501,15 +465,24 @@ packages/lib/src/notes/notes.models.ts
     68→function parseNoteUrl …
 
 packages/lib/src/notes/notes.services.ts
+     1→import { apiClient } from '../api/api.client';
      5→async function storeNote …
     39→async function fetchNote …
 
 packages/lib/src/notes/notes.types.ts
+     1→import type { CompressionAlgorithm, EncryptionAlgorithm, KeyDerivationAlgorithm } from '../crypto/crypto.types';
+     2→import type { SerializationFormat } from '../crypto/serialization/serialization.types';
      4→export type NoteAsset …
     12→export type Note …
     17→export type EncryptedNote …
 
 packages/lib/src/notes/notes.usecases.ts
+     1→import type { EncryptionAlgorithm } from '../crypto/crypto.types';
+     2→import type { SerializationFormat } from '../crypto/serialization/serialization.types';
+     3→import type { NoteAsset } from './notes.types';
+     4→import { encryptNote } from '../crypto/crypto.usecases';
+     5→import { createNoteUrl } from './notes.models';
+     6→import { storeNote as storeNoteImpl } from './notes.services';
     10→const BASE_URL …
     12→async function createNote …
 
@@ -567,12 +540,12 @@ packages/app-client/src/modules/auth/auth.models.ts
      5→function isAccessTokenExpired …
 
 packages/app-client/src/modules/auth/auth.services.ts
-     1→import …
+     1→import { apiClient } from '../shared/http/http-client';
      5→async function login …
 
 packages/app-client/src/modules/auth/auth.store.ts
-     3→import …
-     4→import …
+     3→import { createHook } from '../shared/hooks/hooks';
+     4→import { isAccessTokenExpired } from './auth.models';
      6→export const authStore …
 
 packages/app-server/src/modules/shared/errors/errors.ts
@@ -692,6 +665,7 @@ packages/app-client/src/modules/notes/notes.constants.ts
      1→export const NOTE_ID_REGEX …
 
 packages/app-client/src/modules/notes/notes.context.tsx
+     3→import { createHook } from '../shared/hooks/hooks';
      5→const noteContext …
     11→export const NoteContextProvider: ParentComponent = (props) => {
     27→export function useNoteContext() {
@@ -700,8 +674,10 @@ packages/app-client/src/modules/notes/notes.models.ts
     16→export function buildViewNotePagePath({ prefix }: { prefix?: string | null }): string {
 
 packages/app-client/src/modules/notes/notes.services.ts
+     1→import { apiClient } from '../shared/http/http-client';
 
 packages/app-client/src/modules/notes/notes.usecases.ts
+     2→import { storeNote } from './notes.services';
 
 Dockerfile
 
@@ -761,14 +737,24 @@ packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.models.ts
      3→function defineEncryptionMethods …
 
 packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.registry.ts
+     1→import type { EncryptionMethodsDefinition } from './encryption-algorithms.types';
      6→function createEncryptionAlgorithmsRegistry …
 
 packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.types.ts
+     1→import type { defineEncryptionMethods } from './encryption-algorithms.models';
      3→export type EncryptionMethodsDefinition …
 
 packages/app-client/src/modules/shared/files/convert.ts
 
 packages/app-client/src/modules/shared/files/download.ts
+
+packages/lib/build.config.ts
+
+packages/lib/eslint.config.js
+
+packages/lib/package.json
+
+packages/lib/tsconfig.json
 
 packages/
 
