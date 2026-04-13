@@ -206,6 +206,57 @@ pub(crate) fn has_preceding_attribute(
     false
 }
 
+pub(crate) fn is_documented(node: tree_sitter::Node, source: &str, lang: Lang) -> bool {
+    compute_doc_start_line(node, source, lang).is_some()
+        || (lang == Lang::Python && has_python_docstring(node, source))
+}
+
+fn has_python_docstring(symbol_node: tree_sitter::Node, source: &str) -> bool {
+    let Some(body) = symbol_node.child_by_field_name("body") else { return false };
+    if body.kind() != "block" { return false; }
+    let Some(first_stmt) = body.named_child(0) else { return false };
+    if first_stmt.kind() != "expression_statement" { return false; }
+    let Some(string_node) = first_stmt.named_child(0) else { return false };
+    if !matches!(string_node.kind(), "string" | "concatenated_string") { return false; }
+    let Ok(text) = string_node.utf8_text(source.as_bytes()) else { return false };
+    text.starts_with("\"\"\"") || text.starts_with("'''")
+}
+
+/// For Python: returns 1-indexed (start_line, end_line) of docstring content (excluding quotes).
+pub(crate) fn compute_python_docstring_range(
+    symbol_node: tree_sitter::Node,
+    source: &str,
+) -> Option<(usize, usize)> {
+    let body = symbol_node.child_by_field_name("body")?;
+    let first_stmt = body.named_child(0)?;
+    let string_node = first_stmt.named_child(0)?;
+    let text = string_node.utf8_text(source.as_bytes()).ok()?;
+    if !text.starts_with("\"\"\"") && !text.starts_with("'''") {
+        return None;
+    }
+
+    let start_row = string_node.start_position().row;
+    let end_row = string_node.end_position().row;
+    let quote = if text.starts_with("\"\"\"") { "\"\"\"" } else { "'''" };
+
+    let start_line = source.lines().nth(start_row).unwrap_or("");
+    let after_quotes = start_line.trim_start().strip_prefix(quote).map_or("", |s| s.trim());
+    let content_start = if after_quotes.is_empty() || after_quotes == quote {
+        start_row + 1
+    } else {
+        start_row
+    };
+
+    let end_line = source.lines().nth(end_row).unwrap_or("");
+    let content_end = if end_line.trim() == quote { end_row } else { end_row + 1 };
+
+    if content_start >= content_end {
+        return Some((start_row + 1, start_row + 2));
+    }
+
+    Some((content_start + 1, content_end))
+}
+
 pub(crate) fn find_descendant_of_kind<'a>(
     node: tree_sitter::Node<'a>,
     target_kind: &str,

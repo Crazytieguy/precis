@@ -422,12 +422,11 @@ fn spawn_method_children<'s>(
                 item.source,
                 lang.unwrap_or(Lang::Rust),
             );
-            let is_documented = crate::parse::ast::compute_doc_start_line(
+            let is_documented = crate::parse::ast::is_documented(
                 method_node,
                 item.source,
                 lang.unwrap_or(Lang::Rust),
-            )
-            .is_some();
+            );
 
             let ts_item = TsItem {
                 path: item.path,
@@ -957,18 +956,30 @@ fn compute_body_start_line(item: &TsItem<'_>) -> usize {
 
 fn compute_doc_range(item: &TsItem<'_>, lines: &[&str]) -> Option<(usize, usize)> {
     let lang = Lang::from_path(item.path);
-    let doc_start_1 = crate::parse::ast::compute_doc_start_line(item.node, item.source, lang.unwrap_or(Lang::Rust))?;
-    let doc_start = doc_start_1 - 1;
-    let sym_line = item.start_line();
-    if doc_start >= sym_line {
-        return None;
+    let actual_lang = lang.unwrap_or(Lang::Rust);
+
+    // Try outer doc comments first (preceding siblings)
+    if let Some(doc_start_1) = crate::parse::ast::compute_doc_start_line(item.node, item.source, actual_lang) {
+        let doc_start = doc_start_1 - 1;
+        let sym_line = item.start_line();
+        if doc_start < sym_line {
+            let (trimmed_start, trimmed_end) = trim_doc_delimiters(lines, doc_start, sym_line);
+            if trimmed_start < trimmed_end {
+                return Some((trimmed_start, trimmed_end));
+            }
+        }
     }
-    // Trim delimiters
-    let (trimmed_start, trimmed_end) = trim_doc_delimiters(lines, doc_start, sym_line);
-    if trimmed_start >= trimmed_end {
-        return None;
+
+    if actual_lang == Lang::Python
+        && let Some((start_1, end_excl)) = crate::parse::ast::compute_python_docstring_range(item.node, item.source)
+    {
+        let start = start_1 - 1;
+        if start < end_excl && end_excl <= lines.len() {
+            return Some((start, end_excl));
+        }
     }
-    Some((trimmed_start, trimmed_end))
+
+    None
 }
 
 // Text helpers migrated from layout/doc.rs

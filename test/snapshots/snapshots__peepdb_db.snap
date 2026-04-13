@@ -53,6 +53,23 @@ mongodb.py
     45→        page: int = 1,
     46→        page_size: int = 100
     47→    ) -> t.Dict[str, t.Any]:
+    48→        """
+    49→        Fetches data from the MongoDB database.
+    50→        """
+    51→        offset = (page -1) * page_size
+    52→        collection = self.db[table]
+    53→        data = list(collection.find({}).skip(offset).limit(page_size))
+    54→        total_rows = collection.count_documents({})
+    55→
+    56→        rem = 1 if total_rows % page_size else 0
+    57→        total_pages = (total_rows // page_size) + rem
+    58→
+    59→        return {
+    60→            'data': data,
+    61→            'page': page,
+    62→            'total_pages': total_pages,
+    63→            'total_rows': total_rows
+    64→        }
 
 mssql.py
      2→from .base import BaseDatabase

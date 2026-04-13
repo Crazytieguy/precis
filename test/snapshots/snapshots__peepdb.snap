@@ -40,43 +40,13 @@ README.md
    115→### 5. Choose Output Format
    142→### 6. Remove Saved Connections
    154→## 🔒 Security
-   156→peepDB implements several security measures to protect your database connection details:
-   157→
-   158→1. **Local Storage**: All connection details are stored locally on your machine, not on any remote servers.
-   159→2. **Encryption**: Connection details are encrypted before being stored, using the cryptography library.
-   160→3. **Caution with Passwords**: While passwords are accepted as command-line arguments for convenience, users should be cautious about using this method in shared environments or situations where command history might be accessible to others.
-   161→
    162→## 🤝 Contributing
-   164→Contributions to peepDB are welcome! Please refer to our [Contributing Guide](CONTRIBUTING.md) for more information.
-   165→
    166→## 📜 License
-   168→Distributed under the GNU General Public License Version 3. See the [LICENSE](LICENSE) file for more details.
-   169→
    170→## 📚 Documentation
    172→For more detailed documentation, please visit our [GitHub Pages](https://peepdb.dev/).
 
 docs/README.md
      1→# just-the-docs-template
-     3→This is a *bare-minimum* template to create a [Jekyll] site that:
-     4→
-     5→- uses the [Just the Docs] theme;
-     6→- can be built and published on [GitHub Pages];
-     7→- can be built and previewed locally, and published on other platforms.
-     8→
-     9→More specifically, the created site:
-    10→
-    11→- uses a gem-based approach, i.e. uses a `Gemfile` and loads the `just-the-docs` gem;
-    12→- uses the [GitHub Pages / Actions workflow] to build and publish the site on GitHub Pages.
-    13→
-    14→To get started with creating a site, simply:
-    15→
-    16→1. click "[use this template]" to create a GitHub repository
-    17→2. go to Settings > Pages > Build and deployment > Source, and select GitHub Actions
-    18→
-    19→If you want to maintain your docs in the `docs` directory of an existing project repo, see [Hosting your docs from an existing project repo](#hosting-your-docs-from-an-existing-project-repo).
-    20→
-    21→After completing the creation of your new site on GitHub, update it as needed:
-    22→
     23→## Replace the content of the template pages
     30→## Changing the version of the theme and/or Jekyll
     34→## Adding a plugin
@@ -153,11 +123,51 @@ peepdb/cli.py
     21→            return obj.isoformat()
     22→        return super(CustomEncoder, self).default(obj)
     27→def cli():
+    29→    peepDB: A quick database table viewer.
+    30→
+    31→    This tool allows you to quickly inspect database tables without writing SQL queries.
+    32→    It supports MySQL, PostgreSQL, MariaDB, SQLite, MongoDB, Firebase, MSSQL, and OracleDB.
+    33→
+    34→    Usage examples:
+    35→
+    36→    1. Save a new database connection:
+    37→       peepdb save postgres1 --db-type postgres --host localhost --user postgres --password YourPassword --database peepdb_test
+    38→
+    39→    2. View all tables in a saved connection:
+    40→       peepdb view postgres1
+    41→
+    42→    3. View a specific table with pagination:
+    43→       peepdb view postgres1 --table users --page 2 --page-size 50
+    44→
+    45→    4. Remove a saved connection:
+    46→       peepdb remove postgres1
+    47→
+    48→    Use 'peepdb COMMAND --help' for more information on a specific command.
     65→def save(connection_name, db_type, host, port, user, password, database, trusted):
+    67→    Save a new database connection.
+    68→
+    69→    Example:
+    70→    peepdb save test_conn --db-type mssql --host localhost --port 1433 --trusted --database SomeDB
     87→def list():
+    89→    List saved connections.
+    90→
+    91→    Example:
+    92→    peepdb list
    100→def remove(connection_name):
+   102→    Remove a specific saved connection.
+   103→
+   104→    Example:
+   105→    peepdb remove mydb
    115→def remove_all():
+   117→    Remove all saved connections.
+   118→
+   119→    Example:
+   120→    peepdb remove-all
    133→def view(connection_name, table, format, page, page_size, scientific):
+   135→    View data from a saved connection.
+   136→
+   137→    Example:
+   138→    peepdb view mydb --table SomeTable
    181→def main():
 
 peepdb/config.py
@@ -261,6 +271,7 @@ peepdb/db/mongodb.py
     45→        page: int = 1,
     46→        page_size: int = 100
     47→    ) -> t.Dict[str, t.Any]:
+    49→        Fetches data from the MongoDB database.
 
 peepdb/db/mssql.py
      2→from .base import BaseDatabase
@@ -343,9 +354,14 @@ peepdb/tests/__init__.py
 
 docs/contributing.md
      6→# 🤝 Contributing to peepDB
+    10→## Steps to Contribute
+    28→## Setting Up Development Environment
+    47→## Code Style
+    54→## Testing
+    63→## Documentation
+    68→## Reporting Issues
 
 CONTRIBUTING.md
      1→# Contributing to peepDB
-     5→## Code of Conduct
 
 images/

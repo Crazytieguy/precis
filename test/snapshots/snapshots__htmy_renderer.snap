@@ -11,84 +11,81 @@ __init__.py
 baseline.py
     10→from .context import RendererContext
     18→class Renderer …
+    20→    The baseline renderer that support both async streaming and rendering.
+    21→
+    22→    Because of the simple, recursive implementation, this renderer is the easiest to reason about.
+    23→    Therefore it is useful for validating component correctness before bug reporting (if another
+    24→    renderer implementation fails), testing and debugging alternative implementations, and it can
+    25→    also serve as the baseline for benchmarking other renderer implementations.
     30→    def __init__(
     31→        self,
     32→        default_context: Context | None = None,
     33→        *,
     34→        string_formatter: Callable[[str], str] = xml_format_string,
     35→    ) -> None:
+    37→        Initialization.
+    38→
+    39→        Arguments:
+    40→            default_context: The default context to use for rendering if `render()` doesn't
+    41→                receive a context.
+    42→            string_formatter: Callable that should be used to format plain strings. By default
+    43→                an XML-safe string formatter will be used.
     48→    async def render(self, component: Component, context: Context | None = None) -> str:
+    50→        Renders the given component.
+    51→
+    52→        Implements `htmy.renderer.typing.RendererType`.
+    53→
+    54→        Arguments:
+    55→            component: The component to render.
+    56→            context: An optional rendering context.
+    57→
+    58→        Returns:
+    59→            The rendered string.
     67→    async def stream(self, component: Component, context: Context | None = None) -> AsyncIterator[str]:
+    69→        Async iterator that renders the given component.
+    70→
+    71→        Implements `htmy.renderer.typing.StreamingRendererType`.
+    72→
+    73→        Arguments:
+    74→            component: The component to render.
+    75→            context: An optional rendering context.
+    76→
+    77→        Yields:
+    78→            The rendered strings.
     92→    async def _stream(self, component: Component, context: Context) -> AsyncIterator[str]:
-    93→        """
     94→        Renders the given component with the given context.
-    95→
-    96→        Arguments:
-    97→            component: The component to render.
-    98→            context: The current rendering context.
-    99→
-   100→        Yields:
-   101→            String chunks of the rendered component.
-   102→        """
-   103→        if isinstance(component, str):
-   104→            yield self._string_formatter(component)
-   105→        elif component is None:
-   106→            return
-   107→        elif is_component_sequence(component):
-   108→            for comp in component:
-   109→                if comp is not None:
-   110→                    async for chunk in self._stream_one(comp, context):
-   111→                        yield chunk
-   112→        else:
-   113→            # Sync or async htmy component.
-   114→            async for chunk in self._stream_one(component, context):  # type: ignore[arg-type]
-   115→                yield chunk
+      →…
    117→    async def _stream_one(self, component: ComponentType, context: Context) -> AsyncIterator[str]:
-   118→        """
    119→        Renders a single component.
-   120→
-   121→        Arguments:
-   122→            component: The component to render.
-   123→            context: The current rendering context.
-   124→
-   125→        Yields:
-   126→            The rendered strings.
-   127→        """
-   128→        if isinstance(component, str):
-   129→            yield self._string_formatter(component)
-   130→        elif component is None:
-   131→            return
-   132→        else:
-   133→            # Handle context providers
-   134→            child_context: Context = context
-   135→            if hasattr(component, "htmy_context"):  # isinstance() is too expensive.
-   136→                extra_context: Context | Awaitable[Context] = component.htmy_context()
-   137→                if isawaitable(extra_context):
-   138→                    extra_context = await extra_context
-   139→
-   140→                if len(extra_context):
-   141→                    # Context must not be mutated, so we can ignore that ChainMap expects mutable mappings.
-   142→                    child_context = ChainMap(extra_context, context)  # type: ignore[arg-type]
-   143→
-   144→            children = component.htmy(child_context)
-   145→            if isawaitable(children):
-   146→                children = await children
-   147→
-   148→            async for chunk in self._stream(children, child_context):
-   149→                yield chunk
+      →…
 
 context.py
      3→from .typing import RendererType, is_renderer
      6→class RendererContext …
+     8→    Context key for storing, and utility for retrieving the renderer instance from the rendering context.
     12→    def from_context(cls, context: Context) -> RendererType:
+    14→        Returns the renderer instance from the given context.
+    15→
+    16→        Arguments:
+    17→            context: The context the renderer instance should be loaded from.
+    18→
+    19→        Raises:
+    20→            KeyError: If no renderer instance was found in the context.
+    21→            TypeError: If the value corresponding to `RendererContext` in the context is not a renderer.
 
 default.py
     12→from .context import RendererContext
     20→class _Node …
+    21→    """A single node in the linked list the renderer constructs to resolve a component tree."""
     25→    def __init__(self, component: ComponentType, next: _Node | None = None) -> None:
+    27→        Initialization.
+      →…
     36→    def iter_nodes(self, *, include_self: bool = True) -> Iterator[_Node]:
+    38→        Iterates over all following nodes.
+      →…
     50→_NodeAndChildContext …
     53→class _ComponentRenderer …
+    55→    `ComponentType` renderer that converts a component tree into a linked list of resolved (`str`) nodes.
     60→    def __init__(
     61→        self,
     62→        component: ComponentType,
@@ -96,11 +93,21 @@ default.py
     64→        *,
     65→        string_formatter: Callable[[str], str],
     66→    ) -> None:
+    68→        Initialization.
+      →…
     92→    async def _extend_context(self, component: ContextProvider, context: Context) -> Context:
+    94→        Returns a new context from the given component and context.
+      →…
    111→    def _process_node_result(self, parent_node: _Node, component: Component, context: Context) -> None:
+   113→        Processes the result of a single node.
+      →…
    153→    async def _process_async_node(self, node: _Node, context: Context) -> None:
+   155→        Processes the given node. `node.component` must be an async component.
    160→    def _schedule_node(self, node: _Node, child_context: Context) -> None:
+   162→        Schedules the given node for rendering with the given child context.
+      →…
    174→    async def run(self) -> str:
+   175→        """Runs the component renderer."""
    205→async def _render_component(
    206→    component: Component,
    207→    *,
@@ -108,44 +115,60 @@ default.py
    209→    string_formatter: Callable[[str], str],
    210→) -> str:
    211→    """Renders the given component with the given settings."""
-   212→    if hasattr(component, "htmy"):
-   213→        return await _ComponentRenderer(component, context, string_formatter=string_formatter).run()
-   214→    elif isinstance(component, str):
-   215→        return string_formatter(component)
-   216→    elif is_component_sequence(component):
-   217→        if len(component) == 0:
-   218→            return ""
-   219→
-   220→        renderers = (_ComponentRenderer(c, context, string_formatter=string_formatter) for c in component)
-   221→        return "".join(await asyncio_gather(*(r.run() for r in renderers)))
-   222→    elif component is None:
-   223→        return ""
-   224→    else:
-   225→        raise ValueError(f"Invalid component type: {type(component)}")
    228→class Renderer …
+   230→    The default renderer.
+   231→
+   232→    It resolves component trees by converting them to a linked list of resolved component parts
+   233→    before combining them to the final string.
    238→    def __init__(
    239→        self,
    240→        default_context: Context | None = None,
    241→        *,
    242→        string_formatter: Callable[[str], str] = xml_format_string,
    243→    ) -> None:
+   245→        Initialization.
+   246→
+   247→        Arguments:
+   248→            default_context: The default context to use for rendering if `render()` doesn't
+   249→                receive a context.
+   250→            string_formatter: Callable that should be used to format plain strings. By default
+   251→                an XML-safe string formatter will be used.
    256→    async def render(self, component: Component, context: Context | None = None) -> str:
+   258→        Renders the given component.
+   259→
+   260→        Implements `htmy.typing.RendererType`.
+   261→
+   262→        Arguments:
+   263→            component: The component to render.
+   264→            context: An optional rendering context.
+   265→
+   266→        Returns:
+   267→            The rendered string.
 
 typing.py
     12→class RendererType …
+    13→    """Protocol definition for renderers."""
     15→    async def render(self, component: Component, context: Context | None = None) -> str:
+    17→        Renders the given component.
+    18→
+    19→        Arguments:
+    20→            component: The component to render.
+    21→            context: An optional rendering context.
+    22→
+    23→        Returns:
+    24→            The rendered string.
     29→def is_renderer(obj: Any | None) -> TypeGuard[RendererType]:
     30→    """Type guard that checks if the given object is a renderer."""
-    31→    # Just a basic check, don't waste time here.
-    32→    render: Any = getattr(obj, "render", None)
-    33→    return render is not None
     36→class StreamingRendererType …
+    37→    """Protocol definition for streaming renderers."""
     39→    def stream(self, component: Component, context: Context | None = None) -> AsyncIterator[str]:
+    41→        Async iterator that renders the given component.
+    42→
+    43→        Arguments:
+    44→            component: The component to render.
+    45→            context: An optional rendering context.
+    46→
+    47→        Yields:
+    48→            The rendered strings.
     53→def is_streaming_renderer(obj: Any | None) -> TypeGuard[StreamingRendererType]:
     54→    """Type guard that checks if the given object is a streaming renderer."""
-    55→    if not is_renderer(obj):
-    56→        return False
-    57→
-    58→    # Just a basic check, don't waste time here.
-    59→    stream: Any = getattr(obj, "stream", None)
-    60→    return stream is not None

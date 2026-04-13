@@ -96,7 +96,7 @@ pub fn extract_items<'t>(
             symbol_node
         };
 
-        let documented = ast::compute_doc_start_line(range_node, source, lang).is_some();
+        let documented = ast::is_documented(range_node, source, lang);
 
         let Some(key) = classify(
             symbol_node,

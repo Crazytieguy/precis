@@ -207,12 +207,27 @@ swarm/types.py
     14→class Agent …
     23→class Response …
     29→class Result …
+    31→    Encapsulates the possible return values for an agent function.
+    32→
+    33→    Attributes:
+    34→        value (str): The result value as a string.
+    35→        agent (Agent): The agent instance, if applicable.
+    36→        context_variables (dict): A dictionary of context variables.
 
 swarm/util.py
      5→def debug_print(debug: bool, *args: str) -> None:
     13→def merge_fields(target, source):
     21→def merge_chunk(final_response: dict, delta: dict) -> None:
     31→def function_to_json(func) -> dict:
+    33→    Converts a Python function into a JSON-serializable dictionary
+    34→    that describes the function's signature, including its name,
+    35→    description, and parameters.
+    36→
+    37→    Args:
+    38→        func: The function to be converted.
+    39→
+    40→    Returns:
+    41→        A dictionary representing the function's signature in JSON format.
 
 swarm/repl/__init__.py
      1→from .repl import run_demo_loop
@@ -303,7 +318,6 @@ examples/airline/README.md
 
 examples/basic/README.md
      1→# Swarm basic
-     5→### Examples
     31→## Running the Examples
 
 examples/personal_shopper/README.md
@@ -342,36 +356,14 @@ examples/customer_service_streaming/prep_data.py
 
 examples/weather_agent/agents.py
      6→def get_weather(location, time="now"):
-    11→def send_email(recipient, subject, body):
+    11→def send_email …
 
 examples/weather_agent/evals.py
-     8→def run_and_get_tool_calls(agent, query):
-    26→def test_calls_weather_when_asked(query):
-    41→def test_does_not_call_weather_when_not_asked(query):
+     8→def run_and_get_tool_calls …
+    26→def test_calls_weather_when_asked …
+    41→def test_does_not_call_weather_when_not_asked …
 
 examples/weather_agent/run.py
-
-examples/airline/__init__.py
-
-examples/airline/main.py
-
-examples/support_bot/Makefile
-
-examples/support_bot/__init__.py
-
-examples/support_bot/customer_service.py
-    13→# Set embedding model
-    14→EMBEDDING_MODEL …
-
-examples/support_bot/main.py
-    13→# Set embedding model
-    14→EMBEDDING_MODEL …
-
-examples/support_bot/prep_data.py
-    10→GPT_MODEL …
-    11→EMBEDDING_MODEL …
-
-examples/customer_service_streaming/tests/test_prompts.jsonl
 
 assets/
 
@@ -388,14 +380,6 @@ examples/customer_service/logs/
 examples/customer_service_lite/
 
 examples/customer_service_lite/logs/
-
-examples/customer_service_streaming/configs/
-
-examples/customer_service_streaming/data/
-
-examples/customer_service_streaming/logs/
-
-examples/customer_service_streaming/src/
 
 examples/support_bot/data/
 
