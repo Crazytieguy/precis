@@ -438,40 +438,6 @@ This is a pre-existing issue (the old output also showed both packages fully), b
 
 No simple heuristic detects structural mirrors in general, but the pattern is common in Python SDKs (sync/async), language bindings (C header + wrapper), and multi-platform code (platform-specific implementations with identical APIs).
 
-## 24. Lua `---` doc comment marker captured as doc first line — empty summaries waste budget
-
-**Affected snapshots:** soluna
-
-In soluna's `docs/` directory (the Lua API reference), every function has a LuaDoc comment block starting with `---` on its own line, with the actual summary on subsequent lines:
-
-```lua
----
---- Quit the application.
----
-function app.quit() end
-```
-
-The system captures `---` as FunctionDocFirst. Since this line contains only the comment marker, the output shows:
-
-```
-    10→---
-      →…
-    15→function app.quit() end
-```
-
-Two extra lines per function (`---` + truncation marker) that convey zero information beyond "a doc comment exists." Across ~40 functions in the `docs/` directory, this wastes ~80 output lines.
-
-The pre-rewrite output was more compact, showing only function signatures:
-
-```
-    15→function app.quit() end
-    24→function app.set_ime_font(font_name, font_size) end
-    35→function app.set_ime_rect(rect) end
-```
-
-Compare `docs/app.lua`: old output was 3 lines (3 function signatures), new output is 10 lines (3 function signatures + 3 doc markers + 3 truncation markers + 1 `local app …`). The 3.3× expansion applies across all 20 docs/ files.
-
-The `---` line is semantically equivalent to Python's opening `"""` or Rust's `///` prefix — it's a comment syntax marker, not a summary. The actual summary content (e.g., "Quit the application.") is on lines 2+ of the doc block. A fix could either skip `---`-only doc first lines or look for the first line with actual text content.
 
 ## 25. Bare-filename repetitive files waste budget while structural files are empty
 

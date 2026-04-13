@@ -931,14 +931,14 @@ fn trim_doc_delimiters(lines: &[&str], doc_start: usize, sym_line_0: usize) -> (
     }
     let mut start = doc_start;
     let mut end = sym_line_0;
-    let first = lines[start].trim();
-    if first == "/**" || first == "/*" {
+    while start < end && is_bare_doc_delimiter(lines[start].trim()) {
         start += 1;
     }
-    while end > start && lines[end - 1].trim().is_empty() {
-        end -= 1;
-    }
-    if end > start && lines[end - 1].trim() == "*/" {
+    while end > start {
+        let trimmed = lines[end - 1].trim();
+        if !trimmed.is_empty() && !is_bare_doc_delimiter(trimmed) {
+            break;
+        }
         end -= 1;
     }
     if start >= end {
@@ -946,6 +946,10 @@ fn trim_doc_delimiters(lines: &[&str], doc_start: usize, sym_line_0: usize) -> (
     } else {
         (start, end)
     }
+}
+
+fn is_bare_doc_delimiter(trimmed: &str) -> bool {
+    matches!(trimmed, "/**" | "/*" | "*/" | "---" | "///")
 }
 
 // Noise detection (migrated from layout/noise.rs)
