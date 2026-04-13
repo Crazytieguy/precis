@@ -63,3 +63,34 @@ The pre-rewrite output showed first-line doc comments for `bail!` and `anyhow!`:
 ```
 
 The new output just shows `macro_rules! bail …` and `macro_rules! anyhow …`. Without the doc summaries, a reader has no idea what these macros do from the precis output alone.
+
+## 6. README body content dropped — only headings shown
+
+**Affected snapshots:** bareiron
+
+The output shows README.md with only the h1 and h2 headings — zero body content:
+```
+README.md
+     1→# bareiron
+    12→## Quick start
+    17→## Compilation
+    28→## Configuration
+    39→## Non-volatile storage (optional)
+    48→## Contribution
+```
+
+The pre-rewrite output showed the full introductory section (lines 1-11): project description ("Minimalist Minecraft server for memory-restrictive embedded systems"), design priorities, Minecraft/protocol version numbers, and a compatibility warning. This is the highest-value content in the repo for building a mental model. A reader seeing only headings would know the section structure but not what bareiron is or does.
+
+## 7. C `#define` values truncated while verbose comments consume budget
+
+**Affected snapshots:** bareiron
+
+In `include/globals.h`, the output shows comment lines above each `#define` but truncates the actual values:
+```
+    18→// TCP port, Minecraft's default is 25565
+    19→#define PORT …
+    34→// Max render distance, determines how many chunks to send
+    35→#define VIEW_DISTANCE …
+```
+
+The pre-rewrite showed values directly: `#define PORT 25565`, `#define VIEW_DISTANCE 2`. The pre-rewrite approach is more compact (one line vs two) and often more informative — `VIEW_DISTANCE 2` instantly conveys the server's minimalist constraints, while `#define VIEW_DISTANCE …` tells you nothing beyond the name. globals.h uses ~80 output lines (~¼ of the 4000-token budget), much of it on comments that restate the `#define` name.
