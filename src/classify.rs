@@ -447,6 +447,16 @@ pub fn is_header_file(path: &Path) -> bool {
         .is_some_and(|ext| is_header_extension(&ext.to_ascii_lowercase()))
 }
 
+pub fn is_error_submodule_dir(dir: &Path) -> bool {
+    dir.file_name()
+        .and_then(|n| n.to_str())
+        .is_some_and(|name| {
+            name.eq_ignore_ascii_case("error")
+                || name.eq_ignore_ascii_case("errors")
+                || name.eq_ignore_ascii_case("exceptions")
+        })
+}
+
 pub fn is_c_implementation_file(path: &Path) -> bool {
     path.extension()
         .and_then(|e| e.to_str())

@@ -184,15 +184,6 @@ Meanwhile, the README consumes ~173 lines of output with full code examples, the
 
 The `FileCategory::Example` factor (0.35×) is appropriate for most projects but harmful here. **Partially fixed:** the log file budget waste from #25 was addressed by classifying `logs/` as `FileCategory::Artifact` — the freed ~62 tokens now show function docstrings and signatures from 6 example directories (support_bot, personal_shopper, triage_agent). The remaining regression: 3 weather_agent files still render empty, README still dominates budget (~173 lines), and customer_service_streaming example content is still absent.
 
-## 29. Repetitive error submodule files displace higher-value content
-
-**Affected snapshots:** toasty_core
-
-In toasty_core, 15 error submodule files (`src/error/adhoc.rs` through `src/error/validation.rs`) each follow an identical pattern: a `pub(super)` struct, an `impl Error` block with a public constructor (`pub fn error_name(...) -> Error`) and a public predicate (`pub fn is_error_name(&self) -> bool`). Each file contributes ~6 content lines plus a ~10-token file header, totaling ~350 tokens across all 15 files. After seeing 2-3 examples, every subsequent file is entirely predictable.
-
-The pre-rewrite output showed none of these submodules — only `src/error.rs` with the `Error` struct body, `ErrorKind` enum, and `IntoError` trait. The freed budget went to ~30 files from `src/stmt/` showing the SQL AST type names (`Expr`, `Value`, `Type`, `Direction`, `BinaryOp`, `SetOp`, `Source`, `Query`, `Lock`, `Filter`, `Returning`, etc.) plus `src/schema/db/` types (`Column`, `Index`, `Migration`, `Table`). For a database ORM core library, the statement AST and database schema types are far more informative than individual error constructors.
-
-The root cause is that each error submodule generates several group entries (StructName, ImplBlock, FunctionName × 2) that individually score well enough to beat the marginal cost of their file header. The `pub(super)` struct gets a 0.3× visibility penalty, but the `pub fn` methods on `impl Error` are fully public. The aggregate effect is that 15 small files with mechanical content outbid the stmt/ directory's content despite being less informative per token.
 
 ## 30. Rust lib.rs with `pub use` re-exports rendered empty in large workspaces [needs human review]
 

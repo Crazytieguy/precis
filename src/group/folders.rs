@@ -63,6 +63,13 @@ pub fn create_files_groups<'s>(
         files.iter().any(|f| classify::is_header_file(f))
     });
 
+    let total_files: usize = sorted_roles.iter().map(|(_, f)| f.len()).sum();
+    let error_submodule_factor = if classify::is_error_submodule_dir(dir) && total_files > 5 {
+        0.15
+    } else {
+        1.0
+    };
+
     for (role, files) in sorted_roles {
         let mut partitions: HashMap<(bool, bool, bool, bool), Vec<PathBuf>> = HashMap::new();
         for file_path in files {
@@ -97,7 +104,7 @@ pub fn create_files_groups<'s>(
                 parent_dir: dir.to_path_buf(),
                 role,
                 items: part_files,
-                inherited_modifier: inherited_modifier * contribution,
+                inherited_modifier: inherited_modifier * contribution * error_submodule_factor,
                 is_deprioritized,
                 is_type_declaration,
                 is_header,
