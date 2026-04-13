@@ -74,7 +74,7 @@ The new output just shows `macro_rules! bail …` and `macro_rules! anyhow …`.
 
 ## 6. README body content dropped — only headings shown
 
-**Affected snapshots:** bareiron, commander, d2ts, d2ts_d2ts, log, mcphost, mdbook, mdbook_guide_src, pluggy, semver, soluna, sps, sqlite_vec, toasty, typeguard
+**Affected snapshots:** bareiron, commander, d2ts, d2ts_d2ts, log, mcphost, mdbook, mdbook_guide_src, pluggy, semver, soluna, sps, sqlite_vec, toasty, typeguard, vaul
 
 The output shows README.md with only headings — zero body content. The pre-rewrite output showed introductory sections that tell the reader what the project is.
 
@@ -95,6 +95,8 @@ In mdbook, the root README loses its one-line description ("mdBook is a utility 
 In sps, the README opens with a `[!WARNING]` blockquote (lines 3-22) announcing the project is being scrapped in favor of sps v2, with architectural rationale and a link to the new repo. This is the single most important piece of information about sps. The pre-rewrite showed all of it; the new output shows only 9 heading lines. The new output also adds boilerplate headings ("Contributing", "License") that the old correctly omitted.
 
 In toasty, the README's h1 body (lines 3-5: "**Current status: Incubating - Toasty is not ready for production usage. The API is still evolving and documentation is lacking.**") is the single most important context about the project — it sets expectations for everything else. The pre-rewrite output showed this; the new output drops it and instead shows a `### Contribution` section (lines 117-121) with standard MIT license boilerplate. The boilerplate displaces the status warning because it's under a lower heading whose body is shorter and thus has a better cost/value ratio.
+
+In vaul, the README is a 3-line deprecation notice (blockquote, no headings): "This repo is unmaintained. I might come back to it at some point, but not in the near future." The pre-rewrite showed this content; the new output shows the bare filename. This is a headingless markdown file — with no `Heading` groups, there are no `HeadingBody` groups to carry the text. The deprecation status is the single most important context about the project.
 
 This is the highest-value content in a repo for building a mental model. A reader seeing only headings knows the structure but not the purpose.
 
