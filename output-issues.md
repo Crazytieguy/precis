@@ -66,20 +66,15 @@ The new output just shows `macro_rules! bail …` and `macro_rules! anyhow …`.
 
 ## 6. README body content dropped — only headings shown
 
-**Affected snapshots:** bareiron
+**Affected snapshots:** bareiron, commander
 
-The output shows README.md with only the h1 and h2 headings — zero body content:
-```
-README.md
-     1→# bareiron
-    12→## Quick start
-    17→## Compilation
-    28→## Configuration
-    39→## Non-volatile storage (optional)
-    48→## Contribution
-```
+The output shows README.md with only headings — zero body content. The pre-rewrite output showed introductory sections that tell the reader what the project is.
 
-The pre-rewrite output showed the full introductory section (lines 1-11): project description ("Minimalist Minecraft server for memory-restrictive embedded systems"), design priorities, Minecraft/protocol version numbers, and a compatibility warning. This is the highest-value content in the repo for building a mental model. A reader seeing only headings would know the section structure but not what bareiron is or does.
+In bareiron, the full introductory section (lines 1-11) was shown: project description ("Minimalist Minecraft server for memory-restrictive embedded systems"), design priorities, Minecraft/protocol version numbers, and a compatibility warning.
+
+In commander, the pre-rewrite showed lines 1-45: the description ("The complete solution for node.js command-line interfaces"), a language-switch note, and the full table of contents. The new output shows only headings — a reader can see the section structure but not what Commander.js is or does.
+
+This is the highest-value content in a repo for building a mental model. A reader seeing only headings knows the structure but not the purpose.
 
 ## 7. C `#define` values truncated while verbose comments consume budget
 
@@ -144,3 +139,16 @@ ARCHITECTURE.md's introductory text (lines 3-44, directly under `# Architecture`
 Meanwhile, h2 section bodies are shown in full: `## Example` gets 28 lines of code, `## Performance` and `## Groups` get their body lines. The pre-rewrite output showed the complete file including the intro.
 
 The intro is the most valuable content in ARCHITECTURE.md — it's the "why" that gives meaning to the "how" in the sections below. `HeadingBody` has a flat base value (0.7) regardless of heading level, so the scheduler sees no reason to prefer the h1 intro body over h2 bodies. Since the h1 body is longer (~43 lines vs 1-28 lines for h2 bodies), its cost/benefit ratio is worse, and it loses the budget competition.
+
+## 11. CommonJS entry point rendered empty — require/exports not captured
+
+**Affected snapshots:** commander
+
+Commander's `index.js` (24 lines) is the library's entry point. It shows the module structure: which classes are imported from `lib/`, factory functions (`createCommand`, `createOption`, `createArgument`), and all exports. The pre-rewrite output showed the full file. The new output shows only the filename with zero content — the file appears completely empty.
+
+Root cause: the TypeScript tree-sitter query captures `import_statement` (ES6 imports) and `lexical_declaration` with an `identifier` name, but CommonJS patterns don't match:
+
+1. `const { Argument } = require('./lib/argument.js')` — this is a `lexical_declaration`, but the name is an `object_pattern` (destructuring), not an `identifier`, so the query doesn't match.
+2. `exports.program = new Command()` — this is an `expression_statement` with an assignment, not any captured pattern.
+
+The result is zero extracted items, so the file contributes nothing to the output. This is a significant gap for JavaScript projects that use CommonJS (which is still the majority of npm packages). For entry point files especially, the exports list is often the single most useful piece of information about the library.
