@@ -511,7 +511,7 @@ The `---` line is semantically equivalent to Python's opening `"""` or Rust's `/
 
 ## 25. Bare-filename repetitive files waste budget while structural files are empty
 
-**Affected snapshots:** sps_core, sqlite_vec, swarm
+**Affected snapshots:** sps_core, sqlite_vec, swarm, vscode_emojis_medium
 
 In `src/install/cask/artifacts/`, 21 of 24 `.rs` files are shown as bare filenames (no content). These files follow a uniform pattern — each contains a single `pub fn install_X` function — so once the pattern is clear from 2-3 examples, additional bare filenames add no understanding. Collectively they consume ~42 tokens for information already implied by the directory structure.
 
@@ -525,6 +525,8 @@ The old (pre-rewrite) output showed mod.rs files with their declarations (e.g., 
 In sqlite_vec, the problem is even more extreme: ~25 empty file entries (Makefile, sqlite-vec.h.tmpl, test.sql, SECURITY.md, various examples/, scripts/, and site/ files) and ~25 empty folder entries (benchmarks/exhaustive-memory/, benchmarks/micro/, tests/afbd/, tests/correctness/, etc.). That's ~50 empty entries consuming ~100 tokens for near-zero information. The old output was more selective — it collapsed `site/` into a single folder entry rather than listing all its subfiles and subfolders individually. The budget spent on these empty entries could instead show README body content (issue #6) or enum bodies (issue #18).
 
 In swarm, 31 `logs/session_*.json` files are shown individually as bare filenames, consuming ~62 tokens. The old output showed `logs/` as a single folder entry. These session logs follow a uniform naming pattern — once you've seen one filename, the rest add nothing. The budget could instead show example source files (see #27).
+
+In vscode_emojis_medium, 18 SVG files are listed individually (`icons/light/status-added.svg` through `icons/dark/status-untracked.svg`) — 9 files in `light/` and 9 identical names in `dark/`. The old output showed a single `icons/` folder entry. The SVG filenames follow a uniform `status-*.svg` pattern across two theme variants; once you've seen `icons/light/` and `icons/dark/`, individual filenames add nothing. At budget 200, these 18 bare entries consume ~36 tokens (~18% of budget) while `emojis.json` (the most important file — a 40KB emoji mapping) renders completely empty (see #34).
 
 The root cause is that bare-filename entries have a non-zero rendering cost (~2 tokens each) but zero information value beyond "this file exists." In a directory with 24 similar files, the directory name itself conveys more than 21 individual bare filenames. Budget would be better spent showing lib.rs module declarations (~15 tokens) and mod.rs structures (~5-10 tokens each), which tell the reader how the crate is organized.
 
@@ -655,3 +657,13 @@ In typeguard, `__init__.py` contains 23 re-export lines (`from ._checkers import
 The re-exports are valuable in isolation — they tell a reader what `import typeguard` provides. But they're almost entirely redundant with the per-module listings already shown: every re-exported symbol (`check_type`, `typechecked`, `TypeCheckError`, etc.) appears in its source file's output. The 350 tokens would be far better spent on the empty README.rst (see #6) or the missing config enum values (see #28).
 
 The `from X import Y as Y` pattern is Python's explicit re-export convention. If precis detects this as `ImportedItems { first_party: true }` (base_value 1.0) without applying the reexport penalty, that explains the over-allocation. With `reexport_contribution()` (0.1×), the effective value should be low enough to suppress most of these. This is the inverse of #30 (Rust re-exports too aggressively suppressed) — Python re-exports not suppressed enough.
+
+## 34. Single-line JSON file renders empty — 1,837 DataSection groups produce no output (regression)
+
+**Affected snapshots:** vscode_emojis_medium
+
+`emojis.json` is a 40KB single-line JSON file with 1,837 key-value pairs (emoji name → emoji character). The pre-rewrite output showed a truncated first line: `{"100":"💯","1234":"🔢","+1":"👍","-1":"👎",...} …` — immediately telling the reader this is an emoji name→character mapping. The new output shows just the bare filename with zero content.
+
+The JSON query captures each top-level pair as a DataSection (base_value 0.8). With 1,837 entries all on line 1, the scheduler creates many groups but they all reference the same source line. The rendered output should show at least the truncated line 1, but nothing appears. Meanwhile, 18 bare SVG filenames consume ~36 tokens of the 200-token budget (see #25).
+
+This is the most important file in the fixture — a reader seeing only `emojis.json` with no content doesn't know it's an emoji mapping, how many entries it has, or what its structure looks like.
