@@ -98,6 +98,8 @@ flatten.go
     29→}
 
 format.go
+    11→// ErrorFormatFunc is a function callback that is called by Error to
+    12→// turn the list of errors into a string.
     13→type ErrorFormatFunc …
     15→// ListFormatFunc is a basic formatter that outputs the number of errors
     16→// that occurred along with a bullet point list of the errors.
@@ -121,6 +123,8 @@ go.mod
 go.sum
 
 group.go
+     8→// Group is a collection of goroutines which return errors that need to be
+     9→// coalesced.
     10→type Group …
     11→	mutex sync.Mutex
     12→	err   *Error
@@ -153,6 +157,8 @@ group.go
     41→}
 
 multierror.go
+    11→// Error is an error type to track multiple errors. This is used to
+    12→// accumulate errors in cases and return them as a single "error".
     13→type Error …
     14→	Errors      []error
     15→	ErrorFormat ErrorFormatFunc
@@ -222,6 +228,17 @@ multierror.go
     84→	copy(errs, e.Errors)
     85→	return chain(errs)
     86→}
+    88→// chain implements the interfaces necessary for errors.Is/As/Unwrap to
+    89→// work in a deterministic way with multierror. A chain tracks a list of
+    90→// errors while accounting for the current represented error. This lets
+    91→// Is/As be meaningful.
+    92→//
+    93→// Unwrap returns the next error. In the cleanest form, Unwrap would return
+    94→// the wrapped error here but we can't do that if we want to properly
+    95→// get access to all the errors. Instead, users are recommended to use
+    96→// Is/As to get the correct error type out.
+    97→//
+    98→// Precondition: []error is non-empty (len > 0)
     99→type chain …
    101→// Error implements the error interface
    102→func (e chain) Error() string {
@@ -321,6 +338,7 @@ multierror_test.go
     82→func TestErrorUnwrap(t *testing.T) {
    118→func TestErrorIs(t *testing.T) {
    157→func TestErrorAs(t *testing.T) {
+   208→// nestedError implements error and is used for tests.
    209→type nestedError …
    211→func (*nestedError) Error() string { return "" }
 

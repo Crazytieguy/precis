@@ -388,20 +388,6 @@ In tock, `AnalysisStats` in `internal/adapters/cli/analyze.go` (10 fields: Total
 
 In sqlite_vec's `sqlite-vec.c`, the pre-rewrite showed full bodies for `VectorElementType` (3 members: FLOAT32, BIT, INT8), `Vec0TokenType` (6 members), `NpyTokenType` (10 members), `Vec0DistanceMetrics` (3 members: L2, COSINE, L1), and several `typedef enum` blocks with their values. The new output collapses most of these to just names (e.g., `enum VectorElementType …`). For a C project where enums define the API surface (vector element types, distance metrics, query plan types), these bodies are high-value — a reader can't infer the supported element types or distance metrics from the name alone.
 
-## 19. Go doc comments not detected for type declarations (regression)
-
-**Affected snapshots:** mcphost_sdk
-
-The Go tree-sitter query captures `type_spec` and `type_alias` as `@symbol`, but these are inner nodes within `type_declaration`. Doc comments in Go are siblings of `type_declaration`, one AST level above. `compute_doc_start_line` checks `node.prev_named_sibling()`, which for `type_spec` finds nothing — there are no named siblings within `type_declaration` before it.
-
-Two effects:
-
-1. **Doc comments never shown.** `documented` is always `false` for Go type declarations, so `StructDocFirst`, `InterfaceDocFirst`, and `TypeAliasDocFirst` groups are never spawned. In mcphost_sdk, the MCPHost struct doc ("provides programmatic access to mcphost functionality...") and Options struct doc ("configures MCPHost creation with optional overrides...") are both lost. The pre-rewrite output showed all four type doc comments in this fixture.
-
-2. **Type declarations deprioritized.** `documented: false` applies a 0.5× `documented_contribution` penalty, making type declarations compete at half their natural value.
-
-Functions and methods are unaffected — `function_declaration` and `method_declaration` ARE top-level nodes in Go's tree-sitter grammar, so their doc comments are reachable via `prev_named_sibling()`. The asymmetry is visible in mcphost_sdk's output: all 8 method doc comments are shown while all 4 type doc comments are missing.
-
 ## 21. Volume-based budget capture — large support package crowds out small core package
 
 **Affected snapshots:** mcphost
@@ -604,10 +590,12 @@ The JSON query captures each top-level pair as a DataSection (base_value 0.8). W
 
 This is the most important file in the fixture — a reader seeing only `emojis.json` with no content doesn't know it's an emoji mapping, how many entries it has, or what its structure looks like.
 
-## 35. Third-party imports dropped in small single-file projects despite ample budget (regression)
+## 35. Third-party imports dropped in small single-file projects despite ample budget (regression) [needs human review]
 
 **Affected snapshots:** xxhash_xxhsum
 
 `xxhsum/xxhsum.go` is a 50-line single-file project with a 2000-token budget. The pre-rewrite output (470 tokens) showed the import block including `github.com/cespare/xxhash/v2` — the core dependency that tells a reader this is a wrapper around the xxhash library. The new output drops the entire import block (lines 3-9), showing only the three functions (lines 11-50).
 
 Root cause: `Import { first_party: false, .. }` has base_value 0.0 in heuristics.rs. The comment says "3rd party imports only via dependent_siblings" — but in a single-file project there are no siblings, so the import can never be surfaced. The budget is vastly underutilized (the old output used ~24% of budget) yet the scheduler cannot select the import because its value is zero regardless of remaining capacity.
+
+**Attempted fix:** Tried three approaches: (1) giving third-party imports base_value 0.05 — caused 38 snapshot regressions across all languages; (2) giving base_value 0.01 — still 23 regressions; (3) promoting ungated third-party imports to first-party in files.rs — 29 regressions. Import groups are so cheap (few tokens) that any non-zero base value makes them competitive everywhere, displacing function bodies and other higher-value content. Also tried adding Go first-party detection (stdlib imports don't contain dots), but this correctly classifies Go stdlib imports and the xxhsum import block becomes first-party, which fixes this specific case but adds import blocks to every Go file in every Go snapshot. A targeted fix may need scheduler-level awareness of budget utilization rate or a mechanism specific to single-file projects.

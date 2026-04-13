@@ -121,7 +121,15 @@ xxhash.go
      1→// Package xxhash implements the 64-bit variant of xxHash (XXH64) as described
      2→// at https://xxhash.com/.
     11→const …
+    19→// Store the primes in an array as well.
+    20→//
+    21→// The consts are used when possible in Go code to avoid MOVs but we need a
+    22→// contiguous array for the assembly code.
     23→var primes …
+    25→// Digest implements hash.Hash64.
+    26→//
+    27→// Note that a zero-valued Digest is not ready to receive writes.
+    28→// Call Reset or create a Digest using New before calling other methods.
     29→type Digest …
     30→	v1    uint64
     31→	v2    uint64
@@ -230,6 +238,8 @@ xxhash_unsafe.go
     43→// WriteString adds more data to d. It always returns len(s), nil.
     44→// It may be faster than Write([]byte(s)) by avoiding a copy.
     45→func (d *Digest) WriteString(s string) (n int, err error) {
+    53→// sliceHeader is similar to reflect.SliceHeader, but it assumes that the layout
+    54→// of the first two words is the same as the layout of a string.
     55→type sliceHeader …
     56→	s   string
     57→	cap int
@@ -253,6 +263,21 @@ dynamic/dynamic_test.go
     30→	os.Exit(m.Run())
     31→}
     33→func TestDynamic(t *testing.T) {
+    34→	plug, err := plugin.Open("plugin.so")
+    35→	if err != nil {
+    36→		t.Fatal(err)
+    37→	}
+    38→	for _, test := range []string{
+    39→		"TestSum",
+    40→		"TestDigest",
+    41→	} {
+    42→		f, err := plug.Lookup(test)
+    43→		if err != nil {
+    44→			t.Fatalf("cannot find func %s: %s", test, err)
+    45→		}
+    46→		f.(func(*testing.T))(t)
+    47→	}
+    48→}
 
 bench_test.go
      8→var benchmarks …
@@ -277,37 +302,11 @@ xxhash_unsafe_test.go
     29→// This test is inspired by the Go runtime tests in https://go.dev/cl/57410.
     30→// It asserts that certain important functions may be inlined.
     31→func TestInlining(t *testing.T) {
-    32→	funcs := map[string]struct{}{
-    33→		"Sum64String":           {},
-    34→		"(*Digest).WriteString": {},
-    35→	}
-    36→
-    37→	cmd := exec.Command("go", "test", "-gcflags=-m", "-run", "xxxx")
-    38→	out, err := cmd.CombinedOutput()
-    39→	if err != nil {
-    40→		t.Log(string(out))
-    41→		t.Fatal(err)
-    42→	}
-    43→
-    44→	for _, line := range strings.Split(string(out), "\n") {
-    45→		parts := strings.Split(line, ": can inline")
-    46→		if len(parts) < 2 {
-    47→			continue
-    48→		}
-    49→		delete(funcs, strings.TrimSpace(parts[1]))
-    50→	}
-    51→
-    52→	var failed []string
-    53→	for fn := range funcs {
-    54→		failed = append(failed, fn)
-    55→	}
-    56→	sort.Strings(failed)
-    57→	for _, fn := range failed {
-    58→		t.Errorf("function %s not inlined", fn)
-    59→	}
-    60→}
 
 xxhashbench/xxhashbench_test.go
+    14→// TODO: The main benchmarks live in the xxhash package now, so the only purpose
+    15→// of this is to compare different hash functions. Consider deleting xxhashbench
+    16→// or replacing it with a more minimal comparison.
     18→var sink …
     20→var benchmarks …
    108→func BenchmarkHashes(b *testing.B) {

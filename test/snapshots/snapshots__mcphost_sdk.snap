@@ -1,6 +1,5 @@
 ---
 source: test/fixtures.rs
-assertion_line: 64
 expression: output
 ---
 README.md
@@ -71,11 +70,17 @@ README.md
    148→Same as MCPHost CLI
 
 mcphost.go
+    16→// MCPHost provides programmatic access to mcphost functionality, allowing
+    17→// integration of MCP tools and LLM interactions into Go applications. It manages
+    18→// agents, sessions, and model configurations.
     19→type MCPHost …
     20→	agent       *agent.Agent
     21→	sessionMgr  *session.Manager
     22→	modelString string
     23→}
+    25→// Options configures MCPHost creation with optional overrides for model,
+    26→// prompts, configuration, and behavior settings. All fields are optional
+    27→// and will use CLI defaults if not specified.
     28→type Options …
     29→	Model        string // Override model (e.g., "anthropic:claude-3-sonnet")
     30→	SystemPrompt string // Override system prompt
@@ -123,7 +128,11 @@ mcphost.go
    237→func (m *MCPHost) Close() error {
 
 types.go
+     8→// Message is an alias for session.Message providing SDK users with access
+     9→// to message structures for conversation history and tool interactions.
     10→type Message …
+    12→// ToolCall is an alias for session.ToolCall representing a tool invocation
+    13→// with its name, arguments, and result within a conversation.
     14→type ToolCall …
     16→// ConvertToSchemaMessage converts an SDK message to the underlying schema message
     17→// format used by the agent for LLM interactions.
@@ -137,35 +146,6 @@ examples/basic/main.go
 
 examples/scripting/main.go
     12→func main() {
-    13→	ctx := context.Background()
-    14→
-    15→	// Create MCPHost with environment variable for API key
-    16→	// Expects ANTHROPIC_API_KEY or appropriate provider key to be set
-    17→	host, err := sdk.New(ctx, &sdk.Options{
-    18→		Quiet: true, // Suppress debug output for scripting
-    19→	})
-    20→	if err != nil {
-    21→		log.Fatal(err)
-    22→	}
-    23→	defer host.Close()
-    24→
-    25→	// Process command line arguments
-    26→	if len(os.Args) < 2 {
-    27→		fmt.Println("Usage: go run main.go \"your prompt here\"")
-    28→		os.Exit(1)
-    29→	}
-    30→
-    31→	prompt := os.Args[1]
-    32→
-    33→	// Send prompt and get response
-    34→	response, err := host.Prompt(ctx, prompt)
-    35→	if err != nil {
-    36→		log.Fatal(err)
-    37→	}
-    38→
-    39→	// Output only the response (useful for piping)
-    40→	fmt.Println(response)
-    41→}
 
 mcphost_test.go
     11→func TestNew(t *testing.T) {

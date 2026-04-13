@@ -77,7 +77,8 @@ pub(crate) fn compute_doc_start_line(
         })
         .or_else(|| {
             let parent = symbol_node.parent()?;
-            if matches!(parent.kind(), "export_statement" | "decorated_definition") {
+            if matches!(parent.kind(), "export_statement" | "decorated_definition"
+                | "type_declaration" | "const_declaration" | "var_declaration") {
                 parent.prev_named_sibling().filter(|n| {
                     is_doc_comment_node(*n, source, lang)
                         && parent
