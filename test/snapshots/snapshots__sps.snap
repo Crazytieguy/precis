@@ -36,7 +36,27 @@ sps/Cargo.toml
 
 sps-common/Cargo.toml
      1→[package]
+     2→name = "sps-common"
+     3→version = "0.1.56"
+     4→edition = "2021"
+     5→authors = ["Alexander Knott <alexander.knott@posteo.de>", "sps contributors"]
+     6→description = "Shared utilities for the sps package manager"
+     7→repository = "https://github.com/alexykn/sps"
+     8→license = "BSD-3-Clause"
+     9→
     10→[dependencies]
+    11→# Inherited from workspace
+    12→serde_json = "1.0.143"
+    13→directories = "6.0.0"                                                            # For user/system directories
+    14→tracing = "0.1.41"
+    15→serde = { version = "1.0.219", features = ["derive"] }
+    16→humantime = "2.2.0"
+    17→bitflags = { version = "2.9.3", features = ["serde"] }
+    18→thiserror = "2.0.16"
+    19→reqwest = { version = "0.12.23", features = ["json", "stream", "blocking"] }
+    20→object = { version = "0.37.3", features = ["read_core", "write_core", "macho"] }
+    21→semver = { version = "1.0.26", features = ["serde"] }
+    22→git2 = "0.20.2"
 
 sps-core/Cargo.toml
      1→[package]
@@ -46,7 +66,30 @@ sps-core/src/lib.rs
 
 sps-net/Cargo.toml
      1→[package]
+     2→name = "sps-net"
+     3→version = "0.1.56"
+     4→edition = "2021"
+     5→authors = ["Alexander Knott <alexander.knott@posteo.de>", "sps contributors"]
+     6→description = "Networking library for the sps package manager"
+     7→repository = "https://github.com/alexykn/sps"
+     8→license = "BSD-3-Clause"
+     9→
     10→[dependencies]
+    11→sps-common = "0.1.56"
+    12→
+    13→tokio = { version = "1.47.1", features = ["full"] }
+    14→futures = "0.3.31"
+    15→reqwest = { version = "0.12.23", features = ["json", "stream", "blocking"] }
+    16→serde = { version = "1.0.219", features = ["derive"] }
+    17→serde_json = "1.0.143"
+    18→rand = "0.9.2"
+    19→url = "2.5.4"
+    20→sha2 = "0.10.9"
+    21→hex = "0.4.3"
+    22→infer = "0.19.0"
+    23→tracing = "0.1.41"
+    24→
+    25→oci-distribution = { version = "0.11.0", optional = true }
 
 sps/src/cli.rs
      2→//! Defines the command-line argument structure using clap.
@@ -90,8 +133,6 @@ sps-core/src/build/env.rs
    169→        cellar_path: &Path,
    170→        all_installed_opt_paths: &[PathBuf],
    171→    ) -> Result<Self> {
-   403→    fn is_controlled_homebrew_var …
-   424→    fn set_path_list_var …
    462→    /// Applies the sanitized environment to a `std::process::Command`.
    463→    pub fn apply_to_command(&self, command: &mut std::process::Command) {
    475→    /// Gets the configured PATH string.
@@ -122,7 +163,6 @@ sps-net/src/api.rs
    259→pub async fn get_all_casks …
 
 sps-net/src/http.rs
-    16→use crate::validation::{validate_url, verify_checksum};
     18→pub type ProgressCallback …
     20→const DOWNLOAD_TIMEOUT_SECS …
     21→const CONNECT_TIMEOUT_SECS …
@@ -137,8 +177,6 @@ sps-net/src/http.rs
 sps-net/src/lib.rs
 
 sps-net/src/oci.rs
-    18→use crate::http::ProgressCallback;
-    19→use crate::validation::{validate_url, verify_checksum};
     21→const OCI_MANIFEST_V1_TYPE …
     22→const OCI_LAYER_V1_TYPE …
     23→const DEFAULT_GHCR_TOKEN_ENDPOINT …
@@ -235,8 +273,6 @@ sps-common/src/config.rs
    193→impl Default for Config …
    194→    fn default() -> Self {
    199→pub fn load_config() -> Result<Config> {
-   200→    Config::load()
-   201→}
 
 sps-common/src/error.rs
      6→pub enum SpsError …
@@ -298,7 +334,6 @@ sps-core/src/check/installed.rs
 sps-core/src/check/mod.rs
 
 sps-core/src/check/update.rs
-    20→use crate::check::installed::{InstalledPackageInfo, PackageType};
     23→pub struct UpdateInfo …
     33→async fn ensure_api_data_cached(cache: &Cache) -> Result<()> {
     89→pub async fn check_for_updates …
@@ -314,9 +349,6 @@ sps-core/src/install/extract.rs
     19→    archive_path: &Path,
     20→    archive_type: &str,
     21→) -> Result<Option<PathBuf>> {
-    56→fn infer_tar_root …
-   142→fn infer_xz_tar_root …
-   173→fn infer_zip_root …
    205→pub fn quarantine_extracted_apps_in_stage(stage_dir: &Path, agent_name: &str) -> Result<()> {
    235→pub fn extract_archive(
    236→    archive_path: &Path,
@@ -324,11 +356,8 @@ sps-core/src/install/extract.rs
    238→    strip_components: usize,
    239→    archive_type: &str,
    240→) -> Result<()> {
-   301→/// Represents a hardlink operation that was deferred.
    302→fn extract_xz_tar_archive …
    343→struct DeferredHardLink …
-   348→fn extract_tar_archive …
-   619→fn extract_zip_archive …
 
 sps-core/src/install/mod.rs
     17→pub fn get_formula_opt_path(formula: &Formula, config: &Config) -> PathBuf {
@@ -349,9 +378,6 @@ sps/src/pipeline/planner.rs
    526→    pub async fn plan_operations …
 
 sps/src/pipeline/runner.rs
-    26→const WORKER_JOB_CHANNEL_SIZE …
-    27→const EVENT_CHANNEL_SIZE …
-    28→const DOWNLOAD_OUTCOME_CHANNEL_SIZE …
     31→pub enum CommandType …
     32→    Install,
     33→    Reinstall,
@@ -363,8 +389,6 @@ sps/src/pipeline/runner.rs
     67→pub async fn run_pipeline …
 
 sps-core/src/utils/applescript.rs
-    10→fn get_bundle_identifier_from_app_path(app_path: &Path) -> Option<String> {
-    40→fn is_app_running_by_bundle_id(bundle_id: &str) -> Result<bool> {
     72→/// Attempts to gracefully quit an application using its bundle identifier (preferred) or name via
       →…
     75→pub fn quit_app_gracefully(app_path: &Path) -> Result<()> {
@@ -372,8 +396,6 @@ sps-core/src/utils/applescript.rs
 sps-core/src/utils/mod.rs
 
 sps-core/src/utils/xattr.rs
-    11→fn get_timestamp_hex() -> String {
-    20→fn get_uuid_hex() -> String {
     24→/// true  → file **has** a com.apple.quarantine attribute  
       →…
     26→pub fn has_quarantine_attribute(path: &Path) -> anyhow::Result<bool> {
@@ -580,15 +602,6 @@ sps-common/src/model/mod.rs
 sps-common/src/model/tap.rs
      9→/// Represents a source of packages (formulas and casks)
     10→pub struct Tap …
-    11→    /// The user part of the tap name (e.g., "homebrew" in "homebrew/core")
-    12→    pub user: String,
-    13→
-    14→    /// The repository part of the tap name (e.g., "core" in "homebrew/core")
-    15→    pub repo: String,
-    16→
-    17→    /// The full path to the tap directory
-    18→    pub path: PathBuf,
-    19→}
     21→impl Tap …
     22→    /// Create a new tap from user/repo format
     23→    pub fn new(name: &str) -> Result<Self> {
@@ -688,29 +701,10 @@ sps/src/cli/upgrade.rs
     23→impl UpgradeArgs …
     24→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
 
-sps-core/src/install/cask/dmg.rs
-    12→pub fn mount_dmg …
-    43→pub fn unmount_dmg …
-   153→pub fn extract_dmg_to_stage(dmg_path: &Path, stage_dir: &Path) -> Result<()> {
-
-sps-core/src/install/cask/helpers.rs
-     9→pub fn remove_path_robustly(path: &Path, _config: &Config, use_sudo_if_needed: bool) -> bool {
-    75→pub fn cleanup_empty_parent_dirs_in_private_store(start_path: &Path, stop_at: &Path) {
-
-sps-core/src/install/cask/mod.rs
-    25→pub struct CaskInstallManifest …
-    37→pub fn sps_private_cask_version_dir(cask: &Cask, config: &Config) -> PathBuf {
-    43→pub fn sps_private_cask_token_dir(cask: &Cask, config: &Config) -> PathBuf {
-    49→pub fn sps_private_cask_app_path(cask: &Cask, config: &Config) -> Option<PathBuf> {
-    73→pub async fn download_cask …
-    77→pub async fn download_cask_with_progress …
-   232→pub fn install_cask …
-   580→pub fn write_receipt …
-   612→pub fn write_cask_manifest …
-   686→pub fn cleanup_empty_parent_dirs_in_private_store(start_path: &Path, stop_at: &Path) {
-
 sps-core/src/build/compile/
 
 sps-core/src/install/bottle/
+
+sps-core/src/install/cask/
 
 sps-core/src/install/cask/artifacts/

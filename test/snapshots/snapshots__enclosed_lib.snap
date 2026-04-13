@@ -4,8 +4,6 @@ expression: output
 ---
 README.md
      1→### Enclosed lib
-     3→This package contains the core functionalities of [Enclosed](https://enclosed.cc/), an open-source project that aims to provide a simple and secure way to share e2e encrypted notes.
-     4→
      5→## Installation
      7→```bash
      8→# with npm
@@ -184,4 +182,7 @@ tsconfig.json
      9→  "include": [
 
 src/api/api.models.test.ts
+     2→import { isApiClientErrorWithCode, isApiClientErrorWithStatusCode } from './api.models';
+
+src/notes/notes.models.test.ts
      2→import …

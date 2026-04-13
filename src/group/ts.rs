@@ -77,7 +77,7 @@ pub enum TsGroupKey {
 
     // Markdown
     Heading { level: u8, boilerplate: bool },
-    HeadingBody,
+    HeadingBody { level: u8 },
 
     // JSON / TOML / YAML
     DataSection,
@@ -126,7 +126,7 @@ impl TsGroupKey {
             MacroDocFirst => 101,
             MacroDocRest => 102,
             Heading { .. } => 110,
-            HeadingBody => 111,
+            HeadingBody { .. } => 111,
             DataSection => 120,
             DataSectionBody => 121,
         }
@@ -312,10 +312,10 @@ pub fn children<'s>(g: &mut TsGroup<'s>, _ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
                 }));
             }
         }
-        Heading { level: _, .. } => {
+        Heading { level, .. } => {
             if !g.items.is_empty() {
                 result.push(Group::Ts(TsGroup {
-                    key: HeadingBody,
+                    key: HeadingBody { level: *level },
                     items: g.items.iter().map(|i| clone_ts_item(i)).collect(),
                     inherited_modifier: g.inherited_modifier,
                     dependent_siblings: vec![],
@@ -792,7 +792,7 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
             }]
         }
 
-        HeadingBody => {
+        HeadingBody { .. } => {
             // Setext headings span both the title and the `===`/`---`
             // underline rows; body content starts past the underline.
             // Other heading-like nodes (ATX, TOML tables, YAML pairs)

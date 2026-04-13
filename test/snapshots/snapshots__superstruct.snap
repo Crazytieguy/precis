@@ -9,6 +9,7 @@ Readme.md
    181→### Demo
    189→### Examples
    205→### Documentation
+   231→### License
 
 docs/readme.md
      7→### Usage
@@ -34,7 +35,7 @@ src/error.ts
     17→ * `StructError` objects are thrown (or returned) when validation fails.
       →…
     25→export class StructError …
-    35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
+    35→  constructor …
 
 src/index.ts
 
@@ -44,14 +45,7 @@ src/struct.ts
      5→ * `Struct` objects encapsulate the validation logic for a specific type of
       →…
     10→export class Struct …
-    22→  constructor(props: {
-    23→    type: string
-    24→    schema: S
-    25→    coercer?: Coercer
-    26→    validator?: Validator
-    27→    refiner?: Refiner<T>
-    28→    entries?: Struct<T, S>['entries']
-    29→  }) {
+    22→  constructor …
     64→   * Assert that a value passes the struct's validation, throwing if it doesn't.
     67→  assert(value: unknown, message?: string): asserts value is T {
     68→    return assert(value, this, message)
@@ -208,6 +202,7 @@ src/utils.ts
 
 examples/README.md
      1→# Examples
+     3→To run the examples locally, first run `npm install` in this directory. Then use node to run any of the examples like so: `node basic-validation.js`, `node composing-structs.js`, etc.
 
 docs/resources/faq.md
      1→# FAQ
@@ -230,7 +225,7 @@ src/structs/refinements.ts
      1→import { Struct, Refiner } from '../struct.js'
      2→import { toFailures } from '../utils.js'
      8→export function empty …
-    21→function getSize …
+    21→function getSize(value: string | any[] | Map<any, any> | Set<any>): number {
     33→export function max …
     55→export function min …
     77→export function nonempty …
@@ -334,6 +329,7 @@ docs/reference/utilities.md
      4→
 
 test/index.ts
+     2→ * A helper for testing type signatures.
      5→export function test<T>(fn: (x: unknown) => T) {}
 
 docs/guides/01-getting-started.md
@@ -392,6 +388,8 @@ examples/returning-errors.js
 examples/testing-values.js
 
 examples/throwing-errors.js
+
+examples/package.json
 
 docs/images/
 

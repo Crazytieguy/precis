@@ -47,6 +47,26 @@ README.md
 
 docs/README.md
      1→# just-the-docs-template
+     3→This is a *bare-minimum* template to create a [Jekyll] site that:
+     4→
+     5→- uses the [Just the Docs] theme;
+     6→- can be built and published on [GitHub Pages];
+     7→- can be built and previewed locally, and published on other platforms.
+     8→
+     9→More specifically, the created site:
+    10→
+    11→- uses a gem-based approach, i.e. uses a `Gemfile` and loads the `just-the-docs` gem;
+    12→- uses the [GitHub Pages / Actions workflow] to build and publish the site on GitHub Pages.
+    13→
+    14→To get started with creating a site, simply:
+    15→
+    16→1. click "[use this template]" to create a GitHub repository
+    17→2. go to Settings > Pages > Build and deployment > Source, and select GitHub Actions
+    18→
+    19→If you want to maintain your docs in the `docs` directory of an existing project repo, see [Hosting your docs from an existing project repo](#hosting-your-docs-from-an-existing-project-repo).
+    20→
+    21→After completing the creation of your new site on GitHub, update it as needed:
+    22→
     23→## Replace the content of the template pages
     30→## Changing the version of the theme and/or Jekyll
     34→## Adding a plugin
@@ -117,11 +137,6 @@ peepdb/cli.py
     11→from .exceptions import InvalidPassword
     16→class CustomEncoder …
     17→    def default(self, obj):
-    18→        if isinstance(obj, Decimal):
-    19→            return float(obj)
-    20→        elif isinstance(obj, date):
-    21→            return obj.isoformat()
-    22→        return super(CustomEncoder, self).default(obj)
     27→def cli():
     29→    peepDB: A quick database table viewer.
     30→
@@ -320,23 +335,9 @@ project.toml
      1→[build-system]
      5→[project]
     35→[project.optional-dependencies]
-    36→dev = [
-    37→    "coverage>=7.6.1",
-    38→    "pytest>=8.3.2",
-    39→    "pytest-cov>=5.0.0",
-    40→]
-    41→
     42→[project.urls]
-    43→Homepage = "https://github.com/PeepDB-dev/peepdb"
-    44→"Bug Tracker" = "https://github.com/PeepDB-dev/peepdb/issues"
-    45→
     46→[project.scripts]
-    47→peepdb = "peepdb.cli:main"
-    48→
     49→[tool.setuptools.packages.find]
-    50→where = ["."]
-    51→include = ["peepdb*"]
-    52→exclude = ["tests*"]
 
 requirements.txt
 
@@ -351,17 +352,5 @@ docs/_config.yml
      8→  Template Repository: https://github.com/just-the-docs/just-the-docs-template
 
 peepdb/tests/__init__.py
-
-docs/contributing.md
-     6→# 🤝 Contributing to peepDB
-    10→## Steps to Contribute
-    28→## Setting Up Development Environment
-    47→## Code Style
-    54→## Testing
-    63→## Documentation
-    68→## Reporting Issues
-
-CONTRIBUTING.md
-     1→# Contributing to peepDB
 
 images/

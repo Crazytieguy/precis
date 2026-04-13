@@ -25,33 +25,10 @@ README.md
     26→## Quick Start
     28→### Installation
     30→#### Homebrew (macOS)
-    32→```bash
-    33→# https://formulae.brew.sh/formula/tock
-    34→# Install from official repository (build from source)
-    35→brew install tock
-    36→
-    37→# Install pre-built binary via latest release (Goreleaser)
-    38→brew install kriuchkov/tap/tock
-    39→```
-    40→
     41→#### Go Install
-    43→```bash
-    44→go install github.com/kriuchkov/tock/cmd/tock@latest
-    45→```
-    46→
     47→#### Build from source
-    49→```bash
-    50→go build -o tock ./cmd/tock
-    51→```
-    52→
     53→#### Install Script (Linux & macOS)
-    55→```bash
-    56→curl -sS https://raw.githubusercontent.com/kriuchkov/tock/master/install.sh | sh
-    57→```
-    58→
     59→#### Download Binary
-    61→Download the latest release from the [Releases](https://github.com/kriuchkov/tock/releases) page.
-    62→
     63→### Basic Usage
    116→## Configuration
    118→Tock supports a flexible configuration system using YAML files and environment variables.
@@ -88,30 +65,7 @@ README.md
    283→### Example: Cyberpunk / Fuchsia Theme
    300→### Time Format
    316→#### 12-Hour Format Examples
-   318→```bash
-   319→tock start -p Project -d Task -t "3:04 PM"   # or "03:04 PM"
-   320→tock start -p Project -d Task -t "3PM"       # Minutes optional
-   321→tock add -s "9:00 AM" -e "5:00 PM"
-   322→tock stop -t "4:45pm"                        # Case insensitive
-   323→
-   324→# Times display as: "03:04 PM" instead of "15:04"
-   325→# Input accepts both "3:04 PM" and "03:04 PM" formats
-   326→```
-   327→
    328→#### 24-Hour Format (Default)
-   330→```bash
-   331→tock start -p Project -d Task -t 15:04
-   332→tock stop -t 17:30
-   333→
-   334→# Times display as: "15:04"
-   335→```
-   336→
-   337→Notes:
-   338→
-   339→- Times display with zero-padded hours (e.g., "08:12 AM") for better alignment
-   340→- Input accepts both zero-padded ("03:04 PM") and non-padded ("3:04 PM") formats
-   341→- 24-hour input (e.g., "15:04") is still accepted in 12-hour mode as a fallback
-   342→
    343→## Commands
    345→```bash
    346→
@@ -207,6 +161,26 @@ demo/demo_script.sh
 
 docs/commands.md
      1→# Commands Reference
+     3→This document provides a comprehensive reference for all Tock commands, flags, and usage patterns.
+     4→
+     5→- [Core Commands](#core-commands)
+     6→  - [`start`](#start)
+     7→  - [`stop`](#stop-alias-s)
+     8→  - [`add`](#add)
+     9→  - [`remove`](#remove-alias-rm)
+    10→  - [`continue`](#continue-alias-c)
+    11→  - [`watch`](#watch)
+    12→- [Viewing & Reporting](#viewing--reporting)
+    13→  - [`calendar`](#calendar)
+    14→  - [`list`](#list-alias-ls)
+    15→  - [`current`](#current)
+    16→  - [`last`](#last-alias-lt)
+    17→  - [`report`](#report)
+    18→- [Data & Analysis](#data--analysis)
+    19→  - [`analyze`](#analyze)
+    20→  - [`ical`](#ical)
+    21→- [Global Flags](#global-flags)
+    22→
     23→## Core Commands
     25→### `start`
     57→### `stop` (alias: `s`)
@@ -463,7 +437,20 @@ internal/adapters/cli/add.go
 internal/adapters/cli/analyze.go
     20→func NewAnalyzeCmd() *cobra.Command {
     70→type AnalysisStats …
+    71→	TotalDuration      time.Duration
+    72→	DeepWorkDuration   time.Duration
+    73→	DeepWorkScore      float64 // 0-100
+    74→	ContextSwitches    int
+    75→	AvgSwitchesPerDay  float64
+    76→	Chronotype         string // "Morning Lark", "Night Owl", etc.
+    77→	PeakHour           int
+    78→	FocusDistribution  map[string]int // "Short (<15m)", "Medium (15-60m)", "Long (>60m)"
+    79→	MostProductiveDay  string
+    80→	AvgSessionDuration time.Duration
+    81→}
+    83→//nolint:funlen // analysis function is inherently long
     84→func analyzeData(activities []models.Activity) AnalysisStats {
+   205→//nolint:funlen // render function is inherently long for output formatting
    206→func renderAnalysis(stats AnalysisStats, cfg *config.Config, tf *timeutil.Formatter) {
 
 internal/adapters/cli/calendar.go
@@ -475,6 +462,7 @@ internal/adapters/cli/calendar.go
    134→func (m *reportModel) View() string {
    156→func (m *reportModel) renderCalendar …
    234→func (m *reportModel) renderDetails …
+   255→//nolint:funlen //it's more readable to keep the content generation in one place for now
    256→func (m *reportModel) updateViewportContent() {
    402→func (m *reportModel) formatProjectStat …
    416→// Messages and Commands
@@ -483,11 +471,14 @@ internal/adapters/cli/calendar.go
    420→}
    422→type errMsg …
    424→func (m *reportModel) fetchMonthData …
+   486→// getWeeklyDuration calculates the total duration for the current week (Monday to Sunday)
+   487→// based on the selected date. Fetches directly from service to handle cross-month weeks.
    488→func (m *reportModel) getWeeklyDuration() (time.Duration, error) {
    520→func (m *reportModel) handleKeyMsg …
 
 internal/adapters/cli/calendar_sidebar.go
     12→const barChar …
+    14→// formatDurationCompact formats a duration as "Xh Ym" for compact display.
     15→func formatDurationCompact(d time.Duration) string {
     27→func (m *reportModel) renderSidebar …
     51→func (m *reportModel) renderProductivityStats …
@@ -560,6 +551,7 @@ internal/adapters/cli/remove.go
 internal/adapters/cli/report.go
     20→type reportOptions …
     31→func NewReportCmd() *cobra.Command {
+    60→//nolint:funlen // Report command is long but straightforward.
     61→func runReportCmd(cmd *cobra.Command, opt *reportOptions) error {
 
 internal/adapters/cli/root.go
@@ -679,6 +671,8 @@ internal/core/ports/mocks/mock_activityrepository.go
 internal/core/ports/mocks/mock_activityresolver.go
 
 internal/core/ports/mocks/mock_notesrepository.go
+
+internal/adapters/repositories/notes/repository_test.go
 
 assets/
 

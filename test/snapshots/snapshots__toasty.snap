@@ -9,19 +9,12 @@ README.md
     91→## Application data model vs. database schema
     98→## Current status and roadmap
    117→### Contribution
-   119→Unless you explicitly state otherwise, any contribution intentionally submitted
-   120→for inclusion in Toasty by you, shall be licensed as MIT, without any additional
-   121→terms or conditions.
 
 docs/ARCHITECTURE.md
      1→# Toasty Architecture Overview
      3→## Project Structure
-     5→Toasty is an ORM for Rust that supports SQL and NoSQL databases. The codebase is a Cargo workspace with separate crates for each layer.
-     6→
      7→## Crates
     74→## Further Reading
-    76→- [Query Engine Architecture](architecture/query-engine.md) - Query compilation and execution pipeline
-    77→- [Type System](architecture/type-system.md) - Type system design and conversions
 
 Cargo.toml
      1→[workspace]
@@ -51,6 +44,10 @@ docs/CHANGE_GUIDE.md
 
 docs/architecture/query-engine.md
      1→# Toasty Query Engine
+     3→This document provides a high-level overview of the Toasty query execution
+     4→engine for developers working on engine internals. It describes the multi-phase
+     5→pipeline that transforms user queries into database operations.
+     6→
      7→## Overview
     61→## Phase 1: Simplification
     96→## Phase 2: Lowering
@@ -67,6 +64,8 @@ docs/architecture/type-system.md
 
 docs/guide/jiff.md
      1→# Date and Time Types with Jiff
+     3→Toasty supports date and time types through the [`jiff`](https://github.com/BurntSushi/jiff) crate, which provides high-quality temporal types for Rust.
+     4→
      5→## Enabling Jiff Support
     17→## Supported Types
    126→## Precision Limitations
@@ -76,6 +75,8 @@ docs/guide/jiff.md
 
 docs/guide/pagination.md
      1→# Pagination
+     3→Toasty provides efficient cursor-based pagination that works consistently across SQL and NoSQL databases. This approach avoids the performance issues of traditional offset-based pagination while providing a clean, web-friendly API.
+     4→
      5→## Basic Pagination
     54→## Navigation Patterns
    112→## Web API Integration
@@ -88,7 +89,16 @@ docs/guide/pagination.md
 
 crates/std-util/Cargo.toml
      1→[package]
+     2→name = "std-util"
+     3→version = "0.1.0"
+     4→edition = "2021"
+     5→
+     6→# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+     7→
      8→[dependencies]
+     9→heck.workspace = true
+    10→pluralizer.workspace = true
+    11→rand.workspace = true
 
 crates/toasty/Cargo.toml
      1→[package]
@@ -101,7 +111,17 @@ crates/toasty-cli/Cargo.toml
 
 crates/toasty-codegen/Cargo.toml
      1→[package]
+     2→name = "toasty-codegen"
+     3→version = "0.1.0"
+     4→edition = "2021"
+     5→
+     6→# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+     7→
      8→[dependencies]
+     9→proc-macro2.workspace = true
+    10→quote.workspace = true
+    11→std-util.workspace = true
+    12→syn.workspace = true
 
 crates/toasty-core/Cargo.toml
      1→[package]
@@ -111,7 +131,19 @@ crates/toasty-core/Cargo.toml
 
 crates/toasty-driver-dynamodb/Cargo.toml
      1→[package]
+     2→name = "toasty-driver-dynamodb"
+     3→version = "0.1.0"
+     4→edition = "2021"
+     5→publish = false
+     6→
      7→[dependencies]
+     8→toasty-core.workspace = true
+     9→aws-config.workspace = true
+    10→aws-sdk-dynamodb.workspace = true
+    11→serde.workspace = true
+    12→serde_json.workspace = true
+    13→url.workspace = true
+    14→uuid.workspace = true
 
 crates/toasty-driver-integration-suite/Cargo.toml
      1→[package]
@@ -119,8 +151,18 @@ crates/toasty-driver-integration-suite/Cargo.toml
 
 crates/toasty-driver-integration-suite-macros/Cargo.toml
      1→[package]
+     2→name = "toasty-driver-integration-suite-macros"
+     3→version = "0.1.0"
+     4→edition = "2021"
+     5→publish = false
+     6→
      7→[lib]
+     8→proc-macro = true
+     9→
     10→[dependencies]
+    11→proc-macro2.workspace = true
+    12→quote.workspace = true
+    13→syn = { workspace = true, features = ["visit", "visit-mut"] }
 
 crates/toasty-driver-mysql/Cargo.toml
      1→[package]
@@ -134,12 +176,38 @@ crates/toasty-driver-postgresql/Cargo.toml
 
 crates/toasty-driver-sqlite/Cargo.toml
      1→[package]
+     2→name = "toasty-driver-sqlite"
+     3→version = "0.1.0"
+     4→edition = "2021"
+     5→publish = false
+     6→
      7→[dependencies]
+     8→toasty-core.workspace = true
+     9→toasty-sql.workspace = true
+    10→rusqlite.workspace = true
+    11→serde.workspace = true
+    12→serde_json.workspace = true
+    13→url.workspace = true
+    14→uuid.workspace = true
+    15→
 
 crates/toasty-macros/Cargo.toml
      1→[package]
+     2→name = "toasty-macros"
+     3→version = "0.1.0"
+     4→edition = "2021"
+     5→publish = false
+     6→
      7→[lib]
+     8→proc-macro = true
+     9→
     10→[dependencies]
+    11→toasty-core.workspace = true
+    12→toasty-codegen.workspace = true
+    13→
+    14→proc-macro2.workspace = true
+    15→quote.workspace = true
+    16→syn.workspace = true
 
 crates/toasty-sql/Cargo.toml
      1→[package]
@@ -552,6 +620,7 @@ crates/toasty/src/db/pool.rs
     74→    pub async fn get(&self) -> crate::Result<PoolConnection> {
     84→    pub fn driver(&self) -> &dyn Driver {
     89→    pub fn capability(&self) -> &Capability {
+    95→struct Manager …
     99→impl deadpool::managed::Manager for Manager …
    119→pub struct PoolConnection …
    120→    inner: deadpool::managed::Object<Manager>,
@@ -682,77 +751,17 @@ crates/toasty-core/src/driver/response.rs
      4→pub struct Response …
      9→pub enum Rows …
     20→impl Response …
-    21→    pub fn count(count: u64) -> Self {
-    27→    pub fn value_stream(values: impl Into<stmt::ValueStream>) -> Self {
-    33→    pub fn empty_value_stream() -> Self {
     40→impl Rows …
-    41→    pub fn value_stream(values: impl Into<stmt::ValueStream>) -> Self {
-    45→    pub fn is_count(&self) -> bool {
-    49→    pub async fn dup(&mut self) -> Result<Self> {
-    57→    pub fn try_clone(&self) -> Option<Self> {
-    66→    pub fn into_count(self) -> u64 {
-    73→    pub async fn collect_as_value(self) -> Result<stmt::Value> {
-    81→    pub fn into_value_stream(self) -> stmt::ValueStream {
 
 crates/toasty-driver-integration-suite-macros/src/lib.rs
-    11→pub fn driver_test(attr: TokenStream, item: TokenStream) -> TokenStream {
-    16→pub fn generate_test_registry(input: TokenStream) -> TokenStream {
-    21→pub fn generate_driver_test_variants(input: TokenStream) -> TokenStream {
-    28→pub fn driver_test_cfg(_input: TokenStream) -> TokenStream {
 
 crates/toasty-driver-integration-suite-macros/src/parse.rs
-     3→/// Helper trait for working with collections of expansions
      4→pub trait ExpansionList …
-     5→    /// Check if these expansions require a module wrapper
-      →…
      7→    fn needs_module_wrapper(&self) -> bool;
-    10→impl ExpansionList for [Expansion] …
-    11→    fn needs_module_wrapper …
-    18→pub struct DriverTest …
-    40→pub enum ThreeValuedBool …
-    46→impl ThreeValuedBool …
-    48→    pub fn or …
-    57→    pub fn and …
-    66→    pub fn not …
-    77→pub struct Expansion …
-    91→impl Expansion …
-    93→    pub fn name …
-   114→    pub fn is_ident_true …
-   140→    pub fn should_include …
-   155→    pub(crate) fn evaluate_predicate …
-   203→    pub fn has_expansion …
-   208→    pub fn to_ident …
-   220→pub enum BoolExpr …
-   233→pub enum KindVariant …
-   240→impl KindVariant …
-   242→    pub fn name …
-   252→pub struct DriverTestAttr …
-   261→impl DriverTestAttr …
-   263→    pub fn from_attribute …
-   282→impl Parse for DriverTestAttr …
-   283→    fn parse …
-   338→impl Parse for DriverTestAttrItem …
-   339→    fn parse …
-   378→impl BoolExpr …
-   380→    pub fn parse …
-   428→impl DriverTest …
-   430→    pub fn from_item_fn …
-   460→    pub(crate) fn generate_expansions …
 
 crates/toasty-driver-integration-suite-macros/src/test_registry.rs
-    11→pub fn expand(input: TokenStream) -> TokenStream {
-   103→fn extract_capability_names …
-   140→impl<'ast> Visit<'ast> for TestVisitor …
-   141→    fn visit_item_fn …
-   240→fn generate_capability_runtime_test …
 
 crates/toasty-driver-integration-suite-macros/src/test_variants.rs
-    32→impl syn::parse::Parse for Input …
-    33→    fn parse …
-   100→impl Input …
-   148→pub fn expand(input: TokenStream) -> TokenStream {
-
-tests/Cargo.toml
 
 benches/
 
@@ -797,3 +806,5 @@ crates/toasty-sql/tests/
 examples/
 
 scripts/
+
+tests/

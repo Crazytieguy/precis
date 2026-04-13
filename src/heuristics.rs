@@ -75,7 +75,12 @@ pub fn ts_base_value(key: &TsGroupKey, item_count: usize) -> f64 {
             3 => 0.15,
             _ => 0.08,
         },
-        HeadingBody => 0.7,
+        HeadingBody { level } => match level {
+            1 => 1.2,
+            2 => 0.5,
+            3 => 0.1,
+            _ => 0.05,
+        },
 
         // Data sections
         DataSection => 0.8,
@@ -150,7 +155,7 @@ pub fn visibility_contribution(is_public: bool) -> f64 {
 pub fn documented_contribution(is_documented: bool, key: &TsGroupKey) -> f64 {
     // Sections and module docs are inherently documented
     if matches!(key,
-        TsGroupKey::Heading { .. } | TsGroupKey::HeadingBody
+        TsGroupKey::Heading { .. } | TsGroupKey::HeadingBody { .. }
         | TsGroupKey::ModuleDocFirst | TsGroupKey::ModuleDocRest
         | TsGroupKey::DataSection | TsGroupKey::DataSectionBody
     ) {

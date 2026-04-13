@@ -4,6 +4,31 @@ expression: output
 ---
 README.md
      5→# Tomli
+     7→> A lil' TOML parser
+     8→
+     9→**Table of Contents** *generated with [mdformat-toc](https://github.com/hukkin/mdformat-toc)*
+    10→
+    11→<!-- mdformat-toc start --slug=github --maxlevel=6 --minlevel=2 -->
+    12→
+    13→- [Intro](#intro)
+    14→- [Installation](#installation)
+    15→- [Usage](#usage)
+    16→  - [Parse a TOML string](#parse-a-toml-string)
+    17→  - [Parse a TOML file](#parse-a-toml-file)
+    18→  - [Handle invalid TOML](#handle-invalid-toml)
+    19→  - [Construct `decimal.Decimal`s from TOML floats](#construct-decimaldecimals-from-toml-floats)
+    20→  - [Building a `tomli`/`tomllib` compatibility layer](#building-a-tomlitomllib-compatibility-layer)
+    21→- [FAQ](#faq)
+    22→  - [Why this parser?](#why-this-parser)
+    23→  - [Is comment preserving round-trip parsing supported?](#is-comment-preserving-round-trip-parsing-supported)
+    24→  - [Is there a `dumps`, `write` or `encode` function?](#is-there-a-dumps-write-or-encode-function)
+    25→  - [How do TOML types map into Python types?](#how-do-toml-types-map-into-python-types)
+    26→- [Performance](#performance)
+    27→  - [Mypyc generated wheel](#mypyc-generated-wheel)
+    28→  - [Pure Python](#pure-python)
+    29→
+    30→<!-- mdformat-toc end -->
+    31→
     32→## Intro<a name="intro"></a>
     34→Tomli is a Python library for parsing [TOML](https://toml.io).
     35→Version 2.4.0 and later are compatible with [TOML v1.1.0](https://toml.io/en/v1.1.0).
@@ -50,14 +75,6 @@ fuzzer/fuzz.py
     53→def print_err(data):
     59→def normalize_toml_obj(toml_obj: dict) -> None:
     60→    """Make NaNs equal when compared (without using recursion)."""
-    61→    to_process = [toml_obj]
-    62→    while to_process:
-    63→        cont = to_process.pop()
-    64→        for k, v in cont.items() if isinstance(cont, dict) else enumerate(cont):
-    65→            if isinstance(v, float) and isnan(v):
-    66→                cont[k] = "nan"
-    67→            elif isinstance(v, (dict, list)):
-    68→                to_process.append(v)
     71→def main():
 
 MANIFEST.in
@@ -88,8 +105,7 @@ profiler/profiler_script.py
 
 src/tomli/__init__.py
      1→# SPDX-License-Identifier: MIT
-     2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
-     3→# Licensed to PSF under a Contributor Agreement.
+      →…
      5→__all__ …
      6→__version__ …
      8→from ._parser import TOMLDecodeError, load, loads
@@ -106,18 +122,11 @@ src/tomli/_parser.py
     19→TYPE_CHECKING …
     24→    from ._types import Key, ParseFloat, Pos
     26→# Inline tables/arrays are implemented using recursion. Pathologically
-    27→# nested documents cause pure Python to raise RecursionError (which is OK),
-    28→# but mypyc binary wheels will crash unrecoverably (not OK). According to
-    29→# mypyc docs this will be fixed in the future:
-    30→# https://mypyc.readthedocs.io/en/latest/differences_from_python.html#stack-overflows
-    31→# Before mypyc's fix is in, recursion needs to be limited by this library.
-    32→# Choosing `sys.getrecursionlimit()` as maximum inline table/array nesting
-    33→# level, as it allows more nesting than pure Python, but still seems a far
-    34→# lower number than where mypyc binaries crash.
+      →…
     35→MAX_INLINE_NESTING …
     37→ASCII_CTRL …
     39→# Neither of these sets include quotation mark or backslash. They are
-    40→# currently handled as separate cases in the parser functions.
+      →…
     41→ILLEGAL_BASIC_STR_CHARS …
     42→ILLEGAL_MULTILINE_BASIC_STR_CHARS …
     44→ILLEGAL_LITERAL_STR_CHARS …
@@ -245,9 +254,8 @@ src/tomli/py.typed
 
 benchmark/README.md
      1→# Benchmark
+     3→## Acknowledgments
     10→## Running
-    12→### Against the local Tomli state
-    18→### Against the latest Tomli PyPI release
 
 pyproject.toml
      1→[build-system]
@@ -284,8 +292,7 @@ profiler/requirements.txt
 
 tests/__init__.py
      1→# SPDX-License-Identifier: MIT
-     2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
-     3→# Licensed to PSF under a Contributor Agreement.
+      →…
      5→__all__ …
 
 tests/burntsushi.py
@@ -295,11 +302,10 @@ tests/burntsushi.py
     43→    """Normalize test objects.
     44→
     45→    This normalizes primitive values (e.g. floats)."""
-    68→def _normalize_datetime_str(dt_str: str) -> str:
-    92→def _normalize_localtime_str(lt_str: str) -> str:
-    96→def _normalize_float_str(float_str: str) -> str:
 
-CHANGELOG.md
+benchmark/data.toml
+
+benchmark/requirements.txt
 
 src/
 

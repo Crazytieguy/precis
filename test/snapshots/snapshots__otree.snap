@@ -8,19 +8,7 @@ README.md
      6→
      7→## Install
     17→### Arch Linux (AUR)
-    19→You can install `otree` from the [AUR](https://aur.archlinux.org/packages/otree) with using an [AUR helper](https://wiki.archlinux.org/title/AUR_helpers).
-    20→
-    21→```bash
-    22→paru -S otree
-    23→```
-    24→
     25→### macOS and Linux (Homebrew)
-    27→You can install [`otree`](https://formulae.brew.sh/formula/otree) using [Homebrew](https://brew.sh).
-    28→
-    29→```bash
-    30→brew install otree
-    31→```
-    32→
     33→## Usage
     52→## Roadmap
     82→## Thanks
@@ -35,15 +23,7 @@ Cargo.toml
     13→[dependencies]
     34→[build-dependencies]
     38→[profile.release]
-    39→lto = true
-    40→strip = true
-    41→incremental = false
-    42→
     43→[lints.clippy]
-    44→pedantic = { level = "warn", priority = -1 }
-    45→single_match_else = "allow" # match-ing Options is visually cleaner
-    46→inefficient_to_string = "allow" # makes type conversion less obvious for little benefit
-    47→too_many_lines = "allow" # necessary evil for now
 
 src/config/colors.rs
     21→pub struct Colors …
@@ -103,9 +83,9 @@ src/clipboard.rs
 src/cmd.rs
     13→pub struct CommandArgs …
    111→impl CommandArgs …
-   112→    pub fn parse …
-   149→    pub fn update_config …
-   202→    pub fn get_content_type …
+   112→    pub fn parse() -> Result<Option<Self>> {
+   149→    pub fn update_config(&self, cfg: &mut Config) {
+   202→    pub fn get_content_type(&self) -> ContentType {
 
 src/debug.rs
      8→macro_rules! debug …
@@ -116,15 +96,20 @@ src/debug.rs
 src/edit.rs
     10→pub struct Edit …
     16→impl Edit …
-    17→    pub fn new …
-    40→    pub fn run …
+    17→    pub fn new(cfg: &Config, identify: &str, data: String, extension: &'static str) -> Self {
+    40→    pub fn run(mut self) {
 
 src/live_reload.rs
     16→pub struct FileWatcher …
     27→impl FileWatcher …
-    28→    pub fn new …
-    64→    pub fn get_err …
-    71→    pub fn parse_tree …
+    28→    pub fn new(
+    29→        path: PathBuf,
+    30→        cfg: Rc<Config>,
+    31→        content_type: ContentType,
+    32→        max_data_size: usize,
+    33→    ) -> Self {
+    64→    pub fn get_err(&self) -> Option<String> {
+    71→    pub fn parse_tree(&self) -> Option<Tree> {
     93→struct Data …
     98→impl Data …
    118→fn watch_file(path: &Path, data: Arc<Mutex<Data>>) -> Result<()> {
@@ -146,14 +131,19 @@ src/tree.rs
     48→    Arr,
     49→}
     51→impl Tree …
-    52→    pub fn parse …
-    58→    pub fn from_value …
-    94→    pub fn get_value …
-    98→    pub fn get_parser …
+    52→    pub fn parse(cfg: Rc<Config>, data: &[u8], content_type: ContentType) -> Result<Self> {
+    58→    pub fn from_value(cfg: Rc<Config>, value: Value, parser: Rc<Box<dyn Parser>>) -> Self {
+    94→    pub fn get_value(&self, path: &str) -> Option<&ItemValue> {
+    98→    pub fn get_parser(&self) -> Rc<Box<dyn Parser>> {
    385→impl ItemValue …
-   386→    pub fn plain_text …
-   390→    pub fn render …
-   394→    pub fn build_highlighted_text …
+   386→    pub fn plain_text(&self) -> String {
+   390→    pub fn render(&self, cfg: &Config, width: usize) -> (Text<'_>, usize, usize) {
+   394→    pub fn build_highlighted_text(
+   395→        &self,
+   396→        cfg: &Config,
+   397→        keyword: &str,
+   398→        ignore_case: bool,
+   399→    ) -> Text<'static> {
 
 src/ui/app.rs
     27→enum Refresh …
@@ -421,8 +411,6 @@ examples/example.jsonl
 examples/example.xml
 
 examples/example.yaml
-
-docs/changelog.md
 
 assets/
 

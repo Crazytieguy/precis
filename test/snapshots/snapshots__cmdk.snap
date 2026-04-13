@@ -122,18 +122,53 @@ README.md
 
 ARCHITECTURE.md
      1→# Architecture
+     3→> Document is a work in progress!
+     4→
+     5→⌘K is born from a simple constraint: can you write a combobox with filtering and sorting using the [compound component](https://kentcdodds.com/blog/compound-components-with-react-hooks) approach? We didn't want to render items manually from an array:
+     6→
+     7→```tsx
+     8→// No
+     9→<>
+    10→  {items.map((item) => {
+    11→    return <div>{item}</div>
+    12→  })}
+    13→</>
+    14→```
+    15→
+    16→We didn't want to provide a render prop:
+    17→
+    18→```tsx
+    19→// No
+    20→onItemRender={({ item }) => {
+    21→  return <div>{item}</div>
+    22→}}
+    23→```
+    24→
+    25→Instead, we wanted to render components:
+    26→
+    27→```tsx
+    28→// Yes
+    29→<Item>My item</Item>
+    30→```
+    31→
+    32→Especially, we wanted full component composition:
+    33→
+    34→```tsx
+    35→// YES
+    36→<>
+    37→  <BlogItems />
+    38→  {staticItems}
+    39→</>
+    40→```
+    41→
+    42→Compound components are natural and easy to write. A few months after exploring this library, we were pleased to see [Radix UI](https://www.radix-ui.com) released using this exact approach of component structure – setting the standard for ease of use and composability.
+    43→
+    44→However, for a combobox, it is a terrible, terrible constraint that we've spent 2 years fighting.
+    45→
     46→## Approach
     48→⌘K always keeps every item and group rendered in the React tree. Each item and group adds or removes itself from the DOM based on the search input. The DOM is authoritative. Item selection order is based on the DOM order, which is based on the React render order, which the consumer provides.
     49→
     50→### Discarded approach
-    52→We did not use `React.Children` iteration because it will not support component composition. There is no way to "peek inside" the items contained within `<BlogItems />`, so those items cannot be filtered.
-    53→
-    54→We did not use an object-based data array for each item, like `{ name: "Logout", action: () => logout() }` because this is strict and limiting. In reality, the interface of those objects grows with edge-cases, like `image`, `detailedSubTitle`, `hideWhenRootSearch`, etc. We prefer that you have full control of item rendering, including icons, keyboard shortcuts, and styling. Don't want an item shown? Don't render it. Only want to show an item under condition xyz? Render it.
-    55→
-    56→We did not use a render prop because they are an inelegant pattern and quickly fall to long, centralised if-else logic chains. For example, if you want a fancy sparkle rainbow item, you need a new if statement to render that item specially.
-    57→
-    58→The original approach for tracking which item was selected was to keep an index 0..n. But it's impossible to know which Item is in which position within the React tree when React Strict Mode is enabled, because `useEffect` runs twice and `useRef` cannot be used for stable IDs. <sup>This may be possible with `useId`, now.</sup> We created [use-descendants](https://github.com/pacocoursey/use-descendants) to track relative component indeces, but abandoned it because it could not work in Strict Mode, and will be incompatible with upcoming concurrent mode. Now, we track the selected item with its value, because it is stable across item mounts and unmounts.
-    59→
     60→## Example
     62→```tsx
     63→<Input value="b" />
@@ -263,6 +298,17 @@ website/README.md
 
 website/vercel.json
      2→  "headers": [
+     3→    {
+     4→      "source": "/inter-var-latin.woff2",
+     5→      "headers": [
+     6→        {
+     7→          "key": "Cache-Control",
+     8→          "value": "public, max-age=31536000, immutable"
+     9→        }
+    10→      ]
+    11→    }
+    12→  ]
+    13→}
 
 package.json
      2→  "name": "cmdk-root",
@@ -336,24 +382,6 @@ cmdk/tsup.config.ts
 
 website/components/index.ts
 
-website/next.config.js
-     2→const nextConfig …
-
-website/package.json
-     2→  "name": "cmdk-website",
-     3→  "version": "0.1.0",
-     4→  "private": true,
-     5→  "scripts": {
-    11→  "dependencies": {
-    24→  "devDependencies": {
-    38→  "lint-staged": {
-    43→  "husky": {
-
-website/tsconfig.json
-     2→  "compilerOptions": {
-    19→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-    20→  "exclude": ["node_modules"]
-
 test/
 
 test/pages/
@@ -363,3 +391,5 @@ website/pages/
 website/public/
 
 website/styles/
+
+website/styles/cmdk/

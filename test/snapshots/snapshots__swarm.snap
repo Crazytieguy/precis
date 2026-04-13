@@ -10,53 +10,7 @@ README.md
      8→> We recommend migrating to the Agents SDK for all production use cases.
      9→
     10→## Install
-    12→Requires Python 3.10+
-    13→
-    14→```shell
-    15→pip install git+ssh://git@github.com/openai/swarm.git
-    16→```
-    17→
-    18→or
-    19→
-    20→```shell
-    21→pip install git+https://github.com/openai/swarm.git
-    22→```
-    23→
     24→## Usage
-    26→```python
-    27→from swarm import Swarm, Agent
-    28→
-    29→client = Swarm()
-    30→
-    31→def transfer_to_agent_b():
-    32→    return agent_b
-    33→
-    34→
-    35→agent_a = Agent(
-    36→    name="Agent A",
-    37→    instructions="You are a helpful agent.",
-    38→    functions=[transfer_to_agent_b],
-    39→)
-    40→
-    41→agent_b = Agent(
-    42→    name="Agent B",
-    43→    instructions="Only speak in Haikus.",
-    44→)
-    45→
-    46→response = client.run(
-    47→    agent=agent_a,
-    48→    messages=[{"role": "user", "content": "I want to talk to agent B."}],
-    49→)
-    50→
-    51→print(response.messages[-1]["content"])
-    52→```
-    53→
-    54→```
-    55→Hope glimmers brightly,
-    56→New paths converge gracefully,
-    57→What can I assist?
-    58→```
-    59→
     60→## Table of Contents
     72→# Overview
     74→Swarm focuses on making agent **coordination** and **execution** lightweight, highly controllable, and easily testable.
@@ -69,10 +23,6 @@ README.md
     81→> Swarm Agents are not related to Assistants in the Assistants API. They are named similarly for convenience, but are otherwise completely unrelated. Swarm is entirely powered by the Chat Completions API and is hence stateless between calls.
     82→
     83→## Why Swarm
-    85→Swarm explores patterns that are lightweight, scalable, and highly customizable by design. Approaches similar to Swarm are best suited for situations dealing with a large number of independent capabilities and instructions that are difficult to encode into a single prompt.
-    86→
-    87→The Assistants API is a great option for developers looking for fully-hosted threads and built in memory management and retrieval. However, Swarm is an educational resource for developers curious to learn about multi-agent orchestration. Swarm runs (almost) entirely on the client and, much like the Chat Completions API, does not store state between calls.
-    88→
     89→# Examples
     91→Check out `/examples` for inspiration! Learn more about each one in its README.
     92→
@@ -85,79 +35,16 @@ README.md
     99→
    100→# Documentation
    104→## Running Swarm
-   106→Start by instantiating a Swarm client (which internally just instantiates an `OpenAI` client).
-   107→
-   108→```python
-   109→from swarm import Swarm
-   110→
-   111→client = Swarm()
-   112→```
-   113→
    114→### `client.run()`
    126→#### Arguments
    141→#### `Response` Fields
    149→## Agents
-   151→An `Agent` simply encapsulates a set of `instructions` with a set of `functions` (plus some additional settings below), and has the capability to hand off execution to another `Agent`.
-   152→
-   153→While it's tempting to personify an `Agent` as "someone who does X", it can also be used to represent a very specific workflow or step defined by a set of `instructions` and `functions` (e.g. a set of steps, a complex retrieval, single step of data transformation, etc). This allows `Agent`s to be composed into a network of "agents", "workflows", and "tasks", all represented by the same primitive.
-   154→
    155→## `Agent` Fields
-   157→| Field            | Type                     | Description                                                                   | Default                      |
-   158→| ---------------- | ------------------------ | ----------------------------------------------------------------------------- | ---------------------------- |
-   159→| **name**         | `str`                    | The name of the agent.                                                        | `"Agent"`                    |
-   160→| **model**        | `str`                    | The model to be used by the agent.                                            | `"gpt-4o"`                   |
-   161→| **instructions** | `str` or `func() -> str` | Instructions for the agent, can be a string or a callable returning a string. | `"You are a helpful agent."` |
-   162→| **functions**    | `List`                   | A list of functions that the agent can call.                                  | `[]`                         |
-   163→| **tool_choice**  | `str`                    | The tool choice for the agent, if any.                                        | `None`                       |
-   164→
    165→### Instructions
    197→## Functions
-   199→- Swarm `Agent`s can call python functions directly.
-   200→- Function should usually return a `str` (values will be attempted to be cast as a `str`).
-   201→- If a function returns an `Agent`, execution will be transferred to that `Agent`.
-   202→- If a function defines a `context_variables` parameter, it will be populated by the `context_variables` passed into `client.run()`.
-   203→
-   204→```python
-   205→def greet(context_variables, language):
-   206→   user_name = context_variables["user_name"]
-   207→   greeting = "Hola" if language.lower() == "spanish" else "Hello"
-   208→   print(f"{greeting}, {user_name}!")
-   209→   return "Done"
-   210→
-   211→agent = Agent(
-   212→   functions=[greet]
-   213→)
-   214→
-   215→client.run(
-   216→   agent=agent,
-   217→   messages=[{"role": "user", "content": "Usa greet() por favor."}],
-   218→   context_variables={"user_name": "John"}
-   219→)
-   220→```
-   221→
-   222→```
-   223→Hola, John!
-   224→```
-   225→
-   226→- If an `Agent` function call has an error (missing function, wrong argument, error) an error response will be appended to the chat so the `Agent` can recover gracefully.
-   227→- If multiple functions are called by the `Agent`, they will be executed in that order.
-   228→
    229→### Handoffs and Updating Context Variables
    281→### Function Schemas
    321→## Streaming
-   323→```python
-   324→stream = client.run(agent, messages, stream=True)
-   325→for chunk in stream:
-   326→   print(chunk)
-   327→```
-   328→
-   329→Uses the same events as [Chat Completions API streaming](https://platform.openai.com/docs/api-reference/streaming). See `process_and_print_streaming_response` in `/swarm/repl/repl.py` as an example.
-   330→
-   331→Two new event types have been added:
-   332→
-   333→- `{"delim":"start"}` and `{"delim":"end"}`, to signal each time an `Agent` handles a single message (response or function call). This helps identify switches between `Agent`s.
-   334→- `{"response": Response}` will return a `Response` object at the end of a stream with the aggregated (complete) response, for convenience.
-   335→
    336→# Evaluations
    338→Evaluations are crucial to any project, and we encourage developers to bring their own eval suites to test the performance of their swarms. For reference, we have some examples for how to eval swarm in the `airline`, `weather_agent` and `triage_agent` quickstart examples. See the READMEs for more details.
    339→
@@ -196,12 +83,45 @@ swarm/core.py
     21→)
     23→__CTX_VARS_NAME__ …
     26→class Swarm …
-    27→    def __init__ …
-    32→    def get_chat_completion …
-    71→    def handle_function_result …
-    89→    def handle_tool_calls …
-   139→    def run_and_stream …
-   231→    def run …
+    27→    def __init__(self, client=None):
+    32→    def get_chat_completion(
+    33→        self,
+    34→        agent: Agent,
+    35→        history: List,
+    36→        context_variables: dict,
+    37→        model_override: str,
+    38→        stream: bool,
+    39→        debug: bool,
+    40→    ) -> ChatCompletionMessage:
+    71→    def handle_function_result(self, result, debug) -> Result:
+    89→    def handle_tool_calls(
+    90→        self,
+    91→        tool_calls: List[ChatCompletionMessageToolCall],
+    92→        functions: List[AgentFunction],
+    93→        context_variables: dict,
+    94→        debug: bool,
+    95→    ) -> Response:
+   139→    def run_and_stream(
+   140→        self,
+   141→        agent: Agent,
+   142→        messages: List,
+   143→        context_variables: dict = {},
+   144→        model_override: str = None,
+   145→        debug: bool = False,
+   146→        max_turns: int = float("inf"),
+   147→        execute_tools: bool = True,
+   148→    ):
+   231→    def run(
+   232→        self,
+   233→        agent: Agent,
+   234→        messages: List,
+   235→        context_variables: dict = {},
+   236→        model_override: str = None,
+   237→        stream: bool = False,
+   238→        debug: bool = False,
+   239→        max_turns: int = float("inf"),
+   240→        execute_tools: bool = True,
+   241→    ) -> Response:
 
 swarm/types.py
     14→class Agent …
@@ -312,28 +232,44 @@ setup.cfg
 
 examples/airline/README.md
      1→# Airline customer service
+     3→This example demonstrates a multi-agent setup for handling different customer service requests in an airline context using the Swarm framework. The agents can triage requests, handle flight modifications, cancellations, and lost baggage cases.
+     4→This example uses the helper function `run_demo_loop`, which allows us to create an interactive Swarm session.
+     5→
      6→## Agents
     14→## Setup
     22→## Evaluations
 
 examples/basic/README.md
      1→# Swarm basic
+     3→This folder contains basic examples demonstrating core Swarm capabilities. These examples show the simplest implementations of Swarm, with one input message, and a corresponding output. The `simple_loop_no_helpers` has a while loop to demonstrate how to create an interactive Swarm session.
+     4→
+     5→### Examples
     31→## Running the Examples
 
 examples/personal_shopper/README.md
      1→# Personal shopper
+     3→This Swarm is a personal shopping agent that can help with making sales and refunding orders.
+     4→This example uses the helper function `run_demo_loop`, which allows us to create an interactive Swarm session.
+     5→In this example, we also use a Sqlite3 database with customer information and transaction data.
+     6→
      7→## Overview
     15→## Setup
 
 examples/support_bot/README.md
+     1→# Support bot
 
 examples/triage_agent/README.md
      1→# Triage agent
+     3→This example is a Swarm containing a triage agent, which takes in user inputs and chooses whether to respond directly, or triage the request
+     4→to a sales or refunds agent.
+     5→
      6→## Setup
     16→## Evals
 
 examples/weather_agent/README.md
      1→# Weather agent
+     3→This example is a weather agent demonstrating function calling with a single agent. The agent has tools to get the weather of a particular city, and send an email.
+     4→
      5→## Setup
     15→## Evals
 
@@ -344,7 +280,11 @@ tests/mock_client.py
     44→class MockOpenAIClient …
     45→    def __init__(self):
     49→    def set_response(self, response: ChatCompletion):
+    51→        Set the mock to return a specific response.
+      →…
     56→    def set_sequential_responses(self, responses: list[ChatCompletion]):
+    58→        Set the mock to return different responses sequentially.
+      →…
     63→    def assert_create_called_with(self, **kwargs):
 
 examples/customer_service_streaming/main.py
@@ -356,14 +296,103 @@ examples/customer_service_streaming/prep_data.py
 
 examples/weather_agent/agents.py
      6→def get_weather(location, time="now"):
-    11→def send_email …
+     7→    """Get the current weather in a given location. Location MUST be a city."""
+    11→def send_email(recipient, subject, body):
 
 examples/weather_agent/evals.py
-     8→def run_and_get_tool_calls …
-    26→def test_calls_weather_when_asked …
-    41→def test_does_not_call_weather_when_not_asked …
+     8→def run_and_get_tool_calls(agent, query):
+    26→def test_calls_weather_when_asked(query):
+    41→def test_does_not_call_weather_when_not_asked(query):
 
 examples/weather_agent/run.py
+
+examples/airline/__init__.py
+
+examples/airline/main.py
+
+examples/support_bot/Makefile
+
+examples/support_bot/__init__.py
+
+examples/support_bot/customer_service.py
+    13→# Set embedding model
+    14→EMBEDDING_MODEL …
+    23→def query_qdrant(query, collection_name, vector_name="article", top_k=5):
+    43→def query_docs(query):
+    68→def send_email(email_address, message):
+    73→def submit_ticket(description):
+    90→def transfer_to_help_center():
+    91→    """Transfer the user to the help center agent."""
+
+examples/support_bot/main.py
+    13→# Set embedding model
+    14→EMBEDDING_MODEL …
+    20→def query_qdrant(query, collection_name, vector_name="article", top_k=5):
+    40→def query_docs(query):
+    41→    """Query the knowledge base for relevant articles."""
+    66→def send_email(email_address, message):
+    67→    """Send an email to the user."""
+    72→def submit_ticket(description):
+    73→    """Submit a ticket for the user."""
+    77→def transfer_to_help_center():
+    78→    """Transfer the user to the help center agent."""
+
+examples/support_bot/prep_data.py
+    10→GPT_MODEL …
+    11→EMBEDDING_MODEL …
+
+examples/basic/agent_handoff.py
+    16→def transfer_to_spanish_agent():
+    17→    """Transfer spanish speaking users immediately."""
+
+examples/basic/bare_minimum.py
+
+examples/basic/context_variables.py
+     6→def instructions(context_variables):
+    11→def print_account_details(context_variables: dict):
+
+examples/basic/function_calling.py
+     6→def get_weather(location) -> str:
+
+examples/basic/simple_loop_no_helpers.py
+    11→def pretty_print_messages(messages):
+
+examples/personal_shopper/__init__.py
+
+examples/personal_shopper/database.py
+     7→def get_connection():
+    14→def create_database():
+    61→def add_user(user_id, first_name, last_name, email, phone):
+    84→def add_purchase(user_id, date_of_purchase, item_id, amount):
+   114→def add_product(product_id, product_name, price):
+   132→def close_connection():
+   139→def preview_table(table_name):
+   154→def initialize_database():
+
+examples/personal_shopper/main.py
+    10→def refund_item(user_id, item_id):
+    32→def notify_customer(user_id, method):
+    58→def order_item(user_id, product_id):
+
+examples/triage_agent/agents.py
+     4→def process_refund(item_id, reason="NOT SPECIFIED"):
+    10→def apply_discount():
+    31→def transfer_back_to_triage():
+    36→def transfer_to_sales():
+    40→def transfer_to_refunds():
+
+examples/triage_agent/evals.py
+     9→CONVERSATIONAL_EVAL_SYSTEM_PROMPT …
+    19→def conversation_was_successful(messages) -> bool:
+    27→def run_and_get_tool_calls(agent, query):
+    44→def test_triage_agent_calls_correct_function(query, function_name):
+    68→def test_conversation_is_successful(messages):
+
+examples/triage_agent/evals_util.py
+     9→class BoolEvalResult …
+    14→def evaluate_with_llm_bool(instruction, data) -> BoolEvalResult:
+
+examples/triage_agent/run.py
 
 assets/
 
@@ -380,6 +409,16 @@ examples/customer_service/logs/
 examples/customer_service_lite/
 
 examples/customer_service_lite/logs/
+
+examples/customer_service_streaming/configs/
+
+examples/customer_service_streaming/data/
+
+examples/customer_service_streaming/logs/
+
+examples/customer_service_streaming/src/
+
+examples/customer_service_streaming/tests/
 
 examples/support_bot/data/
 

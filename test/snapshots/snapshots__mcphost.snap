@@ -4,6 +4,10 @@ expression: output
 ---
 README.md
      1→# MCPHost 🤖
+     3→A CLI host application that enables Large Language Models (LLMs) to interact with external tools through the Model Context Protocol (MCP). Currently supports Claude, OpenAI, Google Gemini, and Ollama models.
+     4→
+     5→Discuss the Project on [Discord](https://discord.gg/RqSS2NQVsY)
+     6→
     41→## Overview 🌟
     60→## Features ✨
     77→## Requirements 📋
@@ -86,14 +90,10 @@ cmd/root.go
    131→func GetRootCommand(v string) *cobra.Command {
    143→func InitConfig() {
    225→func LoadConfigWithEnvSubstitution(configPath string) error {
-   755→// AgenticLoopConfig configures the behavior of the unified agentic loop.
-      →…
    758→type AgenticLoopConfig …
 
 cmd/script.go
     28→var scriptCmd …
-   420→// Variable represents a script variable with optional default value.
-      →…
    423→type Variable …
 
 internal/auth/browser.go
@@ -446,7 +446,6 @@ internal/ui/callbacks.go
     17→func (c *CLI) CreateCallbackHandler() callbacks.Handler {
 
 internal/ui/cli.go
-    16→var promptStyle …
     22→type CLI …
     40→func NewCLI(debug bool, compact bool) (*CLI, error) {
     56→func (c *CLI) SetUsageTracker(tracker *UsageTracker) {
@@ -545,7 +544,6 @@ internal/ui/messages.go
     13→// MessageType represents different categories of messages displayed in the UI,
     14→// each with distinct visual styling and formatting rules.
     15→type MessageType …
-    17→const …
     29→type UIMessage …
     47→type MessageRenderer …
     70→func NewMessageRenderer(width int, debug bool) *MessageRenderer {
@@ -590,9 +588,6 @@ internal/ui/spinner.go
    149→func (s *Spinner) Stop() {
 
 internal/ui/styles.go
-    11→const defaultMargin …
-    15→func stringPtr …
-    16→func uintPtr …
     21→func BaseStyle() lipgloss.Style {
     28→func GetMarkdownRenderer(width int) *glamour.TermRenderer {
 

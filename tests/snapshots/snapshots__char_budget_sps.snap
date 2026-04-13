@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 8000 (2690 tokens, 9493 chars)
+budget: 8000 (2717 tokens, 9500 chars)
 
 README.md
      1→# sps
@@ -16,6 +16,14 @@ README.md
 
 Cargo.toml
      1→[workspace]
+     2→resolver = "3"
+     3→members = [
+     4→    "sps",          # was "sps-cli"
+     5→    "sps-common",
+     6→    "sps-core",
+     7→    "sps-net",
+     8→]
+     9→
     10→[patch.crates-io]
     16→[workspace.dependencies]
     43→[profile.release]
@@ -274,14 +282,11 @@ sps-core/src/pipeline/worker.rs
     21→pub(super) fn execute_sync_job …
 
 sps-core/src/uninstall/cask.rs
-    41→pub fn uninstall_cask_artifacts …
-   134→pub async fn zap_cask_artifacts …
 
 sps-core/src/uninstall/common.rs
     11→pub struct UninstallOptions …
-    22→pub(crate) fn remove_filesystem_artifact …
-   108→pub(crate) fn expand_tilde …
-   119→pub(crate) fn is_safe_path …
+    12→    pub skip_zap: bool,
+    13→}
 
 sps-core/src/uninstall/formula.rs
     10→pub fn uninstall_formula_artifacts …

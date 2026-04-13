@@ -65,22 +65,9 @@ packages/crypto/README.md
      3→This package contains the natives crypto primitives used by the [Enclosed lib and project](https://enclosed.cc). It is a standalone package built to provide compatibility between different environments by exposing the same API for node:crypto and web SubtleCrypto.
      4→
      5→## Installation
-     7→```bash
-     8→# with npm
-     9→npm install @enclosed/crypto
-    10→
-    11→# with yarn
-    12→yarn add @enclosed/crypto
-    13→
-    14→# with pnpm
-    15→pnpm add @enclosed/crypto
-    16→```
-    17→
 
 packages/lib/README.md
      1→### Enclosed lib
-     3→This package contains the core functionalities of [Enclosed](https://enclosed.cc/), an open-source project that aims to provide a simple and secure way to share e2e encrypted notes.
-     4→
      5→## Installation
     18→## Usage
 
@@ -341,44 +328,32 @@ packages/cli/src/create-note/create-note.usecases.ts
 
 packages/docs/src/integrations/cli.md
      1→# CLI Guide
+     3→The Enclosed Command-Line Interface (CLI) allows you to create and manage secure notes directly from your terminal. This guide will walk you through installing the CLI, creating and viewing notes, and configuring the CLI for different use cases.
+     4→
      5→## Installation
-     7→You can install the Enclosed CLI globally using npm, yarn, or pnpm.
-     8→
     29→## Creating a Note
-    31→The primary function of the Enclosed CLI is to create secure notes. You can create a note with a simple command.
-    32→
     77→## Viewing a Note
-    79→The Enclosed CLI can also be used to view notes directly from the terminal.
-    80→
     99→## Configuring the Enclosed Instance
-   101→By default, the CLI uses the public instance at [enclosed.cc](https://enclosed.cc). If you are running your own instance of Enclosed, you can configure the CLI to use your server.
-   102→
    113→## Updating the CLI
-   115→To update the Enclosed CLI to the latest version, simply re-run the installation command:
-   116→
    137→## Uninstalling the CLI
-   139→If you need to remove the Enclosed CLI, you can uninstall it with the following commands:
-   140→
    159→## Advanced Usage
-   161→For more advanced usage, you can refer to the CLI's help command, which provides detailed information on all available commands and options:
-   162→
-   163→```bash
-   164→enclosed --help
-   165→```
-   166→
-   167→This will display the complete list of commands and options available in the Enclosed CLI.
-   168→
    169→## Next Steps
-   171→Now that you're familiar with the basic and advanced features of the Enclosed CLI, you can start integrating it into your workflows. Whether you're automating note creation or managing secure communication from the terminal, the Enclosed CLI is a powerful tool for ensuring your messages remain private and secure.
 
 packages/docs/src/integrations/npm-package.md
      1→# NPM Package
+     3→::: warning
+     4→This page is a work in progress.
+     5→:::
+     6→
+     7→The Enclosed lib is available as an npm package. You can use it to create and manage Enclosed notes.
+     8→
      9→## Installation
-    11→You can install the Enclosed Lib using npm, yarn, or pnpm.
-    12→
 
 packages/docs/src/integrations/versioning.md
      1→# Versioning
+     3→The Enclosed project follows the [Semantic Versioning (SemVer)](https://semver.org/) specification. This means that the version number is incremented following the following format: `MAJOR.MINOR.PATCH`.
+     4→
+     5→Starting from version `1.5.0`, all the packages of the Enclosed project are aligned to the same version number. So if you are self-hosting an Enclosed instance, you can use the same version number for all the packages.
 
 packages/app-server/src/modules/app/server.ts
     19→function createServer …
@@ -425,11 +400,11 @@ packages/cli/src/config/config.models.ts
      3→import { configDefinition } from './config.constants';
      7→type ConfigKey …
      8→const config …
-    10→function setConfig({ key, value }: { key: ConfigKey ; value: string }) {
-    31→function getConfig({ key }: { key: ConfigKey }) {
-    57→function deleteConfig({ key }: { key: ConfigKey }) {
-    61→function resetConfig() {
-    65→function createConfigBindings({ key }: { key: ConfigKey }) {
+    10→function setConfig …
+    31→function getConfig …
+    57→function deleteConfig …
+    61→function resetConfig …
+    65→function createConfigBindings …
 
 packages/cli/src/config/config.usecases.ts
      1→import { createConfigBindings } from './config.models';
@@ -465,24 +440,24 @@ packages/lib/src/notes/notes.models.ts
     68→function parseNoteUrl …
 
 packages/lib/src/notes/notes.services.ts
-     1→import { apiClient } from '../api/api.client';
+     1→import …
      5→async function storeNote …
     39→async function fetchNote …
 
 packages/lib/src/notes/notes.types.ts
-     1→import type { CompressionAlgorithm, EncryptionAlgorithm, KeyDerivationAlgorithm } from '../crypto/crypto.types';
-     2→import type { SerializationFormat } from '../crypto/serialization/serialization.types';
+     1→import type …
+     2→import type …
      4→export type NoteAsset …
     12→export type Note …
     17→export type EncryptedNote …
 
 packages/lib/src/notes/notes.usecases.ts
-     1→import type { EncryptionAlgorithm } from '../crypto/crypto.types';
-     2→import type { SerializationFormat } from '../crypto/serialization/serialization.types';
-     3→import type { NoteAsset } from './notes.types';
-     4→import { encryptNote } from '../crypto/crypto.usecases';
-     5→import { createNoteUrl } from './notes.models';
-     6→import { storeNote as storeNoteImpl } from './notes.services';
+     1→import type …
+     2→import type …
+     3→import type …
+     4→import …
+     5→import …
+     6→import …
     10→const BASE_URL …
     12→async function createNote …
 
@@ -498,6 +473,8 @@ packages/crypto/src/web/encryption-algorithms/crypto.web.aes-256-gcm.ts
 
 packages/docs/src/self-hosting/configuration.md
      5→# Self-Host Configuration
+     7→Configuring your self-hosted instance of Enclosed allows you to customize the application to better suit your environment and requirements. This guide covers the key environment variables you can set to control various aspects of the application, including port settings, security options, and storage configurations.
+     8→
      9→## Environment Variables
     15→## Optional: Native HTTPS Configuration
     33→## Applying Configuration Changes
@@ -505,6 +482,8 @@ packages/docs/src/self-hosting/configuration.md
 
 packages/docs/src/self-hosting/docker.md
      5→# Docker Installation
+     7→Enclosed can be easily installed and run using Docker. This method is recommended for users who want a quick and straightforward way to deploy their own instance of Enclosed with minimal setup.
+     8→
      9→## Prerequisites
     13→## Rootless and Non-rootless Docker Images
     19→## Image Sources
@@ -535,6 +514,29 @@ packages/docs/src/self-hosting/troubleshooting.md
 
 packages/docs/src/self-hosting/users-authentication-key-generator.md
     44→# User Authentication Key Generator
+    46→This tool generates the value for the `AUTHENTICATION_USERS` environment variable. This variable is used to define the users that can authenticate to the application. The value should be a comma-separated list of email and password pairs, where the password is hashed using bcrypt.
+    47→
+    48→<CredentialInputs v-model="credentials" />
+    49→
+    50→```txt-vue
+    51→AUTHENTICATION_USERS={{ envValue }}
+    52→```
+    53→
+    54→<Toggle v-model="shouldEscapeWithDollar">
+    55→    Escape for Docker Compose (use <code>$$</code> instead of <code>$</code>)
+    56→</Toggle>
+    57→
+    58→<Toggle v-model="shouldEscapeWithBackslash">
+    59→    Escape for Docker Run (use <code>\$</code> instead of <code>$</code>)
+    60→</Toggle>
+    61→
+    62→---
+    63→
+    64→> [!INFO] Escaping in Docker Run
+    65→> When using env variables in docker run command with `-e` on bash, the `$` character should be escaped in the password hash. For example, `\$2a\$10\$...`.
+    66→
+    67→> [!INFO] Escaping in Docker Compose
+    68→> When using env variables in docker-compose, the `$` character should be escaped with another `$`. For example, `$$2a$$10$$...`.
 
 packages/app-client/src/modules/auth/auth.models.ts
      5→function isAccessTokenExpired …
@@ -747,14 +749,6 @@ packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.types.ts
 packages/app-client/src/modules/shared/files/convert.ts
 
 packages/app-client/src/modules/shared/files/download.ts
-
-packages/lib/build.config.ts
-
-packages/lib/eslint.config.js
-
-packages/lib/package.json
-
-packages/lib/tsconfig.json
 
 packages/
 

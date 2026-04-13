@@ -62,14 +62,6 @@ Cargo.toml
     40→members = ["impl", "tests/no-std"]
     41→
     42→[package.metadata.docs.rs]
-    43→targets = ["x86_64-unknown-linux-gnu"]
-    44→rustdoc-args = [
-    45→    "--generate-link-to-definition",
-    46→    "--generate-macro-expansion",
-    47→    "--extern-html-root-url=core=https://doc.rust-lang.org",
-    48→    "--extern-html-root-url=alloc=https://doc.rust-lang.org",
-    49→    "--extern-html-root-url=std=https://doc.rust-lang.org",
-    50→]
 
 impl/Cargo.toml
      1→[package]
@@ -349,11 +341,34 @@ rust-toolchain.toml
      1→[toolchain]
      2→components = ["rust-src"]
 
-tests/no-std/Cargo.toml
+tests/compiletest.rs
 
-tests/no-std/test.rs
-     6→pub enum Error …
+tests/test_backtrace.rs
 
-tests/
+tests/test_display.rs
+   417→    pub fn octal …
+
+tests/test_error.rs
+
+tests/test_expr.rs
+
+tests/test_from.rs
+
+tests/test_generics.rs
+    14→impl Display for DisplayOnly …
+    23→impl Display for DebugAndDisplay …
+    83→impl<HasDisplay, HasDebug, HasNeither> Debug for EnumCompound<HasDisplay, HasDebug, HasNeither> …
+
+tests/test_lints.rs
+
+tests/test_option.rs
+
+tests/test_path.rs
+
+tests/test_source.rs
+
+tests/test_transparent.rs
+
+tests/no-std/
 
 tests/ui/
