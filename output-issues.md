@@ -325,7 +325,7 @@ Root cause: the 2.5× `header_factor` doesn't compensate for krep.c's 16:1 line 
 
 ## 18. Struct and enum bodies elided — many small entries beat fewer large ones
 
-**Affected snapshots:** log, mdbook, neco
+**Affected snapshots:** log, mdbook, neco, otree
 
 Large body groups (StructBody at base_value 1.2, EnumBody at 1.5) lose budget to many small FunctionName entries (base_value 1.0, ~2 tokens each). The per-token value/cost ratio strongly favors function names, so the scheduler fills the budget with hundreds of cheap name entries before committing to any multi-line body block.
 
@@ -347,6 +347,8 @@ In mdbook, every key struct and enum body is truncated to `…` while the pre-re
 These types define mdBook's entire data model and plugin API. A reader seeing `pub struct MDBook …` and `pub struct RenderContext …` learns nothing about what data is available. The pre-rewrite output showed all of these with full field-level documentation — the struct bodies alone were ~113 lines that built a complete mental model of the architecture.
 
 In neco's `neco.h`, the `neco_stats` typedef struct body is truncated from 12 lines to one: `287→typedef struct neco_stats { …`. The pre-rewrite showed all 11 fields with doxygen comments (`coroutines`, `sleepers`, `evwaiters`, `sigwaiters`, `senders`, `receivers`, `locked`, `waitgroupers`, `condwaiters`, `suspended`, `workers`). This struct tells a reader exactly what runtime telemetry is available — it's the only struct in the API whose fields are user-facing. The budget instead goes to showing all ~90 function declarations in the header, many truncated to just names (e.g., `int neco_yield …`).
+
+In otree, `CommandArgs` (~90 lines of clap-derived CLI flags with doc comments) defines the entire user-facing interface — every command-line option from `--content-type` to `--live-reload` to `--wrap`. The pre-rewrite output showed all fields with documentation. The new output shows `pub struct CommandArgs …`. Similarly, `ContentType` enum variants (Json, Yaml, Toml, Xml, Hcl, Jsonl, Any — with doc comments explaining HCL and JSONL) are truncated to `pub enum ContentType …`, and `SyntaxToken` variants (Symbol, Name, Tag, String, Number, Null, Bool, Section, Break) are truncated to `pub enum SyntaxToken …`. The freed budget goes partly to README install instruction body content (~12 lines showing `paru -S otree` and `brew install otree` commands) that the pre-rewrite output correctly omitted. The old output also showed the `docs/actions.md` keybinding table (first few rows of the action/key/description reference) — for a TUI tool, this is core functionality — while the new output shows only the `# All Available Actions` heading.
 
 Additional budget pressure in log comes from `src/__private_api.rs` (~20 lines), a file whose module doc starts with "WARNING: this is not part of the crate's public API and is subject to change at any time." This file is not flagged by `is_deprioritized_file()` because no rule matches `__`-prefixed source files. The old output also showed this file — it's not a regression, but the 20 lines would be better spent on the missing enum bodies.
 
