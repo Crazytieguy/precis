@@ -66,7 +66,7 @@ The new output just shows `macro_rules! bail …` and `macro_rules! anyhow …`.
 
 ## 6. README body content dropped — only headings shown
 
-**Affected snapshots:** bareiron, commander, d2ts, d2ts_d2ts, log, mcphost, mdbook, mdbook_guide_src, pluggy, semver
+**Affected snapshots:** bareiron, commander, d2ts, d2ts_d2ts, log, mcphost, mdbook, mdbook_guide_src, pluggy, semver, soluna
 
 The output shows README.md with only headings — zero body content. The pre-rewrite output showed introductory sections that tell the reader what the project is.
 
@@ -86,7 +86,7 @@ This is the highest-value content in a repo for building a mental model. A reade
 
 ## 7. C `#define` values truncated while verbose comments consume budget
 
-**Affected snapshots:** bareiron, neco
+**Affected snapshots:** bareiron, neco, soluna
 
 In bareiron's `include/globals.h`, the output shows comment lines above each `#define` but truncates the actual values:
 ```
@@ -283,7 +283,7 @@ The heuristic values suggest this shouldn't happen — `ClassDocFirst` (base 0.4
 
 ## 16. Duplicated `#define` macros from conditional compilation branches
 
-**Affected snapshots:** krep
+**Affected snapshots:** krep, soluna
 
 In `krep.c`, SIMD feature flag macros are defined in multiple `#ifdef`/`#elif`/`#else` branches:
 
@@ -318,6 +318,8 @@ Tree-sitter captures every `preproc_def` node regardless of which preprocessor b
 ```
 
 10 lines for 4 unique macro names. A reader would be confused about why the same symbol is defined three times. The pre-rewrite output didn't show these at all, instead showing more informative constants (`MAX_PATTERN_LENGTH 1024`, `LIKELY(x)`).
+
+In soluna's `src/mutex.h`, both `#ifdef _MSC_VER` branches are captured — lines 6-9 show `mutex_t SRWLOCK`, `mutex_init(m) InitializeSRWLock(&m)`, etc., and lines 12-15 show `mutex_t pthread_mutex_t`, `mutex_init(m) pthread_mutex_init(&m, NULL)`, etc. 8 lines for 4 unique macros. The old output also showed both branches (with values), so this is pre-existing — but the new output truncates values too (issue #7), making the duplication more wasteful since neither copy is informative.
 
 ## 17. C header file budget reduced — key API declarations and struct bodies lost (regression)
 
@@ -429,3 +431,38 @@ A knowledgeable human would show one package in detail and note the other mirror
 This is a pre-existing issue (the old output also showed both packages fully), but the budget waste is more impactful now because class bodies and docstrings are lost (issues #9, #22), making the remaining content thinner. The ~87 lines spent on the async mirror could instead show Client model fields, Inbound fields, class docstrings, or BaseApi property type annotations — all of which build more understanding than a second listing of the same method names.
 
 No simple heuristic detects structural mirrors in general, but the pattern is common in Python SDKs (sync/async), language bindings (C header + wrapper), and multi-platform code (platform-specific implementations with identical APIs).
+
+## 24. Lua `---` doc comment marker captured as doc first line — empty summaries waste budget
+
+**Affected snapshots:** soluna
+
+In soluna's `docs/` directory (the Lua API reference), every function has a LuaDoc comment block starting with `---` on its own line, with the actual summary on subsequent lines:
+
+```lua
+---
+--- Quit the application.
+---
+function app.quit() end
+```
+
+The system captures `---` as FunctionDocFirst. Since this line contains only the comment marker, the output shows:
+
+```
+    10→---
+      →…
+    15→function app.quit() end
+```
+
+Two extra lines per function (`---` + truncation marker) that convey zero information beyond "a doc comment exists." Across ~40 functions in the `docs/` directory, this wastes ~80 output lines.
+
+The pre-rewrite output was more compact, showing only function signatures:
+
+```
+    15→function app.quit() end
+    24→function app.set_ime_font(font_name, font_size) end
+    35→function app.set_ime_rect(rect) end
+```
+
+Compare `docs/app.lua`: old output was 3 lines (3 function signatures), new output is 10 lines (3 function signatures + 3 doc markers + 3 truncation markers + 1 `local app …`). The 3.3× expansion applies across all 20 docs/ files.
+
+The `---` line is semantically equivalent to Python's opening `"""` or Rust's `///` prefix — it's a comment syntax marker, not a summary. The actual summary content (e.g., "Quit the application.") is on lines 2+ of the doc block. A fix could either skip `---`-only doc first lines or look for the first line with actual text content.
