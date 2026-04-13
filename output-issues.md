@@ -353,7 +353,7 @@ Root cause: the 2.5× `header_factor` doesn't compensate for krep.c's 16:1 line 
 
 ## 18. Struct and enum bodies elided — many small entries beat fewer large ones
 
-**Affected snapshots:** log, mdbook, neco, otree, sps, sqlite_vec, thiserror, thiserror_impl_src, toasty_codegen
+**Affected snapshots:** log, mdbook, neco, otree, sps, sqlite_vec, thiserror, thiserror_impl_src, toasty_codegen, toasty_core
 
 Large body groups (StructBody at base_value 1.2, EnumBody at 1.5) lose budget to many small FunctionName entries (base_value 1.0, ~2 tokens each). The per-token value/cost ratio strongly favors function names, so the scheduler fills the budget with hundreds of cheap name entries before committing to any multi-line body block.
 
@@ -387,6 +387,8 @@ In thiserror (root), the same impl/ losses apply — ast.rs and attr.rs struct b
 Additional budget pressure in log comes from `src/__private_api.rs` (~20 lines), a file whose module doc starts with "WARNING: this is not part of the crate's public API and is subject to change at any time." This file is not flagged by `is_deprioritized_file()` because no rule matches `__`-prefixed source files. The old output also showed this file — it's not a regression, but the 20 lines would be better spent on the missing enum bodies.
 
 In toasty_codegen's `src/expand/filters.rs`, the `Filter` struct (7 fields with doc comments: `fields`, `batch`, `only_relation`, `get_method_ident`, `filter_method_ident`, `filter_method_batch_ident`, `update_method_ident`, `delete_method_ident`) defines the core data structure for the filter code generation system. The pre-rewrite output showed all fields with their doc comments (~24 lines). The new output truncates to `pub(super) struct Filter …`. Meanwhile, the less important private `BuildModelFilters` struct body (2 fields, internal helper) IS shown — an inversion of information value.
+
+In toasty_core, the pre-rewrite showed bodies for `Operation` (8 variants with doc comments: Insert, DeleteByKey, FindPkByIndex, GetByKey, QueryPk, QuerySql, Transaction, UpdateByKey — the complete driver operation set), `Statement` (4 variants: Delete, Insert, Query, Update), `Rows` (Count/Value/Stream — the driver response model), `FieldTy` (Primitive, Embedded, BelongsTo, HasMany, HasOne — the core field type model), `ModelKind` (Root/Embedded), `AutoStrategy`/`UuidVersion`, `IndexScope`, `IndexOp`, and `Migration`. It also showed the `Capability` impl's database-specific constants (SQLITE, POSTGRESQL, MYSQL, DYNAMODB). The new output truncates all of these to just names. For a database ORM core library, these enum bodies define the fundamental abstractions — what operations exist, what field types are supported, what databases work. Budget is instead consumed by 15 error submodule files (see #29).
 
 In sqlite_vec's `sqlite-vec.c`, the pre-rewrite showed full bodies for `VectorElementType` (3 members: FLOAT32, BIT, INT8), `Vec0TokenType` (6 members), `NpyTokenType` (10 members), `Vec0DistanceMetrics` (3 members: L2, COSINE, L1), and several `typedef enum` blocks with their values. The new output collapses most of these to just names (e.g., `enum VectorElementType …`). For a C project where enums define the API surface (vector element types, distance metrics, query plan types), these bodies are high-value — a reader can't infer the supported element types or distance metrics from the name alone.
 
@@ -550,3 +552,13 @@ class Response(BaseModel):
 The new output shows only `class Agent …`, `class Response …`, `class Result …`. For an agent framework, seeing Agent's 6 fields (name, model, instructions, functions, tool_choice, parallel_tool_calls) is essential to understanding the API — it's the equivalent of a Rust struct's field definitions, which get StructBody at 1.2.
 
 This also interacts with #22 (Python docstrings not detected): classes are both undocumented (0.5× penalty) and bodyless, so the reader gets only a class name with no fields, no docstring, and no type information.
+
+## 29. Repetitive error submodule files displace higher-value content
+
+**Affected snapshots:** toasty_core
+
+In toasty_core, 15 error submodule files (`src/error/adhoc.rs` through `src/error/validation.rs`) each follow an identical pattern: a `pub(super)` struct, an `impl Error` block with a public constructor (`pub fn error_name(...) -> Error`) and a public predicate (`pub fn is_error_name(&self) -> bool`). Each file contributes ~6 content lines plus a ~10-token file header, totaling ~350 tokens across all 15 files. After seeing 2-3 examples, every subsequent file is entirely predictable.
+
+The pre-rewrite output showed none of these submodules — only `src/error.rs` with the `Error` struct body, `ErrorKind` enum, and `IntoError` trait. The freed budget went to ~30 files from `src/stmt/` showing the SQL AST type names (`Expr`, `Value`, `Type`, `Direction`, `BinaryOp`, `SetOp`, `Source`, `Query`, `Lock`, `Filter`, `Returning`, etc.) plus `src/schema/db/` types (`Column`, `Index`, `Migration`, `Table`). For a database ORM core library, the statement AST and database schema types are far more informative than individual error constructors.
+
+The root cause is that each error submodule generates several group entries (StructName, ImplBlock, FunctionName × 2) that individually score well enough to beat the marginal cost of their file header. The `pub(super)` struct gets a 0.3× visibility penalty, but the `pub fn` methods on `impl Error` are fully public. The aggregate effect is that 15 small files with mechanical content outbid the stmt/ directory's content despite being less informative per token.
