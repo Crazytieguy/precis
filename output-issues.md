@@ -511,7 +511,7 @@ The `---` line is semantically equivalent to Python's opening `"""` or Rust's `/
 
 ## 25. Bare-filename repetitive files waste budget while structural files are empty
 
-**Affected snapshots:** sps_core, sqlite_vec, swarm, vscode_emojis_medium
+**Affected snapshots:** sps_core, sqlite_vec, swarm, vscode_emojis_small, vscode_emojis_medium
 
 In `src/install/cask/artifacts/`, 21 of 24 `.rs` files are shown as bare filenames (no content). These files follow a uniform pattern — each contains a single `pub fn install_X` function — so once the pattern is clear from 2-3 examples, additional bare filenames add no understanding. Collectively they consume ~42 tokens for information already implied by the directory structure.
 
@@ -525,6 +525,8 @@ The old (pre-rewrite) output showed mod.rs files with their declarations (e.g., 
 In sqlite_vec, the problem is even more extreme: ~25 empty file entries (Makefile, sqlite-vec.h.tmpl, test.sql, SECURITY.md, various examples/, scripts/, and site/ files) and ~25 empty folder entries (benchmarks/exhaustive-memory/, benchmarks/micro/, tests/afbd/, tests/correctness/, etc.). That's ~50 empty entries consuming ~100 tokens for near-zero information. The old output was more selective — it collapsed `site/` into a single folder entry rather than listing all its subfiles and subfolders individually. The budget spent on these empty entries could instead show README body content (issue #6) or enum bodies (issue #18).
 
 In swarm, 31 `logs/session_*.json` files are shown individually as bare filenames, consuming ~62 tokens. The old output showed `logs/` as a single folder entry. These session logs follow a uniform naming pattern — once you've seen one filename, the rest add nothing. The budget could instead show example source files (see #27).
+
+In vscode_emojis_small, 9 SVG files in `icons/light/` are listed individually plus `icons/dark/` as a folder — but dark's files are omitted, creating an asymmetric presentation that implies the two directories differ when they're identical. The old output showed just `icons/` as a single folder entry. At budget 100, these bare SVG entries consume most of the budget while `emojis.json` renders with no content (see #34).
 
 In vscode_emojis_medium, 18 SVG files are listed individually (`icons/light/status-added.svg` through `icons/dark/status-untracked.svg`) — 9 files in `light/` and 9 identical names in `dark/`. The old output showed a single `icons/` folder entry. The SVG filenames follow a uniform `status-*.svg` pattern across two theme variants; once you've seen `icons/light/` and `icons/dark/`, individual filenames add nothing. At budget 200, these 18 bare entries consume ~36 tokens (~18% of budget) while `emojis.json` (the most important file — a 40KB emoji mapping) renders completely empty (see #34).
 
@@ -660,7 +662,7 @@ The `from X import Y as Y` pattern is Python's explicit re-export convention. If
 
 ## 34. Single-line JSON file renders empty — 1,837 DataSection groups produce no output (regression)
 
-**Affected snapshots:** vscode_emojis_medium
+**Affected snapshots:** vscode_emojis_small, vscode_emojis_medium
 
 `emojis.json` is a 40KB single-line JSON file with 1,837 key-value pairs (emoji name → emoji character). The pre-rewrite output showed a truncated first line: `{"100":"💯","1234":"🔢","+1":"👍","-1":"👎",...} …` — immediately telling the reader this is an emoji name→character mapping. The new output shows just the bare filename with zero content.
 
