@@ -63,19 +63,11 @@ In tock_internal_core, the missing `InterfaceBody` group causes Go interface met
 
 **Attempted fix:** Tried three approaches: (1) Changing TypeAliasName/ConstName rendering to show full first line instead of truncating at name — individually correct but cascades to 54 snapshots due to changed token costs; ts_pattern regressed (lost API methods, gained README h3 headings); (2) Adding TypeAliasBody/ConstBody groups with base_value 0.3/0.2 — near-zero marginal cost for single-line upgrades makes them competitive everywhere, still 42 snapshots affected; (3) Adding all four body groups (TypeAlias, Const, Interface, Trait) — 75 failures. The fundamental tension: showing type/const values costs more tokens per entry, which shifts budget allocation globally. Any approach that shows more content will cascade. May need a mechanism that allows body content without displacing other entries (e.g., a "free upgrade" path for same-line Truncated→Complete transitions that doesn't count against budget).
 
-## 14. Server architecture lost to broad-but-shallow budget distribution (regression)
+## ~~14. Server architecture lost to broad-but-shallow budget distribution (partially fixed)~~
 
-**Affected snapshots:** enclosed
+**Partially fixed:** Smoothed the depth penalty cliff at depth 4 (from 0.4 to 0.55), reducing the 43% drop between depth 3 (0.7) and depth 4. This surfaced the auth module (`authenticationMiddleware`, `protectedRouteMiddleware`, JWT services, `extractAccessToken`, `registerAuthRoutes`) and config module (`configDefinition`, `Config` type) in the enclosed snapshot. Previously these directories appeared only as bare folder entries.
 
-The pre-rewrite output showed ~170 lines of `packages/app-server/` content: auth middleware (`authenticationMiddleware`, `protectedRouteMiddleware`), config definition, 6 middleware files (cors, errors, logger, storage, timeout, config), 3 storage factories (cloudflare-kv, fs-lite, memory), notes domain types with full bodies, notes tasks, shared errors, and validation utilities. A reader could understand: Hono middleware stack → auth flow → storage abstraction → notes CRUD → task scheduling.
-
-The new output shows ~50 lines of server content: entry points, function/type names for `server.ts`/`server.types.ts`, and constant/type names from the notes domain. The middleware layer, auth system, and storage factories are completely absent — their directories appear only as folder entries (`auth/`, `config/`, `middlewares/`, `storage/factories/`). The notes domain files are present as headers but render empty (see #13 effect 2).
-
-Two contributing causes:
-
-1. **Depth penalty on deep monorepo structures.** The middleware files at `packages/app-server/src/modules/app/middlewares/` have effective_depth 4 (after `packages` and `src` are normalized), yielding depth_factor 0.4. Their public functions get effective value 0.4 — enough in isolation, but uncompetitive against the volume of shallower content across 7 packages.
-
-2. **Budget redistribution without architectural weighting.** The old output over-allocated to `packages/app-client/` (~230 lines, mostly shadcn-solid UI components). The new output correctly reduced that, but the freed budget spread evenly across all packages (more crypto, CLI, and lib internals) rather than flowing to the server. The result: broader coverage with no single package covered deeply enough to convey its architecture. The server — which defines the entire REST API, storage abstraction, and auth flow — is the biggest casualty.
+**Remaining:** The `middlewares/` and `storage/factories/` directories are still just folder entries. The depth penalty fix made depth-4 content more competitive but these directories still can't win enough budget against the volume of shallower content across 7 packages. Further improvement likely requires the budget redistribution mechanisms described in the original issue (architectural weighting or coverage-aware scheduling).
 
 
 ## ~~17. C header file budget reduced — key API declarations and struct bodies lost (resolved)~~

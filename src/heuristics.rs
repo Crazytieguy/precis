@@ -105,6 +105,7 @@ pub fn folders_contribution(
     let depth_factor = match depth {
         0..=1 => 1.0,
         2..=3 => 0.7,
+        4 => 0.55,
         _ => 0.4,
     };
     let category_factor = match category {
