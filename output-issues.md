@@ -108,3 +108,29 @@ Two root causes:
 2. **`is_boilerplate_heading()` doesn't match multi-word headings.** It splits on dashes (`-`, `—`, `–`) but not spaces, then does exact matches. So "Contributing Guidelines" becomes stem `"contributing guidelines"` which doesn't match `"contributing"`. Only 1 of 7 headings in CONTRIBUTING.md ("Code of Conduct") gets the boilerplate modifier. Similarly, "Security issue notifications" doesn't match `"security"`.
 
 The combined effect: CONTRIBUTING.md headings get base_value 1.0 (h1) / 0.6 (h2) with modifier 1.0, competing on near-equal footing with README headings (modifier 1.5). This allocates ~15% of the 4000-token budget to content that builds zero understanding of the codebase.
+
+## 9. Type alias and const bodies missing from taxonomy (regression)
+
+**Affected snapshots:** cmdk_cmdk_src
+
+The taxonomy has Body groups for functions (`FunctionBody`), structs (`StructBody`), and enums (`EnumBody`), but none for type aliases, const declarations, interfaces, classes, or traits. The `*Name` rendering truncates after the identifier, so the entire definition is lost.
+
+Pre-rewrite output showed type definitions and const values:
+```
+    10→type Children = { children?: React.ReactNode }
+    24→type SeparatorProps = DivProps & {
+    25→  /** Whether this separator should always be rendered. Useful if you disable automatic filtering. */
+      →  …
+   154→const GROUP_SELECTOR = `[cmdk-group=""]`
+   169→const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwardedRef) => {
+```
+
+Post-rewrite output truncates all of these to just the name:
+```
+    10→type Children …
+    24→type SeparatorProps …
+   154→const GROUP_SELECTOR …
+   169→const Command …
+```
+
+For cmdk, the 12+ `type` aliases define component props — they ARE the public API surface. `type ItemProps` having `disabled`, `onSelect`, `value`, `keywords`, `forceMount` properties is the most important thing to know about the Item component. The current output hides all of this, spending budget instead on internal helper function bodies (e.g. `findNextSibling` gets 8 lines of full body, `useScheduleLayoutEffect` gets 14 lines).
