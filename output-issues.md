@@ -558,7 +558,7 @@ The `FileCategory::Example` factor (0.35×) is appropriate for most projects but
 
 ## 28. Python class bodies never shown — no ClassBody in taxonomy
 
-**Affected snapshots:** swarm, typeguard (likely all Python fixtures with dataclasses/Pydantic models)
+**Affected snapshots:** swarm, typeguard, xlstm (likely all Python fixtures with dataclasses/Pydantic models)
 
 `TsGroupKey` has `StructBody` (base_value 1.2) and `EnumBody` (1.5) but no `ClassBody`. Python class field definitions live in the class body — for Pydantic models and dataclasses, the fields ARE the class API. In swarm's `types.py`, the old output showed:
 
@@ -589,6 +589,8 @@ In typeguard, `_config.py` contains three classes whose bodies are the core conf
 The pre-rewrite showed all enum values and dataclass fields with defaults (~25 lines). The new output shows only `class ForwardRefPolicy …`, `class CollectionCheckStrategy …`, `class TypeCheckConfiguration …`. For a config module, the options and their defaults ARE the API — a reader seeing just class names doesn't know what policies exist or what can be configured.
 
 Similarly, `_transformer.py`'s `TransformMemo` dataclass (15 fields including node, parent, path, return_annotation, yield_annotation, send_annotation, is_async, local_names, etc.) was shown in full in the old output (~24 lines) but is collapsed to `class TransformMemo …` in the new output. `AnnotationTransformer.type_substitutions` (dict mapping builtins to typing equivalents) was also shown in the old output.
+
+In xlstm, the ML config dataclasses define the architecture's hyperparameter space — the fields ARE what a reader needs to understand the model configuration. The pre-rewrite showed `mLSTMLayerConfig` with all 12 fields (`conv1d_kernel_size: int = 4`, `qkv_proj_blocksize: int = 4`, `num_heads: int = 4`, `proj_factor: float = 2.0`, `embedding_dim`, `bias`, `dropout`, `context_length`, etc.), `mLSTMBlockConfig` with its 3 fields, and `mLSTMCellConfig` with its 3 fields. The new output collapses all of these to `class X …`. Similarly, `xLSTMBlockStackConfig`, `xLSTMLargeConfig`, `sLSTMCellConfig`, and other config classes throughout the library lose their field definitions. For an ML library, the config fields tell a reader what the model's architectural knobs are — without them, the reader knows a config class exists but not what it configures.
 
 ## 29. Repetitive error submodule files displace higher-value content
 
