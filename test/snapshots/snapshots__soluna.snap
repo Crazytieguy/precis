@@ -19,28 +19,23 @@ README.md
     29→## Building from Source
     33→### Integration with the Actions of your projects
     53→## Projects made with Soluna
+    57→## License
 
 src/appevent.h
      2→#define soluna_app_event_h
      4→struct event_message …
-     5→	const char *typestr;
-     6→	int p1;
-     7→	int p2;
-     8→	int p3;
-     9→};
+    11→static inline void …
+    33→static inline void …
+    58→static inline void …
+    84→static inline void …
+    99→static inline void …
    115→static inline void …
 
 src/batch.h
      6→struct draw_primitive …
-     7→	int32_t x;		// sign bit + 23 + 8   fix number
-     8→	int32_t y;
-     9→	uint32_t sr;	// scale + rot
-    10→	int32_t sprite;		// negative : material 
-    11→};
     13→struct draw_primitive_external …
-    14→	int sprite;
-    15→};
     19→struct draw_batch * batch_new(int size);
+    20→struct draw_primitive * batch_reserve(struct draw_batch *, int size);
     21→void batch_delete(struct draw_batch *);
 
 src/font_define.h
@@ -49,15 +44,6 @@ src/font_define.h
      6→#define FONT_POSTION_FIX_POINT  8
      8→#define MAX_FONT_NUM 64
     11→struct font_glyph …
-    12→	int16_t offset_x;
-    13→	int16_t offset_y;
-    14→	int16_t advance_x;
-    15→	int16_t advance_y;
-    16→	uint16_t w;
-    17→	uint16_t h;
-    18→	uint16_t u;
-    19→	uint16_t v;
-    20→};
     22→#define IMAGE_FONT_MASK 0x40    //7 bit
     23→#define FONT_ID_MASK    0x3F    //low 6 bits
     24→#define FONT_ICON       255
@@ -66,40 +52,38 @@ src/font_define.h
 
 src/font_manager.h
     11→size_t font_manager_sizeof();
+    12→void font_manager_init(struct font_manager *, void *L);
+    13→void* font_manager_shutdown(struct font_manager *);
+    14→void font_manager_import(struct font_manager *F, void* fontdata, size_t sz);
+    16→int font_manager_addfont_with_family(struct font_manager *F, const char* family);
+    17→void font_manager_fontheight(struct font_manager *F, int fontid, int size, int *ascent, int *descent, int *lineGap);
+    18→int font_manager_pixelsize(struct font_manager *F, int fontid, int pointsize);
+    19→const char* font_manager_glyph(struct font_manager *F, int fontid, int codepoint, int size, struct font_glyph *g, struct font_glyph *og);
+    20→//int font_manager_touch(struct font_manager *, int font, int codepoint, struct font_glyph *glyph);
+    21→//const char * font_manager_update(struct font_manager *, int font, int codepoint, struct font_glyph *glyph, uint8_t *buffer, int stride);
+    22→int font_manager_flush(struct font_manager *);
+    23→void font_manager_scale(struct font_manager *F, struct font_glyph *glyph, int size);
+    24→int font_manager_underline(struct font_manager *F, int fontid, int size, float *underline_position, float *thickness);
+    25→float font_manager_sdf_mask(struct font_manager *F);
+    26→float font_manager_sdf_distance(struct font_manager *F, uint8_t numpixel);
+    27→void font_manager_icon_init(struct font_manager *F, int n, void *data);
+    28→int font_manager_enum_fontname(struct font_manager *F, int idx, char buffer[], int buf_sz);
     30→// for debug
     31→const void * font_manager_texture(struct font_manager *F, int *sz);
 
 src/ime_char_filter.h
      8→struct soluna_ime_char_filter_state …
-     9→    uint32_t *expected_chars;
-    10→    int *expected_count;
-    11→    uint32_t *ignore_chars;
-    12→    int *ignore_count;
-    13→    int capacity;
-    14→};
     16→static inline void …
     27→static inline bool …
+    41→static inline void …
+    47→static inline void …
     52→static inline bool …
 
 src/ime_state.h
      7→struct soluna_ime_rect_state …
-     8→    float x;
-     9→    float y;
-    10→    float w;
-    11→    float h;
-    12→    uint32_t text_color;
-    13→    bool valid;
-    14→};
 
 src/loginfo.h
      6→struct log_info …
-     7→	char tag[64];
-     8→	uint32_t log_level;
-     9→	uint32_t log_item;
-    10→	uint32_t line_nr;
-    11→	char message[256];
-    12→	const char *filename;	
-    13→};
 
 src/luabuffer.h
      8→static inline uint8_t const * …
@@ -123,71 +107,42 @@ src/mutex.h
 
 src/render_bindings.h
      6→struct soluna_render_bindings …
-     7→	int base;
-     8→	sg_bindings bindings;
-     9→};
     11→#define DRAWFUNC(name) (sg_query_features().draw_base_instance ? name##_ex : name)
 
 src/sprite_submit.h
      9→static inline int32_t …
+    15→static inline void …
     21→static inline void …
     27→static inline int …
     43→static inline uint32_t …
     56→static inline int …
+    66→static inline void …
+    71→static inline void …
+    76→static inline void …
     81→static inline void …
 
 src/spritemgr.h
      7→#define INVALID_TEXTUREID 0xffff
      9→struct sprite_rect …
-    10→	uint32_t texid;
-    11→	uint32_t off;	// (dx + 0x8000) << (dy + 0x8000)
-    12→	uint32_t u;		// x << 16 | w
-    13→	uint32_t v;		// y << 16 | h
-    14→};
     16→struct sprite_bank …
-    17→	int n;
-    18→	int cap;
-    19→	int texture_size;
-    20→	int texture_n;
-    21→	struct sprite_rect rect[1];
-    22→};
 
 src/srbuffer.h
      7→struct sr_mat …
-     8→	float v[4];
-     9→};
     11→struct sr_buffer …
-    12→	int n;
-    13→	int cap;
-    14→	int current_n;
-    15→	uint8_t dirty;
-    16→	uint8_t current_frame;
-    17→	uint8_t *frame;
-    18→	uint16_t *cache;
-    19→	uint32_t *key;
-    20→	struct sr_mat *data;
-    21→};
     23→size_t srbuffer_size(int n);
+    24→void srbuffer_init(struct sr_buffer *SR, int n);
+    25→int srbuffer_add(struct sr_buffer *SR, uint32_t sr);
     26→void * srbuffer_commit(struct sr_buffer *SR, int *sz);
 
 src/tmpbuffer.h
      2→#define soluna_tmp_buffer_h
      7→struct tmp_buffer …
-     8→	void *ptr;
-     9→	size_t sz;
-    10→};
     12→#define TMPBUFFER_PTR(type, obj) (type *)((obj)->ptr)
     13→#define TMPBUFFER_SIZE(type, obj) ((obj)->sz / sizeof(type))
     15→static inline void …
 
 src/transform.h
      6→struct transform …
-     7→	// ix, iy : sign bit + 23.8   fix number
-     8→	int32_t x;	
-     9→	int32_t y;
-    10→	int32_t s; // sign bit + 19.12 fix number
-    11→	int r;	// 12bits [0,4095]
-    12→};
     16→static inline void …
     24→void sprite_transform_init();
     25→void sprite_transform_set(struct transform *t, float s, float r, float x, float y);
@@ -201,13 +156,21 @@ src/truetype.h
     14→#define TRUETYPE_CSTRUCT "TRUETYPE_CSTRUCT"
     15→#define TRUETYPE_IMPORT "TRUETYPE_IMPORT"
     17→struct truetype_font …
-    18→	uint64_t enable;
-    19→	stbtt_fontinfo fontinfo[MAX_FONT_NUM];
-    20→};
+    22→// get global struct truetype_font
+    23→static inline struct truetype_font *
+    24→truetype_cstruct(lua_State *L) {
     34→static inline int …
+    44→static inline const stbtt_fontinfo * …
     51→// font id -> font info
     52→static inline const stbtt_fontinfo *
     53→truetype_font(struct truetype_font *ttf, int fontid, lua_State *L) {
+    83→static inline int …
+    93→// font name -> font id
+    94→static inline int
+    95→truetype_name(lua_State *L, const char *name) {
+   111→static inline int …
+   123→static inline int …
+   147→static inline int …
    160→static inline void …
 
 src/version.h
@@ -221,6 +184,7 @@ src/platform/linux/soluna_linux_ime.h
      9→void soluna_linux_focus_in(void);
     10→void soluna_linux_focus_out(void);
     11→void soluna_linux_shutdown_ime(void);
+    12→bool soluna_linux_should_skip_event(const sapp_event *ev);
     13→void soluna_linux_handle_event(const sapp_event *ev);
 
 src/platform/windows/soluna_windows_ime.h
@@ -259,6 +223,8 @@ src/platform/wasm/soluna_wasm_ime.h
    160→soluna_wasm_hide(void) {
    166→void
    167→soluna_wasm_apply_rect(void) {
+   177→static inline bool …
+   193→static inline bool …
    201→static inline void …
    221→EMSCRIPTEN_KEEPALIVE void
    222→soluna_wasm_ime_commit(const char *text, int modifiers) {
@@ -390,6 +356,8 @@ src/lualib/util.lua
 
 web/config.toml
      7→[pagination]
+     8→  pagerSize = 12
+     9→
     10→[params]
 
 3rd/
@@ -412,12 +380,6 @@ bin/sokol-tools-bin/
 
 clibs/
 
-clibs/datalist/
-
-clibs/ltask/
-
-clibs/lua/
-
 clibs/yoga/
 
 clibs/zip/
@@ -432,13 +394,7 @@ test/
 
 web/content/docs/
 
-web/content/examples/
-
-web/layouts/
-
 web/layouts/_default/
-
-web/layouts/docs/
 
 web/layouts/examples/
 

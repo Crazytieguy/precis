@@ -21,128 +21,135 @@ README.md
    498→## The scheduler
    504→### Fast context switching
    511→### Thread local runtime
+   579→## License
 
 neco.h
     30→/// @defgroup BasicOperations Basic operations
-      →…
+    31→/// Neco provides standard operations for starting a coroutine, sleeping, 
+    32→/// suspending, resuming, yielding to another coroutine, joining/waiting for
+    33→/// child coroutines, and exiting a running coroutine.
+    34→/// @{
     35→int neco_start(void(*coroutine)(int argc, void *argv[]), int argc, ...);
-    36→int neco_startv(void(*coroutine)(int argc, void *argv[]), int argc, void *argv[]);
-    37→int neco_yield(void);
-    38→int neco_sleep(int64_t nanosecs);
-    39→int neco_sleep_dl(int64_t deadline);
-    40→int neco_join(int64_t id);
-    41→int neco_join_dl(int64_t id, int64_t deadline);
-    42→int neco_suspend(void);
-    43→int neco_suspend_dl(int64_t deadline);
-    44→int neco_resume(int64_t id);
-    45→void neco_exit(void);
-    46→int64_t neco_getid(void);
-    47→int64_t neco_lastid(void);
-    48→int64_t neco_starterid(void);
     55→/// @defgroup Channels Channels
       →…
     61→typedef struct neco_chan neco_chan …
-    72→int neco_chan_close(neco_chan *chan);
-    73→int neco_chan_select(int nchans, ...);
-    74→int neco_chan_select_dl(int64_t deadline, int nchans, ...);
-    76→int neco_chan_selectv_dl(int nchans, neco_chan *chans[], int64_t deadline);
-    77→int neco_chan_tryselect(int nchans, ...);
-    79→int neco_chan_case(neco_chan *chan, void *data);
     86→/// @defgroup Generators Generators
       →…
     90→typedef struct neco_gen neco_gen …
-    95→int neco_gen_release(neco_gen *gen);
-    96→int neco_gen_yield(void *data);
-    97→int neco_gen_yield_dl(void *data, int64_t deadline);
-   100→int neco_gen_close(neco_gen *gen);
    107→/// @defgroup Mutexes Mutexes
       →…
    113→typedef struct { int64_t _0; intptr_t _1[5]; } neco_mutex …
-   124→int neco_mutex_tryrdlock(neco_mutex *mutex);
+   115→#define NECO_MUTEX_INITIALIZER { 0 }
    127→/// @defgroup WaitGroups WaitGroups
       →…
    135→typedef struct { int64_t _0; intptr_t _1[5]; } neco_waitgroup …
-   142→int neco_waitgroup_wait_dl(neco_waitgroup *waitgroup, int64_t deadline);
+   136→#define NECO_WAITGROUP_INITIALIZER { 0 }
    145→/// @defgroup CondVar Condition variables
       →…
    149→typedef struct { int64_t _0; intptr_t _1[5]; } neco_cond …
-   156→int neco_cond_wait_dl(neco_cond *cond, neco_mutex *mutex, int64_t deadline);
+   150→#define NECO_COND_INITIALIZER { 0 }
    168→// wrappers for various posix operations.
    169→ssize_t neco_read(int fd, void *data, size_t nbytes);
-   170→ssize_t neco_read_dl(int fd, void *data, size_t nbytes, int64_t deadline);
-   171→ssize_t neco_write(int fd, const void *data, size_t nbytes);
-   172→ssize_t neco_write_dl(int fd, const void *data, size_t nbytes, int64_t deadline);
-   176→int neco_connect_dl(int sockfd, const struct sockaddr *addr, socklen_t addrlen, int64_t deadline);
-   179→int neco_getaddrinfo_dl(const char *node, const char *service,
-   180→    const struct addrinfo *hints, struct addrinfo **res, int64_t deadline);
    187→// utility for enabling non-blocking on existing file descriptors
    188→int neco_setnonblock(int fd, bool nonblock, bool *oldnonblock);
    190→// wait for a file descriptor to be readable or writeable.
    191→#define NECO_WAIT_READ  1
-   194→int neco_wait(int fd, int mode);
-   195→int neco_wait_dl(int fd, int mode, int64_t deadline);
+   192→#define NECO_WAIT_WRITE 2
    203→/// @defgroup Networking Networking utilities
-      →…
+   204→/// @{
    206→int neco_serve(const char *network, const char *address);
-   207→int neco_serve_dl(const char *network, const char *address, int64_t deadline);
-   208→int neco_dial(const char *network, const char *address);
-   209→int neco_dial_dl(const char *network, const char *address, int64_t deadline);
    217→/// @defgroup Cancelation Cancelation
-      →…
+   218→/// @{
    220→int neco_cancel(int64_t id);
-   221→int neco_cancel_dl(int64_t id, int64_t deadline);
-   228→int neco_setcanceltype(int type, int *oldtype);
-   229→int neco_setcancelstate(int state, int *oldstate);
+   223→#define NECO_CANCEL_ASYNC      1
+   224→#define NECO_CANCEL_INLINE     2
+   225→#define NECO_CANCEL_ENABLE     3
+   226→#define NECO_CANCEL_DISABLE    4
+   231→#define neco_cleanup_push(routine, arg) {char __neco_handler[32]={0};\
+   233→#define neco_cleanup_pop(execute) __neco_c1(execute);}
    241→/// @defgroup Random Random number generator
       →…
    244→#define NECO_CSPRNG 0 // Cryptographically secure pseudorandom number generator
-   247→int neco_rand_setseed(int64_t seed, int64_t *oldseed);
-   248→int neco_rand(void *data, size_t nbytes, int attr);
-   249→int neco_rand_dl(void *data, size_t nbytes, int attr, int64_t deadline);
+   245→#define NECO_PRNG   1 // Pseudorandom number generator (non-crypto, faster)
    257→/// @defgroup Signals Signals
-      →…
+   258→/// Allows for signals, such as SIGINT (Ctrl-C), to be intercepted or ignored.
+   259→/// @{
    261→int neco_signal_watch(int signo);
-   262→int neco_signal_wait(void);
-   263→int neco_signal_wait_dl(int64_t deadline);
-   264→int neco_signal_unwatch(int signo);
    272→/// @defgroup Worker Background worker
-      →…
+   273→/// Run arbitrary code in a background worker thread
+   274→/// @{
    276→int neco_work(int64_t pin, void(*work)(void *udata), void *udata);
    284→/// @defgroup Stats Stats and information
       →…
    287→typedef struct neco_stats { …
-   301→int neco_getstats(neco_stats *stats);
-   302→int neco_is_main_thread(void);
-   303→const char *neco_switch_method(void);
    311→/// @defgroup GlobalFuncs Global environment
-      →…
+   312→/// @{
    314→void neco_env_setallocator(void *(*malloc)(size_t), void *(*realloc)(void*, size_t), void (*free)(void*));
-   315→void neco_env_setpaniconerror(bool paniconerror);
-   316→void neco_env_setcanceltype(int type);
-   317→void neco_env_setcancelstate(int state);
    325→/// @defgroup Time Time
       →…
    341→#define NECO_NANOSECOND  INT64_C(1)
-   348→int64_t neco_now(void);
+   342→#define NECO_MICROSECOND INT64_C(1000)
+   343→#define NECO_MILLISECOND INT64_C(1000000)
+   344→#define NECO_SECOND      INT64_C(1000000000)
+   345→#define NECO_MINUTE      INT64_C(60000000000)
+   346→#define NECO_HOUR        INT64_C(3600000000000)
    356→/// @defgroup ErrorFuncs Error handling
       →…
    360→#define NECO_OK              0  ///< Successful result (no error)
-   380→const char *neco_strerror(ssize_t errcode);
-   381→int neco_lasterr(void);
-   382→int neco_gai_lasterr(void);
-   383→int neco_panic(const char *fmt, ...);
+   361→#define NECO_ERROR          -1  ///< System error (check errno)
+   362→#define NECO_INVAL          -2  ///< Invalid argument
+   363→#define NECO_PERM           -3  ///< Operation not permitted
+   364→#define NECO_NOMEM          -4  ///< Cannot allocate memory
+   365→#define NECO_EOF            -5  ///< End of file or stream (neco_stream_*)
+   366→#define NECO_NOTFOUND       -6  ///< No such coroutine (neco_cancel)
+   367→#define NECO_NOSIGWATCH     -7  ///< Not watching on a signal
+   368→#define NECO_CLOSED         -8  ///< Channel is closed
+   369→#define NECO_EMPTY          -9  ///< Channel is empty (neco_chan_tryrecv)
+   370→#define NECO_TIMEDOUT      -10  ///< Deadline has elapsed (neco_*_dl)
+   371→#define NECO_CANCELED      -11  ///< Operation canceled (by neco_cancel)
+   372→#define NECO_BUSY          -12  ///< Resource busy (mutex_trylock)
+   373→#define NECO_NEGWAITGRP    -13  ///< Negative waitgroup counter
+   374→#define NECO_GAIERROR      -14  ///< Error with getaddrinfo (check neco_gai_error)
+   375→#define NECO_UNREADFAIL    -15  ///< Failed to unread byte (neco_stream_unread_byte)
+   376→#define NECO_PARTIALWRITE  -16  ///< Failed to write all data (neco_stream_flush)
+   377→#define NECO_NOTGENERATOR  -17  ///< Coroutine is not a generator (neco_gen_yield)
+   378→#define NECO_NOTSUSPENDED  -18  ///< Coroutine is not suspended (neco_resume)
    391→/// @defgroup Streams Streams and Buffered I/O
       →…
    396→typedef struct neco_stream neco_stream …
-   414→ssize_t neco_stream_buffered_write_size(neco_stream *stream);
-   442→////////////////////////////////////////////////////////////////////////////////
-      →…
-   446→void __neco_c0(void*,void(*)(void*),void*); 
-   447→void __neco_c1(int);
-   448→void __neco_exit_prog(int);
+   427→#define neco_main \
+   453→#define EAI_SYSTEM 11
 
 examples/README.md
      1→# Neco examples 
+     3→This directory contains various example of using Neco.
+     4→
+     5→Also check out the [Bluebox](https://github.com/tidwall/bluebox) project for a
+     6→complete networking example, including benchmarks.
 
 docs/README.md
      1→# Neco Documentation
+
+neco.c
+   294→#define LLCO_NOASM
+  1067→enum llco_stack_grows …
+  1814→struct sco_link …
+  2883→#define NECO_POLL_DISABLED
+  2957→#define pwhere(str) \
+  2963→#define unreachable() \
+  2970→#define must(cond) \
+  3248→enum evkind …
+  3321→enum cokind …
+  3453→#define error_guard(ret) \
+  3466→#define async_error_guard(ret) \
+  3570→struct runtime …
+  5718→struct neco_chan …
+  7082→struct neco_mutex …
+
+tests/README.md
+     1→# Testing
+    16→### Examples
+
+docs/assets/
+
+docs/tools/

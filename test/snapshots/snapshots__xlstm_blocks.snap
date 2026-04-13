@@ -42,12 +42,7 @@ slstm/cell.py
    270→    def __repr__ …
    300→    def parameters_to_dtype …
    324→    def head_dim …
-   327→    def _permute_input(self, x: torch.Tensor) -> torch.Tensor:
-   354→    def _permute_output(self, x: torch.Tensor) -> torch.Tensor:
    376→    def reset_parameters(self):
-   377→        """Resets this layer's parameters to their initial values."""
-   441→    def _zero_state(self, input: torch.Tensor) -> torch.Tensor:
-   471→    def _get_final_state(self, all_states: torch.Tensor) -> torch.Tensor:
    486→    def step …
    496→    def forward …
    509→class sLSTMCellCUDA …
@@ -55,18 +50,8 @@ slstm/cell.py
    537→def sLSTMCellFuncGenerator(training, config: sLSTMCellConfig):
    591→class sLSTMCell_vanilla …
    594→    def __init__ …
-   619→    def _recurrent_kernel_int2ext(
-   620→        self, recurrent_kernel_int: torch.Tensor
-   621→    ) -> torch.Tensor:
-   644→    def _bias_int2ext(self, bias_int: torch.Tensor) -> torch.Tensor:
    681→class sLSTMCell_cuda …
    684→    def __init__(self, config: sLSTMCellConfig, skip_backend_init: bool = False):
-   686→        skip device init is intended for converting models between hardware configurations / backends
-   687→        i.e. to store a model first and later convert it to a different backend form
-   708→    def _recurrent_kernel_int2ext(
-   709→        self, recurrent_kernel_int: torch.tensor
-   710→    ) -> torch.Tensor:
-   735→    def _bias_int2ext(self, bias_int: torch.Tensor) -> torch.Tensor:
    777→class sLSTMCell …
    780→    def __new__ …
 
@@ -134,8 +119,19 @@ slstm/src/cuda/slstm.h
 
 slstm/src/util/blas.h
     27→template <typename T> struct blas { …
+    52→cublasStatus_t cublasHgemmsb(cublasHandle_t handle, cublasOperation_t transa,
+    60→cublasStatus_t cublasSgemmsb(cublasHandle_t handle, cublasOperation_t transa,
+    67→cublasStatus_t cublasDgemmsb(cublasHandle_t handle, cublasOperation_t transa,
+    75→cublasStatus_t cublasHgemv2(cublasHandle_t handle, cublasOperation_t trans,
+    80→cublasStatus_t cublasHgemv3(cublasHandle_t handle, cublasOperation_t trans,
+    85→cublasStatus_t cublasHgemv(cublasHandle_t handle, cublasOperation_t trans,
+    90→cublasStatus_t cublasHgemm2(cublasHandle_t handle, cublasOperation_t transa,
     97→cublasStatus_t cublasHgemm3(cublasHandle_t handle, cublasOperation_t transa,
+   104→void initVector_d(cudaStream_t stream, double *data, int size, double value);
+   105→void initVector_f(cudaStream_t stream, float *data, int size, float value);
    106→void initVector_h(cudaStream_t stream, __half *data, int size, __half value);
+   132→cublasStatus_t cublasBgemv(cublasHandle_t handle, cublasOperation_t trans,
+   139→cublasStatus_t
    147→cublasStatus_t cublasBgemmsb(cublasHandle_t handle, cublasOperation_t transa,
    156→void initVector_b(cudaStream_t stream, __nv_bfloat16 *data, int size,
 
@@ -159,9 +155,9 @@ slstm/src/util/support.h
 
 slstm/src/cuda_init.py
     14→LOGGER …
-    17→def defines_to_cflags(defines=Union[dict[str, Union[int, str]], Sequence[tuple[str, Union[str, int]]]]):
+    17→def defines_to_cflags …
     42→EXTRA_INCLUDE_PATHS …
-    60→def load(*, name, sources, extra_cflags=(), extra_cuda_cflags=(), **kwargs):
+    60→def load …
 
 slstm/src/vanilla/__init__.py
     11→slstm_pointwise_function_registry …

@@ -27,6 +27,8 @@ aho_corasick.h
     27→typedef struct ac_trie ac_trie_t …
     29→// Build the Aho-Corasick Trie from search parameters
     30→ac_trie_t *ac_trie_build(const search_params_t *params);
+    32→// Free the Aho-Corasick Trie
+    33→void ac_trie_free(ac_trie_t *trie);
     35→// Check if the root node of the trie has any outputs (for empty pattern matching)
     36→bool ac_trie_root_has_outputs(const ac_trie_t *trie);
     38→// Aho-Corasick search function declaration
@@ -64,29 +66,37 @@ krep.h
    132→typedef struct …
    145→/* --- Thread Pool API --- */
    146→thread_pool_t *thread_pool_init(int num_threads);
+   147→bool thread_pool_submit(thread_pool_t *pool, void *(*func)(void *), void *arg);
+   148→void thread_pool_wait_all(thread_pool_t *pool);
    149→void thread_pool_destroy(thread_pool_t *pool);
+   154→ * @brief Searches a single file for the given pattern(s). Handles multithreading.
+      →…
+   161→int search_file(const search_params_t *params, const char *filename, int requested_thread_count);
+   164→ * @brief Searches a string in memory for the given pattern(s) (single-threaded).
+      →…
+   170→int search_string(const search_params_t *params, const char *text);
    173→ * @brief Recursively searches a directory for the given pattern(s).
-   174→ *
-   175→ * @param base_dir The starting directory path.
-   176→ * @param params Search parameters including patterns and options.
-   177→ * @param thread_count Number of threads to use within file searches.
-   178→ * @return The total number of errors encountered during the recursive search.
+      →…
    180→int search_directory_recursive(const char *base_dir, const search_params_t *params, int thread_count);
    182→/* --- Match result management functions --- */
    183→match_result_t *match_result_init(uint64_t initial_capacity);
+   184→bool match_result_add(match_result_t *result, size_t start_offset, size_t end_offset);
+   185→void match_result_free(match_result_t *result);
+   186→bool match_result_merge(match_result_t *dest, const match_result_t *src, size_t chunk_offset);
    189→ * @brief Prints matching lines or parts based on the provided results and parameters.
-   190→ *
-   191→ * Handles color highlighting, line numbering, and the '-o' (only matching) option.
-   192→ *
-   193→ * @param filename The name of the file being searched (or NULL for stdin/string).
-   194→ * @param text The full text content.
-   195→ * @param text_len The length of the text content.
-   196→ * @param result A pointer to the match_result_t structure containing match positions.
-   197→ * @param params A pointer to the search parameters, including max_count.
-   198→ * @return The number of items (lines or matches) printed.
+      →…
    200→size_t print_matching_items(const char *filename, const char *text, size_t text_len, const match_result_t *result, const search_params_t *params);
    202→// Print usage information
    203→void print_usage(const char *program_name);
+   205→/* --- Internal Search Algorithm Declarations (Updated Signature) --- */
+   207→uint64_t boyer_moore_search(const search_params_t *params, const char *text_start, size_t text_len, match_result_t *result);
+   208→uint64_t kmp_search(const search_params_t *params, const char *text_start, size_t text_len, match_result_t *result);
+   209→uint64_t regex_search(const search_params_t *params, const char *text_start, size_t text_len, match_result_t *result);
+   210→uint64_t memchr_search(const search_params_t *params, const char *text_start, size_t text_len, match_result_t *result);
+   211→uint64_t memchr_short_search(const search_params_t *params, const char *text_start, size_t text_len, match_result_t *result); // New function for short patterns
+   215→uint64_t simd_sse42_search(const search_params_t *params, const char *text_start, size_t text_len, match_result_t *result);
+   219→uint64_t simd_avx2_search(const search_params_t *params, const char *text_start, size_t text_len, match_result_t *result);
+   223→uint64_t simd_avx512_search(const search_params_t *params, const char *text_start, size_t text_len, match_result_t *result);
    227→uint64_t neon_search(const search_params_t *params, const char *text_start, size_t text_len, match_result_t *result);
    230→/* --- Helper Functions --- */
    231→bool memory_equals_case_insensitive(const unsigned char *s1, const unsigned char *s2, size_t n);
@@ -94,18 +104,10 @@ krep.h
    233→search_func_t select_search_algorithm(const search_params_t *params);
    234→const char *get_algorithm_name(search_func_t func);
    271→ * @brief Find the start of the line containing the given position.
-   272→ *
-   273→ * @param text Pointer to the text buffer.
-   274→ * @param max_len Maximum length of the text buffer.
-   275→ * @param pos Position within the text to find the containing line start.
-   276→ * @return Position of the start of the line.
+      →…
    278→size_t find_line_start(const char *text, size_t max_len, size_t pos);
    281→ * @brief Find the end of the line containing the given position.
-   282→ *
-   283→ * @param text Pointer to the text buffer.
-   284→ * @param text_len Length of the text buffer.
-   285→ * @param pos Position within the text to find the containing line end.
-   286→ * @return Position of the end of the line (index of the newline or text length).
+      →…
    288→size_t find_line_end(const char *text, size_t text_len, size_t pos);
    298→static inline bool is_word_char(char c)
    299→{
@@ -114,20 +116,7 @@ krep.h
 
 test/test_krep.h
     16→#define TESTING
-    33→uint64_t regex_search_test_positions(const char *text_start, size_t text_len, const regex_t *compiled_regex,
-    39→void test_basic_regex(void);
-    62→search_params_t create_literal_params(const char *pattern, bool case_sensitive, bool count_lines, bool only_match);
-    75→search_params_t create_regex_params(const char *pattern, bool case_sensitive, bool count_lines, bool only_match);
-    84→void cleanup_params(search_params_t *params);
-
-aho_corasick.c
-    17→typedef struct ac_node …
-    26→struct ac_trie …
 
 krep.c
-    76→// Constants
-    77→#define MAX_PATTERN_LENGTH 1024
-    92→// Compiler hints for better optimization
-    93→#define LIKELY(x)   __builtin_expect(!!(x), 1)
   3146→typedef struct …
   3154→typedef struct gitignore …

@@ -1144,7 +1144,15 @@ fn item_identifier<'a>(node: Node, source: &'a str) -> &'a str {
         return text.trim();
     }
     if let Some(decl) = node.child_by_field_name("declarator") {
-        let found = ast::find_descendant_of_kind(decl, "type_identifier")
+        // For C/C++ function declarations, the declarator tree may be
+        // pointer_declarator → function_declarator → identifier, with
+        // type_identifiers hiding in the parameter_list. Extract the
+        // name from function_declarator's own declarator field to avoid
+        // picking up a parameter type as the function name.
+        let func_name = ast::find_descendant_of_kind(decl, "function_declarator")
+            .and_then(|fd| fd.child_by_field_name("declarator"));
+        let found = func_name
+            .or_else(|| ast::find_descendant_of_kind(decl, "type_identifier"))
             .or_else(|| ast::find_descendant_of_kind(decl, "identifier"));
         if let Some(n) = found
             && let Ok(text) = n.utf8_text(source.as_bytes())
