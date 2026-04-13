@@ -74,9 +74,11 @@ The new output just shows `macro_rules! bail …` and `macro_rules! anyhow …`.
 
 ## 6. README body content dropped — only headings shown
 
-**Affected snapshots:** bareiron, commander, d2ts, d2ts_d2ts, log, mcphost, mdbook, mdbook_guide_src, pluggy, semver, soluna, sps, sqlite_vec, toasty
+**Affected snapshots:** bareiron, commander, d2ts, d2ts_d2ts, log, mcphost, mdbook, mdbook_guide_src, pluggy, semver, soluna, sps, sqlite_vec, toasty, typeguard
 
 The output shows README.md with only headings — zero body content. The pre-rewrite output showed introductory sections that tell the reader what the project is.
+
+In typeguard, the README.rst (49 lines) explains the library's purpose (runtime type checking for PEP 484 annotations), the two principal approaches (check_type function vs code instrumentation), and the two instrumentation options (@typechecked vs import hook). The pre-rewrite showed the entire file. The new output shows just the bare filename with zero content — even worse than heading-only, because RST has no tree-sitter parser. Additionally, 7 docs/*.rst files (api.rst, extending.rst, features.rst, index.rst, userguide.rst, versionhistory.rst, contributing.rst) all render as bare filenames for the same reason. The old output showed headings and body for each (e.g., api.rst showed "API reference" + "Type checking" section, userguide showed "User guide" + "Checking types directly" section). That's 8 RST files (README + 7 docs) consuming 8 file headers for zero content.
 
 In pluggy, the README.rst contains a complete working example (69 lines in the pre-rewrite output) demonstrating the entire hook specification and implementation API — `HookspecMarker`, `HookimplMarker`, `PluginManager`, plugin registration, and hook calling. This is the single best introduction to what pluggy is and how to use it. The new output shows zero README content. The budget goes instead to CLAUDE.md (~50 lines of AI config, see issue #8) and pyproject.toml towncrier type definitions (~30 lines of repetitive `[[tool.towncrier.type]]` sections).
 
@@ -548,7 +550,7 @@ The `FileCategory::Example` factor (0.35×) is appropriate for most projects but
 
 ## 28. Python class bodies never shown — no ClassBody in taxonomy
 
-**Affected snapshots:** swarm (likely all Python fixtures with dataclasses/Pydantic models)
+**Affected snapshots:** swarm, typeguard (likely all Python fixtures with dataclasses/Pydantic models)
 
 `TsGroupKey` has `StructBody` (base_value 1.2) and `EnumBody` (1.5) but no `ClassBody`. Python class field definitions live in the class body — for Pydantic models and dataclasses, the fields ARE the class API. In swarm's `types.py`, the old output showed:
 
@@ -570,6 +572,15 @@ class Response(BaseModel):
 The new output shows only `class Agent …`, `class Response …`, `class Result …`. For an agent framework, seeing Agent's 6 fields (name, model, instructions, functions, tool_choice, parallel_tool_calls) is essential to understanding the API — it's the equivalent of a Rust struct's field definitions, which get StructBody at 1.2.
 
 This also interacts with #22 (Python docstrings not detected): classes are both undocumented (0.5× penalty) and bodyless, so the reader gets only a class name with no fields, no docstring, and no type information.
+
+In typeguard, `_config.py` contains three classes whose bodies are the core configuration API:
+- `ForwardRefPolicy(Enum)` — 3 values: ERROR, WARN, IGNORE
+- `CollectionCheckStrategy(Enum)` — 2 values: FIRST_ITEM, ALL_ITEMS
+- `TypeCheckConfiguration` dataclass — 4 fields with defaults: forward_ref_policy, typecheck_fail_callback, collection_check_strategy, debug_instrumentation
+
+The pre-rewrite showed all enum values and dataclass fields with defaults (~25 lines). The new output shows only `class ForwardRefPolicy …`, `class CollectionCheckStrategy …`, `class TypeCheckConfiguration …`. For a config module, the options and their defaults ARE the API — a reader seeing just class names doesn't know what policies exist or what can be configured.
+
+Similarly, `_transformer.py`'s `TransformMemo` dataclass (15 fields including node, parent, path, return_annotation, yield_annotation, send_annotation, is_async, local_names, etc.) was shown in full in the old output (~24 lines) but is collapsed to `class TransformMemo …` in the new output. `AnnotationTransformer.type_substitutions` (dict mapping builtins to typing equivalents) was also shown in the old output.
 
 ## 29. Repetitive error submodule files displace higher-value content
 
@@ -632,3 +643,13 @@ Yet the output shows all 3 mock files with struct bodies (`mock.Mock`), construc
 The pre-rewrite output showed the same ~82 lines of mock content, so the mock visibility is not a regression. But combined with the rewrite's regression on core content (interfaces collapsed to names per #9, errors collapsed to `var …`), the ratio has inverted: the old output was 114 core + 82 mock (58/42%), the new output is 34 core + 82 mock (29/71%). A reader of the new output learns more about mock boilerplate structure than about the actual domain model.
 
 Either the test + generated factors are not stacking multiplicatively, or one of the detection mechanisms is not triggering for these files. The expected behavior is that generated test mock files should be suppressed to at most a bare filename mention.
+
+## 33. Python `__init__.py` re-exports shown in full — redundant with per-module listings
+
+**Affected snapshots:** typeguard
+
+In typeguard, `__init__.py` contains 23 re-export lines (`from ._checkers import TypeCheckerCallable as TypeCheckerCallable`, etc.) that define the package's public API. The new output shows all 23 lines (~350 tokens), consuming ~9% of the 4000-token budget. The pre-rewrite showed only the non-import symbols (`config: TypeCheckConfiguration` and `def __getattr__`).
+
+The re-exports are valuable in isolation — they tell a reader what `import typeguard` provides. But they're almost entirely redundant with the per-module listings already shown: every re-exported symbol (`check_type`, `typechecked`, `TypeCheckError`, etc.) appears in its source file's output. The 350 tokens would be far better spent on the empty README.rst (see #6) or the missing config enum values (see #28).
+
+The `from X import Y as Y` pattern is Python's explicit re-export convention. If precis detects this as `ImportedItems { first_party: true }` (base_value 1.0) without applying the reexport penalty, that explains the over-allocation. With `reexport_contribution()` (0.1×), the effective value should be low enough to suppress most of these. This is the inverse of #30 (Rust re-exports too aggressively suppressed) — Python re-exports not suppressed enough.
