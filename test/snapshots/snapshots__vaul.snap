@@ -2,6 +2,11 @@
 source: test/fixtures.rs
 expression: output
 ---
+README.md
+     1→> **Note**  
+     2→> This repo is unmaintained. I might come back to it at some point, but not in the near future. This was and always will be a hobby project and I simply don't have the time or will to work on it right now.
+     3→
+
 FUNDING.yml
      1→github: emilkowalski
 
@@ -327,10 +332,6 @@ tsconfig.json
     10→  "include": ["src"],
     11→}
 
-test/next.config.js
-     2→const nextConfig …
-     8→module.exports = nextConfig; …
-
 test/package.json
      2→  "name": "test",
      3→  "version": "0.1.0",
@@ -339,25 +340,15 @@ test/package.json
     11→  "devDependencies": {
     21→  "dependencies": {
 
-test/postcss.config.js
-     1→module.exports = { …
-
-test/tailwind.config.ts
-     3→const config …
-
 test/tsconfig.json
      2→  "compilerOptions": {
     32→  "include": [
     38→  "exclude": [
-
-test/tests/constants.ts
-     1→export const ANIMATION_DURATION …
-
-test/tests/helpers.ts
-     2→import { ANIMATION_DURATION } from './constants';
 
 test/public/
 
 test/src/
 
 test/src/app/
+
+test/tests/

@@ -2,6 +2,10 @@
 source: test/fixtures.rs
 expression: output
 ---
+downstream/README.md
+     1→This directory contains scripts for testing some downstream projects
+     2→against your current pluggy worktree.
+
 src/pluggy/__init__.py
      1→__all__ …
     32→def __getattr__(name: str) -> str:
@@ -342,6 +346,8 @@ scripts/towncrier-draft-to-file.py
      5→def main() -> int:
 
 docs/_static/
+
+docs/_static/img/
 
 docs/examples/
 

@@ -1,3 +1,6 @@
+use std::path::Path;
+
+use crate::classify::FileRole;
 use crate::Lang;
 
 /// Returns `(representative_node, end_row_inclusive)` for the file's
@@ -6,12 +9,16 @@ pub(super) fn detect_module_doc<'t>(
     root: tree_sitter::Node<'t>,
     source: &str,
     lang: Lang,
+    path: &Path,
 ) -> Option<(tree_sitter::Node<'t>, usize)> {
     let (_start_row, end_row, node) = match lang {
         Lang::Rust => detect_rust(root, source)?,
         Lang::Python => detect_python(root, source)?,
         Lang::Go => detect_go(root, source)?,
         Lang::Java => detect_java(root, source)?,
+        Lang::Markdown if FileRole::from_path(path) == FileRole::Readme => {
+            detect_markdown(root)?
+        }
         _ => return None,
     };
     Some((node, end_row))
@@ -137,6 +144,37 @@ fn detect_go<'t>(
     };
 
     Some((first.start_position().row, end_row, first))
+}
+
+fn is_heading_node(kind: &str) -> bool {
+    matches!(kind, "atx_heading" | "setext_heading")
+}
+
+fn detect_markdown<'t>(
+    root: tree_sitter::Node<'t>,
+) -> Option<(usize, usize, tree_sitter::Node<'t>)> {
+    let mut first_child = None;
+    let mut cursor = root.walk();
+    for child in root.children(&mut cursor) {
+        if first_child.is_none() {
+            first_child = Some(child);
+        }
+        if is_heading_node(child.kind()) {
+            return None;
+        }
+        if child.kind() == "section" {
+            let mut inner = child.walk();
+            if child.children(&mut inner).any(|gc| is_heading_node(gc.kind())) {
+                return None;
+            }
+        }
+    }
+    let first = first_child?;
+    let last_row = root.end_position().row;
+    if last_row == 0 {
+        return None;
+    }
+    Some((first.start_position().row, last_row, first))
 }
 
 fn detect_java<'t>(

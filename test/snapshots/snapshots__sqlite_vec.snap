@@ -43,7 +43,6 @@ bindings/python/extra_init.py
     19→    def register_numpy(db: Connection, name: str, array: npt.NDArray):
     20→        """ayoo"""
     44→    def register_numpy(db: Connection, name: str, array):
-    45→        raise Exception("numpy package is required for register_numpy")
 
 bindings/rust/src/lib.rs
      3→    pub fn sqlite3_vec_init();
@@ -287,6 +286,9 @@ sqlite-dist.toml
      1→[package]
     10→[targets]
 
+examples/nbc-headlines/README.md
+     1→- `headlines-2024.db`
+
 examples/simple-python/demo.py
      8→def serialize_f32(vector: List[float]) -> bytes:
 
@@ -311,8 +313,6 @@ examples/simple-ruby/
 examples/simple-rust/
 
 examples/simple-wasm/
-
-site/
 
 site/features/
 

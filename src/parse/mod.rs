@@ -41,7 +41,7 @@ pub fn extract_items<'t>(
 
     let mut items: Vec<(TsGroupKey, TsItem<'t>)> = Vec::new();
 
-    if let Some((node, end_row)) = module_doc::detect_module_doc(root, source, lang) {
+    if let Some((node, end_row)) = module_doc::detect_module_doc(root, source, lang, display_path) {
         items.push((
             TsGroupKey::ModuleDocFirst,
             TsItem {

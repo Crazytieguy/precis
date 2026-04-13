@@ -5,9 +5,9 @@
 
 **Partially fixed:** A 2× modifier boost for README h1 HeadingBody groups combined with a 12-line cap on markdown h1 body rendering fixed 9 of the 16 affected snapshots: commander, d2ts, d2ts_d2ts, mdbook, mdbook_guide_src, soluna, sps, sqlite_vec, toasty. These now show introductory README body content (project descriptions, status warnings, feature lists).
 
-**Remaining affected snapshots:** bareiron, log, mcphost, pluggy, semver, typeguard, vaul
+**Remaining affected snapshots:** bareiron, log, mcphost, pluggy, semver, typeguard
 
-The fix doesn't help these because: (a) their h1 body content is too short for the cap to reduce cost meaningfully (bareiron, log), (b) they use RST instead of markdown with no tree-sitter parser (pluggy, typeguard), (c) the body content still can't compete on ratio in larger workspaces (mcphost, semver), or (d) the README has no headings so no HeadingBody groups exist (vaul).
+The fix doesn't help these because: (a) their h1 body content is too short for the cap to reduce cost meaningfully (bareiron, log), (b) they use RST instead of markdown with no tree-sitter parser (pluggy, typeguard), or (c) the body content still can't compete on ratio in larger workspaces (mcphost, semver). The vaul case (headingless markdown README) was fixed by treating headingless markdown READMEs as module docs.
 
 In typeguard, the README.rst (49 lines) explains the library's purpose (runtime type checking for PEP 484 annotations), the two principal approaches (check_type function vs code instrumentation), and the two instrumentation options (@typechecked vs import hook). The pre-rewrite showed the entire file. The new output shows just the bare filename with zero content — even worse than heading-only, because RST has no tree-sitter parser. Additionally, 7 docs/*.rst files all render as bare filenames for the same reason.
 
@@ -15,7 +15,6 @@ In pluggy, the README.rst contains a complete working example (69 lines in the p
 
 In bareiron, the full introductory section (lines 1-11) was shown: project description ("Minimalist Minecraft server for memory-restrictive embedded systems"), design priorities, Minecraft/protocol version numbers, and a compatibility warning. The h1 body is ~8 lines — small enough that the 12-line cap doesn't reduce its cost, so the 2× boost alone isn't sufficient for it to win the budget competition.
 
-In vaul, the README is a 3-line deprecation notice (blockquote, no headings): "This repo is unmaintained. I might come back to it at some point, but not in the near future." This is a headingless markdown file — with no `Heading` groups, there are no `HeadingBody` groups to carry the text.
 
 
 ## 9. Type alias and const bodies missing from taxonomy (regression) [needs human review]
@@ -113,15 +112,9 @@ This is a pre-existing issue (the old output also omitted `internal/tools/`) but
 
 
 
-## 27. Example source files absent while library README dominates budget (regression)
+## ~~27. Example source files absent while library README dominates budget (resolved)~~
 
-**Affected snapshots:** swarm
-
-Swarm is an educational framework — the library itself is tiny (4 files, ~300 lines), and the examples ARE the core content. The old output showed function signatures from all 10 example directories: airline agent configs and tools, basic examples (handoff, context_variables, function_calling), personal_shopper database functions, support_bot query/email functions, triage_agent routing functions, weather_agent functions, and customer_service_streaming's full engine/task architecture. The new output shows only example README headings and folder entries, with 3 weather_agent `.py` files rendered completely empty (no content despite having functions like `get_weather`, `send_email`, and an Agent instantiation).
-
-Meanwhile, the README consumes ~173 lines of output with full code examples, the "Core Contributors" list (6 names), install instructions, and documentation tables — content that's less information-dense per token than the example source signatures it displaces. The old output also showed the full README but compensated by showing example source code.
-
-The `FileCategory::Example` factor (0.35×) is appropriate for most projects but harmful here. **Partially fixed:** the log file budget waste from #25 was addressed by classifying `logs/` as `FileCategory::Artifact` — the freed ~62 tokens now show function docstrings and signatures from 6 example directories (support_bot, personal_shopper, triage_agent). The remaining regression: 3 weather_agent files still render empty, README still dominates budget (~173 lines), and customer_service_streaming example content is still absent.
+Resolved through incremental fixes: weather_agent files now show function signatures (agents.py, evals.py), README is ~62 lines (17% of 368 total output), and 6 example directories show source content (support_bot, personal_shopper, triage_agent, basic, weather_agent, customer_service_streaming). The customer_service_streaming src/ engine architecture is absent but this is a reasonable tradeoff — showing breadth across 6 simpler examples builds a better mental model than going deep on one complex sub-project.
 
 
 ## 30. Rust lib.rs with `pub use` re-exports rendered empty in large workspaces [needs human review]
