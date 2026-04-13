@@ -673,3 +673,11 @@ The `from X import Y as Y` pattern is Python's explicit re-export convention. If
 The JSON query captures each top-level pair as a DataSection (base_value 0.8). With 1,837 entries all on line 1, the scheduler creates many groups but they all reference the same source line. The rendered output should show at least the truncated line 1, but nothing appears. Meanwhile, 18 bare SVG filenames consume ~36 tokens of the 200-token budget (see #25).
 
 This is the most important file in the fixture — a reader seeing only `emojis.json` with no content doesn't know it's an emoji mapping, how many entries it has, or what its structure looks like.
+
+## 35. Third-party imports dropped in small single-file projects despite ample budget (regression)
+
+**Affected snapshots:** xxhash_xxhsum
+
+`xxhsum/xxhsum.go` is a 50-line single-file project with a 2000-token budget. The pre-rewrite output (470 tokens) showed the import block including `github.com/cespare/xxhash/v2` — the core dependency that tells a reader this is a wrapper around the xxhash library. The new output drops the entire import block (lines 3-9), showing only the three functions (lines 11-50).
+
+Root cause: `Import { first_party: false, .. }` has base_value 0.0 in heuristics.rs. The comment says "3rd party imports only via dependent_siblings" — but in a single-file project there are no siblings, so the import can never be surfaced. The budget is vastly underutilized (the old output used ~24% of budget) yet the scheduler cannot select the import because its value is zero regardless of remaining capacity.
