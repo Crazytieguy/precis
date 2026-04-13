@@ -108,7 +108,7 @@ The combined effect: CONTRIBUTING.md headings get base_value 1.0 (h1) / 0.6 (h2)
 
 ## 9. Type alias and const bodies missing from taxonomy (regression)
 
-**Affected snapshots:** cmdk, cmdk_cmdk_src, enclosed, enclosed_crypto, enclosed_lib, go_multierror, htmy, ky, ky_source_errors
+**Affected snapshots:** cmdk, cmdk_cmdk_src, enclosed, enclosed_crypto, enclosed_lib, go_multierror, htmy, ky, ky_source_errors, mcphost_sdk
 
 The taxonomy has Body groups for functions (`FunctionBody`), structs (`StructBody`), and enums (`EnumBody`), but none for type aliases, const declarations, interfaces, classes, or traits. The `*Name` rendering truncates after the identifier, so the entire definition is lost.
 
@@ -311,3 +311,17 @@ The pre-rewrite output showed the full `Level` body with all variants and doc co
 `EnumBody` has the highest base_value of any TsGroupKey (1.5), but the body is ~24 lines including per-variant doc comments. Many individual `FunctionName` entries (base_value 1.0 each, ~2 tokens each) have competitive or better value/cost ratios, so the scheduler fills the budget with small method entries before committing to the larger enum body block.
 
 Additional budget pressure comes from `src/__private_api.rs` (~20 lines), a file whose module doc starts with "WARNING: this is not part of the crate's public API and is subject to change at any time." This file is not flagged by `is_deprioritized_file()` because no rule matches `__`-prefixed source files. The old output also showed this file — it's not a regression, but the 20 lines would be better spent on the missing enum bodies.
+
+## 19. Go doc comments not detected for type declarations (regression)
+
+**Affected snapshots:** mcphost_sdk
+
+The Go tree-sitter query captures `type_spec` and `type_alias` as `@symbol`, but these are inner nodes within `type_declaration`. Doc comments in Go are siblings of `type_declaration`, one AST level above. `compute_doc_start_line` checks `node.prev_named_sibling()`, which for `type_spec` finds nothing — there are no named siblings within `type_declaration` before it.
+
+Two effects:
+
+1. **Doc comments never shown.** `documented` is always `false` for Go type declarations, so `StructDocFirst`, `InterfaceDocFirst`, and `TypeAliasDocFirst` groups are never spawned. In mcphost_sdk, the MCPHost struct doc ("provides programmatic access to mcphost functionality...") and Options struct doc ("configures MCPHost creation with optional overrides...") are both lost. The pre-rewrite output showed all four type doc comments in this fixture.
+
+2. **Type declarations deprioritized.** `documented: false` applies a 0.5× `documented_contribution` penalty, making type declarations compete at half their natural value.
+
+Functions and methods are unaffected — `function_declaration` and `method_declaration` ARE top-level nodes in Go's tree-sitter grammar, so their doc comments are reachable via `prev_named_sibling()`. The asymmetry is visible in mcphost_sdk's output: all 8 method doc comments are shown while all 4 type doc comments are missing.
