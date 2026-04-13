@@ -84,9 +84,9 @@ This is the highest-value content in a repo for building a mental model. A reade
 
 ## 7. C `#define` values truncated while verbose comments consume budget
 
-**Affected snapshots:** bareiron
+**Affected snapshots:** bareiron, neco
 
-In `include/globals.h`, the output shows comment lines above each `#define` but truncates the actual values:
+In bareiron's `include/globals.h`, the output shows comment lines above each `#define` but truncates the actual values:
 ```
     18→// TCP port, Minecraft's default is 25565
     19→#define PORT …
@@ -95,6 +95,15 @@ In `include/globals.h`, the output shows comment lines above each `#define` but 
 ```
 
 The pre-rewrite showed values directly: `#define PORT 25565`, `#define VIEW_DISTANCE 2`. The pre-rewrite approach is more compact (one line vs two) and often more informative — `VIEW_DISTANCE 2` instantly conveys the server's minimalist constraints, while `#define VIEW_DISTANCE …` tells you nothing beyond the name. globals.h uses ~80 output lines (~¼ of the 4000-token budget), much of it on comments that restate the `#define` name.
+
+In neco's `neco.h`, the 19 error codes and 6 time constants are all truncated:
+```
+   360→#define NECO_OK …
+   361→#define NECO_ERROR …
+   341→#define NECO_NANOSECOND …
+```
+
+The pre-rewrite showed complete lines with values and trailing doxygen descriptions: `#define NECO_OK 0 ///< Successful result (no error)`, `#define NECO_SECOND INT64_C(1000000000)`. For a C library, error codes ARE the error model — `NECO_OK 0` tells you success returns zero, `NECO_TIMEDOUT -10` tells you specific failure modes. The time constant values tell you the API uses nanoseconds. Truncating these to just names removes the most informative part of each line.
 
 ## 8. CommunityHealth files not deprioritized at root level
 
@@ -316,7 +325,7 @@ Root cause: the 2.5× `header_factor` doesn't compensate for krep.c's 16:1 line 
 
 ## 18. Struct and enum bodies elided — many small entries beat fewer large ones
 
-**Affected snapshots:** log, mdbook
+**Affected snapshots:** log, mdbook, neco
 
 Large body groups (StructBody at base_value 1.2, EnumBody at 1.5) lose budget to many small FunctionName entries (base_value 1.0, ~2 tokens each). The per-token value/cost ratio strongly favors function names, so the scheduler fills the budget with hundreds of cheap name entries before committing to any multi-line body block.
 
@@ -336,6 +345,8 @@ In mdbook, every key struct and enum body is truncated to `…` while the pre-re
 - `SummaryItem` enum (Link, Separator, PartTitle) — 8 lines with variant docs
 
 These types define mdBook's entire data model and plugin API. A reader seeing `pub struct MDBook …` and `pub struct RenderContext …` learns nothing about what data is available. The pre-rewrite output showed all of these with full field-level documentation — the struct bodies alone were ~113 lines that built a complete mental model of the architecture.
+
+In neco's `neco.h`, the `neco_stats` typedef struct body is truncated from 12 lines to one: `287→typedef struct neco_stats { …`. The pre-rewrite showed all 11 fields with doxygen comments (`coroutines`, `sleepers`, `evwaiters`, `sigwaiters`, `senders`, `receivers`, `locked`, `waitgroupers`, `condwaiters`, `suspended`, `workers`). This struct tells a reader exactly what runtime telemetry is available — it's the only struct in the API whose fields are user-facing. The budget instead goes to showing all ~90 function declarations in the header, many truncated to just names (e.g., `int neco_yield …`).
 
 Additional budget pressure in log comes from `src/__private_api.rs` (~20 lines), a file whose module doc starts with "WARNING: this is not part of the crate's public API and is subject to change at any time." This file is not flagged by `is_deprioritized_file()` because no rule matches `__`-prefixed source files. The old output also showed this file — it's not a regression, but the 20 lines would be better spent on the missing enum bodies.
 
