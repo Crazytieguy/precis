@@ -36,7 +36,7 @@ In `error.rs`, five `pub(crate) fn construct_from_*` methods and `unsafe fn cons
 
 ## 4. Cargo.toml content lines lost vs pre-rewrite
 
-**Affected snapshots:** anyhow
+**Affected snapshots:** anyhow, sps_core
 
 The pre-rewrite output showed actual package metadata:
 ```
@@ -46,6 +46,8 @@ The pre-rewrite output showed actual package metadata:
 ```
 
 The new output shows only section headers (`[package]`, `[features]`, `[dependencies]`). For a library, the description and dependency list provide useful context about what the crate does and what it depends on.
+
+In sps_core, the old output showed 24 lines of Cargo.toml including the full package metadata (name, version, description, authors, license, repository) and all 14 dependencies (sps-net, sps-common, anyhow, tokio, reqwest, serde, etc.). The new output shows only `[package]` (line 1) and `[dependencies]` (line 10).
 
 ## 5. Macro doc summaries lost vs pre-rewrite
 
@@ -466,3 +468,18 @@ The pre-rewrite output was more compact, showing only function signatures:
 Compare `docs/app.lua`: old output was 3 lines (3 function signatures), new output is 10 lines (3 function signatures + 3 doc markers + 3 truncation markers + 1 `local app …`). The 3.3× expansion applies across all 20 docs/ files.
 
 The `---` line is semantically equivalent to Python's opening `"""` or Rust's `///` prefix — it's a comment syntax marker, not a summary. The actual summary content (e.g., "Quit the application.") is on lines 2+ of the doc block. A fix could either skip `---`-only doc first lines or look for the first line with actual text content.
+
+## 25. Bare-filename repetitive files waste budget while structural files are empty
+
+**Affected snapshots:** sps_core
+
+In `src/install/cask/artifacts/`, 21 of 24 `.rs` files are shown as bare filenames (no content). These files follow a uniform pattern — each contains a single `pub fn install_X` function — so once the pattern is clear from 2-3 examples, additional bare filenames add no understanding. Collectively they consume ~42 tokens for information already implied by the directory structure.
+
+Meanwhile, structural files that orient the reader on crate organization are shown empty:
+
+- `src/lib.rs` (crate root, 20 lines) — declares all top-level modules (`pub mod build/check/install/pipeline/uninstall/upgrade/utils`) and re-exports `UninstallOptions`. Shown with no content.
+- 6 `mod.rs` files (`build`, `check`, `pipeline`, `uninstall`, `upgrade`, `utils`) — each contains `pub mod` declarations. All shown as bare filenames.
+
+The old (pre-rewrite) output showed mod.rs files with their declarations (e.g., `build/mod.rs` → `pub mod compile; pub mod env;`, `check/mod.rs` → `pub mod installed; pub mod update;`, `install/cask/artifacts/mod.rs` → all 23 `pub mod` declarations). It also showed each artifact file's `pub fn install_X` name. The old approach was more informative per token: mod.rs declarations revealed the crate's internal structure, and artifact function names at least confirmed the pattern.
+
+The root cause is that bare-filename entries have a non-zero rendering cost (~2 tokens each) but zero information value beyond "this file exists." In a directory with 24 similar files, the directory name itself conveys more than 21 individual bare filenames. Budget would be better spent showing lib.rs module declarations (~15 tokens) and mod.rs structures (~5-10 tokens each), which tell the reader how the crate is organized.
