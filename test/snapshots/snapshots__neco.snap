@@ -16,8 +16,11 @@ README.md
    299→## Example 8 (Create a server)
    344→## Example 9 (Echo server and client)
    431→## Example 10 (Suspending and resuming a coroutine)
+   469→### More examples
    473→## Platform notes
    498→## The scheduler
+   504→### Fast context switching
+   511→### Thread local runtime
 
 neco.h
     30→/// @defgroup BasicOperations Basic operations
@@ -36,6 +39,8 @@ neco.h
     46→int64_t neco_getid(void);
     47→int64_t neco_lastid(void);
     48→int64_t neco_starterid(void);
+    55→/// @defgroup Channels Channels
+      →…
     61→typedef struct neco_chan neco_chan …
     72→int neco_chan_close(neco_chan *chan);
     73→int neco_chan_select(int nchans, ...);
@@ -43,15 +48,23 @@ neco.h
     76→int neco_chan_selectv_dl(int nchans, neco_chan *chans[], int64_t deadline);
     77→int neco_chan_tryselect(int nchans, ...);
     79→int neco_chan_case(neco_chan *chan, void *data);
+    86→/// @defgroup Generators Generators
+      →…
     90→typedef struct neco_gen neco_gen …
     95→int neco_gen_release(neco_gen *gen);
     96→int neco_gen_yield(void *data);
     97→int neco_gen_yield_dl(void *data, int64_t deadline);
    100→int neco_gen_close(neco_gen *gen);
+   107→/// @defgroup Mutexes Mutexes
+      →…
    113→typedef struct { int64_t _0; intptr_t _1[5]; } neco_mutex …
    124→int neco_mutex_tryrdlock(neco_mutex *mutex);
+   127→/// @defgroup WaitGroups WaitGroups
+      →…
    135→typedef struct { int64_t _0; intptr_t _1[5]; } neco_waitgroup …
    142→int neco_waitgroup_wait_dl(neco_waitgroup *waitgroup, int64_t deadline);
+   145→/// @defgroup CondVar Condition variables
+      →…
    149→typedef struct { int64_t _0; intptr_t _1[5]; } neco_cond …
    156→int neco_cond_wait_dl(neco_cond *cond, neco_mutex *mutex, int64_t deadline);
    168→// wrappers for various posix operations.
@@ -95,6 +108,8 @@ neco.h
    272→/// @defgroup Worker Background worker
       →…
    276→int neco_work(int64_t pin, void(*work)(void *udata), void *udata);
+   284→/// @defgroup Stats Stats and information
+      →…
    287→typedef struct neco_stats { …
    301→int neco_getstats(neco_stats *stats);
    302→int neco_is_main_thread(void);
@@ -116,32 +131,20 @@ neco.h
    381→int neco_lasterr(void);
    382→int neco_gai_lasterr(void);
    383→int neco_panic(const char *fmt, ...);
+   391→/// @defgroup Streams Streams and Buffered I/O
+      →…
    396→typedef struct neco_stream neco_stream …
    414→ssize_t neco_stream_buffered_write_size(neco_stream *stream);
    442→////////////////////////////////////////////////////////////////////////////////
       →…
    446→void __neco_c0(void*,void(*)(void*),void*); 
-
-neco.c
-   294→#define LLCO_NOASM
-  1067→enum llco_stack_grows …
-  1814→struct sco_link …
-  2883→#define NECO_POLL_DISABLED
-  2957→#define pwhere(str) \
-  2963→#define unreachable() \
-  2970→#define must(cond) \
-  3248→enum evkind …
-  3321→enum cokind …
-  3453→#define error_guard(ret) \
-  3466→#define async_error_guard(ret) \
-  3570→struct runtime …
-  5718→struct neco_chan …
-  7082→struct neco_mutex …
-  7933→typedef struct neco_stream neco_stream …
+   447→void __neco_c1(int);
+   448→void __neco_exit_prog(int);
 
 examples/README.md
      1→# Neco examples 
 
 docs/README.md
+     1→# Neco Documentation
 
 tests/README.md

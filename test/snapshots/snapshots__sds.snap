@@ -29,6 +29,10 @@ README.md
    882→Embedding SDS into your project
    895→Using a different allocator for SDS
    911→Credits and license
+   914→SDS was created by Salvatore Sanfilippo and is released under the BDS two clause license. See the LICENSE file in this source distribution for more information.
+   915→
+   916→Oran Agra improved SDS version 2 by adding dynamic sized headers in order to
+   917→save memory for small strings and allow strings greater than 4GB.
 
 sds.h
     36→#define SDS_MAX_PREALLOC (1024*1024)
@@ -113,10 +117,8 @@ testhelp.h
 Makefile
 
 sds.c
-    39→#include "sds.h"
-    40→#include "sdsalloc.h"
-    44→static inline int sdsHdrSize(char type) {
-    60→static inline char sdsReqType(size_t string_size) {
+    44→static inline int sdsHdrSize …
+    60→static inline char sdsReqType …
     89→sds sdsnewlen(const void *init, size_t initlen) {
    149→sds sdsempty(void) {
    154→sds sdsnew(const char *init) {
@@ -139,8 +141,6 @@ sds.c
   1136→void *sds_malloc(size_t size) { return s_malloc(size); }
   1137→void *sds_realloc(void *ptr, size_t size) { return s_realloc(ptr,size); }
   1138→void sds_free(void *ptr) { s_free(ptr); }
-  1142→#include "testhelp.h"
-  1143→#include "limits.h"
   1145→#define UNUSED(x) (void)(x)
   1146→int sdsTest(void) {
   1325→int main(void) {

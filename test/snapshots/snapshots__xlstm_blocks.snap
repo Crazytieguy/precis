@@ -180,17 +180,18 @@ slstm/src/vanilla/lstm.py
 slstm/src/vanilla/slstm.py
      8→def slstm_forward_pointwise …
 
-slstm/src/cuda/lstm_pointwise.cu
+slstm/src/util/blas.cu
 
-slstm/src/cuda/slstm.cc
-   306→PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
+slstm/src/util/cuda_error.cu
 
-slstm/src/cuda/slstm_backward.cu
+slstm/src/util/inline_ops.cuh
 
-slstm/src/cuda/slstm_backward_cut.cu
+slstm/src/util/inline_ops_2bf16.cuh
 
-slstm/src/cuda/slstm_forward.cu
+slstm/src/util/inline_ops_2fp16.cuh
 
-slstm/src/cuda/slstm_pointwise.cu
+slstm/src/util/inline_ops_bf16.cuh
 
-slstm/src/cuda/slstm_pointwise.cuh
+slstm/src/util/inline_ops_fp16.cuh
+
+slstm/src/util/inline_print.cuh

@@ -436,11 +436,21 @@ pub fn is_header_extension(ext: &str) -> bool {
     matches!(ext, "h" | "hpp" | "hxx" | "hh")
 }
 
+pub fn is_c_implementation_extension(ext: &str) -> bool {
+    matches!(ext, "c" | "cpp" | "cxx" | "cc")
+}
+
 /// Check if a file path has a C/C++ header extension.
 pub fn is_header_file(path: &Path) -> bool {
     path.extension()
         .and_then(|e| e.to_str())
         .is_some_and(|ext| is_header_extension(&ext.to_ascii_lowercase()))
+}
+
+pub fn is_c_implementation_file(path: &Path) -> bool {
+    path.extension()
+        .and_then(|e| e.to_str())
+        .is_some_and(|ext| is_c_implementation_extension(&ext.to_ascii_lowercase()))
 }
 
 /// Compute per-file modifier properties used to partition files into groups.

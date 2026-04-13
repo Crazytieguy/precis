@@ -59,6 +59,10 @@ pub fn create_files_groups<'s>(
     sorted_roles.sort_by_key(|(role, _)| *role);
     let is_root_dir = dir == root;
 
+    let dir_has_headers = sorted_roles.iter().any(|(_, files)| {
+        files.iter().any(|f| classify::is_header_file(f))
+    });
+
     for (role, files) in sorted_roles {
         let mut partitions: HashMap<(bool, bool, bool, bool), Vec<PathBuf>> = HashMap::new();
         for file_path in files {
@@ -75,6 +79,10 @@ pub fn create_files_groups<'s>(
         {
             part_files.sort();
 
+            let has_companion_header = !is_header
+                && dir_has_headers
+                && part_files.iter().any(|f| classify::is_c_implementation_file(f));
+
             let contribution = heuristics::files_contribution(
                 role,
                 is_root_dir,
@@ -82,6 +90,7 @@ pub fn create_files_groups<'s>(
                 is_type_declaration,
                 is_header,
                 is_test_file,
+                has_companion_header,
             );
 
             result.push(Group::Files(FilesGroup {

@@ -87,27 +87,11 @@ Two contributing causes:
 2. **Budget redistribution without architectural weighting.** The old output over-allocated to `packages/app-client/` (~230 lines, mostly shadcn-solid UI components). The new output correctly reduced that, but the freed budget spread evenly across all packages (more crypto, CLI, and lib internals) rather than flowing to the server. The result: broader coverage with no single package covered deeply enough to convey its architecture. The server — which defines the entire REST API, storage abstraction, and auth flow — is the biggest casualty.
 
 
-## 17. C header file budget reduced — key API declarations and struct bodies lost (regression)
+## 17. C header file budget reduced — key API declarations and struct bodies lost (partially fixed)
 
-**Affected snapshots:** krep
+**Partially fixed:** Added a 0.3× companion-header penalty for C/C++ implementation files (.c/.cpp/.cxx/.cc) when header files exist in the same directory. krep.c dropped from ~54 output lines to ~6 (just 2 #define constants and 2 internal typedefs). The freed budget expanded krep.h's @brief doc comments from truncated `→…` to full @param/@return annotations. Also improved neco (gained @defgroup API organization markers) and soluna (gained struct field definitions in headers, lost ~100 lines of empty .c bare filenames).
 
-The rewrite dramatically shifted budget from `krep.h` (321 lines, the API header) to `krep.c` (5287 lines, the implementation). krep.h went from ~111 output lines to ~62, while krep.c went from ~15 to ~54. The result is a strictly worse mental model of the project.
-
-**Struct bodies lost.** The pre-rewrite output showed the complete `search_params_t` struct (30 lines) with all fields — pattern fields, search options (`case_sensitive`, `use_regex`, `whole_word`, etc.), compiled regex pointer, Aho-Corasick trie pointer, max_count. This is the single most important type in the codebase — every search function takes it. Similarly, `thread_data_t` (19 lines) and `match_position_t` (5 lines) were shown with all fields. The new output truncates all of these to just `typedef struct search_params …`.
-
-**15 function declarations lost.** The pre-rewrite output showed all 30 function declarations from krep.h. The new output shows only 15. Missing:
-
-- `search_file`, `search_string` — two of the three public API functions
-- `boyer_moore_search`, `kmp_search`, `regex_search`, `memchr_search`, `memchr_short_search` — the core search algorithm declarations
-- `simd_sse42_search`, `simd_avx2_search`, `simd_avx512_search` — SIMD variants
-- `thread_pool_submit`, `thread_pool_wait_all` — thread pool API
-- `match_result_add`, `match_result_free`, `match_result_merge` — result management
-
-These are replaced by `@brief` doc comment blocks (~12 lines of doc + ellipsis for functions already named) and section header comments (`/* --- Helper Functions --- */`).
-
-**The budget went to redundant krep.c content.** krep.c gained ~39 output lines: 30 `#define` lines (including 10 duplicated SIMD flags from issue #16) and function names that largely duplicate krep.h declarations. A reader seeing `1389→uint64_t regex_search …` in krep.c gains nothing if `regex_search` is already declared in krep.h — and loses information if the header declaration was dropped to make room.
-
-Root cause: the 2.5× `header_factor` doesn't compensate for krep.c's 16:1 line count advantage. krep.c's many ConstName groups (30 `#define` items at base_value 1.0 with sublinear scaling) pull substantial budget. In the old output, krep.c got 15 lines (2 constants + 2 gitignore struct bodies) and krep.h got 111 — this was the right distribution for a C project where the header IS the API.
+**Remaining:** krep.h still shows only ~15 of 30 function declarations (missing search_file, search_string, boyer_moore_search, kmp_search, regex_search, SIMD variants, thread_pool_submit/wait_all, match_result_add/free/merge). The freed budget went to expanded doc comments rather than additional declarations. Struct bodies (search_params_t, thread_data_t, match_position_t) are still truncated — this is covered by issue #18.
 
 ## 18. Struct and enum bodies elided — many small entries beat fewer large ones
 

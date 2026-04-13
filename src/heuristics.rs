@@ -127,6 +127,7 @@ pub fn files_contribution(
     is_type_declaration: bool,
     is_header: bool,
     is_test_file: bool,
+    has_companion_header: bool,
 ) -> f64 {
     let role_factor = match role {
         FileRole::Architecture | FileRole::Readme if is_root_dir => 1.5,
@@ -138,8 +139,9 @@ pub fn files_contribution(
     let type_declaration_factor = if is_type_declaration { 0.15 } else { 1.0 };
     let header_factor = if is_header { 2.5 } else { 1.0 };
     let test_file_factor = if is_test_file { 0.15 } else { 1.0 };
+    let companion_header_factor = if has_companion_header { 0.3 } else { 1.0 };
 
-    role_factor * deprioritized_factor * type_declaration_factor * header_factor * test_file_factor
+    role_factor * deprioritized_factor * type_declaration_factor * header_factor * test_file_factor * companion_header_factor
 }
 
 /// Modifier for generated files, applied to child TsGroups after source is read.

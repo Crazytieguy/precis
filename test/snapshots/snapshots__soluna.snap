@@ -29,11 +29,23 @@ asset/sprites.dl
 src/appevent.h
      2→#define soluna_app_event_h
      4→struct event_message …
+     5→	const char *typestr;
+     6→	int p1;
+     7→	int p2;
+     8→	int p3;
+     9→};
    115→static inline void …
 
 src/batch.h
      6→struct draw_primitive …
+     7→	int32_t x;		// sign bit + 23 + 8   fix number
+     8→	int32_t y;
+     9→	uint32_t sr;	// scale + rot
+    10→	int32_t sprite;		// negative : material 
+    11→};
     13→struct draw_primitive_external …
+    14→	int sprite;
+    15→};
     19→struct draw_batch * batch_new(int size);
     21→void batch_delete(struct draw_batch *);
 
@@ -43,6 +55,15 @@ src/font_define.h
      6→#define FONT_POSTION_FIX_POINT  8
      8→#define MAX_FONT_NUM 64
     11→struct font_glyph …
+    12→	int16_t offset_x;
+    13→	int16_t offset_y;
+    14→	int16_t advance_x;
+    15→	int16_t advance_y;
+    16→	uint16_t w;
+    17→	uint16_t h;
+    18→	uint16_t u;
+    19→	uint16_t v;
+    20→};
     22→#define IMAGE_FONT_MASK 0x40    //7 bit
     23→#define FONT_ID_MASK    0x3F    //low 6 bits
     24→#define FONT_ICON       255
@@ -56,15 +77,35 @@ src/font_manager.h
 
 src/ime_char_filter.h
      8→struct soluna_ime_char_filter_state …
+     9→    uint32_t *expected_chars;
+    10→    int *expected_count;
+    11→    uint32_t *ignore_chars;
+    12→    int *ignore_count;
+    13→    int capacity;
+    14→};
     16→static inline void …
     27→static inline bool …
     52→static inline bool …
 
 src/ime_state.h
      7→struct soluna_ime_rect_state …
+     8→    float x;
+     9→    float y;
+    10→    float w;
+    11→    float h;
+    12→    uint32_t text_color;
+    13→    bool valid;
+    14→};
 
 src/loginfo.h
      6→struct log_info …
+     7→	char tag[64];
+     8→	uint32_t log_level;
+     9→	uint32_t log_item;
+    10→	uint32_t line_nr;
+    11→	char message[256];
+    12→	const char *filename;	
+    13→};
 
 src/luabuffer.h
      8→static inline uint8_t const * …
@@ -88,6 +129,9 @@ src/mutex.h
 
 src/render_bindings.h
      6→struct soluna_render_bindings …
+     7→	int base;
+     8→	sg_bindings bindings;
+     9→};
     11→#define DRAWFUNC(name) (sg_query_features().draw_base_instance ? name##_ex : name)
 
 src/sprite_submit.h
@@ -101,23 +145,55 @@ src/sprite_submit.h
 src/spritemgr.h
      7→#define INVALID_TEXTUREID 0xffff
      9→struct sprite_rect …
+    10→	uint32_t texid;
+    11→	uint32_t off;	// (dx + 0x8000) << (dy + 0x8000)
+    12→	uint32_t u;		// x << 16 | w
+    13→	uint32_t v;		// y << 16 | h
+    14→};
     16→struct sprite_bank …
+    17→	int n;
+    18→	int cap;
+    19→	int texture_size;
+    20→	int texture_n;
+    21→	struct sprite_rect rect[1];
+    22→};
 
 src/srbuffer.h
      7→struct sr_mat …
+     8→	float v[4];
+     9→};
     11→struct sr_buffer …
+    12→	int n;
+    13→	int cap;
+    14→	int current_n;
+    15→	uint8_t dirty;
+    16→	uint8_t current_frame;
+    17→	uint8_t *frame;
+    18→	uint16_t *cache;
+    19→	uint32_t *key;
+    20→	struct sr_mat *data;
+    21→};
     23→size_t srbuffer_size(int n);
     26→void * srbuffer_commit(struct sr_buffer *SR, int *sz);
 
 src/tmpbuffer.h
      2→#define soluna_tmp_buffer_h
      7→struct tmp_buffer …
+     8→	void *ptr;
+     9→	size_t sz;
+    10→};
     12→#define TMPBUFFER_PTR(type, obj) (type *)((obj)->ptr)
     13→#define TMPBUFFER_SIZE(type, obj) ((obj)->sz / sizeof(type))
     15→static inline void …
 
 src/transform.h
      6→struct transform …
+     7→	// ix, iy : sign bit + 23.8   fix number
+     8→	int32_t x;	
+     9→	int32_t y;
+    10→	int32_t s; // sign bit + 19.12 fix number
+    11→	int r;	// 12bits [0,4095]
+    12→};
     16→static inline void …
     24→void sprite_transform_init();
     25→void sprite_transform_set(struct transform *t, float s, float r, float x, float y);
@@ -131,6 +207,9 @@ src/truetype.h
     14→#define TRUETYPE_CSTRUCT "TRUETYPE_CSTRUCT"
     15→#define TRUETYPE_IMPORT "TRUETYPE_IMPORT"
     17→struct truetype_font …
+    18→	uint64_t enable;
+    19→	stbtt_fontinfo fontinfo[MAX_FONT_NUM];
+    20→};
     34→static inline int …
     51→// font id -> font info
     52→static inline const stbtt_fontinfo *
@@ -329,139 +408,21 @@ src/lualib/util.lua
     13→function func_chain:__call …
     20→function util.func_chain …
 
-src/batch.c
+clibs/soluna/compile_lua.lua
 
-src/blit.glsl
+clibs/soluna/compile_shader.lua
 
-src/colorquad.glsl
+clibs/soluna/runlua.lua
 
-src/drawmgr.c
-
-src/embedlua.c
-
-src/entry.c
-
-src/file.c
-
-src/font.c
-
-src/font_manager.c
-    18→// --------------
-      →…
-    48→struct font_slot …
-    94→#define COLLISION_STEP 7
-   360→// F->dpi_perinch is a constant, so do not need to lock
-   361→int
-   362→font_manager_pixelsize(struct font_manager *F, int fontid, int pointsize) {
-
-src/font_system.c
-
-src/gamepad.c
-
-src/image.c
-
-src/lcrypt.c
-   187→#define GET_UINT32(n,b,i)					   \
-   205→#define DES_IP(X,Y)											 \
-   218→#define DES_FP(X,Y)											 \
-   231→#define DES_ROUND(X,Y)						  \
-   373→typedef void (*padding_add)(uint8_t buf …
-   374→typedef int (*padding_remove)(const uint8_t *last …
-   623→#define LEFTROTATE(x, c) (((x) << (c)) | ((x) >> (32 - (c))))
-   790→#define P 0xffffffffffffffc5ull
-
-src/lfs.c
-   323→typedef void (*_push_function) (lua_State *L …
-
-src/lsha1.c
-    89→typedef struct { …
-   114→#define	R0(v,w,x,y,z,i)	z+=((w&(x^y))^y)+blk0(i)+0x5A827999+rol(v,5);w=rol(w,30);
-
-src/luamods.c
-
-src/luayoga.c
-   104→typedef void (*setfunc)(lua_State *L …
-
-src/luazip.c
-
-src/maskquad.glsl
-
-src/material_blit.c
-
-src/material_default.c
-
-src/material_mask.c
-
-src/material_perspective_quad.c
-
-src/material_quad.c
-
-src/material_text.c
-   242→#define iscont(c)	(((c) & 0xC0) == 0x80)
-   329→// todo: support multi font/size
-   330→struct block_context …
-
-src/material_util.c
-
-src/openlibs.c
-
-src/openurl.c
-
-src/perspective_quad.glsl
-
-src/render.c
-   222→// todo : offscreen pass
-   223→struct pass …
-
-src/render_bindings.c
-
-src/render_uniform.c
-
-src/sdfimage.c
-    23→#define IMAGE_SIZE 64
-
-src/sdftext.glsl
-
-src/spritemgr.c
-
-src/srbuffer.c
-
-src/texquad.glsl
-
-src/transform.c
-    75→// returns origin point (x, y) in transformed coordinate system
-    76→void
-    77→sprite_transform_point(const struct transform *t, int *x, int *y) {
-
-src/truetype.c
-
-src/winfile.c
-
-src/writelog.c
-
-src/yogaone.cpp
-
-src/platform/linux/soluna_linux_ime.c
-    18→void soluna_emit_char …
-    88→bool …
-   123→void …
-   261→int …
-   271→void …
-   284→void …
-   296→void …
-   311→void …
-   327→void …
-
-src/platform/windows/soluna_windows_ime.c
-     1→#define WIN32_LEAN_AND_MEAN
-    41→void …
-   133→void …
-   149→void …
-   172→void …
+clibs/soluna/shader2c.lua
 
 make.lua
 
+src/platform/macos/soluna_macos_ime.m
+
 web/config.toml
+     7→[pagination]
+    10→[params]
 
 3rd/
 
@@ -488,8 +449,6 @@ clibs/datalist/
 clibs/ltask/
 
 clibs/lua/
-
-clibs/soluna/
 
 clibs/yoga/
 
