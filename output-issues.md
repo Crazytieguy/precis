@@ -194,22 +194,6 @@ Root cause: the TypeScript tree-sitter query captures `import_statement` (ES6 im
 
 The result is zero extracted items, so the file contributes nothing to the output. This is a significant gap for JavaScript projects that use CommonJS (which is still the majority of npm packages). For entry point files especially, the exports list is often the single most useful piece of information about the library.
 
-## 12. TypeScript function overloads shown individually, consuming budget on duplicates
-
-**Affected snapshots:** d2ts_d2ts
-
-`src/d2.ts` has 20 TypeScript overload signatures for `StreamBuilder.pipe()` (lines 119-157) — a common pattern for type inference in pipe-style APIs (rxjs uses the same approach). Each overload differs only in the number of generic type parameters. The output shows all 20 as separate `pipe …` lines:
-
-```
-   119→  pipe …
-   121→  pipe …
-   123→  pipe …
-       ... (20 identical lines)
-   157→  pipe …
-```
-
-This consumes ~20 lines of budget to convey one fact: "StreamBuilder has a pipe method." The pre-rewrite output showed only the class name without expanding methods, so the overloads weren't visible. The new output's per-method expansion causes each overload to appear as a separate FunctionName entry at base value 1.0, and since they're all public, none gets filtered. A reader seeing 20 `pipe …` lines gains nothing over seeing one.
-
 ## 13. TypeScript `export` statements not captured — barrel files render empty
 
 **Affected snapshots:** d2ts, d2ts_d2ts, enclosed, enclosed_crypto, enclosed_lib, superstruct, ts_pattern

@@ -411,7 +411,10 @@ fn spawn_method_children<'s>(
     let mut buckets: HashMap<(bool, bool), Vec<TsItem<'s>>> = HashMap::new();
 
     for item in &parent.items {
-        let method_nodes = find_method_nodes(item.node, lang);
+        let mut method_nodes = find_method_nodes(item.node, lang);
+        if lang == Some(Lang::JsTs) {
+            method_nodes = dedup_method_overloads(method_nodes, item.source);
+        }
 
         for method_node in method_nodes {
             let is_public = crate::parse::visibility::symbol_visibility(
@@ -484,6 +487,51 @@ fn spawn_method_children<'s>(
     } else {
         result.extend(gated);
     }
+}
+
+/// Deduplicate consecutive method overloads (3+) by name, keeping only the
+/// last of each run. Runs of 2 are kept since pairs often represent meaningful
+/// distinct signatures (e.g. generic + wildcard).
+fn dedup_method_overloads<'a>(
+    mut nodes: Vec<tree_sitter::Node<'a>>,
+    source: &str,
+) -> Vec<tree_sitter::Node<'a>> {
+    if nodes.len() <= 2 {
+        return nodes;
+    }
+    let names: Vec<&str> = nodes
+        .iter()
+        .map(|n| {
+            n.child_by_field_name("name")
+                .and_then(|name| name.utf8_text(source.as_bytes()).ok())
+                .unwrap_or("")
+        })
+        .collect();
+    let mut keep = vec![true; nodes.len()];
+    let mut i = 0;
+    while i < names.len() {
+        if names[i].is_empty() {
+            i += 1;
+            continue;
+        }
+        let mut j = i + 1;
+        while j < names.len() && names[j] == names[i] {
+            j += 1;
+        }
+        if j - i >= 3 {
+            for flag in keep.iter_mut().take(j - 1).skip(i) {
+                *flag = false;
+            }
+        }
+        i = j;
+    }
+    let mut idx = 0;
+    nodes.retain(|_| {
+        let kept = keep[idx];
+        idx += 1;
+        kept
+    });
+    nodes
 }
 
 /// Find method/function child nodes within a container type's AST node.
