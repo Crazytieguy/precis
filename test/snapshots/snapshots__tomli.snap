@@ -150,6 +150,7 @@ src/tomli/_parser.py
     82→    pos: The index of doc where parsing failed
     83→    lineno: The line corresponding to pos
     84→    colno: The column corresponding to pos
+    86→
     87→    def __init__(
     88→        self,
     89→        msg: str | type[DEPRECATED_DEFAULT] = DEPRECATED_DEFAULT,
@@ -163,6 +164,13 @@ src/tomli/_parser.py
    150→    """Parse TOML from a string."""
    220→class Flags …
    221→    """Flags that map to parsed keys/namespaces."""
+   222→
+   223→    # Marks an immutable namespace (inline array or inline table).
+   224→    FROZEN: Final = 0
+   225→    # Marks a nest that has been explicitly created and can no longer
+   226→    # be opened using the "[table]" syntax.
+   227→    EXPLICIT_NEST: Final = 1
+   228→
    229→    def __init__(self) -> None:
    233→    def add_pending(self, key: Key, flag: int) -> None:
    236→    def finalize_pending(self) -> None:
@@ -254,7 +262,6 @@ src/tomli/py.typed
 
 benchmark/README.md
      1→# Benchmark
-     3→## Acknowledgments
     10→## Running
 
 pyproject.toml
@@ -274,9 +281,6 @@ scripts/requirements.txt
 
 scripts/use_setuptools.py
      1→"""Script that switches build backend to setuptools with mypyc support.
-     2→
-     3→Overwrites pyproject.toml. Does not create a backup.
-     4→"""
     12→def use_setuptools() -> None:
 
 benchmark/run.py
@@ -297,15 +301,7 @@ tests/burntsushi.py
     11→def convert(obj):
     42→def normalize(obj: Any) -> Any:
     43→    """Normalize test objects.
-    44→
-    45→    This normalizes primitive values (e.g. floats)."""
-    68→def _normalize_datetime_str …
-    92→def _normalize_localtime_str …
-    96→def _normalize_float_str …
-
-benchmark/data.toml
-
-benchmark/requirements.txt
+      →…
 
 src/
 

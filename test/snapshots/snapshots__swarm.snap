@@ -125,7 +125,16 @@ swarm/core.py
 
 swarm/types.py
     14→class Agent …
+    15→    name: str = "Agent"
+    16→    model: str = "gpt-4o"
+    17→    instructions: Union[str, Callable[[], str]] = "You are a helpful agent."
+    18→    functions: List[AgentFunction] = []
+    19→    tool_choice: str = None
+    20→    parallel_tool_calls: bool = True
     23→class Response …
+    24→    messages: List = []
+    25→    agent: Optional[Agent] = None
+    26→    context_variables: dict = {}
     29→class Result …
     31→    Encapsulates the possible return values for an agent function.
     32→
@@ -133,6 +142,10 @@ swarm/types.py
     34→        value (str): The result value as a string.
     35→        agent (Agent): The agent instance, if applicable.
     36→        context_variables (dict): A dictionary of context variables.
+    38→
+    39→    value: str = ""
+    40→    agent: Optional[Agent] = None
+    41→    context_variables: dict = {}
 
 swarm/util.py
      5→def debug_print(debug: bool, *args: str) -> None:
@@ -232,9 +245,6 @@ setup.cfg
 
 examples/airline/README.md
      1→# Airline customer service
-     3→This example demonstrates a multi-agent setup for handling different customer service requests in an airline context using the Swarm framework. The agents can triage requests, handle flight modifications, cancellations, and lost baggage cases.
-     4→This example uses the helper function `run_demo_loop`, which allows us to create an interactive Swarm session.
-     5→
      6→## Agents
     14→## Setup
     22→## Evaluations
@@ -248,10 +258,6 @@ examples/basic/README.md
 
 examples/personal_shopper/README.md
      1→# Personal shopper
-     3→This Swarm is a personal shopping agent that can help with making sales and refunding orders.
-     4→This example uses the helper function `run_demo_loop`, which allows us to create an interactive Swarm session.
-     5→In this example, we also use a Sqlite3 database with customer information and transaction data.
-     6→
      7→## Overview
     15→## Setup
 
@@ -280,11 +286,7 @@ tests/mock_client.py
     44→class MockOpenAIClient …
     45→    def __init__(self):
     49→    def set_response(self, response: ChatCompletion):
-    51→        Set the mock to return a specific response.
-      →…
     56→    def set_sequential_responses(self, responses: list[ChatCompletion]):
-    58→        Set the mock to return different responses sequentially.
-      →…
     63→    def assert_create_called_with(self, **kwargs):
 
 examples/customer_service_streaming/main.py
@@ -390,9 +392,13 @@ examples/triage_agent/evals.py
 
 examples/triage_agent/evals_util.py
      9→class BoolEvalResult …
+    10→    value: bool
+    11→    reason: Optional[str]
     14→def evaluate_with_llm_bool(instruction, data) -> BoolEvalResult:
 
 examples/triage_agent/run.py
+
+examples/customer_service_streaming/tests/test_prompts.jsonl
 
 assets/
 
@@ -417,8 +423,6 @@ examples/customer_service_streaming/data/
 examples/customer_service_streaming/logs/
 
 examples/customer_service_streaming/src/
-
-examples/customer_service_streaming/tests/
 
 examples/support_bot/data/
 

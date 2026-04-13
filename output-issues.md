@@ -351,42 +351,6 @@ Meanwhile, the README consumes ~173 lines of output with full code examples, the
 
 The `FileCategory::Example` factor (0.35×) is appropriate for most projects but harmful here. The regression is compounded by #25 (31 bare-filename log files wasting ~62 tokens that could fund ~30 example function signatures).
 
-## 28. Python class bodies never shown — no ClassBody in taxonomy
-
-**Affected snapshots:** swarm, typeguard, xlstm (likely all Python fixtures with dataclasses/Pydantic models)
-
-`TsGroupKey` has `StructBody` (base_value 1.2) and `EnumBody` (1.5) but no `ClassBody`. Python class field definitions live in the class body — for Pydantic models and dataclasses, the fields ARE the class API. In swarm's `types.py`, the old output showed:
-
-```
-class Agent(BaseModel):
-    name: str = "Agent"
-    model: str = "gpt-4o"
-    instructions: Union[str, Callable[[], str]] = "You are a helpful agent."
-    functions: List[AgentFunction] = []
-    tool_choice: str = None
-    parallel_tool_calls: bool = True
-
-class Response(BaseModel):
-    messages: List = []
-    agent: Optional[Agent] = None
-    context_variables: dict = {}
-```
-
-The new output shows only `class Agent …`, `class Response …`, `class Result …`. For an agent framework, seeing Agent's 6 fields (name, model, instructions, functions, tool_choice, parallel_tool_calls) is essential to understanding the API — it's the equivalent of a Rust struct's field definitions, which get StructBody at 1.2.
-
-This also interacts with #22 (Python docstrings not detected): classes are both undocumented (0.5× penalty) and bodyless, so the reader gets only a class name with no fields, no docstring, and no type information.
-
-In typeguard, `_config.py` contains three classes whose bodies are the core configuration API:
-- `ForwardRefPolicy(Enum)` — 3 values: ERROR, WARN, IGNORE
-- `CollectionCheckStrategy(Enum)` — 2 values: FIRST_ITEM, ALL_ITEMS
-- `TypeCheckConfiguration` dataclass — 4 fields with defaults: forward_ref_policy, typecheck_fail_callback, collection_check_strategy, debug_instrumentation
-
-The pre-rewrite showed all enum values and dataclass fields with defaults (~25 lines). The new output shows only `class ForwardRefPolicy …`, `class CollectionCheckStrategy …`, `class TypeCheckConfiguration …`. For a config module, the options and their defaults ARE the API — a reader seeing just class names doesn't know what policies exist or what can be configured.
-
-Similarly, `_transformer.py`'s `TransformMemo` dataclass (15 fields including node, parent, path, return_annotation, yield_annotation, send_annotation, is_async, local_names, etc.) was shown in full in the old output (~24 lines) but is collapsed to `class TransformMemo …` in the new output. `AnnotationTransformer.type_substitutions` (dict mapping builtins to typing equivalents) was also shown in the old output.
-
-In xlstm, the ML config dataclasses define the architecture's hyperparameter space — the fields ARE what a reader needs to understand the model configuration. The pre-rewrite showed `mLSTMLayerConfig` with all 12 fields (`conv1d_kernel_size: int = 4`, `qkv_proj_blocksize: int = 4`, `num_heads: int = 4`, `proj_factor: float = 2.0`, `embedding_dim`, `bias`, `dropout`, `context_length`, etc.), `mLSTMBlockConfig` with its 3 fields, and `mLSTMCellConfig` with its 3 fields. The new output collapses all of these to `class X …`. Similarly, `xLSTMBlockStackConfig`, `xLSTMLargeConfig`, `sLSTMCellConfig`, and other config classes throughout the library lose their field definitions. For an ML library, the config fields tell a reader what the model's architectural knobs are — without them, the reader knows a config class exists but not what it configures.
-
 ## 29. Repetitive error submodule files displace higher-value content
 
 **Affected snapshots:** toasty_core

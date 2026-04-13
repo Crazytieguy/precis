@@ -188,6 +188,8 @@ peepdb/cli.py
 peepdb/config.py
     13→from .exceptions import InvalidPassword
     16→class KeySecurity …
+    17→    KEYRING = "os-keyring"
+    18→    PASSWORD = "password"
     20→CONFIG_DIR …
     21→CONFIG_FILE …
     22→SECURITY_CONFIG_FILE …
@@ -234,6 +236,7 @@ peepdb/core.py
 
 peepdb/exceptions.py
      1→class InvalidPassword …
+     2→    pass
 
 peepdb/db/__init__.py
     11→__all__ …
@@ -349,10 +352,5 @@ docs/_config.yml
      8→  Template Repository: https://github.com/just-the-docs/just-the-docs-template
 
 peepdb/tests/__init__.py
-
-docs/contributing.md
-     6→# 🤝 Contributing to peepDB
-
-CONTRIBUTING.md
 
 images/

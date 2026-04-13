@@ -111,8 +111,7 @@ py3xui/api/__init__.py
 py3xui/api/api.py
      1→"""This module provides classes to interact with the XUI API."""
     13→class Api …
-    14→    """This class provides a high-level interface to interact with the XUI API.
-      →…
+    66→
     67→    def __init__ …
     94→    def session(self) -> str | None:
    103→    def session(self, value: str) -> None:
@@ -128,10 +127,17 @@ py3xui/api/api.py
 
 py3xui/api/api_base.py
      1→"""This module contains the base class for the XUI API."""
-    14→# pylint: disable=too-few-public-methods
     15→class ApiFields …
-    27→# pylint: disable=R0902
+    17→
+    18→    SUCCESS = "success"
+    19→    MSG = "msg"
+    20→    OBJ = "obj"
+    21→    CLIENT_STATS = "clientStats"
+    22→    NO_IP_RECORD = "No IP Record"
+    23→    GET = "GET"
+    24→    POST = "POST"
     28→class BaseApi …
+    60→
     61→    def __init__ …
     81→    def host(self) -> str:
     89→    def username(self) -> str:
@@ -157,8 +163,7 @@ py3xui/api/api_client.py
      1→"""This module contains the ClientApi class which provides methods to interact with the
      2→clients in the XUI API."""
     13→class ClientApi …
-    14→    """This class provides methods to interact with the clients in the XUI API.
-      →…
+    51→
     52→    def get_by_email(self, email: str) -> Client | None:
     89→    def get_ips(self, email: str) -> list[str]:
    121→    def add(self, inbound_id: int, clients: list[Client]):
@@ -174,15 +179,13 @@ py3xui/api/api_database.py
      1→"""This module contains the DatabaseApi class, which is responsible handling database operations
      2→in the XUI API."""
      7→class DatabaseApi …
-     8→    """This class provides methods to interact with the database in the XUI API.
-      →…
+    31→
     32→    def export(self) -> None:
 
 py3xui/api/api_inbound.py
      1→"""This module contains the InboundApi class for handling inbounds in the XUI API."""
      9→class InboundApi …
-    10→    """This class provides methods to interact with the inbounds in the XUI API.
-      →…
+    39→
     40→    def get_list(self) -> list[Inbound]:
     71→    def get_by_id(self, inbound_id: int) -> Inbound:
    111→    def add(self, inbound: Inbound) -> None:
@@ -194,8 +197,7 @@ py3xui/api/api_inbound.py
 py3xui/api/api_server.py
      1→"""This module contains the ServerApi class for handling server in the XUI API."""
      7→class ServerApi …
-     8→    """This class provides methods to interact with the server in the XUI API.
-      →…
+    34→
     35→    def get_db(self, save_path: str) -> None:
     67→    def get_status(self) -> Server:
     97→    def generate_reality_keys(self) -> RealityKeyPair:
@@ -269,6 +271,7 @@ py3xui/async_api/__init__.py
 py3xui/async_api/async_api.py
      1→"""This module provides classes to interact with the XUI API in an asynchronous manner."""
     18→class AsyncApi …
+    71→
     72→    def __init__ …
     99→    def session(self) -> str | None:
    108→    def session(self, value: str) -> None:
@@ -285,6 +288,7 @@ py3xui/async_api/async_api.py
 py3xui/async_api/async_api_base.py
      1→"""This module contains the async base class for the XUI API."""
     16→class AsyncBaseApi …
+    48→
     49→    def __init__ …
     69→    def host(self) -> str:
     77→    def username(self) -> str:
@@ -310,6 +314,7 @@ py3xui/async_api/async_api_client.py
      1→"""This module contains the ClientApi class which provides methods to interact with the
      2→clients in the XUI API."""
     12→class AsyncClientApi …
+    51→
     52→    async def get_by_email(self, email: str) -> Client | None:
     89→    async def get_ips(self, email: str) -> list[str]:
    121→    async def add(self, inbound_id: int, clients: list[Client]):
@@ -325,12 +330,14 @@ py3xui/async_api/async_api_database.py
      1→"""This module contains the DatabaseApi class which provides methods to interact with the
      2→database in the XUI API asynchronously."""
      7→class AsyncDatabaseApi …
+    31→
     32→    async def export(self) -> None:
 
 py3xui/async_api/async_api_inbound.py
      1→"""This module contains the InboundApi class which provides methods to interact with the
      2→clients in the XUI API asynchronously."""
     11→class AsyncInboundApi …
+    41→
     42→    async def get_list(self) -> list[Inbound]:
     72→    async def get_by_id(self, inbound_id: int) -> Inbound:
    112→    async def add(self, inbound: Inbound) -> None:
@@ -342,6 +349,8 @@ py3xui/async_api/async_api_inbound.py
 py3xui/async_api/async_api_server.py
      1→"""This module contains the ServerApi class for handling server in the XUI API."""
      8→class AsyncServerApi …
+    42→
+    43→    # pylint: disable=R0801
     44→    async def get_db(self, save_path: str) -> None:
     76→    async def get_status(self) -> Server:
    105→    async def generate_reality_keys(self) -> RealityKeyPair:

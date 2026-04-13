@@ -4,10 +4,12 @@ expression: output
 ---
 block_manager.py
      8→class Block …
+     9→
     10→    def __init__(self, block_id):
     16→    def update(self, hash: int, token_ids: list[int]):
     20→    def reset(self):
     26→class BlockManager …
+    27→
     28→    def __init__(self, num_blocks: int, block_size: int):
     36→    def compute_hash(cls, token_ids: list[int], prefix: int = -1):
     43→    def _allocate_block(self, block_id: int) -> Block:
@@ -29,6 +31,7 @@ block_manager.py
 
 llm_engine.py
     15→class LLMEngine …
+    16→
     17→    def __init__(self, model, **kwargs):
     36→    def exit(self):
     42→    def add_request(self, prompt: str | list[int], sampling_params: SamplingParams):
@@ -43,6 +46,7 @@ llm_engine.py
 
 model_runner.py
     15→class ModelRunner …
+    16→
     17→    def __init__(self, config: Config, rank: int, event: Event | list[Event]):
     50→    def exit(self):
     61→    def loop(self):
@@ -61,6 +65,7 @@ model_runner.py
 
 scheduler.py
      8→class Scheduler …
+     9→
     10→    def __init__(self, config: Config):
     18→    def is_finished(self):
     21→    def add(self, seq: Sequence):
@@ -70,7 +75,13 @@ scheduler.py
 
 sequence.py
      8→class SequenceStatus …
+     9→    WAITING = auto()
+    10→    RUNNING = auto()
+    11→    FINISHED = auto()
     14→class Sequence …
+    15→    block_size = 256
+    16→    counter = count()
+    17→
     18→    def __init__(self, token_ids: list[int], sampling_params = SamplingParams()):
     31→    def __len__(self):
     34→    def __getitem__(self, key):

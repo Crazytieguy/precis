@@ -56,6 +56,7 @@ pub fn ts_base_value(key: &TsGroupKey, item_count: usize) -> f64 {
         FunctionBody => 0.2,
         StructBody => 1.2,
         EnumBody => 1.5,
+        ClassBody => 1.0,
 
         // Doc rest: low — the first line already gives the gist
         ModuleDocRest | FunctionDocRest | StructDocRest | EnumDocRest | ClassDocRest

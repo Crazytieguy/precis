@@ -62,24 +62,89 @@ example.py
 
 nanovllm/models/qwen3.py
     14→class Qwen3Attention …
-    16→    def __init__ …
-    71→    def forward …
+    15→
+    16→    def __init__(
+    17→        self,
+    18→        hidden_size: int,
+    19→        num_heads: int,
+    20→        num_kv_heads: int,
+    21→        max_position: int = 4096 * 32,
+    22→        head_dim: int | None = None,
+    23→        rms_norm_eps: float = 1e-06,
+    24→        qkv_bias: bool = False,
+    25→        rope_theta: float = 10000,
+    26→        rope_scaling: tuple | None = None,
+    27→    ) -> None:
+    71→    def forward(
+    72→        self,
+    73→        positions: torch.Tensor,
+    74→        hidden_states: torch.Tensor,
+    75→    ) -> torch.Tensor:
     90→class Qwen3MLP …
-    92→    def __init__ …
-   112→    def forward …
+    91→
+    92→    def __init__(
+    93→        self,
+    94→        hidden_size: int,
+    95→        intermediate_size: int,
+    96→        hidden_act: str,
+    97→    ) -> None:
+   112→    def forward(self, x):
    119→class Qwen3DecoderLayer …
-   121→    def __init__ …
-   145→    def forward …
+   120→
+   121→    def __init__(
+   122→        self,
+   123→        config: Qwen3Config,
+   124→    ) -> None:
+   145→    def forward(
+   146→        self,
+   147→        positions: torch.Tensor,
+   148→        hidden_states: torch.Tensor,
+   149→        residual: torch.Tensor | None,
+   150→    ) -> tuple[torch.Tensor, torch.Tensor]:
    161→class Qwen3Model …
-   163→    def __init__ …
-   172→    def forward …
+   162→
+   163→    def __init__(
+   164→        self,
+   165→        config: Qwen3Config,
+   166→    ) -> None:
+   172→    def forward(
+   173→        self,
+   174→        input_ids: torch.Tensor,
+   175→        positions: torch.Tensor,
+   176→    ) -> torch.Tensor:
    185→class Qwen3ForCausalLM …
-   194→    def __init__ …
-   204→    def forward …
-   211→    def compute_logits …
+   186→    packed_modules_mapping = {
+   187→        "q_proj": ("qkv_proj", "q"),
+   188→        "k_proj": ("qkv_proj", "k"),
+   189→        "v_proj": ("qkv_proj", "v"),
+   190→        "gate_proj": ("gate_up_proj", 0),
+   191→        "up_proj": ("gate_up_proj", 1),
+   192→    }
+   193→
+   194→    def __init__(
+   195→        self,
+   196→        config: Qwen3Config
+   197→    ) -> None:
+   204→    def forward(
+   205→        self,
+   206→        input_ids: torch.Tensor,
+   207→        positions: torch.Tensor,
+   208→    ) -> torch.Tensor:
+   211→    def compute_logits(
+   212→        self,
+   213→        hidden_states: torch.Tensor,
+   214→    ) -> torch.Tensor:
 
 nanovllm/utils/context.py
      6→class Context …
+     7→    is_prefill: bool = False
+     8→    cu_seqlens_q: torch.Tensor | None = None
+     9→    cu_seqlens_k: torch.Tensor | None = None
+    10→    max_seqlen_q: int = 0
+    11→    max_seqlen_k: int = 0
+    12→    slot_mapping: torch.Tensor | None = None
+    13→    context_lens: torch.Tensor | None = None
+    14→    block_tables: torch.Tensor | None = None
     16→_CONTEXT …
     18→def get_context():
     21→def set_context(is_prefill, cu_seqlens_q=None, cu_seqlens_k=None, max_seqlen_q=0, max_seqlen_k=0, slot_mapping=None, context_lens=None, block_tables=None):
@@ -93,21 +158,40 @@ nanovllm/__init__.py
 
 nanovllm/config.py
      7→class Config …
+     8→    model: str
+     9→    max_num_batched_tokens: int = 16384
+    10→    max_num_seqs: int = 512
+    11→    max_model_len: int = 4096
+    12→    gpu_memory_utilization: float = 0.9
+    13→    tensor_parallel_size: int = 1
+    14→    enforce_eager: bool = False
+    15→    hf_config: AutoConfig | None = None
+    16→    eos: int = -1
+    17→    kvcache_block_size: int = 256
+    18→    num_kvcache_blocks: int = -1
+    19→
     20→    def __post_init__(self):
 
 nanovllm/llm.py
      4→class LLM …
+     5→    pass
 
 nanovllm/sampling_params.py
      5→class SamplingParams …
+     6→    temperature: float = 1.0
+     7→    max_tokens: int = 64
+     8→    ignore_eos: bool = False
+     9→
     10→    def __post_init__(self):
 
 nanovllm/engine/block_manager.py
      8→class Block …
+     9→
     10→    def __init__(self, block_id):
     16→    def update(self, hash: int, token_ids: list[int]):
     20→    def reset(self):
     26→class BlockManager …
+    27→
     28→    def __init__(self, num_blocks: int, block_size: int):
     36→    def compute_hash(cls, token_ids: list[int], prefix: int = -1):
     43→    def _allocate_block(self, block_id: int) -> Block:
@@ -120,6 +204,7 @@ nanovllm/engine/block_manager.py
 
 nanovllm/engine/llm_engine.py
     15→class LLMEngine …
+    16→
     17→    def __init__(self, model, **kwargs):
     36→    def exit(self):
     42→    def add_request(self, prompt: str | list[int], sampling_params: SamplingParams):
@@ -134,6 +219,7 @@ nanovllm/engine/llm_engine.py
 
 nanovllm/engine/model_runner.py
     15→class ModelRunner …
+    16→
     17→    def __init__(self, config: Config, rank: int, event: Event | list[Event]):
     50→    def exit(self):
     61→    def loop(self):
@@ -152,6 +238,7 @@ nanovllm/engine/model_runner.py
 
 nanovllm/engine/scheduler.py
      8→class Scheduler …
+     9→
     10→    def __init__(self, config: Config):
     18→    def is_finished(self):
     21→    def add(self, seq: Sequence):
@@ -161,7 +248,13 @@ nanovllm/engine/scheduler.py
 
 nanovllm/engine/sequence.py
      8→class SequenceStatus …
+     9→    WAITING = auto()
+    10→    RUNNING = auto()
+    11→    FINISHED = auto()
     14→class Sequence …
+    15→    block_size = 256
+    16→    counter = count()
+    17→
     18→    def __init__(self, token_ids: list[int], sampling_params = SamplingParams()):
     31→    def __len__(self):
     34→    def __getitem__(self, key):
@@ -179,8 +272,9 @@ nanovllm/engine/sequence.py
 
 nanovllm/layers/activation.py
      6→class SiluAndMul …
-     8→    def __init__(self):
-    12→    def forward(self, x: torch.Tensor) -> torch.Tensor:
+     7→
+     8→    def __init__ …
+    12→    def forward …
 
 nanovllm/layers/attention.py
     11→def store_kvcache_kernel(
@@ -195,111 +289,58 @@ nanovllm/layers/attention.py
     20→):
     33→def store_kvcache(key: torch.Tensor, value: torch.Tensor, k_cache: torch.Tensor, v_cache: torch.Tensor, slot_mapping: torch.Tensor):
     43→class Attention …
-    45→    def __init__(
-    46→        self,
-    47→        num_heads,
-    48→        head_dim,
-    49→        scale,
-    50→        num_kv_heads,
-    51→    ):
-    59→    def forward(self, q: torch.Tensor, k: torch.Tensor, v: torch.Tensor):
+    44→
+    45→    def __init__ …
+    59→    def forward …
 
 nanovllm/layers/embed_head.py
      9→class VocabParallelEmbedding …
-    11→    def __init__(
-    12→        self,
-    13→        num_embeddings: int,
-    14→        embedding_dim: int,
-    15→    ):
-    27→    def weight_loader(self, param: nn.Parameter, loaded_weight: torch.Tensor):
-    34→    def forward(self, x: torch.Tensor):
+    10→
+    11→    def __init__ …
+    27→    def weight_loader …
+    34→    def forward …
     45→class ParallelLMHead …
-    47→    def __init__(
-    48→        self,
-    49→        num_embeddings: int,
-    50→        embedding_dim: int,
-    51→        bias: bool = False,
-    52→    ):
-    56→    def forward(self, x: torch.Tensor):
+    46→
+    47→    def __init__ …
+    56→    def forward …
 
 nanovllm/layers/layernorm.py
      5→class RMSNorm …
-     7→    def __init__(
-     8→        self,
-     9→        hidden_size: int,
-    10→        eps: float = 1e-6,
-    11→    ) -> None:
-    17→    def rms_forward(
-    18→        self,
-    19→        x: torch.Tensor,
-    20→    ) -> torch.Tensor:
-    29→    def add_rms_forward(
-    30→        self,
-    31→        x: torch.Tensor,
-    32→        residual: torch.Tensor,
-    33→    ) -> tuple[torch.Tensor, torch.Tensor]:
-    42→    def forward(
-    43→        self,
-    44→        x: torch.Tensor,
-    45→        residual: torch.Tensor | None = None,
-    46→    ) -> torch.Tensor | tuple[torch.Tensor, torch.Tensor]:
+     6→
+     7→    def __init__ …
+    17→    def rms_forward …
+    29→    def add_rms_forward …
+    42→    def forward …
 
 nanovllm/layers/linear.py
      7→def divide(numerator, denominator):
     12→class LinearBase …
-    14→    def __init__(
-    15→        self,
-    16→        input_size: int,
-    17→        output_size: int,
-    18→        bias: bool = False,
-    19→        tp_dim: int | None = None,
-    20→    ):
-    33→    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    13→
+    14→    def __init__ …
+    33→    def forward …
     37→class ReplicatedLinear …
-    39→    def __init__(
-    40→        self,
-    41→        input_size: int,
-    42→        output_size: int,
-    43→        bias: bool = False,
-    44→    ):
-    47→    def weight_loader(self, param: nn.Parameter, loaded_weight: torch.Tensor):
-    50→    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    38→
+    39→    def __init__ …
+    47→    def weight_loader …
+    50→    def forward …
     54→class ColumnParallelLinear …
-    56→    def __init__(
-    57→        self,
-    58→        input_size: int,
-    59→        output_size: int,
-    60→        bias: bool = False,
-    61→    ):
-    65→    def weight_loader(self, param: nn.Parameter, loaded_weight: torch.Tensor):
-    72→    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    55→
+    56→    def __init__ …
+    65→    def weight_loader …
+    72→    def forward …
     76→class MergedColumnParallelLinear …
-    78→    def __init__(
-    79→        self,
-    80→        input_size: int,
-    81→        output_sizes: list[int],
-    82→        bias: bool = False,
-    83→    ):
-    87→    def weight_loader(self, param: nn.Parameter, loaded_weight: torch.Tensor, loaded_shard_id: int):
+    77→
+    78→    def __init__ …
+    87→    def weight_loader …
     96→class QKVParallelLinear …
-    98→    def __init__(
-    99→        self,
-   100→        hidden_size: int,
-   101→        head_size: int,
-   102→        total_num_heads: int,
-   103→        total_num_kv_heads: int | None = None,
-   104→        bias: bool = False,
-   105→    ):
-   114→    def weight_loader(self, param: nn.Parameter, loaded_weight: torch.Tensor, loaded_shard_id: str):
+    97→
+    98→    def __init__ …
+   114→    def weight_loader …
    131→class RowParallelLinear …
-   133→    def __init__(
-   134→        self,
-   135→        input_size: int,
-   136→        output_size: int,
-   137→        bias: bool = False,
-   138→    ):
-   142→    def weight_loader(self, param: nn.Parameter, loaded_weight: torch.Tensor):
-   149→    def forward(self, x: torch.Tensor) -> torch.Tensor:
+   132→
+   133→    def __init__ …
+   142→    def weight_loader …
+   149→    def forward …
 
 nanovllm/layers/rotary_embedding.py
      6→def apply_rotary_emb(
@@ -308,19 +349,9 @@ nanovllm/layers/rotary_embedding.py
      9→    sin: torch.Tensor,
     10→) -> torch.Tensor:
     17→class RotaryEmbedding …
-    19→    def __init__(
-    20→        self,
-    21→        head_size: int,
-    22→        rotary_dim: int,
-    23→        max_position_embeddings: int,
-    24→        base: float,
-    25→    ) -> None:
-    38→    def forward(
-    39→        self,
-    40→        positions: torch.Tensor,
-    41→        query: torch.Tensor,
-    42→        key: torch.Tensor,
-    43→    ) -> tuple[torch.Tensor, torch.Tensor]:
+    18→
+    19→    def __init__ …
+    38→    def forward …
     52→def get_rope(
     53→    head_size: int,
     54→    rotary_dim: int,
@@ -331,8 +362,9 @@ nanovllm/layers/rotary_embedding.py
 
 nanovllm/layers/sampler.py
      5→class Sampler …
-     7→    def __init__(self):
-    11→    def forward(self, logits: torch.Tensor, temperatures: torch.Tensor):
+     6→
+     7→    def __init__ …
+    11→    def forward …
 
 pyproject.toml
      1→[build-system]
@@ -340,22 +372,6 @@ pyproject.toml
      3→build-backend = "setuptools.build_meta"
      4→
      5→[project]
-     6→name = "nano-vllm"
-     7→version = "0.2.0"
-     8→authors = [{ name = "Xingkai Yu" }]
-     9→license = "MIT"
-    10→license-files = ["LICENSE"]
-    11→readme = "README.md"
-    12→description = "a lightweight vLLM implementation built from scratch"
-    13→requires-python = ">=3.10,<3.13"
-    14→dependencies = [
-    15→    "torch>=2.4.0",
-    16→    "triton>=3.0.0",
-    17→    "transformers>=4.51.0",
-    18→    "flash-attn",
-    19→    "xxhash",
-    20→]
-    21→
     22→[project.urls]
     23→Homepage="https://github.com/GeeeekExplorer/nano-vllm"
     24→

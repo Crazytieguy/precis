@@ -46,6 +46,7 @@ pub enum TsGroupKey {
     ClassName { documented: bool, public: bool },
     ClassDocFirst,
     ClassDocRest,
+    ClassBody,
 
     // Interfaces
     InterfaceName { documented: bool, public: bool },
@@ -109,6 +110,7 @@ impl TsGroupKey {
             ClassName { .. } => 40,
             ClassDocFirst => 41,
             ClassDocRest => 42,
+            ClassBody => 43,
             InterfaceName { .. } => 50,
             InterfaceDocFirst => 51,
             InterfaceDocRest => 52,
@@ -252,7 +254,9 @@ pub fn children<'s>(g: &mut TsGroup<'s>, _ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
             spawn_type_children(&mut result, g, EnumDocFirst, Some(EnumBody), *documented);
         }
         ClassName { documented, .. } => {
-            spawn_type_children(&mut result, g, ClassDocFirst, None, *documented);
+            let lang = g.items.first().and_then(|i| Lang::from_path(i.path));
+            let body_key = if lang == Some(Lang::Python) { Some(ClassBody) } else { None };
+            spawn_type_children(&mut result, g, ClassDocFirst, body_key, *documented);
             spawn_method_children(&mut result, g, 1.0);
         }
         InterfaceName { documented, .. } => {
@@ -546,6 +550,51 @@ fn dedup_method_overloads<'a>(
     nodes
 }
 
+/// Skip past a leading Python docstring in a class body so ClassBody
+/// doesn't duplicate content already handled by ClassDocFirst/ClassDocRest.
+fn skip_leading_docstring(
+    container_node: tree_sitter::Node,
+    lang: Option<Lang>,
+    body_start: usize,
+) -> usize {
+    if lang != Some(Lang::Python) {
+        return body_start;
+    }
+    let Some(body) = container_node.child_by_field_name("body") else {
+        return body_start;
+    };
+    let mut cursor = body.walk();
+    for child in body.children(&mut cursor) {
+        if child.is_extra() || child.kind() == "comment" {
+            continue;
+        }
+        if child.kind() == "expression_statement"
+            && child.child(0).is_some_and(|c| c.kind() == "string")
+        {
+            return child.end_position().row + 1;
+        }
+        break;
+    }
+    body_start
+}
+
+/// Find the source line of the first method (or decorated method) in a class body.
+/// Returns `None` if the class has no methods.
+fn find_first_method_line(container_node: tree_sitter::Node, lang: Option<Lang>) -> Option<usize> {
+    let body = container_node.child_by_field_name("body")?;
+    let mut cursor = body.walk();
+
+    for child in body.children(&mut cursor) {
+        if is_method_node(child, lang)
+            || (lang == Some(Lang::Python) && child.kind() == "decorated_definition")
+        {
+            return Some(child.start_position().row);
+        }
+    }
+
+    None
+}
+
 /// Find method/function child nodes within a container type's AST node.
 fn find_method_nodes<'a>(
     container_node: tree_sitter::Node<'a>,
@@ -688,11 +737,22 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
             entries
         }
 
-        FunctionBody | StructBody | EnumBody => {
+        FunctionBody | StructBody | EnumBody | ClassBody => {
             let body_start = compute_body_start_line(item);
             let body_end = item.end_line;
+            let lang = Lang::from_path(item.path);
+            let content_start = if matches!(key, ClassBody) {
+                skip_leading_docstring(item.node, lang, body_start)
+            } else {
+                body_start
+            };
+            let effective_end = if matches!(key, ClassBody) {
+                find_first_method_line(item.node, lang).unwrap_or(body_end)
+            } else {
+                body_end
+            };
             let mut entries = Vec::new();
-            for line_idx in body_start..body_end {
+            for line_idx in content_start..effective_end {
                 if line_idx >= lines.len() {
                     break;
                 }

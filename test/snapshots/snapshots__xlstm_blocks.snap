@@ -11,6 +11,9 @@ xlstm_block.py
     44→    """An xLSTM block can be either an sLSTM Block or an mLSTM Block.
     45→
     46→    It contains the pre-LayerNorms and the skip connections.
+    48→
+    49→    config_class = xLSTMBlockConfig
+    50→
     51→    def __init__(self, config: xLSTMBlockConfig) -> None:
     76→    def forward(self, x: torch.Tensor, **kwargs) -> torch.Tensor:
     82→    def step(self, x: torch.Tensor, **kwargs) -> tuple[torch.Tensor, dict[str, tuple[torch.Tensor, ...]]]:
@@ -180,7 +183,6 @@ slstm/src/vanilla/slstm.py
 slstm/src/cuda/lstm_pointwise.cu
 
 slstm/src/cuda/slstm.cc
-    40→class sLSTMFunc …
    306→PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
 
 slstm/src/cuda/slstm_backward.cu
