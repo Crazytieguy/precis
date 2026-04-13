@@ -66,7 +66,7 @@ The new output just shows `macro_rules! bail …` and `macro_rules! anyhow …`.
 
 ## 6. README body content dropped — only headings shown
 
-**Affected snapshots:** bareiron, commander, d2ts, d2ts_d2ts, log
+**Affected snapshots:** bareiron, commander, d2ts, d2ts_d2ts, log, mcphost
 
 The output shows README.md with only headings — zero body content. The pre-rewrite output showed introductory sections that tell the reader what the project is.
 
@@ -325,3 +325,25 @@ Two effects:
 2. **Type declarations deprioritized.** `documented: false` applies a 0.5× `documented_contribution` penalty, making type declarations compete at half their natural value.
 
 Functions and methods are unaffected — `function_declaration` and `method_declaration` ARE top-level nodes in Go's tree-sitter grammar, so their doc comments are reachable via `prev_named_sibling()`. The asymmetry is visible in mcphost_sdk's output: all 8 method doc comments are shown while all 4 type doc comments are missing.
+
+## 20. Go `_test.go` files treated as Source, consuming significant budget
+
+**Affected snapshots:** mcphost (likely all Go fixtures)
+
+Go colocates test files (`*_test.go`) alongside source files in the same directory. `classify_dir()` assigns `FileCategory` at the directory level, so a directory like `internal/auth/` — containing both `credentials.go` and `credentials_test.go` — gets classified as `Source`. There's no file-level test detection for `*_test.go` files, so they receive the full Source modifier (1.0×) instead of the Test modifier (0.15×).
+
+In the mcphost snapshot, ~16 test files contribute ~60 test function name entries plus ~32 lines of file headers — roughly 14% of the output budget. These are function names like `TestCredentialManager`, `TestBashCommandValidation`, `TestFetchHTML` that tell a reader little beyond "tests exist." Meanwhile, the core `internal/tools/` package (see #21) gets zero output.
+
+This applies to any language with colocated tests (Go, Rust with `#[cfg(test)]` modules, Python files named `test_*.py` alongside source). Go is the most affected because `_test.go` is a universal convention with a trivial filename check.
+
+## 21. Volume-based budget capture — large support package crowds out small core package
+
+**Affected snapshots:** mcphost
+
+`internal/ui/` (24 source files, generic terminal UI rendering) captures ~191 output lines (~30% of the budget). `internal/tools/` (4 source files, core MCP tool management) gets zero output lines. Both directories are at the same depth and classified as Source.
+
+`internal/tools/` contains the project's core domain logic: `MCPToolManager` (the central type managing MCP tools across servers), `MCPConnectionPool` (connection lifecycle and health checking), and the tool mapping/invocation machinery. This is literally what MCPHost is — "a CLI host that enables LLMs to interact with external tools through MCP." A reader of the output would understand how mcphost renders spinner animations and style badges, but not how it connects to or invokes MCP tools.
+
+The `internal/ui/` content is individually reasonable (function names at base_value 1.0, same modifier) but collectively overwhelming. With 24 files generating 100+ FunctionName groups, each cheap (~2 tokens), they win the budget competition through volume. The sublinear scaling `(item_count).powf(0.75)` dampens the advantage at the file-group level (FilesGroup base value), but doesn't limit how many TsGroups are spawned from many files. The tools package's 4 larger files generate fewer groups that individually lose to the UI's many small entries.
+
+This is a pre-existing issue (the old output also omitted `internal/tools/`) but is more damaging after the rewrite because the old output compensated with richer content in the files it did show (struct field bodies, type definitions, doc comments). The new output's broader-but-shallower coverage makes the absence of core domain code more conspicuous.
