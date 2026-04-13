@@ -155,24 +155,11 @@ No simple heuristic detects structural mirrors in general, but the pattern is co
 
 ## 25. Bare-filename repetitive files waste budget while structural files are empty
 
-**Affected snapshots:** sps_core, sqlite_vec, xlstm_blocks
+**Affected snapshots:** sqlite_vec
 
-In `src/install/cask/artifacts/`, 21 of 24 `.rs` files are shown as bare filenames (no content). These files follow a uniform pattern — each contains a single `pub fn install_X` function — so once the pattern is clear from 2-3 examples, additional bare filenames add no understanding. Collectively they consume ~42 tokens for information already implied by the directory structure.
+**Partially fixed:** sps_core's `src/install/cask/artifacts/` now shows as a single folder entry (not 21 individual bare filenames). The `mod_item` declarations fix also gave lib.rs and mod.rs files their `pub mod` declarations. swarm's `logs/` directory is now classified as `FileCategory::Artifact`, collapsing 31 bare filenames into a single folder entry. SVG files are now classified as binary. xlstm_blocks' 8 `.cu`/`.cuh` files in `slstm/src/util/` are now deprioritized by the companion-header penalty (`.cu` added to `is_c_implementation_extension`), freeing ~16 tokens that now show full method signatures in `sLSTMCellBase`.
 
-Meanwhile, structural files that orient the reader on crate organization were shown empty (partially fixed: `mod_item` declarations are now captured as Import items, so lib.rs and mod.rs files show their `pub mod` declarations in sps_core):
-
-- `src/lib.rs` (crate root, 20 lines) — now shows all top-level `pub mod` declarations ✓
-- 6 `mod.rs` files (`build`, `check`, `pipeline`, `uninstall`, `upgrade`, `utils`) — now show `pub mod` declarations ✓
-
-The remaining issue is that 21 bare-filename artifact files still consume ~42 tokens.
-
-In sqlite_vec, the problem is even more extreme: ~25 empty file entries (Makefile, sqlite-vec.h.tmpl, test.sql, SECURITY.md, various examples/, scripts/, and site/ files) and ~25 empty folder entries (benchmarks/exhaustive-memory/, benchmarks/micro/, tests/afbd/, tests/correctness/, etc.). That's ~50 empty entries consuming ~100 tokens for near-zero information. The old output was more selective — it collapsed `site/` into a single folder entry rather than listing all its subfiles and subfolders individually. The budget spent on these empty entries could instead show README body content (issue #6) or enum bodies (issue #18).
-
-**Partially fixed:** swarm's `logs/` directory (31 session JSON files) is now classified as `FileCategory::Artifact` (0.1× factor), collapsing 31 bare filenames into a single folder entry. The freed ~62 tokens now show function docstrings and signatures from example code. SVG files (vscode_emojis_small, vscode_emojis_medium, ky, mdbook_guide_src, microbootstrap) are now classified as binary and excluded from source walking — they showed as bare filenames adding no code understanding.
-
-In xlstm_blocks, 6 `.cu`/`.cuh` files in `slstm/src/cuda/` (56-424 lines each) render as bare filenames because precis has no CUDA parser. The old output omitted these entirely. These are kernel implementations whose interfaces are already conveyed by the parsed `slstm.h` (which shows `ForwardPass`, `BackwardPass`, `BackwardPassCut` classes) and `slstm.cc` (which shows the pybind module). The bare filenames add only "these CUDA files exist" — already implied by the header.
-
-The root cause is that bare-filename entries have a non-zero rendering cost (~2 tokens each) but zero information value beyond "this file exists." In a directory with 24 similar files, the directory name itself conveys more than 21 individual bare filenames. Budget would be better spent showing lib.rs module declarations (~15 tokens) and mod.rs structures (~5-10 tokens each), which tell the reader how the crate is organized.
+**Remaining:** In sqlite_vec, ~25 empty file entries (Makefile, sqlite-vec.h.tmpl, test.sql, various examples/, scripts/, and site/ files) and ~25 empty folder entries (benchmarks/, tests/ subdirectories, etc.) consume ~100 tokens for near-zero information. The old output was more selective — it collapsed `site/` into a single folder entry rather than listing all its subfiles and subfolders individually. The budget spent on these empty entries could instead show README body content (issue #6) or enum bodies (issue #18). A general mechanism for deprioritizing unparseable bare-filename entries was attempted (0.2× weight for files without a tree-sitter language) but caused 23+ snapshot regressions due to cascading budget redistribution — most directories mix parseable and unparseable files.
 
 ## 27. Example source files absent while library README dominates budget (regression)
 

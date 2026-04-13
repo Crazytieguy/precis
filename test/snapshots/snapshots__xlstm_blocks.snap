@@ -1,5 +1,6 @@
 ---
 source: test/fixtures.rs
+assertion_line: 64
 expression: output
 ---
 __init__.py
@@ -46,12 +47,12 @@ slstm/cell.py
    270→    def __repr__ …
    300→    def parameters_to_dtype …
    324→    def head_dim …
-   327→    def _permute_input …
-   354→    def _permute_output …
+   327→    def _permute_input(self, x: torch.Tensor) -> torch.Tensor:
+   354→    def _permute_output(self, x: torch.Tensor) -> torch.Tensor:
    376→    def reset_parameters(self):
    377→        """Resets this layer's parameters to their initial values."""
-   441→    def _zero_state …
-   471→    def _get_final_state …
+   441→    def _zero_state(self, input: torch.Tensor) -> torch.Tensor:
+   471→    def _get_final_state(self, all_states: torch.Tensor) -> torch.Tensor:
    486→    def step …
    496→    def forward …
    509→class sLSTMCellCUDA …
@@ -59,14 +60,18 @@ slstm/cell.py
    537→def sLSTMCellFuncGenerator(training, config: sLSTMCellConfig):
    591→class sLSTMCell_vanilla …
    594→    def __init__ …
-   619→    def _recurrent_kernel_int2ext …
-   644→    def _bias_int2ext …
+   619→    def _recurrent_kernel_int2ext(
+   620→        self, recurrent_kernel_int: torch.Tensor
+   621→    ) -> torch.Tensor:
+   644→    def _bias_int2ext(self, bias_int: torch.Tensor) -> torch.Tensor:
    681→class sLSTMCell_cuda …
    684→    def __init__(self, config: sLSTMCellConfig, skip_backend_init: bool = False):
    686→        skip device init is intended for converting models between hardware configurations / backends
    687→        i.e. to store a model first and later convert it to a different backend form
-   708→    def _recurrent_kernel_int2ext …
-   735→    def _bias_int2ext …
+   708→    def _recurrent_kernel_int2ext(
+   709→        self, recurrent_kernel_int: torch.tensor
+   710→    ) -> torch.Tensor:
+   735→    def _bias_int2ext(self, bias_int: torch.Tensor) -> torch.Tensor:
    777→class sLSTMCell …
    780→    def __new__ …
 
@@ -179,19 +184,3 @@ slstm/src/vanilla/lstm.py
 
 slstm/src/vanilla/slstm.py
      8→def slstm_forward_pointwise …
-
-slstm/src/util/blas.cu
-
-slstm/src/util/cuda_error.cu
-
-slstm/src/util/inline_ops.cuh
-
-slstm/src/util/inline_ops_2bf16.cuh
-
-slstm/src/util/inline_ops_2fp16.cuh
-
-slstm/src/util/inline_ops_bf16.cuh
-
-slstm/src/util/inline_ops_fp16.cuh
-
-slstm/src/util/inline_print.cuh

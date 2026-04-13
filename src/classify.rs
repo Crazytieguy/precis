@@ -437,7 +437,7 @@ pub fn is_header_extension(ext: &str) -> bool {
 }
 
 pub fn is_c_implementation_extension(ext: &str) -> bool {
-    matches!(ext, "c" | "cpp" | "cxx" | "cc")
+    matches!(ext, "c" | "cpp" | "cxx" | "cc" | "cu")
 }
 
 /// Check if a file path has a C/C++ header extension.
