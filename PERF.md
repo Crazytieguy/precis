@@ -1,111 +1,86 @@
-# Performance profiling results (2026-04-06)
+# Performance profiling results (2026-04-12)
 
 ## Setup
 
 Profiling binary: `cargo run --release --bin profile -- <path> [--budget N]`
 
-Perf fixtures cloned via `cargo run --bin clone_fixtures -- --perf`. Shallow tag clones stored in `test/perf-fixtures/`.
+Perf fixtures cloned via `cargo run --bin clone_fixtures -- --perf`. Shallow
+tag clones stored in `test/perf-fixtures/`.
 
-## Results (before optimization)
+Numbers below are warm-cache, release mode, Apple Silicon.
 
-| Repo | Files | Symbols | Total | parse | groups | schedule | other |
-|------|------:|--------:|------:|------:|-------:|---------:|------:|
-| django | 6,679 | 50,094 | 92s | 38s (41%) | 42s (45%) | 9s (10%) | <2% |
-| deno | 5,831 | 51,059 | 141s | 107s (76%) | 23s (16%) | 1s (1%) | <7% |
-| cpython | 4,761 | 123,472 | 218s | 101s (46%) | 112s (52%) | 1s (0.5%) | <2% |
-| vscode | 7,335 | 151,690 | 449s | 243s (54%) | 197s (44%) | 4s (1%) | <1% |
-| typescript | 72,621 files | — | crash | — | — | — | — |
+## Results
 
-Walk, read, layout, render, and final token count are all negligible (<2% combined).
+| Repo       |   Files | Budget 4k | Budget 10k |
+|------------|--------:|----------:|-----------:|
+| django     |   6,679 |     340ms |      596ms |
+| deno       |   5,831 |     504ms |      692ms |
+| cpython    |   4,761 |       1.8s |        2.0s |
+| vscode     |   7,335 |     624ms |      912ms |
+| typescript |  72,621 |     512ms |        2.6s |
 
-## Results (after budget-aware truncation)
+All outputs come in within ±3% of budget. TypeScript no longer crashes — the
+old tiktoken stack-overflow was triggered by eagerly tokenizing every line
+of a 40KB emoji JSON; the new architecture never reaches that file.
 
-| Repo | Total | parse | groups | schedule | other |
-|------|------:|------:|-------:|---------:|------:|
-| django | 21s | 9s (43%) | 5.5s (26%) | 5.6s (26%) | <5% |
-| deno | 42s | 37s (88%) | 3.5s (8%) | 0.4s (1%) | <3% |
-| cpython | 37s | 30s (82%) | 5.3s (14%) | 0.4s (1%) | <3% |
-| vscode | 122s | 85s (70%) | 33s (27%) | 2s (2%) | <1% |
+## Architectural context
 
-## Bottleneck 1: parse (tree-sitter)
+The rewrite replaced the old eager pipeline (walk → parse every file →
+build groups → tokenize every line → schedule) with a lazy greedy
+scheduler. Files are parsed on demand inside `Files::children()`, only
+when their parent group has been selected by the scheduler. For a 4k-token
+budget, the vast majority of files in a large repo never get parsed — the
+scheduler commits the biggest-ratio groups and stops when nothing else
+fits.
 
-`extract_all_symbols` calls `parse::extract_symbols` per file. Each call initializes a tree-sitter parser, parses the source into an AST, and runs a query. This is pure CPU work, embarrassingly parallel across files.
+The old per-stage bottlenecks (tree-sitter parsing, tiktoken tokenization,
+group construction) still exist, but each one only runs over the much
+smaller set of files that actually contribute to output.
 
-## Bottleneck 2: groups (BPE tokenization)
+vs. numbers from the pre-rewrite era (captured 2026-04-06, after rayon
+parallelism + composite-symbol fixes, on the same fixtures at the same
+4k budget):
 
-`schedule::build_groups` calls `compute_symbol_costs` per symbol. That function calls `render::count_tokens` (tiktoken-rs BPE encoding) for:
-- The name line (1 call)
-- Each signature line (1 call per line)
-- Each doc line (1 call per line, via `count_line_range`)
-- Each body line (1 call per line, via `count_line_range`)
-- Each truncation marker (1 call per line, via `truncation_marker_cost`)
+| Repo       | Pre-rewrite | Post-rewrite | Speedup |
+|------------|------------:|-------------:|--------:|
+| django     |        7.6s |        340ms |    22x  |
+| deno       |        4.2s |        504ms |     8x  |
+| cpython    |        5.1s |         1.8s |     3x  |
+| vscode     |       27.1s |        624ms |    43x  |
+| typescript |     crashed |        512ms |       — |
 
-That's 2 `count_tokens` calls per source line across all symbols. For cpython (123k symbols), this is hundreds of thousands of BPE encodings. Also embarrassingly parallel, or could be optimized by estimating token counts instead of exact encoding.
+## Remaining hot spots
 
-## Bug: tiktoken-rs stack overflow on TypeScript repo
+cpython is the outlier (1.8s at 4k, 2.0s at 10k). Its flatness between
+budgets suggests the scheduler spends most of its time exploring many
+small, similarly-valued groups before converging — not parsing. A
+profiler run would confirm whether it's cost probing or frontier
+management.
 
-tiktoken-rs panics with `StackOverflow` during the groups stage on the TypeScript fixture (72k files). Likely triggered by an extremely long generated line. The profiler crashes before producing any output.
+TypeScript jumps the most between budgets (512ms → 2.6s, ~5x). Larger
+budgets pull more files through `Files::children()` and therefore more
+through tree-sitter parsing. At 72k files, parse cost per committed file
+dominates.
 
-## Schedule stage
+django, deno, vscode all scale sub-linearly with budget and are well
+below any interactive-usage concern.
 
-The priority queue algorithm in `schedule::schedule` is relatively cheap even at 150k+ symbols (1-9s). Django is the outlier at 9s with 3,924 groups; the others are ~1s. Not a priority for optimization.
+## Deferred optimization ideas
 
-## Optimization attempt: cost estimation (2026-04-06)
+Nothing is urgent. Documented here so the list doesn't get lost.
 
-We tried replacing exact BPE token counting in `build_groups` with calibrated linear models (`tokens ≈ a * bytes + b` per language). This eliminated the tokenization bottleneck but introduced ~7-13% output divergence from token-based scheduling, because bytes-to-tokens ratios vary by content type and the estimation errors compound at budget boundaries.
-
-## Budget-aware truncation (2026-04-06)
-
-Compute exact token costs in `build_groups` but stop per-group once cumulative cost exceeds the budget. Doc/body lines are computed layer-by-layer; layers whose prerequisites already exceed the budget are skipped. Output is exact (all snapshot tests unchanged). Groups stage speedup: 6-21x across repos.
-
-Parse is now the dominant bottleneck (43-88%). Both parse and groups are embarrassingly parallel.
-
-## Query caching (2026-04-06)
-
-`extract_symbols` was compiling the same tree-sitter `Query` from `.scm` text for every file. With ~7,000 files across ~12 distinct language/query pairs, that's thousands of redundant compilations. Fix: `build_language_configs` compiles each `Query` once per unique extension, and `extract_all_symbols_cached` reuses the pre-compiled configs.
-
-| Repo | Total | parse:init | parse | groups | schedule | other |
-|------|------:|----------:|------:|-------:|---------:|------:|
-| django | 17s | 63ms | 3.3s (19%) | 7.5s (43%) | 5.0s (29%) | <9% |
-| deno | 13s | 214ms | 6.5s (50%) | 4.5s (35%) | 0.4s (3%) | <12% |
-| cpython | 20s | 40ms | 12.5s (63%) | 5.7s (29%) | 0.7s (4%) | <4% |
-| vscode | 46s | 86ms | 12.7s (28%) | 30.4s (66%) | 1.7s (4%) | <2% |
-
-Parse speedup: 2.4-6.6x. Query compilation (parse:init) is now negligible (<0.5%).
-
-Parse and groups remain the dominant bottlenecks. Both are embarrassingly parallel.
-
-## Rayon parallelism (2026-04-06)
-
-Added `rayon` for data-parallel iteration across files and groups. Thread safety: tree-sitter `Query`/`Language` are `Send + Sync`; `CoreBPE` is `Sync` via `LazyLock`.
-
-Changes:
-- `extract_all_symbols_cached`: `par_iter` over files (each creates its own `Parser`)
-- `build_groups` Phase 1: parallel map-reduce — compute `GroupKey` + name/sig costs per file in parallel, merge into group map sequentially
-- `build_groups` Phase 2: `par_iter_mut` over groups for `fill_doc_body_costs`
-- `compute_all_layouts`: `par_iter` over files
-- `read_sources`: `par_iter` over file I/O
-
-| Repo | Total | parse | groups | schedule | other |
-|------|------:|------:|-------:|---------:|------:|
-| django | 7.6s | 0.4s (6%) | 1.7s (22%) | 5.0s (66%) | <6% |
-| deno | 4.2s | 2.0s (48%) | 1.2s (29%) | 0.5s (11%) | <12% |
-| cpython | 5.1s | 3.2s (62%) | 1.4s (27%) | 0.3s (6%) | <5% |
-| vscode | 27.1s | 4.2s (15%) | 20.7s (76%) | 1.7s (6%) | <3% |
-
-Overall speedup: 1.7-3.9x. Parse speedup: 3-8x. Groups speedup: 1.5-5.3x. vscode groups remain the bottleneck — likely dominated by a few large groups with many doc/body lines to tokenize.
-
-## Composite symbols (2026-04-08)
-
-Root cause: `extensions/git/resources/emojis.json` is a single 40KB line with 1,837 JSON key-value pairs. All symbols share `sym_line_0 = 0`, so `compute_name_sig_costs` calls `count_tokens(fmt_line(0, full_40KB_line))` 3,674 times on the identical 40KB string. Each BPE call takes ~5ms → 18.2s total (79.5% of Phase 1).
-
-Fix: detect symbols sharing a source line and merge them into a composite symbol. The original symbols become progressive "body lines" — the output is always a valid prefix of the source line, extended one symbol at a time as budget allows. Tokenization uses O(M) boundary-window correction for exact incremental costs.
-
-| Repo | Total | parse | groups | schedule | other |
-|------|------:|------:|-------:|---------:|------:|
-| django | 8.7s | 0.5s (5%) | 2.2s (26%) | 5.0s (57%) | <12% |
-| deno | 4.0s | 2.0s (50%) | 1.3s (32%) | 0.5s (12%) | <6% |
-| cpython | 4.8s | 3.0s (62%) | 1.3s (28%) | 0.3s (6%) | <4% |
-| vscode | 10.3s | 5.0s (49%) | 3.0s (29%) | 1.9s (18%) | <4% |
-
-vscode groups speedup: 6.8x. Overall vscode speedup: 2.6x.
+- **Cost-probe caching.** `schedule::probe_cost` probes each candidate's
+  marginal cost against the current committed set. For small candidates
+  over a large committed set, this is O(committed_files). A per-candidate
+  cache keyed on `len(committed)` would help, but only on
+  large-frontier workloads.
+- **Parallelism.** The old code used rayon across files. The lazy
+  scheduler intentionally serializes parsing to keep the cost model
+  honest (each probe observes the real rendered cost). Re-introducing
+  parallelism would require batched speculative parsing, which trades
+  complexity for maybe 2-3x on parse-bound workloads.
+- **Incremental tokenization.** Each committed group's tokens are cached
+  per-file in `CachedGroupRender`. Probes re-run tokenization on any
+  file the candidate touches. For small candidates this is cheap.
+  Skipping re-tokenization of unchanged entries is possible but
+  significant plumbing.

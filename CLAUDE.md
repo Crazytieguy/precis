@@ -1,7 +1,5 @@
 # Precis
 
-See @design.md for the architecture.
-
 ## Design Principles
 
 **Goal.** Maximize a reader's understanding of a codebase per token spent. The reader starts knowing nothing; the output should build the most accurate mental model possible within the budget.
