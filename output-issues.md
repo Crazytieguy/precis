@@ -1,13 +1,9 @@
 # Output quality issues
 
 
-## 6. README body content dropped — only headings shown (partially fixed)
+## ~~6. README body content dropped — only headings shown (resolved)~~
 
-**Partially fixed:** A 2× modifier boost for README h1 HeadingBody groups combined with a 12-line cap on markdown h1 body rendering fixed 9 of the 16 affected snapshots: commander, d2ts, d2ts_d2ts, mdbook, mdbook_guide_src, soluna, sps, sqlite_vec, toasty. Auto-commit of root-level README h1 body content (bypassing ratio competition) fixed 4 more: bareiron, log, d2ts (root README body), sds.
-
-**Remaining affected snapshots:** mcphost, semver, pluggy, typeguard
-
-pluggy and typeguard use RST instead of markdown with no tree-sitter parser — their README content can't be extracted at all. mcphost already shows some README body content via ratio competition. semver's README has no h1 body content (the setext h1 is immediately followed by `## Install`), so there's nothing to auto-commit.
+Resolved. A 2× modifier boost for README h1 HeadingBody groups combined with a 12-line cap on markdown h1 body rendering fixed 9 of the 16 affected snapshots. Auto-commit of root-level README h1 body content fixed 4 more. Remaining 4 snapshots are fundamentally limited: pluggy/typeguard use RST (no tree-sitter parser), mcphost already shows README body via ratio competition, semver's README has no h1 body content.
 
 
 
@@ -57,11 +53,9 @@ In tock_internal_core, the missing `InterfaceBody` group causes Go interface met
 
 **Attempted fix:** Tried three approaches: (1) Changing TypeAliasName/ConstName rendering to show full first line instead of truncating at name — individually correct but cascades to 54 snapshots due to changed token costs; ts_pattern regressed (lost API methods, gained README h3 headings); (2) Adding TypeAliasBody/ConstBody groups with base_value 0.3/0.2 — near-zero marginal cost for single-line upgrades makes them competitive everywhere, still 42 snapshots affected; (3) Adding all four body groups (TypeAlias, Const, Interface, Trait) — 75 failures. The fundamental tension: showing type/const values costs more tokens per entry, which shifts budget allocation globally. Any approach that shows more content will cascade. May need a mechanism that allows body content without displacing other entries (e.g., a "free upgrade" path for same-line Truncated→Complete transitions that doesn't count against budget).
 
-## ~~14. Server architecture lost to broad-but-shallow budget distribution (partially fixed)~~
+## ~~14. Server architecture lost to broad-but-shallow budget distribution (resolved)~~
 
-**Partially fixed:** Smoothed the depth penalty cliff at depth 4 (from 0.4 to 0.55), reducing the 43% drop between depth 3 (0.7) and depth 4. This surfaced the auth module (`authenticationMiddleware`, `protectedRouteMiddleware`, JWT services, `extractAccessToken`, `registerAuthRoutes`) and config module (`configDefinition`, `Config` type) in the enclosed snapshot. Previously these directories appeared only as bare folder entries.
-
-**Remaining:** The `middlewares/` and `storage/factories/` directories are still just folder entries. The depth penalty fix made depth-4 content more competitive but these directories still can't win enough budget against the volume of shallower content across 7 packages. Further improvement likely requires the budget redistribution mechanisms described in the original issue (architectural weighting or coverage-aware scheduling).
+Resolved. Smoothed depth penalty cliff at depth 4 (from 0.4 to 0.55), surfacing auth and config modules in the enclosed snapshot. Remaining directories (`middlewares/`, `storage/factories/`) are a volume-based budget capture issue — tracked under #21.
 
 
 ## ~~17. C header file budget reduced — key API declarations and struct bodies lost (resolved)~~
@@ -70,7 +64,7 @@ Resolved through two fixes: (1) a 0.3× companion-header penalty for C/C++ imple
 
 The dedup bug fix also improved sds (+20 function declarations), soluna (+16 function declarations), sqlite_vec (+30 function declarations), bareiron (gained README body content + functions). neco regressed: with all 119 functions correctly extracted (vs ~50 before the fix), the FunctionName groups are larger and more expensive, causing #define constants (error codes, time units) to win budget over function declarations. This is a pre-existing scoring issue (MacroName ratio >> FunctionName ratio for large groups) exposed by the fix, not caused by it.
 
-## 18. Struct and enum bodies elided — many small entries beat fewer large ones (partially fixed)
+## 18. Struct and enum bodies elided — many small entries beat fewer large ones (partially fixed) [needs human review]
 
 **Partially fixed:** Added an auto-commit mechanism for compact enum bodies (≤25 lines). When the scheduler commits an enum name, it immediately commits the body too — bypassing ratio-based competition where cheap FunctionName entries (1.0 base_value, ~2 tokens, ratio 0.5) always beat multi-line bodies (1.5 base_value, ~20 tokens, ratio 0.075). Auto-commit only fires when body value ≥1.0 and >75% budget remains, preventing displacement of other content. This fixed enum bodies in 6 snapshots: log (Level/LevelFilter variants), mdbook (TextDirection/RustEdition), otree (Key/LayoutDirection), sps (JobProcessingState), sqlite_vec (VectorElementType/DistanceMetrics/TokenTypes), toasty_core (Operation/Rows).
 
@@ -80,7 +74,9 @@ The fix only applies to EnumBody groups. StructBody auto-commit was attempted bu
 
 The remaining affected snapshots all need struct body improvements: neco (`neco_stats` struct fields), thiserror/thiserror_impl_src (AST data model structs: Struct, Enum, Variant, Field, Attrs), tock (`AnalysisStats` struct fields), toasty_codegen (`Filter` struct fields). Fixing these likely requires either a mechanism to distinguish architecturally important structs from implementation-detail structs, or scheduler-level changes that account for opportunity cost when auto-committing bodies.
 
-Additionally, some larger enum bodies (>25 lines) in sps (SpsError with 15+ variants, PipelineEvent with ~20 variants) and otree (CommandArgs, ContentType, SyntaxToken) remain elided. These exceed the compact body threshold. Raising the threshold helps these cases but risks displacing content in other snapshots.
+Additionally, some larger enum bodies (>25 lines) in sps (SpsError with 15+ variants, PipelineEvent with ~20 variants) and otree (CommandArgs, ContentType, SyntaxToken) remain elided. These exceed the compact body threshold. Raising the threshold to 35 has no effect (these enums are larger still, or budget threshold isn't met).
+
+**Additional struct auto-commit attempt (2026-04-13):** Tried adding StructBody to auto-commit with stricter thresholds (budget 7/8–15/16, line limits 8–15). At 7/8 budget + 8-line limit: mdbook improved (Summary/Link struct bodies), but mcphost regressed (Go struct bodies displaced private function names) and toasty_core regressed (SchemaMutations body displaced relation type names). At 9/10 budget: only mcphost changed (arguably an improvement — gained data model, lost private helpers — but not a target snapshot). At 15/16: no effect. The target snapshots (neco, thiserror, tock, toasty_codegen) never benefit because their struct names are committed too late in scheduling (budget already consumed). The auto-commit approach fundamentally can't reach deep-project structs without also catching shallow Go structs that cause regressions.
 
 ## 21. Volume-based budget capture — large support package crowds out small core package [needs human review]
 
