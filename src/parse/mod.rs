@@ -432,7 +432,7 @@ fn classify<'t>(
         }),
         "import_from_statement" => Some(Import {
             first_party: is_first_party_import(node, source, lang),
-            reexport: false,
+            reexport: is_python_reexport(node, source),
         }),
         "import_declaration" => Some(Import {
             first_party: is_first_party_import(node, source, lang),
@@ -686,6 +686,28 @@ fn rust_use_path(text: &str) -> &str {
     let rest = rest.trim_start();
     let rest = rest.strip_prefix("use").unwrap_or(rest).trim_start();
     rest.trim_end_matches(';').trim()
+}
+
+/// Detect Python `from X import Y as Y` — the PEP 484 explicit re-export convention.
+fn is_python_reexport(node: Node, source: &str) -> bool {
+    let mut cursor = node.walk();
+    let mut has_aliased = false;
+    for child in node.children(&mut cursor) {
+        if child.kind() == "aliased_import" {
+            let name = child
+                .child_by_field_name("name")
+                .and_then(|n| n.utf8_text(source.as_bytes()).ok());
+            let alias = child
+                .child_by_field_name("alias")
+                .and_then(|n| n.utf8_text(source.as_bytes()).ok());
+            match (name, alias) {
+                (Some(n), Some(a)) if n == a => has_aliased = true,
+                (Some(_), Some(_)) => return false,
+                _ => {}
+            }
+        }
+    }
+    has_aliased
 }
 
 fn is_rust_reexport(node: Node, source: &str, mod_names: &[&str]) -> bool {

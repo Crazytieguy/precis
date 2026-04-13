@@ -401,16 +401,6 @@ These ~53 lines of low-value heading-only docs displace content the pre-rewrite 
 
 The pre-rewrite had zero docs/ content for these files — it showed only the crate-level CONTEXT.md files. The docs/ directory is classified as `DocsSite` (category_factor 0.2), but at depth 1-2 the depth_factor is 1.0-0.7, yielding an effective contribution of 0.14-0.2. Since docs files tend to have high heading counts (each at base_value 0.6-1.0), even with the category penalty, the aggregate value of many headings across many docs files exceeds the value of a few struct bodies in deeper source directories.
 
-## 33. Python `__init__.py` re-exports shown in full — redundant with per-module listings
-
-**Affected snapshots:** typeguard
-
-In typeguard, `__init__.py` contains 23 re-export lines (`from ._checkers import TypeCheckerCallable as TypeCheckerCallable`, etc.) that define the package's public API. The new output shows all 23 lines (~350 tokens), consuming ~9% of the 4000-token budget. The pre-rewrite showed only the non-import symbols (`config: TypeCheckConfiguration` and `def __getattr__`).
-
-The re-exports are valuable in isolation — they tell a reader what `import typeguard` provides. But they're almost entirely redundant with the per-module listings already shown: every re-exported symbol (`check_type`, `typechecked`, `TypeCheckError`, etc.) appears in its source file's output. The 350 tokens would be far better spent on the empty README.rst (see #6) or the missing config enum values (see #28).
-
-The `from X import Y as Y` pattern is Python's explicit re-export convention. If precis detects this as `ImportedItems { first_party: true }` (base_value 1.0) without applying the reexport penalty, that explains the over-allocation. With `reexport_contribution()` (0.1×), the effective value should be low enough to suppress most of these. This is the inverse of #30 (Rust re-exports too aggressively suppressed) — Python re-exports not suppressed enough.
-
 ## 35. Third-party imports dropped in small single-file projects despite ample budget (regression) [needs human review]
 
 **Affected snapshots:** xxhash_xxhsum
