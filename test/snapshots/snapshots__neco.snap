@@ -118,11 +118,9 @@ neco.h
    383→int neco_panic(const char *fmt, ...);
    396→typedef struct neco_stream neco_stream …
    414→ssize_t neco_stream_buffered_write_size(neco_stream *stream);
+   442→////////////////////////////////////////////////////////////////////////////////
+      →…
    446→void __neco_c0(void*,void(*)(void*),void*); 
-
-docs/README.md
-     1→# Neco Documentation
-     3→## [API.md](API.md)
 
 neco.c
    294→#define LLCO_NOASM
@@ -139,12 +137,11 @@ neco.c
   3570→struct runtime …
   5718→struct neco_chan …
   7082→struct neco_mutex …
+  7933→typedef struct neco_stream neco_stream …
 
 examples/README.md
      1→# Neco examples 
 
-docs/assets/
+docs/README.md
 
-docs/tools/
-
-tests/
+tests/README.md

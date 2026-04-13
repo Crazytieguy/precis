@@ -142,6 +142,8 @@ fn classify_by_components(path: &Path) -> Option<FileCategory> {
         }
         if s == "website"
             || s == "site"
+            || s == "docs"
+            || s == "doc"
             || s == "rfcs"
             || s == "rfc"
             || s == "changelog"

@@ -4,18 +4,6 @@ expression: output
 ---
 README.rst
 
-docs/api.rst
-
-docs/extending.rst
-
-docs/features.rst
-
-docs/index.rst
-
-docs/userguide.rst
-
-docs/versionhistory.rst
-
 src/typeguard/__init__.py
     34→config …
     37→def __getattr__ …
@@ -349,8 +337,6 @@ src/typeguard/_utils.py
 
 src/typeguard/py.typed
 
-docs/conf.py
-
 pyproject.toml
      1→[build-system]
      8→[project]
@@ -366,6 +352,20 @@ pyproject.toml
     99→[tool.mypy]
    105→[tool.tox]
    115→[tool.tox.env.docs]
+
+docs/api.rst
+
+docs/extending.rst
+
+docs/features.rst
+
+docs/index.rst
+
+docs/userguide.rst
+
+docs/versionhistory.rst
+
+docs/conf.py
 
 src/
 

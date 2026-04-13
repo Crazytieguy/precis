@@ -196,8 +196,6 @@ src/platform/wasm/soluna_wasm_ime.h
    231→EMSCRIPTEN_KEEPALIVE void
    232→soluna_wasm_block_next_keypair(void) {
 
-web/content/docs/_index.md
-
 src/service/gamepad.lua
     10→function S.register …
     15→function S.update …
@@ -251,148 +249,55 @@ web/assets/play.js
 
 web/assets/playframe.js
 
-docs/app.lua
-     8→local app …
-    15→function app.quit() end
-    24→function app.set_ime_font(font_name, font_size) end
-    35→function app.set_ime_rect(rect) end
-
-docs/args.lua
-     5→local batch …
-    18→function batch:add(sprite, x, y) end
-    41→function batch:layer(scale, rotation, x, y) end
-    47→local args …
-
-docs/callback.lua
-     5→local callback …
-    11→function callback.frame(count) end
-    18→function callback.key(keycode, state) end
-    24→function callback.char(char) end
-    31→function callback.mouse_button(button, state) end
-    38→function callback.mouse_move(x, y) end
-    45→function callback.mouse_scroll(dx, dy) end
-    52→function callback.window_resize(width, height) end
-
-docs/coroutine.lua
-     8→local coroutine …
-    18→function coroutine.create(f) end
-    30→function coroutine.resume(co, ...) end
-    40→function coroutine.yield(...) end
-
-docs/crypt.lua
-     8→local crypt …
-    17→function crypt.hexencode(data) end
-    26→function crypt.sha1(data) end
-
-docs/datalist.lua
-     8→local datalist …
-    15→function datalist.parse(data) end
-    22→function datalist.quote(str) end
-
-docs/file.lua
-     8→local file …
-    15→function file.load(filename) end
-    22→function file.attributes(filename) end
-    29→function file.exist(filename) end
-    36→function file.local_exist(filename) end
-    43→function file.local_load(filename) end
-    50→function file.dir(path) end
-
-docs/font.lua
-     8→local font …
-    14→function font.import(data) end
-    21→function font.name(name) end
-    27→function font.cobj() end
-
-docs/font_system.lua
-     8→local font_system …
-    15→function font_system.ttfdata(name) end
-
-docs/image.lua
-     8→local image …
-    17→function image.load(data) end
-    33→function image.resize(data, width, height, scale_x, scale_y) end
-
-docs/layout.lua
-     8→local layout …
-    22→function layout.load(filename_or_list, scripts) end
-    32→function layout.calc(document) end
-
-docs/lfs.lua
-     8→local lfs …
-    15→function lfs.attributes(filename) end
-    22→function lfs.dir(path) end
-
-docs/material_mask.lua
-     8→local matmask …
-    19→function matmask.mask(sprite, color) end
-
-docs/material_perspective_quad.lua
-     8→local matproj …
-    29→function matproj.sprite(sprite, options) end
-
-docs/material_quad.lua
-     8→local matquad …
-    20→function matquad.quad(width, height, color) end
-
-docs/material_text.lua
-     8→local mattext …
-    31→function mattext.block(fontcobj, fontid, size, color, alignment) end
-
-docs/soluna.lua
-    16→local soluna …
-    19→--- Current platform identifier
-      →…
-    22→soluna.platform …
-    25→--- Version string
-      →…
-    28→soluna.version …
-    31→--- API version number
-      →…
-    34→soluna.version_api …
-    40→function soluna.settings() end
-    46→function soluna.set_window_title(text) end
-    52→function soluna.set_icon(data) end
-    59→function soluna.gamedir(name) end
-    66→function soluna.load_sprites(filename) end
-
-docs/text.lua
-     8→local text …
-    17→function text.init(bundle_file) end
-    20→--- Table that converts text strings with embedded icon tags and color codes
-      →…
-    34→text.convert …
-
-docs/url.lua
-     8→local url …
-    14→function url.open(link) end
-
-docs/zip.lua
-     8→local zip …
-    19→function zip.open(filename, mode) end
-
 src/lualib/coroutine.lua
+    19→	function coroutine.create …
+    51→		function coroutine.resume …
+    69→	function coroutine.status …
+    82→	function coroutine.yield …
+    96→		function coroutine.wrap …
+   107→	function coroutine.close …
    113→_ENV.coroutine …
 
 src/lualib/fontmgr.lua
    310→debug.getregistry().TRUETYPE_IMPORT …
 
 src/lualib/icon.lua
+    10→function icon.bundle …
+    27→function icon.symbol …
 
 src/lualib/initsetting.lua
+    62→function S.init …
 
 src/lualib/layout.lua
+    13→function document:__gc …
+    24→function document:__index …
+    28→function document:__tostring …
+    32→function document:__pairs …
+    36→function element:__tostring …
+    40→function element:__newindex …
+    47→function element:update …
+    53→function element:get …
+    59→function element:attribs …
+   128→	function layout.load …
+   151→	function layout.calc …
 
 src/lualib/main.lua
     16→	_G.print_r …
    150→	package.path …
    154→	package.cpath …
+   159→function api.start …
+   183→function api.init …
 
 src/lualib/packageloader.lua
+    75→	function file_load …
+    79→	function file_exist …
     82→	file.local_load …
     83→	file.local_exist …
     84→	file.load …
     85→	file.exist …
+   109→	function file.dir …
+   130→	function file.attributes …
+   143→	function file.searchpath …
    156→	file.dir …
    157→	file.attributes …
    158→	file.local_load …
@@ -402,14 +307,139 @@ src/lualib/packageloader.lua
 src/lualib/print_r.lua
 
 src/lualib/soluna.lua
+    11→function soluna.gamepad_init …
+    28→function soluna.settings …
+    36→function soluna.set_window_title …
+    40→function soluna.set_icon …
+    53→function soluna.gamedir …
+    73→function soluna.load_sprites …
+    79→function soluna.preload …
     99→soluna.version …
 
 src/lualib/spritebundle.lua
+   105→function M.load …
+   117→function M.loadimage …
 
 src/lualib/text.lua
+     9→function text.init …
     66→text.convert …
 
 src/lualib/util.lua
+     9→function func_chain:add …
+    13→function func_chain:__call …
+    20→function util.func_chain …
+
+src/batch.c
+
+src/blit.glsl
+
+src/colorquad.glsl
+
+src/drawmgr.c
+
+src/embedlua.c
+
+src/entry.c
+
+src/file.c
+
+src/font.c
+
+src/font_manager.c
+    18→// --------------
+      →…
+    48→struct font_slot …
+    94→#define COLLISION_STEP 7
+   360→// F->dpi_perinch is a constant, so do not need to lock
+   361→int
+   362→font_manager_pixelsize(struct font_manager *F, int fontid, int pointsize) {
+
+src/font_system.c
+
+src/gamepad.c
+
+src/image.c
+
+src/lcrypt.c
+   187→#define GET_UINT32(n,b,i)					   \
+   205→#define DES_IP(X,Y)											 \
+   218→#define DES_FP(X,Y)											 \
+   231→#define DES_ROUND(X,Y)						  \
+   373→typedef void (*padding_add)(uint8_t buf …
+   374→typedef int (*padding_remove)(const uint8_t *last …
+   623→#define LEFTROTATE(x, c) (((x) << (c)) | ((x) >> (32 - (c))))
+   790→#define P 0xffffffffffffffc5ull
+
+src/lfs.c
+   323→typedef void (*_push_function) (lua_State *L …
+
+src/lsha1.c
+    89→typedef struct { …
+   114→#define	R0(v,w,x,y,z,i)	z+=((w&(x^y))^y)+blk0(i)+0x5A827999+rol(v,5);w=rol(w,30);
+
+src/luamods.c
+
+src/luayoga.c
+   104→typedef void (*setfunc)(lua_State *L …
+
+src/luazip.c
+
+src/maskquad.glsl
+
+src/material_blit.c
+
+src/material_default.c
+
+src/material_mask.c
+
+src/material_perspective_quad.c
+
+src/material_quad.c
+
+src/material_text.c
+   242→#define iscont(c)	(((c) & 0xC0) == 0x80)
+   329→// todo: support multi font/size
+   330→struct block_context …
+
+src/material_util.c
+
+src/openlibs.c
+
+src/openurl.c
+
+src/perspective_quad.glsl
+
+src/render.c
+   222→// todo : offscreen pass
+   223→struct pass …
+
+src/render_bindings.c
+
+src/render_uniform.c
+
+src/sdfimage.c
+    23→#define IMAGE_SIZE 64
+
+src/sdftext.glsl
+
+src/spritemgr.c
+
+src/srbuffer.c
+
+src/texquad.glsl
+
+src/transform.c
+    75→// returns origin point (x, y) in transformed coordinate system
+    76→void
+    77→sprite_transform_point(const struct transform *t, int *x, int *y) {
+
+src/truetype.c
+
+src/winfile.c
+
+src/writelog.c
+
+src/yogaone.cpp
 
 src/platform/linux/soluna_linux_ime.c
     18→void soluna_emit_char …
@@ -429,29 +459,9 @@ src/platform/windows/soluna_windows_ime.c
    149→void …
    172→void …
 
-clibs/soluna/compile_lua.lua
-
-clibs/soluna/compile_shader.lua
-
-clibs/soluna/runlua.lua
-
-clibs/soluna/shader2c.lua
-
 make.lua
 
-src/platform/macos/soluna_macos_ime.m
-
 web/config.toml
-     7→[pagination]
-     8→  pagerSize = 12
-     9→
-    10→[params]
-
-web/layouts/index.html
-
-web/content/examples/_index.md
-
-clibs/datalist/make.lua
 
 3rd/
 
@@ -473,19 +483,31 @@ bin/sokol-tools-bin/
 
 clibs/
 
+clibs/datalist/
+
 clibs/ltask/
 
 clibs/lua/
 
+clibs/soluna/
+
 clibs/yoga/
 
 clibs/zip/
+
+docs/
 
 script/
 
 src/platform/
 
 test/
+
+web/content/docs/
+
+web/content/examples/
+
+web/layouts/
 
 web/layouts/_default/
 

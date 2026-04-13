@@ -45,72 +45,7 @@ README.md
    170→## 📚 Documentation
    172→For more detailed documentation, please visit our [GitHub Pages](https://peepdb.dev/).
 
-docs/README.md
-     1→# just-the-docs-template
-     3→This is a *bare-minimum* template to create a [Jekyll] site that:
-     4→
-     5→- uses the [Just the Docs] theme;
-     6→- can be built and published on [GitHub Pages];
-     7→- can be built and previewed locally, and published on other platforms.
-     8→
-     9→More specifically, the created site:
-    10→
-    11→- uses a gem-based approach, i.e. uses a `Gemfile` and loads the `just-the-docs` gem;
-    12→- uses the [GitHub Pages / Actions workflow] to build and publish the site on GitHub Pages.
-    13→
-    14→To get started with creating a site, simply:
-    23→## Replace the content of the template pages
-    30→## Changing the version of the theme and/or Jekyll
-    34→## Adding a plugin
-    55→## Publishing your site on GitHub Pages
-    76→## Building and previewing your site locally
-    88→## Publishing your built site on a different platform
-    92→## Customization
-    98→## Hosting your docs from an existing project repo
-   102→### Copy the template files
-   108→### Modify the GitHub Actions workflow
-   154→## Licensing and Attribution
-
 MANIFEST.in
-
-docs/Gemfile
-
-docs/index.md
-     6→# peepDB
-     8→**peepDB** is an open-source command-line tool and Python library designed for developers and database administrators who need a fast and efficient way to inspect their database tables without writing SQL queries. With support for MySQL, PostgreSQL, and MariaDB, peepDB is lightweight, secure, and incredibly easy to use.
-     9→
-    10→## 🚀 Features
-    20→## Getting Started
-    28→## 🔒 Security
-    40→## 📜 License
-
-docs/installation.md
-     6→# 📦 Installation
-     8→You can install peepDB directly from PyPI using pip:
-     9→
-    10→```bash
-    11→pip install peepdb
-    12→```
-    13→
-    14→This will install the latest version of peepDB along with all its dependencies.
-    15→
-    16→## Requirements
-    21→## System Dependencies
-    30→## Verifying the Installation
-    42→## Next Steps
-
-docs/usage.md
-     6→# 🛠️ Usage
-     8→peepDB provides a user-friendly command-line interface for interacting with your databases. Here are the main commands and their usage:
-     9→
-    10→## Saving Database Connection Details
-    20→## Listing Saved Connections
-    28→## Viewing Tables
-    42→## Pagination
-    50→## Choosing Output Format
-    58→## Removing Saved Connections
-    74→## Help
-    82→## Examples
 
 peepdb/__init__.py
 
@@ -230,6 +165,32 @@ peepdb/exceptions.py
      1→class InvalidPassword …
      2→    pass
 
+docs/README.md
+     1→# just-the-docs-template
+     3→This is a *bare-minimum* template to create a [Jekyll] site that:
+     4→
+     5→- uses the [Just the Docs] theme;
+     6→- can be built and published on [GitHub Pages];
+     7→- can be built and previewed locally, and published on other platforms.
+     8→
+     9→More specifically, the created site:
+    10→
+    11→- uses a gem-based approach, i.e. uses a `Gemfile` and loads the `just-the-docs` gem;
+    12→- uses the [GitHub Pages / Actions workflow] to build and publish the site on GitHub Pages.
+    13→
+    14→To get started with creating a site, simply:
+    23→## Replace the content of the template pages
+    30→## Changing the version of the theme and/or Jekyll
+    34→## Adding a plugin
+    55→## Publishing your site on GitHub Pages
+    76→## Building and previewing your site locally
+    88→## Publishing your built site on a different platform
+    92→## Customization
+    98→## Hosting your docs from an existing project repo
+   102→### Copy the template files
+   108→### Modify the GitHub Actions workflow
+   154→## Licensing and Attribution
+
 peepdb/db/__init__.py
      1→from .base import BaseDatabase
      2→from .mysql import MySQLDatabase
@@ -340,10 +301,50 @@ project.toml
     46→[project.scripts]
     47→peepdb = "peepdb.cli:main"
     48→
+    49→[tool.setuptools.packages.find]
 
 requirements.txt
 
 setup.py
+
+docs/Gemfile
+
+docs/index.md
+     6→# peepDB
+     8→**peepDB** is an open-source command-line tool and Python library designed for developers and database administrators who need a fast and efficient way to inspect their database tables without writing SQL queries. With support for MySQL, PostgreSQL, and MariaDB, peepDB is lightweight, secure, and incredibly easy to use.
+     9→
+    10→## 🚀 Features
+    20→## Getting Started
+
+docs/installation.md
+     6→# 📦 Installation
+     8→You can install peepDB directly from PyPI using pip:
+     9→
+    10→```bash
+    11→pip install peepdb
+    12→```
+    13→
+    14→This will install the latest version of peepDB along with all its dependencies.
+    15→
+    16→## Requirements
+    21→## System Dependencies
+    30→## Verifying the Installation
+    42→## Next Steps
+
+docs/usage.md
+     6→# 🛠️ Usage
+     8→peepDB provides a user-friendly command-line interface for interacting with your databases. Here are the main commands and their usage:
+     9→
+    10→## Saving Database Connection Details
+    20→## Listing Saved Connections
+    28→## Viewing Tables
+    42→## Pagination
+    50→## Choosing Output Format
+    58→## Removing Saved Connections
+    74→## Help
+    82→## Examples
+
+peepdb/tests/__init__.py
 
 docs/_config.yml
      1→title: peepDB
@@ -353,7 +354,7 @@ docs/_config.yml
      7→aux_links:
      8→  Template Repository: https://github.com/just-the-docs/just-the-docs-template
 
-peepdb/tests/__init__.py
+CONTRIBUTING.md
 
 docs/contributing.md
 

@@ -8,10 +8,6 @@ downstream/README.md
 
 MANIFEST.in
 
-docs/api_reference.rst
-
-docs/index.rst
-
 downstream/conda.sh
 
 downstream/datasette.sh
@@ -306,6 +302,8 @@ src/pluggy/_tracing.py
     16→class TagTracer …
     17→    def __init__(self) -> None:
     22→    def get(self, name: str) -> TagTracerSub:
+    25→    def _format_message …
+    42→    def _processmessage …
     48→    def setwriter(self, writer: _Writer | None) -> None:
     51→    def setprocessor(self, tags: str | tuple[str, ...], processor: _Processor) -> None:
     59→class TagTracerSub …
@@ -328,23 +326,9 @@ src/pluggy/py.typed
 
 changelog/README.rst
 
-docs/examples/toy-example.py
-     8→class MySpec …
-    10→
-    12→    def myhook(self, arg1, arg2):
-    13→        """My special little hook that you can customize."""
-    16→class Plugin_1 …
-    18→
-    20→    def myhook(self, arg1, arg2):
-    25→class Plugin_2 …
-    27→
-    29→    def myhook(self, arg1, arg2):
+docs/api_reference.rst
 
-docs/conf.py
-   106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
-   130→def setup(app: "sphinx.application.Sphinx") -> None:
-
-docs/requirements.txt
+docs/index.rst
 
 codecov.yml
      1→coverage:
@@ -359,6 +343,10 @@ pyproject.toml
      1→[build-system]
      8→[project]
     38→[dependency-groups]
+    39→dev = ["pre-commit", "tox"]
+    40→testing = ["pytest", "pytest-benchmark", "coverage"]
+    41→
+    42→
     43→[tool.setuptools]
     69→[tool.setuptools_scm]
     71→[tool.uv]
@@ -375,15 +363,26 @@ testing/conftest.py
 
 scripts/release.py
      2→Release script.
+     3→"""
+    15→def create_branch(version: str) -> Repo:
+    30→def get_upstream(repo: Repo) -> Remote:
+    39→def pre_release(version: str) -> None:
+    50→def changelog(version: str, write_out: bool = False) -> None:
+    59→def main() -> int:
 
 scripts/towncrier-draft-to-file.py
+     5→def main() -> int:
 
-docs/examples/eggsample/setup.py
+changelog/590.trivial.rst
+
+changelog/_template.rst
+
+docs/conf.py
+
+docs/requirements.txt
 
 docs/_static/
 
-docs/_static/img/
-
-docs/examples/eggsample-spam/
+docs/examples/
 
 src/

@@ -154,37 +154,10 @@ README.md
 
 cmd/tock/main.go
      7→func main() {
+     8→	cli.Execute()
+     9→}
 
 demo/demo_script.sh
-
-docs/commands.md
-     1→# Commands Reference
-     3→This document provides a comprehensive reference for all Tock commands, flags, and usage patterns.
-     4→
-     5→- [Core Commands](#core-commands)
-     6→  - [`start`](#start)
-     7→  - [`stop`](#stop-alias-s)
-     8→  - [`add`](#add)
-     9→  - [`remove`](#remove-alias-rm)
-    10→  - [`continue`](#continue-alias-c)
-    11→  - [`watch`](#watch)
-    12→- [Viewing & Reporting](#viewing--reporting)
-    13→  - [`calendar`](#calendar)
-    14→  - [`list`](#list-alias-ls)
-    23→## Core Commands
-    25→### `start`
-    57→### `stop` (alias: `s`)
-    86→### `add`
-   118→### `remove` (alias: `rm`)
-   143→### `continue` (alias: `c`)
-   188→## Viewing & Reporting
-   190→### `calendar`
-   217→### `list` (alias: `ls`)
-   240→### `current`
-   260→### `last` (alias: `lt`)
-   283→### `report`
-   307→### `analyze`
-   330→### `ical`
 
 internal/config/config.go
     12→type Config …
@@ -393,8 +366,6 @@ internal/adapters/repositories/timewarrior/repository.go
    283→func (r *repository) writeIntervalsToFile(path string, intervals []twInterval) error {
    306→func toTWInterval(a models.Activity) twInterval {
    320→func fromTWInterval(iv twInterval) (models.Activity, error) {
-   349→// parseIncLine parses a line in TimeWarrior's internal serialization format.
-      →…
    352→func parseIncLine(line string) (twInterval, error) {
    393→func tokenize(line string) []string {
 
@@ -417,6 +388,11 @@ internal/adapters/repositories/file/repository.go
    229→func (r *repository) readLines() ([]string, error) {
    250→func (r *repository) writeLines(lines []string) error {
 
+docs/commands.md
+     1→# Commands Reference
+    23→## Core Commands
+   188→## Viewing & Reporting
+
 internal/adapters/cli/add.go
     16→type addOptions …
     26→func NewAddCmd() *cobra.Command {
@@ -427,7 +403,20 @@ internal/adapters/cli/add.go
 internal/adapters/cli/analyze.go
     20→func NewAnalyzeCmd() *cobra.Command {
     70→type AnalysisStats …
+    71→	TotalDuration      time.Duration
+    72→	DeepWorkDuration   time.Duration
+    73→	DeepWorkScore      float64 // 0-100
+    74→	ContextSwitches    int
+    75→	AvgSwitchesPerDay  float64
+    76→	Chronotype         string // "Morning Lark", "Night Owl", etc.
+    77→	PeakHour           int
+    78→	FocusDistribution  map[string]int // "Short (<15m)", "Medium (15-60m)", "Long (>60m)"
+    79→	MostProductiveDay  string
+    80→	AvgSessionDuration time.Duration
+    81→}
+    83→//nolint:funlen // analysis function is inherently long
     84→func analyzeData(activities []models.Activity) AnalysisStats {
+   205→//nolint:funlen // render function is inherently long for output formatting
    206→func renderAnalysis(stats AnalysisStats, cfg *config.Config, tf *timeutil.Formatter) {
 
 internal/adapters/cli/calendar.go
@@ -439,6 +428,7 @@ internal/adapters/cli/calendar.go
    134→func (m *reportModel) View() string {
    156→func (m *reportModel) renderCalendar() string {
    234→func (m *reportModel) renderDetails() string {
+   255→//nolint:funlen //it's more readable to keep the content generation in one place for now
    256→func (m *reportModel) updateViewportContent() {
    402→func (m *reportModel) formatProjectStat(name string, duration time.Duration) string {
    416→// Messages and Commands
@@ -447,11 +437,14 @@ internal/adapters/cli/calendar.go
    420→}
    422→type errMsg …
    424→func (m *reportModel) fetchMonthData() tea.Msg {
+   486→// getWeeklyDuration calculates the total duration for the current week (Monday to Sunday)
+   487→// based on the selected date. Fetches directly from service to handle cross-month weeks.
    488→func (m *reportModel) getWeeklyDuration() (time.Duration, error) {
    520→func (m *reportModel) handleKeyMsg(msg tea.KeyMsg) (tea.Cmd, bool) {
 
 internal/adapters/cli/calendar_sidebar.go
     12→const barChar …
+    14→// formatDurationCompact formats a duration as "Xh Ym" for compact display.
     15→func formatDurationCompact(d time.Duration) string {
     27→func (m *reportModel) renderSidebar() string {
     51→func (m *reportModel) renderProductivityStats() string {
@@ -524,6 +517,7 @@ internal/adapters/cli/remove.go
 internal/adapters/cli/report.go
     20→type reportOptions …
     31→func NewReportCmd() *cobra.Command {
+    60→//nolint:funlen // Report command is long but straightforward.
     61→func runReportCmd(cmd *cobra.Command, opt *reportOptions) error {
 
 internal/adapters/cli/root.go

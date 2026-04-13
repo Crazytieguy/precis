@@ -8,27 +8,6 @@ Files like `ptr.rs` (46 lines), `backtrace.rs` (42 lines), and `wrapper.rs` (21 
 
 This budget would be far better spent on public API signatures (see issue 2).
 
-## 2. Key public API signatures collapsed to `…`
-
-**Affected snapshots:** anyhow
-
-For a generic error library, the type bounds ARE the API contract. The output shows:
-```
-    30→    pub fn new …
-    77→    pub fn msg …
-   372→    pub fn context …
-```
-
-But the reader needs to see:
-```
-    30→    pub fn new<E>(error: E) -> Self
-    31→    where
-    32→        E: StdError + Send + Sync + 'static,
-```
-
-The old (pre-rewrite) output showed full signatures for these key methods. The new output collapses them while spending budget on internal files. Notably, the `downcast` family methods DO get full signatures shown (via their doc-first-line groups pulling in subsequent content), making the omission of `new`/`msg`/`context` signatures even more conspicuous.
-
-
 
 ## 6. README body content dropped — only headings shown (partially fixed)
 
@@ -223,18 +202,6 @@ In xlstm_blocks, 6 `.cu`/`.cuh` files in `slstm/src/cuda/` (56-424 lines each) r
 
 The root cause is that bare-filename entries have a non-zero rendering cost (~2 tokens each) but zero information value beyond "this file exists." In a directory with 24 similar files, the directory name itself conveys more than 21 individual bare filenames. Budget would be better spent showing lib.rs module declarations (~15 tokens) and mod.rs structures (~5-10 tokens each), which tell the reader how the crate is organized.
 
-## 26. Docs site pages shown individually when table-of-contents file already provides structure
-
-**Affected snapshots:** superstruct
-
-Superstruct has a `docs/summary.md` that lists every guide and reference page with links — it IS the table of contents. The output shows this TOC (headings: Guides, API Reference, Resources), but then also shows 13 individual docs/ files (6 guides, 7 reference pages) each with only their `# Title` heading. These 13 single-heading entries consume ~70 lines of output (file headers + title lines) to convey information already present in `docs/summary.md`.
-
-For example, `docs/reference/coercions.md` shows `# Coercions` plus a one-line description, while `docs/summary.md` already lists `- [Coercions](./reference/coercions.md)`. The individual page adds the description text, but the structural relationship is already clear from the TOC.
-
-The ~70 lines of redundant docs/ content displace higher-value source code. The pre-rewrite output showed these same docs pages but compensated by also showing `src/error.ts` with full `Failure` type body (8 fields) and `StructError` class body (8 fields + constructor), plus `src/index.ts` with all 6 re-exports. The new output loses all of these (see #9 and #13) — the Failure type fields (value, key, type, refinement, message, explanation, branch, path) and StructError fields are the error API surface, and the re-exports define the public API.
-
-The DocsSite category factor (0.2×) should suppress this, but with 13 files each generating at least an h1 Heading group (base_value 1.0), the aggregate value still captures significant budget. When a summary/TOC file exists in a docs directory, individual pages' headings are almost entirely redundant.
-
 ## 27. Example source files absent while library README dominates budget (regression)
 
 **Affected snapshots:** swarm
@@ -262,22 +229,6 @@ The root cause is that each error submodule generates several group entries (Str
 `crates/toasty/src/lib.rs` is the main ORM crate's entry point. Its 60 lines define the entire public API surface via `mod` declarations and `pub use` re-exports.
 
 **Partial fix applied:** `mod_item` declarations (e.g. `pub mod cursor;`) are now captured as Import items, and `pub use` re-exports in lib.rs are no longer penalized by `reexport_contribution()`. This fixed module structure visibility in smaller Rust crates (sps_core, thiserror, toasty_codegen), but toasty's lib.rs remains empty because Import base_value (0.1) and ImportedItems base_value (1.0) can't compete on per-token ratio against FunctionName entries (~2 tokens each) in an 8000-token workspace with 8 crates. The `pub use` lines are ~3-4 tokens each, giving them a ratio of ~0.14 vs ~0.28 for function names. Fixing this likely requires either (a) a higher base_value for first-party ImportedItems, which has broad effects, or (b) a mechanism that boosts lib.rs content specifically, which requires threading file identity through the group system.
-
-## 31. Docs directory heading-only content displaces core source code
-
-**Affected snapshots:** toasty
-
-The new output shows ~92 lines of docs/ content across 10 files (ARCHITECTURE.md, CHANGE_GUIDE.md, CONTEXT.md, architecture/*.md, guide/*.md, design/*.md, roadmap/README.md). Most show only heading structures with no body content. While docs/ARCHITECTURE.md (project structure + crate overview) and docs/architecture/*.md (query engine phases, type system) are genuinely high-value, the remaining files contribute heading-only outlines of limited value:
-
-- `docs/CHANGE_GUIDE.md` (13 heading lines) — development change guide; headings like "## Crate-Specific Patterns", "## Common Pitfalls" convey nothing without body text
-- `docs/guide/pagination.md` (10 heading lines) — user guide headings only
-- `docs/guide/jiff.md` (8 heading lines) — user guide headings only
-- `docs/design/enums-and-embedded-structs.md` (14 lines) — design doc headings
-- `docs/design/pagination.md` (8 heading lines) — design doc headings
-
-These ~53 lines of low-value heading-only docs displace content the pre-rewrite showed: `BelongsTo<T>`, `HasMany<T>`, `HasOne<T>` relation structs with `get()` methods (the core ORM relationship types — 9 lines), `MigrationPrefixStyle` enum body (Sequential/Timestamp — 7 lines), `AutoStrategy`/`UuidVersion`/`ColumnType` enum bodies from codegen (see #18), and `Capability` database-specific constants from toasty-core (see #18).
-
-The pre-rewrite had zero docs/ content for these files — it showed only the crate-level CONTEXT.md files. The docs/ directory is classified as `DocsSite` (category_factor 0.2), but at depth 1-2 the depth_factor is 1.0-0.7, yielding an effective contribution of 0.14-0.2. Since docs files tend to have high heading counts (each at base_value 0.6-1.0), even with the category penalty, the aggregate value of many headings across many docs files exceeds the value of a few struct bodies in deeper source directories.
 
 ## 35. Third-party imports dropped in small single-file projects despite ample budget (regression) [needs human review]
 
