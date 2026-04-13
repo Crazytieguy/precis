@@ -110,7 +110,7 @@ fn is_public_symbol(node: tree_sitter::Node, source: &str) -> bool {
         .find(|child| child.kind() == "visibility_modifier")
     {
         let vis_text = vis.utf8_text(source.as_bytes()).unwrap_or("");
-        return vis_text.starts_with("pub");
+        return vis_text == "pub";
     }
     if let Some(parent) = node.parent()
         && parent.kind() == "export_statement"

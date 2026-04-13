@@ -15,7 +15,11 @@ README.md
 src/main.rs
      1→//! The mdbook CLI.
     16→const VERSION …
+    18→fn main …
     58→fn create_clap_command() -> Command {
+    93→fn init_logger …
+   126→fn get_book_dir …
+   139→fn open …
 
 guide/src/README.md
      1→# Introduction
@@ -60,6 +64,13 @@ Cargo.toml
 
 guide/guide-helper/Cargo.toml
      1→[package]
+     2→name = "guide-helper"
+     3→publish = false
+     4→edition.workspace = true
+     5→license.workspace = true
+     6→repository.workspace = true
+     7→rust-version.workspace = true
+     8→
      9→[dependencies]
     10→mdbook-preprocessor.workspace = true
     11→semver.workspace = true
@@ -122,6 +133,8 @@ crates/xtask/README.md
 
 crates/mdbook-summary/src/lib.rs
      1→//! Summary parser for mdBook.
+    17→/// Parse the text from a `SUMMARY.md` file into a sort of "recipe" to be
+      →…
     59→pub fn parse_summary(summary: &str) -> Result<Summary> {
     64→/// The parsed `SUMMARY.md`, specifying how the book should be laid out.
     67→pub struct Summary …
@@ -221,7 +234,6 @@ crates/mdbook-renderer/src/lib.rs
 crates/xtask/src/changelog.rs
      1→//! Helper to generate a changelog for a new release.
      8→const CHANGELOG_PATH …
-    10→pub(crate) fn changelog() -> Result<()> {
 
 crates/xtask/src/main.rs
      1→//! Helper for local development.
@@ -232,17 +244,12 @@ crates/mdbook-html/src/lib.rs
 
 crates/mdbook-html/src/utils.rs
      1→//! Utilities for processing HTML.
-     6→/// Utility function to normalize path elements like `..`.
      7→pub(crate) fn normalize_path(path: &Path) -> PathBuf {
-    41→/// Helper trait for converting a [`Path`] to a string suitable for an HTML path.
     42→pub(crate) trait ToUrlPath …
     43→    fn to_url_path(&self) -> String;
     46→impl ToUrlPath for Path …
     47→    fn to_url_path(&self) -> String {
-    54→/// Make sure an HTML id is unique.
-      →…
     58→pub(crate) fn unique_id(id: &str, used: &mut HashSet<String>) -> String {
-    75→/// Generates an HTML id from the given text.
     76→pub(crate) fn id_from_content(content: &str) -> String {
 
 crates/mdbook-core/src/book/tests.rs
@@ -378,6 +385,14 @@ crates/mdbook-core/Cargo.toml
 
 crates/mdbook-driver/Cargo.toml
      1→[package]
+     2→name = "mdbook-driver"
+     3→version = "0.5.2"
+     4→description = "High-level library for running mdBook"
+     5→edition.workspace = true
+     6→license.workspace = true
+     7→repository.workspace = true
+     8→rust-version.workspace = true
+     9→
     10→[dependencies]
     28→[lints]
     29→workspace = true
@@ -469,6 +484,14 @@ crates/mdbook-compare/Cargo.toml
 
 crates/mdbook-markdown/Cargo.toml
      1→[package]
+     2→name = "mdbook-markdown"
+     3→version = "0.5.2"
+     4→description = "Markdown processing used in mdBook"
+     5→edition.workspace = true
+     6→license.workspace = true
+     7→repository.workspace = true
+     8→rust-version.workspace = true
+     9→
     10→[dependencies]
     11→pulldown-cmark.workspace = true
     12→regex.workspace = true
@@ -479,6 +502,14 @@ crates/mdbook-markdown/Cargo.toml
 
 crates/mdbook-preprocessor/Cargo.toml
      1→[package]
+     2→name = "mdbook-preprocessor"
+     3→version = "0.5.2"
+     4→description = "Library to assist implementing an mdBook preprocessor"
+     5→edition.workspace = true
+     6→license.workspace = true
+     7→repository.workspace = true
+     8→rust-version.workspace = true
+     9→
     10→[dependencies]
     11→anyhow.workspace = true
     12→mdbook-core.workspace = true
@@ -490,6 +521,14 @@ crates/mdbook-preprocessor/Cargo.toml
 
 crates/mdbook-renderer/Cargo.toml
      1→[package]
+     2→name = "mdbook-renderer"
+     3→version = "0.5.2"
+     4→description = "Library to assist implementing an mdBook renderer"
+     5→edition.workspace = true
+     6→license.workspace = true
+     7→repository.workspace = true
+     8→rust-version.workspace = true
+     9→
     10→[dependencies]
     11→anyhow.workspace = true
     12→mdbook-core.workspace = true
@@ -517,11 +556,8 @@ crates/mdbook-driver/src/lib.rs
    107→fn handle_command_error …
 
 crates/mdbook-driver/src/load.rs
-     9→/// Load a book into memory from its `src/` directory.
-    10→pub(crate) fn load_book<P: AsRef<Path>>(src_dir: P, cfg: &BuildConfig) -> Result<Book> {
-    56→/// Use the provided `Summary` to load a `Book` from disk.
-      →…
-    60→pub(crate) fn load_book_from_disk<P: AsRef<Path>>(summary: &Summary, src_dir: P) -> Result<Book> {
+    10→pub(crate) fn load_book …
+    60→pub(crate) fn load_book_from_disk …
 
 crates/mdbook-driver/src/mdbook.rs
      1→//! The high-level interface for loading and rendering books.
@@ -565,6 +601,10 @@ src/cmd/clean.rs
     37→/// Returns a tuple of `(quantity, units)`.
     38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
     46→pub struct Clean …
+    47→    num_files_removed: u64,
+    48→    num_dirs_removed: u64,
+    49→    total_bytes_removed: u64,
+    50→}
     52→impl Clean …
     53→    fn new …
     91→impl fmt::Display for Clean …
@@ -679,10 +719,6 @@ examples/nop-preprocessor.rs
     87→    impl Preprocessor for Nop …
 
 crates/mdbook-driver/src/builtin_preprocessors/links/take_lines.rs
-     6→pub(super) fn take_lines<R: RangeBounds<usize>>(s: &str, range: R) -> String {
-    31→pub(super) fn take_anchored_lines(s: &str, anchor: &str) -> String {
-    63→pub(super) fn take_rustdoc_include_lines<R: RangeBounds<usize>>(s: &str, range: R) -> String {
-    81→pub(super) fn take_rustdoc_include_anchored_lines(s: &str, anchor: &str) -> String {
 
 crates/mdbook-core/src/utils/fs.rs
      1→//! Filesystem utilities and helpers.
@@ -713,22 +749,15 @@ crates/mdbook-core/src/utils/mod.rs
 
 crates/mdbook-core/src/utils/toml_ext.rs
      1→//! Helper for working with toml types.
-     5→/// Helper for working with toml types.
      6→pub(crate) trait TomlExt …
-     7→    /// Read a dotted key.
-     8→    fn read(&self, key: &str) -> Option<&Value>;
-     9→    /// Insert with a dotted key.
-    10→    fn insert(&mut self, key: &str, value: Value);
+     8→    fn read …
+    10→    fn insert …
     13→impl TomlExt for Value …
     14→    fn read …
     22→    fn insert …
     40→fn split …
 
 crates/mdbook-html/src/theme/fonts.rs
-     1→pub(crate) static CSS …
-     3→pub(crate) static LICENSES …
-    14→pub(crate) static OPEN_SANS …
-    58→pub(crate) static SOURCE_CODE_PRO …
 
 crates/mdbook-html/src/theme/mod.rs
      1→//! Support for theme files.
@@ -742,18 +771,10 @@ crates/mdbook-html/src/theme/mod.rs
 
 crates/mdbook-html/src/theme/playground_editor.rs
      1→//! Theme dependencies for the playground editor.
-     3→pub(crate) static JS …
-     4→pub(crate) static ACE_JS …
-     5→pub(crate) static MODE_RUST_JS …
-     7→pub(crate) static THEME_DAWN_JS …
-     9→pub(crate) static THEME_TOMORROW_NIGHT_JS …
 
 crates/mdbook-html/src/theme/searcher.rs
      1→//! Theme dependencies for in-browser search. Not included in mdbook when
      2→//! the "search" cargo feature is disabled.
-     4→pub(crate) static JS …
-     5→pub(crate) static MARK_JS …
-     6→pub(crate) static ELASTICLUNR_JS …
 
 guide/book.toml
      1→[book]

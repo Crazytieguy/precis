@@ -100,10 +100,7 @@ src/install/devtools.rs
 
 src/install/extract.rs
     16→use crate::utils::xattr;
-    18→pub(crate) fn infer_archive_root_dir(
-    19→    archive_path: &Path,
-    20→    archive_type: &str,
-    21→) -> Result<Option<PathBuf>> {
+    18→pub(crate) fn infer_archive_root_dir …
     56→fn infer_tar_root …
    142→fn infer_xz_tar_root …
    173→fn infer_zip_root …
@@ -187,9 +184,7 @@ src/uninstall/cask.rs
    576→fn forget_pkgutil_receipt …
    610→fn unload_and_remove_launchd …
    678→fn trash_path …
-   695→/// Helper for zap scripts.
    696→fn run_zap_script …
-   729→/// Logs the output of a command and adds to error list if it failed.
    730→fn log_command_output …
    763→fn cleanup_private_store …
 
@@ -197,40 +192,48 @@ src/uninstall/common.rs
     11→pub struct UninstallOptions …
     12→    pub skip_zap: bool,
     13→}
-    15→/// Removes a filesystem artifact (file or directory).
-      →…
-    22→pub(crate) fn remove_filesystem_artifact(path: &Path, use_sudo: bool) -> bool {
-   107→/// Expands a path string that may start with `~` to the user's home directory.
-   108→pub(crate) fn expand_tilde(path_str: &str, home: &Path) -> PathBuf {
-   116→/// Checks if a path is safe for zap operations.
-      →…
-   119→pub(crate) fn is_safe_path(path: &Path, home: &Path, config: &Config) -> bool {
+    22→pub(crate) fn remove_filesystem_artifact …
+   108→pub(crate) fn expand_tilde …
+   119→pub(crate) fn is_safe_path …
 
 src/uninstall/formula.rs
-    10→pub fn uninstall_formula_artifacts(
-    11→    info: &InstalledPackageInfo,
-    12→    config: &Config,
-    13→    _options: &UninstallOptions, /* options currently unused for formula but kept for signature
-    14→                                  * consistency */
-    15→) -> Result<()> {
+    10→pub fn uninstall_formula_artifacts …
 
 src/uninstall/mod.rs
 
 src/upgrade/bottle.rs
     14→/// Upgrades a formula that is installed from a bottle.
       →…
-    20→pub async fn upgrade_bottle_formula …
+    20→pub async fn upgrade_bottle_formula(
+    21→    formula: &Formula,
+    22→    new_bottle_download_path: &Path,
+    23→    old_install_info: &InstalledPackageInfo,
+    24→    config: &Config,
+    25→    http_client: Arc<reqwest::Client>, /* Added for download_bottle if needed, though path is
+    26→                                        * pre-downloaded */
+    27→) -> SpsResult<PathBuf> {
 
 src/upgrade/cask.rs
     14→/// Upgrades a cask package using Homebrew's proven strategy.
-    15→pub async fn upgrade_cask_package …
+    15→pub async fn upgrade_cask_package(
+    16→    cask: &Cask,
+    17→    new_cask_download_path: &Path,
+    18→    old_install_info: &InstalledPackageInfo,
+    19→    config: &Config,
+    20→) -> SpsResult<()> {
 
 src/upgrade/mod.rs
 
 src/upgrade/source.rs
     13→/// Upgrades a formula that was/will be installed from source.
       →…
-    19→pub async fn upgrade_source_formula …
+    19→pub async fn upgrade_source_formula(
+    20→    formula: &Formula,
+    21→    new_source_download_path: &Path,
+    22→    old_install_info: &InstalledPackageInfo,
+    23→    config: &Config,
+    24→    all_installed_dependency_paths: &[PathBuf], // For build environment
+    25→) -> SpsResult<PathBuf> {
 
 src/install/cask/dmg.rs
     12→pub fn mount_dmg …
