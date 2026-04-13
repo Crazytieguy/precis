@@ -232,7 +232,7 @@ This consumes ~20 lines of budget to convey one fact: "StreamBuilder has a pipe 
 
 ## 13. TypeScript `export` statements not captured — barrel files render empty
 
-**Affected snapshots:** d2ts, d2ts_d2ts, enclosed, enclosed_crypto, enclosed_lib, superstruct
+**Affected snapshots:** d2ts, d2ts_d2ts, enclosed, enclosed_crypto, enclosed_lib, superstruct, ts_pattern
 
 The TypeScript query captures `(import_statement) @symbol` but not `(export_statement)`. TypeScript re-exports (`export * from './foo.js'`, `export { bar } from './baz.js'`) parse as `export_statement` nodes, not `import_statement`, so they produce zero items.
 
@@ -252,6 +252,8 @@ The pre-rewrite output showed these barrel files with content (e.g., `export * f
 Downstream effect: budget freed by the missing barrel content goes to lower-value items — private helper function names in `d2ql/src/functions.ts` (8 unexported functions like `upperFunction`, `lowerFunction`) and bulk type alias names in `d2ql/src/schema.ts` (30 type names, up from 1 in the pre-rewrite output) that add noise without the definitions (see issue #9).
 
 In enclosed, barrel files like `packages/crypto/src/index.node.ts` and `index.web.ts` (23 lines each, showing the full crypto API surface via destructured `export const { deriveMasterKey, generateBaseKey, ... }`) render empty. Similarly `packages/lib/src/index.ts` (17 re-exports listing the entire library API) renders as just import lines.
+
+In ts-pattern, `src/index.ts` (6 lines) is the library's entry point defining the entire public API: `export { match }`, `export { isMatching }`, `export { Pattern, Pattern as P }`, `export { NonExhaustiveError }`. It renders completely empty — just the filename with no content. This is the fastest way for a reader to understand what the library exports, and its absence is not compensated by the detailed per-file output (which requires scanning multiple files to reconstruct the API surface).
 
 **Effect 2: Functions exported via `export { name }` treated as private.** Many enclosed files use the declare-then-export pattern:
 
