@@ -142,7 +142,7 @@ pub fn files_contribution(
 
 /// Modifier for generated files, applied to child TsGroups after source is read.
 pub fn generated_contribution(is_generated: bool) -> f64 {
-    if is_generated { 0.1 } else { 1.0 }
+    if is_generated { 0.0 } else { 1.0 }
 }
 
 /// Modifier contribution for visibility (public vs private).
