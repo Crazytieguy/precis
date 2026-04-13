@@ -108,7 +108,7 @@ The combined effect: CONTRIBUTING.md headings get base_value 1.0 (h1) / 0.6 (h2)
 
 ## 9. Type alias and const bodies missing from taxonomy (regression)
 
-**Affected snapshots:** cmdk, cmdk_cmdk_src, enclosed_crypto
+**Affected snapshots:** cmdk, cmdk_cmdk_src, enclosed_crypto, enclosed_lib
 
 The taxonomy has Body groups for functions (`FunctionBody`), structs (`StructBody`), and enums (`EnumBody`), but none for type aliases, const declarations, interfaces, classes, or traits. The `*Name` rendering truncates after the identifier, so the entire definition is lost.
 
