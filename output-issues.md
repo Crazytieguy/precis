@@ -36,7 +36,7 @@ In `error.rs`, five `pub(crate) fn construct_from_*` methods and `unsafe fn cons
 
 ## 4. Cargo.toml content lines lost vs pre-rewrite
 
-**Affected snapshots:** anyhow, sps, sps_core
+**Affected snapshots:** anyhow, sps, sps_core, toasty
 
 The pre-rewrite output showed actual package metadata:
 ```
@@ -50,6 +50,8 @@ The new output shows only section headers (`[package]`, `[features]`, `[dependen
 In sps_core, the old output showed 24 lines of Cargo.toml including the full package metadata (name, version, description, authors, license, repository) and all 14 dependencies (sps-net, sps-common, anyhow, tokio, reqwest, serde, etc.). The new output shows only `[package]` (line 1) and `[dependencies]` (line 10).
 
 In sps, the workspace has 3 sub-crate Cargo.toml files (sps-common, sps-core, sps-net). The pre-rewrite showed package name, version, and key dependencies for each (e.g., `sps-common` version 0.1.56, `sps-net` depending on `sps-common`). The new output shows only `[package]` and `[dependencies]` headers. In a multi-crate workspace, the inter-crate dependency lines (`sps-net = "0.1.56"`, `sps-common = "0.1.56"`) tell a reader the dependency graph between crates.
+
+In toasty, the workspace Cargo.toml pre-rewrite showed `resolver = "2"` and the beginning of the `members` list (`"crates/toasty"`, `"crates/toasty-cli"`, ...) — instantly telling a reader this is a multi-crate workspace and which crates exist. The new output shows only `[workspace]` (line 1) and `[workspace.dependencies]` (line 37). Similarly, `toasty-sql/Cargo.toml` pre-rewrite showed the full file (name, version, edition, publish=false, `toasty-core.workspace = true`); the new output shows the same content, which is good — but 6 other crate Cargo.toml files show only header-only `[package]` / `[dependencies]` lines.
 
 ## 5. Macro doc summaries lost vs pre-rewrite
 
@@ -70,7 +72,7 @@ The new output just shows `macro_rules! bail …` and `macro_rules! anyhow …`.
 
 ## 6. README body content dropped — only headings shown
 
-**Affected snapshots:** bareiron, commander, d2ts, d2ts_d2ts, log, mcphost, mdbook, mdbook_guide_src, pluggy, semver, soluna, sps, sqlite_vec
+**Affected snapshots:** bareiron, commander, d2ts, d2ts_d2ts, log, mcphost, mdbook, mdbook_guide_src, pluggy, semver, soluna, sps, sqlite_vec, toasty
 
 The output shows README.md with only headings — zero body content. The pre-rewrite output showed introductory sections that tell the reader what the project is.
 
@@ -87,6 +89,8 @@ In mdbook_guide_src, the root README is the mdBook project introduction. The pre
 In mdbook, the root README loses its one-line description ("mdBook is a utility to create modern online books from Markdown files") and user guide links. More impactfully, 6 of 8 crate READMEs lose their one-sentence descriptions — the pre-rewrite showed "This is the base support library... intended for internal use only" (mdbook-core), "This is the Rust library to implement a preprocessor" (mdbook-preprocessor), etc. In a multi-crate workspace, these descriptions are how a reader understands the crate decomposition: which crates are public API vs internal, and what each provides. The new output shows 8 bare `# crate-name` headings that convey the names but not the purpose or stability guarantees.
 
 In sps, the README opens with a `[!WARNING]` blockquote (lines 3-22) announcing the project is being scrapped in favor of sps v2, with architectural rationale and a link to the new repo. This is the single most important piece of information about sps. The pre-rewrite showed all of it; the new output shows only 9 heading lines. The new output also adds boilerplate headings ("Contributing", "License") that the old correctly omitted.
+
+In toasty, the README's h1 body (lines 3-5: "**Current status: Incubating - Toasty is not ready for production usage. The API is still evolving and documentation is lacking.**") is the single most important context about the project — it sets expectations for everything else. The pre-rewrite output showed this; the new output drops it and instead shows a `### Contribution` section (lines 117-121) with standard MIT license boilerplate. The boilerplate displaces the status warning because it's under a lower heading whose body is shorter and thus has a better cost/value ratio.
 
 This is the highest-value content in a repo for building a mental model. A reader seeing only headings knows the structure but not the purpose.
 
@@ -115,7 +119,7 @@ The pre-rewrite showed complete lines with values and trailing doxygen descripti
 
 ## 8. CommunityHealth, AiConfig, and Changelog files not deprioritized at root level
 
-**Affected snapshots:** chronos, peepdb, pluggy, semver
+**Affected snapshots:** chronos, peepdb, pluggy, semver, toasty
 
 CONTRIBUTING.md gets ~53 lines of output — more than any individual source file — for a boilerplate Amazon open source contributing guide ("how to file bugs", "how to send PRs"). The pre-rewrite output didn't show CONTRIBUTING.md content at all.
 
@@ -124,6 +128,8 @@ In peepdb, the regression is even more severe: CONTRIBUTING.md goes from 1 line 
 In pluggy, CLAUDE.md (classified as `AiConfig`) gets ~50 lines of output showing development commands, testing instructions, and architecture notes — none of which helps a reader understand what pluggy is or how its plugin system works. The pre-rewrite output didn't show CLAUDE.md at all. This budget directly displaces the README.rst content (see issue #6).
 
 In semver, CHANGELOG.md (326 lines, classified as `Changelog`) gets ~70 lines of version headings spanning the full file — every release from v7.7.4 back to v5.0. The pre-rewrite output didn't show CHANGELOG.md at all. The budget goes to ~40 version headings (h2/h3) that tell a reader nothing about what semver is or how it works, while README body content (see #6), the public API surface in `index.js` (see #11), and class method signatures (see #9) are all lost.
+
+In toasty, 5 `CONTEXT.md` files (in crates/toasty/, toasty-core/, toasty-codegen/, toasty-sql/, toasty-driver-sqlite/) each show 8-12 heading lines, consuming ~50 lines total. These are AI context documents (same purpose as CLAUDE.md — agent instructions and development workflow) but `CONTEXT.md` isn't in the `AiConfig` stem list, so they're classified as `Normal` and compete at full value. The pre-rewrite also showed these files, so it's not a regression, but the classification gap means they aren't deprioritized even though they should be.
 
 Two root causes:
 
@@ -562,3 +568,43 @@ In toasty_core, 15 error submodule files (`src/error/adhoc.rs` through `src/erro
 The pre-rewrite output showed none of these submodules — only `src/error.rs` with the `Error` struct body, `ErrorKind` enum, and `IntoError` trait. The freed budget went to ~30 files from `src/stmt/` showing the SQL AST type names (`Expr`, `Value`, `Type`, `Direction`, `BinaryOp`, `SetOp`, `Source`, `Query`, `Lock`, `Filter`, `Returning`, etc.) plus `src/schema/db/` types (`Column`, `Index`, `Migration`, `Table`). For a database ORM core library, the statement AST and database schema types are far more informative than individual error constructors.
 
 The root cause is that each error submodule generates several group entries (StructName, ImplBlock, FunctionName × 2) that individually score well enough to beat the marginal cost of their file header. The `pub(super)` struct gets a 0.3× visibility penalty, but the `pub fn` methods on `impl Error` are fully public. The aggregate effect is that 15 small files with mechanical content outbid the stmt/ directory's content despite being less informative per token.
+
+## 30. Rust lib.rs with `mod` + `pub use` re-exports rendered empty (regression)
+
+**Affected snapshots:** toasty
+
+`crates/toasty/src/lib.rs` is the main ORM crate's entry point. Its 60 lines define the entire public API surface via `mod` declarations and `pub use` re-exports:
+
+```rust
+mod apply_update;
+pub use apply_update::{ApplyUpdate, Query};
+pub mod cursor;
+pub use cursor::Cursor;
+pub mod db;
+pub use db::Db;
+pub mod relation;
+pub use relation::{BelongsTo, HasMany, HasOne};
+pub mod stmt;
+pub use stmt::Statement;
+pub use toasty_core::{Error, Result};
+```
+
+The pre-rewrite output showed 7 lines: `pub mod cursor`, `pub mod db`, `pub mod relation`, `pub mod schema`, `pub mod stmt`, and `pub mod driver { pub use toasty_core::driver::* }`. A reader immediately understood the module structure and what the crate re-exports.
+
+The new output renders the file completely empty — just the filename with zero content lines. The `mod` declarations and `pub use` re-exports are likely captured as Import groups with base_value 0.1, and re-exports further penalized by `reexport_contribution()` (0.1×). The combined effective value (~0.01-0.1 per item) is too low to justify the file header cost. But these lines ARE the API surface — they tell a reader what types are public, where they come from, and how the crate is organized. They're more valuable than many FunctionName entries that the budget is spent on instead.
+
+## 31. Docs directory heading-only content displaces core source code
+
+**Affected snapshots:** toasty
+
+The new output shows ~92 lines of docs/ content across 10 files (ARCHITECTURE.md, CHANGE_GUIDE.md, CONTEXT.md, architecture/*.md, guide/*.md, design/*.md, roadmap/README.md). Most show only heading structures with no body content. While docs/ARCHITECTURE.md (project structure + crate overview) and docs/architecture/*.md (query engine phases, type system) are genuinely high-value, the remaining files contribute heading-only outlines of limited value:
+
+- `docs/CHANGE_GUIDE.md` (13 heading lines) — development change guide; headings like "## Crate-Specific Patterns", "## Common Pitfalls" convey nothing without body text
+- `docs/guide/pagination.md` (10 heading lines) — user guide headings only
+- `docs/guide/jiff.md` (8 heading lines) — user guide headings only
+- `docs/design/enums-and-embedded-structs.md` (14 lines) — design doc headings
+- `docs/design/pagination.md` (8 heading lines) — design doc headings
+
+These ~53 lines of low-value heading-only docs displace content the pre-rewrite showed: `BelongsTo<T>`, `HasMany<T>`, `HasOne<T>` relation structs with `get()` methods (the core ORM relationship types — 9 lines), `MigrationPrefixStyle` enum body (Sequential/Timestamp — 7 lines), `AutoStrategy`/`UuidVersion`/`ColumnType` enum bodies from codegen (see #18), and `Capability` database-specific constants from toasty-core (see #18).
+
+The pre-rewrite had zero docs/ content for these files — it showed only the crate-level CONTEXT.md files. The docs/ directory is classified as `DocsSite` (category_factor 0.2), but at depth 1-2 the depth_factor is 1.0-0.7, yielding an effective contribution of 0.14-0.2. Since docs files tend to have high heading counts (each at base_value 0.6-1.0), even with the category penalty, the aggregate value of many headings across many docs files exceeds the value of a few struct bodies in deeper source directories.
