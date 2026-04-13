@@ -70,7 +70,7 @@ The new output just shows `macro_rules! bail …` and `macro_rules! anyhow …`.
 
 ## 6. README body content dropped — only headings shown
 
-**Affected snapshots:** bareiron, commander, d2ts, d2ts_d2ts, log, mcphost, mdbook, mdbook_guide_src, pluggy, semver, soluna, sps
+**Affected snapshots:** bareiron, commander, d2ts, d2ts_d2ts, log, mcphost, mdbook, mdbook_guide_src, pluggy, semver, soluna, sps, sqlite_vec
 
 The output shows README.md with only headings — zero body content. The pre-rewrite output showed introductory sections that tell the reader what the project is.
 
@@ -92,7 +92,7 @@ This is the highest-value content in a repo for building a mental model. A reade
 
 ## 7. C `#define` values truncated while verbose comments consume budget
 
-**Affected snapshots:** bareiron, neco, soluna
+**Affected snapshots:** bareiron, neco, soluna, sqlite_vec
 
 In bareiron's `include/globals.h`, the output shows comment lines above each `#define` but truncates the actual values:
 ```
@@ -289,7 +289,7 @@ The heuristic values suggest this shouldn't happen — `ClassDocFirst` (base 0.4
 
 ## 16. Duplicated `#define` macros from conditional compilation branches
 
-**Affected snapshots:** krep, soluna
+**Affected snapshots:** krep, soluna, sqlite_vec
 
 In `krep.c`, SIMD feature flag macros are defined in multiple `#ifdef`/`#elif`/`#else` branches:
 
@@ -327,6 +327,8 @@ Tree-sitter captures every `preproc_def` node regardless of which preprocessor b
 
 In soluna's `src/mutex.h`, both `#ifdef _MSC_VER` branches are captured — lines 6-9 show `mutex_t SRWLOCK`, `mutex_init(m) InitializeSRWLock(&m)`, etc., and lines 12-15 show `mutex_t pthread_mutex_t`, `mutex_init(m) pthread_mutex_init(&m, NULL)`, etc. 8 lines for 4 unique macros. The old output also showed both branches (with values), so this is pre-existing — but the new output truncates values too (issue #7), making the duplication more wasteful since neither copy is informative.
 
+In sqlite_vec's `sqlite-vec.c`, `PORTABLE_ALIGN32` appears at lines 125 and 166 from different `#ifdef` branches (compiler-specific alignment attributes).
+
 ## 17. C header file budget reduced — key API declarations and struct bodies lost (regression)
 
 **Affected snapshots:** krep
@@ -351,7 +353,7 @@ Root cause: the 2.5× `header_factor` doesn't compensate for krep.c's 16:1 line 
 
 ## 18. Struct and enum bodies elided — many small entries beat fewer large ones
 
-**Affected snapshots:** log, mdbook, neco, otree, sps
+**Affected snapshots:** log, mdbook, neco, otree, sps, sqlite_vec
 
 Large body groups (StructBody at base_value 1.2, EnumBody at 1.5) lose budget to many small FunctionName entries (base_value 1.0, ~2 tokens each). The per-token value/cost ratio strongly favors function names, so the scheduler fills the budget with hundreds of cheap name entries before committing to any multi-line body block.
 
@@ -379,6 +381,8 @@ In otree, `CommandArgs` (~90 lines of clap-derived CLI flags with doc comments) 
 In sps, the workspace spans 4 crates with several domain-defining types whose bodies are all lost. `SpsError` (15+ variants with `#[error("...")]` messages) tells a reader every failure mode in the system — the pre-rewrite showed all variants. `PipelineEvent` (~20 variants with struct fields) defines the entire event-driven architecture — download lifecycle, job processing, dependency resolution events. `InstalledArtifact` (9 variants: AppBundle, BinaryLink, ManpageLink, MovedResource, PkgUtilReceipt, Launchd, CaskroomLink, CaskroomReference — each with field docs) defines what a "cask install" means at the filesystem level. `JobProcessingState` (8 states from PendingDownload through Succeeded/Failed, with doc comments) defines the job state machine. `BuildEnvironment` struct fields with doc comments explain the build sandbox. `CaskInstallManifest` and `ResolvedDependency` struct fields were also shown in full. The pre-rewrite output showed all of these; collectively they formed the architectural skeleton of the project. The new output collapses every one to just a name.
 
 Additional budget pressure in log comes from `src/__private_api.rs` (~20 lines), a file whose module doc starts with "WARNING: this is not part of the crate's public API and is subject to change at any time." This file is not flagged by `is_deprioritized_file()` because no rule matches `__`-prefixed source files. The old output also showed this file — it's not a regression, but the 20 lines would be better spent on the missing enum bodies.
+
+In sqlite_vec's `sqlite-vec.c`, the pre-rewrite showed full bodies for `VectorElementType` (3 members: FLOAT32, BIT, INT8), `Vec0TokenType` (6 members), `NpyTokenType` (10 members), `Vec0DistanceMetrics` (3 members: L2, COSINE, L1), and several `typedef enum` blocks with their values. The new output collapses most of these to just names (e.g., `enum VectorElementType …`). For a C project where enums define the API surface (vector element types, distance metrics, query plan types), these bodies are high-value — a reader can't infer the supported element types or distance metrics from the name alone.
 
 ## 19. Go doc comments not detected for type declarations (regression)
 
@@ -477,7 +481,7 @@ The `---` line is semantically equivalent to Python's opening `"""` or Rust's `/
 
 ## 25. Bare-filename repetitive files waste budget while structural files are empty
 
-**Affected snapshots:** sps_core
+**Affected snapshots:** sps_core, sqlite_vec
 
 In `src/install/cask/artifacts/`, 21 of 24 `.rs` files are shown as bare filenames (no content). These files follow a uniform pattern — each contains a single `pub fn install_X` function — so once the pattern is clear from 2-3 examples, additional bare filenames add no understanding. Collectively they consume ~42 tokens for information already implied by the directory structure.
 
@@ -487,5 +491,7 @@ Meanwhile, structural files that orient the reader on crate organization are sho
 - 6 `mod.rs` files (`build`, `check`, `pipeline`, `uninstall`, `upgrade`, `utils`) — each contains `pub mod` declarations. All shown as bare filenames.
 
 The old (pre-rewrite) output showed mod.rs files with their declarations (e.g., `build/mod.rs` → `pub mod compile; pub mod env;`, `check/mod.rs` → `pub mod installed; pub mod update;`, `install/cask/artifacts/mod.rs` → all 23 `pub mod` declarations). It also showed each artifact file's `pub fn install_X` name. The old approach was more informative per token: mod.rs declarations revealed the crate's internal structure, and artifact function names at least confirmed the pattern.
+
+In sqlite_vec, the problem is even more extreme: ~25 empty file entries (Makefile, sqlite-vec.h.tmpl, test.sql, SECURITY.md, various examples/, scripts/, and site/ files) and ~25 empty folder entries (benchmarks/exhaustive-memory/, benchmarks/micro/, tests/afbd/, tests/correctness/, etc.). That's ~50 empty entries consuming ~100 tokens for near-zero information. The old output was more selective — it collapsed `site/` into a single folder entry rather than listing all its subfiles and subfolders individually. The budget spent on these empty entries could instead show README body content (issue #6) or enum bodies (issue #18).
 
 The root cause is that bare-filename entries have a non-zero rendering cost (~2 tokens each) but zero information value beyond "this file exists." In a directory with 24 similar files, the directory name itself conveys more than 21 individual bare filenames. Budget would be better spent showing lib.rs module declarations (~15 tokens) and mod.rs structures (~5-10 tokens each), which tell the reader how the crate is organized.
