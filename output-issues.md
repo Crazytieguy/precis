@@ -7,9 +7,11 @@ Resolved. A 2× modifier boost for README h1 HeadingBody groups combined with a 
 
 
 
-## 9. Type alias and const bodies missing from taxonomy (regression) [needs human review]
+## 9. Type alias and const bodies missing from taxonomy (regression)
 
-**Affected snapshots:** cmdk, cmdk_cmdk_src, enclosed, enclosed_crypto, enclosed_lib, go_multierror, htmy, ky, ky_source_errors, mcphost_sdk, microbootstrap, microbootstrap_instruments, mitt, nano_vllm, nano_vllm_engine, pluggy, py3xui, py3xui_api, semver, semver_internal, superstruct, tock, tock_internal_core
+**Affected snapshots:** bareiron, cmdk, cmdk_cmdk_src, enclosed, enclosed_crypto, enclosed_lib, go_multierror, htmy, htmy_renderer, ky, ky_source_errors, mcphost_sdk, microbootstrap, microbootstrap_instruments, mitt, nano_vllm, nano_vllm_engine, pluggy, py3xui, py3xui_api, semver, semver_classes, semver_internal, superstruct, tock, tock_internal_core
+
+This is the highest-impact unresolved issue — the 2026-04-13 blind pairwise eval against origin/main attributed the majority of the 26 current-vs-main regressions (out of 64 fixtures) to some variant of this truncation. Agents repeatedly cited missing class inheritance / Protocol bases (htmy_renderer, microbootstrap_instruments), missing struct-like type alias bodies, and missing class method signatures as decisive regressions.
 
 The taxonomy has Body groups for functions (`FunctionBody`), structs (`StructBody`), and enums (`EnumBody`), but none for type aliases, const declarations, interfaces, classes, or traits. The `*Name` rendering truncates after the identifier, so the entire definition is lost.
 
@@ -64,11 +66,13 @@ Resolved through two fixes: (1) a 0.3× companion-header penalty for C/C++ imple
 
 The dedup bug fix also improved sds (+20 function declarations), soluna (+16 function declarations), sqlite_vec (+30 function declarations), bareiron (gained README body content + functions). neco regressed: with all 119 functions correctly extracted (vs ~50 before the fix), the FunctionName groups are larger and more expensive, causing #define constants (error codes, time units) to win budget over function declarations. This is a pre-existing scoring issue (MacroName ratio >> FunctionName ratio for large groups) exposed by the fix, not caused by it.
 
-## 18. Struct and enum bodies elided — many small entries beat fewer large ones (partially fixed) [needs human review]
+## 18. Struct and enum bodies elided — many small entries beat fewer large ones (partially fixed)
 
 **Partially fixed:** Added an auto-commit mechanism for compact enum bodies (≤25 lines). When the scheduler commits an enum name, it immediately commits the body too — bypassing ratio-based competition where cheap FunctionName entries (1.0 base_value, ~2 tokens, ratio 0.5) always beat multi-line bodies (1.5 base_value, ~20 tokens, ratio 0.075). Auto-commit only fires when body value ≥1.0 and >75% budget remains, preventing displacement of other content. This fixed enum bodies in 6 snapshots: log (Level/LevelFilter variants), mdbook (TextDirection/RustEdition), otree (Key/LayoutDirection), sps (JobProcessingState), sqlite_vec (VectorElementType/DistanceMetrics/TokenTypes), toasty_core (Operation/Rows).
 
-**Remaining affected snapshots:** neco, thiserror, thiserror_impl_src, tock, toasty_codegen
+**Remaining affected snapshots:** log_src_kv, neco, thiserror, thiserror_impl_src, tock, toasty_codegen
+
+The 2026-04-13 blind pairwise eval added log_src_kv to this list — the `Inner` enum variants (Boxed/Msg/Fmt) and cfg-gated submodule declarations in `sval_support`/`serde_support` are load-bearing for understanding the crate's feature-gated architecture and were cited as a decisive regression vs origin/main.
 
 The fix only applies to EnumBody groups. StructBody auto-commit was attempted but cascades to regressions in unaffected snapshots (mcphost struct bodies displace function signatures, xlstm_blocks CUDA helpers displace Python method signatures). Well-documented Go structs are particularly problematic — Go projects tend to have many small documented structs that all qualify for auto-commit, consuming significant budget in aggregate.
 
@@ -78,7 +82,7 @@ Additionally, some larger enum bodies (>25 lines) in sps (SpsError with 15+ vari
 
 **Additional struct auto-commit attempt (2026-04-13):** Tried adding StructBody to auto-commit with stricter thresholds (budget 7/8–15/16, line limits 8–15). At 7/8 budget + 8-line limit: mdbook improved (Summary/Link struct bodies), but mcphost regressed (Go struct bodies displaced private function names) and toasty_core regressed (SchemaMutations body displaced relation type names). At 9/10 budget: only mcphost changed (arguably an improvement — gained data model, lost private helpers — but not a target snapshot). At 15/16: no effect. The target snapshots (neco, thiserror, tock, toasty_codegen) never benefit because their struct names are committed too late in scheduling (budget already consumed). The auto-commit approach fundamentally can't reach deep-project structs without also catching shallow Go structs that cause regressions.
 
-## 21. Volume-based budget capture — large support package crowds out small core package [needs human review]
+## 21. Volume-based budget capture — large support package crowds out small core package
 
 **Affected snapshots:** mcphost
 
@@ -99,15 +103,17 @@ This is a pre-existing issue (the old output also omitted `internal/tools/`) but
 Resolved through incremental fixes: weather_agent files now show function signatures (agents.py, evals.py), README is ~62 lines (17% of 368 total output), and 6 example directories show source content (support_bot, personal_shopper, triage_agent, basic, weather_agent, customer_service_streaming). The customer_service_streaming src/ engine architecture is absent but this is a reasonable tradeoff — showing breadth across 6 simpler examples builds a better mental model than going deep on one complex sub-project.
 
 
-## 30. Rust lib.rs with `pub use` re-exports rendered empty in large workspaces [needs human review]
+## 30. Re-export entry files (Rust `lib.rs`, TS/JS `index.ts` barrels) rendered empty
 
-**Affected snapshots:** toasty
+**Affected snapshots:** toasty, d2ts, d2ts_d2ts, superstruct
 
-`crates/toasty/src/lib.rs` is the main ORM crate's entry point. Its 60 lines define the entire public API surface via `mod` declarations and `pub use` re-exports.
+`crates/toasty/src/lib.rs` is the main ORM crate's entry point. Its 60 lines define the entire public API surface via `mod` declarations and `pub use` re-exports. The same structural role is played by `src/index.ts` and nested barrel files (e.g. `src/operators/index.ts` in d2ts, `src/sqlite/index.ts`) in TS/JS packages, which declare the public API via `export { X } from './foo'` and — for dataflow libraries like d2ts — enumerate the operator family that is a core concept.
 
-**Partial fix applied:** `mod_item` declarations (e.g. `pub mod cursor;`) are now captured as Import items, and `pub use` re-exports in lib.rs are no longer penalized by `reexport_contribution()`. This fixed module structure visibility in smaller Rust crates (sps_core, thiserror, toasty_codegen), but toasty's lib.rs remains empty because Import base_value (0.1) and ImportedItems base_value (1.0) can't compete on per-token ratio against FunctionName entries (~2 tokens each) in an 8000-token workspace with 8 crates. The `pub use` lines are ~3-4 tokens each, giving them a ratio of ~0.14 vs ~0.28 for function names. Fixing this likely requires either (a) a higher base_value for first-party ImportedItems, which has broad effects, or (b) a mechanism that boosts lib.rs content specifically, which requires threading file identity through the group system.
+**Partial fix applied (Rust side):** `mod_item` declarations (e.g. `pub mod cursor;`) are now captured as Import items, and `pub use` re-exports in lib.rs are no longer penalized by `reexport_contribution()`. This fixed module structure visibility in smaller Rust crates (sps_core, thiserror, toasty_codegen), but toasty's lib.rs remains empty because Import base_value (0.1) and ImportedItems base_value (1.0) can't compete on per-token ratio against FunctionName entries (~2 tokens each) in an 8000-token workspace with 8 crates. The `pub use` lines are ~3-4 tokens each, giving them a ratio of ~0.14 vs ~0.28 for function names.
 
-## 35. Third-party imports dropped in small single-file projects despite ample budget (regression) [needs human review]
+TS/JS barrel files are affected by the same ratio-competition issue and are not yet touched — the 2026-04-13 eval flagged d2ts, d2ts_d2ts, and superstruct as regressions where the other side surfaced index.ts re-exports. Fixing this likely requires either (a) a higher base_value for first-party ImportedItems, which has broad effects, or (b) a mechanism that boosts entry-file content specifically (lib.rs, src/index.ts, package index barrels), which requires threading file identity through the group system. Whatever mechanism fixes Rust lib.rs should also cover the barrel case.
+
+## 35. Third-party imports dropped in small single-file projects despite ample budget (regression)
 
 **Affected snapshots:** xxhash_xxhsum
 
@@ -116,3 +122,58 @@ Resolved through incremental fixes: weather_agent files now show function signat
 Root cause: `Import { first_party: false, .. }` has base_value 0.0 in heuristics.rs. The comment says "3rd party imports only via dependent_siblings" — but in a single-file project there are no siblings, so the import can never be surfaced. The budget is vastly underutilized (the old output used ~24% of budget) yet the scheduler cannot select the import because its value is zero regardless of remaining capacity.
 
 **Attempted fix:** Tried three approaches: (1) giving third-party imports base_value 0.05 — caused 38 snapshot regressions across all languages; (2) giving base_value 0.01 — still 23 regressions; (3) promoting ungated third-party imports to first-party in files.rs — 29 regressions. Import groups are so cheap (few tokens) that any non-zero base value makes them competitive everywhere, displacing function bodies and other higher-value content. Also tried adding Go first-party detection (stdlib imports don't contain dots), but this correctly classifies Go stdlib imports and the xxhsum import block becomes first-party, which fixes this specific case but adds import blocks to every Go file in every Go snapshot. A targeted fix may need scheduler-level awareness of budget utilization rate or a mechanism specific to single-file projects.
+
+## 36. Human-authored meta-documentation under-weighted
+
+**Affected snapshots:** toasty, toasty_codegen, mdbook_guide_src, superstruct, soluna, enclosed
+
+Several fixtures contain intentionally-authored overview documents: `CONTEXT.md` files in each toasty workspace crate describing crate purpose and change patterns, `ARCHITECTURE.md` in enclosed, `SUMMARY.md` (the authoritative table of contents) in mdbook_guide_src, `docs/*.md` guide files in superstruct, and the Lua API reference directory in soluna. These are the highest signal-per-token content for orientation but are either dropped entirely (toasty_codegen's CONTEXT.md shown as just its title line) or truncated past the first few lines. The current value model treats them as generic markdown without accounting for the "project front door" role. A value bump for markdown files whose name matches `CONTEXT|ARCHITECTURE|SUMMARY|DESIGN` (and similar), or whose location suggests front-door role (`docs/` top-level), may help.
+
+## 37. Entire implementation modules omitted while siblings are shown
+
+**Affected snapshots:** sds (sds.c), superstruct_src_structs (valid.rs, prop.rs, fallback.rs, expand.rs), xlstm (backends/, vanilla/, blas/), xlstm_blocks (backend implementation files), sps (sps-net/src/api.rs)
+
+Current sometimes omits the file where the actual implementation lives while showing headers, configs, and adjacent code. sds is a single-header C string library where `sds.h` is shown and `sds.c` is entirely absent — the reader sees the API but not where any of it is implemented. In superstruct_src_structs, the proc-macro pipeline (`derive → try_expand → impl_struct → impl_enum`) lives in valid.rs/prop.rs/fallback.rs/expand.rs which current leaves essentially empty. In sps, the entire `sps-net/src/api.rs` module (~8 fetch/get functions defining the networking surface of a package manager) is dropped. This is not a dedup or volume issue; current is actively choosing siblings over the implementation files. Related to #21 (mcphost) but the pattern is more general — sometimes the "boring" file IS the core.
+
+## 38. Function signatures over-elided to bare names even with budget headroom
+
+**Affected snapshots:** mcphost_sdk, vaul, xlstm, xlstm_blocks, ky_source_errors, sps
+
+Current frequently renders `fn foo …` / `func Foo …` / `def foo …` (name only with ellipsis) at 4000/8000 budgets where parameters and return types would fit. For typed languages parameters+returns carry most of a function's documentary value — eliding them leaves content close to information-free, since the filename already implies the function exists. Agents comparing vaul, mcphost_sdk, and the xlstm family consistently flagged that the other side's fuller signatures built a better mental model. This may be a scheduler issue (committing the name group without also committing the body/sig group when budget allows), or a value-model issue (sig groups losing per-token to cheaper name groups).
+
+## 39. README content past top-level headings dropped — deep subsections and usage code blocks lost
+
+**Affected snapshots:** pluggy, go_multierror, ky_source_errors, mdbook_guide_src, mcphost, enclosed
+
+Distinct from resolved issue #6 (which addressed h1 body content for headingless READMEs): these fixtures have READMEs with deeper structure (h3/h4 subsections enumerating the API, tips, or features) and embedded usage examples in code blocks, which current collapses to top-level section headers only. ky_source_errors is a clear example — the README's `### ky.get/post/put/.../extend/create` subheadings map directly to the public API surface and are worth more than the single `## API` heading current shows. pluggy and go_multierror lose README usage examples that are the fastest path to understanding what the library does. mdbook_guide_src loses the root README narrative entirely. A fix likely involves bumping HeadingBody value for h3+ headings in README files, or special-casing README section trees for deeper body preservation.
+
+## 40. Module-level doc comments not surfaced
+
+**Affected snapshots:** log_src_kv, mcphost_sdk, xxhash
+
+Rust `//!` crate/module doc headers, Go package doc comments, and Python module docstrings label a file's purpose in plain English at very low token cost, and are often the single highest-signal line per file for orientation. Current drops them in favor of per-symbol signatures. Eval agents consistently flagged this as decisive — e.g. log_src_kv's `//! Structured logging.` / `//! Structured keys.` headers tell a reader what each file is in one line where a wall of signatures cannot. `ModuleDocFirst` / `ModuleDocRest` groups exist in the taxonomy but apparently lose ratio competition against cheap name entries in these fixtures.
+
+## 41. Anonymous `typedef struct` names not extracted (low significance)
+
+**Affected snapshots:** bareiron
+
+C parser extracts `typedef struct { ... } foo_t` as an anonymous struct rather than using the trailing `foo_t` identifier, so type declarations render without their names. Narrow C parser issue, one fixture.
+
+## 42. Cargo.toml `[workspace].members` list not expanded in workspace roots (low significance)
+
+**Affected snapshots:** toasty
+
+Workspace root Cargo.toml shows `[package]`/`[dependencies]` section headers but drops the `members = [...]` list, which in a multi-crate workspace is the most informative single field (it enumerates the project's crates at a glance). Likely covered incidentally by any fix to #30 that boosts entry-file content.
+
+## 43. Nested subdirectory structure not surfaced in data-heavy repos (low significance)
+
+**Affected snapshots:** vscode_emojis_medium
+
+In repos dominated by one large data file plus asset directories, current shows only top-level directory names and spends remaining budget extending the dominant file's truncated content. A second level of nesting (e.g. `icons/dark/`, `icons/light/`) would reveal organizational structure at negligible cost. One fixture, marginal impact.
+
+## 44. Non-code item-kind breadth in non-code-centric projects (low significance)
+
+**Affected snapshots:** soluna
+
+For projects whose identity includes non-source artifacts (shaders, platform glue files, Makefiles, asset data), current tends to concentrate budget on source code and under-represent the heterogeneous file landscape. Partially overlaps with #37 (implementation files omitted) — the difference is #37 is about missing the file where code lives, while this is about missing file kinds that collectively define what the project *is*. Low significance because it only clearly surfaced in one fixture.
+
