@@ -43,6 +43,11 @@
   (variable_declarator
     name: (identifier) @name)) @symbol
 
+; CommonJS destructured require: const { X } = require('...')
+(lexical_declaration
+  (variable_declarator
+    name: (object_pattern))) @symbol
+
 ; Class field definitions (arrow function properties like `subscribe = (x) => { ... }`)
 (public_field_definition
   name: (property_identifier) @name) @symbol
@@ -50,6 +55,12 @@
 ; Namespaces
 (internal_module
   name: (identifier) @name) @symbol
+
+; CommonJS exports: exports.X = ..., module.exports = ...
+(expression_statement
+  (assignment_expression
+    left: (member_expression
+      object: (identifier)))) @symbol
 
 ; Import statements
 (import_statement) @symbol

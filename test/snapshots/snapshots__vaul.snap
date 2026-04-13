@@ -343,24 +343,23 @@ tsconfig.json
     11→}
 
 test/next.config.js
-     2→const nextConfig …
+     8→module.exports = nextConfig; …
 
 test/package.json
 
 test/postcss.config.js
+     1→module.exports = { …
 
 test/tailwind.config.ts
 
 test/tsconfig.json
 
-test/tests/constants.ts
-
-test/tests/helpers.ts
-
 LICENSE.md
-
-test/src/app/globals.css
 
 test/public/
 
 test/src/
+
+test/src/app/
+
+test/tests/

@@ -234,6 +234,9 @@ fn classify<'t>(
         }
         "internal_module" => None,
         "export_statement" if lang == Lang::JsTs => classify_js_export(node, source),
+        "expression_statement" if lang == Lang::JsTs => {
+            classify_js_cjs_export(node, source, documented)
+        }
 
         // ---- Go ----
         "type_spec" => {
@@ -468,13 +471,21 @@ fn classify_js_lexical(
 ) -> Option<TsGroupKey> {
     use TsGroupKey::*;
 
+    let declarator = node
+        .named_children(&mut node.walk())
+        .find(|c| c.kind() == "variable_declarator");
+
+    if is_require_call(declarator, source) {
+        return Some(TsGroupKey::Import {
+            first_party: is_require_first_party(declarator, source),
+            reexport: false,
+        });
+    }
+
     let keyword = node.child(0).map(|c| c.kind());
     if keyword != Some("const") {
         return None;
     }
-    let declarator = node
-        .named_children(&mut node.walk())
-        .find(|c| c.kind() == "variable_declarator");
     let value_kind = declarator
         .and_then(|d| d.child_by_field_name("value"))
         .map(|v| v.kind());
@@ -486,8 +497,6 @@ fn classify_js_lexical(
             documented,
             public: visibility::symbol_visibility(node, source, lang),
         })
-    } else if is_require_call(declarator, source) {
-        None
     } else {
         Some(ConstName {
             documented,
@@ -543,24 +552,110 @@ fn classify_js_export(node: Node, source: &str) -> Option<TsGroupKey> {
     })
 }
 
+fn classify_js_cjs_export(node: Node, source: &str, documented: bool) -> Option<TsGroupKey> {
+    let assign = node
+        .named_children(&mut node.walk())
+        .find(|c| c.kind() == "assignment_expression")?;
+    let left = assign.child_by_field_name("left")?;
+    if left.kind() != "member_expression" {
+        return None;
+    }
+    let obj = left.child_by_field_name("object")?;
+    let obj_text = obj.utf8_text(source.as_bytes()).ok()?;
+    match obj_text {
+        "exports" => Some(TsGroupKey::ConstName {
+            documented,
+            public: true,
+        }),
+        "module" => {
+            let prop = left.child_by_field_name("property")?;
+            let prop_text = prop.utf8_text(source.as_bytes()).ok()?;
+            if prop_text != "exports" {
+                return None;
+            }
+            let rhs = assign.child_by_field_name("right")?;
+            if is_rhs_require(rhs, source) {
+                Some(TsGroupKey::Import {
+                    first_party: is_rhs_require_first_party(rhs, source),
+                    reexport: true,
+                })
+            } else {
+                Some(TsGroupKey::ConstName {
+                    documented,
+                    public: true,
+                })
+            }
+        }
+        _ => None,
+    }
+}
+
+fn is_rhs_require(rhs: Node, source: &str) -> bool {
+    if rhs.kind() == "call_expression" {
+        return rhs
+            .child_by_field_name("function")
+            .and_then(|f| f.utf8_text(source.as_bytes()).ok())
+            == Some("require");
+    }
+    false
+}
+
+fn is_rhs_require_first_party(rhs: Node, source: &str) -> bool {
+    if rhs.kind() != "call_expression" {
+        return false;
+    }
+    let args = match rhs.child_by_field_name("arguments") {
+        Some(a) => a,
+        None => return false,
+    };
+    let first_arg = match args.named_child(0) {
+        Some(a) if a.kind() == "string" => a,
+        _ => return false,
+    };
+    let text = first_arg
+        .utf8_text(source.as_bytes())
+        .unwrap_or("");
+    let unquoted = text.trim_matches(|c: char| c == '\'' || c == '"');
+    unquoted.starts_with("./") || unquoted.starts_with("../")
+}
+
 fn is_require_call(declarator: Option<Node>, source: &str) -> bool {
+    require_argument(declarator, source).is_some()
+}
+
+fn require_argument<'a>(declarator: Option<Node>, source: &'a str) -> Option<&'a str> {
     let value = declarator.and_then(|d| d.child_by_field_name("value"));
-    match value {
-        Some(v) if v.kind() == "call_expression" => {
-            v.child_by_field_name("function")
-                .and_then(|f| f.utf8_text(source.as_bytes()).ok())
-                == Some("require")
-        }
+    let call = match value {
+        Some(v) if v.kind() == "call_expression" => Some(v),
         Some(v) if v.kind() == "member_expression" => {
-            v.child_by_field_name("object").is_some_and(|obj| {
-                obj.kind() == "call_expression"
-                    && obj
-                        .child_by_field_name("function")
-                        .and_then(|f| f.utf8_text(source.as_bytes()).ok())
-                        == Some("require")
-            })
+            let obj = v.child_by_field_name("object")?;
+            if obj.kind() == "call_expression" {
+                Some(obj)
+            } else {
+                None
+            }
         }
-        _ => false,
+        _ => None,
+    };
+    let call = call?;
+    let func = call.child_by_field_name("function")?;
+    if func.utf8_text(source.as_bytes()).ok() != Some("require") {
+        return None;
+    }
+    let args = call.child_by_field_name("arguments")?;
+    let first_arg = args.named_child(0)?;
+    if first_arg.kind() == "string" {
+        let text = first_arg.utf8_text(source.as_bytes()).ok()?;
+        Some(text.trim_matches(|c| c == '\'' || c == '"'))
+    } else {
+        Some("")
+    }
+}
+
+fn is_require_first_party(declarator: Option<Node>, source: &str) -> bool {
+    match require_argument(declarator, source) {
+        Some(arg) => arg.starts_with("./") || arg.starts_with("../"),
+        None => false,
     }
 }
 

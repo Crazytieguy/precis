@@ -111,23 +111,6 @@ In tock_internal_core, the missing `InterfaceBody` group causes Go interface met
 
 **Attempted fix:** Tried three approaches: (1) Changing TypeAliasName/ConstName rendering to show full first line instead of truncating at name — individually correct but cascades to 54 snapshots due to changed token costs; ts_pattern regressed (lost API methods, gained README h3 headings); (2) Adding TypeAliasBody/ConstBody groups with base_value 0.3/0.2 — near-zero marginal cost for single-line upgrades makes them competitive everywhere, still 42 snapshots affected; (3) Adding all four body groups (TypeAlias, Const, Interface, Trait) — 75 failures. The fundamental tension: showing type/const values costs more tokens per entry, which shifts budget allocation globally. Any approach that shows more content will cascade. May need a mechanism that allows body content without displacing other entries (e.g., a "free upgrade" path for same-line Truncated→Complete transitions that doesn't count against budget).
 
-## 11. CommonJS entry point rendered empty — require/exports not captured
-
-**Affected snapshots:** commander, semver, semver_classes
-
-Commander's `index.js` (24 lines) is the library's entry point. It shows the module structure: which classes are imported from `lib/`, factory functions (`createCommand`, `createOption`, `createArgument`), and all exports. The pre-rewrite output showed the full file. The new output shows only the filename with zero content — the file appears completely empty.
-
-Semver's root `index.js` (91 lines) is the worst case of this issue. The pre-rewrite output showed the complete file: 44 `require()` imports mapping every function and class to its source file, followed by a `module.exports` object listing all 34 public API names. This is the single most valuable file in the repository — it IS the public API surface. The new output shows it as empty. The budget that should go here instead goes to CHANGELOG.md headings (see #8) and 20 individual `functions/*.js` one-liner wrappers that redundantly list the same function names without the module structure context.
-
-Semver's `classes/index.js` (7 lines) is the same pattern — `module.exports = { SemVer: require('./semver.js'), Range: require('./range.js'), Comparator: require('./comparator.js') }`. The pre-rewrite output showed this in full. The new output shows only the filename. This file is the single best summary of the module: three classes, their names, their source files.
-
-Root cause: the TypeScript tree-sitter query captures `import_statement` (ES6 imports) and `lexical_declaration` with an `identifier` name, but CommonJS patterns don't match:
-
-1. `const { Argument } = require('./lib/argument.js')` — this is a `lexical_declaration`, but the name is an `object_pattern` (destructuring), not an `identifier`, so the query doesn't match.
-2. `exports.program = new Command()` — this is an `expression_statement` with an assignment, not any captured pattern.
-
-The result is zero extracted items, so the file contributes nothing to the output. This is a significant gap for JavaScript projects that use CommonJS (which is still the majority of npm packages). For entry point files especially, the exports list is often the single most useful piece of information about the library.
-
 ## 13. Functions exported via `export { name }` treated as private
 
 **Affected snapshots:** enclosed

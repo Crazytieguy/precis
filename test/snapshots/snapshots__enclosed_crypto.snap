@@ -51,12 +51,14 @@ src/index.node.ts
      2→import { AES_256_GCM } from './encryption-algorithms/encryption-algorithms.constants';
      3→import * as webCryptoApi from './node/crypto.node.usecases';
      4→import { aes256GcmEncryptionAlgorithmDefinition } from './node/encryption-algorithms/crypto.node.aes-256-gcm';
+     8→export const { …
 
 src/index.web.ts
      1→import { createEnclosedCryptoApi } from './api-definition';
      2→import { AES_256_GCM } from './encryption-algorithms/encryption-algorithms.constants';
      3→import * as webCryptoApi from './web/crypto.web.usecases';
      4→import { aes256GcmEncryptionAlgorithmDefinition } from './web/encryption-algorithms/crypto.web.aes-256-gcm';
+     8→export const { …
 
 src/node/encryption-algorithms/crypto.node.aes-256-gcm.ts
      2→import { defineEncryptionMethods } from '../../encryption-algorithms/encryption-algorithms.models';
@@ -73,7 +75,6 @@ src/encryption-algorithms/encryption-algorithms.constants.ts
      3→export const ENCRYPTION_ALGORITHMS …
 
 src/encryption-algorithms/encryption-algorithms.models.ts
-     1→export …
      3→function defineEncryptionMethods(args: {
      4→  encryptBuffer: (args: { buffer: Uint8Array; encryptionKey: Uint8Array }) => Promise<{ encryptedString: string }>;
      5→  decryptString: (args: { encryptedString: string; encryptionKey: Uint8Array }) => Promise<{ decryptedBuffer: Uint8Array }>;
@@ -81,7 +82,6 @@ src/encryption-algorithms/encryption-algorithms.models.ts
 
 src/encryption-algorithms/encryption-algorithms.registry.ts
      1→import type { EncryptionAlgorithm, EncryptionMethodsDefinition } from './encryption-algorithms.types';
-     4→export …
      6→function createEncryptionAlgorithmsRegistry({
      7→  encryptionMethodDefinitions,
      8→}: {
@@ -90,7 +90,6 @@ src/encryption-algorithms/encryption-algorithms.registry.ts
 
 src/encryption-algorithms/encryption-algorithms.test-utils.ts
      1→import type { EncryptionMethodsDefinition } from './encryption-algorithms.types';
-     5→export …
      9→function runCommonEncryptionAlgorithmTest({
     10→  encryptionMethodDefinition,
     11→}: {

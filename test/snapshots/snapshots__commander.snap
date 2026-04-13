@@ -82,10 +82,29 @@ typings/index.test-d.ts
 
 esm.mjs
      1→import commander from './index.js';
+     4→export const { …
 
 index.js
+     1→const { Argument } = require('./lib/argument.js');
+     2→const { Command } = require('./lib/command.js');
+     3→const { CommanderError, InvalidArgumentError } = require('./lib/error.js');
+     4→const { Help } = require('./lib/help.js');
+     5→const { Option } = require('./lib/option.js');
+     7→exports.program = new Command(); …
+     9→exports.createCommand = (name) => new Command(name); …
+    10→exports.createOption = (flags, description) => new Option(flags, description); …
+    11→exports.createArgument = (name, description) => new Argument(name, description); …
+    14→ * Expose classes
+    17→exports.Command = Command; …
+    18→exports.Option = Option; …
+    19→exports.Argument = Argument; …
+    20→exports.Help = Help; …
+    22→exports.CommanderError = CommanderError; …
+    23→exports.InvalidArgumentError = InvalidArgumentError; …
+    24→exports.InvalidOptionArgumentError = InvalidArgumentError; // Deprecated …
 
 lib/argument.js
+     1→const { InvalidArgumentError } = require('./error.js');
      3→class Argument …
     13→  constructor(name, description) {
     48→  name() {
@@ -95,8 +114,15 @@ lib/argument.js
    119→  argRequired() {
    129→  argOptional() {
    143→function humanReadableArgName(arg) {
+   149→exports.Argument = Argument; …
+   150→exports.humanReadableArgName = humanReadableArgName; …
 
 lib/command.js
+     7→const { Argument, humanReadableArgName } = require('./argument.js');
+     8→const { CommanderError } = require('./error.js');
+     9→const { Help, stripColor } = require('./help.js');
+    10→const { Option, DualOptions } = require('./option.js');
+    11→const { suggestSimilar } = require('./suggestSimilar');
     13→class Command …
     20→  constructor(name) {
     99→  copyInheritedSettings(sourceCommand) {
@@ -165,6 +191,8 @@ lib/command.js
   2656→  addHelpText(position, text) {
   2705→function incrementNodeInspectorPort(args) {
   2752→function useColor() {
+  2776→exports.Command = Command; …
+  2777→exports.useColor = useColor; // exporting for tests …
 
 lib/error.js
      2→ * CommanderError class
@@ -177,10 +205,12 @@ lib/error.js
     27→   * Constructs the InvalidArgumentError class
       →…
     30→  constructor(message) {
+    38→exports.CommanderError = CommanderError; …
+    39→exports.InvalidArgumentError = InvalidArgumentError; …
 
 lib/help.js
+     1→const { humanReadableArgName } = require('./argument.js');
     12→class Help …
-    13→  constructor() {
     29→  prepareContext(contextOptions) {
     40→  visibleCommands(cmd) {
     62→  compareOptions(a, b) {
@@ -204,26 +234,16 @@ lib/help.js
    443→  formatHelp(cmd, helper) {
    535→  displayWidth(str) {
    545→  styleTitle(str) {
-   549→  styleUsage(str) {
-   563→  styleCommandDescription(str) {
-   566→  styleOptionDescription(str) {
-   569→  styleSubcommandDescription(str) {
-   572→  styleArgumentDescription(str) {
-   575→  styleDescriptionText(str) {
-   578→  styleOptionTerm(str) {
-   581→  styleSubcommandTerm(str) {
-   594→  styleArgumentTerm(str) {
-   597→  styleOptionText(str) {
-   600→  styleArgumentText(str) {
-   603→  styleSubcommandText(str) {
-   606→  styleCommandText(str) {
    618→  padWidth(cmd, helper) {
    633→  preformatted(str) {
    650→  formatItem(term, termWidth, description, helper) {
    695→  boxWrap(str, width) {
    740→function stripColor(str) {
+   746→exports.Help = Help; …
+   747→exports.stripColor = stripColor; …
 
 lib/option.js
+     1→const { InvalidArgumentError } = require('./error.js');
      3→class Option …
     11→  constructor(flags, description) {
     47→  default(value, description) {
@@ -250,11 +270,14 @@ lib/option.js
    297→  valueFromOption(value, option) {
    316→function camelcase(str) {
    328→function splitOptionFlags(flags) {
+   379→exports.Option = Option; …
+   380→exports.DualOptions = DualOptions; …
 
 lib/suggestSimilar.js
      1→const maxDistance …
      3→function editDistance(a, b) {
     56→function suggestSimilar(word, candidates) {
+   101→exports.suggestSimilar = suggestSimilar; …
 
 docs/deprecated.md
      1→# Deprecated
@@ -283,9 +306,6 @@ docs/options-in-depth.md
      2→# Options in Depth
     15→## Options taking varying numbers of option-arguments
     30→### Parsing ambiguity
-    79→#### Alternative: Make `--` part of your syntax
-   104→#### Alternative: Put options last
-   126→#### Alternative: Use options instead of command-arguments
    148→## Combining short options, and options taking arguments
    191→### Combining short options as if boolean
 
@@ -299,8 +319,10 @@ docs/terminology.md
      1→# Terminology
 
 eslint.config.js
+    12→module.exports = tseslint.config( …
 
 jest.config.js
+    10→module.exports = config; …
 
 package-support.json
      2→  "versions": [
@@ -344,38 +366,28 @@ examples/alias.js
 examples/argument.js
 
 examples/arguments-custom-processing.js
-    10→function myParseInt(value) {
-    20→function mySum(value, total) {
 
 examples/arguments-extra.js
 
 examples/color-help-replacement.mjs
-    20→class MyHelp …
-    64→class MyCommand …
 
 examples/color-help.mjs
 
 examples/configure-help.js
 
 examples/configure-output.js
-     4→function errorColor(str) {
 
 examples/custom-command-class.js
-     6→class CommandWithTrace …
-    15→function inspectCommand(command) {
 
 examples/custom-help-text.js
 
 examples/defaultCommand.js
 
 examples/global-options-added.js
-    16→class MyRootCommand …
 
 examples/global-options-nested.js
 
 examples/help-centered.mjs
-     6→class MyHelp …
-    17→class MyCommand …
 
 examples/help-groups.js
 
@@ -384,10 +396,8 @@ examples/help-subcommands-usage.js
 examples/hook.js
 
 examples/man-style-help.mjs
-     5→function formatItem(term, termWidth, description, helper) {
 
 examples/nestedCommands.js
-    21→function makeHeatCommand() {
 
 examples/options-boolean-or-value.js
 
@@ -396,10 +406,6 @@ examples/options-common.js
 examples/options-conflicts.js
 
 examples/options-custom-processing.js
-    10→function myParseInt(value) {
-    19→function increaseVerbosity(dummyValue, previous) {
-    23→function collect(value, previous) {
-    27→function commaSeparatedList(value) {
 
 examples/options-defaults.js
 
@@ -428,34 +434,13 @@ examples/string-util.js
 examples/thank.js
 
 tests/esm-imports-test.mjs
-     1→import …
+    19→function check …
+    26→function checkClass …
 
 typings/esm.d.mts
 
 typings/index.d.ts
-    12→type LiteralUnion …
-    16→export class CommanderError …
-    31→export class InvalidArgumentError …
-    40→export interface ErrorOptions …
-    48→export class Argument …
-    95→export class Option …
-   210→export class Help …
-   340→export type HelpConfiguration …
-   342→export interface ParseOptions …
-   345→export interface HelpContext …
-   349→export interface AddHelpTextContext …
-   354→export interface OutputConfiguration …
-   367→export type AddHelpTextPosition …
-   368→export type HookEvent …
-   370→export type OptionValueSource …
-   374→export type OptionValues …
-   376→export class Command …
-  1094→export interface CommandOptions …
-  1100→export interface ExecutableCommandOptions …
-  1104→export interface ParseOptionsResult …
   1113→export const program …
-
-CHANGELOG.md
 
 docs/zh-CN/
 

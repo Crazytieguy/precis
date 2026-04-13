@@ -11,8 +11,16 @@ comparator.js
     57→  toString () {
     61→  test (version) {
     79→  intersects (comp, options) {
+   136→module.exports = Comparator …
+   138→const parseOptions = require('../internal/parse-options')
+   139→const { safeRe: re, t } = require('../internal/re')
+   140→const cmp = require('../functions/cmp')
+   141→const debug = require('../internal/debug')
+   142→const SemVer = require('./semver')
+   143→const Range = require('./range')
 
 index.js
+     3→module.exports = { …
 
 range.js
      3→const SPACE_CHARACTERS …
@@ -24,7 +32,21 @@ range.js
    100→  parseRange (range) {
    170→  intersects (range, options) {
    193→  test (version) {
+   215→module.exports = Range …
+   217→const LRU = require('../internal/lrucache')
    218→const cache …
+   220→const parseOptions = require('../internal/parse-options')
+   221→const Comparator = require('./comparator')
+   222→const debug = require('../internal/debug')
+   223→const SemVer = require('./semver')
+   224→const {
+   225→  safeRe: re,
+   226→  t,
+   227→  comparatorTrimReplace,
+   228→  tildeTrimReplace,
+   229→  caretTrimReplace,
+   230→} = require('../internal/re')
+   231→const { FLAG_INCLUDE_PRERELEASE, FLAG_LOOSE } = require('../internal/constants')
    233→const isNullSet = c => c.value === '<0.0.0-0'
    234→const isAny = c => c.value === ''
    238→const isSatisfiable = (comparators, options) => {
@@ -42,6 +64,11 @@ range.js
    523→const testSet = (set, version, options) => {
 
 semver.js
+     3→const debug = require('../internal/debug')
+     4→const { MAX_LENGTH, MAX_SAFE_INTEGER } = require('../internal/constants')
+     5→const { safeRe: re, t } = require('../internal/re')
+     7→const parseOptions = require('../internal/parse-options')
+     8→const { compareIdentifiers } = require('../internal/identifiers')
      9→class SemVer …
     10→  constructor (version, options) {
     81→  format () {
@@ -51,3 +78,4 @@ semver.js
    135→  comparePre (other) {
    168→  compareBuild (other) {
    194→  inc (release, identifier, identifierBase) {
+   333→module.exports = SemVer …
