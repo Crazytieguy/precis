@@ -178,3 +178,5 @@ pub fn boilerplate_heading_contribution() -> f64 {
 pub fn reexport_contribution() -> f64 {
     0.1
 }
+
+pub const COMPACT_BODY_LINE_LIMIT: usize = 25;

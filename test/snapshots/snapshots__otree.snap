@@ -28,7 +28,6 @@ Cargo.toml
     43→[lints.clippy]
 
 src/config/colors.rs
-     9→macro_rules! generate_colors_parse …
     21→pub struct Colors …
     55→impl Colors …
     56→    pub fn default() -> Self {
@@ -46,9 +45,25 @@ src/config/colors.rs
    355→impl Color …
 
 src/config/keys.rs
-     7→macro_rules! generate_keys_default …
-    32→macro_rules! generate_actions …
     54→pub enum Key …
+    55→    Char(char),
+    56→
+    57→    Ctrl(char),
+    58→    Alt(char),
+    59→
+    60→    F(u8),
+    61→
+    62→    Backspace,
+    63→    Enter,
+    64→    Left,
+    65→    Right,
+    66→    Up,
+    67→    Down,
+    68→    PageUp,
+    69→    PageDown,
+    70→    Tab,
+    71→    Esc,
+    72→}
     74→impl Key …
    195→pub struct Keys …
    351→pub struct KeyAction …
@@ -61,6 +76,11 @@ src/config/mod.rs
     62→pub struct Editor …
     74→pub struct Layout …
     83→pub enum LayoutDirection …
+    84→    #[serde(rename = "vertical")]
+    85→    Vertical,
+    86→    #[serde(rename = "horizontal")]
+    87→    Horizontal,
+    88→}
     91→pub struct Header …
    100→pub struct Footer …
    106→pub struct Filter …
@@ -79,7 +99,6 @@ src/config/mod.rs
    321→impl Data …
 
 src/config/types.rs
-     3→macro_rules! generate_types_default …
     28→pub struct Types …
 
 src/clipboard.rs
@@ -348,8 +367,6 @@ src/parse/xml.rs
     23→    fn parse …
     32→    fn syntax_highlight …
     37→trait AttrMap …
-    38→    fn insert_text …
-    39→    fn insert_text_node …
     42→impl AttrMap for Map<String, Value> …
     43→    fn insert_text …
     55→    fn insert_text_node …
@@ -369,14 +386,8 @@ src/parse/yaml.rs
 
 config/default.toml
      1→[tree]
-     2→disable_selected_highlight = false
-     3→selected_symbol = ""
-     4→
      5→[editor]
     10→[layout]
-    11→direction = "horizontal"
-    12→tree_size = 40
-    13→
     14→[header]
     18→[footer]
     19→disable = false
@@ -385,11 +396,6 @@ config/default.toml
     25→[filter]
     30→[keys]
     62→[colors]
-    66→[colors.tree]
-    79→[colors.data]
-    90→[colors.footer]
-    95→[colors.popup]
-   100→[colors.filter]
    103→[types]
 
 docs/actions.md
@@ -417,9 +423,6 @@ examples/example.json
      8→  "object": {
     17→  "complex_array": [
     22→  "complex_object": {
-
-typos.toml
-     1→[default.extend-words]
 
 assets/
 

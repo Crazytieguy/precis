@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 8000 (2671 tokens, 9258 chars)
+budget: 8000 (2643 tokens, 9260 chars)
 
 README.md
      1→# sps
@@ -100,18 +100,13 @@ sps-net/src/oci.rs
 
 sps-net/src/validation.rs
     67→pub fn verify_checksum …
-    92→/// Verifies that the detected content type of the file matches the expected extension.
     93→pub fn verify_content_type(path: &Path, expected_ext: &str) -> Result<()> {
-   120→/// Validates a URL, ensuring it uses the HTTPS scheme.
    121→pub fn validate_url(url_str: &str) -> Result<()> {
 
 sps-common/src/cache.rs
     12→const CACHE_TTL …
     14→/// Cache struct to manage cache operations
     15→pub struct Cache …
-    16→    cache_dir: PathBuf,
-    17→    _config: Config, // Keep a reference to config if needed for other paths or future use
-    18→}
     20→impl Cache …
     22→    pub fn new(config: &Config) -> Result<Self> {
     35→    pub fn get_dir(&self) -> &Path {
@@ -151,6 +146,7 @@ sps-common/src/config.rs
    158→    pub fn home_dir …
    162→    pub fn get_tap_path …
    175→    pub fn get_formula_path_from_tap …
+   193→impl Default for Config …
    199→pub fn load_config() -> Result<Config> {
 
 sps-common/src/error.rs
@@ -176,14 +172,8 @@ sps-common/src/formulary.rs
 sps-common/src/keg.rs
     11→/// Represents information about an installed package (Keg).
     13→pub struct InstalledKeg …
-    14→    pub name: String,
-    15→    pub version_str: String,
-    16→    pub path: PathBuf,
-    17→}
     19→/// Manages querying installed packages in the Cellar.
     21→pub struct KegRegistry …
-    22→    config: Config,
-    23→}
     25→impl KegRegistry …
     26→    pub fn new …
     34→    pub fn get_opt_path …
@@ -203,14 +193,26 @@ sps-common/src/pipeline.rs
    150→    pub fn download_failed …
    161→/// Represents the current processing state of a job in the pipeline.
    163→pub enum JobProcessingState …
+   164→    /// Waiting for download to be initiated.
+   165→    PendingDownload,
+   166→    /// Download is in progress (managed by DownloadCoordinator).
+   167→    Downloading,
+   168→    /// Download completed successfully, artifact at PathBuf.
+   169→    Downloaded(PathBuf),
+   170→    /// Downloaded, but waiting for dependencies to be in Succeeded state.
+   171→    WaitingForDependencies(PathBuf),
+   172→    /// Dispatched to the core worker pool for installation/processing.
+   173→    DispatchedToCore(PathBuf),
+   174→    /// Installation/processing is in progress by a core worker.
+   175→    Installing(PathBuf), // Path is still relevant
+   176→    /// Job completed successfully.
+   177→    Succeeded,
+   178→    /// Job failed. The String contains the error message. Arc for cheap cloning.
+   179→    Failed(Arc<SpsError>),
+   180→}
    184→pub struct DownloadOutcome …
    189→/// Structure returned by the planner, now including the ResolvedGraph.
    191→pub struct PlannedOperations …
-   192→    pub jobs: Vec<PlannedJob>,           // Topologically sorted for formulae
-   193→    pub errors: Vec<(String, SpsError)>, // Errors from planning phase
-   194→    pub already_installed_or_up_to_date: std::collections::HashSet<String>,
-   195→    pub resolved_graph: Option<Arc<ResolvedGraph>>, // Graph for dependency checking in runner
-   196→}
 
 sps-core/src/check/installed.rs
     14→pub enum PackageType …
@@ -252,10 +254,6 @@ sps/src/pipeline/planner.rs
 
 sps/src/pipeline/runner.rs
     31→pub enum CommandType …
-    32→    Install,
-    33→    Reinstall,
-    34→    Upgrade { all: bool },
-    35→}
     38→pub struct PipelineFlags …
     67→pub async fn run_pipeline …
 

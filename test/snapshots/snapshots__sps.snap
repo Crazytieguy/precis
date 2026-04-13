@@ -108,12 +108,6 @@ sps-net/Cargo.toml
 sps/src/cli.rs
      2→//! Defines the command-line argument structure using clap.
     35→pub struct CliArgs …
-    36→    #[arg(short, long, action = ArgAction::Count, global = true)]
-    37→    pub verbose: u8,
-    38→
-    39→    #[command(subcommand)]
-    40→    pub command: Command,
-    41→}
     44→pub enum Command …
     56→impl Command …
     57→    pub async fn run(&self, config: &Config, cache: Arc<Cache>) -> Result<()> {
@@ -299,6 +293,23 @@ sps-common/src/pipeline.rs
    150→    pub fn download_failed(target_id: String, url: String, error: &SpsError) -> Self {
    161→/// Represents the current processing state of a job in the pipeline.
    163→pub enum JobProcessingState …
+   164→    /// Waiting for download to be initiated.
+   165→    PendingDownload,
+   166→    /// Download is in progress (managed by DownloadCoordinator).
+   167→    Downloading,
+   168→    /// Download completed successfully, artifact at PathBuf.
+   169→    Downloaded(PathBuf),
+   170→    /// Downloaded, but waiting for dependencies to be in Succeeded state.
+   171→    WaitingForDependencies(PathBuf),
+   172→    /// Dispatched to the core worker pool for installation/processing.
+   173→    DispatchedToCore(PathBuf),
+   174→    /// Installation/processing is in progress by a core worker.
+   175→    Installing(PathBuf), // Path is still relevant
+   176→    /// Job completed successfully.
+   177→    Succeeded,
+   178→    /// Job failed. The String contains the error message. Arc for cheap cloning.
+   179→    Failed(Arc<SpsError>),
+   180→}
    184→pub struct DownloadOutcome …
    189→/// Structure returned by the planner, now including the ResolvedGraph.
    191→pub struct PlannedOperations …
@@ -423,9 +434,9 @@ sps-common/src/dependency/definition.rs
     38→    pub fn new_runtime …
     45→    pub fn new_with_tags …
     53→pub trait DependencyExt …
-    54→    fn filter_by_tags …
-    55→    fn runtime …
-    56→    fn build_time …
+    54→    fn filter_by_tags(&self, include: DependencyTag, exclude: DependencyTag) -> Vec<&Dependency>;
+    55→    fn runtime(&self) -> Vec<&Dependency>;
+    56→    fn build_time(&self) -> Vec<&Dependency>;
     59→impl DependencyExt for Vec<Dependency> …
     60→    fn filter_by_tags …
     66→    fn runtime …
@@ -539,14 +550,8 @@ sps-common/src/model/cask.rs
    195→/// A zap stanza is a map of action -> detail
    197→pub struct ZapStanza …
    201→impl Cask …
-   202→    /// Check if this cask is installed by looking for a manifest file
-   203→    /// in any versioned directory within the Caskroom.
    204→    pub fn is_installed(&self, config: &Config) -> bool {
-   258→    /// Get the installed version of this cask by reading the directory names
-   259→    /// in the Caskroom. Returns the first version found (use cautiously if multiple
-   260→    /// versions could exist, though current install logic prevents this).
    261→    pub fn installed_version(&self, config: &Config) -> Option<String> {
-   288→    /// Get a friendly name for display purposes
    289→    pub fn display_name(&self) -> String {
 
 sps-common/src/model/formula.rs
@@ -592,15 +597,10 @@ sps-common/src/model/tap.rs
      9→/// Represents a source of packages (formulas and casks)
     10→pub struct Tap …
     21→impl Tap …
-    22→    /// Create a new tap from user/repo format
     23→    pub fn new(name: &str) -> Result<Self> {
-    42→    /// Update this tap by pulling latest changes
     43→    pub fn update(&self) -> Result<()> {
-   101→    /// Remove this tap by deleting its local repository
    102→    pub fn remove(&self) -> Result<()> {
-   115→    /// Get the full name of the tap (user/repo)
    116→    pub fn full_name(&self) -> String {
-   120→    /// Check if this tap is installed locally
    121→    pub fn is_installed(&self) -> bool {
 
 sps-common/src/model/version.rs

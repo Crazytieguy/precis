@@ -106,7 +106,7 @@ pub fn schedule<'s>(seed: Vec<Group<'s>>, ctx: &ScheduleCtx<'s>) -> String {
 
         // Atomic commit: remove → children → commit to cache → extend frontier
         let mut best_group = frontier.swap_remove(best_idx);
-        let new_children = best_group.children(ctx);
+        let mut new_children = best_group.children(ctx);
 
         // Commit: update cache, childless_folders, and remaining budget
         commit_group(
@@ -118,6 +118,36 @@ pub fn schedule<'s>(seed: Vec<Group<'s>>, ctx: &ScheduleCtx<'s>) -> String {
             &mut remaining_chars,
         );
 
+        // Auto-commit compact enum bodies with their parent name,
+        // bypassing ratio-based competition where they'd lose to
+        // many cheap FunctionName entries.
+        let mut i = 0;
+        while i < new_children.len() {
+            if is_auto_commit_body(&new_children[i], remaining_tokens, ctx.budget) {
+                let mut child = new_children.swap_remove(i);
+                ensure_cached(&mut child, ctx, &mut cache);
+                let cost = probe_cost(&child, ctx, &mut cache, &childless_folders);
+                if cost.tokens <= remaining_tokens
+                    && remaining_chars.is_none_or(|cb| cost.chars <= cb)
+                {
+                    let grandchildren = child.children(ctx);
+                    commit_group(
+                        &mut child,
+                        ctx,
+                        &mut cache,
+                        &mut childless_folders,
+                        &mut remaining_tokens,
+                        &mut remaining_chars,
+                    );
+                    new_children.extend(grandchildren);
+                } else {
+                    new_children.push(child);
+                    i += 1;
+                }
+            } else {
+                i += 1;
+            }
+        }
         frontier.extend(new_children);
     }
 
@@ -277,6 +307,29 @@ fn commit_group<'s>(
             }
         }
     }
+}
+
+// Only auto-commit when plenty of budget remains, so bodies don't
+// crowd out content that would otherwise win on ratio.
+const AUTO_COMMIT_BUDGET_FRACTION: usize = 4; // remaining must exceed budget * 3/4
+const AUTO_COMMIT_MIN_VALUE: f64 = 1.0;
+
+fn is_auto_commit_body(group: &Group<'_>, remaining_tokens: usize, total_budget: usize) -> bool {
+    let Group::Ts(g) = group else { return false };
+    if !matches!(g.key, crate::group::TsGroupKey::EnumBody) {
+        return false;
+    }
+    if group.value() < AUTO_COMMIT_MIN_VALUE {
+        return false;
+    }
+    if remaining_tokens <= total_budget * (AUTO_COMMIT_BUDGET_FRACTION - 1) / AUTO_COMMIT_BUDGET_FRACTION {
+        return false;
+    }
+    let limit = crate::heuristics::COMPACT_BODY_LINE_LIMIT;
+    g.items.iter().all(|item| {
+        let body_start = crate::group::ts::compute_body_start_line(item);
+        item.end_line.saturating_sub(body_start) <= limit
+    })
 }
 
 /// Ensure a group has its cached cost computed.

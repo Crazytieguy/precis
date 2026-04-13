@@ -320,12 +320,32 @@ crates/mdbook-core/src/config.rs
    356→    pub fn realized_text_direction(&self) -> TextDirection {
    365→/// Text direction to use for HTML output
    368→pub enum TextDirection …
+   369→    /// Left to right.
+   370→    #[serde(rename = "ltr")]
+   371→    LeftToRight,
+   372→    /// Right to left
+   373→    #[serde(rename = "rtl")]
+   374→    RightToLeft,
+   375→}
    377→impl TextDirection …
    379→    pub fn from_lang_code(code: &str) -> Self {
    394→pub struct BuildConfig …
    422→pub struct RustConfig …
    427→/// Rust edition to use for the code.
    430→pub enum RustEdition …
+   431→    /// The 2024 edition of Rust
+   432→    #[serde(rename = "2024")]
+   433→    E2024,
+   434→    /// The 2021 edition of Rust
+   435→    #[serde(rename = "2021")]
+   436→    E2021,
+   437→    /// The 2018 edition of Rust
+   438→    #[serde(rename = "2018")]
+   439→    E2018,
+   440→    /// The 2015 edition of Rust
+   441→    #[serde(rename = "2015")]
+   442→    E2015,
+   443→}
    449→pub struct HtmlConfig …
    555→impl HtmlConfig …
    558→    pub fn theme_dir(&self, root: &Path) -> PathBuf {
@@ -663,30 +683,24 @@ examples/nop-preprocessor.rs
 
 crates/mdbook-core/src/utils/fs.rs
      1→//! Filesystem utilities and helpers.
-    11→pub fn read_to_string<P: AsRef<Path>>(path: P) -> Result<String> {
-    20→pub fn write<P: AsRef<Path>, C: AsRef<[u8]>>(path: P, contents: C) -> Result<()> {
-    31→pub fn create_dir_all(p: impl AsRef<Path>) -> Result<()> {
-    55→pub fn path_to_root<P: Into<PathBuf>>(path: P) -> String {
-    74→pub fn remove_dir_content(dir: &Path) -> Result<()> {
-    93→pub fn copy_files_except_ext(
-    94→    from: &Path,
-    95→    to: &Path,
-    96→    recursive: bool,
-    97→    avoid_dir: Option<&PathBuf>,
-    98→    ext_blacklist: &[&str],
-    99→) -> Result<()> {
+    11→pub fn read_to_string …
+    20→pub fn write …
+    31→pub fn create_dir_all …
+    55→pub fn path_to_root …
+    74→pub fn remove_dir_content …
+    93→pub fn copy_files_except_ext …
    155→fn copy …
 
 crates/mdbook-core/src/utils/html.rs
      1→//! Utilities for dealing with HTML.
-     6→pub fn escape_html_attribute(text: &str) -> Cow<'_, str> {
-    32→pub fn escape_html(text: &str) -> Cow<'_, str> {
+     6→pub fn escape_html_attribute …
+    32→pub fn escape_html …
 
 crates/mdbook-core/src/utils/mod.rs
      1→//! Various helpers and utilities.
     15→/// Defines a `static` with a [`regex::Regex`].
     17→macro_rules! static_regex …
-    29→pub fn log_backtrace(e: &Error) {
+    29→pub fn log_backtrace …
 
 crates/mdbook-core/src/utils/toml_ext.rs
      1→//! Helper for working with toml types.
@@ -698,19 +712,11 @@ crates/mdbook-core/src/utils/toml_ext.rs
     22→    fn insert …
 
 crates/mdbook-html/src/theme/mod.rs
-     1→//! Support for theme files.
     40→pub struct Theme …
     63→impl Theme …
     66→    pub fn new<P: AsRef<Path>>(theme_dir: P) -> Self {
    166→    pub fn copy_theme(html_config: &HtmlConfig, root: &Path) -> Result<()> {
    229→fn load_file_contents …
-
-crates/mdbook-html/src/theme/playground_editor.rs
-     1→//! Theme dependencies for the playground editor.
-
-crates/mdbook-html/src/theme/searcher.rs
-     1→//! Theme dependencies for in-browser search. Not included in mdbook when
-     2→//! the "search" cargo feature is disabled.
 
 crates/
 

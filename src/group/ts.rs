@@ -1064,7 +1064,7 @@ fn find_import_prefix(line: &str) -> &str {
 }
 
 /// Returns the 0-indexed line where body content begins (after `{` or `:` for Python).
-fn compute_body_start_line(item: &TsItem<'_>) -> usize {
+pub(crate) fn compute_body_start_line(item: &TsItem<'_>) -> usize {
     let lang = Lang::from_path(item.path);
     if let Some(body_start) = crate::parse::ast::compute_body_start_line(item.node, lang.unwrap_or(Lang::Rust)) {
         return body_start.min(item.end_line);
