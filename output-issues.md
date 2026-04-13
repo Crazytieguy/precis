@@ -428,11 +428,13 @@ Functions and methods are unaffected — `function_declaration` and `method_decl
 
 ## 20. Go `_test.go` files treated as Source, consuming significant budget
 
-**Affected snapshots:** mcphost, tock (likely all Go fixtures)
+**Affected snapshots:** mcphost, tock, xxhash (likely all Go fixtures)
 
 Go colocates test files (`*_test.go`) alongside source files in the same directory. `classify_dir()` assigns `FileCategory` at the directory level, so a directory like `internal/auth/` — containing both `credentials.go` and `credentials_test.go` — gets classified as `Source`. There's no file-level test detection for `*_test.go` files, so they receive the full Source modifier (1.0×) instead of the Test modifier (0.15×).
 
 In the mcphost snapshot, ~16 test files contribute ~60 test function name entries plus ~32 lines of file headers — roughly 14% of the output budget. These are function names like `TestCredentialManager`, `TestBashCommandValidation`, `TestFetchHTML` that tell a reader little beyond "tests exist." Meanwhile, the core `internal/tools/` package (see #21) gets zero output.
+
+In xxhash, 5 test files (`bench_test.go`, `xxhash_test.go`, `xxhash_unsafe_test.go`, `dynamic/dynamic_test.go`, `xxhashbench/xxhashbench_test.go`) plus the test-support `dynamic/plugin.go` consume ~100 output lines (~32% of the 4000-token budget). The worst case is `dynamic/dynamic_test.go`, which shows full function bodies for TestMain (exec.Command building a plugin.so) and TestDynamic (plugin.Open and Lookup) — 33 lines of niche dynamic-linking test infrastructure that tells the reader nothing about the xxhash API or implementation.
 
 In tock, 8 test files (`config_test.go`, `extra_test.go`, `timeutil_test.go`, `service_test.go`, `parser_test.go`, `repository_test.go` ×3) contribute 37 test function entries plus file headers — roughly ~80 output lines (~10% of the 8000-token budget). The `timeutil_test.go` alone shows 8 test functions. Budget spent on `TestParseTime_24HourMode`, `TestRepository_Remove_WhitespaceHandling`, etc. could instead show the `AnalysisStats` struct body (see #18) or `ports.go` interface methods (see #9).
 
