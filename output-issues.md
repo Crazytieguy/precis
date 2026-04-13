@@ -135,7 +135,7 @@ The combined effect: CONTRIBUTING.md and CLAUDE.md headings get base_value 1.0 (
 
 ## 9. Type alias and const bodies missing from taxonomy (regression)
 
-**Affected snapshots:** cmdk, cmdk_cmdk_src, enclosed, enclosed_crypto, enclosed_lib, go_multierror, htmy, ky, ky_source_errors, mcphost_sdk, microbootstrap, microbootstrap_instruments, mitt, nano_vllm, nano_vllm_engine, pluggy, py3xui, py3xui_api, semver, semver_internal
+**Affected snapshots:** cmdk, cmdk_cmdk_src, enclosed, enclosed_crypto, enclosed_lib, go_multierror, htmy, ky, ky_source_errors, mcphost_sdk, microbootstrap, microbootstrap_instruments, mitt, nano_vllm, nano_vllm_engine, pluggy, py3xui, py3xui_api, semver, semver_internal, superstruct
 
 The taxonomy has Body groups for functions (`FunctionBody`), structs (`StructBody`), and enums (`EnumBody`), but none for type aliases, const declarations, interfaces, classes, or traits. The `*Name` rendering truncates after the identifier, so the entire definition is lost.
 
@@ -220,7 +220,7 @@ This consumes ~20 lines of budget to convey one fact: "StreamBuilder has a pipe 
 
 ## 13. TypeScript `export` statements not captured — barrel files render empty
 
-**Affected snapshots:** d2ts, d2ts_d2ts, enclosed, enclosed_crypto, enclosed_lib
+**Affected snapshots:** d2ts, d2ts_d2ts, enclosed, enclosed_crypto, enclosed_lib, superstruct
 
 The TypeScript query captures `(import_statement) @symbol` but not `(export_statement)`. TypeScript re-exports (`export * from './foo.js'`, `export { bar } from './baz.js'`) parse as `export_statement` nodes, not `import_statement`, so they produce zero items.
 
@@ -495,3 +495,15 @@ The old (pre-rewrite) output showed mod.rs files with their declarations (e.g., 
 In sqlite_vec, the problem is even more extreme: ~25 empty file entries (Makefile, sqlite-vec.h.tmpl, test.sql, SECURITY.md, various examples/, scripts/, and site/ files) and ~25 empty folder entries (benchmarks/exhaustive-memory/, benchmarks/micro/, tests/afbd/, tests/correctness/, etc.). That's ~50 empty entries consuming ~100 tokens for near-zero information. The old output was more selective — it collapsed `site/` into a single folder entry rather than listing all its subfiles and subfolders individually. The budget spent on these empty entries could instead show README body content (issue #6) or enum bodies (issue #18).
 
 The root cause is that bare-filename entries have a non-zero rendering cost (~2 tokens each) but zero information value beyond "this file exists." In a directory with 24 similar files, the directory name itself conveys more than 21 individual bare filenames. Budget would be better spent showing lib.rs module declarations (~15 tokens) and mod.rs structures (~5-10 tokens each), which tell the reader how the crate is organized.
+
+## 26. Docs site pages shown individually when table-of-contents file already provides structure
+
+**Affected snapshots:** superstruct
+
+Superstruct has a `docs/summary.md` that lists every guide and reference page with links — it IS the table of contents. The output shows this TOC (headings: Guides, API Reference, Resources), but then also shows 13 individual docs/ files (6 guides, 7 reference pages) each with only their `# Title` heading. These 13 single-heading entries consume ~70 lines of output (file headers + title lines) to convey information already present in `docs/summary.md`.
+
+For example, `docs/reference/coercions.md` shows `# Coercions` plus a one-line description, while `docs/summary.md` already lists `- [Coercions](./reference/coercions.md)`. The individual page adds the description text, but the structural relationship is already clear from the TOC.
+
+The ~70 lines of redundant docs/ content displace higher-value source code. The pre-rewrite output showed these same docs pages but compensated by also showing `src/error.ts` with full `Failure` type body (8 fields) and `StructError` class body (8 fields + constructor), plus `src/index.ts` with all 6 re-exports. The new output loses all of these (see #9 and #13) — the Failure type fields (value, key, type, refinement, message, explanation, branch, path) and StructError fields are the error API surface, and the re-exports define the public API.
+
+The DocsSite category factor (0.2×) should suppress this, but with 13 files each generating at least an h1 Heading group (base_value 1.0), the aggregate value still captures significant budget. When a summary/TOC file exists in a docs directory, individual pages' headings are almost entirely redundant.
