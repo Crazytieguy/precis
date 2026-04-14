@@ -204,8 +204,6 @@ examples/personal_shopper/README.md
 
 examples/support_bot/README.md
      1→# Support bot
-     6→## Overview
-    13→## Setup
 
 examples/triage_agent/README.md
      1→# Triage agent
@@ -281,6 +279,7 @@ examples/support_bot/prep_data.py
 examples/basic/agent_handoff.py
     16→def transfer_to_spanish_agent():
     17→    """Transfer spanish speaking users immediately."""
+    18→    return spanish_agent
 
 examples/basic/context_variables.py
      6→def instructions(context_variables):
@@ -357,8 +356,6 @@ examples/customer_service_streaming/data/
 examples/customer_service_streaming/logs/
 
 examples/customer_service_streaming/src/
-
-examples/customer_service_streaming/tests/
 
 examples/support_bot/data/
 

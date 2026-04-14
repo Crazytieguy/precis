@@ -6,16 +6,6 @@ the 2026-04-13 design-invariant audit against `design.md` §10.
 
 ## Bugs
 
-### 1. D5 violation — Python function docstrings rendered twice
-
-**Invariant:** D5 — within-item containment. Sibling groups under the same item must not share source lines.
-
-For Python functions with a docstring, `FunctionDocFirst` / `FunctionDocRest` and `FunctionBody` both render the docstring lines. They are cousins in the spawning tree (not parent/descendant), so D5 is violated for every documented Python function.
-
-Root cause: `FunctionBody` renders `[body_start .. body_end)` with no docstring skip, unlike `ClassBody` which calls `skip_leading_docstring` and caps `effective_end` at `find_first_method_line` (see `src/group/ts.rs:568-611`, used only in the `ClassBody` render branch at `:755-781`).
-
-**Fix:** Apply the same guard to `FunctionBody`. The helper already exists; extend its call-site to cover `FunctionBody` when the item is Python and has a docstring.
-
 ### 2. V3 stale `marginal_cost` when cached across iterations
 
 **Invariant:** V3 — candidate cost measured by actually rendering the scheduled set plus the candidate.

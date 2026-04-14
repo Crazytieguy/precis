@@ -645,8 +645,8 @@ fn dedup_method_overloads<'a>(
     nodes
 }
 
-/// Skip past a leading Python docstring in a class body so ClassBody
-/// doesn't duplicate content already handled by ClassDocFirst/ClassDocRest.
+/// Skip past a leading Python docstring in a body so body groups don't
+/// duplicate content already handled by DocFirst/DocRest groups.
 fn skip_leading_docstring(
     container_node: tree_sitter::Node,
     lang: Option<Lang>,
@@ -840,7 +840,7 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
             let body_start = compute_body_start_line(item);
             let body_end = item.end_line;
             let lang = Lang::from_path(item.path);
-            let content_start = if matches!(key, ClassBody) {
+            let content_start = if matches!(key, FunctionBody | ClassBody) {
                 skip_leading_docstring(item.node, lang, body_start)
             } else {
                 body_start

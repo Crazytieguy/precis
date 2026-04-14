@@ -53,9 +53,7 @@ mongodb.py
     45→        page: int = 1,
     46→        page_size: int = 100
     47→    ) -> t.Dict[str, t.Any]:
-    48→        """
     49→        Fetches data from the MongoDB database.
-    50→        """
     51→        offset = (page -1) * page_size
     52→        collection = self.db[table]
     53→        data = list(collection.find({}).skip(offset).limit(page_size))
