@@ -121,11 +121,13 @@ Two modules have absorbed too much responsibility:
 
 Split `FilesGroup::children` into a parse/classify/bucket pipeline with distinct stages. Extract per-language quirks from `parse/mod.rs` into a `LangHandler` trait with one impl per language.
 
-### 19. `ParseStore` parser reuse and memory
+### 19. `ParseStore` memory lifecycle
 
-`ParseStore::parse_source` (`src/store.rs:69-74`) creates a fresh `tree_sitter::Parser` for every file. Parser construction is non-trivial; they should be reused per language or pooled. Also, `store_source` interns file contents even on parse failure, and the `FrozenMap`s are append-only with no eviction — fine for a one-shot CLI, but broken for any daemon or long-lived process. The plugin path (`precis` running under Claude Code as a hook) plausibly hits this.
+`store_source` interns file contents even on parse failure, and the `FrozenMap`s are append-only with no eviction — fine for a one-shot CLI, but broken for any daemon or long-lived process. The plugin path (`precis` running under Claude Code as a hook) plausibly hits this.
 
-Fix: per-language parser cache inside `ParseStore`, and eviction strategy for the source/tree maps (either LRU or scoped per render call).
+Done: parsers are cached per extension inside `ParseStore`, so `parse_source` no longer constructs a fresh `tree_sitter::Parser` for every file.
+
+Remaining: add an eviction strategy for the source/tree maps (either LRU or scoped per render call).
 
 ### 20. Classification via inline string-matching
 

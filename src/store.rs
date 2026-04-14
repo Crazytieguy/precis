@@ -1,3 +1,5 @@
+use std::cell::RefCell;
+use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
 use elsa::FrozenMap;
@@ -21,6 +23,8 @@ pub struct ParseStore {
     trees: FrozenMap<PathBuf, Box<Tree>>,
     /// Lazily-built configs keyed by file extension (lowercase).
     configs: FrozenMap<String, Box<LanguageConfig>>,
+    /// Reusable parsers keyed by file extension (lowercase).
+    parsers: RefCell<HashMap<String, Parser>>,
     /// Interned display paths, deduplicated. Returns `&Path` references
     /// that live as long as the store, eliminating per-item PathBuf clones.
     paths: FrozenMap<PathBuf, Box<PathBuf>>,
@@ -38,21 +42,24 @@ impl ParseStore {
             sources: FrozenMap::new(),
             trees: FrozenMap::new(),
             configs: FrozenMap::new(),
+            parsers: RefCell::new(HashMap::new()),
             paths: FrozenMap::new(),
         }
     }
 
-    fn config_for_path(&self, path: &Path) -> Option<&LanguageConfig> {
-        let ext = path
-            .extension()
+    fn extension_for_path(path: &Path) -> Option<String> {
+        path.extension()
             .and_then(|e| e.to_str())
-            .map(|e| e.to_ascii_lowercase())?;
-        if let Some(config) = self.configs.get(&ext) {
+            .map(|e| e.to_ascii_lowercase())
+    }
+
+    fn config_for_ext(&self, ext: &str) -> Option<&LanguageConfig> {
+        if let Some(config) = self.configs.get(ext) {
             return Some(config);
         }
         // Build on demand
-        let lang = Lang::from_extension(&ext)?;
-        let (ts_language, query_src) = language_for_lang(lang, &ext);
+        let lang = Lang::from_extension(ext)?;
+        let (ts_language, query_src) = language_for_lang(lang, ext);
         let query = tree_sitter::Query::new(&ts_language, query_src).ok()?;
         let symbol_idx = query.capture_index_for_name("symbol")?;
         let name_idx = query.capture_index_for_name("name");
@@ -63,13 +70,26 @@ impl ParseStore {
             symbol_idx,
             name_idx,
         };
-        Some(self.configs.insert(ext, Box::new(config)))
+        Some(self.configs.insert(ext.to_string(), Box::new(config)))
+    }
+
+    fn config_for_path(&self, path: &Path) -> Option<&LanguageConfig> {
+        let ext = Self::extension_for_path(path)?;
+        self.config_for_ext(&ext)
     }
 
     fn parse_source(&self, path: &Path, source: &str) -> Option<Tree> {
-        let config = self.config_for_path(path)?;
-        let mut parser = Parser::new();
-        parser.set_language(&config.ts_language).ok()?;
+        let ext = Self::extension_for_path(path)?;
+        let config = self.config_for_ext(&ext)?;
+        let mut parsers = self.parsers.borrow_mut();
+        let parser = match parsers.entry(ext) {
+            std::collections::hash_map::Entry::Occupied(entry) => entry.into_mut(),
+            std::collections::hash_map::Entry::Vacant(entry) => {
+                let mut parser = Parser::new();
+                parser.set_language(&config.ts_language).ok()?;
+                entry.insert(parser)
+            }
+        };
         parser.parse(source, None)
     }
 
