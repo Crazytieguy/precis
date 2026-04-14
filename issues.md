@@ -106,12 +106,6 @@ Items in this section came out of the 2026-04-13 "cold architecture roast" — o
 
 The structure is really a product: `(SymbolKind, Part, Visibility, Documented)` with a few specializations. Decomposing it would collapse `ordinal()` entirely (derive from the tuple), eliminate `doc_rest_key` (trivial), shrink `is_gated*` to a single predicate on `Part`, and let `ts_base_value` become a small lookup table. `src/group/ts.rs:17-86` is the enum definition; the parallel matches are spread across that file and `src/heuristics.rs:34-93`.
 
-### 15. Scheduler/render layering inverted [convergent]
-
-The scheduler owns rendering state. `src/schedule.rs` imports `render::{CachedGroupRender, FileCache}` and formats folder lines itself during assembly (`src/schedule.rs:157-169`). Meanwhile `render::FileCache` holds `marginal_cost` logic that arguably belongs to a cost model, and `commit`/`assemble` are called directly from the scheduler loop with scheduler-private invariants.
-
-This layering blocks any alternative output format (JSON, streaming writer) without rewriting the scheduler. It also couples two concerns that should be independent: **what to include** (scheduler) and **how to present it** (renderer). The fix is a renderer trait the scheduler depends on, with the current text-output logic as one implementation. The cost model should move behind the same interface so a non-text renderer can define its own cost semantics.
-
 ### 17. `heuristics.rs` is ungrounded magic numbers [convergent]
 
 Sixty-odd float literals with no provenance: `powf(0.75)`, depth factors jumping `1.0 → 0.7 → 0.55 → 0.4`, `deprioritized_factor = 0.2`, `type_declaration_factor = 0.15`, `header_factor = 2.5`, `companion_header_factor = 0.3`, `boilerplate_heading_contribution = 0.1`, `reexport_contribution = 0.1`, `COMPACT_BODY_LINE_LIMIT = 25`. No comments explaining why that number and not another.
@@ -147,11 +141,11 @@ This is a textbook case of a sum type pretending to be a trait. Convert to `trai
 
 `render()` has two seed-building functions: `build_file_seed` fakes a single-file `FilesGroup` just to call `children()` and extract them, while `build_dir_seed` manually constructs a `FoldersGroup` and calls `create_files_groups` on the side. They converge at `schedule::schedule` but neither path is clean. `build_file_seed` in particular is a workaround (constructing a throwaway group to reuse the `children()` logic) that outlived its original reason to exist. Unify them — the single-file case should either be a degenerate directory case or have its own minimal seed that doesn't pretend to be a directory.
 
-### 23. Scheduler `childless_folders` refund hashmap
+### 23. `childless_folders` refund hashmap
 
-`src/schedule.rs` maintains `childless_folders: HashMap<PathBuf, FileCost>` as a bookkeeping structure to "refund" folder line costs when a descendant file group commits and the folder's bare entry is subsumed. This exists because the scheduler commits folder lines eagerly against the budget and later discovers the child supersedes them. `probe_cost` for `Files` has to peek at this map; `commit_group` for `Files` has to remove-and-refund. Three functions cooperating on a side-map to express "this folder is now covered by its child."
+`TextRenderer` maintains `childless_folders: HashMap<PathBuf, FileCost>` as a bookkeeping structure to "refund" folder line costs when a descendant file group commits and the folder's bare entry is subsumed. This exists because folder lines are still committed eagerly against the budget and later removed when child content supersedes them. The renderer's `probe_cost` for `Files` has to peek at this map, and `commit` for `Files` has to remove-and-refund.
 
-The underlying issue is that the scheduler models folder costs wrong: a folder line should be a placeholder whose cost converts into real content when a child is scheduled, not a committed entry that needs a refund mechanism. Fixing this likely means moving folder-line rendering out of commit-time entirely and deferring it to assembly, where the final set of scheduled groups is known.
+The underlying issue is that folder costs are modeled wrong: a folder line should be a placeholder whose cost converts into real content when a child is scheduled, not a committed entry that needs a refund mechanism. Fixing this likely means deferring folder-line charging until assembly, where the final set of scheduled groups is known.
 
 ### 24. Silent `unwrap_or` fallbacks on invariant paths
 

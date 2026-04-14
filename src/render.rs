@@ -4,6 +4,7 @@ use std::collections::{BTreeMap, HashMap};
 use std::path::{Path, PathBuf};
 
 use crate::format;
+use crate::group::{Group, GroupCtx};
 
 // ---------------------------------------------------------------------------
 // LineEntry (design §3.4)
@@ -90,6 +91,223 @@ pub fn render_entry<'s>(entry: &LineEntry<'s>) -> RenderedEntry<'s> {
 pub struct CachedGroupRender<'s> {
     pub per_file: Vec<(PathBuf, Vec<RenderedEntry<'s>>)>,
     pub marginal_cost: FileCost,
+}
+
+// ---------------------------------------------------------------------------
+// Scheduler renderer boundary
+// ---------------------------------------------------------------------------
+
+/// Renderer contract used by the scheduler.
+///
+/// The scheduler decides which group wins next; the renderer decides what that
+/// group costs, how a commit affects the rendered state, and how to assemble
+/// the final output.
+pub trait SchedulerRenderer<'s> {
+    fn prepare(&mut self, group: &mut Group<'s>, ctx: &GroupCtx<'s>);
+    fn probe_cost(&mut self, group: &Group<'s>, ctx: &GroupCtx<'s>) -> FileCost;
+    fn commit(&mut self, group: &mut Group<'s>, ctx: &GroupCtx<'s>) -> BudgetDelta;
+    fn assemble(&self, char_budget: Option<usize>) -> String;
+}
+
+#[derive(Copy, Clone, Default, Debug)]
+pub struct BudgetDelta {
+    pub charge: FileCost,
+    pub refund: FileCost,
+}
+
+impl BudgetDelta {
+    pub fn charge(charge: FileCost) -> Self {
+        Self {
+            charge,
+            refund: FileCost::default(),
+        }
+    }
+
+    pub fn apply_to(&self, remaining_tokens: &mut usize, remaining_chars: &mut Option<usize>) {
+        *remaining_tokens += self.refund.tokens;
+        *remaining_tokens = remaining_tokens.saturating_sub(self.charge.tokens);
+
+        if let Some(rc) = remaining_chars {
+            *rc += self.refund.chars;
+            *rc = rc.saturating_sub(self.charge.chars);
+        }
+    }
+}
+
+pub struct TextRenderer {
+    cache: FileCache,
+    // Folders currently planned in the output and already charged to the
+    // budget. When a child group commits under a folder, the folder is removed
+    // from the map and its cost refunded.
+    childless_folders: HashMap<PathBuf, FileCost>,
+}
+
+impl Default for TextRenderer {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl TextRenderer {
+    pub fn new() -> Self {
+        Self {
+            cache: FileCache::new(),
+            childless_folders: HashMap::new(),
+        }
+    }
+
+    /// Compute per-item folder costs for a FoldersGroup, caching the result.
+    fn ensure_folders_cached(g: &mut crate::group::FoldersGroup, ctx: &GroupCtx<'_>) {
+        if g.cached_item_costs.is_some() {
+            return;
+        }
+        let costs: Vec<FileCost> = g
+            .items
+            .iter()
+            .map(|item_dir| {
+                let rel = ctx.rel_path(item_dir);
+                let header = format::folder_line(rel);
+                FileCost {
+                    tokens: format::count_tokens(&header),
+                    chars: header.len(),
+                }
+            })
+            .collect();
+        g.cached_item_costs = Some(costs);
+    }
+}
+
+impl<'s> SchedulerRenderer<'s> for TextRenderer {
+    fn prepare(&mut self, group: &mut Group<'s>, ctx: &GroupCtx<'s>) {
+        if let Group::Folders(g) = group {
+            Self::ensure_folders_cached(g, ctx);
+            return;
+        }
+        let Group::Ts(g) = group else { return };
+        if g.cached_render.is_some() {
+            return;
+        }
+
+        let raw = crate::group::ts::render_entries(g);
+
+        let mut per_file: Vec<(PathBuf, Vec<RenderedEntry<'s>>)> = Vec::new();
+        for (path, entries) in raw {
+            let rendered: Vec<RenderedEntry<'s>> =
+                entries.iter().map(|e| render_entry(e)).collect();
+            per_file.push((path, rendered));
+        }
+
+        let marginal_cost = self.cache.marginal_cost(&per_file);
+
+        g.cached_render = Some(CachedGroupRender {
+            per_file,
+            marginal_cost,
+        });
+    }
+
+    fn probe_cost(&mut self, group: &Group<'s>, ctx: &GroupCtx<'s>) -> FileCost {
+        match group {
+            Group::Ts(g) => g.cached_render.as_ref().unwrap().marginal_cost,
+            Group::Folders(g) => {
+                let costs = g.cached_item_costs.as_ref().unwrap();
+                let mut fc = FileCost::default();
+                for c in costs {
+                    fc.tokens += c.tokens;
+                    fc.chars += c.chars;
+                }
+                fc
+            }
+            Group::Files(g) => {
+                let mut fc = FileCost::default();
+                for file_path in &g.items {
+                    let rel = ctx.rel_path(file_path);
+                    if !self.cache.has_file(rel) {
+                        let hcost = self.cache.header_cost_for(rel);
+                        fc.tokens += hcost.tokens;
+                        fc.chars += hcost.chars;
+                    }
+                }
+                // Discount: if parent folder is still childless, committing
+                // this Files group will remove that placeholder from output.
+                let parent_rel = ctx.rel_path(&g.parent_dir);
+                if let Some(folder_cost) = self.childless_folders.get(parent_rel) {
+                    fc.tokens = fc.tokens.saturating_sub(folder_cost.tokens);
+                    fc.chars = fc.chars.saturating_sub(folder_cost.chars);
+                }
+                fc
+            }
+        }
+    }
+
+    fn commit(&mut self, group: &mut Group<'s>, ctx: &GroupCtx<'s>) -> BudgetDelta {
+        match group {
+            Group::Ts(g) => {
+                let cached = g.cached_render.take().unwrap();
+                let cost = cached.marginal_cost;
+                self.cache.commit(cached.per_file, cost);
+                BudgetDelta::charge(cost)
+            }
+            Group::Folders(g) => {
+                let costs = g.cached_item_costs.take().unwrap();
+                let mut total_cost = FileCost::default();
+                for (item_dir, cost) in g.items.iter().zip(&costs) {
+                    let rel = ctx.rel_path(item_dir);
+                    self.childless_folders.insert(rel.to_path_buf(), *cost);
+                    total_cost.tokens += cost.tokens;
+                    total_cost.chars += cost.chars;
+                }
+                BudgetDelta::charge(total_cost)
+            }
+            Group::Files(g) => {
+                let mut charge = FileCost::default();
+                for file_path in &g.items {
+                    let rel = ctx.rel_path(file_path);
+                    if !self.cache.has_file(rel) {
+                        let hcost = self.cache.header_cost_for(rel);
+                        charge.tokens += hcost.tokens;
+                        charge.chars += hcost.chars;
+                        self.cache.register_file(rel);
+                    }
+                }
+
+                let parent_rel = ctx.rel_path(&g.parent_dir);
+                let refund = self
+                    .childless_folders
+                    .remove(parent_rel)
+                    .unwrap_or_default();
+                BudgetDelta { charge, refund }
+            }
+        }
+    }
+
+    fn assemble(&self, char_budget: Option<usize>) -> String {
+        let mut output = self.cache.assemble();
+
+        // Append childless folder entries (P2). These are already paid for in
+        // the budget, so no token check is needed.
+        let mut folder_entries: Vec<_> = self.childless_folders.iter().collect();
+        folder_entries.sort_by(|a, b| a.0.cmp(b.0));
+        for (folder_path, _cost) in folder_entries {
+            let line = format::folder_line(folder_path);
+            if output.is_empty() {
+                output.push_str(&line);
+            } else {
+                output.push('\n');
+                output.push_str(&line);
+            }
+        }
+
+        if let Some(cb) = char_budget
+            && output.len() > cb
+        {
+            output.truncate(cb);
+            if let Some(pos) = output.rfind('\n') {
+                output.truncate(pos + 1);
+            }
+        }
+
+        output
+    }
 }
 
 // ---------------------------------------------------------------------------
