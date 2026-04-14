@@ -6,16 +6,6 @@ the 2026-04-13 design-invariant audit against `design.md` §10.
 
 ## Bugs
 
-### 2. V3 stale `marginal_cost` when cached across iterations
-
-**Invariant:** V3 — candidate cost measured by actually rendering the scheduled set plus the candidate.
-
-`CachedGroupRender.marginal_cost` is computed once in `ensure_cached` (`src/schedule.rs:370`) and reused on every subsequent probe (`:213`) without refreshing. If another group commits lines between first probe and eventual commit of this candidate, the cached cost is stale relative to the true "scheduled set plus candidate" cost.
-
-**Known assumption:** The current design relies on sibling groups not outputting the same source lines. Under that assumption the staleness doesn't matter, because no later commit can overlap this candidate's lines. This assumption should be made explicit in `design.md` (either in V3 or in R4/R5's context), since it's load-bearing for the caching optimization.
-
-**Action:** Document the "siblings don't overlap lines" assumption in `design.md`. If the assumption is ever weakened (e.g. a new group type that could overlap siblings), the cached `marginal_cost` will need invalidation on overlapping commits.
-
 ### 3. V4 clause (b) not implemented — byte-budget fast pre-check missing
 
 **Invariant:** V4 — "Byte budget is a fast pre-check" before running the token counter.
@@ -45,10 +35,6 @@ The root cause is calibration: multi-line bodies have ~10× worse ratios than ch
 ### 5. `LineEntry` variant names out of sync with code
 
 §10 (R1, R4, R5) and §3.4 use `LineEntry::Full` / `LineEntry::Prefix`. The code uses `Complete` / `Truncated` (`src/render.rs:13-20`). Semantics match; names don't. Fix by updating `design.md` to match the code.
-
-### 6. V3 cost-caching assumption not documented
-
-See bug #2. The "siblings don't overlap lines" assumption that makes cached `marginal_cost` correct is not stated anywhere in `design.md`. Add it as part of V3 or in the R-section context.
 
 ## Cleanup
 

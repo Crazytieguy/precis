@@ -762,6 +762,11 @@ compromising around it.
   (<1 token BPE boundary effect empirically) and avoids re-tokenizing
   unchanged files on every iteration. The spirit of V3 is preserved:
   cost derives from real rendered output, not a parallel estimate.
+  Cached marginal costs are reused across later probes under D4/D5's
+  non-overlap guarantees: once rendered, a candidate's source lines cannot be
+  made cheaper by an unrelated sibling commit. If a future group type weakens
+  that sibling non-overlap property, marginal costs must be invalidated when
+  overlapping lines commit.
 - **V4 — Budget gates.** Token budget is authoritative and used for
   prioritization. Byte budget is a fast pre-check. When `--char-budget` is
   set (including by the plugin), it is a second acceptance gate but does not
