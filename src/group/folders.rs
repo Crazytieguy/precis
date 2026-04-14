@@ -168,14 +168,5 @@ pub fn children<'s>(g: &mut FoldersGroup, ctx: &GroupCtx<'s>) -> Vec<Group<'s>> 
         ));
     }
 
-    debug_assert!(
-        result.iter().all(|g| match g {
-            Group::Folders(f) => !f.items.is_empty(),
-            Group::Files(f) => !f.items.is_empty(),
-            Group::Ts(t) => !t.items.is_empty(),
-        }),
-        "D3: children() produced an empty group"
-    );
-
     result
 }

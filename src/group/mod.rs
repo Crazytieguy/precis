@@ -133,10 +133,21 @@ impl<'s> Group<'s> {
     where
         's: 'a,
     {
-        match self {
+        let children = match self {
             Group::Folders(g) => folders::children(g, ctx),
             Group::Files(g) => files::children(g, ctx),
             Group::Ts(g) => ts::children(g),
-        }
+        };
+
+        debug_assert!(
+            children.iter().all(|g| match g {
+                Group::Folders(f) => !f.items.is_empty(),
+                Group::Files(f) => !f.items.is_empty(),
+                Group::Ts(t) => !t.items.is_empty(),
+            }),
+            "D3: children() produced an empty group"
+        );
+
+        children
     }
 }
