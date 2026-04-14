@@ -3,14 +3,13 @@ use std::collections::HashMap;
 use crate::classify;
 use crate::heuristics;
 use crate::parse;
-use crate::schedule::ScheduleCtx;
 
 use super::ts::TsGroupKey;
-use super::{FilesGroup, Group, TsGroup, TsItem};
+use super::{FilesGroup, Group, GroupCtx, TsGroup, TsItem};
 
 /// Produce children when a FilesGroup is scheduled.
 /// Parses every file in the group, extracts items, and aggregates across files (D7).
-pub fn children<'s>(g: &mut FilesGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s>> {
+pub fn children<'s>(g: &mut FilesGroup, ctx: &GroupCtx<'s>) -> Vec<Group<'s>> {
     let mut buckets: HashMap<(TsGroupKey, bool), Vec<TsItem<'s>>> = HashMap::new();
 
     for file_path in &g.items {

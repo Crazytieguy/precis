@@ -3,9 +3,8 @@ use std::path::{Path, PathBuf};
 
 use crate::classify::{self, FileRole};
 use crate::heuristics;
-use crate::schedule::ScheduleCtx;
 
-use super::{FilesGroup, FoldersGroup, Group};
+use super::{FilesGroup, FoldersGroup, Group, GroupCtx};
 
 /// Walk one directory level (honoring .gitignore) and classify entries
 /// into sub-folders and files-by-role. Returns absolute paths.
@@ -119,7 +118,7 @@ pub fn create_files_groups<'s>(
 
 /// Produce children when a FoldersGroup is scheduled.
 /// Walks each item directory one level and classifies entries.
-pub fn children<'s>(g: &mut FoldersGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s>> {
+pub fn children<'s>(g: &mut FoldersGroup, ctx: &GroupCtx<'s>) -> Vec<Group<'s>> {
     let mut result: Vec<Group<'s>> = Vec::new();
 
     let sibling_names: HashSet<&str> = g

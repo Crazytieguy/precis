@@ -56,30 +56,36 @@ pub fn render(path: &Path, budget: usize, char_budget: Option<usize>) -> String 
     let store = store::ParseStore::new();
 
     if path.is_file() {
-        let ctx = schedule::ScheduleCtx {
+        let group_ctx = group::GroupCtx {
             store: &store,
             root: path.parent().unwrap_or(Path::new("")).to_path_buf(),
+        };
+        let seed = build_file_seed(path, &group_ctx);
+        let ctx = schedule::ScheduleCtx {
+            groups: group_ctx,
             budget,
             char_budget,
         };
-        let seed = build_file_seed(path, &ctx);
         return schedule::schedule(seed, &ctx);
     }
 
     let root = path.canonicalize().unwrap_or_else(|_| path.to_path_buf());
-    let ctx = schedule::ScheduleCtx {
+    let group_ctx = group::GroupCtx {
         store: &store,
         root: root.clone(),
+    };
+    let seed = build_dir_seed(&root, &group_ctx);
+    let ctx = schedule::ScheduleCtx {
+        groups: group_ctx,
         budget,
         char_budget,
     };
-    let seed = build_dir_seed(&root, &ctx);
 
     schedule::schedule(seed, &ctx)
 }
 
 /// Build the seed frontier for a single-file input (design §5.2).
-fn build_file_seed<'s>(path: &Path, ctx: &schedule::ScheduleCtx<'s>) -> Vec<group::Group<'s>> {
+fn build_file_seed<'s>(path: &Path, ctx: &group::GroupCtx<'s>) -> Vec<group::Group<'s>> {
     let rel = ctx.rel_path(path);
     let role = classify::FileRole::from_path(rel);
     let mut fg = group::FilesGroup::new(ctx.root.clone(), role, vec![path.to_path_buf()], 1.0, rel);
@@ -88,7 +94,7 @@ fn build_file_seed<'s>(path: &Path, ctx: &schedule::ScheduleCtx<'s>) -> Vec<grou
 
 /// Build the seed frontier for a directory input (design §5.2).
 /// Walks one level to produce a FoldersGroup (if sub-folders exist) and FilesGroups.
-fn build_dir_seed<'s>(abs_path: &Path, ctx: &schedule::ScheduleCtx<'s>) -> Vec<group::Group<'s>> {
+fn build_dir_seed<'s>(abs_path: &Path, ctx: &group::GroupCtx<'s>) -> Vec<group::Group<'s>> {
     let (subdirs, files_by_role) = group::folders::walk_dir_entries(abs_path, &ctx.root);
 
     let mut seed = Vec::new();

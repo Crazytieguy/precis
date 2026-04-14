@@ -4,21 +4,19 @@ use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 
 use crate::format;
-use crate::group::Group;
+use crate::group::{Group, GroupCtx};
 use crate::render::{self, CachedGroupRender, FileCache, FileCost, RenderedEntry};
-use crate::store::ParseStore;
 
-/// Read-only shared context threaded through children() calls.
+/// Scheduler configuration and read-only project context.
 pub struct ScheduleCtx<'s> {
-    pub store: &'s ParseStore,
-    pub root: PathBuf,
+    pub groups: GroupCtx<'s>,
     pub budget: usize,
     pub char_budget: Option<usize>,
 }
 
 impl ScheduleCtx<'_> {
     pub fn rel_path<'a>(&self, path: &'a Path) -> &'a Path {
-        path.strip_prefix(&self.root).unwrap_or(path)
+        self.groups.rel_path(path)
     }
 }
 
@@ -106,7 +104,7 @@ pub fn schedule<'s>(seed: Vec<Group<'s>>, ctx: &ScheduleCtx<'s>) -> String {
 
         // Atomic commit: remove → children → commit to cache → extend frontier
         let mut best_group = frontier.swap_remove(best_idx);
-        let mut new_children = best_group.children(ctx);
+        let mut new_children = best_group.children(&ctx.groups);
 
         // Commit: update cache, childless_folders, and remaining budget
         commit_group(
@@ -130,7 +128,7 @@ pub fn schedule<'s>(seed: Vec<Group<'s>>, ctx: &ScheduleCtx<'s>) -> String {
                 if cost.tokens <= remaining_tokens
                     && remaining_chars.is_none_or(|cb| cost.chars <= cb)
                 {
-                    let grandchildren = child.children(ctx);
+                    let grandchildren = child.children(&ctx.groups);
                     commit_group(
                         &mut child,
                         ctx,
@@ -182,7 +180,7 @@ pub fn schedule<'s>(seed: Vec<Group<'s>>, ctx: &ScheduleCtx<'s>) -> String {
 }
 
 /// Compute per-item folder costs for a FoldersGroup, caching the result.
-fn ensure_folders_cached(g: &mut crate::group::FoldersGroup, ctx: &ScheduleCtx<'_>) {
+fn ensure_folders_cached(g: &mut crate::group::FoldersGroup, ctx: &GroupCtx<'_>) {
     if g.cached_item_costs.is_some() {
         return;
     }
@@ -348,7 +346,7 @@ fn is_auto_commit_body(group: &Group<'_>, remaining_tokens: usize, total_budget:
 /// Ensure a group has its cached cost computed.
 fn ensure_cached<'s>(group: &mut Group<'s>, ctx: &ScheduleCtx<'s>, cache: &mut FileCache) {
     if let Group::Folders(g) = group {
-        ensure_folders_cached(g, ctx);
+        ensure_folders_cached(g, &ctx.groups);
         return;
     }
     let Group::Ts(g) = group else { return };
@@ -356,7 +354,7 @@ fn ensure_cached<'s>(group: &mut Group<'s>, ctx: &ScheduleCtx<'s>, cache: &mut F
         return;
     }
 
-    let raw = crate::group::ts::render_entries(g, ctx);
+    let raw = crate::group::ts::render_entries(g);
 
     let mut per_file: Vec<(PathBuf, Vec<RenderedEntry<'s>>)> = Vec::new();
     for (path, entries) in raw {

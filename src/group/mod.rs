@@ -11,9 +11,21 @@ use std::path::{Path, PathBuf};
 
 use crate::classify::FileRole;
 use crate::render::CachedGroupRender;
-use crate::schedule::ScheduleCtx;
+use crate::store::ParseStore;
 
 pub use ts::TsGroupKey;
+
+/// Read-only context needed by group spawning.
+pub struct GroupCtx<'s> {
+    pub store: &'s ParseStore,
+    pub root: PathBuf,
+}
+
+impl GroupCtx<'_> {
+    pub fn rel_path<'a>(&self, path: &'a Path) -> &'a Path {
+        path.strip_prefix(&self.root).unwrap_or(path)
+    }
+}
 
 /// The three group variants (design §3.1).
 pub enum Group<'s> {
@@ -142,14 +154,14 @@ impl<'s> Group<'s> {
     }
 
     /// Produce children when this group is scheduled (A2).
-    pub fn children<'a>(&'a mut self, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s>>
+    pub fn children<'a>(&'a mut self, ctx: &GroupCtx<'s>) -> Vec<Group<'s>>
     where
         's: 'a,
     {
         match self {
             Group::Folders(g) => folders::children(g, ctx),
             Group::Files(g) => files::children(g, ctx),
-            Group::Ts(g) => ts::children(g, ctx),
+            Group::Ts(g) => ts::children(g),
         }
     }
 }

@@ -5,7 +5,6 @@ use std::path::PathBuf;
 
 use crate::Lang;
 use crate::render::LineEntry;
-use crate::schedule::ScheduleCtx;
 
 use super::{Group, TsGroup, TsItem};
 
@@ -271,7 +270,7 @@ impl TsGroupKey {
 // children() — spawn child groups when this TsGroup is scheduled
 // ---------------------------------------------------------------------------
 
-pub fn children<'s>(g: &mut TsGroup<'s>, _ctx: &ScheduleCtx<'s>) -> Vec<Group<'s>> {
+pub fn children<'s>(g: &mut TsGroup<'s>) -> Vec<Group<'s>> {
     let mut result: Vec<Group<'s>> = Vec::new();
 
     result.extend(std::mem::take(&mut g.dependent_siblings));
@@ -753,10 +752,7 @@ fn is_method_node(node: tree_sitter::Node, lang: Option<Lang>) -> bool {
 // render() — produce LineEntry values for this group (R3: context-free)
 // ---------------------------------------------------------------------------
 
-pub fn render_entries<'s>(
-    g: &TsGroup<'s>,
-    _ctx: &ScheduleCtx<'s>,
-) -> Vec<(PathBuf, Vec<LineEntry<'s>>)> {
+pub fn render_entries<'s>(g: &TsGroup<'s>) -> Vec<(PathBuf, Vec<LineEntry<'s>>)> {
     let mut per_file: HashMap<&'s std::path::Path, Vec<LineEntry<'s>>> = HashMap::new();
 
     for item in &g.items {
