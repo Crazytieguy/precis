@@ -125,17 +125,6 @@ impl ParseStore {
         self.sources.insert(path.to_path_buf(), source)
     }
 
-    /// Parse a source that was already stored via `store_source`.
-    pub fn parse_stored(&self, path: &Path) -> Option<(&str, &Tree)> {
-        let src = self.sources.get(path)?;
-        if let Some(tree) = self.trees.get(path) {
-            return Some((src, tree));
-        }
-        let tree = self.parse_source(path, src)?;
-        let tree_ref = self.trees.insert(path.to_path_buf(), Box::new(tree));
-        Some((src, tree_ref))
-    }
-
     /// Get the language config for a path's extension.
     pub fn config_for(&self, path: &Path) -> Option<&LanguageConfig> {
         self.config_for_path(path)

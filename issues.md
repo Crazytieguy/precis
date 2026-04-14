@@ -62,10 +62,6 @@ See bug #2. The "siblings don't overlap lines" assumption that makes cached `mar
 
 ## Cleanup
 
-### 7. Dead code: `ParseStore::parse_stored`
-
-`src/store.rs:109` has zero callers and would bypass A5's sole-entry-point guarantee (all parsing must go through `Files::children()`). Delete.
-
 ### 9. `extend_section_ranges` latent fragility (D4)
 
 `src/parse/mod.rs` `extend_section_ranges` stretches Heading items forward to the next Heading's start line. This is safe today because markdown/TOML/JSON/YAML grammars emit only Heading items, but would be unsafe if any language ever emits both Heading and non-Heading items for the same file. (Note: markdown is probably supposed to emit more than just Heading eventually — tracked separately.) Clamp to the next *any* item's start line rather than the next Heading to make this defensive against future grammar changes.
