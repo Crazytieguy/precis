@@ -70,6 +70,11 @@ pub struct TsItem<'s> {
     pub path: &'s Path,
     pub source: &'s str,
     pub node: tree_sitter::Node<'s>,
+    /// Exclusive render extent for this item.
+    ///
+    /// This can be wider than `node.end_position()` after post-parse range
+    /// extension, notably for heading sections that render until the next
+    /// section starts.
     pub end_line: usize,
 }
 

@@ -72,10 +72,6 @@ See bug #2. The "siblings don't overlap lines" assumption that makes cached `mar
 
 `TsGroupKey::Heading { level: u8 }` and `HeadingBody { level: u8 }` (`src/group/ts.rs:80-81`) accept any `u8`. A dedicated `HeadingLevel` enum or a `NonZeroU8` with runtime clamping at construction would make invalid levels unrepresentable (P1 flavor).
 
-### 11. `TsItem::end_line` semantics undocumented
-
-`TsItem::end_line` (`src/group/mod.rs:86`) is a rendering extent, not the tree-sitter node's end. It's mutated post-parse by `extend_section_ranges` to cover the span up to the next heading, so it can legitimately disagree with `node.end_position()`. Consumers must know to trust `end_line` over `node.end_position()` for rendering. Add a doc comment on the field explaining this.
-
 ### 12. Wire up granular profiling
 
 Performance improved substantially for big repos after the rewrite, but detailed profiling was never re-wired against the new architecture.
