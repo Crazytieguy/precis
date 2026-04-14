@@ -4,8 +4,14 @@
 
 Profiling binary: `cargo run --release --bin profile -- <path> [--budget N]`
 
+Benchmark suite: `cargo bench-hot` (`cargo bench --bench hot_path -- --quick`)
+
 Perf fixtures cloned via `cargo run --bin clone_fixtures -- --perf`. Shallow
 tag clones stored in `test/perf-fixtures/`.
+
+The hot-path benchmark covers regular snapshot fixtures plus the large
+perf fixtures when present. Missing perf fixtures are skipped so local
+iteration still works before cloning the full benchmark set.
 
 Numbers below are warm-cache, release mode, Apple Silicon.
 

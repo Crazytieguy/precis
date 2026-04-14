@@ -84,9 +84,13 @@ D3 ("no empty groups") is asserted only in `folders::children` (`src/group/folde
 
 `TsItem::end_line` (`src/group/mod.rs:86`) is a rendering extent, not the tree-sitter node's end. It's mutated post-parse by `extend_section_ranges` to cover the span up to the next heading, so it can legitimately disagree with `node.end_position()`. Consumers must know to trust `end_line` over `node.end_position()` for rendering. Add a doc comment on the field explaining this.
 
-### 12. Wire up granular profiling and migrate to cargo nextest
+### 12. Wire up granular profiling
 
-Performance improved substantially for big repos after the rewrite, but detailed profiling was never re-wired against the new architecture. `cargo bench --bench hot_path -- --quick` is likely too small now and should grow a few additional cases covering large-repo scenarios. In parallel, migrate the test runner to `cargo nextest` for faster iteration. Planned for a dedicated session.
+Performance improved substantially for big repos after the rewrite, but detailed profiling was never re-wired against the new architecture.
+
+Done: `cargo nextest` release-mode test wiring is in place, and `cargo bench-hot` now covers regular fixtures plus large perf-fixture repos.
+
+Remaining: add per-stage profiling so `profile` reports more than wall-clock render time.
 
 ### 13. Out-of-bounds line fallback in `render_item`
 
@@ -107,12 +111,6 @@ The structure is really a product: `(SymbolKind, Part, Visibility, Documented)` 
 The scheduler owns rendering state. `src/schedule.rs` imports `render::{CachedGroupRender, FileCache}` and formats folder lines itself during assembly (`src/schedule.rs:157-169`). Meanwhile `render::FileCache` holds `marginal_cost` logic that arguably belongs to a cost model, and `commit`/`assemble` are called directly from the scheduler loop with scheduler-private invariants.
 
 This layering blocks any alternative output format (JSON, streaming writer) without rewriting the scheduler. It also couples two concerns that should be independent: **what to include** (scheduler) and **how to present it** (renderer). The fix is a renderer trait the scheduler depends on, with the current text-output logic as one implementation. The cost model should move behind the same interface so a non-text renderer can define its own cost semantics.
-
-### 16. `group/` ↔ `schedule` circular dependency
-
-`src/group/mod.rs:12, 140` imports `ScheduleCtx` and threads it through every `children()` call. Meanwhile the scheduler at `src/schedule.rs:25` owns the traversal loop over `Group`. Neither side can be reused or unit-tested without dragging the other in.
-
-`children()` should return data (a new frontier of groups) and take only what it needs (probably just the `ParseStore`), not a scheduler context. The current shape conflates "spawn my children" with "tell the scheduler what I'm doing," which is why `ScheduleCtx` exists as a ferry between the two.
 
 ### 17. `heuristics.rs` is ungrounded magic numbers [convergent]
 

@@ -29,8 +29,9 @@ All commands must complete within 1 minute.
 - Fixture data is defined once in `test/fixtures.rs`, shared by snapshot tests and the clone binary
 - Run `cargo run --bin clone_fixtures` to clone all missing fixtures
 - Each entry has a single budget matching its real use case (2000/4000/8000)
-- Always run tests in release mode: `cargo test --release` (debug mode is much slower)
-- Always run `cargo bench --bench hot_path -- --quick` after changes to catch performance regressions
+- Always run tests in release mode: `cargo test-release` (`cargo nextest run --release`; debug mode is much slower)
+- If `cargo nextest` is unavailable, install it with `cargo binstall cargo-nextest --locked`, or fall back to `cargo test --release`
+- Always run `cargo bench-hot` after changes to catch performance regressions
 - When inspecting snapshot changes, read the diffs as a user would — check for regressions in understanding, not just changes in content
 
 ## Publishing
