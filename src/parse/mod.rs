@@ -1052,29 +1052,27 @@ fn dedup_line_overlaps(items: &mut Vec<(TsGroupKey, TsItem<'_>)>) {
     });
 }
 
-/// Stretch Heading items whose grammar only captures the heading line
-/// forward to the next heading's start (or EOF).
+/// Stretch Heading items whose grammar only captures the heading line forward
+/// to the next item's start (or EOF).
 fn extend_section_ranges(items: &mut [(TsGroupKey, TsItem<'_>)], source: &str) {
     let is_heading = |k: &TsGroupKey| matches!(k, TsGroupKey::Heading { .. });
     if !items.iter().any(|(k, _)| is_heading(k)) {
         return;
     }
     let total_lines = source.lines().count();
-    let section_indices: Vec<usize> = items
+    let heading_indices: Vec<usize> = items
         .iter()
         .enumerate()
         .filter(|(_, (k, _))| is_heading(k))
         .map(|(idx, _)| idx)
         .collect();
 
-    for (pos, &idx) in section_indices.iter().enumerate() {
-        let next_start = if pos + 1 < section_indices.len() {
-            items[section_indices[pos + 1]].1.start_line()
-        } else {
-            total_lines
-        };
-        let cur = items[idx].1.end_line;
-        items[idx].1.end_line = cur.max(next_start);
+    for &idx in &heading_indices {
+        let next_start = items
+            .get(idx + 1)
+            .map(|(_, item)| item.start_line())
+            .unwrap_or(total_lines);
+        items[idx].1.end_line = next_start;
     }
 }
 
