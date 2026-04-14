@@ -55,31 +55,6 @@ pub struct FilesGroup {
     pub is_test_file: bool,
 }
 
-impl FilesGroup {
-    /// Construct a `FilesGroup`, deriving classification flags from a sample file path.
-    /// `sample_relative` should be a path relative to the project root.
-    pub fn new(
-        parent_dir: PathBuf,
-        role: FileRole,
-        items: Vec<PathBuf>,
-        inherited_modifier: f64,
-        sample_relative: &Path,
-    ) -> Self {
-        let (is_deprioritized, is_type_declaration, is_header, is_test_file) =
-            crate::classify::file_modifier_properties(sample_relative);
-        Self {
-            parent_dir,
-            role,
-            items,
-            inherited_modifier,
-            is_deprioritized,
-            is_type_declaration,
-            is_header,
-            is_test_file,
-        }
-    }
-}
-
 /// A tree-sitter group — items extracted from parsed source.
 pub struct TsGroup<'s> {
     pub key: TsGroupKey,

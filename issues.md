@@ -139,10 +139,6 @@ Remaining: add an eviction strategy for the source/tree maps (either LRU or scop
 
 This is a textbook case of a sum type pretending to be a trait. Convert to `trait Group { fn value(&self) -> f64; fn children(...) -> Vec<Box<dyn Group>>; ... }` with three impl structs. Related to #15 and #16: all three depend on the scheduler not needing to know the concrete variant to do its job.
 
-### 22. Two seed paths in `lib.rs` pretending to be one
-
-`render()` has two seed-building functions: `build_file_seed` fakes a single-file `FilesGroup` just to call `children()` and extract them, while `build_dir_seed` manually constructs a `FoldersGroup` and calls `create_files_groups` on the side. They converge at `schedule::schedule` but neither path is clean. `build_file_seed` in particular is a workaround (constructing a throwaway group to reuse the `children()` logic) that outlived its original reason to exist. Unify them — the single-file case should either be a degenerate directory case or have its own minimal seed that doesn't pretend to be a directory.
-
 ### 23. `childless_folders` refund hashmap
 
 `TextRenderer` maintains `childless_folders: HashMap<PathBuf, FileCost>` as a bookkeeping structure to "refund" folder line costs when a descendant file group commits and the folder's bare entry is subsumed. This exists because folder lines are still committed eagerly against the budget and later removed when child content supersedes them. The renderer's `probe_cost` for `Files` has to peek at this map, and `commit` for `Files` has to remove-and-refund.
