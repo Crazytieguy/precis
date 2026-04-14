@@ -1,7 +1,5 @@
 //! Greedy frontier scheduler (design §5).
 
-use std::path::Path;
-
 use crate::group::{Group, GroupCtx};
 use crate::render::{SchedulerRenderer, TextRenderer};
 
@@ -10,12 +8,6 @@ pub struct ScheduleCtx<'s> {
     pub groups: GroupCtx<'s>,
     pub budget: usize,
     pub char_budget: Option<usize>,
-}
-
-impl ScheduleCtx<'_> {
-    pub fn rel_path<'a>(&self, path: &'a Path) -> &'a Path {
-        self.groups.rel_path(path)
-    }
 }
 
 /// Run the greedy scheduler. Returns the final output string.
@@ -105,11 +97,9 @@ where
             None => break,
         };
 
-        // Atomic commit: remove → children → commit to cache → extend frontier
         let mut best_group = frontier.swap_remove(best_idx);
         let mut new_children = best_group.children(&ctx.groups);
 
-        // Commit: update cache, childless_folders, and remaining budget
         renderer
             .commit(&mut best_group, &ctx.groups)
             .apply_to(&mut remaining_tokens, &mut remaining_chars);

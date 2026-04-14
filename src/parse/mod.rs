@@ -772,8 +772,7 @@ fn is_simple_typedef_alias(node: Node) -> bool {
 }
 
 fn is_c_header_guard(node: Node, source: &str, path: &Path) -> bool {
-    let ext = path.extension().and_then(|e| e.to_str()).unwrap_or("");
-    if !crate::classify::is_header_extension(ext) {
+    if !crate::classify::is_header_file(path) {
         return false;
     }
     if node.child_by_field_name("value").is_some() {

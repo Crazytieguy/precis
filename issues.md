@@ -110,6 +110,19 @@ The underlying issue is that folder costs are modeled wrong: a folder line shoul
 Several invariant-sensitive paths degrade silently when an operation fails:
 
 - `path.canonicalize().unwrap_or_else(...)` in `src/lib.rs` — falls back to the un-canonicalized path on IO failure, producing different output than the canonical case.
-- `ScheduleCtx::rel_path` returns `unwrap_or(path)` — falls back to the absolute path when relativization fails.
+- `GroupCtx::rel_path` returns `unwrap_or(path)` — falls back to the absolute path when relativization fails.
 
 For a tool whose core job is grounded prioritization and reproducible output, "if this fails, use whatever" is the wrong default. These should either bubble the error up (most honest) or log/assert at least in debug builds (fail loud in tests, degrade in prod). The current behavior is a quiet correctness hole.
+
+### 25. `render` ↔ `group` modules cross-import
+
+After the scheduler/renderer split decoupled `schedule` from `group`, the same circular shape now exists between `render` and `group`:
+
+- `src/render.rs` imports `Group`, `GroupCtx`, and reaches into `crate::group::ts::render_entries(g)` directly inside `TextRenderer::prepare`.
+- `src/group/mod.rs` imports `crate::render::{CachedGroupRender, FileCost}`; `src/group/ts.rs` imports `crate::render::LineEntry`.
+
+So the data model and the renderer mutually depend on each other, and a hypothetical alternative renderer would still have to reach into `group::ts` to extract line entries. The previous trait extraction relocated the smell rather than eliminating it.
+
+### 26. `SchedulerRenderer` trait surface is asymmetric
+
+`probe_cost` returns `FileCost`; `commit` returns `BudgetDelta`. `FileCost` is an internal `FileCache` cost type that the trait should not be exposing in its public surface, and the asymmetry means refunds can only be expressed at commit time — a renderer with cost discounts can't communicate them at probe time, so the scheduler can't see them while choosing the next group. A non-text renderer that has no concept of refunds still has to construct `BudgetDelta`s on every commit.

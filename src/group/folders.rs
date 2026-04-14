@@ -106,10 +106,6 @@ pub fn create_files_groups<'s>(
                 role,
                 items: part_files,
                 inherited_modifier: inherited_modifier * contribution * error_submodule_factor,
-                is_deprioritized,
-                is_type_declaration,
-                is_header,
-                is_test_file,
             }));
         }
     }

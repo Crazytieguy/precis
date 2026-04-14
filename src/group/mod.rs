@@ -49,10 +49,6 @@ pub struct FilesGroup {
     pub role: FileRole,
     pub items: Vec<PathBuf>,
     pub inherited_modifier: f64,
-    pub is_deprioritized: bool,
-    pub is_type_declaration: bool,
-    pub is_header: bool,
-    pub is_test_file: bool,
 }
 
 /// A tree-sitter group — items extracted from parsed source.

@@ -1,7 +1,6 @@
 use std::collections::HashMap;
-use std::path::{Path, PathBuf};
 
-use crate::classify::{self, FileRole};
+use crate::classify;
 use crate::heuristics;
 use crate::parse;
 
@@ -11,19 +10,9 @@ use super::{FilesGroup, Group, GroupCtx, TsGroup, TsItem};
 /// Produce children when a FilesGroup is scheduled.
 /// Parses every file in the group, extracts items, and aggregates across files (D7).
 pub fn children<'s>(g: &mut FilesGroup, ctx: &GroupCtx<'s>) -> Vec<Group<'s>> {
-    children_for_files(&g.parent_dir, g.role, &g.items, g.inherited_modifier, ctx)
-}
-
-pub fn children_for_files<'s>(
-    parent_dir: &Path,
-    role: FileRole,
-    items: &[PathBuf],
-    inherited_modifier: f64,
-    ctx: &GroupCtx<'s>,
-) -> Vec<Group<'s>> {
     let mut buckets: HashMap<(TsGroupKey, bool), Vec<TsItem<'s>>> = HashMap::new();
 
-    for file_path in items {
+    for file_path in &g.items {
         // A5: parsing only happens through the file-to-Ts expansion path.
         let (source, tree) = match ctx.store.parse(file_path) {
             Some(pair) => pair,
@@ -41,9 +30,9 @@ pub fn children_for_files<'s>(
             None => continue,
         };
 
-        let relative = file_path.strip_prefix(parent_dir).unwrap_or(file_path);
+        let relative = file_path.strip_prefix(&g.parent_dir).unwrap_or(file_path);
         let is_generated = classify::is_generated_file(source)
-            || classify::is_autogen_api_doc(source, role)
+            || classify::is_autogen_api_doc(source, g.role)
             || classify::is_generated_filename(relative);
 
         let display_path = ctx.store.intern_path(ctx.rel_path(file_path).to_path_buf());
@@ -69,7 +58,7 @@ pub fn children_for_files<'s>(
             continue;
         }
 
-        let modifier = compute_item_modifier(&key, inherited_modifier, is_generated);
+        let modifier = compute_item_modifier(&key, g.inherited_modifier, is_generated);
         let is_gated = key.is_gated();
 
         let group = Group::Ts(TsGroup {

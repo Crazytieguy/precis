@@ -44,9 +44,7 @@ impl Lang {
     }
 
     pub fn from_path(path: &Path) -> Option<Lang> {
-        path.extension()
-            .and_then(|e| e.to_str())
-            .and_then(|ext| Lang::from_extension(&ext.to_ascii_lowercase()))
+        classify::lowercase_extension(path).and_then(|ext| Lang::from_extension(&ext))
     }
 }
 
@@ -88,8 +86,13 @@ pub fn render(path: &Path, budget: usize, char_budget: Option<usize>) -> String 
 fn build_file_seed<'s>(path: &Path, ctx: &group::GroupCtx<'s>) -> Vec<group::Group<'s>> {
     let rel = ctx.rel_path(path);
     let role = classify::FileRole::from_path(rel);
-    let items = [path.to_path_buf()];
-    group::files::children_for_files(&ctx.root, role, &items, 1.0, ctx)
+    let mut fg = group::FilesGroup {
+        parent_dir: ctx.root.clone(),
+        role,
+        items: vec![path.to_path_buf()],
+        inherited_modifier: 1.0,
+    };
+    group::files::children(&mut fg, ctx)
 }
 
 /// Build the seed frontier for a directory input (design §5.2).

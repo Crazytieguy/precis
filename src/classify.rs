@@ -50,10 +50,7 @@ impl FileRole {
     }
 
     pub fn from_path(path: &Path) -> Self {
-        let ext_owned = path
-            .extension()
-            .and_then(|e| e.to_str())
-            .map(|e| e.to_ascii_lowercase());
+        let ext_owned = lowercase_extension(path);
         let ext = ext_owned.as_deref().unwrap_or("");
         let is_doc = matches!(ext, "md" | "markdown" | "rst" | "txt");
         let is_data = matches!(
@@ -455,11 +452,17 @@ pub fn is_c_implementation_extension(ext: &str) -> bool {
     matches!(ext, "c" | "cpp" | "cxx" | "cc" | "cu")
 }
 
-/// Check if a file path has a C/C++ header extension.
-pub fn is_header_file(path: &Path) -> bool {
+/// Lowercased file extension, or `None` when the path has no extension or
+/// the extension is non-UTF-8.
+pub fn lowercase_extension(path: &Path) -> Option<String> {
     path.extension()
         .and_then(|e| e.to_str())
-        .is_some_and(|ext| is_header_extension(&ext.to_ascii_lowercase()))
+        .map(|e| e.to_ascii_lowercase())
+}
+
+/// Check if a file path has a C/C++ header extension.
+pub fn is_header_file(path: &Path) -> bool {
+    lowercase_extension(path).is_some_and(|ext| is_header_extension(&ext))
 }
 
 pub fn is_error_submodule_dir(dir: &Path) -> bool {
@@ -473,9 +476,7 @@ pub fn is_error_submodule_dir(dir: &Path) -> bool {
 }
 
 pub fn is_c_implementation_file(path: &Path) -> bool {
-    path.extension()
-        .and_then(|e| e.to_str())
-        .is_some_and(|ext| is_c_implementation_extension(&ext.to_ascii_lowercase()))
+    lowercase_extension(path).is_some_and(|ext| is_c_implementation_extension(&ext))
 }
 
 /// Compute per-file modifier properties used to partition files into groups.
@@ -524,8 +525,8 @@ pub fn is_source_file(path: &Path) -> bool {
     if is_lockfile(path) {
         return false;
     }
-    if let Some(ext) = path.extension().and_then(|e| e.to_str()) {
-        return !is_binary_extension(&ext.to_ascii_lowercase());
+    if let Some(ext) = lowercase_extension(path) {
+        return !is_binary_extension(&ext);
     }
     path.file_name()
         .and_then(|n| n.to_str())
