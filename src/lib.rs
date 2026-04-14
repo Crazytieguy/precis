@@ -66,9 +66,7 @@ pub fn render(path: &Path, budget: usize, char_budget: Option<usize>) -> String 
         return schedule::schedule(seed, &ctx);
     }
 
-    let root = path
-        .canonicalize()
-        .unwrap_or_else(|_| path.to_path_buf());
+    let root = path.canonicalize().unwrap_or_else(|_| path.to_path_buf());
     let ctx = schedule::ScheduleCtx {
         store: &store,
         root: root.clone(),
@@ -81,27 +79,17 @@ pub fn render(path: &Path, budget: usize, char_budget: Option<usize>) -> String 
 }
 
 /// Build the seed frontier for a single-file input (design §5.2).
-fn build_file_seed<'s>(
-    path: &Path,
-    ctx: &schedule::ScheduleCtx<'s>,
-) -> Vec<group::Group<'s>> {
+fn build_file_seed<'s>(path: &Path, ctx: &schedule::ScheduleCtx<'s>) -> Vec<group::Group<'s>> {
     let rel = ctx.rel_path(path);
     let role = classify::FileRole::from_path(rel);
-    let mut fg = group::FilesGroup::new(
-        ctx.root.clone(),
-        role,
-        vec![path.to_path_buf()],
-        1.0,
-        rel,
-    );
+    let mut fg = group::FilesGroup::new(ctx.root.clone(), role, vec![path.to_path_buf()], 1.0, rel);
     group::files::children(&mut fg, ctx)
 }
 
 /// Build the seed frontier for a directory input (design §5.2).
 /// Walks one level to produce a FoldersGroup (if sub-folders exist) and FilesGroups.
 fn build_dir_seed<'s>(abs_path: &Path, ctx: &schedule::ScheduleCtx<'s>) -> Vec<group::Group<'s>> {
-    let (subdirs, files_by_role) =
-        group::folders::walk_dir_entries(abs_path, &ctx.root);
+    let (subdirs, files_by_role) = group::folders::walk_dir_entries(abs_path, &ctx.root);
 
     let mut seed = Vec::new();
 
@@ -123,4 +111,3 @@ fn build_dir_seed<'s>(abs_path: &Path, ctx: &schedule::ScheduleCtx<'s>) -> Vec<g
 
     seed
 }
-

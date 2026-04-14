@@ -59,9 +59,9 @@ pub fn create_files_groups<'s>(
     sorted_roles.sort_by_key(|(role, _)| *role);
     let is_root_dir = dir == root;
 
-    let dir_has_headers = sorted_roles.iter().any(|(_, files)| {
-        files.iter().any(|f| classify::is_header_file(f))
-    });
+    let dir_has_headers = sorted_roles
+        .iter()
+        .any(|(_, files)| files.iter().any(|f| classify::is_header_file(f)));
 
     let total_files: usize = sorted_roles.iter().map(|(_, f)| f.len()).sum();
     let error_submodule_factor = if classify::is_error_submodule_dir(dir) && total_files > 5 {
@@ -88,7 +88,9 @@ pub fn create_files_groups<'s>(
 
             let has_companion_header = !is_header
                 && dir_has_headers
-                && part_files.iter().any(|f| classify::is_c_implementation_file(f));
+                && part_files
+                    .iter()
+                    .any(|f| classify::is_c_implementation_file(f));
 
             let contribution = heuristics::files_contribution(
                 role,

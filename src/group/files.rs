@@ -36,9 +36,7 @@ pub fn children<'s>(g: &mut FilesGroup, ctx: &ScheduleCtx<'s>) -> Vec<Group<'s>>
             || classify::is_autogen_api_doc(source, g.role)
             || classify::is_generated_filename(relative);
 
-        let display_path = ctx
-            .store
-            .intern_path(ctx.rel_path(file_path).to_path_buf());
+        let display_path = ctx.store.intern_path(ctx.rel_path(file_path).to_path_buf());
 
         let items = parse::extract_items(display_path, source, tree, config);
 
@@ -131,8 +129,14 @@ fn nest_heading_groups(groups: &mut Vec<(Group<'_>, bool)>) {
         }
     };
 
-    let min_level = groups.iter().filter_map(|(g, _)| group_heading_level(g)).min();
-    let max_level = groups.iter().filter_map(|(g, _)| group_heading_level(g)).max();
+    let min_level = groups
+        .iter()
+        .filter_map(|(g, _)| group_heading_level(g))
+        .min();
+    let max_level = groups
+        .iter()
+        .filter_map(|(g, _)| group_heading_level(g))
+        .max();
 
     let (Some(min_level), Some(max_level)) = (min_level, max_level) else {
         return;
@@ -171,7 +175,13 @@ fn nest_heading_groups(groups: &mut Vec<(Group<'_>, bool)>) {
             .filter_map(|(i, (g, _))| {
                 if let Group::Ts(ts) = g {
                     let l = ts.key.heading_level().filter(|&l| l < level)?;
-                    let boilerplate = matches!(&ts.key, TsGroupKey::Heading { boilerplate: true, .. });
+                    let boilerplate = matches!(
+                        &ts.key,
+                        TsGroupKey::Heading {
+                            boilerplate: true,
+                            ..
+                        }
+                    );
                     Some((i, l, boilerplate))
                 } else {
                     None
@@ -197,31 +207,45 @@ fn nest_heading_groups(groups: &mut Vec<(Group<'_>, bool)>) {
 }
 
 /// Compute the inherited modifier for a TsGroup based on its key and parent modifier.
-pub(crate) fn compute_item_modifier(key: &TsGroupKey, parent_modifier: f64, is_generated: bool) -> f64 {
+pub(crate) fn compute_item_modifier(
+    key: &TsGroupKey,
+    parent_modifier: f64,
+    is_generated: bool,
+) -> f64 {
     use TsGroupKey::*;
 
     let generated_factor = heuristics::generated_contribution(is_generated);
 
     let vis_factor = match key {
-        FunctionName { public, .. } | StructName { public, .. } | EnumName { public, .. }
-        | ClassName { public, .. } | InterfaceName { public, .. } | TraitName { public, .. }
-        | TypeAliasName { public, .. } | ConstName { public, .. } | MacroName { public, .. } => {
-            heuristics::visibility_contribution(*public)
-        }
+        FunctionName { public, .. }
+        | StructName { public, .. }
+        | EnumName { public, .. }
+        | ClassName { public, .. }
+        | InterfaceName { public, .. }
+        | TraitName { public, .. }
+        | TypeAliasName { public, .. }
+        | ConstName { public, .. }
+        | MacroName { public, .. } => heuristics::visibility_contribution(*public),
         _ => 1.0,
     };
 
     let doc_factor = match key {
-        FunctionName { documented, .. } | StructName { documented, .. } | EnumName { documented, .. }
-        | ClassName { documented, .. } | InterfaceName { documented, .. } | TraitName { documented, .. }
-        | TypeAliasName { documented, .. } | ConstName { documented, .. } | MacroName { documented, .. } => {
-            heuristics::documented_contribution(*documented, key)
-        }
+        FunctionName { documented, .. }
+        | StructName { documented, .. }
+        | EnumName { documented, .. }
+        | ClassName { documented, .. }
+        | InterfaceName { documented, .. }
+        | TraitName { documented, .. }
+        | TypeAliasName { documented, .. }
+        | ConstName { documented, .. }
+        | MacroName { documented, .. } => heuristics::documented_contribution(*documented, key),
         _ => heuristics::documented_contribution(true, key),
     };
 
     let boilerplate_factor = match key {
-        Heading { boilerplate: true, .. } => heuristics::boilerplate_heading_contribution(),
+        Heading {
+            boilerplate: true, ..
+        } => heuristics::boilerplate_heading_contribution(),
         _ => 1.0,
     };
 
@@ -232,5 +256,10 @@ pub(crate) fn compute_item_modifier(key: &TsGroupKey, parent_modifier: f64, is_g
         _ => 1.0,
     };
 
-    parent_modifier * vis_factor * doc_factor * boilerplate_factor * reexport_factor * generated_factor
+    parent_modifier
+        * vis_factor
+        * doc_factor
+        * boilerplate_factor
+        * reexport_factor
+        * generated_factor
 }

@@ -11,9 +11,7 @@ fn fixture_path(name: &str) -> Option<std::path::PathBuf> {
     } else if name.starts_with("../perf-fixtures") {
         None
     } else {
-        panic!(
-            "fixture not present at {path:?} — run `cargo run --bin clone_fixtures`"
-        );
+        panic!("fixture not present at {path:?} — run `cargo run --bin clone_fixtures`");
     }
 }
 
@@ -31,7 +29,9 @@ macro_rules! budget_test {
     };
 }
 
-macro_rules! with_fixtures { ($($tt:tt)*) => {} }
+macro_rules! with_fixtures {
+    ($($tt:tt)*) => {};
+}
 macro_rules! with_entries {
     ($(($name:ident, $path:expr, $budget:expr)),* $(,)?) => {
         $(budget_test!($name, $path, $budget);)*
@@ -798,15 +798,55 @@ sample_test!(rust_sample_budget_50, "sample.rs", rust_sample, 50);
 sample_test!(rust_sample_budget_200, "sample.rs", rust_sample, 200);
 sample_test!(rust_sample_budget_10000, "sample.rs", rust_sample, 10000);
 
-sample_test!(typescript_sample_budget_20, "sample.ts", typescript_sample, 20);
-sample_test!(typescript_sample_budget_50, "sample.ts", typescript_sample, 50);
-sample_test!(typescript_sample_budget_200, "sample.ts", typescript_sample, 200);
-sample_test!(typescript_sample_budget_10000, "sample.ts", typescript_sample, 10000);
+sample_test!(
+    typescript_sample_budget_20,
+    "sample.ts",
+    typescript_sample,
+    20
+);
+sample_test!(
+    typescript_sample_budget_50,
+    "sample.ts",
+    typescript_sample,
+    50
+);
+sample_test!(
+    typescript_sample_budget_200,
+    "sample.ts",
+    typescript_sample,
+    200
+);
+sample_test!(
+    typescript_sample_budget_10000,
+    "sample.ts",
+    typescript_sample,
+    10000
+);
 
-sample_test!(javascript_sample_budget_20, "sample.js", javascript_sample, 20);
-sample_test!(javascript_sample_budget_50, "sample.js", javascript_sample, 50);
-sample_test!(javascript_sample_budget_200, "sample.js", javascript_sample, 200);
-sample_test!(javascript_sample_budget_10000, "sample.js", javascript_sample, 10000);
+sample_test!(
+    javascript_sample_budget_20,
+    "sample.js",
+    javascript_sample,
+    20
+);
+sample_test!(
+    javascript_sample_budget_50,
+    "sample.js",
+    javascript_sample,
+    50
+);
+sample_test!(
+    javascript_sample_budget_200,
+    "sample.js",
+    javascript_sample,
+    200
+);
+sample_test!(
+    javascript_sample_budget_10000,
+    "sample.js",
+    javascript_sample,
+    10000
+);
 
 sample_test!(tsx_sample_budget_20, "sample.tsx", tsx_sample, 20);
 sample_test!(tsx_sample_budget_50, "sample.tsx", tsx_sample, 50);
@@ -816,7 +856,12 @@ sample_test!(tsx_sample_budget_10000, "sample.tsx", tsx_sample, 10000);
 sample_test!(python_sample_budget_20, "sample.py", python_sample, 20);
 sample_test!(python_sample_budget_50, "sample.py", python_sample, 50);
 sample_test!(python_sample_budget_200, "sample.py", python_sample, 200);
-sample_test!(python_sample_budget_10000, "sample.py", python_sample, 10000);
+sample_test!(
+    python_sample_budget_10000,
+    "sample.py",
+    python_sample,
+    10000
+);
 
 sample_test!(go_sample_budget_20, "sample.go", go_sample, 20);
 sample_test!(go_sample_budget_50, "sample.go", go_sample, 50);
@@ -840,8 +885,18 @@ sample_test!(c_sample_budget_10000, "sample.c", c_sample, 10000);
 
 sample_test!(markdown_sample_budget_20, "README.md", markdown_sample, 20);
 sample_test!(markdown_sample_budget_50, "README.md", markdown_sample, 50);
-sample_test!(markdown_sample_budget_200, "README.md", markdown_sample, 200);
-sample_test!(markdown_sample_budget_10000, "README.md", markdown_sample, 10000);
+sample_test!(
+    markdown_sample_budget_200,
+    "README.md",
+    markdown_sample,
+    200
+);
+sample_test!(
+    markdown_sample_budget_10000,
+    "README.md",
+    markdown_sample,
+    10000
+);
 
 sample_test!(toml_sample_budget_20, "Cargo.toml", toml_sample, 20);
 sample_test!(toml_sample_budget_50, "Cargo.toml", toml_sample, 50);
@@ -935,7 +990,9 @@ fn budget_monotonicity_fixture() {
         assert!(
             tokens >= prev_tokens,
             "Multi-file budget monotonicity: budget {} ({} tokens) < previous ({} tokens)",
-            budget, tokens, prev_tokens,
+            budget,
+            tokens,
+            prev_tokens,
         );
         prev_tokens = tokens;
     }
@@ -946,7 +1003,10 @@ fn budget_monotonicity_fixture() {
 fn empty_directory() {
     let dir = tempfile::tempdir().unwrap();
     let output = precis::render(dir.path(), 4000, None);
-    assert!(output.is_empty(), "empty directory should produce no output");
+    assert!(
+        output.is_empty(),
+        "empty directory should produce no output"
+    );
 }
 
 // ---------------------------------------------------------------------------
@@ -961,7 +1021,9 @@ fn render_fixture(path: &str, budget: usize) -> Option<String> {
     assert!(
         tokens <= budget,
         "budget exceeded for {}: {} tokens > {} budget",
-        path, tokens, budget,
+        path,
+        tokens,
+        budget,
     );
     Some(output)
 }
@@ -1028,12 +1090,15 @@ fn char_budget_monotonicity() {
         assert!(
             chars >= prev_chars,
             "Char budget monotonicity: char_budget {} ({} chars) < previous ({} chars)",
-            cb, chars, prev_chars,
+            cb,
+            chars,
+            prev_chars,
         );
         assert!(
             chars <= cb,
             "Char budget monotonicity: char_budget {} produced {} chars",
-            cb, chars,
+            cb,
+            chars,
         );
         prev_chars = chars;
     }
@@ -1047,10 +1112,8 @@ const README_EXAMPLE_BUDGET: usize = 400;
 fn readme_example_matches_output() {
     let root = fixture_path(README_EXAMPLE_FIXTURE).expect("fixture should be present");
     let output = precis::render(&root, README_EXAMPLE_BUDGET, None);
-    let readme = std::fs::read_to_string(
-        Path::new(env!("CARGO_MANIFEST_DIR")).join("README.md"),
-    )
-    .expect("failed to read README.md");
+    let readme = std::fs::read_to_string(Path::new(env!("CARGO_MANIFEST_DIR")).join("README.md"))
+        .expect("failed to read README.md");
     let start_marker = "<!-- precis-example-start -->";
     let end_marker = "<!-- precis-example-end -->";
     let start_pos = readme

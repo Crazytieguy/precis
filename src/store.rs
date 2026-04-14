@@ -189,4 +189,3 @@ fn language_for_lang(lang: Lang, ext: &str) -> (tree_sitter::Language, &'static 
         ),
     }
 }
-

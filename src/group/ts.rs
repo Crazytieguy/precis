@@ -3,9 +3,9 @@
 use std::collections::HashMap;
 use std::path::PathBuf;
 
+use crate::Lang;
 use crate::render::LineEntry;
 use crate::schedule::ScheduleCtx;
-use crate::Lang;
 
 use super::{Group, TsGroup, TsItem};
 
@@ -20,65 +20,107 @@ pub enum TsGroupKey {
     ModuleDocRest,
 
     // Imports
-    Import { first_party: bool, reexport: bool },
-    ImportedItems { first_party: bool, reexport: bool },
+    Import {
+        first_party: bool,
+        reexport: bool,
+    },
+    ImportedItems {
+        first_party: bool,
+        reexport: bool,
+    },
 
     // Function-like
-    FunctionName { documented: bool, public: bool },
+    FunctionName {
+        documented: bool,
+        public: bool,
+    },
     FunctionDocFirst,
     FunctionDocRest,
     FunctionSig,
     FunctionBody,
 
     // Structs
-    StructName { documented: bool, public: bool },
+    StructName {
+        documented: bool,
+        public: bool,
+    },
     StructDocFirst,
     StructDocRest,
     StructBody,
 
     // Enums
-    EnumName { documented: bool, public: bool },
+    EnumName {
+        documented: bool,
+        public: bool,
+    },
     EnumDocFirst,
     EnumDocRest,
     EnumBody,
 
     // Classes
-    ClassName { documented: bool, public: bool },
+    ClassName {
+        documented: bool,
+        public: bool,
+    },
     ClassDocFirst,
     ClassDocRest,
     ClassBody,
 
     // Interfaces
-    InterfaceName { documented: bool, public: bool },
+    InterfaceName {
+        documented: bool,
+        public: bool,
+    },
     InterfaceDocFirst,
     InterfaceDocRest,
 
     // Rust traits
-    TraitName { documented: bool, public: bool },
+    TraitName {
+        documented: bool,
+        public: bool,
+    },
     TraitDocFirst,
     TraitDocRest,
 
     // Rust impl blocks
-    ImplBlock { is_trait_impl: bool, is_boilerplate_trait: bool },
+    ImplBlock {
+        is_trait_impl: bool,
+        is_boilerplate_trait: bool,
+    },
 
     // Type aliases
-    TypeAliasName { documented: bool, public: bool },
+    TypeAliasName {
+        documented: bool,
+        public: bool,
+    },
     TypeAliasDocFirst,
     TypeAliasDocRest,
 
     // Consts and statics
-    ConstName { documented: bool, public: bool },
+    ConstName {
+        documented: bool,
+        public: bool,
+    },
     ConstDocFirst,
     ConstDocRest,
 
     // Macros
-    MacroName { documented: bool, public: bool, preproc: bool },
+    MacroName {
+        documented: bool,
+        public: bool,
+        preproc: bool,
+    },
     MacroDocFirst,
     MacroDocRest,
 
     // Markdown
-    Heading { level: u8, boilerplate: bool },
-    HeadingBody { level: u8 },
+    Heading {
+        level: u8,
+        boilerplate: bool,
+    },
+    HeadingBody {
+        level: u8,
+    },
 
     // JSON / TOML / YAML
     DataSection,
@@ -156,8 +198,14 @@ impl TsGroupKey {
                 | TypeAliasName { public: false, .. }
                 | ConstName { public: false, .. }
                 | MacroName { public: false, .. }
-                | Import { first_party: false, .. }
-                | ImplBlock { is_trait_impl: true, .. }
+                | Import {
+                    first_party: false,
+                    ..
+                }
+                | ImplBlock {
+                    is_trait_impl: true,
+                    ..
+                }
         )
     }
 
@@ -177,10 +225,25 @@ impl TsGroupKey {
             (ConstName { public: false, .. }, ConstName { public: true, .. }) => true,
             (MacroName { public: false, .. }, MacroName { public: true, .. }) => true,
             (
-                Import { first_party: false, reexport: r1 },
-                Import { first_party: true, reexport: r2 },
+                Import {
+                    first_party: false,
+                    reexport: r1,
+                },
+                Import {
+                    first_party: true,
+                    reexport: r2,
+                },
             ) => r1 == r2,
-            (ImplBlock { is_trait_impl: true, .. }, ImplBlock { is_trait_impl: false, .. }) => true,
+            (
+                ImplBlock {
+                    is_trait_impl: true,
+                    ..
+                },
+                ImplBlock {
+                    is_trait_impl: false,
+                    ..
+                },
+            ) => true,
             _ => false,
         }
     }
@@ -248,14 +311,24 @@ pub fn children<'s>(g: &mut TsGroup<'s>, _ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
             }
         }
         StructName { documented, .. } => {
-            spawn_type_children(&mut result, g, StructDocFirst, Some(StructBody), *documented);
+            spawn_type_children(
+                &mut result,
+                g,
+                StructDocFirst,
+                Some(StructBody),
+                *documented,
+            );
         }
         EnumName { documented, .. } => {
             spawn_type_children(&mut result, g, EnumDocFirst, Some(EnumBody), *documented);
         }
         ClassName { documented, .. } => {
             let lang = g.items.first().and_then(|i| Lang::from_path(i.path));
-            let body_key = if lang == Some(Lang::Python) { Some(ClassBody) } else { None };
+            let body_key = if lang == Some(Lang::Python) {
+                Some(ClassBody)
+            } else {
+                None
+            };
             spawn_type_children(&mut result, g, ClassDocFirst, body_key, *documented);
             spawn_method_children(&mut result, g, 1.0);
         }
@@ -300,7 +373,10 @@ pub fn children<'s>(g: &mut TsGroup<'s>, _ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
                 }));
             }
         }
-        ImplBlock { is_trait_impl, is_boilerplate_trait } => {
+        ImplBlock {
+            is_trait_impl,
+            is_boilerplate_trait,
+        } => {
             let factor = if *is_boilerplate_trait {
                 0.15
             } else if *is_trait_impl {
@@ -310,10 +386,16 @@ pub fn children<'s>(g: &mut TsGroup<'s>, _ctx: &ScheduleCtx<'s>) -> Vec<Group<'s
             };
             spawn_method_children(&mut result, g, factor);
         }
-        Import { first_party, reexport } => {
+        Import {
+            first_party,
+            reexport,
+        } => {
             if !g.items.is_empty() {
                 result.push(Group::Ts(TsGroup {
-                    key: ImportedItems { first_party: *first_party, reexport: *reexport },
+                    key: ImportedItems {
+                        first_party: *first_party,
+                        reexport: *reexport,
+                    },
                     items: g.items.iter().map(|i| clone_ts_item(i)).collect(),
                     inherited_modifier: g.inherited_modifier,
                     dependent_siblings: vec![],
@@ -488,8 +570,7 @@ fn spawn_method_children<'s>(
 
     for ((documented, public), items) in sorted_buckets {
         let key = TsGroupKey::FunctionName { documented, public };
-        let modifier =
-            super::files::compute_item_modifier(&key, base_modifier, false);
+        let modifier = super::files::compute_item_modifier(&key, base_modifier, false);
 
         let group = Group::Ts(TsGroup {
             key,
@@ -648,14 +729,12 @@ fn is_method_node(node: tree_sitter::Node, lang: Option<Lang>) -> bool {
         }
         Some(Lang::JsTs) => match node.kind() {
             "method_definition" | "method_signature" | "abstract_method_signature" => true,
-            "public_field_definition" => node
-                .child_by_field_name("value")
-                .is_some_and(|v| {
-                    matches!(
-                        v.kind(),
-                        "arrow_function" | "function_expression" | "generator_function"
-                    )
-                }),
+            "public_field_definition" => node.child_by_field_name("value").is_some_and(|v| {
+                matches!(
+                    v.kind(),
+                    "arrow_function" | "function_expression" | "generator_function"
+                )
+            }),
             _ => false,
         },
         Some(Lang::Java) => {
@@ -674,7 +753,10 @@ fn is_method_node(node: tree_sitter::Node, lang: Option<Lang>) -> bool {
 // render() — produce LineEntry values for this group (R3: context-free)
 // ---------------------------------------------------------------------------
 
-pub fn render_entries<'s>(g: &TsGroup<'s>, _ctx: &ScheduleCtx<'s>) -> Vec<(PathBuf, Vec<LineEntry<'s>>)> {
+pub fn render_entries<'s>(
+    g: &TsGroup<'s>,
+    _ctx: &ScheduleCtx<'s>,
+) -> Vec<(PathBuf, Vec<LineEntry<'s>>)> {
     let mut per_file: HashMap<&'s std::path::Path, Vec<LineEntry<'s>>> = HashMap::new();
 
     for item in &g.items {
@@ -697,8 +779,14 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
     let start_line = item.start_line();
 
     match key {
-        FunctionName { .. } | StructName { .. } | EnumName { .. } | ClassName { .. }
-        | InterfaceName { .. } | TraitName { .. } | TypeAliasName { .. } | ConstName { .. } => {
+        FunctionName { .. }
+        | StructName { .. }
+        | EnumName { .. }
+        | ClassName { .. }
+        | InterfaceName { .. }
+        | TraitName { .. }
+        | TypeAliasName { .. }
+        | ConstName { .. } => {
             let line_idx = start_line;
             let line = lines.get(line_idx).copied().unwrap_or("");
             let prefix = find_name_end_prefix(line, item.node, start_line);
@@ -780,9 +868,8 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
             entries
         }
 
-        FunctionDocFirst | StructDocFirst | EnumDocFirst | ClassDocFirst
-        | InterfaceDocFirst | TraitDocFirst | TypeAliasDocFirst | ConstDocFirst
-        | MacroDocFirst => {
+        FunctionDocFirst | StructDocFirst | EnumDocFirst | ClassDocFirst | InterfaceDocFirst
+        | TraitDocFirst | TypeAliasDocFirst | ConstDocFirst | MacroDocFirst => {
             let doc_range = compute_doc_range(item, &lines);
             if let Some((start, end)) = doc_range {
                 let mut entries = vec![];
@@ -804,9 +891,8 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
             }
         }
 
-        FunctionDocRest | StructDocRest | EnumDocRest | ClassDocRest
-        | InterfaceDocRest | TraitDocRest | TypeAliasDocRest | ConstDocRest
-        | MacroDocRest => {
+        FunctionDocRest | StructDocRest | EnumDocRest | ClassDocRest | InterfaceDocRest
+        | TraitDocRest | TypeAliasDocRest | ConstDocRest | MacroDocRest => {
             let doc_range = compute_doc_range(item, &lines);
             if let Some((start, end)) = doc_range {
                 let mut entries = vec![];
@@ -977,11 +1063,7 @@ fn capped_line_entry(line: u32, content: &str) -> LineEntry<'_> {
 
 /// Find a prefix of the source line up to and including the item's name,
 /// using the tree-sitter AST node to locate the identifier end position.
-fn find_name_end_prefix<'a>(
-    line: &'a str,
-    node: tree_sitter::Node,
-    line_row: usize,
-) -> &'a str {
+fn find_name_end_prefix<'a>(line: &'a str, node: tree_sitter::Node, line_row: usize) -> &'a str {
     if let Some(col) = find_name_end_col(node, line_row)
         && col <= line.len()
     {
@@ -1008,7 +1090,9 @@ fn find_name_end_col(node: tree_sitter::Node, line_row: usize) -> Option<usize> 
     }
     if node.kind() == "lexical_declaration" {
         let mut cursor = node.walk();
-        if let Some(vd) = node.children(&mut cursor).find(|c| c.kind() == "variable_declarator")
+        if let Some(vd) = node
+            .children(&mut cursor)
+            .find(|c| c.kind() == "variable_declarator")
             && let Some(name_node) = vd.child_by_field_name("name")
             && name_node.end_position().row == line_row
         {
@@ -1024,7 +1108,9 @@ fn find_name_end_col(node: tree_sitter::Node, line_row: usize) -> Option<usize> 
     }
     if node.kind() == "expression_statement" {
         let mut cursor = node.walk();
-        if let Some(assignment) = node.children(&mut cursor).find(|c| c.kind() == "assignment")
+        if let Some(assignment) = node
+            .children(&mut cursor)
+            .find(|c| c.kind() == "assignment")
             && let Some(left) = assignment.child_by_field_name("left")
             && left.end_position().row == line_row
         {
@@ -1034,13 +1120,16 @@ fn find_name_end_col(node: tree_sitter::Node, line_row: usize) -> Option<usize> 
     if matches!(node.kind(), "variable_declaration" | "assignment_statement") {
         let target = if node.kind() == "variable_declaration" {
             let mut cursor = node.walk();
-            node.children(&mut cursor).find(|c| c.kind() == "assignment_statement")
+            node.children(&mut cursor)
+                .find(|c| c.kind() == "assignment_statement")
         } else {
             Some(node)
         };
         if let Some(assign) = target {
             let mut cursor = assign.walk();
-            if let Some(vl) = assign.children(&mut cursor).find(|c| c.kind() == "variable_list")
+            if let Some(vl) = assign
+                .children(&mut cursor)
+                .find(|c| c.kind() == "variable_list")
                 && let Some(name_node) = vl.child_by_field_name("name")
                 && name_node.end_position().row == line_row
             {
@@ -1049,7 +1138,11 @@ fn find_name_end_col(node: tree_sitter::Node, line_row: usize) -> Option<usize> 
         }
     }
     if matches!(node.kind(), "const_declaration" | "var_declaration") {
-        let kw_len = if node.kind() == "const_declaration" { 5 } else { 3 };
+        let kw_len = if node.kind() == "const_declaration" {
+            5
+        } else {
+            3
+        };
         return Some(node.start_position().column + kw_len);
     }
     None
@@ -1066,7 +1159,9 @@ fn find_import_prefix(line: &str) -> &str {
 /// Returns the 0-indexed line where body content begins (after `{` or `:` for Python).
 pub(crate) fn compute_body_start_line(item: &TsItem<'_>) -> usize {
     let lang = Lang::from_path(item.path);
-    if let Some(body_start) = crate::parse::ast::compute_body_start_line(item.node, lang.unwrap_or(Lang::Rust)) {
+    if let Some(body_start) =
+        crate::parse::ast::compute_body_start_line(item.node, lang.unwrap_or(Lang::Rust))
+    {
         return body_start.min(item.end_line);
     }
     item.start_line() + 1
@@ -1077,7 +1172,9 @@ fn compute_doc_range(item: &TsItem<'_>, lines: &[&str]) -> Option<(usize, usize)
     let actual_lang = lang.unwrap_or(Lang::Rust);
 
     // Try outer doc comments first (preceding siblings)
-    if let Some((doc_start_1, doc_end_1)) = crate::parse::ast::compute_doc_line_range(item.node, item.source, actual_lang) {
+    if let Some((doc_start_1, doc_end_1)) =
+        crate::parse::ast::compute_doc_line_range(item.node, item.source, actual_lang)
+    {
         let doc_start = doc_start_1 - 1;
         let doc_end = (doc_end_1 - 1).min(item.start_line());
         if doc_start < doc_end {
@@ -1089,7 +1186,8 @@ fn compute_doc_range(item: &TsItem<'_>, lines: &[&str]) -> Option<(usize, usize)
     }
 
     if actual_lang == Lang::Python
-        && let Some((start_1, end_excl)) = crate::parse::ast::compute_python_docstring_range(item.node, item.source)
+        && let Some((start_1, end_excl)) =
+            crate::parse::ast::compute_python_docstring_range(item.node, item.source)
     {
         let start = start_1 - 1;
         if start < end_excl && end_excl <= lines.len() {
@@ -1139,7 +1237,8 @@ fn is_markdown_leading_noise(line: &str) -> bool {
     if trimmed.starts_with("[![") && trimmed.ends_with(')') {
         return true;
     }
-    if trimmed.starts_with("![") && trimmed.ends_with(')')
+    if trimmed.starts_with("![")
+        && trimmed.ends_with(')')
         && let Some(alt_end) = trimmed.find("](")
         && trimmed[2..alt_end].len() <= 30
     {
@@ -1219,7 +1318,12 @@ fn is_horizontal_rule(trimmed: &str) -> bool {
 
 use crate::classify::strip_heading_badges;
 
-fn skip_doc_leading_noise(lines: &[&str], start: usize, end: usize, lang: Option<Lang>) -> Option<usize> {
+fn skip_doc_leading_noise(
+    lines: &[&str],
+    start: usize,
+    end: usize,
+    lang: Option<Lang>,
+) -> Option<usize> {
     (start..end).find(|&i| !is_markdown_leading_noise(strip_doc_line_prefix(lines[i], lang)))
 }
 
@@ -1268,8 +1372,10 @@ fn strip_doc_line_prefix(line: &str, lang: Option<Lang>) -> &str {
 fn python_string_prefix_len(trimmed: &str) -> usize {
     let bytes = trimmed.as_bytes();
     match bytes {
-        [b'r' | b'R', b'b' | b'B', ..] | [b'b' | b'B', b'r' | b'R', ..]
-        | [b'r' | b'R', b'f' | b'F', ..] | [b'f' | b'F', b'r' | b'R', ..] => 2,
+        [b'r' | b'R', b'b' | b'B', ..]
+        | [b'b' | b'B', b'r' | b'R', ..]
+        | [b'r' | b'R', b'f' | b'F', ..]
+        | [b'f' | b'F', b'r' | b'R', ..] => 2,
         [b'r' | b'R', ..] | [b'u' | b'U', ..] | [b'f' | b'F', ..] | [b'b' | b'B', ..] => 1,
         _ => 0,
     }

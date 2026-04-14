@@ -1,6 +1,5 @@
 use std::path::Path;
 
-
 // ---------------------------------------------------------------------------
 // File role classification
 // ---------------------------------------------------------------------------
@@ -30,16 +29,20 @@ impl FileRole {
             .unwrap_or((&lower, false));
         match stem {
             "readme" => FileRole::Readme,
-            "changelog" | "changes" | "history" | "news" | "releases"
-            | "breaking_changes" | "breaking-changes" | "migration" | "upgrading"
-            | "release_notes" | "release-notes" => FileRole::Changelog,
+            "changelog" | "changes" | "history" | "news" | "releases" | "breaking_changes"
+            | "breaking-changes" | "migration" | "upgrading" | "release_notes"
+            | "release-notes" => FileRole::Changelog,
             "contributing" | "contributors" | "security" | "license" | "licence"
-            | "code_of_conduct" | "codeowners" | "releasing" | "support"
-            | "governance" | "authors" | "maintainers"
-            | "tidelift" | "sponsors" | "funding"
-            | "notice" | "citation" => FileRole::CommunityHealth,
-            "claude" | "agents" | "copilot" | "copilot-instructions"
-            | "cursor" | "windsurf" | "context" => FileRole::AiConfig,
+            | "code_of_conduct" | "codeowners" | "releasing" | "support" | "governance"
+            | "authors" | "maintainers" | "tidelift" | "sponsors" | "funding" | "notice"
+            | "citation" => FileRole::CommunityHealth,
+            "claude"
+            | "agents"
+            | "copilot"
+            | "copilot-instructions"
+            | "cursor"
+            | "windsurf"
+            | "context" => FileRole::AiConfig,
             "architecture" | "design" => FileRole::Architecture,
             _ if is_doc && has_locale_suffix(stem) => FileRole::Translated,
             _ => FileRole::Normal,
@@ -180,9 +183,17 @@ fn classify_by_components(path: &Path) -> Option<FileCategory> {
             && name.split(['-', '_']).any(|seg| {
                 matches!(
                     seg,
-                    "test" | "tests" | "testing" | "bench" | "benches"
-                        | "benchmark" | "benchmarks" | "mock" | "mocks"
-                        | "fixture" | "fixtures"
+                    "test"
+                        | "tests"
+                        | "testing"
+                        | "bench"
+                        | "benches"
+                        | "benchmark"
+                        | "benchmarks"
+                        | "mock"
+                        | "mocks"
+                        | "fixture"
+                        | "fixtures"
                 )
             })
         {
@@ -328,7 +339,7 @@ pub fn is_deprioritized_file(relative_path: &Path, filename: &str) -> bool {
         _ if (lower.starts_with("tsconfig") || lower.starts_with("jsconfig"))
             && ext == Some("json") =>
         {
-            return true
+            return true;
         }
         _ => {}
     }
@@ -354,7 +365,7 @@ pub fn is_deprioritized_file(relative_path: &Path, filename: &str) -> bool {
                 .and_then(|n| n.to_str())
                 .is_some_and(is_docs_dir_name) =>
         {
-            return true
+            return true;
         }
         _ if lower.starts_with("docusaurus.config.") => return true,
         _ => {}
@@ -395,16 +406,20 @@ pub fn is_deprioritized_file(relative_path: &Path, filename: &str) -> bool {
         _ => {}
     }
 
-    if matches!(
-        ext,
-        Some("css" | "scss" | "sass" | "less" | "html" | "htm")
-    ) {
+    if matches!(ext, Some("css" | "scss" | "sass" | "less" | "html" | "htm")) {
         return true;
     }
 
     match lower.as_str() {
-        "codecov.yml" | "codecov.yaml" | "renovate.json" | "package-support.json"
-        | "biome.json" | "biome.jsonc" | "deno.json" | "deno.jsonc" | "taskfile.yml"
+        "codecov.yml"
+        | "codecov.yaml"
+        | "renovate.json"
+        | "package-support.json"
+        | "biome.json"
+        | "biome.jsonc"
+        | "deno.json"
+        | "deno.jsonc"
+        | "taskfile.yml"
         | "taskfile.yaml" => return true,
         _ => {}
     }
@@ -517,12 +532,7 @@ pub fn is_source_file(path: &Path) -> bool {
         .is_some_and(|name| {
             matches!(
                 name,
-                "Makefile"
-                    | "Dockerfile"
-                    | "Containerfile"
-                    | "Justfile"
-                    | "Gemfile"
-                    | "Rakefile"
+                "Makefile" | "Dockerfile" | "Containerfile" | "Justfile" | "Gemfile" | "Rakefile"
             )
         })
 }
@@ -595,8 +605,12 @@ pub fn is_vendored_or_fixture(path: &Path) -> bool {
 // ---------------------------------------------------------------------------
 
 pub fn effective_depth(parent_dir: &Path) -> usize {
-    let is_root =
-        |s: &str| matches!(s, "src" | "source" | "lib" | "pkg" | "cmd" | "internal" | "app" | "packages" | "crates");
+    let is_root = |s: &str| {
+        matches!(
+            s,
+            "src" | "source" | "lib" | "pkg" | "cmd" | "internal" | "app" | "packages" | "crates"
+        )
+    };
     let components: Vec<_> = parent_dir
         .components()
         .filter_map(|c| c.as_os_str().to_str())

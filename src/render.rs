@@ -178,10 +178,7 @@ impl FileCache {
     /// Compute the marginal cost of committing a set of rendered entries,
     /// accounting for descendant overrides of already-committed lines.
     /// Does NOT mutate the cache — this is a read-only probe.
-    pub fn marginal_cost(
-        &mut self,
-        per_file: &[(PathBuf, Vec<RenderedEntry<'_>>)],
-    ) -> FileCost {
+    pub fn marginal_cost(&mut self, per_file: &[(PathBuf, Vec<RenderedEntry<'_>>)]) -> FileCost {
         // Pre-compute header costs for new files to avoid borrow conflict
         for (path, _) in per_file {
             if !self.files.contains_key(path) {
@@ -196,7 +193,10 @@ impl FileCache {
             let is_new_file = file_map.is_none();
 
             if is_new_file {
-                let hcost = self.headers.get(path).map_or(FileCost::default(), |(_, c)| *c);
+                let hcost = self
+                    .headers
+                    .get(path)
+                    .map_or(FileCost::default(), |(_, c)| *c);
                 total.tokens += hcost.tokens;
                 total.chars += hcost.chars;
             }
@@ -204,25 +204,26 @@ impl FileCache {
             for re in entries {
                 let line = re.entry.line();
                 if let Some(map) = file_map
-                    && let Some(existing) = map.get(&line) {
-                        // Override: subtract old cost, add new cost
-                        assert!(
-                            re.entry.content_rank() > existing.content_rank
-                                || (re.entry.content_rank() == existing.content_rank
-                                    && re.entry.content_rank() == 2
-                                    && re.entry.content_len() == existing.content_len)
-                                || (re.entry.content_rank() == existing.content_rank
-                                    && re.entry.content_rank() == 1
-                                    && re.entry.content_len() >= existing.content_len),
-                            "R4 violation: descendant entry has less content at line {}",
-                            line,
-                        );
-                        total.tokens += re.tokens;
-                        total.tokens = total.tokens.saturating_sub(existing.tokens);
-                        total.chars += re.chars;
-                        total.chars = total.chars.saturating_sub(existing.chars);
-                        continue;
-                    }
+                    && let Some(existing) = map.get(&line)
+                {
+                    // Override: subtract old cost, add new cost
+                    assert!(
+                        re.entry.content_rank() > existing.content_rank
+                            || (re.entry.content_rank() == existing.content_rank
+                                && re.entry.content_rank() == 2
+                                && re.entry.content_len() == existing.content_len)
+                            || (re.entry.content_rank() == existing.content_rank
+                                && re.entry.content_rank() == 1
+                                && re.entry.content_len() >= existing.content_len),
+                        "R4 violation: descendant entry has less content at line {}",
+                        line,
+                    );
+                    total.tokens += re.tokens;
+                    total.tokens = total.tokens.saturating_sub(existing.tokens);
+                    total.chars += re.chars;
+                    total.chars = total.chars.saturating_sub(existing.chars);
+                    continue;
+                }
                 // New line: full cost
                 total.tokens += re.tokens;
                 total.chars += re.chars;

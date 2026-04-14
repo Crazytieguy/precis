@@ -41,7 +41,10 @@ pub fn ts_base_value(key: &TsGroupKey, item_count: usize) -> f64 {
         TypeAliasName { .. } => 1.0,
         ConstName { .. } => 1.0,
         MacroName { .. } => 1.0,
-        ImplBlock { is_boilerplate_trait: true, .. } => 0.15,
+        ImplBlock {
+            is_boilerplate_trait: true,
+            ..
+        } => 0.15,
         ImplBlock { .. } => 0.8,
         ModuleDocFirst => 1.0,
 
@@ -49,9 +52,8 @@ pub fn ts_base_value(key: &TsGroupKey, item_count: usize) -> f64 {
         FunctionSig => 0.7,
 
         // Doc first line: moderate — one-line summary
-        FunctionDocFirst | StructDocFirst | EnumDocFirst | ClassDocFirst
-        | InterfaceDocFirst | TraitDocFirst | TypeAliasDocFirst | ConstDocFirst
-        | MacroDocFirst => 0.4,
+        FunctionDocFirst | StructDocFirst | EnumDocFirst | ClassDocFirst | InterfaceDocFirst
+        | TraitDocFirst | TypeAliasDocFirst | ConstDocFirst | MacroDocFirst => 0.4,
 
         // Body: kind-dependent
         FunctionBody => 0.2,
@@ -61,14 +63,21 @@ pub fn ts_base_value(key: &TsGroupKey, item_count: usize) -> f64 {
 
         // Doc rest: low — the first line already gives the gist
         ModuleDocRest | FunctionDocRest | StructDocRest | EnumDocRest | ClassDocRest
-        | InterfaceDocRest | TraitDocRest | TypeAliasDocRest | ConstDocRest
-        | MacroDocRest => 0.3,
+        | InterfaceDocRest | TraitDocRest | TypeAliasDocRest | ConstDocRest | MacroDocRest => 0.3,
 
         // Imports
-        Import { first_party: true, .. } => 0.1,
-        Import { first_party: false, .. } => 0.0, // 3rd party imports only via dependent_siblings
-        ImportedItems { first_party: true, .. } => 1.0,
-        ImportedItems { first_party: false, .. } => 0.1,
+        Import {
+            first_party: true, ..
+        } => 0.1,
+        Import {
+            first_party: false, ..
+        } => 0.0, // 3rd party imports only via dependent_siblings
+        ImportedItems {
+            first_party: true, ..
+        } => 1.0,
+        ImportedItems {
+            first_party: false, ..
+        } => 0.1,
 
         // Headings: depth-dependent
         Heading { level, .. } => match level {
@@ -97,10 +106,7 @@ pub fn ts_base_value(key: &TsGroupKey, item_count: usize) -> f64 {
 // ---------------------------------------------------------------------------
 
 /// Modifier contribution from a Folders group to its child groups.
-pub fn folders_contribution(
-    parent_dir: &Path,
-    category: FileCategory,
-) -> f64 {
+pub fn folders_contribution(parent_dir: &Path, category: FileCategory) -> f64 {
     let depth = classify::effective_depth(parent_dir);
     let depth_factor = match depth {
         0..=1 => 1.0,
@@ -133,7 +139,9 @@ pub fn files_contribution(
 ) -> f64 {
     let role_factor = match role {
         FileRole::Architecture | FileRole::Readme if is_root_dir => 1.5,
-        FileRole::Translated | FileRole::Changelog | FileRole::CommunityHealth
+        FileRole::Translated
+        | FileRole::Changelog
+        | FileRole::CommunityHealth
         | FileRole::AiConfig => 0.1,
         _ => 1.0,
     };
@@ -143,7 +151,12 @@ pub fn files_contribution(
     let test_file_factor = if is_test_file { 0.15 } else { 1.0 };
     let companion_header_factor = if has_companion_header { 0.3 } else { 1.0 };
 
-    role_factor * deprioritized_factor * type_declaration_factor * header_factor * test_file_factor * companion_header_factor
+    role_factor
+        * deprioritized_factor
+        * type_declaration_factor
+        * header_factor
+        * test_file_factor
+        * companion_header_factor
 }
 
 /// Modifier for generated files, applied to child TsGroups after source is read.
@@ -160,10 +173,14 @@ pub fn visibility_contribution(is_public: bool) -> f64 {
 /// Modifier contribution for documented vs undocumented.
 pub fn documented_contribution(is_documented: bool, key: &TsGroupKey) -> f64 {
     // Sections and module docs are inherently documented
-    if matches!(key,
-        TsGroupKey::Heading { .. } | TsGroupKey::HeadingBody { .. }
-        | TsGroupKey::ModuleDocFirst | TsGroupKey::ModuleDocRest
-        | TsGroupKey::DataSection | TsGroupKey::DataSectionBody
+    if matches!(
+        key,
+        TsGroupKey::Heading { .. }
+            | TsGroupKey::HeadingBody { .. }
+            | TsGroupKey::ModuleDocFirst
+            | TsGroupKey::ModuleDocRest
+            | TsGroupKey::DataSection
+            | TsGroupKey::DataSectionBody
     ) {
         return 1.0;
     }

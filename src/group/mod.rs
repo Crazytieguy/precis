@@ -110,13 +110,17 @@ impl<'s> Group<'s> {
     /// First file path for tiebreaking (A1).
     pub fn first_path(&self) -> &Path {
         match self {
-            Group::Folders(g) => g.items.first().map(|p| p.as_path()).unwrap_or(&g.parent_dir),
-            Group::Files(g) => g.items.first().map(|p| p.as_path()).unwrap_or(&g.parent_dir),
-            Group::Ts(g) => g
+            Group::Folders(g) => g
                 .items
                 .first()
-                .map(|i| i.path)
-                .unwrap_or(Path::new("")),
+                .map(|p| p.as_path())
+                .unwrap_or(&g.parent_dir),
+            Group::Files(g) => g
+                .items
+                .first()
+                .map(|p| p.as_path())
+                .unwrap_or(&g.parent_dir),
+            Group::Ts(g) => g.items.first().map(|i| i.path).unwrap_or(Path::new("")),
         }
     }
 

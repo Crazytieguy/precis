@@ -1,7 +1,7 @@
 use std::path::Path;
 
-use crate::classify::FileRole;
 use crate::Lang;
+use crate::classify::FileRole;
 
 /// Returns `(representative_node, end_row_inclusive)` for the file's
 /// module-level doc comment, if present.
@@ -16,9 +16,7 @@ pub(super) fn detect_module_doc<'t>(
         Lang::Python => detect_python(root, source)?,
         Lang::Go => detect_go(root, source)?,
         Lang::Java => detect_java(root, source)?,
-        Lang::Markdown if FileRole::from_path(path) == FileRole::Readme => {
-            detect_markdown(root)?
-        }
+        Lang::Markdown if FileRole::from_path(path) == FileRole::Readme => detect_markdown(root)?,
         _ => return None,
     };
     Some((node, end_row))
@@ -81,11 +79,7 @@ fn detect_python<'t>(
             if matches!(first_child.kind(), "string" | "concatenated_string") {
                 let text = first_child.utf8_text(source.as_bytes()).ok()?;
                 if text.starts_with("\"\"\"") || text.starts_with("'''") {
-                    return Some((
-                        child.start_position().row,
-                        child.end_position().row,
-                        child,
-                    ));
+                    return Some((child.start_position().row, child.end_position().row, child));
                 }
             }
         }
@@ -164,7 +158,10 @@ fn detect_markdown<'t>(
         }
         if child.kind() == "section" {
             let mut inner = child.walk();
-            if child.children(&mut inner).any(|gc| is_heading_node(gc.kind())) {
+            if child
+                .children(&mut inner)
+                .any(|gc| is_heading_node(gc.kind()))
+            {
                 return None;
             }
         }

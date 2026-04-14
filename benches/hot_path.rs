@@ -1,4 +1,4 @@
-use criterion::{criterion_group, criterion_main, Criterion};
+use criterion::{Criterion, criterion_group, criterion_main};
 use std::path::Path;
 
 fn bench_render_small(c: &mut Criterion) {
@@ -23,9 +23,7 @@ fn bench_render_small(c: &mut Criterion) {
 }
 
 fn bench_render_large(c: &mut Criterion) {
-    let fixtures: &[(&str, usize, &str)] = &[
-        ("sps", 8000, "render/sps_8000"),
-    ];
+    let fixtures: &[(&str, usize, &str)] = &[("sps", 8000, "render/sps_8000")];
 
     for &(subpath, budget, bench_name) in fixtures {
         let root = Path::new(env!("CARGO_MANIFEST_DIR"))
@@ -42,9 +40,5 @@ fn bench_render_large(c: &mut Criterion) {
     }
 }
 
-criterion_group!(
-    benches,
-    bench_render_small,
-    bench_render_large,
-);
+criterion_group!(benches, bench_render_small, bench_render_large,);
 criterion_main!(benches);

@@ -11,10 +11,10 @@ use std::path::Path;
 use streaming_iterator::StreamingIterator;
 use tree_sitter::{Node, QueryCursor};
 
+use crate::Lang;
 use crate::group::TsGroupKey;
 use crate::group::TsItem;
 use crate::store::LanguageConfig;
-use crate::Lang;
 
 /// Extract top-level items from a parsed source file, classifying each
 /// directly into a `TsGroupKey` paired with a `TsItem`.
@@ -192,9 +192,7 @@ fn classify<'t>(
         }),
         "impl_item" => {
             let trait_node = node.child_by_field_name("trait");
-            let is_boilerplate = trait_node.is_some_and(|t| {
-                is_boilerplate_trait_impl(t, source)
-            });
+            let is_boilerplate = trait_node.is_some_and(|t| is_boilerplate_trait_impl(t, source));
             Some(ImplBlock {
                 is_trait_impl: trait_node.is_some(),
                 is_boilerplate_trait: is_boilerplate,
@@ -311,10 +309,7 @@ fn classify<'t>(
         }),
         "class_specifier" | "struct_specifier" | "union_specifier" | "enum_specifier" => {
             node.child_by_field_name("body")?;
-            if node
-                .parent()
-                .is_some_and(|p| p.kind() == "type_definition")
-            {
+            if node.parent().is_some_and(|p| p.kind() == "type_definition") {
                 return None;
             }
             match node.kind() {
@@ -417,8 +412,7 @@ fn classify<'t>(
         }),
         "expression_statement" if lang == Lang::Python => {
             let name = python_module_const_name(node, source)?;
-            let public =
-                !name.starts_with('_') || (name.starts_with("__") && name.ends_with("__"));
+            let public = !name.starts_with('_') || (name.starts_with("__") && name.ends_with("__"));
             Some(ConstName { documented, public })
         }
 
@@ -534,15 +528,9 @@ fn classify_js_lexical(
         value_kind,
         Some("arrow_function" | "function_expression" | "generator_function")
     ) {
-        Some(FunctionName {
-            documented,
-            public,
-        })
+        Some(FunctionName { documented, public })
     } else {
-        Some(ConstName {
-            documented,
-            public,
-        })
+        Some(ConstName { documented, public })
     }
 }
 
@@ -570,18 +558,14 @@ fn classify_js_export(node: Node, source: &str) -> Option<TsGroupKey> {
 
     // `export default expr` — not a re-export
     cursor = node.walk();
-    let has_default = node
-        .children(&mut cursor)
-        .any(|c| c.kind() == "default");
+    let has_default = node.children(&mut cursor).any(|c| c.kind() == "default");
     if has_default {
         return None;
     }
 
     // Remaining cases: `export * from '...'`, `export { } from '...'`, `export { }`
     cursor = node.walk();
-    let has_source = node
-        .children(&mut cursor)
-        .any(|c| c.kind() == "string");
+    let has_source = node.children(&mut cursor).any(|c| c.kind() == "string");
     let first_party = if has_source {
         is_first_party_import(node, source, Lang::JsTs)
     } else {
@@ -653,9 +637,7 @@ fn is_rhs_require_first_party(rhs: Node, source: &str) -> bool {
         Some(a) if a.kind() == "string" => a,
         _ => return false,
     };
-    let text = first_arg
-        .utf8_text(source.as_bytes())
-        .unwrap_or("");
+    let text = first_arg.utf8_text(source.as_bytes()).unwrap_or("");
     let unquoted = text.trim_matches(|c: char| c == '\'' || c == '"');
     unquoted.starts_with("./") || unquoted.starts_with("../")
 }
@@ -701,7 +683,10 @@ fn is_require_first_party(declarator: Option<Node>, source: &str) -> bool {
 }
 
 fn java_field_is_static_final(node: Node, source: &str) -> bool {
-    let modifiers = match node.children(&mut node.walk()).find(|c| c.kind() == "modifiers") {
+    let modifiers = match node
+        .children(&mut node.walk())
+        .find(|c| c.kind() == "modifiers")
+    {
         Some(m) => m,
         None => return false,
     };
@@ -947,9 +932,7 @@ fn is_first_party_import(node: Node, source: &str, lang: Lang) -> bool {
     match lang {
         Lang::Rust => {
             let path = rust_use_path(text);
-            path.starts_with("crate::")
-                || path.starts_with("self::")
-                || path.starts_with("super::")
+            path.starts_with("crate::") || path.starts_with("self::") || path.starts_with("super::")
         }
         Lang::JsTs => {
             if let Some(from_pos) = text.rfind(" from ") {
@@ -1202,7 +1185,8 @@ fn trait_type_name<'a>(node: Node, source: &'a str) -> &'a str {
         return node.utf8_text(source.as_bytes()).unwrap_or("");
     }
     if (node.kind() == "scoped_type_identifier" || node.kind() == "generic_type")
-        && let Some(name_node) = node.child_by_field_name("name")
+        && let Some(name_node) = node
+            .child_by_field_name("name")
             .or_else(|| node.child_by_field_name("type"))
     {
         return trait_type_name(name_node, source);

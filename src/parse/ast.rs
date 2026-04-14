@@ -48,7 +48,11 @@ pub(crate) fn compute_body_start_line(node: tree_sitter::Node, lang: Lang) -> Op
         && type_child.child_by_field_name("name").is_none()
     {
         let end = node.end_position();
-        return Some(if end.column == 0 { end.row } else { end.row + 1 });
+        return Some(if end.column == 0 {
+            end.row
+        } else {
+            end.row + 1
+        });
     }
 
     None
@@ -65,7 +69,11 @@ fn find_doc_before<'a>(
         candidate = candidate.prev_named_sibling()?;
     }
     if is_doc_comment_node(candidate, source, lang)
-        && node.start_position().row.saturating_sub(candidate.end_position().row) <= max_gap
+        && node
+            .start_position()
+            .row
+            .saturating_sub(candidate.end_position().row)
+            <= max_gap
     {
         Some(candidate)
     } else {
@@ -95,19 +103,28 @@ pub(crate) fn compute_doc_line_range(
 
     let max_gap = 2;
 
-    let last_doc = find_doc_before(symbol_node, source, lang, max_gap)
-        .or_else(|| {
-            let parent = symbol_node.parent()?;
-            if matches!(parent.kind(), "export_statement" | "decorated_definition"
-                | "type_declaration" | "const_declaration" | "var_declaration") {
-                find_doc_before(parent, source, lang, max_gap)
-            } else {
-                None
-            }
-        })?;
+    let last_doc = find_doc_before(symbol_node, source, lang, max_gap).or_else(|| {
+        let parent = symbol_node.parent()?;
+        if matches!(
+            parent.kind(),
+            "export_statement"
+                | "decorated_definition"
+                | "type_declaration"
+                | "const_declaration"
+                | "var_declaration"
+        ) {
+            find_doc_before(parent, source, lang, max_gap)
+        } else {
+            None
+        }
+    })?;
 
     let end_pos = last_doc.end_position();
-    let doc_end_row_excl = if end_pos.column == 0 { end_pos.row } else { end_pos.row + 1 };
+    let doc_end_row_excl = if end_pos.column == 0 {
+        end_pos.row
+    } else {
+        end_pos.row + 1
+    };
     let mut doc_start_row = last_doc.start_position().row;
     let mut current = last_doc;
 
@@ -152,10 +169,18 @@ pub(super) fn is_inside_function(node: tree_sitter::Node) -> bool {
     let mut current = node.parent();
     while let Some(parent) = current {
         match parent.kind() {
-            "function_item" | "function_declaration" | "function_expression"
-            | "method_definition" | "arrow_function" | "generator_function"
-            | "generator_function_declaration" | "method_declaration" | "func_literal"
-            | "constructor_declaration" | "lambda_expression" | "function_definition" => {
+            "function_item"
+            | "function_declaration"
+            | "function_expression"
+            | "method_definition"
+            | "arrow_function"
+            | "generator_function"
+            | "generator_function_declaration"
+            | "method_declaration"
+            | "func_literal"
+            | "constructor_declaration"
+            | "lambda_expression"
+            | "function_definition" => {
                 return true;
             }
             _ => {}
@@ -202,11 +227,7 @@ pub(super) fn is_rust_test_code(node: tree_sitter::Node, source: &str) -> bool {
     false
 }
 
-pub(crate) fn has_preceding_attribute(
-    node: tree_sitter::Node,
-    source: &str,
-    needle: &str,
-) -> bool {
+pub(crate) fn has_preceding_attribute(node: tree_sitter::Node, source: &str, needle: &str) -> bool {
     let mut sibling = node.prev_sibling();
     while let Some(sib) = sibling {
         if sib.kind() == "attribute_item" {
@@ -228,13 +249,27 @@ pub(crate) fn is_documented(node: tree_sitter::Node, source: &str, lang: Lang) -
 }
 
 fn has_python_docstring(symbol_node: tree_sitter::Node, source: &str) -> bool {
-    let Some(body) = symbol_node.child_by_field_name("body") else { return false };
-    if body.kind() != "block" { return false; }
-    let Some(first_stmt) = body.named_child(0) else { return false };
-    if first_stmt.kind() != "expression_statement" { return false; }
-    let Some(string_node) = first_stmt.named_child(0) else { return false };
-    if !matches!(string_node.kind(), "string" | "concatenated_string") { return false; }
-    let Ok(text) = string_node.utf8_text(source.as_bytes()) else { return false };
+    let Some(body) = symbol_node.child_by_field_name("body") else {
+        return false;
+    };
+    if body.kind() != "block" {
+        return false;
+    }
+    let Some(first_stmt) = body.named_child(0) else {
+        return false;
+    };
+    if first_stmt.kind() != "expression_statement" {
+        return false;
+    }
+    let Some(string_node) = first_stmt.named_child(0) else {
+        return false;
+    };
+    if !matches!(string_node.kind(), "string" | "concatenated_string") {
+        return false;
+    }
+    let Ok(text) = string_node.utf8_text(source.as_bytes()) else {
+        return false;
+    };
     text.starts_with("\"\"\"") || text.starts_with("'''")
 }
 
@@ -253,10 +288,17 @@ pub(crate) fn compute_python_docstring_range(
 
     let start_row = string_node.start_position().row;
     let end_row = string_node.end_position().row;
-    let quote = if text.starts_with("\"\"\"") { "\"\"\"" } else { "'''" };
+    let quote = if text.starts_with("\"\"\"") {
+        "\"\"\""
+    } else {
+        "'''"
+    };
 
     let start_line = source.lines().nth(start_row).unwrap_or("");
-    let after_quotes = start_line.trim_start().strip_prefix(quote).map_or("", |s| s.trim());
+    let after_quotes = start_line
+        .trim_start()
+        .strip_prefix(quote)
+        .map_or("", |s| s.trim());
     let content_start = if after_quotes.is_empty() || after_quotes == quote {
         start_row + 1
     } else {
@@ -264,7 +306,11 @@ pub(crate) fn compute_python_docstring_range(
     };
 
     let end_line = source.lines().nth(end_row).unwrap_or("");
-    let content_end = if end_line.trim() == quote { end_row } else { end_row + 1 };
+    let content_end = if end_line.trim() == quote {
+        end_row
+    } else {
+        end_row + 1
+    };
 
     if content_start >= content_end {
         return Some((start_row + 1, start_row + 2));

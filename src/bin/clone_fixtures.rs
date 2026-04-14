@@ -15,7 +15,9 @@ macro_rules! with_fixtures {
         const FIXTURES: &[(&str, &str, &str)] = &[$(($dir, $url, $rev)),*];
     };
 }
-macro_rules! with_entries { ($($tt:tt)*) => {} }
+macro_rules! with_entries {
+    ($($tt:tt)*) => {};
+}
 include!("../../test/fixtures.rs");
 
 macro_rules! with_perf_fixtures {
@@ -111,7 +113,10 @@ fn clone_perf(filter: Option<&str>) {
         cloned += 1;
     }
 
-    eprintln!("{} cloned, {} already present, {} failed", cloned, skipped, failed);
+    eprintln!(
+        "{} cloned, {} already present, {} failed",
+        cloned, skipped, failed
+    );
     if failed > 0 {
         std::process::exit(1);
     }

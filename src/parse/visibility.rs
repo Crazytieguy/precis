@@ -6,11 +6,7 @@ use super::ast::has_preceding_attribute;
 /// headings. Language-specific: Go uses identifier case, Python `_` prefix,
 /// C `static` + `_` prefix, Lua `local` keyword, others check for explicit
 /// `pub` / `export`.
-pub(crate) fn symbol_visibility(
-    node: tree_sitter::Node,
-    source: &str,
-    lang: Lang,
-) -> bool {
+pub(crate) fn symbol_visibility(node: tree_sitter::Node, source: &str, lang: Lang) -> bool {
     let base = match lang {
         Lang::Go => {
             let ident = node
@@ -48,11 +44,7 @@ pub(crate) fn symbol_visibility(
 /// Visibility for imports. Non-Rust imports are never public (importing is
 /// not exporting in most languages). Rust `pub use` is public, subject to
 /// `#[doc(hidden)]`.
-pub(crate) fn import_visibility(
-    node: tree_sitter::Node,
-    source: &str,
-    lang: Lang,
-) -> bool {
+pub(crate) fn import_visibility(node: tree_sitter::Node, source: &str, lang: Lang) -> bool {
     if lang != Lang::Rust {
         return false;
     }
@@ -63,11 +55,7 @@ pub(crate) fn import_visibility(
 /// `#[macro_export]` override that promotes otherwise-private macros to
 /// public. `symbol_visibility` has already filtered `#[doc(hidden)]` out
 /// of `base`, so we only need to handle the promotion direction here.
-pub(crate) fn macro_visibility(
-    node: tree_sitter::Node,
-    source: &str,
-    lang: Lang,
-) -> bool {
+pub(crate) fn macro_visibility(node: tree_sitter::Node, source: &str, lang: Lang) -> bool {
     let base = symbol_visibility(node, source, lang);
     if !base
         && lang == Lang::Rust

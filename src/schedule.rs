@@ -170,12 +170,13 @@ pub fn schedule<'s>(seed: Vec<Group<'s>>, ctx: &ScheduleCtx<'s>) -> String {
 
     // Defensive trim to char budget
     if let Some(cb) = ctx.char_budget
-        && output.len() > cb {
-            output.truncate(cb);
-            if let Some(pos) = output.rfind('\n') {
-                output.truncate(pos + 1);
-            }
+        && output.len() > cb
+    {
+        output.truncate(cb);
+        if let Some(pos) = output.rfind('\n') {
+            output.truncate(pos + 1);
         }
+    }
 
     output
 }
@@ -209,9 +210,7 @@ fn probe_cost(
     childless_folders: &HashMap<PathBuf, FileCost>,
 ) -> FileCost {
     match group {
-        Group::Ts(g) => {
-            g.cached_render.as_ref().unwrap().marginal_cost
-        }
+        Group::Ts(g) => g.cached_render.as_ref().unwrap().marginal_cost,
         Group::Folders(g) => {
             let costs = g.cached_item_costs.as_ref().unwrap();
             let mut fc = FileCost::default();
@@ -325,7 +324,9 @@ fn is_auto_commit_body(group: &Group<'_>, remaining_tokens: usize, total_budget:
     if group.value() < AUTO_COMMIT_MIN_VALUE {
         return false;
     }
-    if remaining_tokens <= total_budget * (AUTO_COMMIT_BUDGET_FRACTION - 1) / AUTO_COMMIT_BUDGET_FRACTION {
+    if remaining_tokens
+        <= total_budget * (AUTO_COMMIT_BUDGET_FRACTION - 1) / AUTO_COMMIT_BUDGET_FRACTION
+    {
         return false;
     }
     match g.key {
@@ -336,13 +337,10 @@ fn is_auto_commit_body(group: &Group<'_>, remaining_tokens: usize, total_budget:
                 item.end_line.saturating_sub(body_start) <= limit
             })
         }
-        crate::group::TsGroupKey::HeadingBody { level: 1 } => {
-            g.items.iter().any(|item| {
-                crate::classify::FileRole::from_path(item.path)
-                    == crate::classify::FileRole::Readme
-                    && item.path.parent().is_some_and(|p| p.as_os_str().is_empty())
-            })
-        }
+        crate::group::TsGroupKey::HeadingBody { level: 1 } => g.items.iter().any(|item| {
+            crate::classify::FileRole::from_path(item.path) == crate::classify::FileRole::Readme
+                && item.path.parent().is_some_and(|p| p.as_os_str().is_empty())
+        }),
         _ => false,
     }
 }

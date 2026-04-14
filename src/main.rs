@@ -25,9 +25,11 @@ fn main() {
     let cli = Cli::parse();
     let path = &cli.path;
     let budget = cli.budget;
-    let char_budget = cli
-        .char_budget
-        .or_else(|| std::env::var("CLAUDE_PLUGIN_ROOT").ok().map(|_| PLUGIN_CHAR_BUDGET));
+    let char_budget = cli.char_budget.or_else(|| {
+        std::env::var("CLAUDE_PLUGIN_ROOT")
+            .ok()
+            .map(|_| PLUGIN_CHAR_BUDGET)
+    });
 
     if !path.exists() {
         eprintln!("Error: {:?} does not exist", path);
