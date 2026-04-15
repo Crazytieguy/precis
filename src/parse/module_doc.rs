@@ -5,7 +5,7 @@ use crate::classify::FileRole;
 
 /// Returns `(representative_node, end_row_inclusive)` for the file's
 /// module-level doc comment, if present.
-pub(super) fn detect_module_doc<'t>(
+pub(crate) fn detect_module_doc<'t>(
     root: tree_sitter::Node<'t>,
     source: &str,
     lang: Lang,

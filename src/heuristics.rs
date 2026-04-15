@@ -34,68 +34,51 @@ pub fn files_base_value(item_count: usize, role: FileRole) -> f64 {
 pub fn ts_base_value(key: &TsGroupKey, item_count: usize) -> f64 {
     use TsGroupKey::*;
     let per_kind_constant = match key {
-        // Names: highest priority — these orient the reader
-        FunctionName { .. } => 1.0,
-        StructName { .. } | ClassName { .. } | InterfaceName { .. } | TraitName { .. } => 1.0,
-        EnumName { .. } => 1.0,
-        TypeAliasName { .. } => 1.0,
-        ConstName { .. } => 1.0,
-        MacroName { .. } => 1.0,
-        ImplBlock {
-            is_boilerplate_trait: true,
-            ..
-        } => 0.15,
-        ImplBlock { .. } => 0.8,
-        ModuleDocFirst => 1.0,
+        FunctionName(_) => 1.0,
+        StructName(_) | ClassName(_) | InterfaceName(_) | TraitName(_) => 1.0,
+        EnumName(_) => 1.0,
+        TypeAliasName(_) => 1.0,
+        ConstName(_) => 1.0,
+        MacroName(_) => 1.0,
+        ImplBlock(b) if b.is_boilerplate_trait => 0.15,
+        ImplBlock(_) => 0.8,
+        ModuleDocFirst(_) => 1.0,
 
-        // Signatures: moderate — show parameters and return types
-        FunctionSig => 0.7,
+        FunctionSig(_) => 0.7,
 
-        // Doc first line: moderate — one-line summary
-        FunctionDocFirst | StructDocFirst | EnumDocFirst | ClassDocFirst | InterfaceDocFirst
-        | TraitDocFirst | TypeAliasDocFirst | ConstDocFirst | MacroDocFirst => 0.4,
+        FunctionDocFirst(_) | StructDocFirst(_) | EnumDocFirst(_) | ClassDocFirst(_)
+        | InterfaceDocFirst(_) | TraitDocFirst(_) | TypeAliasDocFirst(_) | ConstDocFirst(_)
+        | MacroDocFirst(_) => 0.4,
 
-        // Body: kind-dependent
-        FunctionBody => 0.2,
-        StructBody => 1.2,
-        EnumBody => 1.5,
-        ClassBody => 1.0,
+        FunctionBody(_) => 0.2,
+        StructBody(_) => 1.2,
+        EnumBody(_) => 1.5,
+        ClassBody(_) => 1.0,
 
-        // Doc rest: low — the first line already gives the gist
-        ModuleDocRest | FunctionDocRest | StructDocRest | EnumDocRest | ClassDocRest
-        | InterfaceDocRest | TraitDocRest | TypeAliasDocRest | ConstDocRest | MacroDocRest => 0.3,
+        ModuleDocRest(_) | FunctionDocRest(_) | StructDocRest(_) | EnumDocRest(_)
+        | ClassDocRest(_) | InterfaceDocRest(_) | TraitDocRest(_) | TypeAliasDocRest(_)
+        | ConstDocRest(_) | MacroDocRest(_) => 0.3,
 
-        // Imports
-        Import {
-            first_party: true, ..
-        } => 0.1,
-        Import {
-            first_party: false, ..
-        } => 0.0, // 3rd party imports only via dependent_siblings
-        ImportedItems {
-            first_party: true, ..
-        } => 1.0,
-        ImportedItems {
-            first_party: false, ..
-        } => 0.1,
+        Import(i) if i.first_party => 0.1,
+        Import(_) => 0.0,
+        ImportedItems(i) if i.first_party => 1.0,
+        ImportedItems(_) => 0.1,
 
-        // Headings: depth-dependent
-        Heading { level, .. } => match level {
+        Heading(h) => match h.level {
             1 => 1.0,
             2 => 0.6,
             3 => 0.15,
             _ => 0.08,
         },
-        HeadingBody { level } => match level {
+        HeadingBody(h) => match h.level {
             1 => 1.2,
             2 => 0.5,
             3 => 0.1,
             _ => 0.05,
         },
 
-        // Data sections
-        DataSection => 0.8,
-        DataSectionBody => 0.3,
+        DataSection(_) => 0.8,
+        DataSectionBody(_) => 0.3,
     };
 
     (item_count as f64).powf(0.75) * per_kind_constant
@@ -159,42 +142,10 @@ pub fn files_contribution(
         * companion_header_factor
 }
 
-/// Modifier for generated files, applied to child TsGroups after source is read.
-pub fn generated_contribution(is_generated: bool) -> f64 {
-    if is_generated { 0.0 } else { 1.0 }
-}
-
-/// Modifier contribution for visibility (public vs private).
-/// Applied to the modifier of private-variant groups.
-pub fn visibility_contribution(is_public: bool) -> f64 {
-    if is_public { 1.0 } else { 0.3 }
-}
-
-/// Modifier contribution for documented vs undocumented.
-pub fn documented_contribution(is_documented: bool, key: &TsGroupKey) -> f64 {
-    // Sections and module docs are inherently documented
-    if matches!(
-        key,
-        TsGroupKey::Heading { .. }
-            | TsGroupKey::HeadingBody { .. }
-            | TsGroupKey::ModuleDocFirst
-            | TsGroupKey::ModuleDocRest
-            | TsGroupKey::DataSection
-            | TsGroupKey::DataSectionBody
-    ) {
-        return 1.0;
-    }
-    if is_documented { 1.0 } else { 0.5 }
-}
-
-/// Modifier for boilerplate heading sections.
-pub fn boilerplate_heading_contribution() -> f64 {
-    0.1
-}
-
-/// Modifier for reexport imports.
-pub fn reexport_contribution() -> f64 {
-    0.1
-}
+pub const GENERATED_FACTOR: f64 = 0.0;
+pub const PRIVATE_FACTOR: f64 = 0.3;
+pub const UNDOCUMENTED_FACTOR: f64 = 0.5;
+pub const BOILERPLATE_HEADING_FACTOR: f64 = 0.1;
+pub const REEXPORT_FACTOR: f64 = 0.1;
 
 pub const COMPACT_BODY_LINE_LIMIT: usize = 25;

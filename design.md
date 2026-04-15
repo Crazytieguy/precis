@@ -567,18 +567,18 @@ number). Prefix entries append `…` to the content.
 
 ### 7.1 Tree-sitter queries
 
-Unchanged in principle. The `queries/*.scm` files continue to capture
-structural nodes with `@symbol` and `@name` captures. A per-language routing
-layer maps captures to tree-sitter group kinds.
+Each tree-sitter group kind owns its per-language query strings, colocated
+with its `TsGroupKindParse` impl in `src/group/ts/<family>.rs`. At parse
+time, the dispatcher concatenates every kind's query for the current
+language into one combined `tree_sitter::Query`, walks the tree once, and
+buckets matches back to their originating kind by `pattern_index`.
 
 ### 7.2 Nested-item filtering
 
 Nested items (e.g., a function defined inside another function) should be
-filtered out of the top-level item pool. This can be implemented either at
-the query level (tightening the `.scm` queries to exclude nested matches) or
-as a post-query pass that drops matches whose captured `@symbol` node has a
-same-kind `@symbol` ancestor. The choice is an implementation detail, but
-the behavior must be consistent across languages.
+filtered out of the top-level item pool. A post-query pass drops matches
+whose captured `@symbol` node has a same-kind `@symbol` ancestor. Behavior
+must be consistent across languages.
 
 ### 7.3 Classification
 
@@ -725,7 +725,7 @@ compromising around it.
 
 ### Rendering
 
-- **R1 — Source fidelity.** Every `LineEntry::Full` and `LineEntry::Prefix`
+- **R1 — Source fidelity.** Every `LineEntry::Complete` and `LineEntry::Truncated`
   holds a `&str` that is a slice of the original parsed source. `Ellipsis` is
   the only non-source output from tree-sitter group rendering. Folder and
   file groups render paths separately; that carve-out is the only other

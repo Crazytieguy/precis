@@ -1,5 +1,37 @@
 use crate::Lang;
 
+/// Reject symbols whose parent chain crosses a callable scope boundary —
+/// functions, methods, arrow functions, lambdas, generators. Item-level
+/// containment (class methods dropped by an outer class, typedef-wrapped
+/// struct fields, etc.) is handled separately by `filter_nested_items` —
+/// this check is only for *uncaptured* scope boundaries that item-level
+/// containment can't see, e.g. consts defined inside a
+/// `describe('...', () => { ... })` callback.
+pub(crate) fn is_inside_scope_boundary(node: tree_sitter::Node) -> bool {
+    let mut current = node.parent();
+    while let Some(parent) = current {
+        if matches!(
+            parent.kind(),
+            "function_item"
+                | "function_declaration"
+                | "function_expression"
+                | "function_definition"
+                | "method_definition"
+                | "method_declaration"
+                | "arrow_function"
+                | "generator_function"
+                | "generator_function_declaration"
+                | "func_literal"
+                | "constructor_declaration"
+                | "lambda_expression"
+        ) {
+            return true;
+        }
+        current = parent.parent();
+    }
+    false
+}
+
 /// Returns the 0-indexed line where the body content begins (the line after
 /// the opening `{` or `:` for Python).
 pub(crate) fn compute_body_start_line(node: tree_sitter::Node, lang: Lang) -> Option<usize> {
@@ -157,40 +189,15 @@ fn is_doc_comment_node(node: tree_sitter::Node, source: &str, lang: Lang) -> boo
     };
     match lang {
         Lang::Rust => text.starts_with("///") || text.starts_with("/**"),
-        Lang::Go | Lang::C => true,
-        Lang::JsTs | Lang::Java => text.starts_with("/**"),
+        Lang::Go | Lang::C | Lang::Cpp => true,
+        Lang::TypeScript | Lang::Tsx | Lang::Java => text.starts_with("/**"),
         Lang::Python => text.starts_with('#'),
         Lang::Lua => text.starts_with("---"),
         _ => false,
     }
 }
 
-pub(super) fn is_inside_function(node: tree_sitter::Node) -> bool {
-    let mut current = node.parent();
-    while let Some(parent) = current {
-        match parent.kind() {
-            "function_item"
-            | "function_declaration"
-            | "function_expression"
-            | "method_definition"
-            | "arrow_function"
-            | "generator_function"
-            | "generator_function_declaration"
-            | "method_declaration"
-            | "func_literal"
-            | "constructor_declaration"
-            | "lambda_expression"
-            | "function_definition" => {
-                return true;
-            }
-            _ => {}
-        }
-        current = parent.parent();
-    }
-    false
-}
-
-pub(super) fn is_inside_rust_anon_const(node: tree_sitter::Node, source: &str) -> bool {
+pub(crate) fn is_inside_rust_anon_const(node: tree_sitter::Node, source: &str) -> bool {
     let mut current = node.parent();
     while let Some(parent) = current {
         if parent.kind() == "const_item" {
@@ -208,7 +215,7 @@ pub(super) fn is_inside_rust_anon_const(node: tree_sitter::Node, source: &str) -
     false
 }
 
-pub(super) fn is_rust_test_code(node: tree_sitter::Node, source: &str) -> bool {
+pub(crate) fn is_rust_test_code(node: tree_sitter::Node, source: &str) -> bool {
     if has_preceding_attribute(node, source, "#[test]")
         || has_preceding_attribute(node, source, "#[cfg(test)]")
     {

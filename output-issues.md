@@ -177,3 +177,11 @@ In repos dominated by one large data file plus asset directories, current shows 
 
 For projects whose identity includes non-source artifacts (shaders, platform glue files, Makefiles, asset data), current tends to concentrate budget on source code and under-represent the heterogeneous file landscape. Partially overlaps with #37 (implementation files omitted) — the difference is #37 is about missing the file where code lives, while this is about missing file kinds that collectively define what the project *is*. Low significance because it only clearly surfaced in one fixture.
 
+## 45. Java fields silently dropped
+
+Java `field_declaration` nodes reach `ConstName::from_parse` (`src/group/ts/const_.rs`) only if `java_field_is_static_final(...)` returns true (`src/parse/mod.rs:467-484`). Regular instance fields — which define the shape of every Java DTO, entity, and record-adjacent class — are filtered out at parse time and never appear in output. The same rejection applies via whatever `ClassName::children` spawn logic does for TS/Java class bodies: methods are extracted, fields are not.
+
+Impact: Java snapshots (and by extension TS class-body rendering, which has the same blind spot) hide the structural portion of the type. For a reader trying to understand a Java class, "what data does it carry" is roughly as important as "what methods does it expose", and the current output shows only the latter.
+
+Fix path: extend `ClassName::children` to spawn a field-listing child group (mirroring `spawn_method_children`'s shape), gated on language. Similar to #9 in spirit — a missing body kind for a construct whose body content is load-bearing. Scoped out of the TsGroupKey refactor batch because it requires new spawn logic plus calibration, not just the structural refactor. File now so it doesn't get lost.
+

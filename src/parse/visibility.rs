@@ -24,7 +24,7 @@ pub(crate) fn symbol_visibility(node: tree_sitter::Node, source: &str, lang: Lan
             !ident.starts_with('_') || (ident.starts_with("__") && ident.ends_with("__"))
         }
         Lang::Markdown | Lang::Json | Lang::Toml | Lang::Yaml => true,
-        Lang::C => {
+        Lang::C | Lang::Cpp => {
             let ident = c_identifier_text(node, source);
             !is_c_static(node, source) && !ident.starts_with('_')
         }

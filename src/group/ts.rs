@@ -1,129 +1,136 @@
 //! Tree-sitter group: key enum, children(), render(), and text helpers.
 
+pub mod kind;
+
+pub mod class;
+pub mod const_;
+pub mod data_section;
+pub mod enum_;
+pub mod function;
+pub mod heading;
+pub mod impl_block;
+pub mod import;
+pub mod interface;
+pub mod macro_;
+pub mod module;
+pub mod struct_;
+pub mod trait_;
+pub mod type_alias;
+
 use std::collections::HashMap;
 use std::path::PathBuf;
 
 use crate::Lang;
+use crate::parse::file_ctx::FileCtx;
 use crate::render::LineEntry;
 
 use super::{Group, TsGroup, TsItem};
+use kind::{OwnedQueryMatch, ParseTsGroup, TsGroupKindMethods};
+
+/// Build one `ParseTsGroup` per match, each with a single `TsItem`. The
+/// closure returns `Some(key)` to emit a group, or `None` to skip the match
+/// (e.g. for filtered or polymorphic node kinds).
+pub(crate) fn simple_named_groups<'s, F>(
+    matches: &[OwnedQueryMatch<'s>],
+    ctx: &FileCtx<'s>,
+    mut key_for: F,
+) -> Vec<ParseTsGroup<'s>>
+where
+    F: FnMut(&OwnedQueryMatch<'s>, &FileCtx<'s>) -> Option<TsGroupKey>,
+{
+    let mut out = Vec::with_capacity(matches.len());
+    for m in matches {
+        let Some(key) = key_for(m, ctx) else { continue };
+        let end_line = crate::parse::compute_end_line(m.range_node);
+        let item = TsItem {
+            path: ctx.display_path,
+            source: ctx.source,
+            node: m.range_node,
+            end_line,
+        };
+        out.push(ParseTsGroup {
+            key,
+            items: vec![item],
+            dependent_siblings: Vec::new(),
+        });
+    }
+    out
+}
 
 // ---------------------------------------------------------------------------
 // TsGroupKey enum (design §3.3 + plan extensions)
 // ---------------------------------------------------------------------------
 
-#[derive(Debug, Clone, Hash, Eq, PartialEq, Ord, PartialOrd)]
+#[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, Ord, PartialOrd)]
 pub enum TsGroupKey {
     // Module-level
-    ModuleDocFirst,
-    ModuleDocRest,
+    ModuleDocFirst(module::ModuleDocFirst),
+    ModuleDocRest(module::ModuleDocRest),
 
     // Imports
-    Import {
-        first_party: bool,
-        reexport: bool,
-    },
-    ImportedItems {
-        first_party: bool,
-        reexport: bool,
-    },
+    Import(import::Import),
+    ImportedItems(import::ImportedItems),
 
     // Function-like
-    FunctionName {
-        documented: bool,
-        public: bool,
-    },
-    FunctionDocFirst,
-    FunctionDocRest,
-    FunctionSig,
-    FunctionBody,
+    FunctionName(function::FunctionName),
+    FunctionDocFirst(function::FunctionDocFirst),
+    FunctionDocRest(function::FunctionDocRest),
+    FunctionSig(function::FunctionSig),
+    FunctionBody(function::FunctionBody),
 
     // Structs
-    StructName {
-        documented: bool,
-        public: bool,
-    },
-    StructDocFirst,
-    StructDocRest,
-    StructBody,
+    StructName(struct_::StructName),
+    StructDocFirst(struct_::StructDocFirst),
+    StructDocRest(struct_::StructDocRest),
+    StructBody(struct_::StructBody),
 
     // Enums
-    EnumName {
-        documented: bool,
-        public: bool,
-    },
-    EnumDocFirst,
-    EnumDocRest,
-    EnumBody,
+    EnumName(enum_::EnumName),
+    EnumDocFirst(enum_::EnumDocFirst),
+    EnumDocRest(enum_::EnumDocRest),
+    EnumBody(enum_::EnumBody),
 
     // Classes
-    ClassName {
-        documented: bool,
-        public: bool,
-    },
-    ClassDocFirst,
-    ClassDocRest,
-    ClassBody,
+    ClassName(class::ClassName),
+    ClassDocFirst(class::ClassDocFirst),
+    ClassDocRest(class::ClassDocRest),
+    ClassBody(class::ClassBody),
 
     // Interfaces
-    InterfaceName {
-        documented: bool,
-        public: bool,
-    },
-    InterfaceDocFirst,
-    InterfaceDocRest,
+    InterfaceName(interface::InterfaceName),
+    InterfaceDocFirst(interface::InterfaceDocFirst),
+    InterfaceDocRest(interface::InterfaceDocRest),
 
     // Rust traits
-    TraitName {
-        documented: bool,
-        public: bool,
-    },
-    TraitDocFirst,
-    TraitDocRest,
+    TraitName(trait_::TraitName),
+    TraitDocFirst(trait_::TraitDocFirst),
+    TraitDocRest(trait_::TraitDocRest),
 
     // Rust impl blocks
-    ImplBlock {
-        is_trait_impl: bool,
-        is_boilerplate_trait: bool,
-    },
+    ImplBlock(impl_block::ImplBlock),
 
     // Type aliases
-    TypeAliasName {
-        documented: bool,
-        public: bool,
-    },
-    TypeAliasDocFirst,
-    TypeAliasDocRest,
+    TypeAliasName(type_alias::TypeAliasName),
+    TypeAliasDocFirst(type_alias::TypeAliasDocFirst),
+    TypeAliasDocRest(type_alias::TypeAliasDocRest),
 
     // Consts and statics
-    ConstName {
-        documented: bool,
-        public: bool,
-    },
-    ConstDocFirst,
-    ConstDocRest,
+    ConstName(const_::ConstName),
+    ConstDocFirst(const_::ConstDocFirst),
+    ConstDocRest(const_::ConstDocRest),
 
     // Macros
-    MacroName {
-        documented: bool,
-        public: bool,
-        preproc: bool,
-    },
-    MacroDocFirst,
-    MacroDocRest,
+    MacroName(macro_::MacroName),
+    MacroDocFirst(macro_::MacroDocFirst),
+    MacroDocRest(macro_::MacroDocRest),
 
     // Markdown
-    Heading {
-        level: u8,
-        boilerplate: bool,
-    },
-    HeadingBody {
-        level: u8,
-    },
+    Heading(heading::Heading),
+    HeadingBody(heading::HeadingBody),
 
     // JSON / TOML / YAML
-    DataSection,
-    DataSectionBody,
+    DataSection(data_section::DataSection),
+    DataSectionBody(data_section::DataSectionBody),
 }
 
 impl TsGroupKey {
@@ -131,54 +138,72 @@ impl TsGroupKey {
     pub fn ordinal(&self) -> u32 {
         use TsGroupKey::*;
         match self {
-            ModuleDocFirst => 0,
-            ModuleDocRest => 1,
-            Import { .. } => 2,
-            ImportedItems { .. } => 3,
-            FunctionName { .. } => 10,
-            FunctionDocFirst => 11,
-            FunctionDocRest => 12,
-            FunctionSig => 13,
-            FunctionBody => 14,
-            StructName { .. } => 20,
-            StructDocFirst => 21,
-            StructDocRest => 22,
-            StructBody => 23,
-            EnumName { .. } => 30,
-            EnumDocFirst => 31,
-            EnumDocRest => 32,
-            EnumBody => 33,
-            ClassName { .. } => 40,
-            ClassDocFirst => 41,
-            ClassDocRest => 42,
-            ClassBody => 43,
-            InterfaceName { .. } => 50,
-            InterfaceDocFirst => 51,
-            InterfaceDocRest => 52,
-            TraitName { .. } => 60,
-            TraitDocFirst => 61,
-            TraitDocRest => 62,
-            ImplBlock { .. } => 70,
-            TypeAliasName { .. } => 80,
-            TypeAliasDocFirst => 81,
-            TypeAliasDocRest => 82,
-            ConstName { .. } => 90,
-            ConstDocFirst => 91,
-            ConstDocRest => 92,
-            MacroName { .. } => 100,
-            MacroDocFirst => 101,
-            MacroDocRest => 102,
-            Heading { .. } => 110,
-            HeadingBody { .. } => 111,
-            DataSection => 120,
-            DataSectionBody => 121,
+            ModuleDocFirst(_) => 0,
+            ModuleDocRest(_) => 1,
+            Import(_) => 2,
+            ImportedItems(_) => 3,
+            FunctionName(_) => 10,
+            FunctionDocFirst(_) => 11,
+            FunctionDocRest(_) => 12,
+            FunctionSig(_) => 13,
+            FunctionBody(_) => 14,
+            StructName(_) => 20,
+            StructDocFirst(_) => 21,
+            StructDocRest(_) => 22,
+            StructBody(_) => 23,
+            EnumName(_) => 30,
+            EnumDocFirst(_) => 31,
+            EnumDocRest(_) => 32,
+            EnumBody(_) => 33,
+            ClassName(_) => 40,
+            ClassDocFirst(_) => 41,
+            ClassDocRest(_) => 42,
+            ClassBody(_) => 43,
+            InterfaceName(_) => 50,
+            InterfaceDocFirst(_) => 51,
+            InterfaceDocRest(_) => 52,
+            TraitName(_) => 60,
+            TraitDocFirst(_) => 61,
+            TraitDocRest(_) => 62,
+            ImplBlock(_) => 70,
+            TypeAliasName(_) => 80,
+            TypeAliasDocFirst(_) => 81,
+            TypeAliasDocRest(_) => 82,
+            ConstName(_) => 90,
+            ConstDocFirst(_) => 91,
+            ConstDocRest(_) => 92,
+            MacroName(_) => 100,
+            MacroDocFirst(_) => 101,
+            MacroDocRest(_) => 102,
+            Heading(_) => 110,
+            HeadingBody(_) => 111,
+            DataSection(_) => 120,
+            DataSectionBody(_) => 121,
         }
     }
 
     /// Returns the heading level if this is a `Heading` key, `None` otherwise.
     pub fn heading_level(&self) -> Option<u8> {
         match self {
-            TsGroupKey::Heading { level, .. } => Some(*level),
+            TsGroupKey::Heading(h) => Some(h.level),
+            _ => None,
+        }
+    }
+
+    /// For name-variant keys (`FunctionName`, `StructName`, ...), returns
+    /// `Some((documented, public))`. For all other keys, returns `None`.
+    pub fn name_doc_visibility(&self) -> Option<(bool, bool)> {
+        use TsGroupKey::*;
+        match self {
+            FunctionName(n) => Some((n.documented, n.public)),
+            StructName(n) => Some((n.documented, n.public)),
+            EnumName(n) => Some((n.documented, n.public)),
+            ClassName(n) => Some((n.documented, n.public)),
+            InterfaceName(n) => Some((n.documented, n.public)),
+            TraitName(n) => Some((n.documented, n.public)),
+            TypeAliasName(n) => Some((n.documented, n.public)),
+            ConstName(n) => Some((n.documented, n.public)),
+            MacroName(n) => Some((n.documented, n.public)),
             _ => None,
         }
     }
@@ -186,26 +211,20 @@ impl TsGroupKey {
     /// Whether this key should be gated behind a counterpart (dependent_sibling).
     pub fn is_gated(&self) -> bool {
         use TsGroupKey::*;
-        matches!(
-            self,
-            FunctionName { public: false, .. }
-                | StructName { public: false, .. }
-                | EnumName { public: false, .. }
-                | ClassName { public: false, .. }
-                | InterfaceName { public: false, .. }
-                | TraitName { public: false, .. }
-                | TypeAliasName { public: false, .. }
-                | ConstName { public: false, .. }
-                | MacroName { public: false, .. }
-                | Import {
-                    first_party: false,
-                    ..
-                }
-                | ImplBlock {
-                    is_trait_impl: true,
-                    ..
-                }
-        )
+        match self {
+            FunctionName(n) => !n.public,
+            StructName(n) => !n.public,
+            EnumName(n) => !n.public,
+            ClassName(n) => !n.public,
+            InterfaceName(n) => !n.public,
+            TraitName(n) => !n.public,
+            TypeAliasName(n) => !n.public,
+            ConstName(n) => !n.public,
+            MacroName(n) => !n.public,
+            Import(i) => !i.first_party,
+            ImplBlock(b) => b.is_trait_impl,
+            _ => false,
+        }
     }
 
     /// Whether `self` should be gated behind `other` (design §4).
@@ -214,56 +233,21 @@ impl TsGroupKey {
     pub fn is_gated_by(&self, other: &TsGroupKey) -> bool {
         use TsGroupKey::*;
         match (self, other) {
-            (FunctionName { public: false, .. }, FunctionName { public: true, .. }) => true,
-            (StructName { public: false, .. }, StructName { public: true, .. }) => true,
-            (EnumName { public: false, .. }, EnumName { public: true, .. }) => true,
-            (ClassName { public: false, .. }, ClassName { public: true, .. }) => true,
-            (InterfaceName { public: false, .. }, InterfaceName { public: true, .. }) => true,
-            (TraitName { public: false, .. }, TraitName { public: true, .. }) => true,
-            (TypeAliasName { public: false, .. }, TypeAliasName { public: true, .. }) => true,
-            (ConstName { public: false, .. }, ConstName { public: true, .. }) => true,
-            (MacroName { public: false, .. }, MacroName { public: true, .. }) => true,
-            (
-                Import {
-                    first_party: false,
-                    reexport: r1,
-                },
-                Import {
-                    first_party: true,
-                    reexport: r2,
-                },
-            ) => r1 == r2,
-            (
-                ImplBlock {
-                    is_trait_impl: true,
-                    ..
-                },
-                ImplBlock {
-                    is_trait_impl: false,
-                    ..
-                },
-            ) => true,
+            (FunctionName(a), FunctionName(b)) => !a.public && b.public,
+            (StructName(a), StructName(b)) => !a.public && b.public,
+            (EnumName(a), EnumName(b)) => !a.public && b.public,
+            (ClassName(a), ClassName(b)) => !a.public && b.public,
+            (InterfaceName(a), InterfaceName(b)) => !a.public && b.public,
+            (TraitName(a), TraitName(b)) => !a.public && b.public,
+            (TypeAliasName(a), TypeAliasName(b)) => !a.public && b.public,
+            (ConstName(a), ConstName(b)) => !a.public && b.public,
+            (MacroName(a), MacroName(b)) => !a.public && b.public,
+            (Import(a), Import(b)) => !a.first_party && b.first_party && a.reexport == b.reexport,
+            (ImplBlock(a), ImplBlock(b)) => a.is_trait_impl && !b.is_trait_impl,
             _ => false,
         }
     }
 
-    /// Maps a DocFirst variant to its corresponding DocRest variant.
-    fn doc_rest_key(&self) -> Option<TsGroupKey> {
-        use TsGroupKey::*;
-        match self {
-            FunctionDocFirst => Some(FunctionDocRest),
-            StructDocFirst => Some(StructDocRest),
-            EnumDocFirst => Some(EnumDocRest),
-            ClassDocFirst => Some(ClassDocRest),
-            InterfaceDocFirst => Some(InterfaceDocRest),
-            TraitDocFirst => Some(TraitDocRest),
-            TypeAliasDocFirst => Some(TypeAliasDocRest),
-            ConstDocFirst => Some(ConstDocRest),
-            MacroDocFirst => Some(MacroDocRest),
-            ModuleDocFirst => Some(ModuleDocRest),
-            _ => None,
-        }
-    }
 }
 
 // ---------------------------------------------------------------------------
@@ -272,235 +256,41 @@ impl TsGroupKey {
 
 pub fn children<'s>(g: &mut TsGroup<'s>) -> Vec<Group<'s>> {
     let mut result: Vec<Group<'s>> = Vec::new();
-
     result.extend(std::mem::take(&mut g.dependent_siblings));
-
-    use TsGroupKey::*;
-
-    match &g.key {
-        FunctionName { documented, .. } => {
-            if !g.items.is_empty() {
-                result.push(Group::Ts(TsGroup {
-                    key: FunctionSig,
-                    items: g.items.iter().map(|i| clone_ts_item(i)).collect(),
-                    inherited_modifier: g.inherited_modifier,
-                    dependent_siblings: vec![],
-                    cached_render: None,
-                }));
-            }
-            if *documented && !g.items.is_empty() {
-                result.push(Group::Ts(TsGroup {
-                    key: FunctionDocFirst,
-                    items: g.items.iter().map(|i| clone_ts_item(i)).collect(),
-                    inherited_modifier: g.inherited_modifier,
-                    dependent_siblings: vec![],
-                    cached_render: None,
-                }));
-            }
-        }
-        FunctionSig => {
-            if !g.items.is_empty() {
-                result.push(Group::Ts(TsGroup {
-                    key: FunctionBody,
-                    items: g.items.iter().map(|i| clone_ts_item(i)).collect(),
-                    inherited_modifier: g.inherited_modifier,
-                    dependent_siblings: vec![],
-                    cached_render: None,
-                }));
-            }
-        }
-        StructName { documented, .. } => {
-            spawn_type_children(
-                &mut result,
-                g,
-                StructDocFirst,
-                Some(StructBody),
-                *documented,
-            );
-        }
-        EnumName { documented, .. } => {
-            spawn_type_children(&mut result, g, EnumDocFirst, Some(EnumBody), *documented);
-        }
-        ClassName { documented, .. } => {
-            let lang = g.items.first().and_then(|i| Lang::from_path(i.path));
-            let body_key = if lang == Some(Lang::Python) {
-                Some(ClassBody)
-            } else {
-                None
-            };
-            spawn_type_children(&mut result, g, ClassDocFirst, body_key, *documented);
-            spawn_method_children(&mut result, g, 1.0);
-        }
-        InterfaceName { documented, .. } => {
-            spawn_type_children(&mut result, g, InterfaceDocFirst, None, *documented);
-            spawn_method_children(&mut result, g, 1.0);
-        }
-        TraitName { documented, .. } => {
-            spawn_type_children(&mut result, g, TraitDocFirst, None, *documented);
-            spawn_method_children(&mut result, g, 1.0);
-        }
-        TypeAliasName { documented, .. } => {
-            if *documented && !g.items.is_empty() {
-                result.push(Group::Ts(TsGroup {
-                    key: TypeAliasDocFirst,
-                    items: g.items.iter().map(|i| clone_ts_item(i)).collect(),
-                    inherited_modifier: g.inherited_modifier,
-                    dependent_siblings: vec![],
-                    cached_render: None,
-                }));
-            }
-        }
-        ConstName { documented, .. } => {
-            if *documented && !g.items.is_empty() {
-                result.push(Group::Ts(TsGroup {
-                    key: ConstDocFirst,
-                    items: g.items.iter().map(|i| clone_ts_item(i)).collect(),
-                    inherited_modifier: g.inherited_modifier,
-                    dependent_siblings: vec![],
-                    cached_render: None,
-                }));
-            }
-        }
-        MacroName { documented, .. } => {
-            if *documented && !g.items.is_empty() {
-                result.push(Group::Ts(TsGroup {
-                    key: MacroDocFirst,
-                    items: g.items.iter().map(|i| clone_ts_item(i)).collect(),
-                    inherited_modifier: g.inherited_modifier,
-                    dependent_siblings: vec![],
-                    cached_render: None,
-                }));
-            }
-        }
-        ImplBlock {
-            is_trait_impl,
-            is_boilerplate_trait,
-        } => {
-            let factor = if *is_boilerplate_trait {
-                0.15
-            } else if *is_trait_impl {
-                0.5
-            } else {
-                1.0
-            };
-            spawn_method_children(&mut result, g, factor);
-        }
-        Import {
-            first_party,
-            reexport,
-        } => {
-            if !g.items.is_empty() {
-                result.push(Group::Ts(TsGroup {
-                    key: ImportedItems {
-                        first_party: *first_party,
-                        reexport: *reexport,
-                    },
-                    items: g.items.iter().map(|i| clone_ts_item(i)).collect(),
-                    inherited_modifier: g.inherited_modifier,
-                    dependent_siblings: vec![],
-                    cached_render: None,
-                }));
-            }
-        }
-        Heading { level, .. } => {
-            let (toml_items, other_items): (Vec<_>, Vec<_>) = g
-                .items
-                .iter()
-                .partition(|i| crate::Lang::from_path(i.path) == Some(crate::Lang::Toml));
-            if !other_items.is_empty() {
-                let is_readme_h1 = *level == 1
-                    && other_items.iter().any(|i| {
-                        crate::classify::FileRole::from_path(i.path)
-                            == crate::classify::FileRole::Readme
-                    });
-                let body_modifier = if is_readme_h1 {
-                    README_H1_BODY_BOOST
-                } else {
-                    1.0
-                };
-                result.push(Group::Ts(TsGroup {
-                    key: HeadingBody { level: *level },
-                    items: other_items.into_iter().map(|i| clone_ts_item(i)).collect(),
-                    inherited_modifier: g.inherited_modifier * body_modifier,
-                    dependent_siblings: vec![],
-                    cached_render: None,
-                }));
-            }
-            for item in &toml_items {
-                result.push(Group::Ts(TsGroup {
-                    key: HeadingBody { level: *level },
-                    items: vec![clone_ts_item(item)],
-                    inherited_modifier: g.inherited_modifier,
-                    dependent_siblings: vec![],
-                    cached_render: None,
-                }));
-            }
-        }
-        DataSection => {
-            if !g.items.is_empty() {
-                result.push(Group::Ts(TsGroup {
-                    key: DataSectionBody,
-                    items: g.items.iter().map(|i| clone_ts_item(i)).collect(),
-                    inherited_modifier: g.inherited_modifier,
-                    dependent_siblings: vec![],
-                    cached_render: None,
-                }));
-            }
-        }
-        key if key.doc_rest_key().is_some() => {
-            if !g.items.is_empty() {
-                result.push(Group::Ts(TsGroup {
-                    key: g.key.doc_rest_key().unwrap(),
-                    items: g.items.iter().map(|i| clone_ts_item(i)).collect(),
-                    inherited_modifier: g.inherited_modifier,
-                    dependent_siblings: vec![],
-                    cached_render: None,
-                }));
-            }
-        }
-        // Leaf groups: no children
-        _ => {}
-    }
-
+    result.extend(g.key.children(g));
     result
 }
 
-fn spawn_type_children<'s>(
-    result: &mut Vec<Group<'s>>,
-    g: &TsGroup<'s>,
+/// Spawn a single child group with the given key, sharing the parent's items.
+pub(super) fn spawn_simple_child<'s>(
+    out: &mut Vec<Group<'s>>,
+    parent: &TsGroup<'s>,
+    key: TsGroupKey,
+) {
+    if parent.items.is_empty() {
+        return;
+    }
+    out.push(Group::Ts(TsGroup {
+        key,
+        items: parent.items.clone(),
+        inherited_modifier: parent.inherited_modifier,
+        dependent_siblings: vec![],
+        cached_render: None,
+    }));
+}
+
+pub(super) fn spawn_type_children<'s>(
+    out: &mut Vec<Group<'s>>,
+    parent: &TsGroup<'s>,
     doc_first: TsGroupKey,
     body: Option<TsGroupKey>,
     documented: bool,
 ) {
-    if g.items.is_empty() {
-        return;
-    }
     if documented {
-        result.push(Group::Ts(TsGroup {
-            key: doc_first.clone(),
-            items: g.items.iter().map(|i| clone_ts_item(i)).collect(),
-            inherited_modifier: g.inherited_modifier,
-            dependent_siblings: vec![],
-            cached_render: None,
-        }));
+        spawn_simple_child(out, parent, doc_first);
     }
     if let Some(body_key) = body {
-        result.push(Group::Ts(TsGroup {
-            key: body_key,
-            items: g.items.iter().map(|i| clone_ts_item(i)).collect(),
-            inherited_modifier: g.inherited_modifier,
-            dependent_siblings: vec![],
-            cached_render: None,
-        }));
-    }
-}
-
-fn clone_ts_item<'s>(item: &TsItem<'s>) -> TsItem<'s> {
-    TsItem {
-        path: item.path,
-        source: item.source,
-        node: item.node,
-        end_line: item.end_line,
+        spawn_simple_child(out, parent, body_key);
     }
 }
 
@@ -511,7 +301,7 @@ fn clone_ts_item<'s>(item: &TsItem<'s>) -> TsItem<'s> {
 ///
 /// `modifier_factor` is an additional multiplier (e.g. 0.5 for trait impl
 /// methods per design §4).
-fn spawn_method_children<'s>(
+pub(super) fn spawn_method_children<'s>(
     result: &mut Vec<Group<'s>>,
     parent: &TsGroup<'s>,
     modifier_factor: f64,
@@ -525,7 +315,7 @@ fn spawn_method_children<'s>(
 
     for item in &parent.items {
         let mut method_nodes = find_method_nodes(item.node, lang);
-        if lang == Some(Lang::JsTs) {
+        if matches!(lang, Some(Lang::TypeScript | Lang::Tsx)) {
             method_nodes = dedup_method_overloads(method_nodes, item.source);
         }
 
@@ -568,7 +358,7 @@ fn spawn_method_children<'s>(
     sorted_buckets.sort_by_key(|&(k, _)| k);
 
     for ((documented, public), items) in sorted_buckets {
-        let key = TsGroupKey::FunctionName { documented, public };
+        let key = TsGroupKey::FunctionName(function::FunctionName { documented, public });
         let modifier = super::files::compute_item_modifier(&key, base_modifier, false);
 
         let group = Group::Ts(TsGroup {
@@ -726,7 +516,7 @@ fn is_method_node(node: tree_sitter::Node, lang: Option<Lang>) -> bool {
         Some(Lang::Rust) => {
             matches!(node.kind(), "function_item" | "function_signature_item")
         }
-        Some(Lang::JsTs) => match node.kind() {
+        Some(Lang::TypeScript | Lang::Tsx) => match node.kind() {
             "method_definition" | "method_signature" | "abstract_method_signature" => true,
             "public_field_definition" => node.child_by_field_name("value").is_some_and(|v| {
                 matches!(
@@ -743,7 +533,7 @@ fn is_method_node(node: tree_sitter::Node, lang: Option<Lang>) -> bool {
             )
         }
         Some(Lang::Python) => node.kind() == "function_definition",
-        Some(Lang::C) => node.kind() == "function_definition",
+        Some(Lang::C | Lang::Cpp) => node.kind() == "function_definition",
         _ => false,
     }
 }
@@ -756,7 +546,7 @@ pub fn render_entries<'s>(g: &TsGroup<'s>) -> Vec<(PathBuf, Vec<LineEntry<'s>>)>
     let mut per_file: HashMap<&'s std::path::Path, Vec<LineEntry<'s>>> = HashMap::new();
 
     for item in &g.items {
-        let entries = render_item(&g.key, item);
+        let entries = g.key.render_item(item);
         per_file.entry(item.path).or_default().extend(entries);
     }
 
@@ -768,272 +558,305 @@ pub fn render_entries<'s>(g: &TsGroup<'s>) -> Vec<(PathBuf, Vec<LineEntry<'s>>)>
     result
 }
 
-/// Render a single item according to the group key.
-fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
-    use TsGroupKey::*;
+// Render helpers shared across per-family impls. Each helper captures one
+// rendering pattern from the old central `render_item` match and is called
+// from the family impls in `src/group/ts/<family>.rs`.
+
+/// Emit `LineEntry::Complete` for every line in `[start, end)`, clamping `end`
+/// to `lines.len()`.
+fn complete_line_entries<'s>(
+    lines: &[&'s str],
+    start: usize,
+    end: usize,
+) -> Vec<LineEntry<'s>> {
+    let end = end.min(lines.len());
+    (start..end)
+        .map(|i| LineEntry::Complete {
+            line: i as u32,
+            content: lines[i],
+        })
+        .collect()
+}
+
+/// Return the `idx`-th line of `item.source` without materializing a
+/// `Vec<&str>` for the entire file. Used by single-line render helpers where
+/// the full line vector would be wasted work.
+fn item_line<'s>(item: &TsItem<'s>, idx: usize) -> &'s str {
+    item.source.lines().nth(idx).unwrap_or("")
+}
+
+pub(super) fn render_name_line<'s>(item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
+    let line_idx = item.start_line();
+    let prefix = find_name_end_prefix(item_line(item, line_idx), item.node, line_idx);
+    vec![LineEntry::Truncated {
+        line: line_idx as u32,
+        content: prefix,
+    }]
+}
+
+pub(super) fn render_macro_name<'s>(preproc: bool, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
+    if !preproc {
+        return render_name_line(item);
+    }
+    let line_idx = item.start_line();
+    vec![LineEntry::Complete {
+        line: line_idx as u32,
+        content: item_line(item, line_idx),
+    }]
+}
+
+pub(super) fn render_impl_block_line<'s>(item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
+    let line_idx = item.start_line();
+    let line = item_line(item, line_idx);
+    let prefix = item
+        .node
+        .child_by_field_name("type")
+        .filter(|n| n.end_position().row == line_idx)
+        .map(|n| &line[..n.end_position().column.min(line.len())])
+        .unwrap_or(line);
+    vec![LineEntry::Truncated {
+        line: line_idx as u32,
+        content: prefix,
+    }]
+}
+
+pub(super) fn render_function_sig_lines<'s>(item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
+    let lines: Vec<&str> = item.source.lines().collect();
+    complete_line_entries(&lines, item.start_line(), compute_body_start_line(item))
+}
+
+/// Render a body (function/struct/enum/class body). `skip_docstring` is used
+/// by FunctionBody and ClassBody; `stop_at_first_method` is used by ClassBody.
+pub(super) fn render_body_lines<'s>(
+    item: &TsItem<'s>,
+    skip_docstring: bool,
+    stop_at_first_method: bool,
+) -> Vec<LineEntry<'s>> {
+    let lines: Vec<&str> = item.source.lines().collect();
+    let body_start = compute_body_start_line(item);
+    let body_end = item.end_line;
+    let lang = Lang::from_path(item.path);
+    let content_start = if skip_docstring {
+        skip_leading_docstring(item.node, lang, body_start)
+    } else {
+        body_start
+    };
+    let effective_end = if stop_at_first_method {
+        find_first_method_line(item.node, lang).unwrap_or(body_end)
+    } else {
+        body_end
+    };
+    complete_line_entries(&lines, content_start, effective_end)
+}
+
+pub(super) fn render_doc_first_lines<'s>(item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
+    let lines: Vec<&str> = item.source.lines().collect();
+    let Some((start, end)) = compute_doc_range(item, &lines) else {
+        return vec![];
+    };
+    if start >= end {
+        return vec![];
+    }
+    let mut entries = vec![LineEntry::Complete {
+        line: start as u32,
+        content: lines[start],
+    }];
+    if end - start > 1 {
+        entries.push(LineEntry::Ellipsis {
+            line: (start + 1) as u32,
+        });
+    }
+    entries
+}
+
+pub(super) fn render_doc_rest_lines<'s>(item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
+    let lines: Vec<&str> = item.source.lines().collect();
+    let Some((start, end)) = compute_doc_range(item, &lines) else {
+        return vec![];
+    };
+    complete_line_entries(&lines, start + 1, end)
+}
+
+pub(super) fn render_import_line<'s>(item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
+    let lines: Vec<&str> = item.source.lines().collect();
+    let line_idx = item.start_line();
+    let prefix = find_import_prefix(lines[line_idx]);
+    vec![LineEntry::Truncated {
+        line: line_idx as u32,
+        content: prefix,
+    }]
+}
+
+pub(super) fn render_imported_items_lines<'s>(item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
+    let lines: Vec<&str> = item.source.lines().collect();
+    complete_line_entries(&lines, item.start_line(), item.end_line)
+}
+
+pub(super) fn render_module_doc_first_lines<'s>(item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
     let lines: Vec<&str> = item.source.lines().collect();
     let start_line = item.start_line();
+    let lang = Lang::from_path(item.path);
+    let first_line =
+        skip_doc_leading_noise(&lines, start_line, item.end_line, lang).unwrap_or(start_line);
+    vec![LineEntry::Complete {
+        line: first_line as u32,
+        content: lines[first_line],
+    }]
+}
 
-    match key {
-        FunctionName { .. }
-        | StructName { .. }
-        | EnumName { .. }
-        | ClassName { .. }
-        | InterfaceName { .. }
-        | TraitName { .. }
-        | TypeAliasName { .. }
-        | ConstName { .. } => {
-            let line_idx = start_line;
-            let line = lines.get(line_idx).copied().unwrap_or("");
-            let prefix = find_name_end_prefix(line, item.node, start_line);
-            vec![LineEntry::Truncated {
-                line: line_idx as u32,
-                content: prefix,
-            }]
+pub(super) fn render_module_doc_rest_lines<'s>(item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
+    let lines: Vec<&str> = item.source.lines().collect();
+    let start_line = item.start_line();
+    let lang = Lang::from_path(item.path);
+    let first_line =
+        skip_doc_leading_noise(&lines, start_line, item.end_line, lang).unwrap_or(start_line);
+    complete_line_entries(&lines, first_line + 1, item.end_line)
+}
+
+pub(super) fn render_heading_line<'s>(item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
+    let lines: Vec<&str> = item.source.lines().collect();
+    let line_idx = item.start_line();
+    let stripped = strip_heading_badges(lines[line_idx]);
+    vec![capped_line_entry(line_idx as u32, stripped)]
+}
+
+pub(super) fn render_heading_body_lines<'s>(
+    level: u8,
+    item: &TsItem<'s>,
+) -> Vec<LineEntry<'s>> {
+    let lines: Vec<&str> = item.source.lines().collect();
+    let start_line = item.start_line();
+    // Setext headings span both the title and the `===`/`---` underline rows;
+    // body content starts past the underline. Other heading-like nodes (ATX,
+    // TOML tables, YAML pairs) span either just the header row or the entire
+    // section, neither of which we want to use to shift `body_start`.
+    let body_start = if item.node.kind() == "setext_heading" {
+        let node_end = item.node.end_position();
+        let node_end_line = if node_end.column == 0 && node_end.row > start_line {
+            node_end.row
+        } else {
+            node_end.row + 1
+        };
+        node_end_line.max(start_line + 1)
+    } else {
+        start_line + 1
+    };
+    let body_end = item.end_line;
+    let content_start = skip_markdown_noise(&lines, body_start, body_end);
+    let is_markdown = Lang::from_path(item.path) == Some(Lang::Markdown);
+    let max_body_lines = if is_markdown && level == 1 {
+        MARKDOWN_H1_BODY_LINE_CAP
+    } else {
+        usize::MAX
+    };
+    let capped_end = body_end.min(content_start.saturating_add(max_body_lines));
+    complete_line_entries(&lines, content_start, capped_end)
+}
+
+pub(super) fn render_data_section_line<'s>(item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
+    let lines: Vec<&str> = item.source.lines().collect();
+    let line_idx = item.start_line();
+    vec![capped_line_entry(line_idx as u32, lines[line_idx])]
+}
+
+pub(super) fn render_data_section_body_lines<'s>(item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
+    let lines: Vec<&str> = item.source.lines().collect();
+    complete_line_entries(&lines, item.start_line() + 1, item.end_line)
+}
+
+// Central dispatcher — forwards to per-family impls in src/group/ts/<family>.rs.
+impl TsGroupKindMethods for TsGroupKey {
+    fn render_item<'s>(&self, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
+        use TsGroupKey::*;
+        match self {
+            ModuleDocFirst(k) => k.render_item(item),
+            ModuleDocRest(k) => k.render_item(item),
+            Import(k) => k.render_item(item),
+            ImportedItems(k) => k.render_item(item),
+            FunctionName(k) => k.render_item(item),
+            FunctionDocFirst(k) => k.render_item(item),
+            FunctionDocRest(k) => k.render_item(item),
+            FunctionSig(k) => k.render_item(item),
+            FunctionBody(k) => k.render_item(item),
+            StructName(k) => k.render_item(item),
+            StructDocFirst(k) => k.render_item(item),
+            StructDocRest(k) => k.render_item(item),
+            StructBody(k) => k.render_item(item),
+            EnumName(k) => k.render_item(item),
+            EnumDocFirst(k) => k.render_item(item),
+            EnumDocRest(k) => k.render_item(item),
+            EnumBody(k) => k.render_item(item),
+            ClassName(k) => k.render_item(item),
+            ClassDocFirst(k) => k.render_item(item),
+            ClassDocRest(k) => k.render_item(item),
+            ClassBody(k) => k.render_item(item),
+            InterfaceName(k) => k.render_item(item),
+            InterfaceDocFirst(k) => k.render_item(item),
+            InterfaceDocRest(k) => k.render_item(item),
+            TraitName(k) => k.render_item(item),
+            TraitDocFirst(k) => k.render_item(item),
+            TraitDocRest(k) => k.render_item(item),
+            ImplBlock(k) => k.render_item(item),
+            TypeAliasName(k) => k.render_item(item),
+            TypeAliasDocFirst(k) => k.render_item(item),
+            TypeAliasDocRest(k) => k.render_item(item),
+            ConstName(k) => k.render_item(item),
+            ConstDocFirst(k) => k.render_item(item),
+            ConstDocRest(k) => k.render_item(item),
+            MacroName(k) => k.render_item(item),
+            MacroDocFirst(k) => k.render_item(item),
+            MacroDocRest(k) => k.render_item(item),
+            Heading(k) => k.render_item(item),
+            HeadingBody(k) => k.render_item(item),
+            DataSection(k) => k.render_item(item),
+            DataSectionBody(k) => k.render_item(item),
         }
+    }
 
-        MacroName { preproc, .. } => {
-            let line = lines.get(start_line).copied().unwrap_or("");
-            if *preproc {
-                vec![LineEntry::Complete {
-                    line: start_line as u32,
-                    content: line,
-                }]
-            } else {
-                let prefix = find_name_end_prefix(line, item.node, start_line);
-                vec![LineEntry::Truncated {
-                    line: start_line as u32,
-                    content: prefix,
-                }]
-            }
-        }
-
-        ImplBlock { .. } => {
-            let line_idx = start_line;
-            let line = lines.get(line_idx).copied().unwrap_or("");
-            let prefix = item
-                .node
-                .child_by_field_name("type")
-                .filter(|n| n.end_position().row == start_line)
-                .map(|n| &line[..n.end_position().column.min(line.len())])
-                .unwrap_or(line);
-            vec![LineEntry::Truncated {
-                line: line_idx as u32,
-                content: prefix,
-            }]
-        }
-
-        FunctionSig => {
-            let body_start = compute_body_start_line(item);
-            let mut entries = Vec::new();
-            for line_idx in start_line..body_start.min(lines.len()) {
-                let content = lines.get(line_idx).copied().unwrap_or("");
-                entries.push(LineEntry::Complete {
-                    line: line_idx as u32,
-                    content,
-                });
-            }
-            entries
-        }
-
-        FunctionBody | StructBody | EnumBody | ClassBody => {
-            let body_start = compute_body_start_line(item);
-            let body_end = item.end_line;
-            let lang = Lang::from_path(item.path);
-            let content_start = if matches!(key, FunctionBody | ClassBody) {
-                skip_leading_docstring(item.node, lang, body_start)
-            } else {
-                body_start
-            };
-            let effective_end = if matches!(key, ClassBody) {
-                find_first_method_line(item.node, lang).unwrap_or(body_end)
-            } else {
-                body_end
-            };
-            let mut entries = Vec::new();
-            for line_idx in content_start..effective_end {
-                if line_idx >= lines.len() {
-                    break;
-                }
-                let content = lines.get(line_idx).copied().unwrap_or("");
-                entries.push(LineEntry::Complete {
-                    line: line_idx as u32,
-                    content,
-                });
-            }
-            entries
-        }
-
-        FunctionDocFirst | StructDocFirst | EnumDocFirst | ClassDocFirst | InterfaceDocFirst
-        | TraitDocFirst | TypeAliasDocFirst | ConstDocFirst | MacroDocFirst => {
-            let doc_range = compute_doc_range(item, &lines);
-            if let Some((start, end)) = doc_range {
-                let mut entries = vec![];
-                if start < end {
-                    let content = lines.get(start).copied().unwrap_or("");
-                    entries.push(LineEntry::Complete {
-                        line: start as u32,
-                        content,
-                    });
-                    if end - start > 1 {
-                        entries.push(LineEntry::Ellipsis {
-                            line: (start + 1) as u32,
-                        });
-                    }
-                }
-                entries
-            } else {
-                vec![]
-            }
-        }
-
-        FunctionDocRest | StructDocRest | EnumDocRest | ClassDocRest | InterfaceDocRest
-        | TraitDocRest | TypeAliasDocRest | ConstDocRest | MacroDocRest => {
-            let doc_range = compute_doc_range(item, &lines);
-            if let Some((start, end)) = doc_range {
-                let mut entries = vec![];
-                for line_idx in (start + 1)..end {
-                    let content = lines.get(line_idx).copied().unwrap_or("");
-                    entries.push(LineEntry::Complete {
-                        line: line_idx as u32,
-                        content,
-                    });
-                }
-                entries
-            } else {
-                vec![]
-            }
-        }
-
-        Import { .. } => {
-            let line_idx = start_line;
-            let line = lines.get(line_idx).copied().unwrap_or("");
-            let prefix = find_import_prefix(line);
-            vec![LineEntry::Truncated {
-                line: line_idx as u32,
-                content: prefix,
-            }]
-        }
-
-        ImportedItems { .. } => {
-            let mut entries = Vec::new();
-            for line_idx in start_line..item.end_line {
-                if line_idx >= lines.len() {
-                    break;
-                }
-                let content = lines.get(line_idx).copied().unwrap_or("");
-                entries.push(LineEntry::Complete {
-                    line: line_idx as u32,
-                    content,
-                });
-            }
-            entries
-        }
-
-        ModuleDocFirst => {
-            let lang = Lang::from_path(item.path);
-            let first_line = skip_doc_leading_noise(&lines, start_line, item.end_line, lang);
-            if let Some(line_idx) = first_line {
-                let content = lines.get(line_idx).copied().unwrap_or("");
-                vec![LineEntry::Complete {
-                    line: line_idx as u32,
-                    content,
-                }]
-            } else {
-                let content = lines.get(start_line).copied().unwrap_or("");
-                vec![LineEntry::Complete {
-                    line: start_line as u32,
-                    content,
-                }]
-            }
-        }
-
-        ModuleDocRest => {
-            let lang = Lang::from_path(item.path);
-            let first_line = skip_doc_leading_noise(&lines, start_line, item.end_line, lang)
-                .unwrap_or(start_line);
-            let mut entries = Vec::new();
-            for line_idx in (first_line + 1)..item.end_line {
-                if line_idx >= lines.len() {
-                    break;
-                }
-                let content = lines.get(line_idx).copied().unwrap_or("");
-                entries.push(LineEntry::Complete {
-                    line: line_idx as u32,
-                    content,
-                });
-            }
-            entries
-        }
-
-        Heading { .. } => {
-            let line_idx = start_line;
-            let line = lines.get(line_idx).copied().unwrap_or("");
-            let stripped = strip_heading_badges(line);
-            vec![capped_line_entry(line_idx as u32, stripped)]
-        }
-
-        HeadingBody { level } => {
-            // Setext headings span both the title and the `===`/`---`
-            // underline rows; body content starts past the underline.
-            // Other heading-like nodes (ATX, TOML tables, YAML pairs)
-            // span either just the header row or the entire section,
-            // neither of which we want to use to shift `body_start`.
-            let body_start = if item.node.kind() == "setext_heading" {
-                let node_end = item.node.end_position();
-                let node_end_line = if node_end.column == 0 && node_end.row > start_line {
-                    node_end.row
-                } else {
-                    node_end.row + 1
-                };
-                node_end_line.max(start_line + 1)
-            } else {
-                start_line + 1
-            };
-            let body_end = item.end_line;
-            let content_start = skip_markdown_noise(&lines, body_start, body_end);
-            let is_markdown = Lang::from_path(item.path) == Some(Lang::Markdown);
-            let max_body_lines = if is_markdown && *level == 1 {
-                MARKDOWN_H1_BODY_LINE_CAP
-            } else {
-                usize::MAX
-            };
-            let capped_end = body_end.min(content_start.saturating_add(max_body_lines));
-            let mut entries = Vec::new();
-            for line_idx in content_start..capped_end {
-                if line_idx >= lines.len() {
-                    break;
-                }
-                let content = lines.get(line_idx).copied().unwrap_or("");
-                entries.push(LineEntry::Complete {
-                    line: line_idx as u32,
-                    content,
-                });
-            }
-            entries
-        }
-
-        DataSection => {
-            let line_idx = start_line;
-            let content = lines.get(line_idx).copied().unwrap_or("");
-            vec![capped_line_entry(line_idx as u32, content)]
-        }
-
-        DataSectionBody => {
-            let body_start = start_line + 1;
-            let body_end = item.end_line;
-            let mut entries = Vec::new();
-            for line_idx in body_start..body_end {
-                if line_idx >= lines.len() {
-                    break;
-                }
-                let content = lines.get(line_idx).copied().unwrap_or("");
-                entries.push(LineEntry::Complete {
-                    line: line_idx as u32,
-                    content,
-                });
-            }
-            entries
+    fn children<'s>(&self, parent: &TsGroup<'s>) -> Vec<Group<'s>> {
+        use TsGroupKey::*;
+        match self {
+            ModuleDocFirst(k) => k.children(parent),
+            ModuleDocRest(k) => k.children(parent),
+            Import(k) => k.children(parent),
+            ImportedItems(k) => k.children(parent),
+            FunctionName(k) => k.children(parent),
+            FunctionDocFirst(k) => k.children(parent),
+            FunctionDocRest(k) => k.children(parent),
+            FunctionSig(k) => k.children(parent),
+            FunctionBody(k) => k.children(parent),
+            StructName(k) => k.children(parent),
+            StructDocFirst(k) => k.children(parent),
+            StructDocRest(k) => k.children(parent),
+            StructBody(k) => k.children(parent),
+            EnumName(k) => k.children(parent),
+            EnumDocFirst(k) => k.children(parent),
+            EnumDocRest(k) => k.children(parent),
+            EnumBody(k) => k.children(parent),
+            ClassName(k) => k.children(parent),
+            ClassDocFirst(k) => k.children(parent),
+            ClassDocRest(k) => k.children(parent),
+            ClassBody(k) => k.children(parent),
+            InterfaceName(k) => k.children(parent),
+            InterfaceDocFirst(k) => k.children(parent),
+            InterfaceDocRest(k) => k.children(parent),
+            TraitName(k) => k.children(parent),
+            TraitDocFirst(k) => k.children(parent),
+            TraitDocRest(k) => k.children(parent),
+            ImplBlock(k) => k.children(parent),
+            TypeAliasName(k) => k.children(parent),
+            TypeAliasDocFirst(k) => k.children(parent),
+            TypeAliasDocRest(k) => k.children(parent),
+            ConstName(k) => k.children(parent),
+            ConstDocFirst(k) => k.children(parent),
+            ConstDocRest(k) => k.children(parent),
+            MacroName(k) => k.children(parent),
+            MacroDocFirst(k) => k.children(parent),
+            MacroDocRest(k) => k.children(parent),
+            Heading(k) => k.children(parent),
+            HeadingBody(k) => k.children(parent),
+            DataSection(k) => k.children(parent),
+            DataSectionBody(k) => k.children(parent),
         }
     }
 }
@@ -1044,7 +867,7 @@ fn render_item<'s>(key: &TsGroupKey, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
 
 const MAX_RENDERED_LINE_BYTES: usize = 200;
 const MARKDOWN_H1_BODY_LINE_CAP: usize = 12;
-const README_H1_BODY_BOOST: f64 = 2.0;
+pub(super) const README_H1_BODY_BOOST: f64 = 2.0;
 
 fn capped_line_entry(line: u32, content: &str) -> LineEntry<'_> {
     if content.len() > MAX_RENDERED_LINE_BYTES {

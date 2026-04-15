@@ -144,7 +144,10 @@ fn is_auto_commit_body(group: &Group<'_>, remaining_tokens: usize, total_budget:
     let Group::Ts(g) = group else { return false };
     if !matches!(
         g.key,
-        crate::group::TsGroupKey::EnumBody | crate::group::TsGroupKey::HeadingBody { level: 1 }
+        crate::group::TsGroupKey::EnumBody(_)
+            | crate::group::TsGroupKey::HeadingBody(crate::group::ts::heading::HeadingBody {
+                level: 1
+            })
     ) {
         return false;
     }
@@ -157,14 +160,16 @@ fn is_auto_commit_body(group: &Group<'_>, remaining_tokens: usize, total_budget:
         return false;
     }
     match g.key {
-        crate::group::TsGroupKey::EnumBody => {
+        crate::group::TsGroupKey::EnumBody(_) => {
             let limit = crate::heuristics::COMPACT_BODY_LINE_LIMIT;
             g.items.iter().all(|item| {
                 let body_start = crate::group::ts::compute_body_start_line(item);
                 item.end_line.saturating_sub(body_start) <= limit
             })
         }
-        crate::group::TsGroupKey::HeadingBody { level: 1 } => g.items.iter().any(|item| {
+        crate::group::TsGroupKey::HeadingBody(crate::group::ts::heading::HeadingBody {
+            level: 1,
+        }) => g.items.iter().any(|item| {
             crate::classify::FileRole::from_path(item.path) == crate::classify::FileRole::Readme
                 && item.path.parent().is_some_and(|p| p.as_os_str().is_empty())
         }),

@@ -1,6 +1,7 @@
 //! Tree-sitter query execution and classification into (TsGroupKey, TsItem).
 
 pub(crate) mod ast;
+pub mod file_ctx;
 pub(crate) mod module_doc;
 pub(crate) mod visibility;
 
@@ -14,6 +15,14 @@ use tree_sitter::{Node, QueryCursor};
 use crate::Lang;
 use crate::group::TsGroupKey;
 use crate::group::TsItem;
+use crate::group::ts::kind::{
+    KindParseStrategy, OwnedQueryMatch, ParseTsGroup, TsGroupKindParse,
+};
+use crate::group::ts::{
+    class, const_, enum_, function, heading, impl_block, import, interface, macro_, module,
+    struct_, trait_, type_alias,
+};
+use crate::parse::file_ctx::FileCtx;
 use crate::store::LanguageConfig;
 
 /// Extract top-level items from a parsed source file, classifying each
@@ -22,7 +31,7 @@ pub fn extract_items<'t>(
     display_path: &'t Path,
     source: &'t str,
     tree: &'t tree_sitter::Tree,
-    config: &LanguageConfig,
+    config: &'t LanguageConfig,
 ) -> Vec<(TsGroupKey, TsItem<'t>)> {
     let lang = config.lang;
     let root = tree.root_node();
@@ -39,90 +48,23 @@ pub fn extract_items<'t>(
     let mod_names = collect_top_level_mod_names(root, source, lang);
     let export_names = collect_js_export_names(root, source, lang);
 
+    let ctx = FileCtx {
+        config,
+        lang,
+        display_path,
+        source,
+        root,
+        lines,
+        mod_names,
+        export_names,
+    };
+
     let mut items: Vec<(TsGroupKey, TsItem<'t>)> = Vec::new();
 
-    if let Some((node, end_row)) = module_doc::detect_module_doc(root, source, lang, display_path) {
-        items.push((
-            TsGroupKey::ModuleDocFirst,
-            TsItem {
-                path: display_path,
-                source,
-                node,
-                end_line: end_row + 1,
-            },
-        ));
-    }
-
-    let mut cursor = QueryCursor::new();
-    let mut matches = cursor.matches(&config.query, root, source.as_bytes());
-
-    let symbol_idx = config.symbol_idx;
-
-    while let Some(m) = matches.next() {
-        let symbol_node = match m.captures.iter().find(|c| c.index == symbol_idx) {
-            Some(c) => c.node,
-            None => continue,
-        };
-
-        if ast::is_inside_function(symbol_node) {
-            continue;
+    for parse_group in dispatch_kinds(tree, &ctx) {
+        for item in parse_group.items {
+            items.push((parse_group.key, item));
         }
-        if lang == Lang::Rust && ast::is_rust_test_code(symbol_node, source) {
-            continue;
-        }
-        if lang == Lang::Rust && ast::is_inside_rust_anon_const(symbol_node, source) {
-            continue;
-        }
-
-        if matches!(lang, Lang::Go | Lang::Rust) {
-            let ident = symbol_node
-                .child_by_field_name("name")
-                .and_then(|n| n.utf8_text(source.as_bytes()).ok())
-                .map(str::trim);
-            if ident == Some("_") {
-                continue;
-            }
-        }
-
-        // C++ template_declaration wraps the inner item; classify the inner
-        // node but use the outer for range + doc detection so the template
-        // parameters are captured in the rendered range.
-        let range_node = if lang == Lang::C
-            && symbol_node
-                .parent()
-                .is_some_and(|p| p.kind() == "template_declaration")
-        {
-            symbol_node.parent().unwrap()
-        } else {
-            symbol_node
-        };
-
-        let documented = ast::is_documented(range_node, source, lang);
-
-        let Some(key) = classify(
-            symbol_node,
-            source,
-            lang,
-            display_path,
-            &lines,
-            &mod_names,
-            &export_names,
-            documented,
-        ) else {
-            continue;
-        };
-
-        let end_line = compute_end_line(range_node);
-
-        items.push((
-            key,
-            TsItem {
-                path: display_path,
-                source,
-                node: range_node,
-                end_line,
-            },
-        ));
     }
 
     filter_nested_items(&mut items);
@@ -142,352 +84,196 @@ pub fn extract_items<'t>(
 }
 
 // ---------------------------------------------------------------------------
-// Classification: node -> Option<TsGroupKey>
+// Dispatch: per-kind from_parse loop
 // ---------------------------------------------------------------------------
 
-#[allow(clippy::too_many_arguments)]
-fn classify<'t>(
-    node: Node<'t>,
-    source: &str,
-    lang: Lang,
-    path: &Path,
-    lines: &[&str],
-    mod_names: &[&str],
-    export_names: &HashSet<&str>,
-    documented: bool,
-) -> Option<TsGroupKey> {
-    use TsGroupKey::*;
+use crate::store::CombinedKindQuery;
 
-    let public = || {
-        if visibility::symbol_visibility(node, source, lang) {
-            return true;
-        }
-        if lang == Lang::JsTs
-            && !export_names.is_empty()
-            && let Some(name_node) = node.child_by_field_name("name")
-            && let Ok(name) = name_node.utf8_text(source.as_bytes())
-        {
-            return export_names.contains(name);
-        }
-        false
+/// Hand-written list of every Query-strategy kind. The dispatcher iterates
+/// this list in `build_combined_query` (to assign pattern ranges) and in the
+/// `dispatch_kinds` invoke loop (to hand each bucket to its kind). Each entry
+/// pairs the kind with an explicit 0-based ordinal used as the bucket index.
+macro_rules! query_kinds {
+    ($macro:ident) => {
+        $macro!(0, impl_block::ImplBlock);
+        $macro!(1, heading::Heading);
+        $macro!(2, trait_::TraitName);
+        $macro!(3, enum_::EnumName);
+        $macro!(4, class::ClassName);
+        $macro!(5, macro_::MacroName);
+        $macro!(6, struct_::StructName);
+        $macro!(7, interface::InterfaceName);
+        $macro!(8, type_alias::TypeAliasName);
+        $macro!(9, function::FunctionName);
+        $macro!(10, const_::ConstName);
+        $macro!(11, import::Import);
+    };
+}
+
+const NUM_QUERY_KINDS: usize = 12;
+
+// Compile-time check: every ordinal in `query_kinds!` must fit within
+// `NUM_QUERY_KINDS`. Adding a new kind without bumping `NUM_QUERY_KINDS`
+// fails the build here.
+macro_rules! check_kind_ord {
+    ($ord:literal, $kind:path) => {
+        const _: () = assert!($ord < NUM_QUERY_KINDS);
+    };
+}
+query_kinds!(check_kind_ord);
+
+/// Run every migrated kind's `from_parse` for this file. SourceOnly kinds run
+/// individually; Query kinds share one tree walk via the combined query.
+fn dispatch_kinds<'s>(tree: &'s tree_sitter::Tree, ctx: &FileCtx<'s>) -> Vec<ParseTsGroup<'s>> {
+    let mut out: Vec<ParseTsGroup<'s>> = Vec::new();
+
+    // SourceOnly kinds first so their output is in declaration order.
+    run_source_only::<module::ModuleDocFirst>(ctx, &mut out);
+
+    // All Query kinds share one combined query over the tree.
+    let Some(combined) = ctx
+        .config
+        .combined_kind_query(|ts_lang| build_combined_query(ts_lang, ctx.lang))
+    else {
+        return out;
+    };
+    let symbol_idx = match combined.query.capture_index_for_name("symbol") {
+        Some(i) => i,
+        None => return out,
     };
 
-    match node.kind() {
-        // ---- Rust ----
-        "function_item" | "function_signature_item" => Some(FunctionName {
-            documented,
-            public: public(),
-        }),
-        "struct_item" => Some(StructName {
-            documented,
-            public: public(),
-        }),
-        "enum_item" => Some(EnumName {
-            documented,
-            public: public(),
-        }),
-        "trait_item" => Some(TraitName {
-            documented,
-            public: public(),
-        }),
-        "impl_item" => {
-            let trait_node = node.child_by_field_name("trait");
-            let is_boilerplate = trait_node.is_some_and(|t| is_boilerplate_trait_impl(t, source));
-            Some(ImplBlock {
-                is_trait_impl: trait_node.is_some(),
-                is_boilerplate_trait: is_boilerplate,
-            })
+    let mut buckets: [Vec<OwnedQueryMatch<'s>>; NUM_QUERY_KINDS] = Default::default();
+    let mut cursor = QueryCursor::new();
+    let mut stream = cursor.matches(&combined.query, tree.root_node(), ctx.source.as_bytes());
+    while let Some(m) = stream.next() {
+        let ord = combined.pattern_to_kind[m.pattern_index] as usize;
+        let symbol_node = match m.captures.iter().find(|c| c.index == symbol_idx) {
+            Some(c) => c.node,
+            None => continue,
+        };
+        if !accept_top_level_symbol(symbol_node, ctx) {
+            continue;
         }
-        "type_item" => Some(TypeAliasName {
-            documented,
-            public: public(),
-        }),
-        "const_item" | "static_item" => Some(ConstName {
-            documented,
-            public: public(),
-        }),
-        "macro_definition" => Some(MacroName {
-            documented,
-            public: visibility::macro_visibility(node, source, lang),
-            preproc: false,
-        }),
-        "mod_item" if node.child_by_field_name("body").is_none() => Some(Import {
-            first_party: true,
-            reexport: false,
-        }),
-        "mod_item" => None,
+        let range_node = compute_range_node(symbol_node, ctx.lang);
+        buckets[ord].push(OwnedQueryMatch {
+            symbol: symbol_node,
+            range_node,
+        });
+    }
 
-        // ---- TypeScript / JavaScript ----
-        "function_declaration"
-        | "method_definition"
-        | "method_signature"
-        | "abstract_method_signature"
-        | "method_declaration" => Some(FunctionName {
-            documented,
-            public: public(),
-        }),
-        "class_declaration" | "abstract_class_declaration" => Some(ClassName {
-            documented,
-            public: public(),
-        }),
-        "interface_declaration" => Some(InterfaceName {
-            documented,
-            public: public(),
-        }),
-        "enum_declaration" => Some(EnumName {
-            documented,
-            public: public(),
-        }),
-        "type_alias_declaration" => Some(TypeAliasName {
-            documented,
-            public: public(),
-        }),
-        "lexical_declaration" => classify_js_lexical(node, source, lang, documented, export_names),
-        "public_field_definition" => {
-            let value_kind = node.child_by_field_name("value").map(|v| v.kind());
-            if matches!(
-                value_kind,
-                Some("arrow_function" | "function_expression" | "generator_function")
-            ) {
-                Some(FunctionName {
-                    documented,
-                    public: public(),
-                })
-            } else {
-                None
+    macro_rules! invoke {
+        ($ord:literal, $kind:path) => {
+            if matches!(<$kind>::parse_strategy(ctx.lang), KindParseStrategy::Query(_)) {
+                let matches = std::mem::take(&mut buckets[$ord]);
+                out.extend(<$kind>::from_parse(&matches, ctx));
             }
-        }
-        "internal_module" => None,
-        "export_statement" if lang == Lang::JsTs => classify_js_export(node, source),
-        "expression_statement" if lang == Lang::JsTs => {
-            classify_js_cjs_export(node, source, documented)
-        }
+        };
+    }
+    query_kinds!(invoke);
 
-        // ---- Go ----
-        "type_spec" => {
-            let type_child = node.child_by_field_name("type").map(|t| t.kind());
-            match type_child {
-                Some("struct_type") => Some(StructName {
-                    documented,
-                    public: public(),
-                }),
-                Some("interface_type") => Some(InterfaceName {
-                    documented,
-                    public: public(),
-                }),
-                _ => Some(TypeAliasName {
-                    documented,
-                    public: public(),
-                }),
-            }
-        }
-        "type_alias" => Some(TypeAliasName {
-            documented,
-            public: public(),
-        }),
-        "const_declaration" | "var_declaration" => {
-            let is_grouped = (0..node.child_count())
-                .filter_map(|i| node.child(i))
-                .any(|c| c.kind() == "(" || c.kind() == "var_spec_list");
-            if !is_grouped {
-                return None;
-            }
-            Some(ConstName {
-                documented,
-                public: public(),
-            })
-        }
-        "const_spec" | "var_spec" => Some(ConstName {
-            documented,
-            public: public(),
-        }),
+    out
+}
 
-        // ---- C / C++ ----
-        "function_definition" => Some(FunctionName {
-            documented,
-            public: public(),
-        }),
-        "class_specifier" | "struct_specifier" | "union_specifier" | "enum_specifier" => {
-            node.child_by_field_name("body")?;
-            if node.parent().is_some_and(|p| p.kind() == "type_definition") {
-                return None;
-            }
-            match node.kind() {
-                "enum_specifier" => Some(EnumName {
-                    documented,
-                    public: public(),
-                }),
-                "class_specifier" => Some(ClassName {
-                    documented,
-                    public: public(),
-                }),
-                _ => Some(StructName {
-                    documented,
-                    public: public(),
-                }),
-            }
-        }
-        "type_definition" => {
-            if is_simple_typedef_alias(node) {
-                return None;
-            }
-            Some(TypeAliasName {
-                documented,
-                public: public(),
-            })
-        }
-        "preproc_def" => {
-            if is_c_header_guard(node, source, path) {
-                return None;
-            }
-            if is_platform_type_define(node, source) {
-                return None;
-            }
-            Some(MacroName {
-                documented,
-                public: visibility::macro_visibility(node, source, lang),
-                preproc: true,
-            })
-        }
-        "preproc_function_def" => Some(MacroName {
-            documented,
-            public: visibility::macro_visibility(node, source, lang),
-            preproc: true,
-        }),
-        "preproc_include" => Some(Import {
-            first_party: is_first_party_import(node, source, lang),
-            reexport: false,
-        }),
-        "declaration" if lang == Lang::C => {
-            if ast::find_descendant_of_kind(node, "function_declarator").is_some() {
-                Some(FunctionName {
-                    documented,
-                    public: public(),
-                })
-            } else {
-                Some(ConstName {
-                    documented,
-                    public: public(),
-                })
-            }
-        }
-        "namespace_definition" => None,
-        "alias_declaration" => Some(TypeAliasName {
-            documented,
-            public: public(),
-        }),
-
-        // ---- Java ----
-        "record_declaration" => Some(StructName {
-            documented,
-            public: public(),
-        }),
-        "annotation_type_declaration" => Some(InterfaceName {
-            documented,
-            public: public(),
-        }),
-        "constructor_declaration" | "annotation_type_element_declaration" => Some(FunctionName {
-            documented,
-            public: public(),
-        }),
-        "module_declaration" => None,
-        "field_declaration" if lang == Lang::Java => {
-            if !java_field_is_static_final(node, source) {
-                return None;
-            }
-            Some(ConstName {
-                documented,
-                public: public(),
-            })
-        }
-        "constant_declaration" if lang == Lang::Java => Some(ConstName {
-            documented,
-            public: public(),
-        }),
-
-        // ---- Python ----
-        "class_definition" => Some(ClassName {
-            documented,
-            public: public(),
-        }),
-        "expression_statement" if lang == Lang::Python => {
-            let name = python_module_const_name(node, source)?;
-            let public = !name.starts_with('_') || (name.starts_with("__") && name.ends_with("__"));
-            Some(ConstName { documented, public })
-        }
-
-        // ---- Markdown / JSON / TOML / YAML ----
-        "atx_heading" | "setext_heading" => {
-            let start = node.start_position().row;
-            let end = compute_end_line(node);
-            let level = crate::classify::detect_heading_depth(lines, start, end);
-            let heading_line = lines.get(start).copied().unwrap_or("");
-            let stripped = crate::classify::strip_heading_badges(heading_line);
-            let boilerplate = crate::classify::is_boilerplate_heading(stripped);
-            Some(Heading { level, boilerplate })
-        }
-        "table" | "table_array_element" => {
-            // TOML: level from dot count in [a.b.c] header.
-            let start = node.start_position().row;
-            let line = lines.get(start).copied().unwrap_or("");
-            let key = line
-                .trim()
-                .trim_start_matches('[')
-                .trim_end_matches(']')
-                .trim();
-            let level = key.chars().filter(|&c| c == '.').count() as u8 + 1;
-            Some(Heading {
-                level,
-                boilerplate: false,
-            })
-        }
-        "pair" | "block_mapping_pair" => Some(Heading {
-            level: 1,
-            boilerplate: false,
-        }),
-
-        // ---- Imports ----
-        "use_declaration" => {
-            let is_crate_root = path.file_name().is_some_and(|f| f == "lib.rs");
-            Some(Import {
-                first_party: is_first_party_import(node, source, lang),
-                reexport: !is_crate_root && is_rust_reexport(node, source, mod_names),
-            })
-        }
-        "import_statement" if lang == Lang::Python || lang == Lang::JsTs => Some(Import {
-            first_party: is_first_party_import(node, source, lang),
-            reexport: false,
-        }),
-        "import_from_statement" => Some(Import {
-            first_party: is_first_party_import(node, source, lang),
-            reexport: is_python_reexport(node, source),
-        }),
-        "import_declaration" => Some(Import {
-            first_party: is_first_party_import(node, source, lang),
-            reexport: false,
-        }),
-
-        // ---- Lua ----
-        "variable_declaration" | "assignment_statement" if lang == Lang::Lua => {
-            let is_function = lua_rhs_is_function(node);
-            if is_function {
-                Some(FunctionName {
-                    documented,
-                    public: public(),
-                })
-            } else {
-                Some(ConstName {
-                    documented,
-                    public: public(),
-                })
-            }
-        }
-
-        _ => None,
+fn run_source_only<'s, K: TsGroupKindParse>(
+    ctx: &FileCtx<'s>,
+    out: &mut Vec<ParseTsGroup<'s>>,
+) {
+    if matches!(K::parse_strategy(ctx.lang), KindParseStrategy::SourceOnly) {
+        out.extend(K::from_parse(&[], ctx));
     }
 }
 
-fn classify_js_lexical(
+/// Compile one tree-sitter `Query` spanning every Query-strategy kind for
+/// `lang` and record each pattern's owning kind ordinal in `pattern_to_kind`.
+/// Pattern counts are inferred from each kind query's `@symbol` occurrences,
+/// since every pattern has exactly one `@symbol` capture by convention.
+fn build_combined_query(
+    ts_language: &tree_sitter::Language,
+    lang: Lang,
+) -> Option<CombinedKindQuery> {
+    let mut combined_src = String::new();
+    let mut pattern_to_kind: Vec<u8> = Vec::new();
+
+    macro_rules! push {
+        ($ord:literal, $kind:path) => {
+            if let KindParseStrategy::Query(src) = <$kind>::parse_strategy(lang) {
+                let count = src.matches("@symbol").count();
+                for _ in 0..count {
+                    pattern_to_kind.push($ord);
+                }
+                combined_src.push_str(src);
+                combined_src.push('\n');
+            }
+        };
+    }
+    query_kinds!(push);
+
+    if pattern_to_kind.is_empty() {
+        return None;
+    }
+    let query = tree_sitter::Query::new(ts_language, &combined_src).ok()?;
+    debug_assert_eq!(query.pattern_count(), pattern_to_kind.len());
+    Some(CombinedKindQuery {
+        query,
+        pattern_to_kind,
+    })
+}
+
+fn accept_top_level_symbol(symbol_node: tree_sitter::Node, ctx: &FileCtx<'_>) -> bool {
+    if ast::is_inside_scope_boundary(symbol_node) {
+        return false;
+    }
+    if ctx.lang == Lang::Rust && ast::is_rust_test_code(symbol_node, ctx.source) {
+        return false;
+    }
+    if ctx.lang == Lang::Rust && ast::is_inside_rust_anon_const(symbol_node, ctx.source) {
+        return false;
+    }
+    if matches!(ctx.lang, Lang::Go | Lang::Rust) {
+        let ident = symbol_node
+            .child_by_field_name("name")
+            .and_then(|n| n.utf8_text(ctx.source.as_bytes()).ok())
+            .map(str::trim);
+        if ident == Some("_") {
+            return false;
+        }
+    }
+    true
+}
+
+/// Language visibility rules first, then a TS/TSX fallback against the file's
+/// `export { ... }` names.
+pub(crate) fn symbol_is_public(node: tree_sitter::Node, ctx: &FileCtx<'_>) -> bool {
+    if visibility::symbol_visibility(node, ctx.source, ctx.lang) {
+        return true;
+    }
+    if matches!(ctx.lang, Lang::TypeScript | Lang::Tsx)
+        && !ctx.export_names.is_empty()
+        && let Some(name_node) = node.child_by_field_name("name")
+        && let Ok(name) = name_node.utf8_text(ctx.source.as_bytes())
+    {
+        return ctx.export_names.contains(name);
+    }
+    false
+}
+
+/// C++ `template_declaration` wraps the inner item; classify on the inner
+/// node but use the outer for range + doc detection so the template
+/// parameters are captured in the rendered range. Other languages just use
+/// the symbol node itself.
+fn compute_range_node(symbol_node: tree_sitter::Node<'_>, lang: Lang) -> tree_sitter::Node<'_> {
+    if lang == Lang::Cpp
+        && symbol_node
+            .parent()
+            .is_some_and(|p| p.kind() == "template_declaration")
+    {
+        symbol_node.parent().unwrap()
+    } else {
+        symbol_node
+    }
+}
+
+pub(crate) fn classify_js_lexical(
     node: Node,
     source: &str,
     lang: Lang,
@@ -501,10 +287,10 @@ fn classify_js_lexical(
         .find(|c| c.kind() == "variable_declarator");
 
     if is_require_call(declarator, source) {
-        return Some(TsGroupKey::Import {
+        return Some(TsGroupKey::Import(import::Import {
             first_party: is_require_first_party(declarator, source),
             reexport: false,
-        });
+        }));
     }
 
     let keyword = node.child(0).map(|c| c.kind());
@@ -514,7 +300,7 @@ fn classify_js_lexical(
 
     let base_public = visibility::symbol_visibility(node, source, lang);
     let public = base_public
-        || (lang == Lang::JsTs
+        || (matches!(lang, Lang::TypeScript | Lang::Tsx)
             && !export_names.is_empty()
             && declarator
                 .and_then(|d| d.child_by_field_name("name"))
@@ -528,16 +314,16 @@ fn classify_js_lexical(
         value_kind,
         Some("arrow_function" | "function_expression" | "generator_function")
     ) {
-        Some(FunctionName { documented, public })
+        Some(FunctionName(function::FunctionName { documented, public }))
     } else {
-        Some(ConstName { documented, public })
+        Some(ConstName(const_::ConstName { documented, public }))
     }
 }
 
 /// Classify a JS/TS `export_statement`. Returns `None` for declaration
 /// exports (the inner declaration is captured separately); returns an Import
 /// group for re-exports (`export * from`, `export { } from`, `export { }`).
-fn classify_js_export(node: Node, source: &str) -> Option<TsGroupKey> {
+pub(crate) fn classify_js_export(node: Node, source: &str) -> Option<TsGroupKey> {
     let mut cursor = node.walk();
     let has_declaration = node.children(&mut cursor).any(|c| {
         matches!(
@@ -567,17 +353,17 @@ fn classify_js_export(node: Node, source: &str) -> Option<TsGroupKey> {
     cursor = node.walk();
     let has_source = node.children(&mut cursor).any(|c| c.kind() == "string");
     let first_party = if has_source {
-        is_first_party_import(node, source, Lang::JsTs)
+        is_first_party_import(node, source, Lang::TypeScript)
     } else {
         true
     };
-    Some(TsGroupKey::Import {
+    Some(TsGroupKey::Import(import::Import {
         first_party,
         reexport: true,
-    })
+    }))
 }
 
-fn classify_js_cjs_export(node: Node, source: &str, documented: bool) -> Option<TsGroupKey> {
+pub(crate) fn classify_js_cjs_export(node: Node, source: &str, documented: bool) -> Option<TsGroupKey> {
     let assign = node
         .named_children(&mut node.walk())
         .find(|c| c.kind() == "assignment_expression")?;
@@ -588,10 +374,10 @@ fn classify_js_cjs_export(node: Node, source: &str, documented: bool) -> Option<
     let obj = left.child_by_field_name("object")?;
     let obj_text = obj.utf8_text(source.as_bytes()).ok()?;
     match obj_text {
-        "exports" => Some(TsGroupKey::ConstName {
+        "exports" => Some(TsGroupKey::ConstName(const_::ConstName {
             documented,
             public: true,
-        }),
+        })),
         "module" => {
             let prop = left.child_by_field_name("property")?;
             let prop_text = prop.utf8_text(source.as_bytes()).ok()?;
@@ -600,15 +386,15 @@ fn classify_js_cjs_export(node: Node, source: &str, documented: bool) -> Option<
             }
             let rhs = assign.child_by_field_name("right")?;
             if is_rhs_require(rhs, source) {
-                Some(TsGroupKey::Import {
+                Some(TsGroupKey::Import(import::Import {
                     first_party: is_rhs_require_first_party(rhs, source),
                     reexport: true,
-                })
+                }))
             } else {
-                Some(TsGroupKey::ConstName {
+                Some(TsGroupKey::ConstName(const_::ConstName {
                     documented,
                     public: true,
-                })
+                }))
             }
         }
         _ => None,
@@ -682,7 +468,7 @@ fn is_require_first_party(declarator: Option<Node>, source: &str) -> bool {
     }
 }
 
-fn java_field_is_static_final(node: Node, source: &str) -> bool {
+pub(crate) fn java_field_is_static_final(node: Node, source: &str) -> bool {
     let modifiers = match node
         .children(&mut node.walk())
         .find(|c| c.kind() == "modifiers")
@@ -707,7 +493,7 @@ fn java_field_is_static_final(node: Node, source: &str) -> bool {
 /// constant, return its left-hand identifier text. A type-annotated
 /// assignment always qualifies; otherwise the name must be ALL_CAPS or
 /// `__dunder__`.
-fn python_module_const_name<'a>(node: Node, source: &'a str) -> Option<&'a str> {
+pub(crate) fn python_module_const_name<'a>(node: Node, source: &'a str) -> Option<&'a str> {
     if node.parent().map(|p| p.kind()) != Some("module") {
         return None;
     }
@@ -736,7 +522,7 @@ fn python_module_const_name<'a>(node: Node, source: &'a str) -> Option<&'a str> 
     (is_upper || is_dunder).then_some(name_text)
 }
 
-fn lua_rhs_is_function(node: Node) -> bool {
+pub(crate) fn lua_rhs_is_function(node: Node) -> bool {
     let assign = if node.kind() == "variable_declaration" {
         node.named_children(&mut node.walk())
             .find(|c| c.kind() == "assignment_statement")
@@ -753,7 +539,25 @@ fn lua_rhs_is_function(node: Node) -> bool {
     value_kind == Some("function_definition")
 }
 
-fn is_simple_typedef_alias(node: Node) -> bool {
+/// C/C++ struct/union/enum/class filter: aggregate must have a body (so
+/// anonymous and forward declarations are excluded) and must not be wrapped
+/// in a `typedef` (those are surfaced via typedef handling, not via the
+/// aggregate's own name).
+pub(crate) fn check_c_aggregate_body(node: Node, lang: Lang) -> Option<()> {
+    if !matches!(lang, Lang::C | Lang::Cpp) {
+        return Some(());
+    }
+    node.child_by_field_name("body")?;
+    if node
+        .parent()
+        .is_some_and(|p| p.kind() == "type_definition")
+    {
+        return None;
+    }
+    Some(())
+}
+
+pub(crate) fn is_simple_typedef_alias(node: Node) -> bool {
     let type_child = match node.child_by_field_name("type") {
         Some(t) => t,
         None => return false,
@@ -771,7 +575,7 @@ fn is_simple_typedef_alias(node: Node) -> bool {
     matches!(declarator.kind(), "type_identifier" | "primitive_type")
 }
 
-fn is_c_header_guard(node: Node, source: &str, path: &Path) -> bool {
+pub(crate) fn is_c_header_guard(node: Node, source: &str, path: &Path) -> bool {
     if !crate::classify::is_header_file(path) {
         return false;
     }
@@ -792,7 +596,7 @@ fn is_c_header_guard(node: Node, source: &str, path: &Path) -> bool {
     name.contains(&stem)
 }
 
-fn is_platform_type_define(node: Node, source: &str) -> bool {
+pub(crate) fn is_platform_type_define(node: Node, source: &str) -> bool {
     let name = match node.child_by_field_name("name") {
         Some(n) => n.utf8_text(source.as_bytes()).unwrap_or(""),
         None => return false,
@@ -837,7 +641,7 @@ fn collect_top_level_mod_names<'t>(root: Node<'t>, source: &'t str, lang: Lang) 
 }
 
 fn collect_js_export_names<'t>(root: Node<'t>, source: &'t str, lang: Lang) -> HashSet<&'t str> {
-    if lang != Lang::JsTs {
+    if !matches!(lang, Lang::TypeScript | Lang::Tsx) {
         return HashSet::new();
     }
     let mut out = HashSet::new();
@@ -891,7 +695,7 @@ fn rust_use_path(text: &str) -> &str {
 }
 
 /// Detect Python `from X import Y as Y` — the PEP 484 explicit re-export convention.
-fn is_python_reexport(node: Node, source: &str) -> bool {
+pub(crate) fn is_python_reexport(node: Node, source: &str) -> bool {
     let mut cursor = node.walk();
     let mut has_aliased = false;
     for child in node.children(&mut cursor) {
@@ -912,7 +716,7 @@ fn is_python_reexport(node: Node, source: &str) -> bool {
     has_aliased
 }
 
-fn is_rust_reexport(node: Node, source: &str, mod_names: &[&str]) -> bool {
+pub(crate) fn is_rust_reexport(node: Node, source: &str, mod_names: &[&str]) -> bool {
     if !visibility::import_visibility(node, source, Lang::Rust) {
         return false;
     }
@@ -926,14 +730,14 @@ fn is_rust_reexport(node: Node, source: &str, mod_names: &[&str]) -> bool {
     false
 }
 
-fn is_first_party_import(node: Node, source: &str, lang: Lang) -> bool {
+pub(crate) fn is_first_party_import(node: Node, source: &str, lang: Lang) -> bool {
     let text = node.utf8_text(source.as_bytes()).unwrap_or("");
     match lang {
         Lang::Rust => {
             let path = rust_use_path(text);
             path.starts_with("crate::") || path.starts_with("self::") || path.starts_with("super::")
         }
-        Lang::JsTs => {
+        Lang::TypeScript | Lang::Tsx => {
             if let Some(from_pos) = text.rfind(" from ") {
                 let after = text[from_pos + 6..].trim();
                 after.starts_with("'./")
@@ -949,7 +753,7 @@ fn is_first_party_import(node: Node, source: &str, lang: Lang) -> bool {
             }
         }
         Lang::Python => text.trim().starts_with("from ."),
-        Lang::C => text
+        Lang::C | Lang::Cpp => text
             .trim()
             .strip_prefix("#include")
             .unwrap_or("")
@@ -963,7 +767,7 @@ fn is_first_party_import(node: Node, source: &str, lang: Lang) -> bool {
 // Range construction
 // ---------------------------------------------------------------------------
 
-fn compute_end_line(node: Node) -> usize {
+pub(crate) fn compute_end_line(node: Node) -> usize {
     let end = node.end_position();
     if end.column == 0 && end.row > node.start_position().row {
         end.row
@@ -1054,7 +858,7 @@ fn dedup_line_overlaps(items: &mut Vec<(TsGroupKey, TsItem<'_>)>) {
 /// Stretch Heading items whose grammar only captures the heading line forward
 /// to the next item's start (or EOF).
 fn extend_section_ranges(items: &mut [(TsGroupKey, TsItem<'_>)], source: &str) {
-    let is_heading = |k: &TsGroupKey| matches!(k, TsGroupKey::Heading { .. });
+    let is_heading = |k: &TsGroupKey| matches!(k, TsGroupKey::Heading(_));
     if !items.iter().any(|(k, _)| is_heading(k)) {
         return;
     }
@@ -1078,7 +882,10 @@ fn extend_section_ranges(items: &mut [(TsGroupKey, TsItem<'_>)], source: &str) {
 /// Drop duplicate overloads (C decl+defn, TS overload signatures) and
 /// duplicate type declarations (Rust cfg'd dupes, etc.).
 fn dedup_overloads(items: &mut Vec<(TsGroupKey, TsItem<'_>)>, lang: Lang, source: &str) {
-    if !matches!(lang, Lang::Rust | Lang::C | Lang::JsTs) {
+    if !matches!(
+        lang,
+        Lang::Rust | Lang::C | Lang::Cpp | Lang::TypeScript | Lang::Tsx
+    ) {
         return;
     }
     let mut seen: HashSet<(&str, std::mem::Discriminant<TsGroupKey>)> = HashSet::new();
@@ -1098,10 +905,10 @@ fn dedup_overloads(items: &mut Vec<(TsGroupKey, TsItem<'_>)>, lang: Lang, source
         }
         if matches!(
             key,
-            TsGroupKey::StructName { .. }
-                | TsGroupKey::EnumName { .. }
-                | TsGroupKey::TypeAliasName { .. }
-                | TsGroupKey::MacroName { .. }
+            TsGroupKey::StructName(_)
+                | TsGroupKey::EnumName(_)
+                | TsGroupKey::TypeAliasName(_)
+                | TsGroupKey::MacroName(_)
         ) && !seen.insert((ident, tag))
         {
             to_remove.push(i);
@@ -1161,7 +968,7 @@ fn item_identifier<'a>(node: Node, source: &'a str) -> &'a str {
         .unwrap_or("")
 }
 
-fn is_boilerplate_trait_impl(trait_node: Node, source: &str) -> bool {
+pub(crate) fn is_boilerplate_trait_impl(trait_node: Node, source: &str) -> bool {
     let name = trait_type_name(trait_node, source);
     matches!(
         name,

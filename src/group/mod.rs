@@ -62,6 +62,7 @@ pub struct TsGroup<'s> {
 }
 
 /// A single item in a tree-sitter group.
+#[derive(Clone, Copy)]
 pub struct TsItem<'s> {
     pub path: &'s Path,
     pub source: &'s str,

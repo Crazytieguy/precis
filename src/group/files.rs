@@ -113,7 +113,7 @@ pub fn children<'s>(g: &mut FilesGroup, ctx: &GroupCtx<'s>) -> Vec<Group<'s>> {
 fn nest_heading_groups(groups: &mut Vec<(Group<'_>, bool)>) {
     // Check if these heading groups come from Markdown files.
     let is_markdown = groups.iter().any(|(g, _)| {
-        matches!(g, Group::Ts(ts) if matches!(&ts.key, TsGroupKey::Heading { .. })
+        matches!(g, Group::Ts(ts) if matches!(&ts.key, TsGroupKey::Heading(_))
             && ts.items.first().is_some_and(|item|
                 crate::Lang::from_path(item.path) == Some(crate::Lang::Markdown)))
     });
@@ -176,10 +176,7 @@ fn nest_heading_groups(groups: &mut Vec<(Group<'_>, bool)>) {
                     let l = ts.key.heading_level().filter(|&l| l < level)?;
                     let boilerplate = matches!(
                         &ts.key,
-                        TsGroupKey::Heading {
-                            boilerplate: true,
-                            ..
-                        }
+                        TsGroupKey::Heading(h) if h.boilerplate
                     );
                     Some((i, l, boilerplate))
                 } else {
@@ -213,45 +210,37 @@ pub(crate) fn compute_item_modifier(
 ) -> f64 {
     use TsGroupKey::*;
 
-    let generated_factor = heuristics::generated_contribution(is_generated);
-
-    let vis_factor = match key {
-        FunctionName { public, .. }
-        | StructName { public, .. }
-        | EnumName { public, .. }
-        | ClassName { public, .. }
-        | InterfaceName { public, .. }
-        | TraitName { public, .. }
-        | TypeAliasName { public, .. }
-        | ConstName { public, .. }
-        | MacroName { public, .. } => heuristics::visibility_contribution(*public),
-        _ => 1.0,
+    let generated_factor = if is_generated {
+        heuristics::GENERATED_FACTOR
+    } else {
+        1.0
     };
 
-    let doc_factor = match key {
-        FunctionName { documented, .. }
-        | StructName { documented, .. }
-        | EnumName { documented, .. }
-        | ClassName { documented, .. }
-        | InterfaceName { documented, .. }
-        | TraitName { documented, .. }
-        | TypeAliasName { documented, .. }
-        | ConstName { documented, .. }
-        | MacroName { documented, .. } => heuristics::documented_contribution(*documented, key),
-        _ => heuristics::documented_contribution(true, key),
+    let (doc_factor, vis_factor) = match key.name_doc_visibility() {
+        Some((documented, public)) => {
+            let doc = if documented {
+                1.0
+            } else {
+                heuristics::UNDOCUMENTED_FACTOR
+            };
+            let vis = if public {
+                1.0
+            } else {
+                heuristics::PRIVATE_FACTOR
+            };
+            (doc, vis)
+        }
+        None => (1.0, 1.0),
     };
 
     let boilerplate_factor = match key {
-        Heading {
-            boilerplate: true, ..
-        } => heuristics::boilerplate_heading_contribution(),
+        Heading(h) if h.boilerplate => heuristics::BOILERPLATE_HEADING_FACTOR,
         _ => 1.0,
     };
 
     let reexport_factor = match key {
-        Import { reexport: true, .. } | ImportedItems { reexport: true, .. } => {
-            heuristics::reexport_contribution()
-        }
+        Import(i) if i.reexport => heuristics::REEXPORT_FACTOR,
+        ImportedItems(i) if i.reexport => heuristics::REEXPORT_FACTOR,
         _ => 1.0,
     };
 

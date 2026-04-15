@@ -52,9 +52,9 @@ Done: `cargo nextest` release-mode test wiring is in place, and `cargo bench-hot
 
 Remaining: add per-stage profiling so `profile` reports more than wall-clock render time.
 
-### 13. Out-of-bounds line fallback in `render_item`
+### ~~13. Out-of-bounds line fallback in `render_item` (resolved)~~
 
-Several branches of `render_item` use `lines.get(idx).copied().unwrap_or("")` when a line index is out of bounds (`src/group/ts.rs:703,712,729,746,774,790`). The `""` fallback is a `&'static str`, not a slice of `item.source`, and silently papers over a bug that shouldn't occur in well-formed data. Replace with `debug_assert!` or reshape the loops to avoid needing a fallback.
+Resolved in the 2026-04-14 stage 6 follow-up pass. The `lines.get(idx).copied().unwrap_or("")` pattern in `src/group/ts.rs` render helpers (`render_name_line`, `render_macro_name`, `render_impl_block_line`, `render_doc_first_lines`, `render_import_line`, `render_module_doc_first_lines`, `render_heading_line`, `render_data_section_line`) and in `src/group/ts/heading.rs`'s markdown/TOML arms was replaced with direct indexing (`lines[line_idx]`). Single-line helpers now use a new `item_line(item, idx)` helper that reads the `idx`-th line via `str::lines().nth(idx)` without materializing the full `Vec<&str>`. Invariant-safe: item line indices are always within the file they came from.
 
 ## Architecture
 
@@ -126,3 +126,32 @@ So the data model and the renderer mutually depend on each other, and a hypothet
 ### 26. `SchedulerRenderer` trait surface is asymmetric
 
 `probe_cost` returns `FileCost`; `commit` returns `BudgetDelta`. `FileCost` is an internal `FileCache` cost type that the trait should not be exposing in its public surface, and the asymmetry means refunds can only be expressed at commit time — a renderer with cost discounts can't communicate them at probe time, so the scheduler can't see them while choosing the next group. A non-text renderer that has no concept of refunds still has to construct `BudgetDelta`s on every commit.
+
+### 27. Hand-numbered `ordinal()` magic table
+
+`TsGroupKey::ordinal()` (`src/group/ts.rs`) and `Group::kind_ordinal()` (`src/group/mod.rs:123-130`) are a single numeric namespace used by the scheduler tiebreak tuple at `src/schedule.rs:73-83`. `Folders = 0`, `Files = 1`, and every `TsGroupKey` variant is hand-assigned a magic number (0..120 with gaps), so adding or reordering variants means editing a hand-maintained table.
+
+The naive fix — derive `EnumDiscriminants` on `TsGroupKey` and wrap it in a `GroupKindRank { Folders, Files, Ts(...) }` enum with derived `Ord` — was explored in planning round 21 of the TsGroupKey refactor (Codex finding: see `ignore/refactor_status.md`). Ordered-derive puts all `Ts` variants strictly after `Files`, which changes the tiebreak ordering across groups wherever `(path, line, kind)` ties fire today. Not zero-diff safe under the current snapshot policy.
+
+Cleanup approaches to explore:
+
+1. Define a single `GroupKindRank` enum with hand-maintained variants that preserve today's exact ordering across `Folders`/`Files`/`Ts`. Deletes the magic numbers at the cost of one hand-maintained variant list instead of several parallel number tables.
+2. Restructure the tiebreak to use `(path, line, lexicographic-kind)` and accept whatever fallout the ordering change produces. Needs a deliberate snapshot-review pass.
+
+Either approach is a separate batch — keep it behind its own explicit tiebreak-preservation audit.
+
+### 28. `ImplBlock` trait impl should not be gated
+
+`is_gated_by` at `src/group/ts.rs:233` gates trait-impl `ImplBlock` groups behind inherent `ImplBlock` groups of the same type. This was load-bearing under the pre-rewrite cross-file gating loop, but the semantics it produces are wrong: a trait impl is a public API surface that deserves to be shown on its own merits, not hidden behind an inherent impl. Noted during the TsGroupKey refactor design discussion.
+
+The fix is to stop producing the gating relationship in the first place. Under the post-refactor architecture (plan Stage 7), in-file gating lives inside per-kind `from_parse` impls as `dependent_siblings`, and `ImplBlock::from_parse` can simply never attach trait-impl groups as dependent siblings of inherent-impl groups.
+
+Snapshot-changing cleanup; deferred from the TsGroupKey refactor batch because fixing it required the per-kind gating refactor that Stage 7 delivers. Once Stage 7 lands, this becomes trivial.
+
+### 29. `Mod::children` could re-run `from_parse` with an in-module filter
+
+Today each per-kind `from_parse` traverses the whole file once and applies `accept_top_level_symbol` to filter. When `Mod::children` (or any other container kind that spawns in-body child groups — Rust `mod_item` with body, TS `namespace`, etc.) needs to enumerate nested top-level items, it has to re-derive them with a modified scope.
+
+Idea worth exploring: instead of duplicating extraction logic per container kind, re-run `dispatch_kinds` with a "treat `self` as the root" constraint — the same combined query walked against a subtree instead of the full tree, with `accept_top_level_symbol` reinterpreted relative to the subtree boundary. The filter logic already exists in `ast::is_inside_function` and the wrapper-list approach in Stage 5 makes this cleaner still.
+
+Out of scope for the TsGroupKey refactor batch. Noted for a future session once Stage 5 lands.
