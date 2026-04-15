@@ -359,7 +359,7 @@ pub(super) fn spawn_method_children<'s>(
 
     for ((documented, public), items) in sorted_buckets {
         let key = TsGroupKey::FunctionName(function::FunctionName { documented, public });
-        let modifier = super::files::compute_item_modifier(&key, base_modifier, false);
+        let modifier = super::files::compute_item_modifier(&key, base_modifier);
 
         let group = Group::Ts(TsGroup {
             key,

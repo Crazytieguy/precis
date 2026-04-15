@@ -5,8 +5,13 @@
 Stages 1–6 and 8 are landed (commit `TsGroupKey trait refactor: stages
 1-6, 8 landed`). Stage 5 was dropped after an attempt showed its
 motivation rested on a misreading of `filter_nested_items`. The
-remaining work is **stage 7** — a cluster of semantic changes that
-produce expected snapshot diffs — plus a small tail in stages 9–10.
+**heuristics.rs → calibration.rs rename** landed 2026-04-15 along
+with the **skip-generated-files-at-extraction** piece of stage 7
+(zero snapshot diffs). Remaining: the big stage 7 architectural
+piece (ParseTsGroup pipeline + cross-file aggregation + per-kind
+gating + heading nesting + DataSection routing + dedup_overloads
+per-kind + dedup_line_overlaps chainer + finalize_group), which
+must land as one coherent change with Agent snapshot review.
 
 See `ignore/refactor_status.md` for landed-stage notes and constraints
 that still bind future work (hand-written dispatch over `enum_dispatch`,
@@ -222,52 +227,20 @@ architecture achieves the user's criterion: per-kind logic is confined to
 `from_parse` (and `children`, `render_item`), and everything outside those
 methods is kind-agnostic infrastructure.
 
-### Skip generated files at extraction
+### Skip generated files at extraction — LANDED 2026-04-15
 
-Today: `is_generated` is computed per-file in `FilesGroup::children`,
-threaded through bucketing, and produces TsGroups with `inherited_modifier
-= 0.0` (which means they're never scheduled).
+`FilesGroup::children` now bails on generated files before parsing:
+filename check first, then source-content check via the new
+`ParseStore::read_source`, then `parse()` only for survivors.
+`is_generated` is gone from the bucket key, from
+`compute_item_modifier`, and `GENERATED_FACTOR` is deleted. The
+gating-attach loop simplified (no same-generated preference).
+`(Group, bool)` tuple plumbing through `nest_heading_groups` removed.
 
-New: in `FilesGroup::children`, after determining a file is generated, **skip
-it entirely** — do not parse, do not dispatch, do not produce TsGroups. The
-file header still appears via `FilesGroup` (file headers are committed
-independently).
-
-**Equivalence is partial**: for a generated file's *own scheduled content*,
-new and old behavior are equivalent (nothing scheduled either way). However,
-for *gated relationships involving generated groups*, removing the generated
-groups changes parent selection in the gating loop, which can unhide
-previously-hidden private groups. This is a deliberate behavioral change,
-and the snapshot diffs it produces are explicitly accepted at stage 7.
-
-Removed: `is_generated` from `compute_item_modifier`, `is_generated`
-threading through `(key, is_generated)` bucketing tuples, the same-generated
-preference logic in the gating loop (along with the gating loop itself).
-
-Current detection at `src/group/files.rs:33-37` calls three things:
-`classify::is_generated_file(source)`, `is_autogen_api_doc(source,
-role)`, and `is_generated_filename(relative)`. The skip needs the source
-content *and* the file role *and* the path. Pseudocode:
-
-```rust
-let source = ctx.store.read_source(path);
-let role = file_role(path);
-if classify::is_generated_file(source)
-    || classify::is_autogen_api_doc(source, role)
-    || classify::is_generated_filename(relative_path)
-{
-    continue;  // skip parsing, dispatching, all of it
-}
-let tree = ctx.store.parse(path);  // store-owned
-```
-
-This may require a small `ParseStore` API change to read the source
-without committing to a parse — `read_source(path) -> &'s str` separate
-from `parse(path) -> &'s Tree`. Verify the existing store API and adjust
-if needed.
-
-Delete `generated_contribution` and `is_generated` threading through
-`compute_item_modifier`.
+Zero snapshot diffs across all 141 fixtures: the existing
+same-generated-preference logic in the old gating loop already
+prevented non-generated items from being trapped behind generated
+parents in every fixture, so removing it surfaced nothing.
 
 ### Cross-file aggregation
 
@@ -752,8 +725,10 @@ Delete the `extract_items` legacy adapter introduced in stage 6.
 
 - **Const extraction — landed.** `PRIVATE_FACTOR`,
   `UNDOCUMENTED_FACTOR`, `BOILERPLATE_HEADING_FACTOR`,
-  `REEXPORT_FACTOR` are inline consts in `src/heuristics.rs`.
-  `generated_contribution` will be deleted when stage 7 lands.
+  `REEXPORT_FACTOR` are inline consts in `src/calibration.rs`.
+  `GENERATED_FACTOR` deleted 2026-04-15.
+- **`heuristics.rs` → `calibration.rs` rename — landed 2026-04-15.**
+  All callsites updated. Doc comment updated.
 - **Grounding comments — dropped** per
   `feedback_no_inferable_or_grounding_comments.md`.
 - **`finalize_group` dependent-sibling semantics — pending stage 7**

@@ -2,7 +2,7 @@ use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
 
 use crate::classify::{self, FileRole};
-use crate::heuristics;
+use crate::calibration;
 
 use super::{FilesGroup, FoldersGroup, Group, GroupCtx};
 
@@ -91,7 +91,7 @@ pub fn create_files_groups<'s>(
                     .iter()
                     .any(|f| classify::is_c_implementation_file(f));
 
-            let contribution = heuristics::files_contribution(
+            let contribution = calibration::files_contribution(
                 role,
                 is_root_dir,
                 is_deprioritized,
@@ -137,7 +137,7 @@ pub fn children<'s>(g: &mut FoldersGroup, ctx: &GroupCtx<'s>) -> Vec<Group<'s>> 
     for item_dir in &g.items {
         let rel_dir = ctx.rel_path(item_dir);
         let category = classify::classify_dir(rel_dir);
-        let contribution = heuristics::folders_contribution(rel_dir, category);
+        let contribution = calibration::folders_contribution(rel_dir, category);
         let async_mirror_factor = if async_mirrors.contains(item_dir.as_path()) {
             0.15
         } else {

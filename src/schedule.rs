@@ -161,7 +161,7 @@ fn is_auto_commit_body(group: &Group<'_>, remaining_tokens: usize, total_budget:
     }
     match g.key {
         crate::group::TsGroupKey::EnumBody(_) => {
-            let limit = crate::heuristics::COMPACT_BODY_LINE_LIMIT;
+            let limit = crate::calibration::COMPACT_BODY_LINE_LIMIT;
             g.items.iter().all(|item| {
                 let body_start = crate::group::ts::compute_body_start_line(item);
                 item.end_line.saturating_sub(body_start) <= limit

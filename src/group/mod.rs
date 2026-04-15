@@ -85,13 +85,13 @@ impl<'s> Group<'s> {
     pub fn value(&self) -> f64 {
         match self {
             Group::Folders(g) => {
-                g.inherited_modifier * crate::heuristics::folders_base_value(g.items.len())
+                g.inherited_modifier * crate::calibration::folders_base_value(g.items.len())
             }
             Group::Files(g) => {
-                g.inherited_modifier * crate::heuristics::files_base_value(g.items.len(), g.role)
+                g.inherited_modifier * crate::calibration::files_base_value(g.items.len(), g.role)
             }
             Group::Ts(g) => {
-                g.inherited_modifier * crate::heuristics::ts_base_value(&g.key, g.items.len())
+                g.inherited_modifier * crate::calibration::ts_base_value(&g.key, g.items.len())
             }
         }
     }

@@ -98,32 +98,28 @@ impl ParseStore {
         Some(self.configs.insert(ext, Box::new(config)))
     }
 
-    fn parse_source(&self, path: &Path, source: &str) -> Option<Tree> {
-        let config = self.config_for(path)?;
-        config.parser.borrow_mut().parse(source, None)
+    /// Read a file's source text, caching it in the store. Does not parse.
+    /// Lets callers classify on source content (e.g. generated-file detection)
+    /// before paying for tree-sitter parsing.
+    pub fn read_source(&self, path: &Path) -> Option<&str> {
+        if let Some(src) = self.sources.get(path) {
+            return Some(src);
+        }
+        let source = std::fs::read_to_string(path).ok()?;
+        Some(self.sources.insert(path.to_path_buf(), source))
     }
 
     /// Read, parse, and store a file. Only `FilesGroup::children()` should call this (A5).
     /// Returns `None` if the file fails to read or parse.
     pub fn parse(&self, path: &Path) -> Option<(&str, &Tree)> {
-        // Already parsed?
-        if let Some(src) = self.sources.get(path) {
-            let tree = self.trees.get(path)?;
-            return Some((src, tree));
+        let src_ref = self.read_source(path)?;
+        if let Some(tree) = self.trees.get(path) {
+            return Some((src_ref, tree));
         }
-
-        let source = std::fs::read_to_string(path).ok()?;
-        let tree = self.parse_source(path, &source);
-
-        let src_ref = self.sources.insert(path.to_path_buf(), source);
-
-        if let Some(tree) = tree {
-            let tree_ref = self.trees.insert(path.to_path_buf(), Box::new(tree));
-            Some((src_ref, tree_ref))
-        } else {
-            // Source stored but no tree (unsupported language or parse failure)
-            None
-        }
+        let config = self.config_for(path)?;
+        let tree = config.parser.borrow_mut().parse(src_ref, None)?;
+        let tree_ref = self.trees.insert(path.to_path_buf(), Box::new(tree));
+        Some((src_ref, tree_ref))
     }
 
     /// Store a source string directly (for single-file input where we already have it).

@@ -1,5 +1,5 @@
 //! All base_value() and contribution() functions for the group taxonomy.
-//! This is the single findable location for all value heuristics (design §9).
+//! This is the single findable location for all calibration values (design §9).
 
 use crate::classify::{self, FileCategory, FileRole};
 use crate::group::TsGroupKey;
@@ -142,7 +142,6 @@ pub fn files_contribution(
         * companion_header_factor
 }
 
-pub const GENERATED_FACTOR: f64 = 0.0;
 pub const PRIVATE_FACTOR: f64 = 0.3;
 pub const UNDOCUMENTED_FACTOR: f64 = 0.5;
 pub const BOILERPLATE_HEADING_FACTOR: f64 = 0.1;
