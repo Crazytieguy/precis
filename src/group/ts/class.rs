@@ -26,9 +26,8 @@ impl TsGroupKindMethods for ClassName {
     fn children<'s>(&self, parent: &TsGroup<'s>) -> Vec<Group<'s>> {
         let mut out = Vec::new();
         let lang = parent.items.first().and_then(|i| Lang::from_path(i.path));
-        // Python classes: body lines carry dataclass fields + inheritance.
-        // Java classes: body lines carry field declarations that the method
-        // extractor skips; without ClassBody they'd never surface.
+        // Java: spawn_method_children extracts methods but not fields, so
+        // without ClassBody the data shape of a class is never shown.
         let body_key = if matches!(lang, Some(Lang::Python | Lang::Java)) {
             Some(TsGroupKey::ClassBody(ClassBody))
         } else {

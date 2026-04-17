@@ -139,6 +139,7 @@ where
 // crowd out content that would otherwise win on ratio.
 const AUTO_COMMIT_BUDGET_FRACTION: usize = 4; // remaining must exceed budget * 3/4
 const AUTO_COMMIT_MIN_VALUE: f64 = 1.0;
+const VALUE_REVEAL_BODY_LINE_LIMIT: usize = 3;
 
 fn is_auto_commit_body(group: &Group<'_>, remaining_tokens: usize, total_budget: usize) -> bool {
     let Group::Ts(g) = group else { return false };
@@ -180,22 +181,13 @@ fn is_auto_commit_body(group: &Group<'_>, remaining_tokens: usize, total_budget:
             })
         }
         TsGroupKey::TypeAliasBody(_) | TsGroupKey::ConstBody(_) => {
-            // Value-reveal bodies (upgrade Truncated → Complete on the name
-            // line). Auto-commit only when every item is at most
-            // `VALUE_REVEAL_BODY_LINE_LIMIT` lines — a single-line `type X =
-            // Y` or a short struct-shaped alias. Multi-line bodies cost too
-            // much to auto-commit; they'll stay on the frontier and compete
-            // for budget on their own merit.
+            // Multi-line bodies stay on the frontier to compete on ratio.
             g.items.iter().all(|item| {
                 item.end_line.saturating_sub(item.start_line())
                     <= VALUE_REVEAL_BODY_LINE_LIMIT
             })
         }
         TsGroupKey::FunctionSig(_) => {
-            // Compact function signatures: auto-commit when the signature
-            // fits on a single source line (start..body_start spans one
-            // row). Multi-line signatures are expensive and stay on the
-            // frontier.
             g.items.iter().all(|item| {
                 let body_start = crate::group::ts::compute_body_start_line(item);
                 body_start.saturating_sub(item.start_line()) <= 1
@@ -204,5 +196,3 @@ fn is_auto_commit_body(group: &Group<'_>, remaining_tokens: usize, total_budget:
         _ => false,
     }
 }
-
-const VALUE_REVEAL_BODY_LINE_LIMIT: usize = 3;

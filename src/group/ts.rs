@@ -712,8 +712,21 @@ fn item_line<'s>(item: &TsItem<'s>, idx: usize) -> &'s str {
 /// (type aliases, consts) or whose RHS spans a handful of lines but has
 /// no syntactic body node to skip past.
 pub(super) fn render_full_item_lines<'s>(item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
-    let lines: Vec<&str> = item.source.lines().collect();
-    complete_line_entries(&lines, item.start_line(), item.end_line)
+    let start = item.start_line();
+    let end = item.end_line;
+    if end <= start {
+        return Vec::new();
+    }
+    item.source
+        .lines()
+        .enumerate()
+        .skip(start)
+        .take(end - start)
+        .map(|(i, content)| LineEntry::Complete {
+            line: i as u32,
+            content,
+        })
+        .collect()
 }
 
 pub(super) fn render_name_line<'s>(item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
@@ -853,8 +866,7 @@ pub(super) fn render_import_line<'s>(item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
 }
 
 pub(super) fn render_imported_items_lines<'s>(item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
-    let lines: Vec<&str> = item.source.lines().collect();
-    complete_line_entries(&lines, item.start_line(), item.end_line)
+    render_full_item_lines(item)
 }
 
 pub(super) fn render_module_doc_first_lines<'s>(item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
