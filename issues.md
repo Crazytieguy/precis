@@ -30,19 +30,7 @@ The root cause is calibration: multi-line bodies have ~10× worse ratios than ch
 
 **Preferred fix:** Boost `base_value` for `EnumBody` and root `HeadingBody{1}` until they win ratio competition honestly, then delete the bypass. The snapshot cascade from the value change is the real obstacle — any fix must be paired with a careful calibration pass. The budget-phase gate (>75% remaining) is the only piece that a value model can't express naturally; if it turns out to be load-bearing (i.e. these bodies should commit *early* but not late, even at a better ratio), that's a genuinely new constraint on the model worth discussing.
 
-## Design-doc drift
-
-### 5. `LineEntry` variant names out of sync with code
-
-§10 (R1, R4, R5) and §3.4 use `LineEntry::Full` / `LineEntry::Prefix`. The code uses `Complete` / `Truncated` (`src/render.rs:13-20`). Semantics match; names don't. Fix by updating `design.md` to match the code.
-
-## Cleanup
-
 ## Minor / nice-to-have
-
-### 10. `Heading { level: u8 }` not constrained to 1–6
-
-`TsGroupKey::Heading { level: u8 }` and `HeadingBody { level: u8 }` (`src/group/ts.rs:80-81`) accept any `u8`. A dedicated `HeadingLevel` enum or a `NonZeroU8` with runtime clamping at construction would make invalid levels unrepresentable (P1 flavor).
 
 ### 12. Wire up granular profiling
 
@@ -52,25 +40,19 @@ Done: `cargo nextest` release-mode test wiring is in place, and `cargo bench-hot
 
 Remaining: add per-stage profiling so `profile` reports more than wall-clock render time.
 
-### ~~13. Out-of-bounds line fallback in `render_item` (resolved)~~
-
-Resolved in the 2026-04-14 stage 6 follow-up pass. The `lines.get(idx).copied().unwrap_or("")` pattern in `src/group/ts.rs` render helpers (`render_name_line`, `render_macro_name`, `render_impl_block_line`, `render_doc_first_lines`, `render_import_line`, `render_module_doc_first_lines`, `render_heading_line`, `render_data_section_line`) and in `src/group/ts/heading.rs`'s markdown/TOML arms was replaced with direct indexing (`lines[line_idx]`). Single-line helpers now use a new `item_line(item, idx)` helper that reads the `idx`-th line via `str::lines().nth(idx)` without materializing the full `Vec<&str>`. Invariant-safe: item line indices are always within the file they came from.
-
 ## Architecture
 
 Items in this section came out of the 2026-04-13 "cold architecture roast" — one fresh Claude agent and one Codex task, both reading `src/` without `design.md`. Each item below was flagged by at least one of them; items marked **[convergent]** were raised independently by both.
 
-### 14. `TsGroupKey` is a god enum [convergent]
+### 14. `TsGroupKey` is a god enum [convergent — largely done]
 
-44 hand-maintained variants covering every combination of syntactic construct × doc/body/sig part × visibility × documented-ness × a few more discriminants. Every new construct or language feature requires edits in 3-6 parallel match statements: `ordinal()` (hand-assigned magic numbers `0, 1, 2, 10, ..., 110, 120`), `doc_rest_key`, `is_gated`, `is_gated_by`, `ts_base_value` in `heuristics.rs`, the spawn logic in `TsGroup::children`, and the render branches in `render_item`. Forgetting one is silent.
+Stages 1-8 of the TsGroupKey refactor (see commits `0fd1fc5`, `e178646`) decomposed the parallel matches: each variant now owns a type implementing `TsGroupKindMethods`/`TsGroupKindParse`, and the dispatch is a thin one-line call per variant. What's left is the ordinal table (still hand-maintained — see #27) and the `base_value` lookup in `calibration.rs` (still flat, not derived from `(Part, Visibility, Documented)`). The remaining simplification is real but much smaller than the original diagnosis.
 
-The structure is really a product: `(SymbolKind, Part, Visibility, Documented)` with a few specializations. Decomposing it would collapse `ordinal()` entirely (derive from the tuple), eliminate `doc_rest_key` (trivial), shrink `is_gated*` to a single predicate on `Part`, and let `ts_base_value` become a small lookup table. `src/group/ts.rs:17-86` is the enum definition; the parallel matches are spread across that file and `src/heuristics.rs:34-93`.
+### 17. `calibration.rs` tuning is empirical, not principled [convergent]
 
-### 17. `heuristics.rs` is ungrounded magic numbers [convergent]
+Sixty-odd float literals with no provenance: `powf(0.75)`, depth factors jumping `1.0 → 0.7 → 0.55 → 0.4`, `deprioritized_factor = 0.2`, `type_declaration_factor = 0.15`, `header_factor = 2.5`, `companion_header_factor = 0.3`, `boilerplate_heading_contribution = 0.1`, `reexport_contribution = 0.1`, `COMPACT_BODY_LINE_LIMIT = 25`. They were walked to a local optimum against the fixture snapshot set; per-number justifications would be post-hoc.
 
-Sixty-odd float literals with no provenance: `powf(0.75)`, depth factors jumping `1.0 → 0.7 → 0.55 → 0.4`, `deprioritized_factor = 0.2`, `type_declaration_factor = 0.15`, `header_factor = 2.5`, `companion_header_factor = 0.3`, `boilerplate_heading_contribution = 0.1`, `reexport_contribution = 0.1`, `COMPACT_BODY_LINE_LIMIT = 25`. No comments explaining why that number and not another.
-
-This directly violates the project's own design principle (CLAUDE.md: "Every value judgment must correspond to a real, articulable difference"). A reader debugging a bad precis output has no way to tell which numbers are load-bearing versus guesses that stuck. At minimum: add a short justification comment next to each literal (a sentence about what the number is doing and what alternatives were considered/ruled out). Better: move the table to a declarative data structure where the rationale is a field.
+**Partial fix (2026-04-16):** The file's docstring now flags the values as empirically tuned and warns that retuning tends to cascade across 5–40 snapshots — a caveat the tool was missing. Per-literal grounding is out of scope; the honest answer is "A/B the snapshots before touching any of these," which is what the docstring now says.
 
 ### 18. Kitchen-sink modules [convergent]
 
