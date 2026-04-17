@@ -4,17 +4,11 @@ expression: output
 ---
 README.md
      1→# k(r)ep - A high-performance string search utility
-     6→`krep` is an optimized string search utility designed for maximum throughput and efficiency when processing large files and directories. It is built with performance in mind, offering multiple search algorithms and SIMD acceleration when available.
-     7→
-     8→> **Note:**  
-     9→> Krep is not intended to be a full replacement or direct competitor to feature-rich tools like `grep` or `ripgrep`. Instead, it aims to be a minimal, efficient, and pragmatic tool focused on speed and simplicity.
-    10→>
-    11→> Krep provides the essential features needed for fast searching, without the extensive options and complexity of more comprehensive search utilities. Its design philosophy is to deliver the fastest possible search for the most common use cases, with a clean and minimal interface.
-    12→
     13→## The Story Behind the Name
     19→## Key Features
     36→## What's New in v2.2.0
     42→## Installation
+    44→### Using Homebrew (macOS)
     52→### Building from Source
     69→### Requirements
     75→### Build Options
@@ -25,7 +19,11 @@ README.md
    180→## How Krep Works
    182→Krep achieves its high performance through several key techniques:
    183→
-   235→## Author
+   184→### 1. Smart Algorithm Selection
+   197→### 2. Multi-threading Architecture
+   207→### 3. Memory-Mapped I/O
+   216→### 4. Optimized Data Structures
+   222→### 5. Skipping Non-Relevant Content
 
 aho_corasick.h
     15→typedef struct search_params search_params_t …
@@ -58,7 +56,9 @@ krep.h
     45→#define KREP_COLOR_HELP_MUTED "\033[38;5;244m"
     47→/* --- Match tracking structure --- */
     48→// Define match_position_t BEFORE match_result_t
-    53→} match_position_t …
+    49→typedef struct
+      →…
+    53→} match_position_t;
     55→typedef struct match_result_t // Add the struct tag here …
     64→// Parameters shared across search functions and threads
     65→typedef struct search_params …
@@ -66,10 +66,14 @@ krep.h
     97→// Returns count (lines or matches depending on mode). result can be NULL unless track_positions is true.
     98→typedef uint64_t (*search_func_t)(const search_params_t *params …
    103→// Data passed to each search thread
-   122→} thread_data_t …
+   104→typedef struct
+      →…
+   122→} thread_data_t;
    124→/* --- Thread Pool Implementation --- */
    125→typedef struct task …
-   143→} thread_pool_t …
+   132→typedef struct
+      →…
+   143→} thread_pool_t;
    145→/* --- Thread Pool API --- */
    146→thread_pool_t *thread_pool_init(int num_threads);
    147→bool thread_pool_submit(thread_pool_t *pool, void *(*func)(void *), void *arg);
@@ -120,4 +124,10 @@ krep.h
    312→static inline bool is_whole_word_match(const char *text, size_t text_len, size_t start, size_t end)
    313→{
 
-test/
+test/test_krep.h
+    16→#define TESTING
+    33→uint64_t regex_search_test_positions …
+    39→void test_basic_regex …
+    62→search_params_t create_literal_params …
+    75→search_params_t create_regex_params …
+    84→void cleanup_params …

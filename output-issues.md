@@ -89,9 +89,16 @@ Root cause: `Import { first_party: false, .. }` has base_value 0.0 in heuristics
 
 ## 36. Human-authored meta-documentation under-weighted
 
-**Affected snapshots:** mdbook_guide_src, superstruct, soluna, enclosed
+**Affected snapshots:** mdbook_guide_src, superstruct, soluna, enclosed; also toasty (workspace-level regression from the fix below).
 
-`CONTEXT.md` reclassified from AiConfig (factor 0.1) to Normal, fixing toasty / toasty_codegen / toasty_core — per-crate renders now surface CONTEXT.md overviews. Remaining cases need targeted boosts for front-door docs like `ARCHITECTURE.md`, `SUMMARY.md`, `docs/*.md` guides — partial progress blocked on calibration risk.
+`CONTEXT.md` reclassified from AiConfig (factor 0.1) to Normal, fixing per-crate toasty / toasty_codegen / toasty_core. Workspace-level toasty regressed: 5 CONTEXT.md heading tables crowded out real code.
+
+**Right fix (diagnosed 2026-04-16, not yet landed):** separate two levers that are currently conflated.
+
+- `files_base_value(role)` controls whether the *file itself* is visible (its header line in the output tree).
+- `files_contribution(role)` is the modifier passed to the file's *children* (headings, bodies, etc.) — controls how aggressively its internal content competes.
+
+The current `CONTEXT.md → Normal` change raised both at once. The toasty workspace regression is headings crowding out code because children's modifier went up too. The clean fix is to keep file visibility high (so CONTEXT.md appears in the tree) but pass a reduced modifier to children (so the TOC doesn't compete with code). Possibly via a dedicated `FileRole::ProjectContext` with `base_value` ≈ 1.0 and children contribution ≈ 0.3. Remaining cases (ARCHITECTURE.md, SUMMARY.md, docs/*.md guides) benefit from the same separation.
 
 ## 37. Entire implementation modules omitted while siblings are shown
 
@@ -115,5 +122,12 @@ Distinct from resolved issue #6 (which addressed h1 body content for headingless
 
 `src/group/folders.rs:15` builds the walker with `ignore::WalkBuilder::new(...)` and never calls `.hidden(false)`. The `ignore` crate's default filters out all dotfile entries before they reach `classify::is_source_file`, so hidden files are dropped at walk time regardless of role or content.
 
-**Attempted and reverted (2026-04-16):** `.hidden(false)` was added with a `.git` filter. 38 snapshots changed; A/B verdict: 15 wins, 12 regressions, 11 ties. Wins came from repos where `.github/FUNDING.yml`, `.github/workflows/*`, or `.goreleaser.yaml` added real infrastructure signal. Regressions came from editor/AI configs (`.vscode/`, `.claude/`, `.prettierrc*`, `.husky/`) and empty `.github/` folder lines displacing code content. A deny-list and a whitelist were both tried; both left the regression count roughly unchanged because `.github/` itself is ambiguous (useful with workflows, noise when empty). Reverted. A future attempt likely needs scheduler-level awareness of "only surface a dotfile dir when its contents actually fit".
+**Correctness bug.** Hiding `.mcp.json`, `.github/workflows/`, `.goreleaser.yaml`, `.vscode/`, `.claude/`, etc. implies these files don't exist in the project. Per CLAUDE.md's "Don't confuse the reader," excluding a file is a stronger claim than including it. Dotfiles aren't inherently high-signal, but they describe parts of the project's shape (MCP wiring, CI topology, release automation, editor setup, agent wiring) that can be load-bearing for specific follow-up tasks, and the walker shouldn't decide in advance that a reader won't need them.
+
+**Plan:** re-land `.hidden(false)` (with a `.git` filter) and let the resulting files compete on the normal value/cost axis. The 2026-04-16 attempt was reverted only because the A/B review flagged regressions, but those verdicts were agent miscalibration — agents projected their own aesthetic ("editor config is noise") onto a question about project-shape signal. Two prerequisites before re-landing:
+
+1. The A/B review prompt needs work (see issues.md #30) — a grading rubric grounded in CLAUDE.md's follow-up-actionability + presence-is-signal principles, not reviewer aesthetics.
+2. The value model for directories with sparse/empty content needs the same nonlinear-in-lines treatment as bodies (see issues.md #4), so an empty `.github/` folder listing doesn't cost as much as one with workflows inside.
+
+Once those two are in place, the blocker is procedural (do the A/B with the new prompt and accept the result), not design.
 

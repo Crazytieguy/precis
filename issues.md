@@ -18,17 +18,26 @@ No `byte_budget` pre-check exists anywhere in the crate. Tokens and chars are co
 
 Both checks should live in the render/probe path (`src/schedule.rs` probe_cost → `src/render.rs` marginal_cost), before any `format::count_tokens` call.
 
-### 4. A1 scheduler encapsulation — auto-commit bypass
+### 4. A1 scheduler encapsulation — auto-commit bypass [expanded 2026-04-16]
 
 **Invariant:** A1 — greedy choice: the scheduler picks the frontier group with the best `value / cost` ratio.
 
-`src/schedule.rs:123-150` auto-commits `EnumBody` and root `HeadingBody{1}` groups bypassing ratio ordering entirely. This is a real violation of A1's letter.
+`is_auto_commit_body` in `src/schedule.rs` now covers five kinds: `EnumBody`, root `HeadingBody{1}`, `TypeAliasBody`, `ConstBody`, and `FunctionSig`. It bypasses ratio ordering entirely — a direct violation of A1.
 
-The mechanism has four gates: kind match (`EnumBody` or root `HeadingBody{1}`), value ≥ 1.0, >75% budget remaining, and for `EnumBody` a compactness cap (≤25 lines). Of these, only the budget-phase gate is genuinely time-dependent; kind/value/compactness are all expressible via `base_value`.
+**Hardcoded caps of the same family:** `MARKDOWN_H1_BODY_LINE_CAP = 12` in `src/group/ts.rs` and `COMPACT_BODY_LINE_LIMIT = 25` in `src/calibration.rs` are rendering/scheduling caps that serve the same purpose: making bodies win when they wouldn't under the value/cost model. Both are escape valves on top of a miscalibrated model.
 
-The root cause is calibration: multi-line bodies have ~10× worse ratios than cheap `FunctionName` entries (1.5 / 20 ≈ 0.075 vs 1.0 / 2 = 0.5), so they lose ratio competition. A `base_value` boost proportional to the ratio gap would fix this cleanly, but cascades across snapshots unpredictably (see `output-issues.md` #18 and #9 for the cascade history — any broad-impact value change tends to regress ~20-50 snapshots before it helps the target ones). The bypass was adopted as a targeted escape hatch that only fires in narrow conditions, avoiding the cascade at the cost of A1.
+**Root cause:** `ts_base_value` gives each body kind a constant (EnumBody = 1.5, StructBody = 1.2, etc.) *independent of content size*. Cost scales linearly with lines, so ratio ≈ constant / lines — it drops as bodies grow, and no constant boost can fix both small and large bodies at once. Prior attempts at per-kind base_value boosts cascaded across 20–50 snapshots because a boost that makes big bodies competitive makes small ones dominate.
 
-**Preferred fix:** Boost `base_value` for `EnumBody` and root `HeadingBody{1}` until they win ratio competition honestly, then delete the bypass. The snapshot cascade from the value change is the real obstacle — any fix must be paired with a careful calibration pass. The budget-phase gate (>75% remaining) is the only piece that a value model can't express naturally; if it turns out to be load-bearing (i.e. these bodies should commit *early* but not late, even at a better ratio), that's a genuinely new constraint on the model worth discussing.
+**Preferred fix — principled replacement:** Make body value a function of rendered content size, not a per-kind constant. Candidates to iterate on:
+
+- Linear in lines: `value = per_kind × rendered_lines`. Ratio is constant across sizes, kind-ranked. Probably too aggressive for big bodies.
+- Sublinear in lines (e.g. `sqrt`): diminishing returns per line. Matches intuition that line 20 adds less than line 2.
+
+Use the *rendered* line count, not the full AST extent — bodies that the renderer caps should cost and value based on what's actually emitted.
+
+The right test of principledness: if the curve shape is right, `is_auto_commit_body` and both hardcoded line caps become redundant and can be deleted. Retuning the per-kind constants against the fixture set is fine (that's a semantic preference statement, inherently empirical) — *adding branches/caps/hatches is not*.
+
+Big enough that it deserves its own session with a full A/B pass. Do not extend the auto-commit mechanism further in the meantime.
 
 ## Minor / nice-to-have
 
@@ -138,26 +147,58 @@ Idea worth exploring: instead of duplicating extraction logic per container kind
 
 Out of scope for the TsGroupKey refactor batch. Noted for a future session once Stage 5 lands.
 
+### 31. CLAUDE.md Ownership section removed — monitor for regressions
+
+Removed 2026-04-16. The section pushed "dedicate time every session to
+maintenance," "the more work you do without needing intervention the
+better," and similar nudges aimed at earlier Claude versions that were too
+myopic about the immediate task. Current-session evidence suggests those
+nudges aren't needed and may even crowd out signal.
+
+If future sessions show behavior regressions — e.g. ignoring pre-existing
+problems that deserve cleanup, or not updating README.md/CLAUDE.md when they
+drift — reconsider reintroducing a lighter version. The specific lines worth
+keeping if needed: "don't ignore problems because they're pre-existing," and
+"keep README.md and CLAUDE.md current as you work." The rest was padding.
+
 ## Tooling
 
 ### 30. Agent-based A/B snapshot review workflow
 
 When a refactor produces snapshot diffs across many fixtures, a blind pairwise
-review decides net quality impact without the author reading each diff. Ran
-once on the TsGroupKey refactor, returned a clear verdict (21 wins / 7 losses
-/ 8 ties).
+review decides net quality impact without the author reading each diff.
+
+Ran twice to date:
+- TsGroupKey refactor (2026-04-13): 21 wins / 7 losses / 8 ties
+- TypeAliasBody / ConstBody / FunctionSig additions (2026-04-16): 33 wins / 9
+  losses / 28 ties across 70 fixtures
 
 Worth turning into a reusable skill. Rough opinions, open for discussion:
 
-- Git worktrees are overkill; `git show <ref>:<path>` or a similar per-file
-  fetch is lighter.
-- The scaffolding was ad-hoc Bash + Python; Python doesn't belong in this
-  project. If there's scaffolding beyond a skill prompt, it should be a Rust
-  bin (or stay inline in the skill).
-- One Agent per fixture rather than batches of six — the task is scoped, the
-  instruction prompt is identical, and prompt-caching should make the
-  per-fixture cost close to what batches cost.
+- Git worktrees are overkill; `git show <ref>:<path>` baseline fetch works.
+- Scaffolding was ad-hoc Bash + Deno; if it becomes a reusable skill,
+  scaffolding beyond a skill prompt should be a Rust bin or stay inline.
+- One Agent per fixture; prompt-caching keeps the per-fixture cost reasonable.
 - A skill could orchestrate: pick baseline ref, generate pair files with
   randomized A/B assignment, spawn per-fixture Agents, decode verdicts.
 
-Not a priority until the next big refactor is ready for review.
+**Agent prompt iteration (open):** current prompts are generic ("which builds
+a better mental model?") and agents project their own aesthetics. The
+2026-04-16 hidden-files A/B round showed this plainly — agents flagged
+`.vscode/` and `.claude/` as noise even though existence of such files is
+genuine project-shape signal. Specific things the prompt should eventually
+cover:
+
+- A concrete grading rubric mapped onto the CLAUDE.md principles (follow-up
+  actionability, upfront semantic grounding, presence-is-signal).
+- How to check claims against the fixture ground truth, not against the
+  reviewer's aesthetics.
+- When to prefer inclusion over exclusion on marginal cases.
+- Explicit pushback on "this is noise" without an articulated reason.
+
+Once this workflow is solid, the "Improvement process" line in CLAUDE.md
+should be updated to reference the A/B rubric instead of "look at real
+output for real projects" as the primary test.
+
+Not a priority until the next big refactor is ready for review, but the
+prompt work is the first thing to tackle when it is.

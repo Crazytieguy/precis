@@ -730,10 +730,11 @@ pub(super) fn render_full_item_lines<'s>(item: &TsItem<'s>) -> Vec<LineEntry<'s>
 }
 
 pub(super) fn render_name_line<'s>(item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
-    // Anonymous C/C++ `typedef struct { ... } Name;` (no struct tag) places
-    // the only identifier on a later line than the node's start. Render that
-    // line so the output shows the name. If the aggregate has a tag, the
-    // opening line already names it — don't redirect.
+    // Anonymous C/C++ `typedef struct { ... } Name;`: emit both bookends
+    // (opener + closer) with an ellipsis between. The opener carries the
+    // aggregate kind, the closer carries the alias name, and the gap makes
+    // the omitted body visible. Full lines (not truncated) because the
+    // remaining content on each line is as cheap as the trailing `…` would be.
     if item.node.kind() == "type_definition"
         && is_anonymous_c_aggregate(item.node)
         && let Some(decl) = item.node.child_by_field_name("declarator")
@@ -741,13 +742,22 @@ pub(super) fn render_name_line<'s>(item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
             .or_else(|| crate::parse::ast::find_descendant_of_kind(decl, "type_identifier"))
         && id.start_position().row != item.start_line()
     {
+        let open_row = item.start_line();
         let name_row = id.start_position().row;
-        let line = item_line(item, name_row);
-        let end_col = id.end_position().column.min(line.len());
-        return vec![LineEntry::Truncated {
-            line: name_row as u32,
-            content: &line[..end_col],
+        let mut out = vec![LineEntry::Complete {
+            line: open_row as u32,
+            content: item_line(item, open_row),
         }];
+        if name_row > open_row + 1 {
+            out.push(LineEntry::Ellipsis {
+                line: (open_row + 1) as u32,
+            });
+        }
+        out.push(LineEntry::Complete {
+            line: name_row as u32,
+            content: item_line(item, name_row),
+        });
+        return out;
     }
     let line_idx = item.start_line();
     let prefix = find_name_end_prefix(item_line(item, line_idx), item.node, line_idx);
