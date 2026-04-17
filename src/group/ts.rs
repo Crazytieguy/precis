@@ -704,12 +704,47 @@ fn item_line<'s>(item: &TsItem<'s>, idx: usize) -> &'s str {
 }
 
 pub(super) fn render_name_line<'s>(item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
+    // Anonymous C/C++ `typedef struct { ... } Name;` (no struct tag) places
+    // the only identifier on a later line than the node's start. Render that
+    // line so the output shows the name. If the aggregate has a tag, the
+    // opening line already names it — don't redirect.
+    if item.node.kind() == "type_definition"
+        && is_anonymous_c_aggregate(item.node)
+        && let Some(decl) = item.node.child_by_field_name("declarator")
+        && let Some(id) = crate::parse::ast::find_descendant_of_kind(decl, "identifier")
+            .or_else(|| crate::parse::ast::find_descendant_of_kind(decl, "type_identifier"))
+        && id.start_position().row != item.start_line()
+    {
+        let name_row = id.start_position().row;
+        let line = item_line(item, name_row);
+        let end_col = id.end_position().column.min(line.len());
+        return vec![LineEntry::Truncated {
+            line: name_row as u32,
+            content: &line[..end_col],
+        }];
+    }
     let line_idx = item.start_line();
     let prefix = find_name_end_prefix(item_line(item, line_idx), item.node, line_idx);
     vec![LineEntry::Truncated {
         line: line_idx as u32,
         content: prefix,
     }]
+}
+
+/// `true` iff a C/C++ `type_definition`'s type child is a struct/union/enum
+/// specifier with no name (tag) — meaning the only identifier is on the
+/// declarator side.
+fn is_anonymous_c_aggregate(node: tree_sitter::Node) -> bool {
+    let Some(ty) = node.child_by_field_name("type") else {
+        return false;
+    };
+    if !matches!(
+        ty.kind(),
+        "struct_specifier" | "union_specifier" | "enum_specifier"
+    ) {
+        return false;
+    }
+    ty.child_by_field_name("name").is_none()
 }
 
 pub(super) fn render_macro_name<'s>(preproc: bool, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {

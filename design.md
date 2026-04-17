@@ -508,18 +508,18 @@ values. The contract:
   emits one content line plus an `Ellipsis` entry if and only if the
   underlying doc block has more than one line. That is local information from
   the tree-sitter node.
-- **`FunctionName` alone.** Emits one `Prefix` entry on the function's
+- **`FunctionName` alone.** Emits one `Truncated` entry on the function's
   declaration line: the `fn foo` prefix with the trailing `…` added at render
   time.
-- **`FunctionSig` alone.** Emits one or more `Full` entries for each line of
+- **`FunctionSig` alone.** Emits one or more `Complete` entries for each line of
   the signature, from the declaration line through the line containing `{`
   inclusive.
-- **`FunctionBody` alone.** Emits `Full` entries for every line strictly after
+- **`FunctionBody` alone.** Emits `Complete` entries for every line strictly after
   the signature's closing brace line through the line containing the matching
   `}`.
-- **`Import` alone.** Emits a `Prefix` entry for the import statement's
+- **`Import` alone.** Emits a `Truncated` entry for the import statement's
   leading portion (module path) with a trailing `…`.
-- **`ImportedItems`.** Emits a `Full` entry for the full import statement,
+- **`ImportedItems`.** Emits a `Complete` entry for the full import statement,
   which overrides the prefix emitted by `Import`.
 
 ### 6.2 Override and assembly
@@ -568,7 +568,7 @@ path/to/file.rs
 ```
 
 Line numbers in source order. Ellipsis lines print as `      →…` (no line
-number). Prefix entries append `…` to the content.
+number). Truncated entries append `…` to the content.
 
 ## 7. Parsing
 
@@ -747,8 +747,8 @@ compromising around it.
 - **R4 — Override resolution by content growth.** When multiple groups emit
   at the same `(file, line)`, the later group's entry wins. Enforced by
   scheduling order (A2). A debug assertion checks that a later entry has
-  strictly more content than the entry it overrides: `Ellipsis < Prefix < Full`,
-  and for two `Prefix` entries, the later one's content must be at least as
+  strictly more content than the entry it overrides: `Ellipsis < Truncated < Complete`,
+  and for two `Truncated` entries, the later one's content must be at least as
   long as the earlier's.
 - **R5 — Intra-group ellipses only.** Ellipsis markers appear only within the
   rendering of a single group or item. Gaps between independently scheduled

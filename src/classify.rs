@@ -41,8 +41,7 @@ impl FileRole {
             | "copilot"
             | "copilot-instructions"
             | "cursor"
-            | "windsurf"
-            | "context" => FileRole::AiConfig,
+            | "windsurf" => FileRole::AiConfig,
             "architecture" | "design" => FileRole::Architecture,
             _ if is_doc && has_locale_suffix(stem) => FileRole::Translated,
             _ => FileRole::Normal,
@@ -600,6 +599,7 @@ pub fn is_vendored_or_fixture(path: &Path) -> bool {
         s == "vendor" || s == "node_modules" || s == "deps" || s == "testdata"
     })
 }
+
 
 // ---------------------------------------------------------------------------
 // Effective depth

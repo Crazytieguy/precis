@@ -2,6 +2,55 @@
 source: test/fixtures.rs
 expression: output
 ---
+CONTEXT.md
+     1→# toasty-codegen Component Context
+     3→## Purpose
+     4→Generates Rust code from the `#[derive(Model)]` procedural macro. This crate transforms user-defined structs into full-featured ORM models with query builders, CRUD operations, and relationship handling.
+     5→
+     6→## Key Responsibilities
+     8→### Schema Parsing (`src/schema/`)
+    15→### Code Expansion (`src/expand/`)
+    25→## Common Change Patterns
+    27→### Adding a New Model Attribute
+    33→### Adding Query Methods
+    39→### Supporting New Field Types
+    45→## Generated Code Structure
+    70→## Complete Attribute Support
+    72→### Model-Level Attributes
+    73→- `#[key(partition = field1, local = field2)]` - Composite keys with distributed DB support
+    74→- `#[table = "table_name"]` - Custom table name mapping
+    75→
+    76→### Field-Level Attributes  
+    83→### Relationship Attributes
+    88→## Important Files
+    90→- `lib.rs`: Macro entry point
+    91→- `schema/model.rs`: Model parsing logic
+    92→- `expand/model.rs`: Main expansion logic
+    93→- `expand/util.rs`: Helper functions for code generation
+    94→- `schema/ty.rs`: Type system mapping
+    95→
+    96→## Code Generation Principles
+    98→1. **Fully Qualified Paths**: Always use `#toasty::Type` to avoid conflicts
+    99→2. **Type Safety**: Generate strongly-typed builders and queries
+   100→3. **Zero-Cost**: Generated code should have no runtime overhead
+   101→4. **Discoverable API**: Methods should be intuitive and IDE-friendly
+   102→
+   103→## Key Patterns
+   105→### Dynamic Model IDs
+   114→### Query Builder Pattern
+   123→### Relationship Expansion
+   124→Relations generate both accessor and mutation methods:
+   125→- Accessor: `user.todos()` returns query builder
+   126→- Mutation: Create builders accept related entities
+   127→
+   128→## Recent Changes Analysis
+   130→From recent commits:
+   131→- Switched from const Model::ID to method-based IDs
+   132→- Reduced glob imports for clarity
+   133→- Removed schema query generation (moved to runtime)
+   134→- Simplified field accessor generation
+   135→- Added support for more primitive types
+
 Cargo.toml
      1→[package]
      2→name = "toasty-codegen"
@@ -69,17 +118,17 @@ src/expand/create.rs
      1→use super::{util, Expand};
      2→use crate::schema::FieldTy;
      7→impl Expand<'_> …
-     8→    pub(super) fn expand_create_builder(&self) -> TokenStream {
-    76→    fn expand_create_methods(&self) -> TokenStream {
+     8→    pub(super) fn expand_create_builder …
+    76→    fn expand_create_methods …
 
 src/expand/fields.rs
      1→use super::{util, Expand};
      2→use crate::schema::FieldTy::{BelongsTo, HasMany, HasOne, Primitive};
      6→impl Expand<'_> …
-     7→    pub(super) fn expand_field_struct(&self) -> TokenStream {
-    88→    pub(super) fn expand_model_field_struct_init(&self) -> TokenStream {
-   104→    fn field_struct_ident(&self) -> &syn::Ident {
-   113→    pub(super) fn expand_field_name_to_id(&self) -> TokenStream {
+     7→    pub(super) fn expand_field_struct …
+    88→    pub(super) fn expand_model_field_struct_init …
+   104→    fn field_struct_ident …
+   113→    pub(super) fn expand_field_name_to_id …
 
 src/expand/filters.rs
      1→use super::Expand;
@@ -91,46 +140,36 @@ src/expand/filters.rs
     38→    filters: HashMap<Vec<usize>, Filter>,
     39→}
     41→impl Expand<'_> …
-    42→    pub(super) fn expand_model_filter_methods(&self) -> TokenStream {
-    65→    fn expand_model_get_method(&self, filter: &Filter, self_into_select: bool) -> TokenStream {
-   107→    fn expand_model_filter_method(&self, filter: &Filter, self_into_select: bool) -> TokenStream {
-   140→    fn expand_model_filter_batch_method(
-   141→        &self,
-   142→        filter: &Filter,
-   143→        self_into_select: bool,
-   144→    ) -> TokenStream {
-   169→    pub(super) fn expand_query_filter_methods(&self) -> TokenStream {
-   191→    pub(super) fn expand_relation_filter_methods(&self) -> TokenStream {
-   213→    fn expand_query_filter_method(&self, filter: &Filter) -> TokenStream {
-   227→    fn expand_query_filter_expr(&self, filter: &Filter) -> TokenStream {
-   244→    fn expand_query_filter_batch_method(&self, filter: &Filter) -> TokenStream {
-   271→    fn expand_filter_args<'b>(
-   272→        &'b self,
-   273→        filter: &'b Filter,
-   274→    ) -> impl Iterator<Item = TokenStream> + 'b {
-   289→    fn expand_filter_batch_arg_bound(&self, filter: &Filter) -> TokenStream {
-   307→    pub(super) fn expand_filter_arg_idents<'b>(
-   308→        &'b self,
-   309→        filter: &'b Filter,
-   310→    ) -> impl Iterator<Item = TokenStream> + 'b {
-   317→    pub(super) fn primary_key_filter(&self) -> &Filter {
+    42→    pub(super) fn expand_model_filter_methods …
+    65→    fn expand_model_get_method …
+   107→    fn expand_model_filter_method …
+   140→    fn expand_model_filter_batch_method …
+   169→    pub(super) fn expand_query_filter_methods …
+   191→    pub(super) fn expand_relation_filter_methods …
+   213→    fn expand_query_filter_method …
+   227→    fn expand_query_filter_expr …
+   244→    fn expand_query_filter_batch_method …
+   271→    fn expand_filter_args …
+   289→    fn expand_filter_batch_arg_bound …
+   307→    pub(super) fn expand_filter_arg_idents …
+   317→    pub(super) fn primary_key_filter …
    329→impl Filter …
-   330→    pub(super) fn build_model_filters(model: &Model) -> Vec<Self> {
+   330→    pub(super) fn build_model_filters …
    339→impl<'a> BuildModelFilters<'a> …
-   340→    fn build(mut self) -> Vec<Filter> {
-   345→    fn recurse(&mut self, prefix: &[usize]) {
-   414→    fn find_index(&self, fields: &[usize]) -> Option<&'a Index> {
-   432→    fn method_ident(&self, fields: &[usize], prefix: &str, suffix: Option<&str>) -> syn::Ident {
+   340→    fn build …
+   345→    fn recurse …
+   414→    fn find_index …
+   432→    fn method_ident …
 
 src/expand/model.rs
      1→use super::{util, Expand};
      2→use crate::schema::{FieldTy, ModelKind};
      7→impl Expand<'_> …
-     8→    pub(super) fn expand_model_impls(&self) -> TokenStream {
-   155→    pub(super) fn expand_embedded_model_impls(&self) -> TokenStream {
-   166→    pub(super) fn expand_model_into_select_body(&self, by_ref: bool) -> TokenStream {
-   180→    pub(super) fn expand_model_into_expr_body(&self, by_ref: bool) -> TokenStream {
-   236→    pub(super) fn expand_embedded_into_expr_body(&self, by_ref: bool) -> TokenStream {
+     8→    pub(super) fn expand_model_impls …
+   155→    pub(super) fn expand_embedded_model_impls …
+   166→    pub(super) fn expand_model_into_select_body …
+   180→    pub(super) fn expand_model_into_expr_body …
+   236→    pub(super) fn expand_embedded_into_expr_body …
    275→    /// Generates the body for loading a model or embedded type from a Value.
       →…
    283→    pub(super) fn expand_load_body(&self) -> TokenStream {
@@ -142,36 +181,32 @@ src/expand/query.rs
      1→use super::{util, Expand};
      2→use crate::schema::{BelongsTo, Field, FieldTy, HasMany, HasOne};
      7→impl Expand<'_> …
-     8→    pub(super) fn expand_query_struct(&self) -> TokenStream {
-   103→    fn expand_relation_methods(&self) -> TokenStream {
-   116→    fn expand_belongs_to_method(&self, field: &Field, rel: &BelongsTo) -> TokenStream {
-   135→    fn expand_has_many_method(&self, field: &Field, rel: &HasMany) -> TokenStream {
-   154→    fn expand_has_one_method(&self, field: &Field, rel: &HasOne) -> TokenStream {
-   173→    fn expand_include_method(&self, include_ty: &syn::Ident) -> Option<TokenStream> {
+     8→    pub(super) fn expand_query_struct …
+   103→    fn expand_relation_methods …
+   116→    fn expand_belongs_to_method …
+   135→    fn expand_has_many_method …
+   154→    fn expand_has_one_method …
+   173→    fn expand_include_method …
 
 src/expand/relation.rs
      1→use super::{util, Expand};
      2→use crate::schema::{BelongsTo, Field, FieldTy, HasMany, HasOne};
      7→impl Expand<'_> …
-     8→    pub(super) fn expand_relation_structs(&self) -> TokenStream {
-   186→    pub(super) fn expand_model_relation_methods(&self) -> TokenStream {
-   203→    fn expand_model_relation_belongs_to_method(
-   204→        &self,
-   205→        rel: &BelongsTo,
-   206→        field: &Field,
-   207→    ) -> TokenStream {
-   267→    fn expand_model_relation_has_many_method(&self, rel: &HasMany, field: &Field) -> TokenStream {
-   341→    fn expand_model_relation_has_one_method(&self, rel: &HasOne, field: &Field) -> TokenStream {
+     8→    pub(super) fn expand_relation_structs …
+   186→    pub(super) fn expand_model_relation_methods …
+   203→    fn expand_model_relation_belongs_to_method …
+   267→    fn expand_model_relation_has_many_method …
+   341→    fn expand_model_relation_has_one_method …
 
 src/expand/schema.rs
      1→use super::{util, Expand};
      2→use crate::schema::{AutoStrategy, Column, FieldTy, ModelKind, Name, UuidVersion};
      7→impl Expand<'_> …
-     8→    pub(super) fn expand_model_schema(&self) -> TokenStream {
-    50→    fn expand_model_fields(&self) -> TokenStream {
-   189→    fn expand_primary_key(&self) -> TokenStream {
-   222→    fn expand_model_indices(&self) -> TokenStream {
-   274→    fn expand_table_name(&self) -> TokenStream {
+     8→    pub(super) fn expand_model_schema …
+    50→    fn expand_model_fields …
+   189→    fn expand_primary_key …
+   222→    fn expand_model_indices …
+   274→    fn expand_table_name …
    284→fn expand_name(toasty: &TokenStream, name: &Name) -> TokenStream {
 
 src/expand/update.rs
@@ -183,7 +218,7 @@ src/expand/update.rs
     27→    /// Expand all update methods for all fields.
       →…
     31→    fn expand_update_field_methods(&self, is_embedded: bool) -> TokenStream {
-   144→    pub(super) fn expand_update_builder(&self) -> TokenStream {
+   144→    pub(super) fn expand_update_builder …
    203→    /// Generate match arms for reloading each model field from a sparse record value.
    204→    fn expand_reload_match_arms(&self) -> TokenStream {
    225→    /// Generate the body of the `reload` method for a root model.
@@ -338,9 +373,3 @@ src/schema/name.rs
 
 src/schema/pk.rs
      2→pub(crate) struct PrimaryKey …
-
-CONTEXT.md
-     1→# toasty-codegen Component Context
-     3→## Purpose
-     6→## Key Responsibilities
-    88→## Important Files

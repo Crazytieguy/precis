@@ -24,7 +24,13 @@ pub struct GroupCtx<'s> {
 
 impl GroupCtx<'_> {
     pub fn rel_path<'a>(&self, path: &'a Path) -> &'a Path {
-        path.strip_prefix(&self.root).unwrap_or(path)
+        let stripped = path.strip_prefix(&self.root);
+        debug_assert!(
+            stripped.is_ok(),
+            "rel_path: {path:?} is not under root {:?}",
+            self.root
+        );
+        stripped.unwrap_or(path)
     }
 }
 

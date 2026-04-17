@@ -15,7 +15,6 @@ README.md
     19→## Key Features
     36→## What's New in v2.2.0
     42→## Installation
-    44→### Using Homebrew (macOS)
     52→### Building from Source
     69→### Requirements
     75→### Build Options
@@ -26,6 +25,7 @@ README.md
    180→## How Krep Works
    182→Krep achieves its high performance through several key techniques:
    183→
+   235→## Author
 
 aho_corasick.h
     15→typedef struct search_params search_params_t …
@@ -58,7 +58,7 @@ krep.h
     45→#define KREP_COLOR_HELP_MUTED "\033[38;5;244m"
     47→/* --- Match tracking structure --- */
     48→// Define match_position_t BEFORE match_result_t
-    49→typedef struct …
+    53→} match_position_t …
     55→typedef struct match_result_t // Add the struct tag here …
     64→// Parameters shared across search functions and threads
     65→typedef struct search_params …
@@ -66,10 +66,10 @@ krep.h
     97→// Returns count (lines or matches depending on mode). result can be NULL unless track_positions is true.
     98→typedef uint64_t (*search_func_t)(const search_params_t *params …
    103→// Data passed to each search thread
-   104→typedef struct …
+   122→} thread_data_t …
    124→/* --- Thread Pool Implementation --- */
    125→typedef struct task …
-   132→typedef struct …
+   143→} thread_pool_t …
    145→/* --- Thread Pool API --- */
    146→thread_pool_t *thread_pool_init(int num_threads);
    147→bool thread_pool_submit(thread_pool_t *pool, void *(*func)(void *), void *arg);

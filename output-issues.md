@@ -153,30 +153,6 @@ Distinct from resolved issue #6 (which addressed h1 body content for headingless
 
 Rust `//!` crate/module doc headers, Go package doc comments, and Python module docstrings label a file's purpose in plain English at very low token cost, and are often the single highest-signal line per file for orientation. Current drops them in favor of per-symbol signatures. Eval agents consistently flagged this as decisive — e.g. log_src_kv's `//! Structured logging.` / `//! Structured keys.` headers tell a reader what each file is in one line where a wall of signatures cannot. `ModuleDocFirst` / `ModuleDocRest` groups exist in the taxonomy but apparently lose ratio competition against cheap name entries in these fixtures.
 
-## 41. Anonymous `typedef struct` names not extracted (low significance)
-
-**Affected snapshots:** bareiron
-
-C parser extracts `typedef struct { ... } foo_t` as an anonymous struct rather than using the trailing `foo_t` identifier, so type declarations render without their names. Narrow C parser issue, one fixture.
-
-## 42. Cargo.toml `[workspace].members` list not expanded in workspace roots (low significance)
-
-**Affected snapshots:** toasty
-
-Workspace root Cargo.toml shows `[package]`/`[dependencies]` section headers but drops the `members = [...]` list, which in a multi-crate workspace is the most informative single field (it enumerates the project's crates at a glance). Likely covered incidentally by any fix to #30 that boosts entry-file content.
-
-## 43. Nested subdirectory structure not surfaced in data-heavy repos (low significance)
-
-**Affected snapshots:** vscode_emojis_medium
-
-In repos dominated by one large data file plus asset directories, current shows only top-level directory names and spends remaining budget extending the dominant file's truncated content. A second level of nesting (e.g. `icons/dark/`, `icons/light/`) would reveal organizational structure at negligible cost. One fixture, marginal impact.
-
-## 44. Non-code item-kind breadth in non-code-centric projects (low significance)
-
-**Affected snapshots:** soluna
-
-For projects whose identity includes non-source artifacts (shaders, platform glue files, Makefiles, asset data), current tends to concentrate budget on source code and under-represent the heterogeneous file landscape. Partially overlaps with #37 (implementation files omitted) — the difference is #37 is about missing the file where code lives, while this is about missing file kinds that collectively define what the project *is*. Low significance because it only clearly surfaced in one fixture.
-
 ## 45. Java fields silently dropped
 
 Java `field_declaration` nodes reach `ConstName::from_parse` (`src/group/ts/const_.rs`) only if `java_field_is_static_final(...)` returns true (`src/parse/mod.rs:467-484`). Regular instance fields — which define the shape of every Java DTO, entity, and record-adjacent class — are filtered out at parse time and never appear in output. The same rejection applies via whatever `ClassName::children` spawn logic does for TS/Java class bodies: methods are extracted, fields are not.
