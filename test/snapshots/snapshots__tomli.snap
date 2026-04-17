@@ -92,7 +92,7 @@ src/tomli/__init__.py
      1→# SPDX-License-Identifier: MIT
      2→# SPDX-FileCopyrightText: 2021 Taneli Hukkinen
      3→# Licensed to PSF under a Contributor Agreement.
-     5→__all__ …
+     5→__all__ = ("loads", "load", "TOMLDecodeError")
      6→__version__ …
      8→from ._parser import TOMLDecodeError, load, loads
 
@@ -116,11 +116,11 @@ src/tomli/_parser.py
     32→# Choosing `sys.getrecursionlimit()` as maximum inline table/array nesting
     33→# level, as it allows more nesting than pure Python, but still seems a far
     34→# lower number than where mypyc binaries crash.
-    35→MAX_INLINE_NESTING …
+    35→MAX_INLINE_NESTING: Final = sys.getrecursionlimit()
     37→ASCII_CTRL …
     39→# Neither of these sets include quotation mark or backslash. They are
     40→# currently handled as separate cases in the parser functions.
-    41→ILLEGAL_BASIC_STR_CHARS …
+    41→ILLEGAL_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t")
     42→ILLEGAL_MULTILINE_BASIC_STR_CHARS …
     44→ILLEGAL_LITERAL_STR_CHARS …
     45→ILLEGAL_MULTILINE_LITERAL_STR_CHARS …
@@ -251,7 +251,6 @@ src/tomli/_re.py
 benchmark/README.md
      1→# Benchmark
     10→## Running
-    12→### Against the local Tomli state
 
 pyproject.toml
      1→[build-system]
@@ -266,9 +265,6 @@ pyproject.toml
 
 scripts/use_setuptools.py
      1→"""Script that switches build backend to setuptools with mypyc support.
-     2→
-     3→Overwrites pyproject.toml. Does not create a backup.
-     4→"""
     12→def use_setuptools() -> None:
 
 benchmark/run.py
@@ -278,7 +274,7 @@ benchmark/run.py
 tests/__init__.py
      1→# SPDX-License-Identifier: MIT
       →…
-     5→__all__ …
+     5→__all__ = ("tomllib",)
 
 tests/burntsushi.py
      5→"""Utilities for tests that are in the "burntsushi" format."""

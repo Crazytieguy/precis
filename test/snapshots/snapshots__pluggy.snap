@@ -15,7 +15,7 @@ src/pluggy/_callers.py
      3→"""
     22→# Need to distinguish between old- and new-style hook wrappers.
     23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
-    24→Teardown …
+    24→Teardown: TypeAlias = Generator[None, object, object]
     27→def run_old_style_hookwrapper(
     28→    hook_impl: HookImpl, hook_name: str, args: Sequence[object]
     29→) -> Teardown:

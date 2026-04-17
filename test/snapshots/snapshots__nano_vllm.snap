@@ -145,7 +145,7 @@ nanovllm/utils/context.py
     12→    slot_mapping: torch.Tensor | None = None
     13→    context_lens: torch.Tensor | None = None
     14→    block_tables: torch.Tensor | None = None
-    16→_CONTEXT …
+    16→_CONTEXT = Context()
     18→def get_context():
     21→def set_context(is_prefill, cu_seqlens_q=None, cu_seqlens_k=None, max_seqlen_q=0, max_seqlen_k=0, slot_mapping=None, context_lens=None, block_tables=None):
     25→def reset_context():

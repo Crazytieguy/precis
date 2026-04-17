@@ -3,7 +3,7 @@ source: tests/snapshots.rs
 expression: output
 ---
 init.lua
-     2→local M …
+     2→local M = {}
      4→--- Process items and return the total count.
      5→--- @param items table List of items to process.
      6→--- @return number count The total count.
@@ -21,8 +21,8 @@ init.lua
     20→--- @class Token
     21→--- @field kind string
     22→--- @field span table
-    23→local Token …
-    24→Token.__index …
+    23→local Token = {}
+    24→Token.__index = Token
     26→function Token:new(kind, span)
     27→    return setmetatable({ kind = kind, span = span }, self)
     28→end
@@ -40,5 +40,5 @@ init.lua
     42→        end,
     43→    }
     44→end
-    46→M.MAX_TOKENS …
-    48→M.VERSION …
+    46→M.MAX_TOKENS = 1024
+    48→M.VERSION = "0.1.0"

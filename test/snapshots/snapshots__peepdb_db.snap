@@ -12,7 +12,17 @@ __init__.py
      7→from .firebase import FirebaseDatabase
      8→from .mssql import MSSQLDatabase
      9→from .oracle import OracleDatabase
-    11→__all__ …
+    11→__all__ = [
+    12→    'BaseDatabase',
+    13→    'MySQLDatabase',
+    14→    'PostgreSQLDatabase',
+    15→    'MariaDBDatabase',
+    16→    'MongoDBDatabase',
+    17→    'SQLiteDatabase',
+    18→    'FirebaseDatabase',
+    19→    'MSSQLDatabase',
+    20→    'OracleDatabase'
+    21→]
 
 base.py
      5→class BaseDatabase …

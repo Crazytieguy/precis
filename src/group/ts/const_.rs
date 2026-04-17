@@ -15,6 +15,9 @@ pub struct ConstName {
     pub public: bool,
 }
 
+#[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, Ord, PartialOrd)]
+pub struct ConstBody;
+
 impl TsGroupKindMethods for ConstName {
     fn render_item<'s>(&self, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
         super::render_name_line(item)
@@ -25,7 +28,14 @@ impl TsGroupKindMethods for ConstName {
         if self.documented {
             super::spawn_simple_child(&mut out, parent, TsGroupKey::ConstDocFirst(ConstDocFirst));
         }
+        super::spawn_simple_child(&mut out, parent, TsGroupKey::ConstBody(ConstBody));
         out
+    }
+}
+
+impl TsGroupKindMethods for ConstBody {
+    fn render_item<'s>(&self, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
+        super::render_full_item_lines(item)
     }
 }
 

@@ -18,8 +18,6 @@ README.md
    128→```
    129→
    130→## SDK Usage 🛠️
-   132→MCPHost also provides a Go SDK for programmatic access without spawning OS processes. The SDK maintains identical behavior to the CLI, including configuration loading, environment variables, and defaults.
-   133→
    134→### Quick Example
    165→### SDK Features
    176→## Configuration ⚙️
@@ -256,8 +254,8 @@ sdk/mcphost.go
    237→func (m *MCPHost) Close() error {
 
 sdk/types.go
-    10→type Message …
-    14→type ToolCall …
+    10→type Message = session.Message
+    14→type ToolCall = session.ToolCall
     18→func ConvertToSchemaMessage(msg *Message) *schema.Message {
     24→func ConvertFromSchemaMessage(msg *schema.Message) Message {
 
@@ -274,7 +272,7 @@ internal/config/config.go
    271→func EnsureConfigExists() error {
    296→func createDefaultConfig(homeDir string) error {
    406→func FilepathOr[T any](key string, value *T) error {
-   454→var configPath …
+   454→var configPath string
    459→func SetConfigPath(path string) {
 
 internal/config/merger.go
@@ -315,11 +313,9 @@ internal/models/generate_models.go
     37→type Cost …
     50→type Limit …
     60→type ProviderInfo …
-    73→const codeTemplate …
    156→func main() {
 
 internal/models/providers.go
-    28→const …
     70→type ProviderConfig …
    124→type ProviderResult …
    153→func CreateProvider(ctx context.Context, config *ProviderConfig) (*ProviderResult, error) {
@@ -338,7 +334,7 @@ internal/models/registry.go
    143→func (r *ModelsRegistry) SuggestModels(provider, invalidModel string) []string {
    179→func (r *ModelsRegistry) GetSupportedProviders() []string {
    197→func (r *ModelsRegistry) GetModelsForProvider(provider string) (map[string]ModelInfo, error) {
-   207→var globalRegistry …
+   207→var globalRegistry = NewModelsRegistry()
    216→func GetGlobalRegistry() *ModelsRegistry {
 
 internal/hooks/config.go
@@ -348,9 +344,7 @@ internal/hooks/config.go
     41→func LoadHooksConfig(customPaths ...string) (*HookConfig, error) {
 
 internal/hooks/events.go
-     3→// HookEvent represents a point in MCPHost's lifecycle where hooks can be executed.
-      →…
-     5→type HookEvent …
+     5→type HookEvent string
      7→const …
     23→func (e HookEvent) IsValid() bool {
     34→func (e HookEvent) RequiresMatcher() bool {
@@ -378,13 +372,13 @@ internal/hooks/validator.go
 
 internal/agent/agent.go
     22→type AgentConfig …
-    39→type ToolCallHandler …
-    43→type ToolExecutionHandler …
-    47→type ToolResultHandler …
-    51→type ResponseHandler …
-    55→type StreamingResponseHandler …
-    59→type ToolCallContentHandler …
-    63→type ToolApprovalHandler …
+    39→type ToolCallHandler func(toolName, toolArgs string)
+    43→type ToolExecutionHandler func(toolName string, isStarting bool)
+    47→type ToolResultHandler func(toolName, toolArgs, result string, isError bool)
+    51→type ResponseHandler func(content string)
+    55→type StreamingResponseHandler func(content string)
+    59→type ToolCallContentHandler func(content string)
+    63→type ToolApprovalHandler func(toolName, toolArgs string) (bool, error)
     67→type Agent …
     81→func NewAgent …
    125→type GenerateWithLoopResult …
@@ -402,7 +396,7 @@ internal/agent/agent.go
    536→func (a *Agent) Close …
 
 internal/agent/factory.go
-    15→type SpinnerFunc …
+    15→type SpinnerFunc func(message string, fn func() error) error
     19→type AgentCreationOptions …
     43→func CreateAgent …
     76→func ParseModelName …
@@ -417,7 +411,7 @@ internal/builtin/fetch.go
     27→func NewFetchServer() (*server.MCPServer, error) {
 
 internal/builtin/http.go
-    29→var httpServerModel …
+    29→var httpServerModel model.ToolCallingChatModel
     36→func NewHTTPServer(llmModel model.ToolCallingChatModel) (*server.MCPServer, error) {
 
 internal/builtin/registry.go
@@ -448,7 +442,7 @@ internal/builtin/todo.go
 
 internal/ui/block_renderer.go
      8→type blockRenderer …
-    22→type renderingOption …
+    22→type renderingOption func(*blockRenderer)
     27→func WithFullWidth() renderingOption {
     36→func WithAlign(align lipgloss.Position) renderingOption {
     45→func WithBorderColor(color lipgloss.AdaptiveColor) renderingOption {
@@ -525,7 +519,7 @@ internal/ui/debug_logger.go
     84→func (l *CLIDebugLogger) IsDebugEnabled() bool {
 
 internal/ui/enhanced_styles.go
-    12→var currentTheme …
+    12→var currentTheme = DefaultTheme()
     16→func GetTheme() Theme {
     22→func SetTheme(theme Theme) {
     29→type Theme …
@@ -561,7 +555,7 @@ internal/ui/fuzzy.go
 internal/ui/messages.go
     13→// MessageType represents different categories of messages displayed in the UI,
     14→// each with distinct visual styling and formatting rules.
-    15→type MessageType …
+    15→type MessageType int
     29→type UIMessage …
     47→type MessageRenderer …
     70→func NewMessageRenderer(width int, debug bool) *MessageRenderer {

@@ -25,7 +25,7 @@ README.md
 demo.py
     65→XUI_EXTERNAL_IP = "**********"  # ⬅️ Your external IP here or domain name.
     66→MAIN_REMARK = "gmfvbot"  # ⬅️ It can be any string.
-    67→SERVER_PORT …
+    67→SERVER_PORT = 443  # ⬅️ Your server port here.
     70→def get_connection_string(inbound: Inbound, user_uuid: str, user_email: int) -> str:
     71→    """Prepare a connection string for the given inbound, user UUID and telegram ID.
       →…
@@ -67,7 +67,7 @@ py3xui/server/server.py
       →…
 
 py3xui/utils/__init__.py
-     4→COOKIE_NAMES …
+     4→COOKIE_NAMES = ["3x-ui", "session"]
 
 py3xui/utils/env.py
      1→"""This module contains utility functions for parsing environment variables."""
@@ -336,9 +336,6 @@ pyproject.toml
      4→
      5→[project]
     25→[project.urls]
-    26→Homepage = "https://github.com/iwatkot/py3xui"
-    27→Repository = "https://github.com/iwatkot/py3xui"
-    28→
     29→[tool.setuptools.packages.find]
 
 tests/responses/

@@ -21,7 +21,6 @@ README.md
    498→## The scheduler
    504→### Fast context switching
    511→### Thread local runtime
-   579→## License
 
 neco.h
     30→/// @defgroup BasicOperations Basic operations
@@ -32,21 +31,21 @@ neco.h
     35→int neco_start(void(*coroutine)(int argc, void *argv[]), int argc, ...);
     55→/// @defgroup Channels Channels
       →…
-    61→typedef struct neco_chan neco_chan …
+    61→typedef struct neco_chan neco_chan;
     86→/// @defgroup Generators Generators
       →…
-    90→typedef struct neco_gen neco_gen …
+    90→typedef struct neco_gen neco_gen;
    107→/// @defgroup Mutexes Mutexes
       →…
-   113→typedef struct { int64_t _0; intptr_t _1[5]; } neco_mutex …
+   113→typedef struct { int64_t _0; intptr_t _1[5]; } neco_mutex;
    115→#define NECO_MUTEX_INITIALIZER { 0 }
    127→/// @defgroup WaitGroups WaitGroups
       →…
-   135→typedef struct { int64_t _0; intptr_t _1[5]; } neco_waitgroup …
+   135→typedef struct { int64_t _0; intptr_t _1[5]; } neco_waitgroup;
    136→#define NECO_WAITGROUP_INITIALIZER { 0 }
    145→/// @defgroup CondVar Condition variables
       →…
-   149→typedef struct { int64_t _0; intptr_t _1[5]; } neco_cond …
+   149→typedef struct { int64_t _0; intptr_t _1[5]; } neco_cond;
    150→#define NECO_COND_INITIALIZER { 0 }
    168→// wrappers for various posix operations.
    169→ssize_t neco_read(int fd, void *data, size_t nbytes);
@@ -81,7 +80,19 @@ neco.h
    276→int neco_work(int64_t pin, void(*work)(void *udata), void *udata);
    284→/// @defgroup Stats Stats and information
       →…
-   287→typedef struct neco_stats { …
+   287→typedef struct neco_stats {
+   288→    size_t coroutines;   ///< Number of active coroutines
+   289→    size_t sleepers;     ///< Number of sleeping coroutines
+   290→    size_t evwaiters;    ///< Number of coroutines waiting on I/O events
+   291→    size_t sigwaiters;   ///<
+   292→    size_t senders;      ///<
+   293→    size_t receivers;    ///<
+   294→    size_t locked;       ///<
+   295→    size_t waitgroupers; ///<
+   296→    size_t condwaiters;  ///<
+   297→    size_t suspended;    ///<
+   298→    size_t workers;      ///< Number of background worker threads
+   299→} neco_stats;
    311→/// @defgroup GlobalFuncs Global environment
    312→/// @{
    314→void neco_env_setallocator(void *(*malloc)(size_t), void *(*realloc)(void*, size_t), void (*free)(void*));
@@ -116,40 +127,20 @@ neco.h
    378→#define NECO_NOTSUSPENDED  -18  ///< Coroutine is not suspended (neco_resume)
    391→/// @defgroup Streams Streams and Buffered I/O
       →…
-   396→typedef struct neco_stream neco_stream …
+   396→typedef struct neco_stream neco_stream;
    427→#define neco_main \
    453→#define EAI_SYSTEM 11
 
 examples/README.md
      1→# Neco examples 
-     3→This directory contains various example of using Neco.
-     4→
-     5→Also check out the [Bluebox](https://github.com/tidwall/bluebox) project for a
-     6→complete networking example, including benchmarks.
 
 docs/README.md
      1→# Neco Documentation
 
 neco.c
-   294→#define LLCO_NOASM
   1067→enum llco_stack_grows …
   1814→struct sco_link …
-  2883→#define NECO_POLL_DISABLED
-  2957→#define pwhere(str) \
-  2963→#define unreachable() \
-  2970→#define must(cond) \
-  3248→enum evkind …
   3321→enum cokind …
-  3453→#define error_guard(ret) \
-  3466→#define async_error_guard(ret) \
   3570→struct runtime …
   5718→struct neco_chan …
   7082→struct neco_mutex …
-
-tests/README.md
-     1→# Testing
-    16→### Examples
-
-docs/assets/
-
-docs/tools/

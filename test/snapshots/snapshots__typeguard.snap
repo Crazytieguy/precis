@@ -3,14 +3,22 @@ source: test/fixtures.rs
 expression: output
 ---
 src/typeguard/__init__.py
-    34→config …
+    34→config: TypeCheckConfiguration
     37→def __getattr__ …
 
 src/typeguard/_checkers.py
-    81→TypeCheckerCallable …
-    84→TypeCheckLookupCallback …
-    88→checker_lookup_functions …
-    89→generic_alias_types …
+    81→TypeCheckerCallable: TypeAlias = Callable[
+    82→    [Any, Any, Tuple[Any, ...], TypeCheckMemo], Any
+    83→]
+    84→TypeCheckLookupCallback: TypeAlias = Callable[
+    85→    [Any, Tuple[Any, ...], Tuple[Any, ...]], Optional[TypeCheckerCallable]
+    86→]
+    88→checker_lookup_functions: list[TypeCheckLookupCallback] = []
+    89→generic_alias_types: tuple[type, ...] = (
+    90→    type(List),
+    91→    type(List[Any]),
+    92→    types.GenericAlias,
+    93→)
     98→# Lifted from mypy.sharedparse
     99→BINARY_MAGIC_METHODS …
    153→def check_callable …
@@ -53,7 +61,7 @@ src/typeguard/_checkers.py
       →…
 
 src/typeguard/_config.py
-    11→T …
+    11→T = TypeVar("T")
     14→class ForwardRefPolicy …
     16→    Defines how unresolved forward references are handled.
       →…
@@ -119,8 +127,8 @@ src/typeguard/_exceptions.py
     38→    def __str__(self) -> str:
 
 src/typeguard/_functions.py
-    24→T …
-    25→TypeCheckFailCallback …
+    24→T = TypeVar("T")
+    25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
     29→def check_type …
     40→def check_type …
     50→def check_type(
@@ -147,8 +155,8 @@ src/typeguard/_functions.py
       →…
 
 src/typeguard/_importhook.py
-    40→P …
-    41→T …
+    40→P = ParamSpec("P")
+    41→T = TypeVar("T")
     44→# The name of this function is magical
     45→def _call_with_frames_removed(
     46→    f: Callable[P, T], *args: P.args, **kwargs: P.kwargs
@@ -222,8 +230,8 @@ src/typeguard/_pytest_plugin.py
     75→def pytest_configure …
 
 src/typeguard/_suppression.py
-    15→P …
-    16→T …
+    15→P = ParamSpec("P")
+    16→T = TypeVar("T")
     23→def suppress_type_checks …
     27→def suppress_type_checks …
     30→def suppress_type_checks(
@@ -233,8 +241,8 @@ src/typeguard/_suppression.py
       →…
 
 src/typeguard/_transformer.py
-    67→PreliminaryNameTypePair …
-    68→NameTypePair …
+    67→PreliminaryNameTypePair: typing.TypeAlias = tuple[Constant, "expr | None"]
+    68→NameTypePair: typing.TypeAlias = tuple[Constant, expr]
    118→class TransformMemo …
    141→    def __post_init__(self) -> None:
    171→    def get_unused_name(self, name: str) -> str:
@@ -242,7 +250,6 @@ src/typeguard/_transformer.py
    206→    def get_memo_name(self) -> Name:
    212→    def get_import(self, module: str, name: str) -> Name:
    225→    def insert_imports(self, node: Module | FunctionDef | AsyncFunctionDef) -> None:
-   226→        """Insert imports needed by injected code."""
    238→    def name_matches(self, expression: expr | Expr | None, *names: str) -> bool:
    275→    def get_config_keywords(self) -> list[keyword]:
    285→class NameCollector …
@@ -291,30 +298,16 @@ src/typeguard/_transformer.py
    650→    def visit_FunctionDef(
    651→        self, node: FunctionDef | AsyncFunctionDef
    652→    ) -> FunctionDef | AsyncFunctionDef | None:
-   654→        Injects type checks for function arguments, and for a return of None if the
-      →…
    913→    def visit_AsyncFunctionDef(
    914→        self, node: AsyncFunctionDef
    915→    ) -> FunctionDef | AsyncFunctionDef | None:
    918→    def visit_Return(self, node: Return) -> Return:
-   919→        """This injects type checks into "return" statements."""
    945→    def visit_Yield(self, node: Yield) -> Yield | Call:
-   947→        This injects type checks into "yield" expressions, checking both the yielded
-      →…
    994→    def visit_AnnAssign(self, node: AnnAssign) -> Any:
-   996→        This injects a type check into a local variable annotation-assignment within a
-      →…
   1036→    def visit_Assign(self, node: Assign) -> Any:
-  1038→        This injects a type check into a local variable assignment within a function
-      →…
   1138→    def visit_NamedExpr(self, node: NamedExpr) -> Any:
-  1139→        """This injects a type check into an assignment expression (a := foo())."""
   1181→    def visit_AugAssign(self, node: AugAssign) -> Any:
-  1183→        This injects a type check into an augmented assignment expression (a += 1).
-      →…
   1224→    def visit_If(self, node: If) -> Any:
-  1226→        This blocks names from being collected from a module-level
-      →…
 
 src/typeguard/_utils.py
     25→    def evaluate_forwardref …
@@ -342,12 +335,14 @@ pyproject.toml
     41→
     42→[dependency-groups]
     58→[tool.setuptools_scm]
+    59→version_scheme = "post-release"
+    60→local_scheme = "dirty-tag"
+    61→
     78→[tool.ruff]
     79→src = ["src"]
     80→
     99→[tool.mypy]
    105→[tool.tox]
-   115→[tool.tox.env.docs]
 
 src/
 

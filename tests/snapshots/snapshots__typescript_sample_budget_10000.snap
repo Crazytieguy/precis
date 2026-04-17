@@ -30,8 +30,8 @@ sample.ts
     41→    Number = "number",
     42→    Symbol = "symbol",
     43→}
-    45→export type Span …
-    47→export const MAX_TOKENS …
+    45→export type Span = [number, number];
+    47→export const MAX_TOKENS = 1024;
     49→export default class DefaultExport …
     54→    export function format(s: string): string {
     55→        return s;

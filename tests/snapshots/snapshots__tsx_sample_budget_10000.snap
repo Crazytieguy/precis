@@ -18,9 +18,15 @@ sample.tsx
     25→    return [value, () => setValue(v => !v)];
     26→}
     28→/** A forwarded-ref input component. */
-    29→export const Input …
-    35→export type Theme …
-    37→export const MemoizedList …
+    29→export const Input = forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
+    30→    (props, ref) => {
+    31→        return <input ref={ref} {...props} />;
+    32→    }
+    33→);
+    35→export type Theme = "light" | "dark";
+    37→export const MemoizedList = React.memo(function MemoizedList({ items }: { items: string[] }) {
+    38→    return <ul>{items.map(i => <li key={i}>{i}</li>)}</ul>;
+    39→});
     41→export default function App() {
     42→    const [on, toggle] = useToggle(false);
     43→    return (

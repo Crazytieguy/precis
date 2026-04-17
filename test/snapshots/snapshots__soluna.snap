@@ -15,10 +15,6 @@ README.md
     17→[![Nightly](/../../actions/workflows/nightly.yml/badge.svg)](/../../actions/workflows/nightyly.yml)
     18→
     19→## Documentation
-    21→- [API Reference](./docs)
-    22→- [Examples](./test)
-    23→- [Wiki](https://github.com/cloudwu/soluna/wiki)
-    24→
     25→## Precompiled Binaries
     27→You can download precompiled binaries for Windows, Linux, macOS and WebAssembly from the [Nightly Releases](/../../releases/tag/nightly) page.
     28→
@@ -101,9 +97,9 @@ src/material_util.h
     10→#define MATERIAL_MASK 3
     11→#define MATERIAL_PERSPECTIVE_QUAD 4
     13→void util_ref_object(lua_State *L, void *ptr, int uv_index, const char *key, const char *luatype, int direct);
-    15→typedef void (*util_submit_func)(lua_State *L …
+    15→typedef void (*util_submit_func)(lua_State *L, void *m_, struct draw_primitive *prim, int n);
     16→void util_submit_material(lua_State *L, int batch_n, void *mat, util_submit_func submit);
-    18→typedef const sg_shader_desc* (*util_shader_desc_func)(sg_backend backend …
+    18→typedef const sg_shader_desc* (*util_shader_desc_func)(sg_backend backend);
     19→sg_pipeline util_make_pipeline(sg_pipeline_desc *desc, util_shader_desc_func func, const char *what, int blend);
 
 src/mutex.h
@@ -265,8 +261,8 @@ src/service/render.lua
     81→	function batch.consume …
    145→function S.app …
    215→function S.frame …
-   228→S.register_batch …
-   229→S.submit_batch …
+   228→S.register_batch = assert(batch.register)
+   229→S.submit_batch = assert(batch.submit)
    231→function S.quit …
    252→function S.load_sprites …
    454→function S.init …
@@ -280,7 +276,7 @@ src/service/start.lua
     22→function app.cleanup …
     31→function app.frame …
     48→function prehook.window_resize …
-    56→S.event …
+    56→S.event = skip
     59→function S.external …
    176→function S.quit …
 
@@ -382,8 +378,6 @@ bin/sokol-tools-bin/
 
 clibs/
 
-clibs/datalist/
-
 clibs/ltask/
 
 clibs/lua/
@@ -403,8 +397,6 @@ src/platform/
 test/
 
 web/content/docs/
-
-web/content/examples/
 
 web/layouts/_default/
 

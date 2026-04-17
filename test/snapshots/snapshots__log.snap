@@ -30,7 +30,7 @@ Cargo.toml
 
 src/__private_api.rs
      1→//! WARNING: this is not part of the crate's public API and is subject to change at any time
-    10→pub type Value …
+    10→pub type Value<'a> = &'a str;
     13→    /// Types for the `kv` argument.
     14→    pub trait KVs …
     15→        fn into_kvs …
@@ -312,6 +312,8 @@ src/kv/value.rs
   1157→/// Get a value from a type implementing `serde::Serialize`.
   1159→macro_rules! as_serde …
   1169→macro_rules! as_sval …
+
+benches/
 
 rfcs/
 

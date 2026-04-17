@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 4000 (2676 tokens, 9226 chars)
+budget: 4000 (2641 tokens, 9105 chars)
 
 downstream/README.md
      1→This directory contains scripts for testing some downstream projects
@@ -17,7 +17,7 @@ src/pluggy/_callers.py
      3→"""
     22→# Need to distinguish between old- and new-style hook wrappers.
     23→# Wrapping with a tuple is the fastest type-safe way I found to do it.
-    24→Teardown …
+    24→Teardown: TypeAlias = Generator[None, object, object]
     27→def run_old_style_hookwrapper(
     28→    hook_impl: HookImpl, hook_name: str, args: Sequence[object]
     29→) -> Teardown:
@@ -98,11 +98,9 @@ src/pluggy/_hooks.py
    427→        spec_opts: HookspecOpts,
    428→    ) -> None:
    438→    def is_historic(self) -> bool:
-   442→    def _remove_plugin …
    449→    def get_hookimpls(self) -> list[HookImpl]:
    453→    def _add_hookimpl(self, hookimpl: HookImpl) -> None:
    477→    def __repr__ …
-   480→    def _verify_all_args_are_provided …
    499→    def __call__(self, **kwargs: object) -> Any:
    516→    def call_historic(
    517→        self,
@@ -159,7 +157,6 @@ src/pluggy/_manager.py
     84→    """Core class which manages registration of plugin objects and 1:N hook
       →…
    100→    def __init__ …
-   114→    def _hookexec …
    125→    def register(self, plugin: _Plugin, name: str | None = None) -> str | None:
    176→    def parse_hookimpl_opts(self, plugin: _Plugin, name: str) -> HookimplOpts | None:
    201→    def unregister(
@@ -178,7 +175,6 @@ src/pluggy/_manager.py
    315→    def get_plugin(self, name: str) -> Any | None:
    319→    def has_plugin(self, name: str) -> bool:
    323→    def get_name(self, plugin: _Plugin) -> str | None:
-   331→    def _verify_hook …
    379→    def check_pending(self) -> None:
    395→    def load_setuptools_entrypoints(self, group: str, name: str | None = None) -> int:
    425→    def list_plugin_distinfo(self) -> list[tuple[_Plugin, DistFacade]]:
@@ -241,5 +237,3 @@ docs/examples/
 scripts/
 
 src/
-
-testing/

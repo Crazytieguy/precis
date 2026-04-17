@@ -2,7 +2,7 @@
 source: tests/snapshots.rs
 expression: output
 ---
-budget: 2000 (1969 tokens, 6209 chars)
+budget: 2000 (1994 tokens, 6282 chars)
 
 README.md
      9→# Mitt
@@ -77,7 +77,6 @@ README.md
    121→* * *
    122→
    123→## API
-   127→#### Table of Contents
    138→### mitt
    140→Mitt: Tiny (~200b) functional event emitter / pubsub.
    141→
@@ -103,9 +102,6 @@ README.md
    173→
    174→#### Parameters
    179→## Contribute
-   181→First off, thanks for taking the time to contribute!
-   182→Now, take a moment to be sure your contributions make sense to everyone else.
-   183→
    184→### Reporting Issues
    186→Found a problem? Want a new feature? First of all see if your issue or idea has [already been reported](../../issues).
    187→If don't, just open a [new clear and descriptive issue](../../issues/new).
@@ -115,12 +111,20 @@ README.md
    205→[MIT License](https://opensource.org/licenses/MIT) © [Jason Miller](https://jasonformat.com/)
 
 src/index.ts
-     1→export type EventType …
-     5→export type Handler …
-     6→export type WildcardHandler …
-    12→export type EventHandlerList …
-    13→export type WildCardEventHandlerList …
-    18→export type EventHandlerMap …
+     1→export type EventType = string | symbol;
+     5→export type Handler<T = unknown> = (event: T) => void;
+     6→export type WildcardHandler<T = Record<string, unknown>> = (
+     7→	type: keyof T,
+     8→	event: T[keyof T]
+     9→) => void;
+    12→export type EventHandlerList<T = unknown> = Array<Handler<T>>;
+    13→export type WildCardEventHandlerList<T = Record<string, unknown>> = Array<
+    14→	WildcardHandler<T>
+    15→>;
+    18→export type EventHandlerMap<Events extends Record<EventType, unknown>> = Map<
+    19→	keyof Events | '*',
+    20→	EventHandlerList<Events[keyof Events]> | WildCardEventHandlerList<Events>
+    21→>;
     23→export interface Emitter …
     26→	on<Key extends keyof Events>(type: Key, handler: Handler<Events[Key]>): void;
     27→	on(type: '*', handler: WildcardHandler<Events>): void;
@@ -170,9 +174,6 @@ tsconfig.json
 test/test-types-compilation.ts
      5→interface SomeEventData …
      9→const emitter …
-    15→const barHandler = (x?: number) => {};
-    16→const fooHandler = (x: string) => {};
-    17→const wildcardHandler = (
-    18→	_type: 'foo' | 'bar' | 'someEvent',
-    19→	_event: string | SomeEventData | number | undefined
-    20→) => {};
+    15→const barHandler …
+    16→const fooHandler …
+    17→const wildcardHandler …

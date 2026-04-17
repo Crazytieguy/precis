@@ -585,7 +585,7 @@ crates/toasty-core/src/error.rs
 
 crates/toasty-core/src/lib.rs
     15→/// A Result type alias that uses Toasty's [`Error`] type.
-    16→pub type Result …
+    16→pub type Result<T, E = Error> = core::result::Result<T, E>;
 
 crates/toasty-core/src/macros.rs
      2→macro_rules! path …
@@ -744,9 +744,6 @@ crates/toasty/src/stmt.rs
     83→impl<M> From<Update<M>> for Statement<M> …
     84→    fn from …
 
-crates/toasty-core/src/driver/capability.rs
-   103→pub struct SchemaMutations …
-
 benches/
 
 crates/
@@ -796,7 +793,3 @@ examples/
 scripts/
 
 tests/
-
-tests/src/
-
-tests/tests/

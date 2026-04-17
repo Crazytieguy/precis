@@ -19,14 +19,12 @@ README.md
     16→```
     17→
     18→## License
-    20→This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more information.
-    21→
     22→## Credits and Acknowledgements
     24→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
 
 src/node/crypto.node.usecases.ts
-     5→export { base64UrlToBuffer, bufferToBase64Url, createRandomBuffer, deriveMasterKey, generateBaseKey };
-     7→const deriveWithPbkdf2 …
+     5→export …
+     7→const deriveWithPbkdf2 = promisify(pbkdf2);
      9→function bufferToBase64Url({ buffer }: { buffer: Uint8Array }): string {
     15→function base64UrlToBuffer({ base64Url }: { base64Url: string }): Uint8Array {
     21→function generateBaseKey(): { baseKey: Uint8Array } {
@@ -34,7 +32,7 @@ src/node/crypto.node.usecases.ts
     31→async function deriveMasterKey({ baseKey, password = '' }: { baseKey: Uint8Array; password?: string }): Promise<{ masterKey: Uint8Array }> {
 
 src/web/crypto.web.usecases.ts
-     1→export { base64UrlToBuffer, bufferToBase64Url, createRandomBuffer, deriveMasterKey, generateBaseKey };
+     1→export …
      3→function bufferToBase64Url({ buffer }: { buffer: Uint8Array }): string {
     20→function base64UrlToBuffer({ base64Url }: { base64Url: string }): Uint8Array {
     31→function createRandomBuffer({ length = 16 }: { length?: number } = {}): Uint8Array {
@@ -80,8 +78,8 @@ src/web/encryption-algorithms/crypto.web.aes-256-gcm.ts
      4→export const aes256GcmEncryptionAlgorithmDefinition …
 
 src/encryption-algorithms/encryption-algorithms.constants.ts
-     1→export const AES_256_GCM …
-     3→export const ENCRYPTION_ALGORITHMS …
+     1→export const AES_256_GCM = 'aes-256-gcm';
+     3→export const ENCRYPTION_ALGORITHMS = [AES_256_GCM] as const;
 
 src/encryption-algorithms/encryption-algorithms.models.ts
      3→function defineEncryptionMethods(args: {
@@ -107,9 +105,12 @@ src/encryption-algorithms/encryption-algorithms.test-utils.ts
 
 src/encryption-algorithms/encryption-algorithms.types.ts
      1→import type { ENCRYPTION_ALGORITHMS } from './encryption-algorithms.constants';
-     3→export type EncryptionMethodsDefinition …
-     8→export type EncryptionAlgorithm …
-    10→export type EncryptionAlgorithmDefinitions …
+     3→export type EncryptionMethodsDefinition = {
+     4→  encryptBuffer: (args: { buffer: Uint8Array; encryptionKey: Uint8Array }) => Promise<{ encryptedString: string }>;
+     5→  decryptString: (args: { encryptedString: string; encryptionKey: Uint8Array }) => Promise<{ decryptedBuffer: Uint8Array }>;
+     6→};
+     8→export type EncryptionAlgorithm = typeof ENCRYPTION_ALGORITHMS[number];
+    10→export type EncryptionAlgorithmDefinitions = Record<EncryptionAlgorithm, EncryptionMethodsDefinition>;
 
 package.json
      2→  "name": "@enclosed/crypto",
@@ -142,5 +143,5 @@ src/web/crypto.web.usecases.test.ts
      2→import { base64UrlToBuffer, bufferToBase64Url } from './crypto.web.usecases';
 
 src/encryption-algorithms/encryption-algorithms.registry.test.ts
-     1→import type { EncryptionAlgorithmDefinitions } from './encryption-algorithms.types';
-     3→import { createEncryptionAlgorithmsRegistry } from './encryption-algorithms.registry';
+     1→import type …
+     3→import …

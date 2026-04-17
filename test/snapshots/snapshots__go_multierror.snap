@@ -94,7 +94,7 @@ flatten.go
 format.go
     11→// ErrorFormatFunc is a function callback that is called by Error to
     12→// turn the list of errors into a string.
-    13→type ErrorFormatFunc …
+    13→type ErrorFormatFunc func([]error) string
     15→// ListFormatFunc is a basic formatter that outputs the number of errors
     16→// that occurred along with a bullet point list of the errors.
     17→func ListFormatFunc(es []error) string {
@@ -229,7 +229,7 @@ multierror.go
     96→// Is/As to get the correct error type out.
     97→//
     98→// Precondition: []error is non-empty (len > 0)
-    99→type chain …
+    99→type chain []error
    101→// Error implements the error interface
    102→func (e chain) Error() string {
    103→	return e[0].Error()

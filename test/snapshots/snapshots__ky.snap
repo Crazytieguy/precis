@@ -61,7 +61,6 @@ readme.md
   1264→### Extending types
   1292→## FAQ
   1294→#### How do I use this in Node.js?
-  1298→#### How do I use this with a web app (React, Vue.js, etc.) that uses server-side rendering (SSR)?
   1302→#### How do I test a browser library that uses this?
   1306→#### How do I use this without a bundler like Webpack?
   1321→#### How is it different from [`got`](https://github.com/sindresorhus/got)
@@ -81,7 +80,7 @@ source/index.ts
      7→import {validateAndMerge} from './utils/merge.js';
      8→import {type Mutable} from './utils/types.js';
     10→const createInstance = (defaults?: Partial<Options>): KyInstance => {
-    34→const ky …
+    34→const ky = createInstance();
 
 source/core/Ky.ts
      1→import {HTTPError} from '../errors/HTTPError.js';
@@ -284,7 +283,7 @@ source/utils/normalize.ts
      8→const retryMethods …
     10→const retryStatusCodes …
     12→const retryAfterStatusCodes …
-    14→type InternalRetryOptions …
+    14→type InternalRetryOptions = Required<Omit<RetryOptions, 'shouldRetry'>> & Pick<RetryOptions, 'shouldRetry'>;
     16→const defaultRetryOptions …
     28→export const normalizeRetryOptions = (retry: number | RetryOptions = {}): InternalRetryOptions => {
 

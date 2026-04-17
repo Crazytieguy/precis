@@ -36,10 +36,6 @@ README.md
     51→```
     52→
     53→#### Install Script (Linux & macOS)
-    55→```bash
-    56→curl -sS https://raw.githubusercontent.com/kriuchkov/tock/master/install.sh | sh
-    57→```
-    58→
     59→#### Download Binary
     61→Download the latest release from the [Releases](https://github.com/kriuchkov/tock/releases) page.
     62→
@@ -185,7 +181,7 @@ internal/config/config.go
     56→	Highlight string `mapstructure:"highlight"`
     57→	Tag       string `mapstructure:"tag"`
     58→}
-    60→type Option …
+    60→type Option func(*viper.Viper)
     62→func WithConfigPath(path string) Option {
     68→func WithConfigName(name string) Option {
     74→func WithConfigFile(file string) Option {
@@ -196,7 +192,7 @@ internal/extra/extra.go
 
 internal/timeutil/timeutil.go
     10→// TimeFormat represents the configured time display format.
-    11→type TimeFormat …
+    11→type TimeFormat int
     13→const …
     18→// Formatter handles time formatting and parsing.
     19→type Formatter …
@@ -324,7 +320,9 @@ internal/adapters/repositories/notes/repository.go
     73→func (r *repository) Get(_ context.Context, activityID string, date time.Time) (string, []string, error) {
 
 internal/adapters/repositories/timewarrior/repository.go
-    24→const …
+    24→const (
+    25→	timeLayout = "20060102T150405Z"
+    26→)
     28→type twInterval …
     29→	Start      string   `json:"start"`
     30→	End        string   `json:"end,omitempty"`
@@ -353,7 +351,7 @@ internal/adapters/repositories/timewarrior/repository.go
    393→func tokenize(line string) []string {
 
 internal/adapters/repositories/file/parser.go
-    13→var ErrSkip …
+    13→var ErrSkip = errors.New("skip line")
     15→const …
     20→func ParseActivity(line string) (*models.Activity, error) {
     64→func parseTime(s string) (time.Time, error) {
@@ -593,7 +591,7 @@ internal/adapters/cli/version.go
 
 internal/adapters/cli/watch.go
     19→func NewWatchCmd() *cobra.Command {
-    75→type tickMsg …
+    75→type tickMsg time.Time
     77→type watchModel …
     90→type keyMap …
     95→func initialWatchModel(activity models.Activity, service ports.ActivityResolver, theme Theme) watchModel {
@@ -638,7 +636,5 @@ internal/adapters/
 internal/adapters/repositories/
 
 internal/core/
-
-internal/core/ports/mocks/
 
 internal/services/

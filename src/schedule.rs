@@ -142,16 +142,14 @@ const AUTO_COMMIT_MIN_VALUE: f64 = 1.0;
 
 fn is_auto_commit_body(group: &Group<'_>, remaining_tokens: usize, total_budget: usize) -> bool {
     let Group::Ts(g) = group else { return false };
+    use crate::group::TsGroupKey;
     if !matches!(
         g.key,
-        crate::group::TsGroupKey::EnumBody(_)
-            | crate::group::TsGroupKey::HeadingBody(crate::group::ts::heading::HeadingBody {
-                level: 1
-            })
+        TsGroupKey::EnumBody(_)
+            | TsGroupKey::HeadingBody(crate::group::ts::heading::HeadingBody { level: 1 })
+            | TsGroupKey::TypeAliasBody(_)
+            | TsGroupKey::ConstBody(_)
     ) {
-        return false;
-    }
-    if group.value() < AUTO_COMMIT_MIN_VALUE {
         return false;
     }
     if remaining_tokens
@@ -160,19 +158,40 @@ fn is_auto_commit_body(group: &Group<'_>, remaining_tokens: usize, total_budget:
         return false;
     }
     match g.key {
-        crate::group::TsGroupKey::EnumBody(_) => {
+        TsGroupKey::EnumBody(_) => {
+            if group.value() < AUTO_COMMIT_MIN_VALUE {
+                return false;
+            }
             let limit = crate::calibration::COMPACT_BODY_LINE_LIMIT;
             g.items.iter().all(|item| {
                 let body_start = crate::group::ts::compute_body_start_line(item);
                 item.end_line.saturating_sub(body_start) <= limit
             })
         }
-        crate::group::TsGroupKey::HeadingBody(crate::group::ts::heading::HeadingBody {
-            level: 1,
-        }) => g.items.iter().any(|item| {
-            crate::classify::FileRole::from_path(item.path) == crate::classify::FileRole::Readme
-                && item.path.parent().is_some_and(|p| p.as_os_str().is_empty())
-        }),
+        TsGroupKey::HeadingBody(crate::group::ts::heading::HeadingBody { level: 1 }) => {
+            if group.value() < AUTO_COMMIT_MIN_VALUE {
+                return false;
+            }
+            g.items.iter().any(|item| {
+                crate::classify::FileRole::from_path(item.path)
+                    == crate::classify::FileRole::Readme
+                    && item.path.parent().is_some_and(|p| p.as_os_str().is_empty())
+            })
+        }
+        TsGroupKey::TypeAliasBody(_) | TsGroupKey::ConstBody(_) => {
+            // Value-reveal bodies (upgrade Truncated → Complete on the name
+            // line). Auto-commit only when every item is at most
+            // `VALUE_REVEAL_BODY_LINE_LIMIT` lines — a single-line `type X =
+            // Y` or a short struct-shaped alias. Multi-line bodies cost too
+            // much to auto-commit; they'll stay on the frontier and compete
+            // for budget on their own merit.
+            g.items.iter().all(|item| {
+                item.end_line.saturating_sub(item.start_line())
+                    <= VALUE_REVEAL_BODY_LINE_LIMIT
+            })
+        }
         _ => false,
     }
 }
+
+const VALUE_REVEAL_BODY_LINE_LIMIT: usize = 3;

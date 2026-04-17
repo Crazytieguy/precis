@@ -3,20 +3,44 @@ source: test/fixtures.rs
 expression: output
 ---
 constants.js
-     5→const SEMVER_SPEC_VERSION …
-     7→const MAX_LENGTH …
-     8→const MAX_SAFE_INTEGER …
-    12→const MAX_SAFE_COMPONENT_LENGTH …
-    16→const MAX_SAFE_BUILD_LENGTH …
-    18→const RELEASE_TYPES …
-    28→module.exports = { …
+     5→const SEMVER_SPEC_VERSION = '2.0.0'
+     7→const MAX_LENGTH = 256
+     8→const MAX_SAFE_INTEGER = Number.MAX_SAFE_INTEGER ||
+     9→/* istanbul ignore next */ 9007199254740991
+    12→const MAX_SAFE_COMPONENT_LENGTH = 16
+    16→const MAX_SAFE_BUILD_LENGTH = MAX_LENGTH - 6
+    18→const RELEASE_TYPES = [
+    19→  'major',
+    20→  'premajor',
+    21→  'minor',
+    22→  'preminor',
+    23→  'patch',
+    24→  'prepatch',
+    25→  'prerelease',
+    26→]
+    28→module.exports = {
+    29→  MAX_LENGTH,
+    30→  MAX_SAFE_COMPONENT_LENGTH,
+    31→  MAX_SAFE_BUILD_LENGTH,
+    32→  MAX_SAFE_INTEGER,
+    33→  RELEASE_TYPES,
+    34→  SEMVER_SPEC_VERSION,
+    35→  FLAG_INCLUDE_PRERELEASE: 0b001,
+    36→  FLAG_LOOSE: 0b010,
+    37→}
 
 debug.js
-     3→const debug …
-    11→module.exports = debug …
+     3→const debug = (
+     4→  typeof process === 'object' &&
+     5→  process.env &&
+     6→  process.env.NODE_DEBUG &&
+     7→  /\bsemver\b/i.test(process.env.NODE_DEBUG)
+     8→) ? (...args) => console.error('SEMVER', ...args)
+     9→  : () => {}
+    11→module.exports = debug
 
 identifiers.js
-     3→const numeric …
+     3→const numeric = /^[0-9]+$/
      4→const compareIdentifiers = (a, b) => {
      5→  if (typeof a === 'number' && typeof b === 'number') {
      6→    return a === b ? 0 : a < b ? -1 : 1
@@ -37,7 +61,10 @@ identifiers.js
     21→    : 1
     22→}
     24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
-    26→module.exports = { …
+    26→module.exports = {
+    27→  compareIdentifiers,
+    28→  rcompareIdentifiers,
+    29→}
 
 lrucache.js
      3→class LRUCache …
@@ -74,11 +101,11 @@ lrucache.js
     37→
     38→    return this
     39→  }
-    42→module.exports = LRUCache …
+    42→module.exports = LRUCache
 
 parse-options.js
-     4→const looseOption …
-     5→const emptyOpts …
+     4→const looseOption = Object.freeze({ loose: true })
+     5→const emptyOpts = Object.freeze({ })
      6→const parseOptions = options => {
      7→  if (!options) {
      8→    return emptyOpts
@@ -90,7 +117,7 @@ parse-options.js
     14→
     15→  return options
     16→}
-    17→module.exports = parseOptions …
+    17→module.exports = parseOptions
 
 re.js
      3→const {
@@ -99,13 +126,17 @@ re.js
      6→  MAX_LENGTH,
      7→} = require('./constants')
      8→const debug = require('./debug')
-    12→const re …
-    13→const safeRe …
-    14→const src …
-    15→const safeSrc …
-    16→const t …
-    19→const LETTERDASHNUMBER …
-    27→const safeRegexReplacements …
+    12→const re = exports.re = []
+    13→const safeRe = exports.safeRe = []
+    14→const src = exports.src = []
+    15→const safeSrc = exports.safeSrc = []
+    16→const t = exports.t = {}
+    19→const LETTERDASHNUMBER = '[a-zA-Z0-9-]'
+    27→const safeRegexReplacements = [
+    28→  ['\\s', 1],
+    29→  ['\\d', MAX_LENGTH],
+    30→  [LETTERDASHNUMBER, MAX_SAFE_BUILD_LENGTH],
+    31→]
     33→const makeSafeRegex = (value) => {
     34→  for (const [token, max] of safeRegexReplacements) {
     35→    value = value
@@ -124,6 +155,6 @@ re.js
     49→  re[index] = new RegExp(value, isGlobal ? 'g' : undefined)
     50→  safeRe[index] = new RegExp(safe, isGlobal ? 'g' : undefined)
     51→}
-   180→exports.tildeTrimReplace = '$1~' …
-   190→exports.caretTrimReplace = '$1^' …
-   203→exports.comparatorTrimReplace = '$1$2$3' …
+   180→exports.tildeTrimReplace = '$1~'
+   190→exports.caretTrimReplace = '$1^'
+   203→exports.comparatorTrimReplace = '$1$2$3'

@@ -3,7 +3,12 @@ source: test/fixtures.rs
 expression: output
 ---
 errors/errors.go
-     5→var …
+     5→var (
+     6→	ErrActivityNotFound       = errors.New("activity not found")
+     7→	ErrNoActiveActivity       = errors.New("no active activity found")
+     8→	ErrActivityAlreadyStarted = errors.New("activity already started")
+     9→	ErrCancelled              = errors.New("operation cancelled")
+    10→)
 
 models/activity.go
      9→// Activity represents a time tracking entry.

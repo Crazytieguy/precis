@@ -92,7 +92,6 @@ packages/d2ts/README.md
    210→## API
    228→### Input Streams
    320→### Operators
-   322→#### buffer
   1055→## Implementation Details
   1076→## References
 
@@ -194,7 +193,7 @@ packages/d2mini/src/utils.ts
    128→  getId(value: any): number {
    151→  getStringId(value: any): string {
    161→ * Global instance for cases where a shared object ID space is needed.
-   163→export const globalObjectIdGenerator …
+   163→export const globalObjectIdGenerator = new ObjectIdGenerator()
 
 packages/d2ts/src/d2.ts
     11→export type D2Options …

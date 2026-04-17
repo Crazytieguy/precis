@@ -117,11 +117,11 @@ peepdb/config.py
     16→class KeySecurity …
     17→    KEYRING = "os-keyring"
     18→    PASSWORD = "password"
-    20→CONFIG_DIR …
-    21→CONFIG_FILE …
-    22→SECURITY_CONFIG_FILE …
-    23→KEYRING_USERNAME …
-    24→KEYRING_SERVICE_NAME …
+    20→CONFIG_DIR = os.path.expanduser("~/.peepdb")
+    21→CONFIG_FILE = os.path.join(CONFIG_DIR, "config.json")
+    22→SECURITY_CONFIG_FILE = os.path.join(CONFIG_DIR, "security_config.json")
+    23→KEYRING_USERNAME = "PEEP_DB_KEY"
+    24→KEYRING_SERVICE_NAME = "PEEP_DB"
     30→def generate_key_from_password(salt):
     42→def fetch_key_from_keyring():
     49→def get_key_security_config():
@@ -299,12 +299,10 @@ project.toml
      5→[project]
     35→[project.optional-dependencies]
     42→[project.urls]
-    43→Homepage = "https://github.com/PeepDB-dev/peepdb"
-    44→"Bug Tracker" = "https://github.com/PeepDB-dev/peepdb/issues"
-    45→
     46→[project.scripts]
     47→peepdb = "peepdb.cli:main"
     48→
+    49→[tool.setuptools.packages.find]
 
 docs/index.md
      6→# peepDB

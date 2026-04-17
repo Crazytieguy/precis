@@ -253,11 +253,13 @@ pub enum TsGroupKey {
     TypeAliasName(type_alias::TypeAliasName),
     TypeAliasDocFirst(doc::TypeAliasDocFirst),
     TypeAliasDocRest(doc::TypeAliasDocRest),
+    TypeAliasBody(type_alias::TypeAliasBody),
 
     // Consts and statics
     ConstName(const_::ConstName),
     ConstDocFirst(doc::ConstDocFirst),
     ConstDocRest(doc::ConstDocRest),
+    ConstBody(const_::ConstBody),
 
     // Macros
     MacroName(macro_::MacroName),
@@ -309,9 +311,11 @@ impl TsGroupKey {
             TypeAliasName(_) => 80,
             TypeAliasDocFirst(_) => 81,
             TypeAliasDocRest(_) => 82,
+            TypeAliasBody(_) => 83,
             ConstName(_) => 90,
             ConstDocFirst(_) => 91,
             ConstDocRest(_) => 92,
+            ConstBody(_) => 93,
             MacroName(_) => 100,
             MacroDocFirst(_) => 101,
             MacroDocRest(_) => 102,
@@ -703,6 +707,15 @@ fn item_line<'s>(item: &TsItem<'s>, idx: usize) -> &'s str {
     item.source.lines().nth(idx).unwrap_or("")
 }
 
+/// Render every source line the item spans as a `Complete` entry. Used by
+/// synthetic "body" groups for kinds whose declaration is all on one line
+/// (type aliases, consts) or whose RHS spans a handful of lines but has
+/// no syntactic body node to skip past.
+pub(super) fn render_full_item_lines<'s>(item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
+    let lines: Vec<&str> = item.source.lines().collect();
+    complete_line_entries(&lines, item.start_line(), item.end_line)
+}
+
 pub(super) fn render_name_line<'s>(item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
     // Anonymous C/C++ `typedef struct { ... } Name;` (no struct tag) places
     // the only identifier on a later line than the node's start. Render that
@@ -940,9 +953,11 @@ impl TsGroupKindMethods for TsGroupKey {
             TypeAliasName(k) => k.render_item(item),
             TypeAliasDocFirst(k) => k.render_item(item),
             TypeAliasDocRest(k) => k.render_item(item),
+            TypeAliasBody(k) => k.render_item(item),
             ConstName(k) => k.render_item(item),
             ConstDocFirst(k) => k.render_item(item),
             ConstDocRest(k) => k.render_item(item),
+            ConstBody(k) => k.render_item(item),
             MacroName(k) => k.render_item(item),
             MacroDocFirst(k) => k.render_item(item),
             MacroDocRest(k) => k.render_item(item),
@@ -987,9 +1002,11 @@ impl TsGroupKindMethods for TsGroupKey {
             TypeAliasName(k) => k.children(parent),
             TypeAliasDocFirst(k) => k.children(parent),
             TypeAliasDocRest(k) => k.children(parent),
+            TypeAliasBody(k) => k.children(parent),
             ConstName(k) => k.children(parent),
             ConstDocFirst(k) => k.children(parent),
             ConstDocRest(k) => k.children(parent),
+            ConstBody(k) => k.children(parent),
             MacroName(k) => k.children(parent),
             MacroDocFirst(k) => k.children(parent),
             MacroDocRest(k) => k.children(parent),

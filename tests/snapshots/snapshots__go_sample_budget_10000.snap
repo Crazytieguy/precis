@@ -9,8 +9,12 @@ sample.go
      9→	Span Span
     10→}
     12→// TokenKind represents the kind of a lexical token.
-    13→type TokenKind …
-    15→const …
+    13→type TokenKind int
+    15→const (
+    16→	Ident  TokenKind = iota
+    17→	Number
+    18→	Symbol
+    19→)
     21→// Visitor walks over tokens in a stream.
     22→type Visitor …
     27→// Process processes the input and returns a list of tokens.
@@ -33,9 +37,9 @@ sample.go
     48→}
     50→func (p *TokenParser[T]) advance() {}
     52→// Span represents a source location as [start, end].
-    53→type Span …
-    55→const MaxTokens …
-    57→var Version …
+    53→type Span = [2]int
+    55→const MaxTokens = 1024
+    57→var Version = "0.1.0"
     59→// String implements fmt.Stringer for Token.
     60→func (t Token) String() string {
     61→	return fmt.Sprintf("%d:%v", t.Kind, t.Span)

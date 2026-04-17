@@ -54,6 +54,12 @@ pub fn ts_base_value(key: &TsGroupKey, item_count: usize) -> f64 {
         StructBody(_) => 1.2,
         EnumBody(_) => 1.5,
         ClassBody(_) => 1.0,
+        // TypeAliasBody and ConstBody are "value-reveal" bodies: they upgrade
+        // the name line from Truncated to Complete, usually adding one or two
+        // more tokens per item. Kept low so they compete only via the
+        // auto-commit budget-phase hatch, not against bigger content.
+        TypeAliasBody(_) => 0.3,
+        ConstBody(_) => 0.3,
 
         ModuleDocRest(_) | FunctionDocRest(_) | StructDocRest(_) | EnumDocRest(_)
         | ClassDocRest(_) | InterfaceDocRest(_) | TraitDocRest(_) | TypeAliasDocRest(_)

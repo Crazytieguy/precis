@@ -135,10 +135,10 @@ mcphost.go
 types.go
      8→// Message is an alias for session.Message providing SDK users with access
      9→// to message structures for conversation history and tool interactions.
-    10→type Message …
+    10→type Message = session.Message
     12→// ToolCall is an alias for session.ToolCall representing a tool invocation
     13→// with its name, arguments, and result within a conversation.
-    14→type ToolCall …
+    14→type ToolCall = session.ToolCall
     16→// ConvertToSchemaMessage converts an SDK message to the underlying schema message
     17→// format used by the agent for LLM interactions.
     18→func ConvertToSchemaMessage(msg *Message) *schema.Message {

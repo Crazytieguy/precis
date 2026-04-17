@@ -68,7 +68,7 @@ README.md
 swarm/__init__.py
      1→from .core import Swarm
      2→from .types import Agent, Response
-     4→__all__ …
+     4→__all__ = ["Swarm", "Agent", "Response"]
 
 swarm/core.py
     12→from .util import function_to_json, debug_print, merge_chunk
@@ -81,7 +81,7 @@ swarm/core.py
     19→    Response,
     20→    Result,
     21→)
-    23→__CTX_VARS_NAME__ …
+    23→__CTX_VARS_NAME__ = "context_variables"
     26→class Swarm …
     27→    def __init__(self, client=None):
     32→    def get_chat_completion(
@@ -205,6 +205,7 @@ examples/personal_shopper/README.md
 examples/support_bot/README.md
      1→# Support bot
      6→## Overview
+    13→## Setup
 
 examples/triage_agent/README.md
      1→# Triage agent
@@ -237,8 +238,8 @@ examples/customer_service_streaming/main.py
     10→def main():
 
 examples/customer_service_streaming/prep_data.py
-     6→GPT_MODEL …
-     7→EMBEDDING_MODEL …
+     6→GPT_MODEL = 'gpt-4'
+     7→EMBEDDING_MODEL = "text-embedding-3-large"
 
 examples/weather_agent/agents.py
      6→def get_weather(location, time="now"):
@@ -252,7 +253,7 @@ examples/weather_agent/evals.py
 
 examples/support_bot/customer_service.py
     13→# Set embedding model
-    14→EMBEDDING_MODEL …
+    14→EMBEDDING_MODEL = "text-embedding-3-large"
     23→def query_qdrant(query, collection_name, vector_name="article", top_k=5):
     43→def query_docs(query):
     68→def send_email(email_address, message):
@@ -262,7 +263,7 @@ examples/support_bot/customer_service.py
 
 examples/support_bot/main.py
     13→# Set embedding model
-    14→EMBEDDING_MODEL …
+    14→EMBEDDING_MODEL = "text-embedding-3-large"
     20→def query_qdrant(query, collection_name, vector_name="article", top_k=5):
     40→def query_docs(query):
     41→    """Query the knowledge base for relevant articles."""
@@ -274,8 +275,8 @@ examples/support_bot/main.py
     78→    """Transfer the user to the help center agent."""
 
 examples/support_bot/prep_data.py
-    10→GPT_MODEL …
-    11→EMBEDDING_MODEL …
+    10→GPT_MODEL = "gpt-4o"
+    11→EMBEDDING_MODEL = "text-embedding-3-large"
 
 examples/basic/agent_handoff.py
     16→def transfer_to_spanish_agent():
@@ -306,13 +307,13 @@ examples/personal_shopper/database.py
 examples/personal_shopper/main.py
     10→def refund_item(user_id, item_id):
     11→    """Initiate a refund based on the user ID and item ID.
-    12→    Takes as input arguments in the format '{"user_id":"1","item_id":"3"}'
+      →…
     32→def notify_customer(user_id, method):
     33→    """Notify a customer by their preferred method of either phone or email.
-    34→    Takes as input arguments in the format '{"user_id":"1","method":"email"}'"""
+      →…
     58→def order_item(user_id, product_id):
     59→    """Place an order for a product based on the user ID and product ID.
-    60→    Takes as input arguments in the format '{"user_id":"1","product_id":"2"}'"""
+      →…
 
 examples/triage_agent/agents.py
      4→def process_refund(item_id, reason="NOT SPECIFIED"):

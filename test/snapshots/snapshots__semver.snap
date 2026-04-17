@@ -23,12 +23,6 @@ README.md
    219→#### Prerelease Identifiers
    250→#### Prerelease Identifier Base
    279→### Advanced Range Syntax
-   281→Advanced range syntax desugars to primitive comparators in
-   282→deterministic ways.
-   283→
-   284→Advanced ranges may be combined in the same way as primitive
-   285→comparators using white space or `||`.
-   286→
    287→#### Hyphen Ranges `X.Y.Z - A.B.C`
    306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*`
    324→#### Tilde Ranges `~1.2.3` `~1.2` `~1`
@@ -51,8 +45,8 @@ README.md
    610→## Exported Modules
 
 bin/semver.js
-     8→const argv …
-    12→const range …
+     8→const argv = process.argv.slice(2)
+    12→const range = []
     16→const version = require('../package.json').version
     30→const semver = require('../')
     31→const parseOptions = require('../internal/parse-options')
@@ -71,7 +65,7 @@ map.js
      3→module.exports = testFile => testFile.replace(/test\//, '') …
 
 classes/comparator.js
-     3→const ANY …
+     3→const ANY = Symbol('SemVer ANY')
      5→class Comparator …
      6→  static get ANY () {
     10→  constructor (comp, options) {
@@ -79,7 +73,7 @@ classes/comparator.js
     57→  toString () {
     61→  test (version) {
     79→  intersects (comp, options) {
-   136→module.exports = Comparator …
+   136→module.exports = Comparator
    138→const parseOptions = require('../internal/parse-options')
    139→const { safeRe: re, t } = require('../internal/re')
    140→const cmp = require('../functions/cmp')
@@ -88,10 +82,14 @@ classes/comparator.js
    143→const Range = require('./range')
 
 classes/index.js
-     3→module.exports = { …
+     3→module.exports = {
+     4→  SemVer: require('./semver.js'),
+     5→  Range: require('./range.js'),
+     6→  Comparator: require('./comparator.js'),
+     7→}
 
 classes/range.js
-     3→const SPACE_CHARACTERS …
+     3→const SPACE_CHARACTERS = /\s+/g
      6→class Range …
      7→  constructor (range, options) {
     73→  get range () {
@@ -100,9 +98,9 @@ classes/range.js
    100→  parseRange (range) {
    170→  intersects (range, options) {
    193→  test (version) {
-   215→module.exports = Range …
+   215→module.exports = Range
    217→const LRU = require('../internal/lrucache')
-   218→const cache …
+   218→const cache = new LRU()
    220→const parseOptions = require('../internal/parse-options')
    221→const Comparator = require('./comparator')
    222→const debug = require('../internal/debug')
@@ -146,7 +144,7 @@ classes/semver.js
    135→  comparePre (other) {
    168→  compareBuild (other) {
    194→  inc (release, identifier, identifierBase) {
-   333→module.exports = SemVer …
+   333→module.exports = SemVer
 
 internal/constants.js
      5→const SEMVER_SPEC_VERSION …
@@ -155,17 +153,29 @@ internal/constants.js
     12→const MAX_SAFE_COMPONENT_LENGTH …
     16→const MAX_SAFE_BUILD_LENGTH …
     18→const RELEASE_TYPES …
-    28→module.exports = { …
+    28→module.exports = {
+    29→  MAX_LENGTH,
+    30→  MAX_SAFE_COMPONENT_LENGTH,
+    31→  MAX_SAFE_BUILD_LENGTH,
+    32→  MAX_SAFE_INTEGER,
+    33→  RELEASE_TYPES,
+    34→  SEMVER_SPEC_VERSION,
+    35→  FLAG_INCLUDE_PRERELEASE: 0b001,
+    36→  FLAG_LOOSE: 0b010,
+    37→}
 
 internal/debug.js
      3→const debug …
-    11→module.exports = debug …
+    11→module.exports = debug
 
 internal/identifiers.js
      3→const numeric …
      4→const compareIdentifiers = (a, b) => {
     24→const rcompareIdentifiers = (a, b) => compareIdentifiers(b, a)
-    26→module.exports = { …
+    26→module.exports = {
+    27→  compareIdentifiers,
+    28→  rcompareIdentifiers,
+    29→}
 
 internal/lrucache.js
      3→class LRUCache …
@@ -173,13 +183,13 @@ internal/lrucache.js
      9→  get (key) {
     21→  delete (key) {
     25→  set (key, value) {
-    42→module.exports = LRUCache …
+    42→module.exports = LRUCache
 
 internal/parse-options.js
      4→const looseOption …
      5→const emptyOpts …
      6→const parseOptions = options => {
-    17→module.exports = parseOptions …
+    17→module.exports = parseOptions
 
 internal/re.js
      3→const {
@@ -197,9 +207,9 @@ internal/re.js
     27→const safeRegexReplacements …
     33→const makeSafeRegex = (value) => {
     42→const createToken = (name, value, isGlobal) => {
-   180→exports.tildeTrimReplace = '$1~' …
-   190→exports.caretTrimReplace = '$1^' …
-   203→exports.comparatorTrimReplace = '$1$2$3' …
+   180→exports.tildeTrimReplace = '$1~'
+   190→exports.caretTrimReplace = '$1^'
+   203→exports.comparatorTrimReplace = '$1$2$3'
 
 ranges/gtr.js
      5→const gtr = (version, range, options) => outside(version, range, '>', options)
@@ -226,7 +236,7 @@ ranges/min-version.js
     63→module.exports = minVersion …
 
 ranges/outside.js
-     5→const { ANY } …
+     5→const { ANY } = Comparator
     13→const outside = (version, range, hilo, options) => {
     82→module.exports = outside …
 
@@ -234,10 +244,10 @@ ranges/simplify.js
      8→module.exports = (versions, range, options) => { …
 
 ranges/subset.js
-     5→const { ANY } …
+     5→const { ANY } = Comparator
     45→const subset = (sub, dom, options = {}) => {
-    73→const minimumVersionWithPreRelease …
-    74→const minimumVersion …
+    73→const minimumVersionWithPreRelease = [new Comparator('>=0.0.0-0')]
+    74→const minimumVersion = [new Comparator('>=0.0.0')]
     76→const simpleSubset = (sub, dom, options) => {
    226→const higherGT = (a, b, options) => {
    238→const lowerLT = (a, b, options) => {
@@ -253,107 +263,99 @@ ranges/valid.js
 
 functions/clean.js
      4→const clean = (version, options) => {
-     8→module.exports = clean …
+     8→module.exports = clean
 
 functions/cmp.js
     10→const cmp = (a, op, b, loose) => {
-    54→module.exports = cmp …
+    54→module.exports = cmp
 
 functions/coerce.js
      7→const coerce = (version, options) => {
-    62→module.exports = coerce …
+    62→module.exports = coerce
 
 functions/compare-build.js
      4→const compareBuild = (a, b, loose) => {
-     9→module.exports = compareBuild …
+     9→module.exports = compareBuild
 
 functions/compare-loose.js
      4→const compareLoose = (a, b) => compare(a, b, true)
-     5→module.exports = compareLoose …
+     5→module.exports = compareLoose
 
 functions/compare.js
      4→const compare = (a, b, loose) =>
-     7→module.exports = compare …
+     7→module.exports = compare
 
 functions/diff.js
      5→const diff = (version1, version2) => {
-    60→module.exports = diff …
+    60→module.exports = diff
 
 functions/eq.js
      4→const eq = (a, b, loose) => compare(a, b, loose) === 0
-     5→module.exports = eq …
+     5→module.exports = eq
 
 functions/gt.js
      4→const gt = (a, b, loose) => compare(a, b, loose) > 0
-     5→module.exports = gt …
+     5→module.exports = gt
 
 functions/gte.js
      4→const gte = (a, b, loose) => compare(a, b, loose) >= 0
-     5→module.exports = gte …
+     5→module.exports = gte
 
 functions/inc.js
      5→const inc = (version, release, options, identifier, identifierBase) => {
-    21→module.exports = inc …
+    21→module.exports = inc
 
 functions/lt.js
      4→const lt = (a, b, loose) => compare(a, b, loose) < 0
-     5→module.exports = lt …
+     5→module.exports = lt
 
 functions/lte.js
      4→const lte = (a, b, loose) => compare(a, b, loose) <= 0
-     5→module.exports = lte …
+     5→module.exports = lte
 
 functions/major.js
      4→const major = (a, loose) => new SemVer(a, loose).major
-     5→module.exports = major …
+     5→module.exports = major
 
 functions/minor.js
      4→const minor = (a, loose) => new SemVer(a, loose).minor
-     5→module.exports = minor …
+     5→module.exports = minor
 
 functions/neq.js
      4→const neq = (a, b, loose) => compare(a, b, loose) !== 0
-     5→module.exports = neq …
+     5→module.exports = neq
 
 functions/parse.js
      4→const parse = (version, options, throwErrors = false) => {
-    18→module.exports = parse …
+    18→module.exports = parse
 
 functions/patch.js
      4→const patch = (a, loose) => new SemVer(a, loose).patch
-     5→module.exports = patch …
+     5→module.exports = patch
 
 functions/prerelease.js
      4→const prerelease = (version, options) => {
-     8→module.exports = prerelease …
+     8→module.exports = prerelease
 
 functions/rcompare.js
      4→const rcompare = (a, b, loose) => compare(b, a, loose)
-     5→module.exports = rcompare …
+     5→module.exports = rcompare
 
 functions/rsort.js
      4→const rsort = (list, loose) => list.sort((a, b) => compareBuild(b, a, loose))
-     5→module.exports = rsort …
+     5→module.exports = rsort
 
 functions/satisfies.js
      4→const satisfies = (version, range, options) => {
-    12→module.exports = satisfies …
+    12→module.exports = satisfies
 
 functions/sort.js
      4→const sort = (list, loose) => list.sort((a, b) => compareBuild(a, b, loose))
-     5→module.exports = sort …
+     5→module.exports = sort
 
 functions/valid.js
      4→const valid = (version, options) => {
-     8→module.exports = valid …
-
-test/map.js
-     9→const ROOT …
-    10→const TEST …
-    11→const IGNORE_DIRS …
-    13→const getFile = (f) => {
-    23→const walk = (item, res = []) => getFile(item) || readdirSync(item)
-    28→const walkAll = (items, relativeTo) => items
+     8→module.exports = valid
 
 .commitlintrc.js
      3→module.exports = { …
@@ -404,6 +406,8 @@ release-please-config.json
 
 .github/workflows/
 
+benchmarks/
+
 tap-snapshots/
 
 tap-snapshots/test/
@@ -415,6 +419,8 @@ test/classes/
 test/fixtures/
 
 test/functions/
+
+test/integration/
 
 test/internal/
 

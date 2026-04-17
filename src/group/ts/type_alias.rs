@@ -15,6 +15,9 @@ pub struct TypeAliasName {
     pub public: bool,
 }
 
+#[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, Ord, PartialOrd)]
+pub struct TypeAliasBody;
+
 impl TsGroupKindMethods for TypeAliasName {
     fn render_item<'s>(&self, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
         super::render_name_line(item)
@@ -29,7 +32,14 @@ impl TsGroupKindMethods for TypeAliasName {
                 TsGroupKey::TypeAliasDocFirst(TypeAliasDocFirst),
             );
         }
+        super::spawn_simple_child(&mut out, parent, TsGroupKey::TypeAliasBody(TypeAliasBody));
         out
+    }
+}
+
+impl TsGroupKindMethods for TypeAliasBody {
+    fn render_item<'s>(&self, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
+        super::render_full_item_lines(item)
     }
 }
 

@@ -57,7 +57,10 @@ README.md
     74→- [Badger](https://github.com/dgraph-io/badger)
 
 dynamic/plugin.go
-    14→const …
+    14→const (
+    15→	in   = "Call me Ishmael. Some years ago--never mind how long precisely-"
+    16→	want = uint64(0x02a2e85470d6fd96)
+    17→)
     19→func TestSum(t *testing.T) {
     20→	got := xxhash.Sum64String(in)
     21→	if got != want {
@@ -95,12 +98,18 @@ xxhsum/xxhsum.go
 xxhash.go
      1→// Package xxhash implements the 64-bit variant of xxHash (XXH64) as described
      2→// at https://xxhash.com/.
-    11→const …
+    11→const (
+    12→	prime1 uint64 = 11400714785074694791
+    13→	prime2 uint64 = 14029467366897019727
+    14→	prime3 uint64 = 1609587929392839161
+    15→	prime4 uint64 = 9650029242287828579
+    16→	prime5 uint64 = 2870177450012600261
+    17→)
     19→// Store the primes in an array as well.
     20→//
     21→// The consts are used when possible in Go code to avoid MOVs but we need a
     22→// contiguous array for the assembly code.
-    23→var primes …
+    23→var primes = [...]uint64{prime1, prime2, prime3, prime4, prime5}
     25→// Digest implements hash.Hash64.
     26→//
     27→// Note that a zero-valued Digest is not ready to receive writes.
@@ -134,7 +143,10 @@ xxhash.go
    113→func (d *Digest) Sum(b []byte) []byte {
    128→// Sum64 returns the current hash.
    129→func (d *Digest) Sum64() uint64 {
-   170→const …
+   170→const (
+   171→	magic         = "xxh\x06"
+   172→	marshaledSize = len(magic) + 8*5 + 32
+   173→)
    175→// MarshalBinary implements the encoding.BinaryMarshaler interface.
    176→func (d *Digest) MarshalBinary() ([]byte, error) {
    189→// UnmarshalBinary implements the encoding.BinaryUnmarshaler interface.
@@ -236,7 +248,16 @@ dynamic/dynamic_test.go
     33→func TestDynamic(t *testing.T) {
 
 bench_test.go
-     8→var benchmarks …
+     8→var benchmarks = []struct {
+     9→	name string
+    10→	n    int64
+    11→}{
+    12→	{"4B", 4},
+    13→	{"16B", 16},
+    14→	{"100B", 100},
+    15→	{"4KB", 4e3},
+    16→	{"10MB", 10e6},
+    17→}
     19→func BenchmarkSum64(b *testing.B) {
     34→func BenchmarkSum64String(b *testing.B) {
     46→func BenchmarkDigestBytes(b *testing.B) {
@@ -249,7 +270,7 @@ xxhash_test.go
     97→func TestReset(t *testing.T) {
    114→func TestResetWithSeed(t *testing.T) {
    131→func TestBinaryMarshaling(t *testing.T) {
-   168→var sink …
+   168→var sink uint64
    170→func TestAllocs(t *testing.T) {
    193→func testAllocs(t *testing.T, fn func()) {
 
@@ -258,41 +279,12 @@ xxhash_unsafe_test.go
     29→// This test is inspired by the Go runtime tests in https://go.dev/cl/57410.
     30→// It asserts that certain important functions may be inlined.
     31→func TestInlining(t *testing.T) {
-    32→	funcs := map[string]struct{}{
-    33→		"Sum64String":           {},
-    34→		"(*Digest).WriteString": {},
-    35→	}
-    36→
-    37→	cmd := exec.Command("go", "test", "-gcflags=-m", "-run", "xxxx")
-    38→	out, err := cmd.CombinedOutput()
-    39→	if err != nil {
-    40→		t.Log(string(out))
-    41→		t.Fatal(err)
-    42→	}
-    43→
-    44→	for _, line := range strings.Split(string(out), "\n") {
-    45→		parts := strings.Split(line, ": can inline")
-    46→		if len(parts) < 2 {
-    47→			continue
-    48→		}
-    49→		delete(funcs, strings.TrimSpace(parts[1]))
-    50→	}
-    51→
-    52→	var failed []string
-    53→	for fn := range funcs {
-    54→		failed = append(failed, fn)
-    55→	}
-    56→	sort.Strings(failed)
-    57→	for _, fn := range failed {
-    58→		t.Errorf("function %s not inlined", fn)
-    59→	}
-    60→}
 
 xxhashbench/xxhashbench_test.go
     14→// TODO: The main benchmarks live in the xxhash package now, so the only purpose
     15→// of this is to compare different hash functions. Consider deleting xxhashbench
     16→// or replacing it with a more minimal comparison.
-    18→var sink …
+    18→var sink uint64
     20→var benchmarks …
    108→func BenchmarkHashes(b *testing.B) {
    152→func benchmarkHashBytes(b *testing.B, input []byte, fn func([]byte) uint64) {

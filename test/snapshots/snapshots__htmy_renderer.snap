@@ -79,7 +79,7 @@ default.py
     40→        Arguments:
     41→            include_self: Whether the node on which this method is called should also
     42→                be included in the iterator.
-    50→_NodeAndChildContext …
+    50→_NodeAndChildContext: TypeAlias = tuple[_Node, Context]
     53→class _ComponentRenderer …
     55→    `ComponentType` renderer that converts a component tree into a linked list of resolved (`str`) nodes.
     57→

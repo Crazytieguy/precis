@@ -52,7 +52,7 @@ instrument_box.py
     49→    def instruments …
 
 logging_instrument.py
-    26→access_logger …
+    26→access_logger: typing.Final = structlog.get_logger("api.access")
     29→def make_path_with_query_string(scope: ScopeType) -> str:
     36→def fill_log_message(
     37→    log_level: str,
@@ -61,10 +61,21 @@ logging_instrument.py
     40→    start_time: int,
     41→) -> None:
     62→def tracer_injection(_: WrappedLogger, __: str, event_dict: EventDict) -> EventDict:
-    76→STRUCTLOG_PRE_CHAIN_PROCESSORS …
+    76→STRUCTLOG_PRE_CHAIN_PROCESSORS: typing.Final[list[typing.Any]] = [
+    77→    structlog.stdlib.add_log_level,
+    78→    structlog.stdlib.add_logger_name,
+    79→    tracer_injection,
+    80→    structlog.stdlib.PositionalArgumentsFormatter(),
+    81→    structlog.processors.TimeStamper(fmt="%Y-%m-%d %H:%M:%S"),
+    82→    structlog.processors.StackInfoRenderer(),
+    83→    structlog.processors.format_exc_info,
+    84→    structlog.processors.UnicodeDecoder(),
+    85→]
     88→def _serialize_log_with_orjson_to_string(value: typing.Any, **kwargs: typing.Any) -> str:  # noqa: ANN401
     89→    return orjson.dumps(value, **kwargs).decode()
-    92→STRUCTLOG_FORMATTER_PROCESSOR …
+    92→STRUCTLOG_FORMATTER_PROCESSOR: typing.Final = structlog.processors.JSONRenderer(
+    93→    serializer=_serialize_log_with_orjson_to_string
+    94→)
     97→class MemoryLoggerFactory …
     98→    def __init__ …
    113→    def __call__ …
@@ -80,7 +91,7 @@ logging_instrument.py
    213→    def get_config_type …
 
 opentelemetry_instrument.py
-    24→LOGGER_OBJ …
+    24→LOGGER_OBJ: typing.Final = structlog.get_logger(__name__)
     43→class OpenTelemetryInstrumentor …
     48→class OpentelemetryConfig …
     73→class FastStreamTelemetryMiddlewareProtocol …
@@ -97,29 +108,17 @@ opentelemetry_instrument.py
    170→class OpentelemetryInstrument …
    171→    def define_exclude_urls …
    182→    def get_config_type …
-   186→OTEL_PROFILE_ID_KEY …
-   187→PYROSCOPE_SPAN_ID_KEY …
-   188→PYROSCOPE_SPAN_NAME_KEY …
+   186→OTEL_PROFILE_ID_KEY: typing.Final = "pyroscope.profile.id"
+   187→PYROSCOPE_SPAN_ID_KEY: typing.Final = "span_id"
+   188→PYROSCOPE_SPAN_NAME_KEY: typing.Final = "span_name"
    191→def _is_root_span(span: ReadableSpan) -> bool:
    192→    return span.parent is None or span.parent.is_remote
    195→# Extended `pyroscope-otel` span processor: https://github.com/grafana/otel-profiling-python/blob/990662d416943e992ab70036b35b27488c98336a/src/pyroscope/otel/__init__.py
    196→# Includes `span_name` to identify if it makes sense to go to profiles from traces.
    197→class PyroscopeSpanProcessor …
    198→    def on_start(self, span: Span, parent_context: Context | None = None) -> None:  # noqa: ARG002
-   199→        if _is_root_span(span):
-   200→            formatted_span_id = format_span_id(span.context.span_id)
-   201→            thread_id = threading.get_ident()
-   202→
-   203→            span.set_attribute(OTEL_PROFILE_ID_KEY, formatted_span_id)
-   204→            pyroscope.add_thread_tag(thread_id, PYROSCOPE_SPAN_ID_KEY, formatted_span_id)
-   205→            pyroscope.add_thread_tag(thread_id, PYROSCOPE_SPAN_NAME_KEY, span.name)
    207→    def on_end(self, span: ReadableSpan) -> None:
-   208→        if _is_root_span(span):
-   209→            thread_id = threading.get_ident()
-   210→            pyroscope.remove_thread_tag(thread_id, PYROSCOPE_SPAN_ID_KEY, format_span_id(span.context.span_id))
-   211→            pyroscope.remove_thread_tag(thread_id, PYROSCOPE_SPAN_NAME_KEY, span.name)
    213→    def force_flush(self, timeout_millis: int = 30000) -> bool:  # noqa: ARG002  # pragma: no cover
-   214→        return True
 
 prometheus_instrument.py
     17→class BasePrometheusConfig …
@@ -143,10 +142,10 @@ pyroscope_instrument.py
 
 sentry_instrument.py
     15→class SentryConfig …
-    31→IGNORED_STRUCTLOG_ATTRIBUTES …
+    31→IGNORED_STRUCTLOG_ATTRIBUTES: typing.Final = frozenset({"event", "level", "logger", "tracing", "timestamp"})
     34→def enrich_sentry_event_from_structlog_log(event: sentry_types.Event, _hint: sentry_types.Hint) -> sentry_types.Event:
-    63→SENTRY_EXTRA_OTEL_TRACE_ID_KEY …
-    64→SENTRY_EXTRA_OTEL_TRACE_URL_KEY …
+    63→SENTRY_EXTRA_OTEL_TRACE_ID_KEY: typing.Final = "otelTraceID"
+    64→SENTRY_EXTRA_OTEL_TRACE_URL_KEY: typing.Final = "otelTraceURL"
     67→def add_trace_url_to_event(
     68→    trace_link_template: str, event: sentry_types.Event, _hint: sentry_types.Hint
     69→) -> sentry_types.Event:
