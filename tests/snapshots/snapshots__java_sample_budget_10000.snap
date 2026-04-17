@@ -6,6 +6,9 @@ Token.java
      9→ * A sample class demonstrating Java features.
     10→ * Includes methods, fields, and constructors.
     12→public class Token …
+    13→    public static final int MAX_TOKENS = 1024;
+    14→    private String value;
+    15→
     16→    public Token(String value) {
     17→        this.value = value;
     18→    }

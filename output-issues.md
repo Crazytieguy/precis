@@ -125,9 +125,9 @@ Root cause: `Import { first_party: false, .. }` has base_value 0.0 in heuristics
 
 ## 36. Human-authored meta-documentation under-weighted
 
-**Affected snapshots:** toasty, toasty_codegen, mdbook_guide_src, superstruct, soluna, enclosed
+**Affected snapshots:** mdbook_guide_src, superstruct, soluna, enclosed
 
-Several fixtures contain intentionally-authored overview documents: `CONTEXT.md` files in each toasty workspace crate describing crate purpose and change patterns, `ARCHITECTURE.md` in enclosed, `SUMMARY.md` (the authoritative table of contents) in mdbook_guide_src, `docs/*.md` guide files in superstruct, and the Lua API reference directory in soluna. These are the highest signal-per-token content for orientation but are either dropped entirely (toasty_codegen's CONTEXT.md shown as just its title line) or truncated past the first few lines. The current value model treats them as generic markdown without accounting for the "project front door" role. A value bump for markdown files whose name matches `CONTEXT|ARCHITECTURE|SUMMARY|DESIGN` (and similar), or whose location suggests front-door role (`docs/` top-level), may help.
+`CONTEXT.md` reclassified from AiConfig (factor 0.1) to Normal, fixing toasty / toasty_codegen / toasty_core — per-crate renders now surface CONTEXT.md overviews. Remaining cases need targeted boosts for front-door docs like `ARCHITECTURE.md`, `SUMMARY.md`, `docs/*.md` guides — partial progress blocked on calibration risk.
 
 ## 37. Entire implementation modules omitted while siblings are shown
 
@@ -147,27 +147,9 @@ Current frequently renders `fn foo …` / `func Foo …` / `def foo …` (name o
 
 Distinct from resolved issue #6 (which addressed h1 body content for headingless READMEs): these fixtures have READMEs with deeper structure (h3/h4 subsections enumerating the API, tips, or features) and embedded usage examples in code blocks, which current collapses to top-level section headers only. ky_source_errors is a clear example — the README's `### ky.get/post/put/.../extend/create` subheadings map directly to the public API surface and are worth more than the single `## API` heading current shows. pluggy and go_multierror lose README usage examples that are the fastest path to understanding what the library does. mdbook_guide_src loses the root README narrative entirely. A fix likely involves bumping HeadingBody value for h3+ headings in README files, or special-casing README section trees for deeper body preservation.
 
-## 40. Module-level doc comments not surfaced
-
-**Affected snapshots:** log_src_kv, mcphost_sdk, xxhash
-
-Rust `//!` crate/module doc headers, Go package doc comments, and Python module docstrings label a file's purpose in plain English at very low token cost, and are often the single highest-signal line per file for orientation. Current drops them in favor of per-symbol signatures. Eval agents consistently flagged this as decisive — e.g. log_src_kv's `//! Structured logging.` / `//! Structured keys.` headers tell a reader what each file is in one line where a wall of signatures cannot. `ModuleDocFirst` / `ModuleDocRest` groups exist in the taxonomy but apparently lose ratio competition against cheap name entries in these fixtures.
-
-## 45. Java fields silently dropped
-
-Java `field_declaration` nodes reach `ConstName::from_parse` (`src/group/ts/const_.rs`) only if `java_field_is_static_final(...)` returns true (`src/parse/mod.rs:467-484`). Regular instance fields — which define the shape of every Java DTO, entity, and record-adjacent class — are filtered out at parse time and never appear in output. The same rejection applies via whatever `ClassName::children` spawn logic does for TS/Java class bodies: methods are extracted, fields are not.
-
-Impact: Java snapshots (and by extension TS class-body rendering, which has the same blind spot) hide the structural portion of the type. For a reader trying to understand a Java class, "what data does it carry" is roughly as important as "what methods does it expose", and the current output shows only the latter.
-
-Fix path: extend `ClassName::children` to spawn a field-listing child group (mirroring `spawn_method_children`'s shape), gated on language. Similar to #9 in spirit — a missing body kind for a construct whose body content is load-bearing. Scoped out of the TsGroupKey refactor batch because it requires new spawn logic plus calibration, not just the structural refactor. File now so it doesn't get lost.
-
 ## 46. Hidden files silently excluded — dotfile configs never reach classification
 
 `src/group/folders.rs:15` builds the walker with `ignore::WalkBuilder::new(...)` and never calls `.hidden(false)`. The `ignore` crate's default filters out all dotfile entries before they reach `classify::is_source_file`, so hidden files are dropped at walk time regardless of role or content.
 
-This silently omits files that are often the single most informative artifacts for orientation: `.mcp.json` (MCP server wiring), `.env.example` (runtime configuration surface), `.nvmrc` / `.ruby-version` / `.tool-versions` (language version pinning), `.clang-format` / `.editorconfig` (style contract), `.github/workflows/*.yml` (CI topology and release automation), `.claude/` plugin wiring for this repo itself. For a reader trying to understand what a project *is*, "there's a `.mcp.json` at the root declaring two MCP servers" is higher signal than most source files.
-
-Per CLAUDE.md's "don't confuse the reader" principle this is a correctness bug, not just an omission: the output implies these files don't exist. A reader inferring the tech stack from the visible tree will miss MCP integration, CI, environment shape, and toolchain pins entirely.
-
-Fix path: `.hidden(false)` on the `WalkBuilder` opens the gate. Gitignore filtering stays active (it's an independent filter), so genuinely secret files like real `.env` files that are gitignored still won't surface. Classification then needs to decide what to do with dotfiles — most are config-shaped (JSON/TOML/YAML) and the existing `is_source_file` check will need to admit them, possibly with a new `FileRole` for dotfile configs so they can be weighted deliberately rather than competing as generic source. Calibration work required; non-trivial.
+**Attempted and reverted (2026-04-16):** `.hidden(false)` was added with a `.git` filter. 38 snapshots changed; A/B verdict: 15 wins, 12 regressions, 11 ties. Wins came from repos where `.github/FUNDING.yml`, `.github/workflows/*`, or `.goreleaser.yaml` added real infrastructure signal. Regressions came from editor/AI configs (`.vscode/`, `.claude/`, `.prettierrc*`, `.husky/`) and empty `.github/` folder lines displacing code content. A deny-list and a whitelist were both tried; both left the regression count roughly unchanged because `.github/` itself is ambiguous (useful with workflows, noise when empty). Reverted. A future attempt likely needs scheduler-level awareness of "only surface a dotfile dir when its contents actually fit".
 
