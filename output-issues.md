@@ -185,3 +185,13 @@ Impact: Java snapshots (and by extension TS class-body rendering, which has the 
 
 Fix path: extend `ClassName::children` to spawn a field-listing child group (mirroring `spawn_method_children`'s shape), gated on language. Similar to #9 in spirit — a missing body kind for a construct whose body content is load-bearing. Scoped out of the TsGroupKey refactor batch because it requires new spawn logic plus calibration, not just the structural refactor. File now so it doesn't get lost.
 
+## 46. Hidden files silently excluded — dotfile configs never reach classification
+
+`src/group/folders.rs:15` builds the walker with `ignore::WalkBuilder::new(...)` and never calls `.hidden(false)`. The `ignore` crate's default filters out all dotfile entries before they reach `classify::is_source_file`, so hidden files are dropped at walk time regardless of role or content.
+
+This silently omits files that are often the single most informative artifacts for orientation: `.mcp.json` (MCP server wiring), `.env.example` (runtime configuration surface), `.nvmrc` / `.ruby-version` / `.tool-versions` (language version pinning), `.clang-format` / `.editorconfig` (style contract), `.github/workflows/*.yml` (CI topology and release automation), `.claude/` plugin wiring for this repo itself. For a reader trying to understand what a project *is*, "there's a `.mcp.json` at the root declaring two MCP servers" is higher signal than most source files.
+
+Per CLAUDE.md's "don't confuse the reader" principle this is a correctness bug, not just an omission: the output implies these files don't exist. A reader inferring the tech stack from the visible tree will miss MCP integration, CI, environment shape, and toolchain pins entirely.
+
+Fix path: `.hidden(false)` on the `WalkBuilder` opens the gate. Gitignore filtering stays active (it's an independent filter), so genuinely secret files like real `.env` files that are gitignored still won't surface. Classification then needs to decide what to do with dotfiles — most are config-shaped (JSON/TOML/YAML) and the existing `is_source_file` check will need to admit them, possibly with a new `FileRole` for dotfile configs so they can be weighted deliberately rather than competing as generic source. Calibration work required; non-trivial.
+
