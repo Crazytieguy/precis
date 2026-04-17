@@ -1,12 +1,5 @@
 # Output quality issues
 
-
-## ~~6. README body content dropped — only headings shown (resolved)~~
-
-Resolved. A 2× modifier boost for README h1 HeadingBody groups combined with a 12-line cap on markdown h1 body rendering fixed 9 of the 16 affected snapshots. Auto-commit of root-level README h1 body content fixed 4 more. Remaining 4 snapshots are fundamentally limited: pluggy/typeguard use RST (no tree-sitter parser), mcphost already shows README body via ratio competition, semver's README has no h1 body content.
-
-
-
 ## 9. Type alias and const bodies — remaining gaps
 
 **Largely resolved (2026-04-16):** Added `TypeAliasBody` / `ConstBody` kinds that auto-commit for compact (≤3 line) declarations through the same hatch EnumBody uses. Blind A/B over 35+ fixtures: 10 clear wins (semver_internal constants, go_multierror chain alias, xxhash primes, enclosed_crypto algorithms, htmy type aliases, tock_internal_core sentinel errors, typeguard callable aliases, toasty_core Result, enclosed_lib, htmy_renderer), 0 regressions, rest ties.
@@ -18,17 +11,6 @@ Resolved. A 2× modifier boost for README h1 HeadingBody groups combined with a 
 - **Go interface method signatures** (tock_internal_core's `ActivityResolver` etc.). No `InterfaceBody` group for Go; interfaces render as bare `type X …`.
 
 These three sub-gaps each want a different mechanism — the single TypeAliasBody/ConstBody fix only covered the class of items where the declaration is compact enough to auto-commit cheaply.
-
-## ~~14. Server architecture lost to broad-but-shallow budget distribution (resolved)~~
-
-Resolved. Smoothed depth penalty cliff at depth 4 (from 0.4 to 0.55), surfacing auth and config modules in the enclosed snapshot. Remaining directories (`middlewares/`, `storage/factories/`) are a volume-based budget capture issue — tracked under #21.
-
-
-## ~~17. C header file budget reduced — key API declarations and struct bodies lost (resolved)~~
-
-Resolved through two fixes: (1) a 0.3× companion-header penalty for C/C++ implementation files freed budget from .c files to headers, and (2) a bug fix in `item_identifier` where `find_descendant_of_kind(decl, "type_identifier")` was finding parameter types (e.g. `search_params_t`) instead of function names, causing `dedup_overloads` to incorrectly collapse functions sharing the same first custom-type parameter. krep.h now shows all 29 function declarations including search_file, search_string, boyer_moore_search, kmp_search, regex_search, SIMD variants, thread_pool_submit/wait_all, match_result_add/free/merge. Struct bodies remain truncated — covered by issue #18.
-
-The dedup bug fix also improved sds (+20 function declarations), soluna (+16 function declarations), sqlite_vec (+30 function declarations), bareiron (gained README body content + functions). neco regressed: with all 119 functions correctly extracted (vs ~50 before the fix), the FunctionName groups are larger and more expensive, causing #define constants (error codes, time units) to win budget over function declarations. This is a pre-existing scoring issue (MacroName ratio >> FunctionName ratio for large groups) exposed by the fix, not caused by it.
 
 ## 18. Struct and enum bodies elided — many small entries beat fewer large ones (partially fixed)
 
@@ -59,13 +41,6 @@ The `internal/ui/` content is individually reasonable (function names at base_va
 This is a pre-existing issue (the old output also omitted `internal/tools/`) but is more damaging after the rewrite because the old output compensated with richer content in the files it did show (struct field bodies, type definitions, doc comments). The new output's broader-but-shallower coverage makes the absence of core domain code more conspicuous.
 
 **Attempted fix:** Tried per-directory file-count dampening (N^(-alpha) modifier for directories with >K source files). With threshold 4, exponent 0.2: 32 snapshot failures. With threshold 6, exponent 0.4: 31 failures. With threshold 8, exponent 0.3: 20 failures. With threshold 10, exponent 0.35: 0 failures (no effect). The fundamental issue is structural: TsGroups cost ~2 tokens (ratio ~0.5) while FilesGroups for `internal/tools/` cost ~12 tokens (ratio ~0.07). No dampening of UI TsGroups can bridge a 7× ratio gap. Fixing this likely requires scheduler-level changes: either a coverage-aware scheduling phase that ensures small directories get FilesGroups committed before TsGroups consume the budget, or a mechanism that discounts FilesGroup costs for small focused directories.
-
-
-
-## ~~27. Example source files absent while library README dominates budget (resolved)~~
-
-Resolved through incremental fixes: weather_agent files now show function signatures (agents.py, evals.py), README is ~62 lines (17% of 368 total output), and 6 example directories show source content (support_bot, personal_shopper, triage_agent, basic, weather_agent, customer_service_streaming). The customer_service_streaming src/ engine architecture is absent but this is a reasonable tradeoff — showing breadth across 6 simpler examples builds a better mental model than going deep on one complex sub-project.
-
 
 ## 30. Re-export entry files (Rust `lib.rs`, TS/JS `index.ts` barrels) rendered empty
 
@@ -124,10 +99,4 @@ Distinct from resolved issue #6 (which addressed h1 body content for headingless
 
 **Correctness bug.** Hiding `.mcp.json`, `.github/workflows/`, `.goreleaser.yaml`, `.vscode/`, `.claude/`, etc. implies these files don't exist in the project. Per CLAUDE.md's "Don't confuse the reader," excluding a file is a stronger claim than including it. Dotfiles aren't inherently high-signal, but they describe parts of the project's shape (MCP wiring, CI topology, release automation, editor setup, agent wiring) that can be load-bearing for specific follow-up tasks, and the walker shouldn't decide in advance that a reader won't need them.
 
-**Plan:** re-land `.hidden(false)` (with a `.git` filter) and let the resulting files compete on the normal value/cost axis. The 2026-04-16 attempt was reverted only because the A/B review flagged regressions, but those verdicts were agent miscalibration — agents projected their own aesthetic ("editor config is noise") onto a question about project-shape signal. Two prerequisites before re-landing:
-
-1. The A/B review prompt needs work (see issues.md #30) — a grading rubric grounded in CLAUDE.md's follow-up-actionability + presence-is-signal principles, not reviewer aesthetics.
-2. The value model for directories with sparse/empty content needs the same nonlinear-in-lines treatment as bodies (see issues.md #4), so an empty `.github/` folder listing doesn't cost as much as one with workflows inside.
-
-Once those two are in place, the blocker is procedural (do the A/B with the new prompt and accept the result), not design.
-
+**Plan:** re-land `.hidden(false)` (with a `.git` filter) and let the resulting files compete on the normal value/cost axis. The 2026-04-16 attempt was reverted only because the A/B review flagged regressions, but those verdicts were agent miscalibration — agents projected their own aesthetic ("editor config is noise") onto a question about project-shape signal. The A/B review workflow landed this session (see `.claude/skills/ab-snapshots/`) now has a prompt frame grounded in CLAUDE.md principles and the four failure modes — re-run with this in place. The value model for directories with sparse/empty content should also benefit from the nonlinear-in-lines treatment landing via issues.md #4.

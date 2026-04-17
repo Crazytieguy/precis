@@ -57,12 +57,6 @@ Items in this section came out of the 2026-04-13 "cold architecture roast" — o
 
 Stages 1-8 of the TsGroupKey refactor (see commits `0fd1fc5`, `e178646`) decomposed the parallel matches: each variant now owns a type implementing `TsGroupKindMethods`/`TsGroupKindParse`, and the dispatch is a thin one-line call per variant. What's left is the ordinal table (still hand-maintained — see #27) and the `base_value` lookup in `calibration.rs` (still flat, not derived from `(Part, Visibility, Documented)`). The remaining simplification is real but much smaller than the original diagnosis.
 
-### 17. `calibration.rs` tuning is empirical, not principled [convergent]
-
-Sixty-odd float literals with no provenance: `powf(0.75)`, depth factors jumping `1.0 → 0.7 → 0.55 → 0.4`, `deprioritized_factor = 0.2`, `type_declaration_factor = 0.15`, `header_factor = 2.5`, `companion_header_factor = 0.3`, `boilerplate_heading_contribution = 0.1`, `reexport_contribution = 0.1`, `COMPACT_BODY_LINE_LIMIT = 25`. They were walked to a local optimum against the fixture snapshot set; per-number justifications would be post-hoc.
-
-**Partial fix (2026-04-16):** The file's docstring now flags the values as empirically tuned and warns that retuning tends to cascade across 5–40 snapshots — a caveat the tool was missing. Per-literal grounding is out of scope; the honest answer is "A/B the snapshots before touching any of these," which is what the docstring now says.
-
 ### 18. Kitchen-sink modules [convergent]
 
 Two modules have absorbed too much responsibility:
@@ -131,74 +125,3 @@ Cleanup approaches to explore:
 
 Either approach is a separate batch — keep it behind its own explicit tiebreak-preservation audit.
 
-### 28. `ImplBlock` trait impl should not be gated
-
-`is_gated_by` at `src/group/ts.rs:233` gates trait-impl `ImplBlock` groups behind inherent `ImplBlock` groups of the same type. This was load-bearing under the pre-rewrite cross-file gating loop, but the semantics it produces are wrong: a trait impl is a public API surface that deserves to be shown on its own merits, not hidden behind an inherent impl. Noted during the TsGroupKey refactor design discussion.
-
-The fix is to stop producing the gating relationship in the first place. Under the post-refactor architecture (plan Stage 7), in-file gating lives inside per-kind `from_parse` impls as `dependent_siblings`, and `ImplBlock::from_parse` can simply never attach trait-impl groups as dependent siblings of inherent-impl groups.
-
-Snapshot-changing cleanup; deferred from the TsGroupKey refactor batch because fixing it required the per-kind gating refactor that Stage 7 delivers. Once Stage 7 lands, this becomes trivial.
-
-### 29. `Mod::children` could re-run `from_parse` with an in-module filter
-
-Today each per-kind `from_parse` traverses the whole file once and applies `accept_top_level_symbol` to filter. When `Mod::children` (or any other container kind that spawns in-body child groups — Rust `mod_item` with body, TS `namespace`, etc.) needs to enumerate nested top-level items, it has to re-derive them with a modified scope.
-
-Idea worth exploring: instead of duplicating extraction logic per container kind, re-run `dispatch_kinds` with a "treat `self` as the root" constraint — the same combined query walked against a subtree instead of the full tree, with `accept_top_level_symbol` reinterpreted relative to the subtree boundary. The filter logic already exists in `ast::is_inside_function` and the wrapper-list approach in Stage 5 makes this cleaner still.
-
-Out of scope for the TsGroupKey refactor batch. Noted for a future session once Stage 5 lands.
-
-### 31. CLAUDE.md Ownership section removed — monitor for regressions
-
-Removed 2026-04-16. The section pushed "dedicate time every session to
-maintenance," "the more work you do without needing intervention the
-better," and similar nudges aimed at earlier Claude versions that were too
-myopic about the immediate task. Current-session evidence suggests those
-nudges aren't needed and may even crowd out signal.
-
-If future sessions show behavior regressions — e.g. ignoring pre-existing
-problems that deserve cleanup, or not updating README.md/CLAUDE.md when they
-drift — reconsider reintroducing a lighter version. The specific lines worth
-keeping if needed: "don't ignore problems because they're pre-existing," and
-"keep README.md and CLAUDE.md current as you work." The rest was padding.
-
-## Tooling
-
-### 30. Agent-based A/B snapshot review workflow
-
-When a refactor produces snapshot diffs across many fixtures, a blind pairwise
-review decides net quality impact without the author reading each diff.
-
-Ran twice to date:
-- TsGroupKey refactor (2026-04-13): 21 wins / 7 losses / 8 ties
-- TypeAliasBody / ConstBody / FunctionSig additions (2026-04-16): 33 wins / 9
-  losses / 28 ties across 70 fixtures
-
-Worth turning into a reusable skill. Rough opinions, open for discussion:
-
-- Git worktrees are overkill; `git show <ref>:<path>` baseline fetch works.
-- Scaffolding was ad-hoc Bash + Deno; if it becomes a reusable skill,
-  scaffolding beyond a skill prompt should be a Rust bin or stay inline.
-- One Agent per fixture; prompt-caching keeps the per-fixture cost reasonable.
-- A skill could orchestrate: pick baseline ref, generate pair files with
-  randomized A/B assignment, spawn per-fixture Agents, decode verdicts.
-
-**Agent prompt iteration (open):** current prompts are generic ("which builds
-a better mental model?") and agents project their own aesthetics. The
-2026-04-16 hidden-files A/B round showed this plainly — agents flagged
-`.vscode/` and `.claude/` as noise even though existence of such files is
-genuine project-shape signal. Specific things the prompt should eventually
-cover:
-
-- A concrete grading rubric mapped onto the CLAUDE.md principles (follow-up
-  actionability, upfront semantic grounding, presence-is-signal).
-- How to check claims against the fixture ground truth, not against the
-  reviewer's aesthetics.
-- When to prefer inclusion over exclusion on marginal cases.
-- Explicit pushback on "this is noise" without an articulated reason.
-
-Once this workflow is solid, the "Improvement process" line in CLAUDE.md
-should be updated to reference the A/B rubric instead of "look at real
-output for real projects" as the primary test.
-
-Not a priority until the next big refactor is ready for review, but the
-prompt work is the first thing to tackle when it is.
