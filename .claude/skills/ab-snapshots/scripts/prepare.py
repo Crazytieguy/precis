@@ -40,8 +40,15 @@ def main():
         stderr=subprocess.DEVNULL,
     )
 
-    snaps_dir = project_dir / "tests" / "snapshots"
-    new_files = sorted(snaps_dir.glob("*.snap.new"))
+    # Snapshots live in both tests/snapshots/ (sample tests) and
+    # test/snapshots/ (fixture tests) — insta picks the directory from the
+    # source-file location where the test macro is expanded.
+    snap_dirs = [project_dir / "tests" / "snapshots", project_dir / "test" / "snapshots"]
+    new_files: list[Path] = []
+    for d in snap_dirs:
+        if d.exists():
+            new_files.extend(d.glob("*.snap.new"))
+    new_files.sort()
 
     fixtures_path = parse_fixtures_rs(project_dir / "test" / "fixtures.rs")
 

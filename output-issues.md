@@ -68,12 +68,18 @@ Root cause: `Import { first_party: false, .. }` has base_value 0.0 in heuristics
 
 `CONTEXT.md` reclassified from AiConfig (factor 0.1) to Normal, fixing per-crate toasty / toasty_codegen / toasty_core. Workspace-level toasty regressed: 5 CONTEXT.md heading tables crowded out real code.
 
-**Right fix (diagnosed 2026-04-16, not yet landed):** separate two levers that are currently conflated.
+**Proposed fix (diagnosed 2026-04-16):** separate two levers that are currently conflated.
 
 - `files_base_value(role)` controls whether the *file itself* is visible (its header line in the output tree).
 - `files_contribution(role)` is the modifier passed to the file's *children* (headings, bodies, etc.) — controls how aggressively its internal content competes.
 
-The current `CONTEXT.md → Normal` change raised both at once. The toasty workspace regression is headings crowding out code because children's modifier went up too. The clean fix is to keep file visibility high (so CONTEXT.md appears in the tree) but pass a reduced modifier to children (so the TOC doesn't compete with code). Possibly via a dedicated `FileRole::ProjectContext` with `base_value` ≈ 1.0 and children contribution ≈ 0.3. Remaining cases (ARCHITECTURE.md, SUMMARY.md, docs/*.md guides) benefit from the same separation.
+The clean version is a dedicated `FileRole::ProjectContext` (CONTEXT.md, SUMMARY.md, OVERVIEW.md, NOTES.md, ROADMAP.md) with `base_value` ≈ 1.0 and children contribution ≈ 0.3, plus dropping Architecture's children contribution from 1.0→0.3.
+
+**A/B findings (2026-04-17, tried this exact diagnosis):** 4 wins / 2 losses / 1 tie across the 7 affected snapshots — net positive, but the two regressions were **both on toasty**, the workspace that motivated the issue. Reviewers cited toasty's per-crate CONTEXT.md section headers as load-bearing (toasty's own CLAUDE.md routes agents through them), so shrinking their children modifier hurts rather than helps. mdbook_guide_src, superstruct, toasty_core, and sqlite_vec improved — for them the heading TOC really was crowding out code.
+
+This is the opposite of the issue's original "Normal caused toasty to regress" claim. Either the prior claim was mistaken, or the fixture baseline has moved since — either way, the prescribed fix doesn't resolve the stated target.
+
+Open questions for a future pass: (a) is the target modifier per-file rather than per-role (large-dir workspace wants lower, small-dir crate wants higher)? (b) is there a signal that CONTEXT.md *contents* carry real architectural information (depth, table density, cross-reference density) that could weight them up while down-weighting boilerplate TOCs?
 
 ## 37. Entire implementation modules omitted while siblings are shown
 
