@@ -3,6 +3,7 @@
 //! A group is the scheduling and rendering unit. Groups carry items,
 //! an inherited_modifier, and optional dependent_siblings.
 
+pub mod aggregate;
 pub mod files;
 pub mod folders;
 pub mod ts;

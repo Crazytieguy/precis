@@ -34,12 +34,9 @@ packages/app-client/README.md
      8→$ npm install # or pnpm install or yarn install
      9→```
     10→
-    11→### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
     13→## Available Scripts
     15→In the project directory, you can run:
     16→
-    17→### `npm run dev` or `npm start`
-    24→### `npm run build`
     32→## Deployment
     34→You can deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)
     35→
@@ -109,7 +106,6 @@ packages/cli/src/cli.ts
 pnpm-workspace.yaml
      1→packages:
      2→  - 'packages/*'
-     3→
      4→catalog:
      5→  "@antfu/eslint-config": ^3.6.2
      6→  "@types/node": ^22.5.4
@@ -150,7 +146,6 @@ packages/deploy-cloudflare/_routes.json
      4→    "/api/*"
      5→  ],
      6→  "exclude": []
-     7→}
 
 packages/lib/src/files/files.models.ts
      1→import type { NoteAsset } from '../notes/notes.types';
@@ -196,7 +191,6 @@ packages/app-client/components.json
     14→    "ui": "@/modules/ui/components",
     15→    "cn": "@/modules/shared/style/cn"
     16→  }
-    17→}
 
 packages/cli/src/files/files.services.ts
      5→export async function checkFileExist({ filePath }: { filePath: string }): Promise<boolean> {
@@ -339,13 +333,10 @@ packages/app-client/src/modules/theme/theme.store.ts
      4→export function useThemeStore() {
 
 packages/app-server/src/modules/storage/storage.models.ts
-     1→import type { BindableStorageFactory, Storage } from './storage.types';
      5→function defineStorage<InitialsArgs = void>(fn: (args: InitialsArgs) => { storage: Storage }) {
      9→function defineBindableStorageFactory<InitialsArgs = void >(fn: (args: InitialsArgs) => { storageFactory: BindableStorageFactory }) {
 
 packages/app-server/src/modules/storage/storage.types.ts
-     2→import type { Config } from '../app/config/config.types';
-     3→import type { Context } from '../app/server.types';
      7→export type BindableStorageFactoryArgs …
      8→export type BindableStorageFactory …
      9→export type StorageFactory …
@@ -548,7 +539,16 @@ packages/app-client/src/modules/notes/notes.usecases.ts
 
 docker-compose.yml
      1→services:
+     2→  enclosed:
+     3→    image: corentinth/enclosed
+     4→    ports:
+     5→      - 8787:8787
+     6→    volumes:
+     7→      - enclosed-data:/app/.data
+     8→    restart: unless-stopped
     10→volumes:
+    11→  enclosed-data:
+    12→    driver: local
 
 package.json
      2→  "name": "@enclosed/root",
@@ -558,14 +558,36 @@ package.json
      6→  "license": "Apache-2.0",
      7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
      8→  "repository": {
+     9→    "type": "git",
+    10→    "url": "https://github.com/CorentinTh/enclosed"
+    11→  },
     12→  "engines": {
+    13→    "node": ">=22.0.0"
+    14→  },
     15→  "scripts": {
+    16→    "release": "bumpp --commit --tag --push --recursive",
+    17→    "docker:build": "docker build -t enclosed .",
+    18→    "docker:run": "docker run -d -p 8788:8787 enclosed"
+    19→  },
     20→  "keywords": [
+    21→    "note",
+    22→    "secure",
+    23→    "private",
+    24→    "end-to-end",
+    25→    "encryption",
+    26→    "password",
+    27→    "manager",
+    28→    "expiration"
+    29→  ],
     30→  "devDependencies": {
+    31→    "bumpp": "^9.5.2"
+    32→  }
 
 renovate.json
      2→  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
      3→  "extends": [
+     4→    "config:recommended"
+     5→  ]
 
 packages/app-server/src/modules/notes/notes.constants.ts
      1→export const TEN_MINUTES_IN_SECONDS …
@@ -692,30 +714,6 @@ packages/app-server/wrangler.toml
      6→binding = "notes"
      7→id = "b1329cb8560e49d392bed877c9ac48a2"
 
-packages/app-server/src/modules/app/auth/auth.errors.ts
-     3→export const createUnauthorizedError …
-
-packages/app-server/src/modules/app/auth/auth.middleware.ts
-     7→export const authenticationMiddleware …
-    31→export const protectedRouteMiddleware …
-
-packages/app-server/src/modules/app/auth/auth.models.ts
-     3→function extractAccessToken …
-
-packages/app-server/src/modules/app/auth/auth.routes.ts
-    10→function registerAuthRoutes …
-
-packages/app-server/src/modules/app/auth/auth.services.ts
-     6→async function arePasswordsMatching …
-    10→async function createJwtToken …
-    24→async function isJwtValid …
-
-packages/app-server/src/modules/app/config/config.ts
-     5→export const configDefinition …
-
-packages/app-server/src/modules/app/config/config.types.ts
-     3→export type Config …
-
 packages/
 
 packages/app-client/e2e-tests/
@@ -736,7 +734,11 @@ packages/app-client/src/scripts/
 
 packages/app-server/src/modules/
 
+packages/app-server/src/modules/app/auth/
+
 packages/app-server/src/modules/app/auth/e2e/
+
+packages/app-server/src/modules/app/config/
 
 packages/app-server/src/modules/app/middlewares/
 

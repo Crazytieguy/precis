@@ -77,8 +77,18 @@ pub fn ts_base_value(key: &TsGroupKey, item_count: usize) -> f64 {
             _ => 0.05,
         },
 
-        DataSection(_) => 0.8,
-        DataSectionBody(_) => 0.3,
+        DataSection(d) => match d.level {
+            1 => 1.0,
+            2 => 0.6,
+            3 => 0.15,
+            _ => 0.08,
+        },
+        DataSectionBody(d) => match d.level {
+            1 => 1.2,
+            2 => 0.5,
+            3 => 0.1,
+            _ => 0.05,
+        },
     };
 
     (item_count as f64).powf(0.75) * per_kind_constant
@@ -148,3 +158,30 @@ pub const BOILERPLATE_HEADING_FACTOR: f64 = 0.1;
 pub const REEXPORT_FACTOR: f64 = 0.1;
 
 pub const COMPACT_BODY_LINE_LIMIT: usize = 25;
+
+/// Compute the inherited modifier for a TsGroup based on its key and parent modifier.
+pub fn compute_item_modifier(key: &TsGroupKey, parent_modifier: f64) -> f64 {
+    use TsGroupKey::*;
+
+    let (doc_factor, vis_factor) = match key.name_doc_visibility() {
+        Some((documented, public)) => {
+            let doc = if documented { 1.0 } else { UNDOCUMENTED_FACTOR };
+            let vis = if public { 1.0 } else { PRIVATE_FACTOR };
+            (doc, vis)
+        }
+        None => (1.0, 1.0),
+    };
+
+    let boilerplate_factor = match key {
+        Heading(h) if h.boilerplate => BOILERPLATE_HEADING_FACTOR,
+        _ => 1.0,
+    };
+
+    let reexport_factor = match key {
+        Import(i) if i.reexport => REEXPORT_FACTOR,
+        ImportedItems(i) if i.reexport => REEXPORT_FACTOR,
+        _ => 1.0,
+    };
+
+    parent_modifier * vis_factor * doc_factor * boilerplate_factor * reexport_factor
+}

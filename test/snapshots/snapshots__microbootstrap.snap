@@ -258,7 +258,7 @@ microbootstrap/instruments/logging_instrument.py
     36→def fill_log_message …
     62→def tracer_injection …
     76→STRUCTLOG_PRE_CHAIN_PROCESSORS …
-    88→def _serialize_log_with_orjson_to_string(value: typing.Any, **kwargs: typing.Any) -> str:  # noqa: ANN401
+    88→def _serialize_log_with_orjson_to_string …
     92→STRUCTLOG_FORMATTER_PROCESSOR …
     97→class MemoryLoggerFactory …
     98→    def __init__ …
@@ -370,7 +370,6 @@ package.json
     19→  "dependencies": {
     20→    "vuepress-theme-hope": "^2.0.0-rc.52"
     21→  }
-    22→}
 
 pyproject.toml
      1→[project]
@@ -382,6 +381,9 @@ pyproject.toml
     96→
    101→[tool.mypy]
    109→[tool.ruff]
+   110→target-version = "py310"
+   111→line-length = 120
+   112→
 
 tests/conftest.py
     46→class MockSentryTransport …

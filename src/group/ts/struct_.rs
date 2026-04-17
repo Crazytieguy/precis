@@ -1,5 +1,6 @@
 //! Struct-family kinds.
 
+use super::doc::StructDocFirst;
 use super::kind::{
     KindParseStrategy, OwnedQueryMatch, ParseTsGroup, TsGroupKindMethods, TsGroupKindParse,
 };
@@ -13,12 +14,6 @@ pub struct StructName {
     pub documented: bool,
     pub public: bool,
 }
-
-#[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, Ord, PartialOrd)]
-pub struct StructDocFirst;
-
-#[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, Ord, PartialOrd)]
-pub struct StructDocRest;
 
 #[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, Ord, PartialOrd)]
 pub struct StructBody;
@@ -38,24 +33,6 @@ impl TsGroupKindMethods for StructName {
             self.documented,
         );
         out
-    }
-}
-
-impl TsGroupKindMethods for StructDocFirst {
-    fn render_item<'s>(&self, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
-        super::render_doc_first_lines(item)
-    }
-
-    fn children<'s>(&self, parent: &TsGroup<'s>) -> Vec<Group<'s>> {
-        let mut out = Vec::new();
-        super::spawn_simple_child(&mut out, parent, TsGroupKey::StructDocRest(StructDocRest));
-        out
-    }
-}
-
-impl TsGroupKindMethods for StructDocRest {
-    fn render_item<'s>(&self, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
-        super::render_doc_rest_lines(item)
     }
 }
 
@@ -93,12 +70,14 @@ impl TsGroupKindParse for StructName {
         matches: &[OwnedQueryMatch<'s>],
         ctx: &FileCtx<'s>,
     ) -> Vec<ParseTsGroup<'s>> {
-        super::simple_named_groups(matches, ctx, |m, ctx| {
+        let mut groups = super::per_match_groups(matches, ctx, |m, ctx| {
             crate::parse::check_c_aggregate_body(m.symbol, ctx.lang)?;
             Some(TsGroupKey::StructName(StructName {
                 documented: m.is_documented(ctx),
                 public: m.is_public(ctx),
             }))
-        })
+        });
+        super::dedup_duplicate_type_decls(&mut groups, ctx);
+        groups
     }
 }

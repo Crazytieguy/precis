@@ -15,11 +15,18 @@ README.md
     17→[![Nightly](/../../actions/workflows/nightly.yml/badge.svg)](/../../actions/workflows/nightyly.yml)
     18→
     19→## Documentation
+    21→- [API Reference](./docs)
+    22→- [Examples](./test)
+    23→- [Wiki](https://github.com/cloudwu/soluna/wiki)
+    24→
     25→## Precompiled Binaries
+    27→You can download precompiled binaries for Windows, Linux, macOS and WebAssembly from the [Nightly Releases](/../../releases/tag/nightly) page.
+    28→
     29→## Building from Source
     33→### Integration with the Actions of your projects
     53→## Projects made with Soluna
-    57→## License
+    55→- [Deep Future](https://github.com/cloudwu/deepfuture), a digital version of boardgame Deep Future.
+    56→
 
 src/appevent.h
      2→#define soluna_app_event_h
@@ -143,7 +150,8 @@ src/tmpbuffer.h
 
 src/transform.h
      6→struct transform …
-    16→static inline void …
+    16→static inline void
+    17→sprite_transform_identity(struct transform * t) {
     24→void sprite_transform_init();
     25→void sprite_transform_set(struct transform *t, float s, float r, float x, float y);
     26→void sprite_transform_apply(struct draw_primitive *p, struct transform * t);
@@ -354,12 +362,6 @@ src/lualib/util.lua
     13→function func_chain:__call …
     20→function util.func_chain …
 
-web/config.toml
-     7→[pagination]
-     8→  pagerSize = 12
-     9→
-    10→[params]
-
 3rd/
 
 3rd/datalist/
@@ -380,6 +382,14 @@ bin/sokol-tools-bin/
 
 clibs/
 
+clibs/datalist/
+
+clibs/ltask/
+
+clibs/lua/
+
+clibs/soluna/
+
 clibs/yoga/
 
 clibs/zip/
@@ -394,7 +404,11 @@ test/
 
 web/content/docs/
 
+web/content/examples/
+
 web/layouts/_default/
+
+web/layouts/docs/
 
 web/layouts/examples/
 

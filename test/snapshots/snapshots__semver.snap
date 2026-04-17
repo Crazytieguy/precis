@@ -5,13 +5,30 @@ expression: output
 README.md
      1→semver(1) -- The semantic versioner for npm
      4→## Install
+     6→```bash
+     7→npm install semver
+     8→````
+     9→
     10→## Usage
    139→## Versions
+   141→A "version" is described by the `v2.0.0` specification found at
+   142→<https://semver.org/>.
+   143→
+   144→A leading `"="` or `"v"` character is stripped off and ignored.
+   145→Support for stripping a leading "v" is kept for compatibility with `v1.0.0` of the SemVer
+   146→specification but should not be used anymore.
+   147→
    148→## Ranges
    184→### Prerelease Tags
    219→#### Prerelease Identifiers
    250→#### Prerelease Identifier Base
    279→### Advanced Range Syntax
+   281→Advanced range syntax desugars to primitive comparators in
+   282→deterministic ways.
+   283→
+   284→Advanced ranges may be combined in the same way as primitive
+   285→comparators using white space or `||`.
+   286→
    287→#### Hyphen Ranges `X.Y.Z - A.B.C`
    306→#### X-Ranges `1.2.x` `1.X` `1.2.*` `*`
    324→#### Tilde Ranges `~1.2.3` `~1.2` `~1`
@@ -21,10 +38,14 @@ README.md
    453→### Comparison
    478→### Sorting
    485→### Comparators
+   487→* `intersects(comparator)`: Return true if the comparators intersect
+   488→
    489→### Ranges
    531→### Coercion
    558→### Clean
    576→## Constants
+   578→As a convenience, helper constants are exported to provide information about what `node-semver` supports:
+   579→
    580→### `RELEASE_TYPES`
    600→### `SEMVER_SPEC_VERSION`
    610→## Exported Modules
@@ -48,9 +69,6 @@ index.js
 
 map.js
      3→module.exports = testFile => testFile.replace(/test\//, '') …
-
-preload.js
-     4→module.exports = require('./index.js')
 
 classes/comparator.js
      3→const ANY …
@@ -329,23 +347,13 @@ functions/valid.js
      4→const valid = (version, options) => {
      8→module.exports = valid …
 
-test/index.js
-     4→const semver = require('../')
-     5→const { SEMVER_SPEC_VERSION } = require('../internal/constants')
-
 test/map.js
-     6→const map = require('../map.js')
-     7→const pkg = require('../package.json')
      9→const ROOT …
     10→const TEST …
     11→const IGNORE_DIRS …
     13→const getFile = (f) => {
     23→const walk = (item, res = []) => getFile(item) || readdirSync(item)
     28→const walkAll = (items, relativeTo) => items
-
-test/preload.js
-     4→const preload = require('../preload.js')
-     5→const index = require('../index.js')
 
 .commitlintrc.js
      3→module.exports = { …
@@ -388,40 +396,11 @@ release-please-config.json
      3→repository:
     13→branches:
 
-benchmarks/bench-compare.js
-     5→const suite …
-
-benchmarks/bench-diff.js
-     5→const suite …
-     7→const cases …
-
-benchmarks/bench-parse-options.js
-     5→const suite …
-     7→const options1 …
-    11→const options2 …
-    16→const options3 …
-
-benchmarks/bench-parse.js
-     5→const suite …
-
-benchmarks/bench-satisfies.js
-     5→const suite …
-     7→const versions …
-     8→const versionToCompare …
-     9→const option1 …
-    10→const option2 …
-    11→const option3 …
-
-benchmarks/bench-subset.js
-     5→const suite …
-     8→const cases …
-
-CHANGELOG.md
-     1→# Changelog
-
 .github/ISSUE_TEMPLATE/
 
 .github/actions/
+
+.github/matchers/
 
 .github/workflows/
 
@@ -430,6 +409,8 @@ tap-snapshots/
 tap-snapshots/test/
 
 tap-snapshots/test/bin/
+
+test/classes/
 
 test/fixtures/
 

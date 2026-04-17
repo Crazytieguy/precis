@@ -1,5 +1,6 @@
 //! Type-alias-family kinds.
 
+use super::doc::TypeAliasDocFirst;
 use super::kind::{
     KindParseStrategy, OwnedQueryMatch, ParseTsGroup, TsGroupKindMethods, TsGroupKindParse,
 };
@@ -13,12 +14,6 @@ pub struct TypeAliasName {
     pub documented: bool,
     pub public: bool,
 }
-
-#[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, Ord, PartialOrd)]
-pub struct TypeAliasDocFirst;
-
-#[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, Ord, PartialOrd)]
-pub struct TypeAliasDocRest;
 
 impl TsGroupKindMethods for TypeAliasName {
     fn render_item<'s>(&self, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
@@ -35,28 +30,6 @@ impl TsGroupKindMethods for TypeAliasName {
             );
         }
         out
-    }
-}
-
-impl TsGroupKindMethods for TypeAliasDocFirst {
-    fn render_item<'s>(&self, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
-        super::render_doc_first_lines(item)
-    }
-
-    fn children<'s>(&self, parent: &TsGroup<'s>) -> Vec<Group<'s>> {
-        let mut out = Vec::new();
-        super::spawn_simple_child(
-            &mut out,
-            parent,
-            TsGroupKey::TypeAliasDocRest(TypeAliasDocRest),
-        );
-        out
-    }
-}
-
-impl TsGroupKindMethods for TypeAliasDocRest {
-    fn render_item<'s>(&self, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
-        super::render_doc_rest_lines(item)
     }
 }
 
@@ -89,7 +62,7 @@ impl TsGroupKindParse for TypeAliasName {
         matches: &[OwnedQueryMatch<'s>],
         ctx: &FileCtx<'s>,
     ) -> Vec<ParseTsGroup<'s>> {
-        super::simple_named_groups(matches, ctx, |m, ctx| {
+        let mut groups = super::per_match_groups(matches, ctx, |m, ctx| {
             let kind = m.symbol.kind();
             // Go type_spec is polymorphic — only the non-struct/non-interface
             // variant is a type alias here.
@@ -108,6 +81,8 @@ impl TsGroupKindParse for TypeAliasName {
                 documented: m.is_documented(ctx),
                 public: m.is_public(ctx),
             }))
-        })
+        });
+        super::dedup_duplicate_type_decls(&mut groups, ctx);
+        groups
     }
 }

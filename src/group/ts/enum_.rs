@@ -1,5 +1,6 @@
 //! Enum-family kinds.
 
+use super::doc::EnumDocFirst;
 use super::kind::{
     KindParseStrategy, OwnedQueryMatch, ParseTsGroup, TsGroupKindMethods, TsGroupKindParse,
 };
@@ -13,12 +14,6 @@ pub struct EnumName {
     pub documented: bool,
     pub public: bool,
 }
-
-#[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, Ord, PartialOrd)]
-pub struct EnumDocFirst;
-
-#[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, Ord, PartialOrd)]
-pub struct EnumDocRest;
 
 #[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, Ord, PartialOrd)]
 pub struct EnumBody;
@@ -38,24 +33,6 @@ impl TsGroupKindMethods for EnumName {
             self.documented,
         );
         out
-    }
-}
-
-impl TsGroupKindMethods for EnumDocFirst {
-    fn render_item<'s>(&self, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
-        super::render_doc_first_lines(item)
-    }
-
-    fn children<'s>(&self, parent: &TsGroup<'s>) -> Vec<Group<'s>> {
-        let mut out = Vec::new();
-        super::spawn_simple_child(&mut out, parent, TsGroupKey::EnumDocRest(EnumDocRest));
-        out
-    }
-}
-
-impl TsGroupKindMethods for EnumDocRest {
-    fn render_item<'s>(&self, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
-        super::render_doc_rest_lines(item)
     }
 }
 
@@ -89,12 +66,14 @@ impl TsGroupKindParse for EnumName {
         matches: &[OwnedQueryMatch<'s>],
         ctx: &FileCtx<'s>,
     ) -> Vec<ParseTsGroup<'s>> {
-        super::simple_named_groups(matches, ctx, |m, ctx| {
+        let mut groups = super::per_match_groups(matches, ctx, |m, ctx| {
             crate::parse::check_c_aggregate_body(m.symbol, ctx.lang)?;
             Some(TsGroupKey::EnumName(EnumName {
                 documented: m.is_documented(ctx),
                 public: m.is_public(ctx),
             }))
-        })
+        });
+        super::dedup_duplicate_type_decls(&mut groups, ctx);
+        groups
     }
 }

@@ -1,6 +1,7 @@
 //! Function-family kinds.
 
 use super::const_;
+use super::doc::FunctionDocFirst;
 use super::kind::{
     KindParseStrategy, OwnedQueryMatch, ParseTsGroup, TsGroupKindMethods, TsGroupKindParse,
 };
@@ -14,12 +15,6 @@ pub struct FunctionName {
     pub documented: bool,
     pub public: bool,
 }
-
-#[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, Ord, PartialOrd)]
-pub struct FunctionDocFirst;
-
-#[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, Ord, PartialOrd)]
-pub struct FunctionDocRest;
 
 #[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, Ord, PartialOrd)]
 pub struct FunctionSig;
@@ -43,24 +38,6 @@ impl TsGroupKindMethods for FunctionName {
             );
         }
         out
-    }
-}
-
-impl TsGroupKindMethods for FunctionDocFirst {
-    fn render_item<'s>(&self, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
-        super::render_doc_first_lines(item)
-    }
-
-    fn children<'s>(&self, parent: &TsGroup<'s>) -> Vec<Group<'s>> {
-        let mut out = Vec::new();
-        super::spawn_simple_child(&mut out, parent, TsGroupKey::FunctionDocRest(FunctionDocRest));
-        out
-    }
-}
-
-impl TsGroupKindMethods for FunctionDocRest {
-    fn render_item<'s>(&self, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
-        super::render_doc_rest_lines(item)
     }
 }
 
@@ -186,7 +163,7 @@ impl TsGroupKindParse for FunctionName {
         matches: &[OwnedQueryMatch<'s>],
         ctx: &FileCtx<'s>,
     ) -> Vec<ParseTsGroup<'s>> {
-        super::simple_named_groups(matches, ctx, |m, ctx| {
+        let mut groups = super::per_match_groups(matches, ctx, |m, ctx| {
             let kind = m.symbol.kind();
             if matches!(ctx.lang, Lang::TypeScript | Lang::Tsx) {
                 match kind {
@@ -224,6 +201,8 @@ impl TsGroupKindParse for FunctionName {
                 documented: m.is_documented(ctx),
                 public: m.is_public(ctx),
             }))
-        })
+        });
+        super::dedup_adjacent_overloads(&mut groups, ctx);
+        groups
     }
 }

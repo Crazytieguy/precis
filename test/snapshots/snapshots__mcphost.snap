@@ -13,10 +13,43 @@ README.md
     77→## Requirements 📋
     85→## Environment Setup 🔧
    124→## Installation 📦
+   126→```bash
+   127→go install github.com/mark3labs/mcphost@latest
+   128→```
+   129→
    130→## SDK Usage 🛠️
+   132→MCPHost also provides a Go SDK for programmatic access without spawning OS processes. The SDK maintains identical behavior to the CLI, including configuration loading, environment variables, and defaults.
+   133→
+   134→### Quick Example
+   165→### SDK Features
    176→## Configuration ⚙️
+   178→### MCP Servers
+   189→### Environment Variable Substitution
+   225→### Simplified Configuration Schema
+   361→### Tool Filtering
+   387→### Legacy Configuration Support
+   449→### Transport Types
+   462→### System Prompt
    488→## Usage 🚀
+   492→### Interactive Mode (Default)
+   500→### Script Mode
+   648→### Hooks System
+   669→#### Configuration
+   714→### Non-Interactive Mode
+   729→### Model Generation Parameters
+   752→### Available Models
+   760→### Examples
+   795→### Flags
+   809→### Authentication Subcommands
+   823→### Configuration File Support
+   872→### Interactive Commands
+   882→### Authentication Commands
+   889→### Global Flags
    892→## Automation & Scripting 🤖
+   894→MCPHost's non-interactive mode makes it perfect for automation, scripting, and integration with other tools.
+   895→
+   896→### Use Cases
+   938→### Tips for Scripting
    967→## MCP Server Compatibility 🔌
 
 sdk/README.md
@@ -26,8 +59,12 @@ sdk/README.md
      5→## Installation
     11→## Basic Usage
     44→## Configuration
+    52→### Options
     67→## Advanced Usage
+    93→### Session Management
    115→## API Reference
+   117→### Types
+   124→### Methods
    136→## Environment Variables
 
 main.go
@@ -90,7 +127,17 @@ cmd/root.go
 
 cmd/script.go
     28→var scriptCmd …
+    84→func overrideConfigWithFrontmatter …
+   148→func parseCustomVariables …
+   255→func parseScriptFile …
+   279→func readRemainingLines …
+   288→func parseScriptContent …
    423→type Variable …
+   431→func findVariables …
+   442→func findVariablesWithDefaults …
+   480→func validateVariables …
+   499→func substituteVariables …
+   511→func runScriptMode …
 
 internal/auth/browser.go
     14→func OpenBrowser(url string) error {
@@ -103,7 +150,6 @@ internal/auth/credentials.go
     44→func (c *AnthropicCredentials) NeedsRefresh() bool {
     54→type CredentialManager …
     62→func NewCredentialManager() (*CredentialManager, error) {
-    74→func getCredentialsPath() (string, error) {
     92→func (cm *CredentialManager) LoadCredentials() (*CredentialStore, error) {
    115→func (cm *CredentialManager) SaveCredentials(store *CredentialStore) error {
    139→func (cm *CredentialManager) SetAnthropicCredentials(apiKey string) error {
@@ -111,7 +157,6 @@ internal/auth/credentials.go
    173→func (cm *CredentialManager) RemoveAnthropicCredentials() error {
    195→func (cm *CredentialManager) HasAnthropicCredentials() (bool, error) {
    217→func (cm *CredentialManager) GetCredentialsPath() string {
-   222→func validateAnthropicAPIKey(apiKey string) error {
    247→func GetAnthropicAPIKey(flagValue string) (string, string, error) {
 
 internal/auth/oauth.go
@@ -122,8 +167,6 @@ internal/auth/oauth.go
     78→func (c *OAuthClient) GetAuthorizationURL() (*AuthData, error) {
    107→func (c *OAuthClient) ExchangeCode(code, verifier string) (*AnthropicCredentials, error) {
    133→func (c *OAuthClient) RefreshToken(refreshToken string) (*AnthropicCredentials, error) {
-   144→func (c *OAuthClient) makeTokenRequest(body map[string]interface{}) (*AnthropicCredentials, error) {
-   193→func (c *OAuthClient) parseCodeAndState(code string) (parsedCode, parsedState string) {
    205→func (cm *CredentialManager) SetOAuthCredentials(creds *AnthropicCredentials) error {
    219→func (cm *CredentialManager) GetValidAccessToken() (string, error) {
 
@@ -273,6 +316,7 @@ internal/models/generate_models.go
     50→type Limit …
     60→type ProviderInfo …
     73→const codeTemplate …
+   156→func main() {
 
 internal/models/providers.go
     28→const …
@@ -302,12 +346,10 @@ internal/hooks/config.go
     21→type HookMatcher …
     30→type HookEntry …
     41→func LoadHooksConfig(customPaths ...string) (*HookConfig, error) {
-    97→func getConfigDir() string {
-   113→func mergeHookConfigs(dst, src *HookConfig) {
 
 internal/hooks/events.go
      3→// HookEvent represents a point in MCPHost's lifecycle where hooks can be executed.
-     4→// Events can be tool-related (requiring matchers) or lifecycle-related.
+      →…
      5→type HookEvent …
      7→const …
     23→func (e HookEvent) IsValid() bool {
@@ -320,12 +362,7 @@ internal/hooks/executor.go
     48→func (e *Executor) SetInteractive(interactive bool) {
     57→func (e *Executor) PopulateCommonFields(event HookEvent) CommonInput {
     77→func (e *Executor) ExecuteHooks(ctx context.Context, event HookEvent, input interface{}) (*HookOutput, error) {
-   122→func (e *Executor) executeHook(ctx context.Context, hook HookEntry, input interface{}) *hookResult {
-   169→func matchesPattern(pattern, toolName string) bool {
-   190→func extractToolName(input interface{}) string {
    201→type hookResult …
-   209→func (e *Executor) processResults(results <-chan *hookResult) (*HookOutput, error) {
-   241→func mergeHookOutputs(dst, src *HookOutput) {
 
 internal/hooks/schemas.go
     10→type CommonInput …
@@ -337,10 +374,7 @@ internal/hooks/schemas.go
 
 internal/hooks/validator.go
     10→var …
-    17→func validateHookCommand(command string) error {
-    44→func containsDangerousPattern(command string) bool {
     75→func ValidateHookConfig(config *HookConfig) error {
-   110→func validateHookEntry(hook HookEntry) error {
 
 internal/agent/agent.go
     22→type AgentConfig …
@@ -352,33 +386,29 @@ internal/agent/agent.go
     59→type ToolCallContentHandler …
     63→type ToolApprovalHandler …
     67→type Agent …
-    81→func NewAgent(ctx context.Context, config *AgentConfig) (*Agent, error) {
+    81→func NewAgent …
    125→type GenerateWithLoopResult …
-   135→func (a *Agent) GenerateWithLoop(ctx context.Context, messages []*schema.Message,
-   136→	onToolCall ToolCallHandler, onToolExecution ToolExecutionHandler, onToolResult ToolResultHandler, onResponse ResponseHandler, onToolCallContent ToolCallContentHandler, onToolApproval ToolApprovalHandler,
-   137→) (*GenerateWithLoopResult, error) {
-   144→func (a *Agent) GenerateWithLoopAndStreaming(ctx context.Context, messages []*schema.Message,
-   145→	onToolCall ToolCallHandler, onToolExecution ToolExecutionHandler, onToolResult ToolResultHandler, onResponse ResponseHandler, onToolCallContent ToolCallContentHandler, onStreamingResponse StreamingResponseHandler, onToolApproval ToolApprovalHandler,
-   146→) (*GenerateWithLoopResult, error) {
-   303→func (a *Agent) GetTools() []tool.BaseTool {
-   309→func (a *Agent) GetLoadingMessage() string {
-   315→func (a *Agent) GetLoadedServerNames() []string {
+   135→func (a *Agent) GenerateWithLoop …
+   144→func (a *Agent) GenerateWithLoopAndStreaming …
+   303→func (a *Agent) GetTools …
+   309→func (a *Agent) GetLoadingMessage …
+   315→func (a *Agent) GetLoadedServerNames …
    456→type escListenerModel …
    457→	escPressed chan bool
    458→}
    460→func (m escListenerModel) Init() tea.Cmd {
    464→func (m escListenerModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
    479→func (m escListenerModel) View() string {
-   536→func (a *Agent) Close() error {
+   536→func (a *Agent) Close …
 
 internal/agent/factory.go
     15→type SpinnerFunc …
     19→type AgentCreationOptions …
-    43→func CreateAgent(ctx context.Context, opts *AgentCreationOptions) (*Agent, error) {
-    76→func ParseModelName(modelString string) (provider, model string) {
+    43→func CreateAgent …
+    76→func ParseModelName …
 
 internal/agent/streaming.go
-    19→func StreamWithCallback(ctx context.Context, reader *schema.StreamReader[*schema.Message], callback func(string)) (*schema.Message, error) {
+    19→func StreamWithCallback …
 
 internal/builtin/bash.go
     44→func NewBashServer() (*server.MCPServer, error) {
@@ -566,6 +596,10 @@ internal/ui/slash_command_input.go
 internal/ui/spinner.go
     16→type Spinner …
     25→type spinnerModel …
+    26→	spinner  spinner.Model
+    27→	message  string
+    28→	quitting bool
+    29→}
     31→func (m spinnerModel) Init() tea.Cmd {
     35→func (m spinnerModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
     52→func (m spinnerModel) View() string {

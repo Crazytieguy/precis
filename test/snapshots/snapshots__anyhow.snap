@@ -20,6 +20,7 @@ README.md
    126→## No-std support
    144→## Comparison to failure
    155→## Comparison to thiserror
+   166→#### License
 
 Cargo.toml
      1→[package]
@@ -45,9 +46,9 @@ Cargo.toml
 
 src/backtrace.rs
      8→pub(crate) enum Backtrace …
-    18→macro_rules! impl_backtrace …
-    32→macro_rules! backtrace …
-    64→macro_rules! backtrace_if_absent …
+    11→macro_rules! impl_backtrace …
+    25→macro_rules! backtrace …
+    39→macro_rules! backtrace_if_absent …
     82→    pub(crate) struct Backtrace …
     86→    pub(crate) enum BacktraceStatus …
     92→    enum Inner …
@@ -250,19 +251,17 @@ src/lib.rs
    616→pub trait Context …
    617→    /// Wrap the error value with additional context.
    618→    fn context<C>(self, context: C) -> Result<T, Error>
-   619→    where
-   620→        C: Display + Send + Sync + 'static;
    622→    /// Wrap the error value with additional context that is evaluated lazily
    623→    /// only once an error does occur.
    624→    fn with_context<C, F>(self, f: F) -> Result<T, Error>
-   625→    where
-   626→        C: Display + Send + Sync + 'static,
-   627→        F: FnOnce() -> C;
    630→/// Equivalent to `Ok::<_, anyhow::Error>(value)`.
       →…
    650→pub fn Ok<T>(value: T) -> Result<T> {
    651→    Result::Ok(value)
    652→}
+   684→    pub fn format_err(args: Arguments) -> Error {
+   698→    pub fn must_use(error: Error) -> Error {
+   704→    pub fn not(cond: impl Bool) -> bool {
    710→        pub trait Bool …
    711→            fn not …
    714→        impl Bool for bool …
@@ -282,6 +281,7 @@ src/macros.rs
 
 src/nightly.rs
     41→pub fn request_ref_backtrace(err: &dyn Error) -> Option<&Backtrace> {
+    45→fn request_ref …
     52→pub fn provide_ref_backtrace<'a>(request: &mut Request<'a>, backtrace: &'a Backtrace) {
     56→pub fn provide<'a>(err: &'a (impl Error + ?Sized), request: &mut Request<'a>) {
 
@@ -335,6 +335,8 @@ rust-toolchain.toml
      2→components = ["rust-src"]
 
 tests/
+
+tests/common/
 
 tests/crate/
 

@@ -135,6 +135,9 @@ continuous-integration.md
     10→[Automated Deployment]: https://github.com/rust-lang/mdBook/wiki/Automated-Deployment
     11→
     12→## Installing mdBook
+    14→There are several different strategies for installing mdBook.
+    15→The particular method depends on your needs and preferences.
+    16→
     17→### Pre-compiled binaries
     39→### Building from source
     67→## Running tests
@@ -183,11 +186,6 @@ guide/reading.md
 
 format/example.rs
      1→fn main() {
-     2→    println!("Hello World!");
-     3→#
-     4→#     // You can even hide lines! :D
-     5→#     println!("I am hidden! Expand the code snippet to see me");
-     6→}
 
 format/markdown.md
      1→# Markdown
@@ -273,6 +271,9 @@ for_developers/mdbook-wordcount/Cargo.toml
      8→serde = "1.0"
      9→serde_derive = "1.0"
 
+cli/arg-watcher.md
+     1→#### `--watcher`
+
 cli/build.md
      1→# The build command
 
@@ -288,6 +289,9 @@ cli/init.md
 cli/serve.md
      1→# The serve command
     27→### Server options
+    35→#### `--open`
+    40→#### `--dest-dir`
+    49→#### Specify exclude patterns
 
 cli/test.md
      1→# The test command
@@ -375,8 +379,5 @@ format/configuration/renderers.md
     20→## Output tables
     84→## HTML renderer options
    325→## Markdown renderer
-
-misc/contributors.md
-     1→# Contributors
 
 format/images/

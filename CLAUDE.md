@@ -18,12 +18,6 @@ Use precis itself to explore this codebase instead of spawning Agents. Run `carg
 
 API docs for this crate and its dependencies are at @target/doc-md/index.md. Always run `cargo doc-md` after changing dependencies in Cargo.toml, or if `target/doc-md/` is missing docs for an installed crate.
 
-## Bash Operations
-
-Keep commands simple — complex bash syntax causes permission issues. Use `|`, `||`, `&&`, `>` but avoid string interpolation (`$()`, backticks), heredocs, and loops. For complex operations, write a temporary Rust binary in `src/bin/` and run it with `cargo run --bin <name>`.
-
-All commands must complete within 1 minute.
-
 ## Testing
 
 - Fixture data is defined once in `test/fixtures.rs`, shared by snapshot tests and the clone binary

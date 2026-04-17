@@ -1,5 +1,37 @@
 use crate::Lang;
 
+/// Two nodes are AST-adjacent iff they share a parent AND no other direct
+/// child of that parent sits between them in source order. Used by per-kind
+/// overload dedup to detect sibling pairs (C decl+defn, TS overload
+/// signatures, Rust `#[cfg]` duplicates) without a flat-stream scan.
+pub(crate) fn is_ast_adjacent(a: tree_sitter::Node, b: tree_sitter::Node) -> bool {
+    let (Some(pa), Some(pb)) = (a.parent(), b.parent()) else {
+        return false;
+    };
+    if pa.id() != pb.id() {
+        return false;
+    }
+    let (earlier, later) = if a.end_byte() <= b.start_byte() {
+        (a, b)
+    } else if b.end_byte() <= a.start_byte() {
+        (b, a)
+    } else {
+        return false;
+    };
+    let gap_start = earlier.end_byte();
+    let gap_end = later.start_byte();
+    let mut cursor = pa.walk();
+    for child in pa.children(&mut cursor) {
+        if child.id() == earlier.id() || child.id() == later.id() {
+            continue;
+        }
+        if child.start_byte() >= gap_start && child.end_byte() <= gap_end {
+            return false;
+        }
+    }
+    true
+}
+
 /// Reject symbols whose parent chain crosses a callable scope boundary —
 /// functions, methods, arrow functions, lambdas, generators. Item-level
 /// containment (class methods dropped by an outer class, typedef-wrapped

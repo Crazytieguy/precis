@@ -155,3 +155,27 @@ Today each per-kind `from_parse` traverses the whole file once and applies `acce
 Idea worth exploring: instead of duplicating extraction logic per container kind, re-run `dispatch_kinds` with a "treat `self` as the root" constraint — the same combined query walked against a subtree instead of the full tree, with `accept_top_level_symbol` reinterpreted relative to the subtree boundary. The filter logic already exists in `ast::is_inside_function` and the wrapper-list approach in Stage 5 makes this cleaner still.
 
 Out of scope for the TsGroupKey refactor batch. Noted for a future session once Stage 5 lands.
+
+## Tooling
+
+### 30. Agent-based A/B snapshot review workflow
+
+When a refactor produces snapshot diffs across many fixtures, a blind pairwise
+review decides net quality impact without the author reading each diff. Ran
+once on the TsGroupKey refactor, returned a clear verdict (21 wins / 7 losses
+/ 8 ties).
+
+Worth turning into a reusable skill. Rough opinions, open for discussion:
+
+- Git worktrees are overkill; `git show <ref>:<path>` or a similar per-file
+  fetch is lighter.
+- The scaffolding was ad-hoc Bash + Python; Python doesn't belong in this
+  project. If there's scaffolding beyond a skill prompt, it should be a Rust
+  bin (or stay inline in the skill).
+- One Agent per fixture rather than batches of six — the task is scoped, the
+  instruction prompt is identical, and prompt-caching should make the
+  per-fixture cost close to what batches cost.
+- A skill could orchestrate: pick baseline ref, generate pair files with
+  randomized A/B assignment, spawn per-fixture Agents, decode verdicts.
+
+Not a priority until the next big refactor is ready for review.

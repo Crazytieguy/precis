@@ -1,12 +1,16 @@
 //! Structural invariant tests (design §10).
 //!
-//! Verifies R1 (source fidelity), D4 (non-overlapping items),
-//! line-number monotonicity, and R4 (override resolution) using
-//! proper assertions that run in release mode.
+//! Verifies R1 (source fidelity), line-number monotonicity, and R4
+//! (override resolution) using proper assertions that run in release mode.
+//!
+//! D4 (non-overlapping items) used to be checked at `extract_items`, but
+//! stage 7 moved overlap handling into the per-file chainer in
+//! `src/group/files.rs`: overlapping items become `dependent_siblings` of
+//! their chain root instead of being dropped, so the post-`extract_items`
+//! stream is allowed to contain overlaps. The effective D4 guarantee is
+//! observed at the output level via `check_monotonicity`.
 
 use std::path::{Path, PathBuf};
-
-use precis::store::ParseStore;
 
 // ---------------------------------------------------------------------------
 // Output parsing
@@ -133,51 +137,6 @@ fn check_monotonicity(sections: &[FileSection]) {
                 );
             }
             prev = Some(cl.line_num);
-        }
-    }
-}
-
-/// D4: extracted items from a single file have non-overlapping line ranges.
-fn check_d4(path: &Path, store: &ParseStore) {
-    let Some((source, tree)) = store.parse(path) else {
-        return;
-    };
-    let Some(config) = store.config_for(path) else {
-        return;
-    };
-
-    let items = precis::parse::extract_items(path, source, tree, config);
-    let mut ranges: Vec<_> = items
-        .iter()
-        .map(|(_, item)| (item.start_line(), item.end_line))
-        .collect();
-    ranges.sort();
-
-    for w in ranges.windows(2) {
-        assert!(
-            w[0].1 <= w[1].0,
-            "D4: overlap in {}: [{},{}) and [{},{})",
-            path.display(),
-            w[0].0,
-            w[0].1,
-            w[1].0,
-            w[1].1,
-        );
-    }
-}
-
-/// Recursively check D4 on all parseable files under a directory.
-fn check_d4_recursive(dir: &Path, store: &ParseStore) {
-    let entries = match std::fs::read_dir(dir) {
-        Ok(e) => e,
-        Err(_) => return,
-    };
-    for entry in entries.flatten() {
-        let path = entry.path();
-        if path.is_dir() {
-            check_d4_recursive(&path, store);
-        } else if precis::Lang::from_path(&path).is_some() {
-            check_d4(&path, store);
         }
     }
 }
@@ -347,28 +306,13 @@ fn r1_and_monotonicity_inline() {
     }
 }
 
-/// D4: non-overlapping items on inline samples.
-#[test]
-fn d4_inline() {
-    let store = ParseStore::new();
-
-    for (filename, source) in samples() {
-        let dir = tempfile::tempdir().unwrap();
-        let file_path = dir.path().join(filename);
-        std::fs::write(&file_path, source).unwrap();
-        check_d4(&file_path, &store);
-    }
-}
-
-/// R1 + monotonicity + D4 on all available fixture directories.
+/// R1 + monotonicity on all available fixture directories.
 #[test]
 fn invariants_on_fixtures() {
     let fixtures_dir = Path::new(env!("CARGO_MANIFEST_DIR")).join("test/fixtures");
     if !fixtures_dir.exists() {
         return;
     }
-
-    let store = ParseStore::new();
 
     let mut fixture_dirs: Vec<PathBuf> = std::fs::read_dir(&fixtures_dir)
         .unwrap()
@@ -381,7 +325,6 @@ fn invariants_on_fixtures() {
     for fixture_path in &fixture_dirs {
         let output = precis::render(fixture_path, 4000, None);
         check_output_invariants(&output, fixture_path);
-        check_d4_recursive(fixture_path, &store);
     }
 }
 

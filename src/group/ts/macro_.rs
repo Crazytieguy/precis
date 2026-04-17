@@ -1,5 +1,6 @@
 //! Macro-family kinds.
 
+use super::doc::MacroDocFirst;
 use super::kind::{
     KindParseStrategy, OwnedQueryMatch, ParseTsGroup, TsGroupKindMethods, TsGroupKindParse,
 };
@@ -16,12 +17,6 @@ pub struct MacroName {
     pub preproc: bool,
 }
 
-#[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, Ord, PartialOrd)]
-pub struct MacroDocFirst;
-
-#[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, Ord, PartialOrd)]
-pub struct MacroDocRest;
-
 impl TsGroupKindMethods for MacroName {
     fn render_item<'s>(&self, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
         super::render_macro_name(self.preproc, item)
@@ -33,24 +28,6 @@ impl TsGroupKindMethods for MacroName {
             super::spawn_simple_child(&mut out, parent, TsGroupKey::MacroDocFirst(MacroDocFirst));
         }
         out
-    }
-}
-
-impl TsGroupKindMethods for MacroDocFirst {
-    fn render_item<'s>(&self, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
-        super::render_doc_first_lines(item)
-    }
-
-    fn children<'s>(&self, parent: &TsGroup<'s>) -> Vec<Group<'s>> {
-        let mut out = Vec::new();
-        super::spawn_simple_child(&mut out, parent, TsGroupKey::MacroDocRest(MacroDocRest));
-        out
-    }
-}
-
-impl TsGroupKindMethods for MacroDocRest {
-    fn render_item<'s>(&self, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
-        super::render_doc_rest_lines(item)
     }
 }
 
@@ -73,7 +50,7 @@ impl TsGroupKindParse for MacroName {
         matches: &[OwnedQueryMatch<'s>],
         ctx: &FileCtx<'s>,
     ) -> Vec<ParseTsGroup<'s>> {
-        super::simple_named_groups(matches, ctx, |m, ctx| {
+        let mut groups = super::per_match_groups(matches, ctx, |m, ctx| {
             let kind = m.symbol.kind();
             let preproc = matches!(kind, "preproc_def" | "preproc_function_def");
             if kind == "preproc_def"
@@ -87,6 +64,8 @@ impl TsGroupKindParse for MacroName {
                 public: visibility::macro_visibility(m.symbol, ctx.source, ctx.lang),
                 preproc,
             }))
-        })
+        });
+        super::dedup_duplicate_type_decls(&mut groups, ctx);
+        groups
     }
 }

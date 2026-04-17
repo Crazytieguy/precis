@@ -41,7 +41,11 @@ README.md
    142→### 6. Remove Saved Connections
    154→## 🔒 Security
    162→## 🤝 Contributing
+   164→Contributions to peepDB are welcome! Please refer to our [Contributing Guide](CONTRIBUTING.md) for more information.
+   165→
    166→## 📜 License
+   168→Distributed under the GNU General Public License Version 3. See the [LICENSE](LICENSE) file for more details.
+   169→
    170→## 📚 Documentation
    172→For more detailed documentation, please visit our [GitHub Pages](https://peepdb.dev/).
 
@@ -177,10 +181,14 @@ docs/README.md
     14→To get started with creating a site, simply:
     23→## Replace the content of the template pages
     30→## Changing the version of the theme and/or Jekyll
+    32→Simply edit the relevant line(s) in the `Gemfile`.
+    33→
     34→## Adding a plugin
     55→## Publishing your site on GitHub Pages
     76→## Building and previewing your site locally
     88→## Publishing your built site on a different platform
+    90→Just upload all the files in the directory `_site`.
+    91→
     92→## Customization
     98→## Hosting your docs from an existing project repo
    102→### Copy the template files
@@ -297,7 +305,6 @@ project.toml
     46→[project.scripts]
     47→peepdb = "peepdb.cli:main"
     48→
-    49→[tool.setuptools.packages.find]
 
 docs/index.md
      6→# peepDB
@@ -333,13 +340,5 @@ docs/usage.md
     58→## Removing Saved Connections
     74→## Help
     82→## Examples
-
-docs/_config.yml
-     1→title: peepDB
-     2→description: A starter template for a Jeykll site using the Just the Docs theme!
-     3→theme: just-the-docs
-     5→url: https://just-the-docs.github.io
-     7→aux_links:
-     8→  Template Repository: https://github.com/just-the-docs/just-the-docs-template
 
 images/

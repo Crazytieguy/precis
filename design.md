@@ -159,7 +159,10 @@ items. Each item references one tree-sitter node and the file it came from:
 ```rust
 pub struct TsItem<'t> {
     pub path: &'t Path,
+    pub source: &'t str,
     pub node: tree_sitter::Node<'t>,
+    /// Exclusive render extent (can exceed node.end for section stretching).
+    pub end_line: usize,
 }
 ```
 
@@ -178,91 +181,81 @@ only introduced when items from different files would be prioritized
 differently (e.g., different inherited modifiers due to different parent-file
 properties). See D7 in §10.
 
-Sketched group-key enum (non-exhaustive; exact shape TBD in implementation):
+The group-key enum (non-exhaustive; wrapped types live in
+`src/group/ts/<family>.rs`):
 
 ```rust
 pub enum TsGroupKey {
     // Module-level
-    ModuleDocFirst,
-    ModuleDocRest,
+    ModuleDocFirst(module::ModuleDocFirst),
+    ModuleDocRest(module::ModuleDocRest),
 
     // Imports
-    Import { first_party: bool },
-    ImportedItems { first_party: bool },
+    Import(import::Import),                      // { first_party, reexport }
+    ImportedItems(import::ImportedItems),
 
     // Function-like
-    FunctionName { documented: bool, private: bool },
-    FunctionDocFirst,
-    FunctionDocRest,
-    FunctionSig,
-    FunctionBody,
+    FunctionName(function::FunctionName),        // { documented, public }
+    FunctionDocFirst(function::FunctionDocFirst),
+    FunctionDocRest(function::FunctionDocRest),
+    FunctionSig(function::FunctionSig),
+    FunctionBody(function::FunctionBody),
 
-    // Structs
-    StructName { documented: bool, private: bool },
-    StructDocFirst,
-    StructDocRest,
-    StructBody,
+    // Structs / Enums / Classes / Interfaces / Traits: same shape — a Name
+    // struct carrying { documented, public }, DocFirst/DocRest, plus an
+    // optional Body. Methods of Class/Interface/Trait/ImplBlock are spawned
+    // as ordinary FunctionName groups whose inherited_modifier comes from
+    // the parent-chain.
+    StructName(struct_::StructName),  StructDocFirst, StructDocRest, StructBody,
+    EnumName(enum_::EnumName),        EnumDocFirst,   EnumDocRest,   EnumBody,
+    ClassName(class::ClassName),      ClassDocFirst,  ClassDocRest,  ClassBody,
+    InterfaceName(interface::InterfaceName), InterfaceDocFirst, InterfaceDocRest,
+    TraitName(trait_::TraitName),            TraitDocFirst,     TraitDocRest,
+    ImplBlock(impl_block::ImplBlock),        // { is_trait_impl, is_boilerplate_trait }
 
-    // Enums
-    EnumName { documented: bool, private: bool },
-    EnumDocFirst,
-    EnumDocRest,
-    EnumBody,
-
-    // Classes
-    ClassName { documented: bool, private: bool },
-    ClassDocFirst,
-    ClassDocRest,
-    // Methods are spawned as FunctionName groups whose inherited modifier
-    // comes from the parent class chain.
-
-    // Interfaces
-    InterfaceName { documented: bool, private: bool },
-    InterfaceDocFirst,
-    InterfaceDocRest,
-
-    // Rust traits
-    TraitName { documented: bool, private: bool },
-    TraitDocFirst,
-    TraitDocRest,
-
-    // Rust impl blocks
-    ImplBlock { is_trait_impl: bool },
-
-    // Type aliases
-    TypeAliasName { documented: bool, private: bool },
-    TypeAliasDocFirst,
-    TypeAliasDocRest,
-
-    // Consts and statics (merged)
-    ConstName { documented: bool, private: bool },
-    ConstDocFirst,
-    ConstDocRest,
-
-    // Macros
-    MacroName { documented: bool, private: bool },
-    MacroDocFirst,
-    MacroDocRest,
+    TypeAliasName(type_alias::TypeAliasName), TypeAliasDocFirst, TypeAliasDocRest,
+    ConstName(const_::ConstName),             ConstDocFirst,     ConstDocRest,
+    MacroName(macro_::MacroName),             MacroDocFirst,     MacroDocRest,
 
     // Markdown
-    Heading { level: u8 },
-    HeadingBody,
+    Heading(heading::Heading),          // { level, boilerplate }
+    HeadingBody(heading::HeadingBody),  // { level }
 
-    // JSON / TOML / YAML top-level and nested keys
-    DataSection,
-    DataSectionBody,
+    // JSON / TOML / YAML
+    DataSection(data_section::DataSection),         // { level }
+    DataSectionBody(data_section::DataSectionBody), // { level }
 }
 ```
+
+**Per-kind traits.** Each wrapped struct implements `TsGroupKindMethods`
+(render_item, children) and — for kinds that participate in parsing —
+`TsGroupKindParse` (parse_strategy, from_parse). The central `TsGroupKey`
+impl forwards via a 40-arm match. The trait surface is the extensibility
+point: adding a new kind is one file plus one variant.
+
+**Per-kind parsing.** Each kind declares a `KindParseStrategy` per language
+(`None`, `SourceOnly`, or `Query(&'static str)`). The parse dispatcher
+concatenates every Query kind's string into one combined `tree_sitter::Query`
+per language, walks each file once, and dispatches matches to the owning
+kind's `from_parse` based on `pattern_index`. The combined query is compiled
+lazily per `LanguageConfig`.
+
+**`ParseTsGroup` pipeline.** Each per-kind `from_parse` returns
+`Vec<ParseTsGroup>` — a pre-calibration group that carries items and
+already-nested `dependent_siblings` (heading nesting, etc). Per file, these
+are merged by key, overlap-chained, and gated; then aggregated across
+files and finalized into `TsGroup` values with `inherited_modifier` set.
+The generic passes live in `group::aggregate`.
 
 ### 3.4 LineEntry
 
 ```rust
 pub enum LineEntry<'src> {
     /// Full source line. Rendered as "NNNN→<content>".
-    Full { line: u32, content: &'src str },
+    Complete { line: u32, content: &'src str },
 
     /// Prefix of a source line, the rest omitted. Rendered as "NNNN→<content>…".
-    Prefix { line: u32, content: &'src str },
+    Truncated { line: u32, content: &'src str },
 
     /// Ellipsis placeholder at a specific source line. Rendered as "    →…".
     /// The line number is used for ordering and override resolution, not
@@ -275,10 +268,10 @@ All content is a `&'src str` borrowed directly from the parsed source. The
 renderer assembles the final output by iterating sorted entries and appending
 to a single `String`; no intermediate allocations.
 
-Override ordering by "content amount": `Ellipsis < Prefix < Full`. When two
-prefixes collide at the same line, the one with more characters wins. A
-`debug_assert!` enforces this at override time: a later group emitting at an
-already-occupied line must strictly increase content.
+Override ordering by "content amount": `Ellipsis < Truncated < Complete`.
+When two truncated entries collide at the same line, the one with more
+characters wins. A `debug_assert!` enforces this at override time: a later
+group emitting at an already-occupied line must strictly increase content.
 
 ### 3.5 Parse storage and lifetimes
 
@@ -304,90 +297,104 @@ when the main group is scheduled.
     ├── ModuleDocFirst
     │    └── ModuleDocRest
     │
-    ├── Import(first_party=true)
-    │    ├── ImportedItems(first_party=true)
-    │    ⇢ Import(first_party=false)
-    │         └── ImportedItems(first_party=false)
+    ├── Import(first_party=true, reexport)
+    │    ├── ImportedItems(first_party=true, reexport)
+    │    ⇢ Import(first_party=false, reexport)
+    │         └── ImportedItems(first_party=false, reexport)
     │
-    ├── FunctionName(documented=true, private=false)
+    ├── FunctionName(documented=true, public=true)
+    │    ├── FunctionSig → FunctionBody
     │    ├── FunctionDocFirst → FunctionDocRest
-    │    ├── FunctionSig → FunctionBody
-    │    ⇢ FunctionName(documented=true, private=true)
+    │    ⇢ FunctionName(documented=_, public=false)
     │
-    ├── FunctionName(documented=false, private=false)
-    │    ├── FunctionSig → FunctionBody
-    │    ⇢ FunctionName(documented=false, private=true)
+    ├── StructName(documented, public=true)
+    │    ├── StructDocFirst → StructDocRest   (if documented)
+    │    ├── StructBody                       (fields, atomic)
+    │    ⇢ StructName(public=false)
     │
-    ├── StructName(documented, private)
-    │    ├── StructDocFirst → StructDocRest
-    │    ├── StructBody         (fields, atomic)
-    │    ⇢ (private variant)
+    ├── EnumName(documented, public=true)
+    │    ├── EnumDocFirst → EnumDocRest       (if documented)
+    │    ├── EnumBody                         (variants, atomic)
+    │    ⇢ EnumName(public=false)
     │
-    ├── EnumName(documented, private)
-    │    ├── EnumDocFirst → EnumDocRest
-    │    ├── EnumBody           (variants, atomic)
-    │    ⇢ (private variant)
+    ├── ClassName(documented, public=true)
+    │    ├── ClassDocFirst → ClassDocRest     (if documented)
+    │    ├── ClassBody                        (Python only, atomic)
+    │    ├── FunctionName(method)             (method extraction)
+    │    ⇢ ClassName(public=false)
     │
-    ├── ClassName(documented, private)
-    │    ├── ClassDocFirst → ClassDocRest
-    │    ⇢ (private variant)
-    │
-    ├── InterfaceName(documented, private)
+    ├── InterfaceName(documented, public=true)
     │    ├── InterfaceDocFirst → InterfaceDocRest
-    │    ⇢ (private variant)
+    │    ├── FunctionName(method)
+    │    ⇢ InterfaceName(public=false)
     │
-    ├── TraitName(documented, private)
+    ├── TraitName(documented, public=true)
     │    ├── TraitDocFirst → TraitDocRest
-    │    ⇢ (private variant)
+    │    ├── FunctionName(method)
+    │    ⇢ TraitName(public=false)
     │
     ├── ImplBlock(is_trait_impl=false)
-    │    ⇢ ImplBlock(is_trait_impl=true)
+    │    ├── FunctionName(method, modifier=1.0)
+    │    ⇢ ImplBlock(is_trait_impl=true, is_boilerplate_trait)
+    │         └── FunctionName(method, modifier=0.5 or 0.15 if boilerplate)
     │
-    ├── TypeAliasName(documented, private)
-    │    └── TypeAliasDocFirst → TypeAliasDocRest
+    ├── TypeAliasName(documented, public=true)
+    │    └── TypeAliasDocFirst → TypeAliasDocRest  (if documented)
+    │    ⇢ TypeAliasName(public=false)
     │
-    ├── ConstName(documented, private)       (const + static merged)
-    │    └── ConstDocFirst → ConstDocRest
+    ├── ConstName(documented, public=true)    (const + static merged)
+    │    └── ConstDocFirst → ConstDocRest     (if documented)
+    │    ⇢ ConstName(public=false)
     │
-    ├── MacroName(documented, private)
-    │    └── MacroDocFirst → MacroDocRest
+    ├── MacroName(documented, public=true, preproc)
+    │    └── MacroDocFirst → MacroDocRest     (if documented)
+    │    ⇢ MacroName(public=false)
     │
-    ├── Heading(level=1)                     (markdown only)
+    ├── Heading(level=1, boilerplate)         (markdown only)
     │    ├── HeadingBody
-    │    └── Heading(level=2)
+    │    └── Heading(level=2, ...)            (nested via dependent_siblings)
     │         └── ... nested
     │
-    └── DataSection                          (JSON / TOML / YAML)
-         ├── DataSectionBody
-         └── DataSection                     (nested)
+    └── DataSection(level)                    (JSON / TOML / YAML)
+         └── DataSectionBody(level)           (flat: one group per distinct level)
 ```
 
 Notes:
 
-- **Private promotion.** If a file has no public items of a given kind but
-  does have private items, the private group is promoted to be a direct child
-  of `Files` rather than gated. Detection happens at group-construction time
-  in the `Files::children()` call.
+- **Gating is per-file.** Private items gate behind public counterparts
+  within the *same file* (`aggregate::apply_per_file_gating`, driven by
+  `TsGroupKey::is_gated` / `is_gated_by`). A private from file A does not
+  gate behind a public from file B. If no public counterpart exists in the
+  file, the gated group promotes to a direct child of `Files`.
+- **Generated files are skipped at extraction time.** `FilesGroup::children`
+  short-circuits before parsing when the filename or source contents match
+  the generated-file heuristics. Generated items never enter the pipeline.
 - **Methods as `FunctionName`.** Methods inside classes, interfaces, traits,
   and impl blocks are represented by ordinary `FunctionName` groups, spawned
   as children of the enclosing type. The modifier difference comes from the
   parent-chain `inherited_modifier`, not from a separate `MethodName` kind.
-  These method children are not drawn inline in the tree above; they are a
-  direct consequence of this note.
 - **Trait impl methods are boilerplate.** An `ImplBlock(is_trait_impl=true)`
-  contributes a lower modifier to its method children than
-  `ImplBlock(is_trait_impl=false)` does. The modifier does not depress the
-  impl block's own value — only its descendants'.
-- **Nested items filtered at query time.** If a tree-sitter query match is a
-  descendant of another match of the same kind (e.g. a nested function inside
-  a function), the nested one is dropped. This preserves "function body is
+  contributes a lower modifier (0.5, or 0.15 for boilerplate traits like
+  `Debug`/`Clone`) to its method children than `ImplBlock(is_trait_impl=false)`
+  does. The modifier does not depress the impl block's own value — only its
+  descendants'.
+- **Nested items filtered after extraction.** `filter_nested_items` drops any
+  group whose single item is contained in another group's byte range (e.g.,
+  a nested function inside a function). This preserves "function body is
   atomic" while losing the ability to surface nested functions separately.
   Accepted trade-off.
+- **Line-overlap chainer.** Items whose source line ranges overlap
+  (e.g. Lua `local x = {}; x.foo = bar`) are lifted into the earlier item's
+  `dependent_siblings` instead of being dropped, with chain depth capped at 5.
+- **Heading nesting is per-individual.** Inside `Heading::from_parse`, each
+  heading picks its parent as the most recent earlier heading with strictly
+  lower level (stack walk). Headings stretch their `end_line` to the next
+  heading's start so their body spans the full section.
 - **Plain-text / fallback files** have no children. Their file name appears in
   the output but nothing else.
 - **Markdown and data-file sections are distinct kinds.** `Heading` is
   markdown-specific; `DataSection` covers JSON/TOML/YAML. Same structural
-  shape but separate value heuristics.
+  shape, shared level-based value curves, separate rendering.
 
 ## 5. Scheduling
 
@@ -666,10 +673,12 @@ marginal_cost(candidate | scheduled)
 
 ## 9. Heuristics location
 
-All per-kind value functions and modifier contribution functions should live
-in one findable location, so that the calibration sweep (§12) can reference
-every heuristic in a single place. The exact module layout and API are left
-to implementation.
+All per-kind value functions and modifier contribution functions live in
+`src/calibration.rs`, so that the calibration sweep (§12) can reference
+every heuristic in a single place. Each Group variant has its own
+`*_base_value` and `*_contribution`, plus `compute_item_modifier` for the
+`name_doc_visibility` / boilerplate-heading / reexport factors. Any new
+calibration constant belongs in this module.
 
 ## 10. Invariants
 

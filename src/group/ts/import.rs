@@ -52,6 +52,10 @@ const IMPORT_RUST_QUERY: &str = "\
 const IMPORT_TS_QUERY: &str = "\
 (import_statement) @symbol
 (export_statement) @symbol
+(expression_statement
+  (assignment_expression
+    left: (member_expression
+      object: (identifier)))) @symbol
 ";
 const IMPORT_PYTHON_QUERY: &str = "\
 (import_statement) @symbol
@@ -78,7 +82,7 @@ impl TsGroupKindParse for Import {
         matches: &[OwnedQueryMatch<'s>],
         ctx: &FileCtx<'s>,
     ) -> Vec<ParseTsGroup<'s>> {
-        super::simple_named_groups(matches, ctx, |m, ctx| {
+        super::per_match_groups(matches, ctx, |m, ctx| {
             let kind = m.symbol.kind();
             match (ctx.lang, kind) {
                 (Lang::Rust, "use_declaration") => {
@@ -115,6 +119,12 @@ impl TsGroupKindParse for Import {
                 }
                 (Lang::TypeScript | Lang::Tsx, "export_statement") => {
                     crate::parse::classify_js_export(m.symbol, ctx.source)
+                }
+                // `module.exports = require(...)` is a re-export; the
+                // ConstName path (which also captures expression_statement)
+                // rejects the match in that case.
+                (Lang::TypeScript | Lang::Tsx, "expression_statement") => {
+                    crate::parse::classify_js_cjs_reexport(m.symbol, ctx.source)
                 }
                 (Lang::Python, "import_statement") => Some(TsGroupKey::Import(Import {
                     first_party: crate::parse::is_first_party_import(

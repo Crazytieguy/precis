@@ -15,11 +15,17 @@ README.md
     19→## Key Features
     36→## What's New in v2.2.0
     42→## Installation
+    44→### Using Homebrew (macOS)
+    52→### Building from Source
+    69→### Requirements
+    75→### Build Options
     84→## Usage
     96→## Usage Examples
    134→## Command Line Options
    155→## Performance Benchmarks
    180→## How Krep Works
+   182→Krep achieves its high performance through several key techniques:
+   183→
 
 aho_corasick.h
     15→typedef struct search_params search_params_t …
@@ -114,9 +120,4 @@ krep.h
    312→static inline bool is_whole_word_match(const char *text, size_t text_len, size_t start, size_t end)
    313→{
 
-test/test_krep.h
-    16→#define TESTING
-
-krep.c
-  3146→typedef struct …
-  3154→typedef struct gitignore …
+test/

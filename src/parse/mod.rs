@@ -6,7 +6,6 @@ pub(crate) mod module_doc;
 pub(crate) mod visibility;
 
 use std::collections::HashSet;
-use std::mem::discriminant;
 use std::path::Path;
 
 use streaming_iterator::StreamingIterator;
@@ -14,29 +13,29 @@ use tree_sitter::{Node, QueryCursor};
 
 use crate::Lang;
 use crate::group::TsGroupKey;
-use crate::group::TsItem;
 use crate::group::ts::kind::{
     KindParseStrategy, OwnedQueryMatch, ParseTsGroup, TsGroupKindParse,
 };
 use crate::group::ts::{
-    class, const_, enum_, function, heading, impl_block, import, interface, macro_, module,
-    struct_, trait_, type_alias,
+    class, const_, data_section, enum_, function, heading, impl_block, import, interface, macro_,
+    module, struct_, trait_, type_alias,
 };
 use crate::parse::file_ctx::FileCtx;
 use crate::store::LanguageConfig;
 
-/// Extract top-level items from a parsed source file, classifying each
-/// directly into a `TsGroupKey` paired with a `TsItem`.
+/// Extract top-level items from a parsed source file, returning
+/// pre-calibration `ParseTsGroup` values. Heading-style kinds may embed
+/// nested `dependent_siblings` that must survive all downstream passes.
 pub fn extract_items<'t>(
     display_path: &'t Path,
     source: &'t str,
     tree: &'t tree_sitter::Tree,
     config: &'t LanguageConfig,
-) -> Vec<(TsGroupKey, TsItem<'t>)> {
+) -> Vec<ParseTsGroup<'t>> {
     let lang = config.lang;
     let root = tree.root_node();
 
-    // `lines` is only consulted by Heading arms (markdown/toml/json/yaml).
+    // `lines` is only consulted by Heading and DataSection arms.
     // Skipping the collect() for other languages saves an allocation
     // proportional to file line count on the hot path.
     let lines: Vec<&str> = if matches!(lang, Lang::Markdown | Lang::Toml | Lang::Json | Lang::Yaml)
@@ -59,28 +58,9 @@ pub fn extract_items<'t>(
         export_names,
     };
 
-    let mut items: Vec<(TsGroupKey, TsItem<'t>)> = Vec::new();
-
-    for parse_group in dispatch_kinds(tree, &ctx) {
-        for item in parse_group.items {
-            items.push((parse_group.key, item));
-        }
-    }
-
-    filter_nested_items(&mut items);
-    dedup_line_overlaps(&mut items);
-    extend_section_ranges(&mut items, source);
-    dedup_overloads(&mut items, lang, source);
-
-    assert!(
-        items
-            .windows(2)
-            .all(|w| w[0].1.end_line <= w[1].1.start_line()),
-        "D4 violation: top-level items overlap after nesting filter in {}",
-        display_path.display()
-    );
-
-    items
+    let mut groups = dispatch_kinds(tree, &ctx);
+    filter_nested_items(&mut groups);
+    groups
 }
 
 // ---------------------------------------------------------------------------
@@ -107,10 +87,11 @@ macro_rules! query_kinds {
         $macro!(9, function::FunctionName);
         $macro!(10, const_::ConstName);
         $macro!(11, import::Import);
+        $macro!(12, data_section::DataSection);
     };
 }
 
-const NUM_QUERY_KINDS: usize = 12;
+const NUM_QUERY_KINDS: usize = 13;
 
 // Compile-time check: every ordinal in `query_kinds!` must fit within
 // `NUM_QUERY_KINDS`. Adding a new kind without bumping `NUM_QUERY_KINDS`
@@ -363,7 +344,44 @@ pub(crate) fn classify_js_export(node: Node, source: &str) -> Option<TsGroupKey>
     }))
 }
 
-pub(crate) fn classify_js_cjs_export(node: Node, source: &str, documented: bool) -> Option<TsGroupKey> {
+/// Classify a CJS `exports.X = …` / `module.exports = …` as a ConstName.
+/// Returns `None` for `module.exports = require(…)` (handled by
+/// `classify_js_cjs_reexport`) or anything that isn't a CJS export assignment.
+pub(crate) fn classify_js_cjs_const(node: Node, source: &str, documented: bool) -> Option<TsGroupKey> {
+    let (obj_text, rhs) = cjs_export_target(node, source)?;
+    match obj_text {
+        "exports" => Some(TsGroupKey::ConstName(const_::ConstName {
+            documented,
+            public: true,
+        })),
+        "module" if !is_rhs_require(rhs, source) => Some(TsGroupKey::ConstName(const_::ConstName {
+            documented,
+            public: true,
+        })),
+        _ => None,
+    }
+}
+
+/// Classify a CJS `module.exports = require('X')` as a re-export Import.
+/// Returns `None` for anything that isn't a module.exports = require(...)
+/// re-export.
+pub(crate) fn classify_js_cjs_reexport(node: Node, source: &str) -> Option<TsGroupKey> {
+    let (obj_text, rhs) = cjs_export_target(node, source)?;
+    if obj_text != "module" || !is_rhs_require(rhs, source) {
+        return None;
+    }
+    Some(TsGroupKey::Import(import::Import {
+        first_party: is_rhs_require_first_party(rhs, source),
+        reexport: true,
+    }))
+}
+
+/// Walk a CJS export assignment (`exports.X = …`, `module.exports = …`),
+/// returning `(left-hand object name, right-hand side node)`.
+fn cjs_export_target<'a, 's: 'a>(
+    node: Node<'a>,
+    source: &'s str,
+) -> Option<(&'s str, Node<'a>)> {
     let assign = node
         .named_children(&mut node.walk())
         .find(|c| c.kind() == "assignment_expression")?;
@@ -373,32 +391,14 @@ pub(crate) fn classify_js_cjs_export(node: Node, source: &str, documented: bool)
     }
     let obj = left.child_by_field_name("object")?;
     let obj_text = obj.utf8_text(source.as_bytes()).ok()?;
-    match obj_text {
-        "exports" => Some(TsGroupKey::ConstName(const_::ConstName {
-            documented,
-            public: true,
-        })),
-        "module" => {
-            let prop = left.child_by_field_name("property")?;
-            let prop_text = prop.utf8_text(source.as_bytes()).ok()?;
-            if prop_text != "exports" {
-                return None;
-            }
-            let rhs = assign.child_by_field_name("right")?;
-            if is_rhs_require(rhs, source) {
-                Some(TsGroupKey::Import(import::Import {
-                    first_party: is_rhs_require_first_party(rhs, source),
-                    reexport: true,
-                }))
-            } else {
-                Some(TsGroupKey::ConstName(const_::ConstName {
-                    documented,
-                    public: true,
-                }))
-            }
+    if obj_text == "module" {
+        let prop = left.child_by_field_name("property")?;
+        if prop.utf8_text(source.as_bytes()).ok()? != "exports" {
+            return None;
         }
-        _ => None,
     }
+    let rhs = assign.child_by_field_name("right")?;
+    Some((obj_text, rhs))
 }
 
 fn is_rhs_require(rhs: Node, source: &str) -> bool {
@@ -780,26 +780,30 @@ pub(crate) fn compute_end_line(node: Node) -> usize {
 // Post-extraction filters
 // ---------------------------------------------------------------------------
 
-/// Cross-kind nesting filter: drop any item whose node byte range is fully
-/// contained within another item's node byte range (D4).
-fn filter_nested_items(items: &mut Vec<(TsGroupKey, TsItem<'_>)>) {
-    if items.len() <= 1 {
+/// Cross-kind nesting filter: drop any top-level group whose single item is
+/// fully contained in another group's single item byte range (D4). Relies on
+/// the invariant that every `ParseTsGroup` coming out of `dispatch_kinds` has
+/// exactly one `items` entry; items nested under `dependent_siblings` already
+/// belong to a containing group and are left alone.
+fn filter_nested_items(groups: &mut Vec<ParseTsGroup<'_>>) {
+    if groups.len() <= 1 {
         return;
     }
 
-    items.sort_by(|a, b| {
-        a.1.node
-            .start_byte()
-            .cmp(&b.1.node.start_byte())
-            .then(b.1.node.end_byte().cmp(&a.1.node.end_byte()))
+    groups.sort_by(|a, b| {
+        let na = a.items[0].node;
+        let nb = b.items[0].node;
+        na.start_byte()
+            .cmp(&nb.start_byte())
+            .then(nb.end_byte().cmp(&na.end_byte()))
     });
 
-    let mut keep = vec![true; items.len()];
+    let mut keep = vec![true; groups.len()];
     let mut stack: Vec<(usize, usize)> = Vec::new();
-
-    for (i, (_, item)) in items.iter().enumerate() {
-        let start = item.node.start_byte();
-        let end = item.node.end_byte();
+    for (i, g) in groups.iter().enumerate() {
+        let node = g.items[0].node;
+        let start = node.start_byte();
+        let end = node.end_byte();
 
         while let Some(&(_, parent_end)) = stack.last() {
             if parent_end <= start {
@@ -820,111 +824,15 @@ fn filter_nested_items(items: &mut Vec<(TsGroupKey, TsItem<'_>)>) {
         stack.push((start, end));
     }
 
-    let mut write = 0;
-    for (read, &kept) in keep.iter().enumerate() {
-        if kept {
-            if write != read {
-                items.swap(write, read);
-            }
-            write += 1;
-        }
-    }
-    items.truncate(write);
-
-    items.sort_by_key(|(_, item)| item.start_line());
-}
-
-/// Drop items whose start line falls inside a previous item's range.
-/// Handles e.g. Lua's `local x = {}; x.foo = bar` (two independent items on one line).
-fn dedup_line_overlaps(items: &mut Vec<(TsGroupKey, TsItem<'_>)>) {
-    if items.len() <= 1 {
-        return;
-    }
-    items.sort_by_key(|(_, i)| (i.start_line(), i.node.start_byte()));
-    let mut max_end: usize = 0;
-    let mut first = true;
-    items.retain(|(_, item)| {
-        if first || item.start_line() >= max_end {
-            max_end = item.end_line;
-            first = false;
-            true
-        } else {
-            max_end = max_end.max(item.end_line);
-            false
-        }
+    let mut idx = 0;
+    groups.retain(|_| {
+        let k = keep[idx];
+        idx += 1;
+        k
     });
 }
 
-/// Stretch Heading items whose grammar only captures the heading line forward
-/// to the next item's start (or EOF).
-fn extend_section_ranges(items: &mut [(TsGroupKey, TsItem<'_>)], source: &str) {
-    let is_heading = |k: &TsGroupKey| matches!(k, TsGroupKey::Heading(_));
-    if !items.iter().any(|(k, _)| is_heading(k)) {
-        return;
-    }
-    let total_lines = source.lines().count();
-    let heading_indices: Vec<usize> = items
-        .iter()
-        .enumerate()
-        .filter(|(_, (k, _))| is_heading(k))
-        .map(|(idx, _)| idx)
-        .collect();
-
-    for &idx in &heading_indices {
-        let next_start = items
-            .get(idx + 1)
-            .map(|(_, item)| item.start_line())
-            .unwrap_or(total_lines);
-        items[idx].1.end_line = next_start;
-    }
-}
-
-/// Drop duplicate overloads (C decl+defn, TS overload signatures) and
-/// duplicate type declarations (Rust cfg'd dupes, etc.).
-fn dedup_overloads(items: &mut Vec<(TsGroupKey, TsItem<'_>)>, lang: Lang, source: &str) {
-    if !matches!(
-        lang,
-        Lang::Rust | Lang::C | Lang::Cpp | Lang::TypeScript | Lang::Tsx
-    ) {
-        return;
-    }
-    let mut seen: HashSet<(&str, std::mem::Discriminant<TsGroupKey>)> = HashSet::new();
-    let mut to_remove = Vec::new();
-    let mut prev: Option<(&str, std::mem::Discriminant<TsGroupKey>)> = None;
-
-    for (i, (key, item)) in items.iter().enumerate() {
-        let ident = item_identifier(item.node, source);
-        let tag = discriminant(key);
-
-        if let Some((pname, ptag)) = prev
-            && pname == ident
-            && ptag == tag
-        {
-            to_remove.push(i - 1);
-            continue;
-        }
-        if matches!(
-            key,
-            TsGroupKey::StructName(_)
-                | TsGroupKey::EnumName(_)
-                | TsGroupKey::TypeAliasName(_)
-                | TsGroupKey::MacroName(_)
-        ) && !seen.insert((ident, tag))
-        {
-            to_remove.push(i);
-            continue;
-        }
-        prev = Some((ident, tag));
-    }
-
-    to_remove.sort_unstable();
-    to_remove.dedup();
-    for idx in to_remove.into_iter().rev() {
-        items.remove(idx);
-    }
-}
-
-fn item_identifier<'a>(node: Node, source: &'a str) -> &'a str {
+pub(crate) fn item_identifier<'a>(node: Node, source: &'a str) -> &'a str {
     if let Some(name_node) = node.child_by_field_name("name")
         && let Ok(text) = name_node.utf8_text(source.as_bytes())
     {

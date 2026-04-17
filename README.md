@@ -22,8 +22,16 @@ README.md
     20→
     30→## Install
     56→## Usage
+    81→### Typescript
    113→## Examples & Demos
    123→## API
+   138→### mitt
+   144→### all
+   148→### on
+   152→#### Parameters
+   157→### off
+   162→#### Parameters
+   167→### emit
 
 src/index.ts
      1→export type EventType …
@@ -39,11 +47,9 @@ src/index.ts
     33→	off …
     35→	emit …
     36→	emit …
-    42→ * Mitt: Tiny (~200b) functional event emitter / pubsub.
-      →…
-    46→export default function mitt<Events extends Record<EventType, unknown>>(
-    47→	all?: EventHandlerMap<Events>
-    48→): Emitter<Events> {
+    46→export default function mitt …
+
+test/
 ```
 <!-- precis-example-end -->
 

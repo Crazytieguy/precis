@@ -33,7 +33,16 @@ ARCHITECTURE.md
     10→
     11→## `vec0`
     13→### Shadow Tables
+    15→#### `xyz_chunks`
+    22→#### `xyz_rowids`
+    29→#### `xyz_vector_chunksNN`
+    34→#### `xyz_auxiliary`
+    39→#### `xyz_metadatachunksNN`
+    44→#### `xyz_metadatatextNN`
     49→### idxStr
+    69→#### `VEC0_IDXSTR_KIND_KNN_MATCH` (`'{'`)
+    75→#### `VEC0_IDXSTR_KIND_KNN_K` (`'}'`)
+   102→#### `VEC0_IDXSTR_KIND_POINT_ID` (`'!'`)
 
 bindings/python/extra_init.py
      6→def serialize_float32(vector: List[float]) -> bytes:
@@ -298,33 +307,17 @@ examples/nbc-headlines/README.md
 examples/simple-python/demo.py
      8→def serialize_f32(vector: List[float]) -> bytes:
 
-site/api-reference.md
-     5→# API Reference
-
-site/compiling.md
-     5→# Compiling `sqlite-vec`
-
 site/project.data.ts
     13→  load() {
 
-site/sqlite.tmlanguage.json
-     2→  "information_for_contributors": [
-     7→  "version": "https://github.com/microsoft/vscode-mssql/commit/3929516cce0a570e91ee1be74b09ed886cb360f4",
-     8→  "name": "sqlite",
-     9→  "scopeName": "source.sqlite",
-    10→  "patterns": [
-   392→  "repository": {
-
-site/versioning.md
-     1→# Semantic Versioning for `sqlite-vec`
+examples/python-recipes/openai-sample.py
+    10→def serialize …
 
 bindings/
 
 bindings/go/
 
 examples/
-
-examples/python-recipes/
 
 examples/simple-c/
 
@@ -347,7 +340,5 @@ site/getting-started/
 site/guides/
 
 site/public/
-
-site/public/fonts/
 
 site/using/

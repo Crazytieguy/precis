@@ -10,6 +10,7 @@ README.md
     15→
     16→## Key features
     33→## Testimonials
+    47→## Support
     51→## Installation
     63→## Concepts
     69→### Components
@@ -24,8 +25,13 @@ README.md
    324→## Compatibility and performance
    330→## Framework integrations
    337→## External examples
+   339→- [lipsum-chat](https://github.com/volfpeter/lipsum-chat): A simple chat application using `FastAPI`, `htmx`, and `fasthx`.
+   340→
    341→## Why
    353→## Dependencies
+   361→## Development
+   367→## Contributing
+   377→## License - MIT
 
 htmy/md/core.py
     20→class MarkdownParser …
@@ -37,12 +43,12 @@ htmy/md/core.py
     30→    _default: ClassVar[MarkdownParser | None] = None
     31→    """The default instance or `None` if one hasn't been created already."""
     32→
-    34→    def default(cls) -> MarkdownParser:
+    34→    def default …
     36→        Returns the default instance.
-    43→    def __init__(self, md: MarkdownParserFunction | None = None) -> None:
+    43→    def __init__ …
     45→        Initialization.
       →…
-    53→    def parse(self, text: str) -> ParsedMarkdown:
+    53→    def parse …
     55→        Returns the markdown data by parsing the given text.
     64→    def _default_md(self) -> MarkdownParserFunction:
     81→class MD …
@@ -54,17 +60,10 @@ htmy/md/core.py
    100→        "_renderer",
    101→    )
    102→
-   103→    def __init__(
-   104→        self,
-   105→        path_or_text: Text | str | Path,
-   106→        text_resolver: TextResolver | None = None,
-   107→        *,
-   108→        converter: Callable[[str], Component] | None = None,
-   109→        renderer: MarkdownRenderFunction | None = None,
-   110→        text_processor: TextProcessor | None = None,
-   111→    ) -> None:
+   103→    def __init__ …
    113→        Initialization.
       →…
+   131→    def _render_text …
 
 htmy/md/typing.py
     11→MarkdownMetadataDict …
@@ -332,6 +331,7 @@ htmy/renderer/default.py
     20→class _Node …
     25→    def __init__ …
     36→    def iter_nodes …
+    50→_NodeAndChildContext …
     53→class _ComponentRenderer …
     60→    def __init__ …
    174→    async def run …
@@ -371,8 +371,6 @@ htmy/renderer/typing.py
       →…
     53→def is_streaming_renderer(obj: Any | None) -> TypeGuard[StreamingRendererType]:
     54→    """Type guard that checks if the given object is a streaming renderer."""
-
-docs/
 
 docs/api/
 

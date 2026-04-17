@@ -5,6 +5,7 @@ pub mod kind;
 pub mod class;
 pub mod const_;
 pub mod data_section;
+pub mod doc;
 pub mod enum_;
 pub mod function;
 pub mod heading;
@@ -27,10 +28,149 @@ use crate::render::LineEntry;
 use super::{Group, TsGroup, TsItem};
 use kind::{OwnedQueryMatch, ParseTsGroup, TsGroupKindMethods};
 
+/// Generate the two Doc{First,Rest} sibling kinds for a family.
+///
+/// Nine families (Function, Struct, Enum, Class, Interface, Trait, TypeAlias,
+/// Const, Macro) share byte-identical doc-pair impls: DocFirst renders the
+/// first doc line and spawns DocRest; DocRest renders the remaining lines
+/// and has no children. Module is the exception — its module-level doc
+/// handling strips leading noise, so it keeps its own impl.
+macro_rules! doc_pair {
+    ($first:ident, $rest:ident) => {
+        #[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, Ord, PartialOrd)]
+        pub struct $first;
+
+        #[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, Ord, PartialOrd)]
+        pub struct $rest;
+
+        impl super::kind::TsGroupKindMethods for $first {
+            fn render_item<'s>(
+                &self,
+                item: &crate::group::TsItem<'s>,
+            ) -> Vec<crate::render::LineEntry<'s>> {
+                super::render_doc_first_lines(item)
+            }
+
+            fn children<'s>(
+                &self,
+                parent: &crate::group::TsGroup<'s>,
+            ) -> Vec<crate::group::Group<'s>> {
+                let mut out = Vec::new();
+                super::spawn_simple_child(
+                    &mut out,
+                    parent,
+                    crate::group::TsGroupKey::$rest($rest),
+                );
+                out
+            }
+        }
+
+        impl super::kind::TsGroupKindMethods for $rest {
+            fn render_item<'s>(
+                &self,
+                item: &crate::group::TsItem<'s>,
+            ) -> Vec<crate::render::LineEntry<'s>> {
+                super::render_doc_rest_lines(item)
+            }
+        }
+    };
+}
+pub(crate) use doc_pair;
+
+/// Drop the earlier of any two same-name AST-sibling items. The earlier
+/// item is dropped because for C decl+defn the defn is load-bearing; for
+/// TS overload signatures and Rust `#[cfg]` dupes, either choice is
+/// equivalent so source order determines the outcome.
+///
+/// Gated to languages where same-name AST-sibling items are always
+/// redundant. In Go, Java, Python, and Lua, two adjacent same-name
+/// functions are legitimate separate declarations (different receivers,
+/// overload signatures that carry meaning, reassignment), so this pass
+/// must not run there.
+pub(crate) fn dedup_adjacent_overloads<'s>(
+    groups: &mut Vec<ParseTsGroup<'s>>,
+    ctx: &FileCtx<'_>,
+) {
+    if !matches!(
+        ctx.lang,
+        Lang::Rust | Lang::C | Lang::Cpp | Lang::TypeScript | Lang::Tsx
+    ) {
+        return;
+    }
+    if groups.len() <= 1 {
+        return;
+    }
+    let source = ctx.source;
+    let names: Vec<&str> = groups
+        .iter()
+        .map(|g| {
+            g.items
+                .first()
+                .map(|i| crate::parse::item_identifier(i.node, source))
+                .unwrap_or("")
+        })
+        .collect();
+    let mut drop = vec![false; groups.len()];
+    for i in 0..groups.len() {
+        if drop[i] || names[i].is_empty() {
+            continue;
+        }
+        for j in (i + 1)..groups.len() {
+            if drop[j] {
+                continue;
+            }
+            if names[i] == names[j]
+                && let (Some(a), Some(b)) = (groups[i].items.first(), groups[j].items.first())
+                && crate::parse::ast::is_ast_adjacent(a.node, b.node)
+            {
+                drop[i] = true;
+                break;
+            }
+        }
+    }
+    let mut idx = 0;
+    groups.retain(|_| {
+        let keep = !drop[idx];
+        idx += 1;
+        keep
+    });
+}
+
+/// Keep the first occurrence of each name within the file; drop later
+/// duplicates. Handles Rust `#[cfg]`-gated type/macro declarations that
+/// share a name but appear under different `cfg` branches.
+///
+/// Gated to the same language set as `dedup_adjacent_overloads` so
+/// first-wins dedup never runs on grammars where duplicate top-level names
+/// would be legitimate independent items rather than conditional variants.
+pub(crate) fn dedup_duplicate_type_decls<'s>(
+    groups: &mut Vec<ParseTsGroup<'s>>,
+    ctx: &FileCtx<'_>,
+) {
+    if !matches!(
+        ctx.lang,
+        Lang::Rust | Lang::C | Lang::Cpp | Lang::TypeScript | Lang::Tsx
+    ) {
+        return;
+    }
+    let source = ctx.source;
+    let mut seen: std::collections::HashSet<&str> = std::collections::HashSet::new();
+    groups.retain(|g| {
+        let Some(item) = g.items.first() else {
+            return true;
+        };
+        let name = crate::parse::item_identifier(item.node, source);
+        if name.is_empty() {
+            return true;
+        }
+        seen.insert(name)
+    });
+}
+
 /// Build one `ParseTsGroup` per match, each with a single `TsItem`. The
 /// closure returns `Some(key)` to emit a group, or `None` to skip the match
 /// (e.g. for filtered or polymorphic node kinds).
-pub(crate) fn simple_named_groups<'s, F>(
+pub(crate) fn per_match_groups<'s, F>(
     matches: &[OwnedQueryMatch<'s>],
     ctx: &FileCtx<'s>,
     mut key_for: F,
@@ -73,56 +213,56 @@ pub enum TsGroupKey {
 
     // Function-like
     FunctionName(function::FunctionName),
-    FunctionDocFirst(function::FunctionDocFirst),
-    FunctionDocRest(function::FunctionDocRest),
+    FunctionDocFirst(doc::FunctionDocFirst),
+    FunctionDocRest(doc::FunctionDocRest),
     FunctionSig(function::FunctionSig),
     FunctionBody(function::FunctionBody),
 
     // Structs
     StructName(struct_::StructName),
-    StructDocFirst(struct_::StructDocFirst),
-    StructDocRest(struct_::StructDocRest),
+    StructDocFirst(doc::StructDocFirst),
+    StructDocRest(doc::StructDocRest),
     StructBody(struct_::StructBody),
 
     // Enums
     EnumName(enum_::EnumName),
-    EnumDocFirst(enum_::EnumDocFirst),
-    EnumDocRest(enum_::EnumDocRest),
+    EnumDocFirst(doc::EnumDocFirst),
+    EnumDocRest(doc::EnumDocRest),
     EnumBody(enum_::EnumBody),
 
     // Classes
     ClassName(class::ClassName),
-    ClassDocFirst(class::ClassDocFirst),
-    ClassDocRest(class::ClassDocRest),
+    ClassDocFirst(doc::ClassDocFirst),
+    ClassDocRest(doc::ClassDocRest),
     ClassBody(class::ClassBody),
 
     // Interfaces
     InterfaceName(interface::InterfaceName),
-    InterfaceDocFirst(interface::InterfaceDocFirst),
-    InterfaceDocRest(interface::InterfaceDocRest),
+    InterfaceDocFirst(doc::InterfaceDocFirst),
+    InterfaceDocRest(doc::InterfaceDocRest),
 
     // Rust traits
     TraitName(trait_::TraitName),
-    TraitDocFirst(trait_::TraitDocFirst),
-    TraitDocRest(trait_::TraitDocRest),
+    TraitDocFirst(doc::TraitDocFirst),
+    TraitDocRest(doc::TraitDocRest),
 
     // Rust impl blocks
     ImplBlock(impl_block::ImplBlock),
 
     // Type aliases
     TypeAliasName(type_alias::TypeAliasName),
-    TypeAliasDocFirst(type_alias::TypeAliasDocFirst),
-    TypeAliasDocRest(type_alias::TypeAliasDocRest),
+    TypeAliasDocFirst(doc::TypeAliasDocFirst),
+    TypeAliasDocRest(doc::TypeAliasDocRest),
 
     // Consts and statics
     ConstName(const_::ConstName),
-    ConstDocFirst(const_::ConstDocFirst),
-    ConstDocRest(const_::ConstDocRest),
+    ConstDocFirst(doc::ConstDocFirst),
+    ConstDocRest(doc::ConstDocRest),
 
     // Macros
     MacroName(macro_::MacroName),
-    MacroDocFirst(macro_::MacroDocFirst),
-    MacroDocRest(macro_::MacroDocRest),
+    MacroDocFirst(doc::MacroDocFirst),
+    MacroDocRest(doc::MacroDocRest),
 
     // Markdown
     Heading(heading::Heading),
@@ -182,14 +322,6 @@ impl TsGroupKey {
         }
     }
 
-    /// Returns the heading level if this is a `Heading` key, `None` otherwise.
-    pub fn heading_level(&self) -> Option<u8> {
-        match self {
-            TsGroupKey::Heading(h) => Some(h.level),
-            _ => None,
-        }
-    }
-
     /// For name-variant keys (`FunctionName`, `StructName`, ...), returns
     /// `Some((documented, public))`. For all other keys, returns `None`.
     pub fn name_doc_visibility(&self) -> Option<(bool, bool)> {
@@ -208,46 +340,32 @@ impl TsGroupKey {
         }
     }
 
-    /// Whether this key should be gated behind a counterpart (dependent_sibling).
-    pub fn is_gated(&self) -> bool {
-        use TsGroupKey::*;
+    /// Gating classification for this key.
+    ///
+    /// Returns `None` if the key never participates in public/private gating.
+    /// Otherwise returns `Some((is_direct, bucket))`:
+    /// - `is_direct = true` means the group is a direct output (the public
+    ///   counterpart that gated groups attach behind);
+    /// - `is_direct = false` means the group is gated — it attaches to the
+    ///   first direct group sharing the same `bucket` in the same file, or
+    ///   promotes to direct if no such counterpart exists;
+    /// - `bucket` is an extra equality constraint beyond kind identity. Only
+    ///   `Import` uses it (gated and direct must share `reexport`); other
+    ///   kinds return `0` so all groups of the same kind share one bucket.
+    ///
+    /// Name-kinds (9 of them) gate uniformly on `public` and all reuse
+    /// `name_doc_visibility`. `Import` has its own bucket on `reexport`.
+    /// `ImplBlock` returns `None` — trait impls are a public API surface
+    /// and must not gate behind inherent impls.
+    pub fn gating_key(&self) -> Option<(bool, u8)> {
+        if let Some((_, public)) = self.name_doc_visibility() {
+            return Some((public, 0));
+        }
         match self {
-            FunctionName(n) => !n.public,
-            StructName(n) => !n.public,
-            EnumName(n) => !n.public,
-            ClassName(n) => !n.public,
-            InterfaceName(n) => !n.public,
-            TraitName(n) => !n.public,
-            TypeAliasName(n) => !n.public,
-            ConstName(n) => !n.public,
-            MacroName(n) => !n.public,
-            Import(i) => !i.first_party,
-            ImplBlock(b) => b.is_trait_impl,
-            _ => false,
+            TsGroupKey::Import(i) => Some((i.first_party, i.reexport as u8)),
+            _ => None,
         }
     }
-
-    /// Whether `self` should be gated behind `other` (design §4).
-    /// Ignores the `documented` discriminant — a private undocumented group
-    /// is gated behind a public documented group of the same kind.
-    pub fn is_gated_by(&self, other: &TsGroupKey) -> bool {
-        use TsGroupKey::*;
-        match (self, other) {
-            (FunctionName(a), FunctionName(b)) => !a.public && b.public,
-            (StructName(a), StructName(b)) => !a.public && b.public,
-            (EnumName(a), EnumName(b)) => !a.public && b.public,
-            (ClassName(a), ClassName(b)) => !a.public && b.public,
-            (InterfaceName(a), InterfaceName(b)) => !a.public && b.public,
-            (TraitName(a), TraitName(b)) => !a.public && b.public,
-            (TypeAliasName(a), TypeAliasName(b)) => !a.public && b.public,
-            (ConstName(a), ConstName(b)) => !a.public && b.public,
-            (MacroName(a), MacroName(b)) => !a.public && b.public,
-            (Import(a), Import(b)) => !a.first_party && b.first_party && a.reexport == b.reexport,
-            (ImplBlock(a), ImplBlock(b)) => a.is_trait_impl && !b.is_trait_impl,
-            _ => false,
-        }
-    }
-
 }
 
 // ---------------------------------------------------------------------------
@@ -311,7 +429,11 @@ pub(super) fn spawn_method_children<'s>(
     };
     let lang = Lang::from_path(first_item.path);
 
-    let mut buckets: HashMap<(bool, bool), Vec<TsItem<'s>>> = HashMap::new();
+    // Four buckets, indexed by `(documented as usize) * 2 + (public as usize)`.
+    // Replaces a `HashMap<(bool, bool), _>` and its trailing sort; the fixed
+    // iteration order below covers all four combinations in `(doc, pub)` sort
+    // order for deterministic output.
+    let mut buckets: [Vec<TsItem<'s>>; 4] = Default::default();
 
     for item in &parent.items {
         let mut method_nodes = find_method_nodes(item.node, lang);
@@ -338,14 +460,11 @@ pub(super) fn spawn_method_children<'s>(
                 end_line: method_node.end_position().row + 1,
             };
 
-            buckets
-                .entry((is_documented, is_public))
-                .or_default()
-                .push(ts_item);
+            buckets[(is_documented as usize) * 2 + (is_public as usize)].push(ts_item);
         }
     }
 
-    if buckets.is_empty() {
+    if buckets.iter().all(|b| b.is_empty()) {
         return;
     }
 
@@ -354,12 +473,15 @@ pub(super) fn spawn_method_children<'s>(
     let mut direct: Vec<Group<'s>> = Vec::new();
     let mut gated: Vec<Group<'s>> = Vec::new();
 
-    let mut sorted_buckets: Vec<_> = buckets.into_iter().collect();
-    sorted_buckets.sort_by_key(|&(k, _)| k);
-
-    for ((documented, public), items) in sorted_buckets {
+    for idx in 0..4 {
+        let items = std::mem::take(&mut buckets[idx]);
+        if items.is_empty() {
+            continue;
+        }
+        let documented = (idx & 2) != 0;
+        let public = (idx & 1) != 0;
         let key = TsGroupKey::FunctionName(function::FunctionName { documented, public });
-        let modifier = super::files::compute_item_modifier(&key, base_modifier);
+        let modifier = crate::calibration::compute_item_modifier(&key, base_modifier);
 
         let group = Group::Ts(TsGroup {
             key,
@@ -558,10 +680,6 @@ pub fn render_entries<'s>(g: &TsGroup<'s>) -> Vec<(PathBuf, Vec<LineEntry<'s>>)>
     result
 }
 
-// Render helpers shared across per-family impls. Each helper captures one
-// rendering pattern from the old central `render_item` match and is called
-// from the family impls in `src/group/ts/<family>.rs`.
-
 /// Emit `LineEntry::Complete` for every line in `[start, end)`, clamping `end`
 /// to `lines.len()`.
 fn complete_line_entries<'s>(
@@ -678,9 +796,8 @@ pub(super) fn render_doc_rest_lines<'s>(item: &TsItem<'s>) -> Vec<LineEntry<'s>>
 }
 
 pub(super) fn render_import_line<'s>(item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
-    let lines: Vec<&str> = item.source.lines().collect();
     let line_idx = item.start_line();
-    let prefix = find_import_prefix(lines[line_idx]);
+    let prefix = find_import_prefix(item_line(item, line_idx));
     vec![LineEntry::Truncated {
         line: line_idx as u32,
         content: prefix,
@@ -714,9 +831,8 @@ pub(super) fn render_module_doc_rest_lines<'s>(item: &TsItem<'s>) -> Vec<LineEnt
 }
 
 pub(super) fn render_heading_line<'s>(item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
-    let lines: Vec<&str> = item.source.lines().collect();
     let line_idx = item.start_line();
-    let stripped = strip_heading_badges(lines[line_idx]);
+    let stripped = strip_heading_badges(item_line(item, line_idx));
     vec![capped_line_entry(line_idx as u32, stripped)]
 }
 
@@ -751,17 +867,6 @@ pub(super) fn render_heading_body_lines<'s>(
     };
     let capped_end = body_end.min(content_start.saturating_add(max_body_lines));
     complete_line_entries(&lines, content_start, capped_end)
-}
-
-pub(super) fn render_data_section_line<'s>(item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
-    let lines: Vec<&str> = item.source.lines().collect();
-    let line_idx = item.start_line();
-    vec![capped_line_entry(line_idx as u32, lines[line_idx])]
-}
-
-pub(super) fn render_data_section_body_lines<'s>(item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
-    let lines: Vec<&str> = item.source.lines().collect();
-    complete_line_entries(&lines, item.start_line() + 1, item.end_line)
 }
 
 // Central dispatcher — forwards to per-family impls in src/group/ts/<family>.rs.

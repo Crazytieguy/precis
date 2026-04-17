@@ -26,7 +26,6 @@ turbo.json
      9→      "cache": false
     10→    }
     11→  }
-    12→}
 
 src/browser.ts
      1→export function isMobileFirefox(): boolean | undefined {
@@ -318,7 +317,6 @@ package.json
     66→  "dependencies": {
     67→    "@radix-ui/react-dialog": "^1.1.1"
     68→  }
-    69→}
 
 tsconfig.json
      2→  "compilerOptions": {
@@ -330,7 +328,6 @@ tsconfig.json
      8→    "strict": true
      9→  },
     10→  "include": ["src"],
-    11→}
 
 test/package.json
      2→  "name": "test",
@@ -345,10 +342,11 @@ test/tsconfig.json
     32→  "include": [
     38→  "exclude": [
 
+test/tests/constants.ts
+     1→export const ANIMATION_DURATION …
+
 test/public/
 
 test/src/
 
 test/src/app/
-
-test/tests/

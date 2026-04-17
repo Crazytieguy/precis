@@ -1,7 +1,4 @@
-//! Markdown / TOML / JSON / YAML heading kinds.
-//!
-//! TOML/JSON/YAML still route through `Heading` here as a stage 6 holdover;
-//! stage 7 splits them into a dedicated `DataSection` kind.
+//! Markdown heading kinds.
 
 use super::kind::{
     KindParseStrategy, OwnedQueryMatch, ParseTsGroup, TsGroupKindMethods, TsGroupKindParse,
@@ -29,42 +26,23 @@ impl TsGroupKindMethods for Heading {
 
     fn children<'s>(&self, parent: &TsGroup<'s>) -> Vec<Group<'s>> {
         let body_key = TsGroupKey::HeadingBody(HeadingBody { level: self.level });
-        let (toml_items, other_items): (Vec<TsItem<'s>>, Vec<TsItem<'s>>) = parent
-            .items
-            .iter()
-            .copied()
-            .partition(|i| crate::Lang::from_path(i.path) == Some(crate::Lang::Toml));
-
-        let mut out = Vec::new();
-        if !other_items.is_empty() {
-            let is_readme_h1 = self.level == 1
-                && other_items.iter().any(|i| {
-                    crate::classify::FileRole::from_path(i.path)
-                        == crate::classify::FileRole::Readme
-                });
-            let body_modifier = if is_readme_h1 {
-                super::README_H1_BODY_BOOST
-            } else {
-                1.0
-            };
-            out.push(Group::Ts(TsGroup {
-                key: body_key,
-                items: other_items,
-                inherited_modifier: parent.inherited_modifier * body_modifier,
-                dependent_siblings: vec![],
-                cached_render: None,
-            }));
-        }
-        for item in toml_items {
-            out.push(Group::Ts(TsGroup {
-                key: body_key,
-                items: vec![item],
-                inherited_modifier: parent.inherited_modifier,
-                dependent_siblings: vec![],
-                cached_render: None,
-            }));
-        }
-        out
+        let is_readme_h1 = self.level == 1
+            && parent.items.iter().any(|i| {
+                crate::classify::FileRole::from_path(i.path)
+                    == crate::classify::FileRole::Readme
+            });
+        let body_modifier = if is_readme_h1 {
+            super::README_H1_BODY_BOOST
+        } else {
+            1.0
+        };
+        vec![Group::Ts(TsGroup {
+            key: body_key,
+            items: parent.items.clone(),
+            inherited_modifier: parent.inherited_modifier * body_modifier,
+            dependent_siblings: vec![],
+            cached_render: None,
+        })]
     }
 }
 
@@ -79,91 +57,106 @@ const MARKDOWN_HEADING_QUERY: &str = "\
 (setext_heading (paragraph) @name) @symbol
 ";
 
-const TOML_HEADING_QUERY: &str = "\
-(table (bare_key) @name) @symbol
-(table (dotted_key) @name) @symbol
-(table (quoted_key) @name) @symbol
-(table_array_element (bare_key) @name) @symbol
-(table_array_element (dotted_key) @name) @symbol
-(table_array_element (quoted_key) @name) @symbol
-";
-
-const JSON_HEADING_QUERY: &str = "\
-(document
-  (object
-    (pair
-      key: (string (string_content) @name)) @symbol))
-";
-
-const YAML_HEADING_QUERY: &str = "\
-(stream
-  (document
-    (block_node
-      (block_mapping
-        (block_mapping_pair
-          key: (flow_node
-            (plain_scalar
-              (string_scalar) @name))) @symbol))))
-";
-
 impl TsGroupKindParse for Heading {
     fn parse_strategy(lang: Lang) -> KindParseStrategy {
         match lang {
             Lang::Markdown => KindParseStrategy::Query(MARKDOWN_HEADING_QUERY),
-            Lang::Toml => KindParseStrategy::Query(TOML_HEADING_QUERY),
-            Lang::Json => KindParseStrategy::Query(JSON_HEADING_QUERY),
-            Lang::Yaml => KindParseStrategy::Query(YAML_HEADING_QUERY),
             _ => KindParseStrategy::None,
         }
     }
 
+    /// Build one single-item `ParseTsGroup` per heading. Each heading's
+    /// `end_line` is stretched forward to the next heading's start (section
+    /// ownership — atx headings natively span one line). Each heading also
+    /// picks its parent as the most recent earlier heading with strictly
+    /// lower level, and is attached there as a `dependent_sibling`. Top-level
+    /// headings (those with no shallower earlier heading) are the return
+    /// value.
     fn from_parse<'s>(
         matches: &[OwnedQueryMatch<'s>],
         ctx: &FileCtx<'s>,
     ) -> Vec<ParseTsGroup<'s>> {
-        let mut out = Vec::with_capacity(matches.len());
-        for m in matches {
-            let key = match ctx.lang {
-                Lang::Markdown => {
-                    let start = m.symbol.start_position().row;
-                    let end = crate::parse::compute_end_line(m.symbol);
-                    let level = crate::classify::detect_heading_depth(&ctx.lines, start, end);
-                    let stripped = crate::classify::strip_heading_badges(ctx.lines[start]);
-                    let boilerplate = crate::classify::is_boilerplate_heading(stripped);
-                    TsGroupKey::Heading(Heading { level, boilerplate })
-                }
-                Lang::Toml => {
-                    let start = m.symbol.start_position().row;
-                    let key_text = ctx.lines[start]
-                        .trim()
-                        .trim_start_matches('[')
-                        .trim_end_matches(']')
-                        .trim();
-                    let level = key_text.chars().filter(|&c| c == '.').count() as u8 + 1;
-                    TsGroupKey::Heading(Heading {
-                        level,
-                        boilerplate: false,
-                    })
-                }
-                Lang::Json | Lang::Yaml => TsGroupKey::Heading(Heading {
-                    level: 1,
-                    boilerplate: false,
-                }),
-                _ => continue,
-            };
-            let end_line = crate::parse::compute_end_line(m.range_node);
-            let item = TsItem {
-                path: ctx.display_path,
-                source: ctx.source,
-                node: m.range_node,
-                end_line,
-            };
-            out.push(ParseTsGroup {
-                key,
-                items: vec![item],
-                dependent_siblings: Vec::new(),
-            });
+        struct HeadingInfo<'s> {
+            level: u8,
+            boilerplate: bool,
+            start_line: usize,
+            node: tree_sitter::Node<'s>,
         }
-        out
+
+        let mut infos: Vec<HeadingInfo<'s>> = matches
+            .iter()
+            .map(|m| {
+                let start = m.symbol.start_position().row;
+                let end = crate::parse::compute_end_line(m.symbol);
+                let level = crate::classify::detect_heading_depth(&ctx.lines, start, end);
+                let stripped = crate::classify::strip_heading_badges(ctx.lines[start]);
+                let boilerplate = crate::classify::is_boilerplate_heading(stripped);
+                HeadingInfo {
+                    level,
+                    boilerplate,
+                    start_line: start,
+                    node: m.range_node,
+                }
+            })
+            .collect();
+        infos.sort_by_key(|h| h.start_line);
+
+        let total_lines = ctx.lines.len();
+        let mut groups: Vec<Option<ParseTsGroup<'s>>> = infos
+            .iter()
+            .enumerate()
+            .map(|(i, h)| {
+                let next_start = infos
+                    .get(i + 1)
+                    .map(|n| n.start_line)
+                    .unwrap_or(total_lines);
+                let end_line = next_start.max(crate::parse::compute_end_line(h.node));
+                let item = TsItem {
+                    path: ctx.display_path,
+                    source: ctx.source,
+                    node: h.node,
+                    end_line,
+                };
+                Some(ParseTsGroup {
+                    key: TsGroupKey::Heading(Heading {
+                        level: h.level,
+                        boilerplate: h.boilerplate,
+                    }),
+                    items: vec![item],
+                    dependent_siblings: Vec::new(),
+                })
+            })
+            .collect();
+
+        // Per-individual parent: the nearest earlier heading with strictly
+        // lower level. Stack holds indices in ascending level.
+        let mut parent_of: Vec<Option<usize>> = vec![None; infos.len()];
+        let mut stack: Vec<usize> = Vec::new();
+        for i in 0..infos.len() {
+            while let Some(&top) = stack.last() {
+                if infos[top].level >= infos[i].level {
+                    stack.pop();
+                } else {
+                    break;
+                }
+            }
+            parent_of[i] = stack.last().copied();
+            stack.push(i);
+        }
+
+        // Process in reverse so a child's dependent_siblings stay attached
+        // as we lift it into its parent.
+        for i in (0..infos.len()).rev() {
+            if let Some(p) = parent_of[i] {
+                let child = groups[i].take().expect("child slot populated");
+                groups[p]
+                    .as_mut()
+                    .expect("parent slot populated")
+                    .dependent_siblings
+                    .push(child);
+            }
+        }
+
+        groups.into_iter().flatten().collect()
     }
 }

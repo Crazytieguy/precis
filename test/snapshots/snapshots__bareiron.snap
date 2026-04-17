@@ -15,6 +15,10 @@ README.md
     10→> Currently, only the vanilla client is officially supported. Issues have been reported when using Fabric or similar.
     11→
     12→## Quick start
+    13→For PC x86_64 platforms, grab the [latest build binary](https://github.com/p2r3/bareiron/releases/download/latest/bareiron.exe) and run it. The file is a [Cosmopolitan polyglot](https://github.com/jart/cosmopolitan), which means it'll run on Windows, Linux, and possibly Mac, despite the file extension. Note that the server's default settings cannot be reconfigured without compiling from source.
+    14→
+    15→For microcontrollers, see the section on **compilation** below.
+    16→
     17→## Compilation
     28→## Configuration
     39→## Non-volatile storage (optional)
@@ -197,11 +201,7 @@ include/structures.h
 include/tools.h
      6→#include "globals.h"
      8→static inline int mod_abs (int a, int b) {
-     9→  return ((a % b) + b) % b;
-    10→}
     11→static inline int div_floor (int a, int b) {
-    12→  return a % b < 0 ? (a - b) / b : a / b;
-    13→}
     16→ssize_t recv_all …
     17→ssize_t send_all …
     18→void discard_all …

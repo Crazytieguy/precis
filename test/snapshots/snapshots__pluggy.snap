@@ -204,7 +204,7 @@ src/pluggy/_hooks.py
 src/pluggy/_manager.py
     36→_BeforeTrace …
     37→_AfterTrace …
-    42→def _warn_for_function …
+    42→def _warn_for_function(warning: Warning, function: Callable[..., object]) -> None:
     52→class PluginValidationError …
     53→    """Plugin failed validation.
       →…
@@ -254,7 +254,7 @@ src/pluggy/_manager.py
    512→    def subset_hook_caller(
    513→        self, name: str, remove_plugins: Iterable[_Plugin]
    514→    ) -> HookCaller:
-   525→def _formatdef …
+   525→def _formatdef(func: Callable[..., object]) -> str:
 
 src/pluggy/_result.py
      2→Hook wrapper "result" utilities.
@@ -312,17 +312,12 @@ codecov.yml
      3→    project: true
      4→    patch: true
      5→    changes: true
-     6→
      7→comment: off
 
 pyproject.toml
      1→[build-system]
      8→[project]
     38→[dependency-groups]
-    39→dev = ["pre-commit", "tox"]
-    40→testing = ["pytest", "pytest-benchmark", "coverage"]
-    41→
-    42→
     43→[tool.setuptools]
     69→[tool.setuptools_scm]
     71→[tool.uv]
@@ -346,8 +341,6 @@ scripts/towncrier-draft-to-file.py
      5→def main() -> int:
 
 docs/_static/
-
-docs/_static/img/
 
 docs/examples/
 

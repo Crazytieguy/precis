@@ -1,5 +1,6 @@
 //! Const/static-family kinds.
 
+use super::doc::ConstDocFirst;
 use super::kind::{
     KindParseStrategy, OwnedQueryMatch, ParseTsGroup, TsGroupKindMethods, TsGroupKindParse,
 };
@@ -14,12 +15,6 @@ pub struct ConstName {
     pub public: bool,
 }
 
-#[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, Ord, PartialOrd)]
-pub struct ConstDocFirst;
-
-#[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, Ord, PartialOrd)]
-pub struct ConstDocRest;
-
 impl TsGroupKindMethods for ConstName {
     fn render_item<'s>(&self, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
         super::render_name_line(item)
@@ -31,24 +26,6 @@ impl TsGroupKindMethods for ConstName {
             super::spawn_simple_child(&mut out, parent, TsGroupKey::ConstDocFirst(ConstDocFirst));
         }
         out
-    }
-}
-
-impl TsGroupKindMethods for ConstDocFirst {
-    fn render_item<'s>(&self, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
-        super::render_doc_first_lines(item)
-    }
-
-    fn children<'s>(&self, parent: &TsGroup<'s>) -> Vec<Group<'s>> {
-        let mut out = Vec::new();
-        super::spawn_simple_child(&mut out, parent, TsGroupKey::ConstDocRest(ConstDocRest));
-        out
-    }
-}
-
-impl TsGroupKindMethods for ConstDocRest {
-    fn render_item<'s>(&self, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
-        super::render_doc_rest_lines(item)
     }
 }
 
@@ -94,10 +71,10 @@ impl TsGroupKindParse for ConstName {
         matches: &[OwnedQueryMatch<'s>],
         ctx: &FileCtx<'s>,
     ) -> Vec<ParseTsGroup<'s>> {
-        super::simple_named_groups(matches, ctx, |m, ctx| {
+        super::per_match_groups(matches, ctx, |m, ctx| {
             let kind = m.symbol.kind();
             if matches!(ctx.lang, Lang::TypeScript | Lang::Tsx) && kind == "expression_statement" {
-                return crate::parse::classify_js_cjs_export(
+                return crate::parse::classify_js_cjs_const(
                     m.symbol,
                     ctx.source,
                     m.is_documented(ctx),

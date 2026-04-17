@@ -26,9 +26,23 @@ README.md
     28→### Installation
     30→#### Homebrew (macOS)
     41→#### Go Install
+    43→```bash
+    44→go install github.com/kriuchkov/tock/cmd/tock@latest
+    45→```
+    46→
     47→#### Build from source
+    49→```bash
+    50→go build -o tock ./cmd/tock
+    51→```
+    52→
     53→#### Install Script (Linux & macOS)
+    55→```bash
+    56→curl -sS https://raw.githubusercontent.com/kriuchkov/tock/master/install.sh | sh
+    57→```
+    58→
     59→#### Download Binary
+    61→Download the latest release from the [Releases](https://github.com/kriuchkov/tock/releases) page.
+    62→
     63→### Basic Usage
    116→## Configuration
    118→Tock supports a flexible configuration system using YAML files and environment variables.
@@ -43,7 +57,15 @@ README.md
    127→### Configuration File
    165→### Environment Variables
    179→### Storage Backends
+   181→Tock supports multiple storage backends.
+   182→
    183→### 1. Flat File (Default)
+   185→Stores activities in a simple plaintext file.
+   186→
+   187→```bash
+   188→export TOCK_FILE_PATH="$HOME/.tock.txt"
+   189→```
+   190→
    191→### 2. TimeWarrior
    209→### Calendar View
    238→## Theming
@@ -67,42 +89,6 @@ README.md
    316→#### 12-Hour Format Examples
    328→#### 24-Hour Format (Default)
    343→## Commands
-   345→```bash
-   346→
-   347→A simple timetracker for the command line
-   348→
-   349→Usage:
-   350→  tock [command]
-   351→
-   352→Available Commands:
-   353→  add         Add a completed activity
-   354→  analyze     Analyze your productivity patterns
-   355→  calendar    Show interactive calendar view
-   356→  completion  Generate the autocompletion script for the specified shell
-   357→  continue    Continues a previous activity
-   358→  current     Lists all currently running activities
-   359→  help        Help about any command
-   360→  ical        Generate iCal (.ics) file for a specific task, all tasks in a day, or all tasks
-   361→  last        List recent unique activities
-   362→  list        List activities (Calendar View)
-   363→  remove      Remove an activity
-   364→  report      Generate time tracking report
-   365→  start       Start a new activity
-   366→  stop        Stop the current activity
-   367→  version     Print the version info
-   368→  watch       Display a full-screen stopwatch for the current activity
-   369→
-   370→Flags:
-   371→  -b, --backend string   Storage backend: 'file' (default) or 'timewarrior'
-   372→      --config string    Config file directory (default is $HOME/.config/tock/tock.yaml)
-   373→  -f, --file string      Path to the activity log file (or data directory for timewarrior)
-   374→  -h, --help             help for tock
-   375→  -v, --version          version for tock
-   376→Use "tock [command] --help" for more information about a command.
-   377→```
-   378→
-   379→[**→ Commands Reference**](docs/commands.md)
-   380→
    381→### Start tracking
    401→### Stop tracking
    418→### Add past activity
@@ -340,7 +326,14 @@ internal/adapters/repositories/notes/repository.go
 internal/adapters/repositories/timewarrior/repository.go
     24→const …
     28→type twInterval …
+    29→	Start      string   `json:"start"`
+    30→	End        string   `json:"end,omitempty"`
+    31→	Tags       []string `json:"tags,omitempty"`
+    32→	Annotation string   `json:"annotation,omitempty"`
+    33→}
     35→type repository …
+    36→	dataDir string
+    37→}
     39→func NewRepository(dataDir string) ports.ActivityRepository {
     43→func (r *repository) Find(_ context.Context, filter dto.ActivityFilter) ([]models.Activity, error) {
     67→func determineDateRange(filter dto.ActivityFilter) (time.Time, time.Time) {
@@ -354,6 +347,8 @@ internal/adapters/repositories/timewarrior/repository.go
    283→func (r *repository) writeIntervalsToFile(path string, intervals []twInterval) error {
    306→func toTWInterval(a models.Activity) twInterval {
    320→func fromTWInterval(iv twInterval) (models.Activity, error) {
+   349→// parseIncLine parses a line in TimeWarrior's internal serialization format.
+      →…
    352→func parseIncLine(line string) (twInterval, error) {
    393→func tokenize(line string) []string {
 
@@ -379,7 +374,19 @@ internal/adapters/repositories/file/repository.go
 docs/commands.md
      1→# Commands Reference
     23→## Core Commands
+    25→### `start`
+    57→### `stop` (alias: `s`)
+    86→### `add`
+   118→### `remove` (alias: `rm`)
+   143→### `continue` (alias: `c`)
    188→## Viewing & Reporting
+   190→### `calendar`
+   217→### `list` (alias: `ls`)
+   240→### `current`
+   260→### `last` (alias: `lt`)
+   283→### `report`
+   307→### `analyze`
+   330→### `ical`
 
 internal/adapters/cli/add.go
     16→type addOptions …

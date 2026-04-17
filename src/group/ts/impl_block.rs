@@ -28,29 +28,15 @@ impl TsGroupKindParse for ImplBlock {
         matches: &[OwnedQueryMatch<'s>],
         ctx: &FileCtx<'s>,
     ) -> Vec<ParseTsGroup<'s>> {
-        let mut out = Vec::with_capacity(matches.len());
-        for m in matches {
+        super::per_match_groups(matches, ctx, |m, ctx| {
             let trait_node = m.symbol.child_by_field_name("trait");
             let is_boilerplate = trait_node
                 .is_some_and(|t| crate::parse::is_boilerplate_trait_impl(t, ctx.source));
-            let key = TsGroupKey::ImplBlock(ImplBlock {
+            Some(TsGroupKey::ImplBlock(ImplBlock {
                 is_trait_impl: trait_node.is_some(),
                 is_boilerplate_trait: is_boilerplate,
-            });
-            let end_line = crate::parse::compute_end_line(m.range_node);
-            let item = TsItem {
-                path: ctx.display_path,
-                source: ctx.source,
-                node: m.range_node,
-                end_line,
-            };
-            out.push(ParseTsGroup {
-                key,
-                items: vec![item],
-                dependent_siblings: Vec::new(),
-            });
-        }
-        out
+            }))
+        })
     }
 }
 

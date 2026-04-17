@@ -8,11 +8,9 @@ ci.yml
      4→  push:
      5→    branches: [main]
      6→  pull_request:
-     7→
      8→env:
      9→  CARGO_TERM_COLOR: always
     10→  RUST_BACKTRACE: 1
-    11→
     12→jobs:
     13→  test:
     14→    runs-on: ubuntu-latest

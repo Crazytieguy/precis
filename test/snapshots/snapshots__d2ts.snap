@@ -14,8 +14,31 @@ README.md
     35→
     51→## Key Features
     73→## Quick Start
+    75→### Installation
+    81→### Basic Usage
+   141→### Using with ElectricSQL
    185→## Examples
    196→## API
+   198→### D2 graph construction
+   214→### Input Streams
+   221→### Versions and Frontiers
+   227→#### Version
+   261→### MultiSet as a changeset
+   306→### Operators
+   308→#### buffer
+   318→#### concat
+   328→#### consolidate
+   338→#### count
+   351→#### debug
+   361→#### distinct
+   371→#### filter
+   381→#### iterate
+   424→#### join
+   488→#### map
+   498→#### output
+   545→#### pipe
+   579→#### reduce
+   653→### Using SQLite Backend
    678→## Implementation Details
    699→## References
 
@@ -43,21 +66,33 @@ packages/d2ql/README.md
      9→## Basic Usage
     60→## Current Features
     79→## Common Table Expressions (CTEs)
+   134→### CTE Requirements
    140→## Planned Features
+   142→Future versions may support additional SQL features and optimizations.
+   143→
    144→## ORDER BY, LIMIT, and OFFSET
    244→## GROUP BY and Aggregation
+   303→### Supported Aggregate Functions
    366→## Wildcard Selects
    403→## Keyed Streams with keyBy
    423→## Kitchen Sink Example
    624→## Query Schema
    646→## Query Builder
+   650→### Basic Usage
+   687→### Table Aliases
+   699→### Joins
 
 packages/d2ts/README.md
     26→# D2TS - Differential Dataflow in TypeScript <!-- omit in toc -->
     51→## Key Features
     88→## Quick Start
+    90→### Installation
+    96→### Basic Usage
    200→## Examples
    210→## API
+   228→### Input Streams
+   320→### Operators
+   322→#### buffer
   1055→## Implementation Details
   1076→## References
 
@@ -222,8 +257,7 @@ packages/d2ts/src/multiset.ts
 
 packages/d2ts/src/order.ts
      6→ * Factory function for creating cached Version objects.
-     7→ * Ensures only one object exists for each unique version, these can then safely be
-     8→ * used as keys in maps etc.
+      →…
     10→export function v(version: number | number[]): Version {
     29→export class Version …
     32→  constructor …
@@ -318,14 +352,15 @@ packages/d2ql/src/extractors.ts
    169→export function extractJoinKey …
 
 packages/d2ql/src/functions.ts
-    11→function upperFunction(arg: unknown): string {
-    21→function lowerFunction(arg: unknown): string {
-    31→function lengthFunction(arg: unknown): number {
-    42→function concatFunction(arg: unknown): string {
-    69→function coalesceFunction(arg: unknown): unknown {
-    92→function dateFunction(arg: unknown): Date | null {
-   125→function jsonExtractFunction(arg: unknown): unknown {
-   200→function orderIndexFunction(arg: unknown): null {
+     6→type FunctionImplementation …
+    11→function upperFunction …
+    21→function lowerFunction …
+    31→function lengthFunction …
+    42→function concatFunction …
+    69→function coalesceFunction …
+    92→function dateFunction …
+   125→function jsonExtractFunction …
+   200→function orderIndexFunction …
    219→const functionImplementations …
    241→export function evaluateFunction …
    257→export function isFunctionCall …
@@ -344,16 +379,6 @@ packages/d2ql/src/key-by.ts
 
 packages/d2ql/src/order-by.ts
     16→export function processOrderBy …
-
-packages/d2ql/src/schema.json
-     2→  "$schema": "http://json-schema.org/draft-07/schema#",
-     3→  "title": "SQL DSL Query Schema",
-     4→  "description": "A SQL-like DSL supporting select, join (with optional where clauses), where, groupBy, having, orderBy, limit, offset, and keyBy. In string values, those starting with '@' denote colu …
-     5→  "type": "object",
-     6→  "properties": {
-   146→  "required": ["select", "from"],
-   147→  "additionalProperties": false,
-   148→  "definitions": {
 
 packages/d2ql/src/schema.ts
     48→export interface ExplicitLiteral …
@@ -384,13 +409,6 @@ packages/d2ql/src/utils.ts
    131→export function convertLikeToRegex …
    192→export function isValueInArray …
 
-packages/d2ts/src/sqlite/context.ts
-    65→export function withSQLite(db: SQLiteDb) {
-
-packages/d2ts/src/sqlite/database.ts
-     4→export interface SQLiteStatement …
-    32→export interface SQLiteDb …
-
 examples/
 
 examples/d2ql/
@@ -406,6 +424,8 @@ packages/d2mini/tests/
 packages/d2ql/tests/
 
 packages/d2ts/src/operators/
+
+packages/d2ts/src/sqlite/
 
 packages/d2ts/src/sqlite/operators/
 

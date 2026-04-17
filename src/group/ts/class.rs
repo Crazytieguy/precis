@@ -1,5 +1,6 @@
 //! Class-family kinds.
 
+use super::doc::ClassDocFirst;
 use super::kind::{
     KindParseStrategy, OwnedQueryMatch, ParseTsGroup, TsGroupKindMethods, TsGroupKindParse,
 };
@@ -13,12 +14,6 @@ pub struct ClassName {
     pub documented: bool,
     pub public: bool,
 }
-
-#[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, Ord, PartialOrd)]
-pub struct ClassDocFirst;
-
-#[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, Ord, PartialOrd)]
-pub struct ClassDocRest;
 
 #[derive(Debug, Clone, Copy, Hash, Eq, PartialEq, Ord, PartialOrd)]
 pub struct ClassBody;
@@ -45,24 +40,6 @@ impl TsGroupKindMethods for ClassName {
         );
         super::spawn_method_children(&mut out, parent, 1.0);
         out
-    }
-}
-
-impl TsGroupKindMethods for ClassDocFirst {
-    fn render_item<'s>(&self, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
-        super::render_doc_first_lines(item)
-    }
-
-    fn children<'s>(&self, parent: &TsGroup<'s>) -> Vec<Group<'s>> {
-        let mut out = Vec::new();
-        super::spawn_simple_child(&mut out, parent, TsGroupKey::ClassDocRest(ClassDocRest));
-        out
-    }
-}
-
-impl TsGroupKindMethods for ClassDocRest {
-    fn render_item<'s>(&self, item: &TsItem<'s>) -> Vec<LineEntry<'s>> {
-        super::render_doc_rest_lines(item)
     }
 }
 
@@ -99,7 +76,7 @@ impl TsGroupKindParse for ClassName {
         matches: &[OwnedQueryMatch<'s>],
         ctx: &FileCtx<'s>,
     ) -> Vec<ParseTsGroup<'s>> {
-        super::simple_named_groups(matches, ctx, |m, ctx| {
+        super::per_match_groups(matches, ctx, |m, ctx| {
             crate::parse::check_c_aggregate_body(m.symbol, ctx.lang)?;
             Some(TsGroupKey::ClassName(ClassName {
                 documented: m.is_documented(ctx),

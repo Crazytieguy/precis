@@ -95,7 +95,6 @@ pub trait TsGroupKindParse {
 
 /// Pre-calibration tree-sitter group. Produced by per-kind `from_parse`
 /// impls before cross-file aggregation and calibration.
-#[allow(dead_code)]
 pub struct ParseTsGroup<'s> {
     pub key: TsGroupKey,
     pub items: Vec<TsItem<'s>>,

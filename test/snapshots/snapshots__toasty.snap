@@ -16,7 +16,6 @@ README.md
     76→## SQL and NoSQL
     91→## Application data model vs. database schema
     98→## Current status and roadmap
-   117→### Contribution
 
 Cargo.toml
      1→[workspace]
@@ -716,11 +715,14 @@ crates/toasty-driver-integration-suite-macros/src/parse.rs
    240→impl KindVariant …
    252→pub struct DriverTestAttr …
    261→impl DriverTestAttr …
-   327→enum DriverTestAttrItem …
    378→impl BoolExpr …
    428→impl DriverTest …
 
+crates/toasty-driver-integration-suite-macros/src/test_registry.rs
+    34→struct TestStructure …
+
 crates/toasty-driver-integration-suite-macros/src/test_variants.rs
+    12→struct Input …
    100→impl Input …
 
 benches/
@@ -768,5 +770,3 @@ docs/
 examples/
 
 scripts/
-
-tests/
