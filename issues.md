@@ -16,16 +16,17 @@ the 2026-04-13 design-invariant audit against `design.md` §10.
 
 **Root cause:** `ts_base_value` gives each body kind a constant (EnumBody = 1.5, StructBody = 1.2, etc.) *independent of content size*. Cost scales linearly with lines, so ratio ≈ constant / lines — it drops as bodies grow, and no constant boost can fix both small and large bodies at once. Prior attempts at per-kind base_value boosts cascaded across 20–50 snapshots because a boost that makes big bodies competitive makes small ones dominate.
 
-**Preferred fix — principled replacement:** Make body value a function of rendered content size, not a per-kind constant. Candidates to iterate on:
+**Attempted fix — sublinear curve (2026-04-17, reverted):** Threaded `rendered_lines` through to `ts_base_value`, replaced body per-kind constants with `per_kind × sqrt(rendered_lines)`, and deleted `is_auto_commit_body`, `MARKDOWN_H1_BODY_LINE_CAP`, and `COMPACT_BODY_LINE_LIMIT`. Ran the full A/B over 61 changed snapshots: **25 wins / 31 losses / 5 ties** — net −6. The losses clustered around fixtures where function signatures and module-coverage breadth were load-bearing (anyhow, commander, d2ts, krep, ky, soluna, tomli, ts_pattern, vaul, toasty, sqlite_vec, xlstm, …). Bodies won budget that agents wanted spent on signatures and names.
 
-- Linear in lines: `value = per_kind × rendered_lines`. Ratio is constant across sizes, kind-ranked. Probably too aggressive for big bodies.
-- Sublinear in lines (e.g. `sqrt`): diminishing returns per line. Matches intuition that line 20 adds less than line 2.
+**Why the curve isn't enough on its own.** At the budgets we care about (4000 typical), `FunctionName` rides at ratio ≈ 0.5 (value 1 / cost ~2). For a 3-line body to compete on ratio, its value needs to be ≈ cost × 0.5 = 3.0 — i.e. a per-line body-value contribution of ~1.0. Any kind constant low enough to not flood 20-line bodies is *also* too low for 1–3-line bodies to beat `FunctionName`. Linear (`value = per_kind × lines`) has constant ratio across sizes but the small-body ratio remains under FunctionName's whenever per_kind < 1.0, and for per_kind ≥ 1.0 the large-body flood problem returns. Sqrt (tried) splits the difference and ends up losing both ends. There is no single curve + per-kind constant tuple that makes compact bodies beat FunctionName on ratio without also flooding large bodies.
 
-Use the *rendered* line count, not the full AST extent — bodies that the renderer caps should cost and value based on what's actually emitted.
+**What this implies.** The ratio-only scheduler with a strictly non-negative, content-size-only value function cannot simultaneously admit compact bodies and suppress large ones — the two pressures are the same knob. The fix either:
 
-The right test of principledness: if the curve shape is right, `is_auto_commit_body` and both hardcoded line caps become redundant and can be deleted. Retuning the per-kind constants against the fixture set is fine (that's a semantic preference statement, inherently empirical) — *adding branches/caps/hatches is not*.
+1. Accepts the auto-commit hatch as principled (it *is* a uniform rule: "commit bodies with value ≥ threshold at their parent's commit time") and stops treating it as an A1 violation. This would formalize current behavior rather than removing it.
+2. Changes the scheduler beyond ratio — e.g. admit a frontier-coverage phase (cover every name before any body competes), or a per-parent bundling rule (a name commits its sig+body bundle together when budget allows).
+3. Makes body value depend on *calling* content (e.g. body value up-weighted when the parent is a load-bearing symbol per some grounded signal) — but this moves the hatch into value rather than eliminating it.
 
-Big enough that it deserves its own session with a full A/B pass. Do not extend the auto-commit mechanism further in the meantime.
+The 2026-04-17 run closed option 3 on the curve-alone interpretation. `is_auto_commit_body`, `MARKDOWN_H1_BODY_LINE_CAP`, and `COMPACT_BODY_LINE_LIMIT` stay until one of options 1/2 is picked deliberately.
 
 ## Minor / nice-to-have
 
