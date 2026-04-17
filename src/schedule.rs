@@ -149,6 +149,7 @@ fn is_auto_commit_body(group: &Group<'_>, remaining_tokens: usize, total_budget:
             | TsGroupKey::HeadingBody(crate::group::ts::heading::HeadingBody { level: 1 })
             | TsGroupKey::TypeAliasBody(_)
             | TsGroupKey::ConstBody(_)
+            | TsGroupKey::FunctionSig(_)
     ) {
         return false;
     }
@@ -188,6 +189,16 @@ fn is_auto_commit_body(group: &Group<'_>, remaining_tokens: usize, total_budget:
             g.items.iter().all(|item| {
                 item.end_line.saturating_sub(item.start_line())
                     <= VALUE_REVEAL_BODY_LINE_LIMIT
+            })
+        }
+        TsGroupKey::FunctionSig(_) => {
+            // Compact function signatures: auto-commit when the signature
+            // fits on a single source line (start..body_start spans one
+            // row). Multi-line signatures are expensive and stay on the
+            // frontier.
+            g.items.iter().all(|item| {
+                let body_start = crate::group::ts::compute_body_start_line(item);
+                body_start.saturating_sub(item.start_line()) <= 1
             })
         }
         _ => false,

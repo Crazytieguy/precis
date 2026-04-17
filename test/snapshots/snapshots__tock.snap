@@ -36,6 +36,10 @@ README.md
     51→```
     52→
     53→#### Install Script (Linux & macOS)
+    55→```bash
+    56→curl -sS https://raw.githubusercontent.com/kriuchkov/tock/master/install.sh | sh
+    57→```
+    58→
     59→#### Download Binary
     61→Download the latest release from the [Releases](https://github.com/kriuchkov/tock/releases) page.
     62→
@@ -320,9 +324,7 @@ internal/adapters/repositories/notes/repository.go
     73→func (r *repository) Get(_ context.Context, activityID string, date time.Time) (string, []string, error) {
 
 internal/adapters/repositories/timewarrior/repository.go
-    24→const (
-    25→	timeLayout = "20060102T150405Z"
-    26→)
+    24→const …
     28→type twInterval …
     29→	Start      string   `json:"start"`
     30→	End        string   `json:"end,omitempty"`
@@ -636,5 +638,7 @@ internal/adapters/
 internal/adapters/repositories/
 
 internal/core/
+
+internal/core/ports/mocks/
 
 internal/services/

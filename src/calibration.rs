@@ -1,5 +1,20 @@
 //! All base_value() and contribution() functions for the group taxonomy.
 //! This is the single findable location for all calibration values (design §9).
+//!
+//! **The numbers are empirically tuned, not principled.** They were walked
+//! toward a local optimum by running snapshot diffs on the fixture set and
+//! choosing the value that made the most snapshots improve. A cascade-test
+//! mindset applies: changing any one of them tends to shift 5-40 snapshots
+//! in either direction. Don't retune without an A/B pass — almost every
+//! plausible tweak regresses some snapshot that you weren't thinking about.
+//!
+//! Scale: `FunctionName(_) => 1.0` anchors the scale. Other name-kinds are
+//! near 1.0 on the same grounds. Everything else is relative to that:
+//! bodies (0.2–1.5) trade off against how expensive they are to render;
+//! doc-rest groups (0.3) are slightly above bodies; imports are near-zero
+//! outside first-party. Heading and DataSection value-tables drop sharply
+//! from level 1 to deeper levels because deeper headings carry much less
+//! orientation signal per token.
 
 use crate::classify::{self, FileCategory, FileRole};
 use crate::group::TsGroupKey;
