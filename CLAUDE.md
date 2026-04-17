@@ -10,7 +10,7 @@
 
 **Codebase health beats output quality.** Don't amplify known problems or extend flagged workarounds to fix a snapshot — that makes the codebase worse. A workaround is evidence of a bug in the model, not a template to copy. When the clean fix requires restructuring, leave the output imperfect and restructure.
 
-**Improvement process.** Look at real output for real projects. Does it enable good follow-up actions and ground later reasoning? That's the test.
+**Improvement process.** Snapshot-changing work is validated by the blind pairwise A/B review in `.claude/skills/ab-snapshots/` — one independent subagent per changed fixture, grounded in these principles, aggregated to a tally. That's the test. Eyeballing real output for individual fixtures still helps during iteration, but the A/B aggregate is what decides whether a change lands.
 
 ## Codebase Exploration
 
