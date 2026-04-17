@@ -71,7 +71,10 @@ pub fn render(path: &Path, budget: usize, char_budget: Option<usize>) -> String 
         return schedule::schedule(seed, &ctx);
     }
 
-    let root = path.canonicalize().unwrap_or_else(|_| path.to_path_buf());
+    let root = path.canonicalize().unwrap_or_else(|e| {
+        debug_assert!(false, "canonicalize({path:?}) failed: {e}");
+        path.to_path_buf()
+    });
     let group_ctx = group::GroupCtx {
         store: &store,
         root: root.clone(),

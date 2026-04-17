@@ -6,18 +6,6 @@ the 2026-04-13 design-invariant audit against `design.md` §10.
 
 ## Bugs
 
-### 3. V4 clause (b) not implemented — byte-budget fast pre-check missing
-
-**Invariant:** V4 — "Byte budget is a fast pre-check" before running the token counter.
-
-No `byte_budget` pre-check exists anywhere in the crate. Tokens and chars are computed together inside `FileCache::marginal_cost`, and `char_budget` is consulted only *after* tokenization at `src/schedule.rs:58-65` (as a secondary acceptance gate, correctly implementing clause c).
-
-**Desired behavior (from discussion):**
-1. Before running the tokenizer over a group's `LineEntry`s, sum their byte lengths and use a conservative heuristic (e.g. 16 bytes/token) to estimate whether the group could possibly fit in the remaining token budget. If not, reject without tokenizing.
-2. When `--char-budget` is set, also check char-budget fit before tokenizing — a group that can't fit under the char budget shouldn't incur tokenization cost either.
-
-Both checks should live in the render/probe path (`src/schedule.rs` probe_cost → `src/render.rs` marginal_cost), before any `format::count_tokens` call.
-
 ### 4. A1 scheduler encapsulation — auto-commit bypass [expanded 2026-04-16]
 
 **Invariant:** A1 — greedy choice: the scheduler picks the frontier group with the best `value / cost` ratio.
@@ -89,15 +77,6 @@ This is a textbook case of a sum type pretending to be a trait. Convert to `trai
 `TextRenderer` maintains `childless_folders: HashMap<PathBuf, FileCost>` as a bookkeeping structure to "refund" folder line costs when a descendant file group commits and the folder's bare entry is subsumed. This exists because folder lines are still committed eagerly against the budget and later removed when child content supersedes them. The renderer's `probe_cost` for `Files` has to peek at this map, and `commit` for `Files` has to remove-and-refund.
 
 The underlying issue is that folder costs are modeled wrong: a folder line should be a placeholder whose cost converts into real content when a child is scheduled, not a committed entry that needs a refund mechanism. Fixing this likely means deferring folder-line charging until assembly, where the final set of scheduled groups is known.
-
-### 24. Silent `unwrap_or` fallbacks on invariant paths
-
-Several invariant-sensitive paths degrade silently when an operation fails:
-
-- `path.canonicalize().unwrap_or_else(...)` in `src/lib.rs` — falls back to the un-canonicalized path on IO failure, producing different output than the canonical case.
-- `GroupCtx::rel_path` returns `unwrap_or(path)` — falls back to the absolute path when relativization fails.
-
-For a tool whose core job is grounded prioritization and reproducible output, "if this fails, use whatever" is the wrong default. These should either bubble the error up (most honest) or log/assert at least in debug builds (fail loud in tests, degrade in prod). The current behavior is a quiet correctness hole.
 
 ### 25. `render` ↔ `group` modules cross-import
 
