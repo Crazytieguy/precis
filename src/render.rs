@@ -60,16 +60,21 @@ pub struct RenderedEntry<'src> {
     pub chars: usize,
 }
 
-/// Format a LineEntry and compute its token/char cost. Called once per entry.
-pub fn render_entry<'s>(entry: &LineEntry<'s>) -> RenderedEntry<'s> {
-    let formatted = match entry {
+/// Format a LineEntry into its display string.
+pub fn format_entry(entry: &LineEntry<'_>) -> String {
+    match entry {
         LineEntry::Complete { line, content } => format::fmt_line(*line as usize, content),
         LineEntry::Truncated { line, content } => {
             let base = format::fmt_line(*line as usize, content);
             format!("{} …\n", base.trim_end())
         }
         LineEntry::Ellipsis { .. } => format::TRUNCATION_MARKER.to_string(),
-    };
+    }
+}
+
+/// Format a LineEntry and compute its token/char cost. Called once per entry.
+pub fn render_entry<'s>(entry: &LineEntry<'s>) -> RenderedEntry<'s> {
+    let formatted = format_entry(entry);
     let tokens = format::count_tokens(&formatted);
     let chars = formatted.len();
     RenderedEntry {
@@ -84,13 +89,19 @@ pub fn render_entry<'s>(entry: &LineEntry<'s>) -> RenderedEntry<'s> {
 // CachedGroupRender — stored on the group after first probe
 // ---------------------------------------------------------------------------
 
-/// The result of rendering a group: per-file rendered entries and the total
-/// marginal cost. Computed once on first probe, reused on every subsequent
-/// probe and at commit time.
+/// Cached render state for a TsGroup. Computed on first probe and reused
+/// thereafter. Two variants support the V4(b) byte pre-check: `Partial`
+/// entries have been formatted but not tokenized (skipped because the
+/// budget couldn't possibly fit them); next `prepare` call re-runs the
+/// pre-check against the current remaining budget and promotes to `Full`
+/// if it now fits.
 #[derive(Debug, Clone)]
-pub struct CachedGroupRender<'s> {
-    pub per_file: Vec<(PathBuf, Vec<RenderedEntry<'s>>)>,
-    pub marginal_cost: FileCost,
+pub enum CachedGroupRender<'s> {
+    Partial(Vec<(PathBuf, Vec<RenderedEntry<'s>>)>),
+    Full {
+        per_file: Vec<(PathBuf, Vec<RenderedEntry<'s>>)>,
+        marginal_cost: FileCost,
+    },
 }
 
 // ---------------------------------------------------------------------------
@@ -103,11 +114,29 @@ pub struct CachedGroupRender<'s> {
 /// group costs, how a commit affects the rendered state, and how to assemble
 /// the final output.
 pub trait SchedulerRenderer<'s> {
-    fn prepare(&mut self, group: &mut Group<'s>, ctx: &GroupCtx<'s>);
-    fn probe_cost(&mut self, group: &Group<'s>, ctx: &GroupCtx<'s>) -> FileCost;
+    /// Prepare render state for a group. `remaining_*` bounds let the
+    /// renderer skip tokenization (V4(b)) when the group can't fit. If
+    /// skipped, `probe_cost` returns None and the next iteration with a
+    /// larger budget (via refund) retries.
+    fn prepare(
+        &mut self,
+        group: &mut Group<'s>,
+        ctx: &GroupCtx<'s>,
+        remaining_tokens: usize,
+        remaining_chars: Option<usize>,
+    );
+    /// Returns None when `prepare` skipped tokenization on this group.
+    fn probe_cost(&mut self, group: &Group<'s>, ctx: &GroupCtx<'s>) -> Option<FileCost>;
     fn commit(&mut self, group: &mut Group<'s>, ctx: &GroupCtx<'s>) -> BudgetDelta;
     fn assemble(&self, char_budget: Option<usize>) -> String;
 }
+
+/// Upper bound on bytes per o200k_base token. The vocab contains decoded
+/// tokens up to 128 bytes (long whitespace runs like `" " × 128` are a
+/// single token). `bytes / MAX_BYTES_PER_TOKEN` is therefore a sound lower
+/// bound on the token count of a text — tighter divisors (e.g. 16, a
+/// typical average) would falsely reject whitespace-heavy content.
+const MAX_BYTES_PER_TOKEN: usize = 128;
 
 #[derive(Copy, Clone, Default, Debug)]
 pub struct BudgetDelta {
@@ -178,36 +207,87 @@ impl TextRenderer {
 }
 
 impl<'s> SchedulerRenderer<'s> for TextRenderer {
-    fn prepare(&mut self, group: &mut Group<'s>, ctx: &GroupCtx<'s>) {
+    fn prepare(
+        &mut self,
+        group: &mut Group<'s>,
+        ctx: &GroupCtx<'s>,
+        remaining_tokens: usize,
+        remaining_chars: Option<usize>,
+    ) {
         if let Group::Folders(g) = group {
             Self::ensure_folders_cached(g, ctx);
             return;
         }
         let Group::Ts(g) = group else { return };
-        if g.cached_render.is_some() {
+        if matches!(g.cached_render, Some(CachedGroupRender::Full { .. })) {
             return;
         }
 
-        let raw = crate::group::ts::render_entries(g);
+        let (mut per_file, total_chars) = match g.cached_render.take() {
+            Some(CachedGroupRender::Partial(pf)) => {
+                let total: usize = pf.iter().flat_map(|(_, es)| es.iter()).map(|r| r.chars).sum();
+                (pf, total)
+            }
+            _ => {
+                let raw = crate::group::ts::render_entries(g);
+                let mut per_file: Vec<(PathBuf, Vec<RenderedEntry<'s>>)> = Vec::new();
+                let mut total = 0usize;
+                for (path, entries) in raw {
+                    let rendered: Vec<RenderedEntry<'s>> = entries
+                        .iter()
+                        .map(|e| {
+                            let formatted = format_entry(e);
+                            let chars = formatted.len();
+                            total += chars;
+                            RenderedEntry {
+                                entry: e.clone(),
+                                formatted,
+                                tokens: 0,
+                                chars,
+                            }
+                        })
+                        .collect();
+                    per_file.push((path, rendered));
+                }
+                (per_file, total)
+            }
+        };
 
-        let mut per_file: Vec<(PathBuf, Vec<RenderedEntry<'s>>)> = Vec::new();
-        for (path, entries) in raw {
-            let rendered: Vec<RenderedEntry<'s>> =
-                entries.iter().map(|e| render_entry(e)).collect();
-            per_file.push((path, rendered));
+        // V4(b): total_chars is an upper bound on marginal chars; if it
+        // already fits, skip the marginal_chars pass. Otherwise fall through
+        // to the tighter check against committed-line overlap.
+        let total_fits_tokens = total_chars.div_ceil(MAX_BYTES_PER_TOKEN) <= remaining_tokens;
+        let total_fits_chars = remaining_chars.is_none_or(|cb| total_chars <= cb);
+        if !(total_fits_tokens && total_fits_chars) {
+            let m_chars = self.cache.marginal_chars(&per_file);
+            if m_chars.div_ceil(MAX_BYTES_PER_TOKEN) > remaining_tokens
+                || remaining_chars.is_some_and(|cb| m_chars > cb)
+            {
+                g.cached_render = Some(CachedGroupRender::Partial(per_file));
+                return;
+            }
+        }
+
+        for (_, entries) in &mut per_file {
+            for re in entries {
+                re.tokens = format::count_tokens(&re.formatted);
+            }
         }
 
         let marginal_cost = self.cache.marginal_cost(&per_file);
 
-        g.cached_render = Some(CachedGroupRender {
+        g.cached_render = Some(CachedGroupRender::Full {
             per_file,
             marginal_cost,
         });
     }
 
-    fn probe_cost(&mut self, group: &Group<'s>, ctx: &GroupCtx<'s>) -> FileCost {
+    fn probe_cost(&mut self, group: &Group<'s>, ctx: &GroupCtx<'s>) -> Option<FileCost> {
         match group {
-            Group::Ts(g) => g.cached_render.as_ref().unwrap().marginal_cost,
+            Group::Ts(g) => match g.cached_render.as_ref() {
+                Some(CachedGroupRender::Full { marginal_cost, .. }) => Some(*marginal_cost),
+                _ => None,
+            },
             Group::Folders(g) => {
                 let costs = g.cached_item_costs.as_ref().unwrap();
                 let mut fc = FileCost::default();
@@ -215,7 +295,7 @@ impl<'s> SchedulerRenderer<'s> for TextRenderer {
                     fc.tokens += c.tokens;
                     fc.chars += c.chars;
                 }
-                fc
+                Some(fc)
             }
             Group::Files(g) => {
                 let mut fc = FileCost::default();
@@ -234,7 +314,7 @@ impl<'s> SchedulerRenderer<'s> for TextRenderer {
                     fc.tokens = fc.tokens.saturating_sub(folder_cost.tokens);
                     fc.chars = fc.chars.saturating_sub(folder_cost.chars);
                 }
-                fc
+                Some(fc)
             }
         }
     }
@@ -242,10 +322,15 @@ impl<'s> SchedulerRenderer<'s> for TextRenderer {
     fn commit(&mut self, group: &mut Group<'s>, ctx: &GroupCtx<'s>) -> BudgetDelta {
         match group {
             Group::Ts(g) => {
-                let cached = g.cached_render.take().unwrap();
-                let cost = cached.marginal_cost;
-                self.cache.commit(cached.per_file, cost);
-                BudgetDelta::charge(cost)
+                let Some(CachedGroupRender::Full {
+                    per_file,
+                    marginal_cost,
+                }) = g.cached_render.take()
+                else {
+                    panic!("commit called on Ts group without Full cached render");
+                };
+                self.cache.commit(per_file, marginal_cost);
+                BudgetDelta::charge(marginal_cost)
             }
             Group::Folders(g) => {
                 let costs = g.cached_item_costs.take().unwrap();
@@ -393,6 +478,36 @@ impl FileCache {
         }
     }
 
+    /// Chars-only analogue of `marginal_cost`, used by `prepare` to decide
+    /// whether tokenization is worth running. Reuses cached header char
+    /// counts when available; otherwise computes from the path length
+    /// directly without tokenizing.
+    pub fn marginal_chars(&self, per_file: &[(PathBuf, Vec<RenderedEntry<'_>>)]) -> usize {
+        let mut total = 0usize;
+        for (path, entries) in per_file {
+            let file_map = self.files.get(path);
+            if file_map.is_none() {
+                total += match self.headers.get(path) {
+                    Some((_, cost)) => cost.chars,
+                    // Matches header_cost_for's with_sep: "\n" + header_line.
+                    None => 1 + format::header_line(path).len(),
+                };
+            }
+            for re in entries {
+                let line = re.entry.line();
+                if let Some(map) = file_map
+                    && let Some(existing) = map.get(&line)
+                {
+                    total += re.chars;
+                    total = total.saturating_sub(existing.chars);
+                    continue;
+                }
+                total += re.chars;
+            }
+        }
+        total
+    }
+
     /// Compute the marginal cost of committing a set of rendered entries,
     /// accounting for descendant overrides of already-committed lines.
     /// Does NOT mutate the cache — this is a read-only probe.
@@ -504,5 +619,30 @@ impl FileCache {
             }
         }
         output
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// Guards V4(b) pre-check soundness: the largest token in the current
+    /// tokenizer's vocab must not exceed MAX_BYTES_PER_TOKEN, or the
+    /// `bytes / MAX_BYTES_PER_TOKEN` lower bound on token count breaks and
+    /// prepare can drop groups that would actually fit.
+    #[test]
+    fn max_bytes_per_token_bounds_tokenizer_vocab() {
+        use tiktoken_rs::o200k_base;
+        let bpe = o200k_base().unwrap();
+        let mut actual_max = 0usize;
+        for tok_id in 0..202_000u32 {
+            if let Ok(s) = bpe.decode(vec![tok_id]) {
+                actual_max = actual_max.max(s.len());
+            }
+        }
+        assert!(
+            actual_max <= MAX_BYTES_PER_TOKEN,
+            "tokenizer has a token of {actual_max} bytes; MAX_BYTES_PER_TOKEN ({MAX_BYTES_PER_TOKEN}) is too low"
+        );
     }
 }

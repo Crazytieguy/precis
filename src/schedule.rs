@@ -44,9 +44,11 @@ where
                 continue;
             }
 
-            renderer.prepare(group, &ctx.groups);
+            renderer.prepare(group, &ctx.groups, remaining_tokens, remaining_chars);
 
-            let cost = renderer.probe_cost(&frontier[idx], &ctx.groups);
+            let Some(cost) = renderer.probe_cost(&frontier[idx], &ctx.groups) else {
+                continue;
+            };
 
             if cost.tokens > remaining_tokens {
                 continue;
@@ -111,9 +113,9 @@ where
         while i < new_children.len() {
             if is_auto_commit_body(&new_children[i], remaining_tokens, ctx.budget) {
                 let mut child = new_children.swap_remove(i);
-                renderer.prepare(&mut child, &ctx.groups);
-                let cost = renderer.probe_cost(&child, &ctx.groups);
-                if cost.tokens <= remaining_tokens
+                renderer.prepare(&mut child, &ctx.groups, remaining_tokens, remaining_chars);
+                if let Some(cost) = renderer.probe_cost(&child, &ctx.groups)
+                    && cost.tokens <= remaining_tokens
                     && remaining_chars.is_none_or(|cb| cost.chars <= cb)
                 {
                     let grandchildren = child.children(&ctx.groups);
