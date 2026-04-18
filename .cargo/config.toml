@@ -1,4 +1,3 @@
 [alias]
-bench-hot = "bench --bench hot_path -- --quick"
 lint = "clippy --all-targets --all-features -- -D warnings"
-test-release = "nextest run --release"
+t = "nextest run"

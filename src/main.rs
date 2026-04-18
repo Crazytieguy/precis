@@ -1,3 +1,4 @@
+use anyhow::{Result, bail};
 use clap::Parser;
 use std::path::PathBuf;
 
@@ -6,36 +7,40 @@ use std::path::PathBuf;
 const PLUGIN_CHAR_BUDGET: usize = 9500;
 
 #[derive(Parser)]
-#[command(about = "Extract a token-efficient summary of a path", version)]
+#[command(about = "Extract a token-efficient summary of one or more paths", version)]
 struct Cli {
-    /// Directory or file to summarize
-    #[arg(default_value = ".")]
-    path: PathBuf,
+    /// Directories or files to summarize (defaults to the current directory)
+    paths: Vec<PathBuf>,
 
     /// Token budget for output
     #[arg(long, default_value = "4000")]
-    budget: usize,
+    token_budget: usize,
 
     /// Character budget for output
     #[arg(long)]
     char_budget: Option<usize>,
 }
 
-fn main() {
+fn main() -> Result<()> {
     let cli = Cli::parse();
-    let path = &cli.path;
-    let budget = cli.budget;
+    let paths = if cli.paths.is_empty() {
+        vec![PathBuf::from(".")]
+    } else {
+        cli.paths
+    };
     let char_budget = cli.char_budget.or_else(|| {
         std::env::var("CLAUDE_PLUGIN_ROOT")
             .ok()
             .map(|_| PLUGIN_CHAR_BUDGET)
     });
 
-    if !path.exists() {
-        eprintln!("Error: {:?} does not exist", path);
-        std::process::exit(1);
+    for path in &paths {
+        if !path.exists() {
+            bail!("{:?} does not exist", path);
+        }
     }
 
-    let output = precis::render(path, budget, char_budget);
+    let output = precis::render(&paths, cli.token_budget, char_budget)?;
     print!("{}", output);
+    Ok(())
 }

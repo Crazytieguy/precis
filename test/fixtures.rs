@@ -1,17 +1,6 @@
-// Shared fixture data, included by both tests/snapshots.rs and src/bin/clone_fixtures.rs.
-//
-// Includers must define two macros before including this file:
-//   with_fixtures!(($dir, $url, $rev), ...)     — called with all fixture repos
-//   with_entries!(($name, $path, $budget), ...) — called with all snapshot entries
-//
-// Entries should be meaningfully diverse — don't add both root and root/src
-// when src is the only interesting content. Subfolder entries are for cases
-// like separate crates in a workspace or packages in a monorepo.
-//
-// Budget guidelines:
-//   2000 — small focused submodules (a few files)
-//   4000 — typical libraries and most entries (the CLI default)
-//   8000 — large multi-crate workspaces and monorepos
+// Shared fixture repo list, included by src/bin/clone_fixtures.rs and future
+// test consumers. Includers must define a `with_fixtures!` macro that accepts
+// `($dir, $url, $rev)` tuples.
 
 with_fixtures! {
     // Rust
@@ -59,89 +48,4 @@ with_fixtures! {
     ("krep",                "https://github.com/davidesantangelo/krep.git",       "ae96fbd2"),
     ("sqlite-vec",          "https://github.com/asg017/sqlite-vec.git",           "563a3e60"),
     ("soluna",              "https://github.com/cloudwu/soluna.git",              "be822052"),
-}
-
-with_entries! {
-    // ── Rust ────────────────────────────────────────────────────────────
-    (anyhow,                  "anyhow",                         4000),
-    (thiserror,               "thiserror",                      4000),
-    (thiserror_impl_src,      "thiserror/impl/src",             2000),
-    (log,                     "log",                            4000),
-    (log_src_kv,              "log/src/kv",                     2000),
-    (mdbook,                  "mdbook",                         8000),
-    (mdbook_guide_src,        "mdbook/guide/src",               4000),
-    (toasty,                  "toasty",                         8000),
-    (toasty_core,             "toasty/crates/toasty-core",      4000),
-    (toasty_codegen,          "toasty/crates/toasty-codegen",   4000),
-    (sps,                     "sps",                            8000),
-    (sps_core,                "sps/sps-core",                   4000),
-    (otree,                   "otree",                          4000),
-
-    // ── Go ──────────────────────────────────────────────────────────────
-    (go_multierror,           "go-multierror",                  4000),
-    (xxhash,                  "xxhash",                         4000),
-    (xxhash_xxhsum,           "xxhash/xxhsum",                  2000),
-    (mcphost,                 "mcphost",                        8000),
-    (mcphost_sdk,             "mcphost/sdk",                    2000),
-    (tock,                    "tock",                            8000),
-    (tock_internal_core,      "tock/internal/core",             2000),
-
-    // ── TypeScript ──────────────────────────────────────────────────────
-    (cmdk,                    "cmdk",                           4000),
-    (cmdk_cmdk_src,           "cmdk/cmdk/src",                  2000),
-    (vaul,                    "vaul",                            4000),
-    (ts_pattern,              "ts-pattern",                     4000),
-    (ts_pattern_src_types,    "ts-pattern/src/types",           2000),
-    (ky,                      "ky",                              4000),
-    (ky_source_errors,        "ky/source/errors",               2000),
-    (superstruct,             "superstruct",                    4000),
-    (superstruct_src_structs, "superstruct/src/structs",        2000),
-    (mitt,                    "mitt",                            2000),
-    (enclosed,                "enclosed",                        8000),
-    (enclosed_crypto,         "enclosed/packages/crypto",       2000),
-    (enclosed_lib,            "enclosed/packages/lib",          2000),
-    (d2ts,                    "d2ts",                            4000),
-    (d2ts_d2ts,               "d2ts/packages/d2ts",             4000),
-
-    // ── JavaScript ──────────────────────────────────────────────────────
-    (commander,               "commander",                      4000),
-    (semver,                  "semver",                          4000),
-    (semver_classes,          "semver/classes",                  2000),
-    (semver_internal,         "semver/internal",                 2000),
-
-    // ── Python ──────────────────────────────────────────────────────────
-    (pluggy,                  "pluggy",                          4000),
-    (typeguard,               "typeguard",                      4000),
-    (tomli,                   "tomli",                           4000),
-    (peepdb,                  "peepdb",                          4000),
-    (peepdb_db,               "peepdb/peepdb/db",               2000),
-    (swarm,                   "swarm",                           4000),
-
-    // ── Composite symbols (single-line JSON) ──────────────────────────────
-    // vscode's emojis.json: 1,837 key-value pairs on a single 40KB line.
-    // Progressive disclosure at two budgets shows the composite rendering.
-    // Requires perf fixtures: `cargo run --bin clone_fixtures -- --perf`
-    (vscode_emojis_small,     "../perf-fixtures/vscode/extensions/git/resources", 100),
-    (vscode_emojis_medium,    "../perf-fixtures/vscode/extensions/git/resources", 200),
-    (htmy,                    "htmy",                            4000),
-    (htmy_renderer,           "htmy/htmy/renderer",             2000),
-    (microbootstrap,          "microbootstrap",                 4000),
-    (microbootstrap_instruments, "microbootstrap/microbootstrap/instruments", 2000),
-    (py3xui,                  "py3xui",                          4000),
-    (py3xui_api,              "py3xui/py3xui/api",              2000),
-
-    // ── Python (ML) ─────────────────────────────────────────────────────
-    (xlstm,                   "xlstm",                           4000),
-    (xlstm_blocks,            "xlstm/xlstm/blocks",             2000),
-    (nano_vllm,               "nano-vllm",                      4000),
-    (nano_vllm_engine,        "nano-vllm/nanovllm/engine",      2000),
-    (chronos,                 "chronos-forecasting",             4000),
-
-    // ── C ───────────────────────────────────────────────────────────────
-    (sds,                     "sds",                             2000),
-    (neco,                    "neco",                            2000),
-    (bareiron,                "bareiron",                        4000),
-    (krep,                    "krep",                            2000),
-    (sqlite_vec,              "sqlite-vec",                     4000),
-    (soluna,                  "soluna",                          4000),
 }

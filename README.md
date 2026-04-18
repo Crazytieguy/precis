@@ -4,56 +4,7 @@ A CLI tool that extracts a token-efficient summary of a path, designed to replac
 
 ## Example
 
-Here's what `precis` shows for [developit/mitt](https://github.com/developit/mitt), a tiny TypeScript event emitter, at a 400-token budget:
-
-<!-- precis-example-start -->
-```
-README.md
-     9→# Mitt
-    11→> Tiny 200b functional event emitter / pubsub.
-    12→
-    13→-   **Microscopic:** weighs less than 200 bytes gzipped
-    14→-   **Useful:** a wildcard `"*"` event type listens to all events
-    15→-   **Familiar:** same names & ideas as [Node's EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter)
-    16→-   **Functional:** methods don't rely on `this`
-    17→-   **Great Name:** somehow [mitt](https://npm.im/mitt) wasn't taken
-    18→
-    19→Mitt was made for the browser, but works in any JavaScript runtime. It has no dependencies and supports IE9+.
-    20→
-    30→## Install
-    56→## Usage
-    81→### Typescript
-   113→## Examples & Demos
-   123→## API
-   138→### mitt
-   144→### all
-   148→### on
-   152→#### Parameters
-   157→### off
-   162→#### Parameters
-   167→### emit
-
-src/index.ts
-     1→export type EventType …
-     5→export type Handler …
-     6→export type WildcardHandler …
-    12→export type EventHandlerList …
-    13→export type WildCardEventHandlerList …
-    18→export type EventHandlerMap …
-    23→export interface Emitter …
-    26→	on …
-    27→	on …
-    29→	off …
-    33→	off …
-    35→	emit …
-    36→	emit …
-    46→export default function mitt …
-
-test/
-```
-<!-- precis-example-end -->
-
-The README body gives the project description and feature list. The source file shows type aliases (truncated), the `Emitter` interface with its methods, the doc comment, and the main function signature.
+TODO — will be regenerated for v0.2.
 
 ## Installation
 
@@ -117,22 +68,13 @@ Always use `precis` for codebase exploration. Run `precis .` for a full overview
 ## Usage
 
 ```
-precis .                    # summarize the current directory
-precis ./src                # zoom into a subdirectory
-precis . --budget 8000      # with a larger token budget
+precis .                           # summarize the current directory
+precis ./src                       # zoom into a subdirectory
+precis . --token-budget 8000       # with a larger token budget
 ```
 
 The default budget is 4000 BPE tokens (o200k_base tokenizer). Output is plain text with line numbers preserving source indentation.
 
 ## Supported languages
 
-- **Rust** — functions, structs, enums, traits, impls, type aliases, consts, statics, macros, modules
-- **TypeScript / JavaScript / TSX** — functions, classes, interfaces, enums, type aliases, consts, namespaces
-- **Go** — functions, methods, structs, interfaces, type aliases, consts, vars
-- **C / C++** — functions, classes, structs, unions, enums, namespaces, typedefs, type aliases, macros, includes
-- **Java** — classes, interfaces, enums, records, annotations, methods, constructors, constants, modules
-- **Python** — functions, classes, module-level constants
-- **Markdown** — heading structure with body content
-- **JSON / TOML / YAML** — top-level keys and sections
-- **Lua** — functions, module-level variables
-- **Plain text fallback** — files in any other language are included as plain text (binary files excluded automatically)
+TODO — language coverage is being reworked for v0.2.

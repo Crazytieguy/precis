@@ -10,39 +10,14 @@
       }
     }
   },
-  "hooks": {
-    "PostToolUse": [
-      {
-        "matcher": "EnterWorktree",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/setup-worktree.sh\""
-          }
-        ]
-      }
-    ]
-  },
   "permissions": {
     "allow": [
       "Bash(ls)",
       "Bash(ls *)",
       "Bash(find *)",
-      "Bash(cat *)",
-      "Bash(head *)",
-      "Bash(tail *)",
-      "Bash(wc)",
-      "Bash(wc *)",
       "Bash(diff *)",
       "Bash(mkdir *)",
-      "Bash(awk *)",
-      "Bash(sed -n *)",
       "Bash(jq *)",
-      "Bash(sort)",
-      "Bash(sort *)",
-      "Bash(uniq)",
-      "Bash(uniq *)",
-      "Bash(cut *)",
       "Bash(git status)",
       "Bash(git status *)",
       "Bash(git diff)",
@@ -54,35 +29,46 @@
       "Bash(git add *)",
       "Bash(git commit:*)",
       "Bash(git checkout:*)",
-      "Bash(cargo build)",
-      "Bash(cargo build *)",
-      "Bash(cargo test)",
-      "Bash(cargo test *)",
-      "Bash(cargo test-release)",
-      "Bash(cargo test-release *)",
-      "Bash(cargo nextest *)",
-      "Bash(cargo bench-hot)",
-      "Bash(cargo bench-hot *)",
+      "Bash(cargo t)",
+      "Bash(cargo t *)",
       "Bash(cargo lint)",
       "Bash(cargo lint *)",
-      "Bash(cargo run)",
-      "Bash(cargo run *)",
-      "Bash(cargo check)",
-      "Bash(cargo check *)",
-      "Bash(cargo clippy)",
-      "Bash(cargo clippy *)",
       "Bash(cargo fmt)",
       "Bash(cargo fmt *)",
-      "Bash(cargo bench)",
-      "Bash(cargo bench *)",
-      "Bash(cargo insta *)",
+      "Bash(cargo run --release *)",
+      "Bash(cargo run --bin clone_fixtures)",
+      "Bash(cargo run --bin clone_fixtures *)",
       "Bash(cargo doc-md)",
       "Bash(cargo doc-md *)",
       "WebFetch",
       "WebSearch",
       "mcp__plugin_llms-fetch-mcp_llms-fetch"
     ],
+    "ask": [
+      "Bash(cargo publish)",
+      "Bash(cargo publish *)",
+      "Bash(git push)",
+      "Bash(git push *)"
+    ],
     "deny": [
+      "Bash(cargo test)",
+      "Bash(cargo test *)",
+      "Bash(cargo test-release)",
+      "Bash(cargo test-release *)",
+      "Bash(cargo nextest)",
+      "Bash(cargo nextest *)",
+      "Bash(cargo clippy)",
+      "Bash(cargo clippy *)",
+      "Bash(cargo check)",
+      "Bash(cargo check *)",
+      "Bash(cargo build)",
+      "Bash(cargo build *)",
+      "Bash(cargo bench)",
+      "Bash(cargo bench *)",
+      "Bash(cargo bench-hot)",
+      "Bash(cargo bench-hot *)",
+      "Bash(cargo insta)",
+      "Bash(cargo insta *)",
       "Bash(rustc *)",
       "Bash(git -C *)"
     ]
