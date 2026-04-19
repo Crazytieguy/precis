@@ -18,7 +18,9 @@ Three priorities, in this order:
 
 1. **Minimize catastrophic omissions.** Content whose absence would mislead the agent into not realizing something exists, sending it on a wild goose chase or causing it to skip an important consideration. *Failure mode:* snapshot implies (by what's shown and what's not) that something doesn't exist → agent doesn't look for it → user query goes unanswered or wrong actions are taken. Rare but high-impact; weigh heavily.
 
-2. **Minimize follow-up tool calls and maximize their precision.** When the agent does need to dig, the snapshot should make it obvious *where* (specific file, specific line range), not gesture vaguely. *Failure mode:* snapshot lacks breadth or doesn't give precise locations → agent runs many wide searches before being able to act.
+   **Mitigation via splitting + elision markers**: a batch can include a partial slice of a piece of content with the rest marked as elided (a single line with the line-number prefix, no body). The elision marker is itself an *invitation* — it tells the agent "more exists here, fetch it with a follow-up read when relevant." So a large block can be teased in an early batch (a header line + an elision marker) and the body ranked much lower, without risking the catastrophic-omission failure mode. Splitting need not produce contiguous batches in the ranking.
+
+2. **Minimize follow-up tool calls and maximize their precision.** When the agent does need to dig, the snapshot should make it obvious *where* (specific file, specific line range), not gesture vaguely. Aim for "where can I find X obscure detail in the codebase?" being **one or two hops** away at minimal token cost (a structural pointer in the snapshot + one `Read`/`Grep` to land on it). *Failure mode:* snapshot lacks breadth or doesn't give precise locations → agent runs many wide searches before being able to act.
 
 3. **Maximize cases where the agent needs zero follow-up tool calls** — snapshot itself supplies enough semantic understanding for common queries. *Failure mode:* snapshot lacks general/semantic context → agent can't understand the user query before having to explore, or can't answer basic codebase questions.
 
@@ -40,7 +42,7 @@ A **batch** is the atomic scheduling unit. It's a named set of source content th
 
 A batch can **span multiple files or folders** — the division is arbitrary. Group whatever maximizes the objective while staying coherent (the agent reading the snapshot can tell what's there and what isn't).
 
-A logical entity (a function, a module, a file) **can be split across multiple batches at different priorities** — e.g., a function's signature might be batch 1.5 and its body batch 4.2. Split when it lets ranking carry more information.
+A logical entity (a function, a module, a file) **can be split across multiple batches at different priorities** — e.g., a function's signature might be batch 1.5 and its body batch 4.2. Split when it lets ranking carry more information. Splits don't have to be contiguous in the ranking — teasing a piece early with an elision marker and ranking the rest much lower is a common pattern (see the Mitigation note above).
 
 Name a batch with a **structural descriptor** that captures the rule, not by enumerating its members.
 - Good: "rustdoc summary lines on public structs in `src/walker/`" or "use-statement first-segments in `src/main.rs:1-20`".
@@ -60,6 +62,7 @@ Revision pin: `<rev>`
 ### 1.1 <descriptor>
 - Content: <concrete file / line / folder reference>
 - Cost: <N tokens> (helper: `<exact helper invocation>`)
+- Predecessor: <batch number, if any>      (logical constraint: this batch must come before 1.1)
 - Notes (optional, brief): <any non-obvious rationale>
 
 ### 1.2 <descriptor>
@@ -78,6 +81,10 @@ Revision pin: `<rev>`
 
 **Numbering: major.minor.** A change in the **major number** (`1.x → 2.x`) is a substantial priority drop — the alignment reviewer treats violations across major boundaries as more severe than violations across minor boundaries. A change in **minor number** is a finer ordering signal within the same priority group.
 
+**Predecessor (optional, separate from priority).** Some batches are only meaningful after another batch has been shown — e.g., a function's body only makes sense after its signature; an inner-class method list only after the outer class is declared. Use the `Predecessor: X.Y` field to record these *logical* constraints, **not** to express priority. The reviewer treats violations of a predecessor edge as the most severe class of divergence, even when the priority numbers themselves are close.
+
+**Threshold framing.** Think of your ranking as serving a *threshold* choice: for any token budget, the ideal `precis` output is "all batches numbered ≤ X" for some X. The ranking is good when, for any X you might pick, the resulting bundle is a coherent, useful slice of the codebase to show. Test your draft this way: scan from the top down at imaginary cut points; does each cut land somewhere sensible?
+
 ## Budget distribution and batch sizing
 
 Users pass token budgets in roughly **logarithmic distribution** — many small budgets and a few large ones. Your ranking must serve small budgets too.
@@ -86,6 +93,8 @@ Users pass token budgets in roughly **logarithmic distribution** — many small 
 - **Late batches can be larger.**
 - **Cumulative cost across major groups should be roughly logarithmic** — each subsequent group's cumulative cost should be a meaningful multiple of the prior group's, so a doubling of budget unlocks a meaningful extra slice. Let the fixture tell you the actual numbers.
 - Don't overfit to specific budget values. Snapshot tests use their own; your ranking shouldn't assume any.
+
+**Hard size constraint (non-negotiable):** any batch's token cost must be **at most 2× the largest batch ranked above it**. Reasoning: a batch gates everything ranked below it (a budget that doesn't fit batch X cannot include any later batch). A single oversized batch leaves many budgets severely under-filled. This forces you to split rather than emit a heavy batch at any point in the ranking. A single batch covering more than ~300 tokens early in the ranking is almost always wrong; split it.
 
 A typical fixture has on the order of **50–300 batches** total within the 20k cap. Small fixtures may have fewer; large ones more.
 
@@ -140,4 +149,4 @@ If the fixture is too large to cover everything, articulate the cut-off in below
 4. Use the token counter to estimate every candidate batch's cost.
 5. Rank into major.minor numbering, applying the underlying objective and the budget-distribution sizing rules. Use value/cost ratios to inform the ordering. Drop or demote redundant or low-value candidates.
 6. Write the document.
-7. Read it end-to-end before declaring done — verify file/line references are accurate, every batch has a token count, the early-major-group cumulative costs are small, and below-the-fold genuinely justifies the omissions.
+7. Read it end-to-end before declaring done — verify file/line references are accurate, every batch has a token count, no batch is more than 2× the largest batch ranked above it, and below-the-fold genuinely justifies the omissions. Also apply the threshold test: for a few imaginary cut points, check the resulting "top-K batches" bundle is a coherent useful slice.
