@@ -1,0 +1,35 @@
+---
+source: tests/snapshots.rs
+expression: rendered
+---
+.github/
+    workflows/
+        main.yml
+.gitignore
+CHANGELOG.md
+Cargo.toml
+LICENSE-APACHE
+LICENSE-MIT
+README.md
+benches/
+    value.rs
+rfcs/
+    0296-structured-logging.md
+src/
+    __private_api.rs
+    kv/
+        error.rs
+        key.rs
+        mod.rs
+        source.rs
+        value.rs
+    lib.rs
+    macros.rs
+    serde.rs
+test_max_level_features/
+    Cargo.toml
+    main.rs
+tests/
+    integration.rs
+    macros.rs
+triagebot.toml

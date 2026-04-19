@@ -7,13 +7,16 @@ use std::path::PathBuf;
 const PLUGIN_CHAR_BUDGET: usize = 9500;
 
 #[derive(Parser)]
-#[command(about = "Extract a token-efficient summary of one or more paths", version)]
+#[command(
+    about = "Extract a token-efficient summary of one or more paths",
+    version
+)]
 struct Cli {
     /// Directories or files to summarize (defaults to the current directory)
     paths: Vec<PathBuf>,
 
     /// Token budget for output
-    #[arg(long, default_value = "4000")]
+    #[arg(long, default_value = "3000")]
     token_budget: usize,
 
     /// Character budget for output
