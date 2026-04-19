@@ -37,15 +37,6 @@ pub enum BatchContent {
     },
 }
 
-impl BatchContent {
-    pub fn target_path(&self) -> &PathBuf {
-        match self {
-            BatchContent::FolderListing { path, .. } => path,
-            BatchContent::FileContent { path, .. } => path,
-        }
-    }
-}
-
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct FsEntry {
     pub name: String,

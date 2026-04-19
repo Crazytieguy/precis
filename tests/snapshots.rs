@@ -23,12 +23,15 @@ fn fixture_snapshots() {
         for budget in BUDGETS {
             let rendered = precis::render(&[&path], *budget, None)
                 .unwrap_or_else(|e| panic!("render({fixture} @ {budget}): {e}"));
-            let mut settings = insta::Settings::clone_current();
-            settings.set_snapshot_path("snapshots/fixtures");
-            settings.set_prepend_module_to_snapshot(false);
-            settings.bind(|| {
-                insta::assert_snapshot!(format!("{fixture}__{budget}"), rendered);
-            });
+            insta::with_settings!(
+                {
+                    snapshot_path => "snapshots/fixtures",
+                    prepend_module_to_snapshot => false,
+                },
+                {
+                    insta::assert_snapshot!(format!("{fixture}__{budget}"), rendered);
+                }
+            );
         }
     }
 }

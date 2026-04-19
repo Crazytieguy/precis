@@ -13,54 +13,68 @@ pub struct Scheduler<W: Walker> {
     char_budget: Option<usize>,
     consumed: Cost,
     all_batches: HashMap<BatchId, Batch>,
-    scheduled: HashMap<BatchId, ()>,
+    scheduled: HashSet<BatchId>,
 }
 
 impl<W: Walker> Scheduler<W> {
     pub fn new(root: PathBuf, walker: W, token_budget: usize, char_budget: Option<usize>) -> Self {
         Self {
             walker,
-            ctx: WalkerCtx::new(),
+            ctx: WalkerCtx::new(root.clone()),
             tree: RenderedTree::new(root),
             token_budget,
             char_budget,
             consumed: Cost::default(),
             all_batches: HashMap::new(),
-            scheduled: HashMap::new(),
+            scheduled: HashSet::new(),
         }
     }
 
     pub fn run(mut self) -> RenderedTree {
-        // Seed
-        let seeds = self.walker.seed(self.tree.root(), &mut self.ctx);
+        let seeds = self.walker.seed(&mut self.ctx);
         for batch in seeds {
             self.all_batches.insert(batch.id, batch);
         }
+        while let Some((id, cost)) = self.pick_best() {
+            self.schedule(id, cost);
+        }
 
-        // Greedy loop: pick best ready batch that fits, schedule it, repeat.
-        while let Some(id) = self.pick_best() {
-            self.schedule(id);
+        // End-of-run cross-check against the actually-rendered text. Catches
+        // marginal-cost accounting bugs that incremental tracking might miss
+        // (BPE non-additivity across rows is monotone in our favor, so this
+        // can only fire if some other accounting drift snuck in).
+        let final_tokens = self.tree.total_tokens();
+        assert!(
+            final_tokens <= self.token_budget,
+            "rendered output exceeds token budget: {} > {}",
+            final_tokens,
+            self.token_budget,
+        );
+        if let Some(cb) = self.char_budget {
+            let final_chars = self.tree.total_chars();
+            assert!(
+                final_chars <= cb,
+                "rendered output exceeds char budget: {} > {}",
+                final_chars,
+                cb,
+            );
         }
 
         self.tree
     }
 
-    fn pick_best(&self) -> Option<BatchId> {
-        let mut best: Option<(BatchId, f64)> = None;
+    fn pick_best(&self) -> Option<(BatchId, Cost)> {
+        // Tracks the best (ratio, batch id, cost). Tie-break on lower BatchId
+        // so the schedule order is deterministic regardless of HashMap iteration.
+        let mut best: Option<(f64, BatchId, Cost)> = None;
         for batch in self.all_batches.values() {
-            if self.scheduled.contains_key(&batch.id) {
+            if self.scheduled.contains(&batch.id) {
                 continue;
             }
-            // Predecessors all scheduled?
-            if !batch
-                .predecessors()
-                .all(|p| self.scheduled.contains_key(&p))
-            {
+            if !batch.predecessors().all(|p| self.scheduled.contains(&p)) {
                 continue;
             }
-            // Marginal cost
             let cost = self.tree.marginal_cost(batch);
-            // Fits?
             if self.consumed.tokens + cost.tokens > self.token_budget {
                 continue;
             }
@@ -69,28 +83,29 @@ impl<W: Walker> Scheduler<W> {
             {
                 continue;
             }
-            // Ratio (free batches always picked; well-defined as INFINITY)
             let ratio = if cost.tokens == 0 {
                 f64::INFINITY
             } else {
                 batch.raw_value / cost.tokens as f64
             };
-            if best.is_none_or(|(_, br)| ratio > br) {
-                best = Some((batch.id, ratio));
+            let better = match best {
+                None => true,
+                Some((br, bid, _)) => ratio > br || (ratio == br && batch.id < bid),
+            };
+            if better {
+                best = Some((ratio, batch.id, cost));
             }
         }
-        best.map(|(id, _)| id)
+        best.map(|(_, id, cost)| (id, cost))
     }
 
-    fn schedule(&mut self, id: BatchId) {
+    fn schedule(&mut self, id: BatchId, cost: Cost) {
         let batch = self
             .all_batches
             .get(&id)
             .expect("scheduled id present in batches")
             .clone();
 
-        // Release-enforced invariants protecting output correctness.
-        let cost = self.tree.marginal_cost(&batch);
         assert!(
             self.consumed.tokens + cost.tokens <= self.token_budget,
             "scheduled batch exceeds token budget: {} + {} > {}",
@@ -108,27 +123,23 @@ impl<W: Walker> Scheduler<W> {
             );
         }
 
-        // Debug-only consistency checks.
         debug_assert!(
-            !self.scheduled.contains_key(&id),
+            !self.scheduled.contains(&id),
             "batch {:?} scheduled twice",
-            id,
+            id
         );
         debug_assert!(
-            batch
-                .predecessors()
-                .all(|p| self.scheduled.contains_key(&p)),
+            batch.predecessors().all(|p| self.scheduled.contains(&p)),
             "batch {:?} scheduled before its predecessors",
             id,
         );
 
         let ancestors = self.ancestors_of(&batch);
         self.tree.apply(&batch, |id| ancestors.contains(&id));
-        self.scheduled.insert(id, ());
+        self.scheduled.insert(id);
         self.consumed.tokens += cost.tokens;
         self.consumed.chars += cost.chars;
 
-        // Walker emits successors of this scheduled batch.
         let succs = self.walker.successors(&batch, &mut self.ctx);
         for s in succs {
             debug_assert!(
@@ -140,16 +151,20 @@ impl<W: Walker> Scheduler<W> {
         }
     }
 
-    /// Walks the parent chain of `batch` and collects all ancestor ids
-    /// (excluding `batch` itself). Used by the tree's overlap check.
+    /// Walks the full predecessor graph of `batch` (parent + ordering_pred,
+    /// transitively) and returns the set of ancestor ids. The visited set
+    /// also makes the walk safe against cycles, which a buggy walker could
+    /// otherwise introduce. Used by the tree's overlap check.
     fn ancestors_of(&self, batch: &Batch) -> HashSet<BatchId> {
         let mut set = HashSet::new();
-        let mut cur = batch.parent;
-        while let Some(p) = cur {
+        let mut stack: Vec<BatchId> = batch.predecessors().collect();
+        while let Some(p) = stack.pop() {
             if !set.insert(p) {
-                break;
+                continue;
             }
-            cur = self.all_batches.get(&p).and_then(|b| b.parent);
+            if let Some(b) = self.all_batches.get(&p) {
+                stack.extend(b.predecessors());
+            }
         }
         set
     }

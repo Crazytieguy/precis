@@ -1,4 +1,4 @@
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 
 use crate::batch::{Batch, BatchContent, FsEntry, RenderedLine};
 
@@ -13,7 +13,7 @@ use super::{Walker, WalkerCtx};
 pub struct StubWalker;
 
 impl Walker for StubWalker {
-    fn seed(&mut self, _root: &Path, ctx: &mut WalkerCtx) -> Vec<Batch> {
+    fn seed(&mut self, ctx: &mut WalkerCtx) -> Vec<Batch> {
         vec![Batch {
             id: ctx.alloc_id(),
             descriptor: "stub root listing".to_string(),

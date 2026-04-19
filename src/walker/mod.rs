@@ -1,19 +1,20 @@
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 use crate::batch::{Batch, BatchId};
 
 pub mod generic;
 pub mod stub;
 
-/// Allocator the scheduler hands to walkers when they emit batches, so each
-/// new batch gets a fresh monotonic id.
+/// Per-run state the scheduler hands to walkers when they emit batches:
+/// monotonic id allocation and the seed root the run was started from.
 pub struct WalkerCtx {
     next_id: u64,
+    root: PathBuf,
 }
 
 impl WalkerCtx {
-    pub fn new() -> Self {
-        Self { next_id: 0 }
+    pub fn new(root: PathBuf) -> Self {
+        Self { next_id: 0, root }
     }
 
     pub fn alloc_id(&mut self) -> BatchId {
@@ -21,18 +22,25 @@ impl WalkerCtx {
         self.next_id += 1;
         id
     }
-}
 
-impl Default for WalkerCtx {
-    fn default() -> Self {
-        Self::new()
+    pub fn root(&self) -> &Path {
+        &self.root
+    }
+
+    /// Depth of `path` relative to the seed root (root itself = 0). Returns 0
+    /// when `path` is not under root — that's a walker bug, but the contract
+    /// is to make it visible via wrong indentation rather than panic mid-run.
+    pub fn depth_from_root(&self, path: &Path) -> usize {
+        path.strip_prefix(&self.root)
+            .map(|p| p.components().count())
+            .unwrap_or(0)
     }
 }
 
-/// A walker discovers batches lazily: it emits seed batches for the input root
+/// A walker discovers batches lazily: it emits seed batches for the run's root
 /// and, when a batch is scheduled, may emit successor batches whose structural
 /// parent is the scheduled one.
 pub trait Walker {
-    fn seed(&mut self, root: &Path, ctx: &mut WalkerCtx) -> Vec<Batch>;
+    fn seed(&mut self, ctx: &mut WalkerCtx) -> Vec<Batch>;
     fn successors(&mut self, scheduled: &Batch, ctx: &mut WalkerCtx) -> Vec<Batch>;
 }
