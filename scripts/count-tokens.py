@@ -3,10 +3,11 @@
 # requires-python = ">=3.11"
 # dependencies = ["tiktoken"]
 # ///
-"""Count tokens in files or line ranges using o200k_base.
+"""Count tokens in files, line ranges, or arbitrary text using o200k_base.
 
 Usage:
   count-tokens.py <spec> [<spec> ...] [--regex PATTERN]
+  count-tokens.py --stdin
 
 Each <spec> is one of:
   <path>                       whole file
@@ -19,6 +20,10 @@ prefix + "…" (a single ellipsis char) and counted accordingly. If no match,
 the line is counted in full. Use this to model honest line-prefix truncation
 at syntactic boundaries (e.g., `--regex '^[^{]*'` to truncate at the first `{`,
 or `--regex '^[^(]+\\('` to truncate after the first `(`).
+
+With --stdin: count tokens of arbitrary text read from standard input. Use
+this for folder listings, file lists, or any rendered text whose token cost
+you want to estimate (e.g., `ls src/ | count-tokens.py --stdin`).
 
 Prints per-spec counts and a final total.
 """
@@ -65,6 +70,14 @@ def apply_regex(text, pattern):
 
 def main():
     args = list(sys.argv[1:])
+    enc = tiktoken.get_encoding("o200k_base")
+
+    if "--stdin" in args:
+        text = sys.stdin.read()
+        n = len(enc.encode(text))
+        print(f"stdin: {n}")
+        return
+
     regex = None
     if "--regex" in args:
         i = args.index("--regex")
@@ -74,7 +87,6 @@ def main():
         sys.stderr.write(__doc__)
         sys.exit(2)
 
-    enc = tiktoken.get_encoding("o200k_base")
     total = 0
     for spec in args:
         path, start, end = parse_spec(spec)
