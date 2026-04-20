@@ -4,7 +4,7 @@
 //! land in Stage 7 and will enrich these snapshots organically.
 //!
 //! Skips silently when a fixture isn't cloned. Run `cargo run --bin
-//! clone_fixtures` to populate `test/fixtures/`.
+//! clone_fixtures` to populate `tests/fixtures/`.
 
 use std::path::PathBuf;
 
@@ -13,7 +13,7 @@ const BUDGETS: &[usize] = &[1500, 3000, 6000];
 
 #[test]
 fn fixture_snapshots() {
-    let fixtures_root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("test/fixtures");
+    let fixtures_root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures");
     for fixture in FIXTURES {
         let path = fixtures_root.join(fixture);
         if !path.exists() {

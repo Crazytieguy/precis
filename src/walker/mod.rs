@@ -3,12 +3,11 @@ use std::path::{Path, PathBuf};
 use crate::batch::{Batch, BatchId};
 
 pub mod generic;
-pub mod stub;
 
 /// Per-run state the scheduler hands to walkers when they emit batches:
 /// monotonic id allocation and the seed root the run was started from.
 pub struct WalkerCtx {
-    next_id: u64,
+    next_id: usize,
     root: PathBuf,
 }
 
@@ -38,8 +37,8 @@ impl WalkerCtx {
 }
 
 /// A walker discovers batches lazily: it emits seed batches for the run's root
-/// and, when a batch is scheduled, may emit successor batches whose structural
-/// parent is the scheduled one.
+/// and, when a batch is scheduled, may emit successor batches whose predecessor
+/// is the scheduled one.
 pub trait Walker {
     fn seed(&mut self, ctx: &mut WalkerCtx) -> Vec<Batch>;
     fn successors(&mut self, scheduled: &Batch, ctx: &mut WalkerCtx) -> Vec<Batch>;

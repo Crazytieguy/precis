@@ -18,7 +18,7 @@ use walker::generic::GenericWalker;
 pub fn render(
     paths: &[impl AsRef<Path>],
     token_budget: usize,
-    char_budget: Option<usize>,
+    byte_budget: Option<usize>,
 ) -> Result<String> {
     let path = paths
         .first()
@@ -33,7 +33,7 @@ pub fn render(
             root.display()
         );
     }
-    let scheduler = Scheduler::new(root, GenericWalker::new(), token_budget, char_budget);
+    let scheduler = Scheduler::new(root, GenericWalker::new(), token_budget, byte_budget);
     let tree = scheduler.run();
     Ok(tree.render())
 }

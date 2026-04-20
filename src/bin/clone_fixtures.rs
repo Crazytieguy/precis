@@ -12,10 +12,10 @@ macro_rules! with_fixtures {
         const FIXTURES: &[(&str, &str, &str)] = &[$(($dir, $url, $rev)),*];
     };
 }
-include!("../../test/fixtures.rs");
+include!("../../tests/data/fixtures.rs");
 
 fn main() {
-    let fixtures_dir = Path::new(env!("CARGO_MANIFEST_DIR")).join("test/fixtures");
+    let fixtures_dir = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures");
     let mut cloned = 0;
     let mut skipped = 0;
 
