@@ -38,15 +38,13 @@ The fixture name (e.g. `log`, `anyhow`, `mdbook`). From it, derive:
 
 6. **Drop weak ideas.** If a batch only appears in one draft and is clearly low-value (redundant with the README, restates obvious crate metadata, etc.), drop it. Note the omission in below-the-fold if it's borderline.
 
-7. **Add bridging batches when needed.** If combining the best of each draft creates a 2× violation (e.g., the combined ranking has a 100-token batch followed much later by a 400-token one), introduce intermediate batches from the source material to satisfy the constraint. The combiner is allowed to create batches not present in any draft — but only as glue. The bulk of the document should come from the drafts.
+7. **Re-rank coherently** with major.minor numbering reflecting the synthesized priorities.
 
-8. **Re-rank coherently** with major.minor numbering reflecting the synthesized priorities.
+8. **Re-verify per-batch token costs** with the helper script. Drafts may have miscounted, miscopied line ranges, or used outdated regex patterns — measure each batch yourself.
 
-9. **Re-verify per-batch token costs** with the helper script. Drafts may have miscounted, miscopied line ranges, or used outdated regex patterns — measure each batch yourself.
+9. **Re-write below-the-fold** to capture the union of justified omissions across drafts, plus anything you dropped during curation.
 
-10. **Re-write below-the-fold** to capture the union of justified omissions across drafts, plus anything you dropped during curation.
-
-11. **Apply the threshold test** at several imaginary cut points before declaring done.
+10. **Apply the threshold test** at several imaginary cut points before declaring done.
 
 ## Output
 
@@ -56,5 +54,5 @@ Single markdown document at `tests/north-stars/<fixture>.md`. Same format as a f
 
 - **Honest only.** Verify every file/line reference against the fixture source, regardless of what the drafts said.
 - **Per-batch token counts required**, measured by you with the helper.
-- **No genuinely new content.** Bridging batches drawn from the source material to satisfy the 2× rule are fine; importing batches that none of the drafts considered is out of scope. If the drafts collectively missed something, that's information for the next round of authoring, not for this combiner.
+- **No genuinely new content.** If the drafts collectively missed something, that's information for the next round of authoring, not for this combiner.
 - **Don't propose changes to the drafts** or to the author prompt. Just produce the combined document.
