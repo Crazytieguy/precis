@@ -133,6 +133,14 @@ impl RenderedTree {
     }
 
     fn cost_lines(&self, file_map: &BTreeMap<PathBuf, BTreeMap<usize, RenderedLine>>) -> Cost {
+        // Conservative ellipsis-overhead headroom per file to keep the
+        // end-of-run cross-check happy when this batch introduces new gaps
+        // (rendered as bare-ellipsis lines). ~2 markers × ~3 tokens each;
+        // slight over-estimate trades a few tokens of unused budget for the
+        // invariant that consumed >= rendered.
+        const ELLIPSIS_OVERHEAD_TOKENS: usize = 8;
+        const ELLIPSIS_OVERHEAD_BYTES: usize = 16;
+
         let mut cost = Cost::default();
         for (path, lines) in file_map {
             let indent_depth = self.depth_from_root(path);
@@ -140,6 +148,8 @@ impl RenderedTree {
                 Some(TreeNode::File { content }) => Some(content),
                 _ => None,
             };
+            cost.tokens += ELLIPSIS_OVERHEAD_TOKENS;
+            cost.bytes += ELLIPSIS_OVERHEAD_BYTES;
             for (number, line) in lines {
                 let new_row = format_line_row(*number, line, indent_depth);
                 let new_tokens = tokenizer::count(&new_row);
@@ -261,7 +271,20 @@ impl RenderedTree {
             return;
         };
         let indent = INDENT_UNIT.repeat(indent_depth);
+        // Track the previous rendered line number so we can insert a bare-
+        // ellipsis marker on any gap. Gaps represent content the walkers chose
+        // not to surface at this budget; the marker invites the agent to fetch
+        // it via a Read. A gap at the start of the file (first rendered line
+        // isn't 1) also gets a marker, since content before the first shown
+        // line is likewise elided.
+        let mut prev: Option<usize> = None;
         for (number, record) in content {
+            let expected_next = prev.map_or(1, |p| p + 1);
+            if *number > expected_next {
+                out.push_str(&indent);
+                out.push('…');
+                out.push('\n');
+            }
             out.push_str(&indent);
             out.push_str(&number.to_string());
             out.push('→');
@@ -270,6 +293,7 @@ impl RenderedTree {
                 out.push('…');
             }
             out.push('\n');
+            prev = Some(*number);
         }
     }
 }

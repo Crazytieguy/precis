@@ -9,7 +9,7 @@ pub mod tokenizer;
 pub mod walker;
 
 use scheduler::Scheduler;
-use walker::generic::GenericWalker;
+use walker::multi::MultiWalker;
 
 /// Render a precis summary of the given path(s) under the given budgets.
 ///
@@ -33,7 +33,7 @@ pub fn render(
             root.display()
         );
     }
-    let scheduler = Scheduler::new(root, GenericWalker::new(), token_budget, byte_budget);
+    let scheduler = Scheduler::new(root, MultiWalker::new(), token_budget, byte_budget);
     let tree = scheduler.run();
     Ok(tree.render())
 }

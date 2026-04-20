@@ -8,28 +8,150 @@ expression: rendered
 .gitignore
 CHANGELOG.md
 Cargo.toml
+    1→[package]
+    …
+    3→name = "log"
+    4→version = "0.4.29" # remember to update html_root_url
+    5→authors = ["The Rust Project Developers"]
+    6→license = "MIT OR Apache-2.0"
+    7→readme = "README.md"
+    8→repository = "https://github.com/rust-lang/log"
+    9→documentation = "https://docs.rs/log"
+    10→description = """
+    11→A lightweight logging facade for Rust
+    12→"""
+    13→categories = ["development-tools::debugging"]
+    14→keywords = ["logging"]
+    15→exclude = ["rfcs/**/*"]
+    16→rust-version = "1.68.0"
+    17→edition = "2021"
+    …
+    56→[dependencies]
+    57→serde_core = { version = "1.0", optional = true, default-features = false }
+    58→sval = { version = "2.16", optional = true, default-features = false }
+    59→sval_ref = { version = "2.16", optional = true, default-features = false }
+    60→value-bag = { version = "1.12", optional = true, default-features = false, features = ["inline-i128"] }
 LICENSE-APACHE
 LICENSE-MIT
 README.md
+    …
+    19→## Minimum supported `rustc`
+    …
+    21→`1.68.0+`
+    …
+    23→This version is explicitly tested in CI and may be bumped in any release as needed. Maintaining compatibility with older compilers is a priority though, so the bar for bumping the minimum supported version is set very high. Any changes to the supported minimum version will be called out in the release notes.
 benches/
     value.rs
+        …
+        4→use log::kv::Value;
 rfcs/
     0296-structured-logging.md
 src/
     __private_api.rs
+        1→//! WARNING: this is not part of the crate's public API and is subject to change at any time
+        …
+        3→use self::sealed::KVs;
+        4→use crate::{logger, Level, Log, Metadata, Record};
+        5→use std::fmt::Arguments;
+        6→use std::panic::Location;
+        7→pub use std::{format_args, module_path, stringify};
+        …
+        12→mod sealed {
+        …
+        37→/// The global logger proxy.
+        …
+        113→mod kv_support {
+        …
+        151→pub use self::kv_support::*;
     kv/
         error.rs
+            1→use std::fmt;
+            …
+            3→/// An error encountered while working with structured data.
+            …
+            5→pub struct Error…
+            …
+            69→mod std_support {
         key.rs
+            1→//! Structured keys.
+            …
+            3→use std::borrow::Borrow;
+            4→use std::fmt;
+            …
+            6→/// A type that can be converted into a [`Key`](struct.Key.html).
+            7→pub trait ToKey…
+            …
+            37→pub struct Key<'k>…
+            …
+            94→mod std_support {
+            …
+            113→mod sval_support {
+            …
+            136→mod serde_support {
+            …
+            152→mod tests {
         mod.rs
         source.rs
+            1→//! Sources for key-values.
+            2→//!
+            3→//! This module defines the [`Source`] type and supporting APIs for
+            4→//! working with collections of key-values.
+            …
+            6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
+            7→use std::fmt;
+            …
+            51→pub trait Source…
+            …
+            235→pub trait VisitSource<'kvs>…
+            …
+            280→mod std_support {
+            …
+            462→pub use VisitSource as Visitor;
+            …
+            465→mod tests {
         value.rs
+            1→//! Structured values.
+            2→//!
+            3→//! This module defines the [`Value`] type and supporting APIs for
+            4→//! capturing and serializing them.
+            …
+            6→use std::fmt;
+            …
+            8→pub use crate::kv::Error;
+            …
+            390→mod std_support {
+            …
+            602→pub(in crate::kv) mod inner {
+            …
+            721→pub(in crate::kv) mod inner {
+            …
+            1123→pub use VisitValue as Visit;
+            …
+            1176→pub(crate) mod tests {
     lib.rs
     macros.rs
     serde.rs
 test_max_level_features/
     Cargo.toml
+        1→[package]
+        2→name = "optimized"
+        3→version = "0.1.0"
+        4→edition = "2021"
+        5→publish = false
+        …
+        7→[[bin]]
+        8→name = "test_max_level_features"
+        9→path = "main.rs"
     main.rs
+        1→use log::{debug, error, info, trace, warn, Level, LevelFilter, Log, Metadata, Record};
+        2→use std::sync::{Arc, Mutex};
+        …
+        5→use log::set_boxed_logger;
 tests/
     integration.rs
+        …
+        3→use log::{debug, error, info, trace, warn, Level, LevelFilter, Log, Metadata, Record};
+        4→use std::sync::{Arc, Mutex};
     macros.rs
+        1→use log::{log, log_enabled, Log, Metadata, Record};
 triagebot.toml

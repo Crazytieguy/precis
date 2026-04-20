@@ -8,28 +8,281 @@ expression: rendered
 .gitignore
 CHANGELOG.md
 Cargo.toml
+    1→[package]
+    …
+    3→name = "log"
+    4→version = "0.4.29" # remember to update html_root_url
+    5→authors = ["The Rust Project Developers"]
+    6→license = "MIT OR Apache-2.0"
+    7→readme = "README.md"
+    8→repository = "https://github.com/rust-lang/log"
+    9→documentation = "https://docs.rs/log"
+    10→description = """
+    11→A lightweight logging facade for Rust
+    12→"""
+    13→categories = ["development-tools::debugging"]
+    14→keywords = ["logging"]
+    15→exclude = ["rfcs/**/*"]
+    16→rust-version = "1.68.0"
+    17→edition = "2021"
+    …
+    22→[features]
+    23→max_level_off   = []
+    24→max_level_error = []
+    25→max_level_warn  = []
+    26→max_level_info  = []
+    27→max_level_debug = []
+    28→max_level_trace = []
+    …
+    30→release_max_level_off   = []
+    31→release_max_level_error = []
+    32→release_max_level_warn  = []
+    33→release_max_level_info  = []
+    34→release_max_level_debug = []
+    35→release_max_level_trace = []
+    …
+    37→std = []
+    …
+    39→kv = []
+    40→kv_sval = ["kv", "value-bag/sval", "sval", "sval_ref"]
+    41→kv_std = ["std", "kv", "value-bag/error"]
+    42→kv_serde = ["kv_std", "value-bag/serde", "serde"]
+    …
+    44→# This is here to not break backwards compatibility with the implicit feature
+    45→# that enables support for serde based on the dependency name. Since we're now
+    46→# using serde_core, the implicit feature was renamed, this adds back an alias.
+    47→serde = ["serde_core"]
+    …
+    49→# Deprecated: use `kv_*` instead
+    50→# These `*_unstable` features will be removed in a future release
+    51→kv_unstable = ["kv", "value-bag"]
+    52→kv_unstable_sval = ["kv_sval", "kv_unstable"]
+    53→kv_unstable_std = ["kv_std", "kv_unstable"]
+    54→kv_unstable_serde = ["kv_serde", "kv_unstable_std"]
+    …
+    56→[dependencies]
+    57→serde_core = { version = "1.0", optional = true, default-features = false }
+    58→sval = { version = "2.16", optional = true, default-features = false }
+    59→sval_ref = { version = "2.16", optional = true, default-features = false }
+    60→value-bag = { version = "1.12", optional = true, default-features = false, features = ["inline-i128"] }
+    …
+    62→[dev-dependencies]
+    63→serde = { version = "1.0", features = ["derive"] }
+    64→serde_json = { version = "1.0" }
+    65→serde_test = { version = "1.0" }
+    66→sval = { version = "2.16" }
+    67→sval_derive = { version = "2.16" }
+    68→value-bag = { version = "1.12", features = ["test"] }
+    …
+    70→# NOTE: log doesn't actually depend on this crate. However, our dependencies,
+    71→# serde and sval, dependent on version 1.0 of the crate, which has problem fixed
+    72→# in 1.0.60, specifically in the following commit
+    73→# https://github.com/dtolnay/proc-macro2/commit/e31d61910049e097afdd3d27c37786309082bdcb.
+    74→# By defining the crate as direct dependency we can increase its minimal
+    75→# version making the minimal (crate) version CI happy.
+    76→proc-macro2 = { version = "1.0.63", default-features = false }
 LICENSE-APACHE
 LICENSE-MIT
 README.md
+    …
+    19→## Minimum supported `rustc`
+    …
+    21→`1.68.0+`
+    …
+    23→This version is explicitly tested in CI and may be bumped in any release as needed. Maintaining compatibility with older compilers is a priority though, so the bar for bumping the minimum supported version is set very high. Any changes to the supported minimum version will be called out in the release notes.
 benches/
     value.rs
+        …
+        4→use log::kv::Value;
 rfcs/
     0296-structured-logging.md
+        …
+        5→# Summary
+        6→[summary]: #summary
+        …
+        8→Add support for structured logging to the `log` crate in both `std` and `no_std` environments, allowing log records to carry typed data beyond a textual message. This document serves as an introduction to what structured logging is all about, and as an RFC for an implementation in the `log` crate.
+        …
+        10→`log` will provide an API for capturing structured data that offloads complex serialization to de-facto standards in the ecosystem, but avoids integrating them too tightly, or forcing any specific framework on consumers.
+        …
+        12→The API is heavily inspired by `slog` and `tokio-trace`.
+        …
+        14→> NOTE: Code in this RFC uses recent language features like `impl Trait`, but can be implemented without them.
 src/
     __private_api.rs
+        1→//! WARNING: this is not part of the crate's public API and is subject to change at any time
+        …
+        3→use self::sealed::KVs;
+        4→use crate::{logger, Level, Log, Metadata, Record};
+        5→use std::fmt::Arguments;
+        6→use std::panic::Location;
+        7→pub use std::{format_args, module_path, stringify};
+        …
+        10→pub type Value<'a> = &'a str;
+        …
+        12→mod sealed {
+        …
+        37→/// The global logger proxy.
+        …
+        39→pub struct GlobalLogger;
+        …
+        84→pub fn log<'a, K, L>(
+        85→    logger: L,
+        86→    args: Arguments,
+        87→    level: Level,
+        88→    target_module_path_and_loc: &(&str, &'static str, &'static Location),
+        89→    kvs: K,
+        90→) where
+        91→    K: KVs<'a>,
+        92→    L: Log,
+        …
+        103→pub fn enabled<L: Log>(logger: L, level: Level, target: &str) -> bool…
+        …
+        108→pub fn loc() -> &'static Location<'static>…
+        …
+        113→mod kv_support {
+        …
+        151→pub use self::kv_support::*;
     kv/
         error.rs
+            1→use std::fmt;
+            …
+            3→/// An error encountered while working with structured data.
+            …
+            5→pub struct Error…
+            …
+            69→mod std_support {
         key.rs
+            1→//! Structured keys.
+            …
+            3→use std::borrow::Borrow;
+            4→use std::fmt;
+            …
+            6→/// A type that can be converted into a [`Key`](struct.Key.html).
+            7→pub trait ToKey…
+            …
+            37→pub struct Key<'k>…
+            …
+            94→mod std_support {
+            …
+            113→mod sval_support {
+            …
+            136→mod serde_support {
+            …
+            152→mod tests {
         mod.rs
+            …
+            246→mod error;
+            247→mod key;
+            …
+            250→mod source;
+            …
+            252→mod value;
+            …
+            254→pub use self::error::Error;
+            255→pub use self::key::{Key, ToKey};
+            256→pub use self::source::{Source, VisitSource};
+            257→pub use self::value::{ToValue, Value, VisitValue};
+            …
+            260→pub mod source;
+            …
+            262→pub mod value;
+            …
+            265→pub use self::source::Visitor;
         source.rs
+            1→//! Sources for key-values.
+            2→//!
+            3→//! This module defines the [`Source`] type and supporting APIs for
+            4→//! working with collections of key-values.
+            …
+            6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
+            7→use std::fmt;
+            …
+            51→pub trait Source…
+            …
+            235→pub trait VisitSource<'kvs>…
+            …
+            280→mod std_support {
+            …
+            462→pub use VisitSource as Visitor;
+            …
+            465→mod tests {
         value.rs
+            1→//! Structured values.
+            2→//!
+            3→//! This module defines the [`Value`] type and supporting APIs for
+            4→//! capturing and serializing them.
+            …
+            6→use std::fmt;
+            …
+            8→pub use crate::kv::Error;
+            …
+            390→mod std_support {
+            …
+            602→pub(in crate::kv) mod inner {
+            …
+            721→pub(in crate::kv) mod inner {
+            …
+            1123→pub use VisitValue as Visit;
+            …
+            1176→pub(crate) mod tests {
     lib.rs
+        …
+        399→use std::cfg;
+        …
+        401→use std::error;
+        402→use std::str::FromStr;
+        403→use std::{cmp, fmt, mem};
+        …
+        406→mod macros;
+        407→mod serde;
+        …
+        410→pub mod kv;
+        …
+        413→use std::sync::atomic::{AtomicUsize, Ordering};
+        …
+        416→use std::cell::Cell;
+        …
+        418→use std::sync::atomic::Ordering;
+        …
+        1600→pub mod __private_api;
+        …
+        1627→mod tests {
     macros.rs
     serde.rs
+        …
+        3→use serde_core::de::{
+        4→    Deserialize, DeserializeSeed, Deserializer, EnumAccess, Error, Unexpected, VariantAccess,
+        5→    Visitor,
+        6→};
+        7→use serde_core::ser::{Serialize, Serializer};
+        …
+        9→use crate::{Level, LevelFilter, LOG_LEVEL_NAMES};
+        …
+        11→use std::fmt;
+        12→use std::str::{self, FromStr};
+        …
+        206→mod tests {
 test_max_level_features/
     Cargo.toml
+        1→[package]
+        2→name = "optimized"
+        3→version = "0.1.0"
+        4→edition = "2021"
+        5→publish = false
+        …
+        7→[[bin]]
+        8→name = "test_max_level_features"
+        9→path = "main.rs"
     main.rs
+        1→use log::{debug, error, info, trace, warn, Level, LevelFilter, Log, Metadata, Record};
+        2→use std::sync::{Arc, Mutex};
+        …
+        5→use log::set_boxed_logger;
 tests/
     integration.rs
+        …
+        3→use log::{debug, error, info, trace, warn, Level, LevelFilter, Log, Metadata, Record};
+        4→use std::sync::{Arc, Mutex};
     macros.rs
+        1→use log::{log, log_enabled, Log, Metadata, Record};
 triagebot.toml

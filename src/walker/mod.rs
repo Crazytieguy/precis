@@ -3,6 +3,10 @@ use std::path::{Path, PathBuf};
 use crate::batch::{Batch, BatchDraft, BatchId};
 
 pub mod generic;
+pub mod markdown;
+pub mod multi;
+pub mod rust;
+pub mod toml;
 
 /// Per-run, walker-visible state. Only carries the seed root and depth helper —
 /// no id allocation: the scheduler stamps ids and predecessors when it

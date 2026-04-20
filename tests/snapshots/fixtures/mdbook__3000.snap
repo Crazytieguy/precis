@@ -19,9 +19,34 @@ expression: rendered
 .gitignore
 CHANGELOG.md
 CODE_OF_CONDUCT.md
+    1→# The Rust Code of Conduct
+    …
+    3→The Code of Conduct for this repository [can be found online](https://www.rust-lang.org/conduct.html).
 CONTRIBUTING.md
 Cargo.lock
 Cargo.toml
+    1→[workspace]
+    2→members = [
+    3→    ".",
+    4→    "crates/*",
+    5→    "examples/remove-emphasis/mdbook-remove-emphasis", "guide/guide-helper",
+    6→]
+    …
+    21→[workspace.package]
+    22→edition = "2024"
+    23→license = "MPL-2.0"
+    24→repository = "https://github.com/rust-lang/mdBook"
+    25→rust-version = "1.88.0" # Keep in sync with installation.md and .github/workflows/main.yml
+    …
+    119→[dev-dependencies]
+    120→glob.workspace = true
+    121→regex.workspace = true
+    122→select.workspace = true
+    123→semver.workspace = true
+    124→serde_json.workspace = true
+    125→snapbox = { workspace = true, features = ["diff", "dir", "term-svg", "regex", "json"] }
+    126→tempfile.workspace = true
+    127→walkdir.workspace = true
 LICENSE
 README.md
 ci/
@@ -32,650 +57,275 @@ ci/
 crates/
     mdbook-compare/
         Cargo.toml
+            1→[package]
+            2→name = "mdbook-compare"
+            3→publish = false
+            4→edition.workspace = true
+            5→license.workspace = true
+            6→repository.workspace = true
+            7→rust-version.workspace = true
+            …
+            9→[dependencies]
         README.md
         src/
             main.rs
+                1→//! Utility to compare the output of two different versions of mdbook.
+                …
+                3→use std::path::Path;
+                4→use std::process::Command;
     mdbook-core/
         Cargo.toml
+            1→[package]
+            2→name = "mdbook-core"
+            3→version = "0.5.2"
+            4→description = "The base support library for mdbook, intended for internal use only"
+            5→edition.workspace = true
+            6→license.workspace = true
+            7→repository.workspace = true
+            8→rust-version.workspace = true
+            …
+            18→[dev-dependencies]
+            19→tempfile.workspace = true
         README.md
         src/
-            book/
-                tests.rs
-            book.rs
-            config.rs
-            lib.rs
-            utils/
-                fs.rs
-                html.rs
-                mod.rs
-                toml_ext.rs
     mdbook-driver/
         Cargo.toml
+            1→[package]
+            2→name = "mdbook-driver"
+            3→version = "0.5.2"
+            4→description = "High-level library for running mdBook"
+            5→edition.workspace = true
+            6→license.workspace = true
+            7→repository.workspace = true
+            8→rust-version.workspace = true
+            …
+            31→[features]
+            32→search = ["mdbook-html/search"]
         README.md
         src/
-            builtin_preprocessors/
-                cmd.rs
-                index.rs
-                links/
-                    take_lines.rs
-                links.rs
-                mod.rs
-            builtin_renderers/
-                markdown_renderer.rs
-                mod.rs
-            init.rs
-            lib.rs
-            load.rs
-            mdbook/
-                tests.rs
-            mdbook.rs
     mdbook-html/
         Cargo.toml
         README.md
         front-end/
-            css/
-                ayu-highlight.css
-                chrome.css
-                general.css
-                highlight.css
-                print.css
-                tomorrow-night.css
-                variables.css
-            fonts/
-            images/
-                favicon.png
-                favicon.svg
-            js/
-                book.js
-                clipboard.min.js
-                highlight.js
-            playground_editor/
-                ace.js
-                editor.js
-                mode-rust.js
-                theme-dawn.js
-                theme-tomorrow_night.js
-            searcher/
-                elasticlunr.min.js
-                mark.min.js
-                searcher.js
-            templates/
-                head.hbs
-                header.hbs
-                index.hbs
-                redirect.hbs
-                toc.html.hbs
-                toc.js.hbs
         src/
-            html/
-                admonitions.rs
-                hide_lines.rs
-                mod.rs
-                print.rs
-                serialize.rs
-                tests.rs
-                tokenizer.rs
-                tree.rs
-            html_handlebars/
-                hbs_renderer.rs
-                helpers/
-                    fontawesome.rs
-                    mod.rs
-                    resources.rs
-                    toc.rs
-                mod.rs
-                search.rs
-                static_files.rs
-            lib.rs
-            theme/
-                fonts.rs
-                mod.rs
-                playground_editor.rs
-                searcher.rs
-            utils.rs
     mdbook-markdown/
         Cargo.toml
+            1→[package]
+            2→name = "mdbook-markdown"
+            3→version = "0.5.2"
+            4→description = "Markdown processing used in mdBook"
+            5→edition.workspace = true
+            6→license.workspace = true
+            7→repository.workspace = true
+            8→rust-version.workspace = true
+            …
+            10→[dependencies]
+            11→pulldown-cmark.workspace = true
+            12→regex.workspace = true
+            13→tracing.workspace = true
         README.md
         src/
             lib.rs
+                …
+                8→use pulldown_cmark::{Options, Parser};
+                …
+                11→pub use pulldown_cmark;
+                …
+                13→/// Options for parsing markdown.
+                …
+                15→pub struct MarkdownOptions…
+                …
+                43→/// Creates a new pulldown-cmark parser of the given text.
+                44→pub fn new_cmark_parser<'text>(text: &'text str, options: &MarkdownOptions) -> Parser<'text>…
     mdbook-preprocessor/
         Cargo.toml
+            1→[package]
+            2→name = "mdbook-preprocessor"
+            3→version = "0.5.2"
+            4→description = "Library to assist implementing an mdBook preprocessor"
+            5→edition.workspace = true
+            6→license.workspace = true
+            7→repository.workspace = true
+            8→rust-version.workspace = true
+            …
+            10→[dependencies]
+            11→anyhow.workspace = true
+            12→mdbook-core.workspace = true
+            13→serde.workspace = true
+            14→serde_json.workspace = true
         README.md
         src/
             lib.rs
+                …
+                30→pub trait Preprocessor…
+                …
+                51→pub struct PreprocessorContext…
+                …
+                82→pub fn parse_input<R: Read>(reader: R) -> Result<(PreprocessorContext, Book)>…
     mdbook-renderer/
         Cargo.toml
+            1→[package]
+            2→name = "mdbook-renderer"
+            3→version = "0.5.2"
+            4→description = "Library to assist implementing an mdBook renderer"
+            5→edition.workspace = true
+            6→license.workspace = true
+            7→repository.workspace = true
+            8→rust-version.workspace = true
+            …
+            10→[dependencies]
+            11→anyhow.workspace = true
+            12→mdbook-core.workspace = true
+            13→serde.workspace = true
+            14→serde_json.workspace = true
         README.md
         src/
             lib.rs
+                …
+                28→pub trait Renderer…
+                …
+                40→pub struct RenderContext…
     mdbook-summary/
         Cargo.toml
+            1→[package]
+            2→name = "mdbook-summary"
+            3→version = "0.5.2"
+            4→description = "Summary parser for mdBook"
+            5→edition.workspace = true
+            6→license.workspace = true
+            7→repository.workspace = true
+            8→rust-version.workspace = true
         README.md
         src/
             lib.rs
+                1→//! Summary parser for mdBook.
+                2→//!
+                3→//! This is used to parse the
+                4→//! [`SUMMARY.md`](https://rust-lang.github.io/mdBook/format/summary.html)
+                5→//! file structure for [mdBook](https://rust-lang.github.io/mdBook/).
+                …
+                59→pub fn parse_summary(summary: &str) -> Result<Summary>…
+                …
+                67→pub struct Summary…
+                …
+                84→pub struct Link…
+                …
+                122→pub enum SummaryItem…
     xtask/
         Cargo.toml
+            1→[package]
+            2→name = "xtask"
+            3→publish = false
+            4→edition.workspace = true
+            5→license.workspace = true
+            6→repository.workspace = true
+            7→rust-version.workspace = true
+            …
+            9→[dependencies]
         README.md
+            1→# xtask
+            …
+            3→This is a CLI utility for running development commands for mdbook.
+            4→See [CONTRIBUTING.md](../../CONTRIBUTING.md) for how to use this.
         src/
             changelog.rs
+                1→//! Helper to generate a changelog for a new release.
+                …
+                3→use super::Result;
+                4→use std::fs;
+                5→use std::process::Command;
+                6→use std::process::exit;
+                …
+                10→pub(crate) fn changelog() -> Result<()>…
             main.rs
+                1→//! Helper for local development.
 eslint.config.mjs
 examples/
     nop-preprocessor.rs
+        1→//! A basic example of a preprocessor that does nothing.
     remove-emphasis/
         .gitignore
         book.toml
         mdbook-remove-emphasis/
             Cargo.toml
+                1→[package]
+                2→name = "mdbook-remove-emphasis"
+                3→version = "0.1.0"
+                4→edition.workspace = true
+                5→publish = false
+                …
+                7→[dependencies]
+                8→mdbook-preprocessor.workspace = true
+                9→pulldown-cmark = { workspace = true, default-features = false }
+                10→pulldown-cmark-to-cmark = "22.0.0"
+                11→serde_json.workspace = true
+                …
+                13→[[bin]]
+                14→name = "mdbook-remove-emphasis"
+                15→# This is tested through a separate test from the main package.
+                16→test = false
             src/
                 main.rs
+                    1→//! This is a demonstration of an mdBook preprocessor which parses markdown
+                    2→//! and removes any instances of emphasis.
+                    …
+                    4→use mdbook_preprocessor::book::{Book, Chapter};
+                    5→use mdbook_preprocessor::errors::Result;
+                    6→use mdbook_preprocessor::{Preprocessor, PreprocessorContext};
+                    7→use pulldown_cmark::{Event, Parser, Tag, TagEnd};
+                    8→use std::io;
+                    …
+                    65→pub fn handle_preprocessing() -> Result<()>…
         src/
             SUMMARY.md
+                1→# Summary
+                …
+                3→- [Chapter 1](./chapter_1.md)
             chapter_1.md
+                1→# Chapter 1
+                …
+                3→This has *light emphasis* and **bold emphasis**.
         test.rs
+            1→//! A test to ensure that the remove-emphasis example works.
 guide/
     book.toml
     guide-helper/
         Cargo.toml
+            1→[package]
+            2→name = "guide-helper"
+            3→publish = false
+            4→edition.workspace = true
+            5→license.workspace = true
+            6→repository.workspace = true
+            7→rust-version.workspace = true
+            …
+            9→[dependencies]
+            10→mdbook-preprocessor.workspace = true
+            11→semver.workspace = true
+            12→serde_json.workspace = true
+            13→toml.workspace = true
         src/
             lib.rs
+                1→//! Preprocessor for the mdBook guide.
+                …
+                3→use mdbook_preprocessor::book::Book;
+                4→use mdbook_preprocessor::errors::Result;
+                5→use mdbook_preprocessor::{Preprocessor, PreprocessorContext};
+                6→use semver::{Version, VersionReq};
+                7→use std::io;
+                …
+                9→/// Preprocessing entry point.
+                10→pub fn handle_preprocessing() -> Result<()>…
             main.rs
+                1→//! Preprocessor for the mdBook guide.
     src/
-        404.md
-        README.md
-        SUMMARY.md
-        cli/
-            README.md
-            arg-watcher.md
-            build.md
-            clean.md
-            completions.md
-            init.md
-            serve.md
-            test.md
-            watch.md
-        continuous-integration.md
-        for_developers/
-            README.md
-            backends.md
-            mdbook-wordcount/
-                Cargo.toml
-                src/
-                    main.rs
-            preprocessors.md
-        format/
-            README.md
-            configuration/
-                README.md
-                environment-variables.md
-                general.md
-                preprocessors.md
-                renderers.md
-            example.rs
-            images/
-                rust-logo-blk.svg
-            markdown.md
-            mathjax.md
-            mdbook.md
-            summary.md
-            theme/
-                README.md
-                editor.md
-                index-hbs.md
-                syntax-highlighting.md
-        guide/
-            README.md
-            creating.md
-            installation.md
-            reading.md
-        misc/
-            contributors.md
 package.json
 rustfmt.toml
 src/
     cmd/
-        build.rs
-        clean.rs
-        command_prelude.rs
-        init.rs
-        mod.rs
-        serve.rs
-        test.rs
-        watch/
-            native.rs
-            poller.rs
-        watch.rs
     main.rs
+        1→//! The mdbook CLI.
 tests/
     gui/
     testsuite/
-        README.md
-        book_test.rs
-        build/
-            basic_build/
-                README.md
-                book.toml
-                src/
-                    SUMMARY.md
-                    chapter_1.md
-            create_missing/
-                book.toml
-                src/
-                    SUMMARY.md
-            missing_file/
-                book.toml
-                src/
-                    SUMMARY.md
-            no_reserved_filename/
-                book.toml
-                src/
-                    SUMMARY.md
-                    print.md
-        build.rs
-        cli/
-            help.term.svg
-            no_args.term.svg
-        cli.rs
-        config/
-            empty/
-                book.toml
-                src/
-                    SUMMARY.md
-                    chapter_1.md
-        config.rs
-        includes/
-            all_includes/
-                book.toml
-                src/
-                    SUMMARY.md
-                    anchors.md
-                    example.rs
-                    includes.md
-                    nested-test-with-anchors.rs
-                    partially-included-test-with-anchors.rs
-                    partially-included-test.rs
-                    playground.md
-                    recursive.md
-                    relative/
-                        includes.md
-                    rustdoc.md
-                    sample.md
-        includes.rs
-        index/
-            basic_readme/
-                book.toml
-                src/
-                    README.md
-                    SUMMARY.md
-                    first/
-                        README
-                    second/
-                        Readme.md
-        index.rs
-        init/
-            init_from_summary/
-                src/
-                    SUMMARY.md
-        init.rs
-        main.rs
-        markdown/
-            admonitions/
-                book.toml
-                expected/
-                    admonitions.html
-                expected_disabled/
-                    admonitions.html
-                src/
-                    SUMMARY.md
-                    admonitions.md
-            basic_markdown/
-                book.toml
-                expected/
-                    blank.html
-                    blockquotes.html
-                    code-blocks.html
-                    html.html
-                    images.html
-                    inlines.html
-                    links.html
-                    lists.html
-                    svg.html
-                src/
-                    SUMMARY.md
-                    blank.md
-                    blockquotes.md
-                    code-blocks.md
-                    html.md
-                    images.md
-                    inlines.md
-                    links.md
-                    lists.md
-                    svg.md
-            custom_header_attributes/
-                book.toml
-                src/
-                    SUMMARY.md
-                    custom_header_attributes.md
-            definition_lists/
-                book.toml
-                expected/
-                    definition_lists.html
-                    html_definition_lists.html
-                expected_disabled/
-                    definition_lists.html
-                    html_definition_lists.html
-                src/
-                    SUMMARY.md
-                    definition_lists.md
-                    html_definition_lists.md
-            footnotes/
-                expected/
-                    footnotes.html
-                src/
-                    SUMMARY.md
-                    footnotes.md
-            smart_punctuation/
-                src/
-                    SUMMARY.md
-                    smart_punctuation.md
-            strikethrough/
-                src/
-                    SUMMARY.md
-                    strikethrough.md
-            tables/
-                src/
-                    SUMMARY.md
-                    tables.md
-            tasklists/
-                src/
-                    SUMMARY.md
-                    tasklists.md
-        markdown.rs
-        playground/
-            disabled_playground/
-                book.toml
-                src/
-                    SUMMARY.md
-                    disabled-rust-playground.md
-            playground_on_rust_code/
-                book.toml
-                src/
-                    SUMMARY.md
-                    rust-playground.md
-        playground.rs
-        preprocessor/
-            extension_compatibility/
-                book.toml
-                src/
-                    SUMMARY.md
-                    chapter_1.md
-                    part/
-                        chapter.md
-                        sub-chapter.md
-                    prefix.md
-                    suffix.md
-            failing_preprocessor/
-                book.toml
-                src/
-                    SUMMARY.md
-            missing_optional_not_fatal/
-                book.toml
-                src/
-                    SUMMARY.md
-            missing_preprocessor/
-                book.toml
-                src/
-                    SUMMARY.md
-            nop_preprocessor/
-                book.toml
-                src/
-                    SUMMARY.md
-        preprocessor.rs
-        print/
-            chapter_no_h1/
-                book.toml
-                expected/
-                    print.html
-                src/
-                    SUMMARY.md
-                    chapter_1.md
-                    chapter_2.md
-                    h2-instead.md
-            duplicate_ids/
-                book.toml
-                expected/
-                    print.html
-                src/
-                    SUMMARY.md
-                    chapter_1.md
-                    chapter_2.md
-            noindex/
-                src/
-                    SUMMARY.md
-                    index.md
-            relative_links/
-                book.toml
-                expected/
-                    print.html
-                src/
-                    SUMMARY.md
-                    first/
-                        index.md
-                        nested.md
-                    second/
-                        nested.md
-        print.rs
-        redirects/
-            redirect_existing_page/
-                book.toml
-                src/
-                    SUMMARY.md
-                    chapter_1.md
-            redirect_removed_with_fragments_only/
-                book.toml
-                src/
-                    SUMMARY.md
-                    chapter_1.md
-            redirects_are_emitted_correctly/
-                book.toml
-                expected/
-                    nested/
-                        page.html
-                    overview.html
-                src/
-                    SUMMARY.md
-                    chapter_1.md
-                    chapter_2.md
-        redirects.rs
-        renderer/
-            backends_receive_render_context_via_stdin/
-                book.toml
-                src/
-                    SUMMARY.md
-                    chapter_1.md
-            missing_optional_not_fatal/
-                book.toml
-                src/
-                    SUMMARY.md
-            missing_renderer/
-                book.toml
-                src/
-                    SUMMARY.md
-            renderer_with_arguments/
-                book.toml
-                src/
-                    SUMMARY.md
-        renderer.rs
-        rendering/
-            code_blocks_fenced_with_indent/
-                book.toml
-                expected/
-                    code-blocks-fenced-with-indent.html
-                src/
-                    SUMMARY.md
-                    code-blocks-fenced-with-indent.md
-            default_rust_edition/
-                book.toml
-                expected/
-                    default-rust-edition.html
-                src/
-                    SUMMARY.md
-                    default-rust-edition.md
-            edit_url_template/
-                book.toml
-                src/
-                    SUMMARY.md
-            edit_url_template_explicit_src/
-                book.toml
-                src2/
-                    SUMMARY.md
-            editable_rust_block/
-                book.toml
-                expected/
-                    editable-rust.html
-                src/
-                    SUMMARY.md
-                    editable-rust.md
-            first_chapter_is_copied_as_index_even_if_not_first_elem/
-                src/
-                    SUMMARY.md
-            fontawesome/
-                book.toml
-                expected/
-                    fa.html
-                src/
-                    SUMMARY.md
-                    fa.md
-            header_links/
-                book.toml
-                expected/
-                    header_links.html
-                src/
-                    SUMMARY.md
-                    header_links.md
-            hidelines/
-                book.toml
-                expected/
-                    hide-lines.html
-                src/
-                    SUMMARY.md
-                    hide-lines.md
-            html_blocks/
-                book.toml
-                expected/
-                    comment-in-list.html
-                    script-in-block.html
-                src/
-                    SUMMARY.md
-                    comment-in-list.md
-                    script-in-block.md
-        rendering.rs
-        search/
-            chapter_settings_validation_error/
-                book.toml
-                src/
-                    SUMMARY.md
-            disable_search_chapter/
-                book.toml
-                src/
-                    SUMMARY.md
-                    first/
-                        disable_me.md
-                        keep_me.md
-                    second/
-                        nested.md
-                    second.md
-            reasonable_search_index/
-                expected_index.js
-                src/
-                    SUMMARY.md
-                    first/
-                        duplicate-headers.md
-                        heading-attributes.md
-                        includes.md
-                        index.md
-                        no-headers.md
-                        unicode.md
-                    intro.md
-        search.rs
-        test/
-            failing_tests/
-                book.toml
-                src/
-                    SUMMARY.md
-                    failing.md
-                    failing_include.md
-                    test1.rs
-            passing_tests/
-                book.toml
-                src/
-                    SUMMARY.md
-                    passing1.md
-                    passing2.md
-                    test1.rs
-                    test2.rs
-                    test3.rs
-        test.rs
-        theme/
-            custom_fonts_css/
-                book.toml
-                src/
-                    SUMMARY.md
-                theme/
-                    fonts/
-                        fonts.css
-                        myfont.woff
-            empty_fonts_css/
-                book.toml
-                src/
-                    SUMMARY.md
-                theme/
-                    fonts/
-                        fonts.css
-            empty_theme/
-                book.toml
-                src/
-                    SUMMARY.md
-                    chapter_1.md
-            fonts_css/
-                src/
-                    SUMMARY.md
-                theme/
-                    fonts/
-                        fonts.css
-                        myfont.woff
-            missing_theme/
-                book.toml
-                src/
-                    SUMMARY.md
-                    chapter_1.md
-            override_index/
-                src/
-                    SUMMARY.md
-                theme/
-                    index.hbs
-        theme.rs
-        toc/
-            basic_toc/
-                book.toml
-                src/
-                    README.md
-                    SUMMARY.md
-                    deep/
-                        a/
-                            b/
-                                index.md
-                            index.md
-                        index.md
-                    nested/
-                        index.md
-                        two.md
-                    prefix1.md
-                    prefix2.md
-                    suffix1.md
-                    suffix2.md
-            summary_with_markdown_formatting/
-                src/
-                    SUMMARY.md
-        toc.rs
 triagebot.toml

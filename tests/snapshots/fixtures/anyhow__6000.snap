@@ -8,59 +8,521 @@ expression: rendered
         ci.yml
 .gitignore
 Cargo.toml
+    1→[package]
+    2→name = "anyhow"
+    3→version = "1.0.101"
+    4→authors = ["David Tolnay <dtolnay@gmail.com>"]
+    5→categories = ["rust-patterns", "no-std"]
+    6→description = "Flexible concrete Error type built on std::error::Error"
+    7→documentation = "https://docs.rs/anyhow"
+    8→edition = "2021"
+    9→keywords = ["error", "error-handling"]
+    10→license = "MIT OR Apache-2.0"
+    11→repository = "https://github.com/dtolnay/anyhow"
+    12→rust-version = "1.68"
+    …
+    14→[features]
+    15→default = ["std"]
+    16→std = []
+    …
+    18→[dependencies]
+    19→# On compilers older than 1.65, features=["backtrace"] may be used to enable
+    20→# backtraces via the `backtrace` crate. This feature has no effect on 1.65+
+    21→# besides bringing in an unused dependency, as `std::backtrace` is always
+    22→# preferred.
+    23→backtrace = { version = "0.3.51", optional = true }
+    …
+    25→[dev-dependencies]
+    26→futures = { version = "0.3", default-features = false }
+    27→rustversion = "1.0.6"
+    28→syn = { version = "2.0", features = ["full"] }
+    29→thiserror = "2"
+    30→trybuild = { version = "1.0.108", features = ["diff"] }
 LICENSE-APACHE
 LICENSE-MIT
 README.md
+    …
+    21→## Details
+    …
+    23→- Use `Result<T, anyhow::Error>`, or equivalently `anyhow::Result<T>`, as the
+    24→  return type of any fallible function.
+    …
+    26→  Within the function, use `?` to easily propagate any error that implements the
+    27→  [`std::error::Error`] trait.
+    …
+    29→  ```rust
+    30→  use anyhow::Result;
+    …
+    32→  fn get_cluster_info() -> Result<ClusterMap> {
+    33→      let config = std::fs::read_to_string("cluster.json")?;
+    34→      let map: ClusterMap = serde_json::from_str(&config)?;
+    35→      Ok(map)
+    36→  }
+    37→  ```
+    …
+    39→  [`std::error::Error`]: https://doc.rust-lang.org/std/error/trait.Error.html
+    …
+    41→- Attach context to help the person troubleshooting the error understand where
+    42→  things went wrong. A low-level error like "No such file or directory" can be
+    43→  annoying to debug without more context about what higher level step the
+    44→  application was in the middle of.
+    …
+    46→  ```rust
+    47→  use anyhow::{Context, Result};
+    …
+    49→  fn main() -> Result<()> {
+    50→      ...
+    51→      it.detach().context("Failed to detach the important thing")?;
+    …
+    53→      let content = std::fs::read(path)
+    54→          .with_context(|| format!("Failed to read instrs from {}", path))?;
+    55→      ...
+    56→  }
+    57→  ```
+    …
+    59→  ```console
+    60→  Error: Failed to read instrs from ./path/to/instrs.json
+    …
+    62→  Caused by:
+    63→      No such file or directory (os error 2)
+    64→  ```
+    …
+    66→- Downcasting is supported and can be by value, by shared reference, or by
+    67→  mutable reference as needed.
+    …
+    69→  ```rust
+    70→  // If the error was caused by redaction, then return a
+    71→  // tombstone instead of the content.
+    72→  match root_cause.downcast_ref::<DataStoreError>() {
+    73→      Some(DataStoreError::Censored(_)) => Ok(Poll::Ready(REDACTED_CONTENT)),
+    74→      None => Err(error),
+    75→  }
+    76→  ```
+    …
+    78→- If using Rust &ge; 1.65, a backtrace is captured and printed with the error if
+    79→  the underlying error type does not already provide its own. In order to see
+    80→  backtraces, they must be enabled through the environment variables described
+    81→  in [`std::backtrace`]:
+    …
+    83→  - If you want panics and errors to both have backtraces, set
+    84→    `RUST_BACKTRACE=1`;
+    85→  - If you want only errors to have backtraces, set `RUST_LIB_BACKTRACE=1`;
+    86→  - If you want only panics to have backtraces, set `RUST_BACKTRACE=1` and
+    87→    `RUST_LIB_BACKTRACE=0`.
+    …
+    89→  [`std::backtrace`]: https://doc.rust-lang.org/std/backtrace/index.html#environment-variables
+    …
+    91→- Anyhow works with any error type that has an impl of `std::error::Error`,
+    92→  including ones defined in your crate. We do not bundle a `derive(Error)` macro
+    93→  but you can write the impls yourself or use a standalone macro like
+    94→  [thiserror].
+    …
+    96→  ```rust
+    97→  use thiserror::Error;
+    …
+    99→  #[derive(Error, Debug)]
+    100→  pub enum FormatError {
+    101→      #[error("Invalid header (expected {expected:?}, got {found:?})")]
+    102→      InvalidHeader {
+    103→          expected: String,
+    104→          found: String,
+    105→      },
+    106→      #[error("Missing attribute: {0}")]
+    107→      MissingAttribute(String),
+    108→  }
+    109→  ```
+    …
+    111→- One-off error messages can be constructed using the `anyhow!` macro, which
+    112→  supports string interpolation and produces an `anyhow::Error`.
+    …
+    114→  ```rust
+    115→  return Err(anyhow!("Missing attribute: {}", missing));
+    116→  ```
+    …
+    118→  A `bail!` macro is provided as a shorthand for the same early return.
+    …
+    120→  ```rust
+    121→  bail!("Missing attribute: {}", missing);
+    122→  ```
+    …
+    124→<br>
 build.rs
+    …
+    3→use std::env;
+    4→use std::ffi::OsString;
+    5→use std::fs;
+    6→use std::io::ErrorKind;
+    7→use std::iter;
+    8→use std::path::Path;
+    9→use std::process::{self, Command, Stdio};
+    10→use std::str;
 rust-toolchain.toml
 src/
     backtrace.rs
+        …
+        2→pub(crate) use std::backtrace::{Backtrace, BacktraceStatus};
+        …
+        5→pub(crate) use self::capture::{Backtrace, BacktraceStatus};
+        …
+        8→pub(crate) enum Backtrace…
+        …
+        71→mod capture {
     chain.rs
+        1→use self::ChainState::*;
+        2→use crate::StdError;
+        …
+        5→use alloc::vec::{self, Vec};
+        …
+        8→pub(crate) use crate::Chain;
+        …
+        11→pub(crate) struct Chain<'a>…
+        …
+        16→pub(crate) enum ChainState<'a>…
     context.rs
+        1→use crate::error::ContextError;
+        2→use crate::{Context, Error, StdError};
+        3→use core::convert::Infallible;
+        4→use core::fmt::{self, Debug, Display, Write};
+        …
+        7→use crate::nightly::{self, Request};
+        …
+        9→mod ext {
+        …
+        186→pub(crate) mod private {
     ensure.rs
+        1→use crate::Error;
+        2→use alloc::string::String;
+        3→use core::fmt::{self, Debug, Write};
+        4→use core::mem::MaybeUninit;
+        5→use core::ptr;
+        6→use core::slice;
+        7→use core::str;
     error.rs
+        1→use crate::backtrace::Backtrace;
+        2→use crate::chain::Chain;
+        …
+        4→use crate::nightly::{self, Request};
+        …
+        6→use crate::ptr::Mut;
+        7→use crate::ptr::{Own, Ref};
+        8→use crate::{Error, StdError};
+        9→use alloc::boxed::Box;
+        10→use core::any::TypeId;
+        11→use core::fmt::{self, Debug, Display};
+        12→use core::mem::ManuallyDrop;
+        …
+        14→use core::ops::{Deref, DerefMut};
+        15→use core::panic::{RefUnwindSafe, UnwindSafe};
+        16→use core::ptr;
+        17→use core::ptr::NonNull;
+        …
+        934→pub(crate) struct ErrorImpl<E = ()>…
+        …
+        952→pub(crate) struct ContextError<C, E>…
     fmt.rs
+        1→use crate::chain::Chain;
+        2→use crate::error::ErrorImpl;
+        3→use crate::ptr::Ref;
+        4→use core::fmt::{self, Debug, Write};
+        …
+        104→mod tests {
     kind.rs
+        …
+        47→use crate::Error;
+        48→use core::fmt::{Debug, Display};
+        …
+        51→use crate::StdError;
+        …
+        53→use alloc::boxed::Box;
+        …
+        55→pub struct Adhoc;
+        …
+        58→pub trait AdhocKind: Sized…
+        …
+        77→pub struct Trait;
+        …
+        80→pub trait TraitKind: Sized…
+        …
+        100→pub struct Boxed;
+        …
+        104→pub trait BoxedKind: Sized…
     lib.rs
+        …
+        252→mod backtrace;
+        253→mod chain;
+        254→mod context;
+        255→mod ensure;
+        256→mod error;
+        257→mod fmt;
+        258→mod kind;
+        259→mod macros;
+        …
+        261→mod nightly;
+        262→mod ptr;
+        263→mod wrapper;
+        …
+        265→use crate::error::ErrorImpl;
+        266→use crate::ptr::Own;
+        267→use core::fmt::Display;
+        …
+        270→use core::fmt::Debug;
+        …
+        273→use std::error::Error as StdError;
+        …
+        276→use core::error::Error as StdError;
+        …
+        286→pub use anyhow as format_err;
+        …
+        390→pub struct Error…
+        …
+        415→pub struct Chain<'a>…
+        …
+        468→pub type Result<T, E = Error> = core::result::Result<T, E>;
+        …
+        616→pub trait Context<T, E>: context::private::Sealed…
+        …
+        650→pub fn Ok<T>(value: T) -> Result<T>…
+        …
+        656→pub mod __private {
     macros.rs
+        …
+        58→macro_rules! bail…
+        59→    ($msg:literal $(,)?) =>…
+        60→        return $crate::__private::Err($crate::__anyhow!($msg))
+        61→    };
+        62→    ($err:expr $(,)?) =>…
+        63→        return $crate::__private::Err($crate::__anyhow!($err))
+        64→    };
+        65→    ($fmt:expr, $($arg:tt)*) =>…
+        66→        return $crate::__private::Err($crate::__anyhow!($fmt, $($arg)*))
+        67→    };
+        68→}
+        …
+        204→macro_rules! anyhow…
+        205→    ($msg:literal $(,)?) =>…
+        206→        $crate::__private::must_use(…
+        207→            let error = $crate::__private::format_err($crate::__private::format_args!($msg));
+        208→            error
+        209→        })
+        210→    };
+        211→    ($err:expr $(,)?) =>…
+        212→        $crate::__private::must_use(…
+        213→            use $crate::__private::kind::*;
+        214→            let error = match $err…
+        215→                error => (&error).anyhow_kind().new(error),
+        216→            };
+        217→            error
+        218→        })
+        219→    };
+        220→    ($fmt:expr, $($arg:tt)*) =>…
+        221→        $crate::Error::msg($crate::__private::format!($fmt, $($arg)*))
+        222→    };
+        223→}
+        …
+        230→macro_rules! __anyhow…
+        231→    ($msg:literal $(,)?) => (…
+        232→        let error = $crate::__private::format_err($crate::__private::format_args!($msg));
+        233→        error
+        234→    });
+        235→    ($err:expr $(,)?) => (…
+        236→        use $crate::__private::kind::*;
+        237→        let error = match $err…
+        238→            error => (&error).anyhow_kind().new(error),
+        239→        };
+        240→        error
+        241→    });
+        242→    ($fmt:expr, $($arg:tt)*) =>…
+        243→        $crate::Error::msg($crate::__private::format!($fmt, $($arg)*))
+        244→    };
+        245→}
     nightly.rs
+        …
+        7→use core::error::{self, Error};
+        8→use std::backtrace::Backtrace;
+        …
+        10→pub use core::error::Request;
+        …
+        41→pub fn request_ref_backtrace(err: &dyn Error) -> Option<&Backtrace>…
+        …
+        52→pub fn provide_ref_backtrace<'a>(request: &mut Request<'a>, backtrace: &'a Backtrace)…
+        …
+        56→pub fn provide<'a>(err: &'a (impl Error + ?Sized), request: &mut Request<'a>)…
     ptr.rs
+        1→use alloc::boxed::Box;
+        2→use core::marker::PhantomData;
+        3→use core::ptr::NonNull;
+        …
+        6→pub struct Own<T>
+        7→where
+        8→    T: ?Sized,
+        …
+        64→pub struct Ref<'a, T>
+        65→where
+        66→    T: ?Sized,
+        …
+        125→pub struct Mut<'a, T>
+        126→where
+        127→    T: ?Sized,
+        …
+        181→pub trait CastTo…
     wrapper.rs
+        1→use crate::StdError;
+        2→use core::fmt::{self, Debug, Display};
+        …
+        5→use alloc::boxed::Box;
+        …
+        8→use crate::nightly::{self, Request};
+        …
+        11→pub struct MessageError<M>(pub M);
+        …
+        34→pub struct DisplayError<M>(pub M);
+        …
+        58→pub struct BoxedError(pub Box<dyn StdError + Send + Sync>);
 tests/
     common/
         mod.rs
+            1→use anyhow::{bail, Result};
+            2→use std::io;
+            …
+            4→pub fn bail_literal() -> Result<()>…
+            …
+            8→pub fn bail_fmt() -> Result<()>…
+            …
+            12→pub fn bail_error() -> Result<()>…
     compiletest.rs
     crate/
         .gitignore
         Cargo.toml
+            1→[package]
+            2→name = "anyhow_test"
+            3→version = "0.0.0"
+            4→authors = ["David Tolnay <dtolnay@gmail.com>"]
+            5→edition = "2021"
+            6→publish = false
+            …
+            11→[dependencies]
+            12→anyhow = { path = "../..", default-features = false }
+            …
+            14→[features]
+            15→default = ["std"]
+            16→std = ["anyhow/std"]
+            17→backtrace = ["anyhow/backtrace"]
         test.rs
+            …
+            3→pub use anyhow::*;
     drop/
         mod.rs
+            …
+            3→use std::error::Error as StdError;
+            4→use std::fmt::{self, Display};
+            5→use std::sync::atomic::{AtomicBool, Ordering};
+            6→use std::sync::Arc;
+            …
+            9→pub struct Flag…
+            …
+            26→pub struct DetectDrop…
     test_autotrait.rs
+        …
+        3→use anyhow::Error;
+        4→use std::panic::{RefUnwindSafe, UnwindSafe};
     test_backtrace.rs
     test_boxed.rs
+        …
+        6→use anyhow::anyhow;
+        7→use std::error::Error as StdError;
+        8→use std::io;
+        9→use thiserror::Error;
     test_chain.rs
+        1→use anyhow::{anyhow, Chain, Error};
     test_context.rs
+        …
+        6→mod drop;
+        …
+        8→use crate::drop::{DetectDrop, Flag};
+        9→use anyhow::{Context, Error, Result};
+        10→use std::fmt::{self, Display};
+        11→use thiserror::Error;
     test_convert.rs
+        …
+        3→mod drop;
+        …
+        5→use self::drop::{DetectDrop, Flag};
+        6→use anyhow::{Error, Result};
+        7→use std::error::Error as StdError;
     test_downcast.rs
+        …
+        3→mod common;
+        4→mod drop;
+        …
+        6→use self::common::*;
+        7→use self::drop::{DetectDrop, Flag};
+        8→use anyhow::Error;
+        9→use std::error::Error as StdError;
+        10→use std::fmt::{self, Display};
+        11→use std::io;
     test_ensure.rs
+        …
+        31→use self::Enum::Generic;
+        32→use anyhow::{anyhow, ensure, Chain, Error, Result};
+        33→use std::fmt::{self, Debug};
+        34→use std::iter;
+        35→use std::marker::{PhantomData, PhantomData as P};
+        36→use std::mem;
+        37→use std::ops::Add;
+        38→use std::ptr;
     test_ffi.rs
+        …
+        4→use anyhow::anyhow;
+        …
+        7→pub extern "C" fn anyhow1(err: anyhow::Error)…
+        …
+        12→pub extern "C" fn anyhow2(err: &mut Option<anyhow::Error>)…
+        …
+        17→pub extern "C" fn anyhow3() -> Option<anyhow::Error>…
     test_fmt.rs
+        1→use anyhow::{bail, Context, Result};
+        2→use std::io;
     test_macros.rs
+        …
+        13→mod common;
+        …
+        15→use self::common::*;
+        16→use anyhow::{anyhow, ensure, Result};
+        17→use std::cell::Cell;
+        18→use std::future;
     test_repr.rs
+        …
+        3→mod drop;
+        …
+        5→use self::drop::{DetectDrop, Flag};
+        6→use anyhow::Error;
+        7→use std::mem;
     test_source.rs
+        1→use anyhow::anyhow;
+        2→use std::error::Error as StdError;
+        3→use std::fmt::{self, Display};
+        4→use std::io;
     ui/
         chained-comparison.rs
+            1→use anyhow::{ensure, Result};
         chained-comparison.stderr
         empty-ensure.rs
+            1→use anyhow::{ensure, Result};
         empty-ensure.stderr
         ensure-nonbool.rs
+            1→use anyhow::{ensure, Result};
+            2→use std::ops::{Deref, Not};
         ensure-nonbool.stderr
         must-use.rs
+            …
+            3→use anyhow::anyhow;
         must-use.stderr
         no-impl.rs
+            1→use anyhow::anyhow;
         no-impl.stderr
         temporary-value.rs
+            1→use anyhow::anyhow;
         temporary-value.stderr
         wrong-interpolation.rs
+            1→use anyhow::{bail, Result};
         wrong-interpolation.stderr
