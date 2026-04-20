@@ -1,6 +1,6 @@
 ---
 name: north-star-author
-description: Drafts a North Star document for a code-repository fixture — the ideal precis rendering as a budget-independent, ranked list of batches of source content. The spawn prompt should provide: fixture root path, output path for the document, count-tokens helper script path, and the fixture's revision pin.
+description: Drafts a North Star document for a code-repository fixture — the ideal precis rendering as a budget-independent, ranked list of batches of source content. The spawn prompt should provide: fixture root path, output path for the document (multiple attempts on the same fixture write to different paths, so don't hardcode), count-tokens helper script path, and the fixture's revision pin.
 tools: Read, Glob, Grep, Bash
 ---
 
@@ -18,7 +18,7 @@ Three priorities, in this order:
 
 1. **Minimize catastrophic omissions.** Content whose absence would mislead the agent into not realizing something exists, sending it on a wild goose chase or causing it to skip an important consideration. *Failure mode:* snapshot implies (by what's shown and what's not) that something doesn't exist → agent doesn't look for it → user query goes unanswered or wrong actions are taken. Rare but high-impact; weigh heavily.
 
-   **Mitigation via splitting + elision markers**: a batch can include a partial slice of a piece of content with the rest marked as elided. The elision marker is a bare `…` (no line-number prefix) standing in for one or more elided lines; it is itself an *invitation* — it tells the agent "more exists here, fetch it with a follow-up read when relevant." So a small portion of the content can be teased in an early batch followed by an elision marker, and the rest of the body ranked much lower (or split further), without risking the catastrophic-omission failure mode. Splitting need not produce contiguous batches in the ranking.
+   **Mitigation via splitting + elision markers**: a batch can include a partial slice of a piece of content with the rest marked as elided. The elision marker is a bare `…` (no line-number prefix) standing in for one or more elided lines; it lives **inside the batch with the partial content** (not as its own batch). The marker is itself an *invitation* — it tells the agent "more exists here, fetch it with a follow-up read when relevant." So a small portion of the content can be teased in an early batch (with elision markers around the partial slice), and the rest of the body ranked much lower (or split further), without risking the catastrophic-omission failure mode. Splitting need not produce contiguous batches in the ranking.
 
 2. **Minimize follow-up tool calls and maximize their precision.** When the agent does need to dig, the snapshot should make it obvious *where* (specific file, specific line range), not gesture vaguely. Aim for "where can I find X obscure detail in the codebase?" being **one or two hops** away at minimal token cost (a structural pointer in the snapshot + one `Read`/`Grep` to land on it). *Failure mode:* snapshot lacks breadth or doesn't give precise locations → agent runs many wide searches before being able to act.
 
@@ -100,7 +100,7 @@ Users pass token budgets in roughly **logarithmic distribution** — many small 
 
 **Hard size constraint (non-negotiable):** any batch's token cost must be **at most 2× the largest batch ranked above it**. Reasoning: a batch gates everything ranked below it (a budget that doesn't fit batch X cannot include any later batch). A single oversized batch leaves many budgets severely under-filled. This forces you to split rather than emit a heavy batch at any point in the ranking.
 
-A typical fixture has on the order of **50–300 batches** total within the 20k cap. Small fixtures may have fewer; large ones more.
+**Aim for at least 50 batches.** A North Star with fewer than 50 batches almost always means the author missed splitting opportunities — a coarser ranking can't carry enough information for the threshold test (below) to land sensibly at a wide range of cuts. Be creative: split aggressively along structural and conceptual seams, exploit elision markers to tease deferred content cheaply, separate signature from doc from body, list things separately when they convey different value, etc. The cap is 20k tokens of content total, not a cap on the number of batches.
 
 ## Token-counting helper
 
