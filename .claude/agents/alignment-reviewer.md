@@ -19,8 +19,6 @@ You're invoked with a single identifier `<fixture>__<budget>` in your spawn prom
 - Fixture root:`tests/fixtures/<fixture>/`
 - Report out:  `tests/reviews/<fixture>__<budget>.md`
 
-If the precis repo isn't your current working directory, the spawn prompt will say so; otherwise assume cwd = repo root.
-
 Compute the snapshot's content hash yourself (don't trust a passed-in value):
 
 ```bash
@@ -67,7 +65,7 @@ If a section has no entries, write `(none)` rather than omitting the header.
 
 ## What counts as a divergence
 
-**Ranking divergence.** A piece of content the North Star ranks above the budget cut is missing from the snapshot, *and* some content present in the snapshot maps to a piece the North Star ranks below the missing one. (Just "missing without a corresponding lower-ranked item present" might mean the budget genuinely didn't fit — that's not a ranking divergence; that's the natural cutoff and goes in the Summary if anywhere.)
+**Ranking divergence.** A piece of content the North Star ranks above the budget cut is missing from the snapshot, *and* some content present in the snapshot maps to a piece the North Star ranks below the missing one. (Just "missing without a corresponding lower-ranked item present" means the budget genuinely didn't fit — that's the natural cutoff, not a divergence; do not report it anywhere.)
 
 Include for each divergence: which North Star batch was skipped, which batch(es) in the snapshot displaced it, and the severity by major/minor/predecessor rule.
 

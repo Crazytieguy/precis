@@ -18,7 +18,7 @@ Three priorities, in this order:
 
 1. **Minimize catastrophic omissions.** Content whose absence would mislead the agent into not realizing something exists, sending it on a wild goose chase or causing it to skip an important consideration. *Failure mode:* snapshot implies (by what's shown and what's not) that something doesn't exist → agent doesn't look for it → user query goes unanswered or wrong actions are taken. Rare but high-impact; weigh heavily.
 
-   **Mitigation via splitting + elision markers**: a batch can include a partial slice of a piece of content with the rest marked as elided (a single line with the line-number prefix, no body). The elision marker is itself an *invitation* — it tells the agent "more exists here, fetch it with a follow-up read when relevant." So a large block can be teased in an early batch (a header line + an elision marker) and the body ranked much lower, without risking the catastrophic-omission failure mode. Splitting need not produce contiguous batches in the ranking.
+   **Mitigation via splitting + elision markers**: a batch can include a partial slice of a piece of content with the rest marked as elided. The elision marker is a bare `…` (no line-number prefix) standing in for one or more elided lines; it is itself an *invitation* — it tells the agent "more exists here, fetch it with a follow-up read when relevant." So a small portion of the content can be teased in an early batch followed by an elision marker, and the rest of the body ranked much lower (or split further), without risking the catastrophic-omission failure mode. Splitting need not produce contiguous batches in the ranking.
 
 2. **Minimize follow-up tool calls and maximize their precision.** When the agent does need to dig, the snapshot should make it obvious *where* (specific file, specific line range), not gesture vaguely. Aim for "where can I find X obscure detail in the codebase?" being **one or two hops** away at minimal token cost (a structural pointer in the snapshot + one `Read`/`Grep` to land on it). *Failure mode:* snapshot lacks breadth or doesn't give precise locations → agent runs many wide searches before being able to act.
 
@@ -62,7 +62,6 @@ Revision pin: `<rev>`
 ### 1.1 <descriptor>
 - Content: <concrete file / line / folder reference>
 - Cost: <N tokens> (helper: `<exact helper invocation>`)
-- Predecessor: <batch number, if any>      (logical constraint: this batch must come before 1.1)
 - Notes (optional, brief): <any non-obvious rationale>
 
 ### 1.2 <descriptor>
@@ -70,6 +69,11 @@ Revision pin: `<rev>`
 
 ### 2.1 <descriptor>
 - ...
+
+### 4.2 <descriptor for, e.g., the body of a function whose signature was 2.5>
+- Content: ...
+- Cost: ...
+- Predecessor: 2.5     (logical: this batch is meaningless without 2.5 already shown)
 
 (... continuing through all batches ...)
 
@@ -94,7 +98,7 @@ Users pass token budgets in roughly **logarithmic distribution** — many small 
 - **Cumulative cost across major groups should be roughly logarithmic** — each subsequent group's cumulative cost should be a meaningful multiple of the prior group's, so a doubling of budget unlocks a meaningful extra slice. Let the fixture tell you the actual numbers.
 - Don't overfit to specific budget values. Snapshot tests use their own; your ranking shouldn't assume any.
 
-**Hard size constraint (non-negotiable):** any batch's token cost must be **at most 2× the largest batch ranked above it**. Reasoning: a batch gates everything ranked below it (a budget that doesn't fit batch X cannot include any later batch). A single oversized batch leaves many budgets severely under-filled. This forces you to split rather than emit a heavy batch at any point in the ranking. A single batch covering more than ~300 tokens early in the ranking is almost always wrong; split it.
+**Hard size constraint (non-negotiable):** any batch's token cost must be **at most 2× the largest batch ranked above it**. Reasoning: a batch gates everything ranked below it (a budget that doesn't fit batch X cannot include any later batch). A single oversized batch leaves many budgets severely under-filled. This forces you to split rather than emit a heavy batch at any point in the ranking.
 
 A typical fixture has on the order of **50–300 batches** total within the 20k cap. Small fixtures may have fewer; large ones more.
 
