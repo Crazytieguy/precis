@@ -1,35 +1,58 @@
 # precis v0.2 — design notes
 
-A living doc that captures cross-session design decisions and deferred work
-without bloating the per-session plan files. Add entries when you make a
-decision worth remembering or defer something a later session will need.
+A living doc that captures cross-session design constraints, decisions, and
+deferred work without bloating the per-session plan files. The codebase
+itself is the source of truth for architecture and invariants; this doc is
+for things that aren't visible from reading `src/`.
 
-## Architecture (current)
+## Design philosophy
 
-- **Batch**: atomic scheduling unit. Either `FileSystemEntries(Vec<FsEntry>)`
-  (declares files/folders into the rendered tree) or `Lines(Vec<FileLineSet>)`
-  (adds line content to one or more files). Has a single optional
-  `predecessor` and a heuristic `value`.
-- **RenderedTree**: a path-keyed tree the scheduler accumulates batch
-  contributions into. Renders a hierarchical text output with 4-space indent.
-  Tracks line-level ownership so non-ancestor overlap can be detected.
-- **Scheduler**: greedy `value / cost.tokens` loop over a `Vec<Batch>`
-  indexed by `BatchId(usize)`. Tie-break on lower `BatchId` for determinism.
-  Stops when no remaining batch fits the budget.
-- **Walker**: language- and scope-specific code that emits seed batches
-  for the run's root and successor batches when a batch is scheduled.
-  Single implementation in v0.2 first pass: `GenericWalker` (folders/files,
-  no content).
-- **Tokenizer**: `tiktoken-rs` o200k_base, matching the helper script the
-  north-star-author agent uses (`scripts/count-tokens.py`).
+- **Make invalid states unrepresentable over validating with tests.** Prefer
+  newtype wrappers, sealed enums, and constructor invariants to runtime
+  checks that catch the same bugs after construction.
+- **Release prefers invalid output to a panic.** Hot-path asserts are
+  `debug_assert!`; release builds tolerate walker contract violations
+  rather than abort. The end-of-run budget cross-check follows the same rule.
+- **Plan files are ephemeral; design rationale lives in the repo.** Per-session
+  plans (under `~/.claude/plans/`) shouldn't carry decisions that need to
+  survive plan churn — those go here or in code / agent prompts.
+- **Simplify over validate.** When a feature would need extra validation,
+  consider whether collapsing the design eliminates the need.
 
-## Invariants
+## Honest rendering
 
-- Asserts inside the scheduler/render hot path are **debug-only** (`debug_assert!`).
-  In release we'd rather emit a possibly-out-of-budget output than panic.
-- Non-ancestor overlap of file lines (a batch's owner not in the new batch's
-  predecessor chain) panics in debug; in release it silently overrides.
-- Predecessor-chain visited set guards against cycles introduced by buggy walkers.
+`precis` output is always a verbatim subset of the source. Allowed transforms
+(only the first two are implemented today):
+
+- **Full lines** with their source line number. `RenderedLine::Full(text)`.
+- **Line-prefix + trailing ellipsis** (line shown partially, truncated at a
+  syntactic boundary). `RenderedLine::Truncated(prefix)`.
+- **Bare-ellipsis without a line number** standing in for one or more
+  elided contiguous lines. *Not yet implemented*: the renderer has no way to
+  interleave a bare ellipsis between a file's rendered lines. Stage 7
+  walkers will need this when they emit partial content with deferred
+  follow-up reads — revisit then. (See deferred list below.)
+
+No paraphrasing, summarization, or invented content under any circumstances.
+
+## North Star process
+
+- North Star documents (`tests/north-stars/<fixture>.md`) are agent-drafted,
+  human-reviewed, and **frozen** before implementation iterates against them.
+  Once frozen they are the reviewer's reference standard; implementation
+  changes do not edit them.
+- **Amendment protocol**: a frozen North Star can be corrected via an
+  explicit "defect" review with rationale, diff, and ontology impact. Drift
+  is not allowed; deliberate amendments are.
+
+## Cross-language vs language-specific concerns
+
+Many concerns precis cares about are cross-language (value heuristics,
+ranking signals, render conventions, structural priorities); only the parts
+that genuinely depend on a language's grammar belong in language-specific
+code. The exact abstraction for sharing between the two layers is deferred
+until the Stage 4 ontology is concrete; the discipline meanwhile is:
+**don't accidentally specialize cross-language code to a single language**.
 
 ## Deferred (pick up in later sessions)
 
@@ -40,12 +63,12 @@ decision worth remembering or defer something a later session will need.
   North Star surfaces a real shrink case.
 - **Borrowed line content** — `RenderedLine` text is owned `String`. A `&str`
   borrow into the source file would save allocations but propagate a lifetime
-  through the entire batch graph + walker trait. Defer until a Stage 7+ profile
-  surfaces it as a real bottleneck.
+  through the entire batch graph + walker trait. Defer until a Stage 7+
+  profile surfaces it as a real bottleneck.
 - **Predecessor expressivity** — currently a single `Option<BatchId>`. If
-  Stage 7 walkers need to express "this batch has structural scope X but must
-  also wait for Y", reintroduce a separate `parent` (scope) vs a list of
-  ordering predecessors (or a small DAG representation).
+  Stage 7 walkers need to express "this batch has structural scope X but
+  must also wait for Y", reintroduce a separate `parent` (scope) vs a list
+  of ordering predecessors (or a small DAG representation).
 - **Path newtypes** — `BatchContent` carries arbitrary `PathBuf`s. A
   `RootRelativePath` (or `DirPath` / `FilePath`) newtype with a private
   constructor would make "path outside the seed root" or "file path used as
@@ -57,23 +80,25 @@ decision worth remembering or defer something a later session will need.
   would catch bad inputs at the boundary. Cheap; defer until something
   actually misuses them.
 
-### Scheduler / walker
+### Render
+- **Bare-ellipsis lines** (see Honest rendering above) — needed before any
+  walker can emit "show some lines, then `…`, then more lines" within one
+  file. Probably a third `RenderedLine` variant plus a render-side rule
+  that collapses adjacent bare-ellipsis markers.
 - **Filesystem-level override** — file-content batch superseding a folder
   listing entry, "N more files" placeholders, alternate non-tree renderings.
+
+### Scheduler / walker
 - **File-as-seed** — currently rejected with a clear error in `lib.rs`.
-  Needs a small content-only walker path. Probably driven by a real
-  Stage 7 content walker rather than a generic "show full file" fallback.
+  Needs a small content-only walker path, probably driven by a real Stage 7
+  content walker rather than a generic "show full file" fallback.
 - **Multi-path seed** — the CLI accepts `Vec<PathBuf>` but `render()` uses
   only the first path. Multi-root scheduling (one budget across roots) is
   deferred.
-- **Walker contract enforcement** — dangling/duplicate batch IDs are
-  debug-asserted; cycle handling is silent (visited-set termination).
-  Promote to release-asserted walker contract errors when Stage 7 graphs
-  get richer.
-- **Rich performance optimizations** — `pick_best` is `O(F × tokenize)`
-  per scheduling step. Cache per-row token counts, maintain an explicit
-  frontier set, avoid retokenizing replaced content. Defer until Stage 7
-  fixture sizes surface actual slowness.
+- **Performance optimizations** — `pick_best` is `O(F × tokenize)` per
+  scheduling step. Cache per-row token counts, maintain an explicit frontier
+  set, avoid re-tokenizing replaced content. Defer until Stage 7 fixture
+  sizes surface actual slowness.
 
 ### Stopping criterion / value function
 - **Stopping criterion beyond "no batch fits"** — dynamic floor or
@@ -82,20 +107,17 @@ decision worth remembering or defer something a later session will need.
   the architectural commitment is just that the value function takes batch
   size as input. Pick a concave form when the ontology surfaces concrete
   cases. May differ by batch type.
-- **Cross-language vs language-specific value sharing interface** —
-  finalize once the ontology is concrete. Today the heuristic lives in
-  the walker; that may not scale to many walkers.
 
 ### Honesty / verification
 - **Reviewer-staleness test** — once divergence reports exist (Stage 7
   iteration), add a test that asserts every committed snapshot has a
-  divergence report whose frontmatter `snapshot_hash` matches the
-  current snapshot's hash.
+  divergence report whose frontmatter `snapshot_hash` matches the current
+  snapshot's hash.
 
 ### Process
 - **More languages** — TypeScript and Python are the next likely targets
   after Rust + markdown.
 - **Larger fixtures** — the v0.2 fixture set (log/anyhow/mdbook) is small
   by design. Add scale fixtures once the perf work is in.
-- **Alignment-reviewer precision** — calibrate after first real reports
-  if it actually drifts.
+- **Alignment-reviewer precision** — calibrate after first real reports if
+  it actually drifts.
