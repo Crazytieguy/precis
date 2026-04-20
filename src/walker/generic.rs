@@ -1,6 +1,8 @@
+use std::collections::BTreeMap;
+use std::ffi::OsString;
 use std::path::Path;
 
-use crate::batch::{Batch, BatchContent, FsEntry};
+use crate::batch::{Batch, BatchContent, BatchDraft, BatchId, EntryKind};
 
 use super::{Walker, WalkerCtx};
 
@@ -22,32 +24,40 @@ impl Default for GenericWalker {
 }
 
 impl Walker for GenericWalker {
-    fn seed(&mut self, ctx: &mut WalkerCtx) -> Vec<Batch> {
-        let entries = list_dir(ctx.root());
-        vec![Batch {
-            id: ctx.alloc_id(),
-            content: BatchContent::FileSystemEntries(entries),
-            predecessor: None,
+    fn seed(&mut self, ctx: &WalkerCtx) -> Vec<BatchDraft> {
+        let parent = ctx.root().to_path_buf();
+        let children = list_dir(&parent);
+        vec![BatchDraft {
+            content: BatchContent::FileSystemEntries { parent, children },
             value: folder_value(0),
         }]
     }
 
-    fn successors(&mut self, scheduled: &Batch, ctx: &mut WalkerCtx) -> Vec<Batch> {
-        let BatchContent::FileSystemEntries(entries) = &scheduled.content else {
-            return vec![];
+    fn successors(
+        &mut self,
+        _scheduled_id: BatchId,
+        scheduled: &Batch,
+        ctx: &WalkerCtx,
+    ) -> Vec<BatchDraft> {
+        let BatchContent::FileSystemEntries { parent, children } = &scheduled.content else {
+            return Vec::new();
         };
-        entries
+        children
             .iter()
-            .filter(|e| e.is_dir)
-            .map(|entry| {
-                let depth = ctx.depth_from_root(&entry.path);
-                let sub_entries = list_dir(&entry.path);
-                Batch {
-                    id: ctx.alloc_id(),
-                    content: BatchContent::FileSystemEntries(sub_entries),
-                    predecessor: Some(scheduled.id),
-                    value: folder_value(depth),
+            .filter_map(|(name, kind)| match kind {
+                EntryKind::Directory => {
+                    let sub_path = parent.join(name);
+                    let depth = ctx.depth_from_root(&sub_path);
+                    let sub_children = list_dir(&sub_path);
+                    Some(BatchDraft {
+                        content: BatchContent::FileSystemEntries {
+                            parent: sub_path,
+                            children: sub_children,
+                        },
+                        value: folder_value(depth),
+                    })
                 }
+                EntryKind::File => None,
             })
             .collect()
     }
@@ -60,22 +70,21 @@ fn folder_value(depth: usize) -> f64 {
     1000.0 / (1.0 + depth as f64 * 4.0)
 }
 
-fn list_dir(path: &Path) -> Vec<FsEntry> {
+fn list_dir(path: &Path) -> BTreeMap<OsString, EntryKind> {
     let Ok(read_dir) = std::fs::read_dir(path) else {
-        return Vec::new();
+        return BTreeMap::new();
     };
-    let mut entries: Vec<FsEntry> = read_dir
+    read_dir
         .flatten()
         .filter_map(|e| {
-            let is_dir = e.file_type().ok()?.is_dir();
-            Some(FsEntry {
-                path: e.path(),
-                is_dir,
-            })
+            let kind = if e.file_type().ok()?.is_dir() {
+                EntryKind::Directory
+            } else {
+                EntryKind::File
+            };
+            Some((e.file_name(), kind))
         })
-        .collect();
-    entries.sort_by(|a, b| a.path.cmp(&b.path));
-    entries
+        .collect()
 }
 
 #[cfg(test)]
@@ -87,16 +96,12 @@ mod tests {
     #[test]
     fn seed_lists_root_children() {
         let mut walker = GenericWalker::new();
-        let mut ctx = WalkerCtx::new(PathBuf::from("tests/fixtures/log"));
-        let seeds = walker.seed(&mut ctx);
+        let ctx = WalkerCtx::new(PathBuf::from("tests/fixtures/log"));
+        let seeds = walker.seed(&ctx);
         assert_eq!(seeds.len(), 1);
-        let BatchContent::FileSystemEntries(entries) = &seeds[0].content else {
+        let BatchContent::FileSystemEntries { children, .. } = &seeds[0].content else {
             panic!("expected FileSystemEntries");
         };
-        assert!(
-            entries
-                .iter()
-                .any(|e| e.path.file_name().is_some_and(|n| n == "Cargo.toml"))
-        );
+        assert!(children.contains_key(&OsString::from("Cargo.toml")));
     }
 }

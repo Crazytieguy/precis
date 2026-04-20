@@ -3,65 +3,82 @@
 //! in its own hot path; these tests prove the assertions actually fire by
 //! constructing the relevant cases.
 
+use std::collections::BTreeMap;
+use std::ffi::OsString;
 use std::path::PathBuf;
 
-use precis::batch::{Batch, BatchContent, FileLineSet, FsEntry, RenderedLine};
+use precis::batch::{Batch, BatchContent, BatchDraft, BatchId, EntryKind, RenderedLine};
 use precis::scheduler::Scheduler;
 use precis::walker::{Walker, WalkerCtx};
+
+fn one_file(name: &str, kind: EntryKind) -> BTreeMap<OsString, EntryKind> {
+    let mut m = BTreeMap::new();
+    m.insert(OsString::from(name), kind);
+    m
+}
+
+fn line_set(
+    path: PathBuf,
+    lines: Vec<(usize, RenderedLine)>,
+) -> BTreeMap<PathBuf, BTreeMap<usize, RenderedLine>> {
+    let mut inner = BTreeMap::new();
+    for (n, l) in lines {
+        inner.insert(n, l);
+    }
+    let mut outer = BTreeMap::new();
+    outer.insert(path, inner);
+    outer
+}
 
 #[test]
 fn override_via_predecessor_chain() {
     // Three batches: a folder listing → a file's truncated lines → a full line
-    // for the same line number (overrides the truncated one). All connected
-    // by a predecessor chain. Override must succeed and the rendered output
-    // must show the full form.
+    // for the same line number (overrides the truncated one).
     struct OverrideChain;
     impl Walker for OverrideChain {
-        fn seed(&mut self, ctx: &mut WalkerCtx) -> Vec<Batch> {
-            vec![Batch {
-                id: ctx.alloc_id(),
-                content: BatchContent::FileSystemEntries(vec![FsEntry {
-                    path: PathBuf::from("/stub/synthetic.rs"),
-                    is_dir: false,
-                }]),
-                predecessor: None,
+        fn seed(&mut self, ctx: &WalkerCtx) -> Vec<BatchDraft> {
+            vec![BatchDraft {
+                content: BatchContent::FileSystemEntries {
+                    parent: ctx.root().to_path_buf(),
+                    children: one_file("synthetic.rs", EntryKind::File),
+                },
                 value: 100.0,
             }]
         }
-        fn successors(&mut self, scheduled: &Batch, ctx: &mut WalkerCtx) -> Vec<Batch> {
+        fn successors(
+            &mut self,
+            _id: BatchId,
+            scheduled: &Batch,
+            ctx: &WalkerCtx,
+        ) -> Vec<BatchDraft> {
             match &scheduled.content {
-                BatchContent::FileSystemEntries(_) => vec![Batch {
-                    id: ctx.alloc_id(),
-                    content: BatchContent::Lines(vec![FileLineSet {
-                        path: PathBuf::from("/stub/synthetic.rs"),
-                        lines: vec![
-                            RenderedLine {
-                                number: 1,
-                                text: "fn foo".into(),
-                                truncated: true,
-                            },
-                            RenderedLine {
-                                number: 2,
-                                text: "fn bar".into(),
-                                truncated: true,
-                            },
-                        ],
-                    }]),
-                    predecessor: Some(scheduled.id),
-                    value: 50.0,
-                }],
-                BatchContent::Lines(sets) if sets[0].lines.iter().any(|l| l.truncated) => {
-                    vec![Batch {
-                        id: ctx.alloc_id(),
-                        content: BatchContent::Lines(vec![FileLineSet {
-                            path: PathBuf::from("/stub/synthetic.rs"),
-                            lines: vec![RenderedLine {
-                                number: 1,
-                                text: "fn foo(a: i32, b: i32) -> Result<()> {".into(),
-                                truncated: false,
-                            }],
-                        }]),
-                        predecessor: Some(scheduled.id),
+                BatchContent::FileSystemEntries { .. } => {
+                    let path = ctx.root().join("synthetic.rs");
+                    vec![BatchDraft {
+                        content: BatchContent::Lines(line_set(
+                            path,
+                            vec![
+                                (1, RenderedLine::Truncated("fn foo".into())),
+                                (2, RenderedLine::Truncated("fn bar".into())),
+                            ],
+                        )),
+                        value: 50.0,
+                    }]
+                }
+                BatchContent::Lines(file_map)
+                    if file_map
+                        .values()
+                        .any(|m| m.values().any(|l| l.is_truncated())) =>
+                {
+                    let path = ctx.root().join("synthetic.rs");
+                    vec![BatchDraft {
+                        content: BatchContent::Lines(line_set(
+                            path,
+                            vec![(
+                                1,
+                                RenderedLine::Full("fn foo(a: i32, b: i32) -> Result<()> {".into()),
+                            )],
+                        )),
                         value: 30.0,
                     }]
                 }
@@ -86,34 +103,35 @@ fn override_via_predecessor_chain() {
 fn tiny_budget_truncates_cleanly() {
     struct OneEntry;
     impl Walker for OneEntry {
-        fn seed(&mut self, ctx: &mut WalkerCtx) -> Vec<Batch> {
-            vec![Batch {
-                id: ctx.alloc_id(),
-                content: BatchContent::FileSystemEntries(vec![FsEntry {
-                    path: PathBuf::from("/stub/synthetic.rs"),
-                    is_dir: false,
-                }]),
-                predecessor: None,
+        fn seed(&mut self, ctx: &WalkerCtx) -> Vec<BatchDraft> {
+            vec![BatchDraft {
+                content: BatchContent::FileSystemEntries {
+                    parent: ctx.root().to_path_buf(),
+                    children: one_file("synthetic.rs", EntryKind::File),
+                },
                 value: 100.0,
             }]
         }
-        fn successors(&mut self, scheduled: &Batch, ctx: &mut WalkerCtx) -> Vec<Batch> {
-            // Always emits one large content batch. At a 1-token budget the
-            // listing fits but the content batch doesn't.
-            if matches!(scheduled.content, BatchContent::FileSystemEntries(_)) {
-                vec![Batch {
-                    id: ctx.alloc_id(),
-                    content: BatchContent::Lines(vec![FileLineSet {
-                        path: PathBuf::from("/stub/synthetic.rs"),
-                        lines: (1..=20)
-                            .map(|n| RenderedLine {
-                                number: n,
-                                text: "very long line that will not fit at one token".into(),
-                                truncated: false,
-                            })
-                            .collect(),
-                    }]),
-                    predecessor: Some(scheduled.id),
+        fn successors(
+            &mut self,
+            _id: BatchId,
+            scheduled: &Batch,
+            ctx: &WalkerCtx,
+        ) -> Vec<BatchDraft> {
+            if matches!(scheduled.content, BatchContent::FileSystemEntries { .. }) {
+                let path = ctx.root().join("synthetic.rs");
+                let lines = (1..=20)
+                    .map(|n| {
+                        (
+                            n,
+                            RenderedLine::Full(
+                                "very long line that will not fit at one token".into(),
+                            ),
+                        )
+                    })
+                    .collect::<Vec<_>>();
+                vec![BatchDraft {
+                    content: BatchContent::Lines(line_set(path, lines)),
                     value: 50.0,
                 }]
             } else {
@@ -131,53 +149,47 @@ fn tiny_budget_truncates_cleanly() {
     );
 }
 
+#[cfg(debug_assertions)]
 #[test]
 #[should_panic(expected = "non-ancestor overlap")]
 fn non_predecessor_overlap_panics_in_debug() {
     // Two Lines batches with no ancestor relation that target the same line.
+    // In release builds the assert is compiled out and the second write
+    // silently overrides; this test only asserts the debug behavior.
     struct OverlappingWalker;
     impl Walker for OverlappingWalker {
-        fn seed(&mut self, ctx: &mut WalkerCtx) -> Vec<Batch> {
-            vec![Batch {
-                id: ctx.alloc_id(),
-                content: BatchContent::FileSystemEntries(vec![FsEntry {
-                    path: PathBuf::from("/synth/f.rs"),
-                    is_dir: false,
-                }]),
-                predecessor: None,
+        fn seed(&mut self, ctx: &WalkerCtx) -> Vec<BatchDraft> {
+            vec![BatchDraft {
+                content: BatchContent::FileSystemEntries {
+                    parent: ctx.root().to_path_buf(),
+                    children: one_file("f.rs", EntryKind::File),
+                },
                 value: 100.0,
             }]
         }
-        fn successors(&mut self, scheduled: &Batch, ctx: &mut WalkerCtx) -> Vec<Batch> {
-            if !matches!(scheduled.content, BatchContent::FileSystemEntries(_)) {
+        fn successors(
+            &mut self,
+            _id: BatchId,
+            scheduled: &Batch,
+            ctx: &WalkerCtx,
+        ) -> Vec<BatchDraft> {
+            if !matches!(scheduled.content, BatchContent::FileSystemEntries { .. }) {
                 return vec![];
             }
-            let line = || RenderedLine {
-                number: 1,
-                text: "x".into(),
-                truncated: false,
-            };
+            let path = ctx.root().join("f.rs");
             vec![
-                Batch {
-                    id: ctx.alloc_id(),
-                    content: BatchContent::Lines(vec![FileLineSet {
-                        path: PathBuf::from("/synth/f.rs"),
-                        lines: vec![line()],
-                    }]),
-                    predecessor: Some(scheduled.id),
+                BatchDraft {
+                    content: BatchContent::Lines(line_set(
+                        path.clone(),
+                        vec![(1, RenderedLine::Full("x".into()))],
+                    )),
                     value: 50.0,
                 },
-                Batch {
-                    id: ctx.alloc_id(),
-                    content: BatchContent::Lines(vec![FileLineSet {
-                        path: PathBuf::from("/synth/f.rs"),
-                        lines: vec![RenderedLine {
-                            number: 1,
-                            text: "y".into(),
-                            truncated: false,
-                        }],
-                    }]),
-                    predecessor: Some(scheduled.id),
+                BatchDraft {
+                    content: BatchContent::Lines(line_set(
+                        path,
+                        vec![(1, RenderedLine::Full("y".into()))],
+                    )),
                     value: 50.0,
                 },
             ]
