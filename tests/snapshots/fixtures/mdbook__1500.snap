@@ -38,6 +38,24 @@ Cargo.toml
     24→repository = "https://github.com/rust-lang/mdBook"
     25→rust-version = "1.88.0" # Keep in sync with installation.md and .github/workflows/main.yml
     …
+    72→[package]
+    73→name = "mdbook"
+    74→version = "0.5.2"
+    75→authors = [
+    76→    "Mathieu David <mathieudavid@mathieudavid.org>",
+    77→    "Michael-F-Bryan <michaelfbryan@gmail.com>",
+    78→    "Matt Ickstadt <mattico8@gmail.com>"
+    79→]
+    80→documentation = "https://rust-lang.github.io/mdBook/index.html"
+    81→edition.workspace = true
+    82→exclude = ["/guide/*"]
+    83→keywords = ["book", "gitbook", "rustbook", "markdown"]
+    84→license.workspace = true
+    85→readme = "README.md"
+    86→repository.workspace = true
+    87→description = "Creates a book from markdown files"
+    88→rust-version.workspace = true
+    …
     119→[dev-dependencies]
     120→glob.workspace = true
     121→regex.workspace = true
@@ -55,37 +73,6 @@ ci/
     publish-guide.sh
     update-dependencies.sh
 crates/
-    mdbook-compare/
-        Cargo.toml
-            …
-            9→[dependencies]
-        README.md
-        src/
-            main.rs
-                1→//! Utility to compare the output of two different versions of mdbook.
-                …
-                3→use std::path::Path;
-                4→use std::process::Command;
-    mdbook-core/
-        Cargo.toml
-            …
-            18→[dev-dependencies]
-            19→tempfile.workspace = true
-        README.md
-        src/
-    mdbook-driver/
-        Cargo.toml
-        README.md
-        src/
-    mdbook-html/
-    mdbook-markdown/
-        Cargo.toml
-        README.md
-        src/
-    mdbook-preprocessor/
-    mdbook-renderer/
-    mdbook-summary/
-    xtask/
 eslint.config.mjs
 examples/
     nop-preprocessor.rs
@@ -122,7 +109,12 @@ examples/
                     7→use pulldown_cmark::{Event, Parser, Tag, TagEnd};
                     8→use std::io;
                     …
-                    65→pub fn handle_preprocessing() -> Result<()>…
+                    32→impl Preprocessor for RemoveEmphasis {
+                    33→    fn name(&self) -> &str {
+                    …
+                    37→    fn run(&self, _ctx: &PreprocessorContext, mut book: Book) -> Result<Book> {
+                    …
+                    65→pub fn handle_preprocessing() -> Result<()> {
         src/
             SUMMARY.md
                 1→# Summary
@@ -162,7 +154,12 @@ guide/
                 7→use std::io;
                 …
                 9→/// Preprocessing entry point.
-                10→pub fn handle_preprocessing() -> Result<()>…
+                10→pub fn handle_preprocessing() -> Result<()> {
+                …
+                35→impl Preprocessor for GuideHelper {
+                36→    fn name(&self) -> &str {
+                …
+                40→    fn run(&self, _ctx: &PreprocessorContext, mut book: Book) -> Result<Book> {
             main.rs
                 1→//! Preprocessor for the mdBook guide.
     src/

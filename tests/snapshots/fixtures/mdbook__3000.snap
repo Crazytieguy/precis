@@ -38,6 +38,24 @@ Cargo.toml
     24→repository = "https://github.com/rust-lang/mdBook"
     25→rust-version = "1.88.0" # Keep in sync with installation.md and .github/workflows/main.yml
     …
+    72→[package]
+    73→name = "mdbook"
+    74→version = "0.5.2"
+    75→authors = [
+    76→    "Mathieu David <mathieudavid@mathieudavid.org>",
+    77→    "Michael-F-Bryan <michaelfbryan@gmail.com>",
+    78→    "Matt Ickstadt <mattico8@gmail.com>"
+    79→]
+    80→documentation = "https://rust-lang.github.io/mdBook/index.html"
+    81→edition.workspace = true
+    82→exclude = ["/guide/*"]
+    83→keywords = ["book", "gitbook", "rustbook", "markdown"]
+    84→license.workspace = true
+    85→readme = "README.md"
+    86→repository.workspace = true
+    87→description = "Creates a book from markdown files"
+    88→rust-version.workspace = true
+    …
     119→[dev-dependencies]
     120→glob.workspace = true
     121→regex.workspace = true
@@ -84,6 +102,14 @@ crates/
             7→repository.workspace = true
             8→rust-version.workspace = true
             …
+            10→[dependencies]
+            11→anyhow.workspace = true
+            12→regex.workspace = true
+            13→serde.workspace = true
+            14→serde_json.workspace = true
+            15→toml.workspace = true
+            16→tracing.workspace = true
+            …
             18→[dev-dependencies]
             19→tempfile.workspace = true
         README.md
@@ -105,6 +131,9 @@ crates/
         src/
     mdbook-html/
         Cargo.toml
+            …
+            36→[features]
+            37→search = ["dep:elasticlunr-rs"]
         README.md
         front-end/
         src/
@@ -133,10 +162,7 @@ crates/
                 …
                 13→/// Options for parsing markdown.
                 …
-                15→pub struct MarkdownOptions…
-                …
                 43→/// Creates a new pulldown-cmark parser of the given text.
-                44→pub fn new_cmark_parser<'text>(text: &'text str, options: &MarkdownOptions) -> Parser<'text>…
     mdbook-preprocessor/
         Cargo.toml
             1→[package]
@@ -156,12 +182,6 @@ crates/
         README.md
         src/
             lib.rs
-                …
-                30→pub trait Preprocessor…
-                …
-                51→pub struct PreprocessorContext…
-                …
-                82→pub fn parse_input<R: Read>(reader: R) -> Result<(PreprocessorContext, Book)>…
     mdbook-renderer/
         Cargo.toml
             1→[package]
@@ -181,10 +201,6 @@ crates/
         README.md
         src/
             lib.rs
-                …
-                28→pub trait Renderer…
-                …
-                40→pub struct RenderContext…
     mdbook-summary/
         Cargo.toml
             1→[package]
@@ -195,6 +211,14 @@ crates/
             6→license.workspace = true
             7→repository.workspace = true
             8→rust-version.workspace = true
+            …
+            10→[dependencies]
+            11→anyhow.workspace = true
+            12→mdbook-core.workspace = true
+            13→memchr.workspace = true
+            14→pulldown-cmark.workspace = true
+            15→serde.workspace = true
+            16→tracing.workspace = true
         README.md
         src/
             lib.rs
@@ -203,14 +227,6 @@ crates/
                 3→//! This is used to parse the
                 4→//! [`SUMMARY.md`](https://rust-lang.github.io/mdBook/format/summary.html)
                 5→//! file structure for [mdBook](https://rust-lang.github.io/mdBook/).
-                …
-                59→pub fn parse_summary(summary: &str) -> Result<Summary>…
-                …
-                67→pub struct Summary…
-                …
-                84→pub struct Link…
-                …
-                122→pub enum SummaryItem…
     xtask/
         Cargo.toml
             1→[package]
@@ -236,7 +252,7 @@ crates/
                 5→use std::process::Command;
                 6→use std::process::exit;
                 …
-                10→pub(crate) fn changelog() -> Result<()>…
+                10→pub(crate) fn changelog() -> Result<()> {
             main.rs
                 1→//! Helper for local development.
 eslint.config.mjs
@@ -275,7 +291,12 @@ examples/
                     7→use pulldown_cmark::{Event, Parser, Tag, TagEnd};
                     8→use std::io;
                     …
-                    65→pub fn handle_preprocessing() -> Result<()>…
+                    32→impl Preprocessor for RemoveEmphasis {
+                    33→    fn name(&self) -> &str {
+                    …
+                    37→    fn run(&self, _ctx: &PreprocessorContext, mut book: Book) -> Result<Book> {
+                    …
+                    65→pub fn handle_preprocessing() -> Result<()> {
         src/
             SUMMARY.md
                 1→# Summary
@@ -315,7 +336,12 @@ guide/
                 7→use std::io;
                 …
                 9→/// Preprocessing entry point.
-                10→pub fn handle_preprocessing() -> Result<()>…
+                10→pub fn handle_preprocessing() -> Result<()> {
+                …
+                35→impl Preprocessor for GuideHelper {
+                36→    fn name(&self) -> &str {
+                …
+                40→    fn run(&self, _ctx: &PreprocessorContext, mut book: Book) -> Result<Book> {
             main.rs
                 1→//! Preprocessor for the mdBook guide.
     src/

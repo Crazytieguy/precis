@@ -33,7 +33,7 @@ pub fn render(
             root.display()
         );
     }
-    let scheduler = Scheduler::new(root, MultiWalker::new(), token_budget, byte_budget);
+    let scheduler = Scheduler::new(root, MultiWalker, token_budget, byte_budget);
     let tree = scheduler.run();
     Ok(tree.render())
 }

@@ -1,4 +1,4 @@
-use std::collections::{BTreeMap, HashMap};
+use std::collections::{BTreeMap, BTreeSet, HashMap};
 use std::ffi::OsString;
 use std::path::{Path, PathBuf};
 
@@ -133,14 +133,6 @@ impl RenderedTree {
     }
 
     fn cost_lines(&self, file_map: &BTreeMap<PathBuf, BTreeMap<usize, RenderedLine>>) -> Cost {
-        // Conservative ellipsis-overhead headroom per file to keep the
-        // end-of-run cross-check happy when this batch introduces new gaps
-        // (rendered as bare-ellipsis lines). ~2 markers × ~3 tokens each;
-        // slight over-estimate trades a few tokens of unused budget for the
-        // invariant that consumed >= rendered.
-        const ELLIPSIS_OVERHEAD_TOKENS: usize = 8;
-        const ELLIPSIS_OVERHEAD_BYTES: usize = 16;
-
         let mut cost = Cost::default();
         for (path, lines) in file_map {
             let indent_depth = self.depth_from_root(path);
@@ -148,8 +140,27 @@ impl RenderedTree {
                 Some(TreeNode::File { content }) => Some(content),
                 _ => None,
             };
-            cost.tokens += ELLIPSIS_OVERHEAD_TOKENS;
-            cost.bytes += ELLIPSIS_OVERHEAD_BYTES;
+            // Ellipsis-marker overhead: count how many new gaps this batch
+            // will introduce in the file's rendered line set, multiply by the
+            // cost of a single bare-`…` row at this indent depth. Rendering
+            // emits one marker per gap (and at the start if the first
+            // rendered line isn't 1).
+            let ellipsis_row = format_ellipsis_row(indent_depth);
+            let ellipsis_tokens = tokenizer::count(&ellipsis_row);
+            let ellipsis_bytes = ellipsis_row.len();
+            let existing_keys: Vec<usize> = existing
+                .map(|c| c.keys().copied().collect())
+                .unwrap_or_default();
+            let combined: BTreeSet<usize> = existing_keys
+                .iter()
+                .copied()
+                .chain(lines.keys().copied())
+                .collect();
+            let new_gaps = count_gaps(combined.iter().copied())
+                .saturating_sub(count_gaps(existing_keys.iter().copied()));
+            cost.tokens += new_gaps * ellipsis_tokens;
+            cost.bytes += new_gaps * ellipsis_bytes;
+
             for (number, line) in lines {
                 let new_row = format_line_row(*number, line, indent_depth);
                 let new_tokens = tokenizer::count(&new_row);
@@ -304,6 +315,31 @@ fn format_entry_row(name: &OsString, kind: EntryKind, indent_depth: usize) -> St
     if matches!(kind, EntryKind::Directory) {
         s.push('/');
     }
+    s.push('\n');
+    s
+}
+
+/// Number of bare-ellipsis rows that would be inserted around the given
+/// rendered line numbers under the gap rule (one before the first rendered
+/// line if it isn't 1, plus one between any pair of rendered lines that
+/// aren't consecutive).
+fn count_gaps(line_numbers: impl Iterator<Item = usize>) -> usize {
+    let mut count = 0;
+    let mut prev: Option<usize> = None;
+    for n in line_numbers {
+        match prev {
+            None if n > 1 => count += 1,
+            Some(p) if n > p + 1 => count += 1,
+            _ => {}
+        }
+        prev = Some(n);
+    }
+    count
+}
+
+fn format_ellipsis_row(indent_depth: usize) -> String {
+    let mut s = INDENT_UNIT.repeat(indent_depth);
+    s.push('…');
     s.push('\n');
     s
 }

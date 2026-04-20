@@ -49,20 +49,26 @@ impl<W: Walker> Scheduler<W> {
         }
 
         // End-of-run cross-check (debug-only; in release we'd rather emit a
-        // possibly-out-of-budget output than panic).
-        debug_assert!(
-            self.tree.total_tokens() <= self.token_budget,
-            "rendered output exceeds token budget: {} > {}",
-            self.tree.total_tokens(),
-            self.token_budget,
-        );
-        if let Some(bb) = self.byte_budget {
+        // possibly-out-of-budget output than panic). Bind once — total_tokens
+        // re-renders the whole tree, so re-evaluating it inside the assert
+        // message would render twice.
+        if cfg!(debug_assertions) {
+            let total_tokens = self.tree.total_tokens();
             debug_assert!(
-                self.tree.total_bytes() <= bb,
-                "rendered output exceeds byte budget: {} > {}",
-                self.tree.total_bytes(),
-                bb,
+                total_tokens <= self.token_budget,
+                "rendered output exceeds token budget: {} > {}",
+                total_tokens,
+                self.token_budget,
             );
+            if let Some(bb) = self.byte_budget {
+                let total_bytes = self.tree.total_bytes();
+                debug_assert!(
+                    total_bytes <= bb,
+                    "rendered output exceeds byte budget: {} > {}",
+                    total_bytes,
+                    bb,
+                );
+            }
         }
 
         self.tree

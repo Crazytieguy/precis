@@ -1,44 +1,30 @@
-//! TOML content walker. First-pass Tier 1 scope: identify `[package]`,
-//! `[features]`, and `[dependencies]` / `[dev-dependencies]` sections in a
-//! Cargo.toml-style manifest and emit one batch per section. Uses simple
-//! line-scanning (no TOML parser) since section boundaries are
-//! line-identifiable by their `[header]` lines.
+//! TOML content walker. Identifies `[package]`, `[features]`, `[dependencies]`,
+//! `[dev-dependencies]`, and `[workspace.*]` sections in a manifest and emits
+//! one batch per section. Section boundaries are line-identifiable, so this
+//! avoids a real TOML parser — at the cost of misclassifying contrived
+//! inline-table headers (acceptable for valid Cargo manifests).
 
-use std::collections::BTreeMap;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
-use crate::batch::{BatchContent, BatchDraft, RenderedLine};
+use crate::batch::{BatchDraft, RenderedLine};
 
-/// Emit per-section batches for a TOML manifest.
+use super::lines_for_file;
+
 pub fn emit_batches(path: &Path, source: &str) -> Vec<BatchDraft> {
     parse_sections(source)
         .into_iter()
         .filter_map(|section| {
             let value = value_for_section(&section.name)?;
-            if section.lines.is_empty() {
-                return None;
-            }
-            let mut lines = BTreeMap::new();
-            for (n, text) in section.lines {
-                if text.trim().is_empty() {
-                    continue;
-                }
-                lines.insert(n, RenderedLine::Full(text));
-            }
-            if lines.is_empty() {
-                return None;
-            }
-            let mut file_map: BTreeMap<PathBuf, BTreeMap<usize, RenderedLine>> = BTreeMap::new();
-            file_map.insert(path.to_path_buf(), lines);
-            Some(BatchDraft {
-                content: BatchContent::Lines(file_map),
-                value,
-            })
+            let lines = section
+                .lines
+                .into_iter()
+                .filter(|(_, t)| !t.trim().is_empty())
+                .map(|(n, t)| (n, RenderedLine::Full(t)));
+            lines_for_file(path, lines, value)
         })
         .collect()
 }
 
-/// Priority value for a TOML section. None → skip (don't emit a batch).
 fn value_for_section(name: &str) -> Option<f64> {
     match name {
         "package" | "workspace" | "workspace.package" => Some(900.0),
@@ -60,9 +46,6 @@ fn parse_sections(source: &str) -> Vec<Section> {
     for (i, raw) in source.lines().enumerate() {
         let line_no = i + 1;
         let trimmed = raw.trim_start();
-        // `[header]` starts a new section. Reject `[[header]]` (array-of-tables)
-        // and inline-array contexts by checking the bracket comes first and is
-        // followed by a non-`[` character.
         if let Some(after_open) = trimmed.strip_prefix('[')
             && !after_open.starts_with('[')
             && let Some(name) = after_open.split(']').next()

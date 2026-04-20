@@ -1,14 +1,17 @@
-//! Rust content walker. First-pass Tier 1 scope: per file, emit four batches —
-//! module-level doc, use/mod plumbing, public-item signatures (truncated at
-//! the first `{`), and rustdoc lines above public items. Uses tree-sitter for
-//! item detection.
+//! Per-file Rust batches: module-level `//!` doc, top-level use/mod plumbing,
+//! public-item declarations (signature-only for fns; whole item — including
+//! body — for structs/enums/traits/macros so fields, variants, and method
+//! sigs are surfaced), outer rustdoc above public items, and inherent/trait
+//! impl headers + method signatures. Tree-sitter-rust drives item detection.
 
-use std::collections::BTreeMap;
-use std::path::{Path, PathBuf};
+use std::cell::RefCell;
+use std::path::Path;
 
 use tree_sitter::{Node, Parser};
 
-use crate::batch::{BatchContent, BatchDraft, RenderedLine};
+use crate::batch::{BatchDraft, RenderedLine};
+
+use super::lines_for_file;
 
 const VALUE_MOD_DOC: f64 = 700.0;
 const VALUE_USE_MOD: f64 = 400.0;
@@ -34,84 +37,51 @@ pub fn emit_batches(path: &Path, source: &str) -> Vec<BatchDraft> {
             extend_lines(&mut module_doc_lines, &child, source);
             continue;
         }
-        match child.kind() {
-            "line_comment" | "block_comment" => {
-                // Non-leading comment — these are doc comments above public
-                // items, collected via extend_doc_comments_above when we hit
-                // the item itself. Skip here.
-            }
-            _ => {
-                seen_item = true;
-                handle_item(
-                    child,
-                    source,
-                    &mut use_mod_lines,
-                    &mut pub_sig_lines,
-                    &mut pub_doc_lines,
-                );
-            }
+        if matches!(child.kind(), "line_comment" | "block_comment") {
+            continue;
         }
+        seen_item = true;
+        handle_item(
+            child,
+            source,
+            &mut use_mod_lines,
+            &mut pub_sig_lines,
+            &mut pub_doc_lines,
+        );
     }
 
-    // Categories are emitted as sibling batches under the folder listing —
-    // they can't overlap on the same line (the scheduler's overlap check
-    // would fire), so resolve any duplicates here by giving precedence to
-    // the order below: module_doc, pub_sig, pub_doc, use_mod.
+    // Categories are sibling batches; the scheduler forbids non-ancestor
+    // line overlap. Resolve any duplicates in priority order.
     let mut claimed: std::collections::BTreeSet<usize> = std::collections::BTreeSet::new();
-    let mut take_lines = |raw: Vec<usize>| -> Vec<usize> {
+    let mut take = |raw: Vec<usize>| -> Vec<usize> {
         raw.into_iter().filter(|n| claimed.insert(*n)).collect()
     };
-    let module_doc_lines = take_lines(module_doc_lines);
-    let pub_sig_lines = take_lines(pub_sig_lines);
-    let pub_doc_lines = take_lines(pub_doc_lines);
-    let use_mod_lines = take_lines(use_mod_lines);
+    let module_doc_lines = take(module_doc_lines);
+    let pub_sig_lines = take(pub_sig_lines);
+    let pub_doc_lines = take(pub_doc_lines);
+    let use_mod_lines = take(use_mod_lines);
 
-    let mut drafts = Vec::new();
-    if !module_doc_lines.is_empty() {
-        drafts.push(line_batch(
-            path,
-            &module_doc_lines,
-            &source_lines,
-            VALUE_MOD_DOC,
-            false,
-        ));
-    }
-    if !use_mod_lines.is_empty() {
-        drafts.push(line_batch(
-            path,
-            &use_mod_lines,
-            &source_lines,
-            VALUE_USE_MOD,
-            false,
-        ));
-    }
-    if !pub_sig_lines.is_empty() {
-        drafts.push(line_batch(
-            path,
-            &pub_sig_lines,
-            &source_lines,
-            VALUE_PUB_SIG,
-            true,
-        ));
-    }
-    if !pub_doc_lines.is_empty() {
-        drafts.push(line_batch(
-            path,
-            &pub_doc_lines,
-            &source_lines,
-            VALUE_PUB_DOC,
-            false,
-        ));
-    }
-    drafts
+    [
+        (module_doc_lines, VALUE_MOD_DOC),
+        (use_mod_lines, VALUE_USE_MOD),
+        (pub_sig_lines, VALUE_PUB_SIG),
+        (pub_doc_lines, VALUE_PUB_DOC),
+    ]
+    .into_iter()
+    .filter_map(|(lines, value)| line_batch(path, &lines, &source_lines, value))
+    .collect()
 }
 
 fn parse(source: &str) -> Option<tree_sitter::Tree> {
-    let mut parser = Parser::new();
-    parser
-        .set_language(&tree_sitter_rust::LANGUAGE.into())
-        .ok()?;
-    parser.parse(source, None)
+    thread_local! {
+        static PARSER: RefCell<Parser> = RefCell::new({
+            let mut p = Parser::new();
+            p.set_language(&tree_sitter_rust::LANGUAGE.into())
+                .expect("tree-sitter-rust language load");
+            p
+        });
+    }
+    PARSER.with(|p| p.borrow_mut().parse(source, None))
 }
 
 fn handle_item(
@@ -124,22 +94,46 @@ fn handle_item(
     match node.kind() {
         "use_declaration" => extend_lines(use_mod_lines, &node, source),
         "mod_item" => {
-            // For `mod foo;` extend_lines is a single line; for inline
-            // `mod foo { ... }` we want the declaration only — the inner
-            // items are handled when the file (this one or a child mod's
-            // file) is itself walked.
+            // For inline `mod foo { ... }` we want the declaration only —
+            // the body's items are handled when their containing file is
+            // walked separately (or punted, for inline mods).
             let sig_end = signature_end_row(node);
-            for row in node.start_position().row..=sig_end {
-                use_mod_lines.push(row + 1);
+            push_rows(use_mod_lines, node.start_position().row, sig_end);
+        }
+        "function_item" | "function_signature_item" => {
+            if is_public(node, source) {
+                extend_doc_comments_above(node, source, pub_doc_lines);
+                let sig_end = signature_end_row(node);
+                push_rows(pub_sig_lines, node.start_position().row, sig_end);
+            }
+        }
+        "impl_item" => {
+            // Always surface impl headers and method signatures — impl
+            // bodies are how a type's API is actually used; even when the
+            // impl block itself isn't visibility-marked, its methods are
+            // load-bearing.
+            push_rows(
+                pub_sig_lines,
+                node.start_position().row,
+                signature_end_row(node),
+            );
+            if let Some(body) = node.child_by_field_name("body") {
+                let mut cursor = body.walk();
+                for inner in body.children(&mut cursor) {
+                    if matches!(inner.kind(), "function_item" | "function_signature_item") {
+                        extend_doc_comments_above(inner, source, pub_doc_lines);
+                        let sig_end = signature_end_row(inner);
+                        push_rows(pub_sig_lines, inner.start_position().row, sig_end);
+                    }
+                }
             }
         }
         _ => {
             if is_public(node, source) {
                 extend_doc_comments_above(node, source, pub_doc_lines);
-                let sig_end = signature_end_row(node);
-                for row in node.start_position().row..=sig_end {
-                    pub_sig_lines.push(row + 1);
-                }
+                // Whole item (struct/enum/trait/macro/type/const/static) so
+                // fields, variants, trait method sigs, and macro arms appear.
+                extend_lines(pub_sig_lines, &node, source);
             }
         }
     }
@@ -174,19 +168,16 @@ fn has_macro_export_attribute(node: Node, source: &str) -> bool {
 
 fn extend_doc_comments_above(node: Node, source: &str, out: &mut Vec<usize>) {
     let mut cur = node.prev_sibling();
-    let mut collected: Vec<usize> = Vec::new();
     while let Some(prev) = cur {
         match prev.kind() {
             "line_comment" | "block_comment" if is_outer_doc_comment(prev, source) => {
-                extend_lines(&mut collected, &prev, source);
+                extend_lines(out, &prev, source);
                 cur = prev.prev_sibling();
             }
             "attribute_item" => cur = prev.prev_sibling(),
             _ => break,
         }
     }
-    collected.sort();
-    out.extend(collected);
 }
 
 /// `///` and `/** */` only — NOT `//!`/`/*!`, which document the enclosing
@@ -213,16 +204,20 @@ fn signature_end_row(node: Node) -> usize {
     }
 }
 
-/// Push the 1-indexed line numbers for a node, accounting for the fact that
-/// tree-sitter-rust includes a node's trailing newline in its end_position —
-/// which makes a single-line `//!` comment report rows = N..=N+1. We compute
-/// the real line span from the source text instead.
+/// Push the 1-indexed line numbers for a node, accounting for tree-sitter-
+/// rust including a node's trailing newline in its end_position (so a
+/// single-line `//!` reports rows = N..=N+1). Real span comes from the
+/// source text.
 fn extend_lines(out: &mut Vec<usize>, node: &Node, source: &str) {
     let start = node.start_position().row;
     let text = &source[node.start_byte()..node.end_byte()];
     let internal_lines = text.trim_end_matches(['\n', '\r']).split('\n').count();
     let span = internal_lines.max(1) - 1;
-    for row in start..=start + span {
+    push_rows(out, start, start + span);
+}
+
+fn push_rows(out: &mut Vec<usize>, start_row: usize, end_row: usize) {
+    for row in start_row..=end_row {
         out.push(row + 1);
     }
 }
@@ -232,34 +227,16 @@ fn line_batch(
     line_numbers: &[usize],
     source_lines: &[&str],
     value: f64,
-    truncate_at_brace: bool,
-) -> BatchDraft {
+) -> Option<BatchDraft> {
     let mut deduped: Vec<usize> = line_numbers.to_vec();
     deduped.sort();
     deduped.dedup();
-    let mut lines: BTreeMap<usize, RenderedLine> = BTreeMap::new();
-    for n in deduped {
-        let Some(text) = source_lines.get(n - 1) else {
-            continue;
-        };
+    let lines = deduped.into_iter().filter_map(|n| {
+        let text = source_lines.get(n - 1)?;
         if text.trim().is_empty() {
-            continue;
+            return None;
         }
-        let rendered = if truncate_at_brace && let Some(idx) = text.find('{') {
-            let prefix = text[..idx].trim_end().to_string();
-            if prefix.is_empty() {
-                continue;
-            }
-            RenderedLine::Truncated(prefix)
-        } else {
-            RenderedLine::Full(text.to_string())
-        };
-        lines.insert(n, rendered);
-    }
-    let mut file_map: BTreeMap<PathBuf, BTreeMap<usize, RenderedLine>> = BTreeMap::new();
-    file_map.insert(path.to_path_buf(), lines);
-    BatchDraft {
-        content: BatchContent::Lines(file_map),
-        value,
-    }
+        Some((n, RenderedLine::Full(text.to_string())))
+    });
+    lines_for_file(path, lines, value)
 }

@@ -1,6 +1,8 @@
+use std::collections::BTreeMap;
+use std::ffi::OsString;
 use std::path::{Path, PathBuf};
 
-use crate::batch::{Batch, BatchDraft, BatchId};
+use crate::batch::{Batch, BatchContent, BatchDraft, BatchId, EntryKind, RenderedLine};
 
 pub mod generic;
 pub mod markdown;
@@ -46,4 +48,71 @@ pub trait Walker {
         scheduled: &Batch,
         ctx: &WalkerCtx,
     ) -> Vec<BatchDraft>;
+}
+
+// ---------- shared helpers ----------
+
+/// Heuristic value for a folder-listing batch at a given depth from root.
+/// Decreases with depth so the scheduler prefers shallower listings before
+/// deeper ones. First-pass placeholder — calibrate later.
+pub(crate) fn folder_value(depth: usize) -> f64 {
+    1000.0 / (1.0 + depth as f64 * 4.0)
+}
+
+/// Read a directory's immediate children into a name-keyed map.
+pub(crate) fn list_dir(path: &Path) -> BTreeMap<OsString, EntryKind> {
+    let Ok(read_dir) = std::fs::read_dir(path) else {
+        return BTreeMap::new();
+    };
+    read_dir
+        .flatten()
+        .filter_map(|e| {
+            let kind = if e.file_type().ok()?.is_dir() {
+                EntryKind::Directory
+            } else {
+                EntryKind::File
+            };
+            Some((e.file_name(), kind))
+        })
+        .collect()
+}
+
+/// Build a per-file Lines `BatchDraft` from `(line_number, RenderedLine)` pairs.
+/// Empty-text lines are dropped (they'd trip the renderer's debug-assert and
+/// rendering them as just a numbered prefix is noise). Returns `None` when
+/// the resulting line set is empty.
+pub(crate) fn lines_for_file(
+    path: &Path,
+    lines: impl IntoIterator<Item = (usize, RenderedLine)>,
+    value: f64,
+) -> Option<BatchDraft> {
+    let inner: BTreeMap<usize, RenderedLine> = lines
+        .into_iter()
+        .filter(|(_, l)| !l.text().is_empty())
+        .collect();
+    if inner.is_empty() {
+        return None;
+    }
+    let mut file_map: BTreeMap<PathBuf, BTreeMap<usize, RenderedLine>> = BTreeMap::new();
+    file_map.insert(path.to_path_buf(), inner);
+    Some(BatchDraft {
+        content: BatchContent::Lines(file_map),
+        value,
+    })
+}
+
+/// Build a folder-listing `BatchDraft` for `path` with the given children and
+/// value. Convenience that matches how walkers actually emit folder batches.
+pub(crate) fn folder_listing_draft(
+    path: PathBuf,
+    children: BTreeMap<OsString, EntryKind>,
+    value: f64,
+) -> BatchDraft {
+    BatchDraft {
+        content: BatchContent::FileSystemEntries {
+            parent: path,
+            children,
+        },
+        value,
+    }
 }

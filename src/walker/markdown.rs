@@ -1,102 +1,99 @@
-//! Markdown content walker. First-pass Tier 1 scope:
-//! - `SUMMARY.md`: emit the whole file as one batch (book-style index).
-//! - Any markdown file: emit the first heading + its body slab as one batch.
-//!
-//! Uses simple line scanning (no markdown parser) — Tier 1 only needs heading
-//! detection and basename matching, both line-identifiable.
+//! Markdown content walker. `SUMMARY.md` → whole-file batch (book-style index).
+//! Any other markdown → first heading + body slab. Detects ATX (`# Title`) and
+//! Setext (`Title\n===`) headings; line-scan only.
 
-use std::collections::BTreeMap;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
-use crate::batch::{BatchContent, BatchDraft, RenderedLine};
+use crate::batch::{BatchDraft, RenderedLine};
+
+use super::lines_for_file;
 
 pub fn emit_batches(path: &Path, source: &str) -> Vec<BatchDraft> {
-    let basename = path.file_name().and_then(|n| n.to_str()).unwrap_or("");
-    if basename.eq_ignore_ascii_case("SUMMARY.md") {
-        return vec![whole_file(path, source, 800.0)];
+    let is_named = |target: &str| {
+        path.file_name()
+            .and_then(|n| n.to_str())
+            .is_some_and(|n| n.eq_ignore_ascii_case(target))
+    };
+
+    if is_named("SUMMARY.md") {
+        return whole_file(path, source, 800.0).into_iter().collect();
     }
 
-    // README-style: pull the first heading + its slab (lines until the next
-    // heading or a blank-line fence). Skip files whose first non-blank line
-    // isn't a heading — they're prose dumps, not structured docs.
     let Some((start, end)) = first_heading_slab(source) else {
         return Vec::new();
     };
-    let mut lines = BTreeMap::new();
-    for (i, text) in source
-        .lines()
-        .enumerate()
-        .skip(start - 1)
-        .take(end - start + 1)
-    {
-        if text.trim().is_empty() {
-            continue;
-        }
-        lines.insert(i + 1, RenderedLine::Full(text.to_string()));
-    }
-    let mut file_map: BTreeMap<PathBuf, BTreeMap<usize, RenderedLine>> = BTreeMap::new();
-    file_map.insert(path.to_path_buf(), lines);
-    let value = if basename.eq_ignore_ascii_case("README.md") {
-        800.0
-    } else {
-        400.0
-    };
-    vec![BatchDraft {
-        content: BatchContent::Lines(file_map),
-        value,
-    }]
+    let value = if is_named("README.md") { 800.0 } else { 400.0 };
+    lines_in_range(path, source, start..=end, value)
+        .into_iter()
+        .collect()
 }
 
-fn whole_file(path: &Path, source: &str, value: f64) -> BatchDraft {
-    let mut lines = BTreeMap::new();
-    for (i, text) in source.lines().enumerate() {
-        if text.trim().is_empty() {
-            continue;
-        }
-        lines.insert(i + 1, RenderedLine::Full(text.to_string()));
-    }
-    let mut file_map: BTreeMap<PathBuf, BTreeMap<usize, RenderedLine>> = BTreeMap::new();
-    file_map.insert(path.to_path_buf(), lines);
-    BatchDraft {
-        content: BatchContent::Lines(file_map),
-        value,
-    }
+fn whole_file(path: &Path, source: &str, value: f64) -> Option<BatchDraft> {
+    lines_in_range(path, source, 1..=usize::MAX, value)
+}
+
+fn lines_in_range(
+    path: &Path,
+    source: &str,
+    range: std::ops::RangeInclusive<usize>,
+    value: f64,
+) -> Option<BatchDraft> {
+    let lines = source
+        .lines()
+        .enumerate()
+        .map(|(i, t)| (i + 1, t))
+        .filter(|(n, t)| range.contains(n) && !t.trim().is_empty())
+        .map(|(n, t)| (n, RenderedLine::Full(t.to_string())));
+    lines_for_file(path, lines, value)
 }
 
 /// Find the line range (1-indexed, inclusive) of the first heading and its
-/// following body. The slab ends at the next heading of equal-or-higher
-/// rank, or at end-of-file.
+/// following body. Returns `None` when the file has no recognizable heading.
+/// The slab ends at the next heading of equal-or-higher rank, or end-of-file.
 fn first_heading_slab(source: &str) -> Option<(usize, usize)> {
     let lines: Vec<&str> = source.lines().collect();
-    let (start_idx, start_rank) = lines.iter().enumerate().find_map(|(i, l)| {
-        let rank = heading_rank(l)?;
-        Some((i, rank))
-    })?;
-    // Find next heading of rank <= start_rank (or EOF).
-    let end_idx = lines
-        .iter()
-        .enumerate()
-        .skip(start_idx + 1)
-        .find_map(|(i, l)| {
-            let rank = heading_rank(l)?;
-            (rank <= start_rank).then_some(i)
-        })
+    let (start_idx, start_rank) = first_heading(&lines)?;
+    let end_idx = (start_idx + 1..lines.len())
+        .find(|i| heading_rank_at(&lines, *i).is_some_and(|rank| rank <= start_rank))
         .map(|i| i - 1)
         .unwrap_or(lines.len() - 1);
     Some((start_idx + 1, end_idx + 1))
 }
 
-fn heading_rank(line: &str) -> Option<usize> {
+fn first_heading(lines: &[&str]) -> Option<(usize, usize)> {
+    (0..lines.len()).find_map(|i| heading_rank_at(lines, i).map(|r| (i, r)))
+}
+
+/// ATX (`# Title`) returns rank 1–6. Setext (`Title\n===` or `Title\n---`)
+/// returns rank 1 or 2 respectively, attributed to the title line (i).
+fn heading_rank_at(lines: &[&str], i: usize) -> Option<usize> {
+    let line = *lines.get(i)?;
+    if let Some(rank) = atx_rank(line) {
+        return Some(rank);
+    }
+    let next = lines.get(i + 1)?;
+    if !line.trim().is_empty() && setext_marker_rank(next).is_some() {
+        return setext_marker_rank(next);
+    }
+    None
+}
+
+fn atx_rank(line: &str) -> Option<usize> {
     let trimmed = line.trim_start();
     let rank = trimmed.bytes().take_while(|&b| b == b'#').count();
-    if rank > 0
-        && rank <= 6
-        && trimmed
-            .as_bytes()
-            .get(rank)
-            .is_some_and(|&b| b == b' ' || b == b'\t')
-    {
-        Some(rank)
+    let after = trimmed.as_bytes().get(rank).copied();
+    (rank > 0 && rank <= 6 && matches!(after, Some(b' ') | Some(b'\t'))).then_some(rank)
+}
+
+fn setext_marker_rank(line: &str) -> Option<usize> {
+    let s = line.trim();
+    if s.is_empty() {
+        return None;
+    }
+    if s.bytes().all(|b| b == b'=') {
+        Some(1)
+    } else if s.bytes().all(|b| b == b'-') {
+        Some(2)
     } else {
         None
     }
