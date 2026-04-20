@@ -21,17 +21,16 @@ for things that aren't visible from reading `src/`.
 
 ## Honest rendering
 
-`precis` output is always a verbatim subset of the source. Allowed transforms
-(only the first two are implemented today):
+`precis` output is always a verbatim subset of the source. Allowed transforms:
 
 - **Full lines** with their source line number. `RenderedLine::Full(text)`.
 - **Line-prefix + trailing ellipsis** (line shown partially, truncated at a
   syntactic boundary). `RenderedLine::Truncated(prefix)`.
-- **Bare-ellipsis without a line number** standing in for one or more
-  elided contiguous lines. *Not yet implemented*: the renderer has no way to
-  interleave a bare ellipsis between a file's rendered lines. Stage 7
-  walkers will need this when they emit partial content with deferred
-  follow-up reads — revisit then. (See deferred list below.)
+- **Bare-ellipsis without a line number** at the start of a file (when the
+  first rendered line isn't 1) and between gaps in rendered lines. Inserted
+  automatically by `render_file` when scheduling produces non-contiguous
+  content. **Tail-of-file elisions are not yet supported** — see deferred
+  list below.
 
 No paraphrasing, summarization, or invented content under any circumstances.
 
@@ -81,10 +80,13 @@ until the Stage 4 ontology is concrete; the discipline meanwhile is:
   actually misuses them.
 
 ### Render
-- **Bare-ellipsis lines** (see Honest rendering above) — needed before any
-  walker can emit "show some lines, then `…`, then more lines" within one
-  file. Probably a third `RenderedLine` variant plus a render-side rule
-  that collapses adjacent bare-ellipsis markers.
+- **Tail elisions** — `render_file` emits a bare ellipsis at the start of a
+  file (when the first rendered line isn't 1) and between gaps in rendered
+  lines, but never at the end — `BatchContent::Lines` has no source-line-
+  count metadata so the renderer can't tell whether more source exists
+  past the last rendered line. Either thread the file's total line count
+  through the data model, or have walkers emit an explicit tail marker
+  when they truncate.
 - **Filesystem-level override** — file-content batch superseding a folder
   listing entry, "N more files" placeholders, alternate non-tree renderings.
 
