@@ -38,7 +38,7 @@ decision worth remembering or defer something a later session will need.
   that makes content shorter never credits tokens back. Conservative wrt
   budget, distorts ranking. Refactor `Cost` to allow signed deltas when a
   North Star surfaces a real shrink case.
-- **Borrowed line content** — `RenderedLine.text` is owned `String`. A `&str`
+- **Borrowed line content** — `RenderedLine` text is owned `String`. A `&str`
   borrow into the source file would save allocations but propagate a lifetime
   through the entire batch graph + walker trait. Defer until a Stage 7+ profile
   surfaces it as a real bottleneck.
@@ -46,6 +46,16 @@ decision worth remembering or defer something a later session will need.
   Stage 7 walkers need to express "this batch has structural scope X but must
   also wait for Y", reintroduce a separate `parent` (scope) vs a list of
   ordering predecessors (or a small DAG representation).
+- **Path newtypes** — `BatchContent` carries arbitrary `PathBuf`s. A
+  `RootRelativePath` (or `DirPath` / `FilePath`) newtype with a private
+  constructor would make "path outside the seed root" or "file path used as
+  a directory" unrepresentable. Worth doing once the walker surface is more
+  varied (Stage 7+).
+- **`f64` value / `usize` Cost newtypes** — `Batch.value` admits NaN /
+  negative / infinite; `Cost { tokens, bytes }` admits absolute nonsense.
+  A `FiniteNonNegativeValue` newtype + private-field `Cost` constructors
+  would catch bad inputs at the boundary. Cheap; defer until something
+  actually misuses them.
 
 ### Scheduler / walker
 - **Filesystem-level override** — file-content batch superseding a folder
