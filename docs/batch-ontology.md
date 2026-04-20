@@ -1,4 +1,9 @@
-# Batch ontology (Stage 4)
+# Batch ontology — first-pass draft
+
+**Status: first-pass draft, a guide — not a contract.** Synthesized from three
+north stars. As more north stars are written (more fixtures, more languages),
+this document will be updated, restructured, or replaced. Expect categories
+to consolidate, split, or disappear when evidence from a wider corpus arrives.
 
 Forward-looking design reference for Stage 7 walkers. Defines the recurring
 shapes a batch can take, the abstract value heuristics that rank them, and
