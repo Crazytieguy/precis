@@ -1,17 +1,28 @@
-//! Stage 6 scheduler invariants exercised in language-agnostic terms via
-//! synthetic walkers defined inline. The scheduler asserts these invariants
-//! in its own hot path; these tests prove the assertions actually fire by
+//! Scheduler invariants exercised via synthetic inline walkers. The
+//! scheduler asserts these invariants in its own hot path; these tests
+//! prove the assertions actually fire (and the happy-path cases work) by
 //! constructing the relevant cases.
 
 use std::collections::BTreeMap;
 use std::ffi::OsString;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
-use precis::batch::{Batch, BatchContent, BatchDraft, BatchId, EntryKind, RenderedLine};
+use precis::batch::{
+    BatchContent, BatchKey, EntryKind, FsKey, RenderedLine, ResolvedBatch, RustKey, ValueSignals,
+};
 use precis::scheduler::Scheduler;
-use precis::walker::{Walker, WalkerCtx};
+use precis::walker::{Candidate, WalkCtx, Walker};
 
-fn one_file(name: &str, kind: EntryKind) -> BTreeMap<OsString, EntryKind> {
+fn sig(n: f64) -> ValueSignals {
+    ValueSignals {
+        catastrophic_omission: n,
+        follow_up_minimization: n,
+        zero_tool_call_understanding: n,
+        depth_factor: 1.0,
+    }
+}
+
+fn one_child(name: &str, kind: EntryKind) -> BTreeMap<OsString, EntryKind> {
     let mut m = BTreeMap::new();
     m.insert(OsString::from(name), kind);
     m
@@ -30,64 +41,88 @@ fn line_set(
     outer
 }
 
+// Common stub paths. `/stub` doesn't exist; the synthetic walker answers
+// every key's materialize directly, so the scheduler never touches the
+// real filesystem.
+const STUB_DIR: &str = "/stub";
+
+fn stub_dir() -> PathBuf {
+    PathBuf::from(STUB_DIR)
+}
+
+fn stub_file(name: &str) -> PathBuf {
+    Path::new(STUB_DIR).join(name)
+}
+
+fn listing_key() -> BatchKey {
+    BatchKey::Fs(FsKey::DirListing { dir: stub_dir() })
+}
+
 #[test]
 fn override_via_predecessor_chain() {
-    // Three batches: a folder listing → a file's truncated lines → a full line
-    // for the same line number (overrides the truncated one).
+    // Three batches: a folder listing → a `PubDecls` carrying truncated
+    // lines → a `PubDocs` (refinement, with PubDecls as predecessor) that
+    // overrides line 1 with its full version.
     struct OverrideChain;
     impl Walker for OverrideChain {
-        fn seed(&mut self, ctx: &WalkerCtx) -> Vec<BatchDraft> {
-            vec![BatchDraft {
-                content: BatchContent::FileSystemEntries {
-                    parent: ctx.root().to_path_buf(),
-                    children: one_file("synthetic.rs", EntryKind::File),
-                },
-                value: 100.0,
-            }]
+        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Candidate> {
+            vec![Candidate::new(listing_key(), sig(0.9), 40)]
         }
-        fn successors(
-            &mut self,
-            _id: BatchId,
-            scheduled: &Batch,
-            ctx: &WalkerCtx,
-        ) -> Vec<BatchDraft> {
-            match &scheduled.content {
-                BatchContent::FileSystemEntries { .. } => {
-                    let path = ctx.root().join("synthetic.rs");
-                    vec![BatchDraft {
-                        content: BatchContent::Lines(line_set(
-                            path,
-                            vec![
-                                (1, RenderedLine::Truncated("fn foo".into())),
-                                (2, RenderedLine::Truncated("fn bar".into())),
-                            ],
-                        )),
-                        value: 50.0,
-                    }]
-                }
-                BatchContent::Lines(file_map)
-                    if file_map
-                        .values()
-                        .any(|m| m.values().any(|l| l.is_truncated())) =>
-                {
-                    let path = ctx.root().join("synthetic.rs");
-                    vec![BatchDraft {
-                        content: BatchContent::Lines(line_set(
-                            path,
-                            vec![(
-                                1,
-                                RenderedLine::Full("fn foo(a: i32, b: i32) -> Result<()> {".into()),
-                            )],
-                        )),
-                        value: 30.0,
-                    }]
-                }
-                _ => vec![],
+        fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Candidate> {
+            if matches!(scheduled, BatchKey::Fs(FsKey::DirListing { .. })) {
+                let decls = BatchKey::Rust(RustKey::PubDecls {
+                    file: stub_file("synthetic.rs"),
+                });
+                vec![
+                    Candidate::new(decls.clone(), sig(0.5), 50),
+                    Candidate::new(
+                        BatchKey::Rust(RustKey::PubDocs {
+                            file: stub_file("synthetic.rs"),
+                        }),
+                        sig(0.3),
+                        50,
+                    )
+                    .with_predecessor(decls),
+                ]
+            } else {
+                Vec::new()
+            }
+        }
+        fn materialize(&mut self, key: &BatchKey, _ctx: &WalkCtx) -> Option<ResolvedBatch> {
+            match key {
+                BatchKey::Fs(FsKey::DirListing { dir }) => Some(ResolvedBatch {
+                    content: BatchContent::FileSystemEntries {
+                        parent: dir.clone(),
+                        children: one_child("synthetic.rs", EntryKind::File),
+                    },
+                    signals: sig(0.9),
+                }),
+                BatchKey::Rust(RustKey::PubDecls { .. }) => Some(ResolvedBatch {
+                    content: BatchContent::Lines(line_set(
+                        stub_file("synthetic.rs"),
+                        vec![
+                            (1, RenderedLine::Truncated("fn foo".into())),
+                            (2, RenderedLine::Truncated("fn bar".into())),
+                        ],
+                    )),
+                    signals: sig(0.5),
+                }),
+                BatchKey::Rust(RustKey::PubDocs { .. }) => Some(ResolvedBatch {
+                    content: BatchContent::Lines(line_set(
+                        stub_file("synthetic.rs"),
+                        vec![(
+                            1,
+                            RenderedLine::Full("fn foo(a: i32, b: i32) -> Result<()> {".into()),
+                        )],
+                    )),
+                    signals: sig(0.3),
+                }),
+                _ => None,
             }
         }
     }
 
-    let scheduler = Scheduler::new(PathBuf::from("/stub"), OverrideChain, 100_000, None);
+    let scheduler = Scheduler::new(stub_dir(), OverrideChain, 100_000, None);
     let tree = scheduler.run();
     let rendered = tree.render();
     assert!(rendered.contains("synthetic.rs"), "rendered: {rendered}");
@@ -103,44 +138,56 @@ fn override_via_predecessor_chain() {
 fn tiny_budget_truncates_cleanly() {
     struct OneEntry;
     impl Walker for OneEntry {
-        fn seed(&mut self, ctx: &WalkerCtx) -> Vec<BatchDraft> {
-            vec![BatchDraft {
-                content: BatchContent::FileSystemEntries {
-                    parent: ctx.root().to_path_buf(),
-                    children: one_file("synthetic.rs", EntryKind::File),
-                },
-                value: 100.0,
-            }]
+        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Candidate> {
+            vec![Candidate::new(listing_key(), sig(0.9), 40)]
         }
-        fn successors(
-            &mut self,
-            _id: BatchId,
-            scheduled: &Batch,
-            ctx: &WalkerCtx,
-        ) -> Vec<BatchDraft> {
-            if matches!(scheduled.content, BatchContent::FileSystemEntries { .. }) {
-                let path = ctx.root().join("synthetic.rs");
-                let lines = (1..=20)
-                    .map(|n| {
-                        (
-                            n,
-                            RenderedLine::Full(
-                                "very long line that will not fit at one token".into(),
-                            ),
-                        )
-                    })
-                    .collect::<Vec<_>>();
-                vec![BatchDraft {
-                    content: BatchContent::Lines(line_set(path, lines)),
-                    value: 50.0,
-                }]
+        fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Candidate> {
+            if matches!(scheduled, BatchKey::Fs(FsKey::DirListing { .. })) {
+                vec![Candidate::new(
+                    BatchKey::Rust(RustKey::PubDecls {
+                        file: stub_file("synthetic.rs"),
+                    }),
+                    sig(0.5),
+                    50,
+                )]
             } else {
-                vec![]
+                Vec::new()
+            }
+        }
+        fn materialize(&mut self, key: &BatchKey, _ctx: &WalkCtx) -> Option<ResolvedBatch> {
+            match key {
+                BatchKey::Fs(FsKey::DirListing { dir }) => Some(ResolvedBatch {
+                    content: BatchContent::FileSystemEntries {
+                        parent: dir.clone(),
+                        children: one_child("synthetic.rs", EntryKind::File),
+                    },
+                    signals: sig(0.9),
+                }),
+                BatchKey::Rust(RustKey::PubDecls { .. }) => {
+                    let lines = (1..=20)
+                        .map(|n| {
+                            (
+                                n,
+                                RenderedLine::Full(
+                                    "very long line that will not fit at one token".into(),
+                                ),
+                            )
+                        })
+                        .collect::<Vec<_>>();
+                    Some(ResolvedBatch {
+                        content: BatchContent::Lines(line_set(
+                            stub_file("synthetic.rs"),
+                            lines,
+                        )),
+                        signals: sig(0.5),
+                    })
+                }
+                _ => None,
             }
         }
     }
 
-    let scheduler = Scheduler::new(PathBuf::from("/stub"), OneEntry, 1, None);
+    let scheduler = Scheduler::new(stub_dir(), OneEntry, 1, None);
     let tree = scheduler.run();
     let rendered = tree.render();
     assert!(
@@ -153,49 +200,59 @@ fn tiny_budget_truncates_cleanly() {
 #[test]
 #[should_panic(expected = "non-ancestor overlap")]
 fn non_predecessor_overlap_panics_in_debug() {
-    // Two Lines batches with no ancestor relation that target the same line.
-    // In release builds the assert is compiled out and the second write
-    // silently overrides; this test only asserts the debug behavior.
+    // Two sibling Lines batches (no ancestor relation) target the same
+    // line. Release compiles out the assert; this test only asserts debug.
     struct OverlappingWalker;
     impl Walker for OverlappingWalker {
-        fn seed(&mut self, ctx: &WalkerCtx) -> Vec<BatchDraft> {
-            vec![BatchDraft {
-                content: BatchContent::FileSystemEntries {
-                    parent: ctx.root().to_path_buf(),
-                    children: one_file("f.rs", EntryKind::File),
-                },
-                value: 100.0,
-            }]
+        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Candidate> {
+            vec![Candidate::new(listing_key(), sig(0.9), 40)]
         }
-        fn successors(
-            &mut self,
-            _id: BatchId,
-            scheduled: &Batch,
-            ctx: &WalkerCtx,
-        ) -> Vec<BatchDraft> {
-            if !matches!(scheduled.content, BatchContent::FileSystemEntries { .. }) {
-                return vec![];
+        fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Candidate> {
+            if matches!(scheduled, BatchKey::Fs(FsKey::DirListing { .. })) {
+                // Two siblings — neither has the other as predecessor.
+                vec![
+                    Candidate::new(
+                        BatchKey::Rust(RustKey::PubDecls {
+                            file: stub_file("synthetic.rs"),
+                        }),
+                        sig(0.5),
+                        20,
+                    ),
+                    Candidate::new(
+                        BatchKey::Rust(RustKey::MethodSigs {
+                            file: stub_file("synthetic.rs"),
+                        }),
+                        sig(0.5),
+                        20,
+                    ),
+                ]
+            } else {
+                Vec::new()
             }
-            let path = ctx.root().join("f.rs");
-            vec![
-                BatchDraft {
-                    content: BatchContent::Lines(line_set(
-                        path.clone(),
-                        vec![(1, RenderedLine::Full("x".into()))],
-                    )),
-                    value: 50.0,
-                },
-                BatchDraft {
-                    content: BatchContent::Lines(line_set(
-                        path,
-                        vec![(1, RenderedLine::Full("y".into()))],
-                    )),
-                    value: 50.0,
-                },
-            ]
+        }
+        fn materialize(&mut self, key: &BatchKey, _ctx: &WalkCtx) -> Option<ResolvedBatch> {
+            let mk = |text: &str| ResolvedBatch {
+                content: BatchContent::Lines(line_set(
+                    stub_file("f.rs"),
+                    vec![(1, RenderedLine::Full(text.into()))],
+                )),
+                signals: sig(0.5),
+            };
+            match key {
+                BatchKey::Fs(FsKey::DirListing { dir }) => Some(ResolvedBatch {
+                    content: BatchContent::FileSystemEntries {
+                        parent: dir.clone(),
+                        children: one_child("f.rs", EntryKind::File),
+                    },
+                    signals: sig(0.9),
+                }),
+                BatchKey::Rust(RustKey::PubDecls { .. }) => Some(mk("x")),
+                BatchKey::Rust(RustKey::MethodSigs { .. }) => Some(mk("y")),
+                _ => None,
+            }
         }
     }
 
-    let scheduler = Scheduler::new(PathBuf::from("/synth"), OverlappingWalker, 10_000, None);
+    let scheduler = Scheduler::new(stub_dir(), OverlappingWalker, 10_000, None);
     let _ = scheduler.run();
 }

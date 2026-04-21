@@ -4,8 +4,6 @@ expression: rendered
 ---
 .cargo/
     config.toml
-.git-blame-ignore-revs
-.gitattributes
 .github/
     ISSUE_TEMPLATE/
         bug_report.yml
@@ -19,9 +17,6 @@ expression: rendered
 .gitignore
 CHANGELOG.md
 CODE_OF_CONDUCT.md
-    1→# The Rust Code of Conduct
-    …
-    3→The Code of Conduct for this repository [can be found online](https://www.rust-lang.org/conduct.html).
 CONTRIBUTING.md
 Cargo.lock
 Cargo.toml
@@ -31,13 +26,11 @@ Cargo.toml
     4→    "crates/*",
     5→    "examples/remove-emphasis/mdbook-remove-emphasis", "guide/guide-helper",
     6→]
-    …
     21→[workspace.package]
     22→edition = "2024"
     23→license = "MPL-2.0"
     24→repository = "https://github.com/rust-lang/mdBook"
     25→rust-version = "1.88.0" # Keep in sync with installation.md and .github/workflows/main.yml
-    …
     72→[package]
     73→name = "mdbook"
     74→version = "0.5.2"
@@ -55,45 +48,12 @@ Cargo.toml
     86→repository.workspace = true
     87→description = "Creates a book from markdown files"
     88→rust-version.workspace = true
-    …
-    119→[dev-dependencies]
-    120→glob.workspace = true
-    121→regex.workspace = true
-    122→select.workspace = true
-    123→semver.workspace = true
-    124→serde_json.workspace = true
-    125→snapbox = { workspace = true, features = ["diff", "dir", "term-svg", "regex", "json"] }
-    126→tempfile.workspace = true
-    127→walkdir.workspace = true
-    …
-    129→[features]
-    130→default = ["watch", "serve", "search"]
-    131→watch = ["dep:notify", "dep:notify-debouncer-mini", "dep:ignore", "dep:pathdiff", "dep:walkdir"]
-    132→serve = ["dep:futures-util", "dep:tokio", "dep:axum", "dep:tower-http"]
-    133→search = ["mdbook-html/search"]
-    …
-    135→[[bin]]
-    136→doc = false
-    137→name = "mdbook"
-    …
-    139→[[example]]
-    140→name = "nop-preprocessor"
-    141→test = true
-    …
-    143→[[example]]
-    144→name = "remove-emphasis"
-    145→path = "examples/remove-emphasis/test.rs"
-    146→crate-type = ["lib"]
-    147→test = true
-    …
-    149→[[test]]
-    150→harness = false
-    151→test = false
-    152→name = "gui"
-    153→path = "tests/gui/runner.rs"
-    154→crate-type = ["bin"]
 LICENSE
 README.md
+    1→# mdBook
+    3→[![CI Status](https://github.com/rust-lang/mdBook/actions/workflows/main.yml/badge.svg)](https://github.com/rust-lang/mdBook/actions/workflows/main.yml)
+    4→[![crates.io](https://img.shields.io/crates/v/mdbook.svg)](https://crates.io/crates/mdbook)
+    5→[![LICENSE](https://img.shields.io/github/license/rust-lang/mdBook.svg)](LICENSE)
 ci/
     install-rust.sh
     make-release-asset.sh
@@ -109,13 +69,12 @@ crates/
             5→license.workspace = true
             6→repository.workspace = true
             7→rust-version.workspace = true
-            …
-            9→[dependencies]
         README.md
+            1→# mdbook-compare
+            3→This is a simple utility to compare the output of two different versions of mdbook.
         src/
             main.rs
                 1→//! Utility to compare the output of two different versions of mdbook.
-                …
                 3→use std::path::Path;
                 4→use std::process::Command;
     mdbook-core/
@@ -128,116 +87,28 @@ crates/
             6→license.workspace = true
             7→repository.workspace = true
             8→rust-version.workspace = true
-            …
-            10→[dependencies]
-            11→anyhow.workspace = true
-            12→regex.workspace = true
-            13→serde.workspace = true
-            14→serde_json.workspace = true
-            15→toml.workspace = true
-            16→tracing.workspace = true
-            …
-            18→[dev-dependencies]
-            19→tempfile.workspace = true
         README.md
+            1→# mdbook-core
+            3→[![Documentation](https://img.shields.io/docsrs/mdbook-core)](https://docs.rs/mdbook-core)
+            4→[![crates.io](https://img.shields.io/crates/v/mdbook-core.svg)](https://crates.io/crates/mdbook-core)
+            5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
         src/
             book/
                 tests.rs
-                    1→use super::*;
             book.rs
-                1→//! A tree structure representing a book.
-                …
-                3→use serde::{Deserialize, Serialize};
-                4→use std::collections::VecDeque;
-                5→use std::fmt::{self, Display, Formatter};
-                6→use std::ops::{Deref, DerefMut};
-                7→use std::path::PathBuf;
-                …
-                10→mod tests;
             config.rs
             lib.rs
                 1→//! The base support library for mdbook, intended for internal use only.
-                …
                 3→/// The current version of `mdbook`.
                 4→///
                 5→/// This is provided as a way for custom preprocessors and renderers to do
                 6→/// compatibility checks.
                 7→pub const MDBOOK_VERSION: &str = env!("CARGO_PKG_VERSION");
-                …
                 9→pub mod book;
                 10→pub mod config;
                 11→pub mod utils;
-                …
                 14→pub mod errors {
             utils/
-                fs.rs
-                    1→//! Filesystem utilities and helpers.
-                    …
-                    3→use anyhow::{Context, Result};
-                    4→use std::fs;
-                    5→use std::path::{Component, Path, PathBuf};
-                    6→use tracing::debug;
-                    …
-                    211→mod tests {
-                html.rs
-                    1→//! Utilities for dealing with HTML.
-                    …
-                    3→use std::borrow::Cow;
-                    …
-                    5→/// Escape characters to make it safe for an HTML string.
-                    6→pub fn escape_html_attribute(text: &str) -> Cow<'_, str> {
-                    …
-                    31→/// Escape `<`, `>`, and '&' for HTML.
-                    32→pub fn escape_html(text: &str) -> Cow<'_, str> {
-                mod.rs
-                    1→//! Various helpers and utilities.
-                    …
-                    3→use anyhow::Error;
-                    4→use std::fmt::Write;
-                    5→use tracing::error;
-                    …
-                    7→pub mod fs;
-                    8→mod html;
-                    9→mod toml_ext;
-                    …
-                    11→pub(crate) use self::toml_ext::TomlExt;
-                    …
-                    13→pub use self::html::{escape_html, escape_html_attribute};
-                    …
-                    15→/// Defines a `static` with a [`regex::Regex`].
-                    …
-                    17→macro_rules! static_regex {
-                    18→    ($name:ident, $regex:literal) => {
-                    19→        static $name: std::sync::LazyLock<regex::Regex> =
-                    20→            std::sync::LazyLock::new(|| regex::Regex::new($regex).unwrap());
-                    21→    };
-                    22→    ($name:ident, bytes, $regex:literal) => {
-                    23→        static $name: std::sync::LazyLock<regex::bytes::Regex> =
-                    24→            std::sync::LazyLock::new(|| regex::bytes::Regex::new($regex).unwrap());
-                    25→    };
-                    26→}
-                    …
-                    28→/// Prints a "backtrace" of some `Error`.
-                    29→pub fn log_backtrace(e: &Error) {
-                toml_ext.rs
-                    1→//! Helper for working with toml types.
-                    …
-                    3→use toml::value::{Table, Value};
-                    …
-                    5→/// Helper for working with toml types.
-                    6→pub(crate) trait TomlExt {
-                    7→    /// Read a dotted key.
-                    8→    fn read(&self, key: &str) -> Option<&Value>;
-                    9→    /// Insert with a dotted key.
-                    10→    fn insert(&mut self, key: &str, value: Value);
-                    11→}
-                    …
-                    13→impl TomlExt for Value {
-                    14→    fn read(&self, key: &str) -> Option<&Value> {
-                    …
-                    22→    fn insert(&mut self, key: &str, value: Value) {
-                    …
-                    51→mod tests {
     mdbook-driver/
         Cargo.toml
             1→[package]
@@ -248,29 +119,29 @@ crates/
             6→license.workspace = true
             7→repository.workspace = true
             8→rust-version.workspace = true
-            …
-            10→[dependencies]
-            11→anyhow.workspace = true
-            12→indexmap.workspace = true
-            13→mdbook-core.workspace = true
-            14→mdbook-html.workspace = true
-            15→mdbook-markdown.workspace = true
-            16→mdbook-preprocessor.workspace = true
-            17→mdbook-renderer.workspace = true
-            18→mdbook-summary.workspace = true
-            19→regex.workspace = true
-            20→serde.workspace = true
-            21→serde_json.workspace = true
-            22→shlex.workspace = true
-            23→tempfile.workspace = true
-            24→toml.workspace = true
-            25→topological-sort.workspace = true
-            26→tracing.workspace = true
-            …
             31→[features]
             32→search = ["mdbook-html/search"]
         README.md
+            1→# mdbook-driver
+            3→[![Documentation](https://img.shields.io/docsrs/mdbook-driver)](https://docs.rs/mdbook-driver)
+            4→[![crates.io](https://img.shields.io/crates/v/mdbook-driver.svg)](https://crates.io/crates/mdbook-driver)
+            5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
         src/
+            builtin_preprocessors/
+            builtin_renderers/
+            init.rs
+                13→pub struct BookBuilder {
+                14→    root: PathBuf,
+                15→    create_gitignore: bool,
+                16→    config: Config,
+                17→    copy_theme: bool,
+                18→}
+            lib.rs
+            load.rs
+                10→pub(crate) fn load_book<P: AsRef<Path>>(src_dir: P, cfg: &BuildConfig) -> Result<Book> {
+                60→pub(crate) fn load_book_from_disk<P: AsRef<Path>>(summary: &Summary, src_dir: P) -> Result<Book> {
+            mdbook/
+            mdbook.rs
     mdbook-html/
         Cargo.toml
             1→[package]
@@ -281,110 +152,39 @@ crates/
             6→license.workspace = true
             7→repository.workspace = true
             8→rust-version.workspace = true
-            …
-            29→[dev-dependencies]
-            30→tempfile.workspace = true
-            31→toml.workspace = true
-            …
             36→[features]
             37→search = ["dep:elasticlunr-rs"]
         README.md
+            1→# mdbook-html
+            3→[![Documentation](https://img.shields.io/docsrs/mdbook-html)](https://docs.rs/mdbook-html)
+            4→[![crates.io](https://img.shields.io/crates/v/mdbook-html.svg)](https://crates.io/crates/mdbook-html)
+            5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
         front-end/
             css/
             fonts/
             images/
-                favicon.png
-                favicon.svg
             js/
-                book.js
-                clipboard.min.js
-                highlight.js
             playground_editor/
             searcher/
-                elasticlunr.min.js
-                mark.min.js
-                searcher.js
             templates/
         src/
             html/
             html_handlebars/
-                hbs_renderer.rs
-                helpers/
-                mod.rs
-                search.rs
-                static_files.rs
             lib.rs
                 1→//! mdBook HTML renderer.
-                …
                 3→mod html;
                 4→mod html_handlebars;
                 5→pub mod theme;
                 6→pub(crate) mod utils;
-                …
                 8→pub use html_handlebars::HtmlHandlebars;
             theme/
-                fonts.rs
-                mod.rs
-                    1→//! Support for theme files.
-                    …
-                    3→use anyhow::Result;
-                    4→use mdbook_core::config::HtmlConfig;
-                    5→use mdbook_core::utils::fs;
-                    6→use std::path::{Path, PathBuf};
-                    7→use tracing::{info, warn};
-                    …
-                    9→pub(crate) mod fonts;
-                    10→pub(crate) mod playground_editor;
-                    …
-                    12→pub(crate) mod searcher;
-                    …
-                    242→mod tests {
-                playground_editor.rs
-                    1→//! Theme dependencies for the playground editor.
-                    …
-                    3→pub(crate) static JS: &[u8] = include_bytes!("../../front-end/playground_editor/editor.js");
-                    4→pub(crate) static ACE_JS: &[u8] = include_bytes!("../../front-end/playground_editor/ace.js");
-                    5→pub(crate) static MODE_RUST_JS: &[u8] =
-                    6→    include_bytes!("../../front-end/playground_editor/mode-rust.js");
-                    7→pub(crate) static THEME_DAWN_JS: &[u8] =
-                    8→    include_bytes!("../../front-end/playground_editor/theme-dawn.js");
-                    9→pub(crate) static THEME_TOMORROW_NIGHT_JS: &[u8] =
-                    10→    include_bytes!("../../front-end/playground_editor/theme-tomorrow_night.js");
-                searcher.rs
-                    1→//! Theme dependencies for in-browser search. Not included in mdbook when
-                    2→//! the "search" cargo feature is disabled.
-                    …
-                    4→pub(crate) static JS: &[u8] = include_bytes!("../../front-end/searcher/searcher.js");
-                    5→pub(crate) static MARK_JS: &[u8] = include_bytes!("../../front-end/searcher/mark.min.js");
-                    6→pub(crate) static ELASTICLUNR_JS: &[u8] =
-                    7→    include_bytes!("../../front-end/searcher/elasticlunr.min.js");
             utils.rs
-                1→//! Utilities for processing HTML.
-                …
-                3→use std::collections::HashSet;
-                4→use std::path::{Component, Path, PathBuf};
-                …
-                6→/// Utility function to normalize path elements like `..`.
                 7→pub(crate) fn normalize_path(path: &Path) -> PathBuf {
-                …
-                41→/// Helper trait for converting a [`Path`] to a string suitable for an HTML path.
                 42→pub(crate) trait ToUrlPath {
                 43→    fn to_url_path(&self) -> String;
                 44→}
-                …
-                46→impl ToUrlPath for Path {
-                47→    fn to_url_path(&self) -> String {
-                …
-                54→/// Make sure an HTML id is unique.
-                55→///
-                56→/// Keeps a set of all previously returned IDs; if the requested id is already
-                57→/// used, numeric suffixes (-1, -2, ...) are tried until an unused one is found.
                 58→pub(crate) fn unique_id(id: &str, used: &mut HashSet<String>) -> String {
-                …
-                75→/// Generates an HTML id from the given text.
                 76→pub(crate) fn id_from_content(content: &str) -> String {
-                …
-                103→mod tests {
     mdbook-markdown/
         Cargo.toml
             1→[package]
@@ -395,12 +195,11 @@ crates/
             6→license.workspace = true
             7→repository.workspace = true
             8→rust-version.workspace = true
-            …
-            10→[dependencies]
-            11→pulldown-cmark.workspace = true
-            12→regex.workspace = true
-            13→tracing.workspace = true
         README.md
+            1→# mdbook-markdown
+            3→[![Documentation](https://img.shields.io/docsrs/mdbook-markdown)](https://docs.rs/mdbook-markdown)
+            4→[![crates.io](https://img.shields.io/crates/v/mdbook-markdown.svg)](https://crates.io/crates/mdbook-markdown)
+            5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
         src/
             lib.rs
                 1→//! Markdown processing used in mdBook.
@@ -409,14 +208,30 @@ crates/
                 4→//! [mdBook](https://rust-lang.github.io/mdBook/). The [`pulldown_cmark`]
                 5→//! crate is used as the underlying parser. This crate re-exports
                 6→//! [`pulldown_cmark`] so that you can access its types.
-                …
                 8→use pulldown_cmark::{Options, Parser};
-                …
                 11→pub use pulldown_cmark;
-                …
                 13→/// Options for parsing markdown.
-                …
+                15→pub struct MarkdownOptions {
+                16→    /// Enables smart punctuation.
+                17→    ///
+                18→    /// Converts quotes to curly quotes, `...` to `…`, `--` to en-dash, and
+                19→    /// `---` to em-dash.
+                20→    ///
+                21→    /// This is `true` by default.
+                22→    pub smart_punctuation: bool,
+                23→    /// Enables definition lists.
+                24→    ///
+                25→    /// This is `true` by default.
+                26→    pub definition_lists: bool,
+                27→    /// Enables admonitions.
+                28→    ///
+                29→    /// This is `true` by default.
+                30→    pub admonitions: bool,
+                31→}
+                33→impl Default for MarkdownOptions {
+                34→    fn default() -> MarkdownOptions {
                 43→/// Creates a new pulldown-cmark parser of the given text.
+                44→pub fn new_cmark_parser<'text>(text: &'text str, options: &MarkdownOptions) -> Parser<'text> {
     mdbook-preprocessor/
         Cargo.toml
             1→[package]
@@ -427,13 +242,11 @@ crates/
             6→license.workspace = true
             7→repository.workspace = true
             8→rust-version.workspace = true
-            …
-            10→[dependencies]
-            11→anyhow.workspace = true
-            12→mdbook-core.workspace = true
-            13→serde.workspace = true
-            14→serde_json.workspace = true
         README.md
+            1→# mdbook-preprocessor
+            3→[![Documentation](https://img.shields.io/docsrs/mdbook-preprocessor)](https://docs.rs/mdbook-preprocessor)
+            4→[![crates.io](https://img.shields.io/crates/v/mdbook-preprocessor.svg)](https://crates.io/crates/mdbook-preprocessor)
+            5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
         src/
             lib.rs
                 1→//! Library to assist implementing an mdbook preprocessor.
@@ -442,6 +255,8 @@ crates/
                 4→//! [preprocessor](https://rust-lang.github.io/mdBook/for_developers/preprocessors.html)
                 5→//! for [mdBook](https://rust-lang.github.io/mdBook/). See the linked chapter
                 6→//! for more information on how to implement a preprocessor.
+                68→impl PreprocessorContext {
+                70→    pub fn new(root: PathBuf, config: Config, renderer: String) -> Self {
     mdbook-renderer/
         Cargo.toml
             1→[package]
@@ -452,13 +267,11 @@ crates/
             6→license.workspace = true
             7→repository.workspace = true
             8→rust-version.workspace = true
-            …
-            10→[dependencies]
-            11→anyhow.workspace = true
-            12→mdbook-core.workspace = true
-            13→serde.workspace = true
-            14→serde_json.workspace = true
         README.md
+            1→# mdbook-renderer
+            3→[![Documentation](https://img.shields.io/docsrs/mdbook-renderer)](https://docs.rs/mdbook-renderer)
+            4→[![crates.io](https://img.shields.io/crates/v/mdbook-renderer.svg)](https://crates.io/crates/mdbook-renderer)
+            5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
         src/
             lib.rs
                 1→//! Library to assist implementing an mdbook renderer.
@@ -467,6 +280,50 @@ crates/
                 4→//! [renderer](https://rust-lang.github.io/mdBook/for_developers/backends.html)
                 5→//! for [mdBook](https://rust-lang.github.io/mdBook/). See the linked chapter
                 6→//! for more information on how to implement a renderer.
+                22→/// An mdbook backend.
+                23→///
+                24→/// Types that implement the `Renderer` trait can be used with
+                25→/// [`MDBook::with_renderer`] to programmatically add renderers.
+                26→///
+                27→/// [`MDBook::with_renderer`]: https://docs.rs/mdbook-driver/latest/mdbook_driver/struct.MDBook.html#method.with_renderer
+                28→pub trait Renderer {
+                29→    /// The `Renderer`'s name.
+                30→    fn name(&self) -> &str;
+                32→    /// Invoke the `Renderer`, passing in all the necessary information for
+                33→    /// describing a book.
+                34→    fn render(&self, ctx: &RenderContext) -> Result<()>;
+                35→}
+                37→/// The context provided to all renderers.
+                40→pub struct RenderContext {
+                41→    /// Which version of `mdbook` did this come from (as written in `mdbook`'s
+                42→    /// `Cargo.toml`). Useful if you know the renderer is only compatible with
+                43→    /// certain versions of `mdbook`.
+                44→    pub version: String,
+                45→    /// The book's root directory.
+                46→    pub root: PathBuf,
+                47→    /// A loaded representation of the book itself.
+                48→    pub book: Book,
+                49→    /// The loaded configuration file.
+                50→    pub config: Config,
+                51→    /// Where the renderer *must* put any build artefacts generated. To allow
+                52→    /// renderers to cache intermediate results, this directory is not
+                53→    /// guaranteed to be empty or even exist.
+                54→    pub destination: PathBuf,
+                55→    /// Internal mapping of chapter titles.
+                56→    ///
+                57→    /// This is used internally by mdbook to compute custom chapter titles.
+                58→    /// This should not be used outside of mdbook's internals.
+                59→    #[serde(skip)]
+                60→    pub chapter_titles: HashMap<PathBuf, String>,
+                61→}
+                63→impl RenderContext {
+                65→    pub fn new<P, Q>(root: P, book: Book, config: Config, destination: Q) -> RenderContext
+                66→    where
+                67→        P: Into<PathBuf>,
+                68→        Q: Into<PathBuf>,
+                69→    {
+                81→    pub fn source_dir(&self) -> PathBuf {
+                86→    pub fn from_json<R: Read>(reader: R) -> Result<RenderContext> {
     mdbook-summary/
         Cargo.toml
             1→[package]
@@ -477,15 +334,11 @@ crates/
             6→license.workspace = true
             7→repository.workspace = true
             8→rust-version.workspace = true
-            …
-            10→[dependencies]
-            11→anyhow.workspace = true
-            12→mdbook-core.workspace = true
-            13→memchr.workspace = true
-            14→pulldown-cmark.workspace = true
-            15→serde.workspace = true
-            16→tracing.workspace = true
         README.md
+            1→# mdbook-summary
+            3→[![Documentation](https://img.shields.io/docsrs/mdbook-summary)](https://docs.rs/mdbook-summary)
+            4→[![crates.io](https://img.shields.io/crates/v/mdbook-summary.svg)](https://crates.io/crates/mdbook-summary)
+            5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
         src/
             lib.rs
                 1→//! Summary parser for mdBook.
@@ -493,6 +346,36 @@ crates/
                 3→//! This is used to parse the
                 4→//! [`SUMMARY.md`](https://rust-lang.github.io/mdBook/format/summary.html)
                 5→//! file structure for [mdBook](https://rust-lang.github.io/mdBook/).
+                59→pub fn parse_summary(summary: &str) -> Result<Summary> {
+                67→pub struct Summary {
+                68→    /// An optional title for the `SUMMARY.md`, currently just ignored.
+                69→    pub title: Option<String>,
+                70→    /// Chapters before the main text (e.g. an introduction).
+                71→    pub prefix_chapters: Vec<SummaryItem>,
+                72→    /// The main numbered chapters of the book, broken into one or more possibly named parts.
+                73→    pub numbered_chapters: Vec<SummaryItem>,
+                74→    /// Items which come after the main document (e.g. a conclusion).
+                75→    pub suffix_chapters: Vec<SummaryItem>,
+                76→}
+                84→pub struct Link {
+                85→    /// The name of the chapter.
+                86→    pub name: String,
+                87→    /// The location of the chapter's source file, taking the book's `src`
+                88→    /// directory as the root.
+                89→    pub location: Option<PathBuf>,
+                90→    /// The section number, if this chapter is in the numbered section.
+                91→    pub number: Option<SectionNumber>,
+                92→    /// Any nested items this chapter may contain.
+                93→    pub nested_items: Vec<SummaryItem>,
+                94→}
+                122→pub enum SummaryItem {
+                123→    /// A link to a chapter.
+                124→    Link(Link),
+                125→    /// A separator (`---`).
+                126→    Separator,
+                127→    /// A part title.
+                128→    PartTitle(String),
+                129→}
     xtask/
         Cargo.toml
             1→[package]
@@ -502,48 +385,24 @@ crates/
             5→license.workspace = true
             6→repository.workspace = true
             7→rust-version.workspace = true
-            …
-            9→[dependencies]
         README.md
             1→# xtask
-            …
             3→This is a CLI utility for running development commands for mdbook.
             4→See [CONTRIBUTING.md](../../CONTRIBUTING.md) for how to use this.
         src/
             changelog.rs
-                1→//! Helper to generate a changelog for a new release.
-                …
-                3→use super::Result;
-                4→use std::fs;
-                5→use std::process::Command;
-                6→use std::process::exit;
-                …
                 10→pub(crate) fn changelog() -> Result<()> {
             main.rs
                 1→//! Helper for local development.
-                …
                 3→use std::collections::BTreeMap;
                 4→use std::error::Error;
                 5→use std::io::Write;
                 6→use std::process::exit;
                 7→use std::process::{Command, Stdio};
-                …
                 9→mod changelog;
 eslint.config.mjs
 examples/
     nop-preprocessor.rs
-        1→//! A basic example of a preprocessor that does nothing.
-        …
-        3→use crate::nop_lib::Nop;
-        4→use clap::{Arg, ArgMatches, Command};
-        5→use mdbook_preprocessor::book::Book;
-        6→use mdbook_preprocessor::errors::Result;
-        7→use mdbook_preprocessor::{Preprocessor, PreprocessorContext};
-        8→use semver::{Version, VersionReq};
-        9→use std::io;
-        10→use std::process;
-        …
-        75→mod nop_lib {
     remove-emphasis/
         .gitignore
         book.toml
@@ -554,45 +413,11 @@ examples/
                 3→version = "0.1.0"
                 4→edition.workspace = true
                 5→publish = false
-                …
-                7→[dependencies]
-                8→mdbook-preprocessor.workspace = true
-                9→pulldown-cmark = { workspace = true, default-features = false }
-                10→pulldown-cmark-to-cmark = "22.0.0"
-                11→serde_json.workspace = true
-                …
-                13→[[bin]]
-                14→name = "mdbook-remove-emphasis"
-                15→# This is tested through a separate test from the main package.
-                16→test = false
             src/
-                main.rs
-                    1→//! This is a demonstration of an mdBook preprocessor which parses markdown
-                    2→//! and removes any instances of emphasis.
-                    …
-                    4→use mdbook_preprocessor::book::{Book, Chapter};
-                    5→use mdbook_preprocessor::errors::Result;
-                    6→use mdbook_preprocessor::{Preprocessor, PreprocessorContext};
-                    7→use pulldown_cmark::{Event, Parser, Tag, TagEnd};
-                    8→use std::io;
-                    …
-                    32→impl Preprocessor for RemoveEmphasis {
-                    33→    fn name(&self) -> &str {
-                    …
-                    37→    fn run(&self, _ctx: &PreprocessorContext, mut book: Book) -> Result<Book> {
-                    …
-                    65→pub fn handle_preprocessing() -> Result<()> {
         src/
             SUMMARY.md
-                1→# Summary
-                …
-                3→- [Chapter 1](./chapter_1.md)
             chapter_1.md
-                1→# Chapter 1
-                …
-                3→This has *light emphasis* and **bold emphasis**.
         test.rs
-            1→//! A test to ensure that the remove-emphasis example works.
 guide/
     book.toml
     guide-helper/
@@ -604,49 +429,126 @@ guide/
             5→license.workspace = true
             6→repository.workspace = true
             7→rust-version.workspace = true
-            …
-            9→[dependencies]
-            10→mdbook-preprocessor.workspace = true
-            11→semver.workspace = true
-            12→serde_json.workspace = true
-            13→toml.workspace = true
         src/
             lib.rs
                 1→//! Preprocessor for the mdBook guide.
-                …
                 3→use mdbook_preprocessor::book::Book;
                 4→use mdbook_preprocessor::errors::Result;
                 5→use mdbook_preprocessor::{Preprocessor, PreprocessorContext};
                 6→use semver::{Version, VersionReq};
                 7→use std::io;
-                …
                 9→/// Preprocessing entry point.
                 10→pub fn handle_preprocessing() -> Result<()> {
-                …
                 35→impl Preprocessor for GuideHelper {
                 36→    fn name(&self) -> &str {
-                …
                 40→    fn run(&self, _ctx: &PreprocessorContext, mut book: Book) -> Result<Book> {
             main.rs
                 1→//! Preprocessor for the mdBook guide.
     src/
+        404.md
+        README.md
+        SUMMARY.md
+        cli/
+            README.md
+                1→# Command-line tool
+                3→The `mdbook` command-line tool is used to create and build books.
+                4→After you have [installed](../guide/installation.md) `mdbook`, you can run the `mdbook help` command in your terminal to view the available commands.
+            arg-watcher.md
+            build.md
+            clean.md
+            completions.md
+            init.md
+            serve.md
+            test.md
+            watch.md
+        continuous-integration.md
+        for_developers/
+            README.md
+            backends.md
+            mdbook-wordcount/
+            preprocessors.md
+        format/
+            README.md
+                1→# Format
+                3→In this section you will learn how to:
+            configuration/
+            example.rs
+            images/
+            markdown.md
+            mathjax.md
+            mdbook.md
+            summary.md
+            theme/
+        guide/
+            README.md
+                1→# User guide
+                3→This user guide provides an introduction to basic concepts of using mdBook.
+            creating.md
+            installation.md
+            reading.md
+        misc/
+            contributors.md
 package.json
 rustfmt.toml
 src/
     cmd/
+        build.rs
+            8→pub fn make_subcommand() -> Command {
+            17→pub fn execute(args: &ArgMatches) -> Result<()> {
+        clean.rs
+            11→pub fn make_subcommand() -> Command {
+            19→pub fn execute(args: &ArgMatches) -> Result<()> {
+            38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
+            46→pub struct Clean {
+            47→    num_files_removed: u64,
+            48→    num_dirs_removed: u64,
+            49→    total_bytes_removed: u64,
+            50→}
+            52→impl Clean {
+            53→    fn new(dir: &PathBuf) -> Result<Clean> {
+            91→impl fmt::Display for Clean {
+            92→    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        command_prelude.rs
+            56→impl CommandExt for Command {
+            57→    fn _arg(self, arg: Arg) -> Self {
+        init.rs
+            12→pub fn make_subcommand() -> ClapCommand {
+            32→pub fn execute(args: &ArgMatches) -> Result<()> {
+        mod.rs
+            1→//! Subcommand modules for the `mdbook` binary.
+            3→pub mod build;
+            4→pub mod clean;
+            5→pub mod command_prelude;
+            6→pub mod init;
+            8→pub mod serve;
+            9→pub mod test;
+            11→pub mod watch;
+        serve.rs
+            23→pub fn make_subcommand() -> Command {
+            51→pub fn execute(args: &ArgMatches) -> Result<()> {
+        test.rs
+            9→pub fn make_subcommand() -> Command {
+            35→pub fn execute(args: &ArgMatches) -> Result<()> {
+        watch/
+            native.rs
+            poller.rs
+        watch.rs
+            12→pub fn make_subcommand() -> Command {
+            21→pub enum WatcherKind {
+            22→    Poll,
+            23→    Native,
+            24→}
+            26→impl WatcherKind {
+            27→    pub fn from_str(s: &str) -> WatcherKind {
+            37→pub fn execute(args: &ArgMatches) -> Result<()> {
+            62→pub fn rebuild_on_change(
+            63→    kind: WatcherKind,
+            64→    book_dir: &Path,
+            65→    update_config: &dyn Fn(&mut MDBook),
+            66→    post_build: &dyn Fn(),
+            67→) {
     main.rs
         1→//! The mdbook CLI.
-        …
-        5→use anyhow::anyhow;
-        6→use clap::{Arg, ArgMatches, Command};
-        7→use clap_complete::Shell;
-        8→use mdbook_core::utils;
-        9→use std::env;
-        10→use std::ffi::OsStr;
-        11→use std::path::PathBuf;
-        12→use tracing::{error, info};
-        …
-        14→mod cmd;
 tests/
     gui/
     testsuite/

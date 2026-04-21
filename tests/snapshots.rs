@@ -1,9 +1,7 @@
-//! Snapshot tests for the generic walker against the v0.2 active fixtures.
+//! Snapshot tests for the multi-walker against the v0.2 active fixtures.
 //!
-//! Stage 6 covers folder/file structure only; language-aware content batches
-//! land in Stage 7 and will enrich these snapshots organically.
-//!
-//! Skips silently when a fixture isn't cloned. Run `cargo run --bin
+//! Missing fixtures **fail** the test — silent skips previously hid bugs
+//! when worktrees didn't have the fixtures cloned. Run `cargo run --bin
 //! clone_fixtures` to populate `tests/fixtures/`.
 
 use std::path::PathBuf;
@@ -16,10 +14,11 @@ fn fixture_snapshots() {
     let fixtures_root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures");
     for fixture in FIXTURES {
         let path = fixtures_root.join(fixture);
-        if !path.exists() {
-            eprintln!("skip: fixture `{fixture}` not cloned");
-            continue;
-        }
+        assert!(
+            path.exists(),
+            "fixture `{fixture}` not present at {}; run `cargo run --bin clone_fixtures`",
+            path.display()
+        );
         for budget in BUDGETS {
             let rendered = precis::render(&[&path], *budget, None)
                 .unwrap_or_else(|e| panic!("render({fixture} @ {budget}): {e}"));

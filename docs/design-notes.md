@@ -26,11 +26,11 @@ for things that aren't visible from reading `src/`.
 - **Full lines** with their source line number. `RenderedLine::Full(text)`.
 - **Line-prefix + trailing ellipsis** (line shown partially, truncated at a
   syntactic boundary). `RenderedLine::Truncated(prefix)`.
-- **Bare-ellipsis without a line number** at the start of a file (when the
-  first rendered line isn't 1) and between gaps in rendered lines. Inserted
-  automatically by `render_file` when scheduling produces non-contiguous
-  content. **Tail-of-file elisions are not yet supported** — see deferred
-  list below.
+- **Bare-ellipsis markers** emitted by walkers at specific source lines —
+  `RenderedLine::Ellipsis`. The line number isn't rendered; it exists so a
+  descendant batch can replace the ellipsis with real content at that line.
+  Walkers decide where markers go, because only they know whether a gap
+  means "more content here" vs. "line numbers already make this obvious".
 
 No paraphrasing, summarization, or invented content under any circumstances.
 
@@ -62,53 +62,44 @@ until the Stage 4 ontology is concrete; the discipline meanwhile is:
   North Star surfaces a real shrink case.
 - **Borrowed line content** — `RenderedLine` text is owned `String`. A `&str`
   borrow into the source file would save allocations but propagate a lifetime
-  through the entire batch graph + walker trait. Defer until a Stage 7+
-  profile surfaces it as a real bottleneck.
-- **Predecessor expressivity** — currently a single `Option<BatchId>`. If
-  Stage 7 walkers need to express "this batch has structural scope X but
-  must also wait for Y", reintroduce a separate `parent` (scope) vs a list
-  of ordering predecessors (or a small DAG representation).
+  through the entire batch graph + walker trait. Defer until a profile
+  surfaces it as a real bottleneck.
 - **Path newtypes** — `BatchContent` carries arbitrary `PathBuf`s. A
   `RootRelativePath` (or `DirPath` / `FilePath`) newtype with a private
   constructor would make "path outside the seed root" or "file path used as
   a directory" unrepresentable. Worth doing once the walker surface is more
-  varied (Stage 7+).
-- **`f64` value / `usize` Cost newtypes** — `Batch.value` admits NaN /
-  negative / infinite; `Cost { tokens, bytes }` admits absolute nonsense.
-  A `FiniteNonNegativeValue` newtype + private-field `Cost` constructors
-  would catch bad inputs at the boundary. Cheap; defer until something
-  actually misuses them.
+  varied.
+- **`ValueSignals` / `Cost` newtypes** — signals admit NaN / negative /
+  infinite; `Cost { tokens, bytes }` admits absolute nonsense. A
+  `FiniteNonNegativeSignal` + private-field `Cost` constructors would catch
+  bad inputs at the boundary. Cheap; defer until something misuses them.
 
 ### Render
-- **Tail elisions** — `render_file` emits a bare ellipsis at the start of a
-  file (when the first rendered line isn't 1) and between gaps in rendered
-  lines, but never at the end — `BatchContent::Lines` has no source-line-
-  count metadata so the renderer can't tell whether more source exists
-  past the last rendered line. Either thread the file's total line count
-  through the data model, or have walkers emit an explicit tail marker
-  when they truncate.
 - **Filesystem-level override** — file-content batch superseding a folder
   listing entry, "N more files" placeholders, alternate non-tree renderings.
 
 ### Scheduler / walker
 - **File-as-seed** — currently rejected with a clear error in `lib.rs`.
-  Needs a small content-only walker path, probably driven by a real Stage 7
+  Needs a small content-only walker path, probably driven by a real
   content walker rather than a generic "show full file" fallback.
 - **Multi-path seed** — the CLI accepts `Vec<PathBuf>` but `render()` uses
   only the first path. Multi-root scheduling (one budget across roots) is
   deferred.
-- **Performance optimizations** — `pick_best` is `O(F × tokenize)` per
-  scheduling step. Cache per-row token counts, maintain an explicit frontier
-  set, avoid re-tokenizing replaced content. Defer until Stage 7 fixture
-  sizes surface actual slowness.
+- **Performance optimizations** — `best_exact` recomputes marginal cost for
+  every batch on every loop iteration. Tokenizer has a thread-local cache
+  of string→tokens that cuts the redundant work, but per-batch cost caching
+  invalidated on paths-touched would cut it further. Defer until a larger
+  fixture surfaces it.
 
 ### Stopping criterion / value function
 - **Stopping criterion beyond "no batch fits"** — dynamic floor or
   value/cost threshold so we stop earlier when remaining batches are weak.
-- **Sublinearity formula** — first-pass `value` is linear in batch size;
-  the architectural commitment is just that the value function takes batch
-  size as input. Pick a concave form when the ontology surfaces concrete
-  cases. May differ by batch type.
+- **Per-category sublinearity** — `value::ratio` uses `value / sqrt(cost)` for
+  every batch. May want per-category shapes (e.g. hard cap on CrateDocLede
+  size, gentler concavity on test-as-spec batches).
+- **Signal-weight calibration** — `W_CATASTROPHIC = 1000`, `W_FOLLOW_UP =
+  400`, `W_ZERO_CALL = 300` are first-pass. Calibrate from north-star
+  divergence reports.
 
 ### Honesty / verification
 - **Reviewer-staleness test** — once divergence reports exist (Stage 7

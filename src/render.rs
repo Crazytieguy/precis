@@ -1,4 +1,14 @@
-use std::collections::{BTreeMap, BTreeSet, HashMap};
+//! Rendered tree — the scheduler's "what have we committed to output" state.
+//! Two node kinds (directory, file); applies batches; computes marginal
+//! cost; renders to a string.
+//!
+//! Ellipsis handling is **walker-driven** now: walkers emit
+//! [`RenderedLine::Ellipsis`] at a specific source line number when they
+//! want to signal "more here, elided". The renderer never inserts markers
+//! on its own — line numbers in the rendered output already make gaps
+//! visible.
+
+use std::collections::{BTreeMap, HashMap};
 use std::ffi::OsString;
 use std::path::{Path, PathBuf};
 
@@ -20,8 +30,7 @@ struct LineRecord {
 }
 
 /// A node in the rendered tree is either a directory (with named children)
-/// or a file (with line content). The enum makes "file with children" or
-/// "directory with line content" unconstructible.
+/// or a file (with line content).
 #[derive(Debug)]
 enum TreeNode {
     Dir {
@@ -38,7 +47,6 @@ impl TreeNode {
             children: BTreeMap::new(),
         }
     }
-
     fn empty_file() -> Self {
         Self::File {
             content: BTreeMap::new(),
@@ -63,8 +71,7 @@ impl RenderedTree {
         &self.root
     }
 
-    /// Compute the marginal cost of applying this batch against the current
-    /// state (without mutating).
+    /// Marginal cost of applying `batch` against the current state.
     pub fn marginal_cost(&self, batch: &Batch) -> Cost {
         match &batch.content {
             BatchContent::FileSystemEntries { parent, children } => {
@@ -74,10 +81,9 @@ impl RenderedTree {
         }
     }
 
-    /// Apply a batch's content. `owner` is the batch's id (the scheduler's
-    /// loop index); `is_ancestor(id)` returns true iff `id` is in the
-    /// batch's transitive predecessor chain — used to detect non-ancestor
-    /// overrides of file lines.
+    /// Apply a batch. `owner` is the batch's id; `is_ancestor(id)` tells us
+    /// whether an existing line's owner is an ancestor — used to detect
+    /// non-ancestor line-overwrites (a walker bug; debug-asserts).
     pub fn apply(&mut self, batch: &Batch, owner: BatchId, is_ancestor: impl Fn(BatchId) -> bool) {
         match &batch.content {
             BatchContent::FileSystemEntries { parent, children } => {
@@ -95,13 +101,10 @@ impl RenderedTree {
         out
     }
 
-    /// Total tokens of the rendered tree (recomputed). Used for end-of-run
-    /// cross-checks; not the hot-path budget tracker.
     pub fn total_tokens(&self) -> usize {
         tokenizer::count(&self.render())
     }
 
-    /// Total bytes of the rendered tree.
     pub fn total_bytes(&self) -> usize {
         self.render().len()
     }
@@ -140,27 +143,6 @@ impl RenderedTree {
                 Some(TreeNode::File { content }) => Some(content),
                 _ => None,
             };
-            // Ellipsis-marker overhead: count how many new gaps this batch
-            // will introduce in the file's rendered line set, multiply by the
-            // cost of a single bare-`…` row at this indent depth. Rendering
-            // emits one marker per gap (and at the start if the first
-            // rendered line isn't 1).
-            let ellipsis_row = format_ellipsis_row(indent_depth);
-            let ellipsis_tokens = tokenizer::count(&ellipsis_row);
-            let ellipsis_bytes = ellipsis_row.len();
-            let existing_keys: Vec<usize> = existing
-                .map(|c| c.keys().copied().collect())
-                .unwrap_or_default();
-            let combined: BTreeSet<usize> = existing_keys
-                .iter()
-                .copied()
-                .chain(lines.keys().copied())
-                .collect();
-            let new_gaps = count_gaps(combined.iter().copied())
-                .saturating_sub(count_gaps(existing_keys.iter().copied()));
-            cost.tokens += new_gaps * ellipsis_tokens;
-            cost.bytes += new_gaps * ellipsis_bytes;
-
             for (number, line) in lines {
                 let new_row = format_line_row(*number, line, indent_depth);
                 let new_tokens = tokenizer::count(&new_row);
@@ -181,7 +163,6 @@ impl RenderedTree {
     }
 
     fn apply_entries(&mut self, parent: &Path, children: &BTreeMap<OsString, EntryKind>) {
-        // Pre-create child nodes so future apply()s can target them.
         for (name, kind) in children {
             let child_path = parent.join(name);
             self.nodes.entry(child_path).or_insert_with(|| match kind {
@@ -216,25 +197,17 @@ impl RenderedTree {
         is_ancestor: &impl Fn(BatchId) -> bool,
     ) {
         for (path, lines) in file_map {
-            // The file path must already be declared as a File node by a
-            // prior FileSystemEntries batch. Orphaned content would render
-            // invisibly but consume budget.
-            let node = self.nodes.get_mut(path);
-            debug_assert!(
-                matches!(node, Some(TreeNode::File { .. })),
-                "Lines target {} not declared as a File node",
-                path.display()
-            );
-            let Some(TreeNode::File { content }) = node else {
+            // File path should already be declared as a File node by a prior
+            // FileSystemEntries batch. If it isn't (walker emitted content
+            // for a file whose parent listing was never scheduled), create
+            // the node anyway — release prefers odd output over a panic.
+            if !matches!(self.nodes.get(path), Some(TreeNode::File { .. })) {
+                self.nodes.insert(path.clone(), TreeNode::empty_file());
+            }
+            let Some(TreeNode::File { content }) = self.nodes.get_mut(path) else {
                 continue;
             };
             for (number, line) in lines {
-                debug_assert!(
-                    !line.text().is_empty(),
-                    "RenderedLine with empty text for {}:{}",
-                    path.display(),
-                    number
-                );
                 if let Some(existing) = content.get(number) {
                     debug_assert!(
                         is_ancestor(existing.owner),
@@ -281,30 +254,8 @@ impl RenderedTree {
         let Some(TreeNode::File { content }) = self.nodes.get(path) else {
             return;
         };
-        let indent = INDENT_UNIT.repeat(indent_depth);
-        // Track the previous rendered line number so we can insert a bare-
-        // ellipsis marker on any gap. Gaps represent content the walkers chose
-        // not to surface at this budget; the marker invites the agent to fetch
-        // it via a Read. A gap at the start of the file (first rendered line
-        // isn't 1) also gets a marker, since content before the first shown
-        // line is likewise elided.
-        let mut prev: Option<usize> = None;
         for (number, record) in content {
-            let expected_next = prev.map_or(1, |p| p + 1);
-            if *number > expected_next {
-                out.push_str(&indent);
-                out.push('…');
-                out.push('\n');
-            }
-            out.push_str(&indent);
-            out.push_str(&number.to_string());
-            out.push('→');
-            out.push_str(record.line.text());
-            if record.line.is_truncated() {
-                out.push('…');
-            }
-            out.push('\n');
-            prev = Some(*number);
+            out.push_str(&format_line_row(*number, &record.line, indent_depth));
         }
     }
 }
@@ -319,39 +270,25 @@ fn format_entry_row(name: &OsString, kind: EntryKind, indent_depth: usize) -> St
     s
 }
 
-/// Number of bare-ellipsis rows that would be inserted around the given
-/// rendered line numbers under the gap rule (one before the first rendered
-/// line if it isn't 1, plus one between any pair of rendered lines that
-/// aren't consecutive).
-fn count_gaps(line_numbers: impl Iterator<Item = usize>) -> usize {
-    let mut count = 0;
-    let mut prev: Option<usize> = None;
-    for n in line_numbers {
-        match prev {
-            None if n > 1 => count += 1,
-            Some(p) if n > p + 1 => count += 1,
-            _ => {}
-        }
-        prev = Some(n);
-    }
-    count
-}
-
-fn format_ellipsis_row(indent_depth: usize) -> String {
-    let mut s = INDENT_UNIT.repeat(indent_depth);
-    s.push('…');
-    s.push('\n');
-    s
-}
-
 fn format_line_row(number: usize, line: &RenderedLine, indent_depth: usize) -> String {
     let mut s = INDENT_UNIT.repeat(indent_depth);
-    s.push_str(&number.to_string());
-    s.push('→');
-    s.push_str(line.text());
-    if line.is_truncated() {
-        s.push('…');
+    match line {
+        RenderedLine::Ellipsis => {
+            s.push('…');
+        }
+        RenderedLine::Full(t) => {
+            s.push_str(&number.to_string());
+            s.push('→');
+            s.push_str(t);
+        }
+        RenderedLine::Truncated(t) => {
+            s.push_str(&number.to_string());
+            s.push('→');
+            s.push_str(t);
+            s.push('…');
+        }
     }
     s.push('\n');
     s
 }
+

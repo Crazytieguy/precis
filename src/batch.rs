@@ -1,10 +1,27 @@
+//! Batch data types. A **batch** is the atomic scheduling unit: a named subset
+//! of source content the walker proposes to render. The scheduler picks
+//! batches greedily by value/cost ratio within a token budget.
+//!
+//! Two layers of identity:
+//!
+//! - [`BatchKey`] is a **semantic, walker-defined** name for a batch
+//!   (e.g. `Rust(RustKey::PubDecls { src_dir })`). Walkers use keys to refer
+//!   to each other's batches, including predecessor edges that cross files.
+//!   Keys are emitted during `expand()` before their content has been parsed;
+//!   they're stable through materialization.
+//! - [`BatchId`] is the scheduler's internal index assigned when a batch is
+//!   *materialized*. Walkers never see `BatchId`s.
+//!
+//! The key/id split is what makes lazy materialization and cross-file
+//! batches possible: a walker can emit "rustdoc refinement has `PubDecls` as
+//! predecessor" before either has been parsed, by naming keys.
+
 use std::collections::BTreeMap;
 use std::ffi::OsString;
 use std::path::PathBuf;
 
-/// Opaque batch identity: an index into the scheduler's `batches: Vec<Batch>`.
-/// The constructor is crate-private — only the scheduler hands these out — so
-/// walkers cannot forge dangling, duplicate, or self-referential ids.
+/// Scheduler-internal batch index. Assigned at materialization time; walkers
+/// never see these.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub struct BatchId(usize);
 
@@ -12,46 +29,129 @@ impl BatchId {
     pub(crate) fn new(index: usize) -> Self {
         Self(index)
     }
-
     pub(crate) fn index(self) -> usize {
         self.0
     }
 }
 
-/// Stored batch. `id` is the position in the scheduler's `Vec<Batch>` — it's
-/// not a field on the struct because two storage sites for the same fact
-/// would admit a "Batch::id ≠ index" mismatch.
-#[derive(Debug, Clone)]
-pub struct Batch {
-    pub content: BatchContent,
-    pub predecessor: Option<BatchId>,
-    pub value: f64,
+/// Semantic batch identity. Named by the walker that produces it. Stable
+/// across materialization — the same key always refers to the same batch.
+/// Walkers declare predecessor edges by naming `BatchKey`s, so they can be
+/// set up before any file is parsed.
+#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
+pub enum BatchKey {
+    Fs(FsKey),
+    Rust(RustKey),
+    Markdown(MarkdownKey),
+    Toml(TomlKey),
 }
 
-/// What walkers return: a Batch without identity. The scheduler stamps the
-/// id (= next index) when it absorbs the draft. Successor drafts also have
-/// their `predecessor` stamped automatically by the scheduler so a walker
-/// cannot attach the wrong parent.
+#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
+pub enum FsKey {
+    /// Listing of immediate children of `dir`.
+    DirListing { dir: PathBuf },
+}
+
+impl From<FsKey> for BatchKey {
+    fn from(k: FsKey) -> Self {
+        BatchKey::Fs(k)
+    }
+}
+impl From<RustKey> for BatchKey {
+    fn from(k: RustKey) -> Self {
+        BatchKey::Rust(k)
+    }
+}
+impl From<MarkdownKey> for BatchKey {
+    fn from(k: MarkdownKey) -> Self {
+        BatchKey::Markdown(k)
+    }
+}
+impl From<TomlKey> for BatchKey {
+    fn from(k: TomlKey) -> Self {
+        BatchKey::Toml(k)
+    }
+}
+
+/// Rust batches. Per-file for fine-grained ranking (lib.rs's decls should
+/// rank above a submodule's). MacroNames / MacroBodies are cross-file —
+/// macros cluster in one crate's source tree and benefit from a single
+/// "here's every exported macro name" batch that's cheaper than N per-file
+/// versions.
+#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
+pub enum RustKey {
+    /// `//!` module-doc lede — only emitted for crate entrypoints
+    /// (`lib.rs`, `main.rs`). Priority 1.x.
+    CrateDocLede { file: PathBuf },
+    /// `use` + `mod` + `pub use` plumbing at the top of a file. Priority 2.x.
+    ModUse { file: PathBuf },
+    /// Bare declarations of public items in a single file. Whole item for
+    /// struct/enum/trait/type/const/static; signature for fn. No rustdoc —
+    /// that's the `PubDocs` refinement. Priority 1.x.
+    PubDecls { file: PathBuf },
+    /// Rustdoc above each public item in `file`. Predecessor: `PubDecls`.
+    /// Priority 3.x.
+    PubDocs { file: PathBuf },
+    /// Impl-block headers + method signatures in a single file. Priority 2.x.
+    MethodSigs { file: PathBuf },
+    /// `#[macro_export] macro_rules!` names across `src_dir` (cross-file
+    /// example). Priority 1.x.
+    MacroNames { src_dir: PathBuf },
+    /// Full `macro_rules!` bodies. Predecessor: `MacroNames`. Priority 2.x.
+    MacroBodies { src_dir: PathBuf },
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
+pub enum MarkdownKey {
+    /// Whole `SUMMARY.md` (mdBook ToC). Priority 1.x.
+    SummaryWhole { file: PathBuf },
+    /// README headline: first heading + first paragraph. Priority 1.x.
+    ReadmeHeadline { file: PathBuf },
+    /// README body beyond the headline. Predecessor: `ReadmeHeadline`.
+    /// Priority 2.x.
+    ReadmeBody { file: PathBuf },
+    /// First heading-anchored slab of any other `.md` file. Priority 2.x–5.x.
+    HeadingSlab { file: PathBuf },
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
+pub enum TomlKey {
+    /// `[package]` or `[workspace.package]` identity block. Priority 1.x.
+    Identity { file: PathBuf },
+    /// `[features]` table. Priority 1.x.
+    Features { file: PathBuf },
+    /// `[dependencies]` / `[dev-dependencies]` / `[build-dependencies]` /
+    /// `[workspace.dependencies]`. Priority 2.x.
+    Dependencies { file: PathBuf },
+}
+
+/// Stored batch after materialization. `key` is the semantic name; `content`
+/// is the rendered content; `signals` are the value-model inputs.
 #[derive(Debug, Clone)]
-pub struct BatchDraft {
+pub struct Batch {
+    pub key: BatchKey,
     pub content: BatchContent,
-    pub value: f64,
+    pub predecessor: Option<BatchKey>,
+    pub signals: ValueSignals,
+}
+
+/// What a materializer returns. Scheduler stamps the `BatchId` and absorbs
+/// it into the frontier; walkers never see ids.
+#[derive(Debug, Clone)]
+pub struct ResolvedBatch {
+    pub content: BatchContent,
+    pub signals: ValueSignals,
 }
 
 #[derive(Debug, Clone)]
 pub enum BatchContent {
-    /// Add named children under `parent` to the rendered tree. `parent` must
-    /// already exist in the tree (root, or a folder that some prior
-    /// FileSystemEntries batch declared). The children-by-name map dedupes
-    /// at the type level.
+    /// Add named children under `parent` to the rendered tree.
     FileSystemEntries {
         parent: PathBuf,
         children: BTreeMap<OsString, EntryKind>,
     },
-    /// Add line content to one or more files. Each file path must already be
-    /// declared as a `File` entry by a prior FileSystemEntries batch
-    /// (debug-asserted at apply). Nested map dedupes both file paths and
-    /// line numbers at the type level.
+    /// Add line content to one or more files. Multi-file map for cross-file
+    /// batches (e.g. `PubDecls` across several `.rs` files).
     Lines(BTreeMap<PathBuf, BTreeMap<usize, RenderedLine>>),
 }
 
@@ -61,23 +161,67 @@ pub enum EntryKind {
     Directory,
 }
 
-/// A rendered line: either the full source line or a prefix of it that was
-/// truncated at a syntactic boundary. The variant carries the text; an empty
-/// text string is debug-asserted at apply time.
+/// A rendered line. `Full` and `Truncated` carry text; `Ellipsis` is a
+/// walker-emitted marker that renders as an indented `…` without a line
+/// number prefix. Descendant batches can override any variant by writing to
+/// the same (path, line) entry — typically `Ellipsis` → `Full` as refinement
+/// fills in elided content.
 #[derive(Debug, Clone)]
 pub enum RenderedLine {
     Full(String),
     Truncated(String),
+    /// Walker-emitted elision marker at a source line number. The number is
+    /// not rendered; it exists so descendants can replace the ellipsis with
+    /// real content at that exact line without a non-ancestor-overlap panic.
+    Ellipsis,
 }
 
 impl RenderedLine {
     pub fn text(&self) -> &str {
         match self {
             Self::Full(t) | Self::Truncated(t) => t,
+            Self::Ellipsis => "",
         }
     }
 
     pub fn is_truncated(&self) -> bool {
         matches!(self, Self::Truncated(_))
+    }
+
+    pub fn is_ellipsis(&self) -> bool {
+        matches!(self, Self::Ellipsis)
+    }
+}
+
+/// Multi-signal value inputs. The [`ValueModel`](crate::value::ValueModel)
+/// composes these into an `f64` value; walkers don't see the weights.
+///
+/// Each signal is a 0..1 score:
+/// - `catastrophic_omission`: harm if the agent never sees this content
+///   (e.g. root listing, crate identity, macro-name list).
+/// - `follow_up_minimization`: tool calls this saves vs. not including it
+///   (e.g. public API decls, README).
+/// - `zero_tool_call_understanding`: does seeing this complete a mental
+///   model so the agent can reason without a follow-up at all (e.g. lede
+///   paragraph, whole SUMMARY.md).
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub struct ValueSignals {
+    pub catastrophic_omission: f64,
+    pub follow_up_minimization: f64,
+    pub zero_tool_call_understanding: f64,
+    /// Relative-depth adjustment: multiplied into the final value. Values
+    /// under 1.0 down-rank content that's deep in the tree or under
+    /// `tests/`/`examples/`; values above 1.0 up-rank entrypoint files.
+    pub depth_factor: f64,
+}
+
+impl Default for ValueSignals {
+    fn default() -> Self {
+        Self {
+            catastrophic_omission: 0.0,
+            follow_up_minimization: 0.0,
+            zero_tool_call_understanding: 0.0,
+            depth_factor: 1.0,
+        }
     }
 }

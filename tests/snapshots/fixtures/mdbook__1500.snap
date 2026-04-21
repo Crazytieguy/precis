@@ -4,8 +4,6 @@ expression: rendered
 ---
 .cargo/
     config.toml
-.git-blame-ignore-revs
-.gitattributes
 .github/
     ISSUE_TEMPLATE/
         bug_report.yml
@@ -19,113 +17,148 @@ expression: rendered
 .gitignore
 CHANGELOG.md
 CODE_OF_CONDUCT.md
-    1→# The Rust Code of Conduct
-    …
-    3→The Code of Conduct for this repository [can be found online](https://www.rust-lang.org/conduct.html).
 CONTRIBUTING.md
 Cargo.lock
 Cargo.toml
-    1→[workspace]
-    2→members = [
-    3→    ".",
-    4→    "crates/*",
-    5→    "examples/remove-emphasis/mdbook-remove-emphasis", "guide/guide-helper",
-    6→]
-    …
-    21→[workspace.package]
-    22→edition = "2024"
-    23→license = "MPL-2.0"
-    24→repository = "https://github.com/rust-lang/mdBook"
-    25→rust-version = "1.88.0" # Keep in sync with installation.md and .github/workflows/main.yml
-    …
-    72→[package]
-    73→name = "mdbook"
-    74→version = "0.5.2"
-    75→authors = [
-    76→    "Mathieu David <mathieudavid@mathieudavid.org>",
-    77→    "Michael-F-Bryan <michaelfbryan@gmail.com>",
-    78→    "Matt Ickstadt <mattico8@gmail.com>"
-    79→]
-    80→documentation = "https://rust-lang.github.io/mdBook/index.html"
-    81→edition.workspace = true
-    82→exclude = ["/guide/*"]
-    83→keywords = ["book", "gitbook", "rustbook", "markdown"]
-    84→license.workspace = true
-    85→readme = "README.md"
-    86→repository.workspace = true
-    87→description = "Creates a book from markdown files"
-    88→rust-version.workspace = true
-    …
-    119→[dev-dependencies]
-    120→glob.workspace = true
-    121→regex.workspace = true
-    122→select.workspace = true
-    123→semver.workspace = true
-    124→serde_json.workspace = true
-    125→snapbox = { workspace = true, features = ["diff", "dir", "term-svg", "regex", "json"] }
-    126→tempfile.workspace = true
-    127→walkdir.workspace = true
 LICENSE
 README.md
+    1→# mdBook
+    3→[![CI Status](https://github.com/rust-lang/mdBook/actions/workflows/main.yml/badge.svg)](https://github.com/rust-lang/mdBook/actions/workflows/main.yml)
+    4→[![crates.io](https://img.shields.io/crates/v/mdbook.svg)](https://crates.io/crates/mdbook)
+    5→[![LICENSE](https://img.shields.io/github/license/rust-lang/mdBook.svg)](LICENSE)
 ci/
     install-rust.sh
     make-release-asset.sh
     publish-guide.sh
     update-dependencies.sh
 crates/
+    mdbook-compare/
+        Cargo.toml
+            1→[package]
+            2→name = "mdbook-compare"
+            3→publish = false
+            4→edition.workspace = true
+            5→license.workspace = true
+            6→repository.workspace = true
+            7→rust-version.workspace = true
+        README.md
+            1→# mdbook-compare
+            3→This is a simple utility to compare the output of two different versions of mdbook.
+        src/
+            main.rs
+                1→//! Utility to compare the output of two different versions of mdbook.
+    mdbook-core/
+        Cargo.toml
+            1→[package]
+            2→name = "mdbook-core"
+            3→version = "0.5.2"
+            4→description = "The base support library for mdbook, intended for internal use only"
+            5→edition.workspace = true
+            6→license.workspace = true
+            7→repository.workspace = true
+            8→rust-version.workspace = true
+        README.md
+        src/
+    mdbook-driver/
+        Cargo.toml
+            1→[package]
+            2→name = "mdbook-driver"
+            3→version = "0.5.2"
+            4→description = "High-level library for running mdBook"
+            5→edition.workspace = true
+            6→license.workspace = true
+            7→repository.workspace = true
+            8→rust-version.workspace = true
+            31→[features]
+            32→search = ["mdbook-html/search"]
+        README.md
+        src/
+    mdbook-html/
+        Cargo.toml
+            1→[package]
+            2→name = "mdbook-html"
+            3→version = "0.5.2"
+            4→description = "mdBook HTML renderer"
+            5→edition.workspace = true
+            6→license.workspace = true
+            7→repository.workspace = true
+            8→rust-version.workspace = true
+            36→[features]
+            37→search = ["dep:elasticlunr-rs"]
+        README.md
+        front-end/
+        src/
+    mdbook-markdown/
+        Cargo.toml
+            1→[package]
+            2→name = "mdbook-markdown"
+            3→version = "0.5.2"
+            4→description = "Markdown processing used in mdBook"
+            5→edition.workspace = true
+            6→license.workspace = true
+            7→repository.workspace = true
+            8→rust-version.workspace = true
+        README.md
+        src/
+    mdbook-preprocessor/
+        Cargo.toml
+            1→[package]
+            2→name = "mdbook-preprocessor"
+            3→version = "0.5.2"
+            4→description = "Library to assist implementing an mdBook preprocessor"
+            5→edition.workspace = true
+            6→license.workspace = true
+            7→repository.workspace = true
+            8→rust-version.workspace = true
+        README.md
+        src/
+    mdbook-renderer/
+        Cargo.toml
+            1→[package]
+            2→name = "mdbook-renderer"
+            3→version = "0.5.2"
+            4→description = "Library to assist implementing an mdBook renderer"
+            5→edition.workspace = true
+            6→license.workspace = true
+            7→repository.workspace = true
+            8→rust-version.workspace = true
+        README.md
+        src/
+    mdbook-summary/
+        Cargo.toml
+            1→[package]
+            2→name = "mdbook-summary"
+            3→version = "0.5.2"
+            4→description = "Summary parser for mdBook"
+            5→edition.workspace = true
+            6→license.workspace = true
+            7→repository.workspace = true
+            8→rust-version.workspace = true
+        README.md
+        src/
+    xtask/
+        Cargo.toml
+            1→[package]
+            2→name = "xtask"
+            3→publish = false
+            4→edition.workspace = true
+            5→license.workspace = true
+            6→repository.workspace = true
+            7→rust-version.workspace = true
+        README.md
+            1→# xtask
+            3→This is a CLI utility for running development commands for mdbook.
+            4→See [CONTRIBUTING.md](../../CONTRIBUTING.md) for how to use this.
+        src/
 eslint.config.mjs
 examples/
     nop-preprocessor.rs
-        1→//! A basic example of a preprocessor that does nothing.
     remove-emphasis/
         .gitignore
         book.toml
         mdbook-remove-emphasis/
-            Cargo.toml
-                1→[package]
-                2→name = "mdbook-remove-emphasis"
-                3→version = "0.1.0"
-                4→edition.workspace = true
-                5→publish = false
-                …
-                7→[dependencies]
-                8→mdbook-preprocessor.workspace = true
-                9→pulldown-cmark = { workspace = true, default-features = false }
-                10→pulldown-cmark-to-cmark = "22.0.0"
-                11→serde_json.workspace = true
-                …
-                13→[[bin]]
-                14→name = "mdbook-remove-emphasis"
-                15→# This is tested through a separate test from the main package.
-                16→test = false
-            src/
-                main.rs
-                    1→//! This is a demonstration of an mdBook preprocessor which parses markdown
-                    2→//! and removes any instances of emphasis.
-                    …
-                    4→use mdbook_preprocessor::book::{Book, Chapter};
-                    5→use mdbook_preprocessor::errors::Result;
-                    6→use mdbook_preprocessor::{Preprocessor, PreprocessorContext};
-                    7→use pulldown_cmark::{Event, Parser, Tag, TagEnd};
-                    8→use std::io;
-                    …
-                    32→impl Preprocessor for RemoveEmphasis {
-                    33→    fn name(&self) -> &str {
-                    …
-                    37→    fn run(&self, _ctx: &PreprocessorContext, mut book: Book) -> Result<Book> {
-                    …
-                    65→pub fn handle_preprocessing() -> Result<()> {
         src/
-            SUMMARY.md
-                1→# Summary
-                …
-                3→- [Chapter 1](./chapter_1.md)
-            chapter_1.md
-                1→# Chapter 1
-                …
-                3→This has *light emphasis* and **bold emphasis**.
         test.rs
-            1→//! A test to ensure that the remove-emphasis example works.
 guide/
     book.toml
     guide-helper/
@@ -137,36 +170,31 @@ guide/
             5→license.workspace = true
             6→repository.workspace = true
             7→rust-version.workspace = true
-            …
-            9→[dependencies]
-            10→mdbook-preprocessor.workspace = true
-            11→semver.workspace = true
-            12→serde_json.workspace = true
-            13→toml.workspace = true
         src/
-            lib.rs
-                1→//! Preprocessor for the mdBook guide.
-                …
-                3→use mdbook_preprocessor::book::Book;
-                4→use mdbook_preprocessor::errors::Result;
-                5→use mdbook_preprocessor::{Preprocessor, PreprocessorContext};
-                6→use semver::{Version, VersionReq};
-                7→use std::io;
-                …
-                9→/// Preprocessing entry point.
-                10→pub fn handle_preprocessing() -> Result<()> {
-                …
-                35→impl Preprocessor for GuideHelper {
-                36→    fn name(&self) -> &str {
-                …
-                40→    fn run(&self, _ctx: &PreprocessorContext, mut book: Book) -> Result<Book> {
-            main.rs
-                1→//! Preprocessor for the mdBook guide.
     src/
+        404.md
+        README.md
+        SUMMARY.md
+        cli/
+        continuous-integration.md
+        for_developers/
+        format/
+        guide/
+        misc/
 package.json
 rustfmt.toml
 src/
     cmd/
+        build.rs
+        clean.rs
+        command_prelude.rs
+        init.rs
+        mod.rs
+            1→//! Subcommand modules for the `mdbook` binary.
+        serve.rs
+        test.rs
+        watch/
+        watch.rs
     main.rs
         1→//! The mdbook CLI.
 tests/

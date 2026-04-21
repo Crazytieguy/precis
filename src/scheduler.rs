@@ -1,57 +1,97 @@
-use std::collections::HashSet;
+//! Scheduler: greedy value/cost picker with a two-tier frontier.
+//!
+//! The scheduler maintains two pools at any time:
+//!
+//! - **Speculative candidates** (`self.candidates`): walker-emitted
+//!   [`Candidate`]s whose content hasn't been read or parsed yet. Ranked by
+//!   `score(signals) / cost_hint` — both of which the walker supplies from
+//!   FS-only evidence and must be OPTIMISTIC (signals high, cost low) so
+//!   the ratio is a correct upper bound on the post-materialization value.
+//!
+//! - **Exact batches** (`self.batches`): materialized, with resolved
+//!   content + final signals + exact marginal cost against the current
+//!   tree. Ranked by `score(signals) / marginal_cost`.
+//!
+//! The branch-and-bound loop: peek both tops; if exact-top's ratio ≥
+//! speculative-top's upper bound, schedule exact-top (no unmaterialized
+//! candidate can beat it). Otherwise materialize the speculative-top and
+//! let it join the exact pool. Repeat until neither pool yields a
+//! schedulable batch.
+//!
+//! This gives the lazy-I/O property: files are only read + parsed when a
+//! specific [`BatchKey`] earns the right via its FS-only priority. A folder
+//! being scheduled never triggers a file read by itself.
+
+use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;
 
-use crate::batch::{Batch, BatchDraft, BatchId};
+use crate::batch::{Batch, BatchId, BatchKey};
 use crate::render::{Cost, RenderedTree};
-use crate::walker::{Walker, WalkerCtx};
+use crate::value::{ratio as score_ratio, score};
+use crate::walker::{Candidate, WalkCtx, Walker};
 
 pub struct Scheduler<W: Walker> {
     walker: W,
-    ctx: WalkerCtx,
+    ctx: WalkCtx,
     tree: RenderedTree,
     token_budget: usize,
     byte_budget: Option<usize>,
     consumed: Cost,
+
+    /// Materialized batches, indexed by [`BatchId`] (which is the position).
     batches: Vec<Batch>,
-    scheduled: Vec<bool>,
+    /// Stable key→id lookup for predecessor resolution.
+    key_to_id: HashMap<BatchKey, BatchId>,
+    /// Scheduled batches.
+    scheduled: HashSet<BatchId>,
+    /// Speculative candidates (not yet materialized).
+    candidates: HashMap<BatchKey, Candidate>,
+    /// Keys that failed materialization (`materialize` returned `None`)
+    /// and their dependents. Never retried.
+    dead: HashSet<BatchKey>,
 }
 
 impl<W: Walker> Scheduler<W> {
     pub fn new(root: PathBuf, walker: W, token_budget: usize, byte_budget: Option<usize>) -> Self {
         Self {
             walker,
-            ctx: WalkerCtx::new(root.clone()),
+            ctx: WalkCtx::new(root.clone()),
             tree: RenderedTree::new(root),
             token_budget,
             byte_budget,
             consumed: Cost::default(),
             batches: Vec::new(),
-            scheduled: Vec::new(),
+            key_to_id: HashMap::new(),
+            scheduled: HashSet::new(),
+            candidates: HashMap::new(),
+            dead: HashSet::new(),
         }
     }
 
     pub fn run(mut self) -> RenderedTree {
-        let seeds = self.walker.seed(&self.ctx);
-        for d in seeds {
-            self.absorb_draft(d, None);
+        for c in self.walker.seed(&self.ctx) {
+            self.absorb_candidate(c);
         }
-        while let Some((id, cost)) = self.pick_best() {
-            self.schedule(id, cost);
-            // Walker emits successors of the just-scheduled batch. Collect
-            // first so the borrow on self.walker / self.batches / self.ctx
-            // ends before we mutate self.batches via absorb_draft.
-            let successors = self
-                .walker
-                .successors(id, &self.batches[id.index()], &self.ctx);
-            for d in successors {
-                self.absorb_draft(d, Some(id));
+
+        loop {
+            let best_exact = self.best_exact();
+            let best_spec = self.best_speculative();
+            match (best_exact, best_spec) {
+                (None, None) => break,
+                (Some((id, _)), None) => self.schedule(id),
+                (None, Some((key, _))) => {
+                    let _ = self.materialize(&key);
+                }
+                (Some((id, ex_ratio)), Some((key, spec_bound))) => {
+                    if ex_ratio >= spec_bound {
+                        self.schedule(id);
+                    } else {
+                        let _ = self.materialize(&key);
+                    }
+                }
             }
         }
 
-        // End-of-run cross-check (debug-only; in release we'd rather emit a
-        // possibly-out-of-budget output than panic). Bind once — total_tokens
-        // re-renders the whole tree, so re-evaluating it inside the assert
-        // message would render twice.
         if cfg!(debug_assertions) {
             let total_tokens = self.tree.total_tokens();
             debug_assert!(
@@ -74,91 +114,166 @@ impl<W: Walker> Scheduler<W> {
         self.tree
     }
 
-    /// Allocate a new id and store the batch. `predecessor` is None for seeds,
-    /// `Some(scheduled_id)` for successors — set by the scheduler, not the
-    /// walker, so a walker cannot attach the wrong parent.
-    fn absorb_draft(&mut self, draft: BatchDraft, predecessor: Option<BatchId>) {
-        self.batches.push(Batch {
-            content: draft.content,
-            predecessor,
-            value: draft.value,
-        });
-        self.scheduled.push(false);
+    // ---- absorption ----
+
+    fn absorb_candidate(&mut self, c: Candidate) {
+        if self.key_to_id.contains_key(&c.key)
+            || self.dead.contains(&c.key)
+            || self.candidates.contains_key(&c.key)
+        {
+            return;
+        }
+        self.candidates.insert(c.key.clone(), c);
     }
 
-    fn pick_best(&self) -> Option<(BatchId, Cost)> {
-        // Tracks (ratio, idx, cost). Tie-break on lower idx for determinism.
-        let mut best: Option<(f64, usize, Cost)> = None;
-        for (idx, batch) in self.batches.iter().enumerate() {
-            if self.scheduled[idx] {
+    /// Eligibility check: predecessor is scheduled (or no predecessor, or
+    /// already in the key→id table but un-scheduled means predecessor is
+    /// materialized but not yet picked — not eligible).
+    fn eligible(&self, pred: Option<&BatchKey>) -> bool {
+        match pred {
+            None => true,
+            Some(p) => self
+                .key_to_id
+                .get(p)
+                .is_some_and(|id| self.scheduled.contains(id)),
+        }
+    }
+
+    /// A candidate is dead by transitivity if its predecessor is in `dead`.
+    fn predecessor_dead(&self, pred: Option<&BatchKey>) -> bool {
+        pred.is_some_and(|p| self.dead.contains(p))
+    }
+
+    // ---- speculative pool ----
+
+    fn best_speculative(&self) -> Option<(BatchKey, f64)> {
+        let mut best: Option<(f64, &BatchKey)> = None;
+        for (key, c) in &self.candidates {
+            if self.predecessor_dead(c.predecessor.as_ref()) {
                 continue;
             }
-            if let Some(p) = batch.predecessor
-                && !self.scheduled[p.index()]
-            {
+            if !self.eligible(c.predecessor.as_ref()) {
+                continue;
+            }
+            let ratio = upper_bound_ratio(c);
+            let better = best.is_none_or(|(br, bk)| ratio > br || (ratio == br && key < bk));
+            if better {
+                best = Some((ratio, key));
+            }
+        }
+        best.map(|(ratio, k)| (k.clone(), ratio))
+    }
+
+    // ---- exact pool ----
+
+    fn best_exact(&self) -> Option<(BatchId, f64)> {
+        let mut best: Option<(f64, BatchId, BatchKey)> = None;
+        for (idx, batch) in self.batches.iter().enumerate() {
+            let id = BatchId::new(idx);
+            if self.scheduled.contains(&id) {
+                continue;
+            }
+            if !self.eligible(batch.predecessor.as_ref()) {
                 continue;
             }
             let cost = self.tree.marginal_cost(batch);
-            if self.consumed.tokens + cost.tokens > self.token_budget {
+            if !self.fits(cost) {
                 continue;
             }
-            if let Some(bb) = self.byte_budget
-                && self.consumed.bytes + cost.bytes > bb
-            {
-                continue;
-            }
-            let ratio = if cost.tokens == 0 {
-                f64::INFINITY
-            } else {
-                batch.value / cost.tokens as f64
-            };
-            let better = match best {
-                None => true,
-                Some((br, bidx, _)) => ratio > br || (ratio == br && idx < bidx),
-            };
+            let value = score(&batch.signals);
+            let ratio = score_ratio(value, cost.tokens);
+            let better = best
+                .as_ref()
+                .is_none_or(|(br, _, bk)| ratio > *br || (ratio == *br && &batch.key < bk));
             if better {
-                best = Some((ratio, idx, cost));
+                best = Some((ratio, id, batch.key.clone()));
             }
         }
-        best.map(|(_, idx, cost)| (BatchId::new(idx), cost))
+        best.map(|(ratio, id, _)| (id, ratio))
     }
 
-    fn schedule(&mut self, id: BatchId, cost: Cost) {
+    fn fits(&self, cost: Cost) -> bool {
+        if self.consumed.tokens + cost.tokens > self.token_budget {
+            return false;
+        }
+        if let Some(bb) = self.byte_budget
+            && self.consumed.bytes + cost.bytes > bb
+        {
+            return false;
+        }
+        true
+    }
+
+    // ---- materialization ----
+
+    /// Materialize `key`: remove it from the candidate pool, call the
+    /// walker, and either record it as dead or absorb the resolved batch
+    /// into the exact pool. Returns the assigned [`BatchId`] on success.
+    fn materialize(&mut self, key: &BatchKey) -> Option<BatchId> {
+        let candidate = self.candidates.remove(key)?;
+        let Some(resolved) = self.walker.materialize(key, &self.ctx) else {
+            self.dead.insert(key.clone());
+            return None;
+        };
+        let id = BatchId::new(self.batches.len());
+        self.batches.push(Batch {
+            key: key.clone(),
+            content: resolved.content,
+            predecessor: candidate.predecessor,
+            signals: resolved.signals,
+        });
+        self.key_to_id.insert(key.clone(), id);
+        Some(id)
+    }
+
+    // ---- scheduling ----
+
+    fn schedule(&mut self, id: BatchId) {
+        debug_assert!(!self.scheduled.contains(&id), "batch {:?} scheduled twice", id);
+
+        let cost = self.tree.marginal_cost(&self.batches[id.index()]);
         debug_assert!(
-            !self.scheduled[id.index()],
-            "batch {:?} scheduled twice",
-            id
-        );
-        debug_assert!(
-            self.batches[id.index()]
-                .predecessor
-                .is_none_or(|p| self.scheduled[p.index()]),
-            "batch {:?} scheduled before its predecessor",
-            id,
-        );
-        debug_assert!(
-            self.consumed.tokens + cost.tokens <= self.token_budget,
-            "scheduled batch exceeds token budget"
+            self.fits(cost),
+            "scheduled batch exceeds token/byte budget; best_exact should have filtered it"
         );
 
         let ancestors = self.ancestors_of(id);
+        let batch_clone = self.batches[id.index()].clone();
         self.tree
-            .apply(&self.batches[id.index()], id, |i| ancestors.contains(&i));
-        self.scheduled[id.index()] = true;
+            .apply(&batch_clone, id, |i| ancestors.contains(&i));
+        self.scheduled.insert(id);
         self.consumed.tokens += cost.tokens;
         self.consumed.bytes += cost.bytes;
+
+        // Walker learns about the new scheduled key; emit successors.
+        let key = self.batches[id.index()].key.clone();
+        let successors = self.walker.expand(&key, &self.ctx);
+        for c in successors {
+            self.absorb_candidate(c);
+        }
     }
 
-    /// Walks the predecessor chain of `id` (transitively). Cycles are
-    /// impossible by construction (walkers can't forge ids; predecessors
-    /// always reference an already-allocated batch), so no visited-set guard.
+    /// Walk the predecessor chain, resolving keys to ids. Cycles are a
+    /// walker bug; debug-assert + break.
     fn ancestors_of(&self, id: BatchId) -> HashSet<BatchId> {
         let mut set = HashSet::new();
-        let mut cur = self.batches[id.index()].predecessor;
-        while let Some(p) = cur {
-            set.insert(p);
-            cur = self.batches[p.index()].predecessor;
+        let mut cur = self.batches[id.index()].predecessor.as_ref();
+        while let Some(pred_key) = cur {
+            let Some(pred_id) = self.key_to_id.get(pred_key) else {
+                break;
+            };
+            if !set.insert(*pred_id) {
+                if cfg!(debug_assertions) {
+                    panic!("predecessor cycle detected at {pred_key:?}");
+                }
+                break;
+            }
+            cur = self.batches[pred_id.index()].predecessor.as_ref();
         }
         set
     }
+}
+
+fn upper_bound_ratio(c: &Candidate) -> f64 {
+    score_ratio(score(&c.signals), c.cost_hint)
 }

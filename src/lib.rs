@@ -6,6 +6,7 @@ pub mod batch;
 pub mod render;
 pub mod scheduler;
 pub mod tokenizer;
+pub mod value;
 pub mod walker;
 
 use scheduler::Scheduler;
