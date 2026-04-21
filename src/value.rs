@@ -39,9 +39,10 @@ pub fn depth_factor(depth: usize) -> f64 {
 }
 
 /// Multiplier applied to content whose path is under a "non-essential"
-/// directory (tests / examples / benches / fixtures). These are load-bearing
-/// for *using* the crate's test infrastructure but rarely for understanding
-/// it; they should only appear once the primary-source batches have landed.
+/// directory (tests / examples / benches / fixtures / private helpers).
+/// These are load-bearing for *using* the crate's infrastructure but rarely
+/// for understanding it; they should only appear once the primary-source
+/// batches have landed.
 pub fn non_essential_factor(path: &std::path::Path) -> f64 {
     for component in path.components() {
         let Some(s) = component.as_os_str().to_str() else {
@@ -49,11 +50,19 @@ pub fn non_essential_factor(path: &std::path::Path) -> f64 {
         };
         if matches!(
             s,
-            "tests" | "examples" | "benches" | "fixtures" | "rfcs" | "xtask"
+            "tests" | "examples" | "benches" | "fixtures" | "rfcs" | "xtask" | "ci"
         ) || s.starts_with("test_")
+            || s.starts_with("guide-helper")
         {
-            return 0.35;
+            return 0.2;
         }
+    }
+    // File-level heuristic: `__private_api.rs`, `__internals.rs`, `inner.rs`,
+    // etc. — files whose name itself says "not the public surface".
+    if let Some(name) = path.file_name().and_then(|n| n.to_str())
+        && (name.starts_with("__") || name.starts_with("_") || name == "inner.rs")
+    {
+        return 0.5;
     }
     1.0
 }

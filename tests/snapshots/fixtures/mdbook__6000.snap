@@ -484,12 +484,24 @@ guide/
             mdbook-wordcount/
             preprocessors.md
         format/
+            README.md
+                1→# Format
+                3→In this section you will learn how to:
+            configuration/
+            example.rs
+            images/
+            markdown.md
+            mathjax.md
+            mdbook.md
+            summary.md
+            theme/
         guide/
             README.md
             creating.md
             installation.md
             reading.md
         misc/
+            contributors.md
 package.json
 rustfmt.toml
 src/
@@ -512,9 +524,6 @@ src/
             49→    total_bytes_removed: u64,
             50→}
         command_prelude.rs
-            56→impl CommandExt for Command {
-            57→    fn _arg(self, arg: Arg) -> Self {
-            …
         init.rs
             12→pub fn make_subcommand() -> ClapCommand {
             …
@@ -547,9 +556,6 @@ src/
             22→    Poll,
             23→    Native,
             24→}
-            26→impl WatcherKind {
-            27→    pub fn from_str(s: &str) -> WatcherKind {
-            …
             37→pub fn execute(args: &ArgMatches) -> Result<()> {
             …
             62→pub fn rebuild_on_change(

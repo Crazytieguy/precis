@@ -39,18 +39,28 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate> {
 
     for file in &rust_files {
         let depth = ctx.depth_from_root(file);
-        if is_entrypoint_file(file) {
+        let ep = is_entrypoint_file(file);
+        if ep {
             out.push(candidate(
                 RustKey::CrateDocLede { file: file.clone() },
                 crate_doc_lede_signals(file, depth),
                 40,
             ));
+            out.push(candidate(
+                RustKey::ModUse { file: file.clone() },
+                mod_use_signals(file, depth),
+                60,
+            ));
+            out.push(candidate(
+                RustKey::MethodSigs { file: file.clone() },
+                method_sigs_signals(file, depth),
+                60,
+            ));
         }
-        out.push(candidate(
-            RustKey::ModUse { file: file.clone() },
-            mod_use_signals(file, depth),
-            60,
-        ));
+        // PubDecls + PubDocs for every file. For non-entrypoints these
+        // carry the bulk of the signal (bare decls + their rustdoc); the
+        // mod/use plumbing and impl method sigs only matter where a file
+        // is itself the surface (lib.rs / main.rs / mod.rs).
         let pub_decls = RustKey::PubDecls { file: file.clone() };
         out.push(candidate(
             pub_decls.clone(),
@@ -65,11 +75,6 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate> {
             )
             .with_predecessor(BatchKey::Rust(pub_decls)),
         );
-        out.push(candidate(
-            RustKey::MethodSigs { file: file.clone() },
-            method_sigs_signals(file, depth),
-            60,
-        ));
     }
 
     // Cross-file macro batches, scoped to `dir` (non-recursive).
@@ -238,12 +243,12 @@ fn macro_names_signals(depth: usize) -> ValueSignals {
 
 fn macro_bodies_signals(depth: usize) -> ValueSignals {
     // For macro-heavy crates (anyhow, log), the `#[macro_export]` bodies
-    // are the crate's public API — nearly on par with `PubDecls`. The
-    // predecessor edge to MacroNames still orders them.
+    // are the crate's public API — on par with `PubDecls`. Predecessor
+    // edge to MacroNames orders them.
     ValueSignals {
-        catastrophic_omission: 0.75,
-        follow_up_minimization: 0.85,
-        zero_tool_call_understanding: 0.55,
+        catastrophic_omission: 0.9,
+        follow_up_minimization: 0.9,
+        zero_tool_call_understanding: 0.6,
         depth_factor: depth_factor(depth),
     }
 }
@@ -462,11 +467,34 @@ fn collect_macro_bodies(tree: &Tree, source: &str) -> FileLines {
     let mut cursor = root.walk();
     let mut out = Vec::new();
     for child in root.children(&mut cursor) {
-        if child.kind() == "macro_definition" && has_macro_export(child, source) {
+        if child.kind() == "macro_definition"
+            && has_macro_export(child, source)
+            && !is_underscore_private(child, source)
+        {
             extend_span(&mut out, child, source);
         }
     }
     FileLines::new(dedup_sorted(out))
+}
+
+/// `__` prefix by convention marks an internal dispatcher macro
+/// (`__log`, `__anyhow`, `__parse_ensure`) — `#[macro_export]`'d for
+/// reachability from caller crates but not a user-callable surface. These
+/// belong in the `MacroNames` index only, not `MacroBodies`.
+fn is_underscore_private(node: Node, source: &str) -> bool {
+    // Try the `name` field first; fall back to scanning child tokens for
+    // an identifier starting with `__`.
+    if let Some(name) = node.child_by_field_name("name") {
+        let text = &source[name.start_byte()..name.end_byte()];
+        return text.starts_with("__");
+    }
+    let mut cursor = node.walk();
+    node.children(&mut cursor).any(|c| {
+        c.kind() == "identifier" && {
+            let text = &source[c.start_byte()..c.end_byte()];
+            text.starts_with("__")
+        }
+    })
 }
 
 // --- AST predicates ---

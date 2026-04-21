@@ -79,7 +79,6 @@ README.md
     4→A Rust library providing a lightweight logging *facade*.
 benches/
     value.rs
-        4→use log::kv::Value;
 rfcs/
     0296-structured-logging.md
         1→- Feature Name: `structured_logging`
@@ -87,29 +86,9 @@ rfcs/
         3→- RFC PR: [log/rfcs#0296](https://github.com/rust-lang-nursery/log/pull/296)
 src/
     __private_api.rs
-        3→use self::sealed::KVs;
-        4→use crate::{logger, Level, Log, Metadata, Record};
-        5→use std::fmt::Arguments;
-        6→use std::panic::Location;
-        7→pub use std::{format_args, module_path, stringify};
         10→pub type Value<'a> = &'a str;
-        12→mod sealed {
-        …
-        21→impl<'a> KVs<'a> for &'a [(&'a str, Value<'a>)] {
-        23→    fn into_kvs(self) -> Option<&'a [(&'a str, Value<'a>)]> {
-        …
-        28→impl<'a> KVs<'a> for () {
-        30→    fn into_kvs(self) -> Option<&'a [(&'a str, Value<'a>)]> {
-        …
         37→/// The global logger proxy.
         39→pub struct GlobalLogger;
-        41→impl Log for GlobalLogger {
-        42→    fn enabled(&self, metadata: &Metadata) -> bool {
-        …
-        46→    fn log(&self, record: &Record) {
-        …
-        50→    fn flush(&self) {
-        …
         84→pub fn log<'a, K, L>(
         85→    logger: L,
         86→    args: Arguments,
@@ -125,34 +104,13 @@ src/
         …
         108→pub fn loc() -> &'static Location<'static> {
         …
-        113→mod kv_support {
-        …
-        151→pub use self::kv_support::*;
     kv/
         error.rs
-            1→use std::fmt;
             3→/// An error encountered while working with structured data.
             5→pub struct Error {
             6→    inner: Inner,
             7→}
-            19→impl Error {
-            21→    pub fn msg(msg: &'static str) -> Self {
-            …
-            29→    pub(super) fn from_value(err: crate::kv::value::inner::Error) -> Self {
-            …
-            37→    pub(super) fn into_value(self) -> crate::kv::value::inner::Error {
-            …
-            48→impl fmt::Display for Error {
-            49→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-            …
-            62→impl From<fmt::Error> for Error {
-            63→    fn from(_: fmt::Error) -> Self {
-            …
-            69→mod std_support {
-            …
         key.rs
-            3→use std::borrow::Borrow;
-            4→use std::fmt;
             6→/// A type that can be converted into a [`Key`](struct.Key.html).
             7→pub trait ToKey {
             8→    /// Perform the conversion.
@@ -162,14 +120,6 @@ src/
             38→    // NOTE: This may become `Cow<'k, str>`
             39→    key: &'k str,
             40→}
-            94→mod std_support {
-            …
-            113→mod sval_support {
-            …
-            136→mod serde_support {
-            …
-            152→mod tests {
-            …
         mod.rs
             246→mod error;
             247→mod key;
@@ -183,8 +133,6 @@ src/
             262→pub mod value;
             265→pub use self::source::Visitor;
         source.rs
-            6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
-            7→use std::fmt;
             51→pub trait Source {
             52→    /// Visit key-values.
             53→    ///
@@ -225,21 +173,7 @@ src/
             236→    /// Visit a key-value pair.
             237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
             238→}
-            280→mod std_support {
-            …
-            462→pub use VisitSource as Visitor;
-            465→mod tests {
-            …
         value.rs
-            6→use std::fmt;
-            8→pub use crate::kv::Error;
-            390→mod std_support {
-            …
-            602→pub(in crate::kv) mod inner {
-            …
-            721→pub(in crate::kv) mod inner {
-            …
-            1123→pub use VisitValue as Visit;
             1129→macro_rules! as_debug {
             1130→    ($capture:expr) => {
             1131→        $crate::kv::Value::from_debug(&$capture)
@@ -265,8 +199,6 @@ src/
             1171→        $crate::kv::Value::from_sval(&$capture)
             1172→    };
             1173→}
-            1176→pub(crate) mod tests {
-            …
     lib.rs
         399→use std::cfg;
         401→use std::error;
@@ -278,144 +210,163 @@ src/
         413→use std::sync::atomic::{AtomicUsize, Ordering};
         416→use std::cell::Cell;
         418→use std::sync::atomic::Ordering;
-        475→pub enum Level {
-        476→    /// The "error" level.
-        477→    ///
-        478→    /// Designates very serious errors.
-        479→    // This way these line up with the discriminants for LevelFilter below
-        480→    // This works because Rust treats field-less enums the same way as C does:
-        481→    // https://doc.rust-lang.org/reference/items/enumerations.html#custom-discriminant-values-for-field-less-enumerations
-        482→    Error = 1,
-        483→    /// The "warn" level.
-        484→    ///
-        485→    /// Designates hazardous situations.
-        486→    Warn,
-        487→    /// The "info" level.
-        488→    ///
-        489→    /// Designates useful information.
-        490→    Info,
-        491→    /// The "debug" level.
-        492→    ///
-        493→    /// Designates lower priority information.
-        494→    Debug,
-        495→    /// The "trace" level.
-        496→    ///
-        497→    /// Designates very low priority, often extremely verbose, information.
-        498→    Trace,
-        499→}
-        636→pub enum LevelFilter {
-        637→    /// A level lower than all log levels.
-        638→    Off,
-        639→    /// Corresponds to the `Error` log level.
-        640→    Error,
-        641→    /// Corresponds to the `Warn` log level.
-        642→    Warn,
-        643→    /// Corresponds to the `Info` log level.
-        644→    Info,
-        645→    /// Corresponds to the `Debug` log level.
-        646→    Debug,
-        647→    /// Corresponds to the `Trace` log level.
-        648→    Trace,
-        649→}
-        842→pub struct Record<'a> {
-        843→    metadata: Metadata<'a>,
-        844→    args: fmt::Arguments<'a>,
-        845→    module_path: Option<MaybeStaticStr<'a>>,
-        846→    file: Option<MaybeStaticStr<'a>>,
-        847→    line: Option<u32>,
-        848→    #[cfg(feature = "kv")]
-        849→    key_values: KeyValues<'a>,
-        850→}
-        1003→pub struct RecordBuilder<'a> {
-        1004→    record: Record<'a>,
-        1005→}
-        1158→pub struct Metadata<'a> {
-        1159→    level: Level,
-        1160→    target: &'a str,
-        1161→}
-        1200→pub struct MetadataBuilder<'a> {
-        1201→    metadata: Metadata<'a>,
-        1202→}
-        1249→pub trait Log: Sync + Send {
-        1250→    /// Determines if a log message with the specified metadata would be
-        1251→    /// logged.
-        1252→    ///
-        1253→    /// This is used by the `log_enabled!` macro to allow callers to avoid
-        1254→    /// expensive computation of log message arguments if the message would be
-        1255→    /// discarded anyway.
-        1256→    ///
-        1257→    /// # For implementors
-        1258→    ///
-        1259→    /// This method isn't called automatically by the `log!` macros.
-        1260→    /// It's up to an implementation of the `Log` trait to call `enabled` in its own
-        1261→    /// `log` method implementation to guarantee that filtering is applied.
-        1262→    fn enabled(&self, metadata: &Metadata) -> bool;
-        1264→    /// Logs the `Record`.
-        1265→    ///
-        1266→    /// # For implementors
-        1267→    ///
-        1268→    /// Note that `enabled` is *not* necessarily called before this method.
-        1269→    /// Implementations of `log` should perform all necessary filtering
-        1270→    /// internally.
-        1271→    fn log(&self, record: &Record);
-        1273→    /// Flushes any buffered records.
-        1274→    ///
-        1275→    /// # For implementors
-        1276→    ///
-        1277→    /// This method isn't called automatically by the `log!` macros.
-        1278→    /// It can be called manually on shut-down to ensure any in-flight records are flushed.
-        1279→    fn flush(&self);
-        1280→}
-        1351→pub fn set_max_level(level: LevelFilter) {
-        …
-        1375→pub unsafe fn set_max_level_racy(level: LevelFilter) {
-        …
-        1396→pub fn max_level() -> LevelFilter {
-        …
-        1420→pub fn set_boxed_logger(logger: Box<dyn Log>) -> Result<(), SetLoggerError> {
-        …
-        1478→pub fn set_logger(logger: &'static dyn Log) -> Result<(), SetLoggerError> {
-        …
-        1529→pub unsafe fn set_logger_racy(logger: &'static dyn Log) -> Result<(), SetLoggerError> {
-        …
-        1549→pub struct SetLoggerError(());
-        1566→pub struct ParseLevelError(());
-        1581→pub fn logger() -> &'static dyn Log {
-        …
         1600→pub mod __private_api;
-        1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
-        1612→    false if cfg!(feature = "release_max_level_off") => LevelFilter::Off,
-        1613→    false if cfg!(feature = "release_max_level_error") => LevelFilter::Error,
-        1614→    false if cfg!(feature = "release_max_level_warn") => LevelFilter::Warn,
-        1615→    false if cfg!(feature = "release_max_level_info") => LevelFilter::Info,
-        1616→    false if cfg!(feature = "release_max_level_debug") => LevelFilter::Debug,
-        1617→    false if cfg!(feature = "release_max_level_trace") => LevelFilter::Trace,
-        1618→    _ if cfg!(feature = "max_level_off") => LevelFilter::Off,
-        1619→    _ if cfg!(feature = "max_level_error") => LevelFilter::Error,
-        1620→    _ if cfg!(feature = "max_level_warn") => LevelFilter::Warn,
-        1621→    _ if cfg!(feature = "max_level_info") => LevelFilter::Info,
-        1622→    _ if cfg!(feature = "max_level_debug") => LevelFilter::Debug,
-        1623→    _ => LevelFilter::Trace,
-        1624→};
         1627→mod tests {
         …
     macros.rs
         75→macro_rules! log {
-        …
+        76→    // log!(logger: my_logger, target: "my_target", Level::Info, "a {} event", "log");
+        77→    (logger: $logger:expr, target: $target:expr, $lvl:expr, $($arg:tt)+) => ({
+        78→        $crate::__log!(
+        79→            logger: $crate::__log_logger!($logger),
+        80→            target: $target,
+        81→            $lvl,
+        82→            $($arg)+
+        83→        )
+        84→    });
+        86→    // log!(logger: my_logger, Level::Info, "a log event")
+        87→    (logger: $logger:expr, $lvl:expr, $($arg:tt)+) => ({
+        88→        $crate::__log!(
+        89→            logger: $crate::__log_logger!($logger),
+        90→            target: $crate::__private_api::module_path!(),
+        91→            $lvl,
+        92→            $($arg)+
+        93→        )
+        94→    });
+        96→    // log!(target: "my_target", Level::Info, "a log event")
+        97→    (target: $target:expr, $lvl:expr, $($arg:tt)+) => ({
+        98→        $crate::__log!(
+        99→            logger: $crate::__log_logger!(__log_global_logger),
+        100→            target: $target,
+        101→            $lvl,
+        102→            $($arg)+
+        103→        )
+        104→    });
+        106→    // log!(Level::Info, "a log event")
+        107→    ($lvl:expr, $($arg:tt)+) => ({
+        108→        $crate::__log!(
+        109→            logger: $crate::__log_logger!(__log_global_logger),
+        110→            target: $crate::__private_api::module_path!(),
+        111→            $lvl,
+        112→            $($arg)+
+        113→        )
+        114→    });
+        115→}
         119→macro_rules! __log {
         …
         165→macro_rules! error {
-        …
+        166→    // error!(logger: my_logger, target: "my_target", key1 = 42, key2 = true; "a {} event", "log")
+        167→    // error!(logger: my_logger, target: "my_target", "a {} event", "log")
+        168→    (logger: $logger:expr, target: $target:expr, $($arg:tt)+) => ({
+        169→        $crate::log!(logger: $crate::__log_logger!($logger), target: $target, $crate::Level::Error, $($arg)+)
+        170→    });
+        172→    // error!(logger: my_logger, key1 = 42, key2 = true; "a {} event", "log")
+        173→    // error!(logger: my_logger, "a {} event", "log")
+        174→    (logger: $logger:expr, $($arg:tt)+) => ({
+        175→        $crate::log!(logger: $crate::__log_logger!($logger), $crate::Level::Error, $($arg)+)
+        176→    });
+        178→    // error!(target: "my_target", key1 = 42, key2 = true; "a {} event", "log")
+        179→    // error!(target: "my_target", "a {} event", "log")
+        180→    (target: $target:expr, $($arg:tt)+) => ({
+        181→        $crate::log!(target: $target, $crate::Level::Error, $($arg)+)
+        182→    });
+        184→    // error!("a {} event", "log")
+        185→    ($($arg:tt)+) => ($crate::log!($crate::Level::Error, $($arg)+))
+        186→}
         204→macro_rules! warn {
-        …
+        205→    // warn!(logger: my_logger, target: "my_target", key1 = 42, key2 = true; "a {} event", "log")
+        206→    // warn!(logger: my_logger, target: "my_target", "a {} event", "log")
+        207→    (logger: $logger:expr, target: $target:expr, $($arg:tt)+) => ({
+        208→        $crate::log!(logger: $crate::__log_logger!($logger), target: $target, $crate::Level::Warn, $($arg)+)
+        209→    });
+        211→    // warn!(logger: my_logger, key1 = 42, key2 = true; "a {} event", "log")
+        212→    // warn!(logger: my_logger, "a {} event", "log")
+        213→    (logger: $logger:expr, $($arg:tt)+) => ({
+        214→        $crate::log!(logger: $crate::__log_logger!($logger), $crate::Level::Warn, $($arg)+)
+        215→    });
+        217→    // warn!(target: "my_target", key1 = 42, key2 = true; "a {} event", "log")
+        218→    // warn!(target: "my_target", "a {} event", "log")
+        219→    (target: $target:expr, $($arg:tt)+) => ({
+        220→        $crate::log!(target: $target, $crate::Level::Warn, $($arg)+)
+        221→    });
+        223→    // warn!("a {} event", "log")
+        224→    ($($arg:tt)+) => ($crate::log!($crate::Level::Warn, $($arg)+))
+        225→}
         252→macro_rules! info {
-        …
+        253→    // info!(logger: my_logger, target: "my_target", key1 = 42, key2 = true; "a {} event", "log")
+        254→    // info!(logger: my_logger, target: "my_target", "a {} event", "log")
+        255→    (logger: $logger:expr, target: $target:expr, $($arg:tt)+) => ({
+        256→        $crate::log!(logger: $crate::__log_logger!($logger), target: $target, $crate::Level::Info, $($arg)+)
+        257→    });
+        259→    // info!(logger: my_logger, key1 = 42, key2 = true; "a {} event", "log")
+        260→    // info!(logger: my_logger, "a {} event", "log")
+        261→    (logger: $logger:expr, $($arg:tt)+) => ({
+        262→        $crate::log!(logger: $crate::__log_logger!($logger), $crate::Level::Info, $($arg)+)
+        263→    });
+        265→    // info!(target: "my_target", key1 = 42, key2 = true; "a {} event", "log")
+        266→    // info!(target: "my_target", "a {} event", "log")
+        267→    (target: $target:expr, $($arg:tt)+) => ({
+        268→        $crate::log!(target: $target, $crate::Level::Info, $($arg)+)
+        269→    });
+        271→    // info!("a {} event", "log")
+        272→    ($($arg:tt)+) => ($crate::log!($crate::Level::Info, $($arg)+))
+        273→}
         292→macro_rules! debug {
-        …
+        293→    // debug!(logger: my_logger, target: "my_target", key1 = 42, key2 = true; "a {} event", "log")
+        294→    // debug!(logger: my_logger, target: "my_target", "a {} event", "log")
+        295→    (logger: $logger:expr, target: $target:expr, $($arg:tt)+) => ({
+        296→        $crate::log!(logger: $crate::__log_logger!($logger), target: $target, $crate::Level::Debug, $($arg)+)
+        297→    });
+        299→    // debug!(logger: my_logger, key1 = 42, key2 = true; "a {} event", "log")
+        300→    // debug!(logger: my_logger, "a {} event", "log")
+        301→    (logger: $logger:expr, $($arg:tt)+) => ({
+        302→        $crate::log!(logger: $crate::__log_logger!($logger), $crate::Level::Debug, $($arg)+)
+        303→    });
+        305→    // debug!(target: "my_target", key1 = 42, key2 = true; "a {} event", "log")
+        306→    // debug!(target: "my_target", "a {} event", "log")
+        307→    (target: $target:expr, $($arg:tt)+) => ({
+        308→        $crate::log!(target: $target, $crate::Level::Debug, $($arg)+)
+        309→    });
+        311→    // debug!("a {} event", "log")
+        312→    ($($arg:tt)+) => ($crate::log!($crate::Level::Debug, $($arg)+))
+        313→}
         336→macro_rules! trace {
-        …
+        337→    // trace!(logger: my_logger, target: "my_target", key1 = 42, key2 = true; "a {} event", "log")
+        338→    // trace!(logger: my_logger, target: "my_target", "a {} event", "log")
+        339→    (logger: $logger:expr, target: $target:expr, $($arg:tt)+) => ({
+        340→        $crate::log!(logger: $crate::__log_logger!($logger), target: $target, $crate::Level::Trace, $($arg)+)
+        341→    });
+        343→    // trace!(logger: my_logger, key1 = 42, key2 = true; "a {} event", "log")
+        344→    // trace!(logger: my_logger, "a {} event", "log")
+        345→    (logger: $logger:expr, $($arg:tt)+) => ({
+        346→        $crate::log!(logger: $crate::__log_logger!($logger), $crate::Level::Trace, $($arg)+)
+        347→    });
+        349→    // trace!(target: "my_target", key1 = 42, key2 = true; "a {} event", "log")
+        350→    // trace!(target: "my_target", "a {} event", "log")
+        351→    (target: $target:expr, $($arg:tt)+) => ({
+        352→        $crate::log!(target: $target, $crate::Level::Trace, $($arg)+)
+        353→    });
+        355→    // trace!("a {} event", "log")
+        356→    ($($arg:tt)+) => ($crate::log!($crate::Level::Trace, $($arg)+))
+        357→}
         391→macro_rules! log_enabled {
-        …
+        392→    // log_enabled!(logger: my_logger, target: "my_target", Level::Info)
+        393→    (logger: $logger:expr, target: $target:expr, $lvl:expr) => ({
+        394→        $crate::__log_enabled!(logger: $crate::__log_logger!($logger), target: $target, $lvl)
+        395→    });
+        397→    // log_enabled!(logger: my_logger, Level::Info)
+        398→    (logger: $logger:expr, $lvl:expr) => ({
+        399→        $crate::__log_enabled!(logger: $crate::__log_logger!($logger), target: $crate::__private_api::module_path!(), $lvl)
+        400→    });
+        402→    // log_enabled!(target: "my_target", Level::Info)
+        403→    (target: $target:expr, $lvl:expr) => ({
+        404→        $crate::__log_enabled!(logger: $crate::__log_logger!(__log_global_logger), target: $target, $lvl)
+        405→    });
+        407→    // log_enabled!(Level::Info)
+        408→    ($lvl:expr) => ({
+        409→        $crate::__log_enabled!(logger: $crate::__log_logger!(__log_global_logger), target: $crate::__private_api::module_path!(), $lvl)
+        410→    });
+        411→}
         415→macro_rules! __log_enabled {
         …
         429→macro_rules! __log_logger {
@@ -441,40 +392,6 @@ src/
         573→macro_rules! __log_value_error {
         …
     serde.rs
-        3→use serde_core::de::{
-        4→    Deserialize, DeserializeSeed, Deserializer, EnumAccess, Error, Unexpected, VariantAccess,
-        5→    Visitor,
-        6→};
-        7→use serde_core::ser::{Serialize, Serializer};
-        9→use crate::{Level, LevelFilter, LOG_LEVEL_NAMES};
-        11→use std::fmt;
-        12→use std::str::{self, FromStr};
-        16→impl Serialize for Level {
-        17→    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-        18→    where
-        19→        S: Serializer,
-        20→    {
-        …
-        31→impl<'de> Deserialize<'de> for Level {
-        32→    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-        33→    where
-        34→        D: Deserializer<'de>,
-        35→    {
-        …
-        110→impl Serialize for LevelFilter {
-        111→    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-        112→    where
-        113→        S: Serializer,
-        114→    {
-        …
-        126→impl<'de> Deserialize<'de> for LevelFilter {
-        127→    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-        128→    where
-        129→        D: Deserializer<'de>,
-        130→    {
-        …
-        206→mod tests {
-        …
 test_max_level_features/
     Cargo.toml
         1→[package]
@@ -498,21 +415,5 @@ test_max_level_features/
         …
 tests/
     integration.rs
-        3→use log::{debug, error, info, trace, warn, Level, LevelFilter, Log, Metadata, Record};
-        4→use std::sync::{Arc, Mutex};
-        13→impl Log for Logger {
-        14→    fn enabled(&self, _: &Metadata) -> bool {
-        …
-        18→    fn log(&self, record: &Record) {
-        …
-        22→    fn flush(&self) {}
-        …
     macros.rs
-        1→use log::{log, log_enabled, Log, Metadata, Record};
-        16→impl Log for Logger {
-        17→    fn enabled(&self, _: &Metadata) -> bool {
-        …
-        20→    fn log(&self, _: &Record) {}
-        21→    fn flush(&self) {}
-        …
 triagebot.toml

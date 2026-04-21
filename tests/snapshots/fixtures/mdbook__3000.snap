@@ -74,6 +74,9 @@ crates/
             3→This is a simple utility to compare the output of two different versions of mdbook.
         src/
             main.rs
+                1→//! Utility to compare the output of two different versions of mdbook.
+                3→use std::path::Path;
+                4→use std::process::Command;
     mdbook-core/
         Cargo.toml
             1→[package]
@@ -160,7 +163,6 @@ crates/
             4→[![crates.io](https://img.shields.io/crates/v/mdbook-preprocessor.svg)](https://crates.io/crates/mdbook-preprocessor)
             5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
         src/
-            lib.rs
     mdbook-renderer/
         Cargo.toml
             1→[package]
@@ -177,7 +179,6 @@ crates/
             4→[![crates.io](https://img.shields.io/crates/v/mdbook-renderer.svg)](https://crates.io/crates/mdbook-renderer)
             5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
         src/
-            lib.rs
     mdbook-summary/
         Cargo.toml
             1→[package]
@@ -194,7 +195,6 @@ crates/
             4→[![crates.io](https://img.shields.io/crates/v/mdbook-summary.svg)](https://crates.io/crates/mdbook-summary)
             5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
         src/
-            lib.rs
     xtask/
         Cargo.toml
             1→[package]
@@ -262,9 +262,6 @@ src/
             49→    total_bytes_removed: u64,
             50→}
         command_prelude.rs
-            56→impl CommandExt for Command {
-            57→    fn _arg(self, arg: Arg) -> Self {
-            …
         init.rs
             12→pub fn make_subcommand() -> ClapCommand {
             …

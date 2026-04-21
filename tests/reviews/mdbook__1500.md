@@ -4,25 +4,34 @@ snapshot_hash: 2e38d5222966d3907774681db3c485929f29ad622580553ebedc5507e0a551c9
 
 ## Summary
 
-The snapshot at this budget is far from the North Star. It spends budget on broad directory skeletons (including plumbing like `.cargo/`, `.github/ISSUE_TEMPLATE/`, `.github/renovate.json5`) and on per-crate `Cargo.toml` headers + tiny per-file first-line doc comments, while skipping almost every batch above 1.5. High-value batches 1.2 (README one-liner), 1.6 (subcommand about-lines), 1.7 (workspace Cargo.toml), 1.8 (CLI dispatch), 1.9-1.13 (core traits and built-in preprocessor docs), and 1.14 (Guide SUMMARY.md) are absent, displaced by Below-the-fold Plumbing and Tooling content (sub-crate Cargo.toml headers, `crates/*/README.md`, module-doc line-1 snippets). The dominant pattern is a breadth-first directory-walker whose per-file slice never reaches the ranked doc ranges.
+At 1500 tokens the snapshot is dominated by a wide directory tree plus eight sub-crate `Cargo.toml` package-header fragments and a badge-only README excerpt. The dominant pattern is tree-and-plumbing displacing content: below-the-fold material (`.cargo/`, `.github/ISSUE_TEMPLATE/`, `.github/workflows/`, `ci/`, per-crate `Cargo.toml` metadata, crate READMEs, per-file line-1 doc comments) is shown while Tier-1 batches 1.2, 1.6, 1.7, 1.8, 1.9-1.13, 1.14 and all of Tier-2+ are absent. The snapshot gives enough structure to locate files but almost none of the load-bearing content.
 
 ## Divergences
 
 ### Ranking
-- [markdown] [major] 1.2 (README.md:7 one-liner) missing; snapshot includes README.md lines 1,3-5 (badges only, line 7 skipped) plus below-the-fold content such as `crates/mdbook-compare/README.md`, `crates/xtask/README.md`, and module-doc line-1 snippets from `src/main.rs`, `src/cmd/mod.rs`, `crates/mdbook-compare/src/main.rs` — all plumbing/tooling READMEs and tiny doc-comment slices ranked in Below-the-fold.
-- [rust] [major] 1.6 (subcommand `.about()` map from `src/cmd/*.rs`) missing; displaced by sub-crate `Cargo.toml` headers for `mdbook-core`, `mdbook-driver`, `mdbook-html`, `mdbook-markdown`, `mdbook-preprocessor`, `mdbook-renderer`, `mdbook-summary`, `xtask`, `mdbook-compare` (Below-the-fold Plumbing/Tooling: "Sub-crate Cargo.toml files ~600 toks combined").
-- [rust] [major] 1.7 (workspace `Cargo.toml:1-26` header) missing; displaced by the same sub-crate `Cargo.toml` headers listed above.
-- [rust] [major] 1.8 (`src/main.rs:18-55` CLI subcommand dispatch) missing; snapshot only carries `src/main.rs:1` and `src/cmd/mod.rs:1` module docs — line-1 slices ranked in Below-the-fold "CLI internals".
-- [rust] [major] 1.9 (`MDBook` struct fields) missing; displaced by below-the-fold per-crate `Cargo.toml` + `README.md` content.
-- [rust] [major] 1.10 (`Preprocessor` trait) missing; displaced by below-the-fold per-crate content.
-- [rust] [major] 1.11 (`Renderer` trait) missing; displaced by below-the-fold per-crate content.
-- [rust] [major] 1.12 (`LinkPreprocessor` doc listing `{{# ... }}` helpers) missing; displaced by below-the-fold per-crate content.
-- [rust] [major] 1.13 (`IndexPreprocessor` doc) missing; displaced by below-the-fold per-crate content.
-- [markdown] [major] 1.14 (Guide `SUMMARY.md` full) missing; `guide/src/SUMMARY.md` appears only as a file-name entry. Displaced by expanded directory listings for plumbing such as `.cargo/`, `.github/ISSUE_TEMPLATE/`, `.github/workflows/`, `.github/renovate.json5`, `.gitignore` (pure plumbing, Below-the-fold).
+
+- [markdown] [major] 1.2 (README.md:7 one-liner, "mdBook is a utility to create modern online books from Markdown files.") is missing, while README lines 1/3/4/5 (badge-only head of 6.1) are shown. A Tier-6 surface is displacing the highest-value 14-token Tier-1 batch.
+- [rust] [major] 1.6 (subcommand → about-line map from `src/cmd/*.rs`) is missing; `src/cmd/mod.rs:1` doc comment and the `src/cmd/` file listing appear in its place, along with the below-the-fold sub-crate `Cargo.toml` headers.
+- [rust] [major] 1.7 (workspace `Cargo.toml:1-26` header: `[workspace] members`, `[workspace.lints]`, `[workspace.package]`) is missing; per-crate `[package]` fragments (below-the-fold plumbing) appear instead.
+- [rust] [major] 1.8 (`src/main.rs:18-55` CLI dispatch) is missing; only `src/main.rs:1` doc-comment line is shown — a slice ranked in below-the-fold "CLI internals".
+- [rust] [major] 1.9 (`MDBook` struct fields, `crates/mdbook-driver/src/mdbook.rs:28-44`) is missing; below-the-fold `mdbook-driver/Cargo.toml` package header + `[features]` fragment is shown instead.
+- [rust] [major] 1.10 (`Preprocessor` trait) is missing; displaced by below-the-fold `mdbook-preprocessor/Cargo.toml` header.
+- [rust] [major] 1.11 (`Renderer` trait) is missing; displaced by below-the-fold `mdbook-renderer/Cargo.toml` header.
+- [rust] [major] 1.12 (`LinkPreprocessor` doc listing `{{# include}}`/`{{# rustdoc_include}}`/`{{# playground}}`/`{{# title}}`) is missing; displaced by below-the-fold per-crate `Cargo.toml` content.
+- [rust] [major] 1.13 (`IndexPreprocessor` doc) is missing; displaced by below-the-fold per-crate `Cargo.toml` content.
+- [markdown] [major] 1.14 (Guide `SUMMARY.md` full) is missing — `guide/src/SUMMARY.md` appears only as a filename entry. Displaced by expanded plumbing listings (`.cargo/config.toml`, `.github/ISSUE_TEMPLATE/*`, `.github/renovate.json5`, `.gitignore`, full `.github/workflows/`, full `ci/`).
+- [markdown] [minor] 6.1 is partially shown (lines 1,3,4,5) but 1.2 (line 7, within the same 1-13 span) is not; lower-ranked badge context displaces the higher-ranked sentence.
+- [generic] [major] Pure plumbing entries (`.cargo/config.toml`, `.github/ISSUE_TEMPLATE/{bug_report,feature_request,question}.yml`, `.github/renovate.json5`, `.gitignore`) appear while every Tier-2+ batch is absent. These are named in the Plumbing section of below-the-fold.
+- [rust] [major] Below-the-fold per-file line-1 doc-comment snippets (`src/main.rs:1`, `src/cmd/mod.rs:1`, `crates/mdbook-compare/src/main.rs:1`) appear while Tier-1 content is absent.
 
 ### Batch correctness
-- [rust] [minor] 1.4 (crate-name → one-line description map) is rendered indirectly: descriptions surface as part of full `Cargo.toml:1-8` header slices per crate, not as the compact map specified by the batch. Additionally `mdbook-compare/Cargo.toml` and `xtask/Cargo.toml` have no `description` field and the batch specifies a derived one-liner for those two — the snapshot emits neither a derived description nor any description line for those two crates, so the batch's semantic content is incomplete for 2 of 9 workspace members.
-- [generic] [minor] 1.5 (`src/` and `src/cmd/` listings) is partially included: `src/cmd/` lists `watch.rs` and `watch/` as a sibling but does not expand `watch/` to show `watch/native.rs` and `watch/poller.rs` as the batch specifies. The batch's listing is truncated at the directory boundary.
+
+- [markdown] [minor] 1.1 violated: the rendered top-level listing includes `.gitignore`, `.cargo/`, and `.github/` which the North Star's 1.1 enumeration explicitly excludes (it starts at `CHANGELOG.md` and ends at `triagebot.toml`). The batch is supposed to be an orthogonal named set of 17 entries; the snapshot merges it into a tree with dotfiles interleaved.
+- [markdown] [minor] 6.1 violated: of `README.md:1-13` only lines 1, 3, 4, 5 appear. Lines 2, 6 (blanks) and lines 7-13 (the intro paragraph and the links to User Guide / Contribution Guide) are silently elided. A reader cannot tell from the snapshot that the paragraph exists.
+- [rust] [minor] 1.5 violated: `src/cmd/` listing shows `watch/` and `watch.rs` as siblings, but `src/cmd/watch/native.rs` and `src/cmd/watch/poller.rs` — both enumerated in the batch — are omitted (the `watch/` subdir is unexpanded).
+- [rust] [minor] 1.4 violated: the snapshot conveys crate descriptions only via fragmentary `Cargo.toml` `[package]` blocks (with name, version, description, plus workspace boilerplate). It does not emit a compact crate→description map, and for `mdbook-compare`/`xtask` (no `description` field) the batch calls for a derived one-liner — the snapshot emits neither a derived description nor any description line for those two, so 2 of 9 workspace members are missing description content.
+- [rust] [minor] Sub-crate `Cargo.toml` plumbing emitted partially: for `mdbook-driver` and `mdbook-html`, non-contiguous `[features]` snippets (lines 31-32 and 36-37 respectively) are appended to the `[package]` block with no indication of the gap, so a reader cannot tell what `[dependencies]` lie between.
 
 ### Honesty
+
 - (none)

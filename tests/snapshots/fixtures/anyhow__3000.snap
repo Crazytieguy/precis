@@ -33,14 +33,6 @@ README.md
     6→[<img alt="docs.rs" src="https://img.shields.io/badge/docs.rs-anyhow-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs" height="20">](https://docs.rs/anyhow)
     7→[<img alt="build status" src="https://img.shields.io/github/actions/workflow/status/dtolnay/anyhow/ci.yml?branch=master&style=for-the-badge" height="20">](https://github.com/dtolnay/anyhow/actions?query=branch%3Amaster)
 build.rs
-    3→use std::env;
-    4→use std::ffi::OsString;
-    5→use std::fs;
-    6→use std::io::ErrorKind;
-    7→use std::iter;
-    8→use std::path::Path;
-    9→use std::process::{self, Command, Stdio};
-    10→use std::str;
 rust-toolchain.toml
 src/
     backtrace.rs
@@ -85,17 +77,6 @@ src/
         954→    pub error: E,
         955→}
     fmt.rs
-        6→impl ErrorImpl {
-        7→    pub(crate) unsafe fn display(this: Ref<Self>, f: &mut fmt::Formatter) -> fmt::Result {
-        …
-        20→    pub(crate) unsafe fn debug(this: Ref<Self>, f: &mut fmt::Formatter) -> fmt::Result {
-        …
-        75→impl<T> Write for Indented<'_, T>
-        76→where
-        77→    T: Write,
-        78→{
-        79→    fn write_str(&mut self, s: &str) -> fmt::Result {
-        …
     kind.rs
         55→pub struct Adhoc;
         58→pub trait AdhocKind: Sized {
@@ -142,9 +123,36 @@ src/
         …
     macros.rs
         58→macro_rules! bail {
-        …
+        59→    ($msg:literal $(,)?) => {
+        60→        return $crate::__private::Err($crate::__anyhow!($msg))
+        61→    };
+        62→    ($err:expr $(,)?) => {
+        63→        return $crate::__private::Err($crate::__anyhow!($err))
+        64→    };
+        65→    ($fmt:expr, $($arg:tt)*) => {
+        66→        return $crate::__private::Err($crate::__anyhow!($fmt, $($arg)*))
+        67→    };
+        68→}
         204→macro_rules! anyhow {
-        …
+        205→    ($msg:literal $(,)?) => {
+        206→        $crate::__private::must_use({
+        207→            let error = $crate::__private::format_err($crate::__private::format_args!($msg));
+        208→            error
+        209→        })
+        210→    };
+        211→    ($err:expr $(,)?) => {
+        212→        $crate::__private::must_use({
+        213→            use $crate::__private::kind::*;
+        214→            let error = match $err {
+        215→                error => (&error).anyhow_kind().new(error),
+        216→            };
+        217→            error
+        218→        })
+        219→    };
+        220→    ($fmt:expr, $($arg:tt)*) => {
+        221→        $crate::Error::msg($crate::__private::format!($fmt, $($arg)*))
+        222→    };
+        223→}
         230→macro_rules! __anyhow {
         …
     nightly.rs
@@ -203,6 +211,8 @@ tests/
             4→authors = ["David Tolnay <dtolnay@gmail.com>"]
             5→edition = "2021"
             6→publish = false
+            11→[dependencies]
+            12→anyhow = { path = "../..", default-features = false }
             14→[features]
             15→default = ["std"]
             16→std = ["anyhow/std"]
@@ -239,28 +249,11 @@ tests/
     test_backtrace.rs
     test_boxed.rs
     test_chain.rs
-        1→use anyhow::{anyhow, Chain, Error};
     test_context.rs
-        55→impl Dropped {
-        56→    fn none(&self) -> bool {
-        …
-        60→    fn all(&self) -> bool {
-        …
     test_convert.rs
     test_downcast.rs
     test_ensure.rs
-        42→impl<T> Add<T> for S {
-        44→    fn add(self, rhs: T) -> Self::Output {
-        …
-        57→impl<T> Trait for T {}
-        65→impl<T: ?Sized> PartialEq for Enum<T> {
-        66→    fn eq(&self, rhs: &Self) -> bool {
-        …
-        71→impl<T: ?Sized> Debug for Enum<T> {
-        72→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-        …
     test_ffi.rs
-        4→use anyhow::anyhow;
         7→pub extern "C" fn anyhow1(err: anyhow::Error) {
         …
         12→pub extern "C" fn anyhow2(err: &mut Option<anyhow::Error>) {
@@ -271,24 +264,12 @@ tests/
     test_macros.rs
     test_repr.rs
     test_source.rs
-        11→impl Display for TestError {
-        12→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-        …
-        19→impl StdError for TestError {
-        20→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
-        …
     ui/
         chained-comparison.rs
         chained-comparison.stderr
         empty-ensure.rs
         empty-ensure.stderr
         ensure-nonbool.rs
-            10→impl Deref for DerefBool {
-            12→    fn deref(&self) -> &Self::Target {
-            …
-            17→impl Not for NotBool {
-            19→    fn not(self) -> Self::Output {
-            …
         ensure-nonbool.stderr
         must-use.rs
         must-use.stderr
