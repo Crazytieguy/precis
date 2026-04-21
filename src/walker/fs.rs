@@ -7,7 +7,7 @@ use std::ffi::OsString;
 use std::path::{Path, PathBuf};
 
 use crate::batch::{BatchContent, BatchKey, EntryKind, FsKey, ResolvedBatch, ValueSignals};
-use crate::value::depth_factor;
+use crate::value::{depth_factor, non_essential_factor};
 
 use super::{Candidate, WalkCtx};
 
@@ -48,7 +48,7 @@ pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
             parent: dir.clone(),
             children,
         },
-        signals: dir_listing_signals(dir == ctx.root(), ctx.depth_from_root(dir)),
+        signals: dir_listing_signals_for_path(dir, dir == ctx.root(), ctx.depth_from_root(dir)),
     })
 }
 
@@ -135,10 +135,10 @@ fn walk_files_recursive(dir: &Path, ext: &str, out: &mut Vec<PathBuf>) {
 
 fn dir_listing_candidate(dir: PathBuf, depth: usize) -> Candidate {
     let is_root = depth == 0;
-    let signals = dir_listing_signals(is_root, depth);
+    let signals = dir_listing_signals_for_path(&dir, is_root, depth);
     // Cost hint: small — a listing of ~10 entries is ~30-60 tokens.
     let cost_hint = 40;
-    Candidate::new(BatchKey::Fs(FsKey::DirListing { dir }), signals, cost_hint)
+    Candidate::new(FsKey::DirListing { dir }.into(), signals, cost_hint)
 }
 
 fn dir_listing_signals(is_root: bool, depth: usize) -> ValueSignals {
@@ -157,6 +157,14 @@ fn dir_listing_signals(is_root: bool, depth: usize) -> ValueSignals {
             depth_factor: depth_factor(depth),
         }
     }
+}
+
+/// Variant of `dir_listing_signals` that takes the dir path so the
+/// non-essential-directory discount applies (tests/, examples/, benches/).
+fn dir_listing_signals_for_path(dir: &std::path::Path, is_root: bool, depth: usize) -> ValueSignals {
+    let mut s = dir_listing_signals(is_root, depth);
+    s.depth_factor *= non_essential_factor(dir);
+    s
 }
 
 /// Directories we never enter. Matches common heavy/generated trees.

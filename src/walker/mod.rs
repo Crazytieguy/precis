@@ -161,35 +161,60 @@ impl WalkCtx {
     }
 }
 
+/// Lines a collector wants to render for one file: `full` = emit the source
+/// line verbatim; `ellipses` = emit a walker `…` marker at that line number
+/// (no text, no rendered line number — but a real line number so descendant
+/// batches can override it with real content).
+#[derive(Default, Debug)]
+pub(crate) struct FileLines {
+    pub full: Vec<usize>,
+    pub ellipses: Vec<usize>,
+}
+
+impl FileLines {
+    pub fn new(full: Vec<usize>) -> Self {
+        Self {
+            full,
+            ellipses: Vec::new(),
+        }
+    }
+    pub fn with_ellipses(mut self, ellipses: Vec<usize>) -> Self {
+        self.ellipses = ellipses;
+        self
+    }
+}
+
 /// Build a [`ResolvedBatch`] whose content is a single-file Lines map. Empty
-/// lines are filtered (renderer rejects them). Returns `None` when the
-/// resulting set is empty — caller usually should propagate as "dead key".
+/// lines are filtered. Returns `None` when the resulting set is empty —
+/// caller propagates as "dead key".
 pub(crate) fn single_file_lines_batch(
     path: &Path,
     source: &str,
-    line_numbers: Vec<usize>,
+    lines: FileLines,
     signals: ValueSignals,
 ) -> Option<ResolvedBatch> {
-    let lines = lines_map_from(source, line_numbers);
-    if lines.is_empty() {
+    let map = lines_map_from(source, lines);
+    if map.is_empty() {
         return None;
     }
     let mut file_map = BTreeMap::new();
-    file_map.insert(path.to_path_buf(), lines);
+    file_map.insert(path.to_path_buf(), map);
     Some(ResolvedBatch {
         content: BatchContent::Lines(file_map),
         signals,
     })
 }
 
-/// Produce `{line_number → RenderedLine::Full(text)}` for a set of 1-indexed
-/// source line numbers, skipping blank lines.
+/// Produce `{line_number → RenderedLine}` for a `FileLines` spec. `Full`
+/// entries skip blank source; `Ellipsis` entries don't need a source line
+/// to exist (they're walker-emitted markers).
 pub(crate) fn lines_map_from(
     source: &str,
-    line_numbers: Vec<usize>,
+    lines: FileLines,
 ) -> BTreeMap<usize, RenderedLine> {
     let src_lines: Vec<&str> = source.lines().collect();
-    line_numbers
+    let mut out: BTreeMap<usize, RenderedLine> = lines
+        .full
         .into_iter()
         .filter_map(|n| {
             let text = src_lines.get(n - 1)?;
@@ -198,5 +223,11 @@ pub(crate) fn lines_map_from(
             }
             Some((n, RenderedLine::Full(text.to_string())))
         })
-        .collect()
+        .collect();
+    for n in lines.ellipses {
+        // An ellipsis must not overwrite a `Full` entry we already emitted
+        // for the same line; that would drop the actual content.
+        out.entry(n).or_insert(RenderedLine::Ellipsis);
+    }
+    out
 }

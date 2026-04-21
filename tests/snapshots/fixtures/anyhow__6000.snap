@@ -60,6 +60,7 @@ src/
         5→pub(crate) use self::capture::{Backtrace, BacktraceStatus};
         8→pub(crate) enum Backtrace {}
         71→mod capture {
+        …
     chain.rs
         1→use self::ChainState::*;
         2→use crate::StdError;
@@ -79,15 +80,21 @@ src/
         24→}
         26→impl<'a> Chain<'a> {
         28→    pub fn new(head: &'a (dyn StdError + 'static)) -> Self {
+        …
         35→impl<'a> Iterator for Chain<'a> {
         38→    fn next(&mut self) -> Option<Self::Item> {
+        …
         50→    fn size_hint(&self) -> (usize, Option<usize>) {
+        …
         57→impl DoubleEndedIterator for Chain<'_> {
         58→    fn next_back(&mut self) -> Option<Self::Item> {
+        …
         76→impl ExactSizeIterator for Chain<'_> {
         77→    fn len(&self) -> usize {
+        …
         94→impl Default for Chain<'_> {
         95→    fn default() -> Self {
+        …
     context.rs
         1→use crate::error::ContextError;
         2→use crate::{Context, Error, StdError};
@@ -95,7 +102,9 @@ src/
         4→use core::fmt::{self, Debug, Display, Write};
         7→use crate::nightly::{self, Request};
         9→mod ext {
+        …
         186→pub(crate) mod private {
+        …
     ensure.rs
         1→use crate::Error;
         2→use alloc::string::String;
@@ -113,19 +122,27 @@ src/
         17→    B: Debug,
         18→{
         19→    fn __dispatch_ensure(self, msg: &'static str) -> Error {
+        …
         25→pub trait NotBothDebug {
         26→    fn __dispatch_ensure(self, msg: &'static str) -> Error;
         27→}
         29→impl<A, B> NotBothDebug for &(A, B) {
         30→    fn __dispatch_ensure(self, msg: &'static str) -> Error {
+        …
         40→impl Buf {
         41→    fn new() -> Self {
+        …
         48→    fn as_str(&self) -> &str {
+        …
         58→impl Write for Buf {
         59→    fn write_str(&mut self, s: &str) -> fmt::Result {
+        …
         105→macro_rules! __parse_ensure {
+        …
         886→macro_rules! __fancy_ensure {
+        …
         912→macro_rules! __fallback_ensure {
+        …
     error.rs
         1→use crate::backtrace::Backtrace;
         2→use crate::chain::Chain;
@@ -159,13 +176,17 @@ src/
         4→use core::fmt::{self, Debug, Write};
         6→impl ErrorImpl {
         7→    pub(crate) unsafe fn display(this: Ref<Self>, f: &mut fmt::Formatter) -> fmt::Result {
+        …
         20→    pub(crate) unsafe fn debug(this: Ref<Self>, f: &mut fmt::Formatter) -> fmt::Result {
+        …
         75→impl<T> Write for Indented<'_, T>
         76→where
         77→    T: Write,
         78→{
         79→    fn write_str(&mut self, s: &str) -> fmt::Result {
+        …
         104→mod tests {
+        …
     kind.rs
         47→use crate::Error;
         48→use core::fmt::{Debug, Display};
@@ -184,6 +205,7 @@ src/
         70→    where
         71→        M: Display + Debug + Send + Sync + 'static,
         72→    {
+        …
         77→pub struct Trait;
         80→pub trait TraitKind: Sized {
         81→    #[inline]
@@ -197,6 +219,7 @@ src/
         92→    where
         93→        E: Into<Error>,
         94→    {
+        …
         100→pub struct Boxed;
         104→pub trait BoxedKind: Sized {
         105→    #[inline]
@@ -207,6 +230,7 @@ src/
         112→impl BoxedKind for Box<dyn StdError + Send + Sync> {}
         115→impl Boxed {
         117→    pub fn new(self, error: Box<dyn StdError + Send + Sync>) -> Error {
+        …
     lib.rs
         252→mod backtrace;
         253→mod chain;
@@ -246,18 +270,26 @@ src/
         627→        F: FnOnce() -> C;
         628→}
         650→pub fn Ok<T>(value: T) -> Result<T> {
+        …
         656→pub mod __private {
+        …
     macros.rs
         58→macro_rules! bail {
+        …
         204→macro_rules! anyhow {
+        …
         230→macro_rules! __anyhow {
+        …
     nightly.rs
         7→use core::error::{self, Error};
         8→use std::backtrace::Backtrace;
         10→pub use core::error::Request;
         41→pub fn request_ref_backtrace(err: &dyn Error) -> Option<&Backtrace> {
+        …
         52→pub fn provide_ref_backtrace<'a>(request: &mut Request<'a>, backtrace: &'a Backtrace) {
+        …
         56→pub fn provide<'a>(err: &'a (impl Error + ?Sized), request: &mut Request<'a>) {
+        …
     ptr.rs
         1→use alloc::boxed::Box;
         2→use core::marker::PhantomData;
@@ -296,11 +328,13 @@ src/
         15→    M: Display + Debug,
         16→{
         17→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        …
         22→impl<M> Display for MessageError<M>
         23→where
         24→    M: Display + Debug,
         25→{
         26→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        …
         31→impl<M> StdError for MessageError<M> where M: Display + Debug + 'static {}
         34→pub struct DisplayError<M>(pub M);
         36→impl<M> Debug for DisplayError<M>
@@ -308,28 +342,37 @@ src/
         38→    M: Display,
         39→{
         40→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        …
         45→impl<M> Display for DisplayError<M>
         46→where
         47→    M: Display,
         48→{
         49→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        …
         54→impl<M> StdError for DisplayError<M> where M: Display + 'static {}
         58→pub struct BoxedError(pub Box<dyn StdError + Send + Sync>);
         61→impl Debug for BoxedError {
         62→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        …
         68→impl Display for BoxedError {
         69→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        …
         75→impl StdError for BoxedError {
         76→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
+        …
         81→    fn provide<'a>(&'a self, request: &mut Request<'a>) {
+        …
 tests/
     common/
         mod.rs
             1→use anyhow::{bail, Result};
             2→use std::io;
             4→pub fn bail_literal() -> Result<()> {
+            …
             8→pub fn bail_fmt() -> Result<()> {
+            …
             12→pub fn bail_error() -> Result<()> {
+            …
     compiletest.rs
     crate/
         .gitignore
@@ -359,17 +402,22 @@ tests/
             11→}
             13→impl Flag {
             14→    pub fn new() -> Self {
+            …
             20→    pub fn get(&self) -> bool {
+            …
             26→pub struct DetectDrop {
             27→    has_dropped: Flag,
             28→}
             30→impl DetectDrop {
             31→    pub fn new(has_dropped: &Flag) -> Self {
+            …
             40→impl StdError for DetectDrop {}
             42→impl Display for DetectDrop {
             43→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+            …
             48→impl Drop for DetectDrop {
             49→    fn drop(&mut self) {
+            …
     test_autotrait.rs
         3→use anyhow::Error;
         4→use std::panic::{RefUnwindSafe, UnwindSafe};
@@ -389,7 +437,9 @@ tests/
         11→use thiserror::Error;
         55→impl Dropped {
         56→    fn none(&self) -> bool {
+        …
         60→    fn all(&self) -> bool {
+        …
     test_convert.rs
         3→mod drop;
         5→use self::drop::{DetectDrop, Flag};
@@ -415,16 +465,22 @@ tests/
         38→use std::ptr;
         42→impl<T> Add<T> for S {
         44→    fn add(self, rhs: T) -> Self::Output {
+        …
         57→impl<T> Trait for T {}
         65→impl<T: ?Sized> PartialEq for Enum<T> {
         66→    fn eq(&self, rhs: &Self) -> bool {
+        …
         71→impl<T: ?Sized> Debug for Enum<T> {
         72→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+        …
     test_ffi.rs
         4→use anyhow::anyhow;
         7→pub extern "C" fn anyhow1(err: anyhow::Error) {
+        …
         12→pub extern "C" fn anyhow2(err: &mut Option<anyhow::Error>) {
+        …
         17→pub extern "C" fn anyhow3() -> Option<anyhow::Error> {
+        …
     test_fmt.rs
         1→use anyhow::{bail, Context, Result};
         2→use std::io;
@@ -446,8 +502,10 @@ tests/
         4→use std::io;
         11→impl Display for TestError {
         12→    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+        …
         19→impl StdError for TestError {
         20→    fn source(&self) -> Option<&(dyn StdError + 'static)> {
+        …
     ui/
         chained-comparison.rs
             1→use anyhow::{ensure, Result};
@@ -460,8 +518,10 @@ tests/
             2→use std::ops::{Deref, Not};
             10→impl Deref for DerefBool {
             12→    fn deref(&self) -> &Self::Target {
+            …
             17→impl Not for NotBool {
             19→    fn not(self) -> Self::Output {
+            …
         ensure-nonbool.stderr
         must-use.rs
             3→use anyhow::anyhow;

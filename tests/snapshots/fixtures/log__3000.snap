@@ -75,16 +75,22 @@ src/
         7→pub use std::{format_args, module_path, stringify};
         10→pub type Value<'a> = &'a str;
         12→mod sealed {
+        …
         21→impl<'a> KVs<'a> for &'a [(&'a str, Value<'a>)] {
         23→    fn into_kvs(self) -> Option<&'a [(&'a str, Value<'a>)]> {
+        …
         28→impl<'a> KVs<'a> for () {
         30→    fn into_kvs(self) -> Option<&'a [(&'a str, Value<'a>)]> {
+        …
         37→/// The global logger proxy.
         39→pub struct GlobalLogger;
         41→impl Log for GlobalLogger {
         42→    fn enabled(&self, metadata: &Metadata) -> bool {
+        …
         46→    fn log(&self, record: &Record) {
+        …
         50→    fn flush(&self) {
+        …
         84→pub fn log<'a, K, L>(
         85→    logger: L,
         86→    args: Arguments,
@@ -95,9 +101,13 @@ src/
         91→    K: KVs<'a>,
         92→    L: Log,
         93→{
+        …
         103→pub fn enabled<L: Log>(logger: L, level: Level, target: &str) -> bool {
+        …
         108→pub fn loc() -> &'static Location<'static> {
+        …
         113→mod kv_support {
+        …
         151→pub use self::kv_support::*;
     kv/
         error.rs
@@ -108,13 +118,19 @@ src/
             7→}
             19→impl Error {
             21→    pub fn msg(msg: &'static str) -> Self {
+            …
             29→    pub(super) fn from_value(err: crate::kv::value::inner::Error) -> Self {
+            …
             37→    pub(super) fn into_value(self) -> crate::kv::value::inner::Error {
+            …
             48→impl fmt::Display for Error {
             49→    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+            …
             62→impl From<fmt::Error> for Error {
             63→    fn from(_: fmt::Error) -> Self {
+            …
             69→mod std_support {
+            …
         key.rs
             3→use std::borrow::Borrow;
             4→use std::fmt;
@@ -128,9 +144,13 @@ src/
             39→    key: &'k str,
             40→}
             94→mod std_support {
+            …
             113→mod sval_support {
+            …
             136→mod serde_support {
+            …
             152→mod tests {
+            …
         mod.rs
             246→mod error;
             247→mod key;
@@ -147,21 +167,36 @@ src/
             6→use crate::kv::{Error, Key, ToKey, ToValue, Value};
             7→use std::fmt;
             280→mod std_support {
+            …
             462→pub use VisitSource as Visitor;
             465→mod tests {
+            …
         value.rs
-            6→use std::fmt;
-            8→pub use crate::kv::Error;
-            390→mod std_support {
-            602→pub(in crate::kv) mod inner {
-            721→pub(in crate::kv) mod inner {
-            1123→pub use VisitValue as Visit;
             1129→macro_rules! as_debug {
+            1130→    ($capture:expr) => {
+            1131→        $crate::kv::Value::from_debug(&$capture)
+            1132→    };
+            1133→}
             1139→macro_rules! as_display {
+            1140→    ($capture:expr) => {
+            1141→        $crate::kv::Value::from_display(&$capture)
+            1142→    };
+            1143→}
             1149→macro_rules! as_error {
+            1150→    ($capture:expr) => {
+            1151→        $crate::kv::Value::from_dyn_error(&$capture)
+            1152→    };
+            1153→}
             1159→macro_rules! as_serde {
+            1160→    ($capture:expr) => {
+            1161→        $crate::kv::Value::from_serde(&$capture)
+            1162→    };
+            1163→}
             1169→macro_rules! as_sval {
-            1176→pub(crate) mod tests {
+            1170→    ($capture:expr) => {
+            1171→        $crate::kv::Value::from_sval(&$capture)
+            1172→    };
+            1173→}
     lib.rs
         399→use std::cfg;
         401→use std::error;
@@ -175,27 +210,48 @@ src/
         418→use std::sync::atomic::Ordering;
         1600→pub mod __private_api;
         1627→mod tests {
+        …
     macros.rs
         75→macro_rules! log {
+        …
         119→macro_rules! __log {
+        …
         165→macro_rules! error {
+        …
         204→macro_rules! warn {
+        …
         252→macro_rules! info {
+        …
         292→macro_rules! debug {
+        …
         336→macro_rules! trace {
+        …
         391→macro_rules! log_enabled {
+        …
         415→macro_rules! __log_enabled {
+        …
         429→macro_rules! __log_logger {
+        …
         445→macro_rules! __log_key {
+        …
         459→macro_rules! __log_key {
+        …
         468→macro_rules! __log_value {
+        …
         517→macro_rules! __log_value {
+        …
         526→macro_rules! __log_value_sval {
+        …
         535→macro_rules! __log_value_sval {
+        …
         544→macro_rules! __log_value_serde {
+        …
         553→macro_rules! __log_value_serde {
+        …
         564→macro_rules! __log_value_error {
+        …
         573→macro_rules! __log_value_error {
+        …
     serde.rs
         3→use serde_core::de::{
         4→    Deserialize, DeserializeSeed, Deserializer, EnumAccess, Error, Unexpected, VariantAccess,
@@ -205,27 +261,8 @@ src/
         9→use crate::{Level, LevelFilter, LOG_LEVEL_NAMES};
         11→use std::fmt;
         12→use std::str::{self, FromStr};
-        16→impl Serialize for Level {
-        17→    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-        18→    where
-        19→        S: Serializer,
-        20→    {
-        31→impl<'de> Deserialize<'de> for Level {
-        32→    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-        33→    where
-        34→        D: Deserializer<'de>,
-        35→    {
-        110→impl Serialize for LevelFilter {
-        111→    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-        112→    where
-        113→        S: Serializer,
-        114→    {
-        126→impl<'de> Deserialize<'de> for LevelFilter {
-        127→    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-        128→    where
-        129→        D: Deserializer<'de>,
-        130→    {
         206→mod tests {
+        …
 test_max_level_features/
     Cargo.toml
         1→[package]
@@ -242,20 +279,28 @@ test_max_level_features/
         5→use log::set_boxed_logger;
         17→impl Log for Logger {
         18→    fn enabled(&self, _: &Metadata) -> bool {
+        …
         22→    fn log(&self, record: &Record) {
+        …
         26→    fn flush(&self) {}
+        …
 tests/
     integration.rs
         3→use log::{debug, error, info, trace, warn, Level, LevelFilter, Log, Metadata, Record};
         4→use std::sync::{Arc, Mutex};
         13→impl Log for Logger {
         14→    fn enabled(&self, _: &Metadata) -> bool {
+        …
         18→    fn log(&self, record: &Record) {
+        …
         22→    fn flush(&self) {}
+        …
     macros.rs
         1→use log::{log, log_enabled, Log, Metadata, Record};
         16→impl Log for Logger {
         17→    fn enabled(&self, _: &Metadata) -> bool {
+        …
         20→    fn log(&self, _: &Record) {}
         21→    fn flush(&self) {}
+        …
 triagebot.toml

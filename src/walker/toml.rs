@@ -14,9 +14,9 @@ use std::sync::Arc;
 use tree_sitter::{Node, Tree};
 
 use crate::batch::{BatchKey, FsKey, ResolvedBatch, TomlKey, ValueSignals};
-use crate::value::depth_factor;
+use crate::value::{depth_factor, non_essential_factor};
 
-use super::{Candidate, WalkCtx, fs::files_with_extension, single_file_lines_batch};
+use super::{Candidate, FileLines, WalkCtx, fs::files_with_extension, single_file_lines_batch};
 
 pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate> {
     let BatchKey::Fs(FsKey::DirListing { dir }) = scheduled else {
@@ -31,17 +31,17 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate> {
         let depth = ctx.depth_from_root(&file);
         out.push(candidate(
             TomlKey::Identity { file: file.clone() },
-            identity_signals(depth),
+            identity_signals(&file, depth),
             60,
         ));
         out.push(candidate(
             TomlKey::Features { file: file.clone() },
-            features_signals(depth),
+            features_signals(&file, depth),
             40,
         ));
         out.push(candidate(
             TomlKey::Dependencies { file: file.clone() },
-            dependencies_signals(depth),
+            dependencies_signals(&file, depth),
             80,
         ));
     }
@@ -56,13 +56,13 @@ pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
         TomlKey::Identity { file } => mat_sections(
             file,
             |n| matches!(n, "package" | "workspace" | "workspace.package"),
-            identity_signals(ctx.depth_from_root(file)),
+            identity_signals(file, ctx.depth_from_root(file)),
             ctx,
         ),
         TomlKey::Features { file } => mat_sections(
             file,
             |n| n == "features",
-            features_signals(ctx.depth_from_root(file)),
+            features_signals(file, ctx.depth_from_root(file)),
             ctx,
         ),
         TomlKey::Dependencies { file } => mat_sections(
@@ -76,7 +76,7 @@ pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
                         | "workspace.dependencies"
                 )
             },
-            dependencies_signals(ctx.depth_from_root(file)),
+            dependencies_signals(file, ctx.depth_from_root(file)),
             ctx,
         ),
     }
@@ -101,7 +101,7 @@ fn mat_sections(
     }
     line_numbers.sort();
     line_numbers.dedup();
-    single_file_lines_batch(file, &source, line_numbers, signals)
+    single_file_lines_batch(file, &source, FileLines::new(line_numbers), signals)
 }
 
 // --- candidate helpers ---
@@ -110,30 +110,30 @@ fn candidate(tk: TomlKey, signals: ValueSignals, cost_hint: usize) -> Candidate 
     Candidate::new(tk.into(), signals, cost_hint)
 }
 
-fn identity_signals(depth: usize) -> ValueSignals {
+fn identity_signals(file: &Path, depth: usize) -> ValueSignals {
     ValueSignals {
         catastrophic_omission: 1.0,
         follow_up_minimization: 0.7,
         zero_tool_call_understanding: 0.85,
-        depth_factor: depth_factor(depth),
+        depth_factor: depth_factor(depth) * non_essential_factor(file),
     }
 }
 
-fn features_signals(depth: usize) -> ValueSignals {
+fn features_signals(file: &Path, depth: usize) -> ValueSignals {
     ValueSignals {
         catastrophic_omission: 0.75,
         follow_up_minimization: 0.6,
         zero_tool_call_understanding: 0.5,
-        depth_factor: depth_factor(depth),
+        depth_factor: depth_factor(depth) * non_essential_factor(file),
     }
 }
 
-fn dependencies_signals(depth: usize) -> ValueSignals {
+fn dependencies_signals(file: &Path, depth: usize) -> ValueSignals {
     ValueSignals {
         catastrophic_omission: 0.4,
         follow_up_minimization: 0.7,
         zero_tool_call_understanding: 0.4,
-        depth_factor: depth_factor(depth),
+        depth_factor: depth_factor(depth) * non_essential_factor(file),
     }
 }
 

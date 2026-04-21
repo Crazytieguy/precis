@@ -33,6 +33,14 @@ README.md
     6→[<img alt="docs.rs" src="https://img.shields.io/badge/docs.rs-anyhow-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs" height="20">](https://docs.rs/anyhow)
     7→[<img alt="build status" src="https://img.shields.io/github/actions/workflow/status/dtolnay/anyhow/ci.yml?branch=master&style=for-the-badge" height="20">](https://github.com/dtolnay/anyhow/actions?query=branch%3Amaster)
 build.rs
+    3→use std::env;
+    4→use std::ffi::OsString;
+    5→use std::fs;
+    6→use std::io::ErrorKind;
+    7→use std::iter;
+    8→use std::path::Path;
+    9→use std::process::{self, Command, Stdio};
+    10→use std::str;
 rust-toolchain.toml
 src/
     backtrace.rs
@@ -59,8 +67,11 @@ src/
         26→    fn __dispatch_ensure(self, msg: &'static str) -> Error;
         27→}
         105→macro_rules! __parse_ensure {
+        …
         886→macro_rules! __fancy_ensure {
+        …
         912→macro_rules! __fallback_ensure {
+        …
     error.rs
         934→pub(crate) struct ErrorImpl<E = ()> {
         935→    vtable: &'static ErrorVTable,
@@ -96,37 +107,24 @@ src/
         627→        F: FnOnce() -> C;
         628→}
         650→pub fn Ok<T>(value: T) -> Result<T> {
+        …
     macros.rs
         58→macro_rules! bail {
+        …
         204→macro_rules! anyhow {
+        …
         230→macro_rules! __anyhow {
+        …
     nightly.rs
         41→pub fn request_ref_backtrace(err: &dyn Error) -> Option<&Backtrace> {
+        …
         52→pub fn provide_ref_backtrace<'a>(request: &mut Request<'a>, backtrace: &'a Backtrace) {
+        …
         56→pub fn provide<'a>(err: &'a (impl Error + ?Sized), request: &mut Request<'a>) {
+        …
     ptr.rs
     wrapper.rs
         11→pub struct MessageError<M>(pub M);
         34→pub struct DisplayError<M>(pub M);
         58→pub struct BoxedError(pub Box<dyn StdError + Send + Sync>);
 tests/
-    common/
-        mod.rs
-    compiletest.rs
-    crate/
-    drop/
-        mod.rs
-    test_autotrait.rs
-    test_backtrace.rs
-    test_boxed.rs
-    test_chain.rs
-    test_context.rs
-    test_convert.rs
-    test_downcast.rs
-    test_ensure.rs
-    test_ffi.rs
-    test_fmt.rs
-    test_macros.rs
-    test_repr.rs
-    test_source.rs
-    ui/

@@ -38,6 +38,26 @@ pub fn depth_factor(depth: usize) -> f64 {
     1.0 / (1.0 + depth.saturating_sub(1) as f64 * 0.3)
 }
 
+/// Multiplier applied to content whose path is under a "non-essential"
+/// directory (tests / examples / benches / fixtures). These are load-bearing
+/// for *using* the crate's test infrastructure but rarely for understanding
+/// it; they should only appear once the primary-source batches have landed.
+pub fn non_essential_factor(path: &std::path::Path) -> f64 {
+    for component in path.components() {
+        let Some(s) = component.as_os_str().to_str() else {
+            continue;
+        };
+        if matches!(
+            s,
+            "tests" | "examples" | "benches" | "fixtures" | "rfcs" | "xtask"
+        ) || s.starts_with("test_")
+        {
+            return 0.35;
+        }
+    }
+    1.0
+}
+
 /// Convert a value and a marginal token cost into the scheduling ratio.
 /// Sublinear in cost — the `sqrt(cost)` denominator means that doubling a
 /// batch's size doesn't halve its ratio, only reduces it by √2. This keeps

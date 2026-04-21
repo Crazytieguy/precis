@@ -21,11 +21,9 @@ use std::sync::Arc;
 use tree_sitter::{Node, Tree};
 
 use crate::batch::{BatchContent, BatchKey, FsKey, RenderedLine, ResolvedBatch, RustKey, ValueSignals};
-use crate::value::depth_factor;
+use crate::value::{depth_factor, non_essential_factor};
 
-use super::{
-    Candidate, WalkCtx, fs::files_with_extension, lines_map_from, single_file_lines_batch,
-};
+use super::{Candidate, FileLines, WalkCtx, fs::files_with_extension, single_file_lines_batch};
 
 pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate> {
     let BatchKey::Fs(FsKey::DirListing { dir }) = scheduled else {
@@ -171,15 +169,17 @@ fn entrypoint_boost(path: &Path) -> f64 {
     }
 }
 
-/// Depth factor for a file, with entrypoints pinned to depth 1 so that
-/// `src/lib.rs` (actual depth 2) isn't penalized relative to root-depth
-/// content. Non-entrypoints use the plain `value::depth_factor`.
+/// Depth factor for a file. Entrypoints are pinned to depth 1 so
+/// `src/lib.rs` isn't penalized relative to root-depth content. All files
+/// multiply by a non-essential-directory factor (`tests/`, `examples/`,
+/// etc.) that down-ranks fixture/test/bench content by default.
 fn file_depth_factor(path: &Path, depth: usize) -> f64 {
-    if is_entrypoint_file(path) {
+    let raw = if is_entrypoint_file(path) {
         depth_factor(depth.min(1))
     } else {
         depth_factor(depth)
-    }
+    };
+    raw * non_essential_factor(path)
 }
 
 fn crate_doc_lede_signals(file: &Path, depth: usize) -> ValueSignals {
@@ -211,9 +211,9 @@ fn pub_decls_signals(file: &Path, depth: usize) -> ValueSignals {
 
 fn pub_docs_signals(file: &Path, depth: usize) -> ValueSignals {
     ValueSignals {
-        catastrophic_omission: (0.25 * entrypoint_boost(file)).min(1.0),
-        follow_up_minimization: 0.55,
-        zero_tool_call_understanding: 0.7,
+        catastrophic_omission: (0.4 * entrypoint_boost(file)).min(1.0),
+        follow_up_minimization: 0.6,
+        zero_tool_call_understanding: 0.8,
         depth_factor: file_depth_factor(file, depth),
     }
 }
@@ -237,10 +237,13 @@ fn macro_names_signals(depth: usize) -> ValueSignals {
 }
 
 fn macro_bodies_signals(depth: usize) -> ValueSignals {
+    // For macro-heavy crates (anyhow, log), the `#[macro_export]` bodies
+    // are the crate's public API — nearly on par with `PubDecls`. The
+    // predecessor edge to MacroNames still orders them.
     ValueSignals {
-        catastrophic_omission: 0.25,
-        follow_up_minimization: 0.55,
-        zero_tool_call_understanding: 0.4,
+        catastrophic_omission: 0.75,
+        follow_up_minimization: 0.85,
+        zero_tool_call_understanding: 0.55,
         depth_factor: depth_factor(depth),
     }
 }
@@ -262,7 +265,7 @@ fn mat_per_file<F>(
     ctx: &WalkCtx,
 ) -> Option<ResolvedBatch>
 where
-    F: Fn(&Tree, &str) -> Vec<usize>,
+    F: Fn(&Tree, &str) -> FileLines,
 {
     let (source, tree) = parse_rust(ctx, file)?;
     let lines = collect(&tree, &source);
@@ -279,7 +282,7 @@ fn mat_cross_file<F>(
     ctx: &WalkCtx,
 ) -> Option<ResolvedBatch>
 where
-    F: Fn(&Tree, &str) -> Vec<usize>,
+    F: Fn(&Tree, &str) -> FileLines,
 {
     let rust_files = files_with_extension(src_dir, "rs");
     if rust_files.is_empty() {
@@ -290,7 +293,7 @@ where
         let Some((source, tree)) = parse_rust(ctx, file) else {
             continue;
         };
-        let lines = lines_map_from(&source, collect(&tree, &source));
+        let lines = super::lines_map_from(&source, collect(&tree, &source));
         if !lines.is_empty() {
             file_map.insert(file.clone(), lines);
         }
@@ -306,7 +309,7 @@ where
 
 // --- AST collectors ---
 
-fn collect_module_doc_lede(tree: &Tree, source: &str) -> Vec<usize> {
+fn collect_module_doc_lede(tree: &Tree, source: &str) -> FileLines {
     let root = tree.root_node();
     let mut cursor = root.walk();
     let mut out = Vec::new();
@@ -329,30 +332,35 @@ fn collect_module_doc_lede(tree: &Tree, source: &str) -> Vec<usize> {
     {
         out.truncate(blank_idx);
     }
-    out
+    FileLines::new(out)
 }
 
-fn collect_mod_use(tree: &Tree, source: &str) -> Vec<usize> {
+fn collect_mod_use(tree: &Tree, _source: &str) -> FileLines {
     let root = tree.root_node();
     let mut cursor = root.walk();
-    let mut out = Vec::new();
+    let mut full = Vec::new();
+    let mut ellipses = Vec::new();
     for child in root.children(&mut cursor) {
         match child.kind() {
-            "use_declaration" => extend_span(&mut out, child, source),
+            "use_declaration" => push_rows(&mut full, child.start_position().row, signature_end_row(child)),
             "mod_item" => {
                 let sig_end = signature_end_row(child);
-                push_rows(&mut out, child.start_position().row, sig_end);
+                push_rows(&mut full, child.start_position().row, sig_end);
+                if child.child_by_field_name("body").is_some() {
+                    ellipses.push(sig_end + 2);
+                }
             }
             _ => {}
         }
     }
-    dedup_sorted(out)
+    FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses))
 }
 
-fn collect_pub_decls(tree: &Tree, source: &str) -> Vec<usize> {
+fn collect_pub_decls(tree: &Tree, source: &str) -> FileLines {
     let root = tree.root_node();
     let mut cursor = root.walk();
-    let mut out = Vec::new();
+    let mut full = Vec::new();
+    let mut ellipses = Vec::new();
     for child in root.children(&mut cursor) {
         if child.kind() == "macro_definition" && has_macro_export(child, source) {
             continue; // MacroNames/MacroBodies handle these.
@@ -363,19 +371,23 @@ fn collect_pub_decls(tree: &Tree, source: &str) -> Vec<usize> {
         match child.kind() {
             "function_item" | "function_signature_item" => {
                 let sig_end = signature_end_row(child);
-                push_rows(&mut out, child.start_position().row, sig_end);
+                push_rows(&mut full, child.start_position().row, sig_end);
+                // Body elided when it exists → marker on the first body line.
+                if child.child_by_field_name("body").is_some() {
+                    ellipses.push(sig_end + 2);
+                }
             }
             "struct_item" | "enum_item" | "trait_item" | "type_item" | "const_item"
             | "static_item" | "union_item" => {
-                extend_span(&mut out, child, source);
+                extend_span(&mut full, child, source);
             }
             _ => {}
         }
     }
-    dedup_sorted(out)
+    FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses))
 }
 
-fn collect_pub_docs(tree: &Tree, source: &str) -> Vec<usize> {
+fn collect_pub_docs(tree: &Tree, source: &str) -> FileLines {
     let root = tree.root_node();
     let mut cursor = root.walk();
     let mut out = Vec::new();
@@ -398,19 +410,20 @@ fn collect_pub_docs(tree: &Tree, source: &str) -> Vec<usize> {
         }
         collect_outer_docs_above(child, source, &mut out);
     }
-    dedup_sorted(out)
+    FileLines::new(dedup_sorted(out))
 }
 
-fn collect_method_sigs(tree: &Tree, _source: &str) -> Vec<usize> {
+fn collect_method_sigs(tree: &Tree, _source: &str) -> FileLines {
     let root = tree.root_node();
     let mut cursor = root.walk();
-    let mut out = Vec::new();
+    let mut full = Vec::new();
+    let mut ellipses = Vec::new();
     for child in root.children(&mut cursor) {
         if child.kind() != "impl_item" {
             continue;
         }
         let sig_end = signature_end_row(child);
-        push_rows(&mut out, child.start_position().row, sig_end);
+        push_rows(&mut full, child.start_position().row, sig_end);
         let Some(body) = child.child_by_field_name("body") else {
             continue;
         };
@@ -418,27 +431,33 @@ fn collect_method_sigs(tree: &Tree, _source: &str) -> Vec<usize> {
         for inner in body.children(&mut body_cursor) {
             if matches!(inner.kind(), "function_item" | "function_signature_item") {
                 let inner_end = signature_end_row(inner);
-                push_rows(&mut out, inner.start_position().row, inner_end);
+                push_rows(&mut full, inner.start_position().row, inner_end);
+                if inner.child_by_field_name("body").is_some() {
+                    ellipses.push(inner_end + 2);
+                }
             }
         }
     }
-    dedup_sorted(out)
+    FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses))
 }
 
-fn collect_macro_name_lines(tree: &Tree, source: &str) -> Vec<usize> {
+fn collect_macro_name_lines(tree: &Tree, source: &str) -> FileLines {
     let root = tree.root_node();
     let mut cursor = root.walk();
     let mut out = Vec::new();
+    let mut ellipses = Vec::new();
     for child in root.children(&mut cursor) {
         if child.kind() == "macro_definition" && has_macro_export(child, source) {
             let name_row = child.start_position().row;
             push_rows(&mut out, name_row, name_row);
+            // Macro body elided → marker below the name line.
+            ellipses.push(name_row + 2);
         }
     }
-    out
+    FileLines::new(out).with_ellipses(ellipses)
 }
 
-fn collect_macro_bodies(tree: &Tree, source: &str) -> Vec<usize> {
+fn collect_macro_bodies(tree: &Tree, source: &str) -> FileLines {
     let root = tree.root_node();
     let mut cursor = root.walk();
     let mut out = Vec::new();
@@ -447,7 +466,7 @@ fn collect_macro_bodies(tree: &Tree, source: &str) -> Vec<usize> {
             extend_span(&mut out, child, source);
         }
     }
-    dedup_sorted(out)
+    FileLines::new(dedup_sorted(out))
 }
 
 // --- AST predicates ---

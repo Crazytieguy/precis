@@ -14,9 +14,9 @@ use std::sync::Arc;
 use tree_sitter::{Node, Tree};
 
 use crate::batch::{BatchKey, FsKey, MarkdownKey, ResolvedBatch, ValueSignals};
-use crate::value::depth_factor;
+use crate::value::{depth_factor, non_essential_factor};
 
-use super::{Candidate, WalkCtx, fs::files_with_extension, single_file_lines_batch};
+use super::{Candidate, FileLines, WalkCtx, fs::files_with_extension, single_file_lines_batch};
 
 pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate> {
     let BatchKey::Fs(FsKey::DirListing { dir }) = scheduled else {
@@ -36,20 +36,20 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate> {
         if name.eq_ignore_ascii_case("SUMMARY.md") {
             out.push(candidate(
                 MarkdownKey::SummaryWhole { file: file.clone() },
-                summary_signals(depth),
+                summary_signals(&file, depth),
                 200,
             ));
         } else if name.eq_ignore_ascii_case("README.md") {
             let headline = MarkdownKey::ReadmeHeadline { file: file.clone() };
             out.push(candidate(
                 headline.clone(),
-                readme_headline_signals(depth),
+                readme_headline_signals(&file, depth),
                 60,
             ));
             out.push(
                 candidate(
                     MarkdownKey::ReadmeBody { file: file.clone() },
-                    readme_body_signals(depth),
+                    readme_body_signals(&file, depth),
                     150,
                 )
                 .with_predecessor(BatchKey::Markdown(headline)),
@@ -85,30 +85,30 @@ fn candidate(mk: MarkdownKey, signals: ValueSignals, cost_hint: usize) -> Candid
 
 // --- signals ---
 
-fn summary_signals(depth: usize) -> ValueSignals {
+fn summary_signals(file: &Path, depth: usize) -> ValueSignals {
     ValueSignals {
         catastrophic_omission: 0.9,
         follow_up_minimization: 0.8,
         zero_tool_call_understanding: 0.7,
-        depth_factor: depth_factor(depth),
+        depth_factor: depth_factor(depth) * non_essential_factor(file),
     }
 }
 
-fn readme_headline_signals(depth: usize) -> ValueSignals {
+fn readme_headline_signals(file: &Path, depth: usize) -> ValueSignals {
     ValueSignals {
         catastrophic_omission: 0.9,
         follow_up_minimization: 0.6,
         zero_tool_call_understanding: 0.8,
-        depth_factor: depth_factor(depth),
+        depth_factor: depth_factor(depth) * non_essential_factor(file),
     }
 }
 
-fn readme_body_signals(depth: usize) -> ValueSignals {
+fn readme_body_signals(file: &Path, depth: usize) -> ValueSignals {
     ValueSignals {
-        catastrophic_omission: 0.3,
-        follow_up_minimization: 0.7,
-        zero_tool_call_understanding: 0.6,
-        depth_factor: depth_factor(depth),
+        catastrophic_omission: 0.55,
+        follow_up_minimization: 0.8,
+        zero_tool_call_understanding: 0.7,
+        depth_factor: depth_factor(depth) * non_essential_factor(file),
     }
 }
 
@@ -126,7 +126,7 @@ fn heading_slab_signals(depth: usize, file: &Path) -> ValueSignals {
         catastrophic_omission: if is_guide { 0.5 } else { 0.3 },
         follow_up_minimization: 0.5,
         zero_tool_call_understanding: 0.5,
-        depth_factor: depth_factor(depth),
+        depth_factor: depth_factor(depth) * non_essential_factor(file),
     }
 }
 
@@ -145,8 +145,8 @@ fn mat_summary(file: &Path, ctx: &WalkCtx) -> Option<ResolvedBatch> {
     single_file_lines_batch(
         file,
         &source,
-        lines,
-        summary_signals(ctx.depth_from_root(file)),
+        FileLines::new(lines),
+        summary_signals(file, ctx.depth_from_root(file)),
     )
 }
 
@@ -158,8 +158,8 @@ fn mat_readme_headline(file: &Path, ctx: &WalkCtx) -> Option<ResolvedBatch> {
     single_file_lines_batch(
         file,
         &source,
-        lines,
-        readme_headline_signals(ctx.depth_from_root(file)),
+        FileLines::new(lines),
+        readme_headline_signals(file, ctx.depth_from_root(file)),
     )
 }
 
@@ -174,8 +174,8 @@ fn mat_readme_body(file: &Path, ctx: &WalkCtx) -> Option<ResolvedBatch> {
     single_file_lines_batch(
         file,
         &source,
-        lines,
-        readme_body_signals(ctx.depth_from_root(file)),
+        FileLines::new(lines),
+        readme_body_signals(file, ctx.depth_from_root(file)),
     )
 }
 
@@ -186,7 +186,7 @@ fn mat_heading_slab(file: &Path, ctx: &WalkCtx) -> Option<ResolvedBatch> {
     single_file_lines_batch(
         file,
         &source,
-        lines,
+        FileLines::new(lines),
         heading_slab_signals(ctx.depth_from_root(file), file),
     )
 }

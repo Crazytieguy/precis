@@ -172,7 +172,12 @@ crates/
             7→repository.workspace = true
             8→rust-version.workspace = true
         README.md
+            1→# mdbook-renderer
+            3→[![Documentation](https://img.shields.io/docsrs/mdbook-renderer)](https://docs.rs/mdbook-renderer)
+            4→[![crates.io](https://img.shields.io/crates/v/mdbook-renderer.svg)](https://crates.io/crates/mdbook-renderer)
+            5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
         src/
+            lib.rs
     mdbook-summary/
         Cargo.toml
             1→[package]
@@ -189,6 +194,7 @@ crates/
             4→[![crates.io](https://img.shields.io/crates/v/mdbook-summary.svg)](https://crates.io/crates/mdbook-summary)
             5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
         src/
+            lib.rs
     xtask/
         Cargo.toml
             1→[package]
@@ -240,11 +246,16 @@ src/
     cmd/
         build.rs
             8→pub fn make_subcommand() -> Command {
+            …
             17→pub fn execute(args: &ArgMatches) -> Result<()> {
+            …
         clean.rs
             11→pub fn make_subcommand() -> Command {
+            …
             19→pub fn execute(args: &ArgMatches) -> Result<()> {
+            …
             38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
+            …
             46→pub struct Clean {
             47→    num_files_removed: u64,
             48→    num_dirs_removed: u64,
@@ -253,9 +264,12 @@ src/
         command_prelude.rs
             56→impl CommandExt for Command {
             57→    fn _arg(self, arg: Arg) -> Self {
+            …
         init.rs
             12→pub fn make_subcommand() -> ClapCommand {
+            …
             32→pub fn execute(args: &ArgMatches) -> Result<()> {
+            …
         mod.rs
             1→//! Subcommand modules for the `mdbook` binary.
             3→pub mod build;
@@ -267,26 +281,16 @@ src/
             11→pub mod watch;
         serve.rs
             23→pub fn make_subcommand() -> Command {
+            …
             51→pub fn execute(args: &ArgMatches) -> Result<()> {
+            …
         test.rs
             9→pub fn make_subcommand() -> Command {
+            …
             35→pub fn execute(args: &ArgMatches) -> Result<()> {
+            …
         watch/
         watch.rs
-            12→pub fn make_subcommand() -> Command {
-            21→pub enum WatcherKind {
-            22→    Poll,
-            23→    Native,
-            24→}
-            26→impl WatcherKind {
-            27→    pub fn from_str(s: &str) -> WatcherKind {
-            37→pub fn execute(args: &ArgMatches) -> Result<()> {
-            62→pub fn rebuild_on_change(
-            63→    kind: WatcherKind,
-            64→    book_dir: &Path,
-            65→    update_config: &dyn Fn(&mut MDBook),
-            66→    post_build: &dyn Fn(),
-            67→) {
     main.rs
         1→//! The mdbook CLI.
 tests/
