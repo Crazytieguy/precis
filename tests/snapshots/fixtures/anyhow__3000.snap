@@ -100,6 +100,24 @@ src/
         108→    }
         109→}
     lib.rs
+        252→mod backtrace;
+        253→mod chain;
+        254→mod context;
+        255→mod ensure;
+        256→mod error;
+        257→mod fmt;
+        258→mod kind;
+        259→mod macros;
+        261→mod nightly;
+        262→mod ptr;
+        263→mod wrapper;
+        265→use crate::error::ErrorImpl;
+        266→use crate::ptr::Own;
+        267→use core::fmt::Display;
+        270→use core::fmt::Debug;
+        273→use std::error::Error as StdError;
+        276→use core::error::Error as StdError;
+        286→pub use anyhow as format_err;
         390→pub struct Error {
         391→    inner: Own<ErrorImpl>,
         392→}
@@ -120,6 +138,8 @@ src/
         627→        F: FnOnce() -> C;
         628→}
         650→pub fn Ok<T>(value: T) -> Result<T> {
+        …
+        656→pub mod __private {
         …
     macros.rs
         58→macro_rules! bail {
@@ -211,8 +231,6 @@ tests/
             4→authors = ["David Tolnay <dtolnay@gmail.com>"]
             5→edition = "2021"
             6→publish = false
-            11→[dependencies]
-            12→anyhow = { path = "../..", default-features = false }
             14→[features]
             15→default = ["std"]
             16→std = ["anyhow/std"]

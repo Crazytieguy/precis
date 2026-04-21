@@ -68,14 +68,16 @@ pub fn non_essential_factor(path: &std::path::Path) -> f64 {
 }
 
 /// Convert a value and a marginal token cost into the scheduling ratio.
-/// Sublinear in cost — the `sqrt(cost)` denominator means that doubling a
-/// batch's size doesn't halve its ratio, only reduces it by √2. This keeps
-/// big load-bearing batches (e.g. `lib.rs`'s entire public API) competitive
-/// with small cheap batches of similar-per-token value, matching the
-/// ontology's "value is sublinear in batch size" principle.
+/// Sublinear in cost via `cost^0.35`: the ontology's principle that "value
+/// is sublinear in batch size" plus the empirical observation that `sqrt`
+/// alone is too aggressive on cost — a 1500-token `lib.rs` PubDecls batch
+/// holding the full crate API gets beaten by two dozen 80-token batches
+/// with similar per-token ratio, but losing that one coherent batch is a
+/// catastrophic-omission outcome. The gentler exponent keeps big anchor
+/// batches competitive.
 pub fn ratio(value: f64, cost_tokens: usize) -> f64 {
     if cost_tokens == 0 {
         return f64::INFINITY;
     }
-    value / (cost_tokens as f64).sqrt()
+    value / (cost_tokens as f64).powf(0.35)
 }

@@ -48,12 +48,43 @@ Cargo.toml
     86→repository.workspace = true
     87→description = "Creates a book from markdown files"
     88→rust-version.workspace = true
+    129→[features]
+    130→default = ["watch", "serve", "search"]
+    131→watch = ["dep:notify", "dep:notify-debouncer-mini", "dep:ignore", "dep:pathdiff", "dep:walkdir"]
+    132→serve = ["dep:futures-util", "dep:tokio", "dep:axum", "dep:tower-http"]
+    133→search = ["mdbook-html/search"]
+    135→[[bin]]
+    136→doc = false
+    137→name = "mdbook"
+    139→[[example]]
+    140→name = "nop-preprocessor"
+    141→test = true
+    143→[[example]]
+    144→name = "remove-emphasis"
+    145→path = "examples/remove-emphasis/test.rs"
+    146→crate-type = ["lib"]
+    147→test = true
+    149→[[test]]
+    150→harness = false
+    151→test = false
+    152→name = "gui"
+    153→path = "tests/gui/runner.rs"
+    154→crate-type = ["bin"]
 LICENSE
 README.md
     1→# mdBook
     3→[![CI Status](https://github.com/rust-lang/mdBook/actions/workflows/main.yml/badge.svg)](https://github.com/rust-lang/mdBook/actions/workflows/main.yml)
     4→[![crates.io](https://img.shields.io/crates/v/mdbook.svg)](https://crates.io/crates/mdbook)
     5→[![LICENSE](https://img.shields.io/github/license/rust-lang/mdBook.svg)](LICENSE)
+    7→mdBook is a utility to create modern online books from Markdown files.
+    9→Check out the **[User Guide]** for a list of features and installation and usage information.
+    10→The User Guide also serves as a demonstration to showcase what a book looks like.
+    12→If you are interested in contributing to the development of mdBook, check out the [Contribution Guide].
+    14→## License
+    16→All the code in this repository is released under the ***Mozilla Public License v2.0***, for more information take a look at the [LICENSE] file.
+    18→[User Guide]: https://rust-lang.github.io/mdBook/
+    19→[contribution guide]: https://github.com/rust-lang/mdBook/blob/master/CONTRIBUTING.md
+    20→[LICENSE]: https://github.com/rust-lang/mdBook/blob/master/LICENSE
 ci/
     install-rust.sh
     make-release-asset.sh
@@ -74,9 +105,6 @@ crates/
             3→This is a simple utility to compare the output of two different versions of mdbook.
         src/
             main.rs
-                1→//! Utility to compare the output of two different versions of mdbook.
-                3→use std::path::Path;
-                4→use std::process::Command;
     mdbook-core/
         Cargo.toml
             1→[package]
@@ -163,6 +191,7 @@ crates/
             4→[![crates.io](https://img.shields.io/crates/v/mdbook-preprocessor.svg)](https://crates.io/crates/mdbook-preprocessor)
             5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
         src/
+            lib.rs
     mdbook-renderer/
         Cargo.toml
             1→[package]
@@ -179,6 +208,7 @@ crates/
             4→[![crates.io](https://img.shields.io/crates/v/mdbook-renderer.svg)](https://crates.io/crates/mdbook-renderer)
             5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
         src/
+            lib.rs
     mdbook-summary/
         Cargo.toml
             1→[package]
@@ -195,6 +225,7 @@ crates/
             4→[![crates.io](https://img.shields.io/crates/v/mdbook-summary.svg)](https://crates.io/crates/mdbook-summary)
             5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
         src/
+            lib.rs
     xtask/
         Cargo.toml
             1→[package]
@@ -222,13 +253,6 @@ guide/
     book.toml
     guide-helper/
         Cargo.toml
-            1→[package]
-            2→name = "guide-helper"
-            3→publish = false
-            4→edition.workspace = true
-            5→license.workspace = true
-            6→repository.workspace = true
-            7→rust-version.workspace = true
         src/
     src/
         404.md
@@ -244,50 +268,6 @@ package.json
 rustfmt.toml
 src/
     cmd/
-        build.rs
-            8→pub fn make_subcommand() -> Command {
-            …
-            17→pub fn execute(args: &ArgMatches) -> Result<()> {
-            …
-        clean.rs
-            11→pub fn make_subcommand() -> Command {
-            …
-            19→pub fn execute(args: &ArgMatches) -> Result<()> {
-            …
-            38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
-            …
-            46→pub struct Clean {
-            47→    num_files_removed: u64,
-            48→    num_dirs_removed: u64,
-            49→    total_bytes_removed: u64,
-            50→}
-        command_prelude.rs
-        init.rs
-            12→pub fn make_subcommand() -> ClapCommand {
-            …
-            32→pub fn execute(args: &ArgMatches) -> Result<()> {
-            …
-        mod.rs
-            1→//! Subcommand modules for the `mdbook` binary.
-            3→pub mod build;
-            4→pub mod clean;
-            5→pub mod command_prelude;
-            6→pub mod init;
-            8→pub mod serve;
-            9→pub mod test;
-            11→pub mod watch;
-        serve.rs
-            23→pub fn make_subcommand() -> Command {
-            …
-            51→pub fn execute(args: &ArgMatches) -> Result<()> {
-            …
-        test.rs
-            9→pub fn make_subcommand() -> Command {
-            …
-            35→pub fn execute(args: &ArgMatches) -> Result<()> {
-            …
-        watch/
-        watch.rs
     main.rs
         1→//! The mdbook CLI.
 tests/

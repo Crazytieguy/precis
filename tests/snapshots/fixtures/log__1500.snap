@@ -34,9 +34,6 @@ benches/
     value.rs
 rfcs/
     0296-structured-logging.md
-        1→- Feature Name: `structured_logging`
-        2→- Start Date: 2019-03-11
-        3→- RFC PR: [log/rfcs#0296](https://github.com/rust-lang-nursery/log/pull/296)
 src/
     __private_api.rs
         10→pub type Value<'a> = &'a str;
@@ -64,7 +61,6 @@ src/
             6→    inner: Inner,
             7→}
         key.rs
-            6→/// A type that can be converted into a [`Key`](struct.Key.html).
             7→pub trait ToKey {
             8→    /// Perform the conversion.
             9→    fn to_key(&self) -> Key<'_>;
@@ -102,6 +98,19 @@ src/
             1172→    };
             1173→}
     lib.rs
+        399→use std::cfg;
+        401→use std::error;
+        402→use std::str::FromStr;
+        403→use std::{cmp, fmt, mem};
+        406→mod macros;
+        407→mod serde;
+        410→pub mod kv;
+        413→use std::sync::atomic::{AtomicUsize, Ordering};
+        416→use std::cell::Cell;
+        418→use std::sync::atomic::Ordering;
+        1600→pub mod __private_api;
+        1627→mod tests {
+        …
     macros.rs
         75→macro_rules! log {
         …

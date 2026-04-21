@@ -17,6 +17,8 @@ expression: rendered
 .gitignore
 CHANGELOG.md
 CODE_OF_CONDUCT.md
+    1→# The Rust Code of Conduct
+    3→The Code of Conduct for this repository [can be found online](https://www.rust-lang.org/conduct.html).
 CONTRIBUTING.md
 Cargo.lock
 Cargo.toml
@@ -48,6 +50,28 @@ Cargo.toml
     86→repository.workspace = true
     87→description = "Creates a book from markdown files"
     88→rust-version.workspace = true
+    129→[features]
+    130→default = ["watch", "serve", "search"]
+    131→watch = ["dep:notify", "dep:notify-debouncer-mini", "dep:ignore", "dep:pathdiff", "dep:walkdir"]
+    132→serve = ["dep:futures-util", "dep:tokio", "dep:axum", "dep:tower-http"]
+    133→search = ["mdbook-html/search"]
+    135→[[bin]]
+    136→doc = false
+    137→name = "mdbook"
+    139→[[example]]
+    140→name = "nop-preprocessor"
+    141→test = true
+    143→[[example]]
+    144→name = "remove-emphasis"
+    145→path = "examples/remove-emphasis/test.rs"
+    146→crate-type = ["lib"]
+    147→test = true
+    149→[[test]]
+    150→harness = false
+    151→test = false
+    152→name = "gui"
+    153→path = "tests/gui/runner.rs"
+    154→crate-type = ["bin"]
 LICENSE
 README.md
     1→# mdBook
@@ -146,6 +170,83 @@ crates/
                 17→    copy_theme: bool,
                 18→}
             lib.rs
+                1→//! High-level library for running mdBook.
+                2→//!
+                3→//! This is the high-level library for running
+                4→//! [mdBook](https://rust-lang.github.io/mdBook/). There are several
+                5→//! reasons for using the programmatic API (over the CLI):
+                6→//!
+                7→//! - Integrate mdBook in a current project.
+                8→//! - Extend the capabilities of mdBook.
+                9→//! - Do some processing or test before building your book.
+                10→//! - Accessing the public API to help create a new Renderer.
+                11→//!
+                12→//! ## Additional crates
+                13→//!
+                14→//! In addition to `mdbook-driver`, there are several other crates available
+                15→//! for using and extending mdBook:
+                16→//!
+                17→//! - [`mdbook_preprocessor`]: Provides support for implementing preprocessors.
+                18→//! - [`mdbook_renderer`]: Provides support for implementing renderers.
+                19→//! - [`mdbook_markdown`]: The Markdown renderer.
+                20→//! - [`mdbook_summary`]: The `SUMMARY.md` parser.
+                21→//! - [`mdbook_html`]: The HTML renderer.
+                22→//! - [`mdbook_core`]: An internal library that is used by the other crates
+                23→//!   for shared types. Types from this crate are rexported from the other
+                24→//!   crates as appropriate.
+                25→//!
+                26→//! ## Cargo features
+                27→//!
+                28→//! The following cargo features are available:
+                29→//!
+                30→//! - `search`: Enables the search index in the HTML renderer.
+                31→//!
+                32→//! ## Examples
+                33→//!
+                34→//! If creating a new book from scratch, you'll want to get a [`init::BookBuilder`] via
+                35→//! the [`MDBook::init()`] method.
+                36→//!
+                37→//! ```rust,no_run
+                38→//! use mdbook_driver::MDBook;
+                39→//! use mdbook_driver::config::Config;
+                40→//!
+                41→//! let root_dir = "/path/to/book/root";
+                42→//!
+                43→//! // create a default config and change a couple things
+                44→//! let mut cfg = Config::default();
+                45→//! cfg.book.title = Some("My Book".to_string());
+                46→//! cfg.book.authors.push("Michael-F-Bryan".to_string());
+                47→//!
+                48→//! MDBook::init(root_dir)
+                49→//!     .create_gitignore(true)
+                50→//!     .with_config(cfg)
+                51→//!     .build()
+                52→//!     .expect("Book generation failed");
+                53→//! ```
+                54→//!
+                55→//! You can also load an existing book and build it.
+                56→//!
+                57→//! ```rust,no_run
+                58→//! use mdbook_driver::MDBook;
+                59→//!
+                60→//! let root_dir = "/path/to/book/root";
+                61→//!
+                62→//! let mut md = MDBook::load(root_dir)
+                63→//!     .expect("Unable to load the book");
+                64→//! md.build().expect("Building failed");
+                65→//! ```
+                67→pub mod builtin_preprocessors;
+                68→pub mod builtin_renderers;
+                69→pub mod init;
+                70→mod load;
+                71→mod mdbook;
+                73→use anyhow::{Context, Result, bail};
+                74→pub use mdbook::MDBook;
+                75→pub use mdbook_core::{book, config, errors};
+                76→use shlex::Shlex;
+                77→use std::path::{Path, PathBuf};
+                78→use std::process::Command;
+                79→use tracing::{error, warn};
             load.rs
                 10→pub(crate) fn load_book<P: AsRef<Path>>(src_dir: P, cfg: &BuildConfig) -> Result<Book> {
                 …
@@ -190,6 +291,15 @@ crates/
                 8→pub use html_handlebars::HtmlHandlebars;
             theme/
             utils.rs
+                7→pub(crate) fn normalize_path(path: &Path) -> PathBuf {
+                …
+                42→pub(crate) trait ToUrlPath {
+                43→    fn to_url_path(&self) -> String;
+                44→}
+                58→pub(crate) fn unique_id(id: &str, used: &mut HashSet<String>) -> String {
+                …
+                76→pub(crate) fn id_from_content(content: &str) -> String {
+                …
     mdbook-markdown/
         Cargo.toml
             1→[package]
@@ -288,42 +398,6 @@ crates/
                 4→//! [renderer](https://rust-lang.github.io/mdBook/for_developers/backends.html)
                 5→//! for [mdBook](https://rust-lang.github.io/mdBook/). See the linked chapter
                 6→//! for more information on how to implement a renderer.
-                22→/// An mdbook backend.
-                23→///
-                24→/// Types that implement the `Renderer` trait can be used with
-                25→/// [`MDBook::with_renderer`] to programmatically add renderers.
-                26→///
-                27→/// [`MDBook::with_renderer`]: https://docs.rs/mdbook-driver/latest/mdbook_driver/struct.MDBook.html#method.with_renderer
-                28→pub trait Renderer {
-                29→    /// The `Renderer`'s name.
-                30→    fn name(&self) -> &str;
-                32→    /// Invoke the `Renderer`, passing in all the necessary information for
-                33→    /// describing a book.
-                34→    fn render(&self, ctx: &RenderContext) -> Result<()>;
-                35→}
-                37→/// The context provided to all renderers.
-                40→pub struct RenderContext {
-                41→    /// Which version of `mdbook` did this come from (as written in `mdbook`'s
-                42→    /// `Cargo.toml`). Useful if you know the renderer is only compatible with
-                43→    /// certain versions of `mdbook`.
-                44→    pub version: String,
-                45→    /// The book's root directory.
-                46→    pub root: PathBuf,
-                47→    /// A loaded representation of the book itself.
-                48→    pub book: Book,
-                49→    /// The loaded configuration file.
-                50→    pub config: Config,
-                51→    /// Where the renderer *must* put any build artefacts generated. To allow
-                52→    /// renderers to cache intermediate results, this directory is not
-                53→    /// guaranteed to be empty or even exist.
-                54→    pub destination: PathBuf,
-                55→    /// Internal mapping of chapter titles.
-                56→    ///
-                57→    /// This is used internally by mdbook to compute custom chapter titles.
-                58→    /// This should not be used outside of mdbook's internals.
-                59→    #[serde(skip)]
-                60→    pub chapter_titles: HashMap<PathBuf, String>,
-                61→}
                 63→impl RenderContext {
                 65→    pub fn new<P, Q>(root: P, book: Book, config: Config, destination: Q) -> RenderContext
                 66→    where
@@ -352,42 +426,6 @@ crates/
             5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
         src/
             lib.rs
-                1→//! Summary parser for mdBook.
-                2→//!
-                3→//! This is used to parse the
-                4→//! [`SUMMARY.md`](https://rust-lang.github.io/mdBook/format/summary.html)
-                5→//! file structure for [mdBook](https://rust-lang.github.io/mdBook/).
-                59→pub fn parse_summary(summary: &str) -> Result<Summary> {
-                …
-                67→pub struct Summary {
-                68→    /// An optional title for the `SUMMARY.md`, currently just ignored.
-                69→    pub title: Option<String>,
-                70→    /// Chapters before the main text (e.g. an introduction).
-                71→    pub prefix_chapters: Vec<SummaryItem>,
-                72→    /// The main numbered chapters of the book, broken into one or more possibly named parts.
-                73→    pub numbered_chapters: Vec<SummaryItem>,
-                74→    /// Items which come after the main document (e.g. a conclusion).
-                75→    pub suffix_chapters: Vec<SummaryItem>,
-                76→}
-                84→pub struct Link {
-                85→    /// The name of the chapter.
-                86→    pub name: String,
-                87→    /// The location of the chapter's source file, taking the book's `src`
-                88→    /// directory as the root.
-                89→    pub location: Option<PathBuf>,
-                90→    /// The section number, if this chapter is in the numbered section.
-                91→    pub number: Option<SectionNumber>,
-                92→    /// Any nested items this chapter may contain.
-                93→    pub nested_items: Vec<SummaryItem>,
-                94→}
-                122→pub enum SummaryItem {
-                123→    /// A link to a chapter.
-                124→    Link(Link),
-                125→    /// A separator (`---`).
-                126→    Separator,
-                127→    /// A part title.
-                128→    PartTitle(String),
-                129→}
     xtask/
         Cargo.toml
             1→[package]
@@ -407,12 +445,6 @@ crates/
                 …
             main.rs
                 1→//! Helper for local development.
-                3→use std::collections::BTreeMap;
-                4→use std::error::Error;
-                5→use std::io::Write;
-                6→use std::process::exit;
-                7→use std::process::{Command, Stdio};
-                9→mod changelog;
 eslint.config.mjs
 examples/
     nop-preprocessor.rs
@@ -421,11 +453,6 @@ examples/
         book.toml
         mdbook-remove-emphasis/
             Cargo.toml
-                1→[package]
-                2→name = "mdbook-remove-emphasis"
-                3→version = "0.1.0"
-                4→edition.workspace = true
-                5→publish = false
             src/
         src/
             SUMMARY.md
@@ -443,63 +470,15 @@ guide/
             6→repository.workspace = true
             7→rust-version.workspace = true
         src/
-            lib.rs
-                1→//! Preprocessor for the mdBook guide.
-                3→use mdbook_preprocessor::book::Book;
-                4→use mdbook_preprocessor::errors::Result;
-                5→use mdbook_preprocessor::{Preprocessor, PreprocessorContext};
-                6→use semver::{Version, VersionReq};
-                7→use std::io;
-                9→/// Preprocessing entry point.
-                10→pub fn handle_preprocessing() -> Result<()> {
-                …
-                35→impl Preprocessor for GuideHelper {
-                36→    fn name(&self) -> &str {
-                …
-                40→    fn run(&self, _ctx: &PreprocessorContext, mut book: Book) -> Result<Book> {
-                …
-            main.rs
-                1→//! Preprocessor for the mdBook guide.
     src/
         404.md
         README.md
         SUMMARY.md
         cli/
-            README.md
-                1→# Command-line tool
-                3→The `mdbook` command-line tool is used to create and build books.
-                4→After you have [installed](../guide/installation.md) `mdbook`, you can run the `mdbook help` command in your terminal to view the available commands.
-            arg-watcher.md
-            build.md
-            clean.md
-            completions.md
-            init.md
-            serve.md
-            test.md
-            watch.md
         continuous-integration.md
         for_developers/
-            README.md
-            backends.md
-            mdbook-wordcount/
-            preprocessors.md
         format/
-            README.md
-                1→# Format
-                3→In this section you will learn how to:
-            configuration/
-            example.rs
-            images/
-            markdown.md
-            mathjax.md
-            mdbook.md
-            summary.md
-            theme/
         guide/
-            README.md
-            creating.md
-            installation.md
-            reading.md
         misc/
             contributors.md
 package.json
@@ -516,6 +495,8 @@ src/
             …
             19→pub fn execute(args: &ArgMatches) -> Result<()> {
             …
+            36→/// Formats a number of bytes into a human readable SI-prefixed size.
+            37→/// Returns a tuple of `(quantity, units)`.
             38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
             …
             46→pub struct Clean {
@@ -567,6 +548,15 @@ src/
             …
     main.rs
         1→//! The mdbook CLI.
+        5→use anyhow::anyhow;
+        6→use clap::{Arg, ArgMatches, Command};
+        7→use clap_complete::Shell;
+        8→use mdbook_core::utils;
+        9→use std::env;
+        10→use std::ffi::OsStr;
+        11→use std::path::PathBuf;
+        12→use tracing::{error, info};
+        14→mod cmd;
 tests/
     gui/
     testsuite/

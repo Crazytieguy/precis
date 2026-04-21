@@ -1,51 +1,82 @@
 ---
-snapshot_hash: 2cd1b67e3692a9c6df7a960485efc79579f0ee08a5b88f6f2cdc32a1e22fc537
+snapshot_hash: 95f8879c3f9bca0e391c383026f60be9f37394cf3c721ab86ad7024362d1bc66
 ---
 
 ## Summary
 
-The snapshot is a first-pass walker-style rendering of the whole tree (directory listings plus scattered declaration skeletons with elided bodies), not a North-Star-aligned precis at a 6k budget. It includes most Tier 1 declarations (1.5-1.11 are largely present) but systematically skips almost every Tier 2 and Tier 3 batch (README prose, Error docs and constructor/consumer signatures, Display-representations rustdoc, test_repr/autotrait/ffi full bodies, Context rustdoc, Chain full, test_chain, shared test helpers) while still surfacing chunks of Tier 4-6 material (wrapper.rs declarations, kind.rs trait declarations, ensure.rs runtime helpers, ErrorImpl/ContextError structs, build.rs imports, nightly.rs signatures, fmt.rs signature heads). The dominant pattern is a depth-first, uniform-skeleton walker output that ignores batch groupings: many batches are violated by partial inclusion (headers + elided bodies), and several predecessor edges are violated because higher-ranked user-facing macro/README content is omitted while lower-ranked internals are shown.
+The snapshot is very far from the North Star at this budget. Tier-1 listings
+(1.1/1.2/1.3) and most tier-1 public-surface declarations (1.5-1.13) are
+present as short header lines, but the output then diverges hard: the full
+207-line crate-level rustdoc `lib.rs:1-207` (explicitly below-the-fold per
+North Star) and the public struct declarations from `ptr.rs` (not ranked at
+all) are rendered, while nearly every batch in tiers 2-7 is absent — README
+Details (2.2/2.5/2.7), `Error` constructor/method signatures (2.4/2.6), the
+invariant tests (2.8/2.9/2.10), the formatting doctrine (3.1-3.3), `Context`
+internals (3.4/3.5), full `chain.rs` (3.6), `test_chain.rs` (3.7), most of
+tiers 4-5 (constructor wirings, downcast bodies, `Error::context` method,
+`__private`), the cfg/build story (6.1/6.3), CI (7.3), and the cross-test
+indices (7.7/7.8). The dominant pattern is **shallow, breadth-first walker
+output**: short declaration lines plucked from every file plus two large
+docstring dumps, rather than a ranked depth-first selection. Multiple included
+batches are rendered only partially (declaration shown, impls/bodies elided),
+producing batch-correctness violations across most of tiers 3-6.
 
 ## Divergences
 
 ### Ranking
-- [rust] [predecessor] 1.14 (`ensure!` user-facing arms, macros.rs:127-153) is missing, yet 6.4 (ensure.rs runtime helpers, `BothDebug`/`NotBothDebug`/`Buf`) is partially surfaced. 6.4 declares `Predecessor: 1.14`.
-- [rust] [predecessor] 4.4 (kind.rs autoref-dispatch design comment, lines 1-46) is missing — snapshot's kind.rs section starts at line 47 — yet 4.5 (kind.rs traits and `Adhoc`/`Trait`/`Boxed` declarations) is present. 4.5 declares `Predecessor: 4.4`.
-- [rust] [predecessor] 6.1 (build.rs cfg decision tree, lines 1-97) is missing — only the `use` block 3-10 is shown — yet 6.2 (nightly.rs signatures) is partially present. 6.2 declares `Predecessor: 6.1`.
-- [rust] [predecessor] 2.6 (`Error` consumer-method signatures) is missing, yet 3.3 (fmt.rs 1-67 `display`/`debug` impls) is partially present. 3.3 declares `Predecessor: 2.6`.
-- [markdown] [major] 1.4 (README:9-17 "what is this" + install snippet) is omitted while README:1-7 (title + badges) is shown; lower-ranked 5.4 (wrapper.rs file), 6.2 (nightly.rs fragments), and 6.4 (ensure.rs runtime) are present.
-- [rust] [major] 1.12 (`bail!` macro body, macros.rs:56-68) is missing (only the `macro_rules! bail {` header line is shown with `…`), while lower-ranked 4.5 (kind.rs traits), 5.4 (wrapper.rs), 6.4 (ensure.rs runtime) are present.
-- [rust] [major] 1.13 (`anyhow!` macro body, macros.rs:202-223) is missing (only header + `…`), while the same tier 4-6 internals are present.
-- [markdown] [major] 2.2 (README:21-67 `?` propagation + `.context(...)` tutorial) is missing while lower-ranked internals (wrapper.rs full, kind.rs traits, ensure.rs runtime) are present.
-- [rust] [major] 2.3 (`Error` short doc preamble, lib.rs:288-298) is missing while tier 4-6 internals are present.
-- [rust] [major] 2.4 (`Error::new`/`msg`/`from_boxed` constructor signatures in error.rs) is missing — the error.rs section jumps from the `use` block straight to line 934 — while 5.1 partial (ErrorImpl/ContextError structs) and 5.4 (wrapper.rs) are present.
-- [markdown] [major] 2.5 (README:68-122 downcasting/backtrace env/thiserror/macros bullets) is missing while tier 4-6 internals are present.
-- [rust] [major] 2.6 (`Error` consumer-method signatures — downcast/chain/backtrace/etc.) is missing while 5.4 (wrapper.rs), 4.5 (kind.rs traits), 6.4 (ensure.rs runtime) are present.
-- [markdown] [major] 2.7 (README:124-180 no-std + comparison + license) is missing while tier 4-6 internals are present.
-- [rust] [major] 2.8 (test_repr.rs full file, the one-word repr invariant) is missing — only `use` lines 3-7 are shown — while 5.4 wrapper.rs body and 4.5 kind.rs trait declarations are present.
-- [rust] [major] 2.9 (test_autotrait.rs full file) is missing (only `use` lines 3-4 shown) while lower-ranked internals are present.
-- [rust] [major] 2.10 (test_ffi.rs full file) is missing (only `use` + fn signatures with `…` bodies shown) while lower-ranked internals are present.
-- [rust] [major] 3.1 (`Error` Display-representations rustdoc, lib.rs:299-388) is missing while 5.4 (wrapper.rs full) and 6.4 (ensure.rs runtime) are present.
-- [rust] [major] 3.2 (test_fmt.rs:1-67 expected-output constants) is missing (only `use` lines 1-2 shown) while lower-ranked internals are present.
-- [rust] [major] 3.3 (fmt.rs:1-67 Display/Debug impls) is only partially present — display/debug signature headers at lines 7 and 20 are shown but bodies are elided — while 4.5 and 5.4 declarations are present.
-- [rust] [major] 3.4 (`Context` trait rustdoc + `ImportantThing` example) is missing while lower-ranked internals are present.
-- [rust] [major] 3.5 (context.rs:1-113 `mod ext` + Result/Option impls) is missing — only the `mod ext { … }` header and `mod private { … }` header are shown — while lower-ranked 5.4 wrapper.rs and 6.4 ensure.rs runtime are present.
-- [rust] [major] 3.6 (chain.rs full file — Chain iterator impls) is only partially present: struct/enum declarations and impl headers are shown but method bodies are uniformly elided with `…`, while lower-ranked content (5.4 wrapper.rs declarations) has the same partial treatment but the iterator semantics that make 3.6 useful live in the elided bodies.
-- [rust] [major] 3.7 (test_chain.rs full) is missing (only `use` line 1 shown) while lower-ranked internals are present.
-- [rust] [major] 3.8 (common/mod.rs + drop/mod.rs shared test helpers) is partially present — fn signatures shown, bodies elided — while lower-ranked 5.4 wrapper.rs content is similarly partial.
+
+- [markdown] [minor] 1.4 (README headline + install snippet, `README.md:9-17`) missing; snapshot shows only `README.md:1-7` (title + badges). The "trait object based error type" one-liner and the `anyhow = "1.0"` snippet are absent. 1.5-1.13 (all ranked below 1.4) are present.
+- [rust] [minor] 1.14 (`ensure!` `#[cfg(doc)]` arms, `macros.rs:127-153`) missing; 1.12 (`bail!`) and 1.13 (`anyhow!`) are both present.
+- [markdown] [major] 2.2 (README Details bullets 1-2, `README.md:21-67`) missing while below-the-fold `lib.rs:1-207` (the crate rustdoc mirroring the README with doctest scaffolding) is rendered. NS explicitly lists `lib.rs:14-208` as redundant-with-README below-the-fold content.
+- [rust] [major] 2.3 (`Error` short doc preamble, `lib.rs:288-298`) missing while below-the-fold `lib.rs:1-207` and unranked `ptr.rs` struct decls are present.
+- [rust] [major] 2.4 (`Error::new`/`msg`/`from_boxed` signatures in `error.rs`) missing; the snapshot instead surfaces the much lower-ranked `ErrorImpl`/`ContextError` structs from `error.rs:934-955`.
+- [markdown] [major] 2.5 (README Details bullets 3-6) missing while below-the-fold content is rendered.
+- [rust] [major] 2.6 (`Error` consumer-method signatures: `context`/`backtrace`/`chain`/`root_cause`/`is`/`downcast*`/`into_boxed_dyn_error`/`reallocate_...`) missing; displaced by below-the-fold rustdoc and unranked ptr.rs structs.
+- [markdown] [major] 2.7 (README no_std + comparisons + license footer) missing while below-the-fold content is rendered.
+- [rust] [major] 2.8 (`tests/test_repr.rs` full file — the one-word-size invariant) missing; file listed only as bare filename. Displaced by below-the-fold content.
+- [rust] [major] 2.9 (`tests/test_autotrait.rs` full file) missing; bare filename only.
+- [rust] [major] 3.1 (`Error` Display-representations rustdoc, `lib.rs:299-388`) missing — the canonical formatting reference — while below-the-fold `lib.rs:1-207` is included instead.
+- [rust] [major] 3.2 (`test_fmt.rs:1-67` `EXPECTED_*` constants) missing; `test_fmt.rs` is a bare filename.
+- [rust] [major] 3.3 (`fmt.rs:1-67` `Display`/`Debug` impls) missing; `fmt.rs` is a bare filename.
+- [rust] [major] 3.4 (`Context` trait rustdoc, `lib.rs:469-523`) missing.
+- [rust] [major] 3.5 (`context.rs:1-113` `Context` impls for `Result`/`Option`) missing; `context.rs` is a bare filename.
+- [rust] [major] 3.7 (`tests/test_chain.rs` full file) missing; bare filename only.
+- [rust] [major] 4.1 (`Error::context` method body + rationale doc, `error.rs:316-402`) missing.
+- [rust] [major] 4.2 (`Error::into_boxed_dyn_error` + `reallocate_..._without_backtrace`) missing.
+- [rust] [major] 4.3 (`From<E>`/`Deref`/`DerefMut`/`Display`/`Debug`/`Drop` impls on `Error`) missing.
+- [rust] [major] 4.4 (`kind.rs:1-46` autoref-dispatch design comment) missing — snapshot's `kind.rs` content starts at line 55.
+- [rust] [major] 4.6 (`fmt.rs:69-158` `Indented` formatter + tests) missing.
+- [rust] [major] 5.2 (`Error::construct_from_std/_adhoc/_display`) missing.
+- [rust] [major] 5.3 (`Error::construct_from_context/_boxed` + unsafe `construct<E>`) missing.
+- [rust] [major] 5.5 (`Error::is`/`downcast`/`downcast_ref`/`downcast_mut` bodies) missing.
+- [rust] [major] 5.6 (`ErrorImpl` private accessors, `error.rs:957-1013`) missing.
+- [rust] [major] 6.1 (`build.rs` `fn main` cfg decision tree) missing; `build.rs` appears as bare filename.
+- [rust] [major] 6.6 (`lib.rs:654-728` `__private` module) missing; only the `pub mod __private {` header with immediate elision is shown.
+- [rust] [major] 6.7 (`error.rs:1047-1086` `From<Error> for Box<dyn StdError>` + AsRef + UnwindSafe) missing.
+- [rust] [major] 7.1 (`bail!`/`anyhow!` rustdoc with examples) missing.
+- [rust] [major] 7.2 (`__ensure!` doc wrapper + `#[cfg(not(doc))]` dispatch arm) missing.
+- [other-language] [major] 7.3 (CI matrix from `.github/workflows/ci.yml`) missing; only the directory path `.github/workflows/` is shown.
+- [rust] [major] 7.6 (`tests/test_source.rs` full file) missing; bare filename only.
+- [rust] [major] 7.7 (`test_ensure.rs` preamble + per-test fn index) missing; bare filename only.
+- [rust] [major] 7.8 (cross-test `#[test] fn` index across 5 files) missing.
 
 ### Batch correctness
-- [markdown] [minor] 1.4: only README:1-7 (title + badges) is included; the North Star's content window is 9-17 (one-sentence description + `anyhow = "1.0"` install snippet), which is entirely missing.
-- [rust] [minor] 1.12: macros.rs:58 header `macro_rules! bail {` is shown with the body elided via `…`. The batch's content is the three-arm body spanning 56-68; header-only is a silent partial inclusion.
-- [rust] [minor] 1.13: same shape — only the `macro_rules! anyhow {` header at line 204 is shown; the three-arm body 202-223 is elided.
-- [rust] [minor] 2.1: the 11 `mod ...;` declarations (252-263) are shown, but the `extern crate alloc;` and `#[cfg(feature = "std")] extern crate std;` at 246-250 are not.
-- [rust] [minor] 5.1: only the `ErrorImpl<E>` struct at 934-939 and `ContextError` at 952-955 are present; the `ErrorVTable` struct at 740-755 and the intervening `vtable()` reader are missing. The North Star pairs these two ranges as a single batch.
-- [rust] [minor] 3.3: the `impl ErrorImpl { display, debug }` headers at fmt.rs:7 and :20 are shown but bodies are elided; the `Indented` `Write` impl header at :75 is shown but body elided; the full 1-67 range is not coherently represented.
-- [rust] [minor] 3.6: chain.rs struct/enum/impl headers are shown but every method body (`next`, `next_back`, `size_hint`, `len`, `default`, `new`) is elided. The state machine is unreadable without the bodies.
-- [rust] [minor] 4.5: Adhoc/Trait/Boxed structs and the three `*Kind` traits (55-121) have their declarations shown, but the `new()` method bodies (lines 72-76, 94-98, 117-121 approximately) are elided with `…`, making the autoref-dispatch wiring opaque.
-- [rust] [minor] 5.4: wrapper.rs structs and `impl` headers are shown; every `fmt` body and the `source`/`provide` bodies are elided.
-- [rust] [minor] 6.2: nightly.rs `use`s and the three fn signatures (`request_ref_backtrace`, `provide_ref_backtrace`, `provide`) are shown with bodies elided; the `#[cfg(anyhow_build_probe)] const _` block is absent.
-- [rust] [minor] 6.4: ensure.rs trait/struct declarations and fn headers are shown (`BothDebug`, `NotBothDebug`, `Buf::new`, `Buf::as_str`, `Write for Buf`), but bodies and the `render` function are elided.
+
+- [rust] [major] 2.1 (`lib.rs:246-263`) partially rendered — lines 252-263 (the 11 `mod ...;` declarations) are shown, but lines 246-251 (`extern crate alloc;` and `#[cfg(feature = "std")] extern crate std;`) are silently omitted. The `extern crate` statements are the load-bearing alloc/std toggle per the NS note.
+- [rust] [major] 2.10 (`test_ffi.rs:1-19`) partially rendered — three `pub extern "C" fn ...` signature lines with bodies elided; the test-assertion bodies that actually exercise FFI-safety are missing.
+- [rust] [major] 3.6 (`chain.rs:1-102`) partially rendered — `Chain` struct decl (lines 11-13) and `ChainState` enum (lines 16-24) shown, but the `Iterator`/`DoubleEndedIterator`/`ExactSizeIterator`/`Default` impls and the `pub(crate) use` re-export are missing. NS explicitly notes "Splitting hurts — the impls only make sense together with the state machine."
+- [rust] [major] 3.8 (`common/mod.rs` + `drop/mod.rs`) partially rendered — only fn/struct signatures with bodies elided; the `bail_*` helpers and `Flag`/`DetectDrop` drop-detection bodies are unreadable from signatures alone.
+- [rust] [major] 4.5 (`kind.rs:55-121`) partially rendered — the `Adhoc`/`Trait`/`Boxed` unit structs and the `AdhocKind`/`TraitKind`/`BoxedKind` traits with their `anyhow_kind` methods are shown, but the NS batch also includes the `Adhoc::new`/`Trait::new`/`Boxed::new` free-function impls (the three concrete constructors that produce an `Error`). These are silently omitted.
+- [rust] [major] 5.1 (`error.rs:740-755` + `:930-955`) partially rendered — only the `ErrorImpl<E>` struct and `ContextError<C, E>` struct decls from the 930-955 range are shown; the `ErrorVTable` struct (740-755), which is the *core trick* per the NS, is missing entirely, as is the `vtable()` pointer-trick reader at 941-951.
+- [rust] [major] 5.4 (`wrapper.rs:1-84`) partially rendered — only the three `pub struct` declarations (`MessageError`, `DisplayError`, `BoxedError`) are shown; the `#[repr(transparent)]` attrs, `StdError` impls, and `Display`/`Debug` forwarders that make the newtype pattern work are omitted.
+- [rust] [major] 6.2 (`nightly.rs:1-58`) partially rendered — three `pub fn` signature lines (`request_ref_backtrace`, `provide_ref_backtrace`, `provide`) with bodies elided; the `#[cfg(anyhow_build_probe)] const _: () = { ... }` probe block (the build-script coupling per NS) is absent.
+- [rust] [major] 6.3 (`backtrace.rs:1-68`) partially rendered — only a single `pub(crate) enum Backtrace {}` line at line 8, which is itself just one of the three cfg arms; the `impl_backtrace!`/`backtrace!`/`backtrace_if_absent!` macros and the full cfg dispatch tree are absent.
+- [rust] [major] 6.4 (`ensure.rs:1-101`) partially rendered — the `BothDebug` and `NotBothDebug` trait declarations are shown, but the `Buf` 40-byte stack buffer and the `render` function (which do the no-alloc `(2 vs 1)` formatting per NS) are missing.
+- [rust] [major] 6.5 (`ensure.rs:884-935`) partially rendered — only `macro_rules! __fancy_ensure` and `macro_rules! __fallback_ensure` header lines with immediate `…` elisions; the actual macro arms that define what `ensure!` expands to are absent.
+- [other-language] [major] 7.4 (`tests/crate/`) partially rendered — `Cargo.toml` lines 1-17 shown but `test.rs` content absent (only the filename).
+- [rust] [predecessor] 4.5 partial content present without 4.4 (`kind.rs:1-46` autoref-dispatch design comment). NS declares `4.5 Predecessor: 4.4`; the reader sees `Adhoc`/`Trait`/`Boxed` dispatch types with no explanation of why autoref method resolution is the mechanism.
+- [rust] [predecessor] 6.2 (nightly.rs fn sigs) present without 6.1 (`build.rs` cfg decision tree). NS declares `6.2 Predecessor: 6.1`; the reader sees `request_ref_backtrace`/`provide_ref_backtrace`/`provide` without any story for the `anyhow_build_probe`/`error_generic_member_access` cfgs that gate them.
 
 ### Honesty
+
 - (none)
