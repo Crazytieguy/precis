@@ -101,12 +101,6 @@ until the Stage 4 ontology is concrete; the discipline meanwhile is:
   400`, `W_ZERO_CALL = 300` are first-pass. Calibrate from north-star
   divergence reports.
 
-### Honesty / verification
-- **Reviewer-staleness test** — once divergence reports exist (Stage 7
-  iteration), add a test that asserts every committed snapshot has a
-  divergence report whose frontmatter `snapshot_hash` matches the current
-  snapshot's hash.
-
 ### Process
 - **More languages** — TypeScript and Python are the next likely targets
   after Rust + markdown.
