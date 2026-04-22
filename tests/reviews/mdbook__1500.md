@@ -4,31 +4,25 @@ snapshot_hash: f15376367131fefb1d7fbcb6829cba3695be9bd39a2733141acd99dbf6ee3c34
 
 ## Summary
 
-At a 1500-token budget the snapshot is far from the North Star ordering. Batches 1.1 and 1.2 land, but essentially every ranked item from 1.5 through 3.10 is skipped while the snapshot instead spends budget on lower-ranked material: the mdbook-binary `[package]` stanza (3.11), the `[features]` stanza (3.12), the CI folder listing (5.11), and several below-the-fold surfaces (the `[[bin]]/[[example]]/[[test]]` tail of `Cargo.toml`, the full README, and plumbing Cargo.toml/README fragments under `crates/mdbook-{compare,core,driver}/`). The dominant pattern is "first-pass walker dumps sibling files around a root while skipping the ranked source-tree content entirely."
+At 1500 tokens the snapshot covers only a small slice of the North Star's batch 1 orientation layer, and the slice it includes is heavily out of order: chunks of `Cargo.toml` (NS 3.11/3.12) and several below-the-fold per-crate `Cargo.toml`/README fragments are shown while higher-ranked batches 1.4, 1.6, 1.8, and 1.9-1.14 are absent. Most ranked items that are present are also partial, violating batch correctness for 1.1, 1.5, 1.7, 3.11, and 3.12.
 
 ## Divergences
 
 ### Ranking
-- [rust] [major] 1.5 (src/ + src/cmd/ listing) skipped — only `src/cmd/` folder name is shown; contents absent. Snapshot instead includes lower-ranked Cargo.toml slices mapped to 3.11/3.12 (`Cargo.toml:72-88`, `:129-133`) and below-the-fold `Cargo.toml:135-153`.
-- [rust] [major] 1.6 (subcommand about-line map) skipped while 3.11/3.12 fragments and below-the-fold `Cargo.toml:135-153` are present.
-- [rust] [major] 1.8 (`src/main.rs:18-55` CLI dispatch) skipped; only the line-1 doc comment is shown. Displaced by 3.11/3.12 fragments and the `ci/` listing (5.11).
-- [rust] [major] 1.9 (`MDBook` struct fields) skipped while 3.11/3.12 fragments and below-the-fold plumbing (sub-crate Cargo.toml/README fragments under `crates/mdbook-{compare,core,driver}/`) are present.
-- [rust] [major] 1.10 (`Preprocessor` trait) skipped while 3.11/3.12 and below-the-fold items are present.
-- [rust] [major] 1.11 (`Renderer` trait) skipped while 3.11/3.12 and below-the-fold items are present.
-- [rust] [major] 1.12 (`LinkPreprocessor` helper doc) skipped while lower-ranked material is present.
-- [markdown] [major] 1.13 (`IndexPreprocessor` doc) skipped while lower-ranked material is present.
-- [markdown] [major] 1.14 (guide `SUMMARY.md`) skipped (only filename appears as a collapsed node); displaced by 5.11 and below-the-fold tail README content.
-- [rust] [minor] 2.1-2.22 (core data model batches) entirely skipped while 3.11/3.12 fragments are present (within major group 3, so minor relative to tier 3).
-- [rust] [major] 2.1-2.22 skipped while below-the-fold material (sub-crate Cargo.toml/README plumbing, `Cargo.toml:135-153`) is present.
-- [markdown] [major] 6.1 overreach into below-the-fold: `README.md:1-20` is shown, extending beyond 1.2 (`:7`) and 6.1 (`:1-13`) into the License section (`:14-20`) which is below-the-fold, while most of 1.5-2.x remain absent.
-- [rust] [major] Below-the-fold `Cargo.toml:135-153` (`[[bin]]`/`[[example]]`/`[[test]]` tail — explicitly listed under "CLI internals" below-the-fold as `Cargo.toml:135-158`) is present while most ranked 1.x and 2.x batches are absent.
-- [rust] [major] Below-the-fold plumbing from "Sub-crate `Cargo.toml` files" and "`crates/*/README.md`" — `crates/mdbook-compare/Cargo.toml:1-7`, `crates/mdbook-compare/README.md:1-3`, `crates/mdbook-core/Cargo.toml:1-8`, `crates/mdbook-core/README.md:1-5`, `crates/mdbook-driver/Cargo.toml:31-32`, `crates/mdbook-driver/README.md` — present while 1.4 (crate-name→description map), 1.9-1.14, and most of 2.x/3.x are skipped.
+- [rust] [major] NS 3.11 shown (`Cargo.toml:72-88`, `[package]` block) while NS 1.6 (subcommand about-line map across `src/cmd/*.rs` + `src/main.rs`) is missing.
+- [rust] [major] NS 3.11 shown while NS 1.8 (`src/main.rs:18-55` clap dispatch) is missing — snapshot only shows the `src/main.rs:1` doc line (a below-the-fold fragment).
+- [rust] [major] NS 3.12 fragments shown (`Cargo.toml:129-133, 135-153`, features + `[[bin]]`/`[[example]]`/`[[test]]`) while NS 1.6, 1.8, 1.9 (`MDBook` struct), 1.10 (`Preprocessor` trait), 1.11 (`Renderer` trait), 1.12 (link helpers), 1.13 (`IndexPreprocessor`), 1.14 (guide `SUMMARY.md`) are all missing.
+- [rust] [major] Snapshot extends past the NS 3.12 range into `Cargo.toml:135-153` (explicitly deferred below-the-fold as "CLI internals" `Cargo.toml:135-158`) while 1.4, 1.6, 1.8-1.14, and all of 2.x are missing.
+- [generic] [major] Per-crate plumbing (`crates/mdbook-compare/Cargo.toml:1-7`, `crates/mdbook-compare/README.md`, `crates/mdbook-core/Cargo.toml:1-8`, `crates/mdbook-core/README.md`, `crates/mdbook-driver/Cargo.toml:31-32`, `crates/mdbook-driver/README.md`) is shown while NS 1.4 (the one-line crate-description map that would cover all nine crates in 112 tokens) is missing.
+- [markdown] [major] NS 6.1 tail (`README.md:14-20`, License section) present while most of 1.4-1.14 and all of 2.x are missing. (6.1 itself is batch `:1-13`; snapshot overruns into the below-the-fold tail.)
+- [rust] [minor] NS 3.12 material shown while NS 3.11 itself is not complete (missing `:89-104` dependency list), creating intra-tier-3 disorder.
 
 ### Batch correctness
-- [rust] [minor] 1.7 partial: snapshot shows `Cargo.toml:1-5` and `:21-25` but omits `:6-20` (the `[workspace.lints.*]` block that the batch explicitly includes). Silent partial of the workspace header.
-- [rust] [minor] 3.11 partial: snapshot shows `Cargo.toml:72-88` ([package] metadata) but omits `:89-104` ([dependencies]) which the batch explicitly spans (72-104).
-- [rust] [minor] 3.12 partial: snapshot shows `Cargo.toml:129-133` ([features]) but omits `:105-128` (optional watch/serve deps + [dev-dependencies]) which the batch explicitly spans (105-134).
-- [rust] [minor] 1.4 partial: of the nine-crate name→description map, only `mdbook-core`'s description surfaces (via its included Cargo.toml slice); `mdbook-compare` (has `publish=false`, no description), `mdbook-driver` (only [features] shown), and `mdbook-html/-markdown/-preprocessor/-renderer/-summary/xtask` (folder-only) are not rendered with their descriptions. Silent partial of the batch.
+- [generic] [minor] NS 1.1 violated: top-level listing includes `.cargo/` (with `config.toml`), `.github/` (with full `ISSUE_TEMPLATE/`, `renovate.json5`, `workflows/` subtree), and `.gitignore`, which the North Star batch explicitly excludes. The batch specifies the filtered set `CHANGELOG.md … triagebot.toml`.
+- [rust] [minor] NS 1.5 violated: `src/` listing shown (`main.rs`, `cmd/`) but the paired `src/cmd/` listing (`build.rs`, `clean.rs`, `command_prelude.rs`, `init.rs`, `mod.rs`, `serve.rs`, `test.rs`, `watch.rs`, `watch/native.rs`, `watch/poller.rs`) is silently omitted; batch specifies two listings together-or-not.
+- [rust] [minor] NS 1.7 violated: batch is `Cargo.toml:1-26`; snapshot shows only `:1-5` and `:21-25`, silently dropping `:6-20` (the `[workspace.lints.*]` block) and line `:26`.
+- [rust] [minor] NS 3.11 violated: batch is `Cargo.toml:72-104`; snapshot shows only `:72-88`, silently dropping `:89-104` (`[dependencies]` — clap, internal `mdbook-*` crates, opener, toml, tracing).
+- [rust] [minor] NS 3.12 violated: batch is `Cargo.toml:105-134`; snapshot shows only `:129-133`, silently dropping `:105-128` (optional watch/serve deps, `[dev-dependencies]`). Snapshot also extends past `:134` into deferred `:135-153`.
 
 ### Honesty
 - (none)

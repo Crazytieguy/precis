@@ -26,7 +26,6 @@ At ~1500 tokens the snapshot behaves like a "skeleton of everything" rather than
 
 ### Batch correctness
 - [generic] [minor] 1.1 violated: the rendered root listing expands `.github/` into `FUNDING.yml` and `workflows/ci.yml`, adding two entries the North Star batch excludes (batch is the 10 top-level entries flat).
-- [rust] [minor] 1.5 violated: `Cargo.toml` rendered as lines 1-12 of the 1-13 batch range.
 - [rust] [minor] 1.6 violated: snapshot shows 390-392 only, omitting line 389 (`#[repr(transparent)]`) — the attribute is the load-bearing half of the "one machine word" claim.
 - [rust] [minor] 1.7 violated: snapshot shows 468 only, omitting 467 (the preceding doc-stub line).
 - [rust] [minor] 1.9 violated: snapshot shows only line 650 header of `pub fn Ok<T>`; the other half of the batch (`pub use anyhow as format_err;` at `lib.rs:285-286`) is missing entirely.
