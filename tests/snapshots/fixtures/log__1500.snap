@@ -38,22 +38,26 @@ src/
     __private_api.rs
     kv/
     lib.rs
+        11→//! A lightweight logging facade.
+        12→//!
+        13→//! The `log` crate provides a single logging API that abstracts over the
+        14→//! actual logging implementation. Libraries can use the logging API provided
+        15→//! by this crate, and the consumer of those libraries can choose the logging
+        16→//! implementation that is most suitable for its use case.
+        17→//!
+        18→//! If no logging implementation is selected, the facade falls back to a "noop"
+        19→//! implementation that ignores all log messages. The overhead in this case
+        20→//! is very small - just an integer load, comparison and jump.
+        21→//!
+        22→//! A log request consists of a _target_, a _level_, and a _body_. A target is a
+        23→//! string which defaults to the module path of the location of the log request,
+        24→//! though that default may be overridden. Logger implementations typically use
+        25→//! the target to filter requests based on some user configuration.
+        26→//!
         475→pub enum Level {
         …
         636→pub enum LevelFilter {
-        637→    /// A level lower than all log levels.
-        638→    Off,
-        639→    /// Corresponds to the `Error` log level.
-        640→    Error,
-        641→    /// Corresponds to the `Warn` log level.
-        642→    Warn,
-        643→    /// Corresponds to the `Info` log level.
-        644→    Info,
-        645→    /// Corresponds to the `Debug` log level.
-        646→    Debug,
-        647→    /// Corresponds to the `Trace` log level.
-        648→    Trace,
-        649→}
+        …
         842→pub struct Record<'a> {
         843→    metadata: Metadata<'a>,
         844→    args: fmt::Arguments<'a>,
@@ -92,9 +96,6 @@ src/
         1546→/// [`set_logger`]: fn.set_logger.html
         1549→pub struct SetLoggerError(());
         …
-        1561→/// The type returned by [`from_str`] when the string doesn't match any of the log levels.
-        1562→///
-        1563→/// [`from_str`]: https://doc.rust-lang.org/std/str/trait.FromStr.html#tymethod.from_str
         1566→pub struct ParseLevelError(());
         …
         1578→/// Returns a reference to the logger.
@@ -157,9 +158,6 @@ test_max_level_features/
         8→name = "test_max_level_features"
         9→path = "main.rs"
     main.rs
-        1→use log::{debug, error, info, trace, warn, Level, LevelFilter, Log, Metadata, Record};
-        2→use std::sync::{Arc, Mutex};
-        5→use log::set_boxed_logger;
         17→impl Log for Logger {
         18→    fn enabled(&self, _: &Metadata) -> bool {
         …

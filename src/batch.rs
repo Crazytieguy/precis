@@ -81,9 +81,12 @@ impl From<TomlKey> for BatchKey {
 /// one name-list batch).
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum RustKey {
-    /// `//!` module-doc lede — only emitted for crate entrypoints
+    /// `//!` module-doc lede — first paragraph only, entrypoints
     /// (`lib.rs`, `main.rs`). Priority 1.x.
     CrateDocLede { file: PathBuf },
+    /// `//!` module-doc body — everything after the first paragraph.
+    /// Predecessor: `CrateDocLede`. Priority 2.x–3.x.
+    CrateDocBody { file: PathBuf },
     /// `use` + `mod` + `pub use` plumbing at the top of a file. Priority 2.x.
     ModUse { file: PathBuf },
     /// Surface listing of every top-level `pub` item name in a file. A

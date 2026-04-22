@@ -201,60 +201,6 @@ crates/
                 9→//! - Do some processing or test before building your book.
                 10→//! - Accessing the public API to help create a new Renderer.
                 11→//!
-                12→//! ## Additional crates
-                13→//!
-                14→//! In addition to `mdbook-driver`, there are several other crates available
-                15→//! for using and extending mdBook:
-                16→//!
-                17→//! - [`mdbook_preprocessor`]: Provides support for implementing preprocessors.
-                18→//! - [`mdbook_renderer`]: Provides support for implementing renderers.
-                19→//! - [`mdbook_markdown`]: The Markdown renderer.
-                20→//! - [`mdbook_summary`]: The `SUMMARY.md` parser.
-                21→//! - [`mdbook_html`]: The HTML renderer.
-                22→//! - [`mdbook_core`]: An internal library that is used by the other crates
-                23→//!   for shared types. Types from this crate are rexported from the other
-                24→//!   crates as appropriate.
-                25→//!
-                26→//! ## Cargo features
-                27→//!
-                28→//! The following cargo features are available:
-                29→//!
-                30→//! - `search`: Enables the search index in the HTML renderer.
-                31→//!
-                32→//! ## Examples
-                33→//!
-                34→//! If creating a new book from scratch, you'll want to get a [`init::BookBuilder`] via
-                35→//! the [`MDBook::init()`] method.
-                36→//!
-                37→//! ```rust,no_run
-                38→//! use mdbook_driver::MDBook;
-                39→//! use mdbook_driver::config::Config;
-                40→//!
-                41→//! let root_dir = "/path/to/book/root";
-                42→//!
-                43→//! // create a default config and change a couple things
-                44→//! let mut cfg = Config::default();
-                45→//! cfg.book.title = Some("My Book".to_string());
-                46→//! cfg.book.authors.push("Michael-F-Bryan".to_string());
-                47→//!
-                48→//! MDBook::init(root_dir)
-                49→//!     .create_gitignore(true)
-                50→//!     .with_config(cfg)
-                51→//!     .build()
-                52→//!     .expect("Book generation failed");
-                53→//! ```
-                54→//!
-                55→//! You can also load an existing book and build it.
-                56→//!
-                57→//! ```rust,no_run
-                58→//! use mdbook_driver::MDBook;
-                59→//!
-                60→//! let root_dir = "/path/to/book/root";
-                61→//!
-                62→//! let mut md = MDBook::load(root_dir)
-                63→//!     .expect("Unable to load the book");
-                64→//! md.build().expect("Building failed");
-                65→//! ```
                 67→pub mod builtin_preprocessors;
                 68→pub mod builtin_renderers;
                 69→pub mod init;
@@ -385,10 +331,45 @@ crates/
                 4→//! [preprocessor](https://rust-lang.github.io/mdBook/for_developers/preprocessors.html)
                 5→//! for [mdBook](https://rust-lang.github.io/mdBook/). See the linked chapter
                 6→//! for more information on how to implement a preprocessor.
+                23→/// An operation which is run immediately after loading a book into memory and
+                24→/// before it gets rendered.
+                25→///
+                26→/// Types that implement the `Preprocessor` trait can be used with
+                27→/// [`MDBook::with_preprocessor`] to programmatically add preprocessors.
+                28→///
+                29→/// [`MDBook::with_preprocessor`]: https://docs.rs/mdbook-driver/latest/mdbook_driver/struct.MDBook.html#method.with_preprocessor
                 30→pub trait Preprocessor {
-                …
+                31→    /// Get the `Preprocessor`'s name.
+                32→    fn name(&self) -> &str;
+                34→    /// Run this `Preprocessor`, allowing it to update the book before it is
+                35→    /// given to a renderer.
+                36→    fn run(&self, ctx: &PreprocessorContext, book: Book) -> Result<Book>;
+                38→    /// A hint to `MDBook` whether this preprocessor is compatible with a
+                39→    /// particular renderer.
+                40→    ///
+                41→    /// By default, always returns `true`.
+                42→    fn supports_renderer(&self, _renderer: &str) -> Result<bool> {
+                43→        Ok(true)
+                44→    }
+                45→}
+                47→/// Extra information for a `Preprocessor` to give them more context when
+                48→/// processing a book.
                 51→pub struct PreprocessorContext {
-                …
+                52→    /// The location of the book directory on disk.
+                53→    pub root: PathBuf,
+                54→    /// The book configuration (`book.toml`).
+                55→    pub config: Config,
+                56→    /// The `Renderer` this preprocessor is being used with.
+                57→    pub renderer: String,
+                58→    /// The calling `mdbook` version.
+                59→    pub mdbook_version: String,
+                60→    /// Internal mapping of chapter titles.
+                61→    ///
+                62→    /// This is used internally by mdbook to compute custom chapter titles.
+                63→    /// This should not be used outside of mdbook's internals.
+                64→    #[serde(skip)]
+                65→    pub chapter_titles: RefCell<HashMap<PathBuf, String>>,
+                66→}
                 68→impl PreprocessorContext {
                 70→    pub fn new(root: PathBuf, config: Config, renderer: String) -> Self {
                 …
@@ -412,6 +393,12 @@ crates/
             5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
         src/
             lib.rs
+                1→//! Library to assist implementing an mdbook renderer.
+                2→//!
+                3→//! This library is used to implement a
+                4→//! [renderer](https://rust-lang.github.io/mdBook/for_developers/backends.html)
+                5→//! for [mdBook](https://rust-lang.github.io/mdBook/). See the linked chapter
+                6→//! for more information on how to implement a renderer.
                 28→pub trait Renderer {
                 29→    /// The `Renderer`'s name.
                 30→    fn name(&self) -> &str;
@@ -438,6 +425,14 @@ crates/
             5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
         src/
             lib.rs
+                59→pub fn parse_summary(summary: &str) -> Result<Summary> {
+                …
+                67→pub struct Summary {
+                …
+                84→pub struct Link {
+                …
+                122→pub enum SummaryItem {
+                …
     xtask/
         Cargo.toml
             1→[package]
@@ -462,8 +457,6 @@ examples/
         .gitignore
         book.toml
         mdbook-remove-emphasis/
-            Cargo.toml
-            src/
         src/
         test.rs
 guide/
@@ -488,7 +481,6 @@ guide/
         format/
         guide/
         misc/
-            contributors.md
 package.json
 rustfmt.toml
 src/

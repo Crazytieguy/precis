@@ -4,7 +4,6 @@ expression: rendered
 ---
 .github/
     workflows/
-        main.yml
 .gitignore
 CHANGELOG.md
 Cargo.toml
@@ -36,36 +35,24 @@ rfcs/
     0296-structured-logging.md
 src/
     __private_api.rs
-        10→pub type Value<'a> = &'a str;
-        …
-        37→/// The global logger proxy.
-        39→pub struct GlobalLogger;
-        …
-        84→pub fn log<'a, K, L>(
-        85→    logger: L,
-        86→    args: Arguments,
-        87→    level: Level,
-        88→    target_module_path_and_loc: &(&str, &'static str, &'static Location),
-        89→    kvs: K,
-        90→) where
-        91→    K: KVs<'a>,
-        92→    L: Log,
-        93→{
-        …
-        103→pub fn enabled<L: Log>(logger: L, level: Level, target: &str) -> bool {
-        …
-        108→pub fn loc() -> &'static Location<'static> {
-        …
     kv/
-        error.rs
-            5→pub struct Error {
-            6→    inner: Inner,
-            7→}
-        key.rs
-        mod.rs
-        source.rs
-        value.rs
     lib.rs
+        11→//! A lightweight logging facade.
+        12→//!
+        13→//! The `log` crate provides a single logging API that abstracts over the
+        14→//! actual logging implementation. Libraries can use the logging API provided
+        15→//! by this crate, and the consumer of those libraries can choose the logging
+        16→//! implementation that is most suitable for its use case.
+        17→//!
+        18→//! If no logging implementation is selected, the facade falls back to a "noop"
+        19→//! implementation that ignores all log messages. The overhead in this case
+        20→//! is very small - just an integer load, comparison and jump.
+        21→//!
+        22→//! A log request consists of a _target_, a _level_, and a _body_. A target is a
+        23→//! string which defaults to the module path of the location of the log request,
+        24→//! though that default may be overridden. Logger implementations typically use
+        25→//! the target to filter requests based on some user configuration.
+        26→//!
         467→/// An enum representing the available verbosity levels of the logger.
         468→///
         469→/// Typical usage includes: checking if a certain `Level` is enabled with

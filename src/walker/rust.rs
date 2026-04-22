@@ -49,11 +49,20 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate> {
         let depth = ctx.depth_from_root(file);
         let ep = is_entrypoint_file(file);
         if ep {
+            let lede = RustKey::CrateDocLede { file: file.clone() };
             out.push(candidate(
-                RustKey::CrateDocLede { file: file.clone() },
+                lede.clone(),
                 crate_doc_lede_signals(file, depth),
                 40,
             ));
+            out.push(
+                candidate(
+                    RustKey::CrateDocBody { file: file.clone() },
+                    crate_doc_body_signals(file, depth),
+                    200,
+                )
+                .with_predecessor(BatchKey::Rust(lede)),
+            );
             out.push(candidate(
                 RustKey::ModUse { file: file.clone() },
                 mod_use_signals(file, depth),
@@ -145,6 +154,12 @@ pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
             file,
             collect_module_doc_lede,
             crate_doc_lede_signals(file, ctx.depth_from_root(file)),
+            ctx,
+        ),
+        RustKey::CrateDocBody { file } => mat_per_file(
+            file,
+            collect_module_doc_body,
+            crate_doc_body_signals(file, ctx.depth_from_root(file)),
             ctx,
         ),
         RustKey::ModUse { file } => mat_per_file(
@@ -334,9 +349,18 @@ fn file_depth_factor(path: &Path, depth: usize) -> f64 {
 
 fn crate_doc_lede_signals(file: &Path, depth: usize) -> ValueSignals {
     ValueSignals {
-        catastrophic_omission: (0.7 * entrypoint_boost(file)).min(1.0),
+        catastrophic_omission: (0.8 * entrypoint_boost(file)).min(1.0),
         follow_up_minimization: 0.5,
-        zero_tool_call_understanding: 0.85,
+        zero_tool_call_understanding: 0.9,
+        depth_factor: file_depth_factor(file, depth),
+    }
+}
+
+fn crate_doc_body_signals(file: &Path, depth: usize) -> ValueSignals {
+    ValueSignals {
+        catastrophic_omission: (0.35 * entrypoint_boost(file)).min(1.0),
+        follow_up_minimization: 0.6,
+        zero_tool_call_understanding: 0.75,
         depth_factor: file_depth_factor(file, depth),
     }
 }
@@ -468,28 +492,55 @@ where
 // --- AST collectors ---
 
 fn collect_module_doc_lede(tree: &Tree, source: &str) -> FileLines {
+    FileLines::new(collect_module_doc_lines(tree, source, DocSection::Lede))
+}
+
+fn collect_module_doc_body(tree: &Tree, source: &str) -> FileLines {
+    FileLines::new(collect_module_doc_lines(tree, source, DocSection::Body))
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum DocSection {
+    /// First paragraph of `//!` only.
+    Lede,
+    /// Everything after the first paragraph.
+    Body,
+}
+
+/// Collect line numbers belonging to the crate-`//!` block, split at the
+/// first Markdown heading (`//! #`, `//! ##`, …). Regular license-header
+/// `// comments` above the `//!` run are skipped. The lede is everything
+/// from the first `//!` up to (but not including) the first heading line;
+/// the body is from the heading onwards. If no heading is present, the
+/// whole block is the lede.
+fn collect_module_doc_lines(tree: &Tree, source: &str, section: DocSection) -> Vec<usize> {
     let root = tree.root_node();
     let mut cursor = root.walk();
-    let mut out = Vec::new();
+    let mut all: Vec<usize> = Vec::new();
     for child in root.children(&mut cursor) {
-        if matches!(child.kind(), "line_comment" | "block_comment")
-            && is_module_doc_comment(child, source)
-        {
-            extend_span(&mut out, child, source);
+        if matches!(child.kind(), "line_comment" | "block_comment") {
+            if is_module_doc_comment(child, source) {
+                extend_span(&mut all, child, source);
+            }
             continue;
         }
-        if !matches!(child.kind(), "line_comment" | "block_comment") {
-            break;
-        }
+        break;
+    }
+    if all.is_empty() {
+        return Vec::new();
     }
     let src_lines: Vec<&str> = source.lines().collect();
-    if let Some(blank_idx) = out
-        .iter()
-        .position(|&n| src_lines.get(n - 1).is_some_and(|t| t.trim().is_empty()))
-    {
-        out.truncate(blank_idx);
+    let heading_pos = all.iter().position(|&n| {
+        src_lines
+            .get(n - 1)
+            .is_some_and(|t| t.trim_start().trim_start_matches("//!").trim_start().starts_with('#'))
+    });
+    match (section, heading_pos) {
+        (DocSection::Lede, Some(idx)) => all[..idx].to_vec(),
+        (DocSection::Body, Some(idx)) => all[idx..].to_vec(),
+        (DocSection::Lede, None) => all,
+        (DocSection::Body, None) => Vec::new(),
     }
-    FileLines::new(out)
 }
 
 fn collect_mod_use(tree: &Tree, _source: &str) -> FileLines {
