@@ -94,9 +94,10 @@ until the Stage 4 ontology is concrete; the discipline meanwhile is:
 ### Stopping criterion / value function
 - **Stopping criterion beyond "no batch fits"** — dynamic floor or
   value/cost threshold so we stop earlier when remaining batches are weak.
-- **Per-category sublinearity** — `value::ratio` uses `value / sqrt(cost)` for
-  every batch. May want per-category shapes (e.g. hard cap on CrateDocLede
-  size, gentler concavity on test-as-spec batches).
+- **Per-category sublinearity** — `value::ratio` uses `value / cost^0.35`
+  for every batch (gentler than `sqrt` — see the commit that moved off
+  `sqrt` for reasoning). May want per-category shapes (e.g. hard cap on
+  `CrateDocLede` size, gentler concavity on test-as-spec batches).
 - **Signal-weight calibration** — `W_CATASTROPHIC = 1000`, `W_FOLLOW_UP =
   400`, `W_ZERO_CALL = 300` are first-pass. Calibrate from north-star
   divergence reports.
