@@ -111,14 +111,15 @@ for the exact format.
 Read the three reports. If they flag major ranking / predecessor
 violations, the walker / value weights need tuning.
 
-**Pursue general solutions.** Every change should make the walker
-better across *all* fixtures, not plaster over a specific fixture's
-divergence. Prefer a small accepted divergence on one snapshot to a
-fix that over-fits — fixture-specific heuristics, filename lists,
-magic constants tuned against one repo — all accumulate into a walker
-that silently regresses on unseen repos. When a change visibly
-improves one fixture but is suspicious on others, re-check every
-existing snapshot before accepting.
+**Pursue general solutions.** Every change should improve the walker
+across the general distribution of real-world codebases — the fixtures
+are samples of that distribution, not the target. Prefer a small
+accepted divergence on one snapshot to a fix that over-fits:
+fixture-specific heuristics, filename lists, or magic constants tuned
+against one repo all accumulate into a walker that silently regresses
+on unseen codebases. When a change visibly improves one fixture but is
+suspicious on others, re-check every existing snapshot before
+accepting.
 
 After a walker change, regenerate snapshots (step 6) **and re-run
 alignment review** (step 7). The staleness test will fail if the
@@ -127,11 +128,9 @@ snapshots change and the reviews don't.
 **When stuck.** A divergence that resists general fixes is not a sign
 to ask the user — it's a sign to consult more perspectives first.
 Spawn an Agent for independent brainstorming on the walker design
-tradeoff; consult codex via `codex exec -o /tmp/out.txt "..." 2>&1 |
-grep "session id" && cat /tmp/out.txt` for a second opinion, with
-follow-up rounds via `codex exec resume <session-id>` if the first
-response is underspecified. Often a design tension that looks binary
-has a third option one of them will surface.
+tradeoff and consult codex for a second opinion (with follow-up rounds
+if the first response is underspecified). Often a design tension that
+looks binary has a third option one of them will surface.
 
 **Report to the user as a last resort.** If after that the right path
 is still unclear, reporting back is entirely acceptable — but by
