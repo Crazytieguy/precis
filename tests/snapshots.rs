@@ -6,11 +6,11 @@
 
 use std::path::PathBuf;
 
-const FIXTURES: &[&str] = &["log", "anyhow", "mdbook"];
+const FIXTURES: &[&str] = &["log", "anyhow", "mdbook", "otree"];
 const BUDGETS: &[usize] = &[1500, 3000, 6000];
 
 #[test]
-fn fixture_snapshots() {
+fn snapshots_fixtures() {
     let fixtures_root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures");
     for fixture in FIXTURES {
         let path = fixtures_root.join(fixture);

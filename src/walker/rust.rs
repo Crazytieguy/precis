@@ -28,7 +28,9 @@ use std::sync::Arc;
 
 use tree_sitter::{Node, Tree};
 
-use crate::batch::{BatchContent, BatchKey, FsKey, RenderedLine, ResolvedBatch, RustKey, ValueSignals};
+use crate::batch::{
+    BatchContent, BatchKey, FsKey, RenderedLine, ResolvedBatch, RustKey, ValueSignals,
+};
 use crate::value::{depth_factor, non_essential_factor};
 
 use super::{Candidate, FileLines, WalkCtx, fs::files_with_extension, single_file_lines_batch};
@@ -86,6 +88,13 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate> {
         if items.is_empty() {
             continue;
         }
+        // Intentionally not modeled as a separate batch in current north stars
+        // (they rank full bodies only). Reviewers will flag the resulting
+        // "struct header + …" rendering as a partial body, which is correct
+        // against the frozen NS. Planned: next NS-author pass will rank a
+        // PubItemNames-equivalent as its own tier-1 location hint so
+        // reviewer grading matches walker emission. Deferred to batch with
+        // other NS-side changes before the next fixture round.
         let names_key = RustKey::PubItemNames { file: file.clone() };
         out.push(candidate(
             names_key.clone(),
@@ -531,9 +540,12 @@ fn collect_module_doc_lines(tree: &Tree, source: &str, section: DocSection) -> V
     }
     let src_lines: Vec<&str> = source.lines().collect();
     let heading_pos = all.iter().position(|&n| {
-        src_lines
-            .get(n - 1)
-            .is_some_and(|t| t.trim_start().trim_start_matches("//!").trim_start().starts_with('#'))
+        src_lines.get(n - 1).is_some_and(|t| {
+            t.trim_start()
+                .trim_start_matches("//!")
+                .trim_start()
+                .starts_with('#')
+        })
     });
     match (section, heading_pos) {
         (DocSection::Lede, Some(idx)) => all[..idx].to_vec(),
@@ -550,7 +562,11 @@ fn collect_mod_use(tree: &Tree, _source: &str) -> FileLines {
     let mut ellipses = Vec::new();
     for child in root.children(&mut cursor) {
         match child.kind() {
-            "use_declaration" => push_rows(&mut full, child.start_position().row, signature_end_row(child)),
+            "use_declaration" => push_rows(
+                &mut full,
+                child.start_position().row,
+                signature_end_row(child),
+            ),
             "mod_item" => {
                 let sig_end = signature_end_row(child);
                 push_rows(&mut full, child.start_position().row, sig_end);

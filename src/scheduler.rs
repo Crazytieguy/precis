@@ -229,7 +229,11 @@ impl<W: Walker> Scheduler<W> {
     // ---- scheduling ----
 
     fn schedule(&mut self, id: BatchId) {
-        debug_assert!(!self.scheduled.contains(&id), "batch {:?} scheduled twice", id);
+        debug_assert!(
+            !self.scheduled.contains(&id),
+            "batch {:?} scheduled twice",
+            id
+        );
 
         let cost = self.tree.marginal_cost(&self.batches[id.index()]);
         debug_assert!(

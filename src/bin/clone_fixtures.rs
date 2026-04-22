@@ -46,8 +46,7 @@ fn main() {
             continue;
         }
         std::fs::remove_dir_all(target.join(".git")).ok();
-        std::fs::write(target.join(".precis-pin"), rev)
-            .expect("write .precis-pin");
+        std::fs::write(target.join(".precis-pin"), rev).expect("write .precis-pin");
         cloned += 1;
     }
 

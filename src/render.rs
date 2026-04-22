@@ -291,4 +291,3 @@ fn format_line_row(number: usize, line: &RenderedLine, indent_depth: usize) -> S
     s.push('\n');
     s
 }
-

@@ -186,4 +186,3 @@ fn extract_table_name(node: Node, source: &str) -> Option<String> {
     }
     None
 }
-

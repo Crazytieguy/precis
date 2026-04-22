@@ -208,10 +208,7 @@ pub(crate) fn single_file_lines_batch(
 /// Produce `{line_number → RenderedLine}` for a `FileLines` spec. `Full`
 /// entries skip blank source; `Ellipsis` entries don't need a source line
 /// to exist (they're walker-emitted markers).
-pub(crate) fn lines_map_from(
-    source: &str,
-    lines: FileLines,
-) -> BTreeMap<usize, RenderedLine> {
+pub(crate) fn lines_map_from(source: &str, lines: FileLines) -> BTreeMap<usize, RenderedLine> {
     let src_lines: Vec<&str> = source.lines().collect();
     let mut out: BTreeMap<usize, RenderedLine> = lines
         .full

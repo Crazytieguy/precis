@@ -44,6 +44,52 @@ README.md
     5→[<img alt="crates.io" src="https://img.shields.io/crates/v/anyhow.svg?style=for-the-badge&color=fc8d62&logo=rust" height="20">](https://crates.io/crates/anyhow)
     6→[<img alt="docs.rs" src="https://img.shields.io/badge/docs.rs-anyhow-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs" height="20">](https://docs.rs/anyhow)
     7→[<img alt="build status" src="https://img.shields.io/github/actions/workflow/status/dtolnay/anyhow/ci.yml?branch=master&style=for-the-badge" height="20">](https://github.com/dtolnay/anyhow/actions?query=branch%3Amaster)
+    9→This library provides [`anyhow::Error`][Error], a trait object based error type
+    10→for easy idiomatic error handling in Rust applications.
+    12→[Error]: https://docs.rs/anyhow/1.0/anyhow/struct.Error.html
+    14→```toml
+    15→[dependencies]
+    16→anyhow = "1.0"
+    17→```
+    19→<br>
+    126→## No-std support
+    128→In no_std mode, almost all of the same API is available and works the same way.
+    129→To depend on Anyhow in no_std mode, disable our default enabled "std" feature in
+    130→Cargo.toml. A global allocator is required.
+    132→```toml
+    133→[dependencies]
+    134→anyhow = { version = "1.0", default-features = false }
+    135→```
+    137→With versions of Rust older than 1.81, no_std mode may require an additional
+    138→`.map_err(Error::msg)` when working with a non-Anyhow error type inside a
+    139→function that returns Anyhow's error type, as the trait that `?`-based error
+    140→conversions are defined by is only available in std in those old versions.
+    142→<br>
+    144→## Comparison to failure
+    146→The `anyhow::Error` type works something like `failure::Error`, but unlike
+    147→failure ours is built around the standard library's `std::error::Error` trait
+    148→rather than a separate trait `failure::Fail`. The standard library has adopted
+    149→the necessary improvements for this to be possible as part of [RFC 2504].
+    151→[RFC 2504]: https://github.com/rust-lang/rfcs/blob/master/text/2504-fix-error.md
+    153→<br>
+    155→## Comparison to thiserror
+    157→Use Anyhow if you don't care what error type your functions return, you just
+    158→want it to be easy. This is common in application code. Use [thiserror] if you
+    159→are a library that wants to design your own dedicated error type(s) so that on
+    160→failures the caller gets exactly the information that you choose.
+    162→[thiserror]: https://github.com/dtolnay/thiserror
+    164→<br>
+    166→#### License
+    168→<sup>
+    169→Licensed under either of <a href="LICENSE-APACHE">Apache License, Version
+    170→2.0</a> or <a href="LICENSE-MIT">MIT license</a> at your option.
+    171→</sup>
+    173→<br>
+    175→<sub>
+    176→Unless you explicitly state otherwise, any contribution intentionally submitted
+    177→for inclusion in this crate by you, as defined in the Apache-2.0 license, shall
+    178→be dual licensed as above, without any additional terms or conditions.
+    179→</sub>
 build.rs
 rust-toolchain.toml
 src/
@@ -147,107 +193,6 @@ src/
         273→use std::error::Error as StdError;
         276→use core::error::Error as StdError;
         286→pub use anyhow as format_err;
-        288→/// The `Error` type, a wrapper around a dynamic error type.
-        289→///
-        290→/// `Error` works a lot like `Box<dyn std::error::Error>`, but with these
-        291→/// differences:
-        292→///
-        293→/// - `Error` requires that the error is `Send`, `Sync`, and `'static`.
-        294→/// - `Error` guarantees that a backtrace is available, even if the underlying
-        295→///   error type does not provide one.
-        296→/// - `Error` is represented as a narrow pointer &mdash; exactly one word in
-        297→///   size instead of two.
-        298→///
-        299→/// <br>
-        300→///
-        301→/// # Display representations
-        302→///
-        303→/// When you print an error object using "{}" or to_string(), only the outermost
-        304→/// underlying error or context is printed, not any of the lower level causes.
-        305→/// This is exactly as if you had called the Display impl of the error from
-        306→/// which you constructed your anyhow::Error.
-        307→///
-        308→/// ```console
-        309→/// Failed to read instrs from ./path/to/instrs.json
-        310→/// ```
-        311→///
-        312→/// To print causes as well using anyhow's default formatting of causes, use the
-        313→/// alternate selector "{:#}".
-        314→///
-        315→/// ```console
-        316→/// Failed to read instrs from ./path/to/instrs.json: No such file or directory (os error 2)
-        317→/// ```
-        318→///
-        319→/// The Debug format "{:?}" includes your backtrace if one was captured. Note
-        320→/// that this is the representation you get by default if you return an error
-        321→/// from `fn main` instead of printing it explicitly yourself.
-        322→///
-        323→/// ```console
-        324→/// Error: Failed to read instrs from ./path/to/instrs.json
-        325→///
-        326→/// Caused by:
-        327→///     No such file or directory (os error 2)
-        328→/// ```
-        329→///
-        330→/// and if there is a backtrace available:
-        331→///
-        332→/// ```console
-        333→/// Error: Failed to read instrs from ./path/to/instrs.json
-        334→///
-        335→/// Caused by:
-        336→///     No such file or directory (os error 2)
-        337→///
-        338→/// Stack backtrace:
-        339→///    0: <E as anyhow::context::ext::StdError>::ext_context
-        340→///              at /git/anyhow/src/backtrace.rs:26
-        341→///    1: core::result::Result<T,E>::map_err
-        342→///              at /git/rustc/src/libcore/result.rs:596
-        343→///    2: anyhow::context::<impl anyhow::Context<T,E> for core::result::Result<T,E>>::with_context
-        344→///              at /git/anyhow/src/context.rs:58
-        345→///    3: testing::main
-        346→///              at src/main.rs:5
-        347→///    4: std::rt::lang_start
-        348→///              at /git/rustc/src/libstd/rt.rs:61
-        349→///    5: main
-        350→///    6: __libc_start_main
-        351→///    7: _start
-        352→/// ```
-        353→///
-        354→/// To see a conventional struct-style Debug representation, use "{:#?}".
-        355→///
-        356→/// ```console
-        357→/// Error {
-        358→///     context: "Failed to read instrs from ./path/to/instrs.json",
-        359→///     source: Os {
-        360→///         code: 2,
-        361→///         kind: NotFound,
-        362→///         message: "No such file or directory",
-        363→///     },
-        364→/// }
-        365→/// ```
-        366→///
-        367→/// If none of the built-in representations are appropriate and you would prefer
-        368→/// to render the error and its cause chain yourself, it can be done something
-        369→/// like this:
-        370→///
-        371→/// ```
-        372→/// use anyhow::{Context, Result};
-        373→///
-        374→/// fn main() {
-        375→///     if let Err(err) = try_main() {
-        376→///         eprintln!("ERROR: {}", err);
-        377→///         err.chain().skip(1).for_each(|cause| eprintln!("because: {}", cause));
-        378→///         std::process::exit(1);
-        379→///     }
-        380→/// }
-        381→///
-        382→/// fn try_main() -> Result<()> {
-        383→///     # const IGNORE: &str = stringify! {
-        384→///     ...
-        385→///     # };
-        386→///     # Ok(())
-        387→/// }
-        388→/// ```
         390→pub struct Error {
         391→    inner: Own<ErrorImpl>,
         392→}

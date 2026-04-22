@@ -1,0 +1,625 @@
+---
+source: tests/snapshots.rs
+expression: rendered
+---
+.github/
+    dependabot.yml
+    workflows/
+        cargo-check.yml
+        release-binary.yml
+        spell-check.yml
+.gitignore
+Cargo.lock
+Cargo.toml
+    1→[package]
+    2→name = "otree"
+    3→version = "0.6.4"
+    4→edition = "2021"
+    5→build = "build.rs"
+    6→license = "MIT"
+    7→authors = ["fioncat"]
+    8→categories = ["command-line-utilities"]
+    9→readme = "README.md"
+    10→repository = "https://github.com/fioncat/otree"
+    11→description = "A command line tool to view objects (json/yaml/toml) in TUI tree widget"
+LICENSE
+README.md
+    1→# OTree - Object Tree TUI Viewer
+    3→![screenshot](assets/screenshot.png)
+assets/
+    screenshot.png
+build.rs
+config/
+    default.toml
+    themes/
+        catppuccin.toml
+docs/
+    actions.md
+    changelog.md
+        1→## v0.6.4
+        3→### Fixes
+        5→- Remove `any` in command line options.
+        6→- XML: Handle empty nodes containing fields correctly. (#121)
+        8→## v0.6.3
+        10→### Features
+        12→Enhanced automatic Content Type detection. Even when users don't provide file extensions, otree can now automatically detect the ContentType based on the data content.
+        14→For example, the following command is now available:
+        16→```bash
+        17→echo '{"key": "value"}' | otree
+        18→```
+        20→Now otree will try invoking all parsers in order for unknown content, and whichever parser succeeds determines the format.
+        22→## v0.6.2
+        24→### Features
+        26→- Data block now support wrap mode, this will disable horizontal scrolling, and
+        27→  long text will be split to a new line. You can enable this by `--wrap` or
+        28→  `-w` command line option. To change the default behavior, add `data.wrap = true` in config file. (#104)
+        97→## v0.5.1
+        99→### Fixes
+        101→- Fix panic when using action `expand_children` for empty object. (#87)
+        111→## v0.4.1
+        113→### Features
+        115→- when copying values, use pure text. (#80)
+        117→## v0.4.0
+        119→### Features
+        121→- Command: Add new flag `--debug`, to write some debug logs to a file.
+        122→- UI: Add `--live-reload` option, to watch file changes and update tui (#63).
+        123→- Release: Add Windows prebuilt binary (**unstable**, require more testing).
+        125→## v0.3.0
+        127→### Features
+        129→- Parser: Support [JSONL](https://jsonlines.org/)
+        130→- README: Add Homebrew instructions.
+        132→### Fixes
+        134→- Allow reading from stdin on macOS.
+        151→## v0.1.0
+        153→### Features
+        155→- Basic tree and data UI.
+        156→- Basic actions, see: [actions](./actions.md).
+    colors.md
+examples/
+    edge.json
+    edge.toml
+    edge.yaml
+    example.hcl
+    example.json
+    example.jsonl
+    example.toml
+    example.xml
+    example.yaml
+src/
+    clipboard.rs
+        28→pub fn write_clipboard(text: &str) -> Result<()> {
+        …
+    cmd.rs
+        13→pub struct CommandArgs {
+        …
+    config/
+        colors.rs
+            21→pub struct Colors {
+            22→    #[serde(default = "Colors::default_header")]
+            23→    pub header: Color,
+            25→    #[serde(default = "Colors::default_focus_boder")]
+            26→    pub focus_border: Color,
+            28→    #[serde(default = "FooterColors::default")]
+            29→    pub footer: FooterColors,
+            31→    #[serde(default = "TreeColors::default")]
+            32→    pub tree: TreeColors,
+            34→    #[serde(default = "DataColors::default")]
+            35→    pub data: DataColors,
+            37→    #[serde(default = "PopupColors::default")]
+            38→    pub popup: PopupColors,
+            40→    #[serde(default = "FilterColors::default")]
+            41→    pub filter: FilterColors,
+            42→}
+            78→pub struct DataColors {
+            79→    #[serde(default = "Color::default")]
+            80→    pub text: Color,
+            82→    #[serde(default = "DataColors::default_border")]
+            83→    pub border: Color,
+            85→    #[serde(default = "Color::default")]
+            86→    pub symbol: Color,
+            88→    #[serde(default = "DataColors::default_name")]
+            89→    pub name: Color,
+            91→    #[serde(default = "DataColors::default_tag")]
+            92→    pub tag: Color,
+            94→    #[serde(default = "DataColors::default_str")]
+            95→    pub str: Color,
+            97→    #[serde(default = "DataColors::default_num")]
+            98→    pub num: Color,
+            100→    #[serde(default = "DataColors::default_null")]
+            101→    pub null: Color,
+            103→    #[serde(default = "DataColors::default_bool")]
+            104→    pub bool: Color,
+            106→    #[serde(default = "DataColors::default_section")]
+            107→    pub section: Color,
+            108→}
+            162→pub struct TreeColors {
+            …
+            251→pub struct FooterColors {
+            252→    #[serde(default = "FooterColors::default_root")]
+            253→    pub root: Color,
+            255→    pub identify: Color,
+            257→    #[serde(default = "FooterColors::default_message")]
+            258→    pub message: Color,
+            259→}
+            286→pub struct PopupColors {
+            287→    #[serde(default = "PopupColors::default_error_text")]
+            288→    pub error_text: Color,
+            290→    #[serde(default = "PopupColors::default_help_name")]
+            291→    pub help_name: Color,
+            293→    #[serde(default = "PopupColors::default_help_value")]
+            294→    pub help_value: Color,
+            295→}
+            324→pub struct FilterColors {
+            325→    #[serde(default = "FilterColors::default_border")]
+            326→    pub border: Color,
+            327→}
+            342→pub struct Color {
+            343→    pub fg: Option<String>,
+            344→    pub bg: Option<String>,
+            346→    #[serde(default = "Config::disable")]
+            347→    pub bold: bool,
+            348→    #[serde(default = "Config::disable")]
+            349→    pub italic: bool,
+            351→    #[serde(skip)]
+            352→    pub style: Style,
+            353→}
+        keys.rs
+            54→pub enum Key {
+            55→    Char(char),
+            57→    Ctrl(char),
+            58→    Alt(char),
+            60→    F(u8),
+            62→    Backspace,
+            63→    Enter,
+            64→    Left,
+            65→    Right,
+            66→    Up,
+            67→    Down,
+            68→    PageUp,
+            69→    PageDown,
+            70→    Tab,
+            71→    Esc,
+            72→}
+            195→pub struct Keys {
+            …
+            351→pub struct KeyAction {
+            352→    pub key: Key,
+            353→    pub action: Option<Action>,
+            354→}
+        mod.rs
+            1→pub mod colors;
+            2→pub mod keys;
+            3→pub mod types;
+            5→use std::collections::HashMap;
+            6→use std::path::PathBuf;
+            7→use std::{env, fs, io};
+            9→use anyhow::{bail, Context, Result};
+            10→use serde::{Deserialize, Serialize};
+            12→use self::colors::Colors;
+            13→use self::keys::Keys;
+            14→use self::types::Types;
+            17→pub struct Config {
+            18→    #[serde(default = "Tree::default")]
+            19→    pub tree: Tree,
+            21→    #[serde(default = "Editor::default")]
+            22→    pub editor: Editor,
+            24→    #[serde(default = "Data::default")]
+            25→    pub data: Data,
+            27→    #[serde(default = "Layout::default")]
+            28→    pub layout: Layout,
+            30→    #[serde(default = "Header::default")]
+            31→    pub header: Header,
+            33→    #[serde(default = "Footer::default")]
+            34→    pub footer: Footer,
+            36→    #[serde(default = "Filter::default")]
+            37→    pub filter: Filter,
+            39→    #[serde(default = "Config::empty_map")]
+            40→    pub palette: HashMap<String, String>,
+            42→    #[serde(default = "Colors::default")]
+            43→    pub colors: Colors,
+            45→    #[serde(default = "Types::default")]
+            46→    pub types: Types,
+            48→    #[serde(default = "Keys::default")]
+            49→    pub keys: Keys,
+            50→}
+            53→pub struct Tree {
+            54→    #[serde(default = "Config::disable")]
+            55→    pub disable_selected_highlight: bool,
+            57→    #[serde(default = "String::new")]
+            58→    pub selected_symbol: String,
+            59→}
+            62→pub struct Editor {
+            63→    #[serde(default = "Editor::default_program")]
+            64→    pub program: String,
+            66→    #[serde(default = "Editor::default_args")]
+            67→    pub args: Vec<String>,
+            69→    #[serde(default = "Editor::default_dir")]
+            70→    pub dir: String,
+            71→}
+            74→pub struct Layout {
+            75→    #[serde(default = "Layout::default_direction")]
+            76→    pub direction: LayoutDirection,
+            78→    #[serde(default = "Layout::default_tree_size")]
+            79→    pub tree_size: u16,
+            80→}
+            83→pub enum LayoutDirection {
+            84→    #[serde(rename = "vertical")]
+            85→    Vertical,
+            86→    #[serde(rename = "horizontal")]
+            87→    Horizontal,
+            88→}
+            91→pub struct Header {
+            92→    #[serde(default = "Config::disable")]
+            93→    pub disable: bool,
+            95→    #[serde(default = "Header::default_format")]
+            96→    pub format: String,
+            97→}
+            100→pub struct Footer {
+            101→    #[serde(default = "Config::disable")]
+            102→    pub disable: bool,
+            103→}
+            106→pub struct Filter {
+            107→    #[serde(default = "Config::disable")]
+            108→    pub disable: bool,
+            110→    #[serde(default = "Filter::default_ignore_case")]
+            111→    pub ignore_case: bool,
+            113→    #[serde(default = "Filter::default_exclude_mode")]
+            114→    pub exclude_mode: bool,
+            115→}
+            118→pub struct Data {
+            119→    #[serde(default = "Config::disable")]
+            120→    pub disable_highlight: bool,
+            121→    #[serde(default = "Config::default_max_data_size")]
+            122→    pub max_data_size: usize,
+            123→    #[serde(default = "Config::disable")]
+            124→    pub wrap: bool,
+            125→}
+            127→impl Config {
+            131→    pub fn load(path: Option<String>) -> Result<Self> {
+            …
+            144→    pub fn parse(&mut self) -> Result<()> {
+            …
+            161→    fn validate_palette(&self) -> Result<()> {
+            …
+            171→    fn get_path(path: Option<String>) -> Result<Option<PathBuf>> {
+            …
+            196→    pub fn default() -> Self {
+            …
+            212→    pub fn show(&self) -> Result<()> {
+            …
+            218→    const fn disable() -> bool {
+            …
+            222→    const fn default_max_data_size() -> usize {
+            …
+            226→    fn empty_map() -> HashMap<String, String> {
+            …
+            231→impl Tree {
+            232→    fn default() -> Self {
+            …
+            240→impl Editor {
+            241→    fn default() -> Self {
+            …
+            249→    fn default_program() -> String {
+            …
+            256→    fn default_args() -> Vec<String> {
+            …
+            260→    fn default_dir() -> String {
+            …
+            265→impl Layout {
+            266→    fn default() -> Self {
+            …
+            273→    fn default_direction() -> LayoutDirection {
+            …
+            277→    fn default_tree_size() -> u16 {
+            …
+            282→impl Header {
+            283→    fn default() -> Self {
+            …
+            290→    fn default_format() -> String {
+            …
+            295→impl Footer {
+            296→    fn default() -> Self {
+            …
+            303→impl Filter {
+            304→    fn default() -> Self {
+            …
+            312→    fn default_ignore_case() -> bool {
+            …
+            316→    fn default_exclude_mode() -> bool {
+            …
+            321→impl Data {
+            322→    fn default() -> Self {
+            …
+        types.rs
+            28→pub struct Types {
+            29→    #[serde(default = "Types::default_str")]
+            30→    pub str: String,
+            32→    #[serde(default = "Types::default_null")]
+            33→    pub null: String,
+            35→    #[serde(default = "Types::default_bool")]
+            36→    pub bool: String,
+            38→    #[serde(default = "Types::default_num")]
+            39→    pub num: String,
+            41→    #[serde(default = "Types::default_arr")]
+            42→    pub arr: String,
+            44→    #[serde(default = "Types::default_obj")]
+            45→    pub obj: String,
+            46→}
+    debug.rs
+        8→macro_rules! debug {
+        9→    ($($arg:tt)*) => {
+        10→        if let Err(_) = $crate::debug::write_logs(format!($($arg)*)) {
+        11→            // FIXME: How to handle err when writing logs failed?
+        12→            // We cannot write error to stderr since it is used for TUI.
+        13→        }
+        14→    };
+        15→}
+        19→pub fn set_file(file: String) {
+        …
+        23→pub fn write_logs(mut msg: String) -> Result<()> {
+        …
+    edit.rs
+        10→pub struct Edit {
+        11→    path: String,
+        12→    data: String,
+        13→    cmd: Command,
+        14→}
+    live_reload.rs
+        16→pub struct FileWatcher {
+        17→    path: PathBuf,
+        19→    cfg: Rc<Config>,
+        20→    content_type: ContentType,
+        22→    max_data_size: usize,
+        24→    data: Arc<Mutex<Data>>,
+        25→}
+    main.rs
+    parse/
+        any.rs
+            9→pub struct AnyParser {
+            10→    inner: RefCell<Option<Box<dyn Parser>>>,
+            11→}
+        hcl.rs
+            8→pub struct HclParser {}
+            …
+        json.rs
+            6→pub struct JsonParser {}
+            …
+            26→pub fn highlight(value: &Value, indent: usize, has_next: bool) -> Vec<SyntaxToken> {
+            …
+        jsonl.rs
+            7→pub struct JsonlParser;
+            …
+        mod.rs
+            1→mod any;
+            2→mod hcl;
+            3→mod json;
+            4→mod jsonl;
+            5→mod syntax;
+            6→mod toml;
+            7→mod xml;
+            8→mod yaml;
+            10→pub use syntax::SyntaxToken;
+            12→use anyhow::{bail, Context, Result};
+            13→use clap::ValueEnum;
+            14→use serde_json::Value;
+            15→use strum::EnumIter;
+            18→pub enum ContentType {
+            19→    Json,
+            20→    Yaml,
+            21→    Toml,
+            22→    Xml,
+            24→    /// See: <https://github.com/hashicorp/hcl>
+            25→    Hcl,
+            27→    /// Useful for some logs file: <https://jsonlines.org/>
+            28→    // TODO: check out json-seq as specified in RFC7464 (https://datatracker.ietf.org/doc/html/rfc7464)?
+            29→    // basically jsonl but every json object is prefixed with 0x1e
+            30→    Jsonl,
+            32→    #[clap(skip)]
+            33→    Any,
+            34→}
+            36→pub trait Parser {
+            37→    fn extension(&self) -> &'static str;
+            39→    fn allow_array_root(&self) -> bool;
+            41→    fn parse(&self, data: &str) -> Result<Value>;
+            43→    fn syntax_highlight(&self, name: &str, value: &Value) -> Vec<SyntaxToken>;
+            45→    fn parse_root(&self, validator: Option<&dyn Parser>, data: &[u8]) -> Result<Value> {
+            46→        let data = String::from_utf8(data.to_vec()).context("parse content utf8")?;
+            47→        let value = self.parse(&data)?;
+            49→        match value {
+            50→            Value::Object(_) => {}
+            51→            Value::Array(_) => {
+            52→                let allow =
+            53→                    validator.map_or_else(|| self.allow_array_root(), Parser::allow_array_root);
+            54→                if !allow {
+            55→                    let schema = validator.map_or_else(|| self.extension(), Parser::extension);
+            56→                    bail!("schema '{schema}' does not allow array as root");
+            57→                }
+            58→            }
+            59→            _ => bail!("root value must be either object or array"),
+            60→        }
+            62→        Ok(value)
+            63→    }
+            64→}
+            66→impl ContentType {
+            67→    pub fn new_parser(self) -> Box<dyn Parser> {
+            …
+        syntax.rs
+            11→pub enum SyntaxToken {
+            12→    Symbol(&'static str),
+            14→    Name(String),
+            16→    Tag(String),
+            18→    String(String),
+            19→    Number(String),
+            20→    Null(&'static str),
+            21→    Bool(&'static str),
+            23→    Section(String),
+            25→    Break,
+            26→    Indent(usize),
+            27→}
+            139→pub fn quote_field_name(name: &str) -> String {
+            …
+            151→pub enum StringValue {
+            152→    String(String),
+            153→    MultiLines(Vec<String>),
+            154→}
+            201→pub fn is_value_complex(value: &Value) -> bool {
+            …
+        test_cases/
+            hcl/
+            json/
+            jsonl/
+            toml/
+            xml/
+            yaml/
+        toml.rs
+            9→pub struct TomlParser {}
+            …
+        xml.rs
+            12→pub struct XmlParser {}
+            …
+        yaml.rs
+            8→pub struct YamlParser {}
+            …
+    tree.rs
+        14→pub struct Tree {
+        15→    pub parser: Rc<Box<dyn Parser>>,
+        17→    pub items: Vec<TreeItem<'static, String>>,
+        18→    pub values: HashMap<String, ItemValue>,
+        20→    pub identifies: Vec<String>,
+        22→    cfg: Rc<Config>,
+        23→}
+        25→pub struct ItemValue {
+        26→    pub name: String,
+        27→    pub value: Value,
+        29→    pub field_type: FieldType,
+        30→    pub description: Cow<'static, str>,
+        32→    pub tokens: Vec<SyntaxToken>,
+        33→}
+        36→pub struct HighlightKeyword<'a> {
+        37→    pub text: &'a str,
+        38→    pub ignore_case: bool,
+        39→}
+        42→pub enum FieldType {
+        43→    Null,
+        44→    Num,
+        45→    Bool,
+        46→    Str,
+        47→    Obj,
+        48→    Arr,
+        49→}
+    ui/
+        app.rs
+            48→pub enum ScrollDirection {
+            49→    Up,
+            50→    Down,
+            51→}
+            53→pub struct App {
+            54→    cfg: Rc<Config>,
+            56→    focus: ElementInFocus,
+            57→    last_focus: Option<ElementInFocus>,
+            59→    tree_overview: TreeOverview,
+            60→    tree_overview_area: Rect,
+            62→    filter: Option<Filter>,
+            63→    filter_area: Rect,
+            65→    data_block: DataBlock,
+            66→    data_block_area: Rect,
+            68→    layout_direction: LayoutDirection,
+            69→    layout_tree_size: u16,
+            71→    header: Option<Header>,
+            72→    header_area: Rect,
+            73→    skip_header: bool,
+            75→    footer: Option<Footer>,
+            76→    footer_area: Rect,
+            77→    skip_footer: bool,
+            78→    foot_message: Option<String>,
+            80→    popup: Popup,
+            81→    before_popup_focus: ElementInFocus,
+            83→    fw: Option<FileWatcher>,
+            84→}
+            86→pub enum ShowResult {
+            87→    Edit(Box<Edit>),
+            88→    Quit,
+            89→}
+        data_block.rs
+            16→pub struct DataBlock {
+            17→    cfg: Rc<Config>,
+            19→    can_vertical_scroll: bool,
+            20→    vertical_scroll: usize,
+            21→    vertical_scroll_last: usize,
+            22→    vertical_scroll_state: ScrollbarState,
+            24→    can_horizontal_scroll: bool,
+            25→    horizontal_scroll: usize,
+            26→    horizontal_scroll_last: usize,
+            27→    horizontal_scroll_state: ScrollbarState,
+            29→    identify: String,
+            30→}
+        filter.rs
+            13→pub struct Filter {
+            14→    cfg: Rc<Config>,
+            15→    text_area: TextArea<'static>,
+            16→    target: FilterTarget,
+            17→    ignore_case: bool,
+            18→}
+            20→pub enum FilterAction {
+            21→    Edit,
+            22→    Confirm,
+            23→    Skip,
+            24→    Quit,
+            25→}
+            27→pub struct FilterOptions {
+            28→    pub text: String,
+            29→    pub target: FilterTarget,
+            30→    pub ignore_case: bool,
+            31→}
+            34→pub enum FilterTarget {
+            35→    Key,
+            36→    Value,
+            37→    All,
+            38→}
+        footer.rs
+            10→pub enum FooterText<'a> {
+            11→    Identify(&'a [String], Option<String>),
+            12→    Message(String),
+            13→    None,
+            14→}
+            16→pub struct Footer {
+            17→    cfg: Rc<Config>,
+            18→}
+        header.rs
+            11→pub struct HeaderContext {
+            12→    version: String,
+            13→    data_source: Cow<'static, str>,
+            14→    content_type: &'static str,
+            15→    data_size: String,
+            16→}
+            41→pub struct Header {
+            42→    cfg: Rc<Config>,
+            43→    data: String,
+            44→}
+        mod.rs
+            35→pub fn start(mut app: App) -> Result<()> {
+            …
+        popup.rs
+            13→pub struct PopupData {
+            14→    pub title: Cow<'static, str>,
+            15→    pub text: Text<'static>,
+            16→}
+            18→pub struct Popup {
+            19→    data: Option<PopupData>,
+            21→    cfg: Rc<Config>,
+            23→    scroll: usize,
+            24→}
+        tree_overview.rs
+            19→pub struct TreeOverview {
+            20→    cfg: Rc<Config>,
+            21→    state: Option<TreeState<String>>,
+            22→    tree: Option<Tree>,
+            23→    filter_items: Option<Vec<TreeItem<'static, String>>>,
+            24→    filter_cache: Option<HashMap<String, usize>>,
+            25→    filter_nav_pos: Option<usize>,
+            26→    before_filter_state: Option<TreeState<String>>,
+            27→    last_switches: Vec<(Tree, TreeState<String>)>,
+            28→    root_switch: Option<(Tree, TreeState<String>)>,
+            29→    root_identifies: Vec<String>,
+            30→}
+typos.toml

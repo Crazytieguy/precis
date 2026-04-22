@@ -30,6 +30,9 @@ README.md
     1→log
     2→===
     4→A Rust library providing a lightweight logging *facade*.
+    19→## Minimum supported `rustc`
+    21→`1.68.0+`
+    23→This version is explicitly tested in CI and may be bumped in any release as needed. Maintaining compatibility with older compilers is a priority though, so the bar for bumping the minimum supported version is set very high. Any changes to the supported minimum version will be called out in the release notes.
 benches/
     value.rs
 rfcs/
@@ -91,16 +94,10 @@ src/
         …
         1529→pub unsafe fn set_logger_racy(logger: &'static dyn Log) -> Result<(), SetLoggerError> {
         …
-        1544→/// The type returned by [`set_logger`] if [`set_logger`] has already been called.
-        1545→///
-        1546→/// [`set_logger`]: fn.set_logger.html
         1549→pub struct SetLoggerError(());
         …
         1566→pub struct ParseLevelError(());
         …
-        1578→/// Returns a reference to the logger.
-        1579→///
-        1580→/// If a logger has not been set, a no-op implementation is returned.
         1581→pub fn logger() -> &'static dyn Log {
         …
         1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {

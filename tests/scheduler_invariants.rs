@@ -59,7 +59,7 @@ fn listing_key() -> BatchKey {
 }
 
 #[test]
-fn override_via_predecessor_chain() {
+fn scheduler_invariants_override_via_predecessor_chain() {
     // Three batches: a folder listing → a `PubDecls` carrying truncated
     // lines → a `PubDocs` (refinement, with PubDecls as predecessor) that
     // overrides line 1 with its full version.
@@ -137,7 +137,7 @@ fn override_via_predecessor_chain() {
 }
 
 #[test]
-fn tiny_budget_truncates_cleanly() {
+fn scheduler_invariants_tiny_budget_truncates_cleanly() {
     struct OneEntry;
     impl Walker for OneEntry {
         fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Candidate> {
@@ -178,10 +178,7 @@ fn tiny_budget_truncates_cleanly() {
                         })
                         .collect::<Vec<_>>();
                     Some(ResolvedBatch {
-                        content: BatchContent::Lines(line_set(
-                            stub_file("synthetic.rs"),
-                            lines,
-                        )),
+                        content: BatchContent::Lines(line_set(stub_file("synthetic.rs"), lines)),
                         signals: sig(0.5),
                     })
                 }
@@ -202,7 +199,7 @@ fn tiny_budget_truncates_cleanly() {
 #[cfg(debug_assertions)]
 #[test]
 #[should_panic(expected = "non-ancestor overlap")]
-fn non_predecessor_overlap_panics_in_debug() {
+fn scheduler_invariants_non_predecessor_overlap_panics_in_debug() {
     // Two sibling Lines batches (no ancestor relation) target the same
     // line. Release compiles out the assert; this test only asserts debug.
     struct OverlappingWalker;

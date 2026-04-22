@@ -118,11 +118,13 @@ pub enum MarkdownKey {
     SummaryWhole { file: PathBuf },
     /// README headline: first heading + first paragraph. Priority 1.x.
     ReadmeHeadline { file: PathBuf },
-    /// README body beyond the headline. Predecessor: `ReadmeHeadline`.
-    /// Priority 2.x.
-    ReadmeBody { file: PathBuf },
-    /// First heading-anchored slab of any other `.md` file. Priority 2.x–5.x.
-    HeadingSlab { file: PathBuf },
+    /// One H2-level section of a markdown file, indexed by its 0-based
+    /// position. For `README.md`, section 0 is the first section after
+    /// the headline (predecessor: `ReadmeHeadline`). For other `.md`
+    /// files (changelogs, docs pages), sections are all H2+ sections.
+    /// Splitting lets large documents land piece-by-piece rather than
+    /// all-or-nothing. Priority 2.x–5.x.
+    Section { file: PathBuf, section_index: usize },
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]

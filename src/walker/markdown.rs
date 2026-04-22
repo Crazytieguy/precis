@@ -5,8 +5,11 @@
 //! - `SummaryWhole { file }` — `SUMMARY.md`, whole file (mdBook ToC)
 //! - `ReadmeHeadline { file }` — `README.md`, first section's heading +
 //!   opening paragraph
-//! - `ReadmeBody { file }` — rest of `README.md` (predecessor: headline)
-//! - `HeadingSlab { file }` — any other `.md` file's first section
+//! - `Section { file, section_index }` — one H2 section, 0-indexed. For
+//!   READMEs, this is the split replacement of the old monolithic
+//!   "body" batch (predecessor: headline). For other markdown files
+//!   (changelogs, doc pages), we emit one per top-level section so the
+//!   file can land piece-by-piece.
 
 use std::path::Path;
 use std::sync::Arc;
@@ -39,27 +42,57 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate> {
                 summary_signals(&file, depth),
                 200,
             ));
-        } else if name.eq_ignore_ascii_case("README.md") {
+            continue;
+        }
+
+        // Count top-level sections so we can emit one batch per section.
+        // `None` means the file couldn't be parsed or has no sections —
+        // the walker simply emits nothing in that case.
+        let Some(section_count) = section_count_for(ctx, &file) else {
+            continue;
+        };
+
+        if name.eq_ignore_ascii_case("README.md") {
+            // README gets a cheap "headline" batch (title + opening
+            // paragraph) plus one Section batch per top-level section,
+            // with the headline as predecessor for ordering.
+            //
+            // Note: section 0 covers the *whole* first section, which
+            // overlaps the headline's heading+paragraph lines. The
+            // scheduler dedupes per line, so this is idempotent — the
+            // section batch contributes only the body paragraphs the
+            // headline didn't already render.
             let headline = MarkdownKey::ReadmeHeadline { file: file.clone() };
             out.push(candidate(
                 headline.clone(),
                 readme_headline_signals(&file, depth),
                 60,
             ));
-            out.push(
-                candidate(
-                    MarkdownKey::ReadmeBody { file: file.clone() },
-                    readme_body_signals(&file, depth),
-                    150,
-                )
-                .with_predecessor(BatchKey::Markdown(headline)),
-            );
+            for idx in 0..section_count {
+                out.push(
+                    candidate(
+                        MarkdownKey::Section {
+                            file: file.clone(),
+                            section_index: idx,
+                        },
+                        readme_section_signals(&file, depth),
+                        100,
+                    )
+                    .with_predecessor(BatchKey::Markdown(headline.clone())),
+                );
+            }
         } else {
-            out.push(candidate(
-                MarkdownKey::HeadingSlab { file: file.clone() },
-                heading_slab_signals(depth, &file),
-                80,
-            ));
+            // Other `.md` files: emit one batch per top-level section.
+            for idx in 0..section_count {
+                out.push(candidate(
+                    MarkdownKey::Section {
+                        file: file.clone(),
+                        section_index: idx,
+                    },
+                    heading_slab_signals(depth, &file),
+                    80,
+                ));
+            }
         }
     }
     out
@@ -72,8 +105,10 @@ pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
     match mk {
         MarkdownKey::SummaryWhole { file } => mat_summary(file, ctx),
         MarkdownKey::ReadmeHeadline { file } => mat_readme_headline(file, ctx),
-        MarkdownKey::ReadmeBody { file } => mat_readme_body(file, ctx),
-        MarkdownKey::HeadingSlab { file } => mat_heading_slab(file, ctx),
+        MarkdownKey::Section {
+            file,
+            section_index,
+        } => mat_section(file, *section_index, ctx),
     }
 }
 
@@ -103,7 +138,12 @@ fn readme_headline_signals(file: &Path, depth: usize) -> ValueSignals {
     }
 }
 
-fn readme_body_signals(file: &Path, depth: usize) -> ValueSignals {
+fn readme_section_signals(file: &Path, depth: usize) -> ValueSignals {
+    // Match the former monolithic ReadmeBody's catastrophic weight — a
+    // single section is still a piece of README body; it just fits more
+    // often when split. Follow-up/zero-call slightly reduced because a
+    // single section alone answers fewer potential questions than the
+    // whole body would.
     ValueSignals {
         catastrophic_omission: 0.55,
         follow_up_minimization: 0.8,
@@ -113,15 +153,12 @@ fn readme_body_signals(file: &Path, depth: usize) -> ValueSignals {
 }
 
 fn heading_slab_signals(depth: usize, file: &Path) -> ValueSignals {
-    let is_guide = file
-        .file_name()
-        .and_then(|n| n.to_str())
-        .is_some_and(|n| {
-            matches!(
-                n.to_ascii_uppercase().as_str(),
-                "CHANGELOG.MD" | "CONTRIBUTING.MD" | "CHANGES.MD"
-            )
-        });
+    let is_guide = file.file_name().and_then(|n| n.to_str()).is_some_and(|n| {
+        matches!(
+            n.to_ascii_uppercase().as_str(),
+            "CHANGELOG.MD" | "CONTRIBUTING.MD" | "CHANGES.MD"
+        )
+    });
     ValueSignals {
         catastrophic_omission: if is_guide { 0.5 } else { 0.3 },
         follow_up_minimization: 0.5,
@@ -163,41 +200,43 @@ fn mat_readme_headline(file: &Path, ctx: &WalkCtx) -> Option<ResolvedBatch> {
     )
 }
 
-fn mat_readme_body(file: &Path, ctx: &WalkCtx) -> Option<ResolvedBatch> {
+fn mat_section(file: &Path, section_index: usize, ctx: &WalkCtx) -> Option<ResolvedBatch> {
     let (source, tree) = parse_md(ctx, file)?;
-    let (_, _, para_end) = first_section_headline(&tree, &source)?;
-    let line_count = source.lines().count();
-    if para_end >= line_count {
-        return None;
-    }
-    let lines: Vec<usize> = (para_end + 1..=line_count).collect();
-    single_file_lines_batch(
-        file,
-        &source,
-        FileLines::new(lines),
-        readme_body_signals(file, ctx.depth_from_root(file)),
-    )
-}
-
-fn mat_heading_slab(file: &Path, ctx: &WalkCtx) -> Option<ResolvedBatch> {
-    let (source, tree) = parse_md(ctx, file)?;
-    let (start, end) = first_section_range(&tree, &source)?;
+    let (start, end) = nth_section_range(&tree, &source, section_index)?;
     let lines: Vec<usize> = (start..=end).collect();
-    single_file_lines_batch(
-        file,
-        &source,
-        FileLines::new(lines),
-        heading_slab_signals(ctx.depth_from_root(file), file),
-    )
+    let name = file
+        .file_name()
+        .and_then(|n| n.to_str())
+        .unwrap_or_default();
+    let signals = if name.eq_ignore_ascii_case("README.md") {
+        readme_section_signals(file, ctx.depth_from_root(file))
+    } else {
+        heading_slab_signals(ctx.depth_from_root(file), file)
+    };
+    single_file_lines_batch(file, &source, FileLines::new(lines), signals)
 }
 
 // --- tree-sitter-md helpers ---
 
-fn first_section_range(tree: &Tree, source: &str) -> Option<(usize, usize)> {
-    let section = find_first_section(tree.root_node())?;
+fn nth_section_range(tree: &Tree, source: &str, n: usize) -> Option<(usize, usize)> {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    let mut sections = root.children(&mut cursor).filter(|c| c.kind() == "section");
+    let section = sections.nth(n)?;
     let start = section.start_position().row + 1;
     let end_row = span_last_row(section, source);
     Some((start, end_row + 1))
+}
+
+fn section_count_for(ctx: &WalkCtx, file: &Path) -> Option<usize> {
+    let (_source, tree) = parse_md(ctx, file)?;
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    let n = root
+        .children(&mut cursor)
+        .filter(|c| c.kind() == "section")
+        .count();
+    Some(n)
 }
 
 fn first_section_headline(tree: &Tree, source: &str) -> Option<(usize, usize, usize)> {
@@ -249,4 +288,3 @@ fn span_last_row(node: Node, source: &str) -> usize {
     let internal = trimmed.split('\n').count();
     node.start_position().row + internal.saturating_sub(1)
 }
-

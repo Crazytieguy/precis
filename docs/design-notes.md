@@ -53,6 +53,17 @@ code. The exact abstraction for sharing between the two layers is deferred
 until the Stage 4 ontology is concrete; the discipline meanwhile is:
 **don't accidentally specialize cross-language code to a single language**.
 
+`ValueSignals::depth_factor` is a current example of an abstraction worth
+revisiting once we support more languages. It's the channel every walker
+folds contextual/location priors into (fs depth, non-essential-dir
+penalty, sibling count, entrypoint boost, filename conventions). Today
+all walkers converge on roughly the same recipe, but the helper functions
+live in `src/value.rs` (cross-language) while the composition happens
+in each walker (`src/walker/<lang>.rs`). As more languages land, watch
+whether the composition itself becomes a duplicated pattern that wants
+to be shared, vs. whether languages diverge enough that a single scalar
+is the wrong shape and we need richer per-signal location context.
+
 ## Deferred (pick up in later sessions)
 
 ### Data model
@@ -77,6 +88,24 @@ until the Stage 4 ontology is concrete; the discipline meanwhile is:
 ### Render
 - **Filesystem-level override** — file-content batch superseding a folder
   listing entry, "N more files" placeholders, alternate non-tree renderings.
+- **Sub-section markdown splitting** — H2 sections are now the unit of
+  markdown batching (`MarkdownKey::Section { file, section_index }`), but
+  some H2 sections are themselves big enough not to fit (anyhow's README
+  `## Details` is 104 lines, ~700 tokens; otree's `docs/actions.md` is a
+  single H1 with a 350-token table). Splitting further by H3 boundaries —
+  or by bullet-list item for content-style sections — would let those
+  bodies land piece by piece. Defer until a fixture surfaces the gap as
+  load-bearing; today's behavior fits the smaller H2 sections and skips
+  the giant ones.
+- **Markdown headings-only batch** (analog of Rust `PubItemNames`) — the
+  Rust walker's `PubItemNames` is a cheap existence hedge: one line per
+  pub item, low cost, high catastrophic-omission weight. Markdown has no
+  equivalent today. A headings-only batch per file (H1/H2/H3 titles, no
+  prose, predecessor = nothing or the file's headline) would let the
+  scheduler tell "does this doc have an X section" even when no section
+  body fits. Especially useful for guide-style documents (mdbook book,
+  otree docs) where the structure itself is informative. Pairs naturally
+  with the `PubItem`-style catastrophic rebalance below.
 
 ### Scheduler / walker
 - **File-as-seed** — currently rejected with a clear error in `lib.rs`.
@@ -101,18 +130,117 @@ until the Stage 4 ontology is concrete; the discipline meanwhile is:
 - **Signal-weight calibration** — `W_CATASTROPHIC = 1000`, `W_FOLLOW_UP =
   400`, `W_ZERO_CALL = 300` are first-pass. Calibrate from north-star
   divergence reports.
+- **PubItem signal rebalance (catastrophic ↓, follow_up ↑)** — codex
+  pointed out that `PubItemNames` already carries the existence hedge
+  ("does X exist in this file"), so `PubItem` bodies shouldn't
+  double-count catastrophic-omission. Lowering `PubItem.catastrophic`
+  from 0.85 is structurally right, but a naive drop (tried 0.3 and 0.5
+  in isolation) pushed important bodies out alongside noise — the
+  cumulative loss of body-level value wasn't absorbed anywhere. The
+  right form is probably `catastrophic ↓` **paired** with
+  `follow_up_minimization ↑` and `zero_tool_call_understanding ↑`, so
+  the total score stays roughly constant but the ontological accounting
+  matches what each signal means. Try as a simultaneous adjustment, not
+  a one-axis reduction. Pairs cleanly with the markdown headings-only
+  batch (same "cheap existence hedge up-front, bodies later" shape).
+- **Sibling-count devaluation** — when a file emits many per-item batches
+  (e.g. a config module with 20 `pub struct` children), each one's
+  individual value/cost ratio beats the value/cost of a single important
+  body elsewhere (e.g. `CommandArgs` in `src/cmd.rs`), producing a
+  "wide-but-shallow signature sweep" across deep files at the expense of
+  root-level anchors. The old design collapsed all pub items per file into
+  one batch which naturally dampened this; the split-per-item model is
+  better for ranking precision but loses the dampener. A first attempt
+  folded a `sibling_factor(n_siblings)` into `PubItem`'s `depth_factor`
+  at walker expand time — but across 12 reviews it regressed more than
+  it improved (anyhow_6000 +10 divergences, log_6000 +15, otree_3000
+  worsened from 8→18 major ranking divergences). The tradeoff is
+  structural: dense core files (anyhow's `src/lib.rs` with ~25 pub items,
+  log's `src/lib.rs` similar) are *legitimately* dense; penalizing them
+  displaces their load-bearing bodies (Level/LevelFilter rustdoc,
+  Chain/Context docs) in favor of content elsewhere that's not actually
+  more valuable. Decoration-heavy dense files (otree's `src/config/colors.rs`
+  with 7 color sub-structs) look structurally identical but have very
+  different intrinsic value. `is_entrypoint_file` doesn't reliably
+  distinguish them — `mod.rs` catches both tests/ helpers and real
+  module roots. Needs a richer signal than sibling count alone. Plausibly
+  pairs with an eventual NS-author update that ranks `PubItemNames`-style
+  location hints as first-class, so the calibration target is clearer.
+- **API-surface signal (`pub(crate)` / `pub(super)` / `#[doc(hidden)]`)**
+  — these visibility levels and attribute mark items that are
+  compiler-visible inside the crate but aren't part of the external API
+  surface. An experiment added `is_api_surface` to `PubItemInfo` (cheap
+  AST predicates) and applied a 0.3× multiplier to PubItem/PubItemDoc
+  bodies for non-API items, but it was empirically a small net negative
+  vs. md-split alone (anyhow_3000 went from −38 to −30 vs. HEAD when
+  api_surface was added on top of md-split). The structural reasoning is
+  sound — these items genuinely shouldn't compete with public-API
+  bodies — but the ratio shift caused enough cascade that other content
+  reshuffled unfavorably. Worth retrying when a richer
+  cross-file mod-visibility analysis is available (private `mod x;` in
+  lib.rs makes all `pub` items inside `x.rs` effectively pub(crate),
+  which the current local check misses).
+
+### North Star / reviewer alignment
+- **Rank `PubItemNames` as a first-class NS batch** — the Rust walker
+  emits a `pub struct X {\n…` location-hint batch per file
+  (`src/walker/rust.rs` `PubItemNames`), but current north stars model
+  only full-body batches. Reviewers therefore see the hint render and
+  flag it as "batch partially included" against the NS expectation. The
+  honest description is "two walker batches exist; the names-surface one
+  fired, the body deferred". Batch with next NS-author update so the
+  regeneration cost lands once.
 
 ### Process
 - **More languages** — TypeScript and Python are the next likely targets
   after Rust + markdown.
 - **Larger fixtures** — the v0.2 fixture set (log/anyhow/mdbook) is small
   by design. Add scale fixtures once the perf work is in.
-- **Alignment-reviewer precision** — calibrate after first real reports if
-  it actually drifts.
-- **Deterministic alignment metric** (speculative) — "percent of North-Star
-  batches whose line-ranges appear in the snapshot" would give a cheap
-  continuous signal between agent review rounds and cut latency when
-  adding fixtures. Risk: places too much deterministic weight on the
-  North Stars themselves — ranking violations and honesty concerns would
-  need the reviewer to still catch. Worth a design discussion before
-  building.
+- **Alignment-reviewer noise** — the same snapshot, re-reviewed by the
+  agent in different runs, can produce divergence counts varying by
+  ±10–20 entries. Observed in this session: log_6000 oscillated between
+  28 and 49 divergences on unchanged content across reviewer runs;
+  mdbook_3000 similarly shifted between 20 and 32. The reviewer's
+  qualitative findings stay roughly consistent (same batches flagged
+  as partial, same ranking inversions) but the count is unstable enough
+  that it's a poor metric for calibration A/B tests. Treat divergence
+  count as directional only; always cross-check qualitative snapshot
+  diffs.
+- **Deterministic alignment metric** (promoted from speculative) — given
+  the reviewer noise above and the quota cost of running 12 agents per
+  calibration iteration (this session pushed the user's weekly Claude
+  quota past its 5-hour window), a deterministic NS→snapshot line-range
+  coverage metric is looking more attractive. Shape: for each NS batch,
+  compute "what fraction of its declared line range appears in the
+  snapshot" + a per-tier weighted sum. Gives a continuous, reproducible
+  score that can drive calibration tuning without per-experiment agent
+  cost. Risk: (1) places load-bearing weight on NS line-ranges being
+  exactly right; (2) misses honesty concerns and ranking-order
+  inversions that need semantic judgment; (3) treats "batch present
+  but out of priority order" as a hit when NS actually ranks it low.
+  Mitigation: use the deterministic score for calibration iteration;
+  reserve agent reviews for milestone checkpoints (new fixture, new
+  language, ontology change).
+- **Alignment-reviewer agent sometimes doesn't Write** — observed once
+  in this session: the agent returned the full report in its output
+  summary but didn't call the Write tool, leaving the existing review
+  stale on disk. Consider tightening `.claude/agents/alignment-reviewer.md`
+  with a hard post-condition ("return only after Write has succeeded")
+  or switching to a template where the Write call is the return path.
+- **Alignment-reviewer short-circuits on matching hash** — when an
+  existing review's `snapshot_hash` matches the current snapshot, the
+  agent treats it as fresh and returns without re-scoring, even when
+  the intent is to re-evaluate under changed interpretation (e.g., a
+  reviewer-prompt update, or investigating review variance). Current
+  workaround: delete the review file before re-running. Consider adding
+  a "force" flag or routing re-score requests through a different entry
+  point.
+- **Codex CLI long-prompt hang** — `codex exec "<long prompt>"` with a
+  multi-KB prompt as a positional argument appeared to hang
+  indefinitely (no output, process stayed alive for >10 min). Piping
+  the prompt via stdin (`cat prompt.md | codex exec`) works reliably.
+  Worth documenting wherever we codify codex invocation patterns.
+- **North Star regeneration is expensive** — three drafts (up to ~40
+  min each) + a combiner pass. Batch NS updates across multiple
+  planned changes (e.g., the "rank PubItemNames first-class" item and
+  the future markdown-headings-only equivalent) to amortize the cost.

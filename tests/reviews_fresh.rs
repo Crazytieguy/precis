@@ -27,9 +27,8 @@ macro_rules! with_fixtures {
 include!("data/fixtures.rs");
 
 #[test]
-fn every_snapshot_has_a_fresh_review() {
-    let snapshots_dir =
-        PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests/snapshots/fixtures");
+fn reviews_fresh_every_snapshot_has_a_matching_review() {
+    let snapshots_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests/snapshots/fixtures");
     let reviews_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests/reviews");
 
     let mut entries: Vec<PathBuf> = std::fs::read_dir(&snapshots_dir)
@@ -53,10 +52,7 @@ fn every_snapshot_has_a_fresh_review() {
 
         let review_path = reviews_dir.join(format!("{stem}.md"));
         if !review_path.exists() {
-            problems.push(format!(
-                "{stem}: no review at {}",
-                review_path.display()
-            ));
+            problems.push(format!("{stem}: no review at {}", review_path.display()));
             continue;
         }
         let review = std::fs::read_to_string(&review_path)
@@ -83,7 +79,7 @@ fn every_snapshot_has_a_fresh_review() {
 }
 
 #[test]
-fn fixture_pins_match_declarations() {
+fn reviews_fresh_fixture_pins_match_declarations() {
     let fixtures_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures");
     let mut problems = Vec::new();
     for &(name, _url, expected) in DECLARED_FIXTURES {

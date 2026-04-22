@@ -32,6 +32,34 @@ README.md
     5→[<img alt="crates.io" src="https://img.shields.io/crates/v/anyhow.svg?style=for-the-badge&color=fc8d62&logo=rust" height="20">](https://crates.io/crates/anyhow)
     6→[<img alt="docs.rs" src="https://img.shields.io/badge/docs.rs-anyhow-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs" height="20">](https://docs.rs/anyhow)
     7→[<img alt="build status" src="https://img.shields.io/github/actions/workflow/status/dtolnay/anyhow/ci.yml?branch=master&style=for-the-badge" height="20">](https://github.com/dtolnay/anyhow/actions?query=branch%3Amaster)
+    9→This library provides [`anyhow::Error`][Error], a trait object based error type
+    10→for easy idiomatic error handling in Rust applications.
+    12→[Error]: https://docs.rs/anyhow/1.0/anyhow/struct.Error.html
+    14→```toml
+    15→[dependencies]
+    16→anyhow = "1.0"
+    17→```
+    19→<br>
+    126→## No-std support
+    128→In no_std mode, almost all of the same API is available and works the same way.
+    129→To depend on Anyhow in no_std mode, disable our default enabled "std" feature in
+    130→Cargo.toml. A global allocator is required.
+    132→```toml
+    133→[dependencies]
+    134→anyhow = { version = "1.0", default-features = false }
+    135→```
+    137→With versions of Rust older than 1.81, no_std mode may require an additional
+    138→`.map_err(Error::msg)` when working with a non-Anyhow error type inside a
+    139→function that returns Anyhow's error type, as the trait that `?`-based error
+    140→conversions are defined by is only available in std in those old versions.
+    142→<br>
+    144→## Comparison to failure
+    146→The `anyhow::Error` type works something like `failure::Error`, but unlike
+    147→failure ours is built around the standard library's `std::error::Error` trait
+    148→rather than a separate trait `failure::Fail`. The standard library has adopted
+    149→the necessary improvements for this to be possible as part of [RFC 2504].
+    151→[RFC 2504]: https://github.com/rust-lang/rfcs/blob/master/text/2504-fix-error.md
+    153→<br>
 build.rs
 rust-toolchain.toml
 src/
@@ -120,25 +148,6 @@ src/
         390→pub struct Error {
         391→    inner: Own<ErrorImpl>,
         392→}
-        394→/// Iterator of a chain of source errors.
-        395→///
-        396→/// This type is the iterator returned by [`Error::chain`].
-        397→///
-        398→/// # Example
-        399→///
-        400→/// ```
-        401→/// use anyhow::Error;
-        402→/// use std::io;
-        403→///
-        404→/// pub fn underlying_io_error_kind(error: &Error) -> Option<io::ErrorKind> {
-        405→///     for cause in error.chain() {
-        406→///         if let Some(io_error) = cause.downcast_ref::<io::Error>() {
-        407→///             return Some(io_error.kind());
-        408→///         }
-        409→///     }
-        410→///     None
-        411→/// }
-        412→/// ```
         415→pub struct Chain<'a> {
         416→    state: crate::chain::ChainState<'a>,
         417→}
@@ -233,33 +242,13 @@ src/
 tests/
     common/
         mod.rs
-            4→pub fn bail_literal() -> Result<()> {
-            …
-            8→pub fn bail_fmt() -> Result<()> {
-            …
-            12→pub fn bail_error() -> Result<()> {
-            …
     compiletest.rs
     crate/
         .gitignore
         Cargo.toml
-            1→[package]
-            2→name = "anyhow_test"
-            3→version = "0.0.0"
-            4→authors = ["David Tolnay <dtolnay@gmail.com>"]
-            5→edition = "2021"
-            6→publish = false
-            14→[features]
-            15→default = ["std"]
-            16→std = ["anyhow/std"]
-            17→backtrace = ["anyhow/backtrace"]
         test.rs
     drop/
         mod.rs
-            9→pub struct Flag {
-            …
-            26→pub struct DetectDrop {
-            …
     test_autotrait.rs
     test_backtrace.rs
     test_boxed.rs
@@ -269,12 +258,6 @@ tests/
     test_downcast.rs
     test_ensure.rs
     test_ffi.rs
-        7→pub extern "C" fn anyhow1(err: anyhow::Error) {
-        …
-        12→pub extern "C" fn anyhow2(err: &mut Option<anyhow::Error>) {
-        …
-        17→pub extern "C" fn anyhow3() -> Option<anyhow::Error> {
-        …
     test_fmt.rs
     test_macros.rs
     test_repr.rs

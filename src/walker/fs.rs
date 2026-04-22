@@ -161,7 +161,11 @@ fn dir_listing_signals(is_root: bool, depth: usize) -> ValueSignals {
 
 /// Variant of `dir_listing_signals` that takes the dir path so the
 /// non-essential-directory discount applies (tests/, examples/, benches/).
-fn dir_listing_signals_for_path(dir: &std::path::Path, is_root: bool, depth: usize) -> ValueSignals {
+fn dir_listing_signals_for_path(
+    dir: &std::path::Path,
+    is_root: bool,
+    depth: usize,
+) -> ValueSignals {
     let mut s = dir_listing_signals(is_root, depth);
     s.depth_factor *= non_essential_factor(dir);
     s
