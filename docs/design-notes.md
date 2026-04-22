@@ -109,3 +109,10 @@ until the Stage 4 ontology is concrete; the discipline meanwhile is:
   by design. Add scale fixtures once the perf work is in.
 - **Alignment-reviewer precision** — calibrate after first real reports if
   it actually drifts.
+- **Deterministic alignment metric** (speculative) — "percent of North-Star
+  batches whose line-ranges appear in the snapshot" would give a cheap
+  continuous signal between agent review rounds and cut latency when
+  adding fixtures. Risk: places too much deterministic weight on the
+  North Stars themselves — ranking violations and honesty concerns would
+  need the reviewer to still catch. Worth a design discussion before
+  building.

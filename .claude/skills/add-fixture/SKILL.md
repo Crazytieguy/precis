@@ -18,6 +18,17 @@ invocation explicitly asks for a human checkpoint on the North Star
 (e.g. "let me review the north star first"), pause at step 4; otherwise
 proceed through.
 
+**Idempotency**: skip steps whose output already exists.
+
+- `tests/fixtures/<name>/` exists → skip step 1's clone.
+- `tests/north-stars/<name>.md` exists → skip steps 2-4 (drafts +
+  combine + freeze).
+- `<name>` is already in `tests/snapshots.rs::FIXTURES` → skip step 5.
+- `tests/snapshots/fixtures/<name>__<budget>.snap` exists → skip step 6
+  for that budget unless something earlier in the flow changed.
+
+This lets the skill resume cleanly after partial completion.
+
 ## 1. Declare and clone the repo
 
 Check `tests/data/fixtures.rs` — the shared list of all fixture repos.
@@ -123,7 +134,9 @@ accepting.
 
 After a walker change, regenerate snapshots (step 6) **and re-run
 alignment review** (step 7). The staleness test will fail if the
-snapshots change and the reviews don't.
+snapshots change and the reviews don't. Run `/simplify` after
+non-trivial walker changes to catch reuse / quality / efficiency
+issues before they accumulate.
 
 **When stuck.** A divergence that resists general fixes is not a sign
 to ask the user — it's a sign to consult more perspectives first.

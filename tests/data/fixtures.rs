@@ -1,6 +1,11 @@
 // Shared fixture repo list, included by src/bin/clone_fixtures.rs and future
 // test consumers. Includers must define a `with_fixtures!` macro that accepts
 // `($dir, $url, $rev)` tuples.
+//
+// Listing here only declares a fixture as cloneable. Fixtures become *active*
+// snapshot targets when added to `tests/snapshots.rs::FIXTURES` — typically
+// after a North Star at `tests/north-stars/<name>.md` is in place. See
+// `Skill(add-fixture)` for the full integration flow.
 
 with_fixtures! {
     // Rust

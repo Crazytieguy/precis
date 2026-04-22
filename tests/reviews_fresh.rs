@@ -1,17 +1,30 @@
-//! Every committed snapshot must have a matching review in `tests/reviews/`
-//! whose `snapshot_hash` frontmatter equals the snapshot's current SHA-256.
+//! Two staleness checks for the snapshot/review/fixture pipeline:
 //!
-//! If this test fails, the snapshots and reviews have drifted — re-run the
-//! alignment reviewer for each listed `<fixture>__<budget>`, commit the
-//! refreshed reports, and the test flips back green.
+//! 1. Every committed snapshot must have a matching review in
+//!    `tests/reviews/` whose `snapshot_hash` frontmatter equals the
+//!    snapshot's current SHA-256. If it doesn't, snapshots and reviews
+//!    have drifted — re-run the alignment reviewer for each listed
+//!    `<fixture>__<budget>`, commit the refreshed reports.
 //!
-//! The hash rule matches exactly what the `alignment-reviewer` agent
-//! computes (`shasum -a 256 <snap>`); both read the full file bytes
-//! (including insta's YAML header), so nothing extra to strip.
+//! 2. Every active fixture's `.precis-pin` file must equal the SHA in
+//!    `tests/data/fixtures.rs`. Catches the case where someone re-pins a
+//!    fixture in `fixtures.rs` without re-cloning, which would silently
+//!    invalidate the snapshots+reviews above.
+//!
+//! Snapshot-hash rule matches what the alignment-reviewer agent computes
+//! (`shasum -a 256 <snap>`); both read the full file bytes including
+//! insta's YAML header, so nothing extra to strip.
 
 use std::path::PathBuf;
 
 use sha2::{Digest, Sha256};
+
+macro_rules! with_fixtures {
+    ($(($dir:expr, $url:expr, $rev:expr)),* $(,)?) => {
+        const DECLARED_FIXTURES: &[(&str, &str, &str)] = &[$(($dir, $url, $rev)),*];
+    };
+}
+include!("data/fixtures.rs");
 
 #[test]
 fn every_snapshot_has_a_fresh_review() {
@@ -66,6 +79,38 @@ fn every_snapshot_has_a_fresh_review() {
             "Stale reviews — re-run alignment-reviewer for each listed snapshot:\n  {}",
             problems.join("\n  ")
         );
+    }
+}
+
+#[test]
+fn fixture_pins_match_declarations() {
+    let fixtures_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures");
+    let mut problems = Vec::new();
+    for &(name, _url, expected) in DECLARED_FIXTURES {
+        let dir = fixtures_dir.join(name);
+        if !dir.exists() {
+            continue; // Not all declared fixtures are cloned locally — fine.
+        }
+        let pin_path = dir.join(".precis-pin");
+        let actual = match std::fs::read_to_string(&pin_path) {
+            Ok(s) => s.trim().to_string(),
+            Err(_) => {
+                problems.push(format!(
+                    "{name}: missing {} (re-run `cargo run --bin clone_fixtures`)",
+                    pin_path.display()
+                ));
+                continue;
+            }
+        };
+        if actual != expected {
+            problems.push(format!(
+                "{name}: pin {actual} != fixtures.rs {expected} (re-clone: rm -rf {} && cargo run --bin clone_fixtures)",
+                dir.display()
+            ));
+        }
+    }
+    if !problems.is_empty() {
+        panic!("Fixture pin mismatches:\n  {}", problems.join("\n  "));
     }
 }
 
