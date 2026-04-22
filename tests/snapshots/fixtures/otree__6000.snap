@@ -40,40 +40,6 @@ docs/
         3→### Fixes
         5→- Remove `any` in command line options.
         6→- XML: Handle empty nodes containing fields correctly. (#121)
-        8→## v0.6.3
-        10→### Features
-        12→Enhanced automatic Content Type detection. Even when users don't provide file extensions, otree can now automatically detect the ContentType based on the data content.
-        14→For example, the following command is now available:
-        16→```bash
-        17→echo '{"key": "value"}' | otree
-        18→```
-        20→Now otree will try invoking all parsers in order for unknown content, and whichever parser succeeds determines the format.
-        22→## v0.6.2
-        24→### Features
-        26→- Data block now support wrap mode, this will disable horizontal scrolling, and
-        27→  long text will be split to a new line. You can enable this by `--wrap` or
-        28→  `-w` command line option. To change the default behavior, add `data.wrap = true` in config file. (#104)
-        97→## v0.5.1
-        99→### Fixes
-        101→- Fix panic when using action `expand_children` for empty object. (#87)
-        111→## v0.4.1
-        113→### Features
-        115→- when copying values, use pure text. (#80)
-        117→## v0.4.0
-        119→### Features
-        121→- Command: Add new flag `--debug`, to write some debug logs to a file.
-        122→- UI: Add `--live-reload` option, to watch file changes and update tui (#63).
-        123→- Release: Add Windows prebuilt binary (**unstable**, require more testing).
-        125→## v0.3.0
-        127→### Features
-        129→- Parser: Support [JSONL](https://jsonlines.org/)
-        130→- README: Add Homebrew instructions.
-        132→### Fixes
-        134→- Allow reading from stdin on macOS.
-        151→## v0.1.0
-        153→### Features
-        155→- Basic tree and data UI.
-        156→- Basic actions, see: [actions](./actions.md).
     colors.md
 examples/
     edge.json
@@ -133,7 +99,29 @@ src/
             107→    pub section: Color,
             108→}
             162→pub struct TreeColors {
-            …
+            163→    #[serde(default = "TreeColors::default_border")]
+            164→    pub border: Color,
+            166→    #[serde(default = "TreeColors::default_selected")]
+            167→    pub selected: Color,
+            169→    #[serde(default = "Color::default")]
+            170→    pub name: Color,
+            172→    #[serde(default = "TreeColors::default_filter_keyword")]
+            173→    pub filter_keyword: Color,
+            175→    #[serde(default = "TreeColors::default_type")]
+            176→    pub type_str: Color,
+            178→    #[serde(default = "TreeColors::default_type")]
+            179→    pub type_null: Color,
+            181→    #[serde(default = "TreeColors::default_type")]
+            182→    pub type_bool: Color,
+            184→    #[serde(default = "TreeColors::default_type")]
+            185→    pub type_num: Color,
+            187→    #[serde(default = "TreeColors::default_type")]
+            188→    pub type_arr: Color,
+            190→    #[serde(default = "TreeColors::default_type")]
+            191→    pub type_obj: Color,
+            193→    #[serde(default = "TreeColors::default_value")]
+            194→    pub value: Color,
+            195→}
             251→pub struct FooterColors {
             252→    #[serde(default = "FooterColors::default_root")]
             253→    pub root: Color,
@@ -373,6 +361,28 @@ src/
         24→    data: Arc<Mutex<Data>>,
         25→}
     main.rs
+        1→mod clipboard;
+        2→mod cmd;
+        3→mod config;
+        4→mod debug;
+        5→mod edit;
+        6→mod live_reload;
+        7→mod parse;
+        8→mod tree;
+        9→mod ui;
+        11→use std::fs;
+        12→use std::io;
+        13→use std::io::Read;
+        14→use std::path::PathBuf;
+        15→use std::process;
+        16→use std::rc::Rc;
+        18→use anyhow::{bail, Context, Result};
+        19→use live_reload::FileWatcher;
+        21→use crate::cmd::CommandArgs;
+        22→use crate::config::Config;
+        23→use crate::parse::{ContentType, SyntaxToken};
+        24→use crate::tree::Tree;
+        25→use crate::ui::{App, HeaderContext};
     parse/
         any.rs
             9→pub struct AnyParser {

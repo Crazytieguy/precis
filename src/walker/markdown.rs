@@ -45,54 +45,42 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate> {
             continue;
         }
 
-        // Count top-level sections so we can emit one batch per section.
-        // `None` means the file couldn't be parsed or has no sections —
-        // the walker simply emits nothing in that case.
         let Some(section_count) = section_count_for(ctx, &file) else {
             continue;
         };
 
-        if name.eq_ignore_ascii_case("README.md") {
-            // README gets a cheap "headline" batch (title + opening
-            // paragraph) plus one Section batch per top-level section,
-            // with the headline as predecessor for ordering.
-            //
-            // Note: section 0 covers the *whole* first section, which
-            // overlaps the headline's heading+paragraph lines. The
-            // scheduler dedupes per line, so this is idempotent — the
-            // section batch contributes only the body paragraphs the
-            // headline didn't already render.
+        let is_readme = is_readme(&file);
+        let predecessor = if is_readme {
             let headline = MarkdownKey::ReadmeHeadline { file: file.clone() };
             out.push(candidate(
                 headline.clone(),
                 readme_headline_signals(&file, depth),
                 60,
             ));
-            for idx in 0..section_count {
-                out.push(
-                    candidate(
-                        MarkdownKey::Section {
-                            file: file.clone(),
-                            section_index: idx,
-                        },
-                        readme_section_signals(&file, depth),
-                        100,
-                    )
-                    .with_predecessor(BatchKey::Markdown(headline.clone())),
-                );
-            }
+            Some(BatchKey::Markdown(headline))
         } else {
-            // Other `.md` files: emit one batch per top-level section.
-            for idx in 0..section_count {
-                out.push(candidate(
-                    MarkdownKey::Section {
-                        file: file.clone(),
-                        section_index: idx,
-                    },
-                    heading_slab_signals(depth, &file),
-                    80,
-                ));
+            None
+        };
+
+        for idx in 0..section_count {
+            let signals = if is_readme {
+                readme_section_signals(&file, depth)
+            } else {
+                heading_slab_signals(depth, &file, idx)
+            };
+            let cost = if is_readme { 100 } else { 80 };
+            let mut cand = candidate(
+                MarkdownKey::Section {
+                    file: file.clone(),
+                    section_index: idx,
+                },
+                signals,
+                cost,
+            );
+            if let Some(p) = predecessor.clone() {
+                cand = cand.with_predecessor(p);
             }
+            out.push(cand);
         }
     }
     out
@@ -152,17 +140,28 @@ fn readme_section_signals(file: &Path, depth: usize) -> ValueSignals {
     }
 }
 
-fn heading_slab_signals(depth: usize, file: &Path) -> ValueSignals {
+fn heading_slab_signals(depth: usize, file: &Path, section_index: usize) -> ValueSignals {
     let is_guide = file.file_name().and_then(|n| n.to_str()).is_some_and(|n| {
         matches!(
             n.to_ascii_uppercase().as_str(),
             "CHANGELOG.MD" | "CONTRIBUTING.MD" | "CHANGES.MD"
         )
     });
+    // Changelogs are conventionally sorted newest-first, so later
+    // sections are ancient release notes of decreasing relevance. Apply
+    // an index-based decay only to guide-shape files; for general docs
+    // the section order doesn't imply relevance. Floored at 0.35 so a
+    // deep section can still fire if budget permits, just not displace
+    // higher-tier content.
+    let index_decay = if is_guide {
+        ((section_index as f64 + 1.0).powf(-0.3)).max(0.35)
+    } else {
+        1.0
+    };
     ValueSignals {
-        catastrophic_omission: if is_guide { 0.5 } else { 0.3 },
-        follow_up_minimization: 0.5,
-        zero_tool_call_understanding: 0.5,
+        catastrophic_omission: if is_guide { 0.5 } else { 0.3 } * index_decay,
+        follow_up_minimization: 0.5 * index_decay,
+        zero_tool_call_understanding: 0.5 * index_decay,
         depth_factor: depth_factor(depth) * non_essential_factor(file),
     }
 }
@@ -203,17 +202,38 @@ fn mat_readme_headline(file: &Path, ctx: &WalkCtx) -> Option<ResolvedBatch> {
 fn mat_section(file: &Path, section_index: usize, ctx: &WalkCtx) -> Option<ResolvedBatch> {
     let (source, tree) = parse_md(ctx, file)?;
     let (start, end) = nth_section_range(&tree, &source, section_index)?;
-    let lines: Vec<usize> = (start..=end).collect();
-    let name = file
-        .file_name()
-        .and_then(|n| n.to_str())
-        .unwrap_or_default();
-    let signals = if name.eq_ignore_ascii_case("README.md") {
+
+    // For README section 0, exclude lines already covered by
+    // `ReadmeHeadline` (heading + first paragraph). Otherwise the two
+    // batches overlap exactly on short READMEs, Section 0's marginal
+    // cost drops to zero after dedupe, and `ratio(value, 0) = INFINITY`
+    // gives it unconditional scheduling priority — a smell even though
+    // the duplicate apply is a no-op.
+    let effective_start = if section_index == 0
+        && is_readme(file)
+        && let Some((_, _, para_end)) = first_section_headline(&tree, &source)
+    {
+        (para_end + 1).max(start)
+    } else {
+        start
+    };
+    if effective_start > end {
+        return None;
+    }
+
+    let lines: Vec<usize> = (effective_start..=end).collect();
+    let signals = if is_readme(file) {
         readme_section_signals(file, ctx.depth_from_root(file))
     } else {
-        heading_slab_signals(ctx.depth_from_root(file), file)
+        heading_slab_signals(ctx.depth_from_root(file), file, section_index)
     };
     single_file_lines_batch(file, &source, FileLines::new(lines), signals)
+}
+
+fn is_readme(file: &Path) -> bool {
+    file.file_name()
+        .and_then(|n| n.to_str())
+        .is_some_and(|n| n.eq_ignore_ascii_case("README.md"))
 }
 
 // --- tree-sitter-md helpers ---

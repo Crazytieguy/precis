@@ -153,8 +153,9 @@ is the wrong shape and we need richer per-signal location context.
   better for ranking precision but loses the dampener. A first attempt
   folded a `sibling_factor(n_siblings)` into `PubItem`'s `depth_factor`
   at walker expand time — but across 12 reviews it regressed more than
-  it improved (anyhow_6000 +10 divergences, log_6000 +15, otree_3000
-  worsened from 8→18 major ranking divergences). The tradeoff is
+  it improved (anyhow_6000 +10, log_6000 +15, otree_3000 8→18 major
+  ranking divergences — count-based measurements subject to the noise
+  caveat in the Process section). The tradeoff is
   structural: dense core files (anyhow's `src/lib.rs` with ~25 pub items,
   log's `src/lib.rs` similar) are *legitimately* dense; penalizing them
   displaces their load-bearing bodies (Level/LevelFilter rustdoc,
@@ -171,15 +172,17 @@ is the wrong shape and we need richer per-signal location context.
   compiler-visible inside the crate but aren't part of the external API
   surface. An experiment added `is_api_surface` to `PubItemInfo` (cheap
   AST predicates) and applied a 0.3× multiplier to PubItem/PubItemDoc
-  bodies for non-API items, but it was empirically a small net negative
-  vs. md-split alone (anyhow_3000 went from −38 to −30 vs. HEAD when
-  api_surface was added on top of md-split). The structural reasoning is
-  sound — these items genuinely shouldn't compete with public-API
-  bodies — but the ratio shift caused enough cascade that other content
-  reshuffled unfavorably. Worth retrying when a richer
-  cross-file mod-visibility analysis is available (private `mod x;` in
-  lib.rs makes all `pub` items inside `x.rs` effectively pub(crate),
-  which the current local check misses).
+  bodies for non-API items. Effect was ambiguous given reviewer noise:
+  the main concrete win was a ~12-divergence improvement on anyhow_1500
+  (ChainState / ErrorImpl / ContextError `pub(crate)` bodies correctly
+  demoted to signature-only); other fixtures shifted in both directions
+  within what looked like review-run variance. Structurally sound —
+  those items genuinely shouldn't compete with public-API bodies — but
+  the cascade effects muddied the measurement. Worth retrying with a
+  deterministic metric, and ideally with a richer cross-file
+  mod-visibility analysis (private `mod x;` in lib.rs makes all `pub`
+  items inside `x.rs` effectively pub(crate), which the current local
+  check misses entirely).
 
 ### North Star / reviewer alignment
 - **Rank `PubItemNames` as a first-class NS batch** — the Rust walker
@@ -196,16 +199,22 @@ is the wrong shape and we need richer per-signal location context.
   after Rust + markdown.
 - **Larger fixtures** — the v0.2 fixture set (log/anyhow/mdbook) is small
   by design. Add scale fixtures once the perf work is in.
-- **Alignment-reviewer noise** — the same snapshot, re-reviewed by the
-  agent in different runs, can produce divergence counts varying by
-  ±10–20 entries. Observed in this session: log_6000 oscillated between
-  28 and 49 divergences on unchanged content across reviewer runs;
-  mdbook_3000 similarly shifted between 20 and 32. The reviewer's
-  qualitative findings stay roughly consistent (same batches flagged
-  as partial, same ranking inversions) but the count is unstable enough
-  that it's a poor metric for calibration A/B tests. Treat divergence
-  count as directional only; always cross-check qualitative snapshot
-  diffs.
+- **Alignment-reviewer count is a noisy fitness metric** — the count of
+  `- [category] [severity]` divergence bullets does not scale
+  proportionally with snapshot-content deltas. Concrete observation
+  from this session: a ~14-line content change in log_6000 (one new
+  README section, one dropped `__private_api::log` body fragment)
+  produced a +21 jump in divergence count (28 → 49). The reviewer's
+  qualitative findings stay roughly consistent across runs (same
+  batches flagged as partial, same ranking inversions), but the count
+  inflates whenever new content introduces new partial-batch
+  observations, even when the new content is *better aligned* with the
+  North Star in aggregate. Treat count as directional only; always
+  cross-check qualitative snapshot diffs before concluding a change is
+  better or worse. We don't have clean evidence of run-to-run variance
+  on *identical* snapshots — the "oscillation" I thought I was seeing
+  was different snapshots from different experiments producing
+  similar-but-not-identical counts.
 - **Deterministic alignment metric** (promoted from speculative) — given
   the reviewer noise above and the quota cost of running 12 agents per
   calibration iteration (this session pushed the user's weekly Claude
