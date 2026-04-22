@@ -97,6 +97,20 @@ is the wrong shape and we need richer per-signal location context.
   bodies land piece by piece. Defer until a fixture surfaces the gap as
   load-bearing; today's behavior fits the smaller H2 sections and skips
   the giant ones.
+- **ReadmeHeadline: skip decorative-prose paragraphs** — `ReadmeHeadline`
+  currently returns "first heading + first paragraph" via
+  `first_section_headline` in `src/walker/markdown.rs`. For READMEs that
+  open with a badge block (anyhow, mdbook, otree all do), tree-sitter-md
+  sees the run of `[![...]]` image-link lines as the first paragraph and
+  the batch lands decorative content while the actual tagline (usually
+  the second paragraph) ends up in Section 0 — which then has to compete
+  for budget on its own. A better headline definition would skip leading
+  paragraphs that are purely images/links and pick the first prose
+  paragraph. Heuristic: if a paragraph node's children are all
+  `image`/`link`/whitespace, treat it as badges and advance. Defer
+  until a fixture makes this the highest-value open issue; the Section 0
+  fix (commit 5d6c6d1) partially mitigates by letting the real tagline
+  land in Section 0 at smaller cost.
 - **Markdown headings-only batch** (analog of Rust `PubItemNames`) — the
   Rust walker's `PubItemNames` is a cheap existence hedge: one line per
   pub item, low cost, high catastrophic-omission weight. Markdown has no
