@@ -49,6 +49,7 @@ rust-toolchain.toml
 src/
     backtrace.rs
         8→pub(crate) enum Backtrace {}
+        …
     chain.rs
         11→pub(crate) struct Chain<'a> {
         12→    state: ChainState<'a>,
@@ -91,6 +92,7 @@ src/
     fmt.rs
     kind.rs
         55→pub struct Adhoc;
+        …
         58→pub trait AdhocKind: Sized {
         59→    #[inline]
         60→    fn anyhow_kind(&self) -> Adhoc {
@@ -98,6 +100,7 @@ src/
         62→    }
         63→}
         77→pub struct Trait;
+        …
         80→pub trait TraitKind: Sized {
         81→    #[inline]
         82→    fn anyhow_kind(&self) -> Trait {
@@ -105,6 +108,7 @@ src/
         84→    }
         85→}
         100→pub struct Boxed;
+        …
         104→pub trait BoxedKind: Sized {
         105→    #[inline]
         106→    fn anyhow_kind(&self) -> Boxed {
@@ -112,213 +116,6 @@ src/
         108→    }
         109→}
     lib.rs
-        1→//! [![github]](https://github.com/dtolnay/anyhow)&ensp;[![crates-io]](https://crates.io/crates/anyhow)&ensp;[![docs-rs]](https://docs.rs/anyhow)
-        2→//!
-        3→//! [github]: https://img.shields.io/badge/github-8da0cb?style=for-the-badge&labelColor=555555&logo=github
-        4→//! [crates-io]: https://img.shields.io/badge/crates.io-fc8d62?style=for-the-badge&labelColor=555555&logo=rust
-        5→//! [docs-rs]: https://img.shields.io/badge/docs.rs-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs
-        6→//!
-        7→//! <br>
-        8→//!
-        9→//! This library provides [`anyhow::Error`][Error], a trait object based error
-        10→//! type for easy idiomatic error handling in Rust applications.
-        11→//!
-        12→//! <br>
-        13→//!
-        14→//! # Details
-        15→//!
-        16→//! - Use `Result<T, anyhow::Error>`, or equivalently `anyhow::Result<T>`, as
-        17→//!   the return type of any fallible function.
-        18→//!
-        19→//!   Within the function, use `?` to easily propagate any error that implements
-        20→//!   the [`std::error::Error`] trait.
-        21→//!
-        22→//!   ```
-        23→//!   # pub trait Deserialize {}
-        24→//!   #
-        25→//!   # mod serde_json {
-        26→//!   #     use super::Deserialize;
-        27→//!   #     use std::io;
-        28→//!   #
-        29→//!   #     pub fn from_str<T: Deserialize>(json: &str) -> io::Result<T> {
-        30→//!   #         unimplemented!()
-        31→//!   #     }
-        32→//!   # }
-        33→//!   #
-        34→//!   # struct ClusterMap;
-        35→//!   #
-        36→//!   # impl Deserialize for ClusterMap {}
-        37→//!   #
-        38→//!   use anyhow::Result;
-        39→//!
-        40→//!   fn get_cluster_info() -> Result<ClusterMap> {
-        41→//!       let config = std::fs::read_to_string("cluster.json")?;
-        42→//!       let map: ClusterMap = serde_json::from_str(&config)?;
-        43→//!       Ok(map)
-        44→//!   }
-        45→//!   #
-        46→//!   # fn main() {}
-        47→//!   ```
-        48→//!
-        49→//! - Attach context to help the person troubleshooting the error understand
-        50→//!   where things went wrong. A low-level error like "No such file or
-        51→//!   directory" can be annoying to debug without more context about what higher
-        52→//!   level step the application was in the middle of.
-        53→//!
-        54→//!   ```
-        55→//!   # struct It;
-        56→//!   #
-        57→//!   # impl It {
-        58→//!   #     fn detach(&self) -> Result<()> {
-        59→//!   #         unimplemented!()
-        60→//!   #     }
-        61→//!   # }
-        62→//!   #
-        63→//!   use anyhow::{Context, Result};
-        64→//!
-        65→//!   fn main() -> Result<()> {
-        66→//!       # return Ok(());
-        67→//!       #
-        68→//!       # const _: &str = stringify! {
-        69→//!       ...
-        70→//!       # };
-        71→//!       #
-        72→//!       # let it = It;
-        73→//!       # let path = "./path/to/instrs.json";
-        74→//!       #
-        75→//!       it.detach().context("Failed to detach the important thing")?;
-        76→//!
-        77→//!       let content = std::fs::read(path)
-        78→//!           .with_context(|| format!("Failed to read instrs from {}", path))?;
-        79→//!       #
-        80→//!       # const _: &str = stringify! {
-        81→//!       ...
-        82→//!       # };
-        83→//!       #
-        84→//!       # Ok(())
-        85→//!   }
-        86→//!   ```
-        87→//!
-        88→//!   ```console
-        89→//!   Error: Failed to read instrs from ./path/to/instrs.json
-        90→//!
-        91→//!   Caused by:
-        92→//!       No such file or directory (os error 2)
-        93→//!   ```
-        94→//!
-        95→//! - Downcasting is supported and can be by value, by shared reference, or by
-        96→//!   mutable reference as needed.
-        97→//!
-        98→//!   ```
-        99→//!   # use anyhow::anyhow;
-        100→//!   # use std::fmt::{self, Display};
-        101→//!   # use std::task::Poll;
-        102→//!   #
-        103→//!   # #[derive(Debug)]
-        104→//!   # enum DataStoreError {
-        105→//!   #     Censored(()),
-        106→//!   # }
-        107→//!   #
-        108→//!   # impl Display for DataStoreError {
-        109→//!   #     fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
-        110→//!   #         unimplemented!()
-        111→//!   #     }
-        112→//!   # }
-        113→//!   #
-        114→//!   # impl std::error::Error for DataStoreError {}
-        115→//!   #
-        116→//!   # const REDACTED_CONTENT: () = ();
-        117→//!   #
-        118→//!   # let error = anyhow!("...");
-        119→//!   # let root_cause = &error;
-        120→//!   #
-        121→//!   # let ret =
-        122→//!   // If the error was caused by redaction, then return a
-        123→//!   // tombstone instead of the content.
-        124→//!   match root_cause.downcast_ref::<DataStoreError>() {
-        125→//!       Some(DataStoreError::Censored(_)) => Ok(Poll::Ready(REDACTED_CONTENT)),
-        126→//!       None => Err(error),
-        127→//!   }
-        128→//!   # ;
-        129→//!   ```
-        130→//!
-        131→//! - If using Rust &ge; 1.65, a backtrace is captured and printed with the
-        132→//!   error if the underlying error type does not already provide its own. In
-        133→//!   order to see backtraces, they must be enabled through the environment
-        134→//!   variables described in [`std::backtrace`]:
-        135→//!
-        136→//!   - If you want panics and errors to both have backtraces, set
-        137→//!     `RUST_BACKTRACE=1`;
-        138→//!   - If you want only errors to have backtraces, set `RUST_LIB_BACKTRACE=1`;
-        139→//!   - If you want only panics to have backtraces, set `RUST_BACKTRACE=1` and
-        140→//!     `RUST_LIB_BACKTRACE=0`.
-        141→//!
-        142→//!   [`std::backtrace`]: std::backtrace#environment-variables
-        143→//!
-        144→//! - Anyhow works with any error type that has an impl of `std::error::Error`,
-        145→//!   including ones defined in your crate. We do not bundle a `derive(Error)`
-        146→//!   macro but you can write the impls yourself or use a standalone macro like
-        147→//!   [thiserror].
-        148→//!
-        149→//!   [thiserror]: https://github.com/dtolnay/thiserror
-        150→//!
-        151→//!   ```
-        152→//!   use thiserror::Error;
-        153→//!
-        154→//!   #[derive(Error, Debug)]
-        155→//!   pub enum FormatError {
-        156→//!       #[error("Invalid header (expected {expected:?}, got {found:?})")]
-        157→//!       InvalidHeader {
-        158→//!           expected: String,
-        159→//!           found: String,
-        160→//!       },
-        161→//!       #[error("Missing attribute: {0}")]
-        162→//!       MissingAttribute(String),
-        163→//!   }
-        164→//!   ```
-        165→//!
-        166→//! - One-off error messages can be constructed using the `anyhow!` macro, which
-        167→//!   supports string interpolation and produces an `anyhow::Error`.
-        168→//!
-        169→//!   ```
-        170→//!   # use anyhow::{anyhow, Result};
-        171→//!   #
-        172→//!   # fn demo() -> Result<()> {
-        173→//!   #     let missing = "...";
-        174→//!   return Err(anyhow!("Missing attribute: {}", missing));
-        175→//!   #     Ok(())
-        176→//!   # }
-        177→//!   ```
-        178→//!
-        179→//!   A `bail!` macro is provided as a shorthand for the same early return.
-        180→//!
-        181→//!   ```
-        182→//!   # use anyhow::{bail, Result};
-        183→//!   #
-        184→//!   # fn demo() -> Result<()> {
-        185→//!   #     let missing = "...";
-        186→//!   bail!("Missing attribute: {}", missing);
-        187→//!   #     Ok(())
-        188→//!   # }
-        189→//!   ```
-        190→//!
-        191→//! <br>
-        192→//!
-        193→//! # No-std support
-        194→//!
-        195→//! In no_std mode, almost all of the same API is available and works the same
-        196→//! way. To depend on Anyhow in no_std mode, disable our default enabled "std"
-        197→//! feature in Cargo.toml. A global allocator is required.
-        198→//!
-        199→//! ```toml
-        200→//! [dependencies]
-        201→//! anyhow = { version = "1.0", default-features = false }
-        202→//! ```
-        203→//!
-        204→//! With versions of Rust older than 1.81, no_std mode may require an additional
-        205→//! `.map_err(Error::msg)` when working with a non-Anyhow error type inside a
-        206→//! function that returns Anyhow's error type, as the trait that `?`-based error
-        207→//! conversions are defined by is only available in std in those old versions.
         252→mod backtrace;
         253→mod chain;
         254→mod context;
@@ -340,10 +137,225 @@ src/
         390→pub struct Error {
         391→    inner: Own<ErrorImpl>,
         392→}
+        394→/// Iterator of a chain of source errors.
+        395→///
+        396→/// This type is the iterator returned by [`Error::chain`].
+        397→///
+        398→/// # Example
+        399→///
+        400→/// ```
+        401→/// use anyhow::Error;
+        402→/// use std::io;
+        403→///
+        404→/// pub fn underlying_io_error_kind(error: &Error) -> Option<io::ErrorKind> {
+        405→///     for cause in error.chain() {
+        406→///         if let Some(io_error) = cause.downcast_ref::<io::Error>() {
+        407→///             return Some(io_error.kind());
+        408→///         }
+        409→///     }
+        410→///     None
+        411→/// }
+        412→/// ```
         415→pub struct Chain<'a> {
         416→    state: crate::chain::ChainState<'a>,
         417→}
+        419→/// `Result<T, Error>`
+        420→///
+        421→/// This is a reasonable return type to use throughout your application but also
+        422→/// for `fn main`; if you do, failures will be printed along with any
+        423→/// [context][Context] and a backtrace if one was captured.
+        424→///
+        425→/// `anyhow::Result` may be used with one *or* two type parameters.
+        426→///
+        427→/// ```rust
+        428→/// use anyhow::Result;
+        429→///
+        430→/// # const IGNORE: &str = stringify! {
+        431→/// fn demo1() -> Result<T> {...}
+        432→///            // ^ equivalent to std::result::Result<T, anyhow::Error>
+        433→///
+        434→/// fn demo2() -> Result<T, OtherError> {...}
+        435→///            // ^ equivalent to std::result::Result<T, OtherError>
+        436→/// # };
+        437→/// ```
+        438→///
+        439→/// # Example
+        440→///
+        441→/// ```
+        442→/// # pub trait Deserialize {}
+        443→/// #
+        444→/// # mod serde_json {
+        445→/// #     use super::Deserialize;
+        446→/// #     use std::io;
+        447→/// #
+        448→/// #     pub fn from_str<T: Deserialize>(json: &str) -> io::Result<T> {
+        449→/// #         unimplemented!()
+        450→/// #     }
+        451→/// # }
+        452→/// #
+        453→/// # #[derive(Debug)]
+        454→/// # struct ClusterMap;
+        455→/// #
+        456→/// # impl Deserialize for ClusterMap {}
+        457→/// #
+        458→/// use anyhow::Result;
+        459→///
+        460→/// fn main() -> Result<()> {
+        461→///     # return Ok(());
+        462→///     let config = std::fs::read_to_string("cluster.json")?;
+        463→///     let map: ClusterMap = serde_json::from_str(&config)?;
+        464→///     println!("cluster info: {:#?}", map);
+        465→///     Ok(())
+        466→/// }
+        467→/// ```
         468→pub type Result<T, E = Error> = core::result::Result<T, E>;
+        …
+        470→/// Provides the `context` method for `Result`.
+        471→///
+        472→/// This trait is sealed and cannot be implemented for types outside of
+        473→/// `anyhow`.
+        474→///
+        475→/// <br>
+        476→///
+        477→/// # Example
+        478→///
+        479→/// ```
+        480→/// use anyhow::{Context, Result};
+        481→/// use std::fs;
+        482→/// use std::path::PathBuf;
+        483→///
+        484→/// pub struct ImportantThing {
+        485→///     path: PathBuf,
+        486→/// }
+        487→///
+        488→/// impl ImportantThing {
+        489→///     # const IGNORE: &'static str = stringify! {
+        490→///     pub fn detach(&mut self) -> Result<()> {...}
+        491→///     # };
+        492→///     # fn detach(&mut self) -> Result<()> {
+        493→///     #     unimplemented!()
+        494→///     # }
+        495→/// }
+        496→///
+        497→/// pub fn do_it(mut it: ImportantThing) -> Result<Vec<u8>> {
+        498→///     it.detach().context("Failed to detach the important thing")?;
+        499→///
+        500→///     let path = &it.path;
+        501→///     let content = fs::read(path)
+        502→///         .with_context(|| format!("Failed to read instrs from {}", path.display()))?;
+        503→///
+        504→///     Ok(content)
+        505→/// }
+        506→/// ```
+        507→///
+        508→/// When printed, the outermost context would be printed first and the lower
+        509→/// level underlying causes would be enumerated below.
+        510→///
+        511→/// ```console
+        512→/// Error: Failed to read instrs from ./path/to/instrs.json
+        513→///
+        514→/// Caused by:
+        515→///     No such file or directory (os error 2)
+        516→/// ```
+        517→///
+        518→/// Refer to the [Display representations] documentation for other forms in
+        519→/// which this context chain can be rendered.
+        520→///
+        521→/// [Display representations]: Error#display-representations
+        522→///
+        523→/// <br>
+        524→///
+        525→/// # Effect on downcasting
+        526→///
+        527→/// After attaching context of type `C` onto an error of type `E`, the resulting
+        528→/// `anyhow::Error` may be downcast to `C` **or** to `E`.
+        529→///
+        530→/// That is, in codebases that rely on downcasting, Anyhow's context supports
+        531→/// both of the following use cases:
+        532→///
+        533→///   - **Attaching context whose type is insignificant onto errors whose type
+        534→///     is used in downcasts.**
+        535→///
+        536→///     In other error libraries whose context is not designed this way, it can
+        537→///     be risky to introduce context to existing code because new context might
+        538→///     break existing working downcasts. In Anyhow, any downcast that worked
+        539→///     before adding context will continue to work after you add a context, so
+        540→///     you should freely add human-readable context to errors wherever it would
+        541→///     be helpful.
+        542→///
+        543→///     ```
+        544→///     # use anyhow::bail;
+        545→///     # use thiserror::Error;
+        546→///     #
+        547→///     # #[derive(Error, Debug)]
+        548→///     # #[error("???")]
+        549→///     # struct SuspiciousError;
+        550→///     #
+        551→///     # fn helper() -> Result<()> {
+        552→///     #     bail!(SuspiciousError);
+        553→///     # }
+        554→///     #
+        555→///     use anyhow::{Context, Result};
+        556→///
+        557→///     fn do_it() -> Result<()> {
+        558→///         helper().context("Failed to complete the work")?;
+        559→///         # const IGNORE: &str = stringify! {
+        560→///         ...
+        561→///         # };
+        562→///         # unreachable!()
+        563→///     }
+        564→///
+        565→///     fn main() {
+        566→///         let err = do_it().unwrap_err();
+        567→///         if let Some(e) = err.downcast_ref::<SuspiciousError>() {
+        568→///             // If helper() returned SuspiciousError, this downcast will
+        569→///             // correctly succeed even with the context in between.
+        570→///             # return;
+        571→///         }
+        572→///         # panic!("expected downcast to succeed");
+        573→///     }
+        574→///     ```
+        575→///
+        576→///   - **Attaching context whose type is used in downcasts onto errors whose
+        577→///     type is insignificant.**
+        578→///
+        579→///     Some codebases prefer to use machine-readable context to categorize
+        580→///     lower level errors in a way that will be actionable to higher levels of
+        581→///     the application.
+        582→///
+        583→///     ```
+        584→///     # use anyhow::bail;
+        585→///     # use thiserror::Error;
+        586→///     #
+        587→///     # #[derive(Error, Debug)]
+        588→///     # #[error("???")]
+        589→///     # struct HelperFailed;
+        590→///     #
+        591→///     # fn helper() -> Result<()> {
+        592→///     #     bail!("no such file or directory");
+        593→///     # }
+        594→///     #
+        595→///     use anyhow::{Context, Result};
+        596→///
+        597→///     fn do_it() -> Result<()> {
+        598→///         helper().context(HelperFailed)?;
+        599→///         # const IGNORE: &str = stringify! {
+        600→///         ...
+        601→///         # };
+        602→///         # unreachable!()
+        603→///     }
+        604→///
+        605→///     fn main() {
+        606→///         let err = do_it().unwrap_err();
+        607→///         if let Some(e) = err.downcast_ref::<HelperFailed>() {
+        608→///             // If helper failed, this downcast will succeed because
+        609→///             // HelperFailed is the context that has been attached to
+        610→///             // that error.
+        611→///             # return;
+        612→///         }
+        613→///         # panic!("expected downcast to succeed");
+        614→///     }
+        615→///     ```
         616→pub trait Context<T, E>: context::private::Sealed {
         617→    /// Wrap the error value with additional context.
         618→    fn context<C>(self, context: C) -> Result<T, Error>
@@ -356,6 +368,24 @@ src/
         626→        C: Display + Send + Sync + 'static,
         627→        F: FnOnce() -> C;
         628→}
+        630→/// Equivalent to `Ok::<_, anyhow::Error>(value)`.
+        631→///
+        632→/// This simplifies creation of an `anyhow::Result` in places where type
+        633→/// inference cannot deduce the `E` type of the result &mdash; without needing
+        634→/// to write `Ok::<_, anyhow::Error>(value)`.
+        635→///
+        636→/// One might think that `anyhow::Result::Ok(value)` would work in such cases
+        637→/// but it does not.
+        638→///
+        639→/// ```console
+        640→/// error[E0282]: type annotations needed for `std::result::Result<i32, E>`
+        641→///   --> src/main.rs:11:13
+        642→///    |
+        643→/// 11 |     let _ = anyhow::Result::Ok(1);
+        644→///    |         -   ^^^^^^^^^^^^^^^^^^ cannot infer type for type parameter `E` declared on the enum `Result`
+        645→///    |         |
+        646→///    |         consider giving this pattern the explicit type `std::result::Result<i32, E>`, where the type parameter `E` is specified
+        647→/// ```
         650→pub fn Ok<T>(value: T) -> Result<T> {
         …
         656→pub mod __private {
@@ -427,8 +457,11 @@ src/
         183→}
     wrapper.rs
         11→pub struct MessageError<M>(pub M);
+        …
         34→pub struct DisplayError<M>(pub M);
+        …
         58→pub struct BoxedError(pub Box<dyn StdError + Send + Sync>);
+        …
 tests/
     common/
         mod.rs

@@ -73,11 +73,12 @@ impl From<TomlKey> for BatchKey {
     }
 }
 
-/// Rust batches. Per-file for fine-grained ranking (lib.rs's decls should
-/// rank above a submodule's). MacroNames / MacroBodies are cross-file —
-/// macros cluster in one crate's source tree and benefit from a single
-/// "here's every exported macro name" batch that's cheaper than N per-file
-/// versions.
+/// Rust batches. Per-item for pub type declarations (struct/enum/trait/fn)
+/// so the scheduler can individually rank e.g. `pub trait Log` above
+/// `pub struct RecordBuilder` when the North Star does. File-scope batches
+/// for crate-doc / mod-use / impl-method-groups; cross-file scope for the
+/// macro surface (macros cluster in a single `src_dir` and benefit from
+/// one name-list batch).
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum RustKey {
     /// `//!` module-doc lede — only emitted for crate entrypoints
@@ -85,13 +86,20 @@ pub enum RustKey {
     CrateDocLede { file: PathBuf },
     /// `use` + `mod` + `pub use` plumbing at the top of a file. Priority 2.x.
     ModUse { file: PathBuf },
-    /// Bare declarations of public items in a single file. Whole item for
-    /// struct/enum/trait/type/const/static; signature for fn. No rustdoc —
-    /// that's the `PubDocs` refinement. Priority 1.x.
-    PubDecls { file: PathBuf },
-    /// Rustdoc above each public item in `file`. Predecessor: `PubDecls`.
-    /// Priority 3.x.
-    PubDocs { file: PathBuf },
+    /// Surface listing of every top-level `pub` item name in a file. A
+    /// catastrophic-omission hedge: when budget can't fit every individual
+    /// item's body, this cheap listing still tells the agent that all the
+    /// named items exist. Priority 1.x.
+    PubItemNames { file: PathBuf },
+    /// A single top-level `pub` item's declaration. For struct/enum/trait/
+    /// type/const/static, the whole item (fields, variants, method sigs
+    /// for traits). For fn/fn-sig, the signature with a `…` body marker.
+    /// No rustdoc — that's `PubItemDoc` refinement. Keyed by the item's
+    /// start line so each item has a distinct batch. Priority 1.x–4.x.
+    PubItem { file: PathBuf, start_line: usize },
+    /// Rustdoc (`///` / `/** */`) above a single `pub` item. Predecessor:
+    /// the matching `PubItem` at the same `start_line`. Priority 3.x.
+    PubItemDoc { file: PathBuf, start_line: usize },
     /// Impl-block headers + method signatures in a single file. Priority 2.x.
     MethodSigs { file: PathBuf },
     /// `#[macro_export] macro_rules!` names across `src_dir` (cross-file

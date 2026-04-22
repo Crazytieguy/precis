@@ -37,6 +37,7 @@ rust-toolchain.toml
 src/
     backtrace.rs
         8→pub(crate) enum Backtrace {}
+        …
     chain.rs
         11→pub(crate) struct Chain<'a> {
         12→    state: ChainState<'a>,
@@ -79,6 +80,7 @@ src/
     fmt.rs
     kind.rs
         55→pub struct Adhoc;
+        …
         58→pub trait AdhocKind: Sized {
         59→    #[inline]
         60→    fn anyhow_kind(&self) -> Adhoc {
@@ -86,6 +88,7 @@ src/
         62→    }
         63→}
         77→pub struct Trait;
+        …
         80→pub trait TraitKind: Sized {
         81→    #[inline]
         82→    fn anyhow_kind(&self) -> Trait {
@@ -93,6 +96,7 @@ src/
         84→    }
         85→}
         100→pub struct Boxed;
+        …
         104→pub trait BoxedKind: Sized {
         105→    #[inline]
         106→    fn anyhow_kind(&self) -> Boxed {
@@ -100,31 +104,33 @@ src/
         108→    }
         109→}
     lib.rs
-        252→mod backtrace;
-        253→mod chain;
-        254→mod context;
-        255→mod ensure;
-        256→mod error;
-        257→mod fmt;
-        258→mod kind;
-        259→mod macros;
-        261→mod nightly;
-        262→mod ptr;
-        263→mod wrapper;
-        265→use crate::error::ErrorImpl;
-        266→use crate::ptr::Own;
-        267→use core::fmt::Display;
-        270→use core::fmt::Debug;
-        273→use std::error::Error as StdError;
-        276→use core::error::Error as StdError;
-        286→pub use anyhow as format_err;
         390→pub struct Error {
         391→    inner: Own<ErrorImpl>,
         392→}
+        394→/// Iterator of a chain of source errors.
+        395→///
+        396→/// This type is the iterator returned by [`Error::chain`].
+        397→///
+        398→/// # Example
+        399→///
+        400→/// ```
+        401→/// use anyhow::Error;
+        402→/// use std::io;
+        403→///
+        404→/// pub fn underlying_io_error_kind(error: &Error) -> Option<io::ErrorKind> {
+        405→///     for cause in error.chain() {
+        406→///         if let Some(io_error) = cause.downcast_ref::<io::Error>() {
+        407→///             return Some(io_error.kind());
+        408→///         }
+        409→///     }
+        410→///     None
+        411→/// }
+        412→/// ```
         415→pub struct Chain<'a> {
         416→    state: crate::chain::ChainState<'a>,
         417→}
         468→pub type Result<T, E = Error> = core::result::Result<T, E>;
+        …
         616→pub trait Context<T, E>: context::private::Sealed {
         617→    /// Wrap the error value with additional context.
         618→    fn context<C>(self, context: C) -> Result<T, Error>
@@ -138,8 +144,6 @@ src/
         627→        F: FnOnce() -> C;
         628→}
         650→pub fn Ok<T>(value: T) -> Result<T> {
-        …
-        656→pub mod __private {
         …
     macros.rs
         58→macro_rules! bail {
@@ -208,8 +212,11 @@ src/
         183→}
     wrapper.rs
         11→pub struct MessageError<M>(pub M);
+        …
         34→pub struct DisplayError<M>(pub M);
+        …
         58→pub struct BoxedError(pub Box<dyn StdError + Send + Sync>);
+        …
 tests/
     common/
         mod.rs
@@ -231,6 +238,8 @@ tests/
             4→authors = ["David Tolnay <dtolnay@gmail.com>"]
             5→edition = "2021"
             6→publish = false
+            11→[dependencies]
+            12→anyhow = { path = "../..", default-features = false }
             14→[features]
             15→default = ["std"]
             16→std = ["anyhow/std"]
@@ -283,17 +292,3 @@ tests/
     test_repr.rs
     test_source.rs
     ui/
-        chained-comparison.rs
-        chained-comparison.stderr
-        empty-ensure.rs
-        empty-ensure.stderr
-        ensure-nonbool.rs
-        ensure-nonbool.stderr
-        must-use.rs
-        must-use.stderr
-        no-impl.rs
-        no-impl.stderr
-        temporary-value.rs
-        temporary-value.stderr
-        wrong-interpolation.rs
-        wrong-interpolation.stderr

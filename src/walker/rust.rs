@@ -1,11 +1,19 @@
-//! Rust walker. Per-file + cross-file batches driven by tree-sitter-rust.
+//! Rust walker. Per-item pub-declaration batches plus file-scope
+//! crate-doc / mod-use / impl-method-groups and cross-file macro surface.
 //!
 //! Per-file keys:
 //! - `CrateDocLede { file }`: `//!` opening paragraph (entrypoints only)
 //! - `ModUse { file }`: `use` / `mod` / `pub use` plumbing
-//! - `PubDecls { file }`: bare public-item declarations
-//! - `PubDocs { file }`: rustdoc above each pub item (predecessor: `PubDecls`)
+//! - `PubItemNames { file }`: every pub item's first line as a surface
+//!   listing — a cheap catastrophic-omission hedge when individual item
+//!   decls don't all fit
 //! - `MethodSigs { file }`: inherent + trait impl headers + method sigs
+//!
+//! Per-item keys (keyed by start line so each item has a distinct batch):
+//! - `PubItem { file, start_line }`: one pub item's declaration (struct
+//!   fields / enum variants / trait method sigs / fn signature; no rustdoc)
+//! - `PubItemDoc { file, start_line }`: rustdoc above that item,
+//!   predecessor = the matching `PubItem`
 //!
 //! Cross-file keys (scoped by source directory):
 //! - `MacroNames { src_dir }`: exported macro name list
@@ -57,24 +65,52 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate> {
                 60,
             ));
         }
-        // PubDecls + PubDocs for every file. For non-entrypoints these
-        // carry the bulk of the signal (bare decls + their rustdoc); the
-        // mod/use plumbing and impl method sigs only matter where a file
-        // is itself the surface (lib.rs / main.rs / mod.rs).
-        let pub_decls = RustKey::PubDecls { file: file.clone() };
+
+        // Per-item pub declarations. We need to read the file to find item
+        // start lines — but we cache the parse tree in `WalkCtx`, so this
+        // work is shared with later `materialize` calls. If a file has zero
+        // pub items, no per-item candidates are emitted.
+        let Some((source, tree)) = parse_rust(ctx, file) else {
+            continue;
+        };
+        let items = find_pub_item_starts(&tree, &source);
+        if items.is_empty() {
+            continue;
+        }
+        let names_key = RustKey::PubItemNames { file: file.clone() };
         out.push(candidate(
-            pub_decls.clone(),
-            pub_decls_signals(file, depth),
-            80,
+            names_key.clone(),
+            pub_item_names_signals(file, depth),
+            items.len() * 8,
         ));
-        out.push(
-            candidate(
-                RustKey::PubDocs { file: file.clone() },
-                pub_docs_signals(file, depth),
-                60,
-            )
-            .with_predecessor(BatchKey::Rust(pub_decls)),
-        );
+        for item in &items {
+            let key = RustKey::PubItem {
+                file: file.clone(),
+                start_line: item.start_line,
+            };
+            // PubItemNames is the parent surface listing; PubItem refines
+            // that file's header lines with full content. PubItemDoc
+            // refines PubItem with rustdoc.
+            out.push(
+                candidate(
+                    key.clone(),
+                    pub_item_signals(file, depth, item.kind),
+                    item.estimated_cost(),
+                )
+                .with_predecessor(BatchKey::Rust(names_key.clone())),
+            );
+            out.push(
+                candidate(
+                    RustKey::PubItemDoc {
+                        file: file.clone(),
+                        start_line: item.start_line,
+                    },
+                    pub_item_doc_signals(file, depth, item.kind),
+                    60,
+                )
+                .with_predecessor(BatchKey::Rust(key)),
+            );
+        }
     }
 
     // Cross-file macro batches, scoped to `dir` (non-recursive).
@@ -117,18 +153,34 @@ pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
             mod_use_signals(file, ctx.depth_from_root(file)),
             ctx,
         ),
-        RustKey::PubDecls { file } => mat_per_file(
+        RustKey::PubItemNames { file } => mat_per_file(
             file,
-            collect_pub_decls,
-            pub_decls_signals(file, ctx.depth_from_root(file)),
+            collect_pub_item_names,
+            pub_item_names_signals(file, ctx.depth_from_root(file)),
             ctx,
         ),
-        RustKey::PubDocs { file } => mat_per_file(
-            file,
-            collect_pub_docs,
-            pub_docs_signals(file, ctx.depth_from_root(file)),
-            ctx,
-        ),
+        RustKey::PubItem { file, start_line } => {
+            let (source, tree) = parse_rust(ctx, file)?;
+            let item = find_item_at(&tree, &source, *start_line)?;
+            let lines = collect_pub_item(&tree, &source, *start_line);
+            single_file_lines_batch(
+                file,
+                &source,
+                lines,
+                pub_item_signals(file, ctx.depth_from_root(file), item.kind),
+            )
+        }
+        RustKey::PubItemDoc { file, start_line } => {
+            let (source, tree) = parse_rust(ctx, file)?;
+            let item = find_item_at(&tree, &source, *start_line)?;
+            let lines = collect_pub_item_doc(&tree, &source, *start_line);
+            single_file_lines_batch(
+                file,
+                &source,
+                lines,
+                pub_item_doc_signals(file, ctx.depth_from_root(file), item.kind),
+            )
+        }
         RustKey::MethodSigs { file } => mat_per_file(
             file,
             collect_method_sigs,
@@ -156,6 +208,100 @@ fn candidate(rk: RustKey, signals: ValueSignals, cost_hint: usize) -> Candidate 
     Candidate::new(rk.into(), signals, cost_hint)
 }
 
+/// Kind of a top-level pub item, used to weight its batch. Traits are the
+/// load-bearing abstraction every backend implements; enums and structs
+/// carry the data-model; free fns are the call surface. First-pass
+/// ordering — calibrate against the north stars.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum ItemKind {
+    Trait,
+    Enum,
+    Struct,
+    Union,
+    Fn,
+    TypeAlias,
+    Const,
+    Static,
+}
+
+impl ItemKind {
+    fn kind_weight(self) -> f64 {
+        match self {
+            ItemKind::Trait => 1.15,
+            ItemKind::Enum => 1.1,
+            ItemKind::Struct | ItemKind::Union => 1.0,
+            ItemKind::Fn => 0.95,
+            ItemKind::TypeAlias | ItemKind::Const | ItemKind::Static => 0.85,
+        }
+    }
+}
+
+#[derive(Debug, Clone)]
+struct PubItemInfo {
+    start_line: usize,
+    kind: ItemKind,
+    /// Rough upper bound of the rendered cost of just this item's decl —
+    /// lines × avg 6 tokens, with a floor of 40 for a one-liner decl.
+    line_span: usize,
+}
+
+impl PubItemInfo {
+    fn estimated_cost(&self) -> usize {
+        (self.line_span * 6).max(40)
+    }
+}
+
+fn item_kind_of(node: Node) -> Option<ItemKind> {
+    Some(match node.kind() {
+        "trait_item" => ItemKind::Trait,
+        "enum_item" => ItemKind::Enum,
+        "struct_item" => ItemKind::Struct,
+        "union_item" => ItemKind::Union,
+        "function_item" | "function_signature_item" => ItemKind::Fn,
+        "type_item" => ItemKind::TypeAlias,
+        "const_item" => ItemKind::Const,
+        "static_item" => ItemKind::Static,
+        _ => return None,
+    })
+}
+
+fn find_pub_item_starts(tree: &Tree, source: &str) -> Vec<PubItemInfo> {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    let mut out = Vec::new();
+    for child in root.children(&mut cursor) {
+        if child.kind() == "macro_definition" && has_macro_export(child, source) {
+            continue; // Handled by MacroNames/MacroBodies.
+        }
+        if !is_public(child) {
+            continue;
+        }
+        let Some(kind) = item_kind_of(child) else {
+            continue;
+        };
+        let start_line = child.start_position().row + 1;
+        let end_line = item_end_line(child, source);
+        out.push(PubItemInfo {
+            start_line,
+            kind,
+            line_span: end_line.saturating_sub(start_line) + 1,
+        });
+    }
+    out
+}
+
+fn find_item_at(tree: &Tree, source: &str, start_line: usize) -> Option<PubItemInfo> {
+    find_pub_item_starts(tree, source)
+        .into_iter()
+        .find(|i| i.start_line == start_line)
+}
+
+fn item_end_line(node: Node, source: &str) -> usize {
+    let text = &source[node.start_byte()..node.end_byte()];
+    let internal = text.trim_end_matches(['\n', '\r']).split('\n').count();
+    node.start_position().row + internal.max(1)
+}
+
 /// Files whose filename signals "crate entrypoint / main module surface".
 fn is_entrypoint_file(path: &Path) -> bool {
     path.file_name()
@@ -176,8 +322,7 @@ fn entrypoint_boost(path: &Path) -> f64 {
 
 /// Depth factor for a file. Entrypoints are pinned to depth 1 so
 /// `src/lib.rs` isn't penalized relative to root-depth content. All files
-/// multiply by a non-essential-directory factor (`tests/`, `examples/`,
-/// etc.) that down-ranks fixture/test/bench content by default.
+/// multiply by a non-essential-directory factor.
 fn file_depth_factor(path: &Path, depth: usize) -> f64 {
     let raw = if is_entrypoint_file(path) {
         depth_factor(depth.min(1))
@@ -205,19 +350,32 @@ fn mod_use_signals(file: &Path, depth: usize) -> ValueSignals {
     }
 }
 
-fn pub_decls_signals(file: &Path, depth: usize) -> ValueSignals {
+fn pub_item_names_signals(file: &Path, depth: usize) -> ValueSignals {
+    // Cheap surface listing — catastrophic-omission hedge. Ranks high
+    // because missing it means the agent doesn't know items exist.
     ValueSignals {
-        catastrophic_omission: (0.9 * entrypoint_boost(file)).min(1.0),
-        follow_up_minimization: 0.9,
-        zero_tool_call_understanding: 0.5,
+        catastrophic_omission: (0.8 * entrypoint_boost(file)).min(1.0),
+        follow_up_minimization: 0.6,
+        zero_tool_call_understanding: 0.35,
         depth_factor: file_depth_factor(file, depth),
     }
 }
 
-fn pub_docs_signals(file: &Path, depth: usize) -> ValueSignals {
+fn pub_item_signals(file: &Path, depth: usize, kind: ItemKind) -> ValueSignals {
+    let k = kind.kind_weight();
     ValueSignals {
-        catastrophic_omission: (0.4 * entrypoint_boost(file)).min(1.0),
-        follow_up_minimization: 0.6,
+        catastrophic_omission: (0.85 * k * entrypoint_boost(file)).min(1.0),
+        follow_up_minimization: 0.85 * k,
+        zero_tool_call_understanding: 0.55,
+        depth_factor: file_depth_factor(file, depth),
+    }
+}
+
+fn pub_item_doc_signals(file: &Path, depth: usize, kind: ItemKind) -> ValueSignals {
+    let k = kind.kind_weight();
+    ValueSignals {
+        catastrophic_omission: (0.4 * k * entrypoint_boost(file)).min(1.0),
+        follow_up_minimization: 0.6 * k,
         zero_tool_call_understanding: 0.8,
         depth_factor: file_depth_factor(file, depth),
     }
@@ -243,7 +401,7 @@ fn macro_names_signals(depth: usize) -> ValueSignals {
 
 fn macro_bodies_signals(depth: usize) -> ValueSignals {
     // For macro-heavy crates (anyhow, log), the `#[macro_export]` bodies
-    // are the crate's public API — on par with `PubDecls`. Predecessor
+    // are the crate's public API — on par with `PubItem`. Predecessor
     // edge to MacroNames orders them.
     ValueSignals {
         catastrophic_omission: 0.9,
@@ -261,8 +419,6 @@ fn parse_rust(ctx: &WalkCtx, path: &Path) -> Option<(Arc<str>, Arc<Tree>)> {
 
 // --- shared materializer shapes ---
 
-/// Materialize a per-file batch: parse, run the collector, build a
-/// single-file Lines map.
 fn mat_per_file<F>(
     file: &Path,
     collect: F,
@@ -277,9 +433,6 @@ where
     single_file_lines_batch(file, &source, lines, signals)
 }
 
-/// Materialize a cross-file batch: parse each `.rs` file in `src_dir`
-/// (non-recursive), run the collector per file, join results into a
-/// multi-file Lines map.
 fn mat_cross_file<F>(
     src_dir: &Path,
     collect: F,
@@ -329,7 +482,6 @@ fn collect_module_doc_lede(tree: &Tree, source: &str) -> FileLines {
             break;
         }
     }
-    // Lede = first paragraph. Truncate at the first blank line.
     let src_lines: Vec<&str> = source.lines().collect();
     if let Some(blank_idx) = out
         .iter()
@@ -361,61 +513,68 @@ fn collect_mod_use(tree: &Tree, _source: &str) -> FileLines {
     FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses))
 }
 
-fn collect_pub_decls(tree: &Tree, source: &str) -> FileLines {
-    let root = tree.root_node();
-    let mut cursor = root.walk();
+/// Header lines for every top-level pub item (name + first line only, with
+/// an ellipsis marker where the body would be). Surface listing — see
+/// `PubItemNames`.
+fn collect_pub_item_names(tree: &Tree, source: &str) -> FileLines {
+    let items = find_pub_item_starts(tree, source);
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
+    for item in &items {
+        full.push(item.start_line);
+        ellipses.push(item.start_line + 1);
+    }
+    FileLines::new(full).with_ellipses(ellipses)
+}
+
+/// Lines for a single pub item's decl at `start_line`. For struct/enum/
+/// trait/union: whole item (fields/variants/method sigs). For fn: signature
+/// with body-elision marker. No outer rustdoc — that's `PubItemDoc`.
+fn collect_pub_item(tree: &Tree, source: &str, start_line: usize) -> FileLines {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
     for child in root.children(&mut cursor) {
-        if child.kind() == "macro_definition" && has_macro_export(child, source) {
-            continue; // MacroNames/MacroBodies handle these.
-        }
-        if !is_public(child) {
+        if child.start_position().row + 1 != start_line {
             continue;
         }
+        if !is_public(child) {
+            return FileLines::new(Vec::new());
+        }
+        let mut full = Vec::new();
+        let mut ellipses = Vec::new();
         match child.kind() {
             "function_item" | "function_signature_item" => {
                 let sig_end = signature_end_row(child);
                 push_rows(&mut full, child.start_position().row, sig_end);
-                // Body elided when it exists → marker on the first body line.
                 if child.child_by_field_name("body").is_some() {
                     ellipses.push(sig_end + 2);
                 }
             }
-            "struct_item" | "enum_item" | "trait_item" | "type_item" | "const_item"
-            | "static_item" | "union_item" => {
+            "struct_item" | "enum_item" | "trait_item" | "union_item" | "type_item"
+            | "const_item" | "static_item" => {
                 extend_span(&mut full, child, source);
             }
             _ => {}
         }
+        return FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses));
     }
-    FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses))
+    FileLines::new(Vec::new())
 }
 
-fn collect_pub_docs(tree: &Tree, source: &str) -> FileLines {
+/// Outer rustdoc (`///` / `/** */`) immediately preceding the item at
+/// `start_line`. Returns empty when the item has no outer doc.
+fn collect_pub_item_doc(tree: &Tree, source: &str, start_line: usize) -> FileLines {
     let root = tree.root_node();
     let mut cursor = root.walk();
-    let mut out = Vec::new();
     for child in root.children(&mut cursor) {
-        if !is_public(child)
-            || !matches!(
-                child.kind(),
-                "function_item"
-                    | "function_signature_item"
-                    | "struct_item"
-                    | "enum_item"
-                    | "trait_item"
-                    | "type_item"
-                    | "const_item"
-                    | "static_item"
-                    | "union_item"
-            )
-        {
+        if child.start_position().row + 1 != start_line {
             continue;
         }
+        let mut out = Vec::new();
         collect_outer_docs_above(child, source, &mut out);
+        return FileLines::new(dedup_sorted(out));
     }
-    FileLines::new(dedup_sorted(out))
+    FileLines::new(Vec::new())
 }
 
 fn collect_method_sigs(tree: &Tree, _source: &str) -> FileLines {
@@ -455,7 +614,6 @@ fn collect_macro_name_lines(tree: &Tree, source: &str) -> FileLines {
         if child.kind() == "macro_definition" && has_macro_export(child, source) {
             let name_row = child.start_position().row;
             push_rows(&mut out, name_row, name_row);
-            // Macro body elided → marker below the name line.
             ellipses.push(name_row + 2);
         }
     }
@@ -477,13 +635,8 @@ fn collect_macro_bodies(tree: &Tree, source: &str) -> FileLines {
     FileLines::new(dedup_sorted(out))
 }
 
-/// `__` prefix by convention marks an internal dispatcher macro
-/// (`__log`, `__anyhow`, `__parse_ensure`) — `#[macro_export]`'d for
-/// reachability from caller crates but not a user-callable surface. These
-/// belong in the `MacroNames` index only, not `MacroBodies`.
+/// `__` prefix by convention marks an internal dispatcher macro.
 fn is_underscore_private(node: Node, source: &str) -> bool {
-    // Try the `name` field first; fall back to scanning child tokens for
-    // an identifier starting with `__`.
     if let Some(name) = node.child_by_field_name("name") {
         let text = &source[name.start_byte()..name.end_byte()];
         return text.starts_with("__");
@@ -549,10 +702,6 @@ fn collect_outer_docs_above(node: Node, source: &str, out: &mut Vec<usize>) {
 
 // --- line span helpers ---
 
-/// Push 1-indexed line numbers for `node`. tree-sitter-rust's
-/// `end_position().row` reports the row of the *trailing newline*, so for a
-/// single-line node it would naively report 2 rows; instead count newlines
-/// in the actual source slice.
 fn extend_span(out: &mut Vec<usize>, node: Node, source: &str) {
     let start = node.start_position().row;
     let text = &source[node.start_byte()..node.end_byte()];
@@ -578,4 +727,3 @@ fn dedup_sorted(mut v: Vec<usize>) -> Vec<usize> {
     v.dedup();
     v
 }
-

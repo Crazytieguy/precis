@@ -128,6 +128,25 @@ crates/
         src/
             book/
             book.rs
+                26→pub struct Book {
+                27→    /// The items in this book.
+                28→    pub items: Vec<BookItem>,
+                29→}
+                119→pub enum BookItem {
+                120→    /// A nested chapter.
+                121→    Chapter(Chapter),
+                122→    /// A section separator.
+                123→    Separator,
+                124→    /// A part title.
+                125→    PartTitle(String),
+                126→}
+                141→pub struct Chapter {
+                …
+                222→pub struct SectionNumber(Vec<u32>);
+                …
+                269→pub struct BookItems<'a> {
+                270→    items: VecDeque<&'a BookItem>,
+                271→}
             config.rs
             lib.rs
                 1→//! The base support library for mdbook, intended for internal use only.
@@ -136,6 +155,7 @@ crates/
                 5→/// This is provided as a way for custom preprocessors and renderers to do
                 6→/// compatibility checks.
                 7→pub const MDBOOK_VERSION: &str = env!("CARGO_PKG_VERSION");
+                …
                 9→pub mod book;
                 10→pub mod config;
                 11→pub mod utils;
@@ -254,6 +274,8 @@ crates/
                 …
             mdbook/
             mdbook.rs
+                29→pub struct MDBook {
+                …
     mdbook-html/
         Cargo.toml
             1→[package]
@@ -291,15 +313,6 @@ crates/
                 8→pub use html_handlebars::HtmlHandlebars;
             theme/
             utils.rs
-                7→pub(crate) fn normalize_path(path: &Path) -> PathBuf {
-                …
-                42→pub(crate) trait ToUrlPath {
-                43→    fn to_url_path(&self) -> String;
-                44→}
-                58→pub(crate) fn unique_id(id: &str, used: &mut HashSet<String>) -> String {
-                …
-                76→pub(crate) fn id_from_content(content: &str) -> String {
-                …
     mdbook-markdown/
         Cargo.toml
             1→[package]
@@ -372,8 +385,15 @@ crates/
                 4→//! [preprocessor](https://rust-lang.github.io/mdBook/for_developers/preprocessors.html)
                 5→//! for [mdBook](https://rust-lang.github.io/mdBook/). See the linked chapter
                 6→//! for more information on how to implement a preprocessor.
+                30→pub trait Preprocessor {
+                …
+                51→pub struct PreprocessorContext {
+                …
                 68→impl PreprocessorContext {
                 70→    pub fn new(root: PathBuf, config: Config, renderer: String) -> Self {
+                …
+                81→/// Parses the input given to a preprocessor.
+                82→pub fn parse_input<R: Read>(reader: R) -> Result<(PreprocessorContext, Book)> {
                 …
     mdbook-renderer/
         Cargo.toml
@@ -392,22 +412,14 @@ crates/
             5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
         src/
             lib.rs
-                1→//! Library to assist implementing an mdbook renderer.
-                2→//!
-                3→//! This library is used to implement a
-                4→//! [renderer](https://rust-lang.github.io/mdBook/for_developers/backends.html)
-                5→//! for [mdBook](https://rust-lang.github.io/mdBook/). See the linked chapter
-                6→//! for more information on how to implement a renderer.
-                63→impl RenderContext {
-                65→    pub fn new<P, Q>(root: P, book: Book, config: Config, destination: Q) -> RenderContext
-                66→    where
-                67→        P: Into<PathBuf>,
-                68→        Q: Into<PathBuf>,
-                69→    {
-                …
-                81→    pub fn source_dir(&self) -> PathBuf {
-                …
-                86→    pub fn from_json<R: Read>(reader: R) -> Result<RenderContext> {
+                28→pub trait Renderer {
+                29→    /// The `Renderer`'s name.
+                30→    fn name(&self) -> &str;
+                32→    /// Invoke the `Renderer`, passing in all the necessary information for
+                33→    /// describing a book.
+                34→    fn render(&self, ctx: &RenderContext) -> Result<()>;
+                35→}
+                40→pub struct RenderContext {
                 …
     mdbook-summary/
         Cargo.toml
@@ -441,8 +453,6 @@ crates/
             4→See [CONTRIBUTING.md](../../CONTRIBUTING.md) for how to use this.
         src/
             changelog.rs
-                10→pub(crate) fn changelog() -> Result<()> {
-                …
             main.rs
                 1→//! Helper for local development.
 eslint.config.mjs
@@ -455,8 +465,6 @@ examples/
             Cargo.toml
             src/
         src/
-            SUMMARY.md
-            chapter_1.md
         test.rs
 guide/
     book.toml
@@ -495,8 +503,6 @@ src/
             …
             19→pub fn execute(args: &ArgMatches) -> Result<()> {
             …
-            36→/// Formats a number of bytes into a human readable SI-prefixed size.
-            37→/// Returns a tuple of `(quantity, units)`.
             38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
             …
             46→pub struct Clean {
@@ -505,6 +511,10 @@ src/
             49→    total_bytes_removed: u64,
             50→}
         command_prelude.rs
+            7→pub trait CommandExt: Sized {
+            …
+            62→pub fn set_dest_dir(args: &ArgMatches, book: &mut MDBook) {
+            …
         init.rs
             12→pub fn make_subcommand() -> ClapCommand {
             …

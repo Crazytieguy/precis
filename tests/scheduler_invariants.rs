@@ -70,14 +70,16 @@ fn override_via_predecessor_chain() {
         }
         fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Candidate> {
             if matches!(scheduled, BatchKey::Fs(FsKey::DirListing { .. })) {
-                let decls = BatchKey::Rust(RustKey::PubDecls {
+                let decls = BatchKey::Rust(RustKey::PubItem {
                     file: stub_file("synthetic.rs"),
+                    start_line: 1,
                 });
                 vec![
                     Candidate::new(decls.clone(), sig(0.5), 50),
                     Candidate::new(
-                        BatchKey::Rust(RustKey::PubDocs {
+                        BatchKey::Rust(RustKey::PubItemDoc {
                             file: stub_file("synthetic.rs"),
+                            start_line: 1,
                         }),
                         sig(0.3),
                         50,
@@ -97,7 +99,7 @@ fn override_via_predecessor_chain() {
                     },
                     signals: sig(0.9),
                 }),
-                BatchKey::Rust(RustKey::PubDecls { .. }) => Some(ResolvedBatch {
+                BatchKey::Rust(RustKey::PubItem { .. }) => Some(ResolvedBatch {
                     content: BatchContent::Lines(line_set(
                         stub_file("synthetic.rs"),
                         vec![
@@ -107,7 +109,7 @@ fn override_via_predecessor_chain() {
                     )),
                     signals: sig(0.5),
                 }),
-                BatchKey::Rust(RustKey::PubDocs { .. }) => Some(ResolvedBatch {
+                BatchKey::Rust(RustKey::PubItemDoc { .. }) => Some(ResolvedBatch {
                     content: BatchContent::Lines(line_set(
                         stub_file("synthetic.rs"),
                         vec![(
@@ -144,8 +146,9 @@ fn tiny_budget_truncates_cleanly() {
         fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Candidate> {
             if matches!(scheduled, BatchKey::Fs(FsKey::DirListing { .. })) {
                 vec![Candidate::new(
-                    BatchKey::Rust(RustKey::PubDecls {
+                    BatchKey::Rust(RustKey::PubItem {
                         file: stub_file("synthetic.rs"),
+                        start_line: 1,
                     }),
                     sig(0.5),
                     50,
@@ -163,7 +166,7 @@ fn tiny_budget_truncates_cleanly() {
                     },
                     signals: sig(0.9),
                 }),
-                BatchKey::Rust(RustKey::PubDecls { .. }) => {
+                BatchKey::Rust(RustKey::PubItem { .. }) => {
                     let lines = (1..=20)
                         .map(|n| {
                             (
@@ -212,8 +215,9 @@ fn non_predecessor_overlap_panics_in_debug() {
                 // Two siblings — neither has the other as predecessor.
                 vec![
                     Candidate::new(
-                        BatchKey::Rust(RustKey::PubDecls {
+                        BatchKey::Rust(RustKey::PubItem {
                             file: stub_file("synthetic.rs"),
+                            start_line: 1,
                         }),
                         sig(0.5),
                         20,
@@ -246,7 +250,7 @@ fn non_predecessor_overlap_panics_in_debug() {
                     },
                     signals: sig(0.9),
                 }),
-                BatchKey::Rust(RustKey::PubDecls { .. }) => Some(mk("x")),
+                BatchKey::Rust(RustKey::PubItem { .. }) => Some(mk("x")),
                 BatchKey::Rust(RustKey::MethodSigs { .. }) => Some(mk("y")),
                 _ => None,
             }
