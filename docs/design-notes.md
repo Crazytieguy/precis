@@ -36,13 +36,49 @@ No paraphrasing, summarization, or invented content under any circumstances.
 
 ## North Star process
 
-- North Star documents (`tests/north-stars/<fixture>.md`) are agent-drafted,
+- North Star documents (`tests/north-stars/<fixture>.toml`) are agent-drafted,
   human-reviewed, and **frozen** before implementation iterates against them.
-  Once frozen they are the reviewer's reference standard; implementation
+  Once frozen they are the divergence test's ground truth; implementation
   changes do not edit them.
-- **Amendment protocol**: a frozen North Star can be corrected via an
-  explicit "defect" review with rationale, diff, and ontology impact. Drift
-  is not allowed; deliberate amendments are.
+- Schema: declarative batches with spans + render specs, reusing library
+  `Span` / `Render` / `EntryKind` types directly (drift-free by
+  construction). `NsFsGroup` wraps filesystem listings with an `entries =
+  "all"` sentinel that resolves via `walker::fs::list_dir` at load time.
+- `revision_pin` is the only thing binding an NS to its fixture revision.
+  `load_ns_checked` enforces it; the `ns_pins_match_fixture_pins` test
+  enforces it under `cargo t`.
+- **Amendment protocol**: a frozen NS can be corrected with an explicit
+  rationale + diff. Drift isn't allowed; deliberate amendments are.
+
+## Divergence metric
+
+`src/divergence.rs` — `Sim`, `OffScriptFrac`, `PredViolations`, `Coverage`
+computed from graded-atom intersection over a token-indexed coverage curve.
+
+- Atoms: `Line(path, line)` graded by render spec (Full=1.0, Truncated=0.6,
+  Ellipsis=0.3); `Fs(parent, entry)` always 1.0.
+- Credit: `min(g_walker, g_ns) / g_ns` — walker ≥ NS = 1.0, walker<NS = partial.
+- `Sim = ∫ w(t) · overlap(t) dt / ∫ w(t) dt` with `w(t) = exp(−t/τ)`,
+  `τ = 2000`. First 2000 tokens carry ~63% of the mass.
+- Report format (`tests/divergence/<fixture>__<budget>.md`): stable
+  identifiers, NS-id-sorted missed batches, lex-sorted unmapped walker
+  batches, empty sections elided. Perfect alignment = 1-line file.
+
+Tunables live as module-level constants: `TAU`, `GRADE_FULL`, `GRADE_TRUNCATED`,
+`GRADE_ELLIPSIS`, `MISSED_THRESHOLD`, `UNMAPPED_COST_THRESHOLD`. Adjust and
+regen baselines (`UPDATE_BASELINES=1 cargo t`) to see the effect.
+
+## Scheduler early-stop
+
+`best_exact` returns the top-ranked eligible exact batch *regardless of fit*.
+Main loop schedules if it fits; if it doesn't fit but speculatives remain,
+materializes a speculative (which may resolve to something smaller that
+fits); if it doesn't fit and speculatives are exhausted, stops. Rationale:
+matches NS-style "stop when nothing good fits" ranking; accepts occasional
+budget under-utilization in favor of never picking a worse substitute over
+a better unschedulable batch. Prefix invariant across budgets isn't
+guaranteed (branch-and-bound is budget-sensitive) — the test suite runs
+all four budgets live rather than relying on slicing a single run.
 
 ## Cross-language vs language-specific concerns
 
