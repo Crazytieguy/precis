@@ -102,6 +102,21 @@ is the wrong shape and we need richer per-signal location context.
 
 ## Deferred (pick up in later sessions)
 
+### Revisit the 2× rule — cumulative-based instead of per-batch
+The NS-author validator currently enforces "each batch's cost ≤ 2× the
+largest cost of any earlier batch" (`src/ns_simulate.rs` `Violation::
+TwoXRule`). Intent is to keep small budgets meaningful by preventing a
+single oversized batch from filling the budget alone. But the per-batch
+shape is too local — authors hit it on legitimate ranking choices where
+a single bigger batch arrives after a run of small ones, and the fix
+(artificially inflate a preceding batch) is worse than the signal. A
+cumulative-based formulation would be more principled: something like
+"each batch's cost ≤ k · cumulative_preceding_cost^α" with α < 1 so the
+growth envelope tracks budget distribution. Plan: design the exact
+formula next session (conservative — we'd rather under-reject than
+over-reject legitimate NSs), then re-validate the existing log + otree
+NSs and adjust if needed. Observed in Phase 2 authoring.
+
 ### Walker default — stop skipping hidden dotfiles by default
 `walker::fs::list_dir` (src/walker/fs.rs) currently skips hidden
 dotfiles except for a whitelist (`.gitignore`, `.github`, `.cargo`,
