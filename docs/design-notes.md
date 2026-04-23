@@ -102,6 +102,16 @@ is the wrong shape and we need richer per-signal location context.
 
 ## Deferred (pick up in later sessions)
 
+### Walker default — stop skipping hidden dotfiles by default
+`walker::fs::list_dir` (src/walker/fs.rs) currently skips hidden
+dotfiles except for a whitelist (`.gitignore`, `.github`, `.cargo`,
+`.rustfmt.toml`, `.config`). This is a catastrophic-omission risk for
+configuration files — an agent's answer to "where is X configured?"
+shouldn't depend on whether the config file happens to start with a
+dot. Plan: show hidden dotfiles by default and let per-name skip
+heuristics (e.g. `.DS_Store`, `.git`) stay. Defer until a fixture
+surfaces a concrete case the whitelist misses.
+
 ### Data model
 - **Cost shrink credit** — `cost_lines` uses `saturating_sub` so a refinement
   that makes content shorter never credits tokens back. Conservative wrt

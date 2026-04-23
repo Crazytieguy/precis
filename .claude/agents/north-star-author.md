@@ -51,11 +51,12 @@ Three priorities, in order:
 
 Examples of cheap batches that mitigate catastrophic-omission risk:
 
-- **Location batches** — lines of all public functions in a file (one
-  span per fn's first line, `render = full`), without showing bodies,
-  docs, or signatures. Listing only some items implies the unlisted
-  ones don't exist; always show them all together.
-- **All H2 heading locations** in a markdown file, without any section
+- **Location batches** — the *name only* of every public function in a
+  file (one truncated span per fn's first line, e.g.
+  `render = { kind = "truncate", pattern = "^[^(]+" }`). Listing only
+  some items implies the unlisted ones don't exist; always show them
+  all together.
+- **All H2 heading locations** in a markdown file, without section
   bodies — tells the agent what sections exist.
 
 "Locations" are always included implicitly: rendered output shows the
@@ -141,21 +142,24 @@ spans = [
 
 ### Render specs
 
-- `{ kind = "full" }` — emit the source line verbatim with its line
-  number prefix.
+All three render modes are output with the span's indentation. Every
+rendered line has its source line number prefix **except** `ellipsis`,
+which is a bare `…` that can stand in for one or more lines.
+
+- `{ kind = "full" }` — emit the source line verbatim (with line-number
+  prefix).
 - `{ kind = "truncate", pattern = "<regex>" }` — emit only the regex
-  match against the source line, followed by `…`. Pattern must match
-  ≥1 char on every covered line.
-- `{ kind = "ellipsis" }` — emit a bare `…` marker at that line. A
-  later (predecessor-child) batch can replace it with a `full` /
-  `truncate` span at the same line.
+  match against the source line (with line-number prefix), followed by
+  a trailing `…`. Pattern must match ≥1 char on every covered line.
+- `{ kind = "ellipsis" }` — emit a bare `…` marker, no line number,
+  no content. A later (predecessor-child) batch can replace it with a
+  `full` / `truncate` span at the same line.
 
 ### Filesystem listings
 
-- `entries = "all"` — expand via `walker::fs::list_dir` (walker-consistent
-  filtering: hidden dotfiles skipped, `.github`/`.gitignore`/`.cargo` kept).
+- `entries = "all"` — expand via `walker::fs::list_dir`.
 - `entries = ["foo.rs", "bar.rs"]` — explicit child list; names must
-  actually exist under `parent`.
+  exist under `parent`.
 - A single `kind = "fs"` batch can bundle multiple groups (different
   parents in one batch) when that's the most coherent ranking unit.
 
@@ -173,17 +177,13 @@ spans = [
 
 ## Iteration loop
 
-1. Read every file in the fixture that could plausibly contribute to a
-   developer's understanding — config, top-level docs, all source
-   files of non-trivial size, examples. Don't pre-filter based on
-   patterns from other codebases.
-2. Write the TOML.
-3. Run `cargo run --bin validate-ns -- <output_path>`. It prints every
+1. Write the TOML.
+2. Run `cargo run --bin validate-ns -- <output_path>`. It prints every
    batch's marginal cost + cumulative + flags violations.
-4. Adjust: fix violations, *and* consider re-ranking or splitting
+3. Adjust: fix violations, *and* consider re-ranking or splitting
    batches that are surprisingly large (a batch much bigger than its
    neighbors is a signal to split or demote, even when 2×-clean).
-5. Repeat until the validator reports `OK`.
+4. Repeat until the validator reports `OK`.
 
 ## Budget distribution and batch sizing
 
@@ -197,8 +197,8 @@ many small, a few large. Your ranking must serve small budgets too.
   logarithmically** — each group's cumulative cost should be a
   meaningful multiple of the prior group's, so a doubling of budget
   unlocks a meaningful extra slice.
-- **Aim for ≥50 batches** when the fixture supports it. Fewer usually
-  means missed splitting opportunities.
+- **Aim for ≥50 batches.** Fewer usually means missed splitting
+  opportunities.
 
 **Threshold framing.** Think of your ranking as serving a *threshold*
 choice: for any token budget, the ideal output is "all batches
@@ -208,10 +208,6 @@ bundle is a coherent, useful slice.
 ## Constraints (authorial, not validator-enforced)
 
 - **Honest only.** Reference real files and real lines.
-- **No walker-ontology leakage.** Don't mention `PubItemNames`,
-  `CrateDocLede`, `MarkdownKey`, etc. in descriptors / justifications.
-  The NS is about *what ideal output looks like*; the walker decides
-  *how to produce it*.
 - **No precis output.** Don't run `precis` or look at existing precis
   output.
 - **No precis source code or git history.** Don't browse the precis
@@ -219,7 +215,10 @@ bundle is a coherent, useful slice.
 
 ## Process
 
-1. **Catalog exhaustively.** `Glob '**/*'`. Read every plausible file.
+1. **Catalog exhaustively.** `Glob '**/*'`. Read every file that could
+   plausibly contribute to a developer's understanding — config,
+   top-level docs, all source files, examples. Don't pre-filter based
+   on patterns from other codebases.
 2. Form a high-level mental model.
 3. Brainstorm candidate batches at varying granularity.
 4. Draft the TOML.
