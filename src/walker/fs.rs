@@ -6,7 +6,9 @@ use std::collections::BTreeMap;
 use std::ffi::OsString;
 use std::path::{Path, PathBuf};
 
-use crate::batch::{BatchContent, BatchKey, EntryKind, FsKey, ResolvedBatch, ValueSignals};
+use crate::batch::{
+    BatchContent, BatchKey, EntryKind, FsGroup, FsKey, ResolvedBatch, ValueSignals,
+};
 use crate::value::{depth_factor, non_essential_factor};
 
 use super::{Candidate, WalkCtx};
@@ -44,9 +46,11 @@ pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
         return None;
     }
     Some(ResolvedBatch {
-        content: BatchContent::FileSystemEntries {
-            parent: dir.clone(),
-            children,
+        content: BatchContent::Fs {
+            groups: vec![FsGroup {
+                parent: dir.clone(),
+                children,
+            }],
         },
         signals: dir_listing_signals_for_path(dir, dir == ctx.root(), ctx.depth_from_root(dir)),
     })

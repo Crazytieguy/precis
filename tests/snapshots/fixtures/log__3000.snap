@@ -4,7 +4,6 @@ expression: rendered
 ---
 .github/
     workflows/
-        main.yml
 .gitignore
 CHANGELOG.md
 Cargo.toml
@@ -39,173 +38,8 @@ rfcs/
     0296-structured-logging.md
 src/
     __private_api.rs
-        10→pub type Value<'a> = &'a str;
-        …
-        37→/// The global logger proxy.
-        39→pub struct GlobalLogger;
-        …
-        84→pub fn log<'a, K, L>(
-        85→    logger: L,
-        86→    args: Arguments,
-        87→    level: Level,
-        88→    target_module_path_and_loc: &(&str, &'static str, &'static Location),
-        89→    kvs: K,
-        90→) where
-        91→    K: KVs<'a>,
-        92→    L: Log,
-        93→{
-        …
-        103→pub fn enabled<L: Log>(logger: L, level: Level, target: &str) -> bool {
-        …
-        108→pub fn loc() -> &'static Location<'static> {
-        …
     kv/
     lib.rs
-        11→//! A lightweight logging facade.
-        12→//!
-        13→//! The `log` crate provides a single logging API that abstracts over the
-        14→//! actual logging implementation. Libraries can use the logging API provided
-        15→//! by this crate, and the consumer of those libraries can choose the logging
-        16→//! implementation that is most suitable for its use case.
-        17→//!
-        18→//! If no logging implementation is selected, the facade falls back to a "noop"
-        19→//! implementation that ignores all log messages. The overhead in this case
-        20→//! is very small - just an integer load, comparison and jump.
-        21→//!
-        22→//! A log request consists of a _target_, a _level_, and a _body_. A target is a
-        23→//! string which defaults to the module path of the location of the log request,
-        24→//! though that default may be overridden. Logger implementations typically use
-        25→//! the target to filter requests based on some user configuration.
-        26→//!
-        467→/// An enum representing the available verbosity levels of the logger.
-        468→///
-        469→/// Typical usage includes: checking if a certain `Level` is enabled with
-        470→/// [`log_enabled!`](macro.log_enabled.html), specifying the `Level` of
-        471→/// [`log!`](macro.log.html), and comparing a `Level` directly to a
-        472→/// [`LevelFilter`](enum.LevelFilter.html).
-        475→pub enum Level {
-        476→    /// The "error" level.
-        477→    ///
-        478→    /// Designates very serious errors.
-        479→    // This way these line up with the discriminants for LevelFilter below
-        480→    // This works because Rust treats field-less enums the same way as C does:
-        481→    // https://doc.rust-lang.org/reference/items/enumerations.html#custom-discriminant-values-for-field-less-enumerations
-        482→    Error = 1,
-        483→    /// The "warn" level.
-        484→    ///
-        485→    /// Designates hazardous situations.
-        486→    Warn,
-        487→    /// The "info" level.
-        488→    ///
-        489→    /// Designates useful information.
-        490→    Info,
-        491→    /// The "debug" level.
-        492→    ///
-        493→    /// Designates lower priority information.
-        494→    Debug,
-        495→    /// The "trace" level.
-        496→    ///
-        497→    /// Designates very low priority, often extremely verbose, information.
-        498→    Trace,
-        499→}
-        626→/// An enum representing the available verbosity level filters of the logger.
-        627→///
-        628→/// A `LevelFilter` may be compared directly to a [`Level`]. Use this type
-        629→/// to get and set the maximum log level with [`max_level()`] and [`set_max_level`].
-        630→///
-        631→/// [`Level`]: enum.Level.html
-        632→/// [`max_level()`]: fn.max_level.html
-        633→/// [`set_max_level`]: fn.set_max_level.html
-        636→pub enum LevelFilter {
-        637→    /// A level lower than all log levels.
-        638→    Off,
-        639→    /// Corresponds to the `Error` log level.
-        640→    Error,
-        641→    /// Corresponds to the `Warn` log level.
-        642→    Warn,
-        643→    /// Corresponds to the `Info` log level.
-        644→    Info,
-        645→    /// Corresponds to the `Debug` log level.
-        646→    Debug,
-        647→    /// Corresponds to the `Trace` log level.
-        648→    Trace,
-        649→}
-        842→pub struct Record<'a> {
-        843→    metadata: Metadata<'a>,
-        844→    args: fmt::Arguments<'a>,
-        845→    module_path: Option<MaybeStaticStr<'a>>,
-        846→    file: Option<MaybeStaticStr<'a>>,
-        847→    line: Option<u32>,
-        848→    #[cfg(feature = "kv")]
-        849→    key_values: KeyValues<'a>,
-        850→}
-        1003→pub struct RecordBuilder<'a> {
-        1004→    record: Record<'a>,
-        1005→}
-        1158→pub struct Metadata<'a> {
-        1159→    level: Level,
-        1160→    target: &'a str,
-        1161→}
-        1200→pub struct MetadataBuilder<'a> {
-        1201→    metadata: Metadata<'a>,
-        1202→}
-        1249→pub trait Log: Sync + Send {
-        …
-        1344→/// Sets the global maximum log level.
-        1345→///
-        1346→/// Generally, this should only be called by the active logging implementation.
-        1347→///
-        1348→/// Note that `Trace` is the maximum level, because it provides the maximum amount of detail in the emitted logs.
-        1351→pub fn set_max_level(level: LevelFilter) {
-        …
-        1375→pub unsafe fn set_max_level_racy(level: LevelFilter) {
-        …
-        1396→pub fn max_level() -> LevelFilter {
-        …
-        1420→pub fn set_boxed_logger(logger: Box<dyn Log>) -> Result<(), SetLoggerError> {
-        …
-        1478→pub fn set_logger(logger: &'static dyn Log) -> Result<(), SetLoggerError> {
-        …
-        1529→pub unsafe fn set_logger_racy(logger: &'static dyn Log) -> Result<(), SetLoggerError> {
-        …
-        1544→/// The type returned by [`set_logger`] if [`set_logger`] has already been called.
-        1545→///
-        1546→/// [`set_logger`]: fn.set_logger.html
-        1549→pub struct SetLoggerError(());
-        …
-        1561→/// The type returned by [`from_str`] when the string doesn't match any of the log levels.
-        1562→///
-        1563→/// [`from_str`]: https://doc.rust-lang.org/std/str/trait.FromStr.html#tymethod.from_str
-        1566→pub struct ParseLevelError(());
-        …
-        1578→/// Returns a reference to the logger.
-        1579→///
-        1580→/// If a logger has not been set, a no-op implementation is returned.
-        1581→pub fn logger() -> &'static dyn Log {
-        …
-        1602→/// The statically resolved maximum log level.
-        1603→///
-        1604→/// See the crate level documentation for information on how to configure this.
-        1605→///
-        1606→/// This value is checked by the log macros, but not by the `Log`ger returned by
-        1607→/// the [`logger`] function. Code that manually calls functions on that value
-        1608→/// should compare the level against this value.
-        1609→///
-        1610→/// [`logger`]: fn.logger.html
-        1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
-        1612→    false if cfg!(feature = "release_max_level_off") => LevelFilter::Off,
-        1613→    false if cfg!(feature = "release_max_level_error") => LevelFilter::Error,
-        1614→    false if cfg!(feature = "release_max_level_warn") => LevelFilter::Warn,
-        1615→    false if cfg!(feature = "release_max_level_info") => LevelFilter::Info,
-        1616→    false if cfg!(feature = "release_max_level_debug") => LevelFilter::Debug,
-        1617→    false if cfg!(feature = "release_max_level_trace") => LevelFilter::Trace,
-        1618→    _ if cfg!(feature = "max_level_off") => LevelFilter::Off,
-        1619→    _ if cfg!(feature = "max_level_error") => LevelFilter::Error,
-        1620→    _ if cfg!(feature = "max_level_warn") => LevelFilter::Warn,
-        1621→    _ if cfg!(feature = "max_level_info") => LevelFilter::Info,
-        1622→    _ if cfg!(feature = "max_level_debug") => LevelFilter::Debug,
-        1623→    _ => LevelFilter::Trace,
-        1624→};
     macros.rs
         75→macro_rules! log {
         …
@@ -249,27 +83,5 @@ src/
         …
     serde.rs
 test_max_level_features/
-    Cargo.toml
-        1→[package]
-        2→name = "optimized"
-        3→version = "0.1.0"
-        4→edition = "2021"
-        5→publish = false
-        7→[[bin]]
-        8→name = "test_max_level_features"
-        9→path = "main.rs"
-    main.rs
-        1→use log::{debug, error, info, trace, warn, Level, LevelFilter, Log, Metadata, Record};
-        2→use std::sync::{Arc, Mutex};
-        5→use log::set_boxed_logger;
-        17→impl Log for Logger {
-        18→    fn enabled(&self, _: &Metadata) -> bool {
-        …
-        22→    fn log(&self, record: &Record) {
-        …
-        26→    fn flush(&self) {}
-        …
 tests/
-    integration.rs
-    macros.rs
 triagebot.toml

@@ -6,10 +6,13 @@
 use std::collections::BTreeMap;
 use std::ffi::OsString;
 use std::path::{Path, PathBuf};
+use std::sync::Arc;
 
 use precis::batch::{
-    BatchContent, BatchKey, EntryKind, FsKey, RenderedLine, ResolvedBatch, RustKey, ValueSignals,
+    BatchContent, BatchKey, EntryKind, FsGroup, FsKey, Render, ResolvedBatch, RustKey, Span,
+    ValueSignals,
 };
+use precis::render::SourceCache;
 use precis::scheduler::Scheduler;
 use precis::walker::{Candidate, WalkCtx, Walker};
 
@@ -28,22 +31,18 @@ fn one_child(name: &str, kind: EntryKind) -> BTreeMap<OsString, EntryKind> {
     m
 }
 
-fn line_set(
-    path: PathBuf,
-    lines: Vec<(usize, RenderedLine)>,
-) -> BTreeMap<PathBuf, BTreeMap<usize, RenderedLine>> {
-    let mut inner = BTreeMap::new();
-    for (n, l) in lines {
-        inner.insert(n, l);
-    }
-    let mut outer = BTreeMap::new();
-    outer.insert(path, inner);
-    outer
+fn single_span(path: PathBuf, start: usize, end: usize, render: Render) -> Vec<Span> {
+    vec![Span {
+        path,
+        start,
+        end,
+        render,
+    }]
 }
 
 // Common stub paths. `/stub` doesn't exist; the synthetic walker answers
-// every key's materialize directly, so the scheduler never touches the
-// real filesystem.
+// every key's materialize directly, and each test preloads a `SourceCache`
+// so the render pipeline materializes spans without touching the real FS.
 const STUB_DIR: &str = "/stub";
 
 fn stub_dir() -> PathBuf {
@@ -58,11 +57,15 @@ fn listing_key() -> BatchKey {
     BatchKey::Fs(FsKey::DirListing { dir: stub_dir() })
 }
 
+fn preload(cache: &SourceCache, path: &Path, contents: &str) {
+    cache.insert(path.to_path_buf(), Arc::from(contents));
+}
+
 #[test]
 fn scheduler_invariants_override_via_predecessor_chain() {
-    // Three batches: a folder listing → a `PubDecls` carrying truncated
-    // lines → a `PubDocs` (refinement, with PubDecls as predecessor) that
-    // overrides line 1 with its full version.
+    // Three batches: a folder listing → a `PubItem` carrying Truncated
+    // spans → a `PubItemDoc` refinement (with PubItem as predecessor) that
+    // overrides line 1 with its Full version.
     struct OverrideChain;
     impl Walker for OverrideChain {
         fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Candidate> {
@@ -93,30 +96,41 @@ fn scheduler_invariants_override_via_predecessor_chain() {
         fn materialize(&mut self, key: &BatchKey, _ctx: &WalkCtx) -> Option<ResolvedBatch> {
             match key {
                 BatchKey::Fs(FsKey::DirListing { dir }) => Some(ResolvedBatch {
-                    content: BatchContent::FileSystemEntries {
-                        parent: dir.clone(),
-                        children: one_child("synthetic.rs", EntryKind::File),
+                    content: BatchContent::Fs {
+                        groups: vec![FsGroup {
+                            parent: dir.clone(),
+                            children: one_child("synthetic.rs", EntryKind::File),
+                        }],
                     },
                     signals: sig(0.9),
                 }),
                 BatchKey::Rust(RustKey::PubItem { .. }) => Some(ResolvedBatch {
-                    content: BatchContent::Lines(line_set(
-                        stub_file("synthetic.rs"),
-                        vec![
-                            (1, RenderedLine::Truncated("fn foo".into())),
-                            (2, RenderedLine::Truncated("fn bar".into())),
+                    content: BatchContent::Lines {
+                        spans: vec![
+                            Span {
+                                path: stub_file("synthetic.rs"),
+                                start: 1,
+                                end: 1,
+                                render: Render::Truncated {
+                                    pattern: r"^fn [a-z]+".into(),
+                                },
+                            },
+                            Span {
+                                path: stub_file("synthetic.rs"),
+                                start: 2,
+                                end: 2,
+                                render: Render::Truncated {
+                                    pattern: r"^fn [a-z]+".into(),
+                                },
+                            },
                         ],
-                    )),
+                    },
                     signals: sig(0.5),
                 }),
                 BatchKey::Rust(RustKey::PubItemDoc { .. }) => Some(ResolvedBatch {
-                    content: BatchContent::Lines(line_set(
-                        stub_file("synthetic.rs"),
-                        vec![(
-                            1,
-                            RenderedLine::Full("fn foo(a: i32, b: i32) -> Result<()> {".into()),
-                        )],
-                    )),
+                    content: BatchContent::Lines {
+                        spans: single_span(stub_file("synthetic.rs"), 1, 1, Render::Full),
+                    },
                     signals: sig(0.3),
                 }),
                 _ => None,
@@ -124,7 +138,13 @@ fn scheduler_invariants_override_via_predecessor_chain() {
         }
     }
 
-    let scheduler = Scheduler::new(stub_dir(), OverrideChain, 100_000, None);
+    let cache = SourceCache::new();
+    preload(
+        &cache,
+        &stub_file("synthetic.rs"),
+        "fn foo(a: i32, b: i32) -> Result<()> {\nfn bar(c: i32) -> Result<()> {\n",
+    );
+    let scheduler = Scheduler::with_source_cache(stub_dir(), OverrideChain, 100_000, None, cache);
     let tree = scheduler.run();
     let rendered = tree.render();
     assert!(rendered.contains("synthetic.rs"), "rendered: {rendered}");
@@ -160,34 +180,36 @@ fn scheduler_invariants_tiny_budget_truncates_cleanly() {
         fn materialize(&mut self, key: &BatchKey, _ctx: &WalkCtx) -> Option<ResolvedBatch> {
             match key {
                 BatchKey::Fs(FsKey::DirListing { dir }) => Some(ResolvedBatch {
-                    content: BatchContent::FileSystemEntries {
-                        parent: dir.clone(),
-                        children: one_child("synthetic.rs", EntryKind::File),
+                    content: BatchContent::Fs {
+                        groups: vec![FsGroup {
+                            parent: dir.clone(),
+                            children: one_child("synthetic.rs", EntryKind::File),
+                        }],
                     },
                     signals: sig(0.9),
                 }),
-                BatchKey::Rust(RustKey::PubItem { .. }) => {
-                    let lines = (1..=20)
-                        .map(|n| {
-                            (
-                                n,
-                                RenderedLine::Full(
-                                    "very long line that will not fit at one token".into(),
-                                ),
-                            )
-                        })
-                        .collect::<Vec<_>>();
-                    Some(ResolvedBatch {
-                        content: BatchContent::Lines(line_set(stub_file("synthetic.rs"), lines)),
-                        signals: sig(0.5),
-                    })
-                }
+                BatchKey::Rust(RustKey::PubItem { .. }) => Some(ResolvedBatch {
+                    content: BatchContent::Lines {
+                        spans: vec![Span {
+                            path: stub_file("synthetic.rs"),
+                            start: 1,
+                            end: 20,
+                            render: Render::Full,
+                        }],
+                    },
+                    signals: sig(0.5),
+                }),
                 _ => None,
             }
         }
     }
 
-    let scheduler = Scheduler::new(stub_dir(), OneEntry, 1, None);
+    let cache = SourceCache::new();
+    let body: String = (0..20)
+        .map(|_| "very long line that will not fit at one token\n")
+        .collect();
+    preload(&cache, &stub_file("synthetic.rs"), &body);
+    let scheduler = Scheduler::with_source_cache(stub_dir(), OneEntry, 1, None, cache);
     let tree = scheduler.run();
     let rendered = tree.render();
     assert!(
@@ -213,7 +235,7 @@ fn scheduler_invariants_non_predecessor_overlap_panics_in_debug() {
                 vec![
                     Candidate::new(
                         BatchKey::Rust(RustKey::PubItem {
-                            file: stub_file("synthetic.rs"),
+                            file: stub_file("f.rs"),
                             start_line: 1,
                         }),
                         sig(0.5),
@@ -221,7 +243,7 @@ fn scheduler_invariants_non_predecessor_overlap_panics_in_debug() {
                     ),
                     Candidate::new(
                         BatchKey::Rust(RustKey::MethodSigs {
-                            file: stub_file("synthetic.rs"),
+                            file: stub_file("f.rs"),
                         }),
                         sig(0.5),
                         20,
@@ -232,28 +254,32 @@ fn scheduler_invariants_non_predecessor_overlap_panics_in_debug() {
             }
         }
         fn materialize(&mut self, key: &BatchKey, _ctx: &WalkCtx) -> Option<ResolvedBatch> {
-            let mk = |text: &str| ResolvedBatch {
-                content: BatchContent::Lines(line_set(
-                    stub_file("f.rs"),
-                    vec![(1, RenderedLine::Full(text.into()))],
-                )),
+            let mk = || ResolvedBatch {
+                content: BatchContent::Lines {
+                    spans: single_span(stub_file("f.rs"), 1, 1, Render::Full),
+                },
                 signals: sig(0.5),
             };
             match key {
                 BatchKey::Fs(FsKey::DirListing { dir }) => Some(ResolvedBatch {
-                    content: BatchContent::FileSystemEntries {
-                        parent: dir.clone(),
-                        children: one_child("f.rs", EntryKind::File),
+                    content: BatchContent::Fs {
+                        groups: vec![FsGroup {
+                            parent: dir.clone(),
+                            children: one_child("f.rs", EntryKind::File),
+                        }],
                     },
                     signals: sig(0.9),
                 }),
-                BatchKey::Rust(RustKey::PubItem { .. }) => Some(mk("x")),
-                BatchKey::Rust(RustKey::MethodSigs { .. }) => Some(mk("y")),
+                BatchKey::Rust(RustKey::PubItem { .. }) => Some(mk()),
+                BatchKey::Rust(RustKey::MethodSigs { .. }) => Some(mk()),
                 _ => None,
             }
         }
     }
 
-    let scheduler = Scheduler::new(stub_dir(), OverlappingWalker, 10_000, None);
+    let cache = SourceCache::new();
+    preload(&cache, &stub_file("f.rs"), "x\n");
+    let scheduler =
+        Scheduler::with_source_cache(stub_dir(), OverlappingWalker, 10_000, None, cache);
     let _ = scheduler.run();
 }

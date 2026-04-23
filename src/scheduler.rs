@@ -26,7 +26,7 @@ use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;
 
 use crate::batch::{Batch, BatchId, BatchKey};
-use crate::render::{Cost, RenderedTree};
+use crate::render::{Cost, RenderedTree, SourceCache};
 use crate::value::{ratio as score_ratio, score};
 use crate::walker::{Candidate, WalkCtx, Walker};
 
@@ -53,10 +53,23 @@ pub struct Scheduler<W: Walker> {
 
 impl<W: Walker> Scheduler<W> {
     pub fn new(root: PathBuf, walker: W, token_budget: usize, byte_budget: Option<usize>) -> Self {
+        Self::with_source_cache(root, walker, token_budget, byte_budget, SourceCache::new())
+    }
+
+    /// Construct a scheduler sharing an externally-owned `SourceCache`. Used
+    /// by tests that preload synthetic source content so the render pipeline
+    /// can materialize spans against paths that don't exist on disk.
+    pub fn with_source_cache(
+        root: PathBuf,
+        walker: W,
+        token_budget: usize,
+        byte_budget: Option<usize>,
+        source_cache: SourceCache,
+    ) -> Self {
         Self {
             walker,
-            ctx: WalkCtx::new(root.clone()),
-            tree: RenderedTree::new(root),
+            ctx: WalkCtx::with_cache(root.clone(), source_cache.clone()),
+            tree: RenderedTree::new(root, source_cache),
             token_budget,
             byte_budget,
             consumed: Cost::default(),
@@ -73,18 +86,41 @@ impl<W: Walker> Scheduler<W> {
             self.absorb_candidate(c);
         }
 
+        // Early-stop scheduling: the top-ranked eligible exact batch is
+        // considered regardless of fit. If it fits, schedule it. If it
+        // doesn't and the speculative pool still has candidates, keep
+        // materializing — one of them might resolve to a better-ratio batch
+        // that fits (its cost hint is an upper bound, so actual cost can
+        // be smaller). Only stop once we've both run out of speculatives
+        // and the top exact doesn't fit. This preserves the "best batch
+        // must fit else stop" rule while keeping the branch-and-bound
+        // invariant from being violated by an oversized-but-high-ratio
+        // exact stranding fitting speculatives.
         loop {
             let best_exact = self.best_exact();
             let best_spec = self.best_speculative();
             match (best_exact, best_spec) {
                 (None, None) => break,
-                (Some((id, _)), None) => self.schedule(id),
+                (Some((id, _, cost)), None) => {
+                    if self.fits(cost) {
+                        self.schedule(id, cost);
+                    } else {
+                        break;
+                    }
+                }
                 (None, Some((key, _))) => {
                     let _ = self.materialize(&key);
                 }
-                (Some((id, ex_ratio)), Some((key, spec_bound))) => {
+                (Some((id, ex_ratio, cost)), Some((key, spec_bound))) => {
                     if ex_ratio >= spec_bound {
-                        self.schedule(id);
+                        if self.fits(cost) {
+                            self.schedule(id, cost);
+                        } else {
+                            // Top exact doesn't fit but speculatives exist.
+                            // Materialize — a speculative may resolve to
+                            // something that fits with a competitive ratio.
+                            let _ = self.materialize(&key);
+                        }
                     } else {
                         let _ = self.materialize(&key);
                     }
@@ -166,8 +202,12 @@ impl<W: Walker> Scheduler<W> {
 
     // ---- exact pool ----
 
-    fn best_exact(&self) -> Option<(BatchId, f64)> {
-        let mut best: Option<(f64, BatchId, BatchKey)> = None;
+    /// Top-ranked eligible exact batch regardless of fit, with its
+    /// already-computed cost. Returning `Cost` here lets the main loop do
+    /// the fit check and (on schedule) apply without recomputing —
+    /// `cost_spans` is the hot path per iteration.
+    fn best_exact(&self) -> Option<(BatchId, f64, Cost)> {
+        let mut best: Option<(f64, BatchId, BatchKey, Cost)> = None;
         for (idx, batch) in self.batches.iter().enumerate() {
             let id = BatchId::new(idx);
             if self.scheduled.contains(&id) {
@@ -177,19 +217,16 @@ impl<W: Walker> Scheduler<W> {
                 continue;
             }
             let cost = self.tree.marginal_cost(batch);
-            if !self.fits(cost) {
-                continue;
-            }
             let value = score(&batch.signals);
             let ratio = score_ratio(value, cost.tokens);
             let better = best
                 .as_ref()
-                .is_none_or(|(br, _, bk)| ratio > *br || (ratio == *br && &batch.key < bk));
+                .is_none_or(|(br, _, bk, _)| ratio > *br || (ratio == *br && &batch.key < bk));
             if better {
-                best = Some((ratio, id, batch.key.clone()));
+                best = Some((ratio, id, batch.key.clone(), cost));
             }
         }
-        best.map(|(ratio, id, _)| (id, ratio))
+        best.map(|(ratio, id, _, cost)| (id, ratio, cost))
     }
 
     fn fits(&self, cost: Cost) -> bool {
@@ -228,17 +265,15 @@ impl<W: Walker> Scheduler<W> {
 
     // ---- scheduling ----
 
-    fn schedule(&mut self, id: BatchId) {
+    fn schedule(&mut self, id: BatchId, cost: Cost) {
         debug_assert!(
             !self.scheduled.contains(&id),
             "batch {:?} scheduled twice",
             id
         );
-
-        let cost = self.tree.marginal_cost(&self.batches[id.index()]);
         debug_assert!(
             self.fits(cost),
-            "scheduled batch exceeds token/byte budget; best_exact should have filtered it"
+            "scheduled batch exceeds token/byte budget; caller should have filtered it"
         );
 
         let ancestors = self.ancestors_of(id);

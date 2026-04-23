@@ -240,26 +240,3 @@ src/
         58→pub struct BoxedError(pub Box<dyn StdError + Send + Sync>);
         …
 tests/
-    common/
-        mod.rs
-    compiletest.rs
-    crate/
-        .gitignore
-        Cargo.toml
-        test.rs
-    drop/
-        mod.rs
-    test_autotrait.rs
-    test_backtrace.rs
-    test_boxed.rs
-    test_chain.rs
-    test_context.rs
-    test_convert.rs
-    test_downcast.rs
-    test_ensure.rs
-    test_ffi.rs
-    test_fmt.rs
-    test_macros.rs
-    test_repr.rs
-    test_source.rs
-    ui/

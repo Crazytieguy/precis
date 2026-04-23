@@ -22,13 +22,14 @@
 //! makes all three unrepresentable by accident.
 
 use std::cell::RefCell;
-use std::collections::{BTreeMap, HashMap};
+use std::collections::{BTreeSet, HashMap};
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
 use tree_sitter::{Language, Tree};
 
-use crate::batch::{BatchContent, BatchKey, RenderedLine, ResolvedBatch, ValueSignals};
+use crate::batch::{BatchContent, BatchKey, Render, ResolvedBatch, Span, ValueSignals};
+use crate::render::SourceCache;
 
 pub mod fs;
 pub mod markdown;
@@ -92,30 +93,36 @@ pub trait Walker {
     fn materialize(&mut self, key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch>;
 }
 
-/// Per-run context. Holds the seed root plus source + parse caches so that
-/// Rust's headline decl batch and its rustdoc refinement reuse the same
-/// parsed tree. Caches are unbounded for v0.2 — bound is "files actually
-/// materialized", which is exactly the laziness budget we care about.
+/// Per-run context. Holds the seed root plus a shared source cache +
+/// per-file parse cache. The source cache is the same handle the
+/// [`RenderedTree`](crate::render::RenderedTree) uses for render-time
+/// materialization, so each file is read at most once across the whole run.
 pub struct WalkCtx {
     root: PathBuf,
-    /// Full source of each file that's been read. `Arc<str>` so parsers
-    /// and multiple walkers can share cheaply.
-    source_cache: RefCell<HashMap<PathBuf, Arc<str>>>,
+    source_cache: SourceCache,
     /// Tree-sitter parse results, keyed by path.
     tree_cache: RefCell<HashMap<PathBuf, Arc<Tree>>>,
 }
 
 impl WalkCtx {
     pub fn new(root: PathBuf) -> Self {
+        Self::with_cache(root, SourceCache::new())
+    }
+
+    pub fn with_cache(root: PathBuf, source_cache: SourceCache) -> Self {
         Self {
             root,
-            source_cache: RefCell::new(HashMap::new()),
+            source_cache,
             tree_cache: RefCell::new(HashMap::new()),
         }
     }
 
     pub fn root(&self) -> &Path {
         &self.root
+    }
+
+    pub fn source_cache(&self) -> &SourceCache {
+        &self.source_cache
     }
 
     /// Depth of `path` relative to the seed root (root itself = 0). Returns
@@ -129,15 +136,7 @@ impl WalkCtx {
     /// Read `path` into memory, caching the result. Returns an `Arc<str>`
     /// so callers don't duplicate the string.
     pub fn read_source(&self, path: &Path) -> Option<Arc<str>> {
-        if let Some(cached) = self.source_cache.borrow().get(path) {
-            return Some(cached.clone());
-        }
-        let text = std::fs::read_to_string(path).ok()?;
-        let arc: Arc<str> = Arc::from(text);
-        self.source_cache
-            .borrow_mut()
-            .insert(path.to_path_buf(), arc.clone());
-        Some(arc)
+        self.source_cache.get(path)
     }
 
     /// Parse `path` with the given tree-sitter grammar, caching the result.
@@ -184,47 +183,69 @@ impl FileLines {
     }
 }
 
-/// Build a [`ResolvedBatch`] whose content is a single-file Lines map. Empty
-/// lines are filtered. Returns `None` when the resulting set is empty —
-/// caller propagates as "dead key".
+/// Build a [`ResolvedBatch`] whose content is a set of spans for one file.
+/// Blank source lines are filtered from the `full` set; an ellipsis at a
+/// line already in `full` is dropped. Returns `None` when the resulting
+/// span set is empty — caller propagates as "dead key".
 pub(crate) fn single_file_lines_batch(
     path: &Path,
     source: &str,
     lines: FileLines,
     signals: ValueSignals,
 ) -> Option<ResolvedBatch> {
-    let map = lines_map_from(source, lines);
-    if map.is_empty() {
+    let spans = build_file_spans(path, source, lines);
+    if spans.is_empty() {
         return None;
     }
-    let mut file_map = BTreeMap::new();
-    file_map.insert(path.to_path_buf(), map);
     Some(ResolvedBatch {
-        content: BatchContent::Lines(file_map),
+        content: BatchContent::Lines { spans },
         signals,
     })
 }
 
-/// Produce `{line_number → RenderedLine}` for a `FileLines` spec. `Full`
-/// entries skip blank source; `Ellipsis` entries don't need a source line
-/// to exist (they're walker-emitted markers).
-pub(crate) fn lines_map_from(source: &str, lines: FileLines) -> BTreeMap<usize, RenderedLine> {
+/// Convert a `FileLines` spec for one file into contiguous [`Span`] ranges.
+/// Blank source lines (all-whitespace) are excluded from the `Full` set;
+/// an ellipsis line that also appears in `full` is dropped (a real line
+/// always beats an ellipsis marker at the same position).
+pub(crate) fn build_file_spans(path: &Path, source: &str, lines: FileLines) -> Vec<Span> {
     let src_lines: Vec<&str> = source.lines().collect();
-    let mut out: BTreeMap<usize, RenderedLine> = lines
+    let full: BTreeSet<usize> = lines
         .full
         .into_iter()
-        .filter_map(|n| {
-            let text = src_lines.get(n - 1)?;
-            if text.trim().is_empty() {
-                return None;
-            }
-            Some((n, RenderedLine::Full(text.to_string())))
-        })
+        .filter(|n| src_lines.get(*n - 1).is_some_and(|t| !t.trim().is_empty()))
         .collect();
-    for n in lines.ellipses {
-        // An ellipsis must not overwrite a `Full` entry we already emitted
-        // for the same line; that would drop the actual content.
-        out.entry(n).or_insert(RenderedLine::Ellipsis);
+    let ellipses: BTreeSet<usize> = lines
+        .ellipses
+        .into_iter()
+        .filter(|n| !full.contains(n))
+        .collect();
+
+    let mut spans = Vec::new();
+    // Merge contiguous runs of Full line numbers into single-range spans.
+    let full_vec: Vec<usize> = full.iter().copied().collect();
+    let mut i = 0;
+    while i < full_vec.len() {
+        let start = full_vec[i];
+        let mut end = start;
+        while i + 1 < full_vec.len() && full_vec[i + 1] == end + 1 {
+            end = full_vec[i + 1];
+            i += 1;
+        }
+        spans.push(Span {
+            path: path.to_path_buf(),
+            start,
+            end,
+            render: Render::Full,
+        });
+        i += 1;
     }
-    out
+    for n in ellipses {
+        spans.push(Span {
+            path: path.to_path_buf(),
+            start: n,
+            end: n,
+            render: Render::Ellipsis,
+        });
+    }
+    spans
 }

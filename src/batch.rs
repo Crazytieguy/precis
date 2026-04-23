@@ -15,10 +15,20 @@
 //! The key/id split is what makes lazy materialization and cross-file
 //! batches possible: a walker can emit "rustdoc refinement has `PubDecls` as
 //! predecessor" before either has been parsed, by naming keys.
+//!
+//! **Content model — spans, not materialized text.** A `BatchContent::Lines`
+//! value carries `Vec<Span>` where each span declares *which* source lines
+//! to include and *how* to render them (`Full`, `Truncated { pattern }`,
+//! `Ellipsis`). Materialization happens at render/cost time by reading the
+//! source file through the `RenderedTree`'s shared source cache. This keeps
+//! the NS schema and the walker on the same expressive substrate: both
+//! produce `Vec<Span>` values, both materialize identically.
 
 use std::collections::BTreeMap;
 use std::ffi::OsString;
 use std::path::PathBuf;
+
+use serde::{Deserialize, Serialize};
 
 /// Scheduler-internal batch index. Assigned at materialization time; walkers
 /// never see these.
@@ -156,54 +166,79 @@ pub struct ResolvedBatch {
     pub signals: ValueSignals,
 }
 
-#[derive(Debug, Clone)]
+/// Batch content. Either filesystem-level entries (one or more directory
+/// listings grouped together) or a set of line-range spans with render
+/// specs.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(tag = "kind", rename_all = "lowercase")]
 pub enum BatchContent {
-    /// Add named children under `parent` to the rendered tree.
-    FileSystemEntries {
-        parent: PathBuf,
-        children: BTreeMap<OsString, EntryKind>,
-    },
-    /// Add line content to one or more files. Multi-file map for cross-file
-    /// batches (e.g. `PubDecls` across several `.rs` files).
-    Lines(BTreeMap<PathBuf, BTreeMap<usize, RenderedLine>>),
+    /// One or more filesystem listings. Authored NS batches can bundle
+    /// multiple parents together (e.g. `docs/ + config/ + config/themes/`);
+    /// the walker's filesystem walker emits single-parent batches today.
+    Fs { groups: Vec<FsGroup> },
+    /// Source line ranges. Each span declares lines and a render spec;
+    /// the render pipeline materializes by reading source at cost/apply/
+    /// render time. Within one batch's spans, if two overlap on the same
+    /// `(path, line)` the stronger render spec wins (Full > Truncated > Ellipsis).
+    Lines { spans: Vec<Span> },
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum EntryKind {
-    File,
-    Directory,
+/// A single filesystem listing: one parent directory and its children.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct FsGroup {
+    pub parent: PathBuf,
+    pub children: BTreeMap<OsString, EntryKind>,
 }
 
-/// A rendered line. `Full` and `Truncated` carry text; `Ellipsis` is a
-/// walker-emitted marker that renders as an indented `…` without a line
-/// number prefix. Descendant batches can override any variant by writing to
-/// the same (path, line) entry — typically `Ellipsis` → `Full` as refinement
-/// fills in elided content.
-#[derive(Debug, Clone)]
-pub enum RenderedLine {
-    Full(String),
-    Truncated(String),
-    /// Walker-emitted elision marker at a source line number. The number is
-    /// not rendered; it exists so descendants can replace the ellipsis with
-    /// real content at that exact line without a non-ancestor-overlap panic.
+/// A contiguous range of source lines in one file, plus how to render them.
+/// Both walker and NS schema produce these.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Span {
+    pub path: PathBuf,
+    /// Inclusive, 1-indexed.
+    pub start: usize,
+    /// Inclusive, 1-indexed. For a single line, `start == end`.
+    pub end: usize,
+    pub render: Render,
+}
+
+/// How to render a line. The render pipeline materializes by reading the
+/// source file and applying the spec per line.
+///
+/// - `Full`: emit the source line verbatim with its line-number prefix.
+/// - `Truncated { pattern }`: emit only the regex match of `pattern` against
+///   the source line, followed by a trailing `…`. The pattern must match
+///   at least one character on every line the span covers (validated at
+///   schema load for NS spans; walker spans don't use `Truncated` today).
+/// - `Ellipsis`: emit a `…` marker at that source-line position with no
+///   line-number prefix. A descendant batch can later replace this line
+///   with a `Full` or `Truncated` span at the same `(path, line)`.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[serde(tag = "kind", rename_all = "lowercase")]
+pub enum Render {
+    Full,
+    Truncated { pattern: String },
     Ellipsis,
 }
 
-impl RenderedLine {
-    pub fn text(&self) -> &str {
+impl Render {
+    /// Priority when two spans overlap on the same (path, line):
+    /// Full > Truncated > Ellipsis.
+    pub(crate) fn priority(&self) -> u8 {
         match self {
-            Self::Full(t) | Self::Truncated(t) => t,
-            Self::Ellipsis => "",
+            Render::Full => 3,
+            Render::Truncated { .. } => 2,
+            Render::Ellipsis => 1,
         }
     }
+}
 
-    pub fn is_truncated(&self) -> bool {
-        matches!(self, Self::Truncated(_))
-    }
-
-    pub fn is_ellipsis(&self) -> bool {
-        matches!(self, Self::Ellipsis)
-    }
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord, Serialize, Deserialize)]
+#[serde(rename_all = "lowercase")]
+pub enum EntryKind {
+    File,
+    #[serde(rename = "dir")]
+    Directory,
 }
 
 /// Multi-signal value inputs. The [`ValueModel`](crate::value::ValueModel)

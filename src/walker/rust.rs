@@ -22,18 +22,18 @@
 //! Parse trees are cached in [`WalkCtx`]; the same file parsed once powers
 //! every Rust batch that touches it.
 
-use std::collections::BTreeMap;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::sync::Arc;
 
 use tree_sitter::{Node, Tree};
 
-use crate::batch::{
-    BatchContent, BatchKey, FsKey, RenderedLine, ResolvedBatch, RustKey, ValueSignals,
-};
+use crate::batch::{BatchContent, BatchKey, FsKey, ResolvedBatch, RustKey, Span, ValueSignals};
 use crate::value::{depth_factor, non_essential_factor};
 
-use super::{Candidate, FileLines, WalkCtx, fs::files_with_extension, single_file_lines_batch};
+use super::{
+    Candidate, FileLines, WalkCtx, build_file_spans, fs::files_with_extension,
+    single_file_lines_batch,
+};
 
 pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate> {
     let BatchKey::Fs(FsKey::DirListing { dir }) = scheduled else {
@@ -479,21 +479,19 @@ where
     if rust_files.is_empty() {
         return None;
     }
-    let mut file_map: BTreeMap<PathBuf, BTreeMap<usize, RenderedLine>> = BTreeMap::new();
+    let mut all_spans: Vec<Span> = Vec::new();
     for file in &rust_files {
         let Some((source, tree)) = parse_rust(ctx, file) else {
             continue;
         };
-        let lines = super::lines_map_from(&source, collect(&tree, &source));
-        if !lines.is_empty() {
-            file_map.insert(file.clone(), lines);
-        }
+        let lines = collect(&tree, &source);
+        all_spans.extend(build_file_spans(file, &source, lines));
     }
-    if file_map.is_empty() {
+    if all_spans.is_empty() {
         return None;
     }
     Some(ResolvedBatch {
-        content: BatchContent::Lines(file_map),
+        content: BatchContent::Lines { spans: all_spans },
         signals,
     })
 }

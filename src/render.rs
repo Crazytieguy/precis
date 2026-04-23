@@ -1,21 +1,56 @@
 //! Rendered tree — the scheduler's "what have we committed to output" state.
-//! Two node kinds (directory, file); applies batches; computes marginal
-//! cost; renders to a string.
+//! Two node kinds (directory, file); applies batches (which carry spans,
+//! not materialized text); computes marginal cost; renders to a string by
+//! reading source through a shared cache.
 //!
-//! Ellipsis handling is **walker-driven** now: walkers emit
-//! [`RenderedLine::Ellipsis`] at a specific source line number when they
-//! want to signal "more here, elided". The renderer never inserts markers
-//! on its own — line numbers in the rendered output already make gaps
-//! visible.
+//! Span materialization happens here — walkers emit `Span { path, start,
+//! end, render }`, the tree stores per-line `(owner: BatchId, render: Render)`
+//! records, and `render()` reads source to produce the final text. This
+//! decouples the walker authoring substrate from the rendering pipeline
+//! and lets the NS schema reuse the same `Span`/`Render` types without any
+//! materialization going through a separate code path.
 
+use std::cell::RefCell;
 use std::collections::{BTreeMap, HashMap};
 use std::ffi::OsString;
 use std::path::{Path, PathBuf};
+use std::rc::Rc;
+use std::sync::Arc;
 
-use crate::batch::{Batch, BatchContent, BatchId, EntryKind, RenderedLine};
+use crate::batch::{Batch, BatchContent, BatchId, EntryKind, FsGroup, Render, Span};
 use crate::tokenizer;
 
 const INDENT_UNIT: &str = "    ";
+
+/// Shared source-file cache. The scheduler constructs one and hands clones
+/// to both `WalkCtx` (for walker-side parsing) and `RenderedTree` (for
+/// materialization at render time), so each file is read at most once per
+/// run regardless of how many batches touch it.
+#[derive(Clone, Debug, Default)]
+pub struct SourceCache(Rc<RefCell<HashMap<PathBuf, Arc<str>>>>);
+
+impl SourceCache {
+    pub fn new() -> Self {
+        Self::default()
+    }
+
+    /// Read `path`, caching. Returns `None` on I/O error.
+    pub fn get(&self, path: &Path) -> Option<Arc<str>> {
+        if let Some(cached) = self.0.borrow().get(path) {
+            return Some(cached.clone());
+        }
+        let text = std::fs::read_to_string(path).ok()?;
+        let arc: Arc<str> = Arc::from(text);
+        self.0.borrow_mut().insert(path.to_path_buf(), arc.clone());
+        Some(arc)
+    }
+
+    /// Insert a pre-loaded source (used when the walker has already read the
+    /// file via its own path). Idempotent — repeated inserts are no-ops.
+    pub fn insert(&self, path: PathBuf, source: Arc<str>) {
+        self.0.borrow_mut().entry(path).or_insert(source);
+    }
+}
 
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
 pub struct Cost {
@@ -25,12 +60,12 @@ pub struct Cost {
 
 #[derive(Debug, Clone)]
 struct LineRecord {
-    line: RenderedLine,
+    render: Render,
     owner: BatchId,
 }
 
 /// A node in the rendered tree is either a directory (with named children)
-/// or a file (with line content).
+/// or a file (with per-line render records).
 #[derive(Debug)]
 enum TreeNode {
     Dir {
@@ -58,13 +93,18 @@ impl TreeNode {
 pub struct RenderedTree {
     root: PathBuf,
     nodes: HashMap<PathBuf, TreeNode>,
+    source_cache: SourceCache,
 }
 
 impl RenderedTree {
-    pub fn new(root: PathBuf) -> Self {
+    pub fn new(root: PathBuf, source_cache: SourceCache) -> Self {
         let mut nodes = HashMap::new();
         nodes.insert(root.clone(), TreeNode::empty_dir());
-        Self { root, nodes }
+        Self {
+            root,
+            nodes,
+            source_cache,
+        }
     }
 
     pub fn root(&self) -> &Path {
@@ -74,10 +114,8 @@ impl RenderedTree {
     /// Marginal cost of applying `batch` against the current state.
     pub fn marginal_cost(&self, batch: &Batch) -> Cost {
         match &batch.content {
-            BatchContent::FileSystemEntries { parent, children } => {
-                self.cost_entries(parent, children)
-            }
-            BatchContent::Lines(file_map) => self.cost_lines(file_map),
+            BatchContent::Fs { groups } => self.cost_fs_groups(groups),
+            BatchContent::Lines { spans } => self.cost_spans(spans),
         }
     }
 
@@ -86,11 +124,13 @@ impl RenderedTree {
     /// non-ancestor line-overwrites (a walker bug; debug-asserts).
     pub fn apply(&mut self, batch: &Batch, owner: BatchId, is_ancestor: impl Fn(BatchId) -> bool) {
         match &batch.content {
-            BatchContent::FileSystemEntries { parent, children } => {
-                self.apply_entries(parent, children);
+            BatchContent::Fs { groups } => {
+                for group in groups {
+                    self.apply_fs_group(group);
+                }
             }
-            BatchContent::Lines(file_map) => {
-                self.apply_lines(file_map, owner, &is_ancestor);
+            BatchContent::Lines { spans } => {
+                self.apply_spans(spans, owner, &is_ancestor);
             }
         }
     }
@@ -117,7 +157,15 @@ impl RenderedTree {
             .unwrap_or(0)
     }
 
-    fn cost_entries(&self, parent: &Path, children: &BTreeMap<OsString, EntryKind>) -> Cost {
+    fn cost_fs_groups(&self, groups: &[FsGroup]) -> Cost {
+        let mut cost = Cost::default();
+        for group in groups {
+            cost = cost + self.cost_one_listing(&group.parent, &group.children);
+        }
+        cost
+    }
+
+    fn cost_one_listing(&self, parent: &Path, children: &BTreeMap<OsString, EntryKind>) -> Cost {
         let indent_depth = self.depth_from_root(parent);
         let already_listed = match self.nodes.get(parent) {
             Some(TreeNode::Dir { children }) => Some(children),
@@ -135,22 +183,44 @@ impl RenderedTree {
         cost
     }
 
-    fn cost_lines(&self, file_map: &BTreeMap<PathBuf, BTreeMap<usize, RenderedLine>>) -> Cost {
+    fn cost_spans(&self, spans: &[Span]) -> Cost {
+        let resolved = resolve_spans(spans);
+        let mut by_path: BTreeMap<&Path, Vec<(usize, &Render)>> = BTreeMap::new();
+        for (path, line, render) in &resolved {
+            by_path
+                .entry(path.as_path())
+                .or_default()
+                .push((*line, render));
+        }
+
         let mut cost = Cost::default();
-        for (path, lines) in file_map {
+        for (path, entries) in by_path {
+            let source = self.source_cache.get(path);
+            let src_lines: Vec<&str> = source
+                .as_deref()
+                .map(|s| s.lines().collect())
+                .unwrap_or_default();
             let indent_depth = self.depth_from_root(path);
             let existing = match self.nodes.get(path) {
                 Some(TreeNode::File { content }) => Some(content),
                 _ => None,
             };
-            for (number, line) in lines {
-                let new_row = format_line_row(*number, line, indent_depth);
+            for (line_num, render) in entries {
+                debug_assert!(
+                    src_lines.is_empty() || line_num >= 1 && line_num <= src_lines.len(),
+                    "span line {} out of range (1..={}) for {} — schema load should have caught this",
+                    line_num,
+                    src_lines.len(),
+                    path.display(),
+                );
+                let source_line = src_lines.get(line_num - 1).copied().unwrap_or("");
+                let new_row = format_line_row(line_num, render, source_line, indent_depth);
                 let new_tokens = tokenizer::count(&new_row);
                 let new_bytes = new_row.len();
                 if let Some(existing) = existing
-                    && let Some(old) = existing.get(number)
+                    && let Some(old) = existing.get(&line_num)
                 {
-                    let old_row = format_line_row(*number, &old.line, indent_depth);
+                    let old_row = format_line_row(line_num, &old.render, source_line, indent_depth);
                     cost.tokens += new_tokens.saturating_sub(tokenizer::count(&old_row));
                     cost.bytes += new_bytes.saturating_sub(old_row.len());
                 } else {
@@ -162,7 +232,9 @@ impl RenderedTree {
         cost
     }
 
-    fn apply_entries(&mut self, parent: &Path, children: &BTreeMap<OsString, EntryKind>) {
+    fn apply_fs_group(&mut self, group: &FsGroup) {
+        let parent = &group.parent;
+        let children = &group.children;
         for (name, kind) in children {
             let child_path = parent.join(name);
             self.nodes.entry(child_path).or_insert_with(|| match kind {
@@ -172,17 +244,13 @@ impl RenderedTree {
         }
         let parent_node = self
             .nodes
-            .entry(parent.to_path_buf())
+            .entry(parent.clone())
             .or_insert_with(TreeNode::empty_dir);
         let TreeNode::Dir {
             children: parent_children,
         } = parent_node
         else {
-            debug_assert!(
-                false,
-                "FileSystemEntries parent {} is a File node",
-                parent.display()
-            );
+            debug_assert!(false, "FsGroup parent {} is a File node", parent.display());
             return;
         };
         for (name, kind) in children {
@@ -190,42 +258,32 @@ impl RenderedTree {
         }
     }
 
-    fn apply_lines(
+    fn apply_spans(
         &mut self,
-        file_map: &BTreeMap<PathBuf, BTreeMap<usize, RenderedLine>>,
+        spans: &[Span],
         owner: BatchId,
         is_ancestor: &impl Fn(BatchId) -> bool,
     ) {
-        for (path, lines) in file_map {
-            // File path should already be declared as a File node by a prior
-            // FileSystemEntries batch. If it isn't (walker emitted content
-            // for a file whose parent listing was never scheduled), create
-            // the node anyway — release prefers odd output over a panic.
-            if !matches!(self.nodes.get(path), Some(TreeNode::File { .. })) {
-                self.nodes.insert(path.clone(), TreeNode::empty_file());
-            }
-            let Some(TreeNode::File { content }) = self.nodes.get_mut(path) else {
+        for (path, line_num, render) in resolve_spans(spans) {
+            let node = self
+                .nodes
+                .entry(path.clone())
+                .or_insert_with(TreeNode::empty_file);
+            let TreeNode::File { content } = node else {
+                debug_assert!(false, "span targets non-file node at {}", path.display());
                 continue;
             };
-            for (number, line) in lines {
-                if let Some(existing) = content.get(number) {
-                    debug_assert!(
-                        is_ancestor(existing.owner),
-                        "non-ancestor overlap: batch {:?} would replace line {} of {} owned by non-ancestor batch {:?}",
-                        owner,
-                        number,
-                        path.display(),
-                        existing.owner,
-                    );
-                }
-                content.insert(
-                    *number,
-                    LineRecord {
-                        line: line.clone(),
-                        owner,
-                    },
+            if let Some(existing) = content.get(&line_num) {
+                debug_assert!(
+                    is_ancestor(existing.owner),
+                    "non-ancestor overlap: batch {:?} would replace line {} of {} owned by non-ancestor batch {:?}",
+                    owner,
+                    line_num,
+                    path.display(),
+                    existing.owner,
                 );
             }
+            content.insert(line_num, LineRecord { render, owner });
         }
     }
 
@@ -254,10 +312,55 @@ impl RenderedTree {
         let Some(TreeNode::File { content }) = self.nodes.get(path) else {
             return;
         };
+        if content.is_empty() {
+            return;
+        }
+        let source = self.source_cache.get(path);
+        let src_lines: Vec<&str> = source
+            .as_deref()
+            .map(|s| s.lines().collect())
+            .unwrap_or_default();
         for (number, record) in content {
-            out.push_str(&format_line_row(*number, &record.line, indent_depth));
+            let source_line = src_lines.get(*number - 1).copied().unwrap_or("");
+            out.push_str(&format_line_row(
+                *number,
+                &record.render,
+                source_line,
+                indent_depth,
+            ));
         }
     }
+}
+
+impl std::ops::Add for Cost {
+    type Output = Cost;
+    fn add(self, other: Cost) -> Cost {
+        Cost {
+            tokens: self.tokens + other.tokens,
+            bytes: self.bytes + other.bytes,
+        }
+    }
+}
+
+/// Expand a batch's spans into per-(path, line) entries. Overlaps within
+/// the same batch resolve by `Render::priority` (Full > Truncated > Ellipsis).
+/// Output is sorted by (path, line) — downstream relies on that order.
+fn resolve_spans(spans: &[Span]) -> Vec<(PathBuf, usize, Render)> {
+    let mut by_key: BTreeMap<(PathBuf, usize), Render> = BTreeMap::new();
+    for span in spans {
+        for line_num in span.start..=span.end {
+            let key = (span.path.clone(), line_num);
+            by_key
+                .entry(key)
+                .and_modify(|existing| {
+                    if span.render.priority() > existing.priority() {
+                        *existing = span.render.clone();
+                    }
+                })
+                .or_insert_with(|| span.render.clone());
+        }
+    }
+    by_key.into_iter().map(|((p, l), r)| (p, l, r)).collect()
 }
 
 fn format_entry_row(name: &OsString, kind: EntryKind, indent_depth: usize) -> String {
@@ -270,21 +373,45 @@ fn format_entry_row(name: &OsString, kind: EntryKind, indent_depth: usize) -> St
     s
 }
 
-fn format_line_row(number: usize, line: &RenderedLine, indent_depth: usize) -> String {
+/// Materialize a single rendered line from its render spec + source text.
+/// `source_line` is the raw source at that 1-indexed line (without the
+/// trailing newline); empty string is the fallback when source is
+/// unavailable (release tolerates; debug asserts the invariant).
+fn format_line_row(
+    number: usize,
+    render: &Render,
+    source_line: &str,
+    indent_depth: usize,
+) -> String {
     let mut s = INDENT_UNIT.repeat(indent_depth);
-    match line {
-        RenderedLine::Ellipsis => {
+    match render {
+        Render::Ellipsis => {
             s.push('…');
         }
-        RenderedLine::Full(t) => {
+        Render::Full => {
             s.push_str(&number.to_string());
             s.push('→');
-            s.push_str(t);
+            s.push_str(source_line);
         }
-        RenderedLine::Truncated(t) => {
+        Render::Truncated { pattern } => {
             s.push_str(&number.to_string());
             s.push('→');
-            s.push_str(t);
+            let compiled = regex::Regex::new(pattern);
+            debug_assert!(
+                compiled.is_ok(),
+                "invalid Truncated regex `{pattern}` — should have been rejected at schema load"
+            );
+            if let Ok(re) = compiled {
+                let m = re.find(source_line);
+                debug_assert!(
+                    m.as_ref().is_some_and(|m| !m.as_str().is_empty()),
+                    "Truncated regex `{pattern}` produced empty or no match on line {number} \
+                     — schema loader should have rejected this span"
+                );
+                if let Some(m) = m {
+                    s.push_str(m.as_str());
+                }
+            }
             s.push('…');
         }
     }
