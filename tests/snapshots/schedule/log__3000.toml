@@ -1,0 +1,516 @@
+fixture = "log"
+budget = 3000
+cumulative_tokens = 637
+batch_count = 9
+
+[[batches]]
+position = 1
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/log" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/log'"
+cost_tokens = 46
+cum_tokens = 46
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/log"
+
+[batches.content.groups.children]
+".github" = "dir"
+".gitignore" = "file"
+"CHANGELOG.md" = "file"
+"Cargo.toml" = "file"
+LICENSE-APACHE = "file"
+LICENSE-MIT = "file"
+"README.md" = "file"
+benches = "dir"
+rfcs = "dir"
+src = "dir"
+test_max_level_features = "dir"
+tests = "dir"
+"triagebot.toml" = "file"
+
+[[batches]]
+position = 2
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/log/README.md" })'
+descriptor = "README headline in /Users/yoav/projects/precis/tests/fixtures/log/README.md"
+cost_tokens = 27
+cum_tokens = 73
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/README.md"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/README.md"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 3
+key = 'Toml(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/log/Cargo.toml" })'
+descriptor = "[package] in /Users/yoav/projects/precis/tests/fixtures/log/Cargo.toml"
+cost_tokens = 184
+cum_tokens = 257
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/Cargo.toml"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/Cargo.toml"
+start = 3
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 4
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/log/README.md", section_index: 1 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/log/README.md section #1"
+cost_tokens = 86
+cum_tokens = 343
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/README.md"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/README.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/README.md"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 5
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/log/.github" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/log/.github'"
+cost_tokens = 3
+cum_tokens = 346
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/log/.github"
+
+[batches.content.groups.children]
+workflows = "dir"
+
+[[batches]]
+position = 6
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/log/benches" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/log/benches'"
+cost_tokens = 4
+cum_tokens = 350
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/log/benches"
+
+[batches.content.groups.children]
+"value.rs" = "file"
+
+[[batches]]
+position = 7
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/log/rfcs" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/log/rfcs'"
+cost_tokens = 10
+cum_tokens = 360
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/log/rfcs"
+
+[batches.content.groups.children]
+"0296-structured-logging.md" = "file"
+
+[[batches]]
+position = 8
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/log/src" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/log/src'"
+cost_tokens = 21
+cum_tokens = 381
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/log/src"
+
+[batches.content.groups.children]
+"__private_api.rs" = "file"
+kv = "dir"
+"lib.rs" = "file"
+"macros.rs" = "file"
+"serde.rs" = "file"
+
+[[batches]]
+position = 9
+key = 'Rust(MacroNames { src_dir: "/Users/yoav/projects/precis/tests/fixtures/log/src" })'
+descriptor = "macro_export names across /Users/yoav/projects/precis/tests/fixtures/log/src"
+cost_tokens = 256
+cum_tokens = 637
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 75
+end = 75
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 119
+end = 119
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 165
+end = 165
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 204
+end = 204
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 252
+end = 252
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 292
+end = 292
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 336
+end = 336
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 391
+end = 391
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 415
+end = 415
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 429
+end = 429
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 445
+end = 445
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 459
+end = 459
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 468
+end = 468
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 517
+end = 517
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 526
+end = 526
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 535
+end = 535
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 544
+end = 544
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 553
+end = 553
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 564
+end = 564
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 573
+end = 573
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 76
+end = 76
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 120
+end = 120
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 166
+end = 166
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 205
+end = 205
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 253
+end = 253
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 293
+end = 293
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 337
+end = 337
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 392
+end = 392
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 416
+end = 416
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 430
+end = 430
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 446
+end = 446
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 460
+end = 460
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 469
+end = 469
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 518
+end = 518
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 527
+end = 527
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 536
+end = 536
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 545
+end = 545
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 554
+end = 554
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 565
+end = 565
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs"
+start = 574
+end = 574
+
+[batches.content.spans.render]
+kind = "ellipsis"

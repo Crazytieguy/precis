@@ -4,7 +4,6 @@
 //! constructing the relevant cases.
 
 use std::collections::BTreeMap;
-use std::ffi::OsString;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
@@ -25,9 +24,9 @@ fn sig(n: f64) -> ValueSignals {
     }
 }
 
-fn one_child(name: &str, kind: EntryKind) -> BTreeMap<OsString, EntryKind> {
+fn one_child(name: &str, kind: EntryKind) -> BTreeMap<String, EntryKind> {
     let mut m = BTreeMap::new();
-    m.insert(OsString::from(name), kind);
+    m.insert(name.to_string(), kind);
     m
 }
 

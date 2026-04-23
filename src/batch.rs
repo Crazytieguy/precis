@@ -25,7 +25,6 @@
 //! produce `Vec<Span>` values, both materialize identically.
 
 use std::collections::BTreeMap;
-use std::ffi::OsString;
 use std::path::PathBuf;
 
 use serde::{Deserialize, Serialize};
@@ -275,10 +274,12 @@ pub enum BatchContent {
 }
 
 /// A single filesystem listing: one parent directory and its children.
+/// Child names are stored as `String` (lossy at `list_dir` time) so
+/// [`FsGroup`] round-trips cleanly through TOML for schedule snapshots.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct FsGroup {
     pub parent: PathBuf,
-    pub children: BTreeMap<OsString, EntryKind>,
+    pub children: BTreeMap<String, EntryKind>,
 }
 
 /// A contiguous range of source lines in one file, plus how to render them.

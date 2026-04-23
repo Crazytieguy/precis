@@ -3,3 +3,11 @@
 CLAUDE.local.md
 .claude/autopilot/
 HISTORY.md
+
+# .new sidecars: inspection artifacts written when schedule / divergence /
+# rendered baselines mismatch and the run isn't in regen mode. Never commit.
+# Regen via `UPDATE_BASELINES=1 cargo t`, then commit the updated baselines.
+tests/divergence/*.md.new
+tests/snapshots/schedule/*.toml.new
+**/*.snap.new
+ignore/

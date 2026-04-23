@@ -12,7 +12,6 @@
 
 use std::cell::RefCell;
 use std::collections::{BTreeMap, HashMap};
-use std::ffi::OsString;
 use std::path::{Path, PathBuf};
 use std::rc::Rc;
 use std::sync::Arc;
@@ -69,7 +68,7 @@ struct LineRecord {
 #[derive(Debug)]
 enum TreeNode {
     Dir {
-        children: BTreeMap<OsString, EntryKind>,
+        children: BTreeMap<String, EntryKind>,
     },
     File {
         content: BTreeMap<usize, LineRecord>,
@@ -165,7 +164,7 @@ impl RenderedTree {
         cost
     }
 
-    fn cost_one_listing(&self, parent: &Path, children: &BTreeMap<OsString, EntryKind>) -> Cost {
+    fn cost_one_listing(&self, parent: &Path, children: &BTreeMap<String, EntryKind>) -> Cost {
         let indent_depth = self.depth_from_root(parent);
         let already_listed = match self.nodes.get(parent) {
             Some(TreeNode::Dir { children }) => Some(children),
@@ -294,7 +293,7 @@ impl RenderedTree {
         let indent = INDENT_UNIT.repeat(indent_depth);
         for (name, kind) in children {
             out.push_str(&indent);
-            out.push_str(&name.to_string_lossy());
+            out.push_str(name);
             match kind {
                 EntryKind::Directory => {
                     out.push_str("/\n");
@@ -363,9 +362,9 @@ fn resolve_spans(spans: &[Span]) -> Vec<(PathBuf, usize, Render)> {
     by_key.into_iter().map(|((p, l), r)| (p, l, r)).collect()
 }
 
-fn format_entry_row(name: &OsString, kind: EntryKind, indent_depth: usize) -> String {
+fn format_entry_row(name: &str, kind: EntryKind, indent_depth: usize) -> String {
     let mut s = INDENT_UNIT.repeat(indent_depth);
-    s.push_str(&name.to_string_lossy());
+    s.push_str(name);
     if matches!(kind, EntryKind::Directory) {
         s.push('/');
     }

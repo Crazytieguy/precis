@@ -17,7 +17,6 @@
 //! can't silently compare against a re-pinned fixture.
 
 use std::collections::BTreeMap;
-use std::ffi::OsString;
 use std::path::{Path, PathBuf};
 
 use anyhow::{Context, Result, anyhow, bail};
@@ -142,17 +141,16 @@ fn resolve_fs_group(group: &NsFsGroup, fixture_root: &Path) -> Result<FsGroup> {
         }
         NsEntries::Listed(names) => {
             let probed = list_dir(&parent_abs);
-            let mut children: BTreeMap<OsString, crate::batch::EntryKind> = BTreeMap::new();
+            let mut children: BTreeMap<String, crate::batch::EntryKind> = BTreeMap::new();
             for name in names {
-                let name_os = OsString::from(name);
-                let kind = probed.get(&name_os).copied().ok_or_else(|| {
+                let kind = probed.get(name).copied().ok_or_else(|| {
                     anyhow!(
                         "NS fs group at {} lists entry {:?} which is not present under parent",
                         parent_abs.display(),
                         name
                     )
                 })?;
-                children.insert(name_os, kind);
+                children.insert(name.clone(), kind);
             }
             children
         }

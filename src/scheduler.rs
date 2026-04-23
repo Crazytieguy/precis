@@ -25,10 +25,31 @@
 use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;
 
-use crate::batch::{Batch, BatchId, BatchKey};
+use crate::batch::{Batch, BatchContent, BatchId, BatchKey};
 use crate::render::{Cost, RenderedTree, SourceCache};
 use crate::value::{ratio as score_ratio, score};
 use crate::walker::{Candidate, WalkCtx, Walker};
+
+/// A single scheduled batch, captured in order for downstream consumers
+/// (schedule snapshots, divergence metric). Mirrors what `schedule()` saw
+/// at the moment it applied the batch: the walker-emitted content, the
+/// marginal cost it paid, and the running cumulative.
+#[derive(Debug, Clone)]
+pub struct ScheduledBatchRecord {
+    pub key: BatchKey,
+    pub content: BatchContent,
+    pub cost: Cost,
+    pub cum_tokens: usize,
+}
+
+/// Everything the scheduler produced: the rendered tree plus the ordered
+/// log of scheduled batches. `render()` can be called on the tree; the
+/// log drives `render_schedule()` and the divergence metric.
+#[derive(Debug)]
+pub struct RunReport {
+    pub tree: RenderedTree,
+    pub scheduled: Vec<ScheduledBatchRecord>,
+}
 
 pub struct Scheduler<W: Walker> {
     walker: W,
@@ -44,6 +65,8 @@ pub struct Scheduler<W: Walker> {
     key_to_id: HashMap<BatchKey, BatchId>,
     /// Scheduled batches.
     scheduled: HashSet<BatchId>,
+    /// Ordered log of scheduled batch ids + costs for the final report.
+    scheduled_log: Vec<(BatchId, Cost)>,
     /// Speculative candidates (not yet materialized).
     candidates: HashMap<BatchKey, Candidate>,
     /// Keys that failed materialization (`materialize` returned `None`)
@@ -76,12 +99,23 @@ impl<W: Walker> Scheduler<W> {
             batches: Vec::new(),
             key_to_id: HashMap::new(),
             scheduled: HashSet::new(),
+            scheduled_log: Vec::new(),
             candidates: HashMap::new(),
             dead: HashSet::new(),
         }
     }
 
-    pub fn run(mut self) -> RenderedTree {
+    /// Run the scheduler and return just the rendered tree. Back-compat
+    /// entry point used by `precis::render`; new consumers should prefer
+    /// [`run_with_report`](Self::run_with_report).
+    pub fn run(self) -> RenderedTree {
+        self.run_with_report().tree
+    }
+
+    /// Run the scheduler and return the tree plus the ordered log of
+    /// scheduled batches. Used by `render_schedule` and the divergence
+    /// test.
+    pub fn run_with_report(mut self) -> RunReport {
         for c in self.walker.seed(&self.ctx) {
             self.absorb_candidate(c);
         }
@@ -147,7 +181,24 @@ impl<W: Walker> Scheduler<W> {
             }
         }
 
-        self.tree
+        let scheduled = self
+            .scheduled_log
+            .into_iter()
+            .scan(0usize, |cum, (id, cost)| {
+                *cum += cost.tokens;
+                let batch = &self.batches[id.index()];
+                Some(ScheduledBatchRecord {
+                    key: batch.key.clone(),
+                    content: batch.content.clone(),
+                    cost,
+                    cum_tokens: *cum,
+                })
+            })
+            .collect();
+        RunReport {
+            tree: self.tree,
+            scheduled,
+        }
     }
 
     // ---- absorption ----
@@ -281,6 +332,7 @@ impl<W: Walker> Scheduler<W> {
         self.tree
             .apply(&batch_clone, id, |i| ancestors.contains(&i));
         self.scheduled.insert(id);
+        self.scheduled_log.push((id, cost));
         self.consumed.tokens += cost.tokens;
         self.consumed.bytes += cost.bytes;
 

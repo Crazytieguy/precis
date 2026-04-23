@@ -3,7 +3,7 @@
 //! file contents.
 
 use std::collections::BTreeMap;
-use std::ffi::OsString;
+use std::ffi::OsStr;
 use std::path::{Path, PathBuf};
 
 use crate::batch::{
@@ -37,6 +37,8 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate> {
     out
 }
 
+// ---- additional helpers ----
+
 pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
     let BatchKey::Fs(FsKey::DirListing { dir }) = key else {
         return None;
@@ -56,16 +58,19 @@ pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
     })
 }
 
-/// Read a directory's immediate children into a name-keyed map.
-pub fn list_dir(path: &Path) -> BTreeMap<OsString, EntryKind> {
+/// Read a directory's immediate children into a name-keyed map. Names are
+/// produced via `to_string_lossy` — non-UTF-8 paths (rare in practice)
+/// lose information, accepted so filesystem listings round-trip through
+/// TOML for schedule snapshots.
+pub fn list_dir(path: &Path) -> BTreeMap<String, EntryKind> {
     let Ok(read_dir) = std::fs::read_dir(path) else {
         return BTreeMap::new();
     };
     read_dir
         .flatten()
         .filter_map(|e| {
-            let name = e.file_name();
-            if should_skip_entry(&name) {
+            let name_os = e.file_name();
+            if should_skip_entry(&name_os) {
                 return None;
             }
             let kind = if e.file_type().ok()?.is_dir() {
@@ -73,7 +78,7 @@ pub fn list_dir(path: &Path) -> BTreeMap<OsString, EntryKind> {
             } else {
                 EntryKind::File
             };
-            Some((name, kind))
+            Some((name_os.to_string_lossy().into_owned(), kind))
         })
         .collect()
 }
@@ -118,13 +123,13 @@ fn walk_files_recursive(dir: &Path, ext: &str, out: &mut Vec<PathBuf>) {
         return;
     };
     for entry in read_dir.flatten() {
-        let name = entry.file_name();
-        if should_skip_entry(&name) {
+        let name_os = entry.file_name();
+        if should_skip_entry(&name_os) {
             continue;
         }
         let path = entry.path();
         if path.is_dir() {
-            if !should_skip_dir(&name) {
+            if !should_skip_dir(&name_os.to_string_lossy()) {
                 walk_files_recursive(&path, ext, out);
             }
         } else if path
@@ -176,18 +181,15 @@ fn dir_listing_signals_for_path(
 }
 
 /// Directories we never enter. Matches common heavy/generated trees.
-fn should_skip_dir(name: &OsString) -> bool {
-    let Some(s) = name.to_str() else {
-        return false;
-    };
+fn should_skip_dir(name: &str) -> bool {
     matches!(
-        s,
+        name,
         "target" | "node_modules" | ".git" | "dist" | "build" | ".next" | "__pycache__"
     )
 }
 
 /// Entries we silently skip from listings.
-fn should_skip_entry(name: &OsString) -> bool {
+fn should_skip_entry(name: &OsStr) -> bool {
     let Some(s) = name.to_str() else {
         return false;
     };

@@ -3,24 +3,22 @@ use std::path::Path;
 use anyhow::{Context, Result, anyhow, bail};
 
 pub mod batch;
+pub mod divergence;
 pub mod ns_simulate;
 pub mod render;
+pub mod schedule_types;
 pub mod scheduler;
 pub mod schema;
 pub mod tokenizer;
 pub mod value;
 pub mod walker;
 
-// Public API surface for external binaries (validate-ns, divergence-report
-// generator, etc.) and for tests that need to assemble batches directly.
-// The schema, simulator, and render_schedule entry points land in later
-// commits as their consumers (validate-ns bin, tests/schedule_order.rs)
-// are added.
 pub use batch::{
     Batch, BatchContent, BatchKey, EntryKind, FsGroup, FsKey, MarkdownKey, Render, ResolvedBatch,
     RustKey, Span, TomlKey, ValueSignals,
 };
 pub use render::{Cost, RenderedTree, SourceCache};
+pub use schedule_types::{Atom, Schedule, ScheduledBatch};
 pub use walker::fs::list_dir;
 
 use scheduler::Scheduler;
@@ -39,6 +37,57 @@ pub fn render(
         .first()
         .ok_or_else(|| anyhow!("no path provided"))?
         .as_ref();
+    let root = canonicalize_dir(path)?;
+    let scheduler = Scheduler::new(root, MultiWalker, token_budget, byte_budget);
+    let tree = scheduler.run();
+    Ok(tree.render())
+}
+
+/// Run the walker at `budget` and return a structured `Schedule` — the
+/// input both the regression-snapshot test and `compare-ns` (divergence
+/// metric) consume. Strings out the ordered batch log: keys are formatted
+/// via `BatchKey::describe()` for readable diffs; content is the resolved
+/// library `BatchContent` (fs groups with explicit children, lines with
+/// spans).
+pub fn render_schedule(paths: &[impl AsRef<Path>], budget: usize) -> Result<Schedule> {
+    let path = paths
+        .first()
+        .ok_or_else(|| anyhow!("no path provided"))?
+        .as_ref();
+    let root = canonicalize_dir(path)?;
+    let fixture = root
+        .file_name()
+        .and_then(|n| n.to_str())
+        .unwrap_or("")
+        .to_string();
+
+    let scheduler = Scheduler::new(root, MultiWalker, budget, None);
+    let report = scheduler.run_with_report();
+
+    let cumulative_tokens = report.scheduled.last().map(|b| b.cum_tokens).unwrap_or(0);
+    let batches = report
+        .scheduled
+        .into_iter()
+        .enumerate()
+        .map(|(i, b)| ScheduledBatch {
+            position: i + 1,
+            key: format!("{:?}", b.key),
+            descriptor: b.key.describe(),
+            cost_tokens: b.cost.tokens,
+            cum_tokens: b.cum_tokens,
+            content: b.content,
+        })
+        .collect::<Vec<_>>();
+    Ok(Schedule {
+        fixture,
+        budget,
+        cumulative_tokens,
+        batch_count: batches.len(),
+        batches,
+    })
+}
+
+fn canonicalize_dir(path: &Path) -> Result<std::path::PathBuf> {
     let root = path
         .canonicalize()
         .with_context(|| format!("failed to canonicalize {}", path.display()))?;
@@ -48,7 +97,5 @@ pub fn render(
             root.display()
         );
     }
-    let scheduler = Scheduler::new(root, MultiWalker, token_budget, byte_budget);
-    let tree = scheduler.run();
-    Ok(tree.render())
+    Ok(root)
 }

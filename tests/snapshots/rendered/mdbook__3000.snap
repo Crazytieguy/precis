@@ -1,0 +1,267 @@
+---
+source: tests/schedule_order.rs
+expression: rendered
+---
+.cargo/
+    config.toml
+.github/
+    ISSUE_TEMPLATE/
+        bug_report.yml
+        feature_request.yml
+        question.yml
+    renovate.json5
+    workflows/
+        deploy.yml
+        main.yml
+        update-dependencies.yml
+.gitignore
+CHANGELOG.md
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+Cargo.lock
+Cargo.toml
+    1→[workspace]
+    2→members = [
+    3→    ".",
+    4→    "crates/*",
+    5→    "examples/remove-emphasis/mdbook-remove-emphasis", "guide/guide-helper",
+    6→]
+    21→[workspace.package]
+    22→edition = "2024"
+    23→license = "MPL-2.0"
+    24→repository = "https://github.com/rust-lang/mdBook"
+    25→rust-version = "1.88.0" # Keep in sync with installation.md and .github/workflows/main.yml
+    72→[package]
+    73→name = "mdbook"
+    74→version = "0.5.2"
+    75→authors = [
+    76→    "Mathieu David <mathieudavid@mathieudavid.org>",
+    77→    "Michael-F-Bryan <michaelfbryan@gmail.com>",
+    78→    "Matt Ickstadt <mattico8@gmail.com>"
+    79→]
+    80→documentation = "https://rust-lang.github.io/mdBook/index.html"
+    81→edition.workspace = true
+    82→exclude = ["/guide/*"]
+    83→keywords = ["book", "gitbook", "rustbook", "markdown"]
+    84→license.workspace = true
+    85→readme = "README.md"
+    86→repository.workspace = true
+    87→description = "Creates a book from markdown files"
+    88→rust-version.workspace = true
+    129→[features]
+    130→default = ["watch", "serve", "search"]
+    131→watch = ["dep:notify", "dep:notify-debouncer-mini", "dep:ignore", "dep:pathdiff", "dep:walkdir"]
+    132→serve = ["dep:futures-util", "dep:tokio", "dep:axum", "dep:tower-http"]
+    133→search = ["mdbook-html/search"]
+    135→[[bin]]
+    136→doc = false
+    137→name = "mdbook"
+    139→[[example]]
+    140→name = "nop-preprocessor"
+    141→test = true
+    143→[[example]]
+    144→name = "remove-emphasis"
+    145→path = "examples/remove-emphasis/test.rs"
+    146→crate-type = ["lib"]
+    147→test = true
+    149→[[test]]
+    150→harness = false
+    151→test = false
+    152→name = "gui"
+    153→path = "tests/gui/runner.rs"
+    154→crate-type = ["bin"]
+LICENSE
+README.md
+    1→# mdBook
+    3→[![CI Status](https://github.com/rust-lang/mdBook/actions/workflows/main.yml/badge.svg)](https://github.com/rust-lang/mdBook/actions/workflows/main.yml)
+    4→[![crates.io](https://img.shields.io/crates/v/mdbook.svg)](https://crates.io/crates/mdbook)
+    5→[![LICENSE](https://img.shields.io/github/license/rust-lang/mdBook.svg)](LICENSE)
+    7→mdBook is a utility to create modern online books from Markdown files.
+    9→Check out the **[User Guide]** for a list of features and installation and usage information.
+    10→The User Guide also serves as a demonstration to showcase what a book looks like.
+    12→If you are interested in contributing to the development of mdBook, check out the [Contribution Guide].
+    14→## License
+    16→All the code in this repository is released under the ***Mozilla Public License v2.0***, for more information take a look at the [LICENSE] file.
+    18→[User Guide]: https://rust-lang.github.io/mdBook/
+    19→[contribution guide]: https://github.com/rust-lang/mdBook/blob/master/CONTRIBUTING.md
+    20→[LICENSE]: https://github.com/rust-lang/mdBook/blob/master/LICENSE
+ci/
+    install-rust.sh
+    make-release-asset.sh
+    publish-guide.sh
+    update-dependencies.sh
+crates/
+    mdbook-compare/
+        Cargo.toml
+            1→[package]
+            2→name = "mdbook-compare"
+            3→publish = false
+            4→edition.workspace = true
+            5→license.workspace = true
+            6→repository.workspace = true
+            7→rust-version.workspace = true
+        README.md
+            1→# mdbook-compare
+            3→This is a simple utility to compare the output of two different versions of mdbook.
+        src/
+            main.rs
+                1→//! Utility to compare the output of two different versions of mdbook.
+                3→use std::path::Path;
+                4→use std::process::Command;
+    mdbook-core/
+        Cargo.toml
+            1→[package]
+            2→name = "mdbook-core"
+            3→version = "0.5.2"
+            4→description = "The base support library for mdbook, intended for internal use only"
+            5→edition.workspace = true
+            6→license.workspace = true
+            7→repository.workspace = true
+            8→rust-version.workspace = true
+        README.md
+            1→# mdbook-core
+            3→[![Documentation](https://img.shields.io/docsrs/mdbook-core)](https://docs.rs/mdbook-core)
+            4→[![crates.io](https://img.shields.io/crates/v/mdbook-core.svg)](https://crates.io/crates/mdbook-core)
+            5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
+        src/
+    mdbook-driver/
+        Cargo.toml
+            1→[package]
+            2→name = "mdbook-driver"
+            3→version = "0.5.2"
+            4→description = "High-level library for running mdBook"
+            5→edition.workspace = true
+            6→license.workspace = true
+            7→repository.workspace = true
+            8→rust-version.workspace = true
+            31→[features]
+            32→search = ["mdbook-html/search"]
+        README.md
+            1→# mdbook-driver
+            3→[![Documentation](https://img.shields.io/docsrs/mdbook-driver)](https://docs.rs/mdbook-driver)
+            4→[![crates.io](https://img.shields.io/crates/v/mdbook-driver.svg)](https://crates.io/crates/mdbook-driver)
+            5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
+        src/
+    mdbook-html/
+        Cargo.toml
+            1→[package]
+            2→name = "mdbook-html"
+            3→version = "0.5.2"
+            4→description = "mdBook HTML renderer"
+            5→edition.workspace = true
+            6→license.workspace = true
+            7→repository.workspace = true
+            8→rust-version.workspace = true
+            36→[features]
+            37→search = ["dep:elasticlunr-rs"]
+        README.md
+            1→# mdbook-html
+            3→[![Documentation](https://img.shields.io/docsrs/mdbook-html)](https://docs.rs/mdbook-html)
+            4→[![crates.io](https://img.shields.io/crates/v/mdbook-html.svg)](https://crates.io/crates/mdbook-html)
+            5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
+        front-end/
+        src/
+    mdbook-markdown/
+        Cargo.toml
+            1→[package]
+            2→name = "mdbook-markdown"
+            3→version = "0.5.2"
+            4→description = "Markdown processing used in mdBook"
+            5→edition.workspace = true
+            6→license.workspace = true
+            7→repository.workspace = true
+            8→rust-version.workspace = true
+        README.md
+            1→# mdbook-markdown
+            3→[![Documentation](https://img.shields.io/docsrs/mdbook-markdown)](https://docs.rs/mdbook-markdown)
+            4→[![crates.io](https://img.shields.io/crates/v/mdbook-markdown.svg)](https://crates.io/crates/mdbook-markdown)
+            5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
+        src/
+            lib.rs
+    mdbook-preprocessor/
+        Cargo.toml
+            1→[package]
+            2→name = "mdbook-preprocessor"
+            3→version = "0.5.2"
+            4→description = "Library to assist implementing an mdBook preprocessor"
+            5→edition.workspace = true
+            6→license.workspace = true
+            7→repository.workspace = true
+            8→rust-version.workspace = true
+        README.md
+            1→# mdbook-preprocessor
+            3→[![Documentation](https://img.shields.io/docsrs/mdbook-preprocessor)](https://docs.rs/mdbook-preprocessor)
+            4→[![crates.io](https://img.shields.io/crates/v/mdbook-preprocessor.svg)](https://crates.io/crates/mdbook-preprocessor)
+            5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
+        src/
+    mdbook-renderer/
+        Cargo.toml
+            1→[package]
+            2→name = "mdbook-renderer"
+            3→version = "0.5.2"
+            4→description = "Library to assist implementing an mdBook renderer"
+            5→edition.workspace = true
+            6→license.workspace = true
+            7→repository.workspace = true
+            8→rust-version.workspace = true
+        README.md
+            1→# mdbook-renderer
+            3→[![Documentation](https://img.shields.io/docsrs/mdbook-renderer)](https://docs.rs/mdbook-renderer)
+            4→[![crates.io](https://img.shields.io/crates/v/mdbook-renderer.svg)](https://crates.io/crates/mdbook-renderer)
+            5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
+        src/
+    mdbook-summary/
+        Cargo.toml
+            1→[package]
+            2→name = "mdbook-summary"
+            3→version = "0.5.2"
+            4→description = "Summary parser for mdBook"
+            5→edition.workspace = true
+            6→license.workspace = true
+            7→repository.workspace = true
+            8→rust-version.workspace = true
+        README.md
+            1→# mdbook-summary
+            3→[![Documentation](https://img.shields.io/docsrs/mdbook-summary)](https://docs.rs/mdbook-summary)
+            4→[![crates.io](https://img.shields.io/crates/v/mdbook-summary.svg)](https://crates.io/crates/mdbook-summary)
+            5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
+        src/
+    xtask/
+        Cargo.toml
+            1→[package]
+            2→name = "xtask"
+            3→publish = false
+            4→edition.workspace = true
+            5→license.workspace = true
+            6→repository.workspace = true
+            7→rust-version.workspace = true
+        README.md
+            1→# xtask
+            3→This is a CLI utility for running development commands for mdbook.
+            4→See [CONTRIBUTING.md](../../CONTRIBUTING.md) for how to use this.
+        src/
+eslint.config.mjs
+examples/
+    nop-preprocessor.rs
+    remove-emphasis/
+        .gitignore
+        book.toml
+        mdbook-remove-emphasis/
+        src/
+        test.rs
+guide/
+    book.toml
+    guide-helper/
+        Cargo.toml
+        src/
+    src/
+package.json
+rustfmt.toml
+src/
+    cmd/
+    main.rs
+        1→//! The mdbook CLI.
+tests/
+    gui/
+    testsuite/
+triagebot.toml
