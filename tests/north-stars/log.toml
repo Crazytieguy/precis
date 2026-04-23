@@ -1,15 +1,16 @@
 fixture = "log"
 revision_pin = "43f2c283"
 summary = """
-Smoke-test pilot. Covers only a handful of tier-1 batches — enough to
-validate the schema loader + simulator end-to-end. The hand-conversion
-of the full log NS lands in Phase 1's Task 8.
+Hand-converted pilot. Covers all of tier 1 (orientation + top-level
+types) plus the first few tier-2 batches, reaching ~3k cumulative. A
+real end-to-end exercise of the schema + simulator + divergence
+pipeline; the full NS regeneration (to ~10k) lands in Phase 2.
 """
 
 [[batches]]
 id = "1.1"
 descriptor = "Top-level repo listing"
-justification = "Highest-priority orientation. An agent can't act on any file reference below until it sees the top-level shape."
+justification = "Highest-priority orientation. An agent can't act on any file reference below until it sees the top-level shape (src/, tests/, rfcs/, CI, the test_max_level_features workspace member)."
 
 [batches.content]
 kind = "fs"
@@ -19,7 +20,7 @@ groups = [{ parent = ".", entries = "all" }]
 id = "1.2"
 descriptor = "src/ and src/kv/ listings"
 predecessor = "1.1"
-justification = "Completes the file-tree orientation so the agent knows every module file exists."
+justification = "Completes the file-tree orientation so the agent knows every module file exists (lib.rs, macros.rs, __private_api.rs, serde.rs, kv/*)."
 
 [batches.content]
 kind = "fs"
@@ -29,10 +30,150 @@ groups = [
 ]
 
 [[batches]]
+id = "1.3"
+descriptor = "Crate identity"
+justification = "Name, version, description. Needed before anything else makes sense; cheap and high-leverage."
+
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "Cargo.toml", start = 4, end = 4, render = { kind = "full" } },
+    { path = "Cargo.toml", start = 10, end = 12, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.4"
+descriptor = "Public log-macro names"
+justification = "Tells the agent the macro surface exists without bodies (error!/warn!/info!/debug!/trace!/log!/log_enabled!). With this alone, an agent can guess log::info!(...) works."
+
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "src/macros.rs", start = 75, end = 75, render = { kind = "full" } },
+    { path = "src/macros.rs", start = 165, end = 165, render = { kind = "full" } },
+    { path = "src/macros.rs", start = 204, end = 204, render = { kind = "full" } },
+    { path = "src/macros.rs", start = 252, end = 252, render = { kind = "full" } },
+    { path = "src/macros.rs", start = 292, end = 292, render = { kind = "full" } },
+    { path = "src/macros.rs", start = 336, end = 336, render = { kind = "full" } },
+    { path = "src/macros.rs", start = 391, end = 391, render = { kind = "full" } },
+]
+
+[[batches]]
 id = "1.5"
-descriptor = "Crate-doc lede"
-justification = "Smallest semantic anchor — explains the facade concept. Zero-follow-up answer to 'what is this crate?'"
+descriptor = "Crate-doc lede — facade concept"
+justification = "Smallest semantic anchor — explains the facade concept and the noop fallback. Zero-follow-up answer to 'what is this crate?'"
 
 [batches.content]
 kind = "lines"
 spans = [{ path = "src/lib.rs", start = 11, end = 19, render = { kind = "full" } }]
+
+[[batches]]
+id = "1.6"
+descriptor = "Crate-doc — log-request data model"
+predecessor = "1.5"
+justification = "Defines the target/level/body triple — useful on its own once 1.5 is in context."
+
+[batches.content]
+kind = "lines"
+spans = [{ path = "src/lib.rs", start = 20, end = 26, render = { kind = "full" } }]
+
+[[batches]]
+id = "1.7"
+descriptor = "kv module re-exports"
+predecessor = "1.2"
+justification = "Catastrophic-omission risk if absent — without this an agent never realises the crate has structured logging. The kv mod itself is feature-gated."
+
+[batches.content]
+kind = "lines"
+spans = [{ path = "src/kv/mod.rs", start = 246, end = 265, render = { kind = "full" } }]
+
+[[batches]]
+id = "1.8"
+descriptor = "LevelFilter enum (variants + doc)"
+justification = "The filter type, distinct from Level (admits Off); fundamental for set_max_level."
+
+[batches.content]
+kind = "lines"
+spans = [{ path = "src/lib.rs", start = 626, end = 649, render = { kind = "full" } }]
+
+[[batches]]
+id = "1.9"
+descriptor = "Level enum (variants + doc)"
+justification = "Defines the verbosity vocabulary used everywhere. The discriminant-alignment comment is load-bearing."
+
+[batches.content]
+kind = "lines"
+spans = [{ path = "src/lib.rs", start = 467, end = 499, render = { kind = "full" } }]
+
+[[batches]]
+id = "1.10"
+descriptor = "Log trait declaration"
+justification = "The abstraction every backend must implement. The 'enabled is not necessarily called before log' note is not derivable from signatures."
+
+[batches.content]
+kind = "lines"
+spans = [{ path = "src/lib.rs", start = 1248, end = 1280, render = { kind = "full" } }]
+
+[[batches]]
+id = "1.11"
+descriptor = "Cargo features matrix"
+justification = "Feature flags govern almost every #[cfg] in the crate. Without this, the agent is lost the moment it sees a #[cfg(feature = \"kv_std\")] gate."
+
+[batches.content]
+kind = "lines"
+spans = [{ path = "Cargo.toml", start = 22, end = 55, render = { kind = "full" } }]
+
+[[batches]]
+id = "1.12"
+descriptor = "STATIC_MAX_LEVEL constant"
+predecessor = "1.11"
+justification = "The only place the twelve *max_level_* features actually take effect at compile time. Without it, the agent can't reason about compile-time level filtering at all."
+
+[batches.content]
+kind = "lines"
+spans = [{ path = "src/lib.rs", start = 1602, end = 1624, render = { kind = "full" } }]
+
+[[batches]]
+id = "1.13"
+descriptor = "Cargo dependencies"
+predecessor = "1.11"
+justification = "The actual external crates wired in. Splitting deps from features keeps every batch ≤ 2× the largest above it and makes the dep list scannable on its own."
+
+[batches.content]
+kind = "lines"
+spans = [{ path = "Cargo.toml", start = 56, end = 76, render = { kind = "full" } }]
+
+[[batches]]
+id = "2.1"
+descriptor = "Crate-internal mod/use statements"
+predecessor = "1.2"
+justification = "Tells the agent the module map of the crate root (kv is feature-gated; serde is private; no_std aliases core as std)."
+
+[batches.content]
+kind = "lines"
+spans = [{ path = "src/lib.rs", start = 396, end = 410, render = { kind = "full" } }]
+
+[[batches]]
+id = "2.2"
+descriptor = "Five level-macro signatures with arms elided"
+predecessor = "1.4"
+justification = "Ranks the macros' shapes early without their bodies. Ellipsis markers tell the agent each macro has additional arms."
+
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "src/macros.rs", start = 73, end = 75, render = { kind = "full" } },
+    { path = "src/macros.rs", start = 76, end = 76, render = { kind = "ellipsis" } },
+    { path = "src/macros.rs", start = 163, end = 165, render = { kind = "full" } },
+    { path = "src/macros.rs", start = 166, end = 166, render = { kind = "ellipsis" } },
+    { path = "src/macros.rs", start = 202, end = 204, render = { kind = "full" } },
+    { path = "src/macros.rs", start = 205, end = 205, render = { kind = "ellipsis" } },
+    { path = "src/macros.rs", start = 249, end = 252, render = { kind = "full" } },
+    { path = "src/macros.rs", start = 253, end = 253, render = { kind = "ellipsis" } },
+    { path = "src/macros.rs", start = 289, end = 292, render = { kind = "full" } },
+    { path = "src/macros.rs", start = 293, end = 293, render = { kind = "ellipsis" } },
+    { path = "src/macros.rs", start = 333, end = 336, render = { kind = "full" } },
+    { path = "src/macros.rs", start = 337, end = 337, render = { kind = "ellipsis" } },
+    { path = "src/macros.rs", start = 389, end = 391, render = { kind = "full" } },
+    { path = "src/macros.rs", start = 392, end = 392, render = { kind = "ellipsis" } },
+]
