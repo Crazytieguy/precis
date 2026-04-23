@@ -12,6 +12,10 @@ keywords = ["codebase", "summarizer", "tree-sitter", "cli", "tokens"]
 categories = ["command-line-utilities", "development-tools"]
 default-run = "precis"
 
+[[bin]]
+name = "validate-ns"
+path = "src/bin/validate_ns.rs"
+
 [dependencies]
 anyhow = "1"
 clap = { version = "4", features = ["derive"] }

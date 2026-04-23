@@ -3,11 +3,25 @@ use std::path::Path;
 use anyhow::{Context, Result, anyhow, bail};
 
 pub mod batch;
+pub mod ns_simulate;
 pub mod render;
 pub mod scheduler;
+pub mod schema;
 pub mod tokenizer;
 pub mod value;
 pub mod walker;
+
+// Public API surface for external binaries (validate-ns, divergence-report
+// generator, etc.) and for tests that need to assemble batches directly.
+// The schema, simulator, and render_schedule entry points land in later
+// commits as their consumers (validate-ns bin, tests/schedule_order.rs)
+// are added.
+pub use batch::{
+    Batch, BatchContent, BatchKey, EntryKind, FsGroup, FsKey, MarkdownKey, Render, ResolvedBatch,
+    RustKey, Span, TomlKey, ValueSignals,
+};
+pub use render::{Cost, RenderedTree, SourceCache};
+pub use walker::fs::list_dir;
 
 use scheduler::Scheduler;
 use walker::multi::MultiWalker;

@@ -148,6 +148,97 @@ pub enum TomlKey {
     Dependencies { file: PathBuf },
 }
 
+impl BatchKey {
+    /// Human-readable one-line descriptor, e.g. `"crate-doc lede in src/lib.rs"`.
+    /// Not load-bearing — shown in schedule snapshots and divergence reports
+    /// so diffs read as content-shape rather than `Rust(CrateDocLede(PathBuf(...)))`.
+    pub fn describe(&self) -> String {
+        match self {
+            BatchKey::Fs(k) => k.describe(),
+            BatchKey::Rust(k) => k.describe(),
+            BatchKey::Markdown(k) => k.describe(),
+            BatchKey::Toml(k) => k.describe(),
+        }
+    }
+}
+
+impl FsKey {
+    pub fn describe(&self) -> String {
+        match self {
+            FsKey::DirListing { dir } => {
+                let shown = display_path(dir);
+                if shown.is_empty() {
+                    "listing of '.'".to_string()
+                } else {
+                    format!("listing of '{shown}'")
+                }
+            }
+        }
+    }
+}
+
+impl RustKey {
+    pub fn describe(&self) -> String {
+        match self {
+            RustKey::CrateDocLede { file } => format!("crate-doc lede in {}", display_path(file)),
+            RustKey::CrateDocBody { file } => format!("crate-doc body in {}", display_path(file)),
+            RustKey::ModUse { file } => format!("mod/use plumbing in {}", display_path(file)),
+            RustKey::PubItemNames { file } => {
+                format!("pub-item names surface in {}", display_path(file))
+            }
+            RustKey::PubItem { file, start_line } => {
+                format!("pub item at {}:{}", display_path(file), start_line)
+            }
+            RustKey::PubItemDoc { file, start_line } => {
+                format!("pub-item doc at {}:{}", display_path(file), start_line)
+            }
+            RustKey::MethodSigs { file } => format!("impl method sigs in {}", display_path(file)),
+            RustKey::MacroNames { src_dir } => {
+                format!("macro_export names across {}", display_path(src_dir))
+            }
+            RustKey::MacroBodies { src_dir } => {
+                format!("macro_export bodies across {}", display_path(src_dir))
+            }
+        }
+    }
+}
+
+impl MarkdownKey {
+    pub fn describe(&self) -> String {
+        match self {
+            MarkdownKey::SummaryWhole { file } => {
+                format!("mdBook SUMMARY at {}", display_path(file))
+            }
+            MarkdownKey::ReadmeHeadline { file } => {
+                format!("README headline in {}", display_path(file))
+            }
+            MarkdownKey::Section {
+                file,
+                section_index,
+            } => format!("{} section #{section_index}", display_path(file)),
+        }
+    }
+}
+
+impl TomlKey {
+    pub fn describe(&self) -> String {
+        match self {
+            TomlKey::Identity { file } => format!("[package] in {}", display_path(file)),
+            TomlKey::Features { file } => format!("[features] in {}", display_path(file)),
+            TomlKey::Dependencies { file } => format!("[dependencies] in {}", display_path(file)),
+        }
+    }
+}
+
+/// Render a path as it should appear in a descriptor — lossy UTF-8 of the
+/// path string. For absolute fixture paths we show only the last few
+/// components to keep descriptors short. Kept local to batch.rs; the
+/// schedule-snapshot serializer will typically post-process for its own
+/// needs.
+fn display_path(path: &std::path::Path) -> String {
+    path.display().to_string()
+}
+
 /// Stored batch after materialization. `key` is the semantic name; `content`
 /// is the rendered content; `signals` are the value-model inputs.
 #[derive(Debug, Clone)]

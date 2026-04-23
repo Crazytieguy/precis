@@ -1,0 +1,38 @@
+fixture = "log"
+revision_pin = "43f2c283"
+summary = """
+Smoke-test pilot. Covers only a handful of tier-1 batches — enough to
+validate the schema loader + simulator end-to-end. The hand-conversion
+of the full log NS lands in Phase 1's Task 8.
+"""
+
+[[batches]]
+id = "1.1"
+descriptor = "Top-level repo listing"
+justification = "Highest-priority orientation. An agent can't act on any file reference below until it sees the top-level shape."
+
+[batches.content]
+kind = "fs"
+groups = [{ parent = ".", entries = "all" }]
+
+[[batches]]
+id = "1.2"
+descriptor = "src/ and src/kv/ listings"
+predecessor = "1.1"
+justification = "Completes the file-tree orientation so the agent knows every module file exists."
+
+[batches.content]
+kind = "fs"
+groups = [
+    { parent = "src", entries = "all" },
+    { parent = "src/kv", entries = "all" },
+]
+
+[[batches]]
+id = "1.5"
+descriptor = "Crate-doc lede"
+justification = "Smallest semantic anchor — explains the facade concept. Zero-follow-up answer to 'what is this crate?'"
+
+[batches.content]
+kind = "lines"
+spans = [{ path = "src/lib.rs", start = 11, end = 19, render = { kind = "full" } }]
