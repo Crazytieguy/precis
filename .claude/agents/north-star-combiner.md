@@ -30,7 +30,8 @@ Only the fixture name (e.g. `log`, `anyhow`). From it, derive:
 1. **Read `.claude/agents/north-star-author.md`** end-to-end. The
    combined document must satisfy the same constraints (growth
    envelope, 10k cap, predecessor closure, line-range validity, regex
-   validity) and use the same TOML schema (defined at `src/schema.rs`).
+   validity) and use the same TOML schema (defined at
+   `src/north_star.rs` and its type dependencies).
 
 2. **Read every draft.** Internalize each draft's mental model, top-
    batch choices, splitting approach.

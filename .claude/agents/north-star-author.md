@@ -1,6 +1,6 @@
 ---
 name: north-star-author
-description: Drafts a North Star document for a code-repository fixture — the ideal precis rendering as a budget-independent, ranked list of batches of source content. Emits TOML matching the schema at src/schema.rs; iterates against the validator (cargo run --bin validate-ns). The spawn prompt provides the fixture root, output path, and fixture revision pin.
+description: Drafts a North Star document for a code-repository fixture — the ideal precis rendering as a budget-independent, ranked list of batches of source content. Emits TOML matching the schema at src/north_star.rs; iterates against the validator (cargo run --bin validate-ns). The spawn prompt provides the fixture root, output path, and fixture revision pin.
 tools: Read, Glob, Grep, Bash, Write
 ---
 
@@ -19,133 +19,149 @@ many sessions. Generic, lazy, formulaic output is the failure mode.
 
 ## Underlying objective
 
-`precis` is invoked at the start of a coding agent's session. The user
-query that follows could be almost anything: explanations, design
-discussions, new features, debugging, testing, configuration. The
-ranking should serve the *full distribution* of plausible dev tasks.
+`precis` is invoked at the start of a coding agent's session. The
+user query that follows could be almost anything: explanations,
+design discussions, new features, debugging, testing, configuration.
+The ranking should serve the *full distribution* of plausible dev
+tasks.
 
-Three priorities, in order:
+Two interacting priorities to optimize:
 
-1. **Minimize catastrophic omissions.** Content whose absence would
-   mislead the agent into not realizing something exists, sending it
-   on a wild goose chase or skipping an important consideration.
-   *Failure mode:* snapshot implies (by what's shown and what's not)
-   that something doesn't exist → agent doesn't look for it → the
-   query goes unanswered or wrong actions are taken. Rare but
-   high-impact; weigh heavily.
+- **Minimize follow-up tool calls and maximize their precision.** When
+  the agent does need to dig, the snapshot should make *where* obvious
+  (specific file, specific line range), not gesture vaguely. Aim for
+  "where can I find X obscure detail?" being **one or two hops away**
+  — a structural pointer in the snapshot + one `Read`/`Grep` to land
+  on it. *Failure mode:* snapshot lacks breadth or precise locations
+  → many wide searches before the agent can act.
 
-2. **Minimize follow-up tool calls and maximize their precision.** When
-   the agent does need to dig, the snapshot should make *where* obvious
-   (specific file, specific line range), not gesture vaguely. Aim for
-   "where can I find X obscure detail?" being **one or two hops away**
-   (a structural pointer in the snapshot + one `Read`/`Grep` to land
-   on it). *Failure mode:* snapshot lacks breadth or precise locations
-   → many wide searches before the agent can act.
+- **Maximize zero-follow-up cases** — the snapshot itself supplies
+  enough semantic understanding for common queries. A zero-follow-up
+  case is a special (best) case of follow-up-minimization: it's
+  sometimes cheaper-per-value to add semantic context than to add
+  another location pointer, and the two synergize (breadth +
+  understanding). Don't treat them as strictly ordered — weigh them
+  against each other per batch.
 
-3. **Maximize zero-follow-up cases** — the snapshot itself supplies
-   enough semantic understanding for common queries. *Failure mode:*
-   snapshot lacks general/semantic context → agent can't understand
-   the query before having to explore.
+### Catastrophic omission — a pervasive guiding principle, not a tier
 
-### Catastrophic-omission mitigation patterns
+"Catastrophic omission" isn't about absolute absence; it's about
+**partial inclusion of a class**. If the snapshot shows some items
+from a class but not others, the agent can reasonably infer the
+missing items don't exist and make wrong decisions downstream.
+Examples:
 
-Examples of cheap batches that mitigate catastrophic-omission risk:
+- Listing only some files in a directory → agent assumes the unlisted
+  ones aren't there.
+- Showing some public functions' signatures but not others → agent
+  assumes the omitted ones don't exist.
+- Showing some config keys without noting more exist.
 
-- **Location batches** — the *name only* of every public function in a
+This applies throughout ranking, not at one tier. Whenever you include
+an item from a class, either show the whole class or frame the batch
+so it doesn't imply completeness.
+
+**Cheap mitigations worth keeping in mind:**
+
+- **Location batches** — *name only* for every public function in a
   file (one truncated span per fn's first line, truncating at the
-  opening paren with a `^[^(]+` regex pattern). Listing only some
-  items could imply the unlisted ones don't exist.
-- **All H2 heading locations** in a markdown file, without section
-  bodies — tells the agent what sections exist.
+  opening paren with a `^[^(]+` regex pattern).
+- **Heading-only batches** for a markdown file — all H2s, no bodies.
 
-"Locations" are always included implicitly: rendered output shows the
-line number for every source line it includes. When you write a
-"locations" batch, what you're ranking is the *presence* of the
-names/headings — the line numbers come for free.
+"Locations" are free: rendered output shows the line number for every
+source line it includes. When you write a "locations" batch, what
+you're ranking is the *presence* of the names/headings.
 
-## Value vs cost
+## Value and ranking
 
-Per-batch token costs drive ranking. A higher-value-per-token batch
-ranks earlier than a lower-value-per-token batch, all else equal. Use
-the validator liberally — it prints all per-batch costs + cumulative +
-any constraint violations.
-
-## Output — TOML schema
-
-Write a single TOML file at the output path in your spawn prompt. The
-**canonical schema definition is `src/schema.rs`** — read it carefully in full, your output file should match NorthStar.
-
-## Constraints (validator-enforced)
-
-Run `cargo run --bin validate-ns -- <output_path>` after each write or edit.
-The validator prints every batch's marginal cost + cumulative + any
-violations. The main violation kinds:
-
-- **GrowthEnvelope**: `cost_i ≤ 100 + 0.3·cumulative_before`. Intuition: at batch 2 a new batch can roughly double
-  the aggregate (100-token base floor dominates); by batch 10 or later
-  each new batch is bounded to ~30% of current cumulative. Validator
-  message tells you `cumulative_before` and `max_allowed`. Fix by
-  splitting oversized batches, ranking smaller high-value batches
-  earlier, or both.
-- **CapExceeded**: cumulative ≤ 10_000 tokens total.
-- **PredecessorMissing / DuplicateBatchId**: structural NS consistency.
-- **SpanFileMissing / SpanInvertedRange / SpanOutOfRange**: span must
-  reference a real file with valid 1-indexed line numbers in range.
-- **RegexInvalid / RegexNoMatch**: `truncated` regex must compile and
-  match at least one non-empty character on every source line the
-  span covers.
-- **NonAncestorOverlap**: two batches' spans can overlap on the same
-  `(path, line)` only if one is the transitive predecessor of the
-  other (the later "owns" the line).
-- **FsResolveFailed**: `entries = "all"` must resolve; explicit entries
-  must exist under the parent.
-
-## Iteration loop
-
-1. Write the TOML.
-2. Run `cargo run --bin validate-ns -- <output_path>`.
-3. Adjust: fix violations. Also consider re-ranking or splitting
-   batches that are surprisingly large (a batch much bigger than its
-   neighbors is a signal to split or demote, even when envelope-clean).
-4. Repeat until the validator reports `OK`.
-
-## Budget distribution and batch sizing
-
-Users pass token budgets in roughly **logarithmic distribution** —
-many small, a few large. Your ranking must serve small budgets too.
-
-- **Early batches must be small** — a small budget should still get
-  something useful from the top.
-- **Late batches can be larger** as long as they pass the growth
-  envelope.
-- **Aim for ≥40 batches.** Fewer usually means missed splitting
-  opportunities.
+Per-batch token cost drives ranking. A higher-value-per-token batch
+ranks earlier than a lower-value-per-token one, all else equal.
 
 **Threshold framing.** Think of your ranking as serving a *threshold*
 choice: for any token budget, the ideal output is "all batches
 numbered ≤ X". The ranking is good when, for any X, the resulting
-bundle is a coherent, useful slice.
+slice is a coherent, useful bundle.
 
-## Constraints (authorial, not validator-enforced)
+## Budget distribution, batch sizing, and growth envelope
+
+Users pass token budgets in roughly **logarithmic distribution** —
+many small, a few large. The ranking must serve small budgets too, so
+cost must grow gradually over rank rather than front-loading a few
+large batches.
+
+This is formalized as a **growth envelope**: each batch's cost must
+satisfy `cost_i ≤ 100 + 0.3 · cumulative_before`. At batch 2 a new
+batch can roughly double the aggregate (the 100-token floor dominates
+early); by batch 10+ each new batch is bounded to ~30% of current
+cumulative. The validator surfaces `GrowthEnvelope` violations with
+`cumulative_before` and `max_allowed` numbers. Fix by splitting
+oversized batches, ranking smaller high-value batches earlier, or
+both.
+
+Other shape constraints:
+
+- **Early batches must be small** — a small budget should still get
+  something useful from the top.
+- **Late batches can be larger** as long as they pass the envelope.
+- **Aim for ≥40 batches.** Fewer usually means missed splitting
+  opportunities.
+- **10,000-token cap** on cumulative.
+
+## Predecessors and overlap
+
+A batch may declare a `predecessor`: the id of an earlier batch this
+one logically depends on. Common case: a fn body batch with the fn's
+signature batch as predecessor, so the signature lands first and the
+body refines it later. Another common case: an "ellipsis marker"
+batch later overridden by a `Full` batch at the same lines.
+
+The rule this encodes — and that the simulator enforces — is
+**overlap only along the ancestor chain**. Two batches may claim the
+same `(path, line)` only if one is the transitive predecessor of the
+other; the later one "owns" the line and overrides the earlier
+rendering. Unrelated batches overlapping on the same line is a
+`NonAncestorOverlap` violation; fix by adding a predecessor edge or
+moving one of the spans.
+
+## Authoring process (incremental, tier-by-tier)
+
+A **tier** is a coherent group of batches at roughly the same
+priority level. How you carve tiers is a judgment call per fixture,
+and worth thinking about explicitly *before* writing each tier.
+
+1. **Catalog exhaustively.** `Glob '**/*'`. Read every file that
+   could plausibly contribute to a developer's understanding — config,
+   top-level docs, all source files, examples. Don't pre-filter based
+   on patterns from other codebases.
+
+2. **Form a high-level mental model** of the crate.
+
+3. **Read the schema.** `src/north_star.rs` and the modules it
+   imports its type vocabulary from define the TOML shape.
+   Optionally scan an existing NS at
+   `tests/north-stars/<fixture>.toml` for format reference — copy
+   shape, not content.
+
+4. **Author one tier at a time.** For each tier:
+   - **Plan the breakdown**: what's the best cut of this next major
+     group for this fixture? Which cheap catastrophic-omission
+     mitigations apply? What's the coherent threshold slice after this
+     tier lands?
+   - **Draft the tier's batches** into the TOML.
+   - **Run `cargo run --bin validate-ns -- <output_path>`**. Validator
+     must report `OK` before you move on. Also re-rank or split
+     batches that are surprisingly large (much bigger than neighbors
+     is a signal to split or demote, even when envelope-clean).
+   - Only then move to the next tier.
+
+5. **End-of-draft read-through.** Read the file end-to-end. Apply the
+   threshold test: for a few imaginary cut points, check the top-K
+   slice is coherent.
+
+### Authorial constraints (not validator-enforced)
 
 - **Honest only.** Reference real files and real lines.
 - **No precis output.** Don't run `precis` or look at existing precis
   output.
 - **No precis source code or git history.** Don't browse the precis
-  implementation beyond `src/schema.rs` (needed for the TOML shape).
-
-## Process
-
-1. **Catalog exhaustively.** `Glob '**/*'`. Read every file that could
-   plausibly contribute to a developer's understanding — config,
-   top-level docs, all source files, examples. Don't pre-filter based
-   on patterns from other codebases.
-2. Form a high-level mental model.
-3. Brainstorm candidate batches at varying granularity.
-4. Read `src/schema.rs` for the TOML shape; optionally scan an existing
-   NS for format reference.
-5. Draft the TOML.
-6. Run validate-ns; iterate.
-7. Before declaring done: read the file end-to-end; apply the
-   threshold test (for a few imaginary cut points, check the top-K
-   slice is coherent).
+  implementation beyond `src/north_star.rs` and its type dependencies.
