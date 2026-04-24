@@ -4,6 +4,7 @@ use anyhow::{Context, Result, anyhow, bail};
 
 pub mod batch;
 pub mod divergence;
+pub mod fs_util;
 pub mod ns_simulate;
 pub mod render;
 pub mod schedule_types;
@@ -17,9 +18,9 @@ pub use batch::{
     Batch, BatchContent, BatchKey, EntryKind, FsGroup, FsKey, MarkdownKey, Render, ResolvedBatch,
     RustKey, Span, TomlKey, ValueSignals,
 };
+pub use fs_util::list_dir;
 pub use render::{Cost, RenderedTree, SourceCache};
 pub use schedule_types::{Atom, Schedule, ScheduledBatch};
-pub use walker::fs::list_dir;
 
 use scheduler::Scheduler;
 use walker::multi::MultiWalker;

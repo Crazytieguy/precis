@@ -1,14 +1,15 @@
 //! Filesystem walker. Discovers directories, emits listings, and surveys
 //! file sets for per-language walkers. Only does `read_dir` — never reads
-//! file contents.
+//! file contents. Pure listing lives in [`crate::fs_util::list_dir`];
+//! this module holds walker-specific policy (heavy-directory skip,
+//! per-language file enumeration).
 
-use std::collections::BTreeMap;
-use std::ffi::OsStr;
 use std::path::{Path, PathBuf};
 
 use crate::batch::{
     BatchContent, BatchKey, EntryKind, FsGroup, FsKey, ResolvedBatch, ValueSignals,
 };
+pub use crate::fs_util::list_dir;
 use crate::value::{depth_factor, non_essential_factor};
 
 use super::{Candidate, WalkCtx};
@@ -58,31 +59,6 @@ pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
     })
 }
 
-/// Read a directory's immediate children into a name-keyed map. Names are
-/// produced via `to_string_lossy` — non-UTF-8 paths (rare in practice)
-/// lose information, accepted so filesystem listings round-trip through
-/// TOML for schedule snapshots.
-pub fn list_dir(path: &Path) -> BTreeMap<String, EntryKind> {
-    let Ok(read_dir) = std::fs::read_dir(path) else {
-        return BTreeMap::new();
-    };
-    read_dir
-        .flatten()
-        .filter_map(|e| {
-            let name_os = e.file_name();
-            if should_skip_entry(&name_os) {
-                return None;
-            }
-            let kind = if e.file_type().ok()?.is_dir() {
-                EntryKind::Directory
-            } else {
-                EntryKind::File
-            };
-            Some((name_os.to_string_lossy().into_owned(), kind))
-        })
-        .collect()
-}
-
 /// Enumerate the files under `dir` (non-recursive) matching an extension.
 /// Returns absolute paths. Used by per-language walkers to build cross-file
 /// batch scopes without opening any file.
@@ -124,12 +100,13 @@ fn walk_files_recursive(dir: &Path, ext: &str, out: &mut Vec<PathBuf>) {
     };
     for entry in read_dir.flatten() {
         let name_os = entry.file_name();
-        if should_skip_entry(&name_os) {
+        let name = name_os.to_string_lossy();
+        if name == crate::fs_util::PRECIS_PIN_FILE {
             continue;
         }
         let path = entry.path();
         if path.is_dir() {
-            if !should_skip_dir(&name_os.to_string_lossy()) {
+            if !should_skip_dir(&name) {
                 walk_files_recursive(&path, ext, out);
             }
         } else if path
@@ -180,27 +157,13 @@ fn dir_listing_signals_for_path(
     s
 }
 
-/// Directories we never enter. Matches common heavy/generated trees.
+/// Directories the walker never recurses into. Matches common
+/// heavy/generated trees. Note: these directories still appear in
+/// listings (via `fs_util::list_dir`); this only affects walker
+/// traversal and per-language file enumeration.
 fn should_skip_dir(name: &str) -> bool {
     matches!(
         name,
         "target" | "node_modules" | ".git" | "dist" | "build" | ".next" | "__pycache__"
     )
-}
-
-/// Entries we silently skip from listings.
-fn should_skip_entry(name: &OsStr) -> bool {
-    let Some(s) = name.to_str() else {
-        return false;
-    };
-    // Hidden dotfiles except for a handful of commonly-referenced ones.
-    if s.starts_with('.')
-        && !matches!(
-            s,
-            ".gitignore" | ".github" | ".cargo" | ".rustfmt.toml" | ".config"
-        )
-    {
-        return true;
-    }
-    false
 }

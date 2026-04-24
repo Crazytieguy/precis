@@ -1,14 +1,14 @@
 fixture = "mdbook"
 budget = 3000
-cumulative_tokens = 2942
+cumulative_tokens = 2953
 batch_count = 47
 
 [[batches]]
 position = 1
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mdbook'"
-cost_tokens = 68
-cum_tokens = 68
+cost_tokens = 79
+cum_tokens = 79
 
 [batches.content]
 kind = "fs"
@@ -18,6 +18,8 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook"
 
 [batches.content.groups.children]
 ".cargo" = "dir"
+".git-blame-ignore-revs" = "file"
+".gitattributes" = "file"
 ".github" = "dir"
 ".gitignore" = "file"
 "CHANGELOG.md" = "file"
@@ -43,7 +45,7 @@ position = 2
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/README.md" })'
 descriptor = "README headline in /Users/yoav/projects/precis/tests/fixtures/mdbook/README.md"
 cost_tokens = 111
-cum_tokens = 179
+cum_tokens = 190
 
 [batches.content]
 kind = "lines"
@@ -69,7 +71,7 @@ position = 3
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/.cargo" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mdbook/.cargo'"
 cost_tokens = 5
-cum_tokens = 184
+cum_tokens = 195
 
 [batches.content]
 kind = "fs"
@@ -85,7 +87,7 @@ position = 4
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/.github" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mdbook/.github'"
 cost_tokens = 12
-cum_tokens = 196
+cum_tokens = 207
 
 [batches.content]
 kind = "fs"
@@ -103,7 +105,7 @@ position = 5
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/ci" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mdbook/ci'"
 cost_tokens = 24
-cum_tokens = 220
+cum_tokens = 231
 
 [batches.content]
 kind = "fs"
@@ -122,7 +124,7 @@ position = 6
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/examples" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mdbook/examples'"
 cost_tokens = 11
-cum_tokens = 231
+cum_tokens = 242
 
 [batches.content]
 kind = "fs"
@@ -139,7 +141,7 @@ position = 7
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/guide" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mdbook/guide'"
 cost_tokens = 12
-cum_tokens = 243
+cum_tokens = 254
 
 [batches.content]
 kind = "fs"
@@ -157,7 +159,7 @@ position = 8
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/src" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mdbook/src'"
 cost_tokens = 7
-cum_tokens = 250
+cum_tokens = 261
 
 [batches.content]
 kind = "fs"
@@ -174,7 +176,7 @@ position = 9
 key = 'Rust(CrateDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/src/main.rs" })'
 descriptor = "crate-doc lede in /Users/yoav/projects/precis/tests/fixtures/mdbook/src/main.rs"
 cost_tokens = 10
-cum_tokens = 260
+cum_tokens = 271
 
 [batches.content]
 kind = "lines"
@@ -192,7 +194,7 @@ position = 10
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/tests" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mdbook/tests'"
 cost_tokens = 7
-cum_tokens = 267
+cum_tokens = 278
 
 [batches.content]
 kind = "fs"
@@ -209,7 +211,7 @@ position = 11
 key = 'Toml(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/Cargo.toml" })'
 descriptor = "[package] in /Users/yoav/projects/precis/tests/fixtures/mdbook/Cargo.toml"
 cost_tokens = 349
-cum_tokens = 616
+cum_tokens = 627
 
 [batches.content]
 kind = "lines"
@@ -243,7 +245,7 @@ position = 12
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mdbook/crates'"
 cost_tokens = 48
-cum_tokens = 664
+cum_tokens = 675
 
 [batches.content]
 kind = "fs"
@@ -267,7 +269,7 @@ position = 13
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/README.md", section_index: 0 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/mdbook/README.md section #0"
 cost_tokens = 194
-cum_tokens = 858
+cum_tokens = 869
 
 [batches.content]
 kind = "lines"
@@ -325,7 +327,7 @@ position = 14
 key = 'Toml(Features { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/Cargo.toml" })'
 descriptor = "[features] in /Users/yoav/projects/precis/tests/fixtures/mdbook/Cargo.toml"
 cost_tokens = 257
-cum_tokens = 1115
+cum_tokens = 1126
 
 [batches.content]
 kind = "lines"
@@ -375,7 +377,7 @@ position = 15
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/.github/ISSUE_TEMPLATE" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mdbook/.github/ISSUE_TEMPLATE'"
 cost_tokens = 14
-cum_tokens = 1129
+cum_tokens = 1140
 
 [batches.content]
 kind = "fs"
@@ -393,7 +395,7 @@ position = 16
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/.github/workflows" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mdbook/.github/workflows'"
 cost_tokens = 14
-cum_tokens = 1143
+cum_tokens = 1154
 
 [batches.content]
 kind = "fs"
@@ -411,7 +413,7 @@ position = 17
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare'"
 cost_tokens = 12
-cum_tokens = 1155
+cum_tokens = 1166
 
 [batches.content]
 kind = "fs"
@@ -429,7 +431,7 @@ position = 18
 key = 'Toml(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/Cargo.toml" })'
 descriptor = "[package] in /Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/Cargo.toml"
 cost_tokens = 64
-cum_tokens = 1219
+cum_tokens = 1230
 
 [batches.content]
 kind = "lines"
@@ -447,7 +449,7 @@ position = 19
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/README.md" })'
 descriptor = "README headline in /Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/README.md"
 cost_tokens = 31
-cum_tokens = 1250
+cum_tokens = 1261
 
 [batches.content]
 kind = "lines"
@@ -473,7 +475,7 @@ position = 20
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core'"
 cost_tokens = 12
-cum_tokens = 1262
+cum_tokens = 1273
 
 [batches.content]
 kind = "fs"
@@ -491,7 +493,7 @@ position = 21
 key = 'Toml(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/Cargo.toml" })'
 descriptor = "[package] in /Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/Cargo.toml"
 cost_tokens = 89
-cum_tokens = 1351
+cum_tokens = 1362
 
 [batches.content]
 kind = "lines"
@@ -509,7 +511,7 @@ position = 22
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/README.md" })'
 descriptor = "README headline in /Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/README.md"
 cost_tokens = 115
-cum_tokens = 1466
+cum_tokens = 1477
 
 [batches.content]
 kind = "lines"
@@ -535,7 +537,7 @@ position = 23
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver'"
 cost_tokens = 12
-cum_tokens = 1478
+cum_tokens = 1489
 
 [batches.content]
 kind = "fs"
@@ -553,7 +555,7 @@ position = 24
 key = 'Toml(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/Cargo.toml" })'
 descriptor = "[package] in /Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/Cargo.toml"
 cost_tokens = 83
-cum_tokens = 1561
+cum_tokens = 1572
 
 [batches.content]
 kind = "lines"
@@ -571,7 +573,7 @@ position = 25
 key = 'Toml(Features { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/Cargo.toml" })'
 descriptor = "[features] in /Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/Cargo.toml"
 cost_tokens = 19
-cum_tokens = 1580
+cum_tokens = 1591
 
 [batches.content]
 kind = "lines"
@@ -589,7 +591,7 @@ position = 26
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/README.md" })'
 descriptor = "README headline in /Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/README.md"
 cost_tokens = 115
-cum_tokens = 1695
+cum_tokens = 1706
 
 [batches.content]
 kind = "lines"
@@ -615,7 +617,7 @@ position = 27
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html'"
 cost_tokens = 16
-cum_tokens = 1711
+cum_tokens = 1722
 
 [batches.content]
 kind = "fs"
@@ -634,7 +636,7 @@ position = 28
 key = 'Toml(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/Cargo.toml" })'
 descriptor = "[package] in /Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/Cargo.toml"
 cost_tokens = 80
-cum_tokens = 1791
+cum_tokens = 1802
 
 [batches.content]
 kind = "lines"
@@ -652,7 +654,7 @@ position = 29
 key = 'Toml(Features { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/Cargo.toml" })'
 descriptor = "[features] in /Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/Cargo.toml"
 cost_tokens = 22
-cum_tokens = 1813
+cum_tokens = 1824
 
 [batches.content]
 kind = "lines"
@@ -670,7 +672,7 @@ position = 30
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/README.md" })'
 descriptor = "README headline in /Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/README.md"
 cost_tokens = 115
-cum_tokens = 1928
+cum_tokens = 1939
 
 [batches.content]
 kind = "lines"
@@ -696,7 +698,7 @@ position = 31
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdown" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdown'"
 cost_tokens = 12
-cum_tokens = 1940
+cum_tokens = 1951
 
 [batches.content]
 kind = "fs"
@@ -714,7 +716,7 @@ position = 32
 key = 'Toml(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdown/Cargo.toml" })'
 descriptor = "[package] in /Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdown/Cargo.toml"
 cost_tokens = 83
-cum_tokens = 2023
+cum_tokens = 2034
 
 [batches.content]
 kind = "lines"
@@ -732,7 +734,7 @@ position = 33
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdown/README.md" })'
 descriptor = "README headline in /Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdown/README.md"
 cost_tokens = 120
-cum_tokens = 2143
+cum_tokens = 2154
 
 [batches.content]
 kind = "lines"
@@ -758,7 +760,7 @@ position = 34
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor'"
 cost_tokens = 12
-cum_tokens = 2155
+cum_tokens = 2166
 
 [batches.content]
 kind = "fs"
@@ -776,7 +778,7 @@ position = 35
 key = 'Toml(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor/Cargo.toml" })'
 descriptor = "[package] in /Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor/Cargo.toml"
 cost_tokens = 86
-cum_tokens = 2241
+cum_tokens = 2252
 
 [batches.content]
 kind = "lines"
@@ -794,7 +796,7 @@ position = 36
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor/README.md" })'
 descriptor = "README headline in /Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor/README.md"
 cost_tokens = 120
-cum_tokens = 2361
+cum_tokens = 2372
 
 [batches.content]
 kind = "lines"
@@ -820,7 +822,7 @@ position = 37
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-renderer" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-renderer'"
 cost_tokens = 12
-cum_tokens = 2373
+cum_tokens = 2384
 
 [batches.content]
 kind = "fs"
@@ -838,7 +840,7 @@ position = 38
 key = 'Toml(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-renderer/Cargo.toml" })'
 descriptor = "[package] in /Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-renderer/Cargo.toml"
 cost_tokens = 85
-cum_tokens = 2458
+cum_tokens = 2469
 
 [batches.content]
 kind = "lines"
@@ -856,7 +858,7 @@ position = 39
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-renderer/README.md" })'
 descriptor = "README headline in /Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-renderer/README.md"
 cost_tokens = 120
-cum_tokens = 2578
+cum_tokens = 2589
 
 [batches.content]
 kind = "lines"
@@ -882,7 +884,7 @@ position = 40
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-summary" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-summary'"
 cost_tokens = 12
-cum_tokens = 2590
+cum_tokens = 2601
 
 [batches.content]
 kind = "fs"
@@ -900,7 +902,7 @@ position = 41
 key = 'Toml(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-summary/Cargo.toml" })'
 descriptor = "[package] in /Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-summary/Cargo.toml"
 cost_tokens = 81
-cum_tokens = 2671
+cum_tokens = 2682
 
 [batches.content]
 kind = "lines"
@@ -918,7 +920,7 @@ position = 42
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-summary/README.md" })'
 descriptor = "README headline in /Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-summary/README.md"
 cost_tokens = 115
-cum_tokens = 2786
+cum_tokens = 2797
 
 [batches.content]
 kind = "lines"
@@ -944,7 +946,7 @@ position = 43
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/xtask" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/xtask'"
 cost_tokens = 12
-cum_tokens = 2798
+cum_tokens = 2809
 
 [batches.content]
 kind = "fs"
@@ -962,7 +964,7 @@ position = 44
 key = 'Toml(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/xtask/Cargo.toml" })'
 descriptor = "[package] in /Users/yoav/projects/precis/tests/fixtures/mdbook/crates/xtask/Cargo.toml"
 cost_tokens = 62
-cum_tokens = 2860
+cum_tokens = 2871
 
 [batches.content]
 kind = "lines"
@@ -980,7 +982,7 @@ position = 45
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/xtask/README.md" })'
 descriptor = "README headline in /Users/yoav/projects/precis/tests/fixtures/mdbook/crates/xtask/README.md"
 cost_tokens = 50
-cum_tokens = 2910
+cum_tokens = 2921
 
 [batches.content]
 kind = "lines"
@@ -1006,7 +1008,7 @@ position = 46
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/examples/remove-emphasis" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mdbook/examples/remove-emphasis'"
 cost_tokens = 24
-cum_tokens = 2934
+cum_tokens = 2945
 
 [batches.content]
 kind = "fs"
@@ -1026,7 +1028,7 @@ position = 47
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/guide/guide-helper" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mdbook/guide/guide-helper'"
 cost_tokens = 8
-cum_tokens = 2942
+cum_tokens = 2953
 
 [batches.content]
 kind = "fs"

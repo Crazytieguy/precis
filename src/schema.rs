@@ -23,7 +23,7 @@ use anyhow::{Context, Result, anyhow, bail};
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 use crate::batch::{BatchContent, FsGroup, Span};
-use crate::walker::fs::list_dir;
+use crate::fs_util::list_dir;
 
 /// A frozen North Star document for one fixture: ranked batches with
 /// declarative spans + render specs. Parsed from TOML.

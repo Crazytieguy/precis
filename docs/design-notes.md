@@ -43,10 +43,25 @@ No paraphrasing, summarization, or invented content under any circumstances.
 - Schema: declarative batches with spans + render specs, reusing library
   `Span` / `Render` / `EntryKind` types directly (drift-free by
   construction). `NsFsGroup` wraps filesystem listings with an `entries =
-  "all"` sentinel that resolves via `walker::fs::list_dir` at load time.
+  "all"` sentinel that resolves via `fs_util::list_dir` at load time —
+  raw directory listing, same utility the filesystem walker uses, so NS
+  and walker see identical filesystem content.
 - `revision_pin` is the only thing binding an NS to its fixture revision.
   `load_ns_checked` enforces it; the `ns_pins_match_fixture_pins` test
   enforces it under `cargo t`.
+- **Validation**: `simulate_ns` catches authoring bugs before render time
+  (duplicate ids, span out-of-range, span inverted-range, span targets
+  non-existent file, invalid `Truncated` regex, regex-no-match on source
+  lines, non-ancestor line-overlap, growth-envelope breach, cap breach).
+  All as `Violation` variants — no panics. See `tests/ns_simulate.rs`
+  for representative coverage.
+- **Growth envelope**: each batch's marginal cost must satisfy
+  `cost_i ≤ 100 + 0.3 · cumulative_before`. Replaces the old 2× rule.
+  Per-batch is too local; cumulative matches the author's intuition
+  ("doubling aggregate on batch 2 is fine, doubling on batch 10 is
+  bad") and doesn't force authors to inflate a small preceding batch
+  to clear the path for a legitimately larger one later. Constants
+  tunable via `ENV_BASE` and `envelope_max` in `src/ns_simulate.rs`.
 - **Amendment protocol**: a frozen NS can be corrected with an explicit
   rationale + diff. Drift isn't allowed; deliberate amendments are.
 
@@ -121,31 +136,6 @@ introduced for branch-and-bound correctness under the "fall back to a
 smaller fitting batch" behavior; now that the scheduler is prefix-monotone
 (no fallback), the speculative pool may be simplifiable. Yoav flagged he'd
 like to revisit whether it's still earning its complexity.
-
-### Revisit the 2× rule — cumulative-based instead of per-batch
-The NS-author validator currently enforces "each batch's cost ≤ 2× the
-largest cost of any earlier batch" (`src/ns_simulate.rs` `Violation::
-TwoXRule`). Intent is to keep small budgets meaningful by preventing a
-single oversized batch from filling the budget alone. But the per-batch
-shape is too local — authors hit it on legitimate ranking choices where
-a single bigger batch arrives after a run of small ones, and the fix
-(artificially inflate a preceding batch) is worse than the signal. A
-cumulative-based formulation would be more principled: something like
-"each batch's cost ≤ k · cumulative_preceding_cost^α" with α < 1 so the
-growth envelope tracks budget distribution. Plan: design the exact
-formula next session (conservative — we'd rather under-reject than
-over-reject legitimate NSs), then re-validate the existing log + otree
-NSs and adjust if needed. Observed in Phase 2 authoring.
-
-### Walker default — stop skipping hidden dotfiles by default
-`walker::fs::list_dir` (src/walker/fs.rs) currently skips hidden
-dotfiles except for a whitelist (`.gitignore`, `.github`, `.cargo`,
-`.rustfmt.toml`, `.config`). This is a catastrophic-omission risk for
-configuration files — an agent's answer to "where is X configured?"
-shouldn't depend on whether the config file happens to start with a
-dot. Plan: show hidden dotfiles by default and let per-name skip
-heuristics (e.g. `.DS_Store`, `.git`) stay. Defer until a fixture
-surfaces a concrete case the whitelist misses.
 
 ### Data model
 - **Cost shrink credit** — `cost_lines` uses `saturating_sub` so a refinement
