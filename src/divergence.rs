@@ -496,4 +496,3 @@ fn numeric_id_cmp(a: &str, b: &str) -> std::cmp::Ordering {
     let pb: Vec<usize> = b.split('.').filter_map(|s| s.parse().ok()).collect();
     pa.cmp(&pb)
 }
-

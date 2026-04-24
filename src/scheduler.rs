@@ -324,8 +324,14 @@ impl<W: Walker> Scheduler<W> {
 
         let ancestors = self.ancestors_of(id);
         let batch_clone = self.batches[id.index()].clone();
-        self.tree
+        let conflicts = self
+            .tree
             .apply(&batch_clone, id, |i| ancestors.contains(&i));
+        debug_assert!(
+            conflicts.is_empty(),
+            "walker-emitted batch hit non-ancestor overlap: {:?}",
+            conflicts
+        );
         self.scheduled.insert(id);
         self.scheduled_log.push((id, cost));
         self.consumed.tokens += cost.tokens;

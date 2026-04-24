@@ -121,19 +121,68 @@ fn print_report(ns_path: &std::path::Path, fixture: &str, report: &SimulationRep
 
 fn format_violation(v: &Violation) -> String {
     match v {
-        Violation::PredecessorMissing(id) => {
-            format!("predecessor {:?} not found in prior batches", id)
+        Violation::DuplicateBatchId(id) => {
+            format!("duplicate batch id {id:?} (first occurrence passes; this is the clash)")
         }
-        Violation::TwoXRule { largest_preceding } => {
+        Violation::PredecessorMissing(id) => {
+            format!("predecessor {id:?} not found in prior batches")
+        }
+        Violation::SpanFileMissing(path) => {
+            format!("span file missing: {}", path.display())
+        }
+        Violation::SpanInvertedRange { path, start, end } => {
             format!(
-                "2× violation: cost exceeds 2 × largest preceding batch ({} tokens)",
-                largest_preceding
+                "span range inverted or zero-indexed at {}: start={start}, end={end}",
+                path.display()
             )
         }
+        Violation::SpanOutOfRange {
+            path,
+            start,
+            end,
+            file_lines,
+        } => {
+            format!(
+                "span out of range at {}: {start}..={end} (file has {file_lines} lines)",
+                path.display()
+            )
+        }
+        Violation::RegexInvalid {
+            path,
+            start,
+            end,
+            pattern,
+        } => format!(
+            "invalid Truncated regex `{pattern}` at {}:{start}..={end}",
+            path.display()
+        ),
+        Violation::RegexNoMatch {
+            path,
+            line,
+            pattern,
+        } => format!(
+            "Truncated regex `{pattern}` produced no/empty match at {}:{line}",
+            path.display()
+        ),
+        Violation::FsResolveFailed(msg) => format!("fs content resolution failed: {msg}"),
+        Violation::NonAncestorOverlap {
+            path,
+            line,
+            existing_batch,
+        } => format!(
+            "non-ancestor overlap: {}:{line} already owned by {existing_batch} (add a predecessor edge or move the span)",
+            path.display()
+        ),
+        Violation::GrowthEnvelope {
+            cost,
+            cumulative_before,
+            max_allowed,
+        } => format!(
+            "growth envelope: batch cost {cost} > {max_allowed} tokens (cumulative so far: {cumulative_before}; envelope = 100 + 0.3·cumulative). Split the batch, or rank smaller batches earlier."
+        ),
         Violation::CapExceeded { cumulative, cap } => {
             format!("cap exceeded: cumulative {cumulative} > {cap} tokens")
         }
-        Violation::ResolveFailed(msg) => format!("content resolution failed: {msg}"),
     }
 }
 
@@ -141,5 +190,5 @@ fn format_violation(v: &Violation) -> String {
 /// (which is private) so this bin can show it in output — kept intentionally
 /// in sync; if one changes, both do.
 fn crate_cap() -> usize {
-    10_000
+    precis::ns_simulate::TOKEN_CAP
 }

@@ -57,6 +57,16 @@ pub struct Cost {
     pub bytes: usize,
 }
 
+/// A span wanted to write a line that's already owned by a non-ancestor
+/// batch. Scheduler treats as a walker bug (debug-asserts); simulator
+/// surfaces as an NS-authoring violation.
+#[derive(Debug, Clone)]
+pub struct ApplyConflict {
+    pub path: PathBuf,
+    pub line: usize,
+    pub existing_owner: BatchId,
+}
+
 #[derive(Debug, Clone)]
 struct LineRecord {
     render: Render,
@@ -119,18 +129,24 @@ impl RenderedTree {
     }
 
     /// Apply a batch. `owner` is the batch's id; `is_ancestor(id)` tells us
-    /// whether an existing line's owner is an ancestor — used to detect
-    /// non-ancestor line-overwrites (a walker bug; debug-asserts).
-    pub fn apply(&mut self, batch: &Batch, owner: BatchId, is_ancestor: impl Fn(BatchId) -> bool) {
+    /// whether an existing line's owner is an ancestor — non-ancestor
+    /// overlaps are returned as [`ApplyConflict`]s so callers can surface
+    /// them as violations (simulator) or debug-assert (scheduler, which
+    /// trusts walker-emitted batches to declare correct predecessors).
+    pub fn apply(
+        &mut self,
+        batch: &Batch,
+        owner: BatchId,
+        is_ancestor: impl Fn(BatchId) -> bool,
+    ) -> Vec<ApplyConflict> {
         match &batch.content {
             BatchContent::Fs { groups } => {
                 for group in groups {
                     self.apply_fs_group(group);
                 }
+                Vec::new()
             }
-            BatchContent::Lines { spans } => {
-                self.apply_spans(spans, owner, &is_ancestor);
-            }
+            BatchContent::Lines { spans } => self.apply_spans(spans, owner, &is_ancestor),
         }
     }
 
@@ -262,7 +278,8 @@ impl RenderedTree {
         spans: &[Span],
         owner: BatchId,
         is_ancestor: &impl Fn(BatchId) -> bool,
-    ) {
+    ) -> Vec<ApplyConflict> {
+        let mut conflicts = Vec::new();
         for (path, line_num, render) in resolve_spans(spans) {
             let node = self
                 .nodes
@@ -272,18 +289,19 @@ impl RenderedTree {
                 debug_assert!(false, "span targets non-file node at {}", path.display());
                 continue;
             };
-            if let Some(existing) = content.get(&line_num) {
-                debug_assert!(
-                    is_ancestor(existing.owner),
-                    "non-ancestor overlap: batch {:?} would replace line {} of {} owned by non-ancestor batch {:?}",
-                    owner,
-                    line_num,
-                    path.display(),
-                    existing.owner,
-                );
+            if let Some(existing) = content.get(&line_num)
+                && !is_ancestor(existing.owner)
+            {
+                conflicts.push(ApplyConflict {
+                    path: path.clone(),
+                    line: line_num,
+                    existing_owner: existing.owner,
+                });
+                continue;
             }
             content.insert(line_num, LineRecord { render, owner });
         }
+        conflicts
     }
 
     fn render_dir(&self, path: &Path, indent_depth: usize, out: &mut String) {

@@ -4,13 +4,13 @@
 //! violation data for `validate-ns`.
 
 use std::collections::{HashMap, HashSet};
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 use anyhow::Result;
 
-use crate::batch::{Batch, BatchId, BatchKey, FsKey, ValueSignals};
+use crate::batch::{Batch, BatchId, BatchKey, FsKey, Render, Span, ValueSignals};
 use crate::render::{Cost, RenderedTree, SourceCache};
-use crate::schema::{NorthStar, resolve_content};
+use crate::schema::{NorthStar, NsContent, resolve_content};
 
 /// Per-batch simulator output.
 #[derive(Debug, Clone)]
@@ -19,22 +19,69 @@ pub struct SimulatedBatch {
     pub descriptor: String,
     pub marginal_cost: Cost,
     pub cumulative_tokens: usize,
-    /// Parent NS-id this batch declared as predecessor (copied verbatim from
-    /// the NS). None when unset. The simulator verifies closure separately.
+    /// Parent NS-id this batch declared as predecessor. Copied verbatim
+    /// from the NS; closure is verified separately.
     pub predecessor: Option<String>,
     pub violations: Vec<Violation>,
 }
 
+/// Per-NS-batch violation kinds. The validator emits them as it finds them;
+/// each [`SimulatedBatch`] carries the violations that apply to that batch.
+/// Keep new variants in sync with `validate-ns`'s formatter.
 #[derive(Debug, Clone)]
 pub enum Violation {
-    /// Declared predecessor id doesn't exist or isn't ranked earlier.
+    /// Two batches share the same NS id. Reported on the duplicate
+    /// (second and later) occurrence.
+    DuplicateBatchId(String),
+    /// Declared predecessor id doesn't refer to a batch ranked earlier.
     PredecessorMissing(String),
-    /// `cost > 2 × largest_preceding`.
-    TwoXRule { largest_preceding: usize },
-    /// Cumulative cost exceeds the 10k cap after this batch.
+    /// Span targets a file that doesn't exist under the fixture root.
+    SpanFileMissing(PathBuf),
+    /// Span `start > end` or `start == 0`.
+    SpanInvertedRange {
+        path: PathBuf,
+        start: usize,
+        end: usize,
+    },
+    /// Span covers line(s) beyond the file's line count.
+    SpanOutOfRange {
+        path: PathBuf,
+        start: usize,
+        end: usize,
+        file_lines: usize,
+    },
+    /// Truncated render's regex didn't compile.
+    RegexInvalid {
+        path: PathBuf,
+        start: usize,
+        end: usize,
+        pattern: String,
+    },
+    /// Truncated render's regex produced no/empty match on a source line
+    /// in the span.
+    RegexNoMatch {
+        path: PathBuf,
+        line: usize,
+        pattern: String,
+    },
+    /// Fs group's parent or listed child doesn't exist.
+    FsResolveFailed(String),
+    /// A span would overwrite a line owned by a non-ancestor batch.
+    NonAncestorOverlap {
+        path: PathBuf,
+        line: usize,
+        existing_batch: String,
+    },
+    /// `cost > ENV_BASE + ENV_COEF · cumulative_before` — the growth
+    /// envelope that replaces the old 2× rule. See
+    /// `docs/design-notes.md` for rationale.
+    GrowthEnvelope {
+        cost: usize,
+        cumulative_before: usize,
+        max_allowed: usize,
+    },
+    /// Cumulative cost exceeds the token cap after this batch.
     CapExceeded { cumulative: usize, cap: usize },
-    /// Underlying content resolution failed (file missing, regex bad, etc.).
-    ResolveFailed(String),
 }
 
 /// Result of simulating an NS end-to-end.
@@ -45,28 +92,49 @@ pub struct SimulationReport {
     pub largest_batch: Option<(String, usize)>,
 }
 
-const TOKEN_CAP: usize = 10_000;
+/// Token cap shared with the author prompt.
+pub const TOKEN_CAP: usize = 10_000;
+
+/// Growth envelope: `max_cost = ENV_BASE + ENV_COEF · cumulative_before`.
+pub const ENV_BASE: usize = 100;
+const ENV_COEF_NUMERATOR: usize = 3;
+const ENV_COEF_DENOMINATOR: usize = 10;
+
+pub fn envelope_max(cumulative_before: usize) -> usize {
+    ENV_BASE + cumulative_before * ENV_COEF_NUMERATOR / ENV_COEF_DENOMINATOR
+}
 
 /// Simulate applying an NS's batches to a fresh `RenderedTree` in rank
 /// order. Returns per-batch cost + collected violations. Does not read the
-/// walker — NS content resolves via [`resolve_content`] (which reuses the
-/// walker's `list_dir` for filesystem groups).
+/// walker — NS content resolves via [`resolve_content`].
 pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Result<SimulationReport> {
     let source_cache = SourceCache::new();
-    let mut tree = RenderedTree::new(fixture_root.to_path_buf(), source_cache);
+    let mut tree = RenderedTree::new(fixture_root.to_path_buf(), source_cache.clone());
+
+    // Duplicate-id pass. Attach the violation to the later (offending)
+    // occurrence so the first copy passes cleanly.
+    let mut first_seen: HashMap<&str, usize> = HashMap::new();
+    let mut duplicate_at: HashMap<usize, Violation> = HashMap::new();
+    for (pos, b) in ns.batches.iter().enumerate() {
+        if first_seen.contains_key(b.id.as_str()) {
+            duplicate_at.insert(pos, Violation::DuplicateBatchId(b.id.clone()));
+        } else {
+            first_seen.insert(b.id.as_str(), pos);
+        }
+    }
 
     let mut ns_id_to_batch_id: HashMap<String, BatchId> = HashMap::new();
-    let mut scheduled: HashSet<BatchId> = HashSet::new();
+    let mut batch_id_to_ns: HashMap<BatchId, String> = HashMap::new();
     let mut cumulative: usize = 0;
-    let mut largest_preceding: usize = 0;
     let mut largest: Option<(String, usize)> = None;
     let mut batches_out: Vec<SimulatedBatch> = Vec::with_capacity(ns.batches.len());
 
     for (pos, ns_batch) in ns.batches.iter().enumerate() {
         let mut violations = Vec::new();
+        if let Some(v) = duplicate_at.remove(&pos) {
+            violations.push(v);
+        }
 
-        // Predecessor closure: predecessor id must refer to a batch ranked
-        // earlier (i.e. already assigned a BatchId).
         let predecessor_bk = match &ns_batch.predecessor {
             None => None,
             Some(pred_id) => match ns_id_to_batch_id.get(pred_id) {
@@ -78,11 +146,33 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Result<SimulationRepo
             },
         };
 
+        // Pre-validate Lines content. Fs-content failures surface as
+        // FsResolveFailed below via `resolve_content`. If any span fails
+        // validation, skip cost/apply — render would panic on bad spans.
+        let had_span_error = if let NsContent::Lines { spans } = &ns_batch.content {
+            let span_v = validate_spans(spans, fixture_root, &source_cache);
+            let any = !span_v.is_empty();
+            violations.extend(span_v);
+            any
+        } else {
+            false
+        };
+        if had_span_error {
+            batches_out.push(SimulatedBatch {
+                id: ns_batch.id.clone(),
+                descriptor: ns_batch.descriptor.clone(),
+                marginal_cost: Cost::default(),
+                cumulative_tokens: cumulative,
+                predecessor: ns_batch.predecessor.clone(),
+                violations,
+            });
+            continue;
+        }
+
         let content = match resolve_content(&ns_batch.content, fixture_root) {
             Ok(c) => c,
             Err(e) => {
-                violations.push(Violation::ResolveFailed(e.to_string()));
-                // Skip applying — we can't cost or schedule it.
+                violations.push(Violation::FsResolveFailed(e.to_string()));
                 batches_out.push(SimulatedBatch {
                     id: ns_batch.id.clone(),
                     descriptor: ns_batch.descriptor.clone(),
@@ -104,10 +194,18 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Result<SimulationRepo
         };
 
         let cost = tree.marginal_cost(&batch);
+        let cumulative_before = cumulative;
         cumulative = cumulative.saturating_add(cost.tokens);
 
-        if largest_preceding > 0 && cost.tokens > 2 * largest_preceding {
-            violations.push(Violation::TwoXRule { largest_preceding });
+        if cumulative_before > 0 {
+            let max_allowed = envelope_max(cumulative_before);
+            if cost.tokens > max_allowed {
+                violations.push(Violation::GrowthEnvelope {
+                    cost: cost.tokens,
+                    cumulative_before,
+                    max_allowed,
+                });
+            }
         }
         if cumulative > TOKEN_CAP {
             violations.push(Violation::CapExceeded {
@@ -117,13 +215,22 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Result<SimulationRepo
         }
 
         let ancestors = collect_ancestors(&ns_batch.id, &ns.batches, &ns_id_to_batch_id);
-        tree.apply(&batch, batch_id, |id| ancestors.contains(&id));
-        scheduled.insert(batch_id);
-        ns_id_to_batch_id.insert(ns_batch.id.clone(), batch_id);
-
-        if cost.tokens > largest_preceding {
-            largest_preceding = cost.tokens;
+        let conflicts = tree.apply(&batch, batch_id, |id| ancestors.contains(&id));
+        for c in conflicts {
+            let existing_batch = batch_id_to_ns
+                .get(&c.existing_owner)
+                .cloned()
+                .unwrap_or_else(|| format!("{:?}", c.existing_owner));
+            violations.push(Violation::NonAncestorOverlap {
+                path: c.path,
+                line: c.line,
+                existing_batch,
+            });
         }
+
+        ns_id_to_batch_id.insert(ns_batch.id.clone(), batch_id);
+        batch_id_to_ns.insert(batch_id, ns_batch.id.clone());
+
         if largest.as_ref().is_none_or(|(_, c)| cost.tokens > *c) {
             largest = Some((ns_batch.id.clone(), cost.tokens));
         }
@@ -145,20 +252,73 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Result<SimulationRepo
     })
 }
 
-/// Build a synthetic `BatchKey` to carry through the simulator. The
-/// simulator doesn't need walker-ontology keys; it just needs per-batch
-/// unique `BatchKey` values so tree internal bookkeeping has *something*
-/// to slot in. The real distinguisher is the `BatchId` assigned at apply
-/// time.
+fn validate_spans(spans: &[Span], fixture_root: &Path, cache: &SourceCache) -> Vec<Violation> {
+    let mut out = Vec::new();
+    let mut compiled: HashMap<String, regex::Regex> = HashMap::new();
+    for span in spans {
+        let abs = fixture_root.join(&span.path);
+        let Some(source) = cache.get(&abs) else {
+            out.push(Violation::SpanFileMissing(span.path.clone()));
+            continue;
+        };
+        if span.start == 0 || span.start > span.end {
+            out.push(Violation::SpanInvertedRange {
+                path: span.path.clone(),
+                start: span.start,
+                end: span.end,
+            });
+            continue;
+        }
+        let src_lines: Vec<&str> = source.lines().collect();
+        if span.end > src_lines.len() {
+            out.push(Violation::SpanOutOfRange {
+                path: span.path.clone(),
+                start: span.start,
+                end: span.end,
+                file_lines: src_lines.len(),
+            });
+            continue;
+        }
+        if let Render::Truncated { pattern } = &span.render {
+            if !compiled.contains_key(pattern) {
+                match regex::Regex::new(pattern) {
+                    Ok(re) => {
+                        compiled.insert(pattern.clone(), re);
+                    }
+                    Err(_) => {
+                        out.push(Violation::RegexInvalid {
+                            path: span.path.clone(),
+                            start: span.start,
+                            end: span.end,
+                            pattern: pattern.clone(),
+                        });
+                        continue;
+                    }
+                }
+            }
+            let re = &compiled[pattern];
+            for ln in span.start..=span.end {
+                let line = src_lines[ln - 1];
+                let m = re.find(line);
+                if m.is_none() || m.is_some_and(|m| m.as_str().is_empty()) {
+                    out.push(Violation::RegexNoMatch {
+                        path: span.path.clone(),
+                        line: ln,
+                        pattern: pattern.clone(),
+                    });
+                }
+            }
+        }
+    }
+    out
+}
+
 fn synthetic_key(ns_id: &str) -> BatchKey {
     BatchKey::Fs(FsKey::DirListing {
         dir: std::path::PathBuf::from(format!("/ns/{ns_id}")),
     })
 }
 
-/// Walk the NS-predecessor chain from `ns_id` upward, mapping each NS-id to
-/// the assigned `BatchId`. Used to tell the tree's `is_ancestor` predicate
-/// which scheduled batches are legitimate ancestors of the one being applied.
 fn collect_ancestors(
     ns_id: &str,
     all_batches: &[crate::schema::NsBatch],
