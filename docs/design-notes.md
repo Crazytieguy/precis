@@ -290,6 +290,31 @@ like to revisit whether it's still earning its complexity.
   items inside `x.rs` effectively pub(crate), which the current local
   check misses entirely).
 
+### Schema vocabulary — better doc comments, maybe stricter validation
+
+Observed from the first NS-author runs under the revised prompt:
+
+- **Truncation misuse** — the log NS used `Truncated { pattern = … }`
+  on lines like `macro foo {` where the match covers all or most of
+  the line. Truncation saves no tokens unless the tail of the line is
+  the bulk of it. `Render::Truncated`'s doc in `src/content.rs` should
+  make this explicit (the point of the pattern is to *drop* the rest
+  of the line; if nothing meaningful trails the match, use `Full`).
+  Optional stronger version: validator could reject patterns that
+  match the whole line.
+- **Multi-line Ellipsis spans** — the otree NS used an `Ellipsis`
+  span covering multiple lines, which renders as a single `…` at the
+  first line and nothing at the others (our render collapses an
+  Ellipsis run into one marker). Should arguably be invalid: `Ellipsis`
+  is conceptually a 1-line marker, multi-line spans suggest the author
+  misunderstood. Fix options: (a) tighten `Render::Ellipsis` doc to
+  clarify it's single-line, (b) validator rejects Ellipsis spans with
+  `start != end`.
+
+Both are "prompt-adjacent" bugs — agents generally infer type
+semantics from field docs, so tightening `content.rs` type docs is
+probably 80% of the mitigation.
+
 ### North Star / reviewer alignment
 - **Rank `PubItemNames` as a first-class NS batch** — the Rust walker
   emits a `pub struct X {\n…` location-hint batch per file
