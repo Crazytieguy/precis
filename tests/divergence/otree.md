@@ -1,4 +1,4 @@
-scores: Sim=0.373 Reached=12/48 Early=1 Late=8 Missing=29 Over=1 Cap=10000
+scores: Sim=0.374 Reached=12/48 Early=1 Late=8 Partial=7 Missing=29 Over=1 Cap=10000
 
 ## Arrival ledger (non-aligned NS batches)
 
@@ -18,13 +18,13 @@ scores: Sim=0.373 Reached=12/48 Early=1 Late=8 Missing=29 Over=1 Cap=10000
 | 1.14 | 1226 | — | 0.00 | missing | Default key bindings — navigation half |
 | 1.15 | 1404 | — | 0.00 | missing | Default key bindings — filter/edit/copy/help half |
 | 1.16 | 1555 | 1889 | 0.80 | aligned | Key enum — keyboard-key vocabulary |
-| 1.17 | 1806 | — | 0.45 | partial | FieldType + ContentType::new_parser dispatch |
+| 1.17 | 1806 | — | 0.46 | partial | FieldType + ContentType::new_parser dispatch |
 | 1.18 | 1935 | — | 0.71 | partial | SyntaxToken enum — the shared highlight IR |
 | 2.1 | 2281 | — | 0.69 | partial | Config struct — top-level config sections |
 | 2.2 | 2464 | — | 0.70 | partial | Tree struct + ItemValue struct |
 | 2.3 | 2920 | — | 0.45 | partial | App struct + ElementInFocus / Refresh enums |
 | 2.4 | 3112 | 7699 | 1.00 | late+over | CLI flag names — one line per arg |
-| 2.5 | 3294 | — | 0.29 | partial | Default Config constants — size bounds + max_data_size |
+| 2.5 | 3294 | — | 0.31 | partial | Default Config constants — size bounds + max_data_size |
 | 2.6 | 3823 | — | 0.29 | partial | Colors top-level sections |
 | 2.7 | 4217 | — | 0.28 | partial | Color struct — fg/bg/bold/italic fields |
 | 2.8 | 4446 | — | 0.64 | partial | Types struct — customizable type labels |
@@ -42,7 +42,7 @@ scores: Sim=0.373 Reached=12/48 Early=1 Late=8 Missing=29 Over=1 Cap=10000
 | 3.5 | 7547 | — | 0.06 | partial | Config::load + get_path — config discovery |
 | 3.6 | 7850 | — | 0.00 | missing | CommandArgs::get_content_type — extension → ContentType |
 | 3.7 | 8022 | — | 0.00 | missing | AnyParser — format auto-detection |
-| 3.8 | 8245 | — | 0.10 | partial | JsonParser Parser impl + highlight() signature |
+| 3.8 | 8245 | — | 0.19 | partial | JsonParser Parser impl + highlight() signature |
 | 3.9 | 8516 | — | 0.00 | missing | TreeOverview::filter — filter entry point |
 | 3.10 | 8947 | — | 0.00 | missing | Filter widget key handling — action match |
 | 3.11 | 9311 | — | 0.00 | missing | FilterOptions::filter — per-item match predicate |

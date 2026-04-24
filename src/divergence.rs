@@ -2,9 +2,10 @@
 //! at `T_max` to a frozen `NorthStar`, producing:
 //!
 //! - `Scores`: a small tuple (`sim`, counts) with the integral similarity
-//!   scalar plus Reached/Early/Late/Missing/Over counts. Goodhart
-//!   resistance comes from all three moving in the same direction on a
-//!   real improvement.
+//!   scalar plus Reached/Early/Late/Partial/Missing/Over counts
+//!   (`reached + partial + missing == total_ns`). Goodhart resistance
+//!   comes from all three of Sim / Reached / Missing moving in the same
+//!   direction on a real improvement.
 //! - Markdown `Report` (`tests/divergence/<fixture>.md`): one per fixture,
 //!   holistic across budgets. Line 1 is the grep-able score line; body
 //!   is an arrival ledger (one row per NS batch with expected vs
@@ -56,19 +57,23 @@ const LATE_FACTOR: f64 = 1.3;
 /// the "walker waste" section.
 const UNMAPPED_COST_THRESHOLD: usize = 50;
 
-/// Headline scores.
+/// Headline scores. `reached + partial + missing == total_ns`.
 #[derive(Debug, Clone, Copy)]
 pub struct Scores {
     pub sim: f64,
-    /// Number of NS batches whose credit in the final walker state
-    /// reaches [`REACH_THRESHOLD`].
+    /// NS batches whose credit in the final walker state reaches
+    /// [`REACH_THRESHOLD`].
     pub reached: usize,
     pub total_ns: usize,
     /// NS batches rendered meaningfully earlier than expected.
     pub early: usize,
     /// NS batches rendered meaningfully later than expected.
     pub late: usize,
-    /// NS batches not reached by the walker at the cap.
+    /// NS batches reached above [`MISSING_HEADLINE_FLOOR`] but below
+    /// [`REACH_THRESHOLD`] — content is present but diluted.
+    pub partial: usize,
+    /// NS batches with credit below [`MISSING_HEADLINE_FLOOR`] — walker
+    /// rendered essentially none of what they wanted.
     pub missing: usize,
     /// NS batches where walker's rendered bytes exceed what NS asked for
     /// on at least one line (still fully credited).
@@ -95,10 +100,13 @@ pub fn generate_divergence_report(
 // ---- graded atoms ------------------------------------------------------
 
 /// One atom of content with its render-level byte footprint.
-/// `bytes` semantics:
-/// - `Line`: exclusive byte offset within the source line this render
-///   makes visible. `Full` = full line length; `Truncated{pattern}` =
-///   regex-match byte-end; `Ellipsis` = 0.
+/// `bytes` semantics (minimum 1 for any present atom — 0 is reserved for
+/// "walker never rendered this atom"):
+/// - `Line::Full` = source line length (byte count).
+/// - `Line::Truncated{pattern}` = regex-match byte-end (validator
+///   guarantees ≥ 1 on every covered line).
+/// - `Line::Ellipsis` = `1`. A bare "content present" marker; equal to
+///   another Ellipsis gives full credit.
 /// - `Fs`: always `1`. Fs atoms are boolean.
 ///
 /// Credit between two graded atoms sharing identity (same `Atom`) is
@@ -161,14 +169,22 @@ fn atoms_from_content(
 }
 
 /// Per-render byte_end: where this render stops within the source line.
+/// `Ellipsis` is a 1-byte sentinel (not 0) so NS-ellipsis vs walker-
+/// ellipsis on the same line scores full credit — both walker and NS
+/// say "gap marker here", which counts as alignment. Walker `Full` at
+/// an NS-ellipsis line still scores 1.0 (walker shows more bytes,
+/// clamped by ns_bytes=1). Walker `Ellipsis` at an NS-`Full` line
+/// scores `1 / line_length` — near-zero credit, matching intent
+/// (walker gave a marker instead of the content NS asked for).
 fn byte_end_for(render: &Render, source_line: &str) -> usize {
     match render {
-        Render::Full => source_line.len(),
-        Render::Ellipsis => 0,
+        Render::Full => source_line.len().max(1),
+        Render::Ellipsis => 1,
         Render::Truncated { pattern } => regex::Regex::new(pattern)
             .ok()
             .and_then(|re| re.find(source_line).map(|m| m.end()))
-            .unwrap_or(0),
+            .unwrap_or(0)
+            .max(1),
     }
 }
 
@@ -277,6 +293,7 @@ fn compute_scores(ctx: &BuildCtx) -> Scores {
     let mut reached = 0;
     let mut early = 0;
     let mut late = 0;
+    let mut partial = 0;
     let mut missing = 0;
     let mut over = 0;
 
@@ -288,18 +305,15 @@ fn compute_scores(ctx: &BuildCtx) -> Scores {
             missing += 1;
             continue;
         }
+        if arrival.credit < REACH_THRESHOLD {
+            partial += 1;
+            continue;
+        }
+        reached += 1;
         match arrival.status {
-            ArrivalStatus::Aligned | ArrivalStatus::Early | ArrivalStatus::Late => {
-                reached += 1;
-                match arrival.status {
-                    ArrivalStatus::Early => early += 1,
-                    ArrivalStatus::Late => late += 1,
-                    _ => {}
-                }
-            }
-            // Missing-label rows with credit ≥ MISSING_HEADLINE_FLOOR
-            // can't occur (floor > label floor) — defensive.
-            ArrivalStatus::Missing | ArrivalStatus::Partial => {}
+            ArrivalStatus::Early => early += 1,
+            ArrivalStatus::Late => late += 1,
+            _ => {}
         }
     }
 
@@ -309,6 +323,7 @@ fn compute_scores(ctx: &BuildCtx) -> Scores {
         total_ns: ctx.ns_rows.len(),
         early,
         late,
+        partial,
         missing,
         over,
     }
@@ -506,12 +521,13 @@ fn weighted_segment(a: f64, b: f64) -> f64 {
 fn format_report(scores: &Scores, ctx: &BuildCtx) -> String {
     let mut out = String::new();
     out.push_str(&format!(
-        "scores: Sim={:.3} Reached={}/{} Early={} Late={} Missing={} Over={} Cap={}\n",
+        "scores: Sim={:.3} Reached={}/{} Early={} Late={} Partial={} Missing={} Over={} Cap={}\n",
         scores.sim,
         scores.reached,
         scores.total_ns,
         scores.early,
         scores.late,
+        scores.partial,
         scores.missing,
         scores.over,
         ctx.schedule.budget,

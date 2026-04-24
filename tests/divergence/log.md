@@ -1,4 +1,4 @@
-scores: Sim=0.282 Reached=21/53 Early=3 Late=16 Missing=31 Over=6 Cap=10000
+scores: Sim=0.283 Reached=21/53 Early=3 Late=16 Partial=1 Missing=31 Over=6 Cap=10000
 
 ## Arrival ledger (non-aligned NS batches)
 
@@ -26,7 +26,7 @@ scores: Sim=0.282 Reached=21/53 Early=3 Late=16 Missing=31 Over=6 Cap=10000
 | 2.7 | 3329 | — | 0.00 | missing | Record public method names |
 | 2.8 | 3450 | — | 0.00 | missing | Level / LevelFilter public method names |
 | 2.9 | 3615 | — | 0.00 | missing | RecordBuilder + MetadataBuilder method names |
-| 2.10 | 3990 | — | 0.29 | partial | Error types — SetLoggerError + ParseLevelError |
+| 2.10 | 3990 | — | 0.36 | partial | Error types — SetLoggerError + ParseLevelError |
 | 2.11 | 4100 | — | 0.67 | partial+over | Five level-macro declaration lines with arms elided |
 | 2.12 | 4545 | — | 0.03 | partial | kv::Source trait declaration |
 | 2.13 | 4767 | — | 0.46 | partial | kv::VisitSource + VisitValue trait signatures |

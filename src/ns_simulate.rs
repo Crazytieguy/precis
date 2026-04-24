@@ -176,15 +176,13 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Result<SimulationRepo
         let cumulative_before = cumulative;
         cumulative = cumulative.saturating_add(cost.tokens);
 
-        if cumulative_before > 0 {
-            let max_allowed = envelope_max(cumulative_before);
-            if cost.tokens > max_allowed {
-                violations.push(Violation::GrowthEnvelope {
-                    cost: cost.tokens,
-                    cumulative_before,
-                    max_allowed,
-                });
-            }
+        let max_allowed = envelope_max(cumulative_before);
+        if cost.tokens > max_allowed {
+            violations.push(Violation::GrowthEnvelope {
+                cost: cost.tokens,
+                cumulative_before,
+                max_allowed,
+            });
         }
         if cumulative > TOKEN_CAP {
             violations.push(Violation::CapExceeded {

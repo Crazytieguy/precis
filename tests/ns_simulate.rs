@@ -117,6 +117,37 @@ spans = [{{ path = "src/lib.rs", start = 5, end = 7, render = {{ kind = "full" }
     );
 }
 
+/// Mutation #2b — first batch exceeds the envelope (envelope_max(0) = 100).
+/// Regression for a bug where the validator skipped the envelope check
+/// when `cumulative_before == 0`, letting oversized first batches pass.
+#[test]
+fn ns_simulate_first_batch_obeys_envelope() {
+    let pin = fixture_pin(LOG_FIXTURE);
+    // Single batch spanning ~400 lines of rustdoc — well over 100 tokens.
+    let ns = load_ns_toml(&format!(
+        r#"fixture = "log"
+revision_pin = "{pin}"
+
+[[batches]]
+id = "1"
+descriptor = "oversized first"
+justification = "should fail envelope_max(0)=100"
+[batches.content]
+kind = "lines"
+spans = [{{ path = "src/lib.rs", start = 1, end = 400, render = {{ kind = "full" }} }}]
+"#
+    ));
+    let report = simulate_ns(&ns, Path::new(LOG_FIXTURE)).expect("simulate");
+    assert!(
+        report.batches[0]
+            .violations
+            .iter()
+            .any(|v| matches!(v, Violation::GrowthEnvelope { .. })),
+        "expected GrowthEnvelope on first batch, got {:?}",
+        report.batches[0].violations
+    );
+}
+
 /// Mutation #3 — span covers lines beyond the file's line count.
 /// Matches the `schema load should have caught this` panic observed last
 /// session. Expected: `SpanOutOfRange` (not a panic).
