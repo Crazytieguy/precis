@@ -52,10 +52,10 @@ Three priorities, in order:
 Examples of cheap batches that mitigate catastrophic-omission risk:
 
 - **Location batches** — the *name only* of every public function in a
-  file (one truncated span per fn's first line, e.g.
-  `render = { kind = "truncate", pattern = "^[^(]+" }`). Listing only
-  some items implies the unlisted ones don't exist; always show them
-  all together.
+  file (one truncated span per fn's first line, truncating at the
+  opening paren with a `^[^(]+` regex pattern). Listing only some
+  items implies the unlisted ones don't exist; always show them all
+  together.
 - **All H2 heading locations** in a markdown file, without section
   bodies — tells the agent what sections exist.
 
@@ -73,116 +73,59 @@ any constraint violations.
 
 ## Output — TOML schema
 
-Write a single TOML file at the output path in your spawn prompt.
-Schema at `src/schema.rs`. Example shape:
+Write a single TOML file at the output path in your spawn prompt. The
+**canonical schema definition is `src/schema.rs`** — read it directly
+for field names, variant discriminators, and the `entries = "all"`
+sentinel. For a format reference, skim
+`tests/north-stars/log.toml` or `tests/north-stars/otree.toml` — copy
+the shape, not the content; every fixture is different.
 
-```toml
-fixture = "log"
-revision_pin = "43f2c283"  # must match tests/fixtures/<name>/.precis-pin
-summary = """
-Free-form prose describing the crate's concept + the query
-distribution you're ranking for. Opaque to tooling.
-"""
-
-[[batches]]
-id = "1.1"
-descriptor = "Top-level repo listing"
-justification = """
-Free-form prose on why this batch is ranked here. What query does it
-serve? Why is it tier 1?
-"""
-
-[batches.content]
-kind = "fs"
-groups = [{ parent = ".", entries = "all" }]
-
-[[batches]]
-id = "1.2"
-descriptor = "src/ listing"
-predecessor = "1.1"
-justification = "Drills into src/ once the repo shape is known."
-
-[batches.content]
-kind = "fs"
-groups = [{ parent = "src", entries = "all" }]
-
-[[batches]]
-id = "1.5"
-descriptor = "Crate-doc lede"
-justification = "Zero-follow-up answer to 'what is this crate?'"
-
-[batches.content]
-kind = "lines"
-spans = [{ path = "src/lib.rs", start = 11, end = 19, render = { kind = "full" } }]
-
-# Signature-only tease, body elided:
-[[batches]]
-id = "2.6"
-descriptor = "set_logger signature tease"
-justification = "Tells the agent set_logger exists without paying for the body."
-
-[batches.content]
-kind = "lines"
-spans = [
-  { path = "src/lib.rs", start = 1419, end = 1419, render = { kind = "truncate", pattern = "^[^(]+" } },
-  { path = "src/lib.rs", start = 1420, end = 1420, render = { kind = "ellipsis" } },
-]
-```
-
-### Field meanings
-
+Key field reminders:
 - `id` — `major.minor` string (`"1.1"`, `"2.10"`, `"3.4"`). Numeric-aware
-  sort is used for diff stability; don't mix formats.
+  sort; don't mix formats.
 - `descriptor` — short human-readable label.
 - `justification` — free-form prose on why this batch is ranked here.
-- `predecessor` (optional) — id of a prior batch this one logically
-  depends on (e.g. a fn body after its signature). Enforced.
-- `content` — `{ kind = "fs", groups = [...] }` or
-  `{ kind = "lines", spans = [...] }`.
+- `predecessor` (optional) — id of an earlier-ranked batch this one
+  logically depends on (e.g. a fn body after its signature). The
+  validator enforces referential and ordering closure.
+- `content` — discriminated by `kind = "fs"` (filesystem listings) or
+  `kind = "lines"` (source line spans with render specs).
+- Render kinds are `"full"`, `"truncated"` (with `pattern`), and
+  `"ellipsis"` — check `src/schema.rs` for the exact spelling.
 
-### Render specs
+## Constraints (validator-enforced)
 
-All three render modes are output with the span's indentation. Every
-rendered line has its source line number prefix **except** `ellipsis`,
-which is a bare `…` that can stand in for one or more lines.
+Run `cargo run --bin validate-ns -- <output_path>` after each write.
+The validator prints every batch's marginal cost + cumulative + any
+violations. The main violation kinds:
 
-- `{ kind = "full" }` — emit the source line verbatim (with line-number
-  prefix).
-- `{ kind = "truncate", pattern = "<regex>" }` — emit only the regex
-  match against the source line (with line-number prefix), followed by
-  a trailing `…`. Pattern must match ≥1 char on every covered line.
-- `{ kind = "ellipsis" }` — emit a bare `…` marker, no line number,
-  no content. A later (predecessor-child) batch can replace it with a
-  `full` / `truncate` span at the same line.
-
-### Filesystem listings
-
-- `entries = "all"` — expand via `walker::fs::list_dir`.
-- `entries = ["foo.rs", "bar.rs"]` — explicit child list; names must
-  exist under `parent`.
-- A single `kind = "fs"` batch can bundle multiple groups (different
-  parents in one batch) when that's the most coherent ranking unit.
-
-## Constraints (enforced by the validator)
-
-- **2× rule**: each batch's rendered cost ≤ 2× the largest cost of any
-  earlier batch. Keeps small budgets meaningful.
-- **10k strict cap**: cumulative rendered cost ≤ 10_000 tokens total.
-- **Predecessor closure**: every `predecessor` id refers to an
-  earlier-ranked batch in the same NS.
-- **Line-range validity**: every span's file exists, `start ≤ end ≤
-  line_count(file)`.
-- **Revision-pin match**: `revision_pin` must equal
-  `<fixture_root>/.precis-pin`.
+- **GrowthEnvelope**: `cost_i ≤ 100 + 0.3·cumulative_before`. Replaces
+  the old 2× rule. Intuition: at batch 2 a new batch can roughly double
+  the aggregate (100-token base floor dominates); by batch 10 or later
+  each new batch is bounded to ~30% of current cumulative. Validator
+  message tells you `cumulative_before` and `max_allowed`. Fix by
+  splitting oversized batches, ranking smaller high-value batches
+  earlier, or both.
+- **CapExceeded**: cumulative ≤ 10_000 tokens total.
+- **PredecessorMissing / DuplicateBatchId**: structural NS consistency.
+- **SpanFileMissing / SpanInvertedRange / SpanOutOfRange**: span must
+  reference a real file with valid 1-indexed line numbers in range.
+- **RegexInvalid / RegexNoMatch**: `truncated` regex must compile and
+  match at least one non-empty character on every source line the
+  span covers.
+- **NonAncestorOverlap**: two batches' spans can overlap on the same
+  `(path, line)` only if one is the transitive predecessor of the
+  other (the later "owns" the line).
+- **FsResolveFailed**: `entries = "all"` must resolve; explicit entries
+  must exist under the parent.
 
 ## Iteration loop
 
 1. Write the TOML.
-2. Run `cargo run --bin validate-ns -- <output_path>`. It prints every
-   batch's marginal cost + cumulative + flags violations.
-3. Adjust: fix violations, *and* consider re-ranking or splitting
+2. Run `cargo run --bin validate-ns -- <output_path>`.
+3. Adjust: fix violations. Also consider re-ranking or splitting
    batches that are surprisingly large (a batch much bigger than its
-   neighbors is a signal to split or demote, even when 2×-clean).
+   neighbors is a signal to split or demote, even when envelope-clean).
 4. Repeat until the validator reports `OK`.
 
 ## Budget distribution and batch sizing
@@ -192,12 +135,9 @@ many small, a few large. Your ranking must serve small budgets too.
 
 - **Early batches must be small** — a small budget should still get
   something useful from the top.
-- **Late batches can be larger.**
-- **Cumulative cost across major groups should grow roughly
-  logarithmically** — each group's cumulative cost should be a
-  meaningful multiple of the prior group's, so a doubling of budget
-  unlocks a meaningful extra slice.
-- **Aim for ≥50 batches.** Fewer usually means missed splitting
+- **Late batches can be larger** as long as they pass the growth
+  envelope.
+- **Aim for ≥40 batches.** Fewer usually means missed splitting
   opportunities.
 
 **Threshold framing.** Think of your ranking as serving a *threshold*
@@ -211,7 +151,7 @@ bundle is a coherent, useful slice.
 - **No precis output.** Don't run `precis` or look at existing precis
   output.
 - **No precis source code or git history.** Don't browse the precis
-  implementation or its git log.
+  implementation beyond `src/schema.rs` (needed for the TOML shape).
 
 ## Process
 
@@ -221,8 +161,10 @@ bundle is a coherent, useful slice.
    on patterns from other codebases.
 2. Form a high-level mental model.
 3. Brainstorm candidate batches at varying granularity.
-4. Draft the TOML.
-5. Run validate-ns; iterate.
-6. Before declaring done: read the file end-to-end; apply the
+4. Read `src/schema.rs` for the TOML shape; optionally scan an existing
+   NS for format reference.
+5. Draft the TOML.
+6. Run validate-ns; iterate.
+7. Before declaring done: read the file end-to-end; apply the
    threshold test (for a few imaginary cut points, check the top-K
    slice is coherent).
