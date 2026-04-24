@@ -15,21 +15,7 @@ kind = "fs"
 
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/log"
-
-[batches.content.groups.entries]
-".github" = "dir"
-".gitignore" = "file"
-"CHANGELOG.md" = "file"
-"Cargo.toml" = "file"
-LICENSE-APACHE = "file"
-LICENSE-MIT = "file"
-"README.md" = "file"
-benches = "dir"
-rfcs = "dir"
-src = "dir"
-test_max_level_features = "dir"
-tests = "dir"
-"triagebot.toml" = "file"
+entries = [".github", ".gitignore", "CHANGELOG.md", "Cargo.toml", "LICENSE-APACHE", "LICENSE-MIT", "README.md", "benches", "rfcs", "src", "test_max_level_features", "tests", "triagebot.toml"]
 
 [[batches]]
 position = 2
@@ -129,9 +115,7 @@ kind = "fs"
 
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/log/.github"
-
-[batches.content.groups.entries]
-workflows = "dir"
+entries = ["workflows"]
 
 [[batches]]
 position = 6
@@ -145,9 +129,7 @@ kind = "fs"
 
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/log/benches"
-
-[batches.content.groups.entries]
-"value.rs" = "file"
+entries = ["value.rs"]
 
 [[batches]]
 position = 7
@@ -161,9 +143,7 @@ kind = "fs"
 
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/log/rfcs"
-
-[batches.content.groups.entries]
-"0296-structured-logging.md" = "file"
+entries = ["0296-structured-logging.md"]
 
 [[batches]]
 position = 8
@@ -177,13 +157,7 @@ kind = "fs"
 
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/log/src"
-
-[batches.content.groups.entries]
-"__private_api.rs" = "file"
-kv = "dir"
-"lib.rs" = "file"
-"macros.rs" = "file"
-"serde.rs" = "file"
+entries = ["__private_api.rs", "kv", "lib.rs", "macros.rs", "serde.rs"]
 
 [[batches]]
 position = 9
@@ -779,10 +753,7 @@ kind = "fs"
 
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/log/test_max_level_features"
-
-[batches.content.groups.entries]
-"Cargo.toml" = "file"
-"main.rs" = "file"
+entries = ["Cargo.toml", "main.rs"]
 
 [[batches]]
 position = 13
@@ -880,10 +851,7 @@ kind = "fs"
 
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/log/tests"
-
-[batches.content.groups.entries]
-"integration.rs" = "file"
-"macros.rs" = "file"
+entries = ["integration.rs", "macros.rs"]
 
 [[batches]]
 position = 16
@@ -2019,9 +1987,7 @@ kind = "fs"
 
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/log/.github/workflows"
-
-[batches.content.groups.entries]
-"main.yml" = "file"
+entries = ["main.yml"]
 
 [[batches]]
 position = 54
@@ -2035,13 +2001,7 @@ kind = "fs"
 
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/log/src/kv"
-
-[batches.content.groups.entries]
-"error.rs" = "file"
-"key.rs" = "file"
-"mod.rs" = "file"
-"source.rs" = "file"
-"value.rs" = "file"
+entries = ["error.rs", "key.rs", "mod.rs", "source.rs", "value.rs"]
 
 [[batches]]
 position = 55

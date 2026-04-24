@@ -2,22 +2,17 @@
 //! that the walker is judged against via the divergence metric.
 //!
 //! **Public schema surface** — these are the types an NS-author agent
-//! (or any external TOML producer) needs to understand. The rest of the
-//! schema vocabulary lives adjacent to the walker/render types it reuses:
+//! (or any external TOML producer) needs to understand:
+//! - `NorthStar` / `NsBatch` (this file) — document + per-batch shape.
+//! - [`crate::content`] — `BatchContent`, `FsGroup`, `FsEntries`, `Span`,
+//!   `Render`. Shared vocabulary with the walker/render pipeline.
 //!
-//! - [`crate::batch::BatchContent`] — `Fs { groups }` | `Lines { spans }`
-//! - [`crate::batch::FsGroup`] + [`crate::batch::FsEntries`] — filesystem
-//!   listings with the `All` / `Names(...)` / `Listed(...)` input shapes
-//! - [`crate::batch::Span`] — a line range with a render spec
-//! - [`crate::batch::Render`] — `Full` | `Truncated { pattern }` | `Ellipsis`
-//! - [`crate::batch::EntryKind`] — `File` | `Dir`
-//!
-//! Loading + resolution (expanding `FsEntries::All`/`Names` to `Listed`,
-//! checking the fixture's revision pin) lives in [`crate::ns_loader`].
+//! Loading + resolution (expanding `FsEntries::All` to `Listed`, checking
+//! the fixture's revision pin) lives in [`crate::ns_loader`].
 
 use serde::{Deserialize, Serialize};
 
-use crate::batch::BatchContent;
+use crate::content::BatchContent;
 
 /// A frozen North Star document for one fixture: ranked batches with
 /// declarative spans + render specs.

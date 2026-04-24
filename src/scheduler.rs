@@ -27,7 +27,8 @@
 use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;
 
-use crate::batch::{Batch, BatchContent, BatchId, WalkerKey};
+use crate::batch::{Batch, BatchId, WalkerKey};
+use crate::content::BatchContent;
 use crate::render::{Cost, RenderedTree, SourceCache};
 use crate::value::{ratio as score_ratio, score};
 use crate::walker::{Candidate, WalkCtx, Walker};

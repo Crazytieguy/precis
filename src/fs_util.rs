@@ -1,31 +1,35 @@
-//! Filesystem utilities used by both the NS schema resolver and the
-//! filesystem walker. Raw directory listing — no policy, no filtering
-//! beyond one precis-internal sentinel (`.precis-pin`, our fixture-
-//! revision marker file). Walker-specific heuristics (heavy-directory
-//! skip for recursive traversal, etc.) live in `walker::fs`.
+//! Filesystem utilities used by the walker and NS loader. Raw directory
+//! listing, plus the internal [`EntryKind`] used by the renderer to
+//! decide whether to trail a `/` on each name.
 
 use std::collections::BTreeMap;
 use std::path::Path;
 
-use crate::batch::EntryKind;
+use serde::{Deserialize, Serialize};
 
 /// Name of the precis-internal per-fixture revision-pin file. Never
-/// appears in listings — it's tooling metadata, not part of the fixture
-/// content being summarized.
+/// appears in listings — it's tooling metadata, not fixture content.
 pub const PRECIS_PIN_FILE: &str = ".precis-pin";
 
-/// Read a directory's immediate children into a name-keyed map. Names are
-/// produced via `to_string_lossy` — non-UTF-8 paths (rare in practice)
-/// lose information, accepted so filesystem listings round-trip through
-/// TOML for schedule snapshots.
+/// Directory entry kind. Internal to the walker + renderer; not part of
+/// the public batch content vocabulary.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord, Serialize, Deserialize)]
+#[serde(rename_all = "lowercase")]
+pub enum EntryKind {
+    File,
+    #[serde(rename = "dir")]
+    Directory,
+}
+
+/// Read a directory's immediate children into a name-keyed map. Names
+/// are lossy UTF-8 (rare non-UTF-8 paths lose information, accepted so
+/// names round-trip through TOML).
 ///
-/// Filtering: none, except the precis-internal `.precis-pin` file. In
-/// particular, hidden dotfiles (`.github`, `.gitignore`, `.dockerignore`,
-/// etc.) are surfaced — a fixture's configuration is part of its content
-/// and should be visible to the walker and NS. Gitignored files don't
-/// appear in fixtures (clone_fixtures strips `.git` and fixtures contain
-/// only tracked files), so gitignore filtering is deferred until precis
-/// is used on real-world repos.
+/// No filtering beyond the precis-internal `.precis-pin` file. Hidden
+/// dotfiles (`.github`, `.gitignore`, etc.) are fixture content and
+/// appear in listings. Gitignored files don't appear in the fixture
+/// set today (clone_fixtures strips `.git` and fixtures contain only
+/// tracked files).
 pub fn list_dir(path: &Path) -> BTreeMap<String, EntryKind> {
     let Ok(read_dir) = std::fs::read_dir(path) else {
         return BTreeMap::new();

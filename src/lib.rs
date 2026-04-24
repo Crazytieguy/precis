@@ -3,6 +3,7 @@ use std::path::Path;
 use anyhow::{Context, Result, anyhow, bail};
 
 pub mod batch;
+pub mod content;
 pub mod divergence;
 pub mod fs_util;
 pub mod north_star;
@@ -16,10 +17,10 @@ pub mod value;
 pub mod walker;
 
 pub use batch::{
-    Batch, BatchContent, BatchKey, EntryKind, FsEntries, FsGroup, FsKey, MarkdownKey, Render,
-    ResolvedBatch, RustKey, Span, TomlKey, ValueSignals, WalkerKey,
+    Batch, BatchKey, FsKey, MarkdownKey, ResolvedBatch, RustKey, TomlKey, ValueSignals, WalkerKey,
 };
-pub use fs_util::list_dir;
+pub use content::{BatchContent, FsEntries, FsGroup, Render, Span};
+pub use fs_util::{EntryKind, list_dir};
 pub use render::{Cost, RenderedTree, SourceCache};
 pub use schedule_types::{Atom, Schedule, ScheduledBatch};
 

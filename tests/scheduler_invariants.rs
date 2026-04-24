@@ -3,14 +3,11 @@
 //! prove the assertions actually fire (and the happy-path cases work) by
 //! constructing the relevant cases.
 
-use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
-use precis::batch::{
-    BatchContent, BatchKey, EntryKind, FsGroup, FsKey, Render, ResolvedBatch, RustKey, Span,
-    ValueSignals,
-};
+use precis::batch::{BatchKey, FsKey, ResolvedBatch, RustKey, ValueSignals};
+use precis::content::{BatchContent, FsEntries, FsGroup, Render, Span};
 use precis::render::SourceCache;
 use precis::scheduler::Scheduler;
 use precis::walker::{Candidate, WalkCtx, Walker};
@@ -24,10 +21,8 @@ fn sig(n: f64) -> ValueSignals {
     }
 }
 
-fn one_child(name: &str, kind: EntryKind) -> BTreeMap<String, EntryKind> {
-    let mut m = BTreeMap::new();
-    m.insert(name.to_string(), kind);
-    m
+fn one_child(name: &str) -> FsEntries {
+    FsEntries::Listed(vec![PathBuf::from(name)])
 }
 
 fn single_span(path: PathBuf, start: usize, end: usize, render: Render) -> Vec<Span> {
@@ -100,10 +95,7 @@ fn scheduler_invariants_override_via_predecessor_chain() {
                     content: BatchContent::Fs {
                         groups: vec![FsGroup {
                             parent: dir.clone(),
-                            entries: precis::FsEntries::listed(one_child(
-                                "synthetic.rs",
-                                EntryKind::File,
-                            )),
+                            entries: one_child("synthetic.rs"),
                         }],
                     },
                     signals: sig(0.9),
@@ -189,10 +181,7 @@ fn scheduler_invariants_tiny_budget_truncates_cleanly() {
                     content: BatchContent::Fs {
                         groups: vec![FsGroup {
                             parent: dir.clone(),
-                            entries: precis::FsEntries::listed(one_child(
-                                "synthetic.rs",
-                                EntryKind::File,
-                            )),
+                            entries: one_child("synthetic.rs"),
                         }],
                     },
                     signals: sig(0.9),
@@ -276,7 +265,7 @@ fn scheduler_invariants_non_predecessor_overlap_panics_in_debug() {
                     content: BatchContent::Fs {
                         groups: vec![FsGroup {
                             parent: dir.clone(),
-                            entries: precis::FsEntries::listed(one_child("f.rs", EntryKind::File)),
+                            entries: one_child("f.rs"),
                         }],
                     },
                     signals: sig(0.9),

@@ -10,7 +10,7 @@ use std::path::PathBuf;
 
 use serde::{Deserialize, Serialize};
 
-use crate::batch::BatchContent;
+use crate::content::BatchContent;
 
 /// Complete scheduling result for one `render_schedule(fixture, budget)`
 /// invocation.

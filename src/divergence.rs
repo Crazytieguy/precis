@@ -25,7 +25,7 @@ use std::path::{Path, PathBuf};
 
 use anyhow::Result;
 
-use crate::batch::{BatchContent, Render, Span};
+use crate::content::{BatchContent, Render, Span};
 use crate::north_star::NorthStar;
 use crate::ns_loader::resolve_content;
 use crate::render::SourceCache;
@@ -131,7 +131,7 @@ fn atoms_from_content(
         BatchContent::Fs { groups } => {
             let mut out = Vec::new();
             for g in groups {
-                let Some(children) = g.entries.as_listed() else {
+                let Some(paths) = g.entries.as_listed() else {
                     debug_assert!(
                         false,
                         "unresolved FsEntries in divergence at {}",
@@ -139,11 +139,14 @@ fn atoms_from_content(
                     );
                     continue;
                 };
-                for name in children.keys() {
+                for p in paths {
+                    let Some(name) = p.file_name().and_then(|n| n.to_str()) else {
+                        continue;
+                    };
                     out.push(GradedAtom {
                         atom: Atom::Fs {
                             parent: g.parent.clone(),
-                            entry: name.clone(),
+                            entry: name.to_string(),
                         },
                         bytes: 1,
                     });

@@ -1,17 +1,15 @@
 //! North Star loading + resolution. Parses NS TOML, verifies the
-//! revision-pin invariant, and expands `FsEntries::All` / `Names`
-//! sentinels into concrete `Listed(...)` maps via [`crate::fs_util`].
+//! revision-pin invariant, and expands `FsEntries::All` into a concrete
+//! listing via [`crate::fs_util`].
 //!
-//! Separated from [`crate::north_star`] (types-only) and from
-//! [`crate::batch`] (public schema vocabulary) so the types stay a clean
-//! public surface.
+//! Separated from [`crate::north_star`] (types-only) so the schema
+//! surface the NS author reads stays a clean public interface.
 
-use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 
 use anyhow::{Context, Result, anyhow, bail};
 
-use crate::batch::{BatchContent, EntryKind, FsEntries, FsGroup, Span};
+use crate::content::{BatchContent, FsEntries, FsGroup, Span};
 use crate::fs_util::list_dir;
 use crate::north_star::NorthStar;
 
@@ -50,9 +48,10 @@ pub fn load_ns(ns_path: &Path) -> Result<NorthStar> {
 }
 
 /// Resolve an NS `BatchContent` against the fixture root. Absolutizes
-/// span paths; expands `FsEntries::All` / `Names` into a concrete
-/// `Listed(...)` map via [`list_dir`] (same utility the walker uses, so
-/// NS and walker see identical filesystem content).
+/// span paths; expands `FsEntries::All` into a concrete `Listed(paths)`
+/// via [`list_dir`] (same utility the walker uses, so NS and walker
+/// see identical filesystem content); verifies each `Listed` child
+/// exists.
 pub fn resolve_content(content: &BatchContent, fixture_root: &Path) -> Result<BatchContent> {
     match content {
         BatchContent::Lines { spans } => {
@@ -78,8 +77,12 @@ pub fn resolve_content(content: &BatchContent, fixture_root: &Path) -> Result<Ba
 }
 
 fn resolve_fs_group(group: &FsGroup, fixture_root: &Path) -> Result<FsGroup> {
-    let parent_abs = fixture_root.join(&group.parent);
-    let children = match &group.entries {
+    let parent_abs = if group.parent.is_absolute() {
+        group.parent.clone()
+    } else {
+        fixture_root.join(&group.parent)
+    };
+    let entries = match &group.entries {
         FsEntries::All => {
             let listed = list_dir(&parent_abs);
             if listed.is_empty() && !parent_abs.exists() {
@@ -88,35 +91,28 @@ fn resolve_fs_group(group: &FsGroup, fixture_root: &Path) -> Result<FsGroup> {
                     parent_abs.display()
                 );
             }
-            listed
+            FsEntries::Listed(listed.into_keys().map(PathBuf::from).collect())
         }
-        FsEntries::Names(names) => {
+        FsEntries::Listed(paths) => {
             let probed = list_dir(&parent_abs);
-            let mut children: BTreeMap<String, EntryKind> = BTreeMap::new();
-            for name in names {
-                let kind = probed.get(name).copied().ok_or_else(|| {
-                    anyhow!(
+            for p in paths {
+                let name = p
+                    .file_name()
+                    .and_then(|n| n.to_str())
+                    .ok_or_else(|| anyhow!("NS fs entry path is not a valid name: {p:?}"))?;
+                if !probed.contains_key(name) {
+                    bail!(
                         "NS fs group at {} lists entry {:?} which is not present under parent",
                         parent_abs.display(),
                         name
-                    )
-                })?;
-                children.insert(name.clone(), kind);
+                    );
+                }
             }
-            children
+            FsEntries::Listed(paths.clone())
         }
-        FsEntries::Listed(m) => m.clone(),
     };
     Ok(FsGroup {
-        parent: resolve_parent(&group.parent, fixture_root),
-        entries: FsEntries::Listed(children),
+        parent: parent_abs,
+        entries,
     })
-}
-
-fn resolve_parent(parent: &Path, fixture_root: &Path) -> PathBuf {
-    if parent.is_absolute() {
-        parent.to_path_buf()
-    } else {
-        fixture_root.join(parent)
-    }
 }

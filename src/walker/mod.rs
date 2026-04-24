@@ -28,7 +28,8 @@ use std::sync::Arc;
 
 use tree_sitter::{Language, Tree};
 
-use crate::batch::{BatchContent, Render, ResolvedBatch, Span, ValueSignals, WalkerKey};
+use crate::batch::{ResolvedBatch, ValueSignals, WalkerKey};
+use crate::content::{BatchContent, Render, Span};
 use crate::render::SourceCache;
 
 pub mod fs;

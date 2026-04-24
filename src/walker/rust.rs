@@ -27,7 +27,8 @@ use std::sync::Arc;
 
 use tree_sitter::{Node, Tree};
 
-use crate::batch::{BatchContent, BatchKey, FsKey, ResolvedBatch, RustKey, Span, ValueSignals};
+use crate::batch::{BatchKey, FsKey, ResolvedBatch, RustKey, ValueSignals};
+use crate::content::{BatchContent, Span};
 use crate::value::{depth_factor, non_essential_factor};
 
 use super::{

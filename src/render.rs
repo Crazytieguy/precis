@@ -16,7 +16,9 @@ use std::path::{Path, PathBuf};
 use std::rc::Rc;
 use std::sync::Arc;
 
-use crate::batch::{Batch, BatchContent, BatchId, EntryKind, FsGroup, Render, Span};
+use crate::batch::{Batch, BatchId};
+use crate::content::{BatchContent, FsGroup, Render, Span};
+use crate::fs_util::{EntryKind, list_dir};
 use crate::tokenizer;
 
 const INDENT_UNIT: &str = "    ";
@@ -175,7 +177,7 @@ impl RenderedTree {
     fn cost_fs_groups(&self, groups: &[FsGroup]) -> Cost {
         let mut cost = Cost::default();
         for group in groups {
-            let Some(children) = group.entries.as_listed() else {
+            let Some(paths) = group.entries.as_listed() else {
                 debug_assert!(
                     false,
                     "unresolved FsEntries reached cost path at {}",
@@ -183,23 +185,28 @@ impl RenderedTree {
                 );
                 continue;
             };
-            cost = cost + self.cost_one_listing(&group.parent, children);
+            cost = cost + self.cost_one_listing(&group.parent, paths);
         }
         cost
     }
 
-    fn cost_one_listing(&self, parent: &Path, children: &BTreeMap<String, EntryKind>) -> Cost {
+    fn cost_one_listing(&self, parent: &Path, paths: &[PathBuf]) -> Cost {
         let indent_depth = self.depth_from_root(parent);
         let already_listed = match self.nodes.get(parent) {
             Some(TreeNode::Dir { children }) => Some(children),
             _ => None,
         };
+        let probed = list_dir(parent);
         let mut cost = Cost::default();
-        for (name, kind) in children {
+        for p in paths {
+            let Some(name) = p.file_name().and_then(|n| n.to_str()) else {
+                continue;
+            };
             if already_listed.is_some_and(|c| c.contains_key(name)) {
                 continue;
             }
-            let row = format_entry_row(name, *kind, indent_depth);
+            let kind = probed.get(name).copied().unwrap_or(EntryKind::File);
+            let row = format_entry_row(name, kind, indent_depth);
             cost.tokens += tokenizer::count(&row);
             cost.bytes += row.len();
         }
@@ -257,7 +264,7 @@ impl RenderedTree {
 
     fn apply_fs_group(&mut self, group: &FsGroup) {
         let parent = &group.parent;
-        let Some(children) = group.entries.as_listed() else {
+        let Some(paths) = group.entries.as_listed() else {
             debug_assert!(
                 false,
                 "unresolved FsEntries reached apply path at {}",
@@ -265,7 +272,16 @@ impl RenderedTree {
             );
             return;
         };
-        for (name, kind) in children {
+        let probed = list_dir(parent);
+        let resolved: Vec<(String, EntryKind)> = paths
+            .iter()
+            .filter_map(|p| {
+                let name = p.file_name().and_then(|n| n.to_str())?.to_string();
+                let kind = probed.get(&name).copied().unwrap_or(EntryKind::File);
+                Some((name, kind))
+            })
+            .collect();
+        for (name, kind) in &resolved {
             let child_path = parent.join(name);
             self.nodes.entry(child_path).or_insert_with(|| match kind {
                 EntryKind::Directory => TreeNode::empty_dir(),
@@ -283,8 +299,8 @@ impl RenderedTree {
             debug_assert!(false, "FsGroup parent {} is a File node", parent.display());
             return;
         };
-        for (name, kind) in children {
-            parent_children.entry(name.clone()).or_insert(*kind);
+        for (name, kind) in resolved {
+            parent_children.entry(name).or_insert(kind);
         }
     }
 

@@ -6,9 +6,9 @@
 
 use std::path::{Path, PathBuf};
 
-use crate::batch::{
-    BatchContent, BatchKey, EntryKind, FsGroup, FsKey, ResolvedBatch, ValueSignals,
-};
+use crate::batch::{BatchKey, FsKey, ResolvedBatch, ValueSignals};
+use crate::content::{BatchContent, FsEntries, FsGroup};
+use crate::fs_util::EntryKind;
 pub use crate::fs_util::list_dir;
 use crate::value::{depth_factor, non_essential_factor};
 
@@ -48,11 +48,12 @@ pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
     if children.is_empty() {
         return None;
     }
+    let paths: Vec<PathBuf> = children.into_keys().map(PathBuf::from).collect();
     Some(ResolvedBatch {
         content: BatchContent::Fs {
             groups: vec![FsGroup {
                 parent: dir.clone(),
-                entries: crate::batch::FsEntries::listed(children),
+                entries: FsEntries::Listed(paths),
             }],
         },
         signals: dir_listing_signals_for_path(dir, dir == ctx.root(), ctx.depth_from_root(dir)),

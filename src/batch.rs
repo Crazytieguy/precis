@@ -1,36 +1,22 @@
-//! Batch data types. A **batch** is the atomic scheduling unit: a named subset
-//! of source content the walker proposes to render. The scheduler picks
-//! batches greedily by value/cost ratio within a token budget.
-//!
+//! Walker/scheduler internals. A **batch** is the atomic scheduling
+//! unit: a named subset of source content the walker proposes to render.
 //! Two layers of identity:
 //!
-//! - [`BatchKey`] is a **semantic, walker-defined** name for a batch
-//!   (e.g. `Rust(RustKey::PubDecls { src_dir })`). Walkers use keys to refer
-//!   to each other's batches, including predecessor edges that cross files.
-//!   Keys are emitted during `expand()` before their content has been parsed;
-//!   they're stable through materialization.
-//! - [`BatchId`] is the scheduler's internal index assigned when a batch is
-//!   *materialized*. Walkers never see `BatchId`s.
+//! - [`BatchKey`] is a walker-defined semantic name. Walkers declare
+//!   predecessor edges by naming keys, so edges can be set up before
+//!   any file is parsed. Stable through materialization.
+//! - [`BatchId`] is the scheduler's internal index assigned at
+//!   materialization time. Walkers never see ids.
 //!
-//! The key/id split is what makes lazy materialization and cross-file
-//! batches possible: a walker can emit "rustdoc refinement has `PubDecls` as
-//! predecessor" before either has been parsed, by naming keys.
-//!
-//! **Content model — spans, not materialized text.** A `BatchContent::Lines`
-//! value carries `Vec<Span>` where each span declares *which* source lines
-//! to include and *how* to render them (`Full`, `Truncated { pattern }`,
-//! `Ellipsis`). Materialization happens at render/cost time by reading the
-//! source file through the `RenderedTree`'s shared source cache. This keeps
-//! the NS schema and the walker on the same expressive substrate: both
-//! produce `Vec<Span>` values, both materialize identically.
+//! Content vocabulary shared with the NS schema lives in
+//! [`crate::content`]; this file is only walker/scheduler-internal.
 
-use std::collections::BTreeMap;
 use std::path::PathBuf;
 
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use crate::content::BatchContent;
 
-/// Scheduler-internal batch index. Assigned at materialization time; walkers
-/// never see these.
+/// Scheduler-internal batch index. Assigned at materialization time;
+/// walkers never see these.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub struct BatchId(usize);
 
@@ -43,10 +29,10 @@ impl BatchId {
     }
 }
 
-/// Semantic batch identity. Named by the walker that produces it. Stable
-/// across materialization — the same key always refers to the same batch.
-/// Walkers declare predecessor edges by naming `BatchKey`s, so they can be
-/// set up before any file is parsed.
+/// Default walker-key sum used by [`crate::walker::multi::MultiWalker`].
+/// Scheduler/render code depends on the [`WalkerKey`] trait, not on
+/// this enum — a new walker implementing [`WalkerKey`] can be added
+/// without touching either.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum BatchKey {
     Fs(FsKey),
@@ -147,11 +133,9 @@ pub enum TomlKey {
     Dependencies { file: PathBuf },
 }
 
-/// Opaque walker-key contract. The scheduler + renderer depend on this
-/// trait instead of any concrete walker-specific enum, so a new walker
-/// can be added without touching them. Concrete `Walker::Key` types
-/// (typically an enum the walker defines) implement this; `BatchKey`
-/// below is the default sum used by [`crate::walker::multi::MultiWalker`].
+/// Opaque walker-key contract. Scheduler + renderer depend on this trait
+/// instead of any concrete walker-specific enum, so a new walker can be
+/// added without touching them.
 ///
 /// `Clone + Eq + Hash` support the scheduler's key-to-id map and dead
 /// set; `Ord` gives deterministic tiebreaks; `Debug` is for panic
@@ -254,202 +238,40 @@ impl TomlKey {
     }
 }
 
-/// Render a path as it should appear in a descriptor — lossy UTF-8 of the
-/// path string. For absolute fixture paths we show only the last few
-/// components to keep descriptors short. Kept local to batch.rs; the
-/// schedule-snapshot serializer will typically post-process for its own
-/// needs.
 fn display_path(path: &std::path::Path) -> String {
     path.display().to_string()
 }
 
-/// A materialized batch: just the rendered content + the walker-supplied
-/// value signals. The scheduler stores its own key/predecessor bookkeeping
-/// alongside (see `scheduler::BatchEntry`); they're not fields of `Batch`
-/// because the renderer/cost/divergence paths only ever read
-/// `content`+`signals`, and the validator/divergence previously had to
-/// forge fake keys to populate those fields. Dropping them eliminates
-/// that kludge entirely.
+/// A materialized batch handed to the renderer: content + value signals.
+/// The scheduler tracks key/predecessor bookkeeping separately.
 #[derive(Debug, Clone)]
 pub struct Batch {
     pub content: BatchContent,
     pub signals: ValueSignals,
 }
 
-/// What a materializer returns. Scheduler stamps the `BatchId` and absorbs
-/// it into the frontier; walkers never see ids.
+/// What a walker's materializer returns; the scheduler stamps an id and
+/// absorbs it into the frontier.
 #[derive(Debug, Clone)]
 pub struct ResolvedBatch {
     pub content: BatchContent,
     pub signals: ValueSignals,
 }
 
-/// Batch content. Either filesystem-level entries (one or more directory
-/// listings grouped together) or a set of line-range spans with render
-/// specs. Same type used by the walker (always fully-resolved) and the
-/// NS schema (may carry [`FsEntries::All`] / `FsEntries::Names` sentinels
-/// that get expanded to `Listed` at NS load time).
-#[derive(Debug, Clone, Serialize, Deserialize)]
-#[serde(tag = "kind", rename_all = "lowercase")]
-pub enum BatchContent {
-    /// One or more filesystem listings. Authored NS batches can bundle
-    /// multiple parents together (e.g. `docs/ + config/ + config/themes/`);
-    /// the walker's filesystem walker emits single-parent batches today.
-    Fs { groups: Vec<FsGroup> },
-    /// Source line ranges. Each span declares lines and a render spec;
-    /// the render pipeline materializes by reading source at cost/apply/
-    /// render time. Within one batch's spans, if two overlap on the same
-    /// `(path, line)` the stronger render spec wins (Full > Truncated > Ellipsis).
-    Lines { spans: Vec<Span> },
-}
-
-/// A single filesystem listing: one parent directory and its children.
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct FsGroup {
-    /// Parent directory path. Absolute for walker-emitted groups; NS
-    /// groups are relativized in TOML and absolutized at load time.
-    pub parent: PathBuf,
-    /// Children under `parent`. See [`FsEntries`] for the three shapes
-    /// this can take.
-    pub entries: FsEntries,
-}
-
-/// Filesystem-listing contents. Two input shapes (from NS TOML) and one
-/// post-resolution shape; walker always emits the post-resolution form.
-///
-/// - `All` — NS sentinel meaning "every child under `parent`". Expanded
-///   to `Listed` at NS load time via `fs_util::list_dir`. Never emitted
-///   by the walker; post-resolution invariant is no `All` variants.
-/// - `Names` — NS input listing a subset of child names by string.
-///   Each name must exist under `parent`; load-time resolution probes
-///   and attaches the kind to produce `Listed`.
-/// - `Listed` — concrete: child-name → kind. Walker-emitted and
-///   post-resolution NS form.
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub enum FsEntries {
-    All,
-    Names(Vec<String>),
-    Listed(BTreeMap<String, EntryKind>),
-}
-
-impl FsEntries {
-    /// Convenience constructor for walker code that always produces a
-    /// resolved listing.
-    pub fn listed(children: BTreeMap<String, EntryKind>) -> Self {
-        FsEntries::Listed(children)
-    }
-
-    /// Access the resolved child map. Returns `None` for unresolved
-    /// (`All` / `Names`) variants — callers past NS load should never
-    /// see these.
-    pub fn as_listed(&self) -> Option<&BTreeMap<String, EntryKind>> {
-        match self {
-            FsEntries::Listed(m) => Some(m),
-            _ => None,
-        }
-    }
-}
-
-impl Serialize for FsEntries {
-    fn serialize<S: Serializer>(&self, s: S) -> Result<S::Ok, S::Error> {
-        match self {
-            FsEntries::All => s.serialize_str("all"),
-            FsEntries::Names(names) => names.serialize(s),
-            FsEntries::Listed(map) => map.serialize(s),
-        }
-    }
-}
-
-impl<'de> Deserialize<'de> for FsEntries {
-    fn deserialize<D: Deserializer<'de>>(d: D) -> Result<Self, D::Error> {
-        #[derive(Deserialize)]
-        #[serde(untagged)]
-        enum Repr {
-            Str(String),
-            Names(Vec<String>),
-            Listed(BTreeMap<String, EntryKind>),
-        }
-        match Repr::deserialize(d)? {
-            Repr::Str(s) if s == "all" => Ok(FsEntries::All),
-            Repr::Str(s) => Err(serde::de::Error::custom(format!(
-                "invalid entries sentinel {s:?}; expected \"all\" or a map/list"
-            ))),
-            Repr::Names(v) => Ok(FsEntries::Names(v)),
-            Repr::Listed(m) => Ok(FsEntries::Listed(m)),
-        }
-    }
-}
-
-/// A contiguous range of source lines in one file, plus how to render them.
-/// Both walker and NS schema produce these.
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct Span {
-    pub path: PathBuf,
-    /// Inclusive, 1-indexed.
-    pub start: usize,
-    /// Inclusive, 1-indexed. For a single line, `start == end`.
-    pub end: usize,
-    pub render: Render,
-}
-
-/// How to render a line. The render pipeline materializes by reading the
-/// source file and applying the spec per line.
-///
-/// - `Full`: emit the source line verbatim with its line-number prefix.
-/// - `Truncated { pattern }`: emit only the regex match of `pattern` against
-///   the source line, followed by a trailing `…`. The pattern must match
-///   at least one character on every line the span covers (validated at
-///   schema load for NS spans; walker spans don't use `Truncated` today).
-/// - `Ellipsis`: emit a `…` marker at that source-line position with no
-///   line-number prefix. A descendant batch can later replace this line
-///   with a `Full` or `Truncated` span at the same `(path, line)`.
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-#[serde(tag = "kind", rename_all = "lowercase")]
-pub enum Render {
-    Full,
-    Truncated { pattern: String },
-    Ellipsis,
-}
-
-impl Render {
-    /// Priority when two spans overlap on the same (path, line):
-    /// Full > Truncated > Ellipsis.
-    pub(crate) fn priority(&self) -> u8 {
-        match self {
-            Render::Full => 3,
-            Render::Truncated { .. } => 2,
-            Render::Ellipsis => 1,
-        }
-    }
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord, Serialize, Deserialize)]
-#[serde(rename_all = "lowercase")]
-pub enum EntryKind {
-    File,
-    #[serde(rename = "dir")]
-    Directory,
-}
-
-/// Multi-signal value inputs. The [`ValueModel`](crate::value::ValueModel)
-/// composes these into an `f64` value; walkers don't see the weights.
+/// Multi-signal value inputs. Walkers fill these in; the value model
+/// composes them into a scalar for ranking.
 ///
 /// Each signal is a 0..1 score:
-/// - `catastrophic_omission`: harm if the agent never sees this content
-///   (e.g. root listing, crate identity, macro-name list).
-/// - `follow_up_minimization`: tool calls this saves vs. not including it
-///   (e.g. public API decls, README).
+/// - `catastrophic_omission`: harm if the agent never sees this content.
+/// - `follow_up_minimization`: tool calls this content saves.
 /// - `zero_tool_call_understanding`: does seeing this complete a mental
-///   model so the agent can reason without a follow-up at all (e.g. lede
-///   paragraph, whole SUMMARY.md).
+///   model so the agent can reason without follow-up.
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct ValueSignals {
     pub catastrophic_omission: f64,
     pub follow_up_minimization: f64,
     pub zero_tool_call_understanding: f64,
-    /// Relative-depth adjustment: multiplied into the final value. Values
-    /// under 1.0 down-rank content that's deep in the tree or under
-    /// `tests/`/`examples/`; values above 1.0 up-rank entrypoint files.
+    /// Relative-depth adjustment: multiplied into the final value.
     pub depth_factor: f64,
 }
 

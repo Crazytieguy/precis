@@ -8,7 +8,8 @@ use std::path::{Path, PathBuf};
 
 use anyhow::Result;
 
-use crate::batch::{Batch, BatchContent, BatchId, Render, Span, ValueSignals};
+use crate::batch::{Batch, BatchId, ValueSignals};
+use crate::content::{BatchContent, Render, Span};
 use crate::north_star::NorthStar;
 use crate::ns_loader::resolve_content;
 use crate::render::{Cost, RenderedTree, SourceCache};

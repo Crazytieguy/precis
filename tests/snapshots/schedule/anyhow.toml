@@ -15,18 +15,7 @@ kind = "fs"
 
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/anyhow"
-
-[batches.content.groups.entries]
-".github" = "dir"
-".gitignore" = "file"
-"Cargo.toml" = "file"
-LICENSE-APACHE = "file"
-LICENSE-MIT = "file"
-"README.md" = "file"
-"build.rs" = "file"
-"rust-toolchain.toml" = "file"
-src = "dir"
-tests = "dir"
+entries = [".github", ".gitignore", "Cargo.toml", "LICENSE-APACHE", "LICENSE-MIT", "README.md", "build.rs", "rust-toolchain.toml", "src", "tests"]
 
 [[batches]]
 position = 2
@@ -76,10 +65,7 @@ kind = "fs"
 
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/anyhow/.github"
-
-[batches.content.groups.entries]
-"FUNDING.yml" = "file"
-workflows = "dir"
+entries = ["FUNDING.yml", "workflows"]
 
 [[batches]]
 position = 5
@@ -93,20 +79,7 @@ kind = "fs"
 
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/anyhow/src"
-
-[batches.content.groups.entries]
-"backtrace.rs" = "file"
-"chain.rs" = "file"
-"context.rs" = "file"
-"ensure.rs" = "file"
-"error.rs" = "file"
-"fmt.rs" = "file"
-"kind.rs" = "file"
-"lib.rs" = "file"
-"macros.rs" = "file"
-"nightly.rs" = "file"
-"ptr.rs" = "file"
-"wrapper.rs" = "file"
+entries = ["backtrace.rs", "chain.rs", "context.rs", "ensure.rs", "error.rs", "fmt.rs", "kind.rs", "lib.rs", "macros.rs", "nightly.rs", "ptr.rs", "wrapper.rs"]
 
 [[batches]]
 position = 6
@@ -1530,9 +1503,7 @@ kind = "fs"
 
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/anyhow/.github/workflows"
-
-[batches.content.groups.entries]
-"ci.yml" = "file"
+entries = ["ci.yml"]
 
 [[batches]]
 position = 52
@@ -1546,26 +1517,7 @@ kind = "fs"
 
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/anyhow/tests"
-
-[batches.content.groups.entries]
-common = "dir"
-"compiletest.rs" = "file"
-crate = "dir"
-drop = "dir"
-"test_autotrait.rs" = "file"
-"test_backtrace.rs" = "file"
-"test_boxed.rs" = "file"
-"test_chain.rs" = "file"
-"test_context.rs" = "file"
-"test_convert.rs" = "file"
-"test_downcast.rs" = "file"
-"test_ensure.rs" = "file"
-"test_ffi.rs" = "file"
-"test_fmt.rs" = "file"
-"test_macros.rs" = "file"
-"test_repr.rs" = "file"
-"test_source.rs" = "file"
-ui = "dir"
+entries = ["common", "compiletest.rs", "crate", "drop", "test_autotrait.rs", "test_backtrace.rs", "test_boxed.rs", "test_chain.rs", "test_context.rs", "test_convert.rs", "test_downcast.rs", "test_ensure.rs", "test_ffi.rs", "test_fmt.rs", "test_macros.rs", "test_repr.rs", "test_source.rs", "ui"]
 
 [[batches]]
 position = 53
@@ -1715,9 +1667,7 @@ kind = "fs"
 
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/anyhow/tests/common"
-
-[batches.content.groups.entries]
-"mod.rs" = "file"
+entries = ["mod.rs"]
 
 [[batches]]
 position = 58
@@ -1867,11 +1817,7 @@ kind = "fs"
 
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/anyhow/tests/crate"
-
-[batches.content.groups.entries]
-".gitignore" = "file"
-"Cargo.toml" = "file"
-"test.rs" = "file"
+entries = [".gitignore", "Cargo.toml", "test.rs"]
 
 [[batches]]
 position = 63
@@ -1921,9 +1867,7 @@ kind = "fs"
 
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/anyhow/tests/drop"
-
-[batches.content.groups.entries]
-"mod.rs" = "file"
+entries = ["mod.rs"]
 
 [[batches]]
 position = 66
@@ -2241,22 +2185,7 @@ kind = "fs"
 
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/anyhow/tests/ui"
-
-[batches.content.groups.entries]
-"chained-comparison.rs" = "file"
-"chained-comparison.stderr" = "file"
-"empty-ensure.rs" = "file"
-"empty-ensure.stderr" = "file"
-"ensure-nonbool.rs" = "file"
-"ensure-nonbool.stderr" = "file"
-"must-use.rs" = "file"
-"must-use.stderr" = "file"
-"no-impl.rs" = "file"
-"no-impl.stderr" = "file"
-"temporary-value.rs" = "file"
-"temporary-value.stderr" = "file"
-"wrong-interpolation.rs" = "file"
-"wrong-interpolation.stderr" = "file"
+entries = ["chained-comparison.rs", "chained-comparison.stderr", "empty-ensure.rs", "empty-ensure.stderr", "ensure-nonbool.rs", "ensure-nonbool.stderr", "must-use.rs", "must-use.stderr", "no-impl.rs", "no-impl.stderr", "temporary-value.rs", "temporary-value.stderr", "wrong-interpolation.rs", "wrong-interpolation.stderr"]
 
 [[batches]]
 position = 75
