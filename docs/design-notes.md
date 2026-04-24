@@ -90,19 +90,32 @@ compare the full trajectory against the frozen NS.
   more bytes than NS asks for is fully credited but flagged (`over`).
 - **Scores**: `Sim = ∫ w(t)·overlap(t) dt / ∫ w(t) dt` with
   `w(t) = exp(−t/τ)`, `τ = 2000`; `overlap(t)` averages credit over
-  NS atoms *reachable at t* (ns-batch exp_t ≤ t), so low-t overlap is
-  no longer diluted by unreachable-by-construction atoms. Paired with
-  counters: `Reached/Total`, `Early`, `Late`, `Missing`, `Over`.
+  NS atoms *reachable at t* (ns-batch exp_t ≤ t), so low-t overlap
+  isn't diluted by unreachable-by-construction atoms. Paired with
+  headline counters: `Reached/Total`, `Early`, `Late`, `Partial`,
+  `Missing`, `Used/Budget`. `Over` is a row annotation only (it's
+  always fully credited, so counting it was tautological).
 - **Report**: `tests/divergence/<fixture>.md`. Line 1 grep-able scores.
-  Body: arrival ledger (one row per non-aligned NS batch showing
-  `exp_t`, `seen_t`, `credit`, `status` ∈ {aligned, early, late,
-  partial, missing}, with `+over` suffix when walker over-rendered).
-  Followed by a walker-waste section for off-NS batches with significant
-  cost. Empty sections elide; perfect alignment yields a 1-line file.
+  Body: per-tier rollup (reached/partial/missing counts + avg credit
+  per major id prefix), then an arrival ledger (one row per
+  non-aligned-or-partial NS batch with `exp_t`, `reached_t`,
+  `delta_t = reached_t - exp_t`, `credit`, `status` ∈ {aligned, early,
+  late, partial, missing}, with `+over` suffix when walker
+  over-rendered an aligned batch). Followed by a walker-waste section
+  sorted by off-NS token spend (covers both pure-waste batches and
+  batches that intersect NS but overspend on off-script atoms).
+  Empty sections elide; perfect alignment yields a 1-line file.
 
 Tunables live as module-level constants: `TAU`, `REACH_THRESHOLD`,
-`EARLY_FACTOR`, `LATE_FACTOR`, `UNMAPPED_COST_THRESHOLD`. Adjust and
-regen baselines (`UPDATE_BASELINES=1 cargo t`) to see the effect.
+`MISSING_FLOOR`, `EARLY_FACTOR`, `LATE_FACTOR`,
+`UNMAPPED_COST_THRESHOLD`. Adjust and regen baselines
+(`UPDATE_BASELINES=1 cargo t`) to see the effect.
+
+NS `exp_t` is the cumulative marginal cost of applying each NS batch
+in order to one shared `RenderedTree` — same accounting as
+`simulate_ns`. Under scheduler prefix-monotonicity (below), walker
+sub-budget behavior is the prefix of the `T_max` schedule with
+`cum_tokens ≤ t`, so the metric runs the walker once per fixture.
 
 ## Scheduler early-stop (prefix-monotone)
 

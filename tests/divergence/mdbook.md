@@ -60,56 +60,62 @@ scores: Sim=0.305 Reached=10/46 Early=1 Late=8 Partial=2 Missing=34 Used=9899/10
 | 4.15 | 9774 | — | — | 0.00 | missing | CHANGELOG 0.5 migration lede |
 | 4.16 | 9987 | — | — | 0.34 | missing | watch/serve subcommand identity |
 
-## Walker waste (cost ≥ 50, no NS intersection)
+## Walker waste (off-NS token spend ≥ 50)
 
-| first_t | cost | batch |
-|--------:|-----:|:------|
-| 9899 | 135 | crates/mdbook-core/README.md section #0 |
-| 9502 | 131 | crates/mdbook-markdown/README.md section #0 |
-| 9633 | 131 | crates/mdbook-preprocessor/README.md section #0 |
-| 9349 | 130 | crates/mdbook-renderer/README.md section #0 |
-| 9764 | 131 | crates/mdbook-summary/README.md section #0 |
-| 1477 | 115 | README headline in crates/mdbook-core/README.md |
-| 1706 | 115 | README headline in crates/mdbook-driver/README.md |
-| 1939 | 115 | README headline in crates/mdbook-html/README.md |
-| 2154 | 120 | README headline in crates/mdbook-markdown/README.md |
-| 2372 | 120 | README headline in crates/mdbook-preprocessor/README.md |
-| 2589 | 120 | README headline in crates/mdbook-renderer/README.md |
-| 2797 | 115 | README headline in crates/mdbook-summary/README.md |
-| 2921 | 50 | README headline in crates/xtask/README.md |
-| 8093 | 231 | README headline in guide/src/README.md |
-| 7597 | 68 | README headline in guide/src/cli/README.md |
-| 7728 | 111 | README headline in guide/src/for_developers/README.md |
-| 1126 | 257 | [features] in Cargo.toml |
-| 1230 | 64 | [package] in crates/mdbook-compare/Cargo.toml |
-| 1362 | 89 | [package] in crates/mdbook-core/Cargo.toml |
-| 1572 | 83 | [package] in crates/mdbook-driver/Cargo.toml |
-| 1802 | 80 | [package] in crates/mdbook-html/Cargo.toml |
-| 2034 | 83 | [package] in crates/mdbook-markdown/Cargo.toml |
-| 2252 | 86 | [package] in crates/mdbook-preprocessor/Cargo.toml |
-| 2469 | 85 | [package] in crates/mdbook-renderer/Cargo.toml |
-| 2682 | 81 | [package] in crates/mdbook-summary/Cargo.toml |
-| 2871 | 62 | [package] in crates/xtask/Cargo.toml |
-| 7296 | 50 | [package] in examples/remove-emphasis/mdbook-remove-emphasis/Cargo.toml |
-| 3015 | 62 | [package] in guide/guide-helper/Cargo.toml |
-| 4263 | 147 | crate-doc lede in crates/mdbook-driver/src/lib.rs |
-| 4757 | 103 | crate-doc lede in crates/mdbook-markdown/src/lib.rs |
-| 5169 | 101 | crate-doc lede in crates/mdbook-preprocessor/src/lib.rs |
-| 5935 | 98 | crate-doc lede in crates/mdbook-renderer/src/lib.rs |
-| 6642 | 74 | crate-doc lede in crates/mdbook-summary/src/lib.rs |
-| 6148 | 121 | impl method sigs in crates/mdbook-renderer/src/lib.rs |
-| 9063 | 549 | impl method sigs in crates/mdbook-summary/src/lib.rs |
-| 7413 | 57 | impl method sigs in guide/guide-helper/src/lib.rs |
-| 9219 | 156 | mod/use plumbing in crates/mdbook-preprocessor/src/lib.rs |
-| 8237 | 144 | mod/use plumbing in crates/mdbook-renderer/src/lib.rs |
-| 7134 | 137 | mod/use plumbing in crates/mdbook-summary/src/lib.rs |
-| 7238 | 68 | mod/use plumbing in crates/xtask/src/main.rs |
-| 7490 | 67 | mod/use plumbing in guide/guide-helper/src/lib.rs |
-| 3677 | 96 | mod/use plumbing in src/main.rs |
-| 4957 | 176 | pub item at crates/mdbook-markdown/src/lib.rs:15 |
-| 3412 | 56 | pub item at src/cmd/watch.rs:62 |
-| 5731 | 115 | pub-item doc at crates/mdbook-preprocessor/src/lib.rs:30 |
-| 6027 | 92 | pub-item doc at crates/mdbook-renderer/src/lib.rs:28 |
-| 6997 | 54 | pub-item doc at crates/mdbook-summary/src/lib.rs:84 |
-| 8321 | 84 | pub-item names surface in crates/mdbook-html/src/utils.rs |
-| 3483 | 71 | pub-item names surface in src/cmd/clean.rs |
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 549 | 1.00 | 549 | 9063 | impl method sigs in crates/mdbook-summary/src/lib.rs |
+| 274 | 0.79 | 349 | 627 | [package] in Cargo.toml |
+| 257 | 1.00 | 257 | 1126 | [features] in Cargo.toml |
+| 231 | 1.00 | 231 | 8093 | README headline in guide/src/README.md |
+| 184 | 0.64 | 290 | 6438 | pub item at crates/mdbook-renderer/src/lib.rs:40 |
+| 176 | 1.00 | 176 | 4957 | pub item at crates/mdbook-markdown/src/lib.rs:15 |
+| 156 | 1.00 | 156 | 9219 | mod/use plumbing in crates/mdbook-preprocessor/src/lib.rs |
+| 147 | 1.00 | 147 | 4263 | crate-doc lede in crates/mdbook-driver/src/lib.rs |
+| 144 | 1.00 | 144 | 8237 | mod/use plumbing in crates/mdbook-renderer/src/lib.rs |
+| 137 | 1.00 | 137 | 7134 | mod/use plumbing in crates/mdbook-summary/src/lib.rs |
+| 135 | 1.00 | 135 | 9899 | crates/mdbook-core/README.md section #0 |
+| 131 | 1.00 | 131 | 9502 | crates/mdbook-markdown/README.md section #0 |
+| 131 | 1.00 | 131 | 9633 | crates/mdbook-preprocessor/README.md section #0 |
+| 131 | 1.00 | 131 | 9764 | crates/mdbook-summary/README.md section #0 |
+| 130 | 1.00 | 130 | 9349 | crates/mdbook-renderer/README.md section #0 |
+| 129 | 0.67 | 194 | 869 | README.md section #0 |
+| 121 | 1.00 | 121 | 6148 | impl method sigs in crates/mdbook-renderer/src/lib.rs |
+| 120 | 1.00 | 120 | 2154 | README headline in crates/mdbook-markdown/README.md |
+| 120 | 1.00 | 120 | 2372 | README headline in crates/mdbook-preprocessor/README.md |
+| 120 | 1.00 | 120 | 2589 | README headline in crates/mdbook-renderer/README.md |
+| 115 | 1.00 | 115 | 1477 | README headline in crates/mdbook-core/README.md |
+| 115 | 1.00 | 115 | 1706 | README headline in crates/mdbook-driver/README.md |
+| 115 | 1.00 | 115 | 1939 | README headline in crates/mdbook-html/README.md |
+| 115 | 1.00 | 115 | 2797 | README headline in crates/mdbook-summary/README.md |
+| 115 | 1.00 | 115 | 5731 | pub-item doc at crates/mdbook-preprocessor/src/lib.rs:30 |
+| 111 | 1.00 | 111 | 7728 | README headline in guide/src/for_developers/README.md |
+| 103 | 1.00 | 103 | 4757 | crate-doc lede in crates/mdbook-markdown/src/lib.rs |
+| 101 | 1.00 | 101 | 5169 | crate-doc lede in crates/mdbook-preprocessor/src/lib.rs |
+| 98 | 1.00 | 98 | 5935 | crate-doc lede in crates/mdbook-renderer/src/lib.rs |
+| 96 | 1.00 | 96 | 3677 | mod/use plumbing in src/main.rs |
+| 95 | 0.50 | 191 | 5573 | pub item at crates/mdbook-preprocessor/src/lib.rs:51 |
+| 92 | 1.00 | 92 | 6027 | pub-item doc at crates/mdbook-renderer/src/lib.rs:28 |
+| 89 | 1.00 | 89 | 1362 | [package] in crates/mdbook-core/Cargo.toml |
+| 89 | 0.50 | 178 | 5382 | pub item at crates/mdbook-preprocessor/src/lib.rs:30 |
+| 86 | 1.00 | 86 | 2252 | [package] in crates/mdbook-preprocessor/Cargo.toml |
+| 85 | 1.00 | 85 | 2469 | [package] in crates/mdbook-renderer/Cargo.toml |
+| 84 | 1.00 | 84 | 8321 | pub-item names surface in crates/mdbook-html/src/utils.rs |
+| 83 | 0.75 | 111 | 190 | README headline in README.md |
+| 83 | 1.00 | 83 | 1572 | [package] in crates/mdbook-driver/Cargo.toml |
+| 83 | 1.00 | 83 | 2034 | [package] in crates/mdbook-markdown/Cargo.toml |
+| 81 | 1.00 | 81 | 2682 | [package] in crates/mdbook-summary/Cargo.toml |
+| 80 | 1.00 | 80 | 1802 | [package] in crates/mdbook-html/Cargo.toml |
+| 74 | 1.00 | 74 | 6642 | crate-doc lede in crates/mdbook-summary/src/lib.rs |
+| 71 | 1.00 | 71 | 3483 | pub-item names surface in src/cmd/clean.rs |
+| 68 | 1.00 | 68 | 7597 | README headline in guide/src/cli/README.md |
+| 68 | 1.00 | 68 | 7238 | mod/use plumbing in crates/xtask/src/main.rs |
+| 67 | 1.00 | 67 | 7490 | mod/use plumbing in guide/guide-helper/src/lib.rs |
+| 64 | 1.00 | 64 | 1230 | [package] in crates/mdbook-compare/Cargo.toml |
+| 62 | 1.00 | 62 | 2871 | [package] in crates/xtask/Cargo.toml |
+| 62 | 1.00 | 62 | 3015 | [package] in guide/guide-helper/Cargo.toml |
+| 57 | 1.00 | 57 | 7413 | impl method sigs in guide/guide-helper/src/lib.rs |
+| 56 | 1.00 | 56 | 3412 | pub item at src/cmd/watch.rs:62 |
+| 54 | 1.00 | 54 | 6997 | pub-item doc at crates/mdbook-summary/src/lib.rs:84 |
+| 50 | 1.00 | 50 | 2921 | README headline in crates/xtask/README.md |
+| 50 | 1.00 | 50 | 7296 | [package] in examples/remove-emphasis/mdbook-remove-emphasis/Cargo.toml |

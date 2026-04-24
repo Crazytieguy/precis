@@ -53,20 +53,25 @@ scores: Sim=0.403 Reached=12/40 Early=4 Late=7 Partial=4 Missing=24 Used=9274/10
 | 3.21 | 9850 | — | — | 0.00 | missing | Error::into_boxed_dyn_error + reallocate_* signatures |
 | 3.22 | 9967 | — | — | 0.08 | missing | Test file grouping (location batch for tests/) |
 
-## Walker waste (cost ≥ 50, no NS intersection)
+## Walker waste (off-NS token spend ≥ 50)
 
-| first_t | cost | batch |
-|--------:|-----:|:------|
-| 2585 | 133 | README.md section #3 |
-| 3942 | 269 | README.md section #4 |
-| 2349 | 291 | README headline in README.md |
-| 3369 | 67 | [package] in tests/crate/Cargo.toml |
-| 1867 | 274 | crate-doc lede in src/lib.rs |
-| 3598 | 135 | impl method sigs in tests/drop/mod.rs |
-| 4310 | 82 | listing of 'tests/ui' |
-| 3673 | 54 | mod/use plumbing in tests/drop/mod.rs |
-| 1541 | 51 | pub item at src/ptr.rs:125 |
-| 5255 | 539 | pub-item doc at src/lib.rs:468 |
-| 8034 | 1647 | pub-item doc at src/lib.rs:616 |
-| 4228 | 286 | pub-item doc at src/lib.rs:650 |
-| 2674 | 89 | pub-item names surface in src/nightly.rs |
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 1647 | 1.00 | 1647 | 8034 | pub-item doc at src/lib.rs:616 |
+| 1104 | 0.89 | 1240 | 9274 | pub-item doc at src/lib.rs:390 |
+| 665 | 0.59 | 1132 | 6387 | README.md section #1 |
+| 539 | 1.00 | 539 | 5255 | pub-item doc at src/lib.rs:468 |
+| 291 | 1.00 | 291 | 2349 | README headline in README.md |
+| 286 | 1.00 | 286 | 4228 | pub-item doc at src/lib.rs:650 |
+| 274 | 1.00 | 274 | 1867 | crate-doc lede in src/lib.rs |
+| 269 | 1.00 | 269 | 3942 | README.md section #4 |
+| 155 | 0.90 | 173 | 4690 | mod/use plumbing in src/lib.rs |
+| 135 | 1.00 | 135 | 3598 | impl method sigs in tests/drop/mod.rs |
+| 133 | 1.00 | 133 | 2585 | README.md section #3 |
+| 103 | 0.50 | 207 | 4517 | [dependencies] in Cargo.toml |
+| 89 | 1.00 | 89 | 2674 | pub-item names surface in src/nightly.rs |
+| 82 | 1.00 | 82 | 4310 | listing of 'tests/ui' |
+| 67 | 1.00 | 67 | 3369 | [package] in tests/crate/Cargo.toml |
+| 57 | 0.83 | 69 | 3239 | pub-item names surface in tests/test_ffi.rs |
+| 54 | 1.00 | 54 | 3673 | mod/use plumbing in tests/drop/mod.rs |
+| 51 | 1.00 | 51 | 1541 | pub item at src/ptr.rs:125 |

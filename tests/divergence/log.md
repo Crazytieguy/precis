@@ -20,6 +20,7 @@ scores: Sim=0.391 Reached=16/49 Early=2 Late=10 Partial=0 Missing=33 Used=9956/1
 | 1.4 | 226 | 3734 | +3508 | 1.00 | late | Crate-doc — facade abstraction + noop fallback |
 | 1.5 | 307 | 3734 | +3427 | 1.00 | late | Crate-doc — log-request shape (target, level, body) |
 | 1.6 | 496 | 257 | -239 | 0.94 | early | Cargo package identity + MSRV |
+| 2.1 | 560 | 637 | +77 | 1.00 | aligned+over | Top-level log-macro names (location batch) |
 | 2.2 | 828 | 4186 | +3358 | 1.00 | late | Public items in src/lib.rs (location batch) |
 | 2.3 | 899 | 5866 | +4967 | 1.00 | late | `Log` trait signature (three methods) |
 | 2.4 | 1123 | 8716 | +7593 | 0.86 | late | Cargo features — filter + core toggles |
@@ -61,24 +62,33 @@ scores: Sim=0.391 Reached=16/49 Early=2 Late=10 Partial=0 Missing=33 Used=9956/1
 | 6.5 | 9929 | — | — | 0.00 | missing | CHANGELOG — recent-release H2 locations |
 | 6.6 | 9985 | — | — | 0.00 | missing | RFC 0296 — top-level section headings |
 
-## Walker waste (cost ≥ 50, no NS intersection)
+## Walker waste (off-NS token spend ≥ 50)
 
-| first_t | cost | batch |
-|--------:|-----:|:------|
-| 6318 | 198 | README.md section #0 |
-| 3878 | 76 | [package] in test_max_level_features/Cargo.toml |
-| 3802 | 59 | impl method sigs in test_max_level_features/main.rs |
-| 7119 | 213 | macro_export bodies across src/kv |
-| 6906 | 67 | macro_export names across src/kv |
-| 6120 | 53 | mod/use plumbing in test_max_level_features/main.rs |
-| 9956 | 422 | pub-item doc at src/lib.rs:1003 |
-| 9534 | 410 | pub-item doc at src/lib.rs:1158 |
-| 6805 | 197 | pub-item doc at src/lib.rs:1200 |
-| 4699 | 73 | pub-item doc at src/lib.rs:1351 |
-| 8983 | 267 | pub-item doc at src/lib.rs:1375 |
-| 7682 | 213 | pub-item doc at src/lib.rs:1396 |
-| 6608 | 164 | pub-item doc at src/lib.rs:1420 |
-| 8002 | 259 | pub-item doc at src/lib.rs:1529 |
-| 6444 | 126 | pub-item doc at src/lib.rs:1611 |
-| 5067 | 100 | pub-item doc at src/lib.rs:475 |
-| 5189 | 122 | pub-item doc at src/lib.rs:636 |
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 2021 | 0.71 | 2853 | 3490 | macro_export bodies across src |
+| 422 | 1.00 | 422 | 9956 | pub-item doc at src/lib.rs:1003 |
+| 410 | 1.00 | 410 | 9534 | pub-item doc at src/lib.rs:1158 |
+| 320 | 0.80 | 401 | 5866 | pub item at src/lib.rs:1249 |
+| 313 | 0.96 | 327 | 8329 | README.md section #3 |
+| 267 | 1.00 | 267 | 8983 | pub-item doc at src/lib.rs:1375 |
+| 259 | 1.00 | 259 | 8002 | pub-item doc at src/lib.rs:1529 |
+| 213 | 1.00 | 213 | 7119 | macro_export bodies across src/kv |
+| 213 | 1.00 | 213 | 7682 | pub-item doc at src/lib.rs:1396 |
+| 198 | 1.00 | 198 | 6318 | README.md section #0 |
+| 197 | 1.00 | 197 | 6805 | pub-item doc at src/lib.rs:1200 |
+| 192 | 0.75 | 256 | 637 | macro_export names across src |
+| 164 | 1.00 | 164 | 6608 | pub-item doc at src/lib.rs:1420 |
+| 138 | 0.36 | 387 | 8716 | [features] in Cargo.toml |
+| 126 | 1.00 | 126 | 6444 | pub-item doc at src/lib.rs:1611 |
+| 122 | 1.00 | 122 | 5189 | pub-item doc at src/lib.rs:636 |
+| 117 | 0.92 | 127 | 9110 | mod/use plumbing in src/lib.rs |
+| 100 | 1.00 | 100 | 5067 | pub-item doc at src/lib.rs:475 |
+| 76 | 1.00 | 76 | 3878 | [package] in test_max_level_features/Cargo.toml |
+| 73 | 1.00 | 73 | 4699 | pub-item doc at src/lib.rs:1351 |
+| 67 | 1.00 | 67 | 6906 | macro_export names across src/kv |
+| 61 | 0.25 | 244 | 3734 | crate-doc lede in src/lib.rs |
+| 59 | 1.00 | 59 | 3802 | impl method sigs in test_max_level_features/main.rs |
+| 57 | 0.67 | 86 | 343 | README.md section #1 |
+| 54 | 0.60 | 91 | 5974 | pub-item names surface in src/__private_api.rs |
+| 53 | 1.00 | 53 | 6120 | mod/use plumbing in test_max_level_features/main.rs |

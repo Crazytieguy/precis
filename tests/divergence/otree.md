@@ -69,22 +69,28 @@ scores: Sim=0.351 Reached=19/52 Early=12 Late=5 Partial=10 Missing=23 Used=9982/
 | 9.4 | 9591 | 274 | -9317 | 1.00 | early | examples/ listing |
 | 9.5 | 9612 | 4339 | -5273 | 1.00 | early | parse/test_cases root listing |
 
-## Walker waste (cost ≥ 50, no NS intersection)
+## Walker waste (off-NS token spend ≥ 50)
 
-| first_t | cost | batch |
-|--------:|-----:|:------|
-| 4132 | 51 | docs/changelog.md section #0 |
-| 6794 | 122 | docs/changelog.md section #1 |
-| 7855 | 98 | docs/changelog.md section #2 |
-| 7757 | 58 | listing of 'src/parse/test_cases/hcl' |
-| 6672 | 51 | listing of 'src/parse/test_cases/toml' |
-| 9071 | 79 | listing of 'src/parse/test_cases/yaml' |
-| 414 | 91 | macro_export bodies across src |
-| 4807 | 119 | mod/use plumbing in src/config/mod.rs |
-| 4688 | 115 | mod/use plumbing in src/parse/mod.rs |
-| 6621 | 188 | mod/use plumbing in src/ui/mod.rs |
-| 5786 | 295 | pub item at src/config/colors.rs:162 |
-| 2745 | 65 | pub item at src/config/colors.rs:251 |
-| 2832 | 87 | pub item at src/config/colors.rs:286 |
-| 5491 | 259 | pub item at src/config/colors.rs:78 |
-| 4081 | 153 | pub item at src/config/types.rs:28 |
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 1117 | 0.98 | 1137 | 8992 | README.md section #0 |
+| 611 | 0.68 | 905 | 7699 | pub item at src/cmd.rs:13 |
+| 462 | 0.53 | 870 | 9941 | pub item at src/config/keys.rs:195 |
+| 364 | 0.86 | 425 | 5232 | impl method sigs in src/config/mod.rs |
+| 295 | 1.00 | 295 | 5786 | pub item at src/config/colors.rs:162 |
+| 259 | 1.00 | 259 | 5491 | pub item at src/config/colors.rs:78 |
+| 188 | 1.00 | 188 | 6621 | mod/use plumbing in src/ui/mod.rs |
+| 153 | 1.00 | 153 | 4081 | pub item at src/config/types.rs:28 |
+| 125 | 0.59 | 213 | 5999 | mod/use plumbing in src/main.rs |
+| 122 | 1.00 | 122 | 6794 | docs/changelog.md section #1 |
+| 119 | 1.00 | 119 | 4807 | mod/use plumbing in src/config/mod.rs |
+| 115 | 1.00 | 115 | 4688 | mod/use plumbing in src/parse/mod.rs |
+| 98 | 1.00 | 98 | 7855 | docs/changelog.md section #2 |
+| 91 | 1.00 | 91 | 414 | macro_export bodies across src |
+| 87 | 1.00 | 87 | 2832 | pub item at src/config/colors.rs:286 |
+| 79 | 1.00 | 79 | 9071 | listing of 'src/parse/test_cases/yaml' |
+| 65 | 1.00 | 65 | 2745 | pub item at src/config/colors.rs:251 |
+| 58 | 1.00 | 58 | 7757 | listing of 'src/parse/test_cases/hcl' |
+| 53 | 0.71 | 75 | 2651 | pub-item names surface in src/config/colors.rs |
+| 51 | 1.00 | 51 | 4132 | docs/changelog.md section #0 |
+| 51 | 1.00 | 51 | 6672 | listing of 'src/parse/test_cases/toml' |

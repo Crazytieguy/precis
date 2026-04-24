@@ -462,6 +462,11 @@ fn compute_sim(ctx: &BuildCtx, t_max: usize) -> f64 {
     if den > 0.0 { num / den } else { 0.0 }
 }
 
+/// `overlap(t)` has jumps at both walker batch boundaries (numerator
+/// grows as walker delivers atoms) and NS batch boundaries (denominator
+/// grows as atoms become reachable). It's right-continuous at both —
+/// the left-endpoint eval in `compute_sim` captures the correct
+/// piecewise-constant value for `(a, b]`.
 fn overlap_at(ctx: &BuildCtx, t: usize) -> f64 {
     let mut cumulative: BTreeMap<&Atom, usize> = BTreeMap::new();
     for wr in &ctx.walker_rows {
@@ -592,11 +597,14 @@ fn format_arrival_ledger(out: &mut String, ctx: &BuildCtx, arrivals: &[Arrival])
     rows.sort_by(|a, b| numeric_id_cmp(a.id, b.id));
 
     // Show rows that aren't perfectly aligned: anything that's not an
-    // `Aligned` batch with full credit (over-rendering alone is too
-    // noisy to surface — annotated only when otherwise aligned).
+    // `Aligned` batch with full credit, OR an aligned-with-full-credit
+    // batch where walker over-rendered (the `+over` annotation is its
+    // only surface — the headline counter was dropped).
     let interesting: Vec<&Row> = rows
         .iter()
-        .filter(|r| r.arrival.status != ArrivalStatus::Aligned || r.arrival.credit < 1.0)
+        .filter(|r| {
+            r.arrival.status != ArrivalStatus::Aligned || r.arrival.credit < 1.0 || r.arrival.over
+        })
         .collect();
 
     if interesting.is_empty() {
@@ -632,29 +640,62 @@ fn format_walker_waste(out: &mut String, ctx: &BuildCtx) {
         .iter()
         .flat_map(|r| r.atoms.iter().map(|a| a.atom.clone()))
         .collect();
-    let mut waste: Vec<&WalkerRow<'_>> = ctx
+
+    // For each walker batch: how much of its spend landed on atoms
+    // NS didn't ask for. Pure-waste batches (no NS intersection)
+    // contribute their full cost; mixed batches contribute in
+    // proportion to their off-NS atom share. Sort by off_tokens
+    // descending so the biggest calibration targets are at row 1.
+    struct Row<'a> {
+        wr: &'a WalkerRow<'a>,
+        off_ratio: f64,
+        off_tokens: usize,
+    }
+    let mut rows: Vec<Row<'_>> = ctx
         .walker_rows
         .iter()
         .filter(|wr| wr.batch.cost_tokens >= UNMAPPED_COST_THRESHOLD)
-        .filter(|wr| !wr.atoms.iter().any(|a| ns_atom_set.contains(&a.atom)))
+        .filter_map(|wr| {
+            if wr.atoms.is_empty() {
+                return None;
+            }
+            let total = wr.atoms.len() as f64;
+            let off = wr
+                .atoms
+                .iter()
+                .filter(|a| !ns_atom_set.contains(&a.atom))
+                .count() as f64;
+            let off_ratio = off / total;
+            let off_tokens = (off_ratio * wr.batch.cost_tokens as f64) as usize;
+            if off_tokens < UNMAPPED_COST_THRESHOLD {
+                return None;
+            }
+            Some(Row {
+                wr,
+                off_ratio,
+                off_tokens,
+            })
+        })
         .collect();
-    if waste.is_empty() {
+    if rows.is_empty() {
         return;
     }
-    // Stable sort by descriptor then by (file, line) inside — same
-    // batch-kinds cluster, independent of scheduling order.
-    waste.sort_by(|a, b| a.batch.descriptor.cmp(&b.batch.descriptor));
+    rows.sort_by(|a, b| {
+        b.off_tokens
+            .cmp(&a.off_tokens)
+            .then_with(|| a.wr.batch.descriptor.cmp(&b.wr.batch.descriptor))
+    });
 
     out.push_str(&format!(
-        "\n## Walker waste (cost ≥ {UNMAPPED_COST_THRESHOLD}, no NS intersection)\n\n"
+        "\n## Walker waste (off-NS token spend ≥ {UNMAPPED_COST_THRESHOLD})\n\n"
     ));
-    out.push_str("| first_t | cost | batch |\n");
-    out.push_str("|--------:|-----:|:------|\n");
-    for wr in &waste {
-        let rel = strip_fixture_root(&wr.batch.descriptor, &ctx.fixture_root);
+    out.push_str("| off_tokens | off_ratio | cost | first_t | batch |\n");
+    out.push_str("|-----------:|----------:|-----:|--------:|:------|\n");
+    for r in &rows {
+        let rel = strip_fixture_root(&r.wr.batch.descriptor, &ctx.fixture_root);
         out.push_str(&format!(
-            "| {} | {} | {rel} |\n",
-            wr.seen_t, wr.batch.cost_tokens
+            "| {} | {:.2} | {} | {} | {rel} |\n",
+            r.off_tokens, r.off_ratio, r.wr.batch.cost_tokens, r.wr.seen_t,
         ));
     }
 }
