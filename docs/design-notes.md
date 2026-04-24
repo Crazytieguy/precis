@@ -67,20 +67,33 @@ No paraphrasing, summarization, or invented content under any circumstances.
 
 ## Divergence metric
 
-`src/divergence.rs` — `Sim`, `OffScriptFrac`, `PredViolations`, `Coverage`
-computed from graded-atom intersection over a token-indexed coverage curve.
+`src/divergence.rs` — one report per fixture, holistic across budgets.
+Run the walker once at `T_max = 10000` (scheduler prefix-monotonicity
+means sub-budget behavior is a prefix of the T_max schedule), then
+compare the full trajectory against the frozen NS.
 
-- Atoms: `Line(path, line)` graded by render spec (Full=1.0, Truncated=0.6,
-  Ellipsis=0.3); `Fs(parent, entry)` always 1.0.
-- Credit: `min(g_walker, g_ns) / g_ns` — walker ≥ NS = 1.0, walker<NS = partial.
-- `Sim = ∫ w(t) · overlap(t) dt / ∫ w(t) dt` with `w(t) = exp(−t/τ)`,
-  `τ = 2000`. First 2000 tokens carry ~63% of the mass.
-- Report format (`tests/divergence/<fixture>__<budget>.md`): stable
-  identifiers, NS-id-sorted missed batches, lex-sorted unmapped walker
-  batches, empty sections elided. Perfect alignment = 1-line file.
+- **Atom identity**: `Line(path, line)` | `Fs(parent, entry)`. Walker
+  and NS atoms at the same identity intersect; byte-range is the grade.
+- **Byte-range credit**: each atom carries a `byte_end` (Full = full
+  line length; Truncated{pattern} = regex match end; Ellipsis = 0; Fs
+  = 1). Credit = `min(walker.bytes, ns.bytes) / max(ns.bytes, 1)`.
+  A Full walker atom fully satisfies a Truncated NS atom; a Truncated
+  walker atom partially satisfies a Full NS atom. Walker rendering
+  more bytes than NS asks for is fully credited but flagged (`over`).
+- **Scores**: `Sim = ∫ w(t)·overlap(t) dt / ∫ w(t) dt` with
+  `w(t) = exp(−t/τ)`, `τ = 2000`; `overlap(t)` averages credit over
+  NS atoms *reachable at t* (ns-batch exp_t ≤ t), so low-t overlap is
+  no longer diluted by unreachable-by-construction atoms. Paired with
+  counters: `Reached/Total`, `Early`, `Late`, `Missing`, `Over`.
+- **Report**: `tests/divergence/<fixture>.md`. Line 1 grep-able scores.
+  Body: arrival ledger (one row per non-aligned NS batch showing
+  `exp_t`, `seen_t`, `credit`, `status` ∈ {aligned, early, late,
+  partial, missing}, with `+over` suffix when walker over-rendered).
+  Followed by a walker-waste section for off-NS batches with significant
+  cost. Empty sections elide; perfect alignment yields a 1-line file.
 
-Tunables live as module-level constants: `TAU`, `GRADE_FULL`, `GRADE_TRUNCATED`,
-`GRADE_ELLIPSIS`, `MISSED_THRESHOLD`, `UNMAPPED_COST_THRESHOLD`. Adjust and
+Tunables live as module-level constants: `TAU`, `REACH_THRESHOLD`,
+`EARLY_FACTOR`, `LATE_FACTOR`, `UNMAPPED_COST_THRESHOLD`. Adjust and
 regen baselines (`UPDATE_BASELINES=1 cargo t`) to see the effect.
 
 ## Scheduler early-stop (prefix-monotone)

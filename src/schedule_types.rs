@@ -36,10 +36,10 @@ pub struct ScheduledBatch {
     pub content: BatchContent,
 }
 
-/// Root-relative atom. Not serialized directly; the divergence metric uses
-/// atoms as its intersection primitive and derives them from
-/// `BatchContent`. Kept here so the same helpers build atoms for both NS
-/// and walker sides.
+/// Root-relative atom — identity only. Paired with a per-render
+/// `byte_end` inside the divergence metric for credit computation, so the
+/// same (path, line) atom from walker + NS compare byte-ranges rather
+/// than being treated as different identities.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum Atom {
     Line { path: PathBuf, line: usize },
