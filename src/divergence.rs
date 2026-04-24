@@ -1,84 +1,72 @@
 //! Divergence metric + report generator. Compares a walker `Schedule` run
 //! at `T_max` to a frozen `NorthStar`, producing:
 //!
-//! - `Scores`: a small tuple (`sim`, counts) with the integral similarity
-//!   scalar plus Reached/Early/Late/Partial/Missing/Over counts
-//!   (`reached + partial + missing == total_ns`). Goodhart resistance
-//!   comes from all three of Sim / Reached / Missing moving in the same
-//!   direction on a real improvement.
+//! - `Scores`: a small tuple — `sim` (integral similarity scalar), plus
+//!   per-NS-batch buckets `reached + partial + missing == total_ns` and
+//!   timing-breakdown `early` / `late` within the reached bucket.
 //! - Markdown `Report` (`tests/divergence/<fixture>.md`): one per fixture,
 //!   holistic across budgets. Line 1 is the grep-able score line; body
-//!   is an arrival ledger (one row per NS batch with expected vs
-//!   observed cum_tokens, credit, status) plus a walker-waste section
-//!   for off-NS content. Stable ordering; perfect alignment produces a
-//!   short file.
+//!   is a per-tier rollup, an arrival ledger (one row per non-reached /
+//!   mistimed NS batch), and a walker-waste section for off-NS content.
+//!   Stable ordering; perfect alignment produces a short file.
 //!
-//! Under scheduler prefix-monotonicity (see `docs/design-notes.md`), the
-//! walker schedule at any `t ≤ T_max` is exactly the prefix of the
-//! `T_max` schedule with `cum_tokens ≤ t`. So we run the walker once
-//! and read sub-budget behavior from the trajectory. The NS ordering is
-//! authored cumulatively (each batch declares its predecessor / rank);
-//! its `exp_t` per batch is its declared cumulative-tokens.
+//! NS `exp_t` for each batch is its marginal cost applied to an evolving
+//! `RenderedTree`, matching `simulate_ns` — so predecessor refinements
+//! that override ellipsis lines cost only their delta. Under scheduler
+//! prefix-monotonicity, the walker schedule at any `t ≤ T_max` is the
+//! prefix of the `T_max` schedule with `cum_tokens ≤ t`; we run the
+//! walker once and read sub-budget behavior from that trajectory.
 
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
 
 use anyhow::Result;
 
+use crate::batch::{Batch, BatchId, ValueSignals};
 use crate::content::{BatchContent, FsEntries, Render};
 use crate::north_star::NorthStar;
 use crate::ns_loader::resolve_content;
-use crate::render::SourceCache;
+use crate::render::{RenderedTree, SourceCache};
 use crate::schedule_types::{Atom, Schedule, ScheduledBatch};
 
 /// Time-weight half-life (tokens). `w(t) = exp(−t / τ)`. First 2000
 /// tokens carry ~63% of the mass; first 6000 ~95%.
 const TAU: f64 = 2000.0;
 
-/// Credit threshold for "walker reached this NS batch". NS batch is
-/// considered delivered at the first walker step where its average
-/// per-atom credit reaches this level.
+/// Credit threshold: NS batch counted as `reached` iff final-state
+/// credit ≥ this.
 const REACH_THRESHOLD: f64 = 0.8;
 
-/// Below this credit, an NS batch is counted as `missing` in the
-/// headline — walker rendered essentially nothing of what it wanted.
-/// Batches in `[MISSING_HEADLINE_FLOOR, REACH_THRESHOLD)` count as
-/// reached-partial (neither `missing` nor `reached`) in the headline,
-/// and label as `partial` in the arrival ledger.
-const MISSING_HEADLINE_FLOOR: f64 = 0.5;
-/// Label-only: ledger rows with credit below this and no `seen_t`
-/// surface as `missing` rather than `partial`.
-const MISSING_LABEL_FLOOR: f64 = 0.01;
+/// Credit threshold: NS batch counted as `missing` iff final-state
+/// credit < this. Rows in `[MISSING_FLOOR, REACH_THRESHOLD)` are
+/// `partial` everywhere (headline + row label).
+const MISSING_FLOOR: f64 = 0.5;
 
-/// Classification thresholds (tokens). Used to tag arrival-ledger rows.
+/// Timing classification within the `reached` bucket: a reached batch
+/// is `early` / `late` when `(seen_t - exp_t) / exp_t` passes these
+/// thresholds. Otherwise `aligned`.
 const EARLY_FACTOR: f64 = 0.7;
 const LATE_FACTOR: f64 = 1.3;
 
-/// Report threshold: walker batches with cost below this are elided from
-/// the "walker waste" section.
+/// Report threshold: walker-waste rows elide batches below this cost.
 const UNMAPPED_COST_THRESHOLD: usize = 50;
 
 /// Headline scores. `reached + partial + missing == total_ns`.
 #[derive(Debug, Clone, Copy)]
 pub struct Scores {
     pub sim: f64,
-    /// NS batches whose credit in the final walker state reaches
-    /// [`REACH_THRESHOLD`].
-    pub reached: usize,
     pub total_ns: usize,
-    /// NS batches rendered meaningfully earlier than expected.
+    /// Final credit ≥ [`REACH_THRESHOLD`].
+    pub reached: usize,
+    /// Reached and walker delivered meaningfully earlier than expected.
     pub early: usize,
-    /// NS batches rendered meaningfully later than expected.
+    /// Reached and walker delivered meaningfully later than expected.
     pub late: usize,
-    /// NS batches reached above [`MISSING_HEADLINE_FLOOR`] but below
-    /// [`REACH_THRESHOLD`] — content is present but diluted.
+    /// Final credit in `[MISSING_FLOOR, REACH_THRESHOLD)` — present but
+    /// diluted.
     pub partial: usize,
-    /// NS batches with credit below [`MISSING_HEADLINE_FLOOR`] — walker
-    /// rendered essentially none of what they wanted.
+    /// Final credit < [`MISSING_FLOOR`].
     pub missing: usize,
-    /// NS batches where walker's rendered bytes exceed what NS asked for
-    /// on at least one line (still fully credited).
-    pub over: usize,
 }
 
 /// Compute scores. `schedule` is expected to be a full-cap walker run.
@@ -103,25 +91,23 @@ pub fn generate_divergence_report(
 /// One atom of content with its render-level byte footprint.
 /// `bytes` semantics (minimum 1 for any present atom — 0 is reserved for
 /// "walker never rendered this atom"):
-/// - `Line::Full` = source line length (byte count).
+/// - `Line::Full` = source line length.
 /// - `Line::Truncated{pattern}` = regex-match byte-end (validator
 ///   guarantees ≥ 1 on every covered line).
-/// - `Line::Ellipsis` = `1`. A bare "content present" marker; equal to
-///   another Ellipsis gives full credit.
+/// - `Line::Ellipsis` = `1`.
 /// - `Fs`: always `1`. Fs atoms are boolean.
 ///
 /// Credit between two graded atoms sharing identity (same `Atom`) is
 /// `min(walker.bytes, ns.bytes) / max(ns.bytes, 1)`, capped at 1.0.
-/// Walker rendering strictly more bytes than NS asks for is fully
-/// credited but flagged separately in the report.
+/// Over-rendering (walker shows strictly more bytes than NS asks) is
+/// fully credited but flagged as a row annotation when the batch is
+/// otherwise aligned.
 #[derive(Debug, Clone)]
 struct GradedAtom {
     atom: Atom,
     bytes: usize,
 }
 
-/// Derive graded atoms for one batch. Needs the source cache to compute
-/// per-line byte_end values — full-line length and regex-match offsets.
 fn atoms_from_content(
     content: &BatchContent,
     source_cache: &SourceCache,
@@ -195,12 +181,8 @@ fn atoms_from_content(
 
 /// Per-render byte_end: where this render stops within the source line.
 /// `Ellipsis` is a 1-byte sentinel (not 0) so NS-ellipsis vs walker-
-/// ellipsis on the same line scores full credit — both walker and NS
-/// say "gap marker here", which counts as alignment. Walker `Full` at
-/// an NS-ellipsis line still scores 1.0 (walker shows more bytes,
-/// clamped by ns_bytes=1). Walker `Ellipsis` at an NS-`Full` line
-/// scores `1 / line_length` — near-zero credit, matching intent
-/// (walker gave a marker instead of the content NS asked for).
+/// ellipsis on the same line scores full credit. All render kinds floor
+/// at 1 so "present" is strictly distinguishable from "not rendered".
 fn byte_end_for(render: &Render, source_line: &str) -> usize {
     match render {
         Render::Full => source_line.len().max(1),
@@ -216,19 +198,21 @@ fn byte_end_for(render: &Render, source_line: &str) -> usize {
 // ---- context -----------------------------------------------------------
 
 struct BuildCtx<'a> {
-    /// NS batches, in declared order. Each entry carries its atoms (with
-    /// bytes) and its cumulative cost at that position (`exp_t`).
     ns_rows: Vec<NsRow>,
-    /// Walker batches, in scheduled order. Each entry carries its atoms
-    /// (with bytes) and its `cum_tokens` at schedule time.
     walker_rows: Vec<WalkerRow<'a>>,
     ns: &'a NorthStar,
     schedule: &'a Schedule,
+    fixture_root: PathBuf,
 }
 
 struct NsRow {
     id: String,
+    /// Major id prefix, parsed from `id`. Used for the per-tier rollup.
+    tier: usize,
     atoms: Vec<GradedAtom>,
+    /// Cumulative token cost up through this batch, computed as the
+    /// marginal cost of applying each batch in order to a shared
+    /// `RenderedTree` — same accounting as `simulate_ns`.
     exp_t: usize,
 }
 
@@ -241,16 +225,28 @@ struct WalkerRow<'a> {
 impl<'a> BuildCtx<'a> {
     fn new(ns: &'a NorthStar, schedule: &'a Schedule, fixture_root: &Path) -> Result<Self> {
         let source_cache = SourceCache::new();
+        let fixture_root_buf = fixture_root.to_path_buf();
+        let mut tree = RenderedTree::new(fixture_root_buf.clone(), source_cache.clone());
 
         let mut ns_rows = Vec::with_capacity(ns.batches.len());
         let mut cum = 0usize;
-        for b in &ns.batches {
+        for (pos, b) in ns.batches.iter().enumerate() {
             let content = resolve_content(&b.content, fixture_root)?;
             let atoms = atoms_from_content(&content, &source_cache, fixture_root);
-            let cost = batch_token_cost(&content, fixture_root);
-            cum += cost;
+            let batch = Batch {
+                content: content.clone(),
+                signals: ValueSignals::default(),
+            };
+            let marginal = tree.marginal_cost(&batch);
+            cum += marginal.tokens;
+            let batch_id = BatchId::new(pos);
+            // Divergence doesn't care about predecessor-chain conflicts
+            // here — that's `simulate_ns`'s job. `|_| true` accepts any
+            // existing owner so the tree evolves faithfully regardless.
+            let _ = tree.apply(&batch, batch_id, |_| true);
             ns_rows.push(NsRow {
                 id: b.id.clone(),
+                tier: parse_tier(&b.id),
                 atoms,
                 exp_t: cum,
             });
@@ -274,20 +270,18 @@ impl<'a> BuildCtx<'a> {
             walker_rows,
             ns,
             schedule,
+            fixture_root: fixture_root_buf,
         })
     }
 }
 
-/// Deterministic token-cost estimate for an NS batch. Delegates to
-/// `RenderedTree::marginal_cost` so cost accounting matches the scheduler.
-fn batch_token_cost(content: &BatchContent, fixture_root: &Path) -> usize {
-    let source_cache = crate::render::SourceCache::new();
-    let tree = crate::render::RenderedTree::new(fixture_root.to_path_buf(), source_cache);
-    let batch = crate::batch::Batch {
-        content: content.clone(),
-        signals: crate::batch::ValueSignals::default(),
-    };
-    tree.marginal_cost(&batch).tokens
+/// Major id prefix: `"1.10"` → `1`. Used for tier rollup; falls back to
+/// 0 for non-numeric prefixes.
+fn parse_tier(id: &str) -> usize {
+    id.split('.')
+        .next()
+        .and_then(|s| s.parse().ok())
+        .unwrap_or(0)
 }
 
 // ---- scoring -----------------------------------------------------------
@@ -301,37 +295,30 @@ fn compute_scores(ctx: &BuildCtx) -> Scores {
     let mut late = 0;
     let mut partial = 0;
     let mut missing = 0;
-    let mut over = 0;
 
     for arrival in arrival_infos(ctx) {
-        if arrival.over {
-            over += 1;
-        }
-        if arrival.credit < MISSING_HEADLINE_FLOOR {
+        if arrival.credit < MISSING_FLOOR {
             missing += 1;
-            continue;
-        }
-        if arrival.credit < REACH_THRESHOLD {
+        } else if arrival.credit < REACH_THRESHOLD {
             partial += 1;
-            continue;
-        }
-        reached += 1;
-        match arrival.status {
-            ArrivalStatus::Early => early += 1,
-            ArrivalStatus::Late => late += 1,
-            _ => {}
+        } else {
+            reached += 1;
+            match arrival.status {
+                ArrivalStatus::Early => early += 1,
+                ArrivalStatus::Late => late += 1,
+                _ => {}
+            }
         }
     }
 
     Scores {
         sim,
-        reached,
         total_ns: ctx.ns_rows.len(),
+        reached,
         early,
         late,
         partial,
         missing,
-        over,
     }
 }
 
@@ -356,10 +343,8 @@ impl ArrivalStatus {
     }
 }
 
-/// Per-NS-batch walker observation. Computed once per run and reused by
-/// both the headline counters and the arrival-ledger formatter.
 struct Arrival {
-    seen_t: Option<usize>,
+    reached_t: Option<usize>,
     credit: f64,
     over: bool,
     status: ArrivalStatus,
@@ -369,11 +354,11 @@ fn arrival_infos(ctx: &BuildCtx) -> Vec<Arrival> {
     ctx.ns_rows
         .iter()
         .map(|row| {
-            let seen_t = first_reach_t(ctx, &row.atoms);
-            let (credit, over) = credit_for_ns_atoms_at(ctx, &row.atoms, usize::MAX);
-            let status = classify(seen_t, row.exp_t, credit);
+            let reached_t = first_reach_t(ctx, &row.atoms);
+            let (credit, over) = credit_for_ns_atoms(ctx, &row.atoms);
+            let status = classify(reached_t, row.exp_t, credit);
             Arrival {
-                seen_t,
+                reached_t,
                 credit,
                 over,
                 status,
@@ -382,8 +367,9 @@ fn arrival_infos(ctx: &BuildCtx) -> Vec<Arrival> {
         .collect()
 }
 
-/// `first_reach_t`: cumulative walker tokens at the first walker batch
-/// after which this NS batch's credit ≥ `REACH_THRESHOLD`.
+/// Cumulative walker tokens at the first walker batch after which this
+/// NS batch's credit reaches [`REACH_THRESHOLD`]. `None` if the batch
+/// is never reached.
 fn first_reach_t(ctx: &BuildCtx, ns_atoms: &[GradedAtom]) -> Option<usize> {
     if ns_atoms.is_empty() {
         return None;
@@ -396,7 +382,6 @@ fn first_reach_t(ctx: &BuildCtx, ns_atoms: &[GradedAtom]) -> Option<usize> {
                 cumulative.insert(&wa.atom, wa.bytes);
             }
         }
-        // Re-score against NS atoms using the materialized map.
         let (credit, _over) = credit_against_cum_map(ns_atoms, &cumulative);
         if credit >= REACH_THRESHOLD {
             return Some(wr.seen_t);
@@ -405,15 +390,9 @@ fn first_reach_t(ctx: &BuildCtx, ns_atoms: &[GradedAtom]) -> Option<usize> {
     None
 }
 
-/// Final-state credit (averaged per NS atom) of this NS batch against the
-/// walker's entire output. Also returns whether walker over-rendered
-/// (bytes > ns bytes) on any line of this batch.
-fn credit_for_ns_atoms_at(ctx: &BuildCtx, ns_atoms: &[GradedAtom], budget: usize) -> (f64, bool) {
+fn credit_for_ns_atoms(ctx: &BuildCtx, ns_atoms: &[GradedAtom]) -> (f64, bool) {
     let mut cumulative: BTreeMap<&Atom, usize> = BTreeMap::new();
     for wr in &ctx.walker_rows {
-        if wr.seen_t > budget {
-            break;
-        }
         for wa in &wr.atoms {
             let prev = cumulative.get(&wa.atom).copied().unwrap_or(0);
             if wa.bytes > prev {
@@ -447,10 +426,13 @@ fn credit_against_cum_map(
 
 // ---- Sim (integral) ----------------------------------------------------
 
-/// Sim = ∫ w(t)·overlap(t) dt / ∫ w(t) dt over t ∈ [0, T_max], with w(t)
-/// = exp(−t/τ). overlap(t) averages credit over NS atoms *reachable at
-/// t* (ns batch cum ≤ t) — so low-t reports no longer include
-/// unreachable-by-construction NS atoms in the denominator.
+/// Sim = ∫ w(t)·overlap(t) dt / ∫ w(t) dt over t ∈ [0, T_max], with
+/// `w(t) = exp(−t/τ)`. `overlap(t)` averages credit over NS atoms
+/// *reachable at t* (ns batch `exp_t ≤ t`) — unreachable-by-construction
+/// atoms don't inflate the denominator at low `t`. Eval is at the
+/// *left* endpoint of each boundary segment: overlap is a right-
+/// continuous step function, constant on `[a, b)` after any jump at
+/// `a`, so the left endpoint captures the right integrand for `(a, b)`.
 fn compute_sim(ctx: &BuildCtx, t_max: usize) -> f64 {
     let mut boundaries: BTreeSet<usize> = BTreeSet::new();
     boundaries.insert(0);
@@ -472,8 +454,7 @@ fn compute_sim(ctx: &BuildCtx, t_max: usize) -> f64 {
     for pair in bs.windows(2) {
         let a = pair[0] as f64;
         let b = pair[1] as f64;
-        let t_mid = pair[1]; // right endpoint — piecewise-constant from the right
-        let overlap = overlap_at(ctx, t_mid);
+        let overlap = overlap_at(ctx, pair[0]); // left endpoint
         let w = weighted_segment(a, b);
         num += w * overlap;
         den += w;
@@ -482,7 +463,6 @@ fn compute_sim(ctx: &BuildCtx, t_max: usize) -> f64 {
 }
 
 fn overlap_at(ctx: &BuildCtx, t: usize) -> f64 {
-    // Walker cumulative byte-max at t.
     let mut cumulative: BTreeMap<&Atom, usize> = BTreeMap::new();
     for wr in &ctx.walker_rows {
         if wr.seen_t > t {
@@ -495,7 +475,6 @@ fn overlap_at(ctx: &BuildCtx, t: usize) -> f64 {
             }
         }
     }
-    // NS atoms reachable at t (ns batch's exp_t ≤ t). Average credit.
     let mut total_atoms = 0.0;
     let mut total_credit = 0.0;
     for row in &ctx.ns_rows {
@@ -527,7 +506,7 @@ fn weighted_segment(a: f64, b: f64) -> f64 {
 fn format_report(scores: &Scores, ctx: &BuildCtx) -> String {
     let mut out = String::new();
     out.push_str(&format!(
-        "scores: Sim={:.3} Reached={}/{} Early={} Late={} Partial={} Missing={} Over={} Cap={}\n",
+        "scores: Sim={:.3} Reached={}/{} Early={} Late={} Partial={} Missing={} Used={}/{}\n",
         scores.sim,
         scores.reached,
         scores.total_ns,
@@ -535,24 +514,75 @@ fn format_report(scores: &Scores, ctx: &BuildCtx) -> String {
         scores.late,
         scores.partial,
         scores.missing,
-        scores.over,
+        ctx.schedule.cumulative_tokens,
         ctx.schedule.budget,
     ));
 
-    // Arrival ledger — one row per NS batch, sorted numerically by id.
+    let arrivals = arrival_infos(ctx);
+
+    format_tier_rollup(&mut out, ctx, &arrivals);
+    format_arrival_ledger(&mut out, ctx, &arrivals);
+    format_walker_waste(&mut out, ctx);
+
+    out
+}
+
+fn format_tier_rollup(out: &mut String, ctx: &BuildCtx, arrivals: &[Arrival]) {
+    // Aggregate per tier. Rows in NS order; tiers sorted numerically.
+    struct TierAgg {
+        batches: usize,
+        reached: usize,
+        partial: usize,
+        missing: usize,
+        credit_sum: f64,
+    }
+    let mut by_tier: BTreeMap<usize, TierAgg> = BTreeMap::new();
+    for (row, arrival) in ctx.ns_rows.iter().zip(arrivals) {
+        let agg = by_tier.entry(row.tier).or_insert(TierAgg {
+            batches: 0,
+            reached: 0,
+            partial: 0,
+            missing: 0,
+            credit_sum: 0.0,
+        });
+        agg.batches += 1;
+        if arrival.credit < MISSING_FLOOR {
+            agg.missing += 1;
+        } else if arrival.credit < REACH_THRESHOLD {
+            agg.partial += 1;
+        } else {
+            agg.reached += 1;
+        }
+        agg.credit_sum += arrival.credit;
+    }
+    if by_tier.is_empty() {
+        return;
+    }
+    out.push_str("\n## Tier rollup\n\n");
+    out.push_str("| tier | batches | reached | partial | missing | avg_credit |\n");
+    out.push_str("|-----:|--------:|--------:|--------:|--------:|-----------:|\n");
+    for (tier, agg) in &by_tier {
+        let avg = agg.credit_sum / agg.batches as f64;
+        out.push_str(&format!(
+            "| {tier} | {} | {} | {} | {} | {avg:.2} |\n",
+            agg.batches, agg.reached, agg.partial, agg.missing,
+        ));
+    }
+}
+
+fn format_arrival_ledger(out: &mut String, ctx: &BuildCtx, arrivals: &[Arrival]) {
     struct Row<'a> {
         id: &'a str,
         exp_t: usize,
         descriptor: &'a str,
-        arrival: Arrival,
+        arrival: &'a Arrival,
     }
-    let arrivals = arrival_infos(ctx);
     let mut rows: Vec<Row<'_>> = ctx
         .ns_rows
         .iter()
-        .zip(arrivals)
         .enumerate()
-        .map(|(i, (ns_row, arrival))| Row {
+        .zip(arrivals)
+        .map(|((i, ns_row), arrival)| Row {
             id: &ns_row.id,
             exp_t: ns_row.exp_t,
             descriptor: &ctx.ns.batches[i].descriptor,
@@ -561,77 +591,94 @@ fn format_report(scores: &Scores, ctx: &BuildCtx) -> String {
         .collect();
     rows.sort_by(|a, b| numeric_id_cmp(a.id, b.id));
 
-    // Filter: only show rows that aren't perfectly-aligned (save readers
-    // from scrolling through 40 `aligned` rows in a clean fixture).
+    // Show rows that aren't perfectly aligned: anything that's not an
+    // `Aligned` batch with full credit (over-rendering alone is too
+    // noisy to surface — annotated only when otherwise aligned).
     let interesting: Vec<&Row> = rows
         .iter()
-        .filter(|r| {
-            r.arrival.status != ArrivalStatus::Aligned || r.arrival.credit < 1.0 || r.arrival.over
-        })
+        .filter(|r| r.arrival.status != ArrivalStatus::Aligned || r.arrival.credit < 1.0)
         .collect();
 
-    if !interesting.is_empty() {
-        out.push_str("\n## Arrival ledger (non-aligned NS batches)\n\n");
-        out.push_str("| id | exp_t | seen_t | credit | status | descriptor |\n");
-        out.push_str("|----|------:|-------:|-------:|:-------|:-----------|\n");
-        for r in &interesting {
-            let seen_cell = match r.arrival.seen_t {
-                Some(t) => format!("{t}"),
-                None => "—".to_string(),
-            };
-            let status_cell = if r.arrival.over {
-                format!("{}+over", r.arrival.status.label())
-            } else {
-                r.arrival.status.label().to_string()
-            };
-            out.push_str(&format!(
-                "| {} | {} | {seen_cell} | {:.2} | {status_cell} | {} |\n",
-                r.id, r.exp_t, r.arrival.credit, r.descriptor,
-            ));
-        }
+    if interesting.is_empty() {
+        return;
     }
+    out.push_str("\n## Arrival ledger (non-aligned or partial-credit NS batches)\n\n");
+    out.push_str("| id | exp_t | reached_t | delta_t | credit | status | descriptor |\n");
+    out.push_str("|----|------:|----------:|--------:|-------:|:-------|:-----------|\n");
+    for r in &interesting {
+        let (reached_cell, delta_cell) = match r.arrival.reached_t {
+            Some(t) => {
+                let delta = t as isize - r.exp_t as isize;
+                let sign = if delta > 0 { "+" } else { "" };
+                (format!("{t}"), format!("{sign}{delta}"))
+            }
+            None => ("—".to_string(), "—".to_string()),
+        };
+        let status_cell = if r.arrival.over && r.arrival.status == ArrivalStatus::Aligned {
+            format!("{}+over", r.arrival.status.label())
+        } else {
+            r.arrival.status.label().to_string()
+        };
+        out.push_str(&format!(
+            "| {} | {} | {reached_cell} | {delta_cell} | {:.2} | {status_cell} | {} |\n",
+            r.id, r.exp_t, r.arrival.credit, r.descriptor,
+        ));
+    }
+}
 
-    // Walker waste: walker batches whose content has no NS intersection
-    // and whose cost is significant. Sorted by first appearance.
+fn format_walker_waste(out: &mut String, ctx: &BuildCtx) {
     let ns_atom_set: BTreeSet<Atom> = ctx
         .ns_rows
         .iter()
         .flat_map(|r| r.atoms.iter().map(|a| a.atom.clone()))
         .collect();
-    let mut waste: Vec<(usize, &ScheduledBatch)> = Vec::new();
-    for wr in &ctx.walker_rows {
-        if wr.batch.cost_tokens < UNMAPPED_COST_THRESHOLD {
-            continue;
-        }
-        let any_on = wr.atoms.iter().any(|a| ns_atom_set.contains(&a.atom));
-        if !any_on {
-            waste.push((wr.seen_t, wr.batch));
-        }
+    let mut waste: Vec<&WalkerRow<'_>> = ctx
+        .walker_rows
+        .iter()
+        .filter(|wr| wr.batch.cost_tokens >= UNMAPPED_COST_THRESHOLD)
+        .filter(|wr| !wr.atoms.iter().any(|a| ns_atom_set.contains(&a.atom)))
+        .collect();
+    if waste.is_empty() {
+        return;
     }
-    if !waste.is_empty() {
-        out.push_str(&format!(
-            "\n## Walker waste (cost ≥ {UNMAPPED_COST_THRESHOLD}, no NS intersection)\n\n"
-        ));
-        out.push_str("| first_t | cost | key |\n");
-        out.push_str("|--------:|-----:|:----|\n");
-        for (t, b) in &waste {
-            out.push_str(&format!("| {t} | {} | {} |\n", b.cost_tokens, b.key));
-        }
-    }
+    // Stable sort by descriptor then by (file, line) inside — same
+    // batch-kinds cluster, independent of scheduling order.
+    waste.sort_by(|a, b| a.batch.descriptor.cmp(&b.batch.descriptor));
 
-    out
+    out.push_str(&format!(
+        "\n## Walker waste (cost ≥ {UNMAPPED_COST_THRESHOLD}, no NS intersection)\n\n"
+    ));
+    out.push_str("| first_t | cost | batch |\n");
+    out.push_str("|--------:|-----:|:------|\n");
+    for wr in &waste {
+        let rel = strip_fixture_root(&wr.batch.descriptor, &ctx.fixture_root);
+        out.push_str(&format!(
+            "| {} | {} | {rel} |\n",
+            wr.seen_t, wr.batch.cost_tokens
+        ));
+    }
 }
 
-fn classify(seen_t: Option<usize>, exp_t: usize, credit: f64) -> ArrivalStatus {
-    let Some(seen) = seen_t else {
-        if credit < MISSING_LABEL_FLOOR {
-            return ArrivalStatus::Missing;
-        }
-        return ArrivalStatus::Partial;
-    };
+fn strip_fixture_root(descriptor: &str, fixture_root: &Path) -> String {
+    // Walker descriptors embed absolute paths (e.g. "crate-doc lede in
+    // /Users/.../tests/fixtures/log/src/lib.rs"). Stripping the fixture-
+    // root prefix makes reports diff-stable across checkouts.
+    let prefix = format!("{}/", fixture_root.display());
+    descriptor.replace(&prefix, "")
+}
+
+fn classify(reached_t: Option<usize>, exp_t: usize, credit: f64) -> ArrivalStatus {
+    if credit < MISSING_FLOOR {
+        return ArrivalStatus::Missing;
+    }
     if credit < REACH_THRESHOLD {
         return ArrivalStatus::Partial;
     }
+    let Some(seen) = reached_t else {
+        // Unreachable in practice: credit ≥ 0.8 means at least one walker
+        // batch crossed the threshold, so `first_reach_t` returns Some.
+        return ArrivalStatus::Aligned;
+    };
     let exp = exp_t.max(1) as f64;
     let ratio = (seen as f64 - exp_t as f64) / exp;
     if ratio <= EARLY_FACTOR - 1.0 {
