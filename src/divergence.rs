@@ -1,21 +1,78 @@
-//! Divergence metric + report generator. Compares a walker `Schedule` run
-//! at `T_max` to a frozen `NorthStar`, producing:
+//! Divergence metric + report generator. Compares a walker `Schedule`
+//! run at `T_max` to a frozen `NorthStar`. Two artifacts:
 //!
-//! - `Scores`: a small tuple — `sim` (integral similarity scalar), plus
-//!   per-NS-batch buckets `reached + partial + missing == total_ns` and
-//!   timing-breakdown `early` / `late` within the reached bucket.
-//! - Markdown `Report` (`tests/divergence/<fixture>.md`): one per fixture,
-//!   holistic across budgets. Line 1 is the grep-able score line; body
-//!   is a per-tier rollup, an arrival ledger (one row per non-reached /
-//!   mistimed NS batch), and a walker-waste section for off-NS content.
-//!   Stable ordering; perfect alignment produces a short file.
+//! - `Scores`: `sim` (integral similarity scalar) + per-NS-batch
+//!   buckets `reached + partial + missing == total_ns` and
+//!   `early` / `late` within `reached`.
+//! - Markdown `Report` (`tests/divergence/<fixture>.md`): line 1 is the
+//!   grep-able score line; body is per-tier rollup, arrival ledger,
+//!   and walker-waste. Stable ordering; perfect alignment ⇒ 1-line file.
 //!
-//! NS `exp_t` for each batch is its marginal cost applied to an evolving
-//! `RenderedTree`, matching `simulate_ns` — so predecessor refinements
-//! that override ellipsis lines cost only their delta. Under scheduler
-//! prefix-monotonicity, the walker schedule at any `t ≤ T_max` is the
-//! prefix of the `T_max` schedule with `cum_tokens ≤ t`; we run the
-//! walker once and read sub-budget behavior from that trajectory.
+//! NS `exp_t` is the cumulative marginal cost of applying NS batches in
+//! rank order to one shared `RenderedTree` — same accounting as
+//! `simulate_ns`, so predecessor refinements over ellipsis lines cost
+//! only their delta. Under scheduler prefix-monotonicity, walker
+//! sub-budget behavior is the prefix of the T_max schedule with
+//! `cum_tokens ≤ t`, so we run the walker once.
+//!
+//! ## Score line
+//!
+//! `Sim=X.XXX Reached=R/T Early=E Late=L Partial=P Missing=M Used=U/B`
+//!
+//! - `Sim ∈ [0,1]` — `∫ w(t)·overlap(t) dt / ∫ w(t) dt`,
+//!   `w(t) = exp(−t/τ)`, `τ=2000`. `overlap(t)` averages graded credit
+//!   over NS atoms *reachable at t* (denominator excludes
+//!   unreachable-by-construction NS atoms, so low-t is meaningful).
+//! - `R/T` reached / total NS batches; `E`, `L`, `P`, `M` are subsets.
+//! - `U/B` walker tokens consumed / token budget. Gap = budget the
+//!   prefix-monotone scheduler left on the table.
+//!
+//! ## Atoms + credit
+//!
+//! Atoms are `Line(path, line)` or `Fs(parent, entry)`. Each has a
+//! `bytes` footprint per render (Full = source-line length, Truncated =
+//! regex match end, Ellipsis = 1, Fs = 1; floored at 1 so "rendered" is
+//! distinguishable from "absent"). Credit between matched walker + NS
+//! atoms is `min(walker, ns) / max(ns, 1)`, capped at 1.0. Walker
+//! showing strictly more bytes than NS asked → fully credited but
+//! flagged via the `+over` row annotation.
+//!
+//! ## Tier rollup
+//!
+//! Per major-id prefix (`1.x`, `2.x`, …): `batches | reached | partial
+//! | missing | avg_credit`. Lets a reader spot which tier the walker
+//! falls off.
+//!
+//! ## Arrival ledger
+//!
+//! One row per non-aligned-or-partial NS batch:
+//! `id | exp_t | reached_t | delta_t | credit | status | descriptor`.
+//!
+//! - `exp_t` — NS-cumulative tokens at that batch (when NS expects it).
+//! - `reached_t` — walker `cum_tokens` at the batch where this NS
+//!   batch's credit first reaches `REACH_THRESHOLD = 0.8`. `—` if
+//!   never reached.
+//! - `delta_t` — `reached_t - exp_t` with sign. Negative = early,
+//!   positive = late.
+//! - `credit` — final-state byte-range credit averaged over NS atoms.
+//! - `status` ∈ `{aligned, early, late, partial, missing}` with
+//!   optional `+over` annotation (only on `aligned` rows). Bands:
+//!   `credit < 0.5` → missing, `< 0.8` → partial, else reached;
+//!   within reached, timing classifies via `EARLY_FACTOR = 0.7` /
+//!   `LATE_FACTOR = 1.3` on `delta_t / exp_t`.
+//!
+//! ## Walker waste
+//!
+//! Walker batches whose `off_tokens` exceeds `UNMAPPED_COST_THRESHOLD`,
+//! sorted descending. Surfaces both pure-waste (`off_ratio = 1.00`)
+//! and mixed-intersection batches (some on-NS atoms but most spend
+//! off-script).
+//!
+//! - `off_tokens` — `off_ratio × cost`, the absolute waste estimate.
+//! - `off_ratio` — fraction of batch's atoms with no NS counterpart.
+//! - `cost` — total marginal cost of the walker batch.
+//! - `first_t` — walker `cum_tokens` when this batch was scheduled.
+//! - `batch` — descriptor with fixture root stripped.
 
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
