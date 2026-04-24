@@ -16,7 +16,7 @@ pub mod walker;
 
 pub use batch::{
     Batch, BatchContent, BatchKey, EntryKind, FsGroup, FsKey, MarkdownKey, Render, ResolvedBatch,
-    RustKey, Span, TomlKey, ValueSignals,
+    RustKey, Span, TomlKey, ValueSignals, WalkerKey,
 };
 pub use fs_util::list_dir;
 pub use render::{Cost, RenderedTree, SourceCache};
@@ -72,8 +72,8 @@ pub fn render_schedule(paths: &[impl AsRef<Path>], budget: usize) -> Result<Sche
         .enumerate()
         .map(|(i, b)| ScheduledBatch {
             position: i + 1,
-            key: format!("{:?}", b.key),
-            descriptor: b.key.describe(),
+            key: format!("{:?}", &b.key),
+            descriptor: WalkerKey::describe(&b.key),
             cost_tokens: b.cost.tokens,
             cum_tokens: b.cum_tokens,
             content: b.content,

@@ -21,7 +21,7 @@ use crate::value::{depth_factor, non_essential_factor};
 
 use super::{Candidate, FileLines, WalkCtx, fs::files_with_extension, single_file_lines_batch};
 
-pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate> {
+pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
     let BatchKey::Fs(FsKey::DirListing { dir }) = scheduled else {
         return Vec::new();
     };
@@ -102,7 +102,7 @@ pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
 
 // --- candidate helpers ---
 
-fn candidate(mk: MarkdownKey, signals: ValueSignals, cost_hint: usize) -> Candidate {
+fn candidate(mk: MarkdownKey, signals: ValueSignals, cost_hint: usize) -> Candidate<BatchKey> {
     Candidate::new(mk.into(), signals, cost_hint)
 }
 

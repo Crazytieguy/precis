@@ -15,14 +15,14 @@ use crate::value::{depth_factor, non_essential_factor};
 use super::{Candidate, WalkCtx};
 
 /// Seed: list the root directory.
-pub fn seed(ctx: &WalkCtx) -> Vec<Candidate> {
+pub fn seed(ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
     vec![dir_listing_candidate(ctx.root().to_path_buf(), 0)]
 }
 
 /// Expand a scheduled `FsKey::DirListing` into successor candidates:
 /// subdirectory listings for each subdir. File-based candidates are
 /// emitted by per-language walkers (see [`multi::expand`]).
-pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate> {
+pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
     let BatchKey::Fs(FsKey::DirListing { dir }) = scheduled else {
         return Vec::new();
     };
@@ -119,7 +119,7 @@ fn walk_files_recursive(dir: &Path, ext: &str, out: &mut Vec<PathBuf>) {
     }
 }
 
-fn dir_listing_candidate(dir: PathBuf, depth: usize) -> Candidate {
+fn dir_listing_candidate(dir: PathBuf, depth: usize) -> Candidate<BatchKey> {
     let is_root = depth == 0;
     let signals = dir_listing_signals_for_path(&dir, is_root, depth);
     // Cost hint: small — a listing of ~10 entries is ~30-60 tokens.

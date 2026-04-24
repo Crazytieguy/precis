@@ -28,7 +28,7 @@ use std::sync::Arc;
 
 use tree_sitter::{Language, Tree};
 
-use crate::batch::{BatchContent, BatchKey, Render, ResolvedBatch, Span, ValueSignals};
+use crate::batch::{BatchContent, Render, ResolvedBatch, Span, ValueSignals, WalkerKey};
 use crate::render::SourceCache;
 
 pub mod fs;
@@ -39,14 +39,17 @@ pub mod toml;
 
 /// A discovered batch that hasn't been materialized yet. Emitted by
 /// `seed` / `expand`. Carries:
-/// - the stable [`BatchKey`] so other candidates can name it as predecessor,
+/// - the stable key so other candidates can name it as predecessor,
 /// - [`ValueSignals`] the walker can fill in from FS-only evidence (used
 ///   as the speculative upper bound by the scheduler),
 /// - optional cost hint (token upper bound) for the speculative frontier.
+///
+/// Generic over the walker's own key type (see [`Walker::Key`]), so the
+/// scheduler/renderer never names any walker-specific enum.
 #[derive(Debug, Clone)]
-pub struct Candidate {
-    pub key: BatchKey,
-    pub predecessor: Option<BatchKey>,
+pub struct Candidate<K: WalkerKey> {
+    pub key: K,
+    pub predecessor: Option<K>,
     /// FS-only value signals. After materialization these are overwritten
     /// with the resolved batch's (usually richer) signals.
     pub signals: ValueSignals,
@@ -56,8 +59,8 @@ pub struct Candidate {
     pub cost_hint: usize,
 }
 
-impl Candidate {
-    pub fn new(key: BatchKey, signals: ValueSignals, cost_hint: usize) -> Self {
+impl<K: WalkerKey> Candidate<K> {
+    pub fn new(key: K, signals: ValueSignals, cost_hint: usize) -> Self {
         Self {
             key,
             predecessor: None,
@@ -66,23 +69,27 @@ impl Candidate {
         }
     }
 
-    pub fn with_predecessor(mut self, pred: BatchKey) -> Self {
+    pub fn with_predecessor(mut self, pred: K) -> Self {
         self.predecessor = Some(pred);
         self
     }
 }
 
 /// Walker contract. A single implementor composes the filesystem walker
-/// with per-language walkers (see [`multi::MultiWalker`]).
+/// with per-language walkers (see [`multi::MultiWalker`]). The associated
+/// `Key` type is walker-private: scheduler + renderer never name it, and
+/// adding a new walker doesn't change scheduler/renderer code.
 pub trait Walker {
+    type Key: WalkerKey;
+
     /// Initial candidates. Typically the root filesystem listing.
-    fn seed(&mut self, ctx: &WalkCtx) -> Vec<Candidate>;
+    fn seed(&mut self, ctx: &WalkCtx) -> Vec<Candidate<Self::Key>>;
 
     /// Called when a candidate is scheduled. Returns newly-discovered
     /// candidates. `scheduled` is the key just moved into the tree; the
     /// walker uses it to decide what to propose next (e.g. listing `src/`
     /// exposes `RustKey::PubDecls { src_dir: "src" }`).
-    fn expand(&mut self, scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate>;
+    fn expand(&mut self, scheduled: &Self::Key, ctx: &WalkCtx) -> Vec<Candidate<Self::Key>>;
 
     /// Read source, parse, and build the concrete batch for `key`. Returns
     /// `None` when materialization finds nothing (e.g. no `pub` items in
@@ -90,7 +97,7 @@ pub trait Walker {
     /// retries. This is the **only** method allowed to call
     /// `fs::read_to_string` (enforced by convention; see [`WalkCtx`] which
     /// centralizes source + parse caches).
-    fn materialize(&mut self, key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch>;
+    fn materialize(&mut self, key: &Self::Key, ctx: &WalkCtx) -> Option<ResolvedBatch>;
 }
 
 /// Per-run context. Holds the seed root plus a shared source cache +

@@ -11,11 +11,13 @@ use super::{Candidate, WalkCtx, Walker, fs, markdown, rust, toml};
 pub struct MultiWalker;
 
 impl Walker for MultiWalker {
-    fn seed(&mut self, ctx: &WalkCtx) -> Vec<Candidate> {
+    type Key = BatchKey;
+
+    fn seed(&mut self, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
         fs::seed(ctx)
     }
 
-    fn expand(&mut self, scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate> {
+    fn expand(&mut self, scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
         let mut out = Vec::new();
         out.extend(fs::expand(scheduled, ctx));
         out.extend(rust::expand(scheduled, ctx));

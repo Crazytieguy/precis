@@ -35,7 +35,7 @@ use super::{
     single_file_lines_batch,
 };
 
-pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate> {
+pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
     let BatchKey::Fs(FsKey::DirListing { dir }) = scheduled else {
         return Vec::new();
     };
@@ -228,7 +228,7 @@ pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
 
 // --- candidate + signal helpers ---
 
-fn candidate(rk: RustKey, signals: ValueSignals, cost_hint: usize) -> Candidate {
+fn candidate(rk: RustKey, signals: ValueSignals, cost_hint: usize) -> Candidate<BatchKey> {
     Candidate::new(rk.into(), signals, cost_hint)
 }
 

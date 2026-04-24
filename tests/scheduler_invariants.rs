@@ -67,10 +67,12 @@ fn scheduler_invariants_override_via_predecessor_chain() {
     // overrides line 1 with its Full version.
     struct OverrideChain;
     impl Walker for OverrideChain {
-        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Candidate> {
+        type Key = BatchKey;
+
+        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
             vec![Candidate::new(listing_key(), sig(0.9), 40)]
         }
-        fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Candidate> {
+        fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
             if matches!(scheduled, BatchKey::Fs(FsKey::DirListing { .. })) {
                 let decls = BatchKey::Rust(RustKey::PubItem {
                     file: stub_file("synthetic.rs"),
@@ -159,10 +161,12 @@ fn scheduler_invariants_override_via_predecessor_chain() {
 fn scheduler_invariants_tiny_budget_truncates_cleanly() {
     struct OneEntry;
     impl Walker for OneEntry {
-        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Candidate> {
+        type Key = BatchKey;
+
+        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
             vec![Candidate::new(listing_key(), sig(0.9), 40)]
         }
-        fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Candidate> {
+        fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
             if matches!(scheduled, BatchKey::Fs(FsKey::DirListing { .. })) {
                 vec![Candidate::new(
                     BatchKey::Rust(RustKey::PubItem {
@@ -225,10 +229,12 @@ fn scheduler_invariants_non_predecessor_overlap_panics_in_debug() {
     // line. Release compiles out the assert; this test only asserts debug.
     struct OverlappingWalker;
     impl Walker for OverlappingWalker {
-        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Candidate> {
+        type Key = BatchKey;
+
+        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
             vec![Candidate::new(listing_key(), sig(0.9), 40)]
         }
-        fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Candidate> {
+        fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
             if matches!(scheduled, BatchKey::Fs(FsKey::DirListing { .. })) {
                 // Two siblings — neither has the other as predecessor.
                 vec![

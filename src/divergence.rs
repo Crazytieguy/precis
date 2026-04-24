@@ -193,11 +193,7 @@ fn batch_token_cost(content: &BatchContent, fixture_root: &std::path::Path) -> u
     let source_cache = crate::render::SourceCache::new();
     let tree = crate::render::RenderedTree::new(fixture_root.to_path_buf(), source_cache);
     let batch = crate::batch::Batch {
-        key: crate::batch::BatchKey::Fs(crate::batch::FsKey::DirListing {
-            dir: std::path::PathBuf::from("/ns-cost-probe"),
-        }),
         content: content.clone(),
-        predecessor: None,
         signals: crate::batch::ValueSignals::default(),
     };
     tree.marginal_cost(&batch).tokens

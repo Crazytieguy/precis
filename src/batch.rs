@@ -147,11 +147,36 @@ pub enum TomlKey {
     Dependencies { file: PathBuf },
 }
 
-impl BatchKey {
-    /// Human-readable one-line descriptor, e.g. `"crate-doc lede in src/lib.rs"`.
-    /// Not load-bearing — shown in schedule snapshots and divergence reports
-    /// so diffs read as content-shape rather than `Rust(CrateDocLede(PathBuf(...)))`.
-    pub fn describe(&self) -> String {
+/// Opaque walker-key contract. The scheduler + renderer depend on this
+/// trait instead of any concrete walker-specific enum, so a new walker
+/// can be added without touching them. Concrete `Walker::Key` types
+/// (typically an enum the walker defines) implement this; `BatchKey`
+/// below is the default sum used by [`crate::walker::multi::MultiWalker`].
+///
+/// `Clone + Eq + Hash` support the scheduler's key-to-id map and dead
+/// set; `Ord` gives deterministic tiebreaks; `Debug` is for panic
+/// messages; `Send + Sync + 'static` keep the type usable across
+/// threads / `Arc`s if downstream ever needs it.
+pub trait WalkerKey:
+    Clone
+    + std::fmt::Debug
+    + std::hash::Hash
+    + Eq
+    + Ord
+    + PartialEq
+    + PartialOrd
+    + Send
+    + Sync
+    + 'static
+{
+    /// One-line human descriptor (e.g. `"crate-doc lede in src/lib.rs"`).
+    /// Shown in schedule snapshots + divergence reports so diffs read
+    /// as content-shape rather than `Rust(CrateDocLede(PathBuf(...)))`.
+    fn describe(&self) -> String;
+}
+
+impl WalkerKey for BatchKey {
+    fn describe(&self) -> String {
         match self {
             BatchKey::Fs(k) => k.describe(),
             BatchKey::Rust(k) => k.describe(),
@@ -238,13 +263,16 @@ fn display_path(path: &std::path::Path) -> String {
     path.display().to_string()
 }
 
-/// Stored batch after materialization. `key` is the semantic name; `content`
-/// is the rendered content; `signals` are the value-model inputs.
+/// A materialized batch: just the rendered content + the walker-supplied
+/// value signals. The scheduler stores its own key/predecessor bookkeeping
+/// alongside (see `scheduler::BatchEntry`); they're not fields of `Batch`
+/// because the renderer/cost/divergence paths only ever read
+/// `content`+`signals`, and the validator/divergence previously had to
+/// forge fake keys to populate those fields. Dropping them eliminates
+/// that kludge entirely.
 #[derive(Debug, Clone)]
 pub struct Batch {
-    pub key: BatchKey,
     pub content: BatchContent,
-    pub predecessor: Option<BatchKey>,
     pub signals: ValueSignals,
 }
 

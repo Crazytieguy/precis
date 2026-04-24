@@ -8,7 +8,7 @@ use std::path::{Path, PathBuf};
 
 use anyhow::Result;
 
-use crate::batch::{Batch, BatchId, BatchKey, FsKey, Render, Span, ValueSignals};
+use crate::batch::{Batch, BatchId, Render, Span, ValueSignals};
 use crate::render::{Cost, RenderedTree, SourceCache};
 use crate::schema::{NorthStar, NsContent, resolve_content};
 
@@ -135,16 +135,11 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Result<SimulationRepo
             violations.push(v);
         }
 
-        let predecessor_bk = match &ns_batch.predecessor {
-            None => None,
-            Some(pred_id) => match ns_id_to_batch_id.get(pred_id) {
-                Some(_) => Some(synthetic_key(pred_id)),
-                None => {
-                    violations.push(Violation::PredecessorMissing(pred_id.clone()));
-                    None
-                }
-            },
-        };
+        if let Some(pred_id) = &ns_batch.predecessor
+            && !ns_id_to_batch_id.contains_key(pred_id)
+        {
+            violations.push(Violation::PredecessorMissing(pred_id.clone()));
+        }
 
         // Pre-validate Lines content. Fs-content failures surface as
         // FsResolveFailed below via `resolve_content`. If any span fails
@@ -187,9 +182,7 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Result<SimulationRepo
 
         let batch_id = BatchId::new(pos);
         let batch = Batch {
-            key: synthetic_key(&ns_batch.id),
             content,
-            predecessor: predecessor_bk,
             signals: ValueSignals::default(),
         };
 
@@ -311,12 +304,6 @@ fn validate_spans(spans: &[Span], fixture_root: &Path, cache: &SourceCache) -> V
         }
     }
     out
-}
-
-fn synthetic_key(ns_id: &str) -> BatchKey {
-    BatchKey::Fs(FsKey::DirListing {
-        dir: std::path::PathBuf::from(format!("/ns/{ns_id}")),
-    })
 }
 
 fn collect_ancestors(
