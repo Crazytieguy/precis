@@ -16,7 +16,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/otree"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 ".github" = "dir"
 ".gitignore" = "file"
 "Cargo.lock" = "file"
@@ -88,7 +88,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/otree/.github"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "dependabot.yml" = "file"
 workflows = "dir"
 
@@ -105,7 +105,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/otree/assets"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "screenshot.png" = "file"
 
 [[batches]]
@@ -121,7 +121,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/otree/config"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "default.toml" = "file"
 themes = "dir"
 
@@ -138,7 +138,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/otree/docs"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "actions.md" = "file"
 "changelog.md" = "file"
 "colors.md" = "file"
@@ -156,7 +156,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/otree/examples"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "edge.json" = "file"
 "edge.toml" = "file"
 "edge.yaml" = "file"
@@ -180,7 +180,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/otree/src"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "clipboard.rs" = "file"
 "cmd.rs" = "file"
 config = "dir"
@@ -719,7 +719,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/otree/.github/workflows"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "cargo-check.yml" = "file"
 "release-binary.yml" = "file"
 "spell-check.yml" = "file"
@@ -737,7 +737,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/otree/config/themes"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "catppuccin.toml" = "file"
 
 [[batches]]
@@ -753,7 +753,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/otree/src/config"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "colors.rs" = "file"
 "keys.rs" = "file"
 "mod.rs" = "file"
@@ -1368,7 +1368,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/otree/src/ui"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "app.rs" = "file"
 "data_block.rs" = "file"
 "filter.rs" = "file"
@@ -2269,7 +2269,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/otree/src/parse"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "any.rs" = "file"
 "hcl.rs" = "file"
 "json.rs" = "file"
@@ -3172,7 +3172,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/otree/src/parse/test_cases"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 hcl = "dir"
 json = "dir"
 jsonl = "dir"
@@ -3991,7 +3991,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/otree/src/parse/test_cases/jsonl"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "complex_objects.jsonl" = "file"
 "complex_objects_highlight.json" = "file"
 "csv.jsonl" = "file"
@@ -4012,7 +4012,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/otree/src/parse/test_cases/xml"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "array.json" = "file"
 "array.xml" = "file"
 "array_of_objects.json" = "file"
@@ -4035,7 +4035,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/otree/src/parse/test_cases/json"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "2d_array.json" = "file"
 "3d_array.json" = "file"
 "array_of_objects.json" = "file"
@@ -4159,7 +4159,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/otree/src/parse/test_cases/toml"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "2d_array.toml" = "file"
 "2d_array_highlight.toml" = "file"
 "array_of_objects.toml" = "file"
@@ -4441,7 +4441,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/otree/src/parse/test_cases/hcl"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "array.hcl" = "file"
 "array.json" = "file"
 "array_of_objects.hcl" = "file"
@@ -4704,7 +4704,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/otree/src/parse/test_cases/yaml"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "array_of_objects.yaml" = "file"
 "array_of_objects_highlight.yaml" = "file"
 "arrays.yaml" = "file"

@@ -8,9 +8,10 @@ use std::path::{Path, PathBuf};
 
 use anyhow::Result;
 
-use crate::batch::{Batch, BatchId, Render, Span, ValueSignals};
+use crate::batch::{Batch, BatchContent, BatchId, Render, Span, ValueSignals};
+use crate::north_star::NorthStar;
+use crate::ns_loader::resolve_content;
 use crate::render::{Cost, RenderedTree, SourceCache};
-use crate::schema::{NorthStar, NsContent, resolve_content};
 
 /// Per-batch simulator output.
 #[derive(Debug, Clone)]
@@ -144,7 +145,7 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Result<SimulationRepo
         // Pre-validate Lines content. Fs-content failures surface as
         // FsResolveFailed below via `resolve_content`. If any span fails
         // validation, skip cost/apply — render would panic on bad spans.
-        let had_span_error = if let NsContent::Lines { spans } = &ns_batch.content {
+        let had_span_error = if let BatchContent::Lines { spans } = &ns_batch.content {
             let span_v = validate_spans(spans, fixture_root, &source_cache);
             let any = !span_v.is_empty();
             violations.extend(span_v);
@@ -233,7 +234,7 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Result<SimulationRepo
 /// span validation flagged it (render would panic) or content resolution
 /// failed. Cumulative-tokens carries forward unchanged.
 fn skipped_batch(
-    ns_batch: &crate::schema::NsBatch,
+    ns_batch: &crate::north_star::NsBatch,
     cumulative: usize,
     violations: Vec<Violation>,
 ) -> SimulatedBatch {
@@ -310,7 +311,7 @@ fn validate_spans(spans: &[Span], fixture_root: &Path, cache: &SourceCache) -> V
 
 fn collect_ancestors(
     ns_id: &str,
-    all_batches: &[crate::schema::NsBatch],
+    all_batches: &[crate::north_star::NsBatch],
     ns_id_to_batch_id: &HashMap<String, BatchId>,
 ) -> HashSet<BatchId> {
     let mut out = HashSet::new();

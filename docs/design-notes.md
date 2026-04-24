@@ -40,12 +40,19 @@ No paraphrasing, summarization, or invented content under any circumstances.
   human-reviewed, and **frozen** before implementation iterates against them.
   Once frozen they are the divergence test's ground truth; implementation
   changes do not edit them.
-- Schema: declarative batches with spans + render specs, reusing library
-  `Span` / `Render` / `EntryKind` types directly (drift-free by
-  construction). `NsFsGroup` wraps filesystem listings with an `entries =
-  "all"` sentinel that resolves via `fs_util::list_dir` at load time —
-  raw directory listing, same utility the filesystem walker uses, so NS
-  and walker see identical filesystem content.
+- Schema: declarative batches with spans + render specs, reusing the
+  library's [`BatchContent`] / `Span` / `Render` / `EntryKind` / `FsGroup`
+  types directly (drift-free by construction). `FsGroup::entries` is a
+  three-variant [`FsEntries`] enum: `All` (NS sentinel meaning "list
+  everything under `parent`") / `Names(Vec<String>)` (NS explicit list by
+  string) / `Listed(BTreeMap<_,_>)` (resolved form the walker emits).
+  NS input shapes expand to `Listed` at load time via [`ns_loader`]
+  using `fs_util::list_dir` — same utility the walker uses, so NS and
+  walker see identical filesystem content.
+- Types live in `src/north_star.rs` (NS document) + `src/batch.rs`
+  (BatchContent + FsGroup + FsEntries + Span + Render + EntryKind).
+  Loading/resolution lives in `src/ns_loader.rs`. Types files hold
+  types only; loaders hold functions.
 - `revision_pin` is the only thing binding an NS to its fixture revision.
   `load_ns_checked` enforces it; the `ns_pins_match_fixture_pins` test
   enforces it under `cargo t`.

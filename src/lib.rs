@@ -5,18 +5,19 @@ use anyhow::{Context, Result, anyhow, bail};
 pub mod batch;
 pub mod divergence;
 pub mod fs_util;
+pub mod north_star;
+pub mod ns_loader;
 pub mod ns_simulate;
 pub mod render;
 pub mod schedule_types;
 pub mod scheduler;
-pub mod schema;
 pub mod tokenizer;
 pub mod value;
 pub mod walker;
 
 pub use batch::{
-    Batch, BatchContent, BatchKey, EntryKind, FsGroup, FsKey, MarkdownKey, Render, ResolvedBatch,
-    RustKey, Span, TomlKey, ValueSignals, WalkerKey,
+    Batch, BatchContent, BatchKey, EntryKind, FsEntries, FsGroup, FsKey, MarkdownKey, Render,
+    ResolvedBatch, RustKey, Span, TomlKey, ValueSignals, WalkerKey,
 };
 pub use fs_util::list_dir;
 pub use render::{Cost, RenderedTree, SourceCache};

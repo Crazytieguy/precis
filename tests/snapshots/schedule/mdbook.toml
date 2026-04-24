@@ -16,7 +16,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 ".cargo" = "dir"
 ".git-blame-ignore-revs" = "file"
 ".gitattributes" = "file"
@@ -79,7 +79,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/.cargo"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "config.toml" = "file"
 
 [[batches]]
@@ -95,7 +95,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/.github"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 ISSUE_TEMPLATE = "dir"
 "renovate.json5" = "file"
 workflows = "dir"
@@ -113,7 +113,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/ci"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "install-rust.sh" = "file"
 "make-release-asset.sh" = "file"
 "publish-guide.sh" = "file"
@@ -132,7 +132,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/examples"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "nop-preprocessor.rs" = "file"
 remove-emphasis = "dir"
 
@@ -149,7 +149,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/guide"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "book.toml" = "file"
 guide-helper = "dir"
 src = "dir"
@@ -167,7 +167,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/src"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 cmd = "dir"
 "main.rs" = "file"
 
@@ -202,7 +202,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/tests"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 gui = "dir"
 testsuite = "dir"
 
@@ -253,7 +253,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 mdbook-compare = "dir"
 mdbook-core = "dir"
 mdbook-driver = "dir"
@@ -385,7 +385,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/.github/ISSUE_TEMPLATE"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "bug_report.yml" = "file"
 "feature_request.yml" = "file"
 "question.yml" = "file"
@@ -403,7 +403,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/.github/workflows"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "deploy.yml" = "file"
 "main.yml" = "file"
 "update-dependencies.yml" = "file"
@@ -421,7 +421,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "Cargo.toml" = "file"
 "README.md" = "file"
 src = "dir"
@@ -483,7 +483,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "Cargo.toml" = "file"
 "README.md" = "file"
 src = "dir"
@@ -545,7 +545,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "Cargo.toml" = "file"
 "README.md" = "file"
 src = "dir"
@@ -625,7 +625,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "Cargo.toml" = "file"
 "README.md" = "file"
 front-end = "dir"
@@ -706,7 +706,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdown"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "Cargo.toml" = "file"
 "README.md" = "file"
 src = "dir"
@@ -768,7 +768,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "Cargo.toml" = "file"
 "README.md" = "file"
 src = "dir"
@@ -830,7 +830,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-renderer"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "Cargo.toml" = "file"
 "README.md" = "file"
 src = "dir"
@@ -892,7 +892,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-summary"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "Cargo.toml" = "file"
 "README.md" = "file"
 src = "dir"
@@ -954,7 +954,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/xtask"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "Cargo.toml" = "file"
 "README.md" = "file"
 src = "dir"
@@ -1016,7 +1016,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/examples/remove-emphasis"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 ".gitignore" = "file"
 "book.toml" = "file"
 mdbook-remove-emphasis = "dir"
@@ -1036,7 +1036,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/guide/guide-helper"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "Cargo.toml" = "file"
 src = "dir"
 
@@ -1071,7 +1071,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/guide/src"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "404.md" = "file"
 "README.md" = "file"
 "SUMMARY.md" = "file"
@@ -1095,7 +1095,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/src/cmd"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "build.rs" = "file"
 "clean.rs" = "file"
 "command_prelude.rs" = "file"
@@ -1955,7 +1955,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "main.rs" = "file"
 
 [[batches]]
@@ -2007,7 +2007,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/src"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 book = "dir"
 "book.rs" = "file"
 "config.rs" = "file"
@@ -2303,7 +2303,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/src"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 builtin_preprocessors = "dir"
 builtin_renderers = "dir"
 "init.rs" = "file"
@@ -2533,7 +2533,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/front-end"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 css = "dir"
 fonts = "dir"
 images = "dir"
@@ -2555,7 +2555,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 html = "dir"
 html_handlebars = "dir"
 "lib.rs" = "file"
@@ -2619,7 +2619,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdown/src"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "lib.rs" = "file"
 
 [[batches]]
@@ -2827,7 +2827,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor/src"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "lib.rs" = "file"
 
 [[batches]]
@@ -3085,7 +3085,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-renderer/src"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "lib.rs" = "file"
 
 [[batches]]
@@ -3307,7 +3307,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-summary/src"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "lib.rs" = "file"
 
 [[batches]]
@@ -3583,7 +3583,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/xtask/src"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "changelog.rs" = "file"
 "main.rs" = "file"
 
@@ -3696,7 +3696,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/examples/remove-emphasis/mdbook-remove-emphasis"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "Cargo.toml" = "file"
 src = "dir"
 
@@ -3731,7 +3731,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/examples/remove-emphasis/src"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "SUMMARY.md" = "file"
 "chapter_1.md" = "file"
 
@@ -3748,7 +3748,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/guide/guide-helper/src"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "lib.rs" = "file"
 "main.rs" = "file"
 
@@ -3931,7 +3931,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/guide/src/cli"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "README.md" = "file"
 "arg-watcher.md" = "file"
 "build.md" = "file"
@@ -3981,7 +3981,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/guide/src/for_developers"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "README.md" = "file"
 "backends.md" = "file"
 mdbook-wordcount = "dir"
@@ -4026,7 +4026,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/guide/src/format"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "README.md" = "file"
 configuration = "dir"
 "example.rs" = "file"
@@ -4076,7 +4076,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/guide/src/guide"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "README.md" = "file"
 "creating.md" = "file"
 "installation.md" = "file"
@@ -4121,7 +4121,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/guide/src/misc"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "contributors.md" = "file"
 
 [[batches]]
@@ -4137,7 +4137,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/src/cmd/watch"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "native.rs" = "file"
 "poller.rs" = "file"
 

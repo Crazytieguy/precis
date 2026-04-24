@@ -27,7 +27,7 @@
 use std::collections::BTreeMap;
 use std::path::PathBuf;
 
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 /// Scheduler-internal batch index. Assigned at materialization time; walkers
 /// never see these.
@@ -286,7 +286,9 @@ pub struct ResolvedBatch {
 
 /// Batch content. Either filesystem-level entries (one or more directory
 /// listings grouped together) or a set of line-range spans with render
-/// specs.
+/// specs. Same type used by the walker (always fully-resolved) and the
+/// NS schema (may carry [`FsEntries::All`] / `FsEntries::Names` sentinels
+/// that get expanded to `Listed` at NS load time).
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "kind", rename_all = "lowercase")]
 pub enum BatchContent {
@@ -302,12 +304,80 @@ pub enum BatchContent {
 }
 
 /// A single filesystem listing: one parent directory and its children.
-/// Child names are stored as `String` (lossy at `list_dir` time) so
-/// [`FsGroup`] round-trips cleanly through TOML for schedule snapshots.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct FsGroup {
+    /// Parent directory path. Absolute for walker-emitted groups; NS
+    /// groups are relativized in TOML and absolutized at load time.
     pub parent: PathBuf,
-    pub children: BTreeMap<String, EntryKind>,
+    /// Children under `parent`. See [`FsEntries`] for the three shapes
+    /// this can take.
+    pub entries: FsEntries,
+}
+
+/// Filesystem-listing contents. Two input shapes (from NS TOML) and one
+/// post-resolution shape; walker always emits the post-resolution form.
+///
+/// - `All` — NS sentinel meaning "every child under `parent`". Expanded
+///   to `Listed` at NS load time via `fs_util::list_dir`. Never emitted
+///   by the walker; post-resolution invariant is no `All` variants.
+/// - `Names` — NS input listing a subset of child names by string.
+///   Each name must exist under `parent`; load-time resolution probes
+///   and attaches the kind to produce `Listed`.
+/// - `Listed` — concrete: child-name → kind. Walker-emitted and
+///   post-resolution NS form.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum FsEntries {
+    All,
+    Names(Vec<String>),
+    Listed(BTreeMap<String, EntryKind>),
+}
+
+impl FsEntries {
+    /// Convenience constructor for walker code that always produces a
+    /// resolved listing.
+    pub fn listed(children: BTreeMap<String, EntryKind>) -> Self {
+        FsEntries::Listed(children)
+    }
+
+    /// Access the resolved child map. Returns `None` for unresolved
+    /// (`All` / `Names`) variants — callers past NS load should never
+    /// see these.
+    pub fn as_listed(&self) -> Option<&BTreeMap<String, EntryKind>> {
+        match self {
+            FsEntries::Listed(m) => Some(m),
+            _ => None,
+        }
+    }
+}
+
+impl Serialize for FsEntries {
+    fn serialize<S: Serializer>(&self, s: S) -> Result<S::Ok, S::Error> {
+        match self {
+            FsEntries::All => s.serialize_str("all"),
+            FsEntries::Names(names) => names.serialize(s),
+            FsEntries::Listed(map) => map.serialize(s),
+        }
+    }
+}
+
+impl<'de> Deserialize<'de> for FsEntries {
+    fn deserialize<D: Deserializer<'de>>(d: D) -> Result<Self, D::Error> {
+        #[derive(Deserialize)]
+        #[serde(untagged)]
+        enum Repr {
+            Str(String),
+            Names(Vec<String>),
+            Listed(BTreeMap<String, EntryKind>),
+        }
+        match Repr::deserialize(d)? {
+            Repr::Str(s) if s == "all" => Ok(FsEntries::All),
+            Repr::Str(s) => Err(serde::de::Error::custom(format!(
+                "invalid entries sentinel {s:?}; expected \"all\" or a map/list"
+            ))),
+            Repr::Names(v) => Ok(FsEntries::Names(v)),
+            Repr::Listed(m) => Ok(FsEntries::Listed(m)),
+        }
+    }
 }
 
 /// A contiguous range of source lines in one file, plus how to render them.

@@ -28,8 +28,8 @@ use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
 use precis::{
-    divergence::generate_divergence_report, render as render_precis, render_schedule,
-    schema::load_ns_checked,
+    divergence::generate_divergence_report, ns_loader::load_ns_checked, render as render_precis,
+    render_schedule,
 };
 
 /// Walker budget for the canonical schedule snapshot. Matches the NS cap.
@@ -218,7 +218,7 @@ fn schedule_order_ns_pins_match_fixture_pins() {
         if path.extension().and_then(|s| s.to_str()) != Some("toml") {
             continue;
         }
-        let ns = match precis::schema::load_ns(&path) {
+        let ns = match precis::ns_loader::load_ns(&path) {
             Ok(ns) => ns,
             Err(e) => {
                 problems.push(format!("{}: {e}", path.display()));

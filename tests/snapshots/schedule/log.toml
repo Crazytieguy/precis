@@ -16,7 +16,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/log"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 ".github" = "dir"
 ".gitignore" = "file"
 "CHANGELOG.md" = "file"
@@ -130,7 +130,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/log/.github"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 workflows = "dir"
 
 [[batches]]
@@ -146,7 +146,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/log/benches"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "value.rs" = "file"
 
 [[batches]]
@@ -162,7 +162,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/log/rfcs"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "0296-structured-logging.md" = "file"
 
 [[batches]]
@@ -178,7 +178,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/log/src"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "__private_api.rs" = "file"
 kv = "dir"
 "lib.rs" = "file"
@@ -780,7 +780,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/log/test_max_level_features"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "Cargo.toml" = "file"
 "main.rs" = "file"
 
@@ -881,7 +881,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/log/tests"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "integration.rs" = "file"
 "macros.rs" = "file"
 
@@ -2020,7 +2020,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/log/.github/workflows"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "main.yml" = "file"
 
 [[batches]]
@@ -2036,7 +2036,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/log/src/kv"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "error.rs" = "file"
 "key.rs" = "file"
 "mod.rs" = "file"

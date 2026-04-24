@@ -6,8 +6,8 @@
 
 use std::path::Path;
 
+use precis::north_star::NorthStar;
 use precis::ns_simulate::{ENV_BASE, Violation, envelope_max, simulate_ns};
-use precis::schema::NorthStar;
 
 const LOG_FIXTURE: &str = "tests/fixtures/log";
 

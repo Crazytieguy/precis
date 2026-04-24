@@ -175,7 +175,15 @@ impl RenderedTree {
     fn cost_fs_groups(&self, groups: &[FsGroup]) -> Cost {
         let mut cost = Cost::default();
         for group in groups {
-            cost = cost + self.cost_one_listing(&group.parent, &group.children);
+            let Some(children) = group.entries.as_listed() else {
+                debug_assert!(
+                    false,
+                    "unresolved FsEntries reached cost path at {}",
+                    group.parent.display()
+                );
+                continue;
+            };
+            cost = cost + self.cost_one_listing(&group.parent, children);
         }
         cost
     }
@@ -249,7 +257,14 @@ impl RenderedTree {
 
     fn apply_fs_group(&mut self, group: &FsGroup) {
         let parent = &group.parent;
-        let children = &group.children;
+        let Some(children) = group.entries.as_listed() else {
+            debug_assert!(
+                false,
+                "unresolved FsEntries reached apply path at {}",
+                parent.display()
+            );
+            return;
+        };
         for (name, kind) in children {
             let child_path = parent.join(name);
             self.nodes.entry(child_path).or_insert_with(|| match kind {

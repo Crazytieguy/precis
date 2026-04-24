@@ -26,9 +26,10 @@ use std::path::{Path, PathBuf};
 use anyhow::Result;
 
 use crate::batch::{BatchContent, Render, Span};
+use crate::north_star::NorthStar;
+use crate::ns_loader::resolve_content;
 use crate::render::SourceCache;
 use crate::schedule_types::{Atom, Schedule, ScheduledBatch};
-use crate::schema::{NorthStar, resolve_content};
 
 /// Time-weight half-life (tokens). `w(t) = exp(−t / τ)`. First 2000
 /// tokens carry ~63% of the mass; first 6000 ~95%.
@@ -127,22 +128,29 @@ fn atoms_from_content(
     fixture_root: &Path,
 ) -> Vec<GradedAtom> {
     match content {
-        BatchContent::Fs { groups } => groups
-            .iter()
-            .flat_map(|g| {
-                // `g.parent` arrives absolute from the schema/walker. We
-                // store the absolute parent for compatibility with walker-
-                // emitted schedules.
-                let parent = g.parent.clone();
-                g.children.keys().map(move |name| GradedAtom {
-                    atom: Atom::Fs {
-                        parent: parent.clone(),
-                        entry: name.clone(),
-                    },
-                    bytes: 1,
-                })
-            })
-            .collect(),
+        BatchContent::Fs { groups } => {
+            let mut out = Vec::new();
+            for g in groups {
+                let Some(children) = g.entries.as_listed() else {
+                    debug_assert!(
+                        false,
+                        "unresolved FsEntries in divergence at {}",
+                        g.parent.display()
+                    );
+                    continue;
+                };
+                for name in children.keys() {
+                    out.push(GradedAtom {
+                        atom: Atom::Fs {
+                            parent: g.parent.clone(),
+                            entry: name.clone(),
+                        },
+                        bytes: 1,
+                    });
+                }
+            }
+            out
+        }
         BatchContent::Lines { spans } => {
             let by_line = resolve_span_renders(spans);
             let mut out = Vec::with_capacity(by_line.len());

@@ -16,8 +16,8 @@ use std::process::ExitCode;
 use anyhow::{Context, Result};
 use clap::Parser;
 
+use precis::ns_loader::load_ns_checked;
 use precis::ns_simulate::{SimulationReport, Violation, simulate_ns};
-use precis::schema::load_ns_checked;
 
 #[derive(Parser, Debug)]
 #[command(about = "Validate a North Star TOML against a fixture.")]
@@ -47,7 +47,7 @@ fn run() -> Result<ExitCode> {
         Some(p) => p.clone(),
         None => {
             // Parse just enough of the TOML to learn the fixture name.
-            let probe = precis::schema::load_ns(&cli.ns_path)
+            let probe = precis::ns_loader::load_ns(&cli.ns_path)
                 .with_context(|| format!("loading {} (pre-pin-check)", cli.ns_path.display()))?;
             PathBuf::from("tests/fixtures").join(&probe.fixture)
         }

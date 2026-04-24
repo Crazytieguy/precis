@@ -52,7 +52,7 @@ pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
         content: BatchContent::Fs {
             groups: vec![FsGroup {
                 parent: dir.clone(),
-                children,
+                entries: crate::batch::FsEntries::listed(children),
             }],
         },
         signals: dir_listing_signals_for_path(dir, dir == ctx.root(), ctx.depth_from_root(dir)),

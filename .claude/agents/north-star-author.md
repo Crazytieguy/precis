@@ -54,8 +54,7 @@ Examples of cheap batches that mitigate catastrophic-omission risk:
 - **Location batches** — the *name only* of every public function in a
   file (one truncated span per fn's first line, truncating at the
   opening paren with a `^[^(]+` regex pattern). Listing only some
-  items implies the unlisted ones don't exist; always show them all
-  together.
+  items could imply the unlisted ones don't exist.
 - **All H2 heading locations** in a markdown file, without section
   bodies — tells the agent what sections exist.
 
@@ -74,33 +73,15 @@ any constraint violations.
 ## Output — TOML schema
 
 Write a single TOML file at the output path in your spawn prompt. The
-**canonical schema definition is `src/schema.rs`** — read it directly
-for field names, variant discriminators, and the `entries = "all"`
-sentinel. For a format reference, skim
-`tests/north-stars/log.toml` or `tests/north-stars/otree.toml` — copy
-the shape, not the content; every fixture is different.
-
-Key field reminders:
-- `id` — `major.minor` string (`"1.1"`, `"2.10"`, `"3.4"`). Numeric-aware
-  sort; don't mix formats.
-- `descriptor` — short human-readable label.
-- `justification` — free-form prose on why this batch is ranked here.
-- `predecessor` (optional) — id of an earlier-ranked batch this one
-  logically depends on (e.g. a fn body after its signature). The
-  validator enforces referential and ordering closure.
-- `content` — discriminated by `kind = "fs"` (filesystem listings) or
-  `kind = "lines"` (source line spans with render specs).
-- Render kinds are `"full"`, `"truncated"` (with `pattern`), and
-  `"ellipsis"` — check `src/schema.rs` for the exact spelling.
+**canonical schema definition is `src/schema.rs`** — read it carefully in full, your output file should match NorthStar.
 
 ## Constraints (validator-enforced)
 
-Run `cargo run --bin validate-ns -- <output_path>` after each write.
+Run `cargo run --bin validate-ns -- <output_path>` after each write or edit.
 The validator prints every batch's marginal cost + cumulative + any
 violations. The main violation kinds:
 
-- **GrowthEnvelope**: `cost_i ≤ 100 + 0.3·cumulative_before`. Replaces
-  the old 2× rule. Intuition: at batch 2 a new batch can roughly double
+- **GrowthEnvelope**: `cost_i ≤ 100 + 0.3·cumulative_before`. Intuition: at batch 2 a new batch can roughly double
   the aggregate (100-token base floor dominates); by batch 10 or later
   each new batch is bounded to ~30% of current cumulative. Validator
   message tells you `cumulative_before` and `max_allowed`. Fix by

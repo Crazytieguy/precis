@@ -16,7 +16,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/anyhow"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 ".github" = "dir"
 ".gitignore" = "file"
 "Cargo.toml" = "file"
@@ -77,7 +77,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/anyhow/.github"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "FUNDING.yml" = "file"
 workflows = "dir"
 
@@ -94,7 +94,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/anyhow/src"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "backtrace.rs" = "file"
 "chain.rs" = "file"
 "context.rs" = "file"
@@ -1531,7 +1531,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/anyhow/.github/workflows"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "ci.yml" = "file"
 
 [[batches]]
@@ -1547,7 +1547,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/anyhow/tests"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 common = "dir"
 "compiletest.rs" = "file"
 crate = "dir"
@@ -1716,7 +1716,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/anyhow/tests/common"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "mod.rs" = "file"
 
 [[batches]]
@@ -1868,7 +1868,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/anyhow/tests/crate"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 ".gitignore" = "file"
 "Cargo.toml" = "file"
 "test.rs" = "file"
@@ -1922,7 +1922,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/anyhow/tests/drop"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "mod.rs" = "file"
 
 [[batches]]
@@ -2242,7 +2242,7 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/anyhow/tests/ui"
 
-[batches.content.groups.children]
+[batches.content.groups.entries]
 "chained-comparison.rs" = "file"
 "chained-comparison.stderr" = "file"
 "empty-ensure.rs" = "file"

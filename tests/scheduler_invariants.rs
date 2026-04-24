@@ -100,7 +100,10 @@ fn scheduler_invariants_override_via_predecessor_chain() {
                     content: BatchContent::Fs {
                         groups: vec![FsGroup {
                             parent: dir.clone(),
-                            children: one_child("synthetic.rs", EntryKind::File),
+                            entries: precis::FsEntries::listed(one_child(
+                                "synthetic.rs",
+                                EntryKind::File,
+                            )),
                         }],
                     },
                     signals: sig(0.9),
@@ -186,7 +189,10 @@ fn scheduler_invariants_tiny_budget_truncates_cleanly() {
                     content: BatchContent::Fs {
                         groups: vec![FsGroup {
                             parent: dir.clone(),
-                            children: one_child("synthetic.rs", EntryKind::File),
+                            entries: precis::FsEntries::listed(one_child(
+                                "synthetic.rs",
+                                EntryKind::File,
+                            )),
                         }],
                     },
                     signals: sig(0.9),
@@ -270,7 +276,7 @@ fn scheduler_invariants_non_predecessor_overlap_panics_in_debug() {
                     content: BatchContent::Fs {
                         groups: vec![FsGroup {
                             parent: dir.clone(),
-                            children: one_child("f.rs", EntryKind::File),
+                            entries: precis::FsEntries::listed(one_child("f.rs", EntryKind::File)),
                         }],
                     },
                     signals: sig(0.9),
