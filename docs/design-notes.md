@@ -303,6 +303,24 @@ like to revisit whether it's still earning its complexity.
   items inside `x.rs` effectively pub(crate), which the current local
   check misses entirely).
 
+### Divergence report — deferred refinements
+
+Three rounds of reviewer feedback have landed; report is ship-ready as
+the calibration artifact. Two items deferred for later iteration:
+
+- **Aggregate walker-waste rows by descriptor pattern.** Several
+  fixtures show waste tables with N near-identical rows (e.g.,
+  `pub-item doc at src/lib.rs:<line>` repeated 7+ times totaling
+  ~3k tokens). A rollup column showing pattern-aggregated spend
+  would make systemic misses obvious without scanning. Defer until
+  it's worth the format complexity.
+- **Token-weight off-NS attribution.** Mixed-waste rows currently
+  estimate off-NS spend as `off_atoms / total_atoms × cost_tokens`
+  (atom-count-proportional). For batches with very uneven per-atom
+  costs (e.g., one atom is a 200-line method body, others are
+  one-line decls) this can misrank calibration targets. Defer until
+  someone observes a misranking that changes a calibration decision.
+
 ### Schema vocabulary — better doc comments, maybe stricter validation
 
 Observed from the first NS-author runs under the revised prompt:
