@@ -23,7 +23,7 @@ use std::path::{Path, PathBuf};
 use anyhow::Result;
 
 use crate::batch::{Batch, BatchId, ValueSignals};
-use crate::content::{BatchContent, FsEntries, Render};
+use crate::content::{BatchContent, FsEntries, Render, explode_spans};
 use crate::north_star::NorthStar;
 use crate::ns_loader::resolve_content;
 use crate::render::{RenderedTree, SourceCache};
@@ -72,7 +72,8 @@ pub struct Scores {
 /// Compute scores. `schedule` is expected to be a full-cap walker run.
 pub fn score(ns: &NorthStar, schedule: &Schedule, fixture_root: &Path) -> Result<Scores> {
     let ctx = BuildCtx::new(ns, schedule, fixture_root)?;
-    Ok(compute_scores(&ctx))
+    let arrivals = arrival_infos(&ctx);
+    Ok(compute_scores(&ctx, &arrivals))
 }
 
 /// Generate the markdown divergence report (one per fixture).
@@ -82,8 +83,9 @@ pub fn generate_divergence_report(
     fixture_root: &Path,
 ) -> Result<String> {
     let ctx = BuildCtx::new(ns, schedule, fixture_root)?;
-    let scores = compute_scores(&ctx);
-    Ok(format_report(&scores, &ctx))
+    let arrivals = arrival_infos(&ctx);
+    let scores = compute_scores(&ctx, &arrivals);
+    Ok(format_report(&scores, &ctx, &arrivals))
 }
 
 // ---- graded atoms ------------------------------------------------------
@@ -140,24 +142,9 @@ fn atoms_from_content(
             }
             out
         }
-        BatchContent::Lines { spans } => {
-            // Spans within a batch must be disjoint on (path, line) —
-            // validator enforces it; walker emits disjoint spans by
-            // construction. Overlap here is a bug; debug-assert + last
-            // write wins for release-build robustness.
-            let mut by_key: BTreeMap<(PathBuf, usize), Render> = BTreeMap::new();
-            for span in spans {
-                for line in span.start..=span.end {
-                    let prev = by_key.insert((span.path.clone(), line), span.render.clone());
-                    debug_assert!(
-                        prev.is_none(),
-                        "overlapping spans in divergence at {}:{line}",
-                        span.path.display()
-                    );
-                }
-            }
-            let mut out = Vec::with_capacity(by_key.len());
-            for ((path, line), render) in by_key {
+        BatchContent::Lines { spans } => explode_spans(spans)
+            .into_iter()
+            .map(|(path, line, render)| {
                 let abs = if path.is_absolute() {
                     path.clone()
                 } else {
@@ -169,13 +156,12 @@ fn atoms_from_content(
                     .and_then(|s| s.lines().nth(line.saturating_sub(1)))
                     .unwrap_or("");
                 let bytes = byte_end_for(&render, src_line);
-                out.push(GradedAtom {
+                GradedAtom {
                     atom: Atom::Line { path, line },
                     bytes,
-                });
-            }
-            out
-        }
+                }
+            })
+            .collect(),
     }
 }
 
@@ -275,18 +261,22 @@ impl<'a> BuildCtx<'a> {
     }
 }
 
+/// Numeric components of a major.minor NS id (`"2.10"` → `[2, 10]`).
+/// Shared by `parse_tier` (first component) and `numeric_id_cmp`
+/// (lexicographic compare across components).
+fn id_components(id: &str) -> Vec<usize> {
+    id.split('.').filter_map(|s| s.parse().ok()).collect()
+}
+
 /// Major id prefix: `"1.10"` → `1`. Used for tier rollup; falls back to
 /// 0 for non-numeric prefixes.
 fn parse_tier(id: &str) -> usize {
-    id.split('.')
-        .next()
-        .and_then(|s| s.parse().ok())
-        .unwrap_or(0)
+    id_components(id).first().copied().unwrap_or(0)
 }
 
 // ---- scoring -----------------------------------------------------------
 
-fn compute_scores(ctx: &BuildCtx) -> Scores {
+fn compute_scores(ctx: &BuildCtx, arrivals: &[Arrival]) -> Scores {
     let t_max = ctx.schedule.budget.max(ctx.schedule.cumulative_tokens);
     let sim = compute_sim(ctx, t_max);
 
@@ -296,17 +286,18 @@ fn compute_scores(ctx: &BuildCtx) -> Scores {
     let mut partial = 0;
     let mut missing = 0;
 
-    for arrival in arrival_infos(ctx) {
-        if arrival.credit < MISSING_FLOOR {
-            missing += 1;
-        } else if arrival.credit < REACH_THRESHOLD {
-            partial += 1;
-        } else {
-            reached += 1;
-            match arrival.status {
-                ArrivalStatus::Early => early += 1,
-                ArrivalStatus::Late => late += 1,
-                _ => {}
+    for arrival in arrivals {
+        match arrival.status {
+            ArrivalStatus::Missing => missing += 1,
+            ArrivalStatus::Partial => partial += 1,
+            ArrivalStatus::Aligned => reached += 1,
+            ArrivalStatus::Early => {
+                reached += 1;
+                early += 1;
+            }
+            ArrivalStatus::Late => {
+                reached += 1;
+                late += 1;
             }
         }
     }
@@ -367,6 +358,25 @@ fn arrival_infos(ctx: &BuildCtx) -> Vec<Arrival> {
         .collect()
 }
 
+/// Walker cumulative byte-max map up to (and including) walker batches
+/// with `seen_t ≤ t_max`. Pass `usize::MAX` for the full final state.
+/// Single shared helper for `credit_for_ns_atoms` and `overlap_at`.
+fn walker_cum_at<'a>(ctx: &'a BuildCtx<'_>, t_max: usize) -> BTreeMap<&'a Atom, usize> {
+    let mut cumulative: BTreeMap<&Atom, usize> = BTreeMap::new();
+    for wr in &ctx.walker_rows {
+        if wr.seen_t > t_max {
+            break;
+        }
+        for wa in &wr.atoms {
+            let prev = cumulative.get(&wa.atom).copied().unwrap_or(0);
+            if wa.bytes > prev {
+                cumulative.insert(&wa.atom, wa.bytes);
+            }
+        }
+    }
+    cumulative
+}
+
 /// Cumulative walker tokens at the first walker batch after which this
 /// NS batch's credit reaches [`REACH_THRESHOLD`]. `None` if the batch
 /// is never reached.
@@ -391,15 +401,7 @@ fn first_reach_t(ctx: &BuildCtx, ns_atoms: &[GradedAtom]) -> Option<usize> {
 }
 
 fn credit_for_ns_atoms(ctx: &BuildCtx, ns_atoms: &[GradedAtom]) -> (f64, bool) {
-    let mut cumulative: BTreeMap<&Atom, usize> = BTreeMap::new();
-    for wr in &ctx.walker_rows {
-        for wa in &wr.atoms {
-            let prev = cumulative.get(&wa.atom).copied().unwrap_or(0);
-            if wa.bytes > prev {
-                cumulative.insert(&wa.atom, wa.bytes);
-            }
-        }
-    }
+    let cumulative = walker_cum_at(ctx, usize::MAX);
     credit_against_cum_map(ns_atoms, &cumulative)
 }
 
@@ -454,7 +456,7 @@ fn compute_sim(ctx: &BuildCtx, t_max: usize) -> f64 {
     for pair in bs.windows(2) {
         let a = pair[0] as f64;
         let b = pair[1] as f64;
-        let overlap = overlap_at(ctx, pair[0]); // left endpoint
+        let overlap = overlap_at(ctx, pair[0]);
         let w = weighted_segment(a, b);
         num += w * overlap;
         den += w;
@@ -468,18 +470,7 @@ fn compute_sim(ctx: &BuildCtx, t_max: usize) -> f64 {
 /// the left-endpoint eval in `compute_sim` captures the correct
 /// piecewise-constant value for `(a, b]`.
 fn overlap_at(ctx: &BuildCtx, t: usize) -> f64 {
-    let mut cumulative: BTreeMap<&Atom, usize> = BTreeMap::new();
-    for wr in &ctx.walker_rows {
-        if wr.seen_t > t {
-            break;
-        }
-        for wa in &wr.atoms {
-            let prev = cumulative.get(&wa.atom).copied().unwrap_or(0);
-            if wa.bytes > prev {
-                cumulative.insert(&wa.atom, wa.bytes);
-            }
-        }
-    }
+    let cumulative = walker_cum_at(ctx, t);
     let mut total_atoms = 0.0;
     let mut total_credit = 0.0;
     for row in &ctx.ns_rows {
@@ -508,7 +499,7 @@ fn weighted_segment(a: f64, b: f64) -> f64 {
 
 // ---- report ------------------------------------------------------------
 
-fn format_report(scores: &Scores, ctx: &BuildCtx) -> String {
+fn format_report(scores: &Scores, ctx: &BuildCtx, arrivals: &[Arrival]) -> String {
     let mut out = String::new();
     out.push_str(&format!(
         "scores: Sim={:.3} Reached={}/{} Early={} Late={} Partial={} Missing={} Used={}/{}\n",
@@ -523,17 +514,14 @@ fn format_report(scores: &Scores, ctx: &BuildCtx) -> String {
         ctx.schedule.budget,
     ));
 
-    let arrivals = arrival_infos(ctx);
-
-    format_tier_rollup(&mut out, ctx, &arrivals);
-    format_arrival_ledger(&mut out, ctx, &arrivals);
+    format_tier_rollup(&mut out, ctx, arrivals);
+    format_arrival_ledger(&mut out, ctx, arrivals);
     format_walker_waste(&mut out, ctx);
 
     out
 }
 
 fn format_tier_rollup(out: &mut String, ctx: &BuildCtx, arrivals: &[Arrival]) {
-    // Aggregate per tier. Rows in NS order; tiers sorted numerically.
     struct TierAgg {
         batches: usize,
         reached: usize,
@@ -551,12 +539,10 @@ fn format_tier_rollup(out: &mut String, ctx: &BuildCtx, arrivals: &[Arrival]) {
             credit_sum: 0.0,
         });
         agg.batches += 1;
-        if arrival.credit < MISSING_FLOOR {
-            agg.missing += 1;
-        } else if arrival.credit < REACH_THRESHOLD {
-            agg.partial += 1;
-        } else {
-            agg.reached += 1;
+        match arrival.status {
+            ArrivalStatus::Missing => agg.missing += 1,
+            ArrivalStatus::Partial => agg.partial += 1,
+            _ => agg.reached += 1,
         }
         agg.credit_sum += arrival.credit;
     }
@@ -700,10 +686,10 @@ fn format_walker_waste(out: &mut String, ctx: &BuildCtx) {
     }
 }
 
+/// Walker descriptors embed absolute paths (e.g. `"crate-doc lede in
+/// /abs/.../tests/fixtures/log/src/lib.rs"`); stripping the fixture
+/// root makes reports diff-stable across checkouts.
 fn strip_fixture_root(descriptor: &str, fixture_root: &Path) -> String {
-    // Walker descriptors embed absolute paths (e.g. "crate-doc lede in
-    // /Users/.../tests/fixtures/log/src/lib.rs"). Stripping the fixture-
-    // root prefix makes reports diff-stable across checkouts.
     let prefix = format!("{}/", fixture_root.display());
     descriptor.replace(&prefix, "")
 }
@@ -734,7 +720,5 @@ fn classify(reached_t: Option<usize>, exp_t: usize, credit: f64) -> ArrivalStatu
 /// Sort NS ids numerically: `2.5 < 2.8 < 3.1 < 10.2`. String-sort would
 /// break with `2.10 < 2.2`.
 fn numeric_id_cmp(a: &str, b: &str) -> std::cmp::Ordering {
-    let pa: Vec<usize> = a.split('.').filter_map(|s| s.parse().ok()).collect();
-    let pb: Vec<usize> = b.split('.').filter_map(|s| s.parse().ok()).collect();
-    pa.cmp(&pb)
+    id_components(a).cmp(&id_components(b))
 }

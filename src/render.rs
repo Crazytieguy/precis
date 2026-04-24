@@ -17,7 +17,7 @@ use std::rc::Rc;
 use std::sync::Arc;
 
 use crate::batch::{Batch, BatchId};
-use crate::content::{BatchContent, FsEntries, FsGroup, Render, Span};
+use crate::content::{BatchContent, FsEntries, FsGroup, Render, Span, explode_spans};
 use crate::fs_util::{EntryKind, list_dir};
 use crate::tokenizer;
 
@@ -214,7 +214,7 @@ impl RenderedTree {
     }
 
     fn cost_spans(&self, spans: &[Span]) -> Cost {
-        let resolved = resolve_spans(spans);
+        let resolved = explode_spans(spans);
         let mut by_path: BTreeMap<&Path, Vec<(usize, &Render)>> = BTreeMap::new();
         for (path, line, render) in &resolved {
             by_path
@@ -311,7 +311,7 @@ impl RenderedTree {
         is_ancestor: &impl Fn(BatchId) -> bool,
     ) -> Vec<ApplyConflict> {
         let mut conflicts = Vec::new();
-        for (path, line_num, render) in resolve_spans(spans) {
+        for (path, line_num, render) in explode_spans(spans) {
             let node = self
                 .nodes
                 .entry(path.clone())
@@ -388,28 +388,6 @@ impl std::ops::Add for Cost {
             bytes: self.bytes + other.bytes,
         }
     }
-}
-
-/// Expand a batch's spans into per-(path, line) entries, sorted by
-/// (path, line). Within one batch, spans must be disjoint on
-/// (path, line) — the NS validator rejects overlap, and the walker
-/// builds disjoint spans by construction. Overlap here is a bug;
-/// debug-assert and fall through (last write wins) so release stays
-/// robust.
-fn resolve_spans(spans: &[Span]) -> Vec<(PathBuf, usize, Render)> {
-    let mut by_key: BTreeMap<(PathBuf, usize), Render> = BTreeMap::new();
-    for span in spans {
-        for line_num in span.start..=span.end {
-            let key = (span.path.clone(), line_num);
-            let existed = by_key.insert(key.clone(), span.render.clone()).is_some();
-            debug_assert!(
-                !existed,
-                "overlapping spans within one batch at {}:{line_num} — validator should have caught this",
-                span.path.display()
-            );
-        }
-    }
-    by_key.into_iter().map(|((p, l), r)| (p, l, r)).collect()
 }
 
 fn format_entry_row(name: &str, kind: EntryKind, indent_depth: usize) -> String {

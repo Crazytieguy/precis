@@ -2,6 +2,7 @@
 //! data model both the North Star schema (see [`crate::north_star`]) and
 //! the walker/render pipeline speak. No walker-implementation details.
 
+use std::collections::BTreeMap;
 use std::path::PathBuf;
 
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
@@ -99,4 +100,25 @@ pub enum Render {
     Full,
     Truncated { pattern: String },
     Ellipsis,
+}
+
+/// Expand a batch's spans into per-(path, line) entries, sorted by
+/// `(path, line)`. Within one batch, spans must be disjoint —
+/// `OverlappingSpans` is a validator-caught violation; this fn
+/// `debug_assert`s on overlap and falls through to last-write-wins for
+/// release-build robustness. Shared by `render::cost_spans` /
+/// `render::apply_spans` / `divergence::atoms_from_content`.
+pub(crate) fn explode_spans(spans: &[Span]) -> Vec<(PathBuf, usize, Render)> {
+    let mut by_key: BTreeMap<(PathBuf, usize), Render> = BTreeMap::new();
+    for span in spans {
+        for line in span.start..=span.end {
+            let prev = by_key.insert((span.path.clone(), line), span.render.clone());
+            debug_assert!(
+                prev.is_none(),
+                "overlapping spans within one batch at {}:{line} — validator should have caught this",
+                span.path.display()
+            );
+        }
+    }
+    by_key.into_iter().map(|((p, l), r)| (p, l, r)).collect()
 }
