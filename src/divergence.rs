@@ -25,7 +25,7 @@ use std::path::{Path, PathBuf};
 
 use anyhow::Result;
 
-use crate::content::{BatchContent, Render, Span};
+use crate::content::{BatchContent, FsEntries, Render};
 use crate::north_star::NorthStar;
 use crate::ns_loader::resolve_content;
 use crate::render::SourceCache;
@@ -131,7 +131,7 @@ fn atoms_from_content(
         BatchContent::Fs { groups } => {
             let mut out = Vec::new();
             for g in groups {
-                let Some(paths) = g.entries.as_listed() else {
+                let FsEntries::Listed(paths) = &g.entries else {
                     debug_assert!(
                         false,
                         "unresolved FsEntries in divergence at {}",
@@ -155,9 +155,23 @@ fn atoms_from_content(
             out
         }
         BatchContent::Lines { spans } => {
-            let by_line = resolve_span_renders(spans);
-            let mut out = Vec::with_capacity(by_line.len());
-            for ((path, line), render) in by_line {
+            // Spans within a batch must be disjoint on (path, line) —
+            // validator enforces it; walker emits disjoint spans by
+            // construction. Overlap here is a bug; debug-assert + last
+            // write wins for release-build robustness.
+            let mut by_key: BTreeMap<(PathBuf, usize), Render> = BTreeMap::new();
+            for span in spans {
+                for line in span.start..=span.end {
+                    let prev = by_key.insert((span.path.clone(), line), span.render.clone());
+                    debug_assert!(
+                        prev.is_none(),
+                        "overlapping spans in divergence at {}:{line}",
+                        span.path.display()
+                    );
+                }
+            }
+            let mut out = Vec::with_capacity(by_key.len());
+            for ((path, line), render) in by_key {
                 let abs = if path.is_absolute() {
                     path.clone()
                 } else {
@@ -197,25 +211,6 @@ fn byte_end_for(render: &Render, source_line: &str) -> usize {
             .unwrap_or(0)
             .max(1),
     }
-}
-
-/// Resolve overlapping spans within one batch to the strongest render per
-/// (path, line), matching `RenderedTree::apply_spans`.
-fn resolve_span_renders(spans: &[Span]) -> Vec<((PathBuf, usize), Render)> {
-    let mut by_key: BTreeMap<(PathBuf, usize), Render> = BTreeMap::new();
-    for span in spans {
-        for line in span.start..=span.end {
-            by_key
-                .entry((span.path.clone(), line))
-                .and_modify(|r| {
-                    if span.render.priority() > r.priority() {
-                        *r = span.render.clone();
-                    }
-                })
-                .or_insert_with(|| span.render.clone());
-        }
-    }
-    by_key.into_iter().collect()
 }
 
 // ---- context -----------------------------------------------------------

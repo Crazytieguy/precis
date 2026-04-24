@@ -17,7 +17,7 @@ use std::rc::Rc;
 use std::sync::Arc;
 
 use crate::batch::{Batch, BatchId};
-use crate::content::{BatchContent, FsGroup, Render, Span};
+use crate::content::{BatchContent, FsEntries, FsGroup, Render, Span};
 use crate::fs_util::{EntryKind, list_dir};
 use crate::tokenizer;
 
@@ -177,7 +177,7 @@ impl RenderedTree {
     fn cost_fs_groups(&self, groups: &[FsGroup]) -> Cost {
         let mut cost = Cost::default();
         for group in groups {
-            let Some(paths) = group.entries.as_listed() else {
+            let FsEntries::Listed(paths) = &group.entries else {
                 debug_assert!(
                     false,
                     "unresolved FsEntries reached cost path at {}",
@@ -264,7 +264,7 @@ impl RenderedTree {
 
     fn apply_fs_group(&mut self, group: &FsGroup) {
         let parent = &group.parent;
-        let Some(paths) = group.entries.as_listed() else {
+        let FsEntries::Listed(paths) = &group.entries else {
             debug_assert!(
                 false,
                 "unresolved FsEntries reached apply path at {}",
@@ -390,22 +390,23 @@ impl std::ops::Add for Cost {
     }
 }
 
-/// Expand a batch's spans into per-(path, line) entries. Overlaps within
-/// the same batch resolve by `Render::priority` (Full > Truncated > Ellipsis).
-/// Output is sorted by (path, line) — downstream relies on that order.
+/// Expand a batch's spans into per-(path, line) entries, sorted by
+/// (path, line). Within one batch, spans must be disjoint on
+/// (path, line) — the NS validator rejects overlap, and the walker
+/// builds disjoint spans by construction. Overlap here is a bug;
+/// debug-assert and fall through (last write wins) so release stays
+/// robust.
 fn resolve_spans(spans: &[Span]) -> Vec<(PathBuf, usize, Render)> {
     let mut by_key: BTreeMap<(PathBuf, usize), Render> = BTreeMap::new();
     for span in spans {
         for line_num in span.start..=span.end {
             let key = (span.path.clone(), line_num);
-            by_key
-                .entry(key)
-                .and_modify(|existing| {
-                    if span.render.priority() > existing.priority() {
-                        *existing = span.render.clone();
-                    }
-                })
-                .or_insert_with(|| span.render.clone());
+            let existed = by_key.insert(key.clone(), span.render.clone()).is_some();
+            debug_assert!(
+                !existed,
+                "overlapping spans within one batch at {}:{line_num} — validator should have caught this",
+                span.path.display()
+            );
         }
     }
     by_key.into_iter().map(|((p, l), r)| (p, l, r)).collect()

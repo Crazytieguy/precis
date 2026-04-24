@@ -82,6 +82,10 @@ pub enum Violation {
         cumulative_before: usize,
         max_allowed: usize,
     },
+    /// Two spans in the same batch cover the same `(path, line)`. Batch
+    /// spans must be disjoint; cross-batch overrides go through
+    /// predecessor edges instead.
+    OverlappingSpans { path: PathBuf, line: usize },
     /// Cumulative cost exceeds the token cap after this batch.
     CapExceeded { cumulative: usize, cap: usize },
 }
@@ -252,6 +256,7 @@ fn skipped_batch(
 fn validate_spans(spans: &[Span], fixture_root: &Path, cache: &SourceCache) -> Vec<Violation> {
     let mut out = Vec::new();
     let mut compiled: HashMap<String, regex::Regex> = HashMap::new();
+    let mut seen_lines: HashSet<(PathBuf, usize)> = HashSet::new();
     for span in spans {
         let abs = fixture_root.join(&span.path);
         let Some(source) = cache.get(&abs) else {
@@ -275,6 +280,14 @@ fn validate_spans(spans: &[Span], fixture_root: &Path, cache: &SourceCache) -> V
                 file_lines: src_lines.len(),
             });
             continue;
+        }
+        for ln in span.start..=span.end {
+            if !seen_lines.insert((span.path.clone(), ln)) {
+                out.push(Violation::OverlappingSpans {
+                    path: span.path.clone(),
+                    line: ln,
+                });
+            }
         }
         if let Render::Truncated { pattern } = &span.render {
             if !compiled.contains_key(pattern) {

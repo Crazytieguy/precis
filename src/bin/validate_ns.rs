@@ -180,6 +180,10 @@ fn format_violation(v: &Violation) -> String {
         } => format!(
             "growth envelope: batch cost {cost} > {max_allowed} tokens (cumulative so far: {cumulative_before}; envelope = 100 + 0.3·cumulative). Split the batch, or rank smaller batches earlier."
         ),
+        Violation::OverlappingSpans { path, line } => format!(
+            "overlapping spans within one batch at {}:{line} (batch spans must be disjoint — cross-batch overrides go through predecessor edges)",
+            path.display()
+        ),
         Violation::CapExceeded { cumulative, cap } => {
             format!("cap exceeded: cumulative {cumulative} > {cap} tokens")
         }

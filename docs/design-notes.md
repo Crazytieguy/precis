@@ -40,17 +40,18 @@ No paraphrasing, summarization, or invented content under any circumstances.
   human-reviewed, and **frozen** before implementation iterates against them.
   Once frozen they are the divergence test's ground truth; implementation
   changes do not edit them.
-- Schema: declarative batches with spans + render specs, reusing the
-  library's [`BatchContent`] / `Span` / `Render` / `EntryKind` / `FsGroup`
-  types directly (drift-free by construction). `FsGroup::entries` is a
-  three-variant [`FsEntries`] enum: `All` (NS sentinel meaning "list
-  everything under `parent`") / `Names(Vec<String>)` (NS explicit list by
-  string) / `Listed(BTreeMap<_,_>)` (resolved form the walker emits).
-  NS input shapes expand to `Listed` at load time via [`ns_loader`]
-  using `fs_util::list_dir` — same utility the walker uses, so NS and
-  walker see identical filesystem content.
-- Types live in `src/north_star.rs` (NS document) + `src/batch.rs`
-  (BatchContent + FsGroup + FsEntries + Span + Render + EntryKind).
+- Schema: declarative batches with spans + render specs. `FsGroup::entries`
+  is a two-variant [`FsEntries`] enum: `All` (NS sentinel meaning "list
+  everything under `parent`") / `Listed(Vec<PathBuf>)` (explicit child
+  list; the walker always emits this form). `All` expands to `Listed`
+  at load time via [`ns_loader`] using `fs_util::list_dir` — same
+  utility the walker uses, so NS and walker see identical filesystem
+  content.
+- Public schema types live in `src/content.rs` (BatchContent + FsGroup
+  + FsEntries + Span + Render) and `src/north_star.rs` (NorthStar +
+  NsBatch). Walker/scheduler internals (Batch, BatchKey + variants,
+  WalkerKey, ValueSignals, ResolvedBatch) stay in `src/batch.rs`;
+  `EntryKind` is a renderer-internal detail in `src/fs_util.rs`.
   Loading/resolution lives in `src/ns_loader.rs`. Types files hold
   types only; loaders hold functions.
 - `revision_pin` is the only thing binding an NS to its fixture revision.

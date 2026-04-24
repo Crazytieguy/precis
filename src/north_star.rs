@@ -53,7 +53,7 @@ pub struct NsBatch {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub predecessor: Option<String>,
     /// The batch's content: filesystem listings (possibly with
-    /// `FsEntries::All` / `Names` sentinels resolved at load time) or
+    /// `FsEntries::All` sentinel expanded at load time) or
     /// source line spans with render specs.
     pub content: BatchContent,
 }

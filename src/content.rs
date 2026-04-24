@@ -14,9 +14,9 @@ pub enum BatchContent {
     /// Directory listings. Each group names a parent and the entries to
     /// show underneath it.
     Fs { groups: Vec<FsGroup> },
-    /// Source line ranges with render specs. Within one batch, if two
-    /// spans overlap on the same `(path, line)` the stronger render
-    /// wins (see [`Render::priority`]).
+    /// Source line ranges with render specs. Spans within one batch
+    /// must be disjoint on `(path, line)`; cross-batch overrides go
+    /// through predecessor edges instead.
     Lines { spans: Vec<Span> },
 }
 
@@ -37,20 +37,11 @@ pub struct FsGroup {
 ///   component relative to `parent` (typically just a filename).
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum FsEntries {
+    /// Pre-resolution sentinel: every immediate child of `parent`.
+    /// Expanded to `Listed` at NS load time (see `ns_loader`); walker
+    /// output never carries this variant.
     All,
     Listed(Vec<PathBuf>),
-}
-
-impl FsEntries {
-    /// Access the concrete entry list. Returns `None` for `All`, which
-    /// is a pre-resolution sentinel; post-resolution (NS load or walker
-    /// output) callers should only see `Listed`.
-    pub fn as_listed(&self) -> Option<&[PathBuf]> {
-        match self {
-            FsEntries::Listed(v) => Some(v),
-            FsEntries::All => None,
-        }
-    }
 }
 
 impl Serialize for FsEntries {
@@ -108,16 +99,4 @@ pub enum Render {
     Full,
     Truncated { pattern: String },
     Ellipsis,
-}
-
-impl Render {
-    /// Priority when two spans overlap on the same `(path, line)`:
-    /// `Full` > `Truncated` > `Ellipsis`.
-    pub(crate) fn priority(&self) -> u8 {
-        match self {
-            Render::Full => 3,
-            Render::Truncated { .. } => 2,
-            Render::Ellipsis => 1,
-        }
-    }
 }

@@ -148,6 +148,39 @@ spans = [{{ path = "src/lib.rs", start = 1, end = 400, render = {{ kind = "full"
     );
 }
 
+/// Two spans in one batch cover the same `(path, line)`. Batch spans
+/// must be disjoint; cross-batch overrides use predecessor edges.
+/// Expected: `OverlappingSpans` violation.
+#[test]
+fn ns_simulate_detects_overlapping_spans_within_batch() {
+    let pin = fixture_pin(LOG_FIXTURE);
+    let ns = load_ns_toml(&format!(
+        r#"fixture = "log"
+revision_pin = "{pin}"
+
+[[batches]]
+id = "1"
+descriptor = "overlapping"
+justification = "two spans cover line 5"
+[batches.content]
+kind = "lines"
+spans = [
+  {{ path = "src/lib.rs", start = 1, end = 5, render = {{ kind = "full" }} }},
+  {{ path = "src/lib.rs", start = 5, end = 10, render = {{ kind = "full" }} }},
+]
+"#
+    ));
+    let report = simulate_ns(&ns, Path::new(LOG_FIXTURE)).expect("simulate");
+    assert!(
+        report.batches[0]
+            .violations
+            .iter()
+            .any(|v| matches!(v, Violation::OverlappingSpans { line, .. } if *line == 5)),
+        "expected OverlappingSpans at line 5, got {:?}",
+        report.batches[0].violations
+    );
+}
+
 /// Mutation #3 — span covers lines beyond the file's line count.
 /// Matches the `schema load should have caught this` panic observed last
 /// session. Expected: `SpanOutOfRange` (not a panic).
