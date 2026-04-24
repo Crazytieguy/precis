@@ -45,6 +45,9 @@ Two interacting priorities to optimize:
   general/semantic context → agent can't even frame the query before
   having to explore.
 
+When the two pull in different directions on a close call, **prefer
+breadth over depth**.
+
 ### Catastrophic omission — a pervasive guiding principle, not a tier
 
 "Catastrophic omission" isn't about absolute absence; it's about
@@ -65,21 +68,21 @@ content might fall into the same class and include them in the same
 batch — or where appropriate use an ellipsis marker to signal that
 more content exists at those line positions.
 
-**Cheap mitigations worth keeping in mind:**
+Examples of cheap batches that mitigate catastrophic-omission risk:
 
-- **Location batches** — *name only* for every public function in a
-  file (one truncated span per fn's first line, truncating at the
-  opening paren with a `^[^(]+` regex pattern). Always show them all
-  together; listing only some items implies the unlisted ones don't
-  exist.
-- **Heading-only batches** for a markdown file — all H2s, no bodies.
-  Tells the agent what sections exist without paying for their
-  content.
+- **Location batches** — the *name only* of every public function in
+  a file (one truncated span per fn's first line, truncating at the
+  opening paren with a `^[^(]+` regex pattern). Listing only some
+  items implies the unlisted ones don't exist; always show them all
+  together.
+- **All H2 heading locations** in a markdown file, without section
+  bodies — tells the agent what sections exist.
 
-"Locations" are free: rendered output shows the line number for every
-source line it includes. When you write a "locations" batch what
-you're ranking is the *presence* of the names/headings — line
-numbers come along.
+Analogous hedges come up in other cases; these two are just recurring
+examples. "Locations" are always included implicitly: rendered output
+shows the line number for every source line it includes. When you
+write a "locations" batch what you're ranking is the *presence* of
+the names/headings — the line numbers come for free.
 
 ## Ranking discipline: budget, growth, and threshold
 
@@ -140,19 +143,17 @@ legitimate route.
 ## Authoring process (incremental, tier-by-tier)
 
 A **tier** is the batches sharing a major id prefix (`1.x`, `2.x`,
-`3.x`, …) — a coherent group of batches at roughly one importance
-level. Carving tiers is a judgment call per fixture, worth thinking
-about explicitly *before* writing each tier. Within a tier the minor
-number still matters for threshold slices — cumulative-token
-differences inside a tier can be meaningful.
+`3.x`, …) — a grouping where implementation divergences between
+tiers are considered more severe than divergences within a tier. Tier
+boundaries are a judgment call per fixture.
 
 1. **Catalog exhaustively.** Enumerate every file in the fixture and
    read every one that could plausibly contribute to an agent's
-   understanding of the crate — config, top-level docs, all source
-   files, examples. Don't pre-filter based on patterns from other
-   codebases.
+   understanding of the repository — config, top-level docs, all
+   source files, examples. Don't pre-filter based on patterns from
+   other codebases.
 
-2. **Form a high-level mental model** of the crate.
+2. **Form a high-level mental model** of the repository.
 
 3. **Read the schema.** `src/north_star.rs` defines the `NorthStar`
    and `NsBatch` types; `src/content.rs` defines the `BatchContent` /
@@ -163,11 +164,10 @@ differences inside a tier can be meaningful.
 4. **Author one tier at a time.** For each tier:
    - **Plan the breakdown**: what's the best cut of this next major
      group for this fixture? Brainstorm candidate batches at varying
-     granularity — sometimes a single batch is right, sometimes the
-     same content wants splitting into three. Which cheap
-     catastrophic-omission mitigations apply here? How should these
-     batches be ordered relative to each other so the threshold test
-     holds batch-by-batch as cuts fall inside the tier?
+     granularity. Which cheap catastrophic-omission mitigations apply
+     here? How should these batches be ordered relative to each other
+     so the threshold test holds batch-by-batch as cuts fall inside
+     the tier?
    - **Draft the tier's batches** into the TOML.
    - **Run `cargo run --bin validate-ns -- <output_path>`**. Validator
      must report `OK` before you move on. Also re-rank or split
