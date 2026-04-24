@@ -1,7 +1,7 @@
 fixture = "otree"
 budget = 6000
 cumulative_tokens = 5999
-batch_count = 108
+batch_count = 107
 
 [[batches]]
 position = 1
@@ -3977,29 +3977,3 @@ end = 25
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 108
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/otree/src/parse/json.rs", start_line: 26 })'
-descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/otree/src/parse/json.rs:26"
-cost_tokens = 0
-cum_tokens = 5999
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/otree/src/parse/json.rs"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/otree/src/parse/json.rs"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "ellipsis"

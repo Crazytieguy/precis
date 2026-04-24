@@ -1,7 +1,7 @@
 fixture = "mdbook"
 budget = 1500
-cumulative_tokens = 1497
-batch_count = 24
+cumulative_tokens = 1478
+batch_count = 23
 
 [[batches]]
 position = 1
@@ -547,21 +547,3 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver
 "Cargo.toml" = "file"
 "README.md" = "file"
 src = "dir"
-
-[[batches]]
-position = 24
-key = 'Toml(Features { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/Cargo.toml" })'
-descriptor = "[features] in /Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/Cargo.toml"
-cost_tokens = 19
-cum_tokens = 1497
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/Cargo.toml"
-start = 31
-end = 32
-
-[batches.content.spans.render]
-kind = "full"

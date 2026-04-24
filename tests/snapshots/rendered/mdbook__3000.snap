@@ -104,10 +104,6 @@ crates/
             1→# mdbook-compare
             3→This is a simple utility to compare the output of two different versions of mdbook.
         src/
-            main.rs
-                1→//! Utility to compare the output of two different versions of mdbook.
-                3→use std::path::Path;
-                4→use std::process::Command;
     mdbook-core/
         Cargo.toml
             1→[package]
@@ -177,7 +173,6 @@ crates/
             4→[![crates.io](https://img.shields.io/crates/v/mdbook-markdown.svg)](https://crates.io/crates/mdbook-markdown)
             5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
         src/
-            lib.rs
     mdbook-preprocessor/
         Cargo.toml
             1→[package]

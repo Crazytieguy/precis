@@ -68,17 +68,28 @@ Tunables live as module-level constants: `TAU`, `GRADE_FULL`, `GRADE_TRUNCATED`,
 `GRADE_ELLIPSIS`, `MISSED_THRESHOLD`, `UNMAPPED_COST_THRESHOLD`. Adjust and
 regen baselines (`UPDATE_BASELINES=1 cargo t`) to see the effect.
 
-## Scheduler early-stop
+## Scheduler early-stop (prefix-monotone)
 
 `best_exact` returns the top-ranked eligible exact batch *regardless of fit*.
-Main loop schedules if it fits; if it doesn't fit but speculatives remain,
-materializes a speculative (which may resolve to something smaller that
-fits); if it doesn't fit and speculatives are exhausted, stops. Rationale:
-matches NS-style "stop when nothing good fits" ranking; accepts occasional
-budget under-utilization in favor of never picking a worse substitute over
-a better unschedulable batch. Prefix invariant across budgets isn't
-guaranteed (branch-and-bound is budget-sensitive) — the test suite runs
-all four budgets live rather than relying on slicing a single run.
+Main loop: if the top-ratio item is a speculative, materialize it (free,
+no budget cost). If the top-ratio exact fits, schedule it. If the top-ratio
+exact doesn't fit — **stop**. No fallback to smaller batches, even if
+present.
+
+**Prefix-monotonicity consequence**: every decision taken at budget
+`T_small` up to its stopping point is also taken at `T_large`, because the
+only budget-sensitive check is the final "does it fit" step — up to the
+stopping point at `T_small`, every scheduled cost also fits at `T_large`.
+So `T_small`'s schedule is a true prefix of `T_large`'s schedule; sub-budget
+snapshots can be obtained by slicing a single `T_max` run, and the
+divergence metric runs the walker once per fixture rather than per-budget.
+
+Tradeoff: when the top-ranked exact is too big, budget under-utilization
+can be as much as one batch's cost. This is a deliberate pressure on
+walker calibration (if a top batch consistently blocks small budgets,
+that's a signal to split it or lower its rank) and on NS authoring (the
+cumulative growth constraint — see "Constraint formula" — keeps NS
+prefixes coherent at small budgets).
 
 ## Cross-language vs language-specific concerns
 
@@ -101,6 +112,15 @@ to be shared, vs. whether languages diverge enough that a single scalar
 is the wrong shape and we need richer per-signal location context.
 
 ## Deferred (pick up in later sessions)
+
+### Revisit speculative-materialization
+Speculatives are walker-emitted candidates whose cost hasn't been computed
+yet; the scheduler materializes them on demand when their optimistic
+upper-bound ratio exceeds the best exact's actual ratio. Originally
+introduced for branch-and-bound correctness under the "fall back to a
+smaller fitting batch" behavior; now that the scheduler is prefix-monotone
+(no fallback), the speculative pool may be simplifiable. Yoav flagged he'd
+like to revisit whether it's still earning its complexity.
 
 ### Revisit the 2× rule — cumulative-based instead of per-batch
 The NS-author validator currently enforces "each batch's cost ≤ 2× the

@@ -1,7 +1,7 @@
 fixture = "log"
 budget = 6000
-cumulative_tokens = 5988
-batch_count = 47
+cumulative_tokens = 5974
+batch_count = 45
 
 [[batches]]
 position = 1
@@ -1848,37 +1848,3 @@ end = 10
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 46
-key = 'Rust(PubItemDoc { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs", start_line: 39 })'
-descriptor = "pub-item doc at /Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs:39"
-cost_tokens = 10
-cum_tokens = 5984
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 47
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/log/.github/workflows" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/log/.github/workflows'"
-cost_tokens = 4
-cum_tokens = 5988
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/log/.github/workflows"
-
-[batches.content.groups.children]
-"main.yml" = "file"

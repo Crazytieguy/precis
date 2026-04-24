@@ -1,7 +1,7 @@
 fixture = "anyhow"
 budget = 1500
-cumulative_tokens = 1494
-batch_count = 29
+cumulative_tokens = 1490
+batch_count = 28
 
 [[batches]]
 position = 1
@@ -841,19 +841,3 @@ end = 70
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 29
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/anyhow/.github/workflows" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/anyhow/.github/workflows'"
-cost_tokens = 4
-cum_tokens = 1494
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/anyhow/.github/workflows"
-
-[batches.content.groups.children]
-"ci.yml" = "file"

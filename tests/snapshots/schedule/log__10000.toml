@@ -1,7 +1,7 @@
 fixture = "log"
 budget = 10000
-cumulative_tokens = 9983
-batch_count = 80
+cumulative_tokens = 9956
+batch_count = 79
 
 [[batches]]
 position = 1
@@ -2833,24 +2833,6 @@ kind = "lines"
 path = "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs"
 start = 963
 end = 1001
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 80
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/log/rfcs/0296-structured-logging.md", section_index: 8 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/log/rfcs/0296-structured-logging.md section #8"
-cost_tokens = 27
-cum_tokens = 9983
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/log/rfcs/0296-structured-logging.md"
-start = 1650
-end = 1651
 
 [batches.content.spans.render]
 kind = "full"

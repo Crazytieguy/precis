@@ -1,7 +1,7 @@
 fixture = "mdbook"
 budget = 3000
-cumulative_tokens = 2990
-batch_count = 51
+cumulative_tokens = 2942
+batch_count = 47
 
 [[batches]]
 position = 1
@@ -1037,71 +1037,3 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/guide/guide-helper"
 [batches.content.groups.children]
 "Cargo.toml" = "file"
 src = "dir"
-
-[[batches]]
-position = 48
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src'"
-cost_tokens = 4
-cum_tokens = 2946
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src"
-
-[batches.content.groups.children]
-"main.rs" = "file"
-
-[[batches]]
-position = 49
-key = 'Rust(CrateDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src/main.rs" })'
-descriptor = "crate-doc lede in /Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src/main.rs"
-cost_tokens = 18
-cum_tokens = 2964
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src/main.rs"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 50
-key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src/main.rs" })'
-descriptor = "mod/use plumbing in /Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src/main.rs"
-cost_tokens = 22
-cum_tokens = 2986
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src/main.rs"
-start = 3
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 51
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdown/src" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdown/src'"
-cost_tokens = 4
-cum_tokens = 2990
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdown/src"
-
-[batches.content.groups.children]
-"lib.rs" = "file"

@@ -120,16 +120,14 @@ impl<W: Walker> Scheduler<W> {
             self.absorb_candidate(c);
         }
 
-        // Early-stop scheduling: the top-ranked eligible exact batch is
-        // considered regardless of fit. If it fits, schedule it. If it
-        // doesn't and the speculative pool still has candidates, keep
-        // materializing — one of them might resolve to a better-ratio batch
-        // that fits (its cost hint is an upper bound, so actual cost can
-        // be smaller). Only stop once we've both run out of speculatives
-        // and the top exact doesn't fit. This preserves the "best batch
-        // must fit else stop" rule while keeping the branch-and-bound
-        // invariant from being violated by an oversized-but-high-ratio
-        // exact stranding fitting speculatives.
+        // Prefix-monotone scheduling: the top-ranked eligible batch (across
+        // both exact and speculative pools) is considered at each step. If
+        // it's speculative, materialize it (no budget cost). If it's an
+        // exact that fits, schedule it. If it's an exact that doesn't fit,
+        // stop — do not fall back to a smaller batch. This makes the
+        // schedule at T_small a true prefix of T_large's schedule (every
+        // decision up to the stopping point at T_small also holds at
+        // T_large, and T_large simply continues past it).
         loop {
             let best_exact = self.best_exact();
             let best_spec = self.best_speculative();
@@ -150,10 +148,7 @@ impl<W: Walker> Scheduler<W> {
                         if self.fits(cost) {
                             self.schedule(id, cost);
                         } else {
-                            // Top exact doesn't fit but speculatives exist.
-                            // Materialize — a speculative may resolve to
-                            // something that fits with a competitive ratio.
-                            let _ = self.materialize(&key);
+                            break;
                         }
                     } else {
                         let _ = self.materialize(&key);
