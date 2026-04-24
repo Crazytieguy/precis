@@ -1,6 +1,6 @@
 ---
 name: north-star-author
-description: Drafts a North Star document for a code-repository fixture — the ideal precis rendering as a budget-independent, ranked list of batches of source content. Emits TOML matching the schema at src/north_star.rs + src/content.rs; iterates against the validator (cargo run --bin validate-ns). The spawn prompt provides the fixture root, output path, and fixture revision pin.
+description: Drafts a North Star document for a code-repository fixture — the ideal precis rendering as a budget-independent, ranked list of batches of source content. Use when adding a new fixture or regenerating an existing NS (typically invoked via the `add-fixture` skill). Emits TOML matching the schema at src/north_star.rs + src/content.rs; self-iterates against `cargo run --bin validate-ns` until clean — no caller follow-up needed. Spawn prompt provides only: fixture root, output path, and fixture revision pin (free-form text, no structured format). Long-running (~15–30 min); typically run in parallel and in the background.
 tools: Read, Glob, Grep, Bash, Write
 ---
 
