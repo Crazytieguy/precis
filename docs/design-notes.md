@@ -321,6 +321,38 @@ the calibration artifact. Two items deferred for later iteration:
   one-line decls) this can misrank calibration targets. Defer until
   someone observes a misranking that changes a calibration decision.
 
+### Walker calibration — tier-3 falloff is the open lever
+
+After the divergence rewrite + 4 clean NSs, the per-tier rollup shows a
+consistent pattern: walker reaches tier 1 reliably (avg credit
+0.70–0.99 across fixtures), tier 2 mostly (0.32–0.91), then drops
+sharply at tier 3+ (typically 0.10–0.30). Concrete Sim scores at the
+moment of writing:
+
+- log:    Sim=0.391  reached 16/49,  Used 9956/10000
+- anyhow: Sim=0.403  reached 12/40,  Used 9274/10000
+- mdbook: Sim=0.305  reached 10/46,  Used 9899/10000
+- otree:  Sim=0.351  reached 19/52,  Used 9982/10000
+
+This is the next calibration target: walker's value-model weights
+(`W_CATASTROPHIC`, `W_FOLLOW_UP`, `W_ZERO_CALL`, sublinearity exponent)
+were last tuned against the alignment-reviewer regime, before the
+deterministic divergence metric existed. Tuning under the new metric +
+the four NSs is now feasible. See also "Stopping criterion / value
+function" above for the per-signal items already noted.
+
+### NS author repeatability — only one run per fixture
+
+Original plan was two author runs per fixture and measuring divergence
+between drafts (a cheap proxy for whether the prompt is producing
+stable rankings vs. noisy ones). We only did one run per fixture this
+session because the agent token cost was higher than expected. Worth
+doing as a calibration sanity check before declaring the prompt frozen
+— if two runs disagree wildly on tier boundaries, the prompt needs
+tightening. Spawn `north-star-author` agents pointed at the same
+fixture, write to `tests/north-stars/drafts/<fixture>__runN.toml`,
+diff. Deferred until needed.
+
 ### Schema vocabulary — better doc comments, maybe stricter validation
 
 Observed from the first NS-author runs under the revised prompt:
