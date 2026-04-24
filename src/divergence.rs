@@ -27,7 +27,7 @@ use anyhow::Result;
 use crate::batch::{BatchContent, Render, Span};
 use crate::render::SourceCache;
 use crate::schedule_types::{Atom, Schedule, ScheduledBatch};
-use crate::schema::{NorthStar, NsBatch, resolve_content};
+use crate::schema::{NorthStar, resolve_content};
 
 /// Time-weight half-life (tokens). `w(t) = exp(−t / τ)`. First 2000
 /// tokens carry ~63% of the mass; first 6000 ~95%.
@@ -37,6 +37,16 @@ const TAU: f64 = 2000.0;
 /// considered delivered at the first walker step where its average
 /// per-atom credit reaches this level.
 const REACH_THRESHOLD: f64 = 0.8;
+
+/// Below this credit, an NS batch is counted as `missing` in the
+/// headline — walker rendered essentially nothing of what it wanted.
+/// Batches in `[MISSING_HEADLINE_FLOOR, REACH_THRESHOLD)` count as
+/// reached-partial (neither `missing` nor `reached`) in the headline,
+/// and label as `partial` in the arrival ledger.
+const MISSING_HEADLINE_FLOOR: f64 = 0.5;
+/// Label-only: ledger rows with credit below this and no `seen_t`
+/// surface as `missing` rather than `partial`.
+const MISSING_LABEL_FLOOR: f64 = 0.01;
 
 /// Classification thresholds (tokens). Used to tag arrival-ledger rows.
 const EARLY_FACTOR: f64 = 0.7;
@@ -270,27 +280,26 @@ fn compute_scores(ctx: &BuildCtx) -> Scores {
     let mut missing = 0;
     let mut over = 0;
 
-    for row in &ctx.ns_rows {
-        let (credit_final, over_at_final) = credit_for_ns_atoms_at(ctx, &row.atoms, usize::MAX);
-        if over_at_final {
+    for arrival in arrival_infos(ctx) {
+        if arrival.over {
             over += 1;
         }
-        if credit_final < REACH_THRESHOLD.min(0.5) {
+        if arrival.credit < MISSING_HEADLINE_FLOOR {
             missing += 1;
             continue;
         }
-        let seen_t = first_reach_t(ctx, &row.atoms);
-        if credit_final >= REACH_THRESHOLD {
-            reached += 1;
-            if let Some(seen) = seen_t {
-                let delta = seen as f64 - row.exp_t as f64;
-                let exp = row.exp_t.max(1) as f64;
-                if delta / exp <= EARLY_FACTOR - 1.0 {
-                    early += 1;
-                } else if delta / exp >= LATE_FACTOR - 1.0 {
-                    late += 1;
+        match arrival.status {
+            ArrivalStatus::Aligned | ArrivalStatus::Early | ArrivalStatus::Late => {
+                reached += 1;
+                match arrival.status {
+                    ArrivalStatus::Early => early += 1,
+                    ArrivalStatus::Late => late += 1,
+                    _ => {}
                 }
             }
+            // Missing-label rows with credit ≥ MISSING_HEADLINE_FLOOR
+            // can't occur (floor > label floor) — defensive.
+            ArrivalStatus::Missing | ArrivalStatus::Partial => {}
         }
     }
 
@@ -303,6 +312,53 @@ fn compute_scores(ctx: &BuildCtx) -> Scores {
         missing,
         over,
     }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum ArrivalStatus {
+    Aligned,
+    Early,
+    Late,
+    Partial,
+    Missing,
+}
+
+impl ArrivalStatus {
+    fn label(self) -> &'static str {
+        match self {
+            ArrivalStatus::Aligned => "aligned",
+            ArrivalStatus::Early => "early",
+            ArrivalStatus::Late => "late",
+            ArrivalStatus::Partial => "partial",
+            ArrivalStatus::Missing => "missing",
+        }
+    }
+}
+
+/// Per-NS-batch walker observation. Computed once per run and reused by
+/// both the headline counters and the arrival-ledger formatter.
+struct Arrival {
+    seen_t: Option<usize>,
+    credit: f64,
+    over: bool,
+    status: ArrivalStatus,
+}
+
+fn arrival_infos(ctx: &BuildCtx) -> Vec<Arrival> {
+    ctx.ns_rows
+        .iter()
+        .map(|row| {
+            let seen_t = first_reach_t(ctx, &row.atoms);
+            let (credit, over) = credit_for_ns_atoms_at(ctx, &row.atoms, usize::MAX);
+            let status = classify(seen_t, row.exp_t, credit);
+            Arrival {
+                seen_t,
+                credit,
+                over,
+                status,
+            }
+        })
+        .collect()
 }
 
 /// `first_reach_t`: cumulative walker tokens at the first walker batch
@@ -464,35 +520,32 @@ fn format_report(scores: &Scores, ctx: &BuildCtx) -> String {
     // Arrival ledger — one row per NS batch, sorted numerically by id.
     struct Row<'a> {
         id: &'a str,
-        seen_t: Option<usize>,
         exp_t: usize,
-        credit: f64,
-        over: bool,
-        status: String,
         descriptor: &'a str,
+        arrival: Arrival,
     }
-    let mut rows: Vec<Row<'_>> = Vec::new();
-    for (i, ns_row) in ctx.ns_rows.iter().enumerate() {
-        let seen_t = first_reach_t(ctx, &ns_row.atoms);
-        let (credit, over) = credit_for_ns_atoms_at(ctx, &ns_row.atoms, usize::MAX);
-        let status = classify(seen_t, ns_row.exp_t, credit, over);
-        rows.push(Row {
+    let arrivals = arrival_infos(ctx);
+    let mut rows: Vec<Row<'_>> = ctx
+        .ns_rows
+        .iter()
+        .zip(arrivals)
+        .enumerate()
+        .map(|(i, (ns_row, arrival))| Row {
             id: &ns_row.id,
-            seen_t,
             exp_t: ns_row.exp_t,
-            credit,
-            over,
-            status,
             descriptor: &ctx.ns.batches[i].descriptor,
-        });
-    }
+            arrival,
+        })
+        .collect();
     rows.sort_by(|a, b| numeric_id_cmp(a.id, b.id));
 
     // Filter: only show rows that aren't perfectly-aligned (save readers
     // from scrolling through 40 `aligned` rows in a clean fixture).
     let interesting: Vec<&Row> = rows
         .iter()
-        .filter(|r| r.status != "aligned" || r.credit < 1.0 || r.over)
+        .filter(|r| {
+            r.arrival.status != ArrivalStatus::Aligned || r.arrival.credit < 1.0 || r.arrival.over
+        })
         .collect();
 
     if !interesting.is_empty() {
@@ -500,18 +553,18 @@ fn format_report(scores: &Scores, ctx: &BuildCtx) -> String {
         out.push_str("| id | exp_t | seen_t | credit | status | descriptor |\n");
         out.push_str("|----|------:|-------:|-------:|:-------|:-----------|\n");
         for r in &interesting {
-            let seen_cell = match r.seen_t {
+            let seen_cell = match r.arrival.seen_t {
                 Some(t) => format!("{t}"),
                 None => "—".to_string(),
             };
-            let status_cell = if r.over {
-                format!("{}+over", r.status)
+            let status_cell = if r.arrival.over {
+                format!("{}+over", r.arrival.status.label())
             } else {
-                r.status.clone()
+                r.arrival.status.label().to_string()
             };
             out.push_str(&format!(
                 "| {} | {} | {seen_cell} | {:.2} | {status_cell} | {} |\n",
-                r.id, r.exp_t, r.credit, r.descriptor,
+                r.id, r.exp_t, r.arrival.credit, r.descriptor,
             ));
         }
     }
@@ -547,25 +600,24 @@ fn format_report(scores: &Scores, ctx: &BuildCtx) -> String {
     out
 }
 
-fn classify(seen_t: Option<usize>, exp_t: usize, credit: f64, _over: bool) -> String {
+fn classify(seen_t: Option<usize>, exp_t: usize, credit: f64) -> ArrivalStatus {
     let Some(seen) = seen_t else {
-        if credit < 0.01 {
-            return "missing".to_string();
+        if credit < MISSING_LABEL_FLOOR {
+            return ArrivalStatus::Missing;
         }
-        return "partial".to_string();
+        return ArrivalStatus::Partial;
     };
     if credit < REACH_THRESHOLD {
-        return "partial".to_string();
+        return ArrivalStatus::Partial;
     }
     let exp = exp_t.max(1) as f64;
-    let delta = seen as f64 - exp_t as f64;
-    let ratio = delta / exp;
+    let ratio = (seen as f64 - exp_t as f64) / exp;
     if ratio <= EARLY_FACTOR - 1.0 {
-        "early".to_string()
+        ArrivalStatus::Early
     } else if ratio >= LATE_FACTOR - 1.0 {
-        "late".to_string()
+        ArrivalStatus::Late
     } else {
-        "aligned".to_string()
+        ArrivalStatus::Aligned
     }
 }
 
@@ -576,7 +628,3 @@ fn numeric_id_cmp(a: &str, b: &str) -> std::cmp::Ordering {
     let pb: Vec<usize> = b.split('.').filter_map(|s| s.parse().ok()).collect();
     pa.cmp(&pb)
 }
-
-/// Accept unused fields cleanly.
-#[allow(dead_code)]
-fn _keep_types_live(_b: &NsBatch) {}

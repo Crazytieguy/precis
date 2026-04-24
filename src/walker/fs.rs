@@ -99,13 +99,9 @@ fn walk_files_recursive(dir: &Path, ext: &str, out: &mut Vec<PathBuf>) {
         return;
     };
     for entry in read_dir.flatten() {
-        let name_os = entry.file_name();
-        let name = name_os.to_string_lossy();
-        if name == crate::fs_util::PRECIS_PIN_FILE {
-            continue;
-        }
         let path = entry.path();
         if path.is_dir() {
+            let name = entry.file_name().to_string_lossy().into_owned();
             if !should_skip_dir(&name) {
                 walk_files_recursive(&path, ext, out);
             }

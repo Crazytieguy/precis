@@ -153,14 +153,7 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Result<SimulationRepo
             false
         };
         if had_span_error {
-            batches_out.push(SimulatedBatch {
-                id: ns_batch.id.clone(),
-                descriptor: ns_batch.descriptor.clone(),
-                marginal_cost: Cost::default(),
-                cumulative_tokens: cumulative,
-                predecessor: ns_batch.predecessor.clone(),
-                violations,
-            });
+            batches_out.push(skipped_batch(ns_batch, cumulative, violations));
             continue;
         }
 
@@ -168,14 +161,7 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Result<SimulationRepo
             Ok(c) => c,
             Err(e) => {
                 violations.push(Violation::FsResolveFailed(e.to_string()));
-                batches_out.push(SimulatedBatch {
-                    id: ns_batch.id.clone(),
-                    descriptor: ns_batch.descriptor.clone(),
-                    marginal_cost: Cost::default(),
-                    cumulative_tokens: cumulative,
-                    predecessor: ns_batch.predecessor.clone(),
-                    violations,
-                });
+                batches_out.push(skipped_batch(ns_batch, cumulative, violations));
                 continue;
             }
         };
@@ -243,6 +229,24 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Result<SimulationRepo
         total_tokens: cumulative,
         largest_batch: largest,
     })
+}
+
+/// Record for an NS batch whose cost/apply was skipped — either because
+/// span validation flagged it (render would panic) or content resolution
+/// failed. Cumulative-tokens carries forward unchanged.
+fn skipped_batch(
+    ns_batch: &crate::schema::NsBatch,
+    cumulative: usize,
+    violations: Vec<Violation>,
+) -> SimulatedBatch {
+    SimulatedBatch {
+        id: ns_batch.id.clone(),
+        descriptor: ns_batch.descriptor.clone(),
+        marginal_cost: Cost::default(),
+        cumulative_tokens: cumulative,
+        predecessor: ns_batch.predecessor.clone(),
+        violations,
+    }
 }
 
 fn validate_spans(spans: &[Span], fixture_root: &Path, cache: &SourceCache) -> Vec<Violation> {
