@@ -3,20 +3,26 @@
 //!
 //! Keys:
 //! - `SummaryWhole { file }` — `SUMMARY.md`, whole file (mdBook ToC)
-//! - `ReadmeHeadline { file }` — `README.md`, first section's heading +
-//!   opening paragraph
+//! - `ReadmeHeadline { file }` — `README.md`, the heading's project-name
+//!   line plus the first non-decorative content. Decorative paragraphs
+//!   (image-only / badge-only) and `<img>`-only HTML blocks immediately
+//!   after the heading are skipped, and a heading line whose tail is
+//!   nothing but badges is rendered with `Render::Truncated` to drop it.
 //! - `Section { file, section_index }` — one H2 section, 0-indexed. For
 //!   READMEs, this is the split replacement of the old monolithic
 //!   "body" batch (predecessor: headline). For other markdown files
 //!   (changelogs, doc pages), we emit one per top-level section so the
 //!   file can land piece-by-piece.
 
+use std::collections::BTreeSet;
 use std::path::Path;
 use std::sync::Arc;
 
 use tree_sitter::{Node, Tree};
 
 use crate::batch::{BatchKey, FsKey, MarkdownKey, ResolvedBatch, ValueSignals};
+use crate::content::{BatchContent, Render, Span};
+use crate::tokenizer;
 use crate::value::depth_factor;
 
 use super::{Candidate, FileLines, WalkCtx, fs::files_with_extension, single_file_lines_batch};
@@ -175,6 +181,18 @@ fn parse_md(ctx: &WalkCtx, path: &Path) -> Option<(Arc<str>, Arc<Tree>)> {
     ctx.parse_tree(path, &tree_sitter_md::LANGUAGE.into())
 }
 
+/// Parse `text` with the inline grammar. tree-sitter-md's block grammar
+/// produces a flat `inline` node holding raw bytes; the inline grammar
+/// is what turns those bytes into named `image` / `inline_link` /
+/// `html_tag` children.
+fn parse_inline(text: &str) -> Option<Tree> {
+    let mut parser = tree_sitter::Parser::new();
+    parser
+        .set_language(&tree_sitter_md::INLINE_LANGUAGE.into())
+        .ok()?;
+    parser.parse(text, None)
+}
+
 // --- materializers ---
 
 fn mat_summary(file: &Path, ctx: &WalkCtx) -> Option<ResolvedBatch> {
@@ -191,15 +209,15 @@ fn mat_summary(file: &Path, ctx: &WalkCtx) -> Option<ResolvedBatch> {
 
 fn mat_readme_headline(file: &Path, ctx: &WalkCtx) -> Option<ResolvedBatch> {
     let (source, tree) = parse_md(ctx, file)?;
-    let (heading_start, heading_end, para_end) = first_section_headline(&tree, &source)?;
-    let mut lines: Vec<usize> = (heading_start..=heading_end).collect();
-    lines.extend(heading_end + 1..=para_end);
-    single_file_lines_batch(
-        file,
-        &source,
-        FileLines::new(lines),
-        readme_headline_signals(file, ctx),
-    )
+    let spec = headline_spec(&tree, &source)?;
+    let spans = build_headline_spans(file, &source, &spec);
+    if spans.is_empty() {
+        return None;
+    }
+    Some(ResolvedBatch {
+        content: BatchContent::Lines { spans },
+        signals: readme_headline_signals(file, ctx),
+    })
 }
 
 fn mat_section(file: &Path, section_index: usize, ctx: &WalkCtx) -> Option<ResolvedBatch> {
@@ -207,16 +225,17 @@ fn mat_section(file: &Path, section_index: usize, ctx: &WalkCtx) -> Option<Resol
     let (start, end) = nth_section_range(&tree, &source, section_index)?;
 
     // For README section 0, exclude lines already covered by
-    // `ReadmeHeadline` (heading + first paragraph). Otherwise the two
-    // batches overlap exactly on short READMEs, Section 0's marginal
-    // cost drops to zero after dedupe, and `ratio(value, 0) = INFINITY`
-    // gives it unconditional scheduling priority — a smell even though
-    // the duplicate apply is a no-op.
+    // `ReadmeHeadline`. Otherwise the two batches overlap on short
+    // READMEs, Section 0's marginal cost drops to zero after dedupe,
+    // and `ratio(value, 0) = INFINITY` gives it unconditional
+    // scheduling priority — a smell even though the duplicate apply
+    // is a no-op.
     let effective_start = if section_index == 0
         && is_readme(file)
-        && let Some((_, _, para_end)) = first_section_headline(&tree, &source)
+        && let Some(spec) = headline_spec(&tree, &source)
+        && let Some(max_row) = spec.last_covered_row()
     {
-        (para_end + 1).max(start)
+        (max_row + 1).max(start)
     } else {
         start
     };
@@ -237,6 +256,347 @@ fn is_readme(file: &Path) -> bool {
     file.file_name()
         .and_then(|n| n.to_str())
         .is_some_and(|n| n.eq_ignore_ascii_case("README.md"))
+}
+
+// --- headline spec + span construction ---
+
+/// Computed shape of `ReadmeHeadline`: the set of source rows the batch
+/// renders, plus an optional per-row truncation override for the
+/// heading line. Rows are 1-based.
+#[derive(Debug, Clone)]
+struct HeadlineSpec {
+    covered_rows: BTreeSet<usize>,
+    truncate: Option<TruncatedRow>,
+}
+
+/// Per-row truncation override: render row `row` as
+/// `Render::Truncated { pattern }` instead of `Render::Full`. Storing
+/// the pair together makes "row set without pattern" unrepresentable.
+#[derive(Debug, Clone)]
+struct TruncatedRow {
+    row: usize,
+    pattern: String,
+}
+
+impl HeadlineSpec {
+    fn last_covered_row(&self) -> Option<usize> {
+        self.covered_rows.iter().next_back().copied()
+    }
+}
+
+/// Block kinds that bound a section's content. Hitting one means we've
+/// reached a sibling sub-section — `ReadmeHeadline` must never reach
+/// into nested H2/H3 bodies.
+fn is_section_boundary(kind: &str) -> bool {
+    matches!(kind, "section" | "atx_heading" | "setext_heading")
+}
+
+fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
+    let section = headed_sections(tree.root_node()).next()?;
+    let heading = first_heading_child(section)?;
+
+    let mut covered: BTreeSet<usize> = BTreeSet::new();
+    extend_rows_inclusive(&mut covered, heading, source);
+    let heading_first_row = heading.start_position().row + 1;
+
+    // Walk siblings after the heading, skipping leading decorative
+    // paragraphs / image-only HTML blocks; then include subsequent
+    // blocks until we hit a non-decorative paragraph or a section
+    // boundary.
+    let post: Vec<Node> = children_after(section, heading);
+    let mut i = 0;
+    while i < post.len() {
+        let block = post[i];
+        if is_section_boundary(block.kind()) {
+            break;
+        }
+        match block.kind() {
+            "paragraph" if is_decorative_paragraph(block, source) => {}
+            "html_block" if is_decorative_html_block(block, source) => {}
+            _ => break,
+        }
+        i += 1;
+    }
+    while i < post.len() {
+        let block = post[i];
+        if is_section_boundary(block.kind()) {
+            break;
+        }
+        extend_rows_inclusive(&mut covered, block, source);
+        if block.kind() == "paragraph" && !is_decorative_paragraph(block, source) {
+            break;
+        }
+        i += 1;
+    }
+
+    let truncate = compute_heading_truncation(heading, source);
+
+    if covered.is_empty() {
+        return None;
+    }
+    debug_assert!(
+        covered.contains(&heading_first_row),
+        "headline covered_rows missing heading row"
+    );
+
+    Some(HeadlineSpec {
+        covered_rows: covered,
+        truncate,
+    })
+}
+
+fn build_headline_spans(file: &Path, source: &str, spec: &HeadlineSpec) -> Vec<Span> {
+    let trunc_row = spec.truncate.as_ref().map(|t| t.row);
+    let full_rows: Vec<usize> = spec
+        .covered_rows
+        .iter()
+        .copied()
+        .filter(|n| Some(*n) != trunc_row)
+        .collect();
+
+    // build_file_spans handles blank-row filtering + contiguous-range
+    // merging for the Full rows; we only need to splice in the
+    // truncated-row span (if any) to assemble the final list.
+    let mut spans = super::build_file_spans(file, source, FileLines::new(full_rows));
+    if let Some(t) = &spec.truncate {
+        spans.push(Span {
+            path: file.to_path_buf(),
+            start: t.row,
+            end: t.row,
+            render: Render::Truncated {
+                pattern: t.pattern.clone(),
+            },
+        });
+        spans.sort_by_key(|s| s.start);
+    }
+    spans
+}
+
+/// Append every 1-based row covered by `node` to `out`, trimming a
+/// trailing newline tree-sitter-md sometimes includes in a node's span.
+fn extend_rows_inclusive(out: &mut BTreeSet<usize>, node: Node, source: &str) {
+    let last = span_last_row(node, source);
+    for row in node.start_position().row..=last {
+        out.insert(row + 1);
+    }
+}
+
+fn children_after<'a>(parent: Node<'a>, after: Node<'a>) -> Vec<Node<'a>> {
+    let mut cur = parent.walk();
+    let mut seen = false;
+    let mut out = Vec::new();
+    for child in parent.children(&mut cur) {
+        if seen {
+            out.push(child);
+        }
+        if child.id() == after.id() {
+            seen = true;
+        }
+    }
+    out
+}
+
+// --- decorative classifiers ---
+
+/// Inline children with no semantic content — whitespace text and
+/// line-breaks. Skipping these from inline iteration leaves only the
+/// "real" inline children.
+fn is_skippable_inline(node: Node, source: &str) -> bool {
+    match node.kind() {
+        "text" => source[node.start_byte()..node.end_byte()].trim().is_empty(),
+        "hard_line_break" | "soft_line_break" => true,
+        _ => false,
+    }
+}
+
+/// Image / badge / `<img>`-tag inline. We deliberately do NOT classify
+/// plain text-link / autolink / email-autolink as decorative: a
+/// paragraph of just `[Live Examples](...)` is real navigation content
+/// for the reader.
+fn is_decorative_inline(node: Node, source: &str) -> bool {
+    match node.kind() {
+        "image" => true,
+        "inline_link" | "full_reference_link" | "collapsed_reference_link" | "shortcut_link" => {
+            let Some(link_text) = first_child_of_kind(node, "link_text") else {
+                return false;
+            };
+            link_text_is_image_only_direct(link_text, source)
+        }
+        "html_tag" => is_img_html_tag(node, source),
+        _ => false,
+    }
+}
+
+fn is_img_html_tag(node: Node, source: &str) -> bool {
+    source[node.start_byte()..node.end_byte()]
+        .trim_start()
+        .to_ascii_lowercase()
+        .starts_with("<img")
+}
+
+/// True iff every direct child of `link_text` is either skippable or
+/// an image-shaped node. Direct children only — DO NOT recurse into
+/// `image`'s `image_description` (the alt text would otherwise count
+/// as prose and defeat badge detection).
+fn link_text_is_image_only_direct(link_text: Node, source: &str) -> bool {
+    let mut cur = link_text.walk();
+    let mut had_any = false;
+    for child in link_text.children(&mut cur) {
+        if is_skippable_inline(child, source) {
+            continue;
+        }
+        had_any = true;
+        match child.kind() {
+            "image" => continue,
+            "html_tag" if is_img_html_tag(child, source) => continue,
+            _ => return false,
+        }
+    }
+    had_any
+}
+
+/// A paragraph is decorative iff every non-skippable inline child is
+/// decorative AND there's at least one such child. The block grammar's
+/// `inline` node is opaque bytes — we re-parse with the inline grammar
+/// to see named children like `image` / `inline_link` / `html_tag`.
+/// Returns `false` (treat as non-decorative) when the inline grammar
+/// doesn't surface any named children — e.g., a plain-text paragraph
+/// produces only an `inline` root with raw `text` content.
+fn is_decorative_paragraph(para: Node, source: &str) -> bool {
+    let Some(inline_block) = first_child_of_kind(para, "inline") else {
+        return false;
+    };
+    let inline_text = &source[inline_block.start_byte()..inline_block.end_byte()];
+    let Some(tree) = parse_inline(inline_text) else {
+        return false;
+    };
+    let root = tree.root_node();
+    inline_root_is_all_decorative(root, inline_text)
+}
+
+/// True iff the inline content is non-empty AND every fragment
+/// (named children + plain-text gaps between them — the inline grammar
+/// leaves plain text outside named nodes) is decorative or whitespace.
+fn inline_root_is_all_decorative(root: Node, inline_text: &str) -> bool {
+    let named = named_decorative_candidates(root, inline_text);
+    if named.is_empty() {
+        return false;
+    }
+    named.iter().all(|n| is_decorative_inline(*n, inline_text))
+        && plain_text_gaps_are_blank(&named, inline_text, 0)
+}
+
+fn named_decorative_candidates<'a>(root: Node<'a>, inline_text: &str) -> Vec<Node<'a>> {
+    let mut cur = root.walk();
+    root.children(&mut cur)
+        .filter(|c| c.is_named() && !is_skippable_inline(*c, inline_text))
+        .collect()
+}
+
+/// True iff the byte range `[gap_start, named[0].start)` plus the gaps
+/// between consecutive named children plus the tail after the last
+/// named child are all whitespace-only. Used to enforce "no real prose
+/// between badges" in both decorative-paragraph and heading-truncation
+/// classifications.
+fn plain_text_gaps_are_blank(named: &[Node], inline_text: &str, gap_start: usize) -> bool {
+    let mut cursor = gap_start;
+    for n in named {
+        if !inline_text[cursor..n.start_byte()].trim().is_empty() {
+            return false;
+        }
+        cursor = n.end_byte();
+    }
+    inline_text[cursor..].trim().is_empty()
+}
+
+/// An `html_block` is decorative iff its source text contains nothing
+/// but tags + whitespace. Strips `<…>` runs and checks whether the
+/// remainder is blank. Catches `<p align="center"><img …/></p>` while
+/// preserving blocks that contain real prose.
+fn is_decorative_html_block(block: Node, source: &str) -> bool {
+    let raw = &source[block.start_byte()..block.end_byte()];
+    let stripped = strip_html_tags(raw);
+    stripped.trim().is_empty()
+}
+
+fn strip_html_tags(s: &str) -> String {
+    let mut out = String::with_capacity(s.len());
+    let bytes = s.as_bytes();
+    let mut i = 0;
+    while i < bytes.len() {
+        if bytes[i] == b'<' {
+            while i < bytes.len() && bytes[i] != b'>' {
+                i += 1;
+            }
+            if i < bytes.len() {
+                i += 1;
+            }
+        } else {
+            out.push(bytes[i] as char);
+            i += 1;
+        }
+    }
+    out
+}
+
+// --- heading truncation ---
+
+/// Returns the truncation override if the heading should render its
+/// row as `Render::Truncated { pattern }` to drop a trailing badge run.
+/// Pre-conditions:
+/// * `inline` child exists (atx_heading or setext_heading)
+/// * the inline opens with non-empty plain-text content (the project
+///   name) before its first named child
+/// * every named inline child is decorative AND no non-whitespace
+///   plain text sits between or after them
+/// * the truncated render saves at least one token vs `Render::Full`.
+///
+/// Returns `None` whenever any condition fails — caller renders the
+/// heading row verbatim.
+fn compute_heading_truncation(heading: Node, source: &str) -> Option<TruncatedRow> {
+    let inline_block = first_child_of_kind(heading, "inline")?;
+    let inline_text = &source[inline_block.start_byte()..inline_block.end_byte()];
+    let tree = parse_inline(inline_text)?;
+    let named = named_decorative_candidates(tree.root_node(), inline_text);
+    if named.is_empty() {
+        return None;
+    }
+
+    // Plain-text gap before the first named child = the project name.
+    // Empty means the heading opens with a link/image (e.g.
+    // `# [Project](url)`) — don't truncate, would erase the name.
+    if inline_text[..named[0].start_byte()].trim().is_empty() {
+        return None;
+    }
+    if !named.iter().all(|n| is_decorative_inline(*n, inline_text)) {
+        return None;
+    }
+    if !plain_text_gaps_are_blank(&named[1..], inline_text, named[0].end_byte()) {
+        return None;
+    }
+
+    // The pattern runs from the heading marker (`# `, `## `, …) through
+    // the project-name text. Including the heading marker matters
+    // because `Render::Truncated` only renders the matched bytes —
+    // without `#` the rendered line would lose its heading marker.
+    let abs_trim = inline_block.start_byte() + named[0].start_byte();
+    let prefix = source[heading.start_byte()..abs_trim].trim_end();
+    if prefix.contains('\n') || prefix.is_empty() {
+        return None;
+    }
+
+    let row = inline_block.start_position().row + 1;
+    let line = source.lines().nth(row.saturating_sub(1)).unwrap_or("");
+    let full_tokens = tokenizer::count(&format!("{line}\n"));
+    let truncated_tokens = tokenizer::count(&format!("{prefix}…\n"));
+    if truncated_tokens >= full_tokens {
+        return None;
+    }
+
+    Some(TruncatedRow {
+        row,
+        pattern: regex::escape(prefix),
+    })
 }
 
 // --- tree-sitter-md helpers ---
@@ -305,17 +665,6 @@ fn heading_level(heading: Node) -> usize {
     0
 }
 
-fn first_section_headline(tree: &Tree, source: &str) -> Option<(usize, usize, usize)> {
-    let section = headed_sections(tree.root_node()).next()?;
-    let heading = first_heading_child(section)?;
-    let heading_start = heading.start_position().row + 1;
-    let heading_end = span_last_row(heading, source) + 1;
-    let paragraph_end = first_paragraph_after(section, heading)
-        .map(|p| span_last_row(p, source) + 1)
-        .unwrap_or(heading_end);
-    Some((heading_start, heading_end, paragraph_end))
-}
-
 /// Top-level `section` children of `node` that have a heading. Tree-sitter-md
 /// wraps a leading `html_block` (or other heading-less prelude) in its own
 /// `section` node — those don't represent a navigable doc section, so we
@@ -338,19 +687,9 @@ fn first_heading_child(section: Node) -> Option<Node> {
     None
 }
 
-fn first_paragraph_after<'a>(section: Node<'a>, heading: Node<'a>) -> Option<Node<'a>> {
-    let mut cursor = section.walk();
-    let mut seen_heading = false;
-    for child in section.children(&mut cursor) {
-        if child.id() == heading.id() {
-            seen_heading = true;
-            continue;
-        }
-        if seen_heading && child.kind() == "paragraph" {
-            return Some(child);
-        }
-    }
-    None
+fn first_child_of_kind<'a>(node: Node<'a>, kind: &str) -> Option<Node<'a>> {
+    let mut cur = node.walk();
+    node.children(&mut cur).find(|c| c.kind() == kind)
 }
 
 /// Last source row (0-indexed) covered by `node`, trimming a trailing empty
@@ -360,4 +699,216 @@ fn span_last_row(node: Node, source: &str) -> usize {
     let trimmed = text.trim_end_matches(['\n', '\r']);
     let internal = trimmed.split('\n').count();
     node.start_position().row + internal.saturating_sub(1)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::path::PathBuf;
+    use tree_sitter::Parser;
+
+    fn parse(source: &str) -> Tree {
+        let mut parser = Parser::new();
+        parser
+            .set_language(&tree_sitter_md::LANGUAGE.into())
+            .unwrap();
+        parser.parse(source, None).unwrap()
+    }
+
+    fn covered(source: &str) -> BTreeSet<usize> {
+        let tree = parse(source);
+        let spec = headline_spec(&tree, source).expect("headline spec");
+        spec.covered_rows
+    }
+
+    fn rendered_spans(source: &str) -> Vec<Span> {
+        let tree = parse(source);
+        let spec = headline_spec(&tree, source).expect("headline spec");
+        build_headline_spans(&PathBuf::from("README.md"), source, &spec)
+    }
+
+    /// anyhow shape: H1 setext, blank, four badge image-link lines as one
+    /// paragraph, blank, prose paragraph. The headline must skip the
+    /// badge paragraph.
+    #[test]
+    fn markdown_decorative_paragraph_skipped_anyhow_shape() {
+        let src = "Anyhow\n\
+                   ======\n\
+                   \n\
+                   [![github](https://example/badge1.svg)](https://example/repo)\n\
+                   [![crates.io](https://example/badge2.svg)](https://example/crate)\n\
+                   \n\
+                   This library provides anyhow::Error, a trait object based error type.\n";
+        let rows = covered(src);
+        // Heading on rows 1-2; prose on row 7. Badges (rows 4-5) skipped.
+        assert!(rows.contains(&1), "heading row 1 missing");
+        assert!(rows.contains(&7), "prose row 7 missing");
+        assert!(!rows.contains(&4), "badge row 4 should be skipped");
+        assert!(!rows.contains(&5), "badge row 5 should be skipped");
+    }
+
+    /// otree shape: H1 + blank + bare-image paragraph + blank + tagline.
+    #[test]
+    fn markdown_decorative_image_only_paragraph_skipped_otree_shape() {
+        let src = "# OTree - Object Tree TUI Viewer\n\
+                   \n\
+                   ![screenshot](assets/screenshot.png)\n\
+                   \n\
+                   A command line tool to view objects in TUI tree widget.\n";
+        let rows = covered(src);
+        assert!(rows.contains(&1), "heading row missing");
+        assert!(rows.contains(&5), "tagline row missing");
+        assert!(!rows.contains(&3), "image-only paragraph should be skipped");
+    }
+
+    /// soluna shape: H1 + blank + plain text-link paragraph + blank +
+    /// prose. Plain text-link paragraphs are not badges and must NOT
+    /// be skipped.
+    #[test]
+    fn markdown_link_only_paragraph_kept_soluna_shape() {
+        let src = "# Soluna\n\
+                   \n\
+                   [Live Examples](https://example/demo)\n\
+                   \n\
+                   A framework for 2D games in Lua.\n";
+        let rows = covered(src);
+        assert!(rows.contains(&1));
+        assert!(
+            rows.contains(&3),
+            "plain link paragraph must NOT be skipped"
+        );
+    }
+
+    /// mitt shape: H1, block_quote tagline, list of features, prose
+    /// paragraph. Headline includes all four blocks (regression guard).
+    #[test]
+    fn markdown_mitt_shape_unchanged() {
+        let src = "# Mitt\n\
+                   \n\
+                   > Tiny 200b functional event emitter / pubsub.\n\
+                   \n\
+                   - **Microscopic:** weighs less than 200 bytes\n\
+                   - **Useful:** wildcard event types\n\
+                   \n\
+                   Mitt was made for the browser, but works in any JavaScript runtime.\n\
+                   \n\
+                   ## Table of Contents\n";
+        let rows = covered(src);
+        assert!(rows.contains(&1), "heading row missing");
+        assert!(rows.contains(&3), "block_quote tagline missing");
+        assert!(rows.contains(&5), "list row 5 missing");
+        assert!(rows.contains(&6), "list row 6 missing");
+        assert!(rows.contains(&8), "closer paragraph missing");
+        assert!(!rows.contains(&10), "must not pull in ## Table of Contents");
+    }
+
+    /// Nested H1→H2 immediately. Headline must NOT pull H2 body into
+    /// itself; only the H1 heading row is covered.
+    #[test]
+    fn markdown_nested_subsection_not_pulled_in() {
+        let src = "# Title\n\
+                   \n\
+                   ## Sub\n\
+                   \n\
+                   sub body\n";
+        let rows = covered(src);
+        assert_eq!(rows.iter().copied().collect::<Vec<_>>(), vec![1]);
+    }
+
+    /// Block_quote between H1 and H2 — include block_quote, stop
+    /// before the H2 sub-section.
+    #[test]
+    fn markdown_blockquote_then_subsection() {
+        let src = "# Title\n\
+                   \n\
+                   > Tagline.\n\
+                   \n\
+                   ## Sub\n\
+                   \n\
+                   sub body\n";
+        let rows = covered(src);
+        assert!(rows.contains(&1));
+        assert!(rows.contains(&3), "block_quote row missing");
+        assert!(!rows.contains(&5), "must not pull in ## Sub heading");
+        assert!(!rows.contains(&7), "must not pull in sub body");
+    }
+
+    /// cmdk shape: H1 with project name then trailing image-link badges.
+    /// Heading line emits Render::Truncated.
+    #[test]
+    fn markdown_heading_with_inline_badges_truncates_cmdk_shape() {
+        let src = "# Project [![badge1](https://example/b1.svg)](https://example/r1) [![badge2](https://example/b2.svg)](https://example/r2)\n\
+                   \n\
+                   The actual tagline content.\n";
+        let spans = rendered_spans(src);
+        // Find the span at row 1 — it must be Truncated.
+        let heading_span = spans
+            .iter()
+            .find(|s| s.start <= 1 && s.end >= 1)
+            .expect("no span covers row 1");
+        match &heading_span.render {
+            Render::Truncated { pattern } => {
+                assert!(
+                    pattern.contains("Project"),
+                    "pattern should keep project name: got {pattern}"
+                );
+                assert!(
+                    !pattern.contains("badge"),
+                    "pattern must not include badge text"
+                );
+                assert!(
+                    pattern.starts_with("\\#"),
+                    "pattern must include heading marker: got {pattern}"
+                );
+            }
+            other => panic!("expected Render::Truncated, got {other:?}"),
+        }
+        // Tagline at row 3 still rendered.
+        assert!(spans.iter().any(|s| s.start <= 3 && s.end >= 3));
+    }
+
+    /// Heading whose sole content is a link — must NOT truncate (the
+    /// project-name text isn't there to keep).
+    #[test]
+    fn markdown_heading_with_only_link_not_truncated() {
+        let src = "# [Project](https://example/repo)\n\
+                   \n\
+                   Tagline.\n";
+        let spans = rendered_spans(src);
+        let heading_span = spans
+            .iter()
+            .find(|s| s.start <= 1 && s.end >= 1)
+            .expect("no span covers row 1");
+        assert!(matches!(heading_span.render, Render::Full));
+    }
+
+    /// HTML block with only an `<img>` tag (cmdk-style centered hero).
+    /// The block is decorative and should be skipped.
+    #[test]
+    fn markdown_decorative_html_block_skipped() {
+        let src = "# Title\n\
+                   \n\
+                   <p align=\"center\">\n\
+                   <img src=\"hero.png\" />\n\
+                   </p>\n\
+                   \n\
+                   Tagline.\n";
+        let rows = covered(src);
+        assert!(rows.contains(&1));
+        assert!(rows.contains(&7));
+        assert!(!rows.contains(&3), "html_block row 3 should be skipped");
+        assert!(!rows.contains(&4), "html_block row 4 should be skipped");
+    }
+
+    /// Plain-text autolink paragraph is NOT decorative.
+    #[test]
+    fn markdown_autolink_paragraph_kept() {
+        let src = "# Title\n\
+                   \n\
+                   <https://example.com/docs>\n\
+                   \n\
+                   Tagline.\n";
+        let rows = covered(src);
+        assert!(rows.contains(&3), "autolink paragraph must be kept");
+    }
 }

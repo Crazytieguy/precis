@@ -242,20 +242,30 @@ like to revisit whether it's still earning its complexity.
   don't collapse into one multi-KB blob. Still deferred: H3 splitting
   for big H2 sections (anyhow's `## Details`, otree's `docs/actions.md`)
   and bullet-item splitting for content-style sections.
-- **ReadmeHeadline: skip decorative-prose paragraphs** — `ReadmeHeadline`
-  currently returns "first heading + first paragraph" via
-  `first_section_headline` in `src/walker/markdown.rs`. For READMEs that
-  open with a badge block (anyhow, mdbook, otree all do), tree-sitter-md
-  sees the run of `[![...]]` image-link lines as the first paragraph and
-  the batch lands decorative content while the actual tagline (usually
-  the second paragraph) ends up in Section 0 — which then has to compete
-  for budget on its own. A better headline definition would skip leading
-  paragraphs that are purely images/links and pick the first prose
-  paragraph. Heuristic: if a paragraph node's children are all
-  `image`/`link`/whitespace, treat it as badges and advance. Defer
-  until a fixture makes this the highest-value open issue; the Section 0
-  fix (commit 5d6c6d1) partially mitigates by letting the real tagline
-  land in Section 0 at smaller cost.
+- **ReadmeHeadline: skip decorative-prose paragraphs** — DONE.
+  `headline_spec` in `src/walker/markdown.rs` now skips leading
+  decorative paragraphs (image-only / badge-only) and tag-only
+  `<img>` HTML blocks immediately after the heading, and truncates
+  the heading line itself when its tail is nothing but inline badges
+  (cmdk shape: `# Project [![...]] [![...]]`). Decorative
+  classification reparses the inline content with
+  `tree_sitter_md::INLINE_LANGUAGE` because the block grammar leaves
+  inline content opaque. Honesty preserved: classifier defaults to
+  non-decorative on unknown inline shapes, plain text-link
+  paragraphs (soluna's `[Live Examples](...)`) and autolink
+  paragraphs are kept, link-only headings (`# [Project](url)`) are
+  not truncated.
+- **Anyhow Sim regressed −0.032 from this change.** Walker output is
+  more honest (badges replaced with prose tagline), but the anyhow
+  NS credits the *crate-doc lede* in `src/lib.rs:9-11` rather than
+  the README tagline at `README:9-10`. The new headline batch
+  (~63 tokens, mostly off-NS) now schedules at position 2 because
+  it's far cheaper than before, which delays a few real NS atoms
+  by ~260 tokens. Fixable by an NS amendment that lists the README
+  prose lines as an accepted alternate location for batch 1.2, or
+  by leaving as-is — the user-visible output is genuinely better.
+  mdbook (+0.038), ky (+0.009), cmdk (+0.007), otree (+0.001) all
+  improved; log/mitt/superstruct/ts-pattern/vaul unchanged.
 - **Markdown headings-only batch** (analog of Rust `PubItemNames`) — the
   Rust walker's `PubItemNames` is a cheap existence hedge: one line per
   pub item, low cost, high catastrophic-omission weight. Markdown has no

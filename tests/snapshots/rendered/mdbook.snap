@@ -81,9 +81,6 @@ Cargo.toml
 LICENSE
 README.md
     1→# mdBook
-    3→[![CI Status](https://github.com/rust-lang/mdBook/actions/workflows/main.yml/badge.svg)](https://github.com/rust-lang/mdBook/actions/workflows/main.yml)
-    4→[![crates.io](https://img.shields.io/crates/v/mdbook.svg)](https://crates.io/crates/mdbook)
-    5→[![LICENSE](https://img.shields.io/github/license/rust-lang/mdBook.svg)](LICENSE)
     7→mdBook is a utility to create modern online books from Markdown files.
     9→Check out the **[User Guide]** for a list of features and installation and usage information.
     10→The User Guide also serves as a demonstration to showcase what a book looks like.
@@ -120,9 +117,7 @@ crates/
             8→rust-version.workspace = true
         README.md
             1→# mdbook-core
-            3→[![Documentation](https://img.shields.io/docsrs/mdbook-core)](https://docs.rs/mdbook-core)
-            4→[![crates.io](https://img.shields.io/crates/v/mdbook-core.svg)](https://crates.io/crates/mdbook-core)
-            5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
+            7→This is the base support library for [mdBook](https://rust-lang.github.io/mdBook/). It is intended for internal use only. Other mdBook crates depend on this for any types that are shared across the crates.
         src/
     mdbook-driver/
         Cargo.toml
@@ -138,9 +133,7 @@ crates/
             32→search = ["mdbook-html/search"]
         README.md
             1→# mdbook-driver
-            3→[![Documentation](https://img.shields.io/docsrs/mdbook-driver)](https://docs.rs/mdbook-driver)
-            4→[![crates.io](https://img.shields.io/crates/v/mdbook-driver.svg)](https://crates.io/crates/mdbook-driver)
-            5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
+            7→This is the high-level Rust library for running [mdBook](https://rust-lang.github.io/mdBook/). New books can be created using [`BookBuilder`](https://docs.rs/mdbook-driver/latest/mdbook_driver/init/struct.BookBuilder.html). The primary type [`MDBook`](https://docs.rs/mdbook-driver/latest/mdbook_driver/struct.MDBook.html) can be used to manage and render books.
         src/
     mdbook-html/
         Cargo.toml
@@ -156,9 +149,7 @@ crates/
             37→search = ["dep:elasticlunr-rs"]
         README.md
             1→# mdbook-html
-            3→[![Documentation](https://img.shields.io/docsrs/mdbook-html)](https://docs.rs/mdbook-html)
-            4→[![crates.io](https://img.shields.io/crates/v/mdbook-html.svg)](https://crates.io/crates/mdbook-html)
-            5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
+            7→This is the HTML renderer for [mdBook](https://rust-lang.github.io/mdBook/). This is intended for internal use only. It is automatically included by [`mdbook-driver`](https://crates.io/crates/mdbook-driver) to render books to HTML.
         front-end/
         src/
     mdbook-markdown/
@@ -173,9 +164,7 @@ crates/
             8→rust-version.workspace = true
         README.md
             1→# mdbook-markdown
-            3→[![Documentation](https://img.shields.io/docsrs/mdbook-markdown)](https://docs.rs/mdbook-markdown)
-            4→[![crates.io](https://img.shields.io/crates/v/mdbook-markdown.svg)](https://crates.io/crates/mdbook-markdown)
-            5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
+            7→This is the Markdown support library for [mdBook](https://rust-lang.github.io/mdBook/). Rust crates (such as preprocessors) can use this library to process Markdown in the same way as mdBook.
         src/
     mdbook-preprocessor/
         Cargo.toml
@@ -189,9 +178,7 @@ crates/
             8→rust-version.workspace = true
         README.md
             1→# mdbook-preprocessor
-            3→[![Documentation](https://img.shields.io/docsrs/mdbook-preprocessor)](https://docs.rs/mdbook-preprocessor)
-            4→[![crates.io](https://img.shields.io/crates/v/mdbook-preprocessor.svg)](https://crates.io/crates/mdbook-preprocessor)
-            5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
+            7→This is the Rust library to implement a [preprocessor](https://rust-lang.github.io/mdBook/for_developers/preprocessors.html) for [mdBook](https://rust-lang.github.io/mdBook/).
         src/
     mdbook-renderer/
         Cargo.toml
@@ -205,9 +192,7 @@ crates/
             8→rust-version.workspace = true
         README.md
             1→# mdbook-renderer
-            3→[![Documentation](https://img.shields.io/docsrs/mdbook-renderer)](https://docs.rs/mdbook-renderer)
-            4→[![crates.io](https://img.shields.io/crates/v/mdbook-renderer.svg)](https://crates.io/crates/mdbook-renderer)
-            5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
+            7→This is the Rust library to implement a [renderer](https://rust-lang.github.io/mdBook/for_developers/backends.html) for [mdBook](https://rust-lang.github.io/mdBook/).
         src/
     mdbook-summary/
         Cargo.toml
@@ -221,9 +206,7 @@ crates/
             8→rust-version.workspace = true
         README.md
             1→# mdbook-summary
-            3→[![Documentation](https://img.shields.io/docsrs/mdbook-summary)](https://docs.rs/mdbook-summary)
-            4→[![crates.io](https://img.shields.io/crates/v/mdbook-summary.svg)](https://crates.io/crates/mdbook-summary)
-            5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
+            7→This is the Rust library used to parse the [`SUMMARY.md`](https://rust-lang.github.io/mdBook/format/summary.html) file structure for [mdBook](https://rust-lang.github.io/mdBook/).
         src/
     xtask/
 eslint.config.mjs
@@ -251,14 +234,63 @@ src/
             17→pub fn execute(args: &ArgMatches) -> Result<()> {
             …
         clean.rs
+            11→pub fn make_subcommand() -> Command {
+            …
+            19→pub fn execute(args: &ArgMatches) -> Result<()> {
+            …
+            38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
+            …
+            46→pub struct Clean {
+            47→    num_files_removed: u64,
+            48→    num_dirs_removed: u64,
+            49→    total_bytes_removed: u64,
+            50→}
         command_prelude.rs
+            7→pub trait CommandExt: Sized {
+            …
+            62→pub fn set_dest_dir(args: &ArgMatches, book: &mut MDBook) {
+            …
         init.rs
+            12→pub fn make_subcommand() -> ClapCommand {
+            …
+            32→pub fn execute(args: &ArgMatches) -> Result<()> {
+            …
         mod.rs
             1→//! Subcommand modules for the `mdbook` binary.
+            3→pub mod build;
+            4→pub mod clean;
+            5→pub mod command_prelude;
+            6→pub mod init;
+            8→pub mod serve;
+            9→pub mod test;
+            11→pub mod watch;
         serve.rs
+            23→pub fn make_subcommand() -> Command {
+            …
+            51→pub fn execute(args: &ArgMatches) -> Result<()> {
+            …
         test.rs
+            9→pub fn make_subcommand() -> Command {
+            …
+            35→pub fn execute(args: &ArgMatches) -> Result<()> {
+            …
         watch/
         watch.rs
+            12→pub fn make_subcommand() -> Command {
+            …
+            21→pub enum WatcherKind {
+            22→    Poll,
+            23→    Native,
+            24→}
+            37→pub fn execute(args: &ArgMatches) -> Result<()> {
+            …
+            62→pub fn rebuild_on_change(
+            63→    kind: WatcherKind,
+            64→    book_dir: &Path,
+            65→    update_config: &dyn Fn(&mut MDBook),
+            66→    post_build: &dyn Fn(),
+            67→) {
+            …
     main.rs
         1→//! The mdbook CLI.
 tests/

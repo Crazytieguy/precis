@@ -5,6 +5,7 @@ expression: rendered
 .github/
     FUNDING.yml
     workflows/
+        ci.yml
 .gitignore
 Cargo.toml
     1→[package]
@@ -27,10 +28,6 @@ LICENSE-MIT
 README.md
     1→Anyhow&ensp;¯\\\_(°ペ)\_/¯
     2→==========================
-    4→[<img alt="github" src="https://img.shields.io/badge/github-dtolnay/anyhow-8da0cb?style=for-the-badge&labelColor=555555&logo=github" height="20">](https://github.com/dtolnay/anyhow)
-    5→[<img alt="crates.io" src="https://img.shields.io/crates/v/anyhow.svg?style=for-the-badge&color=fc8d62&logo=rust" height="20">](https://crates.io/crates/anyhow)
-    6→[<img alt="docs.rs" src="https://img.shields.io/badge/docs.rs-anyhow-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs" height="20">](https://docs.rs/anyhow)
-    7→[<img alt="build status" src="https://img.shields.io/github/actions/workflow/status/dtolnay/anyhow/ci.yml?branch=master&style=for-the-badge" height="20">](https://github.com/dtolnay/anyhow/actions?query=branch%3Amaster)
     9→This library provides [`anyhow::Error`][Error], a trait object based error type
     10→for easy idiomatic error handling in Rust applications.
     12→[Error]: https://docs.rs/anyhow/1.0/anyhow/struct.Error.html
@@ -147,6 +144,25 @@ src/
         390→pub struct Error {
         391→    inner: Own<ErrorImpl>,
         392→}
+        394→/// Iterator of a chain of source errors.
+        395→///
+        396→/// This type is the iterator returned by [`Error::chain`].
+        397→///
+        398→/// # Example
+        399→///
+        400→/// ```
+        401→/// use anyhow::Error;
+        402→/// use std::io;
+        403→///
+        404→/// pub fn underlying_io_error_kind(error: &Error) -> Option<io::ErrorKind> {
+        405→///     for cause in error.chain() {
+        406→///         if let Some(io_error) = cause.downcast_ref::<io::Error>() {
+        407→///             return Some(io_error.kind());
+        408→///         }
+        409→///     }
+        410→///     None
+        411→/// }
+        412→/// ```
         415→pub struct Chain<'a> {
         416→    state: crate::chain::ChainState<'a>,
         417→}

@@ -1,4 +1,4 @@
-scores: Sim=0.385 Reached=11/38 Early=2 Late=8 Partial=4 Missing=23 Used=9636/10000
+scores: Sim=0.394 Reached=11/38 Early=3 Late=7 Partial=4 Missing=23 Used=9636/10000
 
 ## Tier rollup
 
@@ -19,7 +19,7 @@ scores: Sim=0.385 Reached=11/38 Early=2 Late=8 Partial=4 Missing=23 Used=9636/10
 | 1.2 | 79 | — | — | 0.00 | missing | Readme one-line tagline |  |
 | 1.3 | 163 | 4972 | +4809 | 0.80 | late | Readme top-level section headings (## only) | readme.md section #2 (t=2889, 28 atoms) |
 | 1.4 | 204 | — | — | 0.00 | missing | Readme target environments + 'no deps' note |  |
-| 1.5 | 331 | 593 | +262 | 0.92 | late | Readme benefits-over-fetch list | readme.md section #0 (t=593, 10 atoms) |
+| 1.5 | 331 | 173 | -158 | 0.92 | early | Readme benefits-over-fetch list | README headline in readme.md (t=173, 11 atoms) |
 | 1.6 | 447 | 1727 | +1280 | 1.00 | late | source/ tree (all immediate children + every subdir) |  |
 | 1.7 | 545 | — | — | 0.00 | missing | test/ tree (top-level + helpers/) |  |
 | 1.8 | 714 | 6516 | +5802 | 0.93 | late | package.json identity (name, version, description, exports, engines) | package identity in package.json (t=1071, 12 atoms) |
@@ -76,8 +76,8 @@ scores: Sim=0.385 Reached=11/38 Early=2 Late=8 Partial=4 Missing=23 Used=9636/10
 | 103 | 1.00 | 103 | 1279 | package scripts in package.json |
 | 100 | 0.30 | 331 | 7891 | export names surface in source/types/options.ts |
 | 82 | 1.00 | 82 | 3189 | export at source/utils/merge.ts:6 |
-| 82 | 1.00 | 82 | 133 | json config tsconfig.json |
-| 77 | 0.88 | 88 | 221 | readme.md section #1 |
+| 82 | 1.00 | 82 | 255 | json config tsconfig.json |
+| 77 | 0.88 | 88 | 343 | readme.md section #1 |
 | 77 | 0.86 | 90 | 4165 | export at source/types/hooks.ts:48 |
 | 75 | 0.86 | 88 | 4075 | export at source/types/hooks.ts:5 |
 | 75 | 0.24 | 314 | 6830 | export names surface in source/core/constants.ts |
@@ -86,11 +86,11 @@ scores: Sim=0.385 Reached=11/38 Early=2 Late=8 Partial=4 Missing=23 Used=9636/10
 | 73 | 0.62 | 117 | 3107 | export names surface in source/utils/merge.ts |
 | 64 | 1.00 | 64 | 9299 | imports in source/utils/merge.ts |
 | 62 | 0.39 | 161 | 3715 | export names surface in source/types/hooks.ts |
-| 56 | 0.75 | 75 | 422 | readme.md section #9 |
+| 56 | 0.75 | 75 | 544 | readme.md section #9 |
 | 55 | 1.00 | 55 | 8913 | imports in source/types/hooks.ts |
 | 54 | 1.00 | 54 | 2990 | export doc at source/errors/NonError.ts:6 |
 | 53 | 0.70 | 77 | 1689 | export at source/types/retry.ts:3 |
 | 53 | 1.00 | 53 | 9235 | imports in source/utils/type-guards.ts |
-| 52 | 0.67 | 79 | 347 | readme.md section #8 |
+| 52 | 0.67 | 79 | 469 | readme.md section #8 |
 | 52 | 1.00 | 52 | 9124 | imports in source/utils/normalize.ts |
 | 50 | 1.00 | 50 | 8963 | imports in source/types/ky.ts |
