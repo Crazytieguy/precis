@@ -1,121 +1,151 @@
 fixture = "ts-pattern"
 revision_pin = "2ece6ba5"
 summary = """
-ts-pattern is a TypeScript library implementing exhaustive pattern matching
-on arbitrary JS values, with smart type narrowing. Public surface: a `match`
-builder (`.with` / `.when` / `.exhaustive` / `.otherwise` / `.run` /
-`.returnType` / `.narrow`), an `isMatching` type-guard helper, and a `P`
-namespace re-exporting wildcard patterns (`P.string`, `P.number`, `P._`, …)
-plus combinators (`P.union`, `P.intersection`, `P.not`, `P.optional`,
-`P.array`, `P.set`, `P.map`, `P.record`, `P.select`, `P.when`, `P.shape`,
-`P.instanceOf`) and chainable predicates (`P.string.startsWith`,
-`P.number.between`, `P.bigint.gt`, etc.). The runtime is small and lives in
-`src/match.ts`, `src/is-matching.ts`, `src/patterns.ts`, plus
-`src/internals/{helpers,symbols}.ts`. The hard work is type-level:
-`src/types/` holds `Match`, `Pattern`, `InvertPattern`, `ExtractPreciseValue`,
-`DistributeUnions`, `DeepExclude`, `FindSelected`, `IsMatching`, `BuildMany`,
-plus a shared `helpers.ts`. Plausible queries: "how do I exhaustively match a
-discriminated union?", "what does `P.select` do?", "how does TS narrowing
-work after `.with`?", "where is `P.string.regex` implemented?", "how does
-`.exhaustive` detect missing cases?", "add a chainable predicate", "what
-breaking changes between v4 and v5?". Ranking front-loads the entry-point
-shape (index re-exports, README orientation, runtime function signatures)
-and breadth across `P.*` patterns, then surfaces type-level machinery and
-docs.
+ts-pattern is a TypeScript pattern-matching library: a chainable
+`match(value).with(pattern, handler)…` builder plus an `isMatching`
+type guard, with a `P` namespace of wildcards and combinators
+(`P.string`, `P.union`, `P.not`, `P.select`, `P.array`, `P.when`,
+`P.optional`, `P.instanceOf`, `P.record`, `P.map`, `P.set`, …) used
+to describe expected shapes. The runtime under `src/` is small and
+mostly delegates pattern testing to a single recursive
+`matchPattern` helper; the bulk of the codebase is the type-level
+machinery in `src/types/` (`Match`, `Pattern`, `InvertPattern`,
+`ExtractPreciseValue`, `DistributeUnions`, `DeepExclude`,
+`FindSelected`, `IsMatching`, `BuildMany`, `helpers`) that powers
+type narrowing, selection inference, and the exhaustiveness check
+behind `.exhaustive()`.
+
+Likely query distribution: "how do I match X?"-style usage questions
+(answered by the README + signatures), debugging type-inference
+failures (answered by the relevant types/* file), adding a new
+combinator (touches `patterns.ts` + `Pattern.ts` + `InvertPattern.ts`),
+and tweaking exhaustiveness/narrowing semantics
+(`Match.ts` + `DeepExclude` + `DistributeUnions`). The ranking
+front-loads the public API surface and pattern catalog because most
+queries land there; deep type-system internals come later.
 """
 
-# ────────────────────────────────────────────────────────────────────────────
-# Tier 1 — orientation: what is this thing? Top-level fixture shape.
-# ────────────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────
+# Tier 1 — Identity & top-level navigation.
+# What is this repo, what does it claim to be, and what's at the
+# root? Every dev task starts by orienting on these.
+# ──────────────────────────────────────────────────────────────────
 
 [[batches]]
 id = "1.1"
-descriptor = "Repo root layout"
+descriptor = "README lede + tagline"
 justification = """
-Single cheapest orienting batch: shows it's a TS npm package with `src/`,
-`tests/`, `docs/`, `examples/`, `benchmarks/`, plus the README, package.json,
-tsconfig.json, jest config. Names every immediate child so the agent can
-target follow-ups precisely.
+First three lines establish: name, one-sentence purpose ("exhaustive
+Pattern Matching library for TypeScript with smart type inference"),
+and the H1. Cheapest possible orientation pin.
 """
-content = { kind = "fs", groups = [
-  { parent = ".", entries = "all" },
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 1, end = 5, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "1.2"
-descriptor = "Public entry point — src/index.ts (full)"
+descriptor = "package.json identity fields"
 justification = """
-6-line file that is the entire JS-level public API surface: re-exports
-`match`, `isMatching`, `Pattern`/`P`, `NonExhaustiveError`. Tiny, load-
-bearing — fully inlining it pins what's exported and from which module.
+Name (`ts-pattern`), version (5.9.0), description, type=module,
+source entry. Tells the agent this is an ES-module npm library
+shipped as `ts-pattern` whose source-of-truth entry is
+`src/index.ts`.
+"""
+content = { kind = "lines", spans = [
+  { path = "package.json", start = 2, end = 7, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.3"
+descriptor = "src/index.ts — full public re-export surface"
+justification = """
+Six lines that name *every* public runtime export: `match`,
+`isMatching`, `Pattern`/`P` namespace, `NonExhaustiveError`. This is
+the single most informative file in the whole repo for orienting a
+new agent on what the library exposes; pinning it whole at this size
+is dramatically more useful than any partial slice.
 """
 content = { kind = "lines", spans = [
   { path = "src/index.ts", start = 1, end = 6, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "1.3"
-descriptor = "src/ directory layout"
-justification = """
-Names every immediate child of `src/` — `errors.ts`, `index.ts`,
-`is-matching.ts`, `match.ts`, `patterns.ts`, plus `internals/` and `types/`
-subdirs. Catastrophic-omission hedge for the runtime surface roster.
-"""
-content = { kind = "fs", groups = [
-  { parent = "src", entries = "all" },
-] }
-
-[[batches]]
 id = "1.4"
-descriptor = "src/types/ directory layout"
+descriptor = "Repo root listing"
 justification = """
-The bulk of ts-pattern's complexity lives in type-level files. Listing every
-file in `src/types/` (BuildMany, DeepExclude, DistributeUnions,
-ExtractPreciseValue, FindSelected, IsMatching, InvertPattern, Match,
-Pattern, helpers, plus index) lets the agent map a "how does narrowing
-work?"-class query to a specific file in one hop.
+Names the top-level shape: `src/`, `tests/`, `docs/`, `examples/`,
+`benchmarks/`, `scripts/`, `README.md`, configs (`package.json`,
+`jsr.json`, `tsconfig.json`, `jest.config.cjs`, `.prettierrc`),
+licence, lockfile. Catastrophic-omission hedge for the fixture's
+top level — no listing means agent assumes only files we've shown
+exist.
 """
 content = { kind = "fs", groups = [
-  { parent = "src/types", entries = "all" },
+  { parent = ".", entries = "all" },
 ] }
 
 [[batches]]
 id = "1.5"
-descriptor = "src/internals/ directory layout"
+descriptor = "src/ + src/types/ + src/internals/ listings"
 justification = """
-Two files (`helpers.ts`, `symbols.ts`) — name them up front so the agent
-finds the runtime matching engine immediately.
+Names every implementation file. Combined with 1.3 (the re-exports)
+this tells the agent exactly which file owns which named export and
+what type files exist. Catastrophic-omission hedge for the source
+tree — partial listings here would actively mislead.
 """
 content = { kind = "fs", groups = [
+  { parent = "src", entries = "all" },
+  { parent = "src/types", entries = "all" },
   { parent = "src/internals", entries = "all" },
 ] }
 
 [[batches]]
 id = "1.6"
-descriptor = "package.json — name/version/description/exports skeleton"
+descriptor = "README features — data structures + typesafety"
 justification = """
-Three small lines pin name (`ts-pattern`), version (5.9.0), the one-line
-description ("exhaustive Pattern Matching library for TypeScript"), and the
-top-level `source` entry pointing at `src/index.ts`. Establishes "this is
-a library, not an app" and the canonical entry path. Truncated rendering
-keeps it cheap.
+First three feature bullets: matches any nested data structure
+(objects/arrays/tuples/sets/maps/primitives), is typesafe with smart
+inference, supports exhaustiveness via `.exhaustive()`. Establishes
+the core selling-point shape of the library. Truncated to drop the
+long markdown anchor links that contribute most of the cost.
 """
 content = { kind = "lines", spans = [
-  { path = "package.json", start = 2, end = 7, render = { kind = "full" } },
+  { path = "README.md", start = 50, end = 50, render = { kind = "truncated", pattern = "^[^\\[]+" } },
+  { path = "README.md", start = 51, end = 52, render = { kind = "full" } },
 ] }
 
-# ────────────────────────────────────────────────────────────────────────────
-# Tier 2 — public-surface signatures: what can the user call, and with what
-# shape? Tiny semantic lookups land here.
-# ────────────────────────────────────────────────────────────────────────────
+[[batches]]
+id = "1.7"
+descriptor = "README features — patterns, wildcards, predicates, bundle"
+justification = """
+Remaining feature bullets: validation via `isMatching`, wildcards
+(`P._`, `P.string`, `P.number`, etc.), predicates / unions /
+intersections / exclusion patterns, `P.select(name?)`, ~2kB bundle.
+Pairs with 1.6 to give a full feature catalogue without overflowing
+the early-batch envelope.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 53, end = 53, render = { kind = "full" } },
+  { path = "README.md", start = 54, end = 55, render = { kind = "truncated", pattern = "^[^\\[]+" } },
+  { path = "README.md", start = 56, end = 57, render = { kind = "full" } },
+] }
+
+# ──────────────────────────────────────────────────────────────────
+# Tier 2 — Public runtime API: match() and isMatching().
+# Signatures + the chainable surface of the Match builder.
+# ──────────────────────────────────────────────────────────────────
 
 [[batches]]
 id = "2.1"
-descriptor = "match() — signature only"
+descriptor = "match() exported signature"
 justification = """
-The single most-asked function. One signature line plus return type is the
-absolute minimum semantic answer to "what does `match` look like?". Body
-follows in a refinement batch later.
+The headline runtime entry point's signature only:
+`function match<const input, output = symbols.unset>(value: input):
+Match<input, output>`. Combined with 1.3's re-exports tells the agent
+where `match` lives and what its public type is. JSDoc revealed
+in 2.4; the MatchExpression body that `match` returns is shown
+class-by-class in 2.3 / 2.5 / 2.7–2.10.
 """
 content = { kind = "lines", spans = [
   { path = "src/match.ts", start = 32, end = 36, render = { kind = "full" } },
@@ -125,9 +155,11 @@ content = { kind = "lines", spans = [
 id = "2.2"
 descriptor = "isMatching() — both overload signatures"
 justification = """
-Two-line signatures for both isMatching forms (curried type-guard factory
-and the eager 2-arg variant). Pinning these answers "is isMatching curriable?"
-and "what's its return type?" without follow-up.
+The other top-level runtime export. Both overloads inline:
+single-arg form returns a curried type guard
+`(value: unknown) => value is P.infer<p>`; two-arg form returns a
+type-guarded boolean. Pinning both overloads in one batch keeps the
+curried/uncurried duality visible.
 """
 content = { kind = "lines", spans = [
   { path = "src/is-matching.ts", start = 32, end = 34, render = { kind = "full" } },
@@ -136,558 +168,594 @@ content = { kind = "lines", spans = [
 
 [[batches]]
 id = "2.3"
-descriptor = "match() — full JSDoc"
-predecessor = "2.1"
+descriptor = "MatchExpression — method-name catalog"
 justification = """
-The 16-line JSDoc lede includes a worked `.with(...).with(...).exhaustive()`
-example. This is one of the highest-value zero-follow-up payoffs in the
-whole repo: agent can answer "show me a basic match expression" without any
-file reads. Predecessor on 2.1 lets us stage it as a refinement.
+The hidden runtime class behind `match()`. Catalogs every chainable
+method's first line — `with`, `when`, `otherwise`, `exhaustive`,
+`run`, `returnType`, `narrow` — with longer signatures truncated at
+the opening paren and the trivial nullary ones rendered full. Lets
+the agent see all seven method names in one shot before the bodies
+arrive in later batches. Catastrophic-omission hedge: partial method
+lists would imply missing methods.
 """
+content = { kind = "lines", spans = [
+  { path = "src/match.ts", start = 47, end = 47, render = { kind = "full" } },
+  { path = "src/match.ts", start = 50, end = 50, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/match.ts", start = 94, end = 94, render = { kind = "full" } },
+  { path = "src/match.ts", start = 110, end = 110, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/match.ts", start = 115, end = 115, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/match.ts", start = 120, end = 120, render = { kind = "full" } },
+  { path = "src/match.ts", start = 124, end = 124, render = { kind = "full" } },
+  { path = "src/match.ts", start = 128, end = 128, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.4"
+descriptor = "match() JSDoc"
+justification = """
+JSDoc for the `match` entry point: chain summary + the canonical
+"A" | "B" exhaustive example. Useful for "how do I use match?"
+zero-follow-up answers; deferred behind 2.1 because the signature
+alone is already informative.
+"""
+predecessor = "2.1"
 content = { kind = "lines", spans = [
   { path = "src/match.ts", start = 16, end = 31, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "2.4"
-descriptor = "NonExhaustiveError class (full)"
+id = "2.5"
+descriptor = "MatchExpression class doc + constructor"
 justification = """
-Tiny class (15 lines) — the only runtime error ts-pattern throws. Including
-it whole means "what does an unmatched .exhaustive() throw?" / "how is the
-input shown?" answer with no follow-ups.
+JSDoc explicitly notes the public types live in src/types/Match.ts,
+plus the class header and constructor signature. Sets up later
+method-body batches.
+"""
+predecessor = "2.3"
+content = { kind = "lines", spans = [
+  { path = "src/match.ts", start = 38, end = 48, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.6"
+descriptor = "match.ts imports + MatchState/unmatched"
+justification = """
+The file's import surface (Pattern, Match type, internal symbols /
+helpers, NonExhaustiveError) and the `MatchState<output>`
+discriminated union plus the shared `unmatched` constant. Lets the
+agent see exactly what `match.ts` depends on without a fresh file
+read.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/match.ts", start = 1, end = 14, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.7"
+descriptor = "MatchExpression.with — argument parsing half"
+justification = """
+The first half of `.with`'s body: how the variadic `...args` are
+disambiguated into pattern / patterns / pattern+guard shapes. Reveals
+the rule that arg count == 3 with a function in slot 1 means
+"pattern + guard"; arg count > 2 means "multiple patterns"; otherwise
+single pattern.
+"""
+predecessor = "2.3"
+content = { kind = "lines", spans = [
+  { path = "src/match.ts", start = 50, end = 65, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.8"
+descriptor = "MatchExpression.with — selection + dispatch half"
+justification = """
+The second half of `.with`: the `select` callback that gathers
+selections (with the anonymous-select-key special case unwrapping a
+single anonymous selection back to the raw value), the
+`patterns.some(matchPattern…) && predicate?` test, and constructing
+the new `state` to pass to a fresh MatchExpression. Together with
+2.7 fully explains how `.with(...)` decides whether to fire.
+"""
+predecessor = "2.7"
+content = { kind = "lines", spans = [
+  { path = "src/match.ts", start = 66, end = 92, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.9"
+descriptor = "MatchExpression.when / otherwise / exhaustive bodies"
+justification = """
+Three terminal-or-near-terminal builder operations: `when` runs a
+predicate, `otherwise` returns a default if unmatched, `exhaustive`
+either returns the matched value or invokes the catcher (defaults
+to throwing NonExhaustiveError).
+"""
+predecessor = "2.3"
+content = { kind = "lines", spans = [
+  { path = "src/match.ts", start = 94, end = 118, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.10"
+descriptor = "MatchExpression.run / returnType / narrow + defaultCatcher"
+justification = """
+Three trivially-bodied methods (`run` aliases `exhaustive`,
+`returnType` and `narrow` are runtime no-ops returning `this` —
+their behaviour is purely at the type level), plus the default
+catcher that throws NonExhaustiveError. The "narrow / returnType
+do nothing at runtime" detail is non-obvious and saves a follow-up
+read.
+"""
+predecessor = "2.3"
+content = { kind = "lines", spans = [
+  { path = "src/match.ts", start = 120, end = 135, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.11"
+descriptor = "isMatching — JSDoc + PatternConstraint helper"
+justification = """
+JSDoc for the curried form (single-pattern type-guard factory) plus
+the `PatternConstraint<T>` helper that enables targeting unknown
+properties on object patterns. Pairs with the signatures in 2.2 to
+fully document the public function.
+"""
+predecessor = "2.2"
+content = { kind = "lines", spans = [
+  { path = "src/is-matching.ts", start = 1, end = 31, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.12"
+descriptor = "isMatching — JSDoc for two-arg + runtime body"
+justification = """
+JSDoc for the two-arg overload plus the unified runtime
+implementation: 1-arg ⇒ partially apply matchPattern; 2-arg ⇒ call
+matchPattern directly; otherwise throw. Important for "what does
+isMatching actually do at runtime?" — answer: it's `matchPattern`
+with no selection callback.
+"""
+predecessor = "2.2"
+content = { kind = "lines", spans = [
+  { path = "src/is-matching.ts", start = 35, end = 47, render = { kind = "full" } },
+  { path = "src/is-matching.ts", start = 53, end = 69, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.13"
+descriptor = "NonExhaustiveError class"
+justification = """
+Whole 15-line file. The error type thrown when `.exhaustive()` runs
+with an unmatched value at runtime — message format `Pattern
+matching error: no pattern matches value <JSON|raw>`, public
+`input` field. Useful for catch-block typing and "what error do I
+get?" questions.
 """
 content = { kind = "lines", spans = [
   { path = "src/errors.ts", start = 1, end = 15, render = { kind = "full" } },
 ] }
 
-[[batches]]
-id = "2.5"
-descriptor = "P.* namespace — locations of every exported pattern (functions)"
-justification = """
-Catastrophic-omission hedge for the function-shaped half of `P`. Truncated
-first lines of every `export function` in `patterns.ts` (optional, array,
-set, map, record, intersection, union, not, when, select, instanceOf,
-shape) so the agent sees the full roster with line numbers. Drilling into
-any one is then a single targeted Read.
-"""
-content = { kind = "lines", spans = [
-  { path = "src/patterns.ts", start = 187, end = 187, render = { kind = "truncated", pattern = "^export function [^(]+" } },
-  { path = "src/patterns.ts", start = 241, end = 241, render = { kind = "truncated", pattern = "^export function [^(]+" } },
-  { path = "src/patterns.ts", start = 294, end = 294, render = { kind = "truncated", pattern = "^export function [^(]+" } },
-  { path = "src/patterns.ts", start = 356, end = 356, render = { kind = "truncated", pattern = "^export function [^(]+" } },
-  { path = "src/patterns.ts", start = 433, end = 433, render = { kind = "truncated", pattern = "^export function [^(]+" } },
-  { path = "src/patterns.ts", start = 536, end = 536, render = { kind = "truncated", pattern = "^export function [^(]+" } },
-  { path = "src/patterns.ts", start = 572, end = 572, render = { kind = "truncated", pattern = "^export function [^(]+" } },
-  { path = "src/patterns.ts", start = 611, end = 611, render = { kind = "truncated", pattern = "^export function [^(]+" } },
-  { path = "src/patterns.ts", start = 637, end = 637, render = { kind = "truncated", pattern = "^export function [^(]+" } },
-  { path = "src/patterns.ts", start = 672, end = 672, render = { kind = "truncated", pattern = "^export function [^(]+" } },
-  { path = "src/patterns.ts", start = 1251, end = 1251, render = { kind = "truncated", pattern = "^export function [^(]+" } },
-  { path = "src/patterns.ts", start = 1271, end = 1271, render = { kind = "truncated", pattern = "^export function [^(]+" } },
-] }
-
-[[batches]]
-id = "2.6"
-descriptor = "P.* namespace — wildcards (constants)"
-justification = """
-Companion catastrophic-omission hedge: every `export const` wildcard in
-`patterns.ts` (`any`, `unknown`, `_`, `string`, `number`, `bigint`,
-`boolean`, `symbol`, `nullish`, `nonNullable`). Together with 2.5 this
-gives the full roster of `P.*` names.
-"""
-content = { kind = "lines", spans = [
-  { path = "src/patterns.ts", start = 782, end = 782, render = { kind = "truncated", pattern = "^export const [^=]+" } },
-  { path = "src/patterns.ts", start = 793, end = 793, render = { kind = "truncated", pattern = "^export const [^=]+" } },
-  { path = "src/patterns.ts", start = 805, end = 805, render = { kind = "truncated", pattern = "^export const [^=]+" } },
-  { path = "src/patterns.ts", start = 928, end = 928, render = { kind = "truncated", pattern = "^export const [^=]+" } },
-  { path = "src/patterns.ts", start = 1075, end = 1075, render = { kind = "truncated", pattern = "^export const [^=]+" } },
-  { path = "src/patterns.ts", start = 1201, end = 1201, render = { kind = "truncated", pattern = "^export const [^=]+" } },
-  { path = "src/patterns.ts", start = 1211, end = 1211, render = { kind = "truncated", pattern = "^export const [^=]+" } },
-  { path = "src/patterns.ts", start = 1221, end = 1221, render = { kind = "truncated", pattern = "^export const [^=]+" } },
-  { path = "src/patterns.ts", start = 1231, end = 1231, render = { kind = "truncated", pattern = "^export const [^=]+" } },
-  { path = "src/patterns.ts", start = 1241, end = 1241, render = { kind = "truncated", pattern = "^export const [^=]+" } },
-] }
-
-[[batches]]
-id = "2.7"
-descriptor = "isMatching() — JSDoc for both overloads"
-predecessor = "2.2"
-justification = """
-Two short JSDoc blocks describing curried (type-guard factory) vs. eager
-(boolean) usage of `isMatching`, with `if (hasName(input))` / `if
-(isMatching(...))` worked examples. Refines 2.2 once we've already shown
-the bare signatures.
-"""
-content = { kind = "lines", spans = [
-  { path = "src/is-matching.ts", start = 17, end = 31, render = { kind = "full" } },
-  { path = "src/is-matching.ts", start = 35, end = 47, render = { kind = "full" } },
-] }
-
-# ────────────────────────────────────────────────────────────────────────────
-# Tier 3 — README orientation + type-level public surface (Match interface,
-# Matcher protocol, symbols). Most "what does this concept mean?" queries
-# resolve here.
-# ────────────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────
+# Tier 3 — The `P` namespace: wildcards + combinators.
+# `patterns.ts` is the largest source file (1276 lines) and the
+# single most-queried surface ("how do I use P.X?"). Strategy:
+# location catalogues first, then JSDocs for the most-asked
+# combinators. Full bodies are reserved for the cheapest /
+# highest-info-density cases — the chainable predicate bodies are
+# repetitive and can be inferred from the catalogue + factory, so
+# they're left to be re-read on demand.
+# ──────────────────────────────────────────────────────────────────
 
 [[batches]]
 id = "3.1"
-descriptor = "README — opening tagline + lede match() example"
+descriptor = "P module-doc + combinator-function name catalog"
 justification = """
-Top of the README: "exhaustive Pattern Matching library for TypeScript with
-smart type inference" plus the headline 18-line `match(result).with(...).
-exhaustive()` example covering object patterns, nested matching and
-`P.select`. This is the canonical answer to "what does ts-pattern look like
-in use?".
+The `@module` doc-comment plus the first line of every exported
+combinator *function* in `patterns.ts`: optional, array, set, map,
+record, intersection, union, not, when, select, instanceOf, shape.
+Each function header is short enough that we use Full (truncation
+saves nothing). Catastrophic-omission hedge — these twelve names
+are the answer to most "is there a P.X?" questions; partial coverage
+would mislead.
 """
 content = { kind = "lines", spans = [
-  { path = "README.md", start = 1, end = 6, render = { kind = "full" } },
-  { path = "README.md", start = 20, end = 38, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 1, end = 6, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 187, end = 187, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 241, end = 241, render = { kind = "truncated", pattern = "^[^<]+" } },
+  { path = "src/patterns.ts", start = 294, end = 294, render = { kind = "truncated", pattern = "^[^<]+" } },
+  { path = "src/patterns.ts", start = 356, end = 356, render = { kind = "truncated", pattern = "^[^<]+" } },
+  { path = "src/patterns.ts", start = 433, end = 433, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 536, end = 536, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 572, end = 572, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 611, end = 611, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 637, end = 637, render = { kind = "truncated", pattern = "^[^<]+" } },
+  { path = "src/patterns.ts", start = 672, end = 672, render = { kind = "truncated", pattern = "^[^<]+" } },
+  { path = "src/patterns.ts", start = 1251, end = 1251, render = { kind = "truncated", pattern = "^[^<]+" } },
+  { path = "src/patterns.ts", start = 1271, end = 1271, render = { kind = "truncated", pattern = "^[^<]+" } },
 ] }
 
 [[batches]]
 id = "3.2"
-descriptor = "README — Features bullets"
+descriptor = "P wildcards — every const definition"
 justification = """
-Ten-line feature list: enumerates supported data structures, typesafety,
-exhaustiveness, isMatching, wildcards, predicates/unions/intersections/
-exclusion, P.select, bundle size. Cheap orientation: agent learns the
-shape of the surface area in plain English.
+Every wildcard `export const` in patterns.ts: `any`, `unknown`, `_`,
+`string`, `number`, `bigint`, `boolean`, `symbol`, `nullish`,
+`nonNullable`. Each is a one-liner so we pin the full line.
+Together with 3.1 this gives the agent the *complete* P-namespace
+member list — name + the chainable type each carries. Crucial
+catastrophic-omission hedge for "is there a P.X wildcard?"
+questions.
 """
 content = { kind = "lines", spans = [
-  { path = "README.md", start = 48, end = 57, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 782, end = 782, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 793, end = 793, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 805, end = 805, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 928, end = 928, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 1075, end = 1075, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 1201, end = 1201, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 1211, end = 1211, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 1221, end = 1221, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 1231, end = 1231, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 1241, end = 1241, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "3.3"
-descriptor = "Match<i, o> interface — top-level decl + member name locations"
+descriptor = "P type-level re-exports + matcher symbol"
 justification = """
-Catastrophic-omission hedge over the public Match interface: location-only
-batch pinning every method/property — the four `.with` overloads, `.when`,
-`.otherwise`, `.exhaustive`, `.run`, `.returnType`, `.narrow`. Plus the
-type's opening lines. Drilling into any one's full signature is then a
-single targeted Read inside `src/types/Match.ts`.
+The `export type` block at top of patterns.ts (`Pattern`, `unstable_Fn`)
+plus subsequent type re-exports: `infer`, `narrow`, and
+`export { matcher }`. These are how user code imports the *types*
+from `P` (vs. the runtime values).
 """
 content = { kind = "lines", spans = [
-  { path = "src/types/Match.ts", start = 18, end = 27, render = { kind = "full" } },
-  { path = "src/types/Match.ts", start = 34, end = 34, render = { kind = "truncated", pattern = "^  with<" } },
-  { path = "src/types/Match.ts", start = 63, end = 63, render = { kind = "truncated", pattern = "^  with<" } },
-  { path = "src/types/Match.ts", start = 85, end = 85, render = { kind = "truncated", pattern = "^  with<" } },
-  { path = "src/types/Match.ts", start = 132, end = 132, render = { kind = "truncated", pattern = "^  with<" } },
-  { path = "src/types/Match.ts", start = 159, end = 159, render = { kind = "truncated", pattern = "^  when<" } },
-  { path = "src/types/Match.ts", start = 180, end = 180, render = { kind = "truncated", pattern = "^  otherwise<" } },
-  { path = "src/types/Match.ts", start = 194, end = 194, render = { kind = "truncated", pattern = "^  exhaustive: " } },
-  { path = "src/types/Match.ts", start = 205, end = 205, render = { kind = "truncated", pattern = "^  run\\(" } },
-  { path = "src/types/Match.ts", start = 212, end = 212, render = { kind = "truncated", pattern = "^  returnType: " } },
-  { path = "src/types/Match.ts", start = 225, end = 225, render = { kind = "truncated", pattern = "^  narrow\\(" } },
+  { path = "src/patterns.ts", start = 65, end = 65, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 116, end = 116, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 131, end = 134, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "3.4"
-descriptor = "src/internals/symbols.ts — full file"
+descriptor = "P.string predicates — name catalog"
 justification = """
-30-line file. Defines the runtime sentinel symbols (`matcher`, `unset`,
-`isVariadic`, `anonymousSelectKey`, `override`) on which the entire
-matcher protocol is built. Including it whole means any "where is the
-Symbol used to plug into ts-pattern's matcher protocol defined?" question
-is one read away from being already answered.
+Every `P.string.*` chainable predicate (one-line definitions, dropping
+the type-parameter tail): `startsWith`, `endsWith`, `minLength`,
+`length`, `maxLength`, `includes`, `regex`. Catastrophic-omission
+hedge for the string predicates — without this batch the agent
+might assume `P.string.regex` doesn't exist.
 """
 content = { kind = "lines", spans = [
-  { path = "src/internals/symbols.ts", start = 1, end = 30, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 817, end = 817, render = { kind = "truncated", pattern = "^[^<]+" } },
+  { path = "src/patterns.ts", start = 831, end = 831, render = { kind = "truncated", pattern = "^[^<]+" } },
+  { path = "src/patterns.ts", start = 845, end = 845, render = { kind = "truncated", pattern = "^[^<]+" } },
+  { path = "src/patterns.ts", start = 857, end = 857, render = { kind = "truncated", pattern = "^[^<]+" } },
+  { path = "src/patterns.ts", start = 869, end = 869, render = { kind = "truncated", pattern = "^[^<]+" } },
+  { path = "src/patterns.ts", start = 881, end = 881, render = { kind = "truncated", pattern = "^[^<]+" } },
+  { path = "src/patterns.ts", start = 895, end = 895, render = { kind = "truncated", pattern = "^[^<]+" } },
 ] }
 
 [[batches]]
 id = "3.5"
-descriptor = "MatcherType + Matcher interface (types/Pattern.ts)"
+descriptor = "P.number / P.bigint predicates — name catalog"
 justification = """
-The matcher protocol contract — what every P.* pattern produces. Lists the
-discriminator strings ('not'/'optional'/'or'/'and'/'array'/'record'/'map'/
-'set'/'select'/'default'/'custom') and shows the `[matcher]()` method
-shape. Foundational for "how does my custom Matchable plug in?" queries.
+Every numeric predicate first-line: `between`, `lt`, `gt`, `lte`,
+`gte`, `int`, `finite`, `positive`, `negative` for P.number. The
+bigint counterparts (defined later in the file with the `BigInt`
+suffix) share the same names with the same shape. Catastrophic-
+omission hedge for numeric predicates.
 """
 content = { kind = "lines", spans = [
-  { path = "src/types/Pattern.ts", start = 7, end = 18, render = { kind = "full" } },
-  { path = "src/types/Pattern.ts", start = 38, end = 41, render = { kind = "full" } },
-  { path = "src/types/Pattern.ts", start = 43, end = 69, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 940, end = 940, render = { kind = "truncated", pattern = "^[^<]+" } },
+  { path = "src/patterns.ts", start = 955, end = 955, render = { kind = "truncated", pattern = "^[^<]+" } },
+  { path = "src/patterns.ts", start = 969, end = 969, render = { kind = "truncated", pattern = "^[^<]+" } },
+  { path = "src/patterns.ts", start = 983, end = 983, render = { kind = "truncated", pattern = "^[^<]+" } },
+  { path = "src/patterns.ts", start = 997, end = 997, render = { kind = "truncated", pattern = "^[^<]+" } },
+  { path = "src/patterns.ts", start = 1011, end = 1011, render = { kind = "truncated", pattern = "^[^<]+" } },
+  { path = "src/patterns.ts", start = 1023, end = 1023, render = { kind = "truncated", pattern = "^[^<]+" } },
+  { path = "src/patterns.ts", start = 1035, end = 1035, render = { kind = "truncated", pattern = "^[^<]+" } },
+  { path = "src/patterns.ts", start = 1047, end = 1047, render = { kind = "truncated", pattern = "^[^<]+" } },
 ] }
 
 [[batches]]
 id = "3.6"
-descriptor = "Pattern<a> generic type — definition + JSDoc"
+descriptor = "P.union — JSDoc + signature"
 justification = """
-The 14-line `Pattern<a>` declaration plus JSDoc — the type users write when
-they need to type a pattern explicitly. Answers "what is `P.Pattern<T>`?"
-without a follow-up.
+One of the most-used combinators. JSDoc + the top-level overload
+signature for `function union<input, const patterns>(...)`. Reading
+this answers "how do I OR together patterns?" without follow-up.
 """
+predecessor = "3.1"
 content = { kind = "lines", spans = [
-  { path = "src/types/Pattern.ts", start = 146, end = 159, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 559, end = 575, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "3.7"
-descriptor = "P.* type re-exports header (patterns.ts module doc + Pattern alias)"
+descriptor = "P.not — JSDoc + signature"
 justification = """
-Module-level JSDoc on `patterns.ts` ("the `P` module contains patterns for
-primitive types, wildcards and other pattern-matching utilities") plus the
-public `Pattern` re-export and `unstable_Fn` JSDoc. Establishes the public
-type names that round-trip through `ts-pattern/types`.
+Headline negation combinator. Self-contained JSDoc with example +
+signature. Common query: "how do I match everything except X?".
 """
+predecessor = "3.1"
 content = { kind = "lines", spans = [
-  { path = "src/patterns.ts", start = 1, end = 6, render = { kind = "full" } },
-  { path = "src/patterns.ts", start = 48, end = 65, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 599, end = 614, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "3.8"
-descriptor = "P.infer + P.narrow — JSDoc + type aliases"
+descriptor = "P.when — JSDoc + both overload signatures"
 justification = """
-Two top-level public type helpers (`P.infer<typeof pat>` and
-`P.narrow<Input, Pattern>`) with their JSDocs and worked examples. Frequent
-use case — validating an API response and inferring its TS type from a
-runtime pattern.
+Predicate / type-guard combinator. JSDoc + both overloads (one
+returns GuardP narrowed, one returns GuardExcludeP for type-guard
+predicates). Common query: "how do I add a custom predicate?".
 """
+predecessor = "3.1"
 content = { kind = "lines", spans = [
-  { path = "src/patterns.ts", start = 106, end = 134, render = { kind = "full" } },
-] }
-
-
-# ────────────────────────────────────────────────────────────────────────────
-# Tier 4 — runtime engine + the most-used P.* combinators in detail.
-# Drills down into the matching engine and into the patterns developers
-# reach for first (P.select, P.union, P.not, P.when, P.optional, P.array).
-# ────────────────────────────────────────────────────────────────────────────
-
-[[batches]]
-id = "4.1"
-descriptor = "MatchExpression class — JSDoc + member signatures"
-justification = """
-The runtime builder behind `match()`. JSDoc plus signatures of every method
-(`with`, `when`, `otherwise`, `exhaustive`, `run`, `returnType`, `narrow`)
-and the `MatchState<output>` discriminated union driving the matched/
-unmatched flag. Bodies stay deferred for now.
-"""
-content = { kind = "lines", spans = [
-  { path = "src/match.ts", start = 1, end = 14, render = { kind = "full" } },
-  { path = "src/match.ts", start = 38, end = 49, render = { kind = "full" } },
-  { path = "src/match.ts", start = 50, end = 50, render = { kind = "truncated", pattern = "^  with\\(.*$" } },
-  { path = "src/match.ts", start = 94, end = 97, render = { kind = "full" } },
-  { path = "src/match.ts", start = 110, end = 110, render = { kind = "truncated", pattern = "^  otherwise\\(.*$" } },
-  { path = "src/match.ts", start = 115, end = 115, render = { kind = "truncated", pattern = "^  exhaustive\\(.*$" } },
-  { path = "src/match.ts", start = 120, end = 120, render = { kind = "truncated", pattern = "^  run\\(.*$" } },
-  { path = "src/match.ts", start = 124, end = 124, render = { kind = "truncated", pattern = "^  returnType\\(\\)" } },
-  { path = "src/match.ts", start = 128, end = 128, render = { kind = "truncated", pattern = "^  narrow\\(\\)" } },
-  { path = "src/match.ts", start = 133, end = 135, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 626, end = 645, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "4.2"
-descriptor = "MatchExpression.with body — runtime semantics"
-predecessor = "4.1"
+id = "3.9"
+descriptor = "P.select — JSDoc + all three overload signatures"
 justification = """
-The 43-line body of `.with()`: how multiple patterns + an optional guard
-are combined, how selections are accumulated via the `select` callback, how
-`anonymousSelectKey` collapses to the bare value, how matched-state is
-threaded. Refines 4.1 once the surface is established.
+Selection combinator (anonymous, named-only, named-with-pattern).
+All three signatures live in adjacent blocks. Heavy query: "how do
+I extract a value into the handler?".
 """
-content = { kind = "lines", spans = [
-  { path = "src/match.ts", start = 50, end = 92, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "4.3"
-descriptor = "matchPattern engine — entry + tuple-matching branch"
-justification = """
-First half of `matchPattern` in `src/internals/helpers.ts`: dispatch on
-matcher protocol, tuple/array branch including variadic-pattern handling
-(start/end split + middle slice). The `Pattern error: Using `...P.array(...)`
-several times` runtime error fires here. This is the runtime core.
-"""
-content = { kind = "lines", spans = [
-  { path = "src/internals/helpers.ts", start = 30, end = 104, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "4.4"
-descriptor = "matchPattern engine — object branch + helpers (isObject, isMatcher, getSelectionKeys, flatMap)"
-predecessor = "4.3"
-justification = """
-Closes out helpers.ts: object-pattern branch (key-by-key recursion, optional
-sentinels), `Object.is(value, pattern)` literal branch, plus the small
-predicates (`isObject`, `isMatcher`, `isOptionalPattern`) and selection-key
-walker. Finishes the runtime engine picture.
-"""
-content = { kind = "lines", spans = [
-  { path = "src/internals/helpers.ts", start = 11, end = 28, render = { kind = "full" } },
-  { path = "src/internals/helpers.ts", start = 106, end = 135, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "4.5"
-predecessor = "2.5"
-descriptor = "P.select — JSDoc + overload signatures"
-justification = """
-Three overloads (anonymous, key-only, key-and-pattern) plus JSDoc. `select`
-is one of the most distinctive ts-pattern features: it both injects into
-the handler and constrains the value. Pinning the signature shape resolves
-"can I select with a sub-pattern?" with no follow-up.
-"""
+predecessor = "3.1"
 content = { kind = "lines", spans = [
   { path = "src/patterns.ts", start = 661, end = 695, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "4.6"
-predecessor = "2.5"
-descriptor = "P.union + P.not + P.intersection — JSDoc + signatures"
+id = "3.10"
+descriptor = "P.array — JSDoc + overload signatures"
 justification = """
-Three combinators that come up in nearly every non-trivial match. Each
-shows the chainable wrapper, the matcher's match callback shape, and (for
-P.union) the eager selection-key seeding so `P.select` inside one branch
-still injects. Cluster batched together because each is short and they're
-typically learned alongside each other.
+Array-of-subpattern combinator + variadic-tuple iterator hook.
+JSDoc and the empty/non-empty overloads. Variadic behaviour is in
+internals/helpers via the `isVariadic` symbol.
 """
+predecessor = "3.1"
 content = { kind = "lines", spans = [
-  { path = "src/patterns.ts", start = 517, end = 535, render = { kind = "full" } },
-  { path = "src/patterns.ts", start = 559, end = 575, render = { kind = "full" } },
-  { path = "src/patterns.ts", start = 599, end = 614, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 231, end = 245, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "4.7"
-predecessor = "2.5"
-descriptor = "P.when + P.optional — JSDoc + signatures"
+id = "3.11"
+descriptor = "P.optional — JSDoc + signature"
 justification = """
-`P.when(predicate)` is the bridge to arbitrary type-guard predicates with
-narrowing; `P.optional(subpattern)` is how object-keys become matcher-
-optional. Together they cover the bulk of "I need a custom matcher" /
-"this property may be missing" cases.
+Optional-key combinator. Important for object patterns — a key
+becomes "missing or matches subpattern". Discrete from `.optional()`
+chainable method (which wraps via this primitive).
 """
+predecessor = "3.1"
 content = { kind = "lines", spans = [
-  { path = "src/patterns.ts", start = 626, end = 650, render = { kind = "full" } },
   { path = "src/patterns.ts", start = 177, end = 192, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "4.8"
-predecessor = "2.5"
-descriptor = "P.array + P.instanceOf — JSDoc + signatures"
+id = "3.12"
+descriptor = "P.intersection / P.instanceOf — JSDoc + signatures"
 justification = """
-P.array drives variadic-tuple matching ([P.any, ...P.array()]) and
-selection-into-array; P.instanceOf gives a one-line `instanceof` matcher.
-Pair them so the agent has both the array branch and the class-instance
-branch named at once.
+Two combinators bundled because each has a small JSDoc/signature
+pair: `P.intersection(...patterns)` (AND) and
+`P.instanceOf(SomeClass)` (class instance check). Common queries
+both.
 """
+predecessor = "3.1"
 content = { kind = "lines", spans = [
-  { path = "src/patterns.ts", start = 231, end = 248, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 517, end = 539, render = { kind = "full" } },
   { path = "src/patterns.ts", start = 1243, end = 1255, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "4.9"
-descriptor = "P.string predicates — chainable methods (StringChainable shape)"
+id = "3.13"
+descriptor = "P.record — JSDoc + signatures"
 justification = """
-The `StringChainable<p>` interface declaration listing all string-predicate
-methods: `startsWith`, `endsWith`, `minLength`, `length`, `maxLength`,
-`includes`, `regex`. Catastrophic-omission hedge: the agent learns the
-full chainable surface for `P.string`. Truncated to method-name level.
+Record pattern: matches `Record<K, V>` objects. Two overloads
+(`(value)` defaults key to string; `(key, value)`). Common in real
+codebases for matching string-keyed plain objects.
 """
+predecessor = "3.1"
 content = { kind = "lines", spans = [
-  { path = "src/types/Pattern.ts", start = 276, end = 280, render = { kind = "full" } },
-  { path = "src/types/Pattern.ts", start = 291, end = 291, render = { kind = "truncated", pattern = "^      startsWith<" } },
-  { path = "src/types/Pattern.ts", start = 306, end = 306, render = { kind = "truncated", pattern = "^      endsWith<" } },
-  { path = "src/types/Pattern.ts", start = 321, end = 321, render = { kind = "truncated", pattern = "^      minLength<" } },
-  { path = "src/types/Pattern.ts", start = 336, end = 336, render = { kind = "truncated", pattern = "^      length<" } },
-  { path = "src/types/Pattern.ts", start = 351, end = 351, render = { kind = "truncated", pattern = "^      maxLength<" } },
-  { path = "src/types/Pattern.ts", start = 366, end = 366, render = { kind = "truncated", pattern = "^      includes<" } },
-  { path = "src/types/Pattern.ts", start = 381, end = 381, render = { kind = "truncated", pattern = "^      regex<" } },
+  { path = "src/patterns.ts", start = 421, end = 444, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "4.10"
-descriptor = "P.number / P.bigint chainable predicates — interface methods"
+id = "3.14"
+descriptor = "P.map / P.set — JSDoc + signatures"
 justification = """
-Mirror of 4.9 for the `NumberChainable<p>` and `BigIntChainable<p>`
-interfaces: `between`, `lt`, `gt`, `lte`, `gte`, plus number-specific
-`int`, `finite`, `positive`, `negative`. Catastrophic-omission hedge: the
-agent learns the full numeric predicate roster.
+Two collection patterns: `P.map(k, v)` matches `Map<k, v>`;
+`P.set(v)` matches `Set<v>`. Empty collections always match.
 """
+predecessor = "3.1"
 content = { kind = "lines", spans = [
-  { path = "src/types/Pattern.ts", start = 391, end = 395, render = { kind = "full" } },
-  { path = "src/types/Pattern.ts", start = 407, end = 407, render = { kind = "truncated", pattern = "^      between<" } },
-  { path = "src/types/Pattern.ts", start = 423, end = 423, render = { kind = "truncated", pattern = "^      lt<" } },
-  { path = "src/types/Pattern.ts", start = 438, end = 438, render = { kind = "truncated", pattern = "^      gt<" } },
-  { path = "src/types/Pattern.ts", start = 453, end = 453, render = { kind = "truncated", pattern = "^      lte<" } },
-  { path = "src/types/Pattern.ts", start = 468, end = 468, render = { kind = "truncated", pattern = "^      gte<" } },
-  { path = "src/types/Pattern.ts", start = 483, end = 483, render = { kind = "truncated", pattern = "^      int<" } },
-  { path = "src/types/Pattern.ts", start = 496, end = 496, render = { kind = "truncated", pattern = "^      finite<" } },
-  { path = "src/types/Pattern.ts", start = 509, end = 509, render = { kind = "truncated", pattern = "^      positive<" } },
-  { path = "src/types/Pattern.ts", start = 522, end = 522, render = { kind = "truncated", pattern = "^      negative<" } },
-  { path = "src/types/Pattern.ts", start = 530, end = 530, render = { kind = "truncated", pattern = "^export type BigIntChainable" } },
-] }
-
-# ────────────────────────────────────────────────────────────────────────────
-# Tier 5 — type-level machinery + breadcrumbs into docs / examples / tests.
-# Once the public surface is well-grounded, "how does narrowing actually
-# work?" / "where can I find a worked example?" queries land here.
-# ────────────────────────────────────────────────────────────────────────────
-
-[[batches]]
-id = "5.1"
-descriptor = "DeepExclude.ts (full) — exhaustiveness engine"
-justification = """
-Three-line file: `Exclude<DistributeMatchingUnions<a, b>, b>`. That's the
-entire engine behind `.exhaustive()`'s NonExhaustiveError detection —
-showing it whole resolves "how does ts-pattern know I missed a case?".
-"""
-content = { kind = "lines", spans = [
-  { path = "src/types/DeepExclude.ts", start = 1, end = 3, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 344, end = 361, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 284, end = 298, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "5.2"
-descriptor = "DistributeMatchingUnions — JSDoc with worked t1/t2 examples"
-predecessor = "5.1"
+id = "3.15"
+descriptor = "P.shape + matcher protocol re-exports"
 justification = """
-The 27-line JSDoc with two concrete `type t1 = …` / `type t2 = …` examples
-showing how the type-level engine expands `['a' | 'b', 1 | 2]` against
-patterns into a distributed union of all combinations. Far cheaper to grasp
-from these examples than from chasing FindUnionsMany / Distribute through
-the file.
+`P.shape(pattern)` lifts plain object/array patterns into a
+chainable matcher (so you can call `.optional()`, `.select()` on
+the structural pattern). Plus the `unstable_Matchable` /
+`unstable_Matcher` exports introducing the custom-matcher escape
+hatch.
 """
+predecessor = "3.1"
 content = { kind = "lines", spans = [
-  { path = "src/types/DistributeUnions.ts", start = 17, end = 43, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 81, end = 85, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 100, end = 104, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 1271, end = 1275, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "5.3"
-descriptor = "ExtractPreciseValue<a, b> — primary type definition"
+id = "3.16"
+descriptor = "chainable() factory + variadic / arrayChainable"
 justification = """
-The 20-line top dispatch of `ExtractPreciseValue<a, b>` (Override → Map/
-Set → plain object → fallback to LeastUpperBound). This is the type-level
-function that produces the narrowed input type passed to the `.with`
-handler — central to "why does my handler arg have type X?".
+The `chainable()` helper that wraps a Matcher with `.optional()`,
+`.and()`, `.or()`, `.select()` methods. Plus `variadic()` (adds the
+`Symbol.iterator` so a pattern can be spread into a tuple) and
+`arrayChainable()` (variadic + chainable). Explains how every P.*
+combinator becomes "chainable" without each implementing the methods.
 """
+predecessor = "3.1"
 content = { kind = "lines", spans = [
-  { path = "src/types/ExtractPreciseValue.ts", start = 13, end = 32, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 136, end = 175, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "5.4"
-descriptor = "InvertPattern + FindSelected + IsMatching + BuildMany — exported type locations"
+id = "3.17"
+descriptor = "P.union / P.not / P.when — full bodies"
 justification = """
-Catastrophic-omission hedge across the four remaining type-level files:
-location of each top-level export — `InvertPattern`,
-`InvertPatternForExclude`, `ReduceUnionForExclude`,
-`ReduceIntersectionForExclude`; `FindSelected`, `Selections`,
-`SelectionToArgs`, `SeveralAnonymousSelectError`,
-`MixedNamedAndAnonymousSelectError`; `IsMatching`; `BuildMany`,
-`SetDeep`. With this the type-level file roster is fully cataloged.
+Three small bodies bundled. Union: collects selection keys from
+every sub-pattern (so even non-matching branches contribute
+`undefined` to the selections record), then uses
+`.some(matchPattern…)`. Not: `!matchPattern(…)`. When: pure
+predicate Boolean call. The three reveal that the runtime side of
+these is one-line affairs; complexity lives in the type system.
 """
+predecessor = "3.6"
 content = { kind = "lines", spans = [
-  { path = "src/types/InvertPattern.ts", start = 106, end = 106, render = { kind = "truncated", pattern = "^export type InvertPattern<" } },
-  { path = "src/types/InvertPattern.ts", start = 180, end = 180, render = { kind = "truncated", pattern = "^export type ReduceIntersectionForExclude<" } },
-  { path = "src/types/InvertPattern.ts", start = 192, end = 192, render = { kind = "truncated", pattern = "^export type ReduceUnionForExclude<" } },
-  { path = "src/types/InvertPattern.ts", start = 303, end = 303, render = { kind = "truncated", pattern = "^export type InvertPatternForExclude<" } },
-  { path = "src/types/FindSelected.ts", start = 159, end = 159, render = { kind = "truncated", pattern = "^export type SeveralAnonymousSelectError<" } },
-  { path = "src/types/FindSelected.ts", start = 165, end = 165, render = { kind = "truncated", pattern = "^export type MixedNamedAndAnonymousSelectError<" } },
-  { path = "src/types/FindSelected.ts", start = 174, end = 174, render = { kind = "truncated", pattern = "^export type SelectionToArgs<" } },
-  { path = "src/types/FindSelected.ts", start = 185, end = 185, render = { kind = "truncated", pattern = "^export type Selections<" } },
-  { path = "src/types/FindSelected.ts", start = 191, end = 191, render = { kind = "truncated", pattern = "^export type FindSelected<" } },
-  { path = "src/types/IsMatching.ts", start = 57, end = 57, render = { kind = "truncated", pattern = "^export type IsMatching<" } },
-  { path = "src/types/BuildMany.ts", start = 4, end = 4, render = { kind = "truncated", pattern = "^export type BuildMany<" } },
-  { path = "src/types/BuildMany.ts", start = 19, end = 19, render = { kind = "truncated", pattern = "^export type SetDeep<" } },
+  { path = "src/patterns.ts", start = 576, end = 597, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 615, end = 624, render = { kind = "full" } },
+  { path = "src/patterns.ts", start = 646, end = 659, render = { kind = "full" } },
 ] }
 
+
+# ──────────────────────────────────────────────────────────────────
+# Tier 4 — Public type-level surface + repo breadth.
+# The runtime is small; the type system in src/types/ is where most
+# library "magic" lives. Plus tests/examples/docs locations so the
+# agent can find concrete usage and migration history on demand.
+# Budget here is tight so we lean on location-only batches and the
+# *type-level signatures* rather than full bodies.
+# ──────────────────────────────────────────────────────────────────
+
 [[batches]]
-id = "5.5"
-descriptor = "docs/ + examples/ directory listings"
+id = "4.1"
+descriptor = "tests/ + docs/ + examples/ listings"
 justification = """
-Two small fs listings: `docs/` (roadmap.md, v3-to-v4 migration, v4-to-v5
-migration); `examples/` (gif-fetcher React app, one-file-demo). Catastrophic-
-omission hedge for "is there an example of X?" / "is migration documented?".
+Names every test file (~50 of them, one per feature: select.test.ts,
+exhaustive-match.test.ts, deep-exclude.test.ts, …), the three
+migration / roadmap docs, and the two example apps. Catastrophic-
+omission hedge — when the agent wants a concrete usage example for
+P.X it should land directly on the right `tests/X.test.ts` file
+rather than guess which test exercises which feature.
 """
 content = { kind = "fs", groups = [
+  { parent = "tests", entries = "all" },
   { parent = "docs", entries = "all" },
   { parent = "examples", entries = "all" },
   { parent = "examples/one-file-demo", entries = "all" },
 ] }
 
 [[batches]]
-id = "5.6"
-descriptor = "v4-to-v5 migration guide — H1/H2 section locations"
+id = "4.2"
+descriptor = "Match<i, o> — public builder type signature"
 justification = """
-Pinned line of every `# …` / `## …` heading in the v4-to-v5 migration
-guide. Common query: "did this break between v4 and v5?" — agent picks
-the relevant section heading and Reads only that.
+The header of the public `Match<i, o, handledCases, inferredOutput>`
+type — the type chain that user code must conform to when calling
+`.with`, `.when`, `.exhaustive`, etc. Doc comment + type parameters
+only.
 """
 content = { kind = "lines", spans = [
-  { path = "docs/v4-to-v5-migration-guide.md", start = 1, end = 1, render = { kind = "full" } },
-  { path = "docs/v4-to-v5-migration-guide.md", start = 5, end = 5, render = { kind = "full" } },
-  { path = "docs/v4-to-v5-migration-guide.md", start = 7, end = 7, render = { kind = "full" } },
-  { path = "docs/v4-to-v5-migration-guide.md", start = 11, end = 11, render = { kind = "full" } },
-  { path = "docs/v4-to-v5-migration-guide.md", start = 42, end = 42, render = { kind = "full" } },
-  { path = "docs/v4-to-v5-migration-guide.md", start = 63, end = 63, render = { kind = "full" } },
-  { path = "docs/v4-to-v5-migration-guide.md", start = 156, end = 156, render = { kind = "full" } },
-  { path = "docs/v4-to-v5-migration-guide.md", start = 214, end = 214, render = { kind = "full" } },
+  { path = "src/types/Match.ts", start = 18, end = 27, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "5.7"
-descriptor = "tests/types-catalog/utils.ts — exported types and ctors (locations)"
+id = "4.3"
+descriptor = "Pattern<T> — public pattern type alias + typed wildcards"
 justification = """
-Catastrophic-omission hedge over the shared test catalog. Every exported
-name (`Option`, `none`, `some`, `Blog`, `State`, `Event`, `BigUnion`,
-`BaseAsyncResult`, `AsyncResultIdleOrLoading`, `AsyncResultSuccess`,
-`AsyncResultError`, `AsyncResult`) at the line where it's declared. Most
-test files `import {…} from './types-catalog/utils'`, so naming this
-roster cuts follow-ups when reading test bodies.
+The `Pattern<a>` type doc + the `unknown extends a` switch that
+sends typed inputs to `KnownPattern<a>` and untyped inputs to
+`UnknownValuePattern`. Plus the alias names for typed wildcards
+(`UnknownPattern`, `StringPattern`, `NumberPattern`, …). Critical
+for "what shape does a pattern have at the type level?" queries.
 """
 content = { kind = "lines", spans = [
-  { path = "tests/types-catalog/utils.ts", start = 1, end = 1, render = { kind = "truncated", pattern = "^export type Option<" } },
-  { path = "tests/types-catalog/utils.ts", start = 3, end = 3, render = { kind = "truncated", pattern = "^export const none" } },
-  { path = "tests/types-catalog/utils.ts", start = 4, end = 4, render = { kind = "truncated", pattern = "^export const some" } },
-  { path = "tests/types-catalog/utils.ts", start = 9, end = 9, render = { kind = "truncated", pattern = "^export type Blog" } },
-  { path = "tests/types-catalog/utils.ts", start = 14, end = 14, render = { kind = "truncated", pattern = "^export type State" } },
-  { path = "tests/types-catalog/utils.ts", start = 20, end = 20, render = { kind = "truncated", pattern = "^export type Event" } },
-  { path = "tests/types-catalog/utils.ts", start = 26, end = 26, render = { kind = "truncated", pattern = "^export type BigUnion" } },
-  { path = "tests/types-catalog/utils.ts", start = 56, end = 56, render = { kind = "truncated", pattern = "^export interface BaseAsyncResult<" } },
-  { path = "tests/types-catalog/utils.ts", start = 62, end = 62, render = { kind = "truncated", pattern = "^export interface AsyncResultIdleOrLoading<" } },
-  { path = "tests/types-catalog/utils.ts", start = 67, end = 67, render = { kind = "truncated", pattern = "^export interface AsyncResultSuccess<" } },
-  { path = "tests/types-catalog/utils.ts", start = 73, end = 73, render = { kind = "truncated", pattern = "^export interface AsyncResultError<" } },
-  { path = "tests/types-catalog/utils.ts", start = 78, end = 78, render = { kind = "truncated", pattern = "^export type AsyncResult<" } },
+  { path = "src/types/Pattern.ts", start = 138, end = 144, render = { kind = "full" } },
+  { path = "src/types/Pattern.ts", start = 146, end = 159, render = { kind = "full" } },
+  { path = "src/types/Pattern.ts", start = 189, end = 201, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "5.8"
-descriptor = "Test file roster — first import line of every feature test"
-predecessor = "1.6"
+id = "4.4"
+descriptor = "MatcherType union + Matcher interface"
 justification = """
-Cheap catastrophic-omission hedge over the test suite. Line 1 (the import
-line) of each `tests/<feature>.test.ts` file. With 1.6's `tests/` listing,
-the agent has both file presence and the import that confirms each
-subject; "where are the tests for X?" is a trivial grep-by-filename.
+The `MatcherType` union (`'not' | 'optional' | 'or' | 'and' |
+'array' | 'record' | 'map' | 'set' | 'select' | 'default' |
+'custom'`) and the `Matcher` interface — every P.* pattern is an
+object with a `[matcher]()` method returning a MatcherProtocol.
+This is *the* type-level vocabulary every type in src/types/
+manipulates.
 """
 content = { kind = "lines", spans = [
-  { path = "tests/exhaustive-match.test.ts", start = 1, end = 1, render = { kind = "full" } },
-  { path = "tests/select.test.ts", start = 1, end = 1, render = { kind = "full" } },
-  { path = "tests/wildcards.test.ts", start = 1, end = 1, render = { kind = "full" } },
-  { path = "tests/numbers.test.ts", start = 1, end = 1, render = { kind = "full" } },
-  { path = "tests/strings.test.ts", start = 1, end = 1, render = { kind = "full" } },
-  { path = "tests/optional.test.ts", start = 1, end = 1, render = { kind = "full" } },
-  { path = "tests/intersection-and-union.test.ts", start = 1, end = 1, render = { kind = "full" } },
-  { path = "tests/matcher-protocol.test.ts", start = 1, end = 1, render = { kind = "full" } },
+  { path = "src/types/Pattern.ts", start = 7, end = 18, render = { kind = "full" } },
+  { path = "src/types/Pattern.ts", start = 50, end = 69, render = { kind = "full" } },
 ] }
 
-
 [[batches]]
-id = "5.9"
-descriptor = "matcher-protocol.test.ts — Some class with custom [P.matcher]()"
-predecessor = "5.8"
+id = "4.5"
+descriptor = "internals/symbols.ts — core matcher / unset / isVariadic brands"
 justification = """
-The first 21 lines of matcher-protocol.test.ts: complete `class Some<T>` with
-`static [P.matcher]()` returning a custom matcher. Direct answer to "how do
-I make my own data type matchable?" with no follow-up. Refines 5.8's bare-
-import location for this test file.
+The three `Symbol.for(...)` brands most-referenced from the type
+system and runtime: `matcher` (the protocol key), `unset` (sentinel
+for unspecified output type), and `isVariadic` (marks a pattern
+spreadable into a tuple). Each declared as both a runtime symbol
+and a `typeof`-aliased type. The remaining `anonymousSelectKey`
+string and `override` symbol live in the same file for follow-up.
 """
 content = { kind = "lines", spans = [
-  { path = "tests/matcher-protocol.test.ts", start = 1, end = 20, render = { kind = "full" } },
+  { path = "src/internals/symbols.ts", start = 16, end = 23, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.6"
+descriptor = "matchPattern() — Matcher / object / primitive branches"
+justification = """
+Three of the four cases `matchPattern` dispatches on: (1) Matcher
+protocol — invoke `match(value)` and forward selections; (3)
+plain-object pattern with key recursion (handles isOptionalPattern
+keys that may be missing from the value); (4) primitive equality
+via `Object.is`. The Array.isArray sub-branch is covered in 4.7.
+"""
+predecessor = "4.4"
+content = { kind = "lines", spans = [
+  { path = "src/internals/helpers.ts", start = 30, end = 49, render = { kind = "full" } },
+  { path = "src/internals/helpers.ts", start = 106, end = 117, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.7"
+descriptor = "matchPattern() — array / tuple / variadic branch"
+justification = """
+The whole `Array.isArray(pattern)` sub-branch: split sub-patterns
+into `startPatterns` / `variadicPatterns` / `endPatterns` (driven
+by the `isVariadic` symbol), reject more than one variadic, then
+match start + middle + end slices against their respective
+sub-patterns. Falls back to exact-length `.every(matchPattern)`
+when no variadic is present. Read after 4.6 for the full recursive
+dispatch picture.
+"""
+predecessor = "4.6"
+content = { kind = "lines", spans = [
+  { path = "src/internals/helpers.ts", start = 50, end = 104, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.8"
+descriptor = "getSelectionKeys() + flatMap helpers"
+justification = """
+`getSelectionKeys` walks a pattern collecting every selection key
+— used by union / optional bodies to seed undefined selections in
+the selections record — and `flatMap` reduces nested key arrays.
+Both are used at multiple sites in patterns.ts.
+"""
+predecessor = "4.6"
+content = { kind = "lines", spans = [
+  { path = "src/internals/helpers.ts", start = 119, end = 135, render = { kind = "full" } },
 ] }
 

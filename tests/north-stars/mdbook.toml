@@ -1,53 +1,38 @@
 fixture = "mdbook"
 revision_pin = "b8c90970"
 summary = """
-mdBook is a Rust CLI + library that turns a directory of Markdown files
-(guided by a `SUMMARY.md` table of contents) into a navigable static
-HTML book — similar in spirit to GitBook. The repo is a workspace of
-nine crates: the top-level `mdbook` binary dispatches CLI subcommands
-(`init`/`build`/`watch`/`serve`/`test`/`clean`/`completions`) that
-call into the `mdbook-driver::MDBook` orchestrator, which loads a book
-from disk, runs preprocessors (`links`/`index` builtin, plus external
-`mdbook-*` commands), then hands the resulting `Book` to renderers
-(`html` builtin via `mdbook-html`, `markdown` builtin, plus external
-command renderers). Shared types — `Book`/`Chapter`/`Config`/`Summary`
-— live in `mdbook-core`/`mdbook-summary` and are re-exported through
-`mdbook-preprocessor` and `mdbook-renderer` so plugin authors pin
-against stable surfaces.
-
-Agent queries this snapshot needs to serve:
-- "where is X implemented" — CLI dispatch in `src/main.rs` +
-  `src/cmd/*`, driver glue in `crates/mdbook-driver/src/mdbook.rs`,
-  HTML rendering in `crates/mdbook-html`, markdown-tree pipeline in
-  `crates/mdbook-html/src/html/` (submodules `tree`/`serialize`/
-  `tokenizer`/`print`/`hide_lines`/`admonitions`), search index in
-  `mdbook-html/src/html_handlebars/search.rs`.
-- "what's the public API for writing a preprocessor / renderer /
-  custom backend" — the two trait files (`mdbook-preprocessor`,
-  `mdbook-renderer`) + `PreprocessorContext` / `RenderContext` +
-  the two example programs under `examples/`.
-- "what config options are supported" — `HtmlConfig` + siblings in
-  `crates/mdbook-core/src/config.rs`, documented in
-  `guide/src/format/configuration/`.
-- "how do I add a test" — `tests/testsuite/` with `BookTest` helper.
-- "what was recently changed" — `CHANGELOG.md`; the 0.5 section has a
-  large Rust-API breaking-change summary worth surfacing early.
+mdBook is a Rust CLI that turns a directory of Markdown files into a
+themed, searchable static-HTML book (the model used for the Rust
+language's own books and many other rust-lang.github.io guides). It
+is laid out as a Cargo workspace: a thin top-level `mdbook` bin in
+`src/` (clap subcommands `init`, `build`, `watch`, `serve`, `test`,
+`clean`, `completions`) that delegates to `mdbook-driver`'s `MDBook`
+type, which in turn composes the focused `mdbook-core` (`Book` /
+`Chapter` / `Config` types), `mdbook-summary` (`SUMMARY.md` parser),
+`mdbook-markdown` (pulldown-cmark wrapper), `mdbook-preprocessor` /
+`mdbook-renderer` (plugin-author trait crates), and `mdbook-html`
+(default Handlebars-templated HTML backend, with included CSS / JS /
+font assets). Built-in `links` and `index` preprocessors expand
+`{{#include}}` / README→index rewrites; non-HTML backends and
+non-builtin preprocessors are spawned as `mdbook-<name>` subprocesses
+over a JSON stdin/stdout protocol. Plausible agent queries span
+build/render orchestration, plugin authoring (preprocessor or
+backend), config schema (`book.toml` keys, `MDBOOK_*` env vars),
+markdown features (admonitions, definition lists, hide-lines),
+SUMMARY.md grammar, theme overrides, and the `BookTest`/snapbox
+testsuite. The ranking front-loads orientation (workspace shape,
+crate graph, public API surface) before drilling into specific
+implementations.
 """
 
-# ============================================================
-# TIER 1 — orientation: what this repo is and how it's laid out
-# ============================================================
+# =============================================================
+# Tier 1 — repo orientation
+# =============================================================
 
 [[batches]]
 id = "1.1"
 descriptor = "README lede"
-justification = """
-One-line identity is the cheapest possible breadth batch. Tells the
-agent this is mdBook (the Rust-lang utility for markdown books), not
-some other crate named `mdbook`. Line 7 is the single-sentence pitch;
-line 9 tells the agent a User Guide exists (and that `guide/` in the
-tree is it). Anything shorter would elide the guide pointer.
-"""
+justification = "Headline answer to 'what is mdbook?'."
 [batches.content]
 kind = "lines"
 spans = [
@@ -57,15 +42,8 @@ spans = [
 
 [[batches]]
 id = "1.2"
-descriptor = "Top-level directory listing"
-justification = """
-Catastrophic-omission mitigation: the agent needs to know the full
-set of top-level entries up front. The mix of `src/` (binary),
-`crates/` (workspace members), `guide/` (user docs, which is itself
-an mdBook), `examples/`, `tests/`, and `ci/` is load-bearing for
-understanding why this workspace has both a binary and nine member
-crates. Cheapest possible structural batch.
-"""
+descriptor = "Repo root listing"
+justification = "Cargo workspace with sub-crates, a guide, examples, CI scripts, top-level config files. Cheap breadth signal."
 [batches.content]
 kind = "fs"
 groups = [
@@ -74,31 +52,8 @@ groups = [
 
 [[batches]]
 id = "1.3"
-descriptor = "Workspace members list"
-justification = """
-`[workspace].members` (lines 1-7) names each entry that's part of
-the workspace: the top-level binary, everything under `crates/*`,
-the `examples/remove-emphasis/mdbook-remove-emphasis` demo
-preprocessor, and `guide/guide-helper` (the preprocessor the
-user-guide-as-an-mdBook itself uses). Tiny and high-value — tells
-the agent what "building mdbook" covers.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "Cargo.toml", start = 1, end = 7, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "1.4"
 descriptor = "crates/ directory listing"
-justification = """
-Enumerate every workspace crate so the agent can see the nine-way
-split at a glance: `mdbook-core`, `mdbook-driver`, `mdbook-html`,
-`mdbook-markdown`, `mdbook-preprocessor`, `mdbook-renderer`,
-`mdbook-summary`, `mdbook-compare`, `xtask`. Without this, a query
-like "which crate defines `Config`?" takes several hops.
-"""
+justification = "Names every workspace crate at once — catastrophic-omission hedge. Lets the agent navigate to mdbook-core / mdbook-driver / mdbook-html / etc. without grepping."
 [batches.content]
 kind = "fs"
 groups = [
@@ -106,30 +61,20 @@ groups = [
 ]
 
 [[batches]]
-id = "1.5"
-descriptor = "src/ directory listing"
-justification = """
-`src/` is where the binary lives; listing its top-level entries
-(`main.rs` + `cmd/`) is cheap and confirms all binary code is
-under those two paths. Pairs with 1.4 (crates/) to cover both
-halves of the workspace.
-"""
+id = "1.4"
+descriptor = "Workspace package summary — name + description"
+justification = "Confirms this is the published `mdbook` crate."
 [batches.content]
-kind = "fs"
-groups = [
-    { parent = "src", entries = "all" },
-    { parent = "src/cmd", entries = "all" },
+kind = "lines"
+spans = [
+    { path = "Cargo.toml", start = 73, end = 74, render = { kind = "full" } },
+    { path = "Cargo.toml", start = 87, end = 87, render = { kind = "full" } },
 ]
 
 [[batches]]
-id = "1.6"
-descriptor = "src/cmd module declaration"
-justification = """
-The `cmd/mod.rs` module list declares which subcommand modules
-exist on disk (`build`/`clean`/`init`/`serve`/`test`/`watch` +
-shared `command_prelude`) and gates watch/serve behind cargo
-features. Confirms one-module-per-subcommand and is cheap.
-"""
+id = "1.5"
+descriptor = "src/cmd module map"
+justification = "Names every subcommand module file — pointer for 'where does serve/watch/init/build/clean/test live'."
 [batches.content]
 kind = "lines"
 spans = [
@@ -137,304 +82,293 @@ spans = [
 ]
 
 [[batches]]
-id = "1.7"
-descriptor = "CLI subcommand dispatch (main.rs)"
-justification = """
-Lines 23-32 + 47 are the actual match arms that route each CLI
-subcommand to its `cmd::<name>::execute` handler. Covers
-init/build/clean/watch/serve/test exhaustively and shows
-watch/serve are cfg-gated by cargo features. `_ => unreachable!`
-on line 47 is preserved so the agent knows the list above is
-exhaustive (clap enforces it via `arg_required_else_help`). The
-completions arm (lines 33-46) is deferred — its implementation
-is a one-off clap_complete call, not a pattern the agent needs up
-front.
-"""
+id = "1.6"
+descriptor = "Workspace members + edition"
+justification = "Confirms member layout (`crates/*`, an example plugin, a guide-helper) and Rust edition/MSRV."
 [batches.content]
 kind = "lines"
 spans = [
-    { path = "src/main.rs", start = 23, end = 32, render = { kind = "full" } },
-    { path = "src/main.rs", start = 47, end = 48, render = { kind = "full" } },
+    { path = "Cargo.toml", start = 1, end = 6, render = { kind = "full" } },
+    { path = "Cargo.toml", start = 21, end = 26, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.7"
+descriptor = "src/ tree (top-level bin sources)"
+justification = "Every file under `src/` so the agent can see the bin is small (main.rs + cmd/) and heavy lifting is in `crates/`."
+[batches.content]
+kind = "fs"
+groups = [
+    { parent = "src", entries = "all" },
+    { parent = "src/cmd", entries = "all" },
+    { parent = "src/cmd/watch", entries = "all" },
 ]
 
 [[batches]]
 id = "1.8"
-descriptor = "mdbook-driver crate-root doc: sibling-crate enumeration"
-justification = """
-The rustdoc comment in `mdbook-driver/lib.rs` at lines 12-25 is the
-canonical one-paragraph explanation of what each sibling crate is
-for (`mdbook_preprocessor`, `mdbook_renderer`, `mdbook_markdown`,
-`mdbook_summary`, `mdbook_html`, `mdbook_core`). Much higher fidelity
-than rephrasing in prose — and it's the kind of list where omitting
-one crate would be catastrophic.
-"""
+descriptor = "CLI subcommand dispatch — match arms"
+justification = "Dispatch table: subcommand name → `cmd::<name>::execute`. Confirms feature flags (watch/serve gated)."
 [batches.content]
 kind = "lines"
 spans = [
-    { path = "crates/mdbook-driver/src/lib.rs", start = 12, end = 25, render = { kind = "full" } },
+    { path = "src/main.rs", start = 1, end = 1, render = { kind = "full" } },
+    { path = "src/main.rs", start = 24, end = 33, render = { kind = "full" } },
+    { path = "src/main.rs", start = 47, end = 47, render = { kind = "full" } },
 ]
 
-[[batches]]
-id = "1.9"
-descriptor = "mdbook-driver lib module declarations"
-justification = """
-Lines 67-76 of the driver's `lib.rs` declare its four submodules
-(`builtin_preprocessors`, `builtin_renderers`, `init`, `load`,
-`mdbook`), the `MDBook` re-export, and the `book`/`config`/`errors`
-passthroughs from `mdbook-core`. This fixes the plugin-author
-import paths and gives a map of the driver's internal decomposition.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "crates/mdbook-driver/src/lib.rs", start = 67, end = 76, render = { kind = "full" } },
-]
-
-# ============================================================
-# TIER 2 — entry-point orchestration: the MDBook type and the
-# load → preprocess → render pipeline it drives
-# ============================================================
+# =============================================================
+# Tier 2 — crate graph: the role of each workspace crate.
+# =============================================================
 
 [[batches]]
 id = "2.1"
-descriptor = "MDBook struct fields"
-justification = """
-`MDBook` is the type every subcommand constructs via `MDBook::load`
-and then acts on. Lines 29-44 show its five fields — `root`,
-`config`, `book`, `renderers` (`IndexMap<String, Box<dyn Renderer>>`),
-`preprocessors` — which encapsulate the entire pipeline's state.
-Knowing these fields preempts a lot of "where is X stored" queries.
-"""
+descriptor = "mdbook-driver crate role"
+justification = "The flagship lib crate — `MDBook::load`/`build`/`test` lives here. Lede is enough to anchor 'what does mdbook-driver do'."
 [batches.content]
 kind = "lines"
 spans = [
-    { path = "crates/mdbook-driver/src/mdbook.rs", start = 28, end = 44, render = { kind = "full" } },
+    { path = "crates/mdbook-driver/src/lib.rs", start = 1, end = 10, render = { kind = "full" } },
 ]
 
 [[batches]]
 id = "2.2"
-descriptor = "MDBook::load (entry point)"
-justification = """
-Lines 46-68 show `MDBook::load`: read `book.toml` → `Config::from_disk`
-→ `config.update_from_env()` → `load_with_config`. The single
-entry point almost every subcommand uses.
-"""
+descriptor = "mdbook-core lib + module map"
+justification = "Names the `book` / `config` / `utils` / `errors` modules and exposes `MDBOOK_VERSION`."
 [batches.content]
 kind = "lines"
 spans = [
-    { path = "crates/mdbook-driver/src/mdbook.rs", start = 46, end = 68, render = { kind = "full" } },
+    { path = "crates/mdbook-core/src/lib.rs", start = 1, end = 16, render = { kind = "full" } },
 ]
 
 [[batches]]
 id = "2.3"
-descriptor = "MDBook::load_with_config (state assembly)"
-justification = """
-Lines 70-87 are the actual state builder called after env-merging:
-`load_book(src_dir, &config.build)` walks the SUMMARY, then
-`determine_renderers` and `determine_preprocessors` populate the
-two `IndexMap`s. The two determine_* functions (lines 400+ of the
-same file) come later as a separate batch.
-"""
+descriptor = "mdbook-summary crate lede"
+justification = "Single-purpose crate — the SUMMARY.md parser."
 [batches.content]
 kind = "lines"
 spans = [
-    { path = "crates/mdbook-driver/src/mdbook.rs", start = 70, end = 87, render = { kind = "full" } },
+    { path = "crates/mdbook-summary/src/lib.rs", start = 1, end = 5, render = { kind = "full" } },
 ]
 
 [[batches]]
 id = "2.4"
-descriptor = "MDBook::build + preprocess_book"
-justification = """
-`build()` iterates renderers and calls `execute_build_process` for
-each. `preprocess_book` constructs a `PreprocessorContext`, clones
-the book, and runs each preprocessor sequentially gated by
-`preprocessor_should_run` (which consults `preprocessor.<n>.renderers`
-or falls back to `supports_renderer`). `execute_build_process` is
-batched next.
-"""
+descriptor = "mdbook-markdown crate lede"
+justification = "Pulldown-cmark wrapper with mdBook's options (smart-punctuation / definition lists / admonitions / GFM)."
 [batches.content]
 kind = "lines"
 spans = [
-    { path = "crates/mdbook-driver/src/mdbook.rs", start = 161, end = 186, render = { kind = "full" } },
+    { path = "crates/mdbook-markdown/src/lib.rs", start = 1, end = 7, render = { kind = "full" } },
 ]
 
 [[batches]]
 id = "2.5"
-descriptor = "MDBook::execute_build_process"
-justification = """
-Constructs the `RenderContext` (root, book, config,
-`build_dir_for(name)`), hands over chapter titles collected during
-preprocessing, and calls `renderer.render(&ctx)`. Completes the
-build pipeline started in 2.4.
-"""
+descriptor = "mdbook-preprocessor crate lede"
+justification = "Plugin-author-facing thin trait crate."
 [batches.content]
 kind = "lines"
 spans = [
-    { path = "crates/mdbook-driver/src/mdbook.rs", start = 189, end = 209, render = { kind = "full" } },
+    { path = "crates/mdbook-preprocessor/src/lib.rs", start = 1, end = 6, render = { kind = "full" } },
 ]
 
 [[batches]]
 id = "2.6"
-descriptor = "Preprocessor trait + PreprocessorContext"
-justification = """
-`Preprocessor` trait methods (name/run/supports_renderer with
-default-true) and the `PreprocessorContext` field list — root,
-config, renderer name, mdbook_version, and a shared interior-mut
-`chapter_titles` map used by the links preprocessor for
-`{{#title …}}`. Doc comments dropped for brevity since the method
-names tell the story.
-"""
+descriptor = "mdbook-renderer crate lede"
+justification = "Plugin-author-facing trait crate for backends."
 [batches.content]
 kind = "lines"
 spans = [
-    { path = "crates/mdbook-preprocessor/src/lib.rs", start = 30, end = 30, render = { kind = "full" } },
-    { path = "crates/mdbook-preprocessor/src/lib.rs", start = 32, end = 32, render = { kind = "full" } },
-    { path = "crates/mdbook-preprocessor/src/lib.rs", start = 36, end = 36, render = { kind = "full" } },
-    { path = "crates/mdbook-preprocessor/src/lib.rs", start = 42, end = 45, render = { kind = "full" } },
-    { path = "crates/mdbook-preprocessor/src/lib.rs", start = 49, end = 51, render = { kind = "full" } },
-    { path = "crates/mdbook-preprocessor/src/lib.rs", start = 53, end = 53, render = { kind = "full" } },
-    { path = "crates/mdbook-preprocessor/src/lib.rs", start = 55, end = 55, render = { kind = "full" } },
-    { path = "crates/mdbook-preprocessor/src/lib.rs", start = 57, end = 57, render = { kind = "full" } },
-    { path = "crates/mdbook-preprocessor/src/lib.rs", start = 59, end = 59, render = { kind = "full" } },
-    { path = "crates/mdbook-preprocessor/src/lib.rs", start = 64, end = 66, render = { kind = "full" } },
+    { path = "crates/mdbook-renderer/src/lib.rs", start = 1, end = 6, render = { kind = "full" } },
 ]
 
 [[batches]]
 id = "2.7"
-descriptor = "Renderer trait + RenderContext"
-justification = """
-`Renderer` trait (just `name`/`render`) and `RenderContext` field
-list — version, root, book, config, destination, chapter_titles.
-External backends receive this serialized as JSON on stdin (see
-`CmdRenderer::render`).
-"""
+descriptor = "mdbook-html crate lib + module map"
+justification = "Names `html` / `html_handlebars` / `theme` / `utils` submodules and the `HtmlHandlebars` re-export."
 [batches.content]
 kind = "lines"
 spans = [
-    { path = "crates/mdbook-renderer/src/lib.rs", start = 28, end = 28, render = { kind = "full" } },
-    { path = "crates/mdbook-renderer/src/lib.rs", start = 30, end = 30, render = { kind = "full" } },
-    { path = "crates/mdbook-renderer/src/lib.rs", start = 34, end = 34, render = { kind = "full" } },
-    { path = "crates/mdbook-renderer/src/lib.rs", start = 38, end = 40, render = { kind = "full" } },
-    { path = "crates/mdbook-renderer/src/lib.rs", start = 44, end = 44, render = { kind = "full" } },
-    { path = "crates/mdbook-renderer/src/lib.rs", start = 46, end = 46, render = { kind = "full" } },
-    { path = "crates/mdbook-renderer/src/lib.rs", start = 48, end = 48, render = { kind = "full" } },
-    { path = "crates/mdbook-renderer/src/lib.rs", start = 50, end = 50, render = { kind = "full" } },
-    { path = "crates/mdbook-renderer/src/lib.rs", start = 54, end = 54, render = { kind = "full" } },
-    { path = "crates/mdbook-renderer/src/lib.rs", start = 60, end = 61, render = { kind = "full" } },
+    { path = "crates/mdbook-html/src/lib.rs", start = 1, end = 8, render = { kind = "full" } },
 ]
 
 [[batches]]
 id = "2.8"
-descriptor = "Book / BookItem / Chapter"
-justification = """
-The in-memory book representation every preprocessor and renderer
-manipulates. `Book { items: Vec<BookItem> }` (21-29),
-three-variant `BookItem` (114-126) of
-`Chapter`/`Separator`/`PartTitle`, and `Chapter` struct field
-list (140-169) — name, content, number, sub_items, path,
-source_path, parent_names. Per-field docs dropped; the one for
-`path` vs `source_path` (README→index rewrite) matters and is kept
-in the same file right next to the field, one hop away.
-"""
+descriptor = "mdbook-driver source layout"
+justification = "Files in mdbook-driver — `init.rs`, `load.rs`, `mdbook.rs`, plus `builtin_preprocessors/` and `builtin_renderers/` subdirs. Catastrophic-omission hedge for the orchestration layer."
+[batches.content]
+kind = "fs"
+groups = [
+    { parent = "crates/mdbook-driver/src", entries = "all" },
+    { parent = "crates/mdbook-driver/src/builtin_preprocessors", entries = "all" },
+    { parent = "crates/mdbook-driver/src/builtin_renderers", entries = "all" },
+]
+
+[[batches]]
+id = "2.9"
+descriptor = "mdbook-core source layout"
+justification = "Names `book.rs`, `config.rs`, `utils/` files. Unblocks 'where is the Config struct'."
+[batches.content]
+kind = "fs"
+groups = [
+    { parent = "crates/mdbook-core/src", entries = "all" },
+    { parent = "crates/mdbook-core/src/utils", entries = "all" },
+]
+
+[[batches]]
+id = "2.10"
+descriptor = "mdbook-html source layout"
+justification = "Every file under mdbook-html/src — surfaces `html/{tree,print,serialize,tokenizer,admonitions,hide_lines}.rs` plus the `html_handlebars/{search,static_files,helpers/*}` set, so any 'how does the HTML renderer X' query knows where to look."
+[batches.content]
+kind = "fs"
+groups = [
+    { parent = "crates/mdbook-html/src", entries = "all" },
+    { parent = "crates/mdbook-html/src/html", entries = "all" },
+    { parent = "crates/mdbook-html/src/html_handlebars", entries = "all" },
+    { parent = "crates/mdbook-html/src/html_handlebars/helpers", entries = "all" },
+    { parent = "crates/mdbook-html/src/theme", entries = "all" },
+]
+
+# =============================================================
+# Tier 3 — load-bearing shapes: the core types that anchor the
+# full distribution of programmatic-API and config questions.
+# Each batch is a small, located slice (struct headers, fn name
+# lines, top-level enum variants).
+# =============================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "Book / BookItem struct shapes"
+justification = "Three public types every preprocessor and renderer touches. Showing the `Book { items: Vec<BookItem> }` shape and the `BookItem::{Chapter,Separator,PartTitle}` enum gives the data model. The `allow(exhaustive_structs)` annotation flags these as part of the stable plugin API."
 [batches.content]
 kind = "lines"
 spans = [
+    { path = "crates/mdbook-core/src/book.rs", start = 1, end = 1, render = { kind = "full" } },
     { path = "crates/mdbook-core/src/book.rs", start = 21, end = 29, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/book.rs", start = 114, end = 126, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/book.rs", start = 140, end = 141, render = { kind = "full" } },
+    { path = "crates/mdbook-core/src/book.rs", start = 113, end = 126, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.2"
+descriptor = "Chapter struct fields"
+justification = "Chapter is the central per-file unit. Its fields (name/content/number/sub_items/path/source_path/parent_names) are exactly what a preprocessor sees and mutates."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "crates/mdbook-core/src/book.rs", start = 134, end = 142, render = { kind = "full" } },
     { path = "crates/mdbook-core/src/book.rs", start = 143, end = 143, render = { kind = "full" } },
     { path = "crates/mdbook-core/src/book.rs", start = 145, end = 145, render = { kind = "full" } },
     { path = "crates/mdbook-core/src/book.rs", start = 147, end = 147, render = { kind = "full" } },
     { path = "crates/mdbook-core/src/book.rs", start = 149, end = 149, render = { kind = "full" } },
     { path = "crates/mdbook-core/src/book.rs", start = 157, end = 157, render = { kind = "full" } },
     { path = "crates/mdbook-core/src/book.rs", start = 166, end = 166, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/book.rs", start = 168, end = 169, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "2.9"
-descriptor = "Book iteration + mutation method names"
-justification = """
-Single-line signatures of `Book` methods preprocessors use:
-`iter`, `chapters`, `for_each_mut`, `for_each_chapter_mut`,
-`push_item`. The `remove-emphasis` example calls
-`for_each_chapter_mut`; the builtin links/index preprocessors
-call `for_each_mut`.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "crates/mdbook-core/src/book.rs", start = 43, end = 43, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "crates/mdbook-core/src/book.rs", start = 50, end = 50, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "crates/mdbook-core/src/book.rs", start = 65, end = 67, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/book.rs", start = 74, end = 76, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/book.rs", start = 93, end = 93, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-]
-
-# ============================================================
-# TIER 3 — surface-level API: config schema, summary parser,
-# builtin pp/renderer enumeration, HTML renderer entry, examples
-# ============================================================
-
-[[batches]]
-id = "3.1"
-descriptor = "Config top-level struct"
-justification = """
-`Config` is the in-memory `book.toml` at the top of
-`crates/mdbook-core/src/config.rs` (lines 58-78). Five fields:
-`book` (BookConfig), `build` (BuildConfig), `rust` (RustConfig),
-and opaque `output`/`preprocessor` TOML values accessed via
-`Config::get`. Serde `deny_unknown_fields` + `non_exhaustive` — an
-unknown top-level key is a hard error.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "crates/mdbook-core/src/config.rs", start = 58, end = 78, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.2"
-descriptor = "BookConfig / BuildConfig / RustConfig field names"
-justification = """
-Catastrophic-omission: list every field of the three primary sub-
-tables without their doc comments. Each `pub <name>:` line is
-rendered full; doc-comment lines in between are dropped by using
-per-field single-line spans. Covers `BookConfig`
-(title/authors/description/src/language/text_direction) +
-`BuildConfig` (build_dir/create_missing/use_default_preprocessors/
-extra_watch_dirs) + `RustConfig.edition` + `RustEdition` enum
-variants (2015/2018/2021/2024).
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "crates/mdbook-core/src/config.rs", start = 318, end = 318, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 320, end = 320, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 322, end = 322, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 324, end = 324, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 327, end = 327, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 329, end = 329, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 332, end = 332, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 394, end = 394, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 396, end = 396, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 399, end = 399, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 402, end = 402, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 404, end = 404, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 422, end = 422, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 424, end = 424, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 430, end = 443, render = { kind = "full" } },
+    { path = "crates/mdbook-core/src/book.rs", start = 168, end = 168, render = { kind = "full" } },
+    { path = "crates/mdbook-core/src/book.rs", start = 169, end = 169, render = { kind = "full" } },
 ]
 
 [[batches]]
 id = "3.3"
-descriptor = "HtmlConfig field names (catastrophic-omission)"
-justification = """
-Every one of the ~26 `output.html.*` field names in `HtmlConfig`
-as a single-line span — doc comments between fields are dropped,
-so the rendered output becomes a compact enumeration of field-name-
-and-type. Agent knows the full set; full rustdoc is one hop away.
-"""
+descriptor = "Book impl method names"
+justification = "Public methods on `Book` (new / new_with_items / iter / chapters / for_each_mut / for_each_chapter_mut / push_item). One signature line per fn, truncated at args paren."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "crates/mdbook-core/src/book.rs", start = 33, end = 33, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-core/src/book.rs", start = 38, end = 38, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-core/src/book.rs", start = 43, end = 43, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-core/src/book.rs", start = 50, end = 50, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-core/src/book.rs", start = 65, end = 65, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-core/src/book.rs", start = 74, end = 74, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-core/src/book.rs", start = 93, end = 93, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "3.4"
+descriptor = "MDBook struct + public method names"
+justification = "Most central programmatic type. Struct (root/config/book + private renderers/preprocessors) and every public method signature so the agent knows the surface (load, load_with_config, load_with_config_and_summary, build, preprocess_book, execute_build_process, with_renderer, with_preprocessor, test, test_chapter, build_dir_for, source_dir, theme_dir)."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "crates/mdbook-driver/src/mdbook.rs", start = 28, end = 44, render = { kind = "full" } },
+    { path = "crates/mdbook-driver/src/mdbook.rs", start = 48, end = 48, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-driver/src/mdbook.rs", start = 71, end = 71, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-driver/src/mdbook.rs", start = 90, end = 90, render = { kind = "full" } },
+    { path = "crates/mdbook-driver/src/mdbook.rs", start = 135, end = 135, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-driver/src/mdbook.rs", start = 156, end = 156, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-driver/src/mdbook.rs", start = 161, end = 161, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-driver/src/mdbook.rs", start = 172, end = 172, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-driver/src/mdbook.rs", start = 189, end = 189, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-driver/src/mdbook.rs", start = 214, end = 214, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-driver/src/mdbook.rs", start = 221, end = 221, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-driver/src/mdbook.rs", start = 228, end = 228, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-driver/src/mdbook.rs", start = 235, end = 235, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-driver/src/mdbook.rs", start = 371, end = 371, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-driver/src/mdbook.rs", start = 382, end = 382, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-driver/src/mdbook.rs", start = 387, end = 387, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "3.5"
+descriptor = "Preprocessor trait + PreprocessorContext"
+justification = "Preprocessor plugin contract — `name`/`run`/`supports_renderer` plus the context struct (root/config/renderer/mdbook_version/chapter_titles)."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "crates/mdbook-preprocessor/src/lib.rs", start = 23, end = 67, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.6"
+descriptor = "Renderer trait + RenderContext"
+justification = "Mirror of 3.5 for backends — `name`/`render` plus `RenderContext` (version/root/book/config/destination)."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "crates/mdbook-renderer/src/lib.rs", start = 22, end = 61, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.7"
+descriptor = "Config struct (top-level book.toml shape)"
+justification = "book.toml schema entrypoint — `Config` with `book`/`build`/`rust`/`output`/`preprocessor` tables."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "crates/mdbook-core/src/config.rs", start = 1, end = 1, render = { kind = "full" } },
+    { path = "crates/mdbook-core/src/config.rs", start = 58, end = 78, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.8"
+descriptor = "Config method names + Config::set"
+justification = "Public method names on `Config` (from_disk / update_from_env / get / contains_key / preprocessors / outputs / html_config / set). Truncated signature lines."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "crates/mdbook-core/src/config.rs", start = 113, end = 113, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-core/src/config.rs", start = 150, end = 150, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-core/src/config.rs", start = 189, end = 189, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-core/src/config.rs", start = 216, end = 216, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-core/src/config.rs", start = 228, end = 228, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-core/src/config.rs", start = 236, end = 236, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-core/src/config.rs", start = 250, end = 250, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-core/src/config.rs", start = 274, end = 274, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "3.9"
+descriptor = "BookConfig + BuildConfig + RustConfig + RustEdition fields"
+justification = "Non-html config sub-structs — title/authors/description/src/language/text-direction (BookConfig); build_dir/create_missing/use_default_preprocessors/extra_watch_dirs (BuildConfig); rust.edition + every supported edition variant. Catastrophic-omission hedge for the basic config keys."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "crates/mdbook-core/src/config.rs", start = 318, end = 333, render = { kind = "full" } },
+    { path = "crates/mdbook-core/src/config.rs", start = 394, end = 405, render = { kind = "full" } },
+    { path = "crates/mdbook-core/src/config.rs", start = 422, end = 443, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.10"
+descriptor = "HtmlConfig field-line catalog"
+justification = "Every `output.html.<key>` the user can set — only the `pub <field>: <type>,` lines (no doc comments). Catastrophic-omission hedge: any subset would let the agent assume keys don't exist. Names theme/default_theme/preferred_dark_theme, smart_punctuation/definition_lists/admonitions/mathjax_support, additional_css/additional_js, fold/playground/code/print, no_section_label, search, git_repository_{url,icon}, input_404, site_url, cname, edit_url_template, redirect, hash_files, sidebar_header_nav."
 [batches.content]
 kind = "lines"
 spans = [
@@ -442,11 +376,7 @@ spans = [
     { path = "crates/mdbook-core/src/config.rs", start = 451, end = 451, render = { kind = "full" } },
     { path = "crates/mdbook-core/src/config.rs", start = 453, end = 453, render = { kind = "full" } },
     { path = "crates/mdbook-core/src/config.rs", start = 456, end = 456, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 458, end = 458, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 460, end = 460, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 462, end = 462, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 464, end = 464, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 466, end = 466, render = { kind = "full" } },
+    { path = "crates/mdbook-core/src/config.rs", start = 458, end = 466, render = { kind = "full" } },
     { path = "crates/mdbook-core/src/config.rs", start = 469, end = 469, render = { kind = "full" } },
     { path = "crates/mdbook-core/src/config.rs", start = 471, end = 471, render = { kind = "full" } },
     { path = "crates/mdbook-core/src/config.rs", start = 474, end = 474, render = { kind = "full" } },
@@ -463,322 +393,134 @@ spans = [
     { path = "crates/mdbook-core/src/config.rs", start = 509, end = 509, render = { kind = "full" } },
     { path = "crates/mdbook-core/src/config.rs", start = 512, end = 512, render = { kind = "full" } },
     { path = "crates/mdbook-core/src/config.rs", start = 517, end = 517, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 520, end = 520, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.4"
-descriptor = "HtmlConfig sub-tables field-name list"
-justification = """
-Field-name-only listing for the five nested structs referenced
-from HtmlConfig: `Print`, `Fold`, `Playground`, `Code`, `Search`,
-`SearchChapterSettings`. Each `pub <field>:` line as a single-line
-span; struct headers kept.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "crates/mdbook-core/src/config.rs", start = 578, end = 578, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 580, end = 580, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 582, end = 582, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 598, end = 598, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 600, end = 600, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 604, end = 604, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 611, end = 611, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 613, end = 613, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 615, end = 615, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 618, end = 618, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 620, end = 620, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 622, end = 622, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 641, end = 643, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 650, end = 650, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 652, end = 652, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 654, end = 654, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 656, end = 656, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 659, end = 659, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 662, end = 662, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 666, end = 666, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 669, end = 669, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 671, end = 671, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 674, end = 674, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 677, end = 677, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 682, end = 682, render = { kind = "full" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 708, end = 710, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.5"
-descriptor = "Config accessor method names"
-justification = """
-One-line spans on every public method's signature line. Emits
-just the `pub fn NAME(…)` header for each (truncated at the
-opening paren). Lists: `from_disk`, `update_from_env`, `get`,
-`contains_key`, `preprocessors`, `outputs`, `html_config`, `set`.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "crates/mdbook-core/src/config.rs", start = 113, end = 113, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 150, end = 150, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 189, end = 189, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 216, end = 216, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 228, end = 228, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 236, end = 236, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 250, end = 250, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "crates/mdbook-core/src/config.rs", start = 274, end = 274, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-]
-
-[[batches]]
-id = "3.6"
-descriptor = "Summary / SummaryItem / Link types"
-justification = """
-The output of the SUMMARY.md parser. `Summary` = title +
-prefix_chapters + numbered_chapters + suffix_chapters (67-76).
-`Link` = name + location + section number + nested_items (84-94).
-`SummaryItem` is `Link`/`Separator`/`PartTitle` (122-129). Drives
-`load_book_from_disk` to walk the filesystem. Doc comments kept
-because they explain the semantics of each bucket.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "crates/mdbook-summary/src/lib.rs", start = 64, end = 76, render = { kind = "full" } },
-    { path = "crates/mdbook-summary/src/lib.rs", start = 82, end = 94, render = { kind = "full" } },
-    { path = "crates/mdbook-summary/src/lib.rs", start = 119, end = 129, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.7"
-descriptor = "parse_summary fn + SUMMARY.md format pointer"
-justification = """
-`parse_summary` is the one entry point that returns a `Summary`.
-The rustdoc above it (at line 17 of this file) is the canonical
-spec of SUMMARY.md format (prefix / part-title / numbered /
-suffix chapters). Signature + first-line doc only; full spec is
-one hop away.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "crates/mdbook-summary/src/lib.rs", start = 17, end = 18, render = { kind = "full" } },
-    { path = "crates/mdbook-summary/src/lib.rs", start = 59, end = 59, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.8"
-descriptor = "Builtin preprocessor list + module gate"
-justification = """
-`mdbook-driver/src/builtin_preprocessors/mod.rs` (all 9 lines) —
-re-exports `CmdPreprocessor`, `IndexPreprocessor`,
-`LinkPreprocessor`. Pairs with `DEFAULT_PREPROCESSORS = &["links",
-"index"]` (lines 426-431 of mdbook.rs) — the two builtins that
-always run unless `build.use-default-preprocessors = false`.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "crates/mdbook-driver/src/builtin_preprocessors/mod.rs", start = 1, end = 9, render = { kind = "full" } },
-    { path = "crates/mdbook-driver/src/mdbook.rs", start = 426, end = 431, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.9"
-descriptor = "Builtin renderer list + CmdRenderer type"
-justification = """
-`builtin_renderers/mod.rs` — `MarkdownRenderer` re-export, plus
-`CmdRenderer` defined inline (lines 1-30 of mod.rs). `CmdRenderer`
-shells out to `mdbook-<name>` for any `output.<name>` table whose
-name isn't `html` or `markdown` (see `determine_renderers` in
-mdbook.rs). The actual html renderer `HtmlHandlebars` lives in
-`mdbook-html`, not here.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "crates/mdbook-driver/src/builtin_renderers/mod.rs", start = 1, end = 30, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "3.10"
-descriptor = "determine_renderers / default_preprocessors gating"
-justification = """
-Lines 401-424 define `determine_renderers` — iterates
-`config.outputs()`, dispatches `html`/`markdown` to builtins, else
-shells out via `CmdRenderer::new(name, "mdbook-<name>")`. Falls
-back to HTML if no `[output.*]` section. The twin logic for
-preprocessors (topological sort over before/after edges) is
-deferred to a later batch.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "crates/mdbook-driver/src/mdbook.rs", start = 401, end = 424, render = { kind = "full" } },
+    { path = "crates/mdbook-core/src/config.rs", start = 520, end = 521, render = { kind = "full" } },
 ]
 
 [[batches]]
 id = "3.11"
-descriptor = "HtmlHandlebars + Renderer impl entry"
-justification = """
-`HtmlHandlebars` is a zero-sized unit struct (19-28) implementing
-`Renderer` (line 303). The render impl pulls config, loads theme,
-registers handlebars templates (index/head/redirect/header/toc),
-builds per-chapter trees, runs search, and copies static files —
-shown here in the compact header-lines-only form so the agent sees
-the sequence. Lines 322-360 (body) have per-template
-`register_template_string` calls which are implementation noise.
-"""
+descriptor = "HTML config sub-tables — Print / Fold / Playground / Code field lines"
+justification = "Print (enable/page_break), Fold (enable/level), Playground (editable/copyable/copy_js/line_numbers/runnable), Code (hidelines map). Field-only listing keeps cost low."
 [batches.content]
 kind = "lines"
 spans = [
-    { path = "crates/mdbook-html/src/html_handlebars/hbs_renderer.rs", start = 19, end = 28, render = { kind = "full" } },
-    { path = "crates/mdbook-html/src/html_handlebars/hbs_renderer.rs", start = 303, end = 314, render = { kind = "full" } },
-    { path = "crates/mdbook-html/src/html_handlebars/hbs_renderer.rs", start = 335, end = 336, render = { kind = "full" } },
-    { path = "crates/mdbook-html/src/html_handlebars/hbs_renderer.rs", start = 356, end = 360, render = { kind = "full" } },
+    { path = "crates/mdbook-core/src/config.rs", start = 578, end = 583, render = { kind = "full" } },
+    { path = "crates/mdbook-core/src/config.rs", start = 598, end = 605, render = { kind = "full" } },
+    { path = "crates/mdbook-core/src/config.rs", start = 611, end = 623, render = { kind = "full" } },
+    { path = "crates/mdbook-core/src/config.rs", start = 641, end = 644, render = { kind = "full" } },
 ]
 
 [[batches]]
 id = "3.12"
-descriptor = "Plugin author examples: nop-preprocessor + remove-emphasis"
-justification = """
-Two complete, minimal extension examples: `examples/nop-preprocessor.rs`
-(a `Preprocessor` that returns the book unchanged, with the stdin
-JSON protocol via `parse_input`) and
-`examples/remove-emphasis/mdbook-remove-emphasis/src/main.rs`
-(a preprocessor that filters `Emphasis`/`Strong` events via
-`pulldown-cmark`). Listed together — both are tested via
-`#[[example]]` entries in the top-level Cargo.toml.
-"""
-[batches.content]
-kind = "fs"
-groups = [
-    { parent = "examples", entries = "all" },
-    { parent = "examples/remove-emphasis", entries = "all" },
-    { parent = "examples/remove-emphasis/mdbook-remove-emphasis", entries = "all" },
-    { parent = "examples/remove-emphasis/mdbook-remove-emphasis/src", entries = "all" },
-    { parent = "examples/remove-emphasis/src", entries = "all" },
-]
-
-# ============================================================
-# TIER 4 — deeper internals + docs/test entry points. Each crate
-# and subcommand gets a tight pointer-with-context batch.
-# ============================================================
-
-[[batches]]
-id = "4.1"
-descriptor = "mdbook build subcommand body"
-justification = """
-`cmd::build::execute` shows the shape every subcommand follows —
-`get_book_dir` → `MDBook::load` → `set_dest_dir` → call a method
-(`book.build()`), optionally open the result. Representative of
-all `cmd/*.rs` files.
-"""
+descriptor = "Search config fields + chapter override settings"
+justification = "Search options — enable/limit_results/teaser_word_count/use_boolean_and/boost_{title,hierarchy,paragraph}/expand/heading_split_level/copy_js/chapter (per-path overrides). Catastrophic-omission risk: agent might assume search isn't tunable."
 [batches.content]
 kind = "lines"
 spans = [
-    { path = "src/cmd/build.rs", start = 8, end = 36, render = { kind = "full" } },
+    { path = "crates/mdbook-core/src/config.rs", start = 650, end = 683, render = { kind = "full" } },
+    { path = "crates/mdbook-core/src/config.rs", start = 707, end = 711, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.13"
+descriptor = "MarkdownOptions + new_cmark_parser"
+justification = "Two public items in mdbook-markdown — `MarkdownOptions` (which markdown extensions are configurable) and `new_cmark_parser` (the entrypoint)."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "crates/mdbook-markdown/src/lib.rs", start = 13, end = 31, render = { kind = "full" } },
+    { path = "crates/mdbook-markdown/src/lib.rs", start = 43, end = 44, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.14"
+descriptor = "Summary / SummaryItem / Link types + parse_summary"
+justification = "Public types from mdbook-summary — `Summary` (prefix/numbered/suffix), `SummaryItem` (Link/Separator/PartTitle), `Link`, plus the `parse_summary` entrypoint."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "crates/mdbook-summary/src/lib.rs", start = 59, end = 62, render = { kind = "full" } },
+    { path = "crates/mdbook-summary/src/lib.rs", start = 64, end = 76, render = { kind = "full" } },
+    { path = "crates/mdbook-summary/src/lib.rs", start = 82, end = 95, render = { kind = "full" } },
+    { path = "crates/mdbook-summary/src/lib.rs", start = 119, end = 129, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.15"
+descriptor = "Preprocessor input parsing + MDBOOK_VERSION re-export"
+justification = "`parse_input` (deserialise [ctx, book] from stdin) + the `pub use` block of types preprocessor authors will use."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "crates/mdbook-preprocessor/src/lib.rs", start = 18, end = 22, render = { kind = "full" } },
+    { path = "crates/mdbook-preprocessor/src/lib.rs", start = 81, end = 84, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.16"
+descriptor = "RenderContext impl methods (incl. from_json)"
+justification = "Public API on RenderContext for backend implementors — new/source_dir/from_json. Symmetric to 3.15."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "crates/mdbook-renderer/src/lib.rs", start = 17, end = 20, render = { kind = "full" } },
+    { path = "crates/mdbook-renderer/src/lib.rs", start = 65, end = 65, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-renderer/src/lib.rs", start = 81, end = 81, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-renderer/src/lib.rs", start = 86, end = 86, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "3.17"
+descriptor = "MDBOOK_* env-var override rules"
+justification = "How `MDBOOK_BOOK__TITLE`-style env vars map to keys (`__` separates nested keys; `_` becomes `-`). Frequent FAQ."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "crates/mdbook-core/src/config.rs", start = 118, end = 149, render = { kind = "full" } },
+]
+
+# =============================================================
+# Tier 4 — orchestration internals: how `MDBook::load` and
+# `MDBook::build` actually flow, the built-in preprocessors and
+# renderers, the SUMMARY-driven loader, and the BookBuilder for
+# `mdbook init`.
+# =============================================================
+
+
+[[batches]]
+id = "4.1"
+descriptor = "Builtin preprocessors module — re-exports"
+justification = "Names `CmdPreprocessor`, `IndexPreprocessor`, `LinkPreprocessor` — the three built-ins. 9-line file."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "crates/mdbook-driver/src/builtin_preprocessors/mod.rs", start = 1, end = 9, render = { kind = "full" } },
 ]
 
 [[batches]]
 id = "4.2"
-descriptor = "command_prelude shared-arg fn names"
-justification = """
-`CommandExt` trait method names: `arg_dest_dir`, `arg_root_dir`,
-`arg_open`, `arg_watcher`, plus the standalone `set_dest_dir`.
-Agent can open the file for the arg specs; knowing these exist
-and that every subcommand re-uses them is the important bit.
-"""
+descriptor = "LinkPreprocessor — supported helpers list"
+justification = "The doc comment that enumerates `{{#include}}`/`{{#rustdoc_include}}`/`{{#playground}}`/`{{#title}}`. Catastrophic-omission hedge: agent might assume the helper set is smaller. Single high-value span."
 [batches.content]
 kind = "lines"
 spans = [
-    { path = "src/cmd/command_prelude.rs", start = 7, end = 7, render = { kind = "full" } },
-    { path = "src/cmd/command_prelude.rs", start = 10, end = 10, render = { kind = "truncated", pattern = "fn [a-z_]+" } },
-    { path = "src/cmd/command_prelude.rs", start = 26, end = 26, render = { kind = "truncated", pattern = "fn [a-z_]+" } },
-    { path = "src/cmd/command_prelude.rs", start = 37, end = 37, render = { kind = "truncated", pattern = "fn [a-z_]+" } },
-    { path = "src/cmd/command_prelude.rs", start = 42, end = 42, render = { kind = "truncated", pattern = "fn [a-z_]+" } },
-    { path = "src/cmd/command_prelude.rs", start = 62, end = 62, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
+    { path = "crates/mdbook-driver/src/builtin_preprocessors/links.rs", start = 20, end = 30, render = { kind = "full" } },
 ]
 
 [[batches]]
 id = "4.3"
-descriptor = "LinkPreprocessor identity"
-justification = """
-`LinkPreprocessor` is the `{{#include …}}` / `{{#playground …}}` /
-`{{#rustdoc_include …}}` / `{{#title …}}` handler. Struct rustdoc
-enumerates the four supported directives; `NAME`/`new`/`name` are
-the canonical shape for every preprocessor. Full bodies (including
-the recursive include resolver) are one hop away in links.rs.
-"""
+descriptor = "MDBook::load body — book.toml + Config wiring"
+justification = "How `load` reads `book.toml` (or defaults) then `update_from_env`. Predecessor 3.4 already gave the signature; this refines with the 'how'."
+predecessor = "3.4"
 [batches.content]
 kind = "lines"
 spans = [
-    { path = "crates/mdbook-driver/src/builtin_preprocessors/links.rs", start = 20, end = 32, render = { kind = "full" } },
-    { path = "crates/mdbook-driver/src/builtin_preprocessors/links.rs", start = 36, end = 36, render = { kind = "full" } },
-    { path = "crates/mdbook-driver/src/builtin_preprocessors/links.rs", start = 44, end = 48, render = { kind = "full" } },
+    { path = "crates/mdbook-driver/src/mdbook.rs", start = 47, end = 68, render = { kind = "full" } },
 ]
 
 [[batches]]
 id = "4.4"
-descriptor = "IndexPreprocessor (README.md → index.md)"
-justification = """
-`IndexPreprocessor` rewrites chapter paths so any README.md
-becomes index.md in the rendered book. Shown: the struct, the
-`NAME` const convention, the `Preprocessor` impl, and the run body
-that uses `for_each_mut` to mutate paths. Warning on README.md +
-index.md collision is one hop away (`warn_readme_name_conflict`).
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "crates/mdbook-driver/src/builtin_preprocessors/index.rs", start = 10, end = 48, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "4.5"
-descriptor = "CmdPreprocessor (shell-out protocol)"
-justification = """
-External-preprocessor protocol: `supports <renderer>` subcommand
-check, then stdin = JSON `(ctx, book)`, stdout = JSON `Book`. The
-`optional` flag degrades gracefully when the `mdbook-*` executable
-is missing. Every custom preprocessor listed under
-`[preprocessor.<name>]` runs through this.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "crates/mdbook-driver/src/builtin_preprocessors/cmd.rs", start = 9, end = 23, render = { kind = "full" } },
-    { path = "crates/mdbook-driver/src/builtin_preprocessors/cmd.rs", start = 115, end = 125, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "4.6"
-descriptor = "Preprocessor topological-sort pointer"
-justification = """
-`determine_preprocessors` runs a topological sort over
-`[preprocessor.<name>].before/after` dependencies (line 446+ of
-`mdbook-driver/src/mdbook.rs`). Shown here: the fn signature,
-the `PreprocessorConfig` struct that defines the config shape
-(optional/before/after/command/renderers), and the cycle-detection
-tail. Middle body is the topological-sort loop and is one hop away.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "crates/mdbook-driver/src/mdbook.rs", start = 433, end = 449, render = { kind = "full" } },
-    { path = "crates/mdbook-driver/src/mdbook.rs", start = 534, end = 541, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "4.7"
-descriptor = "load_book entry + load.rs overview"
-justification = """
-`load_book` (lines 10-23) in `mdbook-driver/src/load.rs` is the
-bridge between parsed `Summary` and in-memory `Book`. Reads
-`SUMMARY.md`, calls `parse_summary`, optionally creates missing
-files (when `build.create_missing = true`), then walks via
-`load_book_from_disk` / `load_chapter`. Handles BOM stripping,
-absolute vs. relative link paths, and draft chapters (via
-`Chapter::new_draft`).
-"""
+descriptor = "load.rs — load_book entrypoint"
+justification = "Where SUMMARY.md is parsed and chapters are read; `create_missing` stubs missing chapters. Routes 'how does mdbook turn SUMMARY.md into chapters'."
 [batches.content]
 kind = "lines"
 spans = [
@@ -786,192 +528,127 @@ spans = [
 ]
 
 [[batches]]
-id = "4.8"
-descriptor = "BookBuilder (init flow) signatures"
-justification = """
-`mdbook init` calls `MDBook::init(&root)` → `BookBuilder` with
-chainable setters (`with_config`, `config`, `copy_theme`,
-`create_gitignore`) and a terminal `build()` that creates the dir
-tree, stubs `SUMMARY.md` + `chapter_1.md`, writes `book.toml`,
-then loads the book. Just the fn signatures here — bodies are in
-`init.rs` one hop away.
-"""
+id = "4.5"
+descriptor = "execute_build_process — the build pipeline"
+justification = "Body of build: preprocess_book → assemble RenderContext → renderer.render. Refines 3.4."
+predecessor = "3.4"
 [batches.content]
 kind = "lines"
 spans = [
-    { path = "crates/mdbook-driver/src/init.rs", start = 12, end = 18, render = { kind = "full" } },
-    { path = "crates/mdbook-driver/src/init.rs", start = 23, end = 23, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "crates/mdbook-driver/src/init.rs", start = 33, end = 33, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "crates/mdbook-driver/src/init.rs", start = 39, end = 39, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "crates/mdbook-driver/src/init.rs", start = 45, end = 45, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "crates/mdbook-driver/src/init.rs", start = 51, end = 51, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "crates/mdbook-driver/src/init.rs", start = 64, end = 64, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
+    { path = "crates/mdbook-driver/src/mdbook.rs", start = 188, end = 209, render = { kind = "full" } },
 ]
 
 [[batches]]
-id = "4.9"
-descriptor = "HTML rendering pipeline overview"
-justification = """
-Module-level doc of `mdbook-html/src/html/mod.rs`: the three-stage
-pipeline (cmark parse → tree build/transform → serialize), plus
-the submodule list (admonitions, hide_lines, print, serialize,
-tokenizer, tree) and entry fn `render_markdown`.
-"""
+id = "4.6"
+descriptor = "Default preprocessors + topological order"
+justification = "`DEFAULT_PREPROCESSORS = [\"links\", \"index\"]` plus the `before`/`after` topological sort. Disambiguates the non-obvious ordering feature."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "crates/mdbook-driver/src/mdbook.rs", start = 426, end = 432, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.7"
+descriptor = "BookBuilder type — mdbook init API"
+justification = "What `MDBook::init` returns — name + builder method names (with_config / copy_theme / create_gitignore / build). Two follow-ups land any init body question."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "crates/mdbook-driver/src/init.rs", start = 11, end = 18, render = { kind = "full" } },
+    { path = "crates/mdbook-driver/src/init.rs", start = 33, end = 33, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-driver/src/init.rs", start = 45, end = 45, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-driver/src/init.rs", start = 51, end = 51, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "crates/mdbook-driver/src/init.rs", start = 64, end = 64, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+# =============================================================
+# Tier 5 — HTML rendering pipeline highlights. The HTML backend is
+# the largest crate; tier-2 layout already gave a per-file map.
+# Here we surface the few load-bearing pipeline locations.
+# =============================================================
+
+[[batches]]
+id = "5.1"
+descriptor = "html/mod.rs — markdown→HTML pipeline outline"
+justification = "The doc-comment numbered pipeline (parse → tree → transformations → serialize) plus `render_markdown`/`build_trees`/`HtmlRenderOptions` names. Tells the agent how the HTML render stage is structured."
 [batches.content]
 kind = "lines"
 spans = [
     { path = "crates/mdbook-html/src/html/mod.rs", start = 1, end = 12, render = { kind = "full" } },
-    { path = "crates/mdbook-html/src/html/mod.rs", start = 19, end = 31, render = { kind = "full" } },
-    { path = "crates/mdbook-html/src/html/mod.rs", start = 66, end = 71, render = { kind = "full" } },
+    { path = "crates/mdbook-html/src/html/mod.rs", start = 28, end = 31, render = { kind = "full" } },
 ]
 
 [[batches]]
-id = "4.10"
-descriptor = "Guide docs SUMMARY (user-facing reference)"
-justification = """
-`guide/src/` is the user-facing mdBook documentation, structured
-exactly the way any mdBook is. The SUMMARY (table of contents)
-lists every chapter: CLI subcommands, format reference (SUMMARY /
-config / theme / markdown / mathjax / mdbook-specific features),
-for_developers (preprocessor + backend authoring). Part headings
-included so the agent sees the three-part structure (User guide /
-Reference guide / Contributors).
-"""
+id = "5.2"
+descriptor = "Theme — bundled-asset names"
+justification = "Lists every default theme/asset filename built into the binary (index.hbs / head.hbs / chrome.css / variables.css / book.js / highlight.js / etc.). Catastrophic-omission hedge for 'what theme files can I override'."
 [batches.content]
 kind = "lines"
 spans = [
-    { path = "guide/src/SUMMARY.md", start = 1, end = 15, render = { kind = "full" } },
-    { path = "guide/src/SUMMARY.md", start = 21, end = 23, render = { kind = "full" } },
-    { path = "guide/src/SUMMARY.md", start = 33, end = 43, render = { kind = "full" } },
+    { path = "crates/mdbook-html/src/theme/mod.rs", start = 14, end = 31, render = { kind = "full" } },
 ]
 
+# =============================================================
+# Tier 6 — CLI command shapes + test harness + guide map.
+# =============================================================
+
 [[batches]]
-id = "4.11"
-descriptor = "guide book.toml (config exemplar)"
-justification = """
-The user guide's own book.toml is a real-world example of an
-`[output.html.*]`-rich config with a custom preprocessor
-(`guide-helper`) and `build.extra-watch-dirs`. Useful to point at
-when answering "what does a populated book.toml look like".
-Truncated to the table headers + first line of each — agent can
-open the file for full values.
-"""
+id = "6.1"
+descriptor = "build subcommand — clap surface"
+justification = "Smallest example of a subcommand: the `make_subcommand` builder pattern with `arg_dest_dir`/`arg_root_dir`/`arg_open` from `command_prelude`. Pattern is identical across init/watch/serve/test/clean."
 [batches.content]
 kind = "lines"
 spans = [
-    { path = "guide/book.toml", start = 1, end = 1, render = { kind = "full" } },
-    { path = "guide/book.toml", start = 7, end = 7, render = { kind = "full" } },
-    { path = "guide/book.toml", start = 10, end = 10, render = { kind = "full" } },
-    { path = "guide/book.toml", start = 18, end = 18, render = { kind = "full" } },
-    { path = "guide/book.toml", start = 22, end = 22, render = { kind = "full" } },
-    { path = "guide/book.toml", start = 25, end = 25, render = { kind = "full" } },
-    { path = "guide/book.toml", start = 34, end = 34, render = { kind = "full" } },
-    { path = "guide/book.toml", start = 37, end = 38, render = { kind = "full" } },
-    { path = "guide/book.toml", start = 40, end = 41, render = { kind = "full" } },
+    { path = "src/cmd/build.rs", start = 8, end = 14, render = { kind = "full" } },
 ]
 
 [[batches]]
-id = "4.12"
-descriptor = "Testsuite top-level module list"
-justification = """
-`tests/testsuite/main.rs` lists every test module (build, cli,
-config, includes, index, init, markdown, playground,
-preprocessor, print, redirects, renderer, rendering, search,
-test, theme, toc, book_test). Also exposes a `prelude` that
-every test uses (`BookTest`, `glob_one`, `read_to_string`,
-snapbox's `str` macro). Agent query: "where's the test for
-X feature?" — one-hop lookup from here.
-"""
+id = "6.2"
+descriptor = "command_prelude shared args"
+justification = "The shared clap arg helpers (`arg_dest_dir`, `arg_root_dir`, `arg_open`, `arg_watcher`) every subcommand uses. Also the `set_dest_dir` impl for `--dest-dir`."
 [batches.content]
 kind = "lines"
 spans = [
-    { path = "tests/testsuite/main.rs", start = 1, end = 30, render = { kind = "full" } },
+    { path = "src/cmd/command_prelude.rs", start = 7, end = 9, render = { kind = "full" } },
+    { path = "src/cmd/command_prelude.rs", start = 10, end = 10, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "src/cmd/command_prelude.rs", start = 26, end = 26, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "src/cmd/command_prelude.rs", start = 37, end = 37, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "src/cmd/command_prelude.rs", start = 42, end = 42, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "src/cmd/command_prelude.rs", start = 62, end = 62, render = { kind = "truncated", pattern = "^[^(]+" } },
 ]
 
 [[batches]]
-id = "4.13"
-descriptor = "BookTest helper API surface"
-justification = """
-Location batch: one-line spans on every `pub fn` in `BookTest` +
-`BookCommand`. Lists `from_dir`, `empty`, `init`,
-`check_main_file`, `check_all_main_files`, `check_toc_js`,
-`toc_js_html`, `check_file`, `check_file_contains`,
-`check_file_doesnt_contain`, `check_file_list`, `load_book`,
-`build`, `run`, `change_file`, `rm_r`, `rust_program`, plus the
-`BookCommand` fluent builder. Catastrophic-omission mitigation.
-"""
+id = "6.3"
+descriptor = "tests/testsuite/main.rs — test module map"
+justification = "Names every testsuite area module: build, cli, config, includes, index, init, markdown, playground, preprocessor, print, redirects, renderer, rendering, search, test, theme, toc. Anchors 'where do I add a test for X'."
 [batches.content]
 kind = "lines"
 spans = [
-    { path = "tests/testsuite/book_test.rs", start = 37, end = 37, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "tests/testsuite/book_test.rs", start = 54, end = 54, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "tests/testsuite/book_test.rs", start = 61, end = 61, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "tests/testsuite/book_test.rs", start = 99, end = 99, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "tests/testsuite/book_test.rs", start = 127, end = 127, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "tests/testsuite/book_test.rs", start = 167, end = 167, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "tests/testsuite/book_test.rs", start = 199, end = 199, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "tests/testsuite/book_test.rs", start = 213, end = 213, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "tests/testsuite/book_test.rs", start = 232, end = 232, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "tests/testsuite/book_test.rs", start = 247, end = 247, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "tests/testsuite/book_test.rs", start = 269, end = 269, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "tests/testsuite/book_test.rs", start = 274, end = 274, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "tests/testsuite/book_test.rs", start = 288, end = 288, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "tests/testsuite/book_test.rs", start = 311, end = 311, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "tests/testsuite/book_test.rs", start = 318, end = 318, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "tests/testsuite/book_test.rs", start = 341, end = 341, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "tests/testsuite/book_test.rs", start = 374, end = 374, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
-    { path = "tests/testsuite/book_test.rs", start = 386, end = 386, render = { kind = "truncated", pattern = "pub fn [a-z_]+" } },
+    { path = "tests/testsuite/main.rs", start = 1, end = 25, render = { kind = "full" } },
 ]
 
 [[batches]]
-id = "4.14"
-descriptor = "tests/ layout: testsuite + gui + README"
-justification = """
-Two test binaries exist. `tests/testsuite/` is the main Rust
-integration test crate (driven by `BookTest`). `tests/gui/` is a
-headless-browser test runner — `runner.rs` + `.goml` scripts + a
-`books/` fixture dir. Referenced from the top-level `Cargo.toml`
-`[[test]]` entry at line 149. Listing the top-level files tells
-the agent the two test harnesses exist without surprise.
-"""
+id = "6.4"
+descriptor = "examples/ + guide/ tree"
+justification = "Names the example projects (nop-preprocessor.rs, remove-emphasis/) and the user-guide source layout (guide/, guide/src/, plus guide-helper). Catastrophic-omission hedge for 'is there an example of X' / 'where do the docs live'."
 [batches.content]
 kind = "fs"
 groups = [
-    { parent = "tests", entries = "all" },
-    { parent = "tests/testsuite", entries = "all" },
-    { parent = "tests/gui", entries = "all" },
+    { parent = "examples", entries = "all" },
+    { parent = "examples/remove-emphasis", entries = "all" },
+    { parent = "guide", entries = "all" },
 ]
 
-[[batches]]
-id = "4.15"
-descriptor = "CHANGELOG 0.5 migration lede"
-justification = """
-The 0.5 release split the Rust API across eight crates — many
-queries referencing pre-0.5 APIs will land here. Three short
-paragraphs: 0.5.0 is "the next major release", there's a migration
-guide for 0.4→0.5, breaking changes are listed in the 0.5 section.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "CHANGELOG.md", start = 39, end = 46, render = { kind = "full" } },
-    { path = "CHANGELOG.md", start = 53, end = 55, render = { kind = "full" } },
-]
 
 [[batches]]
-id = "4.16"
-descriptor = "watch/serve subcommand identity"
-justification = """
-`watch` chooses `WatcherKind::Poll` / `WatcherKind::Native`
-(bodies in `src/cmd/watch/poller.rs` + `native.rs`). `serve`
-runs axum on `localhost:3000` with livereload via a
-`/__livereload` websocket.
-"""
+id = "6.5"
+descriptor = "guide/src tree — doc-source files"
+justification = "Lists doc-source files (README.md, guide/, cli/, format/, for_developers/, misc/). Anchors 'where is the docs page on X' to a concrete path."
 [batches.content]
-kind = "lines"
-spans = [
-    { path = "src/cmd/watch.rs", start = 12, end = 19, render = { kind = "full" } },
-    { path = "src/cmd/watch.rs", start = 21, end = 24, render = { kind = "full" } },
-    { path = "src/cmd/serve.rs", start = 19, end = 21, render = { kind = "full" } },
-    { path = "src/cmd/serve.rs", start = 23, end = 25, render = { kind = "full" } },
+kind = "fs"
+groups = [
+    { parent = "guide/src", entries = "all" },
+    { parent = "guide/src/cli", entries = "all" },
+    { parent = "guide/src/for_developers", entries = "all" },
 ]

@@ -1,66 +1,61 @@
-scores: Sim=0.391 Reached=16/49 Early=2 Late=10 Partial=0 Missing=33 Used=9956/10000
+scores: Sim=0.352 Reached=14/44 Early=1 Late=10 Partial=2 Missing=28 Used=9956/10000
 
 ## Tier rollup
 
 | tier | batches | reached | partial | missing | avg_credit |
 |-----:|--------:|--------:|--------:|--------:|-----------:|
-| 1 | 6 | 6 | 0 | 0 | 0.99 |
-| 2 | 6 | 6 | 0 | 0 | 0.98 |
-| 3 | 10 | 2 | 0 | 8 | 0.30 |
-| 4 | 7 | 0 | 0 | 7 | 0.17 |
-| 5 | 14 | 1 | 0 | 13 | 0.10 |
-| 6 | 6 | 1 | 0 | 5 | 0.23 |
+| 1 | 6 | 5 | 0 | 1 | 0.83 |
+| 2 | 7 | 6 | 0 | 1 | 0.85 |
+| 3 | 9 | 1 | 0 | 8 | 0.21 |
+| 4 | 8 | 0 | 2 | 6 | 0.22 |
+| 5 | 14 | 2 | 0 | 12 | 0.16 |
 
 ## Arrival ledger (non-aligned or partial-credit NS batches)
 
 | id | exp_t | reached_t | delta_t | credit | status | descriptor |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|
-| 1.1 | 10 | 3734 | +3724 | 1.00 | late | Crate-doc lede (first sentence) |
-| 1.3 | 97 | 6839 | +6742 | 1.00 | late | src/ and src/kv/ listings |
-| 1.4 | 226 | 3734 | +3508 | 1.00 | late | Crate-doc — facade abstraction + noop fallback |
-| 1.5 | 307 | 3734 | +3427 | 1.00 | late | Crate-doc — log-request shape (target, level, body) |
-| 1.6 | 496 | 257 | -239 | 0.94 | early | Cargo package identity + MSRV |
-| 2.1 | 560 | 637 | +77 | 1.00 | aligned+over | Top-level log-macro names (location batch) |
-| 2.2 | 828 | 4186 | +3358 | 1.00 | late | Public items in src/lib.rs (location batch) |
-| 2.3 | 899 | 5866 | +4967 | 1.00 | late | `Log` trait signature (three methods) |
-| 2.4 | 1123 | 8716 | +7593 | 0.86 | late | Cargo features — filter + core toggles |
-| 2.5 | 1393 | 4967 | +3574 | 1.00 | late | `Level` enum variants |
-| 2.6 | 1534 | 4477 | +2943 | 1.00 | late | `LevelFilter` enum variants |
-| 3.1 | 2036 | 3490 | +1454 | 0.93 | late | `log!` macro — four call-form patterns |
-| 3.2 | 2528 | — | — | 0.03 | missing | `__log!` expansion — level gate + `__private_api::log` call |
-| 3.3 | 3163 | — | — | 0.20 | missing | `__private_api` log shim (log_impl + GlobalLogger) |
-| 3.4 | 3345 | — | — | 0.00 | missing | Global state machine (LOGGER, STATE, state constants) |
-| 3.5 | 3631 | — | — | 0.00 | missing | `set_logger_inner` compare-exchange install |
-| 3.6 | 3887 | — | — | 0.21 | missing | `logger()` — the Acquire-ordered read |
-| 3.7 | 4106 | — | — | 0.16 | missing | Runtime max-level (atomic + set/get) |
-| 3.9 | 4663 | — | — | 0.36 | missing | `Record` struct fields |
-| 3.10 | 4920 | — | — | 0.16 | missing | `Metadata` struct + accessors |
-| 4.1 | 5414 | — | — | 0.29 | missing | `kv` module — concept + capture-modifier table |
-| 4.2 | 5619 | — | — | 0.00 | missing | `kv` re-exports + submodules |
-| 4.3 | 6061 | — | — | 0.31 | missing | Public items across `src/kv/*.rs` (location batch) |
-| 4.4 | 6498 | — | — | 0.03 | missing | `kv::Source` trait signatures |
-| 4.5 | 6695 | — | — | 0.46 | missing | `VisitSource` + `VisitValue` trait heads |
-| 4.6 | 7005 | — | — | 0.00 | missing | `kv::Value` data-model doc comment |
-| 4.7 | 7269 | — | — | 0.12 | missing | Record's `key_values` + `KeyValues` wrapper |
-| 5.1 | 7604 | — | — | 0.00 | missing | `RecordBuilder` method heads (location batch) |
-| 5.2 | 7635 | — | — | 0.00 | missing | Feature-conflict diagnostics (compile_error! locations) |
-| 5.3 | 7741 | — | — | 0.00 | missing | no-atomic-ptr `AtomicUsize` fallback |
-| 5.4 | 7836 | — | — | 0.21 | missing | `set_boxed_logger` + `set_logger` public wrappers |
-| 5.5 | 7985 | — | — | 0.00 | missing | `set_logger_racy` body (no-atomic install) |
-| 5.6 | 8344 | — | — | 0.23 | missing | Error types (`SetLoggerError`, `ParseLevelError`) |
-| 5.7 | 8394 | — | — | 0.00 | missing | `Log` blanket impls (signatures only) |
-| 5.8 | 8744 | — | — | 0.00 | missing | `__log_value!` capture-modifier dispatch |
-| 5.9 | 9015 | — | — | 0.00 | missing | `capture_*` helpers in `__private_api::kv_support` (signatures) |
-| 5.10 | 9220 | — | — | 0.00 | missing | `serde.rs` — Level Serialize impl |
-| 5.11 | 9315 | — | — | 0.00 | missing | `kv::Error::Inner` variants |
-| 5.12 | 9578 | — | — | 0.00 | missing | `kv::Source` default `get` via visitor |
-| 5.13 | 9682 | — | — | 0.00 | missing | `kv::Source` impl-for locations (tuple, slice, Option, HashMap, BTreeMap) |
-| 6.1 | 9760 | — | — | 0.40 | missing | README H2 headings (location batch) |
-| 6.2 | 9772 | 3886 | -5886 | 1.00 | early | tests/ and benches/ listings + top-level fn signatures |
-| 6.3 | 9805 | — | — | 0.00 | missing | `test_max_level_features` sub-binary (features line) |
-| 6.4 | 9856 | — | — | 0.00 | missing | CI matrix jobs (location batch) |
-| 6.5 | 9929 | — | — | 0.00 | missing | CHANGELOG — recent-release H2 locations |
-| 6.6 | 9985 | — | — | 0.00 | missing | RFC 0296 — top-level section headings |
+| 1.2 | 102 | 257 | +155 | 1.00 | late | Cargo name + description |
+| 1.3 | 190 | 3734 | +3544 | 1.00 | late | Crate-doc one-liner |
+| 1.4 | 231 | 6839 | +6608 | 1.00 | late | src/ + src/kv/ listing |
+| 1.5 | 381 | 3734 | +3353 | 1.00 | late | Crate-doc target/level/body model |
+| 1.6 | 545 | — | — | 0.00 | missing | Five-macro user-facing summary |
+| 2.1 | 735 | 4186 | +3451 | 1.00 | late | Public-item map of lib.rs |
+| 2.3 | 883 | 5866 | +4983 | 1.00 | late | Log trait method signatures |
+| 2.4 | 1153 | 4967 | +3814 | 1.00 | late | Level enum body |
+| 2.5 | 1294 | 4477 | +3183 | 1.00 | late | LevelFilter enum body |
+| 2.6 | 1531 | — | — | 0.01 | missing | Logger installation entry-point signatures |
+| 2.7 | 2033 | 3490 | +1457 | 0.93 | late | log! macro shapes (4 forms) |
+| 3.1 | 2481 | — | — | 0.24 | missing | Record struct + accessor signatures |
+| 3.2 | 2587 | — | — | 0.40 | missing | Metadata struct + accessors |
+| 3.3 | 2682 | — | — | 0.00 | missing | Level public-method index |
+| 3.4 | 2779 | — | — | 0.00 | missing | LevelFilter public-method index |
+| 3.5 | 3082 | — | — | 0.00 | missing | Global state + ordering constants |
+| 3.6 | 3382 | 5465 | +2083 | 1.00 | late | STATIC_MAX_LEVEL compile-time match |
+| 3.7 | 3856 | — | — | 0.00 | missing | __log internal-macro body (the actual gate) |
+| 3.8 | 4415 | — | — | 0.22 | missing | __private_api log dispatcher |
+| 3.9 | 4715 | — | — | 0.00 | missing | set_logger_inner state transitions |
+| 4.1 | 5085 | — | — | 0.33 | missing | kv module concept |
+| 4.2 | 5290 | — | — | 0.00 | missing | kv module re-exports |
+| 4.3 | 5477 | — | — | 0.00 | missing | kv capture-modifier table |
+| 4.4 | 5612 | — | — | 0.62 | partial | kv::Source trait surface |
+| 4.5 | 5889 | — | — | 0.18 | missing | kv::Value capture constructors |
+| 4.6 | 6053 | — | — | 0.58 | partial | kv::Key surface |
+| 4.7 | 6361 | — | — | 0.07 | missing | VisitValue trait method index |
+| 4.8 | 6552 | — | — | 0.00 | missing | kv::Value to_* primitive accessors |
+| 5.1 | 6964 | 8716 | +1752 | 0.85 | aligned | Cargo features list |
+| 5.2 | 7149 | — | — | 0.00 | missing | Implementing-a-Logger doc snippet |
+| 5.3 | 7366 | — | — | 0.00 | missing | Default-Off warning + STATIC_MAX_LEVEL note |
+| 5.4 | 7693 | — | — | 0.00 | missing | Compile-time max_level_* conflict guards |
+| 5.5 | 7986 | — | — | 0.00 | missing | FromStr impls for Level/LevelFilter |
+| 5.6 | 8318 | — | — | 0.00 | missing | RecordBuilder method index |
+| 5.7 | 8407 | — | — | 0.00 | missing | MetadataBuilder method index |
+| 5.8 | 8659 | — | — | 0.00 | missing | Logger blanket impls (&T, Box, Arc) |
+| 5.9 | 8977 | — | — | 0.07 | missing | non-atomic AtomicUsize fallback |
+| 5.10 | 8998 | 3886 | -5112 | 1.00 | early | tests/ + benches/ + harness listings |
+| 5.11 | 9234 | — | — | 0.00 | missing | Macro test-fn names (tests/macros.rs) |
+| 5.12 | 9640 | — | — | 0.00 | missing | kv::Source impl matrix |
+| 5.13 | 9784 | — | — | 0.27 | missing | kv::Error variants |
+| 5.14 | 9861 | — | — | 0.00 | missing | logger() global accessor |
 
 ## Walker waste (off-NS token spend ≥ 50)
 
@@ -69,26 +64,26 @@ scores: Sim=0.391 Reached=16/49 Early=2 Late=10 Partial=0 Missing=33 Used=9956/1
 | 2021 | 0.71 | 2853 | 3490 | macro_export bodies across src |
 | 422 | 1.00 | 422 | 9956 | pub-item doc at src/lib.rs:1003 |
 | 410 | 1.00 | 410 | 9534 | pub-item doc at src/lib.rs:1158 |
-| 320 | 0.80 | 401 | 5866 | pub item at src/lib.rs:1249 |
-| 313 | 0.96 | 327 | 8329 | README.md section #3 |
+| 334 | 0.83 | 401 | 5866 | pub item at src/lib.rs:1249 |
+| 327 | 1.00 | 327 | 8329 | README.md section #3 |
 | 267 | 1.00 | 267 | 8983 | pub-item doc at src/lib.rs:1375 |
 | 259 | 1.00 | 259 | 8002 | pub-item doc at src/lib.rs:1529 |
 | 213 | 1.00 | 213 | 7119 | macro_export bodies across src/kv |
 | 213 | 1.00 | 213 | 7682 | pub-item doc at src/lib.rs:1396 |
 | 198 | 1.00 | 198 | 6318 | README.md section #0 |
 | 197 | 1.00 | 197 | 6805 | pub-item doc at src/lib.rs:1200 |
-| 192 | 0.75 | 256 | 637 | macro_export names across src |
+| 179 | 0.70 | 256 | 637 | macro_export names across src |
 | 164 | 1.00 | 164 | 6608 | pub-item doc at src/lib.rs:1420 |
-| 138 | 0.36 | 387 | 8716 | [features] in Cargo.toml |
+| 138 | 0.75 | 184 | 257 | [package] in Cargo.toml |
 | 126 | 1.00 | 126 | 6444 | pub-item doc at src/lib.rs:1611 |
 | 122 | 1.00 | 122 | 5189 | pub-item doc at src/lib.rs:636 |
-| 117 | 0.92 | 127 | 9110 | mod/use plumbing in src/lib.rs |
 | 100 | 1.00 | 100 | 5067 | pub-item doc at src/lib.rs:475 |
+| 97 | 0.77 | 127 | 9110 | mod/use plumbing in src/lib.rs |
+| 86 | 1.00 | 86 | 343 | README.md section #1 |
 | 76 | 1.00 | 76 | 3878 | [package] in test_max_level_features/Cargo.toml |
 | 73 | 1.00 | 73 | 4699 | pub-item doc at src/lib.rs:1351 |
+| 70 | 0.24 | 300 | 4186 | pub-item names surface in src/lib.rs |
 | 67 | 1.00 | 67 | 6906 | macro_export names across src/kv |
-| 61 | 0.25 | 244 | 3734 | crate-doc lede in src/lib.rs |
+| 63 | 1.00 | 63 | 4586 | pub-item doc at src/lib.rs:1566 |
 | 59 | 1.00 | 59 | 3802 | impl method sigs in test_max_level_features/main.rs |
-| 57 | 0.67 | 86 | 343 | README.md section #1 |
-| 54 | 0.60 | 91 | 5974 | pub-item names surface in src/__private_api.rs |
 | 53 | 1.00 | 53 | 6120 | mod/use plumbing in test_max_level_features/main.rs |

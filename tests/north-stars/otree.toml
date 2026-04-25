@@ -1,902 +1,885 @@
 fixture = "otree"
 revision_pin = "a02bdf44"
 summary = """
-otree is a Rust CLI that renders structured-data files
-(JSON / YAML / TOML / XML / HCL / JSONL) as an interactive TUI tree
-viewer, built on ratatui + tui-tree-widget. A `Parser` trait normalizes
-every format to `serde_json::Value`; a `Tree` walks that Value into
-`TreeItem`s with per-node `ItemValue` (type + description + syntax
-tokens); a ratatui `App` drives a two-pane tree-overview + data-block
-layout plus filter, footer, header, popup, external-editor hand-off,
-clipboard copy, and optional `--live-reload` file-watch. Config is TOML
-(palette, per-element colors, per-action keybindings, layout, type
-labels). The query distribution the ranking serves: how do I add a
-new format / action / color? what keys do what by default? where do
-focus, filtering, change-root, wrap, and scroll live? how does `--to`
-convert between formats?
+otree is a Rust TUI for viewing structured data (JSON / YAML / TOML /
+XML / HCL / JSONL) as a tree alongside a syntax-highlighted data
+block. Architecturally: parsers under src/parse turn input bytes into
+a serde_json::Value; src/tree.rs builds a tui-tree-widget tree of
+items keyed by `/`-joined paths; src/ui composes the App from
+TreeOverview, DataBlock, Filter, Footer, Header, and Popup widgets,
+all driven by a config-driven keybinding system in src/config/keys.rs.
+Cross-cutting features: --to format conversion, --live-reload (file
+watcher), system-clipboard copy, external editor (read-only), filter
+mode with highlight or exclude variants, configurable colors / key
+bindings / type labels, optional debug log file. The query
+distribution we expect: "where does parsing for format X live", "how
+does filter mode work", "what keys are bound by default", "how does
+the App dispatch events to widgets", "how is data rendered with
+wrapping and scrolling", "how do I add a new content type / config
+option", plus targeted bug-fix and feature-extension queries against
+specific widgets or parsers.
 """
 
-# =========================================================================
-# Tier 1 — Landing: "what is this repo and what's in it?"
-# =========================================================================
+# ----------------------------------------------------------------------
+# Tier 1 — Orientation: what's in this repo at all.
+# Small, broad, high-leverage. Reveals the module shape so the agent
+# knows where to look for everything else.
+# ----------------------------------------------------------------------
 
 [[batches]]
 id = "1.1"
-descriptor = "README lede — one-line product description"
+descriptor = "Repo root listing"
 justification = """
-Cheapest orientation: tells the zero-context agent this is a TUI
-viewer for JSON/YAML/TOML/XML, which reframes every later batch.
+First batch: enumerate the top-level fixture so the agent sees src/
+docs/ examples/ config/ assets/ build.rs Cargo.toml README.md and
+.github/ all at once. Cheap, sets the global frame.
 """
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "README.md", start = 1, end = 5, render = { kind = "full" } },
-]
+content = { kind = "fs", groups = [
+  { parent = ".", entries = "all" },
+] }
 
 [[batches]]
 id = "1.2"
-descriptor = "Repo top-level listing"
+descriptor = "README H1 + crate one-liner"
 justification = """
-Breadth-first catastrophic-omission hedge: every top-level entry
-(config/, docs/, examples/, src/, assets/, build.rs, Cargo.toml,
-LICENSE, typos.toml). Tiny batch, highest breadth/token ratio.
+README.md line 1 is a self-explanatory crate description: the agent
+gets "OTree - Object Tree TUI Viewer" plus the one-liner on line 4 and
+nothing else. Smaller and more useful than Cargo.toml metadata at this
+position; full Cargo metadata comes later.
 """
-[batches.content]
-kind = "fs"
-groups = [{ parent = ".", entries = "all" }]
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "README.md", start = 4, end = 4, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.3"
-descriptor = "src/ listing"
+descriptor = "src/ module layout"
 justification = """
-Top-level module files. Splits the `src` tree from its subdirs so
-the early-budget agent sees the crate spine first.
+Show every immediate child of src/ — the parse/ ui/ config/ subdirs
+plus the top-level files (main.rs, cmd.rs, tree.rs, clipboard.rs,
+edit.rs, live_reload.rs, debug.rs). This is the catastrophic-omission
+hedge for "what files exist in this codebase"; most follow-up queries
+hop from here.
 """
-[batches.content]
-kind = "fs"
-groups = [{ parent = "src", entries = "all" }]
+content = { kind = "fs", groups = [
+  { parent = "src", entries = "all" },
+] }
 
 [[batches]]
 id = "1.4"
 descriptor = "main.rs module declarations"
 justification = """
-The mod list at the top of main.rs is the canonical module-to-file map
-for a Rust crate; pairs with 1.3.
+The `mod` lines at the top of main.rs are the canonical list of
+top-level modules. Pairs with 1.3 — agent can confirm src/ children
+ARE the modules and there are no hidden submodules at this level.
 """
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/main.rs", start = 1, end = 9, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+  { path = "src/main.rs", start = 1, end = 9, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.5"
-descriptor = "src/ui/ + src/config/ + src/parse/ listings"
+descriptor = "README section headings"
 justification = """
-The three subpackage directories in one fs batch. Rounds out
-catastrophic-omission — the agent now knows every .rs file in the
-crate without any follow-up ls.
+Remaining README H2s — Install, Usage, Roadmap, Thanks. Tells the
+agent which sections exist (and where they begin) without paying for
+their bodies. Catastrophic-omission hedge: agent can't assume only
+these sections exist if even one is missing here.
 """
-[batches.content]
-kind = "fs"
-groups = [
-    { parent = "src/ui", entries = "all" },
-    { parent = "src/config", entries = "all" },
-    { parent = "src/parse", entries = "all" },
-]
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 7, end = 7, render = { kind = "full" } },
+  { path = "README.md", start = 33, end = 33, render = { kind = "full" } },
+  { path = "README.md", start = 52, end = 52, render = { kind = "full" } },
+  { path = "README.md", start = 82, end = 82, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "1.6"
-descriptor = "Cargo.toml package metadata + description"
+descriptor = "Cargo package metadata"
 justification = """
-Crate name, version, repo URL, one-line description. Slight duplicate
-of the README lede but grounds the upstream (repository URL) and the
-semver version.
+[package] table — name, version (0.6.4), edition, license, repository,
+description. Standard "what crate is this and what version" answer.
 """
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "Cargo.toml", start = 1, end = 11, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+  { path = "Cargo.toml", start = 1, end = 12, render = { kind = "full" } },
+] }
 
-# =========================================================================
-# Tier 2 — CLI surface + format dispatch
-# =========================================================================
+# ----------------------------------------------------------------------
+# Tier 2 — Core domain types and the top-level pipeline.
+# What ContentType values exist, what a Parser is, what Tree/ItemValue
+# look like. Together these answer "how does data flow through this
+# app" with at most one targeted follow-up read.
+# ----------------------------------------------------------------------
 
 [[batches]]
 id = "2.1"
-descriptor = "ContentType enum — supported formats"
+descriptor = "ContentType variants — locations only"
 justification = """
-Single-point answer to "which formats does otree support?" Six
-concrete variants plus the `Any` auto-detect sentinel. Catastrophic-
-omission hedge for the format class.
+Just the lines that name the variants — Json / Yaml / Toml / Xml /
+Hcl / Jsonl / Any. No bodies, no derives, no doc comments. Tells the
+agent what formats exist; pairs with 2.2 which adds the doc context.
 """
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/parse/mod.rs", start = 17, end = 34, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+  { path = "src/parse/mod.rs", start = 18, end = 22, render = { kind = "full" } },
+  { path = "src/parse/mod.rs", start = 25, end = 25, render = { kind = "full" } },
+  { path = "src/parse/mod.rs", start = 30, end = 30, render = { kind = "full" } },
+  { path = "src/parse/mod.rs", start = 33, end = 33, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.2"
-descriptor = "get_content_type — extension → ContentType match"
+descriptor = "ContentType enum context"
 justification = """
-Concrete extension→format mapping. Body lives in src/cmd.rs; we show
-only the signature + the match so the essential dispatch is visible
-without the guard-clause boilerplate.
+Refines 2.1 by filling in the enum derive (ValueEnum makes the variant
+a clap value), the HCL doc-link, the JSONL doc-link, and the
+`#[clap(skip)]` on Any (so the agent knows Any isn't user-selectable).
 """
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/cmd.rs", start = 202, end = 202, render = { kind = "full" } },
-    { path = "src/cmd.rs", start = 203, end = 218, render = { kind = "ellipsis" } },
-    { path = "src/cmd.rs", start = 219, end = 228, render = { kind = "full" } },
-]
+predecessor = "2.1"
+content = { kind = "lines", spans = [
+  { path = "src/parse/mod.rs", start = 17, end = 17, render = { kind = "full" } },
+  { path = "src/parse/mod.rs", start = 23, end = 24, render = { kind = "full" } },
+  { path = "src/parse/mod.rs", start = 26, end = 29, render = { kind = "full" } },
+  { path = "src/parse/mod.rs", start = 31, end = 32, render = { kind = "full" } },
+  { path = "src/parse/mod.rs", start = 34, end = 34, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.3"
-descriptor = "CommandArgs — CLI flags (one span per `pub` field)"
+descriptor = "Parser trait method signatures"
 justification = """
-Breadth: every CLI flag as its own Full line. Catastrophic-omission
-hedge — listing some flags would imply the rest don't exist.
+The five trait methods, names and types only. Tells the agent the
+parser contract: extension, allow_array_root, parse, syntax_highlight,
+parse_root. parse_root has a default impl whose body is the
+array/object root validation — content for that body lands later if
+asked.
 """
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/cmd.rs", start = 12, end = 12, render = { kind = "full" } },
-    { path = "src/cmd.rs", start = 15, end = 15, render = { kind = "full" } },
-    { path = "src/cmd.rs", start = 19, end = 19, render = { kind = "full" } },
-    { path = "src/cmd.rs", start = 24, end = 24, render = { kind = "full" } },
-    { path = "src/cmd.rs", start = 28, end = 28, render = { kind = "full" } },
-    { path = "src/cmd.rs", start = 32, end = 32, render = { kind = "full" } },
-    { path = "src/cmd.rs", start = 36, end = 36, render = { kind = "full" } },
-    { path = "src/cmd.rs", start = 40, end = 40, render = { kind = "full" } },
-    { path = "src/cmd.rs", start = 44, end = 44, render = { kind = "full" } },
-    { path = "src/cmd.rs", start = 48, end = 48, render = { kind = "full" } },
-    { path = "src/cmd.rs", start = 52, end = 52, render = { kind = "full" } },
-    { path = "src/cmd.rs", start = 56, end = 56, render = { kind = "full" } },
-    { path = "src/cmd.rs", start = 60, end = 60, render = { kind = "full" } },
-    { path = "src/cmd.rs", start = 64, end = 64, render = { kind = "full" } },
-    { path = "src/cmd.rs", start = 68, end = 68, render = { kind = "full" } },
-    { path = "src/cmd.rs", start = 72, end = 72, render = { kind = "full" } },
-    { path = "src/cmd.rs", start = 76, end = 76, render = { kind = "full" } },
-    { path = "src/cmd.rs", start = 80, end = 80, render = { kind = "full" } },
-    { path = "src/cmd.rs", start = 84, end = 84, render = { kind = "full" } },
-    { path = "src/cmd.rs", start = 88, end = 88, render = { kind = "full" } },
-    { path = "src/cmd.rs", start = 92, end = 92, render = { kind = "full" } },
-    { path = "src/cmd.rs", start = 96, end = 96, render = { kind = "full" } },
-    { path = "src/cmd.rs", start = 100, end = 100, render = { kind = "full" } },
-    { path = "src/cmd.rs", start = 104, end = 104, render = { kind = "full" } },
-    { path = "src/cmd.rs", start = 108, end = 108, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+  { path = "src/parse/mod.rs", start = 36, end = 36, render = { kind = "full" } },
+  { path = "src/parse/mod.rs", start = 37, end = 37, render = { kind = "full" } },
+  { path = "src/parse/mod.rs", start = 39, end = 39, render = { kind = "full" } },
+  { path = "src/parse/mod.rs", start = 41, end = 41, render = { kind = "full" } },
+  { path = "src/parse/mod.rs", start = 43, end = 43, render = { kind = "full" } },
+  { path = "src/parse/mod.rs", start = 45, end = 45, render = { kind = "full" } },
+  { path = "src/parse/mod.rs", start = 64, end = 64, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.4"
-descriptor = "run() signature + backbone landmarks"
+descriptor = "ContentType::new_parser dispatch"
 justification = """
-The run() signature plus a few load-bearing landmarks: parsing
-CommandArgs, loading Config, branching on --to for stream conversion,
-building Tree::parse, handing off to ui::start. Full body (86 lines)
-lives in src/main.rs and is a grep away.
+The format -> impl-name mapping. Lines reveal which struct each
+ContentType variant constructs (json::JsonParser, …, any::AnyParser).
+Cheap and tells the agent exactly which file to open for each format.
 """
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/main.rs", start = 27, end = 27, render = { kind = "full" } },
-    { path = "src/main.rs", start = 28, end = 30, render = { kind = "full" } },
-    { path = "src/main.rs", start = 79, end = 79, render = { kind = "full" } },
-    { path = "src/main.rs", start = 98, end = 98, render = { kind = "full" } },
-    { path = "src/main.rs", start = 101, end = 101, render = { kind = "full" } },
-    { path = "src/main.rs", start = 108, end = 108, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+  { path = "src/parse/mod.rs", start = 66, end = 78, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.5"
-descriptor = "Parser trait — the format-plugin interface"
+descriptor = "Tree struct fields"
 justification = """
-The four-method contract every format implements (`extension` /
-`allow_array_root` / `parse` / `syntax_highlight`) plus the default
-`parse_root` (root must be object, or array if `allow_array_root`).
-Essential for "how do I add a new format?".
+Tree owns the parser (Rc<Box<dyn Parser>>), the tui-tree-widget
+TreeItems, a `/`-joined-path -> ItemValue map, and a flat list of
+identifies (used for filter navigation). Reveals the join between
+parser output and what the UI sees.
 """
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/parse/mod.rs", start = 36, end = 64, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+  { path = "src/tree.rs", start = 14, end = 23, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "2.6"
-descriptor = "ContentType::new_parser — format → Parser dispatch"
+descriptor = "ItemValue + FieldType"
 justification = """
-The match that turns a ContentType into its boxed Parser. Pair with
-2.5: trait + dispatch = complete plug-in map.
+ItemValue holds the per-tree-node data (name, raw Value, FieldType,
+description, syntax tokens). FieldType is the closed enum driving
+type-label and color choice across the UI.
 """
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/parse/mod.rs", start = 66, end = 78, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+  { path = "src/tree.rs", start = 25, end = 49, render = { kind = "full" } },
+] }
 
-# =========================================================================
-# Tier 3 — Tree model
-# =========================================================================
+[[batches]]
+id = "2.7"
+descriptor = "Tree public fn signatures"
+justification = """
+Truncated first lines of every public Tree / ItemValue fn the rest of
+the crate calls: parse, from_value, get_value, get_parser,
+plain_text, render, build_highlighted_text. Bodies come later as
+needed.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/tree.rs", start = 52, end = 52, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/tree.rs", start = 58, end = 58, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/tree.rs", start = 94, end = 94, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/tree.rs", start = 98, end = 98, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/tree.rs", start = 386, end = 386, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/tree.rs", start = 390, end = 390, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/tree.rs", start = 394, end = 394, render = { kind = "full" } },
+] }
+
+
+[[batches]]
+id = "2.8"
+descriptor = "main.rs run() — config + flag dispatch"
+justification = """
+The early part of run(): args parsed, Config loaded (or defaulted via
+--ignore-config), CLI overrides applied, --show-config and --debug
+side-effects fired. Reveals the order of config layering and where
+the special "print and exit" flag bails out.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/main.rs", start = 27, end = 49, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.9"
+descriptor = "main.rs run() — content type + data read"
+justification = """
+The middle of run(): determine ContentType (CLI arg, ext, or Any),
+compute max_data_size in bytes, optionally start FileWatcher, read
+bytes from file or stdin. Pairs with cmd.rs::get_content_type and
+live_reload.rs::FileWatcher::new.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/main.rs", start = 51, end = 77, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.10"
+descriptor = "main.rs run() — --to short-circuit"
+justification = """
+The --to branch parses the input with one parser and re-emits it
+through another parser's syntax_highlight. Important: this is the
+ONLY non-TUI exit path other than --show-config / --version, and the
+target_type cannot be Any.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/main.rs", start = 79, end = 92, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.11"
+descriptor = "main.rs run() — size check, Tree, App, ui::start"
+justification = """
+The TUI tail of run(): enforce max_data_size, parse the Tree, build
+App (passing the optional FileWatcher), set the header if not
+disabled, hand off to ui::start. The exact join between the
+parse-pipeline output and the TUI subsystem.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/main.rs", start = 94, end = 109, render = { kind = "full" } },
+] }
+
+# ----------------------------------------------------------------------
+# Tier 3 — UI surface: App + widget locations + key dispatch.
+# Catastrophic-omission hedge: every public fn name + line position so
+# the agent never assumes a missing widget or method. Specific bodies
+# come later for the load-bearing ones.
+# ----------------------------------------------------------------------
 
 [[batches]]
 id = "3.1"
-descriptor = "Tree + ItemValue + FieldType structs"
+descriptor = "ui/ module layout"
 justification = """
-The in-memory model: Tree holds the TreeItems + path-keyed HashMap of
-ItemValue + ordered identifies; ItemValue bundles name, raw Value,
-field-type tag, description, syntax tokens; FieldType enumerates
-Null/Num/Bool/Str/Obj/Arr. Almost every UI / copy / edit path pulls
-from ItemValue.
+Every immediate child of src/ui/ — mod.rs, app.rs, tree_overview.rs,
+data_block.rs, filter.rs, footer.rs, header.rs, popup.rs. Pairs with
+the App field list to confirm one widget = one file.
 """
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/tree.rs", start = 14, end = 49, render = { kind = "full" } },
-]
+content = { kind = "fs", groups = [
+  { parent = "src/ui", entries = "all" },
+] }
 
 [[batches]]
 id = "3.2"
-descriptor = "Tree::parse + from_value signatures"
+descriptor = "App struct fields"
 justification = """
-Entry points that turn bytes -> Tree: parse() runs the Parser and
-forwards to from_value(); from_value expands the root Object/Array
-directly (no synthetic `root` node unless the root is a leaf). Body
-is straightforward build_item recursion.
+The App struct enumerates every widget plus its area Rect, focus
+state, header/footer/filter optionality, and the FileWatcher hook.
+The single best answer to "what does the TUI consist of" lives here.
 """
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/tree.rs", start = 51, end = 56, render = { kind = "full" } },
-    { path = "src/tree.rs", start = 58, end = 58, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+  { path = "src/ui/app.rs", start = 53, end = 84, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "3.3"
-descriptor = "Tree::build_item signature"
+descriptor = "ElementInFocus + Refresh + ShowResult"
 justification = """
-The recursion's shape — (parent: &[String], name, value,
-arr_name) -> TreeItem. Shows paths are `parent.join(\"/\")`; useful for
-understanding the get_value(path) lookup keys.
+ElementInFocus is the closed enum of focusable widgets
+(TreeOverview, DataBlock, Popup, Filter, None). Refresh is the
+internal control-flow enum (Update / Skip / Quit / Edit). ShowResult
+is the App::show return type. Together: the TUI state machine.
 """
-predecessor = "3.1"
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/tree.rs", start = 102, end = 114, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+  { path = "src/ui/app.rs", start = 27, end = 51, render = { kind = "full" } },
+  { path = "src/ui/app.rs", start = 86, end = 89, render = { kind = "full" } },
+] }
 
-# =========================================================================
-# Tier 4 — Parser per-format breadth
-# =========================================================================
+[[batches]]
+id = "3.4"
+descriptor = "ui::start event loop"
+justification = """
+The outer event loop in ui/mod.rs: terminal setup, repeatedly
+App::show -> match ShowResult. Edit suspends the TUI to spawn the
+editor, then re-enters; Quit breaks. Always restores the terminal
+even on error. Tiny and high-information.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/ui/mod.rs", start = 35, end = 61, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.5"
+descriptor = "App method names"
+justification = """
+Every fn defined on impl App in src/ui/app.rs, truncated at the
+opening paren. Tells the agent exactly which methods exist (new,
+set_header, show, refresh, refresh_with_fw, reload_tree, draw,
+popup_error, popup, disable_popup, refresh_area,
+can_switch_to_data_block, on_key, on_click, on_scroll,
+on_focus_changed, get_row_inside, build_edit, get_copy_text,
+popup_help) without reading any body. Catastrophic-omission hedge.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/ui/app.rs", start = 102, end = 102, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/app.rs", start = 133, end = 133, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/app.rs", start = 137, end = 137, render = { kind = "full" } },
+  { path = "src/ui/app.rs", start = 165, end = 165, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/app.rs", start = 189, end = 189, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/app.rs", start = 211, end = 211, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/app.rs", start = 221, end = 221, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/app.rs", start = 279, end = 279, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/app.rs", start = 285, end = 285, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/app.rs", start = 293, end = 293, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/app.rs", start = 305, end = 305, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/app.rs", start = 385, end = 385, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/app.rs", start = 393, end = 393, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/app.rs", start = 586, end = 586, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/app.rs", start = 615, end = 615, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/app.rs", start = 639, end = 639, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/app.rs", start = 667, end = 667, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/app.rs", start = 675, end = 675, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/app.rs", start = 697, end = 697, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/app.rs", start = 715, end = 715, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "3.6"
+descriptor = "TreeOverview struct + impl method names"
+justification = """
+TreeOverview owns the tui-tree-widget state plus the filter cache,
+root-stack (for `r` change-root + `<esc>` reset), and the items.
+Method names: new, get_selected, get_root_identifies, get_value,
+get_parser, on_key, change_root, reset, close_parent, select_parent,
+get_selected_parent, expand_children, expand_all,
+expand_all_recursively, close_all_recursively, on_click, on_scroll,
+draw, build_title, begin_filter, end_filter, filter, filter_item,
+nav_filter_match, open_parent, tree, state, state_mut.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/ui/tree_overview.rs", start = 19, end = 30, render = { kind = "full" } },
+  { path = "src/ui/tree_overview.rs", start = 36, end = 36, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/tree_overview.rs", start = 51, end = 51, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/tree_overview.rs", start = 59, end = 59, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/tree_overview.rs", start = 63, end = 63, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/tree_overview.rs", start = 67, end = 67, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/tree_overview.rs", start = 71, end = 71, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/tree_overview.rs", start = 92, end = 92, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/tree_overview.rs", start = 127, end = 127, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/tree_overview.rs", start = 149, end = 149, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/tree_overview.rs", start = 157, end = 157, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/tree_overview.rs", start = 165, end = 165, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/tree_overview.rs", start = 176, end = 176, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/tree_overview.rs", start = 202, end = 202, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/tree_overview.rs", start = 240, end = 240, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/tree_overview.rs", start = 247, end = 247, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/tree_overview.rs", start = 254, end = 254, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/tree_overview.rs", start = 319, end = 319, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/tree_overview.rs", start = 325, end = 325, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/tree_overview.rs", start = 335, end = 335, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/tree_overview.rs", start = 362, end = 362, render = { kind = "full" } },
+  { path = "src/ui/tree_overview.rs", start = 409, end = 409, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "3.7"
+descriptor = "TreeOverview::on_key action dispatch"
+justification = """
+The match in on_key is the single source of truth for which Action
+each tree-overview key handles: MoveUp/Down, SelectFocus,
+SelectParent, CloseParent, Page Up/Down, Select First/Last,
+ChangeRoot, ExpandChildren, ExpandAll, FilterNextMatch /
+FilterPrevMatch, Reset. Crucial for keybinding queries.
+"""
+predecessor = "3.6"
+content = { kind = "lines", spans = [
+  { path = "src/ui/tree_overview.rs", start = 71, end = 90, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.8"
+descriptor = "DataBlock struct + method names"
+justification = """
+DataBlock owns the vertical+horizontal scroll state and the current
+selected identify. Methods: new, on_key, on_scroll, scroll_first /
+scroll_last / scroll_down / scroll_up / scroll_right / scroll_left,
+draw, update_scroll, reset, reset_scroll{,_vertical,_horizontal}.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/ui/data_block.rs", start = 16, end = 30, render = { kind = "full" } },
+  { path = "src/ui/data_block.rs", start = 35, end = 35, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/data_block.rs", start = 50, end = 50, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/data_block.rs", start = 62, end = 62, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/data_block.rs", start = 69, end = 69, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/data_block.rs", start = 86, end = 86, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/data_block.rs", start = 99, end = 99, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/data_block.rs", start = 112, end = 112, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/data_block.rs", start = 122, end = 122, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/data_block.rs", start = 136, end = 136, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/data_block.rs", start = 147, end = 147, render = { kind = "full" } },
+  { path = "src/ui/data_block.rs", start = 226, end = 226, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "3.9"
+descriptor = "Filter widget surface"
+justification = """
+Filter struct + FilterAction + FilterTarget + FilterOptions + method
+names. Tells the agent: a filter has a target (Key / Value / All), an
+ignore_case flag, and produces a FilterOptions consulted by
+TreeOverview::filter. on_key returns FilterAction (Edit / Confirm /
+Skip / Quit) for the App to react to.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/ui/filter.rs", start = 13, end = 38, render = { kind = "full" } },
+  { path = "src/ui/filter.rs", start = 41, end = 41, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/filter.rs", start = 52, end = 52, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/filter.rs", start = 94, end = 94, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/filter.rs", start = 102, end = 102, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/filter.rs", start = 106, end = 106, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/filter.rs", start = 119, end = 119, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/ui/filter.rs", start = 153, end = 153, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "3.10"
+descriptor = "Footer / Header / Popup surfaces"
+justification = """
+Three small widgets in one batch: Footer (root + identify display +
+message channel via FooterText), Header (formatted version /
+data_source / content_type / data_size string), Popup (centered
+overlay used for errors and the help dialog).
+"""
+content = { kind = "lines", spans = [
+  { path = "src/ui/footer.rs", start = 10, end = 23, render = { kind = "full" } },
+  { path = "src/ui/header.rs", start = 11, end = 16, render = { kind = "full" } },
+  { path = "src/ui/header.rs", start = 41, end = 44, render = { kind = "full" } },
+  { path = "src/ui/popup.rs", start = 13, end = 24, render = { kind = "full" } },
+] }
+
+# ----------------------------------------------------------------------
+# Tier 4 — Parser + render surfaces.
+# Concrete impls per format, plus the SyntaxToken vocabulary and the
+# AnyParser auto-detect. Bodies kept tight; the most-asked details
+# (Parser-trait impl signature + extension/allow_array_root/parse_root
+# behavior) are on the threshold cut, the deep highlight bodies are
+# late.
+# ----------------------------------------------------------------------
 
 [[batches]]
 id = "4.1"
-descriptor = "SyntaxToken enum variants"
+descriptor = "parse/ module layout"
 justification = """
-The shared rendering vocabulary every format emits (Symbol, Name,
-Tag, String, Number, Null, Bool, Section, Break, Indent). The
-DataBlock consumes this in render(). Answers "what styles does the
-data pane support?" in one batch.
+Every immediate child of src/parse/ — any.rs, hcl.rs, json.rs,
+jsonl.rs, mod.rs, syntax.rs, toml.rs, xml.rs, yaml.rs, plus the
+test_cases/ directory. Confirms one parser per file.
 """
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/parse/syntax.rs", start = 11, end = 27, render = { kind = "full" } },
-]
+content = { kind = "fs", groups = [
+  { parent = "src/parse", entries = "all" },
+] }
 
 [[batches]]
 id = "4.2"
-descriptor = "Per-format Parser struct declarations"
+descriptor = "SyntaxToken enum"
 justification = """
-Single-line parser struct names per file, tying each format to its
-source. Pairs with the 2.6 dispatch.
+The shared token type all parsers emit. Variants: Symbol, Name, Tag,
+String, Number, Null, Bool, Section, Break, Indent. Drives both the
+styled render and pure_text re-emission used by --to and clipboard.
 """
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/parse/json.rs", start = 6, end = 6, render = { kind = "full" } },
-    { path = "src/parse/yaml.rs", start = 8, end = 8, render = { kind = "full" } },
-    { path = "src/parse/toml.rs", start = 9, end = 9, render = { kind = "full" } },
-    { path = "src/parse/xml.rs", start = 12, end = 12, render = { kind = "full" } },
-    { path = "src/parse/hcl.rs", start = 8, end = 8, render = { kind = "full" } },
-    { path = "src/parse/jsonl.rs", start = 7, end = 7, render = { kind = "full" } },
-    { path = "src/parse/any.rs", start = 9, end = 11, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+  { path = "src/parse/syntax.rs", start = 11, end = 27, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "4.3"
-descriptor = "Per-format extension + allow_array_root"
+descriptor = "Per-parser Parser impl headers"
 justification = """
-Tiny per-format policy: the file extension string each parser claims,
-and whether it accepts a root array. Diagnoses bugs like
-"TOML with array at root fails to parse" (TOML/XML/HCL disallow).
+For every concrete Parser impl, just the impl block opener +
+extension() + allow_array_root() lines — the schema-flag triple.
+Catastrophic-omission hedge: a single batch makes it obvious that
+JSON+YAML+JSONL allow array roots; TOML/XML/HCL don't. Reveals
+JsonlParser advertises extension "json" (intentional).
 """
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/parse/json.rs", start = 9, end = 15, render = { kind = "full" } },
-    { path = "src/parse/yaml.rs", start = 11, end = 17, render = { kind = "full" } },
-    { path = "src/parse/toml.rs", start = 12, end = 18, render = { kind = "full" } },
-    { path = "src/parse/xml.rs", start = 15, end = 21, render = { kind = "full" } },
-    { path = "src/parse/hcl.rs", start = 11, end = 17, render = { kind = "full" } },
-    { path = "src/parse/jsonl.rs", start = 10, end = 16, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+  { path = "src/parse/json.rs", start = 8, end = 16, render = { kind = "full" } },
+  { path = "src/parse/yaml.rs", start = 10, end = 17, render = { kind = "full" } },
+  { path = "src/parse/toml.rs", start = 11, end = 18, render = { kind = "full" } },
+  { path = "src/parse/xml.rs", start = 14, end = 21, render = { kind = "full" } },
+  { path = "src/parse/hcl.rs", start = 10, end = 17, render = { kind = "full" } },
+  { path = "src/parse/jsonl.rs", start = 9, end = 16, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "4.4"
-descriptor = "AnyParser — auto-detect try-each loop"
+descriptor = "Parser::parse_root default body"
 justification = """
-The only parser with non-trivial control flow: iterates
-ContentType::iter() and uses the first one whose parse_root succeeds.
-Explains how `echo '{...}' | otree` works without a file extension.
+The default impl body: utf8-decode, delegate to parse(), then enforce
+"root must be Object or Array (and Array only if validator allows
+it)". Single source of truth for the root-shape error and the
+schema-mismatch bail.
 """
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/parse/any.rs", start = 46, end = 60, render = { kind = "full" } },
-]
+predecessor = "2.3"
+content = { kind = "lines", spans = [
+  { path = "src/parse/mod.rs", start = 45, end = 63, render = { kind = "full" } },
+] }
 
-# =========================================================================
-# Tier 5 — UI: App + TreeOverview + DataBlock + Filter
-# =========================================================================
+[[batches]]
+id = "4.5"
+descriptor = "AnyParser auto-detect parse_root"
+justification = """
+AnyParser trial-parses with each non-Any ContentType in
+strum::IntoEnumIterator order; on first success, set_parser stores
+the impl and the value is returned. Enables `echo {} | otree`.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/parse/any.rs", start = 9, end = 23, render = { kind = "full" } },
+  { path = "src/parse/any.rs", start = 46, end = 60, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.6"
+descriptor = "syntax helper signatures"
+justification = """
+Names + signatures of the helpers parsers share: quote_field_name,
+StringValue::new (single-line vs multi-line classification),
+is_value_complex (object or array-of-complex). Bodies live in
+src/parse/syntax.rs around these line numbers if needed.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/parse/syntax.rs", start = 139, end = 139, render = { kind = "full" } },
+  { path = "src/parse/syntax.rs", start = 151, end = 154, render = { kind = "full" } },
+  { path = "src/parse/syntax.rs", start = 157, end = 157, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/parse/syntax.rs", start = 201, end = 201, render = { kind = "full" } },
+] }
+
+
+# ----------------------------------------------------------------------
+# Tier 5 — Configuration system.
+# Config struct, key bindings + Action enum, color-style hierarchy.
+# Many "how do I customize X" / "what does action Y bind to" questions
+# resolve here.
+# ----------------------------------------------------------------------
 
 [[batches]]
 id = "5.1"
-descriptor = "ElementInFocus + Refresh enums"
+descriptor = "config/ module layout"
 justification = """
-The two enums that drive the App event loop: focus (which of the five
-widgets has input — TreeOverview / DataBlock / Popup / Filter / None)
-and refresh (Update / Skip / Quit / Edit). Reading any App method
-requires these.
+src/config/ children: mod.rs, colors.rs, keys.rs, types.rs. Confirms
+config is split into four files with cfg.colors / keys / types as the
+non-flat branches.
 """
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/ui/app.rs", start = 27, end = 51, render = { kind = "full" } },
-]
+content = { kind = "fs", groups = [
+  { parent = "src/config", entries = "all" },
+] }
 
 [[batches]]
 id = "5.2"
-descriptor = "App struct fields"
+descriptor = "Config struct field names"
 justification = """
-All the App's owned sub-widgets and area rects. Every reference like
-`self.tree_overview` or `self.popup` is one grep away from a concrete
-type after this.
+The 11 top-level config branches: tree, editor, data, layout, header,
+footer, filter, palette, colors, types, keys. Catastrophic-omission
+hedge — agent can refer to any branch by name without grepping.
 """
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/ui/app.rs", start = 53, end = 84, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+  { path = "src/config/mod.rs", start = 16, end = 50, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "5.3"
-descriptor = "App::on_key signature"
+descriptor = "Action enum variants"
 justification = """
-The single largest switch in the app (Action → effect). Signature
-only; the ~190-line body lives at src/ui/app.rs:393-584 and covers
-Quit, Switch, ChangeLayout, TreeScaleUp/Down, Edit, CopyName/Value,
-Filter*, ShowHelp, plus a default arm that forwards to the focused
-widget (TreeOverview / DataBlock / Popup).
+The generate_actions! invocation lists every Action: MoveUp / Down /
+Left / Right, SelectFocus / Parent / First / Last, CloseParent,
+ChangeRoot, Reset, PageUp / Down, ChangeLayout, TreeScaleUp / Down,
+Switch, Edit, CopyName / Value, Filter / FilterKey / FilterValue,
+FilterNextMatch / PrevMatch, FilterSwitchIgnoreCase, ExpandChildren /
+All, ShowHelp, Quit. Catastrophic-omission hedge for keybinding
+queries.
 """
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/ui/app.rs", start = 393, end = 396, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+  { path = "src/config/keys.rs", start = 317, end = 348, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "5.4"
-descriptor = "Action enum variants — every bindable action"
+descriptor = "Default key bindings"
 justification = """
-Every user-facing action in one location batch, rendered as the macro
-body lines `    <keybinding_name> => <ActionVariant>,`. Matches the
-default-keys macro (6.x). Catastrophic-omission hedge.
+generate_keys_default! holds every action's default key list (`k`/
+`<up>`, `j`/`<down>`, `r` for change_root, `/` for filter, `H` for
+help, `q`/`<ctrl-c>` to quit, `[`/`]` for tree-size scaling, etc.).
+Alongside 5.3, lets the agent answer "what does X bind to" with no
+follow-ups.
 """
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/config/keys.rs", start = 318, end = 347, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+  { path = "src/config/keys.rs", start = 284, end = 315, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "5.5"
-descriptor = "TreeOverview struct"
+descriptor = "Key enum + KeyAction"
 justification = """
-The widget owning the tree-widget state, filter items/cache, and the
-root-switch stack (for `change_root` / `reset`). Explains why there
-are both `last_switches` and `root_switch` fields.
+The Key enum: Char, Ctrl, Alt, F(u8), Backspace, Enter, Left, Right,
+Up, Down, PageUp, PageDown, Tab, Esc — what the parser understands.
+KeyAction pairs a Key with an optional Action.
 """
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/ui/tree_overview.rs", start = 19, end = 30, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+  { path = "src/config/keys.rs", start = 53, end = 72, render = { kind = "full" } },
+  { path = "src/config/keys.rs", start = 350, end = 354, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "5.6"
-descriptor = "TreeOverview::on_key — action → method dispatch"
+descriptor = "Per-branch struct fields (Tree / Layout / Filter / Data)"
 justification = """
-The per-widget switch showing which Actions the tree overview handles
-(move, select, expand, change_root, filter navigation, reset). Every
-unhandled Action bubbles back up to App::on_key.
+The fixed-shape structs the agent will most often need to know about:
+Tree (disable_selected_highlight, selected_symbol), Layout
+(direction + tree_size with MIN/MAX 10/80), LayoutDirection enum,
+Filter (disable, ignore_case, exclude_mode), Data (disable_highlight,
+max_data_size, wrap).
 """
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/ui/tree_overview.rs", start = 71, end = 90, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+  { path = "src/config/mod.rs", start = 52, end = 59, render = { kind = "full" } },
+  { path = "src/config/mod.rs", start = 73, end = 88, render = { kind = "full" } },
+  { path = "src/config/mod.rs", start = 105, end = 125, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "5.7"
-descriptor = "DataBlock struct + scroll state"
+descriptor = "Editor + Header + Footer struct fields"
 justification = """
-The right-hand data pane. Dual-axis scroll state plus the identify
-it last rendered (used to reset scroll when selection changes).
+Editor (program / args / dir — defaults to vim, args=["{file}"],
+dir=/tmp; program falls back to $EDITOR). Header (disable, format
+template using {version}/{data_source}/{content_type}/{data_size}).
+Footer (disable).
 """
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/ui/data_block.rs", start = 16, end = 30, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+  { path = "src/config/mod.rs", start = 61, end = 71, render = { kind = "full" } },
+  { path = "src/config/mod.rs", start = 90, end = 103, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "5.8"
-descriptor = "Filter + FilterOptions + FilterTarget + FilterAction"
+descriptor = "Config::load + Config::parse"
 justification = """
-All four filter types in one batch: the widget (text_area + target +
-ignore_case), the options bundle passed to tree, the key/value/all
-target enum, and the filter-mode action results.
+load reads and toml::from_str's the config file (returns Default if
+none found). parse() validates layout.tree_size in [10, 80], then
+invokes palette + colors + keys parse.
 """
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/ui/filter.rs", start = 13, end = 38, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+  { path = "src/config/mod.rs", start = 131, end = 169, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "5.9"
-descriptor = "TreeOverview::change_root / reset — root-stack signatures"
+descriptor = "Config::get_path resolution"
 justification = """
-Non-obvious pair: a separate root_switch for the first push, then a
-last_switches Vec for deeper pushes; reset pops in reverse order
-(last_switches first, then root_switch). Needed to understand why the
-footer shows stacked roots (footer.rs).
+get_path tries (1) the explicit --config arg, (2) $OTREE_CONFIG, (3)
+$HOME/.config/otree.toml. Only path (3) tolerates NotFound silently.
+Single source of truth for where the config file is read from.
 """
-predecessor = "5.5"
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/ui/tree_overview.rs", start = 92, end = 92, render = { kind = "full" } },
-    { path = "src/ui/tree_overview.rs", start = 93, end = 113, render = { kind = "ellipsis" } },
-    { path = "src/ui/tree_overview.rs", start = 114, end = 125, render = { kind = "full" } },
-    { path = "src/ui/tree_overview.rs", start = 127, end = 127, render = { kind = "full" } },
-    { path = "src/ui/tree_overview.rs", start = 128, end = 139, render = { kind = "ellipsis" } },
-    { path = "src/ui/tree_overview.rs", start = 140, end = 146, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+  { path = "src/config/mod.rs", start = 171, end = 194, render = { kind = "full" } },
+] }
 
-# =========================================================================
-# Tier 6 — Config: colors, keys, palette
-# =========================================================================
+[[batches]]
+id = "5.10"
+descriptor = "Color struct + Colors namespaces"
+justification = """
+The leaf Color struct ({fg, bg, bold, italic, style}) and the
+top-level Colors namespaces (header, focus_border, footer, tree,
+data, popup, filter). Combined with 5.11 these enumerate every
+configurable styled element.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/config/colors.rs", start = 20, end = 42, render = { kind = "full" } },
+  { path = "src/config/colors.rs", start = 341, end = 354, render = { kind = "full" } },
+] }
+
+
+[[batches]]
+id = "5.11"
+descriptor = "DataColors fields"
+justification = """
+The DataColors fields: text, border, symbol, name, tag, str, num,
+null, bool, section. The single-line generate_colors_parse! call
+(line 110) is the macro-generated parse impl that also lists every
+field. Catastrophic-omission hedge for "which data styles exist".
+"""
+content = { kind = "lines", spans = [
+  { path = "src/config/colors.rs", start = 78, end = 78, render = { kind = "full" } },
+  { path = "src/config/colors.rs", start = 80, end = 80, render = { kind = "full" } },
+  { path = "src/config/colors.rs", start = 83, end = 83, render = { kind = "full" } },
+  { path = "src/config/colors.rs", start = 86, end = 86, render = { kind = "full" } },
+  { path = "src/config/colors.rs", start = 89, end = 89, render = { kind = "full" } },
+  { path = "src/config/colors.rs", start = 92, end = 92, render = { kind = "full" } },
+  { path = "src/config/colors.rs", start = 95, end = 95, render = { kind = "full" } },
+  { path = "src/config/colors.rs", start = 98, end = 98, render = { kind = "full" } },
+  { path = "src/config/colors.rs", start = 101, end = 101, render = { kind = "full" } },
+  { path = "src/config/colors.rs", start = 104, end = 104, render = { kind = "full" } },
+  { path = "src/config/colors.rs", start = 107, end = 107, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.12"
+descriptor = "TreeColors fields"
+justification = """
+The TreeColors fields: border, selected, name, filter_keyword,
+type_str / null / bool / num / arr / obj (one per FieldType variant),
+value. Pairs with FieldType in 2.6.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/config/colors.rs", start = 162, end = 162, render = { kind = "full" } },
+  { path = "src/config/colors.rs", start = 164, end = 164, render = { kind = "full" } },
+  { path = "src/config/colors.rs", start = 167, end = 167, render = { kind = "full" } },
+  { path = "src/config/colors.rs", start = 170, end = 170, render = { kind = "full" } },
+  { path = "src/config/colors.rs", start = 173, end = 173, render = { kind = "full" } },
+  { path = "src/config/colors.rs", start = 176, end = 176, render = { kind = "full" } },
+  { path = "src/config/colors.rs", start = 179, end = 179, render = { kind = "full" } },
+  { path = "src/config/colors.rs", start = 182, end = 182, render = { kind = "full" } },
+  { path = "src/config/colors.rs", start = 185, end = 185, render = { kind = "full" } },
+  { path = "src/config/colors.rs", start = 188, end = 188, render = { kind = "full" } },
+  { path = "src/config/colors.rs", start = 191, end = 191, render = { kind = "full" } },
+  { path = "src/config/colors.rs", start = 194, end = 194, render = { kind = "full" } },
+] }
+
+
+[[batches]]
+id = "5.13"
+descriptor = "Types config struct"
+justification = """
+Types holds the displayed type-label strings (str, null, bool, num,
+arr, obj). The macro defaults each to the field name verbatim — the
+default `null`-typed item shows "null", but it can be renamed.
+"""
+content = { kind = "lines", spans = [
+  { path = "src/config/types.rs", start = 28, end = 28, render = { kind = "full" } },
+  { path = "src/config/types.rs", start = 30, end = 30, render = { kind = "full" } },
+  { path = "src/config/types.rs", start = 33, end = 33, render = { kind = "full" } },
+  { path = "src/config/types.rs", start = 36, end = 36, render = { kind = "full" } },
+  { path = "src/config/types.rs", start = 39, end = 39, render = { kind = "full" } },
+  { path = "src/config/types.rs", start = 42, end = 42, render = { kind = "full" } },
+  { path = "src/config/types.rs", start = 45, end = 45, render = { kind = "full" } },
+  { path = "src/config/types.rs", start = 48, end = 48, render = { kind = "full" } },
+] }
+
+# ----------------------------------------------------------------------
+# Tier 6 — Surrounding subsystems and docs.
+# Command-line surface, clipboard / editor / file-watcher / debug,
+# build script, project docs. Lower-priority than core but still
+# valuable for breadth.
+# ----------------------------------------------------------------------
 
 [[batches]]
 id = "6.1"
-descriptor = "Config struct — all top-level sections"
+descriptor = "CommandArgs flag list"
 justification = """
-The full Config shape — tree, editor, data, layout, header, footer,
-filter, palette, colors, types, keys. Single batch answers "what can
-I put in ~/.config/otree.toml?".
+Every `pub <flag>: ...,` line of CommandArgs — path, config,
+content_type, to, disable_header / footer / filter,
+tree_disable_selected_highlight, tree_selected_symbol,
+filter_ignore_case, filter_exclude_mode, header_format, vertical,
+horizontal, size, disable_highlight, wrap, show_config, ignore_config,
+build_info, max_data_size, live_reload, debug, version.
+Catastrophic-omission hedge for "what CLI flags exist".
 """
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/config/mod.rs", start = 16, end = 50, render = { kind = "full" } },
-]
+content = { kind = "lines", spans = [
+  { path = "src/cmd.rs", start = 13, end = 13, render = { kind = "full" } },
+  { path = "src/cmd.rs", start = 15, end = 15, render = { kind = "full" } },
+  { path = "src/cmd.rs", start = 19, end = 19, render = { kind = "full" } },
+  { path = "src/cmd.rs", start = 24, end = 24, render = { kind = "full" } },
+  { path = "src/cmd.rs", start = 28, end = 28, render = { kind = "full" } },
+  { path = "src/cmd.rs", start = 32, end = 32, render = { kind = "full" } },
+  { path = "src/cmd.rs", start = 36, end = 36, render = { kind = "full" } },
+  { path = "src/cmd.rs", start = 40, end = 40, render = { kind = "full" } },
+  { path = "src/cmd.rs", start = 44, end = 44, render = { kind = "full" } },
+  { path = "src/cmd.rs", start = 48, end = 48, render = { kind = "full" } },
+  { path = "src/cmd.rs", start = 52, end = 52, render = { kind = "full" } },
+  { path = "src/cmd.rs", start = 56, end = 56, render = { kind = "full" } },
+  { path = "src/cmd.rs", start = 60, end = 60, render = { kind = "full" } },
+  { path = "src/cmd.rs", start = 64, end = 64, render = { kind = "full" } },
+  { path = "src/cmd.rs", start = 68, end = 68, render = { kind = "full" } },
+  { path = "src/cmd.rs", start = 72, end = 72, render = { kind = "full" } },
+  { path = "src/cmd.rs", start = 76, end = 76, render = { kind = "full" } },
+  { path = "src/cmd.rs", start = 80, end = 80, render = { kind = "full" } },
+  { path = "src/cmd.rs", start = 84, end = 84, render = { kind = "full" } },
+  { path = "src/cmd.rs", start = 88, end = 88, render = { kind = "full" } },
+  { path = "src/cmd.rs", start = 92, end = 92, render = { kind = "full" } },
+  { path = "src/cmd.rs", start = 96, end = 96, render = { kind = "full" } },
+  { path = "src/cmd.rs", start = 100, end = 100, render = { kind = "full" } },
+  { path = "src/cmd.rs", start = 104, end = 104, render = { kind = "full" } },
+  { path = "src/cmd.rs", start = 108, end = 108, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "6.2"
-descriptor = "Per-section config structs (Tree/Editor/Layout/Header/Footer/Filter/Data + LayoutDirection)"
+descriptor = "examples/ + docs/ listings"
 justification = """
-Every simple sub-config's exact field names as individual Full spans.
-Catastrophic-omission hedge for config keys. Default-value helpers
-are a grep away (the `default_*` associated fns in src/config/mod.rs).
+examples/ — every supported format has at least one sample
+(example.json/yaml/toml/xml/hcl/jsonl plus edge.{json,toml,yaml}).
+docs/ — actions.md, changelog.md, colors.md (the last is empty as of
+this revision). Catastrophic-omission hedge for "what examples /
+which docs exist".
 """
-predecessor = "6.1"
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/config/mod.rs", start = 53, end = 53, render = { kind = "full" } },
-    { path = "src/config/mod.rs", start = 55, end = 55, render = { kind = "full" } },
-    { path = "src/config/mod.rs", start = 58, end = 58, render = { kind = "full" } },
-    { path = "src/config/mod.rs", start = 62, end = 62, render = { kind = "full" } },
-    { path = "src/config/mod.rs", start = 64, end = 64, render = { kind = "full" } },
-    { path = "src/config/mod.rs", start = 67, end = 67, render = { kind = "full" } },
-    { path = "src/config/mod.rs", start = 70, end = 70, render = { kind = "full" } },
-    { path = "src/config/mod.rs", start = 74, end = 74, render = { kind = "full" } },
-    { path = "src/config/mod.rs", start = 76, end = 76, render = { kind = "full" } },
-    { path = "src/config/mod.rs", start = 79, end = 79, render = { kind = "full" } },
-    { path = "src/config/mod.rs", start = 83, end = 87, render = { kind = "full" } },
-    { path = "src/config/mod.rs", start = 91, end = 91, render = { kind = "full" } },
-    { path = "src/config/mod.rs", start = 93, end = 93, render = { kind = "full" } },
-    { path = "src/config/mod.rs", start = 96, end = 96, render = { kind = "full" } },
-    { path = "src/config/mod.rs", start = 100, end = 100, render = { kind = "full" } },
-    { path = "src/config/mod.rs", start = 102, end = 102, render = { kind = "full" } },
-    { path = "src/config/mod.rs", start = 106, end = 106, render = { kind = "full" } },
-    { path = "src/config/mod.rs", start = 108, end = 108, render = { kind = "full" } },
-    { path = "src/config/mod.rs", start = 111, end = 111, render = { kind = "full" } },
-    { path = "src/config/mod.rs", start = 114, end = 114, render = { kind = "full" } },
-    { path = "src/config/mod.rs", start = 118, end = 118, render = { kind = "full" } },
-    { path = "src/config/mod.rs", start = 120, end = 120, render = { kind = "full" } },
-    { path = "src/config/mod.rs", start = 122, end = 122, render = { kind = "full" } },
-    { path = "src/config/mod.rs", start = 124, end = 124, render = { kind = "full" } },
-]
+content = { kind = "fs", groups = [
+  { parent = "examples", entries = "all" },
+  { parent = "docs", entries = "all" },
+] }
 
 [[batches]]
 id = "6.3"
-descriptor = "Config constants + load/parse/get_path signatures"
+descriptor = "Changelog version headings"
 justification = """
-The tree_size range constants (10..=80) and the three entry points
-governing config: `load` (takes optional explicit path), `parse`
-(validates + resolves palette -> colors + keys), `get_path` (CLI ->
-OTREE_CONFIG env -> ~/.config/otree.toml). The OTREE_CONFIG env var
-is documented nowhere else.
+Just the H2 lines in docs/changelog.md — every released version from
+v0.6.4 down to v0.1.0. Lets the agent answer "when was feature X
+added" by jumping to the right section after a single follow-up read.
 """
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/config/mod.rs", start = 128, end = 131, render = { kind = "full" } },
-    { path = "src/config/mod.rs", start = 132, end = 143, render = { kind = "ellipsis" } },
-    { path = "src/config/mod.rs", start = 144, end = 144, render = { kind = "full" } },
-    { path = "src/config/mod.rs", start = 145, end = 170, render = { kind = "ellipsis" } },
-    { path = "src/config/mod.rs", start = 171, end = 180, render = { kind = "full" } },
-    { path = "src/config/mod.rs", start = 181, end = 193, render = { kind = "ellipsis" } },
-]
+content = { kind = "lines", spans = [
+  { path = "docs/changelog.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "docs/changelog.md", start = 8, end = 8, render = { kind = "full" } },
+  { path = "docs/changelog.md", start = 22, end = 22, render = { kind = "full" } },
+  { path = "docs/changelog.md", start = 30, end = 30, render = { kind = "full" } },
+  { path = "docs/changelog.md", start = 42, end = 42, render = { kind = "full" } },
+  { path = "docs/changelog.md", start = 56, end = 56, render = { kind = "full" } },
+  { path = "docs/changelog.md", start = 97, end = 97, render = { kind = "full" } },
+  { path = "docs/changelog.md", start = 103, end = 103, render = { kind = "full" } },
+  { path = "docs/changelog.md", start = 111, end = 111, render = { kind = "full" } },
+  { path = "docs/changelog.md", start = 117, end = 117, render = { kind = "full" } },
+  { path = "docs/changelog.md", start = 125, end = 125, render = { kind = "full" } },
+  { path = "docs/changelog.md", start = 136, end = 136, render = { kind = "full" } },
+  { path = "docs/changelog.md", start = 151, end = 151, render = { kind = "full" } },
+] }
 
 [[batches]]
 id = "6.4"
-descriptor = "Keys struct fields — every keybindable action"
+descriptor = "clipboard OS routing"
 justification = """
-Every keybinding field as its own Full span. Matches 1:1 with the
-Action enum (5.4) and the default-keys macro (6.5). Catastrophic-
-omission hedge for action names.
+The platform table in clipboard::get_cmd: macOS = pbcopy, Linux =
+wl-copy if WAYLAND_DISPLAY else xclip --selection clipboard, Windows
+= clip, otherwise bail. This is the canonical "how does copy work
+on my OS" answer.
 """
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/config/keys.rs", start = 197, end = 197, render = { kind = "full" } },
-    { path = "src/config/keys.rs", start = 199, end = 199, render = { kind = "full" } },
-    { path = "src/config/keys.rs", start = 202, end = 202, render = { kind = "full" } },
-    { path = "src/config/keys.rs", start = 204, end = 204, render = { kind = "full" } },
-    { path = "src/config/keys.rs", start = 207, end = 207, render = { kind = "full" } },
-    { path = "src/config/keys.rs", start = 209, end = 209, render = { kind = "full" } },
-    { path = "src/config/keys.rs", start = 211, end = 211, render = { kind = "full" } },
-    { path = "src/config/keys.rs", start = 213, end = 213, render = { kind = "full" } },
-    { path = "src/config/keys.rs", start = 216, end = 216, render = { kind = "full" } },
-    { path = "src/config/keys.rs", start = 219, end = 219, render = { kind = "full" } },
-    { path = "src/config/keys.rs", start = 222, end = 222, render = { kind = "full" } },
-    { path = "src/config/keys.rs", start = 225, end = 225, render = { kind = "full" } },
-    { path = "src/config/keys.rs", start = 227, end = 227, render = { kind = "full" } },
-    { path = "src/config/keys.rs", start = 230, end = 230, render = { kind = "full" } },
-    { path = "src/config/keys.rs", start = 233, end = 233, render = { kind = "full" } },
-    { path = "src/config/keys.rs", start = 236, end = 236, render = { kind = "full" } },
-    { path = "src/config/keys.rs", start = 239, end = 239, render = { kind = "full" } },
-    { path = "src/config/keys.rs", start = 242, end = 242, render = { kind = "full" } },
-    { path = "src/config/keys.rs", start = 245, end = 245, render = { kind = "full" } },
-    { path = "src/config/keys.rs", start = 248, end = 248, render = { kind = "full" } },
-    { path = "src/config/keys.rs", start = 251, end = 251, render = { kind = "full" } },
-    { path = "src/config/keys.rs", start = 254, end = 254, render = { kind = "full" } },
-    { path = "src/config/keys.rs", start = 257, end = 257, render = { kind = "full" } },
-    { path = "src/config/keys.rs", start = 260, end = 260, render = { kind = "full" } },
-    { path = "src/config/keys.rs", start = 263, end = 263, render = { kind = "full" } },
-    { path = "src/config/keys.rs", start = 266, end = 266, render = { kind = "full" } },
-    { path = "src/config/keys.rs", start = 269, end = 269, render = { kind = "full" } },
-    { path = "src/config/keys.rs", start = 272, end = 272, render = { kind = "full" } },
-    { path = "src/config/keys.rs", start = 275, end = 275, render = { kind = "full" } },
-    { path = "src/config/keys.rs", start = 278, end = 278, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "6.5"
-descriptor = "Key enum — every parsable key kind"
-justification = """
-What a keybinding string can parse to: Char/Ctrl/Alt/F(n)/Backspace/
-Enter/arrows/PageUp/PageDown/Tab/Esc. Pair with docs/actions.md
-key-syntax rules.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/config/keys.rs", start = 53, end = 72, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "6.6"
-descriptor = "Colors struct — top-level styled element groups"
-justification = """
-The top-level Colors grouping (header, focus_border, footer, tree,
-data, popup, filter). Pairs with Color::parse in 8.x for palette
-lookup semantics.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/config/colors.rs", start = 20, end = 42, render = { kind = "full" } },
-]
-
-# =========================================================================
-# Tier 7 — SyntaxToken rendering + per-format highlighter signatures
-# =========================================================================
-
-[[batches]]
-id = "7.1"
-descriptor = "SyntaxToken::render signature"
-justification = """
-Signature of the rendering heart of the data pane: tokens -> ratatui
-Text with per-kind styles, wrap handling, and scroll-sizing outputs
-(rows, cols) used for scrollbar sizing. Body is large; full source
-is one grep away.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/parse/syntax.rs", start = 32, end = 37, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "7.2"
-descriptor = "StringValue::new + quote_field_name — shared string rules"
-justification = """
-Signatures for the two shared string-emit helpers used by TOML / YAML
-/ HCL: `quote_field_name` (quote non-ident names) and
-`StringValue::new` (quote strings, or split into `MultiLines` if the
-string contains newlines, or force-quote numeric/boolean-looking
-strings). The body is a cascading set of guards; a grep away.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/parse/syntax.rs", start = 139, end = 139, render = { kind = "full" } },
-    { path = "src/parse/syntax.rs", start = 151, end = 154, render = { kind = "full" } },
-    { path = "src/parse/syntax.rs", start = 157, end = 157, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "7.3"
-descriptor = "Per-format highlighter function signatures"
-justification = """
-Every format's syntax_highlight impl line or the private highlight()
-fn signature. Pointers into each implementation — paired with the
-parser struct line (4.2), the agent can land anywhere in one hop.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/parse/json.rs", start = 21, end = 23, render = { kind = "full" } },
-    { path = "src/parse/yaml.rs", start = 37, end = 37, render = { kind = "full" } },
-    { path = "src/parse/toml.rs", start = 25, end = 25, render = { kind = "full" } },
-    { path = "src/parse/xml.rs", start = 32, end = 32, render = { kind = "full" } },
-    { path = "src/parse/hcl.rs", start = 23, end = 23, render = { kind = "full" } },
-    { path = "src/parse/jsonl.rs", start = 35, end = 35, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "7.4"
-descriptor = "YAML: multi-doc + multiline specifics"
-justification = """
-Non-obvious YAML: multi-document support (Value::Array with complex
-children becomes multiple `---` docs), multiline strings rendered with
-`|`, `from_arr` suppresses indent on the first field of a dict nested
-under a `- `. Explains outputs precis users see in examples.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/parse/yaml.rs", start = 38, end = 69, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "7.5"
-descriptor = "TOML highlighter signature + section logic header"
-justification = """
-The trickiest format: splits simple fields from complex ones and
-recurses with a dotted section path. Shows the `[section]` vs
-`[[section]]` header-generation logic. Body trimmed to the section-
-emission prelude.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/parse/toml.rs", start = 88, end = 103, render = { kind = "full" } },
-]
-
-# =========================================================================
-# Tier 8 — Ancillary widgets + platform details
-# =========================================================================
-
-[[batches]]
-id = "8.1"
-descriptor = "Color struct — fg/bg/bold/italic fields"
-justification = """
-How a single color is specified in TOML. Pairs with 8.2 for the
-palette-lookup mechanism.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/config/colors.rs", start = 341, end = 354, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "8.2"
-descriptor = "Color::parse — palette-name → ratatui Color"
-justification = """
-The lookup rule that makes palette-based themes work: a color's `fg`
-or `bg` string is first looked up in the palette map, then parsed as
-a ratatui Color. Explains catppuccin.toml (9.x).
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/config/colors.rs", start = 376, end = 398, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "8.3"
-descriptor = "HeaderContext template substitution"
-justification = """
-The header is a single-line templated string — {version} /
-{data_source} / {content_type} / {data_size} substituted at build
-time. Answers "can I change the header text?" (yes, via header.format).
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/ui/header.rs", start = 11, end = 39, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "8.4"
-descriptor = "FooterText enum"
-justification = """
-Footer's three states: Identify (roots + current path), Message
-(transient), None. Root-stack narrow-terminal eliding lives in
-footer.rs's draw() — not included here.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/ui/footer.rs", start = 10, end = 14, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "8.5"
-descriptor = "Popup struct + on_key dispatch"
-justification = """
-Single shared popup used for both error messages (set via
-popup_error) and the help dialog (show_help / `H`). `Reset` or
-`SelectFocus` dismisses it. Scroll state lives here too.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/ui/popup.rs", start = 13, end = 24, render = { kind = "full" } },
-    { path = "src/ui/popup.rs", start = 39, end = 46, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "8.6"
-descriptor = "Edit struct + new() — external editor hand-off"
-justification = """
-The `e` action writes the selected node to a temp file
-(editor.dir/otree_<id>.<ext>) and spawns editor.program editor.args
-with {file} substituted. ReadOnly: Edit::run cleans the file up after
-the editor exits (run_inner in src/edit.rs, not shown).
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/edit.rs", start = 10, end = 16, render = { kind = "full" } },
-    { path = "src/edit.rs", start = 17, end = 17, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "8.7"
-descriptor = "FileWatcher::new + parse_tree signatures"
-justification = """
-`--live-reload` / `-R` spawns a notify watcher on a background thread;
-the App polls parse_tree between events and hot-swaps the Tree. Full
-body in src/live_reload.rs is a straightforward Arc<Mutex<_>> handoff.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/live_reload.rs", start = 16, end = 26, render = { kind = "full" } },
-    { path = "src/live_reload.rs", start = 28, end = 34, render = { kind = "full" } },
-    { path = "src/live_reload.rs", start = 71, end = 71, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "8.8"
-descriptor = "clipboard::get_cmd — platform dispatch"
-justification = """
-Per-OS clipboard program dispatch: pbcopy on macOS, wl-copy (Wayland)
-or xclip (X11) on Linux, clip on Windows. Most concrete answer to
-"how does y / Y actually copy on my platform?".
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "src/clipboard.rs", start = 7, end = 26, render = { kind = "full" } },
-]
-
-# =========================================================================
-# Tier 9 — Docs + external references
-# =========================================================================
-
-[[batches]]
-id = "9.1"
-descriptor = "Cargo.toml [dependencies] — external crates"
-justification = """
-Every runtime dep, one line each (ratatui, tui-tree-widget,
-tui-textarea, clap, serde, serde_yml, toml, quick-xml, hcl-rs,
-crossterm, notify, humansize, dirs, anyhow, regex, strum, paste).
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "Cargo.toml", start = 13, end = 33, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "9.2"
-descriptor = "docs/actions.md — key-syntax rules + config example"
-justification = """
-The key-syntax reference (<up>, <ctrl-x>, <alt-x>, <fN>, <esc>, …)
-plus the config example showing how to rebind an action. The
-per-action table above (lines 1-34) duplicates 5.4 + 6.4 + 6.5 and
-is a cheap grep away.
-"""
-[batches.content]
-kind = "lines"
-spans = [
-    { path = "docs/actions.md", start = 36, end = 51, render = { kind = "full" } },
-]
-
-[[batches]]
-id = "9.3"
-descriptor = "Every docs/*.md file"
-justification = """
-Location batch: names the doc files. docs/colors.md is empty in this
-revision; actions.md and changelog.md both exist and are grep-
-worthy.
-"""
-[batches.content]
-kind = "fs"
-groups = [{ parent = "docs", entries = "all" }]
-
-[[batches]]
-id = "9.4"
-descriptor = "examples/ listing"
-justification = """
-Enumerates every example input (json/yaml/toml/xml/hcl/jsonl +
-edge-case variants). Quick manual-test pointers.
-"""
-[batches.content]
-kind = "fs"
-groups = [{ parent = "examples", entries = "all" }]
-
-[[batches]]
-id = "9.5"
-descriptor = "parse/test_cases root listing"
-justification = """
-Every format has a `test_cases/<fmt>/` dir with raw + _highlight
-fixture pairs consumed by the inline parser unit tests
-(see `test_syntax_highlight` in each parse/*.rs).
-"""
-[batches.content]
-kind = "fs"
-groups = [{ parent = "src/parse/test_cases", entries = "all" }]
+content = { kind = "lines", spans = [
+  { path = "src/clipboard.rs", start = 7, end = 19, render = { kind = "full" } },
+] }

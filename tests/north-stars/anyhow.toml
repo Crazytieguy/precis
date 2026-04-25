@@ -1,684 +1,857 @@
 fixture = "anyhow"
 revision_pin = "769cba0b"
 summary = """
-anyhow is a one-word-sized, trait-object-backed error type for Rust apps:
-`anyhow::Error` wraps any `E: std::error::Error + Send + Sync + 'static` (or
-any `Display + Debug` ad-hoc message), carries a backtrace when one isn't
-already present, supports a `Context::context(...)` chain that can be
-downcast to either the context type or the underlying error, and comes with
-`anyhow!`/`bail!`/`ensure!` macros for ergonomic construction. The crate
-is `no_std`-friendly (default feature `std`, opt-out alloc-only mode) and
-its single-word layout comes from a hand-rolled per-type vtable rather than
-fat pointers.
+`anyhow` is a Rust error-handling library: a single, flexible
+`anyhow::Error` trait-object error type with downcasting, context
+chains, automatic backtraces, and the `anyhow!` / `bail!` / `ensure!`
+macros. It is `no_std`-compatible (with global allocator), built
+around `std::error::Error` (or `core::error::Error` on new enough
+toolchains) rather than a custom error trait.
 
-The ranking serves the full distribution of agent queries about anyhow:
-  - "what does this crate give me / how do I use it" — crate docs, README,
-    idiomatic examples.
-  - "what's the exact signature of X" — Error / Context / Result / Chain,
-    plus all the macros.
-  - "how does the one-word Error actually work" — ErrorVTable, ErrorImpl,
-    construct_from_* constructors, Own/Ref/Mut ptr types.
-  - "how is context represented / downcast through a chain" — ContextError,
-    context_chain_downcast.
-  - "how are anyhow!/bail!/ensure! dispatched" — kind.rs tagged dispatch,
-    macros.rs call forms, ensure.rs tt-muncher (breadth only — the body is
-    huge and low-value per line).
-  - "what compiler versions / features / cfgs are supported" — build.rs
-    probe + Cargo features + CI matrix.
-  - "how are errors tested" — tests/*.rs shape (one test file per aspect:
-    downcast, context, chain, fmt, ensure, boxed, ffi, autotrait, repr).
+The crate is small (~12 src files) but conceptually dense: behind the
+public surface, `Error` is a one-word `Own<ErrorImpl>` whose
+behaviour is dispatched through a hand-rolled vtable so that
+downcasting, source/cause chains and backtrace plumbing all coexist
+in a single thin pointer. A separate autoref-based "kind" tagged
+dispatch in `kind.rs` lets `anyhow!($expr)` pick between the StdError
+and Display+Debug code paths without specialization. `ensure!` is
+implemented by a giant tt-muncher macro in `ensure.rs` that parses
+Rust expressions to extract `lhs OP rhs` for "assertion failed (lhs
+vs rhs)"-style messages, with a fallback path for shapes it cannot
+parse.
+
+The ranking serves the full distribution of plausible dev queries on
+this crate: explaining concepts, looking up a public method, debugging
+a downcast or context interaction, understanding the macro surface,
+diving into the vtable / unsafe internals, working with the `no_std`
++ feature-flag matrix in `build.rs`, or extending the test suite. It
+prioritises (1) breadth — locations of every public API symbol, every
+test file, every src module — and (2) the high-information snippets
+needed to actually reason about behavior (struct definition, Display
+representations doc, Context trait, key macro arms).
 """
 
-# ---------------------------------------------------------------------------
-# Tier 1 — "what is this crate, at a glance"
-# ---------------------------------------------------------------------------
+# ---------------------------------------------------------------
+# Tier 1 — Orientation: what crate is this? where is the code?
+# ---------------------------------------------------------------
 
 [[batches]]
 id = "1.1"
-descriptor = "Crate one-liner"
+descriptor = "Top-level fixture listing"
 justification = """
-The single-sentence summary from Cargo.toml's `description` field. This is
-what every agent query starts from — what kind of library this is — and
-it's the cheapest possible piece of that context.
+First touch: every file at the crate root. README, Cargo.toml,
+build.rs, src/, tests/, license files, .gitignore, .precis-pin —
+everything an agent might need to find. Catastrophic-omission hedge
+for repository structure.
 """
-content = { kind = "lines", spans = [
-  { path = "Cargo.toml", start = 5, end = 5, render = { kind = "full" } },
-] }
+content = { kind = "fs", groups = [{ parent = ".", entries = "all" }] }
 
 [[batches]]
 id = "1.2"
-descriptor = "Repo root listing"
+descriptor = "Crate-doc lede"
 justification = """
-Every immediate child of the repo root. Tells the agent the crate has src/,
-tests/, build.rs, Cargo.toml, README, LICENSE files, rust-toolchain.toml —
-catastrophic omission: without it, the agent might assume there's no
-build.rs or no rust-toolchain pin.
+The two-line crate description, before the badges noise. Cheapest
+possible answer to "what does this crate do?". Predecessor for the
+later `Error` struct doc.
 """
-content = { kind = "fs", groups = [
-  { parent = ".", entries = "all" },
+content = { kind = "lines", spans = [
+    { path = "src/lib.rs", start = 9, end = 11, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "1.3"
 descriptor = "src/ listing"
 justification = """
-All source modules by name (ensure/error/lib/macros/context/chain/fmt/
-backtrace/kind/nightly/ptr/wrapper). Cheapest split that tells the agent
-which files contain implementation without conflating with tests.
+Names every internal module: backtrace, chain, context, ensure,
+error, fmt, kind, lib, macros, nightly, ptr, wrapper. Pairs with the
+mod declarations later; mitigates the catastrophic-omission risk
+that a partial src/ batch implies an unlisted file does not exist.
 """
-content = { kind = "fs", groups = [
-  { parent = "src", entries = "all" },
-] }
+content = { kind = "fs", groups = [{ parent = "src", entries = "all" }] }
 
 [[batches]]
 id = "1.4"
-descriptor = "Crate-doc lede (what anyhow is)"
+descriptor = "Crate identity (name, edition, MSRV)"
 justification = """
-The one-sentence README lede: "trait object based error type for easy
-idiomatic error handling in Rust applications". Functionally the same as
-1.1's Cargo description, but in slightly fuller prose — and right above
-the `anyhow = "1.0"` install snippet.
+The few `[package]` fields that load-bearingly identify the crate:
+edition 2021, rust-version 1.68 (MSRV), license, name. Skips the
+authors/keywords/categories/repository lines as low-information for
+agents.
 """
 content = { kind = "lines", spans = [
-  { path = "README.md", start = 9, end = 17, render = { kind = "full" } },
+    { path = "Cargo.toml", start = 1, end = 3, render = { kind = "full" } },
+    { path = "Cargo.toml", start = 8, end = 8, render = { kind = "full" } },
+    { path = "Cargo.toml", start = 10, end = 10, render = { kind = "full" } },
+    { path = "Cargo.toml", start = 12, end = 12, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "1.5"
 descriptor = "tests/ listing"
 justification = """
-All test files in tests/ — tells the agent which aspects of Error have
-dedicated tests (test_downcast / test_context / test_chain / test_fmt /
-test_ensure / test_boxed / test_ffi / test_autotrait / test_repr /
-test_source / test_macros / test_backtrace / test_convert), plus
-compiletest.rs, common/, drop/, crate/, ui/. Catastrophic omission
-mitigation for the whole test surface.
+Every integration test file by name. Tests mirror feature areas
+(test_chain, test_context, test_downcast, test_ensure, test_fmt,
+test_macros, test_source, test_repr, test_boxed, test_backtrace,
+test_autotrait, test_convert, test_ffi, plus compiletest). Cheap
+breadth that lets the agent jump directly to a precedent test.
 """
-content = { kind = "fs", groups = [
-  { parent = "tests", entries = "all" },
-] }
+content = { kind = "fs", groups = [{ parent = "tests", entries = "all" }] }
 
-[[batches]]
-id = "1.6"
-descriptor = "Cargo package identity"
-justification = """
-name/version/authors/description/edition/rust-version/license. Most
-load-bearing lines here are `rust-version = "1.68"` (MSRV) and
-`edition = "2021"`.
-"""
-predecessor = "1.1"
-content = { kind = "lines", spans = [
-  { path = "Cargo.toml", start = 1, end = 12, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "1.7"
-descriptor = "Cargo features + runtime deps"
-justification = """
-The [features] default=["std"] / std=[] stanza and the [dependencies]
-block showing the optional `backtrace` crate (with its inline comment
-about >=1.65 preferring std::backtrace). Defines the no_std / backtrace
-feature matrix.
-"""
-content = { kind = "lines", spans = [
-  { path = "Cargo.toml", start = 14, end = 23, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "1.8"
-descriptor = "README usage — Result<T>/? return type"
-justification = """
-The first README bullet: use `Result<T, anyhow::Error>` / `anyhow::Result<T>`
-as the return type of fallible functions, then `?` to propagate any
-`std::error::Error`. Small concrete example. Zero-follow-up answer for
-"how do I start using anyhow".
-"""
-predecessor = "1.4"
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 21, end = 39, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "1.9"
-descriptor = "README usage — .context() and the Caused-by chain"
-justification = """
-The .context() / .with_context() example with the resulting
-"Error: Failed to read instrs from ... / Caused by: No such file or
-directory" output. Cleanly shows the two most load-bearing methods users
-want from the `Context` trait plus what the rendered error chain looks
-like. Sits right after the Result<T>/? batch in the README.
-"""
-predecessor = "1.8"
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 41, end = 64, render = { kind = "full" } },
-] }
-
-# ---------------------------------------------------------------------------
-# Tier 2 — the public API surface: locations first, then signatures
-# ---------------------------------------------------------------------------
+# ---------------------------------------------------------------
+# Tier 2 — Public API surface: types, methods, macros (signatures).
+# ---------------------------------------------------------------
 
 [[batches]]
 id = "2.1"
-descriptor = "Public items in src/lib.rs (location batch)"
+descriptor = "lib.rs module declarations"
 justification = """
-Every `pub` item defined at the top of lib.rs, truncated at their leading
-keyword+name. Locations for `pub use anyhow as format_err`, `pub struct
-Error`, `pub struct Chain<'a>`, `pub type Result`, `pub trait Context`,
-`pub fn Ok`, `pub mod __private`. Cheapest way to prevent an agent from
-assuming some of these don't exist.
+The full mod tree of the crate, in one place: backtrace, chain,
+context, ensure, error, fmt, kind, macros, nightly, ptr, wrapper,
+plus `extern crate alloc` / cfg `extern crate std`. Lets the agent
+map any feature to its file before reading anything else.
 """
 content = { kind = "lines", spans = [
-  { path = "src/lib.rs", start = 286, end = 286, render = { kind = "truncated", pattern = "^[^;]*" } },
-  { path = "src/lib.rs", start = 390, end = 390, render = { kind = "truncated", pattern = "^[^{]+" } },
-  { path = "src/lib.rs", start = 415, end = 415, render = { kind = "truncated", pattern = "^[^{]+" } },
-  { path = "src/lib.rs", start = 468, end = 468, render = { kind = "truncated", pattern = "^[^;]+" } },
-  { path = "src/lib.rs", start = 616, end = 616, render = { kind = "truncated", pattern = "^[^{]+" } },
-  { path = "src/lib.rs", start = 650, end = 650, render = { kind = "truncated", pattern = "^[^{]+" } },
-  { path = "src/lib.rs", start = 656, end = 656, render = { kind = "truncated", pattern = "^[^{]+" } },
+    { path = "src/lib.rs", start = 246, end = 264, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "2.2"
-descriptor = "Public items in src/error.rs (location batch)"
+descriptor = "Error struct definition"
 justification = """
-All `impl Error { pub fn ... }` signatures as a location batch — truncated
-at the opening `(`. Tells the agent every constructor/inspector anyhow
-ships on Error: new, msg, from_boxed, context, backtrace, chain, root_cause,
-is, downcast, downcast_ref, downcast_mut, into_boxed_dyn_error,
-reallocate_into_boxed_dyn_error_without_backtrace.
+The one-word `Error` struct itself: `Own<ErrorImpl>` inner field,
+`#[repr(transparent)]`. Foundational fact (the whole crate is
+organised around this representation); anchor for the later vtable
+batches.
 """
 content = { kind = "lines", spans = [
-  { path = "src/error.rs", start = 30, end = 30, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/error.rs", start = 77, end = 77, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/error.rs", start = 140, end = 140, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/error.rs", start = 372, end = 372, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/error.rs", start = 432, end = 432, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/error.rs", start = 459, end = 459, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/error.rs", start = 470, end = 470, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/error.rs", start = 482, end = 482, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/error.rs", start = 490, end = 490, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/error.rs", start = 554, end = 554, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/error.rs", start = 568, end = 568, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/error.rs", start = 622, end = 622, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/error.rs", start = 663, end = 663, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "src/lib.rs", start = 389, end = 392, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "2.3"
-descriptor = "Public macros — names (location batch)"
+descriptor = "Result type alias"
 justification = """
-`bail!`, `ensure!` (cfg(doc) arm, then cfg(not(doc)) dispatcher), and
-`anyhow!`. Location-only: having the names + their files lets an agent
-jump to any macro body in one hop. Without this, it's easy to assume
-only `anyhow!` exists or to conflate `bail!` with `ensure!`.
+`pub type Result<T, E = Error>`. Tiny but high-frequency: every
+`fn() -> Result<T>` in user code references this.
 """
 content = { kind = "lines", spans = [
-  { path = "src/macros.rs", start = 58, end = 58, render = { kind = "truncated", pattern = "^macro_rules![^{]+" } },
-  { path = "src/macros.rs", start = 129, end = 129, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/macros.rs", start = 159, end = 159, render = { kind = "truncated", pattern = "^[^(]+" } },
-  { path = "src/macros.rs", start = 204, end = 204, render = { kind = "truncated", pattern = "^macro_rules![^{]+" } },
+    { path = "src/lib.rs", start = 468, end = 468, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "2.4"
-descriptor = "Context trait — full definition"
+descriptor = "Chain struct"
 justification = """
-The `pub trait Context<T, E>` body: both `context(...)` and
-`with_context(...)` signatures, including the `Display + Send + Sync +
-'static` bound on the context type. Tiny and directly load-bearing for
-every agent that asks "how do I attach context to a Result".
+`pub struct Chain<'a>` — iterator type returned from
+`Error::chain()`. Locates the user-facing iterator and pairs with
+its impls in src/chain.rs (Iterator/DoubleEndedIterator/ExactSize).
 """
-predecessor = "2.1"
 content = { kind = "lines", spans = [
-  { path = "src/lib.rs", start = 616, end = 628, render = { kind = "full" } },
+    { path = "src/lib.rs", start = 413, end = 417, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "2.5"
-descriptor = "Error struct — definition + one-word guarantees"
+descriptor = "Error vs Box<dyn Error>: three differences"
 justification = """
-`#[repr(transparent)] pub struct Error { inner: Own<ErrorImpl> }` plus
-the three bullets from its docs that state the load-bearing guarantees
-(Send+Sync+'static; backtrace always available; one-word narrow pointer).
-Those bullets are the answer to "why anyhow and not Box<dyn Error>".
+The bullet list at the top of the `Error` doc: Send+Sync+'static,
+guaranteed backtrace, narrow pointer (one word). The single most
+quoted concept of the crate; anchors the vtable and pointer
+machinery surfaced later.
 """
-predecessor = "2.1"
+predecessor = "2.2"
 content = { kind = "lines", spans = [
-  { path = "src/lib.rs", start = 288, end = 298, render = { kind = "full" } },
-  { path = "src/lib.rs", start = 389, end = 392, render = { kind = "full" } },
+    { path = "src/lib.rs", start = 288, end = 297, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "2.6"
-descriptor = "Result alias + Ok helper + format_err re-export"
+descriptor = "Error::* method signatures (locations)"
 justification = """
-`pub type Result<T, E = Error>`, `pub fn Ok<T>(value: T) -> Result<T>`,
-and `pub use anyhow as format_err`. These are trivially small but are the
-actual names users import alongside Error; leaving them out risks the
-agent missing that `anyhow::Result` has a defaulted E param or that
-`format_err!` is just an alias for `anyhow!`.
+First line of every `pub fn` on `Error`, truncated at the opening
+paren: new, msg, from_boxed, context, backtrace, chain, root_cause,
+is, downcast, downcast_ref, downcast_mut, into_boxed_dyn_error,
+reallocate_into_boxed_dyn_error_without_backtrace. Catastrophic-
+omission hedge: implies the closed set of public methods exists,
+without yet revealing each method's full signature/doc.
 """
-predecessor = "2.1"
 content = { kind = "lines", spans = [
-  { path = "src/lib.rs", start = 286, end = 286, render = { kind = "full" } },
-  { path = "src/lib.rs", start = 468, end = 468, render = { kind = "full" } },
-  { path = "src/lib.rs", start = 648, end = 652, render = { kind = "full" } },
+    { path = "src/error.rs", start = 19, end = 19, render = { kind = "full" } },
+    { path = "src/error.rs", start = 30, end = 30, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "src/error.rs", start = 77, end = 77, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "src/error.rs", start = 140, end = 140, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "src/error.rs", start = 372, end = 372, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "src/error.rs", start = 432, end = 432, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "src/error.rs", start = 459, end = 459, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "src/error.rs", start = 470, end = 470, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "src/error.rs", start = 482, end = 482, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "src/error.rs", start = 490, end = 490, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "src/error.rs", start = 554, end = 554, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "src/error.rs", start = 568, end = 568, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "src/error.rs", start = 622, end = 622, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "src/error.rs", start = 663, end = 663, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "2.7"
-descriptor = "Chain iterator — signature + example"
+descriptor = "Context trait signature"
 justification = """
-`pub struct Chain<'a>` plus its small doc example that shows the typical
-downcast-in-a-loop pattern (`for cause in error.chain() { if let Some(io)
-= cause.downcast_ref::<io::Error>() { ... } }`). Pairs with
-Error::chain()/root_cause().
+The `Context<T, E>` trait with both methods (`context`, `with_context`)
+and bounds. Cheapest authoritative answer to "how does .context()
+work?" — by far the most common ergonomic API on this crate.
 """
-predecessor = "2.1"
 content = { kind = "lines", spans = [
-  { path = "src/lib.rs", start = 394, end = 417, render = { kind = "full" } },
+    { path = "src/lib.rs", start = 616, end = 628, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "2.8"
-descriptor = "Error constructors — signatures + bounds"
+descriptor = "Crate-level public items (locations)"
 justification = """
-Full signatures with bounds for the four ways to build an Error:
-`Error::new<E: StdError + Send + Sync + 'static>`,
-`Error::msg<M: Display + Debug + Send + Sync + 'static>`,
-`Error::from_boxed(Box<dyn StdError + Send + Sync + 'static>)`,
-and `Error::context<C: Display + Send + Sync + 'static>` (by-value
-on an existing Error). These bounds are the precise surface users
-compare against.
+The other top-level pub items in lib.rs: `pub use anyhow as
+format_err`, `pub fn Ok`, `pub mod __private` (and the four `pub
+fn`s inside it). Pairs with Error::* and the macros so the agent
+sees the full free-function/re-export surface. Truncated at first
+paren for fn shapes.
 """
-predecessor = "2.2"
 content = { kind = "lines", spans = [
-  { path = "src/error.rs", start = 30, end = 36, render = { kind = "full" } },
-  { path = "src/error.rs", start = 77, end = 82, render = { kind = "full" } },
-  { path = "src/error.rs", start = 140, end = 143, render = { kind = "full" } },
-  { path = "src/error.rs", start = 372, end = 380, render = { kind = "full" } },
+    { path = "src/lib.rs", start = 285, end = 286, render = { kind = "full" } },
+    { path = "src/lib.rs", start = 648, end = 650, render = { kind = "full" } },
+    { path = "src/lib.rs", start = 656, end = 656, render = { kind = "full" } },
+    { path = "src/lib.rs", start = 684, end = 684, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "src/lib.rs", start = 698, end = 698, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "src/lib.rs", start = 704, end = 704, render = { kind = "truncated", pattern = "^[^(]+" } },
 ] }
 
 [[batches]]
 id = "2.9"
-descriptor = "Error inspectors — chain, downcast, is, root_cause signatures"
+descriptor = "Macro export locations"
 justification = """
-Full signatures for the inspection methods: chain(), root_cause(),
-is<E>(), downcast<E>(), downcast_ref<E>(), downcast_mut<E>(). These are
-what users call once they have an Error in hand; the where-bounds
-(`E: Display + Debug + Send + Sync + 'static`) are the subtle part and
-worth preserving.
+The three macros users actually invoke: `bail!`, `ensure!` (doc and
+real definitions, the latter delegating to `__parse_ensure!` in
+ensure.rs) and `anyhow!`. Locations only; bodies later. Surfacing
+the `#[cfg(doc)]` / `#[cfg(not(doc))]` split is itself useful: the
+documented `ensure!` shape lives in macros.rs, the real parser in
+ensure.rs.
 """
-predecessor = "2.2"
 content = { kind = "lines", spans = [
-  { path = "src/error.rs", start = 459, end = 461, render = { kind = "full" } },
-  { path = "src/error.rs", start = 470, end = 472, render = { kind = "full" } },
-  { path = "src/error.rs", start = 482, end = 487, render = { kind = "full" } },
-  { path = "src/error.rs", start = 490, end = 492, render = { kind = "full" } },
-  { path = "src/error.rs", start = 554, end = 557, render = { kind = "full" } },
-  { path = "src/error.rs", start = 568, end = 571, render = { kind = "full" } },
+    { path = "src/macros.rs", start = 56, end = 58, render = { kind = "full" } },
+    { path = "src/macros.rs", start = 126, end = 129, render = { kind = "full" } },
+    { path = "src/macros.rs", start = 155, end = 159, render = { kind = "full" } },
+    { path = "src/macros.rs", start = 202, end = 204, render = { kind = "full" } },
 ] }
 
-# ---------------------------------------------------------------------------
-# Tier 3 — how it actually works: macros, context, vtable, no_std feature
-# ---------------------------------------------------------------------------
+[[batches]]
+id = "2.10"
+descriptor = "Cargo features + dev-deps"
+justification = """
+The `[features]` (default = std, optional `backtrace`) and
+`[dev-dependencies]` (futures, rustversion, syn, thiserror, trybuild)
+sections. Predecessor 1.4 (crate identity) lands the basic header;
+this fills in the bits a no_std / feature-flag question needs.
+"""
+predecessor = "1.4"
+content = { kind = "lines", spans = [
+    { path = "Cargo.toml", start = 14, end = 30, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.11"
+descriptor = "Display reprs: `{}` and `{:#}`"
+justification = """
+The first half of the canonical Error doc: `to_string()` shows only
+the outermost message, `{:#}` chains causes with `: ` separators.
+Two console examples included. Common print-formatting question
+answered without follow-up.
+"""
+predecessor = "2.5"
+content = { kind = "lines", spans = [
+    { path = "src/lib.rs", start = 301, end = 317, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.12"
+descriptor = "anyhow! macro body"
+justification = """
+The three arms of `anyhow!`: literal → `format_err`, expr →
+`anyhow_kind().new(error)` (autoref dispatch through kind.rs),
+fmt+args → `Error::msg(format!(...))`. Predecessor 2.9 already
+revealed the macro's location.
+"""
+predecessor = "2.9"
+content = { kind = "lines", spans = [
+    { path = "src/macros.rs", start = 202, end = 223, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.13"
+descriptor = "Context impls for Result and Option"
+justification = """
+The two `impl Context for ...` blocks that make `.context(msg)?`
+work on both `Result` and `Option`. Short, complete, and the agent
+will frequently reach for it when writing or debugging context
+chains. Predecessor: the trait signature.
+"""
+predecessor = "2.7"
+content = { kind = "lines", spans = [
+    { path = "src/context.rs", start = 42, end = 68, render = { kind = "full" } },
+    { path = "src/context.rs", start = 90, end = 113, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.14"
+descriptor = "Debug repr `{:?}` (default for `fn main`)"
+justification = """
+Multi-line Debug example with `Caused by:` chain and `Stack
+backtrace:` block. This is what users see when an error returns from
+`main`; very common diagnostic question.
+"""
+predecessor = "2.5"
+content = { kind = "lines", spans = [
+    { path = "src/lib.rs", start = 319, end = 352, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.15"
+descriptor = "Debug repr `{:#?}` + manual chain rendering"
+justification = """
+The struct-style `{:#?}` output and the recipe (`for cause in
+err.chain().skip(1)`) for rendering an error chain by hand. Pairs
+with 2.4 (Chain struct) and the `chain.rs` impl batch later.
+"""
+predecessor = "2.5"
+content = { kind = "lines", spans = [
+    { path = "src/lib.rs", start = 354, end = 388, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------
+# Tier 3 — Implementation skeletons: per-file item locations.
+# ---------------------------------------------------------------
 
 [[batches]]
 id = "3.1"
-descriptor = "`bail!` macro — all three arms"
+descriptor = "error.rs item locations"
 justification = """
-The full body of `bail!`: literal → `__anyhow!`, expr → `__anyhow!`,
-format-string → `__anyhow!`. Short, load-bearing — agents frequently
-need to know which forms `bail!` accepts and that it always
-`return Err(...)`s.
+The complete inventory of items in src/error.rs beyond the `pub fn`s
+already located: `impl Error` open, the trait/non-trait impl headers
+(`From<E>`, `Deref`, `DerefMut`, `Display`, `Debug`, `Drop`,
+`AsRef`, `UnwindSafe`/`RefUnwindSafe`, `From<Error> for
+Box<dyn StdError + ...>` x3), and the internal types: `ErrorVTable`,
+`ErrorImpl<E>`, `ContextError<C, E>`, plus the `vtable()` helper.
+Catastrophic-omission hedge for the largest file in the crate.
 """
-predecessor = "2.3"
 content = { kind = "lines", spans = [
-  { path = "src/macros.rs", start = 56, end = 68, render = { kind = "full" } },
+    { path = "src/error.rs", start = 692, end = 692, render = { kind = "full" } },
+    { path = "src/error.rs", start = 704, end = 704, render = { kind = "full" } },
+    { path = "src/error.rs", start = 713, end = 713, render = { kind = "full" } },
+    { path = "src/error.rs", start = 719, end = 719, render = { kind = "full" } },
+    { path = "src/error.rs", start = 725, end = 725, render = { kind = "full" } },
+    { path = "src/error.rs", start = 731, end = 731, render = { kind = "full" } },
+    { path = "src/error.rs", start = 740, end = 740, render = { kind = "full" } },
+    { path = "src/error.rs", start = 934, end = 934, render = { kind = "full" } },
+    { path = "src/error.rs", start = 952, end = 952, render = { kind = "full" } },
+    { path = "src/error.rs", start = 1015, end = 1015, render = { kind = "full" } },
+    { path = "src/error.rs", start = 1029, end = 1029, render = { kind = "full" } },
+    { path = "src/error.rs", start = 1038, end = 1038, render = { kind = "full" } },
+    { path = "src/error.rs", start = 1048, end = 1048, render = { kind = "full" } },
+    { path = "src/error.rs", start = 1056, end = 1056, render = { kind = "full" } },
+    { path = "src/error.rs", start = 1064, end = 1064, render = { kind = "full" } },
+    { path = "src/error.rs", start = 1072, end = 1072, render = { kind = "full" } },
+    { path = "src/error.rs", start = 1079, end = 1079, render = { kind = "full" } },
+    { path = "src/error.rs", start = 1085, end = 1086, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "3.2"
-descriptor = "`anyhow!` macro — all three arms + __anyhow helper"
+descriptor = "context.rs item locations"
 justification = """
-The real dispatch: `anyhow!($msg:literal)` → `format_err(format_args!)`,
-`anyhow!($err:expr)` → `(&error).anyhow_kind().new(error)` (the
-tagged-dispatch trick that chooses AdhocKind vs TraitKind vs BoxedKind),
-`anyhow!($fmt, $args)` → `Error::msg(format!(...))`. Answers "how
-does anyhow! know whether I passed a StdError or just a Display?".
+The structure of context.rs in one batch: the `ext::StdError` private
+trait that lets `Context` accept both `E: StdError` and `Error`; the
+two `impl Context for Result/Option` heads (already opened in 2.13
+but listed here to anchor the file); the `ContextError` trait impls
+(`Debug`, `Display`, two `StdError`s); the `Quoted` debug helper;
+the `private::Sealed` trait.
 """
-predecessor = "2.3"
 content = { kind = "lines", spans = [
-  { path = "src/macros.rs", start = 202, end = 245, render = { kind = "full" } },
+    { path = "src/context.rs", start = 9, end = 9, render = { kind = "full" } },
+    { path = "src/context.rs", start = 12, end = 12, render = { kind = "full" } },
+    { path = "src/context.rs", start = 19, end = 22, render = { kind = "full" } },
+    { path = "src/context.rs", start = 32, end = 32, render = { kind = "full" } },
+    { path = "src/context.rs", start = 115, end = 115, render = { kind = "full" } },
+    { path = "src/context.rs", start = 128, end = 128, render = { kind = "full" } },
+    { path = "src/context.rs", start = 137, end = 137, render = { kind = "full" } },
+    { path = "src/context.rs", start = 152, end = 152, render = { kind = "full" } },
+    { path = "src/context.rs", start = 166, end = 166, render = { kind = "full" } },
+    { path = "src/context.rs", start = 168, end = 168, render = { kind = "full" } },
+    { path = "src/context.rs", start = 180, end = 180, render = { kind = "full" } },
+    { path = "src/context.rs", start = 186, end = 192, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "3.3"
-descriptor = "`ensure!` macro — doc arm and tt-muncher dispatch"
+descriptor = "chain.rs item locations"
 justification = """
-The two definitions of `ensure!`: the `#[cfg(doc)]` arm that rustdoc sees
-(four clean match arms: cond-only / cond+literal / cond+expr / cond+fmt)
-and the `#[cfg(not(doc))]` arm that delegates to the `__parse_ensure!`
-tt-muncher with a `fuel` counter. Explains why `ensure!` accepts arbitrary
-expressions and splits them at comparison operators.
+The complete shape of chain.rs: `ChainState<'a>` enum with `Linked`
+and `Buffered` variants, `Chain::new` constructor, the
+`Iterator`/`DoubleEndedIterator`/`ExactSizeIterator`/`Default`
+impls. The Chain machinery is small enough that locations alone
+mostly answer "what does Chain support?" — except for the
+DoubleEndedIterator buffering trick which gets a body batch later.
 """
-predecessor = "2.3"
 content = { kind = "lines", spans = [
-  { path = "src/macros.rs", start = 126, end = 172, render = { kind = "full" } },
+    { path = "src/chain.rs", start = 11, end = 13, render = { kind = "full" } },
+    { path = "src/chain.rs", start = 16, end = 24, render = { kind = "full" } },
+    { path = "src/chain.rs", start = 26, end = 33, render = { kind = "full" } },
+    { path = "src/chain.rs", start = 35, end = 36, render = { kind = "full" } },
+    { path = "src/chain.rs", start = 57, end = 57, render = { kind = "full" } },
+    { path = "src/chain.rs", start = 76, end = 76, render = { kind = "full" } },
+    { path = "src/chain.rs", start = 94, end = 94, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "3.4"
-descriptor = "`ensure!` expansion — BothDebug/NotBothDebug + __fancy/__fallback"
+descriptor = "kind.rs tagged-dispatch types"
 justification = """
-After `__parse_ensure!` splits `lhs OP rhs`, `__fancy_ensure!` evaluates
-them and on failure dispatches to `(lhs, rhs).__dispatch_ensure(...)`,
-which picks `BothDebug` (formats "cond failed: ... (lhs vs rhs)") or
-`NotBothDebug` (just the condition string). `__fallback_ensure!` handles
-the simple `ensure!(cond)` form. This is the full answer for "what
-produces the `(N vs M)` rendering".
+The autoref-based tagged dispatch behind `anyhow!($expr)`: three
+zero-sized struct/trait pairs `Adhoc`/`AdhocKind`,
+`Trait`/`TraitKind`, `Boxed`/`BoxedKind`, with a `.new(error)`
+method on each that constructs an `Error` differently. Surfaces
+all six locations in one batch so an agent reading the
+`anyhow_kind()` call in 2.12 can find every dispatch arm.
 """
-predecessor = "3.3"
 content = { kind = "lines", spans = [
-  { path = "src/ensure.rs", start = 9, end = 33, render = { kind = "full" } },
-  { path = "src/ensure.rs", start = 884, end = 908, render = { kind = "full" } },
-  { path = "src/ensure.rs", start = 910, end = 919, render = { kind = "full" } },
+    { path = "src/kind.rs", start = 55, end = 55, render = { kind = "full" } },
+    { path = "src/kind.rs", start = 58, end = 63, render = { kind = "full" } },
+    { path = "src/kind.rs", start = 65, end = 65, render = { kind = "full" } },
+    { path = "src/kind.rs", start = 67, end = 75, render = { kind = "full" } },
+    { path = "src/kind.rs", start = 77, end = 77, render = { kind = "full" } },
+    { path = "src/kind.rs", start = 80, end = 85, render = { kind = "full" } },
+    { path = "src/kind.rs", start = 87, end = 87, render = { kind = "full" } },
+    { path = "src/kind.rs", start = 89, end = 97, render = { kind = "full" } },
+    { path = "src/kind.rs", start = 100, end = 100, render = { kind = "full" } },
+    { path = "src/kind.rs", start = 104, end = 109, render = { kind = "full" } },
+    { path = "src/kind.rs", start = 112, end = 121, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "3.5"
-descriptor = "`anyhow!($expr)` tagged dispatch — AdhocKind + TraitKind"
+descriptor = "wrapper.rs: MessageError / DisplayError / BoxedError"
 justification = """
-Two of the three tagged-dispatch types from kind.rs: AdhocKind (applies
-to any `&T: Display + Debug + Send + Sync + 'static`, lower precedence
-via extra autoref) and TraitKind (applies to anything `Into<Error>`,
-which includes every StdError by the blanket From impl). This is the
-machinery behind 3.2's `(&error).anyhow_kind().new(error)` line — the
-full autoref-trick explanation is in kind.rs's own opening comment.
+Three repr(transparent) wrappers that turn a `Display+Debug` value
+or a `Box<dyn StdError>` into a proper `StdError`. Used by the
+adhoc-construction paths in error.rs (`construct_from_adhoc`,
+`construct_from_display`, `construct_from_boxed`). Locations only —
+each impl is one or two lines of body anyway.
 """
 content = { kind = "lines", spans = [
-  { path = "src/kind.rs", start = 55, end = 75, render = { kind = "full" } },
-  { path = "src/kind.rs", start = 77, end = 97, render = { kind = "full" } },
+    { path = "src/wrapper.rs", start = 11, end = 11, render = { kind = "full" } },
+    { path = "src/wrapper.rs", start = 13, end = 14, render = { kind = "full" } },
+    { path = "src/wrapper.rs", start = 22, end = 23, render = { kind = "full" } },
+    { path = "src/wrapper.rs", start = 31, end = 31, render = { kind = "full" } },
+    { path = "src/wrapper.rs", start = 34, end = 34, render = { kind = "full" } },
+    { path = "src/wrapper.rs", start = 36, end = 37, render = { kind = "full" } },
+    { path = "src/wrapper.rs", start = 45, end = 46, render = { kind = "full" } },
+    { path = "src/wrapper.rs", start = 54, end = 54, render = { kind = "full" } },
+    { path = "src/wrapper.rs", start = 58, end = 58, render = { kind = "full" } },
+    { path = "src/wrapper.rs", start = 75, end = 75, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "3.6"
-descriptor = "`anyhow!($expr)` tagged dispatch — BoxedKind path"
+descriptor = "fmt.rs: ErrorImpl::display body + debug/Indented locations"
 justification = """
-BoxedKind, the third arm: applies only when the expression is literally
-a `Box<dyn StdError + Send + Sync>`. Gated on `feature = "std" OR
-!anyhow_no_core_error`. Separate from AdhocKind/TraitKind because it
-bypasses the From<E> blanket (which wouldn't cover bare Box<dyn …>)
-and calls construct_from_boxed directly.
+The `ErrorImpl::display` body (alternate-flag iterates the chain
+with `: ` separators) is small and fully fits. For `ErrorImpl::debug`
+and the `Indented` writer, only the signatures/heads are listed
+here — bodies are deferred to a later batch in tier 5. Answers
+"where is the `: ` chain rendering done" zero-follow-up.
 """
-predecessor = "3.5"
 content = { kind = "lines", spans = [
-  { path = "src/kind.rs", start = 99, end = 121, render = { kind = "full" } },
+    { path = "src/fmt.rs", start = 6, end = 18, render = { kind = "full" } },
+    { path = "src/fmt.rs", start = 20, end = 20, render = { kind = "full" } },
+    { path = "src/fmt.rs", start = 69, end = 73, render = { kind = "full" } },
+    { path = "src/fmt.rs", start = 75, end = 79, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "3.7"
-descriptor = "Context trait impls — Result<T,E> and Option<T>"
+descriptor = "ptr.rs internal pointer newtypes"
 justification = """
-The actual `Context::context` / `with_context` impl bodies: for
-`Result<T, E: ext::StdError>` (a private trait that splits the E:
-StdError case — captures a backtrace via construct_from_context — from
-the E: anyhow::Error case where the existing Error already has one),
-and for `Option<T>` via `Error::construct_from_display`. Answers
-"where does `.context()` live" and "why does `.context()` work on
-both Results and Options".
+The trio of internal smart-pointer wrappers around `NonNull`:
+`Own<T>`, `Ref<'a, T>`, `Mut<'a, T>`, plus the `CastTo` trait. They
+exist because `Error` erases its concrete type and needs explicit
+ownership/borrow tracking through the vtable. Locations for the
+struct/trait heads + the impl blocks.
 """
-predecessor = "2.4"
 content = { kind = "lines", spans = [
-  { path = "src/context.rs", start = 42, end = 68, render = { kind = "full" } },
-  { path = "src/context.rs", start = 90, end = 113, render = { kind = "full" } },
+    { path = "src/ptr.rs", start = 5, end = 11, render = { kind = "full" } },
+    { path = "src/ptr.rs", start = 28, end = 28, render = { kind = "full" } },
+    { path = "src/ptr.rs", start = 63, end = 70, render = { kind = "full" } },
+    { path = "src/ptr.rs", start = 83, end = 83, render = { kind = "full" } },
+    { path = "src/ptr.rs", start = 124, end = 131, render = { kind = "full" } },
+    { path = "src/ptr.rs", start = 144, end = 144, render = { kind = "full" } },
+    { path = "src/ptr.rs", start = 174, end = 174, render = { kind = "full" } },
+    { path = "src/ptr.rs", start = 181, end = 187, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "3.8"
-descriptor = "ContextError — struct + Display/StdError impls"
+descriptor = "backtrace.rs cfg landscape (locations)"
 justification = """
-`pub(crate) struct ContextError<C, E> { context, error }` with repr(C),
-plus its Display (delegates to context) and StdError (source() returns
-the underlying error) impls — both the generic C/E version and the
-C/anyhow::Error specialization that walks through ErrorImpl. The
-Debug impl below uses a `Quoted` newtype (grep-away).
+The cfg-multiplexed Backtrace surface: three competing definitions
+gated on `std_backtrace` / `feature = "backtrace"` / neither, three
+`backtrace!` macros (capture-or-None), three `backtrace_if_absent!`
+macros (nightly / std-and-not-nightly / no-backtrace). This file is
+~410 lines but the load-bearing structure is the cfg branches
+themselves; all the names are surfaced together to mitigate
+catastrophic omission.
 """
-predecessor = "3.7"
 content = { kind = "lines", spans = [
-  { path = "src/context.rs", start = 128, end = 164, render = { kind = "full" } },
-  { path = "src/error.rs", start = 949, end = 955, render = { kind = "full" } },
+    { path = "src/backtrace.rs", start = 1, end = 8, render = { kind = "full" } },
+    { path = "src/backtrace.rs", start = 10, end = 12, render = { kind = "full" } },
+    { path = "src/backtrace.rs", start = 17, end = 19, render = { kind = "full" } },
+    { path = "src/backtrace.rs", start = 24, end = 27, render = { kind = "full" } },
+    { path = "src/backtrace.rs", start = 31, end = 34, render = { kind = "full" } },
+    { path = "src/backtrace.rs", start = 38, end = 39, render = { kind = "full" } },
+    { path = "src/backtrace.rs", start = 48, end = 53, render = { kind = "full" } },
+    { path = "src/backtrace.rs", start = 59, end = 64, render = { kind = "full" } },
+    { path = "src/backtrace.rs", start = 70, end = 71, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "3.9"
-descriptor = "ErrorImpl + ErrorVTable — the hand-rolled layout"
+descriptor = "nightly.rs locations + signatures"
 justification = """
-The `ErrorVTable` struct (fn-pointer table: object_drop / object_ref /
-object_boxed / object_reallocate_boxed / object_downcast /
-object_drop_rest / object_backtrace) and `ErrorImpl<E = ()>` with
-repr(C) (vtable, backtrace, _object). Plus the `vtable()` helper that
-reads the vtable out of a `NonNull<ErrorImpl>`. This is the core of the
-one-word-Error trick.
+The four-fn shim that exists only when `error_generic_member_access`
+is set: `request_ref_backtrace`, `request_ref`, `provide_ref_backtrace`,
+`provide`, plus the `core::error::Request` re-export. Signatures
+only; the build-probe `MyError` block is deferred. The build script
+references this file as a compile probe.
 """
-predecessor = "2.5"
 content = { kind = "lines", spans = [
-  { path = "src/error.rs", start = 740, end = 754, render = { kind = "full" } },
-  { path = "src/error.rs", start = 930, end = 947, render = { kind = "full" } },
+    { path = "src/nightly.rs", start = 7, end = 10, render = { kind = "full" } },
+    { path = "src/nightly.rs", start = 41, end = 43, render = { kind = "full" } },
+    { path = "src/nightly.rs", start = 45, end = 47, render = { kind = "full" } },
+    { path = "src/nightly.rs", start = 52, end = 54, render = { kind = "full" } },
+    { path = "src/nightly.rs", start = 56, end = 58, render = { kind = "full" } },
 ] }
 
 [[batches]]
 id = "3.10"
-descriptor = "Error::construct — how a vtable is attached to an E"
+descriptor = "ensure.rs orientation header (locations)"
 justification = """
-The private `unsafe fn Error::construct<E>(error, vtable, backtrace)
--> Self`: boxes ErrorImpl { vtable, backtrace, _object: error }, then
-`Own::new(inner).cast::<ErrorImpl>()` erases E's concrete type. The
-comment explains this is the analog of `Box<ErrorImpl<E>> ->
-Box<ErrorImpl<dyn StdError + ...>>` but with a thin pointer. All
-construct_from_* constructors end up here.
+The shape of ensure.rs: `BothDebug` / `NotBothDebug` traits that
+dispatch the lhs/rhs Debug-rendering, the fixed-size `Buf` used for
+"({lhs} vs {rhs})" rendering, and the entry points `__parse_ensure!`
++ `__fancy_ensure!` + `__fallback_ensure!`. ensure.rs is ~935 lines
+of macro tt-munching; this batch points the agent at the meaningful
+top-of-file definitions. The `render` body is deferred.
 """
-predecessor = "3.9"
 content = { kind = "lines", spans = [
-  { path = "src/error.rs", start = 287, end = 314, render = { kind = "full" } },
+    { path = "src/ensure.rs", start = 9, end = 11, render = { kind = "full" } },
+    { path = "src/ensure.rs", start = 14, end = 22, render = { kind = "full" } },
+    { path = "src/ensure.rs", start = 24, end = 26, render = { kind = "full" } },
+    { path = "src/ensure.rs", start = 29, end = 31, render = { kind = "full" } },
+    { path = "src/ensure.rs", start = 35, end = 35, render = { kind = "full" } },
+    { path = "src/ensure.rs", start = 81, end = 81, render = { kind = "full" } },
+    { path = "src/ensure.rs", start = 103, end = 105, render = { kind = "full" } },
+    { path = "src/ensure.rs", start = 884, end = 886, render = { kind = "full" } },
+    { path = "src/ensure.rs", start = 910, end = 912, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------
+# Tier 4 — Tests: helpers, plus per-file test fn locations.
+# ---------------------------------------------------------------
+
+[[batches]]
+id = "4.1"
+descriptor = "tests/common + drop helpers"
+justification = """
+Two shared modules used across the test suite. `tests/common/mod.rs`
+defines `bail_literal`/`bail_fmt`/`bail_error` (used by test_macros,
+test_downcast, test_ensure to produce known-shape errors).
+`tests/drop/mod.rs` defines `Flag`/`DetectDrop` for ref-counted
+drop tracking. Together these are the building blocks for
+test_context, test_downcast, test_repr, test_convert, test_ensure.
+"""
+content = { kind = "lines", spans = [
+    { path = "tests/common/mod.rs", start = 1, end = 14, render = { kind = "full" } },
+    { path = "tests/drop/mod.rs", start = 8, end = 11, render = { kind = "full" } },
+    { path = "tests/drop/mod.rs", start = 25, end = 27, render = { kind = "full" } },
+    { path = "tests/drop/mod.rs", start = 30, end = 30, render = { kind = "full" } },
+    { path = "tests/drop/mod.rs", start = 40, end = 40, render = { kind = "full" } },
+    { path = "tests/drop/mod.rs", start = 42, end = 42, render = { kind = "full" } },
+    { path = "tests/drop/mod.rs", start = 48, end = 48, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "3.11"
-descriptor = "construct_from_std — vtable instantiation pattern"
+id = "4.2"
+descriptor = "test_context: Low/Mid/High chain helper + fns"
 justification = """
-The canonical constructor: `construct_from_std<E: StdError + Send +
-Sync + 'static>` builds an ErrorVTable wired to
-object_drop::<E>/object_ref::<E>/object_downcast::<E>/... and calls
-Error::construct. All five construct_from_* paths follow this exact
-shape; one hop to error.rs to see each of the variants
-(_adhoc/_display/_context/_boxed).
+The `make_chain()` fn builds a three-level Low/Mid/High `LowLevel`
++ `MidLevel` + `HighLevel` context chain that the file's downcast
+tests then probe. Surfacing it together with the test fn names
+(`test_downcast_ref`, `test_downcast_high/mid/low`,
+`test_unsuccessful_downcast`, `test_root_cause`,
+`test_inference`) lets the agent answer "where is a precedent for
+testing context chains?" zero-follow-up.
+"""
+content = { kind = "lines", spans = [
+    { path = "tests/test_context.rs", start = 15, end = 15, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_context.rs", start = 22, end = 38, render = { kind = "full" } },
+    { path = "tests/test_context.rs", start = 42, end = 47, render = { kind = "full" } },
+    { path = "tests/test_context.rs", start = 65, end = 65, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_context.rs", start = 97, end = 97, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_context.rs", start = 121, end = 121, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_context.rs", start = 133, end = 133, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_context.rs", start = 145, end = 145, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_context.rs", start = 157, end = 157, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_context.rs", start = 168, end = 168, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "test_downcast / test_repr / test_convert fns (locations)"
+justification = """
+Three small test files focused on the type-system properties of
+`Error`: downcasting (`test_downcast`/`_ref`/`_mut`,
+`test_drop`, `test_as_ref`, `test_large_alignment`,
+`test_unsuccessful_downcast`); representation
+(`test_error_size` asserts size_of::<Error> == size_of::<usize>,
+`test_null_pointer_optimization`, `test_autotraits`, `test_drop`);
+conversion (`test_convert`/`_send`/`_send_sync`,
+`test_question_mark`).
+"""
+content = { kind = "lines", spans = [
+    { path = "tests/test_downcast.rs", start = 14, end = 14, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_downcast.rs", start = 34, end = 34, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_downcast.rs", start = 54, end = 54, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_downcast.rs", start = 80, end = 80, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_downcast.rs", start = 88, end = 88, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_downcast.rs", start = 97, end = 97, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_downcast.rs", start = 118, end = 118, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_repr.rs", start = 10, end = 12, render = { kind = "full" } },
+    { path = "tests/test_repr.rs", start = 14, end = 17, render = { kind = "full" } },
+    { path = "tests/test_repr.rs", start = 19, end = 19, render = { kind = "full" } },
+    { path = "tests/test_repr.rs", start = 25, end = 25, render = { kind = "full" } },
+    { path = "tests/test_convert.rs", start = 10, end = 10, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_convert.rs", start = 20, end = 20, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_convert.rs", start = 30, end = 30, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_convert.rs", start = 40, end = 40, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "4.4"
+descriptor = "test_macros + test_chain + test_source fns"
+justification = """
+test_macros covers the public macro behavior (`test_messages`,
+`test_ensure`, `test_ensure_nonbool`, `test_temporaries`,
+`test_brace_escape`); test_chain exercises the `Chain` iterator
+(`test_iter`/`_rev`/`_len`/`_default`/`_clone`); test_source covers
+the `source()` returns from each anyhow!-construction shape
+(`test_literal_source` etc.). Locations only.
+"""
+content = { kind = "lines", spans = [
+    { path = "tests/test_macros.rs", start = 21, end = 21, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_macros.rs", start = 28, end = 28, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_macros.rs", start = 59, end = 59, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_macros.rs", start = 73, end = 73, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_macros.rs", start = 94, end = 94, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_chain.rs", start = 3, end = 3, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_chain.rs", start = 8, end = 8, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_chain.rs", start = 20, end = 20, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_chain.rs", start = 32, end = 32, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_chain.rs", start = 53, end = 53, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_chain.rs", start = 60, end = 60, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_source.rs", start = 28, end = 28, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_source.rs", start = 34, end = 34, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_source.rs", start = 45, end = 45, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_source.rs", start = 51, end = 51, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_source.rs", start = 58, end = 58, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "4.5"
+descriptor = "test_fmt: f/g/h chain + EXPECTED_* constants (locations)"
+justification = """
+test_fmt verifies all four print formats against a 3-deep error
+chain. The shape of the chain is in `f`/`g`/`h` and the expected
+strings are in nine `EXPECTED_*` constants — surfacing every
+constant name + the four `test_*` fn names lets an agent jump
+straight to a precedent for "what does my error print?".
+"""
+content = { kind = "lines", spans = [
+    { path = "tests/test_fmt.rs", start = 4, end = 4, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_fmt.rs", start = 8, end = 8, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_fmt.rs", start = 12, end = 12, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_fmt.rs", start = 16, end = 22, render = { kind = "full" } },
+    { path = "tests/test_fmt.rs", start = 24, end = 24, render = { kind = "full" } },
+    { path = "tests/test_fmt.rs", start = 31, end = 31, render = { kind = "full" } },
+    { path = "tests/test_fmt.rs", start = 39, end = 39, render = { kind = "full" } },
+    { path = "tests/test_fmt.rs", start = 46, end = 46, render = { kind = "full" } },
+    { path = "tests/test_fmt.rs", start = 56, end = 56, render = { kind = "full" } },
+    { path = "tests/test_fmt.rs", start = 70, end = 70, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_fmt.rs", start = 75, end = 75, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_fmt.rs", start = 82, end = 82, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_fmt.rs", start = 89, end = 89, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "4.6"
+descriptor = "test_autotrait + test_boxed + test_ffi + test_backtrace"
+justification = """
+The remaining short test files (~90 lines combined): autotrait
+(Send/Sync/UnwindSafe/RefUnwindSafe/Unpin assertions), boxed
+(`anyhow!(Box<dyn StdError>)` shapes), ffi (`extern "C"` smoke
+tests), backtrace (rustversion-gated). One batch is plenty.
+"""
+content = { kind = "lines", spans = [
+    { path = "tests/test_autotrait.rs", start = 7, end = 7, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_autotrait.rs", start = 13, end = 13, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_autotrait.rs", start = 19, end = 19, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_autotrait.rs", start = 25, end = 25, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_autotrait.rs", start = 31, end = 31, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_boxed.rs", start = 11, end = 15, render = { kind = "full" } },
+    { path = "tests/test_boxed.rs", start = 18, end = 18, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_boxed.rs", start = 32, end = 32, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_boxed.rs", start = 41, end = 41, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_ffi.rs", start = 7, end = 7, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_ffi.rs", start = 12, end = 12, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_ffi.rs", start = 17, end = 17, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_backtrace.rs", start = 6, end = 6, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/test_backtrace.rs", start = 10, end = 10, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "tests/compiletest.rs", start = 1, end = 7, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.7"
+descriptor = "tests/ui + tests/crate listings"
+justification = """
+The two non-flat sub-trees under tests/. `tests/ui/` is a trybuild
+directory of compile-fail .rs/.stderr pairs. `tests/crate/` is a
+satellite crate (`anyhow_test`) used to exercise no_std + feature
+combos. Listing both saves the agent from doing ls calls before
+finding a UI-test precedent.
+"""
+content = { kind = "fs", groups = [
+    { parent = "tests/ui", entries = "all" },
+    { parent = "tests/crate", entries = "all" },
+    { parent = "tests/common", entries = "all" },
+    { parent = "tests/drop", entries = "all" },
+] }
+
+# ---------------------------------------------------------------
+# Tier 5 — Deeper drilldowns: bodies and design-comment text.
+# ---------------------------------------------------------------
+
+[[batches]]
+id = "5.1"
+descriptor = "ErrorImpl<E> layout + vtable() reader"
+justification = """
+The two definitions that explain how `Error`'s thin pointer works:
+`#[repr(C)] struct ErrorImpl<E = ()>` (vtable, optional backtrace,
+erased _object E) and the `unsafe fn vtable(p: NonNull<ErrorImpl>)`
+that reads the vtable pointer from the head of the allocation
+without going through a reference. This is the load-bearing
+unsafe-Rust trick.
+"""
+predecessor = "3.1"
+content = { kind = "lines", spans = [
+    { path = "src/error.rs", start = 930, end = 947, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "Chain DoubleEndedIterator buffering"
+justification = """
+`DoubleEndedIterator::next_back` walks the linked source-chain
+forward into a Vec, then switches `state` to `Buffered`. This
+allocation-on-demand transition is the only conceptually subtle
+piece of chain.rs and a likely target of "why does Chain
+sometimes allocate?" questions.
+"""
+predecessor = "3.3"
+content = { kind = "lines", spans = [
+    { path = "src/chain.rs", start = 56, end = 75, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.3"
+descriptor = "kind.rs autoref-precedence note"
+justification = """
+The two paragraphs of design commentary in kind.rs that explain why
+the crate uses autoref-based tagged dispatch: specialization is
+unstable, so the trick is to require an extra autoref for one of
+two `anyhow_kind()` traits so method resolution disambiguates.
+The hypothetical-`AnyhowNew` sketch is omitted to save tokens; the
+agent can read the full file (~120 lines) at one follow-up.
+"""
+predecessor = "3.4"
+content = { kind = "lines", spans = [
+    { path = "src/kind.rs", start = 32, end = 46, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.4"
+descriptor = "ErrorImpl::debug body"
+justification = """
+The body of `ErrorImpl::debug`: handles `{:#?}` (delegates), `{:?}`,
+walks `error.source()` printing each via the `Indented` writer, and
+appends the captured backtrace (only when std_backtrace or
+backtrace feature is on). This is the "Caused by:\\n    0: ..."
+generator. Predecessor 3.6 has its signature.
+"""
+predecessor = "3.6"
+content = { kind = "lines", spans = [
+    { path = "src/fmt.rs", start = 20, end = 67, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.5"
+descriptor = "__fancy_ensure! macro body"
+justification = """
+The actual fancy-ensure expansion that does
+`match (&$lhs, &$rhs) { ... if !(lhs OP rhs) { return Err((lhs,
+rhs).__dispatch_ensure(...)) } }`. This is the entry point that
+dispatches to `BothDebug` or `NotBothDebug` for "lhs vs rhs"
+formatting; pairs with the orientation locations in 3.10.
 """
 predecessor = "3.10"
 content = { kind = "lines", spans = [
-  { path = "src/error.rs", start = 145, end = 167, render = { kind = "full" } },
+    { path = "src/ensure.rs", start = 884, end = 908, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "3.12"
-descriptor = "Context chain downcast — walking the nested ContextError"
+id = "5.6"
+descriptor = "ensure!: render `{msg} ({lhs} vs {rhs})`"
 justification = """
-`context_chain_downcast<C>`: if the target is C, return a pointer to the
-ContextError's context field; otherwise recurse down through the inner
-Error's own vtable. This is the mechanism that makes "add context → still
-downcast to the underlying E" work. The parallel `context_chain_drop_rest`
-just below mirrors it for ownership transfer during `downcast::<E>()`.
+The `render` fn that does the lhs/rhs Debug-formatting (using the
+on-stack 40-byte `Buf` for each side) and concatenates
+`"{msg} ({lhs} vs {rhs})"`. This is what produces the "(2 vs 1)"
+suffix in `Condition failed:` messages. Predecessor 3.10 has the
+trait/struct/`Buf` headers.
 """
-predecessor = "3.9"
+predecessor = "3.10"
 content = { kind = "lines", spans = [
-  { path = "src/error.rs", start = 875, end = 889, render = { kind = "full" } },
+    { path = "src/ensure.rs", start = 81, end = 101, render = { kind = "full" } },
 ] }
 
 [[batches]]
-id = "3.13"
-descriptor = "Own<T> — the thin-pointer wrapper"
+id = "5.7"
+descriptor = "build.rs cfg pipeline (rustc version + cfgs)"
 justification = """
-`Own<T>`: repr(transparent) NonNull wrapper with unsafe Send+Sync impls.
-`Ref<'a, T>` / `Mut<'a, T>` below follow the same shape with PhantomData
-lifetimes. The `CastTo` trait forces a turbofish on every `.cast()` —
-prevents accidental widening to a fat pointer. Answers "where does the
-one-word guarantee actually come from?".
+Tail of `build.rs main()`: probes the rustc minor version and emits
+the five cfgs the rest of the crate keys on
+(`std_backtrace`, `error_generic_member_access`, `anyhow_no_core_error`,
+`anyhow_no_clippy_format_args`) plus the `rustc-check-cfg`s. Pairs
+with 3.8 (backtrace.rs cfg landscape) and 3.9 (the nightly probe).
 """
 content = { kind = "lines", spans = [
-  { path = "src/ptr.rs", start = 1, end = 17, render = { kind = "full" } },
-  { path = "src/ptr.rs", start = 28, end = 37, render = { kind = "full" } },
-  { path = "src/ptr.rs", start = 63, end = 71, render = { kind = "full" } },
-  { path = "src/ptr.rs", start = 181, end = 187, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.14"
-descriptor = "ErrorImpl::display/debug — rendering a chain"
-justification = """
-The Display impl that renders `err` / `err: cause: cause...` for `{}`
-and `{:#}`, and the start of the Debug impl that produces the
-multi-line "Caused by:\\n    0: ...\\n    1: ..." form. Pairs with
-`test_fmt.rs` expectations.
-"""
-predecessor = "3.9"
-content = { kind = "lines", spans = [
-  { path = "src/fmt.rs", start = 6, end = 42, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.15"
-descriptor = "Chain<'a> — ChainState + Iterator::next"
-justification = """
-`ChainState::Linked { next }` vs `Buffered { rest }` (Buffered is
-used after .rev()), and Iterator::next walking `error.source()`.
-Cheapest batch that shows the chain is just a linked walk of StdError's
-source() — no heap allocation in the forward path.
-"""
-predecessor = "2.7"
-content = { kind = "lines", spans = [
-  { path = "src/chain.rs", start = 15, end = 48, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.16"
-descriptor = "Wrapper types — MessageError / DisplayError / BoxedError"
-justification = """
-The three repr(transparent) wrappers used by construct_from_adhoc,
-construct_from_display, and construct_from_boxed respectively — shown
-as structs only; their StdError/Display/Debug impls are straightforward
-delegations (one hop away if the agent wants them). Explains the shapes
-referenced in 3.11.
-"""
-predecessor = "3.11"
-content = { kind = "lines", spans = [
-  { path = "src/wrapper.rs", start = 10, end = 11, render = { kind = "full" } },
-  { path = "src/wrapper.rs", start = 33, end = 34, render = { kind = "full" } },
-  { path = "src/wrapper.rs", start = 56, end = 58, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.17"
-descriptor = "no_std support — README section"
-justification = """
-The README "No-std support" section: `default-features = false` flips
-to alloc-only mode, a global allocator is required, and the <1.81
-caveat about `.map_err(Error::msg)`. Matched by a paragraph at the
-bottom of lib.rs's crate doc (one hop away). With 1.7's Cargo features
-batch, this is the full answer for "does this work in no_std".
-"""
-predecessor = "1.7"
-content = { kind = "lines", spans = [
-  { path = "README.md", start = 126, end = 140, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.18"
-descriptor = "Backtrace module — three-way cfg shape"
-justification = """
-Top of backtrace.rs: three cfg branches picking std::backtrace::Backtrace,
-the local `capture` submodule (uses the optional `backtrace` crate), or
-a zero-variant enum. The full `capture` submodule below (~335 lines) is
-a pre-1.65 backtrace-formatting reimplementation, one hop away if
-needed.
-"""
-content = { kind = "lines", spans = [
-  { path = "src/backtrace.rs", start = 1, end = 8, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.19"
-descriptor = "build.rs — the cfgs emitted"
-justification = """
-The list of `--cfg` flags the rest of the crate depends on:
-`std_backtrace` (>=1.65 std::backtrace), `error_generic_member_access`
-(nightly-only `Error::provide`), `anyhow_no_core_error` (<1.81, no
-core::error::Error), `anyhow_no_clippy_format_args` (<1.85). The full
-RUSTC_BOOTSTRAP probe logic is one hop away in build.rs.
-"""
-content = { kind = "lines", spans = [
-  { path = "build.rs", start = 57, end = 60, render = { kind = "full" } },
-  { path = "build.rs", start = 80, end = 96, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.20"
-descriptor = "From<E> for Error + Deref — auto-conversion surface"
-justification = """
-`impl<E: StdError + Send + Sync + 'static> From<E> for Error` (the
-`?`-operator hook that makes any StdError convertible to anyhow::Error)
-plus the `Deref<Target = dyn StdError + Send + Sync + 'static>` impl
-that lets users call StdError methods directly on an anyhow::Error.
-DerefMut just below mirrors Deref.
-"""
-predecessor = "2.5"
-content = { kind = "lines", spans = [
-  { path = "src/error.rs", start = 691, end = 710, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.21"
-descriptor = "Error::into_boxed_dyn_error + reallocate_* signatures"
-justification = """
-Two more Error methods that 2.8/2.9's signature batches skip because
-they're FFI-adjacent rather than everyday: `into_boxed_dyn_error(self)
--> Box<dyn StdError + Send + Sync + 'static>` (cheap pointer cast, keeps
-backtrace but loses downcast-to-original-E), and
-`reallocate_into_boxed_dyn_error_without_backtrace(self) -> Box<...>`
-(allocates, discards backtrace, keeps downcast). Tradeoff pair that's
-load-bearing for anyone writing cross-crate Error bridges.
-"""
-predecessor = "2.2"
-content = { kind = "lines", spans = [
-  { path = "src/error.rs", start = 620, end = 622, render = { kind = "full" } },
-  { path = "src/error.rs", start = 661, end = 665, render = { kind = "full" } },
-] }
-
-[[batches]]
-id = "3.22"
-descriptor = "Test file grouping (location batch for tests/)"
-justification = """
-First #[test] fn name in each test_*.rs — lets the agent map aspect →
-file quickly: test_boxed (boxed_str/thiserror/anyhow), test_chain
-(iter/rev/len/default/clone), test_context (inference + downcast chain
-+ root_cause), test_downcast (downcast/_ref/_mut + drop + as_ref +
-large-alignment), test_ensure (recursion/closures/unary/...), test_fmt
-(display/altdisplay/debug/altdebug), test_repr (error_size / null_ptr /
-autotraits / drop), test_source (literal/variable/fmt/io/anyhow-from-
-anyhow).
-"""
-predecessor = "1.5"
-content = { kind = "lines", spans = [
-  { path = "tests/test_boxed.rs", start = 18, end = 18, render = { kind = "truncated", pattern = "^fn [^(]+" } },
-  { path = "tests/test_chain.rs", start = 8, end = 8, render = { kind = "truncated", pattern = "^fn [^(]+" } },
-  { path = "tests/test_context.rs", start = 15, end = 15, render = { kind = "truncated", pattern = "^fn [^(]+" } },
-  { path = "tests/test_downcast.rs", start = 14, end = 14, render = { kind = "truncated", pattern = "^fn [^(]+" } },
-  { path = "tests/test_ensure.rs", start = 93, end = 93, render = { kind = "truncated", pattern = "^fn [^(]+" } },
-  { path = "tests/test_fmt.rs", start = 70, end = 70, render = { kind = "truncated", pattern = "^fn [^(]+" } },
-  { path = "tests/test_macros.rs", start = 21, end = 21, render = { kind = "truncated", pattern = "^fn [^(]+" } },
-  { path = "tests/test_repr.rs", start = 10, end = 10, render = { kind = "truncated", pattern = "^fn [^(]+" } },
-  { path = "tests/test_source.rs", start = 28, end = 28, render = { kind = "truncated", pattern = "^fn [^(]+" } },
-  { path = "tests/test_convert.rs", start = 10, end = 10, render = { kind = "truncated", pattern = "^fn [^(]+" } },
-  { path = "tests/test_autotrait.rs", start = 7, end = 7, render = { kind = "truncated", pattern = "^fn [^(]+" } },
-  { path = "tests/test_ffi.rs", start = 7, end = 7, render = { kind = "truncated", pattern = "^pub extern [^(]+" } },
-  { path = "tests/test_backtrace.rs", start = 6, end = 6, render = { kind = "truncated", pattern = "^fn [^(]+" } },
+    { path = "build.rs", start = 67, end = 69, render = { kind = "full" } },
+    { path = "build.rs", start = 80, end = 80, render = { kind = "full" } },
+    { path = "build.rs", start = 83, end = 84, render = { kind = "full" } },
+    { path = "build.rs", start = 86, end = 86, render = { kind = "full" } },
+    { path = "build.rs", start = 89, end = 89, render = { kind = "full" } },
+    { path = "build.rs", start = 92, end = 92, render = { kind = "full" } },
+    { path = "build.rs", start = 95, end = 96, render = { kind = "full" } },
 ] }
