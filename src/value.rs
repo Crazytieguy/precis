@@ -39,30 +39,72 @@ pub fn depth_factor(depth: usize) -> f64 {
 }
 
 /// Multiplier applied to content whose path is under a "non-essential"
-/// directory (tests / examples / benches / fixtures / private helpers).
-/// These are load-bearing for *using* the crate's infrastructure but rarely
-/// for understanding it; they should only appear once the primary-source
-/// batches have landed.
-pub fn non_essential_factor(path: &std::path::Path) -> f64 {
-    for component in path.components() {
+/// directory (tests / examples / benches / fixtures / private helpers /
+/// showcase websites). These are load-bearing for *using* the crate's
+/// infrastructure but rarely for understanding it; they should only
+/// appear once the primary-source batches have landed.
+///
+/// File-level test-file naming (`*.test.ts`, `*.spec.ts`, `*_test.go`)
+/// is also caught — many JS/TS projects keep tests next to source rather
+/// than in a `tests/` directory.
+///
+/// `path` is matched component-wise *relative to* `root` (so the outer
+/// `tests/fixtures/` of the test harness doesn't poison every fixture
+/// path). When `path` isn't under `root` (a walker bug; not panicked on
+/// for release-mode robustness), the absolute path is used as-is.
+pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f64 {
+    let target = path.strip_prefix(root).unwrap_or(path);
+    for component in target.components() {
         let Some(s) = component.as_os_str().to_str() else {
             continue;
         };
         if matches!(
             s,
-            "tests" | "examples" | "benches" | "fixtures" | "rfcs" | "xtask" | "ci"
+            "tests"
+                | "test"
+                | "examples"
+                | "example"
+                | "benches"
+                | "bench"
+                | "benchmark"
+                | "benchmarks"
+                | "fixtures"
+                | "rfcs"
+                | "xtask"
+                | "ci"
+                | "website"
+                | "docs-site"
+                | "demo"
+                | "demos"
+                | "playground"
+                | "showcase"
+                | "storybook"
+                | "fuzz"
         ) || s.starts_with("test_")
             || s.starts_with("guide-helper")
         {
             return 0.2;
         }
     }
-    // File-level heuristic: `__private_api.rs`, `__internals.rs`, `inner.rs`,
-    // etc. — files whose name itself says "not the public surface".
-    if let Some(name) = path.file_name().and_then(|n| n.to_str())
-        && (name.starts_with("__") || name.starts_with("_") || name == "inner.rs")
-    {
-        return 0.5;
+    if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
+        // File-level heuristic: `__private_api.rs`, `__internals.rs`,
+        // `inner.rs`, etc. — files whose name itself says "not the
+        // public surface".
+        if name.starts_with("__") || name.starts_with("_") || name == "inner.rs" {
+            return 0.5;
+        }
+        // Co-located test files: `foo.test.ts`, `foo.spec.ts`,
+        // `foo_test.go`, `foo.test.tsx`, `foo.test.js`, etc.
+        let lower = name.to_ascii_lowercase();
+        if lower.contains(".test.")
+            || lower.contains(".spec.")
+            || lower.ends_with("_test.go")
+            || lower.ends_with("_test.ts")
+            || lower.ends_with("_test.js")
+            || lower.ends_with("_test.tsx")
+        {
+            return 0.2;
+        }
     }
     1.0
 }

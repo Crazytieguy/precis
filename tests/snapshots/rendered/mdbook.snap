@@ -18,8 +18,14 @@ expression: rendered
         update-dependencies.yml
 .gitignore
 CHANGELOG.md
+    1→# Changelog
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
+    1→# Contributing
+    3→Welcome stranger!
+    5→If you have come here to learn how to contribute to mdBook, we have some tips for you!
+    7→First of all, don't hesitate to ask questions!
+    8→Use the [issue tracker](https://github.com/rust-lang/mdBook/issues), no question is too simple.
 Cargo.lock
 Cargo.toml
     1→[workspace]
@@ -88,10 +94,6 @@ README.md
     19→[contribution guide]: https://github.com/rust-lang/mdBook/blob/master/CONTRIBUTING.md
     20→[LICENSE]: https://github.com/rust-lang/mdBook/blob/master/LICENSE
 ci/
-    install-rust.sh
-    make-release-asset.sh
-    publish-guide.sh
-    update-dependencies.sh
 crates/
     mdbook-compare/
         Cargo.toml
@@ -224,41 +226,40 @@ crates/
             5→[![Changelog](https://img.shields.io/badge/CHANGELOG-Latest-green)](https://github.com/rust-lang/mdBook/blob/master/CHANGELOG.md)
         src/
     xtask/
-        Cargo.toml
-            1→[package]
-            2→name = "xtask"
-            3→publish = false
-            4→edition.workspace = true
-            5→license.workspace = true
-            6→repository.workspace = true
-            7→rust-version.workspace = true
-        README.md
-            1→# xtask
-            3→This is a CLI utility for running development commands for mdbook.
-            4→See [CONTRIBUTING.md](../../CONTRIBUTING.md) for how to use this.
-        src/
 eslint.config.mjs
 examples/
-    nop-preprocessor.rs
-    remove-emphasis/
-        .gitignore
-        book.toml
-        mdbook-remove-emphasis/
-        src/
-        test.rs
 guide/
     book.toml
     guide-helper/
-        Cargo.toml
-        src/
     src/
+        404.md
+        README.md
+        SUMMARY.md
+        cli/
+        continuous-integration.md
+        for_developers/
+        format/
+        guide/
+        misc/
 package.json
 rustfmt.toml
 src/
     cmd/
+        build.rs
+            8→pub fn make_subcommand() -> Command {
+            …
+            17→pub fn execute(args: &ArgMatches) -> Result<()> {
+            …
+        clean.rs
+        command_prelude.rs
+        init.rs
+        mod.rs
+            1→//! Subcommand modules for the `mdbook` binary.
+        serve.rs
+        test.rs
+        watch/
+        watch.rs
     main.rs
         1→//! The mdbook CLI.
 tests/
-    gui/
-    testsuite/
 triagebot.toml

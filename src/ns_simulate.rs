@@ -348,8 +348,7 @@ fn validate_spans(spans: &[Span], fixture_root: &Path, cache: &SourceCache) -> V
                     continue;
                 };
                 let full_tokens = crate::tokenizer::count(line);
-                let truncated_tokens =
-                    crate::tokenizer::count(&format!("{}…", m.as_str()));
+                let truncated_tokens = crate::tokenizer::count(&format!("{}…", m.as_str()));
                 if truncated_tokens >= full_tokens {
                     out.push(Violation::TruncationSavesNothing {
                         path: span.path.clone(),

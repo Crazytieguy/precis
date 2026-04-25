@@ -1,0 +1,3078 @@
+fixture = "vaul"
+budget = 10000
+cumulative_tokens = 9859
+batch_count = 107
+
+[[batches]]
+position = 1
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vaul" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/vaul'"
+cost_tokens = 62
+cum_tokens = 62
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vaul"
+entries = [".eslintrc.js", ".github", ".gitignore", ".prettierrc.js", ".vscode", "FUNDING.yml", "LICENSE.md", "README.md", "package.json", "playwright.config.ts", "pnpm-lock.yaml", "pnpm-workspace.yaml", "src", "test", "tsconfig.json", "turbo.json"]
+
+[[batches]]
+position = 2
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/playwright.config.ts" })'
+descriptor = "export names surface in /Users/yoav/projects/precis/tests/fixtures/vaul/playwright.config.ts"
+cost_tokens = 11
+cum_tokens = 73
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/playwright.config.ts"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/playwright.config.ts"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 3
+key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json" })'
+descriptor = "package identity in /Users/yoav/projects/precis/tests/fixtures/vaul/package.json"
+cost_tokens = 230
+cum_tokens = 303
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json"
+start = 2
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json"
+start = 31
+end = 46
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 4
+key = 'Json(Entry { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json" })'
+descriptor = "package entrypoints in /Users/yoav/projects/precis/tests/fixtures/vaul/package.json"
+cost_tokens = 174
+cum_tokens = 477
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json"
+start = 5
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 5
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vaul/.github" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/vaul/.github'"
+cost_tokens = 3
+cum_tokens = 480
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vaul/.github"
+entries = ["workflows"]
+
+[[batches]]
+position = 6
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vaul/.vscode" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/vaul/.vscode'"
+cost_tokens = 4
+cum_tokens = 484
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vaul/.vscode"
+entries = ["settings.json"]
+
+[[batches]]
+position = 7
+key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json" })'
+descriptor = "package scripts in /Users/yoav/projects/precis/tests/fixtures/vaul/package.json"
+cost_tokens = 135
+cum_tokens = 619
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json"
+start = 22
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 8
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/tsconfig.json" })'
+descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/vaul/tsconfig.json"
+cost_tokens = 111
+cum_tokens = 730
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/tsconfig.json"
+start = 1
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 9
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/playwright.config.ts", start_line: 12 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/playwright.config.ts:12"
+cost_tokens = 512
+cum_tokens = 1242
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/playwright.config.ts"
+start = 12
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 10
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/playwright.config.ts", start_line: 12 })'
+descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/vaul/playwright.config.ts:12"
+cost_tokens = 26
+cum_tokens = 1268
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/playwright.config.ts"
+start = 9
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 11
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/.vscode/settings.json" })'
+descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/vaul/.vscode/settings.json"
+cost_tokens = 27
+cum_tokens = 1295
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/.vscode/settings.json"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 12
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vaul/src" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/vaul/src'"
+cost_tokens = 71
+cum_tokens = 1366
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vaul/src"
+entries = ["browser.ts", "constants.ts", "context.ts", "helpers.ts", "index.tsx", "style.css", "types.ts", "use-composed-refs.ts", "use-controllable-state.ts", "use-position-fixed.ts", "use-prevent-scroll.ts", "use-scale-background.ts", "use-snap-points.ts"]
+
+[[batches]]
+position = 13
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-position-fixed.ts" })'
+descriptor = "export names surface in /Users/yoav/projects/precis/tests/fixtures/vaul/src/use-position-fixed.ts"
+cost_tokens = 12
+cum_tokens = 1378
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-position-fixed.ts"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-position-fixed.ts"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 14
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-snap-points.ts" })'
+descriptor = "export names surface in /Users/yoav/projects/precis/tests/fixtures/vaul/src/use-snap-points.ts"
+cost_tokens = 12
+cum_tokens = 1390
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-snap-points.ts"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-snap-points.ts"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 15
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-scale-background.ts" })'
+descriptor = "export names surface in /Users/yoav/projects/precis/tests/fixtures/vaul/src/use-scale-background.ts"
+cost_tokens = 13
+cum_tokens = 1403
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-scale-background.ts"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-scale-background.ts"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 16
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-composed-refs.ts" })'
+descriptor = "export names surface in /Users/yoav/projects/precis/tests/fixtures/vaul/src/use-composed-refs.ts"
+cost_tokens = 14
+cum_tokens = 1417
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-composed-refs.ts"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 17
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-composed-refs.ts", start_line: 36 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/use-composed-refs.ts:36"
+cost_tokens = 0
+cum_tokens = 1417
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-composed-refs.ts"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 18
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/context.ts" })'
+descriptor = "export names surface in /Users/yoav/projects/precis/tests/fixtures/vaul/src/context.ts"
+cost_tokens = 34
+cum_tokens = 1451
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/context.ts"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/context.ts"
+start = 69
+end = 69
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/context.ts"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/context.ts"
+start = 70
+end = 70
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 19
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-controllable-state.ts" })'
+descriptor = "export names surface in /Users/yoav/projects/precis/tests/fixtures/vaul/src/use-controllable-state.ts"
+cost_tokens = 35
+cum_tokens = 1486
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-controllable-state.ts"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-controllable-state.ts"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 20
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/types.ts" })'
+descriptor = "export names surface in /Users/yoav/projects/precis/tests/fixtures/vaul/src/types.ts"
+cost_tokens = 52
+cum_tokens = 1538
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/types.ts"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/types.ts"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/types.ts"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 21
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/types.ts", start_line: 2 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/types.ts:2"
+cost_tokens = 21
+cum_tokens = 1559
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/types.ts"
+start = 2
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 22
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/types.ts", start_line: 1 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/types.ts:1"
+cost_tokens = 0
+cum_tokens = 1559
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/types.ts"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 23
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/types.ts", start_line: 7 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/types.ts:7"
+cost_tokens = 0
+cum_tokens = 1559
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/types.ts"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 24
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/context.ts", start_line: 69 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/context.ts:69"
+cost_tokens = 62
+cum_tokens = 1621
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/context.ts"
+start = 69
+end = 75
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 25
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx" })'
+descriptor = "export names surface in /Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+cost_tokens = 223
+cum_tokens = 1844
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 139
+end = 139
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 803
+end = 803
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 831
+end = 831
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 833
+end = 833
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 989
+end = 989
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 996
+end = 996
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 1098
+end = 1098
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 1130
+end = 1130
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 1137
+end = 1137
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 140
+end = 140
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 804
+end = 804
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 832
+end = 832
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 834
+end = 834
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 990
+end = 990
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 997
+end = 997
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 1099
+end = 1099
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 1131
+end = 1131
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 1138
+end = 1138
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 26
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 831 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx:831"
+cost_tokens = 0
+cum_tokens = 1844
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 831
+end = 831
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 27
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 989 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx:989"
+cost_tokens = 13
+cum_tokens = 1857
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 989
+end = 991
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 28
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 1130 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx:1130"
+cost_tokens = 0
+cum_tokens = 1857
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 1130
+end = 1130
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 1131
+end = 1131
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 29
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 1137 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx:1137"
+cost_tokens = 101
+cum_tokens = 1958
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 1137
+end = 1148
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 30
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 40 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx:40"
+cost_tokens = 120
+cum_tokens = 2078
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 40
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 31
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 27 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx:27"
+cost_tokens = 161
+cum_tokens = 2239
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 27
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 32
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 1098 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx:1098"
+cost_tokens = 0
+cum_tokens = 2239
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 1098
+end = 1098
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 1099
+end = 1099
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 33
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 803 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx:803"
+cost_tokens = 329
+cum_tokens = 2568
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 803
+end = 808
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 810
+end = 813
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 815
+end = 827
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 34
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-controllable-state.ts", start_line: 39 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/use-controllable-state.ts:39"
+cost_tokens = 0
+cum_tokens = 2568
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-controllable-state.ts"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-controllable-state.ts"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 35
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts" })'
+descriptor = "export names surface in /Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts"
+cost_tokens = 95
+cum_tokens = 2663
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts"
+start = 68
+end = 68
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts"
+start = 294
+end = 294
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts"
+start = 69
+end = 69
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts"
+start = 295
+end = 295
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 36
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts", start_line: 29 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts:29"
+cost_tokens = 0
+cum_tokens = 2663
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 37
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts", start_line: 294 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts:294"
+cost_tokens = 0
+cum_tokens = 2663
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts"
+start = 294
+end = 294
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts"
+start = 295
+end = 295
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 38
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts", start_line: 8 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts:8"
+cost_tokens = 0
+cum_tokens = 2663
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 39
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts", start_line: 34 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts:34"
+cost_tokens = 0
+cum_tokens = 2663
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 40
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts", start_line: 68 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts:68"
+cost_tokens = 0
+cum_tokens = 2663
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts"
+start = 68
+end = 68
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts"
+start = 69
+end = 69
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 41
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts" })'
+descriptor = "export names surface in /Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+cost_tokens = 112
+cum_tokens = 2775
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 42
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts", start_line: 10 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts:10"
+cost_tokens = 0
+cum_tokens = 2775
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 43
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts", start_line: 14 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts:14"
+cost_tokens = 0
+cum_tokens = 2775
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 44
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts", start_line: 18 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts:18"
+cost_tokens = 0
+cum_tokens = 2775
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 45
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts", start_line: 30 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts:30"
+cost_tokens = 0
+cum_tokens = 2775
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 46
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts", start_line: 34 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts:34"
+cost_tokens = 0
+cum_tokens = 2775
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 47
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts", start_line: 22 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts:22"
+cost_tokens = 0
+cum_tokens = 2775
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 48
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts", start_line: 1 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts:1"
+cost_tokens = 0
+cum_tokens = 2775
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 49
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts" })'
+descriptor = "export names surface in /Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts"
+cost_tokens = 126
+cum_tokens = 2901
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 50
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts", start_line: 1 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts:1"
+cost_tokens = 40
+cum_tokens = 2941
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts"
+start = 1
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 51
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts", start_line: 6 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts:6"
+cost_tokens = 0
+cum_tokens = 2941
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 52
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts", start_line: 8 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts:8"
+cost_tokens = 0
+cum_tokens = 2941
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 53
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts", start_line: 10 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts:10"
+cost_tokens = 0
+cum_tokens = 2941
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 54
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts", start_line: 12 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts:12"
+cost_tokens = 0
+cum_tokens = 2941
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 55
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts", start_line: 14 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts:14"
+cost_tokens = 0
+cum_tokens = 2941
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 56
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts", start_line: 16 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts:16"
+cost_tokens = 0
+cum_tokens = 2941
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 57
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts", start_line: 18 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts:18"
+cost_tokens = 0
+cum_tokens = 2941
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 58
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vaul/.github/workflows" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/vaul/.github/workflows'"
+cost_tokens = 4
+cum_tokens = 2945
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vaul/.github/workflows"
+entries = ["playwright.yml"]
+
+[[batches]]
+position = 59
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts", start_line: 68 })'
+descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts:68"
+cost_tokens = 58
+cum_tokens = 3003
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts"
+start = 63
+end = 67
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 60
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts" })'
+descriptor = "export names surface in /Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+cost_tokens = 171
+cum_tokens = 3174
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 72
+end = 72
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 90
+end = 90
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 94
+end = 94
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 108
+end = 108
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 60
+end = 60
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 73
+end = 73
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 91
+end = 91
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 95
+end = 95
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 109
+end = 109
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 61
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts", start_line: 90 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts:90"
+cost_tokens = 0
+cum_tokens = 3174
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 90
+end = 90
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 91
+end = 91
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 62
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts", start_line: 94 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts:94"
+cost_tokens = 0
+cum_tokens = 3174
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 94
+end = 94
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 95
+end = 95
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 63
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts", start_line: 108 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts:108"
+cost_tokens = 0
+cum_tokens = 3174
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 108
+end = 108
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 109
+end = 109
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 64
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts", start_line: 9 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts:9"
+cost_tokens = 0
+cum_tokens = 3174
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 65
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts", start_line: 42 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts:42"
+cost_tokens = 0
+cum_tokens = 3174
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 66
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts", start_line: 72 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts:72"
+cost_tokens = 0
+cum_tokens = 3174
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 72
+end = 72
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 73
+end = 73
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 67
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts", start_line: 23 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts:23"
+cost_tokens = 0
+cum_tokens = 3174
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 68
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts", start_line: 59 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts:59"
+cost_tokens = 88
+cum_tokens = 3262
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 59
+end = 70
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 69
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts", start_line: 108 })'
+descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts:108"
+cost_tokens = 29
+cum_tokens = 3291
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 105
+end = 107
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 70
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/playwright.config.ts" })'
+descriptor = "imports in /Users/yoav/projects/precis/tests/fixtures/vaul/playwright.config.ts"
+cost_tokens = 17
+cum_tokens = 3308
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/playwright.config.ts"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 71
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/turbo.json" })'
+descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/vaul/turbo.json"
+cost_tokens = 111
+cum_tokens = 3419
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/turbo.json"
+start = 1
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 72
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-scale-background.ts", start_line: 8 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/use-scale-background.ts:8"
+cost_tokens = 0
+cum_tokens = 3419
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-scale-background.ts"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-scale-background.ts"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 73
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 50 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx:50"
+cost_tokens = 1170
+cum_tokens = 4589
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 50
+end = 137
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 74
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 996 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx:996"
+cost_tokens = 1074
+cum_tokens = 5663
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 996
+end = 1011
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 1013
+end = 1014
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 1016
+end = 1025
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 1027
+end = 1034
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 1036
+end = 1041
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 1043
+end = 1043
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 1045
+end = 1048
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 1050
+end = 1054
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 1056
+end = 1061
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 1063
+end = 1068
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 1070
+end = 1094
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 75
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/context.ts", start_line: 37 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/context.ts:37"
+cost_tokens = 327
+cum_tokens = 5990
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/context.ts"
+start = 37
+end = 67
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 76
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/context.ts" })'
+descriptor = "imports in /Users/yoav/projects/precis/tests/fixtures/vaul/src/context.ts"
+cost_tokens = 23
+cum_tokens = 6013
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/context.ts"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 77
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts" })'
+descriptor = "imports in /Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+cost_tokens = 16
+cum_tokens = 6029
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 78
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-composed-refs.ts" })'
+descriptor = "imports in /Users/yoav/projects/precis/tests/fixtures/vaul/src/use-composed-refs.ts"
+cost_tokens = 12
+cum_tokens = 6041
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-composed-refs.ts"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 79
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-controllable-state.ts" })'
+descriptor = "imports in /Users/yoav/projects/precis/tests/fixtures/vaul/src/use-controllable-state.ts"
+cost_tokens = 10
+cum_tokens = 6051
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-controllable-state.ts"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 80
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-position-fixed.ts" })'
+descriptor = "imports in /Users/yoav/projects/precis/tests/fixtures/vaul/src/use-position-fixed.ts"
+cost_tokens = 23
+cum_tokens = 6074
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-position-fixed.ts"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 81
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts" })'
+descriptor = "imports in /Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts"
+cost_tokens = 30
+cum_tokens = 6104
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 82
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 833 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx:833"
+cost_tokens = 1730
+cum_tokens = 7834
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 833
+end = 861
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 863
+end = 864
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 866
+end = 869
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 871
+end = 881
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 883
+end = 885
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 887
+end = 893
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 895
+end = 899
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 901
+end = 926
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 928
+end = 933
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 935
+end = 938
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 940
+end = 956
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 958
+end = 959
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 961
+end = 985
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 83
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-scale-background.ts" })'
+descriptor = "imports in /Users/yoav/projects/precis/tests/fixtures/vaul/src/use-scale-background.ts"
+cost_tokens = 69
+cum_tokens = 7903
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-scale-background.ts"
+start = 1
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 84
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-snap-points.ts" })'
+descriptor = "imports in /Users/yoav/projects/precis/tests/fixtures/vaul/src/use-snap-points.ts"
+cost_tokens = 74
+cum_tokens = 7977
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-snap-points.ts"
+start = 1
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 85
+key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json" })'
+descriptor = "package dependencies in /Users/yoav/projects/precis/tests/fixtures/vaul/package.json"
+cost_tokens = 357
+cum_tokens = 8334
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json"
+start = 47
+end = 68
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 86
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-position-fixed.ts", start_line: 15 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/use-position-fixed.ts:15"
+cost_tokens = 124
+cum_tokens = 8458
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-position-fixed.ts"
+start = 15
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-position-fixed.ts"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 87
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-position-fixed.ts", start_line: 15 })'
+descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/vaul/src/use-position-fixed.ts:15"
+cost_tokens = 147
+cum_tokens = 8605
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-position-fixed.ts"
+start = 6
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 88
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 139 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx:139"
+cost_tokens = 318
+cum_tokens = 8923
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 139
+end = 169
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx"
+start = 170
+end = 170
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 89
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-snap-points.ts", start_line: 7 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/src/use-snap-points.ts:7"
+cost_tokens = 249
+cum_tokens = 9172
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-snap-points.ts"
+start = 7
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-snap-points.ts"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 90
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vaul/test" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/vaul/test'"
+cost_tokens = 52
+cum_tokens = 9224
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vaul/test"
+entries = [".eslintrc.json", ".gitignore", "README.md", "next.config.js", "package.json", "postcss.config.js", "public", "src", "tailwind.config.ts", "tests", "tsconfig.json"]
+
+[[batches]]
+position = 91
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tailwind.config.ts" })'
+descriptor = "export names surface in /Users/yoav/projects/precis/tests/fixtures/vaul/test/tailwind.config.ts"
+cost_tokens = 8
+cum_tokens = 9232
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tailwind.config.ts"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 92
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tailwind.config.ts", start_line: 19 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/test/tailwind.config.ts:19"
+cost_tokens = 0
+cum_tokens = 9232
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tailwind.config.ts"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 93
+key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/package.json" })'
+descriptor = "package identity in /Users/yoav/projects/precis/tests/fixtures/vaul/test/package.json"
+cost_tokens = 36
+cum_tokens = 9268
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/package.json"
+start = 2
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 94
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md" })'
+descriptor = "README headline in /Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md"
+cost_tokens = 19
+cum_tokens = 9287
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 95
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/.eslintrc.json" })'
+descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/vaul/test/.eslintrc.json"
+cost_tokens = 25
+cum_tokens = 9312
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/.eslintrc.json"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 96
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md", section_index: 2 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md section #2"
+cost_tokens = 97
+cum_tokens = 9409
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 97
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/public" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/vaul/test/public'"
+cost_tokens = 9
+cum_tokens = 9418
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/public"
+entries = ["next.svg", "vercel.svg"]
+
+[[batches]]
+position = 98
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/src" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/vaul/test/src'"
+cost_tokens = 3
+cum_tokens = 9421
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/src"
+entries = ["app"]
+
+[[batches]]
+position = 99
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md", section_index: 1 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md section #1"
+cost_tokens = 112
+cum_tokens = 9533
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md"
+start = 25
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 100
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md section #0"
+cost_tokens = 144
+cum_tokens = 9677
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md"
+start = 7
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 101
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tests" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/vaul/test/tests'"
+cost_tokens = 66
+cum_tokens = 9743
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tests"
+entries = ["base.spec.ts", "constants.ts", "controlled.spec.ts", "helpers.ts", "initial-snap.spec.ts", "nested.spec.ts", "non-dismissible.spec.ts", "with-handle.spec.ts", "with-redirect.spec.ts", "with-scaled-background.spec.ts", "without-scaled-background.spec.ts"]
+
+[[batches]]
+position = 102
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/constants.ts" })'
+descriptor = "export names surface in /Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/constants.ts"
+cost_tokens = 13
+cum_tokens = 9756
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/constants.ts"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 103
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/helpers.ts" })'
+descriptor = "export names surface in /Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/helpers.ts"
+cost_tokens = 29
+cum_tokens = 9785
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/helpers.ts"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/helpers.ts"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/helpers.ts"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/helpers.ts"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 104
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/helpers.ts", start_line: 4 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/helpers.ts:4"
+cost_tokens = 0
+cum_tokens = 9785
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/helpers.ts"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/helpers.ts"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 105
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/constants.ts", start_line: 1 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/constants.ts:1"
+cost_tokens = 0
+cum_tokens = 9785
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/constants.ts"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 106
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/helpers.ts", start_line: 11 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/helpers.ts:11"
+cost_tokens = 59
+cum_tokens = 9844
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/helpers.ts"
+start = 11
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/helpers.ts"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 107
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tailwind.config.ts" })'
+descriptor = "imports in /Users/yoav/projects/precis/tests/fixtures/vaul/test/tailwind.config.ts"
+cost_tokens = 15
+cum_tokens = 9859
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tailwind.config.ts"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"

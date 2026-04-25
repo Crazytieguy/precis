@@ -149,6 +149,38 @@ that's a signal to split it or lower its rank) and on NS authoring (the
 cumulative growth constraint — see "Constraint formula" — keeps NS
 prefixes coherent at small budgets).
 
+## Path-relative non-essential factor
+
+`non_essential_factor` (in `src/value.rs`) takes a `(path, root)` pair
+and matches dir-name components only after stripping `root`. The reason:
+under test, fixtures live at `tests/fixtures/<name>/`, so an absolute
+fixture path like `tests/fixtures/cmdk/cmdk/src/index.tsx` contains
+the component `tests` — without root-stripping, every fixture path was
+treated as non-essential and the 0.2× factor masked all real signal.
+For real-user invocations, `root` is the project root the user passed,
+so their own `tests/`, `examples/`, `website/`, etc. still get the
+discount. WalkCtx exposes `non_essential_factor(path)` which forwards
+with the run's root automatically.
+
+If a future refactor tries to drop the `root` parameter — don't.
+Verify any change against `cargo t schedule_order` to make sure source
+files don't lose the relative ranking against test/website/etc dirs.
+
+## JSON walker — package.json predecessor chain
+
+The JSON walker emits four split candidates for `package.json`
+(`Identity` / `Entry` / `Scripts` / `Dependencies`) chained sequentially
+via predecessor edges (`Identity` ← `Entry` ← `Scripts` ←
+`Dependencies`). Reason: a compact (one-line) `package.json` collapses
+all four key categories onto the same source line; without the chain
+the four batches would be sibling candidates claiming the same
+`(path, line)` and trip the scheduler's non-ancestor-overlap
+debug assertion. The chain order matches the typical value ranking
+(Identity first), so for normal multi-line `package.json` files (where
+the four batches produce disjoint spans) the chain doesn't displace
+anything; for the compact case, later batches' renders override
+earlier ones along the legitimate predecessor path.
+
 ## Cross-language vs language-specific concerns
 
 Many concerns precis cares about are cross-language (value heuristics,
@@ -202,15 +234,14 @@ like to revisit whether it's still earning its complexity.
 ### Render
 - **Filesystem-level override** — file-content batch superseding a folder
   listing entry, "N more files" placeholders, alternate non-tree renderings.
-- **Sub-section markdown splitting** — H2 sections are now the unit of
-  markdown batching (`MarkdownKey::Section { file, section_index }`), but
-  some H2 sections are themselves big enough not to fit (anyhow's README
-  `## Details` is 104 lines, ~700 tokens; otree's `docs/actions.md` is a
-  single H1 with a 350-token table). Splitting further by H3 boundaries —
-  or by bullet-list item for content-style sections — would let those
-  bodies land piece by piece. Defer until a fixture surfaces the gap as
-  load-bearing; today's behavior fits the smaller H2 sections and skips
-  the giant ones.
+- **Sub-section markdown splitting** — H2 sections are the unit of
+  markdown batching (`MarkdownKey::Section { file, section_index }`).
+  `logical_sections` now also unwraps a single top-level H1 into its H2
+  children + a synthetic "intro" section #0 (covering H1 heading +
+  pre-first-H2 prelude), so `# Title` READMEs (mitt, mdbook, otree)
+  don't collapse into one multi-KB blob. Still deferred: H3 splitting
+  for big H2 sections (anyhow's `## Details`, otree's `docs/actions.md`)
+  and bullet-item splitting for content-style sections.
 - **ReadmeHeadline: skip decorative-prose paragraphs** — `ReadmeHeadline`
   currently returns "first heading + first paragraph" via
   `first_section_headline` in `src/walker/markdown.rs`. For READMEs that

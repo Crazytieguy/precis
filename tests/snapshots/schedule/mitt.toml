@@ -1,7 +1,7 @@
 fixture = "mitt"
 budget = 10000
-cumulative_tokens = 2832
-batch_count = 23
+cumulative_tokens = 3967
+batch_count = 34
 
 [[batches]]
 position = 1
@@ -19,10 +19,36 @@ entries = [".editorconfig", ".eslintrc", ".github", ".gitignore", "LICENSE", "RE
 
 [[batches]]
 position = 2
+key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/package.json" })'
+descriptor = "package identity in /Users/yoav/projects/precis/tests/fixtures/mitt/package.json"
+cost_tokens = 173
+cum_tokens = 202
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/package.json"
+start = 2
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/package.json"
+start = 30
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 3
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md" })'
 descriptor = "README headline in /Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
 cost_tokens = 168
-cum_tokens = 197
+cum_tokens = 370
 
 [batches.content]
 kind = "lines"
@@ -60,11 +86,89 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 3
+position = 4
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md", section_index: 1 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md section #1"
+cost_tokens = 89
+cum_tokens = 459
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
+start = 23
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 5
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md", section_index: 7 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md section #7"
+cost_tokens = 35
+cum_tokens = 494
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
+start = 203
+end = 203
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
+start = 205
+end = 205
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 6
+key = 'Json(Entry { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/package.json" })'
+descriptor = "package entrypoints in /Users/yoav/projects/precis/tests/fixtures/mitt/package.json"
+cost_tokens = 212
+cum_tokens = 706
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/package.json"
+start = 5
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/package.json"
+start = 42
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 7
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mitt/.github" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mitt/.github'"
 cost_tokens = 10
-cum_tokens = 207
+cum_tokens = 716
 
 [batches.content]
 kind = "fs"
@@ -74,11 +178,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/mitt/.github"
 entries = ["PULL_REQUEST_TEMPLATE.md", "workflows"]
 
 [[batches]]
-position = 4
+position = 8
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mitt/src" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mitt/src'"
 cost_tokens = 4
-cum_tokens = 211
+cum_tokens = 720
 
 [batches.content]
 kind = "fs"
@@ -88,11 +192,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/mitt/src"
 entries = ["index.ts"]
 
 [[batches]]
-position = 5
+position = 9
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/src/index.ts" })'
 descriptor = "export names surface in /Users/yoav/projects/precis/tests/fixtures/mitt/src/index.ts"
 cost_tokens = 160
-cum_tokens = 371
+cum_tokens = 880
 
 [batches.content]
 kind = "lines"
@@ -194,11 +298,11 @@ end = 47
 kind = "ellipsis"
 
 [[batches]]
-position = 6
+position = 10
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/src/index.ts", start_line: 1 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/mitt/src/index.ts:1"
 cost_tokens = 0
-cum_tokens = 371
+cum_tokens = 880
 
 [batches.content]
 kind = "lines"
@@ -212,11 +316,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 7
+position = 11
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/src/index.ts", start_line: 5 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/mitt/src/index.ts:5"
 cost_tokens = 0
-cum_tokens = 371
+cum_tokens = 880
 
 [batches.content]
 kind = "lines"
@@ -230,11 +334,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 8
+position = 12
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/src/index.ts", start_line: 6 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/mitt/src/index.ts:6"
 cost_tokens = 26
-cum_tokens = 397
+cum_tokens = 906
 
 [batches.content]
 kind = "lines"
@@ -248,11 +352,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 9
+position = 13
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/src/index.ts", start_line: 12 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/mitt/src/index.ts:12"
 cost_tokens = 0
-cum_tokens = 397
+cum_tokens = 906
 
 [batches.content]
 kind = "lines"
@@ -266,11 +370,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 10
+position = 14
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/src/index.ts", start_line: 13 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/mitt/src/index.ts:13"
 cost_tokens = 12
-cum_tokens = 409
+cum_tokens = 918
 
 [batches.content]
 kind = "lines"
@@ -284,11 +388,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 11
+position = 15
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/src/index.ts", start_line: 18 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/mitt/src/index.ts:18"
 cost_tokens = 35
-cum_tokens = 444
+cum_tokens = 953
 
 [batches.content]
 kind = "lines"
@@ -302,11 +406,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 12
+position = 16
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/src/index.ts", start_line: 23 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/mitt/src/index.ts:23"
 cost_tokens = 180
-cum_tokens = 624
+cum_tokens = 1133
 
 [batches.content]
 kind = "lines"
@@ -344,25 +448,45 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 13
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mitt/test" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mitt/test'"
-cost_tokens = 12
-cum_tokens = 636
+position = 17
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md", section_index: 4 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md section #4"
+cost_tokens = 113
+cum_tokens = 1246
 
 [batches.content]
-kind = "fs"
+kind = "lines"
 
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/mitt/test"
-entries = ["index_test.ts", "test-types-compilation.ts"]
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
+start = 113
+end = 113
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
+start = 115
+end = 119
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
+start = 121
+end = 121
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
-position = 14
+position = 18
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/src/index.ts", start_line: 46 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/mitt/src/index.ts:46"
 cost_tokens = 23
-cum_tokens = 659
+cum_tokens = 1269
 
 [batches.content]
 kind = "lines"
@@ -384,11 +508,11 @@ end = 49
 kind = "ellipsis"
 
 [[batches]]
-position = 15
+position = 19
 key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/src/index.ts", start_line: 46 })'
 descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/mitt/src/index.ts:46"
 cost_tokens = 48
-cum_tokens = 707
+cum_tokens = 1317
 
 [batches.content]
 kind = "lines"
@@ -402,11 +526,47 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 16
+position = 20
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/tsconfig.json" })'
+descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/mitt/tsconfig.json"
+cost_tokens = 149
+cum_tokens = 1466
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/tsconfig.json"
+start = 1
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
+key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/package.json" })'
+descriptor = "package scripts in /Users/yoav/projects/precis/tests/fixtures/mitt/package.json"
+cost_tokens = 235
+cum_tokens = 1701
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/package.json"
+start = 18
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 22
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/workflows" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mitt/.github/workflows'"
 cost_tokens = 9
-cum_tokens = 716
+cum_tokens = 1710
 
 [batches.content]
 kind = "fs"
@@ -416,146 +576,14 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/workflows"
 entries = ["compressed-size.yml", "main.yml"]
 
 [[batches]]
-position = 17
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/test/index_test.ts" })'
-descriptor = "imports in /Users/yoav/projects/precis/tests/fixtures/mitt/test/index_test.ts"
-cost_tokens = 60
-cum_tokens = 776
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mitt/test/index_test.ts"
-start = 1
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 18
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/test/test-types-compilation.ts" })'
-descriptor = "imports in /Users/yoav/projects/precis/tests/fixtures/mitt/test/test-types-compilation.ts"
-cost_tokens = 9
-cum_tokens = 785
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mitt/test/test-types-compilation.ts"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 19
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/PULL_REQUEST_TEMPLATE.md", section_index: 1 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/PULL_REQUEST_TEMPLATE.md section #1"
-cost_tokens = 16
-cum_tokens = 801
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/PULL_REQUEST_TEMPLATE.md"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 20
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/PULL_REQUEST_TEMPLATE.md", section_index: 2 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/PULL_REQUEST_TEMPLATE.md section #2"
-cost_tokens = 15
-cum_tokens = 816
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/PULL_REQUEST_TEMPLATE.md"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 21
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/PULL_REQUEST_TEMPLATE.md", section_index: 3 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/PULL_REQUEST_TEMPLATE.md section #3"
-cost_tokens = 30
-cum_tokens = 846
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/PULL_REQUEST_TEMPLATE.md"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 22
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/PULL_REQUEST_TEMPLATE.md", section_index: 0 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/PULL_REQUEST_TEMPLATE.md section #0"
-cost_tokens = 105
-cum_tokens = 951
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/PULL_REQUEST_TEMPLATE.md"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/PULL_REQUEST_TEMPLATE.md"
-start = 7
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 23
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md", section_index: 0 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md section #0"
-cost_tokens = 1881
-cum_tokens = 2832
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md", section_index: 2 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md section #2"
+cost_tokens = 249
+cum_tokens = 1959
 
 [batches.content]
 kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
-start = 23
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
@@ -628,6 +656,82 @@ end = 54
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 24
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md", section_index: 6 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md section #6"
+cost_tokens = 297
+cum_tokens = 2256
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
+start = 179
+end = 179
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
+start = 181
+end = 182
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
+start = 184
+end = 184
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
+start = 186
+end = 187
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
+start = 189
+end = 189
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
+start = 191
+end = 191
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
+start = 193
+end = 201
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 25
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md", section_index: 3 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md section #3"
+cost_tokens = 462
+cum_tokens = 2718
+
+[batches.content]
+kind = "lines"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
@@ -781,29 +885,15 @@ end = 111
 [batches.content.spans.render]
 kind = "full"
 
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
-start = 113
-end = 113
+[[batches]]
+position = 26
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md", section_index: 5 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md section #5"
+cost_tokens = 636
+cum_tokens = 3354
 
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
-start = 115
-end = 119
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
-start = 121
-end = 121
-
-[batches.content.spans.render]
-kind = "full"
+[batches.content]
+kind = "lines"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
@@ -981,74 +1071,150 @@ end = 177
 [batches.content.spans.render]
 kind = "full"
 
+[[batches]]
+position = 27
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/PULL_REQUEST_TEMPLATE.md", section_index: 1 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/PULL_REQUEST_TEMPLATE.md section #1"
+cost_tokens = 16
+cum_tokens = 3370
+
+[batches.content]
+kind = "lines"
+
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
-start = 179
-end = 179
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/PULL_REQUEST_TEMPLATE.md"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 28
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/PULL_REQUEST_TEMPLATE.md", section_index: 2 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/PULL_REQUEST_TEMPLATE.md section #2"
+cost_tokens = 15
+cum_tokens = 3385
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/PULL_REQUEST_TEMPLATE.md"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 29
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/PULL_REQUEST_TEMPLATE.md", section_index: 3 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/PULL_REQUEST_TEMPLATE.md section #3"
+cost_tokens = 30
+cum_tokens = 3415
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/PULL_REQUEST_TEMPLATE.md"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 30
+key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/package.json" })'
+descriptor = "package dependencies in /Users/yoav/projects/precis/tests/fixtures/mitt/package.json"
+cost_tokens = 366
+cum_tokens = 3781
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/package.json"
+start = 62
+end = 84
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 31
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/PULL_REQUEST_TEMPLATE.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/PULL_REQUEST_TEMPLATE.md section #0"
+cost_tokens = 105
+cum_tokens = 3886
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/PULL_REQUEST_TEMPLATE.md"
+start = 5
+end = 5
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
-start = 181
-end = 182
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/PULL_REQUEST_TEMPLATE.md"
+start = 7
+end = 13
 
 [batches.content.spans.render]
 kind = "full"
 
+[[batches]]
+position = 32
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mitt/test" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mitt/test'"
+cost_tokens = 12
+cum_tokens = 3898
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mitt/test"
+entries = ["index_test.ts", "test-types-compilation.ts"]
+
+[[batches]]
+position = 33
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/test/index_test.ts" })'
+descriptor = "imports in /Users/yoav/projects/precis/tests/fixtures/mitt/test/index_test.ts"
+cost_tokens = 60
+cum_tokens = 3958
+
+[batches.content]
+kind = "lines"
+
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
-start = 184
-end = 184
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/test/index_test.ts"
+start = 1
+end = 4
 
 [batches.content.spans.render]
 kind = "full"
 
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
-start = 186
-end = 187
+[[batches]]
+position = 34
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/test/test-types-compilation.ts" })'
+descriptor = "imports in /Users/yoav/projects/precis/tests/fixtures/mitt/test/test-types-compilation.ts"
+cost_tokens = 9
+cum_tokens = 3967
 
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
-start = 189
-end = 189
-
-[batches.content.spans.render]
-kind = "full"
+[batches.content]
+kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
-start = 191
-end = 191
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
-start = 193
-end = 201
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
-start = 203
-end = 203
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
-start = 205
-end = 205
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/test/test-types-compilation.ts"
+start = 3
+end = 3
 
 [batches.content.spans.render]
 kind = "full"

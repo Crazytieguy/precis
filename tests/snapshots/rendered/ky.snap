@@ -1,0 +1,299 @@
+---
+source: tests/schedule_order.rs
+expression: rendered
+---
+.editorconfig
+.gitattributes
+.github/
+    funding.yml
+    security.md
+    workflows/
+        main.yml
+.gitignore
+.npmrc
+license
+media/
+    logo.ai
+    logo.png
+    logo.svg
+package.json
+    2→	"name": "ky",
+    3→	"version": "1.14.3",
+    4→	"description": "Tiny and elegant HTTP client based on the Fetch API",
+    5→	"license": "MIT",
+    6→	"repository": "sindresorhus/ky",
+    7→	"funding": "https://github.com/sindresorhus/ky?sponsor=1",
+    8→	"author": {
+    9→		"name": "Sindre Sorhus",
+    10→		"email": "sindresorhus@gmail.com",
+    11→		"url": "https://sindresorhus.com"
+    12→	},
+    13→	"type": "module",
+    14→	"exports": {
+    15→		"types": "./distribution/index.d.ts",
+    16→		"default": "./distribution/index.js"
+    17→	},
+    18→	"main": "./distribution/index.js",
+    19→	"types": "./distribution/index.d.ts",
+    20→	"sideEffects": false,
+    24→	"scripts": {
+    25→		"test": "xo && npm run build && ava",
+    26→		"debug": "PWDEBUG=1 ava --timeout=2m",
+    27→		"release": "np",
+    28→		"build": "del-cli distribution && tsc --project tsconfig.dist.json",
+    29→		"prepare": "npm run build"
+    30→	},
+    31→	"files": [
+    32→		"distribution"
+    33→	],
+    34→	"keywords": [
+    35→		"fetch",
+    36→		"request",
+    37→		"requests",
+    38→		"http",
+    39→		"https",
+    40→		"fetching",
+    41→		"get",
+    42→		"url",
+    43→		"curl",
+    44→		"wget",
+    45→		"net",
+    46→		"network",
+    47→		"ajax",
+    48→		"api",
+    49→		"rest",
+    50→		"xhr",
+    51→		"browser",
+    52→		"got",
+    53→		"axios",
+    54→		"node-fetch"
+    55→	],
+readme.md
+    20→## Benefits over plain `fetch`
+    22→- Simpler API
+    23→- Method shortcuts (`ky.post()`)
+    24→- Treats non-2xx status codes as errors (after redirects)
+    25→- Retries failed requests
+    26→- JSON option
+    27→- Timeout support
+    28→- URL prefix option
+    29→- Instances with custom defaults
+    30→- Hooks
+    31→- TypeScript niceties (e.g. `.json()` supports generics and defaults to `unknown`, not `any`)
+    33→## Install
+    35→```sh
+    36→npm install ky
+    37→```
+    39→###### CDN
+    41→- [jsdelivr](https://cdn.jsdelivr.net/npm/ky/+esm)
+    42→- [unpkg](https://unpkg.com/ky)
+    43→- [esm.sh](https://esm.sh/ky)
+    45→## Usage
+    47→```js
+    48→import ky from 'ky';
+    50→const json = await ky.post('https://example.com', {json: {foo: true}}).json();
+    52→console.log(json);
+    53→//=> {data: '🦄'}
+    54→```
+    56→With plain `fetch`, it would be:
+    58→```js
+    59→class HTTPError extends Error {}
+    61→const response = await fetch('https://example.com', {
+    62→	method: 'POST',
+    63→	body: JSON.stringify({foo: true}),
+    64→	headers: {
+    65→		'content-type': 'application/json'
+    66→	}
+    67→});
+    69→if (!response.ok) {
+    70→	throw new HTTPError(`Fetch error: ${response.statusText}`);
+    71→}
+    73→const json = await response.json();
+    75→console.log(json);
+    76→//=> {data: '🦄'}
+    77→```
+    79→If you are using [Deno](https://github.com/denoland/deno), import Ky from a URL. For example, using a CDN:
+    81→```js
+    82→import ky from 'https://esm.sh/ky';
+    83→```
+    1339→## Browser support
+    1341→The latest version of Chrome, Firefox, and Safari.
+    1343→## Node.js support
+    1345→Node.js 18 and later.
+    1347→## Related
+    1349→- [fetch-extras](https://github.com/sindresorhus/fetch-extras) - Useful utilities for working with Fetch
+    1350→- [ky-hooks-change-case](https://github.com/alice-health/ky-hooks-change-case) - Ky hooks to modify cases on requests and responses of objects
+    1352→## Maintainers
+    1354→- [Sindre Sorhus](https://github.com/sindresorhus)
+    1355→- [Seth Holladay](https://github.com/sholladay)
+    1356→- [Szymon Marczak](https://github.com/szmarczak)
+source/
+    core/
+        Ky.ts
+            33→export class Ky {
+            …
+        constants.ts
+    errors/
+        ForceRetryError.ts
+            4→/**
+            5→Internal error used to signal a forced retry from afterResponse hooks.
+            6→This is thrown when a user returns ky.retry() from an afterResponse hook.
+            7→*/
+            8→export class ForceRetryError extends Error {
+            9→	override name = 'ForceRetryError' as const;
+            10→	customDelay: number | undefined;
+            11→	code: string | undefined;
+            12→	customRequest: Request | undefined;
+            14→	constructor(options?: ForceRetryOptions) {
+            …
+        HTTPError.ts
+            5→export class HTTPError<T = unknown> extends Error {
+            6→	public response: KyResponse<T>;
+            7→	public request: KyRequest;
+            8→	public options: NormalizedOptions;
+            10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
+            …
+        NonError.ts
+            1→/**
+            2→Wrapper for non-Error values that were thrown.
+            4→In JavaScript, any value can be thrown (not just Error instances). This class wraps such values to ensure consistent error handling.
+            5→*/
+            6→export class NonError extends Error {
+            7→	override name = 'NonError';
+            8→	readonly value: unknown;
+            10→	constructor(value: unknown) {
+            …
+        TimeoutError.ts
+            3→export class TimeoutError extends Error {
+            4→	public request: KyRequest;
+            6→	constructor(request: Request) {
+            …
+    index.ts
+        3→import {Ky} from './core/Ky.js';
+        4→import {requestMethods, stop, retry} from './core/constants.js';
+        5→import type {KyInstance} from './types/ky.js';
+        6→import type {Input, Options} from './types/options.js';
+        7→import {validateAndMerge} from './utils/merge.js';
+        8→import {type Mutable} from './utils/types.js';
+        36→export default ky;
+        …
+    types/
+        ResponsePromise.ts
+            6→export type ResponsePromise<T = unknown> = {
+            …
+        common.ts
+            2→export type Primitive = null | undefined | string | number | boolean | symbol | bigint;
+            …
+            4→export type Required<T, K extends keyof T = keyof T> = T & {[P in K]-?: T[P]};
+            …
+            6→export type LiteralUnion<LiteralType extends BaseType, BaseType extends Primitive> =
+            7→	| LiteralType
+            8→	| (BaseType & {_?: never});
+        hooks.ts
+        ky.ts
+            5→export type KyInstance = {
+            …
+        options.ts
+        request.ts
+            1→export type KyRequest<T = unknown> = {
+            2→	json: <J = T>() => Promise<J>;
+            3→} & Request;
+        response.ts
+            1→export type KyResponse<T = unknown> = {
+            2→	json: <J = T >() => Promise<J>;
+            3→} & Response;
+        retry.ts
+            3→export type ShouldRetryState = {
+            4→	/**
+            5→	The error that caused the request to fail.
+            6→	*/
+            7→	error: Error;
+            9→	/**
+            10→	The number of retries attempted. Starts at 1 for the first retry.
+            11→	*/
+            12→	retryCount: number;
+            13→};
+            15→export type RetryOptions = {
+            …
+    utils/
+        body.ts
+            5→export const getBodySize = (body?: BodyInit | null): number => {
+            …
+            90→export const streamResponse = (response: Response, onDownloadProgress: Options['onDownloadProgress']) => {
+            …
+            119→export const streamRequest = (request: Request, onUploadProgress: Options['onUploadProgress'], originalBody?: BodyInit | null) => {
+            …
+        delay.ts
+            5→export type DelayOptions = {
+            6→	signal?: InternalOptions['signal'];
+            7→};
+            9→export default async function delay(
+            10→	ms: number,
+            11→	{signal}: DelayOptions,
+            12→): Promise<void> {
+            …
+        is.ts
+            2→export const isObject = (value: unknown): value is object => value !== null && typeof value === 'object';
+        merge.ts
+        normalize.ts
+            5→export const normalizeRequestMethod = (input: string): string =>
+            6→	requestMethods.includes(input as RequestHttpMethod) ? input.toUpperCase() : input;
+            28→export const normalizeRetryOptions = (retry: number | RetryOptions = {}): InternalRetryOptions => {
+            …
+        options.ts
+            4→export const findUnknownOptions = (
+            …
+            30→export const hasSearchParameters = (search: SearchParamsOption): boolean => {
+            …
+        timeout.ts
+            3→export type TimeoutOptions = {
+            4→	timeout: number;
+            5→	fetch: typeof fetch;
+            6→};
+            9→export default async function timeout(
+            10→	request: Request,
+            11→	init: RequestInit,
+            12→	abortController: AbortController | undefined,
+            13→	options: TimeoutOptions,
+            14→): Promise<Response> {
+            …
+        type-guards.ts
+            27→export function isKyError(error: unknown): error is HTTPError | TimeoutError | ForceRetryError {
+            …
+            49→export function isHTTPError<T = unknown>(error: unknown): error is HTTPError<T> {
+            …
+            71→export function isTimeoutError(error: unknown): error is TimeoutError {
+            …
+            98→export function isForceRetryError(error: unknown): error is ForceRetryError {
+            …
+        types.ts
+            1→export type Mutable<T> = {
+            2→	-readonly[P in keyof T]: T[P]
+            3→};
+            5→export type ObjectEntries<T> = T extends ArrayLike<infer U>
+            6→	? Array<[string, U]>
+            7→	: Array<{[K in keyof T]: [K, T[K]]}[keyof T]>;
+test/
+tsconfig.dist.json
+    1→{
+    2→	"extends": "./tsconfig",
+    3→	"compilerOptions": {
+    4→		"sourceMap": true,
+    5→		"inlineSources": true,
+    6→		"rootDir": "./source",
+    7→		"outDir": "./distribution"
+    8→	},
+    9→	"include": [
+    10→		"source"
+    11→	]
+    12→}
+tsconfig.json
+    1→{
+    2→	"extends": "@sindresorhus/tsconfig",
+    3→	"compilerOptions": {
+    4→		"exactOptionalPropertyTypes": true
+    5→	},
+    6→	"include": [
+    7→		"source"
+    8→	]
+    9→}

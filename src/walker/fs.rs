@@ -10,13 +10,13 @@ use crate::batch::{BatchKey, FsKey, ResolvedBatch, ValueSignals};
 use crate::content::{BatchContent, FsEntries, FsGroup};
 use crate::fs_util::EntryKind;
 pub use crate::fs_util::list_dir;
-use crate::value::{depth_factor, non_essential_factor};
+use crate::value::depth_factor;
 
 use super::{Candidate, WalkCtx};
 
 /// Seed: list the root directory.
 pub fn seed(ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
-    vec![dir_listing_candidate(ctx.root().to_path_buf(), 0)]
+    vec![dir_listing_candidate(ctx.root().to_path_buf(), ctx)]
 }
 
 /// Expand a scheduled `FsKey::DirListing` into successor candidates:
@@ -30,9 +30,7 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
     let mut out = Vec::new();
     for (name, kind) in children {
         if matches!(kind, EntryKind::Directory) && !should_skip_dir(&name) {
-            let sub = dir.join(&name);
-            let depth = ctx.depth_from_root(&sub);
-            out.push(dir_listing_candidate(sub, depth));
+            out.push(dir_listing_candidate(dir.join(&name), ctx));
         }
     }
     out
@@ -56,7 +54,7 @@ pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
                 entries: FsEntries::Listed(paths),
             }],
         },
-        signals: dir_listing_signals_for_path(dir, dir == ctx.root(), ctx.depth_from_root(dir)),
+        signals: dir_listing_signals_for_path(dir, ctx),
     })
 }
 
@@ -121,16 +119,16 @@ fn walk_files_recursive(dir: &Path, ext: &str, out: &mut Vec<PathBuf>) {
     }
 }
 
-fn dir_listing_candidate(dir: PathBuf, depth: usize) -> Candidate<BatchKey> {
-    let is_root = depth == 0;
-    let signals = dir_listing_signals_for_path(&dir, is_root, depth);
+fn dir_listing_candidate(dir: PathBuf, ctx: &WalkCtx) -> Candidate<BatchKey> {
+    let signals = dir_listing_signals_for_path(&dir, ctx);
     // Cost hint: small — a listing of ~10 entries is ~30-60 tokens.
     let cost_hint = 40;
     Candidate::new(FsKey::DirListing { dir }.into(), signals, cost_hint)
 }
 
-fn dir_listing_signals(is_root: bool, depth: usize) -> ValueSignals {
-    if is_root {
+fn dir_listing_signals_for_path(dir: &Path, ctx: &WalkCtx) -> ValueSignals {
+    let depth = ctx.depth_from_root(dir);
+    let mut s = if dir == ctx.root() {
         ValueSignals {
             catastrophic_omission: 0.95,
             follow_up_minimization: 0.6,
@@ -144,18 +142,8 @@ fn dir_listing_signals(is_root: bool, depth: usize) -> ValueSignals {
             zero_tool_call_understanding: 0.25,
             depth_factor: depth_factor(depth),
         }
-    }
-}
-
-/// Variant of `dir_listing_signals` that takes the dir path so the
-/// non-essential-directory discount applies (tests/, examples/, benches/).
-fn dir_listing_signals_for_path(
-    dir: &std::path::Path,
-    is_root: bool,
-    depth: usize,
-) -> ValueSignals {
-    let mut s = dir_listing_signals(is_root, depth);
-    s.depth_factor *= non_essential_factor(dir);
+    };
+    s.depth_factor *= ctx.non_essential_factor(dir);
     s
 }
 

@@ -1,0 +1,221 @@
+---
+source: tests/schedule_order.rs
+expression: rendered
+---
+.github/
+    FUNDING.yml
+    workflows/
+        test.yml
+.gitignore
+.husky/
+    pre-commit
+.prettierignore
+.prettierrc.js
+ARCHITECTURE.md
+    92→## Performance
+    94→This is more expensive memory wise, because if there are 2,000 items but the list is filtered to only 2 items, we still allocate memory for 2,000 instances of the Item component. But it's our only option! Thankfully we can still keep the DOM size to 2 items.
+    96→## Groups
+    98→Item mount informs both the root and the parent group, which keeps track of items within it. Each group informs the root.
+LICENSE.md
+README.md
+    5→# ⌘K [![cmdk minzip package size](https://img.shields.io/bundlephobia/minzip/cmdk)](https://www.npmjs.com/package/cmdk?activeTab=code) [![cmdk package version](https://img.shields.io/npm/v/cmdk.svg?colorB=green)](https://www.npmjs.com/package/cmdk)
+    7→⌘K is a command menu React component that can also be used as an accessible combobox. You render items, it filters and sorts them automatically. ⌘K supports a fully composable API <sup><sup>[How?](/ARCHITECTURE.md)</sup></sup>, so you can wrap items in other components or even as static JSX.
+    9→## Install
+    11→```bash
+    12→pnpm install cmdk
+    13→```
+    15→## Use
+    17→```tsx
+    18→import { Command } from 'cmdk'
+    20→const CommandMenu = () => {
+    21→  return (
+    22→    <Command label="Command Menu">
+    23→      <Command.Input />
+    24→      <Command.List>
+    25→        <Command.Empty>No results found.</Command.Empty>
+    27→        <Command.Group heading="Letters">
+    28→          <Command.Item>a</Command.Item>
+    29→          <Command.Item>b</Command.Item>
+    30→          <Command.Separator />
+    31→          <Command.Item>c</Command.Item>
+    32→        </Command.Group>
+    34→        <Command.Item>Apple</Command.Item>
+    35→      </Command.List>
+    36→    </Command>
+    37→  )
+    38→}
+    39→```
+    41→Or in a dialog:
+    43→```tsx
+    44→import { Command } from 'cmdk'
+    46→const CommandMenu = () => {
+    47→  const [open, setOpen] = React.useState(false)
+    49→  // Toggle the menu when ⌘K is pressed
+    50→  React.useEffect(() => {
+    51→    const down = (e) => {
+    52→      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
+    53→        e.preventDefault()
+    54→        setOpen((open) => !open)
+    55→      }
+    56→    }
+    58→    document.addEventListener('keydown', down)
+    59→    return () => document.removeEventListener('keydown', down)
+    60→  }, [])
+    62→  return (
+    63→    <Command.Dialog open={open} onOpenChange={setOpen} label="Global Command Menu">
+    64→      <Command.Input />
+    65→      <Command.List>
+    66→        <Command.Empty>No results found.</Command.Empty>
+    68→        <Command.Group heading="Letters">
+    69→          <Command.Item>a</Command.Item>
+    70→          <Command.Item>b</Command.Item>
+    71→          <Command.Separator />
+    72→          <Command.Item>c</Command.Item>
+    73→        </Command.Group>
+    75→        <Command.Item>Apple</Command.Item>
+    76→      </Command.List>
+    77→    </Command.Dialog>
+    78→  )
+    79→}
+    80→```
+    430→## FAQ
+    432→**Accessible?** Yes. Labeling, aria attributes, and DOM ordering tested with Voice Over and Chrome DevTools. [Dialog](#dialog-cmdk-dialog-cmdk-overlay) composes an accessible Dialog implementation.
+    434→**Virtualization?** No. Good performance up to 2,000-3,000 items, though. Read below to bring your own.
+    436→**Filter/sort items manually?** Yes. Pass `shouldFilter={false}` to [Command](#command-cmdk-root). Better memory usage and performance. Bring your own virtualization this way.
+    438→**React 18 safe?** Yes, required. Uses React 18 hooks like `useId` and `useSyncExternalStore`.
+    440→**Unstyled?** Yes, use the listed CSS selectors.
+    442→**Hydration mismatch?** No, likely a bug in your code. Ensure the `open` prop to `Command.Dialog` is `false` on the server.
+    444→**React strict mode safe?** Yes. Open an issue if you notice an issue.
+    446→**Weird/wrong behavior?** Make sure your `Command.Item` has a `key` and unique `value`.
+    448→**Concurrent mode safe?** Maybe, but concurrent mode is not yet real. Uses risky approaches like manual DOM ordering.
+    450→**React server component?** No, it's a client component.
+    452→**Listen for ⌘K automatically?** No, do it yourself to have full control over keybind context.
+    454→**React Native?** No, and no plans to support it. If you build a React Native version, let us know and we'll link your repository here.
+    456→## History
+    458→Written in 2019 by Paco ([@pacocoursey](https://twitter.com/pacocoursey)) to see if a composable combobox API was possible. Used for the Vercel command menu and autocomplete by Rauno ([@raunofreiberg](https://twitter.com/raunofreiberg)) in 2020. Re-written independently in 2022 with a simpler and more performant approach. Ideas and help from Shu ([@shuding\_](https://twitter.com/shuding_)).
+    460→[use-descendants](https://github.com/pacocoursey/use-descendants) was extracted from the 2019 version.
+    462→## Testing
+    464→First, install dependencies and Playwright browsers:
+    466→```bash
+    467→pnpm install
+    468→pnpm playwright install
+    469→```
+    471→Then ensure you've built the library:
+    473→```bash
+    474→pnpm build
+    475→```
+    477→Then run the tests using your local build against real browser engines:
+    479→```bash
+    480→pnpm test
+    481→```
+cmdk/
+    package.json
+        2→  "name": "cmdk",
+        3→  "version": "1.1.1",
+        4→  "license": "MIT",
+        5→  "main": "./dist/index.js",
+        6→  "module": "./dist/index.mjs",
+        7→  "types": "./dist/index.d.ts",
+        8→  "files": [
+        9→    "dist"
+        10→  ],
+        11→  "exports": {
+        12→    ".": {
+        13→      "types": "./dist/index.d.ts",
+        14→      "import": "./dist/index.mjs",
+        15→      "require": "./dist/index.js"
+        16→    }
+        17→  },
+        18→  "scripts": {
+        19→    "prepublishOnly": "cp ../README.md . && pnpm build",
+        20→    "postpublish": "rm README.md",
+        21→    "build": "tsup src",
+        22→    "dev": "tsup src --watch"
+        23→  },
+        24→  "peerDependencies": {
+        25→    "react": "^18 || ^19 || ^19.0.0-rc",
+        26→    "react-dom": "^18 || ^19 || ^19.0.0-rc"
+        27→  },
+        28→  "dependencies": {
+        29→    "@radix-ui/react-compose-refs": "^1.1.1",
+        30→    "@radix-ui/react-dialog": "^1.1.6",
+        31→    "@radix-ui/react-id": "^1.1.0",
+        32→    "@radix-ui/react-primitive": "^2.0.2"
+        33→  },
+        34→  "devDependencies": {
+        35→    "@types/react": "18.0.15"
+        36→  },
+        37→  "sideEffects": false,
+        38→  "repository": {
+        39→    "type": "git",
+        40→    "url": "git+https://github.com/pacocoursey/cmdk.git",
+        41→    "directory": "cmdk"
+        42→  },
+        43→  "bugs": {
+        44→    "url": "https://github.com/pacocoursey/cmdk/issues"
+        45→  },
+        46→  "homepage": "https://github.com/pacocoursey/cmdk#readme",
+        47→  "author": {
+        48→    "name": "Paco",
+        49→    "url": "https://github.com/pacocoursey"
+        50→  }
+    src/
+        command-score.ts
+            155→export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
+            …
+        index.tsx
+            941→export { useCmdk as useCommandState }
+            942→export { pkg as Command }
+            943→export { defaultFilter }
+            …
+            945→export { Command as CommandRoot }
+            946→export { List as CommandList }
+            947→export { Item as CommandItem }
+            948→export { Input as CommandInput }
+            949→export { Group as CommandGroup }
+            950→export { Separator as CommandSeparator }
+            951→export { Dialog as CommandDialog }
+            952→export { Empty as CommandEmpty }
+            953→export { Loading as CommandLoading }
+            …
+    tsup.config.ts
+        1→import { defineConfig } from 'tsup'
+        3→export default defineConfig({
+        4→  sourcemap: false,
+        5→  minify: true,
+        6→  dts: true,
+        7→  format: ['esm', 'cjs'],
+        8→  loader: {
+        9→    '.js': 'jsx',
+        10→  },
+        11→})
+package.json
+    2→  "name": "cmdk-root",
+    3→  "private": true,
+playwright.config.ts
+    1→import { PlaywrightTestConfig, devices } from '@playwright/test'
+    27→export default config
+pnpm-lock.yaml
+pnpm-workspace.yaml
+test/
+tsconfig.json
+    1→{
+    2→  "compilerOptions": {
+    3→    "target": "es2018",
+    4→    "lib": ["dom", "dom.iterable", "esnext"],
+    5→    "allowJs": true,
+    6→    "skipLibCheck": true,
+    7→    "strict": false,
+    8→    "forceConsistentCasingInFileNames": true,
+    9→    "esModuleInterop": true,
+    10→    "module": "esnext",
+    11→    "moduleResolution": "node",
+    12→    "resolveJsonModule": true,
+    13→    "isolatedModules": true,
+    14→    "jsx": "react",
+    15→    "noEmit": true
+    16→  },
+    17→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
+    18→  "exclude": ["node_modules", "build", "dist", ".next"]
+    19→}
+website/

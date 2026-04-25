@@ -1,0 +1,890 @@
+fixture = "ky"
+revision_pin = "eb5c3eba"
+summary = """
+ky is a small TypeScript HTTP client wrapping the Fetch API. The whole
+shipped library lives under `source/`: a public-facing `index.ts` that
+wires `Ky.create` into method shortcuts (`get`/`post`/…) plus
+`extend`/`create`/`stop`/`retry`, a single internal `core/Ky` class
+that owns the request/retry/hook lifecycle, a constants module with
+feature detection + the `ForceRetryOptions` / `RetryMarker` plumbing
+behind `ky.retry()`, an options/types tree describing every public
+option, four error classes (`HTTPError`, `TimeoutError`,
+`ForceRetryError`, internal `NonError`), and a handful of utils
+(deep-merge with header/hook/searchParams/signal special-casing,
+retry defaults, fetch-timeout race, abortable delay, body-stream
+progress, type guards). The fixture is paired with an extensive
+`readme.md` (≈1.4k lines of API reference + tips + FAQ) and a deep
+test suite under `test/` (ava, against an express-based helper
+server) covering every option, every hook callback shape, every
+retry path, and headers/streams/browser scenarios.
+
+The query distribution this NS serves: orientation ("what does ky
+do, what does it export"), API/option lookup ("what are the retry
+defaults / hook signatures / what does prefixUrl do"), behavior
+debugging ("why does retry skip this status / how does the hook
+chain interact with cloned responses / when does timeout fire"),
+type integration ("how do I extend types / what shape is
+NormalizedOptions"), and test-anchored questions ("is there a test
+for X"). The ranking front-loads structural breadth (file tree +
+public exports + option/hook/error names with locations) before
+diving into the engine internals (`Ky` class) and the readme's deep
+options reference.
+"""
+
+# ============================================================
+# Tier 1 — orientation: repo shape, identity, readme lede
+# ============================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "Repo root listing"
+justification = """
+First thing a fresh agent needs: what's at the top of the repo.
+Cheap and reveals the overall shape (single `source/`, single
+`test/`, `readme.md`, two tsconfigs, license, media). Without this
+the agent can't even guess where to look.
+"""
+content = { kind = "fs", groups = [ { parent = ".", entries = "all" } ] }
+
+[[batches]]
+id = "1.2"
+descriptor = "Readme one-line tagline"
+justification = """
+The single canonical sentence — 'Ky is a tiny and elegant HTTP
+client based on the Fetch API'. Tiny but resolves the most common
+zero-follow-up question ('what is this'). Comes before the larger
+benefits list so the cheapest possible budget still gets it.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "readme.md", start = 11, end = 11, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.3"
+descriptor = "Readme top-level section headings (## only)"
+justification = """
+The H2s alone are a table of contents for the whole reference:
+Benefits, Install, Usage, API, Tips, FAQ, Browser support, Node.js
+support, Related, Maintainers. Every H2 is one line, very cheap,
+and tells the agent what kinds of questions the readme can answer
+without further reading. Listing only some would mislead. Placed
+before the benefits-list batch so its line 20 (## Benefits over
+plain fetch) lands here first, then gets refined by 1.5 via the
+predecessor edge.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "readme.md", start = 20, end = 20, render = { kind = "full" } },
+    { path = "readme.md", start = 33, end = 33, render = { kind = "full" } },
+    { path = "readme.md", start = 45, end = 45, render = { kind = "full" } },
+    { path = "readme.md", start = 85, end = 85, render = { kind = "full" } },
+    { path = "readme.md", start = 1050, end = 1050, render = { kind = "full" } },
+    { path = "readme.md", start = 1292, end = 1292, render = { kind = "full" } },
+    { path = "readme.md", start = 1339, end = 1339, render = { kind = "full" } },
+    { path = "readme.md", start = 1343, end = 1343, render = { kind = "full" } },
+    { path = "readme.md", start = 1347, end = 1347, render = { kind = "full" } },
+    { path = "readme.md", start = 1352, end = 1352, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.4"
+descriptor = "Readme target environments + 'no deps' note"
+justification = """
+The 'targets modern browsers, Node, Bun, Deno' framing plus the
+'tiny package with no dependencies' line. Splits the benefits-list
+into two cheap batches so cost grows gradually.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "readme.md", start = 16, end = 18, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.5"
+descriptor = "Readme benefits-over-fetch list"
+justification = """
+The bulleted advantages over plain fetch (simpler API, method
+shortcuts, retries, JSON option, timeout, prefixUrl, instances,
+hooks, TS niceties). Highest-density semantic answer to 'what does
+ky give me over fetch'. Predecessor on 1.3 (the H2 at line 20
+overlaps).
+"""
+predecessor = "1.3"
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "readme.md", start = 20, end = 31, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.6"
+descriptor = "source/ tree (all immediate children + every subdir)"
+justification = """
+Catastrophic-omission hedge: if we list `source/` without listing
+`source/core`, `source/types`, `source/utils`, `source/errors`, the
+agent will assume those subdirs don't exist. Listing all four
+together gives a complete map of the shipped code in one cheap
+batch — and for any later 'where is X defined' query the agent now
+has exact directories to grep in.
+"""
+[batches.content]
+kind = "fs"
+groups = [
+    { parent = "source", entries = "all" },
+    { parent = "source/core", entries = "all" },
+    { parent = "source/types", entries = "all" },
+    { parent = "source/utils", entries = "all" },
+    { parent = "source/errors", entries = "all" },
+]
+
+[[batches]]
+id = "1.7"
+descriptor = "test/ tree (top-level + helpers/)"
+justification = """
+Same hedge for tests: list every test file alongside the helpers/
+subdir's contents. Test filenames are themselves a topic map
+(retry, hooks, headers, stream, browser, http-error, prefix-url,
+methods, fetch, context, formdata-searchparams, memory-leak,
+bytes, main). 'Is there a test covering X' becomes a one-glance
+question.
+"""
+[batches.content]
+kind = "fs"
+groups = [
+    { parent = "test", entries = "all" },
+    { parent = "test/helpers", entries = "all" },
+]
+
+[[batches]]
+id = "1.8"
+descriptor = "package.json identity (name, version, description, exports, engines)"
+justification = """
+Authoritative metadata: package name `ky`, version 1.14.3, ESM-only
+(`"type": "module"`), Node ≥18, the `exports` map pointing at
+`distribution/` (so the agent knows source lives in `source/` but
+ships from `distribution/`). Skips the author/license/repo block
+(lines 5-12) which the license file already conveys.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "package.json", start = 1, end = 4, render = { kind = "full" } },
+    { path = "package.json", start = 13, end = 23, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.9"
+descriptor = "Readme `## API` H3 location index"
+justification = """
+The API section's H3s name every public surface of `ky`: the
+callable `ky(input, options?)`, the six method shortcuts, plus
+`ky.extend`, `ky.create`, `ky.stop`, `ky.retry`, `HTTPError`,
+`TimeoutError`. One line each, very cheap, gives the agent precise
+line numbers to land on with one read for any of them. H4/H5/H6
+sub-anchors land in tier 8.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "readme.md", start = 87, end = 87, render = { kind = "full" } },
+    { path = "readme.md", start = 122, end = 127, render = { kind = "full" } },
+    { path = "readme.md", start = 745, end = 745, render = { kind = "full" } },
+    { path = "readme.md", start = 811, end = 811, render = { kind = "full" } },
+    { path = "readme.md", start = 833, end = 833, render = { kind = "full" } },
+    { path = "readme.md", start = 864, end = 864, render = { kind = "full" } },
+    { path = "readme.md", start = 1000, end = 1000, render = { kind = "full" } },
+    { path = "readme.md", start = 1046, end = 1046, render = { kind = "full" } },
+]
+
+# ============================================================
+# Tier 2 — public API surface: index.ts wiring + KyInstance
+# ============================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "source/core/constants.ts: requestMethods + responseTypes + maxSafeTimeout + stop"
+justification = """
+Three small named constants that other files reference repeatedly.
+`requestMethods` is the canonical list of HTTP verbs ky exposes as
+shortcuts; `responseTypes` maps the body-method shortcut name to
+its Accept header; `maxSafeTimeout` (2147483647) is the upper bound
+enforced by `Ky.create`; `stop` is the symbol returned from
+beforeRetry hooks to abort. Cheap and ranked early so even a small
+budget gets the basic constants.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "source/core/constants.ts", start = 39, end = 39, render = { kind = "full" } },
+    { path = "source/core/constants.ts", start = 46, end = 58, render = { kind = "full" } },
+    { path = "source/core/constants.ts", start = 63, end = 63, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.2"
+descriptor = "Readme Usage block (canonical example)"
+justification = """
+The usage section's `import ky` + `ky.post(...).json()` snippet.
+A canonical zero-follow-up answer for 'how do I use this' and a
+primer for the shape of every later option example.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "readme.md", start = 47, end = 54, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.3"
+descriptor = "KyInstance: every member's signature (location batch)"
+justification = """
+Catastrophic-omission hedge over `source/types/ky.ts`: showing some
+members but not others would imply ky has fewer public methods than
+it does. One full line per member: the call signature, all six
+method shortcuts (get/post/put/delete/patch/head),
+create/extend/stop/retry. Pinpoints every member to its exact line
+so any follow-up read is one hop.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "source/types/ky.ts", start = 5, end = 5, render = { kind = "full" } },
+    { path = "source/types/ky.ts", start = 22, end = 22, render = { kind = "full" } },
+    { path = "source/types/ky.ts", start = 30, end = 30, render = { kind = "full" } },
+    { path = "source/types/ky.ts", start = 38, end = 38, render = { kind = "full" } },
+    { path = "source/types/ky.ts", start = 46, end = 46, render = { kind = "full" } },
+    { path = "source/types/ky.ts", start = 54, end = 54, render = { kind = "full" } },
+    { path = "source/types/ky.ts", start = 62, end = 62, render = { kind = "full" } },
+    { path = "source/types/ky.ts", start = 70, end = 70, render = { kind = "full" } },
+    { path = "source/types/ky.ts", start = 77, end = 77, render = { kind = "full" } },
+    { path = "source/types/ky.ts", start = 103, end = 103, render = { kind = "full" } },
+    { path = "source/types/ky.ts", start = 136, end = 136, render = { kind = "full" } },
+    { path = "source/types/ky.ts", start = 185, end = 185, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.4"
+descriptor = "source/index.ts named-export block"
+justification = """
+The `export type {…}` and `export {…}` block enumerates every named
+export: the `KyInstance` type, all option/hook/retry types,
+`ResponsePromise`, `KyRequest`, `KyResponse`, the three error
+classes, and the four `is*Error` type guards. Plus the explicit
+'Intentionally not exporting NonError' comment. Resolves nearly
+every 'is X exported / what's the import name' question with zero
+follow-up.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "source/index.ts", start = 38, end = 76, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.5"
+descriptor = "source/index.ts imports + createInstance signature + default export"
+justification = """
+Top of the file: imports (showing the `Ky` class, `requestMethods`,
+`stop`, `retry`, and the `validateAndMerge` util — exactly what the
+public ky depends on), the `createInstance` arrow signature, and
+the `const ky = createInstance(); export default ky` lines that
+make ky a singleton with `extend`/`create` for fresh instances.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "source/index.ts", start = 1, end = 10, render = { kind = "full" } },
+    { path = "source/index.ts", start = 31, end = 36, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.6"
+descriptor = "source/index.ts createInstance body"
+justification = """
+The function body: the `ky(input, options)` call signature wires to
+`Ky.create(..., validateAndMerge(defaults, options))`; the loop
+over `requestMethods` attaches each method shortcut with `{method}`
+injected; `ky.create` and `ky.extend` recursively re-instance (and
+extend supports a function-form override of the parent defaults);
+`ky.stop`/`ky.retry` are static-attached. The full picture of how
+the public surface composes.
+"""
+predecessor = "2.5"
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "source/index.ts", start = 11, end = 30, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.7"
+descriptor = "Default ky() body-method behavior + body shortcuts list"
+justification = """
+The two paragraphs after `### ky(input, options?)` that explain the
+returned `Response` has body methods bolted on, that they throw
+`HTTPError` for non-2xx, that `.json()` returns `''` for 204 or
+empty body, and the explicit list of supported shortcuts
+(`.json()`, `.text()`, `.formData()`, `.arrayBuffer()`, `.blob()`,
+`.bytes()` with the runtime-feature note). High-value semantic
+context for nearly any 'what does .X() return' question.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "readme.md", start = 91, end = 93, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.8"
+descriptor = "core/constants.ts: feature-detection flags"
+justification = """
+The five `supports*` exports (RequestStreams, AbortController,
+AbortSignal, ResponseStreams, FormData) feature-checked at module
+load. Anchors 'why does X get skipped in environment Y' debugging
+and explains the `if (supportsAbortController && supportsAbortSignal)`
+branches in `Ky`.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "source/core/constants.ts", start = 4, end = 37, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.9"
+descriptor = "ForceRetryOptions type + RetryMarker + retry() factory signature"
+justification = """
+The `ForceRetryOptions` shape (delay/code/cause/request) defines
+exactly what `ky.retry({...})` accepts; `RetryMarker` is the
+internal sentinel returned from afterResponse hooks; the `retry`
+const is the factory wrapper. Together resolve the entire
+'how does ky.retry() work / what fields does it accept' surface.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "source/core/constants.ts", start = 65, end = 78, render = { kind = "full" } },
+    { path = "source/core/constants.ts", start = 88, end = 89, render = { kind = "full" } },
+    { path = "source/core/constants.ts", start = 109, end = 110, render = { kind = "full" } },
+    { path = "source/core/constants.ts", start = 142, end = 150, render = { kind = "full" } },
+    { path = "source/core/constants.ts", start = 235, end = 235, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.10"
+descriptor = "kyOptionKeys + vendor/request option registries"
+justification = """
+The three sets of keys that drive `findUnknownOptions` (utils/options).
+`kyOptionKeys` is the authoritative list of ky-only options
+(json/parseJson/stringifyJson/searchParams/prefixUrl/retry/timeout/
+hooks/throwHttpErrors/onDownloadProgress/onUploadProgress/fetch/
+context). `requestOptionsRegistry` enumerates standard RequestInit
+keys handled by Request directly. `vendorSpecificOptions` lists
+keys (just `next`) that always pass through to fetch().
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "source/core/constants.ts", start = 237, end = 280, render = { kind = "full" } },
+]
+
+# ============================================================
+# Tier 3 — options + types skeleton (KyOptions / RetryOptions / Hooks)
+# ============================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "KyOptions: every option's name + type signature (location batch)"
+justification = """
+Catastrophic-omission hedge over `source/types/options.ts`: the
+KyOptions block declares every ky-only option, and missing one
+would lead the agent to invent or assume defaults. One full line
+per field gives the precise type and a follow-up read finds the
+TSDoc immediately above. Covers json, parseJson, stringifyJson,
+searchParams, prefixUrl, retry, timeout, hooks, throwHttpErrors,
+onDownloadProgress, onUploadProgress, fetch, context.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "source/types/options.ts", start = 33, end = 33, render = { kind = "full" } },
+    { path = "source/types/options.ts", start = 39, end = 39, render = { kind = "full" } },
+    { path = "source/types/options.ts", start = 60, end = 60, render = { kind = "full" } },
+    { path = "source/types/options.ts", start = 86, end = 86, render = { kind = "full" } },
+    { path = "source/types/options.ts", start = 95, end = 95, render = { kind = "full" } },
+    { path = "source/types/options.ts", start = 119, end = 119, render = { kind = "full" } },
+    { path = "source/types/options.ts", start = 147, end = 147, render = { kind = "full" } },
+    { path = "source/types/options.ts", start = 155, end = 155, render = { kind = "full" } },
+    { path = "source/types/options.ts", start = 160, end = 160, render = { kind = "full" } },
+    { path = "source/types/options.ts", start = 173, end = 173, render = { kind = "full" } },
+    { path = "source/types/options.ts", start = 195, end = 195, render = { kind = "full" } },
+    { path = "source/types/options.ts", start = 218, end = 218, render = { kind = "full" } },
+    { path = "source/types/options.ts", start = 238, end = 238, render = { kind = "full" } },
+    { path = "source/types/options.ts", start = 299, end = 299, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.2"
+descriptor = "RetryOptions: every field + ShouldRetryState (location batch)"
+justification = """
+Same hedge for `source/types/retry.ts`: list every retry-config
+field with its type. Reveals the full surface (limit, methods,
+statusCodes, afterStatusCodes, maxRetryAfter, backoffLimit, delay,
+jitter, retryOnTimeout, shouldRetry) and the small ShouldRetryState
+shape passed to the user-supplied predicate. Default values land
+in tier 6 (normalize.ts).
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "source/types/retry.ts", start = 3, end = 3, render = { kind = "full" } },
+    { path = "source/types/retry.ts", start = 7, end = 7, render = { kind = "full" } },
+    { path = "source/types/retry.ts", start = 12, end = 12, render = { kind = "full" } },
+    { path = "source/types/retry.ts", start = 15, end = 15, render = { kind = "full" } },
+    { path = "source/types/retry.ts", start = 21, end = 21, render = { kind = "full" } },
+    { path = "source/types/retry.ts", start = 28, end = 28, render = { kind = "full" } },
+    { path = "source/types/retry.ts", start = 35, end = 35, render = { kind = "full" } },
+    { path = "source/types/retry.ts", start = 42, end = 42, render = { kind = "full" } },
+    { path = "source/types/retry.ts", start = 49, end = 49, render = { kind = "full" } },
+    { path = "source/types/retry.ts", start = 65, end = 65, render = { kind = "full" } },
+    { path = "source/types/retry.ts", start = 72, end = 72, render = { kind = "full" } },
+    { path = "source/types/retry.ts", start = 105, end = 105, render = { kind = "full" } },
+    { path = "source/types/retry.ts", start = 124, end = 124, render = { kind = "full" } },
+    { path = "source/types/retry.ts", start = 170, end = 170, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.3"
+descriptor = "Hooks types: every state + hook type alias (location batch)"
+justification = """
+`source/types/hooks.ts` defines four hook callback types and four
+state types. Surfacing the bare type aliases (without their TSDoc
+or examples) gives the exact signatures: BeforeRequestHook returns
+Request|Response|void; BeforeRetryHook can additionally return
+`stop`; AfterResponseHook can return `RetryMarker`; BeforeErrorHook
+returns HTTPError. Plus the `Hooks` aggregate at the bottom.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "source/types/hooks.ts", start = 5, end = 5, render = { kind = "full" } },
+    { path = "source/types/hooks.ts", start = 14, end = 18, render = { kind = "full" } },
+    { path = "source/types/hooks.ts", start = 20, end = 20, render = { kind = "full" } },
+    { path = "source/types/hooks.ts", start = 30, end = 30, render = { kind = "full" } },
+    { path = "source/types/hooks.ts", start = 32, end = 32, render = { kind = "full" } },
+    { path = "source/types/hooks.ts", start = 41, end = 46, render = { kind = "full" } },
+    { path = "source/types/hooks.ts", start = 48, end = 48, render = { kind = "full" } },
+    { path = "source/types/hooks.ts", start = 57, end = 57, render = { kind = "full" } },
+    { path = "source/types/hooks.ts", start = 59, end = 59, render = { kind = "full" } },
+    { path = "source/types/hooks.ts", start = 88, end = 88, render = { kind = "full" } },
+    { path = "source/types/hooks.ts", start = 162, end = 162, render = { kind = "full" } },
+    { path = "source/types/hooks.ts", start = 229, end = 229, render = { kind = "full" } },
+    { path = "source/types/hooks.ts", start = 267, end = 267, render = { kind = "full" } },
+    { path = "source/types/hooks.ts", start = 268, end = 268, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.4"
+descriptor = "Type aliases: Input, SearchParams*, Progress, KyHeadersInit, RequestHttpMethod, HttpMethod"
+justification = """
+The small foundational types referenced everywhere else: `Input` is
+`string | URL | Request`; SearchParamsInit/Option are the grab-bag
+union accepted by `searchParams`; `Progress` is the
+{percent, transferredBytes, totalBytes} payload to progress
+callbacks; KyHeadersInit accommodates undefined values for header
+removal; the HTTP method aliases. Each one resolves a class of
+type-related questions without reading more files.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "source/types/options.ts", start = 6, end = 6, render = { kind = "full" } },
+    { path = "source/types/options.ts", start = 9, end = 9, render = { kind = "full" } },
+    { path = "source/types/options.ts", start = 11, end = 16, render = { kind = "full" } },
+    { path = "source/types/options.ts", start = 18, end = 27, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.5"
+descriptor = "Options interface (extends KyOptions + RequestInit) + InternalOptions + NormalizedOptions"
+justification = """
+The three tiers of the option type: `Options` (public, what users
+write), `InternalOptions` (after merge/normalize, used inside Ky),
+and `NormalizedOptions` (frozen view passed to hooks/fetch).
+Anchors questions like 'what's required by the time hooks see it'
+and 'what gets stripped'. Predecessor on 3.1 because the field
+location batch already covered headers/method full lines.
+"""
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "source/types/options.ts", start = 312, end = 318, render = { kind = "full" } },
+    { path = "source/types/options.ts", start = 355, end = 384, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.6"
+descriptor = "ResponsePromise type signature (no examples)"
+justification = """
+The whole file is small and entirely about explaining what
+`ky(...)` returns: a Promise<Response> with arrayBuffer/blob/
+formData/bytes/json/text shortcuts attached, where json is generic
+on the result type. Highest density per token for any 'what does
+ky() return' or 'how does the .json<T>() generic work' question.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "source/types/ResponsePromise.ts", start = 6, end = 12, render = { kind = "full" } },
+    { path = "source/types/ResponsePromise.ts", start = 18, end = 18, render = { kind = "full" } },
+    { path = "source/types/ResponsePromise.ts", start = 45, end = 48, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.7"
+descriptor = "KyRequest + KyResponse + common Primitive/LiteralUnion types"
+justification = """
+Tiny adjacent type files: `KyRequest` and `KyResponse` are just
+Request/Response with a generic `.json<J>()` method bolted on;
+`common.ts` defines the Primitive/LiteralUnion utilities used by
+the HttpMethod aliases. Listing them together rather than scattered
+because they're each 2-9 lines and conceptually one bundle.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "source/types/request.ts", start = 1, end = 3, render = { kind = "full" } },
+    { path = "source/types/response.ts", start = 1, end = 3, render = { kind = "full" } },
+    { path = "source/types/common.ts", start = 1, end = 8, render = { kind = "full" } },
+]
+
+# ============================================================
+# Tier 4 — engine internals: the Ky class
+# ============================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "Ky class member declarations + every method signature (location batch)"
+justification = """
+Catastrophic-omission hedge over `source/core/Ky.ts`. Surfaces every
+public/private member and method signature in one cheap location
+batch: static create + static #normalizeSearchParams, the field list
+(request, #abortController, #retryCount, #input, #options,
+#originalRequest, #userProvidedAbortSignal,
+#cachedNormalizedOptions), constructor, #calculateDelay, async
+#calculateRetryDelay, #decorateResponse, #cancelBody,
+#cancelResponseBody, async #retry, async #fetch,
+#getNormalizedOptions, #assignRequest,
+#wrapRequestWithUploadProgress. Any 'where in Ky.ts is X' question
+is answered to one read.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "source/core/Ky.ts", start = 33, end = 34, render = { kind = "full" } },
+    { path = "source/core/Ky.ts", start = 178, end = 178, render = { kind = "full" } },
+    { path = "source/core/Ky.ts", start = 189, end = 197, render = { kind = "full" } },
+    { path = "source/core/Ky.ts", start = 200, end = 200, render = { kind = "full" } },
+    { path = "source/core/Ky.ts", start = 297, end = 297, render = { kind = "full" } },
+    { path = "source/core/Ky.ts", start = 316, end = 316, render = { kind = "full" } },
+    { path = "source/core/Ky.ts", start = 390, end = 390, render = { kind = "full" } },
+    { path = "source/core/Ky.ts", start = 398, end = 398, render = { kind = "full" } },
+    { path = "source/core/Ky.ts", start = 407, end = 407, render = { kind = "full" } },
+    { path = "source/core/Ky.ts", start = 412, end = 412, render = { kind = "full" } },
+    { path = "source/core/Ky.ts", start = 463, end = 463, render = { kind = "full" } },
+    { path = "source/core/Ky.ts", start = 503, end = 503, render = { kind = "full" } },
+    { path = "source/core/Ky.ts", start = 512, end = 512, render = { kind = "full" } },
+    { path = "source/core/Ky.ts", start = 517, end = 517, render = { kind = "full" } },
+]
+
+
+[[batches]]
+id = "4.2"
+descriptor = "#calculateRetryDelay — full retry-decision logic"
+justification = """
+The single most behavior-rich method in the codebase. All the rules
+that gate a retry: increment retryCount, hard-cap on limit, NonError
+wrapping, ForceRetryError shortcut (custom delay, bypass
+shouldRetry/method check), method-list filter, user shouldRetry
+strict-true/false handling, retryOnTimeout default behaviour,
+HTTPError statusCodes filter, Retry-After / RateLimit-Reset /
+X-RateLimit-Retry-After / X-RateLimit-Reset / X-Rate-Limit-Reset
+header parsing with maxRetryAfter clamp, the 2024-01-01 timestamp
+threshold, and the special 413-without-header 'never retry' rule.
+Predecessor on 4.1 for the signature line.
+"""
+predecessor = "4.1"
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "source/core/Ky.ts", start = 316, end = 388, render = { kind = "full" } },
+]
+
+# ============================================================
+# Tier 5 — error classes + type guards
+# ============================================================
+
+[[batches]]
+id = "5.1"
+descriptor = "type-guards.ts: isKyError + isHTTPError + isTimeoutError + isForceRetryError signatures"
+justification = """
+The four exported predicates from `source/utils/type-guards.ts`.
+`isKyError(error): error is HTTPError | TimeoutError |
+ForceRetryError` plus the per-class predicates. Each falls back to
+a name-string check (`(error as any)?.name === HTTPError.name`) so
+they work cross-realm. Only the signatures land here; bodies are
+trivial. Anchors any 'how do I check what kind of error this is'
+question.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "source/utils/type-guards.ts", start = 27, end = 29, render = { kind = "full" } },
+    { path = "source/utils/type-guards.ts", start = 49, end = 51, render = { kind = "full" } },
+    { path = "source/utils/type-guards.ts", start = 71, end = 73, render = { kind = "full" } },
+    { path = "source/utils/type-guards.ts", start = 98, end = 100, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.2"
+descriptor = "HTTPError + TimeoutError class bodies"
+justification = """
+The two main user-facing error classes. `HTTPError` carries
+response/request/options and constructs a 'Request failed with
+status code N: METHOD URL' message; `TimeoutError` carries the
+request and constructs 'Request timed out: METHOD URL'. The full
+class bodies are tiny and resolve every 'what fields does X have'
+question.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "source/errors/HTTPError.ts", start = 5, end = 23, render = { kind = "full" } },
+    { path = "source/errors/TimeoutError.ts", start = 3, end = 11, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.3"
+descriptor = "ForceRetryError class body + NonError signature"
+justification = """
+`ForceRetryError` is the one thrown when an afterResponse hook
+returns `ky.retry({...})` — carries customDelay/code/customRequest
+and wraps non-Error causes in `NonError`. Resolves the entire
+forced-retry error chain. `NonError` (the wrapper for thrown
+non-Error values) gets just its signature; the class body is
+mechanical.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "source/errors/ForceRetryError.ts", start = 8, end = 30, render = { kind = "full" } },
+    { path = "source/errors/NonError.ts", start = 6, end = 6, render = { kind = "full" } },
+    { path = "source/errors/NonError.ts", start = 8, end = 11, render = { kind = "full" } },
+]
+
+
+# ============================================================
+# Tier 6 — utility implementations
+# ============================================================
+
+[[batches]]
+id = "6.1"
+descriptor = "normalize.ts: defaultRetryOptions values + normalizeRequestMethod"
+justification = """
+The authoritative defaults users actually get when they don't pass
+a `retry` option: limit=2, methods=[get/put/head/delete/options/
+trace], statusCodes=[408,413,429,500,502,503,504],
+afterStatusCodes=[413,429,503], maxRetryAfter=Infinity,
+backoffLimit=Infinity, delay=0.3*(2^(n-1))*1000, jitter=undefined,
+retryOnTimeout=false. Plus `normalizeRequestMethod` (uppercases the
+six standard verbs only). Single most asked numeric/value question.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "source/utils/normalize.ts", start = 5, end = 6, render = { kind = "full" } },
+    { path = "source/utils/normalize.ts", start = 8, end = 26, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.2"
+descriptor = "merge.ts deepMerge: special-cased keys (signal/context/searchParams/hooks/headers)"
+justification = """
+The merge fn is what makes `ky.extend` work. The five special-cased
+keys: 'signal' is collected and AbortSignal.any-d at the end;
+'context' is shallow-merged (with TypeError if non-object);
+'searchParams' uses appendSearchParameters when both sides are set;
+'hooks' goes through mergeHooks (concat per-hook-type unless the
+incoming side explicitly sets it to undefined → reset to []);
+'headers' goes through mergeHeaders (with the
+'undefined'→delete-key special case, including the 'undefined'
+literal string for old-browser quirk). Anchors every 'why did my
+extend behave like X' question.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "source/utils/merge.ts", start = 38, end = 46, render = { kind = "full" } },
+    { path = "source/utils/merge.ts", start = 86, end = 86, render = { kind = "full" } },
+    { path = "source/utils/merge.ts", start = 100, end = 156, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.3"
+descriptor = "timeout.ts body"
+justification = """
+`timeout()` is the Promise.race workaround that fires
+`TimeoutError` after `options.timeout`ms and aborts via the
+controller (issue #91). Anchors the 'how does timeout actually
+fire' question. (`delay()` is similar — a signal-aware setTimeout
+used between retries — but its body is mechanical and inferable
+from the retry loop in 4.4.)
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "source/utils/timeout.ts", start = 9, end = 32, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.4"
+descriptor = "options.ts utils + body.ts streaming exports + small util one-liners"
+justification = """
+`findUnknownOptions` is the rule that decides which keys get passed
+through to user-supplied fetch (uses the three registries from
+2.10). `hasSearchParameters` enumerates the truthiness rules per
+input type. `body.ts` exports `getBodySize` (FormData-aware byte
+estimate), `streamResponse` (wraps the body with progress
+TransformStream and avoids reporting 100% early), `streamRequest`
+(re-creates the Request with a duplex='half' progress-stream body).
+Plus `isObject` (utils/is.ts).
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "source/utils/options.ts", start = 4, end = 7, render = { kind = "full" } },
+    { path = "source/utils/options.ts", start = 30, end = 30, render = { kind = "full" } },
+    { path = "source/utils/body.ts", start = 5, end = 5, render = { kind = "full" } },
+    { path = "source/utils/body.ts", start = 90, end = 90, render = { kind = "full" } },
+    { path = "source/utils/body.ts", start = 119, end = 119, render = { kind = "full" } },
+    { path = "source/utils/is.ts", start = 2, end = 2, render = { kind = "full" } },
+]
+
+# ============================================================
+# Tier 7 — test surface (location batches over test names)
+# ============================================================
+
+[[batches]]
+id = "7.1"
+descriptor = "test/main.ts: representative test names (truncated)"
+justification = """
+main.ts holds 55 tests; this batch surfaces a representative ~30
+covering ky() / GET/POST/PUT/PATCH/HEAD/DELETE / POST JSON / json+
+body interaction / custom headers / .json() variants / timeout /
+searchParams merging / throwHttpErrors / ky.create / ky.extend /
+abort signals / parseJson/stringifyJson / and more. PUT/PATCH/HEAD/
+DELETE/some-of-searchParams omitted as variants of GET/POST shapes.
+Truncated to the test name only.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "test/main.ts", start = 13, end = 13, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 25, end = 25, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 36, end = 36, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 83, end = 83, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 94, end = 94, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 114, end = 114, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 179, end = 179, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 197, end = 197, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 223, end = 223, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 241, end = 241, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 289, end = 289, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 305, end = 305, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 325, end = 325, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 381, end = 381, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 520, end = 520, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 531, end = 531, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 631, end = 631, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 659, end = 659, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 677, end = 677, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 809, end = 809, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 811, end = 811, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 813, end = 813, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 863, end = 863, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 905, end = 905, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 921, end = 921, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 941, end = 941, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 958, end = 958, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 985, end = 985, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 998, end = 998, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 1056, end = 1056, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 1071, end = 1071, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 1098, end = 1098, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/main.ts", start = 1123, end = 1123, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+]
+
+[[batches]]
+id = "7.2"
+descriptor = "test/{http-error,methods,prefix-url,bytes,memory-leak,fetch,context}.ts test names"
+justification = """
+Catastrophic-omission hedge over the smaller test files. These are
+the focused-feature suites; their test names alone resolve 'is X
+tested' lookups for HTTPError edge cases, method normalization,
+prefixUrl, bytes() runtime, memory-leak guarantees, fetch
+override, and context propagation. Truncated to the test name
+prefix.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "test/http-error.ts", start = 16, end = 16, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/http-error.ts", start = 30, end = 30, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/http-error.ts", start = 42, end = 42, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/http-error.ts", start = 53, end = 53, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/methods.ts", start = 5, end = 5, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/methods.ts", start = 27, end = 27, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/methods.ts", start = 50, end = 50, render = { kind = "truncated", pattern = "^test\\.[^,]+" } },
+    { path = "test/methods.ts", start = 75, end = 75, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/prefix-url.ts", start = 5, end = 5, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/bytes.ts", start = 8, end = 8, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/bytes.ts", start = 31, end = 31, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/memory-leak.ts", start = 7, end = 7, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/memory-leak.ts", start = 37, end = 37, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/fetch.ts", start = 7, end = 7, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/fetch.ts", start = 78, end = 78, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/fetch.ts", start = 91, end = 91, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/fetch.ts", start = 105, end = 105, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/fetch.ts", start = 118, end = 118, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/fetch.ts", start = 131, end = 131, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/fetch.ts", start = 142, end = 142, render = { kind = "truncated", pattern = "^test\\.[^,]+" } },
+    { path = "test/context.ts", start = 5, end = 5, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/context.ts", start = 62, end = 62, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/context.ts", start = 98, end = 98, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/context.ts", start = 131, end = 131, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/context.ts", start = 146, end = 146, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+]
+
+[[batches]]
+id = "7.3"
+descriptor = "test/retry.ts: 4 most-distinctive test names (truncated)"
+justification = """
+retry.ts holds 50 tests. This batch surfaces 4 high-distinctness
+ones spanning Retry-After header parsing, RateLimit-Reset, jitter,
+and shouldRetry — covers the topics least
+inferable from the source. The rest are accessible by grep using
+the file name from 1.7.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "test/retry.ts", start = 94, end = 94, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/retry.ts", start = 128, end = 128, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/retry.ts", start = 749, end = 749, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+    { path = "test/retry.ts", start = 1035, end = 1035, render = { kind = "truncated", pattern = "^test\\([^,]+" } },
+]

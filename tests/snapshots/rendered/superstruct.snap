@@ -1,0 +1,264 @@
+---
+source: tests/schedule_order.rs
+expression: rendered
+---
+.editorconfig
+.eslintrc
+.gitbook.yaml
+.github/
+    dependabot.yml
+    workflows/
+        ci.yml
+.gitignore
+.prettierignore
+.prettierrc
+.vscode/
+    settings.json
+        1→{
+        2→  "typescript.tsdk": "node_modules/typescript/lib"
+        3→}
+Changelog.md
+    1→# Changelog
+    3→This document maintains a list of major changes to Superstruct with each new release.
+License.md
+Readme.md
+    42→### Usage
+    44→Superstruct allows you to define the shape of data you want to validate:
+    167→### Principles
+    169→1. **Customizable types.** Superstruct's power is in making it easy to define an entire set of custom data types that are specific to your application, and defined in a _single_ place, so you have full control over your requirements.
+    171→2. **Unopinionated defaults.** Superstruct ships with native JavaScript types, and everything else is customizable, so you never have to fight to override decisions made by "core" that differ from your application's needs.
+    173→3. **Composable interfaces.** Superstruct interfaces are composable, so you can break down commonly-repeated pieces of data into components, and compose them to build up the more complex objects.
+    175→4. **Useful errors.** The errors that Superstruct throws contain all the information you need to convert them into your own application-specific errors easy, which means more helpful errors for your end users!
+    177→5. **Familiar API.** The Superstruct API was heavily inspired by [Typescript](https://www.typescriptlang.org/docs/handbook/basic-types.html), [Flow](https://flow.org/en/docs/types/), [Go](https://gobyexample.com/structs), and [GraphQL](http://graphql.org/learn/schema/). If you're familiar with any of those, then its schema definition API will feel very natural to use, so you can get started quickly.
+    179→<br/>
+    181→### Demo
+    183→Try out the [live demo on CodeSandbox](https://codesandbox.io/s/bold-water-s2cr8d?file=/index.js) to get an idea for how the API works, or to quickly verify your use case:
+    185→[![Demo screenshot.](./docs/images/demo-screenshot.png)](https://codesandbox.io/s/bold-water-s2cr8d?file=/index.js)
+    187→<br/>
+    189→### Examples
+    191→Superstruct's API is very flexible, allowing it to be used for a variety of use cases on your servers and in the browser. Here are a few examples of common patterns...
+    193→- [Basic Validation](./examples/basic-validation.js)
+    194→- [Custom Types](./examples/custom-types.js)
+    195→- [Default Values](./examples/default-values.js)
+    196→- [Optional Values](./examples/optional-values.js)
+    197→- [Composing Structs](./examples/composing-structs.js)
+    198→- [Throwing Errors](./examples/throwing-errors.js)
+    199→- [Returning Errors](./examples/returning-errors.js)
+    200→- [Testing Values](./examples/testing-values.js)
+    201→- [Custom Errors](./examples/custom-errors.js)
+    203→<br/>
+    231→### License
+    233→This package is [MIT-licensed](./License.md).
+docs/
+    guides/
+        01-getting-started.md
+        02-validating-data.md
+        03-coercing-data.md
+        04-refining-validation.md
+        05-handling-errors.md
+        06-using-typescript.md
+    images/
+        banner.png
+        demo-screenshot.png
+        docs-screenshot.png
+        icon.png
+        logo.png
+        logo.sketch
+    readme.md
+        7→### Usage
+        9→Superstruct allows you to define the shape of data you want to validate:
+    reference/
+        coercions.md
+        core.md
+        errors.md
+        refinements.md
+        types.md
+        typescript.md
+        utilities.md
+    resources/
+        faq.md
+        links.md
+    summary.md
+        1→- [Introduction](./readme.md)
+        3→## Guides
+        5→- [Getting Started](./guides/01-getting-started.md)
+        6→- [Validating Data](./guides/02-validating-data.md)
+        7→- [Coercing Data](./guides/03-coercing-data.md)
+        8→- [Refining Validation](./guides/04-refining-validation.md)
+        9→- [Handling Errors](./guides/05-handling-errors.md)
+        10→- [Using TypeScript](./guides/06-using-typescript.md)
+        12→## API Reference
+        14→- [Core](./reference/core.md)
+        15→- [Types](./reference/types.md)
+        16→- [Refinements](./reference/refinements.md)
+        17→- [Coercions](./reference/coercions.md)
+        18→- [Utilities](./reference/utilities.md)
+        19→- [Errors](./reference/errors.md)
+        20→- [TypeScript](./reference/typescript.md)
+        22→## Resources
+        24→- [FAQ](./resources/faq.md)
+        25→- [Links](./resources/links.md)
+examples/
+jsr.json
+package.json
+    2→  "name": "superstruct",
+    3→  "description": "A simple and composable way to validate data in JavaScript (and TypeScript).",
+    4→  "version": "2.0.2",
+    5→  "license": "MIT",
+    6→  "repository": "git://github.com/ianstormtaylor/superstruct.git",
+    7→  "type": "module",
+    8→  "main": "./dist/index.cjs",
+    9→  "module": "./dist/index.mjs",
+    10→  "types": "./dist/index.d.ts",
+    11→  "sideEffects": false,
+    12→  "files": [
+    13→    "dist"
+    14→  ],
+    15→  "publishConfig": {
+    16→    "registry": "https://registry.npmjs.org"
+    17→  },
+    38→  "scripts": {
+    39→    "build": "rm -rf ./{dist} && rollup --config ./rollup.config.js",
+    40→    "clean": "rm -rf ./{dist,node_modules}",
+    41→    "fix": "npm run fix:eslint && npm run fix:prettier",
+    42→    "fix:eslint": "npm run lint:eslint --fix",
+    43→    "fix:prettier": "prettier '**/*.{js,json,ts}' --write",
+    44→    "lint": "npm run lint:eslint && npm run lint:prettier",
+    45→    "lint:eslint": "eslint '{src,test}/*.{js,ts}'",
+    46→    "lint:prettier": "prettier '**/*.{js,json,ts}' --check",
+    47→    "release": "npm run build && npm run lint && np",
+    48→    "test": "npm run build && npm run test:types && npm run test:vitest",
+    49→    "test:types": "tsc --noEmit && tsc --project ./test/tsconfig.json --noEmit",
+    50→    "test:vitest": "vitest run",
+    51→    "test:watch": "vitest",
+    52→    "watch": "npm run build -- --watch"
+    53→  },
+    54→  "keywords": [
+    55→    "api",
+    56→    "array",
+    57→    "assert",
+    58→    "cast",
+    59→    "check",
+    60→    "checker",
+    61→    "collection",
+    62→    "data",
+    63→    "error",
+    64→    "express",
+    65→    "hapi",
+    66→    "interface",
+    67→    "invalid",
+    68→    "joi",
+    69→    "json",
+    70→    "list",
+    71→    "model",
+    72→    "object",
+    73→    "orm",
+    74→    "scalar",
+    75→    "schema",
+    76→    "struct",
+    77→    "throw",
+    78→    "type",
+    79→    "types",
+    80→    "valid",
+    81→    "validate",
+    82→    "validation",
+    83→    "validator"
+    84→  ]
+rollup.config.js
+src/
+    error.ts
+        1→/**
+        2→ * A `StructFailure` represents a single specific failure in validation.
+        3→ */
+        5→export type Failure = {
+        6→  value: any
+        7→  key: any
+        8→  type: string
+        9→  refinement: string | undefined
+        10→  message: string
+        11→  explanation?: string
+        12→  branch: Array<any>
+        13→  path: Array<any>
+        14→}
+        25→export class StructError extends TypeError {
+        26→  value: any
+        27→  key!: any
+        28→  type!: string
+        29→  refinement!: string | undefined
+        30→  path!: Array<any>
+        31→  branch!: Array<any>
+        32→  failures: () => Array<Failure>;
+        35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
+        …
+    index.ts
+        1→export * from './error.js'
+        2→export * from './struct.js'
+        3→export * from './structs/coercions.js'
+        4→export * from './structs/refinements.js'
+        5→export * from './structs/types.js'
+        6→export * from './structs/utilities.js'
+    struct.ts
+    structs/
+        coercions.ts
+            16→export function coerce<T, S, C>(
+            17→  struct: Struct<T, S>,
+            18→  condition: Struct<C, any>,
+            19→  coercer: Coercer<C>
+            20→): Struct<T, S> {
+            …
+            38→export function defaulted<T, S>(
+            …
+            79→export function trimmed<T, S>(struct: Struct<T, S>): Struct<T, S> {
+            …
+        refinements.ts
+            8→export function empty<
+            9→  T extends string | any[] | Map<any, any> | Set<any>,
+            10→  S extends any,
+            11→>(struct: Struct<T, S>): Struct<T, S> {
+            …
+            33→export function max<T extends number | Date, S extends any>(
+            34→  struct: Struct<T, S>,
+            35→  threshold: T,
+            36→  options: {
+            37→    exclusive?: boolean
+            38→  } = {}
+            39→): Struct<T, S> {
+            …
+            55→export function min<T extends number | Date, S extends any>(
+            …
+            77→export function nonempty<
+            78→  T extends string | any[] | Map<any, any> | Set<any>,
+            79→  S extends any,
+            80→>(struct: Struct<T, S>): Struct<T, S> {
+            …
+            93→export function pattern<T extends string, S extends any>(
+            94→  struct: Struct<T, S>,
+            95→  regexp: RegExp
+            96→): Struct<T, S> {
+            …
+            109→export function size<
+            …
+            146→export function refine<T, S>(
+            …
+        types.ts
+        utilities.ts
+    utils.ts
+test/
+tsconfig.json
+    1→{
+    2→  "include": ["./src/**/*.ts"],
+    3→  "compilerOptions": {
+    4→    "allowSyntheticDefaultImports": true,
+    5→    "declaration": true,
+    6→    "declarationMap": true,
+    7→    "esModuleInterop": true,
+    8→    "lib": ["esnext"],
+    9→    "module": "esnext",
+    10→    "moduleResolution": "node",
+    11→    "outDir": "./dist",
+    12→    "sourceMap": true,
+    13→    "strict": true,
+    14→    "suppressImplicitAnyIndexErrors": true,
+    15→    "target": "es2020"
+    16→  }
+    17→}

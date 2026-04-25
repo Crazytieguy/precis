@@ -40,6 +40,7 @@ pub enum BatchKey {
     Markdown(MarkdownKey),
     Toml(TomlKey),
     Typescript(TsKey),
+    Json(JsonKey),
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
@@ -71,6 +72,11 @@ impl From<TomlKey> for BatchKey {
 impl From<TsKey> for BatchKey {
     fn from(k: TsKey) -> Self {
         BatchKey::Typescript(k)
+    }
+}
+impl From<JsonKey> for BatchKey {
+    fn from(k: JsonKey) -> Self {
+        BatchKey::Json(k)
     }
 }
 
@@ -157,6 +163,34 @@ pub enum TsKey {
     ExportDoc { file: PathBuf, start_line: usize },
 }
 
+/// JSON batches. `package.json` is split along the same ontology as
+/// `Cargo.toml` (identity / scripts ≈ features / dependencies) plus a
+/// JS-specific entrypoint-pointer batch (`main`/`module`/`exports`/etc.).
+/// Other small JSON configs (`tsconfig.json`, `.eslintrc.json`,
+/// `jsr.json`, …) get a single `Whole` batch when they're small enough
+/// to pay for outright.
+#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
+pub enum JsonKey {
+    /// `package.json` identity scalars: `name`, `version`, `description`,
+    /// `license`, `author`/`authors`, `repository`, `homepage`, `keywords`,
+    /// `type`. Priority 1.x.
+    Identity { file: PathBuf },
+    /// `package.json` entrypoint pointers: `main`, `module`, `browser`,
+    /// `exports`, `types`/`typings`, `source`, `bin`, `unpkg`, `umd:main`,
+    /// `jsnext:main`, `react-native`, `files`. Priority 1.x–2.x.
+    Entry { file: PathBuf },
+    /// `package.json` `scripts` block. Priority 2.x.
+    Scripts { file: PathBuf },
+    /// `package.json` dependency blocks (`dependencies`,
+    /// `devDependencies`, `peerDependencies`, `optionalDependencies`,
+    /// `engines`, `packageManager`). Priority 2.x–4.x.
+    Dependencies { file: PathBuf },
+    /// Whole-file render of a small JSON config (`tsconfig.json`,
+    /// `.eslintrc.json`, `jsr.json`, etc.). Skipped for `package.json`
+    /// (use the split batches instead) and for large/generated files.
+    Whole { file: PathBuf },
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum TomlKey {
     /// `[package]` or `[workspace.package]` identity block. Priority 1.x.
@@ -202,6 +236,7 @@ impl WalkerKey for BatchKey {
             BatchKey::Markdown(k) => k.describe(),
             BatchKey::Toml(k) => k.describe(),
             BatchKey::Typescript(k) => k.describe(),
+            BatchKey::Json(k) => k.describe(),
         }
     }
 }
@@ -288,6 +323,20 @@ impl TomlKey {
             TomlKey::Identity { file } => format!("[package] in {}", display_path(file)),
             TomlKey::Features { file } => format!("[features] in {}", display_path(file)),
             TomlKey::Dependencies { file } => format!("[dependencies] in {}", display_path(file)),
+        }
+    }
+}
+
+impl JsonKey {
+    pub fn describe(&self) -> String {
+        match self {
+            JsonKey::Identity { file } => format!("package identity in {}", display_path(file)),
+            JsonKey::Entry { file } => format!("package entrypoints in {}", display_path(file)),
+            JsonKey::Scripts { file } => format!("package scripts in {}", display_path(file)),
+            JsonKey::Dependencies { file } => {
+                format!("package dependencies in {}", display_path(file))
+            }
+            JsonKey::Whole { file } => format!("json config {}", display_path(file)),
         }
     }
 }

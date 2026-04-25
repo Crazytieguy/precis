@@ -46,43 +46,105 @@ README.md
     87→## Want to become a TypeScript Expert?
     89→Check out 👉 [Type-Level TypeScript](https://type-level-typescript.com/), an online course teaching you how to unleash the full potential of TypeScript's Turing-complete type system. You already know how to code, and types are simply another programming language to master. This course **bridges the gap**, helping you apply your **existing programming knowledge** to **TypeScript's type system**, so you never again struggle with type errors or feel unable to type complex generic code correctly!
 benchmarks/
-    always-last-digit.ts
-    nested-objects.ts
-    package-lock.json
-    package.json
-    random-digit.ts
 docs/
     roadmap.md
     v3-to-v4-migration-guide.md
     v4-to-v5-migration-guide.md
 examples/
-    gif-fetcher/
-        package.json
-        public/
-            index.html
-        src/
-            App.tsx
-                75→export default function App() {
-                …
-            constants.ts
-                1→export const API_KEY = 'xxxxxxxxxxxxxxxx';
-            index.tsx
-                1→import * as React from 'react';
-                2→import { render } from 'react-dom';
-                4→import App from './App';
-            searchGif.ts
-                6→export function searchGif(query: string) {
-                …
-            styles.css
-        tsconfig.json
-    one-file-demo/
-        one-file-demo.ts
-        package.json
-        tsconfig.json
 jest.config.cjs
 jsr.json
+    1→{
+    2→  "name": "@gabriel/ts-pattern",
+    3→  "version": "5.9.0",
+    4→  "exports": {
+    5→    ".": "./src/index.ts",
+    6→    "./types": "./src/index.ts",
+    7→    "./package.json": "./package.json"
+    8→  }
+    9→}
 package-lock.json
 package.json
+    2→  "name": "ts-pattern",
+    3→  "version": "5.9.0",
+    4→  "description": " The exhaustive Pattern Matching library for TypeScript.",
+    5→  "type": "module",
+    6→  "sideEffects": false,
+    7→  "source": "src/index.ts",
+    8→  "exports": {
+    9→    ".": {
+    10→      "require": {
+    11→        "types": "./dist/index.d.cts",
+    12→        "default": "./dist/index.cjs"
+    13→      },
+    14→      "import": {
+    15→        "types": "./dist/index.d.ts",
+    16→        "default": "./dist/index.js"
+    17→      },
+    18→      "types": "./dist/index.d.ts",
+    19→      "default": "./dist/index.js"
+    20→    },
+    21→    "./types": {
+    22→      "require": {
+    23→        "types": "./dist/types/index.d.cts"
+    24→      },
+    25→      "import": {
+    26→        "types": "./dist/types/index.d.ts"
+    27→      },
+    28→      "types": "./dist/types/index.d.ts"
+    29→    },
+    30→    "./package.json": "./package.json"
+    31→  },
+    32→  "types": "dist/index.d.ts",
+    33→  "main": "dist/index.cjs",
+    34→  "module": "dist/index.js",
+    35→  "unpkg": "dist/index.umd.js",
+    36→  "scripts": {
+    37→    "build": "rimraf dist && microbundle --format modern,cjs,umd && sh ./scripts/generate-cts.sh",
+    38→    "dev": "microbundle watch",
+    39→    "prepublishOnly": "npm run test && npm run build",
+    40→    "publish:jsr": "npm run prepublishOnly && npx jsr publish",
+    41→    "release": "npm run prepublishOnly && npm publish && npx jsr publish",
+    42→    "test": "jest",
+    43→    "clear-test": "jest --clearCache",
+    44→    "fmt": "prettier ./src/** ./tests/** -w",
+    45→    "check": "tsc --strict --noEmit --extendedDiagnostics",
+    46→    "perf": "tsc --project tests/tsconfig.json --noEmit --extendedDiagnostics",
+    47→    "trace": "tsc --project tests/tsconfig.json --generateTrace trace --incremental false  --noEmit",
+    48→    "analyzeTrace": "npx @typescript/analyze-trace trace"
+    49→  },
+    50→  "files": [
+    51→    "dist/**/*",
+    52→    "package.json"
+    53→  ],
+    54→  "repository": {
+    55→    "type": "git",
+    56→    "url": "git+ssh://git@github.com/gvergnaud/ts-pattern.git"
+    57→  },
+    58→  "keywords": [
+    59→    "pattern",
+    60→    "matching",
+    61→    "pattern-matching",
+    62→    "typescript",
+    63→    "match-with",
+    64→    "match",
+    65→    "switch",
+    66→    "adt"
+    67→  ],
+    68→  "author": "Gabriel Vergnaud",
+    69→  "license": "MIT",
+    70→  "bugs": {
+    71→    "url": "https://github.com/gvergnaud/ts-pattern/issues"
+    72→  },
+    73→  "homepage": "https://github.com/gvergnaud/ts-pattern#readme",
+    74→  "devDependencies": {
+    75→    "@types/jest": "^30.0.0",
+    76→    "jest": "^30.1.3",
+    77→    "microbundle": "^0.15.1",
+    78→    "prettier": "^2.8.8",
+    79→    "rimraf": "^5.0.1",
+    80→    "ts-jest": "^29.4.1",
+    81→    "typescript": "^5.9.2"
+    82→  }
 scripts/
     generate-cts.sh
 src/
@@ -146,107 +208,19 @@ src/
         …
     patterns.ts
     types/
-        BuildMany.ts
-            4→export type BuildMany<data, xs extends readonly any[]> = xs extends any
-            5→  ? BuildOne<data, xs>
-            6→  : never;
-            19→export type SetDeep<data, value, path> = path extends readonly [
-            …
-        DeepExclude.ts
-            3→export type DeepExclude<a, b> = Exclude<DistributeMatchingUnions<a, b>, b>;
-        DistributeUnions.ts
-            41→export type DistributeMatchingUnions<a, p> = IsAny<a> extends true
-            42→  ? any
-            43→  : BuildMany<a, Distribute<FindUnionsMany<a, p>>>;
-            46→export type FindUnionsMany<
-            47→  a,
-            48→  p,
-            49→  path extends PropertyKey[] = []
-            50→> = UnionToTuple<
-            51→  (
-            52→    p extends any
-            53→      ? IsMatching<a, p> extends true
-            54→        ? FindUnions<a, p, path>
-            55→        : []
-            56→      : never
-            57→  ) extends readonly (infer T)[]
-            58→    ? T
-            59→    : never
-            60→>;
-            80→export type FindUnions<
-            …
-            174→export type ArrayToVariadicUnion<input, excluded> = MaybeAddReadonly<
-            175→  | (input extends readonly [any, ...any] | readonly [...any, any] ? never : [])
-            176→  | (excluded extends readonly [...any, any]
-            177→      ? [...Extract<input, readonly any[]>, ValueOf<input>]
-            178→      : [ValueOf<input>, ...Extract<input, readonly any[]>]),
-            179→  IsReadonlyArray<input>
-            180→>;
-            183→export type Distribute<unions extends readonly any[]> =
-            184→  unions extends readonly [
-            185→    { cases: infer cases; path: infer path },
-            186→    ...infer tail
-            187→  ]
-            188→    ? cases extends { value: infer value; subUnions: infer subUnions }
-            189→      ? [
-            190→          [value, path],
-            191→          ...Distribute<Extract<subUnions, readonly any[]>>,
-            192→          ...Distribute<tail>
-            193→        ]
-            194→      : never
-            195→    : [];
-        ExtractPreciseValue.ts
-            13→export type ExtractPreciseValue<a, b> = b extends Override<infer b1>
-            …
-        FindSelected.ts
-        InvertPattern.ts
-            101→/**
-            102→ * ### InvertPatternInternal
-            103→ * Since patterns have special wildcard values, we need a way
-            104→ * to transform a pattern into the type of value it represents
-            105→ */
-            106→export type InvertPattern<p, input> = Equal<Pattern<input>, p> extends true
-            107→  ? never
-            108→  : InvertPatternInternal<p, input>;
-            180→export type ReduceIntersectionForExclude<
-            181→  tuple extends readonly any[],
-            182→  i,
-            183→  output = unknown
-            184→> = tuple extends readonly [infer p, ...infer tail]
-            185→  ? ReduceIntersectionForExclude<
-            186→      tail,
-            187→      i,
-            188→      output & InvertPatternForExcludeInternal<p, i, unknown>
-            189→    >
-            190→  : output;
-            192→export type ReduceUnionForExclude<
-            193→  tuple extends readonly any[],
-            194→  i,
-            195→  output = never
-            196→> = tuple extends readonly [infer p, ...infer tail]
-            197→  ? ReduceUnionForExclude<
-            198→      tail,
-            199→      i,
-            200→      output | InvertPatternForExcludeInternal<p, i, never>
-            201→    >
-            202→  : output;
-            300→/**
-            301→ * ### InvertPatternForExclude
-            302→ */
-            303→export type InvertPatternForExclude<p, i> = Equal<Pattern<i>, p> extends true
-            304→  ? never
-            305→  : InvertPatternForExcludeInternal<p, i>;
-        IsMatching.ts
-            57→export type IsMatching<a, b> = true extends IsUnion<a> | IsUnion<b>
-            …
-        Match.ts
-            8→export type PickReturnValue<a, b> = a extends symbols.unset ? b : a;
-            …
-            22→export type Match<
-            …
-        Pattern.ts
-        helpers.ts
-        index.ts
-            1→export * from './Pattern';
 tests/
 tsconfig.json
+    1→{
+    2→  "compilerOptions": {
+    3→    "module": "ESNext",
+    4→    "declaration": true,
+    5→    "target": "ESNext",
+    6→    "moduleResolution": "bundler",
+    7→    "strict": true,
+    8→    "outDir": "dist/",
+    9→    "skipLibCheck": true,
+    10→    "esModuleInterop": true
+    11→  },
+    12→  "include": ["src/"],
+    13→  "exclude": ["tests/", "dist/", "examples/", "node_modules/"]
+    14→}

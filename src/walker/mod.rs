@@ -33,6 +33,7 @@ use crate::content::{BatchContent, Render, Span};
 use crate::render::SourceCache;
 
 pub mod fs;
+pub mod json;
 pub mod markdown;
 pub mod multi;
 pub mod rust;
@@ -140,6 +141,13 @@ impl WalkCtx {
         path.strip_prefix(&self.root)
             .map(|p| p.components().count())
             .unwrap_or(0)
+    }
+
+    /// Path-aware non-essential discount, scoped to this run's root so
+    /// the outer test/tooling dirs of whoever invoked precis don't poison
+    /// every fixture path.
+    pub fn non_essential_factor(&self, path: &Path) -> f64 {
+        crate::value::non_essential_factor(path, &self.root)
     }
 
     /// Read `path` into memory, caching the result. Returns an `Arc<str>`

@@ -25,7 +25,7 @@ use std::sync::Arc;
 use tree_sitter::{Node, Tree};
 
 use crate::batch::{BatchKey, FsKey, ResolvedBatch, TsKey, ValueSignals};
-use crate::value::{depth_factor, non_essential_factor};
+use crate::value::depth_factor;
 
 use super::{
     Candidate, FileLines, WalkCtx, dedup_sorted, extend_span, fs::files_with_any_extension,
@@ -43,20 +43,19 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
 
     let mut out = Vec::new();
     for file in &ts_files {
-        let depth = ctx.depth_from_root(file);
         let ep = is_entrypoint_file(file);
 
         if ep {
             out.push(candidate(
                 TsKey::ModuleDocLede { file: file.clone() },
-                module_doc_lede_signals(file, depth),
+                module_doc_lede_signals(file, ctx),
                 40,
             ));
         }
 
         out.push(candidate(
             TsKey::Imports { file: file.clone() },
-            imports_signals(file, depth),
+            imports_signals(file, ctx),
             60,
         ));
 
@@ -70,7 +69,7 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
         let names_key = TsKey::ExportNames { file: file.clone() };
         out.push(candidate(
             names_key.clone(),
-            export_names_signals(file, depth),
+            export_names_signals(file, ctx),
             exports.len() * 8,
         ));
         for item in &exports {
@@ -81,7 +80,7 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
             out.push(
                 candidate(
                     key.clone(),
-                    export_signals(file, depth, item.kind),
+                    export_signals(file, item.kind, ctx),
                     item.estimated_cost(),
                 )
                 .with_predecessor(BatchKey::Typescript(names_key.clone())),
@@ -92,7 +91,7 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
                         file: file.clone(),
                         start_line: item.start_line,
                     },
-                    export_doc_signals(file, depth, item.kind),
+                    export_doc_signals(file, item.kind, ctx),
                     60,
                 )
                 .with_predecessor(BatchKey::Typescript(key)),
@@ -111,41 +110,33 @@ pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
         TsKey::ModuleDocLede { file } => mat_per_file(
             file,
             collect_module_doc_lede,
-            module_doc_lede_signals(file, ctx.depth_from_root(file)),
+            module_doc_lede_signals(file, ctx),
             ctx,
         ),
-        TsKey::Imports { file } => mat_per_file(
-            file,
-            collect_imports,
-            imports_signals(file, ctx.depth_from_root(file)),
-            ctx,
-        ),
+        TsKey::Imports { file } => {
+            mat_per_file(file, collect_imports, imports_signals(file, ctx), ctx)
+        }
         TsKey::ExportNames { file } => mat_per_file(
             file,
             collect_export_names,
-            export_names_signals(file, ctx.depth_from_root(file)),
+            export_names_signals(file, ctx),
             ctx,
         ),
         TsKey::Export { file, start_line } => {
             let (source, tree) = parse_ts(ctx, file)?;
             let item = find_export_at(&tree, &source, *start_line)?;
             let lines = collect_export_lines(&tree, *start_line);
-            single_file_lines_batch(
-                file,
-                &source,
-                lines,
-                export_signals(file, ctx.depth_from_root(file), item.kind),
-            )
+            single_file_lines_batch(file, &source, lines, export_signals(file, item.kind, ctx))
         }
         TsKey::ExportDoc { file, start_line } => {
             let (source, tree) = parse_ts(ctx, file)?;
             let item = find_export_at(&tree, &source, *start_line)?;
-            let lines = collect_export_doc_lines(&tree, &source, *start_line);
+            let lines = collect_export_doc_lines(&tree, &source, file, *start_line);
             single_file_lines_batch(
                 file,
                 &source,
                 lines,
-                export_doc_signals(file, ctx.depth_from_root(file), item.kind),
+                export_doc_signals(file, item.kind, ctx),
             )
         }
     }
@@ -352,59 +343,60 @@ fn entrypoint_boost(path: &Path) -> f64 {
     if is_entrypoint_file(path) { 1.4 } else { 1.0 }
 }
 
-fn file_depth_factor(path: &Path, depth: usize) -> f64 {
+fn file_depth_factor(path: &Path, ctx: &WalkCtx) -> f64 {
+    let depth = ctx.depth_from_root(path);
     let raw = if is_entrypoint_file(path) {
         depth_factor(depth.min(1))
     } else {
         depth_factor(depth)
     };
-    raw * non_essential_factor(path)
+    raw * ctx.non_essential_factor(path)
 }
 
-fn module_doc_lede_signals(file: &Path, depth: usize) -> ValueSignals {
+fn module_doc_lede_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
     ValueSignals {
         catastrophic_omission: (0.8 * entrypoint_boost(file)).min(1.0),
         follow_up_minimization: 0.5,
         zero_tool_call_understanding: 0.9,
-        depth_factor: file_depth_factor(file, depth),
+        depth_factor: file_depth_factor(file, ctx),
     }
 }
 
-fn imports_signals(file: &Path, depth: usize) -> ValueSignals {
+fn imports_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
     ValueSignals {
         catastrophic_omission: (0.3 * entrypoint_boost(file)).min(1.0),
         follow_up_minimization: 0.55,
         zero_tool_call_understanding: 0.3,
-        depth_factor: file_depth_factor(file, depth),
+        depth_factor: file_depth_factor(file, ctx),
     }
 }
 
-fn export_names_signals(file: &Path, depth: usize) -> ValueSignals {
+fn export_names_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
     ValueSignals {
         catastrophic_omission: (0.8 * entrypoint_boost(file)).min(1.0),
         follow_up_minimization: 0.6,
         zero_tool_call_understanding: 0.35,
-        depth_factor: file_depth_factor(file, depth),
+        depth_factor: file_depth_factor(file, ctx),
     }
 }
 
-fn export_signals(file: &Path, depth: usize, kind: ItemKind) -> ValueSignals {
+fn export_signals(file: &Path, kind: ItemKind, ctx: &WalkCtx) -> ValueSignals {
     let k = kind.kind_weight();
     ValueSignals {
         catastrophic_omission: (0.85 * k * entrypoint_boost(file)).min(1.0),
         follow_up_minimization: 0.85 * k,
         zero_tool_call_understanding: 0.55,
-        depth_factor: file_depth_factor(file, depth),
+        depth_factor: file_depth_factor(file, ctx),
     }
 }
 
-fn export_doc_signals(file: &Path, depth: usize, kind: ItemKind) -> ValueSignals {
+fn export_doc_signals(file: &Path, kind: ItemKind, ctx: &WalkCtx) -> ValueSignals {
     let k = kind.kind_weight();
     ValueSignals {
         catastrophic_omission: (0.4 * k * entrypoint_boost(file)).min(1.0),
         follow_up_minimization: 0.6 * k,
         zero_tool_call_understanding: 0.8,
-        depth_factor: file_depth_factor(file, depth),
+        depth_factor: file_depth_factor(file, ctx),
     }
 }
 
@@ -610,8 +602,16 @@ fn collect_export_lines(tree: &Tree, start_line: usize) -> FileLines {
     FileLines::new(Vec::new())
 }
 
-/// JSDoc (`/** */`) immediately above an export at `start_line`.
-fn collect_export_doc_lines(tree: &Tree, source: &str, start_line: usize) -> FileLines {
+/// JSDoc (`/** */`) immediately above an export at `start_line`. For
+/// entrypoint files the leading top-of-file JSDoc is reserved for
+/// [`TsKey::ModuleDocLede`] — skip it here so the two batches don't
+/// claim the same lines without a predecessor edge.
+fn collect_export_doc_lines(
+    tree: &Tree,
+    source: &str,
+    file: &Path,
+    start_line: usize,
+) -> FileLines {
     let root = tree.root_node();
     let mut cursor = root.walk();
     for child in root.children(&mut cursor) {
@@ -619,19 +619,22 @@ fn collect_export_doc_lines(tree: &Tree, source: &str, start_line: usize) -> Fil
             continue;
         }
         let mut out = Vec::new();
-        collect_jsdoc_above(child, source, &mut out);
+        collect_jsdoc_above(child, source, &mut out, is_entrypoint_file(file));
         return FileLines::new(dedup_sorted(out));
     }
     FileLines::new(Vec::new())
 }
 
-fn collect_jsdoc_above(node: Node, source: &str, out: &mut Vec<usize>) {
+fn collect_jsdoc_above(node: Node, source: &str, out: &mut Vec<usize>, skip_module_lede: bool) {
     let mut cur = node.prev_sibling();
     while let Some(prev) = cur {
         match prev.kind() {
             "comment" => {
                 let text = &source[prev.start_byte()..prev.end_byte()];
                 if text.starts_with("/**") {
+                    if skip_module_lede && is_first_top_level_node(prev) {
+                        break;
+                    }
                     extend_span(out, prev, source);
                     cur = prev.prev_sibling();
                 } else {
@@ -641,4 +644,29 @@ fn collect_jsdoc_above(node: Node, source: &str, out: &mut Vec<usize>) {
             _ => break,
         }
     }
+}
+
+/// True if the leading `/** */` comment at `node` is the same one
+/// `ModuleDocLede` would claim — i.e. nothing precedes it except a
+/// `hash_bang_line` and/or non-JSDoc comments (license headers etc).
+/// Used to avoid double-claiming a file's first JSDoc block as both
+/// `ModuleDocLede` and `ExportDoc`. Must mirror the predicate inside
+/// `collect_module_doc_lede`.
+fn is_first_top_level_node(node: Node) -> bool {
+    let mut cur = node.prev_sibling();
+    while let Some(prev) = cur {
+        match prev.kind() {
+            "hash_bang_line" => cur = prev.prev_sibling(),
+            "comment" => {
+                // ModuleDocLede walks past plain `/* */` and `//` comments
+                // before claiming a `/**` block. Keep walking; a *prior*
+                // `/**` block would mean this one isn't the lede, and the
+                // outer `collect_jsdoc_above` loop has already accumulated
+                // it before reaching here.
+                cur = prev.prev_sibling();
+            }
+            _ => return false,
+        }
+    }
+    true
 }

@@ -29,7 +29,7 @@ use tree_sitter::{Node, Tree};
 
 use crate::batch::{BatchKey, FsKey, ResolvedBatch, RustKey, ValueSignals};
 use crate::content::{BatchContent, Span};
-use crate::value::{depth_factor, non_essential_factor};
+use crate::value::depth_factor;
 
 use super::{
     Candidate, FileLines, WalkCtx, build_file_spans, dedup_sorted, extend_span,
@@ -49,31 +49,30 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
     let mut out = Vec::new();
 
     for file in &rust_files {
-        let depth = ctx.depth_from_root(file);
         let ep = is_entrypoint_file(file);
         if ep {
             let lede = RustKey::CrateDocLede { file: file.clone() };
             out.push(candidate(
                 lede.clone(),
-                crate_doc_lede_signals(file, depth),
+                crate_doc_lede_signals(file, ctx),
                 40,
             ));
             out.push(
                 candidate(
                     RustKey::CrateDocBody { file: file.clone() },
-                    crate_doc_body_signals(file, depth),
+                    crate_doc_body_signals(file, ctx),
                     200,
                 )
                 .with_predecessor(BatchKey::Rust(lede)),
             );
             out.push(candidate(
                 RustKey::ModUse { file: file.clone() },
-                mod_use_signals(file, depth),
+                mod_use_signals(file, ctx),
                 60,
             ));
             out.push(candidate(
                 RustKey::MethodSigs { file: file.clone() },
-                method_sigs_signals(file, depth),
+                method_sigs_signals(file, ctx),
                 60,
             ));
         }
@@ -99,7 +98,7 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
         let names_key = RustKey::PubItemNames { file: file.clone() };
         out.push(candidate(
             names_key.clone(),
-            pub_item_names_signals(file, depth),
+            pub_item_names_signals(file, ctx),
             items.len() * 8,
         ));
         for item in &items {
@@ -113,7 +112,7 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
             out.push(
                 candidate(
                     key.clone(),
-                    pub_item_signals(file, depth, item.kind),
+                    pub_item_signals(file, item.kind, ctx),
                     item.estimated_cost(),
                 )
                 .with_predecessor(BatchKey::Rust(names_key.clone())),
@@ -124,7 +123,7 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
                         file: file.clone(),
                         start_line: item.start_line,
                     },
-                    pub_item_doc_signals(file, depth, item.kind),
+                    pub_item_doc_signals(file, item.kind, ctx),
                     60,
                 )
                 .with_predecessor(BatchKey::Rust(key)),
@@ -163,37 +162,29 @@ pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
         RustKey::CrateDocLede { file } => mat_per_file(
             file,
             collect_module_doc_lede,
-            crate_doc_lede_signals(file, ctx.depth_from_root(file)),
+            crate_doc_lede_signals(file, ctx),
             ctx,
         ),
         RustKey::CrateDocBody { file } => mat_per_file(
             file,
             collect_module_doc_body,
-            crate_doc_body_signals(file, ctx.depth_from_root(file)),
+            crate_doc_body_signals(file, ctx),
             ctx,
         ),
-        RustKey::ModUse { file } => mat_per_file(
-            file,
-            collect_mod_use,
-            mod_use_signals(file, ctx.depth_from_root(file)),
-            ctx,
-        ),
+        RustKey::ModUse { file } => {
+            mat_per_file(file, collect_mod_use, mod_use_signals(file, ctx), ctx)
+        }
         RustKey::PubItemNames { file } => mat_per_file(
             file,
             collect_pub_item_names,
-            pub_item_names_signals(file, ctx.depth_from_root(file)),
+            pub_item_names_signals(file, ctx),
             ctx,
         ),
         RustKey::PubItem { file, start_line } => {
             let (source, tree) = parse_rust(ctx, file)?;
             let item = find_item_at(&tree, &source, *start_line)?;
             let lines = collect_pub_item(&tree, &source, *start_line);
-            single_file_lines_batch(
-                file,
-                &source,
-                lines,
-                pub_item_signals(file, ctx.depth_from_root(file), item.kind),
-            )
+            single_file_lines_batch(file, &source, lines, pub_item_signals(file, item.kind, ctx))
         }
         RustKey::PubItemDoc { file, start_line } => {
             let (source, tree) = parse_rust(ctx, file)?;
@@ -203,13 +194,13 @@ pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
                 file,
                 &source,
                 lines,
-                pub_item_doc_signals(file, ctx.depth_from_root(file), item.kind),
+                pub_item_doc_signals(file, item.kind, ctx),
             )
         }
         RustKey::MethodSigs { file } => mat_per_file(
             file,
             collect_method_sigs,
-            method_sigs_signals(file, ctx.depth_from_root(file)),
+            method_sigs_signals(file, ctx),
             ctx,
         ),
         RustKey::MacroNames { src_dir } => mat_cross_file(
@@ -348,79 +339,80 @@ fn entrypoint_boost(path: &Path) -> f64 {
 /// Depth factor for a file. Entrypoints are pinned to depth 1 so
 /// `src/lib.rs` isn't penalized relative to root-depth content. All files
 /// multiply by a non-essential-directory factor.
-fn file_depth_factor(path: &Path, depth: usize) -> f64 {
+fn file_depth_factor(path: &Path, ctx: &WalkCtx) -> f64 {
+    let depth = ctx.depth_from_root(path);
     let raw = if is_entrypoint_file(path) {
         depth_factor(depth.min(1))
     } else {
         depth_factor(depth)
     };
-    raw * non_essential_factor(path)
+    raw * ctx.non_essential_factor(path)
 }
 
-fn crate_doc_lede_signals(file: &Path, depth: usize) -> ValueSignals {
+fn crate_doc_lede_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
     ValueSignals {
         catastrophic_omission: (0.8 * entrypoint_boost(file)).min(1.0),
         follow_up_minimization: 0.5,
         zero_tool_call_understanding: 0.9,
-        depth_factor: file_depth_factor(file, depth),
+        depth_factor: file_depth_factor(file, ctx),
     }
 }
 
-fn crate_doc_body_signals(file: &Path, depth: usize) -> ValueSignals {
+fn crate_doc_body_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
     ValueSignals {
         catastrophic_omission: (0.35 * entrypoint_boost(file)).min(1.0),
         follow_up_minimization: 0.6,
         zero_tool_call_understanding: 0.75,
-        depth_factor: file_depth_factor(file, depth),
+        depth_factor: file_depth_factor(file, ctx),
     }
 }
 
-fn mod_use_signals(file: &Path, depth: usize) -> ValueSignals {
+fn mod_use_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
     ValueSignals {
         catastrophic_omission: (0.3 * entrypoint_boost(file)).min(1.0),
         follow_up_minimization: 0.55,
         zero_tool_call_understanding: 0.3,
-        depth_factor: file_depth_factor(file, depth),
+        depth_factor: file_depth_factor(file, ctx),
     }
 }
 
-fn pub_item_names_signals(file: &Path, depth: usize) -> ValueSignals {
+fn pub_item_names_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
     // Cheap surface listing — catastrophic-omission hedge. Ranks high
     // because missing it means the agent doesn't know items exist.
     ValueSignals {
         catastrophic_omission: (0.8 * entrypoint_boost(file)).min(1.0),
         follow_up_minimization: 0.6,
         zero_tool_call_understanding: 0.35,
-        depth_factor: file_depth_factor(file, depth),
+        depth_factor: file_depth_factor(file, ctx),
     }
 }
 
-fn pub_item_signals(file: &Path, depth: usize, kind: ItemKind) -> ValueSignals {
+fn pub_item_signals(file: &Path, kind: ItemKind, ctx: &WalkCtx) -> ValueSignals {
     let k = kind.kind_weight();
     ValueSignals {
         catastrophic_omission: (0.85 * k * entrypoint_boost(file)).min(1.0),
         follow_up_minimization: 0.85 * k,
         zero_tool_call_understanding: 0.55,
-        depth_factor: file_depth_factor(file, depth),
+        depth_factor: file_depth_factor(file, ctx),
     }
 }
 
-fn pub_item_doc_signals(file: &Path, depth: usize, kind: ItemKind) -> ValueSignals {
+fn pub_item_doc_signals(file: &Path, kind: ItemKind, ctx: &WalkCtx) -> ValueSignals {
     let k = kind.kind_weight();
     ValueSignals {
         catastrophic_omission: (0.4 * k * entrypoint_boost(file)).min(1.0),
         follow_up_minimization: 0.6 * k,
         zero_tool_call_understanding: 0.8,
-        depth_factor: file_depth_factor(file, depth),
+        depth_factor: file_depth_factor(file, ctx),
     }
 }
 
-fn method_sigs_signals(file: &Path, depth: usize) -> ValueSignals {
+fn method_sigs_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
     ValueSignals {
         catastrophic_omission: (0.5 * entrypoint_boost(file)).min(1.0),
         follow_up_minimization: 0.8,
         zero_tool_call_understanding: 0.4,
-        depth_factor: file_depth_factor(file, depth),
+        depth_factor: file_depth_factor(file, ctx),
     }
 }
 
