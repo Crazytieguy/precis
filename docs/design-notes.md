@@ -231,6 +231,34 @@ like to revisit whether it's still earning its complexity.
   `FiniteNonNegativeSignal` + private-field `Cost` constructors would catch
   bad inputs at the boundary. Cheap; defer until something misuses them.
 
+### TypeScript walker — body batch
+- **`TsKey::ExportBody`** — DONE (v4 plan in `ignore/plan-ts-export-body-v2.md`,
+  three plan-review rounds). Emits brace-stripped body interior of any
+  function/class export with a multi-line `statement_block` body. Sibling
+  of `ExportDoc` under `Export`; the two cover disjoint lines (JSDoc above
+  vs body inside). Final shipped signal weights:
+  `catastrophic_omission = 0.45 * k * boost`, `follow_up_minimization =
+  0.9 * k` (clamped to 1.0), `zero_tool_call_understanding = 0.8`.
+  Sim deltas across the 10 fixtures: mitt +0.020 (Used 3997→4868,
+  Reached 13→19, tier-3 reached 0/8 → 6/8 — the structural win),
+  ts-pattern +0.007 (P.union/P.not/P.when full bodies now reach +0.93,
+  NonExhaustiveError class body reaches), superstruct flat Sim but
+  Reached +3 (Struct class methods covered), cmdk flat Sim Reached +1,
+  ky −0.004 within tolerance, vaul flat Sim Reached −4 (Root body
+  displaces some Overlay/Content scheduling), Rust fixtures unchanged.
+  Aggregate +0.022 Sim, +6 Reached. No fixture regressed past −0.03.
+  **Deferred follow-ups** (in plan file):
+  1. Lexical-with-fn-init (`export const X = () => {…}`): `Export`
+     today emits the entire lexical_declaration including the body.
+     Refining with `ExportBody` would overlap; needs a parallel change
+     to `collect_export_lines` first.
+  2. forwardRef-wrapped callbacks (cmdk + vaul `React.forwardRef(...)`):
+     module-private const that's later re-exported by name. Walker
+     emits no `Export` for these. Separate design pass needed.
+  3. Class-method splitting: v1 emits one `ExportBody` per class.
+     Per-method splitting via `(file, class_start_line, method_name)`
+     keys is deferred until a fixture surfaces it.
+
 ### Render
 - **Filesystem-level override** — file-content batch superseding a folder
   listing entry, "N more files" placeholders, alternate non-tree renderings.

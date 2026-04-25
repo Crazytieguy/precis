@@ -5,7 +5,6 @@ expression: rendered
 .eslintrc.js
 .github/
     workflows/
-        playwright.yml
 .gitignore
 .prettierrc.js
 .vscode/
@@ -63,89 +62,36 @@ package.json
     45→    "url": "https://github.com/emilkowalski/vaul/issues"
     46→  },
 playwright.config.ts
-    9→/**
-    10→ * See https://playwright.dev/docs/test-configuration.
-    11→ */
     12→export default defineConfig({
-    13→  testDir: './test',
-    14→  /* Maximum time one test can run for. */
-    15→  timeout: 30 * 1000,
-    16→  expect: {
-    17→    /**
-    18→     * Maximum time expect() should wait for the condition to be met.
-    19→     * For example in `await expect(locator).toHaveText();`
-    20→     */
-    21→    timeout: 5000,
-    22→  },
-    23→  /* Run tests in files in parallel */
-    24→  fullyParallel: true,
-    25→  /* Fail the build on CI if you accidentally left test.only in the source code. */
-    26→  forbidOnly: !!process.env.CI,
-    27→  /* Retry on CI only */
-    28→  retries: process.env.CI ? 2 : 0,
-    29→  /* Opt out of parallel tests on CI. */
-    30→  workers: process.env.CI ? 1 : undefined,
-    31→  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-    32→  reporter: 'html',
-    33→  /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
-    34→  use: {
-    35→    trace: 'on-first-retry',
-    36→    baseURL: 'http://localhost:3000',
-    37→  },
-    38→  webServer: {
-    39→    command: 'npm run dev',
-    40→    url: 'http://localhost:3000',
-    41→    cwd: './test',
-    42→    reuseExistingServer: !process.env.CI,
-    43→  },
-    44→  /* Configure projects for major browsers */
-    45→  projects: [
-    46→    {
-    47→      name: 'iPhone',
-    48→      use: { ...devices['iPhone 13 Pro'] },
-    49→    },
-    50→    {
-    51→      name: 'Pixel',
-    52→      use: { ...devices['Pixel 5'] },
-    53→    },
-    54→  ],
-    55→});
+    …
 pnpm-lock.yaml
 pnpm-workspace.yaml
 src/
     browser.ts
         1→export function isMobileFirefox(): boolean | undefined {
-        …
+        2→  const userAgent = navigator.userAgent;
+        3→  return (
+        4→    typeof window !== 'undefined' &&
+        5→    ((/Firefox/.test(userAgent) && /Mobile/.test(userAgent)) || // Android Firefox
+        6→      /FxiOS/.test(userAgent)) // iOS Firefox
+        7→  );
         10→export function isMac(): boolean | undefined {
-        …
+        11→  return testPlatform(/^Mac/);
         14→export function isIPhone(): boolean | undefined {
-        …
+        15→  return testPlatform(/^iPhone/);
         18→export function isSafari(): boolean | undefined {
-        …
+        19→  return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         22→export function isIPad(): boolean | undefined {
-        …
+        23→  return (
+        24→    testPlatform(/^iPad/) ||
+        25→    // iPadOS 13 lies and says it's a Mac, but we can distinguish by detecting touch support.
+        26→    (isMac() && navigator.maxTouchPoints > 1)
+        27→  );
         30→export function isIOS(): boolean | undefined {
-        …
+        31→  return isIPhone() || isIPad();
         34→export function testPlatform(re: RegExp): boolean | undefined {
-        …
+        35→  return typeof window !== 'undefined' && window.navigator != null ? re.test(window.navigator.platform) : undefined;
     constants.ts
-        1→export const TRANSITIONS = {
-        2→  DURATION: 0.5,
-        3→  EASE: [0.32, 0.72, 0, 1],
-        4→};
-        6→export const VELOCITY_THRESHOLD = 0.4;
-        …
-        8→export const CLOSE_THRESHOLD = 0.25;
-        …
-        10→export const SCROLL_LOCK_TIMEOUT = 100;
-        …
-        12→export const BORDER_RADIUS = 8;
-        …
-        14→export const NESTED_DISPLACEMENT = 16;
-        …
-        16→export const WINDOW_TOP_OFFSET = 26;
-        …
-        18→export const DRAG_CLASS = 'vaul-dragging';
     context.ts
         37→export const DrawerContext = React.createContext<DrawerContextValue>({
         …
@@ -216,9 +162,35 @@ src/
         996→export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(function (
         …
         1098→export function NestedRoot({ onDrag, onOpenChange, open: nestedIsOpen, ...rest }: DialogProps) {
-        …
+        1099→  const { onNestedDrag, onNestedOpenChange, onNestedRelease } = useDrawerContext();
+        1101→  if (!onNestedDrag) {
+        1102→    throw new Error('Drawer.NestedRoot must be placed in another drawer');
+        1103→  }
+        1105→  return (
+        1106→    <Root
+        1107→      nested
+        1108→      open={nestedIsOpen}
+        1109→      onClose={() => {
+        1110→        onNestedOpenChange(false);
+        1111→      }}
+        1112→      onDrag={(e, p) => {
+        1113→        onNestedDrag(e, p);
+        1114→        onDrag?.(e, p);
+        1115→      }}
+        1116→      onOpenChange={(o) => {
+        1117→        if (o) {
+        1118→          onNestedOpenChange(o);
+        1119→        }
+        1120→        onOpenChange?.(o);
+        1121→      }}
+        1122→      onRelease={onNestedRelease}
+        1123→      {...rest}
+        1124→    />
+        1125→  );
         1130→export function Portal(props: PortalProps) {
-        …
+        1131→  const context = useDrawerContext();
+        1132→  const { container = context.container, ...portalProps } = props;
+        1134→  return <DialogPrimitive.Portal container={container} {...portalProps} />;
         1137→export const Drawer = {
         1138→  Root,
         1139→  NestedRoot,
@@ -251,13 +223,24 @@ src/
         8→export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
         …
         29→export function isScrollable(node: Element): boolean {
-        …
+        30→  let style = window.getComputedStyle(node);
+        31→  return /(auto|scroll)/.test(style.overflow + style.overflowX + style.overflowY);
         34→export function getScrollParent(node: Element): Element {
-        …
+        35→  if (isScrollable(node)) {
+        36→    node = node.parentElement as HTMLElement;
+        37→  }
+        39→  while (node && !isScrollable(node)) {
+        40→    node = node.parentElement as HTMLElement;
+        41→  }
+        43→  return node || document.scrollingElement || document.documentElement;
         68→export function usePreventScroll(options: PreventScrollOptions = {}) {
         …
         294→export function isInput(target: Element) {
-        …
+        295→  return (
+        296→    (target instanceof HTMLInputElement && !nonTextInputTypes.has(target.type)) ||
+        297→    target instanceof HTMLTextAreaElement ||
+        298→    (target instanceof HTMLElement && target.isContentEditable)
+        299→  );
     use-scale-background.ts
         8→export function useScaleBackground() {
         …

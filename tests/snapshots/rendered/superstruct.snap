@@ -282,7 +282,7 @@ src/
             38→export function defaulted<T, S>(
             …
             79→export function trimmed<T, S>(struct: Struct<T, S>): Struct<T, S> {
-            …
+            80→  return coerce(struct, string(), (x) => x.trim())
         refinements.ts
         types.ts
         utilities.ts

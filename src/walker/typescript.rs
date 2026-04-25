@@ -15,6 +15,12 @@
 //!   signature / const-assignment line; no JSDoc)
 //! - `ExportDoc { file, start_line }`: JSDoc above that export,
 //!   predecessor = the matching `Export`
+//! - `ExportBody { file, start_line }`: body interior (brace-stripped) of
+//!   a function or class export, predecessor = the matching `Export`.
+//!   Sibling of `ExportDoc` under `Export`. Only emitted when the inner
+//!   decl has a multi-line `statement_block` body. See the v4 plan note in
+//!   `ignore/plan-ts-export-body-v2.md` for what's deferred (lexical-with-
+//!   fn-init, expression arrows, forwardRef-wrapped callbacks).
 //!
 //! `.ts` and `.tsx` are both handled; the grammar is dispatched by
 //! extension. Parse trees are cached in [`WalkCtx`].
@@ -94,8 +100,21 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
                     export_doc_signals(file, item.kind, ctx),
                     60,
                 )
-                .with_predecessor(BatchKey::Typescript(key)),
+                .with_predecessor(BatchKey::Typescript(key.clone())),
             );
+            if item.body_emit_rows > 0 {
+                out.push(
+                    candidate(
+                        TsKey::ExportBody {
+                            file: file.clone(),
+                            start_line: item.start_line,
+                        },
+                        export_body_signals(file, item.kind, ctx),
+                        (item.body_emit_rows * 6).max(60),
+                    )
+                    .with_predecessor(BatchKey::Typescript(key)),
+                );
+            }
         }
     }
 
@@ -124,20 +143,21 @@ pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
         ),
         TsKey::Export { file, start_line } => {
             let (source, tree) = parse_ts(ctx, file)?;
-            let item = find_export_at(&tree, &source, *start_line)?;
+            let kind = classify_export_at(&tree, &source, *start_line)?;
             let lines = collect_export_lines(&tree, *start_line);
-            single_file_lines_batch(file, &source, lines, export_signals(file, item.kind, ctx))
+            single_file_lines_batch(file, &source, lines, export_signals(file, kind, ctx))
         }
         TsKey::ExportDoc { file, start_line } => {
             let (source, tree) = parse_ts(ctx, file)?;
-            let item = find_export_at(&tree, &source, *start_line)?;
+            let kind = classify_export_at(&tree, &source, *start_line)?;
             let lines = collect_export_doc_lines(&tree, &source, file, *start_line);
-            single_file_lines_batch(
-                file,
-                &source,
-                lines,
-                export_doc_signals(file, item.kind, ctx),
-            )
+            single_file_lines_batch(file, &source, lines, export_doc_signals(file, kind, ctx))
+        }
+        TsKey::ExportBody { file, start_line } => {
+            let (source, tree) = parse_ts(ctx, file)?;
+            let kind = classify_export_at(&tree, &source, *start_line)?;
+            let lines = collect_export_body(&tree, &source, *start_line);
+            single_file_lines_batch(file, &source, lines, export_body_signals(file, kind, ctx))
         }
     }
 }
@@ -191,6 +211,11 @@ struct ExportInfo {
     start_line: usize,
     kind: ItemKind,
     line_span: usize,
+    /// Number of *non-blank* source rows the body materializer would emit
+    /// for `ExportBody` if scheduled. 0 means no `ExportBody` candidate
+    /// fires. Computed once at expand-time so the cost hint matches the
+    /// actual emit count after `build_file_spans`'s blank-line filter.
+    body_emit_rows: usize,
 }
 
 impl ExportInfo {
@@ -213,10 +238,12 @@ fn find_export_starts(tree: &Tree, source: &str) -> Vec<ExportInfo> {
         };
         let start_line = child.start_position().row + 1;
         let end_line = item_end_line(decl_node, source);
+        let body_emit_rows = export_body_rows(decl_node, kind, source).len();
         out.push(ExportInfo {
             start_line,
             kind,
             line_span: end_line.saturating_sub(start_line) + 1,
+            body_emit_rows,
         });
     }
     out
@@ -320,10 +347,20 @@ fn has_default_keyword(node: Node, source: &str) -> bool {
     })
 }
 
-fn find_export_at(tree: &Tree, source: &str, start_line: usize) -> Option<ExportInfo> {
-    find_export_starts(tree, source)
-        .into_iter()
-        .find(|i| i.start_line == start_line)
+/// Materializer-path lookup: classify the export at `start_line` without
+/// re-running `find_export_starts` (which would recompute every export's
+/// `body_emit_rows` AST walk just to discard the count). All callers
+/// downstream of materialize need only the `ItemKind` for signal weighting.
+fn classify_export_at(tree: &Tree, source: &str, start_line: usize) -> Option<ItemKind> {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    for child in root.children(&mut cursor) {
+        if child.start_position().row + 1 != start_line {
+            continue;
+        }
+        return classify_export(child, source).map(|(k, _)| k);
+    }
+    None
 }
 
 fn item_end_line(node: Node, source: &str) -> usize {
@@ -395,6 +432,19 @@ fn export_doc_signals(file: &Path, kind: ItemKind, ctx: &WalkCtx) -> ValueSignal
     ValueSignals {
         catastrophic_omission: (0.20 * k * entrypoint_boost(file)).min(1.0),
         follow_up_minimization: (0.6 * k).min(1.0),
+        zero_tool_call_understanding: 0.8,
+        depth_factor: file_depth_factor(file, ctx),
+    }
+}
+
+// Strictly below `Export.catastrophic` (0.70) — `Export`'s signature already
+// hedges existence; the body is a refinement. Strictly above
+// `Export.follow_up` (0.85) — body is the prime "don't go grep" signal.
+fn export_body_signals(file: &Path, kind: ItemKind, ctx: &WalkCtx) -> ValueSignals {
+    let k = kind.kind_weight();
+    ValueSignals {
+        catastrophic_omission: (0.45 * k * entrypoint_boost(file)).min(1.0),
+        follow_up_minimization: (0.9 * k).min(1.0),
         zero_tool_call_understanding: 0.8,
         depth_factor: file_depth_factor(file, ctx),
     }
@@ -602,6 +652,105 @@ fn collect_export_lines(tree: &Tree, start_line: usize) -> FileLines {
     FileLines::new(Vec::new())
 }
 
+/// Body interior lines for an export at `start_line`. Brace-strip rule:
+/// `body.start_row` (the `{`) and `body.end_row` (the `}`) are excluded;
+/// rows in between are emitted. For class exports, every member with a
+/// `statement_block` body contributes its own interior; the merged set
+/// is returned as a single `FileLines`. Only emits for the export shapes
+/// covered by [`export_body_rows`] — others return empty (and the
+/// scheduler propagates as a dead key).
+fn collect_export_body(tree: &Tree, source: &str, start_line: usize) -> FileLines {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    for child in root.children(&mut cursor) {
+        if child.start_position().row + 1 != start_line {
+            continue;
+        }
+        let Some((kind, decl)) = classify_export(child, source) else {
+            return FileLines::new(Vec::new());
+        };
+        let rows = export_body_rows(decl, kind, source);
+        return FileLines::new(rows);
+    }
+    FileLines::new(Vec::new())
+}
+
+/// 1-based source rows that the body materializer would emit for an
+/// export's `(decl, kind)` pair, *after* applying the same blank-line
+/// filter as `build_file_spans`. Used both to gate emission (returns
+/// empty when there is no `statement_block` body, when the body is
+/// single-line, or when interior is all blank) and to size the
+/// speculative cost hint without re-walking the tree.
+fn export_body_rows(decl: Node, kind: ItemKind, source: &str) -> Vec<usize> {
+    let src_lines: Vec<&str> = source.lines().collect();
+    let mut out = Vec::new();
+    match kind {
+        ItemKind::Function => {
+            push_statement_block_interior(&mut out, decl.child_by_field_name("body"), &src_lines);
+        }
+        ItemKind::Class => {
+            push_class_method_interiors(&mut out, decl, &src_lines);
+        }
+        ItemKind::Default => match decl.kind() {
+            "function_declaration"
+            | "function_expression"
+            | "arrow_function"
+            | "generator_function" => {
+                push_statement_block_interior(
+                    &mut out,
+                    decl.child_by_field_name("body"),
+                    &src_lines,
+                );
+            }
+            "class" | "class_declaration" | "abstract_class_declaration" => {
+                push_class_method_interiors(&mut out, decl, &src_lines);
+            }
+            _ => {}
+        },
+        _ => {}
+    }
+    dedup_sorted(out)
+}
+
+/// Push the interior rows (1-based) of `body` if it's a multi-line
+/// `statement_block`. Skips blank source lines so the count matches the
+/// post-`build_file_spans` emit count exactly — that's what
+/// `body_emit_rows` is wired to in the cost hint, and a mismatch would
+/// silently inflate the speculative ratio.
+fn push_statement_block_interior(out: &mut Vec<usize>, body: Option<Node>, src_lines: &[&str]) {
+    let Some(b) = body else { return };
+    if b.kind() != "statement_block" {
+        return;
+    }
+    let s = b.start_position().row;
+    let e = b.end_position().row;
+    if e <= s + 1 {
+        return;
+    }
+    for row in (s + 1)..e {
+        if src_lines.get(row).is_some_and(|t| !t.trim().is_empty()) {
+            out.push(row + 1);
+        }
+    }
+}
+
+/// Walk `class_decl`'s body, accumulating interior rows of every
+/// `method_definition` member's `statement_block` body. Field
+/// initializers (including arrow-init fields) and abstract method
+/// signatures are skipped by design — they fall under the v4 deferral
+/// (lexical-with-fn-init) noted in `ignore/plan-ts-export-body-v2.md`.
+fn push_class_method_interiors(out: &mut Vec<usize>, class_decl: Node, src_lines: &[&str]) {
+    let Some(class_body) = class_decl.child_by_field_name("body") else {
+        return;
+    };
+    let mut cursor = class_body.walk();
+    for member in class_body.children(&mut cursor) {
+        if member.kind() == "method_definition" {
+            push_statement_block_interior(out, member.child_by_field_name("body"), src_lines);
+        }
+    }
+}
+
 /// JSDoc (`/** */`) immediately above an export at `start_line`. For
 /// entrypoint files the leading top-of-file JSDoc is reserved for
 /// [`TsKey::ModuleDocLede`] — skip it here so the two batches don't
@@ -669,4 +818,161 @@ fn is_first_top_level_node(node: Node) -> bool {
         }
     }
     true
+}
+
+#[cfg(test)]
+mod tests {
+    //! Unit tests for `ExportBody`-related AST analysis. Each test parses a
+    //! synthetic TypeScript source string and exercises `find_export_starts`
+    //! / `collect_export_body` directly. Test fn names start with
+    //! `walker_typescript_` so `cargo t walker_typescript` matches under
+    //! nextest.
+
+    use super::*;
+
+    fn parse(source: &str) -> Tree {
+        let mut parser = tree_sitter::Parser::new();
+        parser
+            .set_language(&tree_sitter_typescript::LANGUAGE_TYPESCRIPT.into())
+            .unwrap();
+        parser.parse(source, None).unwrap()
+    }
+
+    fn body_emit_rows_for(source: &str) -> Vec<usize> {
+        let tree = parse(source);
+        let exports = find_export_starts(&tree, source);
+        let item = exports.first().unwrap();
+        let FileLines { full, .. } = collect_export_body(&tree, source, item.start_line);
+        // Sanity: helper-precomputed count matches actual emit rows.
+        assert_eq!(item.body_emit_rows, full.len());
+        full
+    }
+
+    #[test]
+    fn walker_typescript_export_body_function_decl_emits_interior() {
+        let src = "export function foo() {\n  let x = 1;\n  return x;\n}\n";
+        let rows = body_emit_rows_for(src);
+        // Body interior rows = 2..3 (line numbers 2, 3); brace rows 1, 4
+        // skipped.
+        assert_eq!(rows, vec![2, 3]);
+    }
+
+    #[test]
+    fn walker_typescript_export_body_default_function_emits_interior() {
+        let src =
+            "export default function mitt() {\n  let all = new Map();\n  return { all };\n}\n";
+        let rows = body_emit_rows_for(src);
+        assert_eq!(rows, vec![2, 3]);
+    }
+
+    #[test]
+    fn walker_typescript_export_body_single_line_function_no_emit() {
+        let src = "export function foo() { return 1; }\n";
+        let tree = parse(src);
+        let exports = find_export_starts(&tree, src);
+        // body.start_row == body.end_row → empty interior. body_emit_rows
+        // is 0; no candidate fires.
+        assert_eq!(exports[0].body_emit_rows, 0);
+    }
+
+    #[test]
+    fn walker_typescript_export_body_empty_body_no_emit() {
+        let src = "export function foo() {}\n";
+        let tree = parse(src);
+        let exports = find_export_starts(&tree, src);
+        assert_eq!(exports[0].body_emit_rows, 0);
+    }
+
+    #[test]
+    fn walker_typescript_export_body_class_walks_method_bodies_only() {
+        let src = "\
+export class Foo {
+  field: number = 1;
+  bar() {
+    return 1;
+  }
+  baz(x: number) {
+    let y = x + 1;
+    return y;
+  }
+}
+";
+        let rows = body_emit_rows_for(src);
+        // Method `bar` body interior: line 4. Method `baz` body
+        // interior: lines 7, 8. Field initializer (`field`) skipped.
+        assert_eq!(rows, vec![4, 7, 8]);
+    }
+
+    #[test]
+    fn walker_typescript_export_body_interface_no_emit() {
+        let src = "export interface Foo { bar(): void }\n";
+        let tree = parse(src);
+        let exports = find_export_starts(&tree, src);
+        assert_eq!(exports[0].body_emit_rows, 0);
+    }
+
+    #[test]
+    fn walker_typescript_export_body_type_alias_no_emit() {
+        let src = "export type Foo = { bar: number }\n";
+        let tree = parse(src);
+        let exports = find_export_starts(&tree, src);
+        assert_eq!(exports[0].body_emit_rows, 0);
+    }
+
+    #[test]
+    fn walker_typescript_export_body_enum_no_emit() {
+        let src = "export enum Foo { A, B }\n";
+        let tree = parse(src);
+        let exports = find_export_starts(&tree, src);
+        assert_eq!(exports[0].body_emit_rows, 0);
+    }
+
+    #[test]
+    fn walker_typescript_export_body_lexical_arrow_no_emit_v4() {
+        // v4 deferred: `Export` already emits the whole lexical_declaration
+        // including the body. Adding `ExportBody` here would overlap.
+        let src = "export const X = () => {\n  return 1;\n};\n";
+        let tree = parse(src);
+        let exports = find_export_starts(&tree, src);
+        assert_eq!(exports[0].body_emit_rows, 0);
+    }
+
+    #[test]
+    fn walker_typescript_export_body_expression_arrow_no_emit() {
+        let src = "export const X = () => 1;\n";
+        let tree = parse(src);
+        let exports = find_export_starts(&tree, src);
+        assert_eq!(exports[0].body_emit_rows, 0);
+    }
+
+    #[test]
+    fn walker_typescript_export_body_default_class_method_bodies() {
+        let src = "\
+export default class C {
+  bar() {
+    return 1;
+  }
+}
+";
+        let rows = body_emit_rows_for(src);
+        // Method `bar` body interior: line 3.
+        assert_eq!(rows, vec![3]);
+    }
+
+    #[test]
+    fn walker_typescript_export_body_skips_blank_interior_rows() {
+        // Blank source lines inside the body shouldn't be counted —
+        // build_file_spans filters them out, so body_emit_rows must too.
+        let src = "\
+export function foo() {
+
+  let x = 1;
+
+  return x;
+}
+";
+        let rows = body_emit_rows_for(src);
+        // Lines 2 and 4 are blank; only 3 and 5 are emitted.
+        assert_eq!(rows, vec![3, 5]);
+    }
 }

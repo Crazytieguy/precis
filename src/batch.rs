@@ -171,6 +171,16 @@ pub enum TsKey {
     /// JSDoc (`/** … */`) above a single export. Predecessor: the matching
     /// `Export` at the same `start_line`. Priority 3.x.
     ExportDoc { file: PathBuf, start_line: usize },
+    /// Body interior of an export with a `statement_block` body — function,
+    /// generator, class methods, or `export default <fn|class>`. Brace-strip
+    /// rule: outer `{` and `}` rows omitted, interior rows emitted. For
+    /// classes, body interiors of every member with a `statement_block`
+    /// body are merged into one batch. Predecessor: the matching `Export`
+    /// at the same `start_line`. Sibling of `ExportDoc` under `Export`;
+    /// the two cover disjoint lines. Not emitted for interface / type-alias
+    /// / enum / re-export / lexical-with-fn-init (deferred — see the v4
+    /// plan in `ignore/plan-ts-export-body-v2.md`). Priority 2.x–3.x.
+    ExportBody { file: PathBuf, start_line: usize },
 }
 
 /// JSON batches. `package.json` is split along the same ontology as
@@ -325,6 +335,9 @@ impl TsKey {
             }
             TsKey::ExportDoc { file, start_line } => {
                 format!("export doc at {}:{}", display_path(file), start_line)
+            }
+            TsKey::ExportBody { file, start_line } => {
+                format!("export body at {}:{}", display_path(file), start_line)
             }
         }
     }

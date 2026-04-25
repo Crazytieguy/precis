@@ -151,7 +151,13 @@ src/
     errors.ts
         5→export class NonExhaustiveError extends Error {
         6→  constructor(public input: unknown) {
-        …
+        7→    let displayedValue;
+        8→    try {
+        9→      displayedValue = JSON.stringify(input);
+        10→    } catch (e) {
+        11→      displayedValue = input;
+        12→    }
+        13→    super(`Pattern matching error: no pattern matches value ${displayedValue}`);
     index.ts
         1→import * as Pattern from './patterns';
         3→export { match } from './match';
@@ -193,21 +199,16 @@ src/
         32→export function match<const input, output = symbols.unset>(
         33→  value: input
         34→): Match<input, output> {
-        …
+        35→  return new MatchExpression(value, unmatched) as any;
     patterns.ts
     types/
         BuildMany.ts
         DeepExclude.ts
-            3→export type DeepExclude<a, b> = Exclude<DistributeMatchingUnions<a, b>, b>;
         DistributeUnions.ts
         ExtractPreciseValue.ts
-            13→export type ExtractPreciseValue<a, b> = b extends Override<infer b1>
-            …
         FindSelected.ts
         InvertPattern.ts
         IsMatching.ts
-            57→export type IsMatching<a, b> = true extends IsUnion<a> | IsUnion<b>
-            …
         Match.ts
         Pattern.ts
         helpers.ts

@@ -48,44 +48,8 @@ README.md
     54→You can find the library on `window.mitt`.
     56→## Usage
     …
-    58→```js
-    59→import mitt from 'mitt'
-    61→const emitter = mitt()
-    63→// listen to an event
-    64→emitter.on('foo', e => console.log('foo', e) )
-    66→// listen to all events
-    67→emitter.on('*', (type, e) => console.log(type, e) )
-    69→// fire an event
-    70→emitter.emit('foo', { a: 'b' })
-    72→// clearing all events
-    73→emitter.all.clear()
-    75→// working with handler references:
-    76→function onFoo() {}
-    77→emitter.on('foo', onFoo)   // listen
-    78→emitter.off('foo', onFoo)  // unlisten
-    79→```
     81→### Typescript
     …
-    83→Set `"strict": true` in your tsconfig.json to get improved type inference for `mitt` instance methods.
-    85→```ts
-    86→import mitt from 'mitt';
-    88→type Events = {
-    89→  foo: string;
-    90→  bar?: number;
-    91→};
-    93→const emitter = mitt<Events>(); // inferred as Emitter<Events>
-    95→emitter.on('foo', (e) => {}); // 'e' has inferred type 'string'
-    97→emitter.emit('foo', 42); // Error: Argument of type 'number' is not assignable to parameter of type 'string'. (2345)
-    98→```
-    100→Alternatively, you can use the provided `Emitter` type:
-    102→```ts
-    103→import mitt, { Emitter } from 'mitt';
-    105→type Events = {
-    106→  foo: string;
-    107→  bar?: number;
-    108→};
-    110→const emitter: Emitter<Events> = mitt<Events>();
-    111→```
     113→## Examples & Demos
     …
     115→<a href="http://codepen.io/developit/pen/rjMEwW?editors=0110">

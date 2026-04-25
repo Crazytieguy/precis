@@ -198,7 +198,12 @@ cmdk/
     src/
         command-score.ts
             155→export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
-            …
+            156→  /* NOTE:
+            157→   * in the original, we used to do the lower-casing on each recursive call, but this meant that toLowerCase()
+            158→   * was the dominating cost in the algorithm, passing both is a little ugly, but considerably faster.
+            159→   */
+            160→  string = aliases && aliases.length > 0 ? `${string + ' ' + aliases.join(' ')}` : string
+            161→  return commandScoreInner(string, abbreviation, formatInput(string), formatInput(abbreviation), 0, 0, {})
         index.tsx
             941→export { useCmdk as useCommandState }
             942→export { pkg as Command }
