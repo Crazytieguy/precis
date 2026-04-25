@@ -55,6 +55,15 @@ scores: Sim=0.433 Reached=13/39 Early=2 Late=10 Partial=1 Missing=25 Used=9958/1
 | 6.6 | 9863 | — | — | 0.00 | missing | examples/default-values.js — defaulted + create |  |
 | 6.7 | 9978 | — | — | 0.00 | missing | Guide H2 headings — all 14 across guides 02-06 |  |
 
+## Walker waste rollup (by descriptor pattern)
+
+| n | off_tokens_total | pattern |
+|--:|-----------------:|:--------|
+| 6 | 2302 | Readme.md section #<n> |
+| 7 | 484 | export doc at src/structs/utilities.ts:<n> |
+| 3 | 434 | export at src/structs/utilities.ts:<n> |
+| 2 | 166 | export doc at src/struct.ts:<n> |
+
 ## Walker waste (off-NS token spend ≥ 50)
 
 | off_tokens | off_ratio | cost | first_t | batch |

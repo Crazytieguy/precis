@@ -45,6 +45,14 @@ scores: Sim=0.352 Reached=17/33 Early=3 Late=11 Partial=2 Missing=14 Used=9859/1
 | 4.2 | 9201 | — | — | 0.00 | missing | test/src/app/ — every demo page directory |  |
 | 4.4 | 9693 | — | — | 0.33 | missing | Landing page + Playwright device profiles | export at playwright.config.ts:12 (t=1242, 11 atoms) |
 
+## Walker waste rollup (by descriptor pattern)
+
+| n | off_tokens_total | pattern |
+|--:|-----------------:|:--------|
+| 3 | 2789 | export at src/index.tsx:<n> |
+| 2 | 389 | export at src/context.ts:<n> |
+| 3 | 353 | test/README.md section #<n> |
+
 ## Walker waste (off-NS token spend ≥ 50)
 
 | off_tokens | off_ratio | cost | first_t | batch |

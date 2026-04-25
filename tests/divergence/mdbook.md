@@ -64,6 +64,13 @@ scores: Sim=0.380 Reached=16/49 Early=1 Late=12 Partial=9 Missing=24 Used=9990/1
 | 6.3 | 9801 | — | — | 0.00 | missing | tests/testsuite/main.rs — test module map |  |
 | 6.4 | 9848 | — | — | 0.30 | missing | examples/ + guide/ tree |  |
 
+## Walker waste rollup (by descriptor pattern)
+
+| n | off_tokens_total | pattern |
+|--:|-----------------:|:--------|
+| 2 | 600 | pub-item doc at crates/mdbook-summary/src/lib.rs:<n> |
+| 2 | 235 | CONTRIBUTING.md section #<n> |
+
 ## Walker waste (off-NS token spend ≥ 50)
 
 | off_tokens | off_ratio | cost | first_t | batch |

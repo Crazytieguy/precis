@@ -54,6 +54,17 @@ scores: Sim=0.394 Reached=11/38 Early=3 Late=7 Partial=4 Missing=23 Used=9636/10
 | 7.2 | 9911 | — | — | 0.00 | missing | test/{http-error,methods,prefix-url,bytes,memory-leak,fetch,context}.ts test names |  |
 | 7.3 | 9987 | — | — | 0.00 | missing | test/retry.ts: 4 most-distinctive test names (truncated) |  |
 
+## Walker waste rollup (by descriptor pattern)
+
+| n | off_tokens_total | pattern |
+|--:|-----------------:|:--------|
+| 5 | 1007 | readme.md section #<n> |
+| 2 | 424 | export at source/utils/options.ts:<n> |
+| 2 | 337 | export doc at source/utils/type-guards.ts:<n> |
+| 2 | 324 | export at source/utils/body.ts:<n> |
+| 4 | 298 | export at source/types/hooks.ts:<n> |
+| 2 | 227 | export at source/utils/merge.ts:<n> |
+
 ## Walker waste (off-NS token spend ≥ 50)
 
 | off_tokens | off_ratio | cost | first_t | batch |
@@ -77,8 +88,8 @@ scores: Sim=0.394 Reached=11/38 Early=3 Late=7 Partial=4 Missing=23 Used=9636/10
 | 100 | 0.30 | 331 | 7891 | export names surface in source/types/options.ts |
 | 82 | 1.00 | 82 | 3189 | export at source/utils/merge.ts:6 |
 | 82 | 1.00 | 82 | 255 | json config tsconfig.json |
-| 77 | 0.88 | 88 | 343 | readme.md section #1 |
 | 77 | 0.86 | 90 | 4165 | export at source/types/hooks.ts:48 |
+| 77 | 0.88 | 88 | 343 | readme.md section #1 |
 | 75 | 0.86 | 88 | 4075 | export at source/types/hooks.ts:5 |
 | 75 | 0.24 | 314 | 6830 | export names surface in source/core/constants.ts |
 | 73 | 0.89 | 83 | 3901 | export at source/types/hooks.ts:20 |
@@ -91,6 +102,6 @@ scores: Sim=0.394 Reached=11/38 Early=3 Late=7 Partial=4 Missing=23 Used=9636/10
 | 54 | 1.00 | 54 | 2990 | export doc at source/errors/NonError.ts:6 |
 | 53 | 0.70 | 77 | 1689 | export at source/types/retry.ts:3 |
 | 53 | 1.00 | 53 | 9235 | imports in source/utils/type-guards.ts |
-| 52 | 0.67 | 79 | 469 | readme.md section #8 |
 | 52 | 1.00 | 52 | 9124 | imports in source/utils/normalize.ts |
+| 52 | 0.67 | 79 | 469 | readme.md section #8 |
 | 50 | 1.00 | 50 | 8963 | imports in source/types/ky.ts |

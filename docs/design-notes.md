@@ -356,20 +356,39 @@ like to revisit whether it's still earning its complexity.
 ### Divergence report — deferred refinements
 
 Three rounds of reviewer feedback have landed; report is ship-ready as
-the calibration artifact. Two items deferred for later iteration:
+the calibration artifact. Two items previously deferred:
 
-- **Aggregate walker-waste rows by descriptor pattern.** Several
-  fixtures show waste tables with N near-identical rows (e.g.,
-  `pub-item doc at src/lib.rs:<line>` repeated 7+ times totaling
-  ~3k tokens). A rollup column showing pattern-aggregated spend
-  would make systemic misses obvious without scanning. Defer until
-  it's worth the format complexity.
+- **Aggregate walker-waste rows by descriptor pattern.** DONE.
+  `format_walker_waste_rollup` in `src/divergence.rs` now emits a
+  rollup table above the per-batch waste table, grouping rows by
+  descriptor pattern (positional suffixes — `:<line>` / ` section
+  #<index>` — collapsed to `<n>`). Surfaces e.g. log's "14 `pub-item
+  doc at src/lib.rs:<n>` rows totaling 3572 tokens" at row 1 of the
+  rollup. Pattern matching is shape-anchored on known walker
+  descriptor templates (not regex on arbitrary digits), so paths
+  with embedded digits don't false-collapse; covered by unit tests
+  in `divergence::tests`. Section also elides when no pattern groups
+  ≥2 rows. Side-effect of the implementation: per-batch table now
+  ties on relative descriptor (was: absolute), so a few sub-tied row
+  pairs reordered in baselines — sort key now matches what the
+  reader sees.
 - **Token-weight off-NS attribution.** Mixed-waste rows currently
   estimate off-NS spend as `off_atoms / total_atoms × cost_tokens`
   (atom-count-proportional). For batches with very uneven per-atom
   costs (e.g., one atom is a 200-line method body, others are
   one-line decls) this can misrank calibration targets. Defer until
   someone observes a misranking that changes a calibration decision.
+
+### Calibration target surfaced by the rollup
+
+With the rollup live, the dominant waste pattern across fixtures is
+clear: `pub-item doc at <lib.rs>:<n>` (log: 14 rows / 3572 tokens;
+anyhow: 5 / 2725; mdbook: 2 / 600). README/docs sections are the
+secondary cluster (cmdk: 5 / 2948; ky: 5 / 1007; mitt: 2 / 294).
+Pairs with the existing "PubItem signal rebalance (catastrophic ↓,
+follow_up ↑)" deferred item — that's exactly the lever that should
+move pub-item doc bodies later in the schedule when other content
+deserves the budget.
 
 ### Walker calibration — tier-3 falloff is the open lever
 

@@ -58,6 +58,17 @@ scores: Sim=0.276 Reached=16/45 Early=3 Late=11 Partial=7 Missing=22 Used=9906/1
 | 4.7 | 9767 | — | — | 0.00 | missing | matchPattern() — array / tuple / variadic branch |  |
 | 4.8 | 9976 | 2580 | -7396 | 0.82 | early | getSelectionKeys() + flatMap helpers | export at src/internals/helpers.ts:120 (t=2580, 10 atoms) |
 
+## Walker waste rollup (by descriptor pattern)
+
+| n | off_tokens_total | pattern |
+|--:|-----------------:|:--------|
+| 9 | 1078 | export doc at src/patterns.ts:<n> |
+| 4 | 566 | README.md section #<n> |
+| 3 | 350 | export at src/types/DistributeUnions.ts:<n> |
+| 4 | 342 | export at src/types/FindSelected.ts:<n> |
+| 3 | 290 | export at src/patterns.ts:<n> |
+| 2 | 198 | export at src/types/InvertPattern.ts:<n> |
+
 ## Walker waste (off-NS token spend ≥ 50)
 
 | off_tokens | off_ratio | cost | first_t | batch |

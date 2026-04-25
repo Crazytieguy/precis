@@ -73,6 +73,12 @@
 //! - `cost` — total marginal cost of the walker batch.
 //! - `first_t` — walker `cum_tokens` when this batch was scheduled.
 //! - `batch` — descriptor with fixture root stripped.
+//!
+//! Preceded by a *rollup* table grouping waste rows by descriptor
+//! pattern (e.g. `pub-item doc at src/lib.rs:<n>` collapses 14 per-line
+//! rows into one). Surfaces systemic walker over-spend that the
+//! per-batch table buries; elided when no pattern groups two-or-more
+//! rows.
 
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
@@ -757,6 +763,7 @@ fn format_walker_waste(out: &mut String, ctx: &BuildCtx) {
     // descending so the biggest calibration targets are at row 1.
     struct Row<'a> {
         wr: &'a WalkerRow<'a>,
+        descriptor_rel: String,
         off_ratio: f64,
         off_tokens: usize,
     }
@@ -779,8 +786,10 @@ fn format_walker_waste(out: &mut String, ctx: &BuildCtx) {
             if off_tokens < UNMAPPED_COST_THRESHOLD {
                 return None;
             }
+            let descriptor_rel = strip_fixture_root(&wr.batch.descriptor, &ctx.fixture_root);
             Some(Row {
                 wr,
+                descriptor_rel,
                 off_ratio,
                 off_tokens,
             })
@@ -792,8 +801,14 @@ fn format_walker_waste(out: &mut String, ctx: &BuildCtx) {
     rows.sort_by(|a, b| {
         b.off_tokens
             .cmp(&a.off_tokens)
-            .then_with(|| a.wr.batch.descriptor.cmp(&b.wr.batch.descriptor))
+            .then_with(|| a.descriptor_rel.cmp(&b.descriptor_rel))
     });
+
+    format_walker_waste_rollup(
+        out,
+        rows.iter()
+            .map(|r| (r.descriptor_rel.as_str(), r.off_tokens)),
+    );
 
     out.push_str(&format!(
         "\n## Walker waste (off-NS token spend ≥ {UNMAPPED_COST_THRESHOLD})\n\n"
@@ -801,12 +816,96 @@ fn format_walker_waste(out: &mut String, ctx: &BuildCtx) {
     out.push_str("| off_tokens | off_ratio | cost | first_t | batch |\n");
     out.push_str("|-----------:|----------:|-----:|--------:|:------|\n");
     for r in &rows {
-        let rel = strip_fixture_root(&r.wr.batch.descriptor, &ctx.fixture_root);
         out.push_str(&format!(
-            "| {} | {:.2} | {} | {} | {rel} |\n",
-            r.off_tokens, r.off_ratio, r.wr.batch.cost_tokens, r.wr.seen_t,
+            "| {} | {:.2} | {} | {} | {} |\n",
+            r.off_tokens, r.off_ratio, r.wr.batch.cost_tokens, r.wr.seen_t, r.descriptor_rel,
         ));
     }
+}
+
+/// Rollup of waste rows by descriptor pattern: same descriptor with
+/// position-bearing suffix (`:<line>` for Rust/TS bodies, ` #<index>` for
+/// markdown sections) collapsed to `<n>`. Surfaces systemic walker
+/// over-spend — e.g. "14 `pub-item doc at src/lib.rs:<n>` rows totaling
+/// 3.6k tokens" — that the per-row table buries. Elide patterns with
+/// `n == 1` (no rollup benefit) and the whole section if no pattern has
+/// `n ≥ 2`.
+fn format_walker_waste_rollup<'a>(
+    out: &mut String,
+    rows: impl IntoIterator<Item = (&'a str, usize)>,
+) {
+    struct Group {
+        n: usize,
+        off_tokens_total: usize,
+    }
+    let mut by_pattern: BTreeMap<String, Group> = BTreeMap::new();
+    for (descriptor_rel, off_tokens) in rows {
+        let pattern = pattern_template(descriptor_rel);
+        let g = by_pattern.entry(pattern).or_insert(Group {
+            n: 0,
+            off_tokens_total: 0,
+        });
+        g.n += 1;
+        g.off_tokens_total += off_tokens;
+    }
+    let mut interesting: Vec<(&String, &Group)> =
+        by_pattern.iter().filter(|(_, g)| g.n >= 2).collect();
+    if interesting.is_empty() {
+        return;
+    }
+    interesting.sort_by(|a, b| {
+        b.1.off_tokens_total
+            .cmp(&a.1.off_tokens_total)
+            .then_with(|| a.0.cmp(b.0))
+    });
+    out.push_str("\n## Walker waste rollup (by descriptor pattern)\n\n");
+    out.push_str("| n | off_tokens_total | pattern |\n");
+    out.push_str("|--:|-----------------:|:--------|\n");
+    for (pattern, g) in interesting {
+        out.push_str(&format!(
+            "| {} | {} | {pattern} |\n",
+            g.n, g.off_tokens_total
+        ));
+    }
+}
+
+/// Collapse position-bearing suffixes in a descriptor down to `<n>` so
+/// semantically-similar batches group under one pattern. Shape-specific
+/// matching: only known walker descriptor templates with positional
+/// suffixes are touched. Path-only descriptors (e.g.
+/// `crate-doc lede in src/lib.rs`) pass through verbatim — their
+/// trailing characters come from user-controlled paths and shouldn't be
+/// rewritten.
+///
+/// Recognized shapes (extend if a new walker adds a positional descriptor):
+/// - `(pub item|pub-item doc|export|export doc) at <path>:<line>`
+///   → `… at <path>:<n>`
+/// - `<path>.md section #<index>` → `<path>.md section #<n>`
+fn pattern_template(descriptor: &str) -> String {
+    const LINE_PREFIXES: &[&str] = &[
+        "pub item at ",
+        "pub-item doc at ",
+        "export at ",
+        "export doc at ",
+    ];
+    for prefix in LINE_PREFIXES {
+        if let Some(rest) = descriptor.strip_prefix(prefix)
+            && let Some((path_part, last)) = rest.rsplit_once(':')
+            && !last.is_empty()
+            && last.bytes().all(|b| b.is_ascii_digit())
+        {
+            return format!("{prefix}{path_part}:<n>");
+        }
+    }
+    if let Some((before, n)) = descriptor.rsplit_once(" section #")
+        && let Some((_, ext)) = before.rsplit_once('.')
+        && ext.eq_ignore_ascii_case("md")
+        && !n.is_empty()
+        && n.bytes().all(|b| b.is_ascii_digit())
+    {
+        return format!("{before} section #<n>");
+    }
+    descriptor.to_string()
 }
 
 /// Walker descriptors embed absolute paths (e.g. `"crate-doc lede in
@@ -844,4 +943,71 @@ fn classify(reached_t: Option<usize>, exp_t: usize, credit: f64) -> ArrivalStatu
 /// break with `2.10 < 2.2`.
 fn numeric_id_cmp(a: &str, b: &str) -> std::cmp::Ordering {
     id_components(a).cmp(&id_components(b))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::pattern_template;
+
+    #[test]
+    fn divergence_pattern_template_collapses_known_shapes() {
+        assert_eq!(
+            pattern_template("pub item at src/lib.rs:475"),
+            "pub item at src/lib.rs:<n>"
+        );
+        assert_eq!(
+            pattern_template("pub-item doc at src/lib.rs:1478"),
+            "pub-item doc at src/lib.rs:<n>"
+        );
+        assert_eq!(
+            pattern_template("export at source/types/hooks.ts:48"),
+            "export at source/types/hooks.ts:<n>"
+        );
+        assert_eq!(
+            pattern_template("export doc at source/errors/NonError.ts:6"),
+            "export doc at source/errors/NonError.ts:<n>"
+        );
+        assert_eq!(
+            pattern_template("README.md section #3"),
+            "README.md section #<n>"
+        );
+        assert_eq!(
+            pattern_template("docs/changelog.md section #5"),
+            "docs/changelog.md section #<n>"
+        );
+    }
+
+    #[test]
+    fn divergence_pattern_template_handles_mixed_case_md() {
+        assert_eq!(
+            pattern_template("README.MD section #1"),
+            "README.MD section #<n>"
+        );
+        assert_eq!(
+            pattern_template("readme.Md section #0"),
+            "readme.Md section #<n>"
+        );
+    }
+
+    #[test]
+    fn divergence_pattern_template_passes_through_path_only_descriptors() {
+        assert_eq!(
+            pattern_template("crate-doc lede in src/lib.rs"),
+            "crate-doc lede in src/lib.rs"
+        );
+        assert_eq!(
+            pattern_template("[package] in Cargo.toml"),
+            "[package] in Cargo.toml"
+        );
+        assert_eq!(
+            pattern_template("README headline in README.md"),
+            "README headline in README.md"
+        );
+        // Section discriminator only fires for `.md` paths — a non-md
+        // path with the same trailing shape passes through.
+        assert_eq!(
+            pattern_template("not-markdown.txt section #3"),
+            "not-markdown.txt section #3"
+        );
+    }
 }

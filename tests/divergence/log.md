@@ -57,6 +57,14 @@ scores: Sim=0.525 Reached=13/44 Early=1 Late=8 Partial=2 Missing=29 Used=9017/10
 | 5.13 | 9784 | — | — | 0.27 | missing | kv::Error variants | pub item at src/kv/error.rs:5 (t=3489, 3 atoms) |
 | 5.14 | 9861 | — | — | 0.00 | missing | logger() global accessor |  |
 
+## Walker waste rollup (by descriptor pattern)
+
+| n | off_tokens_total | pattern |
+|--:|-----------------:|:--------|
+| 14 | 3572 | pub-item doc at src/lib.rs:<n> |
+| 3 | 611 | README.md section #<n> |
+| 2 | 174 | CHANGELOG.md section #<n> |
+
 ## Walker waste (off-NS token spend ≥ 50)
 
 | off_tokens | off_ratio | cost | first_t | batch |

@@ -58,6 +58,13 @@ scores: Sim=0.348 Reached=12/44 Early=0 Late=9 Partial=4 Missing=28 Used=8308/10
 | 5.6 | 9798 | — | — | 0.00 | missing | ensure!: render `{msg} ({lhs} vs {rhs})` |  |
 | 5.7 | 9946 | — | — | 0.00 | missing | build.rs cfg pipeline (rustc version + cfgs) |  |
 
+## Walker waste rollup (by descriptor pattern)
+
+| n | off_tokens_total | pattern |
+|--:|-----------------:|:--------|
+| 5 | 2725 | pub-item doc at src/lib.rs:<n> |
+| 5 | 1810 | README.md section #<n> |
+
 ## Walker waste (off-NS token spend ≥ 50)
 
 | off_tokens | off_ratio | cost | first_t | batch |

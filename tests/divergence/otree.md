@@ -61,6 +61,14 @@ scores: Sim=0.418 Reached=17/50 Early=5 Late=5 Partial=13 Missing=20 Used=9963/1
 | 6.3 | 9808 | — | — | 0.62 | partial | Changelog version headings | docs/changelog.md section #3 (t=9805, 9 atoms) |
 | 6.4 | 9967 | — | — | 0.00 | missing | clipboard OS routing |  |
 
+## Walker waste rollup (by descriptor pattern)
+
+| n | off_tokens_total | pattern |
+|--:|-----------------:|:--------|
+| 4 | 1022 | README.md section #<n> |
+| 5 | 456 | docs/changelog.md section #<n> |
+| 4 | 428 | pub item at src/config/colors.rs:<n> |
+
 ## Walker waste (off-NS token spend ≥ 50)
 
 | off_tokens | off_ratio | cost | first_t | batch |

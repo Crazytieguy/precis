@@ -62,6 +62,14 @@ scores: Sim=0.282 Reached=14/42 Early=3 Late=10 Partial=7 Missing=21 Used=9941/1
 | 10.6 | 9892 | — | — | 0.00 | missing | index.tsx — Separator body |  |
 | 10.7 | 9996 | — | — | 0.00 | missing | index.tsx — Empty body |  |
 
+## Walker waste rollup (by descriptor pattern)
+
+| n | off_tokens_total | pattern |
+|--:|-----------------:|:--------|
+| 5 | 2948 | README.md section #<n> |
+| 3 | 741 | ARCHITECTURE.md section #<n> |
+| 3 | 391 | website/README.md section #<n> |
+
 ## Walker waste (off-NS token spend ≥ 50)
 
 | off_tokens | off_ratio | cost | first_t | batch |

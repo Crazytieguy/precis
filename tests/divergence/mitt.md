@@ -57,6 +57,12 @@ scores: Sim=0.468 Reached=11/43 Early=3 Late=6 Partial=10 Missing=22 Used=3967/1
 | 5.11 | 8837 | — | — | 0.58 | partial | .github/PULL_REQUEST_TEMPLATE.md | .github/PULL_REQUEST_TEMPLATE.md section #0 (t=3886, 8 atoms) |
 | 5.12 | 8863 | — | — | 0.00 | missing | LICENSE — MIT preamble |  |
 
+## Walker waste rollup (by descriptor pattern)
+
+| n | off_tokens_total | pattern |
+|--:|-----------------:|:--------|
+| 2 | 294 | README.md section #<n> |
+
 ## Walker waste (off-NS token spend ≥ 50)
 
 | off_tokens | off_ratio | cost | first_t | batch |
