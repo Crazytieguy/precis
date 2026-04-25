@@ -62,6 +62,23 @@ README.md
     153→<br>
     155→## Comparison to thiserror
     …
+    157→Use Anyhow if you don't care what error type your functions return, you just
+    158→want it to be easy. This is common in application code. Use [thiserror] if you
+    159→are a library that wants to design your own dedicated error type(s) so that on
+    160→failures the caller gets exactly the information that you choose.
+    162→[thiserror]: https://github.com/dtolnay/thiserror
+    164→<br>
+    166→#### License
+    168→<sup>
+    169→Licensed under either of <a href="LICENSE-APACHE">Apache License, Version
+    170→2.0</a> or <a href="LICENSE-MIT">MIT license</a> at your option.
+    171→</sup>
+    173→<br>
+    175→<sub>
+    176→Unless you explicitly state otherwise, any contribution intentionally submitted
+    177→for inclusion in this crate by you, as defined in the Apache-2.0 license, shall
+    178→be dual licensed as above, without any additional terms or conditions.
+    179→</sub>
 build.rs
 rust-toolchain.toml
 src/
@@ -150,25 +167,6 @@ src/
         390→pub struct Error {
         391→    inner: Own<ErrorImpl>,
         392→}
-        394→/// Iterator of a chain of source errors.
-        395→///
-        396→/// This type is the iterator returned by [`Error::chain`].
-        397→///
-        398→/// # Example
-        399→///
-        400→/// ```
-        401→/// use anyhow::Error;
-        402→/// use std::io;
-        403→///
-        404→/// pub fn underlying_io_error_kind(error: &Error) -> Option<io::ErrorKind> {
-        405→///     for cause in error.chain() {
-        406→///         if let Some(io_error) = cause.downcast_ref::<io::Error>() {
-        407→///             return Some(io_error.kind());
-        408→///         }
-        409→///     }
-        410→///     None
-        411→/// }
-        412→/// ```
         415→pub struct Chain<'a> {
         416→    state: crate::chain::ChainState<'a>,
         417→}

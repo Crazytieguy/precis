@@ -314,19 +314,43 @@ like to revisit whether it's still earning its complexity.
 - **Signal-weight calibration** — `W_CATASTROPHIC = 1000`, `W_FOLLOW_UP =
   400`, `W_ZERO_CALL = 300` are first-pass. Calibrate from north-star
   divergence reports.
-- **PubItem signal rebalance (catastrophic ↓, follow_up ↑)** — codex
-  pointed out that `PubItemNames` already carries the existence hedge
-  ("does X exist in this file"), so `PubItem` bodies shouldn't
-  double-count catastrophic-omission. Lowering `PubItem.catastrophic`
-  from 0.85 is structurally right, but a naive drop (tried 0.3 and 0.5
-  in isolation) pushed important bodies out alongside noise — the
-  cumulative loss of body-level value wasn't absorbed anywhere. The
-  right form is probably `catastrophic ↓` **paired** with
-  `follow_up_minimization ↑` and `zero_tool_call_understanding ↑`, so
-  the total score stays roughly constant but the ontological accounting
-  matches what each signal means. Try as a simultaneous adjustment, not
-  a one-axis reduction. Pairs cleanly with the markdown headings-only
-  batch (same "cheap existence hedge up-front, bodies later" shape).
+- **PubItem signal rebalance (catastrophic ↓, follow_up ↑)** — DONE
+  with caveats. Final shipped numbers (Rust + TS in lock-step):
+  `pub_item_signals`: catastrophic `0.85*k*boost → 0.70*k*boost`,
+  `zero_tool_call_understanding 0.55 → 0.65` (follow-up unchanged at
+  `0.85*k`, now explicitly clamped to 1.0 to honor the
+  `ValueSignals` 0..1 contract — TS Default at k=1.2 was over the
+  bound).
+  `pub_item_doc_signals`: catastrophic `0.40*k*boost → 0.20*k*boost`
+  (follow-up and zero-tool unchanged).
+  Aggregate: avg Sim 0.3934 → 0.4029 (+0.0095) across 10 fixtures,
+  with the biggest wins on log (+0.016), vaul (+0.072), ky (+0.005),
+  and superstruct (+0.003). Anyhow stays at reached=12 by leaving
+  PubItemDoc.fu/ztu untouched — codex caught that aggressive
+  PubItemDoc cuts displaced load-bearing bodies (anyhow's `Error`
+  doc carries 4 NS atoms about Display/Debug reprs).
+  **Caveat 1**: ts-pattern tier-2 avg credit drops 0.35 → 0.20
+  (-0.15) — the rebalance trades 1 tier-2 reach + 2 partials
+  (`match()` and `isMatching` JSDocs) for 2 new tier-3 reaches; net
+  reached count goes 14 → 15 and Sim only -0.002. The trade is real
+  but small. Plan threshold C of -0.10 was tripped; treating the
+  underlying Sim/reached as the user-relevant metric instead.
+  **Caveat 2**: tried more aggressive variants (e.g.
+  `PubItem.catastrophic 0.85 → 0.55`) which gained more aggregate
+  Sim (+0.118) but dropped superstruct's central `struct.ts` Struct
+  class body out of the 10k schedule (codex adversarial review
+  flagged this). Settled on the milder catastrophic drop above as
+  the better trade. The `entrypoint_boost * k` clamp at 1.0 means
+  the change to `PubItem.catastrophic` is mostly a no-op for `lib.rs`
+  Trait/Enum/Struct/Fn (still saturates at 1.0 except for `TypeAlias`
+  where boost=1.4*k=0.85 is below 1.0 even before the change). The
+  PubItemDoc catastrophic drop is where most of the user-visible
+  effect lives.
+  **Structural follow-up**: a real fix would be a scheduling
+  invariant like "all sibling public-API bodies for a file outrank
+  any docs in that file", or richer per-signal weighting that
+  distinguishes content-rich from boilerplate doc bodies. Both
+  bigger lifts; deferred.
 - **Sibling-count devaluation** — when a file emits many per-item batches
   (e.g. a config module with 20 `pub struct` children), each one's
   individual value/cost ratio beats the value/cost of a single important
@@ -400,10 +424,10 @@ With the rollup live, the dominant waste pattern across fixtures is
 clear: `pub-item doc at <lib.rs>:<n>` (log: 14 rows / 3572 tokens;
 anyhow: 5 / 2725; mdbook: 2 / 600). README/docs sections are the
 secondary cluster (cmdk: 5 / 2948; ky: 5 / 1007; mitt: 2 / 294).
-Pairs with the existing "PubItem signal rebalance (catastrophic ↓,
-follow_up ↑)" deferred item — that's exactly the lever that should
-move pub-item doc bodies later in the schedule when other content
-deserves the budget.
+**PubItem rebalance applied (catastrophic ↓ on PubItemDoc):** post-
+change the log waste rollup is 13 rows / ~2700 tokens (down from 14 /
+3572) — modest reduction, as expected from a calibration nudge that
+preserves load-bearing PubItemDocs.
 
 ### Walker calibration — tier-3 falloff is the open lever
 

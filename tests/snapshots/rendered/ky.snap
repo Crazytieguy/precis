@@ -80,6 +80,66 @@ readme.md
     29→- Instances with custom defaults
     30→- Hooks
     31→- TypeScript niceties (e.g. `.json()` supports generics and defaults to `unknown`, not `any`)
+    33→## Install
+    …
+    35→```sh
+    36→npm install ky
+    37→```
+    39→###### CDN
+    41→- [jsdelivr](https://cdn.jsdelivr.net/npm/ky/+esm)
+    42→- [unpkg](https://unpkg.com/ky)
+    43→- [esm.sh](https://esm.sh/ky)
+    45→## Usage
+    …
+    85→## API
+    …
+    87→### ky(input, options?)
+    …
+    122→### ky.get(input, options?)
+    123→### ky.post(input, options?)
+    124→### ky.put(input, options?)
+    125→### ky.patch(input, options?)
+    126→### ky.head(input, options?)
+    127→### ky.delete(input, options?)
+    …
+    745→### ky.extend(defaultOptions)
+    …
+    811→### ky.create(defaultOptions)
+    …
+    833→### ky.stop
+    …
+    864→### ky.retry(options?)
+    …
+    1000→### HTTPError
+    …
+    1046→### TimeoutError
+    …
+    1050→## Tips
+    …
+    1052→### Sending form data
+    …
+    1109→### Setting a custom `Content-Type`
+    …
+    1129→### Cancellation
+    …
+    1156→### Proxy support (Node.js)
+    …
+    1209→### HTTP/2 support (Node.js)
+    …
+    1249→### Consuming Server-Sent Events (SSE)
+    …
+    1264→### Extending types
+    …
+    1292→## FAQ
+    …
+    1339→## Browser support
+    …
+    1343→## Node.js support
+    …
+    1347→## Related
+    …
+    1352→## Maintainers
+    …
 source/
     core/
         Ky.ts
@@ -88,10 +148,6 @@ source/
         constants.ts
     errors/
         ForceRetryError.ts
-            4→/**
-            5→Internal error used to signal a forced retry from afterResponse hooks.
-            6→This is thrown when a user returns ky.retry() from an afterResponse hook.
-            7→*/
             8→export class ForceRetryError extends Error {
             9→	override name = 'ForceRetryError' as const;
             10→	customDelay: number | undefined;
@@ -107,10 +163,6 @@ source/
             10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
             …
         NonError.ts
-            1→/**
-            2→Wrapper for non-Error values that were thrown.
-            4→In JavaScript, any value can be thrown (not just Error instances). This class wraps such values to ensure consistent error handling.
-            5→*/
             6→export class NonError extends Error {
             7→	override name = 'NonError';
             8→	readonly value: unknown;
@@ -175,17 +227,7 @@ source/
             90→export const streamResponse = (response: Response, onDownloadProgress: Options['onDownloadProgress']) => {
             …
             119→export const streamRequest = (request: Request, onUploadProgress: Options['onUploadProgress'], originalBody?: BodyInit | null) => {
-            120→	if (!request.body) {
-            121→		return request;
-            122→	}
-            124→	// Use original body for size calculation since request.body is already a stream
-            125→	const totalBytes = getBodySize(originalBody ?? request.body);
-            127→	return new Request(request, {
-            128→		// @ts-expect-error - Types are outdated.
-            129→		duplex: 'half',
-            130→		body: withProgress(request.body, totalBytes, onUploadProgress),
-            131→	});
-            132→};
+            …
         delay.ts
             5→export type DelayOptions = {
             6→	signal?: InternalOptions['signal'];

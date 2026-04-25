@@ -383,9 +383,9 @@ fn export_names_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
 fn export_signals(file: &Path, kind: ItemKind, ctx: &WalkCtx) -> ValueSignals {
     let k = kind.kind_weight();
     ValueSignals {
-        catastrophic_omission: (0.85 * k * entrypoint_boost(file)).min(1.0),
-        follow_up_minimization: 0.85 * k,
-        zero_tool_call_understanding: 0.55,
+        catastrophic_omission: (0.70 * k * entrypoint_boost(file)).min(1.0),
+        follow_up_minimization: (0.85 * k).min(1.0),
+        zero_tool_call_understanding: 0.65,
         depth_factor: file_depth_factor(file, ctx),
     }
 }
@@ -393,8 +393,8 @@ fn export_signals(file: &Path, kind: ItemKind, ctx: &WalkCtx) -> ValueSignals {
 fn export_doc_signals(file: &Path, kind: ItemKind, ctx: &WalkCtx) -> ValueSignals {
     let k = kind.kind_weight();
     ValueSignals {
-        catastrophic_omission: (0.4 * k * entrypoint_boost(file)).min(1.0),
-        follow_up_minimization: 0.6 * k,
+        catastrophic_omission: (0.20 * k * entrypoint_boost(file)).min(1.0),
+        follow_up_minimization: (0.6 * k).min(1.0),
         zero_tool_call_understanding: 0.8,
         depth_factor: file_depth_factor(file, ctx),
     }

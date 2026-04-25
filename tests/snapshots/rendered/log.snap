@@ -4,6 +4,7 @@ expression: rendered
 ---
 .github/
     workflows/
+        main.yml
 .gitignore
 CHANGELOG.md
     1→# Change Log
@@ -56,6 +57,36 @@ rfcs/
 src/
     __private_api.rs
     kv/
+        error.rs
+            5→pub struct Error {
+            6→    inner: Inner,
+            7→}
+        key.rs
+            7→pub trait ToKey {
+            8→    /// Perform the conversion.
+            9→    fn to_key(&self) -> Key<'_>;
+            10→}
+            37→pub struct Key<'k> {
+            …
+        mod.rs
+            1→//! Structured logging.
+            2→//!
+            3→//! Add the `kv` feature to your `Cargo.toml` to enable
+            4→//! this module:
+            5→//!
+            6→//! ```toml
+            7→//! [dependencies.log]
+            8→//! features = ["kv"]
+            9→//! ```
+            10→//!
+        source.rs
+            51→pub trait Source {
+            …
+            235→pub trait VisitSource<'kvs> {
+            236→    /// Visit a key-value pair.
+            237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
+            238→}
+        value.rs
     lib.rs
         11→//! A lightweight logging facade.
         12→//!
@@ -104,14 +135,6 @@ src/
         497→    /// Designates very low priority, often extremely verbose, information.
         498→    Trace,
         499→}
-        626→/// An enum representing the available verbosity level filters of the logger.
-        627→///
-        628→/// A `LevelFilter` may be compared directly to a [`Level`]. Use this type
-        629→/// to get and set the maximum log level with [`max_level()`] and [`set_max_level`].
-        630→///
-        631→/// [`Level`]: enum.Level.html
-        632→/// [`max_level()`]: fn.max_level.html
-        633→/// [`set_max_level`]: fn.set_max_level.html
         636→pub enum LevelFilter {
         637→    /// A level lower than all log levels.
         638→    Off,
@@ -208,15 +231,6 @@ src/
         1580→/// If a logger has not been set, a no-op implementation is returned.
         1581→pub fn logger() -> &'static dyn Log {
         …
-        1602→/// The statically resolved maximum log level.
-        1603→///
-        1604→/// See the crate level documentation for information on how to configure this.
-        1605→///
-        1606→/// This value is checked by the log macros, but not by the `Log`ger returned by
-        1607→/// the [`logger`] function. Code that manually calls functions on that value
-        1608→/// should compare the level against this value.
-        1609→///
-        1610→/// [`logger`]: fn.logger.html
         1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
         1612→    false if cfg!(feature = "release_max_level_off") => LevelFilter::Off,
         1613→    false if cfg!(feature = "release_max_level_error") => LevelFilter::Error,

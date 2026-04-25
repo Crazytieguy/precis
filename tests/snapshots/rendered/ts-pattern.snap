@@ -149,10 +149,6 @@ scripts/
     generate-cts.sh
 src/
     errors.ts
-        1→/**
-        2→ * Error when the given input value does not match any included pattern
-        3→ * and .exhaustive() was specified
-        4→ */
         5→export class NonExhaustiveError extends Error {
         6→  constructor(public input: unknown) {
         …
@@ -175,15 +171,7 @@ src/
             32→export const matchPattern = (
             …
             120→export const getSelectionKeys = (pattern: any): string[] => {
-            121→  if (isObject(pattern)) {
-            122→    if (isMatcher(pattern)) {
-            123→      return pattern[symbols.matcher]().getSelectionKeys?.() ?? [];
-            124→    }
-            125→    if (Array.isArray(pattern)) return flatMap(pattern, getSelectionKeys);
-            126→    return flatMap(Object.values(pattern), getSelectionKeys);
-            127→  }
-            128→  return [];
-            129→};
+            …
             132→export const flatMap = <a, b>(
             133→  xs: readonly a[],
             134→  f: (v: a) => readonly b[]
@@ -208,6 +196,22 @@ src/
         …
     patterns.ts
     types/
+        BuildMany.ts
+        DeepExclude.ts
+            3→export type DeepExclude<a, b> = Exclude<DistributeMatchingUnions<a, b>, b>;
+        DistributeUnions.ts
+        ExtractPreciseValue.ts
+            13→export type ExtractPreciseValue<a, b> = b extends Override<infer b1>
+            …
+        FindSelected.ts
+        InvertPattern.ts
+        IsMatching.ts
+            57→export type IsMatching<a, b> = true extends IsUnion<a> | IsUnion<b>
+            …
+        Match.ts
+        Pattern.ts
+        helpers.ts
+        index.ts
 tests/
 tsconfig.json
     1→{
