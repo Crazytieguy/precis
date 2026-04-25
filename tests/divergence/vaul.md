@@ -1,4 +1,4 @@
-scores: Sim=0.352 Reached=17/33 Early=3 Late=11 Partial=2 Missing=14 Used=9859/10000
+scores: Sim=0.352 Reached=17/33 Early=3 Late=11 Partial=2 Missing=14 Used=9863/10000
 
 ## Tier rollup
 
@@ -51,7 +51,7 @@ scores: Sim=0.352 Reached=17/33 Early=3 Late=11 Partial=2 Missing=14 Used=9859/1
 |--:|-----------------:|:--------|
 | 3 | 2789 | export at src/index.tsx:<n> |
 | 2 | 389 | export at src/context.ts:<n> |
-| 3 | 353 | test/README.md section #<n> |
+| 3 | 334 | test/README.md section #<n> |
 
 ## Walker waste (off-NS token spend ≥ 50)
 
@@ -66,15 +66,15 @@ scores: Sim=0.352 Reached=17/33 Early=3 Late=11 Partial=2 Missing=14 Used=9859/1
 | 174 | 1.00 | 174 | 477 | package entrypoints in package.json |
 | 157 | 0.48 | 329 | 2568 | export at src/index.tsx:803 |
 | 147 | 1.00 | 147 | 8605 | export doc at src/use-position-fixed.ts:15 |
-| 144 | 1.00 | 144 | 9677 | test/README.md section #0 |
+| 144 | 1.00 | 144 | 9681 | test/README.md section #0 |
 | 135 | 1.00 | 135 | 619 | package scripts in package.json |
 | 124 | 1.00 | 124 | 8458 | export at src/use-position-fixed.ts:15 |
-| 112 | 1.00 | 112 | 9533 | test/README.md section #1 |
 | 111 | 1.00 | 111 | 730 | json config tsconfig.json |
 | 111 | 1.00 | 111 | 3419 | json config turbo.json |
-| 97 | 1.00 | 97 | 9409 | test/README.md section #2 |
+| 104 | 1.00 | 104 | 9525 | test/README.md section #1 |
+| 86 | 1.00 | 86 | 9421 | test/README.md section #2 |
 | 74 | 1.00 | 74 | 7977 | imports in src/use-snap-points.ts |
 | 62 | 1.00 | 62 | 1621 | export at src/context.ts:69 |
-| 59 | 1.00 | 59 | 9844 | export at test/tests/helpers.ts:11 |
+| 59 | 1.00 | 59 | 9848 | export at test/tests/helpers.ts:11 |
 | 58 | 1.00 | 58 | 3003 | export doc at src/use-prevent-scroll.ts:68 |
 | 53 | 0.31 | 171 | 3174 | export names surface in src/helpers.ts |

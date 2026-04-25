@@ -40,8 +40,17 @@ README.md
     15→crate, and the consumer of those libraries can choose the logging
     16→implementation that is most suitable for its use case.
     19→## Minimum supported `rustc`
+    …
     21→`1.68.0+`
     23→This version is explicitly tested in CI and may be bumped in any release as needed. Maintaining compatibility with older compilers is a priority though, so the bar for bumping the minimum supported version is set very high. Any changes to the supported minimum version will be called out in the release notes.
+    25→## Usage
+    …
+    27→### In libraries
+    …
+    58→### In executables
+    …
+    106→## Structured logging
+    …
 benches/
 rfcs/
 src/

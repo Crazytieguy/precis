@@ -242,6 +242,17 @@ like to revisit whether it's still earning its complexity.
   don't collapse into one multi-KB blob. Still deferred: H3 splitting
   for big H2 sections (anyhow's `## Details`, otree's `docs/actions.md`)
   and bullet-item splitting for content-style sections.
+- **Outline-Section ancestor coupling** — `MarkdownKey::HeadingsOutline`
+  is the predecessor of every `Section` in the file when emitted.
+  Without that edge, both batches would render the same heading rows
+  and the renderer's non-ancestor-overlap rule would fire. The trade
+  is gating: if the outline is too big to fit near the budget tail,
+  the prefix-monotone scheduler stops and every section in that file
+  is blocked. Today the outline self-suppresses past 30 headings or
+  1500 bytes of heading content (whichever first); the architectural
+  follow-up is a rendering scheme that lets outline + sections schedule
+  independently (the codex 2025-04-25 plan-review thread on
+  `ignore/plan-headings-outline-v3.md` is the discussion of record).
 - **ReadmeHeadline: skip decorative-prose paragraphs** — DONE.
   `headline_spec` in `src/walker/markdown.rs` now skips leading
   decorative paragraphs (image-only / badge-only) and tag-only
@@ -266,15 +277,19 @@ like to revisit whether it's still earning its complexity.
   by leaving as-is — the user-visible output is genuinely better.
   mdbook (+0.038), ky (+0.009), cmdk (+0.007), otree (+0.001) all
   improved; log/mitt/superstruct/ts-pattern/vaul unchanged.
-- **Markdown headings-only batch** (analog of Rust `PubItemNames`) — the
-  Rust walker's `PubItemNames` is a cheap existence hedge: one line per
-  pub item, low cost, high catastrophic-omission weight. Markdown has no
-  equivalent today. A headings-only batch per file (H1/H2/H3 titles, no
-  prose, predecessor = nothing or the file's headline) would let the
-  scheduler tell "does this doc have an X section" even when no section
-  body fits. Especially useful for guide-style documents (mdbook book,
-  otree docs) where the structure itself is informative. Pairs naturally
-  with the `PubItem`-style catastrophic rebalance below.
+- **Markdown headings-only batch** (analog of Rust `PubItemNames`) —
+  DONE. `MarkdownKey::HeadingsOutline` collects every H1/H2/H3 row
+  (skipping the H1 row already owned by `ReadmeHeadline` so the
+  headline's `Render::Truncated` survives), gated to 2..=30 rows AND
+  ≤1500 bytes of heading source. Predecessor of every `Section` in
+  the file when emitted (see "Outline-Section ancestor coupling"
+  above). Sim deltas across the 10 fixtures: mitt +0.039, cmdk
+  +0.019, otree +0.012, superstruct +0.008, ky +0.007 (NS-modeled
+  outlines); anyhow −0.006, log −0.014, mdbook −0.005 (NS doesn't
+  model the batch, outline competes for budget); ts-pattern −0.002
+  and vaul flat. Net positive; no fixture regressed past the 0.03
+  abort threshold. Pairs naturally with the `PubItem`-style
+  catastrophic rebalance below.
 
 ### Scheduler / walker
 - **File-as-seed** — currently rejected with a clear error in `lib.rs`.

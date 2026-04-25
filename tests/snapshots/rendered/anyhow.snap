@@ -36,7 +36,10 @@ README.md
     16→anyhow = "1.0"
     17→```
     19→<br>
+    21→## Details
+    …
     126→## No-std support
+    …
     128→In no_std mode, almost all of the same API is available and works the same way.
     129→To depend on Anyhow in no_std mode, disable our default enabled "std" feature in
     130→Cargo.toml. A global allocator is required.
@@ -50,12 +53,15 @@ README.md
     140→conversions are defined by is only available in std in those old versions.
     142→<br>
     144→## Comparison to failure
+    …
     146→The `anyhow::Error` type works something like `failure::Error`, but unlike
     147→failure ours is built around the standard library's `std::error::Error` trait
     148→rather than a separate trait `failure::Fail`. The standard library has adopted
     149→the necessary improvements for this to be possible as part of [RFC 2504].
     151→[RFC 2504]: https://github.com/rust-lang/rfcs/blob/master/text/2504-fix-error.md
     153→<br>
+    155→## Comparison to thiserror
+    …
 build.rs
 rust-toolchain.toml
 src/

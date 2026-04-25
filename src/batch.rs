@@ -125,12 +125,22 @@ pub enum MarkdownKey {
     SummaryWhole { file: PathBuf },
     /// README headline: first heading + first paragraph. Priority 1.x.
     ReadmeHeadline { file: PathBuf },
+    /// Cheap navigation hedge: every H1/H2/H3 heading line in the file,
+    /// nothing else. Analog of [`RustKey::PubItemNames`]. For READMEs,
+    /// the H1 line stays under [`MarkdownKey::ReadmeHeadline`] so the
+    /// headline's truncation render isn't overridden; outline collects
+    /// H2+H3 only. Predecessor of every [`MarkdownKey::Section`] in the
+    /// file when emitted (so the section's heading-row overlap is
+    /// permitted as ancestor overlap). Priority 1.x.
+    HeadingsOutline { file: PathBuf },
     /// One H2-level section of a markdown file, indexed by its 0-based
     /// position. For `README.md`, section 0 is the first section after
     /// the headline (predecessor: `ReadmeHeadline`). For other `.md`
-    /// files (changelogs, docs pages), sections are all H2+ sections.
-    /// Splitting lets large documents land piece-by-piece rather than
-    /// all-or-nothing. Priority 2.x–5.x.
+    /// files (changelogs, doc pages), sections are all H2+ sections.
+    /// When [`MarkdownKey::HeadingsOutline`] is emitted for the same
+    /// file, the outline becomes Section's predecessor (overrides the
+    /// README headline edge / the `None` for non-READMEs).
+    /// Priority 2.x–5.x.
     Section { file: PathBuf, section_index: usize },
 }
 
@@ -290,6 +300,9 @@ impl MarkdownKey {
             }
             MarkdownKey::ReadmeHeadline { file } => {
                 format!("README headline in {}", display_path(file))
+            }
+            MarkdownKey::HeadingsOutline { file } => {
+                format!("headings outline in {}", display_path(file))
             }
             MarkdownKey::Section {
                 file,

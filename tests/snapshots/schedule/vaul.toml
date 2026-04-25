@@ -1,7 +1,7 @@
 fixture = "vaul"
 budget = 10000
-cumulative_tokens = 9859
-batch_count = 107
+cumulative_tokens = 9863
+batch_count = 108
 
 [[batches]]
 position = 1
@@ -2753,10 +2753,52 @@ kind = "full"
 
 [[batches]]
 position = 95
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md"
+cost_tokens = 23
+cum_tokens = 9310
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 96
 key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/.eslintrc.json" })'
 descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/vaul/test/.eslintrc.json"
 cost_tokens = 25
-cum_tokens = 9312
+cum_tokens = 9335
 
 [batches.content]
 kind = "lines"
@@ -2770,11 +2812,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 96
+position = 97
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md", section_index: 2 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md section #2"
-cost_tokens = 97
-cum_tokens = 9409
+cost_tokens = 86
+cum_tokens = 9421
 
 [batches.content]
 kind = "lines"
@@ -2804,39 +2846,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 97
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/public" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/vaul/test/public'"
-cost_tokens = 9
-cum_tokens = 9418
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/public"
-entries = ["next.svg", "vercel.svg"]
-
-[[batches]]
 position = 98
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/src" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/vaul/test/src'"
-cost_tokens = 3
-cum_tokens = 9421
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/src"
-entries = ["app"]
-
-[[batches]]
-position = 99
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md", section_index: 1 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md section #1"
-cost_tokens = 112
-cum_tokens = 9533
+cost_tokens = 104
+cum_tokens = 9525
 
 [batches.content]
 kind = "lines"
@@ -2874,11 +2888,39 @@ end = 28
 kind = "full"
 
 [[batches]]
+position = 99
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/public" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/vaul/test/public'"
+cost_tokens = 9
+cum_tokens = 9534
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/public"
+entries = ["next.svg", "vercel.svg"]
+
+[[batches]]
 position = 100
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/src" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/vaul/test/src'"
+cost_tokens = 3
+cum_tokens = 9537
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/src"
+entries = ["app"]
+
+[[batches]]
+position = 101
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md", section_index: 0 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/README.md section #0"
 cost_tokens = 144
-cum_tokens = 9677
+cum_tokens = 9681
 
 [batches.content]
 kind = "lines"
@@ -2916,11 +2958,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 101
+position = 102
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tests" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/vaul/test/tests'"
 cost_tokens = 66
-cum_tokens = 9743
+cum_tokens = 9747
 
 [batches.content]
 kind = "fs"
@@ -2930,11 +2972,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tests"
 entries = ["base.spec.ts", "constants.ts", "controlled.spec.ts", "helpers.ts", "initial-snap.spec.ts", "nested.spec.ts", "non-dismissible.spec.ts", "with-handle.spec.ts", "with-redirect.spec.ts", "with-scaled-background.spec.ts", "without-scaled-background.spec.ts"]
 
 [[batches]]
-position = 102
+position = 103
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/constants.ts" })'
 descriptor = "export names surface in /Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/constants.ts"
 cost_tokens = 13
-cum_tokens = 9756
+cum_tokens = 9760
 
 [batches.content]
 kind = "lines"
@@ -2948,11 +2990,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 103
+position = 104
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/helpers.ts" })'
 descriptor = "export names surface in /Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/helpers.ts"
 cost_tokens = 29
-cum_tokens = 9785
+cum_tokens = 9789
 
 [batches.content]
 kind = "lines"
@@ -2990,11 +3032,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 104
+position = 105
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/helpers.ts", start_line: 4 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/helpers.ts:4"
 cost_tokens = 0
-cum_tokens = 9785
+cum_tokens = 9789
 
 [batches.content]
 kind = "lines"
@@ -3016,11 +3058,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 105
+position = 106
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/constants.ts", start_line: 1 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/constants.ts:1"
 cost_tokens = 0
-cum_tokens = 9785
+cum_tokens = 9789
 
 [batches.content]
 kind = "lines"
@@ -3034,11 +3076,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 106
+position = 107
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/helpers.ts", start_line: 11 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/vaul/test/tests/helpers.ts:11"
 cost_tokens = 59
-cum_tokens = 9844
+cum_tokens = 9848
 
 [batches.content]
 kind = "lines"
@@ -3060,11 +3102,11 @@ end = 18
 kind = "ellipsis"
 
 [[batches]]
-position = 107
+position = 108
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tailwind.config.ts" })'
 descriptor = "imports in /Users/yoav/projects/precis/tests/fixtures/vaul/test/tailwind.config.ts"
 cost_tokens = 15
-cum_tokens = 9859
+cum_tokens = 9863
 
 [batches.content]
 kind = "lines"

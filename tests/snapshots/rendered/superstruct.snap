@@ -18,24 +18,21 @@ expression: rendered
         2→  "typescript.tsdk": "node_modules/typescript/lib"
         3→}
 Changelog.md
-    1→# Changelog
-    3→This document maintains a list of major changes to Superstruct with each new release.
 License.md
 Readme.md
     42→### Usage
     44→Superstruct allows you to define the shape of data you want to validate:
+    145→### Why?
+    …
     167→### Principles
-    169→1. **Customizable types.** Superstruct's power is in making it easy to define an entire set of custom data types that are specific to your application, and defined in a _single_ place, so you have full control over your requirements.
-    171→2. **Unopinionated defaults.** Superstruct ships with native JavaScript types, and everything else is customizable, so you never have to fight to override decisions made by "core" that differ from your application's needs.
-    173→3. **Composable interfaces.** Superstruct interfaces are composable, so you can break down commonly-repeated pieces of data into components, and compose them to build up the more complex objects.
-    175→4. **Useful errors.** The errors that Superstruct throws contain all the information you need to convert them into your own application-specific errors easy, which means more helpful errors for your end users!
-    177→5. **Familiar API.** The Superstruct API was heavily inspired by [Typescript](https://www.typescriptlang.org/docs/handbook/basic-types.html), [Flow](https://flow.org/en/docs/types/), [Go](https://gobyexample.com/structs), and [GraphQL](http://graphql.org/learn/schema/). If you're familiar with any of those, then its schema definition API will feel very natural to use, so you can get started quickly.
-    179→<br/>
+    …
     181→### Demo
+    …
     183→Try out the [live demo on CodeSandbox](https://codesandbox.io/s/bold-water-s2cr8d?file=/index.js) to get an idea for how the API works, or to quickly verify your use case:
     185→[![Demo screenshot.](./docs/images/demo-screenshot.png)](https://codesandbox.io/s/bold-water-s2cr8d?file=/index.js)
     187→<br/>
     189→### Examples
+    …
     191→Superstruct's API is very flexible, allowing it to be used for a variety of use cases on your servers and in the browser. Here are a few examples of common patterns...
     193→- [Basic Validation](./examples/basic-validation.js)
     194→- [Custom Types](./examples/custom-types.js)
@@ -47,16 +44,61 @@ Readme.md
     200→- [Testing Values](./examples/testing-values.js)
     201→- [Custom Errors](./examples/custom-errors.js)
     203→<br/>
+    205→### Documentation
+    …
     231→### License
+    …
     233→This package is [MIT-licensed](./License.md).
 docs/
     guides/
         01-getting-started.md
+            1→# Getting Started
+            …
+            3→## Installing Superstruct
+            …
+            41→## Defining Structs
+            …
         02-validating-data.md
+            1→# Validating Data
+            …
+            5→## Primitive Values
+            …
+            37→## Composed Values
+            …
+            114→## Optional Values
+            …
+            157→## Custom Values
+            …
         03-coercing-data.md
+            1→# Coercing Data
+            …
+            7→## Default Values
+            …
+            49→## Custom Coercions
+            …
         04-refining-validation.md
+            1→# Refining Validation
+            …
+            7→## Built-in Refinements
+            …
+            47→## Custom Refinements
+            …
         05-handling-errors.md
+            1→# Handling Errors
+            …
+            53→## Customizing Errors
+            …
+            102→## Multiple Failures
+            …
         06-using-typescript.md
+            1→# Using TypeScript
+            …
+            7→## Narrowing Types
+            …
+            37→## Describing Types
+            …
+            55→## Inferring Types
+            …
     images/
         banner.png
         demo-screenshot.png
@@ -69,15 +111,49 @@ docs/
         9→Superstruct allows you to define the shape of data you want to validate:
     reference/
         coercions.md
+            1→# Coercions
+            …
+            5→### `defaulted`
+            …
+            21→### `trimmed`
+            …
+            29→### Custom Coercions
+            …
         core.md
         errors.md
+            1→# Errors
+            …
+            5→### `StructError`
+            …
+            19→### Error Properties
+            …
+            32→### Multiple Errors
+            …
         refinements.md
         types.md
         typescript.md
+            1→# TypeScript
+            …
+            5→## Utilities
+            …
+            7→### `Describe`
+            …
+            25→### `Infer`
+            …
         utilities.md
     resources/
         faq.md
+            1→# FAQ
+            …
+            5→### How can I allow unknown keys with `object` structs?
+            …
+            11→### Why not have a built-in `json` struct?
+            …
         links.md
+            1→# Resources
+            …
+            5→## Libraries
+            …
     summary.md
         1→- [Introduction](./readme.md)
         3→## Guides
@@ -211,35 +287,6 @@ src/
             79→export function trimmed<T, S>(struct: Struct<T, S>): Struct<T, S> {
             …
         refinements.ts
-            8→export function empty<
-            9→  T extends string | any[] | Map<any, any> | Set<any>,
-            10→  S extends any,
-            11→>(struct: Struct<T, S>): Struct<T, S> {
-            …
-            33→export function max<T extends number | Date, S extends any>(
-            34→  struct: Struct<T, S>,
-            35→  threshold: T,
-            36→  options: {
-            37→    exclusive?: boolean
-            38→  } = {}
-            39→): Struct<T, S> {
-            …
-            55→export function min<T extends number | Date, S extends any>(
-            …
-            77→export function nonempty<
-            78→  T extends string | any[] | Map<any, any> | Set<any>,
-            79→  S extends any,
-            80→>(struct: Struct<T, S>): Struct<T, S> {
-            …
-            93→export function pattern<T extends string, S extends any>(
-            94→  struct: Struct<T, S>,
-            95→  regexp: RegExp
-            96→): Struct<T, S> {
-            …
-            109→export function size<
-            …
-            146→export function refine<T, S>(
-            …
         types.ts
         utilities.ts
     utils.ts

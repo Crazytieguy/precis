@@ -22,10 +22,37 @@ CHANGELOG.md
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
     1→# Contributing
+    …
     3→Welcome stranger!
     5→If you have come here to learn how to contribute to mdBook, we have some tips for you!
     7→First of all, don't hesitate to ask questions!
     8→Use the [issue tracker](https://github.com/rust-lang/mdBook/issues), no question is too simple.
+    10→## Issue assignment
+    …
+    19→## Issues to work on
+    …
+    44→## Building mdBook
+    …
+    59→## Code quality
+    …
+    63→### Formatting code with rustfmt
+    …
+    87→### Finding issues with clippy
+    …
+    101→## Change requirements
+    …
+    126→## Tests
+    …
+    153→## Making a pull-request
+    …
+    160→## Browser compatibility and testing
+    …
+    190→### Checking changes in `.js` files
+    …
+    205→## Updating highlight.js
+    …
+    218→## Publishing new releases
+    …
 Cargo.lock
 Cargo.toml
     1→[workspace]
@@ -241,10 +268,7 @@ src/
             38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
             …
             46→pub struct Clean {
-            47→    num_files_removed: u64,
-            48→    num_dirs_removed: u64,
-            49→    total_bytes_removed: u64,
-            50→}
+            …
         command_prelude.rs
             7→pub trait CommandExt: Sized {
             …
@@ -257,13 +281,6 @@ src/
             …
         mod.rs
             1→//! Subcommand modules for the `mdbook` binary.
-            3→pub mod build;
-            4→pub mod clean;
-            5→pub mod command_prelude;
-            6→pub mod init;
-            8→pub mod serve;
-            9→pub mod test;
-            11→pub mod watch;
         serve.rs
             23→pub fn make_subcommand() -> Command {
             …

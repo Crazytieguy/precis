@@ -8,11 +8,18 @@
 //!   (image-only / badge-only) and `<img>`-only HTML blocks immediately
 //!   after the heading are skipped, and a heading line whose tail is
 //!   nothing but badges is rendered with `Render::Truncated` to drop it.
+//! - `HeadingsOutline { file }` — every H1/H2/H3 heading line (full
+//!   row, no body). Cheap navigation hedge analogous to Rust's
+//!   `PubItemNames`. For READMEs the headline-covered H1 row is
+//!   skipped so the headline's `Truncated` render survives. Only
+//!   emitted when 2..=`MAX_OUTLINE_HEADINGS` collectable rows exist.
 //! - `Section { file, section_index }` — one H2 section, 0-indexed. For
 //!   READMEs, this is the split replacement of the old monolithic
-//!   "body" batch (predecessor: headline). For other markdown files
-//!   (changelogs, doc pages), we emit one per top-level section so the
-//!   file can land piece-by-piece.
+//!   "body" batch. For other markdown files (changelogs, doc pages),
+//!   we emit one per top-level section so the file can land
+//!   piece-by-piece. Predecessor (when emitted): outline → headline →
+//!   none, picking the deepest available so all heading-row overlaps
+//!   are ancestor-overlaps.
 
 use std::collections::BTreeSet;
 use std::path::Path;
@@ -26,6 +33,21 @@ use crate::tokenizer;
 use crate::value::depth_factor;
 
 use super::{Candidate, FileLines, WalkCtx, fs::files_with_extension, single_file_lines_batch};
+
+/// Upper bound on collectable heading rows before `HeadingsOutline`
+/// suppresses itself. The outline is the predecessor of every section,
+/// so an oversize outline that fails to fit near the budget tail would
+/// block the whole file. See `docs/design-notes.md` "Sub-section
+/// markdown splitting" for the deferred decoupling.
+const MAX_OUTLINE_HEADINGS: usize = 30;
+
+/// Upper bound (in source bytes) on the outline's heading content. The
+/// row-count cap alone wouldn't catch a file with 5 very long headings
+/// — render bytes drive token cost, so we also cap by source bytes.
+/// 1500 chars ≈ 400 tokens, comfortably small at any reasonable budget.
+const MAX_OUTLINE_HEADING_BYTES: usize = 1500;
+
+const TOKENS_PER_HEADING_ROW: usize = 12;
 
 pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
     let BatchKey::Fs(FsKey::DirListing { dir }) = scheduled else {
@@ -50,22 +72,45 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
             continue;
         }
 
-        let Some(section_count) = section_count_for(ctx, &file) else {
+        let Some((source, tree)) = parse_md(ctx, &file) else {
             continue;
         };
+        let section_count = logical_sections(tree.root_node(), &source).len();
+        if section_count == 0 {
+            continue;
+        }
+        let outline_rows = collectable_outline_rows(&file, &tree, &source);
+        let outline_emits = outline_emits_for(&outline_rows, &source);
 
         let is_readme = is_readme(&file);
-        let predecessor = if is_readme {
-            let headline = MarkdownKey::ReadmeHeadline { file: file.clone() };
+        let headline_key = is_readme.then(|| MarkdownKey::ReadmeHeadline { file: file.clone() });
+        let outline_key =
+            outline_emits.then(|| MarkdownKey::HeadingsOutline { file: file.clone() });
+
+        if let Some(h) = &headline_key {
             out.push(candidate(
-                headline.clone(),
+                h.clone(),
                 readme_headline_signals(&file, ctx),
                 60,
             ));
-            Some(BatchKey::Markdown(headline))
-        } else {
-            None
-        };
+        }
+        if let Some(o) = &outline_key {
+            let mut cand = candidate(
+                o.clone(),
+                headings_outline_signals(&file, ctx),
+                (outline_rows.len() * TOKENS_PER_HEADING_ROW).max(30),
+            );
+            if let Some(h) = &headline_key {
+                cand = cand.with_predecessor(BatchKey::Markdown(h.clone()));
+            }
+            out.push(cand);
+        }
+
+        let section_predecessor = outline_key
+            .as_ref()
+            .or(headline_key.as_ref())
+            .cloned()
+            .map(BatchKey::Markdown);
 
         for idx in 0..section_count {
             let signals = if is_readme {
@@ -82,13 +127,33 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
                 signals,
                 cost,
             );
-            if let Some(p) = predecessor.clone() {
+            if let Some(p) = section_predecessor.clone() {
                 cand = cand.with_predecessor(p);
             }
             out.push(cand);
         }
     }
     out
+}
+
+/// True if the outline batch should be emitted for a file with these
+/// heading rows. Bounded both by row count and total source bytes —
+/// long heading lines can blow past `MAX_OUTLINE_HEADINGS * tokens`
+/// even when the row count looks safe.
+fn outline_emits_for(rows: &[(usize, usize)], source: &str) -> bool {
+    if rows.len() < 2 || rows.len() > MAX_OUTLINE_HEADINGS {
+        return false;
+    }
+    let src_lines: Vec<&str> = source.lines().collect();
+    let bytes: usize = rows
+        .iter()
+        .flat_map(|(s, e)| {
+            (*s..=*e)
+                .filter_map(|r| src_lines.get(r - 1))
+                .map(|l| l.len())
+        })
+        .sum();
+    bytes <= MAX_OUTLINE_HEADING_BYTES
 }
 
 pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
@@ -98,6 +163,7 @@ pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
     match mk {
         MarkdownKey::SummaryWhole { file } => mat_summary(file, ctx),
         MarkdownKey::ReadmeHeadline { file } => mat_readme_headline(file, ctx),
+        MarkdownKey::HeadingsOutline { file } => mat_headings_outline(file, ctx),
         MarkdownKey::Section {
             file,
             section_index,
@@ -131,6 +197,15 @@ fn readme_headline_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
         catastrophic_omission: 0.9,
         follow_up_minimization: 0.6,
         zero_tool_call_understanding: 0.8,
+        depth_factor: signal_factor(file, ctx),
+    }
+}
+
+fn headings_outline_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
+    ValueSignals {
+        catastrophic_omission: 0.7,
+        follow_up_minimization: 0.55,
+        zero_tool_call_understanding: 0.4,
         depth_factor: signal_factor(file, ctx),
     }
 }
@@ -218,6 +293,70 @@ fn mat_readme_headline(file: &Path, ctx: &WalkCtx) -> Option<ResolvedBatch> {
         content: BatchContent::Lines { spans },
         signals: readme_headline_signals(file, ctx),
     })
+}
+
+fn mat_headings_outline(file: &Path, ctx: &WalkCtx) -> Option<ResolvedBatch> {
+    let (source, tree) = parse_md(ctx, file)?;
+    let rows = collectable_outline_rows(file, &tree, &source);
+    if rows.len() < 2 {
+        return None;
+    }
+    let mut full = Vec::new();
+    let mut ellipses = Vec::new();
+    for (start, end) in &rows {
+        for r in *start..=*end {
+            full.push(r);
+        }
+        ellipses.push(end + 1);
+    }
+    single_file_lines_batch(
+        file,
+        &source,
+        FileLines::new(full).with_ellipses(ellipses),
+        headings_outline_signals(file, ctx),
+    )
+}
+
+/// Heading-row ranges (1-based, inclusive) the `HeadingsOutline` batch
+/// would render. Walks every `atx_heading` / `setext_heading` reachable
+/// in the parse tree, keeps only level 1-3, and (for READMEs) drops any
+/// heading already covered by `ReadmeHeadline` so the outline never
+/// overrides the headline's `Render::Truncated` with `Render::Full`.
+fn collectable_outline_rows(file: &Path, tree: &Tree, source: &str) -> Vec<(usize, usize)> {
+    let headline_covered: BTreeSet<usize> = if is_readme(file) {
+        headline_spec(tree, source)
+            .map(|s| s.covered_rows.iter().copied().collect())
+            .unwrap_or_default()
+    } else {
+        BTreeSet::new()
+    };
+    let mut nodes = Vec::new();
+    collect_heading_nodes(tree.root_node(), &mut nodes);
+    let mut out = Vec::new();
+    for node in nodes {
+        let level = heading_level(node);
+        if !(1..=3).contains(&level) {
+            continue;
+        }
+        let start_row = node.start_position().row + 1;
+        let end_row = span_last_row(node, source) + 1;
+        if (start_row..=end_row).any(|r| headline_covered.contains(&r)) {
+            continue;
+        }
+        out.push((start_row, end_row));
+    }
+    out
+}
+
+fn collect_heading_nodes<'a>(node: Node<'a>, out: &mut Vec<Node<'a>>) {
+    let mut cursor = node.walk();
+    for child in node.children(&mut cursor) {
+        if matches!(child.kind(), "atx_heading" | "setext_heading") {
+            out.push(child);
+        } else {
+            collect_heading_nodes(child, out);
+        }
+    }
 }
 
 fn mat_section(file: &Path, section_index: usize, ctx: &WalkCtx) -> Option<ResolvedBatch> {
@@ -607,11 +746,6 @@ fn nth_section_range(tree: &Tree, source: &str, n: usize) -> Option<(usize, usiz
         .nth(n)
 }
 
-fn section_count_for(ctx: &WalkCtx, file: &Path) -> Option<usize> {
-    let (source, tree) = parse_md(ctx, file)?;
-    Some(logical_sections(tree.root_node(), &source).len())
-}
-
 /// Section ranges (1-based start, 1-based end inclusive) for batching.
 ///
 /// Top-level sections by default. Special case: if the doc has exactly
@@ -910,5 +1044,150 @@ mod tests {
                    Tagline.\n";
         let rows = covered(src);
         assert!(rows.contains(&3), "autolink paragraph must be kept");
+    }
+
+    // --- HeadingsOutline tests ---
+
+    fn outline_rows(file: &str, source: &str) -> Vec<(usize, usize)> {
+        let tree = parse(source);
+        collectable_outline_rows(&PathBuf::from(file), &tree, source)
+    }
+
+    /// README with H1 + 4 H2s. Outline collects only the H2 rows; the
+    /// H1 row stays under `ReadmeHeadline`.
+    #[test]
+    fn markdown_outline_strips_readme_h1() {
+        let src = "# Project\n\
+                   \n\
+                   Tagline paragraph.\n\
+                   \n\
+                   ## Install\n\
+                   \n\
+                   prose\n\
+                   \n\
+                   ## Usage\n\
+                   \n\
+                   prose\n\
+                   \n\
+                   ## API\n\
+                   \n\
+                   prose\n\
+                   \n\
+                   ## License\n\
+                   \n\
+                   prose\n";
+        let rows = outline_rows("README.md", src);
+        let starts: Vec<usize> = rows.iter().map(|(s, _)| *s).collect();
+        assert_eq!(
+            starts,
+            vec![5, 9, 13, 17],
+            "outline must collect only H2 rows"
+        );
+    }
+
+    /// Setext H2 (`-----` underline) covers two source rows; outline
+    /// includes both.
+    #[test]
+    fn markdown_outline_setext_h2_two_rows() {
+        let src = "# Project\n\
+                   \n\
+                   Tagline.\n\
+                   \n\
+                   First section\n\
+                   -------------\n\
+                   \n\
+                   body\n\
+                   \n\
+                   Second section\n\
+                   --------------\n\
+                   \n\
+                   body\n";
+        let rows = outline_rows("README.md", src);
+        assert_eq!(
+            rows,
+            vec![(5, 6), (10, 11)],
+            "setext H2 outline rows include the underline"
+        );
+    }
+
+    /// File with only H4 headings. `heading_level` returns 4, so the
+    /// outline collects no rows — emission is skipped, downstream
+    /// `Section` batches keep their existing predecessor.
+    #[test]
+    fn markdown_outline_h4_only_collects_nothing() {
+        let src = "#### Subsubsection A\n\
+                   \n\
+                   body A\n\
+                   \n\
+                   #### Subsubsection B\n\
+                   \n\
+                   body B\n";
+        let rows = outline_rows("docs/page.md", src);
+        assert!(
+            rows.is_empty(),
+            "outline must not include H4+; got {rows:?}"
+        );
+    }
+
+    /// `collectable_outline_rows` returns every row regardless of cap;
+    /// the count + byte caps are enforced by `outline_emits_for` at
+    /// the `expand` site.
+    #[test]
+    fn markdown_outline_above_count_cap_gated_by_outline_emits_for() {
+        let mut src = String::from("# Big File\n\nIntro.\n\n");
+        for i in 0..(MAX_OUTLINE_HEADINGS + 5) {
+            src.push_str(&format!("## Section {i}\n\nbody.\n\n"));
+        }
+        let rows = outline_rows("README.md", &src);
+        assert_eq!(rows.len(), MAX_OUTLINE_HEADINGS + 5);
+        assert!(!outline_emits_for(&rows, &src));
+    }
+
+    /// Long heading lines can exceed the byte cap even when the row
+    /// count is safe. The codex adversarial review of v0.2's outline
+    /// flagged this exact failure mode (5 100-char H2s would otherwise
+    /// pass the count cap but produce a ~500-token outline that becomes
+    /// a hard predecessor for every section).
+    #[test]
+    fn markdown_outline_byte_cap_catches_long_headings() {
+        let long = "x".repeat(400);
+        let src = format!(
+            "# Title\n\nIntro.\n\n## {long}\n\nbody.\n\n## {long}\n\nbody.\n\n## {long}\n\nbody.\n\n## {long}\n\nbody.\n",
+        );
+        let rows = outline_rows("README.md", &src);
+        assert!(rows.len() <= MAX_OUTLINE_HEADINGS);
+        assert!(
+            !outline_emits_for(&rows, &src),
+            "byte cap must reject long-heading outlines"
+        );
+    }
+
+    /// cmdk shape: H1 with badge tail + 3 H2s. Headline truncates row
+    /// 1 to drop the badges; outline must skip row 1 so the headline's
+    /// `Render::Truncated` isn't overridden.
+    #[test]
+    fn markdown_outline_preserves_cmdk_headline_truncation() {
+        let src = "# cmdk [![badge1](https://example/b1.svg)](https://example/r1) [![badge2](https://example/b2.svg)](https://example/r2)\n\
+                   \n\
+                   The actual tagline content.\n\
+                   \n\
+                   ## Install\n\
+                   \n\
+                   body\n\
+                   \n\
+                   ## Use\n\
+                   \n\
+                   body\n\
+                   \n\
+                   ## Parts\n\
+                   \n\
+                   body\n";
+        let rows = outline_rows("README.md", src);
+        let starts: Vec<usize> = rows.iter().map(|(s, _)| *s).collect();
+        assert!(
+            !starts.contains(&1),
+            "outline must not claim H1 row; would override headline truncation. got {starts:?}"
+        );
+        assert_eq!(starts, vec![5, 9, 13]);
     }
 }

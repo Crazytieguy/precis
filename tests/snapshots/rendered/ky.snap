@@ -80,53 +80,6 @@ readme.md
     29→- Instances with custom defaults
     30→- Hooks
     31→- TypeScript niceties (e.g. `.json()` supports generics and defaults to `unknown`, not `any`)
-    33→## Install
-    35→```sh
-    36→npm install ky
-    37→```
-    39→###### CDN
-    41→- [jsdelivr](https://cdn.jsdelivr.net/npm/ky/+esm)
-    42→- [unpkg](https://unpkg.com/ky)
-    43→- [esm.sh](https://esm.sh/ky)
-    45→## Usage
-    47→```js
-    48→import ky from 'ky';
-    50→const json = await ky.post('https://example.com', {json: {foo: true}}).json();
-    52→console.log(json);
-    53→//=> {data: '🦄'}
-    54→```
-    56→With plain `fetch`, it would be:
-    58→```js
-    59→class HTTPError extends Error {}
-    61→const response = await fetch('https://example.com', {
-    62→	method: 'POST',
-    63→	body: JSON.stringify({foo: true}),
-    64→	headers: {
-    65→		'content-type': 'application/json'
-    66→	}
-    67→});
-    69→if (!response.ok) {
-    70→	throw new HTTPError(`Fetch error: ${response.statusText}`);
-    71→}
-    73→const json = await response.json();
-    75→console.log(json);
-    76→//=> {data: '🦄'}
-    77→```
-    79→If you are using [Deno](https://github.com/denoland/deno), import Ky from a URL. For example, using a CDN:
-    81→```js
-    82→import ky from 'https://esm.sh/ky';
-    83→```
-    1339→## Browser support
-    1341→The latest version of Chrome, Firefox, and Safari.
-    1343→## Node.js support
-    1345→Node.js 18 and later.
-    1347→## Related
-    1349→- [fetch-extras](https://github.com/sindresorhus/fetch-extras) - Useful utilities for working with Fetch
-    1350→- [ky-hooks-change-case](https://github.com/alice-health/ky-hooks-change-case) - Ky hooks to modify cases on requests and responses of objects
-    1352→## Maintainers
-    1354→- [Sindre Sorhus](https://github.com/sindresorhus)
-    1355→- [Seth Holladay](https://github.com/sholladay)
-    1356→- [Szymon Marczak](https://github.com/szmarczak)
 source/
     core/
         Ky.ts
@@ -222,7 +175,17 @@ source/
             90→export const streamResponse = (response: Response, onDownloadProgress: Options['onDownloadProgress']) => {
             …
             119→export const streamRequest = (request: Request, onUploadProgress: Options['onUploadProgress'], originalBody?: BodyInit | null) => {
-            …
+            120→	if (!request.body) {
+            121→		return request;
+            122→	}
+            124→	// Use original body for size calculation since request.body is already a stream
+            125→	const totalBytes = getBodySize(originalBody ?? request.body);
+            127→	return new Request(request, {
+            128→		// @ts-expect-error - Types are outdated.
+            129→		duplex: 'half',
+            130→		body: withProgress(request.body, totalBytes, onUploadProgress),
+            131→	});
+            132→};
         delay.ts
             5→export type DelayOptions = {
             6→	signal?: InternalOptions['signal'];
@@ -235,6 +198,26 @@ source/
         is.ts
             2→export const isObject = (value: unknown): value is object => value !== null && typeof value === 'object';
         merge.ts
+            6→export const validateAndMerge = (...sources: Array<Partial<Options> | undefined>): Partial<Options> => {
+            7→	for (const source of sources) {
+            8→		if ((!isObject(source) || Array.isArray(source)) && source !== undefined) {
+            9→			throw new TypeError('The `options` argument must be an object');
+            10→		}
+            11→	}
+            13→	return deepMerge({}, ...sources);
+            14→};
+            16→export const mergeHeaders = (source1: KyHeadersInit = {}, source2: KyHeadersInit = {}) => {
+            …
+            38→export const mergeHooks = (original: Hooks = {}, incoming: Hooks = {}): Required<Hooks> => (
+            39→	{
+            40→		beforeRequest: newHookValue(original, incoming, 'beforeRequest'),
+            41→		beforeRetry: newHookValue(original, incoming, 'beforeRetry'),
+            42→		afterResponse: newHookValue(original, incoming, 'afterResponse'),
+            43→		beforeError: newHookValue(original, incoming, 'beforeError'),
+            44→	}
+            45→);
+            86→export const deepMerge = <T>(...sources: Array<Partial<T> | undefined>): T => {
+            …
         normalize.ts
             5→export const normalizeRequestMethod = (input: string): string =>
             6→	requestMethods.includes(input as RequestHttpMethod) ? input.toUpperCase() : input;
