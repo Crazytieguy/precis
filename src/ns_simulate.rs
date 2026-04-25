@@ -66,6 +66,17 @@ pub enum Violation {
         line: usize,
         pattern: String,
     },
+    /// Truncated render's pattern matches enough of the line that the
+    /// rendered `<match>…` is no shorter (in tokens) than the full line —
+    /// truncation saves nothing. Pattern should drop the meaningful tail;
+    /// if there is no meaningful tail, use `Render::Full` instead.
+    TruncationSavesNothing {
+        path: PathBuf,
+        line: usize,
+        pattern: String,
+        full_tokens: usize,
+        truncated_tokens: usize,
+    },
     /// Fs group's parent or listed child doesn't exist.
     FsResolveFailed(String),
     /// A span would overwrite a line owned by a non-ancestor batch.
@@ -150,15 +161,21 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Result<SimulationRepo
         // Pre-validate Lines content. Fs-content failures surface as
         // FsResolveFailed below via `resolve_content`. If any span fails
         // validation, skip cost/apply — render would panic on bad spans.
-        let had_span_error = if let BatchContent::Lines { spans } = &ns_batch.content {
+        // Render-blocking span errors (out-of-range, bad regex, intra-
+        // batch overlap, missing file) prevent applying the batch to the
+        // tree at all — skip cost/apply, mark it dead. Quality-only
+        // violations (e.g. `TruncationSavesNothing`) still let the batch
+        // render fine; record them but keep the batch in the simulation
+        // so successors don't see false-positive `PredecessorMissing`.
+        let had_render_blocking_error = if let BatchContent::Lines { spans } = &ns_batch.content {
             let span_v = validate_spans(spans, fixture_root, &source_cache);
-            let any = !span_v.is_empty();
+            let blocking = span_v.iter().any(is_render_blocking);
             violations.extend(span_v);
-            any
+            blocking
         } else {
             false
         };
-        if had_span_error {
+        if had_render_blocking_error {
             batches_out.push(skipped_batch(ns_batch, cumulative, violations));
             continue;
         }
@@ -233,6 +250,18 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Result<SimulationRepo
         total_tokens: cumulative,
         largest_batch: largest,
     })
+}
+
+fn is_render_blocking(v: &Violation) -> bool {
+    matches!(
+        v,
+        Violation::SpanFileMissing(_)
+            | Violation::SpanInvertedRange { .. }
+            | Violation::SpanOutOfRange { .. }
+            | Violation::RegexInvalid { .. }
+            | Violation::RegexNoMatch { .. }
+            | Violation::OverlappingSpans { .. }
+    )
 }
 
 /// Record for an NS batch whose cost/apply was skipped — either because
@@ -310,11 +339,24 @@ fn validate_spans(spans: &[Span], fixture_root: &Path, cache: &SourceCache) -> V
             for ln in span.start..=span.end {
                 let line = src_lines[ln - 1];
                 let m = re.find(line);
-                if m.is_none() || m.is_some_and(|m| m.as_str().is_empty()) {
+                let Some(m) = m.filter(|m| !m.as_str().is_empty()) else {
                     out.push(Violation::RegexNoMatch {
                         path: span.path.clone(),
                         line: ln,
                         pattern: pattern.clone(),
+                    });
+                    continue;
+                };
+                let full_tokens = crate::tokenizer::count(line);
+                let truncated_tokens =
+                    crate::tokenizer::count(&format!("{}…", m.as_str()));
+                if truncated_tokens >= full_tokens {
+                    out.push(Violation::TruncationSavesNothing {
+                        path: span.path.clone(),
+                        line: ln,
+                        pattern: pattern.clone(),
+                        full_tokens,
+                        truncated_tokens,
                     });
                 }
             }

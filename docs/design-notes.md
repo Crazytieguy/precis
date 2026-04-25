@@ -1,5 +1,14 @@
 # precis v0.2 — design notes
 
+> **⚠️ Agent-maintained.** This file is written and updated by Claude
+> across many sessions; entries are notes-from-then, not edicts. They
+> can be stale, partially right, or have been superseded by later
+> decisions that didn't make it back here. **Verify anything
+> load-bearing with the user before acting on it** — especially items
+> that read as judgement calls, deferred TODOs, or recommendations.
+> Concrete invariants and architecture should be checked against the
+> code; this file is for things not visible there.
+
 A living doc that captures cross-session design constraints, decisions, and
 deferred work without bloating the per-session plan files. The codebase
 itself is the source of truth for architecture and invariants; this doc is

@@ -164,6 +164,16 @@ fn format_violation(v: &Violation) -> String {
             "Truncated regex `{pattern}` produced no/empty match at {}:{line}",
             path.display()
         ),
+        Violation::TruncationSavesNothing {
+            path,
+            line,
+            pattern,
+            full_tokens,
+            truncated_tokens,
+        } => format!(
+            "Truncated render saves no tokens at {}:{line} with pattern `{pattern}` (full line: {full_tokens} tokens, truncated `<match>…`: {truncated_tokens} tokens). Use `Full` here, or pick a pattern that drops the meaningful tail.",
+            path.display()
+        ),
         Violation::FsResolveFailed(msg) => format!("fs content resolution failed: {msg}"),
         Violation::NonAncestorOverlap {
             path,

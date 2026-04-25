@@ -70,19 +70,11 @@ more content exists at those line positions.
 
 Examples of cheap batches that mitigate catastrophic-omission risk:
 
-- **Location batches** — the *name only* of every top-level public
-  item (function, type, class, interface, trait, exported const,
-  etc.) in a file. One span per item's first line, with a `Render`
-  shape that drops the noisy tail: `Truncated { pattern = "^[^(]+" }`
-  for function signatures, `Truncated { pattern = "^[^{]+" }` for
-  type/class headers, or `Full` for one-line items where there is no
-  meaningful tail to drop. Listing only some items implies the
-  unlisted ones don't exist; always show them all together. **Default
-  expectation:** any file with three or more top-level public items
-  earns a names-only location batch, ranked in tier 1 or early tier 2
-  ahead of the per-item body batches. Per-item bodies that follow can
-  carry the names batch as their `predecessor` and override the
-  truncated lines with `Full` content.
+- **Location batches** — the *name only* of every public function in
+  a file (one truncated span per fn's first line, truncating at the
+  opening paren with a `^[^(]+` regex pattern). Listing only some
+  items implies the unlisted ones don't exist; always show them all
+  together.
 - **All H2 heading locations** in a markdown file, without section
   bodies — tells the agent what sections exist.
 
