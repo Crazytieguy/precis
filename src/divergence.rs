@@ -624,6 +624,7 @@ fn format_arrival_ledger(out: &mut String, ctx: &BuildCtx, arrivals: &[Arrival])
         exp_t: usize,
         descriptor: &'a str,
         arrival: &'a Arrival,
+        ns_row: &'a NsRow,
     }
     let mut rows: Vec<Row<'_>> = ctx
         .ns_rows
@@ -635,6 +636,7 @@ fn format_arrival_ledger(out: &mut String, ctx: &BuildCtx, arrivals: &[Arrival])
             exp_t: ns_row.exp_t,
             descriptor: &ctx.ns.batches[i].descriptor,
             arrival,
+            ns_row,
         })
         .collect();
     rows.sort_by(|a, b| numeric_id_cmp(a.id, b.id));
@@ -654,8 +656,12 @@ fn format_arrival_ledger(out: &mut String, ctx: &BuildCtx, arrivals: &[Arrival])
         return;
     }
     out.push_str("\n## Arrival ledger (non-aligned or partial-credit NS batches)\n\n");
-    out.push_str("| id | exp_t | reached_t | delta_t | credit | status | descriptor |\n");
-    out.push_str("|----|------:|----------:|--------:|-------:|:-------|:-----------|\n");
+    out.push_str(
+        "| id | exp_t | reached_t | delta_t | credit | status | descriptor | nearby walker batch |\n",
+    );
+    out.push_str(
+        "|----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|\n",
+    );
     for r in &interesting {
         let (reached_cell, delta_cell) = match r.arrival.reached_t {
             Some(t) => {
@@ -670,10 +676,70 @@ fn format_arrival_ledger(out: &mut String, ctx: &BuildCtx, arrivals: &[Arrival])
         } else {
             r.arrival.status.label().to_string()
         };
+        let hint_cell = nearby_walker_batch_cell(r.ns_row, &ctx.walker_rows, &ctx.fixture_root);
         out.push_str(&format!(
-            "| {} | {} | {reached_cell} | {delta_cell} | {:.2} | {status_cell} | {} |\n",
+            "| {} | {} | {reached_cell} | {delta_cell} | {:.2} | {status_cell} | {} | {hint_cell} |\n",
             r.id, r.exp_t, r.arrival.credit, r.descriptor,
         ));
+    }
+}
+
+/// "Nearby" walker batch for an NS row: the walker batch with the most
+/// rendered atoms whose `(path, line)` falls inside the per-file bounding
+/// box of the NS row's expected line atoms. Surfaces shape-mismatch cases
+/// where the walker emitted a parent batch (e.g. a class declaration) that
+/// covers the file region the NS asked about, even though the specific
+/// lines didn't intersect (e.g. NS asked for a method body whose lines
+/// the walker elides). Returns an empty string when no walker batch has
+/// any atom inside the NS row's per-file bbox, or when the NS row has no
+/// line atoms (Fs-only batches).
+fn nearby_walker_batch_cell(
+    ns_row: &NsRow,
+    walker_rows: &[WalkerRow<'_>],
+    fixture_root: &Path,
+) -> String {
+    let mut ns_box: BTreeMap<PathBuf, (usize, usize)> = BTreeMap::new();
+    for ga in &ns_row.atoms {
+        if let Atom::Line { path, line } = &ga.atom {
+            ns_box
+                .entry(path.clone())
+                .and_modify(|(lo, hi)| {
+                    *lo = (*lo).min(*line);
+                    *hi = (*hi).max(*line);
+                })
+                .or_insert((*line, *line));
+        }
+    }
+    if ns_box.is_empty() {
+        return String::new();
+    }
+
+    let mut best: Option<(&WalkerRow<'_>, usize)> = None;
+    for wr in walker_rows {
+        let mut count = 0;
+        for wa in &wr.atoms {
+            if let Atom::Line { path, line } = &wa.atom
+                && let Some((lo, hi)) = ns_box.get(path)
+                && *lo <= *line
+                && *line <= *hi
+            {
+                count += 1;
+            }
+        }
+        if count == 0 {
+            continue;
+        }
+        match best {
+            Some((_, prev)) if prev >= count => {}
+            _ => best = Some((wr, count)),
+        }
+    }
+    match best {
+        Some((wr, count)) => {
+            let desc = strip_fixture_root(&wr.batch.descriptor, fixture_root);
+            format!("{desc} (t={}, {count} atoms)", wr.seen_t)
+        }
+        None => String::new(),
     }
 }
 

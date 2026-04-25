@@ -11,52 +11,52 @@ scores: Sim=0.285 Reached=12/45 Early=4 Late=7 Partial=7 Missing=26 Used=9961/10
 
 ## Arrival ledger (non-aligned or partial-credit NS batches)
 
-| id | exp_t | reached_t | delta_t | credit | status | descriptor |
-|----|------:|----------:|--------:|-------:|:-------|:-----------|
-| 1.1 | 71 | — | — | 0.00 | missing | README lede + tagline |
-| 1.2 | 151 | — | — | 0.00 | missing | package.json identity fields |
-| 1.3 | 223 | — | — | 0.67 | partial | src/index.ts — full public re-export surface |
-| 1.4 | 271 | 48 | -223 | 1.00 | early | Repo root listing |
-| 1.5 | 364 | 1839 | +1475 | 1.00 | late | src/ + src/types/ + src/internals/ listings |
-| 1.6 | 434 | 1783 | +1349 | 1.00 | late | README features — data structures + typesafety |
-| 1.7 | 546 | 1783 | +1237 | 1.00 | late | README features — patterns, wildcards, predicates, bundle |
-| 2.1 | 603 | — | — | 0.60 | partial | match() exported signature |
-| 2.3 | 772 | — | — | 0.00 | missing | MatchExpression — method-name catalog |
-| 2.4 | 981 | 7486 | +6505 | 1.00 | late | match() JSDoc |
-| 2.5 | 1115 | — | — | 0.00 | missing | MatchExpression class doc + constructor |
-| 2.6 | 1278 | — | — | 0.36 | missing | match.ts imports + MatchState/unmatched |
-| 2.7 | 1489 | — | — | 0.00 | missing | MatchExpression.with — argument parsing half |
-| 2.8 | 1764 | — | — | 0.00 | missing | MatchExpression.with — selection + dispatch half |
-| 2.9 | 2017 | — | — | 0.00 | missing | MatchExpression.when / otherwise / exhaustive bodies |
-| 2.10 | 2115 | — | — | 0.00 | missing | MatchExpression.run / returnType / narrow + defaultCatcher |
-| 2.11 | 2477 | — | — | 0.61 | partial | isMatching — JSDoc + PatternConstraint helper |
-| 2.12 | 2851 | — | — | 0.53 | partial | isMatching — JSDoc for two-arg + runtime body |
-| 2.13 | 3005 | — | — | 0.40 | missing | NonExhaustiveError class |
-| 3.1 | 3161 | — | — | 0.67 | partial | P module-doc + combinator-function name catalog |
-| 3.2 | 3350 | 8773 | +5423 | 1.00 | late | P wildcards — every const definition |
-| 3.3 | 3422 | 8796 | +5374 | 1.00 | late | P type-level re-exports + matcher symbol |
-| 3.4 | 3482 | — | — | 0.00 | missing | P.string predicates — name catalog |
-| 3.5 | 3560 | — | — | 0.00 | missing | P.number / P.bigint predicates — name catalog |
-| 3.6 | 3780 | — | — | 0.24 | missing | P.union — JSDoc + signature |
-| 3.7 | 3971 | — | — | 0.25 | missing | P.not — JSDoc + signature |
-| 3.8 | 4233 | — | — | 0.45 | missing | P.when — JSDoc + both overload signatures |
-| 3.9 | 4659 | — | — | 0.69 | partial | P.select — JSDoc + all three overload signatures |
-| 3.10 | 4865 | — | — | 0.33 | missing | P.array — JSDoc + overload signatures |
-| 3.11 | 5071 | — | — | 0.38 | missing | P.optional — JSDoc + signature |
-| 3.12 | 5524 | — | — | 0.19 | missing | P.intersection / P.instanceOf — JSDoc + signatures |
-| 3.13 | 5846 | — | — | 0.50 | partial | P.record — JSDoc + signatures |
-| 3.14 | 6315 | — | — | 0.33 | missing | P.map / P.set — JSDoc + signatures |
-| 3.15 | 6498 | 8973 | +2475 | 0.93 | late | P.shape + matcher protocol re-exports |
-| 3.16 | 6988 | — | — | 0.00 | missing | chainable() factory + variadic / arrayChainable |
-| 3.17 | 7489 | — | — | 0.13 | missing | P.union / P.not / P.when — full bodies |
-| 4.1 | 7838 | 4966 | -2872 | 1.00 | early | tests/ + docs/ + examples/ listings |
-| 4.2 | 7921 | — | — | 0.12 | missing | Match<i, o> — public builder type signature |
-| 4.3 | 8414 | — | — | 0.00 | missing | Pattern<T> — public pattern type alias + typed wildcards |
-| 4.4 | 8718 | — | — | 0.00 | missing | MatcherType union + Matcher interface |
-| 4.5 | 8816 | 3715 | -5101 | 1.00 | early | internals/symbols.ts — core matcher / unset / isVariadic brands |
-| 4.6 | 9151 | — | — | 0.03 | missing | matchPattern() — Matcher / object / primitive branches |
-| 4.7 | 9767 | — | — | 0.00 | missing | matchPattern() — array / tuple / variadic branch |
-| 4.8 | 9976 | 1459 | -8517 | 0.82 | early | getSelectionKeys() + flatMap helpers |
+| id | exp_t | reached_t | delta_t | credit | status | descriptor | nearby walker batch |
+|----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
+| 1.1 | 71 | — | — | 0.00 | missing | README lede + tagline |  |
+| 1.2 | 151 | — | — | 0.00 | missing | package.json identity fields |  |
+| 1.3 | 223 | — | — | 0.67 | partial | src/index.ts — full public re-export surface | imports in src/index.ts (t=838, 3 atoms) |
+| 1.4 | 271 | 48 | -223 | 1.00 | early | Repo root listing |  |
+| 1.5 | 364 | 1839 | +1475 | 1.00 | late | src/ + src/types/ + src/internals/ listings |  |
+| 1.6 | 434 | 1783 | +1349 | 1.00 | late | README features — data structures + typesafety | README.md section #1 (t=1783, 3 atoms) |
+| 1.7 | 546 | 1783 | +1237 | 1.00 | late | README features — patterns, wildcards, predicates, bundle | README.md section #1 (t=1783, 5 atoms) |
+| 2.1 | 603 | — | — | 0.60 | partial | match() exported signature | export at src/match.ts:32 (t=389, 4 atoms) |
+| 2.3 | 772 | — | — | 0.00 | missing | MatchExpression — method-name catalog |  |
+| 2.4 | 981 | 7486 | +6505 | 1.00 | late | match() JSDoc | export doc at src/match.ts:32 (t=7486, 16 atoms) |
+| 2.5 | 1115 | — | — | 0.00 | missing | MatchExpression class doc + constructor |  |
+| 2.6 | 1278 | — | — | 0.36 | missing | match.ts imports + MatchState/unmatched | imports in src/match.ts (t=4668, 5 atoms) |
+| 2.7 | 1489 | — | — | 0.00 | missing | MatchExpression.with — argument parsing half |  |
+| 2.8 | 1764 | — | — | 0.00 | missing | MatchExpression.with — selection + dispatch half |  |
+| 2.9 | 2017 | — | — | 0.00 | missing | MatchExpression.when / otherwise / exhaustive bodies |  |
+| 2.10 | 2115 | — | — | 0.00 | missing | MatchExpression.run / returnType / narrow + defaultCatcher |  |
+| 2.11 | 2477 | — | — | 0.61 | partial | isMatching — JSDoc + PatternConstraint helper | export doc at src/is-matching.ts:32 (t=4593, 15 atoms) |
+| 2.12 | 2851 | — | — | 0.53 | partial | isMatching — JSDoc for two-arg + runtime body | export doc at src/is-matching.ts:48 (t=3868, 13 atoms) |
+| 2.13 | 3005 | — | — | 0.40 | missing | NonExhaustiveError class | export doc at src/errors.ts:5 (t=880, 4 atoms) |
+| 3.1 | 3161 | — | — | 0.67 | partial | P module-doc + combinator-function name catalog | export names surface in src/patterns.ts (t=8773, 77 atoms) |
+| 3.2 | 3350 | 8773 | +5423 | 1.00 | late | P wildcards — every const definition | export names surface in src/patterns.ts (t=8773, 19 atoms) |
+| 3.3 | 3422 | 8796 | +5374 | 1.00 | late | P type-level re-exports + matcher symbol | export names surface in src/patterns.ts (t=8773, 10 atoms) |
+| 3.4 | 3482 | — | — | 0.00 | missing | P.string predicates — name catalog |  |
+| 3.5 | 3560 | — | — | 0.00 | missing | P.number / P.bigint predicates — name catalog |  |
+| 3.6 | 3780 | — | — | 0.24 | missing | P.union — JSDoc + signature | export at src/patterns.ts:572 (t=9901, 4 atoms) |
+| 3.7 | 3971 | — | — | 0.25 | missing | P.not — JSDoc + signature | export at src/patterns.ts:611 (t=9273, 4 atoms) |
+| 3.8 | 4233 | — | — | 0.45 | missing | P.when — JSDoc + both overload signatures | export at src/patterns.ts:637 (t=9153, 6 atoms) |
+| 3.9 | 4659 | — | — | 0.69 | partial | P.select — JSDoc + all three overload signatures | export at src/patterns.ts:673 (t=9856, 13 atoms) |
+| 3.10 | 4865 | — | — | 0.33 | missing | P.array — JSDoc + overload signatures | export at src/patterns.ts:242 (t=9016, 4 atoms) |
+| 3.11 | 5071 | — | — | 0.38 | missing | P.optional — JSDoc + signature | export at src/patterns.ts:187 (t=9961, 6 atoms) |
+| 3.12 | 5524 | — | — | 0.19 | missing | P.intersection / P.instanceOf — JSDoc + signatures | export names surface in src/patterns.ts (t=8773, 41 atoms) |
+| 3.13 | 5846 | — | — | 0.50 | partial | P.record — JSDoc + signatures | export at src/patterns.ts:437 (t=9419, 8 atoms) |
+| 3.14 | 6315 | — | — | 0.33 | missing | P.map / P.set — JSDoc + signatures | export names surface in src/patterns.ts (t=8773, 8 atoms) |
+| 3.15 | 6498 | 8973 | +2475 | 0.93 | late | P.shape + matcher protocol re-exports | export names surface in src/patterns.ts (t=8773, 76 atoms) |
+| 3.16 | 6988 | — | — | 0.00 | missing | chainable() factory + variadic / arrayChainable |  |
+| 3.17 | 7489 | — | — | 0.13 | missing | P.union / P.not / P.when — full bodies | export names surface in src/patterns.ts (t=8773, 8 atoms) |
+| 4.1 | 7838 | 4966 | -2872 | 1.00 | early | tests/ + docs/ + examples/ listings |  |
+| 4.2 | 7921 | — | — | 0.12 | missing | Match<i, o> — public builder type signature | export names surface in src/types/Match.ts (t=1953, 2 atoms) |
+| 4.3 | 8414 | — | — | 0.00 | missing | Pattern<T> — public pattern type alias + typed wildcards |  |
+| 4.4 | 8718 | — | — | 0.00 | missing | MatcherType union + Matcher interface |  |
+| 4.5 | 8816 | 3715 | -5101 | 1.00 | early | internals/symbols.ts — core matcher / unset / isVariadic brands | export names surface in src/internals/symbols.ts (t=3715, 8 atoms) |
+| 4.6 | 9151 | — | — | 0.03 | missing | matchPattern() — Matcher / object / primitive branches | export names surface in src/internals/helpers.ts (t=1226, 2 atoms) |
+| 4.7 | 9767 | — | — | 0.00 | missing | matchPattern() — array / tuple / variadic branch |  |
+| 4.8 | 9976 | 1459 | -8517 | 0.82 | early | getSelectionKeys() + flatMap helpers | export at src/internals/helpers.ts:120 (t=1459, 10 atoms) |
 
 ## Walker waste (off-NS token spend ≥ 50)
 
