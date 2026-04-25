@@ -88,12 +88,22 @@ pub struct Span {
 /// How to render a line.
 ///
 /// - `Full`: emit the source line verbatim, with its line-number prefix.
+///   Use this when the line is itself the content (a signature, a header,
+///   a one-liner). When in doubt, `Full` is the right choice.
 /// - `Truncated { pattern }`: emit only the regex match of `pattern`
 ///   against the source line, followed by a trailing `…`. The pattern
 ///   must match at least one character on every line the span covers.
-/// - `Ellipsis`: emit a bare `…` marker at that line, with no line
+///   The point is to *drop the meaningful tail* of the line — only use
+///   when the match is materially shorter than the full line (e.g. show
+///   `pub fn foo` from `pub fn foo(arg: Type) -> Result<…>`). If the
+///   pattern matches all or most of the line, use `Full` instead;
+///   `Truncated` saves no tokens there and reads as misuse.
+/// - `Ellipsis`: emit a bare `…` marker at one line, with no line
 ///   number and no content. A later batch can replace it with `Full`
-///   or `Truncated` at the same `(path, line)`.
+///   or `Truncated` at the same `(path, line)`. **Single-line only**:
+///   `start` and `end` must be equal. A multi-line `Ellipsis` span
+///   renders as one `…` marker at `start` and produces nothing for the
+///   remaining lines — almost certainly not what the author intended.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "kind", rename_all = "lowercase")]
 pub enum Render {
