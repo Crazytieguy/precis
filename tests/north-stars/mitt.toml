@@ -1,0 +1,1003 @@
+fixture = "mitt"
+revision_pin = "6b416705"
+summary = """
+Mitt is a tiny (~200b gzipped) functional event-emitter / pubsub library
+written in TypeScript. The whole implementation lives in a single file
+(`src/index.ts`) exposing a default `mitt<Events>()` factory plus the
+type aliases `EventType`, `Handler`, `WildcardHandler`,
+`EventHandlerList`, `WildCardEventHandlerList`, `EventHandlerMap`, and
+the `Emitter<Events>` interface. The factory returns an object with
+`all` (a `Map` of handler arrays keyed by event type), `on`, `off`, and
+`emit`. A `'*'` wildcard event type fires for every emit. Tests live in
+`test/index_test.ts` (mocha + chai + sinon) and a type-only compilation
+test in `test/test-types-compilation.ts`. Repo is small, browser-targeted
+(no `this`-binding, IE9+), bundled by microbundle, linted by ESLint.
+
+Likely query distribution: explaining the API; copy-paste usage; reading
+or modifying the `on`/`off`/`emit` body (e.g. memory-leak analysis of
+`off("type")` stashing `[]`, splice trick `>>> 0`, slice-before-iterate
+re-entrancy guard, `'*'`-after-typed dispatch order); deriving generic
+event types; build/test tool config.
+"""
+
+# ---------- Tier 1: repo orientation ----------
+
+[[batches]]
+id = "1.1"
+descriptor = "Top-level fixture listing"
+justification = """
+First touch: every immediate child of the repo root. Grounds the agent in
+what files exist at all so subsequent batches don't imply omitted classes.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "."
+entries = "all"
+
+[[batches]]
+id = "1.2"
+descriptor = "README title + tagline"
+justification = """
+H1 plus tagline: tells the agent what mitt *is* (tiny functional event
+emitter / pubsub) in two lines. Cheapest possible semantic anchor; the
+agent can answer "what does this library do" with no follow-up.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 9
+end = 11
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "1.3"
+descriptor = "src/ and test/ listings"
+justification = """
+The two source directories. Tiny but reveals that the entire impl is one
+file (`src/index.ts`) and that there are exactly two test files — without
+this an agent might assume more files exist. Pure breadth.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "src"
+entries = "all"
+[[batches.content.groups]]
+parent = "test"
+entries = "all"
+
+[[batches]]
+id = "1.4"
+descriptor = "package.json identity (name, version, description)"
+justification = """
+The npm-facing identity in three lines. Common "what is this package"
+lookup answered without paying for bundler config (deferred to tier 5).
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "package.json"
+start = 2
+end = 4
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "1.5"
+descriptor = "README H2 section locations"
+justification = """
+The H2s show what the README documents (Install, Usage, Examples,
+API, Contribute, License). Truncated to heading text only — pure
+"locations" batch so the agent knows what's available without paying
+for prose. Mitigates catastrophic omission of documented sections.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 30
+end = 30
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^## .+"
+[[batches.content.spans]]
+path = "README.md"
+start = 56
+end = 56
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^## .+"
+[[batches.content.spans]]
+path = "README.md"
+start = 113
+end = 113
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^## .+"
+[[batches.content.spans]]
+path = "README.md"
+start = 123
+end = 123
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^## .+"
+[[batches.content.spans]]
+path = "README.md"
+start = 179
+end = 179
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^## .+"
+[[batches.content.spans]]
+path = "README.md"
+start = 203
+end = 203
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^## .+"
+
+# ---------- Tier 2: public API surface ----------
+
+[[batches]]
+id = "2.1"
+descriptor = "src/index.ts exported names (locations only)"
+justification = """
+Every top-level `export` line in `src/index.ts`, truncated to the
+declaration head. Pure locations batch — tells the agent the complete
+public surface (all 7 named type exports + the default export) without
+paying for type bodies. Catastrophic-omission hedge: any later partial
+tier-2 batch could otherwise imply unlisted exports don't exist.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/index.ts"
+start = 1
+end = 1
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^export type [A-Za-z]+"
+[[batches.content.spans]]
+path = "src/index.ts"
+start = 5
+end = 5
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^export type [A-Za-z]+"
+[[batches.content.spans]]
+path = "src/index.ts"
+start = 6
+end = 6
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^export type [A-Za-z]+"
+[[batches.content.spans]]
+path = "src/index.ts"
+start = 12
+end = 12
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^export type [A-Za-z]+"
+[[batches.content.spans]]
+path = "src/index.ts"
+start = 13
+end = 13
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^export type [A-Za-z]+"
+[[batches.content.spans]]
+path = "src/index.ts"
+start = 18
+end = 18
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^export type [A-Za-z]+"
+[[batches.content.spans]]
+path = "src/index.ts"
+start = 23
+end = 23
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^export interface [A-Za-z]+"
+[[batches.content.spans]]
+path = "src/index.ts"
+start = 46
+end = 46
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "^export default function [a-z]+"
+
+[[batches]]
+id = "2.2"
+descriptor = "Emitter<Events> interface — header + `all` field"
+justification = """
+The interface header + the `all` field type. Anchors the public contract:
+mitt's runtime instance is an `Emitter<Events>` whose `all` is the
+backing `EventHandlerMap`. Method signatures land in the next batches.
+"""
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/index.ts"
+start = 23
+end = 25
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "2.3"
+descriptor = "Emitter.on / Emitter.off / Emitter.emit overload signatures"
+justification = """
+The full set of typed-overload signatures for the three core methods on
+`Emitter<Events>`: typed-key + `'*'` overloads for `on`/`off`, and the
+two `emit` overloads (one mandatory event, one for `undefined`-tolerant
+keys). Together with 2.2 this is the entire public method contract — an
+agent answering "how do I call X" gets a zero-follow-up answer.
+"""
+predecessor = "2.2"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/index.ts"
+start = 26
+end = 39
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "2.4"
+descriptor = "mitt() factory signature + jsdoc"
+justification = """
+Default-export factory signature with its jsdoc, including the optional
+`all` map argument that lets callers pre-seed handlers. Pairs with the
+Emitter interface to fully define the public type surface.
+"""
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/index.ts"
+start = 41
+end = 48
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "2.5"
+descriptor = "EventType, Handler, WildcardHandler aliases"
+justification = """
+The atomic type aliases an Events generic is built out of: union of
+`string | symbol` for keys; `Handler<T>` for typed handlers;
+`WildcardHandler<T>` for `'*'` handlers receiving `(type, event)`.
+"""
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/index.ts"
+start = 1
+end = 9
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "2.6"
+descriptor = "EventHandlerList, WildCardEventHandlerList, EventHandlerMap aliases"
+justification = """
+The list/map types that carry handlers: arrays of typed and wildcard
+handlers, plus the Map keyed by `keyof Events | '*'`. Together with 2.5
+this fully types the data the implementation manipulates.
+"""
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/index.ts"
+start = 11
+end = 21
+[batches.content.spans.render]
+kind = "full"
+
+# ---------- Tier 3: implementation ----------
+
+[[batches]]
+id = "3.1"
+descriptor = "mitt() factory body — opening + return shell"
+justification = """
+The `all = all || new Map()` default and the `return { all, on, off,
+emit }` shape. With 2.4 the factory's prose is fully grounded; method
+bodies follow individually.
+"""
+predecessor = "2.4"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/index.ts"
+start = 49
+end = 58
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "3.2"
+descriptor = "on() method body"
+justification = """
+Body of `on`: looks up existing handler array on `all`, pushes if
+present, else seeds `[handler]`. Single source of truth for the
+push/initialize semantics.
+"""
+predecessor = "2.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/index.ts"
+start = 66
+end = 73
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "3.3"
+descriptor = "off() method body"
+justification = """
+Body of `off`. Two notable details an agent may need: the `>>> 0` trick
+on `indexOf` (turns `-1` into `0xFFFFFFFF` so `splice` becomes a no-op),
+and that `off(type)` with no handler stashes `[]` in the map (preserving
+the key, with implications for memory). Only place this logic exists.
+"""
+predecessor = "2.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/index.ts"
+start = 82
+end = 91
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "3.4"
+descriptor = "emit() method body"
+justification = """
+Body of `emit`. Encodes two important semantics: typed handlers are
+fired before `'*'` handlers; both lists are sliced before iteration so
+re-entrant `on`/`off` calls don't perturb the in-flight dispatch.
+Wildcard handlers receive `(type, evt)`; typed handlers receive `evt`.
+"""
+predecessor = "2.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/index.ts"
+start = 103
+end = 121
+[batches.content.spans.render]
+kind = "full"
+
+# ---------- Tier 4: README usage + tests ----------
+
+[[batches]]
+id = "4.1"
+descriptor = "README Usage example"
+justification = """
+The canonical copy-paste example: `mitt()`, `on('foo')`, `on('*')`,
+`emit('foo')`, `all.clear()`, plus the `off` reference-handle pattern.
+Highest-traffic snippet for "how do I use this". Predecessor 1.5 owns
+the `## Usage` H2 line (56) which this batch overrides with full
+rendering.
+"""
+predecessor = "1.5"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 56
+end = 79
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "4.2"
+descriptor = "test/index_test.ts — describe/it skeleton"
+justification = """
+Every `describe(...)` and `it(...)` line truncated to its label. Gives a
+complete map of the test suite's coverage — agent can locate the test
+case for any specific behavior in one hop. Catastrophic-omission hedge:
+listing some `it` lines would imply other behaviors are untested.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 7
+end = 7
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "describe\\([^)]+\\)"
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 8
+end = 8
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "it\\([^,]+"
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 12
+end = 12
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "it\\([^,]+"
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 25
+end = 25
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "describe\\([^)]+\\)"
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 45
+end = 45
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "describe\\([^)]+\\)"
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 46
+end = 46
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "it\\([^,]+"
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 51
+end = 51
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "describe\\([^)]+\\)"
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 52
+end = 52
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "it\\([^,]+"
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 56
+end = 56
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "it\\([^,]+"
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 63
+end = 63
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "it\\([^,]+"
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 70
+end = 70
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "it\\([^,]+"
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 79
+end = 79
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "it\\([^,]+"
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 92
+end = 92
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "it\\([^,]+"
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 100
+end = 100
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "it\\([^,]+"
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 108
+end = 108
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "describe\\([^)]+\\)"
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 109
+end = 109
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "it\\([^,]+"
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 113
+end = 113
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "it\\([^,]+"
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 121
+end = 121
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "it\\([^,]+"
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 138
+end = 138
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "it\\([^,]+"
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 148
+end = 148
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "it\\([^,]+"
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 160
+end = 160
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "describe\\([^)]+\\)"
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 161
+end = 161
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "it\\([^,]+"
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 165
+end = 165
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "it\\([^,]+"
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 176
+end = 176
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "it\\([^,]+"
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 189
+end = 189
+[batches.content.spans.render]
+kind = "truncated"
+pattern = "it\\([^,]+"
+
+[[batches]]
+id = "4.3"
+descriptor = "test/index_test.ts — top-of-file imports + Events fixture"
+justification = """
+Imports (`mitt`, `Emitter`, `EventHandlerMap` from '..'; chai, sinon,
+sinonChai) and the `Events` shape used across the second `describe` —
+shows test wiring + the symbol/odd-string keys (`'baz:bat!'`,
+`'baz:baT!'`, an `eventType` symbol) being intentionally exercised.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 1
+end = 6
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 26
+end = 43
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "4.4"
+descriptor = "README Typescript section — Events generic example"
+justification = """
+The TS-generic usage example: declaring an `Events` map type and
+instantiating `mitt<Events>()`, plus the alternative `Emitter<Events>`
+typed-binding form. High-frequency lookup for users adopting strict TS.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 81
+end = 111
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "4.5"
+descriptor = "test/test-types-compilation.ts — overview"
+justification = """
+The type-only test: an `Events` map with required and optional fields,
+`@ts-expect-error` markers on every overload that should reject. Single
+authoritative source for what TS errors mitt's overloads guarantee.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "test/test-types-compilation.ts"
+start = 1
+end = 21
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "4.6"
+descriptor = "test-types-compilation.ts — emit overload assertions"
+justification = """
+The `emit` block of the type test: covers the optional-event overload
+(`emit('bar')` allowed because `bar?: number`; `emit('foo')` rejected
+because `foo: string` is required). The most subtle of the three
+overload rules to derive from the interface alone.
+"""
+predecessor = "4.5"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "test/test-types-compilation.ts"
+start = 60
+end = 78
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "4.7"
+descriptor = "test/index_test.ts — wildcard + emit assertions body"
+justification = """
+The `emit('*')` test cases: confirms `'*'` handlers receive
+`(type, evt)` and that they run after typed dispatch. The clearest
+runtime check against 3.4's logic; useful for memory of the dispatch
+order independent of reading the impl.
+"""
+predecessor = "4.2"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 189
+end = 202
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "4.8"
+descriptor = "test/index_test.ts — off() removal-semantics body"
+justification = """
+The `off` body covering: removing only the first matching listener
+(splice once, not all); `off("type")` (no handler) clearing all of a
+type to `[]`. Encodes the contract behind 3.3's `>>> 0` and `[]`-stash
+choices — agent gets the *intended* behavior without re-deriving from
+the implementation.
+"""
+predecessor = "4.2"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "test/index_test.ts"
+start = 138
+end = 158
+[batches.content.spans.render]
+kind = "full"
+
+# ---------- Tier 5: tooling, build, contribute ----------
+
+[[batches]]
+id = "5.1"
+descriptor = "package.json scripts"
+justification = """
+The full scripts object: how tests/builds run (`mocha`, `tsc`, `eslint`,
+`microbundle -f es,cjs,umd`, `documentation` for README API regeneration,
+`release` workflow). Catastrophic-omission hedge: contiguous range so
+unlisted scripts can't be inferred away.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "package.json"
+start = 18
+end = 29
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "5.2"
+descriptor = "package.json entry-points + files + exports"
+justification = """
+The bundler/consumer-facing fields: `module`, `main`, `umd:main`,
+`source: src/index.ts`, `typings: index.d.ts`, the `exports`
+conditional map, and the `files` whitelist that publishes only `dist`
+and `index.d.ts`.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "package.json"
+start = 5
+end = 17
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = "package.json"
+start = 42
+end = 45
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "5.3"
+descriptor = "package.json mocha + prettier config"
+justification = """
+The `mocha` block (ts-node + esm registers, `test/*_test.ts` spec glob,
+`.ts` extension) and the `prettier` block (singleQuote, no trailing
+commas) — both live inside `package.json` rather than as separate files.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "package.json"
+start = 46
+end = 61
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "5.4"
+descriptor = "tsconfig.json"
+justification = """
+Full tsconfig: `strict: true`, `noEmit: true`, `declaration: true`,
+`esModuleInterop`, includes `src/*.ts` and `test/*.ts`. Drives the
+type-test workflow.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "tsconfig.json"
+start = 1
+end = 15
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "5.5"
+descriptor = "package.json devDependencies"
+justification = """
+Full devDependency list: chai/sinon/sinon-chai for tests, mocha + ts-node
++ esm registers, microbundle for `dist/`, `documentation` for README
+API regen, eslint + typescript-eslint, rimraf, npm-run-all, typescript
+4.9. Catastrophic-omission hedge — if some are listed and others aren't
+the agent will assume missing ones aren't there.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "package.json"
+start = 62
+end = 84
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "5.6"
+descriptor = ".eslintrc rules"
+justification = """
+ESLint rules block — semi/brace-style/quotes enforcement plus the
+`@typescript-eslint/*` rules deliberately disabled (no-explicit-any,
+no-non-null-assertion, etc., which is what permits the `all!.get(...)`
+pattern in `src/index.ts`).
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = ".eslintrc"
+start = 25
+end = 51
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "5.7"
+descriptor = ".eslintrc — extends + parser + env"
+justification = """
+The setup half of `.eslintrc`: extends preset (typescript-eslint
+recommended + `developit`), parser, browser/mocha/es6 env, ignore
+patterns (`node_modules`, `dist`, generated `index.d.ts`).
+"""
+predecessor = "5.6"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = ".eslintrc"
+start = 1
+end = 24
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "5.8"
+descriptor = ".github/workflows/main.yml — CI pipeline"
+justification = """
+The CI workflow that runs on PRs and main pushes: ubuntu, node 14,
+`npm install && npm run build --if-present && npm test`. Authoritative
+on the supported node version + the test command surface.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = ".github/workflows/main.yml"
+start = 1
+end = 25
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "5.9"
+descriptor = ".github/workflows/compressed-size.yml — bundle-size guard"
+justification = """
+The PR-only workflow that uses preact's `compressed-size-action` to
+flag size regressions in `dist/*.{js,mjs,cjs}`. Encodes mitt's
+"~200 byte" branding as a CI-enforced budget.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = ".github/workflows/compressed-size.yml"
+start = 1
+end = 12
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "5.10"
+descriptor = ".gitignore + .editorconfig"
+justification = """
+Together: `dist/` and `index.d.ts` are generated (gitignored), tabs
+with LF line endings throughout (overridden to 2-space for json/rc/yml
+and md). Drives any agent producing PRs.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = ".gitignore"
+start = 1
+end = 9
+[batches.content.spans.render]
+kind = "full"
+[[batches.content.spans]]
+path = ".editorconfig"
+start = 1
+end = 18
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "5.11"
+descriptor = "README Install + import examples"
+justification = """
+Install (`npm install --save mitt`) plus ESM/CJS import shapes and the
+UMD `unpkg` script-tag form. Most common quickstart copy-paste target.
+Predecessor 1.5 owns the `## Install` H2 line (30) which this batch
+overrides with the full section text.
+"""
+predecessor = "1.5"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 30
+end = 55
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "5.12"
+descriptor = "README API reference — mitt / all / on (auto-generated prose)"
+justification = """
+First half of the auto-generated API section: prose for `mitt`, `all`,
+`on` (incl. params). Less precise than `src/` but easier to read;
+useful when the agent's query is documentation-shaped. Split from the
+remaining off/emit prose so each batch is roughly ranked-equal.
+Predecessor 1.5 owns the `## API` H2 line (123).
+"""
+predecessor = "1.5"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 123
+end = 156
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "5.13"
+descriptor = "README API reference — off / emit (auto-generated prose)"
+justification = """
+Second half of the API prose: `off` (incl. omitted-handler semantics)
+and `emit` (incl. the `'*'`-after-typed dispatch note and that manually
+firing `'*'` handlers is unsupported).
+"""
+predecessor = "5.12"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 157
+end = 178
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "5.14"
+descriptor = "README Contribute + License"
+justification = """
+Pull-request workflow guidance and the MIT attribution to Jason Miller.
+Last-tier — only relevant for contribution-flow queries. Predecessor
+1.5 owns the `## Contribute` (179) and `## License` (203) H2 lines.
+"""
+predecessor = "1.5"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 179
+end = 205
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "5.15"
+descriptor = ".github/PULL_REQUEST_TEMPLATE.md"
+justification = """
+The PR template: type-of-change checklist (docs/bug/feature/style/
+refactor/CI/other), focus prompt, breaking-change prompt. Useful for an
+agent asked to draft a PR description.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = ".github/PULL_REQUEST_TEMPLATE.md"
+start = 1
+end = 19
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+id = "5.16"
+descriptor = "LICENSE — full MIT text"
+justification = """
+Full MIT license text. Lowest-priority — only matters for
+licensing/legal queries; cost is justified because no smaller proxy
+beats showing the actual permission grant.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "LICENSE"
+start = 1
+end = 21
+[batches.content.spans.render]
+kind = "full"

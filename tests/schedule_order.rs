@@ -44,18 +44,21 @@ const DIVERGENCE_DIR: &str = "tests/divergence";
 
 macro_rules! per_fixture_tests {
     ($fixture:ident) => {
+        per_fixture_tests!($fixture, stringify!($fixture));
+    };
+    ($fixture:ident, $name:expr) => {
         paste::paste! {
             #[test]
             fn [<schedule_order_snapshot_ $fixture>]() {
-                check_schedule_snapshot(stringify!($fixture));
+                check_schedule_snapshot($name);
             }
             #[test]
             fn [<schedule_order_divergence_ $fixture>]() {
-                check_divergence_report(stringify!($fixture));
+                check_divergence_report($name);
             }
             #[test]
             fn [<schedule_order_rendered_ $fixture>]() {
-                check_rendered_snapshot(stringify!($fixture));
+                check_rendered_snapshot($name);
             }
         }
     };
@@ -65,6 +68,8 @@ per_fixture_tests!(log);
 per_fixture_tests!(anyhow);
 per_fixture_tests!(mdbook);
 per_fixture_tests!(otree);
+per_fixture_tests!(mitt);
+per_fixture_tests!(ts_pattern, "ts-pattern");
 
 // ---- paths -------------------------------------------------------------
 

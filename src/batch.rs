@@ -39,6 +39,7 @@ pub enum BatchKey {
     Rust(RustKey),
     Markdown(MarkdownKey),
     Toml(TomlKey),
+    Typescript(TsKey),
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
@@ -65,6 +66,11 @@ impl From<MarkdownKey> for BatchKey {
 impl From<TomlKey> for BatchKey {
     fn from(k: TomlKey) -> Self {
         BatchKey::Toml(k)
+    }
+}
+impl From<TsKey> for BatchKey {
+    fn from(k: TsKey) -> Self {
+        BatchKey::Typescript(k)
     }
 }
 
@@ -122,6 +128,35 @@ pub enum MarkdownKey {
     Section { file: PathBuf, section_index: usize },
 }
 
+/// TypeScript / TSX batches. Mirrors the Rust walker shape: per-file
+/// orientation batches (module-doc lede, imports, top-level export-name
+/// surface) plus per-export item batches with optional JSDoc refinement.
+///
+/// "Public" in TS = a top-level declaration with the `export` keyword (or
+/// a `default` export). Re-exports without a body (`export { foo } from '…'`)
+/// are folded into the `Imports` batch since they're plumbing, not items.
+#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
+pub enum TsKey {
+    /// Top-of-file `/** … */` block — module-level JSDoc lede. Priority 1.x.
+    /// Only emitted for entrypoint files (`index.ts`, `main.ts`, `mod.ts`).
+    ModuleDocLede { file: PathBuf },
+    /// `import` + side-effect imports + bare `export … from` re-exports at
+    /// the top of the file. Plumbing batch. Priority 2.x.
+    Imports { file: PathBuf },
+    /// Surface listing of every top-level export's first line — a
+    /// catastrophic-omission hedge when individual decls don't all fit.
+    /// Priority 1.x.
+    ExportNames { file: PathBuf },
+    /// One top-level export's declaration. For interface/type/class/enum,
+    /// the whole item. For function, signature with body marker. For
+    /// const/let, the assignment line. Keyed by start line so each
+    /// export has a distinct batch. Priority 1.x–4.x.
+    Export { file: PathBuf, start_line: usize },
+    /// JSDoc (`/** … */`) above a single export. Predecessor: the matching
+    /// `Export` at the same `start_line`. Priority 3.x.
+    ExportDoc { file: PathBuf, start_line: usize },
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum TomlKey {
     /// `[package]` or `[workspace.package]` identity block. Priority 1.x.
@@ -166,6 +201,7 @@ impl WalkerKey for BatchKey {
             BatchKey::Rust(k) => k.describe(),
             BatchKey::Markdown(k) => k.describe(),
             BatchKey::Toml(k) => k.describe(),
+            BatchKey::Typescript(k) => k.describe(),
         }
     }
 }
@@ -224,6 +260,24 @@ impl MarkdownKey {
                 file,
                 section_index,
             } => format!("{} section #{section_index}", display_path(file)),
+        }
+    }
+}
+
+impl TsKey {
+    pub fn describe(&self) -> String {
+        match self {
+            TsKey::ModuleDocLede { file } => format!("module-doc lede in {}", display_path(file)),
+            TsKey::Imports { file } => format!("imports in {}", display_path(file)),
+            TsKey::ExportNames { file } => {
+                format!("export names surface in {}", display_path(file))
+            }
+            TsKey::Export { file, start_line } => {
+                format!("export at {}:{}", display_path(file), start_line)
+            }
+            TsKey::ExportDoc { file, start_line } => {
+                format!("export doc at {}:{}", display_path(file), start_line)
+            }
         }
     }
 }

@@ -32,8 +32,8 @@ use crate::content::{BatchContent, Span};
 use crate::value::{depth_factor, non_essential_factor};
 
 use super::{
-    Candidate, FileLines, WalkCtx, build_file_spans, fs::files_with_extension,
-    single_file_lines_batch,
+    Candidate, FileLines, WalkCtx, build_file_spans, dedup_sorted, extend_span,
+    fs::files_with_extension, push_rows, signature_end_row, single_file_lines_batch,
 };
 
 pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
@@ -764,32 +764,4 @@ fn collect_outer_docs_above(node: Node, source: &str, out: &mut Vec<usize>) {
             _ => break,
         }
     }
-}
-
-// --- line span helpers ---
-
-fn extend_span(out: &mut Vec<usize>, node: Node, source: &str) {
-    let start = node.start_position().row;
-    let text = &source[node.start_byte()..node.end_byte()];
-    let internal_lines = text.trim_end_matches(['\n', '\r']).split('\n').count();
-    let span = internal_lines.max(1) - 1;
-    push_rows(out, start, start + span);
-}
-
-fn signature_end_row(node: Node) -> usize {
-    node.child_by_field_name("body")
-        .map(|b| b.start_position().row)
-        .unwrap_or_else(|| node.end_position().row)
-}
-
-fn push_rows(out: &mut Vec<usize>, start_row: usize, end_row: usize) {
-    for row in start_row..=end_row {
-        out.push(row + 1);
-    }
-}
-
-fn dedup_sorted(mut v: Vec<usize>) -> Vec<usize> {
-    v.sort();
-    v.dedup();
-    v
 }

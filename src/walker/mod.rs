@@ -26,7 +26,7 @@ use std::collections::{BTreeSet, HashMap};
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
-use tree_sitter::{Language, Tree};
+use tree_sitter::{Language, Node, Tree};
 
 use crate::batch::{ResolvedBatch, ValueSignals, WalkerKey};
 use crate::content::{BatchContent, Render, Span};
@@ -37,6 +37,7 @@ pub mod markdown;
 pub mod multi;
 pub mod rust;
 pub mod toml;
+pub mod typescript;
 
 /// A discovered batch that hasn't been materialized yet. Emitted by
 /// `seed` / `expand`. Carries:
@@ -222,10 +223,11 @@ pub(crate) fn build_file_spans(path: &Path, source: &str, lines: FileLines) -> V
         .into_iter()
         .filter(|n| src_lines.get(*n - 1).is_some_and(|t| !t.trim().is_empty()))
         .collect();
+    let line_count = src_lines.len();
     let ellipses: BTreeSet<usize> = lines
         .ellipses
         .into_iter()
-        .filter(|n| !full.contains(n))
+        .filter(|n| !full.contains(n) && *n >= 1 && *n <= line_count)
         .collect();
 
     let mut spans = Vec::new();
@@ -256,4 +258,41 @@ pub(crate) fn build_file_spans(path: &Path, source: &str, lines: FileLines) -> V
         });
     }
     spans
+}
+
+// --- shared tree-sitter span helpers ---
+//
+// Pure AST utilities reused by every per-language walker that emits line
+// spans. Kept here so language walkers don't redeclare identical helpers.
+
+/// Append every 1-based row covered by `node` to `out`, skipping any
+/// trailing newline at the end of the node's text.
+pub(crate) fn extend_span(out: &mut Vec<usize>, node: Node, source: &str) {
+    let start = node.start_position().row;
+    let text = &source[node.start_byte()..node.end_byte()];
+    let internal_lines = text.trim_end_matches(['\n', '\r']).split('\n').count();
+    let span = internal_lines.max(1) - 1;
+    push_rows(out, start, start + span);
+}
+
+/// 0-based row of a declaration's signature end: the row before its body
+/// starts, or its end row if there's no body field.
+pub(crate) fn signature_end_row(node: Node) -> usize {
+    node.child_by_field_name("body")
+        .map(|b| b.start_position().row)
+        .unwrap_or_else(|| node.end_position().row)
+}
+
+/// Push 1-based line numbers `start_row+1 ..= end_row+1` onto `out`.
+/// Inputs are 0-based tree-sitter row indices.
+pub(crate) fn push_rows(out: &mut Vec<usize>, start_row: usize, end_row: usize) {
+    for row in start_row..=end_row {
+        out.push(row + 1);
+    }
+}
+
+pub(crate) fn dedup_sorted(mut v: Vec<usize>) -> Vec<usize> {
+    v.sort();
+    v.dedup();
+    v
 }

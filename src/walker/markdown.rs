@@ -239,10 +239,7 @@ fn is_readme(file: &Path) -> bool {
 // --- tree-sitter-md helpers ---
 
 fn nth_section_range(tree: &Tree, source: &str, n: usize) -> Option<(usize, usize)> {
-    let root = tree.root_node();
-    let mut cursor = root.walk();
-    let mut sections = root.children(&mut cursor).filter(|c| c.kind() == "section");
-    let section = sections.nth(n)?;
+    let section = headed_sections(tree.root_node()).nth(n)?;
     let start = section.start_position().row + 1;
     let end_row = span_last_row(section, source);
     Some((start, end_row + 1))
@@ -250,17 +247,11 @@ fn nth_section_range(tree: &Tree, source: &str, n: usize) -> Option<(usize, usiz
 
 fn section_count_for(ctx: &WalkCtx, file: &Path) -> Option<usize> {
     let (_source, tree) = parse_md(ctx, file)?;
-    let root = tree.root_node();
-    let mut cursor = root.walk();
-    let n = root
-        .children(&mut cursor)
-        .filter(|c| c.kind() == "section")
-        .count();
-    Some(n)
+    Some(headed_sections(tree.root_node()).count())
 }
 
 fn first_section_headline(tree: &Tree, source: &str) -> Option<(usize, usize, usize)> {
-    let section = find_first_section(tree.root_node())?;
+    let section = headed_sections(tree.root_node()).next()?;
     let heading = first_heading_child(section)?;
     let heading_start = heading.start_position().row + 1;
     let heading_end = span_last_row(heading, source) + 1;
@@ -270,9 +261,16 @@ fn first_section_headline(tree: &Tree, source: &str) -> Option<(usize, usize, us
     Some((heading_start, heading_end, paragraph_end))
 }
 
-fn find_first_section(node: Node) -> Option<Node> {
+/// Top-level `section` children of `node` that have a heading. Tree-sitter-md
+/// wraps a leading `html_block` (or other heading-less prelude) in its own
+/// `section` node — those don't represent a navigable doc section, so we
+/// skip them everywhere section indices are counted or addressed.
+fn headed_sections(node: Node<'_>) -> impl Iterator<Item = Node<'_>> {
     let mut cursor = node.walk();
-    node.children(&mut cursor).find(|c| c.kind() == "section")
+    let children: Vec<Node> = node.children(&mut cursor).collect();
+    children
+        .into_iter()
+        .filter(|c| c.kind() == "section" && first_heading_child(*c).is_some())
 }
 
 fn first_heading_child(section: Node) -> Option<Node> {

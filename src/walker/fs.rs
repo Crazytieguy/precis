@@ -64,6 +64,13 @@ pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
 /// Returns absolute paths. Used by per-language walkers to build cross-file
 /// batch scopes without opening any file.
 pub fn files_with_extension(dir: &Path, ext: &str) -> Vec<PathBuf> {
+    files_with_any_extension(dir, &[ext])
+}
+
+/// Like [`files_with_extension`] but accepts any of several extensions in a
+/// single `read_dir` pass — convenient for walkers that handle paired
+/// extensions (e.g. `.ts` + `.tsx`).
+pub fn files_with_any_extension(dir: &Path, exts: &[&str]) -> Vec<PathBuf> {
     let Ok(read_dir) = std::fs::read_dir(dir) else {
         return Vec::new();
     };
@@ -75,11 +82,9 @@ pub fn files_with_extension(dir: &Path, ext: &str) -> Vec<PathBuf> {
                 return None;
             }
             let actual = path.extension().and_then(|e| e.to_str())?;
-            if actual.eq_ignore_ascii_case(ext) {
-                Some(path)
-            } else {
-                None
-            }
+            exts.iter()
+                .any(|ext| actual.eq_ignore_ascii_case(ext))
+                .then_some(path)
         })
         .collect();
     out.sort();
