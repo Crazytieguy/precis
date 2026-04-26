@@ -22,7 +22,7 @@
 //! makes all three unrepresentable by accident.
 
 use std::cell::{OnceCell, RefCell};
-use std::collections::{BTreeSet, HashMap};
+use std::collections::{BTreeSet, HashMap, HashSet};
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
@@ -96,6 +96,11 @@ pub trait Walker {
     /// candidates. `scheduled` is the key just moved into the tree; the
     /// walker uses it to decide what to propose next (e.g. listing `src/`
     /// exposes `RustKey::PubDecls { src_dir: "src" }`).
+    ///
+    /// Per-run metadata that needs source reads (module visibility,
+    /// workspace membership) lives behind `WalkCtx` `OnceCell`s. Outside
+    /// those caches, `expand` must not do per-call file I/O — the
+    /// scheduler relies on each speculative candidate being cheap to emit.
     fn expand(&mut self, scheduled: &Self::Key, ctx: &WalkCtx) -> Vec<Candidate<Self::Key>>;
 
     /// Read source, parse, and build the concrete batch for `key`. Returns
@@ -119,6 +124,13 @@ pub struct WalkCtx {
     /// Lazy, per-run map of `<crate root>/src/lib.rs` reachability for the
     /// Rust walker. Populated on first read; see `walker::rust`.
     rust_module_visibility: OnceCell<HashMap<PathBuf, rust::Visibility>>,
+    /// Lazy, per-run set of Cargo workspace member Cargo.toml paths
+    /// (canonicalized) when the seed-root `Cargo.toml` declares a
+    /// `[workspace]`. Empty when the seed isn't a workspace root.
+    cargo_workspace_members: OnceCell<HashSet<PathBuf>>,
+    /// Memoizes `is_workspace_member` lookups so the canonicalize syscall
+    /// runs once per file rather than once per signal computation.
+    workspace_member_lookup: RefCell<HashMap<PathBuf, bool>>,
 }
 
 impl WalkCtx {
@@ -132,6 +144,8 @@ impl WalkCtx {
             source_cache,
             tree_cache: RefCell::new(HashMap::new()),
             rust_module_visibility: OnceCell::new(),
+            cargo_workspace_members: OnceCell::new(),
+            workspace_member_lookup: RefCell::new(HashMap::new()),
         }
     }
 
@@ -189,6 +203,28 @@ impl WalkCtx {
         init: impl FnOnce() -> HashMap<PathBuf, rust::Visibility>,
     ) -> &HashMap<PathBuf, rust::Visibility> {
         self.rust_module_visibility.get_or_init(init)
+    }
+
+    /// `true` iff `file` is a `Cargo.toml` declared (or auto-promoted) as
+    /// a workspace member by the seed-root `Cargo.toml`.
+    pub fn is_workspace_member(&self, file: &Path) -> bool {
+        let members = self
+            .cargo_workspace_members
+            .get_or_init(|| toml::collect_workspace_members(&self.root));
+        if members.is_empty() {
+            return false;
+        }
+        if let Some(&hit) = self.workspace_member_lookup.borrow().get(file) {
+            return hit;
+        }
+        let hit = file
+            .canonicalize()
+            .map(|c| members.contains(&c))
+            .unwrap_or(false);
+        self.workspace_member_lookup
+            .borrow_mut()
+            .insert(file.to_path_buf(), hit);
+        hit
     }
 }
 

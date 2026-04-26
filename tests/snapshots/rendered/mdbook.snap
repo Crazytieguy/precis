@@ -20,6 +20,8 @@ expression: rendered
 CHANGELOG.md
     1→# Changelog
 CODE_OF_CONDUCT.md
+    1→# The Rust Code of Conduct
+    3→The Code of Conduct for this repository [can be found online](https://www.rust-lang.org/conduct.html).
 CONTRIBUTING.md
     1→# Contributing
     …
@@ -121,116 +123,65 @@ ci/
 crates/
     mdbook-compare/
         Cargo.toml
-            1→[package]
-            2→name = "mdbook-compare"
-            3→publish = false
-            4→edition.workspace = true
-            5→license.workspace = true
-            6→repository.workspace = true
-            7→rust-version.workspace = true
         README.md
             1→# mdbook-compare
             3→This is a simple utility to compare the output of two different versions of mdbook.
         src/
     mdbook-core/
         Cargo.toml
-            1→[package]
-            2→name = "mdbook-core"
-            3→version = "0.5.2"
-            4→description = "The base support library for mdbook, intended for internal use only"
-            5→edition.workspace = true
-            6→license.workspace = true
-            7→repository.workspace = true
-            8→rust-version.workspace = true
         README.md
             1→# mdbook-core
             7→This is the base support library for [mdBook](https://rust-lang.github.io/mdBook/). It is intended for internal use only. Other mdBook crates depend on this for any types that are shared across the crates.
+            9→> This crate is maintained by the mdBook team, primarily for use by mdBook and not intended for external use (except as a transitive dependency). This crate may make major changes to its APIs or be deprecated without warning.
+            11→## License
+            13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
         src/
     mdbook-driver/
         Cargo.toml
-            1→[package]
-            2→name = "mdbook-driver"
-            3→version = "0.5.2"
-            4→description = "High-level library for running mdBook"
-            5→edition.workspace = true
-            6→license.workspace = true
-            7→repository.workspace = true
-            8→rust-version.workspace = true
             31→[features]
             32→search = ["mdbook-html/search"]
         README.md
             1→# mdbook-driver
             7→This is the high-level Rust library for running [mdBook](https://rust-lang.github.io/mdBook/). New books can be created using [`BookBuilder`](https://docs.rs/mdbook-driver/latest/mdbook_driver/init/struct.BookBuilder.html). The primary type [`MDBook`](https://docs.rs/mdbook-driver/latest/mdbook_driver/struct.MDBook.html) can be used to manage and render books.
+            9→> This crate is maintained by the mdBook team for use by the wider ecosystem. This crate follows [semver compatibility](https://doc.rust-lang.org/cargo/reference/semver.html) for its APIs.
+            11→## License
+            13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
         src/
     mdbook-html/
         Cargo.toml
-            1→[package]
-            2→name = "mdbook-html"
-            3→version = "0.5.2"
-            4→description = "mdBook HTML renderer"
-            5→edition.workspace = true
-            6→license.workspace = true
-            7→repository.workspace = true
-            8→rust-version.workspace = true
             36→[features]
             37→search = ["dep:elasticlunr-rs"]
         README.md
             1→# mdbook-html
             7→This is the HTML renderer for [mdBook](https://rust-lang.github.io/mdBook/). This is intended for internal use only. It is automatically included by [`mdbook-driver`](https://crates.io/crates/mdbook-driver) to render books to HTML.
+            9→> This crate is maintained by the mdBook team, primarily for use by mdBook and not intended for external use (except as a transitive dependency). This crate may make major changes to its APIs or be deprecated without warning.
+            11→## License
+            13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
         front-end/
         src/
     mdbook-markdown/
         Cargo.toml
-            1→[package]
-            2→name = "mdbook-markdown"
-            3→version = "0.5.2"
-            4→description = "Markdown processing used in mdBook"
-            5→edition.workspace = true
-            6→license.workspace = true
-            7→repository.workspace = true
-            8→rust-version.workspace = true
         README.md
             1→# mdbook-markdown
             7→This is the Markdown support library for [mdBook](https://rust-lang.github.io/mdBook/). Rust crates (such as preprocessors) can use this library to process Markdown in the same way as mdBook.
+            9→> This crate is maintained by the mdBook team for use by the wider ecosystem. This crate follows [semver compatibility](https://doc.rust-lang.org/cargo/reference/semver.html) for its APIs.
+            11→## License
+            13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
         src/
     mdbook-preprocessor/
         Cargo.toml
-            1→[package]
-            2→name = "mdbook-preprocessor"
-            3→version = "0.5.2"
-            4→description = "Library to assist implementing an mdBook preprocessor"
-            5→edition.workspace = true
-            6→license.workspace = true
-            7→repository.workspace = true
-            8→rust-version.workspace = true
         README.md
             1→# mdbook-preprocessor
             7→This is the Rust library to implement a [preprocessor](https://rust-lang.github.io/mdBook/for_developers/preprocessors.html) for [mdBook](https://rust-lang.github.io/mdBook/).
         src/
     mdbook-renderer/
         Cargo.toml
-            1→[package]
-            2→name = "mdbook-renderer"
-            3→version = "0.5.2"
-            4→description = "Library to assist implementing an mdBook renderer"
-            5→edition.workspace = true
-            6→license.workspace = true
-            7→repository.workspace = true
-            8→rust-version.workspace = true
         README.md
             1→# mdbook-renderer
             7→This is the Rust library to implement a [renderer](https://rust-lang.github.io/mdBook/for_developers/backends.html) for [mdBook](https://rust-lang.github.io/mdBook/).
         src/
     mdbook-summary/
         Cargo.toml
-            1→[package]
-            2→name = "mdbook-summary"
-            3→version = "0.5.2"
-            4→description = "Summary parser for mdBook"
-            5→edition.workspace = true
-            6→license.workspace = true
-            7→repository.workspace = true
-            8→rust-version.workspace = true
         README.md
             1→# mdbook-summary
             7→This is the Rust library used to parse the [`SUMMARY.md`](https://rust-lang.github.io/mdBook/format/summary.html) file structure for [mdBook](https://rust-lang.github.io/mdBook/).
@@ -247,6 +198,20 @@ guide/
         SUMMARY.md
         cli/
         continuous-integration.md
+            1→# Running `mdbook` in continuous integration
+            …
+            12→## Installing mdBook
+            …
+            17→### Pre-compiled binaries
+            …
+            39→### Building from source
+            …
+            67→## Running tests
+            …
+            83→## Deploying
+            …
+            100→### 404 handling
+            …
         for_developers/
         format/
         guide/
@@ -268,7 +233,10 @@ src/
             38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
             …
             46→pub struct Clean {
-            …
+            47→    num_files_removed: u64,
+            48→    num_dirs_removed: u64,
+            49→    total_bytes_removed: u64,
+            50→}
         command_prelude.rs
             7→pub trait CommandExt: Sized {
             …
@@ -281,6 +249,13 @@ src/
             …
         mod.rs
             1→//! Subcommand modules for the `mdbook` binary.
+            3→pub mod build;
+            4→pub mod clean;
+            5→pub mod command_prelude;
+            6→pub mod init;
+            8→pub mod serve;
+            9→pub mod test;
+            11→pub mod watch;
         serve.rs
             23→pub fn make_subcommand() -> Command {
             …
@@ -310,5 +285,14 @@ src/
             …
     main.rs
         1→//! The mdbook CLI.
+        5→use anyhow::anyhow;
+        6→use clap::{Arg, ArgMatches, Command};
+        7→use clap_complete::Shell;
+        8→use mdbook_core::utils;
+        9→use std::env;
+        10→use std::ffi::OsStr;
+        11→use std::path::PathBuf;
+        12→use tracing::{error, info};
+        14→mod cmd;
 tests/
 triagebot.toml

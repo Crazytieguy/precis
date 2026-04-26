@@ -421,6 +421,56 @@ like to revisit whether it's still earning its complexity.
   abort threshold. Pairs naturally with the `PubItem`-style
   catastrophic rebalance below.
 
+### TOML walker — workspace-aware sub-crate damping — DONE
+
+`WalkCtx::is_workspace_member(file)` returns `true` for sub-crate
+Cargo.tomls when the seed root declares a `[workspace]` table; the
+member set is the union of (a) `[workspace].members` literal entries
+plus trailing-`/*` globs and (b) auto-promoted local
+`path = "..."` dependencies from `[dependencies]` /
+`[dev-dependencies]` / `[build-dependencies]`. `[workspace].exclude`
+is applied once at the end so it blocks both sources.
+
+The TOML walker's `identity_signals` scales all three channels by
+`WORKSPACE_MEMBER_IDENTITY_FACTOR = 0.4` (matches `ApiSurface::factor`
+for `pub(crate)`) when the file is a member; `[features]` and
+`[dependencies]` signals are unchanged (codex plan-review caught that
+sub-crate dep tables describe the crate's role even when versions
+are inherited).
+
+**Critical guard**: path-dep auto-promotion only fires when a
+`[workspace]` table exists. A non-workspace repo with a local
+`path = "deps/foo"` dep must NOT damp `deps/foo/Cargo.toml`'s
+identity. Codex adversarial-review caught this. Regression test:
+`walker_toml_workspace_members_path_dep_without_workspace`.
+
+**Honest scope** (intentional false-negatives — we never damp a
+non-member):
+- Only trailing-`/*` globs are honored. Mid-name globs
+  (`crates/mdbook-*`), `**`, `?` patterns are not.
+- `[workspace]` is only read from `<root>/Cargo.toml`.
+- Path entries with `..` or absolute paths are skipped.
+
+Lookup is memoized via `RefCell<HashMap<PathBuf, bool>>` on
+`WalkCtx` so the canonicalize syscall in `is_workspace_member`
+runs once per file rather than once per signal computation.
+
+Sim deltas: mdbook +0.018 (Reached 17 → 18, eight `[package] in
+crates/...` waste rows totaling ~650 tokens removed; freed budget
+lets the `Builtin preprocessors` re-export listing reach a partial
+0.78 and other source-layout / driver-trait crate batches arrive
+~600 tokens earlier). Other 9 fixtures unchanged. Plan + 3
+plan-review rounds + 1 adversarial review (which caught the
+non-workspace path-dep bug pre-merge) in
+`ignore/plan-toml-workspace-damping.md`.
+
+The `Walker::expand` doc comment now acknowledges that walkers may
+read source via `WalkCtx` `OnceCell` caches (rust module
+visibility, toml workspace membership) — the previous "no I/O
+beyond `read_dir`" wording was already false in practice. A future
+refactor that moves these caches to an explicit pre-scheduler
+metadata phase remains open.
+
 ### Scheduler / walker
 - **File-as-seed** — currently rejected with a clear error in `lib.rs`.
   Needs a small content-only walker path, probably driven by a real
