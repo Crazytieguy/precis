@@ -525,15 +525,38 @@ like to revisit whether it's still earning its complexity.
   surface gains visibility); other Rust fixtures unchanged
   (mdbook seed root has no `src/lib.rs`, so map is empty);
   TS/JS fixtures unchanged.
-  **Deferred follow-up — re-export tracking.** `pub use self::foo::Bar;`
-  in a `mod.rs`-style parent file lifts items from a private mod
-  back to the public surface. Today these are demoted (false
-  positive). The natural extension is a second pass that scans
-  top-level `pub use` declarations in each `Public` file and lifts
-  the named child mods back to `Public`. log's kv module is the
-  motivating case. Defer until a fixture-driven calibration cycle
-  shows the demotion's impact is consistently load-bearing
-  (currently log Sim is flat, so the tradeoff is neutral).
+  **Re-export tracking — DONE.** `pub use self::path::...`
+  declarations in a `Public` file walk the path segment-by-segment,
+  lifting each declared-and-resolvable child mod to `Public`. The
+  walk is gated on a real top-level `mod x;` declaration in the
+  current file at each step (codex plan-review round 2 caught
+  this — without the gate, an orphan or `#[path]`-mounted file
+  with a colliding name would be silently lifted). Grouped
+  (`pub use self::{a::X, b::*}`), wildcard, and alias
+  (`as Renamed`) clauses all flatten through the same recursive
+  descent. `pub(crate) use ...`, `pub use crate::...`, and
+  `pub use super::...` are not handled — only the unambiguous
+  `self::` path root participates.
+  **Sim deltas across the 10 fixtures:** log Sim flat (0.527 →
+  0.527) but tier-4 partial 1 → 2 (kv::Key surface 0.34 →
+  0.58, kv::Error variants 0.07 → 0.27). The partial-credit gain
+  for kv::Key is the structurally-correct rebalance — it now
+  reaches a names-surface batch at t=2881 (vs t=6956), a
+  ~4000-token earlier arrival. The Sim metric's
+  exp(-t/2000) weighting decays the tier-4/5 gains, so headline
+  Sim moves don't reflect the user-visible improvement on the
+  log fixture. Other Rust fixtures unchanged or within ±0.001
+  (anyhow doesn't use `pub use self::...` for re-exports —
+  internals are `pub(crate)` directly; mdbook seed root has no
+  `src/lib.rs`). TS/JS fixtures unchanged. Plan + 3 plan-review
+  rounds in `ignore/plan-reexport-tracking.md`.
+  **Calibration follow-up:** because log's tier-4/5 atoms sit at
+  `exp_t > 5000`, even a 0.5+ credit improvement contributes
+  little to Sim. If we want the user-visible gain to drive
+  calibration, we either need an NS amendment that promotes
+  load-bearing kv items to lower tiers, or to track a
+  reach-count-weighted metric alongside Sim. Defer until more
+  re-export-heavy fixtures land or NS authoring runs are due.
   **Deferred follow-up — `#[path]` and inline-pub-mod children.**
   Resolver intentionally doesn't honor `#[path = "..."]` or descend
   into `pub mod foo { mod bar; }` for extern-child resolution.

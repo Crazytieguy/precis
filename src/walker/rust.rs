@@ -942,11 +942,11 @@ fn is_underscore_private(node: Node, source: &str) -> bool {
 ///   → `Public`. Those paths already get the non-essential-dir discount.
 ///
 /// The map is computed lazily on first access and cached for the run.
-/// Re-export tracking (`pub use foo::Bar;` lifting items out of a
-/// private mod) is **not** modeled here — items syntactically
-/// `pub` in a private mod are reported as `Restricted` even if a
-/// public ancestor re-exports them. This is a deliberate v1 limitation;
-/// see `docs/design-notes.md` "API-surface signal" for context.
+/// Re-export tracking handles same-module `pub use self::path::...`
+/// declarations: each declared-and-resolvable mod along the chain is
+/// lifted to `Public` (gated segment-by-segment on a real `mod x;`
+/// declaration in the current file). `pub use crate::...` and
+/// `pub use super::...` paths are not modeled.
 fn module_visibility(ctx: &WalkCtx, file: &Path) -> Visibility {
     let map = ctx.rust_module_visibility_map(|| compute_module_visibility(ctx));
     if let Some(&v) = map.get(file) {
@@ -990,8 +990,50 @@ fn compute_module_visibility(ctx: &WalkCtx) -> HashMap<PathBuf, Visibility> {
             };
             stack.push((child, child_vis));
         }
+        if matches!(vis, Visibility::Public) {
+            let parent_decls = mod_decls(&tree, &source);
+            for path in pub_use_self_paths(&tree, &source) {
+                lift_reexport_chain(&file, &parent_decls, &path, ctx, &mut stack);
+            }
+        }
     }
     out
+}
+
+/// Walk a `pub use self::seg1::seg2::...` re-export chain from
+/// `parent_file`, lifting each declared-and-resolvable segment to
+/// `Public`. Stops at the first segment that isn't a top-level `mod`
+/// declaration in the current file. The mod-declaration gate keeps
+/// chain-walked file lifts pinned to real `mod x;` decls — a same-named
+/// file that exists for unrelated reasons (orphan, `#[path]`-mounted)
+/// must not be promoted just because it's on disk.
+fn lift_reexport_chain(
+    parent_file: &Path,
+    parent_decls: &[ModDecl],
+    path: &[String],
+    ctx: &WalkCtx,
+    stack: &mut Vec<(PathBuf, Visibility)>,
+) {
+    let mut current = parent_file.to_path_buf();
+    let mut decls: Vec<ModDecl> = parent_decls.to_vec();
+    let mut first = true;
+    for seg in path {
+        if !first {
+            let Some((src, tree)) = parse_rust(ctx, &current) else {
+                return;
+            };
+            decls = mod_decls(&tree, &src);
+        }
+        first = false;
+        if !decls.iter().any(|d| d.name == *seg) {
+            return;
+        }
+        let Some(child) = resolve_mod(&current, seg) else {
+            return;
+        };
+        stack.push((child.clone(), Visibility::Public));
+        current = child;
+    }
 }
 
 #[derive(Debug, Clone)]
@@ -1023,6 +1065,133 @@ fn mod_decls(tree: &Tree, source: &str) -> Vec<ModDecl> {
         out.push(ModDecl { name, is_pub });
     }
     out
+}
+
+/// Top-level `pub use self::...` re-exports as segment-paths *after*
+/// the leading `self`. One declaration may yield multiple paths when
+/// the use-clause is grouped or wildcarded
+/// (`pub use self::{a::X, b::*}` → `[["a", "X"], ["b"]]`). Restricted
+/// re-exports (`pub(crate) use`, no leading `self`) are skipped.
+fn pub_use_self_paths(tree: &Tree, source: &str) -> Vec<Vec<String>> {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    let mut out = Vec::new();
+    for child in root.children(&mut cursor) {
+        if child.kind() != "use_declaration" {
+            continue;
+        }
+        if !matches!(item_visibility(child, source), Some(Visibility::Public)) {
+            continue;
+        }
+        let mut paths = Vec::new();
+        if let Some(clause) = use_declaration_clause(child) {
+            collect_use_paths(clause, source, &Vec::new(), &mut paths);
+        }
+        for p in paths {
+            if p.first().is_some_and(|s| s == "self") && p.len() > 1 {
+                out.push(p[1..].to_vec());
+            }
+        }
+    }
+    out
+}
+
+/// The argument clause of a `use_declaration` — the part after `pub?
+/// use` and before the trailing `;`. Skips token children.
+fn use_declaration_clause(use_decl: Node) -> Option<Node> {
+    let mut cur = use_decl.walk();
+    use_decl
+        .children(&mut cur)
+        .find(|c| !matches!(c.kind(), "visibility_modifier" | "use" | ";"))
+}
+
+/// Recursively expand a use-clause into one path per enumerated leaf.
+/// `prefix` carries the segments accumulated from outer
+/// `scoped_use_list` / `scoped_identifier` wrappers; each leaf appends
+/// its own segments to `prefix` and pushes one entry into `out`.
+fn collect_use_paths(node: Node, source: &str, prefix: &[String], out: &mut Vec<Vec<String>>) {
+    match node.kind() {
+        "scoped_use_list" => {
+            let mut new_prefix = prefix.to_vec();
+            let mut path_done = false;
+            let mut cur = node.walk();
+            for c in node.children(&mut cur) {
+                if !path_done && append_path_segment(c, source, &mut new_prefix) {
+                    path_done = true;
+                } else if c.kind() == "use_list" {
+                    expand_use_list(c, source, &new_prefix, out);
+                }
+            }
+        }
+        "use_wildcard" => {
+            let mut new_prefix = prefix.to_vec();
+            let mut cur = node.walk();
+            for c in node.children(&mut cur) {
+                append_path_segment(c, source, &mut new_prefix);
+            }
+            out.push(new_prefix);
+        }
+        "use_as_clause" => {
+            let mut cur = node.walk();
+            for c in node.children(&mut cur) {
+                let mut segments = prefix.to_vec();
+                if append_path_segment(c, source, &mut segments) {
+                    out.push(segments);
+                    return;
+                }
+            }
+        }
+        "use_list" => expand_use_list(node, source, prefix, out),
+        _ => {
+            let mut segments = prefix.to_vec();
+            if append_path_segment(node, source, &mut segments) {
+                out.push(segments);
+            }
+        }
+    }
+}
+
+fn expand_use_list(node: Node, source: &str, prefix: &[String], out: &mut Vec<Vec<String>>) {
+    let mut cur = node.walk();
+    for item in node.children(&mut cur) {
+        if matches!(item.kind(), "{" | "}" | ",") {
+            continue;
+        }
+        collect_use_paths(item, source, prefix, out);
+    }
+}
+
+/// Append a path-root node's segments to `out`. Handles the four leaf
+/// shapes that can appear at the head of a use-clause: `scoped_identifier`
+/// (recursed via [`flatten_scoped_id`]), the `self` / `crate` / `super`
+/// path roots, and a bare `identifier`. Returns whether anything was
+/// appended — callers use the return to track when a `scoped_use_list`'s
+/// path prefix has been consumed.
+fn append_path_segment(node: Node, source: &str, out: &mut Vec<String>) -> bool {
+    match node.kind() {
+        "scoped_identifier" => {
+            flatten_scoped_id(node, source, out);
+            true
+        }
+        "self" | "crate" | "super" => {
+            out.push(node.kind().to_string());
+            true
+        }
+        "identifier" => {
+            out.push(source[node.start_byte()..node.end_byte()].to_string());
+            true
+        }
+        _ => false,
+    }
+}
+
+/// Flatten a `scoped_identifier` chain (`self::a::b::C` /
+/// `a::b::C` / `crate::x`) into segment strings.
+fn flatten_scoped_id(node: Node, source: &str, out: &mut Vec<String>) {
+    let mut cur = node.walk();
+    for c in node.children(&mut cur) {
+        append_path_segment(c, source, out);
+    }
 }
 
 /// Resolve a `mod x;` declaration in `parent_file` to the file that
@@ -1459,6 +1628,243 @@ pub mod inline_e { }
         assert_eq!(
             module_visibility(&ctx, &src.join("helpers.rs")),
             Visibility::Public
+        );
+    }
+
+    #[test]
+    fn rust_pub_use_self_paths_handles_grammar_shapes() {
+        let src = r#"
+pub use self::error::Error;
+pub use self::key::{Key, ToKey};
+pub use self::value::*;
+pub use self::source::Visitor as V;
+pub use self::a::b::Deep;
+pub use self::single_segment;
+pub use self::{first_grp::X, second_grp::*};
+pub use self::nested::{a::{x, y}, b};
+pub use crate::foo::Bar;
+pub use other::baz::Qux;
+pub(crate) use self::restricted::Hidden;
+use self::not_pub::Hidden;
+"#;
+        let tree = parse(src);
+        let mut paths = pub_use_self_paths(&tree, src);
+        paths.sort();
+        let expected: Vec<Vec<String>> = [
+            vec!["a", "b", "Deep"],
+            vec!["error", "Error"],
+            vec!["first_grp", "X"],
+            vec!["key", "Key"],
+            vec!["key", "ToKey"],
+            vec!["nested", "a", "x"],
+            vec!["nested", "a", "y"],
+            vec!["nested", "b"],
+            vec!["second_grp"],
+            vec!["single_segment"],
+            vec!["source", "Visitor"],
+            vec!["value"],
+        ]
+        .into_iter()
+        .map(|p| p.into_iter().map(String::from).collect())
+        .collect();
+        let mut expected_sorted = expected;
+        expected_sorted.sort();
+        assert_eq!(paths, expected_sorted);
+    }
+
+    #[test]
+    fn rust_pub_use_self_lifts_private_child_to_public() {
+        // log/src/kv/mod.rs shape — `mod x;` + `pub use self::x::Item;`
+        // is the motivating pattern for cross-file re-export tracking.
+        let dir = tempdir();
+        let src = dir.path().join("src");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(src.join("lib.rs"), "pub mod kv;\n").unwrap();
+        std::fs::create_dir_all(src.join("kv")).unwrap();
+        std::fs::write(
+            src.join("kv").join("mod.rs"),
+            "mod error;\npub use self::error::Error;\n",
+        )
+        .unwrap();
+        std::fs::write(src.join("kv").join("error.rs"), "pub struct Error;\n").unwrap();
+
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let map = compute_module_visibility(&ctx);
+        assert_eq!(
+            map.get(&src.join("kv").join("error.rs")),
+            Some(&Visibility::Public),
+            "error.rs should be lifted to Public via pub use re-export",
+        );
+    }
+
+    #[test]
+    fn rust_pub_use_self_does_not_lift_when_parent_restricted() {
+        // The parent's re-export only crosses to external API when the
+        // parent itself is on the external surface.
+        let dir = tempdir();
+        let src = dir.path().join("src");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(src.join("lib.rs"), "mod parent;\n").unwrap();
+        std::fs::create_dir_all(src.join("parent")).unwrap();
+        std::fs::write(
+            src.join("parent").join("mod.rs"),
+            "mod child;\npub use self::child::X;\n",
+        )
+        .unwrap();
+        std::fs::write(src.join("parent").join("child.rs"), "pub struct X;\n").unwrap();
+
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let map = compute_module_visibility(&ctx);
+        assert_eq!(
+            map.get(&src.join("parent").join("child.rs")),
+            Some(&Visibility::Restricted),
+        );
+    }
+
+    #[test]
+    fn rust_pub_use_self_handles_use_list_and_wildcard() {
+        for re_export in ["pub use self::child::{A, B};", "pub use self::child::*;"] {
+            let dir = tempdir();
+            let src = dir.path().join("src");
+            std::fs::create_dir_all(&src).unwrap();
+            std::fs::write(src.join("lib.rs"), format!("mod child;\n{re_export}\n")).unwrap();
+            std::fs::write(src.join("child.rs"), "pub struct A; pub struct B;\n").unwrap();
+
+            let ctx = WalkCtx::new(dir.path().to_path_buf());
+            let map = compute_module_visibility(&ctx);
+            assert_eq!(
+                map.get(&src.join("child.rs")),
+                Some(&Visibility::Public),
+                "re-export `{re_export}` should lift child.rs to Public",
+            );
+        }
+    }
+
+    #[test]
+    fn rust_pub_use_self_handles_grouped_under_self() {
+        // Outer `scoped_use_list` whose path-prefix is the bare `self`
+        // token (no `scoped_identifier`) — verifies the path_done logic.
+        let dir = tempdir();
+        let src = dir.path().join("src");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(
+            src.join("lib.rs"),
+            "mod a;\nmod b;\npub use self::{a::X, b::*};\n",
+        )
+        .unwrap();
+        std::fs::write(src.join("a.rs"), "pub struct X;\n").unwrap();
+        std::fs::write(src.join("b.rs"), "pub struct Y;\n").unwrap();
+
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let map = compute_module_visibility(&ctx);
+        assert_eq!(map.get(&src.join("a.rs")), Some(&Visibility::Public));
+        assert_eq!(map.get(&src.join("b.rs")), Some(&Visibility::Public));
+    }
+
+    #[test]
+    fn rust_pub_use_self_handles_use_as_clause() {
+        let dir = tempdir();
+        let src = dir.path().join("src");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(
+            src.join("lib.rs"),
+            "mod child;\npub use self::child::Item as Renamed;\n",
+        )
+        .unwrap();
+        std::fs::write(src.join("child.rs"), "pub struct Item;\n").unwrap();
+
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let map = compute_module_visibility(&ctx);
+        assert_eq!(map.get(&src.join("child.rs")), Some(&Visibility::Public),);
+    }
+
+    #[test]
+    fn rust_pub_use_self_walks_chain_through_private_mods() {
+        // The chain walks past private `mod b;` to lift b.rs because
+        // `pub use self::a::b::X` makes `b`'s contents publicly reachable
+        // even though `a.rs` only declares it privately.
+        let dir = tempdir();
+        let src = dir.path().join("src");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(src.join("lib.rs"), "mod a;\npub use self::a::b::X;\n").unwrap();
+        std::fs::create_dir_all(src.join("a")).unwrap();
+        std::fs::write(src.join("a").join("mod.rs"), "mod b;\n").unwrap();
+        std::fs::write(src.join("a").join("b.rs"), "pub struct X;\n").unwrap();
+
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let map = compute_module_visibility(&ctx);
+        assert_eq!(
+            map.get(&src.join("a").join("mod.rs")),
+            Some(&Visibility::Public),
+            "a should be lifted",
+        );
+        assert_eq!(
+            map.get(&src.join("a").join("b.rs")),
+            Some(&Visibility::Public),
+            "b should be lifted via chain walk through private mod",
+        );
+    }
+
+    #[test]
+    fn rust_pub_use_self_does_not_lift_undeclared_same_named_file() {
+        // Without the `mod b;` gate, an orphan `a/b.rs` on disk would
+        // be silently lifted by `pub use self::a::b::X;` even though
+        // it isn't actually a child mod of `a`.
+        let dir = tempdir();
+        let src = dir.path().join("src");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(src.join("lib.rs"), "mod a;\npub use self::a::b::X;\n").unwrap();
+        std::fs::create_dir_all(src.join("a")).unwrap();
+        std::fs::write(src.join("a").join("mod.rs"), "// no mod b\n").unwrap();
+        std::fs::write(src.join("a").join("b.rs"), "pub struct X;\n").unwrap();
+
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let map = compute_module_visibility(&ctx);
+        assert_eq!(
+            map.get(&src.join("a").join("mod.rs")),
+            Some(&Visibility::Public),
+        );
+        assert!(!map.contains_key(&src.join("a").join("b.rs")));
+        assert_eq!(
+            module_visibility(&ctx, &src.join("a").join("b.rs")),
+            Visibility::Restricted,
+        );
+    }
+
+    #[test]
+    fn rust_pub_use_without_self_prefix_does_not_lift() {
+        let dir = tempdir();
+        let src = dir.path().join("src");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(
+            src.join("lib.rs"),
+            "mod foo;\npub use crate::foo::Bar;\npub use my_crate::baz::Qux;\n",
+        )
+        .unwrap();
+        std::fs::write(src.join("foo.rs"), "pub struct Bar;\n").unwrap();
+
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let map = compute_module_visibility(&ctx);
+        assert_eq!(map.get(&src.join("foo.rs")), Some(&Visibility::Restricted),);
+    }
+
+    #[test]
+    fn rust_pub_use_with_inner_visibility_does_not_lift() {
+        let dir = tempdir();
+        let src = dir.path().join("src");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(
+            src.join("lib.rs"),
+            "mod child;\npub(crate) use self::child::X;\n",
+        )
+        .unwrap();
+        std::fs::write(src.join("child.rs"), "pub struct X;\n").unwrap();
+
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let map = compute_module_visibility(&ctx);
+        assert_eq!(
+            map.get(&src.join("child.rs")),
+            Some(&Visibility::Restricted),
         );
     }
 
