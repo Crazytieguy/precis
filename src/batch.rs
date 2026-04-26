@@ -104,12 +104,21 @@ pub enum RustKey {
     /// A single top-level `pub` item's declaration. For struct/enum/trait/
     /// type/const/static, the whole item (fields, variants, method sigs
     /// for traits). For fn/fn-sig, the signature with a `…` body marker.
-    /// No rustdoc — that's `PubItemDoc` refinement. Keyed by the item's
-    /// start line so each item has a distinct batch. Priority 1.x–4.x.
+    /// No rustdoc — that's the `PubItemDocLede` / `PubItemDocBody`
+    /// refinement. Keyed by the item's start line so each item has a
+    /// distinct batch. Priority 1.x–4.x.
     PubItem { file: PathBuf, start_line: usize },
-    /// Rustdoc (`///` / `/** */`) above a single `pub` item. Predecessor:
-    /// the matching `PubItem` at the same `start_line`. Priority 3.x.
-    PubItemDoc { file: PathBuf, start_line: usize },
+    /// First paragraph of the rustdoc (`///` / `/** */`) above a single
+    /// `pub` item — everything up to the first `# Heading` line, or
+    /// the whole doc when no heading is present. Predecessor: the
+    /// matching `PubItem` at the same `start_line`. Priority 3.x.
+    PubItemDocLede { file: PathBuf, start_line: usize },
+    /// Body of the rustdoc above a single `pub` item — from the first
+    /// `# Heading` onward. Predecessor: the matching `PubItemDocLede`
+    /// when one exists, otherwise the `PubItem` (for docs whose first
+    /// non-doctest-hidden line is already a heading — empty Lede would
+    /// otherwise dead-key the body). Priority 3.x–4.x.
+    PubItemDocBody { file: PathBuf, start_line: usize },
     /// Impl-block headers + method signatures in a single file. Priority 2.x.
     MethodSigs { file: PathBuf },
     /// `#[macro_export] macro_rules!` names across `src_dir` (cross-file
@@ -297,8 +306,11 @@ impl RustKey {
             RustKey::PubItem { file, start_line } => {
                 format!("pub item at {}:{}", display_path(file), start_line)
             }
-            RustKey::PubItemDoc { file, start_line } => {
-                format!("pub-item doc at {}:{}", display_path(file), start_line)
+            RustKey::PubItemDocLede { file, start_line } => {
+                format!("pub-item doc lede at {}:{}", display_path(file), start_line)
+            }
+            RustKey::PubItemDocBody { file, start_line } => {
+                format!("pub-item doc body at {}:{}", display_path(file), start_line)
             }
             RustKey::MethodSigs { file } => format!("impl method sigs in {}", display_path(file)),
             RustKey::MacroNames { src_dir } => {

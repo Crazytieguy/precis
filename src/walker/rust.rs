@@ -12,8 +12,13 @@
 //! Per-item keys (keyed by start line so each item has a distinct batch):
 //! - `PubItem { file, start_line }`: one pub item's declaration (struct
 //!   fields / enum variants / trait method sigs / fn signature; no rustdoc)
-//! - `PubItemDoc { file, start_line }`: rustdoc above that item,
-//!   predecessor = the matching `PubItem`
+//! - `PubItemDocLede { file, start_line }`: opening paragraph of the
+//!   item's rustdoc — up to the first `# Heading` line, or the whole
+//!   doc when no heading is present. Predecessor: matching `PubItem`.
+//! - `PubItemDocBody { file, start_line }`: rest of the item's rustdoc
+//!   from the first `# Heading` onward. Predecessor: matching
+//!   `PubItemDocLede` (or `PubItem` directly when the doc starts with a
+//!   heading and no Lede candidate is emitted).
 //!
 //! Cross-file keys (scoped by source directory):
 //! - `MacroNames { src_dir }`: exported macro name list
@@ -107,9 +112,6 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
                 file: file.clone(),
                 start_line: item.start_line,
             };
-            // PubItemNames is the parent surface listing; PubItem refines
-            // that file's header lines with full content. PubItemDoc
-            // refines PubItem with rustdoc.
             out.push(
                 candidate(
                     key.clone(),
@@ -118,17 +120,45 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
                 )
                 .with_predecessor(BatchKey::Rust(names_key.clone())),
             );
-            out.push(
-                candidate(
-                    RustKey::PubItemDoc {
-                        file: file.clone(),
-                        start_line: item.start_line,
-                    },
-                    pub_item_doc_signals(file, item.kind, item.surface, ctx),
-                    60,
-                )
-                .with_predecessor(BatchKey::Rust(key)),
-            );
+            // Pre-classify the doc-shape so empty Lede / empty Body
+            // candidates aren't emitted. An empty Lede with a Body
+            // predecessored on it would dead-key the body permanently
+            // via the scheduler's `materialize`-returns-`None` path.
+            let raw_doc = collect_pub_item_doc_raw(&tree, &source, item.start_line);
+            let lede_lines =
+                split_doc_lines_at_first_heading(raw_doc.clone(), &source, DocSection::Lede);
+            let body_lines = split_doc_lines_at_first_heading(raw_doc, &source, DocSection::Body);
+            let item_key = BatchKey::Rust(key);
+            let mut lede_emitted = None;
+            if !lede_lines.is_empty() {
+                let lede_key = RustKey::PubItemDocLede {
+                    file: file.clone(),
+                    start_line: item.start_line,
+                };
+                out.push(
+                    candidate(
+                        lede_key.clone(),
+                        pub_item_doc_lede_signals(file, item.kind, item.surface, ctx),
+                        DOC_SECTION_COST_HINT,
+                    )
+                    .with_predecessor(item_key.clone()),
+                );
+                lede_emitted = Some(BatchKey::Rust(lede_key));
+            }
+            if !body_lines.is_empty() {
+                let body_key = RustKey::PubItemDocBody {
+                    file: file.clone(),
+                    start_line: item.start_line,
+                };
+                out.push(
+                    candidate(
+                        body_key,
+                        pub_item_doc_body_signals(file, item.kind, item.surface, ctx),
+                        DOC_SECTION_COST_HINT,
+                    )
+                    .with_predecessor(lede_emitted.unwrap_or(item_key)),
+                );
+            }
         }
     }
 
@@ -192,15 +222,26 @@ pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
                 pub_item_signals(file, item.kind, item.surface, ctx),
             )
         }
-        RustKey::PubItemDoc { file, start_line } => {
+        RustKey::PubItemDocLede { file, start_line } => {
             let (source, tree) = parse_rust(ctx, file)?;
             let item = find_item_at(&tree, &source, *start_line)?;
-            let lines = collect_pub_item_doc(&tree, &source, *start_line);
+            let lines = collect_pub_item_doc_section(&tree, &source, *start_line, DocSection::Lede);
             single_file_lines_batch(
                 file,
                 &source,
                 lines,
-                pub_item_doc_signals(file, item.kind, item.surface, ctx),
+                pub_item_doc_lede_signals(file, item.kind, item.surface, ctx),
+            )
+        }
+        RustKey::PubItemDocBody { file, start_line } => {
+            let (source, tree) = parse_rust(ctx, file)?;
+            let item = find_item_at(&tree, &source, *start_line)?;
+            let lines = collect_pub_item_doc_section(&tree, &source, *start_line, DocSection::Body);
+            single_file_lines_batch(
+                file,
+                &source,
+                lines,
+                pub_item_doc_body_signals(file, item.kind, item.surface, ctx),
             )
         }
         RustKey::MethodSigs { file } => mat_per_file(
@@ -456,7 +497,7 @@ fn pub_item_signals(
     }
 }
 
-fn pub_item_doc_signals(
+fn pub_item_doc_lede_signals(
     file: &Path,
     kind: ItemKind,
     surface: ApiSurface,
@@ -471,6 +512,37 @@ fn pub_item_doc_signals(
         depth_factor: file_depth_factor(file, ctx),
     }
 }
+
+/// Body weights are a strict refinement of the lede: body rarely adds
+/// catastrophic info beyond what the lede already covered (so halve
+/// catastrophic), follow-up stays close to the lede's value because
+/// `# Examples` does save tool calls (0.55 vs lede 0.6), and ztu
+/// drops to 0.55 since example walls add only marginal understanding
+/// over the lede prose.
+fn pub_item_doc_body_signals(
+    file: &Path,
+    kind: ItemKind,
+    surface: ApiSurface,
+    ctx: &WalkCtx,
+) -> ValueSignals {
+    let k = kind.kind_weight();
+    let s = effective_surface(surface, ctx, file).factor();
+    ValueSignals {
+        catastrophic_omission: (0.10 * k * s * entrypoint_boost(file)).min(1.0),
+        follow_up_minimization: (0.55 * k * s).min(1.0),
+        zero_tool_call_understanding: 0.55 * s,
+        depth_factor: file_depth_factor(file, ctx),
+    }
+}
+
+/// Cost-hint for `PubItemDocLede` and `PubItemDocBody` candidates. The
+/// hint is required to be a strict lower bound on the
+/// post-materialization cost (so the speculative ratio stays an upper
+/// bound — see [`super::Candidate::cost_hint`]). 1 is the safe floor
+/// for any non-empty rendered batch; the same value is used for the
+/// markdown sub-section keys for the same reason. Empty doc sections
+/// are filtered at expand time by [`classify_pub_item_doc`].
+const DOC_SECTION_COST_HINT: usize = 1;
 
 /// Combine a per-item local `ApiSurface` with the file's effective
 /// crate-visibility from `module_visibility`. `doc_hidden` passes through.
@@ -617,42 +689,138 @@ fn collect_module_doc_lines(tree: &Tree, source: &str, section: DocSection) -> V
         }
         break;
     }
-    if all.is_empty() {
+    split_doc_lines_at_first_heading(all, source, section)
+}
+
+/// Apply the shared rustdoc heading-split: drop hidden doctest lines,
+/// then partition the remaining lines at the first ATX heading. Used by
+/// both module-level (`//!`) and item-level (`///`, `/** */`) doc
+/// collectors so the heading rule has one source of truth.
+fn split_doc_lines_at_first_heading(
+    lines: Vec<usize>,
+    source: &str,
+    section: DocSection,
+) -> Vec<usize> {
+    if lines.is_empty() {
         return Vec::new();
     }
-    let all = strip_hidden_doctest_lines(all, source);
+    let stripped = strip_hidden_doctest_lines(lines, source);
     let src_lines: Vec<&str> = source.lines().collect();
-    let heading_pos = all.iter().position(|&n| {
-        src_lines.get(n - 1).is_some_and(|t| {
-            t.trim_start()
-                .trim_start_matches("//!")
-                .trim_start()
-                .starts_with('#')
-        })
+    let heading_pos = stripped.iter().position(|&n| {
+        src_lines
+            .get(n - 1)
+            .and_then(|raw| normalize_rustdoc_line(raw))
+            .is_some_and(is_doc_atx_heading)
     });
     match (section, heading_pos) {
-        (DocSection::Lede, Some(idx)) => all[..idx].to_vec(),
-        (DocSection::Body, Some(idx)) => all[idx..].to_vec(),
-        (DocSection::Lede, None) => all,
+        (DocSection::Lede, Some(idx)) => stripped[..idx].to_vec(),
+        (DocSection::Body, Some(idx)) => stripped[idx..].to_vec(),
+        (DocSection::Lede, None) => stripped,
         (DocSection::Body, None) => Vec::new(),
     }
 }
 
-/// Drop rustdoc doctest-hidden lines. In a `///` or `//!` rustdoc block,
-/// lines whose first non-whitespace token is `# ` or a bare `#`, while
-/// inside a Rust fenced code block (` ``` ` or ` ~~~ ` with empty/`rust`/
-/// `no_run`/`ignore`/`compile_fail`/`should_panic`/`edition*` info-string),
-/// are scaffolding rustdoc strips from the rendered HTML. Keeping them in a
+/// Strip the rustdoc comment marker from a raw source line and return
+/// the post-marker content. Returns `None` for purely structural lines
+/// (the `/**` / `/*!` opener with no body, the `*/` closer, or a lone
+/// `*` continuation marker) — those carry no doc content and shouldn't
+/// participate in fence/heading detection.
+///
+/// Recognized prefixes (longest-match first so `///` / `//!` always win
+/// over the `*` continuation rule):
+///   - `///` (with up to one optional space after)
+///   - `//!` (with up to one optional space after)
+///   - `/**` opener; if the post-marker remainder is whitespace only,
+///     return `None`; else return the remainder (single-line block doc).
+///   - `/*!` opener; same as above.
+///   - ` * ` / ` *` block-doc continuation (any leading whitespace
+///     tolerated; one optional space after the `*` consumed).
+///   - ` */` closer → `None`.
+fn normalize_rustdoc_line(raw: &str) -> Option<&str> {
+    let trimmed = raw.trim_start();
+    if let Some(rest) = trimmed.strip_prefix("///") {
+        return Some(rest.strip_prefix(' ').unwrap_or(rest));
+    }
+    if let Some(rest) = trimmed.strip_prefix("//!") {
+        return Some(rest.strip_prefix(' ').unwrap_or(rest));
+    }
+    if let Some(rest) = trimmed.strip_prefix("/**") {
+        let body = rest.strip_prefix(' ').unwrap_or(rest);
+        if body.trim().is_empty() {
+            return None;
+        }
+        return Some(body);
+    }
+    if let Some(rest) = trimmed.strip_prefix("/*!") {
+        let body = rest.strip_prefix(' ').unwrap_or(rest);
+        if body.trim().is_empty() {
+            return None;
+        }
+        return Some(body);
+    }
+    if trimmed.starts_with("*/") {
+        return None;
+    }
+    if let Some(rest) = trimmed.strip_prefix('*') {
+        let body = rest.strip_prefix(' ').unwrap_or(rest);
+        if body.trim().is_empty() {
+            return None;
+        }
+        return Some(body);
+    }
+    None
+}
+
+/// Match the Markdown ATX heading rule on already-normalized rustdoc
+/// content. CommonMark accepts 0–3 leading spaces of indentation, then
+/// 1–6 `#` characters, then either end-of-line or a space/tab. Rejects
+/// `#######` (7 hashes, more than ATX allows), `#!` (the `#![attr]`
+/// shape), and `#[` (the `#[attr]` shape) — both of which appear in
+/// rustdoc examples and would be false-positive headings.
+fn is_doc_atx_heading(content: &str) -> bool {
+    // Leading indent: tolerate up to 3 spaces (CommonMark).
+    let mut indent = 0usize;
+    for b in content.bytes() {
+        if b == b' ' && indent < 3 {
+            indent += 1;
+        } else {
+            break;
+        }
+    }
+    let after_indent = &content[indent..];
+    let mut hashes = 0usize;
+    for b in after_indent.bytes() {
+        if b == b'#' && hashes < 7 {
+            hashes += 1;
+        } else {
+            break;
+        }
+    }
+    if !(1..=6).contains(&hashes) {
+        return false;
+    }
+    let after_hashes = &after_indent[hashes..];
+    matches!(after_hashes.bytes().next(), None | Some(b' ' | b'\t'))
+}
+
+/// Drop rustdoc doctest-hidden lines. In any rustdoc block (`///`,
+/// `//!`, or `/** */` / `/*! */`), lines whose first non-whitespace
+/// token is `# ` or a bare `#`, while inside a Rust fenced code block
+/// (` ``` ` or ` ~~~ ` with empty/`rust`/`no_run`/`ignore`/
+/// `compile_fail`/`should_panic`/`edition*` info-string), are
+/// scaffolding rustdoc strips from the rendered HTML. Keeping them in a
 /// token-budgeted summary spends real tokens on content the human reader
 /// of the docs never sees.
 ///
 /// Operates on a sorted list of 1-based source line numbers, all expected
-/// to belong to one contiguous rustdoc block. Walks the lines linearly with
-/// a tiny fence state machine. Lines that aren't doc-prefixed (`///` or
-/// `//!`) are passed through unchanged so block doc comments (`/** */`) and
-/// non-doc inputs are unaffected. Consistent with existing line-level
-/// filtering in `mod_use` / `build_file_spans`; preserves honest rendering
-/// (output is still a verbatim subset of the source — just a smaller one).
+/// to belong to one contiguous rustdoc block. The fence state machine
+/// runs on the *normalized* content (post comment-marker), so
+/// `/** ` / ` * ` / ` */` block-doc continuation lines participate too.
+/// Lines whose normalized form is `None` (the bare `/**` opener,
+/// `*/` closer, or lone `*` continuation) are passed through unchanged
+/// — they're structural and never the target of stripping. Preserves
+/// honest rendering (output is still a verbatim subset of the source —
+/// just a smaller one).
 fn strip_hidden_doctest_lines(lines: Vec<usize>, source: &str) -> Vec<usize> {
     if lines.is_empty() {
         return lines;
@@ -667,17 +835,10 @@ fn strip_hidden_doctest_lines(lines: Vec<usize>, source: &str) -> Vec<usize> {
             out.push(n);
             continue;
         };
-        let after_ws = raw.trim_start();
-        let stripped = after_ws
-            .strip_prefix("//!")
-            .or_else(|| after_ws.strip_prefix("///"));
-        let Some(content) = stripped else {
+        let Some(content) = normalize_rustdoc_line(raw) else {
             out.push(n);
             continue;
         };
-        // Strip up to one space after the prefix (rustdoc's leading-space
-        // convention for the comment body).
-        let content = content.strip_prefix(' ').unwrap_or(content);
 
         if let Some((kind, info)) = open_fence(content) {
             state = match state {
@@ -799,8 +960,9 @@ fn collect_pub_item_names(tree: &Tree, source: &str) -> FileLines {
 }
 
 /// Lines for a single pub item's decl at `start_line`. For struct/enum/
-/// trait/union: whole item (fields/variants/method sigs). For fn: signature
-/// with body-elision marker. No outer rustdoc — that's `PubItemDoc`.
+/// trait/union: whole item (fields/variants/method sigs). For fn:
+/// signature with body-elision marker. No outer rustdoc — that's
+/// `PubItemDocLede` and `PubItemDocBody`.
 fn collect_pub_item(tree: &Tree, source: &str, start_line: usize) -> FileLines {
     let root = tree.root_node();
     let mut cursor = root.walk();
@@ -832,9 +994,24 @@ fn collect_pub_item(tree: &Tree, source: &str, start_line: usize) -> FileLines {
     FileLines::new(Vec::new())
 }
 
-/// Outer rustdoc (`///` / `/** */`) immediately preceding the item at
-/// `start_line`. Returns empty when the item has no outer doc.
-fn collect_pub_item_doc(tree: &Tree, source: &str, start_line: usize) -> FileLines {
+/// Lines of the lede or body section of the outer rustdoc preceding
+/// the item at `start_line`. Both sections share the same heading-split
+/// logic as the crate-level `//!` doc: doctest-hidden lines are stripped
+/// first, then the remaining lines are partitioned at the first ATX
+/// heading. Returns empty when the requested section is empty (note that
+/// `expand` filters out empty Lede/Body candidates pre-emission, so a
+/// scheduled key always produces at least one line in practice).
+fn collect_pub_item_doc_section(
+    tree: &Tree,
+    source: &str,
+    start_line: usize,
+    section: DocSection,
+) -> FileLines {
+    let raw = collect_pub_item_doc_raw(tree, source, start_line);
+    FileLines::new(split_doc_lines_at_first_heading(raw, source, section))
+}
+
+fn collect_pub_item_doc_raw(tree: &Tree, source: &str, start_line: usize) -> Vec<usize> {
     let root = tree.root_node();
     let mut cursor = root.walk();
     for child in root.children(&mut cursor) {
@@ -843,10 +1020,9 @@ fn collect_pub_item_doc(tree: &Tree, source: &str, start_line: usize) -> FileLin
         }
         let mut out = Vec::new();
         collect_outer_docs_above(child, source, &mut out);
-        let out = strip_hidden_doctest_lines(dedup_sorted(out), source);
-        return FileLines::new(out);
+        return dedup_sorted(out);
     }
-    FileLines::new(Vec::new())
+    Vec::new()
 }
 
 fn collect_method_sigs(tree: &Tree, _source: &str) -> FileLines {
@@ -2115,11 +2291,165 @@ pub fn anchor() {}
     }
 
     #[test]
-    fn rust_strip_hidden_lines_block_comment_passthrough() {
-        // Block doc comments `/** */` aren't filtered (helper passes
-        // through any line whose prefix isn't `///` or `//!`).
+    fn rust_strip_hidden_lines_block_doc_unmarked_lines_pass_through() {
+        // Block doc lines without a `*` continuation marker (rare but
+        // syntactically allowed) normalize to `None` and pass through
+        // — they aren't recognized as fence/heading candidates.
         let src = "/** ```\n# would-be-hidden-but-not-handled\nreal\n``` */\n";
         let got = strip_via(src);
         assert!(got.contains("# would-be-hidden-but-not-handled"));
+    }
+
+    #[test]
+    fn rust_strip_hidden_lines_block_doc_strips_starred_hidden_inside_fence() {
+        // Block doc with proper `*` continuation: ` * # use ...` inside a
+        // Rust fence is hidden scaffolding and must be stripped, just like
+        // `/// # use ...` and `//! # use ...` are today.
+        let src = "/**\n * ```\n * # use crate::X;\n * real\n * ```\n */\n";
+        let got = strip_via(src);
+        assert!(
+            !got.contains("# use crate::X"),
+            "block-doc hidden line not stripped; got: {got}",
+        );
+        assert!(
+            got.contains("* real"),
+            "visible block-doc line missing; got: {got}",
+        );
+    }
+
+    #[test]
+    fn rust_doc_atx_heading_predicate() {
+        // 1–6 hashes with trailing space accepted.
+        for n in 1..=6 {
+            let s = format!("{} Heading", "#".repeat(n));
+            assert!(is_doc_atx_heading(&s), "{n} hashes + space rejected: {s}");
+        }
+        // 1–6 hashes with EOL accepted.
+        for n in 1..=6 {
+            let s = "#".repeat(n);
+            assert!(is_doc_atx_heading(&s), "{n} hashes + EOL rejected: {s}");
+        }
+        // 7 hashes rejected.
+        assert!(!is_doc_atx_heading("####### too many"));
+        // Attribute shapes rejected.
+        assert!(!is_doc_atx_heading("#![feature(x)]"));
+        assert!(!is_doc_atx_heading("#[derive(D)]"));
+        // Hash without trailing space/tab/EOL rejected.
+        assert!(!is_doc_atx_heading("#x"));
+        // Tab after hashes accepted.
+        assert!(is_doc_atx_heading("##\tHeading"));
+        // CommonMark allows up to 3 leading spaces of indent.
+        assert!(is_doc_atx_heading("   # Heading"));
+        // 4 spaces of indent → code block, not a heading.
+        assert!(!is_doc_atx_heading("    # Heading"));
+    }
+
+    fn collect_doc_section_lines(src: &str, section: DocSection) -> Vec<String> {
+        let tree = parse(src);
+        let item_start = tree
+            .root_node()
+            .children(&mut tree.root_node().walk())
+            .find_map(|c| (item_visibility(c, src).is_some()).then(|| c.start_position().row + 1))
+            .expect("test source must contain a pub item");
+        let lines = collect_pub_item_doc_section(&tree, src, item_start, section);
+        let src_lines: Vec<&str> = src.lines().collect();
+        lines
+            .full
+            .into_iter()
+            .map(|n| src_lines[n - 1].to_string())
+            .collect()
+    }
+
+    #[test]
+    fn rust_pub_item_doc_lede_body_split_at_heading() {
+        let src = "/// Summary line.\n/// More prose.\n///\n/// # Examples\n/// example()\npub fn foo() {}\n";
+        let lede = collect_doc_section_lines(src, DocSection::Lede);
+        let body = collect_doc_section_lines(src, DocSection::Body);
+        assert!(
+            lede.iter().any(|l| l.contains("Summary line")),
+            "lede missing summary: {lede:?}",
+        );
+        assert!(
+            !lede.iter().any(|l| l.contains("# Examples")),
+            "lede crossed heading: {lede:?}",
+        );
+        assert!(
+            body.first().is_some_and(|l| l.contains("# Examples")),
+            "body should start at heading: {body:?}",
+        );
+        assert!(body.iter().any(|l| l.contains("example()")));
+    }
+
+    #[test]
+    fn rust_pub_item_doc_no_heading_emits_only_lede() {
+        let src = "/// Summary line.\n/// More prose.\npub fn foo() {}\n";
+        let lede = collect_doc_section_lines(src, DocSection::Lede);
+        let body = collect_doc_section_lines(src, DocSection::Body);
+        assert!(!lede.is_empty(), "lede should cover the doc: {lede:?}");
+        assert!(body.is_empty(), "body should be empty: {body:?}");
+    }
+
+    #[test]
+    fn rust_pub_item_doc_starts_with_heading_emits_only_body() {
+        // When the doc's first non-hidden line is already an ATX heading,
+        // the lede is empty. `expand` must wire the Body's predecessor to
+        // `PubItem` (not the absent Lede); see `walker::expand`.
+        let src = "/// # Examples\n/// example()\npub fn foo() {}\n";
+        let lede = collect_doc_section_lines(src, DocSection::Lede);
+        let body = collect_doc_section_lines(src, DocSection::Body);
+        assert!(lede.is_empty(), "lede should be empty: {lede:?}");
+        assert!(body.iter().any(|l| l.contains("# Examples")));
+    }
+
+    #[test]
+    fn rust_pub_item_doc_strips_hidden_doctest_before_split() {
+        // Hidden `# use ...` inside a Rust fence at the *start* of the
+        // doc must not be classified as a heading.
+        let src = "/// ```\n/// # use foo;\n/// real()\n/// ```\n///\n/// # Real Heading\n/// detail\npub fn foo() {}\n";
+        let body = collect_doc_section_lines(src, DocSection::Body);
+        assert!(
+            body.first().is_some_and(|l| l.contains("# Real Heading")),
+            "body should start at real heading: {body:?}",
+        );
+    }
+
+    #[test]
+    fn rust_pub_item_doc_block_doc_split_at_starred_heading() {
+        let src = "/**\n * Summary.\n *\n * # Examples\n * example()\n */\npub fn foo() {}\n";
+        let lede = collect_doc_section_lines(src, DocSection::Lede);
+        let body = collect_doc_section_lines(src, DocSection::Body);
+        assert!(
+            lede.iter().any(|l| l.contains("Summary.")),
+            "lede missing summary: {lede:?}",
+        );
+        assert!(
+            !lede.iter().any(|l| l.contains("# Examples")),
+            "lede crossed heading: {lede:?}",
+        );
+        assert!(
+            body.iter().any(|l| l.contains("# Examples")),
+            "body missing heading: {body:?}",
+        );
+    }
+
+    #[test]
+    fn rust_pub_item_doc_block_doc_strips_hidden_doctest_before_split() {
+        let src = "/**\n * ```\n * # use crate::X;\n * real()\n * ```\n *\n * # Real Heading\n * detail\n */\npub fn foo() {}\n";
+        let body = collect_doc_section_lines(src, DocSection::Body);
+        assert!(
+            body.first().is_some_and(|l| l.contains("# Real Heading")),
+            "body should start at real heading: {body:?}",
+        );
+    }
+
+    #[test]
+    fn rust_pub_item_doc_attribute_lines_are_not_headings() {
+        // Visible `#![...]` and `#[...]` inside a doc fence must not be
+        // mistaken for ATX headings. With no real heading, body is empty.
+        let src = "/// Summary.\n/// ```\n/// #![feature(x)]\n/// #[derive(D)]\n/// real()\n/// ```\npub fn foo() {}\n";
+        let lede = collect_doc_section_lines(src, DocSection::Lede);
+        let body = collect_doc_section_lines(src, DocSection::Body);
+        assert!(!lede.is_empty(), "lede should cover the doc: {lede:?}");
+        assert!(body.is_empty(), "body should be empty: {body:?}");
     }
 }

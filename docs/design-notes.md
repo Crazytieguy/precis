@@ -295,11 +295,75 @@ like to revisit whether it's still earning its complexity.
      keys is deferred until a fixture surfaces it.
 
 ### Render
+- **`PubItemDocLede` / `PubItemDocBody` split** — DONE. The single
+  `PubItemDoc` per-item rustdoc batch is now split at the first ATX
+  heading, mirroring the `CrateDocLede` / `CrateDocBody` shape that
+  already exists for `//!` module-level docs. Lede covers the doc up
+  to (but not including) the first `# Heading` line; Body covers
+  from the heading onward. A new shared
+  `split_doc_lines_at_first_heading` helper drives both module-doc
+  and item-doc collectors, and a new `normalize_rustdoc_line` +
+  `is_doc_atx_heading` pair handles all four prefix shapes
+  (`///`, `//!`, `/** */`, `/*! */` plus ` * ` continuation) with
+  CommonMark-conformant ATX heading detection (1–6 hashes + space/
+  tab/EOL, 0–3 spaces of leading indent allowed; rejects `#!`, `#[`,
+  and 7+ hashes). `strip_hidden_doctest_lines` was refactored to use
+  the same normalizer so block-doc continuation lines participate in
+  fence/`#`-stripping too — previously only `///` / `//!` lines were
+  filtered. Pre-classification at `expand` time computes the lede /
+  body line sets directly and emits 0–2 candidates: only-Lede →
+  predecessor `PubItem`; only-Body → predecessor `PubItem` (avoids
+  the dead-key trap an empty-Lede predecessor would create); both →
+  Body's predecessor is Lede.
+
+  Final shipped signal weights:
+  `pub_item_doc_lede_signals` = today's `PubItemDoc` (catastrophic
+  `0.20*k*boost`, follow_up `0.6*k clamped 1.0`, ztu 0.8).
+  `pub_item_doc_body_signals` = strict refinement (catastrophic
+  `0.10*k*boost`, follow_up `0.55*k clamped 1.0`, ztu 0.55) — body
+  rarely adds catastrophic info beyond the lede. Cost-hint = 1 for
+  both (the speculative-bound contract requires a strict lower
+  bound; 60 was an overestimate that, post-split, would have
+  undervalued tiny ledes; matches the existing `SUB_SECTION_COST_HINT`
+  pattern in `markdown.rs`).
+
+  Sim deltas across the 10 fixtures: anyhow +0.008 (0.380→0.388),
+  log Sim flat-ish (0.539→0.536, -0.003 within tolerance) but
+  Reached 13→14 and Used 7976→9967 (+1991 tokens of newly-fitting
+  content — log's `pub-item doc body at src/lib.rs:<n>` rollup
+  drops from 12 rows / 2406 tokens to 12 lede rows / 1301 tokens
+  + 2 body rows / 159 tokens, freeing ~1000 tokens for
+  `macro_export bodies across src` and other batches). mdbook
+  flat Sim, no Reached change, Used 9956→9996. Other 7 fixtures
+  unchanged. Aggregate Sim 4.117 → 4.122 (+0.005), aggregate
+  Reached 161 → 162 (+1). All four acceptance gates passed.
+
+  Plan + 3 plan-review rounds (codex) in
+  `ignore/plan-pubitem-doc-lede-body-v2.md`. Codex caught three
+  P1s during planning: (1) cost-hint 60 is not a true lower bound
+  for short ledes; (2) the original ATX predicate was too broad
+  (`starts_with('#')` would treat `#![...]` and `#[...]` as
+  headings); (3) block-doc lines (` * # Examples`) need
+  normalization before the heading scan, *and* the existing
+  `strip_hidden_doctest_lines` had to be extended to handle them
+  (otherwise a hidden `* # use crate::X;` inside a block-doc
+  fence would survive stripping and become a false-positive
+  heading). All addressed before implementation.
+
+  Caveat: anyhow's Context trait doc body still schedules
+  (~1160 off-NS tokens at t=8026), but late enough in the
+  schedule that earlier batches now fit better. A more aggressive
+  body weight cut would drop more bodies but risks regressing
+  fixtures whose NS atoms credit body content (anyhow's `Error`
+  doc body carries 4 NS atoms about Display/Debug reprs). Current
+  weights chosen as the safe middle.
+
 - **Rustdoc doctest-hidden lines** — DONE. `strip_hidden_doctest_lines`
   in `src/walker/rust.rs` drops `# foo` and lone-`#` lines inside Rust
   fenced code blocks (` ``` ` and `~~~`, default lang or
   `rust`/`no_run`/`ignore`/`compile_fail`/`should_panic`/`edition*`)
-  within `///` and `//!` rustdoc. Filter runs *inside*
+  within `///`, `//!`, and (post the lede/body split — see entry
+  above) `/** */` / `/*! */` rustdoc. Filter runs *inside*
   `collect_module_doc_lines` before the lede/body heading-split — a
   crate doc that opens with a fenced example whose first line is
   `//! # use crate::X;` would otherwise mis-split on the doctest
@@ -705,14 +769,25 @@ the calibration artifact. Two items previously deferred:
 
 ### Calibration target surfaced by the rollup
 
-With the rollup live, the dominant waste pattern across fixtures is
-clear: `pub-item doc at <lib.rs>:<n>` (log: 14 rows / 3572 tokens;
-anyhow: 5 / 2725; mdbook: 2 / 600). README/docs sections are the
-secondary cluster (cmdk: 5 / 2948; ky: 5 / 1007; mitt: 2 / 294).
-**PubItem rebalance applied (catastrophic ↓ on PubItemDoc):** post-
-change the log waste rollup is 13 rows / ~2700 tokens (down from 14 /
+With the rollup live, the dominant waste pattern across fixtures was
+`pub-item doc at <lib.rs>:<n>` (log: 14 rows / 3572 tokens; anyhow:
+5 / 2725; mdbook: 2 / 600). README/docs sections are the secondary
+cluster (cmdk: 5 / 2948; ky: 5 / 1007; mitt: 2 / 294).
+**PubItem rebalance applied (catastrophic ↓ on PubItemDoc):**
+log waste rollup dropped to 13 rows / ~2700 tokens (from 14 /
 3572) — modest reduction, as expected from a calibration nudge that
 preserves load-bearing PubItemDocs.
+
+**`PubItemDoc` lede/body split applied (see Render section above):**
+log rollup further split into 12 lede rows / 1301 tokens + 2 body
+rows / 159 tokens (total 1460, down from ~2700); anyhow split into
+3 lede rows / 573 tokens + 3 body rows / 1435 tokens (the Context
+trait body still fires but late). With both calibration interventions
+shipped, README/docs sections are now the dominant remaining waste
+pattern (anyhow: 10 README rows / 1767 tokens). README index decay
+already applied; further attack on the README cluster would either
+need more aggressive decay (risks dropping high-tier sections) or
+NS amendments crediting more README content.
 
 ### Walker calibration — tier-3 falloff is the open lever
 

@@ -941,13 +941,14 @@ fn format_walker_waste_rollup<'a>(
 /// rewritten.
 ///
 /// Recognized shapes (extend if a new walker adds a positional descriptor):
-/// - `(pub item|pub-item doc|export|export doc) at <path>:<line>`
-///   → `… at <path>:<n>`
+/// - `(pub item|pub-item doc lede|pub-item doc body|export|export doc)
+///    at <path>:<line>` → `… at <path>:<n>`
 /// - `<path>.md section #<index>` → `<path>.md section #<n>`
 fn pattern_template(descriptor: &str) -> String {
     const LINE_PREFIXES: &[&str] = &[
         "pub item at ",
-        "pub-item doc at ",
+        "pub-item doc lede at ",
+        "pub-item doc body at ",
         "export at ",
         "export doc at ",
     ];
@@ -1125,8 +1126,12 @@ mod tests {
             "pub item at src/lib.rs:<n>"
         );
         assert_eq!(
-            pattern_template("pub-item doc at src/lib.rs:1478"),
-            "pub-item doc at src/lib.rs:<n>"
+            pattern_template("pub-item doc lede at src/lib.rs:1478"),
+            "pub-item doc lede at src/lib.rs:<n>"
+        );
+        assert_eq!(
+            pattern_template("pub-item doc body at src/lib.rs:1478"),
+            "pub-item doc body at src/lib.rs:<n>"
         );
         assert_eq!(
             pattern_template("export at source/types/hooks.ts:48"),

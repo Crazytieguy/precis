@@ -58,8 +58,8 @@ fn preload(cache: &SourceCache, path: &Path, contents: &str) {
 #[test]
 fn scheduler_invariants_override_via_predecessor_chain() {
     // Three batches: a folder listing → a `PubItem` carrying Truncated
-    // spans → a `PubItemDoc` refinement (with PubItem as predecessor) that
-    // overrides line 1 with its Full version.
+    // spans → a `PubItemDocLede` refinement (with PubItem as predecessor)
+    // that overrides line 1 with its Full version.
     struct OverrideChain;
     impl Walker for OverrideChain {
         type Key = BatchKey;
@@ -76,7 +76,7 @@ fn scheduler_invariants_override_via_predecessor_chain() {
                 vec![
                     Candidate::new(decls.clone(), sig(0.5), 50),
                     Candidate::new(
-                        BatchKey::Rust(RustKey::PubItemDoc {
+                        BatchKey::Rust(RustKey::PubItemDocLede {
                             file: stub_file("synthetic.rs"),
                             start_line: 1,
                         }),
@@ -123,7 +123,7 @@ fn scheduler_invariants_override_via_predecessor_chain() {
                     },
                     signals: sig(0.5),
                 }),
-                BatchKey::Rust(RustKey::PubItemDoc { .. }) => Some(ResolvedBatch {
+                BatchKey::Rust(RustKey::PubItemDocLede { .. }) => Some(ResolvedBatch {
                     content: BatchContent::Lines {
                         spans: single_span(stub_file("synthetic.rs"), 1, 1, Render::Full),
                     },
