@@ -339,9 +339,39 @@ like to revisit whether it's still earning its complexity.
   batches. Aggregate Sim delta across the 10 fixtures: +0.007
   (cmdk +0.006, mitt +0.005, otree −0.004, others within
   ±0.001). All Reached counts preserved. Plan + 3 plan-review
-  rounds in `ignore/plan-h3-splitting.md`. **Still deferred**:
-  bullet-item splitting for content-style sections (anyhow's
-  `## Details`).
+  rounds in `ignore/plan-h3-splitting.md`.
+- **Bullet-list splitting** — DONE. An H2 whose non-decorative
+  content is exactly one `list` block (with the standard size gates
+  applied to the *substantive* item set: ≥`BULLET_MIN_ITEMS = 3`
+  items, ≥`BULLET_MIN_LARGE_ITEMS = 2` items above
+  `BULLET_LARGE_ITEM_BYTES = 200` source bytes, ≥`H2_SPLIT_BYTES`
+  total, non-changelog file class, outline emitted) is subdivided
+  into one optional `Intro` (when the H2's pre-list body is
+  substantive — typically dropped, since the predicate's target
+  shape is heading-immediately-followed-by-list) plus one
+  `BulletItem` per substantive top-level list item. Decorative
+  siblings around the list (`<br>`, image-only paragraphs) are
+  tolerated by the predicate but not preserved by any emitted
+  range — the headline / outline batches make the same trade.
+  Constants `H3_CHILD_SIGNAL_SCALE` / `H3_CHILD_COST_HINT` were
+  renamed to `SUB_SECTION_SIGNAL_SCALE` / `SUB_SECTION_COST_HINT`
+  and now apply to both `H3Child` and `BulletItem` ranges.
+  Sim deltas across the 10 fixtures: anyhow +0.001 (the 1125-token
+  `## Details` body splits into 6 BulletItem batches of
+  ~120-260 tokens; per-bullet ranking lets the scheduler interleave
+  them with other batches), superstruct +0.003 (the previously-
+  monolithic `### Principles` 304-token batch splits into 5
+  numbered-bullet BulletItems, freeing budget for the
+  `docs/reference/core.md` outline and `src/structs/refinements.ts`
+  exports — both visible in the post-regen rendered snapshot).
+  Other 8 fixtures unchanged. Plan + 3 plan-review rounds (codex)
+  and one adversarial review on the implementation in
+  `ignore/plan-bullet-split.md`. Codex caught two real issues
+  during planning (decorative-trailing-block tolerance; conditional
+  Intro instead of always-emit) and one during implementation
+  review (selection vs emission item sets must be the same — fixed
+  by having `should_split_by_bullets` filter to substantive items
+  before applying the count/large-item gates).
 - **Outline-Section ancestor coupling** — `MarkdownKey::HeadingsOutline`
   is the predecessor of every `Section` in the file when emitted.
   Without that edge, both batches would render the same heading rows

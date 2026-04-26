@@ -135,14 +135,18 @@ pub enum MarkdownKey {
     HeadingsOutline { file: PathBuf },
     /// One scheduling unit of a markdown file's body, indexed by its
     /// 0-based position in the walker's logical-section list. The
-    /// granularity is variable: a small or single-H3 H2 stays as a
-    /// `Whole` range, while a content-heavy H2 with ≥2 H3 children
-    /// (and the file's outline emitted) is subdivided into one
-    /// `Intro` plus one `H3Child` per H3 — letting the scheduler
-    /// pick relevant sub-sections instead of an all-or-nothing
-    /// commit to the whole H2. The split classification lives in the
-    /// walker (not on this key) — `section_index` is the post-split
-    /// logical index. For `README.md`, section 0 is the first section
+    /// granularity is variable: most H2s stay as a single `Whole`
+    /// range; content-heavy H2s (and the file's outline emitted) are
+    /// subdivided either as a *bullet split* (an H2 whose
+    /// non-decorative content is a single bullet list, one batch per
+    /// top-level item — anyhow `## Details` shape) or as an *H3
+    /// split* (an H2 with ≥2 H3 children, one `Intro` plus one batch
+    /// per H3 child). Either rule lets the scheduler pick relevant
+    /// sub-sections instead of all-or-nothing committing to the
+    /// whole H2. The split classification lives in the walker (not
+    /// on this key) — `section_index` is the post-split logical
+    /// index, so enabling or changing a split rule shifts the
+    /// numbering. For `README.md`, section 0 is the first section
     /// after the headline (predecessor: `ReadmeHeadline`). When
     /// [`MarkdownKey::HeadingsOutline`] is emitted for the same file
     /// the outline becomes Section's predecessor. Priority 2.x–5.x.
