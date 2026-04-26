@@ -48,7 +48,7 @@ scores: Sim=0.375 Reached=17/49 Early=1 Late=13 Partial=8 Missing=24 Used=9995/1
 | 3.13 | 6324 | 5135 | -1189 | 0.95 | aligned | MarkdownOptions + new_cmark_parser | pub item at crates/mdbook-markdown/src/lib.rs:15 (t=5135, 17 atoms) |
 | 3.14 | 6851 | — | — | 0.76 | partial | Summary / SummaryItem / Link types + parse_summary | pub item at crates/mdbook-summary/src/lib.rs:84 (t=6950, 11 atoms) |
 | 3.15 | 6973 | — | — | 0.67 | partial | Preprocessor input parsing + MDBOOK_VERSION re-export | pub item at crates/mdbook-preprocessor/src/lib.rs:51 (t=5751, 16 atoms) |
-| 3.16 | 7060 | 8361 | +1301 | 1.00 | aligned+over | RenderContext impl methods (incl. from_json) | pub item at crates/mdbook-renderer/src/lib.rs:40 (t=6524, 22 atoms) |
+| 3.16 | 7060 | 8321 | +1261 | 1.00 | aligned+over | RenderContext impl methods (incl. from_json) | pub item at crates/mdbook-renderer/src/lib.rs:40 (t=6524, 22 atoms) |
 | 3.17 | 7552 | — | — | 0.00 | missing | MDBOOK_* env-var override rules |  |
 | 4.1 | 7635 | — | — | 0.00 | missing | Builtin preprocessors module — re-exports |  |
 | 4.2 | 7841 | — | — | 0.00 | missing | LinkPreprocessor — supported helpers list |  |
@@ -74,7 +74,7 @@ scores: Sim=0.375 Reached=17/49 Early=1 Late=13 Partial=8 Missing=24 Used=9995/1
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
-| 549 | 1.00 | 549 | 8994 | impl method sigs in crates/mdbook-summary/src/lib.rs |
+| 549 | 1.00 | 549 | 8954 | impl method sigs in crates/mdbook-summary/src/lib.rs |
 | 257 | 1.00 | 257 | 1221 | [features] in Cargo.toml |
 | 231 | 1.00 | 231 | 8158 | README headline in guide/src/README.md |
 | 174 | 0.50 | 349 | 676 | [package] in Cargo.toml |
@@ -85,15 +85,15 @@ scores: Sim=0.375 Reached=17/49 Early=1 Late=13 Partial=8 Missing=24 Used=9995/1
 | 131 | 1.00 | 131 | 4684 | mod/use plumbing in crates/mdbook-driver/src/lib.rs |
 | 111 | 1.00 | 111 | 7571 | README headline in guide/src/for_developers/README.md |
 | 108 | 1.00 | 108 | 281 | README.md section #1 |
-| 108 | 0.69 | 156 | 9150 | mod/use plumbing in crates/mdbook-preprocessor/src/lib.rs |
+| 108 | 0.69 | 156 | 9110 | mod/use plumbing in crates/mdbook-preprocessor/src/lib.rs |
 | 98 | 1.00 | 98 | 1728 | README headline in crates/mdbook-driver/README.md |
-| 96 | 0.67 | 144 | 8361 | mod/use plumbing in crates/mdbook-renderer/src/lib.rs |
+| 96 | 0.67 | 144 | 8321 | mod/use plumbing in crates/mdbook-renderer/src/lib.rs |
 | 96 | 1.00 | 96 | 3189 | mod/use plumbing in src/main.rs |
 | 89 | 1.00 | 89 | 1516 | [package] in crates/mdbook-core/Cargo.toml |
 | 88 | 0.73 | 121 | 6234 | impl method sigs in crates/mdbook-renderer/src/lib.rs |
 | 86 | 1.00 | 86 | 2223 | [package] in crates/mdbook-preprocessor/Cargo.toml |
 | 85 | 1.00 | 85 | 2377 | [package] in crates/mdbook-renderer/Cargo.toml |
-| 84 | 1.00 | 84 | 8445 | pub-item names surface in crates/mdbook-html/src/utils.rs |
+| 84 | 1.00 | 84 | 8405 | pub-item names surface in crates/mdbook-html/src/utils.rs |
 | 83 | 1.00 | 83 | 1611 | [package] in crates/mdbook-driver/Cargo.toml |
 | 83 | 1.00 | 83 | 2067 | [package] in crates/mdbook-markdown/Cargo.toml |
 | 81 | 1.00 | 81 | 2470 | [package] in crates/mdbook-summary/Cargo.toml |

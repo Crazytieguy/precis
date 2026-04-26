@@ -444,6 +444,25 @@ like to revisit whether it's still earning its complexity.
 - **Signal-weight calibration** — `W_CATASTROPHIC = 1000`, `W_FOLLOW_UP =
   400`, `W_ZERO_CALL = 300` are first-pass. Calibrate from north-star
   divergence reports.
+- **README section index decay** — DONE. `readme_section_signals`
+  now scales all three channels by `(h2_idx + 1)^-0.15` (floored at
+  0.7), where `h2_idx` counts real H2 sections only (the H1-unwrap
+  `SyntheticIntro` at `parent_index = 0` is skipped, so a `# Title`
+  README's first real H2 stays at factor 1.0 — guarded by
+  `markdown_readme_index_decay_skips_synthetic_intro`). Motivation:
+  README sections were the dominant off-NS waste pattern in 9 of 10
+  fixtures; a mild decay tilts toward early sections (install /
+  quick-start) without displacing late ones. Sim deltas across the
+  10 fixtures: superstruct +0.020 (Reached 18→19), anyhow +0.015,
+  log +0.012, otree +0.009, ts-pattern +0.004, ky +0.001, mdbook
+  flat, vaul flat, cmdk −0.005, mitt −0.001. Aggregate avg Sim
+  0.4044 → 0.4099 (+0.0055), Reached aggregate +1, no fixture
+  regressed past −0.03 and no high-tier README-credited NS batch
+  flipped from `aligned`/`late` to `missing` or lost credit. Plan +
+  2 plan-review rounds (codex) in `ignore/plan-readme-section-
+  index-decay.md` (round 1 caught the synthetic-intro index bug;
+  round 2 caught an incomplete affected-fixture list — both fixed
+  before implementation).
 - **PubItem signal rebalance (catastrophic ↓, follow_up ↑)** — DONE
   with caveats. Final shipped numbers (Rust + TS in lock-step):
   `pub_item_signals`: catastrophic `0.85*k*boost → 0.70*k*boost`,

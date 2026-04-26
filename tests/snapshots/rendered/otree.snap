@@ -39,17 +39,6 @@ README.md
     …
     33→## Usage
     …
-    35→Open a JSON/YAML/TOML file in TUI tree viewer:
-    37→```bash
-    38→otree /path/to/file.json
-    39→otree /path/to/file.yaml
-    40→otree /path/to/file.toml
-    41→otree /path/to/file.xml
-    42→```
-    44→For more command usage, please run `otree --help`.
-    46→You can configure TUI keys, colors, and more in `~/.config/otree.toml`, the default configuration is [here](config/default.toml).
-    48→For all available actions and their default key bindings, please refer to: [All Available Actions](docs/actions.md).
-    50→For how to configure TUI colors, please refer to: [Colors Document](docs/colors.md).
     52→## Roadmap
     …
     82→## Thanks
@@ -84,9 +73,20 @@ src/
             162→pub struct TreeColors {
             …
             251→pub struct FooterColors {
-            …
+            252→    #[serde(default = "FooterColors::default_root")]
+            253→    pub root: Color,
+            255→    pub identify: Color,
+            257→    #[serde(default = "FooterColors::default_message")]
+            258→    pub message: Color,
+            259→}
             286→pub struct PopupColors {
-            …
+            287→    #[serde(default = "PopupColors::default_error_text")]
+            288→    pub error_text: Color,
+            290→    #[serde(default = "PopupColors::default_help_name")]
+            291→    pub help_name: Color,
+            293→    #[serde(default = "PopupColors::default_help_value")]
+            294→    pub help_value: Color,
+            295→}
             324→pub struct FilterColors {
             325→    #[serde(default = "FilterColors::default_border")]
             326→    pub border: Color,

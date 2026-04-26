@@ -1,4 +1,4 @@
-scores: Sim=0.279 Reached=13/45 Early=2 Late=8 Partial=6 Missing=26 Used=9949/10000
+scores: Sim=0.283 Reached=13/45 Early=2 Late=8 Partial=6 Missing=26 Used=9949/10000
 
 ## Tier rollup
 
@@ -14,13 +14,13 @@ scores: Sim=0.279 Reached=13/45 Early=2 Late=8 Partial=6 Missing=26 Used=9949/10
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | nearby walker batch |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
 | 1.1 | 71 | — | — | 0.00 | missing | README lede + tagline |  |
-| 1.2 | 151 | 1637 | +1486 | 1.00 | late | package.json identity fields | package identity in package.json (t=384, 4 atoms) |
-| 1.3 | 223 | — | — | 0.67 | partial | src/index.ts — full public re-export surface | imports in src/index.ts (t=1676, 3 atoms) |
+| 1.2 | 151 | 1392 | +1241 | 1.00 | late | package.json identity fields | package identity in package.json (t=384, 4 atoms) |
+| 1.3 | 223 | — | — | 0.67 | partial | src/index.ts — full public re-export surface | imports in src/index.ts (t=1431, 3 atoms) |
 | 1.4 | 271 | 48 | -223 | 1.00 | early | Repo root listing |  |
-| 1.5 | 364 | 3000 | +2636 | 1.00 | late | src/ + src/types/ + src/internals/ listings |  |
-| 1.6 | 434 | 2944 | +2510 | 1.00 | late | README features — data structures + typesafety | README.md section #1 (t=2944, 3 atoms) |
-| 1.7 | 546 | 2944 | +2398 | 1.00 | late | README features — patterns, wildcards, predicates, bundle | README.md section #1 (t=2944, 5 atoms) |
-| 2.1 | 603 | 1090 | +487 | 0.80 | late | match() exported signature | export at src/match.ts:32 (t=626, 4 atoms) |
+| 1.5 | 364 | 2459 | +2095 | 1.00 | late | src/ + src/types/ + src/internals/ listings |  |
+| 1.6 | 434 | 4497 | +4063 | 1.00 | late | README features — data structures + typesafety | README.md section #1 (t=4497, 3 atoms) |
+| 1.7 | 546 | 4497 | +3951 | 1.00 | late | README features — patterns, wildcards, predicates, bundle | README.md section #1 (t=4497, 5 atoms) |
+| 2.1 | 603 | 845 | +242 | 0.80 | late | match() exported signature | export at src/match.ts:32 (t=626, 4 atoms) |
 | 2.3 | 772 | — | — | 0.00 | missing | MatchExpression — method-name catalog |  |
 | 2.4 | 981 | — | — | 0.00 | missing | match() JSDoc |  |
 | 2.5 | 1115 | — | — | 0.00 | missing | MatchExpression class doc + constructor |  |
@@ -30,8 +30,8 @@ scores: Sim=0.279 Reached=13/45 Early=2 Late=8 Partial=6 Missing=26 Used=9949/10
 | 2.9 | 2017 | — | — | 0.00 | missing | MatchExpression.when / otherwise / exhaustive bodies |  |
 | 2.10 | 2115 | — | — | 0.00 | missing | MatchExpression.run / returnType / narrow + defaultCatcher |  |
 | 2.11 | 2477 | — | — | 0.13 | missing | isMatching — JSDoc + PatternConstraint helper | imports in src/is-matching.ts (t=5381, 4 atoms) |
-| 2.12 | 2851 | — | — | 0.50 | partial | isMatching — JSDoc for two-arg + runtime body | export body at src/is-matching.ts:53 (t=4455, 12 atoms) |
-| 2.13 | 3005 | 4497 | +1492 | 0.87 | late | NonExhaustiveError class | export body at src/errors.ts:5 (t=1076, 7 atoms) |
+| 2.12 | 2851 | — | — | 0.50 | partial | isMatching — JSDoc for two-arg + runtime body | export body at src/is-matching.ts:53 (t=4131, 12 atoms) |
+| 2.13 | 3005 | 4173 | +1168 | 0.87 | late | NonExhaustiveError class | export body at src/errors.ts:5 (t=831, 7 atoms) |
 | 3.1 | 3161 | — | — | 0.67 | partial | P module-doc + combinator-function name catalog | export names surface in src/patterns.ts (t=6584, 77 atoms) |
 | 3.2 | 3350 | 6584 | +3234 | 1.00 | late | P wildcards — every const definition | export names surface in src/patterns.ts (t=6584, 19 atoms) |
 | 3.3 | 3422 | 6607 | +3185 | 1.00 | late | P type-level re-exports + matcher symbol | export names surface in src/patterns.ts (t=6584, 10 atoms) |
@@ -49,11 +49,11 @@ scores: Sim=0.279 Reached=13/45 Early=2 Late=8 Partial=6 Missing=26 Used=9949/10
 | 3.16 | 6988 | — | — | 0.00 | missing | chainable() factory + variadic / arrayChainable |  |
 | 3.17 | 7489 | 8890 | +1401 | 0.93 | aligned | P.union / P.not / P.when — full bodies | export body at src/patterns.ts:572 (t=8890, 21 atoms) |
 | 4.1 | 7838 | — | — | 0.05 | missing | tests/ + docs/ + examples/ listings |  |
-| 4.2 | 7921 | — | — | 0.12 | missing | Match<i, o> — public builder type signature | export names surface in src/types/Match.ts (t=3114, 2 atoms) |
+| 4.2 | 7921 | — | — | 0.12 | missing | Match<i, o> — public builder type signature | export names surface in src/types/Match.ts (t=2573, 2 atoms) |
 | 4.3 | 8414 | — | — | 0.00 | missing | Pattern<T> — public pattern type alias + typed wildcards |  |
 | 4.4 | 8718 | — | — | 0.00 | missing | MatcherType union + Matcher interface |  |
 | 4.5 | 8816 | 5221 | -3595 | 1.00 | early | internals/symbols.ts — core matcher / unset / isVariadic brands | export names surface in src/internals/symbols.ts (t=5221, 8 atoms) |
-| 4.6 | 9151 | — | — | 0.16 | missing | matchPattern() — Matcher / object / primitive branches | export at src/internals/helpers.ts:32 (t=2350, 6 atoms) |
+| 4.6 | 9151 | — | — | 0.16 | missing | matchPattern() — Matcher / object / primitive branches | export at src/internals/helpers.ts:32 (t=2133, 6 atoms) |
 | 4.7 | 9767 | — | — | 0.00 | missing | matchPattern() — array / tuple / variadic branch |  |
 | 4.8 | 9976 | — | — | 0.76 | partial | getSelectionKeys() + flatMap helpers | export body at src/internals/helpers.ts:120 (t=5319, 8 atoms) |
 
@@ -73,35 +73,35 @@ scores: Sim=0.279 Reached=13/45 Early=2 Late=8 Partial=6 Missing=26 Used=9949/10
 |-----------:|----------:|-----:|--------:|:------|
 | 350 | 1.00 | 350 | 5932 | export at src/types/BuildMany.ts:19 |
 | 339 | 1.00 | 339 | 9826 | export body at src/patterns.ts:696 |
-| 338 | 0.94 | 360 | 1637 | package entrypoints in package.json |
+| 338 | 0.94 | 360 | 1392 | package entrypoints in package.json |
 | 312 | 1.00 | 312 | 9487 | export body at src/patterns.ts:246 |
 | 285 | 1.00 | 285 | 9175 | export body at src/patterns.ts:299 |
-| 271 | 1.00 | 271 | 2182 | package scripts in package.json |
+| 271 | 1.00 | 271 | 1965 | package scripts in package.json |
 | 235 | 1.00 | 235 | 8644 | export body at src/patterns.ts:187 |
 | 227 | 0.83 | 273 | 384 | package identity in package.json |
-| 217 | 1.00 | 217 | 1893 | README.md section #2 |
+| 217 | 1.00 | 217 | 3935 | README.md section #2 |
 | 195 | 0.30 | 652 | 6584 | export names surface in src/patterns.ts |
 | 193 | 1.00 | 193 | 8373 | export body at src/patterns.ts:536 |
-| 154 | 1.00 | 154 | 1277 | json config tsconfig.json |
+| 154 | 1.00 | 154 | 1032 | json config tsconfig.json |
 | 146 | 1.00 | 146 | 5065 | export at src/types/FindSelected.ts:174 |
 | 145 | 1.00 | 145 | 7612 | export at src/patterns.ts:48 |
 | 144 | 1.00 | 144 | 4641 | export names surface in src/types/FindSelected.ts |
-| 144 | 1.00 | 144 | 4259 | headings outline in docs/v4-to-v5-migration-guide.md |
-| 142 | 1.00 | 142 | 4115 | headings outline in docs/v3-to-v4-migration-guide.md |
-| 129 | 1.00 | 129 | 3973 | export at src/types/DistributeUnions.ts:183 |
-| 129 | 1.00 | 129 | 2527 | package dependencies in package.json |
-| 128 | 1.00 | 128 | 1003 | README.md section #3 |
-| 128 | 1.00 | 128 | 3844 | export at src/types/DistributeUnions.ts:46 |
+| 144 | 1.00 | 144 | 3718 | headings outline in docs/v4-to-v5-migration-guide.md |
+| 142 | 1.00 | 142 | 3574 | headings outline in docs/v3-to-v4-migration-guide.md |
+| 129 | 1.00 | 129 | 3432 | export at src/types/DistributeUnions.ts:183 |
+| 129 | 1.00 | 129 | 2310 | package dependencies in package.json |
+| 128 | 1.00 | 128 | 1559 | README.md section #3 |
+| 128 | 1.00 | 128 | 3303 | export at src/types/DistributeUnions.ts:46 |
 | 123 | 1.00 | 123 | 9949 | export doc at src/patterns.ts:116 |
-| 117 | 1.00 | 117 | 875 | README.md section #4 |
+| 117 | 1.00 | 117 | 1676 | README.md section #4 |
 | 104 | 1.00 | 104 | 488 | README.md section #0 |
-| 99 | 1.00 | 99 | 3406 | export at src/types/InvertPattern.ts:180 |
-| 99 | 1.00 | 99 | 3505 | export at src/types/InvertPattern.ts:192 |
+| 99 | 1.00 | 99 | 2865 | export at src/types/InvertPattern.ts:180 |
+| 99 | 1.00 | 99 | 2964 | export at src/types/InvertPattern.ts:192 |
 | 95 | 1.00 | 95 | 8180 | export at src/patterns.ts:362 |
-| 93 | 1.00 | 93 | 3716 | export at src/types/DistributeUnions.ts:174 |
-| 93 | 1.00 | 93 | 2620 | json config jsr.json |
-| 90 | 1.00 | 90 | 3595 | export names surface in src/types/DistributeUnions.ts |
-| 80 | 1.00 | 80 | 3265 | export names surface in src/types/InvertPattern.ts |
+| 93 | 1.00 | 93 | 3175 | export at src/types/DistributeUnions.ts:174 |
+| 93 | 1.00 | 93 | 2403 | json config jsr.json |
+| 90 | 1.00 | 90 | 3054 | export names surface in src/types/DistributeUnions.ts |
+| 80 | 1.00 | 80 | 2724 | export names surface in src/types/InvertPattern.ts |
 | 69 | 1.00 | 69 | 4919 | export at src/types/FindSelected.ts:159 |
 | 68 | 1.00 | 68 | 4850 | export at src/types/FindSelected.ts:191 |
 | 66 | 0.43 | 156 | 5221 | export names surface in src/internals/symbols.ts |

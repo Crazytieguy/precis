@@ -33,17 +33,6 @@ Readme.md
     187→<br/>
     189→### Examples
     …
-    191→Superstruct's API is very flexible, allowing it to be used for a variety of use cases on your servers and in the browser. Here are a few examples of common patterns...
-    193→- [Basic Validation](./examples/basic-validation.js)
-    194→- [Custom Types](./examples/custom-types.js)
-    195→- [Default Values](./examples/default-values.js)
-    196→- [Optional Values](./examples/optional-values.js)
-    197→- [Composing Structs](./examples/composing-structs.js)
-    198→- [Throwing Errors](./examples/throwing-errors.js)
-    199→- [Returning Errors](./examples/returning-errors.js)
-    200→- [Testing Values](./examples/testing-values.js)
-    201→- [Custom Errors](./examples/custom-errors.js)
-    203→<br/>
     205→### Documentation
     …
     231→### License
@@ -297,10 +286,25 @@ src/
             80→  return coerce(struct, string(), (x) => x.trim())
         refinements.ts
             8→export function empty<
+            9→  T extends string | any[] | Map<any, any> | Set<any>,
+            10→  S extends any,
+            11→>(struct: Struct<T, S>): Struct<T, S> {
             …
             33→export function max<T extends number | Date, S extends any>(
+            34→  struct: Struct<T, S>,
+            35→  threshold: T,
+            36→  options: {
+            37→    exclusive?: boolean
+            38→  } = {}
+            39→): Struct<T, S> {
             …
             55→export function min<T extends number | Date, S extends any>(
+            56→  struct: Struct<T, S>,
+            57→  threshold: T,
+            58→  options: {
+            59→    exclusive?: boolean
+            60→  } = {}
+            61→): Struct<T, S> {
             …
             77→export function nonempty<
             78→  T extends string | any[] | Map<any, any> | Set<any>,
@@ -308,6 +312,9 @@ src/
             80→>(struct: Struct<T, S>): Struct<T, S> {
             …
             93→export function pattern<T extends string, S extends any>(
+            94→  struct: Struct<T, S>,
+            95→  regexp: RegExp
+            96→): Struct<T, S> {
             …
             109→export function size<
             …

@@ -269,18 +269,44 @@ fn headings_outline_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
     }
 }
 
-fn readme_section_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
-    // Match the former monolithic ReadmeBody's catastrophic weight — a
-    // single section is still a piece of README body; it just fits more
-    // often when split. Follow-up/zero-call slightly reduced because a
-    // single section alone answers fewer potential questions than the
-    // whole body would.
+fn readme_section_signals(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> ValueSignals {
+    // README sections share a flat base (catastrophic 0.55,
+    // follow-up 0.8, ztu 0.7) — a single section is a piece of
+    // README body that just fits more often when split. The mild
+    // index decay tilts toward earlier sections (install / quick-
+    // start / "how it works") without pushing late ones (License,
+    // Contributing, FAQ appendix) out of the schedule. Floored at
+    // 0.7 — section 5 keeps ≈76% weight, section 10+ keeps 70%.
+    // Index counts real H2 sections only (the H1-unwrap synthetic
+    // intro at parent_index=0 doesn't count), so a `# Title` README's
+    // first real H2 gets factor 1.0.
     ValueSignals {
         catastrophic_omission: 0.55,
         follow_up_minimization: 0.8,
         zero_tool_call_understanding: 0.7,
         depth_factor: signal_factor(file, ctx),
     }
+    .scale_value(readme_index_decay(range))
+}
+
+/// Mild index decay for README sections. Counts real H2 sections only
+/// (skipping the synthetic H1-unwrap intro). Returns 1.0 for the first
+/// real H2; floors at 0.7.
+fn readme_index_decay(range: &SectionRange) -> f64 {
+    let h2_idx = if range.synthetic_intro_present {
+        range.parent_index.saturating_sub(1)
+    } else {
+        range.parent_index
+    };
+    index_decay(h2_idx, 0.15, 0.7)
+}
+
+/// Index-based signal-channel scale factor: `(idx + 1)^-exp`, floored
+/// at `floor`. Shared by `readme_index_decay` and the changelog decay
+/// in `heading_slab_signals`. Both decay the same shape; differ only
+/// in `exp` and `floor`.
+fn index_decay(idx: usize, exp: f64, floor: f64) -> f64 {
+    ((idx as f64 + 1.0).powf(-exp)).max(floor)
 }
 
 fn heading_slab_signals(file: &Path, parent_index: usize, ctx: &WalkCtx) -> ValueSignals {
@@ -293,17 +319,18 @@ fn heading_slab_signals(file: &Path, parent_index: usize, ctx: &WalkCtx) -> Valu
     // higher-tier content. The decay uses `parent_index` (un-split
     // top-level position) so a future H3-split of a changelog still
     // inherits its parent H2's decay tier.
-    let index_decay = if is_guide {
-        ((parent_index as f64 + 1.0).powf(-0.3)).max(0.35)
+    let scale = if is_guide {
+        index_decay(parent_index, 0.3, 0.35)
     } else {
         1.0
     };
     ValueSignals {
-        catastrophic_omission: if is_guide { 0.5 } else { 0.3 } * index_decay,
-        follow_up_minimization: 0.5 * index_decay,
-        zero_tool_call_understanding: 0.5 * index_decay,
+        catastrophic_omission: if is_guide { 0.5 } else { 0.3 },
+        follow_up_minimization: 0.5,
+        zero_tool_call_understanding: 0.5,
         depth_factor: signal_factor(file, ctx),
     }
+    .scale_value(scale)
 }
 
 /// Pick the appropriate signals for a `SectionRange`. Both `expand` and
@@ -315,7 +342,7 @@ fn heading_slab_signals(file: &Path, parent_index: usize, ctx: &WalkCtx) -> Valu
 /// prelude).
 fn section_signals(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> ValueSignals {
     let parent = if is_readme(file) {
-        readme_section_signals(file, ctx)
+        readme_section_signals(file, range, ctx)
     } else {
         heading_slab_signals(file, range.parent_index, ctx)
     };
@@ -828,13 +855,18 @@ fn compute_heading_truncation(heading: Node, source: &str) -> Option<TruncatedRo
 /// plus its kind and the index of its parent H2 in the *un-split*
 /// top-level section list. `parent_index` lets `heading_slab_signals`
 /// apply changelog index-decay relative to the parent H2 instead of
-/// the post-split logical-section index.
+/// the post-split logical-section index. `synthetic_intro_present`
+/// is true iff the file's `top_level_entries[0]` is a
+/// `SyntheticIntro` (the H1-unwrap virtual section); README/changelog
+/// decay subtracts 1 from `parent_index` in that case so the first
+/// real H2 is treated as index 0.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 struct SectionRange {
     start: usize,
     end: usize,
     kind: SectionKind,
     parent_index: usize,
+    synthetic_intro_present: bool,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -878,6 +910,8 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
         outline_emits_for(&rows, source)
     };
     let split_eligible_file = !is_changelog_class(file);
+    let synthetic_intro_present =
+        matches!(entries.first(), Some(TopLevelEntry::SyntheticIntro { .. }));
 
     let mut out = Vec::with_capacity(entries.len());
     for (parent_idx, entry) in entries.iter().enumerate() {
@@ -888,6 +922,7 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                     end: *end,
                     kind: SectionKind::Whole,
                     parent_index: parent_idx,
+                    synthetic_intro_present,
                 });
             }
             TopLevelEntry::H2Section { node, start, end } => {
@@ -900,7 +935,15 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                     .flatten();
 
                 if let Some(items) = bullet_items {
-                    push_intro(&mut out, *node, *start, items[0], parent_idx, source);
+                    push_intro(
+                        &mut out,
+                        *node,
+                        *start,
+                        items[0],
+                        parent_idx,
+                        synthetic_intro_present,
+                        source,
+                    );
                     for item in &items {
                         let item_start = item.start_position().row + 1;
                         let item_end = span_last_row(*item, source) + 1;
@@ -909,6 +952,7 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                             end: item_end,
                             kind: SectionKind::BulletItem,
                             parent_index: parent_idx,
+                            synthetic_intro_present,
                         });
                     }
                     continue;
@@ -920,7 +964,15 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                     Vec::new()
                 };
                 if h3s.len() >= 2 {
-                    push_intro(&mut out, *node, *start, h3s[0], parent_idx, source);
+                    push_intro(
+                        &mut out,
+                        *node,
+                        *start,
+                        h3s[0],
+                        parent_idx,
+                        synthetic_intro_present,
+                        source,
+                    );
                     for h3 in &h3s {
                         let h3_start = h3.start_position().row + 1;
                         let h3_end = span_last_row(*h3, source) + 1;
@@ -930,6 +982,7 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                                 end: h3_end,
                                 kind: SectionKind::H3Child,
                                 parent_index: parent_idx,
+                                synthetic_intro_present,
                             });
                         }
                     }
@@ -939,6 +992,7 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                         end: *end,
                         kind: SectionKind::Whole,
                         parent_index: parent_idx,
+                        synthetic_intro_present,
                     });
                 }
             }
@@ -959,6 +1013,7 @@ fn push_intro<'a>(
     h2_start: usize,
     first_child: Node<'a>,
     parent_idx: usize,
+    synthetic_intro_present: bool,
     source: &str,
 ) {
     let intro_end = (first_child.start_position().row + 1).saturating_sub(1);
@@ -973,6 +1028,7 @@ fn push_intro<'a>(
         end: intro_end,
         kind: SectionKind::Intro,
         parent_index: parent_idx,
+        synthetic_intro_present,
     });
 }
 
@@ -1943,6 +1999,47 @@ mod tests {
             SectionKind::Whole,
             "outline-omitted file must keep H2 as Whole; got {details:?}"
         );
+    }
+
+    /// `# Title` README's first real H2 must get readme-index decay
+    /// factor 1.0 (i.e. be unscaled). The synthetic H1-unwrap intro
+    /// sits at `parent_index = 0`, so naïvely keying the decay off
+    /// `parent_index` would scale "## Install" to ~0.90 — the exact
+    /// codex-flagged regression this test guards against.
+    #[test]
+    fn markdown_readme_index_decay_skips_synthetic_intro() {
+        let src = "# Title\n\nTagline.\n\n## Install\n\nbody\n\n## Use\n\nbody\n";
+        let ranges = sections("README.md", src);
+        // Three ranges: synthetic intro, ## Install, ## Use.
+        assert_eq!(ranges.len(), 3, "got {ranges:?}");
+        let intro = &ranges[0];
+        assert_eq!(intro.parent_index, 0);
+        assert!(intro.synthetic_intro_present);
+
+        let install = &ranges[1];
+        assert_eq!(install.parent_index, 1);
+        assert!(install.synthetic_intro_present);
+        assert_eq!(
+            readme_index_decay(install),
+            1.0,
+            "first real H2 must be unscaled (readme h2_idx = 0)"
+        );
+
+        let use_ = &ranges[2];
+        assert_eq!(use_.parent_index, 2);
+        let f = readme_index_decay(use_);
+        assert!(f < 1.0 && f > 0.7, "second real H2 should decay; got {f}");
+    }
+
+    /// READMEs without an H1 wrap (no synthetic intro) — first H2 is
+    /// `parent_index = 0` and gets factor 1.0 directly.
+    #[test]
+    fn markdown_readme_index_decay_no_synthetic_intro() {
+        let src = "## Install\n\nbody\n\n## Use\n\nbody\n";
+        let ranges = sections("README.md", src);
+        assert_eq!(ranges.len(), 2);
+        assert!(!ranges[0].synthetic_intro_present);
+        assert_eq!(readme_index_decay(&ranges[0]), 1.0);
     }
 
     /// cmdk shape: H1 with badge tail + 3 H2s. Headline truncates row
