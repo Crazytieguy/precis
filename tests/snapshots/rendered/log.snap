@@ -58,16 +58,7 @@ src/
     __private_api.rs
     kv/
         error.rs
-            5→pub struct Error {
-            6→    inner: Inner,
-            7→}
         key.rs
-            7→pub trait ToKey {
-            8→    /// Perform the conversion.
-            9→    fn to_key(&self) -> Key<'_>;
-            10→}
-            37→pub struct Key<'k> {
-            …
         mod.rs
             1→//! Structured logging.
             2→//!
@@ -87,6 +78,14 @@ src/
             237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
             238→}
         value.rs
+            11→pub trait ToValue {
+            12→    /// Perform the conversion.
+            13→    fn to_value(&self) -> Value<'_>;
+            14→}
+            119→pub struct Value<'v> {
+            …
+            462→pub trait VisitValue<'v> {
+            …
     lib.rs
         11→//! A lightweight logging facade.
         12→//!

@@ -22,7 +22,8 @@
 //! Parse trees are cached in [`WalkCtx`]; the same file parsed once powers
 //! every Rust batch that touches it.
 
-use std::path::Path;
+use std::collections::HashMap;
+use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
 use tree_sitter::{Node, Tree};
@@ -288,7 +289,7 @@ struct ApiSurface {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-enum Visibility {
+pub(super) enum Visibility {
     Public,
     Restricted,
 }
@@ -427,10 +428,14 @@ fn mod_use_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
 fn pub_item_names_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
     // Cheap surface listing — catastrophic-omission hedge. Ranks high
     // because missing it means the agent doesn't know items exist.
+    // File-level visibility applies the same axis as `ApiSurface::factor`
+    // (0.4 for Restricted) — a names listing of items that aren't on the
+    // public API is structurally less valuable to the agent.
+    let s = file_visibility_factor(file, ctx);
     ValueSignals {
-        catastrophic_omission: (0.8 * entrypoint_boost(file)).min(1.0),
-        follow_up_minimization: 0.6,
-        zero_tool_call_understanding: 0.35,
+        catastrophic_omission: (0.8 * entrypoint_boost(file) * s).min(1.0),
+        follow_up_minimization: 0.6 * s,
+        zero_tool_call_understanding: 0.35 * s,
         depth_factor: file_depth_factor(file, ctx),
     }
 }
@@ -442,7 +447,7 @@ fn pub_item_signals(
     ctx: &WalkCtx,
 ) -> ValueSignals {
     let k = kind.kind_weight();
-    let s = surface.factor();
+    let s = effective_surface(surface, ctx, file).factor();
     ValueSignals {
         catastrophic_omission: (0.70 * k * s * entrypoint_boost(file)).min(1.0),
         follow_up_minimization: (0.85 * k * s).min(1.0),
@@ -458,12 +463,32 @@ fn pub_item_doc_signals(
     ctx: &WalkCtx,
 ) -> ValueSignals {
     let k = kind.kind_weight();
-    let s = surface.factor();
+    let s = effective_surface(surface, ctx, file).factor();
     ValueSignals {
         catastrophic_omission: (0.20 * k * s * entrypoint_boost(file)).min(1.0),
         follow_up_minimization: (0.6 * k * s).min(1.0),
         zero_tool_call_understanding: 0.8 * s,
         depth_factor: file_depth_factor(file, ctx),
+    }
+}
+
+/// Combine a per-item local `ApiSurface` with the file's effective
+/// crate-visibility from `module_visibility`. `doc_hidden` passes through.
+fn effective_surface(local: ApiSurface, ctx: &WalkCtx, file: &Path) -> ApiSurface {
+    let visibility = match (local.visibility, module_visibility(ctx, file)) {
+        (Visibility::Public, Visibility::Public) => Visibility::Public,
+        _ => Visibility::Restricted,
+    };
+    ApiSurface {
+        visibility,
+        doc_hidden: local.doc_hidden,
+    }
+}
+
+fn file_visibility_factor(file: &Path, ctx: &WalkCtx) -> f64 {
+    match module_visibility(ctx, file) {
+        Visibility::Public => 1.0,
+        Visibility::Restricted => 0.4,
     }
 }
 
@@ -768,6 +793,132 @@ fn is_underscore_private(node: Node, source: &str) -> bool {
     })
 }
 
+// --- Cross-file module visibility ---
+
+/// Effective crate-visibility of `file` as a Rust module. `Public` if a
+/// chain of `pub mod` declarations connects it back to `src/lib.rs`;
+/// `Restricted` otherwise.
+///
+/// Fallback when `file` isn't in the computed map:
+/// - empty map (no `<root>/src/lib.rs`, e.g. binary-only crate or
+///   non-Rust seed) → `Public`. The local-syntactic check is the only
+///   signal we have.
+/// - non-empty map but `file` lives under `<root>/src/` →
+///   `Restricted`. The resolver doesn't honor `#[path = ...]` or descend
+///   into inline `pub mod` blocks with extern children, so a file
+///   under `src/` not in the map is most plausibly behind one of those
+///   gaps. Defaulting to `Restricted` keeps private-by-construction
+///   items from sliding back to full public weight on a resolver miss.
+/// - non-empty map, `file` outside `src/` (tests/, examples/, build.rs)
+///   → `Public`. Those paths already get the non-essential-dir discount.
+///
+/// The map is computed lazily on first access and cached for the run.
+/// Re-export tracking (`pub use foo::Bar;` lifting items out of a
+/// private mod) is **not** modeled here — items syntactically
+/// `pub` in a private mod are reported as `Restricted` even if a
+/// public ancestor re-exports them. This is a deliberate v1 limitation;
+/// see `docs/design-notes.md` "API-surface signal" for context.
+fn module_visibility(ctx: &WalkCtx, file: &Path) -> Visibility {
+    let map = ctx.rust_module_visibility_map(|| compute_module_visibility(ctx));
+    if let Some(&v) = map.get(file) {
+        return v;
+    }
+    if !map.is_empty() && file.starts_with(ctx.root().join("src")) {
+        Visibility::Restricted
+    } else {
+        Visibility::Public
+    }
+}
+
+fn compute_module_visibility(ctx: &WalkCtx) -> HashMap<PathBuf, Visibility> {
+    let mut out: HashMap<PathBuf, Visibility> = HashMap::new();
+    let lib = ctx.root().join("src/lib.rs");
+    if !lib.exists() {
+        return out;
+    }
+    let mut stack: Vec<(PathBuf, Visibility)> = vec![(lib, Visibility::Public)];
+    while let Some((file, vis)) = stack.pop() {
+        let upgrade = match out.get(&file).copied() {
+            None => true,
+            Some(Visibility::Public) => false, // already at the best vis
+            Some(Visibility::Restricted) => matches!(vis, Visibility::Public),
+        };
+        if !upgrade {
+            continue;
+        }
+        out.insert(file.clone(), vis);
+        let Some((source, tree)) = parse_rust(ctx, &file) else {
+            continue;
+        };
+        for decl in mod_decls(&tree, &source) {
+            let child_vis = if decl.is_pub && matches!(vis, Visibility::Public) {
+                Visibility::Public
+            } else {
+                Visibility::Restricted
+            };
+            let Some(child) = resolve_mod(&file, &decl.name) else {
+                continue;
+            };
+            stack.push((child, child_vis));
+        }
+    }
+    out
+}
+
+#[derive(Debug, Clone)]
+struct ModDecl {
+    name: String,
+    is_pub: bool,
+}
+
+/// Top-level external `mod x;` declarations on this file. Inline
+/// `mod x { ... }` blocks (with a body) are skipped — their items live in
+/// the same source file and are subject to the per-item local syntactic
+/// check, not cross-file resolution.
+fn mod_decls(tree: &Tree, source: &str) -> Vec<ModDecl> {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    let mut out = Vec::new();
+    for child in root.children(&mut cursor) {
+        if child.kind() != "mod_item" {
+            continue;
+        }
+        if child.child_by_field_name("body").is_some() {
+            continue;
+        }
+        let Some(name_node) = child.child_by_field_name("name") else {
+            continue;
+        };
+        let name = source[name_node.start_byte()..name_node.end_byte()].to_string();
+        let is_pub = matches!(item_visibility(child, source), Some(Visibility::Public));
+        out.push(ModDecl { name, is_pub });
+    }
+    out
+}
+
+/// Resolve a `mod x;` declaration in `parent_file` to the file that
+/// `x` lives in, following Rust 2018+ module resolution. `#[path = ...]`
+/// is not honored. Returns `None` if neither candidate exists on disk.
+fn resolve_mod(parent_file: &Path, name: &str) -> Option<PathBuf> {
+    let parent_dir = parent_file.parent()?;
+    let lookup_dir = match parent_file.file_name().and_then(|n| n.to_str()) {
+        Some("lib.rs" | "main.rs" | "mod.rs") => parent_dir.to_path_buf(),
+        _ => {
+            let stem = parent_file.file_stem()?.to_str()?;
+            parent_dir.join(stem)
+        }
+    };
+    let flat = lookup_dir.join(format!("{name}.rs"));
+    if flat.exists() {
+        return Some(flat);
+    }
+    let nested = lookup_dir.join(name).join("mod.rs");
+    if nested.exists() {
+        return Some(nested);
+    }
+    None
+}
+
 // --- AST predicates ---
 
 /// Classify the visibility of a top-level item. `None` for items without
@@ -1004,5 +1155,224 @@ pub struct D;
         assert!((pub_hidden.factor() - 0.4).abs() < 1e-9);
         assert!((crate_visible.factor() - 0.4).abs() < 1e-9);
         assert!((crate_hidden.factor() - 0.16).abs() < 1e-9);
+    }
+
+    #[test]
+    fn rust_mod_decls_extracts_top_level_external_modules() {
+        let src = r#"
+mod private_a;
+pub mod public_b;
+pub(crate) mod restricted_c;
+mod inline_d { pub fn x() {} }
+pub mod inline_e { }
+"#;
+        let tree = parse(src);
+        let decls = mod_decls(&tree, src);
+        let by_name: std::collections::HashMap<_, _> =
+            decls.iter().map(|d| (d.name.clone(), d.is_pub)).collect();
+        assert_eq!(by_name.get("private_a"), Some(&false));
+        assert_eq!(by_name.get("public_b"), Some(&true));
+        assert_eq!(by_name.get("restricted_c"), Some(&false)); // pub(crate) ≠ public surface
+        // Inline mods (with body) are not external — their items live in
+        // the same file and aren't subject to cross-file resolution.
+        assert!(!by_name.contains_key("inline_d"));
+        assert!(!by_name.contains_key("inline_e"));
+    }
+
+    #[test]
+    fn rust_resolve_mod_2018_paths() {
+        let dir = tempdir();
+        let src_dir = dir.path().join("src");
+        std::fs::create_dir_all(&src_dir).unwrap();
+        std::fs::write(src_dir.join("lib.rs"), "").unwrap();
+        std::fs::write(src_dir.join("flat.rs"), "").unwrap();
+        std::fs::create_dir_all(src_dir.join("nested")).unwrap();
+        std::fs::write(src_dir.join("nested").join("mod.rs"), "").unwrap();
+        std::fs::create_dir_all(src_dir.join("flat")).unwrap();
+        std::fs::write(src_dir.join("flat").join("child.rs"), "").unwrap();
+
+        // From lib.rs: lookup dir is src/; finds flat.rs.
+        let r = resolve_mod(&src_dir.join("lib.rs"), "flat").unwrap();
+        assert_eq!(r, src_dir.join("flat.rs"));
+
+        // From lib.rs: nested/mod.rs.
+        let r = resolve_mod(&src_dir.join("lib.rs"), "nested").unwrap();
+        assert_eq!(r, src_dir.join("nested").join("mod.rs"));
+
+        // From flat.rs (a non-mod.rs file): lookup dir is src/flat/.
+        let r = resolve_mod(&src_dir.join("flat.rs"), "child").unwrap();
+        assert_eq!(r, src_dir.join("flat").join("child.rs"));
+
+        // From nested/mod.rs: lookup dir is src/nested/, child not present.
+        assert!(resolve_mod(&src_dir.join("nested").join("mod.rs"), "missing").is_none());
+    }
+
+    #[test]
+    fn rust_compute_module_visibility_propagates_through_pub_mod_chain() {
+        let dir = tempdir();
+        let src = dir.path().join("src");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(
+            src.join("lib.rs"),
+            "pub mod public_chain;\nmod private_chain;\n",
+        )
+        .unwrap();
+        std::fs::write(
+            src.join("public_chain.rs"),
+            "pub mod grandchild;\nmod gc_private;\n",
+        )
+        .unwrap();
+        std::fs::create_dir_all(src.join("public_chain")).unwrap();
+        std::fs::write(src.join("public_chain").join("grandchild.rs"), "").unwrap();
+        std::fs::write(src.join("public_chain").join("gc_private.rs"), "").unwrap();
+        std::fs::write(src.join("private_chain.rs"), "pub mod gc_under_private;\n").unwrap();
+        std::fs::create_dir_all(src.join("private_chain")).unwrap();
+        std::fs::write(src.join("private_chain").join("gc_under_private.rs"), "").unwrap();
+
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let map = compute_module_visibility(&ctx);
+
+        assert_eq!(map.get(&src.join("lib.rs")), Some(&Visibility::Public));
+        assert_eq!(
+            map.get(&src.join("public_chain.rs")),
+            Some(&Visibility::Public)
+        );
+        assert_eq!(
+            map.get(&src.join("public_chain").join("grandchild.rs")),
+            Some(&Visibility::Public)
+        );
+        // Private mod inside a public chain → Restricted.
+        assert_eq!(
+            map.get(&src.join("public_chain").join("gc_private.rs")),
+            Some(&Visibility::Restricted)
+        );
+        // Private chain itself → Restricted.
+        assert_eq!(
+            map.get(&src.join("private_chain.rs")),
+            Some(&Visibility::Restricted)
+        );
+        // pub mod inside a private chain doesn't lift visibility back to
+        // Public — once Restricted, always Restricted on that path.
+        assert_eq!(
+            map.get(&src.join("private_chain").join("gc_under_private.rs")),
+            Some(&Visibility::Restricted)
+        );
+    }
+
+    #[test]
+    fn rust_compute_module_visibility_skips_when_no_lib_rs() {
+        let dir = tempdir();
+        let src = dir.path().join("src");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(src.join("main.rs"), "mod helpers;\n").unwrap();
+        std::fs::write(src.join("helpers.rs"), "").unwrap();
+
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let map = compute_module_visibility(&ctx);
+        // No lib.rs → empty map → callers default to Public (preserve
+        // local-syntactic-only behavior for binary-only crates).
+        assert!(map.is_empty());
+    }
+
+    #[test]
+    fn rust_module_visibility_falls_back_to_restricted_for_unresolved_files_under_src() {
+        // Resolver miss simulator: a `#[path = "actual.rs"]` mod or a
+        // private inline `pub mod x { mod y; }` puts files into `src/`
+        // that the resolver doesn't follow. Defaulting these to Public
+        // would silently restore full public-API weight; the safer
+        // fallback is Restricted.
+        let dir = tempdir();
+        let src = dir.path().join("src");
+        std::fs::create_dir_all(&src).unwrap();
+        // Map seeds from lib.rs, which only declares public_child.
+        std::fs::write(src.join("lib.rs"), "pub mod public_child;\n").unwrap();
+        std::fs::write(src.join("public_child.rs"), "").unwrap();
+        // Simulate a #[path]-mounted file the resolver didn't follow.
+        std::fs::write(src.join("hidden_via_path_attr.rs"), "").unwrap();
+        // Files outside src/ (tests/, examples/, build.rs) should still
+        // default to Public — they get the non-essential-dir discount.
+        std::fs::write(dir.path().join("build.rs"), "").unwrap();
+
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        // Reachable via `pub mod` chain → Public.
+        assert_eq!(
+            module_visibility(&ctx, &src.join("public_child.rs")),
+            Visibility::Public
+        );
+        // Resolver miss under src/ → Restricted (safer default).
+        assert_eq!(
+            module_visibility(&ctx, &src.join("hidden_via_path_attr.rs")),
+            Visibility::Restricted
+        );
+        // Outside src/ → Public.
+        assert_eq!(
+            module_visibility(&ctx, &dir.path().join("build.rs")),
+            Visibility::Public
+        );
+    }
+
+    #[test]
+    fn rust_module_visibility_no_lib_rs_defaults_public_everywhere() {
+        // Binary-only crate: no `<root>/src/lib.rs` → empty map →
+        // every file defaults to Public. Preserves the local-syntactic
+        // check as the only signal.
+        let dir = tempdir();
+        let src = dir.path().join("src");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(src.join("main.rs"), "").unwrap();
+        std::fs::write(src.join("helpers.rs"), "").unwrap();
+
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        assert_eq!(
+            module_visibility(&ctx, &src.join("main.rs")),
+            Visibility::Public
+        );
+        assert_eq!(
+            module_visibility(&ctx, &src.join("helpers.rs")),
+            Visibility::Public
+        );
+    }
+
+    #[test]
+    fn rust_compute_module_visibility_dual_decl_merges_to_public() {
+        // log/src/kv/mod.rs pattern: cfg-gated `mod x;` + `pub mod x;`
+        // pointing at the same file. We don't track cfg gates — taking
+        // "any path makes it Public" is the conservative call (preserves
+        // surface signal for the kv_unstable feature configuration).
+        let dir = tempdir();
+        let src = dir.path().join("src");
+        std::fs::create_dir_all(&src).unwrap();
+        std::fs::write(src.join("lib.rs"), "mod child;\npub mod child;\n").unwrap();
+        std::fs::write(src.join("child.rs"), "").unwrap();
+
+        let ctx = WalkCtx::new(dir.path().to_path_buf());
+        let map = compute_module_visibility(&ctx);
+        assert_eq!(map.get(&src.join("child.rs")), Some(&Visibility::Public));
+    }
+
+    /// Minimal scratch-dir helper. Avoids pulling in the `tempfile` crate
+    /// for two tests; `process::id` keeps the path unique enough across
+    /// concurrent test runs.
+    fn tempdir() -> TempDir {
+        let base = std::env::temp_dir().join(format!(
+            "precis-rust-walker-test-{}-{:?}",
+            std::process::id(),
+            std::thread::current().id()
+        ));
+        let _ = std::fs::remove_dir_all(&base);
+        std::fs::create_dir_all(&base).unwrap();
+        TempDir(base)
+    }
+
+    struct TempDir(PathBuf);
+    impl TempDir {
+        fn path(&self) -> &Path {
+            &self.0
+        }
+    }
+    impl Drop for TempDir {
+        fn drop(&mut self) {
+            let _ = std::fs::remove_dir_all(&self.0);
+        }
     }
 }

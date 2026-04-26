@@ -483,13 +483,43 @@ like to revisit whether it's still earning its complexity.
   helper used by both `has_doc_hidden` and `has_macro_export` (was
   duplicated prev-sibling traversal). Structured `attribute` matching
   replaces text-substring parsing (drops `matches_doc_hidden`).
-  **Deferred follow-up — cross-file mod-visibility**: private
-  `mod x;` in lib.rs makes all `pub` items inside `x.rs` effectively
-  pub(crate). Local syntactic check misses this entirely. True fix
-  requires a project-wide module visibility map (walk lib.rs/main.rs
-  for top-level `mod` items, classify them as public/restricted,
-  propagate to per-file PubItem signals). Defer until a fixture
-  surfaces it as a clear miss.
+  **Cross-file mod-visibility — DONE.** Build a per-run map of
+  `<root>/src/lib.rs` reachability via `mod x;` declarations; a file
+  is `Public` iff a chain of `pub mod` declarations connects it to
+  `lib.rs`, otherwise `Restricted`. Map is computed lazily and
+  cached on `WalkCtx` via `OnceCell`. Applied to `PubItem`,
+  `PubItemDoc`, **and** `PubItemNames` (a names-listing of
+  internal-only items is structurally less valuable, same axis).
+  Uses Rust 2018 module resolution (`mod_name.rs` then
+  `mod_name/mod.rs`). Inline `mod x { ... }` blocks and `#[path]`
+  attributes are not followed; the fallback for files under
+  `<root>/src/` not in a populated map is `Restricted` (safer than
+  `Public` — keeps resolver-miss edge cases from sliding back to
+  full public weight). Files outside `src/` and the no-`lib.rs`
+  case (binary-only crates) keep the `Public` default.
+  **Sim deltas across the 10 fixtures:** anyhow +0.008
+  (ptr/nightly/kind internal pub items demoted, freeing budget for
+  lib.rs mod tree and Chain/ContextError struct fields); log flat
+  (kv::Error / kv::Key/ToKey demoted because they're only re-exported
+  via `pub use self::error::Error;` in kv/mod.rs — re-export
+  tracking is the natural follow-up; in compensation kv::Value
+  surface gains visibility); other Rust fixtures unchanged
+  (mdbook seed root has no `src/lib.rs`, so map is empty);
+  TS/JS fixtures unchanged.
+  **Deferred follow-up — re-export tracking.** `pub use self::foo::Bar;`
+  in a `mod.rs`-style parent file lifts items from a private mod
+  back to the public surface. Today these are demoted (false
+  positive). The natural extension is a second pass that scans
+  top-level `pub use` declarations in each `Public` file and lifts
+  the named child mods back to `Public`. log's kv module is the
+  motivating case. Defer until a fixture-driven calibration cycle
+  shows the demotion's impact is consistently load-bearing
+  (currently log Sim is flat, so the tradeoff is neutral).
+  **Deferred follow-up — `#[path]` and inline-pub-mod children.**
+  Resolver intentionally doesn't honor `#[path = "..."]` or descend
+  into `pub mod foo { mod bar; }` for extern-child resolution.
+  The Restricted-under-`src/` fallback is conservative-correct in
+  these cases; lift if a fixture surfaces them.
 
 ### Divergence report — deferred refinements
 

@@ -99,7 +99,8 @@ src/
         …
     chain.rs
         11→pub(crate) struct Chain<'a> {
-        …
+        12→    state: ChainState<'a>,
+        13→}
         16→pub(crate) enum ChainState<'a> {
         …
     context.rs
@@ -118,21 +119,11 @@ src/
         934→pub(crate) struct ErrorImpl<E = ()> {
         …
         952→pub(crate) struct ContextError<C, E> {
-        …
+        953→    pub context: C,
+        954→    pub error: E,
+        955→}
     fmt.rs
     kind.rs
-        55→pub struct Adhoc;
-        …
-        58→pub trait AdhocKind: Sized {
-        …
-        77→pub struct Trait;
-        …
-        80→pub trait TraitKind: Sized {
-        …
-        100→pub struct Boxed;
-        …
-        104→pub trait BoxedKind: Sized {
-        …
     lib.rs
         1→//! [![github]](https://github.com/dtolnay/anyhow)&ensp;[![crates-io]](https://crates.io/crates/anyhow)&ensp;[![docs-rs]](https://docs.rs/anyhow)
         2→//!
@@ -147,6 +138,24 @@ src/
         11→//!
         12→//! <br>
         13→//!
+        252→mod backtrace;
+        253→mod chain;
+        254→mod context;
+        255→mod ensure;
+        256→mod error;
+        257→mod fmt;
+        258→mod kind;
+        259→mod macros;
+        261→mod nightly;
+        262→mod ptr;
+        263→mod wrapper;
+        265→use crate::error::ErrorImpl;
+        266→use crate::ptr::Own;
+        267→use core::fmt::Display;
+        270→use core::fmt::Debug;
+        273→use std::error::Error as StdError;
+        276→use core::error::Error as StdError;
+        286→pub use anyhow as format_err;
         390→pub struct Error {
         391→    inner: Own<ErrorImpl>,
         392→}
@@ -188,6 +197,8 @@ src/
         628→}
         650→pub fn Ok<T>(value: T) -> Result<T> {
         …
+        656→pub mod __private {
+        …
     macros.rs
         58→macro_rules! bail {
         59→    ($msg:literal $(,)?) => {
@@ -223,41 +234,6 @@ src/
         230→macro_rules! __anyhow {
         …
     nightly.rs
-        41→pub fn request_ref_backtrace(err: &dyn Error) -> Option<&Backtrace> {
-        …
-        52→pub fn provide_ref_backtrace<'a>(request: &mut Request<'a>, backtrace: &'a Backtrace) {
-        …
-        56→pub fn provide<'a>(err: &'a (impl Error + ?Sized), request: &mut Request<'a>) {
-        …
     ptr.rs
-        6→pub struct Own<T>
-        7→where
-        8→    T: ?Sized,
-        9→{
-        10→    pub ptr: NonNull<T>,
-        11→}
-        64→pub struct Ref<'a, T>
-        65→where
-        66→    T: ?Sized,
-        67→{
-        68→    pub ptr: NonNull<T>,
-        69→    lifetime: PhantomData<&'a T>,
-        70→}
-        125→pub struct Mut<'a, T>
-        126→where
-        127→    T: ?Sized,
-        128→{
-        129→    pub ptr: NonNull<T>,
-        130→    lifetime: PhantomData<&'a mut T>,
-        131→}
-        181→pub trait CastTo {
-        182→    type Target;
-        183→}
     wrapper.rs
-        11→pub struct MessageError<M>(pub M);
-        …
-        34→pub struct DisplayError<M>(pub M);
-        …
-        58→pub struct BoxedError(pub Box<dyn StdError + Send + Sync>);
-        …
 tests/

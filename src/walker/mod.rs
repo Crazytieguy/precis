@@ -21,7 +21,7 @@
 //! predecessor from the currently-scheduled batch's id). The new split
 //! makes all three unrepresentable by accident.
 
-use std::cell::RefCell;
+use std::cell::{OnceCell, RefCell};
 use std::collections::{BTreeSet, HashMap};
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
@@ -116,6 +116,9 @@ pub struct WalkCtx {
     source_cache: SourceCache,
     /// Tree-sitter parse results, keyed by path.
     tree_cache: RefCell<HashMap<PathBuf, Arc<Tree>>>,
+    /// Lazy, per-run map of `<crate root>/src/lib.rs` reachability for the
+    /// Rust walker. Populated on first read; see `walker::rust`.
+    rust_module_visibility: OnceCell<HashMap<PathBuf, rust::Visibility>>,
 }
 
 impl WalkCtx {
@@ -128,6 +131,7 @@ impl WalkCtx {
             root,
             source_cache,
             tree_cache: RefCell::new(HashMap::new()),
+            rust_module_visibility: OnceCell::new(),
         }
     }
 
@@ -178,6 +182,13 @@ impl WalkCtx {
             .borrow_mut()
             .insert(path.to_path_buf(), arc.clone());
         Some((source, arc))
+    }
+
+    pub(in crate::walker) fn rust_module_visibility_map(
+        &self,
+        init: impl FnOnce() -> HashMap<PathBuf, rust::Visibility>,
+    ) -> &HashMap<PathBuf, rust::Visibility> {
+        self.rust_module_visibility.get_or_init(init)
     }
 }
 
