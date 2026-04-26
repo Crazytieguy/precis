@@ -295,6 +295,25 @@ like to revisit whether it's still earning its complexity.
      keys is deferred until a fixture surfaces it.
 
 ### Render
+- **Rustdoc doctest-hidden lines** — DONE. `strip_hidden_doctest_lines`
+  in `src/walker/rust.rs` drops `# foo` and lone-`#` lines inside Rust
+  fenced code blocks (` ``` ` and `~~~`, default lang or
+  `rust`/`no_run`/`ignore`/`compile_fail`/`should_panic`/`edition*`)
+  within `///` and `//!` rustdoc. Filter runs *inside*
+  `collect_module_doc_lines` before the lede/body heading-split — a
+  crate doc that opens with a fenced example whose first line is
+  `//! # use crate::X;` would otherwise mis-split on the doctest
+  scaffolding (codex adversarial review caught this; integration test
+  in `rust_module_doc_split_handles_fence_before_first_real_heading`).
+  Sim deltas: anyhow Sim flat (0.364) but Reached **12 → 14** (+2),
+  Used **8871 → 9932** (+1061 tokens recovered); tier 1 reached
+  4/5 → 5/5, tier 4 reached 0/7 → 1/7. crate-doc body waste 2368 → 1564.
+  log Sim flat with Used −10. Other Rust fixtures unchanged
+  (mdbook/otree have no `# `-hidden lines in their crate docs).
+  TS/JS/JSON/TOML walkers unaffected (rustdoc-only convention). Plan +
+  1 plan-review round (general-purpose Agent — codex-companion stuck
+  in starting phase) + 1 adversarial review on the implementation
+  (codex caught the lede/body split ordering bug).
 - **Filesystem-level override** — file-content batch superseding a folder
   listing entry, "N more files" placeholders, alternate non-tree renderings.
 - **Sub-section markdown splitting** — H2 sections are the unit of

@@ -1,6 +1,6 @@
 fixture = "log"
 budget = 10000
-cumulative_tokens = 7908
+cumulative_tokens = 7898
 batch_count = 75
 
 [[batches]]
@@ -2411,8 +2411,8 @@ kind = "full"
 position = 69
 key = 'Rust(PubItemDoc { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 1158 })'
 descriptor = "pub-item doc at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:1158"
-cost_tokens = 410
-cum_tokens = 7395
+cost_tokens = 400
+cum_tokens = 7385
 
 [batches.content]
 kind = "lines"
@@ -2420,6 +2420,14 @@ kind = "lines"
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs"
 start = 1119
+end = 1154
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs"
+start = 1156
 end = 1156
 
 [batches.content.spans.render]
@@ -2430,7 +2438,7 @@ position = 70
 key = 'Rust(PubItemDoc { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 1003 })'
 descriptor = "pub-item doc at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:1003"
 cost_tokens = 422
-cum_tokens = 7817
+cum_tokens = 7807
 
 [batches.content]
 kind = "lines"
@@ -2448,7 +2456,7 @@ position = 71
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs" })'
 descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs"
 cost_tokens = 91
-cum_tokens = 7908
+cum_tokens = 7898
 
 [batches.content]
 kind = "lines"
@@ -2538,7 +2546,7 @@ position = 72
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs", start_line: 39 })'
 descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs:39"
 cost_tokens = 0
-cum_tokens = 7908
+cum_tokens = 7898
 
 [batches.content]
 kind = "lines"
@@ -2556,7 +2564,7 @@ position = 73
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs", start_line: 103 })'
 descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs:103"
 cost_tokens = 0
-cum_tokens = 7908
+cum_tokens = 7898
 
 [batches.content]
 kind = "lines"
@@ -2582,7 +2590,7 @@ position = 74
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs", start_line: 108 })'
 descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs:108"
 cost_tokens = 0
-cum_tokens = 7908
+cum_tokens = 7898
 
 [batches.content]
 kind = "lines"
@@ -2608,7 +2616,7 @@ position = 75
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs", start_line: 10 })'
 descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs:10"
 cost_tokens = 0
-cum_tokens = 7908
+cum_tokens = 7898
 
 [batches.content]
 kind = "lines"

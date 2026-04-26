@@ -598,6 +598,12 @@ enum DocSection {
 /// from the first `//!` up to (but not including) the first heading line;
 /// the body is from the heading onwards. If no heading is present, the
 /// whole block is the lede.
+///
+/// Doctest-hidden lines are stripped *before* the lede/body split: a
+/// crate doc that opens with a fenced Rust example whose first hidden
+/// line happens to read `# use crate::X;` would otherwise have its
+/// boundary land on the (invisible) doctest setup, mis-splitting around
+/// the real heading.
 fn collect_module_doc_lines(tree: &Tree, source: &str, section: DocSection) -> Vec<usize> {
     let root = tree.root_node();
     let mut cursor = root.walk();
@@ -614,6 +620,7 @@ fn collect_module_doc_lines(tree: &Tree, source: &str, section: DocSection) -> V
     if all.is_empty() {
         return Vec::new();
     }
+    let all = strip_hidden_doctest_lines(all, source);
     let src_lines: Vec<&str> = source.lines().collect();
     let heading_pos = all.iter().position(|&n| {
         src_lines.get(n - 1).is_some_and(|t| {
@@ -629,6 +636,127 @@ fn collect_module_doc_lines(tree: &Tree, source: &str, section: DocSection) -> V
         (DocSection::Lede, None) => all,
         (DocSection::Body, None) => Vec::new(),
     }
+}
+
+/// Drop rustdoc doctest-hidden lines. In a `///` or `//!` rustdoc block,
+/// lines whose first non-whitespace token is `# ` or a bare `#`, while
+/// inside a Rust fenced code block (` ``` ` or ` ~~~ ` with empty/`rust`/
+/// `no_run`/`ignore`/`compile_fail`/`should_panic`/`edition*` info-string),
+/// are scaffolding rustdoc strips from the rendered HTML. Keeping them in a
+/// token-budgeted summary spends real tokens on content the human reader
+/// of the docs never sees.
+///
+/// Operates on a sorted list of 1-based source line numbers, all expected
+/// to belong to one contiguous rustdoc block. Walks the lines linearly with
+/// a tiny fence state machine. Lines that aren't doc-prefixed (`///` or
+/// `//!`) are passed through unchanged so block doc comments (`/** */`) and
+/// non-doc inputs are unaffected. Consistent with existing line-level
+/// filtering in `mod_use` / `build_file_spans`; preserves honest rendering
+/// (output is still a verbatim subset of the source — just a smaller one).
+fn strip_hidden_doctest_lines(lines: Vec<usize>, source: &str) -> Vec<usize> {
+    if lines.is_empty() {
+        return lines;
+    }
+    let src_lines: Vec<&str> = source.lines().collect();
+
+    let mut state = FenceState::Outside;
+    let mut out = Vec::with_capacity(lines.len());
+
+    for n in lines {
+        let Some(raw) = src_lines.get(n.saturating_sub(1)) else {
+            out.push(n);
+            continue;
+        };
+        let after_ws = raw.trim_start();
+        let stripped = after_ws
+            .strip_prefix("//!")
+            .or_else(|| after_ws.strip_prefix("///"));
+        let Some(content) = stripped else {
+            out.push(n);
+            continue;
+        };
+        // Strip up to one space after the prefix (rustdoc's leading-space
+        // convention for the comment body).
+        let content = content.strip_prefix(' ').unwrap_or(content);
+
+        if let Some((kind, info)) = open_fence(content) {
+            state = match state {
+                FenceState::Outside => FenceState::Inside {
+                    kind,
+                    hides: is_rust_lang(info),
+                },
+                FenceState::Inside { kind: open, .. } if open == kind => FenceState::Outside,
+                // Mismatched-kind fence inside another fence: rustdoc treats
+                // this as literal content. Stay in current state.
+                other => other,
+            };
+            out.push(n);
+            continue;
+        }
+
+        if let FenceState::Inside { hides: true, .. } = state {
+            let trimmed = content.trim_start();
+            if trimmed == "#" || trimmed.starts_with("# ") {
+                continue;
+            }
+        }
+        out.push(n);
+    }
+    out
+}
+
+#[derive(Copy, Clone, PartialEq)]
+enum FenceKind {
+    Backtick,
+    Tilde,
+}
+
+#[derive(Copy, Clone, PartialEq)]
+enum FenceState {
+    Outside,
+    Inside { kind: FenceKind, hides: bool },
+}
+
+/// Returns `Some((kind, info_string))` if `content` (the post-prefix
+/// remainder of a doc line, with one optional leading space stripped) opens
+/// or closes a code fence. The info string is the trailing text after the
+/// fence delimiter.
+fn open_fence(content: &str) -> Option<(FenceKind, &str)> {
+    let trimmed = content.trim_start();
+    if let Some(rest) = trimmed.strip_prefix("```") {
+        Some((FenceKind::Backtick, rest))
+    } else if let Some(rest) = trimmed.strip_prefix("~~~") {
+        Some((FenceKind::Tilde, rest))
+    } else {
+        None
+    }
+}
+
+/// Whether a code fence's info string identifies a Rust block. Empty info
+/// string defaults to Rust (rustdoc convention). The info-string's first
+/// comma-separated token decides; case-insensitive.
+fn is_rust_lang(info: &str) -> bool {
+    let token = info
+        .trim()
+        .split([',', ' ', '\t'])
+        .next()
+        .unwrap_or("")
+        .trim();
+    if token.is_empty() {
+        return true;
+    }
+    const RUST_ATTRS: &[&str] = &[
+        "rust",
+        "no_run",
+        "ignore",
+        "compile_fail",
+        "should_panic",
+        "edition2015",
+        "edition2018",
+        "edition2021",
+        "edition2024",
+    ];
+    RUST_ATTRS.iter().any(|a| token.eq_ignore_ascii_case(a))
 }
 
 fn collect_mod_use(tree: &Tree, _source: &str) -> FileLines {
@@ -715,7 +843,8 @@ fn collect_pub_item_doc(tree: &Tree, source: &str, start_line: usize) -> FileLin
         }
         let mut out = Vec::new();
         collect_outer_docs_above(child, source, &mut out);
-        return FileLines::new(dedup_sorted(out));
+        let out = strip_hidden_doctest_lines(dedup_sorted(out), source);
+        return FileLines::new(out);
     }
     FileLines::new(Vec::new())
 }
@@ -1374,5 +1503,217 @@ pub mod inline_e { }
         fn drop(&mut self) {
             let _ = std::fs::remove_dir_all(&self.0);
         }
+    }
+
+    // ---- strip_hidden_doctest_lines ----
+
+    /// Run the filter on every non-blank line of `src` and return only the
+    /// surviving lines, joined back into a string. Stable shape for
+    /// snapshot-style assertions of multi-fence behavior.
+    fn strip_via(src: &str) -> String {
+        let all: Vec<usize> = (1..=src.lines().count()).collect();
+        let kept = strip_hidden_doctest_lines(all, src);
+        let lines: Vec<&str> = src.lines().collect();
+        kept.into_iter()
+            .map(|n| lines[n - 1])
+            .collect::<Vec<_>>()
+            .join("\n")
+    }
+
+    #[test]
+    fn rust_strip_hidden_lines_default_fence() {
+        let src =
+            "//! ```\n//! # use anyhow::Result;\n//! fn ok() -> Result<()> { Ok(()) }\n//! ```\n";
+        assert_eq!(
+            strip_via(src),
+            "//! ```\n//! fn ok() -> Result<()> { Ok(()) }\n//! ```",
+        );
+    }
+
+    #[test]
+    fn rust_strip_hidden_lines_rust_attrs() {
+        for attr in [
+            "rust",
+            "no_run",
+            "ignore",
+            "compile_fail",
+            "should_panic",
+            "edition2018",
+            "edition2021",
+        ] {
+            let src = format!("/// ```{attr}\n/// # let x = 1;\n/// real\n/// ```\n");
+            let got = strip_via(&src);
+            assert!(
+                !got.contains("# let x"),
+                "fence `{attr}` should drop hidden line; got: {got}",
+            );
+            assert!(got.contains("/// real"));
+        }
+    }
+
+    #[test]
+    fn rust_strip_hidden_lines_non_rust_fence_keeps_hash() {
+        for lang in ["console", "text", "toml", "bash", "json"] {
+            let src = format!("/// ```{lang}\n/// # not hidden\n/// ```\n");
+            let got = strip_via(&src);
+            assert!(
+                got.contains("# not hidden"),
+                "fence `{lang}` should keep `# `; got: {got}",
+            );
+        }
+    }
+
+    #[test]
+    fn rust_strip_hidden_lines_heading_outside_fence() {
+        let src = "//! # Real heading\n//! prose\n";
+        assert_eq!(strip_via(src), src.trim_end());
+    }
+
+    #[test]
+    fn rust_strip_hidden_lines_double_hash_in_rust_fence() {
+        // `## foo` inside a Rust fence is rendered (rustdoc consumes one #),
+        // so the line must be kept.
+        let src = "/// ```\n/// ## foo\n/// ```\n";
+        assert_eq!(strip_via(src), src.trim_end());
+    }
+
+    #[test]
+    fn rust_strip_hidden_lines_attribute_lines_kept() {
+        // `#[derive(...)]` and `#![cfg(...)]` don't start with `# ` (no
+        // space), so they're code, not hidden.
+        let src = "/// ```\n/// #[derive(Debug)]\n/// #![allow(unused)]\n/// struct S;\n/// ```\n";
+        assert_eq!(strip_via(src), src.trim_end());
+    }
+
+    #[test]
+    fn rust_strip_hidden_lines_lone_hash_dropped() {
+        let src = "/// ```\n/// #\n/// real\n/// ```\n";
+        let got = strip_via(src);
+        assert!(!got.contains("/// #\n"), "lone `#` should drop; got: {got}");
+        assert!(got.contains("/// real"));
+    }
+
+    #[test]
+    fn rust_strip_hidden_lines_tilde_fence() {
+        let src = "/// ~~~\n/// # let x = 1;\n/// real\n/// ~~~\n";
+        let got = strip_via(src);
+        assert!(
+            !got.contains("# let x"),
+            "tilde-fence should drop `# `; got: {got}"
+        );
+    }
+
+    #[test]
+    fn rust_strip_hidden_lines_mismatched_fence_kind_does_not_close() {
+        // Inside a backtick Rust fence, a `~~~` line is literal content (not
+        // a closer). Subsequent `# ` lines stay hidden.
+        let src = "/// ```\n/// # hidden 1\n/// ~~~ inline\n/// # hidden 2\n/// ```\n";
+        let got = strip_via(src);
+        assert!(!got.contains("# hidden 1"));
+        assert!(!got.contains("# hidden 2"));
+        assert!(got.contains("~~~ inline"));
+    }
+
+    #[test]
+    fn rust_strip_hidden_lines_multi_fence_state_machine() {
+        // Lede: prose, then a Rust fence, then a console fence, then a
+        // tilde-rust fence. Hidden lines in Rust fences only.
+        let src = "\
+//! intro
+//! ```
+//! # hidden a
+//! visible a
+//! ```
+//! between
+//! ```console
+//! # kept-console
+//! ```
+//! ~~~rust
+//! # hidden b
+//! visible b
+//! ~~~
+//! tail
+";
+        let got = strip_via(src);
+        assert!(!got.contains("# hidden a"));
+        assert!(!got.contains("# hidden b"));
+        assert!(got.contains("# kept-console"));
+        assert!(got.contains("visible a"));
+        assert!(got.contains("visible b"));
+        assert!(got.contains("//! tail"));
+    }
+
+    #[test]
+    fn rust_strip_hidden_lines_works_with_inner_doc() {
+        // Same body for both `///` and `//!` prefix forms.
+        let outer = "/// ```\n/// # hidden\n/// real\n/// ```\n";
+        let inner = "//! ```\n//! # hidden\n//! real\n//! ```\n";
+        assert!(!strip_via(outer).contains("# hidden"));
+        assert!(!strip_via(inner).contains("# hidden"));
+    }
+
+    #[test]
+    fn rust_module_doc_split_handles_fence_before_first_real_heading() {
+        // Crate doc opens with a fenced Rust example that has a `# ` hidden
+        // line. The first *real* heading is `# Public API` further down. Split
+        // must land on the real heading: lede gets the prose and intro fence;
+        // body starts at `# Public API`.
+        let src = "\
+//! Crate one-liner.
+//!
+//! ```
+//! # use crate::Foo;
+//! Foo::bar();
+//! ```
+//!
+//! # Public API
+//!
+//! Detail.
+
+pub fn anchor() {}
+";
+        let tree = parse(src);
+        let lede = collect_module_doc_lines(&tree, src, DocSection::Lede);
+        let body = collect_module_doc_lines(&tree, src, DocSection::Body);
+        let line_text = |n: usize| src.lines().nth(n - 1).unwrap_or("");
+
+        // Lede contains the prose, the fence delimiters, and the visible
+        // body line — but not the `# use crate::Foo;` doctest scaffolding.
+        let lede_text: Vec<&str> = lede.iter().map(|&n| line_text(n)).collect();
+        assert!(
+            lede_text.iter().any(|t| t.contains("Crate one-liner")),
+            "lede missing tagline: {lede_text:?}",
+        );
+        assert!(
+            lede_text.iter().any(|t| t.contains("Foo::bar()")),
+            "lede missing visible code line: {lede_text:?}",
+        );
+        assert!(
+            !lede_text.iter().any(|t| t.contains("# use crate::Foo")),
+            "lede leaked hidden doctest line: {lede_text:?}",
+        );
+        assert!(
+            !lede_text.iter().any(|t| t.contains("# Public API")),
+            "lede crossed the real heading: {lede_text:?}",
+        );
+
+        // Body starts at the real heading and contains the prose after it.
+        let body_text: Vec<&str> = body.iter().map(|&n| line_text(n)).collect();
+        assert!(
+            body_text
+                .first()
+                .is_some_and(|t| t.contains("# Public API")),
+            "body should start at real heading; got {body_text:?}",
+        );
+        assert!(body_text.iter().any(|t| t.contains("Detail.")));
+    }
+
+    #[test]
+    fn rust_strip_hidden_lines_block_comment_passthrough() {
+        // Block doc comments `/** */` aren't filtered (helper passes
+        // through any line whose prefix isn't `///` or `//!`).
+        let src = "/** ```\n# would-be-hidden-but-not-handled\nreal\n``` */\n";
+        let got = strip_via(src);
+        assert!(got.contains("# would-be-hidden-but-not-handled"));
     }
 }

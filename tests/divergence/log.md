@@ -1,4 +1,4 @@
-scores: Sim=0.527 Reached=13/44 Early=2 Late=8 Partial=1 Missing=30 Used=7908/10000
+scores: Sim=0.527 Reached=13/44 Early=2 Late=8 Partial=1 Missing=30 Used=7898/10000
 
 ## Tier rollup
 
@@ -19,7 +19,7 @@ scores: Sim=0.527 Reached=13/44 Early=2 Late=8 Partial=1 Missing=30 Used=7908/10
 | 1.4 | 231 | 2758 | +2527 | 1.00 | late | src/ + src/kv/ listing |  |
 | 1.5 | 381 | 653 | +272 | 1.00 | late | Crate-doc target/level/body model | crate-doc lede in src/lib.rs (t=653, 9 atoms) |
 | 1.6 | 545 | — | — | 0.00 | missing | Five-macro user-facing summary |  |
-| 2.1 | 735 | 961 | +226 | 1.00 | late | Public-item map of lib.rs | pub-item doc at src/lib.rs:1003 (t=7817, 39 atoms) |
+| 2.1 | 735 | 961 | +226 | 1.00 | late | Public-item map of lib.rs | pub-item doc at src/lib.rs:1003 (t=7807, 39 atoms) |
 | 2.2 | 831 | 3537 | +2706 | 1.00 | late | Macro names (src/macros.rs) | macro_export names across src (t=3537, 19 atoms) |
 | 2.3 | 883 | 1921 | +1038 | 1.00 | late | Log trait method signatures | pub item at src/lib.rs:1249 (t=1921, 17 atoms) |
 | 2.4 | 1153 | 1520 | +367 | 1.00 | late | Level enum body | pub item at src/lib.rs:475 (t=1520, 24 atoms) |
@@ -32,7 +32,7 @@ scores: Sim=0.527 Reached=13/44 Early=2 Late=8 Partial=1 Missing=30 Used=7908/10
 | 3.5 | 3082 | — | — | 0.00 | missing | Global state + ordering constants |  |
 | 3.6 | 3382 | 2214 | -1168 | 1.00 | early | STATIC_MAX_LEVEL compile-time match | pub item at src/lib.rs:1611 (t=2214, 14 atoms) |
 | 3.7 | 3856 | — | — | 0.00 | missing | __log internal-macro body (the actual gate) | macro_export names across src (t=3537, 1 atoms) |
-| 3.8 | 4415 | — | — | 0.06 | missing | __private_api log dispatcher | pub-item names surface in src/__private_api.rs (t=7908, 6 atoms) |
+| 3.8 | 4415 | — | — | 0.06 | missing | __private_api log dispatcher | pub-item names surface in src/__private_api.rs (t=7898, 6 atoms) |
 | 3.9 | 4715 | — | — | 0.00 | missing | set_logger_inner state transitions |  |
 | 4.1 | 5085 | — | — | 0.33 | missing | kv module concept | crate-doc lede in src/kv/mod.rs (t=2847, 10 atoms) |
 | 4.2 | 5290 | — | — | 0.55 | partial | kv module re-exports | mod/use plumbing in src/kv/mod.rs (t=4774, 11 atoms) |
@@ -60,7 +60,7 @@ scores: Sim=0.527 Reached=13/44 Early=2 Late=8 Partial=1 Missing=30 Used=7908/10
 
 | n | off_tokens_total | pattern |
 |--:|-----------------:|:--------|
-| 12 | 2416 | pub-item doc at src/lib.rs:<n> |
+| 12 | 2406 | pub-item doc at src/lib.rs:<n> |
 | 3 | 592 | README.md section #<n> |
 | 2 | 174 | CHANGELOG.md section #<n> |
 
@@ -68,8 +68,8 @@ scores: Sim=0.527 Reached=13/44 Early=2 Late=8 Partial=1 Missing=30 Used=7908/10
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
-| 422 | 1.00 | 422 | 7817 | pub-item doc at src/lib.rs:1003 |
-| 410 | 1.00 | 410 | 7395 | pub-item doc at src/lib.rs:1158 |
+| 422 | 1.00 | 422 | 7807 | pub-item doc at src/lib.rs:1003 |
+| 400 | 1.00 | 400 | 7385 | pub-item doc at src/lib.rs:1158 |
 | 397 | 1.00 | 397 | 6932 | [dependencies] in Cargo.toml |
 | 377 | 0.89 | 425 | 6268 | pub item at src/kv/source.rs:51 |
 | 334 | 0.83 | 401 | 1921 | pub item at src/lib.rs:1249 |
